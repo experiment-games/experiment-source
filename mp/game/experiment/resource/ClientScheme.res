@@ -18,7 +18,7 @@ Scheme
 		"Orange"			"255 176 0 255"
 		"OrangeDim"			"255 176 0 120"
 		"LightOrange"		"188 112 0 128"
-		
+
 		"Red"				"192 28 0 140"
 		"Black"				"0 0 0 196"
 		"TransparentBlack"	"0 0 0 196"
@@ -29,7 +29,7 @@ Scheme
 		"ForTesting_Magenta"	"255 0 255 255"
 		"ForTesting_MagentaDim"	"255 0 255 120"
 	}
-	
+
 	///////////////////// BASE SETTINGS ////////////////////////
 	//
 	// default settings for all panels
@@ -41,7 +41,7 @@ Scheme
 
 		"Panel.FgColor"			"255 220 0 100"
 		"Panel.BgColor"			"0 0 0 76"
-		
+
 		"BrightFg"		"255 220 0 255"
 
 		"DamagedBg"			"180 0 0 200"
@@ -54,7 +54,7 @@ Scheme
 		"SelectionEmptyBoxBg" 	"0 0 0 80"
 		"SelectionBoxBg" 		"0 0 0 80"
 		"SelectionSelectedBoxBg" "0 0 0 80"
-		
+
 		"ZoomReticleColor"	"255 220 0 255"
 
 		// HL1-style HUD colors
@@ -66,7 +66,7 @@ Scheme
 		"Main.Title1.X"		"76"
 		"Main.Title1.Y"		"184"
 		"Main.Title1.Color"	"255 255 255 255"
-		
+
 		// Top-left corner of the "DEATHMATCH" on the main screen
 		"Main.Title2.X"		"315"
 		"Main.Title2.Y"		"222"
@@ -255,7 +255,7 @@ Scheme
 		"Main.Title1.Color"	"255 255 255 255"
 
 		// Top-left corner of the "SOURCE" on the main screen
-		"Main.Title2.X"		"380"	
+		"Main.Title2.X"		"380"
 		"Main.Title2.Y"		"205"
 		"Main.Title2.Color"	"255 255 255 80"
 
@@ -271,7 +271,7 @@ Scheme
 		// Blank space to leave beneath the menu on the main screen
 		"Main.BottomBorder"	"32"
 	}
-	
+
 	//////////////////////// FONTS /////////////////////////////
 	//
 	// describes all the fonts
@@ -757,8 +757,8 @@ Scheme
 		{
 			"1"
 			{
-				"name"  "HL2MP"
-				"tall"  "46"
+				"name"  "Lights Out BRK"
+				"tall"  "64"
 				"weight" "0"
 				"additive" "0"
 				"antialias" "1"
@@ -888,7 +888,7 @@ Scheme
 				"antialias" "1"
 				"custom" "1" [$OSX]
 		   }
-		}	
+		}
 		// Used by scoreboard and spectator UI for names which don't map in the normal fashion
 		"DefaultVerySmallFallBack"
 		{
@@ -967,7 +967,7 @@ Scheme
 				}
 			}
 		}
-		
+
 		TitleButtonBorder
 		{
 			"inset" "0 0 1 1"
@@ -1166,7 +1166,7 @@ Scheme
 				}
 			}
 		}
-		
+
 		ButtonBorder
 		{
 			"inset" "0 0 0 0"
@@ -1569,14 +1569,14 @@ Scheme
 		}
 	}
 
-	
+
 	//////////////////////// CUSTOM FONT FILES /////////////////////////////
 	//
 	// specifies all the custom (non-system) font files that need to be loaded to service the above described fonts
 	CustomFontFiles
 	{
-		"1"		"resource/HALFLIFE2.ttf"
-		"1"		"resource/HL2MP.ttf"
+		"1"		"resource/fonts/lightout.ttf"
+		"1"		"resource/fonts/lightout.ttf"
 		"2"		"resource/HL2crosshairs.ttf"
 	}
 

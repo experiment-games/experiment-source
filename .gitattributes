@@ -48,4 +48,5 @@ protoc binary
 ccache binary
 
 gtest_output_test_golden_lin.txt binary
-mod_*_english.txt binary
+experiment_english.txt binary
+gameui_english.txt binary
