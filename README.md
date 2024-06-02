@@ -16,6 +16,14 @@
 
 [&raquo; See the Source SDK 2013 documentation for more information.](https://developer.valvesoftware.com/wiki/Source_SDK_2013)
 
+## Installation
+
+1. Make a symlink from the `mp/game/mod_hl2mp` directory to your sourcemods directory. E.g:
+
+    ```bash
+    mklink /D "C:\Program Files (x86)\Steam\steamapps\sourcemods\experiment" "<path to this repo>\mp\game\mod_hl2mp"
+    ```
+
 ## Extras
 
 <details>

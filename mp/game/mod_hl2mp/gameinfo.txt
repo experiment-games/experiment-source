@@ -1,8 +1,8 @@
 "GameInfo"
 {
-	game	"My First HL2MP Mod"
-	title	"HALF+LIFE'"
-	title2	"deathmatch mod"
+	game	"Experiment"
+	title	"Experiment'"
+	title2	""
 	type multiplayer_only
 	nomodels 0
 	nohimodel 1
@@ -18,7 +18,7 @@
 	FileSystem
 	{
 		SteamAppId				243750
-		
+
 		//
 		// The code that loads this file automatically does a few things here:
 		//
