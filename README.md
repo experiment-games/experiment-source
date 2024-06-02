@@ -12,16 +12,30 @@
 
 - Source SDK 2013 Multiplayer Base (Installed through Steam)
 - Visual Studio 2022 (or newer)
-- Visual Studio 2013 (for the Source SDK 2013 solution)
+- [Visual Studio 2013 (for the Source SDK 2013 solution)](https://archive.org/details/en_visual_studio_community_2013_with_update_5_x86_dvd_6816332)
 
 [&raquo; See the Source SDK 2013 documentation for more information.](https://developer.valvesoftware.com/wiki/Source_SDK_2013)
 
-## Installation
+## Getting started
 
-1. Make a symlink from the `game/experiment` directory to your sourcemods directory. E.g:
+1. Go into the `src/` directory and generate the Visual Studio solution.
 
     ```bash
-    mklink /D "C:\Program Files (x86)\Steam\steamapps\sourcemods\experiment" "<path to this repo>\game\experiment"
+    cd src
+    createallprojects.bat
+    ```
+
+2. Open the `experiment.sln` solution in Visual Studio 2022 (or newer).
+
+    > [!WARNING]
+    > Despite building in Visual Studio 2022, the Source SDK 2013 solution requires Visual Studio 2013 to be installed.
+
+3. Build the solution in `Release` mode.
+
+4. After the build is complete make a symlink from the `game/experiment` directory to your `steamapps/sourcemods` directory. E.g:
+
+    ```bash
+    mklink /J "C:\Program Files (x86)\Steam\steamapps\sourcemods\experiment" "<path to this repo>\game\experiment"
     ```
 
 ## Extras
