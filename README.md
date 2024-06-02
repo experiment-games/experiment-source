@@ -25,7 +25,7 @@
     createallprojects.bat
     ```
 
-2. Open the `experiment.sln` solution in Visual Studio 2022 (or newer).
+2. Open the created `experiment.sln` solution in Visual Studio 2022 (or newer).
 
     > [!WARNING]
     > Despite building in Visual Studio 2022, the Source SDK 2013 solution requires Visual Studio 2013 to be installed.
