@@ -1,6 +1,5 @@
-# Files to ignore when considering what GIT should commit.
-
-# Visual Studio 
+# Visual Studio
+.vs/
 *.suo
 *.user
 *.sln.docstates
@@ -18,7 +17,6 @@ ipch
 *.opensdf
 *.idb
 *.vcxproj
-*.sln
 
 # OSX/Linux build products
 *.mak
