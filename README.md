@@ -18,10 +18,10 @@
 
 ## Installation
 
-1. Make a symlink from the `mp/game/mod_hl2mp` directory to your sourcemods directory. E.g:
+1. Make a symlink from the `mp/game/experiment` directory to your sourcemods directory. E.g:
 
     ```bash
-    mklink /D "C:\Program Files (x86)\Steam\steamapps\sourcemods\experiment" "<path to this repo>\mp\game\mod_hl2mp"
+    mklink /D "C:\Program Files (x86)\Steam\steamapps\sourcemods\experiment" "<path to this repo>\mp\game\experiment"
     ```
 
 ## Extras
