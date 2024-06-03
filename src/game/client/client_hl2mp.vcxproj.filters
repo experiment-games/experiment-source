@@ -1934,7 +1934,10 @@
     <ClInclude Include="..\..\game\shared\hl2mp\weapon_slam.h">
       <Filter>Source Files\HL2MP\Weapons</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\game\shared\luamanager.h">
+    <ClInclude Include="..\..\game\shared\baseluahandle.h">
+      <Filter>Source Files\Lua</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\game\shared\luahandle.h">
       <Filter>Source Files\Lua</Filter>
     </ClInclude>
     <ClInclude Include="sixense\in_sixense.h">
@@ -3304,7 +3307,10 @@
     <ClCompile Include="..\..\game\shared\hl2mp\weapon_stunstick.cpp">
       <Filter>Source Files\HL2MP\Weapons</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\game\shared\luamanager.cpp">
+    <ClCompile Include="..\..\game\shared\baseluahandle.cpp">
+      <Filter>Source Files\Lua</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\game\shared\luahandle.cpp">
       <Filter>Source Files\Lua</Filter>
     </ClCompile>
     <ClCompile Include="stdafx.cpp">

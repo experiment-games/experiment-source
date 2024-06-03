@@ -506,8 +506,10 @@ $Project
 
 		$Folder	"Lua"
 		{
-            $File   "$SRCDIR\game\shared\luamanager.h"
-            $File   "$SRCDIR\game\shared\luamanager.cpp"
+            $File   "$SRCDIR\game\shared\baseluahandle.h"
+            $File   "$SRCDIR\game\shared\baseluahandle.cpp"
+            $File   "$SRCDIR\game\shared\luahandle.h"
+            $File   "$SRCDIR\game\shared\luahandle.cpp"
         }
 
 		$Folder	"Sixense"
