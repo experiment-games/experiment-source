@@ -126,6 +126,11 @@ extern ConVar tf_mm_servermode;
 #include "portal_player.h"
 #endif
 
+#ifdef LUA_SDK
+#include "luacachefile.h"
+#include "luamanager.h"
+#endif
+
 #if defined(REPLAY_ENABLED)
 #include "replay/ireplaysystem.h"
 #endif

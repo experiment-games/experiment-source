@@ -12,7 +12,7 @@
 #include "zip/XUnzip.h"
 #include "utldict.h"
 #include "luamanager.h"
-#include "lua/luacachefile.h"
+#include "luacachefile.h"
 
 #ifdef GAME_DLL
 #include "networkstringtable_gamedll.h"

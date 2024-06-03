@@ -51,7 +51,7 @@ $Configuration
 
 	$Compiler
 	{
-		$AdditionalIncludeDirectories	".\;$BASE;$SRCDIR\vgui2\include;$SRCDIR\vgui2\controls;$SRCDIR\game\shared;.\game_controls;$SRCDIR\thirdparty\sixensesdk\include"
+		$AdditionalIncludeDirectories	".\;$BASE;$SRCDIR\vgui2\include;$SRCDIR\vgui2\controls;$SRCDIR\game\shared;.\game_controls;$SRCDIR\thirdparty\sixensesdk\include;.\scripted_controls;"
 		$PreprocessorDefinitions		"$BASE;NO_STRING_T;CLIENT_DLL;VECTOR;VERSION_SAFE_STEAM_API_INTERFACES;PROTECTED_THINGS_ENABLE;strncpy=use_Q_strncpy_instead;_snprintf=use_Q_snprintf_instead;LUA_SDK;LUA_COMPAT_5_3"
 		$PreprocessorDefinitions		"$BASE;fopen=dont_use_fopen" [$WIN32]
 		$PreprocessorDefinitions		"$BASE;USE_WEBM_FOR_REPLAY;" [$LINUXALL]
@@ -506,6 +506,8 @@ $Project
 
 		$Folder	"Lua"
 		{
+            $File "$SRCDIR\game\shared\basescripted.cpp"
+            $File "$SRCDIR\game\shared\basescripted.h"
 		    $File "$SRCDIR\game\shared\lbasecombatweapon_shared.cpp"
             $File "$SRCDIR\game\shared\lbaseentity_shared.cpp"
             $File "$SRCDIR\game\shared\lbaseplayer_shared.cpp"
@@ -561,6 +563,35 @@ $Project
             $File "$SRCDIR\public\mathlib\lvmatrix.cpp"
             $File "$SRCDIR\public\lvphysics_interface.cpp"
         }
+
+		$Folder	"Scripted Controls"
+		{
+			$File "$SRCDIR\game\client\scripted_controls\lButton.h"
+			$File "$SRCDIR\game\client\scripted_controls\lButton.cpp"
+			$File "$SRCDIR\game\client\scripted_controls\lCheckButton.h"
+			$File "$SRCDIR\game\client\scripted_controls\lCheckButton.cpp"
+			$File "$SRCDIR\game\client\scripted_controls\lFrame.h"
+			$File "$SRCDIR\game\client\scripted_controls\lFrame.cpp"
+			$File "$SRCDIR\game\client\scripted_controls\lPanel.h"
+			$File "$SRCDIR\game\client\scripted_controls\lPanel.cpp"
+			{
+				$Configuration
+				{
+					$Compiler
+					{
+						$ObjectFileName	"$(IntDir)\$(InputName)1.obj"
+					}
+				}
+			}
+			$File "$SRCDIR\game\client\scripted_controls\lPropertyDialog.h"
+			$File "$SRCDIR\game\client\scripted_controls\lPropertyDialog.cpp"
+			$File "$SRCDIR\game\client\scripted_controls\lPropertyPage.h"
+			$File "$SRCDIR\game\client\scripted_controls\lPropertyPage.cpp"
+			$File "$SRCDIR\game\client\scripted_controls\scriptedclientluapanel.h"
+			$File "$SRCDIR\game\client\scripted_controls\scriptedclientluapanel.cpp"
+			$File "$SRCDIR\game\client\scripted_controls\scriptedhudviewport.h"
+			$File "$SRCDIR\game\client\scripted_controls\scriptedhudviewport.cpp"
+		}
 
 		$Folder	"Sixense"
 		{
@@ -692,6 +723,7 @@ $Project
 			$File	"fx_envelope.cpp"
 			$File	"fx_line.cpp"
 			$File	"fx_sparks.cpp"
+			$File	"lc_recipientfilter.cpp"
 			$File	"particlesphererenderer.cpp"
 			$File	"smoke_fog_overlay.cpp"
 		}
@@ -932,6 +964,10 @@ $Project
 		$File	"weapons_resource.h"
 		$File	"vgui_video.h"
 		$File   "vgui_video_player.h"
+
+        // Lua
+        $File "lc_recipientfilter.h"
+        $File "$SRCDIR\public\lvphysics_interface.h"
 	}
 
 	$Folder	"Public Header Files"
@@ -1170,10 +1206,10 @@ $Project
         $File "$SRCDIR\public\vgui_controls\lEditablePanel.h"
         $File "$SRCDIR\public\lfilesystem.h"
         $File "$SRCDIR\public\lgametrace.h"
+        $File "$SRCDIR\public\licvar.h"
         $File "$SRCDIR\public\materialsystem\limaterial.h"
         $File "$SRCDIR\public\vgui\LIScheme.h"
         $File "$SRCDIR\public\SoundEmitterSystem\lisoundemittersystembase.h"
-        $File "$SRCDIR\public\vgui_controls\ListPanel.h"
         $File "$SRCDIR\public\tier1\LKeyValues.h"
         $File "$SRCDIR\public\lnetworkstringtabledefs.h"
         $File "$SRCDIR\public\vgui_controls\lPanel.h"

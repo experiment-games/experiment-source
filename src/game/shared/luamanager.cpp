@@ -1,4 +1,4 @@
-//===== Copyright © 1996-2005, Valve Corporation, All rights reserved. ======//
+//===== Copyright Â© 1996-2005, Valve Corporation, All rights reserved. ======//
 //
 // Purpose: Contains the implementation of Lua for scripting.
 //
@@ -18,7 +18,7 @@
 #include "weapon_hl2mpbase_scriptedweapon.h"
 #include "luamanager.h"
 #include "luasrclib.h"
-#include "lua/luacachefile.h"
+#include "luacachefile.h"
 #include "lconvar.h"
 #include "licvar.h"
 

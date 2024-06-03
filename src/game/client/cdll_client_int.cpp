@@ -162,7 +162,7 @@ extern vgui::IInputInternal *g_InputInternal;
 //=============================================================================
 
 #ifdef LUA_SDK
-#include "lua/luacachefile.h"
+#include "luacachefile.h"
 #include "luamanager.h"
 #endif
 
