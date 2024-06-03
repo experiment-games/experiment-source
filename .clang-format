@@ -1,0 +1,10 @@
+﻿---
+BasedOnStyle: Google
+SortIncludes: Never
+IndentWidth: 4
+AllowShortBlocksOnASingleLine: Never
+AllowShortCaseLabelsOnASingleLine: false
+AllowShortFunctionsOnASingleLine: None
+AllowShortIfStatementsOnASingleLine: Never
+AllowShortLoopsOnASingleLine: false
+...
