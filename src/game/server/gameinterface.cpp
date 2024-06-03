@@ -7,6 +7,7 @@
 //build an interface 			to external modules
 //===========================================================================//
 
+#include "cbase.h"
 #include "EventLog.h"
 #include "TemplateEntities.h"
 #include "achievement_saverestore.h"
@@ -16,7 +17,6 @@
 #include "ai_saverestore.h"
 #include "ai_speech.h"
 #include "bitbuf.h"
-#include "cbase.h"
 #include "client.h"
 #include "datacache/idatacache.h"
 #include "effect_dispatch_data.h"
