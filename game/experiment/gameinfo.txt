@@ -4,6 +4,7 @@
 gameinfo
 {
 	game	"Experiment"
+	icon	"icon_experiment"
 	title	"Experiment"
 	title2	""
 	type	"multiplayer_only"
