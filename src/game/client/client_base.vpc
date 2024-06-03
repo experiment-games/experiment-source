@@ -506,10 +506,6 @@ $Project
 
 		$Folder	"Lua"
 		{
-            $File   "$SRCDIR\game\shared\lauxlib.h"
-            $File   "$SRCDIR\game\shared\lua.h"
-            $File   "$SRCDIR\game\shared\luaconf.h"
-            $File   "$SRCDIR\game\shared\lualib.h"
             $File   "$SRCDIR\game\shared\luamanager.h"
             $File   "$SRCDIR\game\shared\luamanager.cpp"
         }
@@ -1252,7 +1248,6 @@ $Project
 		$Lib		bitmap
 		$Lib		choreoobjects
 		$Lib		dmxloader
-		$Lib		lua54
 		$Lib		mathlib
 		$Lib		matsys_controls
 		$Lib		particles

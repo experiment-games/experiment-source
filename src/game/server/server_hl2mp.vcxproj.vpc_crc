@@ -2,11 +2,11 @@
 b9c20ec3 E:\Projects\_Personal\SourceMods\experiment-source\src\devtools\bin\vpc.exe
 _Nc_VS2013/vpcgame:hl2mp_
 12d246fd server_hl2mp.vpc
-ae568e7e ..\..\game\server\server_base.vpc
+5472391c ..\..\game\server\server_base.vpc
 4832e67a ..\..\vpc_scripts\source_dll_base.vpc
 d752cf80 ..\..\vpc_scripts\platform_dirs.vpc
 6c4a5ff1 ..\..\vpc_scripts\source_base.vpc
-34ca56eb ..\..\vpc_scripts\source_dll_win32_base.vpc
+04f3c80e ..\..\vpc_scripts\source_dll_win32_base.vpc
 486b766d ..\..\vpc_scripts\version.vpc
 846102f0 ..\..\vpc_scripts\loadaddress.vpc
 1355b11f ..\..\vpc_scripts\source_dll_win32_debug.vpc

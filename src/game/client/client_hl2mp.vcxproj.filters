@@ -1934,18 +1934,6 @@
     <ClInclude Include="..\..\game\shared\hl2mp\weapon_slam.h">
       <Filter>Source Files\HL2MP\Weapons</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\game\shared\lauxlib.h">
-      <Filter>Source Files\Lua</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\game\shared\lua.h">
-      <Filter>Source Files\Lua</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\game\shared\luaconf.h">
-      <Filter>Source Files\Lua</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\game\shared\lualib.h">
-      <Filter>Source Files\Lua</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\game\shared\luamanager.h">
       <Filter>Source Files\Lua</Filter>
     </ClInclude>

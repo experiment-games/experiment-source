@@ -1,4 +1,4 @@
-for /r %%i in (*.vcxproj) do (
+for /r %%i in (*.vcxproj *.vcxproj.filters *.vcxproj.user) do (
     echo %%i
     del "%%i"
 )

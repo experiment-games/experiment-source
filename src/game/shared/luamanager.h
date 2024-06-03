@@ -16,9 +16,9 @@
 #endif
 
 extern "C" {
-#include <lauxlib.h>
-#include <lua.h>
-#include <lualib.h>
+#include "lua/lauxlib.h"
+#include "lua/lua.h"
+#include "lua/lualib.h"
 }
 
 #include <vector>
@@ -131,6 +131,6 @@ private:
   bool m_bInit;
 };
 
-extern CLuaManager * Lua();
+extern CLuaManager *Lua();
 
 #endif // MC_LUAMANAGER_H
