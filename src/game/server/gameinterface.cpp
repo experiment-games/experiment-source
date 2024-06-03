@@ -130,10 +130,6 @@ extern ConVar tf_mm_servermode;
 #include "replay/ireplaysystem.h"
 #endif
 
-#ifdef WITH_LUA
-#include "baseluahandle.h"
-#endif
-
 extern IToolFrameworkServer *g_pToolFrameworkServer;
 extern IParticleSystemQuery *g_pParticleSystemQuery;
 
@@ -773,10 +769,6 @@ bool CServerGameDLL::DLLInit(CreateInterfaceFn appSystemFactory,
     gamestatsuploader->InitConnection();
 #endif
 
-#ifdef WITH_LUA
-    Lua()->InitDll();
-#endif
-
     return true;
 }
 
@@ -785,10 +777,6 @@ void CServerGameDLL::PostInit() {
 }
 
 void CServerGameDLL::DLLShutdown(void) {
-#ifdef WITH_LUA
-    Lua()->ShutdownDll();
-#endif
-
     // Due to dependencies, these are not autogamesystems
     ModelSoundsCacheShutdown();
 
@@ -994,6 +982,33 @@ bool CServerGameDLL::LevelInit(const char *pMapName, char const *pMapEntities,
         pItemSchema->BInitFromDelayedBuffer();
     }
 #endif  // USES_ECON_ITEMS
+
+#ifdef LUA_SDK
+    lcf_recursivedeletefile(LUA_PATH_CACHE);
+
+    // Add Lua environment
+    luasrc_init();
+
+    luasrc_dofolder(L, LUA_PATH_EXTENSIONS);
+    luasrc_dofolder(L, LUA_PATH_MODULES);
+    luasrc_dofolder(L, LUA_PATH_GAME_SHARED);
+    luasrc_dofolder(L, LUA_PATH_GAME_SERVER);
+
+    luasrc_LoadWeapons();
+    luasrc_LoadEntities();
+    // luasrc_LoadEffects();
+
+    // Andrew; loadup base gamemode.
+    luasrc_LoadGamemode(LUA_BASE_GAMEMODE);
+
+    luasrc_LoadGamemode(gamemode.GetString());
+    luasrc_SetGamemode(gamemode.GetString());
+
+    if (gpGlobals->maxClients > 1) {
+        // load LCF into stringtable
+        lcf_preparecachefile();
+    }
+#endif
 
     ResetWindspeed();
     UpdateChapterRestrictions(pMapName);
