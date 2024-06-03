@@ -25,6 +25,9 @@
     <Filter Include="Source Files\HL2MP\Weapons">
       <UniqueIdentifier>{382A0C79-1859-D554-1EB7-DCBE8F115956}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\Lua">
+      <UniqueIdentifier>{939EDCD0-6EA9-D723-4838-30149B401D30}</UniqueIdentifier>
+    </Filter>
     <Filter Include="Source Files\Navigation Mesh">
       <UniqueIdentifier>{B09D60FE-50B0-FE99-73C2-303E809808E2}</UniqueIdentifier>
     </Filter>
@@ -49,6 +52,9 @@
       <Filter>Link Libraries</Filter>
     </Library>
     <Library Include="..\..\lib\public\libprotobuf.lib">
+      <Filter>Link Libraries</Filter>
+    </Library>
+    <Library Include="..\..\lib\public\lua54.lib">
       <Filter>Link Libraries</Filter>
     </Library>
     <Library Include="..\..\lib\public\mathlib.lib">
@@ -1778,6 +1784,21 @@
     <ClInclude Include="..\..\game\shared\hl2mp\weapon_slam.h">
       <Filter>Source Files\HL2MP\Weapons</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\game\shared\lauxlib.h">
+      <Filter>Source Files\Lua</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\game\shared\lua.h">
+      <Filter>Source Files\Lua</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\game\shared\luaconf.h">
+      <Filter>Source Files\Lua</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\game\shared\lualib.h">
+      <Filter>Source Files\Lua</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\game\shared\luamanager.h">
+      <Filter>Source Files\Lua</Filter>
+    </ClInclude>
     <ClInclude Include="nav.h">
       <Filter>Source Files\Navigation Mesh</Filter>
     </ClInclude>
@@ -3351,6 +3372,9 @@
     </ClCompile>
     <ClCompile Include="..\..\game\shared\hl2mp\weapon_stunstick.cpp">
       <Filter>Source Files\HL2MP\Weapons</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\game\shared\luamanager.cpp">
+      <Filter>Source Files\Lua</Filter>
     </ClCompile>
     <ClCompile Include="nav_area.cpp">
       <Filter>Source Files\Navigation Mesh</Filter>

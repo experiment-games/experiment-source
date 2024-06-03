@@ -137,3 +137,11 @@ void CLuaManager::RegisterLuaHandle(LuaHandle *handle) {
   if (m_bInit)
     handle->InitDll();
 }
+
+void RegisterLuaFuncs(lua_State *L) {
+  // TODO
+}
+
+void RegisterLuaGlobals(lua_State *L) {
+  // TODO
+}
