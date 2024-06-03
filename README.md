@@ -22,7 +22,7 @@
 
     ```bash
     cd src
-    createallprojects.bat
+    creategameprojects.bat
     ```
 
 2. Open the created `experiment.sln` solution in Visual Studio 2022 (or newer).
