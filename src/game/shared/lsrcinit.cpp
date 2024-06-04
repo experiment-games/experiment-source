@@ -1,4 +1,4 @@
-//========== Copyleft © 2011, Team Sandbox, Some rights reserved. ===========//
+//========== Copyleft Â© 2011, Team Sandbox, Some rights reserved. ===========//
 //
 // Purpose: 
 //
@@ -9,7 +9,7 @@
 #include "lua/lua.hpp"
 
 #include "luasrclib.h"
-#include "lauxlib.h"
+#include "lua/lauxlib.h"
 
 
 static const luaL_Reg luasrclibs[] = {

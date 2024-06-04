@@ -506,6 +506,7 @@ $Project
 
 		$Folder	"Lua"
 		{
+            $File "$SRCDIR\public\lua\lua_compat.cpp"
             $File "$SRCDIR\game\shared\basescripted.cpp"
             $File "$SRCDIR\game\shared\basescripted.h"
 		    $File "$SRCDIR\game\shared\lbasecombatweapon_shared.cpp"
@@ -562,6 +563,8 @@ $Project
             $File "$SRCDIR\public\vgui_controls\lvgui_controls.cpp"
             $File "$SRCDIR\public\mathlib\lvmatrix.cpp"
             $File "$SRCDIR\public\lvphysics_interface.cpp"
+            $File "$SRCDIR\public\XUnzip.cpp"
+            $File "$SRCDIR\public\zip_utils.cpp"
         }
 
 		$Folder	"Scripted Controls"
