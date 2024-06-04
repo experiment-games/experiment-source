@@ -1,4 +1,4 @@
-//========= Copyright © 1996-2005, Valve Corporation, All rights reserved. ============//
+//========= Copyright Â© 1996-2005, Valve Corporation, All rights reserved. ============//
 //
 // Purpose: 
 //
@@ -12,7 +12,7 @@
 //=============================================================================//
 #include "cbase.h"
 #include "inetchannelinfo.h"
-#include "lua.hpp"
+#include "lua/lua.hpp"
 #include "luasrclib.h"
 #include "linetchannelinfo.h"
 
