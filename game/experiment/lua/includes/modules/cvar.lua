@@ -1,78 +1,80 @@
---========== Copyleft © 2010, Team Sandbox, Some rights reserved. ===========--
---
--- Purpose: Implements global change callbacks for ConVars.
---
---===========================================================================--
+--[[
+	Original code by Team Sandbox:
+		Copyleft Â© 2010, Team Sandbox, Some rights reserved.
+
+	Modified for Experiment.
+--]]
 
 local pairs = pairs
 local Warning = dbg.Warning
 local tostring = tostring
 local pcall = pcall
 
-module( "cvar" )
+local MODULE = {}
 
-local bError, strError
-local tCallbacks = {}
+local didCallbackError, callbackError
+local registeredCallbacks = {}
 
--------------------------------------------------------------------------------
--- Purpose: Adds a change callback
--- Input  : strConVarName - Name of the ConVar
---          strCallbackName - Name of the callback
---          pFn - pointer to function
--- Output :
--------------------------------------------------------------------------------
-function AddChangeCallback( strConVarName, strCallbackName, pFn )
-  tCallbacks[ strConVarName ] = tCallbacks[ strConVarName ] or {}
-  tCallbacks[ strConVarName ][ strCallbackName ] = pFn
+--- Adds a callback to a ConVar so that when it changes, the callback is called.
+--- @param conVarName string The name of the ConVar.
+--- @param callbackIdentifier string The name of the callback, so it can be removed later.
+--- @param callback fun(ConVar, string, string) The function to call when the ConVar changes.
+function MODULE.AddChangeCallback(conVarName, callbackIdentifier, callback)
+	registeredCallbacks[conVarName] = registeredCallbacks[conVarName] or {}
+	registeredCallbacks[conVarName][callbackIdentifier] = callback
 end
 
--------------------------------------------------------------------------------
--- Purpose: Called by the game to call global change callbacks
--- Input  : var - ConVar that has changed
---          pOldString - String value before var changed
---          flOldValue - Float value before var changed
--- Output :
--------------------------------------------------------------------------------
-function CallGlobalChangeCallbacks( var, pOldString, flOldValue )
-  local tCallbacks = tCallbacks[ var:GetName() ]
-  if ( tCallbacks ~= nil ) then
-    for k, v in pairs( tCallbacks ) do
-      if ( v == nil ) then
-        Warning( "Callback '" .. tostring( k ) .. "' (" .. tostring( var:GetName() ) .. ") tried to call a nil function!\n" )
-        tCallbacks[ k ] = nil
-        break
-      else
-        bError, strError = pcall( v, var, pOldString, flOldValue )
-        if ( bError == false ) then
-          Warning( "Callback '" .. tostring( k ) .. "' (" .. tostring( var:GetName() ) .. ") Failed: " .. tostring( strError ) .. "\n" )
-          tCallbacks[ k ] = nil
-        end
-      end
-    end
-  end
+--- Calls all of the callbacks for a ConVar.
+--- @param conVar ConVar The ConVar that has changed.
+--- @param oldValueAsString string The old value of the ConVar.
+--- @param oldValueAsNumber number The old value of the ConVar.
+function MODULE.CallGlobalChangeCallbacks(conVar, oldValueAsString, oldValueAsNumber)
+	local callbacks = registeredCallbacks[conVar:GetName()]
+
+	if (callbacks == nil) then
+		return
+	end
+
+	for callbackIdentifier, callback in pairs(callbacks) do
+		if (callback == nil) then
+			Warning(
+				"Callback '" ..
+				tostring(callbackIdentifier) .. "' (" .. tostring(conVar:GetName()) .. ") tried to call a nil function!\n"
+			)
+			callbacks[callbackIdentifier] = nil
+
+			break
+		end
+
+		didCallbackError, callbackError = pcall(callback, conVar, oldValueAsString, oldValueAsNumber)
+
+		if (didCallbackError == false) then
+			Warning("Callback '" ..
+			tostring(callbackIdentifier) ..
+			"' (" .. tostring(conVar:GetName()) .. ") Failed: " .. tostring(callbackError) .. "\n")
+			callbacks[callbackIdentifier] = nil
+		end
+	end
 end
 
--------------------------------------------------------------------------------
--- Purpose: Returns all of the registered callbacks or only callbacks
---      pertaining to a specific ConVar
--- Input  : strConVarName - Name of the ConVar
--- Output : table
--------------------------------------------------------------------------------
-function GetChangeCallbacks( strConVarName )
-  if ( strConVarName ) then
-    return tCallbacks[ strConVarName ]
-  end
-  return tCallbacks
+--- Returns all of the registered callbacks or only callbacks pertaining to a specific ConVar.
+--- @param conVarName string The name of the ConVar.
+--- @return table
+function MODULE.GetChangeCallbacks(conVarName)
+	if (conVarName) then
+		return registeredCallbacks[conVarName]
+	end
+
+	return registeredCallbacks
 end
 
--------------------------------------------------------------------------------
--- Purpose: Removes a callback from the list of registered callbacks
--- Input  : strConVarName - Name of the ConVar
---      strCallbackName - Name of the callback
--- Output :
--------------------------------------------------------------------------------
-function RemoveChangeCallback( strConVarName, strCallbackName )
-  if ( tCallbacks[ strConVarName ][ strCallbackName ] ) then
-    tCallbacks[ strConVarName ][ strCallbackName ] = nil
-  end
+--- Removes a callback from the list of registered callbacks.
+--- @param conVarName string The name of the ConVar.
+--- @param callbackIdentifier string The name of the callback.
+function MODULE.RemoveChangeCallback(conVarName, callbackIdentifier)
+	if (registeredCallbacks[conVarName][callbackIdentifier]) then
+		registeredCallbacks[conVarName][callbackIdentifier] = nil
+	end
 end
+
+return MODULE

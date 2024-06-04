@@ -1,4 +1,4 @@
-//========== Copyleft © 2011, Team Sandbox, Some rights reserved. ===========//
+//========== Copyleft Â© 2011, Team Sandbox, Some rights reserved. ===========//
 //
 // Purpose: 
 //
@@ -22,6 +22,9 @@ LUALIB_API int (luaopen_CBaseCombatWeapon) (lua_State *L);
 #define LUA_BASEENTITYLIBNAME			"CBaseEntity"
 LUALIB_API int (luaopen_CBaseEntity) (lua_State *L);
 LUALIB_API int (luaopen_CBaseEntity_shared) (lua_State *L);
+
+#define LUA_BITLIBNAME                  "bit"
+LUAMOD_API int(luaopen_bit)(lua_State *L);
 
 #define LUA_BASEPLAYERLIBNAME			"CBasePlayer"
 LUALIB_API int (luaopen_CBasePlayer) (lua_State *L);

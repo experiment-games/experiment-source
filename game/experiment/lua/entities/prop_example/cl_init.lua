@@ -1,12 +1,13 @@
---========== Copyleft © 2010, Team Sandbox, Some rights reserved. ===========--
---
--- Purpose:
---
---===========================================================================--
+--[[
+	Original code by Team Sandbox:
+		Copyleft Â© 2010, Team Sandbox, Some rights reserved.
 
-include( "shared.lua" )
+	Modified for Experiment.
+--]]
 
-function ENT:DrawModel( flags )
+include("shared.lua")
+
+function ENT:DrawModel(flags)
 end
 
 function ENT:ClientThink()

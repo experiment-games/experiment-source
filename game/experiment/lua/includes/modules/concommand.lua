@@ -1,59 +1,58 @@
---========== Copyleft © 2010, Team Sandbox, Some rights reserved. ===========--
---
--- Purpose: ConCommand implementation.
---
---===========================================================================--
+--[[
+	Original code by Team Sandbox:
+		Copyleft Â© 2010, Team Sandbox, Some rights reserved.
+
+	Modified for Experiment.
+--]]
 
 local ConCommand = ConCommand
 local Warning = dbg.Warning
 local tostring = tostring
 local pcall = pcall
 
-module( "concommand" )
+local MODULE = {}
 
-local bError, strError
-local tFnCommandCallbacks = {}
+local didCallbackError, callbackError
+local registeredCallbacks = {}
 
--------------------------------------------------------------------------------
--- Purpose: Creates a ConCommand
--- Input  : pName - Name of the ConCommand
---          callback - Callback function for the ConCommand
---          pHelpString - Help string to be displayed
---          flags - Flags of the ConCommand
--- Output :
--------------------------------------------------------------------------------
-function Create( pName, callback, pHelpString, flags )
-  tFnCommandCallbacks[ pName ] = callback
-  ConCommand( pName, pHelpString, flags )
+--- Creates a command that can be called from the console.
+--- @param command string The name of the command that you type into the console.
+--- @param callback fun(Player, string, string) The function that is called when the command is run.
+--- @param helpText string The help text that is displayed when finding the command in the console.
+--- @param flags number FCVAR flags.
+function MODULE.Add(command, callback, helpText, flags)
+	registeredCallbacks[command] = callback
+
+	ConCommand(command, helpText, flags)
 end
 
--------------------------------------------------------------------------------
--- Purpose: Called by the game to dispatch a ConCommand
--- Input  : pPlayer - Player who ran the ConCommand
---          pCmd - Name of the ConCommand
---          ArgS - All args that occur after the 0th arg, in string form
--- Output : boolean
--------------------------------------------------------------------------------
-function Dispatch( pPlayer, pCmd, ArgS )
-  local fnCommandCallback = tFnCommandCallbacks[ pCmd ]
-  if ( not fnCommandCallback ) then
-    return false
-  else
-    bError, strError = pcall( fnCommandCallback, pPlayer, pCmd, ArgS )
-    if ( bError == false ) then
-      Warning( "ConCommand '" .. tostring( pCmd ) .. "' Failed: " .. tostring( strError ) .. "\n" )
-    end
-    return true
-  end
+--- Dispatches a command to the appropriate callback.
+--- @param client Player The player who ran the command.
+--- @param command string The name of the command.
+--- @param arguments string The arguments that were passed to the command.
+--- @return boolean # Whether or not the command was dispatched.
+function MODULE.Dispatch(client, command, arguments)
+	local callback = registeredCallbacks[command]
+
+	if (not callback) then
+		return false
+	end
+
+	didCallbackError, callbackError = pcall(callback, client, command, arguments)
+
+	if (didCallbackError == false) then
+		Warning("ConCommand '" .. tostring(command) .. "' Failed: " .. tostring(callbackError) .. "\n")
+	end
+
+	return true
 end
 
--------------------------------------------------------------------------------
--- Purpose: Removes a ConCommand callback
--- Input  : pName - Name of the ConCommand
--- Output :
--------------------------------------------------------------------------------
-function Remove( pName )
-  if ( tFnCommandCallbacks[ pName ] ) then
-    tFnCommandCallbacks[ pName ] = nil
-  end
+--- Removes a command from the list of registered commands.
+--- @param command string The name of the command to remove.
+function MODULE.Remove(command)
+	if (registeredCallbacks[command]) then
+		registeredCallbacks[command] = nil
+	end
 end
+
+return MODULE

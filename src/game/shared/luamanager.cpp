@@ -54,7 +54,6 @@ lua_State *L;
 bool g_bLuaInitialized;
 
 static int luasrc_print(lua_State *L) {
-    Msg("Print called");
     int n = lua_gettop(L); /* number of arguments */
     int i;
     lua_getglobal(L, "tostring");
@@ -110,13 +109,35 @@ static int luasrc_include(lua_State *L) {
 }
 
 // Prints blue text on the server, yellow text on the client
-static int luasrc_Msg(lua_State *L) {
+static int luasrc_InternalMsgClient(lua_State *L) {
     const char *msg = luaL_checkstring(L, 1);
 
-#ifdef CLIENT_DLL
     ConColorMsg(Color(255, 255, 0, 255), "%s", msg);
-#else
+
+    return 0;
+}
+static int luasrc_InternalMsgServer(lua_State *L) {
+    const char *msg = luaL_checkstring(L, 1);
+
     ConDColorMsg(Color(0, 0, 255, 255), "%s", msg);
+
+    return 0;
+}
+static int luasrc_Msg(lua_State *L) {
+#ifdef CLIENT_DLL
+    luasrc_InternalMsgClient(L);
+#else
+    luasrc_InternalMsgServer(L);
+#endif
+
+    return 0;
+}
+
+static int luasrc_MsgN(lua_State *L) {
+#ifdef CLIENT_DLL
+    luasrc_InternalMsgClient(L);
+#else
+    luasrc_InternalMsgServer(L);
 #endif
 
     Msg("\n");
@@ -126,6 +147,7 @@ static int luasrc_Msg(lua_State *L) {
 
 static const luaL_Reg base_funcs[] = {{"print", luasrc_print},
                                       {"Msg", luasrc_Msg},
+                                      {"MsgN", luasrc_MsgN},
                                       {"type", luasrc_type},
                                       {"include", luasrc_include},
                                       {NULL, NULL}};
@@ -147,6 +169,58 @@ static void base_open(lua_State *L) {
     lua_pushboolean(L, 1);
     lua_setglobal(L, "_GAME"); /* set global _GAME */
 #endif
+}
+
+static int luaB_band(lua_State *L) {
+    int i, n = lua_gettop(L);
+    lua_Integer r = ~((lua_Unsigned)0);
+    for (i = 1; i <= n; i++)
+        r &= luaL_checkinteger(L, i);
+    lua_pushinteger(L, r);
+    return 1;
+}
+
+static int luaB_bor(lua_State *L) {
+    int i, n = lua_gettop(L);
+    lua_Integer r = 0;
+    for (i = 1; i <= n; i++)
+        r |= luaL_checkinteger(L, i);
+    lua_pushinteger(L, r);
+    return 1;
+}
+
+static int luaB_bxor(lua_State *L) {
+    int i, n = lua_gettop(L);
+    lua_Integer r = 0;
+    for (i = 1; i <= n; i++)
+        r ^= luaL_checkinteger(L, i);
+    lua_pushinteger(L, r);
+    return 1;
+}
+
+static int luaB_bnot(lua_State *L) {
+    lua_pushinteger(L, ~luaL_checkinteger(L, 1));
+    return 1;
+}
+
+static int luaB_lshift(lua_State *L) {
+    lua_pushinteger(L, luaL_checkinteger(L, 1) << luaL_checkinteger(L, 2));
+    return 1;
+}
+
+static int luaB_rshift(lua_State *L) {
+    lua_pushinteger(L, luaL_checkinteger(L, 1) >> luaL_checkinteger(L, 2));
+    return 1;
+}
+
+static const luaL_Reg bit_funcs[] = {
+    {"band", luaB_band}, {"bor", luaB_bor},       {"bxor", luaB_bxor},
+    {"bnot", luaB_bnot}, {"lshift", luaB_lshift}, {"rshift", luaB_rshift},
+    {NULL, NULL}};
+
+LUALIB_API int luaopen_bit(lua_State *L) {
+    luaL_register(L, LUA_BITLIBNAME, bit_funcs);
+    return 1;
 }
 
 void luasrc_setmodulepaths(lua_State *L) {
@@ -256,6 +330,7 @@ void luasrc_init_gameui(void) {
 
     luasrc_setmodulepaths(LGameUI);
 
+    luaopen_bit(LGameUI);
     luaopen_ConCommand(LGameUI);
     luaopen_dbg(LGameUI);
     luaopen_engine(LGameUI);
@@ -456,7 +531,7 @@ void luasrc_LoadEntities(const char *path) {
                     if (luasrc_dofile(L, fullpath) == 0) {
                         lua_getglobal(L, "entity");
                         if (lua_istable(L, -1)) {
-                            lua_getfield(L, -1, "register");
+                            lua_getfield(L, -1, "Register");
                             if (lua_isfunction(L, -1)) {
                                 lua_remove(L, -2);
                                 lua_getglobal(L, "ENT");
@@ -544,7 +619,7 @@ void luasrc_LoadWeapons(const char *path) {
                     if (luasrc_dofile(L, fullpath) == 0) {
                         lua_getglobal(L, "weapon");
                         if (lua_istable(L, -1)) {
-                            lua_getfield(L, -1, "register");
+                            lua_getfield(L, -1, "Register");
                             if (lua_isfunction(L, -1)) {
                                 lua_remove(L, -2);
                                 lua_getglobal(L, "SWEP");
@@ -591,7 +666,7 @@ bool luasrc_LoadGamemode(const char *gamemode) {
                                            sizeof(fullpath));
         if (luasrc_dofile(L, fullpath) == 0) {
             lua_getglobal(L, "gamemode");
-            lua_getfield(L, -1, "register");
+            lua_getfield(L, -1, "Register");
             lua_remove(L, -2);
             lua_getglobal(L, "GM");
             lua_pushstring(L, gamemode);
@@ -621,34 +696,56 @@ bool luasrc_LoadGamemode(const char *gamemode) {
 
 bool luasrc_SetGamemode(const char *gamemode) {
     lua_getglobal(L, "gamemode");
-    if (lua_istable(L, -1)) {
-        lua_getfield(L, -1, "get");
-        if (lua_isfunction(L, -1)) {
-            lua_remove(L, -2);
-            lua_pushstring(L, gamemode);
-            luasrc_pcall(L, 1, 1, 0);
-            lua_setglobal(L, "_GAMEMODE");
-            Q_snprintf(contentSearchPath, sizeof(contentSearchPath),
-                       "gamemodes\\%s\\content", gamemode);
-            filesystem->AddSearchPath(contentSearchPath, "MOD");
-            char loadPath[MAX_PATH];
-            Q_snprintf(loadPath, sizeof(loadPath), "%s\\", contentSearchPath);
-            luasrc_LoadWeapons(loadPath);
-            luasrc_LoadEntities(loadPath);
-            // luasrc_LoadEffects( loadPath );
-            BEGIN_LUA_CALL_HOOK("Initialize");
-            END_LUA_CALL_HOOK(0, 0);
-            return true;
-        } else {
-            lua_pop(L, 2);
-            Warning("ERROR: Failed to set gamemode!\n");
-            return false;
-        }
-    } else {
-        lua_pop(L, 1);
+
+    if (!lua_istable(L, -1)) {
+        lua_pop(L, 1);  // Remove gamemode table
         Warning("ERROR: Failed to load gamemode module!\n");
         return false;
     }
+
+    lua_getfield(L, -1, "Get");
+
+    if (!lua_isfunction(L, -1)) {
+        lua_pop(L, 2);  // Remove gamemode table and Get function
+        Warning("ERROR: Failed to set gamemode!\n");
+        return false;
+    }
+
+    lua_remove(L, -2);              // Remove gamemode table
+    lua_pushstring(L, gamemode);    // Push gamemode name
+    luasrc_pcall(L, 1, 1, 0);       // Call gamemode.Get(gamemode)
+    lua_setglobal(L, "_GAMEMODE");  // Set _GAMEMODE to the gamemode table
+
+    lua_getglobal(L, "gamemode");
+    lua_getfield(L, -1, "InternalSetActiveName");
+
+    if (!lua_isfunction(L, -1)) {
+        lua_pop(L,
+                2);  // Remove gamemode table and InternalSetActiveName function
+        Warning("ERROR: Failed to set gamemode!\n");
+        return false;
+    }
+
+    lua_remove(L, -2);            // Remove gamemode table
+    lua_pushstring(L, gamemode);  // Push gamemode name
+    luasrc_pcall(L, 1, 0, 0);  // Call gamemode.InternalSetActiveName(gamemode)
+
+    Q_snprintf(contentSearchPath, sizeof(contentSearchPath),
+               "gamemodes\\%s\\content", gamemode);
+
+    filesystem->AddSearchPath(contentSearchPath, "MOD");
+
+    char loadPath[MAX_PATH];
+    Q_snprintf(loadPath, sizeof(loadPath), "%s\\", contentSearchPath);
+
+    luasrc_LoadWeapons(loadPath);
+    luasrc_LoadEntities(loadPath);
+    // luasrc_LoadEffects( loadPath );
+
+    BEGIN_LUA_CALL_HOOK("Initialize");
+    END_LUA_CALL_HOOK(0, 0);
+
+    return true;
 }
 
 #ifdef LUA_SDK

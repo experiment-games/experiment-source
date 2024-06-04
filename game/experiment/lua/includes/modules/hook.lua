@@ -1,94 +1,117 @@
---========== Copyleft © 2010, Team Sandbox, Some rights reserved. ===========--
---
--- Purpose: Hook implementation.
---
---===========================================================================--
+--[[
+	Original code by Team Sandbox:
+		Copyleft Â© 2010, Team Sandbox, Some rights reserved.
+
+	Modified for Experiment.
+--]]
 
 local pairs = pairs
-local Warning = dbg.Warning
 local tostring = tostring
 local pcall = pcall
-local unpack = unpack
+local unpack = table.unpack
+local ConDColorMsg = dbg.ConDColorMsg
 
-module( "hook" )
+local warningPrefix = "[SERVER] "
+local warningColor = Color(0, 0, 255)
 
-local tHooks = {}
-local tReturns = {}
-
--------------------------------------------------------------------------------
--- Purpose: Adds a hook to the given GameRules function
--- Input  : strEventName - Name of the internal GameRules method
---     	    strHookName - Name of the hook
---          pFn - pointer to function
--- Output :
--------------------------------------------------------------------------------
-function add( strEventName, strHookName, pFn )
-  tHooks[ strEventName ] = tHooks[ strEventName ] or {}
-  tHooks[ strEventName ][ strHookName ] = pFn
+if (_CLIENT) then
+	warningPrefix = "[CLIENT] "
+	warningColor = Color(255, 255, 0)
 end
 
--------------------------------------------------------------------------------
--- Purpose: Called by the engine to call a GameRules hook
--- Input  : strEventName - Name of the internal GameRules method
---          tGamemode - Table of the current gamemode
--- Output :
--------------------------------------------------------------------------------
-function call( strEventName, tGamemode, ... )
-  local tHooks = tHooks[ strEventName ]
-  if ( tHooks ~= nil ) then
-    for k, v in pairs( tHooks ) do
-      if ( v == nil ) then
-        Warning( "Hook '" .. tostring( k ) .. "' (" .. tostring( strEventName ) .. ") tried to call a nil function!\n" )
-        tHooks[ k ] = nil
-        break
-      else
-        tReturns = { pcall( v, ... ) }
-        if ( tReturns[ 1 ] == false ) then
-          Warning( "Hook '" .. tostring( k ) .. "' (" .. tostring( strEventName ) .. ") Failed: " .. tostring( tReturns[ 2 ] ) .. "\n" )
-          tHooks[ k ] = nil
-        elseif ( tReturns[ 2 ] ~= nil ) then
-          return unpack( tReturns, 2 )
-        end
-      end
-    end
-  end
-  if ( tGamemode ~= nil ) then
-    local fn = tGamemode[ strEventName ]
-    if ( fn == nil ) then
-      return nil
-    else
-      tReturns = { pcall( fn, tGamemode, ... ) }
-      if ( tReturns[ 1 ] == false ) then
-        Warning( "ERROR: GAMEMODE: '" .. tostring( strEventName ) .. "' Failed: " .. tostring( tReturns[ 2 ] ) .. "\n" )
-        tGamemode[ strEventName ] = nil
-        return nil
-      end
-      return unpack( tReturns, 2 )
-    end
-  end
+local printWarning = function(msg)
+	ConDColorMsg(warningColor, msg)
 end
 
--------------------------------------------------------------------------------
--- Purpose: Returns all of the registered hooks or only hooks pertaining to a
---          specific event
--- Input  : strEventName - Name of the internal GameRules method
--- Output : table
--------------------------------------------------------------------------------
-function gethooks( strEventName )
-  if ( strEventName ) then
-    return tHooks[ strEventName ]
-  end
-  return tHooks
+local MODULE = {}
+
+local registeredHooks = {}
+local returnValues = {}
+
+--- Adds a hook to the given GameRules function.
+--- @param eventName string The name of the internal GameRules method.
+--- @param hookIdentifier string The name of the hook.
+--- @param callback fun(...) The function to call when the hook is called.
+function MODULE.Add(eventName, hookIdentifier, callback)
+	registeredHooks[eventName] = registeredHooks[eventName] or {}
+	registeredHooks[eventName][hookIdentifier] = callback
 end
 
--------------------------------------------------------------------------------
--- Purpose: Removes a hook from the list of registered hooks
--- Input  : strEventName - Name of the internal GameRules method
---          strHookName - Name of the hook
--- Output :
--------------------------------------------------------------------------------
-function remove( strEventName, strHookName )
-  if ( tHooks[ strEventName ][ strHookName ] ) then
-    tHooks[ strEventName ][ strHookName ] = nil
-  end
+--- Calls all hooks associated with a specific event.
+--- @param eventName string The name of the internal GameRules method.
+--- @param gamemodeTable table The table of the current gamemode.
+--- @vararg any Arguments to pass to the hooks.
+--- @return any # The return value(s) of the hook.
+function MODULE.Call(eventName, gamemodeTable, ...)
+	local callbacks = registeredHooks[eventName]
+
+	if (callbacks ~= nil) then
+		for hookIdentifier, callback in pairs(callbacks) do
+			if (callback == nil) then
+				printWarning(warningPrefix .. "Hook Error! '" ..
+					tostring(hookIdentifier) .. "' (" .. tostring(eventName) .. ") tried to call a nil function!\n")
+				callbacks[hookIdentifier] = nil
+				break
+			end
+
+			returnValues = { pcall(callback, ...) }
+
+			if (returnValues[1] == false) then
+				printWarning(warningPrefix .. "Hook Error! '" ..
+					tostring(hookIdentifier) .. "' (" .. tostring(eventName) .. ") Failed: " .. tostring(returnValues[2]) .. "\n")
+				callbacks[hookIdentifier] = nil
+			elseif (returnValues[2] ~= nil) then
+				return unpack(returnValues, 2)
+			end
+		end
+	end
+
+	if (gamemodeTable ~= nil) then
+		local callback = gamemodeTable[eventName]
+
+		if (callback == nil) then
+			return nil
+		end
+
+		returnValues = { pcall(callback, gamemodeTable, ...) }
+
+		if (returnValues[1] == false) then
+			printWarning(warningPrefix .. "Gamemode Error! '" ..
+				tostring(eventName) .. "' Failed: " .. tostring(returnValues[2]) .. "\n")
+			gamemodeTable[eventName] = nil
+			return nil
+		end
+
+		return unpack(returnValues, 2)
+	end
 end
+
+--- Calls all hooks associated with a specific event, using the current gamemode.
+--- @param eventName string The name of the internal GameRules method.
+--- @vararg any Arguments to pass to the hooks.
+--- @return any # The return value(s) of the hook.
+function MODULE.Run(eventName, ...)
+	return MODULE.Call(eventName, _G._GAMEMODE, ...)
+end
+
+--- Returns all of the registered hooks or only hooks pertaining to a specific event.
+--- @param eventName string The name of the internal GameRules method.
+--- @return table
+function MODULE.GetTable(eventName)
+	if (eventName) then
+		return registeredHooks[eventName]
+	end
+
+	return registeredHooks
+end
+
+--- Removes a hook from the list of registered hooks.
+--- @param eventName string The name of the internal GameRules method.
+--- @param hookIdentifier string The name of the hook.
+function MODULE.Remove(eventName, hookIdentifier)
+	if (registeredHooks[eventName][hookIdentifier]) then
+		registeredHooks[eventName][hookIdentifier] = nil
+	end
+end
+
+return MODULE

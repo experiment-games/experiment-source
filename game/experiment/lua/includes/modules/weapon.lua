@@ -1,15 +1,16 @@
---========== Copyleft © 2010, Team Sandbox, Some rights reserved. ===========--
---
--- Purpose: Scripted weapon implementation.
---
---===========================================================================--
+--[[
+	Original code by Team Sandbox:
+		Copyleft Â© 2010, Team Sandbox, Some rights reserved.
+
+	Modified for Experiment.
+--]]
 
 _BASE_WEAPON = "weapon_hl2mpbase_scriptedweapon"
 
 local table = table
 local Warning = dbg.Warning
 
-module( "weapon" )
+local MODULE = {}
 
 local tWeapons = {}
 
@@ -18,21 +19,26 @@ local tWeapons = {}
 -- Input  : strName - Name of the weapon
 -- Output : table
 -------------------------------------------------------------------------------
-function get( strClassname )
-  local tWeapon = tWeapons[ strClassname ]
-  if ( not tWeapon ) then
-    return nil
-  end
-  tWeapon = table.copy( tWeapon )
-  if ( tWeapon.__base ~= strClassname ) then
-    local tBaseWeapon = get( tWeapon.__base )
-    if ( not tBaseWeapon ) then
-      Warning( "WARNING: Attempted to initialize weapon \"" .. strClassname .. "\" with non-existing base class!\n" )
-    else
-      return table.inherit( tWeapon, tBaseWeapon )
-    end
-  end
-  return tWeapon
+function MODULE.Get(strClassname)
+	local tWeapon = tWeapons[strClassname]
+
+	if (not tWeapon) then
+		return nil
+	end
+
+	tWeapon = table.copy(tWeapon)
+
+	if (tWeapon.__base ~= strClassname) then
+		local tBaseWeapon = get(tWeapon.__base)
+
+		if (not tBaseWeapon) then
+			Warning("WARNING: Attempted to initialize weapon \"" .. strClassname .. "\" with non-existing base class!\n")
+		else
+			return table.inherit(tWeapon, tBaseWeapon)
+		end
+	end
+
+	return tWeapon
 end
 
 -------------------------------------------------------------------------------
@@ -40,8 +46,12 @@ end
 -- Input  :
 -- Output : table
 -------------------------------------------------------------------------------
-function getweapons()
-  return tWeapons
+function MODULE.GetStored()
+	return tWeapons
+end
+
+function MODULE.GetList()
+	return table.copy(tWeapons)
 end
 
 -------------------------------------------------------------------------------
@@ -51,9 +61,11 @@ end
 --          bReload - Whether or not we're reloading this weapon data
 -- Output :
 -------------------------------------------------------------------------------
-function register( tWeapon, strClassname, bReload )
-  if ( get( strClassname ) ~= nil and bReload ~= true ) then
-    return
-  end
-  tWeapons[ strClassname ] = tWeapon
+function MODULE.Register(tWeapon, strClassname, bReload)
+	if (MODULE.Get(strClassname) ~= nil and bReload ~= true) then
+		return
+	end
+	tWeapons[strClassname] = tWeapon
 end
+
+return MODULE

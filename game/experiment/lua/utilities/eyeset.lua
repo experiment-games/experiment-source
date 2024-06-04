@@ -1,4 +1,4 @@
---======== Copyleft © 2010-2011, Team Sandbox, Some rights reserved. ========--
+--======== Copyleft ï¿½ 2010-2011, Team Sandbox, Some rights reserved. ========--
 --
 -- Purpose: Set our eye origin and angles.
 --
@@ -10,7 +10,7 @@ local EYE_PRESET_FOV = 90
 
 local r_eyeset = ConVar( "r_eyeset", "0", FCVAR_CLIENTDLL )
 
-hook.add( "CalcPlayerView", "SetPlayerView", function( pPlayer, eyeOrigin, eyeAngles, fov )
+hook.Add( "CalcPlayerView", "SetPlayerView", function( pPlayer, eyeOrigin, eyeAngles, fov )
   if ( r_eyeset:GetBool() == true ) then
     -- FIXME: eyeOrigin isn't getting set (overriden) correctly.
     eyeOrigin = EYE_PRESET_ORIGIN

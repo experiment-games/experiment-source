@@ -1,8 +1,9 @@
---======== Copyleft © 2010-2011, Team Sandbox, Some rights reserved. ========--
---
--- Purpose:
---
---===========================================================================--
+--[[
+	Original code by Team Sandbox:
+		Copyleft Â© 2010, Team Sandbox, Some rights reserved.
+
+	Modified for Experiment.
+--]]
 
 ENT.__base = "prop_scripted"
 ENT.__factory = "CBaseAnimating"

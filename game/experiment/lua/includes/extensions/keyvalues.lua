@@ -1,8 +1,9 @@
---========== Copyleft © 2013, Team Sandbox, Some rights reserved. ===========--
---
--- Purpose: Extends the keyvalues type.
---
---===========================================================================--
+--[[
+	Original code by Team Sandbox:
+		Copyleft © 2010, Team Sandbox, Some rights reserved.
+
+	Modified for Experiment.
+--]]
 
 local print = print
 

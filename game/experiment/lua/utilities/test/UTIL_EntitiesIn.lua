@@ -1,4 +1,4 @@
---======== Copyleft © 2010-2011, Team Sandbox, Some rights reserved. ========--
+--======== Copyleft ï¿½ 2010-2011, Team Sandbox, Some rights reserved. ========--
 --
 -- Purpose: Tests the implementation of UTIL_EntityIn* functions.
 --
@@ -16,7 +16,7 @@ local SPHERE_RADIUS_OUTER = 128
 local pairs = pairs
 local SPHERE_RADIUS_INNER = 64
 
-hook.add( "PlayerThink", "UTIL_EntityIn*", function( pPlayer )
+hook.Add( "PlayerThink", "UTIL_EntityIn*", function( pPlayer )
   vecOrigin = pPlayer:GetAbsOrigin()
   count, pList = UTIL_EntitiesInSphere( MAX_ENTITYARRAY, vecOrigin, SPHERE_RADIUS_OUTER, 0 )
   for _, pEntity in pairs( pList ) do

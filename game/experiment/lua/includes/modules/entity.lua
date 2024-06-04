@@ -1,59 +1,60 @@
---========== Copyleft © 2010, Team Sandbox, Some rights reserved. ===========--
---
--- Purpose: Scripted entity implementation.
---
---===========================================================================--
+--[[
+	Original code by Team Sandbox:
+		Copyleft Â© 2010, Team Sandbox, Some rights reserved.
+
+	Modified for Experiment.
+--]]
 
 _BASE_ENTITY_CLASS = "prop_scripted"
 
 local table = table
 local Warning = dbg.Warning
 
-module( "entity" )
+local MODULE = {}
 
-local tEntities = {}
+local registeredEntities = {}
 
--------------------------------------------------------------------------------
--- Purpose: Returns an entity table
--- Input  : strName - Name of the entity
--- Output : table
--------------------------------------------------------------------------------
-function get( strClassname )
-  local tEntity = tEntities[ strClassname ]
-  if ( not tEntity ) then
-    return nil
-  end
-  tEntity = table.copy( tEntity )
-  if ( tEntity.__base ~= strClassname ) then
-    local tBaseEntity = get( tEntity.__base )
-    if ( not tBaseEntity ) then
-      Warning( "WARNING: Attempted to initialize entity \"" .. strClassname .. "\" with non-existing base class!\n" )
-    else
-      return table.inherit( tEntity, tBaseEntity )
-    end
-  end
-  return tEntity
+--- Returns an entity table
+--- @param className string Name of the entity
+--- @return table
+function MODULE.Get(className)
+	local foundEntity = registeredEntities[className]
+
+	if (not foundEntity) then
+		return nil
+	end
+
+	foundEntity = table.copy(foundEntity)
+
+	if (foundEntity.__base ~= className) then
+		local tBaseEntity = MODULE.Get(foundEntity.__base)
+
+		if (not tBaseEntity) then
+			Warning("WARNING: Attempted to initialize entity \"" .. className .. "\" with non-existing base class!\n")
+		else
+			return table.inherit(foundEntity, tBaseEntity)
+		end
+	end
+
+	return foundEntity
 end
 
--------------------------------------------------------------------------------
--- Purpose: Returns all registered entities
--- Input  :
--- Output : table
--------------------------------------------------------------------------------
-function getentities()
-  return tEntities
+--- Returns all registered entities
+--- @return table
+function MODULE.GetList()
+	return registeredEntities
 end
 
--------------------------------------------------------------------------------
--- Purpose: Registers an entity
--- Input  : tEntity - Entity table
---          strClassname - Name of the entity
---          bReload - Whether or not we're reloading this entity data
--- Output :
--------------------------------------------------------------------------------
-function register( tEntity, strClassname, bReload )
-  if ( get( strClassname ) ~= nil and bReload ~= true ) then
-    return
-  end
-  tEntities[ strClassname ] = tEntity
+--- Registers an entity
+--- @param entityTable table Entity table
+--- @param className string Name of the entity
+--- @param isReloading boolean Whether or not we're reloading this entity data
+function MODULE.Register(entityTable, className, isReloading)
+	if (MODULE.Get(className) ~= nil and isReloading ~= true) then
+		return
+	end
+
+	registeredEntities[className] = entityTable
 end
+
+return MODULE

@@ -1,4 +1,4 @@
---======== Copyleft © 2010-2011, Team Sandbox, Some rights reserved. ========--
+--======== Copyleft ï¿½ 2010-2011, Team Sandbox, Some rights reserved. ========--
 --
 -- Purpose: Tests the implementation of CalcPlayerView.
 --
@@ -7,7 +7,7 @@
 local sin = math.sin
 local curtime = gpGlobals.curtime
 
-hook.add( "CalcPlayerView", "CalcPlayerView", function( pPlayer, eyeOrigin, eyeAngles, fov )
+hook.Add( "CalcPlayerView", "CalcPlayerView", function( pPlayer, eyeOrigin, eyeAngles, fov )
   -- Give a subtle breathing effect.
   eyeAngles = eyeAngles + QAngle( sin( curtime() ) / 2, 0, 0 )
 

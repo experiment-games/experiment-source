@@ -4,10 +4,6 @@
 --
 --===========================================================================--
 
-if ( not bit ) then
-  require( "bit" )
-end
-
 local bor = bit.bor
 local vgui = require( "vgui" )
 local Frame = vgui.Frame

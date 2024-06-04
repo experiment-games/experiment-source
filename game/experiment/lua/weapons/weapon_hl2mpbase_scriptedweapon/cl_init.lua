@@ -1,16 +1,17 @@
---========== Copyleft © 2010, Team Sandbox, Some rights reserved. ===========--
---
--- Purpose: Initialize the base scripted weapon.
---
---===========================================================================--
+--[[
+	Original code by Team Sandbox:
+		Copyleft Â© 2010, Team Sandbox, Some rights reserved.
 
-include( "shared.lua" )
+	Modified for Experiment.
+--]]
 
-function SWEP:DrawLargeWeaponBox( bSelected, xpos, ypos, boxWide, boxTall, selectedColor, alpha, number )
+include("shared.lua")
+
+function SWEP:DrawLargeWeaponBox(bSelected, xpos, ypos, boxWide, boxTall, selectedColor, alpha, number)
 end
 
-function SWEP:DrawModel( flags )
+function SWEP:DrawModel(flags)
 end
 
-function SWEP:MuzzleFlash( pos1, angles, type, firstPerson )
+function SWEP:MuzzleFlash(pos1, angles, type, firstPerson)
 end

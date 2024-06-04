@@ -1,8 +1,9 @@
---========== Copyleft © 2010, Team Sandbox, Some rights reserved. ===========--
---
--- Purpose: Extends the weapon type.
---
---===========================================================================--
+--[[
+	Original code by Team Sandbox:
+		Copyleft © 2010, Team Sandbox, Some rights reserved.
+
+	Modified for Experiment.
+--]]
 
 _R.CBaseCombatWeapon.__WeaponSound = _R.CBaseCombatWeapon.WeaponSound
 local WeaponSound = _R.CBaseCombatWeapon.WeaponSound
@@ -14,7 +15,7 @@ function _R.CBaseCombatWeapon.WeaponSound( self, sound_type, soundtime )
   if ( _CLIENT ) then
     return
   end
-  
+
   -- Only the player fires this way so we can cast
   local pPlayer = self:GetOwner();
 
@@ -23,9 +24,9 @@ function _R.CBaseCombatWeapon.WeaponSound( self, sound_type, soundtime )
   -- else
     local shootsound = self:GetShootSound( sound_type );
     if ( ToBaseEntity( pPlayer ) ~= NULL ) then
-      pPlayer:EmitSound( shootsound ); 
+      pPlayer:EmitSound( shootsound );
     else
-      self:EmitSound( shootsound ); 
+      self:EmitSound( shootsound );
     end
   -- end
 end

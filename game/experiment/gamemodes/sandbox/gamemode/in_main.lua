@@ -4,20 +4,20 @@
 --
 --===========================================================================--
 
-require( "concommand" )
+require("concommand")
 
-local function IN_BuildDown( pPlayer, pCmd, args )
-	if ( gBuildMenuInterface ) then
-		gBuildMenuInterface:ShowPanel( true )
+local function IN_BuildDown(pPlayer, pCmd, args)
+	if (gBuildMenuInterface) then
+		gBuildMenuInterface:ShowPanel(true)
 	end
 end
 
-concommand.Create( "+buildmenu", IN_BuildDown, nil )
+concommand.Add("+buildmenu", IN_BuildDown, nil)
 
-local function IN_BuildUp( pPlayer, pCmd, args )
-	if ( gBuildMenuInterface ) then
-		gBuildMenuInterface:ShowPanel( false )
+local function IN_BuildUp(pPlayer, pCmd, args)
+	if (gBuildMenuInterface) then
+		gBuildMenuInterface:ShowPanel(false)
 	end
 end
 
-concommand.Create( "-buildmenu", IN_BuildUp, nil )
+concommand.Add("-buildmenu", IN_BuildUp, nil)

@@ -70,3 +70,7 @@ game/experiment/textwindow_temp.html
 
 # config file different for each user
 .env
+
+# mod content while debugging
+game/experiment/materials/**/*.vtf
+game/experiment/materials/**/*.vmt

@@ -1,12 +1,8 @@
---========== Copyleft © 2010, Team Sandbox, Some rights reserved. ===========--
+--========== Copyleft ï¿½ 2010, Team Sandbox, Some rights reserved. ===========--
 --
 -- Purpose:
 --
 --===========================================================================--
-
-if ( not bit ) then
-  require( "bit" )
-end
 
 include( "shared.lua" )
 include( "in_main.lua" )

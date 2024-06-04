@@ -1,10 +1,11 @@
---========== Copyleft © 2010, Team Sandbox, Some rights reserved. ===========--
---
--- Purpose: Initialize the base scripted weapon.
---
---===========================================================================--
+--[[
+	Original code by Team Sandbox:
+		Copyleft Â© 2010, Team Sandbox, Some rights reserved.
 
-include( "shared.lua" )
+	Modified for Experiment.
+--]]
+
+include("shared.lua")
 
 function SWEP:CapabilitiesGet()
 end

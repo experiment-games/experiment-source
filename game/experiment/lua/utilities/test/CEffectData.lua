@@ -1,10 +1,10 @@
---======== Copyleft © 2010-2011, Team Sandbox, Some rights reserved. ========--
+--======== Copyleft ï¿½ 2010-2011, Team Sandbox, Some rights reserved. ========--
 --
 -- Purpose: Tests the implementation of CEffectData.
 --
 --===========================================================================--
 
-hook.add( "PlayerTraceAttack", "PlayerTraceTeslaHitboxesAttack", function( pPlayer, info, vecDir, ptr )
+hook.Add( "PlayerTraceAttack", "PlayerTraceTeslaHitboxesAttack", function( pPlayer, info, vecDir, ptr )
   local pEntity = ptr.m_pEnt
   if ( pEntity ~= NULL ) then
     -- This is taken straight out of CNPC_Hunter::TeslaThink()

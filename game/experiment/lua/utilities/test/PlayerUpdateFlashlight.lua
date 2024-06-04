@@ -6,7 +6,7 @@
 
 local AngleVectors = mathlib.AngleVectors
 
-hook.add( "PlayerUpdateFlashlight", "PlayerUpdateWeaponFlashlight", function( pHL2MPPlayer, position, vecForward, vecRight, vecUp, nDistance )
+hook.Add( "PlayerUpdateFlashlight", "PlayerUpdateWeaponFlashlight", function( pHL2MPPlayer, position, vecForward, vecRight, vecUp, nDistance )
 	--if ( not input.CAM_IsThirdPerson() ) then
 		local vm = pHL2MPPlayer:GetViewModel()
 		if ( vm ~= NULL ) then
