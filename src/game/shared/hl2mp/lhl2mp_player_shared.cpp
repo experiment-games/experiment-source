@@ -1,4 +1,4 @@
-//========= Copyright © 1996-2005, Valve Corporation, All rights reserved. ============//
+//========= Copyright Â© 1996-2005, Valve Corporation, All rights reserved. ============//
 //
 // Purpose: 
 //
@@ -6,8 +6,6 @@
 //
 //=============================================================================//
 #include "cbase.h"
-
-#include "hl2mp_player_shared.h"
 
 #include "luamanager.h"
 #include "lhl2mp_player_shared.h"
@@ -18,6 +16,8 @@
 #include "lbaseanimating.h"
 #endif
 #include "mathlib/lvector.h"
+
+#include "hl2mp_player_shared.h"
 
 // memdbgon must be the last include file in a .cpp file!!!
 #include "tier0/memdbgon.h"

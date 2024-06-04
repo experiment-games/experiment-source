@@ -25,6 +25,10 @@
 // memdbgon must be the last include file in a .cpp file!!!
 #include "tier0/memdbgon.h"
 
+#if defined(CLIENT_DLL)
+#define CHL2MP_Player C_HL2MP_Player
+#endif
+
 #define	SLAM_PRIMARY_VOLUME		450
 
 IMPLEMENT_NETWORKCLASS_ALIASED( Weapon_SLAM, DT_Weapon_SLAM )

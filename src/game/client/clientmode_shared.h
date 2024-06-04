@@ -16,6 +16,11 @@
 #include "GameEventListener.h"
 #include <baseviewport.h>
 
+#ifdef LUA_SDK
+#include <scriptedhudviewport.h>
+#include <scriptedclientluapanel.h>
+#endif
+
 class CBaseHudChat;
 class CBaseHudWeaponSelection;
 class CViewSetup;
@@ -135,7 +140,14 @@ public:
 	virtual bool	IsHTMLInfoPanelAllowed() OVERRIDE { return true; }
 
 protected:
-	CBaseViewport			*m_pViewport;
+#ifdef LUA_SDK
+        CScriptedHudViewport *m_pScriptedViewport;
+#endif
+        CBaseViewport *m_pViewport;
+#ifdef LUA_SDK
+       public:
+        CScriptedClientLuaPanel *m_pClientLuaPanel;
+#endif
 
 	void			DisplayReplayReminder();
 

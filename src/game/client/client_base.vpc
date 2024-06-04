@@ -51,8 +51,8 @@ $Configuration
 
 	$Compiler
 	{
-		$AdditionalIncludeDirectories	".\;$BASE;$SRCDIR\vgui2\include;$SRCDIR\vgui2\controls;$SRCDIR\game\shared;.\game_controls;$SRCDIR\thirdparty\sixensesdk\include;.\scripted_controls;"
-		$PreprocessorDefinitions		"$BASE;NO_STRING_T;CLIENT_DLL;VECTOR;VERSION_SAFE_STEAM_API_INTERFACES;PROTECTED_THINGS_ENABLE;strncpy=use_Q_strncpy_instead;_snprintf=use_Q_snprintf_instead;LUA_SDK;LUA_COMPAT_5_3"
+		$AdditionalIncludeDirectories	".\;$BASE;$SRCDIR\vgui2\include;$SRCDIR\vgui2\controls;$SRCDIR\game\shared;.\game_controls;$SRCDIR\thirdparty\sixensesdk\include;.\scripted_controls;.\hl2;.\hl2\elements;$SRCDIR\game\shared\hl2;$SRCDIR\game\shared\Multiplayer;$SRCDIR\game\shared\episodic"
+		$PreprocessorDefinitions		"$BASE;NO_STRING_T;CLIENT_DLL;VECTOR;VERSION_SAFE_STEAM_API_INTERFACES;PROTECTED_THINGS_ENABLE;strncpy=use_Q_strncpy_instead;_snprintf=use_Q_snprintf_instead;LUA_SDK"
 		$PreprocessorDefinitions		"$BASE;fopen=dont_use_fopen" [$WIN32]
 		$PreprocessorDefinitions		"$BASE;USE_WEBM_FOR_REPLAY;" [$LINUXALL]
 		$PreprocessorDefinitions		"$BASE;CURL_STATICLIB" [$WIN32 && $BUILD_REPLAY]
@@ -522,7 +522,6 @@ $Project
             $File "$SRCDIR\public\lColor.cpp"
             $File "$SRCDIR\public\tier1\lconvar.cpp"
             $File "$SRCDIR\public\tier0\ldbg.cpp"
-            $File "$SRCDIR\public\vgui_controls\lEditablePanel.cpp"
 		    $File "$SRCDIR\game\shared\leffect_dispatch_data.cpp"
 		    $File "$SRCDIR\public\lfilesystem.cpp"
 		    $File "$SRCDIR\public\lgametrace.cpp"
@@ -545,7 +544,6 @@ $Project
             $File "$SRCDIR\public\tier1\LKeyValues.cpp"
             $File "$SRCDIR\public\mathlib\lmathlib.cpp"
             $File "$SRCDIR\public\lnetworkstringtabledefs.cpp"
-            $File "$SRCDIR\public\vgui_controls\lPanel.cpp"
             $File "$SRCDIR\public\vphysics\lperformance.cpp"
             $File "lprediction.cpp"
             $File "$SRCDIR\public\vstdlib\lrandom.cpp"
@@ -560,11 +558,15 @@ $Project
             $File "$SRCDIR\game\shared\lutil_shared.cpp"
             $File "$SRCDIR\public\mathlib\lvector.cpp"
             $File "$SRCDIR\public\vgui\LVGUI.cpp"
-            $File "$SRCDIR\public\vgui_controls\lvgui_controls.cpp"
             $File "$SRCDIR\public\mathlib\lvmatrix.cpp"
             $File "$SRCDIR\public\lvphysics_interface.cpp"
             $File "$SRCDIR\public\XUnzip.cpp"
             $File "$SRCDIR\public\zip_utils.cpp"
+
+            // VGUI
+            $File "$SRCDIR\public\vgui_controls\lvgui_controls.cpp"
+            $File "$SRCDIR\public\vgui_controls\lPanel.cpp"
+            $File "$SRCDIR\public\vgui_controls\lEditablePanel.cpp"
         }
 
 		$Folder	"Scripted Controls"

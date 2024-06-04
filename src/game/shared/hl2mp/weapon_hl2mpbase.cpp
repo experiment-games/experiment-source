@@ -35,6 +35,9 @@ extern IVModelInfo* modelinfo;
 
 #include "weapon_hl2mpbase.h"
 
+#if defined(CLIENT_DLL)
+#define CHL2MP_Player C_HL2MP_Player
+#endif
 
 // ----------------------------------------------------------------------------- //
 // Global functions.
