@@ -11,13 +11,23 @@ lua_State *lua_open() {
 
 void luaL_register(lua_State *L, const char *libname, const luaL_Reg *l) {
     if (libname) {
-        // Create new table for the library
-        luaL_newlib(L, l);
-        // Set the table as a global variable
-        lua_setglobal(L, libname);
-    } else {
-        // Register functions into the existing table on the stack
-        luaL_setfuncs(L, l, 0);
+        luaL_getsubtable(L, LUA_REGISTRYINDEX, LUA_LOADED_TABLE);
+        lua_getfield(L, -1, libname);  // get package.loaded[libname]
+        if (!lua_istable(L, -1)) {
+            lua_pop(L, 1);  // remove previous result
+            lua_newtable(L);
+            lua_pushvalue(L, -1);
+            lua_setfield(L, -3,
+                         libname);  // package.loaded[libname] = new table
+        }
+        lua_remove(L, -2);  // remove package.loaded
+        lua_pushvalue(L, -1);
+        lua_setglobal(L, libname);  // _G[libname] = new table
+    }
+
+    for (; l->name != NULL; l++) {
+        lua_pushcfunction(L, l->func);
+        lua_setfield(L, -2, l->name);
     }
 }
 

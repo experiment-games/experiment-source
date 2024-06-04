@@ -109,7 +109,23 @@ static int luasrc_include(lua_State *L) {
     return 0;
 }
 
+// Prints blue text on the server, yellow text on the client
+static int luasrc_Msg(lua_State *L) {
+    const char *msg = luaL_checkstring(L, 1);
+
+#ifdef CLIENT_DLL
+    ConColorMsg(Color(255, 255, 0, 255), "%s", msg);
+#else
+    ConDColorMsg(Color(0, 0, 255, 255), "%s", msg);
+#endif
+
+    Msg("\n");
+
+    return 0;
+}
+
 static const luaL_Reg base_funcs[] = {{"print", luasrc_print},
+                                      {"Msg", luasrc_Msg},
                                       {"type", luasrc_type},
                                       {"include", luasrc_include},
                                       {NULL, NULL}};
@@ -234,10 +250,6 @@ void luasrc_init_gameui(void) {
 
     luaL_openlibs(LGameUI);
     base_open(LGameUI);
-
-    lua_pushcfunction(LGameUI, printTableValues);
-    lua_getglobal(LGameUI, "_G");
-    lua_pcall(LGameUI, 1, 0, 0);
 
     lua_pushboolean(LGameUI, 1);
     lua_setglobal(LGameUI, "_GAMEUI"); /* set global _GAMEUI */

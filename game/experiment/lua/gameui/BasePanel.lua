@@ -4,9 +4,7 @@
 --
 --===========================================================================--
 
-print("test")
-print(include)
-
+Msg("WhAAAAAAAAAAAAAAAAAAAAT")
 include( "../includes/extensions/panel.lua" )
 
 local FCVAR_CLIENTDLL = _E.FCVAR.CLIENTDLL

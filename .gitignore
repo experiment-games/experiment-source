@@ -68,3 +68,5 @@ game/experiment/textwindow_temp.html
 # shader files
 *.tmp
 
+# config file different for each user
+.env
