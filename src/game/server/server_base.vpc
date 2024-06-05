@@ -1063,6 +1063,11 @@ $Project
         $File "$SRCDIR\public\zip_uncompressed.h"
         $File "$SRCDIR\game\shared\mp_shareddefs.h"
         $File "$SRCDIR\game\shared\econ\ihasowner.h"
+
+		//Haptics
+		$File "$SRCDIR\public\haptics\haptic_utils.h"	[$WIN32]
+
+        // Lua
         $File "$SRCDIR\public\lcmodel.h"
         $File "$SRCDIR\public\lColor.h"
         $File "$SRCDIR\game\shared\leffect_dispatch_data.h"
@@ -1079,8 +1084,6 @@ $Project
         $File "$SRCDIR\game\shared\luasrclib.h"
         $File "$SRCDIR\public\mathlib\lvector.h"
         $File "$SRCDIR\public\lvphysics_interface.h"
-		//Haptics
-		$File "$SRCDIR\public\haptics\haptic_utils.h"	[$WIN32]
 	}
 
 	$Folder	"Tools Framework"
