@@ -30,10 +30,6 @@
 
 #endif
 
-#ifdef WITH_LUA
-#include "luahandle.h"
-#endif
-
 // memdbgon must be the last include file in a .cpp file!!!
 #include "tier0/memdbgon.h"
 
@@ -127,10 +123,6 @@ bool CGameRules::IsLocalPlayer(int nEntIndex) {
 CGameRules::CGameRules() : CAutoGameSystemPerFrame("CGameRules") {
     Assert(!g_pGameRules);
     g_pGameRules = this;
-
-    if (!GetLuaHandle()) {
-        new LuaHandle();
-    }
 }
 
 #else  //}{
@@ -152,10 +144,6 @@ CGameRules::CGameRules() : CAutoGameSystemPerFrame("CGameRules") {
     ClearMultiDamage();
 
     m_flNextVerboseLogOutput = 0.0f;
-
-    if (!GetLuaHandle()) {
-        new LuaHandle();
-    }
 }
 
 //-----------------------------------------------------------------------------

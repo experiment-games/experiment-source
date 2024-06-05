@@ -38,6 +38,11 @@
     mklink /J "C:\Program Files (x86)\Steam\steamapps\sourcemods\experiment" "<path to this repo>\game\experiment"
     ```
 
+> [!WARNING]
+> Note that for debugging (and running the game normally?) you need to extract the `materials` folder from the
+> Source SDK 2013 Multiplayer Base GCF files `hl2_misc_dir.vpk` (and `hl2_textures_dir.vpk`?) to the `game/experiment` directory.
+> Without this, the game will crash on hosting a server or joining one.
+
 ## Extras
 
 <details>
@@ -88,4 +93,29 @@
     ```bash
     git merge master
     ```
+</details>
+
+<details>
+
+<summary>Attaching the debugger</summary>
+
+1. Copy the `.env.example` file to `.env`.
+
+    ```bash
+    cp .env.example .env
+    ```
+
+2. Fill the `.env` file with the described values
+
+3. Then run the `setupprojects.sh` script to modify the Visual Studio project files.
+
+    ```bash
+    ./setupprojects.sh
+    ```
+
+> Alternatively for a manual approach: [check the official docs and use values like this:](https://developer.valvesoftware.com/wiki/Installing_and_Debugging_the_Source_Code)
+> - Command: `C:\Program Files %28x86%29\Steam\steamapps\common\Source SDK Base 2013 Multiplayer\hl2.exe`
+> - Command Arguments: `-allowdebug -dev -sw -game "C:\Program Files (x86)\Steam\steamapps\sourcemods\experiment"`
+> - Working Directory: `C:\Program Files %28x86%29\Steam\steamapps\common\Source SDK Base 2013 Multiplayer`
+
 </details>

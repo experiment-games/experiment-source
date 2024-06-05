@@ -63,7 +63,14 @@ game/experiment/stats.txt
 game/experiment/voice_ban.dt
 game/experiment/cfg/server_blacklist.txt
 game/experiment/maps/graphs/*.ain
+game/experiment/textwindow_temp.html
 
 # shader files
 *.tmp
 
+# config file different for each user
+.env
+
+# mod content while debugging
+game/experiment/materials/**/*.vtf
+game/experiment/materials/**/*.vmt

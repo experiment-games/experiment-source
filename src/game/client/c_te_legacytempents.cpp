@@ -35,6 +35,12 @@
 #include "c_te_effect_dispatch.h"
 #include "c_props.h"
 #include "c_basedoor.h"
+#ifdef LUA_SDK
+#include "weapon_hl2mpbase_scriptedweapon.h"
+#include "luamanager.h"
+#include "lbasecombatweapon_shared.h"
+#include "mathlib/lvector.h"
+#endif
 
 // NOTE: Always include this last!
 #include "tier0/memdbgon.h"
@@ -1724,8 +1730,26 @@ C_LocalTempEntity * CTempEnts::SpawnTempModel( const model_t *pModel, const Vect
 //			attachmentIndex - 
 //			firstPerson - 
 //-----------------------------------------------------------------------------
-void CTempEnts::MuzzleFlash( int type, ClientEntityHandle_t hEntity, int attachmentIndex, bool firstPerson )
-{
+void CTempEnts::MuzzleFlash( int type, ClientEntityHandle_t hEntity, int attachmentIndex, bool firstPerson ) {
+#if defined(LUA_SDK)
+    CBasePlayer *pPlayer =
+        dynamic_cast<CBasePlayer *>((CBaseEntity *)hEntity.Get());
+    if (pPlayer != NULL) {
+        CBaseCombatWeapon *pWeapon =
+            dynamic_cast<CHL2MPScriptedWeapon *>(pPlayer->GetActiveWeapon());
+
+        if (pWeapon != NULL) {
+            BEGIN_LUA_CALL_WEAPON_HOOK("MuzzleFlash", pWeapon);
+            lua_pushinteger(L, type);
+            lua_pushinteger(L, attachmentIndex);
+            lua_pushboolean(L, firstPerson);
+            END_LUA_CALL_WEAPON_HOOK(4, 1);
+
+            RETURN_LUA_NONE();
+        }
+    }
+#endif
+
 	switch( type )
 	{
 	case MUZZLEFLASH_COMBINE:

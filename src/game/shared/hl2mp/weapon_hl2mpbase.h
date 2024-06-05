@@ -15,11 +15,16 @@
 #include "hl2mp_weapon_parse.h"
 
 #if defined( CLIENT_DLL )
+    #include "c_hl2mp_player.h"
 	#define CWeaponHL2MPBase C_WeaponHL2MPBase
 	void UTIL_ClipPunchAngleOffset( QAngle &in, const QAngle &punch, const QAngle &clip );
 #endif
 
 class CHL2MP_Player;
+
+#if defined(CLIENT_DLL)
+#define CHL2MP_Player C_HL2MP_Player
+#endif
 
 // These are the names of the ammo types that go in the CAmmoDefs and that the 
 // weapon script files reference.
