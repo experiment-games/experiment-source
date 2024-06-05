@@ -1,6 +1,6 @@
 --[[
 	Original code by Team Sandbox:
-		Copyleft © 2010, Team Sandbox, Some rights reserved.
+		Copyleft © 2010 - 2013, Team Sandbox, Some rights reserved.
 
 	Modified for Experiment.
 --]]
@@ -20,7 +20,7 @@ local returnValues = {}
 --- Adds a hook to the given GameRules function.
 --- @param eventName string The name of the internal GameRules method.
 --- @param hookIdentifier string The name of the hook.
---- @param callback fun(...) The function to call when the hook is called.
+--- @param callback fun(...): ... The function to call when the hook is called.
 function MODULE.Add(eventName, hookIdentifier, callback)
 	registeredHooks[eventName] = registeredHooks[eventName] or {}
 	registeredHooks[eventName][hookIdentifier] = callback

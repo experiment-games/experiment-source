@@ -304,6 +304,7 @@ void luasrc_shutdown(void);
 
 LUA_API int(luasrc_dostring)(lua_State *L, const char *string);
 LUA_API int(luasrc_dofile)(lua_State *L, const char *filename);
+LUA_API int(luasrc_dofile_leave_stack)(lua_State *L, const char *filename);
 LUA_API void(luasrc_dofolder)(lua_State *L, const char *path);
 
 LUA_API int(luasrc_pcall)(lua_State *L, int nargs, int nresults, int errfunc);

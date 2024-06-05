@@ -104,8 +104,15 @@ static int luasrc_include(lua_State *L) {
     char filename[MAX_PATH];
     Q_snprintf(filename, sizeof(filename), "%s\\%s", source,
                luaL_checkstring(L, 1));
-    luasrc_dofile(L, filename);
-    return 0;
+
+    int returnedValueCount = luasrc_dofile_leave_stack(L, filename);
+
+    if (returnedValueCount == -1) {
+        // An error occurred executing the script
+        return 0;
+    }
+
+    return returnedValueCount;
 }
 
 // Prints blue text on the server, yellow text on the client
@@ -397,20 +404,55 @@ void luasrc_shutdown(void) {
 
 LUA_API int luasrc_dostring(lua_State *L, const char *string) {
     int iError = luaL_dostring(L, string);
+
     if (iError != 0) {
         Warning("%s\n", lua_tostring(L, -1));
         lua_pop(L, 1);
     }
+
     return iError;
 }
 
+/// <summary>
+/// Executes the given file, clearing the stack of values that
+/// were returned by the file afterwards.
+/// </summary>
+/// <param name="L"></param>
+/// <param name="string"></param>
+/// <returns></returns>
 LUA_API int luasrc_dofile(lua_State *L, const char *filename) {
+    int stackBefore = lua_gettop(L);
     int iError = luaL_dofile(L, filename);
+
     if (iError != 0) {
         Warning("%s\n", lua_tostring(L, -1));
         lua_pop(L, 1);
     }
+
+    lua_settop(L, stackBefore);
+
     return iError;
+}
+
+/// <summary>
+/// Executes the given file, not resetting the stack afterwards.
+/// It returns the amount of new values on the stack (which the file
+/// may have returned).
+/// </summary>
+/// <param name="L"></param>
+/// <param name="string"></param>
+/// <returns>The amount of new values on the stack or -1 on error</returns>
+LUA_API int luasrc_dofile_leave_stack(lua_State *L, const char *filename) {
+    int stackBefore = lua_gettop(L);
+    int iError = luaL_dofile(L, filename);
+
+    if (iError != 0) {
+        Warning("%s\n", lua_tostring(L, -1));
+        lua_pop(L, 1);
+        return -1;
+    }
+
+    return lua_gettop(L) - stackBefore;
 }
 
 bool luasrc_checkfolder(const char *path) {
@@ -428,7 +470,6 @@ LUA_API void luasrc_dofolder(lua_State *L, const char *path) {
     char searchPath[512];
     Q_snprintf(searchPath, sizeof(searchPath), "%s\\*.lua", path);
 
-    int stackBefore = lua_gettop(L);
     char const *fn = g_pFullFileSystem->FindFirstEx(searchPath, "MOD", &fh);
 
     while (fn) {
@@ -443,9 +484,6 @@ LUA_API void luasrc_dofolder(lua_State *L, const char *path) {
                 filesystem->RelativePathToFullPath(relative, "MOD", loadname,
                                                    sizeof(loadname));
                 luasrc_dofile(L, loadname);
-
-                // Discard any return values
-                lua_settop(L, stackBefore);
             }
         }
 

@@ -1,9 +1,9 @@
---========= Copyleft © 2010, Team Sandbox, Some rights reserved. ============--
---
--- Purpose:
---
--- $NoKeywords: $
---===========================================================================--
+--[[
+	Original code by Team Sandbox:
+		Copyleft © 2010 - 2013, Team Sandbox, Some rights reserved.
+
+	Modified for Experiment.
+--]]
 
 local vgui = vgui
 local CBuildSubMenu = vgui.CBuildSubMenu
@@ -22,56 +22,56 @@ local CBuildMenu = {
 function CBuildMenu:Init(pViewPort)
 	self:SetProportional(true)
 	-- Make it screen sized
-	self:SetBounds( 0, 0, ScreenWidth(), ScreenHeight() )
+	self:SetBounds(0, 0, ScreenWidth(), ScreenHeight())
 
 
-	self:SetAutoDelete( false )
+	self:SetAutoDelete(false)
 
 	self.m_pViewPort = pViewPort
 
-if false then
-	self.m_pMainMenu = CBuildSubMenu( self, "mainmenu" )
-	self.m_pMainMenu:LoadControlSettings( "Resource/UI/MainBuyMenu.res" )
-	self.m_pMainMenu:SetVisible( false )
-end
-	self:SetVisible( false )
+	if false then
+		self.m_pMainMenu = CBuildSubMenu(self, "mainmenu")
+		self.m_pMainMenu:LoadControlSettings("Resource/UI/MainBuyMenu.res")
+		self.m_pMainMenu:SetVisible(false)
+	end
+	self:SetVisible(false)
 end
 
-function CBuildMenu:ApplySchemeSettings( pScheme )
-	self:SetBgColor( Color(0, 0, 0, 80) )
+function CBuildMenu:ApplySchemeSettings(pScheme)
+	self:SetBgColor(Color(0, 0, 0, 80))
 end
 
 -------------------------------------------------------------------------------
 -- Purpose: shows/hides the build menu
 -------------------------------------------------------------------------------
 function CBuildMenu:ShowPanel(bShow)
-	if ( self:IsVisible() == bShow ) then
+	if (self:IsVisible() == bShow) then
 		return
 	end
 
-	if ( bShow ) then
+	if (bShow) then
 		self:Update()
 
-		self:SetMouseInputEnabled( true )
-		self:SetVisible( true )
+		self:SetMouseInputEnabled(true)
+		self:SetVisible(true)
 		self:MakePopup()
 
-		if ( self.m_lastx and self.m_lasty ) then
-			input.SetCursorPos( self.m_lastx, self.m_lasty )
+		if (self.m_lastx and self.m_lasty) then
+			input.SetCursorPos(self.m_lastx, self.m_lasty)
 		end
 	else
 		self.m_lastx, self.m_lasty = input.GetCursorPos()
 
-		self:SetVisible( false )
-		self:SetMouseInputEnabled( false )
+		self:SetVisible(false)
+		self:SetMouseInputEnabled(false)
 	end
 end
 
-
 function CBuildMenu:Update()
 end
+
 function CBuildMenu:OnClose()
-	self.BaseClass.OnClose( self )
+	self.BaseClass.OnClose(self)
 end
 
-vgui.Register( CBuildMenu, "CBuildMenu", "Panel" )
+vgui.Register(CBuildMenu, "CBuildMenu", "Panel")

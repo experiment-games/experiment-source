@@ -1,8 +1,9 @@
---======== Copyleft � 2010-2013, Team Sandbox, Some rights reserved. ========--
---
--- Purpose:
---
---===========================================================================--
+--[[
+	Original code by Team Sandbox:
+		Copyleft © 2010 - 2013, Team Sandbox, Some rights reserved.
+
+	Modified for Experiment.
+--]]
 
 local Msg = dbg.Msg
 local bor = bit.bor

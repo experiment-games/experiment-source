@@ -1,8 +1,9 @@
---========== Copyleft � 2010, Team Sandbox, Some rights reserved. ===========--
---
--- Purpose:
---
---===========================================================================--
+--[[
+	Original code by Team Sandbox:
+		Copyleft © 2010 - 2013, Team Sandbox, Some rights reserved.
+
+	Modified for Experiment.
+--]]
 
 GM.Name      = "Sandbox"
 GM.Homepage  = "http://www.andrewmcwatters.com/hl2sb/"

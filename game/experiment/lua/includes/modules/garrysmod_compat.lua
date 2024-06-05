@@ -14,5 +14,6 @@ GAMEMODE = _GAMEMODE
 MsgC = ConDColorMsg
 
 PrintTable = table.Print
+LocalPlayer = UTIL.GetLocalPlayer
 
 -- TODO: The rest of the Garry's Mod compatibility layer

@@ -1,8 +1,9 @@
---======== Copyleft © 2010-2011, Team Sandbox, Some rights reserved. ========--
---
--- Purpose: Tests the FileHandle_t implementation.
---
---===========================================================================--
+--[[
+	Original code by Team Sandbox:
+		Copyleft © 2010 - 2013, Team Sandbox, Some rights reserved.
+
+	Modified for Experiment.
+--]]
 
 require("dbg")
 require("filesystem")

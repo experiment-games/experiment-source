@@ -1,23 +1,24 @@
---======== Copyleft © 2010-2011, Team Sandbox, Some rights reserved. ========--
---
--- Purpose: Dumps a list of enumerations in _E in wiki format for Sandpedia.
---
---===========================================================================--
+--[[
+	Original code by Team Sandbox:
+		Copyleft Â© 2010 - 2013, Team Sandbox, Some rights reserved.
 
--- List of enumerations in the Source Engine Lua API
+	Modified for Experiment.
+
+	Purpose: Dumps a list of all enumerations in _E in wiki format for documentation.
+--]]
 
 local enumerations = {}
 
-for prefix, t in pairs( _E ) do
-  for name, n in pairs( t ) do
-    table.insert( enumerations, prefix .. "_" .. name )
-  end
+for prefix, t in pairs(_E) do
+	for name, n in pairs(t) do
+		table.insert(enumerations, prefix .. "_" .. name)
+	end
 end
 
-table.sort( enumerations )
+table.sort(enumerations)
 
-local file = assert( io.open( "enumerations.txt", "wb" ) )
-for i, enumeration in ipairs( enumerations ) do
-  file:write( "*[[_E." .. enumeration .. "|" .. enumeration .. "]]\r\n" )
+local file = assert(io.open("enumerations.txt", "wb"))
+for i, enumeration in ipairs(enumerations) do
+	file:write("*[[_E." .. enumeration .. "|" .. enumeration .. "]]\r\n")
 end
-assert( io.close( file ) )
+assert(io.close(file))
