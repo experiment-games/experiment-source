@@ -47,7 +47,7 @@ function MODULE.Call(eventName, gamemodeTable, ...)
 
 			if (returnValues[1] == false) then
 				printError("Hook Error! '" ..
-					tostring(hookIdentifier) .. "' (" .. tostring(eventName) .. ") Failed: " .. tostring(returnValues[2]) .. "\n")
+					tostring(hookIdentifier) .. "' (" .. tostring(eventName) .. ") Failed\n")
 				-- callbacks[hookIdentifier] = nil
 			elseif (returnValues[2] ~= nil) then
 				return unpack(returnValues, 2)
@@ -66,7 +66,7 @@ function MODULE.Call(eventName, gamemodeTable, ...)
 
 		if (returnValues[1] == false) then
 			printError("Gamemode Error! '" ..
-				tostring(eventName) .. "' Failed: " .. tostring(returnValues[2]) .. "\n")
+				tostring(eventName) .. "' Failed\n")
 			-- gamemodeTable[eventName] = nil
 			return nil
 		end

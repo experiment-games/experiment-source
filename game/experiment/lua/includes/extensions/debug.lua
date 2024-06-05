@@ -14,5 +14,6 @@ if (_CLIENT) then
 end
 
 function debug.PrintError(msg)
-	ConDColorMsg(errorColor, debug.traceback(errorPrefix .. tostring(msg), 2) .. "\n")
+	msg = msg and (errorPrefix .. tostring(msg)) or nil
+	ConDColorMsg(errorColor, debug.traceback(msg, 2) .. "\n")
 end
