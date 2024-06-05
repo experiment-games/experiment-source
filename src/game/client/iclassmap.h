@@ -20,7 +20,6 @@ public:
 	virtual					~IClassMap() {}
 
 #ifdef LUA_SDK
-        virtual DISPATCHFUNCTION FindFactory(const char *classname) = 0;
         virtual void Add(const char *mapname, const char *classname, int size,
                          DISPATCHFUNCTION factory = 0,
                          bool scripted = false) = 0;
@@ -31,6 +30,9 @@ public:
 #endif
 
 	virtual char const		*Lookup( const char *classname ) = 0;
+#ifdef LUA_SDK
+	virtual DISPATCHFUNCTION FindFactory( const char *classname ) = 0;
+#endif
 	virtual C_BaseEntity	*CreateEntity( const char *mapname ) = 0;
 	virtual int				GetClassSize( const char *classname ) = 0;
 };

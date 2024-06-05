@@ -93,11 +93,14 @@ static int CHL2MP_Player_CanSprint(lua_State *L) {
     return 1;
 }
 
-// static int CHL2MP_Player_DoAnimationEvent (lua_State *L) {
-//   luaL_checkhl2mpplayer(L,
-//   1)->DoAnimationEvent((PlayerAnimEvent_t)luaL_checkint(L, 2),
-//   luaL_optinteger(L, 3, 0)); return 0;
-// }
+ static int CHL2MP_Player_DoAnimationEvent(lua_State *L) {
+   // m_pSDKPlayer->DoAnimationEvent(PLAYERANIMEVENT_JUMP);
+   // Became:
+   // MoveHelper()->PlayerSetAnimation(PLAYER_JUMP);
+
+   // luaL_checkhl2mpplayer(L, 1)->DoAnimationEvent((PlayerAnimEvent_t)luaL_checkint(L, 2), luaL_optinteger(L, 3, 0));
+   return 0;
+ }
 
 static int CHL2MP_Player___index(lua_State *L) {
     CHL2MP_Player *pPlayer = lua_tohl2mpplayer(L, 1);
@@ -236,7 +239,7 @@ static const luaL_Reg CHL2MP_Playermeta[] = {
     {"CalculateIKLocks", CHL2MP_Player_CalculateIKLocks},
     {"CalcView", CHL2MP_Player_CalcView},
     {"CanSprint", CHL2MP_Player_CanSprint},
-    //{"DoAnimationEvent", CHL2MP_Player_DoAnimationEvent},
+    {"DoAnimationEvent", CHL2MP_Player_DoAnimationEvent},
     {"__index", CHL2MP_Player___index},
     {"__newindex", CHL2MP_Player___newindex},
     {"__eq", CHL2MP_Player___eq},

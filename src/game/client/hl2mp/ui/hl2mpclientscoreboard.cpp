@@ -23,6 +23,10 @@
 
 #include "voice_status.h"
 
+#ifdef LUA_SDK
+#include "luamanager.h"
+#endif
+
 using namespace vgui;
 
 #define TEAM_MAXCOUNT			5
@@ -373,7 +377,28 @@ void CHL2MPClientScoreBoardDialog::UpdateTeamInfo()
 		if ( team )
 		{
 			sectionID = GetSectionFromTeamNumber( i );
-	
+
+#if defined(LUA_SDK)
+            wchar_t wgamemode[64];
+            const char *gamemode = NULL;
+            lua_getglobal(L, "GAMEMODE");
+            if (lua_istable(L, -1)) {
+                lua_getfield(L, -1, "Name");
+                if (lua_isstring(L, -1)) {
+                    lua_remove(L, -2);
+                    gamemode = lua_tostring(L, -1);
+                } else {
+                    lua_pop(L, 1);
+                    gamemode = "Experiment";
+                }
+            } else {
+                gamemode = "Experiment";
+            }
+            lua_pop(L, 1);
+            g_pVGuiLocalize->ConvertANSIToUnicode(
+                gamemode, wgamemode, sizeof(wgamemode));
+#endif
+
 			// update team name
 			wchar_t name[64];
 			wchar_t string1[1024];
@@ -387,8 +412,12 @@ void CHL2MPClientScoreBoardDialog::UpdateTeamInfo()
 #else
 				_snwprintf( name, ARRAYSIZE(name), L"%S", g_pVGuiLocalize->Find("#ScoreBoard_Deathmatch") );
 #endif
-				
-				teamName = name;
+
+#if defined(LUA_SDK)
+                teamName = wgamemode;
+#else
+                teamName = name;
+#endif
 
 				if ( iNumPlayersInGame == 1)
 				{

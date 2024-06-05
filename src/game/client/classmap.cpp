@@ -15,10 +15,12 @@ class classentry_t {
    public:
     classentry_t() {
         mapname[0] = 0;
+#ifdef LUA_SDK
+        classname[0] = 0;
+#endif
         factory = 0;
         size = -1;
 #ifdef LUA_SDK
-        classname[0] = 0;
         scripted = false;
 #endif
     }
@@ -59,13 +61,14 @@ class CClassMap : public IClassMap {
     virtual void Add(const char *mapname, const char *classname, int size,
                      DISPATCHFUNCTION factory /*= 0*/, bool scripted);
     virtual void RemoveAllScripted(void);
-    virtual DISPATCHFUNCTION FindFactory(const char *classname);
 #else
     virtual void Add(const char *mapname, const char *classname, int size,
                      DISPATCHFUNCTION factory /*= 0*/);
 #endif
-
     virtual const char *Lookup(const char *classname);
+#ifdef LUA_SDK
+    virtual DISPATCHFUNCTION FindFactory(const char *classname);
+#endif
     virtual C_BaseEntity *CreateEntity(const char *mapname);
     virtual int GetClassSize(const char *classname);
 

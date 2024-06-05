@@ -477,6 +477,10 @@ CBaseEntity::~CBaseEntity( )
 		// Remove this entity from the ent list (NOTE:  This Makes EHANDLES go NULL)
 		gEntList.RemoveEntity( GetRefEHandle() );
 	}
+
+#if defined(LUA_SDK)
+    lua_unref(L, m_nTableReference);
+#endif
 }
 
 void CBaseEntity::PostConstructor( const char *szClassname )
