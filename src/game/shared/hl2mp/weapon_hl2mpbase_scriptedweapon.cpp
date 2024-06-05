@@ -176,6 +176,11 @@ int CHL2MPScriptedWeapon::ActivityListCount(void) {
 //-----------------------------------------------------------------------------
 CHL2MPScriptedWeapon::CHL2MPScriptedWeapon(void) {
     m_pLuaWeaponInfo = dynamic_cast<CHL2MPSWeaponInfo *>(CreateWeaponInfo());
+
+#ifdef LUA_SDK
+    // Experiment; Already done in CBaseEntity.
+    // m_nTableReference = LUA_NOREF;
+#endif
 }
 
 //-----------------------------------------------------------------------------
