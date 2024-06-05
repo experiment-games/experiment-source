@@ -68,5 +68,9 @@ void lua_unref(lua_State *L, int ref) {
 }
 
 bool lua_isrefvalid(lua_State *L, int ref) {
+    // ref being 0 indicates we forgot to set `m_nTableReference = LUA_NOREF`
+    // in a constructor somewhere.
+    Assert(ref != 0);
+
     return ref != LUA_REFNIL && ref != LUA_NOREF;
 }
