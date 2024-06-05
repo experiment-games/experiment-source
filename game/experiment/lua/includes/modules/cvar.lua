@@ -6,9 +6,9 @@
 --]]
 
 local pairs = pairs
-local Warning = dbg.Warning
+local printError = debug.PrintError
 local tostring = tostring
-local pcall = pcall
+local xpcall = xpcall
 
 local MODULE = {}
 
@@ -37,8 +37,8 @@ function MODULE.CallGlobalChangeCallbacks(conVar, oldValueAsString, oldValueAsNu
 
 	for callbackIdentifier, callback in pairs(callbacks) do
 		if (callback == nil) then
-			Warning(
-				"Callback '" ..
+			printError(
+				"ConVar Callback Error! '" ..
 				tostring(callbackIdentifier) .. "' (" .. tostring(conVar:GetName()) .. ") tried to call a nil function!\n"
 			)
 			callbacks[callbackIdentifier] = nil
@@ -46,10 +46,10 @@ function MODULE.CallGlobalChangeCallbacks(conVar, oldValueAsString, oldValueAsNu
 			break
 		end
 
-		didCallbackError, callbackError = pcall(callback, conVar, oldValueAsString, oldValueAsNumber)
+		didCallbackError, callbackError = xpcall(callback, printError, conVar, oldValueAsString, oldValueAsNumber)
 
 		if (didCallbackError == false) then
-			Warning("Callback '" ..
+			printError("ConVar Callback Error! '" ..
 			tostring(callbackIdentifier) ..
 			"' (" .. tostring(conVar:GetName()) .. ") Failed: " .. tostring(callbackError) .. "\n")
 			callbacks[callbackIdentifier] = nil

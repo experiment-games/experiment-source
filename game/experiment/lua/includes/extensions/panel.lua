@@ -6,19 +6,20 @@
 --]]
 
 local type = type
+local printError = debug.PrintError
 
 function ToPanel( pPanel )
   if ( not pPanel or type( pPanel ) ~= "panel" ) then
-    return INVALID_PANEL;
+    return INVALID_PANEL
   end
 
-  local success, hPanel = pcall( _R.Panel.GetVPanel, pPanel )
+  local success, hPanel = xpcall( _R.Panel.GetVPanel, printError, pPanel )
   if ( not success ) then
     hPanel = INVALID_PANEL
   end
 if _DEBUG then
-  assert( hPanel ~= INVALID_PANEL );
+  assert( hPanel ~= INVALID_PANEL )
 end
 
-  return hPanel;
+  return hPanel
 end

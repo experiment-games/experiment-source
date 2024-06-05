@@ -1,4 +1,4 @@
---========== Copyleft © 2010, Team Sandbox, Some rights reserved. ===========--
+--========== Copyleft ï¿½ 2010, Team Sandbox, Some rights reserved. ===========--
 --
 -- Purpose:
 --
@@ -32,7 +32,7 @@ function GM:ResetChangeLevel()
   local pEntity = gEntList.FindEntityByClassname( NULL, "trigger_changelevel" )
   local tTriggers = {}
   while ( pEntity ~= NULL ) do
-    local pTrigger = CreateEntityByName( "trigger_changelevel_scripted" );
+    local pTrigger = CreateEntityByName( "trigger_changelevel_scripted" )
     if ( pTrigger ~= NULL ) then
       local vecMins = pEntity:WorldAlignMins()
       local vecMaxs = pEntity:WorldAlignMaxs()
@@ -81,7 +81,7 @@ function GM:LevelInit( strMapName, strMapEntities, strOldLevel, strLandmarkName,
 
   -- Sometimes an ent will Remove() itself during its precache, so RemoveImmediate won't happen.
   -- This makes sure those ents get cleaned up.
-  gEntList.CleanupDeleteList();
+  gEntList.CleanupDeleteList()
 end
 
 GM.m_tPickups = {}

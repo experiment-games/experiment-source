@@ -6,12 +6,12 @@
 
 local gamePath
 if _CLIENT then
-  gamePath = engine.GetGameDirectory();
+  gamePath = engine.GetGameDirectory()
 else
-  gamePath = engine.GetGameDir();
+  gamePath = engine.GetGameDir()
 end
 
-local pMainFile = KeyValues( "gameinfo.txt" );
+local pMainFile = KeyValues( "gameinfo.txt" )
 if ( pMainFile:LoadFromFile( gamePath .. "/gameinfo.txt", "MOD" ) ) then
   print( "KeyValues: ")
   pMainFile:Print( 1 )
@@ -36,4 +36,4 @@ if ( pMainFile:LoadFromFile( gamePath .. "/gameinfo.txt", "MOD" ) ) then
   pNewMainFile:Print( 1 )
   pNewMainFile:deleteThis()
 end
-pMainFile:deleteThis();
+pMainFile:deleteThis()

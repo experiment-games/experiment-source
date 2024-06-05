@@ -66,3 +66,7 @@ void lua_getref(lua_State *L, int ref) {
 void lua_unref(lua_State *L, int ref) {
     luaL_unref(L, LUA_REGISTRYINDEX, ref);
 }
+
+bool lua_isrefvalid(lua_State *L, int ref) {
+    return ref != LUA_REFNIL && ref != LUA_NOREF;
+}

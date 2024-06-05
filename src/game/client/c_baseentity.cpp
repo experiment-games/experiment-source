@@ -1530,15 +1530,18 @@ int C_BaseEntity::GetSoundSourceIndex() const {
 //-----------------------------------------------------------------------------
 const Vector &C_BaseEntity::GetRenderOrigin(void) {
 #ifdef LUA_SDK
-    if (m_nTableReference != LUA_NOREF) {
+    if (lua_isrefvalid(L, m_nTableReference)) {
         lua_getref(L, m_nTableReference);
         lua_getfield(L, -1, "m_vecRenderOrigin");
         lua_remove(L, -2);
+
         if (lua_isuserdata(L, -1) && luaL_checkudata(L, -1, "Vector")) {
             const Vector &res = luaL_checkvector(L, -1);
             lua_pop(L, 1);
+
             return res;
         }
+
         lua_pop(L, 1);
     }
 #endif
@@ -1548,15 +1551,18 @@ const Vector &C_BaseEntity::GetRenderOrigin(void) {
 
 const QAngle &C_BaseEntity::GetRenderAngles(void) {
 #ifdef LUA_SDK
-    if (m_nTableReference != LUA_NOREF) {
+    if (lua_isrefvalid(L, m_nTableReference)) {
         lua_getref(L, m_nTableReference);
         lua_getfield(L, -1, "m_angRenderAngles");
         lua_remove(L, -2);
+
         if (lua_isuserdata(L, -1) && luaL_checkudata(L, -1, "QAngle")) {
             const QAngle &res = luaL_checkangle(L, -1);
             lua_pop(L, 1);
+
             return res;
         }
+
         lua_pop(L, 1);
     }
 #endif

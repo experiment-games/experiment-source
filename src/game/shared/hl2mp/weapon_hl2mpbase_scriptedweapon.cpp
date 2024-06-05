@@ -205,7 +205,7 @@ void CHL2MPScriptedWeapon::InitScriptedWeapon(void) {
 #if defined(LUA_SDK)
 #ifndef CLIENT_DLL
     // Let the instance reinitialize itself for the client.
-    if (m_nTableReference != LUA_NOREF)
+    if (lua_isrefvalid(L, m_nTableReference))
         return;
 #endif
 

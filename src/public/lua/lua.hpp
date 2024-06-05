@@ -40,4 +40,6 @@ void lua_getref(lua_State *L, int ref);
 
 void lua_unref(lua_State *L, int ref);
 
+bool lua_isrefvalid(lua_State *L, int ref);
+
 #endif // LUA_COMPAT_LOADED_HPP

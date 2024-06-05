@@ -1,4 +1,4 @@
---========== Copyleft © 2010, Team Sandbox, Some rights reserved. ===========--
+--========== Copyleft ï¿½ 2010, Team Sandbox, Some rights reserved. ===========--
 --
 -- Purpose:
 --
@@ -52,7 +52,7 @@ end
 function GM:GetMapRemainingTime()
   -- if timelimit is disabled, return 0
   if ( cvar.FindVar( "mp_timelimit" ):GetInt() <= 0 ) then
-    return 0;
+    return 0
   end
 end
 
@@ -89,7 +89,7 @@ function GM:PlayerUse( pPlayer )
 end
 
 function GM:Precache()
-  _R.CBaseEntity.PrecacheScriptSound( "AlyxEmp.Charge" );
+  _R.CBaseEntity.PrecacheScriptSound( "AlyxEmp.Charge" )
 end
 
 function GM:ShouldCollide( collisionGroup0, collisionGroup1 )

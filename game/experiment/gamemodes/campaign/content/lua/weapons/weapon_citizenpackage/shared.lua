@@ -1,6 +1,6 @@
---========== Copyleft © 2010, Team Sandbox, Some rights reserved. ===========--
+--========== Copyleft ï¿½ 2010, Team Sandbox, Some rights reserved. ===========--
 --
--- Purpose: 
+-- Purpose:
 --
 --===========================================================================--
 
@@ -31,10 +31,10 @@ SWEP.m_acttable				=
 {
 	{ 1,						307,					false },
 	{ 6,						308,					false },
-};
+}
 
 -------------------------------------------------------------------------------
--- Purpose: 
+-- Purpose:
 -------------------------------------------------------------------------------
 function SWEP:ItemPostFrame()
 	-- Do nothing
@@ -44,9 +44,9 @@ end
 -- Purpose: Remove the citizen package if it's ever dropped
 -------------------------------------------------------------------------------
 function SWEP:Drop( vecVelocity )
-	self:Drop( vecVelocity );
+	self:Drop( vecVelocity )
 if not _CLIENT then
-	UTIL.Remove( self );
+	UTIL.Remove( self )
 end
 end
 

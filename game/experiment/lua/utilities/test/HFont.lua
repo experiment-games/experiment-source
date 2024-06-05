@@ -22,7 +22,7 @@ surface.SetFontGlyphSet( hTestFont,
 local strTextSample = "The five boxing wizards jump quickly."
 
 g_hFontTestFrame = Frame()
-g_hFontTestFrame:SetBounds( 0, 0, 408, 120 );
+g_hFontTestFrame:SetBounds( 0, 0, 408, 120 )
 g_hFontTestFrame:SetSizeable( false )
 g_hFontTestFrame:SetTitle( "Font Test", true )
 g_hFontTestFrame:SetVisible( true )
@@ -40,6 +40,6 @@ function g_hFontTestFrame.m_hFontSamples:Paint()
 end
 
 -- move to the middle of the screen
-g_hFontTestFrame:MoveToCenterOfScreen();
-g_hFontTestFrame:InvalidateLayout();
-g_hFontTestFrame:Activate();
+g_hFontTestFrame:MoveToCenterOfScreen()
+g_hFontTestFrame:InvalidateLayout()
+g_hFontTestFrame:Activate()

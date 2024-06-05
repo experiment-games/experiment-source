@@ -5,23 +5,12 @@
 	Modified for Experiment.
 --]]
 
+require("debug")
+
 local pairs = pairs
 local tostring = tostring
-local pcall = pcall
 local unpack = table.unpack
-local ConDColorMsg = dbg.ConDColorMsg
-
-local warningPrefix = "[SERVER] "
-local warningColor = Color(0, 0, 255)
-
-if (_CLIENT) then
-	warningPrefix = "[CLIENT] "
-	warningColor = Color(255, 255, 0)
-end
-
-local printWarning = function(msg)
-	ConDColorMsg(warningColor, msg)
-end
+local printError = debug.PrintError
 
 local MODULE = {}
 
@@ -48,18 +37,18 @@ function MODULE.Call(eventName, gamemodeTable, ...)
 	if (callbacks ~= nil) then
 		for hookIdentifier, callback in pairs(callbacks) do
 			if (callback == nil) then
-				printWarning(warningPrefix .. "Hook Error! '" ..
+				printError("Hook Error! '" ..
 					tostring(hookIdentifier) .. "' (" .. tostring(eventName) .. ") tried to call a nil function!\n")
-				callbacks[hookIdentifier] = nil
+				-- callbacks[hookIdentifier] = nil
 				break
 			end
 
-			returnValues = { pcall(callback, ...) }
+			returnValues = { xpcall(callback, printError, ...) }
 
 			if (returnValues[1] == false) then
-				printWarning(warningPrefix .. "Hook Error! '" ..
+				printError("Hook Error! '" ..
 					tostring(hookIdentifier) .. "' (" .. tostring(eventName) .. ") Failed: " .. tostring(returnValues[2]) .. "\n")
-				callbacks[hookIdentifier] = nil
+				-- callbacks[hookIdentifier] = nil
 			elseif (returnValues[2] ~= nil) then
 				return unpack(returnValues, 2)
 			end
@@ -73,12 +62,12 @@ function MODULE.Call(eventName, gamemodeTable, ...)
 			return nil
 		end
 
-		returnValues = { pcall(callback, gamemodeTable, ...) }
+		returnValues = { xpcall(callback, printError, gamemodeTable, ...) }
 
 		if (returnValues[1] == false) then
-			printWarning(warningPrefix .. "Gamemode Error! '" ..
+			printError("Gamemode Error! '" ..
 				tostring(eventName) .. "' Failed: " .. tostring(returnValues[2]) .. "\n")
-			gamemodeTable[eventName] = nil
+			-- gamemodeTable[eventName] = nil
 			return nil
 		end
 

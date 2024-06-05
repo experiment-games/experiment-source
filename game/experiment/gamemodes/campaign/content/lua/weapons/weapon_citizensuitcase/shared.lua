@@ -1,6 +1,6 @@
---========== Copyleft © 2010, Team Sandbox, Some rights reserved. ===========--
+--========== Copyleft ï¿½ 2010, Team Sandbox, Some rights reserved. ===========--
 --
--- Purpose: 
+-- Purpose:
 --
 --===========================================================================--
 
@@ -33,4 +33,4 @@ SWEP.m_acttable				=
 {
 	{ 1,						309,					false },
 	{ 6,						310,					false },
-};
+}

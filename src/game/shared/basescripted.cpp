@@ -120,7 +120,7 @@ void CBaseScripted::InitScriptedEntity(void) {
 #if 0
 #ifndef CLIENT_DLL
 	// Let the instance reinitialize itself for the client.
-	if ( m_nTableReference != LUA_NOREF )
+	if (lua_isrefvalid(L, m_nTableReference))
 		return;
 #endif
 #endif
@@ -147,7 +147,7 @@ void CBaseScripted::InitScriptedEntity(void) {
     Q_strlower(className);
     SetClassname(className);
 
-    if (m_nTableReference == LUA_NOREF) {
+    if (!lua_isrefvalid(L, m_nTableReference)) {
         LoadScriptedEntity();
         m_nTableReference = luaL_ref(L, LUA_REGISTRYINDEX);
     } else {

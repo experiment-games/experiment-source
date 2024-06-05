@@ -6,9 +6,9 @@
 --]]
 
 local ConCommand = ConCommand
-local Warning = dbg.Warning
+local printError = debug.PrintError
 local tostring = tostring
-local pcall = pcall
+local xpcall = xpcall
 
 local MODULE = {}
 
@@ -38,10 +38,10 @@ function MODULE.Dispatch(client, command, arguments)
 		return false
 	end
 
-	didCallbackError, callbackError = pcall(callback, client, command, arguments)
+	didCallbackError, callbackError = xpcall(callback, printError, client, command, arguments)
 
 	if (didCallbackError == false) then
-		Warning("ConCommand '" .. tostring(command) .. "' Failed: " .. tostring(callbackError) .. "\n")
+		printError("ConCommand Error! '" .. tostring(command) .. "' Failed: " .. tostring(callbackError) .. "\n")
 	end
 
 	return true

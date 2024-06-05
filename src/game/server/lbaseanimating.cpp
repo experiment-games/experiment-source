@@ -436,7 +436,7 @@ static int CBaseAnimating___index(lua_State *L) {
                         ar2.short_src, ar1.currentline);
         return lua_error(L);
     }
-    if (pEntity->m_nTableReference != LUA_NOREF) {
+    if (lua_isrefvalid(L, pEntity->m_nTableReference)) {
         lua_getref(L, pEntity->m_nTableReference);
         lua_pushvalue(L, 2);
         lua_gettable(L, -2);
@@ -490,7 +490,7 @@ static int CBaseAnimating___newindex(lua_State *L) {
     else if (Q_strcmp(field, "m_nSkin") == 0)
         pEntity->m_nSkin = luaL_checkint(L, 3);
     else {
-        if (pEntity->m_nTableReference == LUA_NOREF) {
+        if (!lua_isrefvalid(L, pEntity->m_nTableReference)) {
             lua_newtable(L);
             pEntity->m_nTableReference = luaL_ref(L, LUA_REGISTRYINDEX);
         }

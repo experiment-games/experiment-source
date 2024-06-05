@@ -106,7 +106,7 @@ void CBaseScriptedTrigger::InitScriptedTrigger(void) {
 #if defined(LUA_SDK)
 #if 0
 	// Let the instance reinitialize itself for the client.
-	if ( m_nTableReference != LUA_NOREF )
+	if (lua_isrefvalid(L, m_nTableReference))
 		return;
 #endif
 
@@ -134,7 +134,7 @@ void CBaseScriptedTrigger::InitScriptedTrigger(void) {
         lua_pop(L, 1);
     }
 
-    if (m_nTableReference == LUA_NOREF) {
+    if (!lua_isrefvalid(L, m_nTableReference)) {
         LoadScriptedTrigger();
         m_nTableReference = luaL_ref(L, LUA_REGISTRYINDEX);
     } else {

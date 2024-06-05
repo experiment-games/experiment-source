@@ -10,18 +10,18 @@ hook.Add( "PlayerUpdateFlashlight", "PlayerUpdateWeaponFlashlight", function( pH
 	--if ( not input.CAM_IsThirdPerson() ) then
 		local vm = pHL2MPPlayer:GetViewModel()
 		if ( vm ~= NULL ) then
-			local iAttachment = vm:LookupAttachment( "muzzle" );
+			local iAttachment = vm:LookupAttachment( "muzzle" )
 
 			if ( iAttachment >= 0 ) then
-				local vecOrigin = Vector();
+				local vecOrigin = Vector()
 				--Tony; EyeAngles will return proper whether it's local player or not.
-				local eyeAngles = pHL2MPPlayer:EyeAngles();
+				local eyeAngles = pHL2MPPlayer:EyeAngles()
 
-				vm:GetAttachment( iAttachment, vecOrigin, eyeAngles );
+				vm:GetAttachment( iAttachment, vecOrigin, eyeAngles )
 
-				local vForward = Vector();
-				AngleVectors( eyeAngles, vecForward, vecRight, vecUp );
-				position = vecOrigin;
+				local vForward = Vector()
+				AngleVectors( eyeAngles, vecForward, vecRight, vecUp )
+				position = vecOrigin
 				return position, vecForward, vecRight, vecUp, nDistance
 			end
 		end

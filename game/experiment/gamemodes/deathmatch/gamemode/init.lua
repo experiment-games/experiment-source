@@ -1,4 +1,4 @@
---========== Copyleft © 2010, Team Sandbox, Some rights reserved. ===========--
+--========== Copyleft ï¿½ 2010, Team Sandbox, Some rights reserved. ===========--
 --
 -- Purpose:
 --
@@ -22,7 +22,7 @@ end
 function GM:CanHavePlayerItem( pPlayer, pItem )
   if ( cvar.FindVar( "mp_weaponstay" ):GetInt() > 0 ) then
     if ( pPlayer:Weapon_OwnsThisType( pItem:GetClassname(), pItem:GetSubType() ) ) then
-	  return false;
+	  return false
 	end
   end
 end
@@ -46,7 +46,7 @@ function GM:ClientDisconnected( pClient )
 end
 
 function GM:FlItemRespawnTime( pItem )
-  return cvar.FindVar( "sv_hl2mp_item_respawn_time" ):GetFloat();
+  return cvar.FindVar( "sv_hl2mp_item_respawn_time" ):GetFloat()
 end
 
 function GM:FlPlayerFallDamage( pPlayer )
@@ -65,33 +65,33 @@ function GM:FShouldSwitchWeapon( pPlayer, pWeapon )
 end
 
 function GM:GiveDefaultItems( pPlayer )
-	pPlayer:EquipSuit();
+	pPlayer:EquipSuit()
 
-	_R.CBasePlayer.GiveAmmo( pPlayer, 255,	"Pistol");
-	_R.CBasePlayer.GiveAmmo( pPlayer, 45,	"SMG1");
-	_R.CBasePlayer.GiveAmmo( pPlayer, 1,	"grenade" );
-	_R.CBasePlayer.GiveAmmo( pPlayer, 6,	"Buckshot");
-	_R.CBasePlayer.GiveAmmo( pPlayer, 6,	"357" );
+	_R.CBasePlayer.GiveAmmo( pPlayer, 255,	"Pistol")
+	_R.CBasePlayer.GiveAmmo( pPlayer, 45,	"SMG1")
+	_R.CBasePlayer.GiveAmmo( pPlayer, 1,	"grenade" )
+	_R.CBasePlayer.GiveAmmo( pPlayer, 6,	"Buckshot")
+	_R.CBasePlayer.GiveAmmo( pPlayer, 6,	"357" )
 
 	if ( pPlayer:GetPlayerModelType() == PLAYER_SOUNDS_METROPOLICE or pPlayer:GetPlayerModelType() == PLAYER_SOUNDS_COMBINESOLDIER ) then
-		pPlayer:GiveNamedItem( "weapon_stunstick" );
+		pPlayer:GiveNamedItem( "weapon_stunstick" )
 	elseif ( pPlayer:GetPlayerModelType() == PLAYER_SOUNDS_CITIZEN ) then
-		pPlayer:GiveNamedItem( "weapon_crowbar" );
+		pPlayer:GiveNamedItem( "weapon_crowbar" )
 	end
-	
-	pPlayer:GiveNamedItem( "weapon_pistol" );
-	pPlayer:GiveNamedItem( "weapon_smg1" );
-	pPlayer:GiveNamedItem( "weapon_frag" );
-	pPlayer:GiveNamedItem( "weapon_physcannon" );
 
-	local szDefaultWeaponName = engine.GetClientConVarValue( engine.IndexOfEdict( pPlayer ), "cl_defaultweapon" );
+	pPlayer:GiveNamedItem( "weapon_pistol" )
+	pPlayer:GiveNamedItem( "weapon_smg1" )
+	pPlayer:GiveNamedItem( "weapon_frag" )
+	pPlayer:GiveNamedItem( "weapon_physcannon" )
 
-	local pDefaultWeapon = pPlayer:Weapon_OwnsThisType( szDefaultWeaponName );
+	local szDefaultWeaponName = engine.GetClientConVarValue( engine.IndexOfEdict( pPlayer ), "cl_defaultweapon" )
+
+	local pDefaultWeapon = pPlayer:Weapon_OwnsThisType( szDefaultWeaponName )
 
 	if ( ToBaseEntity( pDefaultWeapon ) ~= NULL ) then
-		pPlayer:Weapon_Switch( pDefaultWeapon );
+		pPlayer:Weapon_Switch( pDefaultWeapon )
 	else
-		pPlayer:Weapon_Switch( pPlayer:Weapon_OwnsThisType( "weapon_physcannon" ) );
+		pPlayer:Weapon_Switch( pPlayer:Weapon_OwnsThisType( "weapon_physcannon" ) )
 	end
 end
 
