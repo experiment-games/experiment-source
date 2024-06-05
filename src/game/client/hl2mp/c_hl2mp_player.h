@@ -9,7 +9,7 @@
 #define HL2MP_PLAYER_H
 #pragma once
 
-class C_HL2MP_Player;
+#include "hl2mp_playeranimstate.h"
 #include "c_basehlplayer.h"
 #include "hl2mp_player_shared.h"
 #include "beamdraw.h"
@@ -35,9 +35,6 @@ class C_HL2MP_Player : public C_BaseHLPlayer {
     virtual int DrawModel(int flags);
     virtual void AddEntity(void);
 
-    QAngle GetAnimEyeAngles(void) {
-        return m_angEyeAngles;
-    }
     Vector GetAttackSpread(CBaseCombatWeapon *pWeapon,
                            CBaseEntity *pTarget = NULL);
 
@@ -91,12 +88,14 @@ class C_HL2MP_Player : public C_BaseHLPlayer {
         return m_fIsWalking;
     }
 
-    virtual void PostThink(void);
+    virtual void UpdateClientSideAnimation();
+    void DoAnimationEvent(PlayerAnimEvent_t event, int nData = 0);
+    virtual void CalculateIKLocks(float currentTime);
 
    private:
     C_HL2MP_Player(const C_HL2MP_Player &);
 
-    CPlayerAnimState m_PlayerAnimState;
+    CHL2MPPlayerAnimState *m_PlayerAnimState;
 
     QAngle m_angEyeAngles;
 
