@@ -129,6 +129,7 @@ extern ConVar tf_mm_servermode;
 #ifdef LUA_SDK
 #include "luacachefile.h"
 #include "luamanager.h"
+// #include "mountaddons.h" // TODO
 #endif
 
 #if defined(REPLAY_ENABLED)
@@ -1106,6 +1107,18 @@ bool CServerGameDLL::LevelInit(const char *pMapName, char const *pMapEntities,
     // clear any pending autosavedangerous
     m_fAutoSaveDangerousTime = 0.0f;
     m_fAutoSaveDangerousMinHealthToCommit = 0.0f;
+
+#if defined(LUA_SDK)
+    BEGIN_LUA_CALL_HOOK("LevelInit");
+    lua_pushstring(L, pMapName);
+    lua_pushstring(L, pMapEntities);
+    lua_pushstring(L, pOldLevel);
+    lua_pushstring(L, pLandmarkName);
+    lua_pushboolean(L, loadGame);
+    lua_pushboolean(L, background);
+    END_LUA_CALL_HOOK(6, 0);
+#endif
+
     return true;
 }
 
@@ -1192,6 +1205,14 @@ void CServerGameDLL::ServerActivate(edict_t *pEdictList, int edictCount,
 
 #ifdef NEXT_BOT
     TheNextBots().OnMapLoaded();
+#endif
+
+#if defined(LUA_SDK)
+    // Andrew; call activate on the gamemode
+    BEGIN_LUA_CALL_HOOK("ServerActivate");
+    lua_pushinteger(L, edictCount);
+    lua_pushinteger(L, clientMax);
+    END_LUA_CALL_HOOK(2, 0);
 #endif
 }
 
@@ -1407,6 +1428,13 @@ void CServerGameDLL::OnQueryCvarValueFinished(QueryCvarCookie_t iCookie,
 
 // Called when a level is shutdown (including changing levels)
 void CServerGameDLL::LevelShutdown(void) {
+#if defined(LUA_SDK)
+    if (g_bLuaInitialized) {
+        BEGIN_LUA_CALL_HOOK("LevelShutdown");
+        END_LUA_CALL_HOOK(0, 0);
+    }
+#endif
+
 #ifndef NO_STEAM
     IGameSystem::LevelShutdownPreClearSteamAPIContextAllSystems();
 
@@ -1441,6 +1469,10 @@ void CServerGameDLL::LevelShutdown(void) {
         TheNavMesh->Reset();
     }
 #endif
+#endif
+
+#if defined(LUA_SDK)
+    luasrc_shutdown();
 #endif
 }
 
@@ -1859,6 +1891,15 @@ void CServerGameDLL::PreSaveGameLoaded(char const *pSaveName, bool bInGame) {
 // servers from the master.
 //-----------------------------------------------------------------------------
 bool CServerGameDLL::ShouldHideServer(void) {
+#if defined(LUA_SDK)
+    if (g_bLuaInitialized) {
+        BEGIN_LUA_CALL_HOOK("ShouldHideServer");
+        END_LUA_CALL_HOOK(0, 1);
+
+        RETURN_LUA_BOOLEAN();
+    }
+#endif
+
     if (g_pcv_commentary && g_pcv_commentary->GetBool())
         return true;
 
@@ -3202,6 +3243,12 @@ void CServerGameClients::GetBugReportInfo(char *buf, int buflen) {
 //-----------------------------------------------------------------------------
 void CServerGameClients::NetworkIDValidated(const char *pszUserName,
                                             const char *pszNetworkID) {
+#if defined(LUA_SDK)
+    BEGIN_LUA_CALL_HOOK("NetworkIDValidated");
+    lua_pushstring(L, pszUserName);
+    lua_pushstring(L, pszNetworkID);
+    END_LUA_CALL_HOOK(2, 0);
+#endif
 }
 
 // The client has submitted a keyvalues command

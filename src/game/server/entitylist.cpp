@@ -18,9 +18,14 @@
 #include "globalstate.h"
 #include "datacache/imdlcache.h"
 
+#ifdef LUA_SDK
+#include "luamanager.h"
+#include "lbaseentity_shared.h"
+#endif
+
 #ifdef HL2_DLL
 #include "npc_playercompanion.h"
-#endif // HL2_DLL
+#endif
 
 // memdbgon must be the last include file in a .cpp file!!!
 #include "tier0/memdbgon.h"
@@ -1251,8 +1256,12 @@ void CNotifyList::LevelShutdownPreEntity( void )
 	m_notifyList.Purge();
 }
 
-void CNotifyList::OnEntityCreated( CBaseEntity *pEntity )
-{
+void CNotifyList::OnEntityCreated( CBaseEntity *pEntity ) {
+#if defined(LUA_SDK)
+    BEGIN_LUA_CALL_HOOK("OnEntityCreated");
+    lua_pushentity(L, pEntity);
+    END_LUA_CALL_HOOK(1, 0);
+#endif
 }
 
 void CNotifyList::OnEntityDeleted( CBaseEntity *pEntity )

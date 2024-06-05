@@ -56,6 +56,10 @@
 #include "replay/ienginereplay.h"
 #endif
 
+#ifdef LUA_SDK
+#include "luamanager.h"
+#endif
+
 // memdbgon must be the last include file in a .cpp file!!!
 #include "tier0/memdbgon.h"
 
@@ -230,7 +234,16 @@ void CBaseViewport::OnScreenSizeChanged(int iOldWide, int iOldTall)
 	if ( bSpecGuiWasVisible )
 	{
 		ShowPanel( PANEL_SPECGUI, true );
-	}
+        }
+
+#ifdef LUA_SDK
+        if (g_bLuaInitialized) {
+            BEGIN_LUA_CALL_HOOK("OnScreenSizeChanged");
+            lua_pushinteger(L, iOldWide);
+            lua_pushinteger(L, iOldTall);
+            END_LUA_CALL_HOOK(2, 0);
+        }
+#endif
 }
 
 void CBaseViewport::CreateDefaultPanels( void )
@@ -640,13 +653,20 @@ void CBaseViewport::SetParent(vgui::VPANEL parent)
 //-----------------------------------------------------------------------------
 void CBaseViewport::ActivateClientUI() 
 {
+#ifdef LUA_SDK
+    BEGIN_LUA_CALL_HOOK("ActivateClientUI");
+    END_LUA_CALL_HOOK(0, 0);
+#endif
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: called when the engine hides the base client VGUI panel (i.e when the GameUI is comming up ) 
+// Purpose: called when the engine hides the base client VGUI panel (i.e when the GameUI is coming up ) 
 //-----------------------------------------------------------------------------
-void CBaseViewport::HideClientUI()
-{
+void CBaseViewport::HideClientUI() {
+#ifdef LUA_SDK
+    BEGIN_LUA_CALL_HOOK("HideClientUI");
+    END_LUA_CALL_HOOK(0, 0);
+#endif
 }
 
 //-----------------------------------------------------------------------------

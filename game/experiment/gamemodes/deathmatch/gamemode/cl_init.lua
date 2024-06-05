@@ -5,7 +5,9 @@
 	Modified for Experiment.
 --]]
 
-include( "shared.lua" )
+include("shared.lua")
+
+local AngleVectors = mathlib.AngleVectors
 
 function GM:ActivateClientUI()
 end
@@ -46,7 +48,31 @@ end
 function GM:OnScreenSizeChanged( iOldWide, iOldTall )
 end
 
-function GM:PlayerUpdateFlashlight( pHL2MPPlayer, position, vecForward, vecRight, vecUp, nDistance )
+function GM:PlayerUpdateFlashlight(client, position, vecForward, vecRight, vecUp, nDistance)
+	local vm = client:GetViewModel()
+
+	if (vm == NULL) then
+		return
+	end
+
+	local iAttachment = vm:LookupAttachment("muzzle")
+
+	if (iAttachment < 0) then
+		return
+	end
+
+	local vecOrigin = Vector()
+
+	--Tony; EyeAngles will return proper whether it's local player or not.
+	local eyeAngles = client:EyeAngles()
+
+	vm:GetAttachment(iAttachment, vecOrigin, eyeAngles)
+
+	local vForward = Vector()
+	AngleVectors(eyeAngles, vecForward, vecRight, vecUp)
+	position = vecOrigin
+
+	return position, vecForward, vecRight, vecUp, nDistance
 end
 
 function GM:ShouldDrawCrosshair()

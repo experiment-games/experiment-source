@@ -18,6 +18,10 @@
 #include "hl2mpclientscoreboard.h"
 #include "hl2mptextwindow.h"
 #include "ienginevgui.h"
+#ifdef LUA_SDK
+#include "scriptedhudviewport.h"
+#include "scriptedclientluapanel.h"
+#endif
 
 // memdbgon must be the last include file in a .cpp file!!!
 #include "tier0/memdbgon.h"

@@ -1235,7 +1235,7 @@ void C_BasePlayer::UpdateFlashlight() {
         lua_pushvector(L, vecRight);
         lua_pushvector(L, vecUp);
         lua_pushnumber(L, distance);
-        END_LUA_CALL_HOOK(5, 0);
+        END_LUA_CALL_HOOK(6, 5);
 
         if (lua_isuserdata(L, -5) && luaL_checkudata(L, -5, "Vector"))
             VectorCopy(luaL_checkvector(L, -5), position);
