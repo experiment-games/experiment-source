@@ -5,7 +5,7 @@
 	Modified for Experiment.
 --]]
 
-if not _CLIENT then return end
+if not CLIENT then return end
 
 require( "vgui" )
 

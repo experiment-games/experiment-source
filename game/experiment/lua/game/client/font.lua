@@ -10,7 +10,7 @@
 			recreate them.
 --]]
 
-if (not _CLIENT) then
+if (not CLIENT) then
 	return
 end
 

@@ -12,7 +12,7 @@ local gpGlobals = gpGlobals
 -- HACKHACK: We override this here, because for some reason scripted weapons
 -- don't properly play weapon sounds in singleplayer
 function _R.CBaseCombatWeapon.WeaponSound( self, sound_type, soundtime )
-  if ( _CLIENT ) then
+  if ( CLIENT ) then
     return
   end
 

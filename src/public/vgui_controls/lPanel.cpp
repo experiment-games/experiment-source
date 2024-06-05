@@ -960,7 +960,8 @@ static int Panel_SetPinCorner(lua_State *L) {
 }
 
 static int Panel_SetPos(lua_State *L) {
-    luaL_checkpanel(L, 1)->SetPos(luaL_checkint(L, 2), luaL_checkint(L, 3));
+    luaL_checkpanel(L, 1)->SetPos(luaL_checknumber(L, 2),
+                                  luaL_checknumber(L, 3));
     return 0;
 }
 

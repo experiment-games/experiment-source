@@ -12,7 +12,7 @@ local blocklist = {
 	-- Source Engine Lua API enumerations
 	"_E",
 	-- Source Engine Lua API table objects
-	"_GAMEMODE",
+	"GAMEMODE",
 	-- Source Engine Lua API registry pseudo-index
 	"_R",
 

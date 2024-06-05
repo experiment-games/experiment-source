@@ -80,7 +80,7 @@ end
 --- @vararg any Arguments to pass to the hooks.
 --- @return any # The return value(s) of the hook.
 function MODULE.Run(eventName, ...)
-	return MODULE.Call(eventName, _G._GAMEMODE, ...)
+	return MODULE.Call(eventName, _G.GAMEMODE, ...)
 end
 
 --- Returns all of the registered hooks or only hooks pertaining to a specific event.

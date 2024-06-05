@@ -25,11 +25,11 @@ local activeGamemodeName = nil
 --- @vararg any Arguments to pass to the hook
 --- @return boolean|any # False if the hook doesn't exist, otherwise the return value of the hook
 function MODULE.Call(eventName, ...)
-	if (_G._GAMEMODE and _G._GAMEMODE[eventName] == nil) then
+	if (_G.GAMEMODE and _G.GAMEMODE[eventName] == nil) then
 		return false
 	end
 
-	return hook.Call(eventName, _G._GAMEMODE, ...)
+	return hook.Call(eventName, _G.GAMEMODE, ...)
 end
 
 --- Returns a gamemode table object
@@ -52,8 +52,8 @@ end
 --- @param gamemodeName string Name of the gamemode
 --- @param baseGameMode string Name
 function MODULE.Register(gamemodeTable, gamemodeName, baseGameMode)
-	if (MODULE.Get(gamemodeName) ~= nil and _G._GAMEMODE ~= nil) then
-		gamemodeTable = table.Inherit(gamemodeTable, _G._GAMEMODE)
+	if (MODULE.Get(gamemodeName) ~= nil and _G.GAMEMODE ~= nil) then
+		gamemodeTable = table.Inherit(gamemodeTable, _G.GAMEMODE)
 	end
 
 	if (gamemodeName ~= _BASE_GAMEMODE) then

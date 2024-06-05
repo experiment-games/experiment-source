@@ -6,7 +6,7 @@
 --]]
 
 local gamePath
-if _CLIENT then
+if CLIENT then
 	gamePath = engine.GetGameDirectory()
 else
 	gamePath = engine.GetGameDir()

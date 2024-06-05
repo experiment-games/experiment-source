@@ -7,10 +7,6 @@ _G.weapons = require("weapon")
 
 unpack = unpack or table.unpack
 
-CLIENT = _CLIENT
-SERVER = _SERVER
-GAMEMODE = _GAMEMODE
-
 MsgC = ConDColorMsg
 
 PrintTable = table.Print

@@ -7,14 +7,14 @@
 	Purpose: Dumps an individual library in wiki format for documentation.
 --]]
 
-local curdir = "wiki/libraries/" .. (_CLIENT and "client" or "server")
+local curdir = "wiki/libraries/" .. (CLIENT and "client" or "server")
 filesystem.CreateDirHierarchy(curdir, "MOD")
 
 local blocklist = {
 	-- Source Engine Lua API enumerations
 	"_E",
 	-- Source Engine Lua API table objects
-	"_GAMEMODE",
+	"GAMEMODE",
 	-- Source Engine Lua API registry pseudo-index
 	"_R",
 

@@ -8,7 +8,7 @@ debug.ColorServer = Color(107, 186, 255)
 local errorPrefix = "[SERVER] "
 local errorColor = debug.ColorServer
 
-if (_CLIENT) then
+if (CLIENT) then
 	errorPrefix = "[CLIENT] "
 	errorColor = debug.ColorClient
 end

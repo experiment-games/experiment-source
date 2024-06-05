@@ -152,12 +152,9 @@ static int luasrc_MsgN(lua_State *L) {
     return 0;
 }
 
-static const luaL_Reg base_funcs[] = {{"print", luasrc_print},
-                                      {"Msg", luasrc_Msg},
-                                      {"MsgN", luasrc_MsgN},
-                                      {"type", luasrc_type},
-                                      {"include", luasrc_include},
-                                      {NULL, NULL}};
+static const luaL_Reg base_funcs[] = {
+    {"print", luasrc_print}, {"Msg", luasrc_Msg},         {"MsgN", luasrc_MsgN},
+    {"type", luasrc_type},   {"include", luasrc_include}, {NULL, NULL}};
 
 static void base_open(lua_State *L) {
     /* set global _R */
@@ -171,10 +168,10 @@ static void base_open(lua_State *L) {
     lua_setglobal(L, "_E");
 #ifdef CLIENT_DLL
     lua_pushboolean(L, 1);
-    lua_setglobal(L, "_CLIENT"); /* set global _CLIENT */
+    lua_setglobal(L, "CLIENT");
 #else
     lua_pushboolean(L, 1);
-    lua_setglobal(L, "_GAME"); /* set global _GAME */
+    lua_setglobal(L, "SERVER");
 #endif
 }
 
@@ -759,7 +756,7 @@ bool luasrc_SetGamemode(const char *gamemode) {
     lua_remove(L, -2);              // Remove gamemode table
     lua_pushstring(L, gamemode);    // Push gamemode name
     luasrc_pcall(L, 1, 1, 0);       // Call gamemode.Get(gamemode)
-    lua_setglobal(L, "_GAMEMODE");  // Set _GAMEMODE to the gamemode table
+    lua_setglobal(L, "GAMEMODE");   // Set GAMEMODE to the active gamemode table
 
     lua_getglobal(L, "gamemode");
     lua_getfield(L, -1, "InternalSetActiveName");

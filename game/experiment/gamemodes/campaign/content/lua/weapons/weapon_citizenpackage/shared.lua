@@ -46,7 +46,7 @@ end
 -------------------------------------------------------------------------------
 function SWEP:Drop( vecVelocity )
 	self:Drop( vecVelocity )
-if not _CLIENT then
+if not CLIENT then
 	UTIL.Remove( self )
 end
 end

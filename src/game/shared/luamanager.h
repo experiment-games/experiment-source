@@ -60,7 +60,7 @@
             lua_remove(L, -2);               \
             int args = 0;                    \
             lua_pushstring(L, functionName); \
-            lua_getglobal(L, "_GAMEMODE");   \
+            lua_getglobal(L, "GAMEMODE");    \
             args = 2;
 
 #define END_LUA_CALL_HOOK(nArgs, nresults) \

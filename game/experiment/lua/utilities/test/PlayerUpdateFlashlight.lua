@@ -5,7 +5,7 @@
 	Modified for Experiment.
 --]]
 
-if (not _CLIENT) then
+if (not CLIENT) then
 	return
 end
 

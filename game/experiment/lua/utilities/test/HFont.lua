@@ -3,9 +3,11 @@
 		Copyleft © 2010 - 2013, Team Sandbox, Some rights reserved.
 
 	Modified for Experiment.
+
+	lua_dofile_cl utilities/test/HFont.lua
 --]]
 
-if (not _CLIENT) then
+if (not CLIENT) then
 	return
 end
 
@@ -14,7 +16,7 @@ local vgui = require("vgui")
 local Frame = vgui.Frame
 local Panel = vgui.Panel
 
-surface.AddCustomFontFile("gamemodes\\sandbox\\content\\resource\\DINLi.ttf")
+surface.AddCustomFontFile("DIN-Light", "gamemodes\\sandbox\\content\\resource\\DINLi.ttf")
 local hTestFont = surface.CreateFont()
 surface.SetFontGlyphSet(hTestFont,
 	"DIN-Light",

@@ -111,7 +111,7 @@ function SWEP:PrimaryAttack()
 	angles.y = angles.y + random.RandomInt(-1, 1)
 	angles.z = 0
 
-	if not _CLIENT then
+	if not CLIENT then
 		pPlayer:SnapEyeAngles(angles)
 	end
 

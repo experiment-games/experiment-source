@@ -7,7 +7,7 @@
 	Purpose: Dumps an individual class in wiki format for documentation.
 --]]
 
-local curdir = "wiki/classes/" .. (_CLIENT and "client" or "server")
+local curdir = "wiki/classes/" .. (CLIENT and "client" or "server")
 filesystem.CreateDirHierarchy(curdir, "MOD")
 
 local classes = {}

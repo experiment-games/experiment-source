@@ -14,15 +14,16 @@ if (pPlayer == NULL) then
 	return
 end
 
-local vForward = pPlayer:EyeVectors()
+local vForward = Vector()
+pPlayer:EyeVectors(vForward)
 
 local vecEye = pPlayer:EyePosition()
 local tr = trace_t()
 UTIL.TraceLine(vecEye, vecEye + vForward * 10000, MASK_SHOT, pPlayer, COLLISION_GROUP_NONE, tr)
-MsgN(tr)
+MsgN(tostring(tr))
 local pEntity = tr.m_pEnt
-MsgN(tostring(pEntity) .. " (" .. (not _CLIENT and pEntity:GetEntityName() or "") .. ")")
+MsgN(tostring(pEntity) .. " (" .. (not CLIENT and pEntity:GetEntityName() or "") .. ")")
 if (pEntity ~= NULL) then
-	MsgN(pEntity:GetModelName())
+	MsgN(tostring(pEntity:GetModelName()))
 	pEntity:SetRenderColor(255, 0, 0, 255)
 end

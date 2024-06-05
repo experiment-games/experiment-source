@@ -9,7 +9,7 @@ local Warning = dbg.Warning
 local Msg = dbg.Msg
 
 function ENT:Initialize()
-	if (_CLIENT) then
+	if (CLIENT) then
 		return
 	end
 

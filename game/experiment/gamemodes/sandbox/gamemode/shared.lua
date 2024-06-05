@@ -11,7 +11,7 @@ GM.Developer = "Team Sandbox"
 GM.Manual    = nil
 
 function GM:Initialize()
-	if (not _CLIENT) then
+	if (not CLIENT) then
 		engine.ServerCommand("mp_falldamage 1\n")
 		engine.ServerCommand("mp_flashlight 1\n")
 	else
@@ -33,7 +33,7 @@ function GM:PlayerPlayStepSound(pPlayer, vecOrigin, psurface, fvol, force)
 		return false
 	end
 
-	if (_CLIENT) then
+	if (CLIENT) then
 		-- during prediction play footstep sounds only once
 		if (prediction.InPrediction() and not prediction.IsFirstTimePredicted()) then
 			return false
@@ -77,7 +77,7 @@ function GM:PlayerPlayStepSound(pPlayer, vecOrigin, psurface, fvol, force)
 	local filter = CRecipientFilter()
 	filter:AddRecipientsByPAS(vecOrigin)
 
-	if not _CLIENT then
+	if not CLIENT then
 		-- in MP, server removes all players in the vecOrigin's PVS, these players generate the footsteps client side
 		if (gpGlobals.maxClients() > 1) then
 			filter:RemoveRecipientsByPVS(vecOrigin)

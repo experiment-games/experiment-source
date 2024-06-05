@@ -5,6 +5,10 @@
 	Modified for Experiment.
 --]]
 
+if (not SERVER) then
+	return
+end
+
 local pEntity = gEntList.FindEntityByClassname(pEntity, "prop_physics*")
 while (pEntity ~= NULL) do
 	pEntity:SetRenderColor(255, 0, 0, 255)

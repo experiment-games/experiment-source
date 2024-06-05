@@ -8,3 +8,5 @@ include("include.lua")
 include("KeyValues.lua")
 include("PlayerUpdateFlashlight.lua")
 include("UTIL_EntitiesIn.lua")
+
+-- lua_dofile utilities/test/run_all.lua
