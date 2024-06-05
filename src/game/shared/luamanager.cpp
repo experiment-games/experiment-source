@@ -428,7 +428,9 @@ LUA_API void luasrc_dofolder(lua_State *L, const char *path) {
     char searchPath[512];
     Q_snprintf(searchPath, sizeof(searchPath), "%s\\*.lua", path);
 
+    int stackBefore = lua_gettop(L);
     char const *fn = g_pFullFileSystem->FindFirstEx(searchPath, "MOD", &fh);
+
     while (fn) {
         if (fn[0] != '.') {
             char ext[10];
@@ -441,6 +443,9 @@ LUA_API void luasrc_dofolder(lua_State *L, const char *path) {
                 filesystem->RelativePathToFullPath(relative, "MOD", loadname,
                                                    sizeof(loadname));
                 luasrc_dofile(L, loadname);
+
+                // Discard any return values
+                lua_settop(L, stackBefore);
             }
         }
 

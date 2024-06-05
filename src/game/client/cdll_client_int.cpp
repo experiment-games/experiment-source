@@ -1598,7 +1598,7 @@ void CHLClient::LevelInitPreEntity(char const *pMapName) {
     luasrc_LoadWeapons();
     luasrc_LoadEntities();
     // luasrc_LoadEffects();
-
+    
     // Andrew; loadup base gamemode.
     luasrc_LoadGamemode(LUA_BASE_GAMEMODE);
 
