@@ -5,40 +5,46 @@
 	Modified for Experiment.
 --]]
 
-if not CLIENT then return end
+if (not CLIENT) then
+	return
+end
 
-require( "vgui" )
+require("vgui")
 
 local error = error
 local table = table
 
 -- Private list of helpers
-local tHelpers = {}
+local registeredHelpers = {}
 
--------------------------------------------------------------------------------
--- Purpose: Registers a panel and creates a factory for it in the vgui
---          namespace
--- Input  : tPanel - Panel table object
---          strName - Name of the panel
---          strBaseClass - Name of the base class
--- Output :
--------------------------------------------------------------------------------
-function vgui.Register( tPanel, strName, strBaseClass )
-  if ( vgui[ strName ] ~= nil ) then
-    error( "attempt to register existing panel class \"" .. strName .. "\"", 2 )
-  end
-  if ( vgui[ strBaseClass ] == nil ) then
-    error( "attempt to register panel class with non-existing base class", 2 )
-  end
-  tPanel.__classname = strName
-  tPanel.__base = strBaseClass
-  tHelpers[ strName ] = tPanel
-  vgui[ strName ] = function( ... )
-    local helper = tHelpers[ strName ]
-    local panel = vgui[ helper.__base ]( ... )
-    table.Merge( panel:GetRefTable(), helper )
-    panel.BaseClass = tHelpers[ helper.__base ]
-    panel:Init( ... )
-    return panel
-  end
+--- Registers a panel and creates a factory for it in the vgui namespace
+--- @param panelTable Panel table object
+--- @param panelName Name of the panel
+--- @param baseClassName Name of the base class
+function vgui.Register(panelTable, panelName, baseClassName)
+	if (vgui[panelName] ~= nil) then
+		error("attempt to register existing panel class \"" .. panelName .. "\"", 2)
+	end
+
+	if (vgui[baseClassName] == nil) then
+		error("attempt to register panel class with non-existing base class", 2)
+	end
+
+	panelTable.__classname = panelName
+	panelTable.__base = baseClassName
+
+	registeredHelpers[panelName] = panelTable
+
+	vgui[panelName] = function(...)
+		local helper = registeredHelpers[panelName]
+		local panel = vgui[helper.__base](...)
+
+		table.Merge(panel:GetRefTable(), helper)
+
+		panel.BaseClass = registeredHelpers[helper.__base]
+
+		panel:Init(...)
+
+		return panel
+	end
 end
