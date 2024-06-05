@@ -5,7 +5,7 @@
 	Modified for Experiment.
 --]]
 
-local print = print
+local print = MsgN
 
 function _R.KeyValues.Print( self, i )
   i = i or 0

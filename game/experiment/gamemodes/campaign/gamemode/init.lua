@@ -22,7 +22,7 @@ function GM:DebugEntityNames()
   local pEntity = gEntList.FirstEnt()
   while ( pEntity ~= NULL ) do
     if ( pEntity:GetEntityName() ~= "" ) then
-      print( tostring( pEntity ) .. " (" .. pEntity:GetEntityName() .. ")" )
+      MsgN( tostring( pEntity ) .. " (" .. pEntity:GetEntityName() .. ")" )
     end
     pEntity = gEntList.NextEnt( pEntity )
   end

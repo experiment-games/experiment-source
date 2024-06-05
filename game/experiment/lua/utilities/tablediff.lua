@@ -1,4 +1,4 @@
---======== Copyleft © 2010-2011, Team Sandbox, Some rights reserved. ========--
+--======== Copyleft ï¿½ 2010-2011, Team Sandbox, Some rights reserved. ========--
 --
 -- Purpose: Print the similarities between two tables.
 --
@@ -29,10 +29,10 @@ end
 table.sort( ts )
 
 if ( #ts == 0 ) then
-  print( "Found no shared values!" )
+  MsgN( "Found no shared values!" )
 else
-  print( "Found " .. #ts .. " shared values!" )
+  MsgN( "Found " .. #ts .. " shared values!" )
   for _, v in pairs( ts ) do
-    print( v )
+    MsgN( v )
   end
 end

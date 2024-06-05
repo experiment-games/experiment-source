@@ -1,4 +1,4 @@
---========== Copyleft © 2010, Team Sandbox, Some rights reserved. ===========--
+--========== Copyleft ï¿½ 2010, Team Sandbox, Some rights reserved. ===========--
 --
 -- Purpose: Dumps a list of all INetworkStringTables
 --
@@ -11,6 +11,6 @@ repeat
   if ( t == nil ) then
     break
   end
-  print( t:GetTableName() )
+  MsgN( t:GetTableName() )
   i = i + 1
 until t == nil

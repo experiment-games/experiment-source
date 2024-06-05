@@ -43,4 +43,4 @@ function CContentDialog:Run()
 	self:Activate()
 end
 
-vgui.register(CContentDialog, "CContentDialog", "PropertyDialog")
+vgui.Register(CContentDialog, "CContentDialog", "PropertyDialog")

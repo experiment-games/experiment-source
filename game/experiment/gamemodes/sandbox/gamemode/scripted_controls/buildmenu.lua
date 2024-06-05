@@ -74,4 +74,4 @@ function CBuildMenu:OnClose()
 	self.BaseClass.OnClose( self )
 end
 
-vgui.register( CBuildMenu, "CBuildMenu", "Panel" )
+vgui.Register( CBuildMenu, "CBuildMenu", "Panel" )

@@ -13,4 +13,6 @@ GAMEMODE = _GAMEMODE
 
 MsgC = ConDColorMsg
 
+PrintTable = table.Print
+
 -- TODO: The rest of the Garry's Mod compatibility layer

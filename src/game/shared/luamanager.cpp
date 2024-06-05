@@ -330,16 +330,18 @@ void luasrc_init_gameui(void) {
 
     luasrc_setmodulepaths(LGameUI);
 
-    luaopen_bit(LGameUI);
-    luaopen_ConCommand(LGameUI);
-    luaopen_dbg(LGameUI);
-    luaopen_engine(LGameUI);
-    luaopen_enginevgui(LGameUI);
-    luaopen_FCVAR(LGameUI);
-    luaopen_KeyValues(LGameUI);
-    luaopen_Panel(LGameUI);
-    luaopen_surface(LGameUI);
-    luaopen_vgui(LGameUI);
+    int leftOnStack = 0;
+    leftOnStack += luaopen_bit(LGameUI);
+    leftOnStack += luaopen_ConCommand(LGameUI);
+    leftOnStack += luaopen_dbg(LGameUI);
+    leftOnStack += luaopen_engine(LGameUI);
+    leftOnStack += luaopen_enginevgui(LGameUI);
+    leftOnStack += luaopen_FCVAR(LGameUI);
+    leftOnStack += luaopen_KeyValues(LGameUI);
+    leftOnStack += luaopen_Panel(LGameUI);
+    leftOnStack += luaopen_surface(LGameUI);
+    leftOnStack += luaopen_vgui(LGameUI);
+    lua_pop(LGameUI, leftOnStack);
 
     Msg("Lua Menu initialized (" LUA_VERSION ")\n");
 }
@@ -916,45 +918,51 @@ CON_COMMAND_F_COMPLETION(lua_dofile, "Load and run a Lua file", 0,
 #endif
 
 #if DEBUG
+static void DumpLuaStack(lua_State *L) {
+    int n = lua_gettop(L); /* number of objects */
+    int i;
+
+    for (i = 1; i <= n; i++) {
+        if (lua_istable(L, -1)) {
+            lua_getglobal(L, "table");
+            lua_getfield(L, -1, "Print");
+            lua_remove(L, -2);
+            lua_pushvalue(L, i);
+            lua_call(L, 1, 0);
+        } else {
+            const char *s;
+            lua_getglobal(L, "tostring");
+            lua_pushvalue(L, -1); /* function to be called */
+            lua_pushvalue(L, i);  /* value to print */
+            lua_call(L, 1, 1);
+
+            s = lua_tostring(L, -1); /* get result */
+            Warning(" %d:\t%s\n", i, s);
+            lua_pop(L, 1); /* pop result */
+        }
+    }
+
+    if (n > 0)
+        Warning("Warning: %d object(s) left on the stack!\n", n);
+}
+
 #ifdef CLIENT_DLL
 CON_COMMAND(lua_dumpstack_cl, "Prints the Lua stack") {
     if (!g_bLuaInitialized)
         return;
-    int n = lua_gettop(L); /* number of objects */
-    int i;
-    lua_getglobal(L, "tostring");
-    for (i = 1; i <= n; i++) {
-        const char *s;
-        lua_pushvalue(L, -1); /* function to be called */
-        lua_pushvalue(L, i);  /* value to print */
-        lua_call(L, 1, 1);
-        s = lua_tostring(L, -1); /* get result */
-        Warning(" %d:\t%s\n", i, s);
-        lua_pop(L, 1); /* pop result */
-    }
-    lua_pop(L, 1); /* pop function */
-    if (n > 0)
-        Warning("Warning: %d object(s) left on the stack!\n", n);
+
+    DumpLuaStack(L);
+}
+
+CON_COMMAND(lua_dumpstack_menu, "Prints the Lua stack") {
+    DumpLuaStack(LGameUI);
 }
 #else
 CON_COMMAND(lua_dumpstack, "Prints the Lua stack") {
     if (!g_bLuaInitialized)
         return;
-    int n = lua_gettop(L); /* number of objects */
-    int i;
-    lua_getglobal(L, "tostring");
-    for (i = 1; i <= n; i++) {
-        const char *s;
-        lua_pushvalue(L, -1); /* function to be called */
-        lua_pushvalue(L, i);  /* value to print */
-        lua_call(L, 1, 1);
-        s = lua_tostring(L, -1); /* get result */
-        Warning(" %d:\t%s\n", i, s);
-        lua_pop(L, 1); /* pop result */
-    }
-    lua_pop(L, 1); /* pop function */
-    if (n > 0)
-        Warning("Warning: %d object(s) left on the stack!\n", n);
+
+    DumpLuaStack(L);
 }
 #endif
 #endif

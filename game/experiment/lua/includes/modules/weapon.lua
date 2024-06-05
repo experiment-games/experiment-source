@@ -26,7 +26,7 @@ function MODULE.Get(strClassname)
 		return nil
 	end
 
-	tWeapon = table.copy(tWeapon)
+	tWeapon = table.Copy(tWeapon)
 
 	if (tWeapon.__base ~= strClassname) then
 		local tBaseWeapon = get(tWeapon.__base)
@@ -34,7 +34,7 @@ function MODULE.Get(strClassname)
 		if (not tBaseWeapon) then
 			Warning("WARNING: Attempted to initialize weapon \"" .. strClassname .. "\" with non-existing base class!\n")
 		else
-			return table.inherit(tWeapon, tBaseWeapon)
+			return table.Inherit(tWeapon, tBaseWeapon)
 		end
 	end
 
@@ -51,7 +51,7 @@ function MODULE.GetStored()
 end
 
 function MODULE.GetList()
-	return table.copy(tWeapons)
+	return table.Copy(tWeapons)
 end
 
 -------------------------------------------------------------------------------

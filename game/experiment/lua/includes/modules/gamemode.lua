@@ -11,7 +11,7 @@ require("hook")
 
 local hook = hook
 local table = table
-local print = print
+local print = MsgN
 local _BASE_GAMEMODE = _BASE_GAMEMODE
 local _G = _G
 
@@ -53,11 +53,11 @@ end
 --- @param baseGameMode string Name
 function MODULE.Register(gamemodeTable, gamemodeName, baseGameMode)
 	if (MODULE.Get(gamemodeName) ~= nil and _G._GAMEMODE ~= nil) then
-		gamemodeTable = table.inherit(gamemodeTable, _G._GAMEMODE)
+		gamemodeTable = table.Inherit(gamemodeTable, _G._GAMEMODE)
 	end
 
 	if (gamemodeName ~= _BASE_GAMEMODE) then
-		gamemodeTable = table.inherit(gamemodeTable, MODULE.Get(baseGameMode))
+		gamemodeTable = table.Inherit(gamemodeTable, MODULE.Get(baseGameMode))
 	end
 
 	registeredGamemodes[gamemodeName] = gamemodeTable

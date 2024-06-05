@@ -11,17 +11,17 @@ local printError = debug.PrintError
 
 local hFile = filesystem.Open("gamecontent.txt", "r")
 local size = filesystem.Size(hFile)
-print("hFile = " .. tostring(hFile))
+MsgN("hFile = " .. tostring(hFile))
 local bytesRead, pOutput = filesystem.Read(size, hFile)
-print("bytes: " .. bytesRead)
-print("output:\n" .. pOutput)
-print("Closing hFile, handle should become invalid!")
+MsgN("bytes: " .. bytesRead)
+MsgN("output:\n" .. pOutput)
+MsgN("Closing hFile, handle should become invalid!")
 filesystem.Close(hFile)
-print("hFile = " .. tostring(hFile))
+MsgN("hFile = " .. tostring(hFile))
 
-print("Testing error handling...")
+MsgN("Testing error handling...")
 local status, strError = xpcall(function()
-	print("filesystem.IsOk( hFile ) = " .. tostring(filesystem.IsOk(hFile)))
+	MsgN("filesystem.IsOk( hFile ) = " .. tostring(filesystem.IsOk(hFile)))
 end, printError)
 
 if (status == false) then
@@ -30,9 +30,9 @@ else
 	error("WARNING: test did not fail as expected on line 32!", 2)
 end
 
-print("Testing error handling with non-filehandle type...")
+MsgN("Testing error handling with non-filehandle type...")
 local status, strError = xpcall(function()
-	print("filesystem.IsOk( hFile ) = " .. tostring(filesystem.IsOk(-1)))
+	MsgN("filesystem.IsOk( hFile ) = " .. tostring(filesystem.IsOk(-1)))
 end, printError)
 
 if (status == false) then

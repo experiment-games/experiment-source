@@ -24,7 +24,7 @@ function MODULE.Get(className)
 		return nil
 	end
 
-	foundEntity = table.copy(foundEntity)
+	foundEntity = table.Copy(foundEntity)
 
 	if (foundEntity.__base ~= className) then
 		local tBaseEntity = MODULE.Get(foundEntity.__base)
@@ -32,7 +32,7 @@ function MODULE.Get(className)
 		if (not tBaseEntity) then
 			Warning("WARNING: Attempted to initialize entity \"" .. className .. "\" with non-existing base class!\n")
 		else
-			return table.inherit(foundEntity, tBaseEntity)
+			return table.Inherit(foundEntity, tBaseEntity)
 		end
 	end
 

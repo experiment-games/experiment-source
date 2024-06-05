@@ -1,4 +1,4 @@
---======== Copyleft © 2010-2011, Team Sandbox, Some rights reserved. ========--
+--======== Copyleft ï¿½ 2010-2011, Team Sandbox, Some rights reserved. ========--
 --
 -- Purpose: Dump the size of _G.
 --
@@ -9,4 +9,4 @@ for k, v in pairs( _G ) do
   n = n + 1
 end
 
-print( n )
+MsgN( n )

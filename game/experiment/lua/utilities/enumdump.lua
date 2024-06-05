@@ -1,4 +1,4 @@
---========== Copyleft © 2010, Team Sandbox, Some rights reserved. ===========--
+--========== Copyleft ï¿½ 2010, Team Sandbox, Some rights reserved. ===========--
 --
 -- Purpose: Dumps a list of all enumeration libraries in _E
 --
@@ -47,8 +47,8 @@ local function vpairs( t, f )
 end
 
 for name, lib in kpairs( _E ) do
-  print( "_E." .. name .. ": " .. tostring( lib ) )
+  MsgN( "_E." .. name .. ": " .. tostring( lib ) )
   for enum, v in vpairs( lib ) do
-  	print( "  _E." .. name .. "." .. enum .. ": " .. v )
+  	MsgN( "  _E." .. name .. "." .. enum .. ": " .. v )
   end
 end

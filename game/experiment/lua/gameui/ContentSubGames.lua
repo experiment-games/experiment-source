@@ -176,4 +176,4 @@ function CContentSubGames:OnApplyChanges()
 	pGameContent:deleteThis()
 end
 
-vgui.register(CContentSubGames, "CContentSubGames", "PropertyPage")
+vgui.Register(CContentSubGames, "CContentSubGames", "PropertyPage")

@@ -23,7 +23,7 @@ local tHelpers = {}
 --          strBaseClass - Name of the base class
 -- Output :
 -------------------------------------------------------------------------------
-function vgui.register( tPanel, strName, strBaseClass )
+function vgui.Register( tPanel, strName, strBaseClass )
   if ( vgui[ strName ] ~= nil ) then
     error( "attempt to register existing panel class \"" .. strName .. "\"", 2 )
   end
@@ -36,7 +36,7 @@ function vgui.register( tPanel, strName, strBaseClass )
   vgui[ strName ] = function( ... )
     local helper = tHelpers[ strName ]
     local panel = vgui[ helper.__base ]( ... )
-    table.merge( panel:GetRefTable(), helper )
+    table.Merge( panel:GetRefTable(), helper )
     panel.BaseClass = tHelpers[ helper.__base ]
     panel:Init( ... )
     return panel

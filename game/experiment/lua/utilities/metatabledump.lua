@@ -1,4 +1,4 @@
---========== Copyleft © 2010, Team Sandbox, Some rights reserved. ===========--
+--========== Copyleft ï¿½ 2010, Team Sandbox, Some rights reserved. ===========--
 --
 -- Purpose: Dumps a list of all metatables
 --
@@ -18,5 +18,5 @@ end
 
 table.sort( tMetatables )
 for _, metatable in pairs( tMetatables ) do
-  print( "_R." .. metatable )
+  MsgN( "_R." .. metatable )
 end
