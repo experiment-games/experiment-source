@@ -55,10 +55,7 @@ public:
 	virtual bool PointsMayBeCaptured( void ) { return true; }
 	virtual void SetLastCapPointChanged( int iIndex ) { return; }
 
-#ifdef CLIENT_DLL
-
-#else
-
+#ifndef CLIENT_DLL
 	CTeamplayRules();
 	virtual ~CTeamplayRules() {};
 
@@ -77,7 +74,13 @@ public:
 	virtual void DeathNotice( CBasePlayer *pVictim, const CTakeDamageInfo &info );
 	virtual const char *GetGameDescription( void ) { return "Teamplay"; }  // this is the game name that gets seen in the server browser
 	virtual void PlayerKilled( CBasePlayer *pVictim, const CTakeDamageInfo &info );
+#endif
+
+#if defined(LUA_SDK) || !defined(CLIENT_DLL)
 	virtual void Think ( void );
+#endif
+
+#ifndef CLIENT_DLL
 	virtual int GetTeamIndex( const char *pTeamName );
 	virtual const char *GetIndexedTeamName( int teamIndex );
 	virtual bool IsValidTeam( const char *pTeamName );

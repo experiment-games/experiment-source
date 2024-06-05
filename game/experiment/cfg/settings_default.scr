@@ -54,8 +54,8 @@ DESCRIPTION SERVER_OPTIONS
  		{
  			LIST
  			"#Experiment_Gamemode_Sandbox" "sandbox"
- 			"#Experiment_Gamemode_Campaign" "campaign"
  			"#Experiment_Gamemode_Deathmatch" "deathmatch"
+ 			"#Experiment_Gamemode_Base" "base"
  		}
  		{ "0" }
  	}

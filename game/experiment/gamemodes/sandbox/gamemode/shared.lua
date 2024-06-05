@@ -20,16 +20,16 @@ function GM:Initialize()
 	end
 end
 
-function GM:FlWeaponRespawnTime(pWeapon)
+function GM:FlWeaponRespawnTime(targetWeapon)
 	return -1
 end
 
-function GM:FlWeaponTryRespawn(pWeapon)
+function GM:FlWeaponTryRespawn(targetWeapon)
 	return 0
 end
 
-function GM:PlayerPlayStepSound(pPlayer, vecOrigin, psurface, fvol, force)
-	if (gpGlobals.maxClients() > 1 and cvar.FindVar("sv_footsteps"):GetFloat() == 0) then
+function GM:PlayerPlayStepSound(client, vecOrigin, psurface, fvol, force)
+	if (gpGlobals.maxClients() > 1 and cvars.FindVar("sv_footsteps"):GetFloat() == 0) then
 		return false
 	end
 
@@ -44,20 +44,20 @@ function GM:PlayerPlayStepSound(pPlayer, vecOrigin, psurface, fvol, force)
 		return false
 	end
 
-	local nSide = pPlayer:GetPlayerLocalData().m_nStepside
+	local nSide = client:GetPlayerLocalData().m_nStepside
 	local stepSoundName = nSide ~= 0 and psurface.sounds.stepleft or psurface.sounds.stepright
 	if (not stepSoundName) then
 		return false
 	end
 
-	pPlayer:SetPlayerLocalData("m_nStepside", nSide == 0 and 1 or 0)
+	client:SetPlayerLocalData("m_nStepside", nSide == 0 and 1 or 0)
 
 	local params
 
 	assert(nSide == 0 or nSide == 1)
 
-	if (pPlayer:GetStepSoundCache()[nSide].m_usSoundNameIndex == stepSoundName) then
-		params = pPlayer:GetStepSoundCache()[nSide].m_SoundParameters
+	if (client:GetStepSoundCache()[nSide].m_usSoundNameIndex == stepSoundName) then
+		params = client:GetStepSoundCache()[nSide].m_SoundParameters
 	else
 		local physprops = MoveHelper():GetSurfaceProps()
 		local pSoundName = physprops:GetString(stepSoundName)
@@ -69,8 +69,8 @@ function GM:PlayerPlayStepSound(pPlayer, vecOrigin, psurface, fvol, force)
 
 		-- Only cache if there's one option.  Otherwise we'd never here any other sounds
 		if (params.count == 1) then
-			pPlayer:SetStepSoundCache(nSide, "m_usSoundNameIndex", stepSoundName)
-			pPlayer:SetStepSoundCache(nSide, "m_SoundParameters", params)
+			client:SetStepSoundCache(nSide, "m_usSoundNameIndex", stepSoundName)
+			client:SetStepSoundCache(nSide, "m_SoundParameters", params)
 		end
 	end
 
@@ -93,7 +93,7 @@ function GM:PlayerPlayStepSound(pPlayer, vecOrigin, psurface, fvol, force)
 	ep.m_nPitch = params.pitch
 	ep.m_pOrigin = vecOrigin
 
-	_R.CBaseEntity.EmitSound(filter, pPlayer:entindex(), ep)
+	_R.CBaseEntity.EmitSound(filter, client:entindex(), ep)
 	return false
 end
 

@@ -1,4 +1,4 @@
-//===== Copyright © 1996-2005, Valve Corporation, All rights reserved. ======//
+//===== Copyright Â© 1996-2005, Valve Corporation, All rights reserved. ======//
 //
 // Purpose: 
 //
@@ -64,7 +64,7 @@ static const luaL_Reg cvarlib[] = {
 
 void CV_GlobalChange_Lua( IConVar *var, const char *pOldString, float flOldValue )
 {
-  lua_getglobal(L, "cvar");
+  lua_getglobal(L, "cvars");
   if (lua_istable(L, -1)) {
 	lua_getfield(L, -1, "CallGlobalChangeCallbacks");
 	if (lua_isfunction(L, -1)) {
@@ -97,7 +97,7 @@ void RemoveGlobalChangeCallbacks( void )
 /*
 ** Open cvar library
 */
-LUALIB_API int luaopen_cvar (lua_State *L) {
+LUALIB_API int luaopen_cvars (lua_State *L) {
   luaL_register(L, LUA_CVARLIBNAME, cvarlib);
   InstallGlobalChangeCallbacks();
   return 1;

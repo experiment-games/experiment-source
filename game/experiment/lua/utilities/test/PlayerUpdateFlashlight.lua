@@ -11,7 +11,7 @@ end
 
 local AngleVectors = mathlib.AngleVectors
 
-hook.Add("PlayerUpdateFlashlight", "PlayerUpdateWeaponFlashlight",
+hooks.Add("PlayerUpdateFlashlight", "PlayerUpdateWeaponFlashlight",
 	function(client, position, vecForward, vecRight, vecUp, nDistance)
 		--if ( not input.CAM_IsThirdPerson() ) then
 		local vm = client:GetViewModel()

@@ -5,7 +5,7 @@
 	Modified for Experiment.
 --]]
 
-hook.Add("PlayerTraceAttack", "PlayerTraceTeslaHitboxesAttack", function(pPlayer, info, vecDir, ptr)
+hooks.Add("PlayerTraceAttack", "PlayerTraceTeslaHitboxesAttack", function(client, info, vecDir, ptr)
 	local pEntity = ptr.m_pEnt
 	if (pEntity ~= NULL) then
 		-- This is taken straight out of CNPC_Hunter::TeslaThink()

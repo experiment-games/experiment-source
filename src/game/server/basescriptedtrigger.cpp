@@ -87,7 +87,7 @@ CBaseScriptedTrigger::~CBaseScriptedTrigger(void) {
 }
 
 void CBaseScriptedTrigger::LoadScriptedTrigger(void) {
-    lua_getglobal(L, "entity");
+    lua_getglobal(L, "entities");
     if (lua_istable(L, -1)) {
         lua_getfield(L, -1, "Get");
         if (lua_isfunction(L, -1)) {
@@ -120,7 +120,7 @@ void CBaseScriptedTrigger::InitScriptedTrigger(void) {
     Q_strlower(className);
     SetClassname(className);
 
-    lua_getglobal(L, "entity");
+    lua_getglobal(L, "entities");
     if (lua_istable(L, -1)) {
         lua_getfield(L, -1, "Get");
         if (lua_isfunction(L, -1)) {

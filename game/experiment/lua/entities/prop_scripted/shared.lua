@@ -5,8 +5,8 @@
 	Modified for Experiment.
 --]]
 
-ENT.__base = "prop_scripted"
-ENT.__factory = "CBaseAnimating"
+ENT.Base = "prop_scripted"
+ENT.Factory = "CBaseAnimating"
 
 function ENT:Initialize()
 end

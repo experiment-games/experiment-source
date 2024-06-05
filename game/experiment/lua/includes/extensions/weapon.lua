@@ -17,14 +17,14 @@ function _R.CBaseCombatWeapon.WeaponSound( self, sound_type, soundtime )
   end
 
   -- Only the player fires this way so we can cast
-  local pPlayer = self:GetOwner()
+  local client = self:GetOwner()
 
   -- if ( gpGlobals.maxClients() > 1 ) then
   --   WeaponSound( self, sound_type, soundtime )
   -- else
     local shootsound = self:GetShootSound( sound_type )
-    if ( ToBaseEntity( pPlayer ) ~= NULL ) then
-      pPlayer:EmitSound( shootsound )
+    if ( ToBaseEntity( client ) ~= NULL ) then
+      client:EmitSound( shootsound )
     else
       self:EmitSound( shootsound )
     end

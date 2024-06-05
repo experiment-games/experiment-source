@@ -5,13 +5,14 @@
 	Modified for Experiment.
 --]]
 
-GM.Name      = "Deathmatch"
-GM.Homepage  = "http://www.steampowered.com/"
+GM.Name = "Deathmatch"
+GM.Homepage = "http://www.steampowered.com/"
 GM.Developer = "Valve"
-GM.Manual    = nil
+GM.Manual = nil
+GM.Base = "sandbox"
 
 function GM:Initialize()
-	self.m_bTeamPlayEnabled = cvar.FindVar("mp_teamplay"):GetBool()
+	self.m_bTeamPlayEnabled = cvars.FindVar("mp_teamplay"):GetBool()
 end
 
 function GM:Shutdown()
@@ -22,13 +23,13 @@ function GM:Shutdown()
 	-- it's implementation to be redundant.
 end
 
-function GM:CalcPlayerView(pPlayer, eyeOrigin, eyeAngles, fov)
+function GM:CalcPlayerView(client, eyeOrigin, eyeAngles, fov)
 end
 
 function GM:CheckGameOver()
 end
 
-function GM:ClientSettingsChanged(pPlayer)
+function GM:ClientSettingsChanged(client)
 end
 
 function GM:CreateStandardEntities()
@@ -37,10 +38,10 @@ end
 function GM:DeathNotice(pVictim, info)
 end
 
-function GM:FlWeaponRespawnTime(pWeapon)
+function GM:FlWeaponRespawnTime(targetWeapon)
 end
 
-function GM:FlWeaponTryRespawn(pWeapon)
+function GM:FlWeaponTryRespawn(targetWeapon)
 end
 
 function GM:GetGameDescription()
@@ -52,7 +53,7 @@ end
 
 function GM:GetMapRemainingTime()
 	-- if timelimit is disabled, return 0
-	if (cvar.FindVar("mp_timelimit"):GetInt() <= 0) then
+	if (cvars.FindVar("mp_timelimit"):GetInt() <= 0) then
 		return 0
 	end
 end
@@ -77,16 +78,16 @@ end
 function GM:PlayerKilled(pVictim, info)
 end
 
-function GM:PlayerPlayFootStep(pPlayer, vecOrigin, fvol, force)
+function GM:PlayerPlayFootStep(client, vecOrigin, fvol, force)
 end
 
-function GM:PlayerRelationship(pPlayer, pTarget)
+function GM:PlayerRelationship(client, pTarget)
 end
 
 function GM:PlayerTraceAttack(info, vecDir, ptr)
 end
 
-function GM:PlayerUse(pPlayer)
+function GM:PlayerUse(client)
 end
 
 function GM:Precache()
@@ -99,5 +100,5 @@ end
 function GM:Think()
 end
 
-function GM:VecWeaponRespawnSpot(pWeapon)
+function GM:VecWeaponRespawnSpot(targetWeapon)
 end

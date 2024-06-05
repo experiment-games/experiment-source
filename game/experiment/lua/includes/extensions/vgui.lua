@@ -31,17 +31,17 @@ function vgui.Register(panelTable, panelName, baseClassName)
 	end
 
 	panelTable.__classname = panelName
-	panelTable.__base = baseClassName
+	panelTable.Base = baseClassName
 
 	registeredHelpers[panelName] = panelTable
 
 	vgui[panelName] = function(...)
 		local helper = registeredHelpers[panelName]
-		local panel = vgui[helper.__base](...)
+		local panel = vgui[helper.Base](...)
 
 		table.Merge(panel:GetRefTable(), helper)
 
-		panel.BaseClass = registeredHelpers[helper.__base]
+		panel.BaseClass = registeredHelpers[helper.Base]
 
 		panel:Init(...)
 

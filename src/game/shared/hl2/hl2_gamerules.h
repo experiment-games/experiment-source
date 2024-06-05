@@ -61,9 +61,13 @@ private:
 
 	CHalfLife2();
 	virtual ~CHalfLife2() {}
+#endif
 
+#if defined(LUA_SDK) || !defined(CLIENT_DLL)
 	virtual void			Think( void );
+#endif
 
+#ifndef CLIENT_DLL
 	virtual bool			ClientCommand( CBaseEntity *pEdict, const CCommand &args );
 	virtual void			PlayerSpawn( CBasePlayer *pPlayer );
 

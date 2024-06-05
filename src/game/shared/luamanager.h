@@ -32,7 +32,7 @@
 #define LUA_BASE_ENTITY_CLASS "prop_scripted"
 #define LUA_BASE_ENTITY_FACTORY "CBaseAnimating"
 #define LUA_BASE_WEAPON "weapon_hl2mpbase_scriptedweapon"
-#define LUA_BASE_GAMEMODE "deathmatch"
+#define LUA_BASE_GAMEMODE "base"
 
 #define LUA_MAX_WEAPON_ACTIVITIES 32
 
@@ -53,7 +53,7 @@
     lua_pop(L, 1);
 
 #define BEGIN_LUA_CALL_HOOK(functionName)    \
-    lua_getglobal(L, "hook");                \
+    lua_getglobal(L, "hooks");                \
     if (lua_istable(L, -1)) {                \
         lua_getfield(L, -1, "Call");         \
         if (lua_isfunction(L, -1)) {         \

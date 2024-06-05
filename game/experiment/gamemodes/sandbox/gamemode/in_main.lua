@@ -7,20 +7,20 @@
 	Purpose: builds an intended command to send to the server
 --]]
 
-require("concommand")
+require("concommands")
 
-local function IN_BuildDown(pPlayer, pCmd, args)
+local function IN_BuildDown(client, pCmd, args)
 	if (gBuildMenuInterface) then
 		gBuildMenuInterface:ShowPanel(true)
 	end
 end
 
-concommand.Add("+buildmenu", IN_BuildDown, nil)
+concommands.Add("+buildmenu", IN_BuildDown, nil)
 
-local function IN_BuildUp(pPlayer, pCmd, args)
+local function IN_BuildUp(client, pCmd, args)
 	if (gBuildMenuInterface) then
 		gBuildMenuInterface:ShowPanel(false)
 	end
 end
 
-concommand.Add("-buildmenu", IN_BuildUp, nil)
+concommands.Add("-buildmenu", IN_BuildUp, nil)

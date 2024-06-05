@@ -1,9 +1,9 @@
-_G.concommand = require("concommand")
-_G.cvars = require("cvar")
-_G.scripted_ents = require("entity")
-_G.gamemode = require("gamemode")
-_G.hook = require("hook")
-_G.weapons = require("weapon")
+_G.concommand = require("concommands")
+_G.cvars = require("cvars")
+_G.scripted_ents = require("entities")
+_G.gamemode = require("gamemodes")
+_G.hook = require("hooks")
+_G.weapons = require("weapons")
 
 unpack = unpack or table.unpack
 

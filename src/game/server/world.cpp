@@ -32,6 +32,10 @@
 #include "particle_parse.h"
 #include "globalstate.h"
 
+#ifdef LUA_SDK
+#include "luamanager.h"
+#endif
+
 // memdbgon must be the last include file in a .cpp file!!!
 #include "tier0/memdbgon.h"
 
@@ -505,9 +509,22 @@ void CWorld::DecalTrace( trace_t *pTrace, char const *decalName)
 	}
 }
 
-void CWorld::RegisterSharedActivities( void )
-{
-	ActivityList_RegisterSharedActivities();
+void CWorld::RegisterSharedActivities( void ) {
+#ifdef LUA_SDK
+    // Andrew; There's a big issue with including the Activity enumeration
+    // library, and that issue is that it's massive. While we clean up _G by
+    // placing it in it's own library and increase lookup times across nearly
+    // all of our resources, it may be best that we make it a standard practice
+    // for developers to look up the enumerations that they need on an
+    // as-needed basis, and store them as locals in their relative files, or
+    // simply use the raw value of that enumeration in scripts, which is the
+    // most performance efficient option.
+    // BEGIN_LUA_SET_ENUM_LIB( "Activity" );
+#endif
+    ActivityList_RegisterSharedActivities();
+#ifdef LUA_SDK
+    // END_LUA_SET_ENUM_LIB();
+#endif
 }
 
 void CWorld::RegisterSharedEvents( void )

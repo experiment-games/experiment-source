@@ -5,24 +5,24 @@
 	Modified for Experiment.
 --]]
 
-SWEP.printname        = "#HL2_357Handgun"
-SWEP.viewmodel        = "models/weapons/v_357.mdl"
-SWEP.playermodel      = "models/weapons/w_357.mdl"
-SWEP.anim_prefix      = "python"
-SWEP.bucket           = 1
-SWEP.bucket_position  = 1
+SWEP.PrintName        = "#HL2_357Handgun"
+SWEP.ViewModel        = "models/weapons/v_357.mdl"
+SWEP.WorldModel      = "models/weapons/w_357.mdl"
+SWEP.AnimationPrefix      = "python"
+SWEP.InventorySlot           = 1
+SWEP.InventorySlotPosition  = 1
 
-SWEP.clip_size        = 6
-SWEP.clip2_size       = -1
-SWEP.default_clip     = 6
-SWEP.default_clip2    = -1
-SWEP.primary_ammo     = "357"
-SWEP.secondary_ammo   = "None"
+SWEP.MaxClip        = 6
+SWEP.MaxClip2       = -1
+SWEP.DefaultClip     = 6
+SWEP.DefaultClip2    = -1
+SWEP.PrimaryAmmo     = "357"
+SWEP.SecondaryAmmo   = "None"
 
-SWEP.weight           = 7
-SWEP.item_flags       = 0
+SWEP.Weight           = 7
+SWEP.WeaponFlags       = 0
 
-SWEP.damage           = 75
+SWEP.Damage           = 75
 
 SWEP.SoundData        =
 {
@@ -30,9 +30,9 @@ SWEP.SoundData        =
 	single_shot = "Weapon_357.Single"
 }
 
-SWEP.showusagehint    = 0
-SWEP.autoswitchto     = 1
-SWEP.autoswitchfrom   = 1
+SWEP.ShowUsageHint    = 0
+SWEP.AutoSwitchTo     = 1
+SWEP.AutoSwitchFrom   = 1
 SWEP.BuiltRightHanded = 1
 SWEP.AllowFlipping    = 1
 SWEP.MeleeWeapon      = 0
@@ -65,9 +65,9 @@ end
 
 function SWEP:PrimaryAttack()
 	-- Only the player fires this way so we can cast
-	local pPlayer = self:GetOwner()
+	local client = self:GetOwner()
 
-	if (ToBaseEntity(pPlayer) == NULL) then
+	if (ToBaseEntity(client) == NULL) then
 		return
 	end
 
@@ -83,43 +83,43 @@ function SWEP:PrimaryAttack()
 	end
 
 	self:WeaponSound(1)
-	pPlayer:DoMuzzleFlash()
+	client:DoMuzzleFlash()
 
 	self:SendWeaponAnim(180)
-	pPlayer:SetAnimation(5)
-	ToHL2MPPlayer(pPlayer):DoAnimationEvent(0)
+	client:SetAnimation(5)
+	ToHL2MPPlayer(client):DoAnimationEvent(0)
 
 	self.m_flNextPrimaryAttack   = gpGlobals.curtime() + 0.75
 	self.m_flNextSecondaryAttack = gpGlobals.curtime() + 0.75
 
 	self.m_iClip1                = self.m_iClip1 - 1
 
-	local vecSrc                 = pPlayer:Weapon_ShootPosition()
-	local vecAiming              = pPlayer:GetAutoaimVector(0.08715574274766)
+	local vecSrc                 = client:Weapon_ShootPosition()
+	local vecAiming              = client:GetAutoaimVector(0.08715574274766)
 
 	local info                   = { m_iShots = 1, m_vecSrc = vecSrc, m_vecDirShooting = vecAiming, m_vecSpread =
 	vec3_origin, m_flDistance = MAX_TRACE_LENGTH, m_iAmmoType = self.m_iPrimaryAmmoType }
-	info.m_pAttacker             = pPlayer
+	info.m_pAttacker             = client
 
 	-- Fire the bullets, and force the first shot to be perfectly accuracy
-	pPlayer:FireBullets(info)
+	client:FireBullets(info)
 
 	--Disorient the player
-	local angles = pPlayer:GetLocalAngles()
+	local angles = client:GetLocalAngles()
 
 	angles.x = angles.x + random.RandomInt(-1, 1)
 	angles.y = angles.y + random.RandomInt(-1, 1)
 	angles.z = 0
 
 	if not CLIENT then
-		pPlayer:SnapEyeAngles(angles)
+		client:SnapEyeAngles(angles)
 	end
 
-	pPlayer:ViewPunch(QAngle(-8, random.RandomFloat(-2, 2), 0))
+	client:ViewPunch(QAngle(-8, random.RandomFloat(-2, 2), 0))
 
-	if (self.m_iClip1 == 0 and pPlayer:GetAmmoCount(self.m_iPrimaryAmmoType) <= 0) then
+	if (self.m_iClip1 == 0 and client:GetAmmoCount(self.m_iPrimaryAmmoType) <= 0) then
 		-- HEV suit - indicate out of ammo condition
-		pPlayer:SetSuitUpdate("!HEV_AMO0", 0, 0)
+		client:SetSuitUpdate("!HEV_AMO0", 0, 0)
 	end
 end
 

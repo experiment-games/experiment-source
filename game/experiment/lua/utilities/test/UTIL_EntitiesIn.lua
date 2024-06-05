@@ -17,8 +17,8 @@ local SPHERE_RADIUS_OUTER = 128
 local pairs = pairs
 local SPHERE_RADIUS_INNER = 64
 
-hook.Add("PlayerThink", "UTIL_EntityIn*", function(pPlayer)
-	vecOrigin = pPlayer:GetAbsOrigin()
+hooks.Add("PlayerThink", "UTIL_EntityIn*", function(client)
+	vecOrigin = client:GetAbsOrigin()
 	count, pList = UTIL_EntitiesInSphere(MAX_ENTITYARRAY, vecOrigin, SPHERE_RADIUS_OUTER, 0)
 	for _, pEntity in pairs(pList) do
 		if (pEntity ~= NULL) then

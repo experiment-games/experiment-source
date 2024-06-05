@@ -1,4 +1,4 @@
-//===== Copyright © 1996-2005, Valve Corporation, All rights reserved. ======//
+//===== Copyright Â© 1996-2005, Valve Corporation, All rights reserved. ======//
 //
 // Purpose: 
 //
@@ -120,7 +120,7 @@ void CC_GameUIConCommand( const CCommand& args )
 
 	MDLCACHE_CRITICAL_SECTION();
 
-	lua_getglobal( LGameUI, "concommand" );
+	lua_getglobal( LGameUI, "concommands" );
 	if ( lua_istable( LGameUI, -1 ) )
 	{
 		lua_getfield( LGameUI, -1, "Dispatch" );
@@ -167,7 +167,7 @@ void CC_ConCommand( const CCommand& args )
 
 	MDLCACHE_CRITICAL_SECTION();
 
-	lua_getglobal( L, "concommand" );
+	lua_getglobal( L, "concommands" );
 	if ( lua_istable( L, -1 ) )
 	{
 		lua_getfield( L, -1, "Dispatch" );
@@ -311,7 +311,7 @@ LUALIB_API int luaopen_ConCommand (lua_State *L) {
   luaL_register(L, NULL, ConCommandmeta);
   lua_pushvalue(L, -1);  /* push metatable */
   lua_setfield(L, -2, "__index");  /* metatable.__index = metatable */
-  lua_pushstring(L, "concommand");
+  lua_pushstring(L, "concommands");
   lua_setfield(L, -2, "__type");  /* metatable.__type = "concommand" */
   luaL_register(L, "_G", ConCommand_funcs);
   lua_pop(L, 1);

@@ -31,7 +31,7 @@ static const luaL_Reg luasrclibs[] = {
     {LUA_PASFILTERLIBNAME, luaopen_CPASFilter},
     {LUA_RECIPIENTFILTERLIBNAME, luaopen_CRecipientFilter},
     {LUA_TAKEDAMAGEINFOLIBNAME, luaopen_CTakeDamageInfo},
-    {LUA_CVARLIBNAME, luaopen_cvar},
+    {LUA_CVARLIBNAME, luaopen_cvars},
     {LUA_BITLIBNAME, luaopen_bit},
     {LUA_DBGLIBNAME, luaopen_dbg},
     {LUA_DEBUGOVERLAYLIBNAME, luaopen_debugoverlay},

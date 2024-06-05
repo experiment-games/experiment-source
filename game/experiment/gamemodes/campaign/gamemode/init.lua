@@ -101,22 +101,22 @@ function GM:CheckPickups()
   end
 end
 
-function GM:PlayerGotItem( pPlayer, pItem )
+function GM:PlayerGotItem( client, pItem )
   pItem:Remove()
 end
 
-function GM:PlayerInitialSpawn( pPlayer )
+function GM:PlayerInitialSpawn( client )
   self:CheckPickups()
 end
 
 local g_bFirstPlayerSpawned = false
 
-function GM:PlayerSpawn( pPlayer )
+function GM:PlayerSpawn( client )
   for _, classname in ipairs( self.m_tPickups ) do
     local pEntity = CreateEntityByName( classname )
-    pEntity:SetAbsOrigin( pPlayer:GetAbsOrigin() )
+    pEntity:SetAbsOrigin( client:GetAbsOrigin() )
     pEntity:Spawn()
-    pEntity:Touch( pPlayer )
+    pEntity:Touch( client )
   end
 
   if ( not g_bFirstPlayerSpawned ) then
@@ -127,7 +127,7 @@ function GM:PlayerSpawn( pPlayer )
   local pEntity = gEntList.FindEntityByName( NULL, "global_newgame_template*" )
   local tEntities = {}
   while ( pEntity ~= NULL ) do
-    pEntity:AcceptInput( "ForceSpawn", pPlayer, pPlayer, 0 )
+    pEntity:AcceptInput( "ForceSpawn", client, client, 0 )
     pEntity = gEntList.FindEntityByName( pEntity, "global_newgame_template*" )
   end
   return false

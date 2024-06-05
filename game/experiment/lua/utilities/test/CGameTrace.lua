@@ -8,18 +8,18 @@
 local MASK_SHOT = _E.MASK.SHOT
 local COLLISION_GROUP_NONE = 0
 
-local pPlayer = UTIL.PlayerByIndex(1)
+local client = UTIL.PlayerByIndex(1)
 
-if (pPlayer == NULL) then
+if (client == NULL) then
 	return
 end
 
 local vForward = Vector()
-pPlayer:EyeVectors(vForward)
+client:EyeVectors(vForward)
 
-local vecEye = pPlayer:EyePosition()
+local vecEye = client:EyePosition()
 local tr = trace_t()
-UTIL.TraceLine(vecEye, vecEye + vForward * 10000, MASK_SHOT, pPlayer, COLLISION_GROUP_NONE, tr)
+UTIL.TraceLine(vecEye, vecEye + vForward * 10000, MASK_SHOT, client, COLLISION_GROUP_NONE, tr)
 MsgN(tostring(tr))
 local pEntity = tr.m_pEnt
 MsgN(tostring(pEntity) .. " (" .. (not CLIENT and pEntity:GetEntityName() or "") .. ")")

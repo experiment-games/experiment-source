@@ -12,11 +12,11 @@ end
 local sin = math.sin
 local curtime = gpGlobals.curtime
 
-hook.Add("CalcPlayerView", "CalcPlayerView", function(pPlayer, eyeOrigin, eyeAngles, fov)
+hooks.Add("CalcPlayerView", "CalcPlayerView", function(client, eyeOrigin, eyeAngles, fov)
 	-- Give a subtle breathing effect.
 	eyeAngles = eyeAngles + QAngle(sin(curtime()) / 2, 0, 0)
 
-	-- FIXME: Field of view is just plain broken here. Use pPlayer:SetFOV() to
+	-- FIXME: Field of view is just plain broken here. Use client:SetFOV() to
 	-- get around this.
 
 	-- Although ideally you should just return nil for values you don't modify,

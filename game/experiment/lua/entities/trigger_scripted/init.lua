@@ -5,8 +5,8 @@
 	Modified for Experiment.
 --]]
 
-ENT.__base = "trigger_scripted"
-ENT.__factory = "CBaseTrigger"
+ENT.Base = "trigger_scripted"
+ENT.Factory = "CBaseTrigger"
 
 function ENT:Initialize()
 end

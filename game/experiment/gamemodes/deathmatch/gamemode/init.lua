@@ -17,12 +17,12 @@ end
 function GM:AllowDamage(pVictim, info)
 end
 
-function GM:CanEnterVehicle(pPlayer, pVehicle, nRole)
+function GM:CanEnterVehicle(client, pVehicle, nRole)
 end
 
-function GM:CanHavePlayerItem(pPlayer, pItem)
-	if (cvar.FindVar("mp_weaponstay"):GetInt() > 0) then
-		if (pPlayer:Weapon_OwnsThisType(pItem:GetClassname(), pItem:GetSubType())) then
+function GM:CanHavePlayerItem(client, pItem)
+	if (cvars.FindVar("mp_weaponstay"):GetInt() > 0) then
+		if (client:Weapon_OwnsThisType(pItem:GetClassname(), pItem:GetSubType())) then
 			return false
 		end
 	end
@@ -31,10 +31,10 @@ end
 function GM:CanPlayerHearPlayer(pListener, pTalker, bProximity)
 end
 
-function GM:CheatImpulseCommands(pPlayer, iImpulse)
+function GM:CheatImpulseCommands(client, iImpulse)
 end
 
-function GM:CheckChatForReadySignal(pPlayer, chatmsg)
+function GM:CheckChatForReadySignal(client, chatmsg)
 end
 
 function GM:CleanUpMap()
@@ -47,59 +47,59 @@ function GM:ClientDisconnected(pClient)
 end
 
 function GM:FlItemRespawnTime(pItem)
-	return cvar.FindVar("sv_hl2mp_item_respawn_time"):GetFloat()
+	return cvars.FindVar("sv_hl2mp_item_respawn_time"):GetFloat()
 end
 
-function GM:FlPlayerFallDamage(pPlayer)
+function GM:FlPlayerFallDamage(client)
 end
 
-function GM:FlPlayerSpawnTime(pPlayer)
+function GM:FlPlayerSpawnTime(client)
 end
 
-function GM:FPlayerCanRespawn(pPlayer)
+function GM:FPlayerCanRespawn(client)
 end
 
-function GM:FPlayerCanTakeDamage(pPlayer, pAttacker)
+function GM:FPlayerCanTakeDamage(client, attacker)
 end
 
-function GM:FShouldSwitchWeapon(pPlayer, pWeapon)
+function GM:FShouldSwitchWeapon(client, targetWeapon)
 end
 
-function GM:GiveDefaultItems(pPlayer)
-	pPlayer:EquipSuit()
+function GM:GiveDefaultItems(client)
+	client:EquipSuit()
 
-	_R.CBasePlayer.GiveAmmo(pPlayer, 255, "Pistol")
-	_R.CBasePlayer.GiveAmmo(pPlayer, 45, "SMG1")
-	_R.CBasePlayer.GiveAmmo(pPlayer, 1, "grenade")
-	_R.CBasePlayer.GiveAmmo(pPlayer, 6, "Buckshot")
-	_R.CBasePlayer.GiveAmmo(pPlayer, 6, "357")
+	_R.CBasePlayer.GiveAmmo(client, 255, "Pistol")
+	_R.CBasePlayer.GiveAmmo(client, 45, "SMG1")
+	_R.CBasePlayer.GiveAmmo(client, 1, "grenade")
+	_R.CBasePlayer.GiveAmmo(client, 6, "Buckshot")
+	_R.CBasePlayer.GiveAmmo(client, 6, "357")
 
-	if (pPlayer:GetPlayerModelType() == PLAYER_SOUNDS_METROPOLICE or pPlayer:GetPlayerModelType() == PLAYER_SOUNDS_COMBINESOLDIER) then
-		pPlayer:GiveNamedItem("weapon_stunstick")
-	elseif (pPlayer:GetPlayerModelType() == PLAYER_SOUNDS_CITIZEN) then
-		pPlayer:GiveNamedItem("weapon_crowbar")
+	if (client:GetPlayerModelType() == PLAYER_SOUNDS_METROPOLICE or client:GetPlayerModelType() == PLAYER_SOUNDS_COMBINESOLDIER) then
+		client:GiveNamedItem("weapon_stunstick")
+	elseif (client:GetPlayerModelType() == PLAYER_SOUNDS_CITIZEN) then
+		client:GiveNamedItem("weapon_crowbar")
 	end
 
-	pPlayer:GiveNamedItem("weapon_pistol")
-	pPlayer:GiveNamedItem("weapon_smg1")
-	pPlayer:GiveNamedItem("weapon_frag")
-	pPlayer:GiveNamedItem("weapon_physcannon")
+	client:GiveNamedItem("weapon_pistol")
+	client:GiveNamedItem("weapon_smg1")
+	client:GiveNamedItem("weapon_frag")
+	client:GiveNamedItem("weapon_physcannon")
 
-	local szDefaultWeaponName = engine.GetClientConVarValue(engine.IndexOfEdict(pPlayer), "cl_defaultweapon")
+	local szDefaultWeaponName = engine.GetClientConVarValue(engine.IndexOfEdict(client), "cl_defaultweapon")
 
-	local pDefaultWeapon = pPlayer:Weapon_OwnsThisType(szDefaultWeaponName)
+	local pDefaultWeapon = client:Weapon_OwnsThisType(szDefaultWeaponName)
 
 	if (ToBaseEntity(pDefaultWeapon) ~= NULL) then
-		pPlayer:Weapon_Switch(pDefaultWeapon)
+		client:Weapon_Switch(pDefaultWeapon)
 	else
-		pPlayer:Weapon_Switch(pPlayer:Weapon_OwnsThisType("weapon_physcannon"))
+		client:Weapon_Switch(client:Weapon_OwnsThisType("weapon_physcannon"))
 	end
 end
 
-function GM:Host_Say(pPlayer, p, teamonly)
+function GM:Host_Say(client, p, isTeamOnly)
 end
 
-function GM:InitHUD(pPlayer)
+function GM:InitHUD(client)
 end
 
 function GM:ItemShouldRespawn(pItem)
@@ -120,26 +120,26 @@ end
 function GM:PlayerDeathSound(info)
 end
 
-function GM:PlayerDeathThink(pPlayer)
+function GM:PlayerDeathThink(client)
 end
 
 function GM:PlayerEntSelectSpawnPoint(pHL2MPPlayer)
 end
 
-function GM:PlayerGotItem(pPlayer, pItem)
+function GM:PlayerGotItem(client, pItem)
 end
 
-function GM:PlayerInitialSpawn(pPlayer)
+function GM:PlayerInitialSpawn(client)
 end
 
 function GM:PlayerPickupObject(pHL2MPPlayer, pObject, bLimitMassAndSize)
 	return false
 end
 
-function GM:PlayerSpawn(pPlayer)
+function GM:PlayerSpawn(client)
 end
 
-function GM:PlayerThink(pPlayer)
+function GM:PlayerThink(client)
 end
 
 function GM:RemoveLevelDesignerPlacedObject(pEntity)
@@ -160,8 +160,8 @@ end
 function GM:VecItemRespawnAngles(pItem)
 end
 
-function GM:WeaponShouldRespawn(pWeapon)
+function GM:WeaponShouldRespawn(targetWeapon)
 end
 
-function GM:Weapon_Equip(pPlayer, pWeapon)
+function GM:Weapon_Equip(client, targetWeapon)
 end
