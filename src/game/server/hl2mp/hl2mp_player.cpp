@@ -47,6 +47,8 @@ extern CBaseEntity *g_pLastSpawn;
 
 #define HL2MP_COMMAND_MAX_RATE 0.3
 
+#define CYCLELATCH_UPDATE_INTERVAL	0.2f
+
 void DropPrimedFragGrenade(CHL2MP_Player *pPlayer, CBaseCombatWeapon *pGrenade);
 
 LINK_ENTITY_TO_CLASS(player, CHL2MP_Player);
@@ -69,78 +71,71 @@ void *SendProxy_SendNonLocalDataTable(const SendProp *pProp,
 }
 REGISTER_SEND_PROXY_NON_MODIFIED_POINTER(SendProxy_SendNonLocalDataTable);
 
-BEGIN_SEND_TABLE_NOBASE(CHL2MP_Player, DT_HL2MPLocalPlayerExclusive)
-// send a hi-res origin to the local player for use in prediction
-SendPropVector(SENDINFO(m_vecOrigin), -1, SPROP_NOSCALE | SPROP_CHANGES_OFTEN,
-               0.0f, HIGH_DEFAULT, SendProxy_Origin),
-    SendPropFloat(SENDINFO_VECTORELEM(m_angEyeAngles, 0), 8,
-                  SPROP_CHANGES_OFTEN, -90.0f, 90.0f),
-    //	SendPropAngle( SENDINFO_VECTORELEM(m_angEyeAngles, 1), 10,
-    // SPROP_CHANGES_OFTEN ),
-    END_SEND_TABLE()
 
-        BEGIN_SEND_TABLE_NOBASE(CHL2MP_Player, DT_HL2MPNonLocalPlayerExclusive)
-    // send a lo-res origin to other players
-    SendPropVector(SENDINFO(m_vecOrigin), -1,
-                   SPROP_COORD_MP_LOWPRECISION | SPROP_CHANGES_OFTEN, 0.0f,
-                   HIGH_DEFAULT, SendProxy_Origin),
-    SendPropFloat(SENDINFO_VECTORELEM(m_angEyeAngles, 0), 8,
-                  SPROP_CHANGES_OFTEN, -90.0f, 90.0f),
-    SendPropAngle(SENDINFO_VECTORELEM(m_angEyeAngles, 1), 10,
-                  SPROP_CHANGES_OFTEN),
-    END_SEND_TABLE()
+BEGIN_SEND_TABLE_NOBASE( CHL2MP_Player, DT_HL2MPLocalPlayerExclusive )
+	// send a hi-res origin to the local player for use in prediction
+	SendPropVector	(SENDINFO(m_vecOrigin), -1,  SPROP_NOSCALE|SPROP_CHANGES_OFTEN, 0.0f, HIGH_DEFAULT, SendProxy_Origin ),
+	SendPropFloat( SENDINFO_VECTORELEM(m_angEyeAngles, 0), 8, SPROP_CHANGES_OFTEN, -90.0f, 90.0f ),
+//	SendPropAngle( SENDINFO_VECTORELEM(m_angEyeAngles, 1), 10, SPROP_CHANGES_OFTEN ),
+END_SEND_TABLE()
 
-        IMPLEMENT_SERVERCLASS_ST(CHL2MP_Player, DT_HL2MP_Player)
-            SendPropExclude("DT_BaseAnimating", "m_flPoseParameter"),
-    SendPropExclude("DT_BaseAnimating", "m_flPlaybackRate"),
-    SendPropExclude("DT_BaseAnimating", "m_nSequence"),
-    SendPropExclude("DT_BaseEntity", "m_angRotation"),
-    SendPropExclude("DT_BaseAnimatingOverlay", "overlay_vars"),
+BEGIN_SEND_TABLE_NOBASE( CHL2MP_Player, DT_HL2MPNonLocalPlayerExclusive )
+	// send a lo-res origin to other players
+	SendPropVector	(SENDINFO(m_vecOrigin), -1,  SPROP_COORD_MP_LOWPRECISION|SPROP_CHANGES_OFTEN, 0.0f, HIGH_DEFAULT, SendProxy_Origin ),
+	SendPropFloat( SENDINFO_VECTORELEM(m_angEyeAngles, 0), 8, SPROP_CHANGES_OFTEN, -90.0f, 90.0f ),
+	SendPropAngle( SENDINFO_VECTORELEM(m_angEyeAngles, 1), 10, SPROP_CHANGES_OFTEN ),
+	// Only need to latch cycle for other players
+	// If you increase the number of bits networked, make sure to also modify the code below and in the client class.
+	SendPropInt( SENDINFO( m_cycleLatch ), 4, SPROP_UNSIGNED ),
+END_SEND_TABLE()
 
-    SendPropExclude("DT_BaseEntity", "m_vecOrigin"),
+IMPLEMENT_SERVERCLASS_ST(CHL2MP_Player, DT_HL2MP_Player)
+	SendPropExclude( "DT_BaseAnimating", "m_flPoseParameter" ),
+	SendPropExclude( "DT_BaseAnimating", "m_flPlaybackRate" ),	
+	SendPropExclude( "DT_BaseAnimating", "m_nSequence" ),
+	SendPropExclude( "DT_BaseEntity", "m_angRotation" ),
+	SendPropExclude( "DT_BaseAnimatingOverlay", "overlay_vars" ),
 
-    // playeranimstate and clientside animation takes care of these on the
-    // client
-    SendPropExclude("DT_ServerAnimationData", "m_flCycle"),
-    SendPropExclude("DT_AnimTimeMustBeFirst", "m_flAnimTime"),
+	SendPropExclude( "DT_BaseEntity", "m_vecOrigin" ),
 
-    SendPropExclude("DT_BaseFlex", "m_flexWeight"),
-    SendPropExclude("DT_BaseFlex", "m_blinktoggle"),
-    SendPropExclude("DT_BaseFlex", "m_viewtarget"),
+	// playeranimstate and clientside animation takes care of these on the client
+	SendPropExclude( "DT_ServerAnimationData" , "m_flCycle" ),	
+	SendPropExclude( "DT_AnimTimeMustBeFirst" , "m_flAnimTime" ),
 
-    // Data that only gets sent to the local player.
-    SendPropDataTable("hl2mplocaldata", 0,
-                      &REFERENCE_SEND_TABLE(DT_HL2MPLocalPlayerExclusive),
-                      SendProxy_SendLocalDataTable),
-    // Data that gets sent to all other players
-    SendPropDataTable("hl2mpnonlocaldata", 0,
-                      &REFERENCE_SEND_TABLE(DT_HL2MPNonLocalPlayerExclusive),
-                      SendProxy_SendNonLocalDataTable),
+	SendPropExclude( "DT_BaseFlex", "m_flexWeight" ),
+	SendPropExclude( "DT_BaseFlex", "m_blinktoggle" ),
+	SendPropExclude( "DT_BaseFlex", "m_viewtarget" ),
 
-    SendPropEHandle(SENDINFO(m_hRagdoll)),
-    SendPropInt(SENDINFO(m_iSpawnInterpCounter), 4),
-    SendPropInt(SENDINFO(m_iPlayerSoundType), 3),
+	// Data that only gets sent to the local player.
+	SendPropDataTable( "hl2mplocaldata", 0, &REFERENCE_SEND_TABLE(DT_HL2MPLocalPlayerExclusive), SendProxy_SendLocalDataTable ),
+	// Data that gets sent to all other players
+	SendPropDataTable( "hl2mpnonlocaldata", 0, &REFERENCE_SEND_TABLE(DT_HL2MPNonLocalPlayerExclusive), SendProxy_SendNonLocalDataTable ),
 
-    END_SEND_TABLE()
+	SendPropEHandle( SENDINFO( m_hRagdoll ) ),
+	SendPropInt( SENDINFO( m_iSpawnInterpCounter), 4 ),
+	SendPropInt( SENDINFO( m_iPlayerSoundType), 3 ),
+		
+END_SEND_TABLE()
 
-        BEGIN_DATADESC(CHL2MP_Player) END_DATADESC()
+BEGIN_DATADESC( CHL2MP_Player )
+END_DATADESC()
 
-            const char *g_ppszRandomCitizenModels[] = {
-                "models/humans/group03/male_01.mdl",
-                "models/humans/group03/male_02.mdl",
-                "models/humans/group03/female_01.mdl",
-                "models/humans/group03/male_03.mdl",
-                "models/humans/group03/female_02.mdl",
-                "models/humans/group03/male_04.mdl",
-                "models/humans/group03/female_03.mdl",
-                "models/humans/group03/male_05.mdl",
-                "models/humans/group03/female_04.mdl",
-                "models/humans/group03/male_06.mdl",
-                "models/humans/group03/female_06.mdl",
-                "models/humans/group03/male_07.mdl",
-                "models/humans/group03/female_07.mdl",
-                "models/humans/group03/male_08.mdl",
-                "models/humans/group03/male_09.mdl",
+const char *g_ppszRandomCitizenModels[] = {
+    "models/humans/group03/male_01.mdl",
+    "models/humans/group03/male_02.mdl",
+    "models/humans/group03/female_01.mdl",
+    "models/humans/group03/male_03.mdl",
+    "models/humans/group03/female_02.mdl",
+    "models/humans/group03/male_04.mdl",
+    "models/humans/group03/female_03.mdl",
+    "models/humans/group03/male_05.mdl",
+    "models/humans/group03/female_04.mdl",
+    "models/humans/group03/male_06.mdl",
+    "models/humans/group03/female_06.mdl",
+    "models/humans/group03/male_07.mdl",
+    "models/humans/group03/female_07.mdl",
+    "models/humans/group03/male_08.mdl",
+    "models/humans/group03/male_09.mdl",
 };
 
 const char *g_ppszRandomCombineModels[] = {
@@ -174,6 +169,9 @@ CHL2MP_Player::CHL2MP_Player() {
 
     m_bEnterObserver = false;
     m_bReady = false;
+
+	m_cycleLatch = 0;
+	m_cycleLatchTimer.Invalidate();
 
     BaseClass::ChangeTeam(0);
 }
@@ -371,6 +369,8 @@ void CHL2MP_Player::Spawn(void) {
     SetPlayerUnderwater(false);
 
     m_bReady = false;
+
+	m_cycleLatchTimer.Start( CYCLELATCH_UPDATE_INTERVAL );
 
     // Tony; do the spawn animevent
     DoAnimationEvent(PLAYERANIMEVENT_SPAWN);
@@ -576,6 +576,13 @@ void CHL2MP_Player::PostThink(void) {
     // correctly.
     m_angEyeAngles = EyeAngles();
     m_PlayerAnimState->Update(m_angEyeAngles[YAW], m_angEyeAngles[PITCH]);
+    
+    if ( IsAlive() && m_cycleLatchTimer.IsElapsed() )
+	{
+		m_cycleLatchTimer.Start( CYCLELATCH_UPDATE_INTERVAL );
+		// Compress the cycle into 4 bits. Can represent 0.0625 in steps which is enough.
+		m_cycleLatch.GetForModify() = 16 * GetCycle();
+	}
 }
 
 void CHL2MP_Player::PlayerDeathThink() {
@@ -1417,100 +1424,119 @@ void CHL2MP_Player::SetAnimation(PLAYER_ANIM playerAnim) {
     return;
 }
 
-// --------------------------------------------------------------------------------
-// Player animation event. Sent to the client when a player fires, jumps,
-// reloads, etc..
-// --------------------------------------------------------------------------------
+// -------------------------------------------------------------------------------- //
+// Player animation event. Sent to the client when a player fires, jumps, reloads, etc..
+// -------------------------------------------------------------------------------- //
+class CTEPlayerAnimEvent : public CBaseTempEntity
+{
+public:
+	DECLARE_CLASS( CTEPlayerAnimEvent, CBaseTempEntity );
+	DECLARE_SERVERCLASS();
 
-class CTEPlayerAnimEvent : public CBaseTempEntity {
-   public:
-    DECLARE_CLASS(CTEPlayerAnimEvent, CBaseTempEntity);
-    DECLARE_SERVERCLASS();
+	CTEPlayerAnimEvent( const char *name ) : CBaseTempEntity( name )
+	{
+	}
 
-    CTEPlayerAnimEvent(const char *name) : CBaseTempEntity(name) {
-    }
-
-    CNetworkHandle(CBasePlayer, m_hPlayer);
-    CNetworkVar(int, m_iEvent);
-    CNetworkVar(int, m_nData);
+	CNetworkHandle( CBasePlayer, m_hPlayer );
+	CNetworkVar( int, m_iEvent );
+	CNetworkVar( int, m_nData );
 };
 
-IMPLEMENT_SERVERCLASS_ST_NOBASE(CTEPlayerAnimEvent, DT_TEPlayerAnimEvent)
-SendPropEHandle(SENDINFO(m_hPlayer)),
-    SendPropInt(SENDINFO(m_iEvent), Q_log2(PLAYERANIMEVENT_COUNT) + 1,
-                SPROP_UNSIGNED),
-    SendPropInt(SENDINFO(m_nData), 32) END_SEND_TABLE()
+IMPLEMENT_SERVERCLASS_ST_NOBASE( CTEPlayerAnimEvent, DT_TEPlayerAnimEvent )
+	SendPropEHandle( SENDINFO( m_hPlayer ) ),
+	SendPropInt( SENDINFO( m_iEvent ), Q_log2( PLAYERANIMEVENT_COUNT ) + 1, SPROP_UNSIGNED ),
+	SendPropInt( SENDINFO( m_nData ), 32 )
+END_SEND_TABLE()
 
-        static CTEPlayerAnimEvent g_TEPlayerAnimEvent("PlayerAnimEvent");
+static CTEPlayerAnimEvent g_TEPlayerAnimEvent( "PlayerAnimEvent" );
 
-void TE_PlayerAnimEvent(CBasePlayer *pPlayer, PlayerAnimEvent_t event,
-                        int nData) {
-    CPVSFilter filter((const Vector &)pPlayer->EyePosition());
+void TE_PlayerAnimEvent( CBasePlayer *pPlayer, PlayerAnimEvent_t event, int nData )
+{
+	CPVSFilter filter( (const Vector&)pPlayer->EyePosition() );
 
-    // Tony; use prediction rules.
-    filter.UsePredictionRules();
+	//Tony; use prediction rules.
+	filter.UsePredictionRules();
 
-    g_TEPlayerAnimEvent.m_hPlayer = pPlayer;
-    g_TEPlayerAnimEvent.m_iEvent = event;
-    g_TEPlayerAnimEvent.m_nData = nData;
-    g_TEPlayerAnimEvent.Create(filter, 0);
+	g_TEPlayerAnimEvent.m_hPlayer = pPlayer;
+	g_TEPlayerAnimEvent.m_iEvent = event;
+	g_TEPlayerAnimEvent.m_nData = nData;
+	g_TEPlayerAnimEvent.Create( filter, 0 );
 }
 
-void CHL2MP_Player::DoAnimationEvent(PlayerAnimEvent_t event, int nData) {
-    m_PlayerAnimState->DoAnimationEvent(event, nData);
-    TE_PlayerAnimEvent(this, event,
-                       nData);  // Send to any clients who can see this guy.
+
+void CHL2MP_Player::DoAnimationEvent( PlayerAnimEvent_t event, int nData )
+{
+	m_PlayerAnimState->DoAnimationEvent( event, nData );
+	TE_PlayerAnimEvent( this, event, nData );	// Send to any clients who can see this guy.
 }
 
 //-----------------------------------------------------------------------------
 // Purpose: Override setup bones so that is uses the render angles from
 //			the HL2MP animation state to setup the hitboxes.
 //-----------------------------------------------------------------------------
-void CHL2MP_Player::SetupBones(matrix3x4_t *pBoneToWorld, int boneMask) {
-    VPROF_BUDGET("CHL2MP_Player::SetupBones", VPROF_BUDGETGROUP_SERVER_ANIM);
+void CHL2MP_Player::SetupBones( matrix3x4_t *pBoneToWorld, int boneMask )
+{
+	VPROF_BUDGET( "CHL2MP_Player::SetupBones", VPROF_BUDGETGROUP_SERVER_ANIM );
 
-    // Get the studio header.
-    Assert(GetModelPtr());
-    CStudioHdr *pStudioHdr = GetModelPtr();
-    if (!pStudioHdr)
-        return;
+	// Get the studio header.
+	Assert( GetModelPtr() );
+	CStudioHdr *pStudioHdr = GetModelPtr( );
+	if ( !pStudioHdr )
+		return;
 
-    Vector pos[MAXSTUDIOBONES];
-    Quaternion q[MAXSTUDIOBONES];
+	Vector pos[MAXSTUDIOBONES];
+	Quaternion q[MAXSTUDIOBONES];
 
-    // Adjust hit boxes based on IK driven offset.
-    Vector adjOrigin = GetAbsOrigin() + Vector(0, 0, m_flEstIkOffset);
+	// Adjust hit boxes based on IK driven offset.
+	Vector adjOrigin = GetAbsOrigin() + Vector( 0, 0, m_flEstIkOffset );
 
-    // FIXME: pass this into Studio_BuildMatrices to skip transforms
-    CBoneBitList boneComputed;
-    if (m_pIk) {
-        m_iIKCounter++;
-        m_pIk->Init(pStudioHdr, GetAbsAngles(), adjOrigin, gpGlobals->curtime,
-                    m_iIKCounter, boneMask);
-        GetSkeleton(pStudioHdr, pos, q, boneMask);
+	// FIXME: pass this into Studio_BuildMatrices to skip transforms
+	CBoneBitList boneComputed;
+	if ( m_pIk )
+	{
+		m_iIKCounter++;
+		m_pIk->Init( pStudioHdr, GetAbsAngles(), adjOrigin, gpGlobals->curtime, m_iIKCounter, boneMask );
+		GetSkeleton( pStudioHdr, pos, q, boneMask );
 
-        m_pIk->UpdateTargets(pos, q, pBoneToWorld, boneComputed);
-        CalculateIKLocks(gpGlobals->curtime);
-        m_pIk->SolveDependencies(pos, q, pBoneToWorld, boneComputed);
-    } else {
-        GetSkeleton(pStudioHdr, pos, q, boneMask);
-    }
+		m_pIk->UpdateTargets( pos, q, pBoneToWorld, boneComputed );
+		CalculateIKLocks( gpGlobals->curtime );
+		m_pIk->SolveDependencies( pos, q, pBoneToWorld, boneComputed );
+	}
+	else
+	{
+		GetSkeleton( pStudioHdr, pos, q, boneMask );
+	}
 
-    CBaseAnimating *pParent = dynamic_cast<CBaseAnimating *>(GetMoveParent());
-    if (pParent) {
-        // We're doing bone merging, so do special stuff here.
-        CBoneCache *pParentCache = pParent->GetBoneCache();
-        if (pParentCache) {
-            BuildMatricesWithBoneMerge(
-                pStudioHdr, m_PlayerAnimState->GetRenderAngles(), adjOrigin,
-                pos, q, pBoneToWorld, pParent, pParentCache);
+	CBaseAnimating *pParent = dynamic_cast< CBaseAnimating* >( GetMoveParent() );
+	if ( pParent )
+	{
+		// We're doing bone merging, so do special stuff here.
+		CBoneCache *pParentCache = pParent->GetBoneCache();
+		if ( pParentCache )
+		{
+			BuildMatricesWithBoneMerge( 
+				pStudioHdr, 
+				m_PlayerAnimState->GetRenderAngles(),
+				adjOrigin, 
+				pos, 
+				q, 
+				pBoneToWorld, 
+				pParent, 
+				pParentCache );
 
-            return;
-        }
-    }
+			return;
+		}
+	}
 
-    Studio_BuildMatrices(pStudioHdr, m_PlayerAnimState->GetRenderAngles(),
-                         adjOrigin, pos, q, -1,
-                         GetModelScale(),  // Scaling
-                         pBoneToWorld, boneMask);
+	Studio_BuildMatrices( 
+		pStudioHdr, 
+		m_PlayerAnimState->GetRenderAngles(),
+		adjOrigin, 
+		pos, 
+		q, 
+		-1,
+		GetModelScale(), // Scaling
+		pBoneToWorld,
+		boneMask );
 }
+

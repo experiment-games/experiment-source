@@ -733,6 +733,9 @@ class CBaseCombatWeapon : public BASECOMBATWEAPON_DERIVED_FROM {
     }
 #endif
 
+	//Tony; notifications of any third person switches.
+	virtual void			ThirdPersonSwitch( bool bThirdPerson ) {};
+    
 #endif  // End client-only methods
 
     virtual bool CanLower(void) {

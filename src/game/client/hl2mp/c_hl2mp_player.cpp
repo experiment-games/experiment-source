@@ -35,59 +35,46 @@
 #undef CHL2MP_Player
 #endif
 
+#define CYCLELATCH_TOLERANCE 0.15f
+
 LINK_ENTITY_TO_CLASS(player, C_HL2MP_Player);
 
-BEGIN_RECV_TABLE_NOBASE(C_HL2MP_Player, DT_HL2MPLocalPlayerExclusive)
-RecvPropVector(RECVINFO_NAME(m_vecNetworkOrigin, m_vecOrigin)),
-    RecvPropFloat(RECVINFO(m_angEyeAngles[0])),
-    //	RecvPropFloat( RECVINFO( m_angEyeAngles[1] ) ),
-    END_RECV_TABLE()
+BEGIN_RECV_TABLE_NOBASE( C_HL2MP_Player, DT_HL2MPLocalPlayerExclusive )
+	RecvPropVector( RECVINFO_NAME( m_vecNetworkOrigin, m_vecOrigin ) ),
+	RecvPropFloat( RECVINFO( m_angEyeAngles[0] ) ),
+//	RecvPropFloat( RECVINFO( m_angEyeAngles[1] ) ),
+END_RECV_TABLE()
 
-        BEGIN_RECV_TABLE_NOBASE(C_HL2MP_Player, DT_HL2MPNonLocalPlayerExclusive)
-            RecvPropVector(RECVINFO_NAME(m_vecNetworkOrigin, m_vecOrigin)),
-    RecvPropFloat(RECVINFO(m_angEyeAngles[0])),
-    RecvPropFloat(RECVINFO(m_angEyeAngles[1])),
-    END_RECV_TABLE()
+BEGIN_RECV_TABLE_NOBASE( C_HL2MP_Player, DT_HL2MPNonLocalPlayerExclusive )
+	RecvPropVector( RECVINFO_NAME( m_vecNetworkOrigin, m_vecOrigin ) ),
+	RecvPropFloat( RECVINFO( m_angEyeAngles[0] ) ),
+	RecvPropFloat( RECVINFO( m_angEyeAngles[1] ) ),
 
-        IMPLEMENT_CLIENTCLASS_DT(C_HL2MP_Player, DT_HL2MP_Player, CHL2MP_Player)
+	RecvPropInt( RECVINFO( m_cycleLatch ), 0, &C_HL2MP_Player::RecvProxy_CycleLatch ),
+END_RECV_TABLE()
 
-            RecvPropDataTable(
-                "hl2mplocaldata", 0, 0,
-                &REFERENCE_RECV_TABLE(DT_HL2MPLocalPlayerExclusive)),
-    RecvPropDataTable("hl2mpnonlocaldata", 0, 0,
-                      &REFERENCE_RECV_TABLE(DT_HL2MPNonLocalPlayerExclusive)),
+IMPLEMENT_CLIENTCLASS_DT(C_HL2MP_Player, DT_HL2MP_Player, CHL2MP_Player)
 
-    RecvPropEHandle(RECVINFO(m_hRagdoll)),
-    RecvPropInt(RECVINFO(m_iSpawnInterpCounter)),
-    RecvPropInt(RECVINFO(m_iPlayerSoundType)),
+	RecvPropDataTable( "hl2mplocaldata", 0, 0, &REFERENCE_RECV_TABLE(DT_HL2MPLocalPlayerExclusive) ),
+	RecvPropDataTable( "hl2mpnonlocaldata", 0, 0, &REFERENCE_RECV_TABLE(DT_HL2MPNonLocalPlayerExclusive) ),
 
-    RecvPropBool(RECVINFO(m_fIsWalking)),
-    END_RECV_TABLE()
+	RecvPropEHandle( RECVINFO( m_hRagdoll ) ),
+	RecvPropInt( RECVINFO( m_iSpawnInterpCounter ) ),
+	RecvPropInt( RECVINFO( m_iPlayerSoundType) ),
 
-        BEGIN_PREDICTION_DATA(C_HL2MP_Player)
-            DEFINE_PRED_FIELD(m_flCycle, FIELD_FLOAT,
-                              FTYPEDESC_OVERRIDE | FTYPEDESC_PRIVATE |
-                                  FTYPEDESC_NOERRORCHECK),
-    DEFINE_PRED_FIELD(m_fIsWalking, FIELD_BOOLEAN, FTYPEDESC_INSENDTABLE),
-    DEFINE_PRED_FIELD(m_nSequence, FIELD_INTEGER,
-                      FTYPEDESC_OVERRIDE | FTYPEDESC_PRIVATE |
-                          FTYPEDESC_NOERRORCHECK),
-    DEFINE_PRED_FIELD(m_flPlaybackRate, FIELD_FLOAT,
-                      FTYPEDESC_OVERRIDE | FTYPEDESC_PRIVATE |
-                          FTYPEDESC_NOERRORCHECK),
-    DEFINE_PRED_ARRAY_TOL(m_flEncodedController, FIELD_FLOAT,
-                          MAXSTUDIOBONECTRLS,
-                          FTYPEDESC_OVERRIDE | FTYPEDESC_PRIVATE, 0.02f),
-    DEFINE_PRED_FIELD(m_nNewSequenceParity, FIELD_INTEGER,
-                      FTYPEDESC_OVERRIDE | FTYPEDESC_PRIVATE |
-                          FTYPEDESC_NOERRORCHECK),
-    END_PREDICTION_DATA()
+	RecvPropBool( RECVINFO( m_fIsWalking ) ),
+END_RECV_TABLE()
 
-#define HL2_WALK_SPEED 150
-#define HL2_NORM_SPEED 190
-#define HL2_SPRINT_SPEED 320
+BEGIN_PREDICTION_DATA( C_HL2MP_Player )
+	DEFINE_PRED_FIELD( m_flCycle, FIELD_FLOAT, FTYPEDESC_OVERRIDE | FTYPEDESC_PRIVATE | FTYPEDESC_NOERRORCHECK ),
+	DEFINE_PRED_FIELD( m_fIsWalking, FIELD_BOOLEAN, FTYPEDESC_INSENDTABLE ),
+	DEFINE_PRED_FIELD( m_nSequence, FIELD_INTEGER, FTYPEDESC_OVERRIDE | FTYPEDESC_PRIVATE | FTYPEDESC_NOERRORCHECK ),
+	DEFINE_PRED_FIELD( m_flPlaybackRate, FIELD_FLOAT, FTYPEDESC_OVERRIDE | FTYPEDESC_PRIVATE | FTYPEDESC_NOERRORCHECK ),
+	DEFINE_PRED_ARRAY_TOL( m_flEncodedController, FIELD_FLOAT, MAXSTUDIOBONECTRLS, FTYPEDESC_OVERRIDE | FTYPEDESC_PRIVATE, 0.02f ),
+	DEFINE_PRED_FIELD( m_nNewSequenceParity, FIELD_INTEGER, FTYPEDESC_OVERRIDE | FTYPEDESC_PRIVATE | FTYPEDESC_NOERRORCHECK ),
+END_PREDICTION_DATA()
 
-        static ConVar
+static ConVar
     cl_playermodel("cl_playermodel", "none",
                    FCVAR_USERINFO | FCVAR_ARCHIVE | FCVAR_SERVER_CAN_EXECUTE,
                    "Default Player Model");
@@ -111,6 +98,8 @@ C_HL2MP_Player::C_HL2MP_Player()
     m_blinkTimer.Invalidate();
 
     m_pFlashlightBeam = NULL;
+
+    m_flServerCycle = -1.0f;
 }
 
 C_HL2MP_Player::~C_HL2MP_Player(void) {
@@ -543,6 +532,18 @@ void C_HL2MP_Player::PostDataUpdate(DataUpdateType_t updateType) {
     BaseClass::PostDataUpdate(updateType);
 }
 
+void C_HL2MP_Player::RecvProxy_CycleLatch(const CRecvProxyData *pData,
+                                          void *pStruct, void *pOut) {
+    C_HL2MP_Player *pPlayer = static_cast<C_HL2MP_Player *>(pStruct);
+
+    float flServerCycle = (float)pData->m_Value.m_Int / 16.0f;
+    float flCurCycle = pPlayer->GetCycle();
+    // The cycle is way out of sync.
+    if (fabs(flCurCycle - flServerCycle) > CYCLELATCH_TOLERANCE) {
+        pPlayer->SetServerIntendedCycle(flServerCycle);
+    }
+}
+
 void C_HL2MP_Player::ReleaseFlashlight(void) {
     if (m_pFlashlightBeam) {
         m_pFlashlightBeam->flags = 0;
@@ -742,13 +743,17 @@ IRagdoll *C_HL2MP_Player::GetRepresentativeRagdoll() const {
 
 // HL2MPRAGDOLL
 
-IMPLEMENT_CLIENTCLASS_DT_NOBASE(C_HL2MPRagdoll, DT_HL2MPRagdoll, CHL2MPRagdoll)
-RecvPropVector(RECVINFO(m_vecRagdollOrigin)),
-    RecvPropEHandle(RECVINFO(m_hPlayer)), RecvPropInt(RECVINFO(m_nModelIndex)),
-    RecvPropInt(RECVINFO(m_nForceBone)), RecvPropVector(RECVINFO(m_vecForce)),
-    RecvPropVector(RECVINFO(m_vecRagdollVelocity)) END_RECV_TABLE()
+IMPLEMENT_CLIENTCLASS_DT_NOBASE( C_HL2MPRagdoll, DT_HL2MPRagdoll, CHL2MPRagdoll )
+	RecvPropVector( RECVINFO(m_vecRagdollOrigin) ),
+	RecvPropEHandle( RECVINFO( m_hPlayer ) ),
+	RecvPropInt( RECVINFO( m_nModelIndex ) ),
+	RecvPropInt( RECVINFO(m_nForceBone) ),
+	RecvPropVector( RECVINFO(m_vecForce) ),
+	RecvPropVector( RECVINFO( m_vecRagdollVelocity ) )
+END_RECV_TABLE()
 
-        C_HL2MPRagdoll::C_HL2MPRagdoll() {
+C_HL2MPRagdoll::C_HL2MPRagdoll()
+{
 }
 
 C_HL2MPRagdoll::~C_HL2MPRagdoll() {
@@ -812,79 +817,89 @@ void C_HL2MPRagdoll::ImpactTrace(trace_t *pTrace, int iDamageType,
     m_pRagdoll->ResetRagdollSleepAfterTime();
 }
 
-void C_HL2MPRagdoll::CreateHL2MPRagdoll(void) {
-    // First, initialize all our data. If we have the player's entity on our
-    // client, then we can make ourselves start out exactly where the player is.
-    C_HL2MP_Player *pPlayer = dynamic_cast<C_HL2MP_Player *>(m_hPlayer.Get());
+void C_HL2MPRagdoll::CreateHL2MPRagdoll( void )
+{
+	// First, initialize all our data. If we have the player's entity on our client,
+	// then we can make ourselves start out exactly where the player is.
+	C_HL2MP_Player *pPlayer = dynamic_cast< C_HL2MP_Player* >( m_hPlayer.Get() );
+	
+	if ( pPlayer && !pPlayer->IsDormant() )
+	{
+		// move my current model instance to the ragdoll's so decals are preserved.
+		pPlayer->SnatchModelInstance( this );
 
-    if (pPlayer && !pPlayer->IsDormant()) {
-        // move my current model instance to the ragdoll's so decals are
-        // preserved.
-        pPlayer->SnatchModelInstance(this);
+		VarMapping_t *varMap = GetVarMapping();
 
-        VarMapping_t *varMap = GetVarMapping();
+		// Copy all the interpolated vars from the player entity.
+		// The entity uses the interpolated history to get bone velocity.
+		bool bRemotePlayer = (pPlayer != C_BasePlayer::GetLocalPlayer());			
+		if ( bRemotePlayer )
+		{
+			Interp_Copy( pPlayer );
 
-        // Copy all the interpolated vars from the player entity.
-        // The entity uses the interpolated history to get bone velocity.
-        bool bRemotePlayer = (pPlayer != C_BasePlayer::GetLocalPlayer());
-        if (bRemotePlayer) {
-            Interp_Copy(pPlayer);
+			SetAbsAngles( pPlayer->GetRenderAngles() );
+			GetRotationInterpolator().Reset();
 
-            SetAbsAngles(pPlayer->GetRenderAngles());
-            GetRotationInterpolator().Reset();
+			m_flAnimTime = pPlayer->m_flAnimTime;
+			SetSequence( pPlayer->GetSequence() );
+			m_flPlaybackRate = pPlayer->GetPlaybackRate();
+		}
+		else
+		{
+			// This is the local player, so set them in a default
+			// pose and slam their velocity, angles and origin
+			SetAbsOrigin( m_vecRagdollOrigin );
+			
+			SetAbsAngles( pPlayer->GetRenderAngles() );
 
-            m_flAnimTime = pPlayer->m_flAnimTime;
-            SetSequence(pPlayer->GetSequence());
-            m_flPlaybackRate = pPlayer->GetPlaybackRate();
-        } else {
-            // This is the local player, so set them in a default
-            // pose and slam their velocity, angles and origin
-            SetAbsOrigin(m_vecRagdollOrigin);
+			SetAbsVelocity( m_vecRagdollVelocity );
 
-            SetAbsAngles(pPlayer->GetRenderAngles());
+			int iSeq = pPlayer->GetSequence();
+			if ( iSeq == -1 )
+			{
+				Assert( false );	// missing walk_lower?
+				iSeq = 0;
+			}
+			
+			SetSequence( iSeq );	// walk_lower, basic pose
+			SetCycle( 0.0 );
 
-            SetAbsVelocity(m_vecRagdollVelocity);
+			Interp_Reset( varMap );
+		}		
+	}
+	else
+	{
+		// overwrite network origin so later interpolation will
+		// use this position
+		SetNetworkOrigin( m_vecRagdollOrigin );
 
-            int iSeq = pPlayer->GetSequence();
-            if (iSeq == -1) {
-                Assert(false);  // missing walk_lower?
-                iSeq = 0;
-            }
+		SetAbsOrigin( m_vecRagdollOrigin );
+		SetAbsVelocity( m_vecRagdollVelocity );
 
-            SetSequence(iSeq);  // walk_lower, basic pose
-            SetCycle(0.0);
+		Interp_Reset( GetVarMapping() );
+		
+	}
 
-            Interp_Reset(varMap);
-        }
-    } else {
-        // overwrite network origin so later interpolation will
-        // use this position
-        SetNetworkOrigin(m_vecRagdollOrigin);
+	SetModelIndex( m_nModelIndex );
 
-        SetAbsOrigin(m_vecRagdollOrigin);
-        SetAbsVelocity(m_vecRagdollVelocity);
+	// Make us a ragdoll..
+	m_nRenderFX = kRenderFxRagdoll;
 
-        Interp_Reset(GetVarMapping());
-    }
+	matrix3x4_t boneDelta0[MAXSTUDIOBONES];
+	matrix3x4_t boneDelta1[MAXSTUDIOBONES];
+	matrix3x4_t currentBones[MAXSTUDIOBONES];
+	const float boneDt = 0.05f;
 
-    SetModelIndex(m_nModelIndex);
+	if ( pPlayer && !pPlayer->IsDormant() )
+	{
+		pPlayer->GetRagdollInitBoneArrays( boneDelta0, boneDelta1, currentBones, boneDt );
+	}
+	else
+	{
+		GetRagdollInitBoneArrays( boneDelta0, boneDelta1, currentBones, boneDt );
+	}
 
-    // Make us a ragdoll..
-    m_nRenderFX = kRenderFxRagdoll;
-
-    matrix3x4_t boneDelta0[MAXSTUDIOBONES];
-    matrix3x4_t boneDelta1[MAXSTUDIOBONES];
-    matrix3x4_t currentBones[MAXSTUDIOBONES];
-    const float boneDt = 0.05f;
-
-    if (pPlayer && !pPlayer->IsDormant()) {
-        pPlayer->GetRagdollInitBoneArrays(boneDelta0, boneDelta1, currentBones,
-                                          boneDt);
-    } else {
-        GetRagdollInitBoneArrays(boneDelta0, boneDelta1, currentBones, boneDt);
-    }
-
-    InitAsClientRagdoll(boneDelta0, boneDelta1, currentBones, boneDt);
+	InitAsClientRagdoll( boneDelta0, boneDelta1, currentBones, boneDt );
 }
 
 void C_HL2MPRagdoll::OnDataChanged(DataUpdateType_t type) {

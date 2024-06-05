@@ -236,6 +236,7 @@ void CTripmineGrenade::BeamBreakThink(void) {
 
     SetNextThink(gpGlobals->curtime + 0.05f);
 }
+
 int CTripmineGrenade::OnTakeDamage(const CTakeDamageInfo &info) {
     if (m_iHealth < 0)
         return 0;  // already dead.
@@ -248,6 +249,7 @@ int CTripmineGrenade::OnTakeDamage(const CTakeDamageInfo &info) {
 
         return info.GetDamage();
     }
+    
     return 0;
 }
 

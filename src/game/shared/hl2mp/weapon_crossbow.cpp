@@ -769,11 +769,7 @@ void CWeaponCrossbow::DoLoadEffect(void) {
         data.m_hEntity = GetRefEHandle();
 #endif
 
-#ifndef CLIENT_DLL
     DispatchEffect("CrossbowLoad", data, filter);
-#else
-    DispatchEffect("CrossbowLoad", data);
-#endif
 
 #ifndef CLIENT_DLL
     CSprite *pBlast =

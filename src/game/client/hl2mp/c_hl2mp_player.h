@@ -92,6 +92,10 @@ class C_HL2MP_Player : public C_BaseHLPlayer {
     void DoAnimationEvent(PlayerAnimEvent_t event, int nData = 0);
     virtual void CalculateIKLocks(float currentTime);
 
+	static void RecvProxy_CycleLatch( const CRecvProxyData *pData, void *pStruct, void *pOut );
+    
+	virtual float GetServerIntendedCycle() { return m_flServerCycle; }
+	virtual void SetServerIntendedCycle( float cycle ) { m_flServerCycle = cycle; }
    private:
     C_HL2MP_Player(const C_HL2MP_Player &);
 
@@ -132,6 +136,8 @@ class C_HL2MP_Player : public C_BaseHLPlayer {
     CNetworkVar(HL2MPPlayerState, m_iPlayerState);
 
     bool m_fIsWalking;
+	int m_cycleLatch; // The animation cycle goes out of sync very easily. Mostly from the player entering/exiting PVS. Server will frequently update us with a new one.
+	float m_flServerCycle;
 };
 
 inline C_HL2MP_Player *ToHL2MPPlayer(CBaseEntity *pEntity) {
