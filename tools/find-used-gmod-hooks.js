@@ -12,10 +12,10 @@ const fs = require('fs');
 const path = require('path');
 
 const targetPatterns = [
-    /function GM:(\w+)\((\w+), (\w+)\)/g,
-    /function Schema:(\w+)\((\w+), (\w+)\)/g,
-    /function PLUGIN:(\w+)\((\w+), (\w+)\)/g,
-    /hook\.Add\("(\w+)", "ignore", (\w+)\)/g,
+    /function GM:(\w+)\(([^\)]*)\)/g,
+    /function Schema:(\w+)\(([^\)]*)\)/g,
+    /function PLUGIN:(\w+)\(([^\)]*)\)/g,
+    /hook\.Add\("(\w+)", "\w+", (.+)\)/g,
 ];
 
 const outputFile = 'hooks.txt';
@@ -75,8 +75,6 @@ function logMatchToFile(file, match) {
 }
 
 const startDirectories = process.argv.slice(2);
-
-console.log(`Starting search in directories: ${startDirectories}`);
 
 // Clear the output file before starting
 fs.writeFile(outputFile, '', (err) => {
