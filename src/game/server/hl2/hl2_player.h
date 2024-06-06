@@ -283,6 +283,7 @@ class CHL2_Player : public BASEPLAYERCLASS {
     virtual bool IsHoldingEntity(CBaseEntity *pEnt);
     virtual void ForceDropOfCarriedPhysObjects(CBaseEntity *pOnlyIfHoldindThis);
     virtual float GetHeldObjectMass(IPhysicsObject *pHeldObject);
+    virtual CBaseEntity *GetHeldObject(void);
 
     virtual bool IsFollowingPhysics(void) {
         return (m_afPhysicsFlags & PFLAG_ONBARNACLE) > 0;

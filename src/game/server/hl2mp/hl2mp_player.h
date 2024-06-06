@@ -176,6 +176,9 @@ class CHL2MP_Player : public CHL2_Player {
 
     bool m_bEnterObserver;
     bool m_bReady;
+
+	CNetworkVar(int, m_cycleLatch);  // Network the cycle to clients periodically
+    CountdownTimer m_cycleLatchTimer;
 };
 
 inline CHL2MP_Player *ToHL2MPPlayer(CBaseEntity *pEntity) {

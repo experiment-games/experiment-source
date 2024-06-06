@@ -2906,9 +2906,8 @@ float CBasePlayer::GetHeldObjectMass( IPhysicsObject *pHeldObject )
 	return 0;
 }
 
-CBaseEntity	*CHL2_Player::GetHeldObject( void )
-{
-	return PhysCannonGetHeldEntity( GetActiveWeapon() );
+CBaseEntity *CBasePlayer::GetHeldObject(void) {
+    return PhysCannonGetHeldEntity(GetActiveWeapon());
 }
 
 //-----------------------------------------------------------------------------
