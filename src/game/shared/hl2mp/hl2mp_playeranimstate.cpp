@@ -21,6 +21,13 @@
 #define HL2MP_WALK_SPEED			75.0f
 #define HL2MP_CROUCHWALK_SPEED		110.0f
 
+// When moving this fast, he plays run anim.
+#define ARBITRARY_RUN_SPEED 175.0f
+
+// Experiment; somehow get which type of leganim we're using
+// m_AnimConfig.m_LegAnimType == LEGANIM_9WAY;
+const bool is9Way = true;
+
 //-----------------------------------------------------------------------------
 // Purpose: 
 // Input  : *pPlayer - 
@@ -253,7 +260,7 @@ void CHL2MPPlayerAnimState::DoAnimationEvent( PlayerAnimEvent_t event, int nData
 			else
 				RestartGesture( GESTURE_SLOT_ATTACK_AND_RELOAD, ACT_MP_RELOAD_STAND_END );
 			break;
-		}
+        }
 	default:
 		{
 			BaseClass::DoAnimationEvent( event, nData );
@@ -330,8 +337,7 @@ bool CHL2MPPlayerAnimState::HandleJumping( Activity &idealActivity )
 	Vector vecVelocity;
 	GetOuterAbsVelocity( vecVelocity );
 
-	if ( m_bJumping )
-	{
+	if ( m_bJumping ) {
 		static bool bNewJump = false; //Tony; hl2mp players only have a 'hop'
 
 		if ( m_bFirstJumpFrame )
@@ -380,6 +386,8 @@ bool CHL2MPPlayerAnimState::HandleJumping( Activity &idealActivity )
 			{
 				idealActivity = ACT_MP_JUMP;
 			}
+
+            idealActivity = ACT_HL2MP_JUMP; // Experiment; try get jump to show
 		}
 	}	
 
@@ -387,6 +395,12 @@ bool CHL2MPPlayerAnimState::HandleJumping( Activity &idealActivity )
 		return true;
 
 	return false;
+}
+
+Activity CHL2MPPlayerAnimState::CalcMainActivity() {
+    Activity idealActivity = BaseClass::CalcMainActivity();
+
+    return idealActivity;
 }
 
 bool CHL2MPPlayerAnimState::SetupPoseParameters( CStudioHdr *pStudioHdr )
@@ -399,11 +413,25 @@ bool CHL2MPPlayerAnimState::SetupPoseParameters( CStudioHdr *pStudioHdr )
 	if ( !pStudioHdr )
 		return false;
 
-	// Tony; just set them both to the same for now.
-	m_PoseParameterData.m_iMoveX = GetBasePlayer()->LookupPoseParameter( pStudioHdr, "move_yaw" );
-	m_PoseParameterData.m_iMoveY = GetBasePlayer()->LookupPoseParameter( pStudioHdr, "move_yaw" );
-	if ( ( m_PoseParameterData.m_iMoveX < 0 ) || ( m_PoseParameterData.m_iMoveY < 0 ) )
-		return false;
+    if (is9Way) {
+        m_PoseParameterData.m_iMoveX = GetBasePlayer()->LookupPoseParameter( pStudioHdr, "move_x" );
+        m_PoseParameterData.m_iMoveY = GetBasePlayer()->LookupPoseParameter( pStudioHdr, "move_y" );
+
+        if ((m_PoseParameterData.m_iMoveX == 0) &&
+            (m_PoseParameterData.m_iMoveY == 0))
+            return false;
+    } else {
+        // Tony; just set them both to the same for now.
+        m_PoseParameterData.m_iMoveX =
+            GetBasePlayer()->LookupPoseParameter(pStudioHdr, "move_yaw");
+        m_PoseParameterData.m_iMoveY =
+            GetBasePlayer()->LookupPoseParameter(pStudioHdr, "move_yaw");
+
+        if ((m_PoseParameterData.m_iMoveX < 0) ||
+            (m_PoseParameterData.m_iMoveY < 0))
+            return false;
+
+    }
 
 	// Look for the aim pitch blender.
 	m_PoseParameterData.m_iAimPitch = GetBasePlayer()->LookupPoseParameter( pStudioHdr, "aim_pitch" );
@@ -505,41 +533,12 @@ void CHL2MPPlayerAnimState::ComputePoseParam_MoveYaw( CStudioHdr *pStudioHdr )
 	// Get the estimated movement yaw.
 	EstimateYaw();
 
-#if 0 // 9way
-	ConVarRef mp_slammoveyaw("mp_slammoveyaw");
-
-	// Get the view yaw.
-	float flAngle = AngleNormalize( m_flEyeYaw );
-
-	// Calc side to side turning - the view vs. movement yaw.
-	float flYaw = flAngle - m_PoseParameterData.m_flEstimateYaw;
-	flYaw = AngleNormalize( -flYaw );
-
-	// Get the current speed the character is running.
-	bool bIsMoving;
-	float flPlaybackRate = 	CalcMovementPlaybackRate( &bIsMoving );
-
-	// Setup the 9-way blend parameters based on our speed and direction.
-	Vector2D vecCurrentMoveYaw( 0.0f, 0.0f );
-	if ( bIsMoving )
-	{
-		if ( mp_slammoveyaw.GetBool() )
-			flYaw = SnapYawTo( flYaw );
-
-		vecCurrentMoveYaw.x = cos( DEG2RAD( flYaw ) ) * flPlaybackRate;
-		vecCurrentMoveYaw.y = -sin( DEG2RAD( flYaw ) ) * flPlaybackRate;
-	}
-
-	GetBasePlayer()->SetPoseParameter( pStudioHdr, m_PoseParameterData.m_iMoveX, vecCurrentMoveYaw.x );
-	GetBasePlayer()->SetPoseParameter( pStudioHdr, m_PoseParameterData.m_iMoveY, vecCurrentMoveYaw.y );
-
-	m_DebugAnimData.m_vecMoveYaw = vecCurrentMoveYaw;
-#else
 	// view direction relative to movement
 	float flYaw;	 
 
 	QAngle	angles = GetBasePlayer()->GetLocalAngles();
     float ang = m_flEyeYaw;
+
     if (ang > 180.0f)
 	{
 		ang -= 360.0f;
@@ -564,11 +563,35 @@ void CHL2MPPlayerAnimState::ComputePoseParam_MoveYaw( CStudioHdr *pStudioHdr )
 		flYaw = flYaw - 360;
 	}
 
-	//Tony; oops, i inverted this previously above.
-	GetBasePlayer()->SetPoseParameter( pStudioHdr, m_PoseParameterData.m_iMoveY, flYaw );
+    if (is9Way)
+    {
+        // Get the current speed the character is running.
+        bool bIsMoving;
+        float flPlaybackRate = CalcMovementPlaybackRate(&bIsMoving);
 
-#endif
-	
+        // Setup the 9-way blend parameters based on our speed and direction.
+        Vector2D vecCurrentMoveYaw(0.0f, 0.0f);
+        if (bIsMoving) {
+           /* if (mp_slammoveyaw.GetBool())
+                flYaw = SnapYawTo(flYaw);*/
+
+            vecCurrentMoveYaw.x = cos(DEG2RAD(flYaw)) * flPlaybackRate;
+            vecCurrentMoveYaw.y = -sin(DEG2RAD(flYaw)) * flPlaybackRate;
+        }
+
+        GetBasePlayer()->SetPoseParameter(
+            pStudioHdr, m_PoseParameterData.m_iMoveX, vecCurrentMoveYaw.x);
+        GetBasePlayer()->SetPoseParameter(
+            pStudioHdr, m_PoseParameterData.m_iMoveY, vecCurrentMoveYaw.y);
+
+        m_DebugAnimData.m_vecMoveYaw = vecCurrentMoveYaw;
+    }
+    else
+    {
+        // Tony; oops, i inverted this previously above.
+        GetBasePlayer()->SetPoseParameter(pStudioHdr,
+                                          m_PoseParameterData.m_iMoveY, flYaw);
+    }
 }
 
 //-----------------------------------------------------------------------------

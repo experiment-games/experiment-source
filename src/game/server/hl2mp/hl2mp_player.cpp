@@ -139,11 +139,12 @@ const char *g_ppszRandomCitizenModels[] = {
 };
 
 const char *g_ppszRandomCombineModels[] = {
-    "models/combine_soldier.mdl",
-    "models/combine_soldier_prisonguard.mdl",
-    "models/combine_super_soldier.mdl",
-    "models/police.mdl",
+    "models/stalkertnb/bandit_reager.mdl",
+    "models/stalkertnb/bandit2.mdl",
+    "models/stalkertnb/exo_free.mdl",
 };
+
+const char *g_ppszDefaultModel = "models/stalkertnb/exo_free.mdl";
 
 #define MAX_COMBINE_MODELS 4
 #define MODEL_CHANGE_INTERVAL 5.0f
@@ -193,6 +194,7 @@ void CHL2MP_Player::Precache(void) {
     BaseClass::Precache();
 
     PrecacheModel("sprites/glow01.vmt");
+    PrecacheModel(g_ppszDefaultModel);
 
     // Precache Citizen models
     int nHeads = ARRAYSIZE(g_ppszRandomCitizenModels);
@@ -434,7 +436,7 @@ void CHL2MP_Player::SetPlayerTeamModel(void) {
     int modelIndex = modelinfo->GetModelIndex(szModelName);
 
     if (modelIndex == -1 || ValidatePlayerModel(szModelName) == false) {
-        szModelName = "models/Combine_Soldier.mdl";
+        szModelName = g_ppszDefaultModel;
         m_iModelType = TEAM_COMBINE;
 
         char szReturnString[512];
@@ -481,7 +483,7 @@ void CHL2MP_Player::SetPlayerModel(void) {
         char szReturnString[512];
 
         if (ValidatePlayerModel(pszCurrentModelName) == false) {
-            pszCurrentModelName = "models/Combine_Soldier.mdl";
+            pszCurrentModelName = g_ppszDefaultModel;
         }
 
         Q_snprintf(szReturnString, sizeof(szReturnString),
@@ -520,7 +522,7 @@ void CHL2MP_Player::SetPlayerModel(void) {
     int modelIndex = modelinfo->GetModelIndex(szModelName);
 
     if (modelIndex == -1) {
-        szModelName = "models/Combine_Soldier.mdl";
+        szModelName = g_ppszDefaultModel;
         m_iModelType = TEAM_COMBINE;
 
         char szReturnString[512];
@@ -1421,7 +1423,17 @@ Vector CHL2MP_Player::GetAutoaimVector(float flScale) {
 // Input  : playerAnim -
 //-----------------------------------------------------------------------------
 void CHL2MP_Player::SetAnimation(PLAYER_ANIM playerAnim) {
-    return;
+    // Experiment; copied from NEO: https://github.com/AdamTadeusz/neo/blob/master/mp/src/game/server/neo/neo_player.cpp#L1273-L1284
+    PlayerAnimEvent_t animEvent;
+
+    if (!PlayerAnimToPlayerAnimEvent(playerAnim, animEvent))
+    {
+        //DevWarning("SRV Tried to get unknown PLAYER_ANIM %d\n", playerAnim);
+    }
+    else
+    {
+        m_PlayerAnimState->DoAnimationEvent(animEvent);
+    }
 }
 
 // -------------------------------------------------------------------------------- //

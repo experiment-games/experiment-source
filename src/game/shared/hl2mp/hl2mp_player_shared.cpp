@@ -36,6 +36,32 @@ const char *g_ppszPlayerSoundPrefixNames[PLAYER_SOUNDS_MAX] = {
     "NPC_MetroPolice",
 };
 
+// Experiment; copied from NEO:
+// https://github.com/AdamTadeusz/neo/blob/master/mp/src/game/server/neo/neo_player_shared.cpp
+bool PlayerAnimToPlayerAnimEvent(const PLAYER_ANIM playerAnim,
+                                 PlayerAnimEvent_t &outAnimEvent) {
+    bool success = true;
+
+    if (playerAnim == PLAYER_ANIM::PLAYER_JUMP)
+    {
+        outAnimEvent = PlayerAnimEvent_t::PLAYERANIMEVENT_JUMP;
+    }
+    else if (playerAnim == PLAYER_ANIM::PLAYER_RELOAD)
+    {
+        outAnimEvent = PlayerAnimEvent_t::PLAYERANIMEVENT_RELOAD;
+    }
+    else if (playerAnim == PLAYER_ANIM::PLAYER_ATTACK1)
+    {
+        outAnimEvent = PlayerAnimEvent_t::PLAYERANIMEVENT_ATTACK_PRIMARY;
+    }
+    else
+    {
+        success = false;
+    }
+
+    return success;
+}
+
 const char *CHL2MP_Player::GetPlayerModelSoundPrefix(void) {
     return g_ppszPlayerSoundPrefixNames[m_iPlayerSoundType];
 }
