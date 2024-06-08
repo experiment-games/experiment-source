@@ -649,7 +649,22 @@ static int CBaseAnimating_ResetLatched(lua_State *L) {
 }
 
 static int CBaseAnimating_ResetSequence(lua_State *L) {
-    luaL_checkanimating(L, 1)->ResetSequence(luaL_checkint(L, 2));
+    auto entity = luaL_checkanimating(L, 1);
+    int sequence = luaL_checkint(L, 2);
+    auto model = entity->GetModelPtr();
+
+    if (!model) {
+        Warning("CBaseAnimating::ResetSequence failed: no model\n");
+        return 0;
+    }
+
+    if (sequence >= model->GetNumSeq()) {
+        Warning("CBaseAnimating::ResetSequence failed: invalid sequence %d\n", sequence);
+        return 0;
+    }
+
+    entity->ResetSequence(sequence);
+
     return 0;
 }
 

@@ -1124,12 +1124,15 @@ void CMultiPlayerAnimState::ComputeMainSequence()
 
 	// Export to our outer class..
     int animDesired = SelectWeightedSequence(TranslateActivity(idealActivity));
-	if ( pPlayer->GetSequenceActivity( pPlayer->GetSequence() ) == pPlayer->GetSequenceActivity( animDesired ) )
-		return;
+
+    #if !defined(HL1_CLIENT_DLL) && !defined(HL1_DLL)
+        if (!ShouldResetMainSequence(pPlayer->GetSequence(), animDesired))
+            return;
+    #endif
 
 	if ( animDesired < 0 )
 	{
-		 animDesired = 0;
+		 animDesired = 0; // T-pose
 	}
 
 	pPlayer->ResetSequence( animDesired );
@@ -1143,6 +1146,15 @@ void CMultiPlayerAnimState::ComputeMainSequence()
 		ResetGroundSpeed();
 	}
 #endif
+}
+
+
+bool CMultiPlayerAnimState::ShouldResetMainSequence(int iCurrentSequence, int iNewSequence) {
+    if (!m_pPlayer)
+        return false;
+
+    return m_pPlayer->GetSequenceActivity(iCurrentSequence) !=
+           m_pPlayer->GetSequenceActivity(iNewSequence);
 }
 
 //-----------------------------------------------------------------------------

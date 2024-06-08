@@ -273,7 +273,8 @@ protected:
 	float GetInterpolatedGroundSpeed( void );
 
 	void ComputeFireSequence();
-	void ComputeDeployedSequence();
+
+    virtual bool ShouldResetMainSequence(int iCurrentSequence, int iNewSequence);
 
 	virtual bool ShouldUpdateAnimState();
 

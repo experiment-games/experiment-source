@@ -46,6 +46,10 @@ public:
 
 	virtual float GetCurrentMaxGroundSpeed();
 
+protected:
+    virtual bool ShouldResetMainSequence(int iCurrentSequence,
+                                            int iNewSequence) OVERRIDE;
+
 private:
 
 	bool						SetupPoseParameters( CStudioHdr *pStudioHdr );

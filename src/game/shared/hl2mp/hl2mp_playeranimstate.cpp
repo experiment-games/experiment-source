@@ -379,12 +379,12 @@ bool CHL2MPPlayerAnimState::HandleJumping( Activity &idealActivity )
 				}
 				else
 				{
-					idealActivity = ACT_HL2MP_JUMP_FIST;
+                    idealActivity = ACT_HL2MP_JUMP_MELEE2;
 				}
 			}
 			else
 			{
-                idealActivity = ACT_HL2MP_JUMP;
+                idealActivity = ACT_HL2MP_JUMP_FIST;
 			}
 		}
 	}	
@@ -721,4 +721,16 @@ float CHL2MPPlayerAnimState::GetCurrentMaxGroundSpeed()
 	GetBasePlayer()->SetPoseParameter( pStudioHdr, m_PoseParameterData.m_iMoveY, prevY );
 
 	return speed;
+}
+
+bool CHL2MPPlayerAnimState::ShouldResetMainSequence(int iCurrentSequence,
+                                                  int iNewSequence) {
+    if (m_bJumping) {
+        // Only reset active mid-air jump sequence if we're transitioning
+        // away from that animation
+        return iNewSequence !=
+                SelectWeightedSequence(TranslateActivity(ACT_HL2MP_JUMP));
+    }
+
+    return BaseClass::ShouldResetMainSequence(iCurrentSequence, iNewSequence);
 }
