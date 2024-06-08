@@ -1123,7 +1123,7 @@ void CMultiPlayerAnimState::ComputeMainSequence()
 	}
 
 	// Export to our outer class..
-	int animDesired = SelectWeightedSequence( TranslateActivity( idealActivity ) );
+    int animDesired = SelectWeightedSequence(TranslateActivity(idealActivity));
 	if ( pPlayer->GetSequenceActivity( pPlayer->GetSequence() ) == pPlayer->GetSequenceActivity( animDesired ) )
 		return;
 

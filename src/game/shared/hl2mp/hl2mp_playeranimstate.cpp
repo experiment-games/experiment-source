@@ -375,19 +375,17 @@ bool CHL2MPPlayerAnimState::HandleJumping( Activity &idealActivity )
 			{
 				if ( gpGlobals->curtime - m_flJumpStartTime > 0.5 )
 				{
-					idealActivity = ACT_MP_JUMP_FLOAT;
+                    idealActivity = ACT_HL2MP_JUMP_PASSIVE;
 				}
 				else
 				{
-					idealActivity = ACT_MP_JUMP_START;
+					idealActivity = ACT_HL2MP_JUMP_FIST;
 				}
 			}
 			else
 			{
-				idealActivity = ACT_MP_JUMP;
+                idealActivity = ACT_HL2MP_JUMP;
 			}
-
-            idealActivity = ACT_HL2MP_JUMP; // Experiment; try get jump to show
 		}
 	}	
 
