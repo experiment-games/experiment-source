@@ -94,12 +94,8 @@ static int CHL2MP_Player_CanSprint(lua_State *L) {
 }
 
  static int CHL2MP_Player_DoAnimationEvent(lua_State *L) {
-   // m_pSDKPlayer->DoAnimationEvent(PLAYERANIMEVENT_JUMP);
-   // Became:
-   // MoveHelper()->PlayerSetAnimation(PLAYER_JUMP);
-
-   // luaL_checkhl2mpplayer(L, 1)->DoAnimationEvent((PlayerAnimEvent_t)luaL_checkint(L, 2), luaL_optinteger(L, 3, 0));
-   return 0;
+    luaL_checkhl2mpplayer(L, 1)->DoAnimationEvent((PlayerAnimEvent_t)luaL_checkint(L, 2), luaL_optinteger(L, 3, 0));
+    return 0;
  }
 
 static int CHL2MP_Player___index(lua_State *L) {
