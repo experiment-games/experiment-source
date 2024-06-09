@@ -13,6 +13,7 @@
 
 #ifdef CLIENT_DLL
 #include "c_hl2mp_player.h"
+#include "voice_status.h"
 #else
 #include "hl2mp_player.h"
 #endif
@@ -361,11 +362,14 @@ Activity CHL2MPPlayerAnimState::CalcMainActivity()
 {
     Activity idealActivity = BaseClass::CalcMainActivity();
 
-    // TODO: If the player is using voice, add the gesture for that
-    if ( false )
+#ifdef CLIENT_DLL
+    // If the player is using voice, add the gesture for that
+    if ( ( m_pPlayer == C_BasePlayer::GetLocalPlayer() && GetClientVoiceMgr()->IsLocalPlayerSpeaking() )
+        || GetClientVoiceMgr()->IsPlayerSpeaking( m_pPlayer->entindex() ) )
     {
         AddToGestureSlot( GESTURE_SLOT_CUSTOM, ACT_GMOD_IN_CHAT, true );
     }
+#endif
 
     return idealActivity;
 }
