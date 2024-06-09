@@ -91,6 +91,10 @@ LUA_API void luasrc_ExtractLcf()
                 V_SetCurrentDirectory( cachePath );
             }
 
+            // Experiment; Having only `game+download "|gameinfo_path|download"` in the gameinfo.txt
+            // searchpaths caused an inifinite loop when downloading the cache file from the server.
+            // In order to have "MOD" work for this, we had to specify
+            // `game+mod+download "|gameinfo_path|download"`
             char fullpath[MAX_PATH];
             filesystem->RelativePathToFullPath( pFilename, "MOD", fullpath, sizeof( fullpath ) );
 

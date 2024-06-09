@@ -94,7 +94,7 @@ gameinfo
 
 			// This is where downloaded files go.
 			// Do this last.
-			game+download		"|gameinfo_path|download"
+			game+mod+download		"|gameinfo_path|download"
 		}
 	}
 }

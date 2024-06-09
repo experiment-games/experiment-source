@@ -1010,7 +1010,14 @@ bool CServerGameDLL::LevelInit(const char *pMapName, char const *pMapEntities,
     luasrc_LoadGamemode(gamemode.GetString());
     luasrc_SetGamemode(gamemode.GetString());
 
-    if (gpGlobals->maxClients > 1) {
+    if ( gpGlobals->maxClients > 1 )
+    {
+        // TODO: Use resource.AddFile added resources instead, just testing now
+        INetworkStringTable *downloadables =
+            networkstringtable->FindTable( "downloadables" );
+        downloadables->AddString( true, "resource/DINLi.ttf", -1 );
+        // TODO end
+        
         // load LCF into stringtable
         lcf_preparecachefile();
     }

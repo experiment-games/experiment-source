@@ -76,5 +76,7 @@ game/experiment/textwindow_temp.html
 game/experiment/materials/**/*.vtf
 game/experiment/materials/**/*.vmt
 
-# lua cache files
+# lua/download cache files
+game/experiment/download/*
 game/experiment/cache/*
+game/experiment/**/*.ztmp
