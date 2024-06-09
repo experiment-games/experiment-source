@@ -40,7 +40,7 @@
 "["				"invprev"
 "MWHEELDOWN"	"invnext"
 "]"				"invnext"
-"q"				"lastinv"
+"q"				"+buildmenu"
 "F5"			"jpeg"
 "F6"			"save quick"
 "F7"			"load quick"

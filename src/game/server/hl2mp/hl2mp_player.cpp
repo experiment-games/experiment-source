@@ -303,7 +303,7 @@ void CHL2MP_Player::PickDefaultSpawnTeam(void) {
                     char szReturnString[512];
 
                     Q_snprintf(szReturnString, sizeof(szReturnString),
-                               "cl_playermodel models/combine_soldier.mdl\n");
+                               "cl_playermodel %s \n", g_ppszDefaultModel);
                     engine->ClientCommand(edict(), szReturnString);
                 }
 
