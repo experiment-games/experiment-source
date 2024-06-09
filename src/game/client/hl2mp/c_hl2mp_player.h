@@ -96,7 +96,12 @@ class C_HL2MP_Player : public C_BaseHLPlayer {
     
 	virtual float GetServerIntendedCycle() { return m_flServerCycle; }
 	virtual void SetServerIntendedCycle( float cycle ) { m_flServerCycle = cycle; }
-   private:
+
+    
+    bool IsAirborne() const {
+        return (!(GetFlags() & FL_ONGROUND));
+    }
+private:
     C_HL2MP_Player(const C_HL2MP_Player &);
 
     CHL2MPPlayerAnimState *m_PlayerAnimState;

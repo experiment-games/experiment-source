@@ -5,7 +5,6 @@
 #pragma once
 #endif
 
-
 #include "convar.h"
 #include "multiplayer_animstate.h"
 
@@ -21,50 +20,55 @@ class CHL2MP_Player;
 // ------------------------------------------------------------------------------------------------ //
 class CHL2MPPlayerAnimState : public CMultiPlayerAnimState
 {
-public:
-	
-	DECLARE_CLASS( CHL2MPPlayerAnimState, CMultiPlayerAnimState );
+   public:
+    DECLARE_CLASS( CHL2MPPlayerAnimState, CMultiPlayerAnimState );
 
-	CHL2MPPlayerAnimState();
-	CHL2MPPlayerAnimState( CBasePlayer *pPlayer, MultiPlayerMovementData_t &movementData );
-	~CHL2MPPlayerAnimState();
+    CHL2MPPlayerAnimState();
+    CHL2MPPlayerAnimState( CBasePlayer *pPlayer, MultiPlayerMovementData_t &movementData );
+    ~CHL2MPPlayerAnimState();
 
-	void InitHL2MPAnimState( CHL2MP_Player *pPlayer );
-	CHL2MP_Player *GetHL2MPPlayer( void )							{ return m_pHL2MPPlayer; }
+    void InitHL2MPAnimState( CHL2MP_Player *pPlayer );
+    CHL2MP_Player *GetHL2MPPlayer( void )
+    {
+        return m_pHL2MPPlayer;
+    }
 
-	virtual void ClearAnimationState();
-	virtual Activity TranslateActivity( Activity actDesired );
-	virtual void Update( float eyeYaw, float eyePitch );
+    virtual void ClearAnimationState();
+    virtual Activity TranslateActivity( Activity actDesired );
+    virtual void Update( float eyeYaw, float eyePitch );
 
-	void DoAnimationEvent(PlayerAnimEvent_t event, int nData = 0);
+    void DoAnimationEvent( PlayerAnimEvent_t event, int nData = 0 );
     virtual Activity CalcMainActivity();
 
-	bool	HandleMoving( Activity &idealActivity );
-	bool	HandleJumping( Activity &idealActivity );
-	bool	HandleDucking( Activity &idealActivity );
-	bool	HandleSwimming( Activity &idealActivity );
+    bool HandleMoving( Activity &idealActivity );
+    bool HandleJumping( Activity &idealActivity );
+    bool HandleDucking( Activity &idealActivity );
+    bool HandleSwimming( Activity &idealActivity );
 
-	virtual float GetCurrentMaxGroundSpeed();
+    virtual float GetCurrentMaxGroundSpeed();
 
-protected:
-    virtual bool ShouldResetMainSequence(int iCurrentSequence,
-                                            int iNewSequence) OVERRIDE;
+   protected:
+    virtual bool ShouldResetMainSequence( int iCurrentSequence,
+                                          int iNewSequence ) OVERRIDE;
 
-private:
+    bool IsAirborne();
 
-	bool						SetupPoseParameters( CStudioHdr *pStudioHdr );
-	virtual void				EstimateYaw( void );
-	virtual void				ComputePoseParam_MoveYaw( CStudioHdr *pStudioHdr );
-	virtual void				ComputePoseParam_AimPitch( CStudioHdr *pStudioHdr );
-	virtual void				ComputePoseParam_AimYaw( CStudioHdr *pStudioHdr );
-	
-	CHL2MP_Player   *m_pHL2MPPlayer;
-	bool		m_bInAirWalk;
-	float		m_flHoldDeployedPoseUntilTime;
+   private:
+    bool SetupPoseParameters( CStudioHdr *pStudioHdr );
+    virtual void EstimateYaw( void );
+    virtual void ComputePoseParam_MoveYaw( CStudioHdr *pStudioHdr );
+    virtual void ComputePoseParam_AimPitch( CStudioHdr *pStudioHdr );
+    virtual void ComputePoseParam_AimYaw( CStudioHdr *pStudioHdr );
+
+    CHL2MP_Player *m_pHL2MPPlayer;
+    bool m_bInAirWalk;
+    float m_flHoldDeployedPoseUntilTime;
+
+    bool m_bFreshJump;
+    bool m_bWasJumping;
+    float m_fJumpLandedFrame;
 };
 
 CHL2MPPlayerAnimState *CreateHL2MPPlayerAnimState( CHL2MP_Player *pPlayer );
 
-
-
-#endif // HL2MP_PLAYERANIMSTATE_H
+#endif  // HL2MP_PLAYERANIMSTATE_H

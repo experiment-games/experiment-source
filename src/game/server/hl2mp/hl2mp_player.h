@@ -150,6 +150,10 @@ class CHL2MP_Player : public CHL2_Player {
 
     virtual bool CanHearAndReadChatFrom(CBasePlayer *pPlayer);
 
+    bool IsAirborne() const {
+        return (!(GetFlags() & FL_ONGROUND));
+    }
+
    private:
     CHL2MPPlayerAnimState *m_PlayerAnimState;
 
