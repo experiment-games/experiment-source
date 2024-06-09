@@ -1,6 +1,3 @@
-// Made with XBLAH's Modding tool.
-// Download it at https://modding-assets.net/items/source/tools/modding/xblah-modding-tool
-
 gameinfo
 {
 	game	"Experiment"
@@ -47,47 +44,57 @@ gameinfo
 		//
 		searchpaths
 		{
-			// First, mount all user customizations.  This will search for VPKs and subfolders
+			// Next, mount all user customizations.  This will search for VPKs and subfolders
 			// and mount them in alphabetical order.  The easiest way to distribute a mod is to
 			// pack up the custom content into a VPK.  To "install" a mod, just drop it in this
 			// folder.
 			//
 			// Note that this folder is scanned only when the game is booted.
-			game+mod	"hl2mp/custom/*"
-			game+mod	"hl2/custom/*"
+			game+mod			"|gameinfo_path|custom/*"
 
 			// Now search loose files.  We'll set the directory containing the gameinfo.txt file
 			// as the first "mod" search path (after any user customizations).  This is also the one
 			// that's used when writing to the "mod" path.
-			game+mod+mod_write+default_write_path	"|gameinfo_path|."
-			gamebin	"|gameinfo_path|bin"
+			game+mod+mod_write+default_write_path		"|gameinfo_path|."
+			gamebin																	"|gameinfo_path|bin"
 
 			// We search VPK files before ordinary folders, because most files will be found in
 			// VPK and we can avoid making thousands of file system calls to attempt to open files
 			// in folders where they don't exist.  (Searching a VPK is much faster than making an operating
 			// system call.)
-			game_lv	"hl2/hl2_lv.vpk"
+			game_lv		"hl2/hl2_lv.vpk"
 			game+mod	"hl2mp/hl2mp_english.vpk"
 			game+mod	"hl2mp/hl2mp_pak.vpk"
-			game	"|all_source_engine_paths|hl2/hl2_english.vpk"
-			game	"|all_source_engine_paths|hl2/hl2_pak.vpk"
-			game	"|all_source_engine_paths|hl2/hl2_textures.vpk"
-			game	"|all_source_engine_paths|hl2/hl2_sound_vo_english.vpk"
-			game	"|all_source_engine_paths|hl2/hl2_sound_misc.vpk"
-			game	"|all_source_engine_paths|hl2/hl2_misc.vpk"
+			game			"|all_source_engine_paths|hl2/hl2_english.vpk"
+			game			"|all_source_engine_paths|hl2/hl2_pak.vpk"
+			game			"|all_source_engine_paths|hl2/hl2_textures.vpk"
+			game			"|all_source_engine_paths|hl2/hl2_sound_vo_english.vpk"
+			game			"|all_source_engine_paths|hl2/hl2_sound_misc.vpk"
+			game			"|all_source_engine_paths|hl2/hl2_misc.vpk"
 			platform	"|all_source_engine_paths|platform/platform_misc.vpk"
+			// game+mod			"sourcetest/sourcetest_pak.vpk"
 
-			// Add the HL2 directory as a game search path.  This is also where where writes
-			// to the "game" path go.
-			game+game_write		"hl2mp"
+			// Our VPK files
+			// game				"|gameinfo_path|base_assets.vpk"
+			// game				"|gameinfo_path|experiment_assets.vpk"
+
+			// Add the HL2 directory as a game search path.
+			game				"hl2mp"
+
+			// This is where where writes to the "game" path go.
+			game_write			"|gameinfo_path|"
 
 			// Where the game's binaries are
-			gamebin	"hl2mp/bin"
+			gamebin	"|gameinfo_path|bin"
 
-			// Last, mount in shared HL2 loose files
+			// Mount in shared HL2 loose files
 			game	"|all_source_engine_paths|hl2mp"
 			game	"|all_source_engine_paths|hl2"
 			platform	"|all_source_engine_paths|platform"
+
+			// This is where downloaded files go.
+			// Do this last.
+			game+download		"|gameinfo_path|download"
 		}
 	}
 }
