@@ -66,7 +66,6 @@ class CHL2MPPlayerAnimState : public CMultiPlayerAnimState
 
     bool m_bFreshJump;
     bool m_bWasJumping;
-    float m_fJumpLandedFrame;
 };
 
 CHL2MPPlayerAnimState *CreateHL2MPPlayerAnimState( CHL2MP_Player *pPlayer );

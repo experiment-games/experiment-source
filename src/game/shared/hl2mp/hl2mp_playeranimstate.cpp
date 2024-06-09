@@ -62,7 +62,8 @@ CHL2MPPlayerAnimState::CHL2MPPlayerAnimState()
 }
 
 CHL2MPPlayerAnimState::CHL2MPPlayerAnimState(
-    CBasePlayer *pPlayer, MultiPlayerMovementData_t &movementData )
+    CBasePlayer *pPlayer,
+    MultiPlayerMovementData_t &movementData )
     : CMultiPlayerAnimState( pPlayer, movementData )
 {
     m_pHL2MPPlayer = NULL;
@@ -337,7 +338,8 @@ bool CHL2MPPlayerAnimState::HandleJumping( Activity &idealActivity )
 {
     if ( IsAirborne() )
     {
-        idealActivity = ACT_HL2MP_JUMP;
+        // TODO: Fix which weapon suffix to use
+        idealActivity = ACT_HL2MP_JUMP_PASSIVE;
 
         // We set this here (and not in DoAnimationEvent) because in
         // contrast to DoAnimationEvent, this function is called on
@@ -348,17 +350,8 @@ bool CHL2MPPlayerAnimState::HandleJumping( Activity &idealActivity )
     }
     else if ( m_bWasJumping )
     {
-        /*int jumpLandSequence = m_pHL2MPPlayer->LookupSequence( "jump_land" );
-        m_pHL2MPPlayer->AddLayeredSequence( jumpLandSequence, 1 );*/
-        m_fJumpLandedFrame = gpGlobals->curtime;
+        AddToGestureSlot( GESTURE_SLOT_JUMP, ACT_LAND, true );
         m_bWasJumping = false;
-        return true;
-    }
-    else if( m_fJumpLandedFrame + 1 > gpGlobals->curtime )
-    {
-        /*int jumpLandSequence = m_pHL2MPPlayer->LookupSequence( "jump_land" );
-        m_pHL2MPPlayer->AddLayeredSequence( jumpLandSequence, 1 );*/
-        return true;
     }
 
     return false;
@@ -367,6 +360,12 @@ bool CHL2MPPlayerAnimState::HandleJumping( Activity &idealActivity )
 Activity CHL2MPPlayerAnimState::CalcMainActivity()
 {
     Activity idealActivity = BaseClass::CalcMainActivity();
+
+    // TODO: If the player is using voice, add the gesture for that
+    if ( false )
+    {
+        AddToGestureSlot( GESTURE_SLOT_CUSTOM, ACT_GMOD_IN_CHAT, true );
+    }
 
     return idealActivity;
 }

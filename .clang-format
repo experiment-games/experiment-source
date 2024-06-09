@@ -22,6 +22,7 @@ IndentCaseLabels: true
 AllowShortFunctionsOnASingleLine: Empty
 BinPackArguments: false
 BinPackParameters: false
+AllowAllParametersOfDeclarationOnNextLine: false
 
 BreakBeforeBraces: Allman
 BraceWrapping:
