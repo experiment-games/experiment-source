@@ -11,6 +11,8 @@ sendfile("cl_init.lua")
 sendfile("in_main.lua")
 sendfile("scripted_controls/buildmenu.lua")
 
+resources.AddFile("resource/DINLi.ttf")
+
 local tSpawnPointClassnames = {
 	"info_player_deathmatch",
 	"info_player_combine",

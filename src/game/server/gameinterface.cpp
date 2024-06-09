@@ -349,6 +349,7 @@ void UpdateAllClientData(void);
 void DrawMessageEntities();
 
 #include "ai_network.h"
+#include <lresources.h>
 
 // For now just using one big AI network
 extern ConVar think_limit;
@@ -1012,13 +1013,19 @@ bool CServerGameDLL::LevelInit(const char *pMapName, char const *pMapEntities,
 
     if ( gpGlobals->maxClients > 1 )
     {
-        // TODO: Use resource.AddFile added resources instead, just testing now
+        // Adds files (like models, materials, sounds, etc) to the downloadables table
+        // to be sent to clients when they connect.
         INetworkStringTable *downloadables =
             networkstringtable->FindTable( "downloadables" );
-        downloadables->AddString( true, "resource/DINLi.ttf", -1 );
-        // TODO end
+        int resourceFileCount = resources_GetFilesCount();
+
+        for ( int i = 0; i < resourceFileCount; i++ )
+        {
+            const char *resourceFile = resources_GetFile( i );
+            downloadables->AddString( true, resourceFile, -1 );
+        }
         
-        // load LCF into stringtable
+        // Load the Lua cache files (zipped) into the downloadables table
         lcf_preparecachefile();
     }
 #endif

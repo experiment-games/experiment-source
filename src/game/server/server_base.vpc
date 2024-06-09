@@ -722,6 +722,8 @@ $Project
             $File "$SRCDIR\game\shared\luacachefile.h"
             $File "$SRCDIR\game\shared\luamanager.cpp"
             $File "$SRCDIR\game\shared\luamanager.h"
+            $File "$SRCDIR\game\shared\lresources.cpp"
+            $File "$SRCDIR\game\shared\lresources.h"
             $File "lutil.cpp"
             $File "lutil.h"
             $File "$SRCDIR\game\shared\lutil_shared.cpp"

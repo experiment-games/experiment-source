@@ -16,7 +16,9 @@ LocalPlayer = UTIL.GetLocalPlayer
 
 if (CLIENT) then
 	surface.SetDrawColor = surface.DrawSetColor
-	surface.DrawRect = surface.DrawFilledRect
+    surface.DrawRect = surface.DrawFilledRect
+elseif (SERVER) then
+	resource = resources
 end
 
 -- TODO: The rest of the Garry's Mod compatibility layer
