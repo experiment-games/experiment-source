@@ -58,11 +58,22 @@ LUA_API void luasrc_ExtractLcf()
 {
     INetworkStringTable *downloadables =
         networkstringtable->FindTable( "downloadables" );
+
     const char *pFilename = NULL;
+
+#ifdef CLIENT_DLL
+    const char *gamePath = engine->GetGameDirectory();
+#else
+    char gamePath[256];
+    engine->GetGameDir( gamePath, 256 );
+#endif
+
     for ( int i = 0; i < downloadables->GetNumStrings(); i++ )
     {
         pFilename = downloadables->GetString( i );
+
         char ext[10];
+
         Q_ExtractFileExtension( pFilename, ext, sizeof( ext ) );
 
         if ( !Q_stricmp( ext, "lcf" ) )
@@ -71,44 +82,48 @@ LUA_API void luasrc_ExtractLcf()
             char cachePath[MAX_PATH];
             bool bGetCurrentDirectory =
                 V_GetCurrentDirectory( current, sizeof( current ) );
+
             if ( bGetCurrentDirectory )
             {
-#ifdef CLIENT_DLL
-                const char *gamePath = engine->GetGameDirectory();
-#else
-                char gamePath[256];
-                engine->GetGameDir( gamePath, 256 );
-#endif
                 Q_strncpy( cachePath, gamePath, sizeof( cachePath ) );
                 Q_strncat( cachePath, "\\" LUA_PATH_CACHE, sizeof( cachePath ), COPY_ALL_CHARACTERS );
+
                 V_SetCurrentDirectory( cachePath );
             }
 
             char fullpath[MAX_PATH];
             filesystem->RelativePathToFullPath( pFilename, "MOD", fullpath, sizeof( fullpath ) );
+
             HZIP hz = OpenZip( fullpath, 0, ZIP_FILENAME );
             ZIPENTRY ze;
+
             GetZipItem( hz, -1, &ze );
             int numitems = ze.index;
+
             for ( int i = 0; i < numitems; i++ )
             {
                 GetZipItem( hz, i, &ze );
+
                 // forget directories, we create hierarchies from file names
                 if ( ( ze.attr & FILE_ATTRIBUTE_DIRECTORY ) != 1 )
                 {
                     char fullpath[MAX_PATH];
                     char path[MAX_PATH];
+
                     Q_snprintf( path, sizeof( path ), LUA_PATH_CACHE "\\%s", ze.name );
                     Q_StripFilename( path );
+
                     filesystem->CreateDirHierarchy( path, "MOD" );
+
                     Q_snprintf( fullpath, sizeof( fullpath ), "%s%s", cachePath, path + Q_strlen( LUA_PATH_CACHE ) );
-                    // DevMsg( "LCF: setting current directory to %s...\n",
-                    // fullpath );
+
+                    DevMsg( "LCF: setting current directory to %s...\n", fullpath );
                     V_SetCurrentDirectory( fullpath );
-                    // DevMsg( "LCF: unpacking %s...\n", ze.name );
+                    DevMsg( "LCF: unpacking %s...\n", ze.name );
                     UnzipItem( hz, i, ( void * )V_UnqualifiedFileName( ze.name ), 0, ZIP_FILENAME );
                 }
             }
+
             CloseZip( hz );
 
             if ( bGetCurrentDirectory )
@@ -117,6 +132,14 @@ LUA_API void luasrc_ExtractLcf()
             break;
         }
     }
+
+#ifdef CLIENT_DLL
+    // Add the cache folder to the Lua path, so clients can load files from it.
+    char cacheDirectoryPath[MAX_PATH];
+    Q_strncpy( cacheDirectoryPath, gamePath, sizeof( cacheDirectoryPath ) );
+    Q_strncat( cacheDirectoryPath, "\\" LUA_PATH_CACHE, sizeof( cacheDirectoryPath ), COPY_ALL_CHARACTERS );
+    filesystem->AddSearchPath( cacheDirectoryPath, "MOD" );
+#endif
 }
 
 #else
