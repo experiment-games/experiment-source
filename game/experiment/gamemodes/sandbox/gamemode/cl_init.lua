@@ -42,8 +42,8 @@ function GM:CreateDefaultPanels()
 end
 
 function GM:HudViewportPaint()
-    local w, h = surface.GetScreenSize()
+	-- local w, h = surface.GetScreenSize()
 
-    surface.DrawSetColor(0, 0, 0, 255)
-	surface.DrawFilledRect(0, 0, w, h * .5)
+	-- surface.DrawSetColor(0, 0, 0, 255)
+	-- surface.DrawFilledRect(0, 0, w, h * .5)
 end

@@ -1023,7 +1023,10 @@ bool CServerGameDLL::LevelInit(const char *pMapName, char const *pMapEntities,
         {
             const char *resourceFile = resources_GetFile( i );
             downloadables->AddString( true, resourceFile, -1 );
+
         }
+
+        resources_Free();
         
         // Load the Lua cache files (zipped) into the downloadables table
         lcf_preparecachefile();

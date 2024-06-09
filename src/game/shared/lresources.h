@@ -13,5 +13,6 @@
 
 int resources_GetFilesCount();
 const char *resources_GetFile( int i );
+void resources_Free();
 
 #endif  // LRESOURCES_H

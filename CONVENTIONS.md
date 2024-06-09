@@ -25,7 +25,13 @@ See the `.editorconfig` file for the code style.
 
 ### Naming conventions
 
-- Variables and functions are not abbreviated.
+- Variables and functions are not abbreviated, with the exception of these abbreviations:
+
+  - `Hud`
+  - `Api`
+  - `Id`
+  - `Url`
+  - `Json`, `Xml`, `Html`, `Css` and other data format/language names
 
 - Variables and functions are preferred to be descriptive over short.
 
@@ -55,6 +61,8 @@ See the `.editorconfig` file for the code style.
 
 - Library names are always plural and one word.
 
+  *(To avoid conflicts with variables like `player` and `entity`)*
+
 - Library functions are written in `UpperCamelCase`:
 
   ```lua
@@ -70,7 +78,30 @@ See the `.editorconfig` file for the code style.
   end
   ```
 
-  *(To avoid conflicts with variables like `player` and `entity`)*
+- When we extend a base Lua library, we also write the function in `UpperCamelCase`.
+
+- We use an underscore to prevent conflicts between variables and base libraries:
+
+  ```lua
+  function table.Print(_table)
+    print("Table:")
+    PrintTable(_table)
+  end
+  ```
+
+- Loop variables are written in `lowerCamelCase` and should be descriptive.
+  We use the `_` variable for unused variables:
+
+  ```lua
+  for _, player in ipairs(players) do
+    print(player:Name())
+  end
+
+  -- Incorrect:
+  for k, v in ipairs(players) do -- wrong
+    print(v:Name())
+  end
+  ```
 
 - Metamethod definitions are written in `UPPER_SNAKE_CASE`.
 
