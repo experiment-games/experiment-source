@@ -75,3 +75,6 @@ game/experiment/textwindow_temp.html
 # mod content while debugging
 game/experiment/materials/**/*.vtf
 game/experiment/materials/**/*.vmt
+
+# lua cache files
+game/experiment/cache/*

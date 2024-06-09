@@ -6,6 +6,8 @@
 --]]
 
 include("shared.lua")
+sendfile("shared.lua")
+sendfile("cl_init.lua")
 
 local tSpawnPointClassnames = {
 	"info_player_deathmatch",
