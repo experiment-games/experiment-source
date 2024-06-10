@@ -14,131 +14,150 @@ local type = type
 local print = print
 local KeyValues = KeyValues
 
-function table.Copy(t, tRecursive)
-	if (t == nil) then
+function table.Copy(target, shouldCopyRecursively)
+	if (target == nil) then
 		return nil
 	end
+
 	local __copy = {}
-	setmetatable(__copy, getmetatable(t))
-	for i, v in pairs(t) do
-		if (type(v) ~= "table") then
-			__copy[i] = v
+	setmetatable(__copy, getmetatable(target))
+
+	for key, value in pairs(target) do
+		if (type(value) ~= "table") then
+			__copy[key] = value
 		else
-			tRecursive = tRecursive or {}
-			tRecursive[t] = __copy
-			if (tRecursive[v]) then
-				__copy[i] = tRecursive[v]
+			shouldCopyRecursively = shouldCopyRecursively or {}
+			shouldCopyRecursively[target] = __copy
+			if (shouldCopyRecursively[value]) then
+				__copy[key] = shouldCopyRecursively[value]
 			else
-				__copy[i] = table.Copy(v, tRecursive)
+				__copy[key] = table.Copy(value, shouldCopyRecursively)
 			end
 		end
 	end
+
 	return __copy
 end
 
-function table.HasValue(t, val)
-	for _, v in pairs(t) do
-		if (v == val) then
-			return true
+function table.HasValue(target, valueToFind)
+	for key, value in pairs(target) do
+		if (value == valueToFind) then
+			return true, key
 		end
 	end
-	return false
+
+	return false, nil
 end
 
-function table.Inherit(t, BaseClass)
-	for k, v in pairs(BaseClass) do
-		if (t[k] == nil) then
-			t[k] = v
+function table.Inherit(target, tableToInherit)
+	if (type(target) ~= "table") then
+		error(debug.traceback("bad argument #1 to 'Inherit' (table expected, got " .. type(target) .. ")", 2))
+	end
+
+	if (type(tableToInherit) ~= "table") then
+		error(debug.traceback("bad argument #2 to 'Inherit' (table expected, got " .. type(tableToInherit) .. ")", 2))
+	end
+
+	for k, v in pairs(tableToInherit) do
+		if (target[k] == nil) then
+			target[k] = v
 		end
 	end
-	t.BaseClass = BaseClass
-	return t
+
+	target.BaseClass = tableToInherit
+
+	return target
 end
 
-function table.Merge(dest, src)
-	if (type(dest) ~= "table") then
-		error("bad argument #1 to 'Merge' (table expected, got " .. type(dest) .. ")", 2)
+function table.Merge(destination, source)
+	if (type(destination) ~= "table") then
+		error(debug.traceback("bad argument #1 to 'Merge' (table expected, got " .. type(destination) .. ")", 2))
 	end
-	if (type(src) ~= "table") then
-		error("bad argument #2 to 'Merge' (table expected, got " .. type(src) .. ")", 2)
+
+	if (type(source) ~= "table") then
+		error(debug.traceback("bad argument #2 to 'Merge' (table expected, got " .. type(source) .. ")", 2))
 	end
-	for k, v in pairs(src) do
-		if (type(dest[k]) == "table" and type(v) == "table") then
-			table.Merge(dest[k], v)
+
+	for key, value in pairs(source) do
+		if (type(destination[key]) == "table" and type(value) == "table") then
+			table.Merge(destination[key], value)
 		else
-			dest[k] = v
+			destination[key] = value
 		end
 	end
 end
 
-function table.Print(t, bOrdered, i, seen)
-    i = i or 0
-    seen = seen or {}
+function table.Print(target, isSequential, indentLevel, tablesVisited)
+	indentLevel = indentLevel or 0
+	tablesVisited = tablesVisited or {}
 	local indent = ""
 
-	for j = 1, i do
+	for j = 1, indentLevel do
 		indent = indent .. "\t"
 	end
 
-	if (i == 0) then
-		print("Printing Table: " .. tostring(t))
+	if (indentLevel == 0) then
+		print("Printing Table: " .. tostring(target))
 	end
 
-    if seen[t] then
-        print(indent .. "*recursive*")
-        return
-    end
-    seen[t] = true
+	if tablesVisited[target] then
+		print(indent .. "*recursive*")
+		return
+	end
 
-    if (not bOrdered) then
-        for k, v in pairs(t) do
-            if (type(v) == "table") then
-                print(indent .. k)
-                table.Print(v, false, i + 1, seen)
-            else
-                print(indent .. k, v)
-            end
-        end
-    else
-        for j, pair in ipairs(t) do
-            if (type(pair.value) == "table") then
-                print(indent .. pair.key)
-                table.Print(pair.value, true, i + 1, seen)
-            else
-                print(indent .. pair.key, pair.value)
-            end
-        end
-    end
+	tablesVisited[target] = true
 
-    seen[t] = nil
-end
-
-function table.ToKeyValues(t, setName, bOrdered)
-	local pKV = KeyValues(setName)
-	if (not bOrdered) then
-		for k, v in pairs(t) do
-			if (type(v) == "table") then
-				pKV:AddSubKey(table.ToKeyValues(v, k))
-			elseif (type(v) == "string") then
-				pKV:SetString(k, v)
-			elseif (type(v) == "number") then
-				pKV:SetFloat(k, v)
-			elseif (type(v) == "color") then
-				pKV:SetColor(k, v)
+	if (not isSequential) then
+		for key, value in pairs(target) do
+			if (type(value) == "table") then
+				print(indent .. key)
+				table.Print(value, false, indentLevel + 1, tablesVisited)
 			else
-				pKV:SetString(k, tostring(v))
+				print(indent .. key, value)
 			end
 		end
 	else
-		for i, pair in ipairs(t) do
+		for _, pair in ipairs(target) do
 			if (type(pair.value) == "table") then
-				pKV:AddSubKey(table.ToKeyValues(pair.value, pair.key, true))
+				print(indent .. pair.key)
+				table.Print(pair.value, true, indentLevel + 1, tablesVisited)
 			else
-				local pKey = pKV:CreateNewKey()
+				print(indent .. pair.key, pair.value)
+			end
+		end
+	end
+
+	tablesVisited[target] = nil
+end
+
+function table.ToKeyValues(target, setName, isSequential)
+	local keyValueSet = KeyValues(setName)
+
+	if (not isSequential) then
+		for key, value in pairs(target) do
+			if (type(value) == "table") then
+				keyValueSet:AddSubKey(table.ToKeyValues(value, key))
+			elseif (type(value) == "string") then
+				keyValueSet:SetString(key, value)
+			elseif (type(value) == "number") then
+				keyValueSet:SetFloat(key, value)
+			elseif (type(value) == "color") then
+				keyValueSet:SetColor(key, value)
+			else
+				keyValueSet:SetString(key, tostring(value))
+			end
+		end
+	else
+		for _, pair in ipairs(target) do
+			if (type(pair.value) == "table") then
+				keyValueSet:AddSubKey(table.ToKeyValues(pair.value, pair.key, true))
+			else
+				local pKey = keyValueSet:CreateNewKey()
 				pKey:SetName(pair.key)
 				pKey:SetStringValue(tostring(pair.value))
 			end
 		end
 	end
-	return pKV
+
+	return keyValueSet
 end

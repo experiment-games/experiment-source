@@ -544,11 +544,13 @@ LUA_API void luasrc_dofolder( lua_State *L, const char *path )
 LUA_API int luasrc_pcall( lua_State *L, int nargs, int nresults, int errfunc )
 {
     int iError = lua_pcall( L, nargs, nresults, errfunc );
+
     if ( iError != 0 )
     {
-        Warning( "%s\n", lua_tostring( L, -1 ) );
+        Warning( "[Lua] %s\n", lua_tostring( L, -1 ) );
         lua_pop( L, 1 );
     }
+
     return iError;
 }
 
@@ -779,15 +781,53 @@ void luasrc_LoadWeapons( const char *path )
     g_pFullFileSystem->FindClose( fh );
 }
 
+/// <summary>
+/// Loads the gamemode with the given name from the gamemodes folder.
+/// Recursively loads the base gamemode if the GM.Base field is set.
+///
+/// Calls gamemodes.Register(gamemodeTable, gamemodeName, baseGameMode)
+/// after loading all the relevant gamemodes.
+/// </summary>
+/// <param name="gamemode"></param>
+/// <returns></returns>
 bool luasrc_LoadGamemode( const char *gamemode )
 {
+    Warning( "Loading gamemode %s\n", gamemode );
+
+    // Commented because the gamemode shouldn't be loaded twice
+    //// Check if the gamemode is already loaded with gamemodes.Get(gamemode)
+    //lua_getglobal( L, "gamemodes" );
+    //lua_getfield( L, -1, "Get" );
+    //lua_remove( L, -2 );  // Remove gamemodes now that we have Get
+    //lua_pushstring( L, gamemode );
+    //lua_pcall( L, 1, 1, 0 );
+
+    //bool isLoaded = lua_istable( L, -1 );
+
+    //lua_pop( L, 1 ); // Pop the result of gamemodes.Get(gamemode)
+
+    //if ( isLoaded )
+    //{
+    //    // TODO: Debug only. 
+    //    Warning( "Debug: Already loaded gamemode %s!\n", gamemode );
+    //    return true;
+    //}
+
+    // Set the GM table as a global variable
     lua_newtable( L );
+    lua_setglobal( L, "GM" );
+
+    // Let scripts know what folder the gamemode is in
+    lua_getglobal( L, "GM" );
     lua_pushstring( L, "Folder" );
     char gamemodepath[MAX_PATH];
     Q_snprintf( gamemodepath, sizeof( gamemodepath ), "gamemodes\\%s", gamemode );
     lua_pushstring( L, gamemodepath );
     lua_settable( L, -3 );
-    lua_setglobal( L, "GM" );
+
+    lua_pop( L, 1 ); // Pop the GM table, the stack should be empty now
+
+    // Load the cl_init.lua file client-side and init.lua server-side
     char filename[MAX_PATH];
     char fullpath[MAX_PATH];
 #ifdef CLIENT_DLL
@@ -795,43 +835,97 @@ bool luasrc_LoadGamemode( const char *gamemode )
 #else
     Q_snprintf( filename, sizeof( filename ), "%s\\gamemode\\init.lua", gamemodepath );
 #endif
-    if ( filesystem->FileExists( filename, "MOD" ) )
+
+    if ( !filesystem->FileExists( filename, "MOD" ) )
     {
-        filesystem->RelativePathToFullPath( filename, "MOD", fullpath, sizeof( fullpath ) );
-        if ( luasrc_dofile( L, fullpath ) == 0 )
+        // Unset the GM table
+        lua_pushnil( L );
+        lua_setglobal( L, "GM" );
+
+        Warning( "ERROR: Attempted to load an invalid gamemode %s (%s does not exist)!\n", gamemode, filename );
+
+        return false;
+    }
+
+    filesystem->RelativePathToFullPath( filename, "MOD", fullpath, sizeof( fullpath ) );
+
+    if ( luasrc_dofile( L, fullpath ) != LUA_OK )
+    {
+        // Unset the GM table in case of an error
+        lua_pushnil( L );
+        lua_setglobal( L, "GM" );
+        
+        Warning( "ERROR: Attempted to load an invalid gamemode %s (failed to load %s)!\n", gamemode, fullpath );
+
+        return false;
+    }
+
+    // Checks if the GM.Base field is set, if it is, we call luasrc_LoadGamemode
+    // to load the relevant base gamemode
+    lua_getglobal( L, "GM" );
+    lua_getfield( L, -1, "Base" );
+    lua_remove( L, -2 ); // Remove GM table
+
+    const char *baseGamemode = LUA_BASE_GAMEMODE;
+
+    // Get the base gamemode string
+    if ( lua_isstring( L, -1 ) )
+    {
+        baseGamemode = lua_tostring( L, -1 );
+    }
+
+    lua_pop( L, 1 );  // Pop the base gamemode string or nil
+
+    // Prepare gamemodes.Register with this gamemode to be called later
+    // once all base gamemodes are loaded
+    lua_getglobal( L, "gamemodes" );
+    lua_getfield( L, -1, "Register" );
+    lua_remove( L, -2 );  // Remove gamemodes now that we have Register
+
+    // Sanity check in case someone messes with the gamemodes module
+    if ( !lua_isfunction( L, -1 ) )
+    {
+        lua_pop( L, 1 );  // Pop Register
+
+        Warning( "ERROR: Failed to load gamemode %s (gamemodes.Register is not a function)!\n", gamemode );
+
+        return false;
+    }
+
+    // Leave the GM table on the stack to be used by gamemodes.Register
+    // after all base gamemodes are loaded
+    lua_getglobal( L, "GM" );
+
+    if ( Q_strcmp( baseGamemode, LUA_BASE_GAMEMODE ) != 0 )
+    {
+        // Load the base gamemode for this gamemode only if it's
+        // different from the default base gamemode
+        if ( !luasrc_LoadGamemode( baseGamemode ) )
         {
-            lua_getglobal( L, "gamemodes" );
-            lua_getfield( L, -1, "Register" );
-            lua_remove( L, -2 );
-            lua_getglobal( L, "GM" );
-            lua_pushstring( L, gamemode );
-            lua_getfield( L, -2, "Base" );
-            if ( lua_isnoneornil( L, -1 ) &&
-                 Q_strcmp( gamemode, LUA_BASE_GAMEMODE ) != 0 )
-            {
-                lua_pop( L, 1 );
-                lua_pushstring( L, LUA_BASE_GAMEMODE );
-            }
-            luasrc_pcall( L, 3, 0, 0 );
+            // Unset the GM table in case of an error
             lua_pushnil( L );
             lua_setglobal( L, "GM" );
-            return true;
-        }
-        else
-        {
-            lua_pushnil( L );
-            lua_setglobal( L, "GM" );
-            Warning( "ERROR: Attempted to load an invalid gamemode %s (failed to load %s)!\n", gamemode, fullpath );
+
+            // Pop gamemodes.Register and the GM table that were left on the stack
+            lua_pop( L, 2 );
+
+            Warning( "ERROR: Attempted to load an invalid gamemode %s (failed to load base gamemode %s)!\n", gamemode, baseGamemode );
+
             return false;
         }
     }
-    else
-    {
-        lua_pushnil( L );
-        lua_setglobal( L, "GM" );
-        Warning( "ERROR: Attempted to load an invalid gamemode %s (%s does not exist)!\n", gamemode, filename );
-        return false;
-    }
+
+    // (gamemodes.)Register and the original GM table are on the stack
+    // Call gamemodes.Register(gamemodeTable, gamemodeName, baseGameMode)
+    lua_pushstring( L, gamemode );
+    lua_pushstring( L, baseGamemode );
+    luasrc_pcall( L, 3, 0, 0 );
+
+    // Unset the GM table, users should use the GAMEMODE table instead
+    lua_pushnil( L );
+    lua_setglobal( L, "GM" );
+
+    return true;
 }
 
 bool luasrc_SetGamemode( const char *gamemode )

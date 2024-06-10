@@ -80,3 +80,4 @@ game/experiment/materials/**/*.vmt
 game/experiment/download/*
 game/experiment/cache/*
 game/experiment/**/*.ztmp
+game/experiment/downloadlists/*

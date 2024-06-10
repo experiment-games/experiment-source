@@ -50,12 +50,19 @@ end
 --- @param gamemodeName string Name of the gamemode
 --- @param baseGameMode string Name
 function MODULE.Register(gamemodeTable, gamemodeName, baseGameMode)
-	if (MODULE.Get(gamemodeName) ~= nil and _G.GAMEMODE ~= nil) then
-		gamemodeTable = table.Inherit(gamemodeTable, _G.GAMEMODE)
+	if (_G.GAMEMODE ~= nil) then
+		error(debug.traceback("Cannot register gamemode when a gamemode has already been set!", 2))
+		return
+	end
+
+	if (MODULE.Get(gamemodeName) ~= nil) then
+		error(debug.traceback("Gamemode " .. gamemodeName .. " is already registered!", 2))
+		return
 	end
 
 	if (gamemodeName ~= _BASE_GAMEMODE) then
-		gamemodeTable = table.Inherit(gamemodeTable, MODULE.Get(baseGameMode))
+		local baseGamemodeTable = MODULE.Get(baseGameMode)
+		gamemodeTable = table.Inherit(gamemodeTable, baseGamemodeTable)
 	end
 
 	registeredGamemodes[gamemodeName] = gamemodeTable
