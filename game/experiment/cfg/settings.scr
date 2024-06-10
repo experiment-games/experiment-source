@@ -1,17 +1,17 @@
-// NOTE:  THIS FILE IS AUTOMATICALLY REGENERATED, 
+// NOTE:  THIS FILE IS AUTOMATICALLY REGENERATED,
 //DO NOT EDIT THIS HEADER, YOUR COMMENTS WILL BE LOST IF YOU DO
 // Multiplayer options script
 //
 // Format:
 //  Version [float]
-//  Options description followed by 
+//  Options description followed by
 //  Options defaults
 //
 // Option description syntax:
 //
 //  "cvar" { "Prompt" { type [ type info ] } { default } }
 //
-//  type = 
+//  type =
 //   BOOL   (a yes/no toggle)
 //   STRING
 //   NUMBER
@@ -48,17 +48,12 @@ DESCRIPTION SERVER_OPTIONS
 		{ "Experiment" }
 	}
 
-	"gamemode"
-	{
-		"#Experiment_Gamemode"
-		{
-			LIST
-			"#Experiment_Gamemode_Sandbox" "sandbox"
-			"#Experiment_Gamemode_Deathmatch" "deathmatch"
-			"#Experiment_Gamemode_Base" "base"
-		}
-		{ "0" }
-	}
+ 	"gamemode"
+ 	{
+ 		"#Experiment_Gamemode"
+		{ STRING }
+ 		{ "sandbox" }
+ 	}
 
 	"sv_password"
 	{

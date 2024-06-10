@@ -51,13 +51,8 @@ DESCRIPTION SERVER_OPTIONS
  	"gamemode"
  	{
  		"#Experiment_Gamemode"
- 		{
- 			LIST
- 			"#Experiment_Gamemode_Sandbox" "sandbox"
- 			"#Experiment_Gamemode_Deathmatch" "deathmatch"
- 			"#Experiment_Gamemode_Base" "base"
- 		}
- 		{ "0" }
+		{ STRING }
+ 		{ "sandbox" }
  	}
 
 	"sv_password"
