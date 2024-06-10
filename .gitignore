@@ -1,5 +1,7 @@
-# Visual Studio (Code)
 .vscode/
+
+# Visual Studio files that are not needed, since they are generated
+# by the vpc scripts. To regenerate them, run creategameprojects.bat
 .vs/
 *.suo
 *.user
@@ -23,8 +25,6 @@ ipch
 *.vcxproj.vpc_crc
 *.sln
 *.sentinel
-src/**/Release_mod_hl2mp/*
-src/**/Release/*
 
 # OSX/Linux build products
 *.mak
