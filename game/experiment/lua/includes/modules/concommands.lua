@@ -10,10 +10,11 @@ local printError = debug.PrintError
 local tostring = tostring
 local xpcall = xpcall
 
-local MODULE = {}
+concommands = concommands or {}
+local MODULE = concommands
+MODULE.registeredCallbacks = MODULE.registeredCallbacks or {}
 
 local didCallbackError, callbackError
-local registeredCallbacks = {}
 
 --- Creates a command that can be called from the console.
 --- @param command string The name of the command that you type into the console.
@@ -21,7 +22,7 @@ local registeredCallbacks = {}
 --- @param helpText? string The help text that is displayed when finding the command in the console.
 --- @param flags? number FCVAR flags.
 function MODULE.Add(command, callback, helpText, flags)
-	registeredCallbacks[command] = callback
+	MODULE.registeredCallbacks[command] = callback
 
 	ConCommand(command, helpText, flags or 0)
 end
@@ -32,7 +33,7 @@ end
 --- @param arguments string The arguments that were passed to the command.
 --- @return boolean # Whether or not the command was dispatched.
 function MODULE.Dispatch(client, command, arguments)
-	local callback = registeredCallbacks[command]
+	local callback = MODULE.registeredCallbacks[command]
 
 	if (not callback) then
 		return false
@@ -50,11 +51,9 @@ end
 --- Removes a command from the list of registered commands.
 --- @param command string The name of the command to remove.
 function MODULE.Remove(command)
-	if (registeredCallbacks[command]) then
-		registeredCallbacks[command] = nil
+	if (MODULE.registeredCallbacks[command]) then
+		MODULE.registeredCallbacks[command] = nil
 	end
 end
-
-concommands = MODULE
 
 return MODULE

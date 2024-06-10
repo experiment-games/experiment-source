@@ -1,4 +1,4 @@
-//========= Copyright © 1996-2005, Valve Corporation, All rights reserved. ============//
+//========= Copyright Â© 1996-2005, Valve Corporation, All rights reserved. ============//
 //
 // Purpose: 
 //
@@ -231,7 +231,7 @@ LUALIB_API int luaopen_CRecipientFilter (lua_State *L) {
   lua_setfield(L, -2, "__index");  /* metatable.__index = metatable */
   lua_pushstring(L, "recipientfilter");
   lua_setfield(L, -2, "__type");  /* metatable.__type = "recipientfilter" */
-  luaL_register(L, "_G", CRecipientFilter_funcs);
+  luaL_register( L, LUA_GNAME, CRecipientFilter_funcs );
   lua_pop(L, 1);
   return 1;
 }
@@ -284,7 +284,7 @@ LUALIB_API int luaopen_CPASFilter (lua_State *L) {
   luaL_register(L, NULL, CPASFiltermeta);
   lua_pushstring(L, "recipientfilter");
   lua_setfield(L, -2, "__type");  /* metatable.__type = "recipientfilter" */
-  luaL_register(L, "_G", CPASFilter_funcs);
+  luaL_register( L, LUA_GNAME, CPASFilter_funcs );
   lua_pop(L, 1);
   return 1;
 }

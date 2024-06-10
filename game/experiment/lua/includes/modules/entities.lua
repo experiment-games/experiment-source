@@ -10,15 +10,15 @@ _BASE_ENTITY_CLASS = "prop_scripted"
 local table = table
 local Warning = dbg.Warning
 
-local MODULE = {}
-
-local registeredEntities = {}
+entities = entities or {}
+local MODULE = entities
+MODULE.registeredEntities = MODULE.registeredEntities or {}
 
 --- Returns an entity table
 --- @param className string Name of the entity
 --- @return table
 function MODULE.Get(className)
-	local foundEntity = registeredEntities[className]
+	local foundEntity = MODULE.registeredEntities[className]
 
 	if (not foundEntity) then
 		return nil
@@ -42,7 +42,7 @@ end
 --- Returns all registered entities
 --- @return table
 function MODULE.GetList()
-	return registeredEntities
+	return MODULE.registeredEntities
 end
 
 --- Registers an entity
@@ -54,9 +54,7 @@ function MODULE.Register(entityTable, className, isReloading)
 		return
 	end
 
-	registeredEntities[className] = entityTable
+	MODULE.registeredEntities[className] = entityTable
 end
-
-entities = MODULE
 
 return MODULE

@@ -1,4 +1,4 @@
-//========= Copyright © 1996-2005, Valve Corporation, All rights reserved. ============//
+//========= Copyright Â© 1996-2005, Valve Corporation, All rights reserved. ============//
 //
 // Purpose: 
 //
@@ -128,7 +128,7 @@ LUALIB_API int luaopen_IMoveHelper (lua_State *L) {
   lua_setfield(L, -2, "__index");  /* metatable.__index = metatable */
   lua_pushstring(L, "movehelper");
   lua_setfield(L, -2, "__type");  /* metatable.__type = "movehelper" */
-  luaL_register(L, "_G", IMoveHelper_funcs);
+  luaL_register( L, LUA_GNAME, IMoveHelper_funcs );
   lua_pop(L, 1);
   return 1;
 }

@@ -10,15 +10,15 @@ _BASE_WEAPON = "weapon_hl2mpbase_scriptedweapon"
 local table = table
 local Warning = dbg.Warning
 
-local MODULE = {}
-
-local registeredWeapons = {}
+weapons = weapons or {}
+local MODULE = weapons
+MODULE.registeredWeapons = MODULE.registeredWeapons or {}
 
 --- Returns the registered weapon table for the given weapon class name.
 --- @param weaponClassName string
 --- @return table|nil
 function MODULE.Get(weaponClassName)
-	local weaponTable = registeredWeapons[weaponClassName]
+	local weaponTable = MODULE.registeredWeapons[weaponClassName]
 
 	if (not weaponTable) then
 		return nil
@@ -44,13 +44,13 @@ end
 --- Be careful, this returns a reference to the actual table.
 --- @return table
 function MODULE.GetStored()
-	return registeredWeapons
+	return MODULE.registeredWeapons
 end
 
 --- Returns a list of all registered weapons.
 --- @return table
 function MODULE.GetList()
-	return table.Copy(registeredWeapons)
+	return table.Copy(MODULE.registeredWeapons)
 end
 
 --- Registers a weapon.
@@ -62,9 +62,7 @@ function MODULE.Register(weaponTable, className, isReloading)
 		return
 	end
 
-	registeredWeapons[className] = weaponTable
+	MODULE.registeredWeapons[className] = weaponTable
 end
-
-weapons = MODULE
 
 return MODULE

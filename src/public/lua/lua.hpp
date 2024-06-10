@@ -18,6 +18,9 @@ extern "C" {
 #pragma once
 #endif
 
+#define LUA_ENAME   "_E"
+#define LUA_RNAME   "_R"
+
 #define LUA_QL(x)	"'" x "'"
 #define LUA_QS		LUA_QL("%s")
 
@@ -41,5 +44,16 @@ void lua_getref(lua_State *L, int ref);
 void lua_unref(lua_State *L, int ref);
 
 bool lua_isrefvalid(lua_State *L, int ref);
+
+// Copied from https://github.com/lua/lua/blob/bdc85357aa41a9610498232c2cffe7aa191e5cf6/lbaselib.c#L432
+// since they're static in the original file
+int luaB_error(lua_State *L);
+int luaB_ipairs(lua_State *L);
+int luaB_next(lua_State *L);
+int luaB_pairs(lua_State *L);
+int luaB_select(lua_State *L);
+int luaB_tonumber(lua_State *L);
+int luaB_tostring(lua_State *L);
+int luaB_type(lua_State *L);
 
 #endif // LUA_COMPAT_LOADED_HPP

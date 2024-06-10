@@ -235,7 +235,7 @@ extern void lcf_open( lua_State *L )
 {
 #ifndef CLIENT_DLL
     /* open lib into global table */
-    luaL_register( L, "_G", lcf_funcs );
+    luaL_register( L, LUA_GNAME, lcf_funcs );
     lua_pop( L, 1 );
 #else
     // force create this directory incase it doesn't exist

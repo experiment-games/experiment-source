@@ -12,9 +12,10 @@ local tostring = tostring
 local unpack = table.unpack
 local printError = debug.PrintError
 
-local MODULE = {}
+hooks = hooks or {}
+local MODULE = hooks
+MODULE.registeredHooks = MODULE.registeredHooks or {}
 
-local registeredHooks = {}
 local returnValues = {}
 
 --- Adds a hook to the given GameRules function.
@@ -22,8 +23,8 @@ local returnValues = {}
 --- @param hookIdentifier string The name of the hook.
 --- @param callback fun(...): ... The function to call when the hook is called.
 function MODULE.Add(eventName, hookIdentifier, callback)
-	registeredHooks[eventName] = registeredHooks[eventName] or {}
-	registeredHooks[eventName][hookIdentifier] = callback
+	MODULE.registeredHooks[eventName] = MODULE.registeredHooks[eventName] or {}
+	MODULE.registeredHooks[eventName][hookIdentifier] = callback
 end
 
 --- Calls all hooks associated with a specific event.
@@ -32,7 +33,7 @@ end
 --- @vararg any Arguments to pass to the hooks.
 --- @return any # The return value(s) of the hook.
 function MODULE.Call(eventName, gamemodeTable, ...)
-	local callbacks = registeredHooks[eventName]
+	local callbacks = MODULE.registeredHooks[eventName]
 
 	if (callbacks ~= nil) then
 		for hookIdentifier, callback in pairs(callbacks) do
@@ -88,21 +89,19 @@ end
 --- @return table
 function MODULE.GetTable(eventName)
 	if (eventName) then
-		return registeredHooks[eventName]
+		return MODULE.registeredHooks[eventName]
 	end
 
-	return registeredHooks
+	return MODULE.registeredHooks
 end
 
 --- Removes a hook from the list of registered hooks.
 --- @param eventName string The name of the internal GameRules method.
 --- @param hookIdentifier string The name of the hook.
 function MODULE.Remove(eventName, hookIdentifier)
-	if (registeredHooks[eventName][hookIdentifier]) then
-		registeredHooks[eventName][hookIdentifier] = nil
+	if (MODULE.registeredHooks[eventName][hookIdentifier]) then
+		MODULE.registeredHooks[eventName][hookIdentifier] = nil
 	end
 end
-
-hooks = MODULE
 
 return MODULE

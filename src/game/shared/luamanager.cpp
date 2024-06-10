@@ -5,6 +5,7 @@
 //===========================================================================//
 
 #include "cbase.h"
+#include "utlbuffer.h"
 #include "filesystem.h"
 #ifndef CLIENT_DLL
 #include "gameinterface.h"
@@ -51,9 +52,16 @@ LUALIB_API int luaL_optboolean( lua_State *L, int narg, int def )
 lua_State *LGameUI;
 #endif
 
+// This is the state for the CLIENT (in case of CLIENT_DLL) or the
+// SERVER (in case of GAME_DLL). It will persist for the entire
+// play session.
 lua_State *L;
 
-// Lua system
+// See luasrc_InitCustomLoader for more information
+lua_State *loaderLuaState;
+bool hasLoaderBeenActivated = false;
+
+// Lua system initialized for client or server
 bool g_bLuaInitialized;
 
 static int luasrc_print( lua_State *L )
@@ -109,10 +117,10 @@ static int luasrc_include( lua_State *L )
     char source[MAX_PATH];
     Q_StrRight( ar2.source, iLength - 1, source, sizeof( source ) );
     Q_StripFilename( source );
-    char filename[MAX_PATH];
-    Q_snprintf( filename, sizeof( filename ), "%s\\%s", source, luaL_checkstring( L, 1 ) );
+    char fileName[MAX_PATH];
+    Q_snprintf( fileName, sizeof( fileName ), "%s\\%s", source, luaL_checkstring( L, 1 ) );
 
-    int returnedValueCount = luasrc_dofile_leave_stack( L, filename );
+    int returnedValueCount = luasrc_dofile_leave_stack( L, fileName );
 
     if ( returnedValueCount == -1 )
     {
@@ -124,28 +132,38 @@ static int luasrc_include( lua_State *L )
 }
 
 // Prints blue text on the server, yellow text on the client
-static int luasrc_InternalMsgClient( lua_State *L )
+static int luasrc_InternalMsg( lua_State *L, Color color )
 {
-    const char *msg = luaL_checkstring( L, 1 );
+    int n = lua_gettop( L );  // number of arguments
+    int i;
 
-    ConColorMsg( Color( 255, 255, 0, 255 ), "%s", msg );
+    lua_getglobal( L, "tostring" );
 
-    return 0;
-}
-static int luasrc_InternalMsgServer( lua_State *L )
-{
-    const char *msg = luaL_checkstring( L, 1 );
+    for ( i = 1; i <= n; i++ )
+    {
+        const char *s;
+        lua_pushvalue( L, -1 );  // function to be called
+        lua_pushvalue( L, i );   // value to print
+        lua_call( L, 1, 1 );
+        s = lua_tostring( L, -1 );  // get result
+        if ( s == NULL )
+            return luaL_error( L, LUA_QL( "tostring" ) " must return a string to " LUA_QL( "print" ) );
+        if ( i > 1 )
+            Msg( "\t" );
+        Msg( s );
+        lua_pop( L, 1 );  // pop result
+    }
 
-    ConDColorMsg( Color( 0, 0, 255, 255 ), "%s", msg );
+    Msg( "\n" );
 
     return 0;
 }
 static int luasrc_Msg( lua_State *L )
 {
 #ifdef CLIENT_DLL
-    luasrc_InternalMsgClient( L );
+    luasrc_InternalMsg( L, Color( 255, 255, 0, 255 ) );
 #else
-    luasrc_InternalMsgServer( L );
+    luasrc_InternalMsg( L, Color( 0, 0, 255, 255 ) );
 #endif
 
     return 0;
@@ -154,9 +172,9 @@ static int luasrc_Msg( lua_State *L )
 static int luasrc_MsgN( lua_State *L )
 {
 #ifdef CLIENT_DLL
-    luasrc_InternalMsgClient( L );
+    luasrc_InternalMsg( L, Color( 255, 255, 0, 255 ) );
 #else
-    luasrc_InternalMsgServer( L );
+    luasrc_InternalMsg( L, Color( 0, 0, 255, 255 ) );
 #endif
 
     Msg( "\n" );
@@ -176,13 +194,13 @@ static void base_open( lua_State *L )
 {
     /* set global _R */
     lua_pushvalue( L, LUA_REGISTRYINDEX );
-    lua_setglobal( L, "_R" );
+    lua_setglobal( L, LUA_RNAME );
     /* open lib into global table */
-    luaL_register( L, "_G", base_funcs );
+    luaL_register( L, LUA_GNAME, base_funcs );
     lua_pop( L, 1 );
-    /* set global _E */
+    /* set global enum table */
     lua_newtable( L );
-    lua_setglobal( L, "_E" );
+    lua_setglobal( L, LUA_ENAME );
 #ifdef CLIENT_DLL
     lua_pushboolean( L, 1 );
     lua_setglobal( L, "CLIENT" );
@@ -192,7 +210,7 @@ static void base_open( lua_State *L )
 #endif
 }
 
-static int luaB_band( lua_State *L )
+static int luabitopen_band( lua_State *L )
 {
     int i, n = lua_gettop( L );
     lua_Integer r = ~( ( lua_Unsigned )0 );
@@ -202,7 +220,7 @@ static int luaB_band( lua_State *L )
     return 1;
 }
 
-static int luaB_bor( lua_State *L )
+static int luabitopen_bor( lua_State *L )
 {
     int i, n = lua_gettop( L );
     lua_Integer r = 0;
@@ -212,7 +230,7 @@ static int luaB_bor( lua_State *L )
     return 1;
 }
 
-static int luaB_bxor( lua_State *L )
+static int luabitopen_bxor( lua_State *L )
 {
     int i, n = lua_gettop( L );
     lua_Integer r = 0;
@@ -222,31 +240,31 @@ static int luaB_bxor( lua_State *L )
     return 1;
 }
 
-static int luaB_bnot( lua_State *L )
+static int luabitopen_bnot( lua_State *L )
 {
     lua_pushinteger( L, ~luaL_checkinteger( L, 1 ) );
     return 1;
 }
 
-static int luaB_lshift( lua_State *L )
+static int luabitopen_lshift( lua_State *L )
 {
     lua_pushinteger( L, luaL_checkinteger( L, 1 ) << luaL_checkinteger( L, 2 ) );
     return 1;
 }
 
-static int luaB_rshift( lua_State *L )
+static int luabitopen_rshift( lua_State *L )
 {
     lua_pushinteger( L, luaL_checkinteger( L, 1 ) >> luaL_checkinteger( L, 2 ) );
     return 1;
 }
 
 static const luaL_Reg bit_funcs[] = {
-    { "band", luaB_band },
-    { "bor", luaB_bor },
-    { "bxor", luaB_bxor },
-    { "bnot", luaB_bnot },
-    { "lshift", luaB_lshift },
-    { "rshift", luaB_rshift },
+    { "band", luabitopen_band },
+    { "bor", luabitopen_bor },
+    { "bxor", luabitopen_bxor },
+    { "bnot", luabitopen_bnot },
+    { "lshift", luabitopen_lshift },
+    { "rshift", luabitopen_rshift },
     { NULL, NULL } };
 
 LUALIB_API int luaopen_bit( lua_State *L )
@@ -454,20 +472,120 @@ LUA_API int luasrc_dostring( lua_State *L, const char *string )
 }
 
 /// <summary>
+/// Provides a useful stack traceback for errors that occur in the loader.
+/// It is called before the stack is unwound by the error.
+/// </summary>
+/// <param name="L"></param>
+/// <returns></returns>
+static int luasrc_loader_traceback( lua_State *L )
+{
+    const char *msg = lua_tostring( L, 1 );
+    if ( msg == NULL )
+    {                                               /* is error object not a string? */
+        if ( luaL_callmeta( L, 1, "__tostring" ) && /* does it have a metamethod */
+             lua_type( L, -1 ) == LUA_TSTRING )     /* that produces a string? */
+            return 1;                               /* that is the message */
+        else
+            msg = lua_pushfstring( L, "(error object is a %s value)", luaL_typename( L, 1 ) );
+    }
+    luaL_traceback( L, L, msg, 1 ); /* append a standard traceback */
+    return 1;                       /* return the traceback */
+}
+
+/// <summary>
+/// If no custom loader has been activated, this function will simply
+/// load the given file using luaL_dofile. If a custom loader has been
+/// activated, the file will be preprocessed by the loader before being
+/// loaded.
+/// </summary>
+/// <param name="L"></param>
+/// <param name="fileName"></param>
+/// <returns></returns>
+LUA_API int luasrc_dofile_with_loader( lua_State *L, const char *fileName )
+{
+    // If the loader is not activated, default to simple dofile loading
+    if ( !hasLoaderBeenActivated )
+    {
+        return luaL_dofile( L, fileName );
+    }
+
+    // Handle the file manually, preprocessing it with the loader
+    if ( !filesystem->FileExists( fileName, "MOD" ) )
+    {
+        lua_pushfstring( L, "File does not exist: %s", fileName );
+        return LUA_ERRFILE;
+    }
+
+    // Read the file contents
+    CUtlBuffer fileContentsBuffer( 0, 0, CUtlBuffer::TEXT_BUFFER );
+    if ( !filesystem->ReadFile( fileName, "MOD", fileContentsBuffer ) )
+    {
+        lua_pushfstring( L, "Failed to read file: %s", fileName );
+        return LUA_ERRFILE;
+    }
+
+    const char *fileContents = fileContentsBuffer.String();
+    size_t fileSize = fileContentsBuffer.TellPut();
+
+    // Let the PreProcessFile function in the loader Lua state
+    // process the file contents
+    lua_getfield( loaderLuaState, -1, "PreProcessFile" );
+    lua_pushlstring( loaderLuaState, fileContents, fileContentsBuffer.TellPut() );
+    lua_pushstring( loaderLuaState, fileName );
+    int result = lua_pcall( loaderLuaState, 2, 1, 0 );
+
+    // From here on we prefix @ to the fileName, just like luaL_dofile does
+    char bufferFileName[MAX_PATH];
+    Q_snprintf( bufferFileName, MAX_PATH, "@%s", fileName );
+
+    if ( result != LUA_OK )
+    {
+        const char *error = lua_tostring( loaderLuaState, -1 );
+        lua_pop( loaderLuaState, 1 );  // Pop the error message
+
+        Warning( "[Lua] Loader Error: Failed to preprocess file %s because of error: '%s' (returning file unmodified!)\n", fileName, error );
+
+        return luaL_loadbuffer( L, fileContents, fileSize, bufferFileName );
+    }
+
+    if ( !lua_isstring( loaderLuaState, -1 ) )
+    {
+        lua_pop( loaderLuaState, 1 );  // Pop the invalid preprocessed file contents
+
+        Warning( "[Lua] Loader Error: PreProcessFile did not return a string for file %s (returning file unmodified!)\n", fileName );
+
+        return luaL_loadbuffer( L, fileContents, fileSize, bufferFileName );
+    }
+
+    const char *preprocessedFileContents = lua_tostring( loaderLuaState, -1 );
+
+    lua_pop( loaderLuaState, 1 );  // Pop the preprocessed file contents now that we have them
+
+    int errorCode = luaL_loadbuffer(
+                        L,
+                        preprocessedFileContents,
+                        strlen( preprocessedFileContents ),
+                        bufferFileName ) ||
+                    lua_pcall( L, 0, LUA_MULTRET, 0 );
+
+    return errorCode;
+}
+
+/// <summary>
 /// Executes the given file, clearing the stack of values that
 /// were returned by the file afterwards.
 /// </summary>
 /// <param name="L"></param>
 /// <param name="string"></param>
 /// <returns></returns>
-LUA_API int luasrc_dofile( lua_State *L, const char *filename )
+LUA_API int luasrc_dofile( lua_State *L, const char *fileName )
 {
     int stackBefore = lua_gettop( L );
-    int iError = luaL_dofile( L, filename );
+    int iError = luasrc_dofile_with_loader( L, fileName );
 
     if ( iError != 0 )
     {
-        Warning( "%s\n", lua_tostring( L, -1 ) );
+        Warning( "[Lua] Error: %s\n", lua_tostring( L, -1 ) );
         lua_pop( L, 1 );
     }
 
@@ -484,14 +602,14 @@ LUA_API int luasrc_dofile( lua_State *L, const char *filename )
 /// <param name="L"></param>
 /// <param name="string"></param>
 /// <returns>The amount of new values on the stack or -1 on error</returns>
-LUA_API int luasrc_dofile_leave_stack( lua_State *L, const char *filename )
+LUA_API int luasrc_dofile_leave_stack( lua_State *L, const char *fileName )
 {
     int stackBefore = lua_gettop( L );
-    int iError = luaL_dofile( L, filename );
+    int iError = luasrc_dofile_with_loader( L, fileName );
 
     if ( iError != 0 )
     {
-        Warning( "%s\n", lua_tostring( L, -1 ) );
+        Warning( "[Lua] Error: %s\n", lua_tostring( L, -1 ) );
         lua_pop( L, 1 );
         return -1;
     }
@@ -572,6 +690,7 @@ LUA_API void luasrc_dumpstack( lua_State *L )
     int n = lua_gettop( L ); /* number of objects */
     int i;
     lua_getglobal( L, "tostring" );
+
     for ( i = 1; i <= n; i++ )
     {
         const char *s;
@@ -596,7 +715,7 @@ void luasrc_LoadEntities( const char *path )
 
     char root[MAX_PATH] = { 0 };
 
-    char filename[MAX_PATH] = { 0 };
+    char fileName[MAX_PATH] = { 0 };
     char fullpath[MAX_PATH] = { 0 };
     char className[255] = { 0 };
 
@@ -612,14 +731,14 @@ void luasrc_LoadEntities( const char *path )
             if ( g_pFullFileSystem->FindIsDirectory( fh ) )
             {
 #ifdef CLIENT_DLL
-                Q_snprintf( filename, sizeof( filename ), "%s" LUA_PATH_ENTITIES "\\%s\\cl_init.lua", path, className );
+                Q_snprintf( fileName, sizeof( fileName ), "%s" LUA_PATH_ENTITIES "\\%s\\cl_init.lua", path, className );
 #else
-                Q_snprintf( filename, sizeof( filename ), "%s" LUA_PATH_ENTITIES "\\%s\\init.lua", path, className );
+                Q_snprintf( fileName, sizeof( fileName ), "%s" LUA_PATH_ENTITIES "\\%s\\init.lua", path, className );
 #endif
-                if ( filesystem->FileExists( filename, "MOD" ) )
+                if ( filesystem->FileExists( fileName, "MOD" ) )
                 {
                     filesystem->RelativePathToFullPath(
-                        filename, "MOD", fullpath, sizeof( fullpath ) );
+                        fileName, "MOD", fullpath, sizeof( fullpath ) );
                     lua_newtable( L );
                     char entDir[MAX_PATH];
                     Q_snprintf( entDir, sizeof( entDir ), "entities\\%s", className );
@@ -698,7 +817,7 @@ void luasrc_LoadWeapons( const char *path )
 
     char root[MAX_PATH] = { 0 };
 
-    char filename[MAX_PATH] = { 0 };
+    char fileName[MAX_PATH] = { 0 };
     char fullpath[MAX_PATH] = { 0 };
     char className[MAX_WEAPON_STRING] = { 0 };
 
@@ -723,18 +842,18 @@ void luasrc_LoadWeapons( const char *path )
         }
 
 #ifdef CLIENT_DLL
-        Q_snprintf( filename, sizeof( filename ), "%s" LUA_PATH_WEAPONS "\\%s\\cl_init.lua", path, className );
+        Q_snprintf( fileName, sizeof( fileName ), "%s" LUA_PATH_WEAPONS "\\%s\\cl_init.lua", path, className );
 #else
-        Q_snprintf( filename, sizeof( filename ), "%s" LUA_PATH_WEAPONS "\\%s\\init.lua", path, className );
+        Q_snprintf( fileName, sizeof( fileName ), "%s" LUA_PATH_WEAPONS "\\%s\\init.lua", path, className );
 #endif
-        if ( !filesystem->FileExists( filename, "MOD" ) )
+        if ( !filesystem->FileExists( fileName, "MOD" ) )
         {
             fn = g_pFullFileSystem->FindNext( fh );
             continue;
         }
 
         filesystem->RelativePathToFullPath(
-            filename, "MOD", fullpath, sizeof( fullpath ) );
+            fileName, "MOD", fullpath, sizeof( fullpath ) );
 
         lua_newtable( L );
         char entDir[MAX_PATH];
@@ -782,6 +901,128 @@ void luasrc_LoadWeapons( const char *path )
 }
 
 /// <summary>
+/// The loader Lua state will be used to load files for the first gamemode
+/// that has a `_loader.lua` file in its folder. This file will be used to
+/// preprocess all files that are loaded for the gamemode and the gamemodes
+/// it inherits from.
+///
+/// Only one loader will be used for loading gamemodes. The base gamemode
+/// will not be allowed to have a loader.
+///
+/// See `_loader.lua` inside `gmod_base` for an example of how to use this.
+/// </summary>
+/// <param name="gamemodePath"></param>
+void luasrc_InitCustomLoader( const char *gamemode, const char *gamemodePath )
+{
+    // Check if the _loader.lua file exists, if it does, load it into the
+    // loader Lua state
+    char loaderFilePath[MAX_PATH];
+    Q_snprintf( loaderFilePath, sizeof( loaderFilePath ), "%s\\_loader.lua", gamemodePath );
+
+    if ( !filesystem->FileExists( loaderFilePath, "MOD" ) )
+    {
+        return;
+    }
+
+    filesystem->RelativePathToFullPath( loaderFilePath, "MOD", loaderFilePath, sizeof( loaderFilePath ) );
+
+    loaderLuaState = luaL_newstate();
+
+    lua_pushglobaltable( loaderLuaState );
+
+    static const luaL_Reg baseLoaderFuncs[] = {
+        { "error", luaB_error },
+        { "ipairs", luaB_ipairs },
+        { "next", luaB_next },
+        { "pairs", luaB_pairs },
+        { "print", luasrc_print },
+        { "select", luaB_select },
+        { "tonumber", luaB_tonumber },
+        { "tostring", luaB_tostring },
+        { "type", luaB_type },
+        { NULL, NULL } };
+    luaL_setfuncs( loaderLuaState, baseLoaderFuncs, 0 );
+    lua_pushvalue( loaderLuaState, -1 );
+
+    // Set the global _G table
+    lua_setfield( loaderLuaState, -2, LUA_GNAME );
+
+    static const luaL_Reg availableLibraries[] = {
+        { LUA_TABLIBNAME, luaopen_table },
+        { LUA_STRLIBNAME, luaopen_string },
+        { LUA_UTF8LIBNAME, luaopen_utf8 },
+        { LUA_MATHLIBNAME, luaopen_math },
+        { NULL, NULL } };
+
+    const luaL_Reg *lib;
+
+    for ( lib = availableLibraries; lib->func; lib++ )
+    {
+        luaL_requiref( loaderLuaState, lib->name, lib->func, 1 );
+        lua_pop( loaderLuaState, 1 );
+    }
+
+    lua_pushstring( loaderLuaState, LUA_VERSION );
+    lua_setfield( loaderLuaState, -2, "_VERSION" );
+
+    // Remove the global table from the stack
+    lua_pop( loaderLuaState, 1 );
+
+    // Before preprocessing, make a cfunction available to pcall for error handling
+    // keep it at the bottom of the stack
+    lua_pushcfunction( loaderLuaState, luasrc_loader_traceback );
+
+    // Execute the loader file, leaving the table at the top of the stack
+    if ( luasrc_dofile_leave_stack( loaderLuaState, loaderFilePath ) == -1 )
+    {
+        lua_close( loaderLuaState );
+        Warning(
+            "[Lua] Gamemode '%s' had invalid loader (%s failed to load)!\n",
+            gamemode,
+            loaderFilePath );
+
+        return;
+    }
+
+    // Bring the PreProcessFile function to the top of the stack
+    lua_getfield( loaderLuaState, -1, "PreProcessFile" );
+
+    if ( !lua_isfunction( loaderLuaState, -1 ) )
+    {
+        lua_pop( loaderLuaState, 2 );
+        lua_close( loaderLuaState );
+        Warning(
+            "[Lua] Gamemode '%s' had invalid loader (%s has no PreProcessFile function)!\n",
+            gamemode,
+            loaderFilePath );
+
+        return;
+    }
+
+    lua_pop( loaderLuaState, 1 );  // Pop the PreProcessFile function for now
+
+    // The loader file was loaded successfully. The PreProcessFile loader
+    // function is now at the top of the stack.
+    hasLoaderBeenActivated = true;
+
+    DevMsg( "[Lua] Activated custom loader for gamemode '%s' (%s)!\n\tUsing custom loader for subsequent file loading in all (derived) gamemodes.\n", gamemode, loaderFilePath );
+}
+
+static void cleanUpGamemodeLoading( bool cleanLoader )
+{
+    // Unset the GM table
+    lua_pushnil( L );
+    lua_setglobal( L, "GM" );
+
+    if ( cleanLoader )
+    {
+        // Clean up the loader if we initialized it
+        lua_close( loaderLuaState );
+        hasLoaderBeenActivated = false;
+    }
+}
+
+/// <summary>
 /// Loads the gamemode with the given name from the gamemodes folder.
 /// Recursively loads the base gamemode if the GM.Base field is set.
 ///
@@ -792,26 +1033,19 @@ void luasrc_LoadWeapons( const char *path )
 /// <returns></returns>
 bool luasrc_LoadGamemode( const char *gamemode )
 {
-    Warning( "Loading gamemode %s\n", gamemode );
+    DevMsg( "Loading gamemode %s\n", gamemode );
 
-    // Commented because the gamemode shouldn't be loaded twice
-    //// Check if the gamemode is already loaded with gamemodes.Get(gamemode)
-    //lua_getglobal( L, "gamemodes" );
-    //lua_getfield( L, -1, "Get" );
-    //lua_remove( L, -2 );  // Remove gamemodes now that we have Get
-    //lua_pushstring( L, gamemode );
-    //lua_pcall( L, 1, 1, 0 );
+    // Build the gamemode path
+    char gamemodePath[MAX_PATH];
+    Q_snprintf( gamemodePath, sizeof( gamemodePath ), "gamemodes\\%s", gamemode );
 
-    //bool isLoaded = lua_istable( L, -1 );
-
-    //lua_pop( L, 1 ); // Pop the result of gamemodes.Get(gamemode)
-
-    //if ( isLoaded )
-    //{
-    //    // TODO: Debug only. 
-    //    Warning( "Debug: Already loaded gamemode %s!\n", gamemode );
-    //    return true;
-    //}
+    // Start loading the loader for anything that isn't the base gamemode
+    bool didWeInitLoader = false;
+    if ( Q_strcmp( gamemode, LUA_BASE_GAMEMODE ) != 0 && !hasLoaderBeenActivated )
+    {
+        luasrc_InitCustomLoader( gamemode, gamemodePath );
+        didWeInitLoader = true;
+    }
 
     // Set the GM table as a global variable
     lua_newtable( L );
@@ -820,42 +1054,36 @@ bool luasrc_LoadGamemode( const char *gamemode )
     // Let scripts know what folder the gamemode is in
     lua_getglobal( L, "GM" );
     lua_pushstring( L, "Folder" );
-    char gamemodepath[MAX_PATH];
-    Q_snprintf( gamemodepath, sizeof( gamemodepath ), "gamemodes\\%s", gamemode );
-    lua_pushstring( L, gamemodepath );
+    lua_pushstring( L, gamemodePath );
     lua_settable( L, -3 );
 
-    lua_pop( L, 1 ); // Pop the GM table, the stack should be empty now
+    lua_pop( L, 1 );  // Pop the GM table, the stack should be empty now
 
     // Load the cl_init.lua file client-side and init.lua server-side
-    char filename[MAX_PATH];
-    char fullpath[MAX_PATH];
+    char initialFileName[MAX_PATH];
+    char initialFilePath[MAX_PATH];
 #ifdef CLIENT_DLL
-    Q_snprintf( filename, sizeof( filename ), "%s\\gamemode\\cl_init.lua", gamemodepath );
+    Q_snprintf( initialFileName, sizeof( initialFileName ), "%s\\gamemode\\cl_init.lua", gamemodePath );
 #else
-    Q_snprintf( filename, sizeof( filename ), "%s\\gamemode\\init.lua", gamemodepath );
+    Q_snprintf( initialFileName, sizeof( initialFileName ), "%s\\gamemode\\init.lua", gamemodePath );
 #endif
 
-    if ( !filesystem->FileExists( filename, "MOD" ) )
+    if ( !filesystem->FileExists( initialFileName, "MOD" ) )
     {
-        // Unset the GM table
-        lua_pushnil( L );
-        lua_setglobal( L, "GM" );
+        cleanUpGamemodeLoading( didWeInitLoader );
 
-        Warning( "ERROR: Attempted to load an invalid gamemode %s (%s does not exist)!\n", gamemode, filename );
+        Warning( "[Lua] Error loading gamemode: Attempted to load an invalid gamemode %s (%s does not exist)!\n", gamemode, initialFileName );
 
         return false;
     }
 
-    filesystem->RelativePathToFullPath( filename, "MOD", fullpath, sizeof( fullpath ) );
+    filesystem->RelativePathToFullPath( initialFileName, "MOD", initialFilePath, sizeof( initialFilePath ) );
 
-    if ( luasrc_dofile( L, fullpath ) != LUA_OK )
+    if ( luasrc_dofile( L, initialFilePath ) != LUA_OK )
     {
-        // Unset the GM table in case of an error
-        lua_pushnil( L );
-        lua_setglobal( L, "GM" );
-        
-        Warning( "ERROR: Attempted to load an invalid gamemode %s (failed to load %s)!\n", gamemode, fullpath );
+        cleanUpGamemodeLoading( didWeInitLoader );
+
+        Warning( "[Lua] Error loading gamemode: Attempted to load an invalid gamemode %s (failed to load %s)!\n", gamemode, initialFilePath );
 
         return false;
     }
@@ -864,7 +1092,7 @@ bool luasrc_LoadGamemode( const char *gamemode )
     // to load the relevant base gamemode
     lua_getglobal( L, "GM" );
     lua_getfield( L, -1, "Base" );
-    lua_remove( L, -2 ); // Remove GM table
+    lua_remove( L, -2 );  // Remove GM table
 
     const char *baseGamemode = LUA_BASE_GAMEMODE;
 
@@ -887,7 +1115,7 @@ bool luasrc_LoadGamemode( const char *gamemode )
     {
         lua_pop( L, 1 );  // Pop Register
 
-        Warning( "ERROR: Failed to load gamemode %s (gamemodes.Register is not a function)!\n", gamemode );
+        Warning( "[Lua] Error loading gamemode: %s (gamemodes.Register is not a function)!\n", gamemode );
 
         return false;
     }
@@ -902,14 +1130,12 @@ bool luasrc_LoadGamemode( const char *gamemode )
         // different from the default base gamemode
         if ( !luasrc_LoadGamemode( baseGamemode ) )
         {
-            // Unset the GM table in case of an error
-            lua_pushnil( L );
-            lua_setglobal( L, "GM" );
+            cleanUpGamemodeLoading( didWeInitLoader );
 
             // Pop gamemodes.Register and the GM table that were left on the stack
             lua_pop( L, 2 );
 
-            Warning( "ERROR: Attempted to load an invalid gamemode %s (failed to load base gamemode %s)!\n", gamemode, baseGamemode );
+            Warning( "[Lua] Error loading gamemode: Attempted to load an invalid gamemode %s (failed to load base gamemode %s)!\n", gamemode, baseGamemode );
 
             return false;
         }
@@ -922,8 +1148,10 @@ bool luasrc_LoadGamemode( const char *gamemode )
     luasrc_pcall( L, 3, 0, 0 );
 
     // Unset the GM table, users should use the GAMEMODE table instead
-    lua_pushnil( L );
-    lua_setglobal( L, "GM" );
+    // Also clean up the loader if we initialized it
+    cleanUpGamemodeLoading( didWeInitLoader );
+
+    DevMsg( "Loaded gamemode %s\n", gamemode );
 
     return true;
 }
@@ -935,7 +1163,7 @@ bool luasrc_SetGamemode( const char *gamemode )
     if ( !lua_istable( L, -1 ) )
     {
         lua_pop( L, 1 );  // Remove gamemode table
-        Warning( "ERROR: Failed to load gamemode module!\n" );
+        Warning( "[Lua] Error loading gamemode: Failed to load gamemode module!\n" );
         return false;
     }
 
@@ -944,7 +1172,7 @@ bool luasrc_SetGamemode( const char *gamemode )
     if ( !lua_isfunction( L, -1 ) )
     {
         lua_pop( L, 2 );  // Remove gamemode table and Get function
-        Warning( "ERROR: Failed to set gamemode!\n" );
+        Warning( "[Lua] Error loading gamemode: Failed to set gamemode!\n" );
         return false;
     }
 
@@ -960,7 +1188,7 @@ bool luasrc_SetGamemode( const char *gamemode )
     {
         lua_pop( L,
                  2 );  // Remove gamemode table and InternalSetActiveName function
-        Warning( "ERROR: Failed to set gamemode!\n" );
+        Warning( "[Lua] Error loading gamemode: Failed to set gamemode (gamemodes.InternalSetActiveName didn't exist)!\n" );
         return false;
     }
 
@@ -1077,10 +1305,10 @@ static int DoFileCompletion( const char *partial,
     {
         if ( fn[0] != '.' )
         {
-            char filename[MAX_PATH] = { 0 };
-            Q_snprintf( filename, sizeof( filename ), LUA_ROOT "\\%s\\%s", substring, fn );
-            Q_FixSlashes( filename );
-            if ( filesystem->FileExists( filename, "MOD" ) )
+            char fileName[MAX_PATH] = { 0 };
+            Q_snprintf( fileName, sizeof( fileName ), LUA_ROOT "\\%s\\%s", substring, fn );
+            Q_FixSlashes( fileName );
+            if ( filesystem->FileExists( fileName, "MOD" ) )
             {
                 Q_snprintf( commands[current], sizeof( commands[current] ), "%s %s%s", cmdname, substring, fn );
                 current++;
@@ -1102,18 +1330,18 @@ CON_COMMAND_F_COMPLETION( lua_dofile_cl, "Load and run a Lua file", 0, DoFileCom
 
     if ( args.ArgC() == 1 )
     {
-        Msg( "Usage: lua_dofile_cl <filename>\n" );
+        Msg( "Usage: lua_dofile_cl <fileName>\n" );
         return;
     }
 
     char fullpath[512] = { 0 };
-    char filename[256] = { 0 };
-    Q_snprintf( filename, sizeof( filename ), LUA_ROOT "\\%s", args.ArgS() );
-    Q_strlower( filename );
-    Q_FixSlashes( filename );
-    if ( filesystem->FileExists( filename, "MOD" ) )
+    char fileName[256] = { 0 };
+    Q_snprintf( fileName, sizeof( fileName ), LUA_ROOT "\\%s", args.ArgS() );
+    Q_strlower( fileName );
+    Q_FixSlashes( fileName );
+    if ( filesystem->FileExists( fileName, "MOD" ) )
     {
-        filesystem->RelativePathToFullPath( filename, "MOD", fullpath, sizeof( fullpath ) );
+        filesystem->RelativePathToFullPath( fileName, "MOD", fullpath, sizeof( fullpath ) );
     }
     else
     {
@@ -1140,22 +1368,22 @@ CON_COMMAND_F_COMPLETION( lua_dofile, "Load and run a Lua file", 0, DoFileComple
 
     if ( args.ArgC() == 1 )
     {
-        Msg( "Usage: lua_dofile <filename>\n" );
+        Msg( "Usage: lua_dofile <fileName>\n" );
         return;
     }
 
     char fullpath[512] = { 0 };
-    char filename[256] = { 0 };
-    Q_snprintf( filename, sizeof( filename ), LUA_ROOT "lua\\%s", args.ArgS() );
-    Q_strlower( filename );
-    Q_FixSlashes( filename );
-    if ( filesystem->FileExists( filename, "MOD" ) )
+    char fileName[256] = { 0 };
+    Q_snprintf( fileName, sizeof( fileName ), LUA_ROOT "lua\\%s", args.ArgS() );
+    Q_strlower( fileName );
+    Q_FixSlashes( fileName );
+    if ( filesystem->FileExists( fileName, "MOD" ) )
     {
-        filesystem->RelativePathToFullPath( filename, "MOD", fullpath, sizeof( fullpath ) );
+        filesystem->RelativePathToFullPath( fileName, "MOD", fullpath, sizeof( fullpath ) );
     }
     else
     {
-        // filename is local to game dir for Steam, so we need to prepend game
+        // fileName is local to game dir for Steam, so we need to prepend game
         // dir for regular file load
         char gamePath[256];
         engine->GetGameDir( gamePath, 256 );

@@ -258,7 +258,7 @@ LUALIB_API int luaopen_CHL2MP_Player_shared(lua_State *L) {
     luaL_register(L, NULL, CHL2MP_Playermeta);
     lua_pushstring(L, "entity");
     lua_setfield(L, -2, "__type"); /* metatable.__type = "entity" */
-    luaL_register(L, "_G", CHL2MP_Player_funcs);
+    luaL_register( L, LUA_GNAME, CHL2MP_Player_funcs );
     lua_pop(L, 1);
     return 1;
 }

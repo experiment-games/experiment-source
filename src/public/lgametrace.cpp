@@ -1,4 +1,4 @@
-//========= Copyright © 1996-2005, Valve Corporation, All rights reserved. ============//
+//========= Copyright Â© 1996-2005, Valve Corporation, All rights reserved. ============//
 //
 // Purpose: 
 //
@@ -203,7 +203,7 @@ LUALIB_API int luaopen_CGameTrace (lua_State *L) {
   luaL_register(L, NULL, CGameTracemeta);
   lua_pushstring(L, "trace");
   lua_setfield(L, -2, "__type");  /* metatable.__type = "trace" */
-  luaL_register(L, "_G", CGameTrace_funcs);
+  luaL_register( L, LUA_GNAME, CGameTrace_funcs );
   lua_pop(L, 1);
   return 1;
 }

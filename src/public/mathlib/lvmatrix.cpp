@@ -666,7 +666,7 @@ LUALIB_API int luaopen_VMatrix(lua_State *L) {
     luaL_register(L, NULL, VMatrixmeta);
     lua_pushstring(L, "vmatrix");
     lua_setfield(L, -2, "__type"); /* metatable.__type = "vmatrix" */
-    luaL_register(L, "_G", _G_funcs);
+    luaL_register( L, LUA_GNAME, _G_funcs );
     lua_pop(L, 2);
     luaL_register(L, LUA_VMATRIXLIBNAME, VMatrix_funcs);
     return 1;

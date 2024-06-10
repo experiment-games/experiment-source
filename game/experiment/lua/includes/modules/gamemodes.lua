@@ -8,15 +8,18 @@
 _BASE_GAMEMODE = "base"
 
 local hooks = require("hooks")
+local debugTraceback = debug.traceback
+local error = error
 local table = table
 local print = MsgN
 local _BASE_GAMEMODE = _BASE_GAMEMODE
 local _G = _G
 
-local MODULE = {}
+gamemodes = gamemodes or {}
 
-local registeredGamemodes = {}
-local activeGamemodeName = nil
+local MODULE = gamemodes
+MODULE.registeredGamemodes = MODULE.registeredGamemodes or {}
+MODULE.activeGamemodeName = MODULE.activeGamemodeName or nil
 
 --- Calls a gamemode hook, but only if it exists. Returns false if it doesn't.
 --- @param eventName string Name of the internal GameRules method
@@ -34,15 +37,15 @@ end
 --- @param gamemodeName string Name of the gamemode
 --- @return table # The gamemode table object
 function MODULE.Get(gamemodeName)
-	return registeredGamemodes[gamemodeName]
+	return MODULE.registeredGamemodes[gamemodeName]
 end
 
 function MODULE.InternalSetActiveName(gamemodeName)
-	activeGamemodeName = gamemodeName
+	MODULE.activeGamemodeName = gamemodeName
 end
 
 function MODULE.GetActiveName()
-	return activeGamemodeName
+	return MODULE.activeGamemodeName
 end
 
 --- Registers a gamemode, possibly inheriting from another gamemode.
@@ -50,24 +53,37 @@ end
 --- @param gamemodeName string Name of the gamemode
 --- @param baseGameMode string Name
 function MODULE.Register(gamemodeTable, gamemodeName, baseGameMode)
+    local showError = function(message)
+        error(
+            debugTraceback(
+                "Error registering gamemode " .. tostring(gamemodeName) .. ": " .. tostring(message),
+                3
+            )
+        )
+    end
+
 	if (_G.GAMEMODE ~= nil) then
-		error(debug.traceback("Cannot register gamemode when a gamemode has already been set!", 2))
+		showError("Cannot register gamemode when a gamemode has already been set!")
 		return
 	end
 
 	if (MODULE.Get(gamemodeName) ~= nil) then
-		error(debug.traceback("Gamemode " .. gamemodeName .. " is already registered!", 2))
+		showError("Gamemode " .. gamemodeName .. " is already registered!")
 		return
 	end
 
 	if (gamemodeName ~= _BASE_GAMEMODE) then
-		local baseGamemodeTable = MODULE.Get(baseGameMode)
+        local baseGamemodeTable = MODULE.Get(baseGameMode)
+
+		if (baseGamemodeTable == nil) then
+			showError("Base gamemode " .. tostring(baseGameMode) .. " does not exist!")
+			return
+		end
+
 		gamemodeTable = table.Inherit(gamemodeTable, baseGamemodeTable)
 	end
 
-	registeredGamemodes[gamemodeName] = gamemodeTable
+	MODULE.registeredGamemodes[gamemodeName] = gamemodeTable
 end
-
-gamemodes = MODULE
 
 return MODULE

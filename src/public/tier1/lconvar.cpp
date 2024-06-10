@@ -313,7 +313,7 @@ LUALIB_API int luaopen_ConCommand (lua_State *L) {
   lua_setfield(L, -2, "__index");  /* metatable.__index = metatable */
   lua_pushstring(L, "concommands");
   lua_setfield(L, -2, "__type");  /* metatable.__type = "concommand" */
-  luaL_register(L, "_G", ConCommand_funcs);
+  luaL_register( L, LUA_GNAME, ConCommand_funcs );
   lua_pop(L, 1);
   return 1;
 }
@@ -481,7 +481,7 @@ LUALIB_API int luaopen_ConVar (lua_State *L) {
   lua_setfield(L, -2, "__index");  /* metatable.__index = metatable */
   lua_pushstring(L, "convar");
   lua_setfield(L, -2, "__type");  /* metatable.__type = "convar" */
-  luaL_register(L, "_G", ConVar_funcs);
+  luaL_register( L, LUA_GNAME, ConVar_funcs );
   lua_pop(L, 1);
   return 1;
 }

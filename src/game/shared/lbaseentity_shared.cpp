@@ -1792,7 +1792,7 @@ LUALIB_API int luaopen_CBaseEntity_shared(lua_State *L) {
     luaL_register(L, NULL, CBaseEntitymeta);
     lua_pushstring(L, "entity");
     lua_setfield(L, -2, "__type"); /* metatable.__type = "entity" */
-    luaL_register(L, "_G", CBaseEntity_funcs);
+    luaL_register( L, LUA_GNAME, CBaseEntity_funcs );
     lua_pop(L, 1);
     lua_pushentity(L, NULL);
     lua_setglobal(L, "NULL"); /* set global NULL */

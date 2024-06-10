@@ -1,4 +1,4 @@
-//===== Copyright © 1996-2005, Valve Corporation, All rights reserved. ======//
+//===== Copyright Â© 1996-2005, Valve Corporation, All rights reserved. ======//
 //
 // Purpose: 
 //
@@ -152,7 +152,7 @@ LUALIB_API int luaopen_matrix3x4_t (lua_State *L) {
   luaL_register(L, NULL, matrix3x4_tmeta);
   lua_pushstring(L, "matrix");
   lua_setfield(L, -2, "__type");  /* metatable.__type = "matrix" */
-  luaL_register(L, "_G", matrix3x4_t_funcs);
+  luaL_register( L, LUA_GNAME, matrix3x4_t_funcs );
   lua_pop(L, 1);
   return 1;
 }

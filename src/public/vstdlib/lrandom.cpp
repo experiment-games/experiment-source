@@ -1,4 +1,4 @@
-//===== Copyright © 1996-2005, Valve Corporation, All rights reserved. ======//
+//===== Copyright Â© 1996-2005, Valve Corporation, All rights reserved. ======//
 //
 // Purpose: Random number generator
 //
@@ -89,7 +89,7 @@ static const luaL_Reg random_funcs[] = {
 LUALIB_API int luaopen_random (lua_State *L) {
   luaL_register(L, LUA_RANDOMLIBNAME, randomlib);
   // UNDONE: this has always been redundant.
-  // luaL_register(L, "_G", random_funcs);
+  // luaL_register(L, LUA_GNAME, random_funcs);
   return 1;
 }
 
