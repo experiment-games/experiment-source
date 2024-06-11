@@ -34,20 +34,20 @@ function ToolObj:CreateConVars()
 
 	local mode = self:GetMode()
 
-	self.AllowedCVar = CreateConVar( "toolmode_allow_" .. mode, 1, { FCVAR_NOTIFY, FCVAR_REPLICATED } )
+	self.AllowedCVar = CreateConVar( "toolmode_allow_" .. mode, "1", { FCVAR_NOTIFY, FCVAR_REPLICATED }, "Set to 0 to disallow players being able to use the \"" .. mode .. "\" tool." )
 	self.ClientConVars = {}
 	self.ServerConVars = {}
 
 	if ( CLIENT ) then
 
 		for cvar, default in pairs( self.ClientConVar ) do
-			self.ClientConVars[ cvar ] = CreateClientConVar( mode .. "_" .. cvar, default, true, true )
+			self.ClientConVars[ cvar ] = CreateClientConVar( mode .. "_" .. cvar, default, true, true, "Tool specific client setting (" .. mode .. ")" )
 		end
 
 	else
 
 		for cvar, default in pairs( self.ServerConVar ) do
-			self.ServerConVars[ cvar ] = CreateConVar( mode .. "_" .. cvar, default, FCVAR_ARCHIVE )
+			self.ServerConVars[ cvar ] = CreateConVar( mode .. "_" .. cvar, default, FCVAR_ARCHIVE, "Tool specific server setting (" .. mode .. ")" )
 		end
 
 	end
@@ -90,7 +90,7 @@ function ToolObj:GetClientBool( property, default )
 		return self.ClientConVars[ property ]:GetBool()
 	end
 
-	return math.floor( self:GetOwner():GetInfoNum( self:GetMode() .. "_" .. property, tonumber( default ) or 0 ) ) ~= 0
+	return math.floor( self:GetOwner():GetInfoNum( self:GetMode() .. "_" .. property, tonumber( default ) or 0 ) ) != 0
 
 end
 
@@ -116,9 +116,9 @@ end
 function ToolObj:Init() end
 
 function ToolObj:GetMode()		return self.Mode end
-function ToolObj:GetSWEP()		return self.SWEP end
-function ToolObj:GetOwner()		return self:GetSWEP().Owner or self.Owner end
-function ToolObj:GetWeapon()	return self:GetSWEP().Weapon or self.Weapon end
+function ToolObj:GetWeapon()	return self.SWEP end
+function ToolObj:GetOwner()		return self:GetWeapon():GetOwner() or self.Owner end
+function ToolObj:GetSWEP()		return self:GetWeapon() end
 
 function ToolObj:LeftClick()	return false end
 function ToolObj:RightClick()	return false end
@@ -135,7 +135,7 @@ function ToolObj:CheckObjects()
 
 	for k, v in pairs( self.Objects ) do
 
-		if ( not v.Ent:IsWorld() and not v.Ent:IsValid() ) then
+		if ( !v.Ent:IsWorld() and !v.Ent:IsValid() ) then
 			self:ClearObjects()
 		end
 
@@ -155,7 +155,7 @@ for _, val in ipairs( file.Find( SWEP.Folder .. "/stools/*.lua", "LUA" ) ) do
 
 	TOOL:CreateConVars()
 
-	if ( hook.Run( "PreRegisterTOOL", TOOL, toolmode ) ~= false ) then
+	if ( hook.Run( "PreRegisterTOOL", TOOL, toolmode ) != false ) then
 		SWEP.Tool[ toolmode ] = TOOL
 	end
 
@@ -175,7 +175,7 @@ hook.Add( "PopulateToolMenu", "AddSToolsToMenu", function()
 
 	for ToolName, tool in pairs( TOOLS_LIST ) do
 
-		if ( tool.AddToMenu ~= false ) then
+		if ( tool.AddToMenu != false ) then
 
 			spawnmenu.AddToolMenuOption(
 				tool.Tab or "Main",
@@ -205,7 +205,7 @@ search.AddProvider( function( str )
 		local niceName = v.Name or "#" .. k
 		if ( niceName:StartsWith( "#" ) ) then niceName = language.GetPhrase( niceName:sub( 2 ) ) end
 
-		if ( not k:lower():find( str, nil, true ) and not niceName:lower():find( str, nil, true ) ) then continue end
+		if ( !k:lower():find( str, nil, true ) and !niceName:lower():find( str, nil, true ) ) then continue end
 
 		local entry = {
 			text = niceName,
@@ -231,7 +231,7 @@ end )
 --
 spawnmenu.AddContentType( "tool", function( container, obj )
 
-	if ( not obj.spawnname ) then return end
+	if ( !obj.spawnname ) then return end
 
 	local icon = vgui.Create( "ContentIcon", container )
 	icon:SetContentType( "tool" )

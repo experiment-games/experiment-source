@@ -43,7 +43,7 @@ function TOOL:LeftClick( trace )
 	local fov = self:GetClientNumber( "fov" )
 	local distance = self:GetClientNumber( "distance" )
 	local bright = self:GetClientNumber( "brightness" )
-	local toggle = self:GetClientNumber( "toggle" ) ~= 1
+	local toggle = self:GetClientNumber( "toggle" ) != 1
 
 	local tex = self:GetClientInfo( "texture" )
 	local mat = Material( tex )
@@ -56,7 +56,7 @@ function TOOL:LeftClick( trace )
 		trace.Entity:SetLightFOV( fov )
 		trace.Entity:SetDistance( distance )
 		trace.Entity:SetBrightness( bright )
-		trace.Entity:SetToggle( not toggle )
+		trace.Entity:SetToggle( !toggle )
 		trace.Entity:UpdateLight()
 
 		numpad.Remove( trace.Entity.NumDown )
@@ -79,11 +79,11 @@ function TOOL:LeftClick( trace )
 
 	end
 
-	if ( not util.IsValidModel( mdl ) or not util.IsValidProp( mdl ) or not IsValidLampModel( mdl ) ) then return false end
-	if ( not self:GetSWEP():CheckLimit( "lamps" ) ) then return false end
+	if ( !util.IsValidModel( mdl ) or !util.IsValidProp( mdl ) or !IsValidLampModel( mdl ) ) then return false end
+	if ( !self:GetWeapon():CheckLimit( "lamps" ) ) then return false end
 
-	local lamp = MakeLamp( ply, r, g, b, key, toggle, texture, mdl, fov, distance, bright, not toggle, { Pos = pos, Angle = angle_zero } )
-	if ( not IsValid( lamp ) ) then return false end
+	local lamp = MakeLamp( ply, r, g, b, key, toggle, texture, mdl, fov, distance, bright, !toggle, { Pos = pos, Angle = angle_zero } )
+	if ( !IsValid( lamp ) ) then return false end
 
 	local CurPos = lamp:GetPos()
 	local NearestPoint = lamp:NearestPoint( CurPos - ( trace.HitNormal * 512 ) )
@@ -102,7 +102,7 @@ end
 
 function TOOL:RightClick( trace )
 
-	if ( not IsValid( trace.Entity ) or trace.Entity:GetClass() ~= "gmod_lamp" ) then return false end
+	if ( !IsValid( trace.Entity ) or trace.Entity:GetClass() != "gmod_lamp" ) then return false end
 	if ( CLIENT ) then return true end
 
 	local ent = trace.Entity
@@ -132,11 +132,11 @@ if ( SERVER ) then
 
 	function MakeLamp( ply, r, g, b, KeyDown, toggle, texture, model, fov, distance, brightness, on, Data )
 
-		if ( IsValid( ply ) and not ply:CheckLimit( "lamps" ) ) then return false end
-		if ( not IsValidLampModel( model ) ) then return false end
+		if ( IsValid( ply ) and !ply:CheckLimit( "lamps" ) ) then return false end
+		if ( !IsValidLampModel( model ) ) then return false end
 
 		local lamp = ents.Create( "gmod_lamp" )
-		if ( not IsValid( lamp ) ) then return false end
+		if ( !IsValid( lamp ) ) then return false end
 
 		duplicator.DoGeneric( lamp, Data )
 		lamp:SetModel( model ) -- Backwards compatible for addons directly calling this function
@@ -146,7 +146,7 @@ if ( SERVER ) then
 		lamp:SetDistance( distance )
 		lamp:SetBrightness( brightness )
 		lamp:Switch( on )
-		lamp:SetToggle( not toggle )
+		lamp:SetToggle( !toggle )
 
 		lamp:Spawn()
 
@@ -180,8 +180,8 @@ if ( SERVER ) then
 
 	numpad.Register( "LampToggle", function( ply, ent, onoff )
 
-		if ( not IsValid( ent ) ) then return false end
-		if ( not ent:GetToggle() ) then ent:Switch( onoff == 1 ) return end
+		if ( !IsValid( ent ) ) then return false end
+		if ( !ent:GetToggle() ) then ent:Switch( onoff == 1 ) return end
 
 		if ( numpad.FromButton() ) then
 
@@ -200,10 +200,10 @@ end
 
 function TOOL:UpdateGhostLamp( ent, ply )
 
-	if ( not IsValid( ent ) ) then return end
+	if ( !IsValid( ent ) ) then return end
 
 	local trace = ply:GetEyeTrace()
-	if ( not trace.Hit or IsValid( trace.Entity ) and ( trace.Entity:IsPlayer() or trace.Entity:GetClass() == "gmod_lamp" ) ) then
+	if ( !trace.Hit or IsValid( trace.Entity ) and ( trace.Entity:IsPlayer() or trace.Entity:GetClass() == "gmod_lamp" ) ) then
 
 		ent:SetNoDraw( true )
 		return
@@ -223,9 +223,9 @@ end
 function TOOL:Think()
 
 	local mdl = self:GetClientInfo( "model" )
-	if ( not IsValidLampModel( mdl ) ) then self:ReleaseGhostEntity() return end
+	if ( !IsValidLampModel( mdl ) ) then self:ReleaseGhostEntity() return end
 
-	if ( not IsValid( self.GhostEntity ) or self.GhostEntity:GetModel() ~= mdl ) then
+	if ( !IsValid( self.GhostEntity ) or self.GhostEntity:GetModel() != mdl ) then
 		self:MakeGhostEntity( mdl, vector_origin, angle_zero )
 	end
 
@@ -278,5 +278,12 @@ list.Set( "LampTextures", "effects/flashlight/camera", { Name = "#lamptexture.ca
 list.Set( "LampTextures", "effects/flashlight/view", { Name = "#lamptexture.view" } )
 
 list.Set( "LampModels", "models/lamps/torch.mdl", {} )
-list.Set( "LampModels", "models/maxofs2d/lamp_flashlight.mdl", {} )
-list.Set( "LampModels", "models/maxofs2d/lamp_projector.mdl", {} )
+list.Set( "LampModels", "models/maxofs2d/lamp_flashlight.mdl", { Offset = Vector( 8.5, 0, 0 ) } )
+list.Set( "LampModels", "models/maxofs2d/lamp_projector.mdl", { Offset = Vector( 8.5, 0, 0 ) } )
+list.Set( "LampModels", "models/props_wasteland/light_spotlight01_lamp.mdl", { Offset = Vector( 9, 0, 4 ), Skin = 1, Scale = 3 } )
+list.Set( "LampModels", "models/props_wasteland/light_spotlight02_lamp.mdl", { Offset = Vector( 5.5, 0, 0 ), Skin = 1 } )
+list.Set( "LampModels", "models/props_c17/light_decklight01_off.mdl", { Offset = Vector( 3, 0, 0 ), Skin = 1, Scale = 3 } )
+list.Set( "LampModels", "models/props_wasteland/prison_lamp001c.mdl", { Offset = Vector( 0, 0, -5 ), Angle = Angle( 90, 0, 0 ) } )
+
+-- This works, but the ghost entity is invisible due to $alphatest...
+--list.Set( "LampModels", "models/props_c17/lamp_standard_off01.mdl", { Offset = Vector( 5.20, 0.25, 8 ), Angle = Angle( 90, 0, 0 ), NearZ = 6 } )

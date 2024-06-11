@@ -15,6 +15,7 @@ SWEP.Secondary.Automatic	= true
 SWEP.Secondary.Ammo			= "none"
 
 SWEP.PrintName	= "#GMOD_Camera"
+SWEP.Author	= "Facepunch"
 
 SWEP.Slot		= 5
 SWEP.SlotPos	= 1
@@ -72,7 +73,7 @@ function SWEP:Reload()
 
 	local owner = self:GetOwner()
 
-	if ( not owner:KeyDown( IN_ATTACK2 ) ) then self:SetZoom( owner:IsBot() and 75 or owner:GetInfoNum( "fov_desired", 75 ) ) end
+	if ( !owner:KeyDown( IN_ATTACK2 ) ) then self:SetZoom( owner:IsBot() && 75 || owner:GetInfoNum( "fov_desired", 75 ) ) end
 	self:SetRoll( 0 )
 
 end
@@ -85,8 +86,8 @@ function SWEP:PrimaryAttack()
 	self:DoShootEffect()
 
 	-- If we're multiplayer this can be done totally clientside
-	if ( not game.SinglePlayer() and SERVER ) then return end
-	if ( CLIENT and not IsFirstTimePredicted() ) then return end
+	if ( !game.SinglePlayer() && SERVER ) then return end
+	if ( CLIENT && !IsFirstTimePredicted() ) then return end
 
 	self:GetOwner():ConCommand( "jpeg" )
 
@@ -105,11 +106,11 @@ function SWEP:Tick()
 
 	local owner = self:GetOwner()
 
-	if ( CLIENT and owner ~= LocalPlayer() ) then return end -- If someone is spectating a player holding this weapon, bail
+	if ( CLIENT && owner != LocalPlayer() ) then return end -- If someone is spectating a player holding this weapon, bail
 
 	local cmd = owner:GetCurrentCommand()
 
-	if ( not cmd:KeyDown( IN_ATTACK2 ) ) then return end -- Not holding Mouse 2, bail
+	if ( !cmd:KeyDown( IN_ATTACK2 ) ) then return end -- Not holding Mouse 2, bail
 
 	self:SetZoom( math.Clamp( self:GetZoom() + cmd:GetMouseY() * FrameTime() * 6.6, 0.1, 175 ) ) -- Handles zooming
 	self:SetRoll( self:GetRoll() + cmd:GetMouseX() * FrameTime() * 1.65 ) -- Handles rotation
@@ -141,7 +142,7 @@ function SWEP:Equip()
 
 	local owner = self:GetOwner()
 
-	if ( self:GetZoom() == 70 and owner:IsPlayer() and not owner:IsBot() ) then
+	if ( self:GetZoom() == 70 && owner:IsPlayer() && !owner:IsBot() ) then
 		self:SetZoom( owner:GetInfoNum( "fov_desired", 75 ) )
 	end
 
@@ -160,7 +161,7 @@ function SWEP:DoShootEffect()
 	self:SendWeaponAnim( ACT_VM_PRIMARYATTACK )
 	owner:SetAnimation( PLAYER_ATTACK1 )
 
-	if ( SERVER and not game.SinglePlayer() ) then
+	if ( SERVER && !game.SinglePlayer() ) then
 
 		--
 		-- Note that the flash effect is only
@@ -208,7 +209,7 @@ function SWEP:FreezeMovement()
 	local owner = self:GetOwner()
 
 	-- Don't aim if we're holding the right mouse button
-	if ( owner:KeyDown( IN_ATTACK2 ) or owner:KeyReleased( IN_ATTACK2 ) ) then
+	if ( owner:KeyDown( IN_ATTACK2 ) || owner:KeyReleased( IN_ATTACK2 ) ) then
 		return true
 	end
 
@@ -218,7 +219,7 @@ end
 
 function SWEP:CalcView( ply, origin, angles, fov )
 
-	if ( self:GetRoll() ~= 0 ) then
+	if ( self:GetRoll() != 0 ) then
 		angles.Roll = self:GetRoll()
 	end
 

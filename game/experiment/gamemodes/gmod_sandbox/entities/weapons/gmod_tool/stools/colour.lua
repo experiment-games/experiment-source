@@ -21,7 +21,7 @@ local function SetColour( ply, ent, data )
 	-- If we're trying to make them transparent them make the render mode
 	-- a transparent type. This used to fix in the engine - but made HL:S props invisible(!)
 	--
-	if ( data.Color and data.Color.a < 255 and data.RenderMode == RENDERMODE_NORMAL ) then
+	if ( data.Color && data.Color.a < 255 && data.RenderMode == RENDERMODE_NORMAL ) then
 		data.RenderMode = RENDERMODE_TRANSCOLOR
 	end
 
@@ -42,7 +42,7 @@ function TOOL:LeftClick( trace )
 
 	local ent = trace.Entity
 	if ( IsValid( ent.AttachedEntity ) ) then ent = ent.AttachedEntity end
-	if ( not IsValid( ent ) ) then return false end -- The entity is valid and isn't worldspawn
+	if ( !IsValid( ent ) ) then return false end -- The entity is valid and isn't worldspawn
 	if ( CLIENT ) then return true end
 
 	local r = self:GetClientNumber( "r", 0 )
@@ -61,7 +61,7 @@ function TOOL:RightClick( trace )
 
 	local ent = trace.Entity
 	if ( IsValid( ent.AttachedEntity ) ) then ent = ent.AttachedEntity end
-	if ( not IsValid( ent ) ) then return false end -- The entity is valid and isn't worldspawn
+	if ( !IsValid( ent ) ) then return false end -- The entity is valid and isn't worldspawn
 
 	if ( CLIENT ) then return true end
 
@@ -82,7 +82,7 @@ function TOOL:Reload( trace )
 	local ent = trace.Entity
 	if ( IsValid( ent.AttachedEntity ) ) then ent = ent.AttachedEntity end
 
-	if ( not IsValid( ent ) ) then return false end -- The entity is valid and isn't worldspawn
+	if ( !IsValid( ent ) ) then return false end -- The entity is valid and isn't worldspawn
 	if ( CLIENT ) then return true end
 
 	SetColour( self:GetOwner(), ent, { Color = Color( 255, 255, 255, 255 ), RenderMode = 0, RenderFX = 0 } )

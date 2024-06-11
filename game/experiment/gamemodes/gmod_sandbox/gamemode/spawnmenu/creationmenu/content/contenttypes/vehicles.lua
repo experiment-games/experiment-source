@@ -9,7 +9,7 @@ hook.Add( "PopulateVehicles", "AddEntityContent", function( pnlContent, tree, br
 		for k, v in pairs( Vehicles ) do
 
 			local Category = v.Category or "Other"
-			if ( not isstring( Category ) ) then Category = tostring( Category ) end
+			if ( !isstring( Category ) ) then Category = tostring( Category ) end
 			Categorised[ Category ] = Categorised[ Category ] or {}
 
 			v.ClassName = k

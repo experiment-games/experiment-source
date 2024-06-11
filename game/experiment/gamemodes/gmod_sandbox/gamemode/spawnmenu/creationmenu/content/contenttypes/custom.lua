@@ -3,14 +3,14 @@ local AddCustomizableNode = nil
 
 local function SetupCustomNode( node, pnlContent, needsapp )
 
-	node.CustomSpawnlist = not node.AddonSpawnlist -- Used to determine which nodes ContentSidebarToolBox can edit
+	node.CustomSpawnlist = !node.AddonSpawnlist -- Used to determine which nodes ContentSidebarToolBox can edit
 
 	-- This spawnlist needs a certain app mounted before it will show up.
-	if ( needsapp and needsapp ~= "" ) then
+	if ( needsapp && needsapp != "" ) then
 		node:SetVisible( IsMounted( needsapp ) )
 		node.NeedsApp = needsapp
 
-		if ( not IsMounted( needsapp ) ) then
+		if ( !IsMounted( needsapp ) ) then
 			-- Make it look different
 			node:SetAlpha( 200 )
 
@@ -39,7 +39,7 @@ local function SetupCustomNode( node, pnlContent, needsapp )
 
 	end
 
-	if ( not node.AddonSpawnlist ) then
+	if ( !node.AddonSpawnlist ) then
 		node.OnModified = function()
 			hook.Run( "SpawnlistContentChanged" )
 		end
@@ -142,7 +142,7 @@ function AddPropsOfParent( pnlContent, node, parentid, customProps )
 
 	for FileName, Info in SortedPairs( Props ) do
 
-		if ( parentid ~= Info.parentid ) then continue end
+		if ( parentid != Info.parentid ) then continue end
 
 		local pnlnode = AddCustomizableNode( pnlContent, Info.name, Info.icon, node, Info.needsapp )
 		pnlnode:SetExpanded( true )
@@ -235,7 +235,7 @@ hook.Add( "PopulateContent", "AddCustomContent", function( pnlContent, tree, nod
 
 	-- Custom stuff from addons
 	local CustomProps = spawnmenu.GetCustomPropTable()
-	if ( not table.IsEmpty( CustomProps ) ) then
+	if ( !table.IsEmpty( CustomProps ) ) then
 		local node = AddCustomizableNode( pnlContent, "#spawnmenu.category.addon_spawnlists", "", tree )
 		node:SetExpanded( true )
 		--node:SetDraggableName( "CustomContent" )
@@ -258,7 +258,7 @@ hook.Add( "OnSaveSpawnlist", "DoSaveSpawnlist", function()
 	CheckIfAnyVisible( g_SpawnMenu.CustomizableSpawnlistNode )
 
 end )
-
+ 
 hook.Add( "OnRevertSpawnlist", "DoRevertSpawnlists", function()
 
 	-- First delete all of the existing spawnlists

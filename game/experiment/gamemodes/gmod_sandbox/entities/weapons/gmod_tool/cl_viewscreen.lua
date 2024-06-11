@@ -57,7 +57,7 @@ function SWEP:RenderScreen()
 		surface.DrawTexturedRect( 0, 0, TEX_SIZE, TEX_SIZE )
 
 		-- Give our toolmode the opportunity to override the drawing
-		if ( self:GetToolObject() and self:GetToolObject().DrawToolScreen ) then
+		if ( self:GetToolObject() && self:GetToolObject().DrawToolScreen ) then
 
 			self:GetToolObject():DrawToolScreen( TEX_SIZE, TEX_SIZE )
 

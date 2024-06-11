@@ -13,7 +13,7 @@ end
 -----------------------------------------------------------]]
 function GM:CanPlayerUnfreeze( ply, entity, physobject )
 
-	if ( entity:GetPersistent() and GetConVarString( "sbox_persist" ):Trim() ~= "" ) then return false end
+	if ( entity:GetPersistent() && GetConVarString( "sbox_persist" ):Trim() != "" ) then return false end
 
 	return true
 end
@@ -23,7 +23,7 @@ end
 -----------------------------------------------------------]]
 local function LimitReachedProcess( ply, str )
 
-	if ( not IsValid( ply ) ) then return true end
+	if ( !IsValid( ply ) ) then return true end
 
 	return ply:CheckLimit( str )
 
@@ -32,7 +32,7 @@ end
 
 --[[---------------------------------------------------------
    Name: gamemode:PlayerSpawnRagdoll( ply, model )
-   Desc: Return true if it's allowed
+   Desc: Return true if it's allowed 
 -----------------------------------------------------------]]
 function GM:PlayerSpawnRagdoll( ply, model )
 
@@ -43,7 +43,7 @@ end
 
 --[[---------------------------------------------------------
    Name: gamemode:PlayerSpawnProp( ply, model )
-   Desc: Return true if it's allowed
+   Desc: Return true if it's allowed 
 -----------------------------------------------------------]]
 function GM:PlayerSpawnProp( ply, model )
 
@@ -53,7 +53,7 @@ end
 
 --[[---------------------------------------------------------
    Name: gamemode:PlayerSpawnEffect( ply, model )
-   Desc: Return true if it's allowed
+   Desc: Return true if it's allowed 
 -----------------------------------------------------------]]
 function GM:PlayerSpawnEffect( ply, model )
 
@@ -63,7 +63,7 @@ end
 
 --[[---------------------------------------------------------
    Name: gamemode:PlayerSpawnVehicle( ply, model, vname, vtable )
-   Desc: Return true if it's allowed
+   Desc: Return true if it's allowed 
 -----------------------------------------------------------]]
 function GM:PlayerSpawnVehicle( ply, model, vname, vtable )
 
@@ -74,18 +74,18 @@ end
 
 --[[---------------------------------------------------------
    Name: gamemode:PlayerSpawnSWEP( ply, wname, wtable )
-   Desc: Return true if it's allowed
+   Desc: Return true if it's allowed 
 -----------------------------------------------------------]]
 function GM:PlayerSpawnSWEP( ply, wname, wtable )
 
 	return LimitReachedProcess( ply, "sents" )
-
+	
 end
 
 
 --[[---------------------------------------------------------
    Name: gamemode:PlayerGiveSWEP( ply, wname, wtable )
-   Desc: Return true if it's allowed
+   Desc: Return true if it's allowed 
 -----------------------------------------------------------]]
 function GM:PlayerGiveSWEP( ply, wname, wtable )
 
@@ -200,7 +200,7 @@ end
 	These are buttons that the client is pressing. They're used
 	in Sandbox mode to control things like wheels, thrusters etc.
 -----------------------------------------------------------]]
-function GM:PlayerButtonDown( ply, btn )
+function GM:PlayerButtonDown( ply, btn ) 
 
 	numpad.Activate( ply, btn )
 
@@ -210,7 +210,7 @@ end
 	These are buttons that the client is pressing. They're used
 	in Sandbox mode to control things like wheels, thrusters etc.
 -----------------------------------------------------------]]
-function GM:PlayerButtonUp( ply, btn )
+function GM:PlayerButtonUp( ply, btn ) 
 
 	numpad.Deactivate( ply, btn )
 

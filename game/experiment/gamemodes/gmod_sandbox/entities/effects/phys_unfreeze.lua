@@ -1,5 +1,5 @@
 
-local effects_unfreeze = CreateClientConVar( "effects_unfreeze", "1", true, false )
+local effects_unfreeze = CreateClientConVar( "effects_unfreeze", "1", true, false, "Whether to display Physics Gun unfreeze effects?" )
 
 function EFFECT:Init( data )
 
@@ -20,7 +20,7 @@ end
 
 function EFFECT:Render()
 
-	if ( not IsValid( self.Target ) ) then return end
+	if ( !IsValid( self.Target ) ) then return end
 
 	local delta = ( ( CurTime() - self.StartTime ) / self.Length ) ^ 0.5
 	local idelta = 1 - delta

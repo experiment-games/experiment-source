@@ -15,7 +15,7 @@ end
 function PANEL:OnDepressionChanged( b )
 
 	if ( IsValid( self.checkbox ) ) then
-		self.checkbox:SetVisible( not b )
+		self.checkbox:SetVisible( !b )
 	end
 
 end
@@ -30,7 +30,7 @@ function PANEL:Setup( name, icon, label )
 	self:SetName( label or name )
 
 	self.PP = list.Get( "PostProcess" )[ name ]
-	if ( not self.PP ) then return end
+	if ( !self.PP ) then return end
 
 	self.DoClick = function()
 
@@ -38,13 +38,13 @@ function PANEL:Setup( name, icon, label )
 			return self.PP.onclick()
 		end
 
-		if ( not self.PP.cpanel ) then return end
+		if ( !self.PP.cpanel ) then return end
 
-		if ( not IsValid(self.cp) ) then
+		if ( !IsValid( self.cp ) ) then
 
 			self.cp = vgui.Create( "ControlPanel" )
 			self.cp:SetName( name )
-			self.cp:FillViaFunction( self.PP.cpanel )
+			self.PP.cpanel( self.cp )
 
 		end
 
@@ -87,7 +87,7 @@ function PANEL:Setup( name, icon, label )
 
 			for k, v in pairs( self.ConVars ) do
 
-				if ( GetConVarString( k ) ~= v.on ) then
+				if ( GetConVarString( k ) != v.on ) then
 					good = false
 				end
 
@@ -106,7 +106,7 @@ end
 function PANEL:DoRightClick()
 
 	local pCanvas = self:GetSelectionCanvas()
-	if ( IsValid( pCanvas ) and pCanvas:NumSelectedChildren() > 0 and self:IsSelected() ) then
+	if ( IsValid( pCanvas ) && pCanvas:NumSelectedChildren() > 0 && self:IsSelected() ) then
 		return hook.Run( "SpawnlistOpenGenericMenu", pCanvas )
 	end
 
@@ -120,7 +120,7 @@ end
 function PANEL:OpenMenu()
 
 	-- Do not allow removal from read only panels
-	if ( IsValid( self:GetParent() ) and self:GetParent().GetReadOnly and self:GetParent():GetReadOnly() ) then return end
+	if ( IsValid( self:GetParent() ) && self:GetParent().GetReadOnly && self:GetParent():GetReadOnly() ) then return end
 
 	local menu = DermaMenu()
 		menu:AddOption( "#spawnmenu.menu.delete", function()
@@ -164,8 +164,8 @@ vgui.Register( "PostProcessIcon", PANEL, "ContentIcon" )
 
 spawnmenu.AddContentType( "postprocess", function( container, obj )
 
-	if ( not obj.name ) then return end
-	if ( not obj.icon ) then return end
+	if ( !obj.name ) then return end
+	if ( !obj.icon ) then return end
 
 	local icon = vgui.Create( "PostProcessIcon", container )
 

@@ -24,7 +24,7 @@ local function DoGenericSpawnmenuRightclickMenu( self )
 			self:OpenMenuExtra( menu )
 		end
 
-		if ( not IsValid( self:GetParent() ) or not self:GetParent().GetReadOnly or not self:GetParent():GetReadOnly() ) then
+		if ( !IsValid( self:GetParent() ) || !self:GetParent().GetReadOnly || !self:GetParent():GetReadOnly() ) then
 			menu:AddSpacer()
 			menu:AddOption( "#spawnmenu.menu.delete", function() self:Remove() hook.Run( "SpawnlistContentChanged" ) end ):SetIcon( "icon16/bin_closed.png" )
 		end
@@ -70,7 +70,7 @@ function PANEL:SetMaterial( name )
 	local mat = Material( name )
 
 	-- Look for the old style material
-	if ( not mat or mat:IsError() ) then
+	if ( !mat || mat:IsError() ) then
 
 		name = name:Replace( "entities/", "VGUI/entities/" )
 		name = name:Replace( ".png", "" )
@@ -79,7 +79,7 @@ function PANEL:SetMaterial( name )
 	end
 
 	-- Couldn't find any material.. just return
-	if ( not mat or mat:IsError() ) then
+	if ( !mat || mat:IsError() ) then
 		return
 	end
 
@@ -90,7 +90,7 @@ end
 function PANEL:DoRightClick()
 
 	local pCanvas = self:GetSelectionCanvas()
-	if ( IsValid( pCanvas ) and pCanvas:NumSelectedChildren() > 0 and self:IsSelected() ) then
+	if ( IsValid( pCanvas ) && pCanvas:NumSelectedChildren() > 0 && self:IsSelected() ) then
 		return hook.Run( "SpawnlistOpenGenericMenu", pCanvas )
 	end
 
@@ -109,13 +109,13 @@ end
 
 function PANEL:Paint( w, h )
 
-	if ( self.Depressed and not self.Dragging ) then
-		if ( self.Border ~= 8 ) then
+	if ( self.Depressed && !self.Dragging ) then
+		if ( self.Border != 8 ) then
 			self.Border = 8
 			self:OnDepressionChanged( true )
 		end
 	else
-		if ( self.Border ~= 0 ) then
+		if ( self.Border != 0 ) then
 			self.Border = 0
 			self:OnDepressionChanged( false )
 		end
@@ -131,7 +131,7 @@ function PANEL:Paint( w, h )
 
 	surface.SetDrawColor( 255, 255, 255, 255 )
 
-	if ( not dragndrop.IsDragging() and ( self:IsHovered() or self.Depressed or self:IsChildHovered() ) ) then
+	if ( !dragndrop.IsDragging() && ( self:IsHovered() || self.Depressed || self:IsChildHovered() ) ) then
 
 		surface.SetMaterial( matOverlay_Hovered )
 		self.Label:Hide()
@@ -220,9 +220,9 @@ vgui.Register( "ContentIcon", PANEL, "DButton" )
 
 spawnmenu.AddContentType( "entity", function( container, obj )
 
-	if ( not obj.material ) then return end
-	if ( not obj.nicename ) then return end
-	if ( not obj.spawnname ) then return end
+	if ( !obj.material ) then return end
+	if ( !obj.nicename ) then return end
+	if ( !obj.spawnname ) then return end
 
 	local icon = vgui.Create( "ContentIcon", container )
 	icon:SetContentType( "entity" )
@@ -231,6 +231,20 @@ spawnmenu.AddContentType( "entity", function( container, obj )
 	icon:SetMaterial( obj.material )
 	icon:SetAdminOnly( obj.admin )
 	icon:SetColor( Color( 205, 92, 92, 255 ) )
+
+	-- Generate a nice tooltip with extra info.
+	local ENTinfo = scripted_ents.Get( obj.spawnname )
+	local toolTip = language.GetPhrase( obj.nicename )
+	if ( !ENTinfo ) then ENTinfo = list.Get( "SpawnableEntities" )[ obj.spawnname ] end
+	if ( ENTinfo ) then
+		local extraInfo = ""
+		if ( ENTinfo.Information and ENTinfo.Information != "" ) then extraInfo = extraInfo .. "\n" .. ENTinfo.Information end
+		if ( ENTinfo.Author and ENTinfo.Author != "" ) then extraInfo = extraInfo .. "\nAuthor: " .. ENTinfo.Author end
+		if ( #extraInfo > 0 ) then toolTip = toolTip .. "\n" .. extraInfo end
+	end
+	
+	icon:SetTooltip( toolTip )
+
 	icon.DoClick = function()
 		RunConsoleCommand( "gm_spawnsent", obj.spawnname )
 		surface.PlaySound( "ui/buttonclickrelease.wav" )
@@ -250,9 +264,9 @@ end )
 
 spawnmenu.AddContentType( "vehicle", function( container, obj )
 
-	if ( not obj.material ) then return end
-	if ( not obj.nicename ) then return end
-	if ( not obj.spawnname ) then return end
+	if ( !obj.material ) then return end
+	if ( !obj.nicename ) then return end
+	if ( !obj.spawnname ) then return end
 
 	local icon = vgui.Create( "ContentIcon", container )
 	icon:SetContentType( "vehicle" )
@@ -278,15 +292,15 @@ spawnmenu.AddContentType( "vehicle", function( container, obj )
 
 end )
 
-local gmod_npcweapon = CreateConVar( "gmod_npcweapon", "", { FCVAR_ARCHIVE } )
+local gmod_npcweapon = CreateConVar( "gmod_npcweapon", "", { FCVAR_ARCHIVE }, "Overrides the weapon all spawnmenu NPCs will spawn with. Set to \"\" to not override." )
 
 spawnmenu.AddContentType( "npc", function( container, obj )
 
-	if ( not obj.material ) then return end
-	if ( not obj.nicename ) then return end
-	if ( not obj.spawnname ) then return end
+	if ( !obj.material ) then return end
+	if ( !obj.nicename ) then return end
+	if ( !obj.spawnname ) then return end
 
-	if ( not obj.weapon ) then obj.weapon = {} end
+	if ( !obj.weapon ) then obj.weapon = {} end
 
 	local icon = vgui.Create( "ContentIcon", container )
 	icon:SetContentType( "npc" )
@@ -299,7 +313,7 @@ spawnmenu.AddContentType( "npc", function( container, obj )
 
 	icon.DoClick = function()
 		local weapon = table.Random( obj.weapon ) or ""
-		if ( gmod_npcweapon:GetString() ~= "" ) then weapon = gmod_npcweapon:GetString() end
+		if ( gmod_npcweapon:GetString() != "" ) then weapon = gmod_npcweapon:GetString() end
 
 		RunConsoleCommand( "gmod_spawnnpc", obj.spawnname, weapon )
 		surface.PlaySound( "ui/buttonclickrelease.wav" )
@@ -307,7 +321,7 @@ spawnmenu.AddContentType( "npc", function( container, obj )
 
 	icon.OpenMenuExtra = function( self, menu )
 		local weapon = table.Random( obj.weapon ) or ""
-		if ( gmod_npcweapon:GetString() ~= "" ) then weapon = gmod_npcweapon:GetString() end
+		if ( gmod_npcweapon:GetString() != "" ) then weapon = gmod_npcweapon:GetString() end
 
 		menu:AddOption( "#spawnmenu.menu.spawn_with_toolgun", function()
 			RunConsoleCommand( "gmod_tool", "creator" ) RunConsoleCommand( "creator_type", "2" )
@@ -359,9 +373,9 @@ end )
 
 spawnmenu.AddContentType( "weapon", function( container, obj )
 
-	if ( not obj.material ) then return end
-	if ( not obj.nicename ) then return end
-	if ( not obj.spawnname ) then return end
+	if ( !obj.material ) then return end
+	if ( !obj.nicename ) then return end
+	if ( !obj.spawnname ) then return end
 
 	local icon = vgui.Create( "ContentIcon", container )
 	icon:SetContentType( "weapon" )
@@ -370,6 +384,24 @@ spawnmenu.AddContentType( "weapon", function( container, obj )
 	icon:SetMaterial( obj.material )
 	icon:SetAdminOnly( obj.admin )
 	icon:SetColor( Color( 135, 206, 250, 255 ) )
+
+	-- Generate a nice tooltip with extra info.
+	local SWEPinfo = weapons.Get( obj.spawnname )
+	local toolTip = language.GetPhrase( obj.nicename )
+	if ( !SWEPinfo ) then SWEPinfo = list.Get( "Weapon" )[ obj.spawnname ] end
+	if ( SWEPinfo ) then
+		toolTip = toolTip .. "\n"
+		-- These 2 really should be one
+		if ( SWEPinfo.Purpose and SWEPinfo.Purpose != "" ) then toolTip = toolTip .. "\n" .. SWEPinfo.Purpose end
+		if ( SWEPinfo.Instructions and SWEPinfo.Instructions != "" ) then toolTip = toolTip .. "\n" .. SWEPinfo.Instructions end
+
+		if ( SWEPinfo.Author and SWEPinfo.Author != "" ) then toolTip = toolTip .. "\nAuthor: " .. SWEPinfo.Author end
+	end
+
+	toolTip = toolTip .. "\n\n" .. language.GetPhrase( "spawnmenu.mmb_weapons" )
+
+	icon:SetTooltip( toolTip )
+
 	icon.DoClick = function()
 
 		RunConsoleCommand( "gm_giveswep", obj.spawnname )

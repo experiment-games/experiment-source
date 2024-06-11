@@ -78,14 +78,14 @@ end
 function PANEL:IsEnabled()
 
 	-- This is a hack!
-	return not IsValid( self:GetParent() ) or not self:GetParent().GetReadOnly or not self:GetParent():GetReadOnly()
+	return !IsValid( self:GetParent() ) || !self:GetParent().GetReadOnly || !self:GetParent():GetReadOnly()
 
 end
 
 function PANEL:DoRightClick()
 
 	local pCanvas = self:GetSelectionCanvas()
-	if ( IsValid( pCanvas ) and pCanvas:NumSelectedChildren() > 0 and self:IsSelected() ) then
+	if ( IsValid( pCanvas ) && pCanvas:NumSelectedChildren() > 0 && self:IsSelected() ) then
 		return hook.Run( "SpawnlistOpenGenericMenu", pCanvas )
 	end
 
@@ -96,7 +96,7 @@ end
 function PANEL:OpenMenu()
 
 	-- Do not allow removal from read only panels
-	if ( IsValid( self:GetParent() ) and self:GetParent().GetReadOnly and self:GetParent():GetReadOnly() ) then return end
+	if ( IsValid( self:GetParent() ) && self:GetParent().GetReadOnly && self:GetParent():GetReadOnly() ) then return end
 
 	local menu = DermaMenu()
 	menu:AddOption( "#spawnmenu.menu.delete", function() self:Remove() hook.Run( "SpawnlistContentChanged" ) end ):SetIcon( "icon16/bin_closed.png" )
@@ -108,7 +108,7 @@ vgui.Register( "ContentHeader", PANEL, "DLabelEditable" )
 
 spawnmenu.AddContentType( "header", function( container, obj )
 
-	if ( not obj.text or not isstring( obj.text ) ) then return end
+	if ( !obj.text || !isstring( obj.text ) ) then return end
 
 	local label = vgui.Create( "ContentHeader", container )
 	label:SetText( obj.text )

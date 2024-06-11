@@ -29,7 +29,7 @@ local function SetTrails( ply, ent, data )
 
 	end
 
-	if ( not data ) then
+	if ( !data ) then
 
 		duplicator.ClearEntityModifier( ent, "trail" )
 		return
@@ -37,13 +37,13 @@ local function SetTrails( ply, ent, data )
 	end
 
 	-- Just don't even bother with invisible trails
-	if ( data.StartSize <= 0 and data.EndSize <= 0 ) then return end
+	if ( data.StartSize <= 0 && data.EndSize <= 0 ) then return end
 
 		-- This is here to fix crash exploits
-	if ( not game.SinglePlayer() ) then
+	if ( !game.SinglePlayer() ) then
 
 		-- Lock down the trail material - only allow what the server allows
-		if ( not list.Contains( "trail_materials", data.Material ) ) then return end
+		if ( !list.Contains( "trail_materials", data.Material ) ) then return end
 
 		-- Clamp sizes in multiplayer
 		data.Length = math.Clamp( data.Length, 0.1, 10 )
@@ -73,7 +73,7 @@ end
 
 function TOOL:LeftClick( trace )
 
-	if ( not IsValid( trace.Entity ) ) then return false end
+	if ( !IsValid( trace.Entity ) ) then return false end
 	if ( trace.Entity:IsPlayer() ) then return false end
 	if ( CLIENT ) then return true end
 
@@ -85,7 +85,7 @@ function TOOL:LeftClick( trace )
 	local length = self:GetClientNumber( "length", 5 )
 	local endsize = self:GetClientNumber( "endsize", 0 )
 	local startsize = self:GetClientNumber( "startsize", 32 )
-	local mat = self:GetClientInfo( "material", "sprites/obsolete" )
+	local mat = self:GetClientInfo( "material" )
 
 	local trail = SetTrails( self:GetOwner(), trace.Entity, {
 		Color = Color( r, g, b, a ),
@@ -108,7 +108,7 @@ end
 
 function TOOL:RightClick( trace )
 
-	if ( not IsValid( trace.Entity ) ) then return false end
+	if ( !IsValid( trace.Entity ) ) then return false end
 	if ( trace.Entity:IsPlayer() ) then return false end
 	if ( CLIENT ) then return true end
 

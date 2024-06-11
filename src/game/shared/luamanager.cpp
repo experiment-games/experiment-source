@@ -716,7 +716,7 @@ void luasrc_LoadEntities( const char *path )
     char root[MAX_PATH] = { 0 };
 
     char fileName[MAX_PATH] = { 0 };
-    char fullpath[MAX_PATH] = { 0 };
+    char fullPath[MAX_PATH] = { 0 };
     char className[255] = { 0 };
 
     Q_snprintf( root, sizeof( root ), "%s" LUA_PATH_ENTITIES "\\*", path );
@@ -738,7 +738,7 @@ void luasrc_LoadEntities( const char *path )
                 if ( filesystem->FileExists( fileName, "MOD" ) )
                 {
                     filesystem->RelativePathToFullPath(
-                        fileName, "MOD", fullpath, sizeof( fullpath ) );
+                        fileName, "MOD", fullPath, sizeof( fullPath ) );
                     lua_newtable( L );
                     char entDir[MAX_PATH];
                     Q_snprintf( entDir, sizeof( entDir ), "entities\\%s", className );
@@ -749,7 +749,7 @@ void luasrc_LoadEntities( const char *path )
                     lua_pushstring( L, LUA_BASE_ENTITY_FACTORY );
                     lua_setfield( L, -2, "Factory" );
                     lua_setglobal( L, "ENT" );
-                    if ( luasrc_dofile( L, fullpath ) == 0 )
+                    if ( luasrc_dofile( L, fullPath ) == 0 )
                     {
                         lua_getglobal( L, "entities" );
                         if ( lua_istable( L, -1 ) )
@@ -1022,6 +1022,82 @@ static void cleanUpGamemodeLoading( bool cleanLoader )
     }
 }
 
+// too much maintenance
+//static int luasrc_require_with_loader( lua_State *L )
+//{
+//    const char *name = luaL_checkstring( L, 1 );
+//
+//    if ( !hasLoaderBeenActivated )
+//    {
+//        lua_pushfstring( L, "Module '%s' not found by custom loader (not activated) ", name );
+//
+//        return 1;  // Returning 1 because we are pushing an error message
+//    }
+//
+//    // Get the gamemode folder from GM.Folder or GAMEMODE.Folder
+//    lua_getglobal( L, "GM" )
+//
+//    // TODO: Finish from here, make sure the loader func is used to have modules also use the preprocessor
+//
+//
+//#ifdef CLIENT_DLL
+//    const char *gamePath = engine->GetGameDirectory();
+//#else
+//    char gamePath[256];
+//    engine->GetGameDir( gamePath, 256 );
+//#endif
+//
+//    char gamemodeSearchPath[MAX_PATH];
+//    Q_snprintf(
+//        gamemodeSearchPath,
+//        sizeof( gamemodeSearchPath ),
+//        "%s\\%s\\?.lua;%s\\%s\\gamemode\\?.lua",
+//        gamePath,
+//        gamemodePath,
+//        gamePath,
+//        gamemodePath );
+//    // luasrc_add_to_package_path( L, gamemodeSearchPath );
+//
+//    // Here we would load the module 'name' in some manner
+//    // For simplicity, let's just push an error message to the stack
+//    lua_pushfstring( L, "Module '%s' not found by luasrc_require_with_loader", name );
+//
+//    return 1;  // Returning 1 because we are pushing an error message
+//}
+//
+//static void luasrc_add_loader_searcher( lua_State *L )
+//{
+//    lua_getglobal( L, "package" );
+//    lua_getfield( L, -1, "searchers" );  // Get the current package.searchers
+//    int searchersIndex = lua_gettop( L );
+//
+//    // Get the current length of package.searchers
+//    lua_len( L, searchersIndex );
+//    int length = lua_tointeger( L, -1 );
+//    lua_pop( L, 1 );
+//
+//    // Push the new searcher function
+//    lua_pushcfunction( L, luasrc_require_with_loader );
+//    lua_rawseti( L, searchersIndex, length + 1 );
+//}
+
+/// <summary>
+/// Append the new path to the existing package.path
+/// </summary>
+/// <param name="L"></param>
+/// <param name="searchPath"></param>
+//static void luasrc_add_to_package_path( lua_State *L, const char *searchPath )
+//{
+//    lua_getglobal( L, "package" );
+//    lua_getfield( L, -1, "path" );  // Get the current package.path
+//    const char *currentPath = lua_tostring( L, -1 );
+//    lua_pop( L, 1 );  // Remove the current path from the stack
+//
+//    lua_pushfstring( L, "%s;%s", currentPath, searchPath );
+//    lua_setfield( L, -2, "path" );
+//    lua_pop( L, 1 );  // Remove the package table from the stack
+//}
+
 /// <summary>
 /// Loads the gamemode with the given name from the gamemodes folder.
 /// Recursively loads the base gamemode if the GM.Base field is set.
@@ -1224,14 +1300,14 @@ bool luasrc_SetGamemode( const char *gamemode )
 
 #ifdef LUA_SDK
 #ifdef CLIENT_DLL
-CON_COMMAND( lua_dostring_cl, "Run a Lua string" )
+CON_COMMAND( lua_run_cl, "Run a Lua string" )
 {
     if ( !g_bLuaInitialized )
         return;
 
     if ( args.ArgC() == 1 )
     {
-        Msg( "Usage: lua_dostring_cl <string>\n" );
+        Msg( "Usage: lua_run_cl <string>\n" );
         return;
     }
 
@@ -1247,7 +1323,7 @@ CON_COMMAND( lua_dostring_cl, "Run a Lua string" )
     lua_settop( L, 0 ); /* clear stack */
 }
 #else
-CON_COMMAND( lua_dostring, "Run a Lua string" )
+CON_COMMAND( lua_run, "Run a Lua string" )
 {
     if ( !g_bLuaInitialized )
         return;
@@ -1257,7 +1333,7 @@ CON_COMMAND( lua_dostring, "Run a Lua string" )
 
     if ( args.ArgC() == 1 )
     {
-        Msg( "Usage: lua_dostring <string>\n" );
+        Msg( "Usage: lua_run <string>\n" );
         return;
     }
 

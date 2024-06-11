@@ -12,15 +12,15 @@ util.AddNetworkString( "ReceiveDupe" )
 --
 concommand.Add( "dupe_save", function( ply, cmd, arg )
 
-	if ( not IsValid( ply ) ) then return end
+	if ( !IsValid( ply ) ) then return end
 
 	-- No dupe to save
-	if ( not ply.CurrentDupe ) then return end
+	if ( !ply.CurrentDupe ) then return end
 
 	-- Current dupe was armed from a file. Don't allow immediate resave.
 	if ( ply.CurrentDupeArmed ) then return end
 
-	if ( ply.m_NextDupeSave and ply.m_NextDupeSave > CurTime() and not game.SinglePlayer() ) then
+	if ( ply.m_NextDupeSave && ply.m_NextDupeSave > CurTime() && !game.SinglePlayer() ) then
 		ServerLog( tostring( ply ) .. " tried to save a dupe too quickly!\n" )
 		return
 	end
@@ -76,14 +76,14 @@ if ( CLIENT ) then
 
 			-- MsgN( "R [ " .. part .. " / " .. total .. " ] Size: " .. data:len() )
 
-			if ( part ~= total ) then return end
+			if ( part != total ) then return end
 
 			MsgN( "Received dupe. Size: " .. buffer:len() )
 
 			local uncompressed = util.Decompress( buffer )
 			buffer = ""
 
-			if ( not uncompressed ) then
+			if ( !uncompressed ) then
 				MsgN( "Received dupe - but couldn't decompress!?" )
 				return
 			end

@@ -30,7 +30,7 @@ end
 
 local function GenerateDefaultFlexValue( ent, flexID )
 	local min, max = ent:GetFlexBounds( flexID )
-	if ( not max or max - min == 0 ) then return 0 end
+	if ( !max || max - min == 0 ) then return 0 end
 	return ( 0 - min ) / ( max - min )
 end
 
@@ -39,7 +39,7 @@ function TOOL:FacePoserEntity()
 end
 
 function TOOL:SetFacePoserEntity( ent )
-	if ( IsValid( ent ) and ent:GetClass() == "prop_effect" ) then ent = ent.AttachedEntity end
+	if ( IsValid( ent ) && ent:GetClass() == "prop_effect" ) then ent = ent.AttachedEntity end
 	return self:GetWeapon():SetNWEntity( 1, ent )
 end
 
@@ -61,7 +61,7 @@ function TOOL:Think()
 	if ( self.FaceTimer > CurTime() ) then return end
 
 	local ent = self:FacePoserEntity()
-	if ( not IsValid( ent ) ) then return end
+	if ( !IsValid( ent ) ) then return end
 
 	local FlexNum = ent:GetFlexNum()
 	if ( FlexNum <= 0 ) then return end
@@ -84,13 +84,13 @@ end
 function TOOL:RightClick( trace )
 
 	local ent = trace.Entity
-	if ( IsValid( ent ) and ent:GetClass() == "prop_effect" ) then ent = ent.AttachedEntity end
+	if ( IsValid( ent ) && ent:GetClass() == "prop_effect" ) then ent = ent.AttachedEntity end
 
 	if ( SERVER ) then
 		self:SetFacePoserEntity( ent )
 	end
 
-	if ( not IsValid( ent ) ) then return true end
+	if ( !IsValid( ent ) ) then return true end
 
 	local FlexNum = ent:GetFlexNum()
 	if ( FlexNum == 0 ) then return false end
@@ -103,7 +103,7 @@ function TOOL:RightClick( trace )
 
 		-- In multiplayer the rest is only done on the client to save bandwidth.
 		-- We can't do that in single player because these functions don't get called on the client
-		if ( not game.SinglePlayer() ) then return true end
+		if ( !game.SinglePlayer() ) then return true end
 
 	end
 
@@ -111,7 +111,7 @@ function TOOL:RightClick( trace )
 
 		local Weight = "0.0"
 
-		if ( not ent:HasFlexManipulatior() ) then
+		if ( !ent:HasFlexManipulatior() ) then
 			Weight = GenerateDefaultFlexValue( ent, i )
 		elseif ( i <= FlexNum ) then
 			Weight = ent:GetFlexWeight( i )
@@ -134,9 +134,9 @@ end
 function TOOL:LeftClick( trace )
 
 	local ent = trace.Entity
-	if ( IsValid( ent ) and ent:GetClass() == "prop_effect" ) then ent = ent.AttachedEntity end
+	if ( IsValid( ent ) && ent:GetClass() == "prop_effect" ) then ent = ent.AttachedEntity end
 
-	if ( not IsValid( ent ) ) then return false end
+	if ( !IsValid( ent ) ) then return false end
 	if ( ent:GetFlexNum() == 0 ) then return false end
 
 	self.FaceTimer = 0
@@ -207,7 +207,7 @@ function TOOL.BuildCPanel( CPanel, faceEntity )
 
 	CPanel:AddControl( "Header", { Description = "#tool.faceposer.desc" } )
 
-	if ( not IsValid( faceEntity ) or faceEntity:GetFlexNum() == 0 ) then return end
+	if ( !IsValid( faceEntity ) || faceEntity:GetFlexNum() == 0 ) then return end
 
 	CPanel:AddControl( "ComboBox", { MenuButton = 1, Folder = "face", Options = { [ "#preset.default" ] = ConVarsDefault }, CVars = table.GetKeys( ConVarsDefault ) } )
 
@@ -375,7 +375,7 @@ function TOOL.BuildCPanel( CPanel, faceEntity )
 
 		local name = faceEntity:GetFlexName( i )
 
-		if ( not IsUselessFaceFlex( name ) ) then
+		if ( !IsUselessFaceFlex( name ) ) then
 
 			if ( i == MAXSTUDIOFLEXCTRL ) then
 				CPanel:ControlHelp( "#tool.faceposer.too_many_flexes" ):DockMargin( 16, 16, 16, 4 )
@@ -405,7 +405,7 @@ function TOOL.BuildCPanel( CPanel, faceEntity )
 	-- Actual searching
 	filter.OnValueChange = function( pnl, txt )
 		for id, flxpnl in ipairs( flexControllers ) do
-			if ( not flxpnl:GetText():lower():find( txt:lower(), nil, true ) and not flxpnl.originalName:lower():find( txt:lower(), nil, true ) ) then
+			if ( !flxpnl:GetText():lower():find( txt:lower(), nil, true ) && !flxpnl.originalName:lower():find( txt:lower(), nil, true ) ) then
 				flxpnl:SetVisible( false )
 			else
 				flxpnl:SetVisible( true )
@@ -424,24 +424,24 @@ function TOOL:DrawHUD()
 
 	local selected = self:FacePoserEntity()
 
-	if ( not IsValid( selected ) or selected:IsWorld() or selected:GetFlexNum() == 0 ) then return end
+	if ( !IsValid( selected ) || selected:IsWorld() || selected:GetFlexNum() == 0 ) then return end
 
 	local pos = selected:GetPos()
 	local eyeattachment = selected:LookupAttachment( "eyes" )
-	if ( eyeattachment ~= 0 ) then
+	if ( eyeattachment != 0 ) then
 		local attachment = selected:GetAttachment( eyeattachment )
 		pos = attachment.Pos
 	else
 		-- The model has no "eyes" attachment, try to find a bone with "head" in its name
 		for i = 0, selected:GetBoneCount() - 1 do
-			if ( selected:GetBoneName( i ) and selected:GetBoneName( i ):lower():find( "head" ) ) then
+			if ( selected:GetBoneName( i ) && selected:GetBoneName( i ):lower():find( "head" ) ) then
 				pos = selected:GetBonePosition( i )
 			end
 		end
 	end
 
 	local scrpos = pos:ToScreen()
-	if ( not scrpos.visible ) then return end
+	if ( !scrpos.visible ) then return end
 
 	-- Work out the side distance to give a rough headsize box..
 	local player_eyes = LocalPlayer():EyeAngles()

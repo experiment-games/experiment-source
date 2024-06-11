@@ -9,8 +9,8 @@ function EFFECT:Init( data )
 	local ent = data:GetEntity()
 	local attid = data:GetAttachment()
 
-	if ( IsValid( ent ) and attid > 0 ) then
-		if ( ent.Owner == LocalPlayer() and LocalPlayer():GetViewModel() == LocalPlayer() ) then ent = ent.Owner:GetViewModel() end
+	if ( IsValid( ent ) && attid > 0 ) then
+		if ( ent.Owner == LocalPlayer() && LocalPlayer():GetViewModel() == LocalPlayer() ) then ent = ent.Owner:GetViewModel() end
 
 		local att = ent:GetAttachment( attid )
 		if ( att ) then

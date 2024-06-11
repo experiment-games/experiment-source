@@ -10,9 +10,9 @@ if ( CLIENT ) then
 	local LastDupeArm = 0
 	concommand.Add( "dupe_arm", function( ply, cmd, arg )
 
-		if ( not arg[ 1 ] ) then return end
+		if ( !arg[ 1 ] ) then return end
 
-		if ( LastDupeArm > CurTime() and not game.SinglePlayer() ) then ply:ChatPrint( "Please wait a second before trying to load another duplication!" ) return end
+		if ( LastDupeArm > CurTime() and !game.SinglePlayer() ) then ply:ChatPrint( "Please wait a second before trying to load another duplication!" ) return end
 		LastDupeArm = CurTime() + 1
 
 		-- Server doesn't allow us to do this, don't even try to send them data
@@ -21,10 +21,10 @@ if ( CLIENT ) then
 
 		-- Load the dupe (engine takes care of making sure it's a dupe)
 		local dupe = engine.OpenDupe( arg[ 1 ] )
-		if ( not dupe ) then ply:ChatPrint( "Error loading dupe.. (" .. tostring( arg[ 1 ] ) .. ")" ) return end
+		if ( !dupe ) then ply:ChatPrint( "Error loading dupe.. (" .. tostring( arg[ 1 ] ) .. ")" ) return end
 
 		local uncompressed = util.Decompress( dupe.data, 5242880 )
-		if ( not uncompressed ) then ply:ChatPrint( "That dupe seems to be corrupted!" ) return end
+		if ( !uncompressed ) then ply:ChatPrint( "That dupe seems to be corrupted!" ) return end
 
 		--
 		-- And send it to the server
@@ -61,7 +61,7 @@ if ( SERVER ) then
 
 	net.Receive( "ArmDupe", function( size, client )
 
-		if ( not IsValid( client ) or size < 48 ) then return end
+		if ( !IsValid( client ) or size < 48 ) then return end
 
 		local res = hook.Run( "CanArmDupe", client )
 		if ( res == false ) then client:ChatPrint( "Server has blocked usage of the Duplicator tool!" ) return end
@@ -77,29 +77,29 @@ if ( SERVER ) then
 		client.CurrentDupeBuffer = client.CurrentDupeBuffer or {}
 		client.CurrentDupeBuffer[ part ] = datachunk
 
-		if ( part ~= total ) then return end
+		if ( part != total ) then return end
 
 		local data = table.concat( client.CurrentDupeBuffer )
 		client.CurrentDupeBuffer = nil
 
-		if ( ( client.LastDupeArm or 0 ) > CurTime() and not game.SinglePlayer() ) then ServerLog( tostring( client ) .. " tried to arm a dupe too quickly!\n" ) return end
+		if ( ( client.LastDupeArm or 0 ) > CurTime() and !game.SinglePlayer() ) then ServerLog( tostring( client ) .. " tried to arm a dupe too quickly!\n" ) return end
 		client.LastDupeArm = CurTime() + 1
 
 		ServerLog( tostring( client ) .. " is arming a dupe, size: " .. data:len() .. "\n" )
 
 		local uncompressed = util.Decompress( data, 5242880 )
-		if ( not uncompressed ) then
+		if ( !uncompressed ) then
 			client:ChatPrint( "Server failed to decompress the duplication!" )
 			MsgN( "Couldn't decompress dupe from " .. client:Nick() .. "!" )
 			return
 		end
 
 		local Dupe = util.JSONToTable( uncompressed )
-		if ( not istable( Dupe ) ) then return end
-		if ( not istable( Dupe.Constraints ) ) then return end
-		if ( not istable( Dupe.Entities ) ) then return end
-		if ( not isvector( Dupe.Mins ) ) then return end
-		if ( not isvector( Dupe.Maxs ) ) then return end
+		if ( !istable( Dupe ) ) then return end
+		if ( !istable( Dupe.Constraints ) ) then return end
+		if ( !istable( Dupe.Entities ) ) then return end
+		if ( !isvector( Dupe.Mins ) ) then return end
+		if ( !isvector( Dupe.Maxs ) ) then return end
 
 		client.CurrentDupeArmed = true
 		client.CurrentDupe = Dupe

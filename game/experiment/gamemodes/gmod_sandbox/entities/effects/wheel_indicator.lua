@@ -4,7 +4,7 @@ EFFECT.Mat = Material( "effects/wheel_ring" )
 function EFFECT:Init( data )
 
 	self.Wheel = data:GetEntity()
-	if ( not IsValid( self.Wheel ) ) then return end
+	if ( !IsValid( self.Wheel ) ) then return end
 
 	self.Axis = data:GetOrigin() / 100 -- see gmod_wheel.lua
 	self.Direction = data:GetScale()
@@ -26,7 +26,7 @@ end
 
 function EFFECT:Think()
 
-	if ( not IsValid( self.Wheel ) ) then return false end
+	if ( !IsValid( self.Wheel ) ) then return false end
 
 	local speed = FrameTime()
 
@@ -41,7 +41,7 @@ end
 
 function EFFECT:Render()
 
-	if ( not IsValid( self.Wheel ) ) then return end
+	if ( !IsValid( self.Wheel ) ) then return end
 	if ( self.Alpha < 0 ) then return end
 
 	render.SetMaterial( self.Mat )

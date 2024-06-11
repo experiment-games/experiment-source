@@ -67,12 +67,12 @@ function PANEL:SetSearchType( stype, hookname )
 		self.ContentPanel = pnlContent
 	end )
 	hook.Add( "SearchUpdate", "SearchUpdate_" .. hookname, function()
-		if ( not g_SpawnMenu:IsVisible() ) then self.RebuildResults = true return end
+		if ( !g_SpawnMenu:IsVisible() ) then self.RebuildResults = true return end
 		self:RefreshResults( self.CurrentSearch )
 	end )
 
 	-- This stuff is only for the primary search
-	if ( hookname ~= "PopulateContent" ) then return end
+	if ( hookname != "PopulateContent" ) then return end
 
 	g_SpawnMenu.SearchPropPanel = self.PropPanel
 	hook.Add( "StartSearch", "StartSearch", function()
@@ -98,22 +98,22 @@ end
 
 function PANEL:RefreshResults( str )
 
-	if ( not str ) then -- User tried to search for something
+	if ( !str ) then -- User tried to search for something
 		self.CurrentSearch = self.Search:GetText()
 		str = self.CurrentSearch
 		self.OldResults = -1
 	else
 		-- Don't force open the search when you click away from search while this function is called from cl_search_models.lua
-		if ( self.ContentPanel.SelectedPanel ~= self.PropPanel ) then
+		if ( self.ContentPanel.SelectedPanel != self.PropPanel ) then
 			return
 		end
 	end
 
-	if ( not str or str == "" ) then return end
+	if ( !str or str == "" ) then return end
 
 	local results = search.GetResults( str, self.m_strSearchType, GetConVarNumber( "sbox_search_maxresults" ) )
 	for id, result in ipairs( results ) do
-		if ( not IsValid( result.icon ) ) then ErrorNoHalt( "Failed to create icon for " .. ( result.words and isstring( result.words[ 1 ] ) and result.words[ 1 ] or result.text ).. "\n" ) continue end
+		if ( !IsValid( result.icon ) ) then ErrorNoHalt( "Failed to create icon for " .. ( result.words && isstring( result.words[ 1 ] ) && result.words[ 1 ] || result.text ).. "\n" ) continue end
 		result.icon:SetParent( vgui.GetWorldPanel() ) -- Don't parent the icons to search panel prematurely
 	end
 
@@ -143,7 +143,7 @@ end
 
 function PANEL:AddSearchResult( text, func, icon )
 
-	if ( not IsValid( icon ) ) then return end
+	if ( !IsValid( icon ) ) then return end
 
 	icon:SetParent( self.PropPanel )
 	self.PropPanel:Add( icon )

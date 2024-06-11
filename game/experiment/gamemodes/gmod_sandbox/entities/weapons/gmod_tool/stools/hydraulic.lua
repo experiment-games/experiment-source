@@ -22,10 +22,10 @@ TOOL.Information = {
 
 function TOOL:LeftClick( trace )
 
-	if ( IsValid( trace.Entity ) and trace.Entity:IsPlayer() ) then return false end
+	if ( IsValid( trace.Entity ) && trace.Entity:IsPlayer() ) then return false end
 
 	-- If there's no physics object then we can't constraint it!
-	if ( SERVER and not util.IsValidPhysicsObject( trace.Entity, trace.PhysicsBone ) ) then return false end
+	if ( SERVER && !util.IsValidPhysicsObject( trace.Entity, trace.PhysicsBone ) ) then return false end
 
 	local iNum = self:NumObjects()
 
@@ -40,7 +40,7 @@ function TOOL:LeftClick( trace )
 			return true
 		end
 
-		if ( ( not IsValid( self:GetEnt( 1 ) ) and not IsValid( self:GetEnt( 2 ) ) ) or iNum > 1 ) then
+		if ( ( !IsValid( self:GetEnt( 1 ) ) && !IsValid( self:GetEnt( 2 ) ) ) || iNum > 1 ) then
 
 			self:ClearObjects()
 			return true
@@ -54,7 +54,7 @@ function TOOL:LeftClick( trace )
 		local fixed = self:GetClientNumber( "fixed", 1 )
 		local speed = self:GetClientNumber( "speed", 64 )
 		local material = self:GetClientInfo( "material" )
-		local toggle = self:GetClientNumber( "toggle" ) ~= 0
+		local toggle = self:GetClientNumber( "toggle" ) != 0
 		local colorR = self:GetClientNumber( "color_r" )
 		local colorG = self:GetClientNumber( "color_g" )
 		local colorB = self:GetClientNumber( "color_b" )
@@ -102,7 +102,7 @@ function TOOL:RightClick( trace )
 	if ( self:GetOperation() == 1 ) then return false end
 
 	-- If there's no physics object then we can't constraint it!
-	if ( SERVER and not util.IsValidPhysicsObject( trace.Entity, trace.PhysicsBone ) ) then return false end
+	if ( SERVER && !util.IsValidPhysicsObject( trace.Entity, trace.PhysicsBone ) ) then return false end
 
 	local Phys = trace.Entity:GetPhysicsObjectNum( trace.PhysicsBone )
 	self:SetObject( 1, trace.Entity, trace.HitPos, Phys, trace.PhysicsBone, trace.HitNormal )
@@ -116,29 +116,29 @@ function TOOL:RightClick( trace )
 	end
 
 	local tr = util.TraceLine( tr_new )
-	if ( not tr.Hit ) then
+	if ( !tr.Hit ) then
 		self:ClearObjects()
 		return
 	end
 
 	-- Don't try to constrain world to world
-	if ( trace.HitWorld and tr.HitWorld ) then
+	if ( trace.HitWorld && tr.HitWorld ) then
 		self:ClearObjects()
 		return
 	end
 
-	if ( IsValid( trace.Entity ) and trace.Entity:IsPlayer() ) then
+	if ( IsValid( trace.Entity ) && trace.Entity:IsPlayer() ) then
 		self:ClearObjects()
 		return
 	end
 
-	if ( IsValid( tr.Entity ) and tr.Entity:IsPlayer() ) then
+	if ( IsValid( tr.Entity ) && tr.Entity:IsPlayer() ) then
 		self:ClearObjects()
 		return
 	end
 
 	-- Check to see if the player can create a hydraulic constraint with the entity in the trace
-	if ( not hook.Run( "CanTool", self:GetOwner(), tr, "hydraulic", self, 2 ) ) then
+	if ( !hook.Run( "CanTool", self:GetOwner(), tr, "hydraulic", self, 2 ) ) then
 		self:ClearObjects()
 		return
 	end
@@ -158,7 +158,7 @@ function TOOL:RightClick( trace )
 	local fixed = self:GetClientNumber( "fixed", 1 )
 	local speed = self:GetClientNumber( "speed", 64 )
 	local material = self:GetClientInfo( "material" )
-	local toggle = self:GetClientNumber( "toggle" ) ~= 0
+	local toggle = self:GetClientNumber( "toggle" ) != 0
 	local colorR = self:GetClientNumber( "color_r" )
 	local colorG = self:GetClientNumber( "color_g" )
 	local colorB = self:GetClientNumber( "color_b" )
@@ -197,7 +197,7 @@ end
 
 function TOOL:Reload( trace )
 
-	if ( not IsValid( trace.Entity ) or trace.Entity:IsPlayer() ) then return false end
+	if ( !IsValid( trace.Entity ) || trace.Entity:IsPlayer() ) then return false end
 	if ( CLIENT ) then return true end
 
 	return constraint.RemoveConstraints( trace.Entity, "Hydraulic" )

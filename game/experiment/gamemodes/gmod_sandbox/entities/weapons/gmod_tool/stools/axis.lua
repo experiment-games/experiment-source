@@ -19,20 +19,20 @@ function TOOL:LeftClick( trace )
 
 	if ( self:GetOperation() == 2 ) then return false end
 
-	if ( IsValid( trace.Entity ) and trace.Entity:IsPlayer() ) then return end
+	if ( IsValid( trace.Entity ) && trace.Entity:IsPlayer() ) then return end
 
 	-- todo: Don't attempt to constrain the first object if it's already constrained to a static object
 
 	local iNum = self:NumObjects()
 
 	-- Don't allow us to choose the world as the first object
-	if ( iNum == 0 and not IsValid( trace.Entity ) ) then return false end
+	if ( iNum == 0 && !IsValid( trace.Entity ) ) then return false end
 
 	-- Don't do jeeps (crash protection until we get it fixed)
-	if ( iNum == 0 and trace.Entity:GetClass() == "prop_vehicle_jeep" ) then return false end
+	if ( iNum == 0 && trace.Entity:GetClass() == "prop_vehicle_jeep" ) then return false end
 
 	-- If there's no physics object then we can't constraint it!
-	if ( SERVER and not util.IsValidPhysicsObject( trace.Entity, trace.PhysicsBone ) ) then return false end
+	if ( SERVER && !util.IsValidPhysicsObject( trace.Entity, trace.PhysicsBone ) ) then return false end
 
 	local Phys = trace.Entity:GetPhysicsObjectNum( trace.PhysicsBone )
 	self:SetObject( iNum + 1, trace.Entity, trace.HitPos, Phys, trace.PhysicsBone, trace.HitNormal )
@@ -111,12 +111,12 @@ function TOOL:RightClick( trace )
 
 	if ( self:GetOperation() == 1 ) then return false end
 
-	if ( IsValid( trace.Entity ) and trace.Entity:IsPlayer() ) then return false end
+	if ( IsValid( trace.Entity ) && trace.Entity:IsPlayer() ) then return false end
 
 	local iNum = self:NumObjects()
 
 	-- Don't allow us to choose the world as the first object
-	if ( iNum == 0 and not IsValid( trace.Entity ) ) then return false end
+	if ( iNum == 0 && !IsValid( trace.Entity ) ) then return false end
 
 	local Phys = trace.Entity:GetPhysicsObjectNum( trace.PhysicsBone )
 	self:SetObject( iNum + 1, trace.Entity, trace.HitPos, Phys, trace.PhysicsBone, trace.HitNormal )
@@ -183,7 +183,7 @@ end
 
 function TOOL:Reload( trace )
 
-	if ( not IsValid( trace.Entity ) or trace.Entity:IsPlayer() ) then return false end
+	if ( !IsValid( trace.Entity ) || trace.Entity:IsPlayer() ) then return false end
 	if ( CLIENT ) then return true end
 
 	return constraint.RemoveConstraints( trace.Entity, "Axis" )
@@ -192,7 +192,7 @@ end
 
 function TOOL:Think()
 
-	if ( self:NumObjects() ~= 1 ) then return end
+	if ( self:NumObjects() != 1 ) then return end
 
 	self:UpdateGhostEntity()
 

@@ -9,7 +9,7 @@ hook.Add( "PopulateNPCs", "AddNPCContent", function( pnlContent, tree, browseNod
 	for k, v in pairs( NPCList ) do
 
 		local Category = v.Category or "Other"
-		if ( not isstring( Category ) ) then Category = tostring( Category ) end
+		if ( !isstring( Category ) ) then Category = tostring( Category ) end
 
 		local Tab = Categories[ Category ] or {}
 		Tab[ k ] = v

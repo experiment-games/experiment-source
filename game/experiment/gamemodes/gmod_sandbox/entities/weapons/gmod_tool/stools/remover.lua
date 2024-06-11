@@ -10,7 +10,7 @@ TOOL.Information = {
 
 local function DoRemoveEntity( ent )
 
-	if ( not IsValid( ent ) or ent:IsPlayer() ) then return false end
+	if ( !IsValid( ent ) || ent:IsPlayer() ) then return false end
 
 	-- Nothing for the client to do here
 	if ( CLIENT ) then return true end
@@ -43,7 +43,7 @@ function TOOL:LeftClick( trace )
 
 	if ( DoRemoveEntity( trace.Entity ) ) then
 
-		if ( not CLIENT ) then
+		if ( !CLIENT ) then
 			self:GetOwner():SendLua( "achievements.Remover()" )
 		end
 
@@ -61,7 +61,7 @@ end
 function TOOL:RightClick( trace )
 
 	local entity = trace.Entity
-	if ( not IsValid( entity ) or entity:IsPlayer() ) then return false end
+	if ( !IsValid( entity ) || entity:IsPlayer() ) then return false end
 
 	-- Client can bail out now.
 	if ( CLIENT ) then return true end
@@ -89,7 +89,7 @@ end
 --
 function TOOL:Reload( trace )
 
-	if ( not IsValid( trace.Entity ) or trace.Entity:IsPlayer() ) then return false end
+	if ( !IsValid( trace.Entity ) || trace.Entity:IsPlayer() ) then return false end
 	if ( CLIENT ) then return true end
 
 	return constraint.RemoveAll( trace.Entity )

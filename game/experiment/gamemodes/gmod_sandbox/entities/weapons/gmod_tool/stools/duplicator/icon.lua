@@ -4,7 +4,7 @@ hook.Add( "PostRender", "RenderDupeIcon", function()
 	--
 	-- g_ClientSaveDupe is set in transport.lua when receiving a dupe from the server
 	--
-	if ( not g_ClientSaveDupe ) then return end
+	if ( !g_ClientSaveDupe ) then return end
 
 	--
 	-- Remove the global straight away
@@ -246,7 +246,7 @@ hook.Add( "PostRender", "RenderDupeIcon", function()
 	-- Encode and compress the dupe
 	--
 	local DupeJSON = util.TableToJSON( Dupe )
-	if ( not isstring( DupeJSON ) ) then
+	if ( !isstring( DupeJSON ) ) then
 		MsgN( "There was an error converting the dupe to a json string" )
 	end
 

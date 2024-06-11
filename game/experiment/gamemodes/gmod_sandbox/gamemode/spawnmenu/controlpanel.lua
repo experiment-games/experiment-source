@@ -40,11 +40,11 @@ function PANEL:MatSelect( strConVar, tblOptions, bAutoStretch, iWidth, iHeight )
 
 	MatSelect:SetConVar( strConVar )
 
-	if ( bAutoStretch ~= nil ) then MatSelect:SetAutoHeight( bAutoStretch ) end
-	if ( iWidth ~= nil ) then MatSelect:SetItemWidth( iWidth ) end
-	if ( iHeight ~= nil ) then MatSelect:SetItemHeight( iHeight ) end
+	if ( bAutoStretch != nil ) then MatSelect:SetAutoHeight( bAutoStretch ) end
+	if ( iWidth != nil ) then MatSelect:SetItemWidth( iWidth ) end
+	if ( iHeight != nil ) then MatSelect:SetItemHeight( iHeight ) end
 
-	if ( tblOptions ~= nil ) then
+	if ( tblOptions != nil ) then
 		for k, v in pairs( tblOptions ) do
 			local nam = isnumber( k ) and v or k
 			MatSelect:AddMaterial( nam, v )
@@ -80,7 +80,7 @@ function PANEL:KeyBinder( label1, convar1, label2, convar2 )
 	binder:SetLabel1( label1 )
 	binder:SetConVar1( convar1 )
 
-	if ( label2 ~= nil and convar2 ~= nil ) then
+	if ( label2 != nil and convar2 != nil ) then
 		binder:SetLabel2( label2 )
 		binder:SetConVar2( convar2 )
 	end
@@ -102,7 +102,7 @@ function PANEL:ColorPicker( label, convarR, convarG, convarB, convarA )
 	color:SetConVarG( convarG )
 	color:SetConVarB( convarB )
 
-	if ( convarA ~= nil ) then
+	if ( convarA != nil ) then
 		color:SetConVarA( convarA )
 	end
 
@@ -123,7 +123,7 @@ function PANEL:FillViaTable( Table )
 	--
 	if ( Table.ControlPanelBuildFunction ) then
 
-		self:FillViaFunction( Table.ControlPanelBuildFunction )
+		Table.ControlPanelBuildFunction( self )
 
 	end
 
@@ -191,7 +191,7 @@ function PANEL:AddControl( control, data )
 	if ( control == "slider" ) then
 
 		local Decimals = 0
-		if ( data.type and string.lower(data.type) == "float" ) then Decimals = 2 end
+		if ( data.type && string.lower(data.type) == "float" ) then Decimals = 2 end
 
 		local ctrl = self:NumSlider( data.label or "Untitled", data.command, data.min or 0, data.max or 100, Decimals )
 
@@ -410,7 +410,7 @@ function PANEL:AddControl( control, data )
 
 	local ctrl = vgui.Create( original, self )
 	-- Fallback for scripts that relied on the old behaviour
-	if ( not ctrl ) then
+	if ( !ctrl ) then
 		ctrl = vgui.Create( control, self )
 	end
 	if ( ctrl ) then

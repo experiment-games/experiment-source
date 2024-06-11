@@ -21,7 +21,7 @@ end
 
 function TOOL:LeftClick( trace )
 
-	if ( not trace.HitPos or IsValid( trace.Entity ) and trace.Entity:IsPlayer() ) then return false end
+	if ( !trace.HitPos || IsValid( trace.Entity ) && trace.Entity:IsPlayer() ) then return false end
 	if ( CLIENT ) then return true end
 
 	local ply = self:GetOwner()
@@ -34,7 +34,7 @@ function TOOL:LeftClick( trace )
 	local remove = self:GetClientNumber( "remove" ) == 1
 
 	-- If we shot a dynamite, change it's settings
-	if ( IsValid( trace.Entity ) and trace.Entity:GetClass() == "gmod_dynamite" and trace.Entity:GetPlayer() == ply ) then
+	if ( IsValid( trace.Entity ) && trace.Entity:GetClass() == "gmod_dynamite" && trace.Entity:GetPlayer() == ply ) then
 
 		trace.Entity:SetDamage( damage )
 		trace.Entity:SetShouldRemove( remove )
@@ -47,11 +47,11 @@ function TOOL:LeftClick( trace )
 		return true
 	end
 
-	if ( not util.IsValidModel( model ) or not util.IsValidProp( model ) or not IsValidDynamiteModel( model ) ) then return false end
-	if ( not self:GetSWEP():CheckLimit( "dynamite" ) ) then return false end
+	if ( !util.IsValidModel( model ) || !util.IsValidProp( model ) || !IsValidDynamiteModel( model ) ) then return false end
+	if ( !self:GetWeapon():CheckLimit( "dynamite" ) ) then return false end
 
 	local dynamite = MakeDynamite( ply, trace.HitPos, angle_zero, group, damage, model, remove, delay )
-	if ( not IsValid( dynamite ) ) then return false end
+	if ( !IsValid( dynamite ) ) then return false end
 
 	local CurPos = dynamite:GetPos()
 	local Offset = CurPos - dynamite:NearestPoint( CurPos - ( trace.HitNormal * 512 ) )
@@ -71,8 +71,8 @@ if ( SERVER ) then
 
 	function MakeDynamite( ply, pos, ang, key, damage, model, remove, delay, Data )
 
-		if ( IsValid( ply ) and not ply:CheckLimit( "dynamite" ) ) then return nil end
-		if ( not IsValidDynamiteModel( model ) ) then return nil end
+		if ( IsValid( ply ) && !ply:CheckLimit( "dynamite" ) ) then return nil end
+		if ( !IsValidDynamiteModel( model ) ) then return nil end
 
 		local dynamite = ents.Create( "gmod_dynamite" )
 
@@ -116,7 +116,7 @@ if ( SERVER ) then
 
 	numpad.Register( "DynamiteBlow", function( ply, dynamite )
 
-		if ( not IsValid( dynamite ) ) then return end
+		if ( !IsValid( dynamite ) ) then return end
 
 		dynamite:Explode( nil, ply )
 
@@ -126,10 +126,10 @@ end
 
 function TOOL:UpdateGhostDynamite( ent, ply )
 
-	if ( not IsValid( ent ) ) then return end
+	if ( !IsValid( ent ) ) then return end
 
 	local trace = ply:GetEyeTrace()
-	if ( not trace.Hit or IsValid( trace.Entity ) and ( trace.Entity:IsPlayer() or trace.Entity:GetClass() == "gmod_dynamite" ) ) then
+	if ( !trace.Hit || IsValid( trace.Entity ) && ( trace.Entity:IsPlayer() || trace.Entity:GetClass() == "gmod_dynamite" ) ) then
 		ent:SetNoDraw( true )
 		return
 	end
@@ -148,9 +148,9 @@ end
 function TOOL:Think()
 
 	local mdl = self:GetClientInfo( "model" )
-	if ( not IsValidDynamiteModel( mdl ) ) then self:ReleaseGhostEntity() return end
+	if ( !IsValidDynamiteModel( mdl ) ) then self:ReleaseGhostEntity() return end
 
-	if ( not IsValid( self.GhostEntity ) or self.GhostEntity:GetModel() ~= mdl ) then
+	if ( !IsValid( self.GhostEntity ) || self.GhostEntity:GetModel() != mdl ) then
 		self:MakeGhostEntity( mdl, vector_origin, angle_zero )
 	end
 

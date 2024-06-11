@@ -64,7 +64,7 @@ end, "icon16/disk_multiple.png", 200 )
 
 hook.Add( "PostGameSaved", "OnCreationsSaved", function()
 
-	if ( not HTML ) then return end
+	if ( !HTML ) then return end
 
 	HTML:Call( "OnGameSaved()" )
 

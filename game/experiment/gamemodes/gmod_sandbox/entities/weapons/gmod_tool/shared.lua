@@ -2,7 +2,7 @@
 -- Variables that are used on both client and server
 
 SWEP.PrintName		= "#GMOD_ToolGun"
-SWEP.Author			= ""
+SWEP.Author			= "Facepunch"
 SWEP.Contact		= ""
 SWEP.Purpose		= ""
 SWEP.Instructions	= ""
@@ -124,13 +124,13 @@ function SWEP:Think()
 	if ( CLIENT and self.m_uHolsterFrame == FrameNumber() ) then return end
 
 	local owner = self:GetOwner()
-	if ( not owner:IsPlayer() ) then return end
+	if ( !owner:IsPlayer() ) then return end
 
 	local curmode = owner:GetInfo( "gmod_toolmode" )
 	self.Mode = curmode
 
 	local tool = self:GetToolObject( curmode )
-	if ( not tool ) then return end
+	if ( !tool ) then return end
 
 	tool:CheckObjects()
 
@@ -139,7 +139,7 @@ function SWEP:Think()
 	self.current_mode = curmode
 
 	-- Release ghost entities if we're not allowed to use this new mode?
-	if ( not tool:Allowed() ) then
+	if ( !tool:Allowed() ) then
 		if ( lastmode ) then
 			local lastmode_obj = self:GetToolObject( lastmode )
 
@@ -180,7 +180,7 @@ function SWEP:DoShootEffect( hitpos, hitnormal, entity, physbone, bFirstTimePred
 	-- appear on everyone's screen when we fire this animation.
 	owner:SetAnimation( PLAYER_ATTACK1 ) -- 3rd Person Animation
 
-	if ( not bFirstTimePredicted ) then return end
+	if ( !bFirstTimePredicted ) then return end
 	if ( GetConVarNumber( "gmod_drawtooleffects" ) == 0 ) then return end
 
 	local effectdata = EffectData()
@@ -210,22 +210,23 @@ function SWEP:PrimaryAttack()
 	tr.mask = toolmask
 	tr.mins = vector_origin
 	tr.maxs = tr.mins
-	local trace = util.TraceHull( tr )
-	if ( not trace.Hit ) then return end
+	local trace = util.TraceLine( tr )
+	if ( !trace.Hit ) then trace = util.TraceHull( tr ) end
+	if ( !trace.Hit ) then return end
 
 	local tool = self:GetToolObject()
-	if ( not tool ) then return end
+	if ( !tool ) then return end
 
 	tool:CheckObjects()
 
 	-- Does the server setting say it's ok?
-	if ( not tool:Allowed() ) then return end
+	if ( !tool:Allowed() ) then return end
 
 	-- Ask the gamemode if it's ok to do this
 	local mode = self:GetMode()
-	if ( not gamemode.Call( "CanTool", owner, trace, mode, tool, 1 ) ) then return end
+	if ( !gamemode.Call( "CanTool", owner, trace, mode, tool, 1 ) ) then return end
 
-	if ( not tool:LeftClick( trace ) ) then return end
+	if ( !tool:LeftClick( trace ) ) then return end
 
 	self:DoShootEffect( trace.HitPos, trace.HitNormal, trace.Entity, trace.PhysicsBone, IsFirstTimePredicted() )
 
@@ -239,22 +240,23 @@ function SWEP:SecondaryAttack()
 	tr.mask = toolmask
 	tr.mins = vector_origin
 	tr.maxs = tr.mins
-	local trace = util.TraceHull( tr )
-	if ( not trace.Hit ) then return end
+	local trace = util.TraceLine( tr )
+	if ( !trace.Hit ) then trace = util.TraceHull( tr ) end
+	if ( !trace.Hit ) then return end
 
 	local tool = self:GetToolObject()
-	if ( not tool ) then return end
+	if ( !tool ) then return end
 
 	tool:CheckObjects()
 
 	-- Does the server setting say it's ok?
-	if ( not tool:Allowed() ) then return end
+	if ( !tool:Allowed() ) then return end
 
 	-- Ask the gamemode if it's ok to do this
 	local mode = self:GetMode()
-	if ( not gamemode.Call( "CanTool", owner, trace, mode, tool, 2 ) ) then return end
+	if ( !gamemode.Call( "CanTool", owner, trace, mode, tool, 2 ) ) then return end
 
-	if ( not tool:RightClick( trace ) ) then return end
+	if ( !tool:RightClick( trace ) ) then return end
 
 	self:DoShootEffect( trace.HitPos, trace.HitNormal, trace.Entity, trace.PhysicsBone, IsFirstTimePredicted() )
 
@@ -265,28 +267,29 @@ function SWEP:Reload()
 	local owner = self:GetOwner()
 
 	-- This makes the reload a semi-automatic thing rather than a continuous thing
-	if ( not owner:KeyPressed( IN_RELOAD ) ) then return end
+	if ( !owner:KeyPressed( IN_RELOAD ) ) then return end
 
 	local tr = util.GetPlayerTrace( owner )
 	tr.mask = toolmask
 	tr.mins = vector_origin
 	tr.maxs = tr.mins
-	local trace = util.TraceHull( tr )
-	if ( not trace.Hit ) then return end
+	local trace = util.TraceLine( tr )
+	if ( !trace.Hit ) then trace = util.TraceHull( tr ) end
+	if ( !trace.Hit ) then return end
 
 	local tool = self:GetToolObject()
-	if ( not tool ) then return end
+	if ( !tool ) then return end
 
 	tool:CheckObjects()
 
 	-- Does the server setting say it's ok?
-	if ( not tool:Allowed() ) then return end
+	if ( !tool:Allowed() ) then return end
 
 	-- Ask the gamemode if it's ok to do this
 	local mode = self:GetMode()
-	if ( not gamemode.Call( "CanTool", owner, trace, mode, tool, 3 ) ) then return end
+	if ( !gamemode.Call( "CanTool", owner, trace, mode, tool, 3 ) ) then return end
 
-	if ( not tool:Reload( trace ) ) then return end
+	if ( !tool:Reload( trace ) ) then return end
 
 	self:DoShootEffect( trace.HitPos, trace.HitNormal, trace.Entity, trace.PhysicsBone, IsFirstTimePredicted() )
 
@@ -318,7 +321,7 @@ end
 -- Delete ghosts here in case the weapon gets deleted all of a sudden somehow
 function SWEP:OnRemove()
 
-	if ( not self:GetToolObject() ) then return end
+	if ( !self:GetToolObject() ) then return end
 
 	self:GetToolObject():ReleaseGhostEntity()
 
@@ -328,7 +331,7 @@ end
 -- This will remove any ghosts when a player dies and drops the weapon
 function SWEP:OwnerChanged()
 
-	if ( not self:GetToolObject() ) then return end
+	if ( !self:GetToolObject() ) then return end
 
 	self:GetToolObject():ReleaseGhostEntity()
 
@@ -338,7 +341,7 @@ end
 function SWEP:Deploy()
 
 	-- Just do what the SWEP wants to do if there is no tool
-	if ( not self:GetToolObject() ) then return self.CanDeploy end
+	if ( !self:GetToolObject() ) then return self.CanDeploy end
 
 	self:GetToolObject():UpdateData()
 
@@ -353,14 +356,14 @@ function SWEP:GetToolObject( tool )
 
 	local mode = tool or self:GetMode()
 
-	if ( not mode ) then
+	if ( !mode ) then
 		local owner = self:GetOwner()
 		if ( IsValid( owner ) and owner:IsPlayer() and ( SERVER or owner == LocalPlayer() ) ) then
 			mode = owner:GetInfo( "gmod_toolmode" )
 		end
 	end
 
-	if ( not self.Tool[ mode ] ) then return false end
+	if ( !self.Tool[ mode ] ) then return false end
 
 	return self.Tool[ mode ]
 

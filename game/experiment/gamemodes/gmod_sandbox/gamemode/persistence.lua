@@ -23,14 +23,14 @@ hook.Add( "PersistenceSave", "PersistenceSave", function( name )
 
 	for k, v in ipairs( Ents ) do
 
-		if ( not v:GetPersistent() ) then
+		if ( !v:GetPersistent() ) then
 			Ents[ k ] = nil
 		end
 
 	end
 
 	local tab = duplicator.CopyEnts( Ents )
-	if ( not tab ) then return end
+	if ( !tab ) then return end
 
 	local out = util.TableToJSON( tab )
 
@@ -44,12 +44,12 @@ hook.Add( "PersistenceLoad", "PersistenceLoad", function( name )
 	CurrentlyActivePersistencePage = name
 
 	local data = file.Read( "persist/" .. game.GetMap() .. "_" .. name .. ".txt" )
-	if ( not data ) then return end
+	if ( !data ) then return end
 
 	local tab = util.JSONToTable( data )
-	if ( not tab ) then return end
-	if ( not tab.Entities ) then return end
-	if ( not tab.Constraints ) then return end
+	if ( !tab ) then return end
+	if ( !tab.Entities ) then return end
+	if ( !tab.Constraints ) then return end
 
 	local entities = duplicator.Paste( nil, tab.Entities, tab.Constraints )
 

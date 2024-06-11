@@ -47,7 +47,7 @@ end
 -----------------------------------------------------------]]
 function ToolObj:GetEnt( i )
 
-	if ( not self.Objects[i] ) then return NULL end
+	if ( !self.Objects[i] ) then return NULL end
 
 	return self.Objects[i].Ent
 end

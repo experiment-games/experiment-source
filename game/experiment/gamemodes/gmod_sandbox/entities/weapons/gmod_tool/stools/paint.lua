@@ -16,13 +16,13 @@ TOOL.Information = {
 
 local function PlaceDecal( ply, ent, data )
 
-	if ( not IsValid( ent ) and not ent:IsWorld() ) then return end
+	if ( !IsValid( ent ) && !ent:IsWorld() ) then return end
 	if ( CLIENT ) then return end
 
 	local bone
-	if ( data.bone and data.bone < ent:GetPhysicsObjectCount() ) then bone = ent:GetPhysicsObjectNum( data.bone ) end
-	if ( not IsValid( bone ) ) then bone = ent:GetPhysicsObject() end
-	if ( not IsValid( bone ) ) then bone = ent end
+	if ( data.bone && data.bone < ent:GetPhysicsObjectCount() ) then bone = ent:GetPhysicsObjectNum( data.bone ) end
+	if ( !IsValid( bone ) ) then bone = ent:GetPhysicsObject() end
+	if ( !IsValid( bone ) ) then bone = ent end
 
 	util.Decal( data.decal, bone:LocalToWorld( data.Pos1 ), bone:LocalToWorld( data.Pos2 ), ply )
 
@@ -47,7 +47,7 @@ if ( SERVER ) then
 end
 
 function TOOL:Reload( trace )
-	if ( not IsValid( trace.Entity ) ) then return false end
+	if ( !IsValid( trace.Entity ) ) then return false end
 
 	trace.Entity:RemoveAllDecals()
 
@@ -76,9 +76,9 @@ function TOOL:RightClick( trace, bNoDelay )
 	local Pos2 = trace.HitPos - trace.HitNormal
 
 	local Bone
-	if ( trace.PhysicsBone and trace.PhysicsBone < trace.Entity:GetPhysicsObjectCount() ) then Bone = trace.Entity:GetPhysicsObjectNum( trace.PhysicsBone ) end
-	if ( not IsValid( Bone ) ) then Bone = trace.Entity:GetPhysicsObject() end
-	if ( not IsValid( Bone ) ) then Bone = trace.Entity end
+	if ( trace.PhysicsBone && trace.PhysicsBone < trace.Entity:GetPhysicsObjectCount() ) then Bone = trace.Entity:GetPhysicsObjectNum( trace.PhysicsBone ) end
+	if ( !IsValid( Bone ) ) then Bone = trace.Entity:GetPhysicsObject() end
+	if ( !IsValid( Bone ) ) then Bone = trace.Entity end
 
 	Pos1 = Bone:WorldToLocal( Pos1 )
 	Pos2 = Bone:WorldToLocal( Pos2 )
@@ -140,7 +140,7 @@ function TOOL.BuildCPanel( CPanel )
 	-- Remove duplicates.
 	local Options = {}
 	for id, str in ipairs( list.Get( "PaintMaterials" ) ) do
-		if ( not table.HasValue( Options, str ) ) then
+		if ( !table.HasValue( Options, str ) ) then
 			table.insert( Options, str )
 		end
 	end

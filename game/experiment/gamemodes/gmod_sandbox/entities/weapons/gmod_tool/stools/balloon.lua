@@ -18,7 +18,7 @@ cleanup.Register( "balloons" )
 
 function TOOL:LeftClick( trace, attach )
 
-	if ( IsValid( trace.Entity ) and trace.Entity:IsPlayer() ) then return false end
+	if ( IsValid( trace.Entity ) && trace.Entity:IsPlayer() ) then return false end
 	if ( CLIENT ) then return true end
 
 	--
@@ -29,7 +29,7 @@ function TOOL:LeftClick( trace, attach )
 	end
 
 	-- If there's no physics object then we can't constraint it!
-	if ( SERVER and attach and not util.IsValidPhysicsObject( trace.Entity, trace.PhysicsBone ) ) then
+	if ( SERVER && attach && !util.IsValidPhysicsObject( trace.Entity, trace.PhysicsBone ) ) then
 		return false
 	end
 
@@ -48,7 +48,7 @@ function TOOL:LeftClick( trace, attach )
 	-- Model is a table index on BalloonModels
 	-- If the model isn't defined then it can't be spawned.
 	--
-	if ( not modeltable ) then return false end
+	if ( !modeltable ) then return false end
 
 	--
 	-- The model table can disable colouring for its model
@@ -62,7 +62,7 @@ function TOOL:LeftClick( trace, attach )
 	--
 	-- Clicked on a balloon - modify the force/color/whatever
 	--
-	if	( IsValid( trace.Entity ) and trace.Entity:GetClass() == "gmod_balloon" and trace.Entity.Player == ply ) then
+	if	( IsValid( trace.Entity ) && trace.Entity:GetClass() == "gmod_balloon" && trace.Entity.Player == ply ) then
 
 		if ( IsValid( trace.Entity:GetPhysicsObject() ) ) then trace.Entity:GetPhysicsObject():Wake() end
 		trace.Entity:SetColor( Color( r, g, b, 255 ) )
@@ -75,10 +75,10 @@ function TOOL:LeftClick( trace, attach )
 	--
 	-- Hit the balloon limit, bail
 	--
-	if ( not self:GetSWEP():CheckLimit( "balloons" ) ) then return false end
+	if ( !self:GetWeapon():CheckLimit( "balloons" ) ) then return false end
 
 	local balloon = MakeBalloon( ply, r, g, b, force, { Pos = trace.HitPos, Model = modeltable.model, Skin = modeltable.skin } )
-	if ( not IsValid( balloon ) ) then return false end
+	if ( !IsValid( balloon ) ) then return false end
 
 	local CurPos = balloon:GetPos()
 	local NearestPoint = balloon:NearestPoint( CurPos - ( trace.HitNormal * 512 ) )
@@ -134,10 +134,10 @@ if ( SERVER ) then
 
 	function MakeBalloon( ply, r, g, b, force, Data )
 
-		if ( IsValid( ply ) and not ply:CheckLimit( "balloons" ) ) then return end
+		if ( IsValid( ply ) && !ply:CheckLimit( "balloons" ) ) then return end
 
 		local balloon = ents.Create( "gmod_balloon" )
-		if ( not IsValid( balloon ) ) then return end
+		if ( !IsValid( balloon ) ) then return end
 
 		duplicator.DoGeneric( balloon, Data )
 
@@ -174,10 +174,10 @@ end
 
 function TOOL:UpdateGhostBalloon( ent, ply )
 
-	if ( not IsValid( ent ) ) then return end
+	if ( !IsValid( ent ) ) then return end
 
 	local trace = ply:GetEyeTrace()
-	if ( not trace.Hit or IsValid( trace.Entity ) and ( trace.Entity:IsPlayer() or trace.Entity:GetClass() == "gmod_balloon" ) ) then
+	if ( !trace.Hit || IsValid( trace.Entity ) && ( trace.Entity:IsPlayer() || trace.Entity:GetClass() == "gmod_balloon" ) ) then
 		ent:SetNoDraw( true )
 		return
 	end
@@ -200,10 +200,10 @@ end
 
 function TOOL:Think()
 
-	if ( not IsValid( self.GhostEntity ) or self.GhostEntity.model ~= self:GetClientInfo( "model" ) ) then
+	if ( !IsValid( self.GhostEntity ) || self.GhostEntity.model != self:GetClientInfo( "model" ) ) then
 
 		local modeltable = list.Get( "BalloonModels" )[ self:GetClientInfo( "model" ) ]
-		if ( not modeltable ) then self:ReleaseGhostEntity() return end
+		if ( !modeltable ) then self:ReleaseGhostEntity() return end
 
 		self:MakeGhostEntity( modeltable.model, vector_origin, angle_zero )
 		if ( IsValid( self.GhostEntity ) ) then self.GhostEntity.model = self:GetClientInfo( "model" ) end

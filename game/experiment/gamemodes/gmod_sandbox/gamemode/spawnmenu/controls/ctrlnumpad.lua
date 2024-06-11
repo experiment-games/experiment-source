@@ -27,7 +27,7 @@ end
 	Name: SetLabel1
 -----------------------------------------------------------]]
 function PANEL:SetLabel1( txt )
-	if ( not txt ) then return end
+	if ( !txt ) then return end
 	self.Label1:SetText( txt )
 end
 
@@ -35,7 +35,7 @@ end
 	Name: SetLabel2
 -----------------------------------------------------------]]
 function PANEL:SetLabel2( txt )
-	if ( not txt ) then return end
+	if ( !txt ) then return end
 	self.Label2:SetText( txt )
 end
 
@@ -70,7 +70,7 @@ function PANEL:PerformLayout()
 		self.NumPad2:SetSize( 100, 50 )
 	end
 
-	if ( not self.m_ConVar2 ) then
+	if ( !self.m_ConVar2 ) then
 
 		self.Label1:SizeToContents()
 

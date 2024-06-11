@@ -20,13 +20,13 @@ local function CheckLimit( ply, key )
 
 	local found = false
 	for id, camera in ipairs( ents.FindByClass( "gmod_cameraprop" ) ) do
-		if ( not camera.controlkey or camera.controlkey ~= key ) then continue end
-		if ( IsValid( camera:GetPlayer() ) and ply ~= camera:GetPlayer() ) then continue end
+		if ( !camera.controlkey || camera.controlkey != key ) then continue end
+		if ( IsValid( camera:GetPlayer() ) && ply != camera:GetPlayer() ) then continue end
 		found = true
 		break
 	end
 
-	if ( not found and not ply:CheckLimit( "cameras" ) ) then
+	if ( !found && !ply:CheckLimit( "cameras" ) ) then
 		return false
 	end
 
@@ -35,17 +35,17 @@ local function CheckLimit( ply, key )
 end
 
 local function MakeCamera( ply, key, locked, toggle, Data )
-	if ( IsValid( ply ) and not CheckLimit( ply, key ) ) then return false end
+	if ( IsValid( ply ) && !CheckLimit( ply, key ) ) then return false end
 
 	local ent = ents.Create( "gmod_cameraprop" )
-	if ( not IsValid( ent ) ) then return false end
+	if ( !IsValid( ent ) ) then return false end
 
 	duplicator.DoGeneric( ent, Data )
 
 	if ( key ) then
 		for id, camera in ipairs( ents.FindByClass( "gmod_cameraprop" ) ) do
-			if ( not camera.controlkey or camera.controlkey ~= key ) then continue end
-			if ( IsValid( ply ) and IsValid( camera:GetPlayer() ) and ply ~= camera:GetPlayer() ) then continue end
+			if ( !camera.controlkey || camera.controlkey != key ) then continue end
+			if ( IsValid( ply ) && IsValid( camera:GetPlayer() ) && ply != camera:GetPlayer() ) then continue end
 			camera:Remove()
 		end
 
@@ -92,7 +92,7 @@ function TOOL:LeftClick( trace )
 	local key = self:GetClientNumber( "key" )
 	if ( key == -1 ) then return false end
 
-	if ( not CheckLimit( ply, key ) ) then return false end
+	if ( !CheckLimit( ply, key ) ) then return false end
 
 	if ( CLIENT ) then return true end
 
@@ -100,7 +100,7 @@ function TOOL:LeftClick( trace )
 	local toggle = self:GetClientNumber( "toggle" )
 
 	local ent = MakeCamera( ply, key, locked, toggle, { Pos = trace.StartPos, Angle = ply:EyeAngles() } )
-	if ( not IsValid( ent ) ) then return false end
+	if ( !IsValid( ent ) ) then return false end
 
 	undo.Create( "Camera" )
 		undo.AddEntity( ent )
@@ -117,7 +117,7 @@ function TOOL:RightClick( trace )
 
 	if ( CLIENT ) then return true end
 
-	if ( not IsValid( camera ) ) then return false end
+	if ( !IsValid( camera ) ) then return false end
 
 	if ( trace.Entity:IsWorld() ) then
 

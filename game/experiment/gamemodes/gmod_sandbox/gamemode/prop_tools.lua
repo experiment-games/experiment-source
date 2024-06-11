@@ -8,7 +8,7 @@
 -----------------------------------------------------------]]
 function CheckPropSolid( e, solidtype, nonsolidtype, SolidCallback )
 
-	if ( not IsValid( e ) ) then return end
+	if ( !IsValid( e ) ) then return end
 
 	-- Trace our entity to check for collisions
 	local trace = { start = e:GetPos(), endpos = e:GetPos(), filter = e }

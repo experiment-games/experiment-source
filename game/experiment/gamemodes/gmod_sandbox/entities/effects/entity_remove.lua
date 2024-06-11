@@ -4,7 +4,7 @@ function EFFECT:Init( data )
 	if ( GetConVarNumber( "gmod_drawtooleffects" ) == 0 ) then return end
 
 	local TargetEntity = data:GetEntity()
-	if ( not IsValid( TargetEntity ) ) then return end
+	if ( !IsValid( TargetEntity ) ) then return end
 
 	local vOffset = TargetEntity:GetPos()
 	local Low, High = TargetEntity:WorldSpaceAABB()

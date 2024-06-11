@@ -21,7 +21,7 @@ include( "gui/IconEditor.lua" )
 DEFINE_BASECLASS( "gamemode_base" )
 
 
-local physgun_halo = CreateConVar( "physgun_halo", "1", { FCVAR_ARCHIVE }, "Draw the physics gun halo?" )
+local physgun_halo = CreateConVar( "physgun_halo", "1", { FCVAR_ARCHIVE }, "Draw the Physics Gun grab effect?" )
 
 function GM:Initialize()
 
@@ -47,7 +47,7 @@ function GM:OnUndo( name, strCustomString )
 
 	local text = strCustomString
 
-	if ( not text ) then
+	if ( !text ) then
 		local strId = "#Undone_" .. name
 		text = language.GetPhrase( strId )
 		if ( strId == text ) then
@@ -135,11 +135,11 @@ end
 
 hook.Add( "PreDrawHalos", "AddPhysgunHalos", function()
 
-	if ( not PhysgunHalos or table.IsEmpty( PhysgunHalos ) ) then return end
+	if ( !PhysgunHalos || table.IsEmpty( PhysgunHalos ) ) then return end
 
 	for k, v in pairs( PhysgunHalos ) do
 
-		if ( not IsValid( k ) ) then continue end
+		if ( !IsValid( k ) ) then continue end
 
 		local size = math.random( 1, 2 )
 		local colr = k:GetWeaponColor() + VectorRand() * 0.3
@@ -166,7 +166,7 @@ function GM:NetworkEntityCreated( ent )
 	-- on every entity when joining a server)
 	--
 
-	if ( ent:GetSpawnEffect() and ent:GetCreationTime() > ( CurTime() - 1.0 ) ) then
+	if ( ent:GetSpawnEffect() && ent:GetCreationTime() > ( CurTime() - 1.0 ) ) then
 
 		local ed = EffectData()
 			ed:SetOrigin( ent:GetPos() )

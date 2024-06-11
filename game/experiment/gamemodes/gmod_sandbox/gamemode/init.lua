@@ -49,7 +49,7 @@ end
 function GM:OnPhysgunFreeze( weapon, phys, ent, ply )
 
 	-- Don't freeze persistent props (should already be frozen)
-	if ( ent:GetPersistent() and GetConVarString( "sbox_persist" ):Trim() ~= "" ) then return false end
+	if ( ent:GetPersistent() && GetConVarString( "sbox_persist" ):Trim() != "" ) then return false end
 
 	BaseClass.OnPhysgunFreeze( self, weapon, phys, ent, ply )
 
@@ -87,7 +87,7 @@ function GM:PlayerShouldTakeDamage( ply, attacker )
 	if ( cvars.Bool( "sbox_godmode", false ) ) then return false end
 
 	-- No player vs player damage
-	if ( attacker:IsValid() and attacker:IsPlayer() and ply ~= attacker ) then
+	if ( attacker:IsValid() && attacker:IsPlayer() && ply != attacker ) then
 		return cvars.Bool( "sbox_playershurtplayers", true )
 	end
 
@@ -159,8 +159,8 @@ end
 function GM:CanEditVariable( ent, ply, key, val, editor )
 
 	-- Only allow admins to edit admin only variables!
-	local isAdmin = ply:IsAdmin() or game.SinglePlayer()
-	if ( editor.AdminOnly and not isAdmin ) then
+	local isAdmin = ply:IsAdmin() || game.SinglePlayer()
+	if ( editor.AdminOnly && !isAdmin ) then
 		return false
 	end
 

@@ -14,20 +14,20 @@ function PANEL:Init()
 	self.Button.DoClick = function() self:OpenPresetEditor() end
 	self.Button:Dock( RIGHT )
 	self.Button:SetToolTip( "#preset.edit" )
-	self.Button:SetMaterial( "icon16/wrench.png" )
+	self.Button:SetImage( "icon16/wrench.png" )
 	self.Button:SetStretchToFit( false )
 	self.Button:SetSize( 20, 20 )
 	self.Button:DockMargin( 0, 0, 0, 0 )
 
 	self.AddButton = vgui.Create( "DImageButton", self )
 	self.AddButton.DoClick = function()
-		if ( not IsValid( self ) ) then return end
+		if ( !IsValid( self ) ) then return end
 
 		self:QuickSavePreset()
 	end
 	self.AddButton:Dock( RIGHT )
 	self.AddButton:SetToolTip( "#preset.add" )
-	self.AddButton:SetMaterial( "icon16/add.png" )
+	self.AddButton:SetImage( "icon16/add.png" )
 	self.AddButton:SetStretchToFit( false )
 	self.AddButton:SetSize( 20, 20 )
 	self.AddButton:DockMargin( 2, 0, 0, 0 )
@@ -61,7 +61,7 @@ end
 
 function PANEL:OnSelect( index, value, data )
 
-	if ( not data ) then return end
+	if ( !data ) then return end
 
 	for k, v in pairs( data ) do
 		RunConsoleCommand( k, v )
@@ -81,7 +81,7 @@ end
 
 function PANEL:QuickSavePreset()
 	Derma_StringRequest( "#preset.saveas_title", "#preset.saveas_desc", "", function( text )
-		if ( not text or text:Trim() == "" ) then presets.BadNameAlert() return end
+		if ( !text || text:Trim() == "" ) then presets.BadNameAlert() return end
 
 		if ( presets.Exists( self.m_strPreset, text ) ) then
 			presets.OverwritePresetPrompt( function()
@@ -96,7 +96,7 @@ end
 
 function PANEL:OpenPresetEditor()
 
-	if ( not self.m_strPreset ) then return end
+	if ( !self.m_strPreset ) then return end
 
 	self.Window = vgui.Create( "PresetEditor" )
 	self.Window:MakePopup()

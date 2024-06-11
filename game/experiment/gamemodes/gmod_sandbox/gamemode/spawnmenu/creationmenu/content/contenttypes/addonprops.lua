@@ -2,13 +2,13 @@
 local function AddRecursive( pnl, folder, path, wildcard )
 
 	local files, folders = file.Find( folder .. "*", path )
-	if ( not files ) then MsgN( "Warning! Not opening '" .. folder .. "' because we cannot search in it!"  ) return false end
+	if ( !files ) then MsgN( "Warning! Not opening '" .. folder .. "' because we cannot search in it!"  ) return false end
 
 	local added = false
 
 	for k, v in ipairs( files ) do
 
-		if ( not string.EndsWith( v, ".mdl" ) ) then continue end
+		if ( !string.EndsWith( v, ".mdl" ) ) then continue end
 
 		local cp = spawnmenu.GetContentType( "model" )
 		if ( cp ) then
@@ -21,7 +21,7 @@ local function AddRecursive( pnl, folder, path, wildcard )
 	for k, v in ipairs( folders ) do
 
 		local added_rec = AddRecursive( pnl, folder .. v .. "/", path, wildcard )
-		added = added or added_rec
+		added = added || added_rec
 
 	end
 
@@ -29,15 +29,61 @@ local function AddRecursive( pnl, folder, path, wildcard )
 
 end
 
+local function recurseAddFilesSpawnlist( folder, pathid, list )
+
+	local addedLabel = false
+
+	local files, folders = file.Find( folder .. "/*", pathid )
+	for id, file in pairs( files or {} ) do
+		if ( file:EndsWith( ".mdl" ) ) then
+			if ( !addedLabel ) then
+				table.insert( list, { type = "header", text = folder } )
+				addedLabel = true
+			end
+
+			table.insert( list, { type = "model", model = folder .. "/" .. file } )
+		end
+	end
+
+	for id, fold in pairs( folders or {} ) do
+		recurseAddFilesSpawnlist( folder .. "/" .. fold, pathid, list )
+	end
+
+end
+
+
+local function GenerateSpawnlistFromAddon( folder, path, name )
+
+	local contents = {}
+	recurseAddFilesSpawnlist( folder, path, contents )
+
+	AddPropsOfParent( g_SpawnMenu.CustomizableSpawnlistNode.SMContentPanel, g_SpawnMenu.CustomizableSpawnlistNode, 0, { [ folder ] = {
+		icon = "icon16/page.png",
+		id = math.random( 0, 999999 ), -- Eeehhhh
+		name = name or folder,
+		parentid = 0,
+		contents = contents
+	} } )
+
+	-- We added a new spawnlist, show the save changes button
+	hook.Run( "SpawnlistContentChanged" )
+
+end
+
 local function AddonsRightClick( self )
 
-	if ( not IsValid( self ) or not self.wsid or self.wsid == "0" ) then return end
+	if ( !IsValid( self ) || !self.wsid || self.wsid == "0" ) then return end
 
 	local menu = DermaMenu()
 	menu:AddOption( "#spawnmenu.openaddononworkshop", function()
 		steamworks.ViewFile( self.wsid )
 	end ):SetIcon( "icon16/link_go.png" )
 
+	menu:AddOption( "#spawnmenu.createautospawnlist", function()
+
+		GenerateSpawnlistFromAddon( "models", self.searchPath, self.searchPath )
+
+	end ):SetIcon( "icon16/page_add.png" )
 	menu:Open()
 
 end
@@ -49,7 +95,7 @@ local function RefreshAddons( MyNode )
 
 	for _, addon in SortedPairsByMemberValue( engine.GetAddons(), "title" ) do
 
-		if ( not addon.downloaded or not addon.mounted ) then continue end
+		if ( !addon.downloaded || !addon.mounted ) then continue end
 		if ( addon.models <= 0 ) then continue end
 
 		local models = MyNode:AddNode( addon.title .. " (" .. addon.models .. ")", "icon16/bricks.png" )
@@ -58,7 +104,7 @@ local function RefreshAddons( MyNode )
 			ViewPanel:Clear()
 
 			local anyAdded = AddRecursive( ViewPanel, "models/", addon.title, "*.mdl" )
-			if ( not anyAdded ) then
+			if ( !anyAdded ) then
 				local text = "<font=ContentHeader>" .. language.GetPhrase( "spawnmenu.failedtofindmodels" ) .. "\n\n" ..  tostring( addon.title ) .. " (ID: " .. tostring( addon.wsid ) .. ")" .. "</font>"
 
 				local msg = vgui.Create( "Panel", ViewPanel )
@@ -82,6 +128,7 @@ local function RefreshAddons( MyNode )
 		end
 		models.DoRightClick = AddonsRightClick
 		models.wsid = addon.wsid
+		models.searchPath = addon.title
 
 	end
 
@@ -104,7 +151,7 @@ end )
 
 hook.Add( "GameContentChanged", "RefreshSpawnmenuAddons", function()
 
-	if ( not IsValid( myAddonsNode ) ) then return end
+	if ( !IsValid( myAddonsNode ) ) then return end
 
 	-- TODO: Maybe be more advaced and do not delete => recreate all the nodes, only delete nodes for addons that were removed, add only the new ones?
 	myAddonsNode:Clear()

@@ -2,6 +2,7 @@
 -- Variables that are used on both client and server
 
 SWEP.Instructions	= "Shoot a prop to attach a Manhack.\nRight click to attach a rollermine."
+SWEP.Author			= "Facepunch"
 
 SWEP.Spawnable			= true
 SWEP.AdminOnly			= true
@@ -74,7 +75,7 @@ function SWEP:PrimaryAttack()
 
 	-- Make a manhack
 	local ent = ents.Create( "npc_manhack" )
-	if ( not IsValid( ent ) ) then return end
+	if ( !IsValid( ent ) ) then return end
 
 	ent:SetPos( tr.HitPos + owner:GetAimVector() * -16 )
 	ent:SetAngles( tr.HitNormal:Angle() )
@@ -133,7 +134,7 @@ function SWEP:SecondaryAttack()
 
 	-- Make a manhack
 	local ent = ents.Create( "npc_rollermine" )
-	if ( not IsValid( ent ) ) then return end
+	if ( !IsValid( ent ) ) then return end
 
 	ent:SetPos( tr.HitPos + owner:GetAimVector() * -16 )
 	ent:SetAngles( tr.HitNormal:Angle() )
@@ -141,7 +142,7 @@ function SWEP:SecondaryAttack()
 
 	local weld = nil
 
-	if ( not tr.HitWorld ) then
+	if ( !tr.HitWorld ) then
 
 		-- Weld it to the object that we hit
 		weld = constraint.Weld( tr.Entity, ent, tr.PhysicsBone, 0, 0 )

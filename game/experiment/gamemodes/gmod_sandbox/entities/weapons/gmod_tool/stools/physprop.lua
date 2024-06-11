@@ -9,11 +9,11 @@ TOOL.Information = { { name = "left" } }
 
 function TOOL:LeftClick( trace )
 
-	if ( not IsValid( trace.Entity ) ) then return false end
-	if ( trace.Entity:IsPlayer() or trace.Entity:IsWorld() ) then return false end
+	if ( !IsValid( trace.Entity ) ) then return false end
+	if ( trace.Entity:IsPlayer() || trace.Entity:IsWorld() ) then return false end
 
 	-- Make sure there's a physics object to manipulate
-	if ( SERVER and not util.IsValidPhysicsObject( trace.Entity, trace.PhysicsBone ) ) then return false end
+	if ( SERVER && !util.IsValidPhysicsObject( trace.Entity, trace.PhysicsBone ) ) then return false end
 
 	-- Client can bail out here and assume we're going ahead
 	if ( CLIENT ) then return true end

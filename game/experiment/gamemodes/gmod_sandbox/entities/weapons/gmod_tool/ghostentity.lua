@@ -9,19 +9,19 @@ function ToolObj:MakeGhostEntity( model, pos, angle )
 
 	-- We do ghosting serverside in single player
 	-- It's done clientside in multiplayer
-	if ( SERVER and not game.SinglePlayer() ) then return end
-	if ( CLIENT and game.SinglePlayer() ) then return end
+	if ( SERVER && !game.SinglePlayer() ) then return end
+	if ( CLIENT && game.SinglePlayer() ) then return end
 
 	-- The reason we need this is because in multiplayer, when you holster a tool serverside,
 	-- either by using the spawnnmenu's Weapons tab or by simply entering a vehicle,
 	-- the Think hook is called once after Holster is called on the client, recreating the ghost entity right after it was removed.
-	if ( not IsFirstTimePredicted() ) then return end
+	if ( !IsFirstTimePredicted() ) then return end
 
 	-- Release the old ghost entity
 	self:ReleaseGhostEntity()
 
 	-- Don't allow ragdolls/effects to be ghosts
-	if ( not util.IsValidProp( model ) ) then return end
+	if ( !util.IsValidProp( model ) ) then return end
 
 	if ( CLIENT ) then
 		self.GhostEntity = ents.CreateClientProp( model )
@@ -30,7 +30,7 @@ function ToolObj:MakeGhostEntity( model, pos, angle )
 	end
 
 	-- If there's too many entities we might not spawn..
-	if ( not IsValid( self.GhostEntity ) ) then
+	if ( !IsValid( self.GhostEntity ) ) then
 		self.GhostEntity = nil
 		return
 	end
@@ -60,8 +60,8 @@ function ToolObj:StartGhostEntity( ent )
 
 	-- We do ghosting serverside in single player
 	-- It's done clientside in multiplayer
-	if ( SERVER and not game.SinglePlayer() ) then return end
-	if ( CLIENT and game.SinglePlayer() ) then return end
+	if ( SERVER && !game.SinglePlayer() ) then return end
+	if ( CLIENT && game.SinglePlayer() ) then return end
 
 	self:MakeGhostEntity( ent:GetModel(), ent:GetPos(), ent:GetAngles() )
 
@@ -73,7 +73,7 @@ end
 function ToolObj:ReleaseGhostEntity()
 
 	if ( self.GhostEntity ) then
-		if ( not IsValid( self.GhostEntity ) ) then self.GhostEntity = nil return end
+		if ( !IsValid( self.GhostEntity ) ) then self.GhostEntity = nil return end
 		self.GhostEntity:Remove()
 		self.GhostEntity = nil
 	end
@@ -106,10 +106,10 @@ end
 function ToolObj:UpdateGhostEntity()
 
 	if ( self.GhostEntity == nil ) then return end
-	if ( not IsValid( self.GhostEntity ) ) then self.GhostEntity = nil return end
+	if ( !IsValid( self.GhostEntity ) ) then self.GhostEntity = nil return end
 
 	local trace = self:GetOwner():GetEyeTrace()
-	if ( not trace.Hit ) then return end
+	if ( !trace.Hit ) then return end
 
 	local Ang1, Ang2 = self:GetNormal( 1 ):Angle(), ( trace.HitNormal * -1 ):Angle()
 	local TargetAngle = self:GetEnt( 1 ):AlignAngles( Ang1, Ang2 )

@@ -21,12 +21,12 @@ TOOL.Information = {
 function TOOL:LeftClick( trace )
 
 	-- If there's no physics object then we can't constraint it!
-	if ( SERVER and not util.IsValidPhysicsObject( trace.Entity, trace.PhysicsBone ) ) then return false end
+	if ( SERVER && !util.IsValidPhysicsObject( trace.Entity, trace.PhysicsBone ) ) then return false end
 
 	local iNum = self:NumObjects()
 
-	if ( IsValid( trace.Entity ) and trace.Entity:IsPlayer() ) then return false end
-	if ( not IsValid( trace.Entity ) and ( iNum == nil or iNum == 0 or iNum > 2 ) ) then return false end
+	if ( IsValid( trace.Entity ) && trace.Entity:IsPlayer() ) then return false end
+	if ( !IsValid( trace.Entity ) && ( iNum == nil || iNum == 0 || iNum > 2 ) ) then return false end
 
 	local Phys = trace.Entity:GetPhysicsObjectNum( trace.PhysicsBone )
 	self:SetObject( iNum + 1, trace.Entity, trace.HitPos, Phys, trace.PhysicsBone, trace.HitNormal )
@@ -83,7 +83,7 @@ end
 
 function TOOL:Reload( trace )
 
-	if ( not IsValid( trace.Entity ) or trace.Entity:IsPlayer() ) then return false end
+	if ( !IsValid( trace.Entity ) || trace.Entity:IsPlayer() ) then return false end
 	if ( CLIENT ) then return true end
 
 	return constraint.RemoveConstraints( trace.Entity, "Pulley" )

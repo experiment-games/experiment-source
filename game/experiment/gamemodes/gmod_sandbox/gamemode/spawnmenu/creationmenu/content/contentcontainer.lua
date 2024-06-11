@@ -25,14 +25,14 @@ function PANEL:Init()
 
 		-- A bit of a hack
 		s:EndBoxSelection()
-		if ( btn ~= MOUSE_RIGHT ) then DPanel.OnMousePressed( s, btn ) end
+		if ( btn != MOUSE_RIGHT ) then DPanel.OnMousePressed( s, btn ) end
 
 	end
 	self.IconList.OnMouseReleased = function( s, btn )
 
 		DPanel.OnMouseReleased( s, btn )
 
-		if ( btn ~= MOUSE_RIGHT or s:GetReadOnly() ) then return end
+		if ( btn != MOUSE_RIGHT || s:GetReadOnly() ) then return end
 
 		local menu = DermaMenu()
 		menu:AddOption( "#spawnmenu.newlabel", function()
@@ -118,13 +118,13 @@ end
 function PANEL:SetTriggerSpawnlistChange( bTrigger )
 
 	self.m_bTriggerSpawnlistChange = bTrigger
-	self.IconList:SetReadOnly( not bTrigger )
+	self.IconList:SetReadOnly( !bTrigger )
 
 end
 
 function PANEL:OnModified()
 
-	if ( not self:GetTriggerSpawnlistChange() ) then return end
+	if ( !self:GetTriggerSpawnlistChange() ) then return end
 
 	hook.Run( "SpawnlistContentChanged" )
 
@@ -164,15 +164,6 @@ hook.Add( "SpawnlistOpenGenericMenu", "DragAndDropSelectionMenu", function( canv
 	local selected = canvas:GetSelectedChildren()
 
 	local menu = DermaMenu()
-	menu:AddOption( language.GetPhrase( "spawnmenu.menu.deletex" ):format( #selected ), function()
-
-		for k, v in pairs( selected ) do
-			v:Remove()
-		end
-
-		hook.Run( "SpawnlistContentChanged" )
-
-	end ):SetIcon( "icon16/bin_closed.png" )
 
 	-- This is less than ideal
 	local spawnicons = 0
@@ -188,7 +179,7 @@ hook.Add( "SpawnlistOpenGenericMenu", "DragAndDropSelectionMenu", function( canv
 		icon:InternalAddResizeMenu( menu, function( w, h )
 
 			for id, pnl in pairs( selected ) do
-				if ( not pnl.InternalAddResizeMenu ) then continue end
+				if ( !pnl.InternalAddResizeMenu ) then continue end
 				pnl:SetSize( w, h )
 				pnl:InvalidateLayout( true )
 				pnl:GetParent():OnModified()
@@ -200,11 +191,23 @@ hook.Add( "SpawnlistOpenGenericMenu", "DragAndDropSelectionMenu", function( canv
 
 		menu:AddOption( language.GetPhrase( "spawnmenu.menu.rerenderx" ):format( spawnicons ), function()
 			for id, pnl in pairs( selected ) do
-				if ( not pnl.RebuildSpawnIcon ) then continue end
+				if ( !pnl.RebuildSpawnIcon ) then continue end
 				pnl:RebuildSpawnIcon()
 			end
 		end ):SetIcon( "icon16/picture.png" )
 	end
+
+	menu:AddSpacer()
+
+	menu:AddOption( language.GetPhrase( "spawnmenu.menu.deletex" ):format( #selected ), function()
+
+		for k, v in pairs( selected ) do
+			v:Remove()
+		end
+
+		hook.Run( "SpawnlistContentChanged" )
+
+	end ):SetIcon( "icon16/bin_closed.png" )
 
 	menu:Open()
 

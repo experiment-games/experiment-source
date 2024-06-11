@@ -55,7 +55,7 @@ function ENT:Think()
 
 	BaseClass.Think( self )
 
-	if ( not self:GetOn() ) then return end
+	if ( !self:GetOn() ) then return end
 
 	self.Delay = self.Delay or 0
 
@@ -68,7 +68,7 @@ function ENT:Think()
 	local Effect = self:GetEffect()
 
 	local EffectTable = list.Get( "EffectType" )[ Effect ]
-	if ( not EffectTable ) then return end
+	if ( !EffectTable ) then return end
 
 	local Angle = self:GetAngles()
 	EffectTable.func( self, self:GetPos() + Angle:Forward() * 12, Angle, self:GetScale() )
@@ -88,10 +88,10 @@ if ( SERVER ) then
 
 	numpad.Register( "Emitter_On", function( ply, ent )
 
-		if ( not IsValid( ent ) ) then return end
+		if ( !IsValid( ent ) ) then return end
 
 		if ( ent:GetToggle() ) then
-			ent:SetOn( not ent:GetOn() )
+			ent:SetOn( !ent:GetOn() )
 		return end
 
 		ent:SetOn( true )
@@ -100,7 +100,7 @@ if ( SERVER ) then
 
 	numpad.Register( "Emitter_Off", function( ply, ent )
 
-		if ( not IsValid( ent ) ) then return end
+		if ( !IsValid( ent ) ) then return end
 		if ( ent:GetToggle() ) then return end
 
 		ent:SetOn( false )

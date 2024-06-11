@@ -36,7 +36,7 @@ function TOOL:LeftClick( trace )
 	-- Get the copied dupe. We store it on the player so it will still exist if they die and respawn.
 	--
 	local dupe = self:GetOwner().CurrentDupe
-	if ( not dupe ) then return false end
+	if ( !dupe ) then return false end
 
 	--
 	-- We want to spawn it flush on thr ground. So get the point that we hit
@@ -93,7 +93,7 @@ end
 --
 function TOOL:RightClick( trace )
 
-	if ( not IsValid( trace.Entity ) ) then return false end
+	if ( !IsValid( trace.Entity ) ) then return false end
 	if ( CLIENT ) then return true end
 
 	--
@@ -107,7 +107,7 @@ function TOOL:RightClick( trace )
 	duplicator.SetLocalPos( vector_origin )
 	duplicator.SetLocalAng( angle_zero )
 
-	if ( not Dupe ) then return false end
+	if ( !Dupe ) then return false end
 
 	--
 	-- Tell the clientside that they're holding something new
@@ -145,15 +145,15 @@ if ( CLIENT ) then
 
 		CPanel:AddControl( "Button", { Text = "#tool.duplicator.showsaves", Command = "dupe_show" } )
 
-		if ( not tool and IsValid( LocalPlayer() ) ) then tool = LocalPlayer():GetTool( "duplicator" ) end
-		if ( not tool or not tool.CurrentDupeName ) then return end
+		if ( !tool && IsValid( LocalPlayer() ) ) then tool = LocalPlayer():GetTool( "duplicator" ) end
+		if ( !tool || !tool.CurrentDupeName ) then return end
 
 		local info = "Name: " .. tool.CurrentDupeName
 		info = info .. "\nEntities: " .. tool.CurrentDupeEntCount
 
 		CPanel:AddControl( "Label", { Text = info } )
 
-		if ( tool.CurrentDupeWSIDs and #tool.CurrentDupeWSIDs > 0 ) then
+		if ( tool.CurrentDupeWSIDs && #tool.CurrentDupeWSIDs > 0 ) then
 			CPanel:AddControl( "Label", { Text = "Required workshop content:" } )
 			for _, wsid in pairs( tool.CurrentDupeWSIDs ) do
 				local subbed = ""
@@ -161,7 +161,7 @@ if ( CLIENT ) then
 				local b = CPanel:AddControl( "Button", { Text = wsid .. subbed } )
 				b.DoClick = function( s, ... ) steamworks.ViewFile( wsid ) end
 				steamworks.FileInfo( wsid, function( result )
-					if ( not IsValid( b ) ) then return end
+					if ( !IsValid( b ) ) then return end
 					b:SetText( result.title .. subbed )
 				end )
 			end
@@ -176,7 +176,7 @@ if ( CLIENT ) then
 
 	function TOOL:RefreshCPanel()
 		local CPanel = controlpanel.Get( "duplicator" )
-		if ( not CPanel ) then return end
+		if ( !CPanel ) then return end
 
 		self.BuildCPanel( CPanel, self )
 	end
@@ -195,10 +195,10 @@ if ( CLIENT ) then
 		end
 
 		local ply = LocalPlayer()
-		if ( not IsValid( ply ) or not ply.GetTool ) then return end
+		if ( !IsValid( ply ) || !ply.GetTool ) then return end
 
 		local tool = ply:GetTool( "duplicator" )
-		if ( not tool ) then return end
+		if ( !tool ) then return end
 
 		tool.CurrentDupeCanSave = canSave == 1
 		tool.CurrentDupeMins = net.ReadVector()
@@ -222,7 +222,7 @@ if ( CLIENT ) then
 	function TOOL:DrawHUD()
 
 		local ply = LocalPlayer()
-		if ( not IsValid( ply ) or not self.CurrentDupeMins or not self.CurrentDupeMaxs ) then return end
+		if ( !IsValid( ply ) || !self.CurrentDupeMins || !self.CurrentDupeMaxs ) then return end
 
 		local tr = LocalPlayer():GetEyeTrace()
 

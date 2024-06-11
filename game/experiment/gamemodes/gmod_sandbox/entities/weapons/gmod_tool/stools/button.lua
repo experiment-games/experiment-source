@@ -23,8 +23,8 @@ end
 
 function TOOL:RightClick( trace, worldweld )
 
-	if ( IsValid( trace.Entity ) and trace.Entity:IsPlayer() ) then return false end
-	if ( SERVER and not util.IsValidPhysicsObject( trace.Entity, trace.PhysicsBone ) ) then return false end
+	if ( IsValid( trace.Entity ) && trace.Entity:IsPlayer() ) then return false end
+	if ( SERVER && !util.IsValidPhysicsObject( trace.Entity, trace.PhysicsBone ) ) then return false end
 	if ( CLIENT ) then return true end
 
 	local model = self:GetClientInfo( "model" )
@@ -34,7 +34,7 @@ function TOOL:RightClick( trace, worldweld )
 	local ply = self:GetOwner()
 
 	-- If we shot a button change its settings
-	if ( IsValid( trace.Entity ) and trace.Entity:GetClass() == "gmod_button" and trace.Entity:GetPlayer() == ply ) then
+	if ( IsValid( trace.Entity ) && trace.Entity:GetClass() == "gmod_button" && trace.Entity:GetPlayer() == ply ) then
 		trace.Entity:SetKey( key )
 		trace.Entity:SetLabel( description )
 		trace.Entity:SetIsToggle( toggle )
@@ -43,14 +43,14 @@ function TOOL:RightClick( trace, worldweld )
 	end
 
 	-- Check the model's validity
-	if ( not util.IsValidModel( model ) or not util.IsValidProp( model ) or not IsValidButtonModel( model ) ) then return false end
-	if ( not self:GetSWEP():CheckLimit( "buttons" ) ) then return false end
+	if ( !util.IsValidModel( model ) || !util.IsValidProp( model ) || !IsValidButtonModel( model ) ) then return false end
+	if ( !self:GetWeapon():CheckLimit( "buttons" ) ) then return false end
 
 	local Ang = trace.HitNormal:Angle()
 	Ang.pitch = Ang.pitch + 90
 
 	local button = MakeButton( ply, model, Ang, trace.HitPos, key, description, toggle )
-	if ( not IsValid( button ) ) then return false end
+	if ( !IsValid( button ) ) then return false end
 
 	local min = button:OBBMins()
 	button:SetPos( trace.HitPos - trace.HitNormal * min.z )
@@ -58,7 +58,7 @@ function TOOL:RightClick( trace, worldweld )
 	undo.Create( "Button" )
 		undo.AddEntity( button )
 
-		if ( worldweld and trace.Entity ~= NULL ) then
+		if ( worldweld && trace.Entity != NULL ) then
 			local weld = constraint.Weld( button, trace.Entity, 0, trace.PhysicsBone, 0, 0, true )
 			if ( IsValid( weld ) ) then
 				ply:AddCleanup( "buttons", weld )
@@ -87,11 +87,11 @@ if ( SERVER ) then
 
 	function MakeButton( ply, model, ang, pos, key, description, toggle, nocollide, Data )
 
-		if ( IsValid( ply ) and not ply:CheckLimit( "buttons" ) ) then return false end
-		if ( not IsValidButtonModel( model ) ) then return false end
+		if ( IsValid( ply ) && !ply:CheckLimit( "buttons" ) ) then return false end
+		if ( !IsValidButtonModel( model ) ) then return false end
 
 		local button = ents.Create( "gmod_button" )
-		if ( not IsValid( button ) ) then return false end
+		if ( !IsValid( button ) ) then return false end
 
 		duplicator.DoGeneric( button, Data )
 		button:SetModel( model ) -- Backwards compatible for addons directly calling this function
@@ -135,10 +135,10 @@ end
 
 function TOOL:UpdateGhostButton( ent, ply )
 
-	if ( not IsValid( ent ) ) then return end
+	if ( !IsValid( ent ) ) then return end
 
 	local trace = ply:GetEyeTrace()
-	if ( not trace.Hit or IsValid( trace.Entity ) and ( trace.Entity:GetClass() == "gmod_button" or trace.Entity:IsPlayer() ) ) then
+	if ( !trace.Hit || IsValid( trace.Entity ) && ( trace.Entity:GetClass() == "gmod_button" || trace.Entity:IsPlayer() ) ) then
 		ent:SetNoDraw( true )
 		return
 	end
@@ -157,9 +157,9 @@ end
 function TOOL:Think()
 
 	local mdl = self:GetClientInfo( "model" )
-	if ( not IsValidButtonModel( mdl ) ) then self:ReleaseGhostEntity() return end
+	if ( !IsValidButtonModel( mdl ) ) then self:ReleaseGhostEntity() return end
 
-	if ( not IsValid( self.GhostEntity ) or self.GhostEntity:GetModel() ~= mdl ) then
+	if ( !IsValid( self.GhostEntity ) || self.GhostEntity:GetModel() != mdl ) then
 		self:MakeGhostEntity( mdl, vector_origin, angle_zero )
 	end
 

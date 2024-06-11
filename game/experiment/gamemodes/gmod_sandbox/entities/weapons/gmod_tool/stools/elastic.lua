@@ -20,10 +20,10 @@ TOOL.Information = {
 
 function TOOL:LeftClick( trace )
 
-	if ( IsValid( trace.Entity ) and trace.Entity:IsPlayer() ) then return end
+	if ( IsValid( trace.Entity ) && trace.Entity:IsPlayer() ) then return end
 
 	-- If there's no physics object then we can't constraint it!
-	if ( SERVER and not util.IsValidPhysicsObject( trace.Entity, trace.PhysicsBone ) ) then return false end
+	if ( SERVER && !util.IsValidPhysicsObject( trace.Entity, trace.PhysicsBone ) ) then return false end
 
 	local iNum = self:NumObjects()
 
@@ -87,7 +87,7 @@ end
 
 function TOOL:Reload( trace )
 
-	if ( not IsValid( trace.Entity ) or trace.Entity:IsPlayer() ) then return false end
+	if ( !IsValid( trace.Entity ) || trace.Entity:IsPlayer() ) then return false end
 	if ( CLIENT ) then return true end
 
 	return constraint.RemoveConstraints( trace.Entity, "Elastic" )

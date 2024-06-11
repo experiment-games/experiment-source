@@ -1,7 +1,7 @@
 
 local gmod_drawhelp = CreateClientConVar( "gmod_drawhelp", "1", true, false, "Should the tool HUD be displayed when the tool gun is active?" )
-local gmod_toolmode = CreateClientConVar( "gmod_toolmode", "rope", true, true )
-CreateClientConVar( "gmod_drawtooleffects", "1", true, false, "Should tools draw certain UI elements or effects? ( Will not work for all tools )" )
+local gmod_toolmode = CreateClientConVar( "gmod_toolmode", "rope", true, true, "Currently selected tool mode for the Tool Gun." )
+CreateClientConVar( "gmod_drawtooleffects", "1", true, false, "Should tools draw certain UI elements or effects? (Will not work for all tools)" )
 
 cvars.AddChangeCallback( "gmod_toolmode", function( name, old, new )
 	if ( old == new ) then return end
@@ -50,11 +50,11 @@ function SWEP:DrawHUD()
 	local toolObject = self:GetToolObject()
 
 	-- Don't draw help for a nonexistant tool!
-	if ( not toolObject ) then return end
+	if ( !toolObject ) then return end
 
 	toolObject:DrawHUD()
 
-	if ( not gmod_drawhelp:GetBool() ) then return end
+	if ( !gmod_drawhelp:GetBool() ) then return end
 
 	-- This could probably all suck less than it already does
 
@@ -98,7 +98,7 @@ function SWEP:DrawHUD()
 
 	TextTable.font = "GModToolHelp"
 
-	if ( not toolObject.Information ) then
+	if ( !toolObject.Information ) then
 		TextTable.pos = { x + self.InfoBoxHeight, y }
 		TextTable.text = toolObject:GetHelpText()
 		w, h = draw.TextShadow( TextTable, 1 )
@@ -119,9 +119,9 @@ function SWEP:DrawHUD()
 
 		local name = v.name
 
-		if ( not name ) then continue end
-		if ( v.stage and v.stage ~= self:GetStage() ) then continue end
-		if ( v.op and v.op ~= toolObject:GetOperation() ) then continue end
+		if ( !name ) then continue end
+		if ( v.stage && v.stage != self:GetStage() ) then continue end
+		if ( v.op && v.op != toolObject:GetOperation() ) then continue end
 
 		local txt = "#tool." .. GetConVarString( "gmod_toolmode" ) .. "." .. name
 		if ( name == "info" ) then txt = toolObject:GetHelpText() end
@@ -134,26 +134,26 @@ function SWEP:DrawHUD()
 		local icon1 = v.icon
 		local icon2 = v.icon2
 
-		if ( not icon1 ) then
+		if ( !icon1 ) then
 			if ( string.StartsWith( name, "info" ) ) then icon1 = "gui/info" end
 			if ( string.StartsWith( name, "left" ) ) then icon1 = "gui/lmb.png" end
 			if ( string.StartsWith( name, "right" ) ) then icon1 = "gui/rmb.png" end
 			if ( string.StartsWith( name, "reload" ) ) then icon1 = "gui/r.png" end
 			if ( string.StartsWith( name, "use" ) ) then icon1 = "gui/e.png" end
 		end
-		if ( not icon2 and not string.StartsWith( name, "use" ) and string.EndsWith( name, "use" ) ) then icon2 = "gui/e.png" end
+		if ( !icon2 && !string.StartsWith( name, "use" ) && string.EndsWith( name, "use" ) ) then icon2 = "gui/e.png" end
 
 		self.Icons = self.Icons or {}
-		if ( icon1 and not self.Icons[ icon1 ] ) then self.Icons[ icon1 ] = Material( icon1 ) end
-		if ( icon2 and not self.Icons[ icon2 ] ) then self.Icons[ icon2 ] = Material( icon2 ) end
+		if ( icon1 && !self.Icons[ icon1 ] ) then self.Icons[ icon1 ] = Material( icon1 ) end
+		if ( icon2 && !self.Icons[ icon2 ] ) then self.Icons[ icon2 ] = Material( icon2 ) end
 
-		if ( icon1 and self.Icons[ icon1 ] and not self.Icons[ icon1 ]:IsError() ) then
+		if ( icon1 && self.Icons[ icon1 ] && !self.Icons[ icon1 ]:IsError() ) then
 			surface.SetDrawColor( 255, 255, 255, 255 )
 			surface.SetMaterial( self.Icons[ icon1 ] )
 			surface.DrawTexturedRect( x, y + h2, 16, 16 )
 		end
 
-		if ( icon2 and self.Icons[ icon2 ] and not self.Icons[ icon2 ]:IsError() ) then
+		if ( icon2 && self.Icons[ icon2 ] && !self.Icons[ icon2 ]:IsError() ) then
 			surface.SetDrawColor( 255, 255, 255, 255 )
 			surface.SetMaterial( self.Icons[ icon2 ] )
 			surface.DrawTexturedRect( x - 25, y + h2, 16, 16 )
@@ -171,28 +171,28 @@ end
 
 function SWEP:SetStage( ... )
 
-	if ( not self:GetToolObject() ) then return end
+	if ( !self:GetToolObject() ) then return end
 	return self:GetToolObject():SetStage( ... )
 
 end
 
 function SWEP:GetStage( ... )
 
-	if ( not self:GetToolObject() ) then return end
+	if ( !self:GetToolObject() ) then return end
 	return self:GetToolObject():GetStage( ... )
 
 end
 
 function SWEP:ClearObjects( ... )
 
-	if ( not self:GetToolObject() ) then return end
+	if ( !self:GetToolObject() ) then return end
 	self:GetToolObject():ClearObjects( ... )
 
 end
 
 function SWEP:StartGhostEntities( ... )
 
-	if ( not self:GetToolObject() ) then return end
+	if ( !self:GetToolObject() ) then return end
 	self:GetToolObject():StartGhostEntities( ... )
 
 end
@@ -202,7 +202,7 @@ end
 
 function SWEP:FreezeMovement()
 
-	if ( not self:GetToolObject() ) then return false end
+	if ( !self:GetToolObject() ) then return false end
 
 	return self:GetToolObject():FreezeMovement()
 

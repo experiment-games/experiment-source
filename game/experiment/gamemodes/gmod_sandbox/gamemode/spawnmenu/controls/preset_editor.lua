@@ -79,7 +79,7 @@ function PANEL:Init()
 	self.txtName:SetTooltip( "#preset.addnew_field" )
 	self.txtName:Dock( FILL )
 	self.txtName:DockMargin( 0, 0, 5, 0 )
-	self.txtName.OnChange = function( s ) self.btnAdd:SetEnabled( s:GetText():Trim() ~= "" ) end
+	self.txtName.OnChange = function( s ) self.btnAdd:SetEnabled( s:GetText():Trim() != "" ) end
 
 	self.btnAdd = vgui.Create( "DButton", self.pnlAdd )
 	self.btnAdd:SetText( "#preset.addnew" )
@@ -121,7 +121,7 @@ function PANEL:OnPresetSelected( item )
 	for cvar, val in SortedPairs( item:GetTable().Data ) do
 		local Row = self.pnlDetails:CreateRow( name, cvar:lower() )
 
-		if ( tonumber( val ) ~= nil and false ) then
+		if ( tonumber( val ) != nil && false ) then
 			Row:Setup( "Float", { min = 0, max = 1000 } )
 			Row:SetValue( val )
 		else
@@ -159,7 +159,7 @@ end
 function PANEL:SelectPresetByName( name )
 
 	for id, line in pairs( self.PresetList:GetLines() ) do
-		if ( line:GetValue( 1 ) ~= name ) then continue end
+		if ( line:GetValue( 1 ) != name ) then continue end
 		self.PresetList:SelectItem( line )
 	end
 
@@ -167,7 +167,7 @@ end
 
 function PANEL:Delete()
 
-	if ( not self.PresetList:GetSelectedLine() or not IsValid( self.PresetList:GetLine( self.PresetList:GetSelectedLine() ) ) ) then return end
+	if ( !self.PresetList:GetSelectedLine() || !IsValid( self.PresetList:GetLine( self.PresetList:GetSelectedLine() ) ) ) then return end
 
 	local Selected = self.PresetList:GetLine( self.PresetList:GetSelectedLine() ):GetValue( 1 ):Trim()
 	if ( Selected == "" ) then return end
@@ -205,15 +205,15 @@ end
 
 function PANEL:SaveChanges()
 
-	if ( not self.PresetList:GetSelectedLine() or not IsValid( self.PresetList:GetLine( self.PresetList:GetSelectedLine() ) ) ) then return end
+	if ( !self.PresetList:GetSelectedLine() || !IsValid( self.PresetList:GetLine( self.PresetList:GetSelectedLine() ) ) ) then return end
 
 	local Selected = self.PresetList:GetLine( self.PresetList:GetSelectedLine() ):GetValue( 1 ):Trim()
 	if ( Selected == "" ) then return end
 
 	local ToName = self.txtRename:GetValue():Trim()
-	if ( not ToName or ToName == "" ) then presets.BadNameAlert() return end
+	if ( !ToName || ToName == "" ) then presets.BadNameAlert() return end
 
-	if ( presets.Exists( self:GetType(), ToName ) and Selected ~= ToName ) then
+	if ( presets.Exists( self:GetType(), ToName ) && Selected != ToName ) then
 		presets.OverwritePresetPrompt( function()
 			self:SaveChangesInternal( Selected, ToName )
 		end )
@@ -243,10 +243,10 @@ end
 
 function PANEL:Add()
 
-	if ( not self:GetConVars() ) then return end
+	if ( !self:GetConVars() ) then return end
 
 	local ToName = self.txtName:GetValue():Trim()
-	if ( not ToName or ToName == "" ) then presets.BadNameAlert() return end
+	if ( !ToName || ToName == "" ) then presets.BadNameAlert() return end
 
 	if ( presets.Exists( self:GetType(), ToName ) ) then
 		presets.OverwritePresetPrompt( function()

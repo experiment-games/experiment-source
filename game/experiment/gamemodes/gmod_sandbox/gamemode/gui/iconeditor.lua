@@ -29,13 +29,13 @@ function PANEL:Init()
 
 		local mat_wireframe = Material( "models/wireframe" )
 		function self.ModelPanel.PostDrawModel( mdlpnl, ent )
-			if ( self.ShowOrigin ) then
+			if ( self.ShowOriginPnl:GetChecked() ) then
 				render.DrawLine( vector_origin, Vector( 0, 0, 100 ), Color( 0, 0, 255 ) )
 				render.DrawLine( vector_origin, Vector( 0, 100, 0 ), Color( 0, 255, 0 ) )
 				render.DrawLine( vector_origin, Vector( 100, 0, 0 ), Color( 255, 0, 0 ) )
 			end
 
-			if ( self.ShowBBox ) then
+			if ( self.ShowBBoxPnl:GetChecked() ) then
 				local mins, maxs = ent:GetRenderBounds()
 				local scale = 1
 				mat_wireframe:SetVector( "$color", Vector( 1, 1, 1 ) )
@@ -136,6 +136,7 @@ function PANEL:Init()
 		Picker:Dock( RIGHT )
 		Picker:DockMargin( 2, 0, 0, 0 )
 		Picker:SetWide( 50 )
+		Picker:SetTooltip( "Pick a new model from an entity" )
 		Picker.DoClick = function()
 
 			self:SetVisible( false )
@@ -144,7 +145,7 @@ function PANEL:Init()
 
 				self:SetVisible( true )
 
-				if ( not IsValid( tr.Entity ) ) then return end
+				if ( !IsValid( tr.Entity ) ) then return end
 
 				self:SetFromEntity( tr.Entity )
 
@@ -188,9 +189,9 @@ function PANEL:Init()
 			self.Scenes:SetSize( 200, 200 )
 			self.Scenes.DoClick = function( _, node )
 
-				if ( not node.FileName ) then return end
+				if ( !node.FileName ) then return end
 				local ext = string.GetExtensionFromFilename( node.FileName )
-				if( ext ~= "vcd" ) then return end
+				if( ext != "vcd" ) then return end
 
 				self.ModelPanel:StartScene( node.FileName )
 				MsgN( node.FileName )
@@ -212,32 +213,44 @@ function PANEL:Init()
 		bbox:Dock( TOP )
 		bbox:DockMargin( 0, 0, 0, 3 )
 		bbox:SetDark( true )
-		bbox.OnChange = function( p, b )
-			self.ShowBBox = b
-			p:SetCookie( "checkbox_checked", b and 1 or 0 )
-		end
-		bbox.LoadCookies = function( p ) local b = p:GetCookie( "checkbox_checked" ) p:SetChecked( b ) p:OnChange( tobool( b ) ) end
 		bbox:SetCookieName( "model_editor_bbox" )
+		self.ShowBBoxPnl = bbox
 
 		local origin = settings:Add( "DCheckBoxLabel" )
 		origin:SetText( "Show Origin" )
 		origin:Dock( TOP )
-		origin:DockMargin( 0, 0, 0, 3 )
 		origin:SetDark( true )
-		origin.OnChange = function( p, b )
-			self.ShowOrigin = b
-			p:SetCookie( "checkbox_checked", b and 1 or 0 )
-		end
-		origin.LoadCookies = function( p ) local b = p:GetCookie( "checkbox_checked" ) p:SetChecked( b ) p:OnChange( tobool( b ) ) end
 		origin:SetCookieName( "model_editor_origin" )
+		self.ShowOriginPnl = origin
+
+		local playSpeed = settings:Add( "DNumSlider" )
+		playSpeed:SetText( "Playback Speed" )
+		playSpeed:Dock( TOP )
+		playSpeed:SetValue( 1 )
+		playSpeed:SetMinMax( -1, 2 )
+		playSpeed:SetDark( true )
+		playSpeed.OnValueChanged = function( s, value )
+			self.ModelPanel:GetEntity():SetPlaybackRate( value )
+		end
+
+		local moveSpeed = settings:Add( "DNumSlider" )
+		moveSpeed:SetText( "Move Speed" )
+		moveSpeed:Dock( TOP )
+		moveSpeed:SetMinMax( 0.5, 8 )
+		moveSpeed:SetValue( 1 )
+		moveSpeed:SetDark( true )
+		moveSpeed.OnValueChanged = function( p )
+			self.ModelPanel:SetMovementScale( p:GetValue() )
+		end
+		moveSpeed:SetCookieName( "iconeditor_movespeed" )
 
 		local angle = settings:Add( "DTextEntry" )
 		angle:SetTooltip( "Entity Angles" )
 		angle:Dock( TOP )
 		angle:DockMargin( 0, 0, 0, 3 )
 		angle:SetZPos( 100 )
-		angle.OnChange = function( p, b )
-			self.ModelPanel:GetEntity():SetAngles( Angle( angle:GetText() ) )
+		angle.OnChange = function( p )
+			self.ModelPanel:GetEntity():SetAngles( Angle( p:GetText() ) )
 		end
 		self.TargetAnglePanel = angle
 
@@ -246,8 +259,8 @@ function PANEL:Init()
 		cam_angle:Dock( TOP )
 		cam_angle:DockMargin( 0, 0, 0, 3 )
 		cam_angle:SetZPos( 101 )
-		cam_angle.OnChange = function( p, b )
-			self.ModelPanel:SetLookAng( Angle( cam_angle:GetText() ) )
+		cam_angle.OnChange = function( p )
+			self.ModelPanel:SetLookAng( Angle( p:GetText() ) )
 		end
 		self.TargetCamAnglePanel = cam_angle
 
@@ -256,22 +269,73 @@ function PANEL:Init()
 		cam_pos:Dock( TOP )
 		cam_pos:DockMargin( 0, 0, 0, 3 )
 		cam_pos:SetZPos( 102 )
-		cam_pos.OnChange = function( p, b )
-			self.ModelPanel:SetCamPos( Vector( cam_pos:GetText() ) )
+		cam_pos.OnChange = function( p )
+			self.ModelPanel:SetCamPos( Vector( p:GetText() ) )
 		end
 		self.TargetCamPosPanel = cam_pos
 
-		local playSpeed = settings:Add( "DNumSlider" )
-		playSpeed:SetText( "Playback Speed" )
-		playSpeed:Dock( TOP )
-		playSpeed:DockMargin( 0, 0, 0, 3 )
-		playSpeed:SetMin( -1 )
-		playSpeed:SetDark( true )
-		playSpeed:SetMax( 2 )
-		playSpeed.OnValueChanged = function( s, value )
-			self.ModelPanel:GetEntity():SetPlaybackRate( value )
+		local cam_fov = settings:Add( "DNumSlider" )
+		cam_fov:SetText( "Camera FOV" )
+		cam_fov:Dock( TOP )
+		cam_fov:DockMargin( 0, 0, 0, 3 )
+		cam_fov:SetZPos( 103 )
+		cam_fov:SetMinMax( 0.001, 179 )
+		cam_fov:SetDark( true )
+		cam_fov.OnValueChanged = function( p )
+			self.ModelPanel:SetFOV( p:GetValue() )
 		end
+		self.TargetCamFOVPanel = cam_fov
 
+		local copypaste_cam = settings:Add( "Panel" )
+		copypaste_cam:SetTall( 20 )
+		copypaste_cam:Dock( TOP )
+		copypaste_cam:SetZPos( 104 )
+		copypaste_cam:DockMargin( 0, 0, 0, 4 )
+
+			local copy = copypaste_cam:Add( "DButton" )
+			copy:Dock( FILL )
+			copy:SetText( "Copy Camera Settings" )
+			copy:DockMargin( 0, 0, 3, 0 )
+			copy.DoClick = function() SetClipboardText( util.TableToJSON( {
+				pos = self.ModelPanel:GetCamPos(),
+				ang = self.ModelPanel:GetLookAng(),
+				fov = self.ModelPanel:GetFOV(),
+				mdl_ang = self.ModelPanel:GetEntity():GetAngles()
+			} ) ) end
+
+			local paste = copypaste_cam:Add( "DTextEntry" )
+			paste:SetWide( 140 ) -- Ew
+			paste:Dock( RIGHT )
+			paste:SetPlaceholderText( "Paste Camera Settings Here" )
+			paste.OnChange = function( p )
+				local tabl = util.JSONToTable( p:GetText() )
+				if ( tabl ) then
+					self.ModelPanel:SetCamPos( tabl.pos )
+					self.ModelPanel:SetLookAng( tabl.ang )
+					self.ModelPanel:SetFOV( tabl.fov )
+					self.ModelPanel:GetEntity():SetAngles( tabl.mdl_ang )
+				end
+				p:SetText( "" )
+			end
+
+		local labels = { "Pitch", "Yaw", "Roll" }
+		for i = 1, 3 do
+			local rotate45 = settings:Add( "DButton" )
+			rotate45:SetText( "Rotate Entity +/-45 " .. labels[ i ] )
+			rotate45:Dock( TOP )
+			rotate45:DockMargin( 0, 0, 0, 3 )
+			rotate45:SetZPos( 110 + i )
+			rotate45.DoClick = function( p )
+				local aang = self.ModelPanel:GetEntity():GetAngles()
+				aang[ i ] = aang[ i ] + 45
+				self.ModelPanel:GetEntity():SetAngles( aang )
+			end
+			rotate45.DoRightClick = function( p )
+				local aang = self.ModelPanel:GetEntity():GetAngles()
+				aang[ i ] = aang[ i ] - 45
+				self.ModelPanel:GetEntity():SetAngles( aang )
+			end
+		end
 end
 
 function PANEL:SetDefaultLighting()
@@ -290,7 +354,7 @@ end
 function PANEL:BestGuessLayout()
 
 	local ent = self.ModelPanel:GetEntity()
-	if ( not IsValid( ent ) ) then return end
+	if ( !IsValid( ent ) ) then return end
 
 	local pos = ent:GetPos()
 	local ang = ent:GetAngles()
@@ -309,7 +373,7 @@ end
 function PANEL:FullFrontalLayout()
 
 	local ent = self.ModelPanel:GetEntity()
-	if ( not IsValid( ent ) ) then return end
+	if ( !IsValid( ent ) ) then return end
 
 	local pos = ent:GetPos()
 	local campos = pos + Vector( -200, 0, 0 )
@@ -323,7 +387,7 @@ end
 function PANEL:AboveLayout()
 
 	local ent = self.ModelPanel:GetEntity()
-	if ( not IsValid( ent ) ) then return end
+	if ( !IsValid( ent ) ) then return end
 
 	local pos = ent:GetPos()
 	local campos = pos + Vector( 0, 0, 200 )
@@ -337,7 +401,7 @@ end
 function PANEL:RightLayout()
 
 	local ent = self.ModelPanel:GetEntity()
-	if ( not IsValid( ent ) ) then return end
+	if ( !IsValid( ent ) ) then return end
 
 	local pos = ent:GetPos()
 	local campos = pos + Vector( 0, 200, 0 )
@@ -351,7 +415,7 @@ end
 function PANEL:OriginLayout()
 
 	local ent = self.ModelPanel:GetEntity()
-	if ( not IsValid( ent ) ) then return end
+	if ( !IsValid( ent ) ) then return end
 
 	local pos = ent:GetPos()
 	local campos = pos + vector_origin
@@ -366,14 +430,17 @@ function PANEL:UpdateEntity( ent )
 
 	ent:SetEyeTarget( self.ModelPanel:GetCamPos() )
 
-	if ( IsValid( self.TargetAnglePanel ) and not self.TargetAnglePanel:IsEditing() ) then
+	if ( IsValid( self.TargetAnglePanel ) && !self.TargetAnglePanel:IsEditing() && !self.TargetAnglePanel:IsHovered() ) then
 		self.TargetAnglePanel:SetText( tostring( ent:GetAngles() ) )
 	end
-	if ( IsValid( self.TargetCamAnglePanel ) and not self.TargetCamAnglePanel:IsEditing() ) then
+	if ( IsValid( self.TargetCamAnglePanel ) && !self.TargetCamAnglePanel:IsEditing() && !self.TargetCamAnglePanel:IsHovered() ) then
 		self.TargetCamAnglePanel:SetText( tostring( self.ModelPanel:GetLookAng() ) )
 	end
-	if ( IsValid( self.TargetCamPosPanel ) and not self.TargetCamPosPanel:IsEditing() ) then
+	if ( IsValid( self.TargetCamPosPanel ) && !self.TargetCamPosPanel:IsEditing() && !self.TargetCamPosPanel:IsHovered() ) then
 		self.TargetCamPosPanel:SetText( tostring( self.ModelPanel:GetCamPos() ) )
+	end
+	if ( IsValid( self.TargetCamFOVPanel ) && !self.TargetCamFOVPanel:IsEditing() && !self.TargetCamFOVPanel:IsHovered() ) then
+		self.TargetCamFOVPanel:SetValue( self.ModelPanel:GetFOV() )
 	end
 
 	if ( self.AnimTrack:GetDragging() ) then
@@ -381,7 +448,7 @@ function PANEL:UpdateEntity( ent )
 		ent:SetCycle( self.AnimTrack:GetSlideX() )
 		self.AnimPause:SetToggle( true )
 
-	elseif ( ent:GetCycle() ~= self.AnimTrack:GetSlideX() ) then
+	elseif ( ent:GetCycle() != self.AnimTrack:GetSlideX() ) then
 
 		local cyc = ent:GetCycle()
 		if ( cyc < 0 ) then cyc = cyc + 1 end
@@ -389,7 +456,7 @@ function PANEL:UpdateEntity( ent )
 
 	end
 
-	if ( not self.AnimPause:GetToggle() ) then
+	if ( !self.AnimPause:GetToggle() ) then
 		ent:FrameAdvance( FrameTime() )
 	end
 
@@ -409,7 +476,7 @@ end
 
 function PANEL:SetIcon( icon )
 
-	if ( not IsValid( icon ) ) then return end
+	if ( !IsValid( icon ) ) then return end
 
 	local model = icon:GetModelName()
 	self:SetOrigin( icon )
@@ -429,7 +496,7 @@ function PANEL:SetIcon( icon )
 		self.LeftPanel:SetWide( 400 )
 	end
 
-	if ( not model or model == "" ) then
+	if ( !model or model == "" ) then
 
 		self:SetModel( "error.mdl" )
 		self.SpawnIcon:SetSpawnIcon( icon:GetIconName() )
@@ -443,20 +510,24 @@ function PANEL:SetIcon( icon )
 
 	end
 
+	-- Keep the spawnmenu open
+	g_SpawnMenu:HangOpen( true )
+
 end
 
 function PANEL:Refresh()
 
-	if ( not self:GetModel() ) then return end
+	if ( !self:GetModel() ) then return end
 
 	self.ModelPanel:SetModel( self:GetModel() )
 	self.ModelPanel.LayoutEntity = function() self:UpdateEntity( self.ModelPanel:GetEntity() )  end
 
 	local ent = self.ModelPanel:GetEntity()
-	if ( not IsValid( ent ) ) then return end
+	if ( !IsValid( ent ) ) then return end
 
 	ent:SetSkin( self.SpawnIcon:GetSkinID() )
 	ent:SetBodyGroups( self.SpawnIcon:GetBodyGroup() )
+	ent:SetLOD( 0 )
 
 	self:BestGuessLayout()
 	self:FillAnimations( ent )
@@ -506,7 +577,7 @@ function PANEL:FillAnimations( ent )
 
 			-- If we're not using a custom, change our spawnicon
 			-- so we save the new skin in the right place...
-			if ( not self:GetCustomIcon() ) then
+			if ( !self:GetCustomIcon() ) then
 				self.SpawnIcon:SetModel( self.SpawnIcon:GetModelName(), newVal, self.SpawnIcon:GetBodyGroup() )
 			end
 		end
@@ -536,7 +607,7 @@ function PANEL:FillAnimations( ent )
 
 			-- If we're not using a custom, change our spawnicon
 			-- so we save the new skin in the right place...
-			if ( not self:GetCustomIcon() ) then
+			if ( !self:GetCustomIcon() ) then
 				self.SpawnIcon:SetBodyGroup( s.BodyGroupID, newVal )
 				self.SpawnIcon:SetModel( self.SpawnIcon:GetModelName(), self.SpawnIcon:GetSkinID(), self.SpawnIcon:GetBodyGroup() )
 			end
@@ -557,7 +628,7 @@ end
 
 function PANEL:SetFromEntity( ent )
 
-	if ( not IsValid( ent ) ) then return end
+	if ( !IsValid( ent ) ) then return end
 
 	local bodyStr = ""
 	for i = 0, 8 do

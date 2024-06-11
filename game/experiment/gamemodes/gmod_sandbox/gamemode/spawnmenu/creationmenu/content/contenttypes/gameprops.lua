@@ -6,7 +6,7 @@ local function recurseAddFiles( folder, pathid, list )
 	local files, folders = file.Find( folder .. "/*", pathid )
 	for id, file in pairs( files or {} ) do
 		if ( file:EndsWith( ".mdl" ) ) then
-			if ( not addedLabel ) then
+			if ( !addedLabel ) then
 				table.insert( list, { type = "header", text = folder } )
 				addedLabel = true
 			end
@@ -21,7 +21,7 @@ local function recurseAddFiles( folder, pathid, list )
 
 end
 
-function GenerateSpawnlistFromPath( folder, path, name, icon, appid )
+local function GenerateSpawnlistFromPath( folder, path, name, icon, appid )
 
 	local contents = {}
 	recurseAddFiles( folder, path, contents )
@@ -48,18 +48,18 @@ local function GamePropsRightClick( self )
 		-- Find the "root" node for this game
 		local parent = self
 		local icon = parent:GetIcon()
-		while ( not icon:StartsWith( "games" ) ) do
+		while ( !icon:StartsWith( "games" ) ) do
 			parent = parent:GetParentNode()
-			if ( not IsValid( parent ) ) then break end
+			if ( !IsValid( parent ) ) then break end
 			icon = parent:GetIcon()
 		end
 
 		local name = parent:GetText()
-		if ( self:GetFolder() ~= "models" ) then
+		if ( self:GetFolder() != "models" ) then
 			name = name .. " - " .. self:GetFolder():sub( 8 )
 		end
 
-		GenerateSpawnlistFromPath( self:GetFolder(), self:GetPathID(), name, icon, parent.GameAppID )
+		GenerateSpawnlistFromPath( self:GetFolder(), self:GetPathID(), name, icon, parent.GamePathID )
 
 	end ):SetIcon( "icon16/page_add.png" )
 
@@ -72,7 +72,7 @@ local function InstallNodeRightclick( self, newNode )
 	newNode.OnNodeAdded = InstallNodeRightclick
 end
 
-local function AddBrowseContent( ViewPanel, node, name, icon, path, pathid, pnlContent, appid )
+local function AddBrowseContent( ViewPanel, node, name, icon, path, pathid, pnlContent )
 
 	local models = node:AddFolder( name, path .. "models", pathid, false )
 	models:SetIcon( icon )
@@ -80,14 +80,14 @@ local function AddBrowseContent( ViewPanel, node, name, icon, path, pathid, pnlC
 	models.BrowseExtension = "*.mdl"
 	models.ContentType = "model"
 	models.ViewPanel = ViewPanel
-	models.GameAppID = appid
+	models.GamePathID = pathid
 
 	-- If we click on a subnode of this tree, it gets reported upwards (to us)
 	models.OnNodeSelected = function( slf, node )
 
 		-- Already viewing this panel
-		if ( ViewPanel and ViewPanel.CurrentNode and ViewPanel.CurrentNode == node ) then
-			if ( pnlContent.SelectedPanel ~= ViewPanel ) then pnlContent:SwitchPanel( ViewPanel ) end
+		if ( ViewPanel && ViewPanel.CurrentNode && ViewPanel.CurrentNode == node ) then
+			if ( pnlContent.SelectedPanel != ViewPanel ) then pnlContent:SwitchPanel( ViewPanel ) end
 			return
 		end
 
@@ -139,9 +139,9 @@ local function RefreshGames( MyNode )
 	-- Create a list of mounted games, allowing us to browse them
 	for _, game in SortedPairsByMemberValue( games, "title" ) do
 
-		if ( not game.mounted ) then continue end
+		if ( !game.mounted ) then continue end
 
-		AddBrowseContent( MyNode.ViewPanel, MyNode, game.title, "games/16/" .. ( game.icon or game.folder ) .. ".png", "", game.folder, MyNode.pnlContent, game.depot )
+		AddBrowseContent( MyNode.ViewPanel, MyNode, game.title, "games/16/" .. ( game.icon or game.folder ) .. ".png", "", game.folder, MyNode.pnlContent )
 
 	end
 
@@ -167,7 +167,7 @@ end )
 
 hook.Add( "GameContentChanged", "RefreshSpawnmenuGames", function()
 
-	if ( not IsValid( myGamesNode ) ) then return end
+	if ( !IsValid( myGamesNode ) ) then return end
 
 	-- TODO: Maybe be more advaced and do not delete => recreate all the nodes, only delete nodes for addons that were removed, add only the new ones?
 	myGamesNode:Clear()

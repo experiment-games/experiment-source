@@ -1,11 +1,11 @@
 
-local cl_drawspawneffect = CreateConVar( "cl_drawspawneffect", "1", { FCVAR_ARCHIVE } )
+local cl_drawspawneffect = CreateConVar( "cl_drawspawneffect", "1", { FCVAR_ARCHIVE }, "Whether to draw the spawn effect when spawning objects." )
 
 local matRefract = Material( "models/spawn_effect" )
 
 function EFFECT:Init( data )
 
-	if ( not cl_drawspawneffect:GetBool() ) then return end
+	if ( !cl_drawspawneffect:GetBool() ) then return end
 
 	-- This is how long the spawn effect
 	-- takes from start to finish.
@@ -14,8 +14,8 @@ function EFFECT:Init( data )
 
 	local ent = data:GetEntity()
 
-	if ( not IsValid( ent ) ) then return end
-	if ( not ent:GetModel() ) then return end
+	if ( !IsValid( ent ) ) then return end
+	if ( !ent:GetModel() ) then return end
 
 	self.ParentEntity = ent
 	self:SetModel( ent:GetModel() )
@@ -32,8 +32,8 @@ end
 
 function EFFECT:Think()
 
-	if ( not cl_drawspawneffect:GetBool() ) then return false end
-	if ( not IsValid( self.ParentEntity ) ) then return false end
+	if ( !cl_drawspawneffect:GetBool() ) then return false end
+	if ( !IsValid( self.ParentEntity ) ) then return false end
 
 	local PPos = self.ParentEntity:GetPos()
 	self:SetPos( PPos + ( EyePos() - PPos ):GetNormal() )
@@ -89,7 +89,7 @@ function EFFECT:RenderOverlay( entity )
 			-- Draw model with refraction texture
 			render.MaterialOverride( matRefract )
 				entity:DrawModel()
-			render.MaterialOverride( 0 )
+			render.MaterialOverride()
 
 		end
 
@@ -102,8 +102,8 @@ end
 
 function EFFECT:RenderParent()
 
-	if ( not IsValid( self ) ) then return end
-	if ( not IsValid( self.SpawnEffect ) ) then self.RenderOverride = nil return end
+	if ( !IsValid( self ) ) then return end
+	if ( !IsValid( self.SpawnEffect ) ) then self.RenderOverride = nil return end
 
 	local bClipping = self.SpawnEffect:StartClip( self, 1 )
 

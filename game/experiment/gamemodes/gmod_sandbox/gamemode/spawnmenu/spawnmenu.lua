@@ -1,5 +1,5 @@
 
-local spawnmenu_border = CreateConVar( "spawnmenu_border", "0.1", { FCVAR_ARCHIVE } )
+local spawnmenu_border = CreateConVar( "spawnmenu_border", "0.1", { FCVAR_ARCHIVE }, "Amount of empty space around the Sandbox spawn menu." )
 
 include( "toolmenu.lua" )
 include( "contextmenu.lua" )
@@ -30,20 +30,20 @@ function PANEL:Init()
 	self:SetMouseInputEnabled( true )
 
 	self.ToolToggle = vgui.Create( "DImageButton", self )
-	self.ToolToggle:SetMaterial( "gui/spawnmenu_toggle" )
+	self.ToolToggle:SetImage( "gui/spawnmenu_toggle" )
 	self.ToolToggle:SetSize( 16, 16 )
 	self.ToolToggle.DoClick = function()
 
-		self.ToolMenu:SetVisible( not self.ToolMenu:IsVisible() )
+		self.ToolMenu:SetVisible( !self.ToolMenu:IsVisible() )
 		self:InvalidateLayout()
 
 		if ( self.ToolMenu:IsVisible() ) then
-			self.ToolToggle:SetMaterial( "gui/spawnmenu_toggle" )
+			self.ToolToggle:SetImage( "gui/spawnmenu_toggle" )
 			self.CreateMenu:Dock( NODOCK ) -- What an ugly hack
 			self.HorizontalDivider:SetRight( self.ToolMenu )
 			self.HorizontalDivider:SetLeft( self.CreateMenu )
 		else
-			self.ToolToggle:SetMaterial( "gui/spawnmenu_toggle_back" )
+			self.ToolToggle:SetImage( "gui/spawnmenu_toggle_back" )
 			self.HorizontalDivider:SetRight( nil ) -- What an ugly hack
 			self.HorizontalDivider:SetLeft( nil )
 			self.CreateMenu:SetParent( self.HorizontalDivider )
@@ -109,7 +109,7 @@ function PANEL:Open()
 	self.m_bHangOpen = false
 
 	-- If the context menu is open, try to close it..
-	if ( IsValid( g_ContextMenu ) and g_ContextMenu:IsVisible() ) then
+	if ( IsValid( g_ContextMenu ) && g_ContextMenu:IsVisible() ) then
 		g_ContextMenu:Close( true )
 	end
 
@@ -125,7 +125,7 @@ function PANEL:Open()
 
 	achievements.SpawnMenuOpen()
 
-	if ( IsValid( self.StartupTool ) and self.StartupTool.Name ) then
+	if ( IsValid( self.StartupTool ) && self.StartupTool.Name ) then
 		self.StartupTool:SetSelected( true )
 		spawnmenu.ActivateTool( self.StartupTool.Name, true )
 		self.StartupTool = nil
@@ -159,7 +159,7 @@ function PANEL:PerformLayout()
 	local MarginY = math.Clamp( ( ScrH() - 768 ) * spawnmenu_border:GetFloat(), 25, 256 )
 
 	-- At this size we can't spare any space for emptiness
-	if ( ScrW() < 1024 or ScrH() < 768 ) then
+	if ( ScrW() < 1024 || ScrH() < 768 ) then
 		MarginX = 0
 		MarginY = 0
 	end
@@ -183,7 +183,7 @@ end
 
 function PANEL:EndKeyFocus( pPanel )
 
-	if ( self.m_pKeyFocus ~= pPanel ) then return end
+	if ( self.m_pKeyFocus != pPanel ) then return end
 	self:SetKeyboardInputEnabled( false )
 
 end
@@ -194,7 +194,7 @@ function PANEL:OnSizeChanged( newW, newH )
 	self:InvalidateLayout( true )
 	local divWnew = self.HorizontalDivider:GetWide()
 
-	if ( divW > divL and divW < divWnew ) then
+	if ( divW > divL && divW < divWnew ) then
 		local ratio = divL / divW
 		self.HorizontalDivider:SetLeftWidth( ratio * divWnew )
 	end
@@ -207,7 +207,7 @@ vgui.Register( "SpawnMenu", PANEL, "EditablePanel" )
 -----------------------------------------------------------]]
 local function CreateSpawnMenu()
 
-	if ( not hook.Run( "SpawnMenuEnabled" ) ) then return end
+	if ( !hook.Run( "SpawnMenuEnabled" ) ) then return end
 
 	-- If we have an old spawn menu remove it.
 	if ( IsValid( g_SpawnMenu ) ) then
@@ -259,7 +259,7 @@ concommand.Add( "spawnmenu_reload", CreateSpawnMenu )
 function GM:OnSpawnMenuOpen()
 
 	-- Let the gamemode decide whether we should open or not..
-	if ( not hook.Call( "SpawnMenuOpen", self ) ) then return end
+	if ( !hook.Call( "SpawnMenuOpen", self ) ) then return end
 
 	if ( IsValid( g_SpawnMenu ) ) then
 		g_SpawnMenu:Open()
@@ -283,10 +283,10 @@ end
 -----------------------------------------------------------]]
 local function SpawnMenuKeyboardFocusOn( pnl )
 
-	if ( IsValid( g_SpawnMenu ) and IsValid( pnl ) and pnl:HasParent( g_SpawnMenu ) ) then
+	if ( IsValid( g_SpawnMenu ) && IsValid( pnl ) && pnl:HasParent( g_SpawnMenu ) ) then
 		g_SpawnMenu:StartKeyFocus( pnl )
 	end
-	if ( IsValid( g_ContextMenu ) and IsValid( pnl ) and pnl:HasParent( g_ContextMenu ) ) then
+	if ( IsValid( g_ContextMenu ) && IsValid( pnl ) && pnl:HasParent( g_ContextMenu ) ) then
 		g_ContextMenu:StartKeyFocus( pnl )
 	end
 
@@ -299,11 +299,11 @@ hook.Add( "OnTextEntryGetFocus", "SpawnMenuKeyboardFocusOn", SpawnMenuKeyboardFo
 -----------------------------------------------------------]]
 local function SpawnMenuKeyboardFocusOff( pnl )
 
-	if ( IsValid( g_SpawnMenu ) and IsValid( pnl ) and pnl:HasParent( g_SpawnMenu ) ) then
+	if ( IsValid( g_SpawnMenu ) && IsValid( pnl ) && pnl:HasParent( g_SpawnMenu ) ) then
 		g_SpawnMenu:EndKeyFocus( pnl )
 	end
 
-	if ( IsValid( g_ContextMenu ) and IsValid( pnl ) and pnl:HasParent( g_ContextMenu ) ) then
+	if ( IsValid( g_ContextMenu ) && IsValid( pnl ) && pnl:HasParent( g_ContextMenu ) ) then
 		g_ContextMenu:EndKeyFocus( pnl )
 	end
 
@@ -316,8 +316,8 @@ hook.Add( "OnTextEntryLoseFocus", "SpawnMenuKeyboardFocusOff", SpawnMenuKeyboard
 -----------------------------------------------------------]]
 local function SpawnMenuOpenGUIMousePressed()
 
-	if ( not IsValid( g_SpawnMenu ) ) then return end
-	if ( not g_SpawnMenu:IsVisible() ) then return end
+	if ( !IsValid( g_SpawnMenu ) ) then return end
+	if ( !g_SpawnMenu:IsVisible() ) then return end
 
 	return true
 
@@ -330,8 +330,8 @@ hook.Add( "GUIMousePressed", "SpawnMenuOpenGUIMousePressed", SpawnMenuOpenGUIMou
 -----------------------------------------------------------]]
 local function SpawnMenuOpenGUIMouseReleased()
 
-	if ( not IsValid( g_SpawnMenu ) ) then return end
-	if ( not g_SpawnMenu:IsVisible() ) then return end
+	if ( !IsValid( g_SpawnMenu ) ) then return end
+	if ( !g_SpawnMenu:IsVisible() ) then return end
 
 	g_SpawnMenu:Close()
 
@@ -354,9 +354,9 @@ hook.Add( "GUIMouseReleased", "SpawnMenuOpenGUIMouseReleased", SpawnMenuOpenGUIM
 		- No, in this case we should still refresh the spawn menu because some text and labels do actually update during use of the spawn menu and might be left "dirty"
 -----------------------------------------------------------]]
 local function SpawnMenuLanguageChanged()
-	if ( not IsValid( g_SpawnMenu ) ) then return end
+	if ( !IsValid( g_SpawnMenu ) ) then return end
 
-	if ( g_SpawnMenu.m_UnsavedModifications or g_SpawnMenu:IsVisible() ) then
+	if ( g_SpawnMenu.m_UnsavedModifications || g_SpawnMenu:IsVisible() ) then
 		-- If there are unsaved modifications, or the spawn menu is somehow open, mark the spawn menu for recreation when the opportunity arises
 		g_SpawnMenu.m_NeedsLanguageRefresh = true
 	else
@@ -368,7 +368,7 @@ end
 cvars.AddChangeCallback( "gmod_language", SpawnMenuLanguageChanged, "spawnmenu_reload" )
 
 local function ProtectSpawnMenuChanges()
-	if ( not IsValid( g_SpawnMenu ) ) then return end
+	if ( !IsValid( g_SpawnMenu ) ) then return end
 
 	-- Mark the spawn menu as having unsaved modifications
 	g_SpawnMenu.m_UnsavedModifications = true
@@ -376,7 +376,7 @@ end
 hook.Add( "SpawnlistContentChanged", "ProtectSpawnMenuChanges", ProtectSpawnMenuChanges )
 
 local function SpawnMenuChangesFinished()
-	if ( not IsValid( g_SpawnMenu ) ) then return end
+	if ( !IsValid( g_SpawnMenu ) ) then return end
 
 	-- Mark the spawn menu as no longer having unsaved modifications
 	g_SpawnMenu.m_UnsavedModifications = nil
@@ -385,10 +385,10 @@ hook.Add( "OnRevertSpawnlist", "SpawnMenuChangesFinished", SpawnMenuChangesFinis
 hook.Add( "OnSaveSpawnlist", "SpawnMenuChangesFinished", SpawnMenuChangesFinished )
 
 local function SpawnMenuLanguageRefresh()
-	if ( not IsValid( g_SpawnMenu ) ) then return end
+	if ( !IsValid( g_SpawnMenu ) ) then return end
 
 	-- When the spawn menu is closed, check if it needs a language refresh. If it has no unsaved modifications, refresh it!
-	if ( not g_SpawnMenu.m_UnsavedModifications and g_SpawnMenu.m_NeedsLanguageRefresh ) then
+	if ( !g_SpawnMenu.m_UnsavedModifications && g_SpawnMenu.m_NeedsLanguageRefresh ) then
 		g_SpawnMenu.m_NeedsLanguageRefresh = nil
 		CreateSpawnMenu()
 	end

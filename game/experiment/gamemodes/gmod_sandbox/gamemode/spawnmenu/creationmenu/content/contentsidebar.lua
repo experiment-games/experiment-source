@@ -31,7 +31,7 @@ function PANEL:EnableModify()
 
 	hook.Add( "OpenToolbox", "OpenToolbox", function()
 
-		if ( not IsValid( self.Toolbox ) ) then return end
+		if ( !IsValid( self.Toolbox ) ) then return end
 
 		self.Toolbox:Open()
 

@@ -2,7 +2,7 @@
 AddCSLuaFile()
 
 if ( CLIENT ) then
-	CreateConVar( "cl_drawcameras", "1", 0, "Should the cameras be visible?" )
+	CreateConVar( "cl_drawcameras", "1", 0, "Should Sandbox cameras be visible?" )
 end
 
 ENT.Type = "anim"
@@ -106,8 +106,8 @@ if ( SERVER ) then
 
 	numpad.Register( "Camera_On", function( ply, ent )
 
-		if ( not IsValid( ent ) ) then return false end
-		if ( not IsValid( ply ) ) then return false end
+		if ( !IsValid( ent ) ) then return false end
+		if ( !IsValid( ply ) ) then return false end
 
 		ply:SetViewEntity( ent )
 		ply.UsingCamera = ent
@@ -118,11 +118,11 @@ if ( SERVER ) then
 	numpad.Register( "Camera_Toggle", function( ply, ent, idx, buttoned )
 
 		-- The camera was deleted or something - return false to remove this entry
-		if ( not IsValid( ent ) ) then return false end
-		if ( not IsValid( ply ) ) then return false end
+		if ( !IsValid( ent ) ) then return false end
+		if ( !IsValid( ply ) ) then return false end
 
 		-- Something else changed players view entity
-		if ( ply.UsingCamera and ply.UsingCamera == ent and ply:GetViewEntity() ~= ent ) then
+		if ( ply.UsingCamera and ply.UsingCamera == ent and ply:GetViewEntity() != ent ) then
 			ply.UsingCamera = nil
 			ent.UsingPlayer = nil
 		end
@@ -145,8 +145,8 @@ if ( SERVER ) then
 
 	numpad.Register( "Camera_Off", function( ply, ent )
 
-		if ( not IsValid( ent ) ) then return false end
-		if ( not IsValid( ply ) ) then return false end
+		if ( !IsValid( ent ) ) then return false end
+		if ( !IsValid( ply ) ) then return false end
 
 		if ( ply.UsingCamera and ply.UsingCamera == ent ) then
 			ply:SetViewEntity( ply )
@@ -170,7 +170,7 @@ end
 
 function ENT:TrackEntity( ent, lpos )
 
-	if ( not IsValid( ent ) ) then return end
+	if ( !IsValid( ent ) ) then return end
 
 	local WPos = ent:LocalToWorld( lpos )
 

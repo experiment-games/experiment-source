@@ -21,10 +21,10 @@ TOOL.Information = {
 
 function TOOL:LeftClick( trace )
 
-	if ( IsValid( trace.Entity ) and trace.Entity:IsPlayer() ) then return end
+	if ( IsValid( trace.Entity ) && trace.Entity:IsPlayer() ) then return end
 
 	-- If there's no physics object then we can't constraint it!
-	if ( SERVER and not util.IsValidPhysicsObject( trace.Entity, trace.PhysicsBone ) ) then return false end
+	if ( SERVER && !util.IsValidPhysicsObject( trace.Entity, trace.PhysicsBone ) ) then return false end
 
 	local iNum = self:NumObjects()
 
@@ -40,7 +40,7 @@ function TOOL:LeftClick( trace )
 		end
 
 		-- Get client's CVars
-		local material = self:GetClientInfo( "rope_material", "cable/rope" )
+		local material = self:GetClientInfo( "rope_material" )
 		local width = self:GetClientNumber( "rope_width", 3 )
 		local fwd_bind = self:GetClientNumber( "fwd_group", 44 )
 		local bwd_bind = self:GetClientNumber( "bwd_group", 41 )
@@ -88,7 +88,7 @@ function TOOL:RightClick( trace )
 	if ( self:GetOperation() == 1 ) then return false end
 
 	-- If there's no physics object then we can't constraint it!
-	if ( SERVER and not util.IsValidPhysicsObject( trace.Entity, trace.PhysicsBone ) ) then return false end
+	if ( SERVER && !util.IsValidPhysicsObject( trace.Entity, trace.PhysicsBone ) ) then return false end
 
 	local Phys = trace.Entity:GetPhysicsObjectNum( trace.PhysicsBone )
 	self:SetObject( 1, trace.Entity, trace.HitPos, Phys, trace.PhysicsBone, trace.HitNormal )
@@ -102,28 +102,28 @@ function TOOL:RightClick( trace )
 	end
 
 	local tr = util.TraceLine( tr_new )
-	if ( not tr.Hit ) then
+	if ( !tr.Hit ) then
 		self:ClearObjects()
 		return false
 	end
 
 	-- Don't try to constrain world to world
-	if ( trace.HitWorld and tr.HitWorld ) then
+	if ( trace.HitWorld && tr.HitWorld ) then
 		self:ClearObjects()
 		return false
 	end
 
-	if ( IsValid( trace.Entity ) and trace.Entity:IsPlayer() ) then
+	if ( IsValid( trace.Entity ) && trace.Entity:IsPlayer() ) then
 		self:ClearObjects()
 		return false
 	end
-	if ( IsValid( tr.Entity ) and tr.Entity:IsPlayer() ) then
+	if ( IsValid( tr.Entity ) && tr.Entity:IsPlayer() ) then
 		self:ClearObjects()
 		return false
 	end
 
 	-- Check to see if the player can create a winch constraint with the entity in the trace
-	if ( not hook.Run( "CanTool", self:GetOwner(), tr, "winch", self, 2 ) ) then
+	if ( !hook.Run( "CanTool", self:GetOwner(), tr, "winch", self, 2 ) ) then
 		self:ClearObjects()
 		return false
 	end
@@ -137,7 +137,7 @@ function TOOL:RightClick( trace )
 	end
 
 	-- Get client's CVars
-	local material = self:GetClientInfo( "rope_material", "cable/rope" )
+	local material = self:GetClientInfo( "rope_material" )
 	local width = self:GetClientNumber( "rope_width", 3 )
 	local fwd_bind = self:GetClientNumber( "fwd_group", 44 )
 	local bwd_bind = self:GetClientNumber( "bwd_group", 41 )
@@ -146,13 +146,14 @@ function TOOL:RightClick( trace )
 	local colorR = self:GetClientNumber( "color_r" )
 	local colorG = self:GetClientNumber( "color_g" )
 	local colorB = self:GetClientNumber( "color_b" )
+	local toggle = false
 
 	-- Get information we're about to use
 	local Ent1, Ent2 = self:GetEnt( 1 ), self:GetEnt( 2 )
 	local Bone1, Bone2 = self:GetBone( 1 ), self:GetBone( 2 )
 	local LPos1, LPos2 = self:GetLocalPos( 1 ), self:GetLocalPos( 2 )
 
-	local constr, rope, controller = constraint.Winch( self:GetOwner(), Ent1, Ent2, Bone1, Bone2, LPos1, LPos2, width, fwd_bind, bwd_bind, fwd_speed, bwd_speed, material, Color( colorR, colorG, colorB, 255 ) )
+	local constr, rope, controller = constraint.Winch( self:GetOwner(), Ent1, Ent2, Bone1, Bone2, LPos1, LPos2, width, fwd_bind, bwd_bind, fwd_speed, bwd_speed, material, toggle, Color( colorR, colorG, colorB, 255 ) )
 	if ( IsValid( constr ) ) then
 		undo.Create( "Winch" )
 			undo.AddEntity( constr )
@@ -175,7 +176,7 @@ end
 
 function TOOL:Reload( trace )
 
-	if ( not IsValid( trace.Entity ) or trace.Entity:IsPlayer() ) then return false end
+	if ( !IsValid( trace.Entity ) || trace.Entity:IsPlayer() ) then return false end
 	if ( CLIENT ) then return true end
 
 	return constraint.RemoveConstraints( trace.Entity, "Winch" )

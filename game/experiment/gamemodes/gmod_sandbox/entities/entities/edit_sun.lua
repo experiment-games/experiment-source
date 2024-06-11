@@ -7,6 +7,7 @@ ENT.AdminOnly = true
 
 ENT.PrintName = "Sun Editor"
 ENT.Category = "Editors"
+ENT.Information = "Right click on this entity via the context menu (hold C by default) and select 'Edit Properties' to edit the sun. Rotate the entity to move the sun."
 
 function ENT:Initialize()
 
@@ -85,7 +86,7 @@ end
 --
 function ENT:OnVariableChanged()
 
-	if ( not IsValid( self.EnvSun ) ) then return end
+	if ( !IsValid( self.EnvSun ) ) then return end
 
 	self.EnvSun:SetKeyValue( "size", self:GetSunSize() )
 	self.EnvSun:SetKeyValue( "overlaysize", self:GetOverlaySize() )
@@ -111,10 +112,10 @@ end
 -- Copy over the settings of the map
 hook.Add( "PlayerSpawnedSENT", "CopyOverEditSunSettings", function( ply, ent )
 
-	if ( ent:GetClass() ~= "edit_sun" ) then return end
+	if ( ent:GetClass() != "edit_sun" ) then return end
 
 	local envSun = ents.FindByClass( "env_sun" )[ 1 ];
-	if ( not IsValid( envSun ) ) then return end
+	if ( !IsValid( envSun ) ) then return end
 
 	ent:SetSunSize( envSun:GetInternalVariable( "size" ) )
 	ent:SetOverlaySize( envSun:GetInternalVariable( "overlaysize" ) )

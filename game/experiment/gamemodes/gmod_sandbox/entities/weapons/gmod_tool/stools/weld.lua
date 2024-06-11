@@ -17,10 +17,10 @@ TOOL.Information = {
 function TOOL:LeftClick( trace )
 
 	if ( self:GetOperation() == 1 ) then return false end
-	if ( IsValid( trace.Entity ) and trace.Entity:IsPlayer() ) then return false end
+	if ( IsValid( trace.Entity ) && trace.Entity:IsPlayer() ) then return false end
 
 	-- If there's no physics object then we can't constraint it!
-	if ( SERVER and not util.IsValidPhysicsObject( trace.Entity, trace.PhysicsBone ) ) then return false end
+	if ( SERVER && !util.IsValidPhysicsObject( trace.Entity, trace.PhysicsBone ) ) then return false end
 
 	local iNum = self:NumObjects()
 	local Phys = trace.Entity:GetPhysicsObjectNum( trace.PhysicsBone )
@@ -46,7 +46,7 @@ function TOOL:LeftClick( trace )
 
 		-- Get client's CVars
 		local forcelimit = self:GetClientNumber( "forcelimit" )
-		local nocollide = self:GetClientNumber( "nocollide", 0 ) ~= 0
+		local nocollide = self:GetClientNumber( "nocollide", 0 ) != 0
 
 		-- Get information we're about to use
 		local Ent1, Ent2 = self:GetEnt( 1 ), self:GetEnt( 2 )
@@ -85,19 +85,19 @@ function TOOL:RightClick( trace )
 	if ( iNum < 2 ) then
 
 		-- If there's no physics object then we can't constraint it!
-		if ( SERVER and not util.IsValidPhysicsObject( trace.Entity, trace.PhysicsBone ) ) then return false end
+		if ( SERVER && !util.IsValidPhysicsObject( trace.Entity, trace.PhysicsBone ) ) then return false end
 
 		-- Don't weld players, or to players
 		if ( trace.Entity:IsPlayer() ) then return false end
 
 		-- Don't do anything with stuff without any physics..
-		if ( SERVER and not IsValid( Phys ) ) then return false end
+		if ( SERVER && !IsValid( Phys ) ) then return false end
 
 	end
 
 	if ( iNum == 0 ) then
 
-		if ( not IsValid( trace.Entity ) ) then return false end
+		if ( !IsValid( trace.Entity ) ) then return false end
 		if ( trace.Entity:GetClass() == "prop_vehicle_jeep" ) then return false end
 
 	end
@@ -171,7 +171,7 @@ function TOOL:RightClick( trace )
 
 		-- Get client's CVars
 		local forcelimit = self:GetClientNumber( "forcelimit" )
-		local nocollide = self:GetClientNumber( "nocollide", 0 ) ~= 0
+		local nocollide = self:GetClientNumber( "nocollide", 0 ) != 0
 
 		-- Get information we're about to use
 		local Ent1, Ent2 = self:GetEnt( 1 ), self:GetEnt( 2 )
@@ -179,7 +179,7 @@ function TOOL:RightClick( trace )
 		local Phys1 = self:GetPhys( 1 )
 
 		-- The entity became invalid half way through
-		if ( not IsValid( Ent1 ) ) then
+		if ( !IsValid( Ent1 ) ) then
 
 			self:ClearObjects()
 			return false
@@ -214,7 +214,7 @@ function TOOL:Think()
 
 	if ( self:GetOperation() == 1 ) then
 
-		if ( SERVER and not IsValid( self:GetEnt( 1 ) ) ) then
+		if ( SERVER && !IsValid( self:GetEnt( 1 ) ) ) then
 
 			self:ClearObjects()
 			return
@@ -228,7 +228,7 @@ function TOOL:Think()
 
 		end
 
-		if ( SERVER and self:NumObjects() == 2 ) then
+		if ( SERVER && self:NumObjects() == 2 ) then
 
 			local Phys1 = self:GetPhys( 1 )
 
@@ -253,7 +253,7 @@ end
 
 function TOOL:Reload( trace )
 
-	if ( not IsValid( trace.Entity ) or trace.Entity:IsPlayer() ) then return false end
+	if ( !IsValid( trace.Entity ) || trace.Entity:IsPlayer() ) then return false end
 	if ( CLIENT ) then return true end
 
 	self:ClearObjects()
@@ -264,7 +264,7 @@ end
 
 function TOOL:FreezeMovement()
 
-	return self:GetOperation() == 1 and self:GetStage() == 2
+	return self:GetOperation() == 1 && self:GetStage() == 2
 
 end
 

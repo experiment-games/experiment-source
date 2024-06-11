@@ -1,8 +1,3 @@
---[[
-	Source: https://github.com/Facepunch/garrysmod/blob/c3801c10e1aacc4c114d81331f301c57bdcf5a52/garrysmod/lua/includes/modules/cleanup.lua
-
-	C-style syntax has been converted to Lua for Experiment.
---]]
 
 module( "cleanup", package.seeall )
 
@@ -153,7 +148,7 @@ if ( SERVER ) then
 
 	function CC_AdminCleanup( pl, command, args )
 
-		if ( IsValid( pl ) and not pl:IsAdmin() ) then return end
+		if ( IsValid( pl ) && !pl:IsAdmin() ) then return end
 
 		if ( !args[ 1 ] ) then
 
@@ -186,7 +181,7 @@ if ( SERVER ) then
 
 		for key, ply in pairs( cleanup_list ) do
 
-			if ( ply[ args[ 1 ] ] ~= nil ) then
+			if ( ply[ args[ 1 ] ] != nil ) then
 
 				for id, ent in pairs( ply[ args[ 1 ] ] ) do
 

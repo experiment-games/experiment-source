@@ -7,6 +7,7 @@ ENT.AdminOnly = true
 
 ENT.PrintName = "Sky Editor"
 ENT.Category = "Editors"
+ENT.Information = "Right click on this entity via the context menu (hold C by default) and select 'Edit Properties' to edit the sky."
 
 function ENT:Initialize()
 
@@ -79,10 +80,10 @@ end
 -- Copy over the settings of the maps' skypaint
 hook.Add( "PlayerSpawnedSENT", "CopyOverEditSkySettings", function( ply, ent )
 
-	if ( ent:GetClass() ~= "edit_sky" ) then return end
+	if ( ent:GetClass() != "edit_sky" ) then return end
 
 	local skyPaint = ents.FindByClass( "env_skypaint" )[ 1 ];
-	if ( not IsValid( skyPaint ) ) then return end
+	if ( !IsValid( skyPaint ) ) then return end
 
 	ent:SetTopColor( skyPaint:GetTopColor() )
 	ent:SetBottomColor( skyPaint:GetBottomColor() )

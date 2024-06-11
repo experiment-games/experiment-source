@@ -5,7 +5,7 @@ DEFINE_BASECLASS( "base_gmodentity" )
 ENT.PrintName = "Thruster"
 
 if ( CLIENT ) then
-	CreateConVar( "cl_drawthrusterseffects", "1" )
+	CreateConVar( "cl_drawthrusterseffects", "1", 0, "Should Sandbox Thruster effects be visible?" )
 end
 
 function ENT:SetEffect( name )
@@ -77,13 +77,13 @@ end
 if ( CLIENT ) then
 	function ENT:DrawEffects()
 
-		if ( not self:IsOn() ) then return	end
+		if ( !self:IsOn() ) then return	end
 		if ( self.ShouldDraw == false ) then return end
 
 		if ( self:GetEffect() == "" or self:GetEffect() == "none" ) then return end
 
 		for id, t in pairs( list.GetForEdit( "ThrusterEffects" ) ) do
-			if ( t.thruster_effect ~= self:GetEffect() or not t.effectDraw ) then continue end
+			if ( t.thruster_effect != self:GetEffect() or !t.effectDraw ) then continue end
 
 			t.effectDraw( self )
 
@@ -113,16 +113,16 @@ function ENT:Think()
 
 	if ( CLIENT ) then
 
-		self.ShouldDraw = GetConVarNumber( "cl_drawthrusterseffects" ) ~= 0
+		self.ShouldDraw = GetConVarNumber( "cl_drawthrusterseffects" ) != 0
 
-		if ( not self:IsOn() ) then self.OnStart = nil return end
+		if ( !self:IsOn() ) then self.OnStart = nil return end
 		self.OnStart = self.OnStart or CurTime()
 
 		if ( self.ShouldDraw == false ) then return end
 		if ( self:GetEffect() == "" or self:GetEffect() == "none" ) then return end
 
 		for id, t in pairs( list.GetForEdit( "ThrusterEffects" ) ) do
-			if ( t.thruster_effect ~= self:GetEffect() or not t.effectThink ) then continue end
+			if ( t.thruster_effect != self:GetEffect() or !t.effectThink ) then continue end
 
 			t.effectThink( self )
 
@@ -175,7 +175,7 @@ if ( SERVER ) then
 		mul = mul or 1
 
 		local phys = self:GetPhysicsObject()
-		if ( not IsValid( phys ) ) then
+		if ( !IsValid( phys ) ) then
 			Msg( "Warning: [gmod_thruster] Physics object isn't valid!\n" )
 			return
 		end
@@ -211,7 +211,7 @@ if ( SERVER ) then
 
 		if ( self:GetToggle() ) then
 
-			if ( not bDown ) then return end
+			if ( !bDown ) then return end
 
 			if ( self.Multiply == mul ) then
 				self.Multiply = 0
@@ -227,7 +227,7 @@ if ( SERVER ) then
 		end
 
 		self:SetForce( nil, self.Multiply )
-		self:Switch( self.Multiply ~= 0 )
+		self:Switch( self.Multiply != 0 )
 
 	end
 
@@ -235,7 +235,7 @@ if ( SERVER ) then
 
 		self:TakePhysicsDamage( dmginfo )
 
-		if ( not self.ActivateOnDamage ) then return end
+		if ( !self.ActivateOnDamage ) then return end
 
 		self:Switch( true )
 
@@ -248,7 +248,7 @@ if ( SERVER ) then
 
 	function ENT:PhysicsSimulate( phys, deltatime )
 
-		if ( not self:IsOn() ) then return SIM_NOTHING end
+		if ( !self:IsOn() ) then return SIM_NOTHING end
 
 		return self.ForceAngle, self.ForceLinear, SIM_LOCAL_ACCELERATION
 
@@ -257,7 +257,7 @@ if ( SERVER ) then
 	-- Switch thruster on or off
 	function ENT:Switch( on )
 
-		if ( not IsValid( self ) ) then return false end
+		if ( !IsValid( self ) ) then return false end
 
 		self:SetOn( on )
 
@@ -301,16 +301,16 @@ if ( SERVER ) then
 	-- Starts the looping sound
 	function ENT:StartThrustSound()
 
-		if ( not self.SoundName or self.SoundName == "" ) then return end
+		if ( !self.SoundName or self.SoundName == "" ) then return end
 
 		local valid = false
 		for _, v in pairs( list.Get( "ThrusterSounds" ) ) do
 			if ( v.thruster_soundname == self.SoundName ) then valid = true break end
 		end
 
-		if ( not valid ) then return end
+		if ( !valid ) then return end
 
-		if ( not self.Sound ) then
+		if ( !self.Sound ) then
 			 -- Make sure the fadeout gets to every player!
 			local filter = RecipientFilter()
 			filter:AddPAS( self:GetPos() )
@@ -342,7 +342,7 @@ if ( SERVER ) then
 
 	numpad.Register( "Thruster_On", function( ply, ent, mul )
 
-		if ( not IsValid( ent ) ) then return false end
+		if ( !IsValid( ent ) ) then return false end
 
 		ent:AddMul( mul, true )
 		return true
@@ -351,7 +351,7 @@ if ( SERVER ) then
 
 	numpad.Register( "Thruster_Off", function( ply, ent, mul )
 
-		if ( not IsValid( ent ) ) then return false end
+		if ( !IsValid( ent ) ) then return false end
 
 		ent:AddMul( mul * -1, false )
 		return true
@@ -467,10 +467,10 @@ list.Set( "ThrusterEffects", "#thrustereffect.magic", {
 		vOffset = vOffset + VectorRand() * math.min( size.x, size.y ) / 3
 
 		local emitter = self:GetEmitter( vOffset, false )
-		if ( not IsValid( emitter ) ) then return end
+		if ( !IsValid( emitter ) ) then return end
 
 		local particle = emitter:Add( "sprites/gmdm_pickups/light", vOffset )
-		if ( not particle ) then return end
+		if ( !particle ) then return end
 
 		particle:SetVelocity( vNormal * math.Rand( 80, 160 ) )
 		particle:SetDieTime( 0.5 )
@@ -499,10 +499,10 @@ list.Set( "ThrusterEffects", "#thrustereffect.rings", {
 		vOffset = vOffset + vNormal * 5
 
 		local emitter = self:GetEmitter( vOffset, true )
-		if ( not IsValid( emitter ) ) then return end
+		if ( !IsValid( emitter ) ) then return end
 
 		local particle = emitter:Add( "effects/select_ring", vOffset )
-		if ( not particle ) then return end
+		if ( !particle ) then return end
 
 		particle:SetVelocity( vNormal * 300 )
 		particle:SetLifeTime( 0 )
@@ -536,10 +536,10 @@ list.Set( "ThrusterEffects", "#thrustereffect.smoke", {
 		local vNormal = ( vNormalRand - self:GetPos() ):GetNormalized()
 
 		local emitter = self:GetEmitter( vOffset, false )
-		if ( not IsValid( emitter ) ) then return end
+		if ( !IsValid( emitter ) ) then return end
 
 		local particle = emitter:Add( "particles/smokey", vOffset + VectorRand() * 3 )
-		if ( not particle ) then return end
+		if ( !particle ) then return end
 
 		local vel_scale = math.Rand( 10, 30 ) * 10 / math.Clamp( self:GetVelocity():Length() / 200, 1, 10 )
 		local velocity = vNormal * vel_scale

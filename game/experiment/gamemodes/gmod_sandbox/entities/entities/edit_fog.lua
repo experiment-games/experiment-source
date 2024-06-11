@@ -7,6 +7,7 @@ ENT.AdminOnly = true
 
 ENT.PrintName = "Fog Editor"
 ENT.Category = "Editors"
+ENT.Information = "Right click on this entity via the context menu (hold C by default) and select 'Edit Properties' to edit the fog."
 
 function ENT:Initialize()
 
@@ -88,10 +89,10 @@ end
 -- Copy over the settings of the map
 hook.Add( "PlayerSpawnedSENT", "CopyOverEditFogSettings", function( ply, ent )
 
-	if ( ent:GetClass() ~= "edit_fog" ) then return end
+	if ( ent:GetClass() != "edit_fog" ) then return end
 
 	local fogCntrl = ents.FindByClass( "env_fog_controller" )[ 1 ];
-	if ( not IsValid( fogCntrl ) ) then return end
+	if ( !IsValid( fogCntrl ) ) then return end
 
 	ent:SetFogStart( fogCntrl:GetInternalVariable( "fogstart" ) )
 	ent:SetFogEnd( fogCntrl:GetInternalVariable( "fogend" ) )

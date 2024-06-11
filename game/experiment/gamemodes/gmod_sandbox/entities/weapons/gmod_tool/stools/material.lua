@@ -20,7 +20,7 @@ local function SetMaterial( Player, Entity, Data )
 		--
 		-- Make sure this is in the 'allowed' list in multiplayer - to stop people using exploits
 		--
-		if ( not game.SinglePlayer() and not list.Contains( "OverrideMaterials", Data.MaterialOverride ) and Data.MaterialOverride ~= "" ) then return end
+		if ( !game.SinglePlayer() && !list.Contains( "OverrideMaterials", Data.MaterialOverride ) && Data.MaterialOverride != "" ) then return end
 
 		Entity:SetMaterial( Data.MaterialOverride )
 		duplicator.StoreEntityModifier( Entity, "material", Data )
@@ -38,7 +38,7 @@ function TOOL:LeftClick( trace )
 
 	local ent = trace.Entity
 	if ( IsValid( ent.AttachedEntity ) ) then ent = ent.AttachedEntity end
-	if ( not IsValid( ent ) ) then return false end -- The entity is valid and isn't worldspawn
+	if ( !IsValid( ent ) ) then return false end -- The entity is valid and isn't worldspawn
 	if ( CLIENT ) then return true end
 
 	local mat = self:GetClientInfo( "override" )
@@ -52,7 +52,7 @@ function TOOL:RightClick( trace )
 
 	local ent = trace.Entity
 	if ( IsValid( ent.AttachedEntity ) ) then ent = ent.AttachedEntity end
-	if ( not IsValid( ent ) ) then return false end -- The entity is valid and isn't worldspawn
+	if ( !IsValid( ent ) ) then return false end -- The entity is valid and isn't worldspawn
 	if ( CLIENT ) then return true end
 
 	self:GetOwner():ConCommand( "material_override " .. ent:GetMaterial() )
@@ -66,7 +66,7 @@ function TOOL:Reload( trace )
 
 	local ent = trace.Entity
 	if ( IsValid( ent.AttachedEntity ) ) then ent = ent.AttachedEntity end
-	if ( not IsValid( ent ) ) then return false end -- The entity is valid and isn't worldspawn
+	if ( !IsValid( ent ) ) then return false end -- The entity is valid and isn't worldspawn
 	if ( CLIENT ) then return true end
 
 	SetMaterial( self:GetOwner(), ent, { MaterialOverride = "" } )
@@ -135,7 +135,7 @@ function TOOL.BuildCPanel( CPanel )
 	-- Remove duplicate materials. table.HasValue is used to preserve material order
 	local materials = {}
 	for id, str in ipairs( list.Get( "OverrideMaterials" ) ) do
-		if ( not table.HasValue( materials, str ) ) then
+		if ( !table.HasValue( materials, str ) ) then
 			table.insert( materials, str )
 		end
 	end
@@ -144,7 +144,7 @@ function TOOL.BuildCPanel( CPanel )
 
 	filter.OnValueChange = function( s, txt )
 		for id, pnl in ipairs( matlist.Controls ) do
-			if ( not pnl.Value:lower():find( txt:lower(), nil, true ) ) then
+			if ( !pnl.Value:lower():find( txt:lower(), nil, true ) ) then
 				pnl:SetVisible( false )
 			else
 				pnl:SetVisible( true )

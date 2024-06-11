@@ -2,7 +2,7 @@
 local meta = FindMetaTable( "Player" )
 
 -- Return if there's nothing to add on to
-if ( not meta ) then return end
+if ( !meta ) then return end
 
 g_SBoxObjects = {}
 
@@ -15,8 +15,8 @@ function meta:CheckLimit( str )
 	local count = self:GetCount( str )
 
 	local ret = hook.Run( "PlayerCheckLimit", self, str, count, c )
-	if ( ret ~= nil ) then
-		if ( not ret and SERVER ) then self:LimitHit( str ) end
+	if ( ret != nil ) then
+		if ( !ret && SERVER ) then self:LimitHit( str ) end
 		return ret
 	end
 
@@ -39,12 +39,12 @@ function meta:GetCount( str, minus )
 
 	minus = minus or 0
 
-	if ( not self:IsValid() ) then return end
+	if ( !self:IsValid() ) then return end
 
 	local key = self:UniqueID()
 	local tab = g_SBoxObjects[ key ]
 
-	if ( not tab or not tab[ str ] ) then
+	if ( !tab || !tab[ str ] ) then
 
 		self:SetNWInt( "Count." .. str, 0 )
 		return 0
@@ -55,7 +55,7 @@ function meta:GetCount( str, minus )
 
 	for k, v in pairs( tab[ str ] ) do
 
-		if ( IsValid( v ) and not v:IsMarkedForDeletion() ) then
+		if ( IsValid( v ) && !v:IsMarkedForDeletion() ) then
 			c = c + 1
 		else
 			tab[ str ][ k ] = nil
@@ -105,10 +105,10 @@ end
 function meta:GetTool( mode )
 
 	local wep = self:GetWeapon( "gmod_tool" )
-	if ( not IsValid( wep ) or not wep.GetToolObject ) then return nil end
+	if ( !IsValid( wep ) || !wep.GetToolObject ) then return nil end
 
 	local tool = wep:GetToolObject( mode )
-	if ( not tool ) then return nil end
+	if ( !tool ) then return nil end
 
 	return tool
 

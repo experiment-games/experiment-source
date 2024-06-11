@@ -17,10 +17,10 @@ TOOL.Information = {
 
 function TOOL:LeftClick( trace )
 
-	if ( IsValid( trace.Entity ) and trace.Entity:IsPlayer() ) then return end
+	if ( IsValid( trace.Entity ) && trace.Entity:IsPlayer() ) then return end
 
 	-- If there's no physics object then we can't constraint it!
-	if ( SERVER and not util.IsValidPhysicsObject( trace.Entity, trace.PhysicsBone ) ) then return false end
+	if ( SERVER && !util.IsValidPhysicsObject( trace.Entity, trace.PhysicsBone ) ) then return false end
 
 	local iNum = self:NumObjects()
 
@@ -89,28 +89,28 @@ function TOOL:RightClick( trace )
 	end
 
 	local tr = util.TraceLine( tr_new )
-	if ( not tr.Hit ) then
+	if ( !tr.Hit ) then
 		self:ClearObjects()
 		return
 	end
 
 	-- Don't try to constrain world to world
-	if ( trace.HitWorld and tr.HitWorld ) then
+	if ( trace.HitWorld && tr.HitWorld ) then
 		self:ClearObjects()
 		return
 	end
 
-	if ( IsValid( trace.Entity ) and trace.Entity:IsPlayer() ) then
+	if ( IsValid( trace.Entity ) && trace.Entity:IsPlayer() ) then
 		self:ClearObjects()
 		return
 	end
-	if ( IsValid( tr.Entity ) and tr.Entity:IsPlayer() ) then
+	if ( IsValid( tr.Entity ) && tr.Entity:IsPlayer() ) then
 		self:ClearObjects()
 		return
 	end
 
 	-- Check to see if the player can create a slider constraint with the entity in the trace
-	if ( not hook.Run( "CanTool", self:GetOwner(), tr, "slider", self, 2 ) ) then
+	if ( !hook.Run( "CanTool", self:GetOwner(), tr, "slider", self, 2 ) ) then
 		self:ClearObjects()
 		return
 	end
@@ -156,7 +156,7 @@ end
 
 function TOOL:Reload( trace )
 
-	if ( not IsValid( trace.Entity ) or trace.Entity:IsPlayer() ) then return false end
+	if ( !IsValid( trace.Entity ) || trace.Entity:IsPlayer() ) then return false end
 	if ( CLIENT ) then return true end
 
 	return constraint.RemoveConstraints( trace.Entity, "Slider" )

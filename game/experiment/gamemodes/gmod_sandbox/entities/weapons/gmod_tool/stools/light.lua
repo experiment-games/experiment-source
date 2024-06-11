@@ -21,12 +21,12 @@ cleanup.Register( "lights" )
 
 function TOOL:LeftClick( trace, attach )
 
-	if ( IsValid( trace.Entity ) and trace.Entity:IsPlayer() ) then return false end
+	if ( IsValid( trace.Entity ) && trace.Entity:IsPlayer() ) then return false end
 	if ( CLIENT ) then return true end
 	if ( attach == nil ) then attach = true end
 
 	-- If there's no physics object then we can't constraint it!
-	if ( SERVER and attach and not util.IsValidPhysicsObject( trace.Entity, trace.PhysicsBone ) ) then return false end
+	if ( SERVER && attach && !util.IsValidPhysicsObject( trace.Entity, trace.PhysicsBone ) ) then return false end
 
 	local ply = self:GetOwner()
 
@@ -37,11 +37,11 @@ function TOOL:LeftClick( trace, attach )
 	local b = math.Clamp( self:GetClientNumber( "b" ), 0, 255 )
 	local brght = math.Clamp( self:GetClientNumber( "brightness" ), -10, 20 )
 	local size = self:GetClientNumber( "size" )
-	local toggle = self:GetClientNumber( "toggle" ) ~= 1
+	local toggle = self:GetClientNumber( "toggle" ) != 1
 
 	local key = self:GetClientNumber( "key" )
 
-	if ( IsValid( trace.Entity ) and trace.Entity:GetClass() == "gmod_light" and trace.Entity:GetPlayer() == ply ) then
+	if ( IsValid( trace.Entity ) && trace.Entity:GetClass() == "gmod_light" && trace.Entity:GetPlayer() == ply ) then
 
 		trace.Entity:SetColor( Color( r, g, b, 255 ) )
 		trace.Entity.r = r
@@ -52,7 +52,7 @@ function TOOL:LeftClick( trace, attach )
 
 		trace.Entity:SetBrightness( brght )
 		trace.Entity:SetLightSize( size )
-		trace.Entity:SetToggle( not toggle )
+		trace.Entity:SetToggle( !toggle )
 
 		trace.Entity.KeyDown = key
 
@@ -66,10 +66,10 @@ function TOOL:LeftClick( trace, attach )
 
 	end
 
-	if ( not self:GetSWEP():CheckLimit( "lights" ) ) then return false end
+	if ( !self:GetWeapon():CheckLimit( "lights" ) ) then return false end
 
-	local light = MakeLight( ply, r, g, b, brght, size, toggle, not toggle, key, { Pos = pos, Angle = ang } )
-	if ( not IsValid( light ) ) then return false end
+	local light = MakeLight( ply, r, g, b, brght, size, toggle, !toggle, key, { Pos = pos, Angle = ang } )
+	if ( !IsValid( light ) ) then return false end
 
 	undo.Create( "Light" )
 		undo.AddEntity( light )
@@ -120,17 +120,17 @@ if ( SERVER ) then
 
 	function MakeLight( ply, r, g, b, brght, size, toggle, on, KeyDown, Data )
 
-		if ( IsValid( ply ) and not ply:CheckLimit( "lights" ) ) then return false end
+		if ( IsValid( ply ) && !ply:CheckLimit( "lights" ) ) then return false end
 
 		local light = ents.Create( "gmod_light" )
-		if ( not IsValid( light ) ) then return end
+		if ( !IsValid( light ) ) then return end
 
 		duplicator.DoGeneric( light, Data )
 
 		light:SetColor( Color( r, g, b, 255 ) )
 		light:SetBrightness( brght )
 		light:SetLightSize( size )
-		light:SetToggle( not toggle )
+		light:SetToggle( !toggle )
 		light:SetOn( on )
 
 		light:Spawn()
@@ -164,8 +164,8 @@ if ( SERVER ) then
 
 	local function Toggle( ply, ent, onoff )
 
-		if ( not IsValid( ent ) ) then return false end
-		if ( not ent:GetToggle() ) then ent:SetOn( onoff == 1 ) return end
+		if ( !IsValid( ent ) ) then return false end
+		if ( !ent:GetToggle() ) then ent:SetOn( onoff == 1 ) return end
 
 		if ( numpad.FromButton() ) then
 
@@ -185,10 +185,10 @@ end
 
 function TOOL:UpdateGhostLight( ent, ply )
 
-	if ( not IsValid( ent ) ) then return end
+	if ( !IsValid( ent ) ) then return end
 
 	local trace = ply:GetEyeTrace()
-	if ( not trace.Hit or IsValid( trace.Entity ) and ( trace.Entity:IsPlayer() or trace.Entity:GetClass() == "gmod_light" ) ) then
+	if ( !trace.Hit || IsValid( trace.Entity ) && ( trace.Entity:IsPlayer() || trace.Entity:GetClass() == "gmod_light" ) ) then
 
 		ent:SetNoDraw( true )
 		return
@@ -204,7 +204,7 @@ end
 
 function TOOL:Think()
 
-	if ( not IsValid( self.GhostEntity ) or self.GhostEntity:GetModel() ~= "models/maxofs2d/light_tubular.mdl" ) then
+	if ( !IsValid( self.GhostEntity ) || self.GhostEntity:GetModel() != "models/maxofs2d/light_tubular.mdl" ) then
 		self:MakeGhostEntity( "models/maxofs2d/light_tubular.mdl", vector_origin, angle_zero )
 	end
 

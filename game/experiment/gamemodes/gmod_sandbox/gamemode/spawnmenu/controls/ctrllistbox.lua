@@ -56,7 +56,7 @@ function PANEL:ConVarsChanged()
 	for k, v in pairs( self.ConVars ) do
 
 		if ( self[ k ] == nil ) then return true end
-		if ( self[ k ] ~= GetConVarString( k ) ) then return true end
+		if ( self[ k ] != GetConVarString( k ) ) then return true end
 
 	end
 
@@ -73,7 +73,7 @@ function PANEL:CheckForMatch( cvars )
 
 	for k, v in pairs( cvars ) do
 
-		if ( tostring(v) ~= GetConVarString( k ) ) then
+		if ( tostring(v) != GetConVarString( k ) ) then
 			return false
 		end
 
