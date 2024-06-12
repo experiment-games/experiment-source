@@ -451,7 +451,7 @@ LUA_API int luasrc_dofile_with_loader( lua_State *L, const char *filePath )
     char fullPath[MAX_PATH];
     filesystem->RelativePathToFullPath( filePath, "MOD", fullPath, sizeof( fullPath ) );
 
-    if ( !filesystem->FileExists( fullPath, "MOD") )
+    if ( !filesystem->FileExists( fullPath, "MOD" ) )
     {
         lua_pushfstring( L, "File does not exist: %s", fullPath );
         return LUA_ERRFILE;
@@ -518,7 +518,7 @@ LUA_API int luasrc_dofile_with_loader( lua_State *L, const char *filePath )
         CUtlBuffer buffer( 0, 0, CUtlBuffer::TEXT_BUFFER );
         buffer.PutString( preprocessedFileContents );
 
-	    char fileLogPathDirectory[MAX_PATH];
+        char fileLogPathDirectory[MAX_PATH];
         Q_ExtractFilePath( fileLogPath, fileLogPathDirectory, sizeof( fileLogPathDirectory ) );
         filesystem->CreateDirHierarchy( fileLogPathDirectory, "GAME" );
 
@@ -988,7 +988,7 @@ static void cleanUpGamemodeLoading( bool cleanLoader )
 }
 
 // too much maintenance
-//static int luasrc_require_with_loader( lua_State *L )
+// static int luasrc_require_with_loader( lua_State *L )
 //{
 //    const char *name = luaL_checkstring( L, 1 );
 //
@@ -1005,12 +1005,12 @@ static void cleanUpGamemodeLoading( bool cleanLoader )
 //    // TODO: Finish from here, make sure the loader func is used to have modules also use the preprocessor
 //
 //
-//#ifdef CLIENT_DLL
+// #ifdef CLIENT_DLL
 //    const char *gamePath = engine->GetGameDirectory();
-//#else
+// #else
 //    char gamePath[256];
 //    engine->GetGameDir( gamePath, 256 );
-//#endif
+// #endif
 //
 //    char gamemodeSearchPath[MAX_PATH];
 //    Q_snprintf(
@@ -1030,7 +1030,7 @@ static void cleanUpGamemodeLoading( bool cleanLoader )
 //    return 1;  // Returning 1 because we are pushing an error message
 //}
 //
-//static void luasrc_add_loader_searcher( lua_State *L )
+// static void luasrc_add_loader_searcher( lua_State *L )
 //{
 //    lua_getglobal( L, "package" );
 //    lua_getfield( L, -1, "searchers" );  // Get the current package.searchers
@@ -1051,17 +1051,17 @@ static void cleanUpGamemodeLoading( bool cleanLoader )
 /// </summary>
 /// <param name="L"></param>
 /// <param name="searchPath"></param>
-//static void luasrc_add_to_package_path( lua_State *L, const char *searchPath )
-//{
-//    lua_getglobal( L, "package" );
-//    lua_getfield( L, -1, "path" );  // Get the current package.path
-//    const char *currentPath = lua_tostring( L, -1 );
-//    lua_pop( L, 1 );  // Remove the current path from the stack
-//
-//    lua_pushfstring( L, "%s;%s", currentPath, searchPath );
-//    lua_setfield( L, -2, "path" );
-//    lua_pop( L, 1 );  // Remove the package table from the stack
-//}
+static void luasrc_add_to_package_path( lua_State *L, const char *searchPath )
+{
+    lua_getglobal( L, "package" );
+    lua_getfield( L, -1, "path" );  // Get the current package.path
+    const char *currentPath = lua_tostring( L, -1 );
+    lua_pop( L, 1 );  // Remove the current path from the stack
+
+    lua_pushfstring( L, "%s;%s", currentPath, searchPath );
+    lua_setfield( L, -2, "path" );
+    lua_pop( L, 1 );  // Remove the package table from the stack
+}
 
 /// <summary>
 /// Loads the gamemode with the given name from the gamemodes folder.
@@ -1087,6 +1087,24 @@ bool luasrc_LoadGamemode( const char *gamemode )
         luasrc_InitCustomLoader( gamemode, gamemodePath );
         didWeInitLoader = true;
     }
+
+#ifdef CLIENT_DLL
+    const char *gamePath = engine->GetGameDirectory();
+#else
+    char gamePath[256];
+    engine->GetGameDir( gamePath, 256 );
+#endif
+
+    char gamemodeSearchPath[MAX_PATH];
+    Q_snprintf(
+        gamemodeSearchPath,
+        sizeof( gamemodeSearchPath ),
+        "%s\\%s\\?.lua;%s\\%s\\gamemode\\?.lua",
+        gamePath,
+        gamemodePath,
+        gamePath,
+        gamemodePath );
+    luasrc_add_to_package_path( L, gamemodeSearchPath );
 
     // Set the GM table as a global variable
     lua_newtable( L );
