@@ -10,6 +10,35 @@ GM.Developer = "Experiment" -- Most code by Facepunch Studios
 include("enumerations.lua")
 
 --[[
+	Renames and other polyfills
+--]]
+util = {
+	PrecacheModel = _R.CBaseEntity.PrecacheModel,
+	PrecacheSound = _R.CBaseEntity.PrecacheSound,
+}
+
+local registry = debug.getregistry()
+function FindMetaTable(name)
+	if (name == "Entity") then
+		name = "CBaseEntity"
+	elseif (name == "Player") then
+		name = "CBasePlayer"
+	end
+
+	return registry[name]
+end
+
+RealFrameTime = pgGlobals.absoluteframetime
+CurTime = pgGlobals.curtime
+FrameNumber = pgGlobals.framecount
+FrameTime = pgGlobals.frametime
+engine.TickCount = pgGlobals.tickcount
+engine.TickInterval = pgGlobals.interval_per_tick
+
+Material = gpGlobals.FindMaterial
+CreateMaterial = gpGlobals.CreateMaterial
+
+--[[
 	All our libraries are plural, while with Garry's Mod they vary between plural and singular.
 --]]
 concommand = require("concommands")
@@ -18,48 +47,66 @@ gamemode = require("gamemodes")
 hook = require("hooks")
 weapons = require("weapons")
 
+include("util.lua")
+include("util/sql.lua")
+
 --[[
 	Libraries taken from Garry's Mod.
 	TODO: Write own libraries.
 --]]
-matproxy = include("../modules/matproxy.lua")
-menubar = include("../modules/menubar.lua")
-notification = include("../modules/notification.lua")
-numpad = include("../modules/numpad.lua")
-player_manager = include("../modules/player_manager.lua")
--- presets = include("../modules/presets.lua") -- Not implemented atm.
-properties = include("../modules/properties.lua")
+
+-- Shared modules.
+
+baseclass = include("../modules/baseclass.lua")
+-- concommand = include("../modules/concommand.lua") -- We have our own concommand library.
 saverestore = include("../modules/saverestore.lua")
+-- hook = include("../modules/hook.lua") -- We have our own hook library.
+-- gamemode = include("../modules/gamemode.lua") -- We have our own gamemode library.
+-- weapons = include("../modules/weapons.lua") -- We have our own weapons library.
 -- scripted_ents = include("../modules/scripted_ents.lua") -- We have our own scripted_ents library.
-search = include("../modules/search.lua")
-spawnmenu = include("../modules/spawnmenu.lua")
+player_manager = include("../modules/player_manager.lua")
+numpad = include("../modules/numpad.lua")
 team = include("../modules/team.lua")
 undo = include("../modules/undo.lua")
-usermessage = include("../modules/usermessage.lua")
-utf8 = include("../modules/utf8.lua")
--- weapons = include("../modules/weapons.lua") -- We have our own weapons library.
-widget = include("../modules/widget.lua")
-ai_schedule = include("../modules/ai_schedule.lua")
-ai_task = include("../modules/ai_task.lua")
-baseclass = include("../modules/baseclass.lua")
 cleanup = include("../modules/cleanup.lua")
--- concommand = include("../modules/concommand.lua") -- We have our own concommand library.
+duplicator = include("../modules/duplicator.lua")
 constraint = include("../modules/constraint.lua")
 construct = include("../modules/construct.lua")
-controlpanel = include("../modules/controlpanel.lua")
-cookie = include("../modules/cookie.lua")
-cvars = include("../modules/cvars.lua")
-draw = include("../modules/draw.lua")
-drive = include("../modules/drive.lua")
-duplicator = include("../modules/duplicator.lua")
-effects = include("../modules/effects.lua")
--- gamemode = include("../modules/gamemode.lua") -- We have our own gamemode library.
-halo = include("../modules/halo.lua")
--- hook = include("../modules/hook.lua") -- We have our own hook library.
-http = include("../modules/http.lua")
-killicon = include("../modules/killicon.lua")
+usermessage = include("../modules/usermessage.lua")
 list = include("../modules/list.lua")
-markup = include("../modules/markup.lua")
+cvars = include("../modules/cvars.lua")
+http = include("../modules/http.lua")
+properties = include("../modules/properties.lua")
+widget = include("../modules/widget.lua")
+cookie = include("../modules/cookie.lua")
+utf8 = include("../modules/utf8.lua")
+
+drive = include("../modules/drive.lua")
+-- include("drive/drive_base.lua")
+-- include("drive/drive_noclip.lua")
+
+if (SERVER) then
+	-- Server-side modules.
+	ai_task = include("../modules/ai_task.lua")
+	ai_schedule = include("../modules/ai_schedule.lua")
+end
+
+if (CLIENT) then
+	-- Client-side modules.
+	draw = include("../modules/draw.lua")
+	markup = include("../modules/markup.lua")
+	effects = include("../modules/effects.lua")
+	halo = include("../modules/halo.lua")
+	killicon = include("../modules/killicon.lua")
+	spawnmenu = include("../modules/spawnmenu.lua")
+	controlpanel = include("../modules/controlpanel.lua")
+	-- presets = include("../modules/presets.lua") -- Not implemented atm.
+	menubar = include("../modules/menubar.lua")
+	matproxy = include("../modules/matproxy.lua")
+
+	-- notification = include("../modules/notification.lua")
+	-- search = include("../modules/search.lua")
+end
 
 --[[
 	Other shared functions.
