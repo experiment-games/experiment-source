@@ -186,6 +186,17 @@ LUALIB_API int( luaopen_vgui )( lua_State *L );
 #define LUA_VMATRIXLIBNAME "vmatrix"
 LUALIB_API int( luaopen_VMatrix )( lua_State *L );
 
+#ifdef CLIENT_DLL
+#define LUA_BFREADLIBNAME "bf_read"
+LUALIB_API int( luaopen_bf_read )( lua_State *L );
+#endif
+
+#define LUA_UMSGLIBNAME "umsg"
+LUALIB_API int( luaopen_umsg )( lua_State *L );
+
+#define LUA_NETLIBNAME "net"
+LUALIB_API int( luaopen_net )( lua_State *L );
+
 /* open all Source Engine libraries */
 LUALIB_API void( luasrc_openlibs )( lua_State *L );
 

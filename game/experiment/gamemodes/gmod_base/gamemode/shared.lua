@@ -50,6 +50,18 @@ FrameTime = gpGlobals.frametime
 engine.TickCount = gpGlobals.tickcount
 engine.TickInterval = gpGlobals.interval_per_tick
 
+umsg.Angle = umsg.WriteAngles
+umsg.Bool = umsg.WriteBool
+umsg.Char = umsg.WriteChar
+umsg.Entity = umsg.WriteEntity
+umsg.Float = umsg.WriteFloat
+umsg.Long = umsg.WriteLong
+umsg.Short = umsg.WriteShort
+umsg.String = umsg.WriteString
+umsg.Vector = umsg.WriteVector
+umsg.VectorNormal = umsg.WriteNormal
+umsg.Send = umsg.MessageEnd
+
 function istable(variable)
 	return type(variable) == "table"
 end
@@ -58,11 +70,11 @@ unpack = table.unpack
 Material = gpGlobals.FindMaterial
 CreateMaterial = gpGlobals.CreateMaterial
 CreateConVar = function(name, value, flags, helpText, min, max)
-	if (istable(flags)) then
-		flags = bit.bor(table.unpack(flags))
-	end
+    if (istable(flags)) then
+        flags = bit.bor(table.unpack(flags))
+    end
 
-	return ConVar(name, value, flags, helpText, min, max)
+    return ConVar(name, value, flags, helpText, min, max)
 end
 
 --[[
@@ -99,7 +111,7 @@ require("../modules/cleanup")
 require("../modules/duplicator")
 require("../modules/constraint")
 require("../modules/construct")
-require("../modules/usermessage")
+-- require("../modules/usermessage") -- We have our own usermessage library.
 require("../modules/list")
 require("../modules/cvars")
 require("../modules/http")

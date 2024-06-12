@@ -22,6 +22,7 @@
 #include "luacachefile.h"
 #include "lconvar.h"
 #include "licvar.h"
+#include "lnetwork.h"
 
 // memdbgon must be the last include file in a .cpp file!!!
 #include "tier0/memdbgon.h"
@@ -368,6 +369,8 @@ void luasrc_init( void )
     luasrc_setmodulepaths( L );
 
     luasrc_openlibs( L );
+
+    RegisterLuaUserMessages();
 
     Msg( "Lua initialized (" LUA_VERSION ")\n" );
 }

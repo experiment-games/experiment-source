@@ -705,6 +705,8 @@ $Project
             $File "$SRCDIR\public\engine\livdebugoverlay.cpp"
             $File "$SRCDIR\public\tier1\LKeyValues.cpp"
             $File "$SRCDIR\public\mathlib\lmathlib.cpp"
+            $File "$SRCDIR\public\lnetwork.cpp"
+            $File "$SRCDIR\public\lnetwork.h"
             $File "$SRCDIR\public\lnetworkstringtabledefs.cpp"
             $File "$SRCDIR\public\lnetworkstringtabledefs.h"
             $File "$SRCDIR\public\vphysics\lperformance.cpp"

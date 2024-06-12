@@ -1,4 +1,4 @@
-//===== Copyright © 1996-2005, Valve Corporation, All rights reserved. ======//
+//===== Copyright ï¿½ 1996-2005, Valve Corporation, All rights reserved. ======//
 //
 // Purpose: 
 //
@@ -195,11 +195,6 @@ static int engine_LogPrint (lua_State *L) {
   return 0;
 }
 
-static int engine_MessageEnd (lua_State *L) {
-  engine->MessageEnd();
-  return 0;
-}
-
 static int engine_MultiplayerEndGame (lua_State *L) {
   engine->MultiplayerEndGame();
   return 0;
@@ -314,7 +309,6 @@ static const luaL_Reg enginelib[] = {
   {"LoadGameState", engine_LoadGameState},
   {"LockNetworkStringTables", engine_LockNetworkStringTables},
   {"LogPrint", engine_LogPrint},
-  {"MessageEnd", engine_MessageEnd},
   {"MultiplayerEndGame", engine_MultiplayerEndGame},
   {"NotifyEdictFlagsChange", engine_NotifyEdictFlagsChange},
   {"PrecacheDecal", engine_PrecacheDecal},
