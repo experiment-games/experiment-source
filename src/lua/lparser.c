@@ -661,11 +661,21 @@ static l_noret undefgoto (LexState *ls, Labeldesc *gt) {
     msg = "break outside loop at line %d";
     msg = luaO_pushfstring(ls->L, msg, gt->line);
   }
+  else if (eqstr(gt->name, luaS_newliteral(ls->L, "continue"))) {
+    msg = "continue outside loop at line %d";
+    msg = luaO_pushfstring(ls->L, msg, gt->line);
+  }
   else {
     msg = "no visible label '%s' for <goto> at line %d";
     msg = luaO_pushfstring(ls->L, msg, getstr(gt->name), gt->line);
   }
   luaK_semerror(ls, msg);
+}
+
+
+static void endloopblock (FuncState *fs) {
+  LexState *ls = fs->ls;
+  createlabel(ls, luaS_newliteral(ls->L, "continue"), 0, 0);
 }
 
 
@@ -1443,6 +1453,16 @@ static void breakstat (LexState *ls) {
 
 
 /*
+** Continue statement. Semantically equivalent to "goto continue".
+*/
+static void contstat (LexState *ls) {
+  int line = ls->linenumber;
+  luaX_next(ls);  /* skip continue */
+  newgotoentry(ls, luaS_newliteral(ls->L, "continue"), line, luaK_jump(ls->fs));
+}
+
+
+/*
 ** Check whether there is already a label with the given 'name'.
 */
 static void checkrepeated (LexState *ls, TString *name) {
@@ -1477,6 +1497,7 @@ static void whilestat (LexState *ls, int line) {
   enterblock(fs, &bl, 1);
   checknext(ls, TK_DO);
   block(ls);
+  endloopblock(fs);  /* inside loop scope ('continue' jumps to this point) */
   luaK_jumpto(fs, whileinit);
   check_match(ls, TK_END, TK_WHILE, line);
   leaveblock(fs);
@@ -1494,6 +1515,7 @@ static void repeatstat (LexState *ls, int line) {
   enterblock(fs, &bl2, 0);  /* scope block */
   luaX_next(ls);  /* skip REPEAT */
   statlist(ls);
+  endloopblock(fs);  /* inside loop scope ('continue' jumps to this point) */
   check_match(ls, TK_UNTIL, TK_REPEAT, line);
   condexit = cond(ls);  /* read condition (inside scope block) */
   leaveblock(fs);  /* finish scope */
@@ -1554,6 +1576,7 @@ static void forbody (LexState *ls, int base, int line, int nvars, int isgen) {
   adjustlocalvars(ls, nvars);
   luaK_reserveregs(fs, nvars);
   block(ls);
+  endloopblock(fs);  /* inside loop scope ('continue' jumps to this point) */
   leaveblock(fs);  /* end of scope for declared variables */
   fixforjump(fs, prep, luaK_getlabel(fs), 0);
   if (isgen) {  /* generic for? */
@@ -1644,12 +1667,16 @@ static void test_then_block (LexState *ls, int *escapelist) {
   luaX_next(ls);  /* skip IF or ELSEIF */
   expr(ls, &v);  /* read condition */
   checknext(ls, TK_THEN);
-  if (ls->t.token == TK_BREAK) {  /* 'if x then break' ? */
+  if (ls->t.token == TK_BREAK ||
+      ls->t.token == TK_CONTINUE) {  /* 'if x then (break | continue)' ? */
     int line = ls->linenumber;
     luaK_goiffalse(ls->fs, &v);  /* will jump if condition is true */
     luaX_next(ls);  /* skip 'break' */
     enterblock(fs, &bl, 0);  /* must enter block before 'goto' */
-    newgotoentry(ls, luaS_newliteral(ls->L, "break"), line, v.t);
+    if (ls->t.token == TK_BREAK)
+      newgotoentry(ls, luaS_newliteral(ls->L, "break"), line, v.t);
+    else /* ls->t.token == TK_CONTINUE */
+      newgotoentry(ls, luaS_newliteral(ls->L, "continue"), line, v.t);
     while (testnext(ls, ';')) {}  /* skip semicolons */
     if (block_follow(ls, 0)) {  /* jump is the entire block? */
       leaveblock(fs);
@@ -1658,7 +1685,7 @@ static void test_then_block (LexState *ls, int *escapelist) {
     else  /* must skip over 'then' part if condition is false */
       jf = luaK_jump(fs);
   }
-  else {  /* regular case (not a break) */
+  else {  /* regular case (not a break or continue) */
     luaK_goiftrue(ls->fs, &v);  /* skip over block if condition is false */
     enterblock(fs, &bl, 0);
     jf = v.f;
@@ -1896,6 +1923,10 @@ static void statement (LexState *ls) {
     }
     case TK_BREAK: {  /* stat -> breakstat */
       breakstat(ls);
+      break;
+    }
+    case TK_CONTINUE: {  /* stat -> contstat */
+      contstat(ls);
       break;
     }
     case TK_GOTO: {  /* stat -> 'goto' NAME */

@@ -1,0 +1,194 @@
+#
+# Adds the 'continue' statement to Lua.
+#
+# Source: https://lua-users.org/lists/lua-l/2023-03/msg00098.html
+#
+# To use it:
+# 1. Open a terminal in the lua/ directory.
+#
+# 2. Apply the patch:
+#    patch -p1 < ../lua_add_continue.patch
+#
+# 3. Rebuild the solution
+#
+diff --git a/llex.c b/llex.c
+index b0dc0acc..f96a0239 100644
+--- a/llex.c
++++ b/llex.c
+@@ -38,7 +38,7 @@
+
+ /* ORDER RESERVED */
+ static const char *const luaX_tokens [] = {
+-    "and", "break", "do", "else", "elseif",
++    "and", "break", "continue", "do", "else", "elseif",
+     "end", "false", "for", "function", "goto", "if",
+     "in", "local", "nil", "not", "or", "repeat",
+     "return", "then", "true", "until", "while",
+diff --git a/llex.h b/llex.h
+index 389d2f86..bb55dafe 100644
+--- a/llex.h
++++ b/llex.h
+@@ -31,7 +31,7 @@
+ */
+ enum RESERVED {
+   /* terminal symbols denoted by reserved words */
+-  TK_AND = FIRST_RESERVED, TK_BREAK,
++  TK_AND = FIRST_RESERVED, TK_BREAK, TK_CONTINUE,
+   TK_DO, TK_ELSE, TK_ELSEIF, TK_END, TK_FALSE, TK_FOR, TK_FUNCTION,
+   TK_GOTO, TK_IF, TK_IN, TK_LOCAL, TK_NIL, TK_NOT, TK_OR, TK_REPEAT,
+   TK_RETURN, TK_THEN, TK_TRUE, TK_UNTIL, TK_WHILE,
+diff --git a/lparser.c b/lparser.c
+index 24668c24..773dc070 100644
+--- a/lparser.c
++++ b/lparser.c
+@@ -661,6 +661,10 @@ static l_noret undefgoto (LexState *ls, Labeldesc *gt) {
+     msg = "break outside loop at line %d";
+     msg = luaO_pushfstring(ls->L, msg, gt->line);
+   }
++  else if (eqstr(gt->name, luaS_newliteral(ls->L, "continue"))) {
++    msg = "continue outside loop at line %d";
++    msg = luaO_pushfstring(ls->L, msg, gt->line);
++  }
+   else {
+     msg = "no visible label '%s' for <goto> at line %d";
+     msg = luaO_pushfstring(ls->L, msg, getstr(gt->name), gt->line);
+@@ -669,6 +673,12 @@ static l_noret undefgoto (LexState *ls, Labeldesc *gt) {
+ }
+
+
++static void endloopblock (FuncState *fs) {
++  LexState *ls = fs->ls;
++  createlabel(ls, luaS_newliteral(ls->L, "continue"), 0, 0);
++}
++
++
+ static void leaveblock (FuncState *fs) {
+   BlockCnt *bl = fs->bl;
+   LexState *ls = fs->ls;
+@@ -1442,6 +1452,16 @@ static void breakstat (LexState *ls) {
+ }
+
+
++/*
++** Continue statement. Semantically equivalent to "goto continue".
++*/
++static void contstat (LexState *ls) {
++  int line = ls->linenumber;
++  luaX_next(ls);  /* skip continue */
++  newgotoentry(ls, luaS_newliteral(ls->L, "continue"), line, luaK_jump(ls->fs));
++}
++
++
+ /*
+ ** Check whether there is already a label with the given 'name'.
+ */
+@@ -1477,6 +1497,7 @@ static void whilestat (LexState *ls, int line) {
+   enterblock(fs, &bl, 1);
+   checknext(ls, TK_DO);
+   block(ls);
++  endloopblock(fs);  /* inside loop scope ('continue' jumps to this point) */
+   luaK_jumpto(fs, whileinit);
+   check_match(ls, TK_END, TK_WHILE, line);
+   leaveblock(fs);
+@@ -1494,6 +1515,7 @@ static void repeatstat (LexState *ls, int line) {
+   enterblock(fs, &bl2, 0);  /* scope block */
+   luaX_next(ls);  /* skip REPEAT */
+   statlist(ls);
++  endloopblock(fs);  /* inside loop scope ('continue' jumps to this point) */
+   check_match(ls, TK_UNTIL, TK_REPEAT, line);
+   condexit = cond(ls);  /* read condition (inside scope block) */
+   leaveblock(fs);  /* finish scope */
+@@ -1554,6 +1576,7 @@ static void forbody (LexState *ls, int base, int line, int nvars, int isgen) {
+   adjustlocalvars(ls, nvars);
+   luaK_reserveregs(fs, nvars);
+   block(ls);
++  endloopblock(fs);  /* inside loop scope ('continue' jumps to this point) */
+   leaveblock(fs);  /* end of scope for declared variables */
+   fixforjump(fs, prep, luaK_getlabel(fs), 0);
+   if (isgen) {  /* generic for? */
+@@ -1644,12 +1667,16 @@ static void test_then_block (LexState *ls, int *escapelist) {
+   luaX_next(ls);  /* skip IF or ELSEIF */
+   expr(ls, &v);  /* read condition */
+   checknext(ls, TK_THEN);
+-  if (ls->t.token == TK_BREAK) {  /* 'if x then break' ? */
++  if (ls->t.token == TK_BREAK ||
++      ls->t.token == TK_CONTINUE) {  /* 'if x then (break | continue)' ? */
+     int line = ls->linenumber;
+     luaK_goiffalse(ls->fs, &v);  /* will jump if condition is true */
+     luaX_next(ls);  /* skip 'break' */
+     enterblock(fs, &bl, 0);  /* must enter block before 'goto' */
+-    newgotoentry(ls, luaS_newliteral(ls->L, "break"), line, v.t);
++    if (ls->t.token == TK_BREAK)
++      newgotoentry(ls, luaS_newliteral(ls->L, "break"), line, v.t);
++    else /* ls->t.token == TK_CONTINUE */
++      newgotoentry(ls, luaS_newliteral(ls->L, "continue"), line, v.t);
+     while (testnext(ls, ';')) {}  /* skip semicolons */
+     if (block_follow(ls, 0)) {  /* jump is the entire block? */
+       leaveblock(fs);
+@@ -1658,7 +1685,7 @@ static void test_then_block (LexState *ls, int *escapelist) {
+     else  /* must skip over 'then' part if condition is false */
+       jf = luaK_jump(fs);
+   }
+-  else {  /* regular case (not a break) */
++  else {  /* regular case (not a break or continue) */
+     luaK_goiftrue(ls->fs, &v);  /* skip over block if condition is false */
+     enterblock(fs, &bl, 0);
+     jf = v.f;
+@@ -1898,6 +1925,10 @@ static void statement (LexState *ls) {
+       breakstat(ls);
+       break;
+     }
++    case TK_CONTINUE: {  /* stat -> contstat */
++      contstat(ls);
++      break;
++    }
+     case TK_GOTO: {  /* stat -> 'goto' NAME */
+       luaX_next(ls);  /* skip 'goto' */
+       gotostat(ls);
+
+lst = { 'one', 'two', 'three', 'four', 'five', 'six' }
+
+local function closable()
+  return setmetatable( {}, {
+      __close = function()
+        print( '', '==> I was closed.' )
+      end
+    } )
+end
+
+print( '-------- repeat loop -----------' )
+local idx = 1
+repeat
+  local word = lst[idx]
+  idx = idx + 1
+  local _<close> = closable()
+  if word:sub( 1, 1 ) == 't' then continue end
+  print( idx-1, word )
+until idx > 6
+
+print( '-------- while loop -----------' )
+local idx = 1
+while idx <= 6 do
+  local word = lst[idx]
+  idx = idx + 1
+  local _<close> = closable()
+  if word:sub( 1, 1 ) == 't' then continue end
+  print( idx-1, word )
+end
+
+print( '-------- for loop -----------' )
+for idx, word in ipairs( lst ) do
+  local _<close> = closable()
+  if word:sub( 1, 1 ) == 't' then continue end
+  print( idx, word )
+end
+
+print( '-------- multiple statements -----------' )
+for idx, word in ipairs( lst ) do
+  local _<close> = closable()
+  if word:sub( 1, 1 ) == 't' then
+    print( '', '==> I am continuing.' )
+    continue
+  end
+  print( idx, word )
+end
