@@ -69,10 +69,24 @@ CWARNS= $(CWARNSCPP) $(CWARNSC) $(CWARNGCC)
 LOCAL = $(TESTS) $(CWARNS)
 
 
-# enable Linux goodies
-MYCFLAGS= $(LOCAL) -std=c99 -DLUA_USE_LINUX -DLUA_USE_READLINE
-MYLDFLAGS= $(LOCAL) -Wl,-E
-MYLIBS= -ldl -lreadline
+ifeq ($(OS),Windows_NT)
+    detected_OS := Windows
+else
+    detected_OS := $(shell uname -s)
+endif
+
+ifeq ($(detected_OS),Linux)
+    # enable Linux goodies
+    MYCFLAGS= $(LOCAL) -LUA_BUILD_AS_DLL -DLUA_USE_LINUX -DLUA_USE_READLINE
+    MYLDFLAGS= $(LOCAL) -shared -Wl,--out-implib,lua54.a -o lua54.so
+    MYLIBS= -ldl -lreadline
+endif
+
+ifeq ($(detected_OS),Windows)
+    MYCFLAGS = $(LOCAL) -LUA_BUILD_AS_DLL
+    MYLDFLAGS = $(LOCAL) -shared -Wl,--out-implib,lua54.lib -o lua54.dll
+    MYLIBS =
+endif
 
 
 CC= gcc
