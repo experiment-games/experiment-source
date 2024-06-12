@@ -15,7 +15,7 @@ end
 
 function umsg.OnMessageReceived(messageName, message)
 	if (umsg.Hooks[messageName]) then
-		umsg.Hooks[messageName].Function(message, unpack(umsg.Hooks[messageName].PreArgs))
+		umsg.Hooks[messageName].Function(message, table.unpack(umsg.Hooks[messageName].PreArgs))
 		return
 	end
 

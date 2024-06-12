@@ -29,22 +29,23 @@
 /// <param name="message"></param>
 static void umsg_CallOnMessageReceived( lua_State *L, const char *messageName, bf_read *message )
 {
-    Warning( "umsg_CallOnMessageReceived: %s\n", messageName );
     lua_getglobal( L, "umsg" );
     lua_getfield( L, -1, "OnMessageReceived" );
     lua_pushstring( L, messageName );
     lua_pushbf_read( L, message );
+    lua_remove( L, -4 );  // Remove umsg
     int result = lua_pcall( L, 2, 0, 0 );
 
     if ( result != 0 )
     {
-        Warning( "[Lua] umsg_CallOnMessageReceived: %s\n", lua_tostring( L, -1 ) );
+        Warning( "[Lua] umsg.umsg_CallOnMessageReceived: %s\n", lua_tostring( L, -1 ) );
+        lua_pop( L, 1 );
     }
 }
 
+// lua_run_cl umsg.Hook("test", function(msg) print(msg:ReadString()) end); lua_run umsg.Start("test") umsg.WriteString("asd") umsg.MessageEnd()
 static void umsg_HandleReceiveMessage( bf_read &msg )
 {
-    Warning( "umsg_HandleReceiveMessage\n" );
     char name[2048];
     msg.ReadString( name, sizeof( name ) );
     umsg_CallOnMessageReceived( L, name, &msg );
@@ -59,16 +60,16 @@ static int umsg_Start( lua_State *L )
 {
     if ( isMessageQueued )
     {
-        Warning( "[Lua] umsg.Start called with an active message! Resetting that message.\n" );
+        Warning( "umsg.Start called with an active message! Resetting that message.\n" );
     }
 
     const char *messageName = luaL_checkstring( L, 1 );
 
     isMessageQueued = true;
 
-    queuedMessageBuffer.Reset();
     byte byteBuffer[PAD_NUMBER( MAX_USER_MSG_DATA, 4 )];
     queuedMessageBuffer.StartWriting( byteBuffer, sizeof( byteBuffer ) );
+    queuedMessageBuffer.Reset();
 
     // If the filter is nil or empty, create one with all players
     if ( lua_isnoneornil( L, 2 ) )
@@ -96,16 +97,18 @@ static int umsg_MessageEnd( lua_State *L )
         return 0;
     }
 
-    CBroadcastRecipientFilter tmp ;
+    isMessageQueued = false;
 
     // We have to create and send the message in one go, or we'll get a
     // access violation in the engine (from  othermessages getting in the way)
-    bf_write* sendBuffer = engine->UserMessageBegin( &tmp, luaMessageType );
+    bf_write *sendBuffer = engine->UserMessageBegin( &queuedRecipientFilter, luaMessageType );
     sendBuffer->Reset();
 
-    const unsigned char *data = queuedMessageBuffer.GetData();
+    queuedMessageBuffer.SeekToBit( 0 );
+    unsigned char *data = queuedMessageBuffer.GetData();
     sendBuffer->WriteBits( data, queuedMessageBuffer.GetNumBitsWritten() );
 
+    // Pad the remaining message with zeros
     int bytesLeft = sendBuffer->GetNumBytesLeft() - 1;  // TODO: Why -1 to get the correct number of bytes?
 
     for ( int i = 0; i < bytesLeft; i++ )
@@ -114,10 +117,9 @@ static int umsg_MessageEnd( lua_State *L )
         sendBuffer->WriteByte( 0 );
     }
 
-    queuedRecipientFilter.Reset();
-    isMessageQueued = false;
-
     engine->MessageEnd();
+
+    queuedRecipientFilter.Reset();
 
     return 0;
 }
@@ -223,7 +225,7 @@ static int umsg_WriteString( lua_State *L )
 static int umsg_WriteEntity( lua_State *L )
 {
     if ( !isMessageQueued )
-        Warning( "[Lua] umsg.WriteEntity called with no active message\n" );
+        Warning( "[Lua] umsg.WriteEHandle called with no active message\n" );
 
     long iEncodedEHandle;
 
@@ -332,8 +334,7 @@ static const luaL_Reg netLib[] = {
 #ifdef CLIENT_DLL
 LUA_API void lua_pushbf_read( lua_State *L, bf_read *message )
 {
-    bf_read **ud = ( bf_read ** )lua_newuserdata( L, sizeof( bf_read * ) );
-    *ud = message;
+    bf_read *bfRead = ( bf_read * )lua_newuserdata( L, sizeof( bf_read ) );
     luaL_getmetatable( L, LUA_BFREADLIBNAME );
     lua_setmetatable( L, -2 );
 }
@@ -478,6 +479,28 @@ static int bfRead_ReadEntity( lua_State *L )
     return 1;
 }
 
+static int bfRead___index( lua_State *L )
+{
+    luaL_getmetatable( L, LUA_BFREADLIBNAME );
+    lua_pushvalue( L, 2 );
+    lua_gettable( L, -2 );
+
+    if ( lua_isnil( L, -1 ) )
+    {
+        lua_pop( L, 2 );
+        lua_pushvalue( L, 2 );
+        lua_gettable( L, 1 );
+    }
+
+    return 1;
+}
+
+static int bfRead___tostring( lua_State *L )
+{
+    lua_pushfstring( L, "bf_read: %p", luaL_checkbf_read( L, 1 ) );
+    return 1;
+}
+
 static const luaL_Reg bfReadLib[] = {
     { "ReadBit", bfRead_ReadBit },
     { "ReadByte", bfRead_ReadByte },
@@ -492,6 +515,8 @@ static const luaL_Reg bfReadLib[] = {
     { "ReadString", bfRead_ReadString },
     { "ReadBytes", bfRead_ReadBytes },
     { "ReadEntity", bfRead_ReadEntity },
+    { "__index", bfRead___index },
+    { "__tostring", bfRead___tostring },
     { NULL, NULL } };
 #endif
 
@@ -513,13 +538,11 @@ LUALIB_API int luaopen_net( lua_State *L )
 #ifdef CLIENT_DLL
 LUALIB_API int luaopen_bf_read( lua_State *L )
 {
-    luaL_getmetatable( L, LUA_BFREADLIBNAME );
-    if ( lua_isnoneornil( L, -1 ) )
-    {
-        lua_pop( L, 1 );
-        luaL_newmetatable( L, LUA_BFREADLIBNAME );
-    }
+    luaL_newmetatable( L, LUA_BFREADLIBNAME );
     luaL_register( L, NULL, bfReadLib );
+    lua_pushstring( L, "bf_read" );
+    lua_setfield( L, -2, "__type" ); /* metatable.__type = "entity" */
+    lua_pop( L, 1 );
     return 1;
 }
 #endif
