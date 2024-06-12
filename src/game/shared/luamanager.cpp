@@ -938,7 +938,8 @@ void luasrc_InitCustomLoader( const char *gamemode, const char *gamemodePath )
     lua_pushcfunction( loaderLuaState, luasrc_loader_traceback );
 
     // Execute the loader file, leaving the table at the top of the stack
-    if ( luasrc_dofile_leave_stack( loaderLuaState, loaderFilePath ) == -1 )
+    if ( luasrc_dofile_leave_stack( loaderLuaState, loaderFilePath ) == -1
+        || !lua_istable( loaderLuaState, -1 ) )
     {
         lua_close( loaderLuaState );
         Warning(

@@ -502,11 +502,12 @@ static int llex (LexState *ls, SemInfo *seminfo) {
         else if (check_next1(ls, '>')) return TK_SHR;  /* '>>' */
         else return '>';
       }
-      case '/': {
-        next(ls);
-        if (check_next1(ls, '/')) return TK_IDIV;  /* '//' */
-        else return '/';
-      }
+      // Experiment; commented to implement C-style comments below
+      //case '/': {
+      //  next(ls);
+      //  if (check_next1(ls, '/')) return TK_IDIV;  /* '//' */
+      //  else return '/';
+      //}
       case '~': {
         next(ls);
         if (check_next1(ls, '=')) return TK_NE;  /* '~=' */
@@ -554,6 +555,39 @@ static int llex (LexState *ls, SemInfo *seminfo) {
         if (check_next1(ls, '|')) return TK_COR;  /* '||' */
         else return '|';
       }
+      // Experiment; C-style comments
+      case '/': {
+        next(ls);
+        if (check_next1(ls, '/')) {  /* single-line comment */
+          while (!currIsNewline(ls) && ls->current != EOZ)
+            next(ls);  /* skip until end of line (or end of file) */
+          break;
+        }
+        else if (check_next1(ls, '*')) {  /* multi-line comment */
+          int level = 1;
+          next(ls);  /* skip '*' */
+          while (level > 0) {
+            if (ls->current == EOZ)
+              lexerror(ls, "unfinished long comment", TK_EOS);
+            else if (ls->current == '\n' || ls->current == '\r')
+              inclinenumber(ls);
+            else if (ls->current == '/' && check_next1(ls, '*')) {
+              next(ls);  /* skip '*' */
+              level++;
+            }
+            else if (ls->current == '*' && check_next1(ls, '/')) {
+              next(ls);  /* skip '/' */
+              level--;
+            }
+            else
+              next(ls);
+          }
+          break;
+        }
+        else
+          return '/';
+      }
+      // Experiment; end of C-style operators
       default: {
         if (lislalpha(ls->current)) {  /* identifier or reserved word? */
           TString *ts;

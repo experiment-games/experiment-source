@@ -84,55 +84,55 @@ include("util/sql.lua")
 
 -- Shared modules.
 
-baseclass = require("../modules/baseclass")
--- concommand = require("../modules/concommand") -- We have our own concommand library.
-saverestore = require("../modules/saverestore")
--- hook = require("../modules/hook") -- We have our own hook library.
--- gamemode = require("../modules/gamemode") -- We have our own gamemode library.
--- weapons = require("../modules/weapons") -- We have our own weapons library.
--- scripted_ents = require("../modules/scripted_ents") -- We have our own scripted_ents library.
-player_manager = require("../modules/player_manager")
-numpad = require("../modules/numpad")
-team = require("../modules/team")
-undo = require("../modules/undo")
-cleanup = require("../modules/cleanup")
-duplicator = require("../modules/duplicator")
-constraint = require("../modules/constraint")
-construct = require("../modules/construct")
-usermessage = require("../modules/usermessage")
-list = require("../modules/list")
-cvars = require("../modules/cvars")
-http = require("../modules/http")
-properties = require("../modules/properties")
-widget = require("../modules/widget")
-cookie = require("../modules/cookie")
-utf8 = require("../modules/utf8")
+require("../modules/baseclass")
+-- require("../modules/concommand") -- We have our own concommand library.
+require("../modules/saverestore")
+-- require("../modules/hook") -- We have our own hook library.
+-- require("../modules/gamemode") -- We have our own gamemode library.
+-- require("../modules/weapons") -- We have our own weapons library.
+-- require("../modules/scripted_ents") -- We have our own scripted_ents library.
+require("../modules/player_manager")
+require("../modules/numpad")
+require("../modules/team")
+require("../modules/undo")
+require("../modules/cleanup")
+require("../modules/duplicator")
+require("../modules/constraint")
+require("../modules/construct")
+require("../modules/usermessage")
+require("../modules/list")
+require("../modules/cvars")
+require("../modules/http")
+require("../modules/properties")
+require("../modules/widget")
+require("../modules/cookie")
+require("../modules/utf8")
 
-drive = require("../modules/drive")
+require("../modules/drive")
 -- include("drive/drive_base.lua")
 -- include("drive/drive_noclip.lua")
 
 if (SERVER) then
 	-- Server-side modules.
-	ai_task = require("../modules/ai_task")
-	ai_schedule = require("../modules/ai_schedule")
+	require("../modules/ai_task")
+	require("../modules/ai_schedule")
 end
 
 if (CLIENT) then
 	-- Client-side modules.
-	draw = require("../modules/draw")
-	-- markup = require("../modules/markup") -- Not implemented atm.
-	effects = require("../modules/effects")
-	halo = require("../modules/halo")
-	killicon = require("../modules/killicon")
-	spawnmenu = require("../modules/spawnmenu")
-	controlpanel = require("../modules/controlpanel")
-	-- presets = require("../modules/presets") -- Not implemented atm.
-	menubar = require("../modules/menubar")
-	matproxy = require("../modules/matproxy")
+	require("../modules/draw")
+	-- require("../modules/markup") -- Not implemented atm.
+	require("../modules/effects")
+	require("../modules/halo")
+	require("../modules/killicon")
+	require("../modules/spawnmenu")
+	require("../modules/controlpanel")
+	-- require("../modules/presets") -- Not implemented atm.
+	require("../modules/menubar")
+	require("../modules/matproxy")
 
-	-- notification = require("../modules/notification")
-	-- search = require("../modules/search")
+	-- require("../modules/notification")
+	-- require("../modules/search")
 end
 
 --[[

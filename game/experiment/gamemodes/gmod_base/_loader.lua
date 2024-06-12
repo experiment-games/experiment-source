@@ -1,228 +1,233 @@
---[[
-	If Experiment finds a file named _loader.lua in a gamemode's directory,
-	it will load it before any other file in the directory within its own
-	Lua environment.
+-- --[[
+-- 	If Experiment finds a file named _loader.lua in a gamemode's directory,
+-- 	it will load it before any other file in the directory within its own
+-- 	Lua environment.
 
-	This file must return a table containing the following possible methods:
+-- 	This file must return a table containing the following possible methods:
 
-	- PreProcessFile( string fileContent, string filePath ) : string
-		This method is called before the file is loaded. It receives the file's
-		path and content as arguments and must return the content as a string.
+-- 	- PreProcessFile( string fileContent, string filePath ) : string
+-- 		This method is called before the file is loaded. It receives the file's
+-- 		path and content as arguments and must return the content as a string.
 
-		You can use this to replace or modify the content of the file before it
-		is loaded into the final Lua environment.
+-- 		You can use this to replace or modify the content of the file before it
+-- 		is loaded into the final Lua environment.
 
-	Currently no other methods are supported.
+-- 	Currently no other methods are supported.
 
-	The loader environment only gets the following libraries and functions loaded:
-	- Base Lua Functions: error, ipairs, next, pairs, print, select, tonumber,
-		tostring, type
-	- Lua Libraries with their functions:
-		- table
-		- string
-		- utf8
-		- math
-	- Globals: _G, _VERSION
+-- 	The loader environment only gets the following libraries and functions loaded:
+-- 	- Base Lua Functions: error, ipairs, next, pairs, print, select, tonumber,
+-- 		tostring, type
+-- 	- Lua Libraries with their functions:
+-- 		- table
+-- 		- string
+-- 		- utf8
+-- 		- math
+-- 	- Globals: _G, _VERSION
 
-	Finally this file is always sent to the client, this is so that the client
-	can also load the files with the same modifications as the server.
---]]
+-- 	Finally this file is always sent to the client, this is so that the client
+-- 	can also load the files with the same modifications as the server.
+-- --]]
 
-local isModuleSimulated = false
-local isInMultilineString = false
+-- -- local isModuleSimulated = false
+-- local isInMultilineString = false
 
-local transformers = {
-	--[[
-		Helper to only track whether we are in a multiline string or not
-	--]]
-	{
-		OnFileStart = function()
-			isInMultilineString = false
-		end,
+-- local transformers = {
+-- 	--[[
+-- 		Helper to only track whether we are in a multiline string or not
+-- 	--]]
+-- 	{
+-- 		OnFileStart = function()
+-- 			isInMultilineString = false
+-- 		end,
 
-		LineHandlers = {
-			function(line, allLinesBefore)
-				if (isInMultilineString) then
-					local _, countEnd = line:gsub("%]%]", "")
+-- 		LineHandlers = {
+-- 			function(line, allLinesBefore)
+-- 				if (isInMultilineString) then
+-- 					local _, countEnd = line:gsub("%]%]", "")
 
-					if (countEnd % 2 == 1) then
-						isInMultilineString = false
-					end
-				end
+-- 					if (countEnd % 2 == 1) then
+-- 						isInMultilineString = false
+-- 					end
+-- 				end
 
-				return line
-			end,
-		},
-	},
+-- 				return line
+-- 			end,
+-- 		},
+-- 	},
 
-	-- --[[
-	-- 	Transformers to simulate the 'module' function from Lua 5.1
+--     -- The transformers below attempted to create compatibility with Garry's Mod Lua code,
+--     -- without having to modify the Lua source code. However this became too much of a hassle
+--     -- so we decided to just modify the Lua source code directly to make it compatible with
+-- 	-- Garry's Mod Lua code.
 
-	-- 	Will modify the file so calls to "module(<something>)" or "module(<something>, package.seeall)"
-	-- 	are replaced with:
-	-- 	```lua
-	-- 	local MODULE = {}
-	-- 	<something> = MODULE
-	-- 	```
-	-- 	Any global function definitions in the file will be prefixed with
-	-- 	"MODULE." to avoid polluting the global namespace.
-	-- 	Finally the file will return MODULE at the end
-	-- --]]
-	-- {
-	-- 	OnFileStart = function()
-	-- 		isModuleSimulated = false
-	-- 	end,
+-- 	-- --[[
+-- 	-- 	Transformers to simulate the 'module' function from Lua 5.1
 
-	-- 	LineHandlers = {
-	-- 		-- Transforms the 'module' function call into a local variable and a module table
-	-- 		function(line, allLinesBefore)
-	-- 			local moduleName = line:match("^%s*module%(([^,%)]+)")
+-- 	-- 	Will modify the file so calls to "module(<something>)" or "module(<something>, package.seeall)"
+-- 	-- 	are replaced with:
+-- 	-- 	```lua
+-- 	-- 	local MODULE = {}
+-- 	-- 	<something> = MODULE
+-- 	-- 	```
+-- 	-- 	Any global function definitions in the file will be prefixed with
+-- 	-- 	"MODULE." to avoid polluting the global namespace.
+-- 	-- 	Finally the file will return MODULE at the end
+-- 	-- --]]
+-- 	-- {
+-- 	-- 	OnFileStart = function()
+-- 	-- 		isModuleSimulated = false
+-- 	-- 	end,
 
-	-- 			if (not moduleName) then
-	-- 				return line
-	-- 			end
+-- 	-- 	LineHandlers = {
+-- 	-- 		-- Transforms the 'module' function call into a local variable and a module table
+-- 	-- 		function(line, allLinesBefore)
+-- 	-- 			local moduleName = line:match("^%s*module%(([^,%)]+)")
 
-	-- 			local indent
-	-- 			indent, moduleName = moduleName:match("^(%s*)(.-)%s*$")
+-- 	-- 			if (not moduleName) then
+-- 	-- 				return line
+-- 	-- 			end
 
-	-- 			isModuleSimulated = true
+-- 	-- 			local indent
+-- 	-- 			indent, moduleName = moduleName:match("^(%s*)(.-)%s*$")
 
-	-- 			moduleName = moduleName:gsub("\"", "")
+-- 	-- 			isModuleSimulated = true
 
-	-- 			-- Create the module table and make it available in the global scope
-	-- 			local replacement = indent
-	-- 				.. "local MODULE = {} "
+-- 	-- 			moduleName = moduleName:gsub("\"", "")
 
-	-- 			-- Trap new global functions into the module
-	-- 			replacement = replacement
-	-- 				.. "local __originalMetatableG = getmetatable(_G) "
-	-- 				.. "setmetatable(_G, {"
-	-- 				.. " __newindex = function(table, key, value) MODULE[key] = value end, "
-	-- 				.. " __index = function(table, key) return MODULE[key] end, "
-	-- 				.. "}) "
+-- 	-- 			-- Create the module table and make it available in the global scope
+-- 	-- 			local replacement = indent
+-- 	-- 				.. "local MODULE = {} "
 
-	-- 			return replacement
-	-- 		end,
-	-- 	},
+-- 	-- 			-- Trap new global functions into the module
+-- 	-- 			replacement = replacement
+-- 	-- 				.. "local __originalMetatableG = getmetatable(_G) "
+-- 	-- 				.. "setmetatable(_G, {"
+-- 	-- 				.. " __newindex = function(table, key, value) MODULE[key] = value end, "
+-- 	-- 				.. " __index = function(table, key) return MODULE[key] end, "
+-- 	-- 				.. "}) "
 
-	-- 	OnFileEnd = function(preProcessedContent)
-	-- 		if (not isModuleSimulated) then
-	-- 			return preProcessedContent
-	-- 		end
+-- 	-- 			return replacement
+-- 	-- 		end,
+-- 	-- 	},
 
-	-- 		local restoreGlobalSnippet = "\n\n"
-	-- 			.. "setmetatable(_G, __originalMetatableG) "
+-- 	-- 	OnFileEnd = function(preProcessedContent)
+-- 	-- 		if (not isModuleSimulated) then
+-- 	-- 			return preProcessedContent
+-- 	-- 		end
 
-	-- 		return preProcessedContent .. restoreGlobalSnippet .. "\n\nreturn MODULE"
-	-- 	end,
-	-- },
+-- 	-- 		local restoreGlobalSnippet = "\n\n"
+-- 	-- 			.. "setmetatable(_G, __originalMetatableG) "
 
-	--[[
-		Transforms C-style operators into Lua-style operators
-	--]]
-	{
-		LineHandlers = {
-			function(line, allLinesBefore)
-				-- line = line:gsub("!=", "~=")
-				-- line = line:gsub("&&", " and ")
-				-- line = line:gsub("||", " or ")
-				-- line = line:gsub("//", "--")
-				-- line = line:gsub("/*", "--[[")
-				-- line = line:gsub("*/", "]]")
-				-- The above can cause problems with paths like "test/*" or "test//test", so let's be more specific
-				-- about finding the symbols, only if they are not inside a string on the line
-				if (isInMultilineString) then
-					return line
-				end
+-- 	-- 		return preProcessedContent .. restoreGlobalSnippet .. "\n\nreturn MODULE"
+-- 	-- 	end,
+-- 	-- },
 
-				local newLine = ""
-				local lastChar = ""
-				local inString = false
-				local replacements = {
-					-- ["!="] = "~=",
-					-- ["&&"] = " and ",
-					-- ["||"] = " or ",
-					-- ["//"] = "--",
-					["/*"] = "--[[",
-					["*/"] = "]]",
-				}
+-- 	--[[
+-- 		Transforms C-style operators into Lua-style operators
+-- 	--]]
+-- 	-- {
+-- 	-- 	LineHandlers = {
+-- 	-- 		function(line, allLinesBefore)
+-- 	-- 			-- line = line:gsub("!=", "~=")
+-- 	-- 			-- line = line:gsub("&&", " and ")
+-- 	-- 			-- line = line:gsub("||", " or ")
+-- 	-- 			-- line = line:gsub("//", "--")
+-- 	-- 			-- line = line:gsub("/*", "--[[")
+-- 	-- 			-- line = line:gsub("*/", "]]")
+-- 	-- 			-- The above can cause problems with paths like "test/*" or "test//test", so let's be more specific
+-- 	-- 			-- about finding the symbols, only if they are not inside a string on the line
+-- 	-- 			if (isInMultilineString) then
+-- 	-- 				return line
+-- 	-- 			end
 
-				for i = 1, #line do
-					local char = line:sub(i, i)
-					local nextChar = i < #line and line:sub(i + 1, i + 1) or ""
+-- 	-- 			local newLine = ""
+-- 	-- 			local lastChar = ""
+-- 	-- 			local inString = false
+-- 	-- 			local replacements = {
+-- 	-- 				["!="] = "~=",
+-- 	-- 				["&&"] = " and ",
+-- 	-- 				["||"] = " or ",
+-- 	-- 				["//"] = "--",
+-- 	-- 				["/*"] = "--[[",
+-- 	-- 				["*/"] = "]]",
+-- 	-- 			}
 
-					if (char == "\"" and lastChar ~= "\\") then
-						inString = not inString
-					end
+-- 	-- 			for i = 1, #line do
+-- 	-- 				local char = line:sub(i, i)
+-- 	-- 				local nextChar = i < #line and line:sub(i + 1, i + 1) or ""
 
-					if (not inString) then
-						local replacement = replacements[lastChar .. char]
+-- 	-- 				if (char == "\"" and lastChar ~= "\\") then
+-- 	-- 					inString = not inString
+-- 	-- 				end
 
-						if (replacement) then
-							newLine = newLine:sub(1, -2) .. replacement
-						elseif (char == "!" and nextChar ~= "=") then
-							-- replace ! with not
-							newLine = newLine .. " not "
-						else
-							newLine = newLine .. char
-						end
-					else
-						newLine = newLine .. char
-					end
+-- 	-- 				if (not inString) then
+-- 	-- 					local replacement = replacements[lastChar .. char]
 
-					lastChar = char
-				end
+-- 	-- 					if (replacement) then
+-- 	-- 						newLine = newLine:sub(1, -2) .. replacement
+-- 	-- 					elseif (char == "!" and nextChar ~= "=") then
+-- 	-- 						-- replace ! with not
+-- 	-- 						newLine = newLine .. " not "
+-- 	-- 					else
+-- 	-- 						newLine = newLine .. char
+-- 	-- 					end
+-- 	-- 				else
+-- 	-- 					newLine = newLine .. char
+-- 	-- 				end
 
-				return newLine
-			end,
-		},
-	},
-}
+-- 	-- 				lastChar = char
+-- 	-- 			end
 
-return {
-	--- @param fileContent string
-	--- @param filePath string
-	--- @return string
-	PreProcessFile = function(fileContent, filePath)
-		local isLuaFile = filePath:match("%.lua$")
+-- 	-- 			return newLine
+-- 	-- 		end,
+-- 	-- 	},
+-- 	-- },
+-- }
 
-		if (not isLuaFile) then
-			return fileContent
-		end
+-- return {
+-- 	--- @param fileContent string
+-- 	--- @param filePath string
+-- 	--- @return string
+-- 	PreProcessFile = function(fileContent, filePath)
+-- 		local isLuaFile = filePath:match("%.lua$")
 
-		local moduleContent = {}
+-- 		if (not isLuaFile) then
+-- 			return fileContent
+-- 		end
 
-		for _, transformer in ipairs(transformers) do
-			if (transformer.OnFileStart) then
-				transformer.OnFileStart()
-			end
-		end
+-- 		local moduleContent = {}
 
-		for line in fileContent:gmatch("([^\n]*)\n?") do
-			for _, transformer in ipairs(transformers) do
-				for _, lineHandler in ipairs(transformer.LineHandlers) do
-					line = lineHandler(line, moduleContent)
-				end
-			end
+-- 		for _, transformer in ipairs(transformers) do
+-- 			if (transformer.OnFileStart) then
+-- 				transformer.OnFileStart()
+-- 			end
+-- 		end
 
-			table.insert(moduleContent, line)
-		end
+-- 		for line in fileContent:gmatch("([^\n]*)\n?") do
+-- 			for _, transformer in ipairs(transformers) do
+-- 				for _, lineHandler in ipairs(transformer.LineHandlers) do
+-- 					line = lineHandler(line, moduleContent)
+-- 				end
+-- 			end
 
-		local preProcessedContent = table.concat(moduleContent, "\n")
+-- 			table.insert(moduleContent, line)
+-- 		end
 
-		for _, transformer in ipairs(transformers) do
-			if (transformer.OnFileEnd) then
-				preProcessedContent = transformer.OnFileEnd(preProcessedContent)
-			end
-		end
+-- 		local preProcessedContent = table.concat(moduleContent, "\n")
 
-		-- print("====================================")
-		-- print("Preprocessed " .. filePath)
-		-- for line in preProcessedContent:gmatch("([^\n]*)\n?") do
-		-- 	print(line)
-		-- end
-		-- print("====================================")
+-- 		for _, transformer in ipairs(transformers) do
+-- 			if (transformer.OnFileEnd) then
+-- 				preProcessedContent = transformer.OnFileEnd(preProcessedContent)
+-- 			end
+-- 		end
 
-		return preProcessedContent
-	end,
-}
+-- 		-- print("====================================")
+-- 		-- print("Preprocessed " .. filePath)
+-- 		-- for line in preProcessedContent:gmatch("([^\n]*)\n?") do
+-- 		-- 	print(line)
+-- 		-- end
+-- 		-- print("====================================")
+
+-- 		return preProcessedContent
+-- 	end,
+-- }
