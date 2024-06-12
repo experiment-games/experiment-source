@@ -212,69 +212,6 @@ static void base_open( lua_State *L )
 #endif
 }
 
-static int luabitopen_band( lua_State *L )
-{
-    int i, n = lua_gettop( L );
-    lua_Integer r = ~( ( lua_Unsigned )0 );
-    for ( i = 1; i <= n; i++ )
-        r &= luaL_checkinteger( L, i );
-    lua_pushinteger( L, r );
-    return 1;
-}
-
-static int luabitopen_bor( lua_State *L )
-{
-    int i, n = lua_gettop( L );
-    lua_Integer r = 0;
-    for ( i = 1; i <= n; i++ )
-        r |= luaL_checkinteger( L, i );
-    lua_pushinteger( L, r );
-    return 1;
-}
-
-static int luabitopen_bxor( lua_State *L )
-{
-    int i, n = lua_gettop( L );
-    lua_Integer r = 0;
-    for ( i = 1; i <= n; i++ )
-        r ^= luaL_checkinteger( L, i );
-    lua_pushinteger( L, r );
-    return 1;
-}
-
-static int luabitopen_bnot( lua_State *L )
-{
-    lua_pushinteger( L, ~luaL_checkinteger( L, 1 ) );
-    return 1;
-}
-
-static int luabitopen_lshift( lua_State *L )
-{
-    lua_pushinteger( L, luaL_checkinteger( L, 1 ) << luaL_checkinteger( L, 2 ) );
-    return 1;
-}
-
-static int luabitopen_rshift( lua_State *L )
-{
-    lua_pushinteger( L, luaL_checkinteger( L, 1 ) >> luaL_checkinteger( L, 2 ) );
-    return 1;
-}
-
-static const luaL_Reg bit_funcs[] = {
-    { "band", luabitopen_band },
-    { "bor", luabitopen_bor },
-    { "bxor", luabitopen_bxor },
-    { "bnot", luabitopen_bnot },
-    { "lshift", luabitopen_lshift },
-    { "rshift", luabitopen_rshift },
-    { NULL, NULL } };
-
-LUALIB_API int luaopen_bit( lua_State *L )
-{
-    luaL_register( L, LUA_BITLIBNAME, bit_funcs );
-    return 1;
-}
-
 void luasrc_setmodulepaths( lua_State *L )
 {
     lua_getglobal( L, LUA_LOADLIBNAME );
@@ -393,7 +330,6 @@ void luasrc_init_gameui( void )
     luasrc_setmodulepaths( LGameUI );
 
     int leftOnStack = 0;
-    leftOnStack += luaopen_bit( LGameUI );
     leftOnStack += luaopen_ConCommand( LGameUI );
     leftOnStack += luaopen_dbg( LGameUI );
     leftOnStack += luaopen_engine( LGameUI );

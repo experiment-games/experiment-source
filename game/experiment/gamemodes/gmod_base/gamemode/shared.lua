@@ -28,12 +28,12 @@ function FindMetaTable(name)
 	return registry[name]
 end
 
-RealFrameTime = pgGlobals.absoluteframetime
-CurTime = pgGlobals.curtime
-FrameNumber = pgGlobals.framecount
-FrameTime = pgGlobals.frametime
-engine.TickCount = pgGlobals.tickcount
-engine.TickInterval = pgGlobals.interval_per_tick
+RealFrameTime = gpGlobals.absoluteframetime
+CurTime = gpGlobals.curtime
+FrameNumber = gpGlobals.framecount
+FrameTime = gpGlobals.frametime
+engine.TickCount = gpGlobals.tickcount
+engine.TickInterval = gpGlobals.interval_per_tick
 
 Material = gpGlobals.FindMaterial
 CreateMaterial = gpGlobals.CreateMaterial
