@@ -26,7 +26,7 @@
 #include "mathlib/vector.h"
 #include "mathlib/mathlib.h"
 #include "fmtstr.h"
-#include "lua/lua.hpp"
+#include "lua.hpp"
 #include "luasrclib.h"
 #include "lvmatrix.h"
 #include "lvector.h"

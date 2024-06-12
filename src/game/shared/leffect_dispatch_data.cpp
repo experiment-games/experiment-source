@@ -10,7 +10,7 @@
 #else
 #include "te_effect_dispatch.h"
 #endif
-#include "lua/lua.hpp"
+#include "lua.hpp"
 #include "luasrclib.h"
 #include "leffect_dispatch_data.h"
 #include "lbaseentity_shared.h"

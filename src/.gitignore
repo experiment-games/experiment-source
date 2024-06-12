@@ -25,6 +25,8 @@ mono_crash.*
 [Rr]elease_experiment/
 [Rr]eleases/
 [Rr]eleases_experiment/
+[Dd]ebugexperiment/
+[Rr]eleaseexperiment/
 x64/
 x86/
 [Ww][Ii][Nn]32/

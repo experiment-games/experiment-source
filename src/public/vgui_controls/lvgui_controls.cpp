@@ -5,7 +5,7 @@
 //=============================================================================
 
 #include "cbase.h"
-#include "lua/lua.hpp"
+#include "lua.hpp"
 #include "lControls.h"
 
 // memdbgon must be the last include file in a .cpp file!!!

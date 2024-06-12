@@ -9,7 +9,7 @@
 #include "cbase.h"
 #include "vector.h"
 #include "fmtstr.h"
-#include "lua/lua.hpp"
+#include "lua.hpp"
 #include "luasrclib.h"
 #include "lvector.h"
 

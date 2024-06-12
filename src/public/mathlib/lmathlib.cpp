@@ -6,7 +6,7 @@
 
 #include "cbase.h"
 #include "mathlib.h"
-#include "lua/lua.hpp"
+#include "lua.hpp"
 #include "luasrclib.h"
 #include "lmathlib.h"
 #include "lvector.h"

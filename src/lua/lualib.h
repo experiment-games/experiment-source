@@ -16,6 +16,7 @@
 
 #define LUA_GLIBK		1
 LUAMOD_API int (luaopen_base) (lua_State *L);
+LUAMOD_API int (luaopen_base_minimal) (lua_State *L);
 
 #define LUA_LOADLIBNAME	"package"
 #define LUA_LOADLIBK	(LUA_GLIBK << 1)

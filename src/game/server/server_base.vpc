@@ -51,7 +51,7 @@ $Configuration
 
 	$Compiler
 	{
-		$AdditionalIncludeDirectories	"$BASE;.\;$SRCDIR\game\shared;$SRCDIR\utils\common;$SRCDIR\game\shared\econ;$SRCDIR\game\server\NextBot"
+		$AdditionalIncludeDirectories	"$BASE;.\;$SRCDIR\game\shared;$SRCDIR\utils\common;$SRCDIR\game\shared\econ;$SRCDIR\game\server\NextBot;$SRCDIR\lua"
 		$PreprocessorDefinitions		"$BASE;GAME_DLL;VECTOR;VERSION_SAFE_STEAM_API_INTERFACES;PROTECTED_THINGS_ENABLE;sprintf=use_Q_snprintf_instead_of_sprintf;strncpy=use_Q_strncpy_instead;_snprintf=use_Q_snprintf_instead;EXPERIMENT_SOURCE;LUA_SDK"
 		$PreprocessorDefinitions		"$BASE;SWDS" [$POSIX]
 		$PreprocessorDefinitions		"$BASE;fopen=dont_use_fopen" [$WINDOWS||$X360]
@@ -667,7 +667,7 @@ $Project
 
 		$Folder	"Lua"
 		{
-            $File "$SRCDIR\public\lua\lua_compat.cpp"
+            $File "$SRCDIR\public\lua_compat.cpp"
             $File "$SRCDIR\game\shared\basescripted.cpp"
             $File "$SRCDIR\game\shared\basescripted.h"
             $File "$SRCDIR\game\server\basescriptedtrigger.cpp"
@@ -1104,5 +1104,7 @@ $Project
 		$Lib	tier2
 		$Lib	tier3
 		$ImpLibexternal steam_api
+
+		$Lib	"$SRCDIR\lua\lua54"
 	}
 }

@@ -1,0 +1,150 @@
+//-----------------------------------------------------------------------------
+//	LUA.VPC
+//
+//	Project Script
+//-----------------------------------------------------------------------------
+
+
+$macro SRCDIR		".."
+$Macro GAMENAME     "experiment"
+$Macro OUTBINDIR	"$SRCDIR\..\game\$GAMENAME\bin"
+$Macro OUTBINNAME	"lua54"
+$MacroRequired		"OUTDLLEXT" "$_DLL_EXT"
+
+$Include "$SRCDIR\vpc_scripts\version.vpc"
+$Include "$SRCDIR\vpc_scripts\platform_dirs.vpc"
+$include "$SRCDIR\vpc_scripts\source_base.vpc"
+$Include "$SRCDIR\vpc_scripts\source_win32_base.vpc"
+
+// $CustomBuildStep
+// {
+//     $Description	"Building Lua library..."
+//     $CommandLine	"cl /MD /O2 /W3 /c /DLUA_BUILD_AS_DLL *.c"
+//     $CommandLine	"link /DLL /IMPLIB:lua54.lib /OUT:lua54.dll *.obj"
+// }
+
+$Configuration
+{
+	$General
+	{
+		$TargetExtension	"$OUTDLLEXT"
+		$TargetName	        "$OUTBINNAME"
+		$OutputDirectory    ".\"
+
+		$ConfigurationType					"Dynamic Library (.dll)"
+    }
+
+	$Compiler
+	{
+        $PreprocessorDefinitions            "$BASE;LUA_BUILD_AS_DLL"
+
+		$RuntimeLibrary						"Multi-threaded DLL (/MD)"
+		$Optimization                       "Maximize Speed (/O2)"
+		$WarningLevel						"Level 3 (/W3)"
+        $TreatWarningsAsErrors				"No"
+
+		// Output Files
+		$ExpandAttributedSource
+		$AssemblerOutput
+		$ASMListLocation					"$(IntDir)/"
+		$ObjectFileName						"$(IntDir)/"
+		$ProgramDatabaseFileName			"$(IntDir)/"
+	}
+
+	$Linker
+	{
+		$SubSystem							"Windows (/SUBSYSTEM:WINDOWS)"
+		$TargetMachine						"MachineX86 (/MACHINE:X86)"	[$WIN32]
+		$TargetMachine						"MachineX64 (/MACHINE:X64)"	[$WIN64]
+    }
+
+	$PreBuildEvent
+	{
+		$CommandLine		"if EXIST $OUTBINDIR\$(TargetFileName) for /f $QUOTEdelims=$QUOTE %%A in ('attrib $QUOTE$OUTBINDIR\$(TargetFileName)$QUOTE') do set valveTmpIsReadOnly=$QUOTE%%A$QUOTE" "\n" \
+							"set valveTmpIsReadOnlyLetter=%valveTmpIsReadOnly:~6,1%" "\n" \
+							"if $QUOTE%valveTmpIsReadOnlyLetter%$QUOTE==$QUOTER$QUOTE del /q $QUOTE$(TargetDir)$QUOTE$(TargetFileName)" "\n" \
+							"$CRCCHECK" "\n"
+	}
+
+    $CustomBuildStep
+    {
+        $Description				"Creating $OUTBINNAME.lib"
+        $CommandLine				"$QUOTE$(VCInstallDir)bin\lib.exe$QUOTE /OUT:$OUTBINNAME.lib *.obj"
+        $Outputs					"$(IntDir)\$OUTBINNAME.lib"
+    }
+
+    $PostBuildEvent
+    {
+        $Description	"Copying Lua library to output directory..."
+        $CommandLine	"copy /Y $SRCDIR\lua\$OUTBINNAME.dll $OUTBINDIR\$OUTBINNAME.dll" [$WINDOWS]
+        $CommandLine	"cp $SRCDIR/lua/$OUTBINNAME.so $OUTBINDIR/$OUTBINNAME.so" [$LINUX]
+    }
+}
+
+$Project "lua"
+{
+	$Folder	"Source Files"
+	{
+        $File	"lapi.c"
+        $File   "lapi.h"
+        $File   "lauxlib.c"
+        $File   "lauxlib.h"
+        $File   "lbaselib.c"
+        $File   "lcode.c"
+        $File   "lcode.h"
+        $File   "lcorolib.c"
+        $File   "lctype.c"
+        $File   "lctype.h"
+        $File   "ldblib.c"
+        $File   "ldebug.c"
+        $File   "ldebug.h"
+        $File   "ldo.c"
+        $File   "ldo.h"
+        $File   "ldump.c"
+        $File   "lfunc.c"
+        $File   "lfunc.h"
+        $File   "lgc.c"
+        $File   "lgc.h"
+        $File   "linit.c"
+        $File   "liolib.c"
+        $File   "ljumptab.h"
+        $File   "llex.c"
+        $File   "llex.h"
+        $File   "llimits.h"
+        $File   "lmathlib.c"
+        $File   "lmem.c"
+        $File   "lmem.h"
+        $File   "loadlib.c"
+        $File   "lobject.c"
+        $File   "lobject.h"
+        $File   "lopcodes.c"
+        $File   "lopcodes.h"
+        $File   "lopnames.h"
+        $File   "loslib.c"
+        $File   "lparser.c"
+        $File   "lparser.h"
+        $File   "lprefix.h"
+        $File   "lstate.c"
+        $File   "lstate.h"
+        $File   "lstring.c"
+        $File   "lstring.h"
+        $File   "lstrlib.c"
+        $File   "ltable.c"
+        $File   "ltable.h"
+        $File   "ltablib.c"
+        $File   "ltests.c"
+        $File   "ltm.c"
+        $File   "ltm.h"
+        $File   "lua.c"
+        $File   "lua.h"
+        $File   "luaconf.h"
+        $File   "lualib.h"
+        $File   "lundump.c"
+        $File   "lundump.h"
+        $File   "lutf8lib.c"
+        $File   "lvm.c"
+        $File   "lvm.h"
+        $File   "lzio.c"
+        $File   "lzio.h"
+    }
+}

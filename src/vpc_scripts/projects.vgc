@@ -129,3 +129,7 @@ $Project "vvis_launcher"
 	"utils\vvis_launcher\vvis_launcher.vpc" [$WIN32]
 }
 
+$Project "lua54"
+{
+	"lua\lua.vpc" [$WINDOWS||$X360||$POSIX]
+}

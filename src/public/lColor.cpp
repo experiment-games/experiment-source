@@ -8,7 +8,7 @@
 #include "cbase.h"
 #include "Color.h"
 #include "fmtstr.h"
-#include "lua/lua.hpp"
+#include "lua.hpp"
 #include "luasrclib.h"
 #include "lColor.h"
 

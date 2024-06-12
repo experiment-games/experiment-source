@@ -9,7 +9,7 @@
 
 #include "cbase.h"
 #include "ienginevgui.h"
-#include "lua/lua.hpp"
+#include "lua.hpp"
 #include "luasrclib.h"
 #include "vgui_controls/lPanel.h"
 

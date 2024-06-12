@@ -7,7 +7,7 @@
 
 #include "cbase.h"
 #include "takedamageinfo.h"
-#include "lua/lua.hpp"
+#include "lua.hpp"
 #include "luasrclib.h"
 #include "ltakedamageinfo.h"
 #include "lbaseentity_shared.h"

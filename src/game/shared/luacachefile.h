@@ -12,7 +12,7 @@
 #endif
 
 #include "zip_utils.h"
-#include "lua/lua.hpp"
+#include "lua.hpp"
 
 // Embedded pack/pak file
 IZip *luasrc_GetLcfFile(void);

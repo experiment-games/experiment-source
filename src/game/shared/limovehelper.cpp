@@ -7,7 +7,7 @@
 
 #include "cbase.h"
 #include "imovehelper.h"
-#include "lua/lua.hpp"
+#include "lua.hpp"
 #include "limovehelper.h"
 #include "lbaseentity_shared.h"
 #include "lgametrace.h"

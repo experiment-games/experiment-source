@@ -6,10 +6,10 @@
 */
 
 #include "cbase.h"
-#include "lua/lua.hpp"
+#include "lua.hpp"
 
 #include "luasrclib.h"
-#include "lua/lauxlib.h"
+#include "lauxlib.h"
 
 static const luaL_Reg luasrclibs[] = {
     { LUA_BASEANIMATINGLIBNAME, luaopen_CBaseAnimating },

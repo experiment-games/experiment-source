@@ -6,7 +6,7 @@
 
 #include "cbase.h"
 #include "steam_api.h"
-#include "lua/lua.hpp"
+#include "lua.hpp"
 #include "luasrclib.h"
 #include "listeamfriends.h"
 

@@ -77,14 +77,14 @@ endif
 
 ifeq ($(detected_OS),Linux)
     # enable Linux goodies
-    MYCFLAGS= $(LOCAL) -LUA_BUILD_AS_DLL -DLUA_USE_LINUX -DLUA_USE_READLINE
-    MYLDFLAGS= $(LOCAL) -shared -Wl,--out-implib,lua54.a -o lua54.so
+    MYCFLAGS= $(LOCAL) -DLUA_BUILD_AS_DLL -DLUA_USE_LINUX -DLUA_USE_READLINE
+    MYLDFLAGS= $(LOCAL) -o lua54
     MYLIBS= -ldl -lreadline
 endif
 
 ifeq ($(detected_OS),Windows)
-    MYCFLAGS = $(LOCAL) -LUA_BUILD_AS_DLL
-    MYLDFLAGS = $(LOCAL) -shared -Wl,--out-implib,lua54.lib -o lua54.dll
+    MYCFLAGS = $(LOCAL) -DLUA_BUILD_AS_DLL
+    MYLDFLAGS = $(LOCAL) -o lua54
     MYLIBS =
 endif
 

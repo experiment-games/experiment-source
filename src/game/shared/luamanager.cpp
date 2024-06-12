@@ -963,18 +963,12 @@ void luasrc_InitCustomLoader( const char *gamemode, const char *gamemodePath )
 
     loaderLuaState = luaL_newstate();
 
+    luaopen_base_minimal( loaderLuaState );
+
     lua_pushglobaltable( loaderLuaState );
 
     static const luaL_Reg baseLoaderFuncs[] = {
-        { "error", luaB_error },
-        { "ipairs", luaB_ipairs },
-        { "next", luaB_next },
-        { "pairs", luaB_pairs },
         { "print", luasrc_print },
-        { "select", luaB_select },
-        { "tonumber", luaB_tonumber },
-        { "tostring", luaB_tostring },
-        { "type", luaB_type },
         { NULL, NULL } };
     luaL_setfuncs( loaderLuaState, baseLoaderFuncs, 0 );
     lua_pushvalue( loaderLuaState, -1 );
@@ -1049,7 +1043,7 @@ static void cleanUpGamemodeLoading( bool cleanLoader )
     lua_pushnil( L );
     lua_setglobal( L, "GM" );
 
-    if ( cleanLoader )
+    if ( cleanLoader && hasLoaderBeenActivated )
     {
         // Clean up the loader if we initialized it
         lua_close( loaderLuaState );

@@ -12,6 +12,8 @@ $Group "gamedlls"
 {
 	"client"
 	"server"
+
+    "lua54"
 }
 
 $Group "game"
@@ -22,6 +24,8 @@ $Group "game"
 	"server"
 	"tier1"
 	"vgui_controls"
+
+	"lua54"
 }
 
 $Group "shaders"
@@ -55,6 +59,8 @@ $Group "everything"
 	"vtfdiff"
 	"vvis_dll"
 	"vvis_launcher"
+
+	"lua54"
 }
 
 $Group "dedicated"
@@ -62,5 +68,7 @@ $Group "dedicated"
 	"mathlib"
 	"server"
 	"tier1"
+
+	"lua54"
 }
 

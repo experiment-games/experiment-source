@@ -12,7 +12,7 @@
 //=============================================================================//
 #include "cbase.h"
 #include "inetchannelinfo.h"
-#include "lua/lua.hpp"
+#include "lua.hpp"
 #include "luasrclib.h"
 #include "linetchannelinfo.h"
 

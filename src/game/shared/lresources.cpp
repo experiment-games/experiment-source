@@ -1,5 +1,5 @@
 #include "cbase.h"
-#include "lua/lua.hpp"
+#include "lua.hpp"
 #include "lresources.h"
 #include "luasrclib.h"
 #include "utlvector.h"
