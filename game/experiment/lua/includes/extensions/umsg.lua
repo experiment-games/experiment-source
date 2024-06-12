@@ -1,4 +1,10 @@
+if (not CLIENT) then
+	return
+end
+
 require("umsg")
+
+umsg.Hooks = umsg.Hooks or {}
 
 function umsg.Hook(messageName, func, ...)
 	umsg.Hooks[messageName] = {}
