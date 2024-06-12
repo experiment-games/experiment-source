@@ -27,19 +27,17 @@ do
 end
 print("progname: "..progname)
 
-
-local prepfile = function (s, mod, p)
-  mod = mod and "wb" or "w"    -- mod true means binary files
-  p = p or prog                -- file to write the program
-  local f = io.open(p, mod)
-  f:write(s)
-  assert(f:close())
+local prepfile = function (s, p)
+  p = p or prog
+  io.output(p)
+  io.write(s)
+  assert(io.close())
 end
 
 local function getoutput ()
-  local f = io.open(out)
-  local t = f:read("a")
-  f:close()
+  io.input(out)
+  local t = io.read("a")
+  io.input():close()
   assert(os.remove(out))
   return t
 end
@@ -67,11 +65,10 @@ local function RUN (p, ...)
   assert(os.execute(s))
 end
 
-
 local function NoRun (msg, p, ...)
   p = string.gsub(p, "lua", '"'..progname..'"', 1)
   local s = string.format(p, ...)
-  s = string.format("%s >%s 2>&1", s, out)  -- send output and error to 'out'
+  s = string.format("%s 2> %s", s, out)  -- will send error to 'out'
   assert(not os.execute(s))
   assert(string.find(getoutput(), msg, 1, true))  -- check error message
 end
@@ -111,17 +108,17 @@ RUN('lua %s > %s', prog, out)
 checkout("3\n")
 
 -- bad BOMs
-prepfile("\xEF", true)
-NoRun("unexpected symbol", 'lua %s', prog)
+prepfile("\xEF")
+NoRun("unexpected symbol", 'lua %s > %s', prog, out)
 
-prepfile("\xEF\xBB", true)
-NoRun("unexpected symbol", 'lua %s', prog)
+prepfile("\xEF\xBB")
+NoRun("unexpected symbol", 'lua %s > %s', prog, out)
 
-prepfile("\xEFprint(3)", true)
-NoRun("unexpected symbol", 'lua %s', prog)
+prepfile("\xEFprint(3)")
+NoRun("unexpected symbol", 'lua %s > %s', prog, out)
 
-prepfile("\xEF\xBBprint(3)", true)
-NoRun("unexpected symbol", 'lua %s', prog)
+prepfile("\xEF\xBBprint(3)")
+NoRun("unexpected symbol", 'lua %s > %s', prog, out)
 
 
 -- test option '-'
@@ -137,7 +134,7 @@ RUN('env LUA_INIT= LUA_PATH=x lua %s > %s', prog, out)
 checkout("x\n")
 
 -- test LUA_PATH_version
-RUN('env LUA_INIT= LUA_PATH_5_5=y LUA_PATH=x lua %s > %s', prog, out)
+RUN('env LUA_INIT= LUA_PATH_5_4=y LUA_PATH=x lua %s > %s', prog, out)
 checkout("y\n")
 
 -- test LUA_CPATH
@@ -146,7 +143,7 @@ RUN('env LUA_INIT= LUA_CPATH=xuxu lua %s > %s', prog, out)
 checkout("xuxu\n")
 
 -- test LUA_CPATH_version
-RUN('env LUA_INIT= LUA_CPATH_5_5=yacc LUA_CPATH=x lua %s > %s', prog, out)
+RUN('env LUA_INIT= LUA_CPATH_5_4=yacc LUA_CPATH=x lua %s > %s', prog, out)
 checkout("yacc\n")
 
 -- test LUA_INIT (and its access to 'arg' table)
@@ -156,7 +153,7 @@ checkout("3.2\n")
 
 -- test LUA_INIT_version
 prepfile("print(X)")
-RUN('env LUA_INIT_5_5="X=10" LUA_INIT="X=3" lua %s > %s', prog, out)
+RUN('env LUA_INIT_5_4="X=10" LUA_INIT="X=3" lua %s > %s', prog, out)
 checkout("10\n")
 
 -- test LUA_INIT for files
@@ -216,7 +213,7 @@ convert("a;b;;c")
 
 -- test -l over multiple libraries
 prepfile("print(1); a=2; return {x=15}")
-prepfile(("print(a); print(_G['%s'].x)"):format(prog), false, otherprog)
+prepfile(("print(a); print(_G['%s'].x)"):format(prog), otherprog)
 RUN('env LUA_PATH="?;;" lua -l %s -l%s -lstring -l io %s > %s', prog, otherprog, otherprog, out)
 checkout("1\n2\n15\n2\n15\n")
 
@@ -224,13 +221,6 @@ checkout("1\n2\n15\n2\n15\n")
 prepfile("print(str.upper'alo alo', m.max(10, 20))")
 RUN("lua -l 'str=string' '-lm=math' -e 'print(m.sin(0))' %s > %s", prog, out)
 checkout("0.0\nALO ALO\t20\n")
-
-
--- test module names with version sufix ("libs/lib2-v2")
-RUN("env LUA_CPATH='./libs/?.so' lua -l lib2-v2 -e 'print(lib2.id())' > %s",
-    out)
-checkout("true\n")
-
 
 -- test 'arg' table
 local a = [[
@@ -247,7 +237,7 @@ RUN('lua "-e " -- %s a b c', prog)   -- "-e " runs an empty command
 
 -- test 'arg' availability in libraries
 prepfile"assert(arg)"
-prepfile("assert(arg)", false, otherprog)
+prepfile("assert(arg)", otherprog)
 RUN('env LUA_PATH="?;;" lua -l%s - < %s', prog, otherprog)
 
 -- test messing up the 'arg' table
@@ -312,7 +302,7 @@ setmetatable({}, {__gc = function ()
   -- this finalizer should not be called, as object will be
   -- created after 'lua_close' has been called
   setmetatable({}, {__gc = function () print(3) end})
-  print(collectgarbage() or false)    -- cannot call collector here
+  print(collectgarbage())    -- cannot call collector here
   os.exit(0, true)
 end})
 ]]
@@ -322,7 +312,7 @@ creating 1
 creating 2
 2
 creating 3
-false
+nil
 1
 ]]
 
@@ -423,7 +413,7 @@ prepfile[[#comment in 1st line without \n at the end]]
 RUN('lua %s', prog)
 
 -- first-line comment with binary file
-prepfile("#comment\n" .. string.dump(load("print(3)")), true)
+prepfile("#comment\n" .. string.dump(load("print(3)")))
 RUN('lua %s > %s', prog, out)
 checkout('3\n')
 

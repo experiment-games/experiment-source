@@ -1,9 +1,6 @@
 -- $Id: testes/strings.lua $
 -- See Copyright Notice in file all.lua
 
--- ISO Latin encoding
-
-
 print('testing strings and string library')
 
 local maxi <const> = math.maxinteger
@@ -157,12 +154,6 @@ else   -- compatible coercion
   assert(tostring(-1203 + 0.0) == "-1203")
 end
 
-
-local function topointer (s)
-  return string.format("%p", s)
-end
-
-
 do  -- tests for '%p' format
   -- not much to test, as C does not specify what '%p' does.
   -- ("The value of the pointer is converted to a sequence of printing
@@ -186,18 +177,18 @@ do  -- tests for '%p' format
 
   do
     local t1 = {}; local t2 = {}
-    assert(topointer(t1) ~= topointer(t2))
+    assert(string.format("%p", t1) ~= string.format("%p", t2))
   end
 
   do     -- short strings are internalized
     local s1 = string.rep("a", 10)
     local s2 = string.rep("aa", 5)
-  assert(topointer(s1) == topointer(s2))
+  assert(string.format("%p", s1) == string.format("%p", s2))
   end
 
   do     -- long strings aren't internalized
     local s1 = string.rep("a", 300); local s2 = string.rep("a", 300)
-    assert(topointer(s1) ~= topointer(s2))
+    assert(string.format("%p", s1) ~= string.format("%p", s2))
   end
 end
 
@@ -527,20 +518,6 @@ else
   testpfs("P", str, {})
 end
 
-if T == nil then
-  (Message or print)('\n >>> testC not active: skipping external strings tests <<<\n')
-else
-  print("testing external strings")
-  local x = T.externKstr("hello")   -- external fixed short string
-  assert(x == "hello")
-  local x = T.externstr("hello")   -- external allocated short string
-  assert(x == "hello")
-  x = string.rep("a", 100)   -- long string
-  local y = T.externKstr(x)   -- external fixed long string
-  assert(y == x)
-  local z = T.externstr(x)   -- external allocated long string
-  assert(z == y)
-end
 
 print('OK')
 

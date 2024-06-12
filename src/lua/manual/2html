@@ -30,7 +30,7 @@ by Roberto Ierusalimschy, Luiz Henrique de Figueiredo, Waldemar Celes
 <p>
 <small>
 <a href="http://www.lua.org/copyright.html">Copyright</a>
-&copy; 2024 Lua.org, PUC-Rio.  All rights reserved.
+&copy; 2023 Lua.org, PUC-Rio.  All rights reserved.
 </small>
 <hr>
 
@@ -358,7 +358,7 @@ item = function (s)
          local t, p = string.match(s, "^([^\n|]+)|()")
          if t then
            s = string.sub(s, p)
-           s = Tag.b(t) ..": " .. s
+           s = Tag.b(t..": ") .. s
          end
          return Tag.li(fixpara(s))
        end,

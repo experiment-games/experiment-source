@@ -25,6 +25,15 @@
 
 
 /*
+** LUA_IGMARK is a mark to ignore all before it when building the
+** luaopen_ function name.
+*/
+#if !defined (LUA_IGMARK)
+#define LUA_IGMARK		"-"
+#endif
+
+
+/*
 ** LUA_CSUBSEP is the character that replaces dots in submodule names
 ** when searching for a C loader.
 ** LUA_LSUBSEP is the character that replaces dots in submodule names
@@ -283,8 +292,7 @@ static int noenv (lua_State *L) {
 
 
 /*
-** Set a path. (If using the default path, assume it is a string
-** literal in C and create it as an external string.)
+** Set a path
 */
 static void setpath (lua_State *L, const char *fieldname,
                                    const char *envname,
@@ -295,7 +303,7 @@ static void setpath (lua_State *L, const char *fieldname,
   if (path == NULL)  /* no versioned environment variable? */
     path = getenv(envname);  /* try unversioned name */
   if (path == NULL || noenv(L))  /* no environment variable? */
-    lua_pushextlstring(L, dft, strlen(dft), NULL, NULL);  /* use default */
+    lua_pushstring(L, dft);  /* use default */
   else if ((dftmark = strstr(path, LUA_PATH_SEP LUA_PATH_SEP)) == NULL)
     lua_pushstring(L, path);  /* nothing to change */
   else {  /* path contains a ";;": insert default path in its place */
@@ -621,12 +629,12 @@ static void findloader (lua_State *L, const char *name) {
                  != LUA_TTABLE))
     luaL_error(L, "'package.searchers' must be a table");
   luaL_buffinit(L, &msg);
-  luaL_addstring(&msg, "\n\t");  /* error-message prefix for first message */
   /*  iterate over available searchers to find a loader */
   for (i = 1; ; i++) {
+    luaL_addstring(&msg, "\n\t");  /* error-message prefix */
     if (l_unlikely(lua_rawgeti(L, 3, i) == LUA_TNIL)) {  /* no more searchers? */
       lua_pop(L, 1);  /* remove nil */
-      luaL_buffsub(&msg, 2);  /* remove last prefix */
+      luaL_buffsub(&msg, 2);  /* remove prefix */
       luaL_pushresult(&msg);  /* create error message */
       luaL_error(L, "module '%s' not found:%s", name, lua_tostring(L, -1));
     }
@@ -637,10 +645,11 @@ static void findloader (lua_State *L, const char *name) {
     else if (lua_isstring(L, -2)) {  /* searcher returned error message? */
       lua_pop(L, 1);  /* remove extra return */
       luaL_addvalue(&msg);  /* concatenate error message */
-      luaL_addstring(&msg, "\n\t");  /* prefix for next message */
     }
-    else  /* no error message */
+    else {  /* no error message */
       lua_pop(L, 2);  /* remove both returns */
+      luaL_buffsub(&msg, 2);  /* remove prefix */
+    }
   }
 }
 

@@ -74,8 +74,6 @@ io.input(io.stdin); io.output(io.stdout);
 
 os.remove(file)
 assert(not loadfile(file))
--- Lua code cannot use chunks with fixed buffers
-checkerr("invalid mode", load, "", "", "B")
 checkerr("", dofile, file)
 assert(not io.open(file))
 io.output(file)
@@ -94,8 +92,8 @@ assert(io.output():seek("end") == string.len("alo joao"))
 
 assert(io.output():seek("set") == 0)
 
-assert(io.write('"alo"', "{a}\n", "second line\n", "third line \n"))
-assert(io.write('Xfourth_line'))
+assert(io.write('"álo"', "{a}\n", "second line\n", "third line \n"))
+assert(io.write('çfourth_line'))
 io.output(io.stdout)
 collectgarbage()  -- file should be closed by GC
 assert(io.input() == io.stdin and rawequal(io.output(), io.stdout))
@@ -302,14 +300,14 @@ do  -- test error returns
 end
 checkerr("invalid format", io.read, "x")
 assert(io.read(0) == "")   -- not eof
-assert(io.read(5, 'l') == '"alo"')
+assert(io.read(5, 'l') == '"álo"')
 assert(io.read(0) == "")
 assert(io.read() == "second line")
 local x = io.input():seek()
 assert(io.read() == "third line ")
 assert(io.input():seek("set", x))
 assert(io.read('L') == "third line \n")
-assert(io.read(1) == "X")
+assert(io.read(1) == "ç")
 assert(io.read(string.len"fourth_line") == "fourth_line")
 assert(io.input():seek("cur", -string.len"fourth_line"))
 assert(io.read() == "fourth_line")
@@ -429,12 +427,12 @@ do   -- testing closing file in line iteration
   -- get the to-be-closed variable from a loop
   local function gettoclose (lv)
     lv = lv + 1
-    local stvar = 0   -- to-be-closed is 3th state variable in the loop
+    local stvar = 0   -- to-be-closed is 4th state variable in the loop
     for i = 1, 1000 do
       local n, v = debug.getlocal(lv, i)
       if n == "(for state)" then
         stvar = stvar + 1
-        if stvar == 3 then return v end
+        if stvar == 4 then return v end
       end
     end
   end

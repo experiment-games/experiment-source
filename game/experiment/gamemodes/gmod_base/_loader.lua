@@ -31,9 +31,6 @@
 local isModuleSimulated = false
 local isInMultilineString = false
 
-local currentLoopHasContinue = false
-local currentLoopIndent = nil
-
 local transformers = {
 	--[[
 		Helper to only track whether we are in a multiline string or not
@@ -167,57 +164,6 @@ local transformers = {
 				end
 
 				return newLine
-			end,
-		},
-	},
-
-	--[[
-		Hack to implement 'continue' in Lua.
-		We keep track of the loop we are in and if we find a 'continue' statement
-		we add a 'goto' to go to the end of the loop.
-
-		This is hacky since we try find the companion 'end' of the loop by counting
-		the indentation of the loop start and end.
-	--]]
-	{
-		OnFileStart = function()
-			currentLoopHasContinue = false
-			currentLoopIndent = nil
-		end,
-
-		LineHandlers = {
-			function(line, allLinesBefore)
-				if (not currentLoopIndent) then
-					local isLoopStart = line:match("^%s*for%s*")
-
-					if (not isLoopStart) then
-						return line
-					end
-
-					local loopIndent = line:match("^%s*")
-
-					currentLoopIndent = loopIndent
-
-					return line
-				end
-
-				if (line:match("%s*continue%s*")) then
-					currentLoopHasContinue = true
-					return line:gsub("continue", "goto continue")
-				end
-
-				-- If we find an 'end' with the same indentation as the loop start
-				-- we can place the 'continue' label before it
-				if (line:match("^" .. currentLoopIndent .. "end")) then
-					line = currentLoopIndent .. "	::continue::\n" .. line
-
-					currentLoopHasContinue = false
-					currentLoopIndent = nil
-
-					return line
-				end
-
-				return line
 			end,
 		},
 	},

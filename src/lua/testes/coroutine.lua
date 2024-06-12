@@ -610,20 +610,18 @@ else
     -- (bug in 5.2/5.3)
     c = coroutine.create(function (a, ...)
       T.sethook("yield 0", "l")   -- will yield on next two lines
-      local b = a
+      assert(a == 10)
       return ...
     end)
 
     assert(coroutine.resume(c, 1, 2, 3))   -- start coroutine
     local n,v = debug.getlocal(c, 0, 1)    -- check its local
-    assert(n == "a" and v == 1 and debug.getlocal(c, 0, 2) ~= "b")
+    assert(n == "a" and v == 1)
     assert(debug.setlocal(c, 0, 1, 10))     -- test 'setlocal'
     local t = debug.getinfo(c, 0)        -- test 'getinfo'
-    assert(t.currentline == t.linedefined + 2)
+    assert(t.currentline == t.linedefined + 1)
     assert(not debug.getinfo(c, 1))      -- no other level
     assert(coroutine.resume(c))          -- run next line
-    local n,v = debug.getlocal(c, 0, 2)    -- check next local
-    assert(n == "b" and v == 10)
     v = {coroutine.resume(c)}         -- finish coroutine
     assert(v[1] == true and v[2] == 2 and v[3] == 3 and v[4] == undef)
     assert(not coroutine.resume(c))
@@ -683,7 +681,7 @@ else
          c == "ERRRUN" and d == 4)
 
   a, b, c, d = T.testC([[
-    rawgeti R !M    # get main thread
+    rawgeti R 1    # get main thread
     pushnum 10;
     pushnum 20;
     resume -3 2;
@@ -701,11 +699,11 @@ else
   assert(T.testC(state, "newthread; isyieldable -1; remove 1; return 1"))
 
   -- main thread is not yieldable
-  assert(not T.testC(state, "rawgeti R !M; isyieldable -1; remove 1; return 1"))
+  assert(not T.testC(state, "rawgeti R 1; isyieldable -1; remove 1; return 1"))
 
   T.testC(state, "settop 0")
 
-  T.loadlib(state, 1 | 2, 4)   -- load _G and 'package', preload 'coroutine'
+  T.loadlib(state)
 
   assert(T.doremote(state, [[
     coroutine = require'coroutine';
@@ -713,7 +711,7 @@ else
     return 'ok']]))
 
   local t = table.pack(T.testC(state, [[
-    rawgeti R !M     # get main thread
+    rawgeti R 1     # get main thread
     pushstring 'XX'
     getglobal X    # get function for body
     pushstring AA      # arg
@@ -722,7 +720,7 @@ else
     setglobal T    # top
     setglobal B    # second yielded value
     setglobal A    # fist yielded value
-    rawgeti R !M     # get main thread
+    rawgeti R 1     # get main thread
     pushnum 5       # arg (noise)
     resume 1 1      # after coroutine ends, previous stack is back
     pushstatus

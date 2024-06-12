@@ -60,29 +60,32 @@ end
 -- testing closures with 'for' control variable
 a = {}
 for i=1,10 do
-  a[i] = function () return i end
+  a[i] = {set = function(x) i=x end, get = function () return i end}
   if i == 3 then break end
 end
 assert(a[4] == undef)
-assert(a[2]() == 2)
-assert(a[3]() == 3)
+a[1].set(10)
+assert(a[2].get() == 2)
+a[2].set('a')
+assert(a[3].get() == 3)
+assert(a[2].get() == 'a')
 
 a = {}
 local t = {"a", "b"}
 for i = 1, #t do
   local k = t[i]
-  a[i] = {set = function(x) k=x end,
+  a[i] = {set = function(x, y) i=x; k=y end,
           get = function () return i, k end}
   if i == 2 then break end
 end
-a[1].set(10)
+a[1].set(10, 20)
 local r,s = a[2].get()
 assert(r == 2 and s == 'b')
 r,s = a[1].get()
-assert(r == 1 and s == 10)
-a[2].set('a')
+assert(r == 10 and s == 20)
+a[2].set('a', 'b')
 r,s = a[2].get()
-assert(r == 2 and s == "a")
+assert(r == "a" and s == "b")
 
 
 -- testing closures with 'for' control variable x break

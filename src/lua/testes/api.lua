@@ -407,7 +407,7 @@ do
       concat 3]]) == "hi alo mundo")
 
   -- "argerror" without frames
-  assert(T.checkpanic("loadstring 4 name bt") ==
+  assert(T.checkpanic("loadstring 4") ==
       "bad argument #4 (string expected, got no value)")
 
 
@@ -420,7 +420,7 @@ do
   if not _soft then
     local msg = T.checkpanic[[
       pushstring "function f() f() end"
-      loadstring -1 name t; call 0 0
+      loadstring -1; call 0 0
       getglobal f; call 0 0
     ]]
     assert(string.find(msg, "stack overflow"))
@@ -430,7 +430,7 @@ do
   assert(T.checkpanic([[
     pushstring "return {__close = function () Y = 'ho'; end}"
     newtable
-    loadstring -2 name t
+    loadstring -2
     call 0 1
     setmetatable -2
     toclose -1
@@ -458,8 +458,6 @@ if not _soft then
   print'+'
 end
 
-
-
 local lim = _soft and 500 or 12000
 local prog = {"checkstack " .. (lim * 2 + 100) .. "msg", "newtable"}
 for i = 1,lim do
@@ -467,7 +465,7 @@ for i = 1,lim do
   prog[#prog + 1] = "pushnum " .. i * 10
 end
 
-prog[#prog + 1] = "rawgeti R !G"  -- get global table in registry
+prog[#prog + 1] = "rawgeti R 2"   -- get global table in registry
 prog[#prog + 1] = "insert " .. -(2*lim + 2)
 
 for i = 1,lim do
@@ -483,20 +481,10 @@ for i = 1,lim do assert(t[i] == i*10); t[i] = undef end
 assert(next(t) == nil)
 prog, g, t = nil
 
-do   -- shrink stack
-  local m1, m2 = 0, collectgarbage"count" * 1024
-  while m1 ~= m2 do    -- repeat until stable
-    collectgarbage()
-    m1 = m2
-    m2 = collectgarbage"count" * 1024
-  end
-end
-
-
 -- testing errors
 
 a = T.testC([[
-  loadstring 2 name t; pcall 0 1 0;
+  loadstring 2; pcall 0 1 0;
   pushvalue 3; insert -2; pcall 1 1 0;
   pcall 0 0 0;
   return 1
@@ -510,7 +498,7 @@ local function check3(p, ...)
   assert(#arg == 3)
   assert(string.find(arg[3], p))
 end
-check3(":1:", T.testC("loadstring 2 name t; return *", "x="))
+check3(":1:", T.testC("loadstring 2; return *", "x="))
 check3("%.", T.testC("loadfile 2; return *", "."))
 check3("xxxx", T.testC("loadfile 2; return *", "xxxx"))
 
@@ -520,53 +508,6 @@ local function checkerrnopro (code, msg)
   local stt, err = pcall(T.testC, th, code)   -- run code there
   assert(not stt and string.find(err, msg))
 end
-
-
-do
-  print("testing load of binaries in fixed buffers")
-  local source = {}
-  local N = 1000
-  -- create a somewhat "large" source
-  for i = 1, N do source[i] = "X = X + 1; " end
-  -- add a long string to the source
-  source[#source + 1] = string.format("Y = '%s'", string.rep("a", N));
-  source = table.concat(source)
-  -- give chunk an explicit name to avoid using source as name
-  source = load(source, "name1")
-  -- dump without debug information
-  source = string.dump(source, true)
-  -- each "X=X+1" generates 4 opcodes with 4 bytes each, plus the string
-  assert(#source > N * 4 * 4 + N)
-  collectgarbage(); collectgarbage()
-  local m1 = collectgarbage"count" * 1024
-  -- load dump using fixed buffer
-  local code = T.testC([[
-    loadstring 2 name B;
-    return 1
-  ]], source)
-  collectgarbage()
-  local m2 = collectgarbage"count" * 1024
-  -- load used fewer than 400 bytes. Code alone has more than 3*N bytes,
-  -- and string literal has N bytes. Both were not loaded.
-  assert(m2 > m1 and m2 - m1 < 400)
-  X = 0; code(); assert(X == N and Y == string.rep("a", N))
-  X = nil; Y = nil
-
-  -- testing debug info in fixed buffers
-  source = {"X = 0"}
-  for i = 2, 300 do source[i] = "X = X + 1" end
-  source[#source + 1] = "X = X + {}"   -- error in last line
-  source = table.concat(source, "\n")
-  source = load(source, "name1")
-  source = string.dump(source)
-  -- load dump using fixed buffer
-  local code = T.testC([[
-    loadstring 2 name B;
-    return 1
-  ]], source)
-  checkerr(":301:", code)    -- correct line information
-end
-
 
 if not _soft then
   collectgarbage("stop")   -- avoid __gc with full stack
@@ -930,30 +871,28 @@ checkerr("FILE%* expected, got userdata", io.input, x)
 
 assert(debug.getmetatable(x) == nil and debug.getmetatable(y) == nil)
 
--- Test references in an arbitrary table
-local reftable = {}
-local d = T.ref(a, reftable);
-local e = T.ref(b, reftable);
-local f = T.ref(c, reftable);
-t = {T.getref(d, reftable), T.getref(e, reftable), T.getref(f, reftable)}
+local d = T.ref(a);
+local e = T.ref(b);
+local f = T.ref(c);
+t = {T.getref(d), T.getref(e), T.getref(f)}
 assert(t[1] == a and t[2] == b and t[3] == c)
 
 t=nil; a=nil; c=nil;
-T.unref(e, reftable); T.unref(f, reftable)
+T.unref(e); T.unref(f)
 
 collectgarbage()
 
 -- check that unref objects have been collected
 assert(#cl == 1 and cl[1] == nc)
 
-x = T.getref(d, reftable)
+x = T.getref(d)
 assert(type(x) == 'userdata' and debug.getmetatable(x) == tt)
 x =nil
 tt.b = b  -- create cycle
 tt=nil    -- frees tt for GC
 A = nil
 b = nil
-T.unref(d, reftable);
+T.unref(d);
 local n5 = T.newuserdata(0)
 debug.setmetatable(n5, {__gc=F})
 n5 = T.udataval(n5)
@@ -961,21 +900,6 @@ collectgarbage()
 assert(#cl == 4)
 -- check order of collection
 assert(cl[2] == n5 and cl[3] == nb and cl[4] == na)
-
--- reuse a reference in 'reftable'
-T.unref(T.ref(23, reftable), reftable)
-
-do  -- check reftable
-  local count = 0
-  local i = 1
-  while reftable[i] ~= 0 do
-    i = reftable[i]  -- traverse linked list of free references
-    count = count + 1
-  end
-  -- maximum number of simultaneously locked objects was 3
-  assert(count == 3 and #reftable  == 3 + 1)  -- +1 for reserved [1]
-end
-
 
 collectgarbage"restart"
 
@@ -1122,12 +1046,10 @@ assert(a == nil and c == 2)   -- 2 == run-time error
 a, b, c = T.doremote(L1, "return a+")
 assert(a == nil and c == 3 and type(b) == "string")   -- 3 == syntax error
 
-T.loadlib(L1, 2, ~2)    -- load only 'package', preload all others
+T.loadlib(L1)
 a, b, c = T.doremote(L1, [[
   string = require'string'
-  local initialG = _G   -- not loaded yet
-  local a = require'_G'; assert(a == _G and require("_G") == a)
-  assert(initialG == nil and io == nil)   -- now we have 'assert'
+  a = require'_G'; assert(a == _G and require("_G") == a)
   io = require'io'; assert(type(io.read) == "function")
   assert(require("io") == io)
   a = require'table'; assert(type(a.insert) == "function")
@@ -1141,7 +1063,7 @@ T.closestate(L1);
 
 
 L1 = T.newstate()
-T.loadlib(L1, 0, 0)
+T.loadlib(L1)
 T.doremote(L1, "a = {}")
 T.testC(L1, [[getglobal "a"; pushstring "x"; pushint 1;
              settable -3]])
@@ -1193,8 +1115,7 @@ do
   local a, b = pcall(T.makeCfunc[[
     call 0 1   # create resource
     toclose -1 # mark it to be closed
-    pushvalue -1  # replicate it as error object
-    error       # resource right after error object
+    error       # resource is the error object
   ]], newresource)
   assert(a == false and b[1] == 11)
   assert(#openresource == 0)    -- was closed
@@ -1381,8 +1302,8 @@ end)
 
 -- testing threads
 
--- get main thread from registry
-local mt = T.testC("rawgeti R !M; return 1")
+-- get main thread from registry (at index LUA_RIDX_MAINTHREAD == 1)
+local mt = T.testC("rawgeti R 1; return 1")
 assert(type(mt) == "thread" and coroutine.running() == mt)
 
 
@@ -1525,10 +1446,10 @@ end
 
 do   -- garbage collection with no extra memory
   local L = T.newstate()
-  T.loadlib(L, 1 | 2, 0)   -- load _G and 'package'
+  T.loadlib(L)
   local res = (T.doremote(L, [[
-    _ENV = _G
-    assert(string == nil)
+    _ENV = require"_G"
+    local T = require"T"
     local a = {}
     for i = 1, 1000 do a[i] = 'i' .. i end    -- grow string table
     local stsize, stuse = T.querystr()
