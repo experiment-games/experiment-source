@@ -1208,6 +1208,8 @@ static UnOpr getunopr (int op) {
     case '-': return OPR_MINUS;
     case '~': return OPR_BNOT;
     case '#': return OPR_LEN;
+    // Experiment; C-style operators
+    case TK_CNOT: return OPR_NOT;
     default: return OPR_NOUNOPR;
   }
 }
@@ -1236,6 +1238,10 @@ static BinOpr getbinopr (int op) {
     case TK_GE: return OPR_GE;
     case TK_AND: return OPR_AND;
     case TK_OR: return OPR_OR;
+    // Experiment; C-style operators
+    case TK_CAND: return OPR_AND;
+    case TK_COR: return OPR_OR;
+    case TK_CNE: return OPR_NE;
     default: return OPR_NOBINOPR;
   }
 }

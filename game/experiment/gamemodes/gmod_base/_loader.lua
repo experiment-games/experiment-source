@@ -139,10 +139,10 @@ local transformers = {
 				local lastChar = ""
 				local inString = false
 				local replacements = {
-					["!="] = "~=",
-					["&&"] = " and ",
-					["||"] = " or ",
-					["//"] = "--",
+					-- ["!="] = "~=",
+					-- ["&&"] = " and ",
+					-- ["||"] = " or ",
+					-- ["//"] = "--",
 					["/*"] = "--[[",
 					["*/"] = "]]",
 				}

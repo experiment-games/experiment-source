@@ -39,7 +39,9 @@ enum RESERVED {
   TK_IDIV, TK_CONCAT, TK_DOTS, TK_EQ, TK_GE, TK_LE, TK_NE,
   TK_SHL, TK_SHR,
   TK_DBCOLON, TK_EOS,
-  TK_FLT, TK_INT, TK_NAME, TK_STRING
+  TK_FLT, TK_INT, TK_NAME, TK_STRING,
+  // Experiment; C-style operators
+  TK_CAND, TK_COR, TK_CNOT, TK_CNE
 };
 
 /* number of reserved words */

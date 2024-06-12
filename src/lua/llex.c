@@ -44,7 +44,9 @@ static const char *const luaX_tokens [] = {
     "return", "then", "true", "until", "while",
     "//", "..", "...", "==", ">=", "<=", "~=",
     "<<", ">>", "::", "<eof>",
-    "<number>", "<integer>", "<name>", "<string>"
+    "<number>", "<integer>", "<name>", "<string>",
+    // Experiment; C-style operators
+    "&&", "||", "!", "!="
 };
 
 
@@ -535,6 +537,22 @@ static int llex (LexState *ls, SemInfo *seminfo) {
       }
       case EOZ: {
         return TK_EOS;
+      }
+      // Experiment; C-style operators
+      case '!': {
+        next(ls);
+        if (check_next1(ls, '=')) return TK_NE;  /* '!=' */
+        else return TK_CNOT;  /* '!' */
+      }
+      case '&': {
+        next(ls);
+        if (check_next1(ls, '&')) return TK_CAND;  /* '&&' */
+        else return '&';
+      }
+      case '|': {
+        next(ls);
+        if (check_next1(ls, '|')) return TK_COR;  /* '||' */
+        else return '|';
       }
       default: {
         if (lislalpha(ls->current)) {  /* identifier or reserved word? */
