@@ -84,55 +84,55 @@ include("util/sql.lua")
 
 -- Shared modules.
 
-baseclass = include("../modules/baseclass.lua")
--- concommand = include("../modules/concommand.lua") -- We have our own concommand library.
-saverestore = include("../modules/saverestore.lua")
--- hook = include("../modules/hook.lua") -- We have our own hook library.
--- gamemode = include("../modules/gamemode.lua") -- We have our own gamemode library.
--- weapons = include("../modules/weapons.lua") -- We have our own weapons library.
--- scripted_ents = include("../modules/scripted_ents.lua") -- We have our own scripted_ents library.
-player_manager = include("../modules/player_manager.lua")
-numpad = include("../modules/numpad.lua")
-team = include("../modules/team.lua")
-undo = include("../modules/undo.lua")
-cleanup = include("../modules/cleanup.lua")
-duplicator = include("../modules/duplicator.lua")
-constraint = include("../modules/constraint.lua")
-construct = include("../modules/construct.lua")
-usermessage = include("../modules/usermessage.lua")
-list = include("../modules/list.lua")
-cvars = include("../modules/cvars.lua")
-http = include("../modules/http.lua")
-properties = include("../modules/properties.lua")
-widget = include("../modules/widget.lua")
-cookie = include("../modules/cookie.lua")
-utf8 = include("../modules/utf8.lua")
+baseclass = require("../modules/baseclass")
+-- concommand = require("../modules/concommand") -- We have our own concommand library.
+saverestore = require("../modules/saverestore")
+-- hook = require("../modules/hook") -- We have our own hook library.
+-- gamemode = require("../modules/gamemode") -- We have our own gamemode library.
+-- weapons = require("../modules/weapons") -- We have our own weapons library.
+-- scripted_ents = require("../modules/scripted_ents") -- We have our own scripted_ents library.
+player_manager = require("../modules/player_manager")
+numpad = require("../modules/numpad")
+team = require("../modules/team")
+undo = require("../modules/undo")
+cleanup = require("../modules/cleanup")
+duplicator = require("../modules/duplicator")
+constraint = require("../modules/constraint")
+construct = require("../modules/construct")
+usermessage = require("../modules/usermessage")
+list = require("../modules/list")
+cvars = require("../modules/cvars")
+http = require("../modules/http")
+properties = require("../modules/properties")
+widget = require("../modules/widget")
+cookie = require("../modules/cookie")
+utf8 = require("../modules/utf8")
 
-drive = include("../modules/drive.lua")
+drive = require("../modules/drive")
 -- include("drive/drive_base.lua")
 -- include("drive/drive_noclip.lua")
 
 if (SERVER) then
 	-- Server-side modules.
-	ai_task = include("../modules/ai_task.lua")
-	ai_schedule = include("../modules/ai_schedule.lua")
+	ai_task = require("../modules/ai_task")
+	ai_schedule = require("../modules/ai_schedule")
 end
 
 if (CLIENT) then
 	-- Client-side modules.
-	draw = include("../modules/draw.lua")
-	-- markup = include("../modules/markup.lua") -- Not implemented atm.
-	effects = include("../modules/effects.lua")
-	halo = include("../modules/halo.lua")
-	killicon = include("../modules/killicon.lua")
-	spawnmenu = include("../modules/spawnmenu.lua")
-	controlpanel = include("../modules/controlpanel.lua")
-	-- presets = include("../modules/presets.lua") -- Not implemented atm.
-	menubar = include("../modules/menubar.lua")
-	matproxy = include("../modules/matproxy.lua")
+	draw = require("../modules/draw")
+	-- markup = require("../modules/markup") -- Not implemented atm.
+	effects = require("../modules/effects")
+	halo = require("../modules/halo")
+	killicon = require("../modules/killicon")
+	spawnmenu = require("../modules/spawnmenu")
+	controlpanel = require("../modules/controlpanel")
+	-- presets = require("../modules/presets") -- Not implemented atm.
+	menubar = require("../modules/menubar")
+	matproxy = require("../modules/matproxy")
 
-	-- notification = include("../modules/notification.lua")
-	-- search = include("../modules/search.lua")
+	-- notification = require("../modules/notification")
+	-- search = require("../modules/search")
 end
 
 --[[

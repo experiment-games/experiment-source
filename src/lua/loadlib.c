@@ -686,9 +686,114 @@ static int ll_require (lua_State *L) {
 /* }====================================================== */
 
 
+/*
+** {======================================================
+** Experiment; 'module' function
+** =======================================================
+*/
 
+static void setfenv( lua_State *L )
+{
+    lua_Debug ar;
+    lua_getstack( L, 1, &ar );   // get the stack of the calling function
+    lua_getinfo( L, "f", &ar );  // get the function from the stack
+    lua_pushvalue( L, -2 );      // push the new environment onto the stack
+
+    // Find the first upvalue named _ENV for the function at index -2
+    for ( int i = 1;; ++i )
+    {
+        const char *name = lua_getupvalue( L, -2, i );
+        if ( name == NULL )
+        {
+            break;  // no more upvalues
+        }
+        if ( strcmp( name, "_ENV" ) == 0 )
+        {
+            lua_insert( L, -2 );         // move the new environment to the correct stack position
+            lua_setupvalue( L, -2, i );  // set the new environment
+            return;
+        }
+        lua_pop( L, 1 );  // remove the upvalue value
+    }
+
+    lua_pop( L, 1 );  // pop the function if no _ENV upvalue is found
+}
+
+static void dooptions( lua_State *L, int n )
+{
+    for ( int i = 2; i <= n; i++ )
+    {
+        lua_pushvalue( L, i );  /* get option (a function) */
+        lua_pushvalue( L, -2 ); /* module */
+        lua_call( L, 1, 0 );
+    }
+}
+
+static void modinit( lua_State *L, const char *modname )
+{
+    const char *dot;
+    lua_pushvalue( L, -1 );
+    lua_setfield( L, -2, "_M" ); /* module._M = module */
+    lua_pushstring( L, modname );
+    lua_setfield( L, -2, "_NAME" );
+    dot = strrchr( modname, '.' ); /* look for last dot in module name */
+    if ( dot == NULL )
+        dot = modname;
+    else
+        dot++;
+    /* set _PACKAGE as package name (full module name minus last part) */
+    lua_pushlstring( L, modname, dot - modname );
+    lua_setfield( L, -2, "_PACKAGE" );
+}
+
+static int ll_module( lua_State *L )
+{
+    const char *modname = luaL_checkstring( L, 1 );
+    int loaded = lua_gettop( L ) + 1; /* index of _LOADED table */
+    lua_getfield( L, LUA_REGISTRYINDEX, "_LOADED" );
+    lua_getfield( L, loaded, modname ); /* get _LOADED[modname] */
+    if ( !lua_istable( L, -1 ) )
+    {                      /* not found? */
+        lua_pop( L, 1 );   /* remove previous result */
+        lua_newtable( L ); /* create module table */
+        lua_pushvalue( L, -1 );
+        lua_setfield( L, loaded, modname ); /* _LOADED[modname] = new table */
+    }
+    /* check whether table already has a _NAME field */
+    lua_getfield( L, -1, "_NAME" );
+    if ( !lua_isnil( L, -1 ) )
+    { /* is table an initialized module? */
+        lua_pop( L, 1 );
+    }
+    else
+    { /* no; initialize it */
+        lua_pop( L, 1 );
+        modinit( L, modname );
+    }
+    lua_pushvalue( L, -1 );
+    setfenv( L );
+    dooptions( L, loaded - 1 );
+    return 0;
+}
+
+static int ll_seeall( lua_State *L )
+{
+    luaL_checktype( L, 1, LUA_TTABLE );
+    if ( !lua_getmetatable( L, 1 ) )
+    {
+        lua_createtable( L, 0, 1 ); /* create new metatable */
+        lua_pushvalue( L, -1 );
+        lua_setmetatable( L, 1 );
+    }
+    lua_pushglobaltable( L );
+    lua_setfield( L, -2, "__index" ); /* mt.__index = _G */
+    return 0;
+}
+
+/* }====================================================== */
 
 static const luaL_Reg pk_funcs[] = {
+  {"seeall", ll_seeall},
   {"loadlib", ll_loadlib},
   {"searchpath", ll_searchpath},
   /* placeholders */
@@ -702,6 +807,7 @@ static const luaL_Reg pk_funcs[] = {
 
 
 static const luaL_Reg ll_funcs[] = {
+  {"module", ll_module},
   {"require", ll_require},
   {NULL, NULL}
 };

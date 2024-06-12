@@ -66,6 +66,7 @@ game/experiment/cfg/server_blacklist.txt
 game/experiment/maps/graphs/*.ain
 game/experiment/textwindow_temp.html
 game/experiment/logs/*
+game/experiment/lua_cache/*
 
 # shader files
 *.tmp

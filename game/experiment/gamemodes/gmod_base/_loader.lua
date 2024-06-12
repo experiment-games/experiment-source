@@ -55,57 +55,67 @@ local transformers = {
 		},
 	},
 
-	--[[
-		Transformers to simulate the 'module' function from Lua 5.1
-	--]]
-	{
-		OnFileStart = function()
-			isModuleSimulated = false
-		end,
+	-- --[[
+	-- 	Transformers to simulate the 'module' function from Lua 5.1
 
-		LineHandlers = {
-			-- Transforms the 'module' function call into a local variable and a module table
-			function(line, allLinesBefore)
-				local moduleName = line:match("^%s*module%(([^,%)]+)")
+	-- 	Will modify the file so calls to "module(<something>)" or "module(<something>, package.seeall)"
+	-- 	are replaced with:
+	-- 	```lua
+	-- 	local MODULE = {}
+	-- 	<something> = MODULE
+	-- 	```
+	-- 	Any global function definitions in the file will be prefixed with
+	-- 	"MODULE." to avoid polluting the global namespace.
+	-- 	Finally the file will return MODULE at the end
+	-- --]]
+	-- {
+	-- 	OnFileStart = function()
+	-- 		isModuleSimulated = false
+	-- 	end,
 
-				if (not moduleName) then
-					return line
-				end
+	-- 	LineHandlers = {
+	-- 		-- Transforms the 'module' function call into a local variable and a module table
+	-- 		function(line, allLinesBefore)
+	-- 			local moduleName = line:match("^%s*module%(([^,%)]+)")
 
-				local indent
-				indent, moduleName = moduleName:match("^(%s*)(.-)%s*$")
+	-- 			if (not moduleName) then
+	-- 				return line
+	-- 			end
 
-				isModuleSimulated = true
+	-- 			local indent
+	-- 			indent, moduleName = moduleName:match("^(%s*)(.-)%s*$")
 
-				moduleName = moduleName:gsub("\"", "")
+	-- 			isModuleSimulated = true
 
-				-- Create the module table and make it available in the global scope
-				local replacement = indent
-					.. "local MODULE = {} "
+	-- 			moduleName = moduleName:gsub("\"", "")
 
-				-- Trap new global functions into the module
-				replacement = replacement
-					.. "local __originalMetatableG = getmetatable(_G) "
-					.. "setmetatable(_G, {"
-					.. " __newindex = function(table, key, value) MODULE[key] = value end, "
-					.. " __index = function(table, key) return MODULE[key] end, "
-					.. "}) "
+	-- 			-- Create the module table and make it available in the global scope
+	-- 			local replacement = indent
+	-- 				.. "local MODULE = {} "
 
-				return replacement
-			end,
-		},
+	-- 			-- Trap new global functions into the module
+	-- 			replacement = replacement
+	-- 				.. "local __originalMetatableG = getmetatable(_G) "
+	-- 				.. "setmetatable(_G, {"
+	-- 				.. " __newindex = function(table, key, value) MODULE[key] = value end, "
+	-- 				.. " __index = function(table, key) return MODULE[key] end, "
+	-- 				.. "}) "
 
-		OnFileEnd = function(preProcessedContent)
-			if (not isModuleSimulated) then
-				return preProcessedContent
-			end
+	-- 			return replacement
+	-- 		end,
+	-- 	},
 
-			local restoreGlobalSnippet = "\n\n"
-				.. "setmetatable(_G, __originalMetatableG) "
+	-- 	OnFileEnd = function(preProcessedContent)
+	-- 		if (not isModuleSimulated) then
+	-- 			return preProcessedContent
+	-- 		end
 
-			return preProcessedContent .. restoreGlobalSnippet .. "\n\nreturn MODULE"
-		end,
-	},
+	-- 		local restoreGlobalSnippet = "\n\n"
+	-- 			.. "setmetatable(_G, __originalMetatableG) "
+
+	-- 		return preProcessedContent .. restoreGlobalSnippet .. "\n\nreturn MODULE"
+	-- 	end,
+	-- },
 
 	--[[
 		Transforms C-style operators into Lua-style operators
@@ -170,16 +180,6 @@ local transformers = {
 }
 
 return {
-	--- Will modify the file so calls to "module(<something>)" or "module(<something>, package.seeall)"
-	--- are replaced with:
-	--- ```lua
-	--- local MODULE = {}
-	--- <something> = MODULE
-	--- ```
-	--- Any global function definitions in the file will be prefixed with
-	--- "MODULE." to avoid polluting the global namespace.
-	--- Finally the file will return MODULE at the end
-	---
 	--- @param fileContent string
 	--- @param filePath string
 	--- @return string
