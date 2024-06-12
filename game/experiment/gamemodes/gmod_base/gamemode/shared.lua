@@ -7,6 +7,8 @@ GM.Name = "Garry's Mod Base"
 GM.Homepage = ""
 GM.Developer = "Experiment" -- Most code by Facepunch Studios
 
+include("enumerations.lua")
+
 --[[
 	All our libraries are plural, while with Garry's Mod they vary between plural and singular.
 --]]
@@ -25,7 +27,7 @@ menubar = include("../modules/menubar.lua")
 notification = include("../modules/notification.lua")
 numpad = include("../modules/numpad.lua")
 player_manager = include("../modules/player_manager.lua")
-presets = include("../modules/presets.lua")
+-- presets = include("../modules/presets.lua") -- Not implemented atm.
 properties = include("../modules/properties.lua")
 saverestore = include("../modules/saverestore.lua")
 -- scripted_ents = include("../modules/scripted_ents.lua") -- We have our own scripted_ents library.

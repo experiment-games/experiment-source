@@ -27,6 +27,8 @@
 #include "tier0/memdbgon.h"
 
 ConVar gamemode( "gamemode", "sandbox", FCVAR_ARCHIVE | FCVAR_REPLICATED );
+ConVar lua_log_loader( "lua_log_loader", "1", FCVAR_ARCHIVE );
+
 static char contentSearchPath[MAX_PATH];
 
 static void tag_error( lua_State *L, int narg, int tag )
@@ -501,26 +503,29 @@ static int luasrc_loader_traceback( lua_State *L )
 /// <param name="L"></param>
 /// <param name="fileName"></param>
 /// <returns></returns>
-LUA_API int luasrc_dofile_with_loader( lua_State *L, const char *fileName )
+LUA_API int luasrc_dofile_with_loader( lua_State *L, const char *filePath )
 {
     // If the loader is not activated, default to simple dofile loading
     if ( !hasLoaderBeenActivated )
     {
-        return luaL_dofile( L, fileName );
+        return luaL_dofile( L, filePath );
     }
 
     // Handle the file manually, preprocessing it with the loader
-    if ( !filesystem->FileExists( fileName, "MOD" ) )
+    char fullPath[MAX_PATH];
+    filesystem->RelativePathToFullPath( filePath, "MOD", fullPath, sizeof( fullPath ) );
+
+    if ( !filesystem->FileExists( fullPath, "MOD") )
     {
-        lua_pushfstring( L, "File does not exist: %s", fileName );
+        lua_pushfstring( L, "File does not exist: %s", fullPath );
         return LUA_ERRFILE;
     }
 
     // Read the file contents
     CUtlBuffer fileContentsBuffer( 0, 0, CUtlBuffer::TEXT_BUFFER );
-    if ( !filesystem->ReadFile( fileName, "MOD", fileContentsBuffer ) )
+    if ( !filesystem->ReadFile( fullPath, "MOD", fileContentsBuffer ) )
     {
-        lua_pushfstring( L, "Failed to read file: %s", fileName );
+        lua_pushfstring( L, "Failed to read file: %s", fullPath );
         return LUA_ERRFILE;
     }
 
@@ -531,19 +536,19 @@ LUA_API int luasrc_dofile_with_loader( lua_State *L, const char *fileName )
     // process the file contents
     lua_getfield( loaderLuaState, -1, "PreProcessFile" );
     lua_pushlstring( loaderLuaState, fileContents, fileContentsBuffer.TellPut() );
-    lua_pushstring( loaderLuaState, fileName );
+    lua_pushstring( loaderLuaState, fullPath );
     int result = lua_pcall( loaderLuaState, 2, 1, 0 );
 
     // From here on we prefix @ to the fileName, just like luaL_dofile does
     char bufferFileName[MAX_PATH];
-    Q_snprintf( bufferFileName, MAX_PATH, "@%s", fileName );
+    Q_snprintf( bufferFileName, MAX_PATH, "@%s", fullPath );
 
     if ( result != LUA_OK )
     {
         const char *error = lua_tostring( loaderLuaState, -1 );
         lua_pop( loaderLuaState, 1 );  // Pop the error message
 
-        Warning( "[Lua] Loader Error: Failed to preprocess file %s because of error: '%s' (returning file unmodified!)\n", fileName, error );
+        Warning( "[Lua] Loader Error: Failed to preprocess file %s because of error: '%s' (returning file unmodified!)\n", fullPath, error );
 
         return luaL_loadbuffer( L, fileContents, fileSize, bufferFileName );
     }
@@ -552,12 +557,37 @@ LUA_API int luasrc_dofile_with_loader( lua_State *L, const char *fileName )
     {
         lua_pop( loaderLuaState, 1 );  // Pop the invalid preprocessed file contents
 
-        Warning( "[Lua] Loader Error: PreProcessFile did not return a string for file %s (returning file unmodified!)\n", fileName );
+        Warning( "[Lua] Loader Error: PreProcessFile did not return a string for file %s (returning file unmodified!)\n", fullPath );
 
         return luaL_loadbuffer( L, fileContents, fileSize, bufferFileName );
     }
 
     const char *preprocessedFileContents = lua_tostring( loaderLuaState, -1 );
+
+    if ( lua_log_loader.GetBool() )
+    {
+        // Write the file to the logs folder
+#ifdef CLIENT_DLL
+        const char *gamePath = engine->GetGameDirectory();
+#else
+        char gamePath[256];
+        engine->GetGameDir( gamePath, 256 );
+#endif
+        char relativePath[MAX_PATH];
+        Q_StrRight( fullPath, Q_strlen( fullPath ) - Q_strlen( gamePath ), relativePath, sizeof( relativePath ) );
+        char fileLogPath[MAX_PATH];
+        Q_snprintf( fileLogPath, sizeof( fileLogPath ), "logs\\_loader%s", relativePath );
+        V_RemoveDotSlashes( fileLogPath );
+
+        CUtlBuffer buffer( 0, 0, CUtlBuffer::TEXT_BUFFER );
+        buffer.PutString( preprocessedFileContents );
+
+	    char fileLogPathDirectory[MAX_PATH];
+        Q_ExtractFilePath( fileLogPath, fileLogPathDirectory, sizeof( fileLogPathDirectory ) );
+        filesystem->CreateDirHierarchy( fileLogPathDirectory, "GAME" );
+
+        filesystem->WriteFile( fileLogPath, "GAME", buffer );
+    }
 
     lua_pop( loaderLuaState, 1 );  // Pop the preprocessed file contents now that we have them
 
@@ -925,6 +955,11 @@ void luasrc_InitCustomLoader( const char *gamemode, const char *gamemodePath )
     }
 
     filesystem->RelativePathToFullPath( loaderFilePath, "MOD", loaderFilePath, sizeof( loaderFilePath ) );
+
+#ifndef CLIENT_DLL
+    // Always send the _loader.lua to the client
+    luasrc_sendfile( L, loaderFilePath );
+#endif
 
     loaderLuaState = luaL_newstate();
 

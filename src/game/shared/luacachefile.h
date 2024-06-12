@@ -24,6 +24,10 @@ void luasrc_ExtractLcf(void);
 extern void lcf_recursivedeletefile(const char *current);
 extern void lcf_open(lua_State *L);
 extern void lcf_close(lua_State *L);
+#ifndef CLIENT_DLL
+extern int luasrc_sendfile( lua_State *L );
+void luasrc_sendfile( lua_State *L, const char *fullPath );
+#endif
 
 #ifndef CLIENT_DLL
 extern void lcf_preparecachefile(void);

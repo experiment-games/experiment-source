@@ -53,20 +53,13 @@ LUA_API void luasrc_AddFileToLcf( const char *relativename,
 }
 
 #ifdef CLIENT_DLL
-
 LUA_API void luasrc_ExtractLcf()
 {
     INetworkStringTable *downloadables =
         networkstringtable->FindTable( "downloadables" );
 
     const char *pFilename = NULL;
-
-#ifdef CLIENT_DLL
     const char *gamePath = engine->GetGameDirectory();
-#else
-    char gamePath[256];
-    engine->GetGameDir( gamePath, 256 );
-#endif
 
     for ( int i = 0; i < downloadables->GetNumStrings(); i++ )
     {
@@ -137,16 +130,14 @@ LUA_API void luasrc_ExtractLcf()
         }
     }
 
-#ifdef CLIENT_DLL
     // Add the cache folder to the Lua path, so clients can load files from it.
     char cacheDirectoryPath[MAX_PATH];
     Q_strncpy( cacheDirectoryPath, gamePath, sizeof( cacheDirectoryPath ) );
     Q_strncat( cacheDirectoryPath, "\\" LUA_PATH_CACHE, sizeof( cacheDirectoryPath ), COPY_ALL_CHARACTERS );
     filesystem->AddSearchPath( cacheDirectoryPath, "MOD" );
-#endif
 }
 
-#else
+#else // SERVER:
 
 static CUtlDict< char *, int > m_LcfDatabase;
 
@@ -175,7 +166,7 @@ static const char *UTIL_StripAddonName( char *addonName )
     return addonName + i;
 }
 
-static int luasrc_sendfile( lua_State *L )
+extern int luasrc_sendfile( lua_State *L )
 {
     if ( gpGlobals->maxClients == 1 )
     {
@@ -196,34 +187,39 @@ static int luasrc_sendfile( lua_State *L )
     char filename[MAX_PATH];
     Q_snprintf( filename, sizeof( filename ), "%s\\%s", source, luaL_checkstring( L, 1 ) );
 
+    luasrc_sendfile( L, filename );
+    
+    return 0;
+}
+
+void luasrc_sendfile( lua_State *L, const char *fullPath )
+{
     char relativePath[MAX_PATH];
 
-    if ( filesystem->FullPathToRelativePathEx( filename, "MOD", relativePath, MAX_PATH ) )
+    if ( !filesystem->FullPathToRelativePathEx( fullPath, "MOD", relativePath, MAX_PATH ) )
     {
-        const char *zipPath = relativePath;
+        DevMsg( "LCF: couldn't find relative path to %s!\n", fullPath );
+        return;
+    }
 
-        if ( Q_strnicmp( relativePath, "addons/", 7 ) )
+    const char *zipPath = relativePath;
+
+    if ( Q_strnicmp( relativePath, "addons/", 7 ) )
+    {
+        char *substring = strstr( relativePath, "addons\\" );
+
+        if ( substring )
         {
-            char *substring = strstr( relativePath, "addons\\" );
-
-            if ( substring )
-            {
-                *substring = 0;
-                zipPath = UTIL_StripAddonName( relativePath + 7 );
-            }
+            *substring = 0;
+            zipPath = UTIL_StripAddonName( relativePath + 7 );
         }
-
-        char gamePath[256];
-        engine->GetGameDir( gamePath, 256 );
-
-        DevMsg( "LCF: adding %s to the Lua cache file...\n", zipPath );
-        m_LcfDatabase.Insert( zipPath, strdup( filename ) );
     }
-    else
-    {
-        DevMsg( "LCF: couldn't find relative path to %s!\n", filename );
-    }
-    return 0;
+
+    char gamePath[256];
+    engine->GetGameDir( gamePath, 256 );
+
+    DevMsg( "LCF: adding %s to the Lua cache file...\n", zipPath );
+    m_LcfDatabase.Insert( zipPath, strdup( fullPath ) );
 }
 
 static const luaL_Reg lcf_funcs[] = { { "sendfile", luasrc_sendfile },
