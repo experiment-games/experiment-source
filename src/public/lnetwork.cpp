@@ -50,6 +50,15 @@ static void umsg_HandleReceiveMessage( bf_read &msg )
     msg.ReadString( name, sizeof( name ) );
     umsg_CallOnMessageReceived( L, name, &msg );
 }
+static void umsg_HandleReceiveMessageTest( bf_read &msg )
+{
+    char str[2048];
+    msg.ReadString( str, sizeof( str ) );
+    float num1 = msg.ReadFloat();
+    float num2 = msg.ReadFloat();
+
+    Warning( "The numbers are %f and %f and string is %s", num1, num2, str );
+}
 #else
 static bool isMessageQueued = false;
 static bf_write queuedMessageBuffer;
@@ -276,6 +285,51 @@ static int umsg_WriteSBitLong( lua_State *L )
 
     return 0;
 }
+
+// TODO: Testing only
+static int umsg_Test( lua_State *L )
+{
+    // Works:
+    // CRecipientFilter filter;
+    // filter.AddAllPlayers();
+
+    // bf_write *sendBuffer = engine->UserMessageBegin( &filter, luaMessageType + 1 );
+    // sendBuffer->Reset();
+
+    // sendBuffer->WriteString( "abcdefg" );
+    // sendBuffer->WriteFloat( 123.45 );
+    // sendBuffer->WriteFloat( 654321 );
+
+    // engine->MessageEnd();
+
+    // Works too:
+    CRecipientFilter filter;
+    filter.AddAllPlayers();
+
+    byte byteBuffer[PAD_NUMBER( MAX_USER_MSG_DATA, 4 )];
+    bf_write preBuffer;
+    preBuffer.StartWriting( byteBuffer, sizeof( byteBuffer ) );
+    preBuffer.Reset();
+
+    preBuffer.WriteString( "abcdefg" );
+    preBuffer.WriteFloat( 123.45 );
+    preBuffer.WriteFloat( 654321 );
+
+    bf_write *sendBuffer = engine->UserMessageBegin( &filter, luaMessageType + 1 );
+    sendBuffer->Reset();
+
+    // Copy the prebuffer over to the user message send buffer
+    int size = preBuffer.GetNumBytesWritten();
+    int *dataPre = new int[MAX_USER_MSG_DATA];
+    Q_memcpy( dataPre, preBuffer.GetData(), size );
+
+    sendBuffer->WriteBits( dataPre, preBuffer.GetNumBitsWritten() );
+
+    engine->MessageEnd();
+    delete[] dataPre;
+
+    return 0;
+}
 #endif
 
 static const luaL_Reg umsgLib[] = {
@@ -297,6 +351,7 @@ static const luaL_Reg umsgLib[] = {
     { "WriteUBitLong", umsg_WriteUBitLong },
     { "WriteVector", umsg_WriteVector },
     { "WriteWord", umsg_WriteWord },
+    { "Test", umsg_Test },
 #endif
     { NULL, NULL } };
 
@@ -315,8 +370,12 @@ void RegisterLuaUserMessages()
     // Register a single message that carries all other messages, It's a bit of a hack but it works
     usermessages->Register( "_LuaMessage", MAX_USER_MSG_DATA );
 
+    // TODO: Debug only
+    usermessages->Register( "_LuaMessageTest", -1 );
+
 #ifdef CLIENT_DLL
     usermessages->HookMessage( "_LuaMessage", umsg_HandleReceiveMessage );
+    usermessages->HookMessage( "_LuaMessageTest", umsg_HandleReceiveMessageTest );
 #else
     luaMessageType = usermessages->LookupUserMessage( "_LuaMessage" );
 #endif
