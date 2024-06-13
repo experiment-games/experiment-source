@@ -316,17 +316,11 @@ static int umsg_Test( lua_State *L )
     preBuffer.WriteFloat( 654321 );
 
     bf_write *sendBuffer = engine->UserMessageBegin( &filter, luaMessageType + 1 );
-    sendBuffer->Reset();
 
     // Copy the prebuffer over to the user message send buffer
-    int size = preBuffer.GetNumBytesWritten();
-    int *dataPre = new int[MAX_USER_MSG_DATA];
-    Q_memcpy( dataPre, preBuffer.GetData(), size );
-
-    sendBuffer->WriteBits( dataPre, preBuffer.GetNumBitsWritten() );
+    sendBuffer->WriteBits( preBuffer.GetData(), preBuffer.GetNumBitsWritten() );
 
     engine->MessageEnd();
-    delete[] dataPre;
 
     return 0;
 }
