@@ -33,7 +33,7 @@ static void umsg_CallOnMessageReceived( lua_State *L, const char *messageName, b
     lua_getfield( L, -1, "OnMessageReceived" );
     lua_pushstring( L, messageName );
     lua_pushbf_read( L, message );
-    lua_remove( L, -4 );  // Remove umsg
+    lua_remove( L, -4 );  // Remove the umsg library
     int result = lua_pcall( L, 2, 0, 0 );
 
     if ( result != 0 )
@@ -43,21 +43,11 @@ static void umsg_CallOnMessageReceived( lua_State *L, const char *messageName, b
     }
 }
 
-// lua_run_cl umsg.Hook("test", function(msg) print(msg:ReadString()) end); lua_run umsg.Start("test") umsg.WriteString("asd") umsg.MessageEnd()
 static void umsg_HandleReceiveMessage( bf_read &msg )
 {
     char name[2048];
     msg.ReadString( name, sizeof( name ) );
     umsg_CallOnMessageReceived( L, name, &msg );
-}
-static void umsg_HandleReceiveMessageTest( bf_read &msg )
-{
-    char str[2048];
-    msg.ReadString( str, sizeof( str ) );
-    float num1 = msg.ReadFloat();
-    float num2 = msg.ReadFloat();
-
-    Warning( "The numbers are %f and %f and string is %s", num1, num2, str );
 }
 #else
 static bool isMessageQueued = false;
@@ -93,7 +83,9 @@ static int umsg_Start( lua_State *L )
     queuedRecipientFilter.MakeReliable();
 
     // Write the message name the user wants to send
-    queuedMessageBuffer.WriteString( messageName );
+    char messageNameCopy[2048];
+    Q_strcpy( messageNameCopy, messageName );
+    queuedMessageBuffer.WriteString( messageNameCopy );
 
     return 0;
 }
@@ -111,20 +103,9 @@ static int umsg_MessageEnd( lua_State *L )
     // We have to create and send the message in one go, or we'll get a
     // access violation in the engine (from  othermessages getting in the way)
     bf_write *sendBuffer = engine->UserMessageBegin( &queuedRecipientFilter, luaMessageType );
-    sendBuffer->Reset();
 
-    queuedMessageBuffer.SeekToBit( 0 );
-    unsigned char *data = queuedMessageBuffer.GetData();
-    sendBuffer->WriteBits( data, queuedMessageBuffer.GetNumBitsWritten() );
-
-    // Pad the remaining message with zeros
-    int bytesLeft = sendBuffer->GetNumBytesLeft() - 1;  // TODO: Why -1 to get the correct number of bytes?
-
-    for ( int i = 0; i < bytesLeft; i++ )
-    {
-        // Pad the end of the message with zeros
-        sendBuffer->WriteByte( 0 );
-    }
+    // Copy the prepared buffer over to the user message send buffer
+    sendBuffer->WriteBits( queuedMessageBuffer.GetData(), queuedMessageBuffer.GetNumBitsWritten() );
 
     engine->MessageEnd();
 
@@ -226,7 +207,10 @@ static int umsg_WriteString( lua_State *L )
     if ( !isMessageQueued )
         Warning( "[Lua] umsg.WriteString called with no active message\n" );
 
-    queuedMessageBuffer.WriteString( luaL_checkstring( L, 1 ) );
+    // TODO: Trying a copy to see if that doesnt cause garbled text
+    char stringCopy[2048];
+    Q_strcpy( stringCopy, luaL_checkstring( L, 1 ) );
+    queuedMessageBuffer.WriteString( stringCopy );
 
     return 0;
 }
@@ -285,45 +269,6 @@ static int umsg_WriteSBitLong( lua_State *L )
 
     return 0;
 }
-
-// TODO: Testing only
-static int umsg_Test( lua_State *L )
-{
-    // Works:
-    // CRecipientFilter filter;
-    // filter.AddAllPlayers();
-
-    // bf_write *sendBuffer = engine->UserMessageBegin( &filter, luaMessageType + 1 );
-    // sendBuffer->Reset();
-
-    // sendBuffer->WriteString( "abcdefg" );
-    // sendBuffer->WriteFloat( 123.45 );
-    // sendBuffer->WriteFloat( 654321 );
-
-    // engine->MessageEnd();
-
-    // Works too:
-    CRecipientFilter filter;
-    filter.AddAllPlayers();
-
-    byte byteBuffer[PAD_NUMBER( MAX_USER_MSG_DATA, 4 )];
-    bf_write preBuffer;
-    preBuffer.StartWriting( byteBuffer, sizeof( byteBuffer ) );
-    preBuffer.Reset();
-
-    preBuffer.WriteString( "abcdefg" );
-    preBuffer.WriteFloat( 123.45 );
-    preBuffer.WriteFloat( 654321 );
-
-    bf_write *sendBuffer = engine->UserMessageBegin( &filter, luaMessageType + 1 );
-
-    // Copy the prebuffer over to the user message send buffer
-    sendBuffer->WriteBits( preBuffer.GetData(), preBuffer.GetNumBitsWritten() );
-
-    engine->MessageEnd();
-
-    return 0;
-}
 #endif
 
 static const luaL_Reg umsgLib[] = {
@@ -345,7 +290,6 @@ static const luaL_Reg umsgLib[] = {
     { "WriteUBitLong", umsg_WriteUBitLong },
     { "WriteVector", umsg_WriteVector },
     { "WriteWord", umsg_WriteWord },
-    { "Test", umsg_Test },
 #endif
     { NULL, NULL } };
 
@@ -362,14 +306,10 @@ void RegisterLuaUserMessages()
     }
 
     // Register a single message that carries all other messages, It's a bit of a hack but it works
-    usermessages->Register( "_LuaMessage", MAX_USER_MSG_DATA );
-
-    // TODO: Debug only
-    usermessages->Register( "_LuaMessageTest", -1 );
+    usermessages->Register( "_LuaMessage", -1 );
 
 #ifdef CLIENT_DLL
     usermessages->HookMessage( "_LuaMessage", umsg_HandleReceiveMessage );
-    usermessages->HookMessage( "_LuaMessageTest", umsg_HandleReceiveMessageTest );
 #else
     luaMessageType = usermessages->LookupUserMessage( "_LuaMessage" );
 #endif
@@ -387,24 +327,25 @@ static const luaL_Reg netLib[] = {
 #ifdef CLIENT_DLL
 LUA_API void lua_pushbf_read( lua_State *L, bf_read *message )
 {
-    bf_read *bfRead = ( bf_read * )lua_newuserdata( L, sizeof( bf_read ) );
+    lua_pushlightuserdata( L, message );
     luaL_getmetatable( L, LUA_BFREADLIBNAME );
     lua_setmetatable( L, -2 );
 }
 
-LUALIB_API bf_read *&luaL_checkbf_read( lua_State *L, int narg )
+LUALIB_API bf_read* luaL_checkbf_read( lua_State *L, int narg )
 {
-    bf_read **ud = ( bf_read ** )luaL_checkudata( L, narg, LUA_BFREADLIBNAME );
-    if ( !ud )
+    bf_read *bfRead = ( bf_read * )luaL_checkudata( L, narg, LUA_BFREADLIBNAME );
+    if ( !bfRead )
     {
         luaL_typerror( L, narg, LUA_BFREADLIBNAME );
     }
-    return *ud;
+
+    return bfRead;
 }
 
 static int bfRead_ReadBit( lua_State *L )
 {
-    bf_read *bf = luaL_checkbf_read( L, 1 );
+    bf_read* bf = luaL_checkbf_read( L, 1 );
     lua_pushinteger( L, bf->ReadOneBit() );
     return 1;
 }
