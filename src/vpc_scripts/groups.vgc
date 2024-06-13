@@ -14,6 +14,7 @@ $Group "gamedlls"
 	"server"
 
     "lua54"
+    "luasocket"
 }
 
 $Group "game"
@@ -26,6 +27,7 @@ $Group "game"
 	"vgui_controls"
 
 	"lua54"
+    "luasocket"
 }
 
 $Group "shaders"
@@ -61,6 +63,7 @@ $Group "everything"
 	"vvis_launcher"
 
 	"lua54"
+    "luasocket"
 }
 
 $Group "dedicated"
@@ -70,5 +73,6 @@ $Group "dedicated"
 	"tier1"
 
 	"lua54"
+    "luasocket"
 }
 

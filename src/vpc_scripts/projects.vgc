@@ -133,3 +133,8 @@ $Project "lua54"
 {
 	"lua\lua.vpc" [$WINDOWS||$X360||$POSIX]
 }
+
+$Project "luasocket"
+{
+    "luasocket\luasocket.vpc" [$WINDOWS||$X360||$POSIX]
+}

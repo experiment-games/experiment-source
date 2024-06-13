@@ -1,0 +1,106 @@
+//-----------------------------------------------------------------------------
+//	LUASOCKET.VPC
+//
+//	Project Script
+//-----------------------------------------------------------------------------
+
+$macro SRCDIR		".."
+$Macro GAMENAME     "experiment"
+$Macro OUTBINDIR	"$SRCDIR\..\game\$GAMENAME\bin"
+$Macro OUTBINNAME	"luasocket"
+$MacroRequired		"OUTDLLEXT" "$_DLL_EXT"
+
+$Include "$SRCDIR\vpc_scripts\version.vpc"
+$Include "$SRCDIR\vpc_scripts\platform_dirs.vpc"
+$include "$SRCDIR\vpc_scripts\source_base.vpc"
+$Include "$SRCDIR\vpc_scripts\source_win32_base.vpc"
+
+$Configuration "Debug"
+{
+	$General
+	{
+        $OutputDirectory                 ".\"
+
+        $ConfigurationType				"Dynamic Library (.dll)"
+
+        $TargetName                     "$OUTBINNAME"
+        $TargetExtension                "$OUTDLLEXT"
+    }
+
+	$Compiler
+	{
+		$AdditionalIncludeDirectories       "$BASE;\lua;$(SRCDIR)\luasocket\src;$SRCDIR\lua"
+		$PreprocessorDefinitions            "$BASE;_CRT_SECURE_NO_WARNINGS;LUASOCKET_DEBUG"
+        $AdditionalLibraryDirectories       "$(SRCDIR)\lua"
+
+        $Optimization                   "Disabled (/Od)"
+        $RuntimeLibrary                 "Multi-threaded Debug DLL (/MDd)"
+        $WarningLevel                   "Level 3 (/W3)"
+        $TreatWarningsAsErrors			"No"
+    }
+
+    $Linker
+    {
+        $AdditionalDependencies          "$BASE $SRCDIR\lua\lua54.lib ws2_32.lib"
+        $AdditionalLibraryDirectories    "$(SRCDIR)\lua"
+
+        $SubSystem                      "Windows (/SUBSYSTEM:WINDOWS)"
+        $TargetMachine                  "MachineX86 (/MACHINE:X86)"	[$WIN32]
+        $TargetMachine                  "MachineX64 (/MACHINE:X64)"	[$WIN64]
+    }
+}
+
+$Configuration "Release"
+{
+    $General
+    {
+        $OutputDirectory                 ".\"
+
+        $ConfigurationType				"Dynamic Library (.dll)"
+
+        $TargetName                     "$OUTBINNAME"
+        $TargetExtension                "$OUTDLLEXT"
+    }
+
+    $Compiler
+    {
+        $AdditionalIncludeDirectories	    "$BASE;\lua;$(SRCDIR)\luasocket\src"
+		$PreprocessorDefinitions            "$BASE;_CRT_SECURE_NO_WARNINGS;LUASOCKET_DEBUG"
+        $AdditionalLibraryDirectories       "$(SRCDIR)\lua"
+
+        $Optimization                   "Maximize Speed (/O2)"
+        $RuntimeLibrary                 "Multi-threaded DLL (/MD)"
+        $WarningLevel                   "Level 3 (/W3)"
+        $TreatWarningsAsErrors			"No"
+    }
+
+    $Linker
+    {
+        $AdditionalDependencies          "$BASE $SRCDIR\lua\lua54.lib ws2_32.lib"
+        $AdditionalLibraryDirectories    "$(SRCDIR)\lua"
+
+        $SubSystem                      "Windows (/SUBSYSTEM:WINDOWS)"
+        $TargetMachine                  "MachineX86 (/MACHINE:X86)"	[$WIN32]
+        $TargetMachine                  "MachineX64 (/MACHINE:X64)"	[$WIN64]
+    }
+}
+
+$Project "luasocket"
+{
+    $Folder	"Source Files"
+    {
+        $File	"src/auxiliar.c"
+        $File	"src/buffer.c"
+        $File	"src/compat.c"
+        $File	"src/except.c"
+        $File	"src/inet.c"
+        $File	"src/io.c"
+        $File	"src/luasocket.c"
+        $File	"src/options.c"
+        $File	"src/select.c"
+        $File	"src/tcp.c"
+        $File	"src/timeout.c"
+        $File	"src/udp.c"
+        $File	"src/wsocket.c"
+    }
+}
