@@ -21,6 +21,7 @@
 ** umsg library
 */
 #ifdef CLIENT_DLL
+
 /// <summary>
 /// Calls umsg.OnMessageReceived( messageName, message )
 /// </summary>
@@ -49,7 +50,9 @@ static void umsg_HandleReceiveMessage( bf_read &msg )
     msg.ReadString( name, sizeof( name ) );
     umsg_CallOnMessageReceived( L, name, &msg );
 }
+
 #else
+
 static bool isMessageQueued = false;
 static bf_write queuedMessageBuffer;
 static CRecipientFilter queuedRecipientFilter;
@@ -83,9 +86,7 @@ static int umsg_Start( lua_State *L )
     queuedRecipientFilter.MakeReliable();
 
     // Write the message name the user wants to send
-    char messageNameCopy[2048];
-    Q_strcpy( messageNameCopy, messageName );
-    queuedMessageBuffer.WriteString( messageNameCopy );
+    queuedMessageBuffer.WriteString( messageName );
 
     return 0;
 }
@@ -106,14 +107,9 @@ static int umsg_MessageEnd( lua_State *L )
     sendBuffer->Reset();
 
     // Copy the prepared buffer over to the user message send buffer
-    int size = queuedMessageBuffer.GetNumBytesWritten();
-    int *dataPre = new int[MAX_USER_MSG_DATA];
-    Q_memcpy( dataPre, queuedMessageBuffer.GetData(), size );
-
-    sendBuffer->WriteBits( dataPre, queuedMessageBuffer.GetNumBitsWritten() );
+    sendBuffer->WriteBits( queuedMessageBuffer.GetData(), queuedMessageBuffer.GetNumBitsWritten() );
 
     engine->MessageEnd();
-    delete[] dataPre;
 
     queuedRecipientFilter.Reset();
 
@@ -213,10 +209,7 @@ static int umsg_WriteString( lua_State *L )
     if ( !isMessageQueued )
         Warning( "[Lua] umsg.WriteString called with no active message\n" );
 
-    // TODO: Trying a copy to see if that doesnt cause garbled text
-    char stringCopy[2048];
-    Q_strcpy( stringCopy, luaL_checkstring( L, 1 ) );
-    queuedMessageBuffer.WriteString( stringCopy );
+    queuedMessageBuffer.WriteString( luaL_checkstring( L, 1 ) );
 
     return 0;
 }
@@ -275,6 +268,7 @@ static int umsg_WriteSBitLong( lua_State *L )
 
     return 0;
 }
+
 #endif
 
 static const luaL_Reg umsgLib[] = {
