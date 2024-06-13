@@ -54,6 +54,7 @@ static bool isMessageQueued = false;
 static bf_write queuedMessageBuffer;
 static CRecipientFilter queuedRecipientFilter;
 static int luaMessageType = 0;
+byte byteBuffer[PAD_NUMBER( MAX_USER_MSG_DATA, 4 )];
 
 static int umsg_Start( lua_State *L )
 {
@@ -66,7 +67,6 @@ static int umsg_Start( lua_State *L )
 
     isMessageQueued = true;
 
-    byte byteBuffer[PAD_NUMBER( MAX_USER_MSG_DATA, 4 )];
     queuedMessageBuffer.StartWriting( byteBuffer, sizeof( byteBuffer ) );
     queuedMessageBuffer.Reset();
 
@@ -103,11 +103,17 @@ static int umsg_MessageEnd( lua_State *L )
     // We have to create and send the message in one go, or we'll get a
     // access violation in the engine (from  othermessages getting in the way)
     bf_write *sendBuffer = engine->UserMessageBegin( &queuedRecipientFilter, luaMessageType );
+    sendBuffer->Reset();
 
     // Copy the prepared buffer over to the user message send buffer
-    sendBuffer->WriteBits( queuedMessageBuffer.GetData(), queuedMessageBuffer.GetNumBitsWritten() );
+    int size = queuedMessageBuffer.GetNumBytesWritten();
+    int *dataPre = new int[MAX_USER_MSG_DATA];
+    Q_memcpy( dataPre, queuedMessageBuffer.GetData(), size );
+
+    sendBuffer->WriteBits( dataPre, queuedMessageBuffer.GetNumBitsWritten() );
 
     engine->MessageEnd();
+    delete[] dataPre;
 
     queuedRecipientFilter.Reset();
 
