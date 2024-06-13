@@ -2,8 +2,6 @@
 *.so
 *.so.*
 *.obj
-*.lib
-*.dll*
 *.user
 *.sdf
 Debug

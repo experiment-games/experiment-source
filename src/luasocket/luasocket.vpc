@@ -15,6 +15,16 @@ $Include "$SRCDIR\vpc_scripts\platform_dirs.vpc"
 $include "$SRCDIR\vpc_scripts\source_base.vpc"
 $Include "$SRCDIR\vpc_scripts\source_win32_base.vpc"
 
+$Configuration
+{
+    $PostBuildEvent
+    {
+        $Description	"Copying Luasocket library to output directory..."
+        $CommandLine	"copy /Y $SRCDIR\luasocket\$OUTBINNAME.dll $OUTBINDIR\$OUTBINNAME.dll" [$WINDOWS]
+        $CommandLine	"cp $SRCDIR/luasocket/$OUTBINNAME.so $OUTBINDIR/$OUTBINNAME.so" [$LINUX]
+    }
+}
+
 $Configuration "Debug"
 {
 	$General
