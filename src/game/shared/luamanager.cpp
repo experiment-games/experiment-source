@@ -24,6 +24,11 @@
 #include "licvar.h"
 #include "lnetwork.h"
 
+extern "C"
+{
+    #include "luasocket.h"
+}
+
 // memdbgon must be the last include file in a .cpp file!!!
 #include "tier0/memdbgon.h"
 
@@ -324,6 +329,7 @@ void luasrc_init_gameui( void )
 
     luaL_openlibs( LGameUI );
     base_open( LGameUI );
+    luaopen_socket_core( LGameUI );
 
     lua_pushboolean( LGameUI, 1 );
     lua_setglobal( LGameUI, "_GAMEUI" ); /* set global _GAMEUI */
@@ -363,6 +369,7 @@ void luasrc_init( void )
 
     luaL_openlibs( L );
     base_open( L );
+    luaopen_socket_core( L );
     lcf_open( L );
 
     // Andrew; Someone set us up the path for great justice
