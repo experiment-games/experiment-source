@@ -1,0 +1,10 @@
+"VertexLitGeneric"
+{
+
+	"$basetexture" "models\stalkertnb\humans/upper"
+	"$bumpmap" "models\stalkertnb\humans/upper_n"
+
+
+
+$nocull 1
+}

@@ -1,0 +1,7 @@
+"VertexlitGeneric"
+{
+	"$basetexture" 				"models/stalkertnb/humans/nikolai_body"
+	"$bumpmap" 				"models/stalkertnb/humans/nikolai_body_n"
+	"$alphatest" 1
+	"$nocull" 1
+}
