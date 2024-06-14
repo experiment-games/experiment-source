@@ -3499,9 +3499,29 @@ void CRendering3dView::BuildRenderableRenderLists( int viewID )
     }
 }
 
+/*
+** env_skypaint logic
+*/
 #define SKYBOX_SIDE_NUM 6
 #define SKYBOX_VECTOR_COMPONENT_NUM 3
 #define SKYBOX_SIDE_VERTEX_NUM 4
+
+ConVar skypaint_topcolor( "skypaint_topcolor", "1.0 1.0 0.0 1.0", FCVAR_ARCHIVE | FCVAR_REPLICATED, "The colour of the top of the sky" );
+ConVar skypaint_bottomcolor( "skypaint_bottomcolor", "0.0 0.0 1.0 1.0", FCVAR_ARCHIVE | FCVAR_REPLICATED, "The colour of the bottom of the sky" );
+ConVar skypaint_fadebias( "skypaint_fadebias", "0.5", FCVAR_ARCHIVE | FCVAR_REPLICATED, "Controls the bias of the fade between top/bottom (1.0 is even)" );
+//ConVar skypaint_sunsize( "skypaint_sunsize", "0.5", FCVAR_ARCHIVE | FCVAR_REPLICATED, "Controls the size of the sun glow" );
+//ConVar skypaint_sunnormal( "skypaint_sunnormal", "0.0 0.0 0.0", FCVAR_ARCHIVE | FCVAR_REPLICATED, "The position of the sun, expressed as a normal from the center of the world" );
+//ConVar skypaint_sunposmethod( "skypaint_sunposmethod", "0", FCVAR_ARCHIVE | FCVAR_REPLICATED, "How should we determine the position of the sun? 0: Custom, 1: Automatic" );
+//ConVar skypaint_suncolor( "skypaint_suncolor", "1.0 1.0 1.0 1.0", FCVAR_ARCHIVE | FCVAR_REPLICATED, "The color of the sun glow (this is additive)" );
+//ConVar skypaint_duskscale( "skypaint_duskscale", "1.0", FCVAR_ARCHIVE | FCVAR_REPLICATED, "The size of the dusk effect (colouring of the horizon)" );
+//ConVar skypaint_duskintensity( "skypaint_duskintensity", "1.0", FCVAR_ARCHIVE | FCVAR_REPLICATED, "How powerful the dusk effect is" );
+//ConVar skypaint_duskcolor( "skypaint_duskcolor", "1.0 0.5 0.5 1.0", FCVAR_ARCHIVE | FCVAR_REPLICATED, "The color of the dusk effect" );
+//ConVar skypaint_drawstars( "skypaint_drawstars", "0", FCVAR_ARCHIVE | FCVAR_REPLICATED, "Draws a specified texture as an overlay 0: No, 1: Yes" );
+//ConVar skypaint_starstexture( "skypaint_starstexture", "", FCVAR_ARCHIVE | FCVAR_REPLICATED, "The star texture" );
+//ConVar skypaint_starsscale( "skypaint_starsscale", "1.0", FCVAR_ARCHIVE | FCVAR_REPLICATED, "How big the star texture should be" );
+//ConVar skypaint_starsfade( "skypaint_starsfade", "1.0", FCVAR_ARCHIVE | FCVAR_REPLICATED, "Fade the star texture towards the horizon" );
+//ConVar skypaint_starsspeed( "skypaint_starsspeed", "1.0", FCVAR_ARCHIVE | FCVAR_REPLICATED, "How fast the star texture should scroll across the sky" );
+//ConVar skypaint_hdrscale( "skypaint_hdrscale", "1.0", FCVAR_ARCHIVE | FCVAR_REPLICATED, "When rendering your skybox in HDR mode, output will be scaled by this amount" );
 
 int skyboxSideVectorsLookup[SKYBOX_SIDE_NUM][SKYBOX_VECTOR_COMPONENT_NUM] =
     {
@@ -3587,8 +3607,12 @@ static void DrawSkyPaint( const CViewSetup &view )
     int zFar = 16384;  // Far clipping distance
 
     // TODO: Grab from env_skypaint
-    Vector4D colorBottom( 0.1f, 0.2f, 1.0f, 1.0f );
-    Vector4D colorTop( 1.0f, 1.0f, 0.0f, 1.0f );
+    Vector4D colorBottom;
+    sscanf( skypaint_bottomcolor.GetString(), "%f %f %f %f", &colorBottom.x, &colorBottom.y, &colorBottom.z, &colorBottom.w );
+    Vector4D colorTop;
+    sscanf( skypaint_topcolor.GetString(), "%f %f %f %f", &colorTop.x, &colorTop.y, &colorTop.z, &colorTop.w );
+
+    float fadebias = 1 - clamp( skypaint_fadebias.GetFloat(), 0.0f, 1.0f );
 
     CMatRenderContextPtr pRenderContext( materials );
     pRenderContext->Bind( pSkyPaintMaterial );
@@ -3609,10 +3633,12 @@ static void DrawSkyPaint( const CViewSetup &view )
         {
             // Calculate the color based on the vertex y position to blend between colorBottom and colorTop
             float fraction = clamp( positionArray[j].z / zFar + 1.0f, 0.0f, 1.0f );
-            float red = colorBottom.x * ( 1.0f - fraction ) + colorTop.x * fraction;
-            float green = colorBottom.y * ( 1.0f - fraction ) + colorTop.y * fraction;
-            float blue = colorBottom.z * ( 1.0f - fraction ) + colorTop.z * fraction;
-            float alpha = colorBottom.w * ( 1.0f - fraction ) + colorTop.w * fraction;
+            float adjustedFraction = fraction * fadebias;
+
+            float red = colorBottom.x * ( 1.0f - adjustedFraction ) + colorTop.x * adjustedFraction;
+            float green = colorBottom.y * ( 1.0f - adjustedFraction ) + colorTop.y * adjustedFraction;
+            float blue = colorBottom.z * ( 1.0f - adjustedFraction ) + colorTop.z * adjustedFraction;
+            float alpha = colorBottom.w * ( 1.0f - adjustedFraction ) + colorTop.w * adjustedFraction;
 
             meshBuilder.Color4f( red, green, blue, alpha );
             meshBuilder.Position3fv( positionArray[j].Base() );
