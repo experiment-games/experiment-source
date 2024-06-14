@@ -74,10 +74,6 @@ game/experiment/lua_cache/*
 # config file different for each user
 .env
 
-# mod content while debugging
-game/experiment/materials/**/*.vtf
-game/experiment/materials/**/*.vmt
-
 # lua/download cache files
 game/experiment/download/*
 game/experiment/cache/*
