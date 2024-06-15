@@ -27,7 +27,9 @@ function MODULE.Tick()
 
     for id, timer in pairs(MODULE.registeredTimers) do
         if (curTime >= timer.nextTick) then
-            timer.callback()
+			xpcall(timer.callback, function(err)
+				print("Timer error: " .. err)
+			end)
 
             -- If repetitions was already 0 (or -1) this will result in the
 			-- timer continuing to run indefinitely. This is the intended behavior.

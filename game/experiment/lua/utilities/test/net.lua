@@ -13,6 +13,7 @@ if (SERVER) then
         net.Start("CTestMessage")
 		net.WriteFloat(1234.5677490234)
         net.WriteString("Hello, client!")
+		net.WriteVector(client:GetAbsOrigin())
         net.Send(client)
 
 		countReceived = countReceived + 1
@@ -20,7 +21,7 @@ if (SERVER) then
 
     net.Receive("TestMessage2", function(length, client)
         net.Start("CTestMessage2")
-        net.WriteString("Hello, client yo!")
+        net.WriteString("Hello again, client!")
         net.Send(client)
 
 		countReceived = countReceived + 1
@@ -37,9 +38,11 @@ if (CLIENT) then
 	net.Receive("CTestMessage", function(length, client)
         local num = net.ReadFloat()
         local message = net.ReadString()
+		local position = net.ReadVector()
 
         assert(math.AlmostEquals(num, 1234.5677490234), "Received incorrect number from server!")
         assert(message == "Hello, client!", "Received incorrect message from server!")
+		assert(type(position) == "vector", "Received incorrect position from server!")
 
 		countReceived = countReceived + 1
 	end)
@@ -47,7 +50,7 @@ if (CLIENT) then
 	net.Receive("CTestMessage2", function(length, client)
         local message = net.ReadString()
 
-        assert(message == "Hello, client yo!", "Received incorrect message from server!")
+        assert(message == "Hello again, client!", "Received incorrect message from server!")
 
 		countReceived = countReceived + 1
 	end)

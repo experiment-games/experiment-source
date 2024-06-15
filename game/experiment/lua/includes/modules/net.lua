@@ -29,15 +29,52 @@ local BYTE_SIZE_IN_BITS = 8
 local SIZE_STRING_BYTES = 2
 local SIZE_FLOAT_BYTES = 4
 local SIZE_INT_BYTES = 4
+local SIZE_ENTITY_INDEX = 24 -- TODO: Find out if we should use entindex or GetSerialNumber, or something else
 
 -- Client only:
 local localClient
 
 -- Server only:
 local localServer
-local clients = {}
+local socketClients = {}
 
 MODULE.registeredCallbacks = MODULE.registeredCallbacks or {}
+
+local currentIncomingMessage = nil
+local currentOutgoingMessage = nil
+
+--[[
+	Forward net.Read* and net.Write* functions to the reader and writer
+	that are currently active
+--]]
+if (getmetatable(MODULE) == nil) then
+	setmetatable(MODULE, {
+        __index = function(_, key)
+            local forwardTo = {
+				Read = currentIncomingMessage,
+				Write = currentOutgoingMessage
+            }
+
+            for prefix, target in pairs(forwardTo) do
+                if (key:sub(1, #prefix) ~= prefix) then
+                    continue
+                end
+
+                if (not target) then
+					error("net." .. key .. " was called without calling net.Start.", 2)
+				end
+
+				if (not target[key]) then
+					return nil
+				end
+
+				return function(...)
+					return target[key](target, ...)
+				end
+            end
+		end
+	})
+end
 
 local prefix = CLIENT and "[NetModuleTest Client]" or "[NetModuleTest Server]"
 local debug = function(...)
@@ -73,7 +110,7 @@ local debugData = function(data)
 end
 
 --[[
-	Logic to setup the client and server sockets
+	Logic to setup the socketClient and server sockets
 	and handle incoming data.
 --]]
 
@@ -137,27 +174,27 @@ elseif (SERVER) then
 		return
 	end
 
-	local ip, port = localServer:getsockname()
-
 	-- Disable blocking on the server socket
 	localServer:settimeout(0)
 
-	local function handleClient(client)
-		-- Disable blocking on the client socket
-		client:settimeout(0)
+    local function handleClient(clientData)
+        local socketClient = clientData.socketClient
 
-		local bytes, err = client:receive(SIZE_INT_BYTES)
+		-- Disable blocking on the socketClient socket
+		socketClient:settimeout(0)
+
+		local bytes, err = socketClient:receive(SIZE_INT_BYTES)
 
 		if (err and err ~= "timeout") then
-			-- Remove the client from the list if it's disconnected
-			for i, c in ipairs(clients) do
-				if (c == client) then
-					table.remove(clients, i)
+			-- Remove the socketClient from the list if it's disconnected
+			for i, c in ipairs(socketClients) do
+				if (c == socketClient) then
+					table.remove(socketClients, i)
 					break
 				end
 			end
 
-			client:close()
+			socketClient:close()
 			debug("Client disconnected", err)
 
             return
@@ -169,41 +206,55 @@ elseif (SERVER) then
 
         local length = string.unpack("I", bytes)
 
-        bytes, err = client:receive(length)
+        bytes, err = socketClient:receive(length)
 
 		if (err and err ~= "timeout") then
-			-- Remove the client from the list if it's disconnected
-			for i, c in ipairs(clients) do
-				if (c == client) then
-					table.remove(clients, i)
+			-- Remove the socketClient from the list if it's disconnected
+			for i, c in ipairs(socketClients) do
+				if (c == socketClient) then
+					table.remove(socketClients, i)
 					break
 				end
 			end
 
-			client:close()
+			socketClient:close()
 			debug("Client disconnected", err)
 
 			return
 		end
 
-		MODULE.HandleIncomingMessage(bytes, client)
+		MODULE.HandleIncomingMessage(bytes, clientData.client)
 	end
 
-	local function serverUpdate()
-		-- Accept any new clients
-		local newClient = localServer:accept()
+    local function serverUpdate()
+        -- Accept any new clients
+        local newSocketClient = localServer:accept()
 
-		if (newClient) then
-			table.insert(clients, newClient)
+        if (newSocketClient) then
+			-- TODO: We need to clean this up when the client disconnects
+            table.insert(socketClients, {
+                socketClient = newSocketClient,
+
+                -- TODO: We need some sort of: UTIL.PlayerByAddress(socketClient:getpeername()) here
+                client = UTIL.PlayerByIndex(1)
+            })
+        end
+
+        -- Handle all clients
+        for _, clientData in ipairs(socketClients) do
+            handleClient(clientData)
+        end
+
+        -- Sleep for a short time to prevent high CPU usage
+        -- socket.sleep(0.01)
+    end
+
+	function MODULE.ClientToSocketClient(client)
+		for _, clientData in ipairs(socketClients) do
+			if (clientData.client == client) then
+				return clientData.socketClient
+			end
 		end
-
-		-- Handle all clients
-		for _, client in ipairs(clients) do
-			handleClient(client)
-		end
-
-		-- Sleep for a short time to prevent high CPU usage
-		-- socket.sleep(0.01)
 	end
 
 	hooks.Add("Think", "__NetModuleServerUpdate", serverUpdate)
@@ -231,18 +282,8 @@ local typeIdMap = {
 	["userdata"] = NET_TYPE_USERDATA
 }
 
--- Reverse lookup table
-local typeIdLookup = {}
-for dataType, id in pairs(typeIdMap) do
-	typeIdLookup[id] = dataType
-end
-
 local function toTypeId(data)
 	return typeIdMap[type(data)]
-end
-
-local function fromTypeId(typeId)
-    return typeIdLookup[typeId]
 end
 
 --[[
@@ -262,23 +303,31 @@ end
 --- @param data number|string
 --- @param bits? number
 function WRITER:WriteRaw(data, bits)
-	if (type(data) == "string") then
-		for i = 1, #data do
-			local byte = data:byte(i)
-			self:WriteRaw(byte, BYTE_SIZE_IN_BITS)
-		end
+    if (type(data) == "string") then
+        for i = 1, #data do
+            local byte = data:byte(i)
+            self:WriteRaw(byte, BYTE_SIZE_IN_BITS)
+        end
 
         return
     elseif (type(data) ~= "number") then
         error("Data must be a number or string")
-	elseif (bits and bits ~= BYTE_SIZE_IN_BITS) then
-		assert(data >= 0 and data < 2 ^ bits, "Data is too large to fit in the specified number of bits")
-	end
+    elseif (bits and bits ~= BYTE_SIZE_IN_BITS) then
+        assert(data >= 0 and data < 2 ^ bits, "Data is too large to fit in the specified number of bits")
+    end
 
-	table.insert(self.data, {
-		data = data,
-		bits = bits or BYTE_SIZE_IN_BITS,
-	})
+    table.insert(self.data, {
+        data = data,
+        bits = bits or BYTE_SIZE_IN_BITS,
+    })
+end
+
+--- Writes the components of an angle
+--- @param angle QAngle
+function WRITER:WriteAngle(angle)
+	self:WriteFloat(angle.pitch)
+	self:WriteFloat(angle.yaw)
+	self:WriteFloat(angle.roll)
 end
 
 --- Writes the bit and marking it so when we pack the data,
@@ -290,10 +339,60 @@ function WRITER:WriteBit(bit)
 	self:WriteRaw(bit, 1)
 end
 
+--- Writes a boolean as a bit
+--- @param bool boolean
 function WRITER:WriteBool(bool)
-	assert(type(bool) == "boolean", "Value must be a boolean")
+    assert(type(bool) == "boolean", "Value must be a boolean")
 
-	self:WriteBit(bool and 1 or 0)
+    self:WriteBit(bool and 1 or 0)
+end
+
+--- Writes the components of a color
+--- @param color Color
+--- @param withAlpha? boolean
+function WRITER:WriteColor(color, withAlpha)
+    withAlpha = withAlpha or false
+
+    self:WriteUInt(color.r, 8)
+    self:WriteUInt(color.g, 8)
+    self:WriteUInt(color.b, 8)
+
+    if (withAlpha) then
+        self:WriteUInt(color.a, 8)
+    end
+end
+
+--- Writes the given entity as an index
+--- @param entity CBaseEntity
+function WRITER:WriteEntity(entity)
+    -- TODO: See note near SIZE_ENTITY_INDEX
+    self:WriteUInt(entity:entindex(), SIZE_ENTITY_INDEX)
+end
+
+--- Writes the given float
+--- @param floatValue number
+function WRITER:WriteFloat(floatValue)
+	self:WriteRaw(string.pack("f", floatValue), SIZE_FLOAT_BYTES * BYTE_SIZE_IN_BITS)
+end
+
+--- Writes an integer with the specified number of bits
+--- @param value number
+--- @param bitCount number
+function WRITER:WriteInt(value, bitCount)
+    for i = bitCount - 1, 0, -1 do
+        local bit = (value >> i) & 1
+        self:WriteBit(bit)
+    end
+end
+
+--- Writes an unsigned integer with the specified number of bits
+--- @param value number
+--- @param bitCount number
+function WRITER:WriteUInt(value, bitCount)
+	for i = bitCount - 1, 0, -1 do
+		local bit = (value >> i) & 1
+		self:WriteBit(bit)
+	end
 end
 
 --- The string will be prefixed with a short containing how many bytes the string is.
@@ -309,22 +408,34 @@ function WRITER:WriteString(stringValue)
 	self:WriteRaw(textBytesAsString, length * BYTE_SIZE_IN_BITS)
 end
 
-function WRITER:WriteFloat(floatValue)
-	self:WriteRaw(string.pack("f", floatValue), SIZE_FLOAT_BYTES * BYTE_SIZE_IN_BITS)
-end
+local writeFunctions = {
+	[NET_TYPE_NUMBER] = WRITER.WriteFloat,
+	[NET_TYPE_STRING] = WRITER.WriteString,
+	[NET_TYPE_BOOL] = WRITER.WriteBool,
+	-- TODO: The rest of the types
+}
 
-function WRITER:WriteInt(value, bitCount)
-    for i = bitCount - 1, 0, -1 do
-        local bit = (value >> i) & 1
-        self:WriteBit(bit)
+--- Writes any type of data, with a type identifier
+--- @param data any
+function WRITER:WriteType(data)
+    local typeId = toTypeId(data)
+    self:WriteUInt(typeId, 8)
+
+    local writeFunction = writeFunctions[typeId]
+
+    if (not writeFunction) then
+        error("Unsupported data type: " .. typeId)
     end
+
+    writeFunction(self, data)
 end
 
-function WRITER:WriteUInt(value, bitCount)
-	for i = bitCount - 1, 0, -1 do
-		local bit = (value >> i) & 1
-		self:WriteBit(bit)
-	end
+--- Writes the components of a vector
+--- @param vector Vector
+function WRITER:WriteVector(vector)
+	self:WriteFloat(vector.x)
+	self:WriteFloat(vector.y)
+	self:WriteFloat(vector.z)
 end
 
 --- Packs the data compactly into a string to be sent over the network
@@ -383,11 +494,16 @@ function READER.new(data)
     }, READER)
 end
 
+--- Moves the position in the data by the specified amount
+--- @param amount number
 function READER:MovePosition(amount)
     amount = amount or 1
     self.position = self.position + amount
 end
 
+--- Reads data as a raw number, with the specified number of bits
+--- @param bitCount number
+--- @return number
 function READER:ReadRaw(bitCount)
     local data = 0
 
@@ -405,14 +521,90 @@ function READER:ReadRaw(bitCount)
     return data
 end
 
+--- Reads the components of an angle
+--- @return QAngle
+function READER:ReadAngle()
+    local pitch = self:ReadFloat()
+    local yaw = self:ReadFloat()
+    local roll = self:ReadFloat()
+
+    return QAngle(pitch, yaw, roll)
+end
+
+--- Reads a bit from the data
+--- @return number
 function READER:ReadBit()
     return self:ReadRaw(1)
 end
 
+--- Reads a boolean from the data
+--- @return boolean
 function READER:ReadBool()
     return self:ReadBit() == 1
 end
 
+--- Reads the components of a color
+--- @param withAlpha? boolean
+--- @return Color
+function READER:ReadColor(withAlpha)
+    withAlpha = withAlpha or false
+
+    local r = self:ReadUInt(8)
+    local g = self:ReadUInt(8)
+    local b = self:ReadUInt(8)
+    local a = withAlpha and self:ReadUInt(8) or 255
+
+    return Color(r, g, b, a)
+end
+
+--- Reads an entity index from the data.
+--- Seeing how only entities in the PVS will be available, it is best
+--- to use the second return value, which is a function that will return
+--- the entity when called (if it is then in the PVS).
+--- @return CBaseEntity|nil, fun(): CBaseEntity
+function READER:ReadEntity()
+    local index = self:ReadUInt(SIZE_ENTITY_INDEX)
+    local entityGetter = function()
+        return Entity(index)
+    end
+
+	return entityGetter(), entityGetter
+end
+
+--- Reads a float from the data
+--- @return number
+function READER:ReadFloat()
+    local floatBytes = {}
+
+    for i = 1, SIZE_FLOAT_BYTES do
+        local byte = self:ReadRaw(BYTE_SIZE_IN_BITS)
+        table.insert(floatBytes, string.char(byte))
+    end
+
+    return string.unpack("f", table.concat(floatBytes))
+end
+
+--- Reads an integer from the data
+--- @param bitCount number
+function READER:ReadInt(bitCount)
+    local value = 0
+
+    for i = 1, bitCount do
+        local bit = self:ReadBit()
+        value = (value << 1) | bit
+    end
+
+    return value
+end
+
+--- Reads an unsigned integer from the data
+--- @param bitCount number
+function READER:ReadUInt(bitCount)
+	return self:ReadInt(bitCount)
+end
+
+--- Reads a string from the data
+--- @return string
 function READER:ReadString()
     local length = self:ReadUInt(SIZE_STRING_BYTES * BYTE_SIZE_IN_BITS)
     local textBytes = {}
@@ -425,34 +617,36 @@ function READER:ReadString()
     return table.concat(textBytes)
 end
 
-function READER:ReadFloat()
-    local floatBytes = {}
+local readFunctions = {
+	[NET_TYPE_NUMBER] = READER.ReadFloat,
+	[NET_TYPE_STRING] = READER.ReadString,
+	[NET_TYPE_BOOL] = READER.ReadBool,
+	-- TODO: The rest of the types
+}
 
-    for i = 1, SIZE_FLOAT_BYTES do
-        local byte = self:ReadRaw(BYTE_SIZE_IN_BITS)
-        table.insert(floatBytes, string.char(byte))
+--- Reads any type of data, by reading the type identifier first
+--- @param typeId? number
+--- @return any
+function READER:ReadType(typeId)
+    typeId = typeId or self:ReadUInt(8)
+
+    local readFunction = readFunctions[typeId]
+
+    if (not readFunction) then
+        error("Unsupported data type: " .. typeId)
     end
 
-    return string.unpack("f", table.concat(floatBytes))
+    return readFunction(self)
 end
 
-function READER:ReadInt(bitCount)
-    local value = 0
+--- Reads the components of a vector
+--- @return Vector
+function READER:ReadVector()
+	local x = self:ReadFloat()
+	local y = self:ReadFloat()
+	local z = self:ReadFloat()
 
-    for i = 1, bitCount do
-        local bit = self:ReadBit()
-        value = (value << 1) | bit
-    end
-
-    return value
-end
-
-function READER:ReadUInt(bitCount)
-	return self:ReadInt(bitCount)
-end
-
-function READER:ReadType()
-    return self:ReadUInt(8)
+	return Vector(x, y, z)
 end
 
 function READER:GetSize()
@@ -466,8 +660,6 @@ end
 --[[
 	Common Library functions
 --]]
-
-local currentOutgoingMessage = nil
 
 function MODULE.Cancel()
 	currentOutgoingMessage = nil
@@ -487,12 +679,14 @@ end
 
 if (SERVER) then
 	function MODULE.Send(client)
-		if (not currentOutgoingMessage) then
-			error("net.Send was called without calling net.Start.")
-		end
+        if (not currentOutgoingMessage) then
+            error("net.Send was called without calling net.Start.")
+        end
+
+		local socketClient = MODULE.ClientToSocketClient(client)
 
         local data = currentOutgoingMessage:GetPackedData()
-		client:send(data)
+		socketClient:send(data)
 
 		currentOutgoingMessage = nil
 	end
@@ -502,8 +696,8 @@ if (SERVER) then
 			error("net.Broadcast was called without calling net.Start.")
 		end
 
-        for _, client in ipairs(clients) do
-			MODULE.Send(client)
+        for _, socketClient in ipairs(socketClients) do
+			MODULE.Send(socketClient)
 		end
 
 		currentOutgoingMessage = nil
@@ -526,29 +720,27 @@ elseif (CLIENT) then
 	end
 end
 
-local currentIncomingMessage = nil
-
-function MODULE.HandleIncomingMessage(bytes, client)
+function MODULE.HandleIncomingMessage(bytes, socketClient)
 	if (currentIncomingMessage) then
-		error("net.HandleIncomingMessage was called twice without handling the previous message.")
+        debug("net.HandleIncomingMessage was called twice without handling the previous message. Resetting...")
 	end
 
     currentIncomingMessage = READER.new(bytes)
 
-	MODULE.Incoming(currentIncomingMessage:GetSize(), client)
+	MODULE.Incoming(currentIncomingMessage:GetSize(), socketClient)
 end
 
 --- Registers a callback for a message
 --- @param messageName string
---- @param callback fun(length: number, client: table)
+--- @param callback fun(length: number, socketClient: table)
 function MODULE.Receive(messageName, callback)
     MODULE.registeredCallbacks[messageName] = callback
 end
 
 --- Fires callbacks for incoming messages
 --- @param length any
---- @param client any
-function MODULE.Incoming(length, client)
+--- @param socketClient any
+function MODULE.Incoming(length, socketClient)
     if (not currentIncomingMessage) then
         error("net.Incoming was called without calling net.HandleIncomingMessage.")
     end
@@ -561,7 +753,7 @@ function MODULE.Incoming(length, client)
         return
     end
 
-    callback(length, client)
+    callback(length, socketClient)
 
     currentIncomingMessage = nil
 end
@@ -572,43 +764,6 @@ end
 
 function MODULE.GetIncomingMessageReader()
 	return currentIncomingMessage
-end
-
---[[
-	Forward net.Read* and net.Write* functions to the reader and writer
-	that are currently active
---]]
-
-function MODULE.ReadBit()
-    return currentIncomingMessage:ReadBit()
-end
-
-function MODULE.WriteBit(bit)
-	currentOutgoingMessage:WriteBit(bit)
-end
-
-function MODULE.ReadString()
-    return currentIncomingMessage:ReadString()
-end
-
-function MODULE.WriteString(stringValue)
-    currentOutgoingMessage:WriteString(stringValue)
-end
-
-function MODULE.ReadFloat()
-    return currentIncomingMessage:ReadFloat()
-end
-
-function MODULE.WriteFloat(float)
-    currentOutgoingMessage:WriteFloat(float)
-end
-
-function MODULE.ReadUInt(bitCount)
-    return currentIncomingMessage:ReadUInt(bitCount)
-end
-
-function MODULE.WriteUInt(value, bitCount)
-    currentOutgoingMessage:WriteUInt(value, bitCount)
 end
 
 return MODULE
