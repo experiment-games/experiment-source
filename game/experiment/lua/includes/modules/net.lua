@@ -1,7 +1,6 @@
 --[[
 	TODO:
-		- Add the other datatypes
-		- Use string.pack and string.unpack for writing and reading data
+		- Add the other datatypes for reading and writing
 		- Check if these are indeed all the datatypes:
 			"b": signed byte (char)
 			"B": unsigned byte (unsigned char)

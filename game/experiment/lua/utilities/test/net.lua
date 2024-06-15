@@ -1,29 +1,36 @@
 -- lua_dofile utilities/test/net.lua;lua_dofile_cl utilities/test/net.lua;
 
-local prefix = CLIENT and "[NetModuleTest Client]" or "[NetModuleTest Server]"
-local debug = function(...)
-    print(prefix, ...)
-end
+local countReceived = 0
 
 if (SERVER) then
     net.Receive("TestMessage", function(length, client)
         local message = net.ReadString()
 		local num = net.ReadFloat()
-        debug("Received message from client: " .. message, "Number:", num)
+
+        assert(math.AlmostEquals(num, 3.14), "Received incorrect number from client!")
+		assert(message == "Hello, server!", "Received incorrect message from client!")
 
         net.Start("CTestMessage")
 		net.WriteFloat(1234.5677490234)
         net.WriteString("Hello, client!")
         net.Send(client)
+
+		countReceived = countReceived + 1
     end)
 
     net.Receive("TestMessage2", function(length, client)
-        debug("Received message from client without content")
-
         net.Start("CTestMessage2")
         net.WriteString("Hello, client yo!")
         net.Send(client)
+
+		countReceived = countReceived + 1
     end)
+
+	timer.Simple(1, function()
+		assert(countReceived == 2, "Did not receive all messages from client!")
+
+		print("net module server tests passed!")
+	end)
 end
 
 if (CLIENT) then
@@ -31,12 +38,18 @@ if (CLIENT) then
         local num = net.ReadFloat()
         local message = net.ReadString()
 
-		debug("Received message from server: " .. message, "Number:", num)
+        assert(math.AlmostEquals(num, 1234.5677490234), "Received incorrect number from server!")
+        assert(message == "Hello, client!", "Received incorrect message from server!")
+
+		countReceived = countReceived + 1
 	end)
 
 	net.Receive("CTestMessage2", function(length, client)
-		local message = net.ReadString()
-		debug("Received message from server: " .. message)
+        local message = net.ReadString()
+
+        assert(message == "Hello, client yo!", "Received incorrect message from server!")
+
+		countReceived = countReceived + 1
 	end)
 
 	net.Start("TestMessage")
@@ -45,5 +58,11 @@ if (CLIENT) then
 	net.SendToServer()
 
 	net.Start("TestMessage2")
-	net.SendToServer()
+    net.SendToServer()
+
+	timer.Simple(1, function()
+        assert(countReceived == 2, "Did not receive all messages from server!")
+
+		print("net module client tests passed!")
+	end)
 end
