@@ -32,7 +32,7 @@
 
 
 // Half-Life Server Configuration Layout Script (stores last settings chosen, too)
-// File generated:  Sat Jun 15 03:10:12 PM
+// File generated:  Sat Jun 15 09:25:33 PM
 //
 //
 // Cvar	-	Setting
@@ -52,7 +52,7 @@ DESCRIPTION SERVER_OPTIONS
 	{
 		"#Experiment_Gamemode"
 		{ STRING }
-		{ "sandbox" }
+		{ "gmod_sandbox" }
 	}
 
 	"sv_password"
@@ -115,7 +115,7 @@ DESCRIPTION SERVER_OPTIONS
 	{
 		"#Valve_Force_Respawn"
 		{ BOOL }
-		{ "1" }
+		{ "0" }
 	}
 
 }
