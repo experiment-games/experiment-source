@@ -33,7 +33,7 @@ function GM:GetMapRemainingTime()
 		return 0
 	end
 
-	local time = gpGlobals.curtime - self:GetRoundStartTime()
+	local time = gpGlobals.curtime() - self:GetRoundStartTime()
 
 	return math.max(0, timelimit * 60 - time)
 end
