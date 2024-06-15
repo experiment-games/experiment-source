@@ -1312,12 +1312,21 @@ static int CBaseEntity_SetLocalVelocity( lua_State *L )
 
 static int CBaseEntity_SetModel( lua_State *L )
 {
+    const char *pModelName = luaL_checkstring( L, 2 );
+
+    // Precache if not yet done
+    int i = modelinfo->GetModelIndex( pModelName );
+    if ( i == -1 )
+    {
+        CBaseEntity::PrecacheModel( pModelName );
+    }
+
 #ifdef CLIENT_DLL
     lua_pushboolean( L,
-                     luaL_checkentity( L, 1 )->SetModel( luaL_checkstring( L, 2 ) ) );
+                         luaL_checkentity( L, 1 )->SetModel( pModelName ) );
     return 1;
 #else
-    luaL_checkentity( L, 1 )->SetModel( luaL_checkstring( L, 2 ) );
+        luaL_checkentity( L, 1 )->SetModel( pModelName );
     return 0;
 #endif
 }

@@ -115,8 +115,15 @@ static int luasrc_type( lua_State *L )
     return 1;
 }
 
+/// <summary>
+/// Includes a file relative to the file that called this function.
+/// </summary>
+/// <param name="L"></param>
+/// <returns></returns>
 static int luasrc_include( lua_State *L )
 {
+    // TODO: This fails when called from the console with lua_run include("file.lua")
+    // because the console is not a file and it would try load 'nclude("file.lua")'
     lua_Debug ar1;
     lua_getstack( L, 1, &ar1 );
     lua_getinfo( L, "f", &ar1 );
@@ -158,12 +165,13 @@ static int luasrc_InternalMsg( lua_State *L, Color color )
         if ( s == NULL )
             return luaL_error( L, LUA_QL( "tostring" ) " must return a string to " LUA_QL( "print" ) );
         if ( i > 1 )
-            Msg( "\t" );
-        Msg( s );
+            ConColorMsg( color, "\t" );
+
+        ConColorMsg( color, s );
         lua_pop( L, 1 );  // pop result
     }
 
-    Msg( "\n" );
+    ConColorMsg( color, "\n" );
 
     return 0;
 }

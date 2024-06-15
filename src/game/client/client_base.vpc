@@ -560,6 +560,8 @@ $Project
             $File "$SRCDIR\game\shared\lresources.cpp"
             $File "$SRCDIR\game\shared\lresources.h"
             $File "$SRCDIR\game\shared\lutil_shared.cpp"
+            $File "$SRCDIR\game\shared\mountaddons.h"
+            $File "$SRCDIR\game\shared\mountaddons.cpp"
             $File "$SRCDIR\public\mathlib\lvector.cpp"
             $File "$SRCDIR\public\vgui\LVGUI.cpp"
             $File "$SRCDIR\public\mathlib\lvmatrix.cpp"

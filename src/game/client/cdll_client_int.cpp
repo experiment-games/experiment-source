@@ -164,6 +164,7 @@ extern vgui::IInputInternal *g_InputInternal;
 #ifdef LUA_SDK
 #include "luacachefile.h"
 #include "luamanager.h"
+#include "mountaddons.h"
 #endif
 
 #ifdef PORTAL
@@ -995,6 +996,14 @@ int CHLClient::Init(CreateInterfaceFn appSystemFactory,
     if (!soundemitterbase->Connect(appSystemFactory)) {
         return false;
     }
+
+#if defined( EXPERIMENT_SOURCE )
+    // Andrew; then mount everything the user wants to use.
+    // MountUserContent();
+
+    // Finally, load all of the player's addons.
+    MountAddons();
+#endif
 
     if (CommandLine()->FindParm("-textmode"))
         g_bTextMode = true;

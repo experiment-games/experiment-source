@@ -1,0 +1,5 @@
+"VertexLitGeneric"
+{
+	"$baseTexture" "Models/humans/male/aperturesci/aperture_sheet"
+	"$halflambert" 1
+}

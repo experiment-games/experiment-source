@@ -129,7 +129,7 @@ extern ConVar tf_mm_servermode;
 #ifdef LUA_SDK
 #include "luacachefile.h"
 #include "luamanager.h"
-// #include "mountaddons.h" // TODO
+#include "mountaddons.h"
 #endif
 
 #if defined(REPLAY_ENABLED)
@@ -663,6 +663,18 @@ bool CServerGameDLL::DLLInit(CreateInterfaceFn appSystemFactory,
     // soundemittersystem.dll will handle this gracefully
     if (!soundemitterbase->Connect(appSystemFactory))
         return false;
+
+#if defined( EXPERIMENT_SOURCE )
+    // Andrew; then mount everything the user wants to use.
+    // MountUserContent();
+
+    // Finally, load all of the player's addons.
+    MountAddons();
+
+    // Fixes the issue where the external ip is not matching the local ip.
+    // TODO: Check if still needed - https://github.com/Planimeter/hl2sb-src/blob/7a4c675bbf43f0053a1cb2536ceae0c8365c3433/src/game/server/ticketfix.cpp#L45
+    // PatchTicketValidation();
+#endif
 
     // cache the globals
     gpGlobals = pGlobals;
