@@ -1,7 +1,8 @@
 -- lua_dofile utilities/test/net.lua;lua_dofile_cl utilities/test/net.lua;
 
+local prefix = CLIENT and "[NetModuleTest Client]" or "[NetModuleTest Server]"
 local debug = function(...)
-    print("[NetModuleTest]", ...)
+    print(prefix, ...)
 end
 
 if (SERVER) then
@@ -11,7 +12,7 @@ if (SERVER) then
         debug("Received message from client: " .. message, "Number:", num)
 
         net.Start("CTestMessage")
-		net.WriteFloat(1234.5678)
+		net.WriteFloat(1234.5677490234)
         net.WriteString("Hello, client!")
         net.Send(client)
     end)
@@ -20,7 +21,7 @@ if (SERVER) then
         debug("Received message from client without content")
 
         net.Start("CTestMessage2")
-        net.WriteString("Hello, client!")
+        net.WriteString("Hello, client yo!")
         net.Send(client)
     end)
 end

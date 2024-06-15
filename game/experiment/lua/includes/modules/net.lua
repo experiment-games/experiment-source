@@ -26,7 +26,10 @@ local socket = require("luasocket")
 local IP = "127.0.0.1" -- TODO: game server IP here
 local PORT = 12345
 
+local BYTE_SIZE_IN_BITS = 8
 local SIZE_STRING_BYTES = 2
+local SIZE_FLOAT_BYTES = 4
+local SIZE_INT_BYTES = 4
 
 -- Client only:
 local localClient
@@ -37,21 +40,37 @@ local clients = {}
 
 MODULE.registeredCallbacks = MODULE.registeredCallbacks or {}
 
+local prefix = CLIENT and "[NetModuleTest Client]" or "[NetModuleTest Server]"
 local debug = function(...)
-	local prefix = CLIENT and "[NetModuleTest Client]" or "[NetModuleTest Server]"
-
     print(prefix, ...)
 end
 
--- Shows the data as byte numbers
+-- Shows the data in binary format
 local debugData = function(data)
     local bytes = {}
+	local isString = type(data) == "string"
 
     for i = 1, #data do
-        table.insert(bytes, data:byte(i))
+        if (isString) then
+			local byte = data:byte(i)
+			table.insert(bytes, byte)
+			continue
+        end
+
+        local dataPart = data[i].data or data[i]
+        local dataBits = data[i].bits or BYTE_SIZE_IN_BITS
+
+        local byte = ""
+
+        for j = dataBits - 1, 0, -1 do
+            local bit = (dataPart >> j) & 1
+            byte = byte .. bit
+        end
+
+        table.insert(bytes, byte)
     end
 
-	debug("Data: " .. table.concat(bytes, ", "))
+	debug("Data: " .. table.concat(bytes, " "))
 end
 
 --[[
@@ -68,12 +87,10 @@ if (CLIENT) then
         if (not connected) then
             localClient:connect(IP, PORT)
             connected = true
-
-            debug("Connected to server", localClient:getpeername())
         end
 
 		-- Receive any incoming data from the server
-		local bytes, err = localClient:receive()
+		local bytes, err = localClient:receive(SIZE_INT_BYTES)
 
 		-- On failure, lets close and remove the think hook so we don't spam errors
 		if (err and err ~= "timeout") then
@@ -84,8 +101,20 @@ if (CLIENT) then
 			return
 		end
 
-		if (not bytes) then
-            -- No data to read
+        -- If we don't receive length data, we don't have a message yet
+        if (not bytes) then
+            return
+        end
+
+        local length = string.unpack("I", bytes)
+
+        bytes, err = localClient:receive(length)
+
+		if (err and err ~= "timeout") then
+			debug("Error receiving response: " .. err)
+
+			-- localClient:close()
+			-- hooks.Remove("Think", "__NetModuleTestClientUpdate")
 			return
 		end
 
@@ -110,7 +139,6 @@ elseif (SERVER) then
 	end
 
 	local ip, port = localServer:getsockname()
-    debug("Server listening on " .. tostring(ip) .. ":" .. tostring(port))
 
 	-- Disable blocking on the server socket
 	localServer:settimeout(0)
@@ -119,7 +147,7 @@ elseif (SERVER) then
 		-- Disable blocking on the client socket
 		client:settimeout(0)
 
-		local line, err = client:receive()
+		local bytes, err = client:receive(SIZE_INT_BYTES)
 
 		if (err and err ~= "timeout") then
 			-- Remove the client from the list if it's disconnected
@@ -134,16 +162,32 @@ elseif (SERVER) then
 			debug("Client disconnected", err)
 
             return
-        elseif (err == "timeout") then
-			-- No data to read
-			return
 		end
 
-        if (not line) then
+        if (not bytes) then
             return
         end
 
-		MODULE.HandleIncomingMessage(line, client)
+        local length = string.unpack("I", bytes)
+
+        bytes, err = client:receive(length)
+
+		if (err and err ~= "timeout") then
+			-- Remove the client from the list if it's disconnected
+			for i, c in ipairs(clients) do
+				if (c == client) then
+					table.remove(clients, i)
+					break
+				end
+			end
+
+			client:close()
+			debug("Client disconnected", err)
+
+			return
+		end
+
+		MODULE.HandleIncomingMessage(bytes, client)
 	end
 
 	local function serverUpdate()
@@ -152,7 +196,6 @@ elseif (SERVER) then
 
 		if (newClient) then
 			table.insert(clients, newClient)
-			debug("New client connected", newClient:getpeername())
 		end
 
 		-- Handle all clients
@@ -212,83 +255,66 @@ WRITER.__index = WRITER
 function WRITER.new()
     return setmetatable({
         data = {},
-		bitBuffer = {}
     }, WRITER)
 end
 
---- Writes the bit to be sent later. Because we send data in bytes, just
---- sending a single bit is not possible. For that reason we will collect
---- all bits seperately into the first byte of the data to try and save space.
---- After that bits will be written as normal.
----
+--- Writes data as a byte, or the specified number of bits
+--- If a string is passed, each character will be written as a byte
+--- @param data number|string
+--- @param bits? number
+function WRITER:WriteRaw(data, bits)
+	if (type(data) == "string") then
+		for i = 1, #data do
+			local byte = data:byte(i)
+			self:WriteRaw(byte, BYTE_SIZE_IN_BITS)
+		end
+
+        return
+    elseif (type(data) ~= "number") then
+        error("Data must be a number or string")
+	elseif (bits and bits ~= BYTE_SIZE_IN_BITS) then
+		assert(data >= 0 and data < 2 ^ bits, "Data is too large to fit in the specified number of bits")
+	end
+
+	table.insert(self.data, {
+		data = data,
+		bits = bits or BYTE_SIZE_IN_BITS,
+	})
+end
+
+--- Writes the bit and marking it so when we pack the data,
+--- we can determine if multiple bits are written in the same byte
 --- @param bit any
 function WRITER:WriteBit(bit)
     assert(bit == 0 or bit == 1, "Bit must be 0 or 1")
 
-    -- Collect bits until we have a full byte
-    table.insert(self.bitBuffer, bit)
-
-    if (#self.bitBuffer == 8) then
-        self:ForceWriteBitBuffer()
-    end
-end
-
-function WRITER:ForceWriteBitBuffer()
-    local bitCount = #self.bitBuffer
-
-	if (bitCount == 0) then
-		return
-	end
-
-	local byte = 0
-
-	for i = 1, bitCount do
-		byte = byte + (self.bitBuffer[i] << (8 - i))
-	end
-
-	self.bitBuffer = {}
-	self:WriteByte(byte)
+	self:WriteRaw(bit, 1)
 end
 
 function WRITER:WriteBool(bool)
+	assert(type(bool) == "boolean", "Value must be a boolean")
+
 	self:WriteBit(bool and 1 or 0)
-end
-
-function WRITER:WriteBytes(bytes)
-    if (type(bytes) ~= "string") then
-        error("Bytes must be a string, got " .. type(bytes))
-    end
-
-	self:ForceWriteBitBuffer()
-    table.insert(self.data, bytes)
-end
-
-function WRITER:WriteByte(byte)
-	self:WriteBytes(string.char(byte))
 end
 
 --- The string will be prefixed with a short containing how many bytes the string is.
 --- This means the maximum length of a string is 65535 bytes.
 function WRITER:WriteString(stringValue)
-    self:ForceWriteBitBuffer()
+    local length = #stringValue
 
-	local length = #stringValue
-    self:WriteUInt(length, SIZE_STRING_BYTES * 8)
+    assert(length <= 65535, "String is too long to send over the network")
 
-    local textBytes = string.pack("c" .. length, stringValue)
+    self:WriteUInt(length, SIZE_STRING_BYTES * BYTE_SIZE_IN_BITS)
 
-	self:WriteBytes(textBytes)
+    local textBytesAsString = string.pack("c" .. length, stringValue)
+	self:WriteRaw(textBytesAsString, length * BYTE_SIZE_IN_BITS)
 end
 
 function WRITER:WriteFloat(floatValue)
-    self:ForceWriteBitBuffer()
-
-	self:WriteBytes(string.pack("f", floatValue))
+	self:WriteRaw(string.pack("f", floatValue), SIZE_FLOAT_BYTES * BYTE_SIZE_IN_BITS)
 end
 
 function WRITER:WriteInt(value, bitCount)
-    self:ForceWriteBitBuffer()
-
     for i = bitCount - 1, 0, -1 do
         local bit = (value >> i) & 1
         self:WriteBit(bit)
@@ -296,28 +322,53 @@ function WRITER:WriteInt(value, bitCount)
 end
 
 function WRITER:WriteUInt(value, bitCount)
-    self:ForceWriteBitBuffer()
-
 	for i = bitCount - 1, 0, -1 do
 		local bit = (value >> i) & 1
 		self:WriteBit(bit)
 	end
 end
 
---- Packs the data into a string to be sent over the network with string.pack
---- The first byte will contain any bits to be written, the rest will be the data
+--- Packs the data compactly into a string to be sent over the network
+--- @param withoutPrefixingLength? boolean
 --- @return string
-function WRITER:GetPackedData()
-    -- If there's any bits left, write them to the next byte`
-	self:ForceWriteBitBuffer()
+function WRITER:GetPackedData(withoutPrefixingLength)
+	withoutPrefixingLength = withoutPrefixingLength or false
+	local packedData = ""
+    local currentByte = 0
+    local bitsFilled = 0
 
-	return table.concat(self.data)
+    for _, entry in ipairs(self.data) do
+        local data = entry.data
+        local bits = entry.bits
+
+        for i = bits - 1, 0, -1 do
+            local bit = (data >> i) & 1
+            currentByte = (currentByte << 1) | bit
+            bitsFilled = bitsFilled + 1
+
+            if bitsFilled == 8 then
+                packedData = packedData .. string.char(currentByte)
+                currentByte = 0
+                bitsFilled = 0
+            end
+        end
+    end
+
+    -- Handle any remaining bits that didn't make up a full byte
+    if (bitsFilled > 0) then
+        currentByte = currentByte << (BYTE_SIZE_IN_BITS - bitsFilled)
+        packedData = packedData .. string.char(currentByte)
+    end
+
+    if (withoutPrefixingLength) then
+        return packedData
+    end
+
+	return string.pack("I", #packedData) .. packedData
 end
 
 function WRITER:DebugOutputData()
     debugData(self.data)
-	debugData(self.bitBuffer)
-	debugData(self:GetPackedData())
 end
 
 --[[
@@ -330,95 +381,87 @@ function READER.new(data)
     return setmetatable({
         data = data,
         position = 1,
-        bitBuffer = {}
     }, READER)
 end
 
-function READER:ForcePastBitBuffer()
-	self.bitBuffer = {}
+function READER:MovePosition(amount)
+    amount = amount or 1
+    self.position = self.position + amount
 end
 
-function READER:MovePosition(amount)
-	self.position = self.position + amount
+function READER:ReadRaw(bitCount)
+    local data = 0
+
+    for i = 1, bitCount do
+        local byteIndex = math.floor((self.position - 1) / BYTE_SIZE_IN_BITS) + 1
+        local bitIndex = (self.position - 1) % BYTE_SIZE_IN_BITS + 1
+
+        local byte = self.data:byte(byteIndex)
+        local bit = (byte >> (BYTE_SIZE_IN_BITS - bitIndex)) & 1
+
+        data = (data << 1) | bit
+        self:MovePosition()
+    end
+
+    return data
 end
 
 function READER:ReadBit()
-    if (#self.bitBuffer == 0) then
-        local byte = self:ReadByte()
-
-        for i = 8, 1, -1 do
-            table.insert(self.bitBuffer, (byte >> (i - 1)) & 1)
-        end
-    end
-
-    return table.remove(self.bitBuffer, 1)
+    return self:ReadRaw(1)
 end
 
 function READER:ReadBool()
     return self:ReadBit() == 1
 end
 
-function READER:ReadBytes(length)
-    self:ForcePastBitBuffer()
-
-    local bytes = self.data:sub(self.position, self.position + length - 1)
-    self.position = self.position + length
-
-    return bytes
-end
-
-function READER:ReadByte()
-    return self:ReadBytes(1):byte()
-end
-
 function READER:ReadString()
-    self:ForcePastBitBuffer()
+    local length = self:ReadUInt(SIZE_STRING_BYTES * BYTE_SIZE_IN_BITS)
+    local textBytes = {}
 
-    local length = self:ReadUInt(SIZE_STRING_BYTES * 8)
+    for i = 1, length do
+        local byte = self:ReadRaw(BYTE_SIZE_IN_BITS)
+        table.insert(textBytes, string.char(byte))
+    end
 
-    local textBytes = self:ReadBytes(length)
-
-	debug("Reading string of length", length, "with bytes", textBytes)
-	return string.unpack("c" .. length, textBytes)
+    return table.concat(textBytes)
 end
 
 function READER:ReadFloat()
-    self:ForcePastBitBuffer()
+    local floatBytes = {}
 
-    return string.unpack("f", self:ReadBytes(4))
+    for i = 1, SIZE_FLOAT_BYTES do
+        local byte = self:ReadRaw(BYTE_SIZE_IN_BITS)
+        table.insert(floatBytes, string.char(byte))
+    end
+
+    return string.unpack("f", table.concat(floatBytes))
 end
 
 function READER:ReadInt(bitCount)
-    self:ForcePastBitBuffer()
-
     local value = 0
 
     for i = 1, bitCount do
-        value = value + (self:ReadBit() << (bitCount - i))
+        local bit = self:ReadBit()
+        value = (value << 1) | bit
     end
 
     return value
 end
 
 function READER:ReadUInt(bitCount)
-    self:ForcePastBitBuffer()
+	return self:ReadInt(bitCount)
+end
 
-    local value = 0
-
-    for i = 1, bitCount do
-        value = value + (self:ReadBit() << (bitCount - i))
-    end
-
-    return value
+function READER:ReadType()
+    return self:ReadUInt(8)
 end
 
 function READER:GetSize()
-    return #self.data * 8 -- In bits
+    return #self.data * BYTE_SIZE_IN_BITS
 end
 
 function READER:DebugOutputData()
     debugData(self.data)
-    debugData(self.bitBuffer)
 end
 
 --[[
@@ -449,8 +492,8 @@ if (SERVER) then
 			error("net.Send was called without calling net.Start.")
 		end
 
-		local data = currentOutgoingMessage:GetPackedData()
-		client:send(data .. "\n")
+        local data = currentOutgoingMessage:GetPackedData()
+		client:send(data)
 
 		currentOutgoingMessage = nil
 	end
@@ -460,10 +503,8 @@ if (SERVER) then
 			error("net.Broadcast was called without calling net.Start.")
 		end
 
-		local data = currentOutgoingMessage:GetPackedData()
-
-		for _, client in ipairs(clients) do
-			client:send(data .. "\n")
+        for _, client in ipairs(clients) do
+			MODULE.Send(client)
 		end
 
 		currentOutgoingMessage = nil
@@ -474,8 +515,8 @@ elseif (CLIENT) then
 			error("net.SendToServer was called without calling net.Start.")
 		end
 
-		local data = currentOutgoingMessage:GetPackedData()
-        local success, err = localClient:send(data .. "\n")
+        local data = currentOutgoingMessage:GetPackedData()
+		local success, err = localClient:send(data)
 
 		if (not success) then
 			debug("Error sending data to server:", err)
@@ -494,13 +535,6 @@ function MODULE.HandleIncomingMessage(bytes, client)
 	end
 
     currentIncomingMessage = READER.new(bytes)
-
-	if (not client) then
-		debug("Incoming message from server:")
-	else
-		debug("Incoming message from client:", client)
-	end
-	currentIncomingMessage:DebugOutputData()
 
 	MODULE.Incoming(currentIncomingMessage:GetSize(), client)
 end
