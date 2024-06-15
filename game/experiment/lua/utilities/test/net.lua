@@ -11,13 +11,13 @@ if (SERVER) then
         debug("Received message from client: " .. message, "Number:", num)
 
         net.Start("CTestMessage")
+		net.WriteFloat(1234.5678)
         net.WriteString("Hello, client!")
         net.Send(client)
     end)
 
     net.Receive("TestMessage2", function(length, client)
-        local message = net.ReadString()
-        debug("Received message from client: " .. message)
+        debug("Received message from client without content")
 
         net.Start("CTestMessage2")
         net.WriteString("Hello, client!")
@@ -27,8 +27,10 @@ end
 
 if (CLIENT) then
 	net.Receive("CTestMessage", function(length, client)
-		local message = net.ReadString()
-		debug("Received message from server: " .. message)
+        local num = net.ReadFloat()
+        local message = net.ReadString()
+
+		debug("Received message from server: " .. message, "Number:", num)
 	end)
 
 	net.Receive("CTestMessage2", function(length, client)
@@ -42,6 +44,5 @@ if (CLIENT) then
 	net.SendToServer()
 
 	net.Start("TestMessage2")
-	net.WriteString("Hello, server!")
 	net.SendToServer()
 end

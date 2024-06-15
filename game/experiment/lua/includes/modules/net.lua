@@ -26,6 +26,8 @@ local socket = require("luasocket")
 local IP = "127.0.0.1" -- TODO: game server IP here
 local PORT = 12345
 
+local SIZE_STRING_BYTES = 2
+
 -- Client only:
 local localClient
 
@@ -36,7 +38,9 @@ local clients = {}
 MODULE.registeredCallbacks = MODULE.registeredCallbacks or {}
 
 local debug = function(...)
-    print("[NetModuleTest]", ...)
+	local prefix = CLIENT and "[NetModuleTest Client]" or "[NetModuleTest Server]"
+
+    print(prefix, ...)
 end
 
 -- Shows the data as byte numbers
@@ -199,24 +203,121 @@ local function fromTypeId(typeId)
     return typeIdLookup[typeId]
 end
 
---- https://github.com/ToxicFrog/vstruct/blob/d691a55ab6010e89f2669a52fcf24ccbe111748c/frexp.lua
-local abs,floor,log = math.abs,math.floor,math.log
-local log2 = log(2)
-local function frexp(x)
-    if x == 0 then return 0.0, 0.0 end
-    local e = floor(log(abs(x)) / log2)
-    if e > 0 then
-        -- Why not x / 2^e? Because for large-but-still-legal values of e this
-        -- ends up rounding to inf and the wheels come off.
-        x = x * 2 ^ -e
-    else
-        x = x / 2 ^ e
+--[[
+	Writer Metatable
+--]]
+local WRITER = {}
+WRITER.__index = WRITER
+
+function WRITER.new()
+    return setmetatable({
+        data = {},
+		bitBuffer = {}
+    }, WRITER)
+end
+
+--- Writes the bit to be sent later. Because we send data in bytes, just
+--- sending a single bit is not possible. For that reason we will collect
+--- all bits seperately into the first byte of the data to try and save space.
+--- After that bits will be written as normal.
+---
+--- @param bit any
+function WRITER:WriteBit(bit)
+    assert(bit == 0 or bit == 1, "Bit must be 0 or 1")
+
+    -- Collect bits until we have a full byte
+    table.insert(self.bitBuffer, bit)
+
+    if (#self.bitBuffer == 8) then
+        self:ForceWriteBitBuffer()
     end
-    -- Normalize to the range [0.5,1)
-    if abs(x) >= 1.0 then
-        x, e = x / 2, e + 1
+end
+
+function WRITER:ForceWriteBitBuffer()
+    local bitCount = #self.bitBuffer
+
+	if (bitCount == 0) then
+		return
+	end
+
+	local byte = 0
+
+	for i = 1, bitCount do
+		byte = byte + (self.bitBuffer[i] << (8 - i))
+	end
+
+	self.bitBuffer = {}
+	self:WriteByte(byte)
+end
+
+function WRITER:WriteBool(bool)
+	self:WriteBit(bool and 1 or 0)
+end
+
+function WRITER:WriteBytes(bytes)
+    if (type(bytes) ~= "string") then
+        error("Bytes must be a string, got " .. type(bytes))
     end
-    return x, e
+
+	self:ForceWriteBitBuffer()
+    table.insert(self.data, bytes)
+end
+
+function WRITER:WriteByte(byte)
+	self:WriteBytes(string.char(byte))
+end
+
+--- The string will be prefixed with a short containing how many bytes the string is.
+--- This means the maximum length of a string is 65535 bytes.
+function WRITER:WriteString(stringValue)
+    self:ForceWriteBitBuffer()
+
+	local length = #stringValue
+    self:WriteUInt(length, SIZE_STRING_BYTES * 8)
+
+    local textBytes = string.pack("c" .. length, stringValue)
+
+	self:WriteBytes(textBytes)
+end
+
+function WRITER:WriteFloat(floatValue)
+    self:ForceWriteBitBuffer()
+
+	self:WriteBytes(string.pack("f", floatValue))
+end
+
+function WRITER:WriteInt(value, bitCount)
+    self:ForceWriteBitBuffer()
+
+    for i = bitCount - 1, 0, -1 do
+        local bit = (value >> i) & 1
+        self:WriteBit(bit)
+    end
+end
+
+function WRITER:WriteUInt(value, bitCount)
+    self:ForceWriteBitBuffer()
+
+	for i = bitCount - 1, 0, -1 do
+		local bit = (value >> i) & 1
+		self:WriteBit(bit)
+	end
+end
+
+--- Packs the data into a string to be sent over the network with string.pack
+--- The first byte will contain any bits to be written, the rest will be the data
+--- @return string
+function WRITER:GetPackedData()
+    -- If there's any bits left, write them to the next byte`
+	self:ForceWriteBitBuffer()
+
+	return table.concat(self.data)
+end
+
+function WRITER:DebugOutputData()
+    debugData(self.data)
+	debugData(self.bitBuffer)
+	debugData(self:GetPackedData())
 end
 
 --[[
@@ -228,145 +329,96 @@ READER.__index = READER
 function READER.new(data)
     return setmetatable({
         data = data,
-        position = 1
+        position = 1,
+        bitBuffer = {}
     }, READER)
 end
 
+function READER:ForcePastBitBuffer()
+	self.bitBuffer = {}
+end
+
+function READER:MovePosition(amount)
+	self.position = self.position + amount
+end
+
 function READER:ReadBit()
-    local byte = self.data:byte(self.position)
-    local bit = byte % 2 -- get the least significant bit
-    self.position = self.position + 1
-    return bit
+    if (#self.bitBuffer == 0) then
+        local byte = self:ReadByte()
+
+        for i = 8, 1, -1 do
+            table.insert(self.bitBuffer, (byte >> (i - 1)) & 1)
+        end
+    end
+
+    return table.remove(self.bitBuffer, 1)
+end
+
+function READER:ReadBool()
+    return self:ReadBit() == 1
+end
+
+function READER:ReadBytes(length)
+    self:ForcePastBitBuffer()
+
+    local bytes = self.data:sub(self.position, self.position + length - 1)
+    self.position = self.position + length
+
+    return bytes
+end
+
+function READER:ReadByte()
+    return self:ReadBytes(1):byte()
 end
 
 function READER:ReadString()
-    local length = self:ReadUInt(16) -- short
-    local stringValue = self.data:sub(self.position, self.position + length - 1)
-	self.position = self.position + length
-    return stringValue
+    self:ForcePastBitBuffer()
+
+    local length = self:ReadUInt(SIZE_STRING_BYTES * 8)
+
+    local textBytes = self:ReadBytes(length)
+
+	debug("Reading string of length", length, "with bytes", textBytes)
+	return string.unpack("c" .. length, textBytes)
 end
 
--- IEEE-754 Single-Precision
 function READER:ReadFloat()
-    local bytes = {}
+    self:ForcePastBitBuffer()
 
-    for i = 1, 4 do
-        table.insert(bytes, self.data:byte(self.position))
-        self.position = self.position + 1
-    end
-
-	local byteStringChars = string.char(table.unpack(bytes))
-
-	return string.unpack("f", byteStringChars)
+    return string.unpack("f", self:ReadBytes(4))
 end
 
-function READER:ReadUInt(bitCount)
+function READER:ReadInt(bitCount)
+    self:ForcePastBitBuffer()
+
     local value = 0
 
     for i = 1, bitCount do
-        value = value + self:ReadBit() * 2 ^ (bitCount - i)
+        value = value + (self:ReadBit() << (bitCount - i))
     end
 
-	return value
+    return value
 end
 
-local readFunctions = {
-	[NET_TYPE_NUMBER] = READER.ReadFloat,
-	[NET_TYPE_STRING] = READER.ReadString,
-	-- TODO: the rest
-}
+function READER:ReadUInt(bitCount)
+    self:ForcePastBitBuffer()
 
-function READER:ReadType()
-	local typeId = self:ReadUInt(16) -- short
-	local dataType = fromTypeId(typeId)
+    local value = 0
 
-	if (not dataType) then
-		error("Invalid data type: " .. typeId)
-	end
+    for i = 1, bitCount do
+        value = value + (self:ReadBit() << (bitCount - i))
+    end
 
-	local data = readFunctions[typeId](self)
-
-	return data
-end
-
-function READER:GetPosition()
-    return self.position
-end
-
-function READER:GetData()
-	return self.data
+    return value
 end
 
 function READER:GetSize()
-    return #self.data
+    return #self.data * 8 -- In bits
 end
 
 function READER:DebugOutputData()
-	debugData(self.data)
-end
-
---[[
-	Writer Metatable
---]]
-local WRITER = {}
-WRITER.__index = WRITER
-
-function WRITER.new()
-    return setmetatable({
-        data = ""
-    }, WRITER)
-end
-
-function WRITER:WriteBit(bit)
-    local byte = bit % 2 -- get the least significant bit
-    self.data = self.data .. string.char(byte)
-end
-
-function WRITER:WriteString(stringValue)
-    local length = #stringValue
-    self:WriteUInt(length, 16) -- short means the string can be at most 65,535 characters long
-    self.data = self.data .. stringValue
-end
-
--- Write IEEE-754 Single-Precision
-function WRITER:WriteFloat(floatValue)
-    local packedFloat = string.pack("f", floatValue)
-	local byteString = {string.byte(packedFloat, 1, -1)}
-
-    self.data = self.data .. string.char(table.unpack(byteString))
-end
-
-function WRITER:WriteUInt(value, bitCount)
-    for i = bitCount, 1, -1 do
-		local bit = math.floor(value / 2 ^ (i - 1))
-		self:WriteBit(bit)
-		value = value % 2 ^ (i - 1)
-	end
-end
-
-local writeFunctions = {
-	[NET_TYPE_NUMBER] = WRITER.WriteFloat,
-	[NET_TYPE_STRING] = WRITER.WriteString,
-	-- TODO: the rest
-}
-
-function WRITER:WriteType(data)
-    local typeId = toTypeId(data)
-    self:WriteUInt(typeId, 16) -- short
-
-	writeFunctions[typeId](self, data)
-end
-
-function WRITER:GetData()
-	return self.data
-end
-
-function WRITER:GetSize()
-    return #self.data
-end
-
-function WRITER:DebugOutputData()
-	debugData(self.data)
+    debugData(self.data)
+    debugData(self.bitBuffer)
 end
 
 --[[
@@ -375,6 +427,10 @@ end
 
 local currentOutgoingMessage = nil
 
+function MODULE.Cancel()
+	currentOutgoingMessage = nil
+end
+
 function MODULE.Start(messageName)
 	if (currentOutgoingMessage) then
 		error("net.Start was called twice without sending a message.")
@@ -382,7 +438,8 @@ function MODULE.Start(messageName)
 
     currentOutgoingMessage = WRITER.new()
 
-	-- Write the message name as the header
+    -- Write the message name as the header
+	-- TODO: Store this in networked stringtables and send the index instead (adding net.AddNetworkString, with util.AddNetworkString as an alias for gmod compatibility)
     currentOutgoingMessage:WriteString(messageName)
 end
 
@@ -392,7 +449,7 @@ if (SERVER) then
 			error("net.Send was called without calling net.Start.")
 		end
 
-		local data = currentOutgoingMessage:GetData()
+		local data = currentOutgoingMessage:GetPackedData()
 		client:send(data .. "\n")
 
 		currentOutgoingMessage = nil
@@ -403,7 +460,7 @@ if (SERVER) then
 			error("net.Broadcast was called without calling net.Start.")
 		end
 
-		local data = currentOutgoingMessage:GetData()
+		local data = currentOutgoingMessage:GetPackedData()
 
 		for _, client in ipairs(clients) do
 			client:send(data .. "\n")
@@ -417,7 +474,7 @@ elseif (CLIENT) then
 			error("net.SendToServer was called without calling net.Start.")
 		end
 
-		local data = currentOutgoingMessage:GetData()
+		local data = currentOutgoingMessage:GetPackedData()
         local success, err = localClient:send(data .. "\n")
 
 		if (not success) then
