@@ -193,7 +193,7 @@ static int luasrc_InheritGamemode( lua_State *L )
     lua_getglobal( L, "GM" );
     lua_pushstring( L, baseGamemodeName );
     lua_setfield( L, -2, "DeriveFrom" );
-    lua_pop( L, 1 ); // Pop the GM table
+    lua_pop( L, 1 );  // Pop the GM table
 
     luasrc_LoadGamemode( baseGamemodeName );
 

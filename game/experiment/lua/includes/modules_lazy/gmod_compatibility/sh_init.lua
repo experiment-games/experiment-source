@@ -74,8 +74,13 @@ umsg.VectorNormal = umsg.WriteNormal
 umsg.Send = umsg.MessageEnd
 
 function istable(variable)
-	return type(variable) == "table"
+    return type(variable) == "table"
 end
+
+function isstring(variable)
+	return type(variable) == "string"
+end
+
 unpack = table.unpack
 
 Material = gpGlobals.FindMaterial
@@ -90,11 +95,13 @@ end
 
 AddCSLuaFile = sendfile or function() end
 
-TauntCamera = {
-    ShouldDrawLocalPlayer = function() return false end,
-    CreateMove = function() end,
-	CalcView = function() end,
-}
+TauntCamera = function()
+	return {
+		ShouldDrawLocalPlayer = function() return false end,
+		CreateMove = function() end,
+		CalcView = function() end,
+	}
+end
 
 if (SERVER) then
     resource = resources
@@ -154,7 +161,7 @@ require("gmod_compatibility/modules/player_manager")
 -- require("gmod_compatibility/modules/numpad")
 require("gmod_compatibility/modules/team")
 -- require("gmod_compatibility/modules/undo")
--- require("gmod_compatibility/modules/cleanup")
+require("gmod_compatibility/modules/cleanup")
 require("gmod_compatibility/modules/duplicator")
 -- require("gmod_compatibility/modules/constraint")
 -- require("gmod_compatibility/modules/construct")

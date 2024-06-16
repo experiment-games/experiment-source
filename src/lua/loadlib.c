@@ -688,44 +688,36 @@ static int ll_require (lua_State *L) {
 
 /*
 ** {======================================================
-** Experiment; 'module' function
+** Experiment; 'module' function copied from Lua 5.3
 ** =======================================================
 */
 
-static void setfenv( lua_State *L )
+/*
+** changes the environment variable of calling function
+*/
+static void set_env( lua_State *L )
 {
     lua_Debug ar;
-    lua_getstack( L, 1, &ar );   // get the stack of the calling function
-    lua_getinfo( L, "f", &ar );  // get the function from the stack
-    lua_pushvalue( L, -2 );      // push the new environment onto the stack
-
-    // Find the first upvalue named _ENV for the function at index -2
-    for ( int i = 1;; ++i )
-    {
-        const char *name = lua_getupvalue( L, -2, i );
-        if ( name == NULL )
-        {
-            break;  // no more upvalues
-        }
-        if ( strcmp( name, "_ENV" ) == 0 )
-        {
-            lua_insert( L, -2 );         // move the new environment to the correct stack position
-            lua_setupvalue( L, -2, i );  // set the new environment
-            return;
-        }
-        lua_pop( L, 1 );  // remove the upvalue value
-    }
-
-    lua_pop( L, 1 );  // pop the function if no _ENV upvalue is found
+    if ( lua_getstack( L, 1, &ar ) == 0 ||
+         lua_getinfo( L, "f", &ar ) == 0 || /* get calling function */
+         lua_iscfunction( L, -1 ) )
+        luaL_error( L, "'module' not called from a Lua function" );
+    lua_pushvalue( L, -2 ); /* copy new environment table to top */
+    lua_setupvalue( L, -2, 1 );
+    lua_pop( L, 1 ); /* remove function */
 }
 
 static void dooptions( lua_State *L, int n )
 {
-    for ( int i = 2; i <= n; i++ )
+    int i;
+    for ( i = 2; i <= n; i++ )
     {
-        lua_pushvalue( L, i );  /* get option (a function) */
-        lua_pushvalue( L, -2 ); /* module */
-        lua_call( L, 1, 0 );
+        if ( lua_isfunction( L, i ) )
+        {                           /* avoid 'calling' extra info. */
+            lua_pushvalue( L, i );  /* get option (a function) */
+            lua_pushvalue( L, -2 ); /* module */
+            lua_call( L, 1, 0 );
+        }
     }
 }
 
@@ -746,34 +738,73 @@ static void modinit( lua_State *L, const char *modname )
     lua_setfield( L, -2, "_PACKAGE" );
 }
 
+static const char *luaL_findtable( lua_State *L, int idx, const char *fname, int szhint )
+{
+    const char *e;
+    if ( idx ) lua_pushvalue( L, idx );
+    do
+    {
+        e = strchr( fname, '.' );
+        if ( e == NULL ) e = fname + strlen( fname );
+        lua_pushlstring( L, fname, e - fname );
+        if ( lua_rawget( L, -2 ) == LUA_TNIL )
+        {                                                        /* no such field? */
+            lua_pop( L, 1 );                                     /* remove this nil */
+            lua_createtable( L, 0, ( *e == '.' ? 1 : szhint ) ); /* new table for field */
+            lua_pushlstring( L, fname, e - fname );
+            lua_pushvalue( L, -2 );
+            lua_settable( L, -4 ); /* set new table into field */
+        }
+        else if ( !lua_istable( L, -1 ) )
+        {                    /* field has a non-table value? */
+            lua_pop( L, 2 ); /* remove table and value */
+            return fname;    /* return problematic part of the name */
+        }
+        lua_remove( L, -2 ); /* remove previous table */
+        fname = e + 1;
+    } while ( *e == '.' );
+    return NULL;
+}
+
+/*
+** Find or create a module table with a given name. The function
+** first looks at the LOADED table and, if that fails, try a
+** global variable with that name. In any case, leaves on the stack
+** the module table.
+*/
+LUALIB_API void luaL_pushmodule( lua_State *L, const char *modname, int sizehint )
+{
+    luaL_findtable( L, LUA_REGISTRYINDEX, LUA_LOADED_TABLE, 1 );
+    if ( lua_getfield( L, -1, modname ) != LUA_TTABLE )
+    {                    /* no LOADED[modname]? */
+        lua_pop( L, 1 ); /* remove previous result */
+        /* try global variable (and create one if it does not exist) */
+        lua_pushglobaltable( L );
+        if ( luaL_findtable( L, 0, modname, sizehint ) != NULL )
+            luaL_error( L, "name conflict for module '%s'", modname );
+        lua_pushvalue( L, -1 );
+        lua_setfield( L, -3, modname ); /* LOADED[modname] = new table */
+    }
+    lua_remove( L, -2 ); /* remove LOADED table */
+}
+
 static int ll_module( lua_State *L )
 {
     const char *modname = luaL_checkstring( L, 1 );
-    int loaded = lua_gettop( L ) + 1; /* index of _LOADED table */
-    lua_getfield( L, LUA_REGISTRYINDEX, "_LOADED" );
-    lua_getfield( L, loaded, modname ); /* get _LOADED[modname] */
-    if ( !lua_istable( L, -1 ) )
-    {                      /* not found? */
-        lua_pop( L, 1 );   /* remove previous result */
-        lua_newtable( L ); /* create module table */
-        lua_pushvalue( L, -1 );
-        lua_setfield( L, loaded, modname ); /* _LOADED[modname] = new table */
-    }
+    int lastarg = lua_gettop( L );    /* last parameter */
+    luaL_pushmodule( L, modname, 1 ); /* get/create module table */
     /* check whether table already has a _NAME field */
-    lua_getfield( L, -1, "_NAME" );
-    if ( !lua_isnil( L, -1 ) )
-    { /* is table an initialized module? */
-        lua_pop( L, 1 );
-    }
+    if ( lua_getfield( L, -1, "_NAME" ) != LUA_TNIL )
+        lua_pop( L, 1 ); /* table is an initialized module */
     else
     { /* no; initialize it */
         lua_pop( L, 1 );
         modinit( L, modname );
     }
     lua_pushvalue( L, -1 );
-    setfenv( L );
-    dooptions( L, loaded - 1 );
-    return 0;
+    set_env( L );
+    dooptions( L, lastarg );
+    return 1;
 }
 
 static int ll_seeall( lua_State *L )
@@ -808,7 +839,7 @@ static const luaL_Reg pk_funcs[] = {
 
 static const luaL_Reg ll_funcs[] = {
   {"module", ll_module},
-  {"require", ll_require},
+  { "require", ll_require },
   {NULL, NULL}
 };
 
