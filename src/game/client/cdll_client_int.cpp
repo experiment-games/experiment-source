@@ -1633,8 +1633,8 @@ void CHLClient::LevelInitPreEntity(char const *pMapName) {
     luasrc_LoadEntities();
     // luasrc_LoadEffects();
 
-    luasrc_LoadGamemode(LUA_BASE_GAMEMODE);
-    luasrc_LoadGamemode(gamemode.GetString());
+    luasrc_LoadGamemode( LUA_BASE_GAMEMODE );
+    luasrc_LoadGamemode( gamemode.GetString() );
     luasrc_SetGamemode(gamemode.GetString());
 
     BEGIN_LUA_CALL_HOOK("LevelInitPreEntity");

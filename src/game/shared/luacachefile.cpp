@@ -179,15 +179,25 @@ extern int luasrc_sendfile( lua_State *L )
     lua_Debug ar2;
     lua_getinfo( L, ">S", &ar2 );
 
+    char fileName[MAX_PATH];
+
     int iLength = Q_strlen( ar2.source );
     char source[MAX_PATH];
-    Q_StrRight( ar2.source, iLength - 1, source, sizeof( source ) );
+    Q_StrRight( ar2.source, iLength - 1, source, sizeof( source ) ); // remove the @ from the beginning
+
+    // If there is no file passed, send the file that called this function
+    if ( lua_isnoneornil( L, 1 ) )
+    {
+        luasrc_sendfile( L, source );
+        return 0;
+    }
+
+    // Append the path to the file that called this function
     Q_StripFilename( source );
 
-    char filename[MAX_PATH];
-    Q_snprintf( filename, sizeof( filename ), "%s\\%s", source, luaL_checkstring( L, 1 ) );
+    Q_snprintf( fileName, sizeof( fileName ), "%s\\%s", source, luaL_checkstring( L, 1 ) );
 
-    luasrc_sendfile( L, filename );
+    luasrc_sendfile( L, fileName );
     
     return 0;
 }
@@ -377,23 +387,23 @@ extern void lcf_preparecachefile( void )
 
     delete[] buffer;
 
-    char filename[MAX_PATH];
+    char fileName[MAX_PATH];
     char hexname[16];
     Q_binarytohex( ( const byte * )&crc, sizeof( crc ), hexname, sizeof( hexname ) );
-    Q_snprintf( filename, sizeof( filename ), "cache\\%s.lcf", hexname );
+    Q_snprintf( fileName, sizeof( fileName ), "cache\\%s.lcf", hexname );
 
-    if ( g_pFullFileSystem->FileExists( filename, "MOD" ) )
+    if ( g_pFullFileSystem->FileExists( fileName, "MOD" ) )
     {
         g_pFullFileSystem->RemoveFile( "cache\\cache_temp.lcf", "MOD" );
     }
     else
     {
-        g_pFullFileSystem->RenameFile( "cache\\cache_temp.lcf", filename, "MOD" );
+        g_pFullFileSystem->RenameFile( "cache\\cache_temp.lcf", fileName, "MOD" );
     }
 
     INetworkStringTable *downloadables =
         networkstringtable->FindTable( "downloadables" );
-    downloadables->AddString( true, filename, -1 );
+    downloadables->AddString( true, fileName, -1 );
     IZip::ReleaseZip( pZip );
     s_lcfFile = 0;
 }

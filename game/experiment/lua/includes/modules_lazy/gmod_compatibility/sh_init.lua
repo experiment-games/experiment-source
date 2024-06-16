@@ -19,6 +19,8 @@ package.IncludePath ="lua/includes/modules_lazy/gmod_compatibility/;" .. package
 --[[
 	Renames and other polyfills
 --]]
+DeriveGamemode = InheritGamemode
+
 util = {
 	PrecacheModel = _R.CBaseEntity.PrecacheModel,
 	PrecacheSound = _R.CBaseEntity.PrecacheSound,
@@ -86,14 +88,17 @@ CreateConVar = function(name, value, flags, helpText, min, max)
 	return ConVar(name, value, flags, helpText, min, max)
 end
 
-AddCSLuaFile = function(...)
-	if (SERVER) then
-		return sendfile(...)
-	end
-end
+AddCSLuaFile = sendfile or function() end
+
+TauntCamera = {
+    ShouldDrawLocalPlayer = function() return false end,
+    CreateMove = function() end,
+	CalcView = function() end,
+}
 
 if (SERVER) then
-	resource = resources
+    resource = resources
+	resource.AddWorkshop = function() end
 else
 	LocalPlayer = UTIL.GetLocalPlayer
 
@@ -151,8 +156,8 @@ require("gmod_compatibility/modules/team")
 -- require("gmod_compatibility/modules/undo")
 -- require("gmod_compatibility/modules/cleanup")
 require("gmod_compatibility/modules/duplicator")
-require("gmod_compatibility/modules/constraint")
-require("gmod_compatibility/modules/construct")
+-- require("gmod_compatibility/modules/constraint")
+-- require("gmod_compatibility/modules/construct")
 -- require("gmod_compatibility/modules/usermessage") -- We have our own usermessage library.
 require("gmod_compatibility/modules/list")
 require("gmod_compatibility/modules/cvars")

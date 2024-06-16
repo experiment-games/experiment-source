@@ -73,6 +73,7 @@ function MODULE.Register(gamemodeTable, gamemodeName, baseGameMode)
 	end
 
 	if (gamemodeName ~= _BASE_GAMEMODE) then
+		baseGameMode = baseGameMode or _BASE_GAMEMODE
         local baseGamemodeTable = MODULE.Get(baseGameMode)
 
 		if (baseGamemodeTable == nil) then

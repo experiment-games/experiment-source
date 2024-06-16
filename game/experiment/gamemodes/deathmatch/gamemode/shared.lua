@@ -9,7 +9,6 @@ GM.Name = "Deathmatch"
 GM.Homepage = "http://www.steampowered.com/"
 GM.Developer = "Valve"
 GM.Manual = nil
-GM.Base = "sandbox"
 
 function GM:Initialize()
 	self.m_bTeamPlayEnabled = cvars.FindVar("mp_teamplay"):GetBool()

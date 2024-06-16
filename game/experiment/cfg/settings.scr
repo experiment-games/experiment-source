@@ -32,7 +32,7 @@
 
 
 // Half-Life Server Configuration Layout Script (stores last settings chosen, too)
-// File generated:  Sat Jun 15 09:25:33 PM
+// File generated:  Sun Jun 16 04:48:24 PM
 //
 //
 // Cvar	-	Setting
@@ -52,7 +52,7 @@ DESCRIPTION SERVER_OPTIONS
 	{
 		"#Experiment_Gamemode"
 		{ STRING }
-		{ "gmod_sandbox" }
+		{ "hl2sb" }
 	}
 
 	"sv_password"

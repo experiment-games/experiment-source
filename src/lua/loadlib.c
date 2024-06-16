@@ -755,19 +755,7 @@ static int ll_module( lua_State *L )
     if ( !lua_istable( L, -1 ) )
     {                      /* not found? */
         lua_pop( L, 1 );   /* remove previous result */
-
-        /* try global variable (and create one if it does not exist) */
-        lua_pushglobaltable( L );
-        lua_pushstring( L, modname );
-        lua_gettable( L, -2 );
-        if ( lua_isnil( L, -1 ) )
-        {
-            lua_pop( L, 1 ); /* remove nil */
-            lua_newtable( L ); /* create module table */
-            lua_pushvalue( L, -1 ); /* duplicate module table so we can keep a reference to it */
-            lua_setglobal( L, modname ); /* _G[modname] = module */
-        }
-
+        lua_newtable( L ); /* create module table */
         lua_pushvalue( L, -1 );
         lua_setfield( L, loaded, modname ); /* _LOADED[modname] = new table */
     }

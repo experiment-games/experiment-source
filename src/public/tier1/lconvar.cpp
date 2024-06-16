@@ -214,7 +214,7 @@ static int luasrc_ConCommand (lua_State *L) {
 #ifdef CLIENT_DLL
   bool bIsGameUI = false;
   unsigned short lookup;
-  lua_getglobal(L, "_GAMEUI");
+  lua_getglobal(L, "GAMEUI");
   if (!lua_isnoneornil(L, -1) && lua_toboolean(L, -1)) {
     bIsGameUI = true;
 
