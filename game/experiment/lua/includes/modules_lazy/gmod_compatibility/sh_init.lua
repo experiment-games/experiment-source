@@ -89,8 +89,14 @@ unpack = table.unpack
 Material = gpGlobals.FindMaterial
 CreateMaterial = gpGlobals.CreateMaterial
 CreateConVar = function(name, value, flags, helpText, min, max)
-	if (istable(flags)) then
-		flags = bit.bor(table.unpack(flags))
+    if (istable(flags)) then
+		if (#flags == 0) then
+			flags = 0
+		elseif (#flags == 1) then
+			flags = flags[1]
+		else
+			flags = bit.bor(table.unpack(flags))
+		end
 	end
 
 	return ConVar(name, value, flags, helpText, min, max)

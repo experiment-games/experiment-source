@@ -23,6 +23,7 @@
 #include "lconvar.h"
 #include "licvar.h"
 #include "lnetwork.h"
+#include <stack>
 
 extern "C"
 {
@@ -81,6 +82,10 @@ lua_State *L;
 // See luasrc_InitCustomLoader for more information
 lua_State *loaderLuaState;
 bool hasLoaderBeenActivated = false;
+
+// Used to track the file that is currently being included, so that
+// relative includes can be resolved correctly.
+std::stack< std::string > fileIncludingStack;
 
 // Lua system initialized for client or server
 bool g_bLuaInitialized;
@@ -498,6 +503,22 @@ static bool luasrc_find_file( lua_State *L, const char *fileName, char *fullPath
         return true;
     }
 
+    // Check relative to the current file being loaded if it is set
+    if ( !fileIncludingStack.empty() )
+    {
+        const char *currentFile = fileIncludingStack.top().c_str();
+        char currentFileDir[MAX_PATH];
+        Q_ExtractFilePath( currentFile, currentFileDir, sizeof( currentFileDir ) );
+        char relativeFileName[MAX_PATH];
+        Q_snprintf( relativeFileName, sizeof( relativeFileName ), "%s\\%s", currentFileDir, fileName );
+
+        if ( filesystem->FileExists( relativeFileName, "MOD" ) )
+        {
+            Q_strncpy( fullPath, relativeFileName, fullPathSize );
+            return true;
+        }
+    }
+
     // Next search relative to where the Lua script is
     // TODO: This fails when called from the console with lua_run include("file.lua")
     // because the console is not a file and it would try load 'nclude("file.lua")'
@@ -592,6 +613,9 @@ LUA_API int luasrc_dofile_with_loader( lua_State *L, const char *filePath )
     char fullPath[MAX_PATH];
     luasrc_find_file( L, filePath, fullPath, sizeof( fullPath ) );
 
+    // Useful for tracking relative includes
+    fileIncludingStack.push( fullPath );
+
     // If the loader is not activated, default to simple dofile loading
     if ( !hasLoaderBeenActivated )
     {
@@ -599,7 +623,11 @@ LUA_API int luasrc_dofile_with_loader( lua_State *L, const char *filePath )
         lua_pushcfunction( L, luasrc_traceback );
         // Load the file, leaving the chunk on the stack. Then pcall it with
         // the traceback function (which will be below the chunk on the stack)
-        return ( luaL_loadfile( L, fullPath ) || lua_pcall( L, 0, LUA_MULTRET, -2 ) );
+        int result = ( luaL_loadfile( L, fullPath ) || lua_pcall( L, 0, LUA_MULTRET, -2 ) );
+
+        fileIncludingStack.pop();
+
+        return result;
     }
 
     // Handle the file manually, preprocessing it with the loader
@@ -609,6 +637,7 @@ LUA_API int luasrc_dofile_with_loader( lua_State *L, const char *filePath )
     if ( !filesystem->ReadFile( fullPath, "MOD", fileContentsBuffer ) )
     {
         lua_pushfstring( L, "Failed to read file: %s", fullPath );
+        fileIncludingStack.pop();
         return LUA_ERRFILE;
     }
 
@@ -633,7 +662,11 @@ LUA_API int luasrc_dofile_with_loader( lua_State *L, const char *filePath )
 
         SHOW_LUA_ERROR( "Loader Error: Failed to preprocess file %s because of error: '%s' (returning file unmodified!)\n", fullPath, error );
 
-        return luaL_loadbuffer( L, fileContents, fileSize, bufferFileName );
+        int result = luaL_loadbuffer( L, fileContents, fileSize, bufferFileName );
+
+        fileIncludingStack.pop();
+
+        return result;
     }
 
     if ( !lua_isstring( loaderLuaState, -1 ) )
@@ -642,7 +675,11 @@ LUA_API int luasrc_dofile_with_loader( lua_State *L, const char *filePath )
 
         SHOW_LUA_ERROR( "Loader Error: PreProcessFile did not return a string for file %s (returning file unmodified!)\n", fullPath );
 
-        return luaL_loadbuffer( L, fileContents, fileSize, bufferFileName );
+        int result = luaL_loadbuffer( L, fileContents, fileSize, bufferFileName );
+
+        fileIncludingStack.pop();
+
+        return result;
     }
 
     const char *preprocessedFileContents = lua_tostring( loaderLuaState, -1 );
@@ -684,6 +721,8 @@ LUA_API int luasrc_dofile_with_loader( lua_State *L, const char *filePath )
                         strlen( preprocessedFileContents ),
                         bufferFileName ) ||
                     lua_pcall( L, 0, LUA_MULTRET, -2 );
+
+    fileIncludingStack.pop();
 
     return errorCode;
 }
@@ -1286,6 +1325,10 @@ bool luasrc_LoadGamemode( const char *gamemode )
 
 bool luasrc_SetGamemode( const char *gamemode )
 {
+    // Even if an include failed, they should still have popped the file
+    // from the stack
+    assert( fileIncludingStack.empty() );
+
     lua_getglobal( L, "gamemodes" );
 
     if ( !lua_istable( L, -1 ) )
