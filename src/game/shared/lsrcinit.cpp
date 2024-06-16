@@ -109,6 +109,8 @@ static const luaL_Reg luasrclibs[] = {
 #endif
     { LUA_UMSGLIBNAME, luaopen_umsg },
     { LUA_NETLIBNAME, luaopen_net },
+
+    { LUA_SYSTEMLIBNAME, luaopen_system },
     { NULL, NULL } };
 
 LUALIB_API void luasrc_openlibs( lua_State *L )

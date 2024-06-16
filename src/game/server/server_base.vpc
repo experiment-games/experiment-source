@@ -731,6 +731,8 @@ $Project
             $File "$SRCDIR\game\shared\lutil_shared.cpp"
             $File "$SRCDIR\game\shared\mountaddons.h"
             $File "$SRCDIR\game\shared\mountaddons.cpp"
+            $File "$SRCDIR\game\shared\lsystem.cpp"
+            $File "$SRCDIR\game\shared\lsystem.h"
             $File "$SRCDIR\public\mathlib\lvector.cpp"
             $File "$SRCDIR\public\mathlib\lvmatrix.cpp"
             $File "$SRCDIR\public\mathlib\lvmatrix.h"

@@ -192,10 +192,13 @@ static int luasrc_InheritGamemode( lua_State *L )
 
     lua_getglobal( L, "GM" );
     lua_pushstring( L, baseGamemodeName );
-    lua_setfield( L, -2, "DeriveFrom" );
-    lua_pop( L, 1 );  // Pop the GM table
+    lua_setfield( L, -2, "InheritsFrom" );
+    // lua_pop( L, 1 );  // Leave the GM table for later
 
-    luasrc_LoadGamemode( baseGamemodeName );
+    luasrc_LoadGamemode( baseGamemodeName ); // will not touch the GM table, but will set 'GM' to a new table
+
+    // Restore the GM table as GM
+    lua_setglobal( L, "GM" );
 
     return 0;
 }
@@ -1227,7 +1230,6 @@ bool luasrc_LoadGamemode( const char *gamemode )
 
         Warning( "[Lua] Error loading gamemode: Attempted to load an invalid gamemode %s (failed to load %s)!\n", gamemode, initialFilePath );
 
-        luasrc_dumpstack( L );
         return false;
     }
 

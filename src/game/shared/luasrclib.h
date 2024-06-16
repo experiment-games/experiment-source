@@ -197,6 +197,9 @@ LUALIB_API int( luaopen_umsg )( lua_State *L );
 #define LUA_NETLIBNAME "net"
 LUALIB_API int( luaopen_net )( lua_State *L );
 
+#define LUA_SYSTEMLIBNAME "system"
+LUALIB_API int( luaopen_system )( lua_State *L );
+
 /* open all Source Engine libraries */
 LUALIB_API void( luasrc_openlibs )( lua_State *L );
 
