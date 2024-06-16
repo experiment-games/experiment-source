@@ -92,8 +92,10 @@ gameinfo
 			game	"|all_source_engine_paths|hl2"
 			platform	"|all_source_engine_paths|platform"
 
-			// Data files
+			// Paths for Lua and data files
 			data	"|gameinfo_path|data"
+			lua		"|gameinfo_path|lua"
+			lua		"|gameinfo_path|gamemodes"
 
 			// This is where downloaded files go.
 			// Do this last.

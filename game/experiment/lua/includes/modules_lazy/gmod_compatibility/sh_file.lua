@@ -3,24 +3,18 @@ local filesystem = require("filesystem")
 file = {}
 
 -- Appends content to a file relative to the data folder
-function file.Append(name, content)
-    local file = filesystem.Open(name, "a", "DATA")
-    if file then
-        filesystem.Write(content, #content, file)
+function file.Append(fileName, content)
+    local file = filesystem.Open(fileName, "a", "DATA")
+
+    if (file) then
+        filesystem.Write(content, file)
         filesystem.Close(file)
     end
 end
 
 -- Reads the content of a file asynchronously
 function file.AsyncRead(fileName, gamePath, callback, sync)
-    local content = filesystem.Read(fileName, gamePath)
-    if sync then
-        callback(content)
-    else
-        coroutine.wrap(function()
-            callback(content)
-        end)()
-    end
+	callback(file.Read(fileName, gamePath)) -- TODO: Implement async file reading
 end
 
 -- Creates a directory relative to the data folder
@@ -29,8 +23,8 @@ function file.CreateDir(name)
 end
 
 -- Deletes a file or empty folder relative to the data folder
-function file.Delete(name, path)
-    filesystem.RemoveFile(name, path or "DATA")
+function file.Delete(name, gamePath)
+    filesystem.RemoveFile(name, gamePath or "DATA")
 end
 
 -- Checks if a file or directory exists
@@ -42,7 +36,7 @@ end
 function file.Find(name, path, sorting)
     local files = filesystem.Find(name, path)
 
-    if sorting then
+    if (sorting) then
         MsgN("file.Find Sorting is not supported in the GMod compatibility layer!")
     end
 
@@ -61,7 +55,11 @@ end
 
 -- Reads the content of a file
 function file.Read(fileName, gamePath)
-    return filesystem.Read(fileName, gamePath or "DATA")
+    local file = filesystem.Open(fileName, "r", gamePath)
+	local size = filesystem.Size(fileName, gamePath)
+	local size, content = filesystem.Read(size, file)
+	filesystem.Close(file)
+	return content
 end
 
 -- Renames a file
@@ -82,8 +80,12 @@ end
 -- Writes content to a file, erasing previous data
 function file.Write(fileName, content)
     local file = filesystem.Open(fileName, "w", "DATA")
-    if file then
-        filesystem.Write(content, #content, file)
-        filesystem.Close(file)
+
+    if (not file) then
+		error("file.Write: Couldn't open file '" .. fileName .. "' for writing!")
+        return
     end
+
+	filesystem.Write(content, file)
+	filesystem.Close(file)
 end
