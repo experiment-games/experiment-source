@@ -15,28 +15,41 @@ local print = print
 local KeyValues = KeyValues
 
 function table.Copy(target, shouldCopyRecursively)
-	if (target == nil) then
-		return nil
+    if (target == nil) then
+        return nil
+    end
+
+    local __copy = {}
+    setmetatable(__copy, getmetatable(target))
+
+    for key, value in pairs(target) do
+        if (type(value) ~= "table") then
+            __copy[key] = value
+        else
+            shouldCopyRecursively = shouldCopyRecursively or {}
+            shouldCopyRecursively[target] = __copy
+            if (shouldCopyRecursively[value]) then
+                __copy[key] = shouldCopyRecursively[value]
+            else
+                __copy[key] = table.Copy(value, shouldCopyRecursively)
+            end
+        end
+    end
+
+    return __copy
+end
+
+--- Counts the items in a table by iterating over the keys.
+--- @param target any
+--- @return unknown
+function table.Count(target)
+	local count = 0
+
+	for _ in pairs(target) do
+		count = count + 1
 	end
 
-	local __copy = {}
-	setmetatable(__copy, getmetatable(target))
-
-	for key, value in pairs(target) do
-		if (type(value) ~= "table") then
-			__copy[key] = value
-		else
-			shouldCopyRecursively = shouldCopyRecursively or {}
-			shouldCopyRecursively[target] = __copy
-			if (shouldCopyRecursively[value]) then
-				__copy[key] = shouldCopyRecursively[value]
-			else
-				__copy[key] = table.Copy(value, shouldCopyRecursively)
-			end
-		end
-	end
-
-	return __copy
+	return count
 end
 
 function table.HasValue(target, valueToFind)

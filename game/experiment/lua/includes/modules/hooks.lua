@@ -99,6 +99,10 @@ end
 --- @param eventName string The name of the internal GameRules method.
 --- @param hookIdentifier string The name of the hook.
 function MODULE.Remove(eventName, hookIdentifier)
+    if (not MODULE.registeredHooks[eventName]) then
+        return
+    end
+
 	if (MODULE.registeredHooks[eventName][hookIdentifier]) then
 		MODULE.registeredHooks[eventName][hookIdentifier] = nil
 	end

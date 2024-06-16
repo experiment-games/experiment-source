@@ -15,7 +15,6 @@
 #include "teamplay_gamerules.h"
 #include "physics.h"
 #include "isaverestore.h"
-#include "activitylist.h"
 #include "eventlist.h"
 #include "eventqueue.h"
 #include "ai_network.h"
@@ -42,7 +41,6 @@
 extern CBaseEntity				*g_pLastSpawn;
 void InitBodyQue(void);
 extern void W_Precache(void);
-extern void ActivityList_Free( void );
 extern CUtlMemoryPool g_EntityListPool;
 
 #define SF_DECAL_NOTINDEATHMATCH		2048
@@ -464,7 +462,6 @@ CWorld::CWorld( )
 {
 	AddEFlags( EFL_NO_AUTO_EDICT_ATTACH | EFL_KEEP_ON_RECREATE_ENTITIES );
 	NetworkProp()->AttachEdict( INDEXENT(RequiredEdictIndex()) );
-	ActivityList_Init();
 	EventList_Init();
 	
 	SetSolid( SOLID_BSP );
@@ -476,7 +473,6 @@ CWorld::CWorld( )
 CWorld::~CWorld( )
 {
 	EventList_Free();
-	ActivityList_Free();
 	if ( g_pGameRules )
 	{
 		g_pGameRules->LevelShutdown();
@@ -509,22 +505,10 @@ void CWorld::DecalTrace( trace_t *pTrace, char const *decalName)
 	}
 }
 
-void CWorld::RegisterSharedActivities( void ) {
-#ifdef LUA_SDK
-    // Andrew; There's a big issue with including the Activity enumeration
-    // library, and that issue is that it's massive. While we clean up _G by
-    // placing it in it's own library and increase lookup times across nearly
-    // all of our resources, it may be best that we make it a standard practice
-    // for developers to look up the enumerations that they need on an
-    // as-needed basis, and store them as locals in their relative files, or
-    // simply use the raw value of that enumeration in scripts, which is the
-    // most performance efficient option.
-    // BEGIN_LUA_SET_ENUM_LIB( "Activity" );
-#endif
-    ActivityList_RegisterSharedActivities();
-#ifdef LUA_SDK
-    // END_LUA_SET_ENUM_LIB();
-#endif
+void CWorld::RegisterSharedActivities( void )
+{
+    // Experiment; Note that ACT_* ActivityList registrations
+    // were moved to luamanager.cpp
 }
 
 void CWorld::RegisterSharedEvents( void )
@@ -627,7 +611,6 @@ void CWorld::Precache( void )
 	// =================================================
 	//	Activities
 	// =================================================
-	ActivityList_Free();
 	RegisterSharedActivities();
 
 	EventList_Free();

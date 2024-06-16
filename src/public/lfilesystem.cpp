@@ -339,19 +339,34 @@ static int filesystem_Find( lua_State *L )
 
     char const *fn = filesystem->FindFirstEx( path, pathID, &fh );
 
-    lua_createtable( L, 0, 0 );
+    lua_createtable( L, 0, 0 ); // files
+    lua_createtable( L, 0, 0 ); // directories
 
     while ( fn )
     {
-        lua_pushstring( L, fn );
-        lua_rawseti( L, -2, luaL_len( L, -2 ) + 1 );
+        if ( fn[0] == '.' )
+        {
+            fn = filesystem->FindNext( fh );
+            continue;
+        }
+
+        if ( filesystem->FindIsDirectory( fh ) )
+        {
+            lua_pushstring( L, fn );
+            lua_rawseti( L, -2, luaL_len( L, -2 ) + 1 );
+        }
+        else
+        {
+            lua_pushstring( L, fn );
+            lua_rawseti( L, -3, luaL_len( L, -3 ) + 1 );
+        }
 
         fn = filesystem->FindNext( fh );
     }
 
     filesystem->FindClose( fh );
 
-    return 1;
+    return 2;
 }
 
 

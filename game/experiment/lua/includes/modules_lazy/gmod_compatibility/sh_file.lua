@@ -34,13 +34,13 @@ end
 
 -- Returns a list of files and directories inside a folder
 function file.Find(name, path, sorting)
-    local files = filesystem.Find(name, path)
+    local files, directories = filesystem.Find(name, path)
 
     if (sorting) then
         MsgN("file.Find Sorting is not supported in the GMod compatibility layer!")
     end
 
-	return files
+	return files, directories
 end
 
 -- Checks if the given path is a directory

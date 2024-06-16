@@ -76,12 +76,48 @@ umsg.Vector = umsg.WriteVector
 umsg.VectorNormal = umsg.WriteNormal
 umsg.Send = umsg.MessageEnd
 
+function isangle(variable)
+	return type(variable) == "angle"
+end
+
+function isbool(variable)
+	return type(variable) == "boolean"
+end
+
+function IsColor(variable)
+	return type(variable) == "color"
+end
+
+function ispanel(variable)
+	return type(variable) == "panel"
+end
+
+function isentity(variable)
+    return type(variable) == "entity"
+end
+
+function isfunction(variable)
+    return type(variable) == "function"
+end
+
+function ismatrix(variable)
+    return type(variable) == "vmatrix"
+end
+
+function isnumber(variable)
+	return type(variable) == "number"
+end
+
+function isstring(variable)
+    return type(variable) == "string"
+end
+
 function istable(variable)
     return type(variable) == "table"
 end
 
-function isstring(variable)
-	return type(variable) == "string"
+function isvector(variable)
+	return type(variable) == "vector"
 end
 
 unpack = table.unpack
@@ -105,12 +141,16 @@ end
 AddCSLuaFile = sendfile or function() end
 
 TauntCamera = function()
-	return {
-		ShouldDrawLocalPlayer = function() return false end,
-		CreateMove = function() end,
-		CalcView = function() end,
-	}
+    return {
+        ShouldDrawLocalPlayer = function() return false end,
+        CreateMove = function() end,
+        CalcView = function() end,
+    }
 end
+
+game = {
+	IsDedicated = function() return engine.IsDedicatedServer() end,
+}
 
 if (SERVER) then
     resource = resources
@@ -218,6 +258,14 @@ unpack = unpack or table.unpack
 MsgC = ConDColorMsg
 
 PrintTable = table.Print
+
+ErrorNoHalt = function(...)
+    Msg(...)
+end
+
+ErrorNoHaltWithStack = function(...)
+    Msg(debug.traceback(table.concat({...}, " "), 2))
+end
 
 --[[
 	Now that the compatibility libraries have been loaded, we can start changing hooks

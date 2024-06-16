@@ -7,7 +7,6 @@
 #include "cbase.h"
 #include "c_world.h"
 #include "ivmodemanager.h"
-#include "activitylist.h"
 #include "decals.h"
 #include "engine/ivmodelinfo.h"
 #include "ivieweffects.h"
@@ -78,7 +77,6 @@ C_World::~C_World( void )
 bool C_World::Init( int entnum, int iSerialNum )
 {
 	m_flWaveHeight = 0.0f;
-	ActivityList_Init();
 	EventList_Init();
 
 	return BaseClass::Init( entnum, iSerialNum );
@@ -86,7 +84,6 @@ bool C_World::Init( int entnum, int iSerialNum )
 
 void C_World::Release()
 {
-	ActivityList_Free();
 	Term();
 }
 
@@ -128,13 +125,9 @@ void C_World::OnDataChanged( DataUpdateType_t updateType )
 }
 
 void C_World::RegisterSharedActivities( void ) {
-#ifdef LUA_SDK
-    // BEGIN_LUA_SET_ENUM_LIBRARY( "Activity" );
-#endif
-    ActivityList_RegisterSharedActivities();
-#ifdef LUA_SDK
-    // END_LUA_SET_ENUM_LIBRARY();
-#endif
+    // Experiment; Note that ACT_* ActivityList registrations
+    // were moved to luamanager.cpp
+
 	EventList_RegisterSharedEvents();
 }
 
@@ -174,7 +167,6 @@ void C_World::Precache( void )
 	// =================================================
 	//	Activities
 	// =================================================
-	ActivityList_Free();
 	EventList_Free();
 
 	RegisterSharedActivities();

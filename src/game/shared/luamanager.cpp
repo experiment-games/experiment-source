@@ -6,6 +6,7 @@
 
 #include "cbase.h"
 #include "utlbuffer.h"
+#include "activitylist.h"
 #include "filesystem.h"
 #ifndef CLIENT_DLL
 #include "gameinterface.h"
@@ -428,6 +429,28 @@ void luasrc_init( void )
     RegisterLuaUserMessages();
 
     Msg( "Lua initialized (" LUA_VERSION ")\n" );
+
+    // Experiment; In order to get all ACT_* enums available in time,
+    // we moved this from CWorld and C_World to here.
+    ActivityList_Init();
+#ifdef LUA_SDK
+    // Andrew; There's a big issue with including the Activity enumeration
+    // library, and that issue is that it's massive. While we clean up _G by
+    // placing it in it's own library and increase lookup times across nearly
+    // all of our resources, it may be best that we make it a standard practice
+    // for developers to look up the enumerations that they need on an
+    // as-needed basis, and store them as locals in their relative files, or
+    // simply use the raw value of that enumeration in scripts, which is the
+    // most performance efficient option.
+
+    // Experiment; Thanks Andrew, but for GMod compatibility we have to ignore
+    // the above advice and registers all enumerations.
+    BEGIN_LUA_SET_ENUM_LIB( L, "Activity" );
+#endif
+    ActivityList_RegisterSharedActivities();
+#ifdef LUA_SDK
+    END_LUA_SET_ENUM_LIB( L );
+#endif
 }
 
 void luasrc_shutdown( void )
@@ -452,6 +475,8 @@ void luasrc_shutdown( void )
 
     lcf_close( L );
     lua_close( L );
+
+    ActivityList_Free();
 }
 
 LUA_API int luasrc_dostring( lua_State *L, const char *string )
