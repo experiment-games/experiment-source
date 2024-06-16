@@ -294,10 +294,11 @@ void luasrc_setmodulepaths( lua_State *L )
     // for the 'include' function. These paths will be attempted to be prefixed
     // before X.lua when include("X.lua") is called.
     lua_pushfstring( L,
-                     ".\\;%s\\;%s\\%s",
+                     ".\\;%s\\;%s\\%s;%s",
                      LUA_ROOT,
                      LUA_PATH_ADDONS,
-                     LUA_ROOT );
+                     LUA_ROOT,
+                     LUA_PATH_GAMEMODES );
     lua_setfield( L, -2, "IncludePath" );
 
     lua_pop( L, 1 );  // Pop the package table
@@ -742,7 +743,7 @@ LUA_API void luasrc_dofolder( lua_State *L, const char *path )
 {
     if ( !luasrc_checkfolder( path ) )
     {
-        SHOW_LUA_ERROR( "(dofolder) Folder does not exist: %s\n", path );
+        DevMsg( "Lua dofolder failed! Folder does not exist: %s\n", path );
         return;
     }
 
@@ -1330,7 +1331,7 @@ bool luasrc_SetGamemode( const char *gamemode )
     engine->GetGameDir( gamePath, 256 );
 #endif
     Q_strncpy( contentSearchPath, gamePath, sizeof( contentSearchPath ) );
-    Q_strncat( contentSearchPath, "\\gamemodes\\", sizeof( contentSearchPath ) );
+    Q_strncat( contentSearchPath, LUA_PATH_GAMEMODES "\\", sizeof( contentSearchPath ) );
     Q_strncat( contentSearchPath, gamemode, sizeof( contentSearchPath ) );
     Q_strncat( contentSearchPath, "\\content", sizeof( contentSearchPath ) );
 

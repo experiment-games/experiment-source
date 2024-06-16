@@ -1,4 +1,4 @@
-//===== Copyright © 1996-2005, Valve Corporation, All rights reserved. ======//
+//===== Copyright Â© 1996-2005, Valve Corporation, All rights reserved. ======//
 //
 // Purpose: 
 //
@@ -330,6 +330,30 @@ static int filesystem_Write (lua_State *L) {
   return 1;
 }
 
+static int filesystem_Find( lua_State *L )
+{
+    const char *path = luaL_checkstring( L, 1 );
+    const char *pathID = luaL_optstring( L, 2, "GAME" );
+
+    FileFindHandle_t fh;
+
+    char const *fn = filesystem->FindFirstEx( path, pathID, &fh );
+
+    lua_createtable( L, 0, 0 );
+
+    while ( fn )
+    {
+        lua_pushstring( L, fn );
+        lua_rawseti( L, -2, luaL_len( L, -2 ) + 1 );
+
+        fn = filesystem->FindNext( fh );
+    }
+
+    filesystem->FindClose( fh );
+
+    return 1;
+}
+
 
 static const luaL_Reg filesystemlib[] = {
   {"AddPackFile",   filesystem_AddPackFile},
@@ -376,6 +400,8 @@ static const luaL_Reg filesystemlib[] = {
   {"UnzipFile",   filesystem_UnzipFile},
   {"WaitForResources",   filesystem_WaitForResources},
   {"Write",   filesystem_Write},
+  //{"Shutdown",   filesystem_Shutdown},
+  {"Find",   filesystem_Find},
   {NULL, NULL}
 };
 

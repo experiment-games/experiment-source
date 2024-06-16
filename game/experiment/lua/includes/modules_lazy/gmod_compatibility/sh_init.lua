@@ -4,8 +4,10 @@
 --]]
 
 include("sh_enumerations.lua")
+include("sh_file.lua")
 
 if (SERVER) then
+	sendfile("sh_file.lua")
 	sendfile("sh_init.lua")
 	sendfile("cl_hooks.lua")
 	sendfile("sh_enumerations.lua")
@@ -60,6 +62,7 @@ FrameNumber = gpGlobals.framecount
 FrameTime = gpGlobals.frametime
 engine.TickCount = gpGlobals.tickcount
 engine.TickInterval = gpGlobals.interval_per_tick
+SoundDuration = engine.GetSoundDuration
 
 umsg.Angle = umsg.WriteAngles
 umsg.Bool = umsg.WriteBool
