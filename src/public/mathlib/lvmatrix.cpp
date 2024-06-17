@@ -40,7 +40,7 @@
 */
 
 LUA_API lua_VMatrix &lua_tovmatrix(lua_State *L, int idx) {
-    lua_VMatrix *matrix = (lua_VMatrix *)luaL_checkudata(L, idx, "VMatrix");
+    lua_VMatrix *matrix = (lua_VMatrix *)luaL_checkudata(L, idx, LUA_VMATRIXLIBNAME);
     return *matrix;
 }
 
@@ -51,12 +51,12 @@ LUA_API lua_VMatrix &lua_tovmatrix(lua_State *L, int idx) {
 LUA_API void lua_pushvmatrix(lua_State *L, lua_VMatrix &matrix) {
     lua_VMatrix *pMat = (lua_VMatrix *)lua_newuserdata(L, sizeof(lua_VMatrix));
     *pMat = matrix;
-    luaL_getmetatable(L, "VMatrix");
+    luaL_getmetatable(L, LUA_VMATRIXLIBNAME);
     lua_setmetatable(L, -2);
 }
 
 LUALIB_API lua_VMatrix &luaL_checkvmatrix(lua_State *L, int narg) {
-    lua_VMatrix *d = (lua_VMatrix *)luaL_checkudata(L, narg, "VMatrix");
+    lua_VMatrix *d = (lua_VMatrix *)luaL_checkudata(L, narg, LUA_VMATRIXLIBNAME);
     return *d;
 }
 
@@ -396,7 +396,7 @@ static int luasrc_VMatrix(lua_State *L) {
     return 1;
 }
 
-static const luaL_Reg _G_funcs[] = {{"VMatrix", luasrc_VMatrix}, {NULL, NULL}};
+static const luaL_Reg _G_funcs[] = {{LUA_VMATRIXLIBNAME, luasrc_VMatrix}, {NULL, NULL}};
 
 static int vmatrix_SetupMatrixIdentity(lua_State *L) {
     lua_pushvmatrix(L, SetupMatrixIdentity());
@@ -514,11 +514,11 @@ static int vmatrix_MatrixBuildTranslation(lua_State *L) {
                 luaL_checknumber(L, 3), luaL_checknumber(L, 4));
             break;
         case LUA_TUSERDATA:
-            if (luaL_checkudata(L, 2, "Vector"))
+            if (luaL_checkudata(L, 2, LUA_VECTORLIBNAME))
                 MatrixBuildTranslation(luaL_checkvmatrix(L, 1),
                                        luaL_checkvector(L, 2));
             else
-                luaL_typerror(L, 2, "Vector");
+                luaL_typerror(L, 2, LUA_VECTORLIBNAME);
             break;
     }
     return 0;
@@ -561,11 +561,11 @@ static int vmatrix_MatrixBuildScale(lua_State *L) {
                              luaL_checknumber(L, 3), luaL_checknumber(L, 4));
             break;
         case LUA_TUSERDATA:
-            if (luaL_checkudata(L, 2, "Vector"))
+            if (luaL_checkudata(L, 2, LUA_VECTORLIBNAME))
                 MatrixBuildScale(luaL_checkvmatrix(L, 1),
                                  luaL_checkvector(L, 2));
             else
-                luaL_typerror(L, 2, "Vector");
+                luaL_typerror(L, 2, LUA_VECTORLIBNAME);
             break;
     }
     return 0;
@@ -662,10 +662,10 @@ static const luaL_Reg VMatrix_funcs[] = {
 ** Open VMatrix object
 */
 LUALIB_API int luaopen_VMatrix(lua_State *L) {
-    luaL_newmetatable(L, "VMatrix");
+    luaL_newmetatable(L, LUA_VMATRIXLIBNAME);
     luaL_register(L, NULL, VMatrixmeta);
-    lua_pushstring(L, "vmatrix");
-    lua_setfield(L, -2, "__type"); /* metatable.__type = "vmatrix" */
+    lua_pushstring(L, LUA_VMATRIXLIBNAME);
+    lua_setfield(L, -2, "__type"); /* metatable.__type = "Matrix" */
     luaL_register( L, LUA_GNAME, _G_funcs );
     lua_pop(L, 2);
     luaL_register(L, LUA_VMATRIXLIBNAME, VMatrix_funcs);

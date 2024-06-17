@@ -1,4 +1,4 @@
-//========= Copyright © 1996-2005, Valve Corporation, All rights reserved. ============//
+//========= Copyright ï¿½ 1996-2005, Valve Corporation, All rights reserved. ============//
 //
 // Purpose: 
 //
@@ -136,8 +136,8 @@ LUALIB_API int luaopen_INetworkStringTable (lua_State *L) {
   luaL_register(L, NULL, INetworkStringTablemeta);
   lua_pushvalue(L, -1);  /* push metatable */
   lua_setfield(L, -2, "__index");  /* metatable.__index = metatable */
-  lua_pushstring(L, "networkstringtable");
-  lua_setfield(L, -2, "__type");  /* metatable.__type = "effect" */
+  lua_pushstring(L, LUA_NETWORKSTRINGTABLELIBNAME);
+  lua_setfield(L, -2, "__type");  /* metatable.__type = "NetworkStringTable" */
   return 1;
 }
 

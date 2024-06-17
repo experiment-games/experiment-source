@@ -64,7 +64,7 @@ static const luaL_Reg cvarlib[] = {
 
 void CV_GlobalChange_Lua( IConVar *var, const char *pOldString, float flOldValue )
 {
-  lua_getglobal(L, "cvars");
+  lua_getglobal(L, LUA_CVARLIBNAME);
   if (lua_istable(L, -1)) {
 	lua_getfield(L, -1, "CallGlobalChangeCallbacks");
 	if (lua_isfunction(L, -1)) {

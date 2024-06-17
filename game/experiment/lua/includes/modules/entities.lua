@@ -7,11 +7,9 @@
 
 _BASE_ENTITY_CLASS = "prop_scripted"
 
-local table = table
 local Warning = dbg.Warning
 
-entities = entities or {}
-local MODULE = entities
+local MODULE = {}
 MODULE.registeredEntities = MODULE.registeredEntities or {}
 
 --- Returns an entity table

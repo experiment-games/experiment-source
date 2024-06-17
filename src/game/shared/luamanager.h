@@ -306,7 +306,7 @@
 #define RETURN_LUA_VECTOR()                                                  \
     if ( lua_gettop( L ) == 1 )                                              \
     {                                                                        \
-        if ( lua_isuserdata( L, -1 ) && luaL_checkudata( L, -1, "Vector" ) ) \
+        if ( lua_isuserdata( L, -1 ) && luaL_checkudata( L, -1, LUA_VECTORLIBNAME ) ) \
         {                                                                    \
             Vector res = luaL_checkvector( L, -1 );                          \
             lua_pop( L, 1 );                                                 \
@@ -319,7 +319,7 @@
 #define RETURN_LUA_ANGLE()                                                   \
     if ( lua_gettop( L ) == 1 )                                              \
     {                                                                        \
-        if ( lua_isuserdata( L, -1 ) && luaL_checkudata( L, -1, "QAngle" ) ) \
+        if ( lua_isuserdata( L, -1 ) && luaL_checkudata( L, -1, LUA_QANGLELIBNAME ) ) \
         {                                                                    \
             QAngle res = luaL_checkangle( L, -1 );                           \
             lua_pop( L, 1 );                                                 \

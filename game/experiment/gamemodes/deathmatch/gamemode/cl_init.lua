@@ -5,9 +5,9 @@
 	Modified for Experiment.
 --]]
 
-include("shared.lua")
+Include("shared.lua")
 
-local AngleVectors = mathlib.AngleVectors
+local AngleVectors = math.AngleVectors
 
 -- Have the flashlight appear to come from the weapon's muzzle flash position
 function GM:PlayerUpdateFlashlight(client, position, vecForward, vecRight, vecUp, nDistance)
@@ -17,22 +17,21 @@ function GM:PlayerUpdateFlashlight(client, position, vecForward, vecRight, vecUp
 		return
 	end
 
-	local iAttachment = vm:LookupAttachment("muzzle")
+	local attachmentId = vm:LookupAttachment("muzzle")
 
-	if (iAttachment < 0) then
+	if (attachmentId < 0) then
 		return
 	end
 
-	local vecOrigin = Vector()
+	local origin = Vector()
 
 	--Tony; EyeAngles will return proper whether it's local player or not.
 	local eyeAngles = client:EyeAngles()
 
-	vm:GetAttachment(iAttachment, vecOrigin, eyeAngles)
+	vm:GetAttachment(attachmentId, origin, eyeAngles)
 
-	local vForward = Vector()
 	AngleVectors(eyeAngles, vecForward, vecRight, vecUp)
-	position = vecOrigin
+	position = origin
 
 	return position, vecForward, vecRight, vecUp, nDistance
 end

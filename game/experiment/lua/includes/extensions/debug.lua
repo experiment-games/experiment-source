@@ -1,4 +1,4 @@
-require("debug")
+require("Debug")
 
 local ConDColorMsg = dbg.ConDColorMsg
 

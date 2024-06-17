@@ -1,5 +1,4 @@
-timer = timer or {}
-local MODULE = timer
+local MODULE = {}
 
 MODULE.registeredTimers = MODULE.registeredTimers or {}
 
@@ -8,7 +7,7 @@ function MODULE.Create(id, delay, repetitions, callback)
         delay = delay,
         repetitions = repetitions,
         callback = callback,
-        nextTick = gpGlobals.curtime() + delay
+        nextTick = Globals.curtime() + delay
     }
 end
 
@@ -23,7 +22,7 @@ function MODULE.Simple(delay, callback)
 end
 
 function MODULE.Tick()
-    local curTime = gpGlobals.curtime()
+    local curTime = Globals.curtime()
 
     for id, timer in pairs(MODULE.registeredTimers) do
         if (curTime >= timer.nextTick) then

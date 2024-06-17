@@ -957,11 +957,11 @@ static int CBaseEntity_KeyValue( lua_State *L )
                 L, luaL_checkentity( L, 1 )->KeyValue( luaL_checkstring( L, 2 ), luaL_checkstring( L, 3 ) ) );
             break;
         case LUA_TUSERDATA:
-            if ( luaL_checkudata( L, 3, "Vector" ) )
+            if ( luaL_checkudata( L, 3, LUA_VECTORLIBNAME ) )
                 lua_pushboolean(
                     L, luaL_checkentity( L, 1 )->KeyValue( luaL_checkstring( L, 2 ), luaL_checkvector( L, 3 ) ) );
             else
-                luaL_typerror( L, 3, "Vector" );
+                luaL_typerror( L, 3, LUA_VECTORLIBNAME );
             break;
     }
     return 1;

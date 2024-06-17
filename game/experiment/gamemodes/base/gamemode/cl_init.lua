@@ -1,4 +1,4 @@
-include("shared.lua")
+Include("shared.lua")
 
 function GM:ActivateClientUI()
 end
@@ -15,19 +15,19 @@ end
 function GM:DrawHeadLabels(client)
 end
 
-function GM:GetPlayerTextColor(entindex, r, g, b)
+function GM:GetPlayerTextColor(entityIndex, r, g, b)
 end
 
 function GM:HideClientUI()
 end
 
-function GM:HudElementShouldDraw(pElementName)
+function GM:HudElementShouldDraw(elementName)
 end
 
 function GM:HudViewportPaint()
 end
 
-function GM:KeyInput(down, keynum, pszCurrentBinding)
+function GM:KeyInput(down, keyNumber, currentBinding)
 end
 
 function GM:LevelInitPreEntity()
@@ -36,10 +36,10 @@ end
 function GM:LevelInitPostEntity()
 end
 
-function GM:OnScreenSizeChanged(iOldWide, iOldTall)
+function GM:OnScreenSizeChanged(oldWidth, oldHeight)
 end
 
-function GM:PlayerUpdateFlashlight(client, position, vecForward, vecRight, vecUp, nDistance)
+function GM:PlayerUpdateFlashlight(client, position, forwardVector, rightVector, upVector, distance)
 end
 
 function GM:ShouldDrawCrosshair()
@@ -48,7 +48,7 @@ end
 function GM:ShouldDrawDetailObjects()
 end
 
-function GM:ShouldDrawEntity(pEnt)
+function GM:ShouldDrawEntity(entity)
 end
 
 function GM:ShouldDrawFog()

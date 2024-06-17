@@ -184,10 +184,10 @@ if ( CLIENT ) then
 		-- So we cache the value when we know it is the correct value for the frame
 		lastEyePos = EyePos()
 	end
-	
+
 	hook.Add( "PreDrawHalos", "PropertiesHover", function()
 
-		if ( !IsValid( vgui.GetHoveredPanel() ) || !vgui.GetHoveredPanel():IsWorldClicker() ) then return end
+		if ( !IsValid( Gui.GetHoveredPanel() ) || !Gui.GetHoveredPanel():IsWorldClicker() ) then return end
 
 		UpdateEyePos()
 
@@ -211,7 +211,7 @@ if ( CLIENT ) then
 
 	hook.Add( "GUIMousePressed", "PropertiesClick", function( code, vector )
 
-		if ( !IsValid( vgui.GetHoveredPanel() ) || !vgui.GetHoveredPanel():IsWorldClicker() ) then return end
+		if ( !IsValid( Gui.GetHoveredPanel() ) || !Gui.GetHoveredPanel():IsWorldClicker() ) then return end
 
 		if ( code == MOUSE_RIGHT && !input.IsButtonDown( MOUSE_LEFT ) ) then
 			OnScreenClick( lastEyePos, vector )
@@ -226,7 +226,7 @@ if ( CLIENT ) then
 
 		if ( wasPressed && input.IsButtonDown( MOUSE_RIGHT ) && !input.IsButtonDown( MOUSE_LEFT ) ) then return true end
 
-		if ( !IsValid( vgui.GetHoveredPanel() ) || !vgui.GetHoveredPanel():IsWorldClicker() ) then return end
+		if ( !IsValid( Gui.GetHoveredPanel() ) || !Gui.GetHoveredPanel():IsWorldClicker() ) then return end
 
 		local ply = LocalPlayer()
 		if ( !IsValid( ply ) ) then return end

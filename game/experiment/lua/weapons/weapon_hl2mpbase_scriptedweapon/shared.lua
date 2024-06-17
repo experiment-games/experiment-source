@@ -89,8 +89,8 @@ function SWEP:PrimaryAttack()
 	client:SetAnimation(5)
 	ToHL2MPPlayer(client):DoAnimationEvent(0)
 
-	self.m_flNextPrimaryAttack   = gpGlobals.curtime() + 0.75
-	self.m_flNextSecondaryAttack = gpGlobals.curtime() + 0.75
+	self.m_flNextPrimaryAttack   = Globals.curtime() + 0.75
+	self.m_flNextSecondaryAttack = Globals.curtime() + 0.75
 
 	self.m_iClip1                = self.m_iClip1 - 1
 

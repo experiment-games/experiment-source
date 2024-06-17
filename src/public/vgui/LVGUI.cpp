@@ -1,4 +1,4 @@
-//========= Copyright © 1996-2005, Valve Corporation, All rights reserved. ============//
+//========= Copyright ï¿½ 1996-2005, Valve Corporation, All rights reserved. ============//
 //
 // Purpose: Basic header for using vgui
 //
@@ -43,7 +43,7 @@ LUA_API lua_HFont lua_tofont (lua_State *L, int idx) {
 LUA_API void lua_pushscheme (lua_State *L, HScheme hScheme) {
   lua_HScheme *phScheme = (lua_HFont *)lua_newuserdata(L, sizeof(hScheme));
   *phScheme = hScheme;
-  luaL_getmetatable(L, "HScheme");
+  luaL_getmetatable(L, LUA_HSCHEMELIBNAME);
   lua_setmetatable(L, -2);
 }
 
@@ -51,19 +51,19 @@ LUA_API void lua_pushscheme (lua_State *L, HScheme hScheme) {
 LUA_API void lua_pushfont (lua_State *L, HFont hFont) {
   lua_HFont *phFont = (lua_HFont *)lua_newuserdata(L, sizeof(hFont));
   *phFont = hFont;
-  luaL_getmetatable(L, "HFont");
+  luaL_getmetatable(L, LUA_FONTLIBNAME);
   lua_setmetatable(L, -2);
 }
 
 
 LUALIB_API lua_HScheme luaL_checkscheme (lua_State *L, int narg) {
-  lua_HScheme *d = (lua_HScheme *)luaL_checkudata(L, narg, "HScheme");
+  lua_HScheme *d = (lua_HScheme *)luaL_checkudata(L, narg, LUA_HSCHEMELIBNAME);
   return *d;
 }
 
 
 LUALIB_API lua_HFont luaL_checkfont (lua_State *L, int narg) {
-  lua_HFont *d = (lua_HFont *)luaL_checkudata(L, narg, "HFont");
+  lua_HFont *d = (lua_HFont *)luaL_checkudata(L, narg, LUA_FONTLIBNAME);
   return *d;
 }
 
@@ -89,8 +89,8 @@ LUALIB_API int luaopen_HScheme (lua_State *L) {
   luaL_register(L, NULL, HSchememeta);
   lua_pushvalue(L, -1);  /* push metatable */
   lua_setfield(L, -2, "__index");  /* metatable.__index = metatable */
-  lua_pushstring(L, "scheme");
-  lua_setfield(L, -2, "__type");  /* metatable.__type = "scheme" */
+  lua_pushstring(L, LUA_SCHEMELIBNAME);
+  lua_setfield(L, -2, "__type");  /* metatable.__type = "Scheme" */
   return 1;
 }
 

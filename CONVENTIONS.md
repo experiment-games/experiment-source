@@ -25,6 +25,23 @@ See the `.editorconfig` file for the code style.
 
 ### Naming conventions
 
+- Files are always written in `snake_case`:
+
+  - `player.lua`
+  - `weapon.lua`
+  - `player_health.lua`
+
+- Files that should not be included (except by a specific script) are prefixed with an underscore:
+
+  - `_config.lua`
+  - `_settings.lua`
+
+- Gamemode files should prefix the realm:
+
+  - `sh_` for shared files
+  - `cl_` for client files
+  - `sv_` for server files
+
 - Variables and functions are not abbreviated, with the exception of these abbreviations:
 
   - `Hud`
@@ -59,21 +76,21 @@ See the `.editorconfig` file for the code style.
 
 - Functions are preferred to be stored in a library.
 
-- Library names are always plural and one word.
+- Library names are always plural, one word and written in `UpperCamelCase`:
 
   *(To avoid conflicts with variables like `player` and `entity`)*
 
 - Library functions are written in `UpperCamelCase`:
 
   ```lua
-  local players = {}
-  local weapons = {}
+  local Players = {}
+  local Weapons = {}
 
-  function players.GetHealth(healthFraction)
+  function Players.CalculateHealth(healthFraction)
     return playerHealth * healthFraction
   end
 
-  function weapons.GetDamage(damageFraction)
+  function Weapons.CalculateDamage(damageFraction)
     return weaponDamage * damageFraction
   end
   ```
@@ -146,6 +163,32 @@ See the `.editorconfig` file for the code style.
   function canPlayerRespawn()
     return playerHealth <= 0
   end
+  ```
+
+- Enumerations must be written in `UPPER_SNAKE_CASE`:
+
+  ```lua
+  local WEAPON_TYPE = {
+    MELEE = 1,
+    RANGED = 2,
+    MAGIC = 3
+  }
+  ```
+
+- Enumerations must be grouped under a single table:
+
+  ```lua
+  local WEAPON_TYPE = {
+    MELEE = 1,
+    RANGED = 2,
+    MAGIC = 3
+  }
+
+  local WEAPON = {
+    Type = 1,
+    Damage = 2,
+    Range = 4
+  }
   ```
 
 ### Common variable names

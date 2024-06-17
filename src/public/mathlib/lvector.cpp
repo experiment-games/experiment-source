@@ -22,13 +22,13 @@
 
 
 LUA_API lua_Vector &lua_tovector (lua_State *L, int idx) {
-  lua_Vector *v = (lua_Vector *)luaL_checkudata(L, idx, "Vector");
+  lua_Vector *v = (lua_Vector *)luaL_checkudata(L, idx, LUA_VECTORLIBNAME);
   return *v;
 }
 
 
 LUA_API lua_QAngle &lua_toangle (lua_State *L, int idx) {
-  lua_QAngle *v = (lua_QAngle *)luaL_checkudata(L, idx, "QAngle");
+  lua_QAngle *v = (lua_QAngle *)luaL_checkudata(L, idx, LUA_QANGLELIBNAME);
   return *v;
 }
 
@@ -42,7 +42,7 @@ LUA_API lua_QAngle &lua_toangle (lua_State *L, int idx) {
 LUA_API void lua_pushvector (lua_State *L, lua_Vector &v) {
   lua_Vector *pVec = (lua_Vector *)lua_newuserdata(L, sizeof(lua_Vector));
   *pVec = v;
-  luaL_getmetatable(L, "Vector");
+  luaL_getmetatable(L, LUA_VECTORLIBNAME);
   lua_setmetatable(L, -2);
 }
 
@@ -50,19 +50,19 @@ LUA_API void lua_pushvector (lua_State *L, lua_Vector &v) {
 LUA_API void lua_pushangle (lua_State *L, lua_QAngle &v) {
   lua_QAngle *pVec = (lua_QAngle *)lua_newuserdata(L, sizeof(lua_QAngle));
   *pVec = v;
-  luaL_getmetatable(L, "QAngle");
+  luaL_getmetatable(L, LUA_QANGLELIBNAME);
   lua_setmetatable(L, -2);
 }
 
 
 LUALIB_API lua_Vector &luaL_checkvector (lua_State *L, int narg) {
-  lua_Vector *d = (lua_Vector *)luaL_checkudata(L, narg, "Vector");
+  lua_Vector *d = (lua_Vector *)luaL_checkudata(L, narg, LUA_VECTORLIBNAME);
   return *d;
 }
 
 
 LUALIB_API lua_QAngle &luaL_checkangle (lua_State *L, int narg) {
-  lua_QAngle *d = (lua_QAngle *)luaL_checkudata(L, narg, "QAngle");
+  lua_QAngle *d = (lua_QAngle *)luaL_checkudata(L, narg, LUA_QANGLELIBNAME);
   return *d;
 }
 
@@ -298,7 +298,7 @@ static int luasrc_Vector (lua_State *L) {
 
 
 static const luaL_Reg Vector_funcs[] = {
-  {"Vector", luasrc_Vector},
+  {LUA_VECTORLIBNAME, luasrc_Vector},
   {NULL, NULL}
 };
 
@@ -438,7 +438,7 @@ static int luasrc_QAngle (lua_State *L) {
 
 
 static const luaL_Reg QAngle_funcs[] = {
-  {"QAngle", luasrc_QAngle},
+  {LUA_QANGLELIBNAME, luasrc_QAngle},
   {NULL, NULL}
 };
 

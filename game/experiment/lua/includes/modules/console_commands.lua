@@ -5,13 +5,9 @@
 	Modified for Experiment.
 --]]
 
-local ConCommand = ConCommand
 local printError = debug.PrintError
-local tostring = tostring
-local xpcall = xpcall
 
-concommands = concommands or {}
-local MODULE = concommands
+local MODULE = {}
 MODULE.registeredCallbacks = MODULE.registeredCallbacks or {}
 
 local didCallbackError, callbackError

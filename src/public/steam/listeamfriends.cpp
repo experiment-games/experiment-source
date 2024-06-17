@@ -1,5 +1,5 @@
 
-//====== Copyright © 1996-2004, Valve Corporation, All rights reserved. =======
+//====== Copyright ï¿½ 1996-2004, Valve Corporation, All rights reserved. =======
 //
 // Purpose: interface to friends data in Steam
 //
@@ -37,14 +37,14 @@ LUA_API void lua_pushsteamfriends (lua_State *L, ISteamFriends *pSteamFriends) {
   else {
     lua_ISteamFriends **ppSteamFriends = (lua_ISteamFriends **)lua_newuserdata(L, sizeof(pSteamFriends));
     *ppSteamFriends = pSteamFriends;
-    luaL_getmetatable(L, "ISteamFriends");
+    luaL_getmetatable(L, LUA_STEAMFRIENDSLIBNAME);
     lua_setmetatable(L, -2);
   }
 }
 
 
 LUALIB_API lua_ISteamFriends *luaL_checksteamfriends (lua_State *L, int narg) {
-  lua_ISteamFriends *d = (lua_ISteamFriends *)luaL_checkudata(L, narg, "ISteamFriends");
+  lua_ISteamFriends *d = (lua_ISteamFriends *)luaL_checkudata(L, narg, LUA_STEAMFRIENDSLIBNAME);
   return d;
 }
 

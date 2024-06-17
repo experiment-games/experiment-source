@@ -232,7 +232,7 @@ void luasrc_sendfile( lua_State *L, const char *fullPath )
     m_LcfDatabase.Insert( zipPath, strdup( fullPath ) );
 }
 
-static const luaL_Reg lcf_funcs[] = { { "sendfile", luasrc_sendfile },
+static const luaL_Reg lcf_funcs[] = { { "SendFile", luasrc_sendfile },
                                       { NULL, NULL } };
 
 #endif

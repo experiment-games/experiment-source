@@ -554,7 +554,7 @@ static int CBaseEntity_GetFriction (lua_State *L) {
 }
 
 static int CBaseEntity_FVisible (lua_State *L) {
-  if (lua_isuserdata(L, 2) && luaL_checkudata(L, 2, "Vector"))
+  if (lua_isuserdata(L, 2) && luaL_checkudata(L, 2, LUA_VECTORLIBNAME))
 	lua_pushboolean(L, luaL_checkentity(L, 1)->FVisible(luaL_checkvector(L, 2), luaL_optinteger(L, 3, MASK_BLOCKLOS)));
   else
 	lua_pushboolean(L, luaL_checkentity(L, 1)->FVisible(luaL_checkentity(L, 2), luaL_optinteger(L, 3, MASK_BLOCKLOS)));

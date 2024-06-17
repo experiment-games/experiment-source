@@ -7,11 +7,9 @@
 
 _BASE_WEAPON = "weapon_hl2mpbase_scriptedweapon"
 
-local table = table
 local Warning = dbg.Warning
 
-weapons = weapons or {}
-local MODULE = weapons
+local MODULE = {}
 MODULE.registeredWeapons = MODULE.registeredWeapons or {}
 
 --- Returns the registered weapon table for the given weapon class name.

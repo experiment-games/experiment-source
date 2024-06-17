@@ -5,7 +5,7 @@
 	Modified for Experiment.
 --]]
 
-include("../includes/extensions/panel.lua")
+Include("../includes/extensions/panel.lua")
 
 local FCVAR_CLIENTDLL = _E.FCVAR.CLIENTDLL
 
@@ -19,7 +19,7 @@ local function PositionDialog(dlg)
 	end
 
 	local x, y, ww, wt, wide, tall
-	x, y, ww, wt = surface.GetWorkspaceBounds()
+	x, y, ww, wt = Surface.GetWorkspaceBounds()
 	wide, tall = dlg:GetSize()
 
 	-- Center it, keeping requested size
@@ -28,7 +28,7 @@ end
 
 local function OnOpenContentDialog()
 	if (ToPanel(hContentDialog) == INVALID_PANEL) then
-		hContentDialog = vgui.CContentDialog(VGui_GetGameUIPanel(), "ContentDialog")
+		hContentDialog = Gui.CContentDialog(VGui_GetGameUIPanel(), "ContentDialog")
 		PositionDialog(hContentDialog)
 	end
 	hContentDialog:Activate()

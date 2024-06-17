@@ -14,25 +14,17 @@ if (not CLIENT) then
 	return
 end
 
-require("UTIL")
-require("surface")
-require("hooks")
-
-local INVALID_FONT = INVALID_FONT
-local setmetatable = setmetatable
-local ipairs = ipairs
-local type = type
-local ComputeStringWidth = UTIL.ComputeStringWidth
+local ComputeStringWidth = Util.ComputeStringWidth
 local GetFontName = _R.IScheme.GetFontName
-local CreateFont = surface.CreateFont
-local DrawSetTextFont = surface.DrawSetTextFont
-local GetCharABCwide = surface.GetCharABCwide
-local GetCharacterWidth = surface.GetCharacterWidth
-local GetFontAscent = surface.GetFontAscent
-local GetFontTall = surface.GetFontTall
-local GetTextSize = surface.GetTextSize
-local IsFontAdditive = surface.IsFontAdditive
-local SetFontGlyphSet = surface.SetFontGlyphSet
+local CreateFont = Surface.CreateFont
+local DrawSetTextFont = Surface.DrawSetTextFont
+local GetCharABCwide = Surface.GetCharABCwide
+local GetCharacterWidth = Surface.GetCharacterWidth
+local GetFontAscent = Surface.GetFontAscent
+local GetFontTall = Surface.GetFontTall
+local GetTextSize = Surface.GetTextSize
+local IsFontAdditive = Surface.IsFontAdditive
+local SetFontGlyphSet = Surface.SetFontGlyphSet
 
 -------------------------------------------------------------------------------
 -- _R.HFontContainer
@@ -100,7 +92,7 @@ hooks.Add("OnScreenSizeChanged", "HFontContainerManager", function()
 	end
 end)
 
-function UTIL.ComputeStringWidth(font, str)
+function Util.ComputeStringWidth(font, str)
 	local type = type(font)
 	if (type ~= "font" and type ~= "fontcontainer") then
 		error("bad argument #1 to 'ComputeStringWidth' (font or fontcontainer expected, got " .. type .. ")", 2)
@@ -124,7 +116,7 @@ function _R.IScheme.GetFontName(font)
 	end
 end
 
-function surface.CreateFont()
+function Surface.CreateFont()
 	local fontcontainer = HFontContainer()
 	fontcontainer.index = HFontContainerIndex
 	fontcontainer.font = CreateFont()
@@ -133,7 +125,7 @@ function surface.CreateFont()
 	return fontcontainer
 end
 
-function surface.DrawSetTextFont(font)
+function Surface.DrawSetTextFont(font)
 	local type = type(font)
 	if (type ~= "font" and type ~= "fontcontainer") then
 		error("bad argument #1 to 'DrawSetTextFont' (font or fontcontainer expected, got " .. type .. ")", 2)
@@ -145,7 +137,7 @@ function surface.DrawSetTextFont(font)
 	end
 end
 
-function surface.GetCharABCwide(font, ch)
+function Surface.GetCharABCwide(font, ch)
 	local type = type(font)
 	if (type ~= "font" and type ~= "fontcontainer") then
 		error("bad argument #1 to 'GetCharABCwide' (font or fontcontainer expected, got " .. type .. ")", 2)
@@ -157,7 +149,7 @@ function surface.GetCharABCwide(font, ch)
 	end
 end
 
-function surface.GetCharacterWidth(font, ch)
+function Surface.GetCharacterWidth(font, ch)
 	local type = type(font)
 	if (type ~= "font" and type ~= "fontcontainer") then
 		error("bad argument #1 to 'GetCharacterWidth' (font or fontcontainer expected, got " .. type .. ")", 2)
@@ -169,7 +161,7 @@ function surface.GetCharacterWidth(font, ch)
 	end
 end
 
-function surface.GetFontAscent(font, ch)
+function Surface.GetFontAscent(font, ch)
 	local type = type(font)
 	if (type ~= "font" and type ~= "fontcontainer") then
 		error("bad argument #1 to 'GetFontAscent' (font or fontcontainer expected, got " .. type .. ")", 2)
@@ -181,7 +173,7 @@ function surface.GetFontAscent(font, ch)
 	end
 end
 
-function surface.GetFontTall(font)
+function Surface.GetFontTall(font)
 	local type = type(font)
 	if (type ~= "font" and type ~= "fontcontainer") then
 		error("bad argument #1 to 'GetFontTall' (font or fontcontainer expected, got " .. type .. ")", 2)
@@ -193,7 +185,7 @@ function surface.GetFontTall(font)
 	end
 end
 
-function surface.GetTextSize(font, text)
+function Surface.GetTextSize(font, text)
 	local type = type(font)
 	if (type ~= "font" and type ~= "fontcontainer") then
 		error("bad argument #1 to 'GetTextSize' (font or fontcontainer expected, got " .. type .. ")", 2)
@@ -205,7 +197,7 @@ function surface.GetTextSize(font, text)
 	end
 end
 
-function surface.IsFontAdditive(font)
+function Surface.IsFontAdditive(font)
 	local type = type(font)
 	if (type ~= "font" and type ~= "fontcontainer") then
 		error("bad argument #1 to 'IsFontAdditive' (font or fontcontainer expected, got " .. type .. ")", 2)
@@ -217,7 +209,7 @@ function surface.IsFontAdditive(font)
 	end
 end
 
-function surface.SetFontGlyphSet(font, windowsFontName, tall, weight, blur, scanlines, flags, nRangeMin, nRangeMax)
+function Surface.SetFontGlyphSet(font, windowsFontName, tall, weight, blur, scanlines, flags, nRangeMin, nRangeMax)
 	local type = type(font)
 	if (type ~= "font" and type ~= "fontcontainer") then
 		error("bad argument #1 to 'SetFontGlyphSet' (font or fontcontainer expected, got " .. type .. ")", 2)

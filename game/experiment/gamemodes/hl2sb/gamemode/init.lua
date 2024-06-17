@@ -5,13 +5,13 @@
 	Modified for Experiment.
 --]]
 
-include("shared.lua")
-sendfile("shared.lua")
-sendfile("cl_init.lua")
-sendfile("in_main.lua")
-sendfile("scripted_controls/buildmenu.lua")
+Include("shared.lua")
+SendFile("shared.lua")
+SendFile("cl_init.lua")
+SendFile("in_main.lua")
+SendFile("scripted_controls/buildmenu.lua")
 
-resources.AddFile("resource/DINLi.ttf")
+Resources.AddFile("resource/DINLi.ttf")
 
 local tSpawnPointClassnames = {
 	"info_player_deathmatch",
@@ -42,14 +42,17 @@ end
 
 function GM:PlayerEntSelectSpawnPoint(pHL2MPPlayer)
 	local tSpawnPoints = {}
-	local pSpot = NULL
-	for _, classname in ipairs(tSpawnPointClassnames) do
-		pSpot = gEntList.FindEntityByClassname(NULL, classname)
-		while (pSpot ~= NULL) do
-			table.insert(tSpawnPoints, pSpot)
-			pSpot = gEntList.FindEntityByClassname(pSpot, classname)
-		end
-	end
+    local pSpot = NULL
+
+    for _, classname in ipairs(tSpawnPointClassnames) do
+        pSpot = EntityList.FindEntityByClassname(NULL, classname)
+
+        while (pSpot ~= NULL) do
+            table.insert(tSpawnPoints, pSpot)
+            pSpot = EntityList.FindEntityByClassname(pSpot, classname)
+        end
+    end
+
 	return tSpawnPoints[math.random(1, #tSpawnPoints)]
 end
 

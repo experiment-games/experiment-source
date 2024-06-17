@@ -1,4 +1,4 @@
-//========= Copyright © 1996-2005, Valve Corporation, All rights reserved. ============//
+//========= Copyright ï¿½ 1996-2005, Valve Corporation, All rights reserved. ============//
 //
 // Purpose: 
 //
@@ -79,7 +79,7 @@ static const luaL_Reg g_pClientShadowMgrlib[] = {
 ** Open g_pClientShadowMgr library
 */
 LUALIB_API int luaopen_g_pClientShadowMgr (lua_State *L) {
-  luaL_register(L, "g_pClientShadowMgr", g_pClientShadowMgrlib);
+  luaL_register(L, LUA_CLIENTSHADOWMGRLIBNAME, g_pClientShadowMgrlib);
   return 1;
 }
 

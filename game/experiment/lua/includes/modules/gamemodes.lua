@@ -9,15 +9,8 @@ _BASE_GAMEMODE = "base"
 
 local hooks = require("hooks")
 local debugTraceback = debug.traceback
-local error = error
-local table = table
-local print = MsgN
-local _BASE_GAMEMODE = _BASE_GAMEMODE
-local _G = _G
 
-gamemodes = gamemodes or {}
-
-local MODULE = gamemodes
+local MODULE = {}
 MODULE.registeredGamemodes = MODULE.registeredGamemodes or {}
 MODULE.activeGamemodeName = MODULE.activeGamemodeName or nil
 

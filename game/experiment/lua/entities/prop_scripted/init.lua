@@ -5,7 +5,7 @@
 	Modified for Experiment.
 --]]
 
-include("shared.lua")
+Include("shared.lua")
 
 function ENT:Think()
 end

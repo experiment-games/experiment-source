@@ -212,7 +212,7 @@ static const luaL_Reg base_funcs[] = {
     { "Msg", luasrc_Msg },
     { "MsgN", luasrc_MsgN },
     { "type", luasrc_type },
-    { "include", luasrc_include },
+    { "Include", luasrc_include },
     { "InheritGamemode", luasrc_InheritGamemode },
     { NULL, NULL } };
 
@@ -1115,7 +1115,7 @@ void luasrc_InitCustomLoader( const char *gamemode )
 
     static const luaL_Reg baseLoaderFuncs[] = {
         { "print", luasrc_print },
-        { "include", luasrc_include },
+        { "Include", luasrc_include },
         { NULL, NULL } };
     luaL_setfuncs( loaderLuaState, baseLoaderFuncs, 0 );
     lua_pushvalue( loaderLuaState, -1 );
@@ -1310,7 +1310,7 @@ bool luasrc_LoadGamemode( const char *gamemode )
     }
 
     // Call gamemodes.Register with this gamemode
-    lua_getglobal( L, "gamemodes" );
+    lua_getglobal( L, "Gamemodes" );
     lua_getfield( L, -1, "Register" );
     lua_remove( L, -2 );  // Remove gamemodes now that we have Register
 
@@ -1354,7 +1354,7 @@ bool luasrc_SetGamemode( const char *gamemode )
     // from the stack
     assert( fileIncludingStack.empty() );
 
-    lua_getglobal( L, "gamemodes" );
+    lua_getglobal( L, "Gamemodes" );
 
     if ( !lua_istable( L, -1 ) )
     {
@@ -1377,7 +1377,7 @@ bool luasrc_SetGamemode( const char *gamemode )
     luasrc_pcall( L, 1, 1, 0 );      // Call gamemodes.Get(gamemode)
     lua_setglobal( L, "GAMEMODE" );  // Set GAMEMODE to the active gamemode table
 
-    lua_getglobal( L, "gamemodes" );
+    lua_getglobal( L, "Gamemodes" );
     lua_getfield( L, -1, "InternalSetActiveName" );
 
     if ( !lua_isfunction( L, -1 ) )

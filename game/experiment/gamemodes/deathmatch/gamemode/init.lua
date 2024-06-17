@@ -5,15 +5,15 @@
 	Modified for Experiment.
 --]]
 
-include("shared.lua")
+Include("shared.lua")
 
 local PLAYER_SOUNDS_CITIZEN = 0
 local PLAYER_SOUNDS_COMBINESOLDIER = 1
 local PLAYER_SOUNDS_METROPOLICE = 2
 
-function GM:CanHavePlayerItem(client, pItem)
-	if (cvars.FindVar("mp_weaponstay"):GetInt() > 0) then
-		if (client:Weapon_OwnsThisType(pItem:GetClassname(), pItem:GetSubType())) then
+function GM:CanHavePlayerItem(client, item)
+	if (ConsoleVariables.FindVar("mp_weaponstay"):GetInt() > 0) then
+		if (client:Weapon_OwnsThisType(item:GetClassname(), item:GetSubType())) then
 			return false
 		end
 	end
@@ -22,12 +22,13 @@ function GM:CanHavePlayerItem(client, pItem)
 end
 
 function GM:FlItemRespawnTime(pItem)
-	return cvars.FindVar("sv_hl2mp_item_respawn_time"):GetFloat()
+	return ConsoleVariables.FindVar("sv_hl2mp_item_respawn_time"):GetFloat()
 end
 
 function GM:GiveDefaultItems(client)
 	client:EquipSuit()
 
+	-- TODO: Just do client:GiveAmmo(255, "Pistol") etc.
 	_R.CBasePlayer.GiveAmmo(client, 255, "Pistol")
 	_R.CBasePlayer.GiveAmmo(client, 45, "SMG1")
 	_R.CBasePlayer.GiveAmmo(client, 1, "grenade")
@@ -45,17 +46,16 @@ function GM:GiveDefaultItems(client)
 	client:GiveNamedItem("weapon_frag")
 	client:GiveNamedItem("weapon_physcannon")
 
-	local szDefaultWeaponName = engine.GetClientConVarValue(engine.IndexOfEdict(client), "cl_defaultweapon")
+	local defaultWeaponName = Engine.GetClientConVarValue(Engine.IndexOfEdict(client), "cl_defaultweapon")
+	local defaultWeapon = client:Weapon_OwnsThisType(defaultWeaponName)
 
-	local pDefaultWeapon = client:Weapon_OwnsThisType(szDefaultWeaponName)
-
-	if (ToBaseEntity(pDefaultWeapon) ~= NULL) then
-		client:Weapon_Switch(pDefaultWeapon)
+	if (ToBaseEntity(defaultWeapon) ~= NULL) then
+		client:Weapon_Switch(defaultWeapon)
 	else
 		client:Weapon_Switch(client:Weapon_OwnsThisType("weapon_physcannon"))
 	end
 end
 
-function GM:PlayerPickupObject(pHL2MPPlayer, pObject, bLimitMassAndSize)
-	return self.BaseClass.PlayerPickupObject(self, pHL2MPPlayer, pObject, bLimitMassAndSize)
+function GM:PlayerPickupObject(client, object, isLimitedByMassAndSize)
+	return self.BaseClass.PlayerPickupObject(self, client, object, isLimitedByMassAndSize)
 end

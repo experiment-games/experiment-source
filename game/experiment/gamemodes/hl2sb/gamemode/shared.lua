@@ -12,8 +12,8 @@ GM.Manual    = nil
 
 function GM:Initialize()
 	if (not CLIENT) then
-		engine.ServerCommand("mp_falldamage 1\n")
-		engine.ServerCommand("mp_flashlight 1\n")
+		Engine.ServerCommand("mp_falldamage 1\n")
+		Engine.ServerCommand("mp_flashlight 1\n")
 	else
 		-- Andrew; not the right place to put this, but oh well.
 		self:CreateDefaultPanels()
@@ -29,13 +29,13 @@ function GM:FlWeaponTryRespawn(targetWeapon)
 end
 
 function GM:PlayerPlayStepSound(client, vecOrigin, psurface, fvol, force)
-	if (gpGlobals.maxClients() > 1 and cvars.FindVar("sv_footsteps"):GetFloat() == 0) then
+	if (Globals.maxClients() > 1 and cvars.FindVar("sv_footsteps"):GetFloat() == 0) then
 		return false
 	end
 
 	if (CLIENT) then
 		-- during prediction play footstep sounds only once
-		if (prediction.InPrediction() and not prediction.IsFirstTimePredicted()) then
+		if (Prediction.InPrediction() and not Prediction.IsFirstTimePredicted()) then
 			return false
 		end
 	end
@@ -45,7 +45,8 @@ function GM:PlayerPlayStepSound(client, vecOrigin, psurface, fvol, force)
 	end
 
 	local nSide = client:GetPlayerLocalData().m_nStepside
-	local stepSoundName = nSide ~= 0 and psurface.sounds.stepleft or psurface.sounds.stepright
+    local stepSoundName = nSide ~= 0 and psurface.sounds.stepleft or psurface.sounds.stepright
+
 	if (not stepSoundName) then
 		return false
 	end
@@ -79,7 +80,7 @@ function GM:PlayerPlayStepSound(client, vecOrigin, psurface, fvol, force)
 
 	if not CLIENT then
 		-- in MP, server removes all players in the vecOrigin's PVS, these players generate the footsteps client side
-		if (gpGlobals.maxClients() > 1) then
+		if (Globals.maxClients() > 1) then
 			filter:RemoveRecipientsByPVS(vecOrigin)
 		end
 	end

@@ -5,9 +5,9 @@
 	Modified for Experiment.
 --]]
 
-include("shared.lua")
-include("in_main.lua")
-include("scripted_controls/buildmenu.lua")
+Include("shared.lua")
+Include("in_main.lua")
+Include("scripted_controls/buildmenu.lua")
 
 local bor = bit.bor
 local FONTFLAG_ANTIALIAS = _E.FONTFLAG.ANTIALIAS
@@ -15,12 +15,12 @@ local FONTFLAG_ADDITIVE = _E.FONTFLAG.ADDITIVE
 local FONTFLAG_CUSTOM = _E.FONTFLAG.CUSTOM
 
 function GM:CreateDefaultPanels()
-	gBuildMenuInterface = vgui.CBuildMenu(VGui_GetClientLuaRootPanel(), "build")
+	gBuildMenuInterface = Gui.CBuildMenu(VGui_GetClientLuaRootPanel(), "build")
 
-	surface.AddCustomFontFile("DIN-Light", "resource/DINLi.ttf")
+	Surface.AddCustomFontFile("DIN-Light", "resource/DINLi.ttf")
 
-	gBuildMenuInterface.m_hFonts["BuildMenuTextLarge"] = surface.CreateFont()
-	surface.SetFontGlyphSet(
+	gBuildMenuInterface.m_hFonts["BuildMenuTextLarge"] = Surface.CreateFont()
+	Surface.SetFontGlyphSet(
 		gBuildMenuInterface.m_hFonts["BuildMenuTextLarge"],
 		"DIN-Light",
 		64,
@@ -29,8 +29,8 @@ function GM:CreateDefaultPanels()
 		0,
 		bor(FONTFLAG_ANTIALIAS, FONTFLAG_ADDITIVE, FONTFLAG_CUSTOM)
 	)
-	gBuildMenuInterface.m_hFonts["BuildMenuTextLargeSelected"] = surface.CreateFont()
-	surface.SetFontGlyphSet(
+	gBuildMenuInterface.m_hFonts["BuildMenuTextLargeSelected"] = Surface.CreateFont()
+	Surface.SetFontGlyphSet(
 		gBuildMenuInterface.m_hFonts["BuildMenuTextLargeSelected"],
 		"DIN-Light",
 		64,

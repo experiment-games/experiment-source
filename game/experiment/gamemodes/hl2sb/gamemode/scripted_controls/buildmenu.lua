@@ -5,10 +5,9 @@
 	Modified for Experiment.
 --]]
 
-local vgui = vgui
-local CBuildSubMenu = vgui.CBuildSubMenu
-local ScreenWidth = UTIL.ScreenWidth
-local ScreenHeight = UTIL.ScreenHeight
+local CBuildSubMenu = Gui.CBuildSubMenu
+local ScreenWidth = Util.ScreenWidth
+local ScreenHeight = Util.ScreenHeight
 
 local CBuildMenu = {
 	m_hFonts = {},
@@ -29,7 +28,7 @@ function CBuildMenu:Init(pViewPort)
 
 	self.m_pViewPort = pViewPort
 
-	if false then
+	if false then -- TODO: Implement this
 		self.m_pMainMenu = CBuildSubMenu(self, "mainmenu")
 		self.m_pMainMenu:LoadControlSettings("Resource/UI/MainBuyMenu.res")
 		self.m_pMainMenu:SetVisible(false)
@@ -57,10 +56,10 @@ function CBuildMenu:ShowPanel(bShow)
 		self:MakePopup()
 
 		if (self.m_lastx and self.m_lasty) then
-			input.SetCursorPos(self.m_lastx, self.m_lasty)
+			Input.SetCursorPos(self.m_lastx, self.m_lasty)
 		end
 	else
-		self.m_lastx, self.m_lasty = input.GetCursorPos()
+		self.m_lastx, self.m_lasty = Input.GetCursorPos()
 
 		self:SetVisible(false)
 		self:SetMouseInputEnabled(false)
@@ -74,4 +73,4 @@ function CBuildMenu:OnClose()
 	self.BaseClass.OnClose(self)
 end
 
-vgui.Register(CBuildMenu, "CBuildMenu", "Panel")
+Gui.Register(CBuildMenu, "CBuildMenu", "Panel")

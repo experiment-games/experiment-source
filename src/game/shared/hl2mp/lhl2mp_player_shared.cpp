@@ -43,14 +43,14 @@ LUA_API void lua_pushhl2mpplayer(lua_State *L, CHL2MP_Player *pPlayer) {
     CBaseHandle *hPlayer =
         (CBaseHandle *)lua_newuserdata(L, sizeof(CBaseHandle));
     hPlayer->Set(pPlayer);
-    luaL_getmetatable(L, "CHL2MP_Player");
+    luaL_getmetatable(L, LUA_HL2MPPLAYERLIBNAME);
     lua_setmetatable(L, -2);
 }
 
 LUALIB_API lua_CHL2MP_Player *luaL_checkhl2mpplayer(lua_State *L, int narg) {
     lua_CHL2MP_Player *d = lua_tohl2mpplayer(L, narg);
     if (d == NULL) /* avoid extra test when d is not 0 */
-        luaL_argerror(L, narg, "CHL2MP_Player expected, got NULL entity");
+        luaL_argerror(L, narg, "Player expected, got NULL entity");
     return d;
 }
 
@@ -254,10 +254,10 @@ static const luaL_Reg CHL2MP_Player_funcs[] = {
 ** Open CHL2MP_Player object
 */
 LUALIB_API int luaopen_CHL2MP_Player_shared(lua_State *L) {
-    luaL_newmetatable(L, "CHL2MP_Player");
+    luaL_newmetatable(L, LUA_HL2MPPLAYERLIBNAME);
     luaL_register(L, NULL, CHL2MP_Playermeta);
-    lua_pushstring(L, "entity");
-    lua_setfield(L, -2, "__type"); /* metatable.__type = "entity" */
+    lua_pushstring(L, "Entity");
+    lua_setfield(L, -2, "__type"); /* metatable.__type = "Entity" */
     luaL_register( L, LUA_GNAME, CHL2MP_Player_funcs );
     lua_pop(L, 1);
     return 1;

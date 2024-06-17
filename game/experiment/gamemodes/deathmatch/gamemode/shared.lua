@@ -11,7 +11,7 @@ GM.Developer = "Valve"
 GM.Manual = nil
 
 function GM:Initialize()
-	self.m_bTeamPlayEnabled = cvars.FindVar("mp_teamplay"):GetBool()
+	self.m_bTeamPlayEnabled = ConsoleVariables.FindVar("mp_teamplay"):GetBool()
 
 	self.BaseClass.Initialize(self)
 end
@@ -25,14 +25,14 @@ function GM:GetGameDescription()
 end
 
 function GM:GetMapRemainingTime()
-	local timelimit = cvars.FindVar("mp_timelimit"):GetInt()
+	local timelimit = ConsoleVariables.FindVar("mp_timelimit"):GetInt()
 
 	-- If timelimit is disabled, return 0
 	if (timelimit <= 0) then
 		return 0
 	end
 
-	local time = gpGlobals.curtime() - self:GetRoundStartTime()
+	local time = Globals.curtime() - self:GetRoundStartTime()
 
 	return math.max(0, timelimit * 60 - time)
 end

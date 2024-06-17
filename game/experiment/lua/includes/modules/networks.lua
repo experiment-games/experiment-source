@@ -1,24 +1,3 @@
---[[
-	TODO:
-		- Add the other datatypes for reading and writing
-		- Check if these are indeed all the datatypes:
-			"b": signed byte (char)
-			"B": unsigned byte (unsigned char)
-			"h": signed short (16-bit)
-			"H": unsigned short (16-bit)
-			"l": signed long (32-bit)
-			"L": unsigned long (32-bit)
-			"j": lua_Integer (size varies by implementation, typically 64-bit)
-			"J": lua_Unsigned (size varies by implementation, typically 64-bit)
-			"T": size_t (variable size, typically 32 or 64-bit)
-			"i" and "I": signed and unsigned integers with a specified size (e.g., "i4" for a 32-bit signed integer)
-			"f": single-precision float (32-bit)
-			"d": double-precision float (64-bit)
-			"s": a string preceded by its length coded as an unsigned integer
-			"c": a fixed-size string (e.g., "c10" for 10 bytes)
---]]
-
-net = net or {}
 local MODULE = net
 
 local socket = require("luasocket")
@@ -235,8 +214,8 @@ elseif (SERVER) then
             table.insert(socketClients, {
                 socketClient = newSocketClient,
 
-                -- TODO: We need some sort of: UTIL.PlayerByAddress(socketClient:getpeername()) here
-                client = UTIL.PlayerByIndex(1)
+                -- TODO: We need some sort of: Util.PlayerByAddress(socketClient:getpeername()) here
+                client = Util.PlayerByIndex(1)
             })
         end
 

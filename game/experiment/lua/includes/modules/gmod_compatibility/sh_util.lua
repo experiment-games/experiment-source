@@ -51,7 +51,7 @@ end
 	file
 -----------------------------------------------------------]]
 
-include( "util/color.lua" )
+Include( "util/color.lua" )
 
 --[[---------------------------------------------------------
 	Prints a table to the console
@@ -164,7 +164,7 @@ function IncludeCS( filename )
 		AddCSLuaFile( filename )
 	end
 
-	return include( filename )
+	return Include( filename )
 end
 
 -- Globals
@@ -298,8 +298,6 @@ function IsUselessModel( modelname )
 	return false
 
 end
-
-UTIL_IsUselessModel = IsUselessModel
 
 --[[---------------------------------------------------------
 	Given a number, returns the right 'th

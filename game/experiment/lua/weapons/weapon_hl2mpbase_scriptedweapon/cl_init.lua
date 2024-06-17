@@ -5,7 +5,7 @@
 	Modified for Experiment.
 --]]
 
-include("shared.lua")
+Include("shared.lua")
 
 function SWEP:DrawLargeWeaponBox(bSelected, xpos, ypos, boxWide, boxTall, selectedColor, alpha, number)
 end

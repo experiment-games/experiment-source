@@ -1,4 +1,4 @@
-//========= Copyright © 1996-2005, Valve Corporation, All rights reserved. ============//
+//========= Copyright ï¿½ 1996-2005, Valve Corporation, All rights reserved. ============//
 //
 // Purpose:		Player for HL2.
 //
@@ -40,10 +40,10 @@ static const luaL_Reg CHL2MP_Playermeta[] = {
 ** Open CHL2MP_Player object
 */
 LUALIB_API int luaopen_CHL2MP_Player (lua_State *L) {
-  luaL_getmetatable(L, "CHL2MP_Player");
+  luaL_getmetatable(L, LUA_HL2MPPLAYERLIBNAME);
   if (lua_isnoneornil(L, -1)) {
     lua_pop(L, 1);
-    luaL_newmetatable(L, "CHL2MP_Player");
+    luaL_newmetatable(L, LUA_HL2MPPLAYERLIBNAME);
   }
   luaL_register(L, NULL, CHL2MP_Playermeta);
   return 1;

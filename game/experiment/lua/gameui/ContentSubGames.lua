@@ -5,11 +5,9 @@
 	Modified for Experiment.
 --]]
 
-include("../includes/extensions/table.lua")
-include("../includes/extensions/keyvalues.lua")
-include("../includes/extensions/vgui.lua")
-
-local vgui = vgui
+Include("../includes/extensions/table.lua")
+Include("../includes/extensions/keyvalues.lua")
+Include("../includes/extensions/gui.lua")
 
 local CContentSubGames = {
 	m_pHalfLife2CheckBox = INVALID_PANEL,
@@ -50,70 +48,70 @@ end
 -- Purpose: Constructor
 -------------------------------------------------------------------------------
 function CContentSubGames:Init(parent)
-	self.m_pHalfLife2CheckBox = vgui.CheckButton(
+	self.m_pHalfLife2CheckBox = Gui.CheckButton(
 		self,
 		"HalfLife2",
 		"Half-Life 2")
 	self.m_pHalfLife2CheckBox.OnCheckButtonChecked = OnCheckButtonChecked
 	self.m_pHalfLife2CheckBox:AddActionSignalTarget(self.m_pHalfLife2CheckBox)
 
-	self.m_pCounterStrikeCheckBox = vgui.CheckButton(
+	self.m_pCounterStrikeCheckBox = Gui.CheckButton(
 		self,
 		"CounterStrike",
 		"Counter-Strike: Source")
 	self.m_pCounterStrikeCheckBox.OnCheckButtonChecked = OnCheckButtonChecked
 	self.m_pCounterStrikeCheckBox:AddActionSignalTarget(self.m_pCounterStrikeCheckBox)
 
-	self.m_pHalfLifeCheckBox = vgui.CheckButton(
+	self.m_pHalfLifeCheckBox = Gui.CheckButton(
 		self,
 		"HalfLife",
 		"Half-Life: Source")
 	self.m_pHalfLifeCheckBox.OnCheckButtonChecked = OnCheckButtonChecked
 	self.m_pHalfLifeCheckBox:AddActionSignalTarget(self.m_pHalfLifeCheckBox)
 
-	self.m_pDayOfDefeatCheckBox = vgui.CheckButton(
+	self.m_pDayOfDefeatCheckBox = Gui.CheckButton(
 		self,
 		"DayOfDefeat",
 		"Day of Defeat: Source")
 	self.m_pDayOfDefeatCheckBox.OnCheckButtonChecked = OnCheckButtonChecked
 	self.m_pDayOfDefeatCheckBox:AddActionSignalTarget(self.m_pDayOfDefeatCheckBox)
 
-	self.m_pLostCoastCheckBox = vgui.CheckButton(
+	self.m_pLostCoastCheckBox = Gui.CheckButton(
 		self,
 		"LostCoast",
 		"Half-Life 2: Lost Coast")
 	self.m_pLostCoastCheckBox.OnCheckButtonChecked = OnCheckButtonChecked
 	self.m_pLostCoastCheckBox:AddActionSignalTarget(self.m_pLostCoastCheckBox)
 
-	self.m_pHalfLifeDeathmatchCheckBox = vgui.CheckButton(
+	self.m_pHalfLifeDeathmatchCheckBox = Gui.CheckButton(
 		self,
 		"HalfLifeDeathmatch",
 		"Half-Life Deathmatch: Source")
 	self.m_pHalfLifeDeathmatchCheckBox.OnCheckButtonChecked = OnCheckButtonChecked
 	self.m_pHalfLifeDeathmatchCheckBox:AddActionSignalTarget(self.m_pHalfLifeDeathmatchCheckBox)
 
-	self.m_pEpisodicCheckBox = vgui.CheckButton(
+	self.m_pEpisodicCheckBox = Gui.CheckButton(
 		self,
 		"Episodic",
 		"Half-Life 2: Episode One")
 	self.m_pEpisodicCheckBox.OnCheckButtonChecked = OnCheckButtonChecked
 	self.m_pEpisodicCheckBox:AddActionSignalTarget(self.m_pEpisodicCheckBox)
 
-	self.m_pPortalCheckBox = vgui.CheckButton(
+	self.m_pPortalCheckBox = Gui.CheckButton(
 		self,
 		"Portal",
 		"Portal")
 	self.m_pPortalCheckBox.OnCheckButtonChecked = OnCheckButtonChecked
 	self.m_pPortalCheckBox:AddActionSignalTarget(self.m_pPortalCheckBox)
 
-	self.m_pEpisodeTwoCheckBox = vgui.CheckButton(
+	self.m_pEpisodeTwoCheckBox = Gui.CheckButton(
 		self,
 		"EpisodeTwo",
 		"Half-Life 2: Episode Two")
 	self.m_pEpisodeTwoCheckBox.OnCheckButtonChecked = OnCheckButtonChecked
 	self.m_pEpisodeTwoCheckBox:AddActionSignalTarget(self.m_pEpisodeTwoCheckBox)
 
-	self.m_pTeamFortressCheckBox = vgui.CheckButton(
+	self.m_pTeamFortressCheckBox = Gui.CheckButton(
 		self,
 		"TeamFortress",
 		"Team Fortress 2")
@@ -176,4 +174,4 @@ function CContentSubGames:OnApplyChanges()
 	pGameContent:deleteThis()
 end
 
-vgui.Register(CContentSubGames, "CContentSubGames", "PropertyPage")
+Gui.Register(CContentSubGames, "CContentSubGames", "PropertyPage")

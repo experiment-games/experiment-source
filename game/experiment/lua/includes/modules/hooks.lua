@@ -7,13 +7,10 @@
 
 require("debug")
 
-local pairs = pairs
-local tostring = tostring
 local unpack = table.unpack
 local printError = debug.PrintError
 
-hooks = hooks or {}
-local MODULE = hooks
+local MODULE = {}
 MODULE.registeredHooks = MODULE.registeredHooks or {}
 
 local returnValues = {}

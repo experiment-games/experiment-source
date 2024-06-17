@@ -5,10 +5,9 @@
 	Modified for Experiment.
 --]]
 
-include("../includes/extensions/table.lua")
-include("../includes/extensions/vgui.lua")
+Include("../includes/extensions/table.lua")
+Include("../includes/extensions/gui.lua")
 
-local vgui = vgui
 
 local CContentDialog = {}
 
@@ -25,8 +24,8 @@ function CContentDialog:Init(parent, panelName)
 	-- debug timing code, this function takes too long
 	--	local s4 = system.GetCurrentTime()
 
-	self:AddPage(vgui.CContentSubGames(self, ""), "#GameUI_Games")
-	-- self:AddPage(vgui.CContentSubAddons(self, ""), "#GameUI_Addons")
+	self:AddPage(Gui.CContentSubGames(self, ""), "#GameUI_Games")
+	-- self:AddPage(Gui.CContentSubAddons(self, ""), "#GameUI_Addons")
 
 	--	local s5 = system.GetCurrentTime()
 	--	Msg("CContentDialog:Init(): " .. (s5 - s4) * 1000.0 .. "ms\n")
@@ -43,4 +42,4 @@ function CContentDialog:Run()
 	self:Activate()
 end
 
-vgui.Register(CContentDialog, "CContentDialog", "PropertyDialog")
+Gui.Register(CContentDialog, "CContentDialog", "PropertyDialog")

@@ -7,7 +7,7 @@
 	Purpose: Dump weapon data from WeaponInfo_t.
 --]]
 
-for k, v in pairs(UTIL.PlayerByIndex(1):GetActiveWeapon():GetWpnData()) do
+for k, v in pairs(Util.PlayerByIndex(1):GetActiveWeapon():GetWpnData()) do
 	if (type(v) == "table") then
 		MsgN(k .. ":")
 		for l, w in pairs(v) do

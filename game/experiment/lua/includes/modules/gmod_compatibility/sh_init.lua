@@ -3,16 +3,16 @@
 	modified and adapted to provide compatibility with Experiment.
 --]]
 
-include("sh_enumerations.lua")
-include("sh_file.lua")
+Include("sh_enumerations.lua")
+Include("sh_file.lua")
 
 if (SERVER) then
-	sendfile("sh_file.lua")
-	sendfile("sh_init.lua")
-	sendfile("cl_hooks.lua")
-	sendfile("sh_enumerations.lua")
-	sendfile("sh_util.lua")
-	sendfile("util/sql.lua")
+	SendFile("sh_file.lua")
+	SendFile("sh_init.lua")
+	SendFile("cl_hooks.lua")
+	SendFile("sh_enumerations.lua")
+	SendFile("sh_util.lua")
+	SendFile("util/sql.lua")
 end
 
 -- Add the gmod_compatibility path to the Lua include search path.
@@ -22,6 +22,8 @@ package.IncludePath ="lua/includes/modules_lazy/gmod_compatibility/;" .. package
 	Renames and other polyfills
 --]]
 DeriveGamemode = InheritGamemode
+
+include = Include
 
 util = {
 	PrecacheModel = _R.CBaseEntity.PrecacheModel,
@@ -56,13 +58,22 @@ sql = {
 
 Angle = QAngle
 
-RealFrameTime = gpGlobals.absoluteframetime
-CurTime = gpGlobals.curtime
-FrameNumber = gpGlobals.framecount
-FrameTime = gpGlobals.frametime
-engine.TickCount = gpGlobals.tickcount
-engine.TickInterval = gpGlobals.interval_per_tick
+RealFrameTime = Globals.absoluteframetime
+CurTime = Globals.curtime
+FrameNumber = Globals.framecount
+FrameTime = Globals.frametime
+engine.TickCount = Globals.tickcount
+engine.TickInterval = Globals.interval_per_tick
 SoundDuration = engine.GetSoundDuration
+
+system = System
+cvars = ConsoleVariables
+umsg = require("usermessages")
+vgui = Gui
+VMatrix = Matrix
+surface = Surface
+input = Input
+engine = Engine
 
 umsg.Angle = umsg.WriteAngles
 umsg.Bool = umsg.WriteBool
@@ -77,7 +88,7 @@ umsg.VectorNormal = umsg.WriteNormal
 umsg.Send = umsg.MessageEnd
 
 function isangle(variable)
-	return type(variable) == "angle"
+	return type(variable) == "Angle"
 end
 
 function isbool(variable)
@@ -85,15 +96,15 @@ function isbool(variable)
 end
 
 function IsColor(variable)
-	return type(variable) == "color"
+	return type(variable) == "Color"
 end
 
 function ispanel(variable)
-	return type(variable) == "panel"
+	return type(variable) == "Panel"
 end
 
 function isentity(variable)
-    return type(variable) == "entity"
+    return type(variable) == "Entity"
 end
 
 function isfunction(variable)
@@ -101,7 +112,7 @@ function isfunction(variable)
 end
 
 function ismatrix(variable)
-    return type(variable) == "vmatrix"
+    return type(variable) == "Matrix"
 end
 
 function isnumber(variable)
@@ -117,13 +128,13 @@ function istable(variable)
 end
 
 function isvector(variable)
-	return type(variable) == "vector"
+	return type(variable) == "Vector"
 end
 
 unpack = table.unpack
 
-Material = gpGlobals.FindMaterial
-CreateMaterial = gpGlobals.CreateMaterial
+Material = Globals.FindMaterial
+CreateMaterial = Globals.CreateMaterial
 CreateConVar = function(name, value, flags, helpText, min, max)
     if (istable(flags)) then
 		if (#flags == 0) then
@@ -138,7 +149,7 @@ CreateConVar = function(name, value, flags, helpText, min, max)
 	return ConVar(name, value, flags, helpText, min, max)
 end
 
-AddCSLuaFile = sendfile or function() end
+AddCSLuaFile = SendFile or function() end
 
 TauntCamera = function()
     return {
@@ -156,7 +167,7 @@ if (SERVER) then
     resource = resources
 	resource.AddWorkshop = function() end
 else
-	LocalPlayer = UTIL.GetLocalPlayer
+	LocalPlayer = Util.GetLocalPlayer
 
 	surface.SetDrawColor = surface.DrawSetColor
 	surface.DrawRect = surface.DrawFilledRect
@@ -183,14 +194,18 @@ end
 --[[
 	All our libraries are plural, while with Garry's Mod they vary between plural and singular.
 --]]
-concommand = require("concommands")
+
+bit = require("bitwise")
+concommand = require("console_commands")
 scripted_ents = require("entities")
 gamemode = require("gamemodes")
 hook = require("hooks")
+net = require("networks")
+timer = require("timers")
 weapons = require("weapons")
 
-include("sh_util.lua")
-include("util/sql.lua")
+Include("sh_util.lua")
+Include("util/sql.lua")
 
 --[[
 	Libraries taken from Garry's Mod.
@@ -224,8 +239,8 @@ require("gmod_compatibility/modules/cookie")
 require("gmod_compatibility/modules/utf8")
 
 require("gmod_compatibility/modules/drive")
--- include("drive/drive_base.lua")
--- include("drive/drive_noclip.lua")
+-- Include("drive/drive_base.lua")
+-- Include("drive/drive_noclip.lua")
 
 if (SERVER) then
 	-- Server-side modules.
@@ -270,4 +285,4 @@ end
 --[[
 	Now that the compatibility libraries have been loaded, we can start changing hooks
 --]]
-include("cl_hooks.lua")
+Include("cl_hooks.lua")

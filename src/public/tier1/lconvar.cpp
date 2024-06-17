@@ -48,7 +48,7 @@ LUA_API void lua_pushconcommand (lua_State *L, lua_ConCommand *pConCommand) {
   else {
     lua_ConCommand **ppConCommand = (lua_ConCommand **)lua_newuserdata(L, sizeof(pConCommand));
     *ppConCommand = pConCommand;
-    luaL_getmetatable(L, "ConCommand");
+    luaL_getmetatable(L, LUA_CONCOMMANDLIBNAME);
     lua_setmetatable(L, -2);
   }
 }
@@ -60,20 +60,20 @@ LUA_API void lua_pushconvar (lua_State *L, lua_ConVar *pConVar) {
   else {
     lua_ConVar **ppConVar = (lua_ConVar **)lua_newuserdata(L, sizeof(pConVar));
     *ppConVar = pConVar;
-    luaL_getmetatable(L, "ConVar");
+    luaL_getmetatable(L, LUA_CONVARLIBNAME);
     lua_setmetatable(L, -2);
   }
 }
 
 
 LUALIB_API lua_ConCommand *luaL_checkconcommand (lua_State *L, int narg) {
-  lua_ConCommand **d = (lua_ConCommand **)luaL_checkudata(L, narg, "ConCommand");
+  lua_ConCommand **d = (lua_ConCommand **)luaL_checkudata(L, narg, LUA_CONCOMMANDLIBNAME);
   return *d;
 }
 
 
 LUALIB_API lua_ConVar *luaL_checkconvar (lua_State *L, int narg) {
-  lua_ConVar **d = (lua_ConVar **)luaL_checkudata(L, narg, "ConVar");
+  lua_ConVar **d = (lua_ConVar **)luaL_checkudata(L, narg, LUA_CONVARLIBNAME);
   return *d;
 }
 
@@ -298,7 +298,7 @@ void ResetConCommandDatabase( void )
 
 
 static const luaL_Reg ConCommand_funcs[] = {
-  {"ConCommand", luasrc_ConCommand},
+  {LUA_CONCOMMANDLIBNAME, luasrc_ConCommand},
   {NULL, NULL}
 };
 
@@ -312,7 +312,7 @@ LUALIB_API int luaopen_ConCommand (lua_State *L) {
   lua_pushvalue(L, -1);  /* push metatable */
   lua_setfield(L, -2, "__index");  /* metatable.__index = metatable */
   lua_pushstring(L, "concommands");
-  lua_setfield(L, -2, "__type");  /* metatable.__type = "concommand" */
+  lua_setfield(L, -2, "__type");  /* metatable.__type = "ConsoleCommand" */
   luaL_register( L, LUA_GNAME, ConCommand_funcs );
   lua_pop(L, 1);
   return 1;
@@ -466,7 +466,7 @@ void ResetConVarDatabase( void )
 
 
 static const luaL_Reg ConVar_funcs[] = {
-  {"ConVar", luasrc_ConVar},
+  {LUA_CONVARLIBNAME, luasrc_ConVar},
   {NULL, NULL}
 };
 
@@ -479,8 +479,8 @@ LUALIB_API int luaopen_ConVar (lua_State *L) {
   luaL_register(L, NULL, ConVarmeta);
   lua_pushvalue(L, -1);  /* push metatable */
   lua_setfield(L, -2, "__index");  /* metatable.__index = metatable */
-  lua_pushstring(L, "convar");
-  lua_setfield(L, -2, "__type");  /* metatable.__type = "convar" */
+  lua_pushstring(L, LUA_CONVARLIBNAME);
+  lua_setfield(L, -2, "__type");  /* metatable.__type = "ConsoleVariable" */
   luaL_register( L, LUA_GNAME, ConVar_funcs );
   lua_pop(L, 1);
   return 1;

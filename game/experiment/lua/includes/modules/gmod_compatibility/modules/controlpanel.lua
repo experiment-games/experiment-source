@@ -21,7 +21,7 @@ end
 function Get( name )
 
 	if ( ShouldReCreate( ControlPanels[ name ] ) ) then
-		local cp = vgui.Create( "ControlPanel" )
+		local cp = Gui.Create( "ControlPanel" )
 		if ( !cp ) then
 
 			debug.Trace()

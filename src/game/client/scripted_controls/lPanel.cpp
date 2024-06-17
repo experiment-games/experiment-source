@@ -1,4 +1,4 @@
-//========= Copyright © 1996-2005, Valve Corporation, All rights reserved. ============//
+//========= Copyright ï¿½ 1996-2005, Valve Corporation, All rights reserved. ============//
 //
 // Purpose: 
 //
@@ -484,7 +484,7 @@ static const luaL_Reg Panel_funcs[] = {
 ** Open Panel object
 */
 LUALIB_API int luaopen_vgui_Panel(lua_State *L) {
-  luaL_register(L, "vgui", Panel_funcs);
+  luaL_register(L, LUA_VGUILIBNAME, Panel_funcs);
   lua_pop(L, 1);
   return 1;
 }

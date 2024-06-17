@@ -5,7 +5,7 @@
 	Modified for Experiment.
 --]]
 
-require("cvars")
+require("ConsoleVariables")
 
 local pairs = pairs
 local printError = debug.PrintError
@@ -19,7 +19,7 @@ local registeredCallbacks = {}
 --- @param conVarName string The name of the ConVar.
 --- @param callbackIdentifier string The name of the callback, so it can be removed later.
 --- @param callback fun(ConVar, string, string) The function to call when the ConVar changes.
-function cvars.AddChangeCallback(conVarName, callbackIdentifier, callback)
+function ConsoleVariables.AddChangeCallback(conVarName, callbackIdentifier, callback)
 	registeredCallbacks[conVarName] = registeredCallbacks[conVarName] or {}
 	registeredCallbacks[conVarName][callbackIdentifier] = callback
 end
@@ -28,7 +28,7 @@ end
 --- @param conVar ConVar The ConVar that has changed.
 --- @param oldValueAsString string The old value of the ConVar.
 --- @param oldValueAsNumber number The old value of the ConVar.
-function cvars.CallGlobalChangeCallbacks(conVar, oldValueAsString, oldValueAsNumber)
+function ConsoleVariables.CallGlobalChangeCallbacks(conVar, oldValueAsString, oldValueAsNumber)
 	local callbacks = registeredCallbacks[conVar:GetName()]
 
 	if (callbacks == nil) then
@@ -60,7 +60,7 @@ end
 --- Returns all of the registered callbacks or only callbacks pertaining to a specific ConVar.
 --- @param conVarName string The name of the ConVar.
 --- @return table
-function cvars.GetChangeCallbacks(conVarName)
+function ConsoleVariables.GetChangeCallbacks(conVarName)
 	if (conVarName) then
 		return registeredCallbacks[conVarName]
 	end
@@ -71,7 +71,7 @@ end
 --- Removes a callback from the list of registered callbacks.
 --- @param conVarName string The name of the ConVar.
 --- @param callbackIdentifier string The name of the callback.
-function cvars.RemoveChangeCallback(conVarName, callbackIdentifier)
+function ConsoleVariables.RemoveChangeCallback(conVarName, callbackIdentifier)
 	if (registeredCallbacks[conVarName][callbackIdentifier]) then
 		registeredCallbacks[conVarName][callbackIdentifier] = nil
 	end

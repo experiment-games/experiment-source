@@ -7,15 +7,13 @@
 	Purpose: builds an intended command to send to the server
 --]]
 
-require("concommands")
-
 local function IN_BuildDown(client, pCmd, args)
 	if (gBuildMenuInterface) then
 		gBuildMenuInterface:ShowPanel(true)
 	end
 end
 
-concommands.Add("+buildmenu", IN_BuildDown, nil)
+ConsoleCommands.Add("+buildmenu", IN_BuildDown, nil)
 
 local function IN_BuildUp(client, pCmd, args)
 	if (gBuildMenuInterface) then
@@ -23,4 +21,4 @@ local function IN_BuildUp(client, pCmd, args)
 	end
 end
 
-concommands.Add("-buildmenu", IN_BuildUp, nil)
+ConsoleCommands.Add("-buildmenu", IN_BuildUp, nil)

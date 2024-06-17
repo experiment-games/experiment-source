@@ -1,4 +1,4 @@
-//========= Copyright © 1996-2005, Valve Corporation, All rights reserved. ============//
+//========= Copyright ï¿½ 1996-2005, Valve Corporation, All rights reserved. ============//
 //
 // Purpose: 
 //
@@ -45,14 +45,14 @@ LUA_API void lua_pushischeme (lua_State *L, lua_IScheme *pScheme) {
   else {
     lua_IScheme **ppScheme = (lua_IScheme **)lua_newuserdata(L, sizeof(lua_IScheme));
     *ppScheme = pScheme;
-    luaL_getmetatable(L, "IScheme");
+    luaL_getmetatable(L, LUA_ISCHEMELIBNAME);
     lua_setmetatable(L, -2);
   }
 }
 
 
 LUALIB_API lua_IScheme *luaL_checkischeme (lua_State *L, int narg) {
-  lua_IScheme **d = (lua_IScheme **)luaL_checkudata(L, narg, "IScheme");
+  lua_IScheme **d = (lua_IScheme **)luaL_checkudata(L, narg, LUA_ISCHEMELIBNAME);
   return *d;
 }
 
@@ -78,7 +78,7 @@ static int IScheme_GetResourceString (lua_State *L) {
 }
 
 static int IScheme___tostring (lua_State *L) {
-  lua_pushfstring(L, "IScheme: %p", luaL_checkudata(L, 1, "IScheme"));
+  lua_pushfstring(L, "IScheme: %p", luaL_checkudata(L, 1, LUA_ISCHEMELIBNAME));
   return 1;
 }
 
@@ -101,8 +101,8 @@ LUALIB_API int luaopen_IScheme (lua_State *L) {
   luaL_register(L, NULL, ISchememeta);
   lua_pushvalue(L, -1);  /* push metatable */
   lua_setfield(L, -2, "__index");  /* metatable.__index = metatable */
-  lua_pushstring(L, "ischeme");
-  lua_setfield(L, -2, "__type");  /* metatable.__type = "ischeme" */
+  lua_pushstring(L, LUA_ISCHEMELIBNAME);
+  lua_setfield(L, -2, "__type");  /* metatable.__type = "IScheme" */
   return 1;
 }
 

@@ -38,7 +38,7 @@ function AddProgress( uid, text, frac )
 	local parent = nil
 	if ( GetOverlayPanel ) then parent = GetOverlayPanel() end
 
-	local Panel = vgui.Create( "NoticePanel", parent )
+	local Panel = Gui.Create( "NoticePanel", parent )
 	Panel.StartTime = SysTime()
 	Panel.Length = -1
 	Panel.VelX = -5
@@ -68,7 +68,7 @@ function AddLegacy( text, type, length )
 	local parent = nil
 	if ( GetOverlayPanel ) then parent = GetOverlayPanel() end
 
-	local Panel = vgui.Create( "NoticePanel", parent )
+	local Panel = Gui.Create( "NoticePanel", parent )
 	Panel.StartTime = SysTime()
 	Panel.Length = math.max( length, 0 )
 	Panel.VelX = -5
@@ -164,7 +164,7 @@ function PANEL:Init()
 
 	self:DockPadding( 3, 3, 3, 3 )
 
-	self.Label = vgui.Create( "DLabel", self )
+	self.Label = Gui.Create( "DLabel", self )
 	self.Label:Dock( FILL )
 	self.Label:SetFont( "GModNotify" )
 	self.Label:SetTextColor( color_white )
@@ -211,7 +211,7 @@ end
 
 function PANEL:SetLegacyType( t )
 
-	self.Image = vgui.Create( "DImageButton", self )
+	self.Image = Gui.Create( "DImageButton", self )
 	self.Image:SetMaterial( NoticeMaterial[ t ] )
 	self.Image:SetSize( 32, 32 )
 	self.Image:Dock( LEFT )
@@ -291,4 +291,4 @@ function PANEL:KillSelf()
 
 end
 
-vgui.Register( "NoticePanel", PANEL, "DPanel" )
+Gui.Register( "NoticePanel", PANEL, "DPanel" )

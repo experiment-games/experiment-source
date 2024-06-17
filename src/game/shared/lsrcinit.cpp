@@ -108,7 +108,6 @@ static const luaL_Reg luasrclibs[] = {
     { LUA_BFREADLIBNAME, luaopen_bf_read },
 #endif
     { LUA_UMSGLIBNAME, luaopen_umsg },
-    { LUA_NETLIBNAME, luaopen_net },
 
     { LUA_SYSTEMLIBNAME, luaopen_system },
     { NULL, NULL } };

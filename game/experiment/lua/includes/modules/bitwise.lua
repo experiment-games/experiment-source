@@ -1,5 +1,4 @@
-bit = bit or {}
-local MODULE = bit
+local MODULE = {}
 
 function MODULE.band(a, b)
 	return a & b

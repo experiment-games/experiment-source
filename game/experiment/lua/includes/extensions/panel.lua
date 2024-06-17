@@ -9,7 +9,7 @@ local type = type
 local printError = debug.PrintError
 
 function ToPanel( pPanel )
-  if ( not pPanel or type( pPanel ) ~= "panel" ) then
+  if ( not pPanel or type( pPanel ) ~= "Panel" ) then
     return INVALID_PANEL
   end
 

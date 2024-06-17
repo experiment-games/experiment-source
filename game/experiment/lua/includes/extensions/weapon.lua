@@ -7,7 +7,7 @@
 
 _R.CBaseCombatWeapon.__WeaponSound = _R.CBaseCombatWeapon.WeaponSound
 local WeaponSound = _R.CBaseCombatWeapon.WeaponSound
-local gpGlobals = gpGlobals
+local Globals = Globals
 
 -- HACKHACK: We override this here, because for some reason scripted weapons
 -- don't properly play weapon sounds in singleplayer
@@ -19,7 +19,7 @@ function _R.CBaseCombatWeapon.WeaponSound( self, sound_type, soundtime )
   -- Only the player fires this way so we can cast
   local client = self:GetOwner()
 
-  -- if ( gpGlobals.maxClients() > 1 ) then
+  -- if ( Globals.maxClients() > 1 ) then
   --   WeaponSound( self, sound_type, soundtime )
   -- else
     local shootsound = self:GetShootSound( sound_type )

@@ -30,7 +30,7 @@
 /// <param name="message"></param>
 static void umsg_CallOnMessageReceived( lua_State *L, const char *messageName, bf_read *message )
 {
-    lua_getglobal( L, "umsg" );
+    lua_getglobal( L, LUA_UMSGLIBNAME );
     lua_getfield( L, -1, "OnMessageReceived" );
     lua_pushstring( L, messageName );
     lua_pushbf_read( L, message );
@@ -520,12 +520,6 @@ static const luaL_Reg bfReadLib[] = {
 LUALIB_API int luaopen_umsg( lua_State *L )
 {
     luaL_register( L, LUA_UMSGLIBNAME, umsgLib );
-    return 1;
-}
-
-LUALIB_API int luaopen_net( lua_State *L )
-{
-    luaL_register( L, LUA_NETLIBNAME, netLib );
     return 1;
 }
 

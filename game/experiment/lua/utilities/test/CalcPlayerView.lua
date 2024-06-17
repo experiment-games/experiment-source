@@ -10,7 +10,7 @@ if (not CLIENT) then
 end
 
 local sin = math.sin
-local curtime = gpGlobals.curtime
+local curtime = Globals.curtime
 
 hooks.Add("CalcPlayerView", "CalcPlayerView", function(client, eyeOrigin, eyeAngles, fov)
 	-- Give a subtle breathing effect.

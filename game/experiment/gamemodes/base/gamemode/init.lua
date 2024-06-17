@@ -1,21 +1,21 @@
-include("shared.lua")
+Include("shared.lua")
 
-function GM:AddLevelDesignerPlacedObject(pEntity)
+function GM:AddLevelDesignerPlacedObject(entity)
 end
 
-function GM:AllowDamage(pVictim, info)
+function GM:AllowDamage(victim, info)
 end
 
-function GM:CanEnterVehicle(client, pVehicle, nRole)
+function GM:CanEnterVehicle(client, vehicle, role)
 end
 
-function GM:CanHavePlayerItem(client, pItem)
+function GM:CanHavePlayerItem(client, item)
 end
 
-function GM:CanPlayerHearPlayer(pListener, pTalker, bProximity)
+function GM:CanPlayerHearPlayer(listener, talker, isNearby)
 end
 
-function GM:CheatImpulseCommands(client, iImpulse)
+function GM:CheatImpulseCommands(client, impulse)
 end
 
 function GM:CheckChatForReadySignal(client, chatmsg)
@@ -24,13 +24,13 @@ end
 function GM:CleanUpMap()
 end
 
-function GM:ClientConnected(pEntity, pszName, pszAddress, reject, maxrejectlen)
+function GM:ClientConnected(entity, name, address, reject, maxRejectLength)
 end
 
-function GM:ClientDisconnected(pClient)
+function GM:ClientDisconnected(client)
 end
 
-function GM:FlItemRespawnTime(pItem)
+function GM:FlItemRespawnTime(item)
 end
 
 function GM:FlPlayerFallDamage(client)
@@ -51,11 +51,11 @@ end
 function GM:GiveDefaultItems(client)
 	client:GiveNamedItem("weapon_physcannon")
 
-	local szDefaultWeaponName = engine.GetClientConVarValue(engine.IndexOfEdict(client), "cl_defaultweapon")
-	local pDefaultWeapon = client:Weapon_OwnsThisType(szDefaultWeaponName)
+	local defaultWeaponName = Engine.GetClientConVarValue(Engine.IndexOfEdict(client), "cl_defaultweapon")
+	local defaultWeapon = client:Weapon_OwnsThisType(defaultWeaponName)
 
-	if (ToBaseEntity(pDefaultWeapon) ~= NULL) then
-		client:Weapon_Switch(pDefaultWeapon)
+	if (ToBaseEntity(defaultWeapon) ~= NULL) then
+		client:Weapon_Switch(defaultWeapon)
 	else
 		client:Weapon_Switch(client:Weapon_OwnsThisType("weapon_physcannon"))
 	end
@@ -67,19 +67,19 @@ end
 function GM:InitHUD(client)
 end
 
-function GM:ItemShouldRespawn(pItem)
+function GM:ItemShouldRespawn(item)
 end
 
-function GM:LevelInit(strMapName, strMapEntities, strOldLevel, strLandmarkName, loadGame, background)
+function GM:LevelInit(mapName, mapEntities, oldLevel, landmarkName, loadGame, background)
 end
 
-function GM:NetworkIDValidated(strUserName, strNetworkID)
+function GM:NetworkIDValidated(userName, networkID)
 end
 
-function GM:PlayerCanHearChat(pListener, pSpeaker)
+function GM:PlayerCanHearChat(listener, speaker)
 end
 
-function GM:PlayerCanPickupObject(pObject, massLimit, sizeLimit)
+function GM:PlayerCanPickupObject(object, massLimit, sizeLimit)
 end
 
 function GM:PlayerDeathSound(info)
@@ -88,16 +88,16 @@ end
 function GM:PlayerDeathThink(client)
 end
 
-function GM:PlayerEntSelectSpawnPoint(pHL2MPPlayer)
+function GM:PlayerEntSelectSpawnPoint(client)
 end
 
-function GM:PlayerGotItem(client, pItem)
+function GM:PlayerGotItem(client, item)
 end
 
 function GM:PlayerInitialSpawn(client)
 end
 
-function GM:PlayerPickupObject(pHL2MPPlayer, pObject, bLimitMassAndSize)
+function GM:PlayerPickupObject(client, object, isMassAndSizeLimited)
 	return false
 end
 
@@ -107,7 +107,7 @@ end
 function GM:PlayerThink(client)
 end
 
-function GM:RemoveLevelDesignerPlacedObject(pEntity)
+function GM:RemoveLevelDesignerPlacedObject(entity)
 end
 
 function GM:RestartGame()
@@ -119,10 +119,10 @@ end
 function GM:ShouldHideServer()
 end
 
-function GM:VecItemRespawnSpot(pItem)
+function GM:VecItemRespawnSpot(item)
 end
 
-function GM:VecItemRespawnAngles(pItem)
+function GM:VecItemRespawnAngles(item)
 end
 
 function GM:WeaponShouldRespawn(targetWeapon)
