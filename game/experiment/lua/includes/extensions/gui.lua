@@ -11,9 +11,6 @@ end
 
 require("Gui")
 
-local error = error
-local table = table
-
 -- Private list of helpers
 local registeredHelpers = {}
 

@@ -20,7 +20,7 @@ local didCallbackError, callbackError
 function MODULE.Add(command, callback, helpText, flags)
 	MODULE.registeredCallbacks[command] = callback
 
-	ConCommand(command, helpText, flags or 0)
+	ConsoleCommand(command, helpText, flags or 0)
 end
 
 --- Dispatches a command to the appropriate callback.
@@ -38,7 +38,7 @@ function MODULE.Dispatch(client, command, arguments)
 	didCallbackError, callbackError = xpcall(callback, printError, client, command, arguments)
 
 	if (didCallbackError == false) then
-		printError("ConCommand Error! '" .. tostring(command) .. "' Failed: " .. tostring(callbackError) .. "\n")
+		printError("ConsoleCommand Error! '" .. tostring(command) .. "' Failed: " .. tostring(callbackError) .. "\n")
 	end
 
 	return true

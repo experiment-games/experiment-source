@@ -7,7 +7,7 @@
 	Purpose: Dumps a list of all userdata in the downloadables string table
 --]]
 
-local t = networkstringtable.FindTable("downloadables")
+local t = NetworkStringTable.FindTable("downloadables")
 MsgN(t)
 for i = 1, t:GetNumStrings() do
 	MsgN("\t" .. i .. ": " .. tostring(t:GetString(i)))

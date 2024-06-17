@@ -270,11 +270,9 @@ void luasrc_setmodulepaths( lua_State *L )
     const char *currentPath = lua_tostring( L, -1 );
     lua_pop( L, 1 );  // Pop the path string
     lua_pushfstring( L,
-                     "%s\\%s\\?.lua;%s\\%s\\?.lua;%s",
+                     "%s\\%s\\?.lua;%s",
                      gamePath,
                      LUA_PATH_MODULES,
-                     gamePath,
-                     LUA_PATH_MODULES_LAZY,
                      currentPath );
     lua_setfield( L, -2, "path" );
 
@@ -285,14 +283,12 @@ void luasrc_setmodulepaths( lua_State *L )
     lua_pop( L, 1 );  // Pop the cpath string
     lua_pushfstring( L,
 #ifdef _WIN32
-                     "%s\\%s\\?.dll;%s\\%s\\?.dll;%s",
+                     "%s\\%s\\?.dll;%s",
 #elif _LINUX
-                     "%s\\%s\\?.so;%s\\%s\\?.so;%s",
+                     "%s\\%s\\?.so;%s",
 #endif
                      gamePath,
                      LUA_PATH_MODULES,
-                     gamePath,
-                     LUA_PATH_MODULES_LAZY,
                      currentCPath );
     lua_setfield( L, -2, "cpath" );
 
@@ -548,21 +544,24 @@ static bool luasrc_find_file( lua_State *L, const char *fileName, char *fullPath
     // TODO: This fails when called from the console with lua_run include("file.lua")
     // because the console is not a file and it would try load 'nclude("file.lua")'
     lua_Debug ar1;
-    lua_getstack( L, 1, &ar1 );
-    lua_getinfo( L, "f", &ar1 );
-    lua_Debug ar2;
-    lua_getinfo( L, ">S", &ar2 );
-    int iLength = Q_strlen( ar2.source );
-    char source[MAX_PATH];
-    Q_StrRight( ar2.source, iLength - 1, source, sizeof( source ) );
-    Q_StripFilename( source );
-    char relativeFileName[MAX_PATH];
-    Q_snprintf( relativeFileName, sizeof( relativeFileName ), "%s\\%s", source, fileName );
 
-    if ( filesystem->FileExists( relativeFileName, "MOD" ) )
+    if ( lua_getstack( L, 1, &ar1 ) != 0 )
     {
-        Q_strncpy( fullPath, relativeFileName, fullPathSize );
-        return true;
+        lua_getinfo( L, "f", &ar1 );
+        lua_Debug ar2;
+        lua_getinfo( L, ">S", &ar2 );
+        int iLength = Q_strlen( ar2.source );
+        char source[MAX_PATH];
+        Q_StrRight( ar2.source, iLength - 1, source, sizeof( source ) );
+        Q_StripFilename( source );
+        char relativeFileName[MAX_PATH];
+        Q_snprintf( relativeFileName, sizeof( relativeFileName ), "%s\\%s", source, fileName );
+
+        if ( filesystem->FileExists( relativeFileName, "MOD" ) )
+        {
+            Q_strncpy( fullPath, relativeFileName, fullPathSize );
+            return true;
+        }
     }
 
     // Otherwise, search for the file in all search paths
@@ -644,11 +643,14 @@ LUA_API int luasrc_dofile_with_loader( lua_State *L, const char *filePath )
     // If the loader is not activated, default to simple dofile loading
     if ( !hasLoaderBeenActivated )
     {
-        //return luaL_dofile( L, fullPath );
         lua_pushcfunction( L, luasrc_traceback );
+        int traceBackPosition = lua_gettop( L );
+
         // Load the file, leaving the chunk on the stack. Then pcall it with
         // the traceback function (which will be below the chunk on the stack)
-        int result = ( luaL_loadfile( L, fullPath ) || lua_pcall( L, 0, LUA_MULTRET, -2 ) );
+        int result = ( luaL_loadfile( L, fullPath ) || lua_pcall( L, 0, LUA_MULTRET, traceBackPosition ) );
+
+        lua_remove( L, traceBackPosition );
 
         fileIncludingStack.pop();
 
@@ -737,6 +739,7 @@ LUA_API int luasrc_dofile_with_loader( lua_State *L, const char *filePath )
     lua_pop( loaderLuaState, 1 );  // Pop the preprocessed file contents now that we have them
 
     lua_pushcfunction( L, luasrc_traceback );
+    int traceBackPosition = lua_gettop( L );
 
     // Load the preprocessed file contents as a Lua chunk
     // and execute it with the traceback function below it
@@ -745,7 +748,9 @@ LUA_API int luasrc_dofile_with_loader( lua_State *L, const char *filePath )
                         preprocessedFileContents,
                         strlen( preprocessedFileContents ),
                         bufferFileName ) ||
-                    lua_pcall( L, 0, LUA_MULTRET, -2 );
+                    lua_pcall( L, 0, LUA_MULTRET, traceBackPosition );
+
+    lua_remove( L, traceBackPosition );
 
     fileIncludingStack.pop();
 
@@ -932,7 +937,7 @@ void luasrc_LoadEntities( const char *path )
                     lua_setglobal( L, "ENT" );
                     if ( luasrc_dofile( L, fullPath ) == 0 )
                     {
-                        lua_getglobal( L, "entities" );
+                        lua_getglobal( L, LUA_ENTITIESLIBNAME );
                         if ( lua_istable( L, -1 ) )
                         {
                             lua_getfield( L, -1, "Register" );
@@ -1047,7 +1052,7 @@ void luasrc_LoadWeapons( const char *path )
         lua_setglobal( L, "SWEP" );
         if ( luasrc_dofile( L, fullpath ) == 0 )
         {
-            lua_getglobal( L, "weapons" );
+            lua_getglobal( L, LUA_WEAPONSLIBNAME );
 
             if ( lua_istable( L, -1 ) )
             {
@@ -1208,7 +1213,7 @@ static void cleanUpGamemodeLoading()
 /// <param name="searchPath"></param>
 static void luasrc_add_to_package_path( lua_State *L, const char *searchPath )
 {
-    lua_getglobal( L, "package" );
+    lua_getglobal( L, LUA_LOADLIBNAME );
     lua_getfield( L, -1, "path" );  // Get the current package.path
     const char *currentPath = lua_tostring( L, -1 );
     lua_pop( L, 1 );  // Remove the current path from the stack
@@ -1310,7 +1315,7 @@ bool luasrc_LoadGamemode( const char *gamemode )
     }
 
     // Call gamemodes.Register with this gamemode
-    lua_getglobal( L, "Gamemodes" );
+    lua_getglobal( L, LUA_GAMEMODESLIBNAME );
     lua_getfield( L, -1, "Register" );
     lua_remove( L, -2 );  // Remove gamemodes now that we have Register
 
@@ -1354,7 +1359,7 @@ bool luasrc_SetGamemode( const char *gamemode )
     // from the stack
     assert( fileIncludingStack.empty() );
 
-    lua_getglobal( L, "Gamemodes" );
+    lua_getglobal( L, LUA_GAMEMODESLIBNAME );
 
     if ( !lua_istable( L, -1 ) )
     {
@@ -1377,7 +1382,7 @@ bool luasrc_SetGamemode( const char *gamemode )
     luasrc_pcall( L, 1, 1, 0 );      // Call gamemodes.Get(gamemode)
     lua_setglobal( L, "GAMEMODE" );  // Set GAMEMODE to the active gamemode table
 
-    lua_getglobal( L, "Gamemodes" );
+    lua_getglobal( L, LUA_GAMEMODESLIBNAME );
     lua_getfield( L, -1, "InternalSetActiveName" );
 
     if ( !lua_isfunction( L, -1 ) )
@@ -1616,7 +1621,7 @@ static void DumpLuaStack( lua_State *L )
     {
         if ( lua_istable( L, -1 ) )
         {
-            lua_getglobal( L, "table" );
+            lua_getglobal( L, LUA_TABLIBNAME );
             lua_getfield( L, -1, "Print" );
             lua_remove( L, -2 );
             lua_pushvalue( L, i );

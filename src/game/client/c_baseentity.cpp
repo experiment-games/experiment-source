@@ -42,6 +42,7 @@
 #include "proto_version.h"
 #ifdef LUA_SDK
 #include "luamanager.h"
+#include "luasrclib.h"
 #include "mathlib/lvector.h"
 #endif
 

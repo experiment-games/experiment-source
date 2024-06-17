@@ -9,6 +9,7 @@
 #include "cbase.h"
 
 #include "luamanager.h"
+#include "luasrclib.h"
 #include "lhl2mp_player_shared.h"
 #include "lbaseentity_shared.h"
 #ifdef CLIENT_DLL
@@ -248,7 +249,7 @@ static int luasrc_ToHL2MPPlayer(lua_State *L) {
 }
 
 static const luaL_Reg CHL2MP_Player_funcs[] = {
-    {"ToHL2MPPlayer", luasrc_ToHL2MPPlayer}, {NULL, NULL}};
+    {"ToPlayer", luasrc_ToHL2MPPlayer}, {NULL, NULL}};
 
 /*
 ** Open CHL2MP_Player object

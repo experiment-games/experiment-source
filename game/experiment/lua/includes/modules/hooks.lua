@@ -27,7 +27,7 @@ end
 --- Calls all hooks associated with a specific event.
 --- @param eventName string The name of the internal GameRules method.
 --- @param gamemodeTable table The table of the current gamemode.
---- @vararg any Arguments to pass to the hooks.
+--- @vararg any Arguments to pass to the Hooks.
 --- @return any # The return value(s) of the hook.
 function MODULE.Call(eventName, gamemodeTable, ...)
 	local callbacks = MODULE.registeredHooks[eventName]
@@ -75,7 +75,7 @@ end
 
 --- Calls all hooks associated with a specific event, using the current gamemode.
 --- @param eventName string The name of the internal GameRules method.
---- @vararg any Arguments to pass to the hooks.
+--- @vararg any Arguments to pass to the Hooks.
 --- @return any # The return value(s) of the hook.
 function MODULE.Run(eventName, ...)
 	return MODULE.Call(eventName, _G.GAMEMODE, ...)
@@ -92,7 +92,7 @@ function MODULE.GetTable(eventName)
 	return MODULE.registeredHooks
 end
 
---- Removes a hook from the list of registered hooks.
+--- Removes a hook from the list of registered Hooks.
 --- @param eventName string The name of the internal GameRules method.
 --- @param hookIdentifier string The name of the hook.
 function MODULE.Remove(eventName, hookIdentifier)

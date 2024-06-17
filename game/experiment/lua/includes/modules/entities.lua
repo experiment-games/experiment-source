@@ -7,7 +7,7 @@
 
 _BASE_ENTITY_CLASS = "prop_scripted"
 
-local Warning = dbg.Warning
+local Warning = debug.Warning
 
 local MODULE = {}
 MODULE.registeredEntities = MODULE.registeredEntities or {}

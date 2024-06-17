@@ -5,8 +5,8 @@
 	Modified for Experiment.
 --]]
 
-local Warning = dbg.Warning
-local Msg = dbg.Msg
+local Warning = debug.Warning
+local Msg = debug.Msg
 
 function ENT:Initialize()
 	if (CLIENT) then

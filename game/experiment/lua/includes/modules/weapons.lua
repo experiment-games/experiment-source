@@ -7,7 +7,7 @@
 
 _BASE_WEAPON = "weapon_hl2mpbase_scriptedweapon"
 
-local Warning = dbg.Warning
+local Warning = debug.Warning
 
 local MODULE = {}
 MODULE.registeredWeapons = MODULE.registeredWeapons or {}

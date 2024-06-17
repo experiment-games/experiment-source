@@ -9,9 +9,7 @@ if (not CLIENT) then
 	return
 end
 
-local AngleVectors = mathlib.AngleVectors
-
-hooks.Add("PlayerUpdateFlashlight", "PlayerUpdateWeaponFlashlight",
+Hooks.Add("PlayerUpdateFlashlight", "PlayerUpdateWeaponFlashlight",
 	function(client, position, vecForward, vecRight, vecUp, nDistance)
 		--if ( not input.CAM_IsThirdPerson() ) then
 		local vm = client:GetViewModel()
@@ -29,7 +27,7 @@ hooks.Add("PlayerUpdateFlashlight", "PlayerUpdateWeaponFlashlight",
 				print("after", vecOrigin, eyeAngles)
 
 				local vForward = Vector()
-				AngleVectors(eyeAngles, vecForward, vecRight, vecUp)
+				math.AngleVectors(eyeAngles, vecForward, vecRight, vecUp)
 				position = vecOrigin
 
 				return position, vecForward, vecRight, vecUp, nDistance

@@ -14,10 +14,9 @@ local pList
 local Util_EntitiesInSphere = Util.EntitiesInSphere
 local MAX_ENTITYARRAY = 1024
 local SPHERE_RADIUS_OUTER = 128
-local pairs = pairs
 local SPHERE_RADIUS_INNER = 64
 
-hooks.Add("PlayerThink", "Util.EntityIn*", function(client)
+Hooks.Add("PlayerThink", "Util.EntityIn*", function(client)
 	vecOrigin = client:GetAbsOrigin()
 	count, pList = Util_EntitiesInSphere(MAX_ENTITYARRAY, vecOrigin, SPHERE_RADIUS_OUTER, 0)
 	for _, pEntity in pairs(pList) do

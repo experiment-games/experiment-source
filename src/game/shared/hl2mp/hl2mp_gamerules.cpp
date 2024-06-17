@@ -14,6 +14,7 @@
 #ifdef LUA_SDK
 #include "takedamageinfo.h"
 #include "luamanager.h"
+#include "luasrclib.h"
 #include "lbasecombatweapon_shared.h"
 #include "lbaseentity_shared.h"
 #include "lbaseplayer_shared.h"

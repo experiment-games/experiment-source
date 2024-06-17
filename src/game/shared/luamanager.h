@@ -13,6 +13,7 @@
 #endif
 
 #include "lua.hpp"
+#include "luasrclib.h"
 
 #define LUA_ROOT "lua"  // Can't be "LUA_PATH" because luaconf.h uses it.
 #define LUA_PATH_CACHE "lua_cache\\"
@@ -21,8 +22,8 @@
 #define LUA_PATH_ENUM LUA_ROOT "\\includes\\enum"
 #define LUA_PATH_EXTENSIONS LUA_ROOT "\\includes\\extensions"
 #define LUA_PATH_MODULES LUA_ROOT "\\includes\\modules"
-#define LUA_PATH_MODULES_LAZY LUA_ROOT "\\includes\\modules_lazy"
 #define LUA_PATH_INCLUDES LUA_ROOT "\\includes"
+#define LUA_PATH_INCLUDES_INIT_FILE LUA_PATH_INCLUDES "\\sh_init.lua"
 #define LUA_PATH_GAME_CLIENT LUA_ROOT "\\game\\client"
 #define LUA_PATH_GAME_SERVER LUA_ROOT "\\game\\server"
 #define LUA_PATH_GAME_SHARED LUA_ROOT "\\game\\shared"
@@ -55,7 +56,7 @@
     lua_pop( L, 1 );
 
 #define BEGIN_LUA_CALL_HOOK( functionName )    \
-    lua_getglobal( L, "hooks" );               \
+    lua_getglobal( L, LUA_HOOKSLIBNAME );      \
     if ( lua_istable( L, -1 ) )                \
     {                                          \
         lua_getfield( L, -1, "Call" );         \

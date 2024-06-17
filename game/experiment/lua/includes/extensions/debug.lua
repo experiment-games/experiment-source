@@ -1,6 +1,4 @@
-require("Debug")
-
-local ConDColorMsg = dbg.ConDColorMsg
+require("debug")
 
 debug.ColorClient = Color(255, 213, 107)
 debug.ColorServer = Color(107, 186, 255)
@@ -15,5 +13,5 @@ end
 
 function debug.PrintError(msg)
 	msg = msg and (errorPrefix .. tostring(msg)) or nil
-	ConDColorMsg(errorColor, debug.traceback(msg, 2) .. "\n")
+	debug.ConDColorMsg(errorColor, debug.traceback(msg, 2) .. "\n")
 end

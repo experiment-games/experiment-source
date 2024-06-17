@@ -23,7 +23,7 @@ function MODULE.Call(eventName, ...)
 		return false
 	end
 
-	return hooks.Call(eventName, _G.GAMEMODE, ...)
+	return Hooks.Call(eventName, _G.GAMEMODE, ...)
 end
 
 --- Returns a gamemode table object

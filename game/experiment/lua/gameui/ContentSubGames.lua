@@ -6,7 +6,7 @@
 --]]
 
 Include("../includes/extensions/table.lua")
-Include("../includes/extensions/keyvalues.lua")
+Include("../includes/extensions/key_values.lua")
 Include("../includes/extensions/gui.lua")
 
 local CContentSubGames = {

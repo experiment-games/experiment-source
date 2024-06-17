@@ -1109,7 +1109,7 @@ void luaV_finishOp (lua_State *L) {
 
 /*
 ** Protect code that, in general, can raise errors, reallocate the
-** stack, and change the hooks.
+** stack, and change the Hooks.
 */
 #define Protect(exp)  (savestate(L,ci), (exp), updatetrap(ci))
 
@@ -1118,7 +1118,7 @@ void luaV_finishOp (lua_State *L) {
 
 /*
 ** Protect code that can only raise errors. (That is, it cannot change
-** the stack or hooks.)
+** the stack or Hooks.)
 */
 #define halfProtect(exp)  (savestate(L,ci), (exp))
 

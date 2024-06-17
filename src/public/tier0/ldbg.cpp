@@ -157,6 +157,9 @@ static const luaL_Reg dbg_funcs[] = {{"SpewActivate", luasrc_SpewActivate},
                                      {NULL, NULL}};
 
 LUALIB_API int luaopen_dbg(lua_State *L) {
-    luaL_register(L, LUA_DBGLIBNAME, dbg_funcs);
+    // luaL_register(L, LUA_DBGLIBNAME, dbg_funcs);
+    // Extend the default debug library instead
+    lua_getglobal( L, LUA_DBLIBNAME );
+    luaL_register( L, NULL, dbg_funcs );
     return 1;
 }

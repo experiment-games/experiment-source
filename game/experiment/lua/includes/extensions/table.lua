@@ -7,13 +7,6 @@
 
 require("table")
 
-local setmetatable = setmetatable
-local getmetatable = getmetatable
-local pairs = pairs
-local type = type
-local print = print
-local KeyValues = KeyValues
-
 function table.Copy(target, shouldCopyRecursively)
     if (target == nil) then
         return nil

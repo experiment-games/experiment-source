@@ -56,7 +56,14 @@ sql = {
 	TableExists = function() end,
 }
 
-Angle = QAngle
+system = System
+cvars = ConsoleVariables
+vgui = Gui
+VMatrix = Matrix
+surface = Surface
+input = Input
+
+engine = Engine
 
 RealFrameTime = Globals.absoluteframetime
 CurTime = Globals.curtime
@@ -64,17 +71,9 @@ FrameNumber = Globals.framecount
 FrameTime = Globals.frametime
 engine.TickCount = Globals.tickcount
 engine.TickInterval = Globals.interval_per_tick
-SoundDuration = engine.GetSoundDuration
+SoundDuration = Engine.GetSoundDuration
 
-system = System
-cvars = ConsoleVariables
-umsg = require("usermessages")
-vgui = Gui
-VMatrix = Matrix
-surface = Surface
-input = Input
-engine = Engine
-
+umsg = require("UserMessages")
 umsg.Angle = umsg.WriteAngles
 umsg.Bool = umsg.WriteBool
 umsg.Char = umsg.WriteChar
@@ -160,7 +159,7 @@ TauntCamera = function()
 end
 
 game = {
-	IsDedicated = function() return engine.IsDedicatedServer() end,
+	IsDedicated = function() return Engine.IsDedicatedServer() end,
 }
 
 if (SERVER) then

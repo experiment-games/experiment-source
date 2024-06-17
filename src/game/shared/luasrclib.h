@@ -59,7 +59,7 @@ LUALIB_API int( luaopen_CTakeDamageInfo )( lua_State *L );
 #define LUA_CVARLIBNAME "ConsoleVariables"
 LUALIB_API int( luaopen_cvars )( lua_State *L );
 
-#define LUA_DBGLIBNAME "Debug"
+#define LUA_DBGLIBNAME "Debug" // Unused, since we extend the default debug library
 LUALIB_API int( luaopen_dbg )( lua_State *L );
 
 #define LUA_DEBUGOVERLAYLIBNAME "DebugOverlay"
@@ -199,5 +199,11 @@ LUALIB_API int( luaopen_system )( lua_State *L );
 
 /* open all Source Engine libraries */
 LUALIB_API void( luasrc_openlibs )( lua_State *L );
+
+// Lua defined libraries
+#define LUA_ENTITIESLIBNAME "Entities"
+#define LUA_HOOKSLIBNAME "Hooks"
+#define LUA_WEAPONSLIBNAME "Weapons"
+#define LUA_GAMEMODESLIBNAME "Gamemodes"
 
 #endif  // LUASRCLIB_H

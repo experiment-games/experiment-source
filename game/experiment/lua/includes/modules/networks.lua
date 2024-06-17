@@ -1,4 +1,4 @@
-local MODULE = net
+local MODULE = {}
 
 local socket = require("luasocket")
 local IP = "127.0.0.1" -- TODO: game server IP here
@@ -23,7 +23,7 @@ local currentIncomingMessage = nil
 local currentOutgoingMessage = nil
 
 --[[
-	Forward net.Read* and net.Write* functions to the reader and writer
+	Forward Networks.Read* and Networks.Write* functions to the reader and writer
 	that are currently active
 --]]
 if (getmetatable(MODULE) == nil) then
@@ -40,7 +40,7 @@ if (getmetatable(MODULE) == nil) then
                 end
 
                 if (not target) then
-					error("net." .. key .. " was called without calling net.Start.", 2)
+					error("Networks." .. key .. " was called without calling Networks.Start.", 2)
 				end
 
 				if (not target[key]) then
@@ -112,7 +112,7 @@ if (CLIENT) then
 			debug("Error receiving response: " .. err)
 
 			-- localClient:close()
-			-- hooks.Remove("Think", "__NetModuleTestClientUpdate")
+			-- Hooks.Remove("Think", "__NetModuleTestClientUpdate")
 			return
 		end
 
@@ -129,14 +129,14 @@ if (CLIENT) then
 			debug("Error receiving response: " .. err)
 
 			-- localClient:close()
-			-- hooks.Remove("Think", "__NetModuleTestClientUpdate")
+			-- Hooks.Remove("Think", "__NetModuleTestClientUpdate")
 			return
 		end
 
 		MODULE.HandleIncomingMessage(bytes, nil)
 	end
 
-	hooks.Add("Think", "__NetModuleClientUpdate", clientUpdate)
+	Hooks.Add("Think", "__NetModuleClientUpdate", clientUpdate)
 elseif (SERVER) then
 	localServer = socket.tcp()
     local success, err = localServer:bind(IP, PORT)
@@ -236,7 +236,7 @@ elseif (SERVER) then
 		end
 	end
 
-	hooks.Add("Think", "__NetModuleServerUpdate", serverUpdate)
+	Hooks.Add("Think", "__NetModuleServerUpdate", serverUpdate)
 end
 
 --[[
@@ -302,7 +302,7 @@ function WRITER:WriteRaw(data, bits)
 end
 
 --- Writes the components of an angle
---- @param angle QAngle
+--- @param angle Angle
 function WRITER:WriteAngle(angle)
 	self:WriteFloat(angle.pitch)
 	self:WriteFloat(angle.yaw)
@@ -501,13 +501,13 @@ function READER:ReadRaw(bitCount)
 end
 
 --- Reads the components of an angle
---- @return QAngle
+--- @return Angle
 function READER:ReadAngle()
     local pitch = self:ReadFloat()
     local yaw = self:ReadFloat()
     local roll = self:ReadFloat()
 
-    return QAngle(pitch, yaw, roll)
+    return Angle(pitch, yaw, roll)
 end
 
 --- Reads a bit from the data
@@ -646,20 +646,20 @@ end
 
 function MODULE.Start(messageName)
 	if (currentOutgoingMessage) then
-		error("net.Start was called twice without sending a message.")
+		error("Networks.Start was called twice without sending a message.")
 	end
 
     currentOutgoingMessage = WRITER.new()
 
     -- Write the message name as the header
-	-- TODO: Store this in networked stringtables and send the index instead (adding net.AddNetworkString, with util.AddNetworkString as an alias for gmod compatibility)
+	-- TODO: Store this in networked stringtables and send the index instead (adding Networks.AddNetworkString, with util.AddNetworkString as an alias for gmod compatibility)
     currentOutgoingMessage:WriteString(messageName)
 end
 
 if (SERVER) then
 	function MODULE.Send(client)
         if (not currentOutgoingMessage) then
-            error("net.Send was called without calling net.Start.")
+            error("Networks.Send was called without calling Networks.Start.")
         end
 
 		local socketClient = MODULE.ClientToSocketClient(client)
@@ -672,7 +672,7 @@ if (SERVER) then
 
 	function MODULE.Broadcast()
 		if (not currentOutgoingMessage) then
-			error("net.Broadcast was called without calling net.Start.")
+			error("Networks.Broadcast was called without calling Networks.Start.")
 		end
 
         for _, socketClient in ipairs(socketClients) do
@@ -684,7 +684,7 @@ if (SERVER) then
 elseif (CLIENT) then
 	function MODULE.SendToServer()
 		if (not currentOutgoingMessage) then
-			error("net.SendToServer was called without calling net.Start.")
+			error("Networks.SendToServer was called without calling Networks.Start.")
 		end
 
         local data = currentOutgoingMessage:GetPackedData()
@@ -701,7 +701,7 @@ end
 
 function MODULE.HandleIncomingMessage(bytes, socketClient)
 	if (currentIncomingMessage) then
-        debug("net.HandleIncomingMessage was called twice without handling the previous message. Resetting...")
+        debug("Networks.HandleIncomingMessage was called twice without handling the previous message. Resetting...")
 	end
 
     currentIncomingMessage = READER.new(bytes)
@@ -721,7 +721,7 @@ end
 --- @param socketClient any
 function MODULE.Incoming(length, socketClient)
     if (not currentIncomingMessage) then
-        error("net.Incoming was called without calling net.HandleIncomingMessage.")
+        error("Networks.Incoming was called without calling Networks.HandleIncomingMessage.")
     end
 
     local messageName = currentIncomingMessage:ReadString()

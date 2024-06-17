@@ -14,6 +14,7 @@
 #include "panelmetaclassmgr.h"
 #include <vgui_controls/PHandle.h>
 #include "luamanager.h"
+#include "luasrclib.h"
 #include "vgui_int.h"
 #include "lPanel.h"
 #include <scripted_controls/lPanel.h>

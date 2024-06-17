@@ -1008,8 +1008,7 @@ bool CServerGameDLL::LevelInit(const char *pMapName, char const *pMapEntities,
     // Add Lua environment
     luasrc_init();
 
-    luasrc_dofolder(L, LUA_PATH_EXTENSIONS);
-    luasrc_dofolder(L, LUA_PATH_MODULES);
+    luasrc_dofile( L, LUA_PATH_INCLUDES_INIT_FILE );
     luasrc_dofolder(L, LUA_PATH_GAME_SHARED);
     luasrc_dofolder(L, LUA_PATH_GAME_SERVER);
 

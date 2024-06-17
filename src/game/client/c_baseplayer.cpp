@@ -56,6 +56,7 @@
 
 #ifdef LUA_SDK
 #include "luamanager.h"
+#include "luasrclib.h"
 #include "lbaseplayer_shared.h"
 #include "mathlib/lvector.h"
 #endif

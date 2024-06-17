@@ -1,7 +1,7 @@
 -- lua_dofile utilities/test/luasocket.lua
 local socket = require("luasocket")
 local IP = "127.0.0.1" -- TODO: game server IP here
-local PORT = 12345
+local PORT = 12346 -- Different port from what is used by the Networks.* library
 
 local debug = function(...)
 	print("[LuaSocketTest]", ...)
@@ -74,7 +74,7 @@ if (SERVER) then
 		-- socket.sleep(0.01)
 	end
 
-	hooks.Add("Think", "LuaSocketTestUpdate", serverUpdate)
+	Hooks.Add("Think", "LuaSocketTestUpdate", serverUpdate)
 end
 
 if (CLIENT) then
@@ -105,13 +105,13 @@ if (CLIENT) then
 			debug("Sent to server: " .. message)
 			client:send(message)
 			-- client:close()
-			-- hooks.Remove("Think", "LuaSocketTestClientUpdate")
+			-- Hooks.Remove("Think", "LuaSocketTestClientUpdate")
 		elseif (err and err ~= "timeout") then
 			debug("Error receiving response: " .. err)
 			client:close()
-			hooks.Remove("Think", "LuaSocketTestClientUpdate")
+			Hooks.Remove("Think", "LuaSocketTestClientUpdate")
 		end
 	end
 
-	hooks.Add("Think", "LuaSocketTestClientUpdate", clientUpdate)
+	Hooks.Add("Think", "LuaSocketTestClientUpdate", clientUpdate)
 end

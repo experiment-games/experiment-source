@@ -9,7 +9,7 @@ Include("../includes/extensions/panel.lua")
 
 local FCVAR_CLIENTDLL = _E.FCVAR.CLIENTDLL
 
-local concommands = require("concommands")
+local ConsoleCommands = require("console_commands")
 
 local hContentDialog = INVALID_PANEL
 
@@ -34,4 +34,4 @@ local function OnOpenContentDialog()
 	hContentDialog:Activate()
 end
 
-concommands.Add("OpenContentDialog", OnOpenContentDialog, "Open content dialog.", FCVAR_CLIENTDLL)
+ConsoleCommands.Add("OpenContentDialog", OnOpenContentDialog, "Open content dialog.", FCVAR_CLIENTDLL)

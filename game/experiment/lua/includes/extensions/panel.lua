@@ -5,7 +5,6 @@
 	Modified for Experiment.
 --]]
 
-local type = type
 local printError = debug.PrintError
 
 function ToPanel( pPanel )

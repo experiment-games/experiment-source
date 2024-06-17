@@ -87,7 +87,7 @@ function SWEP:PrimaryAttack()
 
 	self:SendWeaponAnim(180)
 	client:SetAnimation(5)
-	ToHL2MPPlayer(client):DoAnimationEvent(0)
+	ToPlayer(client):DoAnimationEvent(0)
 
 	self.m_flNextPrimaryAttack   = Globals.curtime() + 0.75
 	self.m_flNextSecondaryAttack = Globals.curtime() + 0.75
@@ -115,7 +115,7 @@ function SWEP:PrimaryAttack()
 		client:SnapEyeAngles(angles)
 	end
 
-	client:ViewPunch(QAngle(-8, random.RandomFloat(-2, 2), 0))
+	client:ViewPunch(Angle(-8, random.RandomFloat(-2, 2), 0))
 
 	if (self.m_iClip1 == 0 and client:GetAmmoCount(self.m_iPrimaryAmmoType) <= 0) then
 		-- HEV suit - indicate out of ammo condition
@@ -130,7 +130,7 @@ function SWEP:Reload()
 	local fRet = self:DefaultReload(self:GetMaxClip1(), self:GetMaxClip2(), 182)
 	if (fRet) then
 		--		self:WeaponSound( 6 )
-		ToHL2MPPlayer(self:GetOwner()):DoAnimationEvent(3)
+		ToPlayer(self:GetOwner()):DoAnimationEvent(3)
 	end
 	return fRet
 end

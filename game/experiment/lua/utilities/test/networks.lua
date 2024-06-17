@@ -1,33 +1,33 @@
--- lua_dofile utilities/test/net.lua;lua_dofile_cl utilities/test/net.lua;
+-- lua_dofile utilities/test/networks.lua;lua_dofile_cl utilities/test/networks.lua;
 
 local countReceived = 0
 
 if (SERVER) then
-    net.Receive("TestMessage", function(length, client)
-        local message = net.ReadString()
-		local num = net.ReadFloat()
+    Networks.Receive("TestMessage", function(length, client)
+        local message = Networks.ReadString()
+		local num = Networks.ReadFloat()
 
         assert(math.AlmostEquals(num, 3.14), "Received incorrect number from client!")
 		assert(message == "Hello, server!", "Received incorrect message from client!")
 
-        net.Start("CTestMessage")
-		net.WriteFloat(1234.5677490234)
-        net.WriteString("Hello, client!")
-		net.WriteVector(client:GetAbsOrigin())
-        net.Send(client)
+        Networks.Start("CTestMessage")
+		Networks.WriteFloat(1234.5677490234)
+        Networks.WriteString("Hello, client!")
+		Networks.WriteVector(client:GetAbsOrigin())
+        Networks.Send(client)
 
 		countReceived = countReceived + 1
     end)
 
-    net.Receive("TestMessage2", function(length, client)
-        net.Start("CTestMessage2")
-        net.WriteString("Hello again, client!")
-        net.Send(client)
+    Networks.Receive("TestMessage2", function(length, client)
+        Networks.Start("CTestMessage2")
+        Networks.WriteString("Hello again, client!")
+        Networks.Send(client)
 
 		countReceived = countReceived + 1
     end)
 
-	timer.Simple(1, function()
+	Timers.Simple(1, function()
 		assert(countReceived == 2, "Did not receive all messages from client!")
 
 		print("net module server tests passed!")
@@ -35,10 +35,10 @@ if (SERVER) then
 end
 
 if (CLIENT) then
-	net.Receive("CTestMessage", function(length, client)
-        local num = net.ReadFloat()
-        local message = net.ReadString()
-		local position = net.ReadVector()
+	Networks.Receive("CTestMessage", function(length, client)
+        local num = Networks.ReadFloat()
+        local message = Networks.ReadString()
+		local position = Networks.ReadVector()
 
         assert(math.AlmostEquals(num, 1234.5677490234), "Received incorrect number from server!")
         assert(message == "Hello, client!", "Received incorrect message from server!")
@@ -47,23 +47,23 @@ if (CLIENT) then
 		countReceived = countReceived + 1
 	end)
 
-	net.Receive("CTestMessage2", function(length, client)
-        local message = net.ReadString()
+	Networks.Receive("CTestMessage2", function(length, client)
+        local message = Networks.ReadString()
 
         assert(message == "Hello again, client!", "Received incorrect message from server!")
 
 		countReceived = countReceived + 1
 	end)
 
-	net.Start("TestMessage")
-	net.WriteString("Hello, server!")
-	net.WriteFloat(3.14)
-	net.SendToServer()
+	Networks.Start("TestMessage")
+	Networks.WriteString("Hello, server!")
+	Networks.WriteFloat(3.14)
+	Networks.SendToServer()
 
-	net.Start("TestMessage2")
-    net.SendToServer()
+	Networks.Start("TestMessage2")
+    Networks.SendToServer()
 
-	timer.Simple(1, function()
+	Timers.Simple(1, function()
         assert(countReceived == 2, "Did not receive all messages from server!")
 
 		print("net module client tests passed!")

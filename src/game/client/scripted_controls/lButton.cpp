@@ -10,6 +10,7 @@
 
 #include <vgui_int.h>
 #include <luamanager.h>
+#include "luasrclib.h"
 #include <vgui_controls/lPanel.h>
 #include <lColor.h>
 

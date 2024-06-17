@@ -8,7 +8,7 @@
 --]]
 
 local curdir = "wiki/classes/" .. (CLIENT and "client" or "server")
-filesystem.CreateDirHierarchy(curdir, "MOD")
+FileSystem.CreateDirHierarchy(curdir, "MOD")
 
 local classes = {}
 
@@ -31,29 +31,29 @@ for _, class in pairs(classes) do
 	table.sort(fields)
 
 	local curfilename = curdir .. "/" .. class .. ".txt"
-	local curfile = filesystem.Open(curfilename, "wb")
+	local curfile = FileSystem.Open(curfilename, "wb")
 	local lines = {}
 	for i, field in pairs(fields) do
 		table.insert(lines, "*[[" .. class .. "." .. field .. "|" .. field .. "]]")
 	end
-	filesystem.Write(table.concat(lines, "\r\n") .. "\r\n", curfile)
-	filesystem.Close(curfile)
+	FileSystem.Write(table.concat(lines, "\r\n") .. "\r\n", curfile)
+	FileSystem.Close(curfile)
 
 	local cl_filename = "wiki/classes/client/" .. class .. ".txt"
 	local sv_filename = "wiki/classes/server/" .. class .. ".txt"
-	if (filesystem.FileExists(cl_filename, "MOD") and
-			filesystem.FileExists(sv_filename, "MOD")) then
-		curfile = filesystem.Open(cl_filename, "rb")
-		local _, cl_file = filesystem.Read(filesystem.Size(curfile), curfile)
-		filesystem.Close(curfile)
+	if (FileSystem.FileExists(cl_filename, "MOD") and
+			FileSystem.FileExists(sv_filename, "MOD")) then
+		curfile = FileSystem.Open(cl_filename, "rb")
+		local _, cl_file = FileSystem.Read(FileSystem.Size(curfile), curfile)
+		FileSystem.Close(curfile)
 		local cl_lines = {}
 		for line in string.gmatch(cl_file, "(.-)\r\n") do
 			table.insert(cl_lines, line)
 		end
 
-		curfile = filesystem.Open(sv_filename, "rb")
-		local _, sv_file = filesystem.Read(filesystem.Size(curfile), curfile)
-		filesystem.Close(curfile)
+		curfile = FileSystem.Open(sv_filename, "rb")
+		local _, sv_file = FileSystem.Read(FileSystem.Size(curfile), curfile)
+		FileSystem.Close(curfile)
 		local sv_lines = {}
 		for line in string.gmatch(sv_file, "(.-)\r\n") do
 			table.insert(sv_lines, line)
@@ -70,7 +70,7 @@ for _, class in pairs(classes) do
 			end
 		end
 
-		curfile = filesystem.Open("wiki/classes/" .. class .. ".txt", "wb")
+		curfile = FileSystem.Open("wiki/classes/" .. class .. ".txt", "wb")
 		lines = {}
 		table.insert(lines, "<table width=\"100%\">")
 		table.insert(lines, "<tr>")
@@ -100,7 +100,7 @@ for _, class in pairs(classes) do
 		end
 		table.insert(lines, "</tr>")
 		table.insert(lines, "</table>")
-		filesystem.Write(table.concat(lines, "\r\n") .. "\r\n", curfile)
-		filesystem.Close(curfile)
+		FileSystem.Write(table.concat(lines, "\r\n") .. "\r\n", curfile)
+		FileSystem.Close(curfile)
 	end
 end

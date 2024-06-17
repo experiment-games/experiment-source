@@ -6,6 +6,7 @@
 
 #include "cbase.h"
 #include "luamanager.h"
+#include "luasrclib.h"
 #include "lhl2mp_player_shared.h"
 
 // memdbgon must be the last include file in a .cpp file!!!

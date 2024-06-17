@@ -5044,9 +5044,9 @@ For call events, @id{event} can be @id{LUA_HOOKCALL},
 the normal value, or @id{LUA_HOOKTAILCALL}, for a tail call;
 in this case, there will be no corresponding return event.
 
-While Lua is running a hook, it disables other calls to hooks.
+While Lua is running a hook, it disables other calls to Hooks.
 Therefore, if a hook calls back Lua to execute a function or a chunk,
-this execution occurs without any calls to hooks.
+this execution occurs without any calls to Hooks.
 
 Hook functions cannot have continuations,
 that is, they cannot call @Lid{lua_yieldk},

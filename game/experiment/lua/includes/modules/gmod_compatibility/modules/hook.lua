@@ -14,7 +14,7 @@ local Hooks = {}
 
 --[[---------------------------------------------------------
     Name: GetTable
-    Desc: Returns a table of all hooks.
+    Desc: Returns a table of all Hooks.
 -----------------------------------------------------------]]
 function GetTable()
 	return Hooks

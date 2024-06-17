@@ -10,7 +10,7 @@
 local t
 local i = 0
 repeat
-	t = networkstringtable.GetTable(i)
+	t = NetworkStringTable.GetTable(i)
 	if (t == nil) then
 		break
 	end

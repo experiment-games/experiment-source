@@ -2,10 +2,10 @@
     Run this script to scrap your Garry's Mod projects (specifically Helix schema's)
     to see which hooks are being used in your codebase.
 
-    It'll be outputted to hooks.txt in the same directory as this script.
+    It'll be outputted to Hooks.txt in the same directory as this script.
 
     E.g:
-    node find-used-gmod-hooks.js "C:\Projects\gmod-experiment-redux" "C:\Projects\helix" "C:\Program Files (x86)\Steam\steamapps\common\GarrysMod\garrysmod\gamemodes\sandbox" "C:\Program Files (x86)\Steam\steamapps\common\GarrysMod\garrysmod\gamemodes\base"
+    node find-used-gmod-Hooks.js "C:\Projects\gmod-experiment-redux" "C:\Projects\helix" "C:\Program Files (x86)\Steam\steamapps\common\GarrysMod\garrysmod\gamemodes\sandbox" "C:\Program Files (x86)\Steam\steamapps\common\GarrysMod\garrysmod\gamemodes\base"
 */
 
 const fs = require('fs');
@@ -18,7 +18,7 @@ const targetPatterns = [
     /hook\.Add\("(\w+)", "\w+", (.+)\)/g,
 ];
 
-const outputFile = 'hooks.txt';
+const outputFile = 'Hooks.txt';
 
 function traverseDirectory(dir) {
     if (dir.includes('node_modules') || dir.includes('.git')) {

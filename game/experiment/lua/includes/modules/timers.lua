@@ -43,4 +43,6 @@ function MODULE.Tick()
     end
 end
 
-hooks.Add("Think", "TimerTick", MODULE.Tick)
+Hooks.Add("Think", "TimerTick", MODULE.Tick)
+
+return MODULE

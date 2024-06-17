@@ -201,8 +201,7 @@ LUALIB_API int luaopen_mathlib( lua_State *L )
 {
     // luaL_register(L, LUA_MATHLIBLIBNAME, mathliblib);
     // Extend the default math library instead
-    luaL_getmetatable( L, LUA_MATHLIBLIBNAME );
+    lua_getglobal( L, LUA_MATHLIBNAME );
     luaL_register( L, NULL, mathliblib );
-    lua_pop( L, 1 );  // pop the metatable
     return 1;
 }

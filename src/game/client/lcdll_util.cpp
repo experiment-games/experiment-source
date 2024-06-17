@@ -8,6 +8,7 @@
 
 #include "cbase.h"
 #include "luamanager.h"
+#include "luasrclib.h"
 #include "lbaseplayer_shared.h"
 #include "lbaseentity_shared.h"
 #include "lgametrace.h"
