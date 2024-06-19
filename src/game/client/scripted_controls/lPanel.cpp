@@ -487,5 +487,5 @@ static const luaL_Reg Panel_funcs[] = {
 LUALIB_API int luaopen_vgui_Panel(lua_State *L) {
   luaL_register(L, LUA_VGUILIBNAME, Panel_funcs);
   lua_pop(L, 1);
-  return 1;
+  return 0;
 }

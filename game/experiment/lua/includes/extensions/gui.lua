@@ -19,17 +19,11 @@ local registeredHelpers = {}
 --- @param panelName Name of the panel
 --- @param baseClassName Name of the base class
 function Gui.Register(panelTable, panelName, baseClassName)
-	if (Gui[panelName] ~= nil) then
-		error("attempt to register existing panel class \"" .. tostring(panelName) .. "\"", 2)
-	end
-
     if (Gui[baseClassName] == nil) then
         error(
         "attempt to register panel class \"" ..
         tostring(panelName) .. "\" with non-existing base class \"" .. tostring(baseClassName) .. "\"", 2)
     end
-
-	print("Registering panel class \"" .. tostring(panelName) .. "\" with base class \"" .. tostring(baseClassName) .. "\"")
 
 	panelTable.__classname = panelName
 	panelTable.Base = baseClassName
@@ -48,4 +42,37 @@ function Gui.Register(panelTable, panelName, baseClassName)
 
 		return panel
 	end
+end
+
+--- Registers a panel and creates a factory for it in the Gui namespace,
+--- but uses a metatable for inheritance, to allow out-of-order registration
+--- @param panelTable Panel table object
+--- @param panelName Name of the panel
+--- @param baseClassName Name of the base class
+function Gui.RegisterWithMetatable(panelTable, panelName, baseClassName)
+	-- __index to allow inheritance
+	panelTable.__classname = panelName
+	panelTable.Base = baseClassName
+
+	registeredHelpers[panelName] = panelTable
+
+    setmetatable(panelTable, {
+		__index = function(self, key)
+            local rawValue = rawget(self, key)
+
+            if (key == "Base") then
+                local baseClassName = rawValue
+
+                if (Gui[baseClassName] == nil) then
+                    error(
+                        "attempt to register panel class \"" ..
+                        tostring(panelName) .. "\" with non-existing base class \"" .. tostring(baseClassName) .. "\"", 2)
+                end
+
+                return Gui[baseClassName]
+            end
+
+			return rawValue
+		end
+	})
 end

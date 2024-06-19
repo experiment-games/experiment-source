@@ -461,7 +461,10 @@ CWorld* GetWorldEntity()
 CWorld::CWorld( )
 {
 	AddEFlags( EFL_NO_AUTO_EDICT_ATTACH | EFL_KEEP_ON_RECREATE_ENTITIES );
-	NetworkProp()->AttachEdict( INDEXENT(RequiredEdictIndex()) );
+    NetworkProp()->AttachEdict( INDEXENT( RequiredEdictIndex() ) );
+#ifndef LUA_SDK
+    ActivityList_Init();
+#endif
 	EventList_Init();
 	
 	SetSolid( SOLID_BSP );
@@ -472,6 +475,9 @@ CWorld::CWorld( )
 
 CWorld::~CWorld( )
 {
+#ifndef LUA_SDK
+    ActivityList_Free();
+#endif
 	EventList_Free();
 	if ( g_pGameRules )
 	{
@@ -611,6 +617,9 @@ void CWorld::Precache( void )
 	// =================================================
 	//	Activities
 	// =================================================
+#ifndef LUA_SDK
+    ActivityList_RegisterSharedActivities();
+#endif
 	RegisterSharedActivities();
 
 	EventList_Free();

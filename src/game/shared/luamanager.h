@@ -47,6 +47,11 @@
     lua_getglobal( L, LUA_ENAME );               \
     lua_newtable( L );
 
+#define BEGIN_LUA_SET_ENUM_LIB_CONTINUED( L, libraryName ) \
+    lib = libraryName;                          \
+    lua_getglobal( L, LUA_ENAME );              \
+    lua_newtable( L );
+
 #define lua_pushenum( L, enum, shortname ) \
     lua_pushinteger( L, enum );            \
     lua_setfield( L, -2, shortname );

@@ -6,15 +6,6 @@
 Include("sh_enumerations.lua")
 Include("sh_file.lua")
 
-if (SERVER) then
-	SendFile("sh_file.lua")
-	SendFile("sh_init.lua")
-	SendFile("cl_hooks.lua")
-	SendFile("sh_enumerations.lua")
-	SendFile("sh_util.lua")
-	SendFile("util/sql.lua")
-end
-
 -- Add the gmod_compatibility path to the Lua include search path.
 package.IncludePath ="lua/includes/modules/gmod_compatibility/;" .. package.IncludePath
 
@@ -227,7 +218,7 @@ else
         end
     end
 
-	Gui._OriginalRegister = Gui._OriginalRegister or Gui.Register
+	Gui._OriginalRegister = Gui._OriginalRegister or Gui.RegisterWithMetatable
     vgui.Register = function(panelName, panelTable, baseClassName)
 		Gui._OriginalRegister(panelTable, panelName, baseClassName)
 	end
@@ -314,7 +305,39 @@ if (CLIENT) then
 	require("gmod_compatibility/modules/matproxy")
 
 	-- require("gmod_compatibility/modules/notification")
-	-- require("gmod_compatibility/modules/search")
+    -- require("gmod_compatibility/modules/search")
+
+	function vgui.RegisterTable( mtable, base )
+
+		-- Remove the global
+		PANEL = nil
+
+		mtable.Base = base or "Panel"
+		mtable.Init = mtable.Init or function() end
+
+		return mtable
+
+	end
+
+    function vgui.RegisterFile(filename)
+        local OldPanel = PANEL
+
+        PANEL = {}
+
+        -- The included file should fill the PANEL global.
+        include(filename)
+
+        local mtable = PANEL
+        PANEL = OldPanel
+
+        mtable.Base = mtable.Base or "Panel"
+        mtable.Init = mtable.Init or function() end
+
+        return mtable
+    end
+
+	Include("derma/init.lua")
+    Include("vgui_base.lua")
 end
 
 --[[
@@ -338,3 +361,9 @@ end
 	Now that the compatibility libraries have been loaded, we can start changing hooks
 --]]
 Include("cl_hooks.lua")
+
+hook.Add("Initialize", "GModCompatibility.CallInitializeHooks", function()
+	hook.Run("PreGamemodeLoaded")
+	hook.Run("OnGamemodeLoaded")
+	hook.Run("PostGamemodeLoaded")
+end)

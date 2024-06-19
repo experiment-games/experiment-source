@@ -439,5 +439,5 @@ LUALIB_API int luaopen_vgui_PropertyPage( lua_State *L )
     lua_setfield( L, -2, "__type" ); /* metatable.__type = "Panel" */
     luaL_register( L, LUA_VGUILIBNAME, PropertyPage_funcs );
     lua_pop( L, 2 );
-    return 1;
+    return 0;
 }

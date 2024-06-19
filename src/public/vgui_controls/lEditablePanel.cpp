@@ -11,6 +11,7 @@
 #include "luasrclib.h"
 #include <vgui_controls/lEditablePanel.h>
 #include <LKeyValues.h>
+#include <vgui_int.h>
 #include <vgui_controls/lPanel.h>
 
 using namespace vgui;
@@ -341,6 +342,16 @@ static const luaL_Reg EditablePanelmeta[] = {
     { "__tostring", EditablePanel___tostring },
     { NULL, NULL } };
 
+static int luasrc_Panel( lua_State *L )
+{
+    EditablePanel *pPanel = new EditablePanel( VGui_GetClientLuaRootPanel(), luaL_checkstring( L, 1 ) );
+    lua_pushpanel( L, pPanel );
+    return 1;
+}
+
+static const luaL_Reg EditablePanel_funcs[] = { { "EditablePanel", luasrc_Panel },
+                                         { NULL, NULL } };
+
 /*
 ** Open EditablePanel object
 */
@@ -350,6 +361,7 @@ LUALIB_API int luaopen_vgui_EditablePanel( lua_State *L )
     luaL_register( L, NULL, EditablePanelmeta );
     lua_pushstring( L, LUA_PANELLIBNAME );
     lua_setfield( L, -2, "__type" ); /* metatable.__type = "Panel" */
-    lua_pop( L, 1 );
-    return 1;
+    luaL_register( L, LUA_VGUILIBNAME, EditablePanel_funcs );
+    lua_pop( L, 2 );
+    return 0;
 }

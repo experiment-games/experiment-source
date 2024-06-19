@@ -77,6 +77,9 @@ C_World::~C_World( void )
 bool C_World::Init( int entnum, int iSerialNum )
 {
 	m_flWaveHeight = 0.0f;
+#ifndef LUA_SDK
+    ActivityList_Init();
+#endif
 	EventList_Init();
 
 	return BaseClass::Init( entnum, iSerialNum );
@@ -125,8 +128,9 @@ void C_World::OnDataChanged( DataUpdateType_t updateType )
 }
 
 void C_World::RegisterSharedActivities( void ) {
-    // Experiment; Note that ACT_* ActivityList registrations
-    // were moved to luamanager.cpp
+#ifndef LUA_SDK
+    ActivityList_RegisterSharedActivities();
+#endif
 
 	EventList_RegisterSharedEvents();
 }
@@ -167,6 +171,9 @@ void C_World::Precache( void )
 	// =================================================
 	//	Activities
 	// =================================================
+#ifndef LUA_SDK
+    ActivityList_Free();
+#endif
 	EventList_Free();
 
 	RegisterSharedActivities();

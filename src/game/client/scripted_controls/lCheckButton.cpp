@@ -311,6 +311,6 @@ LUALIB_API int luaopen_vgui_CheckButton(lua_State *L) {
     lua_pushstring(L, LUA_PANELLIBNAME);
     lua_setfield(L, -2, "__type"); /* metatable.__type = "Panel" */
     luaL_register(L, LUA_VGUILIBNAME, CheckButton_funcs);
-    lua_pop(L, 2);
-    return 1;
+    lua_pop( L, 2 );
+    return 0;
 }
