@@ -24,6 +24,12 @@ Networks = require("networks")
 Timers = require("timers")
 Weapons = require("weapons")
 
+local json = require("json")
+Json = {
+    Encode = json.encode,
+	Decode = json.decode,
+}
+
 function RunConsoleCommand(command, ...)
     local commandString = command .. " " .. table.concat({ ... }, " ")
     commandString = commandString:Trim()

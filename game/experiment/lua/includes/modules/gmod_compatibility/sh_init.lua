@@ -29,18 +29,41 @@ util = {
 	PrecacheModel = _R.CBaseEntity.PrecacheModel,
 	PrecacheSound = _R.CBaseEntity.PrecacheSound,
 
-	AddNetworkString = function(name) end, -- Not needed for us.
+    -- TODO: 	Things like the player manager and drive system depend on these three functions
+	--			returning sensible data. Find a way to implement it:
+    AddNetworkString = function(name) end, -- Not needed for us.
+    NetworkIDToString = function() return "" end, -- Not needed for us.
+	NetworkStringToID = function() return 0 end, -- Not needed for us.
+
+	JSONToTable = function(json)
+		return Json.Decode(json)
+    end,
+
+	TableToJSON = function(table)
+		return Json.Encode(table)
+	end,
 }
 
 local registry = debug.getregistry()
 function FindMetaTable(name)
-	if (name == "Entity") then
-		name = "CBaseEntity"
-	elseif (name == "Player") then
-		name = "CBasePlayer"
-	end
+    if (name == "Entity") then
+        name = "CBaseEntity"
+    elseif (name == "Player") then
+        name = "CBasePlayer"
+    end
 
-	return registry[name]
+    return registry[name]
+end
+
+local PLAYER_META = FindMetaTable("Player")
+
+function PLAYER_META:SetClassID(id)
+	-- We don't use this function, so we just store the class ID in the player.
+	self.__classId = id
+end
+
+function PLAYER_META:GetClassID()
+	return self.__classId
 end
 
 -- TODO: Actually implement SQLite
@@ -136,6 +159,7 @@ end
 
 function istable(variable)
     return type(variable) == "table"
+		or type(variable) == "Color"
 end
 
 function isvector(variable)
@@ -180,7 +204,7 @@ game = {
 if (SERVER) then
 	resource.AddWorkshop = function() end
 else
-	LocalPlayer = Util.GetLocalPlayer
+	LocalPlayer = _R.CBasePlayer.GetLocalPlayer
 
 	surface.SetDrawColor = surface.DrawSetColor
 	surface.DrawRect = surface.DrawFilledRect
@@ -259,6 +283,16 @@ require("gmod_compatibility/modules/utf8")
 require("gmod_compatibility/modules/drive")
 -- Include("drive/drive_base.lua")
 -- Include("drive/drive_noclip.lua")
+
+function baseclassGetCompatibility(name)
+	if (name:sub(1, 9) == "gamemode_") then
+        name = name:sub(10)
+
+		return Gamemodes.Get(name)
+	end
+
+	return baseclass.Get(name)
+end
 
 if (SERVER) then
 	-- Server-side modules.

@@ -34,7 +34,7 @@ return {
 	--- @return string
     PreProcessFile = function(fileContent, filePath)
 		-- Replace DEFINE_BASECLASS with local BaseClass = baseclass
-		fileContent = fileContent:gsub("DEFINE_BASECLASS", "local BaseClass = baseclass.Get")
+		fileContent = fileContent:gsub("DEFINE_BASECLASS", "local BaseClass = baseclassGetCompatibility")
 
 		if (not filePath:match("gamemode[/\\]cl_init%.lua$") and not filePath:match("gamemode[/\\]init%.lua$")) then
 			return fileContent

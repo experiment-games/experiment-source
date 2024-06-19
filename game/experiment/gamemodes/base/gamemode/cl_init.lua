@@ -62,3 +62,7 @@ end
 
 function GM:ShouldDrawViewModel()
 end
+
+function GM:HUDPaint()
+	-- Here for GMod compatibility.
+end
