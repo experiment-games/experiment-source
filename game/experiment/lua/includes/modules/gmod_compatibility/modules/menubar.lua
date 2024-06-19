@@ -3,7 +3,7 @@ menubar = {}
 
 function menubar.Init()
 
-	menubar.Control = Gui.Create( "DMenuBar" )
+	menubar.Control = vgui.Create( "DMenuBar" )
 	menubar.Control:Dock( TOP )
 	menubar.Control:SetVisible( false )
 

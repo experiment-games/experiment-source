@@ -35,7 +35,7 @@ function RunConsoleCommand(command, ...)
     commandString = commandString:Trim()
 
 	if (CLIENT) then
-		return Engine.ExecuteClientCmd(commandString)
+		return Engine.ClientCmd(commandString)
     else
 		return Engine.ServerCommand(commandString)
 	end

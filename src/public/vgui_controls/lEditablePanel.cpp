@@ -342,14 +342,14 @@ static const luaL_Reg EditablePanelmeta[] = {
     { "__tostring", EditablePanel___tostring },
     { NULL, NULL } };
 
-static int luasrc_Panel( lua_State *L )
+static int luasrc_EditablePanel( lua_State *L )
 {
-    EditablePanel *pPanel = new EditablePanel( VGui_GetClientLuaRootPanel(), luaL_checkstring( L, 1 ) );
-    lua_pushpanel( L, pPanel );
+    EditablePanel *pPanel = new EditablePanel( luaL_optpanel( L, 1, VGui_GetClientLuaRootPanel() ), luaL_optstring( L, 2, NULL ) );
+    lua_pusheditablepanel( L, pPanel );
     return 1;
 }
 
-static const luaL_Reg EditablePanel_funcs[] = { { "EditablePanel", luasrc_Panel },
+static const luaL_Reg EditablePanel_funcs[] = { { "EditablePanel", luasrc_EditablePanel },
                                          { NULL, NULL } };
 
 /*

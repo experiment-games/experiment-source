@@ -46,7 +46,7 @@ function ChangeTooltip( panel )
 	local Text, ContentPanel, PositionPanel, PanelOverride = FindTooltip( panel )
 	if ( !Text && !IsValid( ContentPanel ) && !PanelOverride ) then return end
 
-	Tooltip = Gui.Create( PanelOverride or "DTooltip" )
+	Tooltip = vgui.Create( PanelOverride or "DTooltip" )
 
 	if ( Text ) then
 

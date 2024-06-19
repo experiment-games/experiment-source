@@ -14,6 +14,23 @@ require("Gui")
 -- Private list of helpers
 local registeredHelpers = {}
 
+local function createHelper(panelName)
+    Gui[panelName] = function(parentPanel, name)
+        parentPanel = parentPanel or VGui_GetClientLuaRootPanel()
+
+        local helper = registeredHelpers[panelName]
+		local panel = Gui[helper.Base](parentPanel, name or panelName)
+
+		table.Merge(panel:GetRefTable(), helper)
+
+		panel.BaseClass = registeredHelpers[helper.Base]
+
+        panel:Init()
+
+		return panel
+	end
+end
+
 --- Registers a panel and creates a factory for it in the Gui namespace
 --- @param panelTable Panel table object
 --- @param panelName Name of the panel
@@ -30,18 +47,7 @@ function Gui.Register(panelTable, panelName, baseClassName)
 
 	registeredHelpers[panelName] = panelTable
 
-	Gui[panelName] = function(...)
-        local helper = registeredHelpers[panelName]
-		local panel = Gui[helper.Base](...)
-
-		table.Merge(panel:GetRefTable(), helper)
-
-		panel.BaseClass = registeredHelpers[helper.Base]
-
-		panel:Init(...)
-
-		return panel
-	end
+	createHelper(panelName)
 end
 
 --- Registers a panel and creates a factory for it in the Gui namespace,
@@ -74,5 +80,31 @@ function Gui.RegisterWithMetatable(panelTable, panelName, baseClassName)
 
 			return rawValue
 		end
-	})
+    })
+
+	createHelper(panelName)
+end
+
+-- gBuildMenuInterface = Gui.CBuildMenu(VGui_GetClientLuaRootPanel(), "build")
+--- Creates a new panel with the given name and base class
+--- @param panelName string Class name of the panel
+--- @param parentPanel Panel The parent panel to attach the new panel to
+--- @param name? string An optional name for the panel (default is panelName)
+--- @return Panel The created panel
+function Gui.Create(panelName, parentPanel, name)
+	local helper = registeredHelpers[panelName]
+
+	if (helper ~= nil) then
+		local panel = Gui[helper.Base](parentPanel, name)
+
+		table.Merge(panel:GetRefTable(), helper)
+
+		panel.BaseClass = registeredHelpers[helper.Base]
+
+		panel:Init()
+
+		return panel
+	end
+
+	return Gui[panelName](parentPanel, name)
 end

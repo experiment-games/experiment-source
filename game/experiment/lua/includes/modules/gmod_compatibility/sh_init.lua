@@ -7,7 +7,7 @@ Include("sh_enumerations.lua")
 Include("sh_file.lua")
 
 -- Add the gmod_compatibility path to the Lua include search path.
-package.IncludePath ="lua/includes/modules/gmod_compatibility/;" .. package.IncludePath
+package.IncludePath = "lua/includes/modules/gmod_compatibility/;" .. package.IncludePath
 
 --[[
 	Renames and other polyfills
@@ -20,30 +20,54 @@ util = {
 	PrecacheModel = _R.CBaseEntity.PrecacheModel,
 	PrecacheSound = _R.CBaseEntity.PrecacheSound,
 
-    -- TODO: 	Things like the player manager and drive system depend on these three functions
+	-- TODO: 	Things like the player manager and drive system depend on these three functions
 	--			returning sensible data. Find a way to implement it:
-    AddNetworkString = function(name) end, -- Not needed for us.
-    NetworkIDToString = function() return "" end, -- Not needed for us.
-	NetworkStringToID = function() return 0 end, -- Not needed for us.
+	AddNetworkString = function(name) end,        -- Not needed for us.
+	NetworkIDToString = function() return "" end, -- Not needed for us.
+	NetworkStringToID = function() return 0 end,  -- Not needed for us.
 
 	JSONToTable = function(json)
 		return Json.Decode(json)
-    end,
+	end,
 
 	TableToJSON = function(table)
 		return Json.Encode(table)
 	end,
 }
 
+ents = {
+	FindAlongRay = function(...)
+		return select(2, Util.EntitiesAlongRay(...))
+	end,
+	FindInBox = function(...)
+		return select(2, Util.EntitiesInBox(...))
+	end,
+	FindInSphere = function(...)
+		return select(2, Util.EntitiesInSphere(...))
+	end,
+}
+
+-- We don't have LuaJIT
+jit = {
+	opt = function() end,
+	status = function() return false end,
+	version = function() return "Lua 5.4" end,
+	versionnum = 0,
+	arch = "x86",
+}
+
 local registry = debug.getregistry()
 function FindMetaTable(name)
-    if (name == "Entity") then
-        name = "CBaseEntity"
-    elseif (name == "Player") then
-        name = "CBasePlayer"
-    end
+	if (name == "Entity") then
+		name = "CBaseEntity"
+	elseif (name == "Player") then
+		name = "CBasePlayer"
+	elseif (name == "Vehicle") then
+		-- We don't have vehicles, so lets not waste time on it
+		return {}
+	end
 
-    return registry[name]
+	return registry[name]
 end
 
 local PLAYER_META = FindMetaTable("Player")
@@ -54,7 +78,18 @@ function PLAYER_META:SetClassID(id)
 end
 
 function PLAYER_META:GetClassID()
-	return self.__classId
+    return self.__classId
+end
+
+if (CLIENT) then
+	local PANEL_META = FindMetaTable("Panel")
+
+    PANEL_META.GetTable = PANEL_META.GetRefTable
+
+	function PANEL_META:Prepare()
+        -- Installs Lua defined functions into the panel.
+		-- TODO: What does that mean?
+	end
 end
 
 -- TODO: Actually implement SQLite
@@ -90,11 +125,11 @@ engine.TickInterval = Globals.interval_per_tick
 SoundDuration = Engine.GetSoundDuration
 
 engine.ActiveGamemode = function()
-    return Gamemodes.GetActiveName()
+	return Gamemodes.GetActiveName()
 end
 
 gmod = {
-    GetGamemode = function()
+	GetGamemode = function()
 		return _G.GAMEMODE
 	end,
 }
@@ -129,15 +164,15 @@ function ispanel(variable)
 end
 
 function isentity(variable)
-    return type(variable) == "Entity"
+	return type(variable) == "Entity"
 end
 
 function isfunction(variable)
-    return type(variable) == "function"
+	return type(variable) == "function"
 end
 
 function ismatrix(variable)
-    return type(variable) == "Matrix"
+	return type(variable) == "Matrix"
 end
 
 function isnumber(variable)
@@ -145,11 +180,11 @@ function isnumber(variable)
 end
 
 function isstring(variable)
-    return type(variable) == "string"
+	return type(variable) == "string"
 end
 
 function istable(variable)
-    return type(variable) == "table"
+	return type(variable) == "table"
 		or type(variable) == "Color"
 end
 
@@ -162,7 +197,7 @@ unpack = table.unpack
 Material = Globals.FindMaterial
 CreateMaterial = Globals.CreateMaterial
 CreateConVar = function(name, value, flags, helpText, min, max)
-    if (istable(flags)) then
+	if (istable(flags)) then
 		if (#flags == 0) then
 			flags = 0
 		elseif (#flags == 1) then
@@ -178,17 +213,17 @@ end
 AddCSLuaFile = SendFile or function() end
 
 TauntCamera = function()
-    return {
-        ShouldDrawLocalPlayer = function() return false end,
-        CreateMove = function() end,
-        CalcView = function() end,
-    }
+	return {
+		ShouldDrawLocalPlayer = function() return false end,
+		CreateMove = function() end,
+		CalcView = function() end,
+	}
 end
 
 game = {
-    IsDedicated = function()
+	IsDedicated = function()
 		return Engine.IsDedicatedServer()
-    end,
+	end,
 	ConsoleCommand = RunConsoleCommand,
 }
 
@@ -210,16 +245,16 @@ else
 		return textureMap[name]
 	end
 
-    surface.GetTextureNameByID = function(id)
-        for name, textureID in pairs(textureMap) do
-            if (textureID == id) then
-                return name
-            end
-        end
-    end
+	surface.GetTextureNameByID = function(id)
+		for name, textureID in pairs(textureMap) do
+			if (textureID == id) then
+				return name
+			end
+		end
+	end
 
 	Gui._OriginalRegister = Gui._OriginalRegister or Gui.RegisterWithMetatable
-    vgui.Register = function(panelName, panelTable, baseClassName)
+	vgui.Register = function(panelName, panelTable, baseClassName)
 		Gui._OriginalRegister(panelTable, panelName, baseClassName)
 	end
 end
@@ -277,7 +312,7 @@ require("gmod_compatibility/modules/drive")
 
 function baseclassGetCompatibility(name)
 	if (name:sub(1, 9) == "gamemode_") then
-        name = name:sub(10)
+		name = name:sub(10)
 
 		return Gamemodes.Get(name)
 	end
@@ -290,6 +325,23 @@ if (SERVER) then
 	require("gmod_compatibility/modules/ai_task")
 	require("gmod_compatibility/modules/ai_schedule")
 end
+
+-- include("extensions/file.lua")
+include("extensions/angle.lua")
+include("extensions/debug.lua")
+include("extensions/entity.lua")
+include("extensions/ents.lua")
+include("extensions/math.lua")
+include("extensions/player.lua")
+include("extensions/player_auth.lua")
+include("extensions/string.lua")
+include("extensions/table.lua")
+include("extensions/util.lua")
+include("extensions/vector.lua")
+include("extensions/game.lua")
+include("extensions/motionsensor.lua")
+include("extensions/weapon.lua")
+include("extensions/coroutine.lua")
 
 if (CLIENT) then
 	-- Client-side modules.
@@ -305,39 +357,16 @@ if (CLIENT) then
 	require("gmod_compatibility/modules/matproxy")
 
 	-- require("gmod_compatibility/modules/notification")
-    -- require("gmod_compatibility/modules/search")
+	require("gmod_compatibility/modules/search")
 
-	function vgui.RegisterTable( mtable, base )
-
-		-- Remove the global
-		PANEL = nil
-
-		mtable.Base = base or "Panel"
-		mtable.Init = mtable.Init or function() end
-
-		return mtable
-
-	end
-
-    function vgui.RegisterFile(filename)
-        local OldPanel = PANEL
-
-        PANEL = {}
-
-        -- The included file should fill the PANEL global.
-        include(filename)
-
-        local mtable = PANEL
-        PANEL = OldPanel
-
-        mtable.Base = mtable.Base or "Panel"
-        mtable.Init = mtable.Init or function() end
-
-        return mtable
-    end
+	include("extensions/client/entity.lua")
+	include("extensions/client/globals.lua")
+	include("extensions/client/panel.lua")
+	include("extensions/client/player.lua")
+	include("extensions/client/render.lua")
 
 	Include("derma/init.lua")
-    Include("vgui_base.lua")
+	Include("vgui_base.lua")
 end
 
 --[[
@@ -350,11 +379,11 @@ MsgC = ConDColorMsg
 PrintTable = table.Print
 
 ErrorNoHalt = function(...)
-    Msg(...)
+	Msg(...)
 end
 
 ErrorNoHaltWithStack = function(...)
-    Msg(debug.traceback(table.concat({...}, " "), 2))
+	Msg(debug.traceback(table.concat({ ... }, " "), 2))
 end
 
 --[[
