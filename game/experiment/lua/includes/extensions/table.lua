@@ -66,7 +66,7 @@ function table.Inherit(target, tableToInherit)
 
 	for k, v in pairs(tableToInherit) do
 		if (target[k] == nil) then
-			target[k] = v
+            target[k] = v
 		end
 	end
 

@@ -56,14 +56,16 @@ sql = {
 	TableExists = function() end,
 }
 
-system = System
 cvars = ConsoleVariables
+engine = Engine
+input = Input
+render = Render
+resource = Resources
+surface = Surface
+surface = Surface
+system = System
 vgui = Gui
 VMatrix = Matrix
-surface = Surface
-input = Input
-
-engine = Engine
 
 RealFrameTime = Globals.absoluteframetime
 CurTime = Globals.curtime
@@ -163,13 +165,10 @@ game = {
 }
 
 if (SERVER) then
-    resource = Resources
 	resource.AddWorkshop = function() end
 else
 	LocalPlayer = Util.GetLocalPlayer
 
-	render = Render
-	surface = Surface
 	surface.SetDrawColor = surface.DrawSetColor
 	surface.DrawRect = surface.DrawFilledRect
 
@@ -183,12 +182,17 @@ else
 		return textureMap[name]
 	end
 
-	surface.GetTextureNameByID = function(id)
-		for name, textureID in pairs(textureMap) do
-			if (textureID == id) then
-				return name
-			end
-		end
+    surface.GetTextureNameByID = function(id)
+        for name, textureID in pairs(textureMap) do
+            if (textureID == id) then
+                return name
+            end
+        end
+    end
+
+	Gui._OriginalRegister = Gui._OriginalRegister or Gui.Register
+    vgui.Register = function(panelName, panelTable, baseClassName)
+		Gui._OriginalRegister(panelTable, panelName, baseClassName)
 	end
 end
 

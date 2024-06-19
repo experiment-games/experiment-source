@@ -20,12 +20,16 @@ local registeredHelpers = {}
 --- @param baseClassName Name of the base class
 function Gui.Register(panelTable, panelName, baseClassName)
 	if (Gui[panelName] ~= nil) then
-		error("attempt to register existing panel class \"" .. panelName .. "\"", 2)
+		error("attempt to register existing panel class \"" .. tostring(panelName) .. "\"", 2)
 	end
 
-	if (Gui[baseClassName] == nil) then
-		error("attempt to register panel class with non-existing base class", 2)
-	end
+    if (Gui[baseClassName] == nil) then
+        error(
+        "attempt to register panel class \"" ..
+        tostring(panelName) .. "\" with non-existing base class \"" .. tostring(baseClassName) .. "\"", 2)
+    end
+
+	print("Registering panel class \"" .. tostring(panelName) .. "\" with base class \"" .. tostring(baseClassName) .. "\"")
 
 	panelTable.__classname = panelName
 	panelTable.Base = baseClassName
@@ -33,7 +37,7 @@ function Gui.Register(panelTable, panelName, baseClassName)
 	registeredHelpers[panelName] = panelTable
 
 	Gui[panelName] = function(...)
-		local helper = registeredHelpers[panelName]
+        local helper = registeredHelpers[panelName]
 		local panel = Gui[helper.Base](...)
 
 		table.Merge(panel:GetRefTable(), helper)

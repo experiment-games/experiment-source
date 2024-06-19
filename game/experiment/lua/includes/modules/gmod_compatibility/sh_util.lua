@@ -51,7 +51,7 @@ end
 	file
 -----------------------------------------------------------]]
 
-Include( "util/color.lua" )
+-- Include( "util/color.lua" ) -- Disabled because we have our own color
 
 --[[---------------------------------------------------------
 	Prints a table to the console

@@ -189,6 +189,12 @@ static int luasrc_MsgN( lua_State *L )
     return 0;
 }
 
+/// <summary>
+/// Sets the InheritsFrom field in the GM table. After the gamemode is loaded,
+/// it will be read and the base gamemode will be loaded.
+/// </summary>
+/// <param name="L"></param>
+/// <returns></returns>
 static int luasrc_InheritGamemode( lua_State *L )
 {
     const char *baseGamemodeName = luaL_checkstring( L, 1 );
@@ -197,12 +203,7 @@ static int luasrc_InheritGamemode( lua_State *L )
     lua_getglobal( L, "GM" );
     lua_pushstring( L, baseGamemodeName );
     lua_setfield( L, -2, "InheritsFrom" );
-    // lua_pop( L, 1 );  // Leave the GM table for later
-
-    luasrc_LoadGamemode( baseGamemodeName ); // will not touch the GM table, but will set 'GM' to a new table
-
-    // Restore the GM table as GM
-    lua_setglobal( L, "GM" );
+    lua_pop( L, 1 );  // Pop the GM table
 
     return 0;
 }
@@ -471,6 +472,12 @@ void luasrc_shutdown( void )
 
     lcf_close( L );
     lua_close( L );
+
+    if ( hasLoaderBeenActivated )
+    {
+        lua_close( loaderLuaState );
+        hasLoaderBeenActivated = false;
+    }
 
     ActivityList_Free();
 }
@@ -1087,10 +1094,11 @@ void luasrc_LoadWeapons( const char *path )
 }
 
 /// <summary>
-/// The loader Lua state will be used to load files gamemodes that have a
-/// `{gamemode name}.lua` file in the lua/loaders folder.
-/// This file will be used to
-/// preprocess all files that are loaded for the gamemode.
+/// As soon as a `{gamemode name}.lua` file exists in the lua/loaders folder
+/// for the gamemode being loaded, it and all its dependencies will be loaded
+/// using this loader lua state.
+/// Each file can be preprocessed by the loader, which can modify the file
+/// contents before they are loaded into the main Lua state.
 /// </summary>
 /// <param name="gamemodePath"></param>
 void luasrc_InitCustomLoader( const char *gamemode )
@@ -1192,13 +1200,13 @@ void luasrc_InitCustomLoader( const char *gamemode )
     SHOW_LUA_MESSAGE( "Activated custom loader for gamemode '%s' (%s)!\n\tUsing custom loader for subsequent file loading in all (derived) gamemodes.\n", gamemode, loaderFilePath );
 }
 
-static void cleanUpGamemodeLoading()
+static void cleanUpGamemodeLoading( bool shouldCleanLoader )
 {
     // Unset the GM table
     lua_pushnil( L );
     lua_setglobal( L, "GM" );
 
-    if ( hasLoaderBeenActivated )
+    if ( hasLoaderBeenActivated && shouldCleanLoader )
     {
         // Clean up the loader if we initialized it
         lua_close( loaderLuaState );
@@ -1225,7 +1233,6 @@ static void luasrc_add_to_package_path( lua_State *L, const char *searchPath )
 
 /// <summary>
 /// Loads the gamemode with the given name from the gamemodes folder.
-/// Recursively loads the base gamemode if the GM.Base field is set.
 ///
 /// Calls gamemodes.Register(gamemodeTable, gamemodeName, baseGameMode)
 /// after loading all the relevant gamemodes.
@@ -1288,7 +1295,7 @@ bool luasrc_LoadGamemode( const char *gamemode )
     if ( !filesystem->FileExists( initialFileName, "MOD" ) )
     {
         lua_pop( L, 1 );  // Pop the GM table
-        cleanUpGamemodeLoading();
+        cleanUpGamemodeLoading( true );
 
         SHOW_LUA_ERROR( "Failed to load invalid gamemode %s (%s does not exist)!\n", gamemode, initialFileName );
 
@@ -1300,18 +1307,11 @@ bool luasrc_LoadGamemode( const char *gamemode )
     if ( luasrc_dofile( L, initialFilePath ) != LUA_OK )
     {
         lua_pop( L, 1 );  // Pop the GM table
-        cleanUpGamemodeLoading();
+        cleanUpGamemodeLoading( true );
 
         SHOW_LUA_ERROR( "Failed to load invalid gamemode %s (%s had errors)!\n", gamemode, initialFilePath );
 
         return false;
-    }
-
-    if ( hasLoaderBeenActivated )
-    {
-        // Now the gamemode is loaded, we can clean up the loader
-        lua_close( loaderLuaState );
-        hasLoaderBeenActivated = false;
     }
 
     // Call gamemodes.Register with this gamemode
@@ -1334,19 +1334,33 @@ bool luasrc_LoadGamemode( const char *gamemode )
     lua_pushvalue( L, -2 );
     lua_remove( L, -3 );  // Remove the GM table that was below the Register function
 
-    lua_pushstring( L, gamemode );
-
     // If InheritGamemode has been called through the loaded scripts above,
-    // the GM.DerivedFrom field will be set. Lets get it from the GM table.
-    lua_getfield( L, -1, "DerivedFrom" );
+    // the GM.InheritsFrom field will be set. Lets get it from the GM table
+    // and load the base gamemode if it exists.
+    lua_getfield( L, -1, "InheritsFrom" );
+    const char *baseGamemodeName;
+
+    if ( lua_isstring( L, -1 ) )
+    {
+        baseGamemodeName = lua_tostring( L, -1 );
+
+        luasrc_LoadGamemode( baseGamemodeName ); // Overwrites the GM global table
+    }
+    else
+    {
+        baseGamemodeName = LUA_BASE_GAMEMODE;
+    }
 
     // (gamemodes.)Register and the original GM table are on the stack
     // Call gamemodes.Register(gamemodeTable, gamemodeName, baseGameMode)
+    lua_pushstring( L, gamemode );
+    lua_insert( L, -2 );  // Move the gamemode name to the 2nd parameter
     luasrc_pcall( L, 3, 0, 0 );
 
     // Unset the GM table, users should use the GAMEMODE table instead
-    // Also clean up the loader if we initialized it
-    cleanUpGamemodeLoading();
+    // We keep the loader active for any later includes. It will be cleaned up
+    // when the Lua state is closed.
+    cleanUpGamemodeLoading( false );
 
     DevMsg( "Loaded gamemode %s\n", gamemode );
 
