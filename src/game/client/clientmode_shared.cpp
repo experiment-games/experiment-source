@@ -667,6 +667,58 @@ void ClientModeShared::PostRender() {
 void ClientModeShared::PostRenderVGui() {
 }
 
+static void ListChilds( int nbchilds, VPANEL panel )
+{
+    for ( int i = 0; i < nbchilds; ++i )
+    {
+        VPANEL tmppanel = vgui::ipanel()->GetChild( panel, i );  // Get the child of panel, at index i
+        DevMsg( "- %d : ", i );
+        int NbChilds = vgui::ipanel()->GetChildCount( tmppanel );  // Get the ammount of child from panel's child VPANEL
+
+        DevMsg( "PanelName: %s, Class: %s, HPanel# : %d, NbChildrens: %d, IsVisible: %d\n",
+                vgui::ipanel()->GetName( tmppanel ),
+                vgui::ipanel()->GetClassName( tmppanel ),
+                vgui::ivgui()->PanelToHandle( tmppanel ),
+                NbChilds,
+                vgui::ipanel()->IsVisible( tmppanel ) );
+    }
+}
+static void GetInfoAboutPanel( VPANEL panel )
+{
+    if ( panel != 0 )
+    {
+        int NbChilds = vgui::ipanel()->GetChildCount( panel );  // Get our ammount of children VPANELs
+
+        DevMsg( "PanelName: %s, Class: %s, HPanel# : %d, NbChildrens: %d, IsVisible: %d\n",
+                vgui::ipanel()->GetName( panel ),
+                vgui::ipanel()->GetClassName( panel ),
+                vgui::ivgui()->PanelToHandle( panel ),
+                NbChilds,
+                vgui::ipanel()->IsVisible( panel ) );
+
+        ListChilds( NbChilds, panel );
+    }
+}
+// https://developer.valvesoftware.com/wiki/Custom_loading_screen
+static void SetVisibilityRecursive( vgui::VPANEL parentPanel, const char *targetPanelName, int depth = 0 )
+{
+    int numChildren = vgui::ipanel()->GetChildCount( parentPanel );
+    for ( int i = 0; i < numChildren; i++ )
+    {
+        vgui::VPANEL childPanel = vgui::ipanel()->GetChild( parentPanel, i );
+        const char *childPanelName = vgui::ipanel()->GetName( childPanel );
+
+        if ( V_strcmp( childPanelName, targetPanelName ) == 0 )
+        {
+            vgui::ipanel()->SetPos( childPanel, -1000, -1000 ); // Hides the panel off screen
+            // vgui::ipanel()->SetVisible( childPanel, false  ); // causes flickering
+            // vgui::ipanel()->SetParent( childPanel, NULL ); // causes access violation
+        }
+
+        SetVisibilityRecursive( childPanel, targetPanelName, depth + 1 );
+    }
+}
+
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
@@ -680,6 +732,14 @@ void ClientModeShared::Update() {
         m_pScriptedViewport->SetVisible(cl_drawhud.GetBool());
     }
 #endif
+
+    // Testing manipulating the loading dialog. TODO: Remove this.
+    // For a moment the panel is visible in the original location.
+    // Lets use the OnMessage hack to hide/move it
+    // VPANEL panel = vgui::ivgui()->HandleToPanel( PANEL_GAMEUIDLL );
+    VPANEL panel = enginevgui->GetPanel( PANEL_GAMEUIDLL );
+    //GetInfoAboutPanel( panel );
+    SetVisibilityRecursive( panel, "LoadingDialog" );
 
     if (m_pViewport->IsVisible() != cl_drawhud.GetBool()) {
         m_pViewport->SetVisible(cl_drawhud.GetBool());
