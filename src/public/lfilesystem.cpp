@@ -437,9 +437,16 @@ static int FileHandle_t___tostring (lua_State *L) {
   return 1;
 }
 
+static int FileHandle_t___eq (lua_State *L) {
+  FileHandle_t hFile1 = lua_tofilehandle(L, 1);
+  FileHandle_t hFile2 = lua_tofilehandle(L, 2);
+  lua_pushboolean(L, hFile1 == hFile2);
+  return 1;
+}
 
 static const luaL_Reg FileHandle_tmeta[] = {
   {"__gc", FileHandle_t___gc},
+  {"__eq", FileHandle_t___eq},
   {"__tostring", FileHandle_t___tostring},
   {NULL, NULL}
 };

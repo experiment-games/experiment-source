@@ -75,6 +75,16 @@ engine.TickCount = Globals.tickcount
 engine.TickInterval = Globals.interval_per_tick
 SoundDuration = Engine.GetSoundDuration
 
+engine.ActiveGamemode = function()
+    return Gamemodes.GetActiveName()
+end
+
+gmod = {
+    GetGamemode = function()
+		return _G.GAMEMODE
+	end,
+}
+
 umsg = require("UserMessages")
 umsg.Angle = umsg.WriteAngles
 umsg.Bool = umsg.WriteBool
@@ -161,7 +171,10 @@ TauntCamera = function()
 end
 
 game = {
-	IsDedicated = function() return Engine.IsDedicatedServer() end,
+    IsDedicated = function()
+		return Engine.IsDedicatedServer()
+    end,
+	ConsoleCommand = RunConsoleCommand,
 }
 
 if (SERVER) then

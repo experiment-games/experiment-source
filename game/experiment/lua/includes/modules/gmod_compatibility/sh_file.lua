@@ -56,6 +56,11 @@ end
 -- Reads the content of a file
 function file.Read(fileName, gamePath)
     local file = FileSystem.Open(fileName, "r", gamePath)
+
+    if (file == FILESYSTEM_INVALID_HANDLE) then
+        return nil
+    end
+
 	local size = FileSystem.Size(fileName, gamePath)
 	local size, content = FileSystem.Read(size, file)
 	FileSystem.Close(file)

@@ -75,22 +75,24 @@ function table.Inherit(target, tableToInherit)
 	return target
 end
 
-function table.Merge(destination, source)
-	if (type(destination) ~= "table") then
-		error(debug.traceback("bad argument #1 to 'Merge' (table expected, got " .. type(destination) .. ")", 2))
+function table.Merge(target, sourceToMergeFrom)
+	if (type(target) ~= "table") then
+		error(debug.traceback("bad argument #1 to 'Merge' (table expected, got " .. type(target) .. ")", 2))
 	end
 
-	if (type(source) ~= "table") then
-		error(debug.traceback("bad argument #2 to 'Merge' (table expected, got " .. type(source) .. ")", 2))
+	if (type(sourceToMergeFrom) ~= "table") then
+		error(debug.traceback("bad argument #2 to 'Merge' (table expected, got " .. type(sourceToMergeFrom) .. ")", 2))
 	end
 
-	for key, value in pairs(source) do
-		if (type(destination[key]) == "table" and type(value) == "table") then
-			table.Merge(destination[key], value)
-		else
-			destination[key] = value
-		end
-	end
+    for key, value in pairs(sourceToMergeFrom) do
+        if (type(target[key]) == "table" and type(value) == "table") then
+            table.Merge(target[key], value)
+        else
+            target[key] = value
+        end
+    end
+
+	return target
 end
 
 function table.Print(target, isSequential, indentLevel, tablesVisited)
