@@ -32,7 +32,7 @@
 
 
 // Half-Life Server Configuration Layout Script (stores last settings chosen, too)
-// File generated:  Mon Jun 17 10:30:38 AM
+// File generated:  Wed Jun 19 11:34:26 AM
 //
 //
 // Cvar	-	Setting
@@ -52,7 +52,7 @@ DESCRIPTION SERVER_OPTIONS
 	{
 		"#Experiment_Gamemode"
 		{ STRING }
-		{ "deathmatch" }
+		{ "hl2rp" }
 	}
 
 	"sv_password"

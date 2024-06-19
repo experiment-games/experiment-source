@@ -168,6 +168,7 @@ if (SERVER) then
 else
 	LocalPlayer = Util.GetLocalPlayer
 
+	render = Render
 	surface = Surface
 	surface.SetDrawColor = surface.DrawSetColor
 	surface.DrawRect = surface.DrawFilledRect

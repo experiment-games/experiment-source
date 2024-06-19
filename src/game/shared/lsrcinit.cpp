@@ -110,6 +110,10 @@ static const luaL_Reg luasrclibs[] = {
     { LUA_UMSGLIBNAME, luaopen_umsg },
 
     { LUA_SYSTEMLIBNAME, luaopen_system },
+#ifdef CLIENT_DLL
+    { LUA_RENDERLIBNAME, luaopen_render },
+    { LUA_ITEXTURELIBNAME, luaopen_ITexture },
+#endif
     { NULL, NULL } };
 
 LUALIB_API void luasrc_openlibs( lua_State *L )

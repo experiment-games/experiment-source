@@ -507,6 +507,8 @@ $Project
 		$Folder	"Lua"
 		{
             $File "$SRCDIR\public\lua_compat.cpp"
+            $File "$SRCDIR\game\client\lrender.cpp"
+            $File "$SRCDIR\game\client\lrender.h"
             $File "$SRCDIR\game\shared\basescripted.cpp"
             $File "$SRCDIR\game\shared\basescripted.h"
 		    $File "$SRCDIR\game\shared\lbasecombatweapon_shared.cpp"
@@ -553,6 +555,7 @@ $Project
             $File "$SRCDIR\game\shared\lsrcinit.cpp"
             $File "$SRCDIR\public\steam\lsteam_api.cpp"
             $File "$SRCDIR\game\shared\ltakedamageinfo.cpp"
+            $File "$SRCDIR\game\shared\ltakedamageinfo.h"
             $File "$SRCDIR\game\shared\luacachefile.cpp"
             $File "$SRCDIR\game\shared\luacachefile.h"
             $File "$SRCDIR\game\shared\luamanager.cpp"
