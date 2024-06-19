@@ -16,7 +16,7 @@ if (SERVER) then
 end
 
 -- Add the gmod_compatibility path to the Lua include search path.
-package.IncludePath ="lua/includes/modules_lazy/gmod_compatibility/;" .. package.IncludePath
+package.IncludePath ="lua/includes/modules/gmod_compatibility/;" .. package.IncludePath
 
 --[[
 	Renames and other polyfills
@@ -145,7 +145,7 @@ CreateConVar = function(name, value, flags, helpText, min, max)
 		end
 	end
 
-	return ConVar(name, value, flags, helpText, min, max)
+	return ConsoleVariable(name, value, flags, helpText, min, max)
 end
 
 AddCSLuaFile = SendFile or function() end
@@ -163,11 +163,12 @@ game = {
 }
 
 if (SERVER) then
-    resource = resources
+    resource = Resources
 	resource.AddWorkshop = function() end
 else
 	LocalPlayer = Util.GetLocalPlayer
 
+	surface = Surface
 	surface.SetDrawColor = surface.DrawSetColor
 	surface.DrawRect = surface.DrawFilledRect
 
