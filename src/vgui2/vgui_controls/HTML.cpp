@@ -110,6 +110,7 @@ private:
 //-----------------------------------------------------------------------------
 // Purpose: Constructor
 //-----------------------------------------------------------------------------
+#pragma warning( disable : 4355 )
 HTML::HTML(Panel *parent, const char *name, bool allowJavaScript, bool bPopupWindow) : Panel(parent, name), 
 m_NeedsPaint( this, &HTML::BrowserNeedsPaint ),
 m_StartRequest( this, &HTML::BrowserStartRequest ),
@@ -192,6 +193,7 @@ m_HideTooltip( this, &HTML::BrowserHideToolTip )
 	m_nViewSourceAllowedIndex = m_pContextMenu->AddMenuItem( "#vgui_HTMLViewSource", new KeyValues( "Command", "command", "viewsource" ), this );
 }
 
+#pragma warning( default : 4355 )
 
 //-----------------------------------------------------------------------------
 // Purpose: browser is ready to show pages

@@ -47,6 +47,14 @@ ents = {
 	end,
 }
 
+player = {
+	GetAll = Util.GetAllPlayers,
+    GetBots = Util.GetAllBots,
+	GetHumans = Util.GetAllHumans,
+	GetBySteamID = Util.PlayerBySteamID,
+	GetBySteamID64 = Util.PlayerBySteamID64,
+}
+
 -- We don't have LuaJIT
 jit = {
 	opt = function() end,

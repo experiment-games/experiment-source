@@ -1389,7 +1389,11 @@ $Project
 		$Lib		tier3
 		$Lib		vgui_controls
 		$Lib		vtf
-		$ImpLib		steam_api
+		$Implib	    "$SRCDIR\public\steam\redistributable_bin\steam_api" [$WIN32]
+        $Implib	    "$SRCDIR\public\steam\redistributable_bin\win64\steam_api64" [$WIN64]
+        $Implib	    "$SRCDIR\public\steam\redistributable_bin\osx32\libsteam_api" [$OSXALL]
+        $Implib	    "$SRCDIR\public\steam\redistributable_bin\linux32\libsteam_api" [$LINUX32]
+        $Implib	    "$SRCDIR\public\steam\redistributable_bin\linux64\libsteam_api" [$LINUX64]
 
 		$Libexternal $LIBCOMMON/libcrypto [$OSXALL]
 		$Libexternal "$SRCDIR\lib\common\$(CRYPTOPPDIR)\libcrypto" [$LINUXALL]

@@ -1109,7 +1109,11 @@ $Project
 		$Lib	particles
 		$Lib	tier2
 		$Lib	tier3
-		$ImpLibexternal steam_api
+		$Implib	    "$SRCDIR\public\steam\redistributable_bin\steam_api" [$WIN32]
+        $Implib	    "$SRCDIR\public\steam\redistributable_bin\win64\steam_api64" [$WIN64]
+        $Implib	    "$SRCDIR\public\steam\redistributable_bin\osx32\libsteam_api" [$OSXALL]
+        $Implib	    "$SRCDIR\public\steam\redistributable_bin\linux32\libsteam_api" [$LINUX32]
+        $Implib	    "$SRCDIR\public\steam\redistributable_bin\linux64\libsteam_api" [$LINUX64]
 
 		$Lib	"$SRCDIR\lua\lua54"
 		$Lib	"$SRCDIR\luasocket\luasocket"

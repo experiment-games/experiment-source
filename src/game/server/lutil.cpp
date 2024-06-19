@@ -464,132 +464,100 @@ static int luasrc_Util_GetCommandClient( lua_State *L )
     return 1;
 }
 
+#define STEAM_BASELINE Q_atoui64( "76561197960265728" )
+
+static int luasrc_Util_PlayerBySteamID( lua_State *L )
+{
+    const char * classicSteamID = luaL_checkstring( L, 1 );
+
+    // Converts STEAM_{eUniverse}:{eAccountType}:{unAccountID} to a 64-bit SteamID
+    int eUniverse, eAccountType;
+    uint64 unAccountID;
+    sscanf( classicSteamID, "STEAM_%d:%d:%llu", &eUniverse, &eAccountType, &unAccountID );
+    uint64 product = unAccountID * 2;
+    uint64 steamID = STEAM_BASELINE + product + eAccountType;
+
+    lua_pushplayer( L, UTIL_PlayerBySteamID( steamID ) );
+    return 1;
+}
+
+static int luasrc_Util_PlayerBySteamID64( lua_State *L )
+{
+    uint64 id = Q_atoui64( luaL_checkstring( L, 1 ) );
+    CSteamID steamID( id );
+    lua_pushplayer( L, UTIL_PlayerBySteamID( steamID ) );
+    return 1;
+}
+
 static const luaL_Reg util_funcs[] = {
     { "CanCreateEntityClass", luasrc_CanCreateEntityClass },
     { "ENTINDEX", luasrc_ENTINDEX },
     { "INDEXENT", luasrc_INDEXENT },
     { "FNullEnt", luasrc_FNullEnt },
     { "FStrEq", luasrc_FStrEq },
-    // {"UTIL_SetSize",  luasrc_Util_SetSize},
     { "SetSize", luasrc_Util_SetSize },
-    // {"UTIL_ClearTrace",  luasrc_Util_ClearTrace},
     { "ClearTrace", luasrc_Util_ClearTrace },
-    // {"UTIL_PrecacheDecal",  luasrc_Util_PrecacheDecal},
     { "PrecacheDecal", luasrc_Util_PrecacheDecal },
-    // {"UTIL_GetSimulationInterval",  luasrc_Util_GetSimulationInterval},
     { "GetSimulationInterval", luasrc_Util_GetSimulationInterval },
-    // {"UTIL_PlayerByIndex",  luasrc_Util_PlayerByIndex},
     { "PlayerByIndex", luasrc_Util_PlayerByIndex },
-    // {"UTIL_GetLocalPlayer",  luasrc_Util_GetLocalPlayer},
     { "GetLocalPlayer", luasrc_Util_GetLocalPlayer },
-    // {"UTIL_GetListenServerHost",  luasrc_Util_GetListenServerHost},
     { "GetListenServerHost", luasrc_Util_GetListenServerHost },
-    // {"UTIL_PlayerByUserId",  luasrc_Util_PlayerByUserId},
     { "PlayerByUserId", luasrc_Util_PlayerByUserId },
-    // {"UTIL_PlayerByName",  luasrc_Util_PlayerByName},
     { "PlayerByName", luasrc_Util_PlayerByName },
-    // {"UTIL_IsCommandIssuedByServerAdmin",  luasrc_Util_IsCommandIssuedByServerAdmin},
     { "IsCommandIssuedByServerAdmin", luasrc_Util_IsCommandIssuedByServerAdmin },
-    // {"UTIL_EntityByIndex",  luasrc_Util_EntityByIndex},
     { "EntityByIndex", luasrc_Util_EntityByIndex },
-    // {"UTIL_GetPlayerConnectionInfo",  luasrc_Util_GetPlayerConnectionInfo},
     { "GetPlayerConnectionInfo", luasrc_Util_GetPlayerConnectionInfo },
-    // {"UTIL_ClientPVSIsExpanded",  luasrc_Util_ClientPVSIsExpanded},
     { "ClientPVSIsExpanded", luasrc_Util_ClientPVSIsExpanded },
-    // {"UTIL_FindClientInPVS",  luasrc_Util_FindClientInPVS},
     { "FindClientInPVS", luasrc_Util_FindClientInPVS },
     { "EntitiesAlongRay", luasrc_Util_EntitiesAlongRay },
-    // {"UTIL_EntitiesInBox",  luasrc_Util_EntitiesInBox},
     { "EntitiesInBox", luasrc_Util_EntitiesInBox },
-    // {"UTIL_EntitiesInSphere",  luasrc_Util_EntitiesInSphere},
     { "EntitiesInSphere", luasrc_Util_EntitiesInSphere },
-    // {"UTIL_Remove",  luasrc_Util_Remove},
     { "Remove", luasrc_Util_Remove },
-    // {"UTIL_DisableRemoveImmediate",  luasrc_Util_DisableRemoveImmediate},
     { "DisableRemoveImmediate", luasrc_Util_DisableRemoveImmediate },
-    // {"UTIL_EnableRemoveImmediate",  luasrc_Util_EnableRemoveImmediate},
     { "EnableRemoveImmediate", luasrc_Util_EnableRemoveImmediate },
-    // {"UTIL_RemoveImmediate",  luasrc_Util_RemoveImmediate},
     { "RemoveImmediate", luasrc_Util_RemoveImmediate },
-    // {"UTIL_DropToFloor",  luasrc_Util_DropToFloor},
     { "DropToFloor", luasrc_Util_DropToFloor },
-    // {"UTIL_SetOrigin",  luasrc_Util_SetOrigin},
     { "SetOrigin", luasrc_Util_SetOrigin },
-    // {"UTIL_EmitAmbientSound",  luasrc_Util_EmitAmbientSound},
     { "EmitAmbientSound", luasrc_Util_EmitAmbientSound },
-    // {"UTIL_ScreenShake",  luasrc_Util_ScreenShake},
     { "ScreenShake", luasrc_Util_ScreenShake },
-    // {"UTIL_ScreenShakeObject",  luasrc_Util_ScreenShakeObject},
     { "ScreenShakeObject", luasrc_Util_ScreenShakeObject },
-    // {"UTIL_ViewPunch",  luasrc_Util_ViewPunch},
     { "ViewPunch", luasrc_Util_ViewPunch },
-    // {"UTIL_ShowMessage",  luasrc_Util_ShowMessage},
     { "ShowMessage", luasrc_Util_ShowMessage },
-    // {"UTIL_ShowMessageAll",  luasrc_Util_ShowMessageAll},
     { "ShowMessageAll", luasrc_Util_ShowMessageAll },
-    // {"UTIL_MuzzleFlash",  luasrc_Util_MuzzleFlash},
     { "MuzzleFlash", luasrc_Util_MuzzleFlash },
-    // {"UTIL_PointOnLineNearestPoint",  luasrc_Util_PointOnLineNearestPoint},
     { "PointOnLineNearestPoint", luasrc_Util_PointOnLineNearestPoint },
-    // {"UTIL_EntityInSolid",  luasrc_Util_EntityInSolid},
     { "EntityInSolid", luasrc_Util_EntityInSolid },
-    // {"UTIL_BloodStream",  luasrc_Util_BloodStream},
     { "BloodStream", luasrc_Util_BloodStream },
-    // {"UTIL_BloodSpray",  luasrc_Util_BloodSpray},
     { "BloodSpray", luasrc_Util_BloodSpray },
-    // {"UTIL_RandomBloodVector",  luasrc_Util_RandomBloodVector},
     { "RandomBloodVector", luasrc_Util_RandomBloodVector },
-    // {"UTIL_ImpactTrace",  luasrc_Util_ImpactTrace},
     { "ImpactTrace", luasrc_Util_ImpactTrace },
-    // {"UTIL_PlayerDecalTrace",  luasrc_Util_PlayerDecalTrace},
     { "PlayerDecalTrace", luasrc_Util_PlayerDecalTrace },
-    // {"UTIL_Smoke",  luasrc_Util_Smoke},
     { "Smoke", luasrc_Util_Smoke },
-    // {"UTIL_AxisStringToPointDir",  luasrc_Util_AxisStringToPointDir},
     { "AxisStringToPointDir", luasrc_Util_AxisStringToPointDir },
-    // {"UTIL_AxisStringToPointPoint",  luasrc_Util_AxisStringToPointPoint},
     { "AxisStringToPointPoint", luasrc_Util_AxisStringToPointPoint },
-    // {"UTIL_AxisStringToUnitDir",  luasrc_Util_AxisStringToUnitDir},
     { "AxisStringToUnitDir", luasrc_Util_AxisStringToUnitDir },
-    // {"UTIL_ClipPunchAngleOffset",  luasrc_Util_ClipPunchAngleOffset},
     { "ClipPunchAngleOffset", luasrc_Util_ClipPunchAngleOffset },
-    // {"UTIL_PredictedPosition",  luasrc_Util_PredictedPosition},
     { "PredictedPosition", luasrc_Util_PredictedPosition },
-    // {"UTIL_Beam",  luasrc_Util_Beam},
     { "Beam", luasrc_Util_Beam },
-    // {"UTIL_IsValidEntity",  luasrc_Util_IsValidEntity},
     { "IsValidEntity", luasrc_Util_IsValidEntity },
-    // {"UTIL_TeamsMatch",  luasrc_Util_TeamsMatch},
     { "TeamsMatch", luasrc_Util_TeamsMatch },
-    // {"UTIL_SnapDirectionToAxis",  luasrc_Util_SnapDirectionToAxis},
     { "SnapDirectionToAxis", luasrc_Util_SnapDirectionToAxis },
-    // {"UTIL_PointAtEntity",  luasrc_Util_PointAtEntity},
     { "PointAtEntity", luasrc_Util_PointAtEntity },
-    // {"UTIL_TransferPoseParameters",  luasrc_Util_TransferPoseParameters},
     { "TransferPoseParameters", luasrc_Util_TransferPoseParameters },
-    // {"UTIL_WaterLevel",  luasrc_Util_WaterLevel},
     { "WaterLevel", luasrc_Util_WaterLevel },
-    // {"UTIL_FindWaterSurface",  luasrc_Util_FindWaterSurface},
     { "FindWaterSurface", luasrc_Util_FindWaterSurface },
-    // {"UTIL_Bubbles",  luasrc_Util_Bubbles},
     { "Bubbles", luasrc_Util_Bubbles },
-    // {"UTIL_BubbleTrail",  luasrc_Util_BubbleTrail},
     { "BubbleTrail", luasrc_Util_BubbleTrail },
-    // {"UTIL_PrecacheOther",  luasrc_Util_PrecacheOther},
     { "PrecacheOther", luasrc_Util_PrecacheOther },
-    // {"UTIL_ClientPrintAll",  luasrc_Util_ClientPrintAll},
     { "ClientPrintAll", luasrc_Util_ClientPrintAll },
-    // {"UTIL_ValidateSoundName",  luasrc_Util_ValidateSoundName},
     { "ValidateSoundName", luasrc_Util_ValidateSoundName },
     { "ClientPrint", luasrc_ClientPrint },
-    // {"UTIL_SayText",  luasrc_Util_SayText},
     { "SayText", luasrc_Util_SayText },
-    // {"UTIL_SayTextAll",  luasrc_Util_SayTextAll},
     { "SayTextAll", luasrc_Util_SayTextAll },
-    // {"UTIL_GetCommandClientIndex",  luasrc_Util_GetCommandClientIndex},
     { "GetCommandClientIndex", luasrc_Util_GetCommandClientIndex },
-    // {"UTIL_GetCommandClient",  luasrc_Util_GetCommandClient},
     { "GetCommandClient", luasrc_Util_GetCommandClient },
+    { "PlayerBySteamID", luasrc_Util_PlayerBySteamID },
+    { "PlayerBySteamID64", luasrc_Util_PlayerBySteamID64 },
     { NULL, NULL } };
 
 LUALIB_API int luaopen_Util( lua_State *L )
