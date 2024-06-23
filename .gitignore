@@ -79,3 +79,4 @@ game/experiment/download/*
 game/experiment/cache/*
 game/experiment/**/*.ztmp
 game/experiment/downloadlists/*
+game/experiment/cfg/settings.scr

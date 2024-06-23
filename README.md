@@ -38,10 +38,11 @@
     mklink /J "C:\Program Files (x86)\Steam\steamapps\sourcemods\experiment" "<path to this repo>\game\experiment"
     ```
 
-> [!WARNING]
-> Note that for debugging (and running the game normally?) you need to extract the `materials` folder from the
-> Source SDK 2013 Multiplayer Base GCF files `hl2_misc_dir.vpk` (and `hl2_textures_dir.vpk`?) to the `game/experiment` directory.
-> Without this, the game will crash on hosting a server or joining one.
+5. To setup the game mod directory, run:
+
+    ```bash
+    ./tools/setup-game.sh
+    ```
 
 ## Extras
 
