@@ -351,6 +351,9 @@ include("extensions/motionsensor.lua")
 include("extensions/weapon.lua")
 include("extensions/coroutine.lua")
 
+-- Experiment; we load our table lib again to overwrite the GMod one.
+include("../../extensions/table.lua")
+
 if (CLIENT) then
 	-- Client-side modules.
 	require("gmod_compatibility/modules/draw")
