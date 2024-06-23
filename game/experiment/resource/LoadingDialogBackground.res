@@ -1,4 +1,4 @@
-"Resource/loadingdialogbackground.res"
+"Resource/LoadingDialogBackground.res"
 {
 	"LoadingImage"
 	{
