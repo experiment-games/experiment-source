@@ -23,10 +23,7 @@ $Configuration
         $CommandLine	"copy /Y $SRCDIR\luasocket\$OUTBINNAME.dll $OUTBINDIR\$OUTBINNAME.dll" [$WINDOWS]
         $CommandLine	"cp $SRCDIR/luasocket/$OUTBINNAME.so $OUTBINDIR/$OUTBINNAME.so" [$LINUX]
     }
-}
 
-$Configuration "Debug"
-{
 	$General
 	{
         $OutputDirectory                ".\"
@@ -41,11 +38,7 @@ $Configuration "Debug"
 	$Compiler
 	{
 		$AdditionalIncludeDirectories       "$BASE;$(SRCDIR)\luasocket\src;$SRCDIR\lua"
-		$PreprocessorDefinitions            "$BASE;_CRT_SECURE_NO_WARNINGS;LUASOCKET_DEBUG"
-
-        $Optimization                   "Disabled (/Od)"
-        $RuntimeLibrary                 "Multi-threaded Debug DLL (/MDd)"
-        $WarningLevel                   "Level 3 (/W3)"
+		$PreprocessorDefinitions            "$BASE;_CRT_SECURE_NO_WARNINGS"
         $TreatWarningsAsErrors			"No"
     }
 
@@ -59,39 +52,25 @@ $Configuration "Debug"
     }
 }
 
+$Configuration "Debug"
+{
+	$Compiler
+	{
+		$PreprocessorDefinitions        "$BASE;LUASOCKET_DEBUG"
+
+        $Optimization                   "Disabled (/Od)"
+        $RuntimeLibrary                 "Multi-threaded Debug DLL (/MDd)"
+        $WarningLevel                   "Level 3 (/W3)"
+    }
+}
+
 $Configuration "Release"
 {
-    $General
-    {
-        $OutputDirectory                 ".\"
-        $IntermediateDirectory		    ".\"
-
-        $ConfigurationType				"Dynamic Library (.dll)"
-
-        $TargetName                     "$OUTBINNAME"
-        $TargetExtension                "$OUTDLLEXT"
-    }
-
     $Compiler
     {
-        $AdditionalIncludeDirectories	    "$(SRCDIR)\luasocket\src"
-		$PreprocessorDefinitions            "$BASE;_CRT_SECURE_NO_WARNINGS;LUASOCKET_DEBUG"
-        $AdditionalLibraryDirectories       "$(SRCDIR)\lua"
-
         $Optimization                   "Maximize Speed (/O2)"
         $RuntimeLibrary                 "Multi-threaded DLL (/MD)"
         $WarningLevel                   "Level 3 (/W3)"
-        $TreatWarningsAsErrors			"No"
-    }
-
-    $Linker
-    {
-        $AdditionalDependencies          "$BASE ws2_32.lib"
-        $AdditionalLibraryDirectories    "$(SRCDIR)\lua"
-
-        $SubSystem                      "Windows (/SUBSYSTEM:WINDOWS)"
-        $TargetMachine                  "MachineX86 (/MACHINE:X86)"	[$WIN32]
-        $TargetMachine                  "MachineX64 (/MACHINE:X64)"	[$WIN64]
     }
 }
 

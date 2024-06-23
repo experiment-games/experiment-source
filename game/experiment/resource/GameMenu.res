@@ -1,6 +1,3 @@
-// Made with XBLAH's Modding tool.
-// Download it at https://xblah.dev/modding-tool/
-
 "gamemenu"
 {
 	"0"
@@ -51,8 +48,20 @@
 	}
 	"7"
 	{
+		"label"	""
+		"command"	""
+		"ingameorder"	"7"
+	}
+	"8"
+	{
 		"label"	"#GameUI_GameMenu_Quit"
 		"command"	"Quit"
-		"ingameorder"	"7"
+		"ingameorder"	"8"
+	}
+	"9"
+	{
+		"label"	"Test UI (TODO implement pinning UI)"
+		"command"	"engine testui"
+		"ingameorder"	"9"
 	}
 }
