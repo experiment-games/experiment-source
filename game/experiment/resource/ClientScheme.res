@@ -249,7 +249,7 @@ Scheme
 
 		"ProgressBarFg"			"255 30 13 255"
 
-		// Top-left corner of the "Counter-Strike" on the main screen
+		// Top-left corner of the "EXPERIMENT" on the main screen
 		"Main.Title1.X"		"32"
 		"Main.Title1.Y"		"180"
 		"Main.Title1.Color"	"255 255 255 255"
@@ -1575,7 +1575,6 @@ Scheme
 	// specifies all the custom (non-system) font files that need to be loaded to service the above described fonts
 	CustomFontFiles
 	{
-		"1"		"resource/fonts/lightout.ttf"
 		"1"		"resource/fonts/lightout.ttf"
 		"2"		"resource/HL2crosshairs.ttf"
 	}
