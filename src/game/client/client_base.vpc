@@ -378,6 +378,8 @@ $Project
 		$File	"lampbeamproxy.cpp"
 		$File	"lamphaloproxy.cpp"
 		$File	"$SRCDIR\game\shared\mapentities_shared.cpp"
+        $File   "mapload_background.cpp"
+        $File   "mapload_background.h"
 		$File	"mathproxy.cpp"
 		$File	"matrixproxy.cpp"
 		$File	"menu.cpp"
