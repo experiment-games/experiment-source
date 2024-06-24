@@ -509,6 +509,7 @@ $Project
 		$Folder	"Lua"
 		{
             $File "$SRCDIR\public\lua_compat.cpp"
+            $File "$SRCDIR\game\client\testui.cpp"
             $File "$SRCDIR\game\client\lrender.cpp"
             $File "$SRCDIR\game\client\lrender.h"
             $File "$SRCDIR\game\shared\basescripted.cpp"
