@@ -396,6 +396,7 @@ static const luaL_Reg PropertyPagemeta[] = {
     { "__newindex", PropertyPage___newindex },
     { "__eq", PropertyPage___eq },
     { "__tostring", PropertyPage___tostring },
+    { "__gc", Panel___gc },
     { NULL, NULL } };
 
 static int luasrc_PropertyPage( lua_State *L )

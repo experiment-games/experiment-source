@@ -429,6 +429,7 @@ static const luaL_Reg EditablePanelmeta[] = {
     { "__newindex", EditablePanel___newindex },
     { "__eq", EditablePanel___eq },
     { "__tostring", EditablePanel___tostring },
+    { "__gc", Panel___gc },
     { NULL, NULL } };
 
 static int luasrc_EditablePanel( lua_State *L )

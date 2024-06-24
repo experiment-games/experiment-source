@@ -1290,7 +1290,7 @@ static int Panel___newindex( lua_State *L )
     }
 }
 
-static int Panel___gc( lua_State *L )
+int Panel___gc( lua_State *L )
 {
     Panel *plPanel = dynamic_cast< Panel * >( lua_topanel( L, 1 ) );
 
@@ -1506,9 +1506,9 @@ static const luaL_Reg Panelmeta[] = {
     { "StringToKeyCode", Panel_StringToKeyCode },
     { "__index", Panel___index },
     { "__newindex", Panel___newindex },
-    { "__gc", Panel___gc },
     { "__eq", Panel___eq },
     { "__tostring", Panel___tostring },
+    { "__gc", Panel___gc },
     { NULL, NULL } };
 
 static int luasrc_VGui_GetGameUIPanel( lua_State *L )

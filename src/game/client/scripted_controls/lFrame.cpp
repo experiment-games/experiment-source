@@ -549,6 +549,7 @@ static const luaL_Reg Framemeta[] = {
     { "__newindex", Frame___newindex },
     { "__eq", Frame___eq },
     { "__tostring", Frame___tostring },
+    { "__gc", Panel___gc },
     { NULL, NULL } };
 
 static int luasrc_Frame( lua_State *L )

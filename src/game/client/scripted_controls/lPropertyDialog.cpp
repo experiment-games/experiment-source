@@ -460,6 +460,7 @@ static const luaL_Reg PropertyDialogmeta[] = {
     { "__newindex", PropertyDialog___newindex },
     { "__eq", PropertyDialog___eq },
     { "__tostring", PropertyDialog___tostring },
+    { "__gc", Panel___gc },
     { NULL, NULL } };
 
 static int luasrc_PropertyDialog( lua_State *L )

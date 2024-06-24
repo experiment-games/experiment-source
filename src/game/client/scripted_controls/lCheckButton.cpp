@@ -275,7 +275,8 @@ static const luaL_Reg CheckButtonmeta[] = {
     {"__index", CheckButton___index},
     {"__newindex", CheckButton___newindex},
     {"__eq", CheckButton___eq},
-    {"__tostring", CheckButton___tostring},
+    { "__tostring", CheckButton___tostring },
+    { "__gc", Panel___gc },
     {NULL, NULL}};
 
 static int luasrc_CheckButton(lua_State *L) {

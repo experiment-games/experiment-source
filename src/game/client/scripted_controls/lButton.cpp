@@ -550,6 +550,7 @@ static const luaL_Reg Buttonmeta[] = {
     { "__newindex", Button___newindex },
     { "__eq", Button___eq },
     { "__tostring", Button___tostring },
+    { "__gc", Panel___gc },
 
     // TODO: Inherit this from Label, creating a lLabel.cpp for all those Lua functions related to labels
     { "SetText", Label_SetText },

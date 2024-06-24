@@ -14,7 +14,7 @@ function parent:ApplySchemeSettings(pScheme)
 end
 
 parent:MakePopup()
-print(parent)
+print(parent, getmetatable(parent), table.Print(getmetatable(parent)))
 
 local child = Gui.Create("Button", parent)
 child:SetText("Docked to the right")
