@@ -38,16 +38,6 @@ function topChild:OnClick()
     parent:MarkForDeletion()
 end
 
-local bottomChild = Gui.Create("Button", parent)
-bottomChild:SetText("BOTTOM")
-bottomChild:SetDock(DOCK_TYPE.BOTTOM)
-bottomChild:SetTall(childTall)
-bottomChild:SetDockPadding(dockPadding, dockPadding, dockPadding, dockPadding)
-
-function bottomChild:OnClick()
-    parent:MarkForDeletion()
-end
-
 local leftChild = Gui.Create("Button", parent)
 leftChild:SetText("LEFT")
 leftChild:SetDock(DOCK_TYPE.LEFT)
@@ -55,6 +45,16 @@ leftChild:SetWide(childWide)
 leftChild:SetDockPadding(dockPadding, dockPadding, dockPadding, dockPadding)
 
 function leftChild:OnClick()
+    parent:MarkForDeletion()
+end
+
+local bottomChild = Gui.Create("Button", parent)
+bottomChild:SetText("BOTTOM")
+bottomChild:SetDock(DOCK_TYPE.BOTTOM)
+bottomChild:SetTall(childTall)
+bottomChild:SetDockPadding(dockPadding, dockPadding, dockPadding, dockPadding)
+
+function bottomChild:OnClick()
     parent:MarkForDeletion()
 end
 
@@ -67,8 +67,6 @@ rightChild:SetDockPadding(dockPadding, dockPadding, dockPadding, dockPadding)
 function rightChild:OnClick()
 	parent:MarkForDeletion()
 end
-
-parent:UpdateDocking()
 
 --[[
 	Experiments with SetBounds and SetAutoResize:
