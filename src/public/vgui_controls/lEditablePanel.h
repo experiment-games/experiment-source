@@ -1,4 +1,4 @@
-//========= Copyright © 1996-2005, Valve Corporation, All rights reserved. ============//
+//========= Copyright Â© 1996-2005, Valve Corporation, All rights reserved. ============//
 //
 // Purpose: 
 //
@@ -13,12 +13,20 @@
 #endif
 
 #include <vgui_controls/EditablePanel.h>
+#include "scripted_controls/lPanel.h"
 
 using namespace vgui;
 
+class LEditablePanel : public LPanel, public EditablePanel
+{
+    DECLARE_CLASS_SIMPLE( LEditablePanel, EditablePanel );
+
+   public:
+    LEditablePanel( Panel *parent, const char *panelName, lua_State *L );
+};
+
 /* type for EditablePanel functions */
 typedef EditablePanel lua_EditablePanel;
-
 
 
 /*

@@ -88,14 +88,15 @@ end
 -- gBuildMenuInterface = Gui.CBuildMenu(VGui_GetClientLuaRootPanel(), "build")
 --- Creates a new panel with the given name and base class
 --- @param panelName string Class name of the panel
---- @param parentPanel Panel The parent panel to attach the new panel to
+--- @param parentPanel? Panel The parent panel to attach the new panel to
 --- @param name? string An optional name for the panel (default is panelName)
 --- @return Panel The created panel
 function Gui.Create(panelName, parentPanel, name)
 	local helper = registeredHelpers[panelName]
+	parentPanel = parentPanel or VGui_GetClientLuaRootPanel()
 
 	if (helper ~= nil) then
-		local panel = Gui[helper.Base](parentPanel, name)
+		local panel = Gui[helper.Base](parentPanel, name or panelName)
 
 		table.Merge(panel:GetRefTable(), helper)
 
@@ -106,5 +107,5 @@ function Gui.Create(panelName, parentPanel, name)
 		return panel
 	end
 
-	return Gui[panelName](parentPanel, name)
+	return Gui[panelName](parentPanel, name or panelName)
 end

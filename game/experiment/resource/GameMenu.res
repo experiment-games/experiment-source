@@ -58,10 +58,4 @@
 		"command"	"Quit"
 		"ingameorder"	"8"
 	}
-	"9"
-	{
-		"label"	"Test UI (TODO implement pinning UI)"
-		"command"	"engine testui"
-		"ingameorder"	"9"
-	}
 }

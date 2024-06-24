@@ -394,6 +394,7 @@ void luasrc_init_gameui( void )
     leftOnStack += luaopen_Panel( LGameUI );
     leftOnStack += luaopen_surface( LGameUI );
     leftOnStack += luaopen_vgui( LGameUI );
+    leftOnStack += luaopen_Color( LGameUI );
     lua_pop( LGameUI, leftOnStack );
 
     Msg( "Lua Menu initialized (" LUA_VERSION ")\n" );
@@ -1623,7 +1624,7 @@ bool luasrc_SetGamemode( const char *gamemode )
 }
 
 #ifdef LUA_SDK
-static void commandLuaRun( lua_State *L, const CCommand &args )
+static void CommandLuaRun( lua_State *L, const CCommand &args )
 {
     int status = luasrc_dostring( L, args.ArgS() );
     if ( status == 0 && lua_gettop( L ) > 0 )
@@ -1648,7 +1649,7 @@ CON_COMMAND( lua_run_cl, "Run a Lua string on the client" )
         return;
     }
 
-    commandLuaRun( L, args );
+    CommandLuaRun( L, args );
 }
 CON_COMMAND( lua_run_menu, "Run a Lua string in the menu" )
 {
@@ -1661,7 +1662,7 @@ CON_COMMAND( lua_run_menu, "Run a Lua string in the menu" )
         return;
     }
 
-    commandLuaRun( LGameUI, args );
+    CommandLuaRun( LGameUI, args );
 }
 #else
 CON_COMMAND( lua_run, "Run a Lua string" )
@@ -1678,9 +1679,45 @@ CON_COMMAND( lua_run, "Run a Lua string" )
         return;
     }
 
-    commandLuaRun( L, args );
+    CommandLuaRun( L, args );
 }
 #endif
+static void ProcessLuaFile( lua_State *L, const char *arg )
+{
+    char fullpath[512] = { 0 };
+    char fileName[256] = { 0 };
+    Q_snprintf( fileName, sizeof( fileName ), LUA_ROOT "\\%s", arg );
+    Q_strlower( fileName );
+    Q_FixSlashes( fileName );
+
+    if ( filesystem->FileExists( fileName, "MOD" ) )
+    {
+        filesystem->RelativePathToFullPath( fileName, "MOD", fullpath, sizeof( fullpath ) );
+    }
+    else
+    {
+#ifdef CLIENT_DLL
+        const char *gamePath = engine->GetGameDirectory();
+#else
+        char gamePath[256];
+        engine->GetGameDir( gamePath, 256 );
+        Q_StripTrailingSlash( gamePath );
+#endif
+        Q_snprintf( fullpath, sizeof( fullpath ), "%s\\" LUA_ROOT "\\%s", gamePath, arg );
+        Q_strlower( fullpath );
+        Q_FixSlashes( fullpath );
+    }
+
+    if ( Q_strstr( fullpath, ".." ) == NULL )
+    {
+        Msg( "Running file %s...\n", arg );
+        luasrc_dofile( L, fullpath );
+    }
+    else
+    {
+        Msg( "Error: Invalid file path %s\n", fullpath );
+    }
+}
 
 static int DoFileCompletion( const char *partial,
                              char commands[COMMAND_COMPLETION_MAXITEMS]
@@ -1742,29 +1779,19 @@ CON_COMMAND_F_COMPLETION( lua_dofile_cl, "Load and run a Lua file", 0, DoFileCom
         return;
     }
 
-    char fullpath[512] = { 0 };
-    char fileName[256] = { 0 };
-    Q_snprintf( fileName, sizeof( fileName ), LUA_ROOT "\\%s", args.ArgS() );
-    Q_strlower( fileName );
-    Q_FixSlashes( fileName );
-    if ( filesystem->FileExists( fileName, "MOD" ) )
+    ProcessLuaFile( L, args.ArgS() );
+}
+CON_COMMAND_F_COMPLETION( lua_dofile_menu, "Load and run a Lua file", 0, DoFileCompletion )
+{
+    if ( args.ArgC() == 1 )
     {
-        filesystem->RelativePathToFullPath( fileName, "MOD", fullpath, sizeof( fullpath ) );
-    }
-    else
-    {
-        Q_snprintf( fullpath, sizeof( fullpath ), "%s\\" LUA_ROOT "\\%s", engine->GetGameDirectory(), args.ArgS() );
-        Q_strlower( fullpath );
-        Q_FixSlashes( fullpath );
-    }
-
-    if ( Q_strstr( fullpath, ".." ) )
-    {
+        Msg( "Usage: lua_dofile_menu <fileName>\n" );
         return;
     }
-    Msg( "Running file %s...\n", args.ArgS() );
-    luasrc_dofile( L, fullpath );
+
+    ProcessLuaFile( LGameUI, args.ArgS() );
 }
+
 #else
 CON_COMMAND_F_COMPLETION( lua_dofile, "Load and run a Lua file", 0, DoFileCompletion )
 {
@@ -1780,33 +1807,7 @@ CON_COMMAND_F_COMPLETION( lua_dofile, "Load and run a Lua file", 0, DoFileComple
         return;
     }
 
-    char fullpath[512] = { 0 };
-    char fileName[256] = { 0 };
-    Q_snprintf( fileName, sizeof( fileName ), LUA_ROOT "lua\\%s", args.ArgS() );
-    Q_strlower( fileName );
-    Q_FixSlashes( fileName );
-    if ( filesystem->FileExists( fileName, "MOD" ) )
-    {
-        filesystem->RelativePathToFullPath( fileName, "MOD", fullpath, sizeof( fullpath ) );
-    }
-    else
-    {
-        // fileName is local to game dir for Steam, so we need to prepend game
-        // dir for regular file load
-        char gamePath[256];
-        engine->GetGameDir( gamePath, 256 );
-        Q_StripTrailingSlash( gamePath );
-        Q_snprintf( fullpath, sizeof( fullpath ), "%s\\" LUA_ROOT "\\%s", gamePath, args.ArgS() );
-        Q_strlower( fullpath );
-        Q_FixSlashes( fullpath );
-    }
-
-    if ( Q_strstr( fullpath, ".." ) )
-    {
-        return;
-    }
-    Msg( "Running file %s...\n", args.ArgS() );
-    luasrc_dofile( L, fullpath );
+    ProcessLuaFile( L, args.ArgS() );
 }
 #endif
 

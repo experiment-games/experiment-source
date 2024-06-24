@@ -1,10 +1,3 @@
-//===== Copyright © 1996-2005, Valve Corporation, All rights reserved. ======//
-//
-// Purpose: 
-//
-// $NoKeywords: $
-//===========================================================================//
-
 #ifndef LBUTTON_H
 #define LBUTTON_H
 
@@ -17,9 +10,6 @@
 namespace vgui
 {
 
-//-----------------------------------------------------------------------------
-// Purpose: 
-//-----------------------------------------------------------------------------
 class LButton : public Button
 {
 	DECLARE_CLASS_SIMPLE( LButton, Button );
@@ -30,11 +20,10 @@ public:
 	~LButton();
 
 public:
-#if defined( LUA_SDK )
+    void DoClick( void );
 	lua_State          *m_lua_State;
 	int                m_nTableReference;
 	int                m_nRefCount;
-#endif
 };
 
 } // namespace vgui
