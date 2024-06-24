@@ -1,4 +1,5 @@
 -- lua_dofile_menu utilities/test/panel_docking.lua
+-- or: lua_dofile_cl utilities/test/panel_docking.lua
 
 -- Lets create a panel and dock it to the right of the parent.
 local parent = Gui.Create("EditablePanel")

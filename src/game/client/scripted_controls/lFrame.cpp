@@ -29,9 +29,7 @@ LFrame::LFrame( Panel *parent, const char *panelName, bool showTaskbarIcon, lua_
 {
 #if defined( LUA_SDK )
     m_lua_State = L;
-    m_nTableReference = LUA_NOREF;
-    m_nRefCount = 0;
-#endif  // LUA_SDK
+#endif
 }
 
 //-----------------------------------------------------------------------------
@@ -39,9 +37,11 @@ LFrame::LFrame( Panel *parent, const char *panelName, bool showTaskbarIcon, lua_
 //-----------------------------------------------------------------------------
 LFrame::~LFrame()
 {
-#if defined( LUA_SDK )
-    lua_unref( m_lua_State, m_nTableReference );
-#endif  // LUA_SDK
+}
+
+void LFrame::PushPanelToLua( lua_State *L )
+{
+    lua_pushframe( L, this );
 }
 
 /*
@@ -476,20 +476,6 @@ static int Frame___newindex( lua_State *L )
     }
 }
 
-static int Frame___gc( lua_State *L )
-{
-    LFrame *plFrame = dynamic_cast< LFrame * >( lua_toframe( L, 1 ) );
-    if ( plFrame )
-    {
-        --plFrame->m_nRefCount;
-        if ( plFrame->m_nRefCount <= 0 )
-        {
-            delete plFrame;
-        }
-    }
-    return 0;
-}
-
 static int Frame___eq( lua_State *L )
 {
     lua_pushboolean( L, lua_toframe( L, 1 ) == lua_toframe( L, 2 ) );
@@ -561,7 +547,6 @@ static const luaL_Reg Framemeta[] = {
     { "SetTitleBarVisible", Frame_SetTitleBarVisible },
     { "__index", Frame___index },
     { "__newindex", Frame___newindex },
-    { "__gc", Frame___gc },
     { "__eq", Frame___eq },
     { "__tostring", Frame___tostring },
     { NULL, NULL } };

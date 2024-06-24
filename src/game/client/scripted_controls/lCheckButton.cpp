@@ -29,18 +29,13 @@ LCheckButton::LCheckButton(Panel *parent, const char *panelName,
     : CheckButton(parent, panelName, text) {
 #if defined(LUA_SDK)
     m_lua_State = L;
-    m_nTableReference = LUA_NOREF;
-    m_nRefCount = 0;
-#endif  // LUA_SDK
+#endif
 }
 
 //-----------------------------------------------------------------------------
 // Purpose: Destructor
 //-----------------------------------------------------------------------------
 LCheckButton::~LCheckButton() {
-#if defined(LUA_SDK)
-    lua_unref(m_lua_State, m_nTableReference);
-#endif  // LUA_SDK
 }
 
 void LCheckButton::PushPanelToLua( lua_State *L )
@@ -247,18 +242,6 @@ static int CheckButton___newindex(lua_State *L) {
     }
 }
 
-static int CheckButton___gc(lua_State *L) {
-    LCheckButton *plCheckButton =
-        dynamic_cast<LCheckButton *>(lua_tocheckbutton(L, 1));
-    if (plCheckButton) {
-        --plCheckButton->m_nRefCount;
-        if (plCheckButton->m_nRefCount <= 0) {
-            delete plCheckButton;
-        }
-    }
-    return 0;
-}
-
 static int CheckButton___eq(lua_State *L) {
     lua_pushboolean(L, lua_tocheckbutton(L, 1) == lua_tocheckbutton(L, 2));
     return 1;
@@ -291,7 +274,6 @@ static const luaL_Reg CheckButtonmeta[] = {
     {"SetSelected", CheckButton_SetSelected},
     {"__index", CheckButton___index},
     {"__newindex", CheckButton___newindex},
-    {"__gc", CheckButton___gc},
     {"__eq", CheckButton___eq},
     {"__tostring", CheckButton___tostring},
     {NULL, NULL}};

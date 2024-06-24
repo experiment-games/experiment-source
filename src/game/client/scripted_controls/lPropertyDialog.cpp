@@ -30,9 +30,7 @@ LPropertyDialog::LPropertyDialog( Panel *parent, const char *panelName, lua_Stat
 {
 #if defined( LUA_SDK )
     m_lua_State = L;
-    m_nTableReference = LUA_NOREF;
-    m_nRefCount = 0;
-#endif  // LUA_SDK
+#endif
 }
 
 //-----------------------------------------------------------------------------
@@ -40,9 +38,11 @@ LPropertyDialog::LPropertyDialog( Panel *parent, const char *panelName, lua_Stat
 //-----------------------------------------------------------------------------
 LPropertyDialog::~LPropertyDialog()
 {
-#if defined( LUA_SDK )
-    lua_unref( m_lua_State, m_nTableReference );
-#endif  // LUA_SDK
+}
+
+void LPropertyDialog::PushPanelToLua( lua_State *L )
+{
+    lua_pushpropertydialog( L, this );
 }
 
 //-----------------------------------------------------------------------------
@@ -415,21 +415,6 @@ static int PropertyDialog___newindex( lua_State *L )
     }
 }
 
-static int PropertyDialog___gc( lua_State *L )
-{
-    LPropertyDialog *plDialog =
-        dynamic_cast< LPropertyDialog * >( lua_topropertydialog( L, 1 ) );
-    if ( plDialog )
-    {
-        --plDialog->m_nRefCount;
-        if ( plDialog->m_nRefCount <= 0 )
-        {
-            delete plDialog;
-        }
-    }
-    return 0;
-}
-
 static int PropertyDialog___eq( lua_State *L )
 {
     lua_pushboolean( L,
@@ -473,7 +458,6 @@ static const luaL_Reg PropertyDialogmeta[] = {
     { "SetOKButtonVisible", PropertyDialog_SetOKButtonVisible },
     { "__index", PropertyDialog___index },
     { "__newindex", PropertyDialog___newindex },
-    { "__gc", PropertyDialog___gc },
     { "__eq", PropertyDialog___eq },
     { "__tostring", PropertyDialog___tostring },
     { NULL, NULL } };

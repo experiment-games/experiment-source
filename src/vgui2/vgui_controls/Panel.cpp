@@ -795,7 +795,8 @@ void Panel::Init( int x, int y, int wide, int tall )
 Panel::~Panel()
 {
 #if defined( LUA_SDK )
-    lua_unref( m_lua_State, m_nTableReference );
+    if ( m_lua_State ) 
+        lua_unref( m_lua_State, m_nTableReference );
 #endif  // LUA_SDK
 
     // @note Tom Bui: only cleanup if we've created it

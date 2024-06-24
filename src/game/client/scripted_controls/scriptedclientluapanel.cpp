@@ -1,4 +1,4 @@
-//========= Copyright © 1996-2005, Valve Corporation, All rights reserved. ============//
+//========= Copyright Â© 1996-2005, Valve Corporation, All rights reserved. ============//
 //
 // Purpose: Client DLL VGUI2 Viewport
 //
@@ -27,8 +27,13 @@
 using namespace vgui;
 
 //================================================================
-CScriptedClientLuaPanel::CScriptedClientLuaPanel() : vgui::EditablePanel( NULL, "CScriptedClientLuaPanel")
+CScriptedClientLuaPanel::CScriptedClientLuaPanel()
+    : vgui::EditablePanel( NULL, "CScriptedClientLuaPanel")
 {
+    // Experiment; We always want a reference to the panel, so it isn't
+    // removed by the garbage collector.
+    m_nRefCount = 1;
+
 	SetKeyBoardInputEnabled( false );
 	SetMouseInputEnabled( false );
 

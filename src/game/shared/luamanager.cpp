@@ -1682,6 +1682,7 @@ CON_COMMAND( lua_run, "Run a Lua string" )
     CommandLuaRun( L, args );
 }
 #endif
+
 static void ProcessLuaFile( lua_State *L, const char *arg )
 {
     char fullpath[512] = { 0 };

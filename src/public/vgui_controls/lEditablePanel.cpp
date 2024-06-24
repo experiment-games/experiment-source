@@ -370,20 +370,6 @@ static int EditablePanel___newindex( lua_State *L )
     }
 }
 
-static int EditablePanel___gc( lua_State *L )
-{
-    LEditablePanel *plEditablePanel = dynamic_cast< LEditablePanel * >( lua_toeditablepanel( L, 1 ) );
-    if ( plEditablePanel )
-    {
-        --plEditablePanel->m_nRefCount;
-        if ( plEditablePanel->m_nRefCount <= 0 )
-        {
-            delete plEditablePanel;
-        }
-    }
-    return 0;
-}
-
 static int EditablePanel___eq( lua_State *L )
 {
     lua_pushboolean( L, lua_toeditablepanel( L, 1 ) == lua_toeditablepanel( L, 2 ) );

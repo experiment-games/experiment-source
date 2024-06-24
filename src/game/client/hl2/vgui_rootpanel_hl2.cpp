@@ -82,7 +82,12 @@ vgui::Panel *VGui_GetClientLuaRootPanel(void) {
 // C_ScriptedBaseGameUIPanel implementation.
 //-----------------------------------------------------------------------------
 C_ScriptedBaseGameUIPanel::C_ScriptedBaseGameUIPanel(vgui::VPANEL parent)
-    : BaseClass(NULL, "ScriptedBaseGameUIPanel") {
+    : BaseClass( NULL, "ScriptedBaseGameUIPanel" )
+{
+    // Experiment; We always want a reference to the panel, so it isn't
+    // removed by the garbage collector.
+    m_nRefCount = 1;
+
     SetParent(parent);
     SetPaintEnabled(false);
     SetPaintBorderEnabled(false);

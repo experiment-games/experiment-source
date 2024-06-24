@@ -470,20 +470,6 @@ static int Button___newindex( lua_State *L )
     }
 }
 
-static int Button___gc( lua_State *L )
-{
-    LButton *plButton = dynamic_cast< LButton * >( lua_tobutton( L, 1 ) );
-    if ( plButton )
-    {
-        --plButton->m_nRefCount;
-        if ( plButton->m_nRefCount <= 0 )
-        {
-            delete plButton;
-        }
-    }
-    return 0;
-}
-
 static int Button___eq( lua_State *L )
 {
     lua_pushboolean( L, lua_tobutton( L, 1 ) == lua_tobutton( L, 2 ) );
@@ -562,7 +548,6 @@ static const luaL_Reg Buttonmeta[] = {
     { "SizeToContents", Button_SizeToContents },
     { "__index", Button___index },
     { "__newindex", Button___newindex },
-    { "__gc", Button___gc },
     { "__eq", Button___eq },
     { "__tostring", Button___tostring },
 

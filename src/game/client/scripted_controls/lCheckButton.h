@@ -27,17 +27,14 @@ class LCheckButton : public CheckButton
    public:
     LCheckButton( Panel *parent, const char *panelName, const char *text, lua_State *L );
     virtual ~LCheckButton();
+
+#if defined( LUA_SDK )
+   public:
     virtual void PushPanelToLua( lua_State *L );
+#endif
 
    protected:
     MESSAGE_FUNC( OnCheckButtonChecked, "CheckButtonChecked" );
-
-   public:
-#if defined( LUA_SDK )
-    lua_State *m_lua_State;
-    int m_nTableReference;
-    int m_nRefCount;
-#endif
 };
 
 }  // namespace vgui

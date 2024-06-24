@@ -28,9 +28,7 @@ LPropertyPage::LPropertyPage( Panel *parent, const char *panelName, lua_State *L
 {
 #if defined( LUA_SDK )
     m_lua_State = L;
-    m_nTableReference = LUA_NOREF;
-    m_nRefCount = 0;
-#endif  // LUA_SDK
+#endif
 }
 
 //-----------------------------------------------------------------------------
@@ -38,9 +36,11 @@ LPropertyPage::LPropertyPage( Panel *parent, const char *panelName, lua_State *L
 //-----------------------------------------------------------------------------
 LPropertyPage::~LPropertyPage()
 {
-#if defined( LUA_SDK )
-    lua_unref( m_lua_State, m_nTableReference );
-#endif  // LUA_SDK
+}
+
+void LPropertyPage::PushPanelToLua( lua_State *L )
+{
+    lua_pushpropertypage( L, this );
 }
 
 //-----------------------------------------------------------------------------
@@ -356,21 +356,6 @@ static int PropertyPage___newindex( lua_State *L )
     }
 }
 
-static int PropertyPage___gc( lua_State *L )
-{
-    LPropertyPage *plPage =
-        dynamic_cast< LPropertyPage * >( lua_topropertypage( L, 1 ) );
-    if ( plPage )
-    {
-        --plPage->m_nRefCount;
-        if ( plPage->m_nRefCount <= 0 )
-        {
-            delete plPage;
-        }
-    }
-    return 0;
-}
-
 static int PropertyPage___eq( lua_State *L )
 {
     lua_pushboolean( L, lua_topropertypage( L, 1 ) == lua_topropertypage( L, 2 ) );
@@ -409,7 +394,6 @@ static const luaL_Reg PropertyPagemeta[] = {
     { "SetVisible", PropertyPage_SetVisible },
     { "__index", PropertyPage___index },
     { "__newindex", PropertyPage___newindex },
-    { "__gc", PropertyPage___gc },
     { "__eq", PropertyPage___eq },
     { "__tostring", PropertyPage___tostring },
     { NULL, NULL } };

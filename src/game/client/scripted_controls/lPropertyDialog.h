@@ -43,11 +43,9 @@ class LPropertyDialog : public PropertyDialog
    public:
     void EnableApplyButton( bool bEnable );
 
-   public:
 #if defined( LUA_SDK )
-    lua_State *m_lua_State;
-    int m_nTableReference;
-    int m_nRefCount;
+   public:
+    virtual void PushPanelToLua( lua_State *L );
 #endif
 };
 

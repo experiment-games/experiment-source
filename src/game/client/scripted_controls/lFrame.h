@@ -1,4 +1,4 @@
-//========= Copyright © 1996-2005, Valve Corporation, All rights reserved. ============//
+//========= Copyright Â© 1996-2005, Valve Corporation, All rights reserved. ============//
 //
 // Purpose: 
 //
@@ -28,11 +28,9 @@ public:
 	LFrame(Panel *parent, const char *panelName, bool showTaskbarIcon = true, lua_State *L = NULL);
 	virtual ~LFrame();
 
-public:
 #if defined( LUA_SDK )
-	lua_State *m_lua_State;
-	int m_nTableReference;
-	int m_nRefCount;
+ public:
+  virtual void PushPanelToLua( lua_State *L );
 #endif
 };
 
