@@ -363,7 +363,7 @@ static int Frame_SetSmallCaption( lua_State *L )
 static int Frame_SetTitle( lua_State *L )
 {
     luaL_checkframe( L, 1 )->SetTitle( luaL_checkstring( L, 2 ),
-                                       luaL_checkboolean( L, 3 ) );
+                                       luaL_optboolean( L, 3, true ) );
     return 0;
 }
 
