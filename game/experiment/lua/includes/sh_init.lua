@@ -8,12 +8,15 @@ Include("extensions/debug.lua")
 Include("extensions/entity.lua")
 Include("extensions/key_values.lua")
 Include("extensions/math.lua")
-Include("extensions/panel.lua")
 Include("extensions/string.lua")
 Include("extensions/table.lua")
 Include("extensions/user_messages.lua")
 Include("extensions/gui.lua")
 Include("extensions/weapon.lua")
+
+if (CLIENT) then
+	Include("extensions/panel.lua")
+end
 
 Bitwise = require("bitwise")
 ConsoleCommands = require("console_commands")

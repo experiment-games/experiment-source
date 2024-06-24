@@ -73,7 +73,7 @@ local PANEL = _R.Panel
 --- @param top number
 --- @param right number
 --- @param bottom number
-function PANEL:SetDockMargins(left, top, right, bottom)
+function PANEL:SetDockMargin(left, top, right, bottom)
     self._dockMarginLeft = left or 0
     self._dockMarginTop = top or 0
     self._dockMarginRight = right or 0
@@ -84,7 +84,7 @@ end
 
 --- Get the dock margins for the panel.
 --- @return number, number, number, number
-function PANEL:GetDockMargins()
+function PANEL:GetDockMargin()
     return self._dockMarginLeft or 0, self._dockMarginTop or 0, self._dockMarginRight or 0, self._dockMarginBottom or 0
 end
 

@@ -103,17 +103,50 @@ function Gui.Create(panelName, parentPanel, name)
 	local helper = registeredHelpers[panelName]
 	parentPanel = parentPanel or getAppropriateBaseParent()
 
-	if (helper ~= nil) then
-		local panel = Gui[helper.Base](parentPanel, name or panelName)
+    if (helper ~= nil) then
+        local panel = Gui[helper.Base](parentPanel, name or panelName)
 
-		table.Merge(panel:GetRefTable(), helper)
+        table.Merge(panel:GetRefTable(), helper)
 
-		panel.BaseClass = registeredHelpers[helper.Base]
+        panel.BaseClass = registeredHelpers[helper.Base]
 
-		panel:Init()
+        panel:Init()
 
-		return panel
+        return panel
+    end
+
+	if (not Gui[panelName]) then
+		error("attempt to create non-existing panel class \"" .. tostring(panelName) .. "\"", 2)
 	end
 
 	return Gui[panelName](parentPanel, name or panelName)
 end
+
+--[[
+	Enumerations
+
+	TODO: Move these to C-side so they don't misalign.
+--]]
+
+--- @enum CURSOR_CODE
+CURSOR_CODE = {
+	USER = 0,
+	NONE = 1,
+	ARROW = 2,
+	I_BEAM = 3,
+	HOURGLASS = 4,
+	WAIT_ARROW = 5,
+	CROSSHAIR = 6,
+	UP = 7,
+	SIZE_NWSE = 8,
+	SIZE_NESW = 9,
+	SIZE_WE = 10,
+	SIZE_NS = 11,
+	SIZE_ALL = 12,
+	NO = 13,
+	HAND = 14,
+	BLANK = 15,
+	LAST = 16,
+	ALWAYS_VISIBLE_PUSH = 17,
+	ALWAYS_VISIBLE_POP = 18
+}

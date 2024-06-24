@@ -66,17 +66,21 @@ jit = {
 
 local registry = debug.getregistry()
 function FindMetaTable(name)
-	if (name == "Entity") then
-		name = "CBaseEntity"
-	elseif (name == "Player") then
-		name = "CBasePlayer"
-	elseif (name == "Vehicle") then
-		-- We don't have vehicles, so lets not waste time on it
-		return {}
-	end
+    if (name == "Entity") then
+        name = "CBaseEntity"
+    elseif (name == "Player") then
+        name = "CBasePlayer"
+    elseif (name == "Vehicle") then
+        -- We don't have vehicles, so lets not waste time on it
+        return {}
+    end
 
-	return registry[name]
+    return registry[name]
 end
+
+local ENTITY_META = FindMetaTable("Entity")
+
+ENTITY_META.GetTable = ENTITY_META.GetRefTable
 
 local PLAYER_META = FindMetaTable("Player")
 
@@ -89,15 +93,63 @@ function PLAYER_META:GetClassID()
     return self.__classId
 end
 
+function PLAYER_META:IsListenServerHost()
+    if (CLIENT) then
+        ErrorNoHalt("IsListenServerHost has not yet been implemented on the client.")
+    end
+
+	return self == Util.GetListenServerHost()
+end
+
 if (CLIENT) then
-	local PANEL_META = FindMetaTable("Panel")
+    local PANEL_META = FindMetaTable("Panel")
+	PANEL_META._OriginalSetCursor = PANEL_META._OriginalSetCursor or PANEL_META.SetCursor
 
     PANEL_META.GetTable = PANEL_META.GetRefTable
+    PANEL_META.Dock = PANEL_META.SetDock
+    PANEL_META.DockMargin = PANEL_META.SetDockMargin
+	PANEL_META.DockPadding = PANEL_META.SetDockPadding
 
-	function PANEL_META:Prepare()
+    function PANEL_META:Prepare()
         -- Installs Lua defined functions into the panel.
-		-- TODO: What does that mean?
+        -- TODO: What does that mean?
+    end
+
+    -- Maps cursor strings to cursor codes.
+	local cursorMap = {
+		-- ["user"] = CURSOR_CODE.USER,
+		["none"] = CURSOR_CODE.NONE,
+		["arrow"] = CURSOR_CODE.ARROW,
+		["beam"] = CURSOR_CODE.I_BEAM,
+		["hourglass"] = CURSOR_CODE.HOURGLASS,
+		["waitarrow"] = CURSOR_CODE.WAIT_ARROW,
+		["crosshair"] = CURSOR_CODE.CROSSHAIR,
+		["up"] = CURSOR_CODE.UP,
+		["sizenwse"] = CURSOR_CODE.SIZE_NWSE,
+		["sizenesw"] = CURSOR_CODE.SIZE_NESW,
+		["sizewe"] = CURSOR_CODE.SIZE_WE,
+		["sizens"] = CURSOR_CODE.SIZE_NS,
+		["sizeall"] = CURSOR_CODE.SIZE_ALL,
+		["no"] = CURSOR_CODE.NO,
+		["hand"] = CURSOR_CODE.HAND,
+		["blank"] = CURSOR_CODE.BLANK,
+		-- ["last"] = CURSOR_CODE.LAST,
+		-- ["alwaysvisiblepush"] = CURSOR_CODE.ALWAYS_VISIBLE_PUSH,
+		-- ["alwaysvisiblepop"] = CURSOR_CODE.ALWAYS_VISIBLE_POP,
+	}
+
+	function PANEL_META:SetCursor(cursor)
+		local cursorCode = cursorMap[cursor]
+
+		if (not cursorCode) then
+			cursorCode = CURSOR_CODE.NONE
+		end
+
+		self:_OriginalSetCursor(cursorCode)
 	end
+
+    ScrW = Util.ScreenWidth
+	ScrH = Util.ScreenHeight
 end
 
 -- TODO: Actually implement SQLite
@@ -231,7 +283,16 @@ end
 game = {
 	IsDedicated = function()
 		return Engine.IsDedicatedServer()
+    end,
+
+	SinglePlayer = function()
+		return Globals.maxClients == 1
+    end,
+
+	MaxPlayers = function()
+		return Globals.maxClients
 	end,
+
 	ConsoleCommand = RunConsoleCommand,
 }
 

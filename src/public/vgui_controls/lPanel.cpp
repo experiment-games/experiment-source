@@ -1022,6 +1022,12 @@ static int Panel_SetBuildModeEditable( lua_State *L )
     return 0;
 }
 
+static int Panel_SetCursor( lua_State *L )
+{
+    luaL_checkpanel( L, 1 )->SetCursor( ( HCursor )luaL_checkint( L, 2 ) );
+    return 0;
+}
+
 static int Panel_SetDragEnabled( lua_State *L )
 {
     luaL_checkpanel( L, 1 )->SetDragEnabled( luaL_checkboolean( L, 2 ) );
@@ -1475,6 +1481,7 @@ static const luaL_Reg Panelmeta[] = {
     { "SetBounds", Panel_SetBounds },
     { "SetBuildModeDeletable", Panel_SetBuildModeDeletable },
     { "SetBuildModeEditable", Panel_SetBuildModeEditable },
+    { "SetCursor", Panel_SetCursor },
     { "SetDragEnabled", Panel_SetDragEnabled },
     { "SetDragSTartTolerance", Panel_SetDragSTartTolerance },
     { "SetDropEnabled", Panel_SetDropEnabled },

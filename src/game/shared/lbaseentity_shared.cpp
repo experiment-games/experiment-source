@@ -1857,6 +1857,7 @@ static const luaL_Reg CBaseEntitymeta[] = {
     { "GetParametersForSound", CBaseEntity_GetParametersForSound },
     { "GetPredictionPlayer", CBaseEntity_GetPredictionPlayer },
     { "GetPredictionRandomSeed", CBaseEntity_GetPredictionRandomSeed },
+    { "GetRefTable", CBaseEntity_GetRefTable },
     { "GetSimulatingPlayer", CBaseEntity_GetSimulatingPlayer },
     { "GetSimulationTime", CBaseEntity_GetSimulationTime },
     { "GetSolid", CBaseEntity_GetSolid },
