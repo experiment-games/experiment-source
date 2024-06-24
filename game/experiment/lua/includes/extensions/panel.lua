@@ -141,16 +141,16 @@ local PANEL = _R.Panel
 --- @param right number
 --- @param bottom number
 function PANEL:SetDockMargins(left, top, right, bottom)
-    self._dockMarginLeft = left
-    self._dockMarginTop = top
-    self._dockMarginRight = right
-    self._dockMarginBottom = bottom
+    self._dockMarginLeft = left or 0
+    self._dockMarginTop = top or 0
+    self._dockMarginRight = right or 0
+    self._dockMarginBottom = bottom or 0
 end
 
 --- Get the dock margins for the panel.
 --- @return number, number, number, number
 function PANEL:GetDockMargins()
-    return self._dockMarginLeft, self._dockMarginTop, self._dockMarginRight, self._dockMarginBottom
+    return self._dockMarginLeft or 0, self._dockMarginTop or 0, self._dockMarginRight or 0, self._dockMarginBottom or 0
 end
 
 --- Set the dock padding for the panel.
@@ -159,16 +159,16 @@ end
 --- @param right number
 --- @param bottom number
 function PANEL:SetDockPadding(left, top, right, bottom)
-    self._dockPaddingLeft = left
-    self._dockPaddingTop = top
-    self._dockPaddingRight = right
-    self._dockPaddingBottom = bottom
+    self._dockPaddingLeft = left or 0
+    self._dockPaddingTop = top or 0
+    self._dockPaddingRight = right or 0
+    self._dockPaddingBottom = bottom or 0
 end
 
 --- Get the dock padding for the panel.
 --- @return number, number, number, number
 function PANEL:GetDockPadding()
-	return self._dockPaddingLeft, self._dockPaddingTop, self._dockPaddingRight, self._dockPaddingBottom
+	return self._dockPaddingLeft or 0, self._dockPaddingTop or 0, self._dockPaddingRight or 0, self._dockPaddingBottom or 0
 end
 
 --- Set the dock type for the panel.
@@ -183,62 +183,163 @@ function PANEL:GetDock()
     return self._dockType
 end
 
---- This function is called to update the panel's position and size based on the dock settings.
+-- Wrong: from perspective of child
+-- --- This function is called to update the panel's position and size based on the dock settings.
+-- function PANEL:UpdateDocking()
+-- 	local parent = self:GetParent()
+
+-- 	if (not parent) then
+-- 		return
+-- 	end
+
+-- 	local parentWide, parentTall = parent:GetSize()
+-- 	-- local parentX, parentY = parent:GetPos()
+--     -- local left, top, right, bottom = self:GetDockMargins()
+-- 	local leftPadding, topPadding, rightPadding, bottomPadding = self:GetDockPadding()
+-- 	local dockType = self:GetDock()
+--     local newWidth, newHeight
+--     local newX, newY
+
+--     -- Calculate the new position and size based on dock type
+--     if dockType == DOCK_TYPE.FILL then
+--         newX, newY = leftPadding, topPadding
+--         newWidth = parentWide - leftPadding - rightPadding
+--         newHeight = parentTall - topPadding - bottomPadding
+
+-- 		self:SetAutoResize(PIN_CORNER.TOP_LEFT, AUTO_RESIZE.DOWN_AND_RIGHT, leftPadding, topPadding, -rightPadding, -bottomPadding)
+--     elseif dockType == DOCK_TYPE.LEFT then
+--         newX, newY = leftPadding, topPadding
+--         newWidth = (parentWide / 2) - leftPadding - rightPadding
+--         newHeight = parentTall - topPadding - bottomPadding
+
+-- 		self:SetAutoResize(PIN_CORNER.TOP_LEFT, AUTO_RESIZE.DOWN, leftPadding, topPadding, 0, -bottomPadding)
+--     elseif dockType == DOCK_TYPE.RIGHT then
+--         newX = (parentWide / 2) + leftPadding
+--         newY = topPadding
+--         newWidth = (parentWide / 2) - leftPadding - rightPadding
+--         newHeight = parentTall - topPadding - bottomPadding
+
+-- 		self:SetAutoResize(PIN_CORNER.TOP_RIGHT, AUTO_RESIZE.DOWN, -rightPadding, topPadding, 0, -bottomPadding)
+--     elseif dockType == DOCK_TYPE.TOP then
+--         newX, newY = leftPadding, topPadding
+--         newWidth = parentWide - leftPadding - rightPadding
+--         newHeight = (parentTall / 2) - topPadding - bottomPadding
+
+-- 		self:SetAutoResize(PIN_CORNER.TOP_LEFT, AUTO_RESIZE.RIGHT, leftPadding, topPadding, -rightPadding, 0)
+--     elseif dockType == DOCK_TYPE.BOTTOM then
+--         newX, newY = leftPadding, (parentTall / 2) + topPadding
+--         newWidth = parentWide - leftPadding - rightPadding
+--         newHeight = (parentTall / 2) - topPadding - bottomPadding
+
+-- 		self:SetAutoResize(PIN_CORNER.BOTTOM_LEFT, AUTO_RESIZE.RIGHT, leftPadding, -bottomPadding, -rightPadding, 0)
+--     else
+--         newX, newY = 0, 0
+		-- newWidth = child:GetWide()
+		-- newHeight = child:GetTall()
+
+-- 		self:SetAutoResize(PIN_CORNER.TOP_LEFT, AUTO_RESIZE.NO, newX, newY, 0, 0)
+--     end
+
+--     self:SetBounds(newX, newY, newWidth, newHeight)
+-- end
+
+--- This function is called to update the panel's child positions and sizes based on their dock settings.
 function PANEL:UpdateDocking()
-	local parent = self:GetParent()
+    local parentWide, parentTall = self:GetSize()
+    local currentX, currentY = 0, 0 -- For calculating the next child's position
+    local childCount = self:GetChildCount()
 
-	if (not parent) then
-		return
-	end
+	-- First pass: handle all children with a dock type that is not FILL,
+	-- Fill will be handled in the second pass when we know the remaining space
+    for i = 1, childCount do
+        local child = self:GetChild(i)
+        local leftPadding, topPadding, rightPadding, bottomPadding = child:GetDockPadding()
+        local dockType = child:GetDock()
+        local newWidth, newHeight
+        local newX, newY
 
-	local parentWide, parentTall = parent:GetSize()
-	-- local parentX, parentY = parent:GetPos()
-    -- local left, top, right, bottom = self:GetDockMargins()
-	local leftPadding, topPadding, rightPadding, bottomPadding = self:GetDockPadding()
-	local dockType = self:GetDock()
-    local newWidth, newHeight
-    local newX, newY
+        -- Calculate the new position and size based on dock type
+        if (dockType == DOCK_TYPE.FILL) then
+            -- Do nothing, will be handled in the second pass
+			continue
+        elseif (dockType == DOCK_TYPE.LEFT) then
+            newX, newY = leftPadding, topPadding
+            newWidth = (parentWide / 2) - leftPadding - rightPadding
+            newHeight = parentTall - topPadding - bottomPadding
 
-    -- Calculate the new position and size based on dock type
-    if dockType == DOCK_TYPE.FILL then
-        newX, newY = leftPadding, topPadding
-        newWidth = parentWide - leftPadding - rightPadding
-        newHeight = parentTall - topPadding - bottomPadding
+            child:SetAutoResize(PIN_CORNER.TOP_LEFT, AUTO_RESIZE.DOWN, leftPadding, topPadding, 0, -bottomPadding)
+        elseif (dockType == DOCK_TYPE.RIGHT) then
+            newX = (parentWide / 2) + leftPadding
+            newY = topPadding
+            newWidth = (parentWide / 2) - leftPadding - rightPadding
+            newHeight = parentTall - topPadding - bottomPadding
 
-		self:SetAutoResize(PIN_CORNER.TOP_LEFT, AUTO_RESIZE.DOWN_AND_RIGHT, leftPadding, topPadding, -rightPadding, -bottomPadding)
-    elseif dockType == DOCK_TYPE.LEFT then
-        newX, newY = leftPadding, topPadding
-        newWidth = (parentWide / 2) - leftPadding - rightPadding
-        newHeight = parentTall - topPadding - bottomPadding
+            child:SetAutoResize(PIN_CORNER.TOP_RIGHT, AUTO_RESIZE.DOWN, -rightPadding, topPadding, 0, -bottomPadding)
+        elseif (dockType == DOCK_TYPE.TOP) then
+            newX, newY = leftPadding, topPadding
+            newWidth = parentWide - leftPadding - rightPadding
+            newHeight = (parentTall / 2) - topPadding - bottomPadding
 
-		self:SetAutoResize(PIN_CORNER.TOP_LEFT, AUTO_RESIZE.DOWN, leftPadding, topPadding, 0, -bottomPadding)
-    elseif dockType == DOCK_TYPE.RIGHT then
-        newX = (parentWide / 2) + leftPadding
-        newY = topPadding
-        newWidth = (parentWide / 2) - leftPadding - rightPadding
-        newHeight = parentTall - topPadding - bottomPadding
+            child:SetAutoResize(PIN_CORNER.TOP_LEFT, AUTO_RESIZE.RIGHT, leftPadding, topPadding, -rightPadding, 0)
+        elseif (dockType == DOCK_TYPE.BOTTOM) then
+            newX, newY = leftPadding, (parentTall / 2) + topPadding
+            newWidth = parentWide - leftPadding - rightPadding
+            newHeight = (parentTall / 2) - topPadding - bottomPadding
 
-		self:SetAutoResize(PIN_CORNER.TOP_RIGHT, AUTO_RESIZE.DOWN, -rightPadding, topPadding, 0, -bottomPadding)
-    elseif dockType == DOCK_TYPE.TOP then
-        newX, newY = leftPadding, topPadding
-        newWidth = parentWide - leftPadding - rightPadding
-        newHeight = (parentTall / 2) - topPadding - bottomPadding
+            child:SetAutoResize(PIN_CORNER.BOTTOM_LEFT, AUTO_RESIZE.RIGHT, leftPadding, -bottomPadding, -rightPadding, 0)
+        else
+            newX, newY = 0, 0
+            newWidth = child:GetWide()
+            newHeight = child:GetTall()
 
-		self:SetAutoResize(PIN_CORNER.TOP_LEFT, AUTO_RESIZE.RIGHT, leftPadding, topPadding, -rightPadding, 0)
-    elseif dockType == DOCK_TYPE.BOTTOM then
-        newX, newY = leftPadding, (parentTall / 2) + topPadding
-        newWidth = parentWide - leftPadding - rightPadding
-        newHeight = (parentTall / 2) - topPadding - bottomPadding
+            child:SetAutoResize(PIN_CORNER.TOP_LEFT, AUTO_RESIZE.NO, newX, newY, 0, 0)
+        end
 
-		self:SetAutoResize(PIN_CORNER.BOTTOM_LEFT, AUTO_RESIZE.RIGHT, leftPadding, -bottomPadding, -rightPadding, 0)
-    else
-        newX, newY = 0, 0
-        newWidth = self:GetWidth()
-        newHeight = self:GetHeight()
+		print("Docking", child, dockType, newX, newY, newWidth, newHeight)
+		child:SetBounds(newX, newY, newWidth, newHeight)
 
-		self:SetAutoResize(PIN_CORNER.TOP_LEFT, AUTO_RESIZE.NO, newX, newY, 0, 0)
+		currentX = newX + newWidth
+		currentY = newY + newHeight
     end
 
-    -- Apply the calculated position and size
-    self:SetBounds(newX, newY, newWidth, newHeight)
+    local remainingWidth = parentWide - currentX
+    local remainingHeight = parentTall - currentY
+
+    -- Second pass: handle all children with a dock type that is FILL and put them in the remaining space (not distrubted, just stacked)
+    for i = 1, childCount do
+        local child = self:GetChild(i)
+        local leftPadding, topPadding, rightPadding, bottomPadding = child:GetDockPadding()
+        local dockType = child:GetDock()
+
+        if (dockType ~= DOCK_TYPE.FILL) then
+            continue
+        end
+
+		local startX = currentX + leftPadding
+		local startY = currentY + topPadding
+		local newWidth = remainingWidth - leftPadding - rightPadding
+		local newHeight = remainingHeight - topPadding - bottomPadding
+
+		if (newWidth <= 0) then
+			if (newHeight <= 0) then
+				-- No space left
+				newWidth = 0
+				newHeight = 0
+			else
+				-- No width left, but height is available, meaning we can take the full width and the remaining height
+				newWidth = parentWide - leftPadding - rightPadding
+				startX = leftPadding
+			end
+		end
+
+		if (newHeight <= 0) then
+			-- No height left, but width is available, meaning we can take the full height and the remaining width
+			newHeight = parentTall - topPadding - bottomPadding
+			startY = topPadding
+		end
+
+		print("Docking FILL", child, dockType, startX, startY, newWidth, newHeight, " x ", remainingWidth, remainingHeight)
+		child:SetBounds(startX, startY, newWidth, newHeight)
+		child:SetAutoResize(PIN_CORNER.TOP_LEFT, AUTO_RESIZE.DOWN_AND_RIGHT, startX, startY, -rightPadding, -bottomPadding)
+    end
 end

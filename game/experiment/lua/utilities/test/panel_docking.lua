@@ -1,6 +1,8 @@
 -- lua_dofile_menu utilities/test/panel_docking.lua
 -- or: lua_dofile_cl utilities/test/panel_docking.lua
 
+Include("includes/extensions/panel.lua")
+
 -- Lets create a panel and dock it to the right of the parent.
 local parent = Gui.Create("Frame")
 local parentWide, parentTall = 256, 256
@@ -12,33 +14,61 @@ parent:SetTitle("Parent panel")
 parent:MakePopup()
 parent:SetVisible(true)
 
-local child = Gui.Create("Button", parent)
 local dockPadding = 10
-local childWide, childTall = 128, 128
-child:SetText("TOP")
+local childWide, childTall = 64, 64
 
-function child:OnClick()
-    print("Clicked", self)
+-- Child for filling
+local fillChild = Gui.Create("Button", parent)
+fillChild:SetText("FILL")
+fillChild:SetDock(DOCK_TYPE.FILL)
+fillChild:SetDockPadding(dockPadding, dockPadding, dockPadding, dockPadding)
+
+function fillChild:OnClick()
     -- parent:DeletePanel() -- Will crash with access violation, as repaint will be called on release of button
     parent:MarkForDeletion() -- safer
 end
 
--- child:SetDock(DOCK_TYPE.FILL)
--- child:SetDock(DOCK_TYPE.LEFT)
--- child:SetDock(DOCK_TYPE.RIGHT)
--- child:SetWide(childWide)
-child:SetDock(DOCK_TYPE.TOP)
--- child:SetDock(DOCK_TYPE.BOTTOM)
-child:SetTall(childTall)
-child:SetDockPadding(dockPadding, dockPadding, dockPadding, dockPadding)
-child:UpdateDocking()
+local topChild = Gui.Create("Button", parent)
+topChild:SetText("TOP")
+topChild:SetDock(DOCK_TYPE.TOP)
+topChild:SetTall(childTall)
+topChild:SetDockPadding(dockPadding, dockPadding, dockPadding, dockPadding)
 
--- Child for filling
-local child2 = Gui.Create("Button", parent)
-child2:SetText("FILL")
-child2:SetDock(DOCK_TYPE.FILL)
-child2:SetDockPadding(dockPadding, dockPadding, dockPadding, dockPadding)
-child2:UpdateDocking()
+function topChild:OnClick()
+    parent:MarkForDeletion()
+end
+
+local bottomChild = Gui.Create("Button", parent)
+bottomChild:SetText("BOTTOM")
+bottomChild:SetDock(DOCK_TYPE.BOTTOM)
+bottomChild:SetTall(childTall)
+bottomChild:SetDockPadding(dockPadding, dockPadding, dockPadding, dockPadding)
+
+function bottomChild:OnClick()
+    parent:MarkForDeletion()
+end
+
+local leftChild = Gui.Create("Button", parent)
+leftChild:SetText("LEFT")
+leftChild:SetDock(DOCK_TYPE.LEFT)
+leftChild:SetWide(childWide)
+leftChild:SetDockPadding(dockPadding, dockPadding, dockPadding, dockPadding)
+
+function leftChild:OnClick()
+    parent:MarkForDeletion()
+end
+
+local rightChild = Gui.Create("Button", parent)
+rightChild:SetText("RIGHT")
+rightChild:SetDock(DOCK_TYPE.RIGHT)
+rightChild:SetWide(childWide)
+rightChild:SetDockPadding(dockPadding, dockPadding, dockPadding, dockPadding)
+
+function rightChild:OnClick()
+	parent:MarkForDeletion()
+end
+
+parent:UpdateDocking()
 
 --[[
 	Experiments with SetBounds and SetAutoResize:

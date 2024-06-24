@@ -211,7 +211,9 @@ static int Panel_GetBounds( lua_State *L )
 
 static int Panel_GetChild( lua_State *L )
 {
-    lua_pushpanel( L, luaL_checkpanel( L, 1 )->GetChild( luaL_checkint( L, 2 ) ) );
+    // ! Note: We are using 1-based indexing here, while the original
+    // code uses 0-based indexing.
+    lua_pushpanel( L, luaL_checkpanel( L, 1 )->GetChild( luaL_checkint( L, 2 ) - 1 ) );
     return 1;
 }
 
