@@ -14,9 +14,17 @@ require("Gui")
 -- Private list of helpers
 local registeredHelpers = {}
 
+local function getAppropriateBaseParent()
+	if (GAMEUI) then
+		return VGui_GetGameUIPanel()
+	end
+
+	return VGui_GetClientLuaRootPanel()
+end
+
 local function createHelper(panelName)
     Gui[panelName] = function(parentPanel, name)
-        parentPanel = parentPanel or VGui_GetClientLuaRootPanel()
+        parentPanel = parentPanel or getAppropriateBaseParent()
 
         local helper = registeredHelpers[panelName]
 		local panel = Gui[helper.Base](parentPanel, name or panelName)
@@ -93,7 +101,7 @@ end
 --- @return Panel The created panel
 function Gui.Create(panelName, parentPanel, name)
 	local helper = registeredHelpers[panelName]
-	parentPanel = parentPanel or VGui_GetClientLuaRootPanel()
+	parentPanel = parentPanel or getAppropriateBaseParent()
 
 	if (helper ~= nil) then
 		local panel = Gui[helper.Base](parentPanel, name or panelName)

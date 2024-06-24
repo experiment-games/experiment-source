@@ -41,7 +41,7 @@ LUA_API lua_Panel *lua_topanel( lua_State *L, int idx )
 
 LUA_API void lua_pushpanel( lua_State *L, Panel *pPanel )
 {
-    LPanel *plPanel = dynamic_cast< LPanel * >( pPanel );
+    Panel *plPanel = dynamic_cast< Panel * >( pPanel );
     if ( plPanel )
         ++plPanel->m_nRefCount;
     PHandle *phPanel = ( PHandle * )lua_newuserdata( L, sizeof( PHandle ) );
@@ -392,7 +392,8 @@ static int Panel_GetPos( lua_State *L )
 
 static int Panel_GetRefTable( lua_State *L )
 {
-    LPanel *plPanel = dynamic_cast< LPanel * >( luaL_checkpanel( L, 1 ) );
+    Panel *plPanel = dynamic_cast< Panel * >( luaL_checkpanel( L, 1 ) );
+
     if ( plPanel )
     {
         if ( !lua_isrefvalid( L, plPanel->m_nTableReference ) )
@@ -404,6 +405,7 @@ static int Panel_GetRefTable( lua_State *L )
     }
     else
         lua_pushnil( L );
+
     return 1;
 }
 
@@ -1213,8 +1215,9 @@ static int Panel_StringToKeyCode( lua_State *L )
 
 static int Panel___index( lua_State *L )
 {
-    Panel *pPanel = lua_topanel( L, 1 );
-    if ( pPanel == NULL )
+    Panel *plPanel = lua_topanel( L, 1 );
+
+    if ( plPanel == NULL )
     { /* avoid extra test when d is not 0 */
         lua_Debug ar1;
         lua_getstack( L, 1, &ar1 );
@@ -1224,7 +1227,7 @@ static int Panel___index( lua_State *L )
         lua_pushfstring( L, "%s:%d: attempt to index an INVALID_PANEL", ar2.short_src, ar1.currentline );
         return lua_error( L );
     }
-    LPanel *plPanel = dynamic_cast< LPanel * >( pPanel );
+
     if ( plPanel && lua_isrefvalid( L, plPanel->m_nTableReference ) )
     {
         lua_getref( L, plPanel->m_nTableReference );
@@ -1249,8 +1252,9 @@ static int Panel___index( lua_State *L )
 
 static int Panel___newindex( lua_State *L )
 {
-    Panel *pPanel = lua_topanel( L, 1 );
-    if ( pPanel == NULL )
+    Panel *plPanel = lua_topanel( L, 1 );
+
+    if ( plPanel == NULL )
     { /* avoid extra test when d is not 0 */
         lua_Debug ar1;
         lua_getstack( L, 1, &ar1 );
@@ -1260,7 +1264,7 @@ static int Panel___newindex( lua_State *L )
         lua_pushfstring( L, "%s:%d: attempt to index an INVALID_PANEL", ar2.short_src, ar1.currentline );
         return lua_error( L );
     }
-    LPanel *plPanel = dynamic_cast< LPanel * >( pPanel );
+
     if ( plPanel )
     {
         if ( !lua_isrefvalid( L, plPanel->m_nTableReference ) )
@@ -1288,7 +1292,8 @@ static int Panel___newindex( lua_State *L )
 
 static int Panel___gc( lua_State *L )
 {
-    LPanel *plPanel = dynamic_cast< LPanel * >( lua_topanel( L, 1 ) );
+    Panel *plPanel = dynamic_cast< Panel * >( lua_topanel( L, 1 ) );
+
     if ( plPanel )
     {
         --plPanel->m_nRefCount;
@@ -1297,6 +1302,7 @@ static int Panel___gc( lua_State *L )
             delete plPanel;
         }
     }
+
     return 0;
 }
 

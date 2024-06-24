@@ -144,17 +144,16 @@
     }                                                  \
     else lua_pop( L, 1 );
 
-#define BEGIN_LUA_CALL_PANEL_METHOD( functionName )                                      \
-    if ( m_nTableReference >= 0 )                                                        \
-    {                                                                                    \
-        lua_getref( m_lua_State, m_nTableReference );                                    \
-        lua_getfield( m_lua_State, -1, functionName );                                   \
-        lua_remove( m_lua_State, -2 );                                                   \
-        if ( lua_isfunction( m_lua_State, -1 ) )                                         \
-        {                                                                                \
-            int args = 0;                                                                \
-            Panel *panelPtr = static_cast< Panel * >( static_cast< LPanel * >( this ) ); \
-            lua_pushpanel( m_lua_State, panelPtr );                               \
+#define BEGIN_LUA_CALL_PANEL_METHOD( functionName )    \
+    if ( m_lua_State && m_nTableReference >= 0 )       \
+    {                                                  \
+        lua_getref( m_lua_State, m_nTableReference );  \
+        lua_getfield( m_lua_State, -1, functionName ); \
+        lua_remove( m_lua_State, -2 );                 \
+        if ( lua_isfunction( m_lua_State, -1 ) )       \
+        {                                              \
+            int args = 0;                              \
+            this->PushPanelToLua( m_lua_State );       \
             ++args;
 
 #define END_LUA_CALL_PANEL_METHOD( nArgs, nresults ) \
@@ -179,7 +178,7 @@
     }
 
 #define RETURN_LUA_PANEL_NONE()                                      \
-    if ( lua_gettop( m_lua_State ) == 1 )                            \
+    if ( m_lua_State && lua_gettop( m_lua_State ) == 1 )             \
     {                                                                \
         if ( lua_isboolean( m_lua_State, -1 ) )                      \
         {                                                            \
@@ -206,7 +205,7 @@
     }
 
 #define RETURN_LUA_PANEL_BOOLEAN()                                   \
-    if ( lua_gettop( m_lua_State ) == 1 )                            \
+    if ( m_lua_State && lua_gettop( m_lua_State ) == 1 )             \
     {                                                                \
         if ( lua_isboolean( m_lua_State, -1 ) )                      \
         {                                                            \

@@ -18,13 +18,15 @@
 
 using namespace vgui;
 
-//-----------------------------------------------------------------------------
-// Purpose: Constructor
-//-----------------------------------------------------------------------------
 LEditablePanel::LEditablePanel( Panel *parent, const char *panelName, lua_State *L )
-    : LPanel( parent, panelName, L ),
-      EditablePanel( parent, panelName )
+    : EditablePanel( parent, panelName )
 {
+    m_lua_State = L;
+}
+
+void LEditablePanel::PushPanelToLua( lua_State *L )
+{
+    lua_pusheditablepanel( L, this );
 }
 
 /*

@@ -26,9 +26,14 @@ using namespace vgui;
 // Purpose: Constructor
 //-----------------------------------------------------------------------------
 LButton::LButton( Panel *parent, const char *panelName, const char *text, Panel *pActionSignalTarget, const char *pCmd, lua_State *L )
-    : LPanel( parent, panelName, L ),
-      Button( parent, panelName, text, pActionSignalTarget, pCmd )
+    : Button( parent, panelName, text, pActionSignalTarget, pCmd )
 {
+    m_lua_State = L;
+}
+
+void LButton::PushPanelToLua( lua_State *L )
+{
+    lua_pushbutton( L, this );
 }
 
 void LButton::DoClick()

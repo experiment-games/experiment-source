@@ -43,12 +43,17 @@ LCheckButton::~LCheckButton() {
 #endif  // LUA_SDK
 }
 
+void LCheckButton::PushPanelToLua( lua_State *L )
+{
+    lua_pushcheckbutton( L, this );
+}
+
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
 void LCheckButton::OnCheckButtonChecked() {
 #ifdef LUA_SDK
-    BEGIN_LUA_CALL_CHECKBUTTON_METHOD("OnCheckButtonChecked");
+    BEGIN_LUA_CALL_PANEL_METHOD( "OnCheckButtonChecked" );
     END_LUA_CALL_PANEL_METHOD(0, 0);
 #endif
 }

@@ -17,12 +17,13 @@
 
 using namespace vgui;
 
-class LEditablePanel : public LPanel, public EditablePanel
+class LEditablePanel : public EditablePanel
 {
     DECLARE_CLASS_SIMPLE( LEditablePanel, EditablePanel );
 
    public:
     LEditablePanel( Panel *parent, const char *panelName, lua_State *L );
+    virtual void PushPanelToLua( lua_State *L );
 };
 
 /* type for EditablePanel functions */

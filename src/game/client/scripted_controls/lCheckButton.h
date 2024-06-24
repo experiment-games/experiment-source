@@ -1,6 +1,6 @@
-//========= Copyright © 1996-2005, Valve Corporation, All rights reserved. ============//
+//========= Copyright Â© 1996-2005, Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -18,58 +18,44 @@ namespace vgui
 {
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 class LCheckButton : public CheckButton
 {
-	DECLARE_CLASS_SIMPLE( LCheckButton, CheckButton );
+    DECLARE_CLASS_SIMPLE( LCheckButton, CheckButton );
 
-public:
-	LCheckButton(Panel *parent, const char *panelName, const char *text, lua_State *L);
-	virtual ~LCheckButton();
+   public:
+    LCheckButton( Panel *parent, const char *panelName, const char *text, lua_State *L );
+    virtual ~LCheckButton();
+    virtual void PushPanelToLua( lua_State *L );
 
-protected:
-	MESSAGE_FUNC( OnCheckButtonChecked, "CheckButtonChecked" );
+   protected:
+    MESSAGE_FUNC( OnCheckButtonChecked, "CheckButtonChecked" );
 
-public:
+   public:
 #if defined( LUA_SDK )
-	lua_State *m_lua_State;
-	int m_nTableReference;
-	int m_nRefCount;
+    lua_State *m_lua_State;
+    int m_nTableReference;
+    int m_nRefCount;
 #endif
 };
 
-} // namespace vgui
-
-#define BEGIN_LUA_CALL_CHECKBUTTON_METHOD(functionName) \
-  if (m_nTableReference >= 0) { \
-    lua_getref(m_lua_State, m_nTableReference); \
-    lua_getfield(m_lua_State, -1, functionName); \
-    lua_remove(m_lua_State, -2); \
-    if (lua_isfunction(m_lua_State, -1)) { \
-      int args = 0; \
-	  lua_pushcheckbutton(m_lua_State, this); \
-	  ++args;
+}  // namespace vgui
 
 /* type for CheckButton functions */
 typedef vgui::CheckButton lua_CheckButton;
-
-
 
 /*
 ** access functions (stack -> C)
 */
 
-LUA_API lua_CheckButton     *(lua_tocheckbutton) (lua_State *L, int idx);
-
+LUA_API lua_CheckButton *( lua_tocheckbutton )( lua_State *L, int idx );
 
 /*
 ** push functions (C -> stack)
 */
-LUA_API void  (lua_pushcheckbutton) (lua_State *L, lua_CheckButton *pCheckButton);
+LUA_API void( lua_pushcheckbutton )( lua_State *L, lua_CheckButton *pCheckButton );
 
+LUALIB_API lua_CheckButton *( luaL_checkcheckbutton )( lua_State *L, int narg );
 
-
-LUALIB_API lua_CheckButton *(luaL_checkcheckbutton) (lua_State *L, int narg);
-
-#endif // VGUI_LCHECKBUTTON_H
+#endif  // VGUI_LCHECKBUTTON_H
