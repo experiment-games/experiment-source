@@ -8,9 +8,6 @@
 /* type for ITexture functions */
 typedef ITexture lua_ITexture;
 
-/* type for C_BaseAnimating functions */
-typedef C_BaseAnimating lua_CBaseAnimating;
-
 /*
 ** access functions (stack -> C)
 */

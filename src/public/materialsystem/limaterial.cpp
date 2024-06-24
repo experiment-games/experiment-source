@@ -7,10 +7,13 @@
 //===========================================================================//
 #include "cbase.h"
 #include "imaterial.h"
+#include "materialsystem/imaterialvar.h"
 #include "luamanager.h"
 #include "luasrclib.h"
 #include "limaterial.h"
 #include "mathlib/lvector.h"
+#include "lColor.h"
+#include <lrender.h>
 
 // memdbgon must be the last include file in a .cpp file!!!
 #include "tier0/memdbgon.h"
@@ -81,6 +84,22 @@ static int IMaterial_DeleteIfUnreferenced( lua_State *L )
 static int IMaterial_GetAlphaModulation( lua_State *L )
 {
     lua_pushnumber( L, luaL_checkmaterial( L, 1 )->GetAlphaModulation() );
+    return 1;
+}
+
+static int IMaterial_GetColor(lua_State* L)
+{
+    float *colorValues = new float[4];
+
+    luaL_checkmaterial( L, 1 )->GetLowResColorSample(
+        luaL_checkint( L, 2 ),
+        luaL_checkint( L, 3 ),
+        colorValues );
+
+    // Turn the color into a table with the color metatable
+    Color color( colorValues[0], colorValues[1], colorValues[2], colorValues[4] ); // TODO: Does alpha get set?
+    lua_pushcolor( L, color );
+
     return 1;
 }
 
@@ -163,6 +182,101 @@ static int IMaterial_GetReflectivity( lua_State *L )
 static int IMaterial_GetShaderName( lua_State *L )
 {
     lua_pushstring( L, luaL_checkmaterial( L, 1 )->GetShaderName() );
+    return 1;
+}
+
+static int IMaterial_GetFloat( lua_State *L )
+{
+    bool *foundVar = new bool;
+    size_t len;
+    IMaterialVar *materialVar = luaL_checkmaterial( L, 1 )
+                                    ->FindVar( luaL_checklstring( L, 2, &len ), foundVar );
+
+    if ( !foundVar )
+    {
+        lua_pushnil( L );
+        return 1;
+    }
+
+    lua_pushnumber( L, materialVar->GetFloatValue() );
+
+    return 1;   
+}
+
+static int IMaterial_GetInt( lua_State *L )
+{
+    bool *foundVar = new bool;
+    size_t len;
+    IMaterialVar *materialVar = luaL_checkmaterial( L, 1 )
+                                    ->FindVar( luaL_checklstring( L, 2, &len ), foundVar );
+
+    if ( !foundVar )
+    {
+        lua_pushnil( L );
+        return 1;
+    }
+
+    lua_pushinteger( L, materialVar->GetIntValue() );
+
+    return 1;
+}
+
+static int IMaterial_GetString( lua_State *L )
+{
+    bool *foundVar = new bool;
+    size_t len;
+    IMaterialVar *materialVar = luaL_checkmaterial( L, 1 )
+                                    ->FindVar( luaL_checklstring( L, 2, &len ), foundVar );
+
+    if ( !foundVar )
+    {
+        lua_pushnil( L );
+        return 1;
+    }
+
+    lua_pushstring( L, materialVar->GetStringValue() );
+
+    return 1;
+}
+
+static int IMaterial_GetTexture(lua_State* L)
+{
+    bool *foundVar = new bool;
+    size_t len;
+    IMaterialVar *materialVar = luaL_checkmaterial( L, 1 )
+                                    ->FindVar( luaL_checklstring( L, 2, &len ), foundVar );
+
+    if ( !foundVar )
+    {
+        lua_pushnil( L );
+        return 1;
+    }
+
+    ITexture *texture = materialVar->GetTextureValue();
+    lua_pushitexture( L, texture );
+
+    return 1;
+}
+
+static int IMaterial_GetVector( lua_State *L )
+{
+    bool *foundVar = new bool;
+    size_t len;
+    IMaterialVar *materialVar = luaL_checkmaterial( L, 1 )
+                                    ->FindVar( luaL_checklstring( L, 2, &len ), foundVar );
+
+    if ( !foundVar )
+    {
+        lua_pushnil( L );
+        return 1;
+    }
+
+    const float *vectorValues = materialVar->GetVecValue();
+
+    // Turn the vector into a table with the vector metatable
+    Vector vector( vectorValues[0], vectorValues[1], vectorValues[2] );
+    lua_pushvector( L, vector );
+
     return 1;
 }
 
@@ -341,6 +455,7 @@ static const luaL_Reg IMaterialmeta[] = {
     { "DecrementReferenceCount", IMaterial_DecrementReferenceCount },
     { "DeleteIfUnreferenced", IMaterial_DeleteIfUnreferenced },
     { "GetAlphaModulation", IMaterial_GetAlphaModulation },
+    { "GetColor", IMaterial_GetColor },
     { "GetColorModulation", IMaterial_GetColorModulation },
     { "GetEnumerationID", IMaterial_GetEnumerationID },
     { "GetMappingHeight", IMaterial_GetMappingHeight },
@@ -354,6 +469,11 @@ static const luaL_Reg IMaterialmeta[] = {
     { "GetPropertyFlag", IMaterial_GetPropertyFlag },
     { "GetReflectivity", IMaterial_GetReflectivity },
     { "GetShaderName", IMaterial_GetShaderName },
+    { "GetFloat", IMaterial_GetFloat },
+    { "GetInt", IMaterial_GetInt },
+    { "GetString", IMaterial_GetString },
+    { "GetTexture", IMaterial_GetTexture },
+    { "GetVector", IMaterial_GetVector },
     { "GetTextureGroupName", IMaterial_GetTextureGroupName },
     { "GetTextureMemoryBytes", IMaterial_GetTextureMemoryBytes },
     { "IncrementReferenceCount", IMaterial_IncrementReferenceCount },

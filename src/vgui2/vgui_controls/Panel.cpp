@@ -1430,7 +1430,9 @@ void Panel::Paint()
 
 #ifdef LUA_SDK  // Except for Lua
     BEGIN_LUA_CALL_PANEL_METHOD( "Paint" );
-    END_LUA_CALL_PANEL_METHOD( 0, 0 );
+    lua_pushinteger( m_lua_State, GetWide() );
+    lua_pushinteger( m_lua_State, GetTall() );
+    END_LUA_CALL_PANEL_METHOD( 2, 0 );
 #endif
 }
 

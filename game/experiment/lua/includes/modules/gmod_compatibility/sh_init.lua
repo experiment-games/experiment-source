@@ -98,7 +98,39 @@ function PLAYER_META:IsListenServerHost()
         ErrorNoHalt("IsListenServerHost has not yet been implemented on the client.")
     end
 
-	return self == Util.GetListenServerHost()
+    return self == Util.GetListenServerHost()
+end
+
+local TEXTURE_META = FindMetaTable("ITexture")
+
+function TEXTURE_META:Width()
+    return self:GetActualWidth()
+end
+
+function TEXTURE_META:Height()
+	return self:GetActualHeight()
+end
+
+local MATERIAL_META = FindMetaTable("IMaterial")
+
+function MATERIAL_META:Width()
+    local baseTexture = self:GetTexture("$basetexture")
+
+    if (baseTexture) then
+        return baseTexture:GetActualWidth()
+    end
+
+    return 0
+end
+
+function MATERIAL_META:Height()
+	local baseTexture = self:GetTexture("$basetexture")
+
+	if (baseTexture) then
+		return baseTexture:GetActualHeight()
+	end
+
+	return 0
 end
 
 if (CLIENT) then
@@ -170,7 +202,6 @@ engine = Engine
 input = Input
 render = Render
 resource = Resources
-surface = Surface
 surface = Surface
 system = System
 vgui = Gui
@@ -323,8 +354,29 @@ else
 	end
 
 	Gui._OriginalRegister = Gui._OriginalRegister or Gui.RegisterWithMetatable
-	vgui.Register = function(panelName, panelTable, baseClassName)
-		Gui._OriginalRegister(panelTable, panelName, baseClassName)
+    vgui.Register = function(panelName, panelTable, baseClassName)
+        Gui._OriginalRegister(panelTable, panelName, baseClassName)
+    end
+
+    surface.SetDrawColor = surface.DrawSetColor
+    surface.DrawRect = surface.DrawFilledRect
+    surface.DrawTexturedRectUV = surface.DrawTexturedSubRect -- TODO: Not sure if this is the correct function
+    surface.GetTextPos = surface.DrawGetTextPos
+    surface.SetFont = surface.DrawSetTextFont
+	surface.SetTextPos = surface.DrawSetTextPos
+    surface.SetTextColor = surface.DrawSetTextColor
+    surface.DrawText = surface.DrawPrintText
+    surface.SetTexture = surface.DrawSetTexture
+
+    local materialMap = {}
+
+	surface.SetMaterial = function(material)
+		if (not materialMap[material]) then
+			local textureID = surface.GetTextureID(material:GetTexture("$basetexture"))
+			materialMap[material] = textureID
+		end
+
+		surface.SetTexture(materialMap[material])
 	end
 end
 
@@ -395,25 +447,25 @@ if (SERVER) then
 	require("gmod_compatibility/modules/ai_schedule")
 end
 
--- include("extensions/file.lua")
-include("extensions/angle.lua")
-include("extensions/debug.lua")
-include("extensions/entity.lua")
-include("extensions/ents.lua")
-include("extensions/math.lua")
-include("extensions/player.lua")
-include("extensions/player_auth.lua")
-include("extensions/string.lua")
-include("extensions/table.lua")
-include("extensions/util.lua")
-include("extensions/vector.lua")
-include("extensions/game.lua")
-include("extensions/motionsensor.lua")
-include("extensions/weapon.lua")
-include("extensions/coroutine.lua")
+-- Include("extensions/file.lua")
+Include("extensions/angle.lua")
+Include("extensions/debug.lua")
+Include("extensions/entity.lua")
+Include("extensions/ents.lua")
+Include("extensions/math.lua")
+Include("extensions/player.lua")
+Include("extensions/player_auth.lua")
+Include("extensions/string.lua")
+Include("extensions/table.lua")
+Include("extensions/util.lua")
+Include("extensions/vector.lua")
+Include("extensions/game.lua")
+Include("extensions/motionsensor.lua")
+Include("extensions/weapon.lua")
+Include("extensions/coroutine.lua")
 
 -- Experiment; we load our table lib again to overwrite the GMod one.
-include("../../extensions/table.lua")
+Include("../../extensions/table.lua")
 
 if (CLIENT) then
 	-- Client-side modules.
@@ -431,14 +483,16 @@ if (CLIENT) then
 	-- require("gmod_compatibility/modules/notification")
 	require("gmod_compatibility/modules/search")
 
-	include("extensions/client/entity.lua")
-	include("extensions/client/globals.lua")
-	include("extensions/client/panel.lua")
-	include("extensions/client/player.lua")
-	include("extensions/client/render.lua")
+	Include("extensions/client/entity.lua")
+	Include("extensions/client/globals.lua")
+	Include("extensions/client/panel.lua")
+	Include("extensions/client/player.lua")
+	Include("extensions/client/render.lua")
 
 	Include("derma/init.lua")
-	Include("vgui_base.lua")
+    Include("vgui_base.lua")
+
+	Include("skins/default.lua")
 end
 
 --[[

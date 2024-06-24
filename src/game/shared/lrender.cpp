@@ -2,9 +2,11 @@
 #include "materialsystem/itexture.h"
 #include "luamanager.h"
 #include "luasrclib.h"
-#include "rendertexture.h"
 #include "lrender.h"
+#ifdef CLIENT_DLL
+#include "rendertexture.h"
 #include "view_scene.h"
+#endif
 
 // memdbgon must be the last include file in a .cpp file!!!
 #include "tier0/memdbgon.h"
@@ -40,6 +42,7 @@ LUALIB_API lua_ITexture *luaL_checkitexture( lua_State *L, int narg )
     return *ppData;
 }
 
+#ifdef CLIENT_DLL
 static int render_GetScreenEffectTexture( lua_State *L )
 {
     lua_ITexture *pTexture = GetFullFrameFrameBufferTexture( luaL_checkint( L, 1 ) );
@@ -53,10 +56,13 @@ static int render_UpdateScreenEffectTexture( lua_State *L )
     UpdateScreenEffectTexture( luaL_checkinteger( L, 1 ), pViewSetup->x, pViewSetup->y, pViewSetup->width, pViewSetup->height );
     return 0;
 }
+#endif
 
 static const luaL_Reg renderLib[] = {
+#ifdef CLIENT_DLL
     { "GetScreenEffectTexture", render_GetScreenEffectTexture },
     { "UpdateScreenEffectTexture", render_UpdateScreenEffectTexture },
+#endif
     { NULL, NULL } };
 
 /*
