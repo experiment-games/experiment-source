@@ -370,13 +370,76 @@ else
 
     local materialMap = {}
 
-	surface.SetMaterial = function(material)
-		if (not materialMap[material]) then
-			local textureID = surface.GetTextureID(material:GetTexture("$basetexture"))
-			materialMap[material] = textureID
-		end
+    surface.SetMaterial = function(material)
+        if (not materialMap[material]) then
+            local textureID = surface.GetTextureID(material:GetTexture("$basetexture"))
+            materialMap[material] = textureID
+        end
 
-		surface.SetTexture(materialMap[material])
+        surface.SetTexture(materialMap[material])
+    end
+
+    -- TODO: Implement
+    surface.DrawTexturedRectRotated = function(x, y, w, h, rotation)
+        -- See src/game/client/hl2/hud_zoom.cpp for an example of how to possibly implement this:
+		--[[
+			// draw the darkened edges, with a rotated texture in the four corners
+			CMatRenderContextPtr pRenderContext( materials );
+			pRenderContext->Bind( m_ZoomMaterial );
+			IMesh *pMesh = pRenderContext->GetDynamicMesh( true, NULL, NULL, NULL );
+
+			float x0 = 0.0f, x1 = fX, x2 = wide;
+			float y0 = 0.0f, y1 = fY, y2 = tall;
+
+			float uv1 = 1.0f - (1.0f / 255.0f);
+			float uv2 = 0.0f + (1.0f / 255.0f);
+
+			struct coord_t
+			{
+				float x, y;
+				float u, v;
+			};
+			coord_t coords[16] =
+			{
+				// top-left
+				{ x0, y0, uv1, uv2 },
+				{ x1, y0, uv2, uv2 },
+				{ x1, y1, uv2, uv1 },
+				{ x0, y1, uv1, uv1 },
+
+				// top-right
+				{ x1, y0, uv2, uv2 },
+				{ x2, y0, uv1, uv2 },
+				{ x2, y1, uv1, uv1 },
+				{ x1, y1, uv2, uv1 },
+
+				// bottom-right
+				{ x1, y1, uv2, uv1 },
+				{ x2, y1, uv1, uv1 },
+				{ x2, y2, uv1, uv2 },
+				{ x1, y2, uv2, uv2 },
+
+				// bottom-left
+				{ x0, y1, uv1, uv1 },
+				{ x1, y1, uv2, uv1 },
+				{ x1, y2, uv2, uv2 },
+				{ x0, y2, uv1, uv2 },
+			};
+
+			CMeshBuilder meshBuilder;
+			meshBuilder.Begin( pMesh, MATERIAL_QUADS, 4 );
+
+			for (int i = 0; i < 16; i++)
+			{
+				meshBuilder.Color4f( 0.0, 0.0, 0.0, alpha );
+				meshBuilder.TexCoord2f( 0, coords[i].u, coords[i].v );
+				meshBuilder.Position3f( coords[i].x, coords[i].y, 0.0f );
+				meshBuilder.AdvanceVertex();
+			}
+
+			meshBuilder.End();
+			pMesh->Draw();
+		--]]
 	end
 end
 
