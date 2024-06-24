@@ -6,24 +6,21 @@
 #endif
 
 #include <vgui_controls/Button.h>
+#include "scripted_controls/lPanel.h"
 
 namespace vgui
 {
 
-class LButton : public Button
+class LButton : public LPanel, public Button
 {
 	DECLARE_CLASS_SIMPLE( LButton, Button );
 
 public:
 	// You can optionally pass in the panel to send the click message to and the name of the command to send to that panel.
 	LButton(Panel *parent, const char *panelName, const char *text, Panel *pActionSignalTarget=NULL, const char *pCmd=NULL, lua_State *L=NULL);
-	~LButton();
 
 public:
     void DoClick( void );
-	lua_State          *m_lua_State;
-	int                m_nTableReference;
-	int                m_nRefCount;
 };
 
 } // namespace vgui

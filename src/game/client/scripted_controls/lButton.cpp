@@ -15,6 +15,7 @@
 #include <lColor.h>
 
 #include <scripted_controls/lButton.h>
+#include "scripted_controls/lPanel.h"
 
 // memdbgon must be the last include file in a .cpp file!!!
 #include <tier0/memdbgon.h>
@@ -25,19 +26,9 @@ using namespace vgui;
 // Purpose: Constructor
 //-----------------------------------------------------------------------------
 LButton::LButton( Panel *parent, const char *panelName, const char *text, Panel *pActionSignalTarget, const char *pCmd, lua_State *L )
-    : Button( parent, panelName, text, pActionSignalTarget, pCmd )
+    : LPanel( parent, panelName, L ),
+      Button( parent, panelName, text, pActionSignalTarget, pCmd )
 {
-    m_lua_State = L;
-    m_nTableReference = LUA_NOREF;
-    m_nRefCount = 0;
-}
-
-//-----------------------------------------------------------------------------
-// Purpose: Destructor
-//-----------------------------------------------------------------------------
-LButton::~LButton()
-{
-    lua_unref( m_lua_State, m_nTableReference );
 }
 
 void LButton::DoClick()

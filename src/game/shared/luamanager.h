@@ -48,8 +48,8 @@
     lua_newtable( L );
 
 #define BEGIN_LUA_SET_ENUM_LIB_CONTINUED( L, libraryName ) \
-    lib = libraryName;                          \
-    lua_getglobal( L, LUA_ENAME );              \
+    lib = libraryName;                                     \
+    lua_getglobal( L, LUA_ENAME );                         \
     lua_newtable( L );
 
 #define lua_pushenum( L, enum, shortname ) \
@@ -144,16 +144,17 @@
     }                                                  \
     else lua_pop( L, 1 );
 
-#define BEGIN_LUA_CALL_PANEL_METHOD( functionName )    \
-    if ( m_nTableReference >= 0 )                      \
-    {                                                  \
-        lua_getref( m_lua_State, m_nTableReference );  \
-        lua_getfield( m_lua_State, -1, functionName ); \
-        lua_remove( m_lua_State, -2 );                 \
-        if ( lua_isfunction( m_lua_State, -1 ) )       \
-        {                                              \
-            int args = 0;                              \
-            lua_pushpanel( m_lua_State, this );        \
+#define BEGIN_LUA_CALL_PANEL_METHOD( functionName )                                      \
+    if ( m_nTableReference >= 0 )                                                        \
+    {                                                                                    \
+        lua_getref( m_lua_State, m_nTableReference );                                    \
+        lua_getfield( m_lua_State, -1, functionName );                                   \
+        lua_remove( m_lua_State, -2 );                                                   \
+        if ( lua_isfunction( m_lua_State, -1 ) )                                         \
+        {                                                                                \
+            int args = 0;                                                                \
+            Panel *panelPtr = static_cast< Panel * >( static_cast< LPanel * >( this ) ); \
+            lua_pushpanel( m_lua_State, panelPtr );                               \
             ++args;
 
 #define END_LUA_CALL_PANEL_METHOD( nArgs, nresults ) \
@@ -309,30 +310,30 @@
             lua_pop( L, 1 );                                                      \
     }
 
-#define RETURN_LUA_VECTOR()                                                  \
-    if ( lua_gettop( L ) == 1 )                                              \
-    {                                                                        \
+#define RETURN_LUA_VECTOR()                                                           \
+    if ( lua_gettop( L ) == 1 )                                                       \
+    {                                                                                 \
         if ( lua_isuserdata( L, -1 ) && luaL_checkudata( L, -1, LUA_VECTORLIBNAME ) ) \
-        {                                                                    \
-            Vector res = luaL_checkvector( L, -1 );                          \
-            lua_pop( L, 1 );                                                 \
-            return res;                                                      \
-        }                                                                    \
-        else                                                                 \
-            lua_pop( L, 1 );                                                 \
+        {                                                                             \
+            Vector res = luaL_checkvector( L, -1 );                                   \
+            lua_pop( L, 1 );                                                          \
+            return res;                                                               \
+        }                                                                             \
+        else                                                                          \
+            lua_pop( L, 1 );                                                          \
     }
 
-#define RETURN_LUA_ANGLE()                                                   \
-    if ( lua_gettop( L ) == 1 )                                              \
-    {                                                                        \
+#define RETURN_LUA_ANGLE()                                                            \
+    if ( lua_gettop( L ) == 1 )                                                       \
+    {                                                                                 \
         if ( lua_isuserdata( L, -1 ) && luaL_checkudata( L, -1, LUA_QANGLELIBNAME ) ) \
-        {                                                                    \
-            QAngle res = luaL_checkangle( L, -1 );                           \
-            lua_pop( L, 1 );                                                 \
-            return res;                                                      \
-        }                                                                    \
-        else                                                                 \
-            lua_pop( L, 1 );                                                 \
+        {                                                                             \
+            QAngle res = luaL_checkangle( L, -1 );                                    \
+            lua_pop( L, 1 );                                                          \
+            return res;                                                               \
+        }                                                                             \
+        else                                                                          \
+            lua_pop( L, 1 );                                                          \
     }
 
 extern ConVar gamemode;
