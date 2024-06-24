@@ -585,6 +585,8 @@ $Project
 
 		$Folder	"Scripted Controls"
 		{
+			$File "$SRCDIR\game\client\scripted_controls\lLabel.h"
+			$File "$SRCDIR\game\client\scripted_controls\lLabel.cpp"
 			$File "$SRCDIR\game\client\scripted_controls\lButton.h"
 			$File "$SRCDIR\game\client\scripted_controls\lButton.cpp"
 			$File "$SRCDIR\game\client\scripted_controls\lCheckButton.h"

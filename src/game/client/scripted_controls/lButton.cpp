@@ -1,11 +1,3 @@
-//========= Copyright © 1996-2005, Valve Corporation, All rights reserved.
-//============//
-//
-// Purpose: Basic button control
-//
-// $NoKeywords: $
-//=============================================================================//
-
 #include <cbase.h>
 
 #include <vgui_int.h>
@@ -88,18 +80,6 @@ static int Button_CanBeDefaultButton( lua_State *L )
     return 1;
 }
 
-static int Button_ChainToAnimationMap( lua_State *L )
-{
-    luaL_checkbutton( L, 1 )->ChainToAnimationMap();
-    return 0;
-}
-
-static int Button_ChainToMap( lua_State *L )
-{
-    luaL_checkbutton( L, 1 )->ChainToMap();
-    return 0;
-}
-
 static int Button_DoClick( lua_State *L )
 {
     luaL_checkbutton( L, 1 )->DoClick();
@@ -133,35 +113,6 @@ static int Button_GetButtonBgColor( lua_State *L )
 static int Button_GetButtonFgColor( lua_State *L )
 {
     lua_pushcolor( L, luaL_checkbutton( L, 1 )->GetButtonFgColor() );
-    return 1;
-}
-
-static int Button_GetPanelBaseClassName( lua_State *L )
-{
-    lua_pushstring( L, luaL_checkbutton( L, 1 )->GetPanelBaseClassName() );
-    return 1;
-}
-
-static int Button_GetPanelClassName( lua_State *L )
-{
-    lua_pushstring( L, luaL_checkbutton( L, 1 )->GetPanelClassName() );
-    return 1;
-}
-
-static int Button_GetRefTable( lua_State *L )
-{
-    LButton *plButton = dynamic_cast< LButton * >( luaL_checkbutton( L, 1 ) );
-    if ( plButton )
-    {
-        if ( !lua_isrefvalid( L, plButton->m_nTableReference ) )
-        {
-            lua_newtable( L );
-            plButton->m_nTableReference = luaL_ref( L, LUA_REGISTRYINDEX );
-        }
-        lua_getref( L, plButton->m_nTableReference );
-    }
-    else
-        lua_pushnil( L );
     return 1;
 }
 
@@ -207,52 +158,9 @@ static int Button_IsUseCaptureMouseEnabled( lua_State *L )
     return 1;
 }
 
-static int Button_KB_AddBoundKey( lua_State *L )
-{
-    luaL_checkbutton( L, 1 )->KB_AddBoundKey(
-        luaL_checkstring( L, 2 ), luaL_checkint( L, 3 ), luaL_checkint( L, 4 ) );
-    return 0;
-}
-
-static int Button_KB_ChainToMap( lua_State *L )
-{
-    luaL_checkbutton( L, 1 )->KB_ChainToMap();
-    return 0;
-}
-
-static int Button_OnCursorEntered( lua_State *L )
-{
-    luaL_checkbutton( L, 1 )->OnCursorEntered();
-    return 0;
-}
-
-static int Button_OnCursorExited( lua_State *L )
-{
-    luaL_checkbutton( L, 1 )->OnCursorExited();
-    return 0;
-}
-
 static int Button_OnHotkey( lua_State *L )
 {
     luaL_checkbutton( L, 1 )->OnHotkey();
-    return 0;
-}
-
-static int Button_OnKillFocus( lua_State *L )
-{
-    luaL_checkbutton( L, 1 )->OnKillFocus();
-    return 0;
-}
-
-static int Button_OnSetFocus( lua_State *L )
-{
-    luaL_checkbutton( L, 1 )->OnSetFocus();
-    return 0;
-}
-
-static int Button_PerformLayout( lua_State *L )
-{
-    luaL_checkbutton( L, 1 )->PerformLayout();
     return 0;
 }
 
@@ -375,12 +283,6 @@ static int Button_ShouldPaint( lua_State *L )
     return 1;
 }
 
-static int Button_SizeToContents( lua_State *L )
-{
-    luaL_checkbutton( L, 1 )->SizeToContents();
-    return 0;
-}
-
 static int Button___index( lua_State *L )
 {
     Button *pButton = lua_tobutton( L, 1 );
@@ -491,26 +393,14 @@ static int Button___tostring( lua_State *L )
     return 1;
 }
 
-// TODO: Inherit this from Label, creating a lLabel.cpp for all those Lua functions related to labels
-static int Label_SetText( lua_State *L )
-{
-    luaL_checkbutton( L, 1 )->SetText( luaL_checkstring( L, 2 ) );
-    return 0;
-}
-
 static const luaL_Reg Buttonmeta[] = {
     { "CanBeDefaultButton", Button_CanBeDefaultButton },
-    { "ChainToAnimationMap", Button_ChainToAnimationMap },
-    { "ChainToMap", Button_ChainToMap },
     { "DoClick", Button_DoClick },
     { "DrawFocusBox", Button_DrawFocusBox },
     { "FireActionSignal", Button_FireActionSignal },
     { "ForceDepressed", Button_ForceDepressed },
     { "GetButtonBgColor", Button_GetButtonBgColor },
     { "GetButtonFgColor", Button_GetButtonFgColor },
-    { "GetPanelBaseClassName", Button_GetPanelBaseClassName },
-    { "GetPanelClassName", Button_GetPanelClassName },
-    { "GetRefTable", Button_GetRefTable },
     { "IsArmed", Button_IsArmed },
     { "IsBlinking", Button_IsBlinking },
     { "IsDepressed", Button_IsDepressed },
@@ -518,14 +408,7 @@ static const luaL_Reg Buttonmeta[] = {
     { "IsMouseClickEnabled", Button_IsMouseClickEnabled },
     { "IsSelected", Button_IsSelected },
     { "IsUseCaptureMouseEnabled", Button_IsUseCaptureMouseEnabled },
-    { "KB_AddBoundKey", Button_KB_AddBoundKey },
-    { "KB_ChainToMap", Button_KB_ChainToMap },
-    { "OnCursorEntered", Button_OnCursorEntered },
-    { "OnCursorExited", Button_OnCursorExited },
     { "OnHotkey", Button_OnHotkey },
-    { "OnKillFocus", Button_OnKillFocus },
-    { "OnSetFocus", Button_OnSetFocus },
-    { "PerformLayout", Button_PerformLayout },
     { "RecalculateDepressedState", Button_RecalculateDepressedState },
     { "SetArmed", Button_SetArmed },
     { "SetArmedColor", Button_SetArmedColor },
@@ -545,15 +428,11 @@ static const luaL_Reg Buttonmeta[] = {
     { "SetShouldPaint", Button_SetShouldPaint },
     { "SetUseCaptureMouse", Button_SetUseCaptureMouse },
     { "ShouldPaint", Button_ShouldPaint },
-    { "SizeToContents", Button_SizeToContents },
     { "__index", Button___index },
     { "__newindex", Button___newindex },
     { "__eq", Button___eq },
     { "__tostring", Button___tostring },
     { "__gc", Panel___gc },
-
-    // TODO: Inherit this from Label, creating a lLabel.cpp for all those Lua functions related to labels
-    { "SetText", Label_SetText },
 
     { NULL, NULL } };
 
@@ -583,6 +462,26 @@ LUALIB_API int luaopen_vgui_Button( lua_State *L )
     lua_pushstring( L, LUA_PANELLIBNAME );
     lua_setfield( L, -2, "__type" ); /* metatable.__type = "Panel" */
     luaL_register( L, LUA_VGUILIBNAME, Button_funcs );
-    lua_pop( L, 2 );
+
+    // Pop the panel library off the stack
+    lua_pop( L, 1 );
+
+    // Also merge any methods from the "Label" metatable into the "Button" metatable
+    luaL_getmetatable( L, "Label" );
+
+    lua_pushnil( L ); // first key
+    while ( lua_next( L, -2 ) != 0 )
+    {
+        lua_pushvalue( L, -2 ); // copy the key
+        lua_pushvalue( L, -2 ); // copy the value
+        lua_settable( L, -6 );  // set the key-value pair in the Button metatable
+
+        // Pop the value, leaving the key on the stack for the next iteration
+        lua_pop( L, 1 );
+    }
+
+    lua_pop( L, 1 ); // Pop the Label metatable
+    lua_pop( L, 1 ); // Pop the Button metatable
+
     return 0;
 }

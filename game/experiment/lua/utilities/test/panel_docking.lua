@@ -28,15 +28,11 @@ function fillChild:OnClick()
     parent:MarkForDeletion() -- safer
 end
 
-local topChild = Gui.Create("Button", parent)
+local topChild = Gui.Create("Label", parent)
 topChild:SetText("TOP")
 topChild:SetDock(DOCK_TYPE.TOP)
 topChild:SetTall(childTall)
 topChild:SetDockPadding(dockPadding, dockPadding, dockPadding, dockPadding)
-
-function topChild:OnClick()
-    parent:MarkForDeletion()
-end
 
 local leftChild = Gui.Create("Button", parent)
 leftChild:SetText("LEFT")
