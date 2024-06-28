@@ -108,13 +108,16 @@
 
 2. Fill the `.env` file with the described values
 
-3. Then run the `setupprojects.sh` script to modify the Visual Studio project files.
+3. Then run the `setupprojects.sh` script to modify the Visual Studio project files and solution.
 
     ```bash
     ./setupprojects.sh
     ```
 
-> Alternatively for a manual approach: [check the official docs and use values like this:](https://developer.valvesoftware.com/wiki/Installing_and_Debugging_the_Source_Code)
+    _This sets up debugging and enforces the correct dependencies of the client & server projects._
+
+> Setting up debugging manually: [check the official docs and use values like this:](https://developer.valvesoftware.com/wiki/Installing_and_Debugging_the_Source_Code)
+>
 > - Command: `C:\Program Files %28x86%29\Steam\steamapps\common\Source SDK Base 2013 Multiplayer\hl2.exe`
 > - Command Arguments: `-allowdebug -dev -sw -game "C:\Program Files (x86)\Steam\steamapps\sourcemods\experiment"`
 > - Working Directory: `C:\Program Files %28x86%29\Steam\steamapps\common\Source SDK Base 2013 Multiplayer`

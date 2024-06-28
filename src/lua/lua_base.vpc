@@ -69,7 +69,7 @@ $Configuration
     }
 }
 
-$Project "lua"
+$Project "lua54"
 {
 	$Folder	"Source Files"
 	{
