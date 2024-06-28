@@ -40,30 +40,42 @@ cat <<EOL > $PROJECT_FILE
 </Project>
 EOL
 
-# For whatever reason Valve decided to not allow us to configure dependencies in *.vpc files (am I wrong?)
-# For this reason we modify the solution file to add the dependencies to Lua and Luasocket to the client
+# For whatever reason Valve decided to not allow us to configure dependencies in *.vpc files. For
+# this reason we modify the solution file to add the dependencies to Lua and Luasocket to the client
 # and server projects
+# TODO: Please someone tell me I am wrong and there is a better way to do this
 sln_file="experiment.sln"
 echo "Modifying the solution file $sln_file..."
 
-# Add dependencies to "Client (HL2MP)"
-sed -i '/Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Client (HL2MP)"/, /EndProjectSection/ {
-    /EndProjectSection/ i\
-\t\t{11C4CA93-C3BB-5EF6-0C85-700D6B69A2F6} = {11C4CA93-C3BB-5EF6-0C85-700D6B69A2F6}\
-\t\t{950C58AA-39F0-9CA2-8BB5-1AD6B8011443} = {950C58AA-39F0-9CA2-8BB5-1AD6B8011443}
-}' "$sln_file"
+function addDependenciesToProject {
+    local project_name=$1
+    local dependency_guid=$2
 
-# Add dependencies to "Server (HL2MP)"
-sed -i '/Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Server (HL2MP)"/, /EndProjectSection/ {
-    /EndProjectSection/ i\
-\t\t{11C4CA93-C3BB-5EF6-0C85-700D6B69A2F6} = {11C4CA93-C3BB-5EF6-0C85-700D6B69A2F6}\
-\t\t{950C58AA-39F0-9CA2-8BB5-1AD6B8011443} = {950C58AA-39F0-9CA2-8BB5-1AD6B8011443}
-}' "$sln_file"
-
-# Make luasocket depend on Lua:
-sed -i '/Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "luasocket"/, /EndProject/ {
-    /EndProject/ i\
+    fromProject_to_EndProjectSection=$(sed -n "/Project(\"{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}\") = \"$project_name\"/, /EndProject/p" "$sln_file")
+    if [[ $fromProject_to_EndProjectSection == *"$dependency_guid"* ]]; then
+        echo "Dependency $dependency_guid already added to the project $project_name (ignoring)"
+    else
+        if [[ $fromProject_to_EndProjectSection != *"EndProjectSection"* ]]; then
+            echo "Adding ProjectSection(ProjectDependencies) to the project $project_name"
+            sed -i '/Project(\"{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}\") = \"'"$project_name"'\"/, /EndProject/ {
+                /EndProject/ i\
 \tProjectSection(ProjectDependencies) = postProject\
-\t\t{11C4CA93-C3BB-5EF6-0C85-700D6B69A2F6} = {11C4CA93-C3BB-5EF6-0C85-700D6B69A2F6}\
 \tEndProjectSection
-}' "$sln_file"
+            }' "$sln_file"
+        fi
+
+        echo "Adding dependency $dependency_guid to the project $project_name"
+        sed -i '/Project(\"{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}\") = \"'"$project_name"'\"/, /EndProjectSection/ {
+            /EndProjectSection/ i\
+\t\t{'"$dependency_guid"'} = {'"$dependency_guid"'}
+        }' "$sln_file"
+    fi
+}
+
+addDependenciesToProject "Client (HL2MP)" "950C58AA-39F0-9CA2-8BB5-1AD6B8011443"
+addDependenciesToProject "Client (HL2MP)" "11C4CA93-C3BB-5EF6-0C85-700D6B69A2F6"
+
+addDependenciesToProject "Server (HL2MP)" "950C58AA-39F0-9CA2-8BB5-1AD6B8011443"
+addDependenciesToProject "Server (HL2MP)" "11C4CA93-C3BB-5EF6-0C85-700D6B69A2F6"
+
+addDependenciesToProject "luasocket" "11C4CA93-C3BB-5EF6-0C85-700D6B69A2F6"
