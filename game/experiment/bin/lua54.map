@@ -1,0 +1,1571 @@
+ lua54
+
+ Timestamp is 667ed23c (Fri Jun 28 17:09:48 2024)
+
+ Preferred load address is 10000000
+
+ Start         Length     Name                   Class
+ 0001:00000000 000367abH .text$mn                CODE
+ 0001:000367b0 00001021H .text$x                 CODE
+ 0002:00000000 00000104H .CRT$XCA                DATA
+ 0002:00000104 00000104H .CRT$XCZ                DATA
+ 0002:00000208 00000104H .CRT$XIA                DATA
+ 0002:0000030c 00000104H .CRT$XIAA               DATA
+ 0002:00000410 00000109H .CRT$XIC                DATA
+ 0002:0000051c 00000104H .CRT$XIZ                DATA
+ 0002:00000620 00004273H .rdata                  DATA
+ 0002:00004894 0000019eH .rdata$debug            DATA
+ 0002:00004a34 00000156H .rdata$r                DATA
+ 0002:00004b8c 00000104H .rtc$IAA                DATA
+ 0002:00004c90 00000104H .rtc$IZZ                DATA
+ 0002:00004d94 00000104H .rtc$TAA                DATA
+ 0002:00004e98 00000104H .rtc$TZZ                DATA
+ 0002:00004fa0 000002a4H .xdata$x                DATA
+ 0002:00005250 000025f6H .edata                  DATA
+ 0003:00000000 0000013dH .data                   DATA
+ 0003:00000140 0000014eH .data$r                 DATA
+ 0003:00000290 0000036cH .bss                    DATA
+ 0004:00000000 00000260H .idata$5                DATA
+ 0004:00000260 00000028H .idata$2                DATA
+ 0004:00000288 00000014H .idata$3                DATA
+ 0004:0000029c 00000260H .idata$4                DATA
+ 0004:000004fc 0000072dH .idata$6                DATA
+
+  Address         Publics by Value              Rva+Base       Lib:Object
+
+ 0000:00000000       __except_list              00000000     <absolute>
+ 0000:00000000       ___safe_se_handler_count   00000000     <absolute>
+ 0000:00000000       ___guard_fids_count        00000000     <absolute>
+ 0000:00000000       ___guard_flags             00000000     <absolute>
+ 0000:00000000       ___safe_se_handler_table   00000000     <absolute>
+ 0000:00000000       ___guard_fids_table        00000000     <absolute>
+ 0000:00009876       __ldused                   00009876     <absolute>
+ 0000:00009876       __fltused                  00009876     <absolute>
+ 0000:00000000       ___ImageBase               10000000     <linker-defined>
+ 0001:00000d90       _dummy                     10001d90 f   pointeroverride.obj
+ 0001:000010b0       ?lua_absindex@@YAHPAUlua_State@@H@Z 100020b0 f   lapi.obj
+ 0001:000010f0       ?lua_arith@@YAXPAUlua_State@@H@Z 100020f0 f   lapi.obj
+ 0001:00001150       ?lua_atpanic@@YAP6AHPAUlua_State@@@Z0P6AH0@Z@Z 10002150 f   lapi.obj
+ 0001:00001170       ?lua_callk@@YAXPAUlua_State@@HHHP6AH0HH@Z@Z 10002170 f   lapi.obj
+ 0001:000011f0       ?lua_checkstack@@YAHPAUlua_State@@H@Z 100021f0 f   lapi.obj
+ 0001:00001250       ?lua_closeslot@@YAXPAUlua_State@@H@Z 10002250 f   lapi.obj
+ 0001:000012b0       ?lua_compare@@YAHPAUlua_State@@HHH@Z 100022b0 f   lapi.obj
+ 0001:00001360       ?lua_concat@@YAXPAUlua_State@@H@Z 10002360 f   lapi.obj
+ 0001:000013d0       ?lua_copy@@YAXPAUlua_State@@HH@Z 100023d0 f   lapi.obj
+ 0001:00001450       ?lua_createtable@@YAXPAUlua_State@@HH@Z 10002450 f   lapi.obj
+ 0001:000014b0       ?lua_dump@@YAHPAUlua_State@@P6AH0PBXIPAX@Z2H@Z 100024b0 f   lapi.obj
+ 0001:000014f0       ?lua_error@@YAHPAUlua_State@@@Z 100024f0 f   lapi.obj
+ 0001:00001530       ?lua_gc@@YAHPAUlua_State@@HZZ 10002530 f   lapi.obj
+ 0001:000017f0       ?lua_getallocf@@YAP6APAXPAX0II@ZPAUlua_State@@PAPAX@Z 100027f0 f   lapi.obj
+ 0001:00001820       ?lua_getfield@@YAHPAUlua_State@@HPBD@Z 10002820 f   lapi.obj
+ 0001:00001850       ?lua_getglobal@@YAHPAUlua_State@@PBD@Z 10002850 f   lapi.obj
+ 0001:00001880       ?lua_geti@@YAHPAUlua_State@@H_J@Z 10002880 f   lapi.obj
+ 0001:00001970       ?lua_getiuservalue@@YAHPAUlua_State@@HH@Z 10002970 f   lapi.obj
+ 0001:000019f0       ?lua_getmetatable@@YAHPAUlua_State@@H@Z 100029f0 f   lapi.obj
+ 0001:00001a70       ?lua_gettable@@YAHPAUlua_State@@H@Z 10002a70 f   lapi.obj
+ 0001:00001b20       ?lua_gettop@@YAHPAUlua_State@@@Z 10002b20 f   lapi.obj
+ 0001:00001b40       ?lua_getupvalue@@YAPBDPAUlua_State@@HH@Z 10002b40 f   lapi.obj
+ 0001:00001c00       ?lua_iscfunction@@YAHPAUlua_State@@H@Z 10002c00 f   lapi.obj
+ 0001:00001c30       ?lua_isinteger@@YAHPAUlua_State@@H@Z 10002c30 f   lapi.obj
+ 0001:00001c60       ?lua_isnumber@@YAHPAUlua_State@@H@Z 10002c60 f   lapi.obj
+ 0001:00001cb0       ?lua_isstring@@YAHPAUlua_State@@H@Z 10002cb0 f   lapi.obj
+ 0001:00001cf0       ?lua_isuserdata@@YAHPAUlua_State@@H@Z 10002cf0 f   lapi.obj
+ 0001:00001d20       ?lua_len@@YAXPAUlua_State@@H@Z 10002d20 f   lapi.obj
+ 0001:00001d50       ?lua_load@@YAHPAUlua_State@@P6APBD0PAXPAI@Z1PBD4@Z 10002d50 f   lapi.obj
+ 0001:00001e10       ?lua_newuserdatauv@@YAPAXPAUlua_State@@IH@Z 10002e10 f   lapi.obj
+ 0001:00001e80       ?lua_next@@YAHPAUlua_State@@H@Z 10002e80 f   lapi.obj
+ 0001:00001ed0       ?lua_pcallk@@YAHPAUlua_State@@HHHHP6AH0HH@Z@Z 10002ed0 f   lapi.obj
+ 0001:00001ff0       ?lua_pushboolean@@YAXPAUlua_State@@H@Z 10002ff0 f   lapi.obj
+ 0001:00002020       ?lua_pushcclosure@@YAXPAUlua_State@@P6AH0@ZH@Z 10003020 f   lapi.obj
+ 0001:000020e0       ?lua_pushfstring@@YAPBDPAUlua_State@@PBDZZ 100030e0 f   lapi.obj
+ 0001:00002120       ?lua_pushinteger@@YAXPAUlua_State@@_J@Z 10003120 f   lapi.obj
+ 0001:00002150       ?lua_pushlightuserdata@@YAXPAUlua_State@@PAX@Z 10003150 f   lapi.obj
+ 0001:00002170       ?lua_pushlstring@@YAPBDPAUlua_State@@PBDI@Z 10003170 f   lapi.obj
+ 0001:000021e0       ?lua_pushnil@@YAXPAUlua_State@@@Z 100031e0 f   lapi.obj
+ 0001:00002200       ?lua_pushnumber@@YAXPAUlua_State@@N@Z 10003200 f   lapi.obj
+ 0001:00002220       ?lua_pushstring@@YAPBDPAUlua_State@@PBD@Z 10003220 f   lapi.obj
+ 0001:00002290       ?lua_pushthread@@YAHPAUlua_State@@@Z 10003290 f   lapi.obj
+ 0001:000022c0       ?lua_pushvalue@@YAXPAUlua_State@@H@Z 100032c0 f   lapi.obj
+ 0001:00002300       ?lua_pushvfstring@@YAPBDPAUlua_State@@PBDPAD@Z 10003300 f   lapi.obj
+ 0001:00002340       ?lua_rawequal@@YAHPAUlua_State@@HH@Z 10003340 f   lapi.obj
+ 0001:000023b0       ?lua_rawget@@YAHPAUlua_State@@H@Z 100033b0 f   lapi.obj
+ 0001:00002440       ?lua_rawgeti@@YAHPAUlua_State@@H_J@Z 10003440 f   lapi.obj
+ 0001:000024c0       ?lua_rawgetp@@YAHPAUlua_State@@HPBX@Z 100034c0 f   lapi.obj
+ 0001:00002560       ?lua_rawlen@@YA_KPAUlua_State@@H@Z 10003560 f   lapi.obj
+ 0001:00002610       ?lua_rawset@@YAXPAUlua_State@@H@Z 10003610 f   lapi.obj
+ 0001:00002680       ?lua_rawseti@@YAXPAUlua_State@@H_J@Z 10003680 f   lapi.obj
+ 0001:000026f0       ?lua_rawsetp@@YAXPAUlua_State@@HPBX@Z 100036f0 f   lapi.obj
+ 0001:00002770       ?lua_rotate@@YAXPAUlua_State@@HH@Z 10003770 f   lapi.obj
+ 0001:00002800       ?lua_setallocf@@YAXPAUlua_State@@P6APAXPAX1II@Z1@Z 10003800 f   lapi.obj
+ 0001:00002820       ?lua_setfield@@YAXPAUlua_State@@HPBD@Z 10003820 f   lapi.obj
+ 0001:00002850       ?lua_setglobal@@YAXPAUlua_State@@PBD@Z 10003850 f   lapi.obj
+ 0001:00002880       ?lua_seti@@YAXPAUlua_State@@H_J@Z 10003880 f   lapi.obj
+ 0001:000029a0       ?lua_setiuservalue@@YAHPAUlua_State@@HH@Z 100039a0 f   lapi.obj
+ 0001:00002a40       ?lua_setmetatable@@YAHPAUlua_State@@H@Z 10003a40 f   lapi.obj
+ 0001:00002b00       ?lua_settable@@YAXPAUlua_State@@H@Z 10003b00 f   lapi.obj
+ 0001:00002bd0       ?lua_settop@@YAXPAUlua_State@@H@Z 10003bd0 f   lapi.obj
+ 0001:00002c50       ?lua_setupvalue@@YAPBDPAUlua_State@@HH@Z 10003c50 f   lapi.obj
+ 0001:00002d00       ?lua_setwarnf@@YAXPAUlua_State@@P6AXPAXPBDH@Z1@Z 10003d00 f   lapi.obj
+ 0001:00002d30       ?lua_status@@YAHPAUlua_State@@@Z 10003d30 f   lapi.obj
+ 0001:00002d40       ?lua_stringtonumber@@YAIPAUlua_State@@PBD@Z 10003d40 f   lapi.obj
+ 0001:00002d70       ?lua_toboolean@@YAHPAUlua_State@@H@Z 10003d70 f   lapi.obj
+ 0001:00002da0       ?lua_tocfunction@@YAP6AHPAUlua_State@@@Z0H@Z 10003da0 f   lapi.obj
+ 0001:00002de0       ?lua_toclose@@YAXPAUlua_State@@H@Z 10003de0 f   lapi.obj
+ 0001:00002e40       ?lua_tointegerx@@YA_JPAUlua_State@@HPAH@Z 10003e40 f   lapi.obj
+ 0001:00002ec0       ?lua_tolstring@@YAPBDPAUlua_State@@HPAI@Z 10003ec0 f   lapi.obj
+ 0001:00002f70       ?lua_tonumberx@@YANPAUlua_State@@HPAH@Z 10003f70 f   lapi.obj
+ 0001:00002fd0       ?lua_topointer@@YAPBXPAUlua_State@@H@Z 10003fd0 f   lapi.obj
+ 0001:00003060       ?lua_tothread@@YAPAUlua_State@@PAU1@H@Z 10004060 f   lapi.obj
+ 0001:00003090       ?lua_touserdata@@YAPAXPAUlua_State@@H@Z 10004090 f   lapi.obj
+ 0001:000030f0       ?lua_type@@YAHPAUlua_State@@H@Z 100040f0 f   lapi.obj
+ 0001:00003140       ?lua_typename@@YAPBDPAUlua_State@@H@Z 10004140 f   lapi.obj
+ 0001:00003160       ?lua_upvalueid@@YAPAXPAUlua_State@@HH@Z 10004160 f   lapi.obj
+ 0001:00003200       ?lua_upvaluejoin@@YAXPAUlua_State@@HHHH@Z 10004200 f   lapi.obj
+ 0001:000032a0       ?lua_version@@YANPAUlua_State@@@Z 100042a0 f   lapi.obj
+ 0001:000032b0       ?lua_warning@@YAXPAUlua_State@@PBDH@Z 100042b0 f   lapi.obj
+ 0001:000032c0       ?lua_xmove@@YAXPAUlua_State@@0H@Z 100042c0 f   lapi.obj
+ 0001:00003800       ?luaL_addgsub@@YAXPAUluaL_Buffer@@PBD11@Z 10004800 f   lauxlib.obj
+ 0001:00003910       ?luaL_addlstring@@YAXPAUluaL_Buffer@@PBDI@Z 10004910 f   lauxlib.obj
+ 0001:00003950       ?luaL_addstring@@YAXPAUluaL_Buffer@@PBD@Z 10004950 f   lauxlib.obj
+ 0001:000039a0       ?luaL_addvalue@@YAXPAUluaL_Buffer@@@Z 100049a0 f   lauxlib.obj
+ 0001:00003a00       ?luaL_argerror@@YAHPAUlua_State@@HPBD@Z 10004a00 f   lauxlib.obj
+ 0001:00003b50       ?luaL_buffinit@@YAXPAUlua_State@@PAUluaL_Buffer@@@Z 10004b50 f   lauxlib.obj
+ 0001:00003b90       ?luaL_buffinitsize@@YAPADPAUlua_State@@PAUluaL_Buffer@@I@Z 10004b90 f   lauxlib.obj
+ 0001:00003be0       ?luaL_callmeta@@YAHPAUlua_State@@HPBD@Z 10004be0 f   lauxlib.obj
+ 0001:00003c40       ?luaL_checkany@@YAXPAUlua_State@@H@Z 10004c40 f   lauxlib.obj
+ 0001:00003c80       ?luaL_checkinteger@@YA_JPAUlua_State@@H@Z 10004c80 f   lauxlib.obj
+ 0001:00003d10       ?luaL_checklstring@@YAPBDPAUlua_State@@HPAI@Z 10004d10 f   lauxlib.obj
+ 0001:00003d60       ?luaL_checknumber@@YANPAUlua_State@@H@Z 10004d60 f   lauxlib.obj
+ 0001:00003dc0       ?luaL_checkoption@@YAHPAUlua_State@@HPBDQBQBD@Z 10004dc0 f   lauxlib.obj
+ 0001:00003ea0       ?luaL_checkstack@@YAXPAUlua_State@@HPBD@Z 10004ea0 f   lauxlib.obj
+ 0001:00003f00       ?luaL_checktype@@YAXPAUlua_State@@HH@Z 10004f00 f   lauxlib.obj
+ 0001:00003f40       ?luaL_checkudata@@YAPAXPAUlua_State@@HPBD@Z 10004f40 f   lauxlib.obj
+ 0001:00003fe0       ?luaL_checkversion_@@YAXPAUlua_State@@NI@Z 10004fe0 f   lauxlib.obj
+ 0001:00004060       ?luaL_error@@YAHPAUlua_State@@PBDZZ 10005060 f   lauxlib.obj
+ 0001:000040a0       ?luaL_execresult@@YAHPAUlua_State@@H@Z 100050a0 f   lauxlib.obj
+ 0001:00004150       ?luaL_fileresult@@YAHPAUlua_State@@HPBD@Z 10005150 f   lauxlib.obj
+ 0001:000041f0       ?luaL_getmetafield@@YAHPAUlua_State@@HPBD@Z 100051f0 f   lauxlib.obj
+ 0001:00004270       ?luaL_getsubtable@@YAHPAUlua_State@@HPBD@Z 10005270 f   lauxlib.obj
+ 0001:000042f0       ?luaL_gsub@@YAPBDPAUlua_State@@PBD11@Z 100052f0 f   lauxlib.obj
+ 0001:00004400       ?luaL_len@@YA_JPAUlua_State@@H@Z 10005400 f   lauxlib.obj
+ 0001:00004470       ?luaL_loadbufferx@@YAHPAUlua_State@@PBDI11@Z 10005470 f   lauxlib.obj
+ 0001:000044b0       ?luaL_loadfilex@@YAHPAUlua_State@@PBD1@Z 100054b0 f   lauxlib.obj
+ 0001:00004740       ?luaL_loadstring@@YAHPAUlua_State@@PBD@Z 10005740 f   lauxlib.obj
+ 0001:00004790       ?luaL_newmetatable@@YAHPAUlua_State@@PBD@Z 10005790 f   lauxlib.obj
+ 0001:00004820       ?luaL_newstate@@YAPAUlua_State@@XZ 10005820 f   lauxlib.obj
+ 0001:00004870       ?luaL_optinteger@@YA_JPAUlua_State@@H_J@Z 10005870 f   lauxlib.obj
+ 0001:000048b0       ?luaL_optlstring@@YAPBDPAUlua_State@@HPBDPAI@Z 100058b0 f   lauxlib.obj
+ 0001:00004950       ?luaL_optnumber@@YANPAUlua_State@@HN@Z 10005950 f   lauxlib.obj
+ 0001:000049c0       ?luaL_prepbuffsize@@YAPADPAUluaL_Buffer@@I@Z 100059c0 f   lauxlib.obj
+ 0001:000049e0       ?luaL_pushresult@@YAXPAUluaL_Buffer@@@Z 100059e0 f   lauxlib.obj
+ 0001:00004a40       ?luaL_pushresultsize@@YAXPAUluaL_Buffer@@I@Z 10005a40 f   lauxlib.obj
+ 0001:00004aa0       ?luaL_ref@@YAHPAUlua_State@@H@Z 10005aa0 f   lauxlib.obj
+ 0001:00004b90       ?luaL_requiref@@YAXPAUlua_State@@PBDP6AH0@ZH@Z 10005b90 f   lauxlib.obj
+ 0001:00004cb0       ?luaL_setfuncs@@YAXPAUlua_State@@PBUluaL_Reg@@H@Z 10005cb0 f   lauxlib.obj
+ 0001:00004d90       ?luaL_setmetatable@@YAXPAUlua_State@@PBD@Z 10005d90 f   lauxlib.obj
+ 0001:00004dc0       ?luaL_testudata@@YAPAXPAUlua_State@@HPBD@Z 10005dc0 f   lauxlib.obj
+ 0001:00004e40       ?luaL_tolstring@@YAPBDPAUlua_State@@HPAI@Z 10005e40 f   lauxlib.obj
+ 0001:00005100       ?luaL_traceback@@YAXPAUlua_State@@0PBDH@Z 10006100 f   lauxlib.obj
+ 0001:00005590       ?luaL_typeerror@@YAHPAUlua_State@@HPBD@Z 10006590 f   lauxlib.obj
+ 0001:00005670       ?luaL_unref@@YAXPAUlua_State@@HH@Z 10006670 f   lauxlib.obj
+ 0001:000056e0       ?luaL_where@@YAXPAUlua_State@@H@Z 100066e0 f   lauxlib.obj
+ 0001:00006eb0       ?luaopen_base@@YAHPAUlua_State@@@Z 10007eb0 f   lbaselib.obj
+ 0001:00006f30       ?luaopen_base_minimal@@YAHPAUlua_State@@@Z 10007f30 f   lbaselib.obj
+ 0001:00008ad0       ?luaK_checkstack@@YAXPAUFuncState@@H@Z 10009ad0 f   lcode.obj
+ 0001:00008b20       ?luaK_code@@YAHPAUFuncState@@I@Z 10009b20 f   lcode.obj
+ 0001:00008b90       ?luaK_codeABCk@@YAHPAUFuncState@@W4OpCode@@HHHH@Z 10009b90 f   lcode.obj
+ 0001:00008c20       ?luaK_codeABx@@YAHPAUFuncState@@W4OpCode@@HI@Z 10009c20 f   lcode.obj
+ 0001:00008ca0       ?luaK_codeAsBx@@YAHPAUFuncState@@W4OpCode@@HH@Z 10009ca0 f   lcode.obj
+ 0001:00008d80       ?luaK_concat@@YAXPAUFuncState@@PAHH@Z 10009d80 f   lcode.obj
+ 0001:00008e10       ?luaK_dischargevars@@YAXPAUFuncState@@PAUexpdesc@@@Z 10009e10 f   lcode.obj
+ 0001:000090f0       ?luaK_exp2RK@@YAHPAUFuncState@@PAUexpdesc@@@Z 1000a0f0 f   lcode.obj
+ 0001:00009130       ?luaK_exp2anyreg@@YAHPAUFuncState@@PAUexpdesc@@@Z 1000a130 f   lcode.obj
+ 0001:000091a0       ?luaK_exp2anyregup@@YAXPAUFuncState@@PAUexpdesc@@@Z 1000a1a0 f   lcode.obj
+ 0001:00009220       ?luaK_exp2const@@YAHPAUFuncState@@PBUexpdesc@@PAUTValue@@@Z 1000a220 f   lcode.obj
+ 0001:00009320       ?luaK_exp2nextreg@@YAXPAUFuncState@@PAUexpdesc@@@Z 1000a320 f   lcode.obj
+ 0001:000093b0       ?luaK_exp2val@@YAXPAUFuncState@@PAUexpdesc@@@Z 1000a3b0 f   lcode.obj
+ 0001:000093e0       ?luaK_finish@@YAXPAUFuncState@@@Z 1000a3e0 f   lcode.obj
+ 0001:00009550       ?luaK_fixline@@YAXPAUFuncState@@H@Z 1000a550 f   lcode.obj
+ 0001:00009690       ?luaK_getlabel@@YAHPAUFuncState@@@Z 1000a690 f   lcode.obj
+ 0001:000096b0       ?luaK_goiffalse@@YAXPAUFuncState@@PAUexpdesc@@@Z 1000a6b0 f   lcode.obj
+ 0001:00009740       ?luaK_goiftrue@@YAXPAUFuncState@@PAUexpdesc@@@Z 1000a740 f   lcode.obj
+ 0001:00009810       ?luaK_indexed@@YAXPAUFuncState@@PAUexpdesc@@1@Z 1000a810 f   lcode.obj
+ 0001:00009990       ?luaK_infix@@YAXPAUFuncState@@W4BinOpr@@PAUexpdesc@@@Z 1000a990 f   lcode.obj
+ 0001:00009ad0       ?luaK_int@@YAXPAUFuncState@@H_J@Z 1000aad0 f   lcode.obj
+ 0001:00009bd0       ?luaK_isKint@@YAHPAUexpdesc@@@Z 1000abd0 f   lcode.obj
+ 0001:00009c00       ?luaK_jump@@YAHPAUFuncState@@@Z 1000ac00 f   lcode.obj
+ 0001:00009c70       ?luaK_nil@@YAXPAUFuncState@@HH@Z 1000ac70 f   lcode.obj
+ 0001:00009e30       ?luaK_patchlist@@YAXPAUFuncState@@HH@Z 1000ae30 f   lcode.obj
+ 0001:00009e60       ?luaK_patchtohere@@YAXPAUFuncState@@H@Z 1000ae60 f   lcode.obj
+ 0001:00009e90       ?luaK_posfix@@YAXPAUFuncState@@W4BinOpr@@PAUexpdesc@@2H@Z 1000ae90 f   lcode.obj
+ 0001:0000a180       ?luaK_prefix@@YAXPAUFuncState@@W4UnOpr@@PAUexpdesc@@H@Z 1000b180 f   lcode.obj
+ 0001:0000a220       ?luaK_reserveregs@@YAXPAUFuncState@@H@Z 1000b220 f   lcode.obj
+ 0001:0000a270       ?luaK_ret@@YAXPAUFuncState@@HH@Z 1000b270 f   lcode.obj
+ 0001:0000a310       ?luaK_self@@YAXPAUFuncState@@PAUexpdesc@@1@Z 1000b310 f   lcode.obj
+ 0001:0000a450       ?luaK_semerror@@YAXPAULexState@@PBD@Z 1000b450 f   lcode.obj
+ 0001:0000a470       ?luaK_setlist@@YAXPAUFuncState@@HHH@Z 1000b470 f   lcode.obj
+ 0001:0000a520       ?luaK_setoneret@@YAXPAUFuncState@@PAUexpdesc@@@Z 1000b520 f   lcode.obj
+ 0001:0000a580       ?luaK_setreturns@@YAXPAUFuncState@@PAUexpdesc@@H@Z 1000b580 f   lcode.obj
+ 0001:0000a610       ?luaK_settablesize@@YAXPAUFuncState@@HHHH@Z 1000b610 f   lcode.obj
+ 0001:0000a6b0       ?luaK_storevar@@YAXPAUFuncState@@PAUexpdesc@@1@Z 1000b6b0 f   lcode.obj
+ 0001:0000b3e0       ?luaopen_coroutine@@YAHPAUlua_State@@@Z 1000c3e0 f   lcorolib.obj
+ 0001:0000c620       ?luaopen_debug@@YAHPAUlua_State@@@Z 1000d620 f   ldblib.obj
+ 0001:0000d4b0       ?luaG_addinfo@@YAPBDPAUlua_State@@PBDPAUTString@@H@Z 1000e4b0 f   ldebug.obj
+ 0001:0000d540       ?luaG_callerror@@YAXPAUlua_State@@PBUTValue@@@Z 1000e540 f   ldebug.obj
+ 0001:0000d600       ?luaG_concaterror@@YAXPAUlua_State@@PBUTValue@@1@Z 1000e600 f   ldebug.obj
+ 0001:0000d630       ?luaG_errormsg@@YAXPAUlua_State@@@Z 1000e630 f   ldebug.obj
+ 0001:0000d6b0       ?luaG_findlocal@@YAPBDPAUlua_State@@PAUCallInfo@@HPAPATStackValue@@@Z 1000e6b0 f   ldebug.obj
+ 0001:0000d7a0       ?luaG_forerror@@YAXPAUlua_State@@PBUTValue@@PBD@Z 1000e7a0 f   ldebug.obj
+ 0001:0000d7d0       ?luaG_getfuncline@@YAHPBUProto@@H@Z 1000e7d0 f   ldebug.obj
+ 0001:0000d820       ?luaG_opinterror@@YAXPAUlua_State@@PBUTValue@@1PBD@Z 1000e820 f   ldebug.obj
+ 0001:0000d850       ?luaG_ordererror@@YAXPAUlua_State@@PBUTValue@@1@Z 1000e850 f   ldebug.obj
+ 0001:0000d8e0       ?luaG_runerror@@YAXPAUlua_State@@PBDZZ 1000e8e0 f   ldebug.obj
+ 0001:0000d9d0       ?luaG_tointerror@@YAXPAUlua_State@@PBUTValue@@1@Z 1000e9d0 f   ldebug.obj
+ 0001:0000da20       ?luaG_traceexec@@YAHPAUlua_State@@PBI@Z 1000ea20 f   ldebug.obj
+ 0001:0000dba0       ?luaG_typeerror@@YAXPAUlua_State@@PBUTValue@@PBD@Z 1000eba0 f   ldebug.obj
+ 0001:0000dbd0       ?lua_gethook@@YAP6AXPAUlua_State@@PAUlua_Debug@@@Z0@Z 1000ebd0 f   ldebug.obj
+ 0001:0000dbe0       ?lua_gethookcount@@YAHPAUlua_State@@@Z 1000ebe0 f   ldebug.obj
+ 0001:0000dbf0       ?lua_gethookmask@@YAHPAUlua_State@@@Z 1000ebf0 f   ldebug.obj
+ 0001:0000dc00       ?lua_getinfo@@YAHPAUlua_State@@PBDPAUlua_Debug@@@Z 1000ec00 f   ldebug.obj
+ 0001:0000dcc0       ?lua_getlocal@@YAPBDPAUlua_State@@PBUlua_Debug@@H@Z 1000ecc0 f   ldebug.obj
+ 0001:0000dd60       ?lua_getstack@@YAHPAUlua_State@@HPAUlua_Debug@@@Z 1000ed60 f   ldebug.obj
+ 0001:0000ddd0       ?lua_sethook@@YAXPAUlua_State@@P6AX0PAUlua_Debug@@@ZHH@Z 1000edd0 f   ldebug.obj
+ 0001:0000de30       ?lua_setlocal@@YAPBDPAUlua_State@@PBUlua_Debug@@H@Z 1000ee30 f   ldebug.obj
+ 0001:0000e450       ?luaD_call@@YAXPAUlua_State@@PATStackValue@@H@Z 1000f450 f   ldo.obj
+ 0001:0000e470       ?luaD_callnoyield@@YAXPAUlua_State@@PATStackValue@@H@Z 1000f470 f   ldo.obj
+ 0001:0000e4a0       ?luaD_closeprotected@@YAHPAUlua_State@@HH@Z 1000f4a0 f   ldo.obj
+ 0001:0000e540       ?luaD_growstack@@YAHPAUlua_State@@HH@Z 1000f540 f   ldo.obj
+ 0001:0000e600       ?luaD_hook@@YAXPAUlua_State@@HHHH@Z 1000f600 f   ldo.obj
+ 0001:0000e790       ?luaD_hookcall@@YAXPAUlua_State@@PAUCallInfo@@@Z 1000f790 f   ldo.obj
+ 0001:0000e7f0       ?luaD_inctop@@YAXPAUlua_State@@@Z 1000f7f0 f   ldo.obj
+ 0001:0000e890       ?luaD_pcall@@YAHPAUlua_State@@P6AX0PAX@Z1HH@Z 1000f890 f   ldo.obj
+ 0001:0000e930       ?luaD_poscall@@YAXPAUlua_State@@PAUCallInfo@@H@Z 1000f930 f   ldo.obj
+ 0001:0000e990       ?luaD_precall@@YAPAUCallInfo@@PAUlua_State@@PATStackValue@@H@Z 1000f990 f   ldo.obj
+ 0001:0000eb20       ?luaD_pretailcall@@YAHPAUlua_State@@PAUCallInfo@@PATStackValue@@HH@Z 1000fb20 f   ldo.obj
+ 0001:0000ecd0       ?luaD_protectedparser@@YAHPAUlua_State@@PAUZio@@PBD2@Z 1000fcd0 f   ldo.obj
+ 0001:0000ede0       ?luaD_rawrunprotected@@YAHPAUlua_State@@P6AX0PAX@Z1@Z 1000fde0 f   ldo.obj
+ 0001:0000eea0       ?luaD_reallocstack@@YAHPAUlua_State@@HH@Z 1000fea0 f   ldo.obj
+ 0001:0000efd0       ?luaD_seterrorobj@@YAXPAUlua_State@@HPATStackValue@@@Z 1000ffd0 f   ldo.obj
+ 0001:0000f090       ?luaD_shrinkstack@@YAXPAUlua_State@@@Z 10010090 f   ldo.obj
+ 0001:0000f130       ?luaD_throw@@YAXPAUlua_State@@H@Z 10010130 f   ldo.obj
+ 0001:0000f1e0       ?luaD_tryfuncTM@@YAPATStackValue@@PAUlua_State@@PAT1@@Z 100101e0 f   ldo.obj
+ 0001:0000f310       ?lua_isyieldable@@YAHPAUlua_State@@@Z 10010310 f   ldo.obj
+ 0001:0000f330       ?lua_resume@@YAHPAUlua_State@@0HPAH@Z 10010330 f   ldo.obj
+ 0001:0000f490       ?lua_yieldk@@YAHPAUlua_State@@HHP6AH0HH@Z@Z 10010490 f   ldo.obj
+ 0001:00010990       ?luaU_dump@@YAHPAUlua_State@@PBUProto@@P6AH0PBXIPAX@Z3H@Z 10011990 f   ldump.obj
+ 0001:00010a80       ?luaF_close@@YAPATStackValue@@PAUlua_State@@PAT1@HH@Z 10011a80 f   lfunc.obj
+ 0001:00010bd0       ?luaF_closeupval@@YAXPAUlua_State@@PATStackValue@@@Z 10011bd0 f   lfunc.obj
+ 0001:00010c70       ?luaF_findupval@@YAPAUUpVal@@PAUlua_State@@PATStackValue@@@Z 10011c70 f   lfunc.obj
+ 0001:00010d00       ?luaF_freeproto@@YAXPAUlua_State@@PAUProto@@@Z 10011d00 f   lfunc.obj
+ 0001:00010db0       ?luaF_getlocalname@@YAPBDPBUProto@@HH@Z 10011db0 f   lfunc.obj
+ 0001:00010e10       ?luaF_initupvals@@YAXPAUlua_State@@PAULClosure@@@Z 10011e10 f   lfunc.obj
+ 0001:00010e80       ?luaF_newCclosure@@YAPAUCClosure@@PAUlua_State@@H@Z 10011e80 f   lfunc.obj
+ 0001:00010eb0       ?luaF_newLclosure@@YAPAULClosure@@PAUlua_State@@H@Z 10011eb0 f   lfunc.obj
+ 0001:00010f10       ?luaF_newproto@@YAPAUProto@@PAUlua_State@@@Z 10011f10 f   lfunc.obj
+ 0001:00010fd0       ?luaF_newtbcupval@@YAXPAUlua_State@@PATStackValue@@@Z 10011fd0 f   lfunc.obj
+ 0001:00011050       ?luaF_unlinkupval@@YAXPAUUpVal@@@Z 10012050 f   lfunc.obj
+ 0001:00012110       ?luaC_barrier_@@YAXPAUlua_State@@PAUGCObject@@1@Z 10013110 f   lgc.obj
+ 0001:00012180       ?luaC_barrierback_@@YAXPAUlua_State@@PAUGCObject@@@Z 10013180 f   lgc.obj
+ 0001:000121e0       ?luaC_changemode@@YAXPAUlua_State@@H@Z 100131e0 f   lgc.obj
+ 0001:00012230       ?luaC_checkfinalizer@@YAXPAUlua_State@@PAUGCObject@@PAUTable@@@Z 10013230 f   lgc.obj
+ 0001:00012300       ?luaC_fix@@YAXPAUlua_State@@PAUGCObject@@@Z 10013300 f   lgc.obj
+ 0001:00012330       ?luaC_freeallobjects@@YAXPAUlua_State@@@Z 10013330 f   lgc.obj
+ 0001:000123a0       ?luaC_fullgc@@YAXPAUlua_State@@H@Z 100133a0 f   lgc.obj
+ 0001:000123f0       ?luaC_newobj@@YAPAUGCObject@@PAUlua_State@@HI@Z 100133f0 f   lgc.obj
+ 0001:00012440       ?luaC_newobjdt@@YAPAUGCObject@@PAUlua_State@@HII@Z 10013440 f   lgc.obj
+ 0001:00012490       ?luaC_runtilstate@@YAXPAUlua_State@@H@Z 10013490 f   lgc.obj
+ 0001:00012690       ?luaC_step@@YAXPAUlua_State@@@Z 10013690 f   lgc.obj
+ 0001:00014d70       ?luaL_openlibs@@YAXPAUlua_State@@@Z 10015d70 f   linit.obj
+ 0001:00016000       ?luaopen_io@@YAHPAUlua_State@@@Z 10017000 f   liolib.obj
+ 0001:000175f0       ?luaX_init@@YAXPAUlua_State@@@Z 100185f0 f   llex.obj
+ 0001:00017650       ?luaX_lookahead@@YAHPAULexState@@@Z 10018650 f   llex.obj
+ 0001:00017670       ?luaX_newstring@@YAPAUTString@@PAULexState@@PBDI@Z 10018670 f   llex.obj
+ 0001:00017710       ?luaX_next@@YAXPAULexState@@@Z 10018710 f   llex.obj
+ 0001:00017770       ?luaX_setinput@@YAXPAUlua_State@@PAULexState@@PAUZio@@PAUTString@@H@Z 10018770 f   llex.obj
+ 0001:00017810       ?luaX_syntaxerror@@YAXPAULexState@@PBD@Z 10018810 f   llex.obj
+ 0001:00017830       ?luaX_token2str@@YAPBDPAULexState@@H@Z 10018830 f   llex.obj
+ 0001:000199b0       ?luaopen_math@@YAHPAUlua_State@@@Z 1001a9b0 f   lmathlib.obj
+ 0001:00019f30       ?luaM_free_@@YAXPAUlua_State@@PAXI@Z 1001af30 f   lmem.obj
+ 0001:00019f60       ?luaM_growaux_@@YAPAXPAUlua_State@@PAXHPAHHHPBD@Z 1001af60 f   lmem.obj
+ 0001:0001a000       ?luaM_malloc_@@YAPAXPAUlua_State@@IH@Z 1001b000 f   lmem.obj
+ 0001:0001a090       ?luaM_realloc_@@YAPAXPAUlua_State@@PAXII@Z 1001b090 f   lmem.obj
+ 0001:0001a120       ?luaM_saferealloc_@@YAPAXPAUlua_State@@PAXII@Z 1001b120 f   lmem.obj
+ 0001:0001a160       ?luaM_shrinkvector_@@YAPAXPAUlua_State@@PAXPAHHH@Z 1001b160 f   lmem.obj
+ 0001:0001a1c0       ?luaM_toobig@@YAXPAUlua_State@@@Z 1001b1c0 f   lmem.obj
+ 0001:0001abb0       ?luaL_pushmodule@@YAXPAUlua_State@@PBDH@Z 1001bbb0 f   loadlib.obj
+ 0001:0001ac70       ?luaopen_package@@YAHPAUlua_State@@@Z 1001bc70 f   loadlib.obj
+ 0001:0001bfa0       ?luaO_arith@@YAXPAUlua_State@@HPBUTValue@@1PATStackValue@@@Z 1001cfa0 f   lobject.obj
+ 0001:0001bff0       ?luaO_ceillog2@@YAHI@Z     1001cff0 f   lobject.obj
+ 0001:0001c030       ?luaO_chunkid@@YAXPADPBDI@Z 1001d030 f   lobject.obj
+ 0001:0001c1a0       ?luaO_hexavalue@@YAHH@Z    1001d1a0 f   lobject.obj
+ 0001:0001c1d0       ?luaO_pushfstring@@YAPBDPAUlua_State@@PBDZZ 1001d1d0 f   lobject.obj
+ 0001:0001c1f0       ?luaO_pushvfstring@@YAPBDPAUlua_State@@PBDPAD@Z 1001d1f0 f   lobject.obj
+ 0001:0001c6e0       ?luaO_rawarith@@YAHPAUlua_State@@HPBUTValue@@1PAU2@@Z 1001d6e0 f   lobject.obj
+ 0001:0001c8c0       ?luaO_str2num@@YAIPBDPAUTValue@@@Z 1001d8c0 f   lobject.obj
+ 0001:0001c950       ?luaO_tostring@@YAXPAUlua_State@@PAUTValue@@@Z 1001d950 f   lobject.obj
+ 0001:0001c9b0       ?luaO_utf8esc@@YAHPADK@Z   1001d9b0 f   lobject.obj
+ 0001:0001d740       ?luaopen_os@@YAHPAUlua_State@@@Z 1001e740 f   loslib.obj
+ 0001:0001ffe0       ?luaY_nvarstack@@YAHPAUFuncState@@@Z 10020fe0 f   lparser.obj
+ 0001:00020030       ?luaY_parser@@YAPAULClosure@@PAUlua_State@@PAUZio@@PAUMbuffer@@PAUDyndata@@PBDH@Z 10021030 f   lparser.obj
+ 0001:00022560       ?luaE_checkcstack@@YAXPAUlua_State@@@Z 10023560 f   lstate.obj
+ 0001:000225a0       ?luaE_extendCI@@YAPAUCallInfo@@PAUlua_State@@@Z 100235a0 f   lstate.obj
+ 0001:000225f0       ?luaE_freeCI@@YAXPAUlua_State@@@Z 100235f0 f   lstate.obj
+ 0001:00022640       ?luaE_freethread@@YAXPAUlua_State@@0@Z 10023640 f   lstate.obj
+ 0001:000226b0       ?luaE_incCstack@@YAXPAUlua_State@@@Z 100236b0 f   lstate.obj
+ 0001:00022700       ?luaE_resetthread@@YAHPAUlua_State@@H@Z 10023700 f   lstate.obj
+ 0001:000227b0       ?luaE_setdebt@@YAXPAUglobal_State@@H@Z 100237b0 f   lstate.obj
+ 0001:000227e0       ?luaE_shrinkCI@@YAXPAUlua_State@@@Z 100237e0 f   lstate.obj
+ 0001:00022850       ?luaE_warnerror@@YAXPAUlua_State@@PBD@Z 10023850 f   lstate.obj
+ 0001:00022940       ?luaE_warning@@YAXPAUlua_State@@PBDH@Z 10023940 f   lstate.obj
+ 0001:00022970       ?lua_close@@YAXPAUlua_State@@@Z 10023970 f   lstate.obj
+ 0001:00022990       ?lua_closethread@@YAHPAUlua_State@@0@Z 10023990 f   lstate.obj
+ 0001:000229d0       ?lua_newstate@@YAPAUlua_State@@P6APAXPAX0II@Z0@Z 100239d0 f   lstate.obj
+ 0001:00022c70       ?lua_newthread@@YAPAUlua_State@@PAU1@@Z 10023c70 f   lstate.obj
+ 0001:00022d40       ?lua_resetthread@@YAHPAUlua_State@@@Z 10023d40 f   lstate.obj
+ 0001:00022d70       ?lua_setcstacklimit@@YAHPAUlua_State@@I@Z 10023d70 f   lstate.obj
+ 0001:00023070       ?luaS_clearcache@@YAXPAUglobal_State@@@Z 10024070 f   lstring.obj
+ 0001:000230c0       ?luaS_createlngstrobj@@YAPAUTString@@PAUlua_State@@I@Z 100240c0 f   lstring.obj
+ 0001:00023100       ?luaS_eqlngstr@@YAHPAUTString@@0@Z 10024100 f   lstring.obj
+ 0001:00023190       ?luaS_hash@@YAIPBDII@Z     10024190 f   lstring.obj
+ 0001:000231d0       ?luaS_hashlongstr@@YAIPAUTString@@@Z 100241d0 f   lstring.obj
+ 0001:00023230       ?luaS_init@@YAXPAUlua_State@@@Z 10024230 f   lstring.obj
+ 0001:000232d0       ?luaS_new@@YAPAUTString@@PAUlua_State@@PBD@Z 100242d0 f   lstring.obj
+ 0001:00023420       ?luaS_newlstr@@YAPAUTString@@PAUlua_State@@PBDI@Z 10024420 f   lstring.obj
+ 0001:000234b0       ?luaS_newudata@@YAPAUUdata@@PAUlua_State@@IH@Z 100244b0 f   lstring.obj
+ 0001:00023550       ?luaS_remove@@YAXPAUlua_State@@PAUTString@@@Z 10024550 f   lstring.obj
+ 0001:000235a0       ?luaS_resize@@YAXPAUlua_State@@H@Z 100245a0 f   lstring.obj
+ 0001:00026a70       ?luaopen_string@@YAHPAUlua_State@@@Z 10027a70 f   lstrlib.obj
+ 0001:00028640       ?luaH_finishset@@YAXPAUlua_State@@PAUTable@@PBUTValue@@2PAU3@@Z 10029640 f   ltable.obj
+ 0001:00028690       ?luaH_free@@YAXPAUlua_State@@PAUTable@@@Z 10029690 f   ltable.obj
+ 0001:00028740       ?luaH_get@@YAPBUTValue@@PAUTable@@PBU1@@Z 10029740 f   ltable.obj
+ 0001:00028830       ?luaH_getint@@YAPBUTValue@@PAUTable@@_J@Z 10029830 f   ltable.obj
+ 0001:00028910       ?luaH_getn@@YA_KPAUTable@@@Z 10029910 f   ltable.obj
+ 0001:00028a60       ?luaH_getshortstr@@YAPBUTValue@@PAUTable@@PAUTString@@@Z 10029a60 f   ltable.obj
+ 0001:00028ac0       ?luaH_getstr@@YAPBUTValue@@PAUTable@@PAUTString@@@Z 10029ac0 f   ltable.obj
+ 0001:00028b10       ?luaH_new@@YAPAUTable@@PAUlua_State@@@Z 10029b10 f   ltable.obj
+ 0001:00028b60       ?luaH_newkey@@YAXPAUlua_State@@PAUTable@@PBUTValue@@PAU3@@Z 10029b60 f   ltable.obj
+ 0001:00028e30       ?luaH_next@@YAHPAUlua_State@@PAUTable@@PATStackValue@@@Z 10029e30 f   ltable.obj
+ 0001:00028f80       ?luaH_realasize@@YAIPBUTable@@@Z 10029f80 f   ltable.obj
+ 0001:00028fd0       ?luaH_resize@@YAXPAUlua_State@@PAUTable@@II@Z 10029fd0 f   ltable.obj
+ 0001:000292a0       ?luaH_resizearray@@YAXPAUlua_State@@PAUTable@@I@Z 1002a2a0 f   ltable.obj
+ 0001:000292f0       ?luaH_set@@YAXPAUlua_State@@PAUTable@@PBUTValue@@PAU3@@Z 1002a2f0 f   ltable.obj
+ 0001:00029340       ?luaH_setint@@YAXPAUlua_State@@PAUTable@@_JPAUTValue@@@Z 1002a340 f   ltable.obj
+ 0001:0002aaf0       ?luaopen_table@@YAHPAUlua_State@@@Z 1002baf0 f   ltablib.obj
+ 0001:0002ae00       ?luaT_adjustvarargs@@YAXPAUlua_State@@HPAUCallInfo@@PBUProto@@@Z 1002be00 f   ltm.obj
+ 0001:0002aee0       ?luaT_callTM@@YAXPAUlua_State@@PBUTValue@@111@Z 1002bee0 f   ltm.obj
+ 0001:0002af90       ?luaT_callTMres@@YAXPAUlua_State@@PBUTValue@@11PATStackValue@@@Z 1002bf90 f   ltm.obj
+ 0001:0002b050       ?luaT_callorderTM@@YAHPAUlua_State@@PBUTValue@@1W4TMS@@@Z 1002c050 f   ltm.obj
+ 0001:0002b0b0       ?luaT_callorderiTM@@YAHPAUlua_State@@PBUTValue@@HHHW4TMS@@@Z 1002c0b0 f   ltm.obj
+ 0001:0002b150       ?luaT_gettm@@YAPBUTValue@@PAUTable@@W4TMS@@PAUTString@@@Z 1002c150 f   ltm.obj
+ 0001:0002b190       ?luaT_gettmbyobj@@YAPBUTValue@@PAUlua_State@@PBU1@W4TMS@@@Z 1002c190 f   ltm.obj
+ 0001:0002b210       ?luaT_getvarargs@@YAXPAUlua_State@@PAUCallInfo@@PATStackValue@@H@Z 1002c210 f   ltm.obj
+ 0001:0002b330       ?luaT_init@@YAXPAUlua_State@@@Z 1002c330 f   ltm.obj
+ 0001:0002b390       ?luaT_objtypename@@YAPBDPAUlua_State@@PBUTValue@@@Z 1002c390 f   ltm.obj
+ 0001:0002b410       ?luaT_trybinTM@@YAXPAUlua_State@@PBUTValue@@1PATStackValue@@W4TMS@@@Z 1002c410 f   ltm.obj
+ 0001:0002b4a0       ?luaT_trybinassocTM@@YAXPAUlua_State@@PBUTValue@@1HPATStackValue@@W4TMS@@@Z 1002c4a0 f   ltm.obj
+ 0001:0002b4f0       ?luaT_trybiniTM@@YAXPAUlua_State@@PBUTValue@@_JHPATStackValue@@W4TMS@@@Z 1002c4f0 f   ltm.obj
+ 0001:0002b550       ?luaT_tryconcatTM@@YAXPAUlua_State@@@Z 1002c550 f   ltm.obj
+ 0001:0002c6f0       _main                      1002d6f0 f   lua.obj
+ 0001:0002d660       ?luaU_undump@@YAPAULClosure@@PAUlua_State@@PAUZio@@PBD@Z 1002e660 f   lundump.obj
+ 0001:0002e0c0       ?luaopen_utf8@@YAHPAUlua_State@@@Z 1002f0c0 f   lutf8lib.obj
+ 0001:0002eae0       ?luaV_concat@@YAXPAUlua_State@@H@Z 1002fae0 f   lvm.obj
+ 0001:0002ed30       ?luaV_equalobj@@YAHPAUlua_State@@PBUTValue@@1@Z 1002fd30 f   lvm.obj
+ 0001:0002efb0       ?luaV_execute@@YAXPAUlua_State@@PAUCallInfo@@@Z 1002ffb0 f   lvm.obj
+ 0001:00032eb0       ?luaV_finishOp@@YAXPAUlua_State@@@Z 10033eb0 f   lvm.obj
+ 0001:00033060       ?luaV_finishget@@YAXPAUlua_State@@PBUTValue@@PAU2@PATStackValue@@1@Z 10034060 f   lvm.obj
+ 0001:000331a0       ?luaV_finishset@@YAXPAUlua_State@@PBUTValue@@PAU2@21@Z 100341a0 f   lvm.obj
+ 0001:00033370       ?luaV_flttointeger@@YAHNPA_JW4F2Imod@@@Z 10034370 f   lvm.obj
+ 0001:000333f0       ?luaV_idiv@@YA_JPAUlua_State@@_J1@Z 100343f0 f   lvm.obj
+ 0001:00033490       ?luaV_lessequal@@YAHPAUlua_State@@PBUTValue@@1@Z 10034490 f   lvm.obj
+ 0001:00033510       ?luaV_lessthan@@YAHPAUlua_State@@PBUTValue@@1@Z 10034510 f   lvm.obj
+ 0001:00033590       ?luaV_mod@@YA_JPAUlua_State@@_J1@Z 10034590 f   lvm.obj
+ 0001:00033620       ?luaV_modf@@YANPAUlua_State@@NN@Z 10034620 f   lvm.obj
+ 0001:00033670       ?luaV_objlen@@YAXPAUlua_State@@PATStackValue@@PBUTValue@@@Z 10034670 f   lvm.obj
+ 0001:00033780       ?luaV_shiftl@@YA_J_J0@Z    10034780 f   lvm.obj
+ 0001:000337e0       ?luaV_tointeger@@YAHPBUTValue@@PA_JW4F2Imod@@@Z 100347e0 f   lvm.obj
+ 0001:000338a0       ?luaV_tointegerns@@YAHPBUTValue@@PA_JW4F2Imod@@@Z 100348a0 f   lvm.obj
+ 0001:00033900       ?luaV_tonumber_@@YAHPBUTValue@@PAN@Z 10034900 f   lvm.obj
+ 0001:00033a70       ?luaZ_fill@@YAHPAUZio@@@Z  10034a70 f   lzio.obj
+ 0001:00033ac0       ?luaZ_init@@YAXPAUlua_State@@PAUZio@@P6APBD0PAXPAI@Z2@Z 10034ac0 f   lzio.obj
+ 0001:00033af0       ?luaZ_read@@YAIPAUZio@@PAXI@Z 10034af0 f   lzio.obj
+ 0001:00033ba0       __errno                    10034ba0 f   MSVCRT:MSVCR120.dll
+ 0001:00033ba6       ___iob_func                10034ba6 f   MSVCRT:MSVCR120.dll
+ 0001:00033bac       _fclose                    10034bac f   MSVCRT:MSVCR120.dll
+ 0001:00033bb2       _feof                      10034bb2 f   MSVCRT:MSVCR120.dll
+ 0001:00033bb8       _ferror                    10034bb8 f   MSVCRT:MSVCR120.dll
+ 0001:00033bbe       _fflush                    10034bbe f   MSVCRT:MSVCR120.dll
+ 0001:00033bc4       _fopen                     10034bc4 f   MSVCRT:MSVCR120.dll
+ 0001:00033bca       _fprintf                   10034bca f   MSVCRT:MSVCR120.dll
+ 0001:00033bd0       _fread                     10034bd0 f   MSVCRT:MSVCR120.dll
+ 0001:00033bd6       _freopen                   10034bd6 f   MSVCRT:MSVCR120.dll
+ 0001:00033bdc       _getc                      10034bdc f   MSVCRT:MSVCR120.dll
+ 0001:00033be2       _free                      10034be2 f   MSVCRT:MSVCR120.dll
+ 0001:00033be8       _realloc                   10034be8 f   MSVCRT:MSVCR120.dll
+ 0001:00033bee       _strerror                  10034bee f   MSVCRT:MSVCR120.dll
+ 0001:00033bf4       _strncmp                   10034bf4 f   MSVCRT:MSVCR120.dll
+ 0001:00033bfa       _strstr                    10034bfa f   MSVCRT:MSVCR120.dll
+ 0001:00033c00       @__security_check_cookie@4 10034c00 f   MSVCRT:secchk.obj
+ 0001:00033c10       _memcpy                    10034c10 f   MSVCRT:MSVCR120.dll
+ 0001:00033c16       _isdigit                   10034c16 f   MSVCRT:MSVCR120.dll
+ 0001:00033c1c       _isalnum                   10034c1c f   MSVCRT:MSVCR120.dll
+ 0001:00033c22       _toupper                   10034c22 f   MSVCRT:MSVCR120.dll
+ 0001:00033c28       _fwrite                    10034c28 f   MSVCRT:MSVCR120.dll
+ 0001:00033c2e       _strspn                    10034c2e f   MSVCRT:MSVCR120.dll
+ 0001:00033c40       __allmul                   10034c40 f   MSVCRT:llmul.obj
+ 0001:00033c74       _ldexp                     10034c74 f   MSVCRT:MSVCR120.dll
+ 0001:00033c7a       _fgets                     10034c7a f   MSVCRT:MSVCR120.dll
+ 0001:00033c80       _strchr                    10034c80 f   MSVCRT:MSVCR120.dll
+ 0001:00033c86       _abort                     10034c86 f   MSVCRT:MSVCR120.dll
+ 0001:00033c8c       __CxxThrowException@8      10034c8c f   MSVCRT:MSVCR120.dll
+ 0001:00033c92       ___CxxFrameHandler3        10034c92 f   MSVCRT:MSVCR120.dll
+ 0001:00033c98       ??0type_info@@AAE@ABV0@@Z  10034c98 f   MSVCRT:ti_inst.obj
+ 0001:00033ca3       ??4type_info@@AAEAAV0@ABV0@@Z 10034ca3 f   MSVCRT:ti_inst.obj
+ 0001:00033ca8       ??_Etype_info@@UAEPAXI@Z   10034ca8 f i MSVCRT:ti_inst.obj
+ 0001:00033cf2       _isxdigit                  10034cf2 f   MSVCRT:MSVCR120.dll
+ 0001:00033cf8       _isspace                   10034cf8 f   MSVCRT:MSVCR120.dll
+ 0001:00033cfe       _localeconv                10034cfe f   MSVCRT:MSVCR120.dll
+ 0001:00033d04       _clearerr                  10034d04 f   MSVCRT:MSVCR120.dll
+ 0001:00033d0a       __fseeki64                 10034d0a f   MSVCRT:MSVCR120.dll
+ 0001:00033d10       __ftelli64                 10034d10 f   MSVCRT:MSVCR120.dll
+ 0001:00033d16       __pclose                   10034d16 f   MSVCRT:MSVCR120.dll
+ 0001:00033d1c       __popen                    10034d1c f   MSVCRT:MSVCR120.dll
+ 0001:00033d22       _setvbuf                   10034d22 f   MSVCRT:MSVCR120.dll
+ 0001:00033d28       _tmpfile                   10034d28 f   MSVCRT:MSVCR120.dll
+ 0001:00033d2e       _ungetc                    10034d2e f   MSVCRT:MSVCR120.dll
+ 0001:00033d34       __time64                   10034d34 f   MSVCRT:MSVCR120.dll
+ 0001:00033d3a       __CIacos                   10034d3a f   MSVCRT:MSVCR120.dll
+ 0001:00033d40       __CIasin                   10034d40 f   MSVCRT:MSVCR120.dll
+ 0001:00033d46       __CIfmod                   10034d46 f   MSVCRT:MSVCR120.dll
+ 0001:00033d50       __allrem                   10034d50 f   MSVCRT:llrem.obj
+ 0001:00033e10       __allshl                   10034e10 f   MSVCRT:llshl.obj
+ 0001:00033e30       __aullshr                  10034e30 f   MSVCRT:ullshr.obj
+ 0001:00033e50       __ftol2_sse                10034e50 f   MSVCRT:ftol2.obj
+ 0001:00033e59       __ftol2_pentium4           10034e59 f   MSVCRT:ftol2.obj
+ 0001:00033e6c       __ftol2_sse_excpt          10034e6c f   MSVCRT:ftol2.obj
+ 0001:00033e86       __ftol2                    10034e86 f   MSVCRT:ftol2.obj
+ 0001:00033efc       _ceil                      10034efc f   MSVCRT:MSVCR120.dll
+ 0001:00033f02       _floor                     10034f02 f   MSVCRT:MSVCR120.dll
+ 0001:00033f08       _getenv                    10034f08 f   MSVCRT:MSVCR120.dll
+ 0001:00033f0e       _strrchr                   10034f0e f   MSVCRT:MSVCR120.dll
+ 0001:00033f14       _sprintf                   10034f14 f   MSVCRT:MSVCR120.dll
+ 0001:00033f1a       _strtod                    10034f1a f   MSVCRT:MSVCR120.dll
+ 0001:00033f20       _strpbrk                   10034f20 f   MSVCRT:MSVCR120.dll
+ 0001:00033f26       __CIpow                    10034f26 f   MSVCRT:MSVCR120.dll
+ 0001:00033f2c       _setlocale                 10034f2c f   MSVCRT:MSVCR120.dll
+ 0001:00033f32       _exit                      10034f32 f   MSVCRT:MSVCR120.dll
+ 0001:00033f38       _system                    10034f38 f   MSVCRT:MSVCR120.dll
+ 0001:00033f3e       _clock                     10034f3e f   MSVCRT:MSVCR120.dll
+ 0001:00033f44       _strftime                  10034f44 f   MSVCRT:MSVCR120.dll
+ 0001:00033f4a       __difftime64               10034f4a f   MSVCRT:MSVCR120.dll
+ 0001:00033f50       __gmtime64                 10034f50 f   MSVCRT:MSVCR120.dll
+ 0001:00033f56       __localtime64              10034f56 f   MSVCRT:MSVCR120.dll
+ 0001:00033f5c       __mktime64                 10034f5c f   MSVCRT:MSVCR120.dll
+ 0001:00033f62       _remove                    10034f62 f   MSVCRT:MSVCR120.dll
+ 0001:00033f68       _rename                    10034f68 f   MSVCRT:MSVCR120.dll
+ 0001:00033f6e       _tmpnam                    10034f6e f   MSVCRT:MSVCR120.dll
+ 0001:00033f74       _isalpha                   10034f74 f   MSVCRT:MSVCR120.dll
+ 0001:00033f7a       _isupper                   10034f7a f   MSVCRT:MSVCR120.dll
+ 0001:00033f80       _islower                   10034f80 f   MSVCRT:MSVCR120.dll
+ 0001:00033f86       _ispunct                   10034f86 f   MSVCRT:MSVCR120.dll
+ 0001:00033f8c       _isgraph                   10034f8c f   MSVCRT:MSVCR120.dll
+ 0001:00033f92       _iscntrl                   10034f92 f   MSVCRT:MSVCR120.dll
+ 0001:00033f98       _tolower                   10034f98 f   MSVCRT:MSVCR120.dll
+ 0001:00033f9e       _frexp                     10034f9e f   MSVCRT:MSVCR120.dll
+ 0001:00033fa4       _memchr                    10034fa4 f   MSVCRT:MSVCR120.dll
+ 0001:00033fb0       __alldiv                   10034fb0 f   MSVCRT:lldiv.obj
+ 0001:00034060       __aullrem                  10035060 f   MSVCRT:ullrem.obj
+ 0001:000340d6       __fileno                   100350d6 f   MSVCRT:MSVCR120.dll
+ 0001:000340dc       _fputs                     100350dc f   MSVCRT:MSVCR120.dll
+ 0001:000340e2       _signal                    100350e2 f   MSVCRT:MSVCR120.dll
+ 0001:000340e8       __isatty                   100350e8 f   MSVCRT:MSVCR120.dll
+ 0001:000340ee       _strcoll                   100350ee f   MSVCRT:MSVCR120.dll
+ 0001:00034100       __alldvrm                  10035100 f   MSVCRT:lldvrm.obj
+ 0001:000341e0       __aulldiv                  100351e0 f   MSVCRT:ulldiv.obj
+ 0001:00034294       _NtCurrentTeb              10035294 f i MSVCRT:crtdll.obj
+ 0001:0003429b       __CRT_INIT@12              1003529b f   MSVCRT:crtdll.obj
+ 0001:00034492       __DllMainCRTStartup@12     10035492 f   MSVCRT:crtdll.obj
+ 0001:000345e8       ___raise_securityfailure   100355e8 f   MSVCRT:gs_report.obj
+ 0001:00034625       ___report_gsfailure        10035625 f   MSVCRT:gs_report.obj
+ 0001:00034720       ___report_rangecheckfailure 10035720 f   MSVCRT:gs_report.obj
+ 0001:0003472c       ___report_securityfailure  1003572c f   MSVCRT:gs_report.obj
+ 0001:000347fc       ___report_securityfailureEx 100357fc f   MSVCRT:gs_report.obj
+ 0001:00034912       ??_M@YGXPAXIHP6EX0@Z@Z     10035912 f   MSVCRT:ehvecdtr.obj
+ 0001:0003499a       ?__ArrayUnwind@@YGXPAXIHP6EX0@Z@Z 1003599a f   MSVCRT:ehvecdtr.obj
+ 0001:000349f8       ??3@YAXPAX@Z               100359f8 f   MSVCRT:MSVCR120.dll
+ 0001:000349fe       ??1type_info@@UAE@XZ       100359fe f   MSVCRT:MSVCR120.dll
+ 0001:00034a04       ___isa_available_init      10035a04 f   MSVCRT:cpu_disp.obj
+ 0001:00034b7e       ___CppXcptFilter           10035b7e f   MSVCRT:MSVCR120.dll
+ 0001:00034b84       __amsg_exit                10035b84 f   MSVCRT:MSVCR120.dll
+ 0001:00034b90       __FindPESection            10035b90 f   MSVCRT:pesect.obj
+ 0001:00034be0       __IsNonwritableInCurrentImage 10035be0 f   MSVCRT:pesect.obj
+ 0001:00034ca0       __ValidateImageBase        10035ca0 f   MSVCRT:pesect.obj
+ 0001:00034cd1       ___atonexitinit            10035cd1 f   MSVCRT:atonexit.obj
+ 0001:00034d0d       __onexit                   10035d0d f   MSVCRT:atonexit.obj
+ 0001:00034db6       _atexit                    10035db6 f   MSVCRT:atonexit.obj
+ 0001:00034dcb       ___security_init_cookie    10035dcb f   MSVCRT:gs_support.obj
+ 0001:00034e67       _DllMain@12                10035e67 f   MSVCRT:dllmain.obj
+ 0001:00034e8a       __malloc_crt               10035e8a f   MSVCRT:MSVCR120.dll
+ 0001:00034e90       __RTC_Initialize           10035e90 f   MSVCRT:initsect.obj
+ 0001:00034eb0       __RTC_Terminate            10035eb0 f   MSVCRT:initsect.obj
+ 0001:00034ed0       __initterm                 10035ed0 f   MSVCRT:MSVCR120.dll
+ 0001:00034ed6       __initterm_e               10035ed6 f   MSVCRT:MSVCR120.dll
+ 0001:00034edc       ___clean_type_info_names   10035edc f   MSVCRT:tncleanup.obj
+ 0001:00034ef0       __SEH_prolog4              10035ef0 f   MSVCRT:sehprolg4.obj
+ 0001:00034f35       __SEH_epilog4              10035f35 f   MSVCRT:sehprolg4.obj
+ 0001:00034f49       __except_handler4          10035f49 f   MSVCRT:chandler4gs.obj
+ 0001:00034f6c       __crt_debugger_hook        10035f6c f   MSVCRT:MSVCR120.dll
+ 0001:00034f72       ___crtUnhandledException   10035f72 f   MSVCRT:MSVCR120.dll
+ 0001:00034f78       ___crtTerminateProcess     10035f78 f   MSVCRT:MSVCR120.dll
+ 0001:00034f7e       ?terminate@@YAXXZ          10035f7e f   MSVCRT:MSVCR120.dll
+ 0001:00034f84       __lock                     10035f84 f   MSVCRT:MSVCR120.dll
+ 0001:00034f8a       __unlock                   10035f8a f   MSVCRT:MSVCR120.dll
+ 0001:00034f90       __calloc_crt               10035f90 f   MSVCRT:MSVCR120.dll
+ 0001:00034f96       ___dllonexit               10035f96 f   MSVCRT:MSVCR120.dll
+ 0001:00034f9c       ___clean_type_info_names_internal 10035f9c f   MSVCRT:MSVCR120.dll
+ 0001:00034fa2       __except_handler4_common   10035fa2 f   MSVCRT:MSVCR120.dll
+ 0001:00034fa8       _FreeLibrary@4             10035fa8 f   kernel32:KERNEL32.dll
+ 0001:00034fae       _GetProcAddress@8          10035fae f   kernel32:KERNEL32.dll
+ 0001:00034fb4       _GetLastError@0            10035fb4 f   kernel32:KERNEL32.dll
+ 0001:00034fba       _FormatMessageA@28         10035fba f   kernel32:KERNEL32.dll
+ 0001:00034fc0       _LoadLibraryExA@12         10035fc0 f   kernel32:KERNEL32.dll
+ 0001:00034fc6       _GetModuleFileNameA@12     10035fc6 f   kernel32:KERNEL32.dll
+ 0001:00034fcc       _IsDebuggerPresent@0       10035fcc f   kernel32:KERNEL32.dll
+ 0001:00034fd2       _IsProcessorFeaturePresent@4 10035fd2 f   kernel32:KERNEL32.dll
+ 0001:00034fd8       _QueryPerformanceCounter@4 10035fd8 f   kernel32:KERNEL32.dll
+ 0001:00034fde       _GetCurrentProcessId@0     10035fde f   kernel32:KERNEL32.dll
+ 0001:00034fe4       _GetCurrentThreadId@0      10035fe4 f   kernel32:KERNEL32.dll
+ 0001:00034fea       _GetSystemTimeAsFileTime@4 10035fea f   kernel32:KERNEL32.dll
+ 0001:00034ff0       _DisableThreadLibraryCalls@4 10035ff0 f   kernel32:KERNEL32.dll
+ 0002:00000000       ___xc_a                    10039000     MSVCRT:cinitexe.obj
+ 0002:00000104       ___xc_z                    10039104     MSVCRT:cinitexe.obj
+ 0002:00000208       ___xi_a                    10039208     MSVCRT:cinitexe.obj
+ 0002:0000051c       ___xi_z                    1003951c     MSVCRT:cinitexe.obj
+ 0002:00000658       ?lua_ident@@3QBDB          10039658     lapi.obj
+ 0002:000006f2       ??_C@_00CNPNBAHC@?$AA@     100396f2     lapi.obj
+ 0002:000006f4       ??_C@_01OGPIMHDM@?$DP?$AA@ 100396f4     lapi.obj
+ 0002:000006f8       ??_C@_09EHJCIMDJ@?$CIno?5name?$CJ?$AA@ 100396f8     lapi.obj
+ 0002:00000708       __real@0000000000000000    10039708     lapi.obj
+ 0002:00000718       __real@407f800000000000    10039718     lapi.obj
+ 0002:00000740       ??_C@_04BDLIKKMN@__gc?$AA@ 10039740     lauxlib.obj
+ 0002:00000748       ??_C@_07DMJMBBKE@__close?$AA@ 10039748     lauxlib.obj
+ 0002:00000754       ??_C@_01LFCBOECM@?4?$AA@   10039754     lauxlib.obj
+ 0002:00000758       ??_C@_01INIBCBCB@f?$AA@    10039758     lauxlib.obj
+ 0002:0000075c       ??_C@_07PINPBNPB@_LOADED?$AA@ 1003975c     lauxlib.obj
+ 0002:00000768       ??_C@_03DDAHKNHO@_G?4?$AA@ 10039768     lauxlib.obj
+ 0002:0000076c       ??_C@_0O@EHCGJIOP@function?5?8?$CFs?8?$AA@ 1003976c     lauxlib.obj
+ 0002:0000077c       ??_C@_07JJBIELFA@?$CFs?5?8?$CFs?8?$AA@ 1003977c     lauxlib.obj
+ 0002:00000788       ??_C@_0L@HEICADBI@main?5chunk?$AA@ 10039788     lauxlib.obj
+ 0002:00000798       ??_C@_0BB@OJHNELPG@function?5?$DM?$CFs?3?$CFd?$DO?$AA@ 10039798     lauxlib.obj
+ 0002:000007ac       ??_C@_0BB@CJHIJJAH@stack?5traceback?3?$AA@ 100397ac     lauxlib.obj
+ 0002:000007c0       ??_C@_0BL@NBBBEFEA@?6?7?4?4?4?7?$CIskipping?5?$CFd?5levels?$CJ?$AA@ 100397c0     lauxlib.obj
+ 0002:000007e0       ??_C@_04DOIEKPJK@Slnt?$AA@ 100397e0     lauxlib.obj
+ 0002:000007e8       ??_C@_09DOCBGGFB@?6?7?$CFs?3?5in?5?$AA@ 100397e8     lauxlib.obj
+ 0002:000007f4       ??_C@_0N@DNHLMHIC@?6?7?$CFs?3?$CFd?3?5in?5?$AA@ 100397f4     lauxlib.obj
+ 0002:00000804       ??_C@_0BF@HEPAINJG@?6?7?$CI?4?4?4tail?5calls?4?4?4?$CJ?$AA@ 10039804     lauxlib.obj
+ 0002:00000820       ??_C@_0BG@CHJGEHJL@bad?5argument?5?$CD?$CFd?5?$CI?$CFs?$CJ?$AA@ 10039820     lauxlib.obj
+ 0002:0000083c       ??_C@_01EFFIKLCJ@n?$AA@    1003983c     lauxlib.obj
+ 0002:00000840       ??_C@_06GABBCIBA@method?$AA@ 10039840     lauxlib.obj
+ 0002:00000848       ??_C@_0BO@LENGMNDF@calling?5?8?$CFs?8?5on?5bad?5self?5?$CI?$CFs?$CJ?$AA@ 10039848     lauxlib.obj
+ 0002:0000086c       ??_C@_0BO@GOMKJOAH@bad?5argument?5?$CD?$CFd?5to?5?8?$CFs?8?5?$CI?$CFs?$CJ?$AA@ 1003986c     lauxlib.obj
+ 0002:00000890       ??_C@_06LHMLJNCG@__name?$AA@ 10039890     lauxlib.obj
+ 0002:00000898       ??_C@_0P@JGKNIAMH@light?5userdata?$AA@ 10039898     lauxlib.obj
+ 0002:000008ac       ??_C@_0BE@LDJANOJE@?$CFs?5expected?0?5got?5?$CFs?$AA@ 100398ac     lauxlib.obj
+ 0002:000008c4       ??_C@_02KHAMJCKP@Sl?$AA@   100398c4     lauxlib.obj
+ 0002:000008c8       ??_C@_07FCDHCGBN@?$CFs?3?$CFd?3?5?$AA@ 100398c8     lauxlib.obj
+ 0002:000008d4       ??_C@_06DJHOIPC@?$CFs?3?5?$CFs?$AA@ 100398d4     lauxlib.obj
+ 0002:000008dc       ??_C@_04MKNBDEPB@exit?$AA@ 100398dc     lauxlib.obj
+ 0002:000008e4       ??_C@_0BE@HBADPNMP@invalid?5option?5?8?$CFs?8?$AA@ 100398e4     lauxlib.obj
+ 0002:000008fc       ??_C@_0BE@CBBDHBEP@stack?5overflow?5?$CI?$CFs?$CJ?$AA@ 100398fc     lauxlib.obj
+ 0002:00000914       ??_C@_0P@EODJGPIM@stack?5overflow?$AA@ 10039914     lauxlib.obj
+ 0002:00000928       ??_C@_0P@PDHEKNMA@value?5expected?$AA@ 10039928     lauxlib.obj
+ 0002:0000093c       ??_C@_0CF@GPCMCKGL@number?5has?5no?5integer?5representa@ 1003993c     lauxlib.obj
+ 0002:00000968       ??_C@_0BC@ENOOLCNF@not?5enough?5memory?$AA@ 10039968     lauxlib.obj
+ 0002:00000980       ??_C@_06HMNNAPJ@_UBOX?$CK?$AA@ 10039980     lauxlib.obj
+ 0002:00000988       ??_C@_0BB@IIFCFAGL@buffer?5too?5large?$AA@ 10039988     lauxlib.obj
+ 0002:0000099c       ??_C@_0BB@BJDGDOHH@cannot?5?$CFs?5?$CFs?3?5?$CFs?$AA@ 1003999c     lauxlib.obj
+ 0002:000009b0       ??_C@_06CCPPALKB@?$DNstdin?$AA@ 100399b0     lauxlib.obj
+ 0002:000009b8       ??_C@_03HPDLNGOA@?$EA?$CFs?$AA@ 100399b8     lauxlib.obj
+ 0002:000009bc       ??_C@_01KDCPPGHE@r?$AA@    100399bc     lauxlib.obj
+ 0002:000009c0       ??_C@_04PMOCAHAA@open?$AA@ 100399c0     lauxlib.obj
+ 0002:000009c8       ??_C@_02JDPG@rb?$AA@       100399c8     lauxlib.obj
+ 0002:000009cc       ??_C@_06IEGCHAII@reopen?$AA@ 100399cc     lauxlib.obj
+ 0002:000009d4       ??_C@_04POLDLDMI@read?$AA@ 100399d4     lauxlib.obj
+ 0002:000009dc       ??_C@_0CA@GGPBEEGI@object?5length?5is?5not?5an?5integer?$AA@ 100399dc     lauxlib.obj
+ 0002:00000a04       ??_C@_0L@HDFPAPPH@__tostring?$AA@ 10039a04     lauxlib.obj
+ 0002:00000a14       ??_C@_0CC@DOCFOFGL@?8__tostring?8?5must?5return?5a?5strin@ 10039a14     lauxlib.obj
+ 0002:00000a3c       ??_C@_02BPIDFGKK@?$CFI?$AA@ 10039a3c     lauxlib.obj
+ 0002:00000a40       ??_C@_02NJPGOMH@?$CFf?$AA@ 10039a40     lauxlib.obj
+ 0002:00000a44       ??_C@_04LOAJBDKD@true?$AA@ 10039a44     lauxlib.obj
+ 0002:00000a4c       ??_C@_05LAPONLG@false?$AA@ 10039a4c     lauxlib.obj
+ 0002:00000a54       ??_C@_03ILAMHENH@nil?$AA@  10039a54     lauxlib.obj
+ 0002:00000a58       ??_C@_06CILKLLDB@?$CFs?3?5?$CFp?$AA@ 10039a58     lauxlib.obj
+ 0002:00000a60       ??_C@_0BC@CDGHCIOF@too?5many?5upvalues?$AA@ 10039a60     lauxlib.obj
+ 0002:00000a78       ??_C@_0BN@BJBIBCMN@error?5object?5is?5not?5a?5string?$AA@ 10039a78     lauxlib.obj
+ 0002:00000a9c       ??_C@_0DC@EFOPIIKP@PANIC?3?5unprotected?5error?5in?5call@ 10039a9c     lauxlib.obj
+ 0002:00000ad8       ??_C@_03MCADLMAF@off?$AA@  10039ad8     lauxlib.obj
+ 0002:00000adc       ??_C@_02LIELOMNJ@on?$AA@   10039adc     lauxlib.obj
+ 0002:00000ae0       ??_C@_02DKCKIIND@?$CFs?$AA@ 10039ae0     lauxlib.obj
+ 0002:00000ae4       ??_C@_01EEMJAFIK@?6?$AA@   10039ae4     lauxlib.obj
+ 0002:00000ae8       ??_C@_0O@KOLJDGHA@Lua?5warning?3?5?$AA@ 10039ae8     lauxlib.obj
+ 0002:00000af8       ??_C@_0DB@FGBFPBHC@core?5and?5library?5have?5incompatib@ 10039af8     lauxlib.obj
+ 0002:00000b34       ??_C@_0DG@EDLDPMHE@version?5mismatch?3?5app?4?5needs?5?$CFf?0@ 10039b34     lauxlib.obj
+ 0002:00000c74       ??_C@_06GMEIIFFN@assert?$AA@ 10039c74     lbaselib.obj
+ 0002:00000c7c       ??_C@_0P@CKFEAJJE@collectgarbage?$AA@ 10039c7c     lbaselib.obj
+ 0002:00000c90       ??_C@_06ONNDGCDK@dofile?$AA@ 10039c90     lbaselib.obj
+ 0002:00000c98       ??_C@_05KKCIMGE@error?$AA@ 10039c98     lbaselib.obj
+ 0002:00000ca0       ??_C@_0N@LGLOEPAG@getmetatable?$AA@ 10039ca0     lbaselib.obj
+ 0002:00000cb0       ??_C@_06MGIEFEAJ@ipairs?$AA@ 10039cb0     lbaselib.obj
+ 0002:00000cb8       ??_C@_08BNNFLGCJ@loadfile?$AA@ 10039cb8     lbaselib.obj
+ 0002:00000cc4       ??_C@_04EONOHKEP@load?$AA@ 10039cc4     lbaselib.obj
+ 0002:00000ccc       ??_C@_04CJGEDOF@next?$AA@  10039ccc     lbaselib.obj
+ 0002:00000cd4       ??_C@_05PEAECDOC@pairs?$AA@ 10039cd4     lbaselib.obj
+ 0002:00000cdc       ??_C@_05JAJCNIIJ@pcall?$AA@ 10039cdc     lbaselib.obj
+ 0002:00000ce4       ??_C@_05IJDJACGD@print?$AA@ 10039ce4     lbaselib.obj
+ 0002:00000cec       ??_C@_04FNLOFOEM@warn?$AA@ 10039cec     lbaselib.obj
+ 0002:00000cf4       ??_C@_08LCBKMMAG@rawequal?$AA@ 10039cf4     lbaselib.obj
+ 0002:00000d00       ??_C@_06FFKMAGPK@rawlen?$AA@ 10039d00     lbaselib.obj
+ 0002:00000d08       ??_C@_06DCIAHLCA@rawget?$AA@ 10039d08     lbaselib.obj
+ 0002:00000d10       ??_C@_06ONPLLLOI@rawset?$AA@ 10039d10     lbaselib.obj
+ 0002:00000d18       ??_C@_06LGNCCACI@select?$AA@ 10039d18     lbaselib.obj
+ 0002:00000d20       ??_C@_0N@MCAAIDEK@setmetatable?$AA@ 10039d20     lbaselib.obj
+ 0002:00000d30       ??_C@_08JOIMPOJO@tonumber?$AA@ 10039d30     lbaselib.obj
+ 0002:00000d3c       ??_C@_08FNIIFOJC@tostring?$AA@ 10039d3c     lbaselib.obj
+ 0002:00000d48       ??_C@_04GPMDFGEJ@type?$AA@ 10039d48     lbaselib.obj
+ 0002:00000d50       ??_C@_06GDLLDIBI@xpcall?$AA@ 10039d50     lbaselib.obj
+ 0002:00000d58       ??_C@_02NIGGJGKC@_G?$AA@   10039d58     lbaselib.obj
+ 0002:00000d5c       ??_C@_08PMLCGGEP@_VERSION?$AA@ 10039d5c     lbaselib.obj
+ 0002:00000dc0       ??_C@_01GPOEFGEJ@?7?$AA@   10039dc0     lbaselib.obj
+ 0002:00000dc4       ??_C@_06IOBDPLFO@?5?$AM?6?$AN?7?$AL?$AA@ 10039dc4     lbaselib.obj
+ 0002:00000dcc       ??_C@_0BC@GGLHLOMM@base?5out?5of?5range?$AA@ 10039dcc     lbaselib.obj
+ 0002:00000de4       ??_C@_0M@OKDMMFBL@__metatable?$AA@ 10039de4     lbaselib.obj
+ 0002:00000df4       ??_C@_0N@PKGNFMCF@nil?5or?5table?$AA@ 10039df4     lbaselib.obj
+ 0002:00000e04       ??_C@_0CE@LJKICCEL@cannot?5change?5a?5protected?5metata@ 10039e04     lbaselib.obj
+ 0002:00000e30       ??_C@_0BA@MLHECKCE@table?5or?5string?$AA@ 10039e30     lbaselib.obj
+ 0002:00000e44       ??_C@_0M@LPKHOAFP@incremental?$AA@ 10039e44     lbaselib.obj
+ 0002:00000e54       ??_C@_0N@LDJIAIKF@generational?$AA@ 10039e54     lbaselib.obj
+ 0002:00000e98       ??_C@_04PEGFANN@stop?$AA@  10039e98     lbaselib.obj
+ 0002:00000ea0       ??_C@_07LDHOHMPD@restart?$AA@ 10039ea0     lbaselib.obj
+ 0002:00000eac       ??_C@_07JHIJCABF@collect?$AA@ 10039eac     lbaselib.obj
+ 0002:00000eb8       ??_C@_05IOMEMJEC@count?$AA@ 10039eb8     lbaselib.obj
+ 0002:00000ec0       ??_C@_04CNBNFAL@step?$AA@  10039ec0     lbaselib.obj
+ 0002:00000ec8       ??_C@_08ONFIAENP@setpause?$AA@ 10039ec8     lbaselib.obj
+ 0002:00000ed4       ??_C@_0L@KABEJKKP@setstepmul?$AA@ 10039ed4     lbaselib.obj
+ 0002:00000ee4       ??_C@_09JCKLCKIH@isrunning?$AA@ 10039ee4     lbaselib.obj
+ 0002:00000f20       ??_C@_07HJHPCFBM@__pairs?$AA@ 10039f20     lbaselib.obj
+ 0002:00000f2c       ??_C@_0BK@NJPFPDBN@too?5many?5nested?5functions?$AA@ 10039f2c     lbaselib.obj
+ 0002:00000f4c       ??_C@_0CF@IPNALDCD@reader?5function?5must?5return?5a?5st@ 10039f4c     lbaselib.obj
+ 0002:00000f78       ??_C@_02LOIFFB@bt?$AA@     10039f78     lbaselib.obj
+ 0002:00000f7c       ??_C@_07JEBBFCAN@?$DN?$CIload?$CJ?$AA@ 10039f7c     lbaselib.obj
+ 0002:00000f88       ??_C@_0BC@ONMFJPBH@assertion?5failed?$CB?$AA@ 10039f88     lbaselib.obj
+ 0002:00000fa0       ??_C@_0BD@ILOGJALA@index?5out?5of?5range?$AA@ 10039fa0     lbaselib.obj
+ 0002:00000fb8       ??_C@_07BGNKGLMN@Lua?55?44?$AA@ 10039fb8     lbaselib.obj
+ 0002:00000fc8       __real@3f50000000000000    10039fc8     lbaselib.obj
+ 0002:00000fd8       ??_C@_0BL@BDOLDOFI@control?5structure?5too?5long?$AA@ 10039fd8     lcode.obj
+ 0002:00000ff8       ??_C@_05DENOCHIP@lines?$AA@ 10039ff8     lcode.obj
+ 0002:00001000       ??_C@_07BEDGJMGI@opcodes?$AA@ 1003a000     lcode.obj
+ 0002:0000100c       ??_C@_0DA@PHCKMDLF@function?5or?5expression?5needs?5too@ 1003a00c     lcode.obj
+ 0002:00001048       ??_C@_09FGMGFBD@constants?$AA@ 1003a048     lcode.obj
+ 0002:00001078       __real@3ff0000000000000    1003a078     lcode.obj
+ 0002:00001084       ??_C@_07PANPENDC@running?$AA@ 1003a084     lcorolib.obj
+ 0002:000010e8       ??_C@_06HBNONAG@create?$AA@ 1003a0e8     lcorolib.obj
+ 0002:000010f0       ??_C@_06PLELHCEK@resume?$AA@ 1003a0f0     lcorolib.obj
+ 0002:000010f8       ??_C@_06DJIHEMFI@status?$AA@ 1003a0f8     lcorolib.obj
+ 0002:00001100       ??_C@_04NFDDIEML@wrap?$AA@ 1003a100     lcorolib.obj
+ 0002:00001108       ??_C@_05LKJGIMLP@yield?$AA@ 1003a108     lcorolib.obj
+ 0002:00001110       ??_C@_0M@IHMPMLIH@isyieldable?$AA@ 1003a110     lcorolib.obj
+ 0002:00001120       ??_C@_05LBOHBHFK@close?$AA@ 1003a120     lcorolib.obj
+ 0002:00001128       ??_C@_06FJHNOCKE@thread?$AA@ 1003a128     lcorolib.obj
+ 0002:00001130       ??_C@_0BN@CLPLGDGN@too?5many?5arguments?5to?5resume?$AA@ 1003a130     lcorolib.obj
+ 0002:00001154       ??_C@_0BL@OALEJBKN@too?5many?5results?5to?5resume?$AA@ 1003a154     lcorolib.obj
+ 0002:00001188       ??_C@_04BBBDNBOK@dead?$AA@ 1003a188     lcorolib.obj
+ 0002:00001190       ??_C@_09PAHKPJCJ@suspended?$AA@ 1003a190     lcorolib.obj
+ 0002:0000119c       ??_C@_06IKLLLDHL@normal?$AA@ 1003a19c     lcorolib.obj
+ 0002:000011a4       ??_C@_0BM@NNBIAPBA@cannot?5close?5a?5?$CFs?5coroutine?$AA@ 1003a1a4     lcorolib.obj
+ 0002:000011c8       ?luai_ctype_@@3QBEB        1003a1c8     lctype.obj
+ 0002:000013ac       ??_C@_05GFCDIDHO@debug?$AA@ 1003a3ac     ldblib.obj
+ 0002:000013b4       ??_C@_0N@FNKEMMA@getuservalue?$AA@ 1003a3b4     ldblib.obj
+ 0002:000013c4       ??_C@_07GELEAAJ@gethook?$AA@ 1003a3c4     ldblib.obj
+ 0002:000013d0       ??_C@_07OICKPAFH@getinfo?$AA@ 1003a3d0     ldblib.obj
+ 0002:000013dc       ??_C@_08GMECKPDH@getlocal?$AA@ 1003a3dc     ldblib.obj
+ 0002:000013e8       ??_C@_0M@NCNCBJKP@getregistry?$AA@ 1003a3e8     ldblib.obj
+ 0002:000013f8       ??_C@_0L@DNKHBCFJ@getupvalue?$AA@ 1003a3f8     ldblib.obj
+ 0002:00001408       ??_C@_0M@BLDMBHBB@upvaluejoin?$AA@ 1003a408     ldblib.obj
+ 0002:00001418       ??_C@_09LPCDDMGF@upvalueid?$AA@ 1003a418     ldblib.obj
+ 0002:00001424       ??_C@_0N@HBGEIAIM@setuservalue?$AA@ 1003a424     ldblib.obj
+ 0002:00001434       ??_C@_07POLKHPNI@sethook?$AA@ 1003a434     ldblib.obj
+ 0002:00001440       ??_C@_08JNGOLMEK@setlocal?$AA@ 1003a440     ldblib.obj
+ 0002:0000144c       ??_C@_0L@CDIIKFBA@setupvalue?$AA@ 1003a44c     ldblib.obj
+ 0002:0000145c       ??_C@_09GPFEECNC@traceback?$AA@ 1003a45c     ldblib.obj
+ 0002:00001468       ??_C@_0P@DIFAIHEN@setcstacklimit?$AA@ 1003a468     ldblib.obj
+ 0002:0000147c       ??_C@_08HMDGBONF@_HOOKKEY?$AA@ 1003a47c     ldblib.obj
+ 0002:00001488       ??_C@_07ENIEFBCC@flnSrtu?$AA@ 1003a488     ldblib.obj
+ 0002:00001494       ??_C@_0BD@NJNGCHOO@invalid?5option?5?8?$DO?8?$AA@ 1003a494     ldblib.obj
+ 0002:000014ac       ??_C@_03PENLABEP@?$DO?$CFs?$AA@ 1003a4ac     ldblib.obj
+ 0002:000014b0       ??_C@_0P@PJFAGLMH@invalid?5option?$AA@ 1003a4b0     ldblib.obj
+ 0002:000014c4       ??_C@_06OEKOLKIL@source?$AA@ 1003a4c4     ldblib.obj
+ 0002:000014cc       ??_C@_09NOFDGFFO@short_src?$AA@ 1003a4cc     ldblib.obj
+ 0002:000014d8       ??_C@_0M@IOFFDKM@linedefined?$AA@ 1003a4d8     ldblib.obj
+ 0002:000014e8       ??_C@_0BA@BGGOJOFO@lastlinedefined?$AA@ 1003a4e8     ldblib.obj
+ 0002:000014fc       ??_C@_04IOPLPGDE@what?$AA@ 1003a4fc     ldblib.obj
+ 0002:00001504       ??_C@_0M@OLGEEKJC@currentline?$AA@ 1003a504     ldblib.obj
+ 0002:00001514       ??_C@_04BDNNNDAF@nups?$AA@ 1003a514     ldblib.obj
+ 0002:0000151c       ??_C@_07DEOJMPEE@nparams?$AA@ 1003a51c     ldblib.obj
+ 0002:00001528       ??_C@_08PKLIBBKE@isvararg?$AA@ 1003a528     ldblib.obj
+ 0002:00001534       ??_C@_04MEMAJGDJ@name?$AA@ 1003a534     ldblib.obj
+ 0002:0000153c       ??_C@_08JEGIFMFI@namewhat?$AA@ 1003a53c     ldblib.obj
+ 0002:00001548       ??_C@_09GPKDOOIO@ftransfer?$AA@ 1003a548     ldblib.obj
+ 0002:00001554       ??_C@_09HMHEKOHK@ntransfer?$AA@ 1003a554     ldblib.obj
+ 0002:00001560       ??_C@_0L@KHAEKHMK@istailcall?$AA@ 1003a560     ldblib.obj
+ 0002:00001570       ??_C@_0M@DINLHJFF@activelines?$AA@ 1003a570     ldblib.obj
+ 0002:00001580       ??_C@_04HPNHAEOP@func?$AA@ 1003a580     ldblib.obj
+ 0002:00001588       ??_C@_0BD@EFMIJNPC@level?5out?5of?5range?$AA@ 1003a588     ldblib.obj
+ 0002:000015a0       ??_C@_0BG@MMNKKMGE@invalid?5upvalue?5index?$AA@ 1003a5a0     ldblib.obj
+ 0002:000015bc       ??_C@_0BG@EHJAKGKG@Lua?5function?5expected?$AA@ 1003a5bc     ldblib.obj
+ 0002:000015f0       ??_C@_04OMFAIDPG@call?$AA@ 1003a5f0     ldblib.obj
+ 0002:000015f8       ??_C@_06LNOFJDNM@return?$AA@ 1003a5f8     ldblib.obj
+ 0002:00001600       ??_C@_04HJPCFDOP@line?$AA@ 1003a600     ldblib.obj
+ 0002:00001608       ??_C@_09PJFMDEKP@tail?5call?$AA@ 1003a608     ldblib.obj
+ 0002:00001614       ??_C@_01DICPFPGM@k?$AA@    1003a614     ldblib.obj
+ 0002:00001618       ??_C@_06BPGFKLEK@__mode?$AA@ 1003a618     ldblib.obj
+ 0002:00001620       ??_C@_0O@POGBCBNN@external?5hook?$AA@ 1003a620     ldblib.obj
+ 0002:00001630       ??_C@_0M@FBGICICO@lua_debug?$DO?5?$AA@ 1003a630     ldblib.obj
+ 0002:00001640       ??_C@_05KJNBGLAC@cont?6?$AA@ 1003a640     ldblib.obj
+ 0002:00001648       ??_C@_0BB@BLKFCGLG@?$DN?$CIdebug?5command?$CJ?$AA@ 1003a648     ldblib.obj
+ 0002:0000165c       ??_C@_03OFAPEBGM@?$CFs?6?$AA@ 1003a65c     ldblib.obj
+ 0002:00001660       ??_C@_08ENHBMMMC@?$CIvararg?$CJ?$AA@ 1003a660     ldebug.obj
+ 0002:0000166c       ??_C@_0M@KDEIOHKI@?$CItemporary?$CJ?$AA@ 1003a66c     ldebug.obj
+ 0002:0000167c       ??_C@_0O@PBFALFHF@?$CIC?5temporary?$CJ?$AA@ 1003a67c     ldebug.obj
+ 0002:0000168c       ??_C@_04BKJOMPG@?$DN?$FLC?$FN?$AA@ 1003a68c     ldebug.obj
+ 0002:00001694       ??_C@_01GFHCPBMG@C?$AA@    1003a694     ldebug.obj
+ 0002:00001698       ??_C@_02HENDHKBC@?$DN?$DP?$AA@ 1003a698     ldebug.obj
+ 0002:0000169c       ??_C@_04GHJNJNPO@main?$AA@ 1003a69c     ldebug.obj
+ 0002:000016a4       ??_C@_03CBKFDHDL@Lua?$AA@  1003a6a4     ldebug.obj
+ 0002:000016a8       ??_C@_04LJLBKCOP@_ENV?$AA@ 1003a6a8     ldebug.obj
+ 0002:000016b0       ??_C@_06FJKEMHGD@global?$AA@ 1003a6b0     ldebug.obj
+ 0002:000016b8       ??_C@_05EIBGDMPB@field?$AA@ 1003a6b8     ldebug.obj
+ 0002:000016c0       ??_C@_05IDKHKMLA@local?$AA@ 1003a6c0     ldebug.obj
+ 0002:000016c8       ??_C@_0O@OOFFNJAC@integer?5index?$AA@ 1003a6c8     ldebug.obj
+ 0002:000016d8       ??_C@_07NAGMKCIK@upvalue?$AA@ 1003a6d8     ldebug.obj
+ 0002:000016e4       ??_C@_08KFDOCAEB@constant?$AA@ 1003a6e4     ldebug.obj
+ 0002:000016f0       ??_C@_0N@LEHLDOCH@for?5iterator?$AA@ 1003a6f0     ldebug.obj
+ 0002:00001700       ??_C@_0L@ILHKGAHF@metamethod?$AA@ 1003a700     ldebug.obj
+ 0002:00001710       ??_C@_04DGFIONEK@hook?$AA@ 1003a710     ldebug.obj
+ 0002:00001718       ??_C@_0L@HICMLPOF@?5?$CI?$CFs?5?8?$CFs?8?$CJ?$AA@ 1003a718     ldebug.obj
+ 0002:00001728       ??_C@_0BL@BEEJNDFB@attempt?5to?5?$CFs?5a?5?$CFs?5value?$CFs?$AA@ 1003a728     ldebug.obj
+ 0002:00001748       ??_C@_0CH@OPBHCFMM@bad?5?8for?8?5?$CFs?5?$CInumber?5expected?0?5g@ 1003a748     ldebug.obj
+ 0002:00001778       ??_C@_0M@LPKAOE@concatenate?$AA@ 1003a778     ldebug.obj
+ 0002:00001788       ??_C@_0CH@EHJFDOFM@number?$CFs?5has?5no?5integer?5represen@ 1003a788     ldebug.obj
+ 0002:000017b8       ??_C@_0CB@DEJMKNMB@attempt?5to?5compare?5two?5?$CFs?5values@ 1003a7b8     ldebug.obj
+ 0002:000017e0       ??_C@_0BO@DNBGDDFP@attempt?5to?5compare?5?$CFs?5with?5?$CFs?$AA@ 1003a7e0     ldebug.obj
+ 0002:00001804       ??_C@_09BHPFBFOI@?$CFs?3?$CFd?3?5?$CFs?$AA@ 1003a804     ldebug.obj
+ 0002:00001810       ??_C@_0BI@KGOCJOGJ@error?5in?5error?5handling?$AA@ 1003a810     ldo.obj
+ 0002:0000182c       ??_C@_0CG@NAAHDPPN@cannot?5resume?5non?9suspended?5coro@ 1003a82c     ldo.obj
+ 0002:0000185c       ??_C@_0BN@JJDDBCCB@cannot?5resume?5dead?5coroutine?$AA@ 1003a85c     ldo.obj
+ 0002:00001880       ??_C@_0BB@EJOGNINL@C?5stack?5overflow?$AA@ 1003a880     ldo.obj
+ 0002:00001894       ??_C@_0CK@PNAEIJLG@attempt?5to?5yield?5across?5a?5C?9call@ 1003a894     ldo.obj
+ 0002:000018c8       ??_C@_0CK@CHKMHBBM@attempt?5to?5yield?5from?5outside?5a?5@ 1003a8c8     ldo.obj
+ 0002:000018fc       ??_C@_0CK@CHOBLPGK@attempt?5to?5load?5a?5?$CFs?5chunk?5?$CImode@ 1003a8fc     ldo.obj
+ 0002:00001930       ??_C@_06FNFBAEBE@binary?$AA@ 1003a930     ldo.obj
+ 0002:00001938       ??_C@_04CIMGMMMG@text?$AA@ 1003a938     ldo.obj
+ 0002:00001940       ??_C@_04NBPDLJKJ@?$BLLua?$AA@ 1003a940     ldump.obj
+ 0002:00001948       ??_C@_06HHFEHHII@?$BJ?$JD?$AN?6?$BK?6?$AA@ 1003a948     ldump.obj
+ 0002:00001950       __real@4077280000000000    1003a950     ldump.obj
+ 0002:0000195c       ??_C@_0CH@DMFKJEBA@variable?5?8?$CFs?8?5got?5a?5non?9closable@ 1003a95c     lfunc.obj
+ 0002:00001a04       ??_C@_07KNEGBPNO@package?$AA@ 1003aa04     linit.obj
+ 0002:00001a10       ??_C@_09HNKENHFC@coroutine?$AA@ 1003aa10     linit.obj
+ 0002:00001a1c       ??_C@_05LCLENNFI@table?$AA@ 1003aa1c     linit.obj
+ 0002:00001a24       ??_C@_02KFNNKBCK@io?$AA@   1003aa24     linit.obj
+ 0002:00001a28       ??_C@_02EHCHIAMF@os?$AA@   1003aa28     linit.obj
+ 0002:00001a2c       ??_C@_06ICGJLFIM@string?$AA@ 1003aa2c     linit.obj
+ 0002:00001a34       ??_C@_04CFDJAKFL@math?$AA@ 1003aa34     linit.obj
+ 0002:00001a3c       ??_C@_04LHHHFLPP@utf8?$AA@ 1003aa3c     linit.obj
+ 0002:00001abc       ??_C@_05GLCAEPFP@flush?$AA@ 1003aabc     liolib.obj
+ 0002:00001ac4       ??_C@_05DFJCHPDH@input?$AA@ 1003aac4     liolib.obj
+ 0002:00001acc       ??_C@_06DKIGHACF@output?$AA@ 1003aacc     liolib.obj
+ 0002:00001ad4       ??_C@_05IACAFMHP@popen?$AA@ 1003aad4     liolib.obj
+ 0002:00001adc       ??_C@_07FKJPAINK@tmpfile?$AA@ 1003aadc     liolib.obj
+ 0002:00001ae8       ??_C@_05NGFEDHGN@write?$AA@ 1003aae8     liolib.obj
+ 0002:00001b3c       ??_C@_04EDECCOGL@seek?$AA@ 1003ab3c     liolib.obj
+ 0002:00001b44       ??_C@_07HHBPNGAN@setvbuf?$AA@ 1003ab44     liolib.obj
+ 0002:00001b80       ??_C@_07NHABFFHN@__index?$AA@ 1003ab80     liolib.obj
+ 0002:00001b8c       ??_C@_03DCNFGMMH@rwa?$AA@  1003ab8c     liolib.obj
+ 0002:00001b90       ??_C@_01OJONOECF@b?$AA@    1003ab90     liolib.obj
+ 0002:00001b94       ??_C@_05KCHOJJD@FILE?$CK?$AA@ 1003ab94     liolib.obj
+ 0002:00001b9c       ??_C@_0M@IBKPHHKH@closed?5file?$AA@ 1003ab9c     liolib.obj
+ 0002:00001bac       ??_C@_04DAMGJPCA@file?$AA@ 1003abac     liolib.obj
+ 0002:00001bb4       ??_C@_0O@PLFAPHPG@file?5?$CIclosed?$CJ?$AA@ 1003abb4     liolib.obj
+ 0002:00001bc4       ??_C@_09BPMAMLLD@file?5?$CI?$CFp?$CJ?$AA@ 1003abc4     liolib.obj
+ 0002:00001bd0       ??_C@_0BN@LPOOHAOM@attempt?5to?5use?5a?5closed?5file?$AA@ 1003abd0     liolib.obj
+ 0002:00001bf4       ??_C@_0L@MIKJDGID@_IO_output?$AA@ 1003abf4     liolib.obj
+ 0002:00001c04       ??_C@_0BL@JABDLMOO@cannot?5open?5file?5?8?$CFs?8?5?$CI?$CFs?$CJ?$AA@ 1003ac04     liolib.obj
+ 0002:00001c24       ??_C@_0N@MICJCNHE@invalid?5mode?$AA@ 1003ac24     liolib.obj
+ 0002:00001c34       ??_C@_0BK@EPJBELMK@default?5?$CFs?5file?5is?5closed?$AA@ 1003ac34     liolib.obj
+ 0002:00001c54       ??_C@_09HINEJHGE@_IO_input?$AA@ 1003ac54     liolib.obj
+ 0002:00001c60       ??_C@_01NOFIACDB@w?$AA@    1003ac60     liolib.obj
+ 0002:00001c64       ??_C@_0BD@IOJAAODF@too?5many?5arguments?$AA@ 1003ac64     liolib.obj
+ 0002:00001c7c       ??_C@_02EGFLAODH@?9?$CL?$AA@ 1003ac7c     liolib.obj
+ 0002:00001c80       ??_C@_02OOPEBDOJ@pP?$AA@   1003ac80     liolib.obj
+ 0002:00001c84       ??_C@_02MDKMJEGG@eE?$AA@   1003ac84     liolib.obj
+ 0002:00001c88       ??_C@_0P@CENJCLHM@invalid?5format?$AA@ 1003ac88     liolib.obj
+ 0002:00001c9c       ??_C@_0BH@PBGIDLEF@file?5is?5already?5closed?$AA@ 1003ac9c     liolib.obj
+ 0002:00001cb8       ??_C@_04BFAHMMK@?$CFlld?$AA@ 1003acb8     liolib.obj
+ 0002:00001cc0       ??_C@_05CGOEHEFE@?$CF?414g?$AA@ 1003acc0     liolib.obj
+ 0002:00001cec       ??_C@_03KCHOJKKI@set?$AA@  1003acec     liolib.obj
+ 0002:00001cf0       ??_C@_03LIBLMJMB@cur?$AA@  1003acf0     liolib.obj
+ 0002:00001cf4       ??_C@_03JBJLGPFL@end?$AA@  1003acf4     liolib.obj
+ 0002:00001d1c       ??_C@_02KAJCLHKP@no?$AA@   1003ad1c     liolib.obj
+ 0002:00001d20       ??_C@_04PLMLMMEO@full?$AA@ 1003ad20     liolib.obj
+ 0002:00001d28       ??_C@_0BL@PEFGCPAG@cannot?5close?5standard?5file?$AA@ 1003ad28     liolib.obj
+ 0002:00001d48       ??_C@_05MHOFLBOO@stdin?$AA@ 1003ad48     liolib.obj
+ 0002:00001d50       ??_C@_06DJDOIFHB@stdout?$AA@ 1003ad50     liolib.obj
+ 0002:00001d58       ??_C@_06FJGNEBG@stderr?$AA@ 1003ad58     liolib.obj
+ 0002:00001e2c       ??_C@_03BOPJPIAM@and?$AA@  1003ae2c     llex.obj
+ 0002:00001e30       ??_C@_05ELPHFHOI@break?$AA@ 1003ae30     llex.obj
+ 0002:00001e38       ??_C@_08DLICDMBN@continue?$AA@ 1003ae38     llex.obj
+ 0002:00001e44       ??_C@_02KNAFDCHJ@do?$AA@   1003ae44     llex.obj
+ 0002:00001e48       ??_C@_04FHMCPBIP@else?$AA@ 1003ae48     llex.obj
+ 0002:00001e50       ??_C@_06CAACNEC@elseif?$AA@ 1003ae50     llex.obj
+ 0002:00001e58       ??_C@_03JOHEBPFF@for?$AA@  1003ae58     llex.obj
+ 0002:00001e5c       ??_C@_08HFFPPCHF@function?$AA@ 1003ae5c     llex.obj
+ 0002:00001e68       ??_C@_04MABHPDAO@goto?$AA@ 1003ae68     llex.obj
+ 0002:00001e70       ??_C@_02HEBPBKGD@if?$AA@   1003ae70     llex.obj
+ 0002:00001e74       ??_C@_02LMMGJAGL@in?$AA@   1003ae74     llex.obj
+ 0002:00001e78       ??_C@_03NJKJADM@not?$AA@   1003ae78     llex.obj
+ 0002:00001e7c       ??_C@_02FODMLBIE@or?$AA@   1003ae7c     llex.obj
+ 0002:00001e80       ??_C@_06LGDBIFHB@repeat?$AA@ 1003ae80     llex.obj
+ 0002:00001e88       ??_C@_04HOHPNOOD@then?$AA@ 1003ae88     llex.obj
+ 0002:00001e90       ??_C@_05FJMDOIMN@until?$AA@ 1003ae90     llex.obj
+ 0002:00001e98       ??_C@_05OODBEKIG@while?$AA@ 1003ae98     llex.obj
+ 0002:00001ea0       ??_C@_02CBLDBPFN@?1?1?$AA@ 1003aea0     llex.obj
+ 0002:00001ea4       ??_C@_02DJGKEECL@?4?4?$AA@ 1003aea4     llex.obj
+ 0002:00001ea8       ??_C@_03KHICJKCI@?4?4?4?$AA@ 1003aea8     llex.obj
+ 0002:00001eac       ??_C@_02EGOFBIJA@?$DN?$DN?$AA@ 1003aeac     llex.obj
+ 0002:00001eb0       ??_C@_02EEKDKGMJ@?$DO?$DN?$AA@ 1003aeb0     llex.obj
+ 0002:00001eb4       ??_C@_02EHCHHCKH@?$DM?$DN?$AA@ 1003aeb4     llex.obj
+ 0002:00001eb8       ??_C@_02DEDJCLAJ@?$HO?$DN?$AA@ 1003aeb8     llex.obj
+ 0002:00001ebc       ??_C@_02FODMEDOG@?$DM?$DM?$AA@ 1003aebc     llex.obj
+ 0002:00001ec0       ??_C@_02GPIOPFAK@?$DO?$DO?$AA@ 1003aec0     llex.obj
+ 0002:00001ec4       ??_C@_02MOLJINC@?3?3?$AA@  1003aec4     llex.obj
+ 0002:00001ec8       ??_C@_05CINCKAN@?$DMeof?$DO?$AA@ 1003aec8     llex.obj
+ 0002:00001ed0       ??_C@_08OHBCANEJ@?$DMnumber?$DO?$AA@ 1003aed0     llex.obj
+ 0002:00001edc       ??_C@_09CKFPBBLH@?$DMinteger?$DO?$AA@ 1003aedc     llex.obj
+ 0002:00001ee8       ??_C@_06FNGJOCBI@?$DMname?$DO?$AA@ 1003aee8     llex.obj
+ 0002:00001ef0       ??_C@_08OOGHEFMC@?$DMstring?$DO?$AA@ 1003aef0     llex.obj
+ 0002:00001efc       ??_C@_02PPKAJPJL@?$CG?$CG?$AA@ 1003aefc     llex.obj
+ 0002:00001f00       ??_C@_02NONPIBCD@?$HM?$HM?$AA@ 1003af00     llex.obj
+ 0002:00001f04       ??_C@_01DCLJPIOD@?$CB?$AA@ 1003af04     llex.obj
+ 0002:00001f08       ??_C@_02FDNJECIE@?$CB?$DN?$AA@ 1003af08     llex.obj
+ 0002:00001f0c       ??_C@_0BJ@JNKOFINI@lexical?5element?5too?5long?$AA@ 1003af0c     llex.obj
+ 0002:00001f2c       ??_C@_04ENIEGDOG@?8?$CFc?8?$AA@ 1003af2c     llex.obj
+ 0002:00001f34       ??_C@_07DELEPGKM@?8?$DM?2?$CFd?$DO?8?$AA@ 1003af34     llex.obj
+ 0002:00001f40       ??_C@_04FBKCMAJG@?8?$CFs?8?$AA@ 1003af40     llex.obj
+ 0002:00001f48       ??_C@_0L@DKMPGOCF@?$CFs?5near?5?$CFs?$AA@ 1003af48     llex.obj
+ 0002:00001f58       ??_C@_0BJ@LAKGPFF@chunk?5has?5too?5many?5lines?$AA@ 1003af58     llex.obj
+ 0002:00001f78       ??_C@_02GOGFPGCE@Ee?$AA@   1003af78     llex.obj
+ 0002:00001f7c       ??_C@_02CIDOMIFJ@xX?$AA@   1003af7c     llex.obj
+ 0002:00001f80       ??_C@_02EDDNHBKL@Pp?$AA@   1003af80     llex.obj
+ 0002:00001f84       ??_C@_0BB@CFMNENCE@malformed?5number?$AA@ 1003af84     llex.obj
+ 0002:00001f98       ??_C@_07GJGNEJFD@comment?$AA@ 1003af98     llex.obj
+ 0002:00001fa4       ??_C@_0CJ@CPAHLMBA@unfinished?5long?5?$CFs?5?$CIstarting?5at?5@ 1003afa4     llex.obj
+ 0002:00001fd8       ??_C@_0BL@HIOFDBBP@hexadecimal?5digit?5expected?$AA@ 1003afd8     llex.obj
+ 0002:00001ff8       ??_C@_0M@LCIHADNN@missing?5?8?$HL?8?$AA@ 1003aff8     llex.obj
+ 0002:00002008       ??_C@_0BG@INJLHCPD@UTF?98?5value?5too?5large?$AA@ 1003b008     llex.obj
+ 0002:00002024       ??_C@_0M@LGAKHPGP@missing?5?8?$HN?8?$AA@ 1003b024     llex.obj
+ 0002:00002034       ??_C@_0BJ@FGOMBPHF@decimal?5escape?5too?5large?$AA@ 1003b034     llex.obj
+ 0002:00002054       ??_C@_0BC@IBAFBKML@unfinished?5string?$AA@ 1003b054     llex.obj
+ 0002:0000206c       ??_C@_0BI@HGMIJEDD@invalid?5escape?5sequence?$AA@ 1003b06c     llex.obj
+ 0002:00002088       ??_C@_0BO@DBNLNIBP@invalid?5long?5string?5delimiter?$AA@ 1003b088     llex.obj
+ 0002:000020ac       ??_C@_0BI@ONEAKEIB@unfinished?5long?5comment?$AA@ 1003b0ac     llex.obj
+ 0002:000020e4       ??_C@_06NLFCANPD@random?$AA@ 1003b0e4     lmathlib.obj
+ 0002:000020ec       ??_C@_0L@PIIACENG@randomseed?$AA@ 1003b0ec     lmathlib.obj
+ 0002:0000220c       ??_C@_03BCGAIFPO@abs?$AA@  1003b20c     lmathlib.obj
+ 0002:00002210       ??_C@_04PDIFKINK@acos?$AA@ 1003b210     lmathlib.obj
+ 0002:00002218       ??_C@_04FIHNOPOL@asin?$AA@ 1003b218     lmathlib.obj
+ 0002:00002220       ??_C@_04MLLJIGOK@atan?$AA@ 1003b220     lmathlib.obj
+ 0002:00002228       ??_C@_04GFPJNGEK@ceil?$AA@ 1003b228     lmathlib.obj
+ 0002:00002230       ??_C@_03LALBNOCG@cos?$AA@  1003b230     lmathlib.obj
+ 0002:00002234       ??_C@_03OFPLEBM@deg?$AA@   1003b234     lmathlib.obj
+ 0002:00002238       ??_C@_03KHJOGHMM@exp?$AA@  1003b238     lmathlib.obj
+ 0002:0000223c       ??_C@_09EAKFBKNJ@tointeger?$AA@ 1003b23c     lmathlib.obj
+ 0002:00002248       ??_C@_05PBJFFIGL@floor?$AA@ 1003b248     lmathlib.obj
+ 0002:00002250       ??_C@_04KEPJIHGP@fmod?$AA@ 1003b250     lmathlib.obj
+ 0002:00002258       ??_C@_03IIMEPOPL@ult?$AA@  1003b258     lmathlib.obj
+ 0002:0000225c       ??_C@_03MGHMBJCF@log?$AA@  1003b25c     lmathlib.obj
+ 0002:00002260       ??_C@_03LJAEFNNE@max?$AA@  1003b260     lmathlib.obj
+ 0002:00002264       ??_C@_03KLIPLJLL@min?$AA@  1003b264     lmathlib.obj
+ 0002:00002268       ??_C@_04EHEDPDJG@modf?$AA@ 1003b268     lmathlib.obj
+ 0002:00002270       ??_C@_03FHAJEHEA@rad?$AA@  1003b270     lmathlib.obj
+ 0002:00002274       ??_C@_03BLEJJJBH@sin?$AA@  1003b274     lmathlib.obj
+ 0002:00002278       ??_C@_04EIAKFFMI@sqrt?$AA@ 1003b278     lmathlib.obj
+ 0002:00002280       ??_C@_03IIINPABG@tan?$AA@  1003b280     lmathlib.obj
+ 0002:00002284       ??_C@_02OAHAJOFD@pi?$AA@   1003b284     lmathlib.obj
+ 0002:00002288       ??_C@_04JJGMCGIH@huge?$AA@ 1003b288     lmathlib.obj
+ 0002:00002290       ??_C@_0L@FKMOHNGI@maxinteger?$AA@ 1003b290     lmathlib.obj
+ 0002:000022a0       ??_C@_0L@JGMDAGGH@mininteger?$AA@ 1003b2a0     lmathlib.obj
+ 0002:000022b0       ??_C@_04DDFHDMOL@zero?$AA@ 1003b2b0     lmathlib.obj
+ 0002:000022b8       ??_C@_07LKHFMGFB@integer?$AA@ 1003b2b8     lmathlib.obj
+ 0002:000022c4       ??_C@_05KNFBNCOH@float?$AA@ 1003b2c4     lmathlib.obj
+ 0002:000022cc       ??_C@_0BK@KNAOOCNO@wrong?5number?5of?5arguments?$AA@ 1003b2cc     lmathlib.obj
+ 0002:000022ec       ??_C@_0BC@JKHEKPDC@interval?5is?5empty?$AA@ 1003b2ec     lmathlib.obj
+ 0002:00002308       __real@3ca0000000000000    1003b308     lmathlib.obj
+ 0002:00002318       __real@3f91df46a2529d39    1003b318     lmathlib.obj
+ 0002:00002328       __real@400921fb54442d18    1003b328     lmathlib.obj
+ 0002:00002338       __real@4024000000000000    1003b338     lmathlib.obj
+ 0002:00002348       __real@404ca5dc1a63c1f8    1003b348     lmathlib.obj
+ 0002:00002358       __real@43e0000000000000    1003b358     lmathlib.obj
+ 0002:00002368       __real@c3e0000000000000    1003b368     lmathlib.obj
+ 0002:00002374       ??_C@_0BK@JNOIBMBC@too?5many?5?$CFs?5?$CIlimit?5is?5?$CFd?$CJ?$AA@ 1003b374     lmem.obj
+ 0002:00002394       ??_C@_0CH@LBFPMMCP@memory?5allocation?5error?3?5block?5t@ 1003b394     lmem.obj
+ 0002:000023c4       ??_C@_04LNEJFJGI@path?$AA@ 1003b3c4     loadlib.obj
+ 0002:000023cc       ??_C@_05EEMJHCCC@cpath?$AA@ 1003b3cc     loadlib.obj
+ 0002:000023d4       ??_C@_09IPENMJM@searchers?$AA@ 1003b3d4     loadlib.obj
+ 0002:00002438       ??_C@_06LNOHAKGK@seeall?$AA@ 1003b438     loadlib.obj
+ 0002:00002440       ??_C@_07KOEABFCN@loadlib?$AA@ 1003b440     loadlib.obj
+ 0002:0000244c       ??_C@_0L@LLHGDMBK@searchpath?$AA@ 1003b44c     loadlib.obj
+ 0002:0000245c       ??_C@_07GCEAJMEA@preload?$AA@ 1003b45c     loadlib.obj
+ 0002:00002468       ??_C@_06IILMCCFO@loaded?$AA@ 1003b468     loadlib.obj
+ 0002:0000248c       ??_C@_06BIEEJMKO@module?$AA@ 1003b48c     loadlib.obj
+ 0002:00002494       ??_C@_07FFLLPPLH@require?$AA@ 1003b494     loadlib.obj
+ 0002:000024a0       ??_C@_06KHFFDENL@_CLIBS?$AA@ 1003b4a0     loadlib.obj
+ 0002:000024a8       ??_C@_0BN@GMPFCLAN@unable?5to?5get?5ModuleFileName?$AA@ 1003b4a8     loadlib.obj
+ 0002:000024cc       ??_C@_0BB@BLJKPILH@system?5error?5?$CFd?6?$AA@ 1003b4cc     loadlib.obj
+ 0002:000024e0       ??_C@_09EFECHJCA@LUA_NOENV?$AA@ 1003b4e0     loadlib.obj
+ 0002:000024ec       ??_C@_04JIKBMCBB@_5_4?$AA@ 1003b4ec     loadlib.obj
+ 0002:000024f4       ??_C@_04HDOCAJNK@?$CFs?$CFs?$AA@ 1003b4f4     loadlib.obj
+ 0002:000024fc       ??_C@_02BEDCMDKE@?$DL?$DL?$AA@ 1003b4fc     loadlib.obj
+ 0002:00002500       ??_C@_01ICJEACDI@?$DL?$AA@ 1003b500     loadlib.obj
+ 0002:00002504       ??_C@_04HKFDNBLD@init?$AA@ 1003b504     loadlib.obj
+ 0002:0000250c       ??_C@_09NMNIMBNM@no?5file?5?8?$AA@ 1003b50c     loadlib.obj
+ 0002:00002518       ??_C@_0N@GPFBHEGB@?8?6?7no?5file?5?8?$AA@ 1003b518     loadlib.obj
+ 0002:00002528       ??_C@_01GEODFPGF@?8?$AA@   1003b528     loadlib.obj
+ 0002:0000252c       ??_C@_01KICIPPFI@?2?$AA@   1003b52c     loadlib.obj
+ 0002:00002530       ??_C@_0BO@COFCKCAL@?8package?4?$CFs?8?5must?5be?5a?5string?$AA@ 1003b530     loadlib.obj
+ 0002:00002554       ??_C@_0CO@KHMIPLKM@error?5loading?5module?5?8?$CFs?8?5from?5f@ 1003b554     loadlib.obj
+ 0002:0000258c       ??_C@_01IDAFKMJL@_?$AA@    1003b58c     loadlib.obj
+ 0002:00002590       ??_C@_0L@KHKMBFOE@luaopen_?$CFs?$AA@ 1003b590     loadlib.obj
+ 0002:000025a0       ??_C@_0BM@KDJDNFKB@no?5module?5?8?$CFs?8?5in?5file?5?8?$CFs?8?$AA@ 1003b5a0     loadlib.obj
+ 0002:000025c4       ??_C@_08LBNNGFKE@_PRELOAD?$AA@ 1003b5c4     loadlib.obj
+ 0002:000025d0       ??_C@_0BP@NPGLBLOJ@no?5field?5package?4preload?$FL?8?$CFs?8?$FN?$AA@ 1003b5d0     loadlib.obj
+ 0002:000025f8       ??_C@_09CJEFLBFM@?3preload?3?$AA@ 1003b5f8     loadlib.obj
+ 0002:00002604       ??_C@_0CE@JEDHJEBL@?8package?4searchers?8?5must?5be?5a?5ta@ 1003b604     loadlib.obj
+ 0002:00002630       ??_C@_02NMOLBIHC@?6?7?$AA@ 1003b630     loadlib.obj
+ 0002:00002634       ??_C@_0BJ@HFHHABH@module?5?8?$CFs?8?5not?5found?3?$CFs?$AA@ 1003b634     loadlib.obj
+ 0002:00002654       ??_C@_0CI@GKOMOAFD@?8module?8?5not?5called?5from?5a?5Lua?5f@ 1003b654     loadlib.obj
+ 0002:00002684       ??_C@_02CCIJHOCI@_M?$AA@   1003b684     loadlib.obj
+ 0002:00002688       ??_C@_05ICMCJINN@_NAME?$AA@ 1003b688     loadlib.obj
+ 0002:00002690       ??_C@_08HONLOGDK@_PACKAGE?$AA@ 1003b690     loadlib.obj
+ 0002:0000269c       ??_C@_0BO@CBJIAGLF@name?5conflict?5for?5module?5?8?$CFs?8?$AA@ 1003b69c     loadlib.obj
+ 0002:000026d8       ??_C@_0HO@CBGAELKL@?$CB?2lua?2?$DP?4lua?$DL?$CB?2lua?2?$DP?2init?4lua?$DL?$CB?2?$DP@ 1003b6d8     loadlib.obj
+ 0002:00002770       ??_C@_08GLJMJBPN@LUA_PATH?$AA@ 1003b770     loadlib.obj
+ 0002:0000277c       ??_C@_0DF@NHDPLPNK@?$CB?2?$DP?4dll?$DL?$CB?2?4?4?2lib?2lua?25?44?2?$DP?4dll?$DL?$CB@ 1003b77c     loadlib.obj
+ 0002:000027bc       ??_C@_09FBPOOEID@LUA_CPATH?$AA@ 1003b7bc     loadlib.obj
+ 0002:000027c8       ??_C@_0L@GKIMPOMK@?2?6?$DL?6?$DP?6?$CB?6?9?6?$AA@ 1003b7c8     loadlib.obj
+ 0002:000027d8       ??_C@_06HEJKKHEK@config?$AA@ 1003b7d8     loadlib.obj
+ 0002:00002914       ??_C@_05JIDDDCPI@?4xXnN?$AA@ 1003b914     lobject.obj
+ 0002:0000291c       ??_C@_0M@MJJAFOKF@?90123456789?$AA@ 1003b91c     lobject.obj
+ 0002:0000292c       ??_C@_06OJHGLDPL@?$CInull?$CJ?$AA@ 1003b92c     lobject.obj
+ 0002:00002934       ??_C@_02BBAHNLBA@?$CFp?$AA@ 1003b934     lobject.obj
+ 0002:00002938       ??_C@_01FGNFDNOH@?$CF?$AA@ 1003b938     lobject.obj
+ 0002:0000293c       ??_C@_0CL@FANIKJON@invalid?5option?5?8?$CF?$CF?$CFc?8?5to?5?8lua_pu@ 1003b93c     lobject.obj
+ 0002:00002970       ??_C@_09PHLFBDIK@?$FLstring?5?$CC?$AA@ 1003b970     lobject.obj
+ 0002:0000297c       ??_C@_02DEGCJHHK@?$CC?$FN?$AA@ 1003b97c     lobject.obj
+ 0002:00002980       __real@4000000000000000    1003b980     lobject.obj
+ 0002:00002990       __real@4030000000000000    1003b990     lobject.obj
+ 0002:000029a0       ?luaP_opmodes@@3QBEB       1003b9a0     lopcodes.obj
+ 0002:00002a04       ??_C@_04CLCEDBPF@time?$AA@ 1003ba04     loslib.obj
+ 0002:00002a84       ??_C@_05DDECJJKE@clock?$AA@ 1003ba84     loslib.obj
+ 0002:00002a8c       ??_C@_04JNIHBGGH@date?$AA@ 1003ba8c     loslib.obj
+ 0002:00002a94       ??_C@_08PDOPCMOG@difftime?$AA@ 1003ba94     loslib.obj
+ 0002:00002aa0       ??_C@_07EMGJIMLB@execute?$AA@ 1003baa0     loslib.obj
+ 0002:00002aac       ??_C@_06EPDNLFGH@getenv?$AA@ 1003baac     loslib.obj
+ 0002:00002ab4       ??_C@_06LEMKAMD@remove?$AA@ 1003bab4     loslib.obj
+ 0002:00002abc       ??_C@_06LMEAOBLB@rename?$AA@ 1003babc     loslib.obj
+ 0002:00002ac4       ??_C@_09IOBOFJNA@setlocale?$AA@ 1003bac4     loslib.obj
+ 0002:00002ad0       ??_C@_07KOJJABMD@tmpname?$AA@ 1003bad0     loslib.obj
+ 0002:00002adc       ??_C@_0CF@CFMGMNIN@unable?5to?5generate?5a?5unique?5file@ 1003badc     loslib.obj
+ 0002:00002b08       ??_C@_04JFPLDHAO@year?$AA@ 1003bb08     loslib.obj
+ 0002:00002b10       ??_C@_05MEBAADFH@month?$AA@ 1003bb10     loslib.obj
+ 0002:00002b18       ??_C@_03NNBHCDBP@day?$AA@  1003bb18     loslib.obj
+ 0002:00002b1c       ??_C@_04LMOJGCPE@hour?$AA@ 1003bb1c     loslib.obj
+ 0002:00002b24       ??_C@_03KHPNBODO@sec?$AA@  1003bb24     loslib.obj
+ 0002:00002b28       ??_C@_04MOLDIJKA@yday?$AA@ 1003bb28     loslib.obj
+ 0002:00002b30       ??_C@_04HBIDDHMB@wday?$AA@ 1003bb30     loslib.obj
+ 0002:00002b38       ??_C@_05HGBEJAHO@isdst?$AA@ 1003bb38     loslib.obj
+ 0002:00002b40       ??_C@_0BN@FEDFLMHC@field?5?8?$CFs?8?5is?5not?5an?5integer?$AA@ 1003bb40     loslib.obj
+ 0002:00002b64       ??_C@_0CB@DJMEIEGF@field?5?8?$CFs?8?5missing?5in?5date?5table@ 1003bb64     loslib.obj
+ 0002:00002b8c       ??_C@_0BL@KEGBKIBL@field?5?8?$CFs?8?5is?5out?9of?9bound?$AA@ 1003bb8c     loslib.obj
+ 0002:00002bac       ??_C@_0DG@EDFFHNBH@aAbBcdHIjmMpSUwWxXyYzZ?$CF?$HM?$HM?$CDc?$CDx?$CDd?$CD@ 1003bbac     loslib.obj
+ 0002:00002bec       ??_C@_0CE@MFIJMOHJ@invalid?5conversion?5specifier?5?8?$CF?$CF@ 1003bbec     loslib.obj
+ 0002:00002c18       ??_C@_02HAOIJKIC@?$CFc?$AA@ 1003bc18     loslib.obj
+ 0002:00002c1c       ??_C@_0DH@IODHDLIC@date?5result?5cannot?5be?5represente@ 1003bc1c     loslib.obj
+ 0002:00002c60       ??_C@_02HODHFJCJ@?$CKt?$AA@ 1003bc60     loslib.obj
+ 0002:00002c64       ??_C@_0DH@HAACGOCO@time?5result?5cannot?5be?5represente@ 1003bc64     loslib.obj
+ 0002:00002ce8       ??_C@_03NFKEKGGK@all?$AA@  1003bce8     loslib.obj
+ 0002:00002cec       ??_C@_07FCFLCBKH@collate?$AA@ 1003bcec     loslib.obj
+ 0002:00002cf8       ??_C@_05JGEDHNAD@ctype?$AA@ 1003bcf8     loslib.obj
+ 0002:00002d00       ??_C@_08BIOBDOAM@monetary?$AA@ 1003bd00     loslib.obj
+ 0002:00002d0c       ??_C@_07MMLECJPG@numeric?$AA@ 1003bd0c     loslib.obj
+ 0002:00002d18       __real@3f50624dd2f1a9fc    1003bd18     loslib.obj
+ 0002:00002d58       ??_C@_0M@IEHHDPGI@?$CFs?5expected?$AA@ 1003bd58     lparser.obj
+ 0002:00002d68       ??_C@_0O@FCKLILMC@main?5function?$AA@ 1003bd68     lparser.obj
+ 0002:00002d78       ??_C@_0BE@EDMMCJEE@function?5at?5line?5?$CFd?$AA@ 1003bd78     lparser.obj
+ 0002:00002d90       ??_C@_0CA@FBOMDEEF@too?5many?5?$CFs?5?$CIlimit?5is?5?$CFd?$CJ?5in?5?$CFs?$AA@ 1003bd90     lparser.obj
+ 0002:00002db8       ??_C@_0CF@PKDGNAMA@?$CFs?5expected?5?$CIto?5close?5?$CFs?5at?5line@ 1003bdb8     lparser.obj
+ 0002:00002de4       ??_C@_0BA@EIDMAHJI@local?5variables?$AA@ 1003bde4     lparser.obj
+ 0002:00002df8       ??_C@_0CJ@LNEEBKLL@attempt?5to?5assign?5to?5const?5varia@ 1003bdf8     lparser.obj
+ 0002:00002e2c       ??_C@_08JKPCMKJ@upvalues?$AA@ 1003be2c     lparser.obj
+ 0002:00002e38       ??_C@_0DI@LMKMCOIF@?$DMgoto?5?$CFs?$DO?5at?5line?5?$CFd?5jumps?5into?5@ 1003be38     lparser.obj
+ 0002:00002e7c       ??_C@_0N@OEGJPJFJ@labels?1gotos?$AA@ 1003be7c     lparser.obj
+ 0002:00002e8c       ??_C@_0BO@KNEKJFGP@break?5outside?5loop?5at?5line?5?$CFd?$AA@ 1003be8c     lparser.obj
+ 0002:00002eb0       ??_C@_0CB@FGKAPJHM@continue?5outside?5loop?5at?5line?5?$CFd@ 1003beb0     lparser.obj
+ 0002:00002ed8       ??_C@_0CM@OGINCFCB@no?5visible?5label?5?8?$CFs?8?5for?5?$DMgoto?$DO@ 1003bed8     lparser.obj
+ 0002:00002f0c       ??_C@_09CEAIPAHE@functions?$AA@ 1003bf0c     lparser.obj
+ 0002:00002f18       ??_C@_0BH@IAOKECIM@items?5in?5a?5constructor?$AA@ 1003bf18     lparser.obj
+ 0002:00002f34       ??_C@_0BJ@MHIGIDHO@?$DMname?$DO?5or?5?8?4?4?4?8?5expected?$AA@ 1003bf34     lparser.obj
+ 0002:00002f54       ??_C@_04PJDNGLKJ@self?$AA@ 1003bf54     lparser.obj
+ 0002:00002f5c       ??_C@_0BM@HEIHHEKF@function?5arguments?5expected?$AA@ 1003bf5c     lparser.obj
+ 0002:00002f80       ??_C@_0BC@KBCKKGAJ@unexpected?5symbol?$AA@ 1003bf80     lparser.obj
+ 0002:00002f98       ??_C@_0CL@EJFFCAJP@cannot?5use?5?8?4?4?4?8?5outside?5a?5varar@ 1003bf98     lparser.obj
+ 0002:00002fcc       ??_C@_0N@MNJHOOI@syntax?5error?$AA@ 1003bfcc     lparser.obj
+ 0002:00002fdc       ??_C@_0CG@FBAEKGNA@label?5?8?$CFs?8?5already?5defined?5on?5li@ 1003bfdc     lparser.obj
+ 0002:00003024       ??_C@_0M@CCNPGEGC@?$CIfor?5state?$CJ?$AA@ 1003c024     lparser.obj
+ 0002:00003034       ??_C@_0BF@PACDFECJ@?8?$DN?8?5or?5?8in?8?5expected?$AA@ 1003c034     lparser.obj
+ 0002:00003050       ??_C@_05BNCCCJPP@const?$AA@ 1003c050     lparser.obj
+ 0002:00003058       ??_C@_0BH@NHBOLAEN@unknown?5attribute?5?8?$CFs?8?$AA@ 1003c058     lparser.obj
+ 0002:00003074       ??_C@_0CO@MNLNALLI@multiple?5to?9be?9closed?5variables?5@ 1003c074     lparser.obj
+ 0002:000030ac       ??_C@_09HAKNOAMA@error?5in?5?$AA@ 1003c0ac     lstate.obj
+ 0002:000030b8       ??_C@_02GFKOMOKH@?5?$CI?$AA@ 1003c0b8     lstate.obj
+ 0002:000030bc       ??_C@_01PKGAHCOL@?$CJ?$AA@ 1003c0bc     lstate.obj
+ 0002:0000316c       ??_C@_04IHGKJMLH@byte?$AA@ 1003c16c     lstrlib.obj
+ 0002:00003174       ??_C@_04ENMBGAPA@char?$AA@ 1003c174     lstrlib.obj
+ 0002:0000317c       ??_C@_04GGLOKIEE@dump?$AA@ 1003c17c     lstrlib.obj
+ 0002:00003184       ??_C@_04CKFJHKAP@find?$AA@ 1003c184     lstrlib.obj
+ 0002:0000318c       ??_C@_06DLEPGFEF@format?$AA@ 1003c18c     lstrlib.obj
+ 0002:00003194       ??_C@_06DPFCLDIO@gmatch?$AA@ 1003c194     lstrlib.obj
+ 0002:0000319c       ??_C@_04GOLEAPFD@gsub?$AA@ 1003c19c     lstrlib.obj
+ 0002:000031a4       ??_C@_03BKCJCHLK@len?$AA@  1003c1a4     lstrlib.obj
+ 0002:000031a8       ??_C@_05IPJEPLHL@lower?$AA@ 1003c1a8     lstrlib.obj
+ 0002:000031b0       ??_C@_05FNONLPDI@match?$AA@ 1003c1b0     lstrlib.obj
+ 0002:000031b8       ??_C@_03HOKODIMJ@rep?$AA@  1003c1b8     lstrlib.obj
+ 0002:000031bc       ??_C@_07KOIEOCCE@reverse?$AA@ 1003c1bc     lstrlib.obj
+ 0002:000031c8       ??_C@_03KCMAIMAP@sub?$AA@  1003c1c8     lstrlib.obj
+ 0002:000031cc       ??_C@_05NECKJAMC@upper?$AA@ 1003c1cc     lstrlib.obj
+ 0002:000031d4       ??_C@_04IPANLPFO@pack?$AA@ 1003c1d4     lstrlib.obj
+ 0002:000031dc       ??_C@_08JEMJHBLC@packsize?$AA@ 1003c1dc     lstrlib.obj
+ 0002:000031e8       ??_C@_06FIONAGJL@unpack?$AA@ 1003c1e8     lstrlib.obj
+ 0002:000031f0       ??_C@_05MEHDOBFN@__add?$AA@ 1003c1f0     lstrlib.obj
+ 0002:000031f8       ??_C@_05HFNNBAII@__sub?$AA@ 1003c1f8     lstrlib.obj
+ 0002:00003200       ??_C@_05FLJIBNKK@__mul?$AA@ 1003c200     lstrlib.obj
+ 0002:00003208       ??_C@_05ICPALBAE@__mod?$AA@ 1003c208     lstrlib.obj
+ 0002:00003210       ??_C@_05EBGMHPNE@__pow?$AA@ 1003c210     lstrlib.obj
+ 0002:00003218       ??_C@_05IDIBPCOP@__div?$AA@ 1003c218     lstrlib.obj
+ 0002:00003220       ??_C@_06FENDFIEK@__idiv?$AA@ 1003c220     lstrlib.obj
+ 0002:00003228       ??_C@_05MHFNBPAK@__unm?$AA@ 1003c228     lstrlib.obj
+ 0002:00003290       ??_C@_0BL@JPPPHHNK@resulting?5string?5too?5large?$AA@ 1003c290     lstrlib.obj
+ 0002:000032b0       ??_C@_0BG@DFAIEAEC@string?5slice?5too?5long?$AA@ 1003c2b0     lstrlib.obj
+ 0002:000032cc       ??_C@_0BD@JFBPAFFP@value?5out?5of?5range?$AA@ 1003c2cc     lstrlib.obj
+ 0002:000032e4       ??_C@_0BO@BNLBHKJN@unable?5to?5dump?5given?5function?$AA@ 1003c2e4     lstrlib.obj
+ 0002:00003308       ??_C@_0CB@FJNHHAEH@attempt?5to?5?$CFs?5a?5?8?$CFs?8?5with?5a?5?8?$CFs?8@ 1003c308     lstrlib.obj
+ 0002:00003330       ??_C@_0BL@JNACDPC@invalid?5capture?5index?5?$CF?$CF?$CFd?$AA@ 1003c330     lstrlib.obj
+ 0002:00003350       ??_C@_0BI@ECNPHIBF@invalid?5pattern?5capture?$AA@ 1003c350     lstrlib.obj
+ 0002:0000336c       ??_C@_0CD@PLJBIEHA@malformed?5pattern?5?$CIends?5with?5?8?$CF?$CF@ 1003c36c     lstrlib.obj
+ 0002:00003398       ??_C@_0CA@CFGACOGB@malformed?5pattern?5?$CImissing?5?8?$FN?8?$CJ?$AA@ 1003c398     lstrlib.obj
+ 0002:000033c0       ??_C@_0CP@FCNHBCLO@malformed?5pattern?5?$CImissing?5argum@ 1003c3c0     lstrlib.obj
+ 0002:000033f8       ??_C@_0BC@IMEAEJPD@too?5many?5captures?$AA@ 1003c3f8     lstrlib.obj
+ 0002:00003410       ??_C@_0BE@LPFFPFJG@pattern?5too?5complex?$AA@ 1003c410     lstrlib.obj
+ 0002:00003428       ??_C@_0CD@LOJJMDBH@missing?5?8?$FL?8?5after?5?8?$CF?$CFf?8?5in?5patte@ 1003c428     lstrlib.obj
+ 0002:00003454       ??_C@_0BD@BFKNEALP@unfinished?5capture?$AA@ 1003c454     lstrlib.obj
+ 0002:0000346c       ??_C@_0L@NLFJOONJ@?$FO$?$CK?$CL?$DP?4?$CI?$FL?$CF?9?$AA@ 1003c46c     lstrlib.obj
+ 0002:0000347c       ??_C@_0CK@KLCOLAN@invalid?5use?5of?5?8?$CFc?8?5in?5replaceme@ 1003c47c     lstrlib.obj
+ 0002:000034b0       ??_C@_0CB@LPDIHGGA@invalid?5replacement?5value?5?$CIa?5?$CFs?$CJ@ 1003c4b0     lstrlib.obj
+ 0002:000034d8       ??_C@_0BG@HOCELNID@string?1function?1table?$AA@ 1003c4d8     lstrlib.obj
+ 0002:000034f4       ??_C@_0L@ICMKKNNM@?$CF?414gx0p?$CL0?$AA@ 1003c4f4     lstrlib.obj
+ 0002:00003504       ??_C@_04GCGKLAID@p?$CF?$CLd?$AA@ 1003c504     lstrlib.obj
+ 0002:0000350c       ??_C@_0DB@EBICNNOC@modifiers?5for?5format?5?8?$CF?$CFa?8?1?8?$CF?$CFA?8@ 1003c50c     lstrlib.obj
+ 0002:00003548       ??_C@_03GAHHLKFB@?2?$CFd?$AA@ 1003c548     lstrlib.obj
+ 0002:0000354c       ??_C@_05OLMHDLGP@?2?$CF03d?$AA@ 1003c54c     lstrlib.obj
+ 0002:00003554       ??_C@_06DAJCCOPH@1e9999?$AA@ 1003c554     lstrlib.obj
+ 0002:0000355c       ??_C@_07KKKPFJGH@?91e9999?$AA@ 1003c55c     lstrlib.obj
+ 0002:00003568       ??_C@_05JMJPKEJC@?$CI0?10?$CJ?$AA@ 1003c568     lstrlib.obj
+ 0002:00003570       ??_C@_02ECNOPIAA@?$CFa?$AA@ 1003c570     lstrlib.obj
+ 0002:00003574       ??_C@_06PDHLCDAK@0x?$CFllx?$AA@ 1003c574     lstrlib.obj
+ 0002:0000357c       ??_C@_0BK@KCCOPFHJ@value?5has?5no?5literal?5form?$AA@ 1003c57c     lstrlib.obj
+ 0002:0000359c       ??_C@_0CH@DGBDBBAG@invalid?5conversion?5specification@ 1003c59c     lstrlib.obj
+ 0002:000035cc       ??_C@_0BA@EIMPBENN@?9?$CL?$CD0?5123456789?4?$AA@ 1003c5cc     lstrlib.obj
+ 0002:000035e0       ??_C@_0BK@KOAOBLGI@invalid?5format?5?$CItoo?5long?$CJ?$AA@ 1003c5e0     lstrlib.obj
+ 0002:00003600       ??_C@_08JEIPHCP@no?5value?$AA@ 1003c600     lstrlib.obj
+ 0002:0000360c       ??_C@_01JOAMLHOP@?9?$AA@   1003c60c     lstrlib.obj
+ 0002:00003610       ??_C@_04MGFAAKFK@?9?$CL0?5?$AA@ 1003c610     lstrlib.obj
+ 0002:00003618       ??_C@_02OPGNMFKN@?90?$AA@  1003c618     lstrlib.obj
+ 0002:0000361c       ??_C@_03GJKOJJEK@?9?$CD0?$AA@ 1003c61c     lstrlib.obj
+ 0002:00003620       ??_C@_02IIDLDAAC@ll?$AA@   1003c620     lstrlib.obj
+ 0002:00003624       ??_C@_05EAHGJHED@?9?$CL?$CD0?5?$AA@ 1003c624     lstrlib.obj
+ 0002:0000362c       ??_C@_0CG@LHHCEAFA@specifier?5?8?$CF?$CFq?8?5cannot?5have?5modi@ 1003c62c     lstrlib.obj
+ 0002:0000365c       ??_C@_0BG@FHCNDFMO@string?5contains?5zeros?$AA@ 1003c65c     lstrlib.obj
+ 0002:00003678       ??_C@_0CE@PCOENLPI@invalid?5conversion?5?8?$CFs?8?5to?5?8form@ 1003c678     lstrlib.obj
+ 0002:000036a4       ??_C@_0CI@CNGGJHEE@integral?5size?5?$CI?$CFd?$CJ?5out?5of?5limits@ 1003c6a4     lstrlib.obj
+ 0002:000036d4       ??_C@_0CD@KNDEAFDL@missing?5size?5for?5format?5option?5?8@ 1003c6d4     lstrlib.obj
+ 0002:00003700       ??_C@_0BL@EBKLKADF@invalid?5format?5option?5?8?$CFc?8?$AA@ 1003c700     lstrlib.obj
+ 0002:00003720       ??_C@_0CD@KGGDHJLO@invalid?5next?5option?5for?5option?5?8@ 1003c720     lstrlib.obj
+ 0002:0000374c       ??_C@_0CJ@BHJFKHIF@format?5asks?5for?5alignment?5not?5po@ 1003c74c     lstrlib.obj
+ 0002:00003780       ??_C@_0BB@KBEKGHFK@integer?5overflow?$AA@ 1003c780     lstrlib.obj
+ 0002:00003794       ??_C@_0BC@HFAHIBAH@unsigned?5overflow?$AA@ 1003c794     lstrlib.obj
+ 0002:000037ac       ??_C@_0BO@KJIHONPE@string?5longer?5than?5given?5size?$AA@ 1003c7ac     lstrlib.obj
+ 0002:000037d0       ??_C@_0CJ@JDDCIIOM@string?5length?5does?5not?5fit?5in?5gi@ 1003c7d0     lstrlib.obj
+ 0002:00003804       ??_C@_0BH@BCBEHJHD@variable?9length?5format?$AA@ 1003c804     lstrlib.obj
+ 0002:00003820       ??_C@_0BI@IHIBMINB@format?5result?5too?5large?$AA@ 1003c820     lstrlib.obj
+ 0002:0000383c       ??_C@_0CO@PPAGINFB@?$CFd?9byte?5integer?5does?5not?5fit?5int@ 1003c83c     lstrlib.obj
+ 0002:00003874       ??_C@_0BP@MEEJFMAG@initial?5position?5out?5of?5string?$AA@ 1003c874     lstrlib.obj
+ 0002:0000389c       ??_C@_0BG@KKKAHMHM@data?5string?5too?5short?$AA@ 1003c89c     lstrlib.obj
+ 0002:000038b8       ??_C@_0BB@JAJHLPBA@too?5many?5results?$AA@ 1003c8b8     lstrlib.obj
+ 0002:000038cc       ??_C@_0CB@KIKICKIO@unfinished?5string?5for?5format?5?8z?8@ 1003c8cc     lstrlib.obj
+ 0002:0000392c       ??_C@_0BG@FEBJBDLJ@invalid?5key?5to?5?8next?8?$AA@ 1003c92c     ltable.obj
+ 0002:00003948       ??_C@_0P@KKABOKCO@table?5overflow?$AA@ 1003c948     ltable.obj
+ 0002:0000395c       ??_C@_0BD@BDIKLFBP@table?5index?5is?5nil?$AA@ 1003c95c     ltable.obj
+ 0002:00003974       ??_C@_0BD@BKBJANLJ@table?5index?5is?5NaN?$AA@ 1003c974     ltable.obj
+ 0002:00003990       __real@41e0000000000000    1003c990     ltable.obj
+ 0002:000039ec       ??_C@_06CMLIEHFC@concat?$AA@ 1003c9ec     ltablib.obj
+ 0002:000039f4       ??_C@_06OAOPNKHP@insert?$AA@ 1003c9f4     ltablib.obj
+ 0002:000039fc       ??_C@_04HDMMNHEL@move?$AA@ 1003c9fc     ltablib.obj
+ 0002:00003a04       ??_C@_04PIMMHFGE@sort?$AA@ 1003ca04     ltablib.obj
+ 0002:00003a0c       ??_C@_0L@GADKNKH@__newindex?$AA@ 1003ca0c     ltablib.obj
+ 0002:00003a1c       ??_C@_05MNDELLDN@__len?$AA@ 1003ca1c     ltablib.obj
+ 0002:00003a24       ??_C@_0BH@FFAABLEA@position?5out?5of?5bounds?$AA@ 1003ca24     ltablib.obj
+ 0002:00003a40       ??_C@_0CG@LPGHMHCC@wrong?5number?5of?5arguments?5to?5?8in@ 1003ca40     ltablib.obj
+ 0002:00003a70       ??_C@_0BK@ICIDIFLD@too?5many?5elements?5to?5move?$AA@ 1003ca70     ltablib.obj
+ 0002:00003a90       ??_C@_0BI@GJMBFEK@destination?5wrap?5around?$AA@ 1003ca90     ltablib.obj
+ 0002:00003aac       ??_C@_0DF@CNGMBKCF@invalid?5value?5?$CI?$CFs?$CJ?5at?5index?5?$CFI?5i@ 1003caac     ltablib.obj
+ 0002:00003aec       ??_C@_0BL@EDBCOFHM@too?5many?5results?5to?5unpack?$AA@ 1003caec     ltablib.obj
+ 0002:00003b0c       ??_C@_0CD@OFHMGIPD@invalid?5order?5function?5for?5sorti@ 1003cb0c     ltablib.obj
+ 0002:00003b38       ??_C@_0O@KFKKFIGA@array?5too?5big?$AA@ 1003cb38     ltablib.obj
+ 0002:00003b48       ?luaT_typenames_@@3QBQBDB  1003cb48     ltm.obj
+ 0002:00003b90       ??_C@_07GOBOHMJA@boolean?$AA@ 1003cb90     ltm.obj
+ 0002:00003b9c       ??_C@_06EBGNBFIA@number?$AA@ 1003cb9c     ltm.obj
+ 0002:00003ba4       ??_C@_05BENFLAID@proto?$AA@ 1003cba4     ltm.obj
+ 0002:00003c28       ??_C@_04GIMIAOHA@__eq?$AA@ 1003cc28     ltm.obj
+ 0002:00003c30       ??_C@_06GJGGPPDP@__band?$AA@ 1003cc30     ltm.obj
+ 0002:00003c38       ??_C@_05MGALBEIF@__bor?$AA@ 1003cc38     ltm.obj
+ 0002:00003c40       ??_C@_06FJCNDIMK@__bxor?$AA@ 1003cc40     ltm.obj
+ 0002:00003c48       ??_C@_05PPKAANCF@__shl?$AA@ 1003cc48     ltm.obj
+ 0002:00003c50       ??_C@_05CLOBDCPK@__shr?$AA@ 1003cc50     ltm.obj
+ 0002:00003c58       ??_C@_06HKAFJHAP@__bnot?$AA@ 1003cc58     ltm.obj
+ 0002:00003c60       ??_C@_04BKGOMBLK@__lt?$AA@ 1003cc60     ltm.obj
+ 0002:00003c68       ??_C@_04EJLHOCKK@__le?$AA@ 1003cc68     ltm.obj
+ 0002:00003c70       ??_C@_08HGDAODEP@__concat?$AA@ 1003cc70     ltm.obj
+ 0002:00003c7c       ??_C@_06JPFLIIOJ@__call?$AA@ 1003cc7c     ltm.obj
+ 0002:00003c84       ??_C@_0BN@DBGLHCNA@perform?5bitwise?5operation?5on?$AA@ 1003cc84     ltm.obj
+ 0002:00003ca8       ??_C@_0BG@IOLALLOM@perform?5arithmetic?5on?$AA@ 1003cca8     ltm.obj
+ 0002:00003cc4       ??_C@_03IBJHJIAF@lua?$AA@  1003ccc4     lua.obj
+ 0002:00003cc8       ??_C@_0N@IHACIAEK@interrupted?$CB?$AA@ 1003ccc8     lua.obj
+ 0002:00003cd8       ??_C@_04PFAOODAA@?$CFs?3?5?$AA@ 1003ccd8     lua.obj
+ 0002:00003ce0       ??_C@_0BF@FAKPCNHG@?8?$CFs?8?5needs?5argument?6?$AA@ 1003cce0     lua.obj
+ 0002:00003cfc       ??_C@_0BK@PCCNLBCC@unrecognized?5option?5?8?$CFs?8?6?$AA@ 1003ccfc     lua.obj
+ 0002:00003d20       ??_C@_0BMB@KHKIKKJF@usage?3?5?$CFs?5?$FLoptions?$FN?5?$FLscript?5?$FLarg@ 1003cd20     lua.obj
+ 0002:00003f3c       ??_C@_0BN@OOIOLIOE@?$CIerror?5object?5is?5a?5?$CFs?5value?$CJ?$AA@ 1003cf3c     lua.obj
+ 0002:00003f60       ??_C@_0DE@EIMNJLGP@Lua?55?44?46?5?5Copyright?5?$CIC?$CJ?51994?920@ 1003cf60     lua.obj
+ 0002:00003fa0       ??_C@_03CAOIPBNL@arg?$AA@  1003cfa0     lua.obj
+ 0002:00003fa4       ??_C@_0BF@FIHDONGD@?8arg?8?5is?5not?5a?5table?$AA@ 1003cfa4     lua.obj
+ 0002:00003fc0       ??_C@_0BN@DLFNFJGA@too?5many?5arguments?5to?5script?$AA@ 1003cfc0     lua.obj
+ 0002:00003fe4       ??_C@_02BAABKJLB@?9?9?$AA@ 1003cfe4     lua.obj
+ 0002:00003fe8       ??_C@_0BA@FDPHDMOB@?$DN?$CIcommand?5line?$CJ?$AA@ 1003cfe8     lua.obj
+ 0002:00003ffc       ??_C@_03PNFKLCOK@?$EAon?$AA@ 1003cffc     lua.obj
+ 0002:00004000       ??_C@_0O@EHIIHJEK@?$DNLUA_INIT_5_4?$AA@ 1003d000     lua.obj
+ 0002:00004010       ??_C@_09DEAIGMHG@?$DNLUA_INIT?$AA@ 1003d010     lua.obj
+ 0002:0000401c       ??_C@_07HFPOHICP@_PROMPT?$AA@ 1003d01c     lua.obj
+ 0002:00004028       ??_C@_08EGNEJHFA@_PROMPT2?$AA@ 1003d028     lua.obj
+ 0002:00004034       ??_C@_02LLMPMKNF@?$DO?5?$AA@ 1003d034     lua.obj
+ 0002:00004038       ??_C@_03HFDOEDEJ@?$DO?$DO?5?$AA@ 1003d038     lua.obj
+ 0002:0000403c       ??_C@_09JEDJACMH@return?5?$CFs?$AA@ 1003d03c     lua.obj
+ 0002:00004048       ??_C@_0L@DJCGIBCJ@return?5?$CFs?$DL?$AA@ 1003d048     lua.obj
+ 0002:00004058       ??_C@_0BK@HHHPJODG@too?5many?5results?5to?5print?$AA@ 1003d058     lua.obj
+ 0002:00004078       ??_C@_0BL@CJONDGA@error?5calling?5?8print?8?5?$CI?$CFs?$CJ?$AA@ 1003d078     lua.obj
+ 0002:00004098       ??_C@_0CH@DODEOMIP@cannot?5create?5state?3?5not?5enough?5@ 1003d098     lua.obj
+ 0002:000040c8       ??_C@_0BL@OLHFMPLN@?$CFs?3?5bad?5binary?5format?5?$CI?$CFs?$CJ?$AA@ 1003d0c8     lundump.obj
+ 0002:000040e8       ??_C@_0BA@CPEPOPIL@truncated?5chunk?$AA@ 1003d0e8     lundump.obj
+ 0002:000040fc       ??_C@_0BP@JEHANHLJ@bad?5format?5for?5constant?5string?$AA@ 1003d0fc     lundump.obj
+ 0002:00004124       ??_C@_0BB@IBGFAJOH@?$CFs?5size?5mismatch?$AA@ 1003d124     lundump.obj
+ 0002:00004138       ??_C@_0BD@HDHFEAI@not?5a?5binary?5chunk?$AA@ 1003d138     lundump.obj
+ 0002:00004150       ??_C@_0BB@LMNLLBJL@version?5mismatch?$AA@ 1003d150     lundump.obj
+ 0002:00004164       ??_C@_0BA@DDHFOPAI@format?5mismatch?$AA@ 1003d164     lundump.obj
+ 0002:00004178       ??_C@_0BA@ELNACCNF@corrupted?5chunk?$AA@ 1003d178     lundump.obj
+ 0002:0000418c       ??_C@_0M@LHLPIFKK@Instruction?$AA@ 1003d18c     lundump.obj
+ 0002:0000419c       ??_C@_0M@GMBHIDNA@lua_Integer?$AA@ 1003d19c     lundump.obj
+ 0002:000041ac       ??_C@_0L@PFILHMCA@lua_Number?$AA@ 1003d1ac     lundump.obj
+ 0002:000041bc       ??_C@_0BI@DNKFBMKP@integer?5format?5mismatch?$AA@ 1003d1bc     lundump.obj
+ 0002:000041d8       ??_C@_0BG@BAHDHADB@float?5format?5mismatch?$AA@ 1003d1d8     lundump.obj
+ 0002:000041f4       ??_C@_0O@CNJIDMJE@binary?5string?$AA@ 1003d1f4     lundump.obj
+ 0002:00004248       ??_C@_06KLHHMIGM@offset?$AA@ 1003d248     lutf8lib.obj
+ 0002:00004250       ??_C@_09HHCEKEIA@codepoint?$AA@ 1003d250     lutf8lib.obj
+ 0002:0000425c       ??_C@_05CFHFIAJO@codes?$AA@ 1003d25c     lutf8lib.obj
+ 0002:00004264       ??_C@_0M@GMACFGDH@charpattern?$AA@ 1003d264     lutf8lib.obj
+ 0002:00004290       ??_C@_0BP@GADPIPAO@initial?5position?5out?5of?5bounds?$AA@ 1003d290     lutf8lib.obj
+ 0002:000042b8       ??_C@_0BN@KEPOAMNG@final?5position?5out?5of?5bounds?$AA@ 1003d2b8     lutf8lib.obj
+ 0002:000042dc       ??_C@_0O@EAGJMEKM@out?5of?5bounds?$AA@ 1003d2dc     lutf8lib.obj
+ 0002:000042ec       ??_C@_0BD@MJACNLBA@invalid?5UTF?98?5code?$AA@ 1003d2ec     lutf8lib.obj
+ 0002:00004304       ??_C@_02PJPEALPH@?$CFU?$AA@ 1003d304     lutf8lib.obj
+ 0002:00004308       ??_C@_0CI@HDBIKOFJ@initial?5position?5is?5a?5continuati@ 1003d308     lutf8lib.obj
+ 0002:00004338       ??_C@_0P@HIBMDJPG@?$FL?$AA?9?$HP?B?9?$PN?$FN?$FL?$IA?9?$LP?$FN?$CK?$AA@ 1003d338     lutf8lib.obj
+ 0002:0000434c       ??_C@_05GADAOHMC@limit?$AA@ 1003d34c     lvm.obj
+ 0002:00004354       ??_C@_0BD@PJLANDHO@?8for?8?5step?5is?5zero?$AA@ 1003d354     lvm.obj
+ 0002:0000436c       ??_C@_0O@GPKAKMKB@initial?5value?$AA@ 1003d36c     lvm.obj
+ 0002:0000437c       ??_C@_05FKHKFDID@index?$AA@ 1003d37c     lvm.obj
+ 0002:00004384       ??_C@_0CI@GKOBBGCN@?8__index?8?5chain?5too?5long?$DL?5possib@ 1003d384     lvm.obj
+ 0002:000043b4       ??_C@_0CL@CIBANOPE@?8__newindex?8?5chain?5too?5long?$DL?5pos@ 1003d3b4     lvm.obj
+ 0002:000043e8       ??_C@_0BH@ONIKNOCM@string?5length?5overflow?$AA@ 1003d3e8     lvm.obj
+ 0002:00004404       ??_C@_0O@MKOIIDGO@get?5length?5of?$AA@ 1003d404     lvm.obj
+ 0002:00004414       ??_C@_0BK@KPCDLNKD@attempt?5to?5divide?5by?5zero?$AA@ 1003d414     lvm.obj
+ 0002:00004434       ??_C@_0BK@HHICHKCC@attempt?5to?5perform?5?8n?$CF?$CF0?8?$AA@ 1003d434     lvm.obj
+ 0002:00004453       ?value@?$integral_constant@_N$0A@@std@@2_NB 1003d453     MSVCRT:ti_inst.obj
+ 0002:00004454       ?value@?$integral_constant@_N$00@std@@2_NB 1003d454     MSVCRT:ti_inst.obj
+ 0002:0000445c       ??_7type_info@@6B@         1003d45c     MSVCRT:ti_inst.obj
+ 0002:00004460       __pRawDllMain              1003d460     MSVCRT:crtdll.obj
+ 0002:00004460       __pDefaultRawDllMain       1003d460     MSVCRT:crtdll.obj
+ 0002:0000446c       ?ProcessDetach@NativeDll@<CrtImplementationDetails>@@0IB 1003d46c     MSVCRT:initsect.obj
+ 0002:00004470       ?ProcessAttach@NativeDll@<CrtImplementationDetails>@@0IB 1003d470     MSVCRT:initsect.obj
+ 0002:00004474       ?ThreadAttach@NativeDll@<CrtImplementationDetails>@@0IB 1003d474     MSVCRT:initsect.obj
+ 0002:00004478       ?ThreadDetach@NativeDll@<CrtImplementationDetails>@@0IB 1003d478     MSVCRT:initsect.obj
+ 0002:0000447c       ?ProcessVerifier@NativeDll@<CrtImplementationDetails>@@0IB 1003d47c     MSVCRT:initsect.obj
+ 0002:00004480       __load_config_used         1003d480     MSVCRT:loadcfg.obj
+ 0002:000044c8       __imp_?lua_close@@YAXPAUlua_State@@@Z 1003d4c8     <linker-defined>
+ 0002:000044cc       __imp_?lua_gettop@@YAHPAUlua_State@@@Z 1003d4cc     <linker-defined>
+ 0002:000044d0       __imp_?lua_settop@@YAXPAUlua_State@@H@Z 1003d4d0     <linker-defined>
+ 0002:000044d4       __imp_?lua_rotate@@YAXPAUlua_State@@HH@Z 1003d4d4     <linker-defined>
+ 0002:000044d8       __imp_?lua_type@@YAHPAUlua_State@@H@Z 1003d4d8     <linker-defined>
+ 0002:000044dc       __imp_?lua_typename@@YAPBDPAUlua_State@@H@Z 1003d4dc     <linker-defined>
+ 0002:000044e0       __imp_?lua_tointegerx@@YA_JPAUlua_State@@HPAH@Z 1003d4e0     <linker-defined>
+ 0002:000044e4       __imp_?lua_toboolean@@YAHPAUlua_State@@H@Z 1003d4e4     <linker-defined>
+ 0002:000044e8       __imp_?lua_tolstring@@YAPBDPAUlua_State@@HPAI@Z 1003d4e8     <linker-defined>
+ 0002:000044ec       __imp_?lua_touserdata@@YAPAXPAUlua_State@@H@Z 1003d4ec     <linker-defined>
+ 0002:000044f0       __imp_?lua_pushinteger@@YAXPAUlua_State@@_J@Z 1003d4f0     <linker-defined>
+ 0002:000044f4       __imp_?lua_pushlstring@@YAPBDPAUlua_State@@PBDI@Z 1003d4f4     <linker-defined>
+ 0002:000044f8       __imp_?lua_pushstring@@YAPBDPAUlua_State@@PBD@Z 1003d4f8     <linker-defined>
+ 0002:000044fc       __imp_?lua_pushfstring@@YAPBDPAUlua_State@@PBDZZ 1003d4fc     <linker-defined>
+ 0002:00004500       __imp_?lua_pushcclosure@@YAXPAUlua_State@@P6AH0@ZH@Z 1003d500     <linker-defined>
+ 0002:00004504       __imp_?lua_pushboolean@@YAXPAUlua_State@@H@Z 1003d504     <linker-defined>
+ 0002:00004508       __imp_?lua_pushlightuserdata@@YAXPAUlua_State@@PAX@Z 1003d508     <linker-defined>
+ 0002:0000450c       __imp_?lua_getglobal@@YAHPAUlua_State@@PBD@Z 1003d50c     <linker-defined>
+ 0002:00004510       __imp_?lua_rawgeti@@YAHPAUlua_State@@H_J@Z 1003d510     <linker-defined>
+ 0002:00004514       __imp_?lua_createtable@@YAXPAUlua_State@@HH@Z 1003d514     <linker-defined>
+ 0002:00004518       __imp_?lua_setglobal@@YAXPAUlua_State@@PBD@Z 1003d518     <linker-defined>
+ 0002:0000451c       __imp_?lua_setfield@@YAXPAUlua_State@@HPBD@Z 1003d51c     <linker-defined>
+ 0002:00004520       __imp_?lua_rawseti@@YAXPAUlua_State@@H_J@Z 1003d520     <linker-defined>
+ 0002:00004524       __imp_?lua_pcallk@@YAHPAUlua_State@@HHHHP6AH0HH@Z@Z 1003d524     <linker-defined>
+ 0002:00004528       __imp_?lua_warning@@YAXPAUlua_State@@PBDH@Z 1003d528     <linker-defined>
+ 0002:0000452c       __imp_?lua_gc@@YAHPAUlua_State@@HZZ 1003d52c     <linker-defined>
+ 0002:00004530       __imp_?lua_concat@@YAXPAUlua_State@@H@Z 1003d530     <linker-defined>
+ 0002:00004534       __imp_?lua_sethook@@YAXPAUlua_State@@P6AX0PAUlua_Debug@@@ZHH@Z 1003d534     <linker-defined>
+ 0002:00004538       __imp_?luaL_checkversion_@@YAXPAUlua_State@@NI@Z 1003d538     <linker-defined>
+ 0002:0000453c       __imp_?luaL_callmeta@@YAHPAUlua_State@@HPBD@Z 1003d53c     <linker-defined>
+ 0002:00004540       __imp_?luaL_tolstring@@YAPBDPAUlua_State@@HPAI@Z 1003d540     <linker-defined>
+ 0002:00004544       __imp_?luaL_checkstack@@YAXPAUlua_State@@HPBD@Z 1003d544     <linker-defined>
+ 0002:00004548       __imp_?luaL_error@@YAHPAUlua_State@@PBDZZ 1003d548     <linker-defined>
+ 0002:0000454c       __imp_?luaL_loadfilex@@YAHPAUlua_State@@PBD1@Z 1003d54c     <linker-defined>
+ 0002:00004550       __imp_?luaL_loadbufferx@@YAHPAUlua_State@@PBDI11@Z 1003d550     <linker-defined>
+ 0002:00004554       __imp_?luaL_newstate@@YAPAUlua_State@@XZ 1003d554     <linker-defined>
+ 0002:00004558       __imp_?luaL_len@@YA_JPAUlua_State@@H@Z 1003d558     <linker-defined>
+ 0002:0000455c       __imp_?luaL_traceback@@YAXPAUlua_State@@0PBDH@Z 1003d55c     <linker-defined>
+ 0002:00004560       __imp_?luaL_openlibs@@YAXPAUlua_State@@@Z 1003d560     <linker-defined>
+ 0002:00004a34       ??_R4type_info@@6B@        1003da34     MSVCRT:ti_inst.obj
+ 0002:00004a48       ??_R3type_info@@8          1003da48     MSVCRT:ti_inst.obj
+ 0002:00004a58       ??_R2type_info@@8          1003da58     MSVCRT:ti_inst.obj
+ 0002:00004a60       ??_R1A@?0A@EA@type_info@@8 1003da60     MSVCRT:ti_inst.obj
+ 0002:00004b8c       ___rtc_iaa                 1003db8c     MSVCRT:initsect.obj
+ 0002:00004c90       ___rtc_izz                 1003dc90     MSVCRT:initsect.obj
+ 0002:00004d94       ___rtc_taa                 1003dd94     MSVCRT:initsect.obj
+ 0002:00004e98       ___rtc_tzz                 1003de98     MSVCRT:initsect.obj
+ 0002:00005000       __TI2PAUlua_longjmp@@      1003e000     ldo.obj
+ 0002:00005014       __CTA2PAUlua_longjmp@@     1003e014     ldo.obj
+ 0002:00005024       __CT??_R0PAUlua_longjmp@@@84 1003e024     ldo.obj
+ 0002:00005044       __CT??_R0PAX@84            1003e044     ldo.obj
+ 0003:00000000       __imp__EncodePointer@4     10041000     pointeroverride.obj
+ 0003:00000004       __imp__DecodePointer@4     10041004     pointeroverride.obj
+ 0003:00000010       ___security_cookie         10041010     MSVCRT:gs_cookie.obj
+ 0003:00000014       ___security_cookie_complement 10041014     MSVCRT:gs_cookie.obj
+ 0003:00000020       ___isa_enabled             10041020     MSVCRT:cpu_disp.obj
+ 0003:00000030       ___native_dllmain_reason   10041030     MSVCRT:natstart.obj
+ 0003:00000140       ??_R0PAUlua_longjmp@@@8    10041140     ldo.obj
+ 0003:00000160       ??_R0PAX@8                 10041160     ldo.obj
+ 0003:00000170       ??_R0?AVtype_info@@@8      10041170     MSVCRT:ti_inst.obj
+ 0003:000005b8       ___isa_available           100415b8     MSVCRT:cpu_disp.obj
+ 0003:000005bc       ___favor                   100415bc     MSVCRT:cpu_disp.obj
+ 0003:000005c0       ?__type_info_root_node@@3U__type_info_node@@A 100415c0     MSVCRT:tncleanup.obj
+ 0003:000005c8       ___native_startup_lock     100415c8     <common>
+ 0003:000005d8       ___native_startup_state    100415d8     <common>
+ 0003:000005dc       ___onexitend               100415dc     <common>
+ 0003:000005ec       ___onexitbegin             100415ec     <common>
+ 0003:000005f0       ___dyn_tls_init_callback   100415f0     <common>
+ 0004:00000000       __imp__GetSystemTimeAsFileTime@4 10042000     kernel32:KERNEL32.dll
+ 0004:00000004       __imp__GetCurrentThreadId@0 10042004     kernel32:KERNEL32.dll
+ 0004:00000008       __imp__GetCurrentProcessId@0 10042008     kernel32:KERNEL32.dll
+ 0004:0000000c       __imp__QueryPerformanceCounter@4 1004200c     kernel32:KERNEL32.dll
+ 0004:00000010       __imp__IsProcessorFeaturePresent@4 10042010     kernel32:KERNEL32.dll
+ 0004:00000014       __imp__IsDebuggerPresent@0 10042014     kernel32:KERNEL32.dll
+ 0004:00000018       __imp__GetModuleFileNameA@12 10042018     kernel32:KERNEL32.dll
+ 0004:0000001c       __imp__LoadLibraryExA@12   1004201c     kernel32:KERNEL32.dll
+ 0004:00000020       __imp__FormatMessageA@28   10042020     kernel32:KERNEL32.dll
+ 0004:00000024       __imp__GetLastError@0      10042024     kernel32:KERNEL32.dll
+ 0004:00000028       __imp__GetProcAddress@8    10042028     kernel32:KERNEL32.dll
+ 0004:0000002c       __imp__FreeLibrary@4       1004202c     kernel32:KERNEL32.dll
+ 0004:00000030       __imp__DisableThreadLibraryCalls@4 10042030     kernel32:KERNEL32.dll
+ 0004:00000034       \177KERNEL32_NULL_THUNK_DATA 10042034     kernel32:KERNEL32.dll
+ 0004:00000068       __imp__strncmp             10042068     MSVCRT:MSVCR120.dll
+ 0004:0000006c       __imp__strstr              1004206c     MSVCRT:MSVCR120.dll
+ 0004:00000070       __imp__memcpy              10042070     MSVCRT:MSVCR120.dll
+ 0004:00000074       __imp__isdigit             10042074     MSVCRT:MSVCR120.dll
+ 0004:00000078       __imp__isalnum             10042078     MSVCRT:MSVCR120.dll
+ 0004:0000007c       __imp__toupper             1004207c     MSVCRT:MSVCR120.dll
+ 0004:00000080       __imp__fwrite              10042080     MSVCRT:MSVCR120.dll
+ 0004:00000084       __imp__strspn              10042084     MSVCRT:MSVCR120.dll
+ 0004:00000088       __imp__ldexp               10042088     MSVCRT:MSVCR120.dll
+ 0004:0000008c       __imp__fgets               1004208c     MSVCRT:MSVCR120.dll
+ 0004:00000090       __imp__strchr              10042090     MSVCRT:MSVCR120.dll
+ 0004:00000094       __imp__abort               10042094     MSVCRT:MSVCR120.dll
+ 0004:00000098       __imp___CxxThrowException@8 10042098     MSVCRT:MSVCR120.dll
+ 0004:0000009c       __imp____CxxFrameHandler3  1004209c     MSVCRT:MSVCR120.dll
+ 0004:000000a0       __imp__isxdigit            100420a0     MSVCRT:MSVCR120.dll
+ 0004:000000a4       __imp__isspace             100420a4     MSVCRT:MSVCR120.dll
+ 0004:000000a8       __imp__localeconv          100420a8     MSVCRT:MSVCR120.dll
+ 0004:000000ac       __imp__clearerr            100420ac     MSVCRT:MSVCR120.dll
+ 0004:000000b0       __imp___fseeki64           100420b0     MSVCRT:MSVCR120.dll
+ 0004:000000b4       __imp___ftelli64           100420b4     MSVCRT:MSVCR120.dll
+ 0004:000000b8       __imp___pclose             100420b8     MSVCRT:MSVCR120.dll
+ 0004:000000bc       __imp___popen              100420bc     MSVCRT:MSVCR120.dll
+ 0004:000000c0       __imp__setvbuf             100420c0     MSVCRT:MSVCR120.dll
+ 0004:000000c4       __imp__tmpfile             100420c4     MSVCRT:MSVCR120.dll
+ 0004:000000c8       __imp__ungetc              100420c8     MSVCRT:MSVCR120.dll
+ 0004:000000cc       __imp___time64             100420cc     MSVCRT:MSVCR120.dll
+ 0004:000000d0       __imp___CIacos             100420d0     MSVCRT:MSVCR120.dll
+ 0004:000000d4       __imp___CIasin             100420d4     MSVCRT:MSVCR120.dll
+ 0004:000000d8       __imp___CIfmod             100420d8     MSVCRT:MSVCR120.dll
+ 0004:000000dc       __imp__ceil                100420dc     MSVCRT:MSVCR120.dll
+ 0004:000000e0       __imp__floor               100420e0     MSVCRT:MSVCR120.dll
+ 0004:000000e4       __imp___HUGE               100420e4     MSVCRT:MSVCR120.dll
+ 0004:000000e8       __imp__getenv              100420e8     MSVCRT:MSVCR120.dll
+ 0004:000000ec       __imp__strrchr             100420ec     MSVCRT:MSVCR120.dll
+ 0004:000000f0       __imp__sprintf             100420f0     MSVCRT:MSVCR120.dll
+ 0004:000000f4       __imp__strtod              100420f4     MSVCRT:MSVCR120.dll
+ 0004:000000f8       __imp__strpbrk             100420f8     MSVCRT:MSVCR120.dll
+ 0004:000000fc       __imp___CIpow              100420fc     MSVCRT:MSVCR120.dll
+ 0004:00000100       __imp__setlocale           10042100     MSVCRT:MSVCR120.dll
+ 0004:00000104       __imp__exit                10042104     MSVCRT:MSVCR120.dll
+ 0004:00000108       __imp__system              10042108     MSVCRT:MSVCR120.dll
+ 0004:0000010c       __imp__strerror            1004210c     MSVCRT:MSVCR120.dll
+ 0004:00000110       __imp__strftime            10042110     MSVCRT:MSVCR120.dll
+ 0004:00000114       __imp___difftime64         10042114     MSVCRT:MSVCR120.dll
+ 0004:00000118       __imp___gmtime64           10042118     MSVCRT:MSVCR120.dll
+ 0004:0000011c       __imp___localtime64        1004211c     MSVCRT:MSVCR120.dll
+ 0004:00000120       __imp___mktime64           10042120     MSVCRT:MSVCR120.dll
+ 0004:00000124       __imp__remove              10042124     MSVCRT:MSVCR120.dll
+ 0004:00000128       __imp__rename              10042128     MSVCRT:MSVCR120.dll
+ 0004:0000012c       __imp__tmpnam              1004212c     MSVCRT:MSVCR120.dll
+ 0004:00000130       __imp__isalpha             10042130     MSVCRT:MSVCR120.dll
+ 0004:00000134       __imp__isupper             10042134     MSVCRT:MSVCR120.dll
+ 0004:00000138       __imp__islower             10042138     MSVCRT:MSVCR120.dll
+ 0004:0000013c       __imp__ispunct             1004213c     MSVCRT:MSVCR120.dll
+ 0004:00000140       __imp__isgraph             10042140     MSVCRT:MSVCR120.dll
+ 0004:00000144       __imp__iscntrl             10042144     MSVCRT:MSVCR120.dll
+ 0004:00000148       __imp__tolower             10042148     MSVCRT:MSVCR120.dll
+ 0004:0000014c       __imp__frexp               1004214c     MSVCRT:MSVCR120.dll
+ 0004:00000150       __imp__memchr              10042150     MSVCRT:MSVCR120.dll
+ 0004:00000154       __imp___fileno             10042154     MSVCRT:MSVCR120.dll
+ 0004:00000158       __imp__fputs               10042158     MSVCRT:MSVCR120.dll
+ 0004:0000015c       __imp__signal              1004215c     MSVCRT:MSVCR120.dll
+ 0004:00000160       __imp___isatty             10042160     MSVCRT:MSVCR120.dll
+ 0004:00000164       __imp__strcoll             10042164     MSVCRT:MSVCR120.dll
+ 0004:00000168       __imp_??3@YAXPAX@Z         10042168     MSVCRT:MSVCR120.dll
+ 0004:0000016c       __imp_??1type_info@@UAE@XZ 1004216c     MSVCRT:MSVCR120.dll
+ 0004:00000170       __imp____CppXcptFilter     10042170     MSVCRT:MSVCR120.dll
+ 0004:00000174       __imp___amsg_exit          10042174     MSVCRT:MSVCR120.dll
+ 0004:00000178       __imp___malloc_crt         10042178     MSVCRT:MSVCR120.dll
+ 0004:0000017c       __imp___initterm           1004217c     MSVCRT:MSVCR120.dll
+ 0004:00000180       __imp___initterm_e         10042180     MSVCRT:MSVCR120.dll
+ 0004:00000184       __imp___crt_debugger_hook  10042184     MSVCRT:MSVCR120.dll
+ 0004:00000188       __imp____crtUnhandledException 10042188     MSVCRT:MSVCR120.dll
+ 0004:0000018c       __imp____crtTerminateProcess 1004218c     MSVCRT:MSVCR120.dll
+ 0004:00000190       __imp_?terminate@@YAXXZ    10042190     MSVCRT:MSVCR120.dll
+ 0004:00000194       __imp___lock               10042194     MSVCRT:MSVCR120.dll
+ 0004:00000198       __imp___unlock             10042198     MSVCRT:MSVCR120.dll
+ 0004:0000019c       __imp___calloc_crt         1004219c     MSVCRT:MSVCR120.dll
+ 0004:000001a0       __imp____dllonexit         100421a0     MSVCRT:MSVCR120.dll
+ 0004:000001a4       __imp___onexit             100421a4     MSVCRT:MSVCR120.dll
+ 0004:000001a8       __imp____clean_type_info_names_internal 100421a8     MSVCRT:MSVCR120.dll
+ 0004:000001ac       __imp___except_handler4_common 100421ac     MSVCRT:MSVCR120.dll
+ 0004:000001b0       __imp__realloc             100421b0     MSVCRT:MSVCR120.dll
+ 0004:000001b4       __imp__free                100421b4     MSVCRT:MSVCR120.dll
+ 0004:000001b8       __imp__getc                100421b8     MSVCRT:MSVCR120.dll
+ 0004:000001bc       __imp__freopen             100421bc     MSVCRT:MSVCR120.dll
+ 0004:000001c0       __imp__fread               100421c0     MSVCRT:MSVCR120.dll
+ 0004:000001c4       __imp__fprintf             100421c4     MSVCRT:MSVCR120.dll
+ 0004:000001c8       __imp__fopen               100421c8     MSVCRT:MSVCR120.dll
+ 0004:000001cc       __imp__fflush              100421cc     MSVCRT:MSVCR120.dll
+ 0004:000001d0       __imp__ferror              100421d0     MSVCRT:MSVCR120.dll
+ 0004:000001d4       __imp__feof                100421d4     MSVCRT:MSVCR120.dll
+ 0004:000001d8       __imp__fclose              100421d8     MSVCRT:MSVCR120.dll
+ 0004:000001dc       __imp____iob_func          100421dc     MSVCRT:MSVCR120.dll
+ 0004:000001e0       __imp__clock               100421e0     MSVCRT:MSVCR120.dll
+ 0004:000001e4       __imp___errno              100421e4     MSVCRT:MSVCR120.dll
+ 0004:000001e8       \177MSVCR120_NULL_THUNK_DATA 100421e8     MSVCRT:MSVCR120.dll
+ 0004:00000260       __IMPORT_DESCRIPTOR_MSVCR120 10042260     MSVCRT:MSVCR120.dll
+ 0004:00000274       __IMPORT_DESCRIPTOR_KERNEL32 10042274     kernel32:KERNEL32.dll
+ 0004:00000288       __NULL_IMPORT_DESCRIPTOR   10042288     MSVCRT:MSVCR120.dll
+
+ Exports
+
+  ordinal    name
+
+        1    ?luaL_addgsub@@YAXPAUluaL_Buffer@@PBD11@Z (void __cdecl luaL_addgsub(struct luaL_Buffer *,char const *,char const *,char const *))
+        2    ?luaL_addlstring@@YAXPAUluaL_Buffer@@PBDI@Z (void __cdecl luaL_addlstring(struct luaL_Buffer *,char const *,unsigned int))
+        3    ?luaL_addstring@@YAXPAUluaL_Buffer@@PBD@Z (void __cdecl luaL_addstring(struct luaL_Buffer *,char const *))
+        4    ?luaL_addvalue@@YAXPAUluaL_Buffer@@@Z (void __cdecl luaL_addvalue(struct luaL_Buffer *))
+        5    ?luaL_argerror@@YAHPAUlua_State@@HPBD@Z (int __cdecl luaL_argerror(struct lua_State *,int,char const *))
+        6    ?luaL_buffinit@@YAXPAUlua_State@@PAUluaL_Buffer@@@Z (void __cdecl luaL_buffinit(struct lua_State *,struct luaL_Buffer *))
+        7    ?luaL_buffinitsize@@YAPADPAUlua_State@@PAUluaL_Buffer@@I@Z (char * __cdecl luaL_buffinitsize(struct lua_State *,struct luaL_Buffer *,unsigned int))
+        8    ?luaL_callmeta@@YAHPAUlua_State@@HPBD@Z (int __cdecl luaL_callmeta(struct lua_State *,int,char const *))
+        9    ?luaL_checkany@@YAXPAUlua_State@@H@Z (void __cdecl luaL_checkany(struct lua_State *,int))
+       10    ?luaL_checkinteger@@YA_JPAUlua_State@@H@Z (__int64 __cdecl luaL_checkinteger(struct lua_State *,int))
+       11    ?luaL_checklstring@@YAPBDPAUlua_State@@HPAI@Z (char const * __cdecl luaL_checklstring(struct lua_State *,int,unsigned int *))
+       12    ?luaL_checknumber@@YANPAUlua_State@@H@Z (double __cdecl luaL_checknumber(struct lua_State *,int))
+       13    ?luaL_checkoption@@YAHPAUlua_State@@HPBDQBQBD@Z (int __cdecl luaL_checkoption(struct lua_State *,int,char const *,char const * const * const))
+       14    ?luaL_checkstack@@YAXPAUlua_State@@HPBD@Z (void __cdecl luaL_checkstack(struct lua_State *,int,char const *))
+       15    ?luaL_checktype@@YAXPAUlua_State@@HH@Z (void __cdecl luaL_checktype(struct lua_State *,int,int))
+       16    ?luaL_checkudata@@YAPAXPAUlua_State@@HPBD@Z (void * __cdecl luaL_checkudata(struct lua_State *,int,char const *))
+       17    ?luaL_checkversion_@@YAXPAUlua_State@@NI@Z (void __cdecl luaL_checkversion_(struct lua_State *,double,unsigned int))
+       18    ?luaL_error@@YAHPAUlua_State@@PBDZZ (int __cdecl luaL_error(struct lua_State *,char const *,...))
+       19    ?luaL_execresult@@YAHPAUlua_State@@H@Z (int __cdecl luaL_execresult(struct lua_State *,int))
+       20    ?luaL_fileresult@@YAHPAUlua_State@@HPBD@Z (int __cdecl luaL_fileresult(struct lua_State *,int,char const *))
+       21    ?luaL_getmetafield@@YAHPAUlua_State@@HPBD@Z (int __cdecl luaL_getmetafield(struct lua_State *,int,char const *))
+       22    ?luaL_getsubtable@@YAHPAUlua_State@@HPBD@Z (int __cdecl luaL_getsubtable(struct lua_State *,int,char const *))
+       23    ?luaL_gsub@@YAPBDPAUlua_State@@PBD11@Z (char const * __cdecl luaL_gsub(struct lua_State *,char const *,char const *,char const *))
+       24    ?luaL_len@@YA_JPAUlua_State@@H@Z (__int64 __cdecl luaL_len(struct lua_State *,int))
+       25    ?luaL_loadbufferx@@YAHPAUlua_State@@PBDI11@Z (int __cdecl luaL_loadbufferx(struct lua_State *,char const *,unsigned int,char const *,char const *))
+       26    ?luaL_loadfilex@@YAHPAUlua_State@@PBD1@Z (int __cdecl luaL_loadfilex(struct lua_State *,char const *,char const *))
+       27    ?luaL_loadstring@@YAHPAUlua_State@@PBD@Z (int __cdecl luaL_loadstring(struct lua_State *,char const *))
+       28    ?luaL_newmetatable@@YAHPAUlua_State@@PBD@Z (int __cdecl luaL_newmetatable(struct lua_State *,char const *))
+       29    ?luaL_newstate@@YAPAUlua_State@@XZ (struct lua_State * __cdecl luaL_newstate(void))
+       30    ?luaL_openlibs@@YAXPAUlua_State@@@Z (void __cdecl luaL_openlibs(struct lua_State *))
+       31    ?luaL_optinteger@@YA_JPAUlua_State@@H_J@Z (__int64 __cdecl luaL_optinteger(struct lua_State *,int,__int64))
+       32    ?luaL_optlstring@@YAPBDPAUlua_State@@HPBDPAI@Z (char const * __cdecl luaL_optlstring(struct lua_State *,int,char const *,unsigned int *))
+       33    ?luaL_optnumber@@YANPAUlua_State@@HN@Z (double __cdecl luaL_optnumber(struct lua_State *,int,double))
+       34    ?luaL_prepbuffsize@@YAPADPAUluaL_Buffer@@I@Z (char * __cdecl luaL_prepbuffsize(struct luaL_Buffer *,unsigned int))
+       35    ?luaL_pushmodule@@YAXPAUlua_State@@PBDH@Z (void __cdecl luaL_pushmodule(struct lua_State *,char const *,int))
+       36    ?luaL_pushresult@@YAXPAUluaL_Buffer@@@Z (void __cdecl luaL_pushresult(struct luaL_Buffer *))
+       37    ?luaL_pushresultsize@@YAXPAUluaL_Buffer@@I@Z (void __cdecl luaL_pushresultsize(struct luaL_Buffer *,unsigned int))
+       38    ?luaL_ref@@YAHPAUlua_State@@H@Z (int __cdecl luaL_ref(struct lua_State *,int))
+       39    ?luaL_requiref@@YAXPAUlua_State@@PBDP6AH0@ZH@Z (void __cdecl luaL_requiref(struct lua_State *,char const *,int (__cdecl*)(struct lua_State *),int))
+       40    ?luaL_setfuncs@@YAXPAUlua_State@@PBUluaL_Reg@@H@Z (void __cdecl luaL_setfuncs(struct lua_State *,struct luaL_Reg const *,int))
+       41    ?luaL_setmetatable@@YAXPAUlua_State@@PBD@Z (void __cdecl luaL_setmetatable(struct lua_State *,char const *))
+       42    ?luaL_testudata@@YAPAXPAUlua_State@@HPBD@Z (void * __cdecl luaL_testudata(struct lua_State *,int,char const *))
+       43    ?luaL_tolstring@@YAPBDPAUlua_State@@HPAI@Z (char const * __cdecl luaL_tolstring(struct lua_State *,int,unsigned int *))
+       44    ?luaL_traceback@@YAXPAUlua_State@@0PBDH@Z (void __cdecl luaL_traceback(struct lua_State *,struct lua_State *,char const *,int))
+       45    ?luaL_typeerror@@YAHPAUlua_State@@HPBD@Z (int __cdecl luaL_typeerror(struct lua_State *,int,char const *))
+       46    ?luaL_unref@@YAXPAUlua_State@@HH@Z (void __cdecl luaL_unref(struct lua_State *,int,int))
+       47    ?luaL_where@@YAXPAUlua_State@@H@Z (void __cdecl luaL_where(struct lua_State *,int))
+       48    ?lua_absindex@@YAHPAUlua_State@@H@Z (int __cdecl lua_absindex(struct lua_State *,int))
+       49    ?lua_arith@@YAXPAUlua_State@@H@Z (void __cdecl lua_arith(struct lua_State *,int))
+       50    ?lua_atpanic@@YAP6AHPAUlua_State@@@Z0P6AH0@Z@Z (int (__cdecl*__cdecl lua_atpanic(struct lua_State *,int (__cdecl*)(struct lua_State *)))(struct lua_State *))
+       51    ?lua_callk@@YAXPAUlua_State@@HHHP6AH0HH@Z@Z (void __cdecl lua_callk(struct lua_State *,int,int,int,int (__cdecl*)(struct lua_State *,int,int)))
+       52    ?lua_checkstack@@YAHPAUlua_State@@H@Z (int __cdecl lua_checkstack(struct lua_State *,int))
+       53    ?lua_close@@YAXPAUlua_State@@@Z (void __cdecl lua_close(struct lua_State *))
+       54    ?lua_closeslot@@YAXPAUlua_State@@H@Z (void __cdecl lua_closeslot(struct lua_State *,int))
+       55    ?lua_closethread@@YAHPAUlua_State@@0@Z (int __cdecl lua_closethread(struct lua_State *,struct lua_State *))
+       56    ?lua_compare@@YAHPAUlua_State@@HHH@Z (int __cdecl lua_compare(struct lua_State *,int,int,int))
+       57    ?lua_concat@@YAXPAUlua_State@@H@Z (void __cdecl lua_concat(struct lua_State *,int))
+       58    ?lua_copy@@YAXPAUlua_State@@HH@Z (void __cdecl lua_copy(struct lua_State *,int,int))
+       59    ?lua_createtable@@YAXPAUlua_State@@HH@Z (void __cdecl lua_createtable(struct lua_State *,int,int))
+       60    ?lua_dump@@YAHPAUlua_State@@P6AH0PBXIPAX@Z2H@Z (int __cdecl lua_dump(struct lua_State *,int (__cdecl*)(struct lua_State *,void const *,unsigned int,void *),void *,int))
+       61    ?lua_error@@YAHPAUlua_State@@@Z (int __cdecl lua_error(struct lua_State *))
+       62    ?lua_gc@@YAHPAUlua_State@@HZZ (int __cdecl lua_gc(struct lua_State *,int,...))
+       63    ?lua_getallocf@@YAP6APAXPAX0II@ZPAUlua_State@@PAPAX@Z (void * (__cdecl*__cdecl lua_getallocf(struct lua_State *,void * *))(void *,void *,unsigned int,unsigned int))
+       64    ?lua_getfield@@YAHPAUlua_State@@HPBD@Z (int __cdecl lua_getfield(struct lua_State *,int,char const *))
+       65    ?lua_getglobal@@YAHPAUlua_State@@PBD@Z (int __cdecl lua_getglobal(struct lua_State *,char const *))
+       66    ?lua_gethook@@YAP6AXPAUlua_State@@PAUlua_Debug@@@Z0@Z (void (__cdecl*__cdecl lua_gethook(struct lua_State *))(struct lua_State *,struct lua_Debug *))
+       67    ?lua_gethookcount@@YAHPAUlua_State@@@Z (int __cdecl lua_gethookcount(struct lua_State *))
+       68    ?lua_gethookmask@@YAHPAUlua_State@@@Z (int __cdecl lua_gethookmask(struct lua_State *))
+       69    ?lua_geti@@YAHPAUlua_State@@H_J@Z (int __cdecl lua_geti(struct lua_State *,int,__int64))
+       70    ?lua_getinfo@@YAHPAUlua_State@@PBDPAUlua_Debug@@@Z (int __cdecl lua_getinfo(struct lua_State *,char const *,struct lua_Debug *))
+       71    ?lua_getiuservalue@@YAHPAUlua_State@@HH@Z (int __cdecl lua_getiuservalue(struct lua_State *,int,int))
+       72    ?lua_getlocal@@YAPBDPAUlua_State@@PBUlua_Debug@@H@Z (char const * __cdecl lua_getlocal(struct lua_State *,struct lua_Debug const *,int))
+       73    ?lua_getmetatable@@YAHPAUlua_State@@H@Z (int __cdecl lua_getmetatable(struct lua_State *,int))
+       74    ?lua_getstack@@YAHPAUlua_State@@HPAUlua_Debug@@@Z (int __cdecl lua_getstack(struct lua_State *,int,struct lua_Debug *))
+       75    ?lua_gettable@@YAHPAUlua_State@@H@Z (int __cdecl lua_gettable(struct lua_State *,int))
+       76    ?lua_gettop@@YAHPAUlua_State@@@Z (int __cdecl lua_gettop(struct lua_State *))
+       77    ?lua_getupvalue@@YAPBDPAUlua_State@@HH@Z (char const * __cdecl lua_getupvalue(struct lua_State *,int,int))
+       78    ?lua_iscfunction@@YAHPAUlua_State@@H@Z (int __cdecl lua_iscfunction(struct lua_State *,int))
+       79    ?lua_isinteger@@YAHPAUlua_State@@H@Z (int __cdecl lua_isinteger(struct lua_State *,int))
+       80    ?lua_isnumber@@YAHPAUlua_State@@H@Z (int __cdecl lua_isnumber(struct lua_State *,int))
+       81    ?lua_isstring@@YAHPAUlua_State@@H@Z (int __cdecl lua_isstring(struct lua_State *,int))
+       82    ?lua_isuserdata@@YAHPAUlua_State@@H@Z (int __cdecl lua_isuserdata(struct lua_State *,int))
+       83    ?lua_isyieldable@@YAHPAUlua_State@@@Z (int __cdecl lua_isyieldable(struct lua_State *))
+       84    ?lua_len@@YAXPAUlua_State@@H@Z (void __cdecl lua_len(struct lua_State *,int))
+       85    ?lua_load@@YAHPAUlua_State@@P6APBD0PAXPAI@Z1PBD4@Z (int __cdecl lua_load(struct lua_State *,char const * (__cdecl*)(struct lua_State *,void *,unsigned int *),void *,char const *,char const *))
+       86    ?lua_newstate@@YAPAUlua_State@@P6APAXPAX0II@Z0@Z (struct lua_State * __cdecl lua_newstate(void * (__cdecl*)(void *,void *,unsigned int,unsigned int),void *))
+       87    ?lua_newthread@@YAPAUlua_State@@PAU1@@Z (struct lua_State * __cdecl lua_newthread(struct lua_State *))
+       88    ?lua_newuserdatauv@@YAPAXPAUlua_State@@IH@Z (void * __cdecl lua_newuserdatauv(struct lua_State *,unsigned int,int))
+       89    ?lua_next@@YAHPAUlua_State@@H@Z (int __cdecl lua_next(struct lua_State *,int))
+       90    ?lua_pcallk@@YAHPAUlua_State@@HHHHP6AH0HH@Z@Z (int __cdecl lua_pcallk(struct lua_State *,int,int,int,int,int (__cdecl*)(struct lua_State *,int,int)))
+       91    ?lua_pushboolean@@YAXPAUlua_State@@H@Z (void __cdecl lua_pushboolean(struct lua_State *,int))
+       92    ?lua_pushcclosure@@YAXPAUlua_State@@P6AH0@ZH@Z (void __cdecl lua_pushcclosure(struct lua_State *,int (__cdecl*)(struct lua_State *),int))
+       93    ?lua_pushfstring@@YAPBDPAUlua_State@@PBDZZ (char const * __cdecl lua_pushfstring(struct lua_State *,char const *,...))
+       94    ?lua_pushinteger@@YAXPAUlua_State@@_J@Z (void __cdecl lua_pushinteger(struct lua_State *,__int64))
+       95    ?lua_pushlightuserdata@@YAXPAUlua_State@@PAX@Z (void __cdecl lua_pushlightuserdata(struct lua_State *,void *))
+       96    ?lua_pushlstring@@YAPBDPAUlua_State@@PBDI@Z (char const * __cdecl lua_pushlstring(struct lua_State *,char const *,unsigned int))
+       97    ?lua_pushnil@@YAXPAUlua_State@@@Z (void __cdecl lua_pushnil(struct lua_State *))
+       98    ?lua_pushnumber@@YAXPAUlua_State@@N@Z (void __cdecl lua_pushnumber(struct lua_State *,double))
+       99    ?lua_pushstring@@YAPBDPAUlua_State@@PBD@Z (char const * __cdecl lua_pushstring(struct lua_State *,char const *))
+      100    ?lua_pushthread@@YAHPAUlua_State@@@Z (int __cdecl lua_pushthread(struct lua_State *))
+      101    ?lua_pushvalue@@YAXPAUlua_State@@H@Z (void __cdecl lua_pushvalue(struct lua_State *,int))
+      102    ?lua_pushvfstring@@YAPBDPAUlua_State@@PBDPAD@Z (char const * __cdecl lua_pushvfstring(struct lua_State *,char const *,char *))
+      103    ?lua_rawequal@@YAHPAUlua_State@@HH@Z (int __cdecl lua_rawequal(struct lua_State *,int,int))
+      104    ?lua_rawget@@YAHPAUlua_State@@H@Z (int __cdecl lua_rawget(struct lua_State *,int))
+      105    ?lua_rawgeti@@YAHPAUlua_State@@H_J@Z (int __cdecl lua_rawgeti(struct lua_State *,int,__int64))
+      106    ?lua_rawgetp@@YAHPAUlua_State@@HPBX@Z (int __cdecl lua_rawgetp(struct lua_State *,int,void const *))
+      107    ?lua_rawlen@@YA_KPAUlua_State@@H@Z (unsigned __int64 __cdecl lua_rawlen(struct lua_State *,int))
+      108    ?lua_rawset@@YAXPAUlua_State@@H@Z (void __cdecl lua_rawset(struct lua_State *,int))
+      109    ?lua_rawseti@@YAXPAUlua_State@@H_J@Z (void __cdecl lua_rawseti(struct lua_State *,int,__int64))
+      110    ?lua_rawsetp@@YAXPAUlua_State@@HPBX@Z (void __cdecl lua_rawsetp(struct lua_State *,int,void const *))
+      111    ?lua_resetthread@@YAHPAUlua_State@@@Z (int __cdecl lua_resetthread(struct lua_State *))
+      112    ?lua_resume@@YAHPAUlua_State@@0HPAH@Z (int __cdecl lua_resume(struct lua_State *,struct lua_State *,int,int *))
+      113    ?lua_rotate@@YAXPAUlua_State@@HH@Z (void __cdecl lua_rotate(struct lua_State *,int,int))
+      114    ?lua_setallocf@@YAXPAUlua_State@@P6APAXPAX1II@Z1@Z (void __cdecl lua_setallocf(struct lua_State *,void * (__cdecl*)(void *,void *,unsigned int,unsigned int),void *))
+      115    ?lua_setcstacklimit@@YAHPAUlua_State@@I@Z (int __cdecl lua_setcstacklimit(struct lua_State *,unsigned int))
+      116    ?lua_setfield@@YAXPAUlua_State@@HPBD@Z (void __cdecl lua_setfield(struct lua_State *,int,char const *))
+      117    ?lua_setglobal@@YAXPAUlua_State@@PBD@Z (void __cdecl lua_setglobal(struct lua_State *,char const *))
+      118    ?lua_sethook@@YAXPAUlua_State@@P6AX0PAUlua_Debug@@@ZHH@Z (void __cdecl lua_sethook(struct lua_State *,void (__cdecl*)(struct lua_State *,struct lua_Debug *),int,int))
+      119    ?lua_seti@@YAXPAUlua_State@@H_J@Z (void __cdecl lua_seti(struct lua_State *,int,__int64))
+      120    ?lua_setiuservalue@@YAHPAUlua_State@@HH@Z (int __cdecl lua_setiuservalue(struct lua_State *,int,int))
+      121    ?lua_setlocal@@YAPBDPAUlua_State@@PBUlua_Debug@@H@Z (char const * __cdecl lua_setlocal(struct lua_State *,struct lua_Debug const *,int))
+      122    ?lua_setmetatable@@YAHPAUlua_State@@H@Z (int __cdecl lua_setmetatable(struct lua_State *,int))
+      123    ?lua_settable@@YAXPAUlua_State@@H@Z (void __cdecl lua_settable(struct lua_State *,int))
+      124    ?lua_settop@@YAXPAUlua_State@@H@Z (void __cdecl lua_settop(struct lua_State *,int))
+      125    ?lua_setupvalue@@YAPBDPAUlua_State@@HH@Z (char const * __cdecl lua_setupvalue(struct lua_State *,int,int))
+      126    ?lua_setwarnf@@YAXPAUlua_State@@P6AXPAXPBDH@Z1@Z (void __cdecl lua_setwarnf(struct lua_State *,void (__cdecl*)(void *,char const *,int),void *))
+      127    ?lua_status@@YAHPAUlua_State@@@Z (int __cdecl lua_status(struct lua_State *))
+      128    ?lua_stringtonumber@@YAIPAUlua_State@@PBD@Z (unsigned int __cdecl lua_stringtonumber(struct lua_State *,char const *))
+      129    ?lua_toboolean@@YAHPAUlua_State@@H@Z (int __cdecl lua_toboolean(struct lua_State *,int))
+      130    ?lua_tocfunction@@YAP6AHPAUlua_State@@@Z0H@Z (int (__cdecl*__cdecl lua_tocfunction(struct lua_State *,int))(struct lua_State *))
+      131    ?lua_toclose@@YAXPAUlua_State@@H@Z (void __cdecl lua_toclose(struct lua_State *,int))
+      132    ?lua_tointegerx@@YA_JPAUlua_State@@HPAH@Z (__int64 __cdecl lua_tointegerx(struct lua_State *,int,int *))
+      133    ?lua_tolstring@@YAPBDPAUlua_State@@HPAI@Z (char const * __cdecl lua_tolstring(struct lua_State *,int,unsigned int *))
+      134    ?lua_tonumberx@@YANPAUlua_State@@HPAH@Z (double __cdecl lua_tonumberx(struct lua_State *,int,int *))
+      135    ?lua_topointer@@YAPBXPAUlua_State@@H@Z (void const * __cdecl lua_topointer(struct lua_State *,int))
+      136    ?lua_tothread@@YAPAUlua_State@@PAU1@H@Z (struct lua_State * __cdecl lua_tothread(struct lua_State *,int))
+      137    ?lua_touserdata@@YAPAXPAUlua_State@@H@Z (void * __cdecl lua_touserdata(struct lua_State *,int))
+      138    ?lua_type@@YAHPAUlua_State@@H@Z (int __cdecl lua_type(struct lua_State *,int))
+      139    ?lua_typename@@YAPBDPAUlua_State@@H@Z (char const * __cdecl lua_typename(struct lua_State *,int))
+      140    ?lua_upvalueid@@YAPAXPAUlua_State@@HH@Z (void * __cdecl lua_upvalueid(struct lua_State *,int,int))
+      141    ?lua_upvaluejoin@@YAXPAUlua_State@@HHHH@Z (void __cdecl lua_upvaluejoin(struct lua_State *,int,int,int,int))
+      142    ?lua_version@@YANPAUlua_State@@@Z (double __cdecl lua_version(struct lua_State *))
+      143    ?lua_warning@@YAXPAUlua_State@@PBDH@Z (void __cdecl lua_warning(struct lua_State *,char const *,int))
+      144    ?lua_xmove@@YAXPAUlua_State@@0H@Z (void __cdecl lua_xmove(struct lua_State *,struct lua_State *,int))
+      145    ?lua_yieldk@@YAHPAUlua_State@@HHP6AH0HH@Z@Z (int __cdecl lua_yieldk(struct lua_State *,int,int,int (__cdecl*)(struct lua_State *,int,int)))
+      146    ?luaopen_base@@YAHPAUlua_State@@@Z (int __cdecl luaopen_base(struct lua_State *))
+      147    ?luaopen_base_minimal@@YAHPAUlua_State@@@Z (int __cdecl luaopen_base_minimal(struct lua_State *))
+      148    ?luaopen_coroutine@@YAHPAUlua_State@@@Z (int __cdecl luaopen_coroutine(struct lua_State *))
+      149    ?luaopen_debug@@YAHPAUlua_State@@@Z (int __cdecl luaopen_debug(struct lua_State *))
+      150    ?luaopen_io@@YAHPAUlua_State@@@Z (int __cdecl luaopen_io(struct lua_State *))
+      151    ?luaopen_math@@YAHPAUlua_State@@@Z (int __cdecl luaopen_math(struct lua_State *))
+      152    ?luaopen_os@@YAHPAUlua_State@@@Z (int __cdecl luaopen_os(struct lua_State *))
+      153    ?luaopen_package@@YAHPAUlua_State@@@Z (int __cdecl luaopen_package(struct lua_State *))
+      154    ?luaopen_string@@YAHPAUlua_State@@@Z (int __cdecl luaopen_string(struct lua_State *))
+      155    ?luaopen_table@@YAHPAUlua_State@@@Z (int __cdecl luaopen_table(struct lua_State *))
+      156    ?luaopen_utf8@@YAHPAUlua_State@@@Z (int __cdecl luaopen_utf8(struct lua_State *))

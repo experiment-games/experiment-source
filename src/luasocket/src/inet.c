@@ -350,7 +350,7 @@ const char *inet_trycreate(p_socket ps, int family, int type, int protocol) {
     const char *err = socket_strerror(socket_create(ps, family, type, protocol));
     if (err == NULL && family == AF_INET6) {
         int yes = 1;
-        setsockopt(*ps, IPPROTO_IPV6, IPV6_V6ONLY, (void *)&yes, sizeof(yes));
+        setsockopt( *ps, IPPROTO_IPV6, IPV6_V6ONLY, ( const char * )&yes, sizeof( yes ) );
     }
     return err;
 }

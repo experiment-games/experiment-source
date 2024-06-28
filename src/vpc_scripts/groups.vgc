@@ -26,7 +26,7 @@ $Group "game"
 	"tier1"
 	"vgui_controls"
 
-	"lua54"
+    "lua54"
     "luasocket"
 }
 
@@ -62,7 +62,7 @@ $Group "everything"
 	"vvis_dll"
 	"vvis_launcher"
 
-	"lua54"
+    "lua54"
     "luasocket"
 }
 
@@ -72,7 +72,7 @@ $Group "dedicated"
 	"server"
 	"tier1"
 
-	"lua54"
+    "lua54"
     "luasocket"
 }
 

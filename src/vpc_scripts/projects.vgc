@@ -131,10 +131,10 @@ $Project "vvis_launcher"
 
 $Project "lua54"
 {
-	"lua\lua.vpc" [$WINDOWS||$X360||$POSIX]
+	"lua\lua_base.vpc"
 }
 
 $Project "luasocket"
 {
-    "luasocket\luasocket.vpc" [$WINDOWS||$X360||$POSIX]
+    "luasocket\luasocket_base.vpc"
 }

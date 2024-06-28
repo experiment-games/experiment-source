@@ -1413,8 +1413,7 @@ $Project
 		$Libexternal "$LIBCOMMON/libcurlssl" [$LINUXALL]
 		$Libexternal "$SRCDIR\lib\common\$(CRYPTOPPDIR)\libssl" [$LINUXALL]
 
-		$Lib	"$SRCDIR\lua\lua54"
-		$Lib	"$SRCDIR\luasocket\luasocket"
+		$Lib	"lua54"
+		$Lib	"luasocket"
  	}
-
 }
