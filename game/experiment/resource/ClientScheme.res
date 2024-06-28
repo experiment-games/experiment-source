@@ -79,9 +79,7 @@ Scheme
 		// Blank space to leave beneath the menu on the main screen
 		"Main.BottomBorder"	"32"
 
-
-///HERE
-				// vgui_controls color specifications
+        // vgui_controls color specifications
 		Border.Bright					"LightOrange"		// the lit side of a control
 		Border.Dark						"LightOrange"		// the dark/unlit side of a control
 		Border.Selection				"Blank"				// the additional border color for displaying the default/selected button
@@ -169,7 +167,7 @@ Scheme
 		RichText.SelectedTextColor		"Orange"
 		RichText.SelectedBgColor		"Blank"
 
-				ScrollBarButton.FgColor				"Orange"
+        ScrollBarButton.FgColor				"Orange"
 		ScrollBarButton.BgColor				"Blank"
 		ScrollBarButton.ArmedFgColor		"Orange"
 		ScrollBarButton.ArmedBgColor		"Blank"
@@ -212,6 +210,11 @@ Scheme
 		Tooltip.BgColor				"Red"
 
 		TreeView.BgColor			"TransparentBlack"
+
+        HTML.SearchInsetY          "0"
+        HTML.SearchInsetX          "0"
+        HTML.SearchTall         "24"
+        HTML.SearchWide         "180"
 
 		WizardSubPanel.BgColor		"Blank"
 

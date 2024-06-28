@@ -4,6 +4,7 @@
 using namespace vgui;
 #include <ienginevgui.h>
 #include <vgui/IVGui.h>
+#include <vgui_controls/HTML.h>
 #include <vgui_controls/Frame.h>
 
 class CTestPanel : public vgui::Frame
@@ -11,13 +12,18 @@ class CTestPanel : public vgui::Frame
     DECLARE_CLASS_SIMPLE( CTestPanel, vgui::Frame );
 
     CTestPanel( vgui::VPANEL parent );
-    ~CTestPanel(){};
+    ~CTestPanel();
+
+    MESSAGE_FUNC( OnTextChanged, "TextChanged" );
+    MESSAGE_FUNC_PARAMS( OnURLChanged, "OnURLChanged", data );
 
    protected:
     virtual void OnTick();
     virtual void OnCommand( const char* pcCommand );
 
    private:
+    vgui::HTML* m_pHTML;
+    vgui::TextEntry* m_pUrlTextEntry;
 };
 
 CTestPanel::CTestPanel( vgui::VPANEL parent )
@@ -39,11 +45,44 @@ CTestPanel::CTestPanel( vgui::VPANEL parent )
 
     SetScheme( vgui::scheme()->LoadSchemeFromFile( "resource/SourceScheme.res", "SourceScheme" ) );
 
+    m_pHTML = new vgui::HTML( this, "TestHTML" );
+    m_pUrlTextEntry = new vgui::TextEntry( this, "UrlTextEntry" );
+
     LoadControlSettings( "resource/UI/testui.res" );
 
-    vgui::ivgui()->AddTickSignal( GetVPanel(), 100 );
-
     DevMsg( "TestUI has been constructed\n" );
+
+    m_pUrlTextEntry->SetText( "http://neverssl.com" );
+    m_pHTML->OpenURL( "http://neverssl.com", NULL );
+
+    m_pUrlTextEntry->AddActionSignalTarget( this );
+
+    vgui::ivgui()->AddTickSignal( GetVPanel(), 100 );
+}
+
+CTestPanel::~CTestPanel()
+{
+    ivgui()->RemoveTickSignal( GetVPanel() );
+}
+
+void CTestPanel::OnTextChanged()
+{
+    char url[MAX_PATH];
+    m_pUrlTextEntry->GetText( url, sizeof(url));
+
+    m_pHTML->OpenURL( url, NULL );
+}
+
+void CTestPanel::OnURLChanged( KeyValues* data )
+{
+    if ( m_pUrlTextEntry->HasFocus() )
+        return;
+    /*
+    pMessage->SetString( "url", url );
+    pMessage->SetString( "postdata", pchPostData );
+    pMessage->SetInt( "isredirect", bIsRedirect ? 1 : 0 );
+    */
+    m_pUrlTextEntry->SetText( data->GetString( "url" ) );
 }
 
 class CTestPanelInterface
