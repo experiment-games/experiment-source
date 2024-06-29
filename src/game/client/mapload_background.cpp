@@ -39,6 +39,11 @@ void CMapLoadBG::SetNewBackgroundImage( char const* imageName )
     m_pBackground->SetImage( imageName );
 }
 
+void CMapLoadBG::OnFileReceived( const char* fileName, unsigned int transferID )
+{
+    Warning( "File received: %s (%d)\n", fileName, transferID );
+}
+
 // URAKOLOUY5: Recursively find all elements with this name and unparent them
 void SetVisibilityRecursive( vgui::VPANEL parentPanel, const char* targetPanelName, int depth = 0 )
 {

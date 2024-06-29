@@ -21,6 +21,7 @@ class CMapLoadBG : public vgui::EditablePanel
 
     void SetNewBackgroundImage( char const *imageName );
     void OnMessage( const KeyValues *params, vgui::VPANEL fromPanel );
+    void OnFileReceived( const char *fileName, unsigned int transferID );
 
    protected:
     void ApplySchemeSettings( vgui::IScheme *pScheme );
@@ -28,5 +29,7 @@ class CMapLoadBG : public vgui::EditablePanel
    private:
     vgui::ImagePanel *m_pBackground;
 };
+
+static CMapLoadBG *g_pMapLoadingPanel;
 
 #endif  // !MAPLOAD_BACKGROUND_H

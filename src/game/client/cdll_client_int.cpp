@@ -87,6 +87,7 @@
 #include "ihudlcd.h"
 #include "toolframework_client.h"
 #include "hltvcamera.h"
+#include "mapload_background.h"
 #if defined(REPLAY_ENABLED)
 #include "replay/replaycamera.h"
 #include "replay/replay_ragdoll.h"
@@ -2546,6 +2547,11 @@ CMouthInfo *CHLClient::GetClientUIMouthInfo() {
 void CHLClient::FileReceived(const char *fileName, unsigned int transferID) {
     if (g_pGameRules) {
         g_pGameRules->OnFileReceived(fileName, transferID);
+    }
+
+    if ( g_pMapLoadingPanel )
+    {
+        g_pMapLoadingPanel->OnFileReceived( fileName, transferID );
     }
 }
 

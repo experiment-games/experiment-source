@@ -41,7 +41,6 @@
 #endif
 
 #include "GameUI/IGameUI.h"
-#include "mapload_background.h"
 
 #if defined( REPLAY_ENABLED )
 #include "replay/replaycamera.h"
@@ -110,7 +109,6 @@ CON_COMMAND( cl_reload_localization_files, "Reloads all localization files" )
 }
 
 // Fenix: Needed for the custom background loading screens
-CMapLoadBG *pPanelBg;
 IMaterial *pMatMapBg;
 
 #ifdef VOICE_VOX_ENABLE
@@ -326,7 +324,7 @@ ClientModeShared::ClientModeShared()
     m_nRootSize[0] = m_nRootSize[1] = -1;
 
     // Fenix: Needed for the custom background loading screens
-    pPanelBg = NULL;
+    g_pMapLoadingPanel = NULL;
     pMatMapBg = NULL;
 
 #if defined( REPLAY_ENABLED )
@@ -441,11 +439,11 @@ void ClientModeShared::Init()
         IGameUI *pGameUI = ( IGameUI * )gameUIFactory( GAMEUI_INTERFACE_VERSION, NULL );
         if ( pGameUI )
         {
-            pPanelBg = new CMapLoadBG( "Background" );
-            pPanelBg->InvalidateLayout( false, true );
-            pPanelBg->SetVisible( false );
-            pPanelBg->MakePopup( false );
-            pGameUI->SetLoadingBackgroundDialog( pPanelBg->GetVPanel() );
+            g_pMapLoadingPanel = new CMapLoadBG( "Background" );
+            g_pMapLoadingPanel->InvalidateLayout( false, true );
+            g_pMapLoadingPanel->SetVisible( false );
+            g_pMapLoadingPanel->MakePopup( false );
+            pGameUI->SetLoadingBackgroundDialog( g_pMapLoadingPanel->GetVPanel() );
         }
     }
 }
@@ -1040,7 +1038,7 @@ void ClientModeShared::LevelInit( const char *newmap )
     CLocalPlayerFilter filter;
     enginesound->SetPlayerDSP( filter, 0, true );
 
-    pPanelBg->SetNewBackgroundImage( "loading/default" );
+    g_pMapLoadingPanel->SetNewBackgroundImage( "loading/default" );
 }
 
 //-----------------------------------------------------------------------------

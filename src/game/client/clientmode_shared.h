@@ -15,6 +15,7 @@
 #include "iclientmode.h"
 #include "GameEventListener.h"
 #include <baseviewport.h>
+#include <mapload_background.h>
 
 #ifdef LUA_SDK
 #include <scriptedhudviewport.h>
