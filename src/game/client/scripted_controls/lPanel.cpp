@@ -64,7 +64,7 @@ LUALIB_API VPANEL luaL_checkvpanel( lua_State *L, int narg )
 {
     lua_Panel *d = lua_topanel( L, narg );
     if ( d == NULL ) /* avoid extra test when d is not 0 */
-        luaL_argerror( L, narg, "Panel expected, got INVALID_PANEL" );
+        luaL_argerror( L, narg, "VPanel expected, got INVALID_PANEL" );
     PHandle hPanel;
     hPanel.Set( d );
     return ivgui()->HandleToPanel( hPanel.m_iPanelID );
@@ -728,6 +728,13 @@ static int Panel_MakeReadyForUse( lua_State *L )
 static int Panel_MarkForDeletion( lua_State *L )
 {
     luaL_checkpanel( L, 1 )->MarkForDeletion();
+    return 0;
+}
+
+// Used by gui.lua to mark that hooks can start being called
+static int Panel_MarkInitialized( lua_State *L )
+{
+    luaL_checkpanel( L, 1 )->m_bMarkedAsInitialized = true;
     return 0;
 }
 
@@ -1436,6 +1443,7 @@ static const luaL_Reg Panelmeta[] = {
     { "MakePopup", Panel_MakePopup },
     { "MakeReadyForUse", Panel_MakeReadyForUse },
     { "MarkForDeletion", Panel_MarkForDeletion },
+    { "MarkInitialized", Panel_MarkInitialized },
     { "MoveToFront", Panel_MoveToFront },
     { "OnCommand", Panel_OnCommand },
     { "OnCursorEntered", Panel_OnCursorEntered },
@@ -1488,7 +1496,7 @@ static const luaL_Reg Panelmeta[] = {
     { "SetDropEnabled", Panel_SetDropEnabled },
     { "SetEnabled", Panel_SetEnabled },
     { "SetFgColor", Panel_SetFgColor },
-    { "SetKeyboardInputEnabled", Panel_SetKeyBoardInputEnabled }, // Note that we fixed capitalization, keyboard is one word
+    { "SetKeyboardInputEnabled", Panel_SetKeyBoardInputEnabled },  // Note that we fixed capitalization, keyboard is one word
     { "SetMinimumSize", Panel_SetMinimumSize },
     { "SetMouseInputEnabled", Panel_SetMouseInputEnabled },
     { "SetName", Panel_SetName },
@@ -1527,7 +1535,7 @@ static int luasrc_Panel( lua_State *L )
         luaL_optpanel( L, 1, VGui_GetClientLuaRootPanel() ),
         luaL_optstring( L, 2, NULL ),
         L );
-    lua_pushpanel( L, pPanel );
+    pPanel->PushPanelToLua( L );
     return 1;
 }
 
@@ -1561,7 +1569,7 @@ LUALIB_API int luaopen_vgui_Panel( lua_State *L )
     luaL_register( L, NULL, Panelmeta );
     lua_pushstring( L, LUA_PANELLIBNAME );
     lua_setfield( L, -2, "__type" ); /* metatable.__type = "Panel" */
-    lua_pop( L, 1 ); // pop metatable
+    lua_pop( L, 1 );                 // pop metatable
     // Andrew; Don't be mislead, INVALID_PANEL is not NULL internally, but we
     // need a name other than NULL, because NULL has already been assigned as an
     // entity.

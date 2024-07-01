@@ -11,29 +11,42 @@ end
 
 require("Gui")
 
--- Private list of helpers
-local registeredHelpers = {}
+local registeredScriptedPanels = {}
 
 local function getAppropriateBaseParent()
-	if (GAMEUI) then
-		return Gui.GetGameUIPanel()
-	end
+    if (GAMEUI) then
+        return Gui.GetGameUIPanel()
+    end
 
-	return Gui.GetClientLuaRootPanel()
+    return Gui.GetClientLuaRootPanel()
+end
+
+--- Creates a panel using the base, copying the scripted panel overtop
+--- @param panelName string
+--- @param parentPanel? Panel
+--- @param name? string
+--- @return Panel
+local function newScriptedPanel(panelName, parentPanel, name)
+	local scriptedPanel = registeredScriptedPanels[panelName]
+	local panel = Gui[scriptedPanel.Base](parentPanel, name)
+
+	table.Merge(panel:GetRefTable(), scriptedPanel)
+
+	panel.BaseClass = registeredScriptedPanels[scriptedPanel.Base]
+
+    if (panel.Init) then
+        panel:Init()
+    end
+
+	panel:MarkInitialized()
+
+	return panel
 end
 
 local function createHelper(panelName)
     Gui[panelName] = function(parentPanel, name)
         parentPanel = parentPanel or getAppropriateBaseParent()
-
-        local helper = registeredHelpers[panelName]
-		local panel = Gui[helper.Base](parentPanel, name or panelName)
-
-		table.Merge(panel:GetRefTable(), helper)
-
-		panel.BaseClass = registeredHelpers[helper.Base]
-
-        panel:Init()
+		local panel = newScriptedPanel(panelName, parentPanel, name or panelName)
 
 		return panel
 	end
@@ -50,10 +63,10 @@ function Gui.Register(panelTable, panelName, baseClassName)
         tostring(panelName) .. "\" with non-existing base class \"" .. tostring(baseClassName) .. "\"", 2)
     end
 
-	panelTable.__classname = panelName
+	panelTable.ClassName = panelName
 	panelTable.Base = baseClassName
 
-	registeredHelpers[panelName] = panelTable
+	registeredScriptedPanels[panelName] = panelTable
 
 	createHelper(panelName)
 end
@@ -65,10 +78,10 @@ end
 --- @param baseClassName Name of the base class
 function Gui.RegisterWithMetatable(panelTable, panelName, baseClassName)
 	-- __index to allow inheritance
-	panelTable.__classname = panelName
+	panelTable.ClassName = panelName
 	panelTable.Base = baseClassName
 
-	registeredHelpers[panelName] = panelTable
+	registeredScriptedPanels[panelName] = panelTable
 
     setmetatable(panelTable, {
 		__index = function(self, key)
@@ -100,17 +113,10 @@ end
 --- @param name? string An optional name for the panel (default is panelName)
 --- @return Panel The created panel
 function Gui.Create(panelName, parentPanel, name)
-	local helper = registeredHelpers[panelName]
 	parentPanel = parentPanel or getAppropriateBaseParent()
 
-    if (helper ~= nil) then
-        local panel = Gui[helper.Base](parentPanel, name or panelName)
-
-        table.Merge(panel:GetRefTable(), helper)
-
-        panel.BaseClass = registeredHelpers[helper.Base]
-
-        panel:Init()
+    if (registeredScriptedPanels[panelName] ~= nil) then
+		local panel = newScriptedPanel(panelName, parentPanel, name or panelName)
 
         return panel
     end

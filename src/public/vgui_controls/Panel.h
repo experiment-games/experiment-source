@@ -172,6 +172,7 @@ class Panel : public IClientPanel, virtual IForceVirtualInheritancePanel
     lua_State *m_lua_State = nullptr;
     int m_nTableReference;
     int m_nRefCount;
+    bool m_bMarkedAsInitialized = false;
 #endif
 
     // returns pointer to Panel's vgui VPanel interface handle

@@ -1043,9 +1043,33 @@ LUA_API void luasrc_dofolder( lua_State *L, const char *path )
     g_pFullFileSystem->FindClose( fh );
 }
 
-LUA_API int luasrc_pcall( lua_State *L, int nargs, int nresults, int errfunc )
+/// <summary>
+/// Calls with error handling, providing own traceback function if none is provided.
+/// </summary>
+/// <param name="L"></param>
+/// <param name="amountOfArguments"></param>
+/// <param name="amountOfResults"></param>
+/// <param name="errorFunctionStackPos"></param>
+/// <returns></returns>
+LUA_API int luasrc_pcall( lua_State *L, int amountOfArguments, int amountOfResults, int errorFunctionStackPos )
 {
-    int iError = lua_pcall( L, nargs, nresults, errfunc );
+    bool injectedOwnErrorFunction = false;
+
+    if ( errorFunctionStackPos == 0 )
+    {
+        // insert luasrc_traceback function below everything
+        lua_pushcfunction( L, luasrc_traceback );
+        lua_insert( L, 1 );
+        errorFunctionStackPos = 1;
+        injectedOwnErrorFunction = true;
+    }
+
+    int iError = lua_pcall( L, amountOfArguments, amountOfResults, errorFunctionStackPos );
+
+    if ( injectedOwnErrorFunction )
+    {
+        lua_remove( L, errorFunctionStackPos );
+    }
 
     if ( iError != 0 )
     {

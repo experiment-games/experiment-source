@@ -1562,9 +1562,7 @@ void Panel::OnChildAdded( VPANEL child )
 #ifdef LUA_SDK
     BEGIN_LUA_CALL_PANEL_METHOD( "OnChildAdded" );
     lua_pushpanel( m_lua_State, child );
-    END_LUA_CALL_PANEL_METHOD( 0, 1 );
-
-    RETURN_LUA_PANEL_NONE();
+    END_LUA_CALL_PANEL_METHOD( 1, 0 );
 #endif
 
     Assert( !_flags.IsFlagSet( IN_PERFORM_LAYOUT ) );

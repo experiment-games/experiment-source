@@ -44,15 +44,23 @@ function leftChild:OnClick()
     parent:MarkForDeletion()
 end
 
-local bottomChild = Gui.Create("Button", parent)
-bottomChild:SetText("BOTTOM")
+local bottomChild = Gui.Create("Panel", parent)
 bottomChild:SetDock(DOCK_TYPE.BOTTOM)
 bottomChild:SetTall(childTall)
 bottomChild:SetDockPadding(dockPadding, dockPadding, dockPadding, dockPadding)
+bottomChild:SetBgColor(Color(0, 255, 0, 255))
 
-function bottomChild:OnClick()
-    parent:MarkForDeletion()
-end
+local bottomAncestor = Gui.Create("Button", bottomChild)
+bottomAncestor:SetText("bottom BOTTOM")
+bottomAncestor:SetDock(DOCK_TYPE.BOTTOM)
+bottomAncestor:SetTall(childTall / 2)
+bottomAncestor:SetDockPadding(dockPadding, dockPadding, dockPadding, dockPadding)
+
+local bottomAncestor2 = Gui.Create("Button", bottomChild)
+bottomAncestor2:SetText("bottom TOP")
+bottomAncestor2:SetDock(DOCK_TYPE.TOP)
+bottomAncestor2:SetTall(childTall / 2)
+bottomAncestor2:SetDockPadding(dockPadding, dockPadding, dockPadding, dockPadding)
 
 local rightChild = Gui.Create("Button", parent)
 rightChild:SetText("RIGHT")
