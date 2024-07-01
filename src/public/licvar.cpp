@@ -67,6 +67,7 @@ static const luaL_Reg cvarlib[] = {
 
 void CV_GlobalChange_Lua( IConVar *var, const char *pOldString, float flOldValue )
 {
+#ifdef CLIENT_DLL
     lua_State *targetState = nullptr;
 
     // Hacky workaround for when we load all libs into the menu
@@ -78,6 +79,9 @@ void CV_GlobalChange_Lua( IConVar *var, const char *pOldString, float flOldValue
     {
         targetState = LGameUI;
     }
+#else
+    lua_State *targetState = L;
+#endif
 
     lua_getglobal( targetState, LUA_CVARLIBNAME );
     if ( lua_istable( targetState, -1 ) )
