@@ -155,6 +155,12 @@ static int Label_SizeToContents( lua_State *L )
     return 0;
 }
 
+static int Label_SetContentAlignment( lua_State *L )
+{
+    luaL_checklabel( L, 1 )->SetContentAlignment( (vgui::Label::Alignment) luaL_checkint( L, 2 ) );
+    return 0;
+}
+
 static int Label_SetFont( lua_State *L )
 {
     luaL_checklabel( L, 1 )->SetFont( luaL_checkfont( L, 2 ) );
@@ -330,6 +336,7 @@ static const luaL_Reg Labelmeta[] = {
     { "OnSetFocus", Label_OnSetFocus },
     { "PerformLayout", Label_PerformLayout },
     { "SizeToContents", Label_SizeToContents },
+    { "SetContentAlignment", Label_SetContentAlignment },
     { "SetText", Label_SetText },
     { "SetFont", Label_SetFont },
     { "GetFont", Label_GetFont },

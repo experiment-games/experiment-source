@@ -135,7 +135,7 @@ end
 
 if (CLIENT) then
     local PANEL_META = FindMetaTable("Panel")
-	PANEL_META._OriginalSetCursor = PANEL_META._OriginalSetCursor or PANEL_META.SetCursor
+    PANEL_META._OriginalSetCursor = PANEL_META._OriginalSetCursor or PANEL_META.SetCursor
 
     PANEL_META.GetTable = PANEL_META.GetRefTable
     PANEL_META.Dock = PANEL_META.SetDock
@@ -145,6 +145,24 @@ if (CLIENT) then
     function PANEL_META:Prepare()
         -- Installs Lua defined functions into the panel.
         -- TODO: What does that mean?
+    end
+
+	-- Change casing and add functionality to pass individual color components.
+	function PANEL_META:SetBGColor(rOrColor, g, b, a)
+		if (istable(rOrColor)) then
+			self:SetBgColor(rOrColor)
+		else
+			self:SetBgColor(Color(rOrColor, g, b, a))
+		end
+	end
+
+	-- Change casing and add functionality to pass individual color components.
+    function PANEL_META:SetFGColor(rOrColor, g, b, a)
+        if (istable(rOrColor)) then
+            self:SetFgColor(rOrColor)
+        else
+            self:SetFgColor(Color(rOrColor, g, b, a))
+        end
     end
 
     local LABEL_PANEL_META = FindMetaTable("Label")
