@@ -8,6 +8,7 @@
 #include <scripted_controls/lLabel.h>
 #include "scripted_controls/lPanel.h"
 #include <scripted_controls/lButton.h>
+#include <vgui/LVGUI.h>
 
 // memdbgon must be the last include file in a .cpp file!!!
 #include <tier0/memdbgon.h>
@@ -152,6 +153,30 @@ static int Label_SizeToContents( lua_State *L )
 {
     luaL_checklabel( L, 1 )->SizeToContents();
     return 0;
+}
+
+static int Label_SetFont( lua_State *L )
+{
+    luaL_checklabel( L, 1 )->SetFont( luaL_checkfont( L, 2 ) );
+    return 0;
+}
+
+static int Label_GetFont( lua_State *L )
+{
+    lua_pushfont( L, luaL_checklabel( L, 1 )->GetFont() );
+    return 1;
+}
+
+static int Label_SetFgColor( lua_State *L )
+{
+    luaL_checklabel( L, 1 )->SetFgColor( luaL_checkcolor( L, 2 ) );
+    return 0;
+}
+
+static int Label_GetFgColor( lua_State *L )
+{
+    lua_pushcolor( L, luaL_checklabel( L, 1 )->GetFgColor() );
+    return 1;
 }
 
 static int Label_SetText( lua_State *L )
@@ -306,6 +331,10 @@ static const luaL_Reg Labelmeta[] = {
     { "PerformLayout", Label_PerformLayout },
     { "SizeToContents", Label_SizeToContents },
     { "SetText", Label_SetText },
+    { "SetFont", Label_SetFont },
+    { "GetFont", Label_GetFont },
+    { "SetFgColor", Label_SetFgColor },
+    { "GetFgColor", Label_GetFgColor },
     { "__index", Label___index },
     { "__newindex", Label___newindex },
     { "__eq", Label___eq },

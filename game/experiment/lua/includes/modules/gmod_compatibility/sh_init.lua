@@ -147,6 +147,22 @@ if (CLIENT) then
         -- TODO: What does that mean?
     end
 
+    local LABEL_PANEL_META = FindMetaTable("Label")
+    LABEL_PANEL_META._OriginalSetFont = LABEL_PANEL_META._OriginalSetFont or LABEL_PANEL_META.SetFont
+    LABEL_PANEL_META._OriginalGetFont = LABEL_PANEL_META._OriginalGetFont or LABEL_PANEL_META.GetFont
+
+    function LABEL_PANEL_META:SetFontInternal(font)
+        self:SetFontByName(font)
+    end
+
+    function LABEL_PANEL_META:SetFont(font)
+        self:SetFontByName(font)
+    end
+
+	function LABEL_PANEL_META:GetFont()
+		return self:GetFontName()
+	end
+
     -- Maps cursor strings to cursor codes.
 	local cursorMap = {
 		-- ["user"] = CURSOR_CODE.USER,

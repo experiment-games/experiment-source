@@ -12,6 +12,7 @@
 #include "lPanel.h"
 #include <scripted_controls/lPanel.h>
 #include "lColor.h"
+#include "vgui/LVGUI.h"
 
 using namespace vgui;
 
@@ -411,6 +412,12 @@ static int Panel_GetResizeOffset( lua_State *L )
     lua_pushinteger( L, dx );
     lua_pushinteger( L, dy );
     return 2;
+}
+
+static int Panel_GetScheme( lua_State *L )
+{
+    lua_pushscheme( L, luaL_checkpanel( L, 1 )->GetScheme() );
+    return 1;
 }
 
 static int Panel_GetSize( lua_State *L )
@@ -1376,6 +1383,7 @@ static const luaL_Reg Panelmeta[] = {
     { "GetPos", Panel_GetPos },
     { "GetRefTable", Panel_GetRefTable },
     { "GetResizeOffset", Panel_GetResizeOffset },
+    { "GetScheme", Panel_GetScheme },
     { "GetSize", Panel_GetSize },
     { "GetTabPosition", Panel_GetTabPosition },
     { "GetTall", Panel_GetTall },
@@ -1480,7 +1488,7 @@ static const luaL_Reg Panelmeta[] = {
     { "SetDropEnabled", Panel_SetDropEnabled },
     { "SetEnabled", Panel_SetEnabled },
     { "SetFgColor", Panel_SetFgColor },
-    { "SetKeyBoardInputEnabled", Panel_SetKeyBoardInputEnabled },
+    { "SetKeyboardInputEnabled", Panel_SetKeyBoardInputEnabled }, // Note that we fixed capitalization, keyboard is one word
     { "SetMinimumSize", Panel_SetMinimumSize },
     { "SetMouseInputEnabled", Panel_SetMouseInputEnabled },
     { "SetName", Panel_SetName },

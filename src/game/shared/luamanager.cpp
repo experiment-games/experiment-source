@@ -384,17 +384,22 @@ void luasrc_init_gameui( void )
 
     luasrc_setmodulepaths( LGameUI );
 
-    int leftOnStack = 0;
-    leftOnStack += luaopen_ConCommand( LGameUI );
-    leftOnStack += luaopen_dbg( LGameUI );
-    leftOnStack += luaopen_engine( LGameUI );
-    leftOnStack += luaopen_enginevgui( LGameUI );
-    leftOnStack += luaopen_FCVAR( LGameUI );
-    leftOnStack += luaopen_KeyValues( LGameUI );
-    leftOnStack += luaopen_surface( LGameUI );
-    leftOnStack += luaopen_vgui( LGameUI );
-    leftOnStack += luaopen_Color( LGameUI );
-    lua_pop( LGameUI, leftOnStack );
+    //int leftOnStack = 0;
+    //leftOnStack += luaopen_ConCommand( LGameUI );
+    //leftOnStack += luaopen_dbg( LGameUI );
+    //leftOnStack += luaopen_system( LGameUI );
+    //leftOnStack += luaopen_engine( LGameUI );
+    //leftOnStack += luaopen_enginevgui( LGameUI );
+    //leftOnStack += luaopen_FCVAR( LGameUI );
+    //leftOnStack += luaopen_KeyValues( LGameUI );
+    //leftOnStack += luaopen_surface( LGameUI );
+    //leftOnStack += luaopen_vgui( LGameUI );
+    //leftOnStack += luaopen_scheme( LGameUI );
+    //leftOnStack += luaopen_Color( LGameUI );
+    //lua_pop( LGameUI, leftOnStack );
+    // Experiment; The above is unmaintainable. Find another way, for now lets open all
+    // at the risk of opening libraries not functional in the menu.
+    luasrc_openlibs( LGameUI );
 
     Msg( "Lua Menu initialized (" LUA_VERSION ")\n" );
 }
