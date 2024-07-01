@@ -452,7 +452,7 @@ static const luaL_Reg ConVarmeta[] = {
 
 static CUtlDict< ConVar *, unsigned short > m_ConVarDatabase;
 
-static int luasrc_ConVar( lua_State *L )
+static int luasrc_CreateConVar( lua_State *L )
 {
     const char *pName = luaL_checkstring( L, 1 );
     // Complain about duplicately defined ConVar names...
@@ -471,6 +471,13 @@ static int luasrc_ConVar( lua_State *L )
     return 1;
 }
 
+static int luasrc_GetConVar( lua_State *L )
+{
+    const char *pName = luaL_checkstring( L, 1 );
+    lua_pushconvar( L, cvar->FindVar( pName ) );
+    return 1;
+}
+
 void ResetConVarDatabase( void )
 {
     for ( int i = m_ConVarDatabase.First(); i != m_ConVarDatabase.InvalidIndex(); i = m_ConVarDatabase.Next( i ) )
@@ -483,7 +490,8 @@ void ResetConVarDatabase( void )
 }
 
 static const luaL_Reg ConVar_funcs[] = {
-    { LUA_CONVARLIBNAME, luasrc_ConVar },
+    { "CreateConsoleVariable", luasrc_CreateConVar },
+    { "GetConsoleVariable", luasrc_GetConVar },
     { NULL, NULL } };
 
 /*

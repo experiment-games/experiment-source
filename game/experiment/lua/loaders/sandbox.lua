@@ -36,12 +36,28 @@ return {
 		-- Replace DEFINE_BASECLASS with local BaseClass = baseclass
 		fileContent = fileContent:gsub("DEFINE_BASECLASS", "local BaseClass = baseclassGetCompatibility")
 
-		if (not filePath:match("gamemode[/\\]cl_init%.lua$") and not filePath:match("gamemode[/\\]init%.lua$")) then
-			return fileContent
-		end
+        if (not filePath:match("gamemode[/\\]cl_init%.lua$") and not filePath:match("gamemode[/\\]init%.lua$")) then
+            return fileContent
+        end
+
+        -- Split the paths at \ or / and get the last part
+        local parts = {}
+
+        for part in filePath:gmatch("([^/\\]+)[/\\]") do
+            table.insert(parts, part)
+        end
+
+        -- Folder where gamemode folder (which contains cl_init.lua and init.lua) is located
+        local rootFolder = ""
+
+		-- -1 tp not get the last part (cl_init.lua or init.lua) nor the gamemode/ folder
+        for i = 1, #parts - 1 do
+            rootFolder = rootFolder .. parts[i] .. "/"
+        end
 
 		-- Load the gmod_compatibility module to make Garry's Mod code compatible with Experiment
 		return "require(\"gmod_compatibility\")\n\n" -- Add the gmod_compatibility module
-			.. fileContent
+            .. fileContent
+			.. "\nEntities.LoadFromDirectory( \""..rootFolder.."entities/entities\" ) Weapons.LoadFromDirectory( \""..rootFolder.."entities/weapons\" )\n" -- Load entities and weapons
 	end,
 }

@@ -16,6 +16,8 @@ DeriveGamemode = InheritGamemode
 
 include = Include
 
+GetConVar_Internal = GetConsoleVariable
+
 util = {
 	PrecacheModel = _R.CBaseEntity.PrecacheModel,
 	PrecacheSound = _R.CBaseEntity.PrecacheSound,
@@ -180,6 +182,11 @@ if (CLIENT) then
     function LABEL_PANEL_META:GetFont()
         return self:GetFontName()
     end
+
+	-- TODO: Actually draw the drop shadow
+    function LABEL_PANEL_META:SetExpensiveShadow(distance, color)
+		self._expensiveShadow = { distance = distance, color = color }
+	end
 
     local TEXT_ENTRY_PANEL_META = FindMetaTable("TextEntry")
     TEXT_ENTRY_PANEL_META._OriginalSetFont = TEXT_ENTRY_PANEL_META._OriginalSetFont or TEXT_ENTRY_PANEL_META.SetFont
@@ -348,7 +355,7 @@ CreateConVar = function(name, value, flags, helpText, min, max)
 		end
 	end
 
-	return ConsoleVariable(name, value, flags, helpText, min, max)
+	return CreateConsoleVariable(name, value, flags, helpText, min, max)
 end
 
 AddCSLuaFile = SendFile or function() end
