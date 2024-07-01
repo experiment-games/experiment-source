@@ -14,7 +14,7 @@ local FONTFLAG_ADDITIVE = _E.FONTFLAG.ADDITIVE
 local FONTFLAG_CUSTOM = _E.FONTFLAG.CUSTOM
 
 function GM:CreateDefaultPanels()
-	gBuildMenuInterface = Gui.CBuildMenu(VGui_GetClientLuaRootPanel(), "build")
+	gBuildMenuInterface = Gui.CBuildMenu(Gui.GetClientLuaRootPanel(), "build")
 
 	Surface.AddCustomFontFile("DIN-Light", "resource/DINLi.ttf")
 

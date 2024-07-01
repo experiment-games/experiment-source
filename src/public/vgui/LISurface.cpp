@@ -1,4 +1,4 @@
-//===== Copyright © 1996-2005, Valve Corporation, All rights reserved. ======//
+//===== Copyright Â© 1996-2005, Valve Corporation, All rights reserved. ======//
 //
 // Purpose: 
 //
@@ -12,7 +12,8 @@
 #include "luamanager.h"
 #include "luasrclib.h"
 #include "vgui/lvgui.h"
-#include "vgui_controls/lPanel.h"
+
+#include "scripted_controls/lPanel.h"
 
 // memdbgon must be the last include file in a .cpp file!!!
 #include "tier0/memdbgon.h"

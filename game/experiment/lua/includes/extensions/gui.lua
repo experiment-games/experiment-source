@@ -16,10 +16,10 @@ local registeredHelpers = {}
 
 local function getAppropriateBaseParent()
 	if (GAMEUI) then
-		return VGui_GetGameUIPanel()
+		return Gui.GetGameUIPanel()
 	end
 
-	return VGui_GetClientLuaRootPanel()
+	return Gui.GetClientLuaRootPanel()
 end
 
 local function createHelper(panelName)
@@ -93,7 +93,7 @@ function Gui.RegisterWithMetatable(panelTable, panelName, baseClassName)
 	createHelper(panelName)
 end
 
--- gBuildMenuInterface = Gui.CBuildMenu(VGui_GetClientLuaRootPanel(), "build")
+-- gBuildMenuInterface = Gui.CBuildMenu(Gui.GetClientLuaRootPanel(), "build")
 --- Creates a new panel with the given name and base class
 --- @param panelName string Class name of the panel
 --- @param parentPanel? Panel The parent panel to attach the new panel to

@@ -576,15 +576,12 @@ $Project
             $File "$SRCDIR\public\lvphysics_interface.cpp"
             $File "$SRCDIR\public\XUnzip.cpp"
             $File "$SRCDIR\public\zip_utils.cpp"
-
-            // VGUI
-            $File "$SRCDIR\public\vgui_controls\lvgui_controls.cpp"
-            $File "$SRCDIR\public\vgui_controls\lPanel.cpp"
-            $File "$SRCDIR\public\vgui_controls\lEditablePanel.cpp"
         }
 
 		$Folder	"Scripted Controls"
 		{
+            $File "$SRCDIR\game\client\scripted_controls\lControls.cpp"
+            $File "$SRCDIR\game\client\scripted_controls\lControls.h"
 			$File "$SRCDIR\game\client\scripted_controls\lLabel.h"
 			$File "$SRCDIR\game\client\scripted_controls\lLabel.cpp"
 			$File "$SRCDIR\game\client\scripted_controls\lButton.h"
@@ -595,15 +592,8 @@ $Project
 			$File "$SRCDIR\game\client\scripted_controls\lFrame.cpp"
 			$File "$SRCDIR\game\client\scripted_controls\lPanel.h"
 			$File "$SRCDIR\game\client\scripted_controls\lPanel.cpp"
-			{
-				$Configuration
-				{
-					$Compiler
-					{
-						$ObjectFileName	"$(IntDir)\$(InputName)1.obj"
-					}
-				}
-			}
+            $File "$SRCDIR\game\client\scripted_controls\lEditablePanel.cpp"
+            $File "$SRCDIR\game\client\scripted_controls\lEditablePanel.h"
 			$File "$SRCDIR\game\client\scripted_controls\lPropertyDialog.h"
 			$File "$SRCDIR\game\client\scripted_controls\lPropertyDialog.cpp"
 			$File "$SRCDIR\game\client\scripted_controls\lPropertyPage.h"
@@ -1222,9 +1212,7 @@ $Project
         $File "$SRCDIR\public\mathlib\lvector.h"
         $File "$SRCDIR\public\lcmodel.h"
         $File "$SRCDIR\public\lColor.h"
-        $File "$SRCDIR\public\vgui_controls\lControls.h"
         $File "$SRCDIR\public\tier1\lconvar.h"
-        $File "$SRCDIR\public\vgui_controls\lEditablePanel.h"
         $File "$SRCDIR\public\lfilesystem.h"
         $File "$SRCDIR\public\lgametrace.h"
         $File "$SRCDIR\public\licvar.h"
@@ -1233,7 +1221,6 @@ $Project
         $File "$SRCDIR\public\SoundEmitterSystem\lisoundemittersystembase.h"
         $File "$SRCDIR\public\tier1\LKeyValues.h"
         $File "$SRCDIR\public\lnetworkstringtabledefs.h"
-        $File "$SRCDIR\public\vgui_controls\lPanel.h"
         $File "$SRCDIR\public\mathlib\lvector.h"
         $File "$SRCDIR\public\vgui\LVGUI.h"
         $File "$SRCDIR\public\mathlib\lvmatrix.h"

@@ -29,7 +29,7 @@ function GM:FlWeaponTryRespawn(targetWeapon)
 end
 
 function GM:PlayerPlayStepSound(client, vecOrigin, psurface, fvol, force)
-	if (Globals.maxClients() > 1 and cvars.FindVar("sv_footsteps"):GetFloat() == 0) then
+	if (Globals.maxClients() > 1 and ConsoleVariables.FindVar("sv_footsteps"):GetFloat() == 0) then
 		return false
 	end
 

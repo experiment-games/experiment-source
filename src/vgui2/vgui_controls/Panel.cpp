@@ -45,7 +45,7 @@
 
 #ifdef LUA_SDK
 #include <luamanager.h>
-#include <vgui_controls/lPanel.h>
+#include "scripted_controls/lPanel.h"
 #endif
 
 // memdbgon must be the last include file in a .cpp file!!!

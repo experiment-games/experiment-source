@@ -28,7 +28,7 @@ end
 
 local function OnOpenContentDialog()
 	if (ToPanel(hContentDialog) == INVALID_PANEL) then
-		hContentDialog = Gui.CContentDialog(VGui_GetGameUIPanel(), "ContentDialog")
+		hContentDialog = Gui.CContentDialog(Gui.GetGameUIPanel(), "ContentDialog")
 		PositionDialog(hContentDialog)
 	end
 	hContentDialog:Activate()

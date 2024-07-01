@@ -391,7 +391,6 @@ void luasrc_init_gameui( void )
     leftOnStack += luaopen_enginevgui( LGameUI );
     leftOnStack += luaopen_FCVAR( LGameUI );
     leftOnStack += luaopen_KeyValues( LGameUI );
-    leftOnStack += luaopen_Panel( LGameUI );
     leftOnStack += luaopen_surface( LGameUI );
     leftOnStack += luaopen_vgui( LGameUI );
     leftOnStack += luaopen_Color( LGameUI );

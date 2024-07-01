@@ -11,11 +11,12 @@
 #include <vgui_int.h>
 #include <luamanager.h>
 #include "luasrclib.h"
-#include <vgui_controls/lPanel.h>
 
-#include <scripted_controls/lPropertyDialog.h>
 #include <vgui_controls/PropertySheet.h>
 #include <vgui_controls/Button.h>
+
+#include <scripted_controls/lPanel.h>
+#include <scripted_controls/lPropertyDialog.h>
 
 // memdbgon must be the last include file in a .cpp file!!!
 #include <tier0/memdbgon.h>

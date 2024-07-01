@@ -9,12 +9,12 @@
 #include <vgui_controls/PHandle.h>
 #include "luamanager.h"
 #include "luasrclib.h"
-#include <vgui_controls/lEditablePanel.h>
 #include <LKeyValues.h>
 #include <vgui_int.h>
 #include <vgui_controls/Panel.h>
-#include <vgui_controls/lPanel.h>
+
 #include "scripted_controls/lPanel.h"
+#include "scripted_controls/lEditablePanel.h"
 
 using namespace vgui;
 

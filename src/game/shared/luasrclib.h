@@ -143,9 +143,6 @@ LUALIB_API int( luaopen_matrix3x4_t )( lua_State *L );
 #define LUA_NETWORKSTRINGTABLELIBNAME "NetworkStringTable"
 LUALIB_API int( luaopen_networkstringtable )( lua_State *L );
 
-#define LUA_PANELLIBNAME "Panel"
-LUALIB_API int( luaopen_Panel )( lua_State *L );
-
 #define LUA_PHYSENVLIBNAME "PhysicsEnvironment"
 LUALIB_API int( luaopen_physenv )( lua_State *L );
 
@@ -181,6 +178,7 @@ LUALIB_API int( luaopen_Util_shared )( lua_State *L );
 LUALIB_API int( luaopen_Vector )( lua_State *L );
 
 #define LUA_VGUILIBNAME "Gui"
+#define LUA_PANELLIBNAME "Panel"
 LUALIB_API int( luaopen_vgui )( lua_State *L );
 
 #define LUA_VMATRIXLIBNAME "Matrix"

@@ -11,9 +11,9 @@
 #include <ienginevgui.h>
 #include <luamanager.h>
 #include "luasrclib.h"
-#include <vgui_controls/lPanel.h>
 #include <LKeyValues.h>
 
+#include <scripted_controls/lPanel.h>
 #include <scripted_controls/lFrame.h>
 
 // memdbgon must be the last include file in a .cpp file!!!

@@ -12,7 +12,8 @@
 #include "luasrclib.h"
 #include "vgui/lischeme.h"
 #include "vgui/lvgui.h"
-#include "vgui_controls/lPanel.h"
+
+#include "scripted_controls/lPanel.h"
 #include "lColor.h"
 
 // memdbgon must be the last include file in a .cpp file!!!
