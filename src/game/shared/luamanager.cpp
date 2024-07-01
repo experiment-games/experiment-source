@@ -969,7 +969,7 @@ LUA_API int luasrc_dofile( lua_State *L, const char *fileName )
 
     if ( iError != 0 )
     {
-        SHOW_LUA_ERROR( "%s\n", lua_tostring( L, -1 ) );
+        SHOW_LUA_ERROR( "error loading file '%s': %s\n", fileName, lua_tostring( L, -1 ) );
         lua_pop( L, 1 );
     }
 
@@ -993,7 +993,7 @@ LUA_API int luasrc_dofile_leave_stack( lua_State *L, const char *fileName )
 
     if ( iError != 0 )
     {
-        SHOW_LUA_ERROR( "%s\n", lua_tostring( L, -1 ) );
+        SHOW_LUA_ERROR( "error loading file '%s': %s\n", fileName, lua_tostring( L, -1 ) );
         lua_pop( L, 1 );
         return -1;
     }
@@ -1049,7 +1049,7 @@ LUA_API int luasrc_pcall( lua_State *L, int nargs, int nresults, int errfunc )
 
     if ( iError != 0 )
     {
-        SHOW_LUA_ERROR( "%s\n", lua_tostring( L, -1 ) );
+        SHOW_LUA_ERROR( "pcall error: %s\n", lua_tostring( L, -1 ) );
         lua_pop( L, 1 );
     }
 

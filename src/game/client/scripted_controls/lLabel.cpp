@@ -9,6 +9,7 @@
 #include "scripted_controls/lPanel.h"
 #include <scripted_controls/lButton.h>
 #include <vgui/LVGUI.h>
+#include <LKeyValues.h>
 
 // memdbgon must be the last include file in a .cpp file!!!
 #include <tier0/memdbgon.h>
@@ -64,6 +65,37 @@ LUALIB_API lua_Label *luaL_checklabel( lua_State *L, int narg )
         luaL_argerror( L, narg, "Label expected, got INVALID_PANEL" );
     return d;
 }
+
+// virtual void GetContentSize( int &wide, int &tall );
+// virtual void SetContentAlignment( Alignment alignment );
+// virtual void SetEnabled( bool state );
+// virtual void SetTextInset( int xInset, int yInset );
+// virtual void GetTextInset( int *xInset, int *yInset );
+// virtual void SetFgColor( Color color );
+// virtual Color GetFgColor();
+// virtual void SetDisabledFgColor1( Color color );
+// virtual void SetDisabledFgColor2( Color color );
+// virtual Color GetDisabledFgColor1();
+// virtual Color GetDisabledFgColor2();
+// virtual void SetTextColorState( EColorState state );
+// virtual void SetFont( HFont font );
+// virtual HFont GetFont();
+// virtual Panel *HasHotkey( wchar_t key );
+// virtual void SetHotkey( wchar_t key );
+// virtual wchar_t GetHotKey();
+// virtual void SetAssociatedControl( Panel *control );
+// virtual int AddImage( IImage *image, int preOffset );  // Return the index the image was placed in
+// virtual void SetImageAtIndex( int index, IImage *image, int preOffset );
+// virtual void SetImagePreOffset( int index, int preOffset );  // Set the offset in pixels before the image
+// virtual IImage *GetImageAtIndex( int index );
+// virtual int GetImageCount();
+// virtual void ClearImages();
+// virtual void ResetToSimpleTextImage();
+// virtual void SetImageBounds( int index, int x, int width );
+// virtual TextImage *GetTextImage();
+// virtual int SetTextImageIndex( int newIndex );
+// virtual bool RequestInfo( KeyValues *outputData );
+// virtual void SizeToContents();
 
 static int Label_ChainToAnimationMap( lua_State *L )
 {
@@ -189,6 +221,112 @@ static int Label_SetText( lua_State *L )
 {
     luaL_checklabel( L, 1 )->SetText( luaL_checkstring( L, 2 ) );
     return 0;
+}
+
+static int Label_GetTextInset( lua_State *L )
+{
+    int xInset, yInset;
+    luaL_checklabel( L, 1 )->GetTextInset( &xInset, &yInset );
+    lua_pushinteger( L, xInset );
+    lua_pushinteger( L, yInset );
+    return 2;
+}
+
+static int Label_SetTextInset( lua_State *L )
+{
+    luaL_checklabel( L, 1 )->SetTextInset( luaL_checkint( L, 2 ), luaL_checkint( L, 3 ) );
+    return 0;
+}
+
+static int Label_GetHotKey( lua_State *L )
+{
+    lua_pushinteger( L, luaL_checklabel( L, 1 )->GetHotKey() );
+    return 1;
+}
+
+static int Label_HasHotkey( lua_State *L )
+{
+    lua_pushpanel( L, luaL_checklabel( L, 1 )->HasHotkey( luaL_checkint( L, 2 ) ) );
+    return 1;
+}
+
+static int Label_SetHotkey( lua_State *L )
+{
+    luaL_checklabel( L, 1 )->SetHotkey( luaL_checkint( L, 2 ) );
+    return 0;
+}
+
+static int Label_SetAssociatedControl( lua_State *L )
+{
+    luaL_checklabel( L, 1 )->SetAssociatedControl( luaL_checkpanel( L, 2 ) );
+    return 0;
+}
+
+// TODO: Implement luaL_checkimage etc. (low priority, used nowhere)
+//static int Label_AddImage( lua_State *L )
+//{
+//    luaL_checklabel( L, 1 )->AddImage( luaL_checkimage( L, 2 ), luaL_checkint( L, 3 ) );
+//    return 0;
+//}
+//
+//static int Label_SetImageAtIndex( lua_State *L )
+//{
+//    luaL_checklabel( L, 1 )->SetImageAtIndex( luaL_checkint( L, 2 ), luaL_checkimage( L, 3 ), luaL_checkint( L, 4 ) );
+//    return 0;
+//}
+
+static int Label_SetImagePreOffset( lua_State *L )
+{
+    luaL_checklabel( L, 1 )->SetImagePreOffset( luaL_checkint( L, 2 ), luaL_checkint( L, 3 ) );
+    return 0;
+}
+
+//static int Label_GetImageAtIndex( lua_State *L )
+//{
+//    lua_pushimage( L, luaL_checklabel( L, 1 )->GetImageAtIndex( luaL_checkint( L, 2 ) ) );
+//    return 1;
+//}
+
+static int Label_GetImageCount( lua_State *L )
+{
+    lua_pushinteger( L, luaL_checklabel( L, 1 )->GetImageCount() );
+    return 1;
+}
+
+static int Label_ClearImages( lua_State *L )
+{
+    luaL_checklabel( L, 1 )->ClearImages();
+    return 0;
+}
+
+static int Label_ResetToSimpleTextImage( lua_State *L )
+{
+    luaL_checklabel( L, 1 )->ResetToSimpleTextImage();
+    return 0;
+}
+
+static int Label_SetImageBounds( lua_State *L )
+{
+    luaL_checklabel( L, 1 )->SetImageBounds( luaL_checkint( L, 2 ), luaL_checkint( L, 3 ), luaL_checkint( L, 4 ) );
+    return 0;
+}
+
+//static int Label_GetTextImage( lua_State *L )
+//{
+//    lua_pushimage( L, luaL_checklabel( L, 1 )->GetTextImage() );
+//    return 1;
+//}
+
+static int Label_SetTextImageIndex( lua_State *L )
+{
+    lua_pushinteger( L, luaL_checklabel( L, 1 )->SetTextImageIndex( luaL_checkint( L, 2 ) ) );
+    return 1;
+}
+
+static int Label_RequestInfo( lua_State *L )
+{
+    lua_pushboolean( L, luaL_checklabel( L, 1 )->RequestInfo( luaL_checkkeyvalues( L, 2 ) ) );
+    return 1;
 }
 
 static int Label___index( lua_State *L )
@@ -342,6 +480,23 @@ static const luaL_Reg Labelmeta[] = {
     { "GetFont", Label_GetFont },
     { "SetFgColor", Label_SetFgColor },
     { "GetFgColor", Label_GetFgColor },
+    { "GetTextInset", Label_GetTextInset },
+    { "SetTextInset", Label_SetTextInset },
+    { "GetHotKey", Label_GetHotKey },
+    { "HasHotkey", Label_HasHotkey },
+    { "SetHotkey", Label_SetHotkey },
+    { "SetAssociatedControl", Label_SetAssociatedControl },
+    //{ "AddImage", Label_AddImage },
+    //{ "SetImageAtIndex", Label_SetImageAtIndex },
+    { "SetImagePreOffset", Label_SetImagePreOffset },
+    //{ "GetImageAtIndex", Label_GetImageAtIndex },
+    { "GetImageCount", Label_GetImageCount },
+    { "ClearImages", Label_ClearImages },
+    { "ResetToSimpleTextImage", Label_ResetToSimpleTextImage },
+    { "SetImageBounds", Label_SetImageBounds },
+    //{ "GetTextImage", Label_GetTextImage },
+    { "SetTextImageIndex", Label_SetTextImageIndex },
+    { "RequestInfo", Label_RequestInfo },
     { "__index", Label___index },
     { "__newindex", Label___newindex },
     { "__eq", Label___eq },
