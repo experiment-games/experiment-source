@@ -400,6 +400,7 @@ void luasrc_init_gameui( void )
     // Experiment; The above is unmaintainable. Find another way, for now lets open all
     // at the risk of opening libraries not functional in the menu.
     luasrc_openlibs( LGameUI );
+    luasrc_dofile( LGameUI, LUA_PATH_INCLUDES_INIT_FILE );
 
     Msg( "Lua Menu initialized (" LUA_VERSION ")\n" );
 }

@@ -17,6 +17,7 @@ Include("extensions/weapon.lua")
 if (CLIENT) then
 	Include("extensions/panel.lua")
 	Include("extensions/label.lua")
+	Include("extensions/text_entry.lua")
 end
 
 Bitwise = require("bitwise")

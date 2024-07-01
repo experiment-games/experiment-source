@@ -2,6 +2,8 @@
 -- or: lua_dofile_cl utilities/test/panel_with_labels.lua
 
 Include("includes/extensions/panel.lua")
+Include("includes/extensions/label.lua")
+Include("includes/extensions/text_entry.lua")
 
 local parent = Gui.Create("Frame")
 local parentWide, parentTall = 256, 256
@@ -36,16 +38,24 @@ local labels = {
 firstSpacing = 22
 
 for i, label in ipairs(labels) do
-	local topChild = Gui.Create("Label", parent)
-	topChild:SetText(label.text)
-	topChild:SetDock(DOCK_TYPE.TOP)
+    local topChild = Gui.Create("Label", parent)
+    topChild:SetText(label.text)
+    topChild:SetDock(DOCK_TYPE.TOP)
     topChild:SetDockPadding(dockPadding, firstSpacing + dockPadding, dockPadding, dockPadding)
     topChild:SetFontByName(label.font)
 
-	print ("child font name", topChild:GetFontName())
+    print("child font name", topChild:GetFontName())
 
-	firstSpacing = 0
+    firstSpacing = 0
 end
+
+-- Add a text entry
+local textEntry = Gui.Create("TextEntry", parent)
+textEntry:SetDock(DOCK_TYPE.FILL)
+textEntry:SetDockPadding(dockPadding, dockPadding, dockPadding, dockPadding)
+textEntry:SetFontByName("Default")
+textEntry:SetMultiline(true)
+textEntry:SetEditable(false)
 
 local closeButton = Gui.Create("Button", parent)
 closeButton:SetText("Close")
@@ -54,4 +64,13 @@ closeButton:SetTall(32)
 
 function closeButton:OnClick()
 	parent:MarkForDeletion()
+end
+
+local enableButton = Gui.Create("Button", parent)
+enableButton:SetText("Toggle TextEntry IsEditable")
+enableButton:SetDock(DOCK_TYPE.BOTTOM)
+enableButton:SetTall(32)
+
+function enableButton:OnClick()
+	textEntry:SetEditable(not textEntry:IsEditable())
 end

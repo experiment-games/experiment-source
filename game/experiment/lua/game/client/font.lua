@@ -27,32 +27,32 @@ local IsFontAdditive = Surface.IsFontAdditive
 local SetFontGlyphSet = Surface.SetFontGlyphSet
 
 -------------------------------------------------------------------------------
--- _R.HFontContainer
+-- _R.FontHandleContainer
 -- Purpose: Class metatable
 -------------------------------------------------------------------------------
-_R.HFontContainer = {
+_R.FontHandleContainer = {
 	__index = {},
-	__type = "fontcontainer"
+	__type = "FontHandleContainer"
 }
 
 -------------------------------------------------------------------------------
--- HFontContainerIndex
+-- FontHandleContainerIndex
 -- Purpose: Internal container index
 -------------------------------------------------------------------------------
-local HFontContainerIndex = 1
+local FontHandleContainerIndex = 1
 
 -------------------------------------------------------------------------------
--- HFontContainers
+-- FontHandleContainers
 -- Purpose: Internal containers index
 -------------------------------------------------------------------------------
-local HFontContainers = {}
+local FontHandleContainers = {}
 
 -------------------------------------------------------------------------------
--- HFontContainer()
--- Purpose: Creates a new HFontContainer
--- Output: HFontContainer
+-- FontHandleContainer()
+-- Purpose: Creates a new FontHandleContainer
+-- Output: FontHandleContainer
 -------------------------------------------------------------------------------
-function HFontContainer()
+function FontHandleContainer()
 	local t = {
 		index = 0,
 		font = INVALID_FONT,
@@ -65,20 +65,20 @@ function HFontContainer()
 		nRangeMin = nil,
 		nRangeMax = nil
 	}
-	setmetatable(t, _R.HFontContainer)
+	setmetatable(t, _R.FontHandleContainer)
 	return t
 end
 
 -------------------------------------------------------------------------------
--- HFontContainer:__tostring()
--- Purpose: __tostring metamethod for HFontContainer
+-- FontHandleContainer:__tostring()
+-- Purpose: __tostring metamethod for FontHandleContainer
 -------------------------------------------------------------------------------
-function _R.HFontContainer:__tostring()
-	return "HFontContainer: " .. self.index
+function _R.FontHandleContainer:__tostring()
+	return "FontHandleContainer: " .. self.index
 end
 
 Hooks.Add("OnScreenSizeChanged", "HFontContainerManager", function()
-	for i, fontcontainer in ipairs(HFontContainers) do
+	for i, fontcontainer in ipairs(FontHandleContainers) do
 		fontcontainer.font = CreateFont()
 		SetFontGlyphSet(fontcontainer.font,
 			fontcontainer.windowsFontName,
@@ -94,129 +94,129 @@ end)
 
 function Util.ComputeStringWidth(font, str)
 	local type = type(font)
-	if (type ~= "font" and type ~= "fontcontainer") then
+	if (type ~= "FontHandle" and type ~= "FontHandleContainer") then
 		error("bad argument #1 to 'ComputeStringWidth' (font or fontcontainer expected, got " .. type .. ")", 2)
 	end
-	if (type == "font") then
+	if (type == "FontHandle") then
 		return ComputeStringWidth(font, str)
-	elseif (type == "fontcontainer") then
+	elseif (type == "FontHandleContainer") then
 		return ComputeStringWidth(font.font, str)
 	end
 end
 
 function _R.IScheme.GetFontName(font)
 	local type = type(font)
-	if (type ~= "font" and type ~= "fontcontainer") then
+	if (type ~= "FontHandle" and type ~= "FontHandleContainer") then
 		error("bad argument #1 to 'GetFontName' (font or fontcontainer expected, got " .. type .. ")", 2)
 	end
-	if (type == "font") then
+	if (type == "FontHandle") then
 		return GetFontName(font)
-	elseif (type == "fontcontainer") then
+	elseif (type == "FontHandleContainer") then
 		return GetFontName(font.font)
 	end
 end
 
 function Surface.CreateFont()
-	local fontcontainer = HFontContainer()
-	fontcontainer.index = HFontContainerIndex
+	local fontcontainer = FontHandleContainer()
+	fontcontainer.index = FontHandleContainerIndex
 	fontcontainer.font = CreateFont()
-	HFontContainers[HFontContainerIndex] = fontcontainer
-	HFontContainerIndex = HFontContainerIndex + 1
+	FontHandleContainers[FontHandleContainerIndex] = fontcontainer
+	FontHandleContainerIndex = FontHandleContainerIndex + 1
 	return fontcontainer
 end
 
 function Surface.DrawSetTextFont(font)
 	local type = type(font)
-	if (type ~= "font" and type ~= "fontcontainer") then
+	if (type ~= "FontHandle" and type ~= "FontHandleContainer") then
 		error("bad argument #1 to 'DrawSetTextFont' (font or fontcontainer expected, got " .. type .. ")", 2)
 	end
-	if (type == "font") then
+	if (type == "FontHandle") then
 		return DrawSetTextFont(font)
-	elseif (type == "fontcontainer") then
+	elseif (type == "FontHandleContainer") then
 		return DrawSetTextFont(font.font)
 	end
 end
 
 function Surface.GetCharABCwide(font, ch)
 	local type = type(font)
-	if (type ~= "font" and type ~= "fontcontainer") then
+	if (type ~= "FontHandle" and type ~= "FontHandleContainer") then
 		error("bad argument #1 to 'GetCharABCwide' (font or fontcontainer expected, got " .. type .. ")", 2)
 	end
-	if (type == "font") then
+	if (type == "FontHandle") then
 		return GetCharABCwide(font, ch)
-	elseif (type == "fontcontainer") then
+	elseif (type == "FontHandleContainer") then
 		return GetCharABCwide(font.font, ch)
 	end
 end
 
 function Surface.GetCharacterWidth(font, ch)
 	local type = type(font)
-	if (type ~= "font" and type ~= "fontcontainer") then
+	if (type ~= "FontHandle" and type ~= "FontHandleContainer") then
 		error("bad argument #1 to 'GetCharacterWidth' (font or fontcontainer expected, got " .. type .. ")", 2)
 	end
-	if (type == "font") then
+	if (type == "FontHandle") then
 		return GetCharacterWidth(font, ch)
-	elseif (type == "fontcontainer") then
+	elseif (type == "FontHandleContainer") then
 		return GetCharacterWidth(font.font, ch)
 	end
 end
 
 function Surface.GetFontAscent(font, ch)
 	local type = type(font)
-	if (type ~= "font" and type ~= "fontcontainer") then
+	if (type ~= "FontHandle" and type ~= "FontHandleContainer") then
 		error("bad argument #1 to 'GetFontAscent' (font or fontcontainer expected, got " .. type .. ")", 2)
 	end
-	if (type == "font") then
+	if (type == "FontHandle") then
 		return GetFontAscent(font, ch)
-	elseif (type == "fontcontainer") then
+	elseif (type == "FontHandleContainer") then
 		return GetFontAscent(font.font, ch)
 	end
 end
 
 function Surface.GetFontTall(font)
 	local type = type(font)
-	if (type ~= "font" and type ~= "fontcontainer") then
+	if (type ~= "FontHandle" and type ~= "FontHandleContainer") then
 		error("bad argument #1 to 'GetFontTall' (font or fontcontainer expected, got " .. type .. ")", 2)
 	end
-	if (type == "font") then
+	if (type == "FontHandle") then
 		return GetFontTall(font)
-	elseif (type == "fontcontainer") then
+	elseif (type == "FontHandleContainer") then
 		return GetFontTall(font.font)
 	end
 end
 
 function Surface.GetTextSize(font, text)
 	local type = type(font)
-	if (type ~= "font" and type ~= "fontcontainer") then
+	if (type ~= "FontHandle" and type ~= "FontHandleContainer") then
 		error("bad argument #1 to 'GetTextSize' (font or fontcontainer expected, got " .. type .. ")", 2)
 	end
-	if (type == "font") then
+	if (type == "FontHandle") then
 		return GetTextSize(font, text)
-	elseif (type == "fontcontainer") then
+	elseif (type == "FontHandleContainer") then
 		return GetTextSize(font.font, text)
 	end
 end
 
 function Surface.IsFontAdditive(font)
 	local type = type(font)
-	if (type ~= "font" and type ~= "fontcontainer") then
+	if (type ~= "FontHandle" and type ~= "FontHandleContainer") then
 		error("bad argument #1 to 'IsFontAdditive' (font or fontcontainer expected, got " .. type .. ")", 2)
 	end
-	if (type == "font") then
+	if (type == "FontHandle") then
 		return IsFontAdditive(font)
-	elseif (type == "fontcontainer") then
+	elseif (type == "FontHandleContainer") then
 		return IsFontAdditive(font.font)
 	end
 end
 
 function Surface.SetFontGlyphSet(font, windowsFontName, tall, weight, blur, scanlines, flags, nRangeMin, nRangeMax)
 	local type = type(font)
-	if (type ~= "font" and type ~= "fontcontainer") then
+	if (type ~= "FontHandle" and type ~= "FontHandleContainer") then
 		error("bad argument #1 to 'SetFontGlyphSet' (font or fontcontainer expected, got " .. type .. ")", 2)
 	end
-	if (type == "font") then
+	if (type == "FontHandle") then
 		return SetFontGlyphSet(font, windowsFontName, tall, weight, blur, scanlines, flags, nRangeMin, nRangeMax)
-	elseif (type == "fontcontainer") then
+	elseif (type == "FontHandleContainer") then
 		font.windowsFontName = windowsFontName
 		font.tall = tall
 		font.weight = weight

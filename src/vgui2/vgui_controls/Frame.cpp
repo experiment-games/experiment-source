@@ -867,7 +867,7 @@ Frame::~Frame()
 	}
 
 #if !defined( _X360 )
-	delete _topGrip;
+    	delete _topGrip;
 	delete _bottomGrip;
 	delete _leftGrip;
 	delete _rightGrip;

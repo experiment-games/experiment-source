@@ -177,7 +177,23 @@ if (CLIENT) then
         self:SetFontByName(font)
     end
 
-	function LABEL_PANEL_META:GetFont()
+    function LABEL_PANEL_META:GetFont()
+        return self:GetFontName()
+    end
+
+    local TEXT_ENTRY_PANEL_META = FindMetaTable("TextEntry")
+    TEXT_ENTRY_PANEL_META._OriginalSetFont = TEXT_ENTRY_PANEL_META._OriginalSetFont or TEXT_ENTRY_PANEL_META.SetFont
+	TEXT_ENTRY_PANEL_META._OriginalGetFont = TEXT_ENTRY_PANEL_META._OriginalGetFont or TEXT_ENTRY_PANEL_META.GetFont
+
+    function TEXT_ENTRY_PANEL_META:SetFontInternal(font)
+        self:SetFontByName(font)
+    end
+
+    function TEXT_ENTRY_PANEL_META:SetFont(font)
+        self:SetFontByName(font)
+    end
+
+	function TEXT_ENTRY_PANEL_META:GetFont()
 		return self:GetFontName()
 	end
 

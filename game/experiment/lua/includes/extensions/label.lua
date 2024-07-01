@@ -12,10 +12,7 @@ function LABEL_PANEL_META:SetFontByName(fontName)
 	local iScheme = Scheme.GetIScheme(scheme)
 	local font = iScheme:GetFont(fontName)
 
-	if (font) then
-        -- self:SetFont(font)
-		self._OriginalSetFont(self, font)
-	end
+	self._OriginalSetFont(self, font)
 end
 
 --- Gets the font name from the font handle.
@@ -23,10 +20,7 @@ end
 function LABEL_PANEL_META:GetFontName()
     local scheme = self:GetScheme()
     local iScheme = Scheme.GetIScheme(scheme)
+    local font = self._OriginalGetFont(self, iScheme)
 
-    -- return iScheme:GetFontName(self:GetFont())
-    local font = self._OriginalGetFont(self)
 	return iScheme:GetFontName(font)
 end
-
-print("Loaded extensions/label.lua")
