@@ -84,6 +84,12 @@ static int surface_CreatePopup( lua_State *L )
     return 0;
 }
 
+static int surface_DestroyTextureID( lua_State *L )
+{
+    surface()->DestroyTextureID( luaL_checkint( L, 1 ) );
+    return 0;
+}
+
 static int surface_DrawFilledRect( lua_State *L )
 {
     surface()->DrawFilledRect( luaL_checkint( L, 1 ), luaL_checkint( L, 2 ), luaL_checkint( L, 3 ), luaL_checkint( L, 4 ) );
@@ -120,7 +126,7 @@ static int surface_DrawGetTextPos( lua_State *L )
 static int surface_DrawGetTextureFile( lua_State *L )
 {
     char *filename = "";
-    lua_pushboolean( L, surface()->DrawGetTextureFile( luaL_checkint( L, 1 ), filename, luaL_checkint( L, 2 ) ) );
+    lua_pushboolean( L, surface()->DrawGetTextureFile( luaL_checkint( L, 1 ), filename, luaL_optint( L, 2, 0 ) ) );
     lua_pushstring( L, filename );
     return 2;
 }
@@ -637,6 +643,7 @@ static const luaL_Reg surfacelib[] = {
     { "CreateFont", surface_CreateFont },
     { "CreateNewTextureID", surface_CreateNewTextureID },
     { "CreatePopup", surface_CreatePopup },
+    { "DestroyTextureID", surface_DestroyTextureID },
     { "DrawFilledRect", surface_DrawFilledRect },
     { "DrawFilledRectFade", surface_DrawFilledRectFade },
     { "DrawFlushText", surface_DrawFlushText },

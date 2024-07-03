@@ -402,11 +402,23 @@ else
 
 	surface.GetTextureID = function(name)
 		if (not textureMap[name]) then
-            textureMap[name] = surface.CreateNewTextureID()
+			textureMap[name] = surface.CreateNewTextureID()
 			surface.DrawSetTextureFile(textureMap[name], name)
 		end
 
 		return textureMap[name]
+	end
+
+	-- TODO: This doesnt fix the crash on closing the game, but it does seem like something we should do on level shutdown
+	surface.ClearAllTextures = function()
+		-- see cl_hooks.lua
+		testMat:GetTexture("$basetexture"):Release()
+		testMat:Release()
+
+		for name, id in pairs(textureMap) do
+			Surface.DestroyTextureID(id)
+			print("Destroyed texture ID for " .. name, id)
+		end
 	end
 
 	surface.GetTextureNameByID = function(id)
@@ -436,8 +448,7 @@ else
         local name = material:GetString("$basetexture")
 
 		if (not textureMap[name]) then
-            textureMap[name] = surface.CreateNewTextureID()
-			-- surface.DrawSetTextureInstance(textureMap[name], texture)
+            textureMap[name] = surface.CreateNewTextureID(true)
 		end
 
 		surface.DrawSetTextureMaterial(textureMap[name], material)

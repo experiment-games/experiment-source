@@ -26,6 +26,7 @@
 #include "lnetwork.h"
 #include "inputsystem/ButtonCode.h"
 #include <stack>
+#include <cpng.h>
 
 extern "C"
 {
@@ -671,6 +672,7 @@ void luasrc_shutdown( void )
     }
 
     ActivityList_Free();
+    CPngTextureRegen::ReleaseAllTextureData();
 }
 
 LUA_API int luasrc_dostring( lua_State *L, const char *string )

@@ -138,6 +138,12 @@ static int ITexture_IsErrorTexture( lua_State *L )
     return 1;
 }
 
+static int ITexture_Release( lua_State *L )
+{
+    luaL_checkitexture( L, 1 )->Release();
+    return 0;
+}
+
 static int ITexture___tostring( lua_State *L )
 {
     lua_pushfstring( L, "ITexture: %s", luaL_checkitexture( L, 1 )->GetName() );
@@ -156,6 +162,7 @@ static const luaL_Reg ITextureMetaLib[] = {
     { "IsMipmapped", ITexture_IsMipmapped },
     { "IsError", ITexture_IsError },
     { "IsErrorTexture", ITexture_IsErrorTexture },
+    { "Release", ITexture_Release },
     { "__tostring", ITexture___tostring },
     { NULL, NULL } };
 

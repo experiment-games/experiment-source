@@ -11,6 +11,7 @@
 #include "filesystem.h"
 #include "cpng.h"
 #include "strtools.h"
+#include "materialsystem/imaterialsystem.h"
 
 #ifdef CLIENT_DLL
 #include "libpng/png.h"
@@ -19,7 +20,7 @@
 // memdbgon must be the last include file in a .cpp file!!!
 #include "tier0/memdbgon.h"
 
-CUtlMap< ITexture *, unsigned char * > CPngTextureRegen::m_PngTextures( DefLessFunc( ITexture * ) );
+CUtlVector< IMaterial * > CPngTextureRegen::m_vecProceduralMaterials;
 
 CPngTextureRegen::CPngTextureRegen( const char *pFileName )
 {
@@ -49,10 +50,6 @@ void CPngTextureRegen::RegenerateTextureBits( ITexture *pTexture, IVTFTexture *p
         return;
     }
 
-    //pVTFTexture->ConvertImageFormat( IMAGE_FORMAT_RGBA8888, false );  // not sure if this is needed
-
-    //m_PngTextures.InsertOrReplace( pTexture, imageData );
-
     // copy the image data to the vtf texture
     for ( int y = 0; y < height; ++y )
     {
@@ -67,20 +64,10 @@ void CPngTextureRegen::RegenerateTextureBits( ITexture *pTexture, IVTFTexture *p
             vtfImageData[vtfIndex + 3] = imageData[imageIndex + 3];
         }
     }
+
+    // Now that we have copied the image data, we can free the original image data
+    free( imageData );
 #endif
-}
-
-unsigned char *CPngTextureRegen::GetPngTextureData( ITexture *pTexture )
-{
-    unsigned short index = m_PngTextures.Find( pTexture );
-
-    if ( !m_PngTextures.IsValidIndex( index ) )
-    {
-        Warning( "CPngTextureRegen tried to get data for a texture that doesn't exist in the map!\n" );
-        return nullptr;
-    }
-
-    return m_PngTextures[index];
 }
 
 #ifdef CLIENT_DLL
@@ -250,6 +237,7 @@ IMaterial *CPngTextureRegen::GetOrCreateProceduralMaterial( const char *material
     if ( bFound && pVar )
     {
         pMaterial->IncrementReferenceCount();
+        m_vecProceduralMaterials.AddToTail( pMaterial );
         pVar->SetTextureValue( pTexture );
     }
     else
@@ -258,4 +246,14 @@ IMaterial *CPngTextureRegen::GetOrCreateProceduralMaterial( const char *material
     }
 
     return pMaterial;
+}
+
+void CPngTextureRegen::ReleaseAllTextureData()
+{
+    for ( int i = 0; i < m_vecProceduralMaterials.Count(); ++i )
+    {
+        m_vecProceduralMaterials[i]->DecrementReferenceCount();
+    }
+
+    m_vecProceduralMaterials.RemoveAll();
 }

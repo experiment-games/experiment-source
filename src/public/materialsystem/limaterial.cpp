@@ -411,6 +411,7 @@ static int IMaterial_RefreshPreservingMaterialVars( lua_State *L )
 static int IMaterial_Release( lua_State *L )
 {
     luaL_checkmaterial( L, 1 )->Release();
+    g_pMaterialSystem->UncacheUnusedMaterials();
     return 0;
 }
 

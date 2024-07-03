@@ -30,15 +30,11 @@ class CPngTextureRegen : public ITextureRegenerator
    private:
     char m_pFileName[MAX_PATH];
 
-    // Static map of all PNG textures that have been loaded
-    static CUtlMap< ITexture *, unsigned char * > m_PngTextures;
-
     public:
-        static unsigned char * GetPngTextureData( ITexture *pTexture );
-
+        static CUtlVector< IMaterial * > m_vecProceduralMaterials;
         static IMaterial *GetOrCreateProceduralMaterial( const char *materialName, const char *filePath );
-
-        // static void ReleaseAllTextureData(); // TODO
+        static void ReleaseAllTextureData();
+        
 };
 
 unsigned char *PNG_ReadFromBuffer( CUtlBuffer &buffer, const char *filePath, int &width, int &height, ImageFormat &imageFormat );
