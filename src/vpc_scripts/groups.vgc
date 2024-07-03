@@ -15,6 +15,7 @@ $Group "gamedlls"
 
     "lua54"
     "luasocket"
+    "libpng"
 }
 
 $Group "game"
@@ -28,6 +29,7 @@ $Group "game"
 
     "lua54"
     "luasocket"
+    "libpng"
 }
 
 $Group "shaders"

@@ -51,7 +51,7 @@ $Configuration
 
 	$Compiler
 	{
-		$AdditionalIncludeDirectories	".\;$BASE;$SRCDIR\vgui2\include;$SRCDIR\vgui2\controls;$SRCDIR\game\shared;.\game_controls;$SRCDIR\thirdparty\sixensesdk\include;.\scripted_controls;.\hl2;.\hl2\elements;$SRCDIR\game\shared\hl2;$SRCDIR\game\shared\episodic;$SRCDIR\lua;$SRCDIR\luasocket\src"
+		$AdditionalIncludeDirectories	".\;$BASE;$SRCDIR;$SRCDIR\vgui2\include;$SRCDIR\vgui2\controls;$SRCDIR\game\shared;.\game_controls;$SRCDIR\thirdparty\sixensesdk\include;.\scripted_controls;.\hl2;.\hl2\elements;$SRCDIR\game\shared\hl2;$SRCDIR\game\shared\episodic;$SRCDIR\lua;$SRCDIR\luasocket\src"
 		$PreprocessorDefinitions		"$BASE;NO_STRING_T;CLIENT_DLL;VECTOR;VERSION_SAFE_STEAM_API_INTERFACES;PROTECTED_THINGS_ENABLE;strncpy=use_Q_strncpy_instead;_snprintf=use_Q_snprintf_instead;EXPERIMENT_SOURCE;LUA_SDK"
 		$PreprocessorDefinitions		"$BASE;fopen=dont_use_fopen" [$WIN32]
 		$PreprocessorDefinitions		"$BASE;USE_WEBM_FOR_REPLAY;" [$LINUXALL]
@@ -177,6 +177,8 @@ $Project
 		$File	"history_resource.cpp"
 		$File	"hud_weapon.cpp"
 		$File	"train.cpp"
+		$File	"$SRCDIR\game\shared\cpng.cpp"
+		$File	"$SRCDIR\game\shared\cpng.h"
 		$File	"$SRCDIR\game\shared\weapon_parse_default.cpp"
 		$File	"$SRCDIR\game\shared\achievement_saverestore.cpp"
 		$File	"$SRCDIR\game\shared\achievement_saverestore.h"
@@ -1406,5 +1408,6 @@ $Project
 
 		$Lib	"lua54"
 		$Lib	"luasocket"
+        $Lib    "libpng"
  	}
 }

@@ -39,6 +39,10 @@ LUA_API void lua_pushitexture( lua_State *L, lua_ITexture *pTexture )
 LUALIB_API lua_ITexture *luaL_checkitexture( lua_State *L, int narg )
 {
     lua_ITexture **ppData = ( lua_ITexture ** )luaL_checkudata( L, narg, "ITexture" );
+
+    if ( *ppData == 0 ) /* avoid extra test when d is not 0 */
+        luaL_argerror( L, narg, "ITexture expected, got NULL" );
+
     return *ppData;
 }
 

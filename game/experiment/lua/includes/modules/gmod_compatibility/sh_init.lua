@@ -402,7 +402,8 @@ else
 
 	surface.GetTextureID = function(name)
 		if (not textureMap[name]) then
-			textureMap[name] = surface.CreateNewTextureID()
+            textureMap[name] = surface.CreateNewTextureID()
+			surface.DrawSetTextureFile(textureMap[name], name)
 		end
 
 		return textureMap[name]
@@ -429,18 +430,18 @@ else
 	surface.SetTextPos = surface.DrawSetTextPos
     surface.SetTextColor = surface.DrawSetTextColor
     surface.DrawText = surface.DrawPrintText
-    surface.SetTexture = surface.DrawSetTexture
-
-    local materialMap = {}
+	surface.SetTexture = surface.DrawSetTexture
 
     surface.SetMaterial = function(material)
-        if (not materialMap[material]) then
-            local textureID = surface.GetTextureID(material:GetTexture("$basetexture"))
-            materialMap[material] = textureID
-        end
+        local name = material:GetString("$basetexture")
 
-        surface.SetTexture(materialMap[material])
-    end
+		if (not textureMap[name]) then
+            textureMap[name] = surface.CreateNewTextureID()
+			-- surface.DrawSetTextureInstance(textureMap[name], texture)
+		end
+
+		surface.DrawSetTextureMaterial(textureMap[name], material)
+	end
 
     -- TODO: Implement
     surface.DrawTexturedRectRotated = function(x, y, w, h, rotation)

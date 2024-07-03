@@ -74,6 +74,7 @@ function addDependenciesToProject {
 
 addDependenciesToProject "Client (HL2MP)" "950C58AA-39F0-9CA2-8BB5-1AD6B8011443"
 addDependenciesToProject "Client (HL2MP)" "11C4CA93-C3BB-5EF6-0C85-700D6B69A2F6"
+addDependenciesToProject "Client (HL2MP)" "378EBA0C-3BA5-1CB2-6A4B-13E100D0686B"
 
 addDependenciesToProject "Server (HL2MP)" "950C58AA-39F0-9CA2-8BB5-1AD6B8011443"
 addDependenciesToProject "Server (HL2MP)" "11C4CA93-C3BB-5EF6-0C85-700D6B69A2F6"

@@ -7,7 +7,14 @@
 #include "cbase.h"
 #include "lua.hpp"
 #include "luasrclib.h"
+#include "filesystem.h"
+#include "utlbuffer.h"
+#include "materialsystem/itexture.h"
+#include <materialsystem/imaterial.h>
 #include <materialsystem/imaterialsystem.h>
+#include "materialsystem/imaterialvar.h"
+#include <bitmap/bitmap.h>
+#include <cpng.h>
 
 // memdbgon must be the last include file in a .cpp file!!!
 #include "tier0/memdbgon.h"
@@ -83,19 +90,31 @@ extern IMaterialSystem *g_pMaterialSystem;
 static int gpGlobals_FindMaterial( lua_State *L )
 {
     const char *name = luaL_checkstring( L, 1 );
-    IMaterial *pMaterial = g_pMaterialSystem->FindMaterial( name, 0 );
 
-    if ( pMaterial )
+    IMaterial *pMaterial = g_pMaterialSystem->FindMaterial( name, 0, false );
+
+    if ( IsErrorMaterial( pMaterial ) )
     {
-        IMaterial **pUserData = (IMaterial **)lua_newuserdata( L, sizeof( IMaterial * ) );
-        *pUserData = pMaterial;
-        luaL_getmetatable( L, LUA_MATERIALLIBNAME );
-        lua_setmetatable( L, -2 );
+        char ext[4];
+
+        Q_ExtractFileExtension( name, ext, sizeof( ext ) );
+
+        if ( Q_stricmp( ext, "png" ) == 0 )
+        {
+            // Get a name for png materials (prefixed with ! and no png extension)
+            char nameWithoutExtension[MAX_PATH];
+            Q_StripExtension( name, nameWithoutExtension, sizeof( nameWithoutExtension ) );
+            char materialName[MAX_PATH];
+            Q_snprintf( materialName, sizeof( materialName ), "!%s", nameWithoutExtension );
+
+            pMaterial = CPngTextureRegen::GetOrCreateProceduralMaterial( materialName, name );
+        }
     }
-    else
-    {
-        lua_pushnil( L );
-    }
+
+    IMaterial **pUserData = ( IMaterial ** )lua_newuserdata( L, sizeof( IMaterial * ) );
+    *pUserData = pMaterial;
+    luaL_getmetatable( L, LUA_MATERIALLIBNAME );
+    lua_setmetatable( L, -2 );
 
     return 1;
 }
@@ -108,9 +127,9 @@ static int gpGlobals_CreateMaterial( lua_State *L )
     KeyValues *keys = new KeyValues( shaderName );
 
     // Get the table to fill in the key values
-    lua_pushvalue( L, 3 ); // Push the table to the top of the stack
+    lua_pushvalue( L, 3 );  // Push the table to the top of the stack
 
-    lua_pushnil( L ); // Push the first key
+    lua_pushnil( L );  // Push the first key
     while ( lua_next( L, -2 ) != 0 )
     {
         const char *key = luaL_checkstring( L, -2 );
@@ -118,17 +137,16 @@ static int gpGlobals_CreateMaterial( lua_State *L )
 
         keys->SetString( key, value );
 
-        lua_pop( L, 1 ); // Pop the value, but leave the key
+        lua_pop( L, 1 );  // Pop the value, but leave the key
     }
 
-    lua_pop( L, 1 ); // Pop the table
-
+    lua_pop( L, 1 );  // Pop the table
 
     IMaterial *pMaterial = g_pMaterialSystem->CreateMaterial( name, keys );
 
     if ( pMaterial )
     {
-        IMaterial **pUserData = (IMaterial **)lua_newuserdata( L, sizeof( IMaterial * ) );
+        IMaterial **pUserData = ( IMaterial ** )lua_newuserdata( L, sizeof( IMaterial * ) );
         *pUserData = pMaterial;
         luaL_getmetatable( L, LUA_MATERIALLIBNAME );
         lua_setmetatable( L, -2 );

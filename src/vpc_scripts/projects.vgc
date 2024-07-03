@@ -138,3 +138,8 @@ $Project "luasocket"
 {
     "luasocket\luasocket_base.vpc"
 }
+
+$Project "libpng"
+{
+    "libpng\libpng_base.vpc"
+}

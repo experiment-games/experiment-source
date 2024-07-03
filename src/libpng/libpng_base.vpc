@@ -1,0 +1,119 @@
+//-----------------------------------------------------------------------------
+//	LIBPNG_BASE.VPC
+//
+//	Project Script
+//-----------------------------------------------------------------------------
+
+$IgnoreRedundancyWarning	"ON"
+
+$Macro SRCDIR		".."
+$Macro GAMENAME     "experiment"
+
+$Macro OUTBINDIR	"$SRCDIR\..\game\$GAMENAME\bin"
+$Macro OUTBINNAME	"libpng"
+
+$MacroRequired		"OUTDLLEXT" "$_DLL_EXT"
+
+$Include "$SRCDIR\vpc_scripts\source_dll_base.vpc"
+$Include "$SRCDIR\tier0\tier0_exclude.vpc"
+$Include "$SRCDIR\tier1\tier1_exclude.vpc"
+$Include "$SRCDIR\vstdlib\vstdlib_exclude.vpc"
+
+$MacroRequired PLATSUBDIR
+$MacroRequired OUTLIBNAME   "$OUTBINNAME"
+$MacroRequired OUTLIBDIR	"$SRCDIR\lib\public$PLATSUBDIR"
+
+$Configuration	"Debug"
+{
+	$General
+	{
+		$OutputDirectory			".\Debug_$GAMENAME"			[$WIN32]
+		$IntermediateDirectory		".\Debug_$GAMENAME"			[$WIN32]
+
+		$OutputDirectory			".\Debug_$GAMENAME_360"		[$X360]
+		$IntermediateDirectory		".\Debug_$GAMENAME_360"		[$X360]
+	}
+}
+
+$Configuration	"Release"
+{
+	$General
+	{
+		$OutputDirectory			".\Release_$GAMENAME"		[$WIN32]
+		$IntermediateDirectory		".\Release_$GAMENAME"		[$WIN32]
+
+		$OutputDirectory			".\Release_$GAMENAME_360"	[$X360]
+		$IntermediateDirectory		".\Release_$GAMENAME_360"	[$X360]
+	}
+}
+
+$Configuration
+{
+	$Compiler
+	{
+		$AdditionalIncludeDirectories       "$BASE;./zlib-1.3.1"
+        $EnableFloatingPointExceptions  "0"
+        $DisableSpecificWarnings "4127;4244;4244"
+
+		"$CompileAs"    "Compile as C Code (/TC)"
+	}
+
+    $CustomBuildStep
+    {
+        $Description	"Copying .lib to $OUTLIBDIR"
+        $CommandLine	"copy /Y $QUOTE$(OutDir)$(TargetName).lib$QUOTE $QUOTE$OUTLIBDIR\$OUTBINNAME.lib$QUOTE" [$WIN32]
+        $CommandLine	"cp $QUOTE$(OutDir)$(TargetName).lib$QUOTE $QUOTE$OUTLIBDIR/$OUTBINNAME.lib$QUOTE" [$LINUX]
+        $Outputs        "$OUTLIBDIR\$OUTBINNAME.lib"
+        $ExecuteAfter  "BuildLink"
+    }
+}
+
+$Project "libpng"
+{
+	$Folder	"Source Files"
+	{
+        $File	"png.c"
+        $File	"pngerror.c"
+        $File	"pngget.c"
+        $File	"pngmem.c"
+        $File	"pngpread.c"
+        $File	"pngread.c"
+        $File	"pngrio.c"
+        $File	"pngrtran.c"
+        $File	"pngrutil.c"
+        $File	"pngset.c"
+        $File	"pngtrans.c"
+        $File	"pngwio.c"
+        $File	"pngwrite.c"
+        $File	"pngwtran.c"
+        $File	"pngwutil.c"
+    }
+
+	$Folder	"zlib"
+	{
+        $File	"zlib-1.3.1/adler32.c"
+        $File	"zlib-1.3.1/compress.c"
+        $File	"zlib-1.3.1/crc32.c"
+        $File	"zlib-1.3.1/crc32.h"
+        $File	"zlib-1.3.1/deflate.c"
+        $File	"zlib-1.3.1/deflate.h"
+        $File	"zlib-1.3.1/gzclose.c"
+        $File	"zlib-1.3.1/gzguts.h"
+        $File	"zlib-1.3.1/gzlib.c"
+        $File	"zlib-1.3.1/gzread.c"
+        $File	"zlib-1.3.1/gzwrite.c"
+        $File	"zlib-1.3.1/infback.c"
+        $File	"zlib-1.3.1/inffast.c"
+        $File	"zlib-1.3.1/inffast.h"
+        $File	"zlib-1.3.1/inffixed.h"
+        $File	"zlib-1.3.1/inflate.c"
+        $File	"zlib-1.3.1/inflate.h"
+        $File	"zlib-1.3.1/inftrees.c"
+        $File	"zlib-1.3.1/inftrees.h"
+        $File	"zlib-1.3.1/trees.c"
+        $File	"zlib-1.3.1/trees.h"
+        $File	"zlib-1.3.1/uncompr.c"
+        $File	"zlib-1.3.1/zutil.c"
+        $File	"zlib-1.3.1/zutil.h"
+    }
+}

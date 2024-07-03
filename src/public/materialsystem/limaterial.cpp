@@ -48,6 +48,10 @@ LUA_API void lua_pushmaterial( lua_State *L, lua_IMaterial *pMaterial )
 LUALIB_API lua_IMaterial *luaL_checkmaterial( lua_State *L, int narg )
 {
     lua_IMaterial **d = ( lua_IMaterial ** )luaL_checkudata( L, narg, "IMaterial" );
+
+    if ( *d == 0 ) /* avoid extra test when d is not 0 */
+        luaL_argerror( L, narg, "IMaterial expected, got NULL" );
+
     return *d;
 }
 
@@ -89,18 +93,22 @@ static int IMaterial_GetAlphaModulation( lua_State *L )
 
 static int IMaterial_GetColor(lua_State* L)
 {
-    float *colorValues = new float[4];
+    // TODO: why does this crash
+    //float *colorValues = new float[4];
 
-    luaL_checkmaterial( L, 1 )->GetLowResColorSample(
-        luaL_checkint( L, 2 ),
-        luaL_checkint( L, 3 ),
-        colorValues );
+    //luaL_checkmaterial( L, 1 )->GetLowResColorSample(
+    //    luaL_checkint( L, 2 ),
+    //    luaL_checkint( L, 3 ),
+    //    colorValues );
 
-    // Turn the color into a table with the color metatable
-    Color color( colorValues[0], colorValues[1], colorValues[2], colorValues[4] ); // TODO: Does alpha get set?
-    lua_pushcolor( L, color );
+    //// Turn the color into a table with the color metatable
+    //Color color( colorValues[0], colorValues[1], colorValues[2], colorValues[4] ); // TODO: Does alpha get set?
+    //lua_pushcolor( L, color );
 
-    return 1;
+    //free( colorValues );
+
+    //return 1;
+    return 0;
 }
 
 static int IMaterial_GetColorModulation( lua_State *L )

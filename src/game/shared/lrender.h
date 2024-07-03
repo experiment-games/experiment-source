@@ -19,6 +19,6 @@ LUALIB_API lua_ITexture *( luaL_toitexture )( lua_State *L, int idx );
 
 LUALIB_API void( lua_pushitexture )( lua_State *L, lua_ITexture *pTexture );
 
-LUALIB_API lua_ITexture *( luaL_checktexture )( lua_State *L, int narg );
+LUALIB_API lua_ITexture *( luaL_checkitexture )( lua_State *L, int narg );
 
 #endif  // LC_RENDER_H
