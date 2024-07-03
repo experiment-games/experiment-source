@@ -5,6 +5,10 @@
 	Modified for Experiment.
 --]]
 
+if (GAMEUI) then
+	return
+end
+
 require("ConsoleVariables")
 
 local pairs = pairs

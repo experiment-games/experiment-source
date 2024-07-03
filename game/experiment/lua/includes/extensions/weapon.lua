@@ -5,6 +5,10 @@
 	Modified for Experiment.
 --]]
 
+if (GAMEUI) then
+	return
+end
+
 _R.CBaseCombatWeapon.__WeaponSound = _R.CBaseCombatWeapon.WeaponSound
 local WeaponSound = _R.CBaseCombatWeapon.WeaponSound
 local Globals = Globals

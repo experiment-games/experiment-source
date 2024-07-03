@@ -399,7 +399,7 @@ void luasrc_init_gameui( void )
     // lua_pop( LGameUI, leftOnStack );
     //  Experiment; The above is unmaintainable. Find another way, for now lets open all
     //  at the risk of opening libraries not functional in the menu.
-    luasrc_openlibs( LGameUI );
+    luasrc_openlibs( LGameUI, true );
     luasrc_dofile( LGameUI, LUA_PATH_INCLUDES_INIT_FILE );
 
     Msg( "Lua Menu initialized (" LUA_VERSION ")\n" );
@@ -1132,6 +1132,7 @@ static void luasrc_LoadEntityFromFile( char *fullPath, char *className )
     lua_pushstring( L, LUA_BASE_ENTITY_FACTORY );
     lua_setfield( L, -2, "Factory" );
     lua_setglobal( L, "ENT" );
+
     if ( luasrc_dofile( L, fullPath ) == 0 )
     {
         lua_getglobal( L, LUA_ENTITIESLIBNAME );
@@ -1258,6 +1259,148 @@ static int luasrc_LoadWeapons( lua_State *L )
     return 0;
 }
 
+/// <summary>
+/// Sets up the default values for the SWEP that is on the stack of L.
+///
+/// TODO: Copied from Garry's Mod Wiki, whilst not all values are used by
+/// us. Copied for compatibility reasons.
+/// </summary>
+static void luasrc_SetupDefaultWeapon()
+{
+    lua_pushstring( L, "Other" );
+    lua_setfield( L, -2, "Category" );
+
+    lua_pushboolean( L, false );
+    lua_setfield( L, -2, "Spawnable" );
+
+    lua_pushboolean( L, false );
+    lua_setfield( L, -2, "AdminOnly" );
+
+    lua_pushstring( L, "Scripted Weapon" );
+    lua_setfield( L, -2, "PrintName" );
+
+    lua_pushstring( L, LUA_BASE_WEAPON );
+    lua_setfield( L, -2, "Base" );
+
+    lua_pushnumber( L, 1 );
+    lua_setfield( L, -2, "m_WeaponDeploySpeed" );
+
+    lua_pushstring( L, "" );
+    lua_setfield( L, -2, "Author" );
+
+    lua_pushstring( L, "" );
+    lua_setfield( L, -2, "Contact" );
+
+    lua_pushstring( L, "" );
+    lua_setfield( L, -2, "Purpose" );
+
+    lua_pushstring( L, "" );
+    lua_setfield( L, -2, "Instructions" );
+
+    lua_pushstring( L, "models/weapons/v_pistol.mdl" );
+    lua_setfield( L, -2, "ViewModel" );
+
+    lua_pushboolean( L, false );
+    lua_setfield( L, -2, "ViewModelFlip" );
+
+    lua_pushboolean( L, false );
+    lua_setfield( L, -2, "ViewModelFlip1" );
+
+    lua_pushboolean( L, false );
+    lua_setfield( L, -2, "ViewModelFlip2" );
+
+    lua_pushnumber( L, 62 );
+    lua_setfield( L, -2, "ViewModelFOV" );
+
+    lua_pushstring( L, "models/weapons/w_357.mdl" );
+    lua_setfield( L, -2, "WorldModel" );
+
+    lua_pushboolean( L, true );
+    lua_setfield( L, -2, "AutoSwitchFrom" );
+
+    lua_pushboolean( L, true );
+    lua_setfield( L, -2, "AutoSwitchTo" );
+
+    lua_pushnumber( L, 5 );
+    lua_setfield( L, -2, "Weight" );
+
+    lua_pushnumber( L, 1 );
+    lua_setfield( L, -2, "BobScale" );
+
+    lua_pushnumber( L, 1 );
+    lua_setfield( L, -2, "SwayScale" );
+
+    lua_pushboolean( L, true );
+    lua_setfield( L, -2, "BounceWeaponIcon" );
+
+    lua_pushboolean( L, true );
+    lua_setfield( L, -2, "DrawWeaponInfoBox" );
+
+    lua_pushboolean( L, true );
+    lua_setfield( L, -2, "DrawAmmo" );
+
+    lua_pushboolean( L, true );
+    lua_setfield( L, -2, "DrawCrosshair" );
+
+    lua_pushnumber( L, 0 );
+    lua_setfield( L, -2, "Slot" );
+
+    lua_pushnumber( L, 10 );
+    lua_setfield( L, -2, "SlotPos" );
+
+    lua_pushnumber( L, 0 );
+    lua_setfield( L, -2, "SpeechBubbleLid" );
+
+    lua_pushnumber( L, 0 );
+    lua_setfield( L, -2, "WepSelectIcon" );
+
+    lua_pushboolean( L, false );
+    lua_setfield( L, -2, "CSMuzzleFlashes" );
+
+    lua_pushboolean( L, false );
+    lua_setfield( L, -2, "CSMuzzleX" );
+
+    lua_newtable( L );
+    lua_pushstring( L, "Pistol" );
+    lua_setfield( L, -2, "Ammo" );
+    lua_pushnumber( L, 0 );
+    lua_setfield( L, -2, "ClipSize" );
+    lua_pushnumber( L, 0 );
+    lua_setfield( L, -2, "DefaultClip" );
+    lua_pushboolean( L, false );
+    lua_setfield( L, -2, "Automatic" );
+    lua_setfield( L, -2, "Primary" );
+
+    lua_newtable( L );
+    lua_pushstring( L, "Pistol" );
+    lua_setfield( L, -2, "Ammo" );
+    lua_pushnumber( L, 0 );
+    lua_setfield( L, -2, "ClipSize" );
+    lua_pushnumber( L, 0 );
+    lua_setfield( L, -2, "DefaultClip" );
+    lua_pushboolean( L, false );
+    lua_setfield( L, -2, "Automatic" );
+    lua_setfield( L, -2, "Secondary" );
+
+    lua_pushboolean( L, false );
+    lua_setfield( L, -2, "UseHands" );
+
+    lua_pushboolean( L, false );
+    lua_setfield( L, -2, "AccurateCrosshair" );
+
+    lua_pushboolean( L, true );
+    lua_setfield( L, -2, "DisableDuplicator" );
+
+    lua_pushstring( L, "weapon" );
+    lua_setfield( L, -2, "ScriptedEntityType" );
+
+    lua_pushboolean( L, true );
+    lua_setfield( L, -2, "m_bPlayPickupSound" );
+
+    lua_pushstring( L, "materials/entities/<ClassName>.png" );
+    lua_setfield( L, -2, "IconOverride" );
+}
+
 static void luasrc_LoadWeaponFromFile( char *fullPath, char *className )
 {
     Q_strlower( className );
@@ -1268,9 +1411,11 @@ static void luasrc_LoadWeaponFromFile( char *fullPath, char *className )
 
     lua_pushstring( L, entDir );
     lua_setfield( L, -2, "Folder" );
-    lua_pushstring( L, LUA_BASE_WEAPON );
-    lua_setfield( L, -2, "Base" );
+    lua_pushstring( L, className );
+    lua_setfield( L, -2, "ClassName" );
+    luasrc_SetupDefaultWeapon();
     lua_setglobal( L, "SWEP" );
+
     if ( luasrc_dofile( L, fullPath ) == 0 )
     {
         lua_getglobal( L, LUA_WEAPONSLIBNAME );

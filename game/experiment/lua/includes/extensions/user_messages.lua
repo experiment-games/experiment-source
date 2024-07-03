@@ -1,4 +1,4 @@
-if (not CLIENT) then
+if (not CLIENT or GAMEUI) then
 	return
 end
 

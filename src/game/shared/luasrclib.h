@@ -201,7 +201,7 @@ LUALIB_API int( luaopen_render )( lua_State *L );
 LUALIB_API int( luaopen_ITexture )( lua_State *L );
 
 /* open all Source Engine libraries */
-LUALIB_API void( luasrc_openlibs )( lua_State *L );
+LUALIB_API void( luasrc_openlibs )( lua_State *L, bool isStateGameUI = false );
 
 // Lua defined libraries
 #define LUA_ENTITIESLIBNAME "Entities"
