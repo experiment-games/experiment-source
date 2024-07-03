@@ -272,6 +272,8 @@ engine.TickCount = Globals.tickcount
 engine.TickInterval = Globals.interval_per_tick
 SoundDuration = Engine.GetSoundDuration
 
+PrecacheParticleSystem = ParticleSystem.Precache
+
 engine.ActiveGamemode = function()
 	return Gamemodes.GetActiveName()
 end
@@ -381,7 +383,11 @@ game = {
 		return Globals.maxClients
 	end,
 
-	ConsoleCommand = RunConsoleCommand,
+    ConsoleCommand = RunConsoleCommand,
+
+	AddParticles = function(filePath)
+		return ParticleSystem.ReadConfigFile("gmod_compatibility_content/" .. tostring(filePath))
+	end,
 }
 
 if (SERVER) then

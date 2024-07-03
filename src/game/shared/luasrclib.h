@@ -143,6 +143,9 @@ LUALIB_API int( luaopen_matrix3x4_t )( lua_State *L );
 #define LUA_NETWORKSTRINGTABLELIBNAME "NetworkStringTable"
 LUALIB_API int( luaopen_networkstringtable )( lua_State *L );
 
+#define LUA_PARTICLESYSTEMLIBNAME "ParticleSystem"
+LUALIB_API int( luaopen_ParticleSystem )( lua_State *L );
+
 #define LUA_PHYSENVLIBNAME "PhysicsEnvironment"
 LUALIB_API int( luaopen_physenv )( lua_State *L );
 

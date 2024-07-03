@@ -113,6 +113,7 @@ static const luaL_RegForState luasrclibs[] = {
 #endif
     { LUA_UMSGLIBNAME, luaopen_umsg, false },
 
+    { LUA_PARTICLESYSTEMLIBNAME, luaopen_ParticleSystem, false},
     { LUA_SYSTEMLIBNAME, luaopen_system, true },
     { LUA_RENDERLIBNAME, luaopen_render, true },
     { LUA_ITEXTURELIBNAME, luaopen_ITexture, true },

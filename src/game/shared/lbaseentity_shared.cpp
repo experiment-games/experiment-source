@@ -29,6 +29,7 @@
 #include "ltakedamageinfo.h"
 #include "mathlib/lvector.h"
 #include "lvphysics_interface.h"
+#include "engine/IEngineSound.h"
 
 // memdbgon must be the last include file in a .cpp file!!!
 #include "tier0/memdbgon.h"
@@ -1089,7 +1090,20 @@ static int CBaseEntity_PrecacheScriptSound( lua_State *L )
 
 static int CBaseEntity_PrecacheSound( lua_State *L )
 {
-    lua_pushboolean( L, CBaseEntity::PrecacheSound( luaL_checkstring( L, 1 ) ) );
+    const char *name = luaL_checkstring( L, 1 );
+
+    // Copied from PrecacheSound so the "Direct precache of %s" warnings arent shown
+    if ( !CBaseEntity::IsPrecacheAllowed() )
+    {
+        if ( !enginesound->IsSoundPrecached( name ) )
+        {
+            Assert( !"CBaseEntity::PrecacheSound:  too late" );
+
+            Warning( "Late precache of %s\n", name );
+        }
+    }
+
+    lua_pushboolean( L, enginesound->PrecacheSound( name, true ) );
     return 1;
 }
 
