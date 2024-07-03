@@ -637,43 +637,6 @@ end
 --]]
 Include("cl_hooks.lua")
 
--- NOTE: This is where I finished work. Commenting hook.Run("OnGamemodeLoaded") will let us in-game.
--- Without this commented we get:
---[[
-
-Loaded gamemode sandbox
-DPropertySheet:AddSheet tried to add invalid panel!
-
-Trace:
-
-	1: Line 32	"Trace"		...ncludes\modules\gmod_compatibility/\extensions/debug.lua
-
-	2: Line 179	"AddSheet"		...des\modules\gmod_compatibility/\\vgui/DPropertySheet.lua
-
-	3: Line 46	"AddToolPanel"		...ent\gamemodes\sandbox\gamemode\\\spawnmenu/\toolmenu.lua
-
-	4: Line 28	"LoadTools"		...ent\gamemodes\sandbox\gamemode\\\spawnmenu/\toolmenu.lua
-
-	5: Line 13	"Init"		...ent\gamemodes\sandbox\gamemode\\\spawnmenu/\toolmenu.lua
-
-	6: Line 41	"Create"		...mpatibility/\extensions/client/\panel/scriptedpanels.lua
-
-	7: Line 22	"Init"		...ent\gamemodes\sandbox\gamemode\\\spawnmenu/spawnmenu.lua
-
-	8: Line 41	"Create"		...mpatibility/\extensions/client/\panel/scriptedpanels.lua
-
-	9: Line 243	"nil"		...ent\gamemodes\sandbox\gamemode\\\spawnmenu/spawnmenu.lua
-
-	10: C function	"xpcall"
-
-	11: Line 44	"nil"		...pps\sourcemods\experiment\lua\includes\modules\hooks.lua
-
-	12: Line 642	"nil"		...ment\lua\includes\modules\gmod_compatibility/sh_init.lua
-
-	13: C function	"xpcall"
-
-	14: Line 44	"nil"		...pps\sourcemods\experiment\lua\includes\modules\hooks.lua
-]]
 hook.Add("Initialize", "GModCompatibility.CallInitializeHooks", function()
 	hook.Run("PreGamemodeLoaded")
 	hook.Run("OnGamemodeLoaded")

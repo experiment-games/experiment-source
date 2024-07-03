@@ -666,6 +666,13 @@ static int Panel_IsValidKeyBindingsContext( lua_State *L )
     return 1;
 }
 
+static int Panel_IsValid( lua_State *L )
+{
+    lua_Panel *d = lua_topanel( L, 1 );
+    lua_pushboolean( L, d != NULL );
+    return 1;
+}
+
 static int Panel_IsVisible( lua_State *L )
 {
     lua_pushboolean( L, luaL_checkpanel( L, 1 )->IsVisible() );
@@ -1433,6 +1440,7 @@ static const luaL_Reg Panelmeta[] = {
     { "IsStartDragWhenMouseExitsPanel", Panel_IsStartDragWhenMouseExitsPanel },
     { "IsTriplePressAllowed", Panel_IsTriplePressAllowed },
     { "IsValidKeyBindingsContext", Panel_IsValidKeyBindingsContext },
+    { "IsValid", Panel_IsValid },
     { "IsVisible", Panel_IsVisible },
     { "IsWithin", Panel_IsWithin },
     { "IsWithinTraverse", Panel_IsWithinTraverse },
