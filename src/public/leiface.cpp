@@ -95,6 +95,14 @@ static int engine_GetEntityCount( lua_State *L )
     return 1;
 }
 
+static int engine_GetLevelName( lua_State *L )
+{
+    char szMap[MAX_PATH + 1] = "";
+    Q_strncpy( szMap, gpGlobals->mapname.ToCStr(), ARRAYSIZE( szMap ) );
+    lua_pushstring( L, szMap );
+    return 1;
+}
+
 static int engine_GetGameDir( lua_State *L )
 {
     char gamePath[256];
@@ -344,6 +352,7 @@ static const luaL_Reg enginelib[] = {
     { "GetAppID", engine_GetAppID },
     { "GetClientConVarValue", engine_GetClientConVarValue },
     { "GetEntityCount", engine_GetEntityCount },
+    { "GetLevelName", engine_GetLevelName },
     { "GetGameDir", engine_GetGameDir },
     { "GetMapEntitiesString", engine_GetMapEntitiesString },
     { "GetMostRecentlyLoadedFileName", engine_GetMostRecentlyLoadedFileName },

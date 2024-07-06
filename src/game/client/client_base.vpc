@@ -596,6 +596,8 @@ $Project
             $File "$SRCDIR\game\client\scripted_controls\lEditablePanel.h"
             $File "$SRCDIR\game\client\scripted_controls\lFrame.cpp"
             $File "$SRCDIR\game\client\scripted_controls\lFrame.h"
+            $File "$SRCDIR\game\client\scripted_controls\lHTML.cpp"
+            $File "$SRCDIR\game\client\scripted_controls\lHTML.h"
             $File "$SRCDIR\game\client\scripted_controls\lLabel.cpp"
             $File "$SRCDIR\game\client\scripted_controls\lLabel.h"
             $File "$SRCDIR\game\client\scripted_controls\lPanel.cpp"

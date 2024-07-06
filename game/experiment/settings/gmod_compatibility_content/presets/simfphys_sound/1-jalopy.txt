@@ -1,0 +1,18 @@
+"Jalopy"
+{
+	"simfphyssoundeditor_High"		"simulated_vehicles/jalopy/jalopy_high.wav"
+	"simfphyssoundeditor_HighFadeInRate"		"0.40"
+	"simfphyssoundeditor_HighFadeInRPMpercent"		"55.00"
+	"simfphyssoundeditor_HighPitch"		"0.75"
+	"simfphyssoundeditor_HighVolume"		"0.90"
+	"simfphyssoundeditor_Idle"		"simulated_vehicles/jalopy/jalopy_idle.wav"
+	"simfphyssoundeditor_IdlePitch"		"0.95"
+	"simfphyssoundeditor_Mid"		"simulated_vehicles/jalopy/jalopy_mid.wav"
+	"simfphyssoundeditor_MidFadeOutRate"		"0.25"
+	"simfphyssoundeditor_MidFadeOutRPMpercent"		"55.00"
+	"simfphyssoundeditor_MidPitch"		"1.00"
+	"simfphyssoundeditor_MidVolume"		"1.00"
+	"simfphyssoundeditor_ThrottlePitch"		"0.00"
+	"simfphyssoundeditor_ThrottleVolume"		"0.00"
+	"simfphyssoundeditor_Type"		"0"
+}

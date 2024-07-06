@@ -1244,11 +1244,10 @@ static int Panel_StringToKeyCode( lua_State *L )
 static int Panel___index( lua_State *L )
 {
     Panel *plPanel = lua_topanel( L, 1 );
+    const char *pKey = luaL_checkstring( L, 2 );
 
     if ( plPanel == NULL )
     {
-        const char *pKey = luaL_checkstring( L, 2 );
-
         if ( Q_strcmp( pKey, "IsValid" ) == 0 )
         {
             lua_pushcfunction( L, Panel_IsValid );
@@ -1265,11 +1264,28 @@ static int Panel___index( lua_State *L )
         return lua_error( L );
     }
 
+    // TODO: Do this a nicer way that also works for all derived classes
+    if ( !Q_stricmp( pKey, "x" ) )
+    {
+        int x, _;
+        luaL_checkpanel( L, 1 )->GetPos( x, _ );
+        lua_pushinteger( L, x );
+        return 1;
+    }
+    else if ( !Q_stricmp( pKey, "y" ) )
+    {
+        int _, y;
+        luaL_checkpanel( L, 1 )->GetPos( _, y );
+        lua_pushinteger( L, y );
+        return 1;
+    }
+
     if ( plPanel && lua_isrefvalid( L, plPanel->m_nTableReference ) )
     {
         lua_getref( L, plPanel->m_nTableReference );
         lua_pushvalue( L, 2 );
         lua_gettable( L, -2 );
+
         if ( lua_isnil( L, -1 ) )
         {
             lua_pop( L, 2 );
@@ -1284,6 +1300,7 @@ static int Panel___index( lua_State *L )
         lua_pushvalue( L, 2 );
         lua_gettable( L, -2 );
     }
+
     return 1;
 }
 

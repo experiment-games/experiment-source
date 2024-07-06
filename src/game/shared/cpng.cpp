@@ -82,7 +82,7 @@ static void PNG_ReadData( png_structp png_ptr, png_bytep outBytes, png_size_t by
 
 ImageFormat PNG_GetImageFormat( int colorType, int bitDepth )
 {
-    if ( colorType == 6 )  // 32-bit RGBA
+    if ( colorType == 6 || colorType == 4 )  // 32-bit RGBA ?
     {
         return IMAGE_FORMAT_RGBA8888;
     }

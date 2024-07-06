@@ -240,6 +240,11 @@ TauntCamera = function()
 	}
 end
 
+-- We don't use the workshop
+WorkshopFileBase = function(namespace, requiredTags)
+	return {}
+end
+
 game = {
 	IsDedicated = function()
 		return Engine.IsDedicatedServer()
@@ -261,6 +266,8 @@ game = {
 
 		return ParticleSystem.ReadConfigFile("particles/gmod_compatibility_content/" .. tostring(filePath))
 	end,
+
+	GetMap = Engine.GetLevelName,
 }
 
 local ENTITY_META = FindMetaTable("Entity")
@@ -672,6 +679,25 @@ Include("extensions/coroutine.lua")
 Include("../../extensions/table.lua")
 
 if (CLIENT) then
+    spawnmenu = {
+		PopulateFromTextFiles = function(callback)
+			local spawnlists = file.Find("settings/gmod_compatibility_content/spawnlist/*.txt", "GAME")
+
+			for _, spawnlist in ipairs(spawnlists) do
+				local contents = file.Read("settings/gmod_compatibility_content/spawnlist/" .. spawnlist, "GAME")
+				local name = spawnlist:sub(1, -5)
+
+				callback(spawnlist, name, contents, "", 0, 0, false)
+			end
+        end,
+
+		DoSaveToTextFiles = function(props)
+			for filename, data in pairs(props) do
+				file.Write("settings/gmod_compatibility_content/spawnlist/" .. filename, data.contents)
+			end
+		end,
+	}
+
 	-- Client-side modules.
 	require("gmod_compatibility/modules/draw")
 	-- require("gmod_compatibility/modules/markup") -- Not implemented atm.

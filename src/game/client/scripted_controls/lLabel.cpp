@@ -66,37 +66,6 @@ LUALIB_API lua_Label *luaL_checklabel( lua_State *L, int narg )
     return d;
 }
 
-// virtual void GetContentSize( int &wide, int &tall );
-// virtual void SetContentAlignment( Alignment alignment );
-// virtual void SetEnabled( bool state );
-// virtual void SetTextInset( int xInset, int yInset );
-// virtual void GetTextInset( int *xInset, int *yInset );
-// virtual void SetFgColor( Color color );
-// virtual Color GetFgColor();
-// virtual void SetDisabledFgColor1( Color color );
-// virtual void SetDisabledFgColor2( Color color );
-// virtual Color GetDisabledFgColor1();
-// virtual Color GetDisabledFgColor2();
-// virtual void SetTextColorState( EColorState state );
-// virtual void SetFont( HFont font );
-// virtual HFont GetFont();
-// virtual Panel *HasHotkey( wchar_t key );
-// virtual void SetHotkey( wchar_t key );
-// virtual wchar_t GetHotKey();
-// virtual void SetAssociatedControl( Panel *control );
-// virtual int AddImage( IImage *image, int preOffset );  // Return the index the image was placed in
-// virtual void SetImageAtIndex( int index, IImage *image, int preOffset );
-// virtual void SetImagePreOffset( int index, int preOffset );  // Set the offset in pixels before the image
-// virtual IImage *GetImageAtIndex( int index );
-// virtual int GetImageCount();
-// virtual void ClearImages();
-// virtual void ResetToSimpleTextImage();
-// virtual void SetImageBounds( int index, int x, int width );
-// virtual TextImage *GetTextImage();
-// virtual int SetTextImageIndex( int newIndex );
-// virtual bool RequestInfo( KeyValues *outputData );
-// virtual void SizeToContents();
-
 static int Label_ChainToAnimationMap( lua_State *L )
 {
     luaL_checklabel( L, 1 )->ChainToAnimationMap();

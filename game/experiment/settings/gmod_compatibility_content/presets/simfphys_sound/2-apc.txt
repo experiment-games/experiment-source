@@ -1,0 +1,18 @@
+"APC"
+{
+	"simfphyssoundeditor_High"		"simulated_vehicles/misc/v8high2.wav"
+	"simfphyssoundeditor_HighFadeInRate"		"0.19"
+	"simfphyssoundeditor_HighFadeInRPMpercent"		"58.00"
+	"simfphyssoundeditor_HighPitch"		"1.00"
+	"simfphyssoundeditor_HighVolume"		"0.75"
+	"simfphyssoundeditor_Idle"		"simulated_vehicles/misc/nanjing_loop.wav"
+	"simfphyssoundeditor_IdlePitch"		"1.00"
+	"simfphyssoundeditor_Mid"		"simulated_vehicles/misc/m50.wav"
+	"simfphyssoundeditor_MidFadeOutRate"		"0.48"
+	"simfphyssoundeditor_MidFadeOutRPMpercent"		"58.00"
+	"simfphyssoundeditor_MidPitch"		"1.00"
+	"simfphyssoundeditor_MidVolume"		"1.00"
+	"simfphyssoundeditor_ThrottlePitch"		"0.00"
+	"simfphyssoundeditor_ThrottleVolume"		"0.00"
+	"simfphyssoundeditor_Type"		"0"
+}

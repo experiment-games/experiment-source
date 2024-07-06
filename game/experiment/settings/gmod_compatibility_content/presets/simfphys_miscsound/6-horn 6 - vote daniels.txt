@@ -1,0 +1,4 @@
+"Horn 6 - Vote Daniels"
+{
+	"simfphysmiscsoundeditor_HornSound"		"simulated_vehicles/horn_6.wav"
+}

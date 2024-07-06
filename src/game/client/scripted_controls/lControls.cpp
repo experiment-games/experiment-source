@@ -22,6 +22,7 @@ LUALIB_API int luaopen_vgui( lua_State *L )
     luaopen_vgui_Panel( L );
     luaopen_vgui_CheckButton( L );
     luaopen_vgui_Frame( L );
+    luaopen_vgui_HTML( L );
     luaopen_vgui_PropertyDialog( L );
     luaopen_vgui_PropertyPage( L );
     luaopen_vgui_TextEntry( L );
