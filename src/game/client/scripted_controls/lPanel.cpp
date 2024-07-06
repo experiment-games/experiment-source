@@ -745,6 +745,12 @@ static int Panel_MarkInitialized( lua_State *L )
     return 0;
 }
 
+static int Panel_MoveToBack( lua_State *L )
+{
+    luaL_checkpanel( L, 1 )->MoveToBack();
+    return 0;
+}
+
 static int Panel_MoveToFront( lua_State *L )
 {
     luaL_checkpanel( L, 1 )->MoveToFront();
@@ -1461,6 +1467,7 @@ static const luaL_Reg Panelmeta[] = {
     { "MakeReadyForUse", Panel_MakeReadyForUse },
     { "MarkForDeletion", Panel_MarkForDeletion },
     { "MarkInitialized", Panel_MarkInitialized },
+    { "MoveToBack", Panel_MoveToBack },
     { "MoveToFront", Panel_MoveToFront },
     { "OnCommand", Panel_OnCommand },
     { "OnCursorEntered", Panel_OnCursorEntered },

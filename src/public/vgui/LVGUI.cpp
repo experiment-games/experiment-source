@@ -9,7 +9,7 @@
 #include "lua.hpp"
 #include "luasrclib.h"
 #include "lvgui.h"
-#include <luamanager.h> // TODO: Remove, devbugging only
+#include <luamanager.h>  // TODO: Remove, devbugging only
 
 // memdbgon must be the last include file in a .cpp file!!!
 #include "tier0/memdbgon.h"

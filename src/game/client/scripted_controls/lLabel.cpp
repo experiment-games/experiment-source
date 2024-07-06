@@ -323,6 +323,18 @@ static int Label_SetTextImageIndex( lua_State *L )
     return 1;
 }
 
+static int Label_SetWrap( lua_State *L )
+{
+    luaL_checklabel( L, 1 )->SetWrap( luaL_checkboolean( L, 2 ) );
+    return 0;
+}
+
+static int Label_SetCenterWrap( lua_State *L )
+{
+    luaL_checklabel( L, 1 )->SetCenterWrap( luaL_checkboolean( L, 2 ) );
+    return 0;
+}
+
 static int Label_RequestInfo( lua_State *L )
 {
     lua_pushboolean( L, luaL_checklabel( L, 1 )->RequestInfo( luaL_checkkeyvalues( L, 2 ) ) );
@@ -496,6 +508,8 @@ static const luaL_Reg Labelmeta[] = {
     { "SetImageBounds", Label_SetImageBounds },
     //{ "GetTextImage", Label_GetTextImage },
     { "SetTextImageIndex", Label_SetTextImageIndex },
+    { "SetWrap", Label_SetWrap },
+    { "SetCenterWrap", Label_SetCenterWrap },
     { "RequestInfo", Label_RequestInfo },
     { "__index", Label___index },
     { "__newindex", Label___newindex },

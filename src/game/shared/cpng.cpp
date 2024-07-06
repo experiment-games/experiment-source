@@ -35,14 +35,14 @@ void CPngTextureRegen::RegenerateTextureBits( ITexture *pTexture, IVTFTexture *p
     CUtlBuffer buffer;
     if ( !filesystem->ReadFile( m_pFileName, "GAME", buffer ) )
     {
-        Warning( "Failed loading PNG as Material! Couldn't read PNG from file \"%s\"\n", m_pFileName );
+        Warning( "Failed regenerating PNG as Texture! Couldn't read PNG from file \"%s\"\n", m_pFileName );
         return;
     }
 
     int width, height;
-    ImageFormat _;
+    ImageFormat imageFormat;
 
-    unsigned char *imageData = PNG_ReadFromBuffer( buffer, m_pFileName, width, height, _ );
+    unsigned char *imageData = PNG_ReadFromBuffer( buffer, m_pFileName, width, height, imageFormat );
 
     if ( !imageData )
     {
@@ -50,20 +50,23 @@ void CPngTextureRegen::RegenerateTextureBits( ITexture *pTexture, IVTFTexture *p
         return;
     }
 
-    // copy the image data to the vtf texture
-    for ( int y = 0; y < height; ++y )
+    int bitDepth = 0;
+    switch ( imageFormat )
     {
-        for ( int x = 0; x < width; ++x )
-        {
-            int vtfIndex = ( y * width + x ) * 4;
-            int imageIndex = ( y * width + x ) * 4;
-
-            vtfImageData[vtfIndex + 0] = imageData[imageIndex + 0];
-            vtfImageData[vtfIndex + 1] = imageData[imageIndex + 1];
-            vtfImageData[vtfIndex + 2] = imageData[imageIndex + 2];
-            vtfImageData[vtfIndex + 3] = imageData[imageIndex + 3];
-        }
+        // TODO: Verify if this is correct
+        case IMAGE_FORMAT_RGBA8888:
+            bitDepth = 4;
+            break;
+        case IMAGE_FORMAT_RGB888:
+            bitDepth = 1;
+            break;
+        default:
+            Warning( "Failed loading PNG as Material! Unsupported image format %d\n", imageFormat );
+            free( imageData );
+            return;
     }
+
+    Q_memcpy( vtfImageData, imageData, width * height * bitDepth );
 
     // Now that we have copied the image data, we can free the original image data
     free( imageData );
@@ -75,6 +78,21 @@ static void PNG_ReadData( png_structp png_ptr, png_bytep outBytes, png_size_t by
 {
     CUtlBuffer *buffer = ( CUtlBuffer * )png_get_io_ptr( png_ptr );
     buffer->Get( outBytes, byteCountToRead );
+}
+
+ImageFormat PNG_GetImageFormat( int colorType, int bitDepth )
+{
+    if ( colorType == 6 )  // 32-bit RGBA
+    {
+        return IMAGE_FORMAT_RGBA8888;
+    }
+    else if ( colorType == 3 )  // 8-bit RGB
+    {
+        return IMAGE_FORMAT_RGB888;
+    }
+
+    Warning( "Failed loading PNG as Material! Unsupported color type %d with bit depth %d\n", colorType, bitDepth );
+    return IMAGE_FORMAT_RGBA8888;
 }
 
 unsigned char *PNG_ReadFromBuffer( CUtlBuffer &buffer, const char *filePath, int &width, int &height, ImageFormat &imageFormat )
@@ -142,7 +160,7 @@ unsigned char *PNG_ReadFromBuffer( CUtlBuffer &buffer, const char *filePath, int
 
     width = pngWidth;
     height = pngHeight;
-    imageFormat = IMAGE_FORMAT_RGBA8888;  // TODO: Is this always the case?
+    imageFormat = PNG_GetImageFormat( colorType, bitDepth );
 
     return imageData;
 }
@@ -194,7 +212,7 @@ bool PNG_ReadInfoFromBuffer( CUtlBuffer &buffer, const char *filePath, int &widt
 
     width = pngWidth;
     height = pngHeight;
-    imageFormat = IMAGE_FORMAT_RGBA8888;  // TODO: Is this always the case?
+    imageFormat = PNG_GetImageFormat( colorType, bitDepth );
 
     return true;
 }

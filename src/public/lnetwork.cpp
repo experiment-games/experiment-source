@@ -332,7 +332,7 @@ LUA_API void lua_pushbf_read( lua_State *L, bf_read *message )
     lua_setmetatable( L, -2 );
 }
 
-LUALIB_API bf_read* luaL_checkbf_read( lua_State *L, int narg )
+LUALIB_API bf_read *luaL_checkbf_read( lua_State *L, int narg )
 {
     bf_read *bfRead = ( bf_read * )luaL_checkudata( L, narg, LUA_BFREADLIBNAME );
     if ( !bfRead )
@@ -345,7 +345,7 @@ LUALIB_API bf_read* luaL_checkbf_read( lua_State *L, int narg )
 
 static int bfRead_ReadBit( lua_State *L )
 {
-    bf_read* bf = luaL_checkbf_read( L, 1 );
+    bf_read *bf = luaL_checkbf_read( L, 1 );
     lua_pushinteger( L, bf->ReadOneBit() );
     return 1;
 }

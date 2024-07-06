@@ -203,6 +203,9 @@ LUALIB_API int( luaopen_system )( lua_State *L );
 LUALIB_API int( luaopen_render )( lua_State *L );
 LUALIB_API int( luaopen_ITexture )( lua_State *L );
 
+#define LUA_LOCALIZATIONLIBNAME "Localization"
+LUALIB_API int luaopen_localization( lua_State *L );
+
 /* open all Source Engine libraries */
 LUALIB_API void( luasrc_openlibs )( lua_State *L, bool isStateGameUI = false );
 

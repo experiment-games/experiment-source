@@ -116,7 +116,10 @@ static const luaL_RegForState luasrclibs[] = {
     { LUA_PARTICLESYSTEMLIBNAME, luaopen_ParticleSystem, false},
     { LUA_SYSTEMLIBNAME, luaopen_system, true },
     { LUA_RENDERLIBNAME, luaopen_render, true },
-    { LUA_ITEXTURELIBNAME, luaopen_ITexture, true },
+    { LUA_ITEXTURELIBNAME, luaopen_ITexture, true }
+    ,
+    { LUA_LOCALIZATIONLIBNAME, luaopen_localization, true },
+    
     { NULL, NULL, NULL } };
 
 LUALIB_API void luasrc_openlibs( lua_State *L, bool isStateGameUI )

@@ -34,15 +34,10 @@ LUA_API lua_IMaterial *lua_tomaterial( lua_State *L, int idx )
 
 LUA_API void lua_pushmaterial( lua_State *L, lua_IMaterial *pMaterial )
 {
-    if ( pMaterial == NULL )
-        lua_pushnil( L );
-    else
-    {
-        lua_IMaterial **ppMaterial = ( lua_IMaterial ** )lua_newuserdata( L, sizeof( pMaterial ) );
-        *ppMaterial = pMaterial;
-        luaL_getmetatable( L, "IMaterial" );
-        lua_setmetatable( L, -2 );
-    }
+    lua_IMaterial **ppMaterial = ( lua_IMaterial ** )lua_newuserdata( L, sizeof( pMaterial ) );
+    *ppMaterial = pMaterial;
+    luaL_getmetatable( L, "IMaterial" );
+    lua_setmetatable( L, -2 );
 }
 
 LUALIB_API lua_IMaterial *luaL_checkmaterial( lua_State *L, int narg )

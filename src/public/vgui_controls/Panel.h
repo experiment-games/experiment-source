@@ -282,6 +282,7 @@ class Panel : public IClientPanel, virtual IForceVirtualInheritancePanel
     virtual bool IsEnabled();
     virtual bool IsPopup();  // has a parent, but is in it's own space
     virtual void GetClipRect( int &x0, int &y0, int &x1, int &y1 );
+    virtual void MoveToBack();
     virtual void MoveToFront();
 
     // pin positions for auto-layout

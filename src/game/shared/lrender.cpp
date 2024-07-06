@@ -26,15 +26,10 @@ LUA_API lua_ITexture *lua_toitexture( lua_State *L, int idx )
 */
 LUA_API void lua_pushitexture( lua_State *L, lua_ITexture *pTexture )
 {
-    if ( pTexture == NULL )
-        lua_pushnil( L );
-    else
-    {
-        lua_ITexture **ppTexture = ( lua_ITexture ** )lua_newuserdata( L, sizeof( pTexture ) );
-        *ppTexture = pTexture;
-        luaL_getmetatable( L, "ITexture" );
-        lua_setmetatable( L, -2 );
-    }
+    lua_ITexture **ppTexture = ( lua_ITexture ** )lua_newuserdata( L, sizeof( pTexture ) );
+    *ppTexture = pTexture;
+    luaL_getmetatable( L, "ITexture" );
+    lua_setmetatable( L, -2 );
 }
 
 LUALIB_API lua_ITexture *luaL_checkitexture( lua_State *L, int narg )

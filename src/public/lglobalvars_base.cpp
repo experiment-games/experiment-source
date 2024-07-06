@@ -31,6 +31,12 @@ static int gpGlobals_curtime( lua_State *L )
     return 1;
 }
 
+static int gpGlobals_SystemTime( lua_State *L )
+{
+    lua_pushnumber( L, Plat_FloatTime() );
+    return 1;
+}
+
 static int gpGlobals_framecount( lua_State *L )
 {
     lua_pushinteger( L, gpGlobals->framecount );
@@ -119,6 +125,52 @@ static int gpGlobals_FindMaterial( lua_State *L )
     return 1;
 }
 
+static int gpGlobals_DoesMaterialExist( lua_State *L )
+{
+    const char *name = luaL_checkstring( L, 1 );
+    IMaterial *pMaterial = g_pMaterialSystem->FindMaterial( name, 0, false );
+
+    if ( !IsErrorMaterial( pMaterial ) )
+    {
+        lua_pushboolean( L, 1 );
+        return 1;
+    }
+
+    char ext[4];
+
+    Q_ExtractFileExtension( name, ext, sizeof( ext ) );
+
+    if ( Q_stricmp( ext, "png" ) == 0 )
+    {
+        // Get a name for png materials (prefixed with ! and no png extension)
+        char nameWithoutExtension[MAX_PATH];
+        Q_StripExtension( name, nameWithoutExtension, sizeof( nameWithoutExtension ) );
+        char materialName[MAX_PATH];
+        Q_snprintf( materialName, sizeof( materialName ), "!%s", nameWithoutExtension );
+
+        if ( g_pMaterialSystem->IsMaterialLoaded( materialName ) )
+        {
+            lua_pushboolean( L, 1 );
+            return 1;
+        }
+
+        char fullFilePath[MAX_PATH];
+        Q_snprintf( fullFilePath, sizeof( fullFilePath ), "materials/%s", name );
+        Q_FixSlashes( fullFilePath );
+
+#ifdef CLIENT_DLL
+        if (filesystem->FileExists(fullFilePath, "GAME"))
+        {
+            lua_pushboolean( L, 1 );
+            return 1;
+        }
+#endif
+    }
+
+    lua_pushboolean( L, 0 );
+    return 1;
+}
+
 static int gpGlobals_CreateMaterial( lua_State *L )
 {
     const char *name = luaL_checkstring( L, 1 );
@@ -162,6 +214,7 @@ static int gpGlobals_CreateMaterial( lua_State *L )
 static const luaL_Reg gpGlobalslib[] = {
     { "absoluteframetime", gpGlobals_absoluteframetime },
     { "curtime", gpGlobals_curtime },
+    { "SystemTime", gpGlobals_SystemTime },
     { "framecount", gpGlobals_framecount },
     { "frametime", gpGlobals_frametime },
     { "interval_per_tick", gpGlobals_interval_per_tick },
@@ -172,6 +225,7 @@ static const luaL_Reg gpGlobalslib[] = {
     { "simTicksThisFrame", gpGlobals_simTicksThisFrame },
     { "tickcount", gpGlobals_tickcount },
     { "FindMaterial", gpGlobals_FindMaterial },
+    { "DoesMaterialExist", gpGlobals_DoesMaterialExist },
     { "CreateMaterial", gpGlobals_CreateMaterial },
     { NULL, NULL } };
 

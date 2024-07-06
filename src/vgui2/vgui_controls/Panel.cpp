@@ -1635,6 +1635,21 @@ int Panel::GetAlpha()
 }
 
 //-----------------------------------------------------------------------------
+// Purpose: Moves the panel to the back of the z-order
+//-----------------------------------------------------------------------------
+void Panel::MoveToBack( void )
+{
+    if ( IsPopup() )
+    {
+        surface()->MovePopupToBack( GetVPanel() );
+    }
+    else
+    {
+        ipanel()->MoveToBack( GetVPanel() );
+    }
+}
+
+//-----------------------------------------------------------------------------
 // Purpose: Moves the panel to the front of the z-order
 //-----------------------------------------------------------------------------
 void Panel::MoveToFront( void )

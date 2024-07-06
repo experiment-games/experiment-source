@@ -1,4 +1,5 @@
 
+include( "vgui/Awesomium.lua" )
 include( "vgui/DFrame.lua" )
 include( "vgui/DButton.lua" )
 include( "vgui/DTooltip.lua" )
@@ -11,6 +12,7 @@ include( "vgui/DHorizontalDivider.lua" )
 include( "vgui/DHorizontalScroller.lua" )
 include( "vgui/DPanelList.lua" )
 include( "vgui/DListLayout.lua" )
+include( "vgui/DTileLayout.lua" )
 include( "vgui/DVScrollBar.lua" )
 include( "vgui/DHScrollBar.lua" )
 include( "vgui/DScrollBarGrip.lua" )

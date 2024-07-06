@@ -41,28 +41,18 @@ LUA_API lua_ConVar *lua_toconvar( lua_State *L, int idx )
 
 LUA_API void lua_pushconcommand( lua_State *L, lua_ConCommand *pConCommand )
 {
-    if ( pConCommand == NULL )
-        lua_pushnil( L );
-    else
-    {
-        lua_ConCommand **ppConCommand = ( lua_ConCommand ** )lua_newuserdata( L, sizeof( pConCommand ) );
-        *ppConCommand = pConCommand;
-        luaL_getmetatable( L, LUA_CONCOMMANDLIBNAME );
-        lua_setmetatable( L, -2 );
-    }
+    lua_ConCommand **ppConCommand = ( lua_ConCommand ** )lua_newuserdata( L, sizeof( pConCommand ) );
+    *ppConCommand = pConCommand;
+    luaL_getmetatable( L, LUA_CONCOMMANDLIBNAME );
+    lua_setmetatable( L, -2 );
 }
 
 LUA_API void lua_pushconvar( lua_State *L, lua_ConVar *pConVar )
 {
-    if ( pConVar == NULL )
-        lua_pushnil( L );
-    else
-    {
-        lua_ConVar **ppConVar = ( lua_ConVar ** )lua_newuserdata( L, sizeof( pConVar ) );
-        *ppConVar = pConVar;
-        luaL_getmetatable( L, LUA_CONVARLIBNAME );
-        lua_setmetatable( L, -2 );
-    }
+    lua_ConVar **ppConVar = ( lua_ConVar ** )lua_newuserdata( L, sizeof( pConVar ) );
+    *ppConVar = pConVar;
+    luaL_getmetatable( L, LUA_CONVARLIBNAME );
+    lua_setmetatable( L, -2 );
 }
 
 LUALIB_API lua_ConCommand *luaL_checkconcommand( lua_State *L, int narg )

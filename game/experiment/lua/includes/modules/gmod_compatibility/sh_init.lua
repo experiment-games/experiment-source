@@ -105,6 +105,7 @@ VMatrix = Matrix
 
 RealFrameTime = Globals.absoluteframetime
 CurTime = Globals.curtime
+SysTime = Globals.SystemTime
 FrameNumber = Globals.framecount
 FrameTime = Globals.frametime
 engine.TickCount = Globals.tickcount
@@ -121,6 +122,30 @@ gmod = {
 	GetGamemode = function()
 		return _G.GAMEMODE
 	end,
+}
+
+language = {
+	GetPhrase = function(phrase)
+		return Localization.Find(phrase)
+	end,
+
+	Add = function(key, value)
+		Localization.AddString(key, value)
+	end,
+}
+
+notification = {
+	AddLegacy = function(text, type, length)
+		print("Notification: " .. text)
+    end,
+
+	AddProgress = function(id, text, frac)
+		print("Progress Notification: " .. text)
+    end,
+
+	Kill = function(uid)
+		print("Killing notification with UID: " .. uid)
+    end,
 }
 
 umsg = require("UserMessages")
@@ -183,7 +208,13 @@ end
 
 unpack = table.unpack
 
-Material = Globals.FindMaterial
+Material = function(name)
+    if (not Globals.DoesMaterialExist(name)) then
+        name = "gmod_compatibility_content/" .. name
+    end
+
+	return Globals.FindMaterial(name)
+end
 CreateMaterial = Globals.CreateMaterial
 CreateConVar = function(name, value, flags, helpText, min, max)
 	if (istable(flags)) then
@@ -224,8 +255,11 @@ game = {
 
     ConsoleCommand = RunConsoleCommand,
 
-	AddParticles = function(filePath)
-		return ParticleSystem.ReadConfigFile("gmod_compatibility_content/" .. tostring(filePath))
+    AddParticles = function(filePath)
+        -- Remove particles/ from the start of the file path
+        filePath = filePath:sub(11)
+
+		return ParticleSystem.ReadConfigFile("particles/gmod_compatibility_content/" .. tostring(filePath))
 	end,
 }
 
@@ -263,6 +297,7 @@ function TEXTURE_META:Height()
 end
 
 local MATERIAL_META = FindMetaTable("IMaterial")
+MATERIAL_META.GetShader = MATERIAL_META.GetShaderName
 
 function MATERIAL_META:Width()
 	local baseTexture = self:GetTexture("$basetexture")
@@ -275,14 +310,36 @@ function MATERIAL_META:Width()
 end
 
 function MATERIAL_META:Height()
-	local baseTexture = self:GetTexture("$basetexture")
+    local baseTexture = self:GetTexture("$basetexture")
 
-	if (baseTexture) then
-		return baseTexture:GetActualHeight()
-	end
+    if (baseTexture) then
+        return baseTexture:GetActualHeight()
+    end
 
-	return 0
+    return 0
 end
+
+--[[
+	We don't use achievements:
+--]]
+achievements = {
+	BalloonPopped = function() end,
+	Count = function() return 0 end,
+	EatBall = function() end,
+	GetCount = function() return 0 end,
+	GetDesc = function() return "" end,
+	GetGoal = function() return 0 end,
+	GetName = function() return "" end,
+	IncBaddies = function() end,
+	IncBystander = function() end,
+	IncGoodies = function() end,
+	IsAchieved = function() return false end,
+	Remover = function() end,
+	SpawnedNPC = function() end,
+	SpawnedProp = function() end,
+	SpawnedRagdoll = function() end,
+	SpawnMenuOpen = function() end,
+}
 
 if (SERVER) then
 	resource.AddWorkshop = function() end
@@ -295,9 +352,13 @@ else
 	PANEL_META.DockMargin = PANEL_META.SetDockMargin
 	PANEL_META.DockPadding = PANEL_META.SetDockPadding
 
-	function PANEL_META:Prepare()
-		-- Installs Lua defined functions into the panel.
-		-- TODO: What does that mean?
+    function PANEL_META:Prepare()
+        -- Installs Lua defined functions into the panel.
+        -- TODO: What does that mean?
+    end
+
+    function PANEL_META:SetWorldClicker(isEnabled)
+		-- TODO: Implement this in Lua
 	end
 
 	-- Change casing and add functionality to pass individual color components.
@@ -402,6 +463,10 @@ else
 	local textureMap = {}
 
 	surface.GetTextureID = function(name)
+        if (not file.Exists("materials/" .. name .. ".vmt", "GAME") and not file.Exists("materials/" .. name, "GAME")) then
+			name = "gmod_compatibility_content/" .. name
+        end
+
 		if (not textureMap[name]) then
 			textureMap[name] = surface.CreateNewTextureID()
 			surface.DrawSetTextureFile(textureMap[name], name)
@@ -660,6 +725,7 @@ end
 
 hook.Add("Initialize", "GModCompatibility.CallInitializeHooks", function()
 	hook.Run("PreGamemodeLoaded")
+
 	hook.Run("OnGamemodeLoaded")
 	hook.Run("PostGamemodeLoaded")
 end)
