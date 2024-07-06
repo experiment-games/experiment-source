@@ -11,7 +11,8 @@ if (CLIENT) then
 	errorColor = debug.ColorClient
 end
 
-function debug.PrintError(msg)
-	msg = msg and (errorPrefix .. tostring(msg)) or nil
-	debug.ConDColorMsg(errorColor, debug.traceback(msg, 2) .. "\n")
+function debug.PrintError(message)
+	message = debug.traceback(message or "<error without message>", 2)
+    debug.ConDColorMsg(errorColor, errorPrefix .. message .. "\n")
+	LuaLogToFile(message .. "\n")
 end

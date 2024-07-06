@@ -37,11 +37,12 @@ extern "C"
 // memdbgon must be the last include file in a .cpp file!!!
 #include "tier0/memdbgon.h"
 
-#define SHOW_LUA_ERROR( format, ... ) \
-    ConColorMsg( REALM_COLOR, "\n[Lua] " format "\n", ##__VA_ARGS__ );
+static FileHandle_t g_LuaLogFileHandle = FILESYSTEM_INVALID_HANDLE;
 
-#define SHOW_LUA_MESSAGE( format, ... ) \
-    Msg( "\n[Lua] " format "\n", ##__VA_ARGS__ );
+ConVar gamemode( "gamemode", "hl2sb", FCVAR_ARCHIVE | FCVAR_REPLICATED );
+ConVar lua_log_cl( "lua_log_cl", "1", FCVAR_ARCHIVE );
+ConVar lua_log_sv( "lua_log_sv", "1", FCVAR_ARCHIVE );
+ConVar lua_log_loader( "lua_log_loader", "1", FCVAR_ARCHIVE );
 
 #ifdef CLIENT_DLL
 #define REALM_COLOR Color( 255, 202, 58, 255 )
@@ -49,8 +50,37 @@ extern "C"
 #define REALM_COLOR Color( 120, 205, 215, 255 )
 #endif
 
-ConVar gamemode( "gamemode", "hl2sb", FCVAR_ARCHIVE | FCVAR_REPLICATED );
-ConVar lua_log_loader( "lua_log_loader", "1", FCVAR_ARCHIVE );
+void LuaLogToFile( const char *format, ... )
+{
+    va_list argp;
+    char msg[4096];
+
+    va_start( argp, format );
+    Q_vsnprintf( msg, sizeof( msg ), format, argp );
+    va_end(argp);
+
+#ifdef CLIENT_DLL
+    if ( lua_log_cl.GetBool() )
+#else
+    if ( lua_log_sv.GetBool() )
+#endif
+    {
+        if ( g_LuaLogFileHandle == FILESYSTEM_INVALID_HANDLE )
+        {
+            return;
+        }
+
+        filesystem->Write( msg, Q_strlen( msg ), g_LuaLogFileHandle );
+        filesystem->Flush( g_LuaLogFileHandle );
+    }
+}
+
+#define SHOW_LUA_ERROR( format, ... )                                  \
+    ConColorMsg( REALM_COLOR, "\n[Lua] " format "\n", ##__VA_ARGS__ ); \
+    LuaLogToFile( format, ##__VA_ARGS__ );
+
+#define SHOW_LUA_MESSAGE( format, ... ) \
+    Msg( "\n[Lua] " format "\n", ##__VA_ARGS__ );
 
 static char contentSearchPath[MAX_PATH];
 
@@ -191,6 +221,29 @@ static int luasrc_MsgN( lua_State *L )
     return 0;
 }
 
+static int luasrc_LuaLogToFile( lua_State *L )
+{
+    int n = lua_gettop( L );
+
+    if ( n < 1 )
+    {
+        luaL_error( L, "at least one argument expected" );
+        return 0;
+    }
+
+    const char *format = luaL_checkstring( L, 1 );
+    CUtlVector< const char * > args;
+
+    for ( int i = 2; i <= n; ++i )
+    {
+        args.AddToTail( lua_tostring( L, i ) );
+    }
+
+    LuaLogToFile( format, args.Base() );
+
+    return 0;
+}
+
 /// <summary>
 /// Sets the InheritsFrom field in the GM table. After the gamemode is loaded,
 /// it will be read and the base gamemode will be loaded.
@@ -217,6 +270,7 @@ static const luaL_Reg base_funcs[] = {
     { "type", luasrc_type },
     { "Include", luasrc_include },
     { "InheritGamemode", luasrc_InheritGamemode },
+    { "LuaLogToFile", luasrc_LuaLogToFile },
     { NULL, NULL } };
 
 static void base_open( lua_State *L )
@@ -450,8 +504,19 @@ static void RegisterButtonCodeString( const char *name, ButtonCode_t code, bool 
 
 void luasrc_init( void )
 {
+    if ( g_LuaLogFileHandle == FILESYSTEM_INVALID_HANDLE )
+    {
+#ifdef CLIENT_DLL
+        const char *logFilePath = "lua_log_cl.log";
+#else
+        const char *logFilePath = "lua_log_sv.log";
+#endif
+        g_LuaLogFileHandle = filesystem->Open( logFilePath, "a", "GAME" );
+    }
+
     if ( g_bLuaInitialized )
         return;
+
     g_bLuaInitialized = true;
 
     L = lua_open();
@@ -644,6 +709,18 @@ void luasrc_init( void )
 
 void luasrc_shutdown( void )
 {
+#ifdef CLIENT_DLL
+    Msg( "Lua Menu shutdown - Client\n" );
+#else
+    Msg( "Lua shutdown - Server\n" );
+#endif
+
+    if ( g_LuaLogFileHandle != FILESYSTEM_INVALID_HANDLE )
+    {
+        filesystem->Close( g_LuaLogFileHandle );
+        g_LuaLogFileHandle = FILESYSTEM_INVALID_HANDLE;
+    }
+
     if ( !g_bLuaInitialized )
         return;
 
@@ -1455,8 +1532,8 @@ void luasrc_LoadWeapons( const char *path )
     lua_getglobal( L, LUA_WEAPONSLIBNAME );
     lua_pushcfunction( L, luasrc_LoadWeapons );
     lua_setfield( L, -2, "LoadFromDirectory" );
-    lua_pop( L, 1 ); // Pop the weapons library
-    
+    lua_pop( L, 1 );  // Pop the weapons library
+
     FileFindHandle_t fh;
 
     char searchPath[MAX_PATH] = { 0 };

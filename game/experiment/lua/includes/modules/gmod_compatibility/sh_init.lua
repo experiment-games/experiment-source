@@ -80,167 +80,6 @@ function FindMetaTable(name)
     return registry[name]
 end
 
-local ENTITY_META = FindMetaTable("Entity")
-
-ENTITY_META.GetTable = ENTITY_META.GetRefTable
-
-local PLAYER_META = FindMetaTable("Player")
-
-function PLAYER_META:SetClassID(id)
-	-- We don't use this function, so we just store the class ID in the player.
-	self.__classId = id
-end
-
-function PLAYER_META:GetClassID()
-    return self.__classId
-end
-
-function PLAYER_META:IsListenServerHost()
-    if (CLIENT) then
-        ErrorNoHalt("IsListenServerHost has not yet been implemented on the client.")
-    end
-
-    return self == Util.GetListenServerHost()
-end
-
-local TEXTURE_META = FindMetaTable("ITexture")
-
-function TEXTURE_META:Width()
-    return self:GetActualWidth()
-end
-
-function TEXTURE_META:Height()
-	return self:GetActualHeight()
-end
-
-local MATERIAL_META = FindMetaTable("IMaterial")
-
-function MATERIAL_META:Width()
-    local baseTexture = self:GetTexture("$basetexture")
-
-    if (baseTexture) then
-        return baseTexture:GetActualWidth()
-    end
-
-    return 0
-end
-
-function MATERIAL_META:Height()
-	local baseTexture = self:GetTexture("$basetexture")
-
-	if (baseTexture) then
-		return baseTexture:GetActualHeight()
-	end
-
-	return 0
-end
-
-if (CLIENT) then
-    local PANEL_META = FindMetaTable("Panel")
-    PANEL_META._OriginalSetCursor = PANEL_META._OriginalSetCursor or PANEL_META.SetCursor
-
-    PANEL_META.GetTable = PANEL_META.GetRefTable
-    PANEL_META.Dock = PANEL_META.SetDock
-    PANEL_META.DockMargin = PANEL_META.SetDockMargin
-	PANEL_META.DockPadding = PANEL_META.SetDockPadding
-
-    function PANEL_META:Prepare()
-        -- Installs Lua defined functions into the panel.
-        -- TODO: What does that mean?
-    end
-
-	-- Change casing and add functionality to pass individual color components.
-	function PANEL_META:SetBGColor(rOrColor, g, b, a)
-		if (istable(rOrColor)) then
-			self:SetBgColor(rOrColor)
-		else
-			self:SetBgColor(Color(rOrColor, g, b, a))
-		end
-	end
-
-	-- Change casing and add functionality to pass individual color components.
-    function PANEL_META:SetFGColor(rOrColor, g, b, a)
-        if (istable(rOrColor)) then
-            self:SetFgColor(rOrColor)
-        else
-            self:SetFgColor(Color(rOrColor, g, b, a))
-        end
-    end
-
-    local LABEL_PANEL_META = FindMetaTable("Label")
-    LABEL_PANEL_META._OriginalSetFont = LABEL_PANEL_META._OriginalSetFont or LABEL_PANEL_META.SetFont
-    LABEL_PANEL_META._OriginalGetFont = LABEL_PANEL_META._OriginalGetFont or LABEL_PANEL_META.GetFont
-
-    function LABEL_PANEL_META:SetFontInternal(font)
-        self:SetFontByName(font)
-    end
-
-    function LABEL_PANEL_META:SetFont(font)
-        self:SetFontByName(font)
-    end
-
-    function LABEL_PANEL_META:GetFont()
-        return self:GetFontName()
-    end
-
-	-- TODO: Actually draw the drop shadow
-    function LABEL_PANEL_META:SetExpensiveShadow(distance, color)
-		self._expensiveShadow = { distance = distance, color = color }
-	end
-
-    local TEXT_ENTRY_PANEL_META = FindMetaTable("TextEntry")
-    TEXT_ENTRY_PANEL_META._OriginalSetFont = TEXT_ENTRY_PANEL_META._OriginalSetFont or TEXT_ENTRY_PANEL_META.SetFont
-	TEXT_ENTRY_PANEL_META._OriginalGetFont = TEXT_ENTRY_PANEL_META._OriginalGetFont or TEXT_ENTRY_PANEL_META.GetFont
-
-    function TEXT_ENTRY_PANEL_META:SetFontInternal(font)
-        self:SetFontByName(font)
-    end
-
-    function TEXT_ENTRY_PANEL_META:SetFont(font)
-        self:SetFontByName(font)
-    end
-
-	function TEXT_ENTRY_PANEL_META:GetFont()
-		return self:GetFontName()
-	end
-
-    -- Maps cursor strings to cursor codes.
-	local cursorMap = {
-		-- ["user"] = CURSOR_CODE.USER,
-		["none"] = CURSOR_CODE.NONE,
-		["arrow"] = CURSOR_CODE.ARROW,
-		["beam"] = CURSOR_CODE.I_BEAM,
-		["hourglass"] = CURSOR_CODE.HOURGLASS,
-		["waitarrow"] = CURSOR_CODE.WAIT_ARROW,
-		["crosshair"] = CURSOR_CODE.CROSSHAIR,
-		["up"] = CURSOR_CODE.UP,
-		["sizenwse"] = CURSOR_CODE.SIZE_NWSE,
-		["sizenesw"] = CURSOR_CODE.SIZE_NESW,
-		["sizewe"] = CURSOR_CODE.SIZE_WE,
-		["sizens"] = CURSOR_CODE.SIZE_NS,
-		["sizeall"] = CURSOR_CODE.SIZE_ALL,
-		["no"] = CURSOR_CODE.NO,
-		["hand"] = CURSOR_CODE.HAND,
-		["blank"] = CURSOR_CODE.BLANK,
-		-- ["last"] = CURSOR_CODE.LAST,
-		-- ["alwaysvisiblepush"] = CURSOR_CODE.ALWAYS_VISIBLE_PUSH,
-		-- ["alwaysvisiblepop"] = CURSOR_CODE.ALWAYS_VISIBLE_POP,
-	}
-
-	function PANEL_META:SetCursor(cursor)
-		local cursorCode = cursorMap[cursor]
-
-		if (not cursorCode) then
-			cursorCode = CURSOR_CODE.NONE
-		end
-
-		self:_OriginalSetCursor(cursorCode)
-	end
-
-    ScrW = Util.ScreenWidth
-	ScrH = Util.ScreenHeight
-end
-
 -- TODO: Actually implement SQLite
 sql = {
 	Begin = function() end,
@@ -390,9 +229,171 @@ game = {
 	end,
 }
 
+local ENTITY_META = FindMetaTable("Entity")
+
+ENTITY_META.GetTable = ENTITY_META.GetRefTable
+
+local PLAYER_META = FindMetaTable("Player")
+
+function PLAYER_META:SetClassID(id)
+	-- We don't use this function, so we just store the class ID in the player.
+	self.__classId = id
+end
+
+function PLAYER_META:GetClassID()
+	return self.__classId
+end
+
+function PLAYER_META:IsListenServerHost()
+	if (CLIENT) then
+		ErrorNoHalt("IsListenServerHost has not yet been implemented on the client.")
+	end
+
+	return self == Util.GetListenServerHost()
+end
+
+local TEXTURE_META = FindMetaTable("ITexture")
+
+function TEXTURE_META:Width()
+	return self:GetActualWidth()
+end
+
+function TEXTURE_META:Height()
+	return self:GetActualHeight()
+end
+
+local MATERIAL_META = FindMetaTable("IMaterial")
+
+function MATERIAL_META:Width()
+	local baseTexture = self:GetTexture("$basetexture")
+
+	if (baseTexture) then
+		return baseTexture:GetActualWidth()
+	end
+
+	return 0
+end
+
+function MATERIAL_META:Height()
+	local baseTexture = self:GetTexture("$basetexture")
+
+	if (baseTexture) then
+		return baseTexture:GetActualHeight()
+	end
+
+	return 0
+end
+
 if (SERVER) then
 	resource.AddWorkshop = function() end
 else
+	local PANEL_META = FindMetaTable("Panel")
+	PANEL_META._OriginalSetCursor = PANEL_META._OriginalSetCursor or PANEL_META.SetCursor
+
+	PANEL_META.GetTable = PANEL_META.GetRefTable
+	PANEL_META.Dock = PANEL_META.SetDock
+	PANEL_META.DockMargin = PANEL_META.SetDockMargin
+	PANEL_META.DockPadding = PANEL_META.SetDockPadding
+
+	function PANEL_META:Prepare()
+		-- Installs Lua defined functions into the panel.
+		-- TODO: What does that mean?
+	end
+
+	-- Change casing and add functionality to pass individual color components.
+	function PANEL_META:SetBGColor(rOrColor, g, b, a)
+		if (istable(rOrColor)) then
+			self:SetBgColor(rOrColor)
+		else
+			self:SetBgColor(Color(rOrColor, g, b, a))
+		end
+	end
+
+	-- Change casing and add functionality to pass individual color components.
+	function PANEL_META:SetFGColor(rOrColor, g, b, a)
+		if (istable(rOrColor)) then
+			self:SetFgColor(rOrColor)
+		else
+			self:SetFgColor(Color(rOrColor, g, b, a))
+		end
+	end
+
+	local LABEL_PANEL_META = FindMetaTable("Label")
+	LABEL_PANEL_META._OriginalSetFont = LABEL_PANEL_META._OriginalSetFont or LABEL_PANEL_META.SetFont
+	LABEL_PANEL_META._OriginalGetFont = LABEL_PANEL_META._OriginalGetFont or LABEL_PANEL_META.GetFont
+
+	function LABEL_PANEL_META:SetFontInternal(font)
+		self:SetFontByName(font)
+	end
+
+	function LABEL_PANEL_META:SetFont(font)
+		self:SetFontByName(font)
+	end
+
+	function LABEL_PANEL_META:GetFont()
+		return self:GetFontName()
+	end
+
+	-- TODO: Actually draw the drop shadow
+	function LABEL_PANEL_META:SetExpensiveShadow(distance, color)
+		self._expensiveShadow = { distance = distance, color = color }
+	end
+
+	local TEXT_ENTRY_PANEL_META = FindMetaTable("TextEntry")
+	TEXT_ENTRY_PANEL_META._OriginalSetFont = TEXT_ENTRY_PANEL_META._OriginalSetFont or TEXT_ENTRY_PANEL_META.SetFont
+	TEXT_ENTRY_PANEL_META._OriginalGetFont = TEXT_ENTRY_PANEL_META._OriginalGetFont or TEXT_ENTRY_PANEL_META.GetFont
+
+	function TEXT_ENTRY_PANEL_META:SetFontInternal(font)
+		self:SetFontByName(font)
+	end
+
+	function TEXT_ENTRY_PANEL_META:SetFont(font)
+		self:SetFontByName(font)
+	end
+
+	function TEXT_ENTRY_PANEL_META:GetFont()
+		return self:GetFontName()
+	end
+
+	-- Maps cursor strings to cursor codes.
+	local cursorMap = {
+		-- ["user"] = CURSOR_CODE.USER,
+		["none"] = CURSOR_CODE.NONE,
+		["arrow"] = CURSOR_CODE.ARROW,
+		["beam"] = CURSOR_CODE.I_BEAM,
+		["hourglass"] = CURSOR_CODE.HOURGLASS,
+		["waitarrow"] = CURSOR_CODE.WAIT_ARROW,
+		["crosshair"] = CURSOR_CODE.CROSSHAIR,
+		["up"] = CURSOR_CODE.UP,
+		["sizenwse"] = CURSOR_CODE.SIZE_NWSE,
+		["sizenesw"] = CURSOR_CODE.SIZE_NESW,
+		["sizewe"] = CURSOR_CODE.SIZE_WE,
+		["sizens"] = CURSOR_CODE.SIZE_NS,
+		["sizeall"] = CURSOR_CODE.SIZE_ALL,
+		["no"] = CURSOR_CODE.NO,
+		["hand"] = CURSOR_CODE.HAND,
+		["blank"] = CURSOR_CODE.BLANK,
+		-- ["last"] = CURSOR_CODE.LAST,
+		-- ["alwaysvisiblepush"] = CURSOR_CODE.ALWAYS_VISIBLE_PUSH,
+		-- ["alwaysvisiblepop"] = CURSOR_CODE.ALWAYS_VISIBLE_POP,
+	}
+
+	function PANEL_META:SetCursor(cursor)
+		local cursorCode = cursorMap[cursor]
+
+		if (not cursorCode) then
+			cursorCode = CURSOR_CODE.NONE
+		end
+
+		self:_OriginalSetCursor(cursorCode)
+	end
+
+	ScrW = Util.ScreenWidth
+	ScrH = Util.ScreenHeight
+
+	GetRenderTargetEx = render.CreateRenderTargetTextureEx
+	GetRenderTarget = render.CreateRenderTargetTextureEx
+
 	LocalPlayer = _R.CBasePlayer.GetLocalPlayer
 
 	surface.SetDrawColor = surface.DrawSetColor
@@ -653,7 +654,9 @@ end
 --[[
 	Now that the compatibility libraries have been loaded, we can start changing hooks
 --]]
-Include("cl_hooks.lua")
+if (CLIENT) then
+	Include("cl_hooks.lua")
+end
 
 hook.Add("Initialize", "GModCompatibility.CallInitializeHooks", function()
 	hook.Run("PreGamemodeLoaded")

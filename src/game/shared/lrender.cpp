@@ -6,6 +6,7 @@
 #ifdef CLIENT_DLL
 #include "rendertexture.h"
 #include "view_scene.h"
+#include <materialsystem/imaterialsystem.h>
 #endif
 
 // memdbgon must be the last include file in a .cpp file!!!
@@ -47,6 +48,30 @@ LUALIB_API lua_ITexture *luaL_checkitexture( lua_State *L, int narg )
 }
 
 #ifdef CLIENT_DLL
+static int render_CreateRenderTargetTextureEx( lua_State *L )
+{
+    const char *name = luaL_checkstring( L, 1 );
+    int width = luaL_checkint( L, 2 );
+    int height = luaL_checkint( L, 3 );
+    int sizeMode = luaL_optint( L, 4, RT_SIZE_DEFAULT );
+    int depthMode = luaL_optint( L, 5, MATERIAL_RT_DEPTH_SHARED );
+    int textureFlags = luaL_optint( L, 6, TEXTUREFLAGS_CLAMPS | TEXTUREFLAGS_CLAMPT );
+    int renderTargetFlags = luaL_optint( L, 7, 0 );
+    int imageFormat = luaL_optint( L, 8, IMAGE_FORMAT_RGBA8888 );
+
+    ITexture *pTexture = materials->CreateNamedRenderTargetTextureEx(
+        name,
+        width,
+        height,
+        ( RenderTargetSizeMode_t )sizeMode,
+        ( ImageFormat )imageFormat,
+        ( MaterialRenderTargetDepth_t )depthMode,
+        textureFlags,
+        renderTargetFlags );
+    lua_pushitexture( L, pTexture );
+    return 1;
+}
+
 static int render_GetScreenEffectTexture( lua_State *L )
 {
     lua_ITexture *pTexture = GetFullFrameFrameBufferTexture( luaL_checkint( L, 1 ) );
@@ -64,6 +89,7 @@ static int render_UpdateScreenEffectTexture( lua_State *L )
 
 static const luaL_Reg renderLib[] = {
 #ifdef CLIENT_DLL
+    { "CreateRenderTargetTextureEx", render_CreateRenderTargetTextureEx },
     { "GetScreenEffectTexture", render_GetScreenEffectTexture },
     { "UpdateScreenEffectTexture", render_UpdateScreenEffectTexture },
 #endif

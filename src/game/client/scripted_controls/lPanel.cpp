@@ -1240,13 +1240,22 @@ static int Panel___index( lua_State *L )
     Panel *plPanel = lua_topanel( L, 1 );
 
     if ( plPanel == NULL )
-    { /* avoid extra test when d is not 0 */
+    {
+        const char *pKey = luaL_checkstring( L, 2 );
+
+        if ( Q_strcmp( pKey, "IsValid" ) == 0 )
+        {
+            lua_pushcfunction( L, Panel_IsValid );
+            return 1;
+        }
+
         lua_Debug ar1;
         lua_getstack( L, 1, &ar1 );
         lua_getinfo( L, "fl", &ar1 );
         lua_Debug ar2;
         lua_getinfo( L, ">S", &ar2 );
         lua_pushfstring( L, "%s:%d: attempt to index an INVALID_PANEL", ar2.short_src, ar1.currentline );
+
         return lua_error( L );
     }
 
