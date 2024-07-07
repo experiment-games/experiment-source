@@ -1,4 +1,7 @@
 "gmodscreenspace"
 {
-
+    // For testing run: sv_cheats 1; r_screenoverlay my_material
+	"$basetexture" "_rt_FullFrameFB"
+    "$bloomamount" "0.9"
+    "$blur" "4"
 }
