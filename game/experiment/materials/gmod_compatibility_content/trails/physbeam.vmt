@@ -1,0 +1,8 @@
+"UnlitGeneric"
+{
+	"$baseTexture" "sprites/physbeam"
+	
+	"$additive" 1
+	"$vertexcolor" 1
+	"$vertexalpha" 1
+}

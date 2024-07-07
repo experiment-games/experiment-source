@@ -1,0 +1,28 @@
+VertexlitGeneric
+{
+$halflambert 0
+$phong 1
+$phongtint "[.62 .72 1]"
+$phongfresnelranges "[0.75 0.25 1]"
+$phongboost "0.6"
+$DETAIL "models/infected/common/l4d2/detail/ci_detail_dirt"
+$DETAILFRAME 0
+$DETAILSCALE 1
+$CHEAPDIFFUSE 0
+
+$BURNDETAILTEXTURE "models/infected/common/l4d2/ci_burning"
+$EYEGLOW 1
+$EYEGLOWCOLOR "[.25 .04 .005]"
+$EYEGLOWFLASHLIGHTBOOST 1000
+$BLOODCOLOR "[.15 0 0]"
+$DEFAULTPHONGEXPONENT 30
+$SKINPHONGEXPONENT 16
+$BLOODPHONGEXPONENT 600
+$BLOODSPECBOOST 6
+$BLOODMASKRANGE "[0 0.5]"
+$GRADIENTTEXTURE "models/infected/common/l4d2/ci_gradient_palette" 
+$WOUNDCUTOUTTEXTURE "models/infected/common/body_wounds/wound_combined_cull_texture"
+$CUTOUTDECALFALLOFF 2
+$CUTOUTDECALMAPPINGSCALE 7
+$CUTOUTTEXTUREBIAS "0.95"
+}

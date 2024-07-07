@@ -242,12 +242,6 @@ static int PropertyPage_OnResetData( lua_State *L )
     return 0;
 }
 
-static int PropertyPage_SetVisible( lua_State *L )
-{
-    luaL_checkpropertypage( L, 1 )->SetVisible( luaL_checkboolean( L, 2 ) );
-    return 0;
-}
-
 static int PropertyPage___index( lua_State *L )
 {
     PropertyPage *pPage = lua_topropertypage( L, 1 );
@@ -339,7 +333,6 @@ static const luaL_Reg PropertyPagemeta[] = {
     { "OnPageHide", PropertyPage_OnPageHide },
     { "OnPageShow", PropertyPage_OnPageShow },
     { "OnResetData", PropertyPage_OnResetData },
-    { "SetVisible", PropertyPage_SetVisible },
     { "__index", PropertyPage___index },
     { "__newindex", PropertyPage___newindex },
     { "__eq", PropertyPage___eq },

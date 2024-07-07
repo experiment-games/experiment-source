@@ -1,0 +1,14 @@
+"VertexLitGeneric"
+{
+	"$basetexture" "phoenix_storms/pro_gear_side"
+	"$surfaceprop" "metal"
+	"$envmap" "env_cubemap"
+	"$envmapcontrast" 1.25
+	"$envmapsaturation" 0.15
+	"$envmaptint" "[ 1.0 1.0 1.0 ]"
+	"$basealphaenvmapmask" 1
+	"$model" 1
+	"$halflambert" 1
+}
+
+

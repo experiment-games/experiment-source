@@ -1,0 +1,15 @@
+"VertexLitGeneric"
+{
+	"$basetexture" "models/humans/male/group01/citizen_sheet"
+	"$bumpmap" "models/humans/male/group01/citizen_sheet_normal"
+	"$halflambert" "1"
+	
+	"$phong" "1"
+	"$phongexponent" "6"
+	"$phongboost" "0.4"
+	"$phongfresnelranges" "[0 0.2 0.5]"
+	
+	// "$rimlight" "1"
+	// "$rimlightexponent" "5"
+	// "$rimlightboost" "0.01"
+}

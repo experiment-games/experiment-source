@@ -1,0 +1,16 @@
+VertexLitGeneric
+{
+	"$basetexture"	"models/weapons/v_models/hands/v_hands"
+	"$bumpmap"      "models/weapons/v_models/hands/v_hands_normal"
+	
+	"$phong" "1"
+	"$phongboost" "1"
+	"$phongexponent" "8"
+	"$phongfresnelranges"	"[.2 .5 1]"
+	
+	"$phongtint" "[0.9 0.8 0.7]"
+	
+	"$rimlight" "1"
+	"$rimlightboost" "0.2"
+	"$rimlightexponent" "16"
+}

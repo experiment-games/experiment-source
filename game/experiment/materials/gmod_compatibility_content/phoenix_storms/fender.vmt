@@ -1,0 +1,13 @@
+"VertexLitGeneric"
+{
+	"$basetexture" "phoenix_storms/fender"
+	"$surfaceprop" "plastic"
+	"$envmap" "env_cubemap"
+//	"$envmapcontrast" 1
+//	"$envmapsaturation" 1
+	"$envmaptint" "[ .3 .3 .3 ]"
+	"$model" 1
+	"$halflambert" 1
+}
+
+

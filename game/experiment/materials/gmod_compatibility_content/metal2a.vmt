@@ -1,0 +1,11 @@
+"VertexLitGeneric"
+{
+	"$baseTexture" "metal4"
+	"$surfaceprop" "solidmetal"
+	"$envmap" "env_cubemap"
+	"$envmaptint" "[ .5 .5 .5 ]"
+	"$envmapcontrast" 0
+	"$envmapsaturation" 0	//"$envmapmask" "Models/props_combine/combine_binocular01_mask"
+	"$selfillum" 0
+	"$model" 1
+}

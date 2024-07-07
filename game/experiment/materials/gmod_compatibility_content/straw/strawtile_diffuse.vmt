@@ -1,0 +1,12 @@
+"VertexLitGeneric"
+{
+	"$model" 1
+   	"$basetexture" "Straw/StrawTile_diffuse"
+   	"$surfaceprop" "grass"
+    	"$bumpmap" "Straw/StrawTile_normal"
+	"$phong" "1"
+	"$phongexponent" "40"
+	"$phongboost" "2"
+	"$phongfresnelranges" "[.05 .5 1]"
+	"$halflambert" "1"
+}

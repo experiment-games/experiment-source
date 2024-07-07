@@ -1,0 +1,21 @@
+vertexlitgeneric
+{
+$basetexture "models/chell/chell_head_diffuse"
+$bumpmap "models/chell/chell_head_normals"
+$phong 1
+$phongboost "2.4"
+
+$phongexponent 4
+$phongtint "[.85 .85 1]"
+$phongfresnelranges "[.2 .5 5]"
+$nodecal 1
+$ambientocclusion 1
+$halflambert 1
+$diffuseexp "1.5"
+$lightwarptexture "models/chell/skin_warp"
+$rimlight 1
+$rimlightboost 1
+$rimlightexponent 6
+$surfaceprop flesh
+
+}

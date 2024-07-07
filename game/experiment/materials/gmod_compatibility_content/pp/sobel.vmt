@@ -1,0 +1,5 @@
+"Sobel"
+{
+	"$fbtexture" "_rt_FullFrameFB"
+	"$threshold" "0.11"
+}

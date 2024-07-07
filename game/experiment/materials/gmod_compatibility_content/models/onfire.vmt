@@ -1,0 +1,7 @@
+"VertexLitGeneric"
+{
+	"$basetexture" "models/onfire"
+	"$selfillum" 1 
+	"$model" 1
+	"$additive" 0
+}

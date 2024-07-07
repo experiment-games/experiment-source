@@ -62,7 +62,7 @@ Surface.SetMaterial = function(material)
 	Surface.DrawSetTextureMaterial(textureMap[name], material)
 end
 
-testMat = Globals.FindMaterial("icon16/accept.png")
+testMat = Globals.FindMaterial("silkicons/accept.png")
 testTexture = Surface.GetTextureID("vgui/gfx/vgui/crosshair")
 -- lua_run_cl STOP = true surface.ClearAllTextures()
 function GM:HudViewportPaint()

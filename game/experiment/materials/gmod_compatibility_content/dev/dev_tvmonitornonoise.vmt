@@ -1,0 +1,19 @@
+"UnlitGeneric"
+{
+	"$basetexture" "_rt_Camera"
+	"%tooltexture" "dev/dev_monitor"
+	"$surfaceprop" "glass"
+	
+	"$texoffset"	"[0.5 0.5]"
+	"$texscale"	2
+	
+	"Proxies"
+	{
+		"TextureTransform"
+		{
+			"translateVar" "$texoffset"
+			"scaleVar" "$texscale"
+			"resultVar" "$basetexturetransform"
+		}
+	}
+}

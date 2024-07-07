@@ -1,0 +1,14 @@
+"VertexLitGeneric"
+{
+	"$basetexture"	"phoenix_storms/future_vents_noalpha"
+	"$bumpmap"		"phoenix_storms/future_vents_bump"
+	"$surfaceprop"	"metal"
+	"$halflambert"	"1"
+
+	"$phong"			"1"
+	"$phongexponent"	"60"
+	"$phongboost"		"2"
+	"$phongfresnelranges"	"[.5 .8 1]"
+}
+
+

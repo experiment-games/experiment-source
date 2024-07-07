@@ -1,0 +1,13 @@
+
+"VertexLitGeneric"
+{
+	"$basetexture" "models/XQM/CoasterTrack/Special_Station"
+	"$surfaceprop" "metal"
+	"$bumpmap" "models/XQM/CoasterTrack/Special_Station_normal"
+	"$model" 1
+	"$phong" "1"
+	"$phongexponent" "40"
+	"$phongboost" "3"
+	"$phongfresnelranges" "[.05 .5 1]"
+	"$halflambert" "1"
+}

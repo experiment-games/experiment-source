@@ -1,0 +1,5 @@
+"g_sharpen"
+{
+	"$ignorez" "1"
+	"$fbtexture" "_rt_FullFrameFB"
+}

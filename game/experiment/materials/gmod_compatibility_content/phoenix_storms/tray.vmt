@@ -1,0 +1,22 @@
+"VertexLitGeneric"
+{
+	"$basetexture" "phoenix_storms/tray"
+	"$selfillum" 0.2
+	"$additive" 0.2
+	"$model" 1
+	"$halflambert" 1
+
+	"Proxies"
+	{
+		"AnimatedTexture" 
+         	{ 
+     		    "animatedTextureVar" "$basetexture" 
+      	 	    "animatedTextureFrameNumVar" "$frame" 
+       	 	    "animatedTextureFrameRate" "5" 
+        	 }
+
+		
+	}
+}
+
+

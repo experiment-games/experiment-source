@@ -1,0 +1,7 @@
+"VertexLitGeneric"
+{
+	"$translucent" "1"
+	"$basetexture" "decals/noughtsncrosses"
+	"$decal" "1"
+	"$decalscale" "0.08"
+}

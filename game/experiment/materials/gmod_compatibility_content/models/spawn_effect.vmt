@@ -1,0 +1,37 @@
+"Refract"
+{
+ 	"$model" 1
+
+ 	"$refractamount" ".2"
+ 	"$bluramount" "0"
+	"$REFRACTTINT" "{255 255 255}"
+	"$dudvmap" 	"models/shadertest/shader3_dudv"
+ 	"$normalmap" "models/shadertest/shader3_normal"
+	"$dudvframe" "0"
+	"$bumpframe" "0"
+	
+	"Proxies"
+	{
+		"AnimatedTexture"
+		{
+			"animatedtexturevar" "$dudvmap"
+			"animatedtextureframenumvar" "$dudvframe"
+			"animatedtextureframerate" 100.00
+		}
+
+		"AnimatedTexture"
+		{
+			"animatedtexturevar" "$normalmap"
+			"animatedtextureframenumvar" "$bumpframe"
+			"animatedtextureframerate" 100.00
+		}
+
+		"TextureScroll"
+		{
+			"texturescrollvar" "$bumptransform"
+			"texturescrollrate" 0.1
+			"texturescrollangle" 90
+		}
+
+	}
+}

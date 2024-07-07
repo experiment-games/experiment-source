@@ -1,0 +1,10 @@
+"LightmappedGeneric"
+{
+	"$translucent" "1"
+	"$basetexture" "decals/eye"
+	"$decal" "1"
+	"$decalscale" "0.08"
+	"$vertexcolor" "1"
+
+	"$modelmaterial" "decals/eye_model"
+}

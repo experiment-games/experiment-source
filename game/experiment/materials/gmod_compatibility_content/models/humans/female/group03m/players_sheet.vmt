@@ -1,0 +1,18 @@
+"VertexLitGeneric"
+{
+	"$basetexture" "models/humans/female/group03/citizen_sheet"
+	"$bumpmap" "models/humans/female/group03/citizen_sheet_normal" // thanks to LT_C and Bloocobalt!!
+	"$halflambert" "1"
+	
+	"$phong" "1"
+	"$phongexponent" "6"
+	"$phongboost" "0.3"
+	"$phongfresnelranges" "[0.05 0.3 0.5]"
+	
+	"$rimlight" "1"
+	"$rimlightexponent" "8"
+	"$rimlightboost" "2"
+	
+	"$phongexponenttexture" "models/humans/female/group03/citizen_sheet_normal"
+	"$rimmask" "1"
+}

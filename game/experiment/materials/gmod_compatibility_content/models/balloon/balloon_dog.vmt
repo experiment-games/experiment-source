@@ -1,0 +1,14 @@
+"VertexlitGeneric"
+{
+	"$basetexture" 			"color/white"
+	"$envmap" 				"env_cubemap"
+	"$bumpmap" 				"null-bumpmap"
+	 
+	"$phong" 				"1"
+	"$phongexponent" 		"10"
+	"$phongboost" 			"3" 
+	"$phongfresnelranges" 	"[0.1 0.5 1]"
+	
+ 
+	$envmaptint "[0.04 0.04 0.04]"
+}

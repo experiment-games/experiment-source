@@ -1,0 +1,8 @@
+"UnlitGeneric"
+{
+	"$baseTexture"	"pp/morph/brush_outline"
+	"$vertexalpha"	1
+	"$vertexcolor"	1
+	"$ignorez"		1
+	"$additive"		1
+}

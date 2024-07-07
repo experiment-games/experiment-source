@@ -1,0 +1,10 @@
+"VertexLitGeneric"
+{
+	"$basetexture" "models/monk/monk_sheet"
+	"$bumpmap" "models/monk/monk_sheet_normal"
+
+	"$phong" "1"
+	"$phongboost" "1"
+	"$phongexponent" "10"
+	"$phongfresnelranges"	"[0.05 0.5 1]"
+}

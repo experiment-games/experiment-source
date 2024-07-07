@@ -1,0 +1,14 @@
+"g_sky"
+{
+	// Fallback textures
+	"$basetexture" "skybox/paintedLF"
+	"$startexture" "skybox/starfield"
+
+	Proxies
+	{
+		SkyPaint
+		{
+			// No configuration. Entity controlled.
+		}
+	}
+}

@@ -1,0 +1,15 @@
+"VertexLitGeneric"
+{
+	"$basetexture" "phoenix_storms/pack2/redlight"
+	"$nocull" 1	
+	"$surfaceprop" "metal"
+	//"$bumpmap" "phoenix_storms/pack2/interior_sides_bump"
+	"$envmap" "env_cubemap"
+	"$envmaptint" "[ .2 .2 .2 ]"
+	//"$envmapmask" "Models/props_combine/combine_binocular01_mask"
+	"$selfillum" 0.5
+	"$model" 1
+	"$halflambert" 1
+}
+
+

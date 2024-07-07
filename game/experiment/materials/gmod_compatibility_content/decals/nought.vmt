@@ -1,0 +1,10 @@
+"LightmappedGeneric"
+{
+	"$translucent" "1"
+	"$basetexture" "decals/nought"
+	"$decal" "1"
+	"$decalscale" "0.11"
+	"$vertexcolor" "1"
+
+	"$modelmaterial" "decals/nought_model"
+}

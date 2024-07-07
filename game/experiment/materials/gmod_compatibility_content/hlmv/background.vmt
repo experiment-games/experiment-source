@@ -1,0 +1,7 @@
+//"LightmappedGeneric"
+"UnlitGeneric"
+{
+	"$baseTexture" "hlmv/background"
+	"$selfillum" "1"
+
+}

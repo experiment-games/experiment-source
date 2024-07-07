@@ -1,0 +1,7 @@
+"UnlitGeneric"
+{
+	"$basetexture" "sprites/key_8"
+	"$additive" 0
+	"$vertexcolor" 1
+	"$vertexalpha" 1
+}

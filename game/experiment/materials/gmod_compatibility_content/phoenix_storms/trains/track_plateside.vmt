@@ -1,0 +1,13 @@
+"VertexLitGeneric"
+{
+	"$basetexture" "phoenix_storms/trains/track_plateside"
+	"$surfaceprop" "metal"
+	"$bumpmap" "phoenix_storms/trains/track_plateside_normal"
+	"$phong"     "1"
+	"$halflambert"	1
+ 	"$phongexponent"   "60"
+ 	"$phongboost"   "2"
+ 	"$phongfresnelranges"   "[.5 .8 1]"
+}
+
+

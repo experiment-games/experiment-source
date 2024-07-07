@@ -1,0 +1,8 @@
+"VertexLitGeneric"
+{
+	"$translucent" "1"
+	"$basetexture" "decals/smile"
+	"$decal" "1"
+	"$decalscale" "0.08"
+	"$vertexcolor" "1"
+}

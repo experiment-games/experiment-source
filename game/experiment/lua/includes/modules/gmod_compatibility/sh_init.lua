@@ -117,6 +117,10 @@ PrecacheParticleSystem = ParticleSystem.Precache
 engine.ActiveGamemode = function()
 	return Gamemodes.GetActiveName()
 end
+engine.GetGames = function() return {} end
+engine.GetAddons = function() return {} end -- TODO: Implement with our addon system
+engine.GetGamemodes = function() return {} end -- TODO: Implement with our gamemode system
+engine.GetUserContent = function() return {} end
 
 gmod = {
 	GetGamemode = function()
@@ -207,6 +211,26 @@ function isvector(variable)
 end
 
 unpack = table.unpack
+
+-- Have table.insert return the position where the value was inserted
+table._OriginalInsert = table._OriginalInsert or table.insert
+
+---@overload fun(list: table, value: any)
+---@param list table
+---@param positionOrValue integer|any
+---@param value? any|nil
+---@return integer
+---@diagnostic disable-next-line: duplicate-set-field
+function table.insert(list, positionOrValue, value)
+	if (not value) then
+        table._OriginalInsert(list, positionOrValue)
+		return #list
+	end
+
+	table._OriginalInsert(list, positionOrValue, value)
+
+	return positionOrValue
+end
 
 Material = function(name)
     if (not Globals.DoesMaterialExist(name)) then
@@ -683,11 +707,20 @@ if (CLIENT) then
 		PopulateFromTextFiles = function(callback)
 			local spawnlists = file.Find("settings/gmod_compatibility_content/spawnlist/*.txt", "GAME")
 
-			for _, spawnlist in ipairs(spawnlists) do
-				local contents = file.Read("settings/gmod_compatibility_content/spawnlist/" .. spawnlist, "GAME")
-				local name = spawnlist:sub(1, -5)
+			for _, spawnlistFileName in ipairs(spawnlists) do
+				local spawnlistKeyValues = KeyValues(spawnlistFileName)
+				spawnlistKeyValues:LoadFromFile("settings/gmod_compatibility_content/spawnlist/" .. spawnlistFileName, "GAME")
+				local spawnlist = spawnlistKeyValues:ToTable()
 
-				callback(spawnlist, name, contents, "", 0, 0, false)
+                callback(
+                    spawnlistFileName,
+                    spawnlist.name,
+					spawnlist.contents,
+					spawnlist.icon,
+					spawnlist.id,
+					spawnlist.parentid,
+					spawnlist.needsapp
+				)
 			end
         end,
 

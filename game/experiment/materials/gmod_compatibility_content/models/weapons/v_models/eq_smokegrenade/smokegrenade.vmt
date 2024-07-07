@@ -1,0 +1,8 @@
+VertexLitGeneric
+{
+	"$basetexture"	"models\weapons\v_models\eq_smokegrenade\smokegrenade"
+	"$envmap" "env_cubemap"
+	"$envmapmask" "models\weapons\v_models\eq_smokegrenade\smokegrenade_ref"
+
+	"$halflambert" "1"
+}

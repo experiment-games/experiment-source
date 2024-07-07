@@ -1,0 +1,19 @@
+"VertexLitGeneric"
+{
+	"$baseTexture" "models/weapons/w_357/w_357"
+	"$bumpmap" "models/weapons/w_357/w_357_normal"
+	
+	"$phong" "1"
+	"$phongexponent" "25"
+	"$phongboost" "1" 
+	"$phongfresnelranges" "[0.3 0.6 1]"
+ 
+	"$envmap" "env_cubemap"
+	"$envmaptint" "[0.4 0.5 0.6]"
+	"$normalmapalphaenvmapmask" "1"
+	
+	$detail "detail\metal_detail_01"
+    $detailscale 1.5
+    $detailblendfactor 1.5
+    $detailblendmode 0
+}

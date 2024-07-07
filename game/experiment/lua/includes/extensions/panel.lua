@@ -68,6 +68,18 @@ end
 --]]
 local PANEL = _R.Panel
 
+--- Get all children of the panel.
+--- @return table
+function PANEL:GetChildren()
+	local children = {}
+
+	for i = 1, self:GetChildCount() do
+		table.insert(children, self:GetChild(i))
+	end
+
+	return children
+end
+
 --- Set dock margins for the panel.
 --- @param left number
 --- @param top number

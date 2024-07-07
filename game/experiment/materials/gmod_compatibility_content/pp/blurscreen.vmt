@@ -1,0 +1,7 @@
+// Todo: Make own shader with widely variable blur (and no refraction!)
+"GMODScreenspace"
+{
+	"$basetexture" "_rt_FullFrameFB"
+	"$texturealpha" "0"
+	"$vertexalpha" "0"
+}

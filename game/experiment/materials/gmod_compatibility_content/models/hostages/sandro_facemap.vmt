@@ -1,0 +1,20 @@
+"VertexLitGeneric"
+{
+	"$basetexture" "models/hostages/sandro_facemap"
+	"$bumpmap" "null-bumpmap"
+	
+	"$phong" "1"
+	"$phongexponent" "15.0"
+	"$phongboost" "0.5"
+	"$phongfresnelranges"	"[0.1 0.5 1]"
+	"$basemapalphaphongmask" "1"
+	
+	"$phongexponenttexture" "models/humans/facemap_phong"
+
+	"$phongtint" "[0.9 0.8 0.7]"
+	
+	"$rimlight" "1"
+	"$rimlightboost" "2"
+	"$rimlightexponent" "4"
+	"$rimmask" "1"
+}

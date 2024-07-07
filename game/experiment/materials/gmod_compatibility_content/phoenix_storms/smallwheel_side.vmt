@@ -1,0 +1,13 @@
+"VertexLitGeneric"
+{
+	"$basetexture" "phoenix_storms/smallwheel_side"
+	"$surfaceprop" "metal"
+	"$bumpmap" "phoenix_storms/smallwheel_side_bump"
+	"$envmap" "env_cubemap"
+	"$envmaptint" "[ .15 .15 .15 ]"
+	"$selfillum" 0
+	"$model" 1
+	"$halflambert" 1
+}
+
+

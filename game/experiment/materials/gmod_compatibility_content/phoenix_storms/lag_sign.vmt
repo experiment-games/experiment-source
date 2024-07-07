@@ -1,0 +1,16 @@
+"VertexLitGeneric"
+{
+	"$basetexture" "phoenix_storms/lag_sign"
+	//"%compilepassbullets" 1
+	"$translucent" 1
+	"$nocull" 1	
+	"$surfaceprop" "glass"
+	"$envmap" "env_cubemap"
+	"$envmaptint" "[ .3 .3 .3 ]"
+	//"$basealphaenvmapmask" 1
+	"$model" 1
+	//"$gamematerial"	"Y"
+	"$halflambert" 1
+}
+
+

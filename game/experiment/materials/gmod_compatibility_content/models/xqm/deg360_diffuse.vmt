@@ -1,0 +1,13 @@
+
+"VertexLitGeneric"
+{
+	"$basetexture" "models/XQM/Deg360_diffuse"
+	"$surfaceprop" "metal"
+	"$bumpmap" "models/XQM/Deg360_normal"
+	"$model" 1
+	"$phong" "1"
+	"$phongexponent" "40"
+	"$phongboost" "4"
+	"$phongfresnelranges" "[.05 .5 1]"
+	"$halflambert" "1"
+}

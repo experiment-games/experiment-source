@@ -1,0 +1,22 @@
+
+"VertexLitGeneric"
+{
+	"$basetexture" "models/XQM/Hoverboard2_diffuse"
+	"$surfaceprop" "metal"
+	"$bumpmap" "models/XQM/Hoverboard_normal"
+	"$phong" "1"
+	"$phongexponent" "40"
+	"$phongboost" "2"
+	"$phongfresnelranges" "[.05 .5 1]"
+	"$halflambert" "1"
+ "Proxies"
+   {
+      "AnimatedTexture"
+      {
+         "animatedtexturevar" "$basetexture"
+         "animatedtextureframenumvar" "$frame"
+         "animatedtextureframerate" 10
+      }
+   }
+	"$model" 1
+}

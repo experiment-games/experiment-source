@@ -1,0 +1,13 @@
+
+"VertexLitGeneric"
+{
+	"$basetexture" "models/NatesWheel/nateswheel_diffuse"
+	"$surfaceprop" "rubbertire"
+	"$bumpmap" "models/NatesWheel/nateswheel_normal"
+	"$phong" "1"
+	"$phongexponent" "40"
+	"$phongboost" "2"
+	"$phongfresnelranges" "[.05 .5 1]"
+	"$halflambert" "1"
+	"$model" 1
+}

@@ -1,0 +1,19 @@
+"VertexLitGeneric"
+{
+	"$baseTexture" "models/mossman/mossman_face"
+	"$bumpmap" "models/mossman/mossman_head_normal"
+	
+	"$phong" "1"
+	"$phongexponent" "10"
+	"$phongboost" "1"
+	"$phongfresnelranges" "[0.1 0.4 1.0]"
+	
+	"$phongexponenttexture" "models/humans/facemap_phong"
+
+	"$phongtint" "[0.9 0.8 0.7]"
+	
+	"$rimlight" "1"
+	"$rimlightboost" "2"
+	"$rimlightexponent" "4"
+	"$rimmask" "1"
+}

@@ -1,0 +1,10 @@
+"VertexLitGeneric"
+{
+	"$baseTexture" "red"
+	"$surfaceprop" "solidmetal"
+	"$phong"     "1"
+	"$halflambert"	1
+ 	"$phongexponent"   "150"
+ 	"$phongboost"   "1"
+ 	"$phongfresnelranges"   "[.2 .2 .2]"
+}

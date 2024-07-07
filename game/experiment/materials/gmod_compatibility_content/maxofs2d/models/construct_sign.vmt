@@ -1,0 +1,13 @@
+"VertexLitGeneric"
+{
+	"$baseTexture" "MaxOfS2D/models/construct_sign"
+	// "$bumpmap" "MaxOfS2D/models/flat_normal"
+	
+	// "$model" "1"
+	// "$halflambert" "1"
+	
+	"$detail" detail\noise_detail_01
+	"$detailscale" 32
+	"$detailblendfactor" 0.3
+	"$detailblendmode" 0
+}

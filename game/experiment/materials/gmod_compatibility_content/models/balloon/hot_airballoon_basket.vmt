@@ -1,0 +1,15 @@
+"VertexLitGeneric"
+{
+	"$basetexture" "models\balloon\hot_airballoon_basket"
+	"$bumpmap" "models\balloon\hot_airballoon_basket_normal"
+	"$envmap" "env_cubemap"
+	$normalmapalphaenvmapmask 1
+	 
+	"$phong" "1"
+	"$phongexponent" "10"
+	"$phongboost" "1" 
+	"$phongfresnelranges" "[0.2 0.5 2]"
+ 
+	"$envmaptint" "[0.1 0.1 0.1]"
+}
+

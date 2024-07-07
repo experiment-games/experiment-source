@@ -1209,7 +1209,7 @@ static int Panel_SetTriplePressAllowed( lua_State *L )
 
 static int Panel_SetVisible( lua_State *L )
 {
-    luaL_checkpanel( L, 1 )->SetVisible( luaL_checkboolean( L, 2 ) );
+    luaL_checkpanel( L, 1 )->SetVisible( luaL_optboolean( L, 2, 0 ) );
     return 0;
 }
 

@@ -1,0 +1,9 @@
+VertexlitGeneric
+{
+	$RTTSHADOWBUILD 1
+	$WOUNDED 1
+	$WOUNDCUTOUTTEXTURE "models/infected/common/body_wounds/wound_combined_cull_texture"
+	$CUTOUTDECALFALLOFF 2
+	$CUTOUTDECALMAPPINGSCALE 7
+	$CUTOUTTEXTUREBIAS "0.95"
+}
