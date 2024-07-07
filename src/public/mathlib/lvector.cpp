@@ -202,20 +202,23 @@ static int Vector_Zero( lua_State *L )
 
 static int Vector___index( lua_State *L )
 {
-    Vector v = luaL_checkvector( L, 1 );
+    Vector vector = luaL_checkvector( L, 1 );
     const char *field = luaL_checkstring( L, 2 );
+
     if ( strcmp( field, "x" ) == 0 )
-        lua_pushnumber( L, v.x );
+        lua_pushnumber( L, vector.x );
     else if ( strcmp( field, "y" ) == 0 )
-        lua_pushnumber( L, v.y );
+        lua_pushnumber( L, vector.y );
     else if ( strcmp( field, "z" ) == 0 )
-        lua_pushnumber( L, v.z );
+        lua_pushnumber( L, vector.z );
     else
     {
         lua_getmetatable( L, 1 );
-        lua_pushvalue( L, 2 );
-        lua_gettable( L, -2 );
+        LUA_METATABLE_INDEX_CHECK_TABLE( L );
+
+        lua_pushnil( L );
     }
+
     return 1;
 }
 
@@ -377,20 +380,23 @@ static int QAngle_LengthSqr( lua_State *L )
 
 static int QAngle___index( lua_State *L )
 {
-    QAngle v = luaL_checkangle( L, 1 );
+    QAngle angle = luaL_checkangle( L, 1 );
     const char *field = luaL_checkstring( L, 2 );
-    if ( strcmp( field, "x" ) == 0 )
-        lua_pushnumber( L, v.x );
-    else if ( strcmp( field, "y" ) == 0 )
-        lua_pushnumber( L, v.y );
-    else if ( strcmp( field, "z" ) == 0 )
-        lua_pushnumber( L, v.z );
+
+    if ( strcmp( field, "x" ) == 0 || strcmp( field, "p" ) == 0 )
+        lua_pushnumber( L, angle.x );
+    else if ( strcmp( field, "y" ) == 0 || strcmp( field, "y" ) == 0 )
+        lua_pushnumber( L, angle.y );
+    else if ( strcmp( field, "z" ) == 0 || strcmp( field, "r" ) == 0 )
+        lua_pushnumber( L, angle.z );
     else
     {
         lua_getmetatable( L, 1 );
-        lua_pushvalue( L, 2 );
-        lua_gettable( L, -2 );
+        LUA_METATABLE_INDEX_CHECK_TABLE( L );
+
+        lua_pushnil( L );
     }
+
     return 1;
 }
 

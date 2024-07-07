@@ -696,17 +696,25 @@ void Panel::PushPanelToLua( lua_State *L )
 //-----------------------------------------------------------------------------
 void Panel::SetupRefTable( lua_State *L )
 {
+    if (m_lua_State == nullptr)
+        m_lua_State = L;
+
+    // Some panels may not have a Lua state yet, so we set it. But in any
+    // case it should always be the same lua state as the one passed to this
+    // function.
+    Assert( m_lua_State == L );
+
     lua_newtable( L );
     int x, y, wide, tall;
     GetBounds( x, y, wide, tall );
-    lua_pushinteger( m_lua_State, x );
-    lua_setfield( m_lua_State, -2, "x" );
-    lua_pushinteger( m_lua_State, y );
-    lua_setfield( m_lua_State, -2, "y" );
-    lua_pushinteger( m_lua_State, wide );
-    lua_setfield( m_lua_State, -2, "wide" );
-    lua_pushinteger( m_lua_State, tall );
-    lua_setfield( m_lua_State, -2, "tall" );
+    lua_pushinteger( L, x );
+    lua_setfield( L, -2, "x" );
+    lua_pushinteger( L, y );
+    lua_setfield( L, -2, "y" );
+    lua_pushinteger( L, wide );
+    lua_setfield( L, -2, "wide" );
+    lua_pushinteger( L, tall );
+    lua_setfield( L, -2, "tall" );
     m_nTableReference = luaL_ref( L, LUA_REGISTRYINDEX );
 }
 #endif

@@ -475,17 +475,12 @@ static int bfRead_ReadEntity( lua_State *L )
 
 static int bfRead___index( lua_State *L )
 {
-    luaL_getmetatable( L, LUA_BFREADLIBNAME );
-    lua_pushvalue( L, 2 );
-    lua_gettable( L, -2 );
+    bf_read *bfRead = luaL_checkbf_read( L, 1 );
 
-    if ( lua_isnil( L, -1 ) )
-    {
-        lua_pop( L, 2 );
-        lua_pushvalue( L, 2 );
-        lua_gettable( L, 1 );
-    }
+    lua_getmetatable( L, 1 );
+    LUA_METATABLE_INDEX_CHECK_TABLE( L );
 
+    lua_pushnil( L );
     return 1;
 }
 

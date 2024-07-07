@@ -285,51 +285,23 @@ static int Button_ShouldPaint( lua_State *L )
 static int Button___index( lua_State *L )
 {
     Button *pButton = lua_tobutton( L, 1 );
-    if ( pButton == NULL )
-    { /* avoid extra test when d is not 0 */
-        lua_Debug ar1;
-        lua_getstack( L, 1, &ar1 );
-        lua_getinfo( L, "fl", &ar1 );
-        lua_Debug ar2;
-        lua_getinfo( L, ">S", &ar2 );
-        lua_pushfstring( L, "%s:%d: attempt to index an INVALID_PANEL", ar2.short_src, ar1.currentline );
-        return lua_error( L );
-    }
+
+    LUA_METATABLE_INDEX_CHECK_VALID( L, Panel_IsValid );
+    LUA_METATABLE_INDEX_CHECK_NULL( L, pButton );
 
     LButton *plButton = dynamic_cast< LButton * >( pButton );
-    if ( plButton && lua_isrefvalid( L, plButton->m_nTableReference ) )
-    {
-        lua_getref( L, plButton->m_nTableReference );
-        lua_pushvalue( L, 2 );
-        lua_gettable( L, -2 );
-        if ( lua_isnil( L, -1 ) )
-        {
-            lua_pop( L, 2 );
-            lua_getmetatable( L, 1 );
-            lua_pushvalue( L, 2 );
-            lua_gettable( L, -2 );
-            if ( lua_isnil( L, -1 ) )
-            {
-                lua_pop( L, 2 );
-                luaL_getmetatable( L, "Panel" );
-                lua_pushvalue( L, 2 );
-                lua_gettable( L, -2 );
-            }
-        }
-    }
-    else
-    {
-        lua_getmetatable( L, 1 );
-        lua_pushvalue( L, 2 );
-        lua_gettable( L, -2 );
-        if ( lua_isnil( L, -1 ) )
-        {
-            lua_pop( L, 2 );
-            luaL_getmetatable( L, "Panel" );
-            lua_pushvalue( L, 2 );
-            lua_gettable( L, -2 );
-        }
-    }
+    LUA_METATABLE_INDEX_CHECK_REF_TABLE( L, plButton );
+
+    lua_getmetatable( L, 1 );
+    LUA_METATABLE_INDEX_CHECK_TABLE( L );    
+
+    luaL_getmetatable( L, "Label" );
+    LUA_METATABLE_INDEX_CHECK_TABLE( L );
+
+    luaL_getmetatable( L, "Panel" );
+    LUA_METATABLE_INDEX_CHECK_TABLE( L );
+
+    lua_pushnil( L );
     return 1;
 }
 
@@ -460,9 +432,6 @@ LUALIB_API int luaopen_vgui_Button( lua_State *L )
 
     // Pop the panel library off the stack
     lua_pop( L, 1 );
-
-    LUA_MERGE_METATABLE( L, "Label" );
-    
     lua_pop( L, 1 );  // Pop the Button metatable
 
     return 0;

@@ -375,65 +375,22 @@ static int Frame_SetTitleBarVisible( lua_State *L )
 static int Frame___index( lua_State *L )
 {
     Frame *pFrame = lua_toframe( L, 1 );
+    LUA_METATABLE_INDEX_CHECK_VALID( L, Panel_IsValid );
+    LUA_METATABLE_INDEX_CHECK_NULL( L, pFrame );
 
-    if ( pFrame == NULL )
-    { /* avoid extra test when d is not 0 */
-        lua_Debug ar1;
-        lua_getstack( L, 1, &ar1 );
-        lua_getinfo( L, "fl", &ar1 );
-        lua_Debug ar2;
-        lua_getinfo( L, ">S", &ar2 );
-        lua_pushfstring( L, "%s:%d: attempt to index an INVALID_PANEL", ar2.short_src, ar1.currentline );
-        return lua_error( L );
-    }
     LFrame *plFrame = dynamic_cast< LFrame * >( pFrame );
-    if ( plFrame && lua_isrefvalid( L, plFrame->m_nTableReference ) )
-    {
-        lua_getref( L, plFrame->m_nTableReference );
-        lua_pushvalue( L, 2 );
-        lua_gettable( L, -2 );
-        if ( lua_isnil( L, -1 ) )
-        {
-            lua_pop( L, 2 );
-            lua_getmetatable( L, 1 );
-            lua_pushvalue( L, 2 );
-            lua_gettable( L, -2 );
-            if ( lua_isnil( L, -1 ) )
-            {
-                lua_pop( L, 2 );
-                luaL_getmetatable( L, "EditablePanel" );
-                lua_pushvalue( L, 2 );
-                lua_gettable( L, -2 );
-                if ( lua_isnil( L, -1 ) )
-                {
-                    lua_pop( L, 2 );
-                    luaL_getmetatable( L, "Panel" );
-                    lua_pushvalue( L, 2 );
-                    lua_gettable( L, -2 );
-                }
-            }
-        }
-    }
-    else
-    {
-        lua_getmetatable( L, 1 );
-        lua_pushvalue( L, 2 );
-        lua_gettable( L, -2 );
-        if ( lua_isnil( L, -1 ) )
-        {
-            lua_pop( L, 2 );
-            luaL_getmetatable( L, "EditablePanel" );
-            lua_pushvalue( L, 2 );
-            lua_gettable( L, -2 );
-            if ( lua_isnil( L, -1 ) )
-            {
-                lua_pop( L, 2 );
-                luaL_getmetatable( L, "Panel" );
-                lua_pushvalue( L, 2 );
-                lua_gettable( L, -2 );
-            }
-        }
-    }
+    LUA_METATABLE_INDEX_CHECK_REF_TABLE( L, plFrame );
+
+    lua_getmetatable( L, 1 );
+    LUA_METATABLE_INDEX_CHECK_TABLE( L );
+
+    luaL_getmetatable( L, "EditablePanel" );
+    LUA_METATABLE_INDEX_CHECK_TABLE( L );
+
+    luaL_getmetatable( L, "Panel" );
+    LUA_METATABLE_INDEX_CHECK_TABLE( L );
+
+    lua_pushnil( L );
     return 1;
 }
 

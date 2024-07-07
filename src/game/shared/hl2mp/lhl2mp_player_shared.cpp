@@ -108,93 +108,24 @@ static int CHL2MP_Player_DoAnimationEvent( lua_State *L )
 static int CHL2MP_Player___index( lua_State *L )
 {
     CHL2MP_Player *pPlayer = lua_tohl2mpplayer( L, 1 );
+    // LUA_METATABLE_INDEX_CHECK_VALID( L, Entity_IsValid ); // TODO: Entity_IsValid
+    LUA_METATABLE_INDEX_CHECK_NULL( L, pPlayer );
 
-    if ( pPlayer == NULL )
-    { /* avoid extra test when d is not 0 */
-        lua_Debug ar1;
-        lua_getstack( L, 1, &ar1 );
-        lua_getinfo( L, "fl", &ar1 );
-        lua_Debug ar2;
-        lua_getinfo( L, ">S", &ar2 );
-        lua_pushfstring( L, "%s:%d: attempt to index a NULL entity", ar2.short_src, ar1.currentline );
+    LUA_METATABLE_INDEX_CHECK_REF_TABLE( L, pPlayer );
 
-        return lua_error( L );
-    }
+    lua_getmetatable( L, 1 );
+    LUA_METATABLE_INDEX_CHECK_TABLE( L );
 
-    const char *field = luaL_checkstring( L, 2 );
+    luaL_getmetatable( L, "CBasePlayer" );
+    LUA_METATABLE_INDEX_CHECK_TABLE( L );
 
-#ifdef CLIENT_DLL
-    if ( Q_strcmp( field, "m_fNextThinkPushAway" ) == 0 )
-    {
-        // TODO: This doesn't exist in SourceSDK2013?
-        // lua_pushnumber(L, pPlayer->m_fNextThinkPushAway);
-    }
-    else
-    {
-#endif
-        if ( lua_isrefvalid( L, pPlayer->m_nTableReference ) )
-        {
-            lua_getref( L, pPlayer->m_nTableReference );
-            lua_getfield( L, -1, field );
+    luaL_getmetatable( L, "CBaseAnimating" );
+    LUA_METATABLE_INDEX_CHECK_TABLE( L );
 
-            if ( lua_isnil( L, -1 ) )
-            {
-                lua_pop( L, 2 );
-                lua_getmetatable( L, 1 );
-                lua_getfield( L, -1, field );
+    luaL_getmetatable( L, "CBaseEntity" );
+    LUA_METATABLE_INDEX_CHECK_TABLE( L );
 
-                if ( lua_isnil( L, -1 ) )
-                {
-                    lua_pop( L, 2 );
-                    luaL_getmetatable( L, "CBasePlayer" );
-                    lua_getfield( L, -1, field );
-
-                    if ( lua_isnil( L, -1 ) )
-                    {
-                        lua_pop( L, 2 );
-                        luaL_getmetatable( L, "CBaseAnimating" );
-                        lua_getfield( L, -1, field );
-
-                        if ( lua_isnil( L, -1 ) )
-                        {
-                            lua_pop( L, 2 );
-                            luaL_getmetatable( L, "CBaseEntity" );
-                            lua_getfield( L, -1, field );
-                        }
-                    }
-                }
-            }
-        }
-        else
-        {
-            lua_getmetatable( L, 1 );
-            lua_getfield( L, -1, field );
-
-            if ( lua_isnil( L, -1 ) )
-            {
-                lua_pop( L, 2 );
-                luaL_getmetatable( L, "CBasePlayer" );
-                lua_getfield( L, -1, field );
-
-                if ( lua_isnil( L, -1 ) )
-                {
-                    lua_pop( L, 2 );
-                    luaL_getmetatable( L, "CBaseAnimating" );
-                    lua_getfield( L, -1, field );
-
-                    if ( lua_isnil( L, -1 ) )
-                    {
-                        lua_pop( L, 2 );
-                        luaL_getmetatable( L, "CBaseEntity" );
-                        lua_getfield( L, -1, field );
-                    }
-                }
-            }
-        }
-#ifdef CLIENT_DLL
-    }
-#endif
-
+    lua_pushnil( L );
     return 1;
 }
 

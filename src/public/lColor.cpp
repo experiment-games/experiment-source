@@ -113,32 +113,24 @@ static int Color___eq( lua_State *L )
 static int Color___index( lua_State *L )
 {
     Color color = luaL_checkcolor( L, 1 );
-    const char *key = luaL_checkstring( L, 2 );
+    const char *field = luaL_checkstring( L, 2 );
 
-    if ( !Q_stricmp( key, "r" ) )
-    {
+    if ( Q_strcmp( field, "r" ) == 0 )
         lua_pushinteger( L, color.r() );
-        return 1;
-    }
-    else if ( !Q_stricmp( key, "g" ) )
-    {
+    else if ( Q_strcmp( field, "g" ) == 0 )
         lua_pushinteger( L, color.g() );
-        return 1;
-    }
-    else if ( !Q_stricmp( key, "b" ) )
-    {
+    else if ( Q_strcmp( field, "b" ) == 0 )
         lua_pushinteger( L, color.b() );
-        return 1;
-    }
-    else if ( !Q_stricmp( key, "a" ) )
-    {
+    else if ( Q_strcmp( field, "a" ) == 0 )
         lua_pushinteger( L, color.a() );
-        return 1;
+    else
+    {
+        lua_getmetatable( L, 1 );
+        LUA_METATABLE_INDEX_CHECK_TABLE( L );
+
+        lua_pushnil( L );
     }
 
-    lua_getmetatable( L, 1 );
-    lua_pushvalue( L, 2 );
-    lua_gettable( L, -2 );
     return 1;
 }
 

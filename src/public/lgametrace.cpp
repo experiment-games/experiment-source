@@ -98,9 +98,10 @@ static int CGameTrace_IsDispSurfaceWalkable( lua_State *L )
 }
 
 static int CGameTrace___index( lua_State *L )
-{
+{    
     trace_t tr = luaL_checktrace( L, 1 );
     const char *field = luaL_checkstring( L, 2 );
+
     if ( Q_strcmp( field, "allsolid" ) == 0 )
         lua_pushboolean( L, tr.allsolid );
     else if ( Q_strcmp( field, "contents" ) == 0 )
@@ -130,9 +131,11 @@ static int CGameTrace___index( lua_State *L )
     else
     {
         lua_getmetatable( L, 1 );
-        lua_pushvalue( L, 2 );
-        lua_gettable( L, -2 );
+        LUA_METATABLE_INDEX_CHECK_TABLE( L );
+
+        lua_pushnil( L );
     }
+
     return 1;
 }
 

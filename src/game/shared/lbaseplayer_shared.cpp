@@ -929,17 +929,8 @@ static int CBasePlayer_WeaponCount( lua_State *L )
 static int CBasePlayer___index( lua_State *L )
 {
     CBasePlayer *pPlayer = lua_toplayer( L, 1 );
-
-    if ( pPlayer == NULL )
-    { /* avoid extra test when d is not 0 */
-        lua_Debug ar1;
-        lua_getstack( L, 1, &ar1 );
-        lua_getinfo( L, "fl", &ar1 );
-        lua_Debug ar2;
-        lua_getinfo( L, ">S", &ar2 );
-        lua_pushfstring( L, "%s:%d: attempt to index a NULL entity", ar2.short_src, ar1.currentline );
-        return lua_error( L );
-    }
+    // LUA_METATABLE_INDEX_CHECK_VALID( L, Entity_IsValid ); // TODO: Entity_IsValid
+    LUA_METATABLE_INDEX_CHECK_NULL( L, pPlayer );
 
     const char *field = luaL_checkstring( L, 2 );
 
@@ -959,51 +950,22 @@ static int CBasePlayer___index( lua_State *L )
         lua_pushinteger( L, pPlayer->m_StuckLast );
     else if ( Q_strcmp( field, "m_szAnimExtension" ) == 0 )
         lua_pushstring( L, pPlayer->m_szAnimExtension );
-    else if ( lua_isrefvalid( L, pPlayer->m_nTableReference ) )
-    {
-        lua_getref( L, pPlayer->m_nTableReference );
-        lua_getfield( L, -1, field );
-
-        if ( lua_isnil( L, -1 ) )
-        {
-            lua_pop( L, 2 );
-            lua_getmetatable( L, 1 );
-            lua_getfield( L, -1, field );
-
-            if ( lua_isnil( L, -1 ) )
-            {
-                lua_pop( L, 2 );
-                luaL_getmetatable( L, "CBaseAnimating" );
-                lua_getfield( L, -1, field );
-
-                if ( lua_isnil( L, -1 ) )
-                {
-                    lua_pop( L, 2 );
-                    luaL_getmetatable( L, "CBaseEntity" );
-                    lua_getfield( L, -1, field );
-                }
-            }
-        }
-    }
     else
     {
+        LUA_METATABLE_INDEX_CHECK_REF_TABLE( L, pPlayer );
+
         lua_getmetatable( L, 1 );
-        lua_getfield( L, -1, field );
+        LUA_METATABLE_INDEX_CHECK_TABLE( L );
 
-        if ( lua_isnil( L, -1 ) )
-        {
-            lua_pop( L, 2 );
-            luaL_getmetatable( L, "CBaseAnimating" );
-            lua_getfield( L, -1, field );
+        luaL_getmetatable( L, "CBaseAnimating" );
+        LUA_METATABLE_INDEX_CHECK_TABLE( L );
 
-            if ( lua_isnil( L, -1 ) )
-            {
-                lua_pop( L, 2 );
-                luaL_getmetatable( L, "CBaseEntity" );
-                lua_getfield( L, -1, field );
-            }
-        }
+        luaL_getmetatable( L, "CBaseEntity" );
+        LUA_METATABLE_INDEX_CHECK_TABLE( L );
+
+        lua_pushnil( L );
     }
+    
     return 1;
 }
 

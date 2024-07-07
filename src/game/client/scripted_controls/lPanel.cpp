@@ -663,7 +663,7 @@ static int Panel_IsValidKeyBindingsContext( lua_State *L )
     return 1;
 }
 
-static int Panel_IsValid( lua_State *L )
+int Panel_IsValid( lua_State *L )
 {
     lua_Panel *d = lua_topanel( L, 1 );
     lua_pushboolean( L, d != NULL );
@@ -1241,47 +1241,16 @@ static int Panel_StringToKeyCode( lua_State *L )
 static int Panel___index( lua_State *L )
 {
     Panel *plPanel = lua_topanel( L, 1 );
-    const char *pKey = luaL_checkstring( L, 2 );
 
-    if ( plPanel == NULL )
-    {
-        if ( Q_strcmp( pKey, "IsValid" ) == 0 )
-        {
-            lua_pushcfunction( L, Panel_IsValid );
-            return 1;
-        }
+    LUA_METATABLE_INDEX_CHECK_VALID( L, Panel_IsValid );
+    LUA_METATABLE_INDEX_CHECK_NULL( L, plPanel );
 
-        lua_Debug ar1;
-        lua_getstack( L, 1, &ar1 );
-        lua_getinfo( L, "fl", &ar1 );
-        lua_Debug ar2;
-        lua_getinfo( L, ">S", &ar2 );
-        lua_pushfstring( L, "%s:%d: attempt to index an INVALID_PANEL", ar2.short_src, ar1.currentline );
+    LUA_METATABLE_INDEX_CHECK_REF_TABLE( L, plPanel );
 
-        return lua_error( L );
-    }
+    lua_getmetatable( L, 1 );
+    LUA_METATABLE_INDEX_CHECK_TABLE( L );
 
-    if ( plPanel && lua_isrefvalid( L, plPanel->m_nTableReference ) )
-    {
-        lua_getref( L, plPanel->m_nTableReference );
-        lua_pushvalue( L, 2 );
-        lua_gettable( L, -2 );
-
-        if ( lua_isnil( L, -1 ) )
-        {
-            lua_pop( L, 2 );
-            lua_getmetatable( L, 1 );
-            lua_pushvalue( L, 2 );
-            lua_gettable( L, -2 );
-        }
-    }
-    else
-    {
-        lua_getmetatable( L, 1 );
-        lua_pushvalue( L, 2 );
-        lua_gettable( L, -2 );
-    }
-
+    lua_pushnil( L );
     return 1;
 }
 
