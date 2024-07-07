@@ -168,6 +168,7 @@ class Panel : public IClientPanel, virtual IForceVirtualInheritancePanel
 #ifdef LUA_SDK
     Panel( Panel *parent, const char *panelName, lua_State *L );
     virtual void PushPanelToLua( lua_State *L );
+    virtual void SetupRefTable( lua_State *L );
 
     lua_State *m_lua_State = nullptr;
     int m_nTableReference;

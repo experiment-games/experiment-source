@@ -483,6 +483,17 @@ CBaseEntity::~CBaseEntity( )
 #endif
 }
 
+#ifdef LUA_SDK
+//-----------------------------------------------------------------------------
+// Purpose: Initialize any variables in the reference table
+//-----------------------------------------------------------------------------
+void CBaseEntity::SetupRefTable( lua_State *L )
+{
+    lua_newtable( L );
+    m_nTableReference = luaL_ref( L, LUA_REGISTRYINDEX );
+}
+#endif
+
 void CBaseEntity::PostConstructor( const char *szClassname )
 {
 	if ( szClassname )

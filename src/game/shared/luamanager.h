@@ -335,6 +335,43 @@
             lua_pop( L, 1 );                                                          \
     }
 
+// Merge any methods from the metatable with the given name into the metatable at the top of the stack.
+#define LUA_MERGE_METATABLE( L, DerivedFrom )                                        \
+    luaL_getmetatable( L, DerivedFrom );                                             \
+                                                                                     \
+    lua_pushnil( L );                                                                \
+    while ( lua_next( L, -2 ) != 0 )                                                 \
+    {                                                                                \
+        lua_getfield( L, -4, lua_tostring( L, -2 ) );                                \
+                                                                                     \
+        /* Only copy the metamethod if it doesn't already exist in the metatable */  \
+        if ( !lua_isnil( L, -1 ) )                                                   \
+        {                                                                            \
+            lua_pop( L, 1 ); /* Pop the field value from the Button metatable */     \
+                                                                                     \
+            lua_pop( L, 1 ); /* Pop the field value from the Label metatable */      \
+            continue;                                                                \
+        }                                                                            \
+                                                                                     \
+        lua_pop( L, 1 ); /* Pop the field value from the Button metatable */         \
+                                                                                     \
+        lua_pushvalue( L, -2 ); /* Copy the key */                                   \
+        lua_pushvalue( L, -2 ); /* Copy the value */                                 \
+        lua_settable( L, -6 );  /* Set the key-value pair in the Button metatable */ \
+                                                                                     \
+        /* Pop the value, leaving the key on the stack for the next iteration */     \
+        lua_pop( L, 1 );                                                             \
+    }                                                                                \
+                                                                                     \
+    lua_pop( L, 1 ); /* Pop the Label metatable */
+
+#define LUA_GET_REF_TABLE( L, Target )                     \
+    if ( !lua_isrefvalid( L, Target->m_nTableReference ) ) \
+    {                                                      \
+        Target->SetupRefTable( L );                        \
+    }                                                      \
+    lua_getref( L, Target->m_nTableReference );
+
 extern ConVar gamemode;
 
 LUALIB_API int luaL_checkboolean( lua_State *L, int narg );

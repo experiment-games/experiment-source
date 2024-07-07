@@ -93,17 +93,16 @@ static int Label_GetPanelClassName( lua_State *L )
 static int Label_GetRefTable( lua_State *L )
 {
     LLabel *plLabel = dynamic_cast< LLabel * >( luaL_checklabel( L, 1 ) );
+
     if ( plLabel )
     {
-        if ( !lua_isrefvalid( L, plLabel->m_nTableReference ) )
-        {
-            lua_newtable( L );
-            plLabel->m_nTableReference = luaL_ref( L, LUA_REGISTRYINDEX );
-        }
-        lua_getref( L, plLabel->m_nTableReference );
+        LUA_GET_REF_TABLE( L, plLabel );
     }
     else
+    {
         lua_pushnil( L );
+    }
+
     return 1;
 }
 
@@ -379,15 +378,11 @@ static int Label___newindex( lua_State *L )
 
     if ( plLabel )
     {
-        if ( !lua_isrefvalid( L, plLabel->m_nTableReference ) )
-        {
-            lua_newtable( L );
-            plLabel->m_nTableReference = luaL_ref( L, LUA_REGISTRYINDEX );
-        }
-        lua_getref( L, plLabel->m_nTableReference );
+        LUA_GET_REF_TABLE( L, plLabel );
         lua_pushvalue( L, 3 );
         lua_setfield( L, -2, luaL_checkstring( L, 2 ) );
         lua_pop( L, 1 );
+
         return 0;
     }
 
@@ -399,12 +394,7 @@ static int Label___newindex( lua_State *L )
 
     if ( plButton )
     {
-        if ( !lua_isrefvalid( L, plButton->m_nTableReference ) )
-        {
-            lua_newtable( L );
-            plButton->m_nTableReference = luaL_ref( L, LUA_REGISTRYINDEX );
-        }
-        lua_getref( L, plButton->m_nTableReference );
+        LUA_GET_REF_TABLE( L, plButton );
         lua_pushvalue( L, 3 );
         lua_setfield( L, -2, luaL_checkstring( L, 2 ) );
         lua_pop( L, 1 );

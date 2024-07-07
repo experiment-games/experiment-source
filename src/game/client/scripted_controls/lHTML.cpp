@@ -308,20 +308,19 @@ static int HTML___newindex( lua_State *L )
         lua_Debug ar2;
         lua_getinfo( L, ">S", &ar2 );
         lua_pushfstring( L, "%s:%d: attempt to index an INVALID_PANEL", ar2.short_src, ar1.currentline );
+
         return lua_error( L );
     }
+
     LHTML *plHTML = dynamic_cast< LHTML * >( pHTML );
+
     if ( plHTML )
     {
-        if ( !lua_isrefvalid( L, plHTML->m_nTableReference ) )
-        {
-            lua_newtable( L );
-            plHTML->m_nTableReference = luaL_ref( L, LUA_REGISTRYINDEX );
-        }
-        lua_getref( L, plHTML->m_nTableReference );
+        LUA_GET_REF_TABLE( L, plHTML );
         lua_pushvalue( L, 3 );
         lua_setfield( L, -2, luaL_checkstring( L, 2 ) );
         lua_pop( L, 1 );
+
         return 0;
     }
     else
@@ -332,6 +331,7 @@ static int HTML___newindex( lua_State *L )
         lua_Debug ar2;
         lua_getinfo( L, ">S", &ar2 );
         lua_pushfstring( L, "%s:%d: attempt to index a non-scripted panel", ar2.short_src, ar1.currentline );
+
         return lua_error( L );
     }
 }

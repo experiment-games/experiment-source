@@ -55,6 +55,10 @@
 #include "studio_stats.h"
 #include "tier1/callqueue.h"
 
+#ifdef LUA_SDK
+#include <luamanager.h>
+#endif
+
 #ifdef TF_CLIENT_DLL
 #include "c_tf_player.h"
 #include "c_baseobject.h"

@@ -1044,12 +1044,7 @@ static int CBasePlayer___newindex( lua_State *L )
         Q_strcpy( pPlayer->m_szAnimExtension, luaL_checkstring( L, 3 ) );
     else
     {
-        if ( !lua_isrefvalid( L, pPlayer->m_nTableReference ) )
-        {
-            lua_newtable( L );
-            pPlayer->m_nTableReference = luaL_ref( L, LUA_REGISTRYINDEX );
-        }
-        lua_getref( L, pPlayer->m_nTableReference );
+        LUA_GET_REF_TABLE( L, pPlayer );
         lua_pushvalue( L, 3 );
         lua_setfield( L, -2, field );
         lua_pop( L, 1 );

@@ -203,17 +203,16 @@ static int Frame_GetPanelClassName( lua_State *L )
 static int Frame_GetRefTable( lua_State *L )
 {
     LFrame *plFrame = dynamic_cast< LFrame * >( luaL_checkframe( L, 1 ) );
+
     if ( plFrame )
     {
-        if ( !lua_isrefvalid( L, plFrame->m_nTableReference ) )
-        {
-            lua_newtable( L );
-            plFrame->m_nTableReference = luaL_ref( L, LUA_REGISTRYINDEX );
-        }
-        lua_getref( L, plFrame->m_nTableReference );
+        LUA_GET_REF_TABLE( L, plFrame );
     }
     else
+    {
         lua_pushnil( L );
+    }
+
     return 1;
 }
 
@@ -376,6 +375,7 @@ static int Frame_SetTitleBarVisible( lua_State *L )
 static int Frame___index( lua_State *L )
 {
     Frame *pFrame = lua_toframe( L, 1 );
+
     if ( pFrame == NULL )
     { /* avoid extra test when d is not 0 */
         lua_Debug ar1;
@@ -448,20 +448,19 @@ static int Frame___newindex( lua_State *L )
         lua_Debug ar2;
         lua_getinfo( L, ">S", &ar2 );
         lua_pushfstring( L, "%s:%d: attempt to index an INVALID_PANEL", ar2.short_src, ar1.currentline );
+
         return lua_error( L );
     }
+
     LFrame *plFrame = dynamic_cast< LFrame * >( pFrame );
+
     if ( plFrame )
     {
-        if ( !lua_isrefvalid( L, plFrame->m_nTableReference ) )
-        {
-            lua_newtable( L );
-            plFrame->m_nTableReference = luaL_ref( L, LUA_REGISTRYINDEX );
-        }
-        lua_getref( L, plFrame->m_nTableReference );
+        LUA_GET_REF_TABLE( L, plFrame );
         lua_pushvalue( L, 3 );
         lua_setfield( L, -2, luaL_checkstring( L, 2 ) );
         lua_pop( L, 1 );
+
         return 0;
     }
     else
@@ -472,6 +471,7 @@ static int Frame___newindex( lua_State *L )
         lua_Debug ar2;
         lua_getinfo( L, ">S", &ar2 );
         lua_pushfstring( L, "%s:%d: attempt to index a non-scripted panel", ar2.short_src, ar1.currentline );
+
         return lua_error( L );
     }
 }
@@ -575,6 +575,6 @@ LUALIB_API int luaopen_vgui_Frame( lua_State *L )
     lua_pushstring( L, LUA_PANELLIBNAME );
     lua_setfield( L, -2, "__type" ); /* metatable.__type = "Panel" */
     luaL_register( L, LUA_VGUILIBNAME, Frame_funcs );
-    lua_pop( L, 2 );
+    lua_pop( L, 2 ); // remove metatable and Frame_funcs
     return 0;
 }

@@ -676,8 +676,8 @@ Panel::Panel( Panel *parent, const char *panelName, HScheme scheme )
 //-----------------------------------------------------------------------------
 // Purpose: Constructor for Lua create Panels
 //-----------------------------------------------------------------------------
-Panel::Panel( Panel *parent, const char *panelName, lua_State* L )
-    : Panel( parent , panelName )
+Panel::Panel( Panel *parent, const char *panelName, lua_State *L )
+    : Panel( parent, panelName )
 {
     m_lua_State = L;
 }
@@ -689,6 +689,25 @@ Panel::Panel( Panel *parent, const char *panelName, lua_State* L )
 void Panel::PushPanelToLua( lua_State *L )
 {
     lua_pushpanel( L, this );
+}
+
+//-----------------------------------------------------------------------------
+// Purpose: Initialize any variables in the reference table
+//-----------------------------------------------------------------------------
+void Panel::SetupRefTable( lua_State *L )
+{
+    lua_newtable( L );
+    int x, y, wide, tall;
+    GetBounds( x, y, wide, tall );
+    lua_pushinteger( m_lua_State, x );
+    lua_setfield( m_lua_State, -2, "x" );
+    lua_pushinteger( m_lua_State, y );
+    lua_setfield( m_lua_State, -2, "y" );
+    lua_pushinteger( m_lua_State, wide );
+    lua_setfield( m_lua_State, -2, "wide" );
+    lua_pushinteger( m_lua_State, tall );
+    lua_setfield( m_lua_State, -2, "tall" );
+    m_nTableReference = luaL_ref( L, LUA_REGISTRYINDEX );
 }
 #endif
 
@@ -795,7 +814,7 @@ void Panel::Init( int x, int y, int wide, int tall )
 Panel::~Panel()
 {
 #if defined( LUA_SDK )
-    if ( m_lua_State ) 
+    if ( m_lua_State )
         lua_unref( m_lua_State, m_nTableReference );
 #endif  // LUA_SDK
 
@@ -946,6 +965,18 @@ void Panel::SetPos( int x, int y )
         Assert( abs( x ) < 32768 && abs( y ) < 32768 );
     }
     ipanel()->SetPos( GetVPanel(), x, y );
+
+#if defined( LUA_SDK )
+    if ( m_lua_State )
+    {
+        LUA_GET_REF_TABLE( m_lua_State, this );
+        lua_pushinteger( m_lua_State, x );
+        lua_setfield( m_lua_State, -2, "x" );
+        lua_pushinteger( m_lua_State, y );
+        lua_setfield( m_lua_State, -2, "y" );
+        lua_pop( m_lua_State, 1 );
+    }
+#endif
 }
 
 //-----------------------------------------------------------------------------
@@ -983,6 +1014,18 @@ void Panel::SetSize( int wide, int tall )
 {
     Assert( abs( wide ) < 32768 && abs( tall ) < 32768 );
     ipanel()->SetSize( GetVPanel(), wide, tall );
+
+#if defined( LUA_SDK )
+    if ( m_lua_State )
+    {
+        LUA_GET_REF_TABLE( m_lua_State, this );
+        lua_pushinteger( m_lua_State, wide );
+        lua_setfield( m_lua_State, -2, "wide" );
+        lua_pushinteger( m_lua_State, tall );
+        lua_setfield( m_lua_State, -2, "tall" );
+        lua_pop( m_lua_State, 1 ); // pop the ref table
+    }
+#endif
 }
 
 //-----------------------------------------------------------------------------

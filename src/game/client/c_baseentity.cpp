@@ -956,6 +956,17 @@ C_BaseEntity::~C_BaseEntity() {
 #endif
 }
 
+#ifdef LUA_SDK
+//-----------------------------------------------------------------------------
+// Purpose: Initialize any variables in the reference table
+//-----------------------------------------------------------------------------
+void C_BaseEntity::SetupRefTable( lua_State *L )
+{
+    lua_newtable( L );
+    m_nTableReference = luaL_ref( L, LUA_REGISTRYINDEX );
+}
+#endif
+
 void C_BaseEntity::Clear(void) {
     m_bDormant = true;
 

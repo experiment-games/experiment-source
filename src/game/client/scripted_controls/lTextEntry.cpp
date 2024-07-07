@@ -506,12 +506,7 @@ static int TextEntry___newindex( lua_State *L )
     LTextEntry *plTextEntry = dynamic_cast< LTextEntry * >( pTextEntry );
     if ( plTextEntry )
     {
-        if ( !lua_isrefvalid( L, plTextEntry->m_nTableReference ) )
-        {
-            lua_newtable( L );
-            plTextEntry->m_nTableReference = luaL_ref( L, LUA_REGISTRYINDEX );
-        }
-        lua_getref( L, plTextEntry->m_nTableReference );
+        LUA_GET_REF_TABLE( L, plTextEntry );
         lua_pushvalue( L, 3 );
         lua_setfield( L, -2, luaL_checkstring( L, 2 ) );
         lua_pop( L, 1 );

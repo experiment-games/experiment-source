@@ -1337,10 +1337,10 @@ static int CBaseEntity_SetModel( lua_State *L )
 
 #ifdef CLIENT_DLL
     lua_pushboolean( L,
-                         luaL_checkentity( L, 1 )->SetModel( pModelName ) );
+                     luaL_checkentity( L, 1 )->SetModel( pModelName ) );
     return 1;
 #else
-        luaL_checkentity( L, 1 )->SetModel( pModelName );
+    luaL_checkentity( L, 1 )->SetModel( pModelName );
     return 0;
 #endif
 }
@@ -1759,12 +1759,7 @@ static int CBaseEntity___newindex( lua_State *L )
         pEntity->touchStamp = luaL_checkint( L, 3 );
     else
     {
-        if ( !lua_isrefvalid( L, pEntity->m_nTableReference ) )
-        {
-            lua_newtable( L );
-            pEntity->m_nTableReference = luaL_ref( L, LUA_REGISTRYINDEX );
-        }
-        lua_getref( L, pEntity->m_nTableReference );
+        LUA_GET_REF_TABLE( L, pEntity );
         lua_pushvalue( L, 3 );
         lua_setfield( L, -2, field );
         lua_pop( L, 1 );

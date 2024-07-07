@@ -21,6 +21,10 @@
 #include "shareddefs.h"
 #include "engine/ivmodelinfo.h"
 
+#ifdef LUA_SDK
+#include "luamanager.h"
+#endif
+
 class CDamageModifier;
 class CDmgAccumulator;
 
@@ -345,7 +349,7 @@ class CBaseEntity : public IServerEntity
 {
 public:
 	DECLARE_CLASS_NOBASE( CBaseEntity );	
-
+    
 	//----------------------------------------
 	// Class vars and functions
 	//----------------------------------------
@@ -372,6 +376,10 @@ public:
 	// by logical entities.
 	CBaseEntity( bool bServerOnly=false );
 	virtual ~CBaseEntity();
+
+#ifdef LUA_SDK
+  virtual void SetupRefTable( lua_State *L );
+#endif
 
 	// prediction system
 	DECLARE_PREDICTABLE();

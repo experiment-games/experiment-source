@@ -953,13 +953,9 @@ static int CBaseAnimating___newindex(lua_State *L) {
         pEntity->m_nHitboxSet = luaL_checkint(L, 3);
     else if (Q_strcmp(field, "m_nSkin") == 0)
         pEntity->m_nSkin = luaL_checkint(L, 3);
-    else {
-        if (!lua_isrefvalid(L, pEntity->m_nTableReference)) {
-            lua_newtable(L);
-            pEntity->m_nTableReference = luaL_ref(L, LUA_REGISTRYINDEX);
-        }
-
-        lua_getref(L, pEntity->m_nTableReference);
+    else
+    {
+        LUA_GET_REF_TABLE( L, pEntity );
         lua_pushvalue(L, 3);
         lua_setfield(L, -2, field);
         lua_pop(L, 1);

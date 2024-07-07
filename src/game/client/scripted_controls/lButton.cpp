@@ -295,6 +295,7 @@ static int Button___index( lua_State *L )
         lua_pushfstring( L, "%s:%d: attempt to index an INVALID_PANEL", ar2.short_src, ar1.currentline );
         return lua_error( L );
     }
+
     LButton *plButton = dynamic_cast< LButton * >( pButton );
     if ( plButton && lua_isrefvalid( L, plButton->m_nTableReference ) )
     {
@@ -348,12 +349,7 @@ static int Button___newindex( lua_State *L )
     LButton *plButton = dynamic_cast< LButton * >( pButton );
     if ( plButton )
     {
-        if ( !lua_isrefvalid( L, plButton->m_nTableReference ) )
-        {
-            lua_newtable( L );
-            plButton->m_nTableReference = luaL_ref( L, LUA_REGISTRYINDEX );
-        }
-        lua_getref( L, plButton->m_nTableReference );
+        LUA_GET_REF_TABLE( L, plButton );
         lua_pushvalue( L, 3 );
         lua_setfield( L, -2, luaL_checkstring( L, 2 ) );
         lua_pop( L, 1 );
@@ -465,22 +461,9 @@ LUALIB_API int luaopen_vgui_Button( lua_State *L )
     // Pop the panel library off the stack
     lua_pop( L, 1 );
 
-    // Also merge any methods from the "Label" metatable into the "Button" metatable
-    luaL_getmetatable( L, "Label" );
-
-    lua_pushnil( L ); // first key
-    while ( lua_next( L, -2 ) != 0 )
-    {
-        lua_pushvalue( L, -2 ); // copy the key
-        lua_pushvalue( L, -2 ); // copy the value
-        lua_settable( L, -6 );  // set the key-value pair in the Button metatable
-
-        // Pop the value, leaving the key on the stack for the next iteration
-        lua_pop( L, 1 );
-    }
-
-    lua_pop( L, 1 ); // Pop the Label metatable
-    lua_pop( L, 1 ); // Pop the Button metatable
+    LUA_MERGE_METATABLE( L, "Label" );
+    
+    lua_pop( L, 1 );  // Pop the Button metatable
 
     return 0;
 }

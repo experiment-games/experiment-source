@@ -392,15 +392,12 @@ static int Panel_GetRefTable( lua_State *L )
 
     if ( plPanel )
     {
-        if ( !lua_isrefvalid( L, plPanel->m_nTableReference ) )
-        {
-            lua_newtable( L );
-            plPanel->m_nTableReference = luaL_ref( L, LUA_REGISTRYINDEX );
-        }
-        lua_getref( L, plPanel->m_nTableReference );
+        LUA_GET_REF_TABLE( L, plPanel );
     }
     else
+    {
         lua_pushnil( L );
+    }
 
     return 1;
 }
@@ -1264,22 +1261,6 @@ static int Panel___index( lua_State *L )
         return lua_error( L );
     }
 
-    // TODO: Do this a nicer way that also works for all derived classes
-    if ( !Q_stricmp( pKey, "x" ) )
-    {
-        int x, _;
-        luaL_checkpanel( L, 1 )->GetPos( x, _ );
-        lua_pushinteger( L, x );
-        return 1;
-    }
-    else if ( !Q_stricmp( pKey, "y" ) )
-    {
-        int _, y;
-        luaL_checkpanel( L, 1 )->GetPos( _, y );
-        lua_pushinteger( L, y );
-        return 1;
-    }
-
     if ( plPanel && lua_isrefvalid( L, plPanel->m_nTableReference ) )
     {
         lua_getref( L, plPanel->m_nTableReference );
@@ -1321,12 +1302,7 @@ static int Panel___newindex( lua_State *L )
 
     if ( plPanel )
     {
-        if ( !lua_isrefvalid( L, plPanel->m_nTableReference ) )
-        {
-            lua_newtable( L );
-            plPanel->m_nTableReference = luaL_ref( L, LUA_REGISTRYINDEX );
-        }
-        lua_getref( L, plPanel->m_nTableReference );
+        LUA_GET_REF_TABLE( L, plPanel );
         lua_pushvalue( L, 3 );
         lua_setfield( L, -2, luaL_checkstring( L, 2 ) );
         lua_pop( L, 1 );

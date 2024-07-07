@@ -36,6 +36,10 @@
 #include "toolframework/itoolentity.h"
 #include "tier0/threadtools.h"
 
+#ifdef LUA_SDK
+#include "luamanager.h"
+#endif
+
 class C_Team;
 class IPhysicsObject;
 class IClientVehicle;
@@ -187,6 +191,10 @@ public:
 
 									C_BaseEntity();
 	virtual							~C_BaseEntity();
+
+#ifdef LUA_SDK
+                  virtual void SetupRefTable( lua_State *L );
+#endif
 
 	static C_BaseEntity				*CreatePredictedEntityByName( const char *classname, const char *module, int line, bool persist = false );
 	

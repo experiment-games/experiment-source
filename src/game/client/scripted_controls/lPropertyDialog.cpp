@@ -230,12 +230,7 @@ static int PropertyDialog_GetRefTable( lua_State *L )
         dynamic_cast< LPropertyDialog * >( luaL_checkpropertydialog( L, 1 ) );
     if ( plDialog )
     {
-        if ( !lua_isrefvalid( L, plDialog->m_nTableReference ) )
-        {
-            lua_newtable( L );
-            plDialog->m_nTableReference = luaL_ref( L, LUA_REGISTRYINDEX );
-        }
-        lua_getref( L, plDialog->m_nTableReference );
+        LUA_GET_REF_TABLE( L, plDialog );
     }
     else
         lua_pushnil( L );
@@ -393,12 +388,7 @@ static int PropertyDialog___newindex( lua_State *L )
     LPropertyDialog *plDialog = dynamic_cast< LPropertyDialog * >( pDialog );
     if ( plDialog )
     {
-        if ( !lua_isrefvalid( L, plDialog->m_nTableReference ) )
-        {
-            lua_newtable( L );
-            plDialog->m_nTableReference = luaL_ref( L, LUA_REGISTRYINDEX );
-        }
-        lua_getref( L, plDialog->m_nTableReference );
+        LUA_GET_REF_TABLE( L, plDialog );
         lua_pushvalue( L, 3 );
         lua_setfield( L, -2, luaL_checkstring( L, 2 ) );
         lua_pop( L, 1 );

@@ -186,12 +186,7 @@ static int PropertyPage_GetRefTable( lua_State *L )
         dynamic_cast< LPropertyPage * >( luaL_checkpropertypage( L, 1 ) );
     if ( plPage )
     {
-        if ( !lua_isrefvalid( L, plPage->m_nTableReference ) )
-        {
-            lua_newtable( L );
-            plPage->m_nTableReference = luaL_ref( L, LUA_REGISTRYINDEX );
-        }
-        lua_getref( L, plPage->m_nTableReference );
+        LUA_GET_REF_TABLE( L, plPage );
     }
     else
         lua_pushnil( L );
@@ -333,12 +328,7 @@ static int PropertyPage___newindex( lua_State *L )
     LPropertyPage *plPage = dynamic_cast< LPropertyPage * >( pPage );
     if ( plPage )
     {
-        if ( !lua_isrefvalid( L, plPage->m_nTableReference ) )
-        {
-            lua_newtable( L );
-            plPage->m_nTableReference = luaL_ref( L, LUA_REGISTRYINDEX );
-        }
-        lua_getref( L, plPage->m_nTableReference );
+        LUA_GET_REF_TABLE( L, plPage );
         lua_pushvalue( L, 3 );
         lua_setfield( L, -2, luaL_checkstring( L, 2 ) );
         lua_pop( L, 1 );
