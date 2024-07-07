@@ -8,6 +8,10 @@ $Macro SRCDIR		"..\.."
 $Macro GAMENAME "experiment"
 $Include "$SRCDIR\materialsystem\stdshaders\game_shader_dx9_base.vpc"
 
-$Project "Shaders (HL2MP)"
+$Project "Shaders (Experiment)"
 {
+	$Folder	"Source Files"
+	{
+		$File	"gmodscreenspace.cpp"
+	}
 }

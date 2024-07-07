@@ -21,6 +21,8 @@ mono_crash.*
 [Dd]ebug_experiment/
 [Dd]ebugPublic/
 [Dd]ebugPublic_experiment/
+[Dd]ebug_dx9/
+[Dd]ebug_dx9_experiment/
 [Rr]elease/
 [Rr]elease_experiment/
 [Rr]eleases/
