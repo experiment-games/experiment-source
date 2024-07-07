@@ -1,6 +1,6 @@
 "Refract"
 {
-	"$basetexture" "gmod_compatibility_content/_rt_FullFrameFB"
+	"$basetexture" "_rt_FullFrameFB"
  	"$normalmap" "pp/toytown_gradient"
 	"$fbtexture" "_rt_FullFrameFB"
  	"$refractamount" "0"

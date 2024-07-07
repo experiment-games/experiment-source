@@ -1,6 +1,6 @@
 "g_blurx"
 {
-	"$basetexture" "gmod_compatibility_content/_rt_FullFrameFB"
+	"$basetexture" "_rt_FullFrameFB"
 
 	"$size" "6"
 	"$ignorez" "1"

@@ -1,6 +1,6 @@
 "g_bloom"
 {
-	"$basetexture" "gmod_compatibility_content/_rt_FullFrameFB"
+	"$basetexture" "_rt_FullFrameFB"
 
 	"$levelr" "0.5"
 	"$levelg" "0.5"

@@ -1,6 +1,6 @@
 "UnlitTwoTexture"
 {
-	"$basetexture" "gmod_compatibility_content/_rt_Camera"
+	"$basetexture" "_rt_Camera"
 	"%tooltexture" "dev/dev_monitor"
 	"$surfaceprop" "glass"
 //	"$texture2"	"dev/dev_monitor"

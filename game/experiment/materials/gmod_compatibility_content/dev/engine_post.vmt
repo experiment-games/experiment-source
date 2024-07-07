@@ -1,7 +1,7 @@
 "engine_post"
 {
 	"$additive" 0
-	"$basetexture" "gmod_compatibility_content/_rt_SmallFB0"
+	"$basetexture" "_rt_SmallFB0"
 	"%noToolTexture" 1
 	"$ignorez" 1
 	"$nocull" 1

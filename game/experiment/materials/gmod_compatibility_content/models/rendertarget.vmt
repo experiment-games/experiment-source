@@ -1,5 +1,5 @@
 "VertexLitGeneric"
 {
-	"$basetexture" "gmod_compatibility_content/_rt_Camera"
+	"$basetexture" "_rt_Camera"
 	"$model"	"1"
 }

@@ -1,6 +1,6 @@
 "UnlitGeneric"
 {
-	"$basetexture" "gmod_compatibility_content/_rt_spawnicon"
+	"$basetexture" "_rt_spawnicon"
 	"$vertexcolor" 		0
 	"$vertexalpha" 		0
 	"$nolod" 			1

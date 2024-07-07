@@ -1,6 +1,6 @@
 "GMODScreenspace"
 {
-	"$basetexture" "gmod_compatibility_content/_rt_FullFrameFB"
+	"$basetexture" "_rt_FullFrameFB"
 	"$texturealpha" "0"
 	"$vertexalpha" "1"
 }

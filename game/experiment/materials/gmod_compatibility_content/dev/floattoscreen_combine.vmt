@@ -1,6 +1,6 @@
 "floatcombine"
 {
-	"$basetexture" "gmod_compatibility_content/_rt_FullFrameFB"
+	"$basetexture" "_rt_FullFrameFB"
 	"$bloomtexture" "_rt_SmallFB0"
 	"$vignette_power" "1.0"
 	"$edge_softness" "0"

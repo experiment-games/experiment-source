@@ -1,4 +1,4 @@
 "UnlitGeneric"
 {
-	"$basetexture" "gmod_compatibility_content/_rt_Camera"
+	"$basetexture" "_rt_Camera"
 }
