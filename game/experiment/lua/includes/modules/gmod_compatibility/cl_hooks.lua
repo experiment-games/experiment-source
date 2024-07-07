@@ -2,14 +2,10 @@ hook.Add("HudViewportPaint", "GModCompatibility.CallHUDPaint", function()
 	hook.Run("HUDPaint")
 end)
 
-hook.Add("KeyInput", "GModCompatibility.CallSpawnMenuHooks", function(down, keyNumber, currentBinding)
-	if (keyNumber ~= KEY_Q) then
-		return
-	end
+ConsoleCommands.Add("+buildmenu", function(client, pCmd, args)
+	hook.Run("OnSpawnMenuOpen")
+end)
 
-	if (down == 1) then
-		hook.Run("OnSpawnMenuOpen")
-	elseif (not down) then
-		hook.Run("OnSpawnMenuClose")
-	end
+ConsoleCommands.Add("-buildmenu", function(client, pCmd, args)
+	hook.Run("OnSpawnMenuClose")
 end)

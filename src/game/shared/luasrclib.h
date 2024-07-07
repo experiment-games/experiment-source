@@ -38,7 +38,7 @@ LUALIB_API int( luaopen_CHL2MP_Player_shared )( lua_State *L );
 #define LUA_COLORLIBNAME "Color"
 LUALIB_API int( luaopen_Color )( lua_State *L );
 
-#define LUA_CONCOMMANDLIBNAME "ConsoleCommand"
+#define LUA_CONCOMMANDLIBNAME "ConsoleCommands"
 LUALIB_API int( luaopen_ConCommand )( lua_State *L );
 
 #define LUA_CONTENTSLIBNAME "CONTENTS"

@@ -88,22 +88,20 @@ static int IMaterial_GetAlphaModulation( lua_State *L )
 
 static int IMaterial_GetColor(lua_State* L)
 {
-    // TODO: why does this crash
-    //float *colorValues = new float[4];
+    float *colorValues = new float[4];
 
-    //luaL_checkmaterial( L, 1 )->GetLowResColorSample(
-    //    luaL_checkint( L, 2 ),
-    //    luaL_checkint( L, 3 ),
-    //    colorValues );
+    luaL_checkmaterial( L, 1 )->GetLowResColorSample(
+        luaL_checkint( L, 2 ),
+        luaL_checkint( L, 3 ),
+        colorValues );
 
-    //// Turn the color into a table with the color metatable
-    //Color color( colorValues[0], colorValues[1], colorValues[2], colorValues[4] ); // TODO: Does alpha get set?
-    //lua_pushcolor( L, color );
+    // Turn the color into a table with the color metatable
+    Color color( colorValues[0], colorValues[1], colorValues[2], colorValues[4] ); // TODO: Does alpha get set?
+    lua_pushcolor( L, color );
 
-    //free( colorValues );
+    free( colorValues );
 
-    //return 1;
-    return 0;
+    return 1;
 }
 
 static int IMaterial_GetColorModulation( lua_State *L )
