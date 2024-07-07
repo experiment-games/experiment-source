@@ -70,6 +70,13 @@ game/experiment/lua_cache/*
 
 # shader files
 *.tmp
+src/materialsystem/stdshaders/filestocopy.txt
+src/materialsystem/stdshaders/inclist.txt
+src/materialsystem/stdshaders/uniquefilestocopy.txt
+src/materialsystem/stdshaders/vcslist.txt
+src/materialsystem/stdshaders/makefile.stdshader_dx9_*
+src/materialsystem/stdshaders/fxctmp9_tmp/*
+src/materialsystem/stdshaders/shaders/*
 
 # config file different for each user
 .env

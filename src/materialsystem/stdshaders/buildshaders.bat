@@ -71,7 +71,7 @@ REM ****************
 :set_mod_args
 
 if not exist "%SDKBINDIR%\shadercompile.exe" goto NoShaderCompile
-set ChangeToDir=%SDKBINDIR%
+set ChangeToDir="%SDKBINDIR%"
 
 if /i "%4" NEQ "-source" goto NoSourceDirSpecified
 set SrcDirBase=%~5
@@ -128,22 +128,21 @@ if exist vcslist.txt del /f /q vcslist.txt
 REM ****************
 REM Generate a makefile for the shader project
 REM ****************
-perl "%SrcDirBase%\devtools\bin\updateshaders.pl" -source "%SrcDirBase%" %inputbase%
-
+"%PERLPATH%" "%SrcDirBase%\devtools\bin\updateshaders.pl" -source "%SrcDirBase%" %inputbase%
 
 REM ****************
 REM Run the makefile, generating minimal work/build list for fxc files, go ahead and compile vsh and psh files.
 REM ****************
 rem nmake /S /C -f makefile.%inputbase% clean > clean.txt 2>&1
 echo Building inc files, asm vcs files, and VMPI worklist for %inputbase%...
-nmake /S /C -f makefile.%inputbase%
+"%NMAKEPATH%" /S /C -f makefile.%inputbase%
 
 REM ****************
 REM Copy the inc files to their target
 REM ****************
 if exist "inclist.txt" (
 	echo Publishing shader inc files to target...
-	perl %SrcDirBase%\devtools\bin\copyshaderincfiles.pl inclist.txt
+	"%PERLPATH%" %SrcDirBase%\devtools\bin\copyshaderincfiles.pl inclist.txt
 )
 
 REM ****************
@@ -166,7 +165,7 @@ echo %SDKBINDIR%\tier0.dll >> filestocopy.txt
 REM ****************
 REM Cull duplicate entries in work/build list
 REM ****************
-if exist filestocopy.txt type filestocopy.txt | perl "%SrcDirBase%\devtools\bin\uniqifylist.pl" > uniquefilestocopy.txt
+if exist filestocopy.txt type filestocopy.txt | "%PERLPATH%" "%SrcDirBase%\devtools\bin\uniqifylist.pl" > uniquefilestocopy.txt
 if exist filelistgen.txt if not "%dynamic_shaders%" == "1" (
     echo Generating action list...
     copy filelistgen.txt filelist.txt >nul
@@ -180,10 +179,10 @@ set shader_path_cd=%cd%
 if exist "filelist.txt" if exist "uniquefilestocopy.txt" if not "%dynamic_shaders%" == "1" (
 	echo Running distributed shader compilation...
 
-	cd /D %ChangeToDir%
+	cd /D "%ChangeToDir%"
 	echo %shadercompilecommand% %SDKArgs% -shaderpath "%shader_path_cd:/=\%" -allowdebug
 	%shadercompilecommand% %SDKArgs% -shaderpath "%shader_path_cd:/=\%" -allowdebug
-	cd /D %shader_path_cd%
+	cd /D "%shader_path_cd%"
 )
 
 REM ****************
