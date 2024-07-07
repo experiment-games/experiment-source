@@ -1677,7 +1677,6 @@ static void test_then_block (LexState *ls, int *escapelist) {
       ls->t.token == TK_CONTINUE) {  /* 'if x then (break | continue)' ? */
     int line = ls->linenumber;
     luaK_goiffalse(ls->fs, &v);  /* will jump if condition is true */
-    luaX_next(ls);  /* skip 'break' */
     enterblock(fs, &bl, 0);  /* must enter block before 'goto' */
     if (ls->t.token == TK_BREAK)
       newgotoentry(ls, luaS_newliteral(ls->L, "break"), line, v.t);
