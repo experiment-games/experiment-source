@@ -235,6 +235,12 @@ static int TextEntry_MoveCursor( lua_State *L )
     return 0;
 }
 
+static int TextEntry_PaintText( lua_State *L )
+{
+    luaL_checktextentry( L, 1 )->PaintText( luaL_checkcolor( L, 2 ), luaL_checkcolor( L, 3 ), luaL_checkcolor( L, 4 ) );
+    return 0;
+}
+
 static int TextEntry_SetDisabledBgColor( lua_State *L )
 {
     luaL_checktextentry( L, 1 )->SetDisabledBgColor( luaL_checkcolor( L, 2 ) );
@@ -544,6 +550,7 @@ static const luaL_Reg TextEntrymeta[] = {
     { "IsEditable", TextEntry_IsEditable },
     { "SetEnabled", TextEntry_SetEnabled },
     { "MoveCursor", TextEntry_MoveCursor },
+    { "PaintText", TextEntry_PaintText },
     { "SetDisabledBgColor", TextEntry_SetDisabledBgColor },
     { "SetMultiline", TextEntry_SetMultiline },
     { "IsMultiline", TextEntry_IsMultiline },
@@ -608,8 +615,8 @@ LUALIB_API int luaopen_vgui_TextEntry( lua_State *L )
     lua_setfield( L, -2, "__type" ); /* metatable.__type = "Panel" */
     luaL_register( L, LUA_VGUILIBNAME, TextEntry_funcs );
 
-    lua_pop( L, 1 ); // Pop the panel library off the stack
-    lua_pop( L, 1 ); // Pop the TextEntry metatable
+    lua_pop( L, 1 );  // Pop the panel library off the stack
+    lua_pop( L, 1 );  // Pop the TextEntry metatable
 
     return 0;
 }

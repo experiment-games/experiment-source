@@ -24,9 +24,9 @@ util = {
 
 	-- TODO: 	Things like the player manager and drive system depend on these three functions
 	--			returning sensible data. Find a way to implement it:
-	AddNetworkString = function(name) end,        -- Not needed for us.
+	AddNetworkString = function(name) end,     -- Not needed for us.
 	NetworkIDToString = function() return "" end, -- Not needed for us.
-	NetworkStringToID = function() return 0 end,  -- Not needed for us.
+	NetworkStringToID = function() return 0 end, -- Not needed for us.
 
 	JSONToTable = function(json)
 		return Json.Decode(json)
@@ -51,7 +51,7 @@ ents = {
 
 player = {
 	GetAll = Util.GetAllPlayers,
-    GetBots = Util.GetAllBots,
+	GetBots = Util.GetAllBots,
 	GetHumans = Util.GetAllHumans,
 	GetBySteamID = Util.PlayerBySteamID,
 	GetBySteamID64 = Util.PlayerBySteamID64,
@@ -68,16 +68,16 @@ jit = {
 
 local registry = debug.getregistry()
 function FindMetaTable(name)
-    if (name == "Entity") then
-        name = "CBaseEntity"
-    elseif (name == "Player") then
-        name = "CBasePlayer"
-    elseif (name == "Vehicle") then
-        -- We don't have vehicles, so lets not waste time on it
-        return {}
-    end
+	if (name == "Entity") then
+		name = "CBaseEntity"
+	elseif (name == "Player") then
+		name = "CBasePlayer"
+	elseif (name == "Vehicle") then
+		-- We don't have vehicles, so lets not waste time on it
+		return {}
+	end
 
-    return registry[name]
+	return registry[name]
 end
 
 -- TODO: Actually implement SQLite
@@ -118,7 +118,7 @@ engine.ActiveGamemode = function()
 	return Gamemodes.GetActiveName()
 end
 engine.GetGames = function() return {} end
-engine.GetAddons = function() return {} end -- TODO: Implement with our addon system
+engine.GetAddons = function() return {} end    -- TODO: Implement with our addon system
 engine.GetGamemodes = function() return {} end -- TODO: Implement with our gamemode system
 engine.GetUserContent = function() return {} end
 
@@ -141,15 +141,15 @@ language = {
 notification = {
 	AddLegacy = function(text, type, length)
 		print("Notification: " .. text)
-    end,
+	end,
 
 	AddProgress = function(id, text, frac)
 		print("Progress Notification: " .. text)
-    end,
+	end,
 
 	Kill = function(uid)
 		print("Killing notification with UID: " .. uid)
-    end,
+	end,
 }
 
 umsg = require("UserMessages")
@@ -223,7 +223,7 @@ table._OriginalInsert = table._OriginalInsert or table.insert
 ---@diagnostic disable-next-line: duplicate-set-field
 function table.insert(list, positionOrValue, value)
 	if (not value) then
-        table._OriginalInsert(list, positionOrValue)
+		table._OriginalInsert(list, positionOrValue)
 		return #list
 	end
 
@@ -233,9 +233,9 @@ function table.insert(list, positionOrValue, value)
 end
 
 Material = function(name)
-    if (not Globals.DoesMaterialExist(name)) then
-        name = "gmod_compatibility_content/" .. name
-    end
+	if (not Globals.DoesMaterialExist(name)) then
+		name = "gmod_compatibility_content/" .. name
+	end
 
 	return Globals.FindMaterial(name)
 end
@@ -272,21 +272,21 @@ end
 game = {
 	IsDedicated = function()
 		return Engine.IsDedicatedServer()
-    end,
+	end,
 
 	SinglePlayer = function()
 		return Globals.maxClients == 1
-    end,
+	end,
 
 	MaxPlayers = function()
 		return Globals.maxClients
 	end,
 
-    ConsoleCommand = RunConsoleCommand,
+	ConsoleCommand = RunConsoleCommand,
 
-    AddParticles = function(filePath)
-        -- Remove particles/ from the start of the file path
-        filePath = filePath:sub(11)
+	AddParticles = function(filePath)
+		-- Remove particles/ from the start of the file path
+		filePath = filePath:sub(11)
 
 		return ParticleSystem.ReadConfigFile("particles/gmod_compatibility_content/" .. tostring(filePath))
 	end,
@@ -341,13 +341,13 @@ function MATERIAL_META:Width()
 end
 
 function MATERIAL_META:Height()
-    local baseTexture = self:GetTexture("$basetexture")
+	local baseTexture = self:GetTexture("$basetexture")
 
-    if (baseTexture) then
-        return baseTexture:GetActualHeight()
-    end
+	if (baseTexture) then
+		return baseTexture:GetActualHeight()
+	end
 
-    return 0
+	return 0
 end
 
 --[[
@@ -382,13 +382,32 @@ else
 	PANEL_META.Dock = PANEL_META.SetDock
 	PANEL_META.DockMargin = PANEL_META.SetDockMargin
 	PANEL_META.DockPadding = PANEL_META.SetDockPadding
+	PANEL_META.ChildCount = PANEL_META.GetChildCount
 
-    function PANEL_META:Prepare()
-        -- Installs Lua defined functions into the panel.
-        -- TODO: What does that mean?
-    end
+	function PANEL_META:Prepare()
+		-- Installs Lua defined functions into the panel.
+		-- TODO: What does that mean? That all functions are only here stored into the C panel?
 
-    function PANEL_META:SetWorldClicker(isEnabled)
+		-- ! HACK! This is a workaround for the following problem:
+		-- ! 1. We Gui.Create("SubPanel") which is based on "ParentPanel"
+		-- ! 2. Gui.Create will :Init() and :MarkAsInitialized() the parent panel
+		-- ! 3. Gui.Create will merge the parent panel's functions with the child panel
+		-- ! 4. If the child panel does something to trigger panel hooks inside :Init() those
+		-- ! 	will be called.
+		-- ! 	This can cause issues because the child panel may not be fully initialized yet
+		-- ! 	(e.g: another child panel may not have been setup yet inside :Init())
+		-- TODO: Fix this weird hack
+		local _self = self
+		timer.Simple(0, function()
+			if (not IsValid(_self)) then
+				return
+			end
+			_self:MarkAsInitialized()
+			_self:InvalidateLayout(true)
+		end)
+	end
+
+	function PANEL_META:SetWorldClicker(isEnabled)
 		-- TODO: Implement this in Lua
 	end
 
@@ -434,6 +453,7 @@ else
 	local TEXT_ENTRY_PANEL_META = FindMetaTable("TextEntry")
 	TEXT_ENTRY_PANEL_META._OriginalSetFont = TEXT_ENTRY_PANEL_META._OriginalSetFont or TEXT_ENTRY_PANEL_META.SetFont
 	TEXT_ENTRY_PANEL_META._OriginalGetFont = TEXT_ENTRY_PANEL_META._OriginalGetFont or TEXT_ENTRY_PANEL_META.GetFont
+	TEXT_ENTRY_PANEL_META.DrawTextEntryText = TEXT_ENTRY_PANEL_META.PaintText
 
 	function TEXT_ENTRY_PANEL_META:SetFontInternal(font)
 		self:SetFontByName(font)
@@ -494,9 +514,9 @@ else
 	local textureMap = {}
 
 	surface.GetTextureID = function(name)
-        if (not file.Exists("materials/" .. name .. ".vmt", "GAME") and not file.Exists("materials/" .. name, "GAME")) then
-            name = "gmod_compatibility_content/" .. name
-        end
+		if (not file.Exists("materials/" .. name .. ".vmt", "GAME") and not file.Exists("materials/" .. name, "GAME")) then
+			name = "gmod_compatibility_content/" .. name
+		end
 
 		if (not textureMap[name]) then
 			textureMap[name] = surface.CreateNewTextureID()
@@ -526,34 +546,52 @@ else
 		end
 	end
 
-	Gui._OriginalRegister = Gui._OriginalRegister or Gui.RegisterWithMetatable
-    vgui.Register = function(panelName, panelTable, baseClassName)
-        Gui._OriginalRegister(panelTable, panelName, baseClassName)
-    end
+	local function getAppropriateBaseParent()
+		if (GAMEUI) then
+			return Gui.GetGameUIPanel()
+		end
 
-    surface.SetDrawColor = surface.DrawSetColor
-    surface.DrawRect = surface.DrawFilledRect
-    surface.DrawTexturedRectUV = surface.DrawTexturedSubRect -- TODO: Not sure if this is the correct function
-    surface.GetTextPos = surface.DrawGetTextPos
-    surface.SetFont = surface.DrawSetTextFont
+		return Gui.GetClientLuaRootPanel()
+	end
+
+	function Gui.Create(panelName, parentPanel, name)
+		parentPanel = parentPanel or getAppropriateBaseParent()
+
+		if (not Gui[panelName]) then
+			error("attempt to create non-existing panel class \"" .. tostring(panelName) .. "\"", 2)
+		end
+
+		return Gui[panelName](parentPanel, name or panelName)
+	end
+
+	Gui._OriginalRegister = Gui._OriginalRegister or Gui.RegisterWithMetatable
+	vgui.Register = function(panelName, panelTable, baseClassName)
+		Gui._OriginalRegister(panelTable, panelName, baseClassName)
+	end
+
+	surface.SetDrawColor = surface.DrawSetColor
+	surface.DrawRect = surface.DrawFilledRect
+	surface.DrawTexturedRectUV = surface.DrawTexturedSubRect -- TODO: Not sure if this is the correct function
+	surface.GetTextPos = surface.DrawGetTextPos
+	surface.SetFont = surface.DrawSetTextFont
 	surface.SetTextPos = surface.DrawSetTextPos
-    surface.SetTextColor = surface.DrawSetTextColor
-    surface.DrawText = surface.DrawPrintText
+	surface.SetTextColor = surface.DrawSetTextColor
+	surface.DrawText = surface.DrawPrintText
 	surface.SetTexture = surface.DrawSetTexture
 
-    surface.SetMaterial = function(material)
-        local name = material:GetString("$basetexture")
+	surface.SetMaterial = function(material)
+		local name = material:GetString("$basetexture")
 
 		if (not textureMap[name]) then
-            textureMap[name] = surface.CreateNewTextureID(true)
+			textureMap[name] = surface.CreateNewTextureID(true)
 		end
 
 		surface.DrawSetTextureMaterial(textureMap[name], material)
 	end
 
-    -- TODO: Implement
-    surface.DrawTexturedRectRotated = function(x, y, w, h, rotation)
-        -- See src/game/client/hl2/hud_zoom.cpp for an example of how to possibly implement this:
+	-- TODO: Implement
+	surface.DrawTexturedRectRotated = function(x, y, w, h, rotation)
+		-- See src/game/client/hl2/hud_zoom.cpp for an example of how to possibly implement this:
 		--[[
 			// draw the darkened edges, with a rotated texture in the four corners
 			CMatRenderContextPtr pRenderContext( materials );
@@ -703,18 +741,19 @@ Include("extensions/coroutine.lua")
 Include("../../extensions/table.lua")
 
 if (CLIENT) then
-    spawnmenu = {
+	spawnmenu = {
 		PopulateFromTextFiles = function(callback)
 			local spawnlists = file.Find("settings/gmod_compatibility_content/spawnlist/*.txt", "GAME")
 
 			for _, spawnlistFileName in ipairs(spawnlists) do
 				local spawnlistKeyValues = KeyValues(spawnlistFileName)
-				spawnlistKeyValues:LoadFromFile("settings/gmod_compatibility_content/spawnlist/" .. spawnlistFileName, "GAME")
+				spawnlistKeyValues:LoadFromFile("settings/gmod_compatibility_content/spawnlist/" .. spawnlistFileName,
+					"GAME")
 				local spawnlist = spawnlistKeyValues:ToTable()
 
-                callback(
-                    spawnlistFileName,
-                    spawnlist.name,
+				callback(
+					spawnlistFileName,
+					spawnlist.name,
 					spawnlist.contents,
 					spawnlist.icon,
 					spawnlist.id,
@@ -722,7 +761,7 @@ if (CLIENT) then
 					spawnlist.needsapp
 				)
 			end
-        end,
+		end,
 
 		DoSaveToTextFiles = function(props)
 			for filename, data in pairs(props) do
@@ -753,7 +792,7 @@ if (CLIENT) then
 	Include("extensions/client/render.lua")
 
 	Include("derma/init.lua")
-    Include("vgui_base.lua")
+	Include("vgui_base.lua")
 
 	Include("skins/default.lua")
 end

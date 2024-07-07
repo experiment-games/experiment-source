@@ -4,6 +4,8 @@
 	TODO: Move these enum definitions to the C-side so they don't misalign.
 --]]
 
+local Hooks = require("hooks")
+
 --- @enum PIN_CORNER
 PIN_CORNER = {
 	TOP_LEFT = 0,
@@ -67,27 +69,58 @@ end
 	Panel metatable extensions
 --]]
 local PANEL = _R.Panel
--- PANEL._OriginalPerformLayout = PANEL._OriginalPerformLayout or PANEL.PerformLayout
 
--- --- We override PerformLayout so we can update docking when the panel is resized.
--- function PANEL:PerformLayout(...)
---     self:_OriginalPerformLayout(...)
+function PANEL:SizeToChildren(sizeWidth, sizeHeight)
+	self._sizeToChildren = {
+		width = sizeWidth,
+		height = sizeHeight
+	}
+end
 
--- 	if (self._dockType ~= DOCK_TYPE.NONE) then
--- 		self:UpdateDocking()
--- 	end
--- end
+--- We override PerformLayout so we can update docking when the panel is resized.
+Hooks.Add("OnPanelPerformLayout", "OnPanelPerformLayoutInternal", function(panel)
+    if (panel._sizeToChildren and (panel._sizeToChildren.width or panel._sizeToChildren.height)) then
+		local width, height = 0, 0
+
+        for i = 1, panel:GetChildCount() do
+            local child = panel:GetChild(i)
+            local x, y = child:GetPos()
+            local w, h = child:GetSize()
+
+            width = math.max(width, x + w)
+			height = math.max(height, y + h)
+        end
+
+        if (panel._sizeToChildren.width) then
+            panel:SetWide(width)
+        end
+
+        if (panel._sizeToChildren.height) then
+			panel:SetTall(height)
+		end
+    end
+
+	if (panel._dockType ~= DOCK_TYPE.NONE) then
+        panel:UpdateDockingParent()
+	end
+end)
 
 --- Get all children of the panel.
 --- @return table
 function PANEL:GetChildren()
-	local children = {}
+    local children = {}
 
-	for i = 1, self:GetChildCount() do
-		table.insert(children, self:GetChild(i))
-	end
+    for i = 1, self:GetChildCount() do
+        table.insert(children, self:GetChild(i))
+    end
 
-	return children
+    return children
+end
+
+--- Checks if the panel has any children.
+--- @return boolean
+function PANEL:HasChildren()
+    return self:GetChildCount() > 0
 end
 
 --- Set dock margins for the panel.
@@ -101,7 +134,7 @@ function PANEL:SetDockMargin(left, top, right, bottom)
     self._dockMarginRight = right or 0
     self._dockMarginBottom = bottom or 0
 
-	self:UpdateDockingParent()
+	-- self:UpdateDockingParent()
 end
 
 --- Get the dock margins for the panel.
@@ -121,7 +154,7 @@ function PANEL:SetDockPadding(left, top, right, bottom)
     self._dockPaddingRight = right or 0
     self._dockPaddingBottom = bottom or 0
 
-	self:UpdateDockingParent()
+	-- self:UpdateDockingParent()
 end
 
 --- Get the dock padding for the panel.
@@ -135,7 +168,7 @@ end
 function PANEL:SetDock(dockType)
     self._dockType = dockType
 
-	self:UpdateDockingParent()
+	-- self:UpdateDockingParent()
 end
 
 --- Get the dock type for the panel.

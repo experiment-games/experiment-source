@@ -736,9 +736,10 @@ static int Panel_MarkForDeletion( lua_State *L )
 }
 
 // Used by gui.lua to mark that hooks can start being called
-static int Panel_MarkInitialized( lua_State *L )
+static int Panel_MarkAsInitialized( lua_State *L )
 {
-    luaL_checkpanel( L, 1 )->m_bMarkedAsInitialized = true;
+    lua_Panel *pPanel = luaL_checkpanel( L, 1 );
+    pPanel->MarkAsInitialized();
     return 0;
 }
 
@@ -1172,7 +1173,7 @@ static int Panel_SetSilentMode( lua_State *L )
 
 static int Panel_SetSize( lua_State *L )
 {
-    luaL_checkpanel( L, 1 )->SetSize( luaL_checkint( L, 2 ), luaL_checkint( L, 3 ) );
+    luaL_checkpanel( L, 1 )->SetSize( ( int )luaL_checknumber( L, 2 ), ( int )luaL_checknumber( L, 3 ) );
     return 0;
 }
 
@@ -1428,7 +1429,7 @@ static const luaL_Reg Panelmeta[] = {
     { "MakePopup", Panel_MakePopup },
     { "MakeReadyForUse", Panel_MakeReadyForUse },
     { "MarkForDeletion", Panel_MarkForDeletion },
-    { "MarkInitialized", Panel_MarkInitialized },
+    { "MarkAsInitialized", Panel_MarkAsInitialized },
     { "MoveToBack", Panel_MoveToBack },
     { "MoveToFront", Panel_MoveToFront },
     { "OnCommand", Panel_OnCommand },

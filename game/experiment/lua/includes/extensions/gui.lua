@@ -21,6 +21,19 @@ local function getAppropriateBaseParent()
     return Gui.GetClientLuaRootPanel()
 end
 
+--- Initializes a panel if it has an Init function
+--- @param panel any
+--- @return Panel
+local function initPanel(panel)
+	if (panel.Init) then
+        panel:Init()
+    end
+
+    panel:MarkAsInitialized()
+
+	return panel
+end
+
 --- Creates a panel using the base, copying the scripted panel overtop
 --- @param panelName string
 --- @param parentPanel? Panel
@@ -34,21 +47,14 @@ local function newScriptedPanel(panelName, parentPanel, name)
 
 	panel.BaseClass = registeredScriptedPanels[scriptedPanel.Base]
 
-    if (panel.Init) then
-        panel:Init()
-    end
-
-	panel:MarkInitialized()
-
-	return panel
+	return initPanel(panel)
 end
 
 local function createHelper(panelName)
     Gui[panelName] = function(parentPanel, name)
         parentPanel = parentPanel or getAppropriateBaseParent()
-		local panel = newScriptedPanel(panelName, parentPanel, name or panelName)
 
-		return panel
+		return newScriptedPanel(panelName, parentPanel, name or panelName)
 	end
 end
 
@@ -125,7 +131,7 @@ function Gui.Create(panelName, parentPanel, name)
 		error("attempt to create non-existing panel class \"" .. tostring(panelName) .. "\"", 2)
 	end
 
-	return Gui[panelName](parentPanel, name or panelName)
+	return initPanel(Gui[panelName](parentPanel, name or panelName))
 end
 
 --[[

@@ -696,7 +696,7 @@ void Panel::PushPanelToLua( lua_State *L )
 //-----------------------------------------------------------------------------
 void Panel::SetupRefTable( lua_State *L )
 {
-    if (m_lua_State == nullptr)
+    if ( m_lua_State == nullptr )
         m_lua_State = L;
 
     // Some panels may not have a Lua state yet, so we set it. But in any
@@ -1031,7 +1031,7 @@ void Panel::SetSize( int wide, int tall )
         lua_setfield( m_lua_State, -2, "wide" );
         lua_pushinteger( m_lua_State, tall );
         lua_setfield( m_lua_State, -2, "tall" );
-        lua_pop( m_lua_State, 1 ); // pop the ref table
+        lua_pop( m_lua_State, 1 );  // pop the ref table
     }
 #endif
 }
@@ -1625,29 +1625,12 @@ void Panel::OnChildAdded( VPANEL child )
 void Panel::OnSizeChanged( int newWide, int newTall )
 {
 #ifdef LUA_SDK
-    /*
     BEGIN_LUA_CALL_PANEL_METHOD( "OnSizeChanged" );
     lua_pushinteger( m_lua_State, newWide );
     lua_pushinteger( m_lua_State, newTall );
     END_LUA_CALL_PANEL_METHOD( 2, 1 );
 
-    RETURN_LUA_PANEL_NONE();*/
-    BEGIN_LUA_CALL_PANEL_METHOD( "OnSizeChanged" );
-    lua_pushinteger( m_lua_State, newWide );
-    lua_pushinteger( m_lua_State, newTall );
-    END_LUA_CALL_PANEL_METHOD( 2, 1 );
-
-    if ( m_lua_State && lua_gettop( m_lua_State ) == 1 )
-    {
-        if ( ( lua_type( m_lua_State, ( -1 ) ) == 1 ) )
-        {
-            bool res = ( bool )luaL_checkboolean( m_lua_State, -1 );
-            lua_settop( m_lua_State, -( 1 ) - 1 );
-            if ( !res ) return;
-        }
-        else
-            lua_settop( m_lua_State, -( 1 ) - 1 );
-    };
+    RETURN_LUA_PANEL_NONE();
 #endif
 
     InvalidateLayout();  // our size changed so force us to layout again
@@ -4096,6 +4079,14 @@ void Panel::PerformLayout()
 #ifdef LUA_SDK
     BEGIN_LUA_CALL_PANEL_METHOD( "PerformLayout" );
     END_LUA_CALL_PANEL_METHOD( 0, 0 );
+
+    // Hack so we can implement Docking in Lua (see game/experiment/lua/includes/extensions/panel.lua)
+    if ( m_lua_State && m_nTableReference >= 0 && m_bMarkedAsInitialized )
+    {
+        BEGIN_LUA_CALL_HOOK_FOR_STATE( m_lua_State, "OnPanelPerformLayout" );
+        this->PushPanelToLua( m_lua_State );
+        END_LUA_CALL_HOOK_FOR_STATE( m_lua_State, 1, 0 );
+    }
 #endif
 }
 

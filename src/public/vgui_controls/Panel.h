@@ -174,6 +174,11 @@ class Panel : public IClientPanel, virtual IForceVirtualInheritancePanel
     int m_nTableReference;
     int m_nRefCount;
     bool m_bMarkedAsInitialized = false;
+
+    void MarkAsInitialized()
+    {
+        m_bMarkedAsInitialized = true;
+    }
 #endif
 
     // returns pointer to Panel's vgui VPanel interface handle

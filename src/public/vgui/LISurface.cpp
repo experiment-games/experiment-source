@@ -18,6 +18,7 @@
 #include <materialsystem/limaterial.h>
 
 #include "scripted_controls/lPanel.h"
+#include <lColor.h>
 
 // memdbgon must be the last include file in a .cpp file!!!
 #include "tier0/memdbgon.h"
@@ -185,13 +186,29 @@ static int surface_DrawSetAlphaMultiplier( lua_State *L )
 
 static int surface_DrawSetColor( lua_State *L )
 {
-    surface()->DrawSetColor( luaL_checkint( L, 1 ), luaL_checkint( L, 2 ), luaL_checkint( L, 3 ), luaL_checkint( L, 4 ) );
+    if ( lua_isnumber( L, 1 ) )
+    {
+        surface()->DrawSetColor( luaL_checkint( L, 1 ), luaL_checkint( L, 2 ), luaL_checkint( L, 3 ), luaL_checkint( L, 4 ) );
+        return 0;
+    }
+
+    lua_Color color = luaL_checkcolor( L, 1 );
+    surface()->DrawSetColor( color.r(), color.g(), color.b(), color.a() );
+
     return 0;
 }
 
 static int surface_DrawSetTextColor( lua_State *L )
 {
-    surface()->DrawSetTextColor( luaL_checkint( L, 1 ), luaL_checkint( L, 2 ), luaL_checkint( L, 3 ), luaL_checkint( L, 4 ) );
+    if ( lua_isnumber( L, 1 ) )
+    {
+        surface()->DrawSetTextColor( luaL_checkint( L, 1 ), luaL_checkint( L, 2 ), luaL_checkint( L, 3 ), luaL_checkint( L, 4 ) );
+        return 0;
+    }
+
+    lua_Color color = luaL_checkcolor( L, 1 );
+    surface()->DrawSetTextColor( color.r(), color.g(), color.b(), color.a() );
+
     return 0;
 }
 

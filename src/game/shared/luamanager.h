@@ -60,26 +60,32 @@
     lua_setfield( L, -2, lib );   \
     lua_pop( L, 1 );
 
-#define BEGIN_LUA_CALL_HOOK( functionName )    \
-    lua_getglobal( L, LUA_HOOKSLIBNAME );      \
-    if ( lua_istable( L, -1 ) )                \
-    {                                          \
-        lua_getfield( L, -1, "Call" );         \
-        if ( lua_isfunction( L, -1 ) )         \
-        {                                      \
-            lua_remove( L, -2 );               \
-            int args = 0;                      \
-            lua_pushstring( L, functionName ); \
-            lua_getglobal( L, "GAMEMODE" );    \
+#define BEGIN_LUA_CALL_HOOK_FOR_STATE( L, functionName ) \
+    lua_getglobal( L, LUA_HOOKSLIBNAME );                \
+    if ( lua_istable( L, -1 ) )                          \
+    {                                                    \
+        lua_getfield( L, -1, "Call" );                   \
+        if ( lua_isfunction( L, -1 ) )                   \
+        {                                                \
+            lua_remove( L, -2 );                         \
+            int args = 0;                                \
+            lua_pushstring( L, functionName );           \
+            lua_getglobal( L, "GAMEMODE" );              \
             args = 2;
 
-#define END_LUA_CALL_HOOK( nArgs, nresults ) \
-    args += nArgs;                           \
-    luasrc_pcall( L, args, nresults, 0 );    \
-    }                                        \
-    else lua_pop( L, 2 );                    \
-    }                                        \
+#define BEGIN_LUA_CALL_HOOK( functionName ) \
+    BEGIN_LUA_CALL_HOOK_FOR_STATE( L, functionName )
+
+#define END_LUA_CALL_HOOK_FOR_STATE( L, nArgs, nresults ) \
+    args += nArgs;                                        \
+    luasrc_pcall( L, args, nresults, 0 );                 \
+    }                                                     \
+    else lua_pop( L, 2 );                                 \
+    }                                                     \
     else lua_pop( L, 1 );
+
+#define END_LUA_CALL_HOOK( nArgs, nresults ) \
+    END_LUA_CALL_HOOK_FOR_STATE( L, nArgs, nresults )
 
 #define BEGIN_LUA_CALL_WEAPON_METHOD( functionName ) \
     lua_getref( L, m_nTableReference );              \

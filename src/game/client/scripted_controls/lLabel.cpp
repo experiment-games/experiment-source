@@ -78,6 +78,15 @@ static int Label_ChainToMap( lua_State *L )
     return 0;
 }
 
+static int Label_GetContentSize( lua_State *L )
+{
+    int wide, tall;
+    luaL_checklabel( L, 1 )->GetContentSize( wide, tall );
+    lua_pushinteger( L, wide );
+    lua_pushinteger( L, tall );
+    return 2;
+}
+
 static int Label_GetPanelBaseClassName( lua_State *L )
 {
     lua_pushstring( L, luaL_checklabel( L, 1 )->GetPanelBaseClassName() );
@@ -403,6 +412,7 @@ static int Label___tostring( lua_State *L )
 static const luaL_Reg Labelmeta[] = {
     { "ChainToAnimationMap", Label_ChainToAnimationMap },
     { "ChainToMap", Label_ChainToMap },
+    { "GetContentSize", Label_GetContentSize },
     { "GetPanelBaseClassName", Label_GetPanelBaseClassName },
     { "GetPanelClassName", Label_GetPanelClassName },
     { "GetRefTable", Label_GetRefTable },
