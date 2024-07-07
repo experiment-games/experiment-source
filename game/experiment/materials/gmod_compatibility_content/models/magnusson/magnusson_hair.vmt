@@ -1,6 +1,6 @@
 "VertexLitGeneric"
 {
-	"$basetexture"	"Models/Magnusson/magnusson_hair"
+	"$basetexture" "gmod_compatibility_content/Models/Magnusson/magnusson_hair"
 	"$surfaceprop"	"default"
 	"$translucent"	1
 	"$halflambert"	1

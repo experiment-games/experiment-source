@@ -1,7 +1,7 @@
 "VertexLitGeneric"
 {
-	"$basetexture" "phoenix_storms/train_wheel"
-	"$bumpmap" "phoenix_storms/stripes_normal"
+	"$basetexture" "gmod_compatibility_content/phoenix_storms/train_wheel"
+	"$bumpmap" "gmod_compatibility_content/phoenix_storms/stripes_normal"
 	"$surfaceprop" "metal"
 	"$envmap" "env_cubemap"
 	"$envmapcontrast" 1

@@ -1,15 +1,15 @@
 
 "VertexLitGeneric"
 {
-	"$basetexture" "models/XQM/LightLinesGB"
+	"$basetexture" "gmod_compatibility_content/models/XQM/LightLinesGB"
 	"$surfaceprop" "metal"
-	"$bumpmap" "models/XQM/LightLinesGB_normal"
+	"$bumpmap" "gmod_compatibility_content/models/XQM/LightLinesGB_normal"
 	"$phong" "1"
 	"$phongexponent" "40"
 	"$phongboost" "3"
 	"$phongfresnelranges" "[.05 .6 1]"
 	"$halflambert" "1"
-	
+
 	"$selfillum" 1
 
  "Proxies"

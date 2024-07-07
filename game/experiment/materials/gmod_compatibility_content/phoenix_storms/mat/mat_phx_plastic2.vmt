@@ -1,8 +1,8 @@
 "VertexLitGeneric"
 {
-	"$basetexture" "phoenix_storms/mat/mat_phx_metallic"
+	"$basetexture" "gmod_compatibility_content/phoenix_storms/mat/mat_phx_metallic"
 	"$surfaceprop" "metal"
-	"$bumpmap" "phoenix_storms/mat/mat_phx_metallic_normal"
+	"$bumpmap" "gmod_compatibility_content/phoenix_storms/mat/mat_phx_metallic_normal"
 	"$envmap" "env_cubemap"
 	"$normalmapalphaenvmapmask" 1
 	"$envmapcontrast" 1

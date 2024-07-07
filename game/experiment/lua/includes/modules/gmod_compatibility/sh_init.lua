@@ -495,7 +495,7 @@ else
 
 	surface.GetTextureID = function(name)
         if (not file.Exists("materials/" .. name .. ".vmt", "GAME") and not file.Exists("materials/" .. name, "GAME")) then
-			name = "gmod_compatibility_content/" .. name
+            name = "gmod_compatibility_content/" .. name
         end
 
 		if (not textureMap[name]) then

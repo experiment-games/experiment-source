@@ -1,6 +1,6 @@
 "VertexLitGeneric"
 {
-	"$baseTexture" "red"
+	"$basetexture" "gmod_compatibility_content/red"
 	"$surfaceprop" "solidmetal"
 	"$phong"     "1"
 	"$halflambert"	1

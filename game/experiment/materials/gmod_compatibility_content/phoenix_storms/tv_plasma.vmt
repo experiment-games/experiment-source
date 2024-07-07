@@ -1,6 +1,6 @@
 "VertexLitGeneric"
 {
-	"$basetexture" "phoenix_storms/tv_plasma"
+	"$basetexture" "gmod_compatibility_content/phoenix_storms/tv_plasma"
 	"$surfaceprop" "metal"
 	"$envmap" "env_cubemap"
 	"$envmaptint" "[ .2 .2 .3 ]"

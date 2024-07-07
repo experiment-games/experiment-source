@@ -1,7 +1,7 @@
 "LightmappedGeneric"
 {
-	"$basetexture" "building_template/building_template003a"
-	"$bumpmap" "building_template/building_template003a_normal"
+	"$basetexture" "gmod_compatibility_content/building_template/building_template003a"
+	"$bumpmap" "gmod_compatibility_content/building_template/building_template003a_normal"
 	"$surfaceprop"  "concrete"
 
 	"$detail" detail\noise_detail_01

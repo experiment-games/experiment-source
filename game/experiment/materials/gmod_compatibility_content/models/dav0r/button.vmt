@@ -1,9 +1,9 @@
 "VertexLitGeneric"
 {
-	"$baseTexture" "models\dav0r/button"
+	"$basetexture" "gmod_compatibility_content/models\dav0r/button"
 
-	"$phong" "1" 
-	"$phongboost" "1" 
+	"$phong" "1"
+	"$phongboost" "1"
 	"$phongfresnelranges" "[ 0 2 1]"
 	"$phongexponent" "10"
 }

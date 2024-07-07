@@ -1,6 +1,6 @@
 "VertexLitGeneric"
 {
-	"$basetexture" "phoenix_storms/ps_grass"
+	"$basetexture" "gmod_compatibility_content/phoenix_storms/ps_grass"
 	"$surfaceprop" "grass"
 	"$selfillum" 0
 	"$model" 1

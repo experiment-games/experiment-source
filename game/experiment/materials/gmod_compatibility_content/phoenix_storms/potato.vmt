@@ -1,5 +1,5 @@
 "VertexLitGeneric"
 {
-	"$baseTexture" "phoenix_storms/potato"
+	"$basetexture" "gmod_compatibility_content/phoenix_storms/potato"
 	"$surfaceprop" "dirt"
 }

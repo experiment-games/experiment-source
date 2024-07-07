@@ -1,6 +1,6 @@
 "VertexLitGeneric"
 {
-	"$baseTexture" "cantop"
+	"$basetexture" "gmod_compatibility_content/cantop"
 	"$surfaceprop" "metalcan"
 	"$envmap" "env_cubemap"
 	"$envmaptint" "[ .1 .1 .1 ]"

@@ -1,6 +1,6 @@
 "VertexLitGeneric"
 {
-	"$baseTexture" "steelreserve"
+	"$basetexture" "gmod_compatibility_content/steelreserve"
 	"$surfaceprop" "metalcan"
 	"$envmap" "env_cubemap"
 	"$envmaptint" "[ .1 .1 .1 ]"

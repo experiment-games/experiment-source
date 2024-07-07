@@ -1,6 +1,6 @@
 "UnlitGeneric"
 {
-	"$basetexture"		"effects/wheel_ring"
+	"$basetexture" "gmod_compatibility_content/effects/wheel_ring"
 	"$ignorez"		0
 	"$vertexcolor" 		1
 	"$vertexalpha" 		1

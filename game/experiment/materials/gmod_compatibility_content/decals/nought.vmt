@@ -1,7 +1,7 @@
 "LightmappedGeneric"
 {
 	"$translucent" "1"
-	"$basetexture" "decals/nought"
+	"$basetexture" "gmod_compatibility_content/decals/nought"
 	"$decal" "1"
 	"$decalscale" "0.11"
 	"$vertexcolor" "1"

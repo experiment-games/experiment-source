@@ -1,7 +1,7 @@
 "UnlitGeneric"
 {
 	"$model" 1
-	"$basetexture" "_rt_Camera"
+	"$basetexture" "gmod_compatibility_content/_rt_Camera"
 	"%tooltexture" "dev/dev_monitor"
 	"$surfaceprop" "glass"
 }

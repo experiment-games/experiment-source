@@ -1,6 +1,6 @@
 "VertexLitGeneric"
 {
-	"$basetexture" "phoenix_storms/output_jack"
+	"$basetexture" "gmod_compatibility_content/phoenix_storms/output_jack"
 	"$surfaceprop" "wood"
 	"$envmap" "env_cubemap"
 //	"$envmapcontrast" 1

@@ -1,8 +1,8 @@
 "VertexLitGeneric"
 {
-	"$baseTexture" "models/humans/corpse/corpse1"
-	"$bumpmap"      "models/humans/corpse/corpse1_normal"
-	
+	"$basetexture" "gmod_compatibility_content/models/humans/corpse/corpse1"
+	"$bumpmap" "gmod_compatibility_content/models/humans/corpse/corpse1_normal"
+
 	"$phong" "1"
 	"$phongexponent" "10.0"
 	"$phongboost" "0.2"

@@ -19,7 +19,7 @@
 
 	"$scale" "[1 1]"
 
-	"$bumpmap" "nature/water_coast01_dudv"
+	"$bumpmap" "gmod_compatibility_content/nature/water_coast01_dudv"
 	"$normalmap" "nature/water_coast01_normal"
 
 	"$surfaceprop" "water"

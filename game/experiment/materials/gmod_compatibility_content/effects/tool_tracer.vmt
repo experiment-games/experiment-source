@@ -1,6 +1,6 @@
 "UnlitGeneric"
 {
-	"$basetexture" "effects/tool_tracer"
+	"$basetexture" "gmod_compatibility_content/effects/tool_tracer"
 	"$additive" 1
 	"$vertexcolor" 1
 	"$vertexalpha" 1

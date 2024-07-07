@@ -10,7 +10,7 @@
 
 	"$scale" "[1 1]"
 
-	"$bumpmap" "dev/water_dudv"
+	"$bumpmap" "gmod_compatibility_content/dev/water_dudv"
 	"$normalmap" "dev/water_normal"
 
 	"$surfaceprop" "water"

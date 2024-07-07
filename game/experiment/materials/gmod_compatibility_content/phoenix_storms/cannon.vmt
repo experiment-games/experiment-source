@@ -1,8 +1,8 @@
 "VertexLitGeneric"
 {
-	"$basetexture" "phoenix_storms/cannon"
+	"$basetexture" "gmod_compatibility_content/phoenix_storms/cannon"
 	"$surfaceprop" "metal"
-	"$bumpmap" "phoenix_storms/cannon_bump"
+	"$bumpmap" "gmod_compatibility_content/phoenix_storms/cannon_bump"
 	"$envmap" "env_cubemap"
 	"$envmaptint" "[ .2 .2 .2 ]"
 	"$selfillum" 0

@@ -2,6 +2,6 @@
 {
 	"$spriteorientation" "vp_parallel"
 	"$spriteorigin" "[ 0.50 0.50 ]"
-	"$basetexture" "editor/info_lighting_relative"
+	"$basetexture" "gmod_compatibility_content/editor/info_lighting_relative"
 	"$no_fullbright" 1
 }

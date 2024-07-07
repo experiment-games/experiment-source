@@ -1,7 +1,7 @@
 "screenspace_general"
 {
 	"$PIXSHADER" "luminance_compare_ps20"
-	"$BASETEXTURE" "_rt_FullFrameFB"
+	"$basetexture" "gmod_compatibility_content/_rt_FullFrameFB"
     "$ALPHATESTED" "1"
     "$DISABLE_COLOR_WRITES" "1"
 	"%noToolTexture" 1

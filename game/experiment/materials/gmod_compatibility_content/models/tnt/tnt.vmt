@@ -1,4 +1,4 @@
 "VertexLitGeneric"
 {
-	"$baseTexture" "models\tnt/tnt"
+	"$basetexture" "gmod_compatibility_content/models\tnt/tnt"
 }

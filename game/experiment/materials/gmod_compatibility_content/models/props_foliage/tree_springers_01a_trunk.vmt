@@ -1,7 +1,7 @@
 "vertexlitGeneric"
 {
 	// Original shader: BaseTimesLightmap
-	"$basetexture" "models/props_foliage/tree_springers_01a_trunk"
+	"$basetexture" "gmod_compatibility_content/models/props_foliage/tree_springers_01a_trunk"
 	"$model" 1
 	"$surfaceprop" "wood"
 	"$nodecal" 1

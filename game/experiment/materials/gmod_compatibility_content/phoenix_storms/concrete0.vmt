@@ -1,8 +1,8 @@
 "VertexLitGeneric"
 {
-	"$basetexture" "phoenix_storms/concrete0"
+	"$basetexture" "gmod_compatibility_content/phoenix_storms/concrete0"
 	"$surfaceprop" "concrete"
-	"$bumpmap" "phoenix_storms/concrete_bump"
+	"$bumpmap" "gmod_compatibility_content/phoenix_storms/concrete_bump"
 	"$model" 1
 	"$HalfLambert" 1
 }

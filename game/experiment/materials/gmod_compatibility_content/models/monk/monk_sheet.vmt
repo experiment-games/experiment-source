@@ -1,7 +1,7 @@
 "VertexLitGeneric"
 {
-	"$basetexture" "models/monk/monk_sheet"
-	"$bumpmap" "models/monk/monk_sheet_normal"
+	"$basetexture" "gmod_compatibility_content/models/monk/monk_sheet"
+	"$bumpmap" "gmod_compatibility_content/models/monk/monk_sheet_normal"
 
 	"$phong" "1"
 	"$phongboost" "1"

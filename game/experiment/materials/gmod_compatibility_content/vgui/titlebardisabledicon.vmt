@@ -1,6 +1,6 @@
 "UnlitGeneric"
 {
-	"$basetexture"		"vgui/icon"
+	"$basetexture" "gmod_compatibility_content/vgui/icon"
 	"$vertexcolor" 		1
 	"$vertexalpha" 		1
 	"$nolod" 			1

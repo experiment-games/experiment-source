@@ -2,6 +2,6 @@
 {
 	"$spriteorientation" "vp_parallel"
 	"$spriteorigin" "[ 0.50 0.50 ]"
-	"$basetexture" "editor/point_template"
+	"$basetexture" "gmod_compatibility_content/editor/point_template"
 	"$no_fullbright" 1
 }

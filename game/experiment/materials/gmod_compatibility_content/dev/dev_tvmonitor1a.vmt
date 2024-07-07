@@ -1,6 +1,6 @@
 "UnlitTwoTexture"
 {
-	"$basetexture" "_rt_Camera"
+	"$basetexture" "gmod_compatibility_content/_rt_Camera"
 	"%tooltexture" "dev/dev_monitor"
 	"$surfaceprop" "glass"
 //	"$texture2"	"dev/dev_monitor"
@@ -195,7 +195,7 @@
 			"resultVar" "$tex2offset[1]"
 			"rate" -.91
 		}
-		
+
 		"TextureTransform"
 		{
 //			"scaleVar"	"$tex2scale"

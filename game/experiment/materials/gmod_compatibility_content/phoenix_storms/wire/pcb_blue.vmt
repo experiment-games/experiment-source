@@ -1,9 +1,9 @@
 "VertexLitGeneric"
 {
-	"$basetexture" "phoenix_storms/wire/pcb_blue"
+	"$basetexture" "gmod_compatibility_content/phoenix_storms/wire/pcb_blue"
  	"$selfillum" "1"
 	"$surfaceprop" "computer"
-	"$bumpmap" "phoenix_storms/wire/pcb_normal"
+	"$bumpmap" "gmod_compatibility_content/phoenix_storms/wire/pcb_normal"
 	"$phong"     "1"
 	"$halflambert"	1
  	"$phongexponent"   "60"

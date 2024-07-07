@@ -1,5 +1,5 @@
 "UnlitGeneric"
 {
-	"$basetexture" "gm_construct/citycard01"
+	"$basetexture" "gmod_compatibility_content/gm_construct/citycard01"
 	"$vertexalpha" "1"
 }

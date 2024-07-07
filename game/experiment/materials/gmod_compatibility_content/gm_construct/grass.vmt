@@ -1,9 +1,9 @@
 "LightmappedGeneric"
 {
-	"$basetexture" "gm_construct/grass1"
+	"$basetexture" "gmod_compatibility_content/gm_construct/grass1"
 	"$basetexture2" "gm_construct/grass2"
 
-	//"$bumpmap" "gm_construct/grassnormal"
+	//"$bumpmap" "gmod_compatibility_content/gm_construct/grassnormal"
 
 	"$surfaceprop" "grass"
 	"$surfaceprop2" "grass"

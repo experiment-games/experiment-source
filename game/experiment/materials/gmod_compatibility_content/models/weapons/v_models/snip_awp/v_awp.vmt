@@ -1,6 +1,6 @@
 VertexLitGeneric
 {
-	"$basetexture"	"models\weapons\v_models\snip_awp\v_awp"
+	"$basetexture" "gmod_compatibility_content/models\weapons\v_models\snip_awp\v_awp"
 	"$envmap" "env_cubemap"
 	"$envmapmask" "models\weapons\v_models\snip_awp\v_awp_ref"
 

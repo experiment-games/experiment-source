@@ -1,6 +1,6 @@
 "VertexLitGeneric"
 {
-	"$basetexture" "phoenix_storms/zc_tube"
+	"$basetexture" "gmod_compatibility_content/phoenix_storms/zc_tube"
 	"$surfaceprop" "plastic"
 	"$envmap" "env_cubemap"
 	"$envmapcontrast" 1

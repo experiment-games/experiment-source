@@ -1,6 +1,6 @@
 "UnlitGeneric"
 {
-	"$basetexture"		"gui/arrow"
+	"$basetexture" "gmod_compatibility_content/gui/arrow"
 	"$ignorez"		1
 	"$vertexcolor" 		1
 	"$vertexalpha" 		1

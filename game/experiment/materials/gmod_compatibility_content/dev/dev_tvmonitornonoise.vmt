@@ -1,12 +1,12 @@
 "UnlitGeneric"
 {
-	"$basetexture" "_rt_Camera"
+	"$basetexture" "gmod_compatibility_content/_rt_Camera"
 	"%tooltexture" "dev/dev_monitor"
 	"$surfaceprop" "glass"
-	
+
 	"$texoffset"	"[0.5 0.5]"
 	"$texscale"	2
-	
+
 	"Proxies"
 	{
 		"TextureTransform"

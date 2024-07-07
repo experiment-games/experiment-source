@@ -1,5 +1,5 @@
 "LightmappedGeneric"
 {
-	"$basetexture" "nature/dirtfloor006a"
+	"$basetexture" "gmod_compatibility_content/nature/dirtfloor006a"
 	"%detailtype" "construct_grass"
 }

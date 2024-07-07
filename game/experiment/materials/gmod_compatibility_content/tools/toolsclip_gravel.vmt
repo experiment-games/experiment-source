@@ -1,7 +1,7 @@
 "LightmappedGeneric"
 {
 	"$translucent" 		"1"
-	"$basetexture" 		"Tools/toolsclip_gravel"
+	"$basetexture" "gmod_compatibility_content/Tools/toolsclip_gravel"
 	"%compileclip" 		"1"
 	"$surfaceprop" 		"gravel"
 	"%keywords" 		"clip,gravel"

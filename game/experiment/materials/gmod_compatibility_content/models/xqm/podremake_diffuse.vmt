@@ -1,9 +1,9 @@
 
 "VertexLitGeneric"
 {
-	"$basetexture" "models/XQM/PodRemake_diffuse"
+	"$basetexture" "gmod_compatibility_content/models/XQM/PodRemake_diffuse"
 	"$surfaceprop" "metal"
-	"$bumpmap" "models/XQM/PodRemake_normal"
+	"$bumpmap" "gmod_compatibility_content/models/XQM/PodRemake_normal"
 	"$phong" "1"
 	"$phongexponent" "40"
 	"$phongboost" "3"

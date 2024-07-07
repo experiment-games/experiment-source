@@ -2,7 +2,7 @@
 {
 	"$spriteorientation" "vp_parallel"
 	"$spriteorigin" "[ 0.50 0.50 ]"
-	"$basetexture" "sprites/orangecore2"
+	"$basetexture" "gmod_compatibility_content/sprites/orangecore2"
 	//"$ignorez" "1"
 	"$spriterendermode" "5"
 }

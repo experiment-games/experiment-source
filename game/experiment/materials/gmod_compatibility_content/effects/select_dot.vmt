@@ -1,6 +1,6 @@
 "UnlitGeneric"
 {
-	"$basetexture"		"effects/select_dot"
+	"$basetexture" "gmod_compatibility_content/effects/select_dot"
 	"$ignorez"		0
 	"$vertexcolor" 		1
 	"$vertexalpha" 		1

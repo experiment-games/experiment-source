@@ -1,9 +1,9 @@
 "VertexLitGeneric"
 {
-	"$basetexture" "models/XQM/LightLinesRed"
+	"$basetexture" "gmod_compatibility_content/models/XQM/LightLinesRed"
 	"$basetexturetransform" "center .5 .5 scale 2 2 rotate 0 translate 0 0"
 	"$surfaceprop" "metal"
-	"$bumpmap" "models/XQM/LightLinesRed_normal"
+	"$bumpmap" "gmod_compatibility_content/models/XQM/LightLinesRed_normal"
 	"$phong" "1"
 	"$phongexponent" "30"
 	"$phongboost" "2"
@@ -15,13 +15,13 @@
 	"$detailscale"        "1"
 	"$detailblendfactor"  "0.01"
 	"$detailblendmode"    "4"
-	
+
 	"$rimlight" "1"
 	"$rimlightboost" "0.5"
 	"$rimlightexponent" "2"
-	
+
 	"$frame" "12"
-	
+
  "Proxies"
    {
       "AnimatedTexture"

@@ -1,9 +1,9 @@
 
 "VertexLitGeneric"
 {
-	"$basetexture" "models/NatesWheel/nateswheel_diffuse"
+	"$basetexture" "gmod_compatibility_content/models/NatesWheel/nateswheel_diffuse"
 	"$surfaceprop" "rubbertire"
-	"$bumpmap" "models/NatesWheel/nateswheel_normal"
+	"$bumpmap" "gmod_compatibility_content/models/NatesWheel/nateswheel_normal"
 	"$phong" "1"
 	"$phongexponent" "40"
 	"$phongboost" "2"

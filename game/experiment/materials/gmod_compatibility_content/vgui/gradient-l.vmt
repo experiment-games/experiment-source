@@ -1,6 +1,6 @@
 "UnlitGeneric"
 {
-	"$basetexture"	"vgui/gradient-l"
+	"$basetexture" "gmod_compatibility_content/vgui/gradient-l"
 	"$ignorez"		"1"
 	"$vertexcolor"	"1"
 	"$vertexalpha"	"1"

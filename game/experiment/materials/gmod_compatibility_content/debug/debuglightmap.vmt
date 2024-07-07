@@ -4,5 +4,5 @@
 	"$comparez" 0
 	"$writez" 0
 	"%noToolTexture" 1
-	"$basetexture" "dev/twenty"
+	"$basetexture" "gmod_compatibility_content/dev/twenty"
 }

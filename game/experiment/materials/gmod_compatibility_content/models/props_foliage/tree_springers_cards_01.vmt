@@ -1,6 +1,6 @@
 "VertexLitGeneric"
 {
-	"$basetexture" "models/props_foliage/tree_springers_cards_01"
+	"$basetexture" "gmod_compatibility_content/models/props_foliage/tree_springers_cards_01"
 	"$model" "1"
 	"$alphatest" "1"
 	"$nocull" "1"
@@ -8,7 +8,7 @@
 
 	"$halflambert" "1"
 
-	// "$bumpmap" "null-bumpmap"
+	// "$bumpmap" "gmod_compatibility_content/null-bumpmap"
 	// "$phong" "1"
 	// "$phongexponent" "10"
 	// "$phongboost" "1000"

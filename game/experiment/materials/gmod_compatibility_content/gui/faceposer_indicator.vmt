@@ -1,6 +1,6 @@
 "UnlitGeneric"
 {
-	"$basetexture"		"gui/faceposer_indicator"
+	"$basetexture" "gmod_compatibility_content/gui/faceposer_indicator"
 	"$vertexcolor" 		1
 	"$vertexalpha" 		1
 	"$nolod" 			1

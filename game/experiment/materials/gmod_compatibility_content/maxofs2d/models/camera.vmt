@@ -1,8 +1,8 @@
 "VertexLitGeneric"
 {
-	"$baseTexture" "MaxOfS2D/models/camera"
-	"$bumpmap" "MaxOfS2D/models/camera_normal"
-	
+	"$basetexture" "gmod_compatibility_content/MaxOfS2D/models/camera"
+	"$bumpmap" "gmod_compatibility_content/MaxOfS2D/models/camera_normal"
+
 	"$phong" "1"
 	"$phongexponent" "30.0"
 	"$phongboost" "0.1"

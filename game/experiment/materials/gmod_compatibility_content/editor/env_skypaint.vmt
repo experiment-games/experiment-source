@@ -2,6 +2,6 @@
 {
 	"$spriteorientation" "vp_parallel"
 	"$spriteorigin" "[ 0.50 0.50 ]"
-	"$basetexture" "editor/env_skypaint"
+	"$basetexture" "gmod_compatibility_content/editor/env_skypaint"
 	"$no_fullbright" 1
 }

@@ -1,7 +1,7 @@
 "VertexLitGeneric"
 {
 	// Original shader: VertexLitSelfIlluminatedTexture
-	"$basetexture" "models/Weapons/w_slam/wslamnewlight1"
+	"$basetexture" "gmod_compatibility_content/models/Weapons/w_slam/wslamnewlight1"
 	"$selfillum" 1
 	"Proxies"
 	{

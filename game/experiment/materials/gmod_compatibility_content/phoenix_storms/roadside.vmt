@@ -1,6 +1,6 @@
 "VertexLitGeneric"
 {
-	"$basetexture" "phoenix_storms/roadside"
+	"$basetexture" "gmod_compatibility_content/phoenix_storms/roadside"
 	"$surfaceprop" "concrete"
 	"$envmap" "env_cubemap"
 	"$envmaptint" "[ .05 .05 .05 ]"

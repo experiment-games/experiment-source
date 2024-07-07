@@ -1,8 +1,8 @@
 "VertexLitGeneric"
 {
-	"$basetexture" "phoenix_storms/heli"
+	"$basetexture" "gmod_compatibility_content/phoenix_storms/heli"
 	"$surfaceprop" "metal"
-	//"$bumpmap" "phoenix_storms/top_bump"
+	//"$bumpmap" "gmod_compatibility_content/phoenix_storms/top_bump"
 	"$envmap" "env_cubemap"
 	"$envmaptint" "[ .25 .25 .25 ]"
 	//"$envmapmask" "Models/props_combine/combine_binocular01_mask"

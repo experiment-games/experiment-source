@@ -1,13 +1,13 @@
 "VertexLitGeneric"
 {
-	"$baseTexture" "MaxOfS2D/models/button_slider"
-	"$bumpmap" "MaxOfS2D/models/button_slider_normal"
-	
+	"$basetexture" "gmod_compatibility_content/MaxOfS2D/models/button_slider"
+	"$bumpmap" "gmod_compatibility_content/MaxOfS2D/models/button_slider_normal"
+
 	// "$color2" "{224 100 80}"
-	
+
 	"$blendtintbybasealpha" 1
 	"$blendtintcoloroverbase" "0"
-	
+
 	"$phong" "1"
 	"$phongexponent" "10"
 	"$phongboost" "1"

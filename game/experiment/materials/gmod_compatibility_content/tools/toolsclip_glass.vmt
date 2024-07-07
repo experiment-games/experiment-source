@@ -1,7 +1,7 @@
 "LightmappedGeneric"
 {
 	"$translucent" 		"1"
-	"$basetexture" 		"Tools/toolsclip_glass"
+	"$basetexture" "gmod_compatibility_content/Tools/toolsclip_glass"
 	"%compileclip" 		"1"
 	"$surfaceprop" 		"glassfloor"
 	"%keywords" 		"clip,glass"

@@ -1,6 +1,6 @@
 "UnlitGeneric"
 {
-	"$basetexture"		"weapons\swep"
+	"$basetexture" "gmod_compatibility_content/weapons\swep"
 	"$ignorez"		1
 	"$vertexcolor" 1
 	"$vertexalpha" 1

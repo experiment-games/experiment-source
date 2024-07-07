@@ -1,8 +1,8 @@
 "VertexLitGeneric"
 {
-	"$baseTexture" "models/kleiner/kleiner_sheet"
-	"$bumpmap" "models/kleiner/kleiner_sheet_normal"
-	
+	"$basetexture" "gmod_compatibility_content/models/kleiner/kleiner_sheet"
+	"$bumpmap" "gmod_compatibility_content/models/kleiner/kleiner_sheet_normal"
+
 	"$phong" "1"
 	"$phongexponent" "6"
 	"$phongboost" "0.3"

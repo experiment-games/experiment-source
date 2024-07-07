@@ -1,6 +1,6 @@
 "UnlitGeneric"
 {
-	"$basetexture"		"gui/icorner8"
+	"$basetexture" "gmod_compatibility_content/gui/icorner8"
 	"$ignorez"		1
 	"$vertexcolor" 		1
 	"$vertexalpha" 		1

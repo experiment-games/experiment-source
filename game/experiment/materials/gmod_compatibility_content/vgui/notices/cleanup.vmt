@@ -1,6 +1,6 @@
 "UnlitGeneric"
 {
-	"$basetexture"		"vgui/notices/cleanup"
+	"$basetexture" "gmod_compatibility_content/vgui/notices/cleanup"
 	"$ignorez"		1
 	"$vertexcolor" 		1
 	"$vertexalpha" 		1

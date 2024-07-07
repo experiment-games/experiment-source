@@ -1,6 +1,6 @@
 "LightmappedGeneric"
 {
-	"$basetexture" "dev/water"
+	"$basetexture" "gmod_compatibility_content/dev/water"
 	"$color" "{18 14 12 210}"
 	"$scale" "[1 1]"
 	"$translucent" "1"
@@ -22,7 +22,7 @@
 	"$fogenable" "1"
 
 	// This is the color of the fog in the water when looking from above.
-	// You'll have the same thing in the bottom material for when looking from 
+	// You'll have the same thing in the bottom material for when looking from
 	// below.
 	"$fogcolor" "{25 25 15}"
 

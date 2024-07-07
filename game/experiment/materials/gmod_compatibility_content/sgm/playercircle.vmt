@@ -1,6 +1,6 @@
 "UnlitGeneric"
 {
-	"$basetexture"		"SGM/playercircle"
+	"$basetexture" "gmod_compatibility_content/SGM/playercircle"
 	"$ignorez"			0
 	"$vertexcolor" 		1
 	"$vertexalpha" 		1

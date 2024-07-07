@@ -1,6 +1,6 @@
 "vertexlitgeneric"
 {
-	"$baseTexture" "models/cstrike/ct_gign_glass"
+	"$basetexture" "gmod_compatibility_content/models/cstrike/ct_gign_glass"
 	"$envmap" 			"env_cubemap"
 	"$envmapmask" "models/cstrike/ct_gign_glass_spec"
 	"$translucent" 1

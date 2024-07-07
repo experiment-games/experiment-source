@@ -1,6 +1,6 @@
 "Teeth"
 {
-	"$basetexture" "models/eli/mouth"
+	"$basetexture" "gmod_compatibility_content/models/eli/mouth"
 	"$model" 1
 	"$clientshader" "MouthShader"
 	"$halflambert" 1

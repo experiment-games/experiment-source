@@ -1,9 +1,9 @@
 
 "VertexLitGeneric"
 {
-	"$basetexture" "models/XQM/CinderBlock_Tex"
+	"$basetexture" "gmod_compatibility_content/models/XQM/CinderBlock_Tex"
 	"$surfaceprop" "concrete"
-	"$bumpmap" "models/XQM/CinderBlock_Tex_normal"
+	"$bumpmap" "gmod_compatibility_content/models/XQM/CinderBlock_Tex_normal"
 	"$model" 1
 	"$phong" "1"
 	"$phongexponent" "40"

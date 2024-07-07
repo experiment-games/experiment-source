@@ -1,6 +1,6 @@
 "UnlitGeneric"
 {
-	"$basetexture"		"vgui/face/angry_eyebrows"
+	"$basetexture" "gmod_compatibility_content/vgui/face/angry_eyebrows"
 	"$vertexcolor" 		1
 	"$vertexalpha" 		1
 	"$nolod" 			1

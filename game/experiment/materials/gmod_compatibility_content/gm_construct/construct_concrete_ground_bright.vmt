@@ -2,8 +2,8 @@
 {
 	"$basetexturetransform" "center .5 .5 scale 1.25 1.25 rotate 0 translate 0 0"
 	"$bumptransform" "center .5 .5 scale 1.25 1.25 rotate 0 translate 0 0"
-	"$basetexture" "gm_construct/construct_concrete_ground"
-	"$bumpmap" "gm_construct/construct_concrete_ground_normal"
+	"$basetexture" "gmod_compatibility_content/gm_construct/construct_concrete_ground"
+	"$bumpmap" "gmod_compatibility_content/gm_construct/construct_concrete_ground_normal"
 
 	"$color2" "[1.6 1.6 1.7]"
 	"$reflectivity" "[0.52 0.50 0.48]"

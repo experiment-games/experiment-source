@@ -1,9 +1,9 @@
 
 "VertexLitGeneric"
 {
-	"$basetexture" "models/XQM/ModernChair_diffuse"
+	"$basetexture" "gmod_compatibility_content/models/XQM/ModernChair_diffuse"
 	"$surfaceprop" "metal"
-	"$bumpmap" "models/XQM/ModernChair_normal"
+	"$bumpmap" "gmod_compatibility_content/models/XQM/ModernChair_normal"
 	"$phong" "1"
 	"$phongexponent" "40"
 	"$phongboost" "3"

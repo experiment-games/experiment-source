@@ -1,9 +1,9 @@
 
 "VertexLitGeneric"
 {
-	"$basetexture" "models/XQM/HydControlBox"
+	"$basetexture" "gmod_compatibility_content/models/XQM/HydControlBox"
 	"$surfaceprop" "metal"
-	"$bumpmap" "models/XQM/HydControlBox_normal"
+	"$bumpmap" "gmod_compatibility_content/models/XQM/HydControlBox_normal"
 	"$model" 1
 	"$phong" "1"
 	"$phongexponent" "30"

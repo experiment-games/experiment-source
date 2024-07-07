@@ -1,7 +1,7 @@
 "UnlitGeneric"
 {
-	"$baseTexture" "trails/lol"
-	
+	"$basetexture" "gmod_compatibility_content/trails/lol"
+
 	"$additive" 0
 	"$vertexcolor" 1
 	"$vertexalpha" 1

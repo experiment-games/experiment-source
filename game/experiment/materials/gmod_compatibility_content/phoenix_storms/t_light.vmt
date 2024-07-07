@@ -1,6 +1,6 @@
 "VertexLitGeneric"
 {
-	"$basetexture" "phoenix_storms/t_light"
+	"$basetexture" "gmod_compatibility_content/phoenix_storms/t_light"
 	"$selfillum" 1
 	"$additive" 0.2
 	"$envmap" "env_cubemap"
@@ -12,14 +12,14 @@
 
 	"Proxies"
 	{
-		"AnimatedTexture" 
-         	{ 
-     		    "animatedTextureVar" "$basetexture" 
-      	 	    "animatedTextureFrameNumVar" "$frame" 
-       	 	    "animatedTextureFrameRate" "1" 
+		"AnimatedTexture"
+         	{
+     		    "animatedTextureVar" "$basetexture"
+      	 	    "animatedTextureFrameNumVar" "$frame"
+       	 	    "animatedTextureFrameRate" "1"
         	 }
 
-		
+
 	}
 }
 

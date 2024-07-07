@@ -1,6 +1,6 @@
 "UnlitTwoTexture"
 {
-	"$basetexture" "_rt_Camera"
+	"$basetexture" "gmod_compatibility_content/_rt_Camera"
 	"%tooltexture" "dev/dev_monitor"
 	"$surfaceprop" "glass"
 	"$texture2"	"dev/dev_combinescanline"
@@ -12,7 +12,7 @@
 
 	"$texoffset"	"[0.5 0.5]"
 	"$texscale" "2"
-	
+
 
 	"Proxies"
 	{
@@ -45,7 +45,7 @@
 			"scaleVar" "$texscale"
 			"resultVar" "$basetexturetransform"
 		}
-		
+
 		"TextureScroll"
 		{
 			"texturescrollvar" "$texture2transform"

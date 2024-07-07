@@ -1,8 +1,8 @@
 "VertexLitGeneric"
 {
-	"$basetexture" "phoenix_storms/wood_wire"
+	"$basetexture" "gmod_compatibility_content/phoenix_storms/wood_wire"
 	"$surfaceprop" "metal"
-	"$bumpmap" "phoenix_storms/wood_wire_bump"
+	"$bumpmap" "gmod_compatibility_content/phoenix_storms/wood_wire_bump"
 	"$envmap" "env_cubemap"
 	"$normalmapalphaenvmapmask" 1
 	//"$basealphaenvmapmask" 1

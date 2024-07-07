@@ -1,8 +1,8 @@
 "VertexLitGeneric"
 {
-	"$basetexture" "phoenix_storms/car_tire"
+	"$basetexture" "gmod_compatibility_content/phoenix_storms/car_tire"
 	"$surfaceprop" "metal"
-	"$bumpmap" "phoenix_storms/tire_bump"
+	"$bumpmap" "gmod_compatibility_content/phoenix_storms/tire_bump"
 	"$envmap" "env_cubemap"
 	"$normalmapalphaenvmapmask" 1
 	//"$basealphaenvmapmask" 1

@@ -1,6 +1,6 @@
 "UnlitGeneric"
 {
-	"$basetexture"		"gui/sniper_corner"
+	"$basetexture" "gmod_compatibility_content/gui/sniper_corner"
 	"$ignorez"		1
 	"$vertexcolor" 		1
 	"$vertexalpha" 		1

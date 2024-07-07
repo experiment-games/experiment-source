@@ -1,6 +1,6 @@
 "floatcombine_autoexpose"
 {
-	"$basetexture" "_rt_FullFrameFB"
+	"$basetexture" "gmod_compatibility_content/_rt_FullFrameFB"
 	"$bloomtexture" "_rt_SmallHDR0"
 	"$exposure_texture" "_rt_TeenyFB0"
 	"$edge_softness" "0"

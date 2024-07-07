@@ -2,6 +2,6 @@
 {
 	"$spriteorientation" "vp_parallel"
 	"$spriteorigin" "[ 0.50 0.50 ]"
-	"$basetexture" "editor/lua_run"
+	"$basetexture" "gmod_compatibility_content/editor/lua_run"
 	"$no_fullbright" 1
 }

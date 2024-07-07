@@ -1,6 +1,6 @@
 "VertexLitGeneric"
 {
-	"$basetexture" "phoenix_storms/fender"
+	"$basetexture" "gmod_compatibility_content/phoenix_storms/fender"
 	"$surfaceprop" "plastic"
 	"$envmap" "env_cubemap"
 //	"$envmapcontrast" 1

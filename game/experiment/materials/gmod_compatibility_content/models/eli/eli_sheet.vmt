@@ -1,15 +1,15 @@
 "VertexLitGeneric"
 {
-	"$basetexture" "models/eli/eli_sheet"
-    "$bumpmap" "models/eli/eli_sheet_normal"
+	"$basetexture" "gmod_compatibility_content/models/eli/eli_sheet"
+    "$bumpmap" "gmod_compatibility_content/models/eli/eli_sheet_normal"
 	"$halflambert" 1
 	"$nodecal" "1"
 	"$phong" "1"
 	"$phongboost" "4"
 	"$phongexponenttexture" "models/eli/eli_sheet_phong"
-	"$phongalbedotint" "1"										
+	"$phongalbedotint" "1"
 	"$phongfresnelranges"	"[.1 .5  1]"
-	
+
 	"$rimlight" "1"
 	"$rimlightexponent" "8"
 	"$rimlightboost" "1"

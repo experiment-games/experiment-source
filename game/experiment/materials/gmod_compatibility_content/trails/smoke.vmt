@@ -1,13 +1,13 @@
 "UnlitGeneric"
 {
-	"$basetexture" "trails/smoke"
+	"$basetexture" "gmod_compatibility_content/trails/smoke"
 	"$texture2" "trails/smoke"
 
 	"$additive" 0
 	"$vertexcolor" 1
 	"$vertexalpha" 1
 	"$translucent" "1"
-	
+
 	"Proxies"
 	{
 		"TextureScroll"
@@ -17,5 +17,5 @@
 			"texturescrollangle" 90
 		}
 	}
-	
+
 }

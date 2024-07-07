@@ -1,7 +1,7 @@
 "VertexLitGeneric"
 {
-	"$baseTexture" "MaxOfS2D/models/light_tubular"
-	"$bumpmap" "null-bumpmap"
+	"$basetexture" "gmod_compatibility_content/MaxOfS2D/models/light_tubular"
+	"$bumpmap" "gmod_compatibility_content/null-bumpmap"
 
 	"$phong" "1"
 	"$phongexponent" "10.0"

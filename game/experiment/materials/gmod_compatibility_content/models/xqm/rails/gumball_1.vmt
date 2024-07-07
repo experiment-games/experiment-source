@@ -1,14 +1,14 @@
 
 "VertexLitGeneric"
 {
-	"$basetexture" "models/XQM/Rails/gumball_1"
+	"$basetexture" "gmod_compatibility_content/models/XQM/Rails/gumball_1"
 	"$surfaceprop" "metal"
-	"$bumpmap" "models/XQM/Rails/gumball_1_normal"
+	"$bumpmap" "gmod_compatibility_content/models/XQM/Rails/gumball_1_normal"
 	"$phong" "1"
 	"$phongexponent" "40"
 	"$phongboost" "3"
 	"$phongfresnelranges" "[.05 .6 1]"
 	"$halflambert" "1"
-	
+
 	"$model" 1
 }

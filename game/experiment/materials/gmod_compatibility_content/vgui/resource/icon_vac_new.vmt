@@ -1,6 +1,6 @@
 "UnlitGeneric"
 {
-	"$basetexture" 		"vgui\resource\icon_vac_new"
+	"$basetexture" "gmod_compatibility_content/vgui\resource\icon_vac_new"
 	"$vertexcolor" 1
 	"$vertexalpha" 1
 	"$ignorez" 1

@@ -1,6 +1,6 @@
 "VertexlitGeneric"
 {
-	"$basetexture" "models/Noesis/donut"
+	"$basetexture" "gmod_compatibility_content/models/Noesis/donut"
 	"$surfaceprop" "Tile"
 	"$surfaceprop2" "Tile"
 	"$alphatest" 1

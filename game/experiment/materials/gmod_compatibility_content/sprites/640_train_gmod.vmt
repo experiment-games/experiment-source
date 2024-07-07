@@ -1,6 +1,6 @@
 "UnlitGeneric"
 {
-	"$basetexture" "sprites/640_train"
+	"$basetexture" "gmod_compatibility_content/sprites/640_train"
 	"$additive" "1"
 	"$vertexcolor" "1"
 	"$vertexalpha" "1"

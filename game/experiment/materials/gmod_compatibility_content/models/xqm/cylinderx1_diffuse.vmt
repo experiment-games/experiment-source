@@ -1,9 +1,9 @@
 
 "VertexLitGeneric"
 {
-	"$basetexture" "models/XQM/CylinderX1_diffuse"
+	"$basetexture" "gmod_compatibility_content/models/XQM/CylinderX1_diffuse"
 	"$surfaceprop" "metal"
-	"$bumpmap" "models/XQM/CylinderX1_normal"
+	"$bumpmap" "gmod_compatibility_content/models/XQM/CylinderX1_normal"
 	"$model" 1
 	"$phong" "1"
 	"$phongexponent" "40"

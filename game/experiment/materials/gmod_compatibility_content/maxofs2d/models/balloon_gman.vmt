@@ -1,15 +1,15 @@
 "VertexLitGeneric"
 {
-	"$baseTexture" "MaxOfS2D/models/balloon_gman"
-	"$bumpmap" "null-bumpmap"
-	
+	"$basetexture" "gmod_compatibility_content/MaxOfS2D/models/balloon_gman"
+	"$bumpmap" "gmod_compatibility_content/null-bumpmap"
+
 	"$phong" "1"
 	"$phongexponent" "40.0"
 	"$phongboost" "0.4"
 	"$phongfresnelranges"	"[1.0 0.0 0.0]"
-	
+
 	"$basemapalphaphongmask" "0"
-	
+
 	"$envmap" "env_cubemap"
 	"$envmaptint" "[ .06 .06 .06 ]"
 }

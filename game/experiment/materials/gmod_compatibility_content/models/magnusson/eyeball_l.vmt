@@ -1,6 +1,6 @@
 "eyes"
 {
-	"$basetexture"	"Models/Magnusson/eyeball_l"
+	"$basetexture" "gmod_compatibility_content/Models/Magnusson/eyeball_l"
 	"$iris" "models/Magnusson/pupil_l"
 	"$halflambert"	1
 }

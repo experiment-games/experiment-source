@@ -1,6 +1,6 @@
 "VertexLitGeneric"
 {
-	"$basetexture" "Models/Items/Healthkit01"
+	"$basetexture" "gmod_compatibility_content/Models/Items/Healthkit01"
 	"$surfaceprop" "metal"
 	"$envmap" "env_cubemap"
 	"$envmaptint" "[ .45 .50 .55]"

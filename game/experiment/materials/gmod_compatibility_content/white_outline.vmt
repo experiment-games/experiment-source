@@ -1,6 +1,6 @@
 "VertexLitGeneric"
 {
-	"$basetexture" "color/white"
+	"$basetexture" "gmod_compatibility_content/color/white"
 	"$model" 1
 	"$translucent" 1
 	"$vertexalpha" 1

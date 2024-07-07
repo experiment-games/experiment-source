@@ -1,6 +1,6 @@
 "UnlitGeneric"
 {
-    "$basetexture"      "sprites/sent_ball"
+    "$basetexture" "gmod_compatibility_content/sprites/sent_ball"
     "$vertexcolor"      1
     "$vertexalpha"      1
     "$alphatest"        1

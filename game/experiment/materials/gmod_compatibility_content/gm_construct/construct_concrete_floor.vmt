@@ -2,8 +2,8 @@
 {
 	"$basetexturetransform" "center .5 .5 scale 1.2 1.2 rotate 0 translate 0 0"
 	"$bumptransform" "center .5 .5 scale 1.2 1.2 rotate 0 translate 0 0"
-	"$basetexture" "gm_construct/construct_concrete_floor"
-	"$bumpmap" "gm_construct/construct_concrete_floor_normal"
+	"$basetexture" "gmod_compatibility_content/gm_construct/construct_concrete_floor"
+	"$bumpmap" "gmod_compatibility_content/gm_construct/construct_concrete_floor_normal"
 
 	"$color2" "[0.84 0.83 0.82]" // making this a little less bright
 

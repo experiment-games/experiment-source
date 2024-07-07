@@ -1,7 +1,7 @@
 "LightmappedGeneric"
 {
 	"$translucent" 		"1"
-	"$basetexture" 		"Tools/toolsclip_rubbertire"
+	"$basetexture" "gmod_compatibility_content/Tools/toolsclip_rubbertire"
 	"%compileclip" 		"1"
 	"$surfaceprop" 		"rubbertire"
 	"%keywords" 		"clip,rubber"

@@ -1,6 +1,6 @@
 "VertexLitGeneric"
 {
-	"$baseTexture" "xeon133/Slider_12x12x96"
+	"$basetexture" "gmod_compatibility_content/xeon133/Slider_12x12x96"
 	"$surfaceprop" "metal"
 	"$phong"     "1"
 	"$halflambert"	1

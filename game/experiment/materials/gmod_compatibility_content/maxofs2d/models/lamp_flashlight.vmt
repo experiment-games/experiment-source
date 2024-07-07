@@ -1,13 +1,13 @@
 "VertexLitGeneric"
 {
-	"$baseTexture" "MaxOfS2D/models/lamp_flashlight"
-	"$bumpmap" "MaxOfS2D/models/lamp_flashlight_normal"
-	
+	"$basetexture" "gmod_compatibility_content/MaxOfS2D/models/lamp_flashlight"
+	"$bumpmap" "gmod_compatibility_content/MaxOfS2D/models/lamp_flashlight_normal"
+
 	// "$color2" "{58 152 246}"
-	
+
 	"$blendtintbybasealpha" 1
 	"$blendtintcoloroverbase" "0.1"
-	
+
 	"$phong" "1"
 	"$phongexponent" "12.0"
 	"$phongboost" "0.8"

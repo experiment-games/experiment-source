@@ -1,18 +1,18 @@
 
 "VertexLitGeneric"
 {
-	"$basetexture" "models/XQM/CoasterTrack/Train_2_Tex1"
+	"$basetexture" "gmod_compatibility_content/models/XQM/CoasterTrack/Train_2_Tex1"
 	"$surfaceprop" "metal"
-	"$bumpmap" "models/XQM/CoasterTrack/Train_2_Tex1_normal"
+	"$bumpmap" "gmod_compatibility_content/models/XQM/CoasterTrack/Train_2_Tex1_normal"
 	"$model" 1
 	"$phong" "1"
 	"$phongexponent" "40"
 	"$phongboost" "3"
 	"$phongfresnelranges" "[.1 .6 1]"
 	"$halflambert" "1"
-	
+
 	"$selfillum" 1
-	
+
 	"$envmap" "env_cubemap"
 	"$envmaptint" "[0.15 0.15 0.15]"
 	"$envmapsaturation" 1

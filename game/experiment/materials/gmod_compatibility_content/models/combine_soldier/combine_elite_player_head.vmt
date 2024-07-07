@@ -1,20 +1,20 @@
 "VertexLitGeneric"
 {
-	"$baseTexture" 	"models/combine_soldier/combine_elite_player"
-	"$bumpmap" "models/combine_soldier/combine_elite_normal"
+	"$basetexture" "gmod_compatibility_content/models/combine_soldier/combine_elite_player"
+	"$bumpmap" "gmod_compatibility_content/models/combine_soldier/combine_elite_normal"
 
 	"$phong" "1"
 	"$phongboost" "5"
 	"$phongexponenttexture" "models/combine_soldier/combine_elite_phong"
-	"$phongalbedotint" "1"									
+	"$phongalbedotint" "1"
 	"$phongfresnelranges"	"[.1 .5 1]"
-	
+
 	"$rimlight" "1"
 	"$rimlightexponent" "8"
 	"$rimlightboost" "2"
-	
+
 	"$selfillum" "1"
-	
+
 	// --- Test values. Comment the PlayerColor proxy to use one of these.
 	// "$selfillumtint" "[0.3 1.8 2.1]" // Default
 	// "$selfillumtint" "[1.5 2.2 1.9]" // White
@@ -25,7 +25,7 @@
 	// "$selfillumtint" "[0.5 0.6 3.1]" // Blue (lavender)
 	// "$selfillumtint" "[1.4 0.6 2.5]" // Purple
 	// "$selfillumtint" "[1.9 0.6 1.1]" // Pink
-	
+
 	Proxies
 	{
 		PlayerColor

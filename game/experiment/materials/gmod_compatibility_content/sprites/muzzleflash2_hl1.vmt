@@ -2,5 +2,5 @@
 {
 	"$spriteorientation" "vp_parallel"
 	"$spriteorigin" "[ 0.50 0.50 ]"
-	"$basetexture" "sprites/muzzleflash2_hl1"
+	"$basetexture" "gmod_compatibility_content/sprites/muzzleflash2_hl1"
 }

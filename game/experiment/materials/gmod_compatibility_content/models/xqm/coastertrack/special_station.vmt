@@ -1,9 +1,9 @@
 
 "VertexLitGeneric"
 {
-	"$basetexture" "models/XQM/CoasterTrack/Special_Station"
+	"$basetexture" "gmod_compatibility_content/models/XQM/CoasterTrack/Special_Station"
 	"$surfaceprop" "metal"
-	"$bumpmap" "models/XQM/CoasterTrack/Special_Station_normal"
+	"$bumpmap" "gmod_compatibility_content/models/XQM/CoasterTrack/Special_Station_normal"
 	"$model" 1
 	"$phong" "1"
 	"$phongexponent" "40"

@@ -1,8 +1,8 @@
 "VertexLitGeneric"
 {
-	"$basetexture" "phoenix_storms/indentTiles_1-2"
+	"$basetexture" "gmod_compatibility_content/phoenix_storms/indentTiles_1-2"
 	"$surfaceprop" "metal"
-	"$bumpmap" "phoenix_storms/indentTiles_bump"
+	"$bumpmap" "gmod_compatibility_content/phoenix_storms/indentTiles_bump"
 	"$envmap" "env_cubemap"
 	"$envmaptint" "[ .35 .35 .35 ]"
 	"$envmapcontrast" 0.1

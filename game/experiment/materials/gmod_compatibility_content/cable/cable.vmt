@@ -1,7 +1,7 @@
 "Cable"
 {
-	"$basetexture"		"cable\black"
-	"$bumpmap"			"cable\cablenormalmap"
+	"$basetexture" "gmod_compatibility_content/cable\black"
+	"$bumpmap" "gmod_compatibility_content/cable\cablenormalmap"
 	"$vertexcolor"		1
 	"$nocull"			1
 	"$MinLight"			0.0

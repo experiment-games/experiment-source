@@ -1,6 +1,6 @@
 "VertexLitGeneric"
 {
-	"$basetexture" "phoenix_storms/camera"
+	"$basetexture" "gmod_compatibility_content/phoenix_storms/camera"
 	"$surfaceprop" "metal"
 	"$envmap" "env_cubemap"
 	"$envmaptint" "[ .25 .25 .25 ]"

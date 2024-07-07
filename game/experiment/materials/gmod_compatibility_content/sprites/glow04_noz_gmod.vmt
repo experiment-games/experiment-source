@@ -2,7 +2,7 @@
 {
 	"$spriteorientation" "vp_parallel"
 	"$spriteorigin" "[ 0.50 0.50 ]"
-	"$basetexture" "sprites/glow04"
+	"$basetexture" "gmod_compatibility_content/sprites/glow04"
 	//"$ignorez" "1"
 	"$spriterendermode" "5"
 }

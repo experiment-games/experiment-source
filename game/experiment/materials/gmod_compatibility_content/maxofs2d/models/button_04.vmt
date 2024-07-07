@@ -1,8 +1,8 @@
 "VertexLitGeneric"
 {
-	"$baseTexture" "MaxOfS2D/models/button_04"
-	"$bumpmap" "MaxOfS2D/models/button_04_normal"
-	
+	"$basetexture" "gmod_compatibility_content/MaxOfS2D/models/button_04"
+	"$bumpmap" "gmod_compatibility_content/MaxOfS2D/models/button_04_normal"
+
 	"$phong" "1"
 	"$phongexponent" "10"
 	"$phongboost" "4"

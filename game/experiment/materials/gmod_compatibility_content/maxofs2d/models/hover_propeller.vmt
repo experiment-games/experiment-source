@@ -1,16 +1,16 @@
 "VertexLitGeneric"
 {
-	"$baseTexture" "MaxOfS2D/models/hover_propeller"
-	"$bumpmap" "MaxOfS2D/models/hover_propeller_normal"
-	
+	"$basetexture" "gmod_compatibility_content/MaxOfS2D/models/hover_propeller"
+	"$bumpmap" "gmod_compatibility_content/MaxOfS2D/models/hover_propeller_normal"
+
 	// "$color2" "{240 180 120}"
-	
+
 	"$nocull" "1"	// I wanted to have $nocull enabled only at
 	                // the two lowest LODs, but Source didn't
-					// want to let me. SOURCE ENGINE IN ACTION.		
-	
+					// want to let me. SOURCE ENGINE IN ACTION.
+
 	"$blendtintbybasealpha" 1
-	
+
 	"$phong" "1"
 	"$phongexponent" "10.0"
 	"$phongboost" "0.5"

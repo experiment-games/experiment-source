@@ -1,6 +1,6 @@
 "VertexLitGeneric"
 {
-	"$baseTexture" 		"models/balloon/balloon_nips"
+	"$basetexture" "gmod_compatibility_content/models/balloon/balloon_nips"
 	"$envmap" 		"env_cubemap"
 	"$envmaptint" 		"[ .3 .3 .3 ]"
 	"$model" 			1

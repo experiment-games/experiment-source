@@ -1,7 +1,7 @@
 "VertexLitGeneric"
 {
-	"$basetexture" "Models/combine_soldier/combinesoldiersheet_player"
-	"$bumpmap" "models/combine_soldier/combinesoldiersheet_normal"
+	"$basetexture" "gmod_compatibility_content/Models/combine_soldier/combinesoldiersheet_player"
+	"$bumpmap" "gmod_compatibility_content/models/combine_soldier/combinesoldiersheet_normal"
 
 	"$phong" "1"
 	"$phongboost" "1.5"

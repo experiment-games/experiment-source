@@ -1,5 +1,5 @@
 "DebugLuxels"
 {
-	"$basetexture" "debug/debugluxels"
+	"$basetexture" "gmod_compatibility_content/debug/debugluxels"
 	"$vertexalpha" 1
 }

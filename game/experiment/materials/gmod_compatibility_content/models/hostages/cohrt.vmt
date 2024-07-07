@@ -1,16 +1,16 @@
 "VertexLitGeneric"
 {
-	"$basetexture" "models/hostages/cohrt"
-	"$bumpmap" "null-bumpmap"
-	
+	"$basetexture" "gmod_compatibility_content/models/hostages/cohrt"
+	"$bumpmap" "gmod_compatibility_content/null-bumpmap"
+
 	"$phong" "1"
 	"$phongexponent" "15.0"
 	"$phongboost" "0.5"
 	"$phongfresnelranges"	"[0.1 0.5 1]"
 	"$basemapalphaphongmask" "1"
-	
+
 	"$phongtint" "[0.9 0.8 0.7]"
-	
+
 	"$rimlight" "1"
 	"$rimlightboost" "1.2"
 	"$rimlightexponent" "4"

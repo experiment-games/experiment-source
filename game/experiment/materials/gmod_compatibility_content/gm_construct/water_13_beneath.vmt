@@ -23,7 +23,7 @@
 
 	"$scale" "[1 1]"
 
-	"$bumpmap" "gm_construct/water_13_dudv"
+	"$bumpmap" "gmod_compatibility_content/gm_construct/water_13_dudv"
 	"$normalmap" "gm_construct/water_13_normal"
 
 	"$surfaceprop" "water"

@@ -1,6 +1,6 @@
 "LightmappedGeneric"
 {
-	"$basetexture" "gm_construct/overlay_5"
+	"$basetexture" "gmod_compatibility_content/gm_construct/overlay_5"
 	"$translucent" "1"
 	"$decal" "1"
 }

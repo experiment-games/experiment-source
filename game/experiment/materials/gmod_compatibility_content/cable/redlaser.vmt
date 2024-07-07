@@ -1,6 +1,6 @@
 "UnlitGeneric"
 {
-	"$basetexture"		"sprites\purplelaser1"
+	"$basetexture" "gmod_compatibility_content/sprites\purplelaser1"
 	"$nocull"			1
 	"$MinLight"		1
 	"$MaxLight"		1

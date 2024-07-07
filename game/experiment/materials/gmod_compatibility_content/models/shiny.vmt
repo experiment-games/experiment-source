@@ -1,6 +1,6 @@
 "VertexLitGeneric"
 {
-	"$basetexture" "Models/Debug/debugwhite"
+	"$basetexture" "gmod_compatibility_content/Models/Debug/debugwhite"
 	"$surfaceprop" "metal"
 	"$envmap" "env_cubemap"
 	"$envmaptint" "[ .5 .5 .5 ]"

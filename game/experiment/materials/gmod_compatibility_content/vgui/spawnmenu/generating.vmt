@@ -1,6 +1,6 @@
 "UnlitGeneric"
 {
-	"$basetexture"		"vgui/spawnmenu/generating"
+	"$basetexture" "gmod_compatibility_content/vgui/spawnmenu/generating"
 	"$vertexcolor" 		0
 	"$vertexalpha" 		1
 	"$nolod" 			1

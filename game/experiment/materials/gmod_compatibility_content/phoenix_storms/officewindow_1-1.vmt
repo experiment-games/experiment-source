@@ -1,7 +1,7 @@
 "VertexLitGeneric"
 {
-	"$basetexture"	"phoenix_storms/officewindow_1-1"
-	"$bumpmap"		"phoenix_storms/officewindow_bump"
+	"$basetexture" "gmod_compatibility_content/phoenix_storms/officewindow_1-1"
+	"$bumpmap" "gmod_compatibility_content/phoenix_storms/officewindow_bump"
 	"$surfaceprop"	"metal"
 	"$halflambert"	"1"
 

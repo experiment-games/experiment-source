@@ -1,6 +1,6 @@
 "VertexLitGeneric"
 {
-	"$basetexture" "phoenix_storms/woodinside"
+	"$basetexture" "gmod_compatibility_content/phoenix_storms/woodinside"
 	"$surfaceprop" "wood"
 	//"$envmap" "env_cubemap"
 	//"$envmaptint" "[ .3 .3 .3 ]"

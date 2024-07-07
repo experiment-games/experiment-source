@@ -1,6 +1,6 @@
 "UnlitGeneric"
 {
-	"$basetexture"		"gui/gradient_down"
+	"$basetexture" "gmod_compatibility_content/gui/gradient_down"
 	"$ignorez"			1
 	"$vertexcolor" 		1
 	"$vertexalpha" 		1

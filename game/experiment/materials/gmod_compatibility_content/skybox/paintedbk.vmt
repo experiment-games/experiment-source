@@ -1,7 +1,7 @@
 "g_sky"
 {
 	// Fallback textures
-	"$basetexture" "skybox/paintedBK"
+	"$basetexture" "gmod_compatibility_content/skybox/paintedBK"
 	"$startexture" "skybox/starfield"
 
 	Proxies

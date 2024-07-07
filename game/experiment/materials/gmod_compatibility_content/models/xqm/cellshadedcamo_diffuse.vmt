@@ -1,9 +1,9 @@
 
 "VertexLitGeneric"
 {
-	"$basetexture" "models/XQM/CellShadedCamo_diffuse"
+	"$basetexture" "gmod_compatibility_content/models/XQM/CellShadedCamo_diffuse"
 	"$surfaceprop" "metal"
-	"$bumpmap" "models/XQM/CellShadedCamo_normal"
+	"$bumpmap" "gmod_compatibility_content/models/XQM/CellShadedCamo_normal"
 	"$model" 1
 	"$phong" "1"
 	"$phongexponent" "40"

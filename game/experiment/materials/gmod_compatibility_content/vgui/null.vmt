@@ -1,6 +1,6 @@
 "UnlitGeneric"
 {
-	"$basetexture"		"null"
+	"$basetexture" "gmod_compatibility_content/null"
 	"$vertexcolor" 		1
 	"$vertexalpha" 		1
 	"$nolod" 			1

@@ -1,8 +1,8 @@
 "VertexLitGeneric"
 {
-	"$basetexture" "phoenix_storms/mat/mat_phx_carbonfiber"
+	"$basetexture" "gmod_compatibility_content/phoenix_storms/mat/mat_phx_carbonfiber"
 	"$surfaceprop" "metal"
-	"$bumpmap" "phoenix_storms/mat/mat_phx_carbonfiber_normal"
+	"$bumpmap" "gmod_compatibility_content/phoenix_storms/mat/mat_phx_carbonfiber_normal"
 	"$envmap" "env_cubemap"
 	"$normalmapalphaenvmapmask" 1
 //	"$envmapcontrast" 1

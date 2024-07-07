@@ -1,9 +1,9 @@
 "VertexLitGeneric"
 {
-	"$baseTexture" "MaxOfS2D/models/hover_basic_rainbow"
-	"$bumpmap" "null-bumpmap"
-	
+	"$basetexture" "gmod_compatibility_content/MaxOfS2D/models/hover_basic_rainbow"
+	"$bumpmap" "gmod_compatibility_content/null-bumpmap"
+
 	"$translucent" "1"
-	
+
 	// "$BasemapAlphaPhongMask" "1"
 }

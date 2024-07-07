@@ -1,5 +1,5 @@
 "VertexLitGeneric"
 {
 	// Original shader: VertexLitTexture
-	"$basetexture" "models/Weapons/w_slam/wslam"
+	"$basetexture" "gmod_compatibility_content/models/Weapons/w_slam/wslam"
 }

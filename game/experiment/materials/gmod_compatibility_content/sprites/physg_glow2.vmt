@@ -1,7 +1,7 @@
 "Sprite"
 {
-	"$basetexture" "sprites/physgun_glow"
-	
+	"$basetexture" "gmod_compatibility_content/sprites/physgun_glow"
+
 	"$spriteorientation" "vp_parallel"
 	"$spriteorigin" "[ 0.50 0.50 ]"
 	"$vertexalpha" 1

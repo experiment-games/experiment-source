@@ -1,19 +1,19 @@
 "VertexLitGeneric"
 {
-	"$baseTexture" 		"models/balloon/balloon_fish"
-	
+	"$basetexture" "gmod_compatibility_content/models/balloon/balloon_fish"
+
 	"$envmap" 		"env_cubemap"
 	"$envmaptint" 		"[ .01 .01 .01 ]"
 
 	"$halflambert" 1
 
-	"$phong" "1" 
-	"$phongboost" "10" 
+	"$phong" "1"
+	"$phongboost" "10"
 	"$phongfresnelranges" "[0.33 0.33 0.33]"
 	"$phongexponent" "100"
-	
+
 	// Yack, but it's the only way I can find to enable phong.
-	"$bumpmap" "null-bumpmap"
-	
+	"$bumpmap" "gmod_compatibility_content/null-bumpmap"
+
 	"$model" 1
 }

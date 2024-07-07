@@ -1,6 +1,6 @@
 "Teeth"
 {
-	"$basetexture" "models/Mossman/fmouth"
+	"$basetexture" "gmod_compatibility_content/models/Mossman/fmouth"
 	"$clientshader" "MouthShader"
 	"$model" 1
 	"$halflambert" 1

@@ -2,7 +2,7 @@
 {
 	"$basetexturetransform2" "center .5 .5 scale 1.2 1.2 rotate 30 translate 0 0"
 
-	"$basetexture" "gm_construct/grass1"
+	"$basetexture" "gmod_compatibility_content/gm_construct/grass1"
 	"$basetexture2" "gm_construct/construct_sand"
 
 	"$blendmodulatetexture" "gm_construct/grass_blendmask"

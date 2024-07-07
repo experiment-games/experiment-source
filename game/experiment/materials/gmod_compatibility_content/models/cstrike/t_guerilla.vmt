@@ -1,31 +1,31 @@
 "vertexlitgeneric"
 {
-	"$baseTexture" 	"models/cstrike/t_guerilla"
-    "$bumpmap" 		"models/cstrike/t_guerilla_normal"
-	
+	"$basetexture" "gmod_compatibility_content/models/cstrike/t_guerilla"
+    "$bumpmap" "gmod_compatibility_content/models/cstrike/t_guerilla_normal"
+
 	"$phong" "1"
 	"$phongexponent" "8"
 	"$phongboost" "1"
 	"$phongfresnelranges" "[0.05 0.1 0.5]"
-	
+
 	"$rimlight" "1"
 	"$rimlightexponent" "8"
 	"$rimlightboost" "3"
-	
+
 	"$phongexponenttexture" "models/cstrike/t_guerilla_normal"
 	"$rimmask" "1"
-	
+
 	// ------------------------------------------------------------------------
 	// PLAYER COLOR CUSTOMIZATION
 	// ------------------------------------------------------------------------
-	
+
 	// This particular model doesn't use the long chain of proxies seen
 	// elsewhere, since only a small part of the model is coloured. If you're
 	// looking for an example, try models/alyx/plyr_sheet.vmt :)
-	
-	"$blendtintbybasealpha" "1" 
+
+	"$blendtintbybasealpha" "1"
  	"$blendtintcoloroverbase" "0"
-	
+
 	// --- Test values. Comment the PlayerColor proxy to use one of these.
 	// "$color2" "{0 0 0}" // Black
 	// "$color2" "{255 0 0}" // Blue (default)
@@ -36,7 +36,7 @@
 	// "$color2" "{248 166 202}" // Pink
 	// "$color2" "{160 100 140}" // Purple
 	// "$color2" "{242 168 96}" // Yellow (gold-ish)
-	
+
 	Proxies
 	{
 		PlayerColor

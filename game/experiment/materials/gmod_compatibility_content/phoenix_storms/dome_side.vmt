@@ -1,9 +1,9 @@
 "VertexLitGeneric"
 {
-	"$basetexture" "phoenix_storms/dome_side"
+	"$basetexture" "gmod_compatibility_content/phoenix_storms/dome_side"
 	"$nocull" 1
 	"$surfaceprop" "metal"
-	"$bumpmap" "phoenix_storms/dome_side_bump"
+	"$bumpmap" "gmod_compatibility_content/phoenix_storms/dome_side_bump"
 	"$envmap" "env_cubemap"
 	"$normalmapalphaenvmapmask" 1
 	"$envmapcontrast" 1

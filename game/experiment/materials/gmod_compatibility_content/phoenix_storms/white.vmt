@@ -1,6 +1,6 @@
 "VertexLitGeneric"
 {
-	"$basetexture" "phoenix_storms/white_chrome"
+	"$basetexture" "gmod_compatibility_content/phoenix_storms/white_chrome"
 	"$surfaceprop" "concrete"
 	//"$envmap" "env_cubemap"
 	//"$envmaptint" "[ .05 .05 .05 ]"

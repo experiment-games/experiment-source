@@ -1,6 +1,6 @@
 "UnlitGeneric"
 {
-	"$basetexture" "console/background01"
+	"$basetexture" "gmod_compatibility_content/console/background01"
 	"$vertexcolor" 1
 	"$vertexalpha" 1
 	"$ignorez" 1

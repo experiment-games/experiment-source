@@ -1,6 +1,6 @@
 "VertexLitGeneric"
 {
-	"$baseTexture" "models/dav0r/hoverball"
+	"$basetexture" "gmod_compatibility_content/models/dav0r/hoverball"
 	"$surfaceprop" "metal"
     	"$envmap" "env_cubemap"
    	"$envmapcontrast" 0.7
@@ -8,11 +8,11 @@
 	"$selfillum"	"1"
 
 
-	"$phong" "1" 
-	"$phongboost" "1" 
+	"$phong" "1"
+	"$phongboost" "1"
 	"$phongfresnelranges" "[ 1 5 20]"
 	"$phongexponent" "40"
 
-	"$bumpmap" "models/dav0r/hoverball_nrm"
+	"$bumpmap" "gmod_compatibility_content/models/dav0r/hoverball_nrm"
 	"$normalmapalphaenvmapmask" "1"
 }

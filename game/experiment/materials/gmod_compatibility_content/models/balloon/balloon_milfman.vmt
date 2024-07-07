@@ -1,6 +1,6 @@
 "VertexLitGeneric"
 {
-	"$baseTexture" 		"models/balloon/balloon_milfman"
+	"$basetexture" "gmod_compatibility_content/models/balloon/balloon_milfman"
 	"$envmap" 		"env_cubemap"
 	"$envmaptint" 		"[ .4 .4 .4 ]"
 	"$model" 			1

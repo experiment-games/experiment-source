@@ -1,6 +1,6 @@
 "VertexLitGeneric"
 {
-	"$basetexture" "phoenix_storms/gear_top"
+	"$basetexture" "gmod_compatibility_content/phoenix_storms/gear_top"
 	"$surfaceprop" "metal"
 	"$envmap" "env_cubemap"
 	"$envmapcontrast" 1

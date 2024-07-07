@@ -2,7 +2,7 @@
 {
 	"$spriteorientation" "vp_parallel"
 	"$spriteorigin" "[ 0.50 0.50 ]"
-	"$basetexture" "sprites/redglow1"
+	"$basetexture" "gmod_compatibility_content/sprites/redglow1"
 
 	// Use same fix as HL1, instead of changing how grenade glow looks
 	"$spriterendermode" "5"

@@ -1,10 +1,10 @@
 
 "VertexLitGeneric"
 {
-	"$basetexture" "models/XQM/JetBody3Glass"
+	"$basetexture" "gmod_compatibility_content/models/XQM/JetBody3Glass"
 	"$translucent" 1
 	"$surfaceprop" "metal"
-	"$bumpmap" "models/XQM/JetBody3_normal"
+	"$bumpmap" "gmod_compatibility_content/models/XQM/JetBody3_normal"
 	"$phong" "1"
 	"$phongexponent" "40"
 	"$phongboost" "4"

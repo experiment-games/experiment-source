@@ -1,9 +1,9 @@
 "VertexLitGeneric"
 {
-	"$basetexture" "phoenix_storms/egg"
+	"$basetexture" "gmod_compatibility_content/phoenix_storms/egg"
 	"$surfaceprop" "plastic"
 	"$halflambert" 1
-	"$bumpmap" "phoenix_storms/egg_bump"
+	"$bumpmap" "gmod_compatibility_content/phoenix_storms/egg_bump"
 	"$envmap" "env_cubemap"
 //	"$normalmapalphaenvmapmask" 1
 //	"$envmapcontrast" 1

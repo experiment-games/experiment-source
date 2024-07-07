@@ -1,9 +1,9 @@
 
 "VertexLitGeneric"
 {
-	"$basetexture" "models/XQM/Deg360_diffuse"
+	"$basetexture" "gmod_compatibility_content/models/XQM/Deg360_diffuse"
 	"$surfaceprop" "metal"
-	"$bumpmap" "models/XQM/Deg360_normal"
+	"$bumpmap" "gmod_compatibility_content/models/XQM/Deg360_normal"
 	"$model" 1
 	"$phong" "1"
 	"$phongexponent" "40"

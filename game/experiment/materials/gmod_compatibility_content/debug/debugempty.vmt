@@ -1,7 +1,7 @@
 "UnlitGeneric"
 {
 	// Original shader: BaseTexture
-	"$basetexture" "Debug/debugempty"
+	"$basetexture" "gmod_compatibility_content/Debug/debugempty"
 	"$model" 1
 
 	// If this is used for decals, make it somewhat small...

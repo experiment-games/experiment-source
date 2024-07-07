@@ -11,12 +11,12 @@
 
 	"$reflecttexture" "_rt_WaterReflection" // disable for  brightness bug
 	"$reflectamount" "0.4"
-	
+
 	"$scale" "[1 1]"
 
-	"$bumpmap" "gm_construct/water_13_dudv"
+	"$bumpmap" "gmod_compatibility_content/gm_construct/water_13_dudv"
 	"$normalmap" "gm_construct/water_13_normal"
-	// "$bumpmap" "nature/water_coast01_dudv"
+	// "$bumpmap" "gmod_compatibility_content/nature/water_coast01_dudv"
 	// "$normalmap" "nature/water_coast01_normal"
 
 	"$surfaceprop" "water"

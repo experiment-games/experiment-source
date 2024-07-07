@@ -1,10 +1,10 @@
 "VertexLitGeneric"
 {
-	"$basetexture" "phoenix_storms/pack2/glass"
+	"$basetexture" "gmod_compatibility_content/phoenix_storms/pack2/glass"
 	"$translucent" 1
-	"$nocull" 1	
+	"$nocull" 1
 	"$surfaceprop" "metal"
-	//"$bumpmap" "phoenix_storms/pack2/glass"
+	//"$bumpmap" "gmod_compatibility_content/phoenix_storms/pack2/glass"
 	"$envmap" "env_cubemap"
 	"$envmaptint" "[ 1.0 1.0 1.0 ]"
 	//"$envmapmask" "phoenix_storms/pack2/glass"

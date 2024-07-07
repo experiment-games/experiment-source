@@ -1,6 +1,6 @@
 "UnlitGeneric"
 {
-	"$basetexture" "sprites/key_13"
+	"$basetexture" "gmod_compatibility_content/sprites/key_13"
 	"$additive" 0
 	"$vertexcolor" 1
 	"$vertexalpha" 1

@@ -2,6 +2,6 @@
 {
 	"$spriteorientation" "vp_parallel"
 	"$spriteorigin" "[ 0.50 0.50 ]"
-	"$basetexture" "editor/func_instance_parms"
+	"$basetexture" "gmod_compatibility_content/editor/func_instance_parms"
 	"$no_fullbright" 1
 }

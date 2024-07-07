@@ -1,9 +1,9 @@
 "VertexLitGeneric"
 {
-	"$basetexture"	"Models/skeleton/skeleton_decomp"
+	"$basetexture" "gmod_compatibility_content/Models/skeleton/skeleton_decomp"
 	"$surfaceprop"	"default"
 	"$model"	1
-		"$bumpmap" "null-bumpmap"
+		"$bumpmap" "gmod_compatibility_content/null-bumpmap"
 	"$phong" "1"
 	"$phongboost" "0.5"
 	"$phongexponent" "15"

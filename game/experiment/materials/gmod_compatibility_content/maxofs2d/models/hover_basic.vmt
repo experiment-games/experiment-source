@@ -1,12 +1,12 @@
 "VertexLitGeneric"
 {
-	"$baseTexture" "MaxOfS2D/models/hover_basic"
-	"$bumpmap" "MaxOfS2D/models/hover_basic_normal"
-	
+	"$basetexture" "gmod_compatibility_content/MaxOfS2D/models/hover_basic"
+	"$bumpmap" "gmod_compatibility_content/MaxOfS2D/models/hover_basic_normal"
+
 	"$phong" "1"
 	"$phongexponent" "10.0"
 	"$phongboost" "1"
 	"$phongfresnelranges"	"[0.4 0.8 0.2]"
-	
+
 	"$BasemapAlphaPhongMask" "1"
 }

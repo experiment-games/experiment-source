@@ -1,4 +1,4 @@
 "Eyeball"
 {
-	"$basetexture" "models/Mossman/pupil_l"
+	"$basetexture" "gmod_compatibility_content/models/Mossman/pupil_l"
 }

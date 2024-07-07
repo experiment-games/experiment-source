@@ -2,6 +2,6 @@
 {
 	"$spriteorientation" "parallel_upright"
 	"$spriteorigin" "[ 0.50 0.50 ]"
-	"$basetexture" "sprites/physbeam_white"
+	"$basetexture" "gmod_compatibility_content/sprites/physbeam_white"
 	"$spriterendermode" 5
 }

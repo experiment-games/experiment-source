@@ -1,8 +1,8 @@
 "VertexLitGeneric"
 {
-	"$baseTexture" "models/police/metrocop_sheet"
-	"$bumpmap" "models/police/metrocop_sheet_normal"
-	
+	"$basetexture" "gmod_compatibility_content/models/police/metrocop_sheet"
+	"$bumpmap" "gmod_compatibility_content/models/police/metrocop_sheet_normal"
+
 	"$phong" "1"
 	"$phongexponent" "10"
 	"$phongboost" "5"

@@ -1,6 +1,6 @@
 "VertexLitGeneric"
 {
-	"$baseTexture" "xeon133/sliderbar"
+	"$basetexture" "gmod_compatibility_content/xeon133/sliderbar"
 	"$surfaceprop" "metal"
 	"$phong"     "1"
 	"$halflambert"	1

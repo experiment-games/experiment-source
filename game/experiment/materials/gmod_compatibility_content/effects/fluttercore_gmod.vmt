@@ -2,7 +2,7 @@
 {
 	"$spriteorientation" "vp_parallel"
 	"$spriteorigin" "[ 0.50 0.50 ]"
-	"$basetexture" "effects/fluttercore"
+	"$basetexture" "gmod_compatibility_content/effects/fluttercore"
 	//"$ignorez" "1"
 	"$spriterendermode" "5"
 }

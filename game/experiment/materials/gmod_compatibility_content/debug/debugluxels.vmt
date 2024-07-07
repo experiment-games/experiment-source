@@ -1,6 +1,6 @@
 "DebugLuxels"
 {
-	"$basetexture" "debug/debugluxels"
+	"$basetexture" "gmod_compatibility_content/debug/debugluxels"
 	"$translucent" 1
 	"$decal" 1
 }

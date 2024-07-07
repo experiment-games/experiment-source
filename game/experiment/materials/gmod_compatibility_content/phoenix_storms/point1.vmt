@@ -1,6 +1,6 @@
 "VertexLitGeneric"
 {
-	"$basetexture" "phoenix_storms/point1"
+	"$basetexture" "gmod_compatibility_content/phoenix_storms/point1"
 	"$surfaceprop" "paper"
 	"$selfillum" 0
 	"$model" 1

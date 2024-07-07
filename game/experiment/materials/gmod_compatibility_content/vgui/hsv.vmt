@@ -1,6 +1,6 @@
 "UnlitGeneric"
 {
-	"$basetexture"		"vgui/hsv"
+	"$basetexture" "gmod_compatibility_content/vgui/hsv"
 	"$vertexcolor" 		1
 	"$vertexalpha" 		1
 	"$nolod" 			1

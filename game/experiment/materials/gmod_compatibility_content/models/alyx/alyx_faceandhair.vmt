@@ -1,14 +1,14 @@
 "VertexLitGeneric"
 {
-	"$basetexture" "models/Alyx/alyx_faceandhair"
-	"$bumpmap" "models/alyx/alyx_head_normal"
+	"$basetexture" "gmod_compatibility_content/models/Alyx/alyx_faceandhair"
+	"$bumpmap" "gmod_compatibility_content/models/alyx/alyx_head_normal"
 	"$halflambert" 1
 	"$nodecal" "1"
-	
+
 	"$phongexponenttexture" "models/humans/facemap_phong"
 
 	"$phongtint" "[0.9 0.8 0.7]"
-	
+
 	"$rimlight" "1"
 	"$rimlightboost" "2"
 	"$rimlightexponent" "4"

@@ -1,6 +1,6 @@
 "VertexLitGeneric"
 {
-	"$baseTexture" "Models/Mossman/mossman_hair"
+	"$basetexture" "gmod_compatibility_content/Models/Mossman/mossman_hair"
 	"$translucent" "1"
 	"$halflambert" 1
 	"$nodecal" "1"

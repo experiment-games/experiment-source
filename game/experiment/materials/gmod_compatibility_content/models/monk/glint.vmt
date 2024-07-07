@@ -1,7 +1,7 @@
 "UnlitGeneric"
 {
 	// Original shader: AddTexture
-	"$basetexture" "models/monk/glint"
+	"$basetexture" "gmod_compatibility_content/models/monk/glint"
 	"$additive" 1
 	"$model" 1
 }

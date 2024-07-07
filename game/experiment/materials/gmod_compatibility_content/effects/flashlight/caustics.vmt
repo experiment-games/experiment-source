@@ -1,7 +1,7 @@
 "UnlitGeneric"
 {
-	"$basetexture" "effects/flashlight/caustics"
-	
+	"$basetexture" "gmod_compatibility_content/effects/flashlight/caustics"
+
 	"Proxies"
 	{
 		"AnimatedTexture"

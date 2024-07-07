@@ -1,6 +1,6 @@
 "UnlitGeneric"
 {
-	"$basetexture"		"vgui/gradvr"
+	"$basetexture" "gmod_compatibility_content/vgui/gradvr"
 	"$vertexcolor" 		1
 	"$vertexalpha" 		1
 	"$nolod" 			1

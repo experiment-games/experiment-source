@@ -1,5 +1,5 @@
 "VertexLitGeneric"
 {
-	"$basetexture" "_rt_FullFrameFB"
+	"$basetexture" "gmod_compatibility_content/_rt_FullFrameFB"
 	"$model"	"1"
 }

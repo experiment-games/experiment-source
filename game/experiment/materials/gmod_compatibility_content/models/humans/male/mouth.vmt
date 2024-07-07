@@ -1,6 +1,6 @@
 "Teeth"
 {
-	"$basetexture" "models/Humans/Male/mouth"
+	"$basetexture" "gmod_compatibility_content/models/Humans/Male/mouth"
 	"$model" 1
 	"$clientshader" "MouthShader"
 	"$halflambert" 1

@@ -1,7 +1,7 @@
 "VertexLitGeneric"
 {
 	"$translucent" "1"
-	"$basetexture" "decals/smile"
+	"$basetexture" "gmod_compatibility_content/decals/smile"
 	"$decal" "1"
 	"$decalscale" "0.08"
 	"$vertexcolor" "1"

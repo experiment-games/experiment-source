@@ -1,8 +1,8 @@
 "VertexLitGeneric"
 {
-	"$baseTexture" "MaxOfS2D/models/hover_plate"
-	"$bumpmap" "MaxOfS2D/models/hover_plate_normal"
-	
+	"$basetexture" "gmod_compatibility_content/MaxOfS2D/models/hover_plate"
+	"$bumpmap" "gmod_compatibility_content/MaxOfS2D/models/hover_plate_normal"
+
 
 	"$phong" "1"
 	"$phongexponent" "10.0"

@@ -1,6 +1,6 @@
 "VertexLitGeneric"
 {
-	"$baseTexture" "xeon133/testtexture"
+	"$basetexture" "gmod_compatibility_content/xeon133/testtexture"
 	"$surfaceprop" "metal"
 	"$phong"     "1"
 	"$halflambert"	1

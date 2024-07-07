@@ -1,6 +1,6 @@
 "LightmappedGeneric"
 {
-	"$basetexture" "Plaster/plasterwall017a"
+	"$basetexture" "gmod_compatibility_content/Plaster/plasterwall017a"
 	"$surfaceprop" "plaster"
 	"$detail" "detail\plaster_detail_01"
 	"$detailscale" "6.783"
@@ -11,7 +11,7 @@
 
 	"LightmappedGeneric_DX9"
 	{
-		"$bumpmap" "concrete/concretefloor025a_normal"
+		"$bumpmap" "gmod_compatibility_content/concrete/concretefloor025a_normal"
 		// "$envmap" "env_cubemap"
 		// "$normalmapalphaenvmapmask" "1"
 		// "$envmapcontrast" "1"

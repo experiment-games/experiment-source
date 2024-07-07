@@ -1,7 +1,7 @@
 "VertexLitGeneric"
 {
-	"$basetexture" "models/eli/eli_tex4z"
-    "$bumpmap" "models/eli/eli_head_normal"
+	"$basetexture" "gmod_compatibility_content/models/eli/eli_tex4z"
+    "$bumpmap" "gmod_compatibility_content/models/eli/eli_head_normal"
 	"$halflambert" 1
 	"$nodecal" "1"
 
@@ -10,7 +10,7 @@
 	"$phongboost" "5"
 	"$phongfresnelranges"	"[.1 .5  1]"
 	"$phongtint" "[0.9 0.8 0.7]"
-	
+
 	"$rimlight" "1"
 	"$rimlightboost" "2"
 	"$rimlightexponent" "4"

@@ -1,6 +1,6 @@
 "eyes"
 {
-	"$basetexture" "models/monk/eyeball_l"
+	"$basetexture" "gmod_compatibility_content/models/monk/eyeball_l"
 	"$iris" "models/monk/pupil_l"
 	"$halflambert" 1
 }

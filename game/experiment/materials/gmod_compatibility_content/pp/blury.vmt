@@ -1,8 +1,8 @@
 "g_blury"
 {
-	"$basetexture" "_rt_FullFrameFB"
+	"$basetexture" "gmod_compatibility_content/_rt_FullFrameFB"
 
-	"$size" "6" 
+	"$size" "6"
 	"$ignorez" "1"
 	"$additive" "1"
 }

@@ -1,6 +1,6 @@
 "VertexLitGeneric"
 {
-	"$baseTexture" "metal4"
+	"$basetexture" "gmod_compatibility_content/metal4"
 	"$surfaceprop" "solidmetal"
 	"$envmap" "env_cubemap"
 	"$envmaptint" "[ 1 1 1 ]"

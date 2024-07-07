@@ -1,6 +1,6 @@
 "UnlitGeneric"
 {
-	"$basetexture" "gui/corner32"
+	"$basetexture" "gmod_compatibility_content/gui/corner32"
 	"$ignorez" "1"
 	"$vertexcolor" "1"
 	"$vertexalpha" "1"

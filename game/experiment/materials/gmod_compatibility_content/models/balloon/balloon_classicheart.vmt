@@ -1,12 +1,12 @@
 "VertexlitGeneric"
 {
-	"$basetexture" "color/white"
-	"$bumpmap" "null-bumpmap"
+	"$basetexture" "gmod_compatibility_content/color/white"
+	"$bumpmap" "gmod_compatibility_content/null-bumpmap"
 	"$envmap" "env_cubemap"
-	
+
 	"$phong" "1"
 	"$phongexponent" "2"
-	"$phongboost" "1" 
+	"$phongboost" "1"
 	"$phongfresnelranges" "[0.1 0.5 1]"
 
 	$envmaptint "[0.07 0.07 0.07]"

@@ -1,7 +1,7 @@
 "unlitgeneric"
 {
 	"$nofog"             1
-	"$basetexture"       "models/props/de_nuke/hr_nuke/nuke_skydome_001/nuke_clouds_002"
+	"$basetexture" "gmod_compatibility_content/models/props/de_nuke/hr_nuke/nuke_skydome_001/nuke_clouds_002"
 	"$texture2"          "models/props/de_nuke/hr_nuke/nuke_skydome_001/nuke_clouds_001"
 	"$alpha"             ".65"
 	"$translucent"       "1"

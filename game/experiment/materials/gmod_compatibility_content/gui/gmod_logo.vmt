@@ -1,6 +1,6 @@
 "UnlitGeneric"
 {
-	"$basetexture"		"gui/gmod_logo"
+	"$basetexture" "gmod_compatibility_content/gui/gmod_logo"
 	"$ignorez"		1
 	"$vertexcolor" 		1
 	"$vertexalpha" 		1

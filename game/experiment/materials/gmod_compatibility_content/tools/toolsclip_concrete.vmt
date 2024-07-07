@@ -1,7 +1,7 @@
 "LightmappedGeneric"
 {
 	"$translucent" 		"1"
-	"$basetexture" 		"Tools/toolsclip_concrete"
+	"$basetexture" "gmod_compatibility_content/Tools/toolsclip_concrete"
 	"%compileclip" 		"1"
 	"$surfaceprop" 		"concrete"
 	"%keywords" 		"clip,concrete"

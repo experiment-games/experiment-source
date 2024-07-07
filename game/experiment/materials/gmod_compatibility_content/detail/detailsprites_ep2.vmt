@@ -1,6 +1,6 @@
 "UnlitGeneric"
 {
-	"$basetexture" "detail/detailsprites_ep2"
+	"$basetexture" "gmod_compatibility_content/detail/detailsprites_ep2"
 	"$nocull" 1
 	"$translucent" "1"
 	"$VertexColor" 1

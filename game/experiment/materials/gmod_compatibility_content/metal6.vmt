@@ -1,8 +1,8 @@
 "VertexLitGeneric"
 {
-	"$baseTexture" "metal6"
+	"$basetexture" "gmod_compatibility_content/metal6"
 	"$surfaceprop" "solidmetal"
-	"$bumpmap" "metal6_bump"
+	"$bumpmap" "gmod_compatibility_content/metal6_bump"
 	 "$phong"     "1"
 	"$halflambert"	1
  	"$phongexponent"   "250"

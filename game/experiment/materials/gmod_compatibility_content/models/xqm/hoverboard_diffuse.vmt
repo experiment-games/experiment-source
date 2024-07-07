@@ -1,9 +1,9 @@
 
 "VertexLitGeneric"
 {
-	"$basetexture" "models/XQM/Hoverboard_diffuse"
+	"$basetexture" "gmod_compatibility_content/models/XQM/Hoverboard_diffuse"
 	"$surfaceprop" "metal"
-	"$bumpmap" "models/XQM/Hoverboard_normal"
+	"$bumpmap" "gmod_compatibility_content/models/XQM/Hoverboard_normal"
 	"$phong" "1"
 	"$phongexponent" "40"
 	"$phongboost" "3"

@@ -1,8 +1,8 @@
 "VertexLitGeneric"
 {
-	"$basetexture"	"MODELS/WEAPONS/V_MODELS/HANDS/us_sleeve"
-	"$bumpmap" "models/weapons/v_models/hands/dod_arms_normal"
-	
+	"$basetexture" "gmod_compatibility_content/MODELS/WEAPONS/V_MODELS/HANDS/us_sleeve"
+	"$bumpmap" "gmod_compatibility_content/models/weapons/v_models/hands/dod_arms_normal"
+
 	"$phong" "1"
 	"$phongexponent" "5"
 	"$phongboost" "0.5"

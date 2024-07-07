@@ -1,14 +1,14 @@
 VertexLitGeneric
 {
-	"$basetexture"	"models\weapons\v_models\c4\c4"
+	"$basetexture" "gmod_compatibility_content/models\weapons\v_models\c4\c4"
 	// "$envmap" "env_cubemap"
 	// "$envmapmask" "models\weapons\v_models\c4\c4_ref"
-	
-	"$bumpmap" "null-bumpmap"
+
+	"$bumpmap" "gmod_compatibility_content/null-bumpmap"
 	"$halflambert" "1"
-	
+
 	"$BasemapLuminancePhongMask" "1"
-	
+
 	"$phong" "1"
 	"$phongboost" "1"
 	"$phongexponent" "10"

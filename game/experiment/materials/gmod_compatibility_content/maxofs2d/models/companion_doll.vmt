@@ -1,13 +1,13 @@
 "VertexLitGeneric"
 {
-	"$baseTexture" "MaxOfS2D/models/companion_doll"
-	"$bumpmap" "MaxOfS2D/models/companion_doll_normal"
-	
+	"$basetexture" "gmod_compatibility_content/MaxOfS2D/models/companion_doll"
+	"$bumpmap" "gmod_compatibility_content/MaxOfS2D/models/companion_doll_normal"
+
 	// "$color2" "{108 36 102}"
-	
+
 	"$blendtintbybasealpha" 1
 	"$blendtintcoloroverbase" "0.05"
-	
+
 	"$phong" "1"
 	"$phongexponent" "12.0"
 	"$phongboost" "0.8"

@@ -1,8 +1,8 @@
 "VertexLitGeneric"
 {
-	"$basetexture" "phoenix_storms/checkers"
+	"$basetexture" "gmod_compatibility_content/phoenix_storms/checkers"
 	"$surfaceprop" "tile"
-	"$bumpmap" "phoenix_storms/checkers_bump"
+	"$bumpmap" "gmod_compatibility_content/phoenix_storms/checkers_bump"
 	"$envmap" "env_cubemap"
 	"$normalmapalphaenvmapmask" 1
 

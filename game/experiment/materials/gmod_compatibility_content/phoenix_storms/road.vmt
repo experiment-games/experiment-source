@@ -1,8 +1,8 @@
 "VertexLitGeneric"
 {
-	"$basetexture" "phoenix_storms/road"
+	"$basetexture" "gmod_compatibility_content/phoenix_storms/road"
 	"$surfaceprop" "concrete"
-	"$bumpmap" "phoenix_storms/concrete_bump"
+	"$bumpmap" "gmod_compatibility_content/phoenix_storms/concrete_bump"
 	"$envmap" "env_cubemap"
 	"$envmaptint" "[ .1 .1 .1 ]"
 	"$selfillum" 0

@@ -1,5 +1,5 @@
 "DecalModulate"
 {
-	"$basetexture" "decals/light"
+	"$basetexture" "gmod_compatibility_content/decals/light"
 	"$decalscale" "0.4"
 }

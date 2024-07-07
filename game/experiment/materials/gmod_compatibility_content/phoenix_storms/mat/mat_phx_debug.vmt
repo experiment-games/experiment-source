@@ -1,6 +1,6 @@
 "VertexLitGeneric"
 {
-	"$basetexture" "phoenix_storms/mat/mat_phx_debug"
+	"$basetexture" "gmod_compatibility_content/phoenix_storms/mat/mat_phx_debug"
 	"$surfaceprop" "metal"
 	"$model" 1
 	"$HalfLambert" 1

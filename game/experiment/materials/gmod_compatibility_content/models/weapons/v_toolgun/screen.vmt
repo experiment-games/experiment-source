@@ -1,5 +1,5 @@
 "UnLitGeneric"
 {
 	"$model" 			1
-	"$basetexture" 	"models/weapons/v_toolgun/screen_bg"	
+	"$basetexture" "gmod_compatibility_content/models/weapons/v_toolgun/screen_bg"
 }

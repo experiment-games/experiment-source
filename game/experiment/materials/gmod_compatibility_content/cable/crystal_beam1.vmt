@@ -1,6 +1,6 @@
 "UnlitGeneric"
 {
-	"$basetexture"		"sprites\crystal_beam1"
+	"$basetexture" "gmod_compatibility_content/sprites\crystal_beam1"
 	"$vertexcolor"		1
 	"$nocull"			1
 	"$MinLight"		1

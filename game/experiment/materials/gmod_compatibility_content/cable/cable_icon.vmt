@@ -1,6 +1,6 @@
 "UnlitGeneric"
 {
-	"$basetexture"		"cable\cable"
+	"$basetexture" "gmod_compatibility_content/cable\cable"
 	"$vertexcolor"		1
 	"$nocull"			1
 }

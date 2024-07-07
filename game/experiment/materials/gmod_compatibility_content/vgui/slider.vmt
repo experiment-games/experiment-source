@@ -1,6 +1,6 @@
 "UnlitGeneric"
 {
-	"$basetexture"		"vgui/slider"
+	"$basetexture" "gmod_compatibility_content/vgui/slider"
 	"$vertexcolor" 		1
 	"$vertexalpha" 		1
 	"$nolod" 			1

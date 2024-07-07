@@ -1,11 +1,11 @@
 "VertexLitGeneric"
 {
-	"$basetexture"	"Models/skeleton/skeleton"
+	"$basetexture" "gmod_compatibility_content/Models/skeleton/skeleton"
 	"$surfaceprop"	"default"
 	"$halflambert"	1
 	"$model"	1
-	
-	"$bumpmap" "null-bumpmap"
+
+	"$bumpmap" "gmod_compatibility_content/null-bumpmap"
 	"$phong" "1"
 	"$phongboost" "0.5"
 	"$phongexponent" "15"
@@ -13,7 +13,7 @@
 	"$rimlight" "1"
 	"$rimlightboost" "1.5"
 	"$rimlightexponent" "6"
-	
+
 	Proxies
 	{
 		PlayerColor
@@ -29,5 +29,5 @@
 			resultVar "$color2"
 		}
 	}
-	
+
 }

@@ -2,7 +2,7 @@
 {
 	// Original shader: BaseTimesLightmapAlphaBlend
 	"$translucent" 1
-	"$basetexture" "phoenix_storms/metalfence004a"
+	"$basetexture" "gmod_compatibility_content/phoenix_storms/metalfence004a"
 	"%compilepassbullets" 1
 	"$surfaceprop" "chainlink"
 	//"%keywords" "c17downtown,c17industrial"

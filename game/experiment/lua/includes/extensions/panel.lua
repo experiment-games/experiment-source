@@ -67,6 +67,16 @@ end
 	Panel metatable extensions
 --]]
 local PANEL = _R.Panel
+-- PANEL._OriginalPerformLayout = PANEL._OriginalPerformLayout or PANEL.PerformLayout
+
+-- --- We override PerformLayout so we can update docking when the panel is resized.
+-- function PANEL:PerformLayout(...)
+--     self:_OriginalPerformLayout(...)
+
+-- 	if (self._dockType ~= DOCK_TYPE.NONE) then
+-- 		self:UpdateDocking()
+-- 	end
+-- end
 
 --- Get all children of the panel.
 --- @return table

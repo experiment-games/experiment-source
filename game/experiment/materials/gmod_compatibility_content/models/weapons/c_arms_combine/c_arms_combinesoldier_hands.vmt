@@ -1,13 +1,13 @@
 "VertexLitGeneric"
 {
-	"$basetexture" "models/weapons/c_arms_combine/c_arms_combinesoldier_hands"
-	"$bumpmap"     "models/weapons/c_arms_combine/c_arms_combinesoldier_hands_normal"
+	"$basetexture" "gmod_compatibility_content/models/weapons/c_arms_combine/c_arms_combinesoldier_hands"
+	"$bumpmap" "gmod_compatibility_content/models/weapons/c_arms_combine/c_arms_combinesoldier_hands_normal"
 
 	"$phong" "1"
 	"$phongboost" "2"
 	"$phongexponent" "5"
 	"$phongfresnelranges"	"[.1 .5 1]"
-	
+
 	"$rimlight" "1"
 	"$rimlightboost" "0.5"
 	"$rimlightexponent" "4"

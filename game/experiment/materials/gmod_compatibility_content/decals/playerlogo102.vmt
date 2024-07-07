@@ -4,7 +4,7 @@
 	"$vertexalpha" "1"
 	// Original shader: DecalBaseTimesLightmapAlphaBlend
 	"$translucent" 1
-	"$basetexture" "decals/YBlood1"
+	"$basetexture" "gmod_compatibility_content/decals/YBlood1"
 	"$decal" 1
 
 	"Proxies"

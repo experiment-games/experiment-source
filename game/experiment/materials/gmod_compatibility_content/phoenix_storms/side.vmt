@@ -1,8 +1,8 @@
 "VertexLitGeneric"
 {
-	"$basetexture" "phoenix_storms/side"
+	"$basetexture" "gmod_compatibility_content/phoenix_storms/side"
 	"$surfaceprop" "metal"
-	"$bumpmap" "phoenix_storms/side_bump"
+	"$bumpmap" "gmod_compatibility_content/phoenix_storms/side_bump"
 	 "$phong"     "1"
 	"$halflambert"	1
  	"$phongexponent"   "60"

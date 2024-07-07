@@ -1,9 +1,9 @@
 
 "VertexLitGeneric"
 {
-	"$basetexture" "models/XQM/SquaredMatInverted"
+	"$basetexture" "gmod_compatibility_content/models/XQM/SquaredMatInverted"
 	"$surfaceprop" "metal"
-	"$bumpmap" "models/XQM/SquaredMatInverted_normal"
+	"$bumpmap" "gmod_compatibility_content/models/XQM/SquaredMatInverted_normal"
 	"$phong" "1"
 	"$phongexponent" "40"
 	"$phongboost" "3"

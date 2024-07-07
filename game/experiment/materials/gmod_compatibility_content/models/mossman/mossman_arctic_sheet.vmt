@@ -1,7 +1,7 @@
 "VertexLitGeneric"
 {
-	"$baseTexture" "Models/mossman/mossman_arctic_sheet"
-    "$bumpmap" "models/mossman/mossman_arctic_normal"
+	"$basetexture" "gmod_compatibility_content/Models/mossman/mossman_arctic_sheet"
+    "$bumpmap" "gmod_compatibility_content/models/mossman/mossman_arctic_normal"
 
 	"$halflambert" "1"
 
@@ -9,24 +9,24 @@
 	"$phongexponent" "5"
 	"$phongboost" "3"
 	"$phongfresnelranges" "[0.05 0.1 1]"
-	
+
 	"$rimlight" "1"
 	"$rimlightexponent" "8"
 	"$rimlightboost" "2"
-	
+
 	// ------------------------------------------------------------------------
 	// PLAYER COLOR CUSTOMIZATION
 	// ------------------------------------------------------------------------
-	
+
 	// The following chain of proxies is to modulate phong tint (and rimlight,
 	// by extension) according to your chosen player color, but only within a
 	// certain saturation range: 50%. This might be confusing, I tried my best
 	// to comment it, e-mail maxofs2d@facepunchstudios.com if you have any
 	// questions regarding how player colourability is set up in VMTs. GLHF.
-	
+
 	"$blendtintbybasealpha" "1" // alpha channel of $basetexture: color mask.
  	"$blendtintcoloroverbase" "0" // blend mode. anything =/= 0 is ugly!
-	
+
 	// --- Test values. Comment the PlayerColor proxy to use one of these.
 	// "$color2" "{0 0 0}" // Black
 	// "$color2" "{255 0 0}" // Blue (default)
@@ -37,9 +37,9 @@
 	// "$color2" "{248 166 202}" // Pink
 	// "$color2" "{160 100 140}" // Purple
 	// "$color2" "{242 168 96}" // Yellow (gold-ish)
-	
+
 	"$PhongBrightnessScalar" "0.5" // see below. "0.5" will get overwritten.
-	
+
 	Proxies
 	{
 		PlayerColor

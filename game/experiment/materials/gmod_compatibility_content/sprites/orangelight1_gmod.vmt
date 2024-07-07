@@ -2,5 +2,5 @@
 {
 	"$spriteorientation" "vp_parallel"
 	"$spriteorigin" "[ 0.50 0.50 ]"
-	"$basetexture" "sprites/orangelight1"
+	"$basetexture" "gmod_compatibility_content/sprites/orangelight1"
 }
