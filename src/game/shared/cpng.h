@@ -25,7 +25,10 @@ class CPngTextureRegen : public ITextureRegenerator
     CPngTextureRegen( const char *pFileName );
 
     virtual void RegenerateTextureBits( ITexture *pTexture, IVTFTexture *pVTFTexture, Rect_t *pSubRect );
-    virtual void Release() {}
+    virtual void Release()
+    {
+        delete this;
+    }
 
    private:
     char m_pFileName[MAX_PATH];

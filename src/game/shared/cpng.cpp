@@ -270,7 +270,23 @@ void CPngTextureRegen::ReleaseAllTextureData()
 {
     for ( int i = 0; i < m_vecProceduralMaterials.Count(); ++i )
     {
-        m_vecProceduralMaterials[i]->DecrementReferenceCount();
+        IMaterial *pMaterial = m_vecProceduralMaterials[i];
+
+        // Disconnect the texture regenerator, or else we will get a crash on exit in MaterialSystem.dll
+        // in certain situations (like having the ESC menu opened when finding a material)
+        bool bFound = false;
+        IMaterialVar *pVar = pMaterial->FindVar( "$basetexture", &bFound );
+        
+        if ( bFound && pVar )
+        {
+            ITexture *pTexture = pVar->GetTextureValue();
+            if ( pTexture )
+            {
+                pTexture->SetTextureRegenerator( NULL );
+            }
+        }
+
+        pMaterial->DecrementReferenceCount();
     }
 
     m_vecProceduralMaterials.RemoveAll();

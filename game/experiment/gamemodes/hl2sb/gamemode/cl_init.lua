@@ -67,13 +67,14 @@ testMatX = Surface.FindMaterial("silkicons/monkey.png") -- Unused materials caus
 testMatY = Surface.FindMaterial("silkicons/___non___existant_mat.png") -- Testing that non-existant materials don't crash
 testTexture = Surface.GetTextureID("vgui/gfx/vgui/crosshair")
 
--- Having the ESC menu opened whilst finding a material seems to cause a crash on exit
+-- Having the ESC menu opened whilst finding a material seemed to cause a crash on exit
 -- Having had the ESC menu open at some point does not cause a crash on exit
--- Something about FindMaterial seems to be causing the crash
+-- Having SetTextureRegenerator with a reference to the texture regen caused an error
+-- This is now fixed, because we set the texture regenerator to null on shutdown
 function test()
-    print("Testing whether having the ESC menu open whilst finding a material causes a crash on exit", GAMEUI, CLIENT, SERVER)
-    -- local testingTempMat = Surface.FindMaterial("silkicons/accept.png") -- local or not doesnt matter
-	-- Surface.CreateNewTextureID(true) -- It really is FindMaterial causing the issue
+	print("testingTempMat test")
+    local testingTempMat = Surface.FindMaterial("gmod_compatibility_content/gui/alpha_grid.png") -- local or not doesnt matter
+	-- Despite being fixed here, the problem still occurs in the gmod sandbox gamemode...
 end
 Timers.Simple(2, test)
 
