@@ -465,6 +465,7 @@ void luasrc_shutdown_gameui( void )
     ResetGameUIConCommandDatabase();
 
     lua_close( LGameUI );
+    LGameUI = nullptr;
 }
 #endif
 
@@ -741,6 +742,7 @@ void luasrc_shutdown( void )
 
     lcf_close( L );
     lua_close( L );
+    L = nullptr;
 
     if ( hasLoaderBeenActivated )
     {

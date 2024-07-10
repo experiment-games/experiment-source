@@ -1,4 +1,4 @@
-//========= Copyright © 1996-2005, Valve Corporation, All rights reserved. ============//
+//========= Copyright Â© 1996-2005, Valve Corporation, All rights reserved. ============//
 //
 // Purpose: Client DLL VGUI2 Viewport
 //
@@ -27,8 +27,10 @@
 using namespace vgui;
 
 //================================================================
-CScriptedHudViewport::CScriptedHudViewport() : vgui::EditablePanel( NULL, "CScriptedHudViewport")
+CScriptedHudViewport::CScriptedHudViewport( lua_State* L ) : vgui::EditablePanel( NULL, "CScriptedHudViewport")
 {
+    m_lua_State = L;
+
 	SetKeyBoardInputEnabled( false );
 	SetMouseInputEnabled( false );
 

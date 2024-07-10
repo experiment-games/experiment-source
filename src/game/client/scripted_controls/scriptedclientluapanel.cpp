@@ -27,9 +27,10 @@
 using namespace vgui;
 
 //================================================================
-CScriptedClientLuaPanel::CScriptedClientLuaPanel()
-    : vgui::EditablePanel( NULL, "CScriptedClientLuaPanel")
+CScriptedClientLuaPanel::CScriptedClientLuaPanel( lua_State *L )
+    : vgui::EditablePanel( NULL, "CScriptedClientLuaPanel" )
 {
+    m_lua_State = L;
     // Experiment; We always want a reference to the panel, so it isn't
     // removed by the garbage collector.
     m_nRefCount = 1;

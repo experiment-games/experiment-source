@@ -1292,7 +1292,10 @@ static int Panel___newindex( lua_State *L )
 
 int Panel___gc( lua_State *L )
 {
-    Panel *plPanel = dynamic_cast< Panel * >( lua_topanel( L, 1 ) );
+    // We've disabled this for now, or Lua would have to keep a reference to every panel
+    // TODO: Perhaps we should modify Gui.Create to keep references for the user.
+    // TODO: We should clean up the panels when their accompanying Lua state is destroyed.
+    /*Panel *plPanel = dynamic_cast< Panel * >( lua_topanel( L, 1 ) );
 
     if ( plPanel )
     {
@@ -1301,7 +1304,7 @@ int Panel___gc( lua_State *L )
         {
             delete plPanel;
         }
-    }
+    }*/
 
     return 0;
 }

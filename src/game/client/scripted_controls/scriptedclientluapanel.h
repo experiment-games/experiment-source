@@ -1,4 +1,4 @@
-//========= Copyright © 1996-2005, Valve Corporation, All rights reserved. ============//
+//========= Copyright Â© 1996-2005, Valve Corporation, All rights reserved. ============//
 //
 // Purpose: 
 //
@@ -18,7 +18,7 @@ class CScriptedClientLuaPanel : public vgui::EditablePanel
 	DECLARE_CLASS_SIMPLE( CScriptedClientLuaPanel, vgui::EditablePanel );
 
 public: 
-	CScriptedClientLuaPanel();
+	CScriptedClientLuaPanel( lua_State *L );
 
 	virtual void CreateDefaultPanels( void );
 
