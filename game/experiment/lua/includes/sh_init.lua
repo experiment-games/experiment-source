@@ -18,6 +18,9 @@ if (CLIENT) then
 	Include("extensions/panel.lua")
 	Include("extensions/label.lua")
 	Include("extensions/text_entry.lua")
+
+	-- Gui elements
+	Include("gui/cl_image_panel.lua")
 end
 
 Bitwise = require("bitwise")

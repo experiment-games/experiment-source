@@ -698,9 +698,8 @@ static int surface_FindMaterial( lua_State *L )
 static int surface_DoesMaterialExist( lua_State *L )
 {
     const char *name = luaL_checkstring( L, 1 );
-    IMaterial *pMaterial = g_pMaterialSystem->FindMaterial( name, 0, false );
 
-    if ( !IsErrorMaterial( pMaterial ) )
+    if ( g_pMaterialSystem->IsMaterialLoaded( name ) )
     {
         lua_pushboolean( L, 1 );
         return 1;

@@ -20,19 +20,28 @@ local CBuildMenu = {
 -------------------------------------------------------------------------------
 function CBuildMenu:Init(pViewPort)
 	self:SetProportional(true)
-	-- Make it screen sized
+
 	self:SetBounds(0, 0, ScreenWidth(), ScreenHeight())
-
-
 	self:SetAutoDelete(false)
 
 	self.m_pViewPort = pViewPort
 
+	self.m_pImage = Gui.CImagePanel(self, "test_image")
+	self.m_pImage:SetImage("silkicons/monkey.png")
+	self.m_pImage:SizeToContents()
+	self.m_pImage:SetPos(
+		(ScreenWidth() - self.m_pImage:GetWide()) * .5,
+		(ScreenHeight() - self.m_pImage:GetTall()) * .5
+	)
+
+	print(self.m_pImage:GetBounds(), "<-----------------------------")
+
 	if false then -- TODO: Implement this
-		self.m_pMainMenu = CBuildSubMenu(self, "mainmenu")
+		self.m_pMainMenu = Gui.CBuildSubMenu(self, "mainmenu")
 		self.m_pMainMenu:LoadControlSettings("Resource/UI/MainBuyMenu.res")
 		self.m_pMainMenu:SetVisible(false)
 	end
+
 	self:SetVisible(false)
 end
 

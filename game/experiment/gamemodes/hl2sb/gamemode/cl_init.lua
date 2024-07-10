@@ -80,7 +80,3 @@ function GM:HudViewportPaint()
 		Surface.DrawTexturedRect(64, 64, 64, 64)
 	end
 end
-
--- uncomment the following line, then go in-game into the hl2sb gamemode. Press quit in the main menu. The game will crash with an access violation.
--- TODO: perhaps we are leaving something on the stack, or popping too much when showing error messages?
--- error("errors cause issues on quitting?")
