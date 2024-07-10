@@ -73,7 +73,10 @@ testTexture = Surface.GetTextureID("vgui/gfx/vgui/crosshair")
 -- This is now fixed, because we set the texture regenerator to null on shutdown
 function test()
 	print("testingTempMat test")
-    local testingTempMat = Surface.FindMaterial("gmod_compatibility_content/gui/alpha_grid.png") -- local or not doesnt matter
+    local testingTempMat1 = Surface.FindMaterial("gmod_compatibility_content/icon16/folder.png")
+    local testingTempMat2 = Surface.FindMaterial("gmod_compatibility_content/icon16/folder.png")
+    local testingTempMat3 = Surface.FindMaterial("gmod_compatibility_content/icon16/folder.png") -- With this line, we crashed on exit because we incorrectly re-loaded textures, even if the material and texture were found. That is now fixed using g_pMaterialSystem->IsTextureLoaded (cpng.cpp)
+    -- local testingTempMat4 = Surface.FindMaterial("gmod_compatibility_content/icon16/folder.png")
 	-- Despite being fixed here, the problem still occurs in the gmod sandbox gamemode...
 end
 Timers.Simple(2, test)

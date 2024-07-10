@@ -245,18 +245,21 @@ IMaterial *CPngTextureRegen::GetOrCreateProceduralMaterial( const char *material
     PNG_ReadInfoFromBuffer( buffer, filePath, width, height, imageFormat );
 #endif
 
-    ITexture *pTexture = g_pMaterialSystem->CreateProceduralTexture( materialName, TEXTURE_GROUP_VGUI, width, height, imageFormat, TEXTUREFLAGS_NOMIP | TEXTUREFLAGS_NOLOD | TEXTUREFLAGS_PROCEDURAL );
-    pTexture->SetTextureRegenerator( new CPngTextureRegen( fullFilePath ) );
-    pTexture->Download();
-
     bool bFound = false;
     IMaterialVar *pVar = pMaterial->FindVar( "$basetexture", &bFound );
 
     if ( bFound && pVar )
     {
-        pMaterial->IncrementReferenceCount();
-        m_vecProceduralMaterials.AddToTail( pMaterial );
-        pVar->SetTextureValue( pTexture );
+        if ( !g_pMaterialSystem->IsTextureLoaded( materialName ) )
+        {
+            ITexture *pTexture = g_pMaterialSystem->CreateProceduralTexture( materialName, TEXTURE_GROUP_VGUI, width, height, imageFormat, TEXTUREFLAGS_NOMIP | TEXTUREFLAGS_NOLOD | TEXTUREFLAGS_PROCEDURAL );
+            pTexture->SetTextureRegenerator( new CPngTextureRegen( fullFilePath ) );
+            pTexture->Download();
+
+            pMaterial->IncrementReferenceCount();
+            m_vecProceduralMaterials.AddToTail( pMaterial );
+            pVar->SetTextureValue( pTexture );
+        }
     }
     else
     {
