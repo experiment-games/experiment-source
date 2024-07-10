@@ -233,13 +233,13 @@ function table.insert(list, positionOrValue, value)
 end
 
 Material = function(name)
-	if (not Globals.DoesMaterialExist(name)) then
+	if (not Surface.DoesMaterialExist(name)) then
 		name = "gmod_compatibility_content/" .. name
 	end
 
-	return Globals.FindMaterial(name)
+	return Surface.FindMaterial(name)
 end
-CreateMaterial = Globals.CreateMaterial
+CreateMaterial = Surface.CreateMaterial
 CreateConVar = function(name, value, flags, helpText, min, max)
 	if (istable(flags)) then
 		if (#flags == 0) then

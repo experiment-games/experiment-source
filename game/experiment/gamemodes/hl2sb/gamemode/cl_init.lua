@@ -62,9 +62,9 @@ Surface.SetMaterial = function(material)
 	Surface.DrawSetTextureMaterial(textureMap[name], material)
 end
 
-testMat = Globals.FindMaterial("silkicons/accept.png")
-testMatX = Globals.FindMaterial("silkicons/monkey.png") -- Unused materials cause a crash on exit
-testMatY = Globals.FindMaterial("silkicons/___non___existant_mat.png") -- Testing that non-existant materials don't crash
+testMat = Surface.FindMaterial("silkicons/accept.png")
+testMatX = Surface.FindMaterial("silkicons/monkey.png") -- Unused materials cause a crash on exit
+testMatY = Surface.FindMaterial("silkicons/___non___existant_mat.png") -- Testing that non-existant materials don't crash
 testTexture = Surface.GetTextureID("vgui/gfx/vgui/crosshair")
 -- lua_run_cl STOP = true surface.ClearAllTextures()
 function GM:HudViewportPaint()

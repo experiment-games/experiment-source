@@ -16,6 +16,15 @@
 #include <cpng.h>
 #include "VGuiMatSurface/IMatSystemSurface.h"
 #include <materialsystem/limaterial.h>
+#include "filesystem.h"
+#include "utlbuffer.h"
+#include "materialsystem/itexture.h"
+#include <materialsystem/imaterial.h>
+#include <materialsystem/imaterialsystem.h>
+#include "materialsystem/imaterialvar.h"
+#include <bitmap/bitmap.h>
+#include <cpng.h>
+#include "vgui_controls/Controls.h"
 
 #include "scripted_controls/lPanel.h"
 #include <lColor.h>
@@ -649,6 +658,129 @@ static int surface_UnlockCursor( lua_State *L )
     return 0;
 }
 
+static int surface_FindMaterial( lua_State *L )
+{
+    const char *name = luaL_checkstring( L, 1 );
+
+    IMaterial *pMaterial = g_pMaterialSystem->FindMaterial( name, 0, false );
+
+    if ( IsErrorMaterial( pMaterial ) )
+    {
+        char ext[4];
+
+        Q_ExtractFileExtension( name, ext, sizeof( ext ) );
+
+        if ( Q_stricmp( ext, "png" ) == 0 )
+        {
+            // Get a name for png materials (prefixed with ! and no png extension)
+            char nameWithoutExtension[MAX_PATH];
+            Q_StripExtension( name, nameWithoutExtension, sizeof( nameWithoutExtension ) );
+            char materialName[MAX_PATH];
+            Q_snprintf( materialName, sizeof( materialName ), "!%s", nameWithoutExtension );
+
+            pMaterial = CPngTextureRegen::GetOrCreateProceduralMaterial( materialName, name );
+
+            // We need to assign a TextureID to the material, or else the game will crash in MaterialSystem.pdb
+            // when shutting down the game, after having created (but never assigning a CreateNewTextureID)
+            // a material with this FindMaterial call.
+            g_pMatSystemSurface->DrawSetTextureMaterial( vgui::surface()->CreateNewTextureID( true ), pMaterial );
+        }
+    }
+
+    IMaterial **pUserData = ( IMaterial ** )lua_newuserdata( L, sizeof( IMaterial * ) );
+    *pUserData = pMaterial;
+    luaL_getmetatable( L, LUA_MATERIALLIBNAME );
+    lua_setmetatable( L, -2 );
+
+    return 1;
+}
+
+static int surface_DoesMaterialExist( lua_State *L )
+{
+    const char *name = luaL_checkstring( L, 1 );
+    IMaterial *pMaterial = g_pMaterialSystem->FindMaterial( name, 0, false );
+
+    if ( !IsErrorMaterial( pMaterial ) )
+    {
+        lua_pushboolean( L, 1 );
+        return 1;
+    }
+
+    char ext[4];
+
+    Q_ExtractFileExtension( name, ext, sizeof( ext ) );
+
+    if ( Q_stricmp( ext, "png" ) == 0 )
+    {
+        // Get a name for png materials (prefixed with ! and no png extension)
+        char nameWithoutExtension[MAX_PATH];
+        Q_StripExtension( name, nameWithoutExtension, sizeof( nameWithoutExtension ) );
+        char materialName[MAX_PATH];
+        Q_snprintf( materialName, sizeof( materialName ), "!%s", nameWithoutExtension );
+
+        if ( g_pMaterialSystem->IsMaterialLoaded( materialName ) )
+        {
+            lua_pushboolean( L, 1 );
+            return 1;
+        }
+
+        char fullFilePath[MAX_PATH];
+        Q_snprintf( fullFilePath, sizeof( fullFilePath ), "materials/%s", name );
+        Q_FixSlashes( fullFilePath );
+
+#ifdef CLIENT_DLL
+        if ( filesystem->FileExists( fullFilePath, "GAME" ) )
+        {
+            lua_pushboolean( L, 1 );
+            return 1;
+        }
+#endif
+    }
+
+    lua_pushboolean( L, 0 );
+    return 1;
+}
+
+static int surface_CreateMaterial( lua_State *L )
+{
+    const char *name = luaL_checkstring( L, 1 );
+    const char *shaderName = luaL_checkstring( L, 2 );
+
+    KeyValues *keys = new KeyValues( shaderName );
+
+    // Get the table to fill in the key values
+    lua_pushvalue( L, 3 );  // Push the table to the top of the stack
+
+    lua_pushnil( L );  // Push the first key
+    while ( lua_next( L, -2 ) != 0 )
+    {
+        const char *key = luaL_checkstring( L, -2 );
+        const char *value = luaL_checkstring( L, -1 );
+
+        keys->SetString( key, value );
+
+        lua_pop( L, 1 );  // Pop the value, but leave the key
+    }
+
+    lua_pop( L, 1 );  // Pop the table
+
+    IMaterial *pMaterial = g_pMaterialSystem->CreateMaterial( name, keys );
+
+    if ( pMaterial )
+    {
+        IMaterial **pUserData = ( IMaterial ** )lua_newuserdata( L, sizeof( IMaterial * ) );
+        *pUserData = pMaterial;
+        luaL_getmetatable( L, LUA_MATERIALLIBNAME );
+        lua_setmetatable( L, -2 );
+    }
+    else
+    {
+        lua_pushnil( L );
+    }
+
+    return 1;
+}
+
 static const luaL_Reg surfacelib[] = {
     { "AddBitmapFontFile", surface_AddBitmapFontFile },
     { "AddCustomFontFile", surface_AddCustomFontFile },
@@ -736,6 +868,9 @@ static const luaL_Reg surfacelib[] = {
     { "SurfaceGetCursorPos", surface_SurfaceGetCursorPos },
     { "SurfaceSetCursorPos", surface_SurfaceSetCursorPos },
     { "UnlockCursor", surface_UnlockCursor },
+    { "FindMaterial", surface_FindMaterial },
+    { "DoesMaterialExist", surface_DoesMaterialExist },
+    { "CreateMaterial", surface_CreateMaterial },
     { NULL, NULL } };
 
 /*
