@@ -240,9 +240,22 @@ IMaterial *CPngTextureRegen::GetOrCreateProceduralMaterial( const char *material
 
     if ( bFound && pVar )
     {
+        ITexture *pTexture = nullptr;
+        bool bLoadInitial = false;
+
         if ( !g_pMaterialSystem->IsTextureLoaded( materialName ) )
         {
-            ITexture *pTexture = g_pMaterialSystem->CreateProceduralTexture( materialName, TEXTURE_GROUP_VGUI, width, height, imageFormat, TEXTUREFLAGS_NOMIP | TEXTUREFLAGS_NOLOD | TEXTUREFLAGS_PROCEDURAL );
+            pTexture = g_pMaterialSystem->CreateProceduralTexture( materialName, TEXTURE_GROUP_VGUI, width, height, imageFormat, TEXTUREFLAGS_NOMIP | TEXTUREFLAGS_NOLOD | TEXTUREFLAGS_PROCEDURAL );
+            bLoadInitial = true;
+        }
+        else
+        {
+            pTexture = g_pMaterialSystem->FindTexture( materialName, TEXTURE_GROUP_VGUI, false );
+            bLoadInitial = pTexture->IsError();
+        }
+
+        if ( bLoadInitial )
+        {
             pTexture->SetTextureRegenerator( new CPngTextureRegen( fullFilePath ) );
             pTexture->Download();
 
@@ -276,6 +289,7 @@ void CPngTextureRegen::ReleaseAllTextureData()
             if ( pTexture )
             {
                 pTexture->SetTextureRegenerator( NULL );
+                pTexture->SetErrorTexture( true );
             }
         }
 

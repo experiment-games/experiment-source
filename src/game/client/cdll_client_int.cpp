@@ -1798,6 +1798,7 @@ void CHLClient::LevelShutdown(void) {
     g_pParticleSystemMgr->UncacheAllParticleSystems();
 #endif
 #ifdef LUA_SDK
+    surface_DestroyAllTextureIDs();
     CPngTextureRegen::ReleaseAllTextureData();
 #endif
     UncacheAllMaterials();
@@ -1820,7 +1821,6 @@ void CHLClient::LevelShutdown(void) {
     // We must remove all children, or we may get invalid dangling references in the menu (or when exitting)
     // because the Lua state children belong to would already be gone.
     VGui_GetClientLuaRootPanel()->DeleteChildren();
-    surface_DestroyAllTextureIDs();
     luasrc_shutdown();
 #endif
 }
