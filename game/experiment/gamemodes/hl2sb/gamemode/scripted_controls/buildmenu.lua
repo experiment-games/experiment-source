@@ -21,7 +21,7 @@ local CBuildMenu = {
 function CBuildMenu:Init(pViewPort)
 	self:SetProportional(true)
 
-	self:SetBounds(0, 0, ScreenWidth(), ScreenHeight())
+	self:SetDock( DOCK_TYPE.FILL )
 	self:SetAutoDelete(false)
 
 	self.m_pViewPort = pViewPort
@@ -33,8 +33,6 @@ function CBuildMenu:Init(pViewPort)
 		(ScreenWidth() - self.m_pImage:GetWide()) * .5,
 		(ScreenHeight() - self.m_pImage:GetTall()) * .5
 	)
-
-	print(self.m_pImage:GetBounds(), "<-----------------------------")
 
 	if false then -- TODO: Implement this
 		self.m_pMainMenu = Gui.CBuildSubMenu(self, "mainmenu")

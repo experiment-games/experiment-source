@@ -365,17 +365,19 @@ achievements = {
 	SpawnMenuOpen = function() end,
 }
 
-Material = function(name)
-    if (not Surface.DoesMaterialExist(name)) then
-        name = "gmod_compatibility_content/" .. name
-    end
-
-    return Surface.FindMaterial(name)
-end
-
 if (SERVER) then
-	resource.AddWorkshop = function() end
+    resource.AddWorkshop = function() end
+
+	Material = function(name) end
 else
+	Material = function(name)
+		if (not Surface.DoesMaterialExist(name)) then
+			name = "gmod_compatibility_content/" .. name
+		end
+
+		return Surface.FindMaterial(name)
+	end
+
     CreateMaterial = Surface.CreateMaterial
 
 	local PANEL_META = FindMetaTable("Panel")

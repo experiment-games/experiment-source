@@ -41,6 +41,11 @@ CScriptedClientLuaPanel::CScriptedClientLuaPanel( lua_State *L )
 	SetProportional( true );
 }
 
+CScriptedClientLuaPanel::~CScriptedClientLuaPanel()
+{
+    DevWarning( "CScriptedClientLuaPanel::~CScriptedClientLuaPanel\n" );
+}
+
 void CScriptedClientLuaPanel::CreateDefaultPanels( void )
 {
 	// Was a nice idea, but is called on game init and not level init

@@ -63,7 +63,7 @@ Surface.SetMaterial = function(material)
 end
 
 testMat = Surface.FindMaterial("silkicons/accept.png")
-testMatX = Surface.FindMaterial("silkicons/monkey.png") -- Unused materials cause a crash on exit
+testMatX = Surface.FindMaterial("silkicons/monkey.png") -- Unused materials caused a crash on exit earlier
 testMatY = Surface.FindMaterial("silkicons/___non___existant_mat.png") -- Testing that non-existant materials don't crash
 testTexture = Surface.GetTextureID("vgui/gfx/vgui/crosshair")
 -- lua_run_cl STOP = true surface.ClearAllTextures()

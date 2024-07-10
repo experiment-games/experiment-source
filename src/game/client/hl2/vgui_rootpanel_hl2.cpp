@@ -71,9 +71,10 @@ vgui::Panel *VGui_GetGameUIPanel(void) {
 // Purpose: Game specific root panel
 // Output : vgui::Panel
 //-----------------------------------------------------------------------------
-vgui::Panel *VGui_GetClientLuaRootPanel(void) {
+CScriptedClientLuaPanel *VGui_GetClientLuaRootPanel( void )
+{
     ClientModeShared *mode = (ClientModeShared *)GetClientModeNormal();
-    vgui::Panel *pRoot = mode->m_pClientLuaPanel;
+    CScriptedClientLuaPanel *pRoot = mode->m_pClientLuaPanel;
     return pRoot;
 }
 #endif

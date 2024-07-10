@@ -821,11 +821,6 @@ void Panel::Init( int x, int y, int wide, int tall )
 //-----------------------------------------------------------------------------
 Panel::~Panel()
 {
-#if defined( LUA_SDK )
-    if ( m_lua_State )
-        lua_unref( m_lua_State, m_nTableReference );
-#endif  // LUA_SDK
-
     // @note Tom Bui: only cleanup if we've created it
     if ( !m_bToolTipOverridden )
     {
@@ -866,6 +861,14 @@ Panel::~Panel()
             ipanel()->SetParent( child, NULL );
         }
     }
+
+#if defined( LUA_SDK )
+    if ( m_lua_State )
+    {
+        lua_unref( m_lua_State, m_nTableReference );
+        m_lua_State = NULL;
+    }
+#endif  // LUA_SDK
 
     // delete VPanel
     ivgui()->FreePanel( _vpanel );

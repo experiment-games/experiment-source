@@ -13,6 +13,7 @@
 #include "interface.h"
 
 #include <vgui/VGUI.h>
+#include <scriptedclientluapanel.h>
 
 namespace vgui
 {
@@ -26,7 +27,7 @@ vgui::VPANEL VGui_GetClientDLLRootPanel( void );
 
 #ifdef LUA_SDK
 vgui::Panel *VGui_GetGameUIPanel(void);
-vgui::Panel *VGui_GetClientLuaRootPanel(void);
+CScriptedClientLuaPanel *VGui_GetClientLuaRootPanel( void );
 void VGUI_CreateGameUIRootPanel(void);
 void VGUI_DestroyGameUIRootPanel(void);
 #endif

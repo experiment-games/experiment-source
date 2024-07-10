@@ -1227,10 +1227,6 @@ void CHLClient::Shutdown(void) {
     g_pSixenseInput = NULL;
 #endif
 
-#ifdef LUA_SDK
-    luasrc_shutdown_gameui();
-#endif
-
     C_BaseAnimating::ShutdownBoneSetupThreadPool();
     ClientWorldFactoryShutdown();
 
@@ -1259,6 +1255,11 @@ void CHLClient::Shutdown(void) {
 
     gHUD.Shutdown();
     VGui_Shutdown();
+
+#ifdef LUA_SDK
+    // Only shutdown the GameUI Lua State after VGui has shut down and cleaned up
+    luasrc_shutdown_gameui();
+#endif
 
     ParticleMgr()->Term();
 
@@ -1808,6 +1809,9 @@ void CHLClient::LevelShutdown(void) {
 #endif
 
 #if defined(LUA_SDK)
+    // We must remove all children, or we may get invalid dangling references in the menu (or when exitting)
+    // because the Lua state children belong to would already be gone.
+    VGui_GetClientLuaRootPanel()->DeleteChildren();
     luasrc_shutdown();
 #endif
 }
