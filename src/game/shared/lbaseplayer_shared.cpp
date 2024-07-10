@@ -44,11 +44,13 @@ LUA_API lua_CBasePlayer *lua_toplayer( lua_State *L, int idx )
 
 LUA_API void lua_pushplayer( lua_State *L, CBasePlayer *pPlayer )
 {
-    CBaseHandle *phPlayer =
+    /*CBaseHandle *phPlayer =
         ( CBaseHandle * )lua_newuserdata( L, sizeof( CBaseHandle ) );
     phPlayer->Set( pPlayer );
     luaL_getmetatable( L, "CBasePlayer" );
-    lua_setmetatable( L, -2 );
+    lua_setmetatable( L, -2 );*/
+    // Experiment; We always want to push the player as the most specific type
+    lua_pushhl2mpplayer( L, ToHL2MPPlayer( pPlayer ) );
 }
 
 LUALIB_API lua_CBasePlayer *luaL_checkplayer( lua_State *L, int narg )
@@ -965,7 +967,7 @@ static int CBasePlayer___index( lua_State *L )
 
         lua_pushnil( L );
     }
-    
+
     return 1;
 }
 

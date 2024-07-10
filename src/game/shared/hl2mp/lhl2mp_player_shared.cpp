@@ -105,6 +105,12 @@ static int CHL2MP_Player_DoAnimationEvent( lua_State *L )
     return 0;
 }
 
+static int CHL2MP_Player_KeyDown( lua_State *L )
+{
+    luaL_checkhl2mpplayer( L, 1 )->KeyDown( luaL_checkint( L, 2 ) );
+    return 0;
+}
+
 static int CHL2MP_Player___index( lua_State *L )
 {
     CHL2MP_Player *pPlayer = lua_tohl2mpplayer( L, 1 );
@@ -188,6 +194,7 @@ static const luaL_Reg CHL2MP_Playermeta[] = {
     { "CalcView", CHL2MP_Player_CalcView },
     { "CanSprint", CHL2MP_Player_CanSprint },
     { "DoAnimationEvent", CHL2MP_Player_DoAnimationEvent },
+    { "KeyDown", CHL2MP_Player_KeyDown },
     { "__index", CHL2MP_Player___index },
     { "__newindex", CHL2MP_Player___newindex },
     { "__eq", CHL2MP_Player___eq },

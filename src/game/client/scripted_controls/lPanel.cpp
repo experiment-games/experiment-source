@@ -95,7 +95,7 @@ static int Panel_AddActionSignalTarget( lua_State *L )
 
 static int Panel_CanStartDragging( lua_State *L )
 {
-    lua_pushboolean( L, luaL_checkpanel( L, 1 )->CanStartDragging( luaL_checkint( L, 2 ), luaL_checkint( L, 3 ), luaL_checkint( L, 4 ), luaL_checkint( L, 5 ) ) );
+    lua_pushboolean( L, luaL_checkpanel( L, 1 )->CanStartDragging( luaL_checknumber( L, 2 ), luaL_checknumber( L, 3 ), luaL_checknumber( L, 4 ), luaL_checknumber( L, 5 ) ) );
     return 1;
 }
 
@@ -127,28 +127,28 @@ static int Panel_DisableMouseInputForThisPanel( lua_State *L )
 static int Panel_DrawBox( lua_State *L )
 {
     luaL_checkpanel( L, 1 )->DrawBox(
-        luaL_checkint( L, 2 ), luaL_checkint( L, 3 ), luaL_checkint( L, 4 ), luaL_checkint( L, 5 ), luaL_checkcolor( L, 6 ), luaL_checknumber( L, 7 ), luaL_optboolean( L, 8, 0 ) );
+        luaL_checknumber( L, 2 ), luaL_checknumber( L, 3 ), luaL_checknumber( L, 4 ), luaL_checknumber( L, 5 ), luaL_checkcolor( L, 6 ), luaL_checknumber( L, 7 ), luaL_optboolean( L, 8, 0 ) );
     return 0;
 }
 
 static int Panel_DrawBoxFade( lua_State *L )
 {
     luaL_checkpanel( L, 1 )->DrawBoxFade(
-        luaL_checkint( L, 2 ), luaL_checkint( L, 3 ), luaL_checkint( L, 4 ), luaL_checkint( L, 5 ), luaL_checkcolor( L, 6 ), luaL_checknumber( L, 7 ), luaL_checkint( L, 8 ), luaL_checkint( L, 9 ), luaL_checkboolean( L, 10 ), luaL_optboolean( L, 11, 0 ) );
+        luaL_checknumber( L, 2 ), luaL_checknumber( L, 3 ), luaL_checknumber( L, 4 ), luaL_checknumber( L, 5 ), luaL_checkcolor( L, 6 ), luaL_checknumber( L, 7 ), luaL_checkint( L, 8 ), luaL_checkint( L, 9 ), luaL_checkboolean( L, 10 ), luaL_optboolean( L, 11, 0 ) );
     return 0;
 }
 
 static int Panel_DrawHollowBox( lua_State *L )
 {
     luaL_checkpanel( L, 1 )->DrawHollowBox(
-        luaL_checkint( L, 2 ), luaL_checkint( L, 3 ), luaL_checkint( L, 4 ), luaL_checkint( L, 5 ), luaL_checkcolor( L, 6 ), luaL_checknumber( L, 7 ) );
+        luaL_checknumber( L, 2 ), luaL_checknumber( L, 3 ), luaL_checknumber( L, 4 ), luaL_checknumber( L, 5 ), luaL_checkcolor( L, 6 ), luaL_checknumber( L, 7 ) );
     return 0;
 }
 
 static int Panel_DrawTexturedBox( lua_State *L )
 {
     luaL_checkpanel( L, 1 )->DrawTexturedBox(
-        luaL_checkint( L, 2 ), luaL_checkint( L, 3 ), luaL_checkint( L, 4 ), luaL_checkint( L, 5 ), luaL_checkcolor( L, 6 ), luaL_checknumber( L, 7 ) );
+        luaL_checknumber( L, 2 ), luaL_checknumber( L, 3 ), luaL_checknumber( L, 4 ), luaL_checknumber( L, 5 ), luaL_checkcolor( L, 6 ), luaL_checknumber( L, 7 ) );
     return 0;
 }
 
@@ -161,7 +161,7 @@ static int Panel_EditKeyBindings( lua_State *L )
 static int Panel_FillRectSkippingPanel( lua_State *L )
 {
     luaL_checkpanel( L, 1 )->FillRectSkippingPanel(
-        luaL_checkcolor( L, 2 ), luaL_checkint( L, 3 ), luaL_checkint( L, 4 ), luaL_checkint( L, 5 ), luaL_checkint( L, 6 ), luaL_checkpanel( L, 7 ) );
+        luaL_checkcolor( L, 2 ), luaL_checknumber( L, 3 ), luaL_checknumber( L, 4 ), luaL_checknumber( L, 5 ), luaL_checknumber( L, 6 ), luaL_checkpanel( L, 7 ) );
     return 0;
 }
 
@@ -710,13 +710,13 @@ static int Panel_IsVisible( lua_State *L )
 
 static int Panel_IsWithin( lua_State *L )
 {
-    lua_pushboolean( L, luaL_checkpanel( L, 1 )->IsWithin( luaL_checkint( L, 2 ), luaL_checkint( L, 3 ) ) );
+    lua_pushboolean( L, luaL_checkpanel( L, 1 )->IsWithin( luaL_checknumber( L, 2 ), luaL_checknumber( L, 3 ) ) );
     return 1;
 }
 
 static int Panel_IsWithinTraverse( lua_State *L )
 {
-    lua_pushboolean( L, luaL_checkpanel( L, 1 )->IsWithinTraverse( luaL_checkint( L, 2 ), luaL_checkint( L, 3 ), luaL_checkboolean( L, 4 ) ) );
+    lua_pushboolean( L, luaL_checkpanel( L, 1 )->IsWithinTraverse( luaL_checknumber( L, 2 ), luaL_checknumber( L, 3 ), luaL_checkboolean( L, 4 ) ) );
     return 1;
 }
 
@@ -807,8 +807,8 @@ static int Panel_OnCursorExited( lua_State *L )
 
 static int Panel_OnCursorMoved( lua_State *L )
 {
-    luaL_checkpanel( L, 1 )->OnCursorMoved( luaL_checkint( L, 2 ),
-                                            luaL_checkint( L, 3 ) );
+    luaL_checkpanel( L, 1 )->OnCursorMoved( luaL_checknumber( L, 2 ),
+                                            luaL_checknumber( L, 3 ) );
     return 0;
 }
 
@@ -886,7 +886,7 @@ static int Panel_OnMouseTriplePressed( lua_State *L )
 
 static int Panel_OnMouseWheeled( lua_State *L )
 {
-    luaL_checkpanel( L, 1 )->OnMouseWheeled( luaL_checkint( L, 2 ) );
+    luaL_checkpanel( L, 1 )->OnMouseWheeled( luaL_checknumber( L, 2 ) );
     return 0;
 }
 
@@ -904,8 +904,8 @@ static int Panel_OnSetFocus( lua_State *L )
 
 static int Panel_OnSizeChanged( lua_State *L )
 {
-    luaL_checkpanel( L, 1 )->OnSizeChanged( luaL_checkint( L, 2 ),
-                                            luaL_checkint( L, 3 ) );
+    luaL_checkpanel( L, 1 )->OnSizeChanged( luaL_checknumber( L, 2 ),
+                                            luaL_checknumber( L, 3 ) );
     return 0;
 }
 
@@ -1020,7 +1020,7 @@ static int Panel_SetAllowKeyBindingChainToParent( lua_State *L )
 
 static int Panel_SetAlpha( lua_State *L )
 {
-    luaL_checkpanel( L, 1 )->SetAlpha( luaL_checkint( L, 2 ) );
+    luaL_checkpanel( L, 1 )->SetAlpha( luaL_checknumber( L, 2 ) );
     return 0;
 }
 
@@ -1035,10 +1035,10 @@ static int Panel_SetAutoResize( lua_State *L )
     luaL_checkpanel( L, 1 )->SetAutoResize(
         ( Panel::PinCorner_e )luaL_checkint( L, 2 ),
         ( Panel::AutoResize_e )luaL_checkint( L, 3 ),
-        luaL_checkint( L, 4 ),
-        luaL_checkint( L, 5 ),
-        luaL_checkint( L, 6 ),
-        luaL_checkint( L, 7 ) );
+        luaL_checknumber( L, 4 ),
+        luaL_checknumber( L, 5 ),
+        luaL_checknumber( L, 6 ),
+        luaL_checknumber( L, 7 ) );
     return 0;
 }
 
@@ -1056,7 +1056,7 @@ static int Panel_SetBlockDragChaining( lua_State *L )
 
 static int Panel_SetBounds( lua_State *L )
 {
-    luaL_checkpanel( L, 1 )->SetBounds( luaL_checkint( L, 2 ), luaL_checkint( L, 3 ), luaL_checkint( L, 4 ), luaL_checkint( L, 5 ) );
+    luaL_checkpanel( L, 1 )->SetBounds( luaL_checknumber( L, 2 ), luaL_checknumber( L, 3 ), luaL_checknumber( L, 4 ), luaL_checknumber( L, 5 ) );
     return 0;
 }
 
@@ -1117,8 +1117,8 @@ static int Panel_SetKeyBoardInputEnabled( lua_State *L )
 
 static int Panel_SetMinimumSize( lua_State *L )
 {
-    luaL_checkpanel( L, 1 )->SetMinimumSize( luaL_checkint( L, 2 ),
-                                             luaL_checkint( L, 3 ) );
+    luaL_checkpanel( L, 1 )->SetMinimumSize( luaL_checknumber( L, 2 ),
+                                             luaL_checknumber( L, 3 ) );
     return 0;
 }
 
@@ -1167,8 +1167,8 @@ static int Panel_SetParent( lua_State *L )
 static int Panel_SetPinCorner( lua_State *L )
 {
     luaL_checkpanel( L, 1 )->SetPinCorner( ( Panel::PinCorner_e )luaL_checkint( L, 2 ),
-                                           luaL_checkint( L, 3 ),
-                                           luaL_checkint( L, 4 ) );
+                                           luaL_checknumber( L, 3 ),
+                                           luaL_checknumber( L, 4 ) );
     return 0;
 }
 
@@ -1230,7 +1230,7 @@ static int Panel_SetTabPosition( lua_State *L )
 
 static int Panel_SetTall( lua_State *L )
 {
-    luaL_checkpanel( L, 1 )->SetTall( luaL_checkint( L, 2 ) );
+    luaL_checkpanel( L, 1 )->SetTall( luaL_checknumber( L, 2 ) );
     return 0;
 }
 
@@ -1248,13 +1248,13 @@ static int Panel_SetVisible( lua_State *L )
 
 static int Panel_SetWide( lua_State *L )
 {
-    luaL_checkpanel( L, 1 )->SetWide( luaL_checkint( L, 2 ) );
+    luaL_checkpanel( L, 1 )->SetWide( luaL_checknumber( L, 2 ) );
     return 0;
 }
 
 static int Panel_SetZPos( lua_State *L )
 {
-    luaL_checkpanel( L, 1 )->SetZPos( luaL_checkint( L, 2 ) );
+    luaL_checkpanel( L, 1 )->SetZPos( luaL_checknumber( L, 2 ) );
     return 0;
 }
 

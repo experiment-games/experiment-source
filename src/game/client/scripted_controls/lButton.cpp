@@ -325,6 +325,7 @@ static int Button___newindex( lua_State *L )
         lua_pushvalue( L, 3 );
         lua_setfield( L, -2, luaL_checkstring( L, 2 ) );
         lua_pop( L, 1 );
+
         return 0;
     }
     else

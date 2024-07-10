@@ -29,7 +29,7 @@ static int g_pClientShadowMgr_GetShadowDirection( lua_State *L )
 
 static int g_pClientShadowMgr_RenderShadowTexture( lua_State *L )
 {
-    g_pClientShadowMgr->RenderShadowTexture( luaL_checkint( L, 1 ), luaL_checkint( L, 2 ) );
+    g_pClientShadowMgr->RenderShadowTexture( luaL_checknumber( L, 1 ), luaL_checknumber( L, 2 ) );
     return 0;
 }
 

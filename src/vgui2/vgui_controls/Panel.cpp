@@ -3190,6 +3190,14 @@ void Panel::OnCursorMoved( int x, int y )
 void Panel::OnCursorEntered()
 {
 #ifdef LUA_SDK
+    if ( m_lua_State )
+    {
+        LUA_GET_REF_TABLE( m_lua_State, this );
+        lua_pushboolean( m_lua_State, true );
+        lua_setfield( m_lua_State, -2, "Hovered" );
+        lua_pop( m_lua_State, 1 );
+    }
+
     BEGIN_LUA_CALL_PANEL_METHOD( "OnCursorEntered" );
     END_LUA_CALL_PANEL_METHOD( 0, 0 );
 #endif
@@ -3198,6 +3206,14 @@ void Panel::OnCursorEntered()
 void Panel::OnCursorExited()
 {
 #ifdef LUA_SDK
+    if ( m_lua_State )
+    {
+        LUA_GET_REF_TABLE( m_lua_State, this );
+        lua_pushboolean( m_lua_State, false );
+        lua_setfield( m_lua_State, -2, "Hovered" );
+        lua_pop( m_lua_State, 1 );
+    }
+
     BEGIN_LUA_CALL_PANEL_METHOD( "OnCursorExited" );
     END_LUA_CALL_PANEL_METHOD( 0, 0 );
 #endif
@@ -4080,15 +4096,22 @@ void Panel::PerformLayout()
     // this should be overridden to relayout controls
 
 #ifdef LUA_SDK
+    int wide, tall;
+    Panel::GetSize( wide, tall );
+
     BEGIN_LUA_CALL_PANEL_METHOD( "PerformLayout" );
-    END_LUA_CALL_PANEL_METHOD( 0, 0 );
+    lua_pushinteger( L, wide );
+    lua_pushinteger( L, tall );
+    END_LUA_CALL_PANEL_METHOD( 2, 0 );
 
     // Hack so we can implement Docking in Lua (see game/experiment/lua/includes/extensions/panel.lua)
     if ( m_lua_State && m_nTableReference >= 0 && m_bMarkedAsInitialized )
     {
         BEGIN_LUA_CALL_HOOK_FOR_STATE( m_lua_State, "OnPanelPerformLayout" );
         this->PushPanelToLua( m_lua_State );
-        END_LUA_CALL_HOOK_FOR_STATE( m_lua_State, 1, 0 );
+        lua_pushinteger( L, wide );
+        lua_pushinteger( L, tall );
+        END_LUA_CALL_HOOK_FOR_STATE( m_lua_State, 3, 0 );
     }
 #endif
 }

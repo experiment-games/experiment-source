@@ -16,12 +16,11 @@
 #endif
 
 /* type for CHL2MP_Player functions */
-typedef CHL2MP_Player lua_CHL2MP_Player;
-//#ifdef CLIENT_DLL
-//typedef C_HL2MP_Player lua_CHL2MP_Player;
-//#else
-//typedef CHL2MP_Player lua_CHL2MP_Player;
-//#endif
+#ifdef CLIENT_DLL
+#define lua_CHL2MP_Player C_HL2MP_Player
+#else
+#define lua_CHL2MP_Player CHL2MP_Player
+#endif
 
 /*
 ** access functions (stack -> C)

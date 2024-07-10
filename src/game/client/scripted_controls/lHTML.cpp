@@ -243,7 +243,7 @@ static int HTML_VerticalScrollMax( lua_State *L )
 
 static int HTML_GetLinkAtPosition( lua_State *L )
 {
-    luaL_checkhtml( L, 1 )->GetLinkAtPosition( luaL_checkint( L, 2 ), luaL_checkint( L, 3 ) );
+    luaL_checkhtml( L, 1 )->GetLinkAtPosition( luaL_checknumber( L, 2 ), luaL_checknumber( L, 3 ) );
     return 0;
 }
 

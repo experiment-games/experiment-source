@@ -399,7 +399,7 @@ else
 	PANEL_META._OriginalSetCursor = PANEL_META._OriginalSetCursor or PANEL_META.SetCursor
 	PANEL_META._OriginalGetParent = PANEL_META._OriginalGetParent or PANEL_META.GetParent
 
-	PANEL_META.Remove = PANEL_META.DeletePanel
+	PANEL_META.Remove = PANEL_META.MarkForDeletion
 	PANEL_META.GetTable = PANEL_META.GetRefTable
 	PANEL_META.Dock = PANEL_META.SetDock
 	PANEL_META.DockMargin = PANEL_META.SetDockMargin

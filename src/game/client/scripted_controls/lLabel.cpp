@@ -211,7 +211,7 @@ static int Label_GetTextInset( lua_State *L )
 
 static int Label_SetTextInset( lua_State *L )
 {
-    luaL_checklabel( L, 1 )->SetTextInset( luaL_checkint( L, 2 ), luaL_checkint( L, 3 ) );
+    luaL_checklabel( L, 1 )->SetTextInset( luaL_checknumber( L, 2 ), luaL_checknumber( L, 3 ) );
     return 0;
 }
 
@@ -254,7 +254,7 @@ static int Label_SetAssociatedControl( lua_State *L )
 
 static int Label_SetImagePreOffset( lua_State *L )
 {
-    luaL_checklabel( L, 1 )->SetImagePreOffset( luaL_checkint( L, 2 ), luaL_checkint( L, 3 ) );
+    luaL_checklabel( L, 1 )->SetImagePreOffset( luaL_checknumber( L, 2 ), luaL_checknumber( L, 3 ) );
     return 0;
 }
 
@@ -284,7 +284,7 @@ static int Label_ResetToSimpleTextImage( lua_State *L )
 
 static int Label_SetImageBounds( lua_State *L )
 {
-    luaL_checklabel( L, 1 )->SetImageBounds( luaL_checkint( L, 2 ), luaL_checkint( L, 3 ), luaL_checkint( L, 4 ) );
+    luaL_checklabel( L, 1 )->SetImageBounds( luaL_checknumber( L, 2 ), luaL_checknumber( L, 3 ), luaL_checknumber( L, 4 ) );
     return 0;
 }
 

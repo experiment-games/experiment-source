@@ -54,6 +54,7 @@ class CHL2MP_Player : public CHL2_Player {
     // This passes the event to the client's and server's CHL2MPPlayerAnimState.
     void DoAnimationEvent(PlayerAnimEvent_t event, int nData = 0);
     void SetupBones(matrix3x4_t *pBoneToWorld, int boneMask);
+    bool KeyDown(int buttonCode);
 
     virtual void Precache(void);
     virtual void Spawn(void);

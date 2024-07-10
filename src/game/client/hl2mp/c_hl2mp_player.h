@@ -89,8 +89,10 @@ class C_HL2MP_Player : public C_BaseHLPlayer {
     }
 
     virtual void UpdateClientSideAnimation();
-    void DoAnimationEvent(PlayerAnimEvent_t event, int nData = 0);
+    void DoAnimationEvent( PlayerAnimEvent_t event, int nData = 0 );
     virtual void CalculateIKLocks(float currentTime);
+
+    bool KeyDown( int buttonCode );
 
 	static void RecvProxy_CycleLatch( const CRecvProxyData *pData, void *pStruct, void *pOut );
     

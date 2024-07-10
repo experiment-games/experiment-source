@@ -231,7 +231,7 @@ static int TextEntry_SetEnabled( lua_State *L )
 
 static int TextEntry_MoveCursor( lua_State *L )
 {
-    luaL_checktextentry( L, 1 )->MoveCursor( luaL_checkinteger( L, 2 ), luaL_checkinteger( L, 3 ) );
+    luaL_checktextentry( L, 1 )->MoveCursor( luaL_checknumber( L, 2 ), luaL_checknumber( L, 3 ) );
     return 0;
 }
 
@@ -346,7 +346,7 @@ static int TextEntry_SelectAllText( lua_State *L )
 
 static int TextEntry_SetDrawWidth( lua_State *L )
 {
-    luaL_checktextentry( L, 1 )->SetDrawWidth( luaL_checkinteger( L, 2 ) );
+    luaL_checktextentry( L, 1 )->SetDrawWidth( luaL_checknumber( L, 2 ) );
     return 0;
 }
 

@@ -1,4 +1,4 @@
-//========= Copyright © 1996-2005, Valve Corporation, All rights reserved. ============//
+//========= Copyright Â© 1996-2005, Valve Corporation, All rights reserved. ============//
 //
 // Purpose: 
 //
@@ -10,6 +10,8 @@
 #ifdef _WIN32
 #pragma once
 #endif
+
+#include "lhl2mp_player_shared.h"
 
 /* type for CBasePlayer functions */
 typedef CBasePlayer lua_CBasePlayer;
