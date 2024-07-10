@@ -15,6 +15,8 @@
 #include "materialsystem/imaterialvar.h"
 #include <bitmap/bitmap.h>
 #include <cpng.h>
+#include "VGuiMatSurface/IMatSystemSurface.h"
+#include "vgui_controls/Controls.h"
 
 // memdbgon must be the last include file in a .cpp file!!!
 #include "tier0/memdbgon.h"
@@ -114,6 +116,11 @@ static int gpGlobals_FindMaterial( lua_State *L )
             Q_snprintf( materialName, sizeof( materialName ), "!%s", nameWithoutExtension );
 
             pMaterial = CPngTextureRegen::GetOrCreateProceduralMaterial( materialName, name );
+
+            // We need to assign a TextureID to the material, or else the game will crash in MaterialSystem.pdb
+            // when shutting down the game, after having created (but never assigning a CreateNewTextureID)
+            // a material with this FindMaterial call.
+            g_pMatSystemSurface->DrawSetTextureMaterial( vgui::surface()->CreateNewTextureID( true ), pMaterial );
         }
     }
 
@@ -159,7 +166,7 @@ static int gpGlobals_DoesMaterialExist( lua_State *L )
         Q_FixSlashes( fullFilePath );
 
 #ifdef CLIENT_DLL
-        if (filesystem->FileExists(fullFilePath, "GAME"))
+        if ( filesystem->FileExists( fullFilePath, "GAME" ) )
         {
             lua_pushboolean( L, 1 );
             return 1;
