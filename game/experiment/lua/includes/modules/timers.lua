@@ -7,7 +7,7 @@ function MODULE.Create(id, delay, repetitions, callback)
         delay = delay,
         repetitions = repetitions,
         callback = callback,
-        nextTick = Globals.curtime() + delay
+        nextTick = Globals.CurrentTime() + delay
     }
 end
 
@@ -22,7 +22,7 @@ function MODULE.Simple(delay, callback)
 end
 
 function MODULE.Tick()
-    local curTime = Globals.curtime()
+    local curTime = Globals.CurrentTime()
 
     for id, timer in pairs(MODULE.registeredTimers) do
         if (curTime >= timer.nextTick) then

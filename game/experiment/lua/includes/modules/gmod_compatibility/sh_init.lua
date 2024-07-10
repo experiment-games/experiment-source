@@ -103,13 +103,14 @@ system = System
 vgui = Gui
 VMatrix = Matrix
 
-RealFrameTime = Globals.absoluteframetime
-CurTime = Globals.curtime
+RealFrameTime = Globals.AbsoluteFrameTime
+CurTime = Globals.CurrentTime
 SysTime = Globals.SystemTime
-FrameNumber = Globals.framecount
-FrameTime = Globals.frametime
-engine.TickCount = Globals.tickcount
-engine.TickInterval = Globals.interval_per_tick
+RealTime = Globals.RealTime
+FrameNumber = Globals.FrameCount
+FrameTime = Globals.FrameTime
+engine.TickCount = Globals.TickCount
+engine.TickInterval = Globals.IntervalPerTick
 SoundDuration = Engine.GetSoundDuration
 
 PrecacheParticleSystem = ParticleSystem.Precache
@@ -232,14 +233,6 @@ function table.insert(list, positionOrValue, value)
 	return positionOrValue
 end
 
-Material = function(name)
-	if (not Surface.DoesMaterialExist(name)) then
-		name = "gmod_compatibility_content/" .. name
-	end
-
-	return Surface.FindMaterial(name)
-end
-CreateMaterial = Surface.CreateMaterial
 CreateConVar = function(name, value, flags, helpText, min, max)
 	if (istable(flags)) then
 		if (#flags == 0) then
@@ -275,11 +268,11 @@ game = {
 	end,
 
 	SinglePlayer = function()
-		return Globals.maxClients == 1
+		return Globals.MaxClients == 1
 	end,
 
 	MaxPlayers = function()
-		return Globals.maxClients
+		return Globals.MaxClients
 	end,
 
 	ConsoleCommand = RunConsoleCommand,
@@ -372,9 +365,19 @@ achievements = {
 	SpawnMenuOpen = function() end,
 }
 
+Material = function(name)
+    if (not Surface.DoesMaterialExist(name)) then
+        name = "gmod_compatibility_content/" .. name
+    end
+
+    return Surface.FindMaterial(name)
+end
+
 if (SERVER) then
 	resource.AddWorkshop = function() end
 else
+    CreateMaterial = Surface.CreateMaterial
+
 	local PANEL_META = FindMetaTable("Panel")
 	PANEL_META._OriginalSetCursor = PANEL_META._OriginalSetCursor or PANEL_META.SetCursor
 

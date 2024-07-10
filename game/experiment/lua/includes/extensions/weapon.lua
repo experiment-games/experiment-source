@@ -23,7 +23,7 @@ function _R.CBaseCombatWeapon.WeaponSound( self, sound_type, soundtime )
   -- Only the player fires this way so we can cast
   local client = self:GetOwner()
 
-  -- if ( Globals.maxClients() > 1 ) then
+  -- if ( Globals.MaxClients() > 1 ) then
   --   WeaponSound( self, sound_type, soundtime )
   -- else
     local shootsound = self:GetShootSound( sound_type )

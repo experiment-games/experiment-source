@@ -84,18 +84,18 @@ static int gpGlobals_tickcount( lua_State *L )
 }
 
 static const luaL_Reg gpGlobalslib[] = {
-    { "absoluteframetime", gpGlobals_absoluteframetime },
-    { "curtime", gpGlobals_curtime },
+    { "AbsoluteFrameTime", gpGlobals_absoluteframetime },
+    { "CurrentTime", gpGlobals_curtime },
     { "SystemTime", gpGlobals_SystemTime },
-    { "framecount", gpGlobals_framecount },
-    { "frametime", gpGlobals_frametime },
-    { "interval_per_tick", gpGlobals_interval_per_tick },
+    { "FrameCount", gpGlobals_framecount },
+    { "FrameTime", gpGlobals_frametime },
+    { "IntervalPerTick", gpGlobals_interval_per_tick },
     { "IsClient", gpGlobals_IsClient },
-    { "maxClients", gpGlobals_maxClients },
-    { "network_protocol", gpGlobals_network_protocol },
-    { "realtime", gpGlobals_realtime },
-    { "simTicksThisFrame", gpGlobals_simTicksThisFrame },
-    { "tickcount", gpGlobals_tickcount },
+    { "MaxClients", gpGlobals_maxClients },
+    { "NetworkProtocol", gpGlobals_network_protocol },
+    { "RealTime", gpGlobals_realtime },
+    { "SimulatedTicksThisFrame", gpGlobals_simTicksThisFrame },
+    { "TickCount", gpGlobals_tickcount },
     { NULL, NULL } };
 
 /*

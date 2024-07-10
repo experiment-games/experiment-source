@@ -9,11 +9,11 @@ if (not CLIENT) then
 	return
 end
 
-local curtime = Globals.curtime
+local currentTime = Globals.CurrentTime
 
 Hooks.Add("CalcPlayerView", "CalcPlayerView", function(client, eyeOrigin, eyeAngles, fov)
 	-- Give a subtle breathing effect.
-	eyeAngles = eyeAngles + Angle(math.sin(curtime()) / 2, 0, 0)
+	eyeAngles = eyeAngles + Angle(math.sin(currentTime()) / 2, 0, 0)
 
 	-- FIXME: Field of view is just plain broken here. Use client:SetFOV() to
 	-- get around this.
