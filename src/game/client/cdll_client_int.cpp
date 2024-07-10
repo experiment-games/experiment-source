@@ -167,6 +167,7 @@ extern vgui::IInputInternal *g_InputInternal;
 #include "luamanager.h"
 #include "mountaddons.h"
 #include <lrender.h>
+#include <cpng.h>
 #endif
 
 #ifdef PORTAL
@@ -1251,6 +1252,9 @@ void CHLClient::Shutdown(void) {
     view->Shutdown();
     g_pParticleSystemMgr->UncacheAllParticleSystems();
     UncacheAllMaterials();
+#ifdef LUA_SDK
+    CPngTextureRegen::ReleaseAllTextureData();
+#endif
 
     IGameSystem::ShutdownAllSystems();
 
@@ -1792,6 +1796,9 @@ void CHLClient::LevelShutdown(void) {
     // character loadout screen that can be viewed when we're not connected to a
     // server
     g_pParticleSystemMgr->UncacheAllParticleSystems();
+#endif
+#ifdef LUA_SDK
+    CPngTextureRegen::ReleaseAllTextureData();
 #endif
     UncacheAllMaterials();
 

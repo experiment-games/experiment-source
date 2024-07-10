@@ -751,7 +751,6 @@ void luasrc_shutdown( void )
     }
 
     ActivityList_Free();
-    CPngTextureRegen::ReleaseAllTextureData();
 }
 
 LUA_API int luasrc_dostring( lua_State *L, const char *string )
