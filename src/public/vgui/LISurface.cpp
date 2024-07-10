@@ -84,19 +84,13 @@ static int surface_CreateFont( lua_State *L )
 
 static int surface_CreateNewTextureID( lua_State *L )
 {
-    lua_pushinteger( L, surface()->CreateNewTextureID( luaL_optboolean( L, 1, false ) ) );
+    lua_pushinteger( L, surface_SafeCreateNewTextureID( luaL_optboolean( L, 1, false ) ) );
     return 1;
 }
 
 static int surface_CreatePopup( lua_State *L )
 {
     surface()->CreatePopup( luaL_checkvpanel( L, 1 ), luaL_checkboolean( L, 2 ), luaL_optboolean( L, 3, true ), luaL_optboolean( L, 4, false ), luaL_optboolean( L, 5, true ), luaL_optboolean( L, 6, true ) );
-    return 0;
-}
-
-static int surface_DestroyTextureID( lua_State *L )
-{
-    surface()->DestroyTextureID( luaL_checkint( L, 1 ) );
     return 0;
 }
 
@@ -270,32 +264,6 @@ static int surface_DrawSetTextureRGBA( lua_State *L )
     surface()->DrawSetTextureRGBA( id, rgba, width, height, luaL_optint( L, 5, 0 ), luaL_optboolean( L, 6, true ) );
     return 0;
 }
-
-///// <summary>
-///// Inserts cached data from the procedural texture into the given texture ID,
-///// based on the ITexture provided
-///// </summary>
-///// <param name="L"></param>
-///// <returns></returns>
-//static int surface_DrawSetTextureInstance( lua_State *L )
-//{
-//    int id = luaL_checkint( L, 1 );
-//    ITexture *pTexture = luaL_checkitexture( L, 2 );
-//
-//    const unsigned char *imageData = CPngTextureRegen::GetPngTextureData( pTexture );
-//
-//    if ( !imageData )
-//    {
-//        return 0;
-//    }
-//
-//    int width = pTexture->GetActualWidth();
-//    int height = pTexture->GetActualHeight();
-//
-//    surface()->DrawSetTextureRGBA( id, imageData, width, height, 0, true );
-//
-//    return 0;
-//}
 
 static int surface_DrawSetTextureMaterial( lua_State *L )
 {
@@ -683,7 +651,7 @@ static int surface_FindMaterial( lua_State *L )
             // We need to assign a TextureID to the material, or else the game will crash in MaterialSystem.pdb
             // when shutting down the game, after having created (but never assigning a CreateNewTextureID)
             // a material with this FindMaterial call.
-            g_pMatSystemSurface->DrawSetTextureMaterial( vgui::surface()->CreateNewTextureID( true ), pMaterial );
+            g_pMatSystemSurface->DrawSetTextureMaterial( surface_SafeCreateNewTextureID( true ), pMaterial );
         }
     }
 
@@ -791,7 +759,6 @@ static const luaL_Reg surfacelib[] = {
     { "CreateFont", surface_CreateFont },
     { "CreateNewTextureID", surface_CreateNewTextureID },
     { "CreatePopup", surface_CreatePopup },
-    { "DestroyTextureID", surface_DestroyTextureID },
     { "DrawFilledRect", surface_DrawFilledRect },
     { "DrawFilledRectFade", surface_DrawFilledRectFade },
     { "DrawFlushText", surface_DrawFlushText },

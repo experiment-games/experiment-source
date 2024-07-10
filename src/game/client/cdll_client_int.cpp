@@ -166,6 +166,7 @@ extern vgui::IInputInternal *g_InputInternal;
 #include "luacachefile.h"
 #include "luamanager.h"
 #include "mountaddons.h"
+#include <lrender.h>
 #endif
 
 #ifdef PORTAL
@@ -1812,6 +1813,7 @@ void CHLClient::LevelShutdown(void) {
     // We must remove all children, or we may get invalid dangling references in the menu (or when exitting)
     // because the Lua state children belong to would already be gone.
     VGui_GetClientLuaRootPanel()->DeleteChildren();
+    surface_DestroyAllTextureIDs();
     luasrc_shutdown();
 #endif
 }

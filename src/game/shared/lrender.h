@@ -21,4 +21,7 @@ LUALIB_API void( lua_pushitexture )( lua_State *L, lua_ITexture *pTexture );
 
 LUALIB_API lua_ITexture *( luaL_checkitexture )( lua_State *L, int narg );
 
+int surface_SafeCreateNewTextureID( bool procedural = false );
+void surface_DestroyAllTextureIDs();
+
 #endif  // LC_RENDER_H

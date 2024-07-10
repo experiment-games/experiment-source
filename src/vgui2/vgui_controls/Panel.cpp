@@ -4227,6 +4227,11 @@ void Panel::MarkForDeletion()
     }*/
 }
 
+bool Panel::IsMarkedForDeletion()
+{
+    return _flags.IsFlagSet( MARKED_FOR_DELETION );
+}
+
 //-----------------------------------------------------------------------------
 // Purpose: return true if this object require a perform layout
 //-----------------------------------------------------------------------------

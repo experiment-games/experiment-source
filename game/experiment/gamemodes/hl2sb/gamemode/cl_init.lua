@@ -66,7 +66,7 @@ testMat = Surface.FindMaterial("silkicons/accept.png")
 testMatX = Surface.FindMaterial("silkicons/monkey.png") -- Unused materials caused a crash on exit earlier
 testMatY = Surface.FindMaterial("silkicons/___non___existant_mat.png") -- Testing that non-existant materials don't crash
 testTexture = Surface.GetTextureID("vgui/gfx/vgui/crosshair")
--- lua_run_cl STOP = true surface.ClearAllTextures()
+
 function GM:HudViewportPaint()
 	if (not STOP) then -- TODO: How to detect freed material textures?
 		Surface.SetMaterial(testMat)

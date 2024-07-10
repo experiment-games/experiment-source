@@ -382,12 +382,24 @@ else
 
 	local PANEL_META = FindMetaTable("Panel")
 	PANEL_META._OriginalSetCursor = PANEL_META._OriginalSetCursor or PANEL_META.SetCursor
+	PANEL_META._OriginalGetParent = PANEL_META._OriginalGetParent or PANEL_META.GetParent
 
+	PANEL_META.Remove = PANEL_META.DeletePanel
 	PANEL_META.GetTable = PANEL_META.GetRefTable
 	PANEL_META.Dock = PANEL_META.SetDock
 	PANEL_META.DockMargin = PANEL_META.SetDockMargin
 	PANEL_META.DockPadding = PANEL_META.SetDockPadding
-	PANEL_META.ChildCount = PANEL_META.GetChildCount
+    PANEL_META.ChildCount = PANEL_META.GetChildCount
+
+	function PANEL_META:GetParent()
+		local parent = self:_OriginalGetParent()
+
+		if (not IsValid(parent)) then
+			return nil
+		end
+
+		return parent
+	end
 
 	function PANEL_META:Prepare()
 		-- Installs Lua defined functions into the panel.
@@ -529,18 +541,6 @@ else
 		end
 
 		return textureMap[name]
-	end
-
-	-- TODO: This doesnt fix the crash on closing the game, but it does seem like something we should do on level shutdown
-	surface.ClearAllTextures = function()
-		-- see cl_hooks.lua
-		testMat:GetTexture("$basetexture"):Release()
-		testMat:Release()
-
-		for name, id in pairs(textureMap) do
-			Surface.DestroyTextureID(id)
-			print("Destroyed texture ID for " .. name, id)
-		end
 	end
 
 	surface.GetTextureNameByID = function(id)

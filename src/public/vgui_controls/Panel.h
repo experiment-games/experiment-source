@@ -365,6 +365,7 @@ class Panel : public IClientPanel, virtual IForceVirtualInheritancePanel
     virtual bool IsCursorNone();
     virtual bool IsCursorOver();              // returns true if the cursor is currently over the panel
     virtual void MarkForDeletion();           // object will free it's memory next tick
+    virtual bool IsMarkedForDeletion();
     virtual bool IsLayoutInvalid();           // does this object require a perform layout?
     virtual Panel *HasHotkey( wchar_t key );  // returns the panel that has this hotkey
     virtual bool IsOpaque();

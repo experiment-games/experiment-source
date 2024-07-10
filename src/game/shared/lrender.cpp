@@ -7,10 +7,48 @@
 #include "rendertexture.h"
 #include "view_scene.h"
 #include <materialsystem/imaterialsystem.h>
+#include <vgui/ISurface.h>
+#include <vgui_controls/Controls.h>
 #endif
 
 // memdbgon must be the last include file in a .cpp file!!!
 #include "tier0/memdbgon.h"
+
+#ifdef CLIENT_DLL
+// List of all texture ids created during the lifetime of the client Lua state
+static CUtlVector< int > g_TextureIDs;
+
+/// <summary>
+/// Creates a new TextureID, keeping track of it, so it can be destroyed on shutdown
+/// of the client Lua state.
+/// </summary>
+/// <param name="procedural"></param>
+/// <returns></returns>
+int surface_SafeCreateNewTextureID( bool procedural )
+{
+    int textureID = vgui::surface()->CreateNewTextureID( procedural );
+
+    if ( textureID != -1 )
+    {
+        g_TextureIDs.AddToTail( textureID );
+    }
+
+    return textureID;
+}
+
+/// <summary>
+/// Destroys all TextureIDs created during the lifetime of the client Lua state
+/// </summary>
+void surface_DestroyAllTextureIDs()
+{
+    for ( int i = 0; i < g_TextureIDs.Count(); i++ )
+    {
+        vgui::surface()->DestroyTextureID( g_TextureIDs[i] );
+    }
+
+    g_TextureIDs.RemoveAll();
+}
+#endif
 
 /*
 ** access functions (stack -> C)

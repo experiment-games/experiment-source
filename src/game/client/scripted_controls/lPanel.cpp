@@ -608,6 +608,12 @@ static int Panel_IsLayoutInvalid( lua_State *L )
     return 1;
 }
 
+static int Panel_IsMarkedForDeletion( lua_State *L )
+{
+    lua_pushboolean( L, luaL_checkpanel( L, 1 )->IsMarkedForDeletion() );
+    return 1;
+}
+
 static int Panel_IsMouseInputDisabledForThisPanel( lua_State *L )
 {
     lua_pushboolean( L,
@@ -1410,6 +1416,7 @@ static const luaL_Reg Panelmeta[] = {
     { "IsKeyBoardInputEnabled", Panel_IsKeyBoardInputEnabled },
     { "IsKeyOverridden", Panel_IsKeyOverridden },
     { "IsKeyRebound", Panel_IsKeyRebound },
+    { "IsMarkedForDeletion", Panel_IsMarkedForDeletion },
     { "IsLayoutInvalid", Panel_IsLayoutInvalid },
     { "IsMouseInputDisabledForThisPanel",
       Panel_IsMouseInputDisabledForThisPanel },
@@ -1516,7 +1523,7 @@ static const luaL_Reg Panelmeta[] = {
     { "__newindex", Panel___newindex },
     { "__eq", Panel___eq },
     { "__tostring", Panel___tostring },
-    { "__gc", Panel___gc },
+    //{ "__gc", Panel___gc },
     { NULL, NULL } };
 
 static int luasrc_Panel( lua_State *L )
