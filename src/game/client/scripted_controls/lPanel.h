@@ -27,6 +27,7 @@ LUA_API void( lua_pushpanel )( lua_State *L, VPANEL panel );
 LUALIB_API lua_Panel *( luaL_checkpanel )( lua_State *L, int narg );
 LUALIB_API VPANEL( luaL_checkvpanel )( lua_State *L, int narg );
 LUALIB_API lua_Panel *( luaL_optpanel )( lua_State *L, int narg, lua_Panel *def );
+LUALIB_API VPANEL( luaL_optvpanel )( lua_State *L, int narg, VPANEL def );
 
 int Panel_IsValid( lua_State *L );
 int Panel___gc( lua_State *L );

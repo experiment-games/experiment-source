@@ -19,6 +19,12 @@
 #include <materialsystem/imaterialsystem.h>
 #include "materialsystem/imaterialvar.h"
 
+struct PngTexturePointer
+{
+    unsigned char *pTexturePointer;
+    int iSizeInBytes;
+};
+
 class CPngTextureRegen : public ITextureRegenerator
 {
    public:
@@ -31,13 +37,16 @@ class CPngTextureRegen : public ITextureRegenerator
     }
 
    private:
+    char m_pMaterialName[MAX_PATH];
     char m_pFileName[MAX_PATH];
 
-    public:
-        static CUtlVector< IMaterial * > m_vecProceduralMaterials;
-        static IMaterial *GetOrCreateProceduralMaterial( const char *materialName, const char *filePath );
-        static void ReleaseAllTextureData();
-        
+   public:
+    static CUtlVector< IMaterial * > m_vecProceduralMaterials;
+    static CUtlMap< const char *, PngTexturePointer > m_mapProceduralTexturePointers;
+
+    static IMaterial *GetOrCreateProceduralMaterial( const char *pMaterialName, const char *filePath );
+    static unsigned char *GetProceduralTexturePointer( const char *pMaterialName, int &iSizeInBytes );
+    static void ReleaseAllTextureData();
 };
 
 unsigned char *PNG_ReadFromBuffer( CUtlBuffer &buffer, const char *filePath, int &width, int &height, int &colorType, int &bitDepth, int &sizeInBytes );

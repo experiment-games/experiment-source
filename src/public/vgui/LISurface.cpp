@@ -94,6 +94,17 @@ static int surface_CreatePopup( lua_State *L )
     return 0;
 }
 
+static int surface_DisableClipping( lua_State *L )
+{
+    int left, top, right, bottom;
+    bool bClippingDisabled;
+    g_pMatSystemSurface->GetClippingRect( left, top, right, bottom, bClippingDisabled );
+    g_pMatSystemSurface->DisableClipping( luaL_checkboolean( L, 1 ) );
+    lua_pushboolean( L, bClippingDisabled );
+
+    return 1;
+}
+
 static int surface_DrawFilledRect( lua_State *L )
 {
     surface()->DrawFilledRect( luaL_checkint( L, 1 ), luaL_checkint( L, 2 ), luaL_checkint( L, 3 ), luaL_checkint( L, 4 ) );
@@ -284,7 +295,16 @@ static int surface_DrawTexturedRect( lua_State *L )
 
 static int surface_DrawTexturedSubRect( lua_State *L )
 {
-    surface()->DrawTexturedSubRect( luaL_checkint( L, 1 ), luaL_checkint( L, 2 ), luaL_checkint( L, 3 ), luaL_checkint( L, 4 ), luaL_checknumber( L, 5 ), luaL_checknumber( L, 6 ), luaL_checknumber( L, 7 ), luaL_checknumber( L, 8 ) );
+    int x0 = luaL_checkint( L, 1 );
+    int y0 = luaL_checkint( L, 2 );
+    int x1 = luaL_checkint( L, 3 );
+    int y1 = luaL_checkint( L, 4 );
+    float texs0 = luaL_checknumber( L, 5 );
+    float text0 = luaL_checknumber( L, 6 );
+    float texs1 = luaL_checknumber( L, 7 );
+    float text1 = luaL_checknumber( L, 8 );
+    surface()->DrawTexturedSubRect( x0, y0, x0 + x1, y0 + y1, texs0, text0, texs1, text1 );
+
     return 0;
 }
 
@@ -759,6 +779,7 @@ static const luaL_Reg surfacelib[] = {
     { "CreateFont", surface_CreateFont },
     { "CreateNewTextureID", surface_CreateNewTextureID },
     { "CreatePopup", surface_CreatePopup },
+    { "DisableClipping", surface_DisableClipping },
     { "DrawFilledRect", surface_DrawFilledRect },
     { "DrawFilledRectFade", surface_DrawFilledRectFade },
     { "DrawFlushText", surface_DrawFlushText },

@@ -13,7 +13,9 @@
 #include "limaterial.h"
 #include "mathlib/lvector.h"
 #include "lColor.h"
+#include "materialsystem/itexture.h"
 #include <lrender.h>
+#include <cpng.h>
 
 // memdbgon must be the last include file in a .cpp file!!!
 #include "tier0/memdbgon.h"
@@ -88,19 +90,32 @@ static int IMaterial_GetAlphaModulation( lua_State *L )
 
 static int IMaterial_GetColor(lua_State* L)
 {
-    float *colorValues = new float[4];
+    int x = luaL_checkint( L, 2 );
+    int y = luaL_checkint( L, 3 );
 
-    luaL_checkmaterial( L, 1 )->GetLowResColorSample(
-        luaL_checkint( L, 2 ),
-        luaL_checkint( L, 3 ),
-        colorValues );
+    bool bFound = false;
+    IMaterialVar* pVar = luaL_checkmaterial( L, 1 )->FindVar( "$basetexture", &bFound );
+    ITexture* pTexture = pVar->GetTextureValue();
+    int sizeInBytes;
+    unsigned char* pTextureData = CPngTextureRegen::GetProceduralTexturePointer( pTexture->GetName(), sizeInBytes );
+    lua_Color color;
 
-    // Turn the color into a table with the color metatable
-    Color color( colorValues[0], colorValues[1], colorValues[2], colorValues[4] ); // TODO: Does alpha get set?
+    if ( !pTextureData )
+    {
+        lua_pushcolor( L, color );
+        return 1;
+    }
+
+    int width = pTexture->GetActualWidth();
+    int height = pTexture->GetActualHeight();
+
+    Assert( x >= 0 && x < width );
+    Assert( y >= 0 && y < height );
+
+    int bytesPerRow = sizeInBytes / height;
+    byte *ptr = pTextureData + ( y * bytesPerRow ) + x;
+    color = Color( ptr[0], ptr[1], ptr[2], ptr[3] );
     lua_pushcolor( L, color );
-
-    free( colorValues );
-
     return 1;
 }
 

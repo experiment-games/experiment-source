@@ -494,6 +494,8 @@ void Label::ComputeAlignment(int &tx0, int &ty0, int &tx1, int &ty1)
 //-----------------------------------------------------------------------------
 void Label::Paint()
 {
+    BaseClass::Paint();
+
 	int tx0, ty0, tx1, ty1;
 	ComputeAlignment(tx0, ty0, tx1, ty1);
 

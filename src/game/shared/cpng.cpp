@@ -21,6 +21,7 @@
 #include "tier0/memdbgon.h"
 
 CUtlVector< IMaterial * > CPngTextureRegen::m_vecProceduralMaterials;
+CUtlMap< const char *, PngTexturePointer > CPngTextureRegen::m_mapProceduralTexturePointers;
 
 CPngTextureRegen::CPngTextureRegen( const char *pFileName )
 {
@@ -52,6 +53,11 @@ void CPngTextureRegen::RegenerateTextureBits( ITexture *pTexture, IVTFTexture *p
         return;
     }
 
+    PngTexturePointer texturePointer;
+    texturePointer.iSizeInBytes = sizeInBytes;
+    texturePointer.pTexturePointer = vtfImageData;
+    m_mapProceduralTexturePointers.Insert( pTexture->GetName(), texturePointer );
+
     Q_memcpy( vtfImageData, imageData, sizeInBytes );
 
     // Now that we have copied the image data, we can free the original image data
@@ -66,13 +72,13 @@ static void PNG_ReadData( png_structp png_ptr, png_bytep outBytes, png_size_t by
     buffer->Get( outBytes, byteCountToRead );
 }
 
-unsigned char *PNG_ReadFromBuffer( CUtlBuffer &buffer, const char *filePath, int &width, int &height, int &colorType, int &bitDepth, int &sizeInBytes )
+unsigned char *PNG_ReadFromBuffer( CUtlBuffer &buffer, const char *pFilePath, int &width, int &height, int &colorType, int &bitDepth, int &sizeInBytes )
 {
     png_const_bytep fileHeader = ( png_const_bytep )buffer.Base();
 
     if ( png_sig_cmp( fileHeader, 0, 8 ) )
     {
-        Warning( "Failed loading PNG as Material! File is missing PNG header \"%s\"\n", filePath );
+        Warning( "Failed loading PNG as Material! File is missing PNG header \"%s\"\n", pFilePath );
         return NULL;
     }
 
@@ -82,7 +88,7 @@ unsigned char *PNG_ReadFromBuffer( CUtlBuffer &buffer, const char *filePath, int
     if ( setjmp( png_jmpbuf( readPointer ) ) )
     {
         png_destroy_read_struct( &readPointer, &infoPointer, NULL );
-        Warning( "Failed loading PNG as Material! Error during PNG creation \"%s\"\n", filePath );
+        Warning( "Failed loading PNG as Material! Error during PNG creation \"%s\"\n", pFilePath );
         return NULL;
     }
 
@@ -133,7 +139,7 @@ unsigned char *PNG_ReadFromBuffer( CUtlBuffer &buffer, const char *filePath, int
     if ( !imageData )
     {
         png_destroy_read_struct( &readPointer, &infoPointer, NULL );
-        Warning( "Failed loading PNG as Material! Memory allocation failed \"%s\"\n", filePath );
+        Warning( "Failed loading PNG as Material! Memory allocation failed \"%s\"\n", pFilePath );
         return NULL;
     }
 
@@ -143,7 +149,7 @@ unsigned char *PNG_ReadFromBuffer( CUtlBuffer &buffer, const char *filePath, int
     {
         free( imageData );
         png_destroy_read_struct( &readPointer, &infoPointer, NULL );
-        Warning( "Failed loading PNG as Material! Memory allocation for row pointers failed \"%s\"\n", filePath );
+        Warning( "Failed loading PNG as Material! Memory allocation for row pointers failed \"%s\"\n", pFilePath );
         return NULL;
     }
 
@@ -164,13 +170,13 @@ unsigned char *PNG_ReadFromBuffer( CUtlBuffer &buffer, const char *filePath, int
     return imageData;
 }
 
-bool PNG_ReadInfoFromBuffer( CUtlBuffer &buffer, const char *filePath, int &width, int &height, int &colorType, int &bitDepth )
+bool PNG_ReadInfoFromBuffer( CUtlBuffer &buffer, const char *pFilePath, int &width, int &height, int &colorType, int &bitDepth )
 {
     png_const_bytep fileHeader = ( png_const_bytep )buffer.Base();
 
     if ( png_sig_cmp( fileHeader, 0, 8 ) )
     {
-        Warning( "Failed loading PNG as Material! File is missing PNG header \"%s\"\n", filePath );
+        Warning( "Failed loading PNG as Material! File is missing PNG header \"%s\"\n", pFilePath );
         return false;
     }
 
@@ -180,7 +186,7 @@ bool PNG_ReadInfoFromBuffer( CUtlBuffer &buffer, const char *filePath, int &widt
     if ( setjmp( png_jmpbuf( readPointer ) ) )
     {
         png_destroy_read_struct( &readPointer, &infoPointer, NULL );
-        Warning( "Failed loading PNG as Material! Error during PNG creation \"%s\"\n", filePath );
+        Warning( "Failed loading PNG as Material! Error during PNG creation \"%s\"\n", pFilePath );
         return false;
     }
 
@@ -201,19 +207,20 @@ bool PNG_ReadInfoFromBuffer( CUtlBuffer &buffer, const char *filePath, int &widt
 
     return true;
 }
-bool PNG_ReadInfoFromBuffer( CUtlBuffer &buffer, const char *filePath, int &width, int &height )
+
+bool PNG_ReadInfoFromBuffer( CUtlBuffer &buffer, const char *pFilePath, int &width, int &height )
 {
     int colorType, bitDepth;
-    return PNG_ReadInfoFromBuffer( buffer, filePath, width, height, colorType, bitDepth );
+    return PNG_ReadInfoFromBuffer( buffer, pFilePath, width, height, colorType, bitDepth );
 }
 #endif
 
-IMaterial *CPngTextureRegen::GetOrCreateProceduralMaterial( const char *materialName, const char *filePath )
+IMaterial *CPngTextureRegen::GetOrCreateProceduralMaterial( const char *pMaterialName, const char *pFilePath )
 {
     KeyValues *keys = new KeyValues( "UnlitGeneric" );
-    keys->SetString( "$basetexture", materialName );
+    keys->SetString( "$basetexture", pMaterialName );
     keys->SetString( "$translucent", "1" );
-    IMaterial *pMaterial = g_pMaterialSystem->FindProceduralMaterial( materialName, TEXTURE_GROUP_VGUI, keys );
+    IMaterial *pMaterial = g_pMaterialSystem->FindProceduralMaterial( pMaterialName, TEXTURE_GROUP_VGUI, keys );
 
     // The server will have incorrect info on the material
     int width = 512;
@@ -221,18 +228,18 @@ IMaterial *CPngTextureRegen::GetOrCreateProceduralMaterial( const char *material
     ImageFormat imageFormat = IMAGE_FORMAT_RGBA8888;
 
     char fullFilePath[MAX_PATH];
-    Q_snprintf( fullFilePath, sizeof( fullFilePath ), "materials/%s", filePath );
+    Q_snprintf( fullFilePath, sizeof( fullFilePath ), "materials/%s", pFilePath );
     Q_FixSlashes( fullFilePath );
 
 #ifdef CLIENT_DLL
     CUtlBuffer buffer;
     if ( !filesystem->ReadFile( fullFilePath, "GAME", buffer ) )
     {
-        Warning( "Failed loading PNG as Material! Couldn't read PNG from file \"%s\"\n", filePath );
+        Warning( "Failed loading PNG as Material! Couldn't read PNG from file \"%s\"\n", pFilePath );
         return NULL;
     }
 
-    PNG_ReadInfoFromBuffer( buffer, filePath, width, height );
+    PNG_ReadInfoFromBuffer( buffer, pFilePath, width, height );
 #endif
 
     bool bFound = false;
@@ -243,14 +250,14 @@ IMaterial *CPngTextureRegen::GetOrCreateProceduralMaterial( const char *material
         ITexture *pTexture = nullptr;
         bool bLoadInitial = false;
 
-        if ( !g_pMaterialSystem->IsTextureLoaded( materialName ) )
+        if ( !g_pMaterialSystem->IsTextureLoaded( pMaterialName ) )
         {
-            pTexture = g_pMaterialSystem->CreateProceduralTexture( materialName, TEXTURE_GROUP_VGUI, width, height, imageFormat, TEXTUREFLAGS_NOMIP | TEXTUREFLAGS_NOLOD | TEXTUREFLAGS_PROCEDURAL );
+            pTexture = g_pMaterialSystem->CreateProceduralTexture( pMaterialName, TEXTURE_GROUP_VGUI, width, height, imageFormat, TEXTUREFLAGS_NOMIP | TEXTUREFLAGS_NOLOD | TEXTUREFLAGS_PROCEDURAL );
             bLoadInitial = true;
         }
         else
         {
-            pTexture = g_pMaterialSystem->FindTexture( materialName, TEXTURE_GROUP_VGUI, false );
+            pTexture = g_pMaterialSystem->FindTexture( pMaterialName, TEXTURE_GROUP_VGUI, false );
             bLoadInitial = pTexture->IsError();
         }
 
@@ -266,10 +273,25 @@ IMaterial *CPngTextureRegen::GetOrCreateProceduralMaterial( const char *material
     }
     else
     {
-        Warning( "Failed loading PNG as Material! Couldn't find basetexture var in material \"%s\"\n", materialName );
+        Warning( "Failed loading PNG as Material! Couldn't find basetexture var in material \"%s\"\n", pMaterialName );
     }
 
     return pMaterial;
+}
+
+unsigned char *CPngTextureRegen::GetProceduralTexturePointer( const char *pMaterialName, int &iSizeInBytes )
+{
+    unsigned short index = m_mapProceduralTexturePointers.Find( pMaterialName );
+
+    if ( index == m_mapProceduralTexturePointers.InvalidIndex() )
+    {
+        return nullptr;
+    }
+
+    PngTexturePointer texturePointer = m_mapProceduralTexturePointers.Element( index );
+    iSizeInBytes = texturePointer.iSizeInBytes;
+
+    return texturePointer.pTexturePointer;
 }
 
 void CPngTextureRegen::ReleaseAllTextureData()
@@ -297,4 +319,5 @@ void CPngTextureRegen::ReleaseAllTextureData()
     }
 
     m_vecProceduralMaterials.RemoveAll();
+    m_mapProceduralTexturePointers.RemoveAll();
 }

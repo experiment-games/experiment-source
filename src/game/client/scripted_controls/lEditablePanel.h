@@ -24,10 +24,11 @@ class LEditablePanel : public EditablePanel
    public:
     LEditablePanel( Panel *parent, const char *panelName, lua_State *L );
     virtual void PushPanelToLua( lua_State *L );
+    void SetFocusTopLevel( bool state );
 };
 
 /* type for EditablePanel functions */
-typedef EditablePanel lua_EditablePanel;
+typedef LEditablePanel lua_EditablePanel;
 
 
 /*

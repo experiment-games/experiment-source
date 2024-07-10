@@ -370,15 +370,30 @@ if (SERVER) then
 
 	Material = function(name) end
 else
-	Material = function(name)
-		if (not Surface.DoesMaterialExist(name)) then
-			name = "gmod_compatibility_content/" .. name
-		end
+    Material = function(name)
+        if (not Surface.DoesMaterialExist(name)) then
+            name = "gmod_compatibility_content/" .. name
+        end
 
-		return Surface.FindMaterial(name)
-	end
+        return Surface.FindMaterial(name)
+    end
+
+    gui = {
+        MouseX = function()
+            local x, y = input.GetCursorPosition()
+			return x
+        end,
+		MouseY = function()
+			local x, y = input.GetCursorPosition()
+			return y
+        end,
+        SetMousePos = input.SetCursorPosition,
+    }
+    input.SetCursorPos = input.SetCursorPosition
+	input.GetCursorPos = input.GetCursorPosition
 
     CreateMaterial = Surface.CreateMaterial
+	DisableClipping = Surface.DisableClipping
 
 	local PANEL_META = FindMetaTable("Panel")
 	PANEL_META._OriginalSetCursor = PANEL_META._OriginalSetCursor or PANEL_META.SetCursor
@@ -390,6 +405,14 @@ else
 	PANEL_META.DockMargin = PANEL_META.SetDockMargin
 	PANEL_META.DockPadding = PANEL_META.SetDockPadding
     PANEL_META.ChildCount = PANEL_META.GetChildCount
+
+    function PANEL_META:MouseCapture(doCapture)
+		if (doCapture) then
+			input.SetMouseCapture(self)
+		else
+			input.SetMouseCapture(nil)
+		end
+	end
 
 	function PANEL_META:GetParent()
 		local parent = self:_OriginalGetParent()

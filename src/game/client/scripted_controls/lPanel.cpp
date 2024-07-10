@@ -75,6 +75,11 @@ LUALIB_API lua_Panel *luaL_optpanel( lua_State *L, int narg, Panel *def )
     return luaL_opt( L, luaL_checkpanel, narg, def );
 }
 
+LUALIB_API VPANEL luaL_optvpanel( lua_State *L, int narg, VPANEL def )
+{
+    return luaL_opt( L, luaL_checkvpanel, narg, def );
+}
+
 static int Panel_AddKeyBinding( lua_State *L )
 {
     luaL_checkpanel( L, 1 )->AddKeyBinding(
@@ -465,6 +470,27 @@ static int Panel_GetZPos( lua_State *L )
 static int Panel_HasFocus( lua_State *L )
 {
     lua_pushboolean( L, luaL_checkpanel( L, 1 )->HasFocus() );
+    return 1;
+}
+
+static bool ChildHasFocus( Panel *pPanel )
+{
+    if ( pPanel->HasFocus() )
+        return true;
+
+    for ( int i = 0; i < pPanel->GetChildCount(); i++ )
+    {
+        Panel *pChild = pPanel->GetChild( i );
+        if ( ChildHasFocus( pChild ) )
+            return true;
+    }
+
+    return false;
+}
+
+static int Panel_HasHierarchicalFocus( lua_State *L )
+{
+    lua_pushboolean( L, ChildHasFocus( luaL_checkpanel( L, 1 ) ) );
     return 1;
 }
 
@@ -1393,6 +1419,7 @@ static const luaL_Reg Panelmeta[] = {
     { "GetWide", Panel_GetWide },
     { "GetZPos", Panel_GetZPos },
     { "HasFocus", Panel_HasFocus },
+    { "HasHierarchicalFocus", Panel_HasHierarchicalFocus },
     { "HasUserConfigSettings", Panel_HasUserConfigSettings },
     { "InitPropertyConverters", Panel_InitPropertyConverters },
     { "InvalidateLayout", Panel_InvalidateLayout },

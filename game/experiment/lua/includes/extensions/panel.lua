@@ -100,8 +100,9 @@ Hooks.Add("OnPanelPerformLayout", "OnPanelPerformLayoutInternal", function(panel
 		end
     end
 
-	if (panel._dockType ~= DOCK_TYPE.NONE) then
+    if (panel._dockType ~= DOCK_TYPE.NONE) then
         panel:UpdateDockingParent()
+        panel:UpdateDocking()
 	end
 end)
 
@@ -189,11 +190,12 @@ end
 --- Update the docking of child panels.
 function PANEL:UpdateDocking()
     local parentWidth, parentHeight = self:GetSize()
+	local leftPadding, topPadding, rightPadding, bottomPadding = self:GetDockPadding()
     local occupiedSpace = {
-        left = 0,
-        top = 0,
-        right = 0,
-        bottom = 0
+		left = leftPadding,
+		top = topPadding,
+		right = rightPadding,
+		bottom = bottomPadding
     }
 
     for i = 1, self:GetChildCount() do

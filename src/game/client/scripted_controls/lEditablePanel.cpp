@@ -29,6 +29,11 @@ void LEditablePanel::PushPanelToLua( lua_State *L )
     lua_pusheditablepanel( L, this );
 }
 
+void LEditablePanel::SetFocusTopLevel( bool state )
+{
+    GetFocusNavGroup().SetFocusTopLevel( state );
+}
+
 /*
 ** access functions (stack -> C)
 */
@@ -48,16 +53,13 @@ LUA_API lua_EditablePanel *lua_toeditablepanel( lua_State *L, int idx )
 ** push functions (C -> stack)
 */
 
-LUA_API void lua_pusheditablepanel( lua_State *L, EditablePanel *pEditablePanel )
+LUA_API void lua_pusheditablepanel( lua_State *L, lua_EditablePanel *plEditablePanel )
 {
-    LEditablePanel *plEditablePanel = dynamic_cast< LEditablePanel * >( pEditablePanel );
-
     if ( plEditablePanel )
         ++plEditablePanel->m_nRefCount;
 
     PHandle *phPanel = ( PHandle * )lua_newuserdata( L, sizeof( PHandle ) );
-
-    phPanel->Set( pEditablePanel );
+    phPanel->Set( plEditablePanel );
 
     luaL_getmetatable( L, "EditablePanel" );
     lua_setmetatable( L, -2 );
@@ -281,6 +283,13 @@ static int EditablePanel_SetDialogVariable( lua_State *L )
     return 0;
 }
 
+
+static int EditablePanel_SetFocusTopLevel( lua_State *L )
+{
+    luaL_checkeditablepanel( L, 1 )->SetFocusTopLevel( luaL_checkboolean( L, 2 ) );
+    return 0;
+}
+
 static int EditablePanel___index( lua_State *L )
 {
     EditablePanel *pEditablePanel = lua_toeditablepanel( L, 1 );
@@ -393,6 +402,7 @@ static const luaL_Reg EditablePanelmeta[] = {
     { "SetControlString", EditablePanel_SetControlString },
     { "SetControlVisible", EditablePanel_SetControlVisible },
     { "SetDialogVariable", EditablePanel_SetDialogVariable },
+    { "SetFocusTopLevel", EditablePanel_SetFocusTopLevel },
     { "__index", EditablePanel___index },
     { "__newindex", EditablePanel___newindex },
     { "__eq", EditablePanel___eq },
@@ -402,7 +412,7 @@ static const luaL_Reg EditablePanelmeta[] = {
 
 static int luasrc_EditablePanel( lua_State *L )
 {
-    EditablePanel *pEditablePanel =
+    LEditablePanel *pEditablePanel =
         new LEditablePanel(
             luaL_optpanel( L, 1, VGui_GetClientLuaRootPanel() ),
             luaL_checkstring( L, 2 ),
