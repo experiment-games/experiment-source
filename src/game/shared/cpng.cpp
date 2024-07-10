@@ -32,6 +32,9 @@ void CPngTextureRegen::RegenerateTextureBits( ITexture *pTexture, IVTFTexture *p
 #ifdef CLIENT_DLL
     unsigned char *vtfImageData = pVTFTexture->ImageData( 0, 0, 0 );
 
+    // Ensure the texture we are copying to is the same format as the texture we are copying from
+    pVTFTexture->ConvertImageFormat( pTexture->GetImageFormat(), false );
+
     CUtlBuffer buffer;
     if ( !filesystem->ReadFile( m_pFileName, "GAME", buffer ) )
     {
@@ -39,10 +42,9 @@ void CPngTextureRegen::RegenerateTextureBits( ITexture *pTexture, IVTFTexture *p
         return;
     }
 
-    int width, height;
-    ImageFormat imageFormat;
+    int width, height, colorType, bitDepth, sizeInBytes;
 
-    unsigned char *imageData = PNG_ReadFromBuffer( buffer, m_pFileName, width, height, imageFormat );
+    unsigned char *imageData = PNG_ReadFromBuffer( buffer, m_pFileName, width, height, colorType, bitDepth, sizeInBytes );
 
     if ( !imageData )
     {
@@ -50,23 +52,7 @@ void CPngTextureRegen::RegenerateTextureBits( ITexture *pTexture, IVTFTexture *p
         return;
     }
 
-    int bitDepth = 0;
-    switch ( imageFormat )
-    {
-        // TODO: Verify if this is correct
-        case IMAGE_FORMAT_RGBA8888:
-            bitDepth = 4;
-            break;
-        case IMAGE_FORMAT_RGB888:
-            bitDepth = 1;
-            break;
-        default:
-            Warning( "Failed loading PNG as Material! Unsupported image format %d\n", imageFormat );
-            free( imageData );
-            return;
-    }
-
-    Q_memcpy( vtfImageData, imageData, width * height * bitDepth );
+    Q_memcpy( vtfImageData, imageData, sizeInBytes );
 
     // Now that we have copied the image data, we can free the original image data
     free( imageData );
@@ -80,22 +66,7 @@ static void PNG_ReadData( png_structp png_ptr, png_bytep outBytes, png_size_t by
     buffer->Get( outBytes, byteCountToRead );
 }
 
-ImageFormat PNG_GetImageFormat( int colorType, int bitDepth )
-{
-    if ( colorType == 6 || colorType == 4 )  // 32-bit RGBA ?
-    {
-        return IMAGE_FORMAT_RGBA8888;
-    }
-    else if ( colorType == 3 )  // 8-bit RGB
-    {
-        return IMAGE_FORMAT_RGB888;
-    }
-
-    Warning( "Failed loading PNG as Material! Unsupported color type %d with bit depth %d\n", colorType, bitDepth );
-    return IMAGE_FORMAT_RGBA8888;
-}
-
-unsigned char *PNG_ReadFromBuffer( CUtlBuffer &buffer, const char *filePath, int &width, int &height, ImageFormat &imageFormat )
+unsigned char *PNG_ReadFromBuffer( CUtlBuffer &buffer, const char *filePath, int &width, int &height, int &colorType, int &bitDepth, int &sizeInBytes )
 {
     png_const_bytep fileHeader = ( png_const_bytep )buffer.Base();
 
@@ -120,15 +91,44 @@ unsigned char *PNG_ReadFromBuffer( CUtlBuffer &buffer, const char *filePath, int
 
     png_uint_32 pngWidth = 0;
     png_uint_32 pngHeight = 0;
-    int bitDepth = 0;
-    int colorType = -1;
 
     png_get_IHDR( readPointer, infoPointer, &pngWidth, &pngHeight, &bitDepth, &colorType, NULL, NULL, NULL );
+
+    if ( colorType == PNG_COLOR_TYPE_PALETTE )
+    {
+        png_set_expand( readPointer );
+    }
+
+    if ( colorType == PNG_COLOR_TYPE_GRAY && bitDepth < 8 )
+    {
+        png_set_expand( readPointer );
+    }
+
+    if ( png_get_valid( readPointer, infoPointer, PNG_INFO_tRNS ) )
+    {
+        png_set_expand( readPointer );
+    }
+
+    if ( bitDepth == 16 )
+    {
+        png_set_strip_16( readPointer );
+    }
+
+    if ( colorType == PNG_COLOR_TYPE_GRAY || colorType == PNG_COLOR_TYPE_GRAY_ALPHA )
+    {
+        png_set_gray_to_rgb( readPointer );
+    }
+
+    if ( !( colorType & PNG_COLOR_MASK_ALPHA ) )
+    {
+        png_set_add_alpha( readPointer, 255, PNG_FILLER_AFTER );
+    }
 
     png_read_update_info( readPointer, infoPointer );
 
     png_size_t rowBytes = png_get_rowbytes( readPointer, infoPointer );
-    unsigned char *imageData = ( unsigned char * )malloc( rowBytes * pngHeight );
+    sizeInBytes = rowBytes * pngHeight;
+    unsigned char *imageData = ( unsigned char * )malloc( sizeInBytes );
 
     if ( !imageData )
     {
@@ -160,23 +160,11 @@ unsigned char *PNG_ReadFromBuffer( CUtlBuffer &buffer, const char *filePath, int
 
     width = pngWidth;
     height = pngHeight;
-    imageFormat = PNG_GetImageFormat( colorType, bitDepth );
 
     return imageData;
 }
 
-void PNG_ReadToBitmap( CUtlBuffer &buffer, const char *filePath, Bitmap_t &bitmap )
-{
-    bitmap.Clear();
-
-    int width, height;
-    ImageFormat imageFormat;
-    unsigned char *imageData = PNG_ReadFromBuffer( buffer, filePath, width, height, imageFormat );
-
-    bitmap.SetBuffer( width, height, imageFormat, imageData, true, width * 4 );
-}
-
-bool PNG_ReadInfoFromBuffer( CUtlBuffer &buffer, const char *filePath, int &width, int &height, ImageFormat &imageFormat )
+bool PNG_ReadInfoFromBuffer( CUtlBuffer &buffer, const char *filePath, int &width, int &height, int &colorType, int &bitDepth )
 {
     png_const_bytep fileHeader = ( png_const_bytep )buffer.Base();
 
@@ -201,8 +189,6 @@ bool PNG_ReadInfoFromBuffer( CUtlBuffer &buffer, const char *filePath, int &widt
 
     png_uint_32 pngWidth = 0;
     png_uint_32 pngHeight = 0;
-    int bitDepth = 0;
-    int colorType = -1;
 
     png_get_IHDR( readPointer, infoPointer, &pngWidth, &pngHeight, &bitDepth, &colorType, NULL, NULL, NULL );
 
@@ -212,9 +198,13 @@ bool PNG_ReadInfoFromBuffer( CUtlBuffer &buffer, const char *filePath, int &widt
 
     width = pngWidth;
     height = pngHeight;
-    imageFormat = PNG_GetImageFormat( colorType, bitDepth );
 
     return true;
+}
+bool PNG_ReadInfoFromBuffer( CUtlBuffer &buffer, const char *filePath, int &width, int &height )
+{
+    int colorType, bitDepth;
+    return PNG_ReadInfoFromBuffer( buffer, filePath, width, height, colorType, bitDepth );
 }
 #endif
 
@@ -242,7 +232,7 @@ IMaterial *CPngTextureRegen::GetOrCreateProceduralMaterial( const char *material
         return NULL;
     }
 
-    PNG_ReadInfoFromBuffer( buffer, filePath, width, height, imageFormat );
+    PNG_ReadInfoFromBuffer( buffer, filePath, width, height );
 #endif
 
     bool bFound = false;
@@ -279,7 +269,7 @@ void CPngTextureRegen::ReleaseAllTextureData()
         // in certain situations (like having the ESC menu opened when finding a material)
         bool bFound = false;
         IMaterialVar *pVar = pMaterial->FindVar( "$basetexture", &bFound );
-        
+
         if ( bFound && pVar )
         {
             ITexture *pTexture = pVar->GetTextureValue();

@@ -40,8 +40,7 @@ class CPngTextureRegen : public ITextureRegenerator
         
 };
 
-unsigned char *PNG_ReadFromBuffer( CUtlBuffer &buffer, const char *filePath, int &width, int &height, ImageFormat &imageFormat );
-void PNG_ReadToBitmap( CUtlBuffer &buffer, const char *filePath, Bitmap_t &bitmap );
-bool PNG_ReadInfoFromBuffer( CUtlBuffer &buffer, const char *filePath, int &width, int &height, ImageFormat &imageFormat );
+unsigned char *PNG_ReadFromBuffer( CUtlBuffer &buffer, const char *filePath, int &width, int &height, int &colorType, int &bitDepth, int &sizeInBytes );
+bool PNG_ReadInfoFromBuffer( CUtlBuffer &buffer, const char *filePath, int &width, int &height, int &colorType, int &bitDepth );
 
 #endif  // C_PNG_H
