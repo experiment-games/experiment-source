@@ -1302,6 +1302,21 @@ static int Panel___newindex( lua_State *L )
         return lua_error( L );
     }
 
+    const char *field = luaL_checkstring( L, 2 );
+
+    if ( Q_strcmp( field, "x" ) == 0 )
+    {
+        int x, y;
+        plPanel->GetPos( x, y );
+        plPanel->SetPos( luaL_checknumber( L, 3 ), y );
+    }
+    if ( Q_strcmp( field, "y" ) == 0 )
+    {
+        int x, y;
+        plPanel->GetPos( x, y );
+        plPanel->SetPos( x, luaL_checknumber( L, 3 ) );
+    }
+
     if ( plPanel )
     {
         LUA_GET_REF_TABLE( L, plPanel );
