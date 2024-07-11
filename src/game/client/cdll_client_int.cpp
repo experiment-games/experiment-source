@@ -1820,9 +1820,6 @@ void CHLClient::LevelShutdown(void) {
 #endif
 
 #if defined(LUA_SDK)
-    // We must remove all children, or we may get invalid dangling references in the menu (or when exitting)
-    // because the Lua state children belong to would already be gone.
-    VGui_GetClientLuaRootPanel()->DeleteChildren();
     luasrc_shutdown();
 #endif
 }

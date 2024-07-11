@@ -1,5 +1,6 @@
 include("shared.lua")
 
+GM.TestAsd2 = Material("gmod_compatibility_content/gwenskin/gmoddefault.png")
 DEFINE_BASECLASS("gamemode_base")
 
 function GM:Initialize()
@@ -69,3 +70,7 @@ end)
 TEST_PANEL = MakeTestPanel()
 TEST_PANEL2 = MakeTestPanel()
 TEST_PANEL2:SetPos(512, 0)
+
+-- Loading the same materials after the derma skin is already loaded, shouldn't cause earlier ones to unload. It does...
+GM.TestAsd = Material("gmod_compatibility_content/gwenskin/gmoddefault.png")
+print(GM.TestAsd,GM.TestAsd2)

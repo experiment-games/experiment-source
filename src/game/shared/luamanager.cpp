@@ -10,11 +10,13 @@
 #include "filesystem.h"
 #ifndef CLIENT_DLL
 #include "gameinterface.h"
+#include "basescriptedtrigger.h"
 #endif
 #include "steam/isteamfriends.h"
 #include "networkstringtabledefs.h"
-#ifndef CLIENT_DLL
-#include "basescriptedtrigger.h"
+#ifdef CLIENT_DLL
+#include <scriptedclientluapanel.h>
+#include <vgui_int.h>
 #endif
 #include "basescripted.h"
 #include "weapon_hl2mpbase_scriptedweapon.h"
@@ -105,6 +107,10 @@ LUALIB_API int luaL_optboolean( lua_State *L, int narg, int def )
 
 #ifdef CLIENT_DLL
 lua_State *LGameUI;
+// This is where all scripted panels are parented to
+// it will be created on the client when the L state is created
+// and removed when the L state is destroyed
+CScriptedClientLuaPanel *g_pClientLuaPanel = NULL;
 #endif
 
 // This is the state for the CLIENT (in case of CLIENT_DLL) or the
@@ -522,6 +528,12 @@ void luasrc_init( void )
 
     L = lua_open();
 
+#ifdef CLIENT_DLL
+    g_pClientLuaPanel = new CScriptedClientLuaPanel( L );
+    g_pClientLuaPanel->Start( gameuifuncs, gameeventmanager );
+    luasrc_ui_enable();
+#endif
+
     luaL_openlibs( L );
     base_open( L );
     lcf_open( L );
@@ -708,10 +720,61 @@ void luasrc_init( void )
     buttonCodeStringNext = -1;  // Clean up for next time
 }
 
+#ifdef CLIENT_DLL
+void luasrc_ui_enable( void )
+{
+    if ( !g_pClientLuaPanel )
+        return;
+
+    vgui::VPANEL pRoot = VGui_GetClientDLLRootPanel();
+
+    if ( pRoot != 0 )
+    {
+        g_pClientLuaPanel->SetParent( pRoot );
+    }
+
+    g_pClientLuaPanel->SetProportional( false );
+    g_pClientLuaPanel->SetCursor( vgui::dc_none );
+    g_pClientLuaPanel->SetVisible( true );
+
+    if ( g_pClientLuaPanel->IsKeyBoardInputEnabled() )
+    {
+        g_pClientLuaPanel->RequestFocus();
+    }
+
+    if ( pRoot != 0 )
+    {
+        int wide, tall;
+        vgui::ipanel()->GetSize( pRoot, wide, tall );
+        luasrc_ui_layout( wide, tall );
+    }
+}
+
+void luasrc_ui_layout( int wide, int tall )
+{
+    if ( !g_pClientLuaPanel )
+        return;
+
+    g_pClientLuaPanel->SetBounds( 0, 0, wide, tall );
+}
+
+void luasrc_ui_disable( void )
+{
+    if ( !g_pClientLuaPanel )
+        return;
+
+    g_pClientLuaPanel->SetParent( ( vgui::VPANEL )NULL );
+    g_pClientLuaPanel->SetVisible( false );
+}
+#endif
+
 void luasrc_shutdown( void )
 {
 #ifdef CLIENT_DLL
     Msg( "Lua Menu shutdown - Client\n" );
+
+    delete g_pClientLuaPanel;
+    g_pClientLuaPanel = NULL;
 #else
     Msg( "Lua shutdown - Server\n" );
 #endif

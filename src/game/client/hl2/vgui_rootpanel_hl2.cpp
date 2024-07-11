@@ -73,8 +73,7 @@ vgui::Panel *VGui_GetGameUIPanel(void) {
 //-----------------------------------------------------------------------------
 CScriptedClientLuaPanel *VGui_GetClientLuaRootPanel( void )
 {
-    ClientModeShared *mode = (ClientModeShared *)GetClientModeNormal();
-    CScriptedClientLuaPanel *pRoot = mode->m_pClientLuaPanel;
+    CScriptedClientLuaPanel *pRoot = g_pClientLuaPanel;
     return pRoot;
 }
 #endif

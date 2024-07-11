@@ -41,7 +41,7 @@ unsigned char *PNG_ReadFromBuffer( CUtlBuffer &buffer, const char *pFilePath, in
 
     if ( png_sig_cmp( fileHeader, 0, 8 ) )
     {
-        Warning( "Failed loading PNG as Material! File is missing PNG header \"%s\"\n", pFilePath );
+        DevWarning( "Failed loading PNG as Material! File is missing PNG header \"%s\"\n", pFilePath );
         return NULL;
     }
 
@@ -51,7 +51,7 @@ unsigned char *PNG_ReadFromBuffer( CUtlBuffer &buffer, const char *pFilePath, in
     if ( setjmp( png_jmpbuf( readPointer ) ) )
     {
         png_destroy_read_struct( &readPointer, &infoPointer, NULL );
-        Warning( "Failed loading PNG as Material! Error during PNG creation \"%s\"\n", pFilePath );
+        DevWarning( "Failed loading PNG as Material! Error during PNG creation \"%s\"\n", pFilePath );
         return NULL;
     }
 
@@ -102,7 +102,7 @@ unsigned char *PNG_ReadFromBuffer( CUtlBuffer &buffer, const char *pFilePath, in
     if ( !imageData )
     {
         png_destroy_read_struct( &readPointer, &infoPointer, NULL );
-        Warning( "Failed loading PNG as Material! Memory allocation failed \"%s\"\n", pFilePath );
+        DevWarning( "Failed loading PNG as Material! Memory allocation failed \"%s\"\n", pFilePath );
         return NULL;
     }
 
@@ -112,7 +112,7 @@ unsigned char *PNG_ReadFromBuffer( CUtlBuffer &buffer, const char *pFilePath, in
     {
         free( imageData );
         png_destroy_read_struct( &readPointer, &infoPointer, NULL );
-        Warning( "Failed loading PNG as Material! Memory allocation for row pointers failed \"%s\"\n", pFilePath );
+        DevWarning( "Failed loading PNG as Material! Memory allocation for row pointers failed \"%s\"\n", pFilePath );
         return NULL;
     }
 
@@ -139,7 +139,7 @@ bool PNG_ReadInfoFromBuffer( CUtlBuffer &buffer, const char *pFilePath, int &wid
 
     if ( png_sig_cmp( fileHeader, 0, 8 ) )
     {
-        Warning( "Failed loading PNG as Material! File is missing PNG header \"%s\"\n", pFilePath );
+        DevWarning( "Failed loading PNG as Material! File is missing PNG header \"%s\"\n", pFilePath );
         return false;
     }
 
@@ -149,7 +149,7 @@ bool PNG_ReadInfoFromBuffer( CUtlBuffer &buffer, const char *pFilePath, int &wid
     if ( setjmp( png_jmpbuf( readPointer ) ) )
     {
         png_destroy_read_struct( &readPointer, &infoPointer, NULL );
-        Warning( "Failed loading PNG as Material! Error during PNG creation \"%s\"\n", pFilePath );
+        DevWarning( "Failed loading PNG as Material! Error during PNG creation \"%s\"\n", pFilePath );
         return false;
     }
 
@@ -178,6 +178,13 @@ bool PNG_ReadInfoFromBuffer( CUtlBuffer &buffer, const char *pFilePath, int &wid
 }
 #endif
 
+void CleanMaterialName( const char *pMaterialName, char *pCleanMaterialName, int iOutNameSize )
+{
+    Q_StripExtension( pMaterialName, pCleanMaterialName, iOutNameSize );
+    Q_strlower( pCleanMaterialName );
+    Q_FixSlashes( pCleanMaterialName, '/' );
+}
+
 IMaterial *CPngTextureRegen::GetOrCreateProceduralMaterial( const char *pMaterialName, const char *pFilePath )
 {
     // TODO: The server will have incorrect info on the material (acceptable for now)
@@ -193,18 +200,40 @@ IMaterial *CPngTextureRegen::GetOrCreateProceduralMaterial( const char *pMateria
     CUtlBuffer buffer;
     if ( !filesystem->ReadFile( fullFilePath, "GAME", buffer ) )
     {
-        Warning( "Failed loading PNG as Material! Couldn't read PNG from file \"%s\"\n", pFilePath );
+        DevWarning( "Failed loading PNG as Material! Couldn't read PNG from file \"%s\"\n", pFilePath );
         return NULL;
     }
 
     PNG_ReadInfoFromBuffer( buffer, pFilePath, width, height );
 #endif
 
-    ITexture *pTexture = g_pMaterialSystem->CreateProceduralTexture( pMaterialName, TEXTURE_GROUP_VGUI, width, height, imageFormat, TEXTUREFLAGS_NOMIP | TEXTUREFLAGS_NOLOD | TEXTUREFLAGS_PROCEDURAL );
+    char cleanMaterialName[MAX_PATH];
+    CleanMaterialName( pMaterialName, cleanMaterialName, sizeof( cleanMaterialName ) );
+
+    ITexture *pTexture = NULL;
+    if ( g_pMaterialSystem->IsTextureLoaded( cleanMaterialName ) )
+    {
+        pTexture = g_pMaterialSystem->FindTexture( cleanMaterialName, TEXTURE_GROUP_VGUI, false );
+
+        if ( !pTexture->IsError() )
+        {
+            pTexture->IncrementReferenceCount();
+        }
+        else
+        {
+            pTexture = NULL;
+        }
+    }
+
+    if ( !pTexture )
+    {
+        pTexture = g_pMaterialSystem->CreateProceduralTexture( cleanMaterialName, TEXTURE_GROUP_VGUI, width, height, imageFormat, TEXTUREFLAGS_NOMIP | TEXTUREFLAGS_NOLOD | TEXTUREFLAGS_PROCEDURAL );
+        pTexture->Download();
+    }
 
     KeyValues *pVMTKeyValues = new KeyValues( "UnlitGeneric" );
     pVMTKeyValues->SetInt( "$translucent", 1 );
-    pVMTKeyValues->SetString( "$basetexture", pTexture->GetName() );
+    pVMTKeyValues->SetString( "$basetexture", cleanMaterialName );
     pVMTKeyValues->SetString( "$proceduraltexturepath", fullFilePath );
 
     KeyValues *pVMTProxies = new KeyValues( "Proxies" );
@@ -215,16 +244,27 @@ IMaterial *CPngTextureRegen::GetOrCreateProceduralMaterial( const char *pMateria
 
     //KeyValuesDumpAsDevMsg( pVMTKeyValues );
 
-    IMaterial *pMaterial = g_pMaterialSystem->FindProceduralMaterial( pMaterialName, TEXTURE_GROUP_VGUI, pVMTKeyValues );
+    IMaterial *pMaterial = g_pMaterialSystem->FindProceduralMaterial( cleanMaterialName, TEXTURE_GROUP_VGUI, pVMTKeyValues );
     pMaterial->IncrementReferenceCount();
-    pMaterial->Refresh();
+
+    bool bIsPrecached = pMaterial->IsPrecached();
+
+    if ( !bIsPrecached )
+    {
+        //DevWarning( "CPngTextureRegen::GetOrCreateProceduralMaterial: %s not precached\n", cleanMaterialName );
+        //pTexture->Download();
+        pMaterial->Refresh();
+    }
 
     return pMaterial;
 }
 
 CPngMaterialProxy *CPngTextureRegen::GetProceduralMaterialProxy( const char *pMaterialName )
 {
-    unsigned short index = m_mapProceduralMaterials.Find( pMaterialName );
+    char cleanMaterialName[MAX_PATH];
+    CleanMaterialName( pMaterialName, cleanMaterialName, sizeof( cleanMaterialName ) );
+
+    unsigned short index = m_mapProceduralMaterials.Find( cleanMaterialName );
 
     if ( index == m_mapProceduralMaterials.InvalidIndex() )
     {
@@ -238,19 +278,31 @@ CPngMaterialProxy *CPngTextureRegen::GetProceduralMaterialProxy( const char *pMa
 
 void CPngTextureRegen::ReleaseAllTextureData()
 {
-    //FOR_EACH_MAP_FAST( m_mapProceduralMaterials, i )
-    //{
-    //    CPngMaterialProxy *pMaterialProxy = m_mapProceduralMaterials[i];
+    /*FOR_EACH_MAP_FAST( m_mapProceduralMaterials, i )
+    {
+        CPngMaterialProxy *pMaterialProxy = m_mapProceduralMaterials[i];
 
-    //    if (!pMaterialProxy)
-    //        continue;
+        if (!pMaterialProxy)
+            continue;
 
-    //    IMaterial *pMaterial = pMaterialProxy->GetMaterial();
+        IMaterial *pMaterial = pMaterialProxy->GetMaterial();
 
-    //    pMaterial->DecrementReferenceCount();
-    //}
+        if (!pMaterial)
+            continue;
+
+        ITexture *pTexture = pMaterial->FindVar( "$basetexture", NULL, false )->GetTextureValue();
+
+        pMaterial->Release();
+
+        if (!pTexture)
+            continue;
+
+        pTexture->Release();
+    }*/
 
     m_mapProceduralMaterials.RemoveAll();
+
+    g_pMaterialSystem->UncacheAllMaterials(); // doesnt work to have IsTextureLoaded return false :/
 }
 
 /*
@@ -271,11 +323,15 @@ CPngMaterialProxy::CPngMaterialProxy()
 
 CPngMaterialProxy::~CPngMaterialProxy()
 {
+    //DevWarning( "CPngMaterialProxy::~CPngMaterialProxy for texture %s\n", m_pTexture->GetName() );
     // Disconnect the texture regenerator, or else we will get a crash on exit in MaterialSystem.dll
     // in certain situations (like having the ESC menu opened when finding a material)
     if ( m_pTexture != NULL )
     {
         m_pTexture->SetTextureRegenerator( NULL );
+        m_pTexture->DecrementReferenceCount();
+        m_pTexture->DeleteIfUnreferenced();
+        m_pTexture = NULL;
     }
 
     delete m_pTexturePointer;
@@ -302,9 +358,9 @@ bool CPngMaterialProxy::Init( IMaterial *pMaterial, KeyValues *pKeyValues )
         return false;
     }
 
-    DevWarning( "CPngMaterialProxy::Init: %s\n", m_pFullPathVar->GetStringValue() );
-
     m_pTexture = m_pTextureVar->GetTextureValue();
+    //DevWarning( "CPngMaterialProxy::Init: %s\n", m_pTexture->GetName() );
+
     m_pTexture->SetTextureRegenerator( &m_TextureRegen );
     m_pTexture->Download();
 
@@ -320,13 +376,13 @@ void CPngMaterialProxy::OnBind( void *pBind )
     if ( pBind == NULL )
         return;
 
-    //Assert( m_pTextureVar );
-    //Assert( m_pTextureVar->IsTexture() );
+    Assert( m_pTextureVar );
+    Assert( m_pTextureVar->IsTexture() );
 
-    //DevWarning( "CPngMaterialProxy::OnBind: %s\n", m_pFullPathVar->GetStringValue() );
+    DevWarning( "CPngMaterialProxy::OnBind: %s\n", m_pFullPathVar->GetStringValue() );
 
-    //ITexture *pTexture = m_pTextureVar->GetTextureValue();
-    //pTexture->Download();
+    ITexture *pTexture = m_pTextureVar->GetTextureValue();
+    pTexture->Download();
 }
 
 void CPngMaterialProxy::PreLoadTexture()
@@ -337,7 +393,7 @@ void CPngMaterialProxy::PreLoadTexture()
     CUtlBuffer buffer;
     if ( !filesystem->ReadFile( fileName, "GAME", buffer ) )
     {
-        Warning( "Failed regenerating PNG as Texture! Couldn't read PNG from file \"%s\"\n", fileName );
+        DevWarning( "Failed regenerating PNG as Texture! Couldn't read PNG from file \"%s\"\n", fileName );
         return;
     }
 
@@ -367,7 +423,7 @@ void CPngMaterialProxy::LoadTexture( ITexture *pTexture, IVTFTexture *pVTFTextur
 
     if (pTexture->IsMipmapped())
     {
-        Warning( "Failed regenerating PNG as Texture! Mipmapped textures are not supported \"%s\"\n", pTexture->GetName() );
+        DevWarning( "Failed regenerating PNG as Texture! Mipmapped textures are not supported \"%s\"\n", pTexture->GetName() );
         return;
     }
 

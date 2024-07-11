@@ -167,10 +167,6 @@ class ClientModeShared : public IClientMode, public CGameEventListener {
     CScriptedHudViewport *m_pScriptedViewport;
 #endif
     CBaseViewport *m_pViewport;
-#ifdef LUA_SDK
-   public:
-    CScriptedClientLuaPanel *m_pClientLuaPanel;
-#endif
 
     void DisplayReplayReminder();
 

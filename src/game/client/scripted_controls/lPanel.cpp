@@ -356,7 +356,8 @@ static int Panel_GetPanelClassName( lua_State *L )
 
 static int Panel_GetParent( lua_State *L )
 {
-    lua_pushpanel( L, luaL_checkpanel( L, 1 )->GetParent() );
+    lua_Panel *pPanel = luaL_checkpanel( L, 1 )->GetParent();
+    lua_pushpanel( L, pPanel );
     return 1;
 }
 
@@ -1267,7 +1268,6 @@ static int Panel___index( lua_State *L )
 
     if ( lua_getmetatable( L, 1 ) )
     {
-        //LUA_METATABLE_INDEX_CHECK_USER_METATABLE( L ); //TODO;
         LUA_METATABLE_INDEX_CHECK_TABLE( L );
     }
 

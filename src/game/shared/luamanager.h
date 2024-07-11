@@ -15,6 +15,10 @@
 #include "lua.hpp"
 #include "luasrclib.h"
 
+#if CLIENT_DLL
+#include <scriptedclientluapanel.h>
+#endif
+
 #define LUA_ROOT "lua"  // Can't be "LUA_PATH" because luaconf.h uses it.
 #define LUA_PATH_CACHE "lua_cache\\"
 #define LUA_PATH_ADDONS "addons"
@@ -420,35 +424,7 @@
         return 1;                            \
     }                                        \
                                              \
-    lua_pop( L, 2 ); /* Pop the metatable and the nil value */
-
-// Helper macro to check the metatable on top of the stack for the existance
-// of the value in __user_metatable
-#define LUA_METATABLE_INDEX_CHECK_USER_METATABLE( L )                     \
-    Warning( "\nLUA_METATABLE_INDEX_CHECK_USER_METATABLE:\n" );           \
-    lua_getfield( L, -1, "__user_metatable" );                            \
-                                                                          \
-    /* If the user metatable exists, we check it for the key */           \
-    if ( !lua_isnil( L, -1 ) )                                            \
-    {                                                                     \
-        lua_pushvalue( L, 2 );                                            \
-        luasrc_dumpstack( L );                                            \
-        lua_gettable( L, -2 );                                            \
-                                                                          \
-        if ( !lua_isnil( L, -1 ) )                                        \
-        {                                                                 \
-            Warning( "a====================================\n\n" );       \
-            return 1;                                                     \
-        }                                                                 \
-                                                                          \
-        Warning( "b====================================\n\n" );           \
-        lua_pop( L, 2 ); /* Pop the __user_metatable and the nil value */ \
-    }                                                                     \
-    else                                                                  \
-    {                                                                     \
-        Warning( "c====================================\n\n" );           \
-        lua_pop( L, 1 ); /* Pop the __user_metatable nil value */         \
-    }
+    lua_pop( L, 2 ); /* Pop the table and the nil value */
 
 #define LUA_METATABLE_INDEX_CHECK_REF_TABLE( L, Target )                                    \
     /* We follow by checking if the target has any properties set in its reference table */ \
@@ -477,9 +453,11 @@ LUALIB_API int luaL_optboolean( lua_State *L, int narg, int def );
 
 #ifdef CLIENT_DLL
 extern lua_State *LGameUI;  // gameui state
+extern CScriptedClientLuaPanel *g_pClientLuaPanel;
 #endif
 
 extern lua_State *L;
+
 
 // Set to true between LevelInit and LevelShutdown.
 extern bool g_bLuaInitialized;
@@ -490,6 +468,11 @@ void luasrc_shutdown_gameui( void );
 #endif
 
 void luasrc_init( void );
+#ifdef CLIENT_DLL
+void luasrc_ui_enable( void );
+void luasrc_ui_layout( int wide, int tall );
+void luasrc_ui_disable( void );
+#endif
 void luasrc_shutdown( void );
 
 LUA_API int( luasrc_dostring )( lua_State *L, const char *string );
