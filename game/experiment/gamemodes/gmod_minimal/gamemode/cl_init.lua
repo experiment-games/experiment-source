@@ -3,6 +3,51 @@ include("shared.lua")
 GM.TestAsd2 = Material("gmod_compatibility_content/gwenskin/gmoddefault.png")
 DEFINE_BASECLASS("gamemode_base")
 
+-- Loading the same materials after the derma skin is already loaded, shouldn't cause earlier ones to unload. It does (sometimes)
+GM.TestAsd = Material("gmod_compatibility_content/gwenskin/gmoddefault.png")
+print(GM.TestAsd,GM.TestAsd2)
+
+-- gmod_compatibility_content/gui/
+local files = {
+	"alpha_grid.png",
+	"colors_dark.png",
+	"colors_light.png",
+	"contenticon-hovered.png",
+	"colors.png",
+	"contenticon-normal.png",
+	"contenticon-normal.psd",
+	"cross.png",
+	"crosshair.png",
+	"dupe_bg.png",
+	"e.png",
+	-- "crosshair_bg.png", -- TODO: support non power of 4 textures
+	-- "crosshair_bg2.png", -- TODO: support non power of 4 textures
+	"hand_human_left.png",
+	"key.png",
+	"lmb.png",
+	"noicon.png",
+	"npc.png",
+	"numberscratch_cover.png",
+	"numberscratch_under.png",
+	"progress_cog.png",
+	"point.png",
+	"r.png",
+	"ps_hover.png",
+	"rmb.png",
+	"sm_hover.png",
+	"spawnicon-npc.png",
+	"steamworks_header.png",
+	"tool.png",
+	"workshop_rocket.png"
+}
+local mats = {}
+
+for _, file in ipairs(files) do
+	print("Loading ", "gmod_compatibility_content/gui/"..file)
+	local mat = Material("gmod_compatibility_content/gui/" .. file)
+	mats[file] = mat
+end
+
 function GM:Initialize()
     BaseClass.Initialize(self)
 end
@@ -56,7 +101,15 @@ function MakeTestPanel()
 
 	local panel2 = vgui.Create( "DPanel", sheet )
 	panel2.Paint = function( self, w, h ) draw.RoundedBox( 4, 0, 0, w, h, Color( 255, 128, 0, self:GetAlpha() ) ) end
-	sheet:AddSheet( "test 2", panel2, "icon16/tick.png" )
+    sheet:AddSheet("test 2", panel2, "icon16/tick.png")
+
+    -- Add all images as DImage to the first panel
+	for file, mat in pairs(mats) do
+		local img = vgui.Create("DImage", panel1)
+		img:SetMaterial(mat)
+		img:SetSize(16, 16)
+        img:SetPos(0, 16 * #panel1:GetChildren())
+	end
 
 	return testPanel
 end
@@ -70,7 +123,3 @@ end)
 TEST_PANEL = MakeTestPanel()
 TEST_PANEL2 = MakeTestPanel()
 TEST_PANEL2:SetPos(512, 0)
-
--- Loading the same materials after the derma skin is already loaded, shouldn't cause earlier ones to unload. It does...
-GM.TestAsd = Material("gmod_compatibility_content/gwenskin/gmoddefault.png")
-print(GM.TestAsd,GM.TestAsd2)

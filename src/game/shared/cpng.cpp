@@ -228,7 +228,7 @@ IMaterial *CPngTextureRegen::GetOrCreateProceduralMaterial( const char *pMateria
     if ( !pTexture )
     {
         pTexture = g_pMaterialSystem->CreateProceduralTexture( cleanMaterialName, TEXTURE_GROUP_VGUI, width, height, imageFormat, TEXTUREFLAGS_NOMIP | TEXTUREFLAGS_NOLOD | TEXTUREFLAGS_PROCEDURAL );
-        pTexture->Download();
+        //pTexture->Download();
     }
 
     KeyValues *pVMTKeyValues = new KeyValues( "UnlitGeneric" );
