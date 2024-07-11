@@ -217,7 +217,7 @@ IMaterial *CPngTextureRegen::GetOrCreateProceduralMaterial( const char *pMateria
 
         if ( !pTexture->IsError() )
         {
-            pTexture->IncrementReferenceCount();
+            //pTexture->IncrementReferenceCount();
         }
         else
         {
@@ -245,7 +245,7 @@ IMaterial *CPngTextureRegen::GetOrCreateProceduralMaterial( const char *pMateria
     //KeyValuesDumpAsDevMsg( pVMTKeyValues );
 
     IMaterial *pMaterial = g_pMaterialSystem->FindProceduralMaterial( cleanMaterialName, TEXTURE_GROUP_VGUI, pVMTKeyValues );
-    pMaterial->IncrementReferenceCount();
+    //pMaterial->IncrementReferenceCount();
 
     bool bIsPrecached = pMaterial->IsPrecached();
 
@@ -329,12 +329,12 @@ CPngMaterialProxy::~CPngMaterialProxy()
     if ( m_pTexture != NULL )
     {
         m_pTexture->SetTextureRegenerator( NULL );
-        m_pTexture->DecrementReferenceCount();
-        m_pTexture->DeleteIfUnreferenced();
-        m_pTexture = NULL;
+        //m_pTexture->DecrementReferenceCount();
+        //m_pTexture->DeleteIfUnreferenced();
+        //m_pTexture = NULL;
     }
 
-    delete m_pTexturePointer;
+    //delete m_pTexturePointer;
 }
 
 bool CPngMaterialProxy::Init( IMaterial *pMaterial, KeyValues *pKeyValues )

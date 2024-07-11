@@ -51,7 +51,7 @@ class CPngMaterialProxy : public IMaterialProxy
     virtual void OnBind( void *pBind );
     virtual void Release( void )
     {
-        delete this; // On double occurance of material loads, the earlier texture is released. Will this cause problems?
+        delete this;
     }
 
     virtual IMaterial *GetMaterial()

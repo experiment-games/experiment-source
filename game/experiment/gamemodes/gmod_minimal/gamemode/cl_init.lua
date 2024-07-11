@@ -3,11 +3,10 @@ include("shared.lua")
 GM.TestAsd2 = Material("gmod_compatibility_content/gwenskin/gmoddefault.png")
 DEFINE_BASECLASS("gamemode_base")
 
--- Loading the same materials after the derma skin is already loaded, shouldn't cause earlier ones to unload. It does (sometimes)
 GM.TestAsd = Material("gmod_compatibility_content/gwenskin/gmoddefault.png")
-print(GM.TestAsd,GM.TestAsd2)
+print(GM.TestAsd, GM.TestAsd2)
 
--- gmod_compatibility_content/gui/
+-- Test loading many materials at once
 local files = {
 	"alpha_grid.png",
 	"colors_dark.png",
