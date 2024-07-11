@@ -1,6 +1,10 @@
-require("gmod_compatibility")
-
 include("shared.lua")
+
+DEFINE_BASECLASS( "gamemode_base" )
+
+function GM:Initialize()
+    BaseClass.Initialize(self)
+end
 
 --[[
 		Testing if Gui panel inheritance works as expected
@@ -66,3 +70,4 @@ end)
 
 ConsoleCommands.Add("-buildmenu", function(client, pCmd, args)
 end)
+MakeTestPanel()

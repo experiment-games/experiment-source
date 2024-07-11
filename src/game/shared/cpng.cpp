@@ -263,6 +263,7 @@ IMaterial *CPngTextureRegen::GetOrCreateProceduralMaterial( const char *pMateria
 
         if ( bLoadInitial )
         {
+            pTexture->SetErrorTexture( false );
             pTexture->SetTextureRegenerator( new CPngTextureRegen( fullFilePath ) );
             pTexture->Download();
 
