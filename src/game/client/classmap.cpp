@@ -90,14 +90,18 @@ void CClassMap::Add(const char *mapname, const char *classname, int size,
 #endif
 {
 #if defined(LUA_SDK)
-    for (int i = m_ClassDict.First(); i != m_ClassDict.InvalidIndex();
-         i = m_ClassDict.Next(i)) {
+    int c = m_ClassDict.Count();
+    int i;
+
+    for ( i = c - 1; i >= 0; i-- )
+    {
         classentry_t *lookup = &m_ClassDict[i];
-        if (!lookup)
+        if ( !lookup )
             continue;
 
-        if (!Q_stricmp(lookup->GetMapName(), mapname)) {
-            m_ClassDict.RemoveAt(i);
+        if ( !Q_stricmp( lookup->GetMapName(), mapname ) )
+        {
+            m_ClassDict.RemoveAt( i );
         }
     }
 #else
@@ -131,13 +135,15 @@ void CClassMap::RemoveAllScripted(void) {
     int c = m_ClassDict.Count();
     int i;
 
-    for (i = 0; i < c; i++) {
+    for ( i = c - 1; i >= 0; i-- )
+    {
         classentry_t *lookup = &m_ClassDict[i];
-        if (!lookup)
+        if ( !lookup )
             continue;
 
-        if (lookup->scripted) {
-            m_ClassDict.RemoveAt(i);
+        if ( lookup->scripted )
+        {
+            m_ClassDict.RemoveAt( i );
         }
     }
 }
