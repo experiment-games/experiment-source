@@ -180,13 +180,7 @@ bool PNG_ReadInfoFromBuffer( CUtlBuffer &buffer, const char *pFilePath, int &wid
 
 IMaterial *CPngTextureRegen::GetOrCreateProceduralMaterial( const char *pMaterialName, const char *pFilePath )
 {
-    KeyValues *keys = new KeyValues( "UnlitGeneric" );
-    keys->SetString( "$basetexture", pMaterialName );
-    keys->SetString( "$fullfilepath", pFilePath );
-    keys->SetString( "$translucent", "1" );
-    IMaterial *pMaterial = g_pMaterialSystem->FindProceduralMaterial( pMaterialName, TEXTURE_GROUP_VGUI, keys );
-
-    // The server will have incorrect info on the material
+    // TODO: The server will have incorrect info on the material (acceptable for now)
     int width = 512;
     int height = 512;
     ImageFormat imageFormat = IMAGE_FORMAT_RGBA8888;
@@ -206,49 +200,24 @@ IMaterial *CPngTextureRegen::GetOrCreateProceduralMaterial( const char *pMateria
     PNG_ReadInfoFromBuffer( buffer, pFilePath, width, height );
 #endif
 
-    IMaterialVar *pVar = pMaterial->FindVar( "$basetexture", NULL );
+    ITexture *pTexture = g_pMaterialSystem->CreateProceduralTexture( pMaterialName, TEXTURE_GROUP_VGUI, width, height, imageFormat, TEXTUREFLAGS_NOMIP | TEXTUREFLAGS_NOLOD | TEXTUREFLAGS_PROCEDURAL );
 
-    if ( pVar )
-    {
-        ITexture *pTexture = nullptr;
-        bool bLoadInitial = false;
+    KeyValues *pVMTKeyValues = new KeyValues( "UnlitGeneric" );
+    pVMTKeyValues->SetInt( "$translucent", 1 );
+    pVMTKeyValues->SetString( "$basetexture", pTexture->GetName() );
+    pVMTKeyValues->SetString( "$proceduraltexturepath", fullFilePath );
 
-        if ( !g_pMaterialSystem->IsTextureLoaded( pMaterialName ) )
-        {
-            pTexture = g_pMaterialSystem->CreateProceduralTexture( pMaterialName, TEXTURE_GROUP_VGUI, width, height, imageFormat, TEXTUREFLAGS_NOMIP | TEXTUREFLAGS_NOLOD | TEXTUREFLAGS_PROCEDURAL );
-            bLoadInitial = true;
-        }
-        else
-        {
-            pTexture = g_pMaterialSystem->FindTexture( pMaterialName, TEXTURE_GROUP_VGUI, false );
-            bLoadInitial = pTexture->IsError();
-        }
+    KeyValues *pVMTProxies = new KeyValues( "Proxies" );
+    pVMTKeyValues->AddSubKey( pVMTProxies );
 
-        if ( bLoadInitial )
-        {
-            // pTexture->SetErrorTexture( false );
-            IMaterialVar *pFullPathVar = pMaterial->FindVar( "$fullfilepath", NULL );
-            pFullPathVar->SetStringValue( fullFilePath );
+    KeyValues *pVMTPngValues = new KeyValues( "ProceduralPng" );
+    pVMTProxies->AddSubKey( pVMTPngValues );
 
-            CPngMaterialProxy *pMaterialProxy = new CPngMaterialProxy();
-            pMaterialProxy->Init( pMaterial, keys );
+    //KeyValuesDumpAsDevMsg( pVMTKeyValues );
 
-            //CMaterialReference hMaterial;
-            //hMaterial.Init( pMaterial );
-            //hMaterial->Refresh();
-
-            //CMatRenderContextPtr pRenderContext( g_pMaterialSystem );
-            //pRenderContext->Bind( pMaterial );
-
-            m_mapProceduralMaterials.Insert( pTexture->GetName(), pMaterialProxy );
-        }
-
-        pMaterial->IncrementReferenceCount();
-    }
-    else
-    {
-        Warning( "Failed loading PNG as Material! Couldn't find basetexture var in material \"%s\"\n", pMaterialName );
-    }
+    IMaterial *pMaterial = g_pMaterialSystem->FindProceduralMaterial( pMaterialName, TEXTURE_GROUP_VGUI, pVMTKeyValues );
+    pMaterial->IncrementReferenceCount();
+    pMaterial->Refresh();
 
     return pMaterial;
 }
@@ -269,13 +238,17 @@ CPngMaterialProxy *CPngTextureRegen::GetProceduralMaterialProxy( const char *pMa
 
 void CPngTextureRegen::ReleaseAllTextureData()
 {
-    FOR_EACH_MAP_FAST( m_mapProceduralMaterials, i )
-    {
-        CPngMaterialProxy *pMaterialProxy = m_mapProceduralMaterials[i];
-        IMaterial *pMaterial = pMaterialProxy->GetMaterial();
+    //FOR_EACH_MAP_FAST( m_mapProceduralMaterials, i )
+    //{
+    //    CPngMaterialProxy *pMaterialProxy = m_mapProceduralMaterials[i];
 
-        pMaterial->DecrementReferenceCount();
-    }
+    //    if (!pMaterialProxy)
+    //        continue;
+
+    //    IMaterial *pMaterial = pMaterialProxy->GetMaterial();
+
+    //    pMaterial->DecrementReferenceCount();
+    //}
 
     m_mapProceduralMaterials.RemoveAll();
 }
@@ -288,11 +261,11 @@ void CPngTextureRegen::ReleaseAllTextureData()
 CPngMaterialProxy::CPngMaterialProxy()
     : m_TextureRegen( this )
 {
-    m_pMaterial = NULL;
     m_pTexturePointer = NULL;
     m_iSizeInBytes = 0;
     m_pTextureVar = NULL;
     m_pFullPathVar = NULL;
+    m_pTexture = NULL;
 }
 #pragma warning( default : 4355 )
 
@@ -300,11 +273,9 @@ CPngMaterialProxy::~CPngMaterialProxy()
 {
     // Disconnect the texture regenerator, or else we will get a crash on exit in MaterialSystem.dll
     // in certain situations (like having the ESC menu opened when finding a material)
-    if ( m_pTextureVar )
+    if ( m_pTexture != NULL )
     {
-        ITexture *pTexture = m_pTextureVar->GetTextureValue();
-        if ( pTexture )
-            pTexture->SetTextureRegenerator( NULL );
+        m_pTexture->SetTextureRegenerator( NULL );
     }
 
     delete m_pTexturePointer;
@@ -312,19 +283,8 @@ CPngMaterialProxy::~CPngMaterialProxy()
 
 bool CPngMaterialProxy::Init( IMaterial *pMaterial, KeyValues *pKeyValues )
 {
-    m_pMaterial = pMaterial;
-
     bool bFound;
-    m_pTextureVar = m_pMaterial->FindVar( "$basetexture", &bFound );
-
-    if ( !bFound )
-    {
-        Assert( 0 );
-        m_pTextureVar = NULL;
-        return false;
-    }
-
-    m_pFullPathVar = m_pMaterial->FindVar( "$fullfilepath", &bFound );
+    m_pFullPathVar = pMaterial->FindVar( "$proceduraltexturepath", &bFound );
 
     if ( !bFound )
     {
@@ -333,25 +293,40 @@ bool CPngMaterialProxy::Init( IMaterial *pMaterial, KeyValues *pKeyValues )
         return false;
     }
 
-    PreLoadTexture();
+    m_pTextureVar = pMaterial->FindVar( "$basetexture", &bFound );
 
-    ITexture *pTexture = m_pTextureVar->GetTextureValue();
-
-    if ( pTexture )
+    if ( !bFound )
     {
-        pTexture->SetTextureRegenerator( &m_TextureRegen );
-        pTexture->Download();
+        Assert( 0 );
+        m_pTextureVar = NULL;
+        return false;
     }
+
+    DevWarning( "CPngMaterialProxy::Init: %s\n", m_pFullPathVar->GetStringValue() );
+
+    m_pTexture = m_pTextureVar->GetTextureValue();
+    m_pTexture->SetTextureRegenerator( &m_TextureRegen );
+    m_pTexture->Download();
+
+    CPngTextureRegen::m_mapProceduralMaterials.Insert( m_pTexture->GetName(), this );
 
     return true;
 }
 
 void CPngMaterialProxy::OnBind( void *pBind )
 {
-    Assert( m_pTextureVar );
+    // This is called everytime a DrawTexturedRect is called, so we shouldnt Download here.
+    // Also pBind will be NULL since it is not bounnd to an entity?
+    if ( pBind == NULL )
+        return;
 
-    ITexture *pTexture = m_pTextureVar->GetTextureValue();
-    pTexture->Download();
+    //Assert( m_pTextureVar );
+    //Assert( m_pTextureVar->IsTexture() );
+
+    //DevWarning( "CPngMaterialProxy::OnBind: %s\n", m_pFullPathVar->GetStringValue() );
+
+    //ITexture *pTexture = m_pTextureVar->GetTextureValue();
+    //pTexture->Download();
 }
 
 void CPngMaterialProxy::PreLoadTexture()
@@ -383,13 +358,21 @@ void CPngMaterialProxy::PreLoadTexture()
 void CPngMaterialProxy::LoadTexture( ITexture *pTexture, IVTFTexture *pVTFTexture )
 {
 #ifdef CLIENT_DLL
+    PreLoadTexture();
+
     unsigned char *vtfImageData = pVTFTexture->ImageData( 0, 0, 0 );
 
     // Ensure the texture we are copying to is the same format as the texture we are copying from
     pVTFTexture->ConvertImageFormat( pTexture->GetImageFormat(), false );
 
+    if (pTexture->IsMipmapped())
+    {
+        Warning( "Failed regenerating PNG as Texture! Mipmapped textures are not supported \"%s\"\n", pTexture->GetName() );
+        return;
+    }
+
     Q_memcpy( vtfImageData, m_pTexturePointer, m_iSizeInBytes );
 #endif
 }
 
-EXPOSE_INTERFACE( CPngMaterialProxy, IMaterialProxy, "Png" IMATERIAL_PROXY_INTERFACE_VERSION );
+EXPOSE_INTERFACE( CPngMaterialProxy, IMaterialProxy, "ProceduralPng" IMATERIAL_PROXY_INTERFACE_VERSION );

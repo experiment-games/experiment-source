@@ -20,10 +20,6 @@
 #include "materialsystem/imaterialvar.h"
 #include "materialsystem/imaterialproxy.h"
 
-struct PngTexturePointer
-{
-};
-
 class CPngMaterialProxy;
 
 class CPngTextureRegen : public ITextureRegenerator
@@ -55,12 +51,12 @@ class CPngMaterialProxy : public IMaterialProxy
     virtual void OnBind( void *pBind );
     virtual void Release( void )
     {
-        delete this;
+        delete this; // On double occurance of material loads, the earlier texture is released. Will this cause problems?
     }
 
     virtual IMaterial *GetMaterial()
     {
-        return m_pMaterial;
+        return m_pTextureVar->GetOwningMaterial();
     }
     virtual unsigned char *GetTexturePointer() const
     {
@@ -71,12 +67,12 @@ class CPngMaterialProxy : public IMaterialProxy
         return m_iSizeInBytes;
     }
 
-    void PreLoadTexture();
     void LoadTexture( ITexture *pTexture, IVTFTexture *pVTFTexture );
 
    private:
-    IMaterial *m_pMaterial;
+    void PreLoadTexture();
     CPngTextureRegen m_TextureRegen;
+    ITexture *m_pTexture;
     IMaterialVar *m_pTextureVar;
     IMaterialVar *m_pFullPathVar;
 
