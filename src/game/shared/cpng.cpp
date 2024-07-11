@@ -215,11 +215,7 @@ IMaterial *CPngTextureRegen::GetOrCreateProceduralMaterial( const char *pMateria
     {
         pTexture = g_pMaterialSystem->FindTexture( cleanMaterialName, TEXTURE_GROUP_VGUI, false );
 
-        if ( !pTexture->IsError() )
-        {
-            //pTexture->IncrementReferenceCount();
-        }
-        else
+        if ( pTexture->IsError() )
         {
             pTexture = NULL;
         }
@@ -228,7 +224,6 @@ IMaterial *CPngTextureRegen::GetOrCreateProceduralMaterial( const char *pMateria
     if ( !pTexture )
     {
         pTexture = g_pMaterialSystem->CreateProceduralTexture( cleanMaterialName, TEXTURE_GROUP_VGUI, width, height, imageFormat, TEXTUREFLAGS_NOMIP | TEXTUREFLAGS_NOLOD | TEXTUREFLAGS_PROCEDURAL );
-        //pTexture->Download();
     }
 
     KeyValues *pVMTKeyValues = new KeyValues( "UnlitGeneric" );
@@ -242,17 +237,13 @@ IMaterial *CPngTextureRegen::GetOrCreateProceduralMaterial( const char *pMateria
     KeyValues *pVMTPngValues = new KeyValues( "ProceduralPng" );
     pVMTProxies->AddSubKey( pVMTPngValues );
 
-    //KeyValuesDumpAsDevMsg( pVMTKeyValues );
-
     IMaterial *pMaterial = g_pMaterialSystem->FindProceduralMaterial( cleanMaterialName, TEXTURE_GROUP_VGUI, pVMTKeyValues );
-    //pMaterial->IncrementReferenceCount();
 
     bool bIsPrecached = pMaterial->IsPrecached();
 
     if ( !bIsPrecached )
     {
         //DevWarning( "CPngTextureRegen::GetOrCreateProceduralMaterial: %s not precached\n", cleanMaterialName );
-        //pTexture->Download();
         pMaterial->Refresh();
     }
 
@@ -278,28 +269,6 @@ CPngMaterialProxy *CPngTextureRegen::GetProceduralMaterialProxy( const char *pMa
 
 void CPngTextureRegen::ReleaseAllTextureData()
 {
-    /*FOR_EACH_MAP_FAST( m_mapProceduralMaterials, i )
-    {
-        CPngMaterialProxy *pMaterialProxy = m_mapProceduralMaterials[i];
-
-        if (!pMaterialProxy)
-            continue;
-
-        IMaterial *pMaterial = pMaterialProxy->GetMaterial();
-
-        if (!pMaterial)
-            continue;
-
-        ITexture *pTexture = pMaterial->FindVar( "$basetexture", NULL, false )->GetTextureValue();
-
-        pMaterial->Release();
-
-        if (!pTexture)
-            continue;
-
-        pTexture->Release();
-    }*/
-
     m_mapProceduralMaterials.RemoveAll();
 
     g_pMaterialSystem->UncacheAllMaterials(); // doesnt work to have IsTextureLoaded return false :/
@@ -329,12 +298,7 @@ CPngMaterialProxy::~CPngMaterialProxy()
     if ( m_pTexture != NULL )
     {
         m_pTexture->SetTextureRegenerator( NULL );
-        //m_pTexture->DecrementReferenceCount();
-        //m_pTexture->DeleteIfUnreferenced();
-        //m_pTexture = NULL;
     }
-
-    //delete m_pTexturePointer;
 }
 
 bool CPngMaterialProxy::Init( IMaterial *pMaterial, KeyValues *pKeyValues )
