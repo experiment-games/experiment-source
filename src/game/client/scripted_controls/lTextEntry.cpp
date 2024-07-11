@@ -48,13 +48,7 @@ LUA_API lua_TextEntry *lua_totextentry( lua_State *L, int idx )
 
 LUA_API void lua_pushtextentry( lua_State *L, TextEntry *pTextEntry )
 {
-    LTextEntry *plTextEntry = dynamic_cast< LTextEntry * >( pTextEntry );
-    if ( plTextEntry )
-        ++plTextEntry->m_nRefCount;
-    PHandle *phPanel = ( PHandle * )lua_newuserdata( L, sizeof( PHandle ) );
-    phPanel->Set( pTextEntry );
-    luaL_getmetatable( L, "TextEntry" );
-    lua_setmetatable( L, -2 );
+    LUA_PUSH_PANEL_USERDATA( L, pTextEntry, LTextEntry, "TextEntry" );
 }
 
 LUALIB_API lua_TextEntry *luaL_checktextentry( lua_State *L, int narg )
@@ -455,8 +449,10 @@ static int TextEntry___index( lua_State *L )
     LTextEntry *plTextEntry = dynamic_cast< LTextEntry * >( pTextEntry );
     LUA_METATABLE_INDEX_CHECK_REF_TABLE( L, plTextEntry );
 
-    lua_getmetatable( L, 1 );
-    LUA_METATABLE_INDEX_CHECK_TABLE( L );
+    if ( lua_getmetatable( L, 1 ) )
+    {
+        LUA_METATABLE_INDEX_CHECK_TABLE( L );
+    }
 
     luaL_getmetatable( L, "Panel" );
     LUA_METATABLE_INDEX_CHECK_TABLE( L );

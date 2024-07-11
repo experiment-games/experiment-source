@@ -582,6 +582,10 @@ else
 		return Gui.GetClientLuaRootPanel()
 	end
 
+	--[[
+		We disable our own Gui.Create and Gui.Register logic, in favor of the GMod one.
+		This Gui.Create will be used as vgui.CreateX by gmod to create internal panels.
+	--]]
 	function Gui.Create(panelName, parentPanel, name)
 		parentPanel = parentPanel or getAppropriateBaseParent()
 
@@ -590,11 +594,6 @@ else
 		end
 
 		return Gui[panelName](parentPanel, name or panelName)
-	end
-
-	Gui._OriginalRegister = Gui._OriginalRegister or Gui.RegisterWithMetatable
-	vgui.Register = function(panelName, panelTable, baseClassName)
-		Gui._OriginalRegister(panelTable, panelName, baseClassName)
 	end
 
 	surface.SetDrawColor = surface.DrawSetColor
@@ -699,7 +698,6 @@ Include("util/sql.lua")
 
 --[[
 	Libraries taken from Garry's Mod.
-	TODO: Write own libraries.
 --]]
 
 -- Shared modules.

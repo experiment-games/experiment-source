@@ -635,11 +635,7 @@ static int CBaseEntity_GetPredictionRandomSeed( lua_State *L )
 static int CBaseEntity_GetRefTable( lua_State *L )
 {
     CBaseEntity *pEntity = luaL_checkentity( L, 1 );
-
-    if ( !lua_isrefvalid( L, pEntity->m_nTableReference ) )
-        lua_pushnil( L );
-    else
-        lua_getref( L, pEntity->m_nTableReference );
+    LUA_GET_REF_TABLE( L, pEntity );
 
     return 1;
 }
@@ -1704,8 +1700,10 @@ static int CBaseEntity___index( lua_State *L )
     {
         LUA_METATABLE_INDEX_CHECK_REF_TABLE( L, pEntity );
 
-        lua_getmetatable( L, 1 );
-        LUA_METATABLE_INDEX_CHECK_TABLE( L );
+        if ( lua_getmetatable( L, 1 ) )
+        {
+            LUA_METATABLE_INDEX_CHECK_TABLE( L );
+        }
 
         lua_pushnil( L );
     }

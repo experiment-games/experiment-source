@@ -74,13 +74,7 @@ LUA_API lua_CheckButton *lua_tocheckbutton( lua_State *L, int idx )
 
 LUA_API void lua_pushcheckbutton( lua_State *L, CheckButton *pCheckButton )
 {
-    LCheckButton *plCheckButton = dynamic_cast< LCheckButton * >( pCheckButton );
-    if ( plCheckButton )
-        ++plCheckButton->m_nRefCount;
-    PHandle *phPanel = ( PHandle * )lua_newuserdata( L, sizeof( PHandle ) );
-    phPanel->Set( pCheckButton );
-    luaL_getmetatable( L, "CheckButton" );
-    lua_setmetatable( L, -2 );
+    LUA_PUSH_PANEL_USERDATA( L, pCheckButton, LCheckButton, "CheckButton" );
 }
 
 LUALIB_API lua_CheckButton *luaL_checkcheckbutton( lua_State *L, int narg )
@@ -127,23 +121,6 @@ static int CheckButton_GetPanelClassName( lua_State *L )
     return 1;
 }
 
-static int CheckButton_GetRefTable( lua_State *L )
-{
-    LCheckButton *plCheckButton =
-        dynamic_cast< LCheckButton * >( luaL_checkcheckbutton( L, 1 ) );
-
-    if ( plCheckButton )
-    {
-        LUA_GET_REF_TABLE( L, plCheckButton );
-    }
-    else
-    {
-        lua_pushnil( L );
-    }
-
-    return 1;
-}
-
 static int CheckButton_KB_AddBoundKey( lua_State *L )
 {
     luaL_checkcheckbutton( L, 1 )->KB_AddBoundKey(
@@ -179,8 +156,10 @@ static int CheckButton___index( lua_State *L )
     LCheckButton *plCheckButton = dynamic_cast< LCheckButton * >( pCheckButton );
     LUA_METATABLE_INDEX_CHECK_REF_TABLE( L, plCheckButton );
 
-    lua_getmetatable( L, 1 );
-    LUA_METATABLE_INDEX_CHECK_TABLE( L );
+    if ( lua_getmetatable( L, 1 ) )
+    {
+        LUA_METATABLE_INDEX_CHECK_TABLE( L );
+    }
 
     // luaL_getmetatable( L, "ToggleButton" ); // This doesnt have a Lua panel yet
     // LUA_METATABLE_INDEX_CHECK_TABLE( L );
@@ -263,7 +242,6 @@ static const luaL_Reg CheckButtonmeta[] = {
     { "GetDisabledFgColor", CheckButton_GetDisabledFgColor },
     { "GetPanelBaseClassName", CheckButton_GetPanelBaseClassName },
     { "GetPanelClassName", CheckButton_GetPanelClassName },
-    { "GetRefTable", CheckButton_GetRefTable },
     { "KB_AddBoundKey", CheckButton_KB_AddBoundKey },
     { "KB_ChainToMap", CheckButton_KB_ChainToMap },
     { "SetCheckButtonCheckable", CheckButton_SetCheckButtonCheckable },

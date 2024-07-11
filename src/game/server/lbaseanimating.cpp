@@ -467,13 +467,15 @@ static int CBaseAnimating_VPhysicsUpdate( lua_State *L )
 static int CBaseAnimating___index( lua_State *L )
 {
     CBaseAnimating *pEntity = lua_toanimating( L, 1 );
-    //LUA_METATABLE_INDEX_CHECK_VALID( L, Entity_IsValid ); // TODO: Entity_IsValid
+    // LUA_METATABLE_INDEX_CHECK_VALID( L, Entity_IsValid ); // TODO: Entity_IsValid
     LUA_METATABLE_INDEX_CHECK_NULL( L, pEntity );
 
     LUA_METATABLE_INDEX_CHECK_REF_TABLE( L, pEntity );
 
-    lua_getmetatable( L, 1 );
-    LUA_METATABLE_INDEX_CHECK_TABLE( L );
+    if ( lua_getmetatable( L, 1 ) )
+    {
+        LUA_METATABLE_INDEX_CHECK_TABLE( L );
+    }
 
     luaL_getmetatable( L, "CBaseEntity" );
     LUA_METATABLE_INDEX_CHECK_TABLE( L );

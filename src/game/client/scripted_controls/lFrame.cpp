@@ -63,13 +63,7 @@ LUA_API lua_Frame *lua_toframe( lua_State *L, int idx )
 
 LUA_API void lua_pushframe( lua_State *L, Frame *pFrame )
 {
-    LFrame *plFrame = dynamic_cast< LFrame * >( pFrame );
-    if ( plFrame )
-        ++plFrame->m_nRefCount;
-    PHandle *phPanel = ( PHandle * )lua_newuserdata( L, sizeof( PHandle ) );
-    phPanel->Set( pFrame );
-    luaL_getmetatable( L, "Frame" );
-    lua_setmetatable( L, -2 );
+    LUA_PUSH_PANEL_USERDATA( L, pFrame, LFrame, "Frame" );
 }
 
 LUALIB_API lua_Frame *luaL_checkframe( lua_State *L, int narg )
@@ -197,22 +191,6 @@ static int Frame_GetPanelBaseClassName( lua_State *L )
 static int Frame_GetPanelClassName( lua_State *L )
 {
     lua_pushstring( L, luaL_checkframe( L, 1 )->GetPanelClassName() );
-    return 1;
-}
-
-static int Frame_GetRefTable( lua_State *L )
-{
-    LFrame *plFrame = dynamic_cast< LFrame * >( luaL_checkframe( L, 1 ) );
-
-    if ( plFrame )
-    {
-        LUA_GET_REF_TABLE( L, plFrame );
-    }
-    else
-    {
-        lua_pushnil( L );
-    }
-
     return 1;
 }
 
@@ -381,8 +359,10 @@ static int Frame___index( lua_State *L )
     LFrame *plFrame = dynamic_cast< LFrame * >( pFrame );
     LUA_METATABLE_INDEX_CHECK_REF_TABLE( L, plFrame );
 
-    lua_getmetatable( L, 1 );
-    LUA_METATABLE_INDEX_CHECK_TABLE( L );
+    if ( lua_getmetatable( L, 1 ) )
+    {
+        LUA_METATABLE_INDEX_CHECK_TABLE( L );
+    }
 
     luaL_getmetatable( L, "EditablePanel" );
     LUA_METATABLE_INDEX_CHECK_TABLE( L );
@@ -475,7 +455,6 @@ static const luaL_Reg Framemeta[] = {
     { "GetDraggerSize", Frame_GetDraggerSize },
     { "GetPanelBaseClassName", Frame_GetPanelBaseClassName },
     { "GetPanelClassName", Frame_GetPanelClassName },
-    { "GetRefTable", Frame_GetRefTable },
     { "IsMinimized", Frame_IsMinimized },
     { "IsMoveable", Frame_IsMoveable },
     { "IsSizeable", Frame_IsSizeable },
@@ -532,6 +511,6 @@ LUALIB_API int luaopen_vgui_Frame( lua_State *L )
     lua_pushstring( L, LUA_PANELLIBNAME );
     lua_setfield( L, -2, "__type" ); /* metatable.__type = "Panel" */
     luaL_register( L, LUA_VGUILIBNAME, Frame_funcs );
-    lua_pop( L, 2 ); // remove metatable and Frame_funcs
+    lua_pop( L, 2 );  // remove metatable and Frame_funcs
     return 0;
 }

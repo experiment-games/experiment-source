@@ -323,9 +323,14 @@ static int VMatrix___index( lua_State *L )
     }
     else
     {
-        lua_getmetatable( L, 1 );
-        lua_pushvalue( L, 2 );
-        lua_gettable( L, -2 );
+        if ( lua_getmetatable( L, 1 ) )
+        {
+            LUA_METATABLE_INDEX_CHECK_TABLE( L );
+        }
+        else
+        {
+            lua_pushnil( L );
+        }
     }
     return 1;
 }

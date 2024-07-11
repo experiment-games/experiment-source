@@ -49,13 +49,7 @@ LUA_API lua_Label *lua_tolabel( lua_State *L, int idx )
 
 LUA_API void lua_pushlabel( lua_State *L, Label *pLabel )
 {
-    LLabel *plLabel = dynamic_cast< LLabel * >( pLabel );
-    if ( plLabel )
-        ++plLabel->m_nRefCount;
-    PHandle *phPanel = ( PHandle * )lua_newuserdata( L, sizeof( PHandle ) );
-    phPanel->Set( pLabel );
-    luaL_getmetatable( L, "Label" );
-    lua_setmetatable( L, -2 );
+    LUA_PUSH_PANEL_USERDATA( L, pLabel, LLabel, "Label" );
 }
 
 LUALIB_API lua_Label *luaL_checklabel( lua_State *L, int narg )
@@ -96,22 +90,6 @@ static int Label_GetPanelBaseClassName( lua_State *L )
 static int Label_GetPanelClassName( lua_State *L )
 {
     lua_pushstring( L, luaL_checklabel( L, 1 )->GetPanelClassName() );
-    return 1;
-}
-
-static int Label_GetRefTable( lua_State *L )
-{
-    LLabel *plLabel = dynamic_cast< LLabel * >( luaL_checklabel( L, 1 ) );
-
-    if ( plLabel )
-    {
-        LUA_GET_REF_TABLE( L, plLabel );
-    }
-    else
-    {
-        lua_pushnil( L );
-    }
-
     return 1;
 }
 
@@ -166,7 +144,7 @@ static int Label_SizeToContents( lua_State *L )
 
 static int Label_SetContentAlignment( lua_State *L )
 {
-    luaL_checklabel( L, 1 )->SetContentAlignment( (vgui::Label::Alignment) luaL_checkint( L, 2 ) );
+    luaL_checklabel( L, 1 )->SetContentAlignment( ( vgui::Label::Alignment )luaL_checkint( L, 2 ) );
     return 0;
 }
 
@@ -191,6 +169,14 @@ static int Label_SetFgColor( lua_State *L )
 static int Label_GetFgColor( lua_State *L )
 {
     lua_pushcolor( L, luaL_checklabel( L, 1 )->GetFgColor() );
+    return 1;
+}
+
+static int Label_GetText( lua_State *L )
+{
+    char textBuffer[1024];
+    luaL_checklabel( L, 1 )->GetText( textBuffer, sizeof( textBuffer ) );
+    lua_pushstring( L, textBuffer );
     return 1;
 }
 
@@ -240,13 +226,13 @@ static int Label_SetAssociatedControl( lua_State *L )
 }
 
 // TODO: Implement luaL_checkimage etc. (low priority, used nowhere)
-//static int Label_AddImage( lua_State *L )
+// static int Label_AddImage( lua_State *L )
 //{
 //    luaL_checklabel( L, 1 )->AddImage( luaL_checkimage( L, 2 ), luaL_checkint( L, 3 ) );
 //    return 0;
 //}
 //
-//static int Label_SetImageAtIndex( lua_State *L )
+// static int Label_SetImageAtIndex( lua_State *L )
 //{
 //    luaL_checklabel( L, 1 )->SetImageAtIndex( luaL_checkint( L, 2 ), luaL_checkimage( L, 3 ), luaL_checkint( L, 4 ) );
 //    return 0;
@@ -258,11 +244,11 @@ static int Label_SetImagePreOffset( lua_State *L )
     return 0;
 }
 
-//static int Label_GetImageAtIndex( lua_State *L )
+// static int Label_GetImageAtIndex( lua_State *L )
 //{
-//    lua_pushimage( L, luaL_checklabel( L, 1 )->GetImageAtIndex( luaL_checkint( L, 2 ) ) );
-//    return 1;
-//}
+//     lua_pushimage( L, luaL_checklabel( L, 1 )->GetImageAtIndex( luaL_checkint( L, 2 ) ) );
+//     return 1;
+// }
 
 static int Label_GetImageCount( lua_State *L )
 {
@@ -288,11 +274,11 @@ static int Label_SetImageBounds( lua_State *L )
     return 0;
 }
 
-//static int Label_GetTextImage( lua_State *L )
+// static int Label_GetTextImage( lua_State *L )
 //{
-//    lua_pushimage( L, luaL_checklabel( L, 1 )->GetTextImage() );
-//    return 1;
-//}
+//     lua_pushimage( L, luaL_checklabel( L, 1 )->GetTextImage() );
+//     return 1;
+// }
 
 static int Label_SetTextImageIndex( lua_State *L )
 {
@@ -327,8 +313,10 @@ static int Label___index( lua_State *L )
     LLabel *plLabel = dynamic_cast< LLabel * >( pLabel );
     LUA_METATABLE_INDEX_CHECK_REF_TABLE( L, plLabel );
 
-    lua_getmetatable( L, 1 );
-    LUA_METATABLE_INDEX_CHECK_TABLE( L );
+    if ( lua_getmetatable( L, 1 ) )
+    {
+        LUA_METATABLE_INDEX_CHECK_TABLE( L );
+    }
 
     luaL_getmetatable( L, "Panel" );
     LUA_METATABLE_INDEX_CHECK_TABLE( L );
@@ -415,7 +403,6 @@ static const luaL_Reg Labelmeta[] = {
     { "GetContentSize", Label_GetContentSize },
     { "GetPanelBaseClassName", Label_GetPanelBaseClassName },
     { "GetPanelClassName", Label_GetPanelClassName },
-    { "GetRefTable", Label_GetRefTable },
     { "KB_AddBoundKey", Label_KB_AddBoundKey },
     { "KB_ChainToMap", Label_KB_ChainToMap },
     { "OnCursorEntered", Label_OnCursorEntered },
@@ -425,6 +412,7 @@ static const luaL_Reg Labelmeta[] = {
     { "PerformLayout", Label_PerformLayout },
     { "SizeToContents", Label_SizeToContents },
     { "SetContentAlignment", Label_SetContentAlignment },
+    { "GetText", Label_GetText },
     { "SetText", Label_SetText },
     { "SetFont", Label_SetFont },
     { "GetFont", Label_GetFont },

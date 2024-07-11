@@ -386,22 +386,28 @@
         return 1;                                                 \
     }
 
-#define LUA_METATABLE_INDEX_CHECK_NULL( L, Target )                                                                     \
-    /* Invalid panels fail all checks */                                                                                \
-    if ( Target == NULL )                                                                                               \
-    {                                                                                                                   \
-        lua_Debug ar1;                                                                                                  \
-        lua_getstack( L, 1, &ar1 );                                                                                     \
-        lua_getinfo( L, "fl", &ar1 );                                                                                   \
-        lua_Debug ar2;                                                                                                  \
-        lua_getinfo( L, ">S", &ar2 );                                                                                   \
-        lua_getmetatable( L, 1 );                                                                                       \
-        luaL_getmetafield( L, -1, "__name" );                                                                           \
-        const char *__metatableName = lua_tostring( L, -1 );                                                            \
-        lua_pop( L, 2 ); /* Pop the metatable name and the metatable */                                                 \
-        lua_pushfstring( L, "%s:%d: attempt to index an invalid %s", ar2.short_src, ar1.currentline, __metatableName ); \
-                                                                                                                        \
-        return lua_error( L );                                                                                          \
+#define LUA_METATABLE_INDEX_CHECK_NULL( L, Target )                                                                                  \
+    /* Invalid panels fail all checks */                                                                                             \
+    if ( Target == NULL )                                                                                                            \
+    {                                                                                                                                \
+        lua_Debug ar1;                                                                                                               \
+        lua_getstack( L, 1, &ar1 );                                                                                                  \
+        lua_getinfo( L, "fl", &ar1 );                                                                                                \
+        lua_Debug ar2;                                                                                                               \
+        lua_getinfo( L, ">S", &ar2 );                                                                                                \
+        if ( lua_getmetatable( L, 1 ) )                                                                                              \
+        {                                                                                                                            \
+            luaL_getmetafield( L, -1, "__name" );                                                                                    \
+            const char *__metatableName = lua_tostring( L, -1 );                                                                     \
+            lua_pop( L, 2 ); /* Pop the metatable name and the metatable */                                                          \
+            lua_pushfstring( L, "%s:%d: attempt to index an invalid %s", ar2.short_src, ar1.currentline, __metatableName );          \
+        }                                                                                                                            \
+        else                                                                                                                         \
+        {                                                                                                                            \
+            lua_pushfstring( L, "%s:%d: attempt to index an unknown type (that has no metatable)", ar2.short_src, ar1.currentline ); \
+        }                                                                                                                            \
+                                                                                                                                     \
+        return lua_error( L );                                                                                                       \
     }
 
 // Helper macro to check table on top of the stack for __index
@@ -416,6 +422,34 @@
                                              \
     lua_pop( L, 2 ); /* Pop the metatable and the nil value */
 
+// Helper macro to check the metatable on top of the stack for the existance
+// of the value in __user_metatable
+#define LUA_METATABLE_INDEX_CHECK_USER_METATABLE( L )                     \
+    Warning( "\nLUA_METATABLE_INDEX_CHECK_USER_METATABLE:\n" );           \
+    lua_getfield( L, -1, "__user_metatable" );                            \
+                                                                          \
+    /* If the user metatable exists, we check it for the key */           \
+    if ( !lua_isnil( L, -1 ) )                                            \
+    {                                                                     \
+        lua_pushvalue( L, 2 );                                            \
+        luasrc_dumpstack( L );                                            \
+        lua_gettable( L, -2 );                                            \
+                                                                          \
+        if ( !lua_isnil( L, -1 ) )                                        \
+        {                                                                 \
+            Warning( "a====================================\n\n" );       \
+            return 1;                                                     \
+        }                                                                 \
+                                                                          \
+        Warning( "b====================================\n\n" );           \
+        lua_pop( L, 2 ); /* Pop the __user_metatable and the nil value */ \
+    }                                                                     \
+    else                                                                  \
+    {                                                                     \
+        Warning( "c====================================\n\n" );           \
+        lua_pop( L, 1 ); /* Pop the __user_metatable nil value */         \
+    }
+
 #define LUA_METATABLE_INDEX_CHECK_REF_TABLE( L, Target )                                    \
     /* We follow by checking if the target has any properties set in its reference table */ \
     if ( Target && L )                                                                      \
@@ -423,6 +457,18 @@
         LUA_GET_REF_TABLE( L, Target );                                                     \
         LUA_METATABLE_INDEX_CHECK_TABLE( L );                                               \
     }
+
+#define LUA_PUSH_PANEL_USERDATA_METATABLE( L, MetaTableName ) \
+    luaL_getmetatable( L, MetaTableName );                    \
+    lua_setmetatable( L, -2 );
+
+#define LUA_PUSH_PANEL_USERDATA( L, Target, TargetType, MetaTableName )            \
+    TargetType *_pPanel = dynamic_cast< TargetType * >( Target );                  \
+    if ( _pPanel )                                                                 \
+        ++_pPanel->m_nRefCount;                                                    \
+    PHandle *_pPanelHandle = ( PHandle * )lua_newuserdata( L, sizeof( PHandle ) ); \
+    _pPanelHandle->Set( Target );                                                  \
+    LUA_PUSH_PANEL_USERDATA_METATABLE( L, MetaTableName );
 
 extern ConVar gamemode;
 

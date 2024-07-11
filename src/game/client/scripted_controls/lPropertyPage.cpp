@@ -139,13 +139,7 @@ LUA_API lua_PropertyPage *lua_topropertypage( lua_State *L, int idx )
 
 LUA_API void lua_pushpropertypage( lua_State *L, PropertyPage *pPage )
 {
-    LPropertyPage *plPage = dynamic_cast< LPropertyPage * >( pPage );
-    if ( plPage )
-        ++plPage->m_nRefCount;
-    PHandle *phPanel = ( PHandle * )lua_newuserdata( L, sizeof( PHandle ) );
-    phPanel->Set( pPage );
-    luaL_getmetatable( L, "PropertyPage" );
-    lua_setmetatable( L, -2 );
+    LUA_PUSH_PANEL_USERDATA( L, pPage, LPropertyPage, "PropertyPage" );
 }
 
 LUALIB_API lua_PropertyPage *luaL_checkpropertypage( lua_State *L, int narg )
@@ -177,19 +171,6 @@ static int PropertyPage_GetPanelBaseClassName( lua_State *L )
 static int PropertyPage_GetPanelClassName( lua_State *L )
 {
     lua_pushstring( L, luaL_checkpropertypage( L, 1 )->GetPanelClassName() );
-    return 1;
-}
-
-static int PropertyPage_GetRefTable( lua_State *L )
-{
-    LPropertyPage *plPage =
-        dynamic_cast< LPropertyPage * >( luaL_checkpropertypage( L, 1 ) );
-    if ( plPage )
-    {
-        LUA_GET_REF_TABLE( L, plPage );
-    }
-    else
-        lua_pushnil( L );
     return 1;
 }
 
@@ -251,8 +232,10 @@ static int PropertyPage___index( lua_State *L )
     LPropertyPage *plPage = dynamic_cast< LPropertyPage * >( pPage );
     LUA_METATABLE_INDEX_CHECK_REF_TABLE( L, plPage );
 
-    lua_getmetatable( L, 1 );
-    LUA_METATABLE_INDEX_CHECK_TABLE( L );
+    if ( lua_getmetatable( L, 1 ) )
+    {
+        LUA_METATABLE_INDEX_CHECK_TABLE( L );
+    }
 
     luaL_getmetatable( L, "EditablePanel" );
     LUA_METATABLE_INDEX_CHECK_TABLE( L );
@@ -324,7 +307,6 @@ static const luaL_Reg PropertyPagemeta[] = {
     { "ChainToMap", PropertyPage_ChainToMap },
     { "GetPanelBaseClassName", PropertyPage_GetPanelBaseClassName },
     { "GetPanelClassName", PropertyPage_GetPanelClassName },
-    { "GetRefTable", PropertyPage_GetRefTable },
     { "HasUserConfigSettings", PropertyPage_HasUserConfigSettings },
     { "KB_AddBoundKey", PropertyPage_KB_AddBoundKey },
     { "KB_ChainToMap", PropertyPage_KB_ChainToMap },

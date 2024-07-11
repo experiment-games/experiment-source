@@ -55,14 +55,7 @@ LUA_API lua_EditablePanel *lua_toeditablepanel( lua_State *L, int idx )
 
 LUA_API void lua_pusheditablepanel( lua_State *L, lua_EditablePanel *plEditablePanel )
 {
-    if ( plEditablePanel )
-        ++plEditablePanel->m_nRefCount;
-
-    PHandle *phPanel = ( PHandle * )lua_newuserdata( L, sizeof( PHandle ) );
-    phPanel->Set( plEditablePanel );
-
-    luaL_getmetatable( L, "EditablePanel" );
-    lua_setmetatable( L, -2 );
+    LUA_PUSH_PANEL_USERDATA( L, plEditablePanel, lua_EditablePanel, "EditablePanel" );
 }
 
 LUALIB_API lua_EditablePanel *luaL_checkeditablepanel( lua_State *L, int narg )
@@ -283,7 +276,6 @@ static int EditablePanel_SetDialogVariable( lua_State *L )
     return 0;
 }
 
-
 static int EditablePanel_SetFocusTopLevel( lua_State *L )
 {
     luaL_checkeditablepanel( L, 1 )->SetFocusTopLevel( luaL_checkboolean( L, 2 ) );
@@ -299,8 +291,10 @@ static int EditablePanel___index( lua_State *L )
     LEditablePanel *plEditablePanel = dynamic_cast< LEditablePanel * >( pEditablePanel );
     LUA_METATABLE_INDEX_CHECK_REF_TABLE( L, plEditablePanel );
 
-    lua_getmetatable( L, 1 );
-    LUA_METATABLE_INDEX_CHECK_TABLE( L );
+    if ( lua_getmetatable( L, 1 ) )
+    {
+        LUA_METATABLE_INDEX_CHECK_TABLE( L );
+    }
 
     luaL_getmetatable( L, "Panel" );
     LUA_METATABLE_INDEX_CHECK_TABLE( L );

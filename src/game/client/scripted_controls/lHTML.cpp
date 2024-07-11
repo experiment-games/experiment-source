@@ -59,13 +59,7 @@ LUA_API lua_HTML *lua_tohtml( lua_State *L, int idx )
 
 LUA_API void lua_pushhtml( lua_State *L, HTML *pHTML )
 {
-    LHTML *plHTML = dynamic_cast< LHTML * >( pHTML );
-    if ( plHTML )
-        ++plHTML->m_nRefCount;
-    PHandle *phPanel = ( PHandle * )lua_newuserdata( L, sizeof( PHandle ) );
-    phPanel->Set( pHTML );
-    luaL_getmetatable( L, "HTML" );
-    lua_setmetatable( L, -2 );
+    LUA_PUSH_PANEL_USERDATA( L, pHTML, LHTML, "HTML" );
 }
 
 LUALIB_API lua_HTML *luaL_checkhtml( lua_State *L, int narg )
@@ -256,8 +250,10 @@ static int HTML___index( lua_State *L )
     LHTML *plHTML = dynamic_cast< LHTML * >( pHTML );
     LUA_METATABLE_INDEX_CHECK_REF_TABLE( L, plHTML );
 
-    lua_getmetatable( L, 1 );
-    LUA_METATABLE_INDEX_CHECK_TABLE( L );
+    if ( lua_getmetatable( L, 1 ) )
+    {
+        LUA_METATABLE_INDEX_CHECK_TABLE( L );
+    }
 
     luaL_getmetatable( L, "Panel" );
     LUA_METATABLE_INDEX_CHECK_TABLE( L );

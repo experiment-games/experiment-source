@@ -35,21 +35,14 @@ LUA_API lua_Panel *lua_topanel( lua_State *L, int idx )
 
 LUA_API void lua_pushpanel( lua_State *L, Panel *pPanel )
 {
-    Panel *plPanel = dynamic_cast< Panel * >( pPanel );
-    if ( plPanel )
-        ++plPanel->m_nRefCount;
-    PHandle *phPanel = ( PHandle * )lua_newuserdata( L, sizeof( PHandle ) );
-    phPanel->Set( pPanel );
-    luaL_getmetatable( L, "Panel" );
-    lua_setmetatable( L, -2 );
+    LUA_PUSH_PANEL_USERDATA( L, pPanel, Panel, "Panel" );
 }
 
 LUA_API void lua_pushpanel( lua_State *L, VPANEL panel )
 {
     PHandle *phPanel = ( PHandle * )lua_newuserdata( L, sizeof( PHandle ) );
     phPanel->Set( ivgui()->PanelToHandle( panel ) );
-    luaL_getmetatable( L, "Panel" );
-    lua_setmetatable( L, -2 );
+    LUA_PUSH_PANEL_USERDATA_METATABLE( L, "Panel" );
 }
 
 LUALIB_API lua_Panel *luaL_checkpanel( lua_State *L, int narg )
@@ -393,16 +386,8 @@ static int Panel_GetPos( lua_State *L )
 
 static int Panel_GetRefTable( lua_State *L )
 {
-    Panel *plPanel = dynamic_cast< Panel * >( luaL_checkpanel( L, 1 ) );
-
-    if ( plPanel )
-    {
-        LUA_GET_REF_TABLE( L, plPanel );
-    }
-    else
-    {
-        lua_pushnil( L );
-    }
+    lua_Panel *plPanel = luaL_checkpanel( L, 1 );
+    LUA_GET_REF_TABLE( L, plPanel );
 
     return 1;
 }
@@ -1280,8 +1265,11 @@ static int Panel___index( lua_State *L )
 
     LUA_METATABLE_INDEX_CHECK_REF_TABLE( L, plPanel );
 
-    lua_getmetatable( L, 1 );
-    LUA_METATABLE_INDEX_CHECK_TABLE( L );
+    if ( lua_getmetatable( L, 1 ) )
+    {
+        //LUA_METATABLE_INDEX_CHECK_USER_METATABLE( L ); //TODO;
+        LUA_METATABLE_INDEX_CHECK_TABLE( L );
+    }
 
     lua_pushnil( L );
     return 1;

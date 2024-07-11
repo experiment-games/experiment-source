@@ -154,13 +154,7 @@ LUA_API lua_PropertyDialog *lua_topropertydialog( lua_State *L, int idx )
 
 LUA_API void lua_pushpropertydialog( lua_State *L, PropertyDialog *pDialog )
 {
-    LPropertyDialog *plDialog = dynamic_cast< LPropertyDialog * >( pDialog );
-    if ( plDialog )
-        ++plDialog->m_nRefCount;
-    PHandle *phPanel = ( PHandle * )lua_newuserdata( L, sizeof( PHandle ) );
-    phPanel->Set( pDialog );
-    luaL_getmetatable( L, "PropertyDialog" );
-    lua_setmetatable( L, -2 );
+    LUA_PUSH_PANEL_USERDATA( L, pDialog, LPropertyDialog, "PropertyDialog" );
 }
 
 LUALIB_API lua_PropertyDialog *luaL_checkpropertydialog( lua_State *L,
@@ -221,19 +215,6 @@ static int PropertyDialog_GetPanelBaseClassName( lua_State *L )
 static int PropertyDialog_GetPanelClassName( lua_State *L )
 {
     lua_pushstring( L, luaL_checkpropertydialog( L, 1 )->GetPanelClassName() );
-    return 1;
-}
-
-static int PropertyDialog_GetRefTable( lua_State *L )
-{
-    LPropertyDialog *plDialog =
-        dynamic_cast< LPropertyDialog * >( luaL_checkpropertydialog( L, 1 ) );
-    if ( plDialog )
-    {
-        LUA_GET_REF_TABLE( L, plDialog );
-    }
-    else
-        lua_pushnil( L );
     return 1;
 }
 
@@ -303,8 +284,10 @@ static int PropertyDialog___index( lua_State *L )
     LPropertyDialog *plDialog = dynamic_cast< LPropertyDialog * >( pDialog );
     LUA_METATABLE_INDEX_CHECK_REF_TABLE( L, plDialog );
 
-    lua_getmetatable( L, 1 );
-    LUA_METATABLE_INDEX_CHECK_TABLE( L );
+    if ( lua_getmetatable( L, 1 ) )
+    {
+        LUA_METATABLE_INDEX_CHECK_TABLE( L );
+    }
 
     luaL_getmetatable( L, "Frame" );
     LUA_METATABLE_INDEX_CHECK_TABLE( L );
@@ -384,7 +367,6 @@ static const luaL_Reg PropertyDialogmeta[] = {
     { "GetActivePage", PropertyDialog_GetActivePage },
     { "GetPanelBaseClassName", PropertyDialog_GetPanelBaseClassName },
     { "GetPanelClassName", PropertyDialog_GetPanelClassName },
-    { "GetRefTable", PropertyDialog_GetRefTable },
     { "KB_AddBoundKey", PropertyDialog_KB_AddBoundKey },
     { "KB_ChainToMap", PropertyDialog_KB_ChainToMap },
     { "ResetAllData", PropertyDialog_ResetAllData },

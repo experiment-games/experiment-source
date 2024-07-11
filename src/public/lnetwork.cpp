@@ -477,8 +477,10 @@ static int bfRead___index( lua_State *L )
 {
     bf_read *bfRead = luaL_checkbf_read( L, 1 );
 
-    lua_getmetatable( L, 1 );
-    LUA_METATABLE_INDEX_CHECK_TABLE( L );
+    if ( lua_getmetatable( L, 1 ) )
+    {
+        LUA_METATABLE_INDEX_CHECK_TABLE( L );
+    }
 
     lua_pushnil( L );
     return 1;

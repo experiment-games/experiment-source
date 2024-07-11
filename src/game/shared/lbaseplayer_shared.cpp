@@ -956,8 +956,10 @@ static int CBasePlayer___index( lua_State *L )
     {
         LUA_METATABLE_INDEX_CHECK_REF_TABLE( L, pPlayer );
 
-        lua_getmetatable( L, 1 );
-        LUA_METATABLE_INDEX_CHECK_TABLE( L );
+        if ( lua_getmetatable( L, 1 ) )
+        {
+            LUA_METATABLE_INDEX_CHECK_TABLE( L );
+        }
 
         luaL_getmetatable( L, "CBaseAnimating" );
         LUA_METATABLE_INDEX_CHECK_TABLE( L );

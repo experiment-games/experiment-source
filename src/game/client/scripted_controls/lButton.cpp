@@ -56,13 +56,7 @@ LUA_API lua_Button *lua_tobutton( lua_State *L, int idx )
 
 LUA_API void lua_pushbutton( lua_State *L, Button *pButton )
 {
-    LButton *plButton = dynamic_cast< LButton * >( pButton );
-    if ( plButton )
-        ++plButton->m_nRefCount;
-    PHandle *phPanel = ( PHandle * )lua_newuserdata( L, sizeof( PHandle ) );
-    phPanel->Set( pButton );
-    luaL_getmetatable( L, "Button" );
-    lua_setmetatable( L, -2 );
+    LUA_PUSH_PANEL_USERDATA( L, pButton, LButton, "Button" );
 }
 
 LUALIB_API lua_Button *luaL_checkbutton( lua_State *L, int narg )
@@ -292,8 +286,10 @@ static int Button___index( lua_State *L )
     LButton *plButton = dynamic_cast< LButton * >( pButton );
     LUA_METATABLE_INDEX_CHECK_REF_TABLE( L, plButton );
 
-    lua_getmetatable( L, 1 );
-    LUA_METATABLE_INDEX_CHECK_TABLE( L );    
+    if ( lua_getmetatable( L, 1 ) )
+    {
+        LUA_METATABLE_INDEX_CHECK_TABLE( L );
+    }
 
     luaL_getmetatable( L, "Label" );
     LUA_METATABLE_INDEX_CHECK_TABLE( L );

@@ -213,10 +213,14 @@ static int Vector___index( lua_State *L )
         lua_pushnumber( L, vector.z );
     else
     {
-        lua_getmetatable( L, 1 );
-        LUA_METATABLE_INDEX_CHECK_TABLE( L );
-
-        lua_pushnil( L );
+        if ( lua_getmetatable( L, 1 ) )
+        {
+            LUA_METATABLE_INDEX_CHECK_TABLE( L );
+        }
+        else
+        {
+            lua_pushnil( L );
+        }
     }
 
     return 1;
@@ -391,10 +395,14 @@ static int QAngle___index( lua_State *L )
         lua_pushnumber( L, angle.z );
     else
     {
-        lua_getmetatable( L, 1 );
-        LUA_METATABLE_INDEX_CHECK_TABLE( L );
-
-        lua_pushnil( L );
+        if ( lua_getmetatable( L, 1 ) )
+        {
+            LUA_METATABLE_INDEX_CHECK_TABLE( L );
+        }
+        else
+        {
+            lua_pushnil( L );
+        }
     }
 
     return 1;
