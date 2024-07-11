@@ -96,8 +96,9 @@ static int IMaterial_GetColor(lua_State* L)
     bool bFound = false;
     IMaterialVar* pVar = luaL_checkmaterial( L, 1 )->FindVar( "$basetexture", &bFound );
     ITexture* pTexture = pVar->GetTextureValue();
-    int sizeInBytes;
-    unsigned char* pTextureData = CPngTextureRegen::GetProceduralTexturePointer( pTexture->GetName(), sizeInBytes );
+    CPngMaterialProxy *pMaterialProxy = CPngTextureRegen::GetProceduralMaterialProxy( pTexture->GetName() );
+    unsigned char *pTextureData = pMaterialProxy->GetTexturePointer();
+    int sizeInBytes = pMaterialProxy->GetSizeInBytes();
     lua_Color color;
 
     if ( !pTextureData )

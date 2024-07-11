@@ -12,6 +12,7 @@
 #include "cpng.h"
 #include "strtools.h"
 #include "materialsystem/imaterialsystem.h"
+#include "datacache/idatacache.h"
 
 #ifdef CLIENT_DLL
 #include "libpng/png.h"
@@ -20,49 +21,11 @@
 // memdbgon must be the last include file in a .cpp file!!!
 #include "tier0/memdbgon.h"
 
-CUtlVector< IMaterial * > CPngTextureRegen::m_vecProceduralMaterials;
-CUtlMap< const char *, PngTexturePointer > CPngTextureRegen::m_mapProceduralTexturePointers;
-
-CPngTextureRegen::CPngTextureRegen( const char *pFileName )
-{
-    Q_strncpy( m_pFileName, pFileName, sizeof( m_pFileName ) );
-}
+CUtlMap< const char *, CPngMaterialProxy * > CPngTextureRegen::m_mapProceduralMaterials;
 
 void CPngTextureRegen::RegenerateTextureBits( ITexture *pTexture, IVTFTexture *pVTFTexture, Rect_t *pSubRect )
 {
-#ifdef CLIENT_DLL
-    unsigned char *vtfImageData = pVTFTexture->ImageData( 0, 0, 0 );
-
-    // Ensure the texture we are copying to is the same format as the texture we are copying from
-    pVTFTexture->ConvertImageFormat( pTexture->GetImageFormat(), false );
-
-    CUtlBuffer buffer;
-    if ( !filesystem->ReadFile( m_pFileName, "GAME", buffer ) )
-    {
-        Warning( "Failed regenerating PNG as Texture! Couldn't read PNG from file \"%s\"\n", m_pFileName );
-        return;
-    }
-
-    int width, height, colorType, bitDepth, sizeInBytes;
-
-    unsigned char *imageData = PNG_ReadFromBuffer( buffer, m_pFileName, width, height, colorType, bitDepth, sizeInBytes );
-
-    if ( !imageData )
-    {
-        // Warning already printed by PNG_ReadFromBuffer
-        return;
-    }
-
-    PngTexturePointer texturePointer;
-    texturePointer.iSizeInBytes = sizeInBytes;
-    texturePointer.pTexturePointer = vtfImageData;
-    m_mapProceduralTexturePointers.Insert( pTexture->GetName(), texturePointer );
-
-    Q_memcpy( vtfImageData, imageData, sizeInBytes );
-
-    // Now that we have copied the image data, we can free the original image data
-    free( imageData );
-#endif
+    m_pProxy->LoadTexture( pTexture, pVTFTexture );
 }
 
 #ifdef CLIENT_DLL
@@ -219,6 +182,7 @@ IMaterial *CPngTextureRegen::GetOrCreateProceduralMaterial( const char *pMateria
 {
     KeyValues *keys = new KeyValues( "UnlitGeneric" );
     keys->SetString( "$basetexture", pMaterialName );
+    keys->SetString( "$fullfilepath", pFilePath );
     keys->SetString( "$translucent", "1" );
     IMaterial *pMaterial = g_pMaterialSystem->FindProceduralMaterial( pMaterialName, TEXTURE_GROUP_VGUI, keys );
 
@@ -242,10 +206,9 @@ IMaterial *CPngTextureRegen::GetOrCreateProceduralMaterial( const char *pMateria
     PNG_ReadInfoFromBuffer( buffer, pFilePath, width, height );
 #endif
 
-    bool bFound = false;
-    IMaterialVar *pVar = pMaterial->FindVar( "$basetexture", &bFound );
+    IMaterialVar *pVar = pMaterial->FindVar( "$basetexture", NULL );
 
-    if ( bFound && pVar )
+    if ( pVar )
     {
         ITexture *pTexture = nullptr;
         bool bLoadInitial = false;
@@ -263,14 +226,24 @@ IMaterial *CPngTextureRegen::GetOrCreateProceduralMaterial( const char *pMateria
 
         if ( bLoadInitial )
         {
-            pTexture->SetErrorTexture( false );
-            pTexture->SetTextureRegenerator( new CPngTextureRegen( fullFilePath ) );
-            pTexture->Download();
+            // pTexture->SetErrorTexture( false );
+            IMaterialVar *pFullPathVar = pMaterial->FindVar( "$fullfilepath", NULL );
+            pFullPathVar->SetStringValue( fullFilePath );
 
-            pMaterial->IncrementReferenceCount();
-            m_vecProceduralMaterials.AddToTail( pMaterial );
-            pVar->SetTextureValue( pTexture );
+            CPngMaterialProxy *pMaterialProxy = new CPngMaterialProxy();
+            pMaterialProxy->Init( pMaterial, keys );
+
+            //CMaterialReference hMaterial;
+            //hMaterial.Init( pMaterial );
+            //hMaterial->Refresh();
+
+            //CMatRenderContextPtr pRenderContext( g_pMaterialSystem );
+            //pRenderContext->Bind( pMaterial );
+
+            m_mapProceduralMaterials.Insert( pTexture->GetName(), pMaterialProxy );
         }
+
+        pMaterial->IncrementReferenceCount();
     }
     else
     {
@@ -280,45 +253,143 @@ IMaterial *CPngTextureRegen::GetOrCreateProceduralMaterial( const char *pMateria
     return pMaterial;
 }
 
-unsigned char *CPngTextureRegen::GetProceduralTexturePointer( const char *pMaterialName, int &iSizeInBytes )
+CPngMaterialProxy *CPngTextureRegen::GetProceduralMaterialProxy( const char *pMaterialName )
 {
-    unsigned short index = m_mapProceduralTexturePointers.Find( pMaterialName );
+    unsigned short index = m_mapProceduralMaterials.Find( pMaterialName );
 
-    if ( index == m_mapProceduralTexturePointers.InvalidIndex() )
+    if ( index == m_mapProceduralMaterials.InvalidIndex() )
     {
         return nullptr;
     }
 
-    PngTexturePointer texturePointer = m_mapProceduralTexturePointers.Element( index );
-    iSizeInBytes = texturePointer.iSizeInBytes;
+    CPngMaterialProxy *pMaterialProxy = m_mapProceduralMaterials.Element( index );
 
-    return texturePointer.pTexturePointer;
+    return pMaterialProxy;
 }
 
 void CPngTextureRegen::ReleaseAllTextureData()
 {
-    for ( int i = 0; i < m_vecProceduralMaterials.Count(); ++i )
+    FOR_EACH_MAP_FAST( m_mapProceduralMaterials, i )
     {
-        IMaterial *pMaterial = m_vecProceduralMaterials[i];
-
-        // Disconnect the texture regenerator, or else we will get a crash on exit in MaterialSystem.dll
-        // in certain situations (like having the ESC menu opened when finding a material)
-        bool bFound = false;
-        IMaterialVar *pVar = pMaterial->FindVar( "$basetexture", &bFound );
-
-        if ( bFound && pVar )
-        {
-            ITexture *pTexture = pVar->GetTextureValue();
-            if ( pTexture )
-            {
-                pTexture->SetTextureRegenerator( NULL );
-                pTexture->SetErrorTexture( true );
-            }
-        }
+        CPngMaterialProxy *pMaterialProxy = m_mapProceduralMaterials[i];
+        IMaterial *pMaterial = pMaterialProxy->GetMaterial();
 
         pMaterial->DecrementReferenceCount();
     }
 
-    m_vecProceduralMaterials.RemoveAll();
-    m_mapProceduralTexturePointers.RemoveAll();
+    m_mapProceduralMaterials.RemoveAll();
 }
+
+/*
+** CPngMaterialProxy
+*/
+
+#pragma warning( disable : 4355 )  //  warning: 'this' : used in base member initializer list
+CPngMaterialProxy::CPngMaterialProxy()
+    : m_TextureRegen( this )
+{
+    m_pMaterial = NULL;
+    m_pTexturePointer = NULL;
+    m_iSizeInBytes = 0;
+    m_pTextureVar = NULL;
+    m_pFullPathVar = NULL;
+}
+#pragma warning( default : 4355 )
+
+CPngMaterialProxy::~CPngMaterialProxy()
+{
+    // Disconnect the texture regenerator, or else we will get a crash on exit in MaterialSystem.dll
+    // in certain situations (like having the ESC menu opened when finding a material)
+    if ( m_pTextureVar )
+    {
+        ITexture *pTexture = m_pTextureVar->GetTextureValue();
+        if ( pTexture )
+            pTexture->SetTextureRegenerator( NULL );
+    }
+
+    delete m_pTexturePointer;
+}
+
+bool CPngMaterialProxy::Init( IMaterial *pMaterial, KeyValues *pKeyValues )
+{
+    m_pMaterial = pMaterial;
+
+    bool bFound;
+    m_pTextureVar = m_pMaterial->FindVar( "$basetexture", &bFound );
+
+    if ( !bFound )
+    {
+        Assert( 0 );
+        m_pTextureVar = NULL;
+        return false;
+    }
+
+    m_pFullPathVar = m_pMaterial->FindVar( "$fullfilepath", &bFound );
+
+    if ( !bFound )
+    {
+        Assert( 0 );
+        m_pFullPathVar = NULL;
+        return false;
+    }
+
+    PreLoadTexture();
+
+    ITexture *pTexture = m_pTextureVar->GetTextureValue();
+
+    if ( pTexture )
+    {
+        pTexture->SetTextureRegenerator( &m_TextureRegen );
+        pTexture->Download();
+    }
+
+    return true;
+}
+
+void CPngMaterialProxy::OnBind( void *pBind )
+{
+    Assert( m_pTextureVar );
+
+    ITexture *pTexture = m_pTextureVar->GetTextureValue();
+    pTexture->Download();
+}
+
+void CPngMaterialProxy::PreLoadTexture()
+{
+#ifdef CLIENT_DLL
+    const char *fileName = m_pFullPathVar->GetStringValue();
+
+    CUtlBuffer buffer;
+    if ( !filesystem->ReadFile( fileName, "GAME", buffer ) )
+    {
+        Warning( "Failed regenerating PNG as Texture! Couldn't read PNG from file \"%s\"\n", fileName );
+        return;
+    }
+
+    int width, height, colorType, bitDepth, sizeInBytes;
+
+    m_pTexturePointer = PNG_ReadFromBuffer( buffer, fileName, width, height, colorType, bitDepth, sizeInBytes );
+
+    if ( !m_pTexturePointer )
+    {
+        // Warning already printed by PNG_ReadFromBuffer
+        return;
+    }
+
+    m_iSizeInBytes = sizeInBytes;
+#endif
+}
+
+void CPngMaterialProxy::LoadTexture( ITexture *pTexture, IVTFTexture *pVTFTexture )
+{
+#ifdef CLIENT_DLL
+    unsigned char *vtfImageData = pVTFTexture->ImageData( 0, 0, 0 );
+
+    // Ensure the texture we are copying to is the same format as the texture we are copying from
+    pVTFTexture->ConvertImageFormat( pTexture->GetImageFormat(), false );
+
+    Q_memcpy( vtfImageData, m_pTexturePointer, m_iSizeInBytes );
+#endif
+}
+
+EXPOSE_INTERFACE( CPngMaterialProxy, IMaterialProxy, "Png" IMATERIAL_PROXY_INTERFACE_VERSION );

@@ -1,6 +1,6 @@
 include("shared.lua")
 
-DEFINE_BASECLASS( "gamemode_base" )
+DEFINE_BASECLASS("gamemode_base")
 
 function GM:Initialize()
     BaseClass.Initialize(self)
@@ -40,17 +40,13 @@ derma.DefineControl("TestPanel", "", PANEL, "DFrame")
 
 -- lua_run_cl MakeTestPanel()
 function MakeTestPanel()
-    if IsValid(TEST_PANEL) then
-        TEST_PANEL:Remove()
-    end
-
-	TEST_PANEL = vgui.Create("TestPanel")
-	TEST_PANEL:SetSize(512, 512)
-	TEST_PANEL:Center()
-    TEST_PANEL:MakePopup()
+	local testPanel = vgui.Create("TestPanel")
+	testPanel:SetSize(512, 512)
+	testPanel:Center()
+    testPanel:MakePopup()
 
 	-- TODO: But here we can click the sheets :/ (see above)
-	local sheet = vgui.Create( "DPropertySheet", TEST_PANEL )
+	local sheet = vgui.Create( "DPropertySheet", testPanel )
 	sheet:Dock( FILL )
 
 	local panel1 = vgui.Create( "DPanel", sheet )
@@ -61,7 +57,7 @@ function MakeTestPanel()
 	panel2.Paint = function( self, w, h ) draw.RoundedBox( 4, 0, 0, w, h, Color( 255, 128, 0, self:GetAlpha() ) ) end
 	sheet:AddSheet( "test 2", panel2, "icon16/tick.png" )
 
-	return TEST_PANEL
+	return testPanel
 end
 
 ConsoleCommands.Add("+buildmenu", function(client, pCmd, args)
@@ -70,4 +66,6 @@ end)
 
 ConsoleCommands.Add("-buildmenu", function(client, pCmd, args)
 end)
-MakeTestPanel()
+TEST_PANEL = MakeTestPanel()
+TEST_PANEL2 = MakeTestPanel()
+TEST_PANEL2:SetPos(512, 0)
