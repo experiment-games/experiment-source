@@ -65,6 +65,19 @@ static int TextEntry_SetText( lua_State *L )
     return 0;
 }
 
+static int TextEntry_GetCursorPos( lua_State *L )
+{
+    int position = luaL_checktextentry( L, 1 )->GetCursorPos();
+    lua_pushinteger( L, position );
+    return 1;
+}
+
+static int TextEntry_SetCursorPos( lua_State *L )
+{
+    luaL_checktextentry( L, 1 )->SetCursorPos( luaL_checkinteger( L, 2 ) );
+    return 0;
+}
+
 static int TextEntry_GetText( lua_State *L )
 {
     char buf[1023];
@@ -542,6 +555,8 @@ static const luaL_Reg TextEntrymeta[] = {
     // { "?", TextEntry_? },
     { "SetText", TextEntry_SetText },
     { "GetText", TextEntry_GetText },
+    { "GetCaretPos", TextEntry_GetCursorPos },
+    { "SetCaretPos", TextEntry_SetCursorPos },
     { "GetTextLength", TextEntry_GetTextLength },
     { "GetValue", TextEntry_GetValue },
     { "GetValueAsFloat", TextEntry_GetValueAsFloat },

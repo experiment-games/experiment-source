@@ -231,6 +231,14 @@ class TextEntry : public Panel
     void SetUseFallbackFont( bool bState, HFont hFallback );
 
     virtual void PaintText( Color foregroundColor, Color highlightColor, Color cursorColor );
+    virtual int GetCursorPos() const
+    {
+        return _cursorPos;
+    }
+    virtual void SetCursorPos(int position)
+    {
+        _cursorPos = position;
+    }
 
    protected:
     virtual void ResetCursorBlink();

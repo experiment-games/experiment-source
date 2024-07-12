@@ -1,6 +1,6 @@
 //========= Copyright © 1996-2005, Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -23,29 +23,38 @@ class LEditablePanel : public EditablePanel
 
    public:
     LEditablePanel( Panel *parent, const char *panelName, lua_State *L );
+    ~LEditablePanel();
     virtual void PushPanelToLua( lua_State *L );
     void SetFocusTopLevel( bool state );
+
+    virtual void Activate();
+    virtual void DoModal();
+    virtual bool IsModal();
+    virtual void OnClose();
+
+    // closes the dialog
+    MESSAGE_FUNC( Close, "Close" );
+    MESSAGE_FUNC( CloseModal, "CloseModal" );
+
+   private:
+    void FinishClose();
+    VPANEL m_hPreviousModal;
 };
 
 /* type for EditablePanel functions */
 typedef LEditablePanel lua_EditablePanel;
 
-
 /*
 ** access functions (stack -> C)
 */
 
-LUA_API lua_EditablePanel     *(lua_toeditablepanel) (lua_State *L, int idx);
-
+LUA_API lua_EditablePanel *( lua_toeditablepanel )( lua_State *L, int idx );
 
 /*
 ** push functions (C -> stack)
 */
-LUA_API void  (lua_pusheditablepanel) (lua_State *L, lua_EditablePanel *pPanel);
+LUA_API void( lua_pusheditablepanel )( lua_State *L, lua_EditablePanel *pPanel );
 
+LUALIB_API lua_EditablePanel *( luaL_checkeditablepanel )( lua_State *L, int narg );
 
-
-LUALIB_API lua_EditablePanel *(luaL_checkeditablepanel) (lua_State *L, int narg);
-
-
-#endif // LEDITABLEPANEL_H
+#endif  // LEDITABLEPANEL_H

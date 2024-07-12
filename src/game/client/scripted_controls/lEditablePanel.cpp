@@ -11,6 +11,8 @@
 #include "luasrclib.h"
 #include <LKeyValues.h>
 #include <vgui_int.h>
+#include <vgui/IInput.h>
+#include <vgui/ISurface.h>
 #include <vgui_controls/Panel.h>
 
 #include "scripted_controls/lPanel.h"
@@ -24,6 +26,19 @@ LEditablePanel::LEditablePanel( Panel *parent, const char *panelName, lua_State 
     m_lua_State = L;
 }
 
+LEditablePanel::~LEditablePanel()
+{
+    if ( input()->GetAppModalSurface() == GetVPanel() )
+    {
+        vgui::input()->ReleaseAppModalSurface();
+        if ( m_hPreviousModal != 0 )
+        {
+            vgui::input()->SetAppModalSurface( m_hPreviousModal );
+            m_hPreviousModal = 0;
+        }
+    }
+}
+
 void LEditablePanel::PushPanelToLua( lua_State *L )
 {
     lua_pusheditablepanel( L, this );
@@ -32,6 +47,85 @@ void LEditablePanel::PushPanelToLua( lua_State *L )
 void LEditablePanel::SetFocusTopLevel( bool state )
 {
     GetFocusNavGroup().SetFocusTopLevel( state );
+}
+
+/*
+** The following Modal functions are taken from the Frame vgui
+
+
+// Purpose: Bring the frame to the front and requests focus, ensures it's not minimized
+void LEditablePanel::Activate()
+{
+    MoveToFront();
+
+    if ( IsKeyBoardInputEnabled() )
+    {
+        RequestFocus();
+    }
+    SetVisible( true );
+    SetEnabled( true );
+
+    surface()->SetMinimized( GetVPanel(), false );
+}
+
+// Sets up, cleans up modal dialogs
+void LEditablePanel::DoModal()
+{
+    InvalidateLayout();
+    Activate();
+    m_hPreviousModal = vgui::input()->GetAppModalSurface(); // TODO: Crashes?
+    vgui::input()->SetAppModalSurface( GetVPanel() );
+}
+
+bool LEditablePanel::IsModal()
+{
+    return vgui::input()->GetAppModalSurface() == GetVPanel();
+}
+
+void LEditablePanel::Close()
+{
+    OnClose();
+}
+
+void LEditablePanel::CloseModal()
+{
+    vgui::input()->ReleaseAppModalSurface();
+    if ( m_hPreviousModal != 0 )
+    {
+        vgui::input()->SetAppModalSurface( m_hPreviousModal );
+        m_hPreviousModal = 0;
+    }
+    PostMessage( this, new KeyValues( "Close" ) );
+}
+
+// Go invisible when a close message is recieved.
+void LEditablePanel::OnClose()
+{
+    // if we're modal, release that before we hide the window else the wrong window will get focus
+    if ( input()->GetAppModalSurface() == GetVPanel() )
+    {
+        input()->ReleaseAppModalSurface();
+        if ( m_hPreviousModal != 0 )
+        {
+            vgui::input()->SetAppModalSurface( m_hPreviousModal );
+            m_hPreviousModal = 0;
+        }
+    }
+
+    BaseClass::OnClose();
+
+    FinishClose();
+}
+
+void LEditablePanel::FinishClose()
+{
+    SetVisible( false );
+
+    //if ( m_bDeleteSelfOnClose )
+    {
+        // Must be last because if vgui is not running then this will call delete this!!!
+        MarkForDeletion();
+    }
 }
 
 /*
@@ -95,6 +189,19 @@ static int EditablePanel_ChainToMap( lua_State *L )
 static int EditablePanel_CreateControlByName( lua_State *L )
 {
     lua_pushpanel( L, luaL_checkeditablepanel( L, 1 )->CreateControlByName( luaL_checkstring( L, 2 ) ) );
+    return 1;
+}
+
+static int EditablePanel_DoModal( lua_State *L )
+{
+    luaL_checkeditablepanel( L, 1 )->DoModal();
+    return 0;
+}
+
+
+static int EditablePanel_IsModal( lua_State *L )
+{
+    lua_pushboolean( L, luaL_checkeditablepanel( L, 1 )->IsModal() );
     return 1;
 }
 
@@ -368,6 +475,8 @@ static const luaL_Reg EditablePanelmeta[] = {
     { "ChainToAnimationMap", EditablePanel_ChainToAnimationMap },
     { "ChainToMap", EditablePanel_ChainToMap },
     { "CreateControlByName", EditablePanel_CreateControlByName },
+    { "DoModal", EditablePanel_DoModal },
+    { "IsModal", EditablePanel_IsModal },
     { "GetControlInt", EditablePanel_GetControlInt },
     { "GetControlString", EditablePanel_GetControlString },
     { "GetCurrentKeyFocus", EditablePanel_GetCurrentKeyFocus },

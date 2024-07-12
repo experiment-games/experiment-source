@@ -380,23 +380,25 @@ else
     end
 
 	-- Returns whether the currently focused panel is a child of the given one.
-	function vgui.FocusedHasParent(panel)
-		local focusedPanel = Input.GetFocus()
+    function vgui.FocusedHasParent(panel)
+        local focusedPanel = Input.GetFocus()
 
-		if (not IsValid(focusedPanel)) then
-			return false
-		end
+        if (not IsValid(focusedPanel)) then
+            return false
+        end
 
-		while (IsValid(focusedPanel)) do
-			if (focusedPanel == panel) then
-				return true
-			end
+        while (IsValid(focusedPanel)) do
+            if (focusedPanel == panel) then
+                return true
+            end
 
-			focusedPanel = focusedPanel:GetParent()
-		end
+            focusedPanel = focusedPanel:GetParent()
+        end
 
-		return false
-	end
+        return false
+    end
+    vgui.GetKeyboardFocus = Input.GetFocus
+	vgui.GetHoveredPanel = Input.GetMouseOver
 
     gui = {
         MouseX = function()
@@ -429,8 +431,18 @@ else
     PANEL_META.NoClipping = PANEL_META.SetPaintClippingEnabled
 
     function PANEL_META:DrawFilledRect()
+        local width, height = self:GetSize()
+        surface.DrawRect(0, 0, width, height)
+    end
+
+    function PANEL_META:DrawOutlinedRect()
+        local width, height = self:GetSize()
+        surface.DrawOutlinedRect(0, 0, width, height)
+    end
+
+	function PANEL_META:DrawTexturedRect()
 		local width, height = self:GetSize()
-		surface.DrawRect(0, 0, width, height)
+		surface.DrawTexturedRect(0, 0, width, height)
 	end
 
     function PANEL_META:MouseCapture(doCapture)
@@ -527,7 +539,22 @@ else
             return LABEL_PANEL_META.GetValue(self)
         end
 
-		error("attempt to get value of unsupported panel class \"" .. tostring(className) .. "\"", 2)
+        error("attempt to get value of unsupported panel class \"" .. tostring(className) .. "\"", 2)
+    end
+
+    function PANEL_META:GetContentSize()
+        local className = self:GetClassName()
+
+        if (className == "LLabel") then
+            return LABEL_PANEL_META.GetContentSize(self)
+        end
+
+        error("attempt to get content size of unsupported panel class \"" .. tostring(className) .. "\"", 2)
+    end
+
+    -- TODO: Does this need serious implementing?
+	function PANEL_META:SetDrawOnTop(isOnTop)
+		print("PANEL_META:SetDrawOnTop: Reminder to implement this function (or not).")
 	end
 
 	-- Maps cursor strings to cursor codes.

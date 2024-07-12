@@ -107,13 +107,21 @@ static int surface_DisableClipping( lua_State *L )
 
 static int surface_DrawFilledRect( lua_State *L )
 {
-    surface()->DrawFilledRect( luaL_checkint( L, 1 ), luaL_checkint( L, 2 ), luaL_checkint( L, 3 ), luaL_checkint( L, 4 ) );
+    int x = luaL_checknumber( L, 1 );
+    int y = luaL_checknumber( L, 2 );
+    int width = luaL_checknumber( L, 3 );
+    int height = luaL_checknumber( L, 4 );
+    surface()->DrawFilledRect( x, y, x + width, y + height );
     return 0;
 }
 
 static int surface_DrawFilledRectFade( lua_State *L )
 {
-    surface()->DrawFilledRectFade( luaL_checkint( L, 1 ), luaL_checkint( L, 2 ), luaL_checkint( L, 3 ), luaL_checkint( L, 4 ), luaL_checkint( L, 5 ), luaL_checkint( L, 6 ), luaL_checkboolean( L, 7 ) );
+    int x = luaL_checknumber( L, 1 );
+    int y = luaL_checknumber( L, 2 );
+    int width = luaL_checknumber( L, 3 );
+    int height = luaL_checknumber( L, 4 );
+    surface()->DrawFilledRectFade( x, y, x + width, y + height, luaL_checkint( L, 5 ), luaL_checkint( L, 6 ), luaL_checkboolean( L, 7 ) );
     return 0;
 }
 
@@ -163,19 +171,23 @@ static int surface_DrawGetTextureSize( lua_State *L )
 
 static int surface_DrawLine( lua_State *L )
 {
-    surface()->DrawLine( luaL_checkint( L, 1 ), luaL_checkint( L, 2 ), luaL_checkint( L, 3 ), luaL_checkint( L, 4 ) );
+    surface()->DrawLine( luaL_checknumber( L, 1 ), luaL_checknumber( L, 2 ), luaL_checknumber( L, 3 ), luaL_checknumber( L, 4 ) );
     return 0;
 }
 
 static int surface_DrawOutlinedCircle( lua_State *L )
 {
-    surface()->DrawOutlinedCircle( luaL_checkint( L, 1 ), luaL_checkint( L, 2 ), luaL_checkint( L, 3 ), luaL_checkint( L, 4 ) );
+    surface()->DrawOutlinedCircle( luaL_checknumber( L, 1 ), luaL_checknumber( L, 2 ), luaL_checknumber( L, 3 ), luaL_checknumber( L, 4 ) );
     return 0;
 }
 
 static int surface_DrawOutlinedRect( lua_State *L )
 {
-    surface()->DrawOutlinedRect( luaL_checkint( L, 1 ), luaL_checkint( L, 2 ), luaL_checkint( L, 3 ), luaL_checkint( L, 4 ) );
+    int x = luaL_checknumber( L, 1 );
+    int y = luaL_checknumber( L, 2 );
+    int width = luaL_checknumber( L, 3 );
+    int height = luaL_checknumber( L, 4 );
+    surface()->DrawOutlinedRect( x, y, x + width, y + height );
     return 0;
 }
 
@@ -202,7 +214,7 @@ static int surface_DrawSetColor( lua_State *L )
 {
     if ( lua_isnumber( L, 1 ) )
     {
-        surface()->DrawSetColor( luaL_checkint( L, 1 ), luaL_checkint( L, 2 ), luaL_checkint( L, 3 ), luaL_checkint( L, 4 ) );
+        surface()->DrawSetColor( luaL_checknumber( L, 1 ), luaL_checknumber( L, 2 ), luaL_checknumber( L, 3 ), luaL_checknumber( L, 4 ) );
         return 0;
     }
 
@@ -216,7 +228,7 @@ static int surface_DrawSetTextColor( lua_State *L )
 {
     if ( lua_isnumber( L, 1 ) )
     {
-        surface()->DrawSetTextColor( luaL_checkint( L, 1 ), luaL_checkint( L, 2 ), luaL_checkint( L, 3 ), luaL_checkint( L, 4 ) );
+        surface()->DrawSetTextColor( luaL_checknumber( L, 1 ), luaL_checknumber( L, 2 ), luaL_checknumber( L, 3 ), luaL_checknumber( L, 4 ) );
         return 0;
     }
 
@@ -234,7 +246,7 @@ static int surface_DrawSetTextFont( lua_State *L )
 
 static int surface_DrawSetTextPos( lua_State *L )
 {
-    surface()->DrawSetTextPos( luaL_checkint( L, 1 ), luaL_checkint( L, 2 ) );
+    surface()->DrawSetTextPos( luaL_checknumber( L, 1 ), luaL_checknumber( L, 2 ) );
     return 0;
 }
 
@@ -269,8 +281,8 @@ static int surface_DrawSetTextureFile( lua_State *L )
 static int surface_DrawSetTextureRGBA( lua_State *L )
 {
     int id = luaL_checkint( L, 1 );
-    int width = luaL_checkint( L, 2 );
-    int height = luaL_checkint( L, 3 );
+    int width = luaL_checknumber( L, 2 );
+    int height = luaL_checknumber( L, 3 );
     const unsigned char *rgba = ( const unsigned char * )luaL_checkstring( L, 4 );
     surface()->DrawSetTextureRGBA( id, rgba, width, height, luaL_optint( L, 5, 0 ), luaL_optboolean( L, 6, true ) );
     return 0;
@@ -284,21 +296,20 @@ static int surface_DrawSetTextureMaterial( lua_State *L )
 
 static int surface_DrawTexturedRect( lua_State *L )
 {
-    // TODO: Apply this treatment for the others, of converting x2,y2 to x1+w,y1+h
-    int x = luaL_checkint( L, 1 );
-    int y = luaL_checkint( L, 2 );
-    int width = luaL_checkint( L, 3 );
-    int height = luaL_checkint( L, 4 );
+    int x = luaL_checknumber( L, 1 );
+    int y = luaL_checknumber( L, 2 );
+    int width = luaL_checknumber( L, 3 );
+    int height = luaL_checknumber( L, 4 );
     surface()->DrawTexturedRect( x, y, x + width, y + height );
     return 0;
 }
 
 static int surface_DrawTexturedSubRect( lua_State *L )
 {
-    int x0 = luaL_checkint( L, 1 );
-    int y0 = luaL_checkint( L, 2 );
-    int x1 = luaL_checkint( L, 3 );
-    int y1 = luaL_checkint( L, 4 );
+    int x0 = luaL_checknumber( L, 1 );
+    int y0 = luaL_checknumber( L, 2 );
+    int x1 = luaL_checknumber( L, 3 );
+    int y1 = luaL_checknumber( L, 4 );
     float texs0 = luaL_checknumber( L, 5 );
     float text0 = luaL_checknumber( L, 6 );
     float texs1 = luaL_checknumber( L, 7 );

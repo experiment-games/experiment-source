@@ -1306,8 +1306,10 @@ static int str_format (lua_State *L) {
           goto intcase;
         case 'o': case 'x': case 'X':
           flags = L_FMTFLAGSX;
-         intcase: {
-          lua_Integer n = luaL_checkinteger(L, arg);
+      intcase: {
+          // Experiment; Don't be too strict on taking integers (allow any number)d
+          //lua_Integer n = luaL_checkinteger(L, arg);
+          lua_Number n = luaL_checknumber(L, arg);
           checkformat(L, form, flags, 1);
           addlenmod(form, LUA_INTEGER_FRMLEN);
           nb = l_sprintf(buff, maxitem, form, (LUAI_UACINT)n);
