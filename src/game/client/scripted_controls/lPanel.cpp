@@ -215,6 +215,19 @@ static int Panel_GetChildCount( lua_State *L )
     return 1;
 }
 
+static int Panel_GetChildrenSize( lua_State *L )
+{
+    Panel *pPanel = luaL_checkpanel( L, 1 );
+
+    int wide, tall;
+    pPanel->GetChildrenSize( wide, tall );
+
+    lua_pushinteger( L, wide );
+    lua_pushinteger( L, tall );
+
+    return 2;
+}
+
 static int Panel_GetClassName( lua_State *L )
 {
     lua_pushstring( L, luaL_checkpanel( L, 1 )->GetClassName() );
@@ -1145,6 +1158,12 @@ static int Panel_SetPaintBorderEnabled( lua_State *L )
     return 0;
 }
 
+static int Panel_SetPaintClippingEnabled( lua_State *L )
+{
+    luaL_checkpanel( L, 1 )->SetPaintClippingEnabled( luaL_checkboolean( L, 2 ) );
+    return 0;
+}
+
 static int Panel_SetPaintEnabled( lua_State *L )
 {
     luaL_checkpanel( L, 1 )->SetPaintEnabled( luaL_checkboolean( L, 2 ) );
@@ -1248,6 +1267,18 @@ static int Panel_SetWide( lua_State *L )
 static int Panel_SetZPos( lua_State *L )
 {
     luaL_checkpanel( L, 1 )->SetZPos( luaL_checknumber( L, 2 ) );
+    return 0;
+}
+
+static int Panel_SizeToContents( lua_State *L )
+{
+    Panel *pPanel = luaL_checkpanel( L, 1 );
+
+    int wide, tall;
+    pPanel->GetChildrenSize( wide, tall );
+
+    pPanel->SetSize( wide, tall );
+
     return 0;
 }
 
@@ -1394,6 +1425,7 @@ static const luaL_Reg Panelmeta[] = {
     { "GetBounds", Panel_GetBounds },
     { "GetChild", Panel_GetChild },
     { "GetChildCount", Panel_GetChildCount },
+    { "GetChildrenSize", Panel_GetChildrenSize },
     { "GetClassName", Panel_GetClassName },
     { "GetClipRect", Panel_GetClipRect },
     { "GetCornerTextureSize", Panel_GetCornerTextureSize },
@@ -1538,6 +1570,7 @@ static const luaL_Reg Panelmeta[] = {
     { "SetPaintBackgroundEnabled", Panel_SetPaintBackgroundEnabled },
     { "SetPaintBackgroundType", Panel_SetPaintBackgroundType },
     { "SetPaintBorderEnabled", Panel_SetPaintBorderEnabled },
+    { "SetPaintClippingEnabled", Panel_SetPaintClippingEnabled },
     { "SetPaintEnabled", Panel_SetPaintEnabled },
     { "SetParent", Panel_SetParent },
     { "SetPinCorner", Panel_SetPinCorner },
@@ -1555,6 +1588,7 @@ static const luaL_Reg Panelmeta[] = {
     { "SetVisible", Panel_SetVisible },
     { "SetWide", Panel_SetWide },
     { "SetZPos", Panel_SetZPos },
+    { "SizeToContents", Panel_SizeToContents },
     { "ShouldHandleInputMessage", Panel_ShouldHandleInputMessage },
     { "StringToKeyCode", Panel_StringToKeyCode },
     { "__index", Panel___index },

@@ -67,7 +67,7 @@ static int TextEntry_SetText( lua_State *L )
 
 static int TextEntry_GetText( lua_State *L )
 {
-    char buf[256];
+    char buf[1023];
     luaL_checktextentry( L, 1 )->GetText( buf, sizeof( buf ) );
     lua_pushstring( L, buf );
     return 1;
@@ -76,6 +76,28 @@ static int TextEntry_GetText( lua_State *L )
 static int TextEntry_GetTextLength( lua_State *L )
 {
     lua_pushinteger( L, luaL_checktextentry( L, 1 )->GetTextLength() );
+    return 1;
+}
+
+static int TextEntry_GetValue( lua_State *L )
+{
+    char buf[8092];
+    luaL_checktextentry( L, 1 )->GetText( buf, sizeof( buf ) );
+    lua_pushstring( L, buf );
+    return 1;
+}
+
+static int TextEntry_GetValueAsFloat( lua_State *L )
+{
+    float value = luaL_checktextentry( L, 1 )->GetValueAsFloat();
+    lua_pushnumber( L, value );
+    return 1;
+}
+
+static int TextEntry_GetValueAsInt( lua_State *L )
+{
+    int value = luaL_checktextentry( L, 1 )->GetValueAsInt();
+    lua_pushinteger( L, value );
     return 1;
 }
 
@@ -521,6 +543,9 @@ static const luaL_Reg TextEntrymeta[] = {
     { "SetText", TextEntry_SetText },
     { "GetText", TextEntry_GetText },
     { "GetTextLength", TextEntry_GetTextLength },
+    { "GetValue", TextEntry_GetValue },
+    { "GetValueAsFloat", TextEntry_GetValueAsFloat },
+    { "GetValueAsInt", TextEntry_GetValueAsInt },
     { "IsTextFullySelected", TextEntry_IsTextFullySelected },
     { "GotoLeft", TextEntry_GotoLeft },
     { "GotoRight", TextEntry_GotoRight },

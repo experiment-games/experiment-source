@@ -121,6 +121,12 @@ static int CheckButton_GetPanelClassName( lua_State *L )
     return 1;
 }
 
+static int CheckButton_IsSelected( lua_State *L )
+{
+    lua_pushboolean( L, luaL_checkcheckbutton( L, 1 )->IsSelected() );
+    return 1;
+}
+
 static int CheckButton_KB_AddBoundKey( lua_State *L )
 {
     luaL_checkcheckbutton( L, 1 )->KB_AddBoundKey(
@@ -242,6 +248,7 @@ static const luaL_Reg CheckButtonmeta[] = {
     { "GetDisabledFgColor", CheckButton_GetDisabledFgColor },
     { "GetPanelBaseClassName", CheckButton_GetPanelBaseClassName },
     { "GetPanelClassName", CheckButton_GetPanelClassName },
+    { "IsSelected", CheckButton_IsSelected },
     { "KB_AddBoundKey", CheckButton_KB_AddBoundKey },
     { "KB_ChainToMap", CheckButton_KB_ChainToMap },
     { "SetCheckButtonCheckable", CheckButton_SetCheckButtonCheckable },

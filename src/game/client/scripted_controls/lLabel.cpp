@@ -93,6 +93,14 @@ static int Label_GetPanelClassName( lua_State *L )
     return 1;
 }
 
+static int Label_GetValue( lua_State *L )
+{
+    char buf[8092];
+    luaL_checklabel( L, 1 )->GetText( buf, sizeof( buf ) );
+    lua_pushstring( L, buf );
+    return 1;
+}
+
 static int Label_KB_AddBoundKey( lua_State *L )
 {
     luaL_checklabel( L, 1 )->KB_AddBoundKey(
@@ -403,6 +411,7 @@ static const luaL_Reg Labelmeta[] = {
     { "GetContentSize", Label_GetContentSize },
     { "GetPanelBaseClassName", Label_GetPanelBaseClassName },
     { "GetPanelClassName", Label_GetPanelClassName },
+    { "GetValue", Label_GetValue },
     { "KB_AddBoundKey", Label_KB_AddBoundKey },
     { "KB_ChainToMap", Label_KB_ChainToMap },
     { "OnCursorEntered", Label_OnCursorEntered },

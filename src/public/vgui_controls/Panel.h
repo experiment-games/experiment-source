@@ -176,7 +176,30 @@ class Panel : public IClientPanel, virtual IForceVirtualInheritancePanel
     lua_State *m_lua_State = nullptr;
     int m_nTableReference;
     int m_nRefCount;
+    bool m_bIsPaintClipping = true;
     CUtlDict<int, int> m_PreparedFunctions;
+
+    virtual void GetChildrenSize(int& wide, int& tall)
+    {
+        wide = 0;
+        tall = 0;
+
+        for ( int i = 0; i < GetChildCount(); i++ )
+        {
+            Panel *pChild = GetChild( i );
+            int x, y;
+            pChild->GetPos( x, y );
+            int w, t;
+            pChild->GetSize( w, t );
+            wide = max( wide, x + w );
+            tall = max( tall, y + t );
+        }
+    }
+
+    virtual void SetPaintClippingEnabled( bool state )
+    {
+        m_bIsPaintClipping = state;
+    }
 #endif
 
     // returns pointer to Panel's vgui VPanel interface handle

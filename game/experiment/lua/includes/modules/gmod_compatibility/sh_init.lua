@@ -260,7 +260,7 @@ end
 
 -- We don't use the workshop
 WorkshopFileBase = function(namespace, requiredTags)
-	return {}
+    return {}
 end
 
 game = {
@@ -425,6 +425,13 @@ else
 	PANEL_META.DockMargin = PANEL_META.SetDockMargin
 	PANEL_META.DockPadding = PANEL_META.SetDockPadding
     PANEL_META.ChildCount = PANEL_META.GetChildCount
+    PANEL_META.ChildrenSize = PANEL_META.GetChildrenSize
+    PANEL_META.NoClipping = PANEL_META.SetPaintClippingEnabled
+
+    function PANEL_META:DrawFilledRect()
+		local width, height = self:GetSize()
+		surface.DrawRect(0, 0, width, height)
+	end
 
     function PANEL_META:MouseCapture(doCapture)
 		if (doCapture) then
@@ -468,7 +475,9 @@ else
 
 	local LABEL_PANEL_META = FindMetaTable("Label")
 	LABEL_PANEL_META._OriginalSetFont = LABEL_PANEL_META._OriginalSetFont or LABEL_PANEL_META.SetFont
-	LABEL_PANEL_META._OriginalGetFont = LABEL_PANEL_META._OriginalGetFont or LABEL_PANEL_META.GetFont
+    LABEL_PANEL_META._OriginalGetFont = LABEL_PANEL_META._OriginalGetFont or LABEL_PANEL_META.GetFont
+
+    LABEL_PANEL_META.GetTextSize = LABEL_PANEL_META.GetContentSize
 
 	function LABEL_PANEL_META:SetFontInternal(font)
 		self:SetFontByName(font)
@@ -500,8 +509,25 @@ else
 		self:SetFontByName(font)
 	end
 
-	function TEXT_ENTRY_PANEL_META:GetFont()
-		return self:GetFontName()
+    function TEXT_ENTRY_PANEL_META:GetFont()
+        return self:GetFontName()
+    end
+
+    local CHECK_BUTTON_PANEL_META = FindMetaTable("CheckButton")
+    CHECK_BUTTON_PANEL_META.GetValue = CHECK_BUTTON_PANEL_META.IsSelected
+
+    function PANEL_META:GetValue()
+        local className = self:GetClassName()
+
+        if (className == "LCheckButton") then
+            return CHECK_BUTTON_PANEL_META.GetValue(self)
+        elseif (className == "LTextEntry") then
+            return TEXT_ENTRY_PANEL_META.GetValue(self)
+        elseif (className == "LLabel") then
+            return LABEL_PANEL_META.GetValue(self)
+        end
+
+		error("attempt to get value of unsupported panel class \"" .. tostring(className) .. "\"", 2)
 	end
 
 	-- Maps cursor strings to cursor codes.
@@ -817,7 +843,7 @@ if (CLIENT) then
 	Include("derma/init.lua")
 	Include("vgui_base.lua")
 
-	Include("skins/default.lua")
+    Include("skins/default.lua")
 end
 
 --[[

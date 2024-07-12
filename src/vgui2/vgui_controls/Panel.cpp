@@ -3777,6 +3777,16 @@ bool Panel::IsBuildModeActive()
 //-----------------------------------------------------------------------------
 void Panel::GetClipRect( int &x0, int &y0, int &x1, int &y1 )
 {
+#ifdef LUA_SDK
+    if ( !m_bIsPaintClipping )
+    {
+        // If we're not clipping, then return the entire screen
+        x0 = 0;
+        y0 = 0;
+        surface()->GetScreenSize(x1, y1);
+        return;
+    }
+#endif
     ipanel()->GetClipRect( GetVPanel(), x0, y0, x1, y1 );
 }
 
