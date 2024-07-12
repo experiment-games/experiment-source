@@ -154,16 +154,16 @@
     }                                                  \
     else lua_pop( L, 1 );
 
-#define BEGIN_LUA_CALL_PANEL_METHOD( functionName )                        \
-    if ( m_lua_State && m_nTableReference >= 0 && m_bMarkedAsInitialized ) \
-    {                                                                      \
-        lua_getref( m_lua_State, m_nTableReference );                      \
-        lua_getfield( m_lua_State, -1, functionName );                     \
-        lua_remove( m_lua_State, -2 );                                     \
-        if ( lua_isfunction( m_lua_State, -1 ) )                           \
-        {                                                                  \
-            int args = 0;                                                  \
-            this->PushPanelToLua( m_lua_State );                           \
+#define BEGIN_LUA_CALL_PANEL_METHOD( functionName )                                    \
+    if ( m_lua_State && m_nTableReference >= 0 && IsFunctionPrepared( functionName ) ) \
+    {                                                                                  \
+        lua_getref( m_lua_State, m_nTableReference );                                  \
+        lua_getfield( m_lua_State, -1, functionName );                                 \
+        lua_remove( m_lua_State, -2 );                                                 \
+        if ( lua_isfunction( m_lua_State, -1 ) )                                       \
+        {                                                                              \
+            int args = 0;                                                              \
+            this->PushPanelToLua( m_lua_State );                                       \
             ++args;
 
 #define END_LUA_CALL_PANEL_METHOD( nArgs, nresults ) \
@@ -187,18 +187,18 @@
             lua_pop( L, 1 );                               \
     }
 
-#define RETURN_LUA_PANEL_NONE()                                                    \
-    if ( m_lua_State && lua_gettop( m_lua_State ) == 1 && m_bMarkedAsInitialized ) \
-    {                                                                              \
-        if ( lua_isboolean( m_lua_State, -1 ) )                                    \
-        {                                                                          \
-            bool res = ( bool )luaL_checkboolean( m_lua_State, -1 );               \
-            lua_pop( m_lua_State, 1 );                                             \
-            if ( !res )                                                            \
-                return;                                                            \
-        }                                                                          \
-        else                                                                       \
-            lua_pop( m_lua_State, 1 );                                             \
+#define RETURN_LUA_PANEL_NONE()                                      \
+    if ( m_lua_State && lua_gettop( m_lua_State ) == 1 )             \
+    {                                                                \
+        if ( lua_isboolean( m_lua_State, -1 ) )                      \
+        {                                                            \
+            bool res = ( bool )luaL_checkboolean( m_lua_State, -1 ); \
+            lua_pop( m_lua_State, 1 );                               \
+            if ( !res )                                              \
+                return;                                              \
+        }                                                            \
+        else                                                         \
+            lua_pop( m_lua_State, 1 );                               \
     }
 
 #define RETURN_LUA_BOOLEAN()                               \
@@ -214,17 +214,17 @@
             lua_pop( L, 1 );                               \
     }
 
-#define RETURN_LUA_PANEL_BOOLEAN()                                                 \
-    if ( m_lua_State && lua_gettop( m_lua_State ) == 1 && m_bMarkedAsInitialized ) \
-    {                                                                              \
-        if ( lua_isboolean( m_lua_State, -1 ) )                                    \
-        {                                                                          \
-            bool res = ( bool )luaL_checkboolean( m_lua_State, -1 );               \
-            lua_pop( m_lua_State, 1 );                                             \
-            return res;                                                            \
-        }                                                                          \
-        else                                                                       \
-            lua_pop( m_lua_State, 1 );                                             \
+#define RETURN_LUA_PANEL_BOOLEAN()                                   \
+    if ( m_lua_State && lua_gettop( m_lua_State ) == 1 )             \
+    {                                                                \
+        if ( lua_isboolean( m_lua_State, -1 ) )                      \
+        {                                                            \
+            bool res = ( bool )luaL_checkboolean( m_lua_State, -1 ); \
+            lua_pop( m_lua_State, 1 );                               \
+            return res;                                              \
+        }                                                            \
+        else                                                         \
+            lua_pop( m_lua_State, 1 );                               \
     }
 
 #define RETURN_LUA_NUMBER()                        \
@@ -457,7 +457,6 @@ extern CScriptedClientLuaPanel *g_pClientLuaPanel;
 #endif
 
 extern lua_State *L;
-
 
 // Set to true between LevelInit and LevelShutdown.
 extern bool g_bLuaInitialized;

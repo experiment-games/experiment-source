@@ -378,6 +378,25 @@ else
         return Surface.FindMaterial(name)
     end
 
+	-- Returns whether the currently focused panel is a child of the given one.
+	function vgui.FocusedHasParent(panel)
+		local focusedPanel = Input.GetFocus()
+
+		if (not IsValid(focusedPanel)) then
+			return false
+		end
+
+		while (IsValid(focusedPanel)) do
+			if (focusedPanel == panel) then
+				return true
+			end
+
+			focusedPanel = focusedPanel:GetParent()
+		end
+
+		return false
+	end
+
     gui = {
         MouseX = function()
             local x, y = input.GetCursorPosition()
@@ -422,29 +441,6 @@ else
 		end
 
 		return parent
-	end
-
-	function PANEL_META:Prepare()
-		-- Installs Lua defined functions into the panel.
-		-- TODO: What does that mean? That all functions are only here stored into the C panel?
-
-		-- ! HACK! This is a workaround for the following problem:
-		-- ! 1. We Gui.Create("SubPanel") which is based on "ParentPanel"
-		-- ! 2. Gui.Create will :Init() and :MarkAsInitialized() the parent panel
-		-- ! 3. Gui.Create will merge the parent panel's functions with the child panel
-		-- ! 4. If the child panel does something to trigger panel hooks inside :Init() those
-		-- ! 	will be called.
-		-- ! 	This can cause issues because the child panel may not be fully initialized yet
-		-- ! 	(e.g: another child panel may not have been setup yet inside :Init())
-		-- TODO: Fix this weird hack
-		local _self = self
-		timer.Simple(0, function()
-			if (not IsValid(_self)) then
-				return
-			end
-			_self:MarkAsInitialized()
-			_self:InvalidateLayout(true)
-		end)
 	end
 
 	function PANEL_META:SetWorldClicker(isEnabled)

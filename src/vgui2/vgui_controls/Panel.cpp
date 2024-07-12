@@ -717,6 +717,37 @@ void Panel::SetupRefTable( lua_State *L )
     lua_setfield( L, -2, "tall" );
     m_nTableReference = luaL_ref( L, LUA_REGISTRYINDEX );
 }
+
+//-----------------------------------------------------------------------------
+// Purpose: Checks whether a function on the panel has been marked as prepared
+//-----------------------------------------------------------------------------
+bool Panel::IsFunctionPrepared( const char *functionName )
+{
+    return m_PreparedFunctions.Find( functionName ) != m_PreparedFunctions.InvalidIndex();
+}
+
+//-----------------------------------------------------------------------------
+// Purpose: For all functions in the table reference, add them to the prepared
+//      functions list if they are not already there.
+//-----------------------------------------------------------------------------
+void Panel::UpdatePreparedFunctions()
+{
+    lua_rawgeti( m_lua_State, LUA_REGISTRYINDEX, m_nTableReference );
+    lua_pushnil( m_lua_State );
+    while ( lua_next( m_lua_State, -2 ) != 0 )
+    {
+        if ( lua_isfunction( m_lua_State, -1 ) )
+        {
+            const char *functionName = lua_tostring( m_lua_State, -2 );
+            if ( !IsFunctionPrepared( functionName ) )
+            {
+                m_PreparedFunctions.Insert( functionName, 0 );
+            }
+        }
+        lua_pop( m_lua_State, 1 );
+    }
+    lua_pop( m_lua_State, 1 );
+}
 #endif
 
 //-----------------------------------------------------------------------------
@@ -4105,7 +4136,7 @@ void Panel::PerformLayout()
     END_LUA_CALL_PANEL_METHOD( 2, 0 );
 
     // Hack so we can implement Docking in Lua (see game/experiment/lua/includes/extensions/panel.lua)
-    if ( m_lua_State && m_nTableReference >= 0 && m_bMarkedAsInitialized )
+    if ( m_lua_State && m_nTableReference >= 0 && IsFunctionPrepared( "PerformLayout" ) )
     {
         BEGIN_LUA_CALL_HOOK_FOR_STATE( m_lua_State, "OnPanelPerformLayout" );
         this->PushPanelToLua( m_lua_State );

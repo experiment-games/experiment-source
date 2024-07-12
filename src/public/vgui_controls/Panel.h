@@ -31,6 +31,7 @@
 
 #ifdef LUA_SDK
 #include "lua.hpp"
+#include "utldict.h"
 #endif
 
 // undefine windows function macros that overlap
@@ -169,21 +170,13 @@ class Panel : public IClientPanel, virtual IForceVirtualInheritancePanel
     Panel( Panel *parent, const char *panelName, lua_State *L );
     virtual void PushPanelToLua( lua_State *L );
     virtual void SetupRefTable( lua_State *L );
+    virtual bool IsFunctionPrepared( const char *functionName );
+    virtual void UpdatePreparedFunctions();
 
     lua_State *m_lua_State = nullptr;
     int m_nTableReference;
     int m_nRefCount;
-    bool m_bMarkedAsInitialized = false;
-
-    void MarkAsInitialized()
-    {
-        m_bMarkedAsInitialized = true;
-    }
-
-    bool IsMarkedAsInitialized()
-    {
-        return m_bMarkedAsInitialized;
-    }
+    CUtlDict<int, int> m_PreparedFunctions;
 #endif
 
     // returns pointer to Panel's vgui VPanel interface handle

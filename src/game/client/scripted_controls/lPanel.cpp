@@ -626,12 +626,6 @@ static int Panel_IsLayoutInvalid( lua_State *L )
     return 1;
 }
 
-static int Panel_IsMarkedAsInitialized( lua_State *L )
-{
-    lua_pushboolean( L, luaL_checkpanel( L, 1 )->IsMarkedAsInitialized() );
-    return 1;
-}
-
 static int Panel_IsMarkedForDeletion( lua_State *L )
 {
     lua_pushboolean( L, luaL_checkpanel( L, 1 )->IsMarkedForDeletion() );
@@ -748,8 +742,13 @@ static int Panel_LocalToScreen( lua_State *L )
 
 static int Panel_MakePopup( lua_State *L )
 {
-    luaL_checkpanel( L, 1 )->MakePopup( luaL_optboolean( L, 2, 1 ),
-                                        luaL_optboolean( L, 3, 0 ) );
+    lua_Panel *pPanel = luaL_checkpanel( L, 1 );
+
+    pPanel->SetKeyBoardInputEnabled( true );
+    pPanel->SetMouseInputEnabled( true );
+    pPanel->MakePopup( luaL_optboolean( L, 2, 1 ), luaL_optboolean( L, 3, 0 ) );
+    pPanel->MoveToFront();
+    pPanel->RequestFocus();
     return 0;
 }
 
@@ -762,14 +761,6 @@ static int Panel_MakeReadyForUse( lua_State *L )
 static int Panel_MarkForDeletion( lua_State *L )
 {
     luaL_checkpanel( L, 1 )->MarkForDeletion();
-    return 0;
-}
-
-// Used by gui.lua to mark that hooks can start being called
-static int Panel_MarkAsInitialized( lua_State *L )
-{
-    lua_Panel *pPanel = luaL_checkpanel( L, 1 );
-    pPanel->MarkAsInitialized();
     return 0;
 }
 
@@ -955,6 +946,12 @@ static int Panel_ParentLocalToScreen( lua_State *L )
 static int Panel_PerformLayout( lua_State *L )
 {
     luaL_checkpanel( L, 1 )->PerformLayout();
+    return 0;
+}
+
+static int Panel_Prepare( lua_State *L )
+{
+    luaL_checkpanel( L, 1 )->UpdatePreparedFunctions();
     return 0;
 }
 
@@ -1459,7 +1456,6 @@ static const luaL_Reg Panelmeta[] = {
     { "IsKeyBoardInputEnabled", Panel_IsKeyBoardInputEnabled },
     { "IsKeyOverridden", Panel_IsKeyOverridden },
     { "IsKeyRebound", Panel_IsKeyRebound },
-    { "IsMarkedAsInitialized", Panel_IsMarkedAsInitialized },
     { "IsMarkedForDeletion", Panel_IsMarkedForDeletion },
     { "IsLayoutInvalid", Panel_IsLayoutInvalid },
     { "IsMouseInputDisabledForThisPanel",
@@ -1483,7 +1479,6 @@ static const luaL_Reg Panelmeta[] = {
     { "MakePopup", Panel_MakePopup },
     { "MakeReadyForUse", Panel_MakeReadyForUse },
     { "MarkForDeletion", Panel_MarkForDeletion },
-    { "MarkAsInitialized", Panel_MarkAsInitialized },
     { "MoveToBack", Panel_MoveToBack },
     { "MoveToFront", Panel_MoveToFront },
     { "OnCommand", Panel_OnCommand },
@@ -1514,6 +1509,7 @@ static const luaL_Reg Panelmeta[] = {
     { "PaintBuildOverlay", Panel_PaintBuildOverlay },
     { "ParentLocalToScreen", Panel_ParentLocalToScreen },
     { "PerformLayout", Panel_PerformLayout },
+    { "Prepare", Panel_Prepare },
     { "PostChildPaint", Panel_PostChildPaint },
     { "ReloadKeyBindings", Panel_ReloadKeyBindings },
     { "RemoveActionSignalTarget", Panel_RemoveActionSignalTarget },
