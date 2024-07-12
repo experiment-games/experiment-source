@@ -435,6 +435,12 @@ static int Panel_GetVPanel( lua_State *L )
     return 1;
 }
 
+static int Panel_GetVPanelAsInteger( lua_State *L )
+{
+    lua_pushinteger( L, luaL_checkpanel( L, 1 )->GetVPanel() );
+    return 1;
+}
+
 static int Panel_GetVParent( lua_State *L )
 {
     lua_pushpanel( L, luaL_checkpanel( L, 1 )->GetVParent() );
@@ -617,6 +623,12 @@ static int Panel_IsKeyRebound( lua_State *L )
 static int Panel_IsLayoutInvalid( lua_State *L )
 {
     lua_pushboolean( L, luaL_checkpanel( L, 1 )->IsLayoutInvalid() );
+    return 1;
+}
+
+static int Panel_IsMarkedAsInitialized( lua_State *L )
+{
+    lua_pushboolean( L, luaL_checkpanel( L, 1 )->IsMarkedAsInitialized() );
     return 1;
 }
 
@@ -1418,6 +1430,7 @@ static const luaL_Reg Panelmeta[] = {
     { "GetTabPosition", Panel_GetTabPosition },
     { "GetTall", Panel_GetTall },
     { "GetVPanel", Panel_GetVPanel },
+    { "GetVPanelAsInteger", Panel_GetVPanelAsInteger },
     { "GetVParent", Panel_GetVParent },
     { "GetWide", Panel_GetWide },
     { "GetZPos", Panel_GetZPos },
@@ -1446,6 +1459,7 @@ static const luaL_Reg Panelmeta[] = {
     { "IsKeyBoardInputEnabled", Panel_IsKeyBoardInputEnabled },
     { "IsKeyOverridden", Panel_IsKeyOverridden },
     { "IsKeyRebound", Panel_IsKeyRebound },
+    { "IsMarkedAsInitialized", Panel_IsMarkedAsInitialized },
     { "IsMarkedForDeletion", Panel_IsMarkedForDeletion },
     { "IsLayoutInvalid", Panel_IsLayoutInvalid },
     { "IsMouseInputDisabledForThisPanel",

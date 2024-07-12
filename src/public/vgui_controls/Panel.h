@@ -179,6 +179,11 @@ class Panel : public IClientPanel, virtual IForceVirtualInheritancePanel
     {
         m_bMarkedAsInitialized = true;
     }
+
+    bool IsMarkedAsInitialized()
+    {
+        return m_bMarkedAsInitialized;
+    }
 #endif
 
     // returns pointer to Panel's vgui VPanel interface handle
