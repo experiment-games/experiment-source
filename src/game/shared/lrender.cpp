@@ -92,6 +92,7 @@ static int render_CreateRenderTargetTextureEx( lua_State *L )
     int renderTargetFlags = luaL_optint( L, 7, 0 );
     int imageFormat = luaL_optint( L, 8, IMAGE_FORMAT_RGBA8888 );
 
+    g_pMaterialSystem->OverrideRenderTargetAllocation( true );
     ITexture *pTexture = materials->CreateNamedRenderTargetTextureEx(
         name,
         width,
@@ -101,6 +102,7 @@ static int render_CreateRenderTargetTextureEx( lua_State *L )
         ( MaterialRenderTargetDepth_t )depthMode,
         textureFlags,
         renderTargetFlags );
+    g_pMaterialSystem->OverrideRenderTargetAllocation( false );
     lua_pushitexture( L, pTexture );
     return 1;
 }
