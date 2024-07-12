@@ -106,6 +106,7 @@ VMatrix = Matrix
 RealFrameTime = Globals.AbsoluteFrameTime
 CurTime = Globals.CurrentTime
 SysTime = Globals.SystemTime
+VGUIFrameTime = Globals.SystemTime
 RealTime = Globals.RealTime
 FrameNumber = Globals.FrameCount
 FrameTime = Globals.FrameTime

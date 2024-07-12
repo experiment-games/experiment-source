@@ -89,7 +89,6 @@ function MakeTestPanel()
     testPanel:SetSize(512, 512)
 	testPanel:Center()
     testPanel:MakePopup()
-	print(testPanel:IsActive())
 
 	-- TODO: But here we can click the sheets :/ (see above)
 	local sheet = vgui.Create( "DPropertySheet", testPanel )

@@ -1343,7 +1343,27 @@ void Panel::PaintTraverse( bool repaint, bool allowForce )
         if ( _flags.IsFlagSet( PAINT_ENABLED ) )
         {
             surface()->PushMakeCurrent( vpanel, true );
+#ifdef LUA_SDK
+            BEGIN_LUA_CALL_PANEL_METHOD( "Paint" );
+            lua_pushinteger( m_lua_State, GetWide() );
+            lua_pushinteger( m_lua_State, GetTall() );
+            END_LUA_CALL_PANEL_METHOD( 2, 1 );
+
+            bool paintOverride = false;
+
+            if ( m_lua_State && m_nTableReference >= 0 && IsFunctionPrepared( "Paint" ) )
+            {
+                paintOverride = lua_isboolean( m_lua_State, -1 ) && lua_toboolean( m_lua_State, -1 );
+                lua_pop( m_lua_State, 1 );
+            }
+
+            if ( !paintOverride )
+            {
+#endif
             Paint();
+#ifdef LUA_SDK
+            }
+#endif
             surface()->PopMakeCurrent( vpanel );
         }
     }
@@ -1416,6 +1436,15 @@ void Panel::PaintTraverse( bool repaint, bool allowForce )
             PostChildPaint();
             surface()->PopMakeCurrent( vpanel );
         }
+
+#ifdef LUA_SDK
+        surface()->PushMakeCurrent( vpanel, false );
+        BEGIN_LUA_CALL_PANEL_METHOD( "PaintOver" );
+        lua_pushinteger( m_lua_State, GetWide() );
+        lua_pushinteger( m_lua_State, GetTall() );
+        END_LUA_CALL_PANEL_METHOD( 2, 0 );
+        surface()->PopMakeCurrent( vpanel );
+#endif
     }
 
     surface()->DrawSetAlphaMultiplier( oldAlphaMultiplier );
@@ -1499,10 +1528,6 @@ void Panel::PaintBackground()
         }
     }
 
-#ifdef LUA_SDK
-    BEGIN_LUA_CALL_PANEL_METHOD( "PaintBackground" );
-    END_LUA_CALL_PANEL_METHOD( 0, 0 );
-#endif
 }
 
 //-----------------------------------------------------------------------------
@@ -1512,13 +1537,6 @@ void Panel::Paint()
 {
     // empty on purpose
     // PaintBackground is painted and default behavior is for Paint to do nothing
-
-#ifdef LUA_SDK  // Except for Lua
-    BEGIN_LUA_CALL_PANEL_METHOD( "Paint" );
-    lua_pushinteger( m_lua_State, GetWide() );
-    lua_pushinteger( m_lua_State, GetTall() );
-    END_LUA_CALL_PANEL_METHOD( 2, 0 );
-#endif
 }
 
 //-----------------------------------------------------------------------------
@@ -3112,7 +3130,7 @@ void Panel::InternalSetCursor()
 void Panel::OnThink()
 {
 #ifdef LUA_SDK
-    BEGIN_LUA_CALL_PANEL_METHOD( "OnThink" );
+    BEGIN_LUA_CALL_PANEL_METHOD( "Think" );
     END_LUA_CALL_PANEL_METHOD( 0, 0 );
 #else
 #if defined( VGUI_USEDRAGDROP )
