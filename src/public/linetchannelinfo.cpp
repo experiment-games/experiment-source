@@ -44,6 +44,8 @@ LUA_API void lua_pushnetchannel( lua_State *L, INetChannelInfo *netchannel )
 LUALIB_API lua_INetChannelInfo *luaL_checknetchannel( lua_State *L, int narg )
 {
     lua_INetChannelInfo *d = *( lua_INetChannelInfo ** )luaL_checkudata( L, narg, "INetChannelInfo" );
+    if ( d == NULL ) /* avoid extra test when d is not 0 */
+        luaL_argerror( L, narg, "INetChannelInfo expected, got NULL" );
     return d;
 }
 

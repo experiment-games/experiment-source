@@ -1645,7 +1645,14 @@ void Panel::SetParent( VPANEL newParent )
     {
         SetProportional( ipanel()->IsProportional( GetVParent() ) );
 
-        // most of the time KBInput == parents kbinput
+        // Experiment;  the following logic is disabled as it caused an issue when MakePopup is
+        //              called on a panel which already has children created in :Init()
+        //              The children would get SetParent here and IsPopup would be false after
+        //              which the code below recursively copies the parent's keyboard and mouse
+        //              input settings to all children.
+        //              When MakePopup is called, for some reason the children are not focusable
+        //              :/ There might be an easier fix, but I couldn't find it.
+        /*// most of the time KBInput == parents kbinput
         if ( ipanel()->IsKeyBoardInputEnabled( GetVParent() ) != IsKeyBoardInputEnabled() )
         {
             SetKeyBoardInputEnabled( ipanel()->IsKeyBoardInputEnabled( GetVParent() ) );
@@ -1654,7 +1661,7 @@ void Panel::SetParent( VPANEL newParent )
         if ( ipanel()->IsMouseInputEnabled( GetVParent() ) != IsMouseInputEnabled() )
         {
             SetMouseInputEnabled( ipanel()->IsMouseInputEnabled( GetVParent() ) );
-        }
+        }*/
     }
 
     UpdateSiblingPin();

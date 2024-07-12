@@ -495,6 +495,10 @@ LUALIB_API lua_IPhysicsObject *luaL_checkphysicsobject( lua_State *L, int narg )
 LUALIB_API lua_IPhysicsSurfaceProps *luaL_checkphysicssurfaceprops( lua_State *L, int narg )
 {
     lua_IPhysicsSurfaceProps **d = ( lua_IPhysicsSurfaceProps ** )luaL_checkudata( L, narg, "IPhysicsSurfaceProps" );
+
+    if ( *d == 0 ) /* avoid extra test when d is not 0 */
+        luaL_argerror( L, narg, "IPhysicsSurfaceProps expected, got NULL" );
+
     return *d;
 }
 

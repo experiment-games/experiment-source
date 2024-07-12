@@ -58,12 +58,18 @@ LUA_API void lua_pushconvar( lua_State *L, lua_ConVar *pConVar )
 LUALIB_API lua_ConCommand *luaL_checkconcommand( lua_State *L, int narg )
 {
     lua_ConCommand **d = ( lua_ConCommand ** )luaL_checkudata( L, narg, "ConsoleCommand" );
+
+    if ( *d == 0 ) /* avoid extra test when d is not 0 */
+        luaL_argerror( L, narg, "ConsoleCommand expected, got NULL" );
+
     return *d;
 }
 
 LUALIB_API lua_ConVar *luaL_checkconvar( lua_State *L, int narg )
 {
     lua_ConVar **d = ( lua_ConVar ** )luaL_checkudata( L, narg, LUA_CONVARLIBNAME );
+    if ( *d == NULL ) /* avoid extra test when d is not 0 */
+        luaL_argerror( L, narg, "ConVar expected, got NULL" );
     return *d;
 }
 

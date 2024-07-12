@@ -37,8 +37,12 @@ LUA_API void lua_pushstringtable( lua_State *L, lua_INetworkStringTable *pNetwor
 
 LUALIB_API lua_INetworkStringTable *luaL_checkstringtable( lua_State *L, int narg )
 {
-    lua_INetworkStringTable **d = ( lua_INetworkStringTable ** )luaL_checkudata( L, narg, "INetworkStringTable" );
-    return *d;
+    lua_INetworkStringTable **ppData = ( lua_INetworkStringTable ** )luaL_checkudata( L, narg, "INetworkStringTable" );
+
+    if ( *ppData == 0 ) /* avoid extra test when d is not 0 */
+        luaL_argerror( L, narg, "INetworkStringTable expected, got NULL" );
+
+    return *ppData;
 }
 
 static int INetworkStringTable_AddString( lua_State *L )

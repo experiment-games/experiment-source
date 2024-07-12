@@ -38,6 +38,10 @@ LUA_API void lua_pushsteamfriends( lua_State *L, ISteamFriends *pSteamFriends )
 LUALIB_API lua_ISteamFriends *luaL_checksteamfriends( lua_State *L, int narg )
 {
     lua_ISteamFriends *d = ( lua_ISteamFriends * )luaL_checkudata( L, narg, LUA_STEAMFRIENDSLIBNAME );
+
+    if ( d == 0 ) /* avoid extra test when d is not 0 */
+        luaL_argerror( L, narg, "ISteamFriends expected, got NULL" );
+
     return d;
 }
 

@@ -42,7 +42,7 @@ LUALIB_API lua_KeyValues *luaL_checkkeyvalues( lua_State *L, int narg )
 {
     lua_KeyValues **d = ( lua_KeyValues ** )luaL_checkudata( L, narg, "KeyValues" );
     if ( *d == 0 ) /* avoid extra test when d is not 0 */
-        luaL_argerror( L, narg, "KeyValues expected, got NULL keyvalues" );
+        luaL_argerror( L, narg, "KeyValues expected, got NULL" );
     return *d;
 }
 

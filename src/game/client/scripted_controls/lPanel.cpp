@@ -733,7 +733,8 @@ static int Panel_KeyCodeToString( lua_State *L )
 
 static int Panel_LocalToScreen( lua_State *L )
 {
-    int x, y;
+    int x = luaL_checkint( L, 2 );
+    int y = luaL_checkint( L, 3 );
     luaL_checkpanel( L, 1 )->LocalToScreen( x, y );
     lua_pushinteger( L, x );
     lua_pushinteger( L, y );
@@ -745,9 +746,7 @@ static int Panel_MakePopup( lua_State *L )
     lua_Panel *pPanel = luaL_checkpanel( L, 1 );
 
     pPanel->MakePopup( false, false );
-    pPanel->SetKeyBoardInputEnabled( true );
-    pPanel->SetMouseInputEnabled( true );
-    pPanel->MoveToFront();
+
     return 0;
 }
 

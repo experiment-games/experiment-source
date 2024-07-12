@@ -1,7 +1,6 @@
 include("shared.lua")
 
 GM.TestAsd2 = Material("gmod_compatibility_content/gwenskin/gmoddefault.png")
-DEFINE_BASECLASS("gamemode_base")
 
 GM.TestAsd = Material("gmod_compatibility_content/gwenskin/gmoddefault.png")
 print(GM.TestAsd, GM.TestAsd2)
@@ -47,59 +46,46 @@ for _, file in ipairs(files) do
 	mats[file] = mat
 end
 
+DEFINE_BASECLASS("gamemode_base")
 function GM:Initialize()
     BaseClass.Initialize(self)
 end
 
---[[
-		Testing if Gui panel inheritance works as expected
---]]
-local PANEL = {}
-function PANEL:Init()
-	print(self, getmetatable(self), self.GetText, self.SetText, "DCustomLabel")
-end
-derma.DefineControl("DCustomLabel", "", PANEL, "Label")
-local PANEL = {}
-function PANEL:Init()
-	print(self, getmetatable(self), self.GetText, self.SetText, "DCustomLabelChild")
-end
-derma.DefineControl("DCustomLabelChild", "", PANEL, "DCustomLabel")
-
 local PANEL = {}
 
-function PANEL:Init()
-	-- TODO: Why cant we click the sheets when initializing here? (see below)
-	-- local sheet = vgui.Create( "DPropertySheet", self )
-	-- sheet:Dock( FILL )
+local forAllChildren
+forAllChildren = function(panels, func, recursive)
+    if not istable(panels) then
+        panels = { panels }
+    end
 
-	-- local panel1 = vgui.Create( "DPanel", sheet )
-	-- panel1.Paint = function( self, w, h ) draw.RoundedBox( 4, 0, 0, w, h, Color( 0, 128, 255, self:GetAlpha() ) ) end
-	-- sheet:AddSheet( "test", panel1, "icon16/cross.png" )
+	for _, panel in pairs(panels) do
+		for _, child in pairs(panel:GetChildren()) do
+            func(child)
 
-	-- local panel2 = vgui.Create( "DPanel", sheet )
-	-- panel2.Paint = function( self, w, h ) draw.RoundedBox( 4, 0, 0, w, h, Color( 255, 128, 0, self:GetAlpha() ) ) end
-	-- sheet:AddSheet( "test 2", panel2, "icon16/tick.png" )
+			if recursive then
+				forAllChildren(child, func, recursive)
+			end
+		end
+	end
 end
 
-derma.DefineControl("TestPanel", "", PANEL, "DFrame")
+DEFINE_BASECLASS("DFrame")
+function PANEL:Init()
+    -- TODO: Why cant we click the sheets when MakePopup happens after init?
+	if (self.WithTestEarlyMakePopup) then
+        self:MakePopup() -- This the sheets clickable, wut :/
+		print("MakePopup called early")
+	end
+    local sheet = vgui.Create("DPropertySheet", self)
+    sheet:Dock(FILL)
 
--- lua_run_cl MakeTestPanel()
-function MakeTestPanel()
-	local testPanel = vgui.Create("TestPanel")
-    testPanel:SetSize(512, 512)
-	testPanel:Center()
-    testPanel:MakePopup()
+    local panel1 = vgui.Create("DPanel", sheet)
+    panel1.Paint = function(self, w, h) draw.RoundedBox(4, 0, 0, w, h, Color(0, 128, 255, self:GetAlpha())) end
+    sheet:AddSheet("test", panel1, "icon16/cross.png")
 
-	-- TODO: But here we can click the sheets :/ (see above)
-	local sheet = vgui.Create( "DPropertySheet", testPanel )
-	sheet:Dock( FILL )
-
-	local panel1 = vgui.Create( "DPanel", sheet )
-	panel1.Paint = function( self, w, h ) draw.RoundedBox( 4, 0, 0, w, h, Color( 0, 128, 255, self:GetAlpha() ) ) end
-	sheet:AddSheet( "test", panel1, "icon16/cross.png" )
-
-	local panel2 = vgui.Create( "DPanel", sheet )
-	panel2.Paint = function( self, w, h ) draw.RoundedBox( 4, 0, 0, w, h, Color( 255, 128, 0, self:GetAlpha() ) ) end
+    local panel2 = vgui.Create("DPanel", sheet)
+    panel2.Paint = function(self, w, h) draw.RoundedBox(4, 0, 0, w, h, Color(255, 128, 0, self:GetAlpha())) end
     sheet:AddSheet("test 2", panel2, "icon16/tick.png")
 
     -- Add all images as DImage to the first panel
@@ -110,15 +96,55 @@ function MakeTestPanel()
         img:SetPos(0, 16 * #panel1:GetChildren())
 	end
 
+	-- forAllChildren({sheet, panel1, panel2}, function(child)
+	-- 	if (child.ClassName == "DTab") then
+	-- 		print("INIT child", child, child:GetVPanelAsInteger(), child.GetText and child:GetText() or "", "parent:", child:GetParent(), child:GetVParent(), self:IsPopup(), child:IsPopup())
+	-- 	end
+	-- end, true)
+end
+
+function PANEL:PerformLayout(w, h)
+	BaseClass.PerformLayout(self, w, h)
+    -- -- Print all children
+	-- print(self, self:GetVPanelAsInteger())
+	-- forAllChildren(self, function(child)
+	-- 	if (child.ClassName == "DTab") then
+	-- 		-- child:SetKeyboardInputEnabled(true)
+    --         -- child:SetMouseInputEnabled(true)
+    --         -- child:MoveToFront()
+	-- 		-- timer.Simple(0, function()
+	-- 		-- child:SetParent(self)
+	-- 		-- end)
+	-- 		print(child, child:GetVPanelAsInteger(), child.GetText and child:GetText() or "", "parent:", child:GetParent(), child:GetVParent(), self:IsPopup(), child:IsPopup())
+	-- 	end
+	-- 	-- print(child.ClassName)
+	-- 	-- child:SetEnabled(true)
+    -- end, true)
+end
+
+local PANEL2 = table.Copy(PANEL)
+PANEL2.WithTestEarlyMakePopup = true
+derma.DefineControl("TestPanel", "", PANEL, "DFrame")
+derma.DefineControl("TestPanel2", "", PANEL2, "DFrame")
+
+-- lua_run_cl MakeTestPanel()
+function MakeTestPanel(title)
+	local testPanel = vgui.Create("TestPanel")
+	testPanel:SetTitle(title)
+    testPanel:SetSize(512, 512)
+	testPanel:Center()
+
 	return testPanel
 end
 
 ConsoleCommands.Add("+buildmenu", function(client, pCmd, args)
-	MakeTestPanel()
+	local testPanel = vgui.Create("TestPanel2")
+	testPanel:SetTitle("TestPanel2 WithTestEarlyMakePopup")
+    testPanel:SetSize(512, 512)
+	testPanel:Center()
 end)
 
 ConsoleCommands.Add("-buildmenu", function(client, pCmd, args)
 end)
-TEST_PANEL = MakeTestPanel()
-TEST_PANEL2 = MakeTestPanel()
-TEST_PANEL2:SetPos(512, 0)
+TEST_PANEL = MakeTestPanel("TestPanel (1)")
+TEST_PANEL:MakePopup()

@@ -41,8 +41,12 @@ LUA_API void lua_pushmovehelper( lua_State *L, lua_IMoveHelper *pHelper )
 
 LUALIB_API lua_IMoveHelper *luaL_checkmovehelper( lua_State *L, int narg )
 {
-    lua_IMoveHelper **d = ( lua_IMoveHelper ** )luaL_checkudata( L, narg, "IMoveHelper" );
-    return *d;
+    lua_IMoveHelper **ppData = ( lua_IMoveHelper ** )luaL_checkudata( L, narg, "IMoveHelper" );
+
+    if ( *ppData == 0 ) /* avoid extra test when d is not 0 */
+        luaL_argerror( L, narg, "IMoveHelper expected, got NULL" );
+
+    return *ppData;
 }
 
 static int IMoveHelper_ResetTouchList( lua_State *L )
