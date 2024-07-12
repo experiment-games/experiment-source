@@ -166,11 +166,17 @@
             this->PushPanelToLua( m_lua_State );                                       \
             ++args;
 
-#define END_LUA_CALL_PANEL_METHOD( nArgs, nresults ) \
-    args += nArgs;                                   \
-    luasrc_pcall( m_lua_State, args, nresults, 0 );  \
-    }                                                \
-    else lua_pop( m_lua_State, 1 );                  \
+#define END_LUA_CALL_PANEL_METHOD( nArgs, nresults )          \
+    args += nArgs;                                            \
+    if ( luasrc_pcall( m_lua_State, args, nresults, 0 ) > 0 ) \
+    {                                                         \
+        for ( int i = 0; i < nresults; i++ )                  \
+        {                                                     \
+            lua_pushnil( m_lua_State );                       \
+        }                                                     \
+    }                                                         \
+    }                                                         \
+    else lua_pop( m_lua_State, 1 );                           \
     }
 
 #define RETURN_LUA_NONE()                                  \

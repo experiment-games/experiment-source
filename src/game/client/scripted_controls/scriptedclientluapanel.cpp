@@ -76,7 +76,3 @@ void CScriptedClientLuaPanel::SetParent(vgui::VPANEL parent)
 	// slammed to be nonproportional
 	EditablePanel::SetProportional( true );
 }
-
-void CScriptedClientLuaPanel::Paint()
-{
-}

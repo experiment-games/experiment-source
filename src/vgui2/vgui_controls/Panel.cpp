@@ -1376,24 +1376,27 @@ void Panel::PaintTraverse( bool repaint, bool allowForce )
         VPANEL child = children[i];
         bool bVisible = ipanel()->IsVisible( child );
 
-        if ( surface()->ShouldPaintChildPanel( child ) )
+        // Experiment;  We've commented these checks, since they prevented popups
+        //              from drawing back to front. Let's hope this doesn't break
+        //              anything else.
+        //if ( surface()->ShouldPaintChildPanel( child ) )
         {
             if ( bVisible )
             {
                 ipanel()->PaintTraverse( child, repaint, allowForce );
             }
         }
-        else
-        {
-            // Invalidate the child panel so that it gets redrawn
-            surface()->Invalidate( child );
+        //else
+        //{
+        //    // Invalidate the child panel so that it gets redrawn
+        //    surface()->Invalidate( child );
 
-            // keep traversing the tree, just don't allow anyone to paint after here
-            if ( bVisible )
-            {
-                ipanel()->PaintTraverse( child, false, false );
-            }
-        }
+        //    // keep traversing the tree, just don't allow anyone to paint after here
+        //    if ( bVisible )
+        //    {
+        //        ipanel()->PaintTraverse( child, false, false );
+        //    }
+        //}
     }
 
     // draw the border last

@@ -744,11 +744,10 @@ static int Panel_MakePopup( lua_State *L )
 {
     lua_Panel *pPanel = luaL_checkpanel( L, 1 );
 
+    pPanel->MakePopup( false, false );
     pPanel->SetKeyBoardInputEnabled( true );
     pPanel->SetMouseInputEnabled( true );
-    pPanel->MakePopup( luaL_optboolean( L, 2, 1 ), luaL_optboolean( L, 3, 0 ) );
     pPanel->MoveToFront();
-    pPanel->RequestFocus();
     return 0;
 }
 
