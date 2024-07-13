@@ -1270,18 +1270,6 @@ static int Panel_SetZPos( lua_State *L )
     return 0;
 }
 
-static int Panel_SizeToContents( lua_State *L )
-{
-    Panel *pPanel = luaL_checkpanel( L, 1 );
-
-    int wide, tall;
-    pPanel->GetChildrenSize( wide, tall );
-
-    pPanel->SetSize( wide, tall );
-
-    return 0;
-}
-
 static int Panel_ShouldHandleInputMessage( lua_State *L )
 {
     lua_pushboolean( L, luaL_checkpanel( L, 1 )->ShouldHandleInputMessage() );
@@ -1588,7 +1576,6 @@ static const luaL_Reg Panelmeta[] = {
     { "SetVisible", Panel_SetVisible },
     { "SetWide", Panel_SetWide },
     { "SetZPos", Panel_SetZPos },
-    { "SizeToContents", Panel_SizeToContents },
     { "ShouldHandleInputMessage", Panel_ShouldHandleInputMessage },
     { "StringToKeyCode", Panel_StringToKeyCode },
     { "__index", Panel___index },

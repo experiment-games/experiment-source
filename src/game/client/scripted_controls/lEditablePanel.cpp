@@ -51,7 +51,7 @@ void LEditablePanel::SetFocusTopLevel( bool state )
 
 /*
 ** The following Modal functions are taken from the Frame vgui
-
+*/
 
 // Purpose: Bring the frame to the front and requests focus, ensures it's not minimized
 void LEditablePanel::Activate()

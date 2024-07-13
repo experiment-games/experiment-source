@@ -71,7 +71,26 @@ end
 local PANEL = _R.Panel
 
 function PANEL:SizeToChildren(sizeWidth, sizeHeight)
-	self._sizeToChildren = {
+    sizeWidth = sizeWidth or false
+    sizeHeight = sizeHeight or false
+
+    local width, height = self:GetChildrenSize()
+	local currentWidth, currentHeight = self:GetSize()
+
+    if (sizeWidth and width ~= currentWidth) then
+        self:SetWide(width)
+    end
+
+	if (sizeHeight and height ~= currentHeight) then
+		self:SetTall(height)
+	end
+end
+
+function PANEL:SizeToContents(sizeWidth, sizeHeight)
+	sizeWidth = sizeWidth or false
+	sizeHeight = sizeHeight or false
+
+	self.__sizeToContents = {
 		width = sizeWidth,
 		height = sizeHeight
 	}
@@ -79,28 +98,11 @@ end
 
 --- We override PerformLayout so we can update docking when the panel is resized.
 Hooks.Add("OnPanelPerformLayout", "OnPanelPerformLayoutInternal", function(panel)
-    if (panel._sizeToChildren and (panel._sizeToChildren.width or panel._sizeToChildren.height)) then
-		local width, height = 0, 0
-
-        for i = 1, panel:GetChildCount() do
-            local child = panel:GetChild(i)
-            local x, y = child:GetPos()
-            local w, h = child:GetSize()
-
-            width = math.max(width, x + w)
-			height = math.max(height, y + h)
-        end
-
-        if (panel._sizeToChildren.width) then
-            panel:SetWide(width)
-        end
-
-        if (panel._sizeToChildren.height) then
-			panel:SetTall(height)
-		end
+    if (panel.__sizeToContents) then
+        panel:SizeToChildren(panel.__sizeToContents.width, panel.__sizeToContents.height)
     end
 
-    if (panel._dockType ~= DOCK_TYPE.NONE) then
+    if (panel.__dockType ~= DOCK_TYPE.NONE) then
         panel:UpdateDockingParent()
         panel:UpdateDocking()
 	end
@@ -130,10 +132,10 @@ end
 --- @param right number
 --- @param bottom number
 function PANEL:SetDockMargin(left, top, right, bottom)
-    self._dockMarginLeft = left or 0
-    self._dockMarginTop = top or 0
-    self._dockMarginRight = right or 0
-    self._dockMarginBottom = bottom or 0
+    self.__dockMarginLeft = left or 0
+    self.__dockMarginTop = top or 0
+    self.__dockMarginRight = right or 0
+    self.__dockMarginBottom = bottom or 0
 
 	-- self:UpdateDockingParent()
 end
@@ -141,7 +143,7 @@ end
 --- Get the dock margins for the panel.
 --- @return number, number, number, number
 function PANEL:GetDockMargin()
-    return self._dockMarginLeft or 0, self._dockMarginTop or 0, self._dockMarginRight or 0, self._dockMarginBottom or 0
+    return self.__dockMarginLeft or 0, self.__dockMarginTop or 0, self.__dockMarginRight or 0, self.__dockMarginBottom or 0
 end
 
 --- Set the dock padding for the panel.
@@ -150,10 +152,10 @@ end
 --- @param right number
 --- @param bottom number
 function PANEL:SetDockPadding(left, top, right, bottom)
-    self._dockPaddingLeft = left or 0
-    self._dockPaddingTop = top or 0
-    self._dockPaddingRight = right or 0
-    self._dockPaddingBottom = bottom or 0
+    self.__dockPaddingLeft = left or 0
+    self.__dockPaddingTop = top or 0
+    self.__dockPaddingRight = right or 0
+    self.__dockPaddingBottom = bottom or 0
 
 	-- self:UpdateDockingParent()
 end
@@ -161,13 +163,13 @@ end
 --- Get the dock padding for the panel.
 --- @return number, number, number, number
 function PANEL:GetDockPadding()
-	return self._dockPaddingLeft or 0, self._dockPaddingTop or 0, self._dockPaddingRight or 0, self._dockPaddingBottom or 0
+	return self.__dockPaddingLeft or 0, self.__dockPaddingTop or 0, self.__dockPaddingRight or 0, self.__dockPaddingBottom or 0
 end
 
 --- Set the dock type for the panel.
 --- @param dockType DOCK_TYPE
 function PANEL:SetDock(dockType)
-    self._dockType = dockType
+    self.__dockType = dockType
 
 	-- self:UpdateDockingParent()
 end
@@ -175,7 +177,7 @@ end
 --- Get the dock type for the panel.
 --- @return DOCK_TYPE
 function PANEL:GetDock()
-    return self._dockType
+    return self.__dockType
 end
 
 --- Update the docking of the parent panel.
