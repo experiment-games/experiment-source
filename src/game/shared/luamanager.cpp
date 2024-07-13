@@ -129,7 +129,7 @@ std::stack< std::string > fileIncludingStack;
 // Lua system initialized for client or server
 bool g_bLuaInitialized;
 
-static int luasrc_print( lua_State *L )
+LUA_API int luasrc_print( lua_State *L )
 {
     int n = lua_gettop( L ); /* number of arguments */
     int i;
@@ -147,7 +147,7 @@ static int luasrc_print( lua_State *L )
                 LUA_QL( "tostring" ) " must return a string to " LUA_QL( "print" ) );
         if ( i > 1 )
             Msg( "\t" );
-        Msg( s );
+        Msg( "%s", s ); // By providing the string as second parameter, we prevent formatting from user input
         lua_pop( L, 1 ); /* pop result */
     }
     Msg( "\n" );
@@ -1221,19 +1221,6 @@ LUA_API int luasrc_pcall( lua_State *L, int amountOfArguments, int amountOfResul
     }
 
     return iError;
-}
-
-LUA_API void luasrc_print( lua_State *L, int narg )
-{
-    lua_getglobal( L, "tostring" );
-    const char *s;
-    lua_pushvalue( L, -1 );   /* function to be called */
-    lua_pushvalue( L, narg ); /* value to print */
-    lua_call( L, 1, 1 );
-    s = lua_tostring( L, -1 ); /* get result */
-    Msg( " %d:\t%s\n", narg, s );
-    lua_pop( L, 1 ); /* pop result */
-    lua_pop( L, 1 ); /* pop function */
 }
 
 LUA_API void luasrc_dumpstack( lua_State *L )

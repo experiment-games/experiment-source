@@ -21,7 +21,7 @@ static int localization_AddString( lua_State *L )
 {
     const char *token = luaL_checkstring( L, 1 );
     const char *translation = luaL_checkstring( L, 2 );
-    wchar_t translationBuffer[512];
+    wchar_t translationBuffer[4096];
 
     translationBuffer[0] = 0;
     V_UTF8ToUnicode( translation, translationBuffer, sizeof( translationBuffer ) );

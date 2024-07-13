@@ -148,6 +148,28 @@ language = {
 	end,
 }
 
+local basePath = "resource/gmod_compatibility_content/localization/en/"
+local languageFiles = file.Find(basePath .. "*.properties", "GAME")
+
+for _, languageFile in ipairs(languageFiles) do
+	local fileContent = file.Read(basePath .. languageFile, "GAME")
+
+	if (fileContent == nil) then
+		continue
+	end
+
+	for line in fileContent:gmatch("[^\r\n]+") do
+		-- Skip comment lines or empty lines
+		if (line:match("^%s*#") or line:match("^%s*$")) then
+			continue
+		end
+
+		local key, value = line:match("([^=]+)=(.*)")
+
+		language.Add(key, value)
+	end
+end
+
 notification = {
 	AddLegacy = function(text, type, length)
 		print("Notification: " .. text)

@@ -257,35 +257,35 @@ static int filesystem_PrintSearchPaths( lua_State *L )
 
 static int filesystem_Read( lua_State *L )
 {
-    byte *buffer;
-
-    FileHandle_t file;
-    file = luaL_checkfilehandle( L, 2 );
-
+    FileHandle_t file = luaL_checkfilehandle( L, 2 );
     int size = luaL_checkint( L, 1 );
-    buffer = new byte[size + 1];
+
+    if ( size < 0 )
+    {
+        lua_pushstring( L, "Invalid size parameter" );
+        return lua_error( L );
+    }
+
+    char *buffer = new char[size + 1];
     if ( !buffer )
     {
-        Warning( "filesystem.Read:  Couldn't allocate buffer of size %i for file\n", size + 1 );
-        lua_pushinteger( L, -1 );
-        lua_pushstring( L, NULL );
-        return 2;
+        lua_pushstring( L, "Memory allocation failed" );
+        return lua_error( L );
     }
+
     int bytesRead = filesystem->Read( buffer, size, file );
-
-    if ( bytesRead )
+    if ( bytesRead < 0 )
     {
-        // Ensure null terminator
-        buffer[bytesRead] = 0;
-    }
-    else
-    {
-        *buffer = 0;
+        delete[] buffer;
+        lua_pushstring( L, "File read error" );
+        return lua_error( L );
     }
 
-    lua_pushinteger( L, size );
-    lua_pushstring( L, ( const char * )buffer );
-    delete buffer;
+    buffer[bytesRead] = '\0';  // Ensure the buffer is null-terminated
+
+    lua_pushinteger( L, bytesRead );
+    lua_pushlstring( L, buffer, bytesRead );
+    delete[] buffer;
 
     return 2;
 }
@@ -479,28 +479,29 @@ static const luaL_Reg filesystemlib[] = {
 
 static int FileHandle_t_Read( lua_State *L )
 {
-    byte *buffer;
-
     FileHandle_t file;
     file = luaL_checkfilehandle( L, 1 );
 
     int size = luaL_optinteger( L, 2, filesystem->Size( file ) );
-    buffer = new byte[size + 1];
+    char *buffer = new char[size + 1];
+    if ( !buffer )
+    {
+        lua_pushstring( L, "Memory allocation failed" );
+        return lua_error( L );
+    }
 
     int bytesRead = filesystem->Read( buffer, size, file );
-
-    if ( bytesRead )
+    if ( bytesRead < 0 )
     {
-        // Ensure null terminator
-        buffer[bytesRead] = 0;
-    }
-    else
-    {
-        *buffer = 0;
+        delete[] buffer;
+        lua_pushstring( L, "File read error" );
+        return lua_error( L );
     }
 
-    lua_pushstring( L, ( const char * )buffer );
-    delete buffer;
+    buffer[bytesRead] = '\0';  // Ensure the buffer is null-terminated
+
+    lua_pushlstring( L, buffer, bytesRead );
+    delete[] buffer;
 
     return 1;
 }

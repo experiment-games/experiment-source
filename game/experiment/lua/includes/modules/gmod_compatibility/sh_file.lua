@@ -61,7 +61,7 @@ function file.Read(fileName, gamePath)
         return nil
     end
 
-	local size = FileSystem.Size(fileName, gamePath)
+	local size = FileSystem.Size(file)
 	local size, content = FileSystem.Read(size, file)
 	FileSystem.Close(file)
 	return content
