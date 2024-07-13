@@ -375,19 +375,6 @@ static int engine_IsTakingScreenshot( lua_State *L )
     return 1;
 }
 
-static int engine_Key_BindingForKey( lua_State *L )
-{
-    ButtonCode_t code = ( ButtonCode_t )luaL_checkint( L, 1 );
-    lua_pushstring( L, engine->Key_BindingForKey( code ) );
-    return 1;
-}
-
-static int engine_Key_LookupBinding( lua_State *L )
-{
-    lua_pushstring( L, engine->Key_LookupBinding( luaL_checkstring( L, 1 ) ) );
-    return 1;
-}
-
 static int engine_LevelLeafCount( lua_State *L )
 {
     lua_pushinteger( L, engine->LevelLeafCount() );
@@ -577,8 +564,6 @@ static const luaL_Reg enginelib[] = {
     { "IsSaveInProgress", engine_IsSaveInProgress },
     { "IsSkyboxVisibleFromPoint", engine_IsSkyboxVisibleFromPoint },
     { "IsTakingScreenshot", engine_IsTakingScreenshot },
-    { "Key_BindingForKey", engine_Key_BindingForKey },
-    { "Key_LookupBinding", engine_Key_LookupBinding },
     { "LevelLeafCount", engine_LevelLeafCount },
     { "LightStyleValue", engine_LightStyleValue },
     { "LinearToGamma", engine_LinearToGamma },

@@ -86,5 +86,6 @@ class CPngMaterialProxy : public IMaterialProxy
 
 unsigned char *PNG_ReadFromBuffer( CUtlBuffer &buffer, const char *filePath, int &width, int &height, int &colorType, int &bitDepth, int &sizeInBytes );
 bool PNG_ReadInfoFromBuffer( CUtlBuffer &buffer, const char *filePath, int &width, int &height, int &colorType, int &bitDepth );
+bool PNG_WriteToFile( const char *filePath, unsigned char *pImageData, int width, int height );
 
 #endif  // C_PNG_H

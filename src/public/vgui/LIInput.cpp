@@ -126,6 +126,25 @@ static int input_IsMouseDown( lua_State *L )
     return 1;
 }
 
+static int engine_Key_LookupBinding( lua_State *L )
+{
+    bool exact = lua_toboolean( L, 2 );
+
+    if (exact)
+        lua_pushstring( L, engine->Key_LookupBindingExact( luaL_checkstring( L, 1 ) ) );
+    else
+        lua_pushstring( L, engine->Key_LookupBinding( luaL_checkstring( L, 1 ) ) );
+
+    return 1;
+}
+
+static int engine_Key_BindingForKey( lua_State *L )
+{
+    ButtonCode_t code = ( ButtonCode_t )luaL_checkint( L, 1 );
+    lua_pushstring( L, engine->Key_BindingForKey( code ) );
+    return 1;
+}
+
 static int input_OnChangeIME( lua_State *L )
 {
     input()->OnChangeIME( luaL_checkboolean( L, 1 ) );
@@ -343,6 +362,8 @@ static const luaL_Reg inputlib[] = {
     { "GetShouldInvertCompositionString", input_GetShouldInvertCompositionString },
     { "IsKeyDown", input_IsKeyDown },
     { "IsMouseDown", input_IsMouseDown },
+    { "LookupBinding", engine_Key_LookupBinding },
+    { "LookupKeyBinding", engine_Key_BindingForKey },
     { "OnChangeIME", input_OnChangeIME },
     { "OnChangeIMEByHandle", input_OnChangeIMEByHandle },
     { "OnChangeIMEConversionModeByHandle", input_OnChangeIMEConversionModeByHandle },

@@ -600,6 +600,8 @@ $Project
             $File "$SRCDIR\game\client\scripted_controls\lHTML.h"
             $File "$SRCDIR\game\client\scripted_controls\lLabel.cpp"
             $File "$SRCDIR\game\client\scripted_controls\lLabel.h"
+            $File "$SRCDIR\game\client\scripted_controls\lModelImagePanel.cpp"
+            $File "$SRCDIR\game\client\scripted_controls\lModelImagePanel.h"
             $File "$SRCDIR\game\client\scripted_controls\lPanel.cpp"
             $File "$SRCDIR\game\client\scripted_controls\lPanel.h"
             $File "$SRCDIR\game\client\scripted_controls\lPropertyDialog.cpp"

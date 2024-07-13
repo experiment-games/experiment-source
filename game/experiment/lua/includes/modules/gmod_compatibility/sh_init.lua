@@ -353,6 +353,7 @@ end
 
 local MATERIAL_META = FindMetaTable("IMaterial")
 MATERIAL_META.GetShader = MATERIAL_META.GetShaderName
+MATERIAL_META.IsError = MATERIAL_META.IsErrorMaterial
 
 function MATERIAL_META:Width()
 	local baseTexture = self:GetTexture("$basetexture")
@@ -456,6 +457,31 @@ else
 
 	CreateMaterial = Surface.CreateMaterial
 	DisableClipping = Surface.DisableClipping
+
+	local MODEL_IMAGE_PANEL_META = FindMetaTable("ModelImagePanel")
+	MODEL_IMAGE_PANEL_META._OriginalRebuildSpawnIcon = MODEL_IMAGE_PANEL_META._OriginalRebuildSpawnIcon or MODEL_IMAGE_PANEL_META.RebuildSpawnIcon
+	registry.ModelImage = MODEL_IMAGE_PANEL_META
+
+	MODEL_IMAGE_PANEL_META.SetSpawnIcon = MODEL_IMAGE_PANEL_META.SetModelImage
+
+	function MODEL_IMAGE_PANEL_META:RebuildSpawnIcon()
+		-- TODO: sensible defaults
+		self:_OriginalRebuildSpawnIcon({
+			origin = Vector(0, 0, 0),
+			angles = Angle(0, 0, 0),
+			fov = 90,
+			znear = 1,
+			zfar = 1000,
+		})
+	end
+
+	function MODEL_IMAGE_PANEL_META:RebuildSpawnIconEx(tab)
+		self:_OriginalRebuildSpawnIcon({
+			origin = tab.cam_pos or Vector(0, 0, 0),
+			angles = tab.cam_ang or Angle(0, 0, 0),
+			fov = tab.cam_fov or 90,
+		})
+	end
 
 	local PANEL_META = FindMetaTable("Panel")
 	PANEL_META._OriginalSetCursor = PANEL_META._OriginalSetCursor or PANEL_META.SetCursor
@@ -711,14 +737,18 @@ else
 		We disable our own Gui.Create and Gui.Register logic, in favor of the GMod one.
 		This Gui.Create will be used as vgui.CreateX by gmod to create internal panels.
 	--]]
-	function Gui.Create(panelName, parentPanel, name)
+	function Gui.Create(panelClassName, parentPanel, name)
 		parentPanel = parentPanel or getAppropriateBaseParent()
 
-		if (not Gui[panelName]) then
-			error("attempt to create non-existing panel class \"" .. tostring(panelName) .. "\"", 2)
+		if (panelClassName == "ModelImage") then
+			panelClassName = "ModelImagePanel"
 		end
 
-		return Gui[panelName](parentPanel, name or panelName)
+		if (not Gui[panelClassName]) then
+			error("attempt to create non-existing panel class \"" .. tostring(panelClassName) .. "\"", 2)
+		end
+
+		return Gui[panelClassName](parentPanel, name or panelClassName)
 	end
 
 	surface.SetDrawColor = surface.DrawSetColor

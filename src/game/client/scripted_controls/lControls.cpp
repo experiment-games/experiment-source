@@ -26,5 +26,6 @@ LUALIB_API int luaopen_vgui( lua_State *L )
     luaopen_vgui_PropertyDialog( L );
     luaopen_vgui_PropertyPage( L );
     luaopen_vgui_TextEntry( L );
+    luaopen_vgui_ModelImagePanel( L );
     return 0;
 }

@@ -177,6 +177,84 @@ bool PNG_ReadInfoFromBuffer( CUtlBuffer &buffer, const char *pFilePath, int &wid
     int colorType, bitDepth;
     return PNG_ReadInfoFromBuffer( buffer, pFilePath, width, height, colorType, bitDepth );
 }
+
+static void PNG_WriteData( png_structp writePointer, png_bytep data, png_size_t length )
+{
+    CUtlBuffer *buffer = ( CUtlBuffer * )png_get_io_ptr( writePointer );
+    buffer->Put( data, length );
+}
+
+static void PNG_FlushData( png_structp writePointer )
+{
+    // TODO: Do we need to do anything here?
+}
+
+bool PNG_WriteToFile( const char *filePath, unsigned char *pImageData, int width, int height )
+{
+    CUtlBuffer buffer;
+
+    png_structp writePointer = png_create_write_struct( PNG_LIBPNG_VER_STRING, NULL, NULL, NULL );
+    png_infop infoPointer = png_create_info_struct( writePointer );
+
+    if ( setjmp( png_jmpbuf( writePointer ) ) )
+    {
+        png_destroy_write_struct( &writePointer, &infoPointer );
+        
+        DevWarning( "Failed writing PNG as Material! Error during PNG creation \"%s\"\n", filePath );
+        return false;
+    }
+
+    png_set_write_fn( writePointer, ( void * )&buffer, PNG_WriteData, PNG_FlushData );
+
+    png_set_IHDR(
+        writePointer,
+        infoPointer,
+        width,
+        height,
+        8,
+        PNG_COLOR_TYPE_RGB_ALPHA,
+        PNG_INTERLACE_NONE,
+        PNG_COMPRESSION_TYPE_DEFAULT,
+        PNG_FILTER_TYPE_DEFAULT
+    );
+    png_write_info( writePointer, infoPointer );
+
+    png_bytepp rowPointers = ( png_bytepp )malloc( sizeof( png_bytep ) * height );
+
+    if ( !rowPointers )
+    {
+        png_destroy_write_struct( &writePointer, &infoPointer );
+        DevWarning( "Failed writing PNG as Material! Memory allocation for row pointers failed \"%s\"\n", filePath );
+        return false;
+    }
+
+    png_size_t rowBytes = png_get_rowbytes( writePointer, infoPointer );
+
+    for ( int i = 0; i < height; ++i )
+    {
+        rowPointers[i] = pImageData + i * rowBytes;
+    }
+
+    png_write_image( writePointer, rowPointers );
+    free( rowPointers );
+
+    png_write_end( writePointer, infoPointer );
+    png_destroy_write_struct( &writePointer, &infoPointer );
+
+    // force create this directory incase it doesn't exist
+    char fileDirectoryPath[MAX_PATH];
+    Q_snprintf( fileDirectoryPath, sizeof( fileDirectoryPath ), "%s", filePath );
+    Q_StripFilename( fileDirectoryPath );
+    filesystem->CreateDirHierarchy( fileDirectoryPath, "GAME" );
+
+    if ( !filesystem->WriteFile( filePath, "GAME", buffer ) )
+    {
+        DevWarning( "Failed writing PNG as Material! Couldn't write PNG to file \"%s\"\n", filePath );
+        return false;
+    }
+
+    return true;
+}
 #endif
 
 void CleanMaterialName( const char *pMaterialName, char *pCleanMaterialName, int iOutNameSize )
