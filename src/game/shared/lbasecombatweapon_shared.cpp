@@ -924,7 +924,7 @@ static int CBaseCombatWeapon___index( lua_State *L )
 {    
     CBaseCombatWeapon *pWeapon = lua_toweapon( L, 1 );
     // LUA_METATABLE_INDEX_CHECK_VALID( L, Entity_IsValid ); // TODO: Entity_IsValid
-    LUA_METATABLE_INDEX_CHECK_NULL( L, pWeapon );
+    LUA_METATABLE_INDEX_CHECK( L, pWeapon );
 
     const char *field = luaL_checkstring( L, 2 );
     if ( Q_strcmp( field, "m_bAltFiresUnderwater" ) == 0 )

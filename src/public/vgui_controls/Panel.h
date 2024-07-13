@@ -177,6 +177,8 @@ class Panel : public IClientPanel, virtual IForceVirtualInheritancePanel
     int m_nTableReference;
     int m_nRefCount;
     bool m_bIsPaintClipping = true;
+    int m_nLastLocalCursorX = 0;
+    int m_nLastLocalCursorY = 0;
     CUtlDict<int, int> m_PreparedFunctions;
 
     virtual void GetChildrenSize(int& wide, int& tall)
@@ -194,6 +196,12 @@ class Panel : public IClientPanel, virtual IForceVirtualInheritancePanel
             wide = max( wide, x + w );
             tall = max( tall, y + t );
         }
+    }
+
+    virtual void GetLocalCursorPosition( int& x, int& y )
+    {
+        x = m_nLastLocalCursorX;
+        y = m_nLastLocalCursorY;
     }
 
     virtual void SetPaintClippingEnabled( bool state )

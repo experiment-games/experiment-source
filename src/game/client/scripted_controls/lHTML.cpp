@@ -245,7 +245,7 @@ static int HTML___index( lua_State *L )
 {
     HTML *pHTML = lua_tohtml( L, 1 );
     LUA_METATABLE_INDEX_CHECK_VALID( L, Panel_IsValid );
-    LUA_METATABLE_INDEX_CHECK_NULL( L, pHTML );
+    LUA_METATABLE_INDEX_CHECK( L, pHTML );
 
     LHTML *plHTML = dynamic_cast< LHTML * >( pHTML );
     LUA_METATABLE_INDEX_CHECK_REF_TABLE( L, plHTML );

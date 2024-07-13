@@ -115,7 +115,7 @@ static int CHL2MP_Player___index( lua_State *L )
 {
     CHL2MP_Player *pPlayer = lua_tohl2mpplayer( L, 1 );
     // LUA_METATABLE_INDEX_CHECK_VALID( L, Entity_IsValid ); // TODO: Entity_IsValid
-    LUA_METATABLE_INDEX_CHECK_NULL( L, pPlayer );
+    LUA_METATABLE_INDEX_CHECK( L, pPlayer );
 
     LUA_METATABLE_INDEX_CHECK_REF_TABLE( L, pPlayer );
 

@@ -279,7 +279,7 @@ static int PropertyDialog___index( lua_State *L )
 {
     PropertyDialog *pDialog = lua_topropertydialog( L, 1 );
     LUA_METATABLE_INDEX_CHECK_VALID( L, Panel_IsValid );
-    LUA_METATABLE_INDEX_CHECK_NULL( L, pDialog );
+    LUA_METATABLE_INDEX_CHECK( L, pDialog );
 
     LPropertyDialog *plDialog = dynamic_cast< LPropertyDialog * >( pDialog );
     LUA_METATABLE_INDEX_CHECK_REF_TABLE( L, plDialog );

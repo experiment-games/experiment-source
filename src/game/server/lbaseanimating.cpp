@@ -468,7 +468,7 @@ static int CBaseAnimating___index( lua_State *L )
 {
     CBaseAnimating *pEntity = lua_toanimating( L, 1 );
     // LUA_METATABLE_INDEX_CHECK_VALID( L, Entity_IsValid ); // TODO: Entity_IsValid
-    LUA_METATABLE_INDEX_CHECK_NULL( L, pEntity );
+    LUA_METATABLE_INDEX_CHECK( L, pEntity );
 
     LUA_METATABLE_INDEX_CHECK_REF_TABLE( L, pEntity );
 

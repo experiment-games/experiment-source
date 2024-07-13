@@ -37,6 +37,14 @@ LUA_API void lua_pushcolor( lua_State *L, lua_Color &clr )
     lua_setmetatable( L, -2 );
 }
 
+LUA_API void lua_pushcolor( lua_State *L, Color &clr )
+{
+    lua_Color *pColor = ( lua_Color * )lua_newuserdata( L, sizeof( lua_Color ) );
+    *pColor = lua_Color( clr.r(), clr.g(), clr.b(), clr.a() );
+    luaL_getmetatable( L, "Color" );
+    lua_setmetatable( L, -2 );
+}
+
 LUALIB_API lua_Color &luaL_checkcolor( lua_State *L, int narg )
 {
     lua_Color *d = ( lua_Color * )luaL_checkudata( L, narg, "Color" );
@@ -98,7 +106,7 @@ static int Color_SetRawColor( lua_State *L )
 
 static int Color___tostring( lua_State *L )
 {
-    Color color = luaL_checkcolor( L, 1 );
+    lua_Color color = luaL_checkcolor( L, 1 );
     lua_pushfstring( L, "Color: %s", static_cast< const char * >( CFmtStr( "(%i, %i, %i, %i)", color.r(), color.g(), color.b(), color.a() ) ) );
     return 1;
 }
@@ -112,28 +120,34 @@ static int Color___eq( lua_State *L )
 // Returns the color's r, g, b, a values or fallsback to the Color metatable
 static int Color___index( lua_State *L )
 {
-    Color color = luaL_checkcolor( L, 1 );
-    const char *field = luaL_checkstring( L, 2 );
+    lua_Color *color = &luaL_checkcolor( L, 1 );
+    LUA_METATABLE_INDEX_CHECK( L, color );
 
-    if ( Q_strcmp( field, "r" ) == 0 )
-        lua_pushinteger( L, color.r() );
-    else if ( Q_strcmp( field, "g" ) == 0 )
-        lua_pushinteger( L, color.g() );
-    else if ( Q_strcmp( field, "b" ) == 0 )
-        lua_pushinteger( L, color.b() );
-    else if ( Q_strcmp( field, "a" ) == 0 )
-        lua_pushinteger( L, color.a() );
-    else
+    LUA_GET_REF_TABLE( L, color );
+    LUA_METATABLE_INDEX_CHECK_REF_TABLE( L, color );
+
+    if ( lua_getmetatable( L, 1 ) )
     {
-        if (lua_getmetatable(L, 1))
-        {
-            LUA_METATABLE_INDEX_CHECK_TABLE( L );
-        }
-
-        lua_pushnil( L );
+        LUA_METATABLE_INDEX_CHECK_TABLE( L );
     }
 
+    lua_pushnil( L );
     return 1;
+}
+
+static int Color___newindex( lua_State *L )
+{
+    lua_Color *color = &luaL_checkcolor( L, 1 );
+    LUA_METATABLE_INDEX_CHECK( L, color );
+
+    const char *field = luaL_checkstring( L, 2 );
+
+    LUA_GET_REF_TABLE( L, color );
+    lua_pushvalue( L, 3 );
+    lua_setfield( L, -2, field );
+    lua_pop( L, 1 );
+
+    return 0;
 }
 
 static const luaL_Reg Colormeta[] = {
@@ -148,18 +162,19 @@ static const luaL_Reg Colormeta[] = {
     { "__tostring", Color___tostring },
     { "__eq", Color___eq },
     { "__index", Color___index },
+    { "__newindex", Color___newindex },
     { NULL, NULL } };
 
 static int luasrc_Color( lua_State *L )
 {
-    Color clr = Color( luaL_checkint( L, 1 ), luaL_checkint( L, 2 ), luaL_checkint( L, 3 ), luaL_optint( L, 4, 255 ) );
+    lua_Color clr = lua_Color( luaL_checkint( L, 1 ), luaL_checkint( L, 2 ), luaL_checkint( L, 3 ), luaL_optint( L, 4, 255 ) );
     lua_pushcolor( L, clr );
     return 1;
 }
 
 static int luasrc_RGBToHSV( lua_State *L )
 {
-    Color clr = luaL_checkcolor( L, 1 );
+    lua_Color clr = luaL_checkcolor( L, 1 );
     Vector hsv;
     RGBtoHSV( Vector( clr.r(), clr.g(), clr.b() ), hsv );
     lua_pushnumber( L, hsv.x );
@@ -173,7 +188,7 @@ static int luasrc_HSVToRGB( lua_State *L )
     Vector hsv = Vector( luaL_checknumber( L, 1 ), luaL_checknumber( L, 2 ), luaL_checknumber( L, 3 ) );
     Vector rgb;
     HSVtoRGB( hsv, rgb );
-    lua_pushcolor( L, Color( rgb.x, rgb.y, rgb.z, 255 ) );
+    lua_pushcolor( L, lua_Color( rgb.x, rgb.y, rgb.z, 255 ) );
     return 1;
 }
 
@@ -202,7 +217,7 @@ float HueToRGB( float v1, float v2, float vH )
 
 static int luasrc_RGBToHSL( lua_State *L )
 {
-    Color clr = luaL_checkcolor( L, 1 );
+    lua_Color clr = luaL_checkcolor( L, 1 );
     float h, s;
     float flMax = max( clr.r(), max( clr.g(), clr.b() ) );
     float flMin = min( clr.r(), min( clr.g(), clr.b() ) );
@@ -285,7 +300,7 @@ static int luasrc_HSLToRGB( lua_State *L )
         b = HueToRGB( v1, v2, h - ( 1.0f / 3.0f ) );
     }
 
-    lua_pushcolor( L, Color( r, g, b, 255 ) );
+    lua_pushcolor( L, lua_Color( r, g, b, 255 ) );
 
     return 1;
 }

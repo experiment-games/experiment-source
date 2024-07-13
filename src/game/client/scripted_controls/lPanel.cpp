@@ -319,6 +319,15 @@ static int Panel_GetKeyMappingCount( lua_State *L )
     return 1;
 }
 
+static int Panel_GetLocalCursorPosition( lua_State *L )
+{
+    int x, y;
+    luaL_checkpanel( L, 1 )->GetLocalCursorPosition( x, y );
+    lua_pushinteger( L, x );
+    lua_pushinteger( L, y );
+    return 2;
+}
+
 static int Panel_GetMinimumSize( lua_State *L )
 {
     int wide, tall;
@@ -1288,7 +1297,7 @@ static int Panel___index( lua_State *L )
     Panel *plPanel = lua_topanel( L, 1 );
 
     LUA_METATABLE_INDEX_CHECK_VALID( L, Panel_IsValid );
-    LUA_METATABLE_INDEX_CHECK_NULL( L, plPanel );
+    LUA_METATABLE_INDEX_CHECK( L, plPanel );
 
     LUA_METATABLE_INDEX_CHECK_REF_TABLE( L, plPanel );
 
@@ -1427,6 +1436,7 @@ static const luaL_Reg Panelmeta[] = {
     { "GetKeyBindingsFile", Panel_GetKeyBindingsFile },
     { "GetKeyBindingsFilePathID", Panel_GetKeyBindingsFilePathID },
     { "GetKeyMappingCount", Panel_GetKeyMappingCount },
+    { "GetLocalCursorPosition", Panel_GetLocalCursorPosition },
     { "GetMinimumSize", Panel_GetMinimumSize },
     { "GetModuleName", Panel_GetModuleName },
     { "GetName", Panel_GetName },

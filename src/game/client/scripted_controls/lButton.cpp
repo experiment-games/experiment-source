@@ -281,7 +281,7 @@ static int Button___index( lua_State *L )
     Button *pButton = lua_tobutton( L, 1 );
 
     LUA_METATABLE_INDEX_CHECK_VALID( L, Panel_IsValid );
-    LUA_METATABLE_INDEX_CHECK_NULL( L, pButton );
+    LUA_METATABLE_INDEX_CHECK( L, pButton );
 
     LButton *plButton = dynamic_cast< LButton * >( pButton );
     LUA_METATABLE_INDEX_CHECK_REF_TABLE( L, plButton );

@@ -393,7 +393,7 @@ static int EditablePanel___index( lua_State *L )
 {
     EditablePanel *pEditablePanel = lua_toeditablepanel( L, 1 );
     LUA_METATABLE_INDEX_CHECK_VALID( L, Panel_IsValid );
-    LUA_METATABLE_INDEX_CHECK_NULL( L, pEditablePanel );
+    LUA_METATABLE_INDEX_CHECK( L, pEditablePanel );
 
     LEditablePanel *plEditablePanel = dynamic_cast< LEditablePanel * >( pEditablePanel );
     LUA_METATABLE_INDEX_CHECK_REF_TABLE( L, plEditablePanel );

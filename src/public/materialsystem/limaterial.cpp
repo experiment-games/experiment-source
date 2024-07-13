@@ -115,7 +115,7 @@ static int IMaterial_GetColor(lua_State* L)
 
     int bytesPerRow = sizeInBytes / height;
     byte *ptr = pTextureData + ( y * bytesPerRow ) + x;
-    color = Color( ptr[0], ptr[1], ptr[2], ptr[3] );
+    color = lua_Color( ptr[0], ptr[1], ptr[2], ptr[3] );
     lua_pushcolor( L, color );
     return 1;
 }

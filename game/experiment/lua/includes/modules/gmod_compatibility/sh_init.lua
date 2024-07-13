@@ -16,7 +16,15 @@ DeriveGamemode = InheritGamemode
 
 include = Include
 
-GetConVar_Internal = GetConsoleVariable
+function GetConVar_Internal(name)
+    local consoleVariable = GetConsoleVariable(name)
+
+	if (not IsValid(consoleVariable)) then
+		return nil
+	end
+
+	return consoleVariable
+end
 
 util = {
 	PrecacheModel = _R.CBaseEntity.PrecacheModel,
@@ -421,6 +429,7 @@ else
 	PANEL_META._OriginalSetCursor = PANEL_META._OriginalSetCursor or PANEL_META.SetCursor
 	PANEL_META._OriginalGetParent = PANEL_META._OriginalGetParent or PANEL_META.GetParent
 
+	PANEL_META.CursorPos = PANEL_META.GetLocalCursorPosition
 	PANEL_META.Remove = PANEL_META.MarkForDeletion
 	PANEL_META.GetTable = PANEL_META.GetRefTable
 	PANEL_META.Dock = PANEL_META.SetDock

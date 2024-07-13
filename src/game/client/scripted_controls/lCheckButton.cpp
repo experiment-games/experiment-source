@@ -157,7 +157,7 @@ static int CheckButton___index( lua_State *L )
 {
     CheckButton *pCheckButton = lua_tocheckbutton( L, 1 );
     LUA_METATABLE_INDEX_CHECK_VALID( L, Panel_IsValid );
-    LUA_METATABLE_INDEX_CHECK_NULL( L, pCheckButton );
+    LUA_METATABLE_INDEX_CHECK( L, pCheckButton );
 
     LCheckButton *plCheckButton = dynamic_cast< LCheckButton * >( pCheckButton );
     LUA_METATABLE_INDEX_CHECK_REF_TABLE( L, plCheckButton );

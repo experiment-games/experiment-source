@@ -479,7 +479,7 @@ static int TextEntry___index( lua_State *L )
 {
     TextEntry *pTextEntry = lua_totextentry( L, 1 );
     LUA_METATABLE_INDEX_CHECK_VALID( L, Panel_IsValid );
-    LUA_METATABLE_INDEX_CHECK_NULL( L, pTextEntry );
+    LUA_METATABLE_INDEX_CHECK( L, pTextEntry );
 
     LTextEntry *plTextEntry = dynamic_cast< LTextEntry * >( pTextEntry );
     LUA_METATABLE_INDEX_CHECK_REF_TABLE( L, plTextEntry );

@@ -316,7 +316,7 @@ static int Label___index( lua_State *L )
 {
     Label *pLabel = lua_tolabel( L, 1 );
     LUA_METATABLE_INDEX_CHECK_VALID( L, Panel_IsValid );
-    LUA_METATABLE_INDEX_CHECK_NULL( L, pLabel );
+    LUA_METATABLE_INDEX_CHECK( L, pLabel );
 
     LLabel *plLabel = dynamic_cast< LLabel * >( pLabel );
     LUA_METATABLE_INDEX_CHECK_REF_TABLE( L, plLabel );

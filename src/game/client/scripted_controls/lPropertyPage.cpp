@@ -227,7 +227,7 @@ static int PropertyPage___index( lua_State *L )
 {
     PropertyPage *pPage = lua_topropertypage( L, 1 );
     LUA_METATABLE_INDEX_CHECK_VALID( L, Panel_IsValid );
-    LUA_METATABLE_INDEX_CHECK_NULL( L, pPage );
+    LUA_METATABLE_INDEX_CHECK( L, pPage );
 
     LPropertyPage *plPage = dynamic_cast< LPropertyPage * >( pPage );
     LUA_METATABLE_INDEX_CHECK_REF_TABLE( L, plPage );

@@ -32,7 +32,7 @@ public:
 	{
 		SetColor(_r, _g, _b, _a);
 	}
-	
+
 	// set the color
 	// r - red component (0-255)
 	// g - green component (0-255)

@@ -1458,6 +1458,9 @@ void Panel::PaintTraverse( bool repaint, bool allowForce )
     {
         surface()->PopFullscreenViewport();
     }
+
+    input()->GetCursorPos( m_nLastLocalCursorX, m_nLastLocalCursorY );
+    ScreenToLocal( m_nLastLocalCursorX, m_nLastLocalCursorY );
 }
 
 //-----------------------------------------------------------------------------

@@ -999,16 +999,8 @@ static int CBaseAnimating___index( lua_State *L )
 {
     CBaseAnimating *pEntity = lua_toanimating( L, 1 );
 
-    if ( pEntity == NULL )
-    { /* avoid extra test when d is not 0 */
-        lua_Debug ar1;
-        lua_getstack( L, 1, &ar1 );
-        lua_getinfo( L, "fl", &ar1 );
-        lua_Debug ar2;
-        lua_getinfo( L, ">S", &ar2 );
-        lua_pushfstring( L, "%s:%d: attempt to index a NULL entity", ar2.short_src, ar1.currentline );
-        return lua_error( L );
-    }
+    //LUA_METATABLE_INDEX_CHECK_VALID( L, ...IsValid );
+    LUA_METATABLE_INDEX_CHECK( L, pEntity );
 
     if ( lua_isrefvalid( L, pEntity->m_nTableReference ) )
     {

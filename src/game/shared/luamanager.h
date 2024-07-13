@@ -381,7 +381,7 @@
                                                                                      \
     lua_pop( L, 1 ); /* Pop the Label metatable */
 
-#define LUA_GET_REF_TABLE( L, Target )                     \
+#define LUA_GET_REF_TABLE( L, Target )             \
     if ( !lua_isrefvalid( L, Target->m_nTableReference ) ) \
     {                                                      \
         Target->SetupRefTable( L );                        \
@@ -396,7 +396,7 @@
         return 1;                                                 \
     }
 
-#define LUA_METATABLE_INDEX_CHECK_NULL( L, Target )                                                                                  \
+#define LUA_METATABLE_INDEX_CHECK( L, Target )                                                                                       \
     /* Invalid panels fail all checks */                                                                                             \
     if ( Target == NULL )                                                                                                            \
     {                                                                                                                                \
@@ -432,11 +432,11 @@
                                              \
     lua_pop( L, 2 ); /* Pop the table and the nil value */
 
-#define LUA_METATABLE_INDEX_CHECK_REF_TABLE( L, Target )                                    \
+#define LUA_METATABLE_INDEX_CHECK_REF_TABLE( L, Target )                            \
     /* We follow by checking if the target has any properties set in its reference table */ \
     if ( Target && L )                                                                      \
     {                                                                                       \
-        LUA_GET_REF_TABLE( L, Target );                                                     \
+        LUA_GET_REF_TABLE( L, Target );                                             \
         LUA_METATABLE_INDEX_CHECK_TABLE( L );                                               \
     }
 

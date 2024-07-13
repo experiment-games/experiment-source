@@ -85,6 +85,13 @@ static int ConCommand_IsCommand( lua_State *L )
     return 1;
 }
 
+static int ConCommand_IsValid( lua_State *L )
+{
+    lua_ConCommand *d = lua_toconcommand( L, 1 );
+    lua_pushboolean( L, d != NULL );
+    return 1;
+}
+
 static int ConCommand___tostring( lua_State *L )
 {
     lua_pushfstring( L, "ConCommand: \"%s\"", luaL_checkconcommand( L, 1 )->GetName() );
@@ -94,6 +101,7 @@ static int ConCommand___tostring( lua_State *L )
 static const luaL_Reg ConCommandmeta[] = {
     { "CanAutoComplete", ConCommand_CanAutoComplete },
     { "IsCommand", ConCommand_IsCommand },
+    { "IsValid", ConCommand_IsValid },
     { "__tostring", ConCommand___tostring },
     { NULL, NULL } };
 
@@ -400,6 +408,13 @@ static int ConVar_IsRegistered( lua_State *L )
     return 1;
 }
 
+static int ConVar_IsValid( lua_State *L )
+{
+    lua_ConVar *d = lua_toconvar( L, 1 );
+    lua_pushboolean( L, d != NULL );
+    return 1;
+}
+
 static int ConVar_Revert( lua_State *L )
 {
     luaL_checkconvar( L, 1 )->Revert();
@@ -441,6 +456,7 @@ static const luaL_Reg ConVarmeta[] = {
     { "IsCommand", ConVar_IsCommand },
     { "IsFlagSet", ConVar_IsFlagSet },
     { "IsRegistered", ConVar_IsRegistered },
+    { "IsValid", ConVar_IsValid },
     { "Revert", ConVar_Revert },
     { "SetValue", ConVar_SetValue },
     { "__tostring", ConVar___tostring },

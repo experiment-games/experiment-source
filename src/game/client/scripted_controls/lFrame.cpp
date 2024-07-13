@@ -354,7 +354,7 @@ static int Frame___index( lua_State *L )
 {
     Frame *pFrame = lua_toframe( L, 1 );
     LUA_METATABLE_INDEX_CHECK_VALID( L, Panel_IsValid );
-    LUA_METATABLE_INDEX_CHECK_NULL( L, pFrame );
+    LUA_METATABLE_INDEX_CHECK( L, pFrame );
 
     LFrame *plFrame = dynamic_cast< LFrame * >( pFrame );
     LUA_METATABLE_INDEX_CHECK_REF_TABLE( L, plFrame );

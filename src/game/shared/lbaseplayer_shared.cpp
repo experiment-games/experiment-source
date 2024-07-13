@@ -932,7 +932,7 @@ static int CBasePlayer___index( lua_State *L )
 {
     CBasePlayer *pPlayer = lua_toplayer( L, 1 );
     // LUA_METATABLE_INDEX_CHECK_VALID( L, Entity_IsValid ); // TODO: Entity_IsValid
-    LUA_METATABLE_INDEX_CHECK_NULL( L, pPlayer );
+    LUA_METATABLE_INDEX_CHECK( L, pPlayer );
 
     const char *field = luaL_checkstring( L, 2 );
 

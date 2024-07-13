@@ -1674,7 +1674,7 @@ static int CBaseEntity___index( lua_State *L )
 {    
     CBaseEntity *pEntity = lua_toentity( L, 1 );
     // LUA_METATABLE_INDEX_CHECK_VALID( L, Entity_IsValid ); // TODO: Entity_IsValid
-    LUA_METATABLE_INDEX_CHECK_NULL( L, pEntity );
+    LUA_METATABLE_INDEX_CHECK( L, pEntity );
 
     const char *field = luaL_checkstring( L, 2 );
 
