@@ -88,6 +88,18 @@ static int IMaterial_GetAlphaModulation( lua_State *L )
     return 1;
 }
 
+lua_Color ColorAtPosition( unsigned char *imageData, int width, int height, int x, int y )
+{
+    if ( x < 0 || x >= width || y < 0 || y >= height )
+    {
+        return lua_Color();
+    }
+
+    int i = ( y * width + x ) * 4;
+
+    return lua_Color( imageData[i], imageData[i + 1], imageData[i + 2], imageData[i + 3] );
+}
+
 static int IMaterial_GetColor(lua_State* L)
 {
     int x = luaL_checkint( L, 2 );
@@ -98,12 +110,10 @@ static int IMaterial_GetColor(lua_State* L)
     ITexture* pTexture = pVar->GetTextureValue();
     CPngMaterialProxy *pMaterialProxy = CPngTextureRegen::GetProceduralMaterialProxy( pTexture->GetName() );
     unsigned char *pTextureData = pMaterialProxy->GetTexturePointer();
-    int sizeInBytes = pMaterialProxy->GetSizeInBytes();
-    lua_Color color;
 
     if ( !pTextureData )
     {
-        lua_pushcolor( L, color );
+        lua_pushcolor( L, lua_Color() );
         return 1;
     }
 
@@ -113,9 +123,7 @@ static int IMaterial_GetColor(lua_State* L)
     Assert( x >= 0 && x < width );
     Assert( y >= 0 && y < height );
 
-    int bytesPerRow = sizeInBytes / height;
-    byte *ptr = pTextureData + ( y * bytesPerRow ) + x;
-    color = lua_Color( ptr[0], ptr[1], ptr[2], ptr[3] );
+    lua_Color color = ColorAtPosition( pTextureData, width, height, x, y );
     lua_pushcolor( L, color );
     return 1;
 }

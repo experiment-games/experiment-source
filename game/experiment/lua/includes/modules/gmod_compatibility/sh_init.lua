@@ -17,7 +17,7 @@ DeriveGamemode = InheritGamemode
 include = Include
 
 function GetConVar_Internal(name)
-    local consoleVariable = GetConsoleVariable(name)
+	local consoleVariable = GetConsoleVariable(name)
 
 	if (not IsValid(consoleVariable)) then
 		return nil
@@ -268,7 +268,7 @@ end
 
 -- We don't use the workshop
 WorkshopFileBase = function(namespace, requiredTags)
-    return {}
+	return {}
 end
 
 game = {
@@ -375,54 +375,64 @@ achievements = {
 }
 
 if (SERVER) then
-    resource.AddWorkshop = function() end
+	resource.AddWorkshop = function() end
 
 	Material = function(name) end
 else
-    Material = function(name)
-        if (not Surface.DoesMaterialExist(name)) then
-            name = "gmod_compatibility_content/" .. name
-        end
+	Material = function(name)
+		if (not Surface.DoesMaterialExist(name)) then
+			name = "gmod_compatibility_content/" .. name
+		end
 
-        return Surface.FindMaterial(name)
-    end
+		return Surface.FindMaterial(name)
+	end
 
 	-- Returns whether the currently focused panel is a child of the given one.
-    function vgui.FocusedHasParent(panel)
-        local focusedPanel = Input.GetFocus()
+	function vgui.FocusedHasParent(panel)
+		local focusedPanel = Input.GetFocus()
 
-        if (not IsValid(focusedPanel)) then
-            return false
-        end
+		if (not IsValid(focusedPanel)) then
+			return false
+		end
 
-        while (IsValid(focusedPanel)) do
-            if (focusedPanel == panel) then
-                return true
-            end
+		while (IsValid(focusedPanel)) do
+			if (focusedPanel == panel) then
+				return true
+			end
 
-            focusedPanel = focusedPanel:GetParent()
-        end
+			focusedPanel = focusedPanel:GetParent()
+		end
 
-        return false
-    end
-    vgui.GetKeyboardFocus = Input.GetFocus
+		return false
+	end
+
+	vgui.GetKeyboardFocus = Input.GetFocus
 	vgui.GetHoveredPanel = Input.GetMouseOver
 
-    gui = {
-        MouseX = function()
-            local x, y = input.GetCursorPosition()
+	gui = {
+		MouseX = function()
+			local x, y = input.GetCursorPosition()
 			return x
-        end,
+		end,
 		MouseY = function()
 			local x, y = input.GetCursorPosition()
 			return y
-        end,
-        SetMousePos = input.SetCursorPosition,
-    }
-    input.SetCursorPos = input.SetCursorPosition
+		end,
+		SetMousePos = input.SetCursorPosition,
+	}
+
+	input.SetCursorPos = input.SetCursorPosition
 	input.GetCursorPos = input.GetCursorPosition
 
-    CreateMaterial = Surface.CreateMaterial
+	function input.IsShiftDown()
+		return input.IsKeyDown(KEY_LSHIFT) or input.IsKeyDown(KEY_RSHIFT)
+	end
+
+	function input.IsControlDown()
+		return input.IsKeyDown(KEY_LCONTROL) or input.IsKeyDown(KEY_RCONTROL)
+	end
+
+	CreateMaterial = Surface.CreateMaterial
 	DisableClipping = Surface.DisableClipping
 
 	local PANEL_META = FindMetaTable("Panel")
@@ -435,26 +445,26 @@ else
 	PANEL_META.Dock = PANEL_META.SetDock
 	PANEL_META.DockMargin = PANEL_META.SetDockMargin
 	PANEL_META.DockPadding = PANEL_META.SetDockPadding
-    PANEL_META.ChildCount = PANEL_META.GetChildCount
-    PANEL_META.ChildrenSize = PANEL_META.GetChildrenSize
-    PANEL_META.NoClipping = PANEL_META.SetPaintClippingEnabled
+	PANEL_META.ChildCount = PANEL_META.GetChildCount
+	PANEL_META.ChildrenSize = PANEL_META.GetChildrenSize
+	PANEL_META.NoClipping = PANEL_META.SetPaintClippingEnabled
 
-    function PANEL_META:DrawFilledRect()
-        local width, height = self:GetSize()
-        surface.DrawRect(0, 0, width, height)
-    end
+	function PANEL_META:DrawFilledRect()
+		local width, height = self:GetSize()
+		surface.DrawRect(0, 0, width, height)
+	end
 
-    function PANEL_META:DrawOutlinedRect()
-        local width, height = self:GetSize()
-        surface.DrawOutlinedRect(0, 0, width, height)
-    end
+	function PANEL_META:DrawOutlinedRect()
+		local width, height = self:GetSize()
+		surface.DrawOutlinedRect(0, 0, width, height)
+	end
 
 	function PANEL_META:DrawTexturedRect()
 		local width, height = self:GetSize()
 		surface.DrawTexturedRect(0, 0, width, height)
 	end
 
-    function PANEL_META:MouseCapture(doCapture)
+	function PANEL_META:MouseCapture(doCapture)
 		if (doCapture) then
 			input.SetMouseCapture(self)
 		else
@@ -496,9 +506,10 @@ else
 
 	local LABEL_PANEL_META = FindMetaTable("Label")
 	LABEL_PANEL_META._OriginalSetFont = LABEL_PANEL_META._OriginalSetFont or LABEL_PANEL_META.SetFont
-    LABEL_PANEL_META._OriginalGetFont = LABEL_PANEL_META._OriginalGetFont or LABEL_PANEL_META.GetFont
+	LABEL_PANEL_META._OriginalGetFont = LABEL_PANEL_META._OriginalGetFont or LABEL_PANEL_META.GetFont
+	LABEL_PANEL_META._OriginalSetContentAlignment = LABEL_PANEL_META._OriginalSetContentAlignment or LABEL_PANEL_META.SetContentAlignment
 
-    LABEL_PANEL_META.GetTextSize = LABEL_PANEL_META.GetContentSize
+	LABEL_PANEL_META.GetTextSize = LABEL_PANEL_META.GetContentSize
 
 	function LABEL_PANEL_META:SetFontInternal(font)
 		self:SetFontByName(font)
@@ -517,6 +528,30 @@ else
 		self._expensiveShadow = { distance = distance, color = color }
 	end
 
+	--- Set content alignment based on numpad keys
+	local NUMPAD_TO_ALIGNMENT_MAP = {
+		[7] = 0,
+		[8] = 1,
+		[9] = 2,
+
+		[4] = 3,
+		[5] = 4,
+		[6] = 5,
+
+		[1] = 6,
+		[2] = 7,
+		[3] = 8,
+	}
+	function LABEL_PANEL_META:SetContentAlignment(numpadAlignment)
+		local alignment = NUMPAD_TO_ALIGNMENT_MAP[numpadAlignment]
+
+		if (not alignment) then
+			error("attempt to set invalid content alignment \"" .. tostring(numpadAlignment) .. "\"", 2)
+		end
+
+		self:_OriginalSetContentAlignment(alignment)
+	end
+
 	local TEXT_ENTRY_PANEL_META = FindMetaTable("TextEntry")
 	TEXT_ENTRY_PANEL_META._OriginalSetFont = TEXT_ENTRY_PANEL_META._OriginalSetFont or TEXT_ENTRY_PANEL_META.SetFont
 	TEXT_ENTRY_PANEL_META._OriginalGetFont = TEXT_ENTRY_PANEL_META._OriginalGetFont or TEXT_ENTRY_PANEL_META.GetFont
@@ -530,38 +565,47 @@ else
 		self:SetFontByName(font)
 	end
 
-    function TEXT_ENTRY_PANEL_META:GetFont()
-        return self:GetFontName()
-    end
+	function TEXT_ENTRY_PANEL_META:GetFont()
+		return self:GetFontName()
+	end
 
-    local CHECK_BUTTON_PANEL_META = FindMetaTable("CheckButton")
-    CHECK_BUTTON_PANEL_META.GetValue = CHECK_BUTTON_PANEL_META.IsSelected
+	local CHECK_BUTTON_PANEL_META = FindMetaTable("CheckButton")
+	CHECK_BUTTON_PANEL_META.GetValue = CHECK_BUTTON_PANEL_META.IsSelected
 
-    function PANEL_META:GetValue()
-        local className = self:GetClassName()
+	function PANEL_META:GetValue()
+		local className = self:GetClassName()
 
-        if (className == "LCheckButton") then
-            return CHECK_BUTTON_PANEL_META.GetValue(self)
-        elseif (className == "LTextEntry") then
-            return TEXT_ENTRY_PANEL_META.GetValue(self)
-        elseif (className == "LLabel") then
-            return LABEL_PANEL_META.GetValue(self)
-        end
+		if (className == "LCheckButton") then
+			return CHECK_BUTTON_PANEL_META.GetValue(self)
+		elseif (className == "LTextEntry") then
+			return TEXT_ENTRY_PANEL_META.GetValue(self)
+		elseif (className == "LLabel") then
+			return LABEL_PANEL_META.GetValue(self)
+		end
 
-        error("attempt to get value of unsupported panel class \"" .. tostring(className) .. "\"", 2)
-    end
+		error("attempt to get value of unsupported panel class \"" .. tostring(className) .. "\"", 2)
+	end
 
-    function PANEL_META:GetContentSize()
-        local className = self:GetClassName()
+	function PANEL_META:GetContentSize()
+		local className = self:GetClassName()
 
-        if (className == "LLabel") then
-            return LABEL_PANEL_META.GetContentSize(self)
-        end
+		if (className == "LLabel") then
+			return LABEL_PANEL_META.GetContentSize(self)
+		end
 
-        error("attempt to get content size of unsupported panel class \"" .. tostring(className) .. "\"", 2)
-    end
+		error("attempt to get content size of unsupported panel class \"" .. tostring(className) .. "\"", 2)
+	end
 
-    -- TODO: Does this need serious implementing?
+	local EDITABLEPANEL_PANEL_META = FindMetaTable("EditablePanel")
+	function PANEL_META:IsModal()
+		local className = self:GetClassName()
+
+		if (className == "LEditablePanel") then
+			return EDITABLEPANEL_PANEL_META.IsModal(self)
+		end
+	end
+
+	-- TODO: Does this need serious implementing?
 	function PANEL_META:SetDrawOnTop(isOnTop)
 		print("PANEL_META:SetDrawOnTop: Reminder to implement this function (or not).")
 	end
@@ -879,7 +923,7 @@ if (CLIENT) then
 	Include("derma/init.lua")
 	Include("vgui_base.lua")
 
-    Include("skins/default.lua")
+	Include("skins/default.lua")
 end
 
 --[[
