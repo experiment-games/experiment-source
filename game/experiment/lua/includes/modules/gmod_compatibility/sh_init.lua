@@ -701,7 +701,7 @@ else
 
 	surface.SetDrawColor = surface.DrawSetColor
 	surface.DrawRect = surface.DrawFilledRect
-	surface.DrawTexturedRectUV = surface.DrawTexturedSubRect -- TODO: Not sure if this is the correct function
+	surface.DrawTexturedRectUV = surface.DrawTexturedSubRect
 	surface.GetTextPos = surface.DrawGetTextPos
 	surface.SetFont = surface.DrawSetTextFont
 	surface.SetTextPos = surface.DrawSetTextPos

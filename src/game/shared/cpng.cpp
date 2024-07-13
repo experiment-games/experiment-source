@@ -29,9 +29,9 @@ void CPngTextureRegen::RegenerateTextureBits( ITexture *pTexture, IVTFTexture *p
 }
 
 #ifdef CLIENT_DLL
-static void PNG_ReadData( png_structp png_ptr, png_bytep outBytes, png_size_t byteCountToRead )
+static void PNG_ReadData( png_structp readPointer, png_bytep outBytes, png_size_t byteCountToRead )
 {
-    CUtlBuffer *buffer = ( CUtlBuffer * )png_get_io_ptr( png_ptr );
+    CUtlBuffer *buffer = ( CUtlBuffer * )png_get_io_ptr( readPointer );
     buffer->Get( outBytes, byteCountToRead );
 }
 
@@ -106,7 +106,7 @@ unsigned char *PNG_ReadFromBuffer( CUtlBuffer &buffer, const char *pFilePath, in
         return NULL;
     }
 
-    png_bytep *rowPointers = ( png_bytep * )malloc( sizeof( png_bytep ) * pngHeight );
+    png_bytepp rowPointers = ( png_bytepp )malloc( sizeof( png_bytep ) * pngHeight );
 
     if ( !rowPointers )
     {
@@ -122,9 +122,10 @@ unsigned char *PNG_ReadFromBuffer( CUtlBuffer &buffer, const char *pFilePath, in
     }
 
     png_read_image( readPointer, rowPointers );
+    free( rowPointers );
+
     png_read_end( readPointer, NULL );
 
-    free( rowPointers );
     png_destroy_read_struct( &readPointer, &infoPointer, NULL );
 
     width = pngWidth;
@@ -185,7 +186,12 @@ void CleanMaterialName( const char *pMaterialName, char *pCleanMaterialName, int
     Q_FixSlashes( pCleanMaterialName, '/' );
 }
 
-IMaterial *CPngTextureRegen::GetOrCreateProceduralMaterial( const char *pMaterialName, const char *pFilePath )
+IMaterial *CPngTextureRegen::GetOrCreateProceduralMaterial(
+    const char *pMaterialName,
+    const char *pFilePath,
+    KeyValues *pVMTKeyValues /* = nullptr */,
+    bool bSmooth /* = false */
+)
 {
     // TODO: The server will have incorrect info on the material (acceptable for now)
     int width = 512;
@@ -223,11 +229,31 @@ IMaterial *CPngTextureRegen::GetOrCreateProceduralMaterial( const char *pMateria
 
     if ( !pTexture )
     {
-        pTexture = g_pMaterialSystem->CreateProceduralTexture( cleanMaterialName, TEXTURE_GROUP_VGUI, width, height, imageFormat, TEXTUREFLAGS_NOMIP | TEXTUREFLAGS_NOLOD | TEXTUREFLAGS_PROCEDURAL );
+        int nFlags = TEXTUREFLAGS_PROCEDURAL | TEXTUREFLAGS_NOMIP;
+
+        if ( !bSmooth )
+        {
+            nFlags |= TEXTUREFLAGS_POINTSAMPLE | TEXTUREFLAGS_NOLOD;
+        }
+
+        pTexture = g_pMaterialSystem->CreateProceduralTexture(
+            cleanMaterialName,
+            TEXTURE_GROUP_VGUI,
+            width,
+            height,
+            imageFormat,
+            nFlags );
     }
 
-    KeyValues *pVMTKeyValues = new KeyValues( "UnlitGeneric" );
-    pVMTKeyValues->SetInt( "$translucent", 1 );
+    if ( pVMTKeyValues == nullptr )
+    {
+        pVMTKeyValues = new KeyValues( "UnlitGeneric" );
+        pVMTKeyValues->SetInt( "$vertexalpha", 1 );
+    }
+
+    Assert( !pVMTKeyValues->FindKey( "$basetexture" ) );
+    Assert( !pVMTKeyValues->FindKey( "$proceduraltexturepath" ) );
+
     pVMTKeyValues->SetString( "$basetexture", cleanMaterialName );
     pVMTKeyValues->SetString( "$proceduraltexturepath", fullFilePath );
 
@@ -243,7 +269,7 @@ IMaterial *CPngTextureRegen::GetOrCreateProceduralMaterial( const char *pMateria
 
     if ( !bIsPrecached )
     {
-        //DevWarning( "CPngTextureRegen::GetOrCreateProceduralMaterial: %s not precached\n", cleanMaterialName );
+        // DevWarning( "CPngTextureRegen::GetOrCreateProceduralMaterial: %s not precached\n", cleanMaterialName );
         pMaterial->Refresh();
     }
 
@@ -271,7 +297,7 @@ void CPngTextureRegen::ReleaseAllTextureData()
 {
     m_mapProceduralMaterials.RemoveAll();
 
-    g_pMaterialSystem->UncacheAllMaterials(); // doesnt work to have IsTextureLoaded return false :/
+    g_pMaterialSystem->UncacheAllMaterials();  // doesnt work to have IsTextureLoaded return false :/
 }
 
 /*
@@ -292,9 +318,9 @@ CPngMaterialProxy::CPngMaterialProxy()
 
 CPngMaterialProxy::~CPngMaterialProxy()
 {
-    //DevWarning( "CPngMaterialProxy::~CPngMaterialProxy for texture %s\n", m_pTexture->GetName() );
-    // Disconnect the texture regenerator, or else we will get a crash on exit in MaterialSystem.dll
-    // in certain situations (like having the ESC menu opened when finding a material)
+    // DevWarning( "CPngMaterialProxy::~CPngMaterialProxy for texture %s\n", m_pTexture->GetName() );
+    //  Disconnect the texture regenerator, or else we will get a crash on exit in MaterialSystem.dll
+    //  in certain situations (like having the ESC menu opened when finding a material)
     if ( m_pTexture != NULL )
     {
         m_pTexture->SetTextureRegenerator( NULL );
@@ -323,7 +349,7 @@ bool CPngMaterialProxy::Init( IMaterial *pMaterial, KeyValues *pKeyValues )
     }
 
     m_pTexture = m_pTextureVar->GetTextureValue();
-    //DevWarning( "CPngMaterialProxy::Init: %s\n", m_pTexture->GetName() );
+    // DevWarning( "CPngMaterialProxy::Init: %s\n", m_pTexture->GetName() );
 
     m_pTexture->SetTextureRegenerator( &m_TextureRegen );
     m_pTexture->Download();
@@ -385,7 +411,7 @@ void CPngMaterialProxy::LoadTexture( ITexture *pTexture, IVTFTexture *pVTFTextur
     // Ensure the texture we are copying to is the same format as the texture we are copying from
     pVTFTexture->ConvertImageFormat( pTexture->GetImageFormat(), false );
 
-    if (pTexture->IsMipmapped())
+    if ( pTexture->IsMipmapped() )
     {
         DevWarning( "Failed regenerating PNG as Texture! Mipmapped textures are not supported \"%s\"\n", pTexture->GetName() );
         return;

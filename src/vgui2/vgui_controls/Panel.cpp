@@ -4172,8 +4172,8 @@ void Panel::PerformLayout()
     Panel::GetSize( wide, tall );
 
     BEGIN_LUA_CALL_PANEL_METHOD( "PerformLayout" );
-    lua_pushinteger( L, wide );
-    lua_pushinteger( L, tall );
+    lua_pushinteger( m_lua_State, wide );
+    lua_pushinteger( m_lua_State, tall );
     END_LUA_CALL_PANEL_METHOD( 2, 0 );
 
     // Hack so we can implement Docking in Lua (see game/experiment/lua/includes/extensions/panel.lua)
@@ -4181,8 +4181,8 @@ void Panel::PerformLayout()
     {
         BEGIN_LUA_CALL_HOOK_FOR_STATE( m_lua_State, "OnPanelPerformLayout" );
         this->PushPanelToLua( m_lua_State );
-        lua_pushinteger( L, wide );
-        lua_pushinteger( L, tall );
+        lua_pushinteger( m_lua_State, wide );
+        lua_pushinteger( m_lua_State, tall );
         END_LUA_CALL_HOOK_FOR_STATE( m_lua_State, 3, 0 );
     }
 #endif

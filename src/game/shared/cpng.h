@@ -37,7 +37,11 @@ class CPngTextureRegen : public ITextureRegenerator
    public:
     static CUtlMap< const char *, CPngMaterialProxy * > m_mapProceduralMaterials;
 
-    static IMaterial *GetOrCreateProceduralMaterial( const char *pMaterialName, const char *filePath );
+    static IMaterial *GetOrCreateProceduralMaterial(
+        const char *pMaterialName,
+        const char *pFilePath,
+        KeyValues *pVMTKeyValues = nullptr,
+        bool bSmooth = false );
     static CPngMaterialProxy *GetProceduralMaterialProxy( const char *pMaterialName );
     static void ReleaseAllTextureData();
 };

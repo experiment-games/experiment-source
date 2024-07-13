@@ -107,20 +107,20 @@ static int surface_DisableClipping( lua_State *L )
 
 static int surface_DrawFilledRect( lua_State *L )
 {
-    int x = luaL_checknumber( L, 1 );
-    int y = luaL_checknumber( L, 2 );
-    int width = luaL_checknumber( L, 3 );
-    int height = luaL_checknumber( L, 4 );
+    float x = luaL_checknumber( L, 1 );
+    float y = luaL_checknumber( L, 2 );
+    float width = luaL_checknumber( L, 3 );
+    float height = luaL_checknumber( L, 4 );
     surface()->DrawFilledRect( x, y, x + width, y + height );
     return 0;
 }
 
 static int surface_DrawFilledRectFade( lua_State *L )
 {
-    int x = luaL_checknumber( L, 1 );
-    int y = luaL_checknumber( L, 2 );
-    int width = luaL_checknumber( L, 3 );
-    int height = luaL_checknumber( L, 4 );
+    float x = luaL_checknumber( L, 1 );
+    float y = luaL_checknumber( L, 2 );
+    float width = luaL_checknumber( L, 3 );
+    float height = luaL_checknumber( L, 4 );
     surface()->DrawFilledRectFade( x, y, x + width, y + height, luaL_checkint( L, 5 ), luaL_checkint( L, 6 ), luaL_checkboolean( L, 7 ) );
     return 0;
 }
@@ -183,10 +183,10 @@ static int surface_DrawOutlinedCircle( lua_State *L )
 
 static int surface_DrawOutlinedRect( lua_State *L )
 {
-    int x = luaL_checknumber( L, 1 );
-    int y = luaL_checknumber( L, 2 );
-    int width = luaL_checknumber( L, 3 );
-    int height = luaL_checknumber( L, 4 );
+    float x = luaL_checknumber( L, 1 );
+    float y = luaL_checknumber( L, 2 );
+    float width = luaL_checknumber( L, 3 );
+    float height = luaL_checknumber( L, 4 );
     surface()->DrawOutlinedRect( x, y, x + width, y + height );
     return 0;
 }
@@ -281,8 +281,8 @@ static int surface_DrawSetTextureFile( lua_State *L )
 static int surface_DrawSetTextureRGBA( lua_State *L )
 {
     int id = luaL_checkint( L, 1 );
-    int width = luaL_checknumber( L, 2 );
-    int height = luaL_checknumber( L, 3 );
+    float width = luaL_checknumber( L, 2 );
+    float height = luaL_checknumber( L, 3 );
     const unsigned char *rgba = ( const unsigned char * )luaL_checkstring( L, 4 );
     surface()->DrawSetTextureRGBA( id, rgba, width, height, luaL_optint( L, 5, 0 ), luaL_optboolean( L, 6, true ) );
     return 0;
@@ -296,25 +296,25 @@ static int surface_DrawSetTextureMaterial( lua_State *L )
 
 static int surface_DrawTexturedRect( lua_State *L )
 {
-    int x = luaL_checknumber( L, 1 );
-    int y = luaL_checknumber( L, 2 );
-    int width = luaL_checknumber( L, 3 );
-    int height = luaL_checknumber( L, 4 );
+    float x = luaL_checknumber( L, 1 );
+    float y = luaL_checknumber( L, 2 );
+    float width = luaL_checknumber( L, 3 );
+    float height = luaL_checknumber( L, 4 );
     surface()->DrawTexturedRect( x, y, x + width, y + height );
     return 0;
 }
 
 static int surface_DrawTexturedSubRect( lua_State *L )
 {
-    int x0 = luaL_checknumber( L, 1 );
-    int y0 = luaL_checknumber( L, 2 );
-    int x1 = luaL_checknumber( L, 3 );
-    int y1 = luaL_checknumber( L, 4 );
+    float x = luaL_checknumber( L, 1 );
+    float y = luaL_checknumber( L, 2 );
+    float width = luaL_checknumber( L, 3 );
+    float height = luaL_checknumber( L, 4 );
     float texs0 = luaL_checknumber( L, 5 );
     float text0 = luaL_checknumber( L, 6 );
     float texs1 = luaL_checknumber( L, 7 );
     float text1 = luaL_checknumber( L, 8 );
-    surface()->DrawTexturedSubRect( x0, y0, x0 + x1, y0 + y1, texs0, text0, texs1, text1 );
+    surface()->DrawTexturedSubRect( x, y, x + width, y + height, texs0, text0, texs1, text1 );
 
     return 0;
 }
@@ -657,9 +657,67 @@ static int surface_UnlockCursor( lua_State *L )
     return 0;
 }
 
+static KeyValues *ParseParameters( const char *parameters, bool &outSmooth )
+{
+    KeyValues *outKeyValues = new KeyValues( "UnlitGeneric" );
+    bool keyValuesChanged = false;
+    outSmooth = false;
+
+    if ( !parameters || !parameters[0] )
+        return nullptr;
+
+    char *p = strdup( parameters );
+    char *token = strtok( p, " " );
+
+    while ( token )
+    {
+        if ( Q_stricmp( token, "vertexlitgeneric" ) == 0 )
+        {
+            outKeyValues->SetName( "VertexLitGeneric" );
+            keyValuesChanged = true;
+        }
+        else if ( Q_stricmp( token, "nocull" ) == 0 )
+        {
+            outKeyValues->SetInt( "$nocull", 1 );
+            keyValuesChanged = true;
+        }
+        else if ( Q_stricmp( token, "alphatest" ) == 0 )
+        {
+            outKeyValues->SetInt( "$alphatest", 1 );
+            keyValuesChanged = true;
+        }
+        else if ( Q_stricmp( token, "mips" ) == 0 )
+        {
+            // TODO: Generates Mipmaps for the imported texture, or sets No Level Of Detail and No Mipmaps if unset. This adjusts the material's dimensions to a power of 2.
+            DevWarning( "Mips material parameter is not implemented yet\n" );
+        }
+        else if ( Q_stricmp( token, "noclamp" ) == 0 )
+        {
+            outKeyValues->SetInt( "$flags", MATERIAL_VAR_NOCULL );
+            keyValuesChanged = true;
+        }
+        else if ( Q_stricmp( token, "ignorez" ) == 0 )
+        {
+            outKeyValues->SetInt( "$ignorez", 1 );
+            keyValuesChanged = true;
+        }
+        else if ( Q_stricmp( token, "smooth" ) == 0 )
+        {
+            outSmooth = true;
+        }
+
+        token = strtok( NULL, " " );
+    }
+
+    free( p );
+
+    return outKeyValues;
+}
+
 static int surface_FindMaterial( lua_State *L )
 {
     const char *name = luaL_checkstring( L, 1 );
+    const char *parameters = luaL_optstring( L, 2, "" );
 
     IMaterial *pMaterial = g_pMaterialSystem->FindMaterial( name, 0, false );
 
@@ -677,7 +735,9 @@ static int surface_FindMaterial( lua_State *L )
             char materialName[MAX_PATH];
             Q_snprintf( materialName, sizeof( materialName ), "!%s", nameWithoutExtension );
 
-            pMaterial = CPngTextureRegen::GetOrCreateProceduralMaterial( materialName, name );
+            bool isSmooth;
+            KeyValues *keyValues = ParseParameters( parameters, isSmooth );
+            pMaterial = CPngTextureRegen::GetOrCreateProceduralMaterial( materialName, name, keyValues, isSmooth );
 
             // We need to assign a TextureID to the material, or else the game will crash in MaterialSystem.pdb
             // when shutting down the game, after having created (but never assigning a CreateNewTextureID)

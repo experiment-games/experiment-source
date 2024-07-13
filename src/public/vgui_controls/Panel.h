@@ -189,6 +189,7 @@ class Panel : public IClientPanel, virtual IForceVirtualInheritancePanel
         for ( int i = 0; i < GetChildCount(); i++ )
         {
             Panel *pChild = GetChild( i );
+            pChild->InvalidateLayout( true, false );
             int x, y;
             pChild->GetPos( x, y );
             int w, t;

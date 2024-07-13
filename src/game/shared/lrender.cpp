@@ -147,25 +147,25 @@ static int ITexture_GetName( lua_State *L )
 
 static int ITexture_GetActualWidth( lua_State *L )
 {
-    lua_pushinteger( L, luaL_checkitexture( L, 1 )->GetActualWidth() );
+    lua_pushnumber( L, luaL_checkitexture( L, 1 )->GetActualWidth() );
     return 1;
 }
 
 static int ITexture_GetActualHeight( lua_State *L )
 {
-    lua_pushinteger( L, luaL_checkitexture( L, 1 )->GetActualHeight() );
+    lua_pushnumber( L, luaL_checkitexture( L, 1 )->GetActualHeight() );
     return 1;
 }
 
 static int ITexture_GetMappingWidth( lua_State *L )
 {
-    lua_pushinteger( L, luaL_checkitexture( L, 1 )->GetMappingWidth() );
+    lua_pushnumber( L, luaL_checkitexture( L, 1 )->GetMappingWidth() );
     return 1;
 }
 
 static int ITexture_GetMappingHeight( lua_State *L )
 {
-    lua_pushinteger( L, luaL_checkitexture( L, 1 )->GetMappingHeight() );
+    lua_pushnumber( L, luaL_checkitexture( L, 1 )->GetMappingHeight() );
     return 1;
 }
 

@@ -166,6 +166,8 @@
             this->PushPanelToLua( m_lua_State );                                       \
             ++args;
 
+// Will call the function if it exists, leaving the specified amount of
+// return values on the stack (or nils if the function doesn't exist).
 #define END_LUA_CALL_PANEL_METHOD( nArgs, nresults )          \
     args += nArgs;                                            \
     if ( luasrc_pcall( m_lua_State, args, nresults, 0 ) > 0 ) \
@@ -176,7 +178,14 @@
         }                                                     \
     }                                                         \
     }                                                         \
-    else lua_pop( m_lua_State, 1 );                           \
+    else                                                      \
+    {                                                         \
+        lua_pop( m_lua_State, 1 );                            \
+        for ( int i = 0; i < nresults; i++ )                  \
+        {                                                     \
+            lua_pushnil( m_lua_State );                       \
+        }                                                     \
+    }                                                         \
     }
 
 #define RETURN_LUA_NONE()                                  \
@@ -381,7 +390,7 @@
                                                                                      \
     lua_pop( L, 1 ); /* Pop the Label metatable */
 
-#define LUA_GET_REF_TABLE( L, Target )             \
+#define LUA_GET_REF_TABLE( L, Target )                     \
     if ( !lua_isrefvalid( L, Target->m_nTableReference ) ) \
     {                                                      \
         Target->SetupRefTable( L );                        \
@@ -432,11 +441,11 @@
                                              \
     lua_pop( L, 2 ); /* Pop the table and the nil value */
 
-#define LUA_METATABLE_INDEX_CHECK_REF_TABLE( L, Target )                            \
+#define LUA_METATABLE_INDEX_CHECK_REF_TABLE( L, Target )                                    \
     /* We follow by checking if the target has any properties set in its reference table */ \
     if ( Target && L )                                                                      \
     {                                                                                       \
-        LUA_GET_REF_TABLE( L, Target );                                             \
+        LUA_GET_REF_TABLE( L, Target );                                                     \
         LUA_METATABLE_INDEX_CHECK_TABLE( L );                                               \
     }
 
