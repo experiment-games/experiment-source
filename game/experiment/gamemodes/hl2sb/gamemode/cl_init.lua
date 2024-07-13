@@ -57,9 +57,10 @@ Surface.SetMaterial = function(material)
 
 	if (not textureMap[name]) then
 		textureMap[name] = Surface.CreateNewTextureID(true)
+		Surface.DrawSetTextureMaterial(textureMap[name], material)
 	end
 
-	Surface.DrawSetTextureMaterial(textureMap[name], material)
+	Surface.DrawSetTexture(textureMap[name])
 end
 
 testMat = Surface.FindMaterial("silkicons/accept.png")

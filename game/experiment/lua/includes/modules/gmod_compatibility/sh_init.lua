@@ -713,10 +713,11 @@ else
 		local name = material:GetString("$basetexture")
 
 		if (not textureMap[name]) then
-			textureMap[name] = surface.CreateNewTextureID(true)
+			textureMap[name] = Surface.CreateNewTextureID(true)
+			Surface.DrawSetTextureMaterial(textureMap[name], material)
 		end
 
-		surface.DrawSetTextureMaterial(textureMap[name], material)
+		Surface.DrawSetTexture(textureMap[name])
 	end
 
 	-- TODO: Implement
