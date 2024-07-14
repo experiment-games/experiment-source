@@ -10,11 +10,11 @@
 #include <vgui/ISurface.h>
 #include <vgui_controls/Controls.h>
 #include "mathlib/lvector.h"
+#include <lColor.h>
 #endif
 
 // memdbgon must be the last include file in a .cpp file!!!
 #include "tier0/memdbgon.h"
-#include <lColor.h>
 
 #ifdef CLIENT_DLL
 // List of all texture ids created during the lifetime of the client Lua state
@@ -128,24 +128,24 @@ static int render_Push3DView(lua_State* L)
 {
     CViewSetup playerView = *view->GetPlayerViewSetup();
 
-    Vector pos = luaL_optvector(L, 1, &playerView.origin);
+    Vector origin = luaL_optvector(L, 1, &playerView.origin);
     QAngle angles = luaL_optangle(L, 2, &playerView.angles);
     float fov = luaL_optnumber(L, 3, playerView.fov);
     int x = luaL_optint(L, 4, playerView.x);
     int y = luaL_optint(L, 5, playerView.y);
-    int w = luaL_optint(L, 6, playerView.width);
-    int h = luaL_optint(L, 7, playerView.height);
+    int width = luaL_optint(L, 6, playerView.width);
+    int height = luaL_optint(L, 7, playerView.height);
     float zNear = luaL_optnumber(L, 8, playerView.zNear);
     float zFar = luaL_optnumber(L, 9, playerView.zFar);
 
     CViewSetup viewModelSetup( playerView );
-    viewModelSetup.origin = pos;
+    viewModelSetup.origin = origin;
     viewModelSetup.angles = angles;
     viewModelSetup.fov = fov;
     viewModelSetup.x = x;
     viewModelSetup.y = y;
-    viewModelSetup.width = w;
-    viewModelSetup.height = h;
+    viewModelSetup.width = width;
+    viewModelSetup.height = height;
     viewModelSetup.zNear = zNear;
     viewModelSetup.zFar = zFar;
 

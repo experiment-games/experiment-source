@@ -125,6 +125,7 @@
 #include "sourcevr/isourcevirtualreality.h"
 #include "client_virtualreality.h"
 #include "mumble.h"
+#include "lc_baseflex.h"
 
 // NVNT includes
 #include "hud_macros.h"
@@ -1764,6 +1765,9 @@ void CHLClient::LevelShutdown(void) {
     C_PhysPropClientside::DestroyAll();
 
     modemanager->LevelShutdown();
+
+    // Experiment; release any clientside entities
+    g_pClientSideEntityManager->Release();
 
     // Remove temporary entities before removing entities from the client entity
     // list so that the te_* may clean up before hand.

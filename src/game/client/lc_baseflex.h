@@ -30,4 +30,26 @@ LUA_API void( lua_pushbaseflex )( lua_State *L, lua_CBaseFlex *pEntity );
 
 LUALIB_API lua_CBaseFlex *( luaL_checkbaseflex )( lua_State *L, int narg );
 
+/*
+** Manager for client side entities
+*/
+class CClientSideEntityManager
+{
+   public:
+    CClientSideEntityManager();
+    ~CClientSideEntityManager();
+
+    lua_CBaseFlex *CreateClientSideEntity( const char *pszModelName, RenderGroup_t renderGroup );
+    void Clear();
+    void Release();
+
+   protected:
+    void InitClientEntity( lua_CBaseFlex *pClientSideEntity, const model_t *pModel, RenderGroup_t renderGroup );
+
+    CClassMemoryPool< lua_CBaseFlex > m_ClientSideEntityPool;
+    CUtlLinkedList< lua_CBaseFlex *, unsigned short > m_ClientSideEntities;
+};
+
+extern CClientSideEntityManager *g_pClientSideEntityManager;
+
 #endif  // LC_BASEFLEX_H

@@ -12,11 +12,92 @@
 #include "lbaseplayer_shared.h"
 #include "mathlib/lvector.h"
 #include "lvphysics_interface.h"
-#include <winlite.h>
 
 // memdbgon must be the last include file in a .cpp file!!!
 #include "tier0/memdbgon.h"
 #include <model_types.h>
+
+const int MIN_CLIENTSIDE_ENTITIES = 64;
+const int MAX_CLIENTSIDE_ENTITIES = 1024;
+
+static CClientSideEntityManager s_ClientSideEntityManager;
+CClientSideEntityManager *g_pClientSideEntityManager = &s_ClientSideEntityManager;
+
+CClientSideEntityManager::CClientSideEntityManager()
+    : m_ClientSideEntityPool( MIN_CLIENTSIDE_ENTITIES, CUtlMemoryPool::GROW_SLOW )
+{
+}
+
+CClientSideEntityManager::~CClientSideEntityManager()
+{
+    m_ClientSideEntityPool.Clear();
+    m_ClientSideEntities.RemoveAll();
+}
+
+void CClientSideEntityManager::Clear()
+{
+    FOR_EACH_LL( m_ClientSideEntities, i )
+    {
+        lua_CBaseFlex *pClientSideEntity = m_ClientSideEntities[i];
+
+        m_ClientSideEntityPool.Free( pClientSideEntity );
+    }
+
+    m_ClientSideEntities.RemoveAll();
+}
+
+void CClientSideEntityManager::Release()
+{
+    Clear();
+}
+
+lua_CBaseFlex *CClientSideEntityManager::CreateClientSideEntity( const char *pszModelName, RenderGroup_t renderGroup )
+{
+    if ( m_ClientSideEntityPool.Count() >= MAX_CLIENTSIDE_ENTITIES )
+    {
+        DevWarning( 1, "Too many clientside ents (maximum is %d)!\n", MAX_CLIENTSIDE_ENTITIES );
+        return NULL;
+    }
+
+    lua_CBaseFlex *pClientSideEntity = m_ClientSideEntityPool.AllocZero();
+
+    m_ClientSideEntities.AddToTail( pClientSideEntity );
+
+    // Force loading of the model into memory immediately
+    // TODO: Always load the model immediately? Or check if it's already loaded?
+    model_t *pModel = ( model_t * )engine->LoadModel( pszModelName, true );
+
+    InitClientEntity( pClientSideEntity, pModel, renderGroup );
+
+    return pClientSideEntity;
+}
+
+void CClientSideEntityManager::InitClientEntity( lua_CBaseFlex *pClientSideEntity, const model_t *pModel, RenderGroup_t renderGroup )
+{
+    pClientSideEntity->SetModelPointer( pModel );
+    pClientSideEntity->m_RenderGroup = renderGroup;
+
+    pClientSideEntity->m_nBody = 0;
+    pClientSideEntity->m_nSkin = 0;
+    pClientSideEntity->SetRenderMode( kRenderNormal );
+    pClientSideEntity->m_nRenderFX = kRenderFxNone;
+    pClientSideEntity->Interp_SetupMappings( pClientSideEntity->GetVarMapping() );
+    pClientSideEntity->SetAbsOrigin( vec3_origin );
+
+    pClientSideEntity->index = -1;
+
+    cl_entitylist->AddNonNetworkableEntity( pClientSideEntity->GetIClientUnknown() );
+    Assert( pClientSideEntity->GetClientHandle() != ClientEntityList().InvalidHandle() );
+
+    if ( pClientSideEntity->m_RenderGroup == RENDER_GROUP_OTHER )
+    {
+        pClientSideEntity->AddToLeafSystem();
+    }
+    else
+    {
+        pClientSideEntity->AddToLeafSystem( pClientSideEntity->m_RenderGroup );
+    }
+}
 
 /*
 ** access functions (stack -> C)
@@ -28,19 +109,20 @@ LUA_API lua_CBaseFlex *lua_tobaseflex( lua_State *L, int idx )
         dynamic_cast< CBaseHandle * >( ( CBaseHandle * )lua_touserdata( L, idx ) );
     if ( hEntity == NULL )
         return NULL;
-    return dynamic_cast< lua_CBaseFlex * >( hEntity->Get() );
+    IHandleEntity *pEntity = hEntity->Get();
+    return dynamic_cast< lua_CBaseFlex * >( pEntity );
 }
 
 /*
 ** push functions (C -> stack)
 */
 
-LUA_API void lua_pushbaseflex( lua_State *L, CBaseFlex *pEntity )
+LUA_API void lua_pushbaseflex( lua_State *L, lua_CBaseFlex *pEntity )
 {
     CBaseHandle *hEntity =
         ( CBaseHandle * )lua_newuserdata( L, sizeof( CBaseHandle ) );
     hEntity->Set( pEntity );
-    luaL_getmetatable( L, "CBaseFlex" );
+    luaL_getmetatable( L, LUA_CBASEFLEXLIBNAME );
     lua_setmetatable( L, -2 );
 }
 
@@ -133,7 +215,7 @@ static int CBaseFlex___eq( lua_State *L )
 
 static int CBaseFlex___tostring( lua_State *L )
 {
-    CBaseFlex *pEntity = lua_tobaseflex( L, 1 );
+    lua_CBaseFlex *pEntity = lua_tobaseflex( L, 1 );
     if ( pEntity == NULL )
         lua_pushstring( L, "NULL" );
     else
@@ -171,13 +253,7 @@ static int CBaseFlex_ClientsideModel( lua_State *L )
     }
 
     int renderGroup = luaL_optint( L, 2, RENDER_GROUP_OTHER );
-    CBaseFlex *pEntity = new CBaseFlex();
-    pEntity->InitializeAsClientEntity( pszModelName, ( RenderGroup_t )renderGroup );
-    // Force loading of the model into memory immediately
-    // TODO: Always load the model immediately? Or check if it's already loaded?
-    model_t *pModel = ( model_t * )engine->LoadModel( "models/crossbow_bolt.mdl", false );
-    pEntity->SetModelPointer( pModel );
-    Assert( pEntity->GetModelPtr() );
+    lua_CBaseFlex *pEntity = g_pClientSideEntityManager->CreateClientSideEntity( pszModelName, ( RenderGroup_t )renderGroup );
     lua_pushbaseflex( L, pEntity );
     return 1;
 }

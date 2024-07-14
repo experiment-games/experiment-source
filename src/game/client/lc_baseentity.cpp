@@ -50,6 +50,18 @@ static int CBaseEntity_IsEnabledInToolView( lua_State *L )
     return 1;
 }
 
+static int CBaseEntity_SetIK( lua_State *L )
+{
+    bool bUseIK = luaL_checkboolean( L, 2 );
+
+    if ( bUseIK )
+        luaL_checkentity( L, 1 )->m_EntClientFlags &= ~ENTCLIENTFLAG_DONTUSEIK;
+    else
+        luaL_checkentity( L, 1 )->m_EntClientFlags |= ENTCLIENTFLAG_DONTUSEIK;
+
+    return 0;
+}
+
 static int CBaseEntity_SetToolRecording( lua_State *L )
 {
     luaL_checkentity( L, 1 )->SetToolRecording( luaL_checkboolean( L, 2 ) );
@@ -175,6 +187,7 @@ static const luaL_Reg CBaseEntitymeta[] = {
     { "Term", CBaseEntity_Term },
     { "EnableInToolView", CBaseEntity_EnableInToolView },
     { "IsEnabledInToolView", CBaseEntity_IsEnabledInToolView },
+    { "SetIK", CBaseEntity_SetIK },
     { "SetToolRecording", CBaseEntity_SetToolRecording },
     { "IsValid", CBaseEntity_IsValid },
     { "IsToolRecording", CBaseEntity_IsToolRecording },

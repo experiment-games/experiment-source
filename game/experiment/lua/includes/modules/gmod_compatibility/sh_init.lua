@@ -327,14 +327,10 @@ ENTITY_META.GetTable = ENTITY_META.GetRefTable
 
 function ENTITY_META:SetNoDraw(bBool)
     if (bBool) then
-        self:SetRenderMode(10) -- kRenderNone
+        self:AddEffects(EF_NODRAW)
     else
-        self:SetRenderMode(0) -- kRenderNormal
+        self:RemoveEffects(EF_NODRAW)
     end
-end
-
-function ENTITY_META:SetIK(bBool)
-	print("TODO: Implement ENTITY_META:SetIK")
 end
 
 local PLAYER_META = FindMetaTable("Player")
