@@ -63,9 +63,29 @@ lua_CBaseFlex *CClientSideEntityManager::CreateClientSideEntity( const char *psz
 
     m_ClientSideEntities.AddToTail( pClientSideEntity );
 
-    // Force loading of the model into memory immediately
-    // TODO: Always load the model immediately? Or check if it's already loaded?
-    model_t *pModel = ( model_t * )engine->LoadModel( pszModelName, true );
+    int nModelIndex = modelinfo->GetModelClientSideIndex( pszModelName );
+
+    model_t *pModel = nullptr;
+
+    // First try get the existing model
+    if ( nModelIndex != -1 )
+    {
+        pModel = ( model_t * )modelinfo->GetModel( nModelIndex );
+
+        // After a map change, the pointer to the model may give an invalid studio model
+        // in that case, we need to force the model to be loaded again
+        if ( modelinfo->GetStudiomodel( pModel ) == nullptr )
+        {
+            pModel = nullptr;
+        }
+    }
+
+    if (pModel == nullptr)
+    {
+        // Force loading of the model into memory immediately
+        pModel = ( model_t * )engine->LoadModel( pszModelName, true );
+        modelinfo->RegisterDynamicModel( pszModelName, true );
+    }
 
     InitClientEntity( pClientSideEntity, pModel, renderGroup );
 
@@ -238,22 +258,16 @@ static const luaL_Reg CBaseFlexmeta[] = {
 static int CBaseFlex_ClientsideModel( lua_State *L )
 {
     const char *pszModelName = luaL_checkstring( L, 1 );
-    int nModelIndex = -1;
+    int renderGroup = luaL_optint( L, 2, RENDER_GROUP_OTHER );
 
-    // Try precache the model
-    if ( pszModelName != NULL )
+    if ( pszModelName == NULL )
     {
-        nModelIndex = CBaseEntity::PrecacheModel( pszModelName );
-
-        if ( nModelIndex == -1 )
-        {
-            nModelIndex = modelinfo->RegisterDynamicModel( pszModelName, true );
-            Assert( nModelIndex != -1 );
-        }
+        luaL_error( L, "ClientsideModel: Invalid model name" );
+        return 0;
     }
 
-    int renderGroup = luaL_optint( L, 2, RENDER_GROUP_OTHER );
     lua_CBaseFlex *pEntity = g_pClientSideEntityManager->CreateClientSideEntity( pszModelName, ( RenderGroup_t )renderGroup );
+
     lua_pushbaseflex( L, pEntity );
     return 1;
 }
