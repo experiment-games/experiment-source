@@ -318,9 +318,24 @@ game = {
 	GetMap = Engine.GetLevelName,
 }
 
-local ENTITY_META = FindMetaTable("Entity")
+local VECTOR_META = FindMetaTable("Vector")
+VECTOR_META.AngleEx = VECTOR_META.AngleWithUp
 
+local ENTITY_META = FindMetaTable("Entity")
+ENTITY_META.GetModel = ENTITY_META.GetModelName
 ENTITY_META.GetTable = ENTITY_META.GetRefTable
+
+function ENTITY_META:SetNoDraw(bBool)
+    if (bBool) then
+        self:SetRenderMode(10) -- kRenderNone
+    else
+        self:SetRenderMode(0) -- kRenderNormal
+    end
+end
+
+function ENTITY_META:SetIK(bBool)
+	print("TODO: Implement ENTITY_META:SetIK")
+end
 
 local PLAYER_META = FindMetaTable("Player")
 
@@ -469,17 +484,19 @@ else
 		self:_OriginalRebuildSpawnIcon({
 			origin = Vector(0, 0, 0),
 			angles = Angle(0, 0, 0),
-			fov = 90,
-			znear = 1,
-			zfar = 1000,
+			fieldOfView = 90,
+			zNear = 1,
+			zFar = 1000,
 		})
 	end
 
 	function MODEL_IMAGE_PANEL_META:RebuildSpawnIconEx(tab)
 		self:_OriginalRebuildSpawnIcon({
-			origin = tab.cam_pos or Vector(0, 0, 0),
-			angles = tab.cam_ang or Angle(0, 0, 0),
-			fov = tab.cam_fov or 90,
+			origin = tab.cam_pos or tab.origin or Vector(0, 0, 0),
+			angles = tab.cam_ang or tab.angles or Angle(0, 0, 0),
+            fieldOfView = tab.cam_fov or tab.fieldOfView or 90,
+            zNear = tab.nearz or tab.zNear or 1,
+			zFar = tab.farz or tab.zFar or 1000,
 		})
 	end
 

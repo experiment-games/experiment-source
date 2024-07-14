@@ -23,7 +23,11 @@
 #include <tier3/mdlutils.h>
 #include <matsys_controls/matsyscontrols.h>
 #include <mathlib/lvector.h>
-#include <view.h>
+#include "view.h"
+#include "iviewrender.h"
+#include "view_shared.h"
+#include <model_types.h>
+#include <basemodelpanel.h>
 
 using namespace vgui;
 
@@ -77,10 +81,6 @@ static const char *PathToMaterialName( const char *pngImagePath )
     return materialName;
 }
 
-// Note: https://wiki.facepunch.com/gmod/Panel:RebuildSpawnIconEx
-// TODO: Create compat function in Lua that passes default values to this function and wraps this in RebuildSpawnIconEx, accepting a table
-// Note: I think the .ent (Entity) field is ignored for this function (since we already know the model, skin and bodygroups from SetModel)
-
 /// <summary>
 /// This function is used to render a model to a PNG file given a camera setup.
 /// If pszSavePath is not NULL, the PNG file will be saved to that path. If it is NULL, the PNG
@@ -90,220 +90,177 @@ static const char *PathToMaterialName( const char *pngImagePath )
 /// <param name="pszSavePath"></param>
 void LModelImagePanel::RebuildSpawnIcon( Camera_t camera, const char *pszSavePath /*= NULL*/ )
 {
-    // - Get the model path, skin and bodygroups from the panel
-    // - Render it using the specified camera position, angle and FOV
-    // - Save it toa .png file in materials/spawnicons/<path to the model relative to GAME root>.png
-    // - Set the image to this panel
+    char pngPathFull[MAX_PATH];
 
-    int wide, tall;
-    GetSize( wide, tall );
+    if ( pszSavePath != NULL )
+    {
+        Q_strncpy( pngPathFull, pszSavePath, sizeof( pngPathFull ) );
+    }
+    else
+    {
+        // Build the path relative to the icon texture
+        Q_snprintf( pngPathFull, sizeof( pngPathFull ), "materials/spawnicons/%s", m_pszModelPath );
+        Q_StripExtension( pngPathFull, pngPathFull, sizeof( pngPathFull ) );  // strip .mdl
+        Q_DefaultExtension( pngPathFull, ".png", sizeof( pngPathFull ) );
+    }
+
+    int x, y, w, h;
+    GetBounds( x, y, w, h );
+    ParentLocalToScreen( x, y );
 
     int outputWidth = 256;
     int outputHeight = 256;
 
-   /* CMatRenderContextPtr pRenderContext( materials );
+    CMatRenderContextPtr pRenderContext( materials );
 
-    bool renderToTexture = false;
-    vgui::MatSystemSurface()->Begin3DPaint( 0, 0, outputWidth, outputHeight, renderToTexture );
+    ITexture *pTexture = materials->FindTexture( "_rt_FullFrameFB1", TEXTURE_GROUP_RENDER_TARGET );
+    pRenderContext->PushRenderTargetAndViewport( pTexture, 0, 0, outputWidth, outputHeight );
 
-    pRenderContext->MatrixMode( MATERIAL_MODEL );
-    pRenderContext->LoadIdentity();
+    int viewportX, viewportY, viewportWidth, viewportHeight;
+    pRenderContext->GetViewport( viewportX, viewportY, viewportWidth, viewportHeight );
 
-    pRenderContext->MatrixMode( MATERIAL_VIEW );
-    pRenderContext->LoadMatrix( view );
+    pRenderContext->ClearColor4ub( 0, 0, 0, 0 );
+    pRenderContext->ClearBuffers( true, true, true );
 
-    pRenderContext->MatrixMode( MATERIAL_PROJECTION );
-    pRenderContext->LoadMatrix( projection );
+    CViewSetup viewSetup;
+    memset( &viewSetup, 0, sizeof( viewSetup ) );
+    viewSetup.origin = camera.m_origin;
+    viewSetup.angles = camera.m_angles;
+    //viewSetup.m_bRenderToSubrectOfLargerScreen = true;
+    viewSetup.zNear = camera.m_flZNear;
+    viewSetup.zFar = camera.m_flZFar;
+    viewSetup.fov = camera.m_flFOV;
 
-    pRenderContext->ClearBuffers( true, true );
+    viewSetup.x = viewportX;
+    viewSetup.y = viewportY;
+    viewSetup.width = ( float )outputWidth;
+    viewSetup.height = ( float )outputHeight;
+    viewSetup.m_bOrtho = true;
 
-    pRenderContext->CullMode( MATERIAL_CULLMODE_CCW );
-    pRenderContext->SetIntRenderingParameter( INT_RENDERPARM_WRITE_DEPTH_TO_DESTALPHA, false );*/
-
-    MDLHandle_t modelHandle = vgui::MDLCache()->FindMDL( m_pszModelPath );
-
-    if ( vgui::MDLCache()->IsErrorModel( modelHandle ) )
+    if ( g_pMaterialSystemHardwareConfig->GetHDREnabled() )
     {
-        DevWarning( "Failed to load model %s\n", m_pszModelPath );
-        return;
-    }
-
-    VMatrix view, projection;
-    ComputeViewMatrix( &view, camera );
-    ComputeProjectionMatrix( &projection, camera, outputWidth, outputHeight );
-
-    VMatrix worldToCamera;
-    MatrixInverseTR( view, worldToCamera );
-    Vector vecOrigin, vecRight, vecUp, vecForward;
-    MatrixGetColumn( worldToCamera, 0, &vecRight );
-    MatrixGetColumn( worldToCamera, 1, &vecUp );
-    MatrixGetColumn( worldToCamera, 2, &vecForward );
-    MatrixGetColumn( worldToCamera, 3, &vecOrigin );
-
-    MDLData_t rootModel;
-    rootModel.m_MDL.SetMDL( modelHandle );
-    rootModel.m_MDL.m_bWorldSpaceViewTarget = true;
-    rootModel.m_MDL.m_vecViewTarget = vecOrigin;
-    rootModel.m_bDisabled = false;
-    rootModel.m_flCycleStartTime = 0.0f;
-
-    StudioRenderConfig_t studioRenderConfig;
-    memset( &studioRenderConfig, 0, sizeof( studioRenderConfig ) );
-    studioRenderConfig.fEyeShiftX = 0.0f;
-    studioRenderConfig.fEyeShiftY = 0.0f;
-    studioRenderConfig.fEyeShiftZ = 0.0f;
-    studioRenderConfig.fEyeSize = 0.0f;
-    studioRenderConfig.fEyeGlintPixelWidthLODThreshold = 0.0f;
-    studioRenderConfig.maxDecalsPerModel = 0;
-    studioRenderConfig.drawEntities = 1;
-    studioRenderConfig.skin = m_iSkin;
-    studioRenderConfig.fullbright = 1;
-    studioRenderConfig.bEyeMove = false;
-    studioRenderConfig.bSoftwareSkin = false;
-    studioRenderConfig.bNoHardware = false;
-    studioRenderConfig.bNoSoftware = false;
-    studioRenderConfig.bTeeth = true;
-    studioRenderConfig.bEyes = true;
-    studioRenderConfig.bFlex = false;
-    studioRenderConfig.bWireframe = true;
-    studioRenderConfig.bDrawNormals = true;
-    studioRenderConfig.bDrawTangentFrame = false;
-    studioRenderConfig.bDrawZBufferedWireframe = false;
-    studioRenderConfig.bSoftwareLighting = false;
-    studioRenderConfig.bShowEnvCubemapOnly = false;
-    studioRenderConfig.bWireframeDecals = false;
-
-    StudioRenderConfig_t oldStudioRenderConfig;
-    StudioRender()->GetCurrentConfig( oldStudioRenderConfig );
-
-    StudioRender()->UpdateConfig( studioRenderConfig );
-
-    // Build the path relative to the icon texture
-    char pngPath[MAX_PATH];
-    char pngPathFull[MAX_PATH];
-    Q_snprintf( pngPath, sizeof( pngPath ), "spawnicons/%s", m_pszModelPath );
-    Q_StripExtension( pngPath, pngPath, sizeof( pngPath ) );  // strip .mdl
-    Q_DefaultExtension( pngPath, ".png", sizeof( pngPath ) );
-    Q_snprintf( pngPathFull, sizeof( pngPathFull ), "materials/%s", pngPath );
-
-    // const char *materialName = PathToMaterialName( pngPath );
-
-
-	// Color + alpha modulation
-    Color m_Color( 255, 255, 255, 255 );
-    Vector white( m_Color.r() / 255.0f, m_Color.g() / 255.0f, m_Color.b() / 255.0f );
-    g_pStudioRender->SetColorModulation( white.Base() );
-    g_pStudioRender->SetAlphaModulation( m_Color.a() / 255.0f );
-
-    DrawModelInfo_t info;
-    info.m_pStudioHdr = g_pMDLCache->GetStudioHdr( modelHandle );
-    info.m_pHardwareData = g_pMDLCache->GetHardwareData( modelHandle );
-    info.m_Decals = STUDIORENDER_DECAL_INVALID;
-    info.m_Skin = m_iSkin;
-    info.m_Body = 0;
-    info.m_HitboxSet = 0;
-    info.m_pClientEntity = NULL;
-    info.m_pColorMeshes = NULL;
-    info.m_bStaticLighting = false;
-    info.m_Lod = 0;
-
-    matrix3x4_t *pBoneToWorld = g_pStudioRender->LockBoneMatrices( info.m_pStudioHdr->numbones );
-    rootModel.m_MDL.SetUpBones( rootModel.m_MDLToWorld, info.m_pStudioHdr->numbones, pBoneToWorld );
-
-    Vector vecWorldViewTarget;
-    if ( rootModel.m_MDL.m_bWorldSpaceViewTarget )
-    {
-        vecWorldViewTarget = rootModel.m_MDL.m_vecViewTarget;
+        ITexture *pCubemapTexture = materials->FindTexture( "editor/cubemap.hdr", NULL, true );
+        pRenderContext->BindLocalCubemap( pCubemapTexture );
     }
     else
     {
-        VectorTransform( rootModel.m_MDL.m_vecViewTarget, rootModel.m_MDLToWorld, vecWorldViewTarget );
+        ITexture *pCubemapTexture = materials->FindTexture( "editor/cubemap", NULL, true );
+        pRenderContext->BindLocalCubemap( pCubemapTexture );
     }
-    g_pStudioRender->SetEyeViewTarget( info.m_pStudioHdr, info.m_Body, vecWorldViewTarget );
 
-    CMatRenderContextPtr pRenderContext( g_pMaterialSystem );
+    MDLCACHE_CRITICAL_SECTION();
 
-    // Set default flex values
-    float *pFlexWeights = NULL;
-    //const int nFlexDescCount = info.m_pStudioHdr->numflexdesc;
-    //if ( nFlexDescCount )
+    //CModelPanelModel *pTemporaryEntity = new CModelPanelModel;
+
+    //if ( !pTemporaryEntity )
+    //    return;
+
+    //if ( pTemporaryEntity->InitializeAsClientEntity( m_pszModelPath, RENDER_GROUP_OPAQUE_ENTITY ) == false )
     //{
-    //    CStudioHdr cStudioHdr( info.m_pStudioHdr, g_pMDLCache );
-
-    //    g_pStudioRender->LockFlexWeights( info.m_pStudioHdr->numflexdesc, &pFlexWeights );
-    //    cStudioHdr.RunFlexRules( m_pFlexControls, pFlexWeights );
-    //    g_pStudioRender->UnlockFlexWeights();
+    //    pTemporaryEntity->Remove();
+    //    return;
     //}
 
-    Vector vecModelOrigin;
-    MatrixGetColumn( rootModel.m_MDLToWorld, 3, vecModelOrigin );
-    g_pStudioRender->DrawModel( NULL, info, const_cast< matrix3x4_t * >( pBoneToWorld ), pFlexWeights, NULL, vecModelOrigin, STUDIORENDER_DRAW_ENTIRE_MODEL );
+    ////pTemporaryEntity->DontRecordInTools();
+    ////pTemporaryEntity->AddEffects( EF_NODRAW );
+    //pTemporaryEntity->SetModel( m_pszModelPath );
+    //pTemporaryEntity->m_nSkin = m_iSkin;
 
-    //CStudioHdr studioHdr( g_pMDLCache->GetStudioHdr( rootModel.m_MDL.GetMDL() ), g_pMDLCache );
-    //// SetupFlexWeights();
+    ///*FOR_EACH_MAP_FAST( m_pModelInfo->m_mapBodygroupValues, i )
+    //{
+    //    pTemporaryEntity->SetBodygroup( m_pModelInfo->m_mapBodygroupValues.Key( i ), m_pModelInfo->m_mapBodygroupValues[i] );
+    //}*/
 
-    //matrix3x4_t *pBoneToWorld = g_pStudioRender->LockBoneMatrices( studioHdr.numbones() );
+    //pTemporaryEntity->SetAbsOrigin( vec3_origin );
+    //pTemporaryEntity->SetAbsAngles( QAngle() );
 
-    //float *poseParameters = NULL;
-    //MDLSquenceLayer_t sequenceLayers[8];
-    //int numSequenceLayers = 0;
-    //V_memset( sequenceLayers, 0, sizeof( sequenceLayers ) );
-    //rootModel.m_MDL.SetUpBones( rootModel.m_MDLToWorld, studioHdr.numbones(), pBoneToWorld, poseParameters, sequenceLayers, numSequenceLayers );
-    //g_pStudioRender->UnlockBoneMatrices();
+    pRenderContext->SetLightingOrigin( camera.m_origin );
+    pRenderContext->SetAmbientLight( 0.4, 0.4, 0.4 );
 
-    //rootModel.m_MDL.Draw( rootModel.m_MDLToWorld, pBoneToWorld );
-    /*DrawModelInfo_t info;
-    info.m_nLocalLightCount = 0;
-    info.m_bStaticLighting = true;
-    info.m_Body = 0;
-    info.m_HitboxSet = 0;
+    static Vector white[6] =
+        {
+            Vector( 0.4, 0.4, 0.4 ),
+            Vector( 0.4, 0.4, 0.4 ),
+            Vector( 0.4, 0.4, 0.4 ),
+            Vector( 0.4, 0.4, 0.4 ),
+            Vector( 0.4, 0.4, 0.4 ),
+            Vector( 0.4, 0.4, 0.4 ),
+        };
 
-    float color[3];
-    color[0] = color[1] = color[2] = 1.0f;
-    g_pStudioRender->SetColorModulation( color );
-    g_pStudioRender->SetAlphaModulation( 1.0f );
+    g_pStudioRender->SetAmbientLightColors( white );
 
-    DrawModelResults_t results;
-    DrawModelState_t state = { 0 };
-    state.m_pStudioHdr = g_pMDLCache->GetStudioHdr( rootModel.m_MDL.GetMDL() );
-    state.m_drawFlags |= STUDIORENDER_DRAW_ENTIRE_MODEL;
-    state.m_drawFlags |= STUDIORENDER_DRAW_STATIC_LIGHTING;
-    state.m_drawFlags |= STUDIORENDER_DRAW_WIREFRAME;
+    // spotlight
+	/*Vector vecMins, vecMaxs;
+    pTemporaryEntity->GetRenderBounds( vecMins, vecMaxs );
+    LightDesc_t spotLight( vec3_origin + Vector( 0, 0, 200 ), Vector( 1, 1, 1 ), pTemporaryEntity->GetAbsOrigin() + Vector( 0, 0, ( vecMaxs.z - vecMins.z ) * 0.75 ), 0.035, 0.873 );
+    g_pStudioRender->SetLocalLights( 1, &spotLight );*/
+
+    int flags = 0;
+    flags |= STUDIO_WIREFRAME;
+
+    CBaseAnimating *pAnimating = CBasePlayer::GetLocalPlayer();
+
+    Vector m_LightingOrigin = camera.m_origin;
+    ModelRenderInfo_t sInfo;
+    sInfo.origin = vec3_origin;
+    sInfo.angles = QAngle(0, 0, 0);
+    sInfo.pRenderable = pAnimating;
+    sInfo.pModel = pAnimating->GetModel();
+    sInfo.pModelToWorld = &pAnimating->EntityToWorldTransform();
+    sInfo.pLightingOffset = NULL;
+    sInfo.pLightingOrigin = &m_LightingOrigin;
+    sInfo.flags = flags;
+    sInfo.entity_index = -1;
+    sInfo.skin = m_iSkin;
+    sInfo.body = 0;
+    sInfo.hitboxset = 0;
+    sInfo.instance = pAnimating->GetModelInstance();
+
+    Frustum dummyFrustum;
+    render->Push3DView( viewSetup, 0, pTexture, dummyFrustum );
+
+    modelrender->SuppressEngineLighting( true );
+    float color[3] = { 1.0f, 1.0f, 1.0f };
+    render->SetColorModulation( color );
+    render->SetBlend( 1.0f );
 
     pRenderContext->MatrixMode( MATERIAL_MODEL );
     pRenderContext->PushMatrix();
     pRenderContext->LoadIdentity();
-    g_pStudioRender->ClearAllShadows();
-    pRenderContext->DisableAllLocalLights();
+    int drawn = modelrender->DrawModelEx( sInfo );
+    pRenderContext->MatrixMode( MATERIAL_MODEL );
+    pRenderContext->PopMatrix();
 
-    info.m_pStudioHdr = state.m_pStudioHdr;
-    info.m_Skin = m_iSkin;
-    info.m_pClientEntity = static_cast< void * >( state.m_pRenderable );
-    info.m_Lod = 0;*/
+    Assert( drawn != 0 );
 
-    //g_pStudioRender->DrawModelStaticProp( info, *pBoneToWorld, drawFlags );
+    //pTemporaryEntity->DrawModel( STUDIO_RENDER );
 
-    //g_pStudioRender->DrawModel( &results, info, pBoneToWorld, NULL, NULL, camera.m_origin, state.m_drawFlags );
+    modelrender->SuppressEngineLighting( false );
 
-    // Now get the pixels from the render target
-    unsigned char *imageData = new unsigned char[outputWidth * outputHeight * 4];
+    //pTemporaryEntity->Remove();
 
-    pRenderContext->ReadPixels( 0, 0, outputWidth, outputHeight, imageData, IMAGE_FORMAT_RGBA8888 );
+    unsigned char *pImageData = new unsigned char[outputWidth * outputHeight * 4];
 
-    PNG_WriteToFile( pngPathFull, imageData, outputWidth, outputHeight );
+    pRenderContext->ReadPixels( 0, 0, outputWidth, outputHeight, pImageData, IMAGE_FORMAT_RGBA8888 );
 
-    free( imageData );
+    //CViewSetup view2d;
+    //view2d.x = viewSetup.x;
+    //view2d.y = viewSetup.y;
+    //view2d.width = viewSetup.width;
+    //view2d.height = viewSetup.height;
 
-    pRenderContext->CullMode( MATERIAL_CULLMODE_CW );
-    pRenderContext->Flush();
+    //render->Push2DView( view2d, 0, NULL, dummyFrustum );
+    //surface()->DrawSetColor( 0, 255, 0, 255 );
+    //surface()->DrawFilledRect( 50, 50, 10, 10 );
+    //render->PopView( dummyFrustum );
 
-    StudioRender()->UpdateConfig( oldStudioRenderConfig );
+    render->PopView( dummyFrustum );
 
-    //vgui::MatSystemSurface()->End3DPaint();
+    pRenderContext->BindLocalCubemap( NULL );
 
-    vgui::MDLCache()->Release( modelHandle );
+    pRenderContext->PopRenderTargetAndViewport();
 
-    SetModelImage( pngPath );
+    PNG_WriteToFile( pngPathFull, pImageData, outputWidth, outputHeight );
 }
 
 /// <summary>
@@ -335,18 +292,31 @@ void LModelImagePanel::SetModelImage( const char *pngImagePath )
 /// Paints the texture to the panel
 /// TODO: Implement, without conflicting with the base class
 /// </summary>
- void LModelImagePanel::Paint()
+void LModelImagePanel::Paint()
 {
-     if ( m_nTextureID == -1 )
-         return;
+    //Camera_t camera;
+    //camera.m_origin = Vector( 60, 60, 64 );
+    //float rotatingByTime = Plat_FloatTime() * 100;
+    //camera.m_angles = QAngle( rotatingByTime, 0, 0 );
+    //camera.m_flFOV = 70;
+    //camera.m_flZNear = 1;
+    //camera.m_flZFar = 10000;
+    //RebuildSpawnIcon( camera );
 
-     int wide, tall;
-     GetSize( wide, tall );
+    // Draw a little square to show this is called
+    surface()->DrawSetColor( 255, 0, 0, 255 );
+    surface()->DrawFilledRect( 0, 0, 10, 10 );
 
-     surface()->DrawSetColor( 255, 255, 255, 255 );
-     surface()->DrawSetTexture( m_nTextureID );
-     surface()->DrawTexturedRect( 0, 0, wide, tall );
- }
+    //if ( m_nTextureID == -1 )
+    //    return;
+
+    //int wide, tall;
+    //GetSize( wide, tall );
+
+    //surface()->DrawSetColor( 255, 255, 255, 255 );
+    //surface()->DrawSetTexture( m_nTextureID );
+    //surface()->DrawTexturedRect( 0, 0, wide, tall );
+}
 
 /*
 ** access functions (stack -> C)
@@ -446,17 +416,17 @@ static int ModelImagePanel_RebuildSpawnIcon( lua_State *L )
     camera.m_angles = angles;
 
     lua_getfield( L, 2, "fieldOfView" );
-    float fieldOfView = lua_tonumber( L, -1 );
+    float fieldOfView = luaL_optnumber( L, -1, 70 );
     lua_pop( L, 1 );
     camera.m_flFOV = fieldOfView;
 
     lua_getfield( L, 2, "zNear" );
-    float zNear = lua_tonumber( L, -1 );
+    float zNear = luaL_optnumber( L, -1, 1 );
     lua_pop( L, 1 );
     camera.m_flZNear = zNear;
 
     lua_getfield( L, 2, "zFar" );
-    float zFar = lua_tonumber( L, -1 );
+    float zFar = luaL_optnumber( L, -1, 10000 );
     lua_pop( L, 1 );
     camera.m_flZFar = zFar;
 

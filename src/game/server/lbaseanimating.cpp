@@ -98,36 +98,6 @@ static int CBaseAnimating_GetAnimTimeInterval( lua_State *L )
     return 1;
 }
 
-static int CBaseAnimating_GetAttachment( lua_State *L )
-{
-    switch ( lua_type( L, 2 ) )
-    {
-        case LUA_TNUMBER:
-        {
-            if ( lua_gettop( L ) <= 3 )
-                lua_pushboolean(
-                    L, luaL_checkanimating( L, 1 )->GetAttachment( luaL_checkint( L, 2 ), luaL_checkvector( L, 3 ) ) );
-            else
-                lua_pushboolean( L,
-                                 luaL_checkanimating( L, 1 )->GetAttachment(
-                                     luaL_checkint( L, 2 ), luaL_checkvector( L, 3 ), luaL_checkangle( L, 4 ) ) );
-            break;
-        }
-        case LUA_TSTRING:
-        default:
-        {
-            if ( lua_gettop( L ) <= 3 )
-                lua_pushboolean(
-                    L, luaL_checkanimating( L, 1 )->GetAttachment( luaL_checkstring( L, 2 ), luaL_checkvector( L, 3 ) ) );
-            else
-                lua_pushboolean(
-                    L, luaL_checkanimating( L, 1 )->GetAttachment( luaL_checkstring( L, 2 ), luaL_checkvector( L, 3 ), luaL_checkangle( L, 4 ) ) );
-            break;
-        }
-    }
-    return 1;
-}
-
 static int CBaseAnimating_GetAttachmentLocal( lua_State *L )
 {
     lua_pushboolean( L, luaL_checkanimating( L, 1 )->GetAttachmentLocal( luaL_checkint( L, 2 ), luaL_checkvector( L, 3 ), luaL_checkangle( L, 4 ) ) );
@@ -543,7 +513,6 @@ static const luaL_Reg CBaseAnimatingmeta[] = {
     { "FindBodygroupByName", CBaseAnimating_FindBodygroupByName },
     { "FindTransitionSequence", CBaseAnimating_FindTransitionSequence },
     { "GetAnimTimeInterval", CBaseAnimating_GetAnimTimeInterval },
-    { "GetAttachment", CBaseAnimating_GetAttachment },
     { "GetAttachmentLocal", CBaseAnimating_GetAttachmentLocal },
     { "GetBaseAnimating", CBaseAnimating_GetBaseAnimating },
     { "GetBodygroup", CBaseAnimating_GetBodygroup },

@@ -526,6 +526,8 @@ $Project
             $File "$SRCDIR\public\lbspflags.cpp"
             $File "lc_baseanimating.cpp"
             $File "lc_baseanimating.h"
+            $File "lc_baseflex.cpp"
+            $File "lc_baseflex.h"
             $File "lc_baseentity.cpp"
             $File "lc_baseplayer.cpp"
             $File "$SRCDIR\public\lcdll_int.cpp"

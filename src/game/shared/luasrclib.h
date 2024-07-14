@@ -14,6 +14,9 @@
 #define LUA_BASEANIMATINGLIBNAME "CBaseAnimating"
 LUALIB_API int( luaopen_CBaseAnimating )( lua_State *L );
 
+#define LUA_CBASEFLEXLIBNAME "CBaseFlex"
+LUALIB_API int( luaopen_CBaseFlex )( lua_State *L );
+
 #define LUA_BASECOMBATWEAPONLIBNAME "CBaseCombatWeapon"
 LUALIB_API int( luaopen_CBaseCombatWeapon )( lua_State *L );
 

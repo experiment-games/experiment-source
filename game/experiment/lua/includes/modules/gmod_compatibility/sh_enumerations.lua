@@ -1,6 +1,13 @@
 TEAM_CONNECTING 	=	0
 TEAM_UNASSIGNED 	=	1001
-TEAM_SPECTATOR 		=	1002
+TEAM_SPECTATOR  = 1002
+
+BOX_FRONT = 0
+BOX_BACK = 1
+BOX_RIGHT = 2
+BOX_LEFT = 3
+BOX_TOP = 4
+BOX_BOTTOM = 5
 
 -- Copy all ACT_* and BUTTON_*/KEY_* enums to the global table
 local enumsToCopyToGlobal = {

@@ -74,6 +74,29 @@ LUALIB_API lua_QAngle &luaL_optangle( lua_State *L, int narg, QAngle *def )
     return luaL_opt( L, luaL_checkangle, narg, *def );
 }
 
+static int Vector_Angle( lua_State *L )
+{
+    Vector vec = luaL_checkvector( L, 1 );
+    QAngle angle;
+
+    VectorAngles( vec, angle );
+    lua_pushangle( L, angle );
+
+    return 1;
+}
+
+static int Vector_AngleWithUp( lua_State *L )
+{
+    Vector vec = luaL_checkvector( L, 1 );
+    QAngle angle;
+    Vector up = luaL_checkvector( L, 2 );
+
+    VectorAngles( vec, up, angle );
+    lua_pushangle( L, angle );
+
+    return 1;
+}
+
 static int Vector_Cross( lua_State *L )
 {
     lua_pushvector( L, luaL_checkvector( L, 1 ).Cross( luaL_checkvector( L, 2 ) ) );
@@ -290,6 +313,8 @@ static int Vector___unm( lua_State *L )
 }
 
 static const luaL_Reg Vectormeta[] = {
+    { "Angle", Vector_Angle },
+    { "AngleWithUp", Vector_AngleWithUp },
     { "Cross", Vector_Cross },
     { "DistTo", Vector_DistTo },
     { "DistToSqr", Vector_DistToSqr },
@@ -339,8 +364,8 @@ LUALIB_API int luaopen_Vector( lua_State *L )
 {
     luaL_newmetatable( L, LUA_VECTORLIBNAME );
     luaL_register( L, NULL, Vectormeta );
-    lua_pushstring( L, "vector" );
-    lua_setfield( L, -2, "__type" ); /* metatable.__type = "vector" */
+    lua_pushstring( L, "Vector" );
+    lua_setfield( L, -2, "__type" ); /* metatable.__type = "Vector" */
     luaL_register( L, LUA_GNAME, Vector_funcs );
     lua_pop( L, 1 );
     Vector origin = vec3_origin;
@@ -349,6 +374,50 @@ LUALIB_API int luaopen_Vector( lua_State *L )
     Vector invalid = vec3_invalid;
     lua_pushvector( L, invalid );
     lua_setglobal( L, "vec3_invalid" ); /* set global vec3_invalid */
+    return 1;
+}
+
+static int QAngle_Forward( lua_State *L )
+{
+    QAngle angle = luaL_checkangle( L, 1 );
+    Vector forward;
+
+    AngleVectors( angle, &forward );
+    lua_pushvector( L, forward );
+
+    return 1;
+}
+
+static int QAngle_Right( lua_State *L )
+{
+    QAngle angle = luaL_checkangle( L, 1 );
+    Vector right;
+
+    AngleVectors( angle, NULL, &right, NULL );
+    lua_pushvector( L, right );
+
+    return 1;
+}
+
+static int QAngle_Up( lua_State *L )
+{
+    QAngle angle = luaL_checkangle( L, 1 );
+    Vector up;
+
+    AngleVectors( angle, NULL, NULL, &up );
+    lua_pushvector( L, up );
+
+    return 1;
+}
+
+static int QAngle_IsEqualTol( lua_State *L )
+{
+    QAngle angle = luaL_checkangle( L, 1 );
+    QAngle other = luaL_checkangle( L, 2 );
+    float tolerance = luaL_checknumber( L, 3 );
+
+    lua_pushboolean( L, QAnglesAreEqual( angle, other, tolerance ) );
+
     return 1;
 }
 
@@ -463,6 +532,10 @@ static int QAngle___unm( lua_State *L )
 }
 
 static const luaL_Reg QAnglemeta[] = {
+    { "Forward", QAngle_Forward },
+    { "Right", QAngle_Right },
+    { "Up", QAngle_Up },
+    { "IsEqualTol", QAngle_IsEqualTol },
     { "Init", QAngle_Init },
     { "Invalidate", QAngle_Invalidate },
     { "IsValid", QAngle_IsValid },
@@ -496,8 +569,8 @@ LUALIB_API int luaopen_QAngle( lua_State *L )
 {
     luaL_newmetatable( L, LUA_QANGLELIBNAME );
     luaL_register( L, NULL, QAnglemeta );
-    lua_pushstring( L, "angle" );
-    lua_setfield( L, -2, "__type" ); /* metatable.__type = "angle" */
+    lua_pushstring( L, "Angle" );
+    lua_setfield( L, -2, "__type" ); /* metatable.__type = "Angle" */
     luaL_register( L, LUA_GNAME, QAngle_funcs );
     lua_pop( L, 1 );
     QAngle v = vec3_angle;

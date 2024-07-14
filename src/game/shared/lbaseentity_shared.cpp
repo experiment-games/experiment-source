@@ -589,7 +589,9 @@ static int CBaseEntity_GetModelIndex( lua_State *L )
 
 static int CBaseEntity_GetModelName( lua_State *L )
 {
-    lua_pushstring( L, STRING( luaL_checkentity( L, 1 )->GetModelName() ) );
+    //lua_pushstring( L, STRING( luaL_checkentity( L, 1 )->GetModelName() ) ); // Must be explicitly set?
+    lua_pushstring( L, luaL_checkanimating( L, 1 )->GetModelPtr()->pszName() );
+    
     return 1;
 }
 
@@ -1436,6 +1438,16 @@ static int CBaseEntity_SetRenderColorR( lua_State *L )
     return 0;
 }
 
+static int CBaseEntity_SetRenderMode( lua_State *L )
+{
+#ifdef CLIENT_DLL
+    luaL_checkentity( L, 1 )->SetRenderMode( (RenderMode_t) luaL_checkint( L, 2 ), true );
+#else
+    luaL_checkentity( L, 1 )->SetRenderMode( (RenderMode_t) luaL_checkint( L, 2 ) );
+#endif
+    return 0;
+}
+
 static int CBaseEntity_SetSimulatedEveryTick( lua_State *L )
 {
     luaL_checkentity( L, 1 )->SetSimulatedEveryTick( luaL_checkboolean( L, 2 ) );
@@ -1452,6 +1464,15 @@ static int CBaseEntity_SetSize( lua_State *L )
 {
     luaL_checkentity( L, 1 )->SetSize( luaL_checkvector( L, 2 ),
                                        luaL_checkvector( L, 3 ) );
+    return 0;
+}
+
+static int CBaseEntity_SetSkin(lua_State* L)
+{
+    // TODO: SetSkin
+    // TODO: There's also logic in lbaseanimating.__newindex for this
+    // TODO: Placed here because its easily shared, but we should really create a common place for baseanimating shared functions
+    lua_toanimating( L, 1 )->m_nSkin = luaL_checkint( L, 2 );
     return 0;
 }
 
@@ -1668,6 +1689,50 @@ static int CBaseEntity_WorldToEntitySpace( lua_State *L )
     luaL_checkentity( L, 1 )->WorldToEntitySpace( luaL_checkvector( L, 2 ),
                                                   &luaL_checkvector( L, 3 ) );
     return 0;
+}
+
+static int CBaseAnimating_GetAttachment( lua_State *L )
+{
+    int iArg2Type = lua_type( L, 2 );
+    Vector pVecOrigin;
+    QAngle pVecAngles;
+    int boneID = -1;
+
+    if ( iArg2Type == LUA_TNUMBER )
+    {
+        boneID = luaL_checkint( L, 2 );
+
+        if ( !luaL_checkanimating( L, 1 )->GetAttachment( boneID, pVecOrigin, pVecAngles ) )
+        {
+            lua_pushnil( L );
+            return 1;
+        }
+    }
+    else if ( iArg2Type == LUA_TSTRING )
+    {
+        boneID = luaL_checkanimating( L, 1 )->LookupAttachment( luaL_checkstring( L, 2 ) );
+
+        if ( !luaL_checkanimating( L, 1 )->GetAttachment( boneID, pVecOrigin, pVecAngles ) )
+        {
+            lua_pushnil( L );
+            return 1;
+        }
+    }
+
+    if ( boneID == -1 )
+    {
+        lua_pushnil( L );
+        return 1;
+    }
+
+    lua_newtable( L );
+    lua_pushvector( L, pVecOrigin );
+    lua_setfield( L, -2, "Pos" );  // TODO: Write gmod compat and rename this to our own conventions
+    lua_pushangle( L, pVecAngles );
+    lua_setfield( L, -2, "Ang" );  // TODO: Write gmod compat and rename this to our own conventions
+    lua_pushinteger( L, boneID );
+    lua_setfield( L, -2, "Bone" );  // TODO: Write gmod compat and rename this to our own conventions
+    return 1;
 }
 
 static int CBaseEntity___index( lua_State *L )
@@ -1976,9 +2041,11 @@ static const luaL_Reg CBaseEntitymeta[] = {
     { "SetRenderColorB", CBaseEntity_SetRenderColorB },
     { "SetRenderColorG", CBaseEntity_SetRenderColorG },
     { "SetRenderColorR", CBaseEntity_SetRenderColorR },
+    { "SetRenderMode", CBaseEntity_SetRenderMode },
     { "SetSimulatedEveryTick", CBaseEntity_SetSimulatedEveryTick },
     { "SetSimulationTime", CBaseEntity_SetSimulationTime },
     { "SetSize", CBaseEntity_SetSize },
+    { "SetSkin", CBaseEntity_SetSkin },
     { "SetSolid", CBaseEntity_SetSolid },
     { "SetSolidFlags", CBaseEntity_SetSolidFlags },
     { "SetTextureFrameIndex", CBaseEntity_SetTextureFrameIndex },
@@ -2012,6 +2079,7 @@ static const luaL_Reg CBaseEntitymeta[] = {
     { "WorldAlignSize", CBaseEntity_WorldAlignSize },
     { "WorldSpaceCenter", CBaseEntity_WorldSpaceCenter },
     { "WorldToEntitySpace", CBaseEntity_WorldToEntitySpace },
+    { "GetAttachment", CBaseAnimating_GetAttachment },
     { "__index", CBaseEntity___index },
     { "__newindex", CBaseEntity___newindex },
     { "__eq", CBaseEntity___eq },
