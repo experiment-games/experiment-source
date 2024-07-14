@@ -79,7 +79,8 @@ static int Vector_Angle( lua_State *L )
     Vector vec = luaL_checkvector( L, 1 );
     QAngle angle;
 
-    VectorAngles( vec, angle );
+    Vector up( 0.0f, 0.0f, 1.0f );
+    VectorAngles( vec, up, angle );
     lua_pushangle( L, angle );
 
     return 1;
