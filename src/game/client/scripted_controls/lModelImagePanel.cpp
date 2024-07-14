@@ -28,6 +28,8 @@
 #include "view_shared.h"
 #include <model_types.h>
 #include <basemodelpanel.h>
+#include <lc_baseflex.h>
+#include <viewrender.h>
 
 using namespace vgui;
 
@@ -91,6 +93,7 @@ static const char *PathToMaterialName( const char *pngImagePath )
 void LModelImagePanel::RebuildSpawnIcon( Camera_t camera, const char *pszSavePath /*= NULL*/ )
 {
     char pngPathFull[MAX_PATH];
+    char pngPath[MAX_PATH];
 
     if ( pszSavePath != NULL )
     {
@@ -104,6 +107,13 @@ void LModelImagePanel::RebuildSpawnIcon( Camera_t camera, const char *pszSavePat
         Q_DefaultExtension( pngPathFull, ".png", sizeof( pngPathFull ) );
     }
 
+    // trim materials/ from the front
+    Q_strncpy( pngPath, pngPathFull + 10, sizeof( pngPath ) );
+
+    lua_CBaseFlex *pEntity = g_pClientSideEntityManager->CreateClientSideEntity( m_pszModelPath, RENDER_GROUP_OTHER );
+    pEntity->m_nSkin = m_iSkin;
+    pEntity->AddEffects( EF_NODRAW );
+
     int x, y, w, h;
     GetBounds( x, y, w, h );
     ParentLocalToScreen( x, y );
@@ -112,155 +122,65 @@ void LModelImagePanel::RebuildSpawnIcon( Camera_t camera, const char *pszSavePat
     int outputHeight = 256;
 
     CMatRenderContextPtr pRenderContext( materials );
+    pRenderContext->MatrixMode( MATERIAL_PROJECTION );
+    pRenderContext->PushMatrix();
 
-    ITexture *pTexture = materials->FindTexture( "_rt_FullFrameFB1", TEXTURE_GROUP_RENDER_TARGET );
-    pRenderContext->PushRenderTargetAndViewport( pTexture, 0, 0, outputWidth, outputHeight );
-
-    int viewportX, viewportY, viewportWidth, viewportHeight;
-    pRenderContext->GetViewport( viewportX, viewportY, viewportWidth, viewportHeight );
+    pRenderContext->MatrixMode( MATERIAL_VIEW );
+    pRenderContext->PushMatrix();
 
     pRenderContext->ClearColor4ub( 0, 0, 0, 0 );
+
+    pRenderContext->PushRenderTargetAndViewport( NULL, 0, 0, outputWidth, outputHeight );
+
+    pRenderContext->ClearColor4ub( 0, 0, 0, 255 );
     pRenderContext->ClearBuffers( true, true, true );
 
     CViewSetup viewSetup;
     memset( &viewSetup, 0, sizeof( viewSetup ) );
+    viewSetup.x = 0;
+    viewSetup.y = 0;
+    viewSetup.width = outputWidth;
+    viewSetup.height = outputHeight;
+    viewSetup.fov = ScaleFOVByWidthRatio( camera.m_flFOV, ( ( float )outputWidth / ( float )outputHeight ) / ( 4.0f / 3.0f ) );
     viewSetup.origin = camera.m_origin;
     viewSetup.angles = camera.m_angles;
-    //viewSetup.m_bRenderToSubrectOfLargerScreen = true;
     viewSetup.zNear = camera.m_flZNear;
     viewSetup.zFar = camera.m_flZFar;
-    viewSetup.fov = camera.m_flFOV;
-
-    viewSetup.x = viewportX;
-    viewSetup.y = viewportY;
-    viewSetup.width = ( float )outputWidth;
-    viewSetup.height = ( float )outputHeight;
-    viewSetup.m_bOrtho = true;
-
-    if ( g_pMaterialSystemHardwareConfig->GetHDREnabled() )
-    {
-        ITexture *pCubemapTexture = materials->FindTexture( "editor/cubemap.hdr", NULL, true );
-        pRenderContext->BindLocalCubemap( pCubemapTexture );
-    }
-    else
-    {
-        ITexture *pCubemapTexture = materials->FindTexture( "editor/cubemap", NULL, true );
-        pRenderContext->BindLocalCubemap( pCubemapTexture );
-    }
-
-    MDLCACHE_CRITICAL_SECTION();
-
-    //CModelPanelModel *pTemporaryEntity = new CModelPanelModel;
-
-    //if ( !pTemporaryEntity )
-    //    return;
-
-    //if ( pTemporaryEntity->InitializeAsClientEntity( m_pszModelPath, RENDER_GROUP_OPAQUE_ENTITY ) == false )
-    //{
-    //    pTemporaryEntity->Remove();
-    //    return;
-    //}
-
-    ////pTemporaryEntity->DontRecordInTools();
-    ////pTemporaryEntity->AddEffects( EF_NODRAW );
-    //pTemporaryEntity->SetModel( m_pszModelPath );
-    //pTemporaryEntity->m_nSkin = m_iSkin;
-
-    ///*FOR_EACH_MAP_FAST( m_pModelInfo->m_mapBodygroupValues, i )
-    //{
-    //    pTemporaryEntity->SetBodygroup( m_pModelInfo->m_mapBodygroupValues.Key( i ), m_pModelInfo->m_mapBodygroupValues[i] );
-    //}*/
-
-    //pTemporaryEntity->SetAbsOrigin( vec3_origin );
-    //pTemporaryEntity->SetAbsAngles( QAngle() );
-
-    pRenderContext->SetLightingOrigin( camera.m_origin );
-    pRenderContext->SetAmbientLight( 0.4, 0.4, 0.4 );
-
-    static Vector white[6] =
-        {
-            Vector( 0.4, 0.4, 0.4 ),
-            Vector( 0.4, 0.4, 0.4 ),
-            Vector( 0.4, 0.4, 0.4 ),
-            Vector( 0.4, 0.4, 0.4 ),
-            Vector( 0.4, 0.4, 0.4 ),
-            Vector( 0.4, 0.4, 0.4 ),
-        };
-
-    g_pStudioRender->SetAmbientLightColors( white );
-
-    // spotlight
-	/*Vector vecMins, vecMaxs;
-    pTemporaryEntity->GetRenderBounds( vecMins, vecMaxs );
-    LightDesc_t spotLight( vec3_origin + Vector( 0, 0, 200 ), Vector( 1, 1, 1 ), pTemporaryEntity->GetAbsOrigin() + Vector( 0, 0, ( vecMaxs.z - vecMins.z ) * 0.75 ), 0.035, 0.873 );
-    g_pStudioRender->SetLocalLights( 1, &spotLight );*/
-
-    int flags = 0;
-    flags |= STUDIO_WIREFRAME;
-
-    CBaseAnimating *pAnimating = CBasePlayer::GetLocalPlayer();
-
-    Vector m_LightingOrigin = camera.m_origin;
-    ModelRenderInfo_t sInfo;
-    sInfo.origin = vec3_origin;
-    sInfo.angles = QAngle(0, 0, 0);
-    sInfo.pRenderable = pAnimating;
-    sInfo.pModel = pAnimating->GetModel();
-    sInfo.pModelToWorld = &pAnimating->EntityToWorldTransform();
-    sInfo.pLightingOffset = NULL;
-    sInfo.pLightingOrigin = &m_LightingOrigin;
-    sInfo.flags = flags;
-    sInfo.entity_index = -1;
-    sInfo.skin = m_iSkin;
-    sInfo.body = 0;
-    sInfo.hitboxset = 0;
-    sInfo.instance = pAnimating->GetModelInstance();
 
     Frustum dummyFrustum;
-    render->Push3DView( viewSetup, 0, pTexture, dummyFrustum );
+    render->Push3DView( viewSetup, VIEW_CLEAR_DEPTH | VIEW_CLEAR_STENCIL, NULL, dummyFrustum );
 
     modelrender->SuppressEngineLighting( true );
     float color[3] = { 1.0f, 1.0f, 1.0f };
     render->SetColorModulation( color );
     render->SetBlend( 1.0f );
 
-    pRenderContext->MatrixMode( MATERIAL_MODEL );
-    pRenderContext->PushMatrix();
-    pRenderContext->LoadIdentity();
-    int drawn = modelrender->DrawModelEx( sInfo );
-    pRenderContext->MatrixMode( MATERIAL_MODEL );
-    pRenderContext->PopMatrix();
+    pEntity->DrawModel( STUDIO_RENDER );
 
-    Assert( drawn != 0 );
+    unsigned char *pImage = ( unsigned char * )malloc( outputWidth * outputHeight * 4 );
 
-    //pTemporaryEntity->DrawModel( STUDIO_RENDER );
+    pRenderContext->ReadPixels( 0, 0, outputWidth, outputHeight, pImage, IMAGE_FORMAT_RGBA8888 );
+
+    PNG_WriteToFile( pngPathFull, pImage, outputWidth, outputHeight );
 
     modelrender->SuppressEngineLighting( false );
 
-    //pTemporaryEntity->Remove();
-
-    unsigned char *pImageData = new unsigned char[outputWidth * outputHeight * 4];
-
-    pRenderContext->ReadPixels( 0, 0, outputWidth, outputHeight, pImageData, IMAGE_FORMAT_RGBA8888 );
-
-    //CViewSetup view2d;
-    //view2d.x = viewSetup.x;
-    //view2d.y = viewSetup.y;
-    //view2d.width = viewSetup.width;
-    //view2d.height = viewSetup.height;
-
-    //render->Push2DView( view2d, 0, NULL, dummyFrustum );
-    //surface()->DrawSetColor( 0, 255, 0, 255 );
-    //surface()->DrawFilledRect( 50, 50, 10, 10 );
-    //render->PopView( dummyFrustum );
-
     render->PopView( dummyFrustum );
 
-    pRenderContext->BindLocalCubemap( NULL );
+    free( pImage );
 
+    // restore our previous state
     pRenderContext->PopRenderTargetAndViewport();
 
-    PNG_WriteToFile( pngPathFull, pImageData, outputWidth, outputHeight );
+    pRenderContext->MatrixMode( MATERIAL_PROJECTION );
+    pRenderContext->PopMatrix();
+
+    pRenderContext->MatrixMode( MATERIAL_VIEW );
+    pRenderContext->PopMatrix();
+
+    pEntity->AddEFlags( EFL_KILLME );
+
+    SetModelImage( pngPath );
 }
 
 /// <summary>
@@ -294,28 +214,15 @@ void LModelImagePanel::SetModelImage( const char *pngImagePath )
 /// </summary>
 void LModelImagePanel::Paint()
 {
-    //Camera_t camera;
-    //camera.m_origin = Vector( 60, 60, 64 );
-    //float rotatingByTime = Plat_FloatTime() * 100;
-    //camera.m_angles = QAngle( rotatingByTime, 0, 0 );
-    //camera.m_flFOV = 70;
-    //camera.m_flZNear = 1;
-    //camera.m_flZFar = 10000;
-    //RebuildSpawnIcon( camera );
+    if ( m_nTextureID == -1 )
+        return;
 
-    // Draw a little square to show this is called
-    surface()->DrawSetColor( 255, 0, 0, 255 );
-    surface()->DrawFilledRect( 0, 0, 10, 10 );
+    int wide, tall;
+    GetSize( wide, tall );
 
-    //if ( m_nTextureID == -1 )
-    //    return;
-
-    //int wide, tall;
-    //GetSize( wide, tall );
-
-    //surface()->DrawSetColor( 255, 255, 255, 255 );
-    //surface()->DrawSetTexture( m_nTextureID );
-    //surface()->DrawTexturedRect( 0, 0, wide, tall );
+    surface()->DrawSetColor( 255, 255, 255, 255 );
+    surface()->DrawSetTexture( m_nTextureID );
+    surface()->DrawTexturedRect( 0, 0, wide, tall );
 }
 
 /*

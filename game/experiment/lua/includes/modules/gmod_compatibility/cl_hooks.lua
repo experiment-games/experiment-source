@@ -10,85 +10,42 @@ ConsoleCommands.Add("-buildmenu", function(client, pCmd, args)
 	hook.Run("OnSpawnMenuClose")
 end)
 
--- -- A single DFrame with a spawnicon, we call RebuildSpawnIcon on it
--- local spawnIconFrame = vgui.Create("DFrame")
--- spawnIconFrame:SetSize(512 + 8, 512 + 30 + 32 + 4 + 32 + 4)
--- spawnIconFrame:SetTitle("SpawnIcon")
--- spawnIconFrame:Center()
--- spawnIconFrame:MakePopup()
+-- A single DFrame with a spawnicon, we call RebuildSpawnIcon on it
+local spawnIconFrame = vgui.Create("DFrame")
+spawnIconFrame:SetSize(512 + 8, 512 + 30 + 32 + 4 + 32 + 4)
+spawnIconFrame:SetTitle("SpawnIcon")
+spawnIconFrame:Center()
+spawnIconFrame:MakePopup()
 
--- TheSpawnIcon = vgui.Create("SpawnIcon", spawnIconFrame)
--- TheSpawnIcon:SetModel("models/stalkertnb/exo_free.mdl")
--- TheSpawnIcon:SetSize(512, 512)
--- TheSpawnIcon:SetPos(4, 30)
+local model = "models/props_junk/PlasticCrate01a.mdl"--"models/stalkertnb/exo_free.mdl")
+TheSpawnIcon = vgui.Create("SpawnIcon", spawnIconFrame)
+TheSpawnIcon:SetModel(model)
+TheSpawnIcon:SetSize(512, 512)
+TheSpawnIcon:SetPos(4, 30)
 
--- local origin = Vector()
--- local angles = Angle()
--- local fieldOfView = 90
--- local zNear = 1
--- local zFar = 10000
+local origin = Vector(265.463013, 222.722046, 161.557571)
+local angles = Angle(25.000000, 220.000000, 0.000000)
+local fieldOfView = 5.0196311198984
+local zNear = 1
+local zFar = 433.3431892957
 
--- function RebuildTheSpawnIcon()
---     TheSpawnIcon:RebuildSpawnIconEx({
--- 		origin = origin,
--- 		angles = angles,
--- 		fieldOfView = fieldOfView,
--- 		zNear = zNear,
--- 		zFar = zFar
--- 	})
--- end
+function RebuildTheSpawnIcon()
+    TheSpawnIcon:RebuildSpawnIconEx({
+		origin = origin,
+		angles = angles,
+		fieldOfView = fieldOfView,
+		zNear = zNear,
+		zFar = zFar
+	})
+end
 
--- local buttonToRebuildSpawnIcon = vgui.Create("DButton", spawnIconFrame)
--- buttonToRebuildSpawnIcon:SetText("Rebuild SpawnIcon")
--- buttonToRebuildSpawnIcon:SetSize(512, 32)
--- buttonToRebuildSpawnIcon:SetPos(4, 512 + 30)
--- buttonToRebuildSpawnIcon.DoClick = function()
---     RebuildTheSpawnIcon()
--- end
-
--- -- Buttons to move the spawnicon origin around
--- local buttonToMoveOriginUp = vgui.Create("DButton", spawnIconFrame)
--- buttonToMoveOriginUp:SetText("Move Origin Y+")
--- buttonToMoveOriginUp:SetSize(100, 32)
--- buttonToMoveOriginUp:SetPos(4, 512 + 30 + 32)
--- buttonToMoveOriginUp.DoClick = function()
---     origin.y = origin.y + 1
-
---     RebuildTheSpawnIcon()
--- end
-
--- local buttonToMoveOriginDown = vgui.Create("DButton", spawnIconFrame)
--- buttonToMoveOriginDown:SetText("Move Origin Y-")
--- buttonToMoveOriginDown:SetSize(100, 32)
--- buttonToMoveOriginDown:SetPos(4 + 100, 512 + 30 + 32)
--- buttonToMoveOriginDown.DoClick = function()
---     origin.y = origin.y - 1
-
---     RebuildTheSpawnIcon()
--- end
-
--- local buttonToMoveOriginLeft = vgui.Create("DButton", spawnIconFrame)
--- buttonToMoveOriginLeft:SetText("Move Origin X-")
--- buttonToMoveOriginLeft:SetSize(100, 32)
--- buttonToMoveOriginLeft:SetPos(4 + 100 * 2, 512 + 30 + 32)
--- buttonToMoveOriginLeft.DoClick = function()
--- 	origin.x = origin.x - 1
-
--- 	RebuildTheSpawnIcon()
--- end
-
--- local buttonToMoveOriginRight = vgui.Create("DButton", spawnIconFrame)
--- buttonToMoveOriginRight:SetText("Rotate +45")
--- buttonToMoveOriginRight:SetSize(100, 32)
--- buttonToMoveOriginRight:SetPos(4 + 100 * 3, 512 + 30 + 32)
--- buttonToMoveOriginRight.DoClick = function()
--- 	angles.y = angles.y + 45
-
--- 	RebuildTheSpawnIcon()
--- end
-
---[[
-]]
+local buttonToRebuildSpawnIcon = vgui.Create("DButton", spawnIconFrame)
+buttonToRebuildSpawnIcon:SetText("Rebuild SpawnIcon")
+buttonToRebuildSpawnIcon:SetSize(512, 32)
+buttonToRebuildSpawnIcon:SetPos(4, 512 + 30)
+buttonToRebuildSpawnIcon.DoClick = function()
+    RebuildTheSpawnIcon()
+end
 
 local function RenderSpawnIcon_Prop( model, pos, middle, size )
 
@@ -254,8 +211,8 @@ function PositionSpawnIcon( model, pos, noAngles )
 	size = math.max( size, math.abs( mn.y ) + math.abs( mx.y ) )
 	size = math.max( size, math.abs( mn.z ) + math.abs( mx.z ) )
 
-	--model:SetPos( pos )
-	-- if ( !noAngles ) then model:SetAngles( angle_zero ) end
+	model:SetPos( pos )
+	if ( !noAngles ) then model:SetAngles( angle_zero ) end
 
 	local ModelName = model:GetModel()
 	ModelName = string.Replace( ModelName, "--", "/" )
@@ -288,27 +245,21 @@ function PositionSpawnIcon( model, pos, noAngles )
 
 end
 
--- local buttonByHelper = vgui.Create("DButton", spawnIconFrame)
--- buttonByHelper:SetText("Set by Helper")
--- buttonByHelper:SetSize(100, 32)
--- buttonByHelper:SetPos(4 + 100 * 4, 512 + 30 + 32)
--- buttonByHelper.DoClick = function()
---     local result = PositionSpawnIcon(LocalPlayer(), Vector())
+local buttonByHelper = vgui.Create("DButton", spawnIconFrame)
+buttonByHelper:SetText("Set by Helper")
+buttonByHelper:SetSize(100, 32)
+buttonByHelper:SetPos(4 + 100 * 4, 512 + 30 + 32)
+buttonByHelper.DoClick = function()
+	local ent = ClientsideModel( model, RENDERGROUP_OTHER )
+    local result = PositionSpawnIcon(ent, vector_origin)
 
---     PrintTable(result)
+    PrintTable(result)
 
---     origin = result.origin
---     angles = result.angles
---     fieldOfView = 60--result.fov
---     zNear = result.znear
--- 	zFar = 10000--result.zfar
+    origin = result.origin
+    angles = result.angles
+    fieldOfView = result.fov
+    zNear = result.znear
+	zFar = result.zfar
 
--- 	RebuildTheSpawnIcon()
--- end
-
--- lua_run_cl TheSpawnIcon:RebuildSpawnIconEx({ origin = Vector(0, 0, 64), angles = Angle(0, 0, 0), fieldOfView = 70, zNear = 0.1, zFar = 10000 })
--- lua_run_cl TheSpawnIcon:RebuildSpawnIconEx({ origin = Vector(0, 0, 64), angles = Angle(0, 45, 0), fieldOfView = 70, zNear = 0.1, zFar = 10000 })
--- lua_run_cl TheSpawnIcon:RebuildSpawnIconEx({ origin = Vector(0, 0, 64), angles = Angle(45, 45, 0), fieldOfView = 70, zNear = 0.1, zFar = 10000 })
--- lua_run_cl TheSpawnIcon:RebuildSpawnIconEx({ origin = Vector(0, 0, 64), angles = Angle(0, 90, 0), fieldOfView = 70, zNear = 0.1, zFar = 10000 })
--- lua_run_cl TheSpawnIcon:RebuildSpawnIconEx({ origin = Vector(0, 0, 64), angles = Angle(90, 90, 0), fieldOfView = 70, zNear = 0.1, zFar = 10000 })
--- lua_run_cl TheSpawnIcon:RebuildSpawnIconEx({ origin = Vector(0, 0, 64), angles = Angle(0, 180, 0), fieldOfView = 70, zNear = 0.1, zFar = 10000 })
+	RebuildTheSpawnIcon()
+end

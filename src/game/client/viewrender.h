@@ -313,6 +313,10 @@ public:
 	virtual void	OnRenderStart();
 	void			DriftPitch (void);
 
+    virtual CViewSetup GetMonoViewSetup() {
+        return GetView( STEREO_EYE_MONO );
+    }
+
 	static CViewRender *	GetMainView() { return assert_cast<CViewRender *>( view ); }
 
 	void			AddViewToScene( CRendering3dView *pView ) { m_SimpleExecutor.AddView( pView ); }
