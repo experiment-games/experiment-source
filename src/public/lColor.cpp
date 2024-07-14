@@ -47,8 +47,31 @@ LUA_API void lua_pushcolor( lua_State *L, Color &clr )
 
 LUALIB_API lua_Color &luaL_checkcolor( lua_State *L, int narg )
 {
-    lua_Color *d = ( lua_Color * )luaL_checkudata( L, narg, "Color" );
-    return *d;
+    if ( lua_isuserdata(L, narg) )
+    {
+        lua_Color *d = ( lua_Color * )luaL_checkudata( L, narg, "Color" );
+        return *d;
+    }
+
+    // HACK:    For some reason some code is copying colors as a table, messing up at luaL_checkudata
+    //          As a temporary fix we will first check if the metatable has a __type field and if it is "Color"
+    //          If it is we will assume it is a color and return it
+    if ( lua_istable( L, narg ) )
+    {
+        lua_getmetatable( L, narg );
+        lua_getfield( L, -1, "__type" );
+
+        if ( lua_isstring( L, -1 ) && !strcmp( lua_tostring( L, -1 ), "Color" ) )
+        {
+            lua_pop( L, 2 );
+            lua_pushcolor( L, lua_Color( lua_tonumber( L, narg ), lua_tonumber( L, narg + 1 ), lua_tonumber( L, narg + 2 ), lua_tonumber( L, narg + 3 ) ) );
+            return lua_tocolor( L, -1 );
+        }
+        lua_pop( L, 2 );
+    }
+
+    luaL_typerror( L, narg, "Color" );
+    return *static_cast< lua_Color * >( 0 );
 }
 
 static int Color_a( lua_State *L )
@@ -320,8 +343,8 @@ LUALIB_API int luaopen_Color( lua_State *L )
 {
     luaL_newmetatable( L, LUA_COLORLIBNAME );
     luaL_register( L, NULL, Colormeta );
-    lua_pushstring( L, "color" );
-    lua_setfield( L, -2, "__type" ); /* metatable.__type = "color" */
+    lua_pushstring( L, "Color" );
+    lua_setfield( L, -2, "__type" ); /* metatable.__type = "Color" */
     luaL_register( L, LUA_GNAME, Color_funcs );
     lua_pop( L, 1 );
     return 1;

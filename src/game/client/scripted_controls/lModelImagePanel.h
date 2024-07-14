@@ -28,10 +28,7 @@ class LModelImagePanel : public EditablePanel
     const char *m_pszModelPath;
     int m_iSkin;
     const char *m_pszBodyGroups;
-    IMaterial *m_pRenderMaterial;
     int m_nTextureID;
-    int m_iCachedTextureWide;
-    int m_iCachedTextureTall;
 
    public:
     virtual void SetModel( const char *modelPath, int skin = 0, const char *bodyGroups = NULL )

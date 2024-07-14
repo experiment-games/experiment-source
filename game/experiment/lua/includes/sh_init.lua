@@ -13,6 +13,7 @@ Include("extensions/table.lua")
 Include("extensions/user_messages.lua")
 Include("extensions/gui.lua")
 Include("extensions/weapon.lua")
+Include("extensions/color.lua")
 
 if (CLIENT) then
 	Include("extensions/panel.lua")

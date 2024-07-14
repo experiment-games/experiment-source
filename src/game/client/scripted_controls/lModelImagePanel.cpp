@@ -52,10 +52,7 @@ LModelImagePanel::LModelImagePanel( Panel *parent, const char *panelName, lua_St
     m_pszModelPath = NULL;
     m_iSkin = 0;
     m_pszBodyGroups = NULL;
-    m_pRenderMaterial = NULL;
     m_nTextureID = -1;
-    m_iCachedTextureWide = 0;
-    m_iCachedTextureTall = 0;
 }
 
 LModelImagePanel::~LModelImagePanel()
@@ -111,8 +108,24 @@ void LModelImagePanel::RebuildSpawnIcon( Camera_t camera, const char *pszSavePat
     Q_strncpy( pngPath, pngPathFull + 10, sizeof( pngPath ) );
 
     lua_CBaseFlex *pEntity = g_pClientSideEntityManager->CreateClientSideEntity( m_pszModelPath, RENDER_GROUP_OTHER );
-    pEntity->m_nSkin = m_iSkin;
     pEntity->AddEffects( EF_NODRAW );
+    pEntity->m_nSkin = m_iSkin;
+
+    if ( m_pszBodyGroups != NULL )
+    {
+        int i = 0;
+        while ( m_pszBodyGroups[i] != '\0' && i < pEntity->GetNumBodyGroups() )
+        {
+            char value = m_pszBodyGroups[i];
+
+            if ( value >= '0' && value <= '9' )
+                pEntity->SetBodygroup( i, value - '0' );
+            else if ( value >= 'a' && value <= 'z' )
+                pEntity->SetBodygroup( i, value - 'a' + 10 );
+
+            i++;
+        }
+    }
 
     int x, y, w, h;
     GetBounds( x, y, w, h );
@@ -128,12 +141,10 @@ void LModelImagePanel::RebuildSpawnIcon( Camera_t camera, const char *pszSavePat
     pRenderContext->MatrixMode( MATERIAL_VIEW );
     pRenderContext->PushMatrix();
 
-    pRenderContext->ClearColor4ub( 0, 0, 0, 0 );
-
     pRenderContext->PushRenderTargetAndViewport( NULL, 0, 0, outputWidth, outputHeight );
 
-    pRenderContext->ClearColor4ub( 0, 0, 0, 255 );
-    pRenderContext->ClearBuffers( true, true, true );
+    pRenderContext->ClearColor4ub( 0, 0, 0, 0 );
+    pRenderContext->ClearBuffers( true, false );
 
     CViewSetup viewSetup;
     memset( &viewSetup, 0, sizeof( viewSetup ) );
@@ -146,16 +157,24 @@ void LModelImagePanel::RebuildSpawnIcon( Camera_t camera, const char *pszSavePat
     viewSetup.angles = camera.m_angles;
     viewSetup.zNear = camera.m_flZNear;
     viewSetup.zFar = camera.m_flZFar;
+    viewSetup.m_eStereoEye = STEREO_EYE_MONO;
 
     Frustum dummyFrustum;
-    render->Push3DView( viewSetup, VIEW_CLEAR_DEPTH | VIEW_CLEAR_STENCIL, NULL, dummyFrustum );
+    render->Push3DView( viewSetup, 0, NULL, dummyFrustum );
 
     modelrender->SuppressEngineLighting( true );
-    float color[3] = { 1.0f, 1.0f, 1.0f };
-    render->SetColorModulation( color );
-    render->SetBlend( 1.0f );
+    // pRenderContext->FogMode( MATERIAL_FOG_NONE );
+    // pRenderContext->SetAmbientLight( 255, 255, 255 );
+    //float color[3] = { 1.0f, 1.0f, 1.0f };
+    //render->SetColorModulation( color );
+    //render->SetBlend( 1.0f );
+
+    //pRenderContext->OverrideAlphaWriteEnable( true, true );
+    pRenderContext->SetIntRenderingParameter( INT_RENDERPARM_WRITE_DEPTH_TO_DESTALPHA, false );
 
     pEntity->DrawModel( STUDIO_RENDER );
+
+    //pRenderContext->OverrideAlphaWriteEnable( false, true );
 
     unsigned char *pImage = ( unsigned char * )malloc( outputWidth * outputHeight * 4 );
 
@@ -204,8 +223,6 @@ void LModelImagePanel::SetModelImage( const char *pngImagePath )
 
     IMaterial *pMaterial = CPngTextureRegen::GetOrCreateProceduralMaterial( materialName, pngImagePath );
     g_pMatSystemSurface->DrawSetTextureMaterial( m_nTextureID, pMaterial );
-
-    surface()->DrawGetTextureSize( m_nTextureID, m_iCachedTextureWide, m_iCachedTextureTall );
 }
 
 /// <summary>

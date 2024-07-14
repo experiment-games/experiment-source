@@ -11,6 +11,7 @@
 #include <vgui_controls/Controls.h>
 #include "mathlib/lvector.h"
 #include <lColor.h>
+#include <renderparm.h>
 #endif
 
 // memdbgon must be the last include file in a .cpp file!!!
@@ -124,19 +125,19 @@ static int render_UpdateScreenEffectTexture( lua_State *L )
 }
 
 Frustum renderFrustum;
-static int render_Push3DView(lua_State* L)
+static int render_Push3DView( lua_State *L )
 {
     CViewSetup playerView = *view->GetPlayerViewSetup();
 
-    Vector origin = luaL_optvector(L, 1, &playerView.origin);
-    QAngle angles = luaL_optangle(L, 2, &playerView.angles);
-    float fov = luaL_optnumber(L, 3, playerView.fov);
-    int x = luaL_optint(L, 4, playerView.x);
-    int y = luaL_optint(L, 5, playerView.y);
-    int width = luaL_optint(L, 6, playerView.width);
-    int height = luaL_optint(L, 7, playerView.height);
-    float zNear = luaL_optnumber(L, 8, playerView.zNear);
-    float zFar = luaL_optnumber(L, 9, playerView.zFar);
+    Vector origin = luaL_optvector( L, 1, &playerView.origin );
+    QAngle angles = luaL_optangle( L, 2, &playerView.angles );
+    float fov = luaL_optnumber( L, 3, playerView.fov );
+    int x = luaL_optint( L, 4, playerView.x );
+    int y = luaL_optint( L, 5, playerView.y );
+    int width = luaL_optint( L, 6, playerView.width );
+    int height = luaL_optint( L, 7, playerView.height );
+    float zNear = luaL_optnumber( L, 8, playerView.zNear );
+    float zFar = luaL_optnumber( L, 9, playerView.zFar );
 
     CViewSetup viewModelSetup( playerView );
     viewModelSetup.origin = origin;
@@ -266,7 +267,7 @@ static int render_SetColorModulation( lua_State *L )
 
 static int render_SetBlend( lua_State *L )
 {
-    render->SetBlend( luaL_checknumber( L, 1 )  );
+    render->SetBlend( luaL_checknumber( L, 1 ) );
     return 0;
 }
 
@@ -280,22 +281,29 @@ static int render_ClearBuffers( lua_State *L )
     return 0;
 }
 
-static int render_ClearColor(lua_State* L)
+static int render_ClearColor( lua_State *L )
 {
-    lua_Color clr = luaL_checkcolor(L, 1);
+    lua_Color clr = luaL_checkcolor( L, 1 );
     g_pMaterialSystem->GetRenderContext()->ClearColor4ub( clr.r(), clr.g(), clr.b(), clr.a() );
     return 0;
 }
 
-static int render_SetScissorRect(lua_State* L)
+static int render_SetScissorRect( lua_State *L )
 {
-    int nLeft = luaL_checkint(L, 1);
-    int nTop = luaL_checkint(L, 2);
-    int nRight = luaL_checkint(L, 3);
-    int nBottom = luaL_checkint(L, 4);
-    bool bEnableScissor = lua_toboolean(L, 5);
+    int nLeft = luaL_checkint( L, 1 );
+    int nTop = luaL_checkint( L, 2 );
+    int nRight = luaL_checkint( L, 3 );
+    int nBottom = luaL_checkint( L, 4 );
+    bool bEnableScissor = lua_toboolean( L, 5 );
 
-    g_pMaterialSystem->GetRenderContext()->SetScissorRect(nLeft, nTop, nRight, nBottom, bEnableScissor);
+    g_pMaterialSystem->GetRenderContext()->SetScissorRect( nLeft, nTop, nRight, nBottom, bEnableScissor );
+    return 0;
+}
+
+static int render_SetWriteDepthToDestAlpha( lua_State *L )
+{
+    bool bEnable = lua_toboolean( L, 1 );
+    g_pMaterialSystem->GetRenderContext()->SetIntRenderingParameter( INT_RENDERPARM_WRITE_DEPTH_TO_DESTALPHA, bEnable );
     return 0;
 }
 #endif
@@ -317,6 +325,7 @@ static const luaL_Reg renderLib[] = {
     { "ClearColor", render_ClearColor },
     { "SetScissorRect", render_SetScissorRect },
     { "UpdateScreenEffectTexture", render_UpdateScreenEffectTexture },
+    { "SetWriteDepthToDestAlpha", render_SetWriteDepthToDestAlpha },
 #endif
     { NULL, NULL } };
 
