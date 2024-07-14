@@ -500,13 +500,16 @@ else
 	MODEL_IMAGE_PANEL_META.SetSpawnIcon = MODEL_IMAGE_PANEL_META.SetModelImage
 
 	function MODEL_IMAGE_PANEL_META:RebuildSpawnIcon()
-		-- TODO: sensible defaults
+		local ent = ClientsideModel(self:GetModel(), RENDERGROUP_OTHER)
+		local result = PositionSpawnIcon(ent, vector_origin)
+        ent:Remove()
+
 		self:_OriginalRebuildSpawnIcon({
-			origin = Vector(0, 0, 0),
-			angles = Angle(0, 0, 0),
-			fieldOfView = 90,
-			zNear = 1,
-			zFar = 1000,
+			origin = result.origin,
+			angles = result.angles,
+			fieldOfView = result.fov,
+			zNear = result.znear,
+			zFar = result.zfar,
 		})
 	end
 
@@ -962,6 +965,12 @@ Include("extensions/coroutine.lua")
 Include("../../extensions/table.lua")
 
 if (CLIENT) then
+    matproxy = {
+		Add = function(name, data) end -- TODO: Implement
+	}
+
+    Include("util/client.lua")
+
 	spawnmenu = {
 		PopulateFromTextFiles = function(callback)
 			local spawnlists = file.Find("settings/gmod_compatibility_content/spawnlist/*.txt", "GAME")

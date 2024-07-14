@@ -1135,7 +1135,12 @@ static int CBaseEntity_RegisterThinkContext( lua_State *L )
 
 static int CBaseEntity_Remove( lua_State *L )
 {
-    luaL_checkentity( L, 1 )->Remove();
+    //luaL_checkentity( L, 1 )->Remove(); // Causes crashes
+    #if CLIENT_DLL
+    luaL_checkentity( L, 1 )->AddEFlags( EFL_KILLME );
+    #else
+    UTIL_Remove( luaL_checkentity( L, 1 ) );
+    #endif
     return 0;
 }
 
