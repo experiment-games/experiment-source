@@ -9,10 +9,12 @@
 #include <materialsystem/imaterialsystem.h>
 #include <vgui/ISurface.h>
 #include <vgui_controls/Controls.h>
+#include "mathlib/lvector.h"
 #endif
 
 // memdbgon must be the last include file in a .cpp file!!!
 #include "tier0/memdbgon.h"
+#include <lColor.h>
 
 #ifdef CLIENT_DLL
 // List of all texture ids created during the lifetime of the client Lua state
@@ -120,12 +122,200 @@ static int render_UpdateScreenEffectTexture( lua_State *L )
     UpdateScreenEffectTexture( luaL_checkinteger( L, 1 ), pViewSetup->x, pViewSetup->y, pViewSetup->width, pViewSetup->height );
     return 0;
 }
+
+Frustum renderFrustum;
+static int render_Push3DView(lua_State* L)
+{
+    CViewSetup playerView = *view->GetPlayerViewSetup();
+
+    Vector pos = luaL_optvector(L, 1, &playerView.origin);
+    QAngle angles = luaL_optangle(L, 2, &playerView.angles);
+    float fov = luaL_optnumber(L, 3, playerView.fov);
+    int x = luaL_optint(L, 4, playerView.x);
+    int y = luaL_optint(L, 5, playerView.y);
+    int w = luaL_optint(L, 6, playerView.width);
+    int h = luaL_optint(L, 7, playerView.height);
+    float zNear = luaL_optnumber(L, 8, playerView.zNear);
+    float zFar = luaL_optnumber(L, 9, playerView.zFar);
+
+    CViewSetup viewModelSetup( playerView );
+    viewModelSetup.origin = pos;
+    viewModelSetup.angles = angles;
+    viewModelSetup.fov = fov;
+    viewModelSetup.x = x;
+    viewModelSetup.y = y;
+    viewModelSetup.width = w;
+    viewModelSetup.height = h;
+    viewModelSetup.zNear = zNear;
+    viewModelSetup.zFar = zFar;
+
+    render->Push3DView( viewModelSetup, 0, NULL, renderFrustum );
+
+    return 0;
+}
+
+static int render_PopView( lua_State *L )
+{
+    render->PopView( renderFrustum );
+    return 0;
+}
+
+static int modelrender_SuppressEngineLighting( lua_State *L )
+{
+    modelrender->SuppressEngineLighting( lua_toboolean( L, 1 ) );
+    return 0;
+}
+
+static int render_SetLightingOrigin( lua_State *L )
+{
+    g_pMaterialSystem->GetRenderContext()->SetLightingOrigin( luaL_checkvector( L, 1 ) );
+    return 0;
+}
+
+/*directionFace:
+TODO: Check that these match the values in the engine
+BOX_FRONT	0	Place the light from the front
+BOX_BACK	1	Place the light behind
+BOX_RIGHT	2	Place the light to the right
+BOX_LEFT	3	Place the light to the left
+BOX_TOP	4	Place the light to the top
+BOX_BOTTOM	5	Place the light to the bottom
+*/
+static int render_SetAmbientLightCube( lua_State *L )
+{
+    int directionFace = luaL_checkint( L, 1 );
+    float r = luaL_checknumber( L, 2 );
+    float g = luaL_checknumber( L, 3 );
+    float b = luaL_checknumber( L, 4 );
+    static Vector4D cubeFaces[6];
+    int i;
+
+    for ( i = 0; i < 6; i++ )
+    {
+        if ( i == directionFace )
+        {
+            cubeFaces[i].Init( r, g, b, 1.0f );
+        }
+        else
+        {
+            cubeFaces[i].Init( 0.0f, 0.0f, 0.0f, 0.0f );
+        }
+    }
+
+    g_pMaterialSystem->GetRenderContext()->SetAmbientLightCube( cubeFaces );
+    return 0;
+}
+
+static int render_ResetAmbientLightCube( lua_State *L )
+{
+    float r = luaL_checknumber( L, 1 );
+    float g = luaL_checknumber( L, 2 );
+    float b = luaL_checknumber( L, 3 );
+
+    static Vector4D cubeFaces[6];
+    int i;
+
+    for ( i = 0; i < 6; i++ )
+    {
+        cubeFaces[i].Init( r, g, b, 1.0f );
+    }
+
+    g_pMaterialSystem->GetRenderContext()->SetAmbientLightCube( cubeFaces );
+    return 0;
+}
+
+static int render_SetLight( lua_State *L )
+{
+    LightDesc_t desc;
+    memset( &desc, 0, sizeof( desc ) );
+
+    desc.m_Type = MATERIAL_LIGHT_DIRECTIONAL;
+
+    desc.m_Color[0] = luaL_checknumber( L, 1 );
+    desc.m_Color[1] = luaL_checknumber( L, 2 );
+    desc.m_Color[2] = luaL_checknumber( L, 3 );
+    desc.m_Color *= luaL_checknumber( L, 4 ) / 255.0f;
+
+    desc.m_Attenuation0 = 1.0f;
+    desc.m_Attenuation1 = 0.0f;
+    desc.m_Attenuation2 = 0.0f;
+    desc.m_Flags = LIGHTTYPE_OPTIMIZATIONFLAGS_HAS_ATTENUATION0;
+
+    desc.m_Direction = luaL_checkvector( L, 5 );
+    VectorNormalize( desc.m_Direction );
+
+    desc.m_Theta = 0.0f;
+    desc.m_Phi = 0.0f;
+    desc.m_Falloff = 1.0f;
+
+    g_pMaterialSystem->GetRenderContext()->SetLight( luaL_checkint( L, 6 ), desc );
+    return 0;
+}
+
+static int render_SetColorModulation( lua_State *L )
+{
+    float color[3];
+    color[0] = luaL_checknumber( L, 1 );
+    color[1] = luaL_checknumber( L, 2 );
+    color[2] = luaL_checknumber( L, 3 );
+
+    render->SetColorModulation( color );
+
+    return 0;
+}
+
+static int render_SetBlend( lua_State *L )
+{
+    render->SetBlend( luaL_checknumber( L, 1 )  );
+    return 0;
+}
+
+static int render_ClearBuffers( lua_State *L )
+{
+    bool bClearColor = lua_toboolean( L, 1 );
+    bool bClearDepth = lua_toboolean( L, 2 );
+    bool bClearStencil = lua_toboolean( L, 3 );
+
+    g_pMaterialSystem->GetRenderContext()->ClearBuffers( bClearColor, bClearDepth, bClearStencil );
+    return 0;
+}
+
+static int render_ClearColor(lua_State* L)
+{
+    lua_Color clr = luaL_checkcolor(L, 1);
+    g_pMaterialSystem->GetRenderContext()->ClearColor4ub( clr.r(), clr.g(), clr.b(), clr.a() );
+    return 0;
+}
+
+static int render_SetScissorRect(lua_State* L)
+{
+    int nLeft = luaL_checkint(L, 1);
+    int nTop = luaL_checkint(L, 2);
+    int nRight = luaL_checkint(L, 3);
+    int nBottom = luaL_checkint(L, 4);
+    bool bEnableScissor = lua_toboolean(L, 5);
+
+    g_pMaterialSystem->GetRenderContext()->SetScissorRect(nLeft, nTop, nRight, nBottom, bEnableScissor);
+    return 0;
+}
 #endif
 
 static const luaL_Reg renderLib[] = {
 #ifdef CLIENT_DLL
     { "CreateRenderTargetTextureEx", render_CreateRenderTargetTextureEx },
     { "GetScreenEffectTexture", render_GetScreenEffectTexture },
+    { "Push3DView", render_Push3DView },
+    { "PopView", render_PopView },
+    { "SuppressEngineLighting", modelrender_SuppressEngineLighting },
+    { "SetLightingOrigin", render_SetLightingOrigin },
+    { "SetAmbientLightCube", render_SetAmbientLightCube },
+    { "ResetAmbientLightCube", render_ResetAmbientLightCube },
+    { "SetLight", render_SetLight },
+    { "SetColorModulation", render_SetColorModulation },
+    { "SetBlend", render_SetBlend },
+    { "ClearBuffers", render_ClearBuffers },
+    { "ClearColor", render_ClearColor },
+    { "SetScissorRect", render_SetScissorRect },
     { "UpdateScreenEffectTexture", render_UpdateScreenEffectTexture },
 #endif
     { NULL, NULL } };

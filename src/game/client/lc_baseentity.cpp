@@ -9,6 +9,7 @@
 #include "luasrclib.h"
 #include "lbaseentity_shared.h"
 #include "mathlib/lvector.h"
+#include "model_types.h"
 
 // memdbgon must be the last include file in a .cpp file!!!
 #include "tier0/memdbgon.h"
@@ -139,7 +140,7 @@ static int CBaseEntity_UsesFullFrameBufferTexture( lua_State *L )
 
 static int CBaseEntity_DrawModel( lua_State *L )
 {
-    lua_pushinteger( L, luaL_checkentity( L, 1 )->DrawModel( luaL_checkint( L, 2 ) ) );
+    lua_pushinteger( L, luaL_checkentity( L, 1 )->DrawModel( luaL_optint( L, 2, STUDIO_RENDER ) ) );
     return 1;
 }
 

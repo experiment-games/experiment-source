@@ -457,7 +457,28 @@ else
 			return y
 		end,
 		SetMousePos = input.SetCursorPosition,
-	}
+    }
+
+    cam = {
+        Start3D = render.Push3DView,
+		End3D = render.PopView,
+    }
+
+    render.SetModelLighting = render.SetAmbientLightCube
+    render.ResetModelLighting = render.ResetAmbientLightCube
+
+    function render.Clear(r, g, b, a, clearDepth, clearStencil)
+        render.ClearBuffers(true, clearDepth or false, clearStencil or false)
+        render.ClearColor(r, g, b, a)
+    end
+
+    function render.ClearDepth(clearStencil)
+        render.ClearBuffers(false, true, clearStencil or false)
+    end
+
+	function render.ClearStencil()
+        render.ClearBuffers(false, false, true)
+	end
 
 	input.SetCursorPos = input.SetCursorPosition
 	input.GetCursorPos = input.GetCursorPosition
