@@ -141,7 +141,14 @@ static int engine_Key_LookupBinding( lua_State *L )
 static int engine_Key_BindingForKey( lua_State *L )
 {
     ButtonCode_t code = ( ButtonCode_t )luaL_checkint( L, 1 );
-    lua_pushstring( L, engine->Key_BindingForKey( code ) );
+    const char *binding = engine->Key_BindingForKey( code );
+
+    // Dunno why binding returns 0x10000 for BUTTON_CODE_LAST, but lets catch that
+    if ( binding && ( ( uintptr_t )binding != 0x10000 ) )
+        lua_pushstring( L, binding );
+    else
+        lua_pushstring( L, "" );
+
     return 1;
 }
 

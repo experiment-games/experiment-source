@@ -58,6 +58,7 @@ include( "vgui/DAlphaBar.lua" )
 include( "vgui/DRGBPicker.lua" )
 include( "vgui/DPanPanel.lua" )
 
+include("vgui/DAdjustableModelPanel.lua")
 include("vgui/DModelPanel.lua")
 include("vgui/DModelSelect.lua")
 include("vgui/DModelSelectMulti.lua")

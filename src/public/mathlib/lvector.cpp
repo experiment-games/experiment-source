@@ -116,6 +116,38 @@ static int Vector_DistToSqr( lua_State *L )
     return 1;
 }
 
+static int Vector_DistanceTo2D( lua_State *L )
+{
+    Vector delta;
+    Vector a = luaL_checkvector( L, 1 );
+    Vector b = luaL_checkvector( L, 2 );
+
+    CHECK_VALID( a );
+    CHECK_VALID( b );
+    delta.x = a.x - b.x;
+    delta.y = a.y - b.y;
+
+    lua_pushnumber( L, delta.Length() );
+
+    return 1;
+}
+
+static int Vector_DistanceTo2DSqr( lua_State *L )
+{
+    Vector delta;
+    Vector a = luaL_checkvector( L, 1 );
+    Vector b = luaL_checkvector( L, 2 );
+
+    CHECK_VALID( a );
+    CHECK_VALID( b );
+    delta.x = a.x - b.x;
+    delta.y = a.y - b.y;
+
+    lua_pushnumber( L, delta.LengthSqr() );
+
+    return 1;
+}
+
 static int Vector_Dot( lua_State *L )
 {
     lua_pushnumber( L, luaL_checkvector( L, 1 ).Dot( luaL_checkvector( L, 2 ) ) );
@@ -317,8 +349,10 @@ static const luaL_Reg Vectormeta[] = {
     { "Angle", Vector_Angle },
     { "AngleWithUp", Vector_AngleWithUp },
     { "Cross", Vector_Cross },
-    { "DistTo", Vector_DistTo },
-    { "DistToSqr", Vector_DistToSqr },
+    { "DistanceTo", Vector_DistTo },
+    { "DistanceToAsSqr", Vector_DistToSqr },
+    { "DistanceTo2D", Vector_DistanceTo2D },
+    { "DistanceTo2DSqr", Vector_DistanceTo2DSqr },
     { "Dot", Vector_Dot },
     { "Init", Vector_Init },
     { "Invalidate", Vector_Invalidate },

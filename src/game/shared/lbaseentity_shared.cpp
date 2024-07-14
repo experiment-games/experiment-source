@@ -581,6 +581,16 @@ static int CBaseEntity_GetMaxHealth( lua_State *L )
     return 1;
 }
 
+static int CBaseEntity_GetModelBounds( lua_State *L )
+{
+    Vector mins, maxs;
+    CBaseEntity *pEntity = luaL_checkentity( L, 1 );
+    modelinfo->GetModelBounds( pEntity->GetModel(), mins, maxs );
+    lua_pushvector( L, mins );
+    lua_pushvector( L, maxs );
+    return 2;
+}
+
 static int CBaseEntity_GetModelIndex( lua_State *L )
 {
     lua_pushinteger( L, luaL_checkentity( L, 1 )->GetModelIndex() );
@@ -1909,6 +1919,7 @@ static const luaL_Reg CBaseEntitymeta[] = {
     { "GetLocalOrigin", CBaseEntity_GetLocalOrigin },
     { "GetLocalVelocity", CBaseEntity_GetLocalVelocity },
     { "GetMaxHealth", CBaseEntity_GetMaxHealth },
+    { "GetModelBounds", CBaseEntity_GetModelBounds },
     { "GetModelIndex", CBaseEntity_GetModelIndex },
     { "GetModelName", CBaseEntity_GetModelName },
     { "GetMoveParent", CBaseEntity_GetMoveParent },

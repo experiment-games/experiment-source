@@ -11,9 +11,138 @@
 #include "lbaseplayer_shared.h"
 #include "lgametrace.h"
 #include "mathlib/lvector.h"
+#include "collisionutils.h"
 
 // memdbgon must be the last include file in a .cpp file!!!
 #include "tier0/memdbgon.h"
+
+// TODO: Test if this function works as expected
+static int luasrc_Util_IntersectRayWithOBB( lua_State *L )
+{
+    Vector vecRayStart = luaL_checkvector( L, 1 );
+    Vector vecRayDelta = luaL_checkvector( L, 2 );
+    Vector vecBoxOrigin = luaL_checkvector( L, 3 );
+    QAngle angBoxAngles = luaL_checkangle( L, 4 );
+    Vector vecBoxMins = luaL_checkvector( L, 5 );
+    Vector vecBoxMaxs = luaL_checkvector( L, 6 );
+
+    matrix3x4_t matOBBToWorld;
+    AngleMatrix( angBoxAngles, vecBoxOrigin, matOBBToWorld );
+
+    CBaseTrace tr;
+    if ( IntersectRayWithOBB( vecRayStart, vecRayDelta, matOBBToWorld, vecBoxMins, vecBoxMaxs, 0.0f, &tr ) )
+    {
+        lua_pushvector( L, tr.endpos );
+        lua_pushvector( L, tr.plane.normal );
+        lua_pushnumber( L, tr.fraction );
+    }
+    else
+    {
+        lua_pushnil( L );
+        lua_pushnil( L );
+        lua_pushnil( L );
+    }
+
+    return 3;
+}
+
+static int luasrc_Util_IntersectRayWithPlane( lua_State *L )
+{
+    Vector vecRayOrigin = luaL_checkvector( L, 1 );
+    Vector vecRayDirection = luaL_checkvector( L, 2 );
+    Vector vecPlaneOrigin = luaL_checkvector( L, 3 );
+    Vector vecPlaneNormal = luaL_checkvector( L, 4 );
+
+    float flDot = DotProduct( vecPlaneNormal, vecRayDirection );
+
+    // If the ray is parallel to the plane, there is no intersection.
+    if ( flDot == 0.0f )
+    {
+        lua_pushnil( L );
+        return 1;
+    }
+
+    float flDistance = DotProduct( vecPlaneOrigin, vecPlaneNormal ) - DotProduct( vecRayOrigin, vecPlaneNormal );
+
+    Vector vecHitPos = vecRayOrigin + vecRayDirection * ( flDistance / flDot );
+
+    lua_pushvector( L, vecHitPos );
+
+    return 1;
+}
+
+static int lua_Util_IntersectRayWithSphere( lua_State *L )
+{
+    Vector vecRayOrigin = luaL_checkvector( L, 1 );
+    Vector vecRayDelta = luaL_checkvector( L, 2 );
+    Vector vecSphereCenter = luaL_checkvector( L, 3 );
+    float flRadius = luaL_checknumber( L, 4 );
+
+    float t1, t2;
+    if ( IntersectRayWithSphere( vecRayOrigin, vecRayDelta, vecSphereCenter, flRadius, &t1, &t2 ) )
+    {
+        lua_pushnumber( L, t1 );
+        lua_pushnumber( L, t2 );
+        return 2;
+    }
+
+    lua_pushnil( L );
+    lua_pushnil( L );
+    return 2;
+}
+
+static int lua_Util_IsBoxIntersectingSphere( lua_State *L )
+{
+    Vector boxMin = luaL_checkvector( L, 1 );
+    Vector boxMax = luaL_checkvector( L, 2 );
+    Vector spherePosition = luaL_checkvector( L, 3 );
+    float sphereRadius = luaL_checknumber( L, 4 );
+
+    lua_pushboolean( L, IsBoxIntersectingSphere( boxMin, boxMax, spherePosition, sphereRadius ) );
+    return 1;
+}
+
+static int lua_Util_IsOBBIntersectingOBB( lua_State *L )
+{
+    Vector vecOrigin1 = luaL_checkvector( L, 1 );
+    QAngle vecAngles1 = luaL_checkangle( L, 2 );
+    Vector boxMin1 = luaL_checkvector( L, 3 );
+    Vector boxMax1 = luaL_checkvector( L, 4 );
+
+    Vector vecOrigin2 = luaL_checkvector( L, 5 );
+    QAngle vecAngles2 = luaL_checkangle( L, 6 );
+    Vector boxMin2 = luaL_checkvector( L, 7 );
+    Vector boxMax2 = luaL_checkvector( L, 8 );
+
+    float flTolerance = luaL_optnumber( L, 9, 0.0f );
+
+    lua_pushboolean( L, IsOBBIntersectingOBB( vecOrigin1, vecAngles1, boxMin1, boxMax1, vecOrigin2, vecAngles2, boxMin2, boxMax2, flTolerance ) );
+    return 1;
+}
+
+static int lua_Util_IsSphereIntersectingCone( lua_State *L )
+{
+    Vector sphereCenter = luaL_checkvector( L, 1 );
+    float sphereRadius = luaL_checknumber( L, 2 );
+    Vector coneOrigin = luaL_checkvector( L, 3 );
+    Vector coneAxis = luaL_checkvector( L, 4 );
+    float coneSine = luaL_checknumber( L, 5 );
+    float coneCosine = luaL_checknumber( L, 6 );
+
+    lua_pushboolean( L, IsSphereIntersectingCone( sphereCenter, sphereRadius, coneOrigin, coneAxis, coneSine, coneCosine ) );
+    return 1;
+}
+
+static int lua_Util_IsSphereIntersectingSphere( lua_State *L )
+{
+    Vector sphereCenter1 = luaL_checkvector( L, 1 );
+    float sphereRadius1 = luaL_checknumber( L, 2 );
+    Vector sphereCenter2 = luaL_checkvector( L, 3 );
+    float sphereRadius2 = luaL_checknumber( L, 4 );
+
+    lua_pushboolean( L, IsSphereIntersectingSphere( sphereCenter1, sphereRadius1, sphereCenter2, sphereRadius2 ) );
+    return 1;
+}
 
 static int luasrc_Util_VecToYaw( lua_State *L )
 {
@@ -215,6 +344,13 @@ static int CBasePlayer_GetAllPlayers( lua_State *L )
 }
 
 static const luaL_Reg util_funcs[] = {
+    { "IntersectRayWithPlane", luasrc_Util_IntersectRayWithPlane },
+    { "IntersectRayWithOBB", luasrc_Util_IntersectRayWithOBB },
+    { "IntersectRayWithSphere", lua_Util_IntersectRayWithSphere },
+    { "IsBoxIntersectingSphere", lua_Util_IsBoxIntersectingSphere },
+    { "IsOBBIntersectingOBB", lua_Util_IsOBBIntersectingOBB },
+    { "IsSphereIntersectingCone", lua_Util_IsSphereIntersectingCone },
+    { "IsSphereIntersectingSphere", lua_Util_IsSphereIntersectingSphere },
     { "VecToYaw", luasrc_Util_VecToYaw },
     { "VecToPitch", luasrc_Util_VecToPitch },
     { "YawToVector", luasrc_Util_YawToVector },

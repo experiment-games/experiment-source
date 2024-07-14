@@ -26,24 +26,23 @@ function GetConVar_Internal(name)
 	return consoleVariable
 end
 
-util = {
-	PrecacheModel = _R.CBaseEntity.PrecacheModel,
-	PrecacheSound = _R.CBaseEntity.PrecacheSound,
+util = Util
+util.PrecacheModel = _R.CBaseEntity.PrecacheModel
+util.PrecacheSound = _R.CBaseEntity.PrecacheSound
 
-	-- TODO: 	Things like the player manager and drive system depend on these three functions
-	--			returning sensible data. Find a way to implement it:
-	AddNetworkString = function(name) end,     -- Not needed for us.
-	NetworkIDToString = function() return "" end, -- Not needed for us.
-	NetworkStringToID = function() return 0 end, -- Not needed for us.
+-- TODO: 	Things like the player manager and drive system depend on these three functions
+--			returning sensible data. Find a way to implement it:
+util.AddNetworkString = function(name) end     -- Not needed for us.
+util.NetworkIDToString = function() return "" end -- Not needed for us.
+util.NetworkStringToID = function() return 0 end -- Not needed for us.
 
-	JSONToTable = function(json)
-		return Json.Decode(json)
-	end,
+util.JSONToTable = function(json)
+	return Json.Decode(json)
+end
 
-	TableToJSON = function(table)
-		return Json.Encode(table)
-	end,
-}
+util.TableToJSON = function(table)
+	return Json.Encode(table)
+end
 
 ents = {
 	FindAlongRay = function(...)
@@ -320,6 +319,10 @@ game = {
 
 local VECTOR_META = FindMetaTable("Vector")
 VECTOR_META.AngleEx = VECTOR_META.AngleWithUp
+VECTOR_META.Distance = VECTOR_META.DistanceTo
+VECTOR_META.DistToSqr = VECTOR_META.DistanceToAsSqr
+VECTOR_META.Distance2D = VECTOR_META.DistanceTo2D
+VECTOR_META.Distance2DSqr = VECTOR_META.DistanceToAsSqr2D
 
 local ENTITY_META = FindMetaTable("Entity")
 ENTITY_META.GetModel = ENTITY_META.GetModelName
@@ -726,7 +729,9 @@ else
 	end
 
 	ScrW = Util.ScreenWidth
-	ScrH = Util.ScreenHeight
+    ScrH = Util.ScreenHeight
+
+	Util.IsSkyboxVisibleFromPoint = engine.IsSkyboxVisibleFromPoint
 
 	GetRenderTargetEx = render.CreateRenderTargetTextureEx
 	GetRenderTarget = render.CreateRenderTargetTextureEx
