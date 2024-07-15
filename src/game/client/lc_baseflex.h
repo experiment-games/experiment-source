@@ -40,14 +40,9 @@ class CClientSideEntityManager
     ~CClientSideEntityManager();
 
     lua_CBaseFlex *CreateClientSideEntity( const char *pszModelName, RenderGroup_t renderGroup );
-    void Clear();
-    void Release();
 
    protected:
     void InitClientEntity( lua_CBaseFlex *pClientSideEntity, const model_t *pModel, RenderGroup_t renderGroup );
-
-    CClassMemoryPool< lua_CBaseFlex > m_ClientSideEntityPool;
-    CUtlLinkedList< lua_CBaseFlex *, unsigned short > m_ClientSideEntities;
 };
 
 extern CClientSideEntityManager *g_pClientSideEntityManager;

@@ -108,7 +108,13 @@ void LModelImagePanel::RebuildSpawnIcon( Camera_t camera, const char *pszSavePat
     Q_strncpy( pngPath, pngPathFull + 10, sizeof( pngPath ) );
 
     lua_CBaseFlex *pEntity = g_pClientSideEntityManager->CreateClientSideEntity( m_pszModelPath, RENDER_GROUP_OTHER );
+
+    if ( pEntity == NULL )
+        return;
+
+    pEntity->DontRecordInTools();
     pEntity->AddEffects( EF_NODRAW );
+
     pEntity->m_nSkin = m_iSkin;
 
     if ( m_pszBodyGroups != NULL )
@@ -144,7 +150,7 @@ void LModelImagePanel::RebuildSpawnIcon( Camera_t camera, const char *pszSavePat
     pRenderContext->PushRenderTargetAndViewport( NULL, 0, 0, outputWidth, outputHeight );
 
     pRenderContext->ClearColor4ub( 0, 0, 0, 0 );
-    pRenderContext->ClearBuffers( true, false );
+    pRenderContext->ClearBuffers( true, true, true );
 
     CViewSetup viewSetup;
     memset( &viewSetup, 0, sizeof( viewSetup ) );
@@ -152,7 +158,7 @@ void LModelImagePanel::RebuildSpawnIcon( Camera_t camera, const char *pszSavePat
     viewSetup.y = 0;
     viewSetup.width = outputWidth;
     viewSetup.height = outputHeight;
-    viewSetup.fov = ScaleFOVByWidthRatio( camera.m_flFOV, ( ( float )outputWidth / ( float )outputHeight ) / ( 4.0f / 3.0f ) );
+    viewSetup.fov = camera.m_flFOV;
     viewSetup.origin = camera.m_origin;
     viewSetup.angles = camera.m_angles;
     viewSetup.zNear = camera.m_flZNear;
@@ -162,19 +168,32 @@ void LModelImagePanel::RebuildSpawnIcon( Camera_t camera, const char *pszSavePat
     Frustum dummyFrustum;
     render->Push3DView( viewSetup, 0, NULL, dummyFrustum );
 
-    modelrender->SuppressEngineLighting( true );
-    // pRenderContext->FogMode( MATERIAL_FOG_NONE );
-    // pRenderContext->SetAmbientLight( 255, 255, 255 );
-    //float color[3] = { 1.0f, 1.0f, 1.0f };
-    //render->SetColorModulation( color );
-    //render->SetBlend( 1.0f );
+    pRenderContext->FogMode( MATERIAL_FOG_NONE );
+    pRenderContext->SetLightingOrigin( Vector( 0, 0, 1000 ) );
+    pRenderContext->SetAmbientLight( 0.4, 0.4, 0.4 );
 
-    //pRenderContext->OverrideAlphaWriteEnable( true, true );
+    static Vector white[6] =
+        {
+            Vector( 1, 1, 1 ),
+            Vector( 0.4, 0.4, 0.4 ),
+            Vector( 1, 1, 1 ),
+            Vector( 1, 1, 1 ),
+            Vector( 1, 1, 1 ),
+            Vector( 0.4, 0.4, 0.4 ),
+        };
+
+    g_pStudioRender->SetAmbientLightColors( white );
+    g_pStudioRender->SetLocalLights( 0, NULL );
+
+    modelrender->SuppressEngineLighting( true );
+
+    float color[3] = { 1.0f, 1.0f, 1.0f };
+    render->SetColorModulation( color );
+    render->SetBlend( 1.0f );
+
     pRenderContext->SetIntRenderingParameter( INT_RENDERPARM_WRITE_DEPTH_TO_DESTALPHA, false );
 
     pEntity->DrawModel( STUDIO_RENDER );
-
-    //pRenderContext->OverrideAlphaWriteEnable( false, true );
 
     unsigned char *pImage = ( unsigned char * )malloc( outputWidth * outputHeight * 4 );
 
@@ -197,9 +216,10 @@ void LModelImagePanel::RebuildSpawnIcon( Camera_t camera, const char *pszSavePat
     pRenderContext->MatrixMode( MATERIAL_VIEW );
     pRenderContext->PopMatrix();
 
-    pEntity->AddEFlags( EFL_KILLME );
-
     SetModelImage( pngPath );
+
+    pEntity->Remove();
+    pEntity = NULL;
 }
 
 /// <summary>

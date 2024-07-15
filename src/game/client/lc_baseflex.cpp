@@ -17,51 +17,20 @@
 #include "tier0/memdbgon.h"
 #include <model_types.h>
 
-const int MIN_CLIENTSIDE_ENTITIES = 64;
-const int MAX_CLIENTSIDE_ENTITIES = 1024;
-
 static CClientSideEntityManager s_ClientSideEntityManager;
 CClientSideEntityManager *g_pClientSideEntityManager = &s_ClientSideEntityManager;
 
 CClientSideEntityManager::CClientSideEntityManager()
-    : m_ClientSideEntityPool( MIN_CLIENTSIDE_ENTITIES, CUtlMemoryPool::GROW_SLOW )
 {
 }
 
 CClientSideEntityManager::~CClientSideEntityManager()
 {
-    m_ClientSideEntityPool.Clear();
-    m_ClientSideEntities.RemoveAll();
-}
-
-void CClientSideEntityManager::Clear()
-{
-    FOR_EACH_LL( m_ClientSideEntities, i )
-    {
-        lua_CBaseFlex *pClientSideEntity = m_ClientSideEntities[i];
-
-        m_ClientSideEntityPool.Free( pClientSideEntity );
-    }
-
-    m_ClientSideEntities.RemoveAll();
-}
-
-void CClientSideEntityManager::Release()
-{
-    Clear();
 }
 
 lua_CBaseFlex *CClientSideEntityManager::CreateClientSideEntity( const char *pszModelName, RenderGroup_t renderGroup )
 {
-    if ( m_ClientSideEntityPool.Count() >= MAX_CLIENTSIDE_ENTITIES )
-    {
-        DevWarning( 1, "Too many clientside ents (maximum is %d)!\n", MAX_CLIENTSIDE_ENTITIES );
-        return NULL;
-    }
-
-    lua_CBaseFlex *pClientSideEntity = m_ClientSideEntityPool.AllocZero();
-
-    m_ClientSideEntities.AddToTail( pClientSideEntity );
+    lua_CBaseFlex *pClientSideEntity = new lua_CBaseFlex();
 
     int nModelIndex = modelinfo->GetModelClientSideIndex( pszModelName );
 
@@ -89,6 +58,13 @@ lua_CBaseFlex *CClientSideEntityManager::CreateClientSideEntity( const char *psz
 
     InitClientEntity( pClientSideEntity, pModel, renderGroup );
 
+    if ( pClientSideEntity->InitializeAsClientEntity( pszModelName, renderGroup ) == false )
+    {
+        pClientSideEntity->Remove();
+        DevWarning( "Failed to initialize clientside entity for model %s\n", pszModelName );
+        return NULL;
+    }
+
     return pClientSideEntity;
 }
 
@@ -103,20 +79,6 @@ void CClientSideEntityManager::InitClientEntity( lua_CBaseFlex *pClientSideEntit
     pClientSideEntity->m_nRenderFX = kRenderFxNone;
     pClientSideEntity->Interp_SetupMappings( pClientSideEntity->GetVarMapping() );
     pClientSideEntity->SetAbsOrigin( vec3_origin );
-
-    pClientSideEntity->index = -1;
-
-    cl_entitylist->AddNonNetworkableEntity( pClientSideEntity->GetIClientUnknown() );
-    Assert( pClientSideEntity->GetClientHandle() != ClientEntityList().InvalidHandle() );
-
-    if ( pClientSideEntity->m_RenderGroup == RENDER_GROUP_OTHER )
-    {
-        pClientSideEntity->AddToLeafSystem();
-    }
-    else
-    {
-        pClientSideEntity->AddToLeafSystem( pClientSideEntity->m_RenderGroup );
-    }
 }
 
 /*

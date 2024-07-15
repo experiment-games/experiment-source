@@ -1766,9 +1766,6 @@ void CHLClient::LevelShutdown(void) {
 
     modemanager->LevelShutdown();
 
-    // Experiment; release any clientside entities
-    g_pClientSideEntityManager->Release();
-
     // Remove temporary entities before removing entities from the client entity
     // list so that the te_* may clean up before hand.
     tempents->LevelShutdown();
