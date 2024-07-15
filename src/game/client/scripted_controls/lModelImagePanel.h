@@ -30,12 +30,16 @@ class LModelImagePanel : public EditablePanel
     const char *m_pszBodyGroups;
     int m_nTextureID;
 
+    virtual void LoadIfExists();
+
    public:
     virtual void SetModel( const char *modelPath, int skin = 0, const char *bodyGroups = NULL )
     {
         m_pszModelPath = modelPath;
         m_iSkin = skin;
         m_pszBodyGroups = bodyGroups;
+
+        LoadIfExists();
     }
 
     virtual const char *GetModel()

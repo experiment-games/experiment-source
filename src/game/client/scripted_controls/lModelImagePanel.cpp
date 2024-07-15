@@ -30,6 +30,7 @@
 #include <basemodelpanel.h>
 #include <lc_baseflex.h>
 #include <viewrender.h>
+#include <filesystem.h>
 
 using namespace vgui;
 
@@ -221,6 +222,8 @@ void LModelImagePanel::RebuildSpawnIcon( Camera_t camera, const char *pszSavePat
 
     pRenderContext->SetIntRenderingParameter( INT_RENDERPARM_WRITE_DEPTH_TO_DESTALPHA, false );
 
+    pRenderContext->OverrideAlphaWriteEnable( true, true );
+
     pEntity->DrawModel( STUDIO_RENDER );
 
     unsigned char *pImage = ( unsigned char * )malloc( outputWidth * outputHeight * 4 );
@@ -236,6 +239,7 @@ void LModelImagePanel::RebuildSpawnIcon( Camera_t camera, const char *pszSavePat
     free( pImage );
 
     // restore our previous state
+    pRenderContext->OverrideAlphaWriteEnable( false, true );
     pRenderContext->PopRenderTargetAndViewport();
 
     pRenderContext->MatrixMode( MATERIAL_PROJECTION );
@@ -249,6 +253,29 @@ void LModelImagePanel::RebuildSpawnIcon( Camera_t camera, const char *pszSavePat
     pEntity->Remove();
     pEntity = NULL;
 }
+
+/// <summary>
+/// Loads the model image if it exists in the spawnicons directory already.
+/// </summary>
+void LModelImagePanel::LoadIfExists()
+{
+    char pngPathFull[MAX_PATH];
+    char pngPath[MAX_PATH];
+
+    // Build the path relative to the icon texture
+    Q_snprintf( pngPathFull, sizeof( pngPathFull ), "materials/spawnicons/%s", m_pszModelPath );
+    Q_StripExtension( pngPathFull, pngPathFull, sizeof( pngPathFull ) );  // strip .mdl
+    Q_DefaultExtension( pngPathFull, ".png", sizeof( pngPathFull ) );
+
+    // trim materials/ from the front
+    Q_strncpy( pngPath, pngPathFull + 10, sizeof( pngPath ) );
+
+    if ( filesystem->FileExists( pngPathFull, "GAME" ) )
+    {
+        SetModelImage( pngPath );
+    }
+}
+
 
 /// <summary>
 /// Sets the PNG image to be displayed on the panel. This loads it into the material system
