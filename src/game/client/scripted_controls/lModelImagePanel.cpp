@@ -141,6 +141,9 @@ void LModelImagePanel::RebuildSpawnIcon( Camera_t camera, const char *pszSavePat
     int outputHeight = 256;
 
     CMatRenderContextPtr pRenderContext( materials );
+    pRenderContext->MatrixMode( MATERIAL_MODEL );
+    pRenderContext->LoadIdentity();
+
     pRenderContext->MatrixMode( MATERIAL_PROJECTION );
     pRenderContext->PushMatrix();
 
@@ -169,21 +172,46 @@ void LModelImagePanel::RebuildSpawnIcon( Camera_t camera, const char *pszSavePat
     render->Push3DView( viewSetup, 0, NULL, dummyFrustum );
 
     pRenderContext->FogMode( MATERIAL_FOG_NONE );
-    pRenderContext->SetLightingOrigin( Vector( 0, 0, 1000 ) );
-    pRenderContext->SetAmbientLight( 0.4, 0.4, 0.4 );
+    pRenderContext->SetLightingOrigin( vec3_origin );
+    pRenderContext->SetAmbientLight( 0.6, 0.6, 0.6 );
 
-    static Vector white[6] =
+    // front, back, right, left, top, bottom?
+    static Vector semiBright[6] =
         {
-            Vector( 1, 1, 1 ),
+            Vector( 0.6, 0.6, 0.6 ),
             Vector( 0.4, 0.4, 0.4 ),
-            Vector( 1, 1, 1 ),
-            Vector( 1, 1, 1 ),
-            Vector( 1, 1, 1 ),
+            Vector( 0.6, 0.6, 0.6 ),
+            Vector( 0.6, 0.6, 0.6 ),
+            Vector( 0.6, 0.6, 0.6 ),
             Vector( 0.4, 0.4, 0.4 ),
         };
 
-    g_pStudioRender->SetAmbientLightColors( white );
+    g_pStudioRender->SetAmbientLightColors( semiBright );
     g_pStudioRender->SetLocalLights( 0, NULL );
+
+    Vector vecMins, vecMaxs;
+    pEntity->GetRenderBounds( vecMins, vecMaxs );
+    Vector vecEntityPosition = pEntity->GetAbsOrigin();
+
+    Vector vecAboveEntity = vecEntityPosition + Vector( 0, 0, vecMaxs.z - vecMins.z ) + Vector( 0, 64, 200 );
+    Vector vecEntityAboveCenter = pEntity->GetAbsOrigin() + Vector( 0, 0, ( vecMaxs.z - vecMins.z ) * 0.75 );
+
+    LightDesc_t pLight;
+    memset( &pLight, 0, sizeof( pLight ) );
+    pLight.m_Type = MATERIAL_LIGHT_SPOT;
+    pLight.m_Color.Init( 1, 1, 1 );
+    pLight.m_Position = vecAboveEntity;
+    pLight.m_Direction = vecEntityAboveCenter - vecAboveEntity;
+    VectorNormalizeFast( pLight.m_Direction );
+    pLight.m_Attenuation0 = 1;
+    pLight.m_Attenuation1 = 0;
+    pLight.m_Attenuation2 = 0;
+    pLight.m_Theta = DEG2RAD( 30 );
+    pLight.m_Phi = DEG2RAD( 45 );
+    pLight.m_Range = 0.0;
+    pLight.RecalculateDerivedValues();
+
+    g_pStudioRender->SetLocalLights( 1, &pLight );
 
     modelrender->SuppressEngineLighting( true );
 
