@@ -56,7 +56,7 @@ LUA_API void lua_pushentity( lua_State *L, CBaseEntity *pEntity )
     CBaseHandle *hEntity =
         ( CBaseHandle * )lua_newuserdata( L, sizeof( CBaseHandle ) );
     hEntity->Set( pEntity );
-    luaL_getmetatable( L, "CBaseEntity" );
+    luaL_getmetatable( L, LUA_BASEENTITYLIBNAME );
     lua_setmetatable( L, -2 );
 }
 
@@ -1750,10 +1750,30 @@ static int CBaseAnimating_GetAttachment( lua_State *L )
     return 1;
 }
 
+int CBaseEntity_IsValid( lua_State *L )
+{
+    lua_CBaseEntity *d = lua_toentity( L, 1 );
+
+    if ( d == NULL )
+    {
+        lua_pushboolean( L, false );
+        return 1;
+    }
+
+#if CLIENT_DLL
+    lua_pushboolean( L, true );
+#else
+    lua_pushboolean( L, UTIL_IsValidEntity( d ) );
+#endif
+
+    return 1;
+}
+
 static int CBaseEntity___index( lua_State *L )
 {    
     CBaseEntity *pEntity = lua_toentity( L, 1 );
-    // LUA_METATABLE_INDEX_CHECK_VALID( L, Entity_IsValid ); // TODO: Entity_IsValid
+
+    LUA_METATABLE_INDEX_CHECK_VALID( L, CBaseEntity_IsValid );
     LUA_METATABLE_INDEX_CHECK( L, pEntity );
 
     const char *field = luaL_checkstring( L, 2 );
@@ -1981,6 +2001,7 @@ static const luaL_Reg CBaseEntitymeta[] = {
     { "IsSolidFlagSet", CBaseEntity_IsSolidFlagSet },
     { "IsStandable", CBaseEntity_IsStandable },
     { "IsTransparent", CBaseEntity_IsTransparent },
+    { "IsValid", CBaseEntity_IsValid },
     { "IsWeapon", CBaseEntity_IsWeapon },
     { "KeyValue", CBaseEntity_KeyValue },
     { "LocalEyeAngles", CBaseEntity_LocalEyeAngles },
@@ -2131,15 +2152,10 @@ static const luaL_Reg CBaseEntity_funcs[] = {
 */
 LUALIB_API int luaopen_CBaseEntity_shared( lua_State *L )
 {
-    luaL_getmetatable( L, LUA_BASEENTITYLIBNAME );
-    if ( lua_isnoneornil( L, -1 ) )
-    {
-        lua_pop( L, 1 );
-        luaL_newmetatable( L, LUA_BASEENTITYLIBNAME );
-    }
+    LUA_PUSH_NEW_METATABLE( L, LUA_BASEENTITYLIBNAME );
     luaL_register( L, NULL, CBaseEntitymeta );
-    lua_pushstring( L, "entity" );
-    lua_setfield( L, -2, "__type" ); /* metatable.__type = "entity" */
+    lua_pushstring( L, "Entity" );
+    lua_setfield( L, -2, "__type" ); /* metatable.__type = "Entity" */
     luaL_register( L, LUA_GNAME, CBaseEntity_funcs );
     lua_pop( L, 1 );
     lua_pushentity( L, NULL );

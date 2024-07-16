@@ -473,7 +473,7 @@ static const luaL_Reg Label_funcs[] = { { "Label", luasrc_Label },
 */
 LUALIB_API int luaopen_vgui_Label( lua_State *L )
 {
-    luaL_newmetatable( L, "Label" );
+    LUA_PUSH_NEW_METATABLE( L, "Label" );
     luaL_register( L, NULL, Labelmeta );
     lua_pushstring( L, LUA_PANELLIBNAME );
     lua_setfield( L, -2, "__type" ); /* metatable.__type = "Panel" */

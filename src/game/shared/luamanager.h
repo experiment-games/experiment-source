@@ -82,7 +82,7 @@
 
 #define END_LUA_CALL_HOOK_FOR_STATE( L, nArgs, nresults ) \
     args += nArgs;                                        \
-    luasrc_pcall( L, args, nresults, 0 );                 \
+    luasrc_pcall( L, args, nresults );                    \
     }                                                     \
     else lua_pop( L, 2 );                                 \
     }                                                     \
@@ -103,7 +103,7 @@
 
 #define END_LUA_CALL_WEAPON_METHOD( nArgs, nresults ) \
     args += nArgs;                                    \
-    luasrc_pcall( L, args, nresults, 0 );             \
+    luasrc_pcall( L, args, nresults );                \
     }                                                 \
     else lua_pop( L, 1 );
 
@@ -119,7 +119,7 @@
 
 #define END_LUA_CALL_WEAPON_HOOK( nArgs, nresults ) \
     args += nArgs;                                  \
-    luasrc_pcall( L, args, nresults, 0 );           \
+    luasrc_pcall( L, args, nresults );              \
     }
 
 #define BEGIN_LUA_CALL_ENTITY_METHOD( functionName ) \
@@ -134,7 +134,7 @@
 
 #define END_LUA_CALL_ENTITY_METHOD( nArgs, nresults ) \
     args += nArgs;                                    \
-    luasrc_pcall( L, args, nresults, 0 );             \
+    luasrc_pcall( L, args, nresults );                \
     }                                                 \
     else lua_pop( L, 1 );
 
@@ -150,7 +150,7 @@
 
 #define END_LUA_CALL_TRIGGER_METHOD( nArgs, nresults ) \
     args += nArgs;                                     \
-    luasrc_pcall( L, args, nresults, 0 );              \
+    luasrc_pcall( L, args, nresults );                 \
     }                                                  \
     else lua_pop( L, 1 );
 
@@ -168,24 +168,24 @@
 
 // Will call the function if it exists, leaving the specified amount of
 // return values on the stack (or nils if the function doesn't exist).
-#define END_LUA_CALL_PANEL_METHOD( nArgs, nresults )          \
-    args += nArgs;                                            \
-    if ( luasrc_pcall( m_lua_State, args, nresults, 0 ) > 0 ) \
-    {                                                         \
-        for ( int i = 0; i < nresults; i++ )                  \
-        {                                                     \
-            lua_pushnil( m_lua_State );                       \
-        }                                                     \
-    }                                                         \
-    }                                                         \
-    else                                                      \
-    {                                                         \
-        lua_pop( m_lua_State, 1 );                            \
-        for ( int i = 0; i < nresults; i++ )                  \
-        {                                                     \
-            lua_pushnil( m_lua_State );                       \
-        }                                                     \
-    }                                                         \
+#define END_LUA_CALL_PANEL_METHOD( nArgs, nresults )       \
+    args += nArgs;                                         \
+    if ( luasrc_pcall( m_lua_State, args, nresults ) > 0 ) \
+    {                                                      \
+        for ( int i = 0; i < nresults; i++ )               \
+        {                                                  \
+            lua_pushnil( m_lua_State );                    \
+        }                                                  \
+    }                                                      \
+    }                                                      \
+    else                                                   \
+    {                                                      \
+        lua_pop( m_lua_State, 1 );                         \
+        for ( int i = 0; i < nresults; i++ )               \
+        {                                                  \
+            lua_pushnil( m_lua_State );                    \
+        }                                                  \
+    }                                                      \
     }
 
 #define RETURN_LUA_NONE()                                  \
@@ -294,44 +294,44 @@
             lua_pop( L, 1 );                             \
     }
 
-#define RETURN_LUA_WEAPON()                                     \
-    if ( lua_gettop( L ) == 1 )                                 \
-    {                                                           \
-        if ( lua_isuserdata( L, -1 ) &&                         \
-             luaL_checkudata( L, -1, "CBaseCombatWeapon" ) )    \
-        {                                                       \
-            CBaseCombatWeapon *res = luaL_checkweapon( L, -1 ); \
-            lua_pop( L, 1 );                                    \
-            return res;                                         \
-        }                                                       \
-        else                                                    \
-            lua_pop( L, 1 );                                    \
+#define RETURN_LUA_WEAPON()                                          \
+    if ( lua_gettop( L ) == 1 )                                      \
+    {                                                                \
+        if ( lua_isuserdata( L, -1 ) &&                              \
+             luaL_checkudata( L, -1, LUA_BASECOMBATWEAPONLIBNAME ) ) \
+        {                                                            \
+            CBaseCombatWeapon *res = luaL_checkweapon( L, -1 );      \
+            lua_pop( L, 1 );                                         \
+            return res;                                              \
+        }                                                            \
+        else                                                         \
+            lua_pop( L, 1 );                                         \
     }
 
-#define RETURN_LUA_ENTITY()                                                       \
-    if ( lua_gettop( L ) == 1 )                                                   \
-    {                                                                             \
-        if ( lua_isuserdata( L, -1 ) && luaL_checkudata( L, -1, "CBaseEntity" ) ) \
-        {                                                                         \
-            CBaseEntity *res = luaL_checkentity( L, -1 );                         \
-            lua_pop( L, 1 );                                                      \
-            return res;                                                           \
-        }                                                                         \
-        else                                                                      \
-            lua_pop( L, 1 );                                                      \
+#define RETURN_LUA_ENTITY()                                                               \
+    if ( lua_gettop( L ) == 1 )                                                           \
+    {                                                                                     \
+        if ( lua_isuserdata( L, -1 ) && luaL_checkudata( L, -1, LUA_BASEENTITYLIBNAME ) ) \
+        {                                                                                 \
+            CBaseEntity *res = luaL_checkentity( L, -1 );                                 \
+            lua_pop( L, 1 );                                                              \
+            return res;                                                                   \
+        }                                                                                 \
+        else                                                                              \
+            lua_pop( L, 1 );                                                              \
     }
 
-#define RETURN_LUA_PLAYER()                                                       \
-    if ( lua_gettop( L ) == 1 )                                                   \
-    {                                                                             \
-        if ( lua_isuserdata( L, -1 ) && luaL_checkudata( L, -1, "CBasePlayer" ) ) \
-        {                                                                         \
-            CBasePlayer *res = luaL_checkplayer( L, -1 );                         \
-            lua_pop( L, 1 );                                                      \
-            return res;                                                           \
-        }                                                                         \
-        else                                                                      \
-            lua_pop( L, 1 );                                                      \
+#define RETURN_LUA_PLAYER()                                                               \
+    if ( lua_gettop( L ) == 1 )                                                           \
+    {                                                                                     \
+        if ( lua_isuserdata( L, -1 ) && luaL_checkudata( L, -1, LUA_BASEPLAYERLIBNAME ) ) \
+        {                                                                                 \
+            CBasePlayer *res = luaL_checkplayer( L, -1 );                                 \
+            lua_pop( L, 1 );                                                              \
+            return res;                                                                   \
+        }                                                                                 \
+        else                                                                              \
+            lua_pop( L, 1 );                                                              \
     }
 
 #define RETURN_LUA_VECTOR()                                                           \
@@ -461,6 +461,16 @@
     _pPanelHandle->Set( Target );                                                  \
     LUA_PUSH_PANEL_USERDATA_METATABLE( L, MetaTableName );
 
+#define LUA_PUSH_NEW_METATABLE( L, MetaTableName )                      \
+    luaL_getmetatable( L, MetaTableName );                              \
+    AssertMsg( lua_isnoneornil( L, -1 ), "Metatable already exists!" ); \
+    lua_pop( L, 1 );                                                    \
+    luaL_newmetatable( L, MetaTableName );
+
+#define LUA_PUSH_METATABLE_TO_EXTEND( L, MetaTableName ) \
+    luaL_getmetatable( L, MetaTableName );               \
+    AssertMsg( lua_istable( L, -1 ), "Metatable doesn't exist!" );
+
 extern ConVar gamemode;
 
 LUALIB_API int luaL_checkboolean( lua_State *L, int narg );
@@ -494,7 +504,8 @@ LUA_API int( luasrc_dofile )( lua_State *L, const char *filename );
 LUA_API int( luasrc_dofile_leave_stack )( lua_State *L, const char *filename );
 LUA_API void( luasrc_dofolder )( lua_State *L, const char *path );
 
-LUA_API int( luasrc_pcall )( lua_State *L, int nargs, int nresults, int errfunc );
+#define LUA_DEFAULT_ERROR_HANDLER 0
+LUA_API int( luasrc_pcall )( lua_State *L, int amountOfArguments, int amountOfResults, int errorFunctionStackPos = LUA_DEFAULT_ERROR_HANDLER );
 LUA_API int( luasrc_print )( lua_State *L );
 LUA_API void( luasrc_dumpstack )( lua_State *L );
 

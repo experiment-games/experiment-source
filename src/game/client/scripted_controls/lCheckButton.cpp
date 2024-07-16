@@ -280,7 +280,7 @@ static const luaL_Reg CheckButton_funcs[] = {
 */
 LUALIB_API int luaopen_vgui_CheckButton( lua_State *L )
 {
-    luaL_newmetatable( L, "CheckButton" );
+    LUA_PUSH_NEW_METATABLE( L, "CheckButton" );
     luaL_register( L, NULL, CheckButtonmeta );
     lua_pushstring( L, LUA_PANELLIBNAME );
     lua_setfield( L, -2, "__type" ); /* metatable.__type = "Panel" */

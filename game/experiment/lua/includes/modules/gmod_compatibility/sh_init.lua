@@ -57,7 +57,8 @@ ents = {
 }
 
 player = {
-	GetAll = Util.GetAllPlayers,
+    GetAll = Util.GetAllPlayers,
+	GetByID = Util.PlayerByIndex,
 	GetBots = Util.GetAllBots,
 	GetHumans = Util.GetAllHumans,
 	GetBySteamID = Util.PlayerBySteamID,

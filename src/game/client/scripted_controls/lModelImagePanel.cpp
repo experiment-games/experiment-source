@@ -248,6 +248,7 @@ void LModelImagePanel::RebuildSpawnIcon( Camera_t camera, const char *pszSavePat
     pRenderContext->MatrixMode( MATERIAL_VIEW );
     pRenderContext->PopMatrix();
 
+    m_pszModelImagePath = nullptr;
     SetModelImage( pngPath );
 
     pEntity->Remove();
@@ -542,7 +543,7 @@ static const luaL_Reg ModelImagePanel_funcs[] = { { "ModelImagePanel", luasrc_Mo
 */
 LUALIB_API int luaopen_vgui_ModelImagePanel( lua_State *L )
 {
-    luaL_newmetatable( L, "ModelImagePanel" );
+    LUA_PUSH_NEW_METATABLE( L, "ModelImagePanel" );
     luaL_register( L, NULL, ModelImagePanelmeta );
     lua_pushstring( L, LUA_PANELLIBNAME );
     lua_setfield( L, -2, "__type" ); /* metatable.__type = "Panel" */

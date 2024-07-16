@@ -1062,6 +1062,27 @@ float CountdownTimer::Now( void ) const
 // HPE_END
 //=============================================================================
 
+  CBasePlayer *UTIL_PlayerByName( const char *name )
+  {
+      if ( !name || !name[0] )
+          return NULL;
+
+      for ( int i = 1; i <= gpGlobals->maxClients; i++ )
+      {
+          CBasePlayer *pPlayer = UTIL_PlayerByIndex( i );
+
+          if ( !pPlayer )
+              continue;
+
+          if ( Q_stricmp( pPlayer->GetPlayerName(), name ) == 0 )
+          {
+              return pPlayer;
+          }
+      }
+
+      return NULL;
+  }
+
 #endif
 
 

@@ -103,11 +103,11 @@ static const luaL_Reg ISteamFriendsmeta[] = {
 */
 LUALIB_API int luaopen_ISteamFriends( lua_State *L )
 {
-    luaL_newmetatable( L, LUA_STEAMFRIENDSLIBNAME );
+    LUA_PUSH_NEW_METATABLE( L, LUA_STEAMFRIENDSLIBNAME );
     luaL_register( L, NULL, ISteamFriendsmeta );
     lua_pushvalue( L, -1 );           /* push metatable */
     lua_setfield( L, -2, "__index" ); /* metatable.__index = metatable */
-    lua_pushstring( L, "steamfriends" );
-    lua_setfield( L, -2, "__type" ); /* metatable.__type = "steamfriends" */
+    lua_pushstring( L, "SteamFriends" );
+    lua_setfield( L, -2, "__type" ); /* metatable.__type = "SteamFriends" */
     return 1;
 }

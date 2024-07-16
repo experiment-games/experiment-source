@@ -110,52 +110,7 @@ static CUtlDict< ConCommand *, unsigned short > m_GameUIConCommandDatabase;
 #endif
 static CUtlDict< ConCommand *, unsigned short > m_ConCommandDatabase;
 
-#ifdef CLIENT_DLL
-// Andrew; ugh.
-void CC_GameUIConCommand( const CCommand &args )
-{
-    C_BasePlayer *pPlayer = C_BasePlayer::GetLocalPlayer();
-    const char *pCmd = args[0];
-
-    // Is the client spawned yet?
-    // if ( !pPlayer )
-    // 	return;
-
-    MDLCACHE_CRITICAL_SECTION();
-
-    lua_getglobal( LGameUI, LUA_CONCOMMANDLIBNAME );
-    if ( lua_istable( LGameUI, -1 ) )
-    {
-        lua_getfield( LGameUI, -1, "Dispatch" );
-        if ( lua_isfunction( LGameUI, -1 ) )
-        {
-            lua_remove( LGameUI, -2 );
-            lua_pushplayer( LGameUI, pPlayer );
-            lua_pushstring( LGameUI, pCmd );
-            lua_pushstring( LGameUI, args.ArgS() );
-            luasrc_pcall( LGameUI, 3, 1, 0 );
-            if ( lua_isboolean( LGameUI, -1 ) )
-            {
-                bool res = ( bool )luaL_checkboolean( LGameUI, -1 );
-                lua_pop( LGameUI, 1 );
-                if ( !res )
-                {
-                }
-            }
-            else
-            {
-                lua_pop( LGameUI, 1 );
-            }
-        }
-        else
-            lua_pop( LGameUI, 2 );
-    }
-    else
-        lua_pop( LGameUI, 1 );
-}
-#endif
-
-void CC_ConCommand( const CCommand &args )
+void RunConCommand( lua_State *L, const CCommand &args )
 {
 #ifdef CLIENT_DLL
     C_BasePlayer *pPlayer = C_BasePlayer::GetLocalPlayer();
@@ -168,48 +123,76 @@ void CC_ConCommand( const CCommand &args )
     // if ( !pPlayer )
     // 	return;
 
-    MDLCACHE_CRITICAL_SECTION();
+    MDLCACHE_CRITICAL_SECTION();  // TODO: (Experiment) Why is this here?
 
     lua_getglobal( L, LUA_CONCOMMANDLIBNAME );
-    if ( lua_istable( L, -1 ) )
+    if ( !lua_istable( L, -1 ) )
     {
-        lua_getfield( L, -1, "Dispatch" );
-        if ( lua_isfunction( L, -1 ) )
-        {
-            lua_remove( L, -2 );
-            lua_pushplayer( L, pPlayer );
-            lua_pushstring( L, pCmd );
-            lua_pushstring( L, args.ArgS() );
-            luasrc_pcall( L, 3, 1, 0 );
-            if ( lua_isboolean( L, -1 ) )
-            {
-                bool res = ( bool )luaL_checkboolean( L, -1 );
-                lua_pop( L, 1 );
-                if ( !res )
-                {
+        lua_pop( L, 1 );  // pop the nil value
+        Warning( "ConCommand: ConsoleCommands library table not found.\n" );
+        return;
+    }
+
+    lua_getfield( L, -1, "Dispatch" );
+    if ( !lua_isfunction( L, -1 ) )
+    {
+        lua_pop( L, 2 );  // pop the function and the table
+        Warning( "ConCommand: ConsoleCommands.Dispatch function not found.\n" );
+        return;
+    }
+
+    lua_remove( L, -2 ); // remove the library table
+
+    // Push the player and command. With arguments as a table
+    lua_pushplayer( L, pPlayer );
+    lua_pushstring( L, pCmd );
+    lua_newtable( L );
+    for ( int i = 1; i < args.ArgC(); i++ )
+    {
+        lua_pushinteger( L, i );
+        lua_pushstring( L, args[i] );
+        lua_settable( L, -3 );
+    }
+    luasrc_pcall( L, 3, 1 );
+
+    if ( !lua_isboolean( L, -1 ) )
+    {
+        lua_pop( L, 1 );  // pop the return value
+        return;
+    }
+
+    bool res = ( bool )luaL_checkboolean( L, -1 );
+    lua_pop( L, 1 ); // pop the return value
+
+    if ( res )
+    {
+        return;
+    }
+
 #ifndef CLIENT_DLL
-                    if ( Q_strlen( pCmd ) > 128 )
-                    {
-                        ClientPrint( pPlayer, HUD_PRINTCONSOLE, "Console command too long.\n" );
-                    }
-                    else
-                    {
-                        // tell the user they entered an unknown command
-                        ClientPrint( pPlayer, HUD_PRINTCONSOLE, UTIL_VarArgs( "Unknown command: %s\n", pCmd ) );
-                    }
-#endif
-                }
-            }
-            else
-            {
-                lua_pop( L, 1 );
-            }
-        }
-        else
-            lua_pop( L, 2 );
+    // If we failed, see if we can't get some helpful information to the user
+    if ( Q_strlen( pCmd ) > 128 )
+    {
+        ClientPrint( pPlayer, HUD_PRINTCONSOLE, "Console command too long.\n" );
     }
     else
-        lua_pop( L, 1 );
+    {
+        ClientPrint( pPlayer, HUD_PRINTCONSOLE, UTIL_VarArgs( "Unknown command: %s\n", pCmd ) );
+    }
+#endif
+}
+#ifdef CLIENT_DLL
+// Andrew; ugh.
+// Experiment; pass the correct lua state to the function when in the gameui
+void CC_GameUIConCommand( const CCommand &args )
+{
+    RunConCommand( LGameUI, args );
+}
+#endif
+
+void CC_ConCommand( const CCommand &args )
+{
+    RunConCommand( L, args );
 }
 
 static int luasrc_ConCommand( lua_State *L )
@@ -315,7 +298,7 @@ static const luaL_Reg ConCommand_funcs[] = {
 */
 LUALIB_API int luaopen_ConCommand( lua_State *L )
 {
-    luaL_newmetatable( L, "ConsoleCommand" );
+    LUA_PUSH_NEW_METATABLE( L, "ConsoleCommand" );
     luaL_register( L, NULL, ConCommandmeta );
     lua_pushvalue( L, -1 );           /* push metatable */
     lua_setfield( L, -2, "__index" ); /* metatable.__index = metatable */
@@ -511,7 +494,7 @@ static const luaL_Reg ConVar_funcs[] = {
 */
 LUALIB_API int luaopen_ConVar( lua_State *L )
 {
-    luaL_newmetatable( L, LUA_CONVARLIBNAME );
+    LUA_PUSH_NEW_METATABLE( L, LUA_CONVARLIBNAME );
     luaL_register( L, NULL, ConVarmeta );
     lua_pushvalue( L, -1 );           /* push metatable */
     lua_setfield( L, -2, "__index" ); /* metatable.__index = metatable */

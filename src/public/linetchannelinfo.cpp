@@ -255,11 +255,11 @@ static const luaL_Reg INetChannelInfometa[] = {
 */
 LUALIB_API int luaopen_INetChannelInfo( lua_State *L )
 {
-    luaL_newmetatable( L, LUA_NETCHANNELINFOLIBNAME );
+    LUA_PUSH_NEW_METATABLE( L, LUA_NETCHANNELINFOLIBNAME );
     luaL_register( L, NULL, INetChannelInfometa );
     lua_pushvalue( L, -1 );           /* push metatable */
     lua_setfield( L, -2, "__index" ); /* metatable.__index = metatable */
-    lua_pushstring( L, "netchannelinfo" );
-    lua_setfield( L, -2, "__type" ); /* metatable.__type = "netchannelinfo" */
+    lua_pushstring( L, "NetChannelInfo" );
+    lua_setfield( L, -2, "__type" ); /* metatable.__type = "NetChannelInfo" */
     return 1;
 }

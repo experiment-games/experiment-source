@@ -10,6 +10,7 @@
 #include "lbaseanimating.h"
 #include "mathlib/lvector.h"
 #include "lvphysics_interface.h"
+#include "lbaseentity_shared.h"
 
 // memdbgon must be the last include file in a .cpp file!!!
 #include "tier0/memdbgon.h"
@@ -437,7 +438,8 @@ static int CBaseAnimating_VPhysicsUpdate( lua_State *L )
 static int CBaseAnimating___index( lua_State *L )
 {
     CBaseAnimating *pEntity = lua_toanimating( L, 1 );
-    // LUA_METATABLE_INDEX_CHECK_VALID( L, Entity_IsValid ); // TODO: Entity_IsValid
+
+    LUA_METATABLE_INDEX_CHECK_VALID( L, CBaseEntity_IsValid );
     LUA_METATABLE_INDEX_CHECK( L, pEntity );
 
     LUA_METATABLE_INDEX_CHECK_REF_TABLE( L, pEntity );
@@ -447,7 +449,7 @@ static int CBaseAnimating___index( lua_State *L )
         LUA_METATABLE_INDEX_CHECK_TABLE( L );
     }
 
-    luaL_getmetatable( L, "CBaseEntity" );
+    luaL_getmetatable( L, LUA_BASEENTITYLIBNAME );
     LUA_METATABLE_INDEX_CHECK_TABLE( L );
 
     lua_pushnil( L );
@@ -576,10 +578,10 @@ static const luaL_Reg CBaseAnimatingmeta[] = {
 */
 LUALIB_API int luaopen_CBaseAnimating( lua_State *L )
 {
-    luaL_newmetatable( L, "CBaseAnimating" );
+    LUA_PUSH_NEW_METATABLE( L, "CBaseAnimating" );
     luaL_register( L, NULL, CBaseAnimatingmeta );
-    lua_pushstring( L, "entity" );
-    lua_setfield( L, -2, "__type" ); /* metatable.__type = "entity" */
+    lua_pushstring( L, "Entity" );
+    lua_setfield( L, -2, "__type" ); /* metatable.__type = "Entity" */
     lua_pop( L, 1 );
     return 1;
 }

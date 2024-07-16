@@ -26,7 +26,7 @@ end
 --- Dispatches a command to the appropriate callback.
 --- @param client Player The player who ran the command.
 --- @param command string The name of the command.
---- @param arguments string The arguments that were passed to the command.
+--- @param arguments table The arguments that were passed to the command.
 --- @return boolean # Whether or not the command was dispatched.
 function MODULE.Dispatch(client, command, arguments)
 	local callback = MODULE.registeredCallbacks[command]

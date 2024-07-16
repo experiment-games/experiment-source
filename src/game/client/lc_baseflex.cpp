@@ -152,7 +152,7 @@ static int CBaseFlex___index( lua_State *L )
 {
     CBaseFlex *pEntity = lua_tobaseflex( L, 1 );
 
-    // LUA_METATABLE_INDEX_CHECK_VALID( L, ...IsValid );
+    LUA_METATABLE_INDEX_CHECK_VALID( L, CBaseEntity_IsValid );
     LUA_METATABLE_INDEX_CHECK( L, pEntity );
 
     LUA_METATABLE_INDEX_CHECK_REF_TABLE( L, pEntity );
@@ -162,10 +162,10 @@ static int CBaseFlex___index( lua_State *L )
         LUA_METATABLE_INDEX_CHECK_TABLE( L );
     }
 
-    luaL_getmetatable( L, "CBaseAnimating" );
+    luaL_getmetatable( L, LUA_BASEANIMATINGLIBNAME );
     LUA_METATABLE_INDEX_CHECK_TABLE( L );
 
-    luaL_getmetatable( L, "CBaseEntity" );
+    luaL_getmetatable( L, LUA_BASEENTITYLIBNAME );
     LUA_METATABLE_INDEX_CHECK_TABLE( L );
 
     lua_pushnil( L );
@@ -176,7 +176,7 @@ static int CBaseFlex___newindex( lua_State *L )
 {
     CBaseFlex *pEntity = lua_tobaseflex( L, 1 );
 
-    // LUA_METATABLE_INDEX_CHECK_VALID( L, ...IsValid );
+    LUA_METATABLE_INDEX_CHECK_VALID( L, CBaseEntity_IsValid );
     LUA_METATABLE_INDEX_CHECK( L, pEntity );
 
     const char *field = luaL_checkstring( L, 2 );
@@ -246,9 +246,9 @@ LUALIB_API int luaopen_CBaseFlex( lua_State *L )
     luaL_register( L, LUA_GNAME, CBaseFlex_funcs );
     lua_pop( L, 1 );
 
-    luaL_newmetatable( L, LUA_CBASEFLEXLIBNAME );
+    LUA_PUSH_NEW_METATABLE( L, LUA_CBASEFLEXLIBNAME );
     luaL_register( L, NULL, CBaseFlexmeta );
-    lua_pushstring( L, "entity" );
-    lua_setfield( L, -2, "__type" ); /* metatable.__type = "entity" */
+    lua_pushstring( L, "Entity" );
+    lua_setfield( L, -2, "__type" ); /* metatable.__type = "Entity" */
     return 1;
 }

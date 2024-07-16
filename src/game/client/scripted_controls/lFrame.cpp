@@ -506,7 +506,7 @@ static const luaL_Reg Frame_funcs[] = { { "Frame", luasrc_Frame }, { NULL, NULL 
 */
 LUALIB_API int luaopen_vgui_Frame( lua_State *L )
 {
-    luaL_newmetatable( L, "Frame" );
+    LUA_PUSH_NEW_METATABLE( L, "Frame" );
     luaL_register( L, NULL, Framemeta );
     lua_pushstring( L, LUA_PANELLIBNAME );
     lua_setfield( L, -2, "__type" ); /* metatable.__type = "Panel" */

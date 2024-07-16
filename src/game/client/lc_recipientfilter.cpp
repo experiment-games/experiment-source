@@ -211,12 +211,12 @@ static const luaL_Reg C_RecipientFilter_funcs[] = {
 */
 LUALIB_API int luaopen_CRecipientFilter( lua_State *L )
 {
-    luaL_newmetatable( L, LUA_RECIPIENTFILTERLIBNAME );
+    LUA_PUSH_NEW_METATABLE( L, LUA_RECIPIENTFILTERLIBNAME );
     luaL_register( L, NULL, C_RecipientFiltermeta );
     lua_pushvalue( L, -1 );           /* push metatable */
     lua_setfield( L, -2, "__index" ); /* metatable.__index = metatable */
-    lua_pushstring( L, "recipientfilter" );
-    lua_setfield( L, -2, "__type" ); /* metatable.__type = "recipientfilter" */
+    lua_pushstring( L, "RecipientFilter" );
+    lua_setfield( L, -2, "__type" ); /* metatable.__type = "RecipientFilter" */
     luaL_register( L, LUA_GNAME, C_RecipientFilter_funcs );
     lua_pop( L, 1 );
     return 1;
@@ -271,10 +271,10 @@ static const luaL_Reg CPASFilter_funcs[] = {
 */
 LUALIB_API int luaopen_CPASFilter( lua_State *L )
 {
-    luaL_newmetatable( L, LUA_PASFILTERLIBNAME );
+    LUA_PUSH_NEW_METATABLE( L, LUA_PASFILTERLIBNAME );
     luaL_register( L, NULL, CPASFiltermeta );
-    lua_pushstring( L, "recipientfilter" );
-    lua_setfield( L, -2, "__type" ); /* metatable.__type = "recipientfilter" */
+    lua_pushstring( L, "CPASFilter" );
+    lua_setfield( L, -2, "__type" ); /* metatable.__type = "CPASFilter" */
     luaL_register( L, LUA_GNAME, CPASFilter_funcs );
     lua_pop( L, 1 );
     return 1;

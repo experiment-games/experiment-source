@@ -740,7 +740,7 @@ static const luaL_Reg VMatrix_funcs[] = {
 */
 LUALIB_API int luaopen_VMatrix( lua_State *L )
 {
-    luaL_newmetatable( L, LUA_VMATRIXLIBNAME );
+    LUA_PUSH_NEW_METATABLE( L, LUA_VMATRIXLIBNAME );
     luaL_register( L, NULL, VMatrixmeta );
     lua_pushstring( L, LUA_VMATRIXLIBNAME );
     lua_setfield( L, -2, "__type" ); /* metatable.__type = "Matrix" */

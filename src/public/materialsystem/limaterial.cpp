@@ -534,7 +534,7 @@ static const luaL_Reg IMaterialmeta[] = {
 */
 LUALIB_API int luaopen_IMaterial( lua_State *L )
 {
-    luaL_newmetatable( L, LUA_MATERIALLIBNAME );
+    LUA_PUSH_NEW_METATABLE( L, LUA_MATERIALLIBNAME );
     luaL_register( L, NULL, IMaterialmeta );
     lua_pushvalue( L, -1 );           /* push metatable */
     lua_setfield( L, -2, "__index" ); /* metatable.__index = metatable */

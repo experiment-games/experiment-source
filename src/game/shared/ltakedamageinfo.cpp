@@ -404,12 +404,12 @@ static const luaL_Reg CTakeDamageInfo_funcs[] = {
 */
 LUALIB_API int luaopen_CTakeDamageInfo( lua_State *L )
 {
-    luaL_newmetatable( L, LUA_TAKEDAMAGEINFOLIBNAME );
+    LUA_PUSH_NEW_METATABLE( L, LUA_TAKEDAMAGEINFOLIBNAME );
     luaL_register( L, NULL, CTakeDamageInfometa );
     lua_pushvalue( L, -1 );           /* push metatable */
     lua_setfield( L, -2, "__index" ); /* metatable.__index = metatable */
-    lua_pushstring( L, "damageinfo" );
-    lua_setfield( L, -2, "__type" ); /* metatable.__type = "damageinfo" */
+    lua_pushstring( L, "DamageInfo" );
+    lua_setfield( L, -2, "__type" ); /* metatable.__type = "DamageInfo" */
     luaL_register( L, LUA_GNAME, CTakeDamageInfo_funcs );
     lua_pop( L, 1 );
     return 1;

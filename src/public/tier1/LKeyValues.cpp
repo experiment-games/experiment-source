@@ -421,12 +421,12 @@ static const luaL_Reg KeyValues_funcs[] = {
 */
 LUALIB_API int luaopen_KeyValues( lua_State *L )
 {
-    luaL_newmetatable( L, LUA_KEYVALUESLIBNAME );
+    LUA_PUSH_NEW_METATABLE( L, LUA_KEYVALUESLIBNAME );
     luaL_register( L, NULL, KeyValuesmeta );
     lua_pushvalue( L, -1 );           /* push metatable */
     lua_setfield( L, -2, "__index" ); /* metatable.__index = metatable */
-    lua_pushstring( L, "keyvalues" );
-    lua_setfield( L, -2, "__type" ); /* metatable.__type = "keyvalues" */
+    lua_pushstring( L, "KeyValues" );
+    lua_setfield( L, -2, "__type" ); /* metatable.__type = "KeyValues" */
     luaL_register( L, LUA_GNAME, KeyValues_funcs );
     lua_pop( L, 1 );
     // Andrew; This is nasty, but we can't really repurpose the NULL global

@@ -71,33 +71,9 @@ static int luasrc_Util_GetSimulationInterval( lua_State *L )
     return 1;
 }
 
-static int luasrc_Util_PlayerByIndex( lua_State *L )
-{
-    lua_pushplayer( L, UTIL_PlayerByIndex( luaL_checkinteger( L, 1 ) ) );
-    return 1;
-}
-
-static int luasrc_Util_GetLocalPlayer( lua_State *L )
-{
-    lua_pushplayer( L, UTIL_GetLocalPlayer() );
-    return 1;
-}
-
 static int luasrc_Util_GetListenServerHost( lua_State *L )
 {
     lua_pushplayer( L, UTIL_GetListenServerHost() );
-    return 1;
-}
-
-static int luasrc_Util_PlayerByUserId( lua_State *L )
-{
-    lua_pushplayer( L, UTIL_PlayerByUserId( luaL_checkinteger( L, 1 ) ) );
-    return 1;
-}
-
-static int luasrc_Util_PlayerByName( lua_State *L )
-{
-    lua_pushplayer( L, UTIL_PlayerByName( luaL_checkstring( L, 1 ) ) );
     return 1;
 }
 
@@ -132,58 +108,6 @@ static int luasrc_Util_FindClientInPVS( lua_State *L )
 {
     lua_pushentity( L, UTIL_FindClientInPVS( luaL_checkvector( L, 1 ), luaL_checkvector( L, 2 ) ) );
     return 1;
-}
-
-#define MAX_ENTITYARRAY 1024
-
-static int luasrc_Util_EntitiesAlongRay( lua_State *L )
-{
-    CBaseEntity *pList[MAX_ENTITYARRAY];
-
-    Ray_t ray;
-    ray.Init( luaL_checkvector( L, 1 ), luaL_checkvector( L, 2 ), luaL_checkvector( L, 3 ), luaL_checkvector( L, 4 ) );
-    int count = UTIL_EntitiesAlongRay( pList, MAX_ENTITYARRAY, ray, UINT_MAX );
-    lua_pushinteger( L, count );
-    lua_newtable( L );
-    for ( int i = 0; i < count; i++ )
-    {
-        lua_pushinteger( L, i );
-        lua_pushentity( L, pList[i] );
-        lua_settable( L, -3 );
-    }
-    return 2;
-}
-
-static int luasrc_Util_EntitiesInBox( lua_State *L )
-{
-    CBaseEntity *pList[MAX_ENTITYARRAY];
-
-    int count = UTIL_EntitiesInBox( pList, luaL_checkinteger( L, 1 ), luaL_checkvector( L, 2 ), luaL_checkvector( L, 3 ), luaL_checkinteger( L, 4 ) );
-    lua_pushinteger( L, count );
-    lua_newtable( L );
-    for ( int i = 0; i < count; i++ )
-    {
-        lua_pushinteger( L, i );
-        lua_pushentity( L, pList[i] );
-        lua_settable( L, -3 );
-    }
-    return 2;
-}
-
-static int luasrc_Util_EntitiesInSphere( lua_State *L )
-{
-    CBaseEntity *pList[MAX_ENTITYARRAY];
-
-    int count = UTIL_EntitiesInSphere( pList, luaL_checkinteger( L, 1 ), luaL_checkvector( L, 2 ), luaL_checknumber( L, 3 ), luaL_checkinteger( L, 4 ) );
-    lua_pushinteger( L, count );
-    lua_newtable( L );
-    for ( int i = 0; i < count; i++ )
-    {
-        lua_pushinteger( L, i );
-        lua_pushentity( L, pList[i] );
-        lua_settable( L, -3 );
-    }
-    return 2;
 }
 
 static int luasrc_Util_Remove( lua_State *L )
@@ -390,12 +314,6 @@ static int luasrc_Util_TransferPoseParameters( lua_State *L )
     return 1;
 }
 
-static int luasrc_Util_WaterLevel( lua_State *L )
-{
-    lua_pushnumber( L, UTIL_WaterLevel( luaL_checkvector( L, 1 ), luaL_checknumber( L, 2 ), luaL_checknumber( L, 3 ) ) );
-    return 1;
-}
-
 static int luasrc_Util_FindWaterSurface( lua_State *L )
 {
     lua_pushnumber( L, UTIL_FindWaterSurface( luaL_checkvector( L, 1 ), luaL_checknumber( L, 2 ), luaL_checknumber( L, 3 ) ) );
@@ -499,19 +417,12 @@ static const luaL_Reg util_funcs[] = {
     { "ClearTrace", luasrc_Util_ClearTrace },
     { "PrecacheDecal", luasrc_Util_PrecacheDecal },
     { "GetSimulationInterval", luasrc_Util_GetSimulationInterval },
-    { "PlayerByIndex", luasrc_Util_PlayerByIndex },
-    { "GetLocalPlayer", luasrc_Util_GetLocalPlayer },
     { "GetListenServerHost", luasrc_Util_GetListenServerHost },
-    { "PlayerByUserId", luasrc_Util_PlayerByUserId },
-    { "PlayerByName", luasrc_Util_PlayerByName },
     { "IsCommandIssuedByServerAdmin", luasrc_Util_IsCommandIssuedByServerAdmin },
     { "EntityByIndex", luasrc_Util_EntityByIndex },
     { "GetPlayerConnectionInfo", luasrc_Util_GetPlayerConnectionInfo },
     { "ClientPVSIsExpanded", luasrc_Util_ClientPVSIsExpanded },
     { "FindClientInPVS", luasrc_Util_FindClientInPVS },
-    { "EntitiesAlongRay", luasrc_Util_EntitiesAlongRay },
-    { "EntitiesInBox", luasrc_Util_EntitiesInBox },
-    { "EntitiesInSphere", luasrc_Util_EntitiesInSphere },
     { "Remove", luasrc_Util_Remove },
     { "DisableRemoveImmediate", luasrc_Util_DisableRemoveImmediate },
     { "EnableRemoveImmediate", luasrc_Util_EnableRemoveImmediate },
@@ -544,7 +455,6 @@ static const luaL_Reg util_funcs[] = {
     { "SnapDirectionToAxis", luasrc_Util_SnapDirectionToAxis },
     { "PointAtEntity", luasrc_Util_PointAtEntity },
     { "TransferPoseParameters", luasrc_Util_TransferPoseParameters },
-    { "WaterLevel", luasrc_Util_WaterLevel },
     { "FindWaterSurface", luasrc_Util_FindWaterSurface },
     { "Bubbles", luasrc_Util_Bubbles },
     { "BubbleTrail", luasrc_Util_BubbleTrail },

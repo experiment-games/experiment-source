@@ -523,10 +523,10 @@ LUALIB_API int luaopen_umsg( lua_State *L )
 #ifdef CLIENT_DLL
 LUALIB_API int luaopen_bf_read( lua_State *L )
 {
-    luaL_newmetatable( L, LUA_BFREADLIBNAME );
+    LUA_PUSH_NEW_METATABLE( L, LUA_BFREADLIBNAME );
     luaL_register( L, NULL, bfReadLib );
     lua_pushstring( L, "bf_read" );
-    lua_setfield( L, -2, "__type" ); /* metatable.__type = "entity" */
+    lua_setfield( L, -2, "__type" ); /* metatable.__type = "bf_read" */
     lua_pop( L, 1 );
     return 1;
 }

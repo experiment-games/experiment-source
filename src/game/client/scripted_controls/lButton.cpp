@@ -421,7 +421,7 @@ static const luaL_Reg Button_funcs[] = { { "Button", luasrc_Button },
 */
 LUALIB_API int luaopen_vgui_Button( lua_State *L )
 {
-    luaL_newmetatable( L, "Button" );
+    LUA_PUSH_NEW_METATABLE( L, "Button" );
     luaL_register( L, NULL, Buttonmeta );
     lua_pushstring( L, LUA_PANELLIBNAME );
     lua_setfield( L, -2, "__type" ); /* metatable.__type = "Panel" */

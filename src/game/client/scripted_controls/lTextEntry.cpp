@@ -645,7 +645,7 @@ static const luaL_Reg TextEntry_funcs[] = { { "TextEntry", luasrc_TextEntry },
 */
 LUALIB_API int luaopen_vgui_TextEntry( lua_State *L )
 {
-    luaL_newmetatable( L, "TextEntry" );
+    LUA_PUSH_NEW_METATABLE( L, "TextEntry" );
     luaL_register( L, NULL, TextEntrymeta );
     lua_pushstring( L, LUA_PANELLIBNAME );
     lua_setfield( L, -2, "__type" ); /* metatable.__type = "Panel" */

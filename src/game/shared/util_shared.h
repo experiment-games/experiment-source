@@ -369,6 +369,11 @@ CBasePlayer *UTIL_PlayerByUserId( int userID );
 // HPE_END
 //=============================================================================
 
+// Experiment; Added UTIL_PlayerByName and UTIL_WaterLevel to the client-side too
+CBasePlayer *UTIL_PlayerByName( const char *name );  // not case sensitive
+// Search for water transition along a vertical line
+float UTIL_WaterLevel( const Vector &position, float minz, float maxz );
+
 // decodes a buffer using a 64bit ICE key (inplace)
 void		UTIL_DecodeICE( unsigned char * buffer, int size, const unsigned char *key);
 

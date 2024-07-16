@@ -246,7 +246,7 @@ void CHL2MPScriptedWeapon::InitScriptedWeapon( void )
         {
             lua_remove( L, -2 );
             lua_pushstring( L, className );
-            luasrc_pcall( L, 1, 1, 0 );
+            luasrc_pcall( L, 1, 1 );
         }
         else
         {

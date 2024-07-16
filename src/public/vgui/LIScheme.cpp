@@ -92,7 +92,7 @@ static const luaL_Reg ISchememeta[] = {
 */
 LUALIB_API int luaopen_IScheme( lua_State *L )
 {
-    luaL_newmetatable( L, LUA_ISCHEMELIBNAME );
+    LUA_PUSH_NEW_METATABLE( L, LUA_ISCHEMELIBNAME );
     luaL_register( L, NULL, ISchememeta );
     lua_pushvalue( L, -1 );           /* push metatable */
     lua_setfield( L, -2, "__index" ); /* metatable.__index = metatable */

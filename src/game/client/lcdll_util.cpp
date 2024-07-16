@@ -202,6 +202,16 @@ static int luasrc_Util_BoundToWorldSize( lua_State *L )
     return 0;
 }
 
+static int luasrc_Util_GetLocalPlayer( lua_State *L )
+{
+#ifdef CLIENT_DLL
+    lua_pushplayer( L, C_BasePlayer::GetLocalPlayer() );
+#else
+    lua_pushplayer( L, UTIL_GetLocalPlayer() );
+#endif
+    return 1;
+}
+
 static const luaL_Reg util_funcs[] = {
     { "IsPlayerIndex", luasrc_IsPlayerIndex },
     { "GetLocalPlayerIndex", luasrc_GetLocalPlayerIndex },
@@ -227,6 +237,7 @@ static const luaL_Reg util_funcs[] = {
     { "EntitiesInSphere", luasrc_Util_EntitiesInSphere },
     { "SafeName", luasrc_Util_SafeName },
     { "BoundToWorldSize", luasrc_Util_BoundToWorldSize },
+    { "GetLocalPlayer", luasrc_Util_GetLocalPlayer },
     { NULL, NULL } };
 
 LUALIB_API int luaopen_Util( lua_State *L )

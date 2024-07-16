@@ -341,7 +341,7 @@ static const luaL_Reg PropertyPage_funcs[] = {
 */
 LUALIB_API int luaopen_vgui_PropertyPage( lua_State *L )
 {
-    luaL_newmetatable( L, "PropertyPage" );
+    LUA_PUSH_NEW_METATABLE( L, "PropertyPage" );
     luaL_register( L, NULL, PropertyPagemeta );
     lua_pushstring( L, LUA_PANELLIBNAME );
     lua_setfield( L, -2, "__type" ); /* metatable.__type = "Panel" */

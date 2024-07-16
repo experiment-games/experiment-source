@@ -80,7 +80,7 @@ static const luaL_Reg HSchememeta[] = {
 */
 LUALIB_API int luaopen_HScheme( lua_State *L )
 {
-    luaL_newmetatable( L, LUA_HSCHEMELIBNAME );
+    LUA_PUSH_NEW_METATABLE( L, LUA_HSCHEMELIBNAME );
     luaL_register( L, NULL, HSchememeta );
     lua_pushvalue( L, -1 );           /* push metatable */
     lua_setfield( L, -2, "__index" ); /* metatable.__index = metatable */
@@ -108,7 +108,7 @@ static const luaL_Reg HFontmeta[] = {
 */
 LUALIB_API int luaopen_HFont( lua_State *L )
 {
-    luaL_newmetatable( L, LUA_FONTLIBNAME );
+    LUA_PUSH_NEW_METATABLE( L, LUA_FONTLIBNAME );
     luaL_register( L, NULL, HFontmeta );
     lua_pushvalue( L, -1 );           /* push metatable */
     lua_setfield( L, -2, "__index" ); /* metatable.__index = metatable */

@@ -1631,7 +1631,7 @@ LUALIB_API int luaopen_vgui_Panel( lua_State *L )
     luaL_register( L, LUA_VGUILIBNAME, Panel_funcs );
     lua_pop( L, 1 );
 
-    luaL_newmetatable( L, "Panel" );
+    LUA_PUSH_NEW_METATABLE( L, "Panel" );
     luaL_register( L, NULL, Panelmeta );
     lua_pushstring( L, LUA_PANELLIBNAME );
     lua_setfield( L, -2, "__type" ); /* metatable.__type = "Panel" */

@@ -114,7 +114,8 @@ static int CHL2MP_Player_KeyDown( lua_State *L )
 static int CHL2MP_Player___index( lua_State *L )
 {
     CHL2MP_Player *pPlayer = lua_tohl2mpplayer( L, 1 );
-    // LUA_METATABLE_INDEX_CHECK_VALID( L, Entity_IsValid ); // TODO: Entity_IsValid
+
+    LUA_METATABLE_INDEX_CHECK_VALID( L, CBaseEntity_IsValid );
     LUA_METATABLE_INDEX_CHECK( L, pPlayer );
 
     LUA_METATABLE_INDEX_CHECK_REF_TABLE( L, pPlayer );
@@ -124,13 +125,13 @@ static int CHL2MP_Player___index( lua_State *L )
         LUA_METATABLE_INDEX_CHECK_TABLE( L );
     }
 
-    luaL_getmetatable( L, "CBasePlayer" );
+    luaL_getmetatable( L, LUA_BASEPLAYERLIBNAME );
     LUA_METATABLE_INDEX_CHECK_TABLE( L );
 
-    luaL_getmetatable( L, "CBaseAnimating" );
+    luaL_getmetatable( L, LUA_BASEANIMATINGLIBNAME );
     LUA_METATABLE_INDEX_CHECK_TABLE( L );
 
-    luaL_getmetatable( L, "CBaseEntity" );
+    luaL_getmetatable( L, LUA_BASEENTITYLIBNAME );
     LUA_METATABLE_INDEX_CHECK_TABLE( L );
 
     lua_pushnil( L );
@@ -218,7 +219,7 @@ static const luaL_Reg CHL2MP_Player_funcs[] = {
 */
 LUALIB_API int luaopen_CHL2MP_Player_shared( lua_State *L )
 {
-    luaL_newmetatable( L, LUA_HL2MPPLAYERLIBNAME );
+    LUA_PUSH_NEW_METATABLE( L, LUA_HL2MPPLAYERLIBNAME );
     luaL_register( L, NULL, CHL2MP_Playermeta );
     lua_pushstring( L, "Entity" );
     lua_setfield( L, -2, "__type" ); /* metatable.__type = "Entity" */

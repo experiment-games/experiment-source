@@ -39,7 +39,7 @@ LUA_API void lua_pushweapon( lua_State *L, lua_CBaseCombatWeapon *pWeapon )
     CBaseHandle *hWeapon =
         ( CBaseHandle * )lua_newuserdata( L, sizeof( CBaseHandle ) );
     hWeapon->Set( ( CBaseEntity * )pWeapon );
-    luaL_getmetatable( L, "CBaseCombatWeapon" );
+    luaL_getmetatable( L, LUA_BASECOMBATWEAPONLIBNAME );
     lua_setmetatable( L, -2 );
 }
 
@@ -921,9 +921,10 @@ static int CBaseCombatWeapon_WeaponState( lua_State *L )
 }
 
 static int CBaseCombatWeapon___index( lua_State *L )
-{    
+{
     CBaseCombatWeapon *pWeapon = lua_toweapon( L, 1 );
-    // LUA_METATABLE_INDEX_CHECK_VALID( L, Entity_IsValid ); // TODO: Entity_IsValid
+
+    LUA_METATABLE_INDEX_CHECK_VALID( L, CBaseEntity_IsValid );
     LUA_METATABLE_INDEX_CHECK( L, pWeapon );
 
     const char *field = luaL_checkstring( L, 2 );
@@ -984,10 +985,10 @@ static int CBaseCombatWeapon___index( lua_State *L )
             LUA_METATABLE_INDEX_CHECK_TABLE( L );
         }
 
-        luaL_getmetatable( L, "CBaseAnimating" );
+        luaL_getmetatable( L, LUA_BASEANIMATINGLIBNAME );
         LUA_METATABLE_INDEX_CHECK_TABLE( L );
 
-        luaL_getmetatable( L, "CBaseEntity" );
+        luaL_getmetatable( L, LUA_BASEENTITYLIBNAME );
         LUA_METATABLE_INDEX_CHECK_TABLE( L );
 
         lua_pushnil( L );
@@ -1228,9 +1229,9 @@ static const luaL_Reg CBaseCombatWeaponmeta[] = {
 */
 LUALIB_API int luaopen_CBaseCombatWeapon( lua_State *L )
 {
-    luaL_newmetatable( L, LUA_BASECOMBATWEAPONLIBNAME );
+    LUA_PUSH_NEW_METATABLE( L, LUA_BASECOMBATWEAPONLIBNAME );
     luaL_register( L, NULL, CBaseCombatWeaponmeta );
-    lua_pushstring( L, "entity" );
-    lua_setfield( L, -2, "__type" ); /* metatable.__type = "entity" */
+    lua_pushstring( L, "Entity" );
+    lua_setfield( L, -2, "__type" ); /* metatable.__type = "Entity" */
     return 1;
 }

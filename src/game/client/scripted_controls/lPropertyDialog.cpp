@@ -402,7 +402,7 @@ static const luaL_Reg PropertyDialog_funcs[] = {
 */
 LUALIB_API int luaopen_vgui_PropertyDialog( lua_State *L )
 {
-    luaL_newmetatable( L, "PropertyDialog" );
+    LUA_PUSH_NEW_METATABLE( L, "PropertyDialog" );
     luaL_register( L, NULL, PropertyDialogmeta );
     lua_pushstring( L, LUA_PANELLIBNAME );
     lua_setfield( L, -2, "__type" ); /* metatable.__type = "Panel" */

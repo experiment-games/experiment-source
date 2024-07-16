@@ -1183,12 +1183,12 @@ static const luaL_Reg IPhysicsObjectmeta[] = {
 */
 LUALIB_API int luaopen_IPhysicsObject( lua_State *L )
 {
-    luaL_newmetatable( L, LUA_PHYSICSOBJECTLIBNAME );
+    LUA_PUSH_NEW_METATABLE( L, LUA_PHYSICSOBJECTLIBNAME );
     luaL_register( L, NULL, IPhysicsObjectmeta );
     lua_pushvalue( L, -1 );           /* push metatable */
     lua_setfield( L, -2, "__index" ); /* metatable.__index = metatable */
-    lua_pushstring( L, "physicsobject" );
-    lua_setfield( L, -2, "__type" ); /* metatable.__type = "physicsobject" */
+    lua_pushstring( L, "PhysicsObject" );
+    lua_setfield( L, -2, "__type" ); /* metatable.__type = "PhysicsObject" */
     return 1;
 }
 
@@ -1270,12 +1270,12 @@ static const luaL_Reg IPhysicsSurfacePropsmeta[] = {
 */
 LUALIB_API int luaopen_IPhysicsSurfaceProps( lua_State *L )
 {
-    luaL_newmetatable( L, LUA_PHYSICSSURFACEPROPSLIBNAME );
+    LUA_PUSH_NEW_METATABLE( L, LUA_PHYSICSSURFACEPROPSLIBNAME );
     luaL_register( L, NULL, IPhysicsSurfacePropsmeta );
     lua_pushvalue( L, -1 );           /* push metatable */
     lua_setfield( L, -2, "__index" ); /* metatable.__index = metatable */
-    lua_pushstring( L, "physicssurfaceprops" );
-    lua_setfield( L, -2, "__type" ); /* metatable.__type = "physicssurfaceprops" */
+    lua_pushstring( L, "PhysicsSurfaceProps" );
+    lua_setfield( L, -2, "__type" ); /* metatable.__type = "PhysicsSurfaceProps" */
     lua_pushphysicssurfaceprops( L, physprops );
     lua_setglobal( L, "physprops" ); /* set global physprops */
     return 1;

@@ -68,13 +68,6 @@ static int CBaseEntity_SetToolRecording( lua_State *L )
     return 0;
 }
 
-static int CBaseEntity_IsValid( lua_State *L )
-{
-    lua_CBaseEntity *d = lua_toentity( L, 1 );
-    lua_pushboolean( L, d != NULL );
-    return 1;
-}
-
 static int CBaseEntity_IsToolRecording( lua_State *L )
 {
     lua_pushboolean( L, luaL_checkentity( L, 1 )->IsToolRecording() );
@@ -189,7 +182,6 @@ static const luaL_Reg CBaseEntitymeta[] = {
     { "IsEnabledInToolView", CBaseEntity_IsEnabledInToolView },
     { "SetIK", CBaseEntity_SetIK },
     { "SetToolRecording", CBaseEntity_SetToolRecording },
-    { "IsValid", CBaseEntity_IsValid },
     { "IsToolRecording", CBaseEntity_IsToolRecording },
     { "HasRecordedThisFrame", CBaseEntity_HasRecordedThisFrame },
     { "RecordToolMessage", CBaseEntity_RecordToolMessage },
@@ -214,12 +206,7 @@ static const luaL_Reg CBaseEntitymeta[] = {
 */
 LUALIB_API int luaopen_CBaseEntity( lua_State *L )
 {
-    luaL_getmetatable( L, LUA_BASEENTITYLIBNAME );
-    if ( lua_isnoneornil( L, -1 ) )
-    {
-        lua_pop( L, 1 );
-        luaL_newmetatable( L, LUA_BASEENTITYLIBNAME );
-    }
+    LUA_PUSH_METATABLE_TO_EXTEND( L, LUA_BASEENTITYLIBNAME );
     luaL_register( L, NULL, CBaseEntitymeta );
     return 1;
 }

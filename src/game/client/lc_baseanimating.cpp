@@ -39,7 +39,7 @@ LUA_API void lua_pushanimating( lua_State *L, CBaseAnimating *pEntity )
     CBaseHandle *hEntity =
         ( CBaseHandle * )lua_newuserdata( L, sizeof( CBaseHandle ) );
     hEntity->Set( pEntity );
-    luaL_getmetatable( L, "CBaseAnimating" );
+    luaL_getmetatable( L, LUA_BASEANIMATINGLIBNAME );
     lua_setmetatable( L, -2 );
 }
 
@@ -970,59 +970,20 @@ static int CBaseAnimating___index( lua_State *L )
 {
     CBaseAnimating *pEntity = lua_toanimating( L, 1 );
 
-    //LUA_METATABLE_INDEX_CHECK_VALID( L, ...IsValid );
+    LUA_METATABLE_INDEX_CHECK_VALID( L, CBaseEntity_IsValid );
     LUA_METATABLE_INDEX_CHECK( L, pEntity );
 
-    if ( lua_isrefvalid( L, pEntity->m_nTableReference ) )
+    LUA_METATABLE_INDEX_CHECK_REF_TABLE( L, pEntity );
+
+    if ( lua_getmetatable( L, 1 ) )
     {
-        lua_getref( L, pEntity->m_nTableReference );
-        lua_pushvalue( L, 2 );
-        lua_gettable( L, -2 );
-
-        if ( lua_isnil( L, -1 ) )
-        {
-            lua_pop( L, 2 );
-
-            if ( lua_getmetatable( L, 1 ) )
-            {
-                lua_pushvalue( L, 2 );
-                lua_gettable( L, -2 );
-
-                if ( lua_isnil( L, -1 ) )
-                {
-                    lua_pop( L, 2 );
-                    luaL_getmetatable( L, "CBaseEntity" );
-                    lua_pushvalue( L, 2 );
-                    lua_gettable( L, -2 );
-                }
-            }
-            else
-            {
-                lua_pushnil( L );
-            }
-        }
-    }
-    else
-    {
-        if ( lua_getmetatable( L, 1 ) )
-        {
-            lua_pushvalue( L, 2 );
-            lua_gettable( L, -2 );
-
-            if ( lua_isnil( L, -1 ) )
-            {
-                lua_pop( L, 2 );
-                luaL_getmetatable( L, "CBaseEntity" );
-                lua_pushvalue( L, 2 );
-                lua_gettable( L, -2 );
-            }
-        }
-        else
-        {
-            lua_pushnil( L );
-        }
+        LUA_METATABLE_INDEX_CHECK_TABLE( L );
     }
 
+    luaL_getmetatable( L, LUA_BASEENTITYLIBNAME );
+    LUA_METATABLE_INDEX_CHECK_TABLE( L );
+
+    lua_pushnil( L );
     return 1;
 }
 
@@ -1233,9 +1194,9 @@ static const luaL_Reg CBaseAnimatingmeta[] = {
 */
 LUALIB_API int luaopen_CBaseAnimating( lua_State *L )
 {
-    luaL_newmetatable( L, LUA_BASEANIMATINGLIBNAME );
+    LUA_PUSH_NEW_METATABLE( L, LUA_BASEANIMATINGLIBNAME );
     luaL_register( L, NULL, CBaseAnimatingmeta );
-    lua_pushstring( L, "entity" );
-    lua_setfield( L, -2, "__type" ); /* metatable.__type = "entity" */
+    lua_pushstring( L, "Entity" );
+    lua_setfield( L, -2, "__type" ); /* metatable.__type = "Entity" */
     return 1;
 }

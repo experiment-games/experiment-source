@@ -209,10 +209,10 @@ static const luaL_Reg CGameTrace_funcs[] = {
 */
 LUALIB_API int luaopen_CGameTrace( lua_State *L )
 {
-    luaL_newmetatable( L, LUA_GAMETRACELIBNAME );
+    LUA_PUSH_NEW_METATABLE( L, LUA_GAMETRACELIBNAME );
     luaL_register( L, NULL, CGameTracemeta );
-    lua_pushstring( L, "trace" );
-    lua_setfield( L, -2, "__type" ); /* metatable.__type = "trace" */
+    lua_pushstring( L, "Trace" );
+    lua_setfield( L, -2, "__type" ); /* metatable.__type = "Trace" */
     luaL_register( L, LUA_GNAME, CGameTrace_funcs );
     lua_pop( L, 1 );
     return 1;

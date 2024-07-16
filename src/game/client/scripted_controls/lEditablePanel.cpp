@@ -532,7 +532,7 @@ static const luaL_Reg EditablePanel_funcs[] = { { "EditablePanel", luasrc_Editab
 */
 LUALIB_API int luaopen_vgui_EditablePanel( lua_State *L )
 {
-    luaL_newmetatable( L, "EditablePanel" );
+    LUA_PUSH_NEW_METATABLE( L, "EditablePanel" );
     luaL_register( L, NULL, EditablePanelmeta );
     lua_pushstring( L, LUA_PANELLIBNAME );
     lua_setfield( L, -2, "__type" ); /* metatable.__type = "Panel" */

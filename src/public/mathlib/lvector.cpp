@@ -397,7 +397,7 @@ static const luaL_Reg Vector_funcs[] = {
 */
 LUALIB_API int luaopen_Vector( lua_State *L )
 {
-    luaL_newmetatable( L, LUA_VECTORLIBNAME );
+    LUA_PUSH_NEW_METATABLE( L, LUA_VECTORLIBNAME );
     luaL_register( L, NULL, Vectormeta );
     lua_pushstring( L, "Vector" );
     lua_setfield( L, -2, "__type" ); /* metatable.__type = "Vector" */
@@ -602,7 +602,7 @@ static const luaL_Reg QAngle_funcs[] = {
 */
 LUALIB_API int luaopen_QAngle( lua_State *L )
 {
-    luaL_newmetatable( L, LUA_QANGLELIBNAME );
+    LUA_PUSH_NEW_METATABLE( L, LUA_QANGLELIBNAME );
     luaL_register( L, NULL, QAnglemeta );
     lua_pushstring( L, "Angle" );
     lua_setfield( L, -2, "__type" ); /* metatable.__type = "Angle" */

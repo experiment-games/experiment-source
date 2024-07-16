@@ -1198,7 +1198,7 @@ LUA_API int luasrc_pcall( lua_State *L, int amountOfArguments, int amountOfResul
 {
     bool injectedOwnErrorFunction = false;
 
-    if ( errorFunctionStackPos == 0 )
+    if ( errorFunctionStackPos == LUA_DEFAULT_ERROR_HANDLER )
     {
         // insert luasrc_traceback function below everything
         lua_pushcfunction( L, luasrc_traceback );
@@ -1274,7 +1274,7 @@ static void luasrc_LoadEntityFromFile( char *fullPath, char *className )
                 lua_remove( L, -2 );
                 lua_getglobal( L, "ENT" );
                 lua_pushstring( L, className );
-                luasrc_pcall( L, 2, 0, 0 );
+                luasrc_pcall( L, 2, 0 );
                 lua_getglobal( L, "ENT" );
                 if ( lua_istable( L, -1 ) )
                 {
@@ -1559,7 +1559,7 @@ static void luasrc_LoadWeaponFromFile( char *fullPath, char *className )
                 lua_remove( L, -2 );
                 lua_getglobal( L, "SWEP" );
                 lua_pushstring( L, className );
-                luasrc_pcall( L, 2, 0, 0 );
+                luasrc_pcall( L, 2, 0 );
                 RegisterScriptedWeapon( className );
             }
             else
@@ -1911,7 +1911,7 @@ bool luasrc_LoadGamemode( const char *gamemode )
     // Call gamemodes.Register(gamemodeTable, gamemodeName, baseGameMode)
     lua_pushstring( L, gamemode );
     lua_insert( L, -2 );  // Move the gamemode name to the 2nd parameter
-    luasrc_pcall( L, 3, 0, 0 );
+    luasrc_pcall( L, 3, 0 );
 
     // Unset the GM table, users should use the GAMEMODE table instead
     // We keep the loader active for any later includes. It will be cleaned up
@@ -1949,7 +1949,7 @@ bool luasrc_SetGamemode( const char *gamemode )
 
     lua_remove( L, -2 );             // Remove gamemode table
     lua_pushstring( L, gamemode );   // Push gamemode name
-    luasrc_pcall( L, 1, 1, 0 );      // Call gamemodes.Get(gamemode)
+    luasrc_pcall( L, 1, 1 );      // Call gamemodes.Get(gamemode)
     lua_setglobal( L, "GAMEMODE" );  // Set GAMEMODE to the active gamemode table
 
     lua_getglobal( L, LUA_GAMEMODESLIBNAME );
@@ -1965,7 +1965,7 @@ bool luasrc_SetGamemode( const char *gamemode )
 
     lua_remove( L, -2 );            // Remove gamemode table
     lua_pushstring( L, gamemode );  // Push gamemode name
-    luasrc_pcall( L, 1, 0, 0 );     // Call gamemodes.InternalSetActiveName(gamemode)
+    luasrc_pcall( L, 1, 0 );     // Call gamemodes.InternalSetActiveName(gamemode)
 
 #ifdef CLIENT_DLL
     const char *gamePath = engine->GetGameDirectory();

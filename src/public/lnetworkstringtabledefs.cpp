@@ -138,7 +138,7 @@ static const luaL_Reg INetworkStringTablemeta[] = {
 */
 LUALIB_API int luaopen_INetworkStringTable( lua_State *L )
 {
-    luaL_newmetatable( L, LUA_INETWORKSTRINGTABLELIBNAME );
+    LUA_PUSH_NEW_METATABLE( L, LUA_INETWORKSTRINGTABLELIBNAME );
     luaL_register( L, NULL, INetworkStringTablemeta );
     lua_pushvalue( L, -1 );           /* push metatable */
     lua_setfield( L, -2, "__index" ); /* metatable.__index = metatable */

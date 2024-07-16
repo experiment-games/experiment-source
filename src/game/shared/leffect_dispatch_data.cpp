@@ -203,10 +203,10 @@ static const luaL_Reg CEffectData_funcs[] = {
 */
 LUALIB_API int luaopen_CEffectData( lua_State *L )
 {
-    luaL_newmetatable( L, LUA_EFFECTDATALIBNAME );
+    LUA_PUSH_NEW_METATABLE( L, LUA_EFFECTDATALIBNAME );
     luaL_register( L, NULL, CEffectDatameta );
-    lua_pushstring( L, "effect" );
-    lua_setfield( L, -2, "__type" ); /* metatable.__type = "effect" */
+    lua_pushstring( L, "Effect" );
+    lua_setfield( L, -2, "__type" ); /* metatable.__type = "Effect" */
     luaL_register( L, LUA_GNAME, CEffectData_funcs );
     lua_pop( L, 1 );
     return 1;

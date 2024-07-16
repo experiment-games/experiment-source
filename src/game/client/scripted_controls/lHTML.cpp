@@ -378,7 +378,7 @@ static const luaL_Reg HTML_funcs[] = { { "HTML", luasrc_HTML },
 */
 LUALIB_API int luaopen_vgui_HTML( lua_State *L )
 {
-    luaL_newmetatable( L, "HTML" );
+    LUA_PUSH_NEW_METATABLE( L, "HTML" );
     luaL_register( L, NULL, HTMLmeta );
     lua_pushstring( L, LUA_PANELLIBNAME );
     lua_setfield( L, -2, "__type" ); /* metatable.__type = "Panel" */

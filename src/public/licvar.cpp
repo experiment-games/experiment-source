@@ -93,7 +93,7 @@ void CV_GlobalChange_Lua( IConVar *var, const char *pOldString, float flOldValue
             lua_pushconvar( targetState, cvar->FindVar( var->GetName() ) );
             lua_pushstring( targetState, pOldString );
             lua_pushnumber( targetState, flOldValue );
-            luasrc_pcall( targetState, 3, 0, 0 );
+            luasrc_pcall( targetState, 3, 0 );
         }
         else
             lua_pop( targetState, 2 );

@@ -437,7 +437,7 @@ LUALIB_API int luaopen_render( lua_State *L )
 
 LUALIB_API int luaopen_ITexture( lua_State *L )
 {
-    luaL_newmetatable( L, LUA_ITEXTURELIBNAME );
+    LUA_PUSH_NEW_METATABLE( L, LUA_ITEXTURELIBNAME );
     luaL_register( L, NULL, ITextureMetaLib );
     lua_pushvalue( L, -1 );           /* push metatable */
     lua_setfield( L, -2, "__index" ); /* metatable.__index = metatable */

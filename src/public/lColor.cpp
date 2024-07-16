@@ -341,7 +341,7 @@ static const luaL_Reg Color_funcs[] = {
 */
 LUALIB_API int luaopen_Color( lua_State *L )
 {
-    luaL_newmetatable( L, LUA_COLORLIBNAME );
+    LUA_PUSH_NEW_METATABLE( L, LUA_COLORLIBNAME );
     luaL_register( L, NULL, Colormeta );
     lua_pushstring( L, "Color" );
     lua_setfield( L, -2, "__type" ); /* metatable.__type = "Color" */

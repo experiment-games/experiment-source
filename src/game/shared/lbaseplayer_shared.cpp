@@ -47,7 +47,7 @@ LUA_API void lua_pushplayer( lua_State *L, CBasePlayer *pPlayer )
     /*CBaseHandle *phPlayer =
         ( CBaseHandle * )lua_newuserdata( L, sizeof( CBaseHandle ) );
     phPlayer->Set( pPlayer );
-    luaL_getmetatable( L, "CBasePlayer" );
+    luaL_getmetatable( L, LUA_BASEPLAYERLIBNAME );
     lua_setmetatable( L, -2 );*/
     // Experiment; We always want to push the player as the most specific type
     lua_pushhl2mpplayer( L, ToHL2MPPlayer( pPlayer ) );
@@ -931,7 +931,8 @@ static int CBasePlayer_WeaponCount( lua_State *L )
 static int CBasePlayer___index( lua_State *L )
 {
     CBasePlayer *pPlayer = lua_toplayer( L, 1 );
-    // LUA_METATABLE_INDEX_CHECK_VALID( L, Entity_IsValid ); // TODO: Entity_IsValid
+
+    LUA_METATABLE_INDEX_CHECK_VALID( L, CBaseEntity_IsValid );
     LUA_METATABLE_INDEX_CHECK( L, pPlayer );
 
     const char *field = luaL_checkstring( L, 2 );
@@ -961,10 +962,10 @@ static int CBasePlayer___index( lua_State *L )
             LUA_METATABLE_INDEX_CHECK_TABLE( L );
         }
 
-        luaL_getmetatable( L, "CBaseAnimating" );
+        luaL_getmetatable( L, LUA_BASEANIMATINGLIBNAME );
         LUA_METATABLE_INDEX_CHECK_TABLE( L );
 
-        luaL_getmetatable( L, "CBaseEntity" );
+        luaL_getmetatable( L, LUA_BASEENTITYLIBNAME );
         LUA_METATABLE_INDEX_CHECK_TABLE( L );
 
         lua_pushnil( L );
@@ -1200,15 +1201,10 @@ static const luaL_Reg CBasePlayer_funcs[] = {
 */
 LUALIB_API int luaopen_CBasePlayer_shared( lua_State *L )
 {
-    luaL_getmetatable( L, LUA_BASEPLAYERLIBNAME );
-    if ( lua_isnoneornil( L, -1 ) )
-    {
-        lua_pop( L, 1 );
-        luaL_newmetatable( L, LUA_BASEPLAYERLIBNAME );
-    }
+    LUA_PUSH_NEW_METATABLE( L, LUA_BASEPLAYERLIBNAME );
     luaL_register( L, NULL, CBasePlayermeta );
-    lua_pushstring( L, "entity" );
-    lua_setfield( L, -2, "__type" ); /* metatable.__type = "entity" */
+    lua_pushstring( L, "Entity" );
+    lua_setfield( L, -2, "__type" ); /* metatable.__type = "Entity" */
     luaL_register( L, LUA_GNAME, CBasePlayer_funcs );
     lua_pop( L, 1 );
     return 1;

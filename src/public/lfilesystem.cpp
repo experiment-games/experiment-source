@@ -571,12 +571,12 @@ static const luaL_Reg FileHandle_tmeta[] = {
 */
 LUALIB_API int luaopen_filesystem( lua_State *L )
 {
-    luaL_newmetatable( L, "FileHandle_t" );
+    LUA_PUSH_NEW_METATABLE( L, "FileHandle_t" );
     luaL_register( L, NULL, FileHandle_tmeta );
     lua_pushvalue( L, -1 );           /* push metatable */
     lua_setfield( L, -2, "__index" ); /* metatable.__index = metatable */
-    lua_pushstring( L, "filehandle" );
-    lua_setfield( L, -2, "__type" ); /* metatable.__type = "filehandle" */
+    lua_pushstring( L, "FileHandle" );
+    lua_setfield( L, -2, "__type" ); /* metatable.__type = "FileHandle" */
     lua_pop( L, 1 );
     lua_pushfilehandle( L, FILESYSTEM_INVALID_HANDLE );
     lua_setglobal( L, "FILESYSTEM_INVALID_HANDLE" );

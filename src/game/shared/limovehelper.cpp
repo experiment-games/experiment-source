@@ -122,12 +122,12 @@ static const luaL_Reg IMoveHelper_funcs[] = {
 */
 LUALIB_API int luaopen_IMoveHelper( lua_State *L )
 {
-    luaL_newmetatable( L, "IMoveHelper" );
+    LUA_PUSH_NEW_METATABLE( L, "IMoveHelper" );
     luaL_register( L, NULL, IMoveHelpermeta );
     lua_pushvalue( L, -1 );           /* push metatable */
     lua_setfield( L, -2, "__index" ); /* metatable.__index = metatable */
-    lua_pushstring( L, "movehelper" );
-    lua_setfield( L, -2, "__type" ); /* metatable.__type = "movehelper" */
+    lua_pushstring( L, "MoveHelper" );
+    lua_setfield( L, -2, "__type" ); /* metatable.__type = "MoveHelper" */
     luaL_register( L, LUA_GNAME, IMoveHelper_funcs );
     lua_pop( L, 1 );
     return 1;

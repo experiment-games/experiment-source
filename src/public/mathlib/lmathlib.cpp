@@ -160,10 +160,10 @@ static const luaL_Reg matrix3x4_t_funcs[] = {
 */
 LUALIB_API int luaopen_matrix3x4_t( lua_State *L )
 {
-    luaL_newmetatable( L, LUA_MATRIXLIBNAME );
+    LUA_PUSH_NEW_METATABLE( L, LUA_MATRIXLIBNAME );
     luaL_register( L, NULL, matrix3x4_tmeta );
-    lua_pushstring( L, "matrix" );
-    lua_setfield( L, -2, "__type" ); /* metatable.__type = "matrix" */
+    lua_pushstring( L, LUA_VMATRIXLIBNAME );
+    lua_setfield( L, -2, "__type" ); /* metatable.__type = "Matrix" */
     luaL_register( L, LUA_GNAME, matrix3x4_t_funcs );
     lua_pop( L, 1 );
     return 1;
