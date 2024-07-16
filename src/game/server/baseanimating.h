@@ -31,6 +31,10 @@ FORWARD_DECLARE_HANDLE( memhandle_t );
 
 class CBaseAnimating : public CBaseEntity
 {
+#ifdef LUA_SDK
+    LUA_OVERRIDE_SINGLE_LUA_INSTANCE_METATABLE( LUA_BASEANIMATINGLIBNAME )
+#endif
+
    public:
     DECLARE_CLASS( CBaseAnimating, CBaseEntity );
 

@@ -177,7 +177,7 @@ public:
 // functions of IClientRenderable.
 abstract_class CDefaultClientRenderable : public IClientUnknown, public IClientRenderable
 {
-public:
+   public:
 	CDefaultClientRenderable()
 	{
 		m_hRenderHandle = INVALID_CLIENT_RENDER_HANDLE;

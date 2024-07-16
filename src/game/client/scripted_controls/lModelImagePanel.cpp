@@ -28,7 +28,7 @@
 #include "view_shared.h"
 #include <model_types.h>
 #include <basemodelpanel.h>
-#include <lc_baseflex.h>
+#include <lbaseflex_shared.h>
 #include <viewrender.h>
 #include <filesystem.h>
 

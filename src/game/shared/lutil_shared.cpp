@@ -508,6 +508,58 @@ static int luasrc_Util_EntitiesInSphere( lua_State *L )
     return 2;
 }
 
+#ifndef CLIENT_DLL
+/// <summary>
+/// Goes through the entities and find the ones that are in the PVS of the provided vector.
+/// </summary>
+/// <param name="L"></param>
+/// <returns></returns>
+static int luasrc_Util_EntitiesInPVS( lua_State *L )
+{
+    Vector vecViewOrigin = luaL_checkvector( L, 1 );
+
+    static byte pvs[MAX_MAP_CLUSTERS / 8];
+    int clusterIndex = engine->GetClusterForOrigin( vecViewOrigin );
+    Assert( clusterIndex >= 0 );
+    engine->GetPVSForCluster( clusterIndex, sizeof( pvs ), pvs );
+
+    int count = 0;
+
+    lua_newtable( L );
+
+    for ( CBaseEntity *pEntity = gEntList.NextEnt( NULL ); pEntity; pEntity = gEntList.NextEnt( pEntity ) )
+    {
+        // Only return attached ents.
+        if ( !pEntity->edict() )
+            continue;
+
+        CBaseEntity *pParent = pEntity->GetRootMoveParent();
+
+        Vector vecSurroundMins, vecSurroundMaxs;
+        pParent->CollisionProp()->WorldSpaceSurroundingBounds( &vecSurroundMins, &vecSurroundMaxs );
+        if ( !engine->CheckBoxInPVS( vecSurroundMins, vecSurroundMaxs, pvs, sizeof( pvs ) ) )
+            continue;
+
+        lua_pushinteger( L, count );
+        lua_pushentity( L, pEntity );
+        lua_settable( L, -3 );
+        count++;
+
+        if ( count >= MAX_ENTITYARRAY )
+        {
+            DevWarning( "UTIL_EntitiesInPVS: Reached max (%d) entities in PVS (skipping the rest)\n", MAX_ENTITYARRAY );
+            break;
+        }
+    }
+
+    // insert the count before the table
+    lua_pushinteger( L, count );
+    lua_insert( L, -2 );
+
+    return 2;
+}
+#endif
+
 static int luasrc_Util_WaterLevel( lua_State *L )
 {
     lua_pushnumber( L, UTIL_WaterLevel( luaL_checkvector( L, 1 ), luaL_checknumber( L, 2 ), luaL_checknumber( L, 3 ) ) );
@@ -592,6 +644,9 @@ static const luaL_Reg util_funcs[] = {
     { "EntitiesAlongRay", luasrc_Util_EntitiesAlongRay },
     { "EntitiesInBox", luasrc_Util_EntitiesInBox },
     { "EntitiesInSphere", luasrc_Util_EntitiesInSphere },
+#ifndef CLIENT_DLL
+    { "EntitiesInPVS", luasrc_Util_EntitiesInPVS },
+#endif
     { "WaterLevel", luasrc_Util_WaterLevel },
     { "CRC32", luasrc_Util_CRC32 },
     { "Base64Encode", luasrc_Util_Base64Encode },

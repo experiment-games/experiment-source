@@ -14,6 +14,7 @@
 
 #include "lua.hpp"
 #include "luasrclib.h"
+#include "lsingleluainstance.h"
 
 #if CLIENT_DLL
 #include <scriptedclientluapanel.h>

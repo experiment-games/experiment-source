@@ -118,19 +118,19 @@ function table.Print(target, isSequential, indentLevel, tablesVisited)
 	if (not isSequential) then
 		for key, value in pairs(target) do
 			if (type(value) == "table") then
-				print(indent .. key)
+				print(indent .. tostring(key))
 				table.Print(value, false, indentLevel + 1, tablesVisited)
 			else
-				print(indent .. key, value)
+				print(indent .. tostring(key), value)
 			end
 		end
 	else
 		for _, pair in ipairs(target) do
 			if (type(pair.value) == "table") then
-				print(indent .. pair.key)
+				print(indent .. tostring(pair.key))
 				table.Print(pair.value, true, indentLevel + 1, tablesVisited)
 			else
-				print(indent .. pair.key, pair.value)
+				print(indent .. tostring(pair.key), pair.value)
 			end
 		end
 	end

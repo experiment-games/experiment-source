@@ -1,5 +1,6 @@
 local MODULE = {}
 
+local Hooks = require("hooks")
 local socket = require("luasocket")
 local IP = "127.0.0.1" -- TODO: game server IP here
 local PORT = 12345
@@ -156,6 +157,26 @@ elseif (SERVER) then
 	-- Disable blocking on the server socket
 	localServer:settimeout(0)
 
+    -- If the server is sending a message, it may be to a client that is still connecting
+    -- This is due to our system only connecting once the client has loaded Lua.
+    -- For this we create a queue of messages to send to the client once they connect.
+    local clientPackedDataQueue = {}
+
+	local function processQueuedMessages(client)
+		if (not clientPackedDataQueue[client]) then
+			return
+		end
+
+		for _, packedData in pairs(clientPackedDataQueue[client]) do
+			local socketClient = MODULE.ClientToSocketClient(client)
+			socketClient:send(packedData)
+
+			debug("Sent queued message to client")
+		end
+
+		clientPackedDataQueue[client] = nil
+	end
+
     local function handleClient(clientData)
         local socketClient = clientData.socketClient
 
@@ -210,13 +231,18 @@ elseif (SERVER) then
         local newSocketClient = localServer:accept()
 
         if (newSocketClient) then
-			-- TODO: We need to clean this up when the client disconnects
+            -- TODO: We need some sort of: Util.PlayerByAddress(socketClient:getpeername()) here
+			-- ! This will stop working once we're not the only client anymore
+            local client = Util.PlayerByIndex(1)
+
+            -- TODO: We need to clean this up when the client disconnects
             table.insert(socketClients, {
                 socketClient = newSocketClient,
 
-                -- TODO: We need some sort of: Util.PlayerByAddress(socketClient:getpeername()) here
-                client = Util.PlayerByIndex(1)
+                client = client
             })
+
+			processQueuedMessages(client)
         end
 
         -- Handle all clients
@@ -228,7 +254,15 @@ elseif (SERVER) then
         -- socket.sleep(0.01)
     end
 
-	function MODULE.ClientToSocketClient(client)
+    function MODULE.QueueMessage(client, packedData)
+        if (not clientPackedDataQueue[client]) then
+            clientPackedDataQueue[client] = {}
+        end
+
+        table.insert(clientPackedDataQueue[client], packedData)
+    end
+
+    function MODULE.ClientToSocketClient(client)
 		for _, clientData in ipairs(socketClients) do
 			if (clientData.client == client) then
 				return clientData.socketClient
@@ -544,6 +578,7 @@ end
 function READER:ReadEntity()
     local index = self:ReadUInt(SIZE_ENTITY_INDEX)
     local entityGetter = function()
+		print(index, Entity, Entity(index))
         return Entity(index)
     end
 
@@ -662,21 +697,48 @@ if (SERVER) then
             error("Networks.Send was called without calling Networks.Start.")
         end
 
-		local socketClient = MODULE.ClientToSocketClient(client)
+        local socketClient = MODULE.ClientToSocketClient(client)
 
         local data = currentOutgoingMessage:GetPackedData()
-		socketClient:send(data)
+        currentOutgoingMessage = nil
 
-		currentOutgoingMessage = nil
-	end
-
-	function MODULE.Broadcast()
-		if (not currentOutgoingMessage) then
-			error("Networks.Broadcast was called without calling Networks.Start.")
+        if (not socketClient) then
+			debug("Client is not connected yet, queueing message...", client)
+			MODULE.QueueMessage(client, data)
+			return
 		end
 
+		socketClient:send(data)
+	end
+    function MODULE.Broadcast()
+        if (not currentOutgoingMessage) then
+            error("Networks.Broadcast was called without calling Networks.Start.")
+        end
+
         for _, socketClient in ipairs(socketClients) do
-			MODULE.Send(socketClient)
+            MODULE.Send(socketClient)
+        end
+
+        currentOutgoingMessage = nil
+    end
+
+	--- Sends the message to all players that have the entity in their PVS
+	--- @param entity any
+    function MODULE.BroadcastPVS(entity)
+        if (not currentOutgoingMessage) then
+            error("Networks.BroadcastPVS was called without calling Networks.Start.")
+        end
+
+		local origin = entity:GetPosition()
+		local count, entitiesInPVS = Util.EntitiesInPVS(origin)
+
+        for _, ent in ipairs(entitiesInPVS) do
+			print(ent)
+            if (not ent:IsPlayer()) then
+                continue
+            end
+
+            MODULE.Send(ent)
 		end
 
 		currentOutgoingMessage = nil

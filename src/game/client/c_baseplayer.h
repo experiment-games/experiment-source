@@ -70,7 +70,7 @@ bool IsInFreezeCam( void );
 //-----------------------------------------------------------------------------
 class C_BasePlayer : public C_BaseCombatCharacter, public CGameEventListener
 {
-public:
+   public:
 	DECLARE_CLASS( C_BasePlayer, C_BaseCombatCharacter );
 	DECLARE_CLIENTCLASS();
 	DECLARE_PREDICTABLE();

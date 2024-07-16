@@ -186,7 +186,12 @@ class CDmgAccumulator {
 // Purpose: Client side rep of CBaseTFCombatWeapon
 //-----------------------------------------------------------------------------
 // Hacky
-class CBaseCombatWeapon : public BASECOMBATWEAPON_DERIVED_FROM {
+class CBaseCombatWeapon : public BASECOMBATWEAPON_DERIVED_FROM
+{
+#ifdef LUA_SDK
+    LUA_OVERRIDE_SINGLE_LUA_INSTANCE_METATABLE( LUA_BASECOMBATWEAPONLIBNAME )
+#endif
+
    public:
     DECLARE_CLASS(CBaseCombatWeapon, BASECOMBATWEAPON_DERIVED_FROM);
     DECLARE_NETWORKCLASS();

@@ -425,6 +425,21 @@ CBaseEntity::CBaseEntity( bool bServerOnly )
 #endif
 }
 
+#ifdef LUA_SDK
+void *CBaseEntity::CreateLuaInstance( lua_State *L )
+{
+    CBaseHandle *hEntity =
+        ( CBaseHandle * )lua_newuserdata( L, sizeof( CBaseHandle ) );
+    hEntity->Set( this );
+    return hEntity;
+}
+
+const char *CBaseEntity::GetMetatableName()
+{
+    return LUA_BASEENTITYLIBNAME;
+}
+#endif
+
 //-----------------------------------------------------------------------------
 // Purpose: Scale up our physics hull and test against the new one
 // Input  : *pNewCollide - New collision hull

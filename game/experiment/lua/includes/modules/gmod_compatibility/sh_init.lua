@@ -59,6 +59,21 @@ ents = {
 	FindInSphere = function(...)
 		return select(2, Util.EntitiesInSphere(...))
 	end,
+    FindInPVS = function(viewOrigin)
+        if (type(viewOrigin) == "Entity") then
+            viewOrigin = viewOrigin:GetPos()
+        elseif (type(viewOrigin) == "Player") then
+            local viewEntity = viewOrigin:GetViewEntity()
+
+			if (IsValid(viewEntity)) then
+                viewOrigin = viewEntity:GetPos()
+            else
+				viewOrigin = viewOrigin:GetPos()
+			end
+		end
+
+		return select(2, Util.EntitiesInPVS(viewOrigin))
+	end,
 }
 
 player = {

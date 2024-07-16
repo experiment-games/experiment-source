@@ -17,7 +17,12 @@
 //=============================================================================
 // >> HL2MP_Player
 //=============================================================================
-class C_HL2MP_Player : public C_BaseHLPlayer {
+class C_HL2MP_Player : public C_BaseHLPlayer
+{
+#ifdef LUA_SDK
+    LUA_OVERRIDE_SINGLE_LUA_INSTANCE_METATABLE( LUA_HL2MPPLAYERLIBNAME )
+#endif
+
    public:
     DECLARE_CLASS(C_HL2MP_Player, C_BaseHLPlayer);
 

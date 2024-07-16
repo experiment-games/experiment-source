@@ -34,13 +34,9 @@ LUA_API lua_CBaseCombatWeapon *lua_toweapon( lua_State *L, int idx )
 ** push functions (C -> stack)
 */
 
-LUA_API void lua_pushweapon( lua_State *L, lua_CBaseCombatWeapon *pWeapon )
+LUA_API void lua_pushweapon( lua_State *L, lua_CBaseCombatWeapon *pEntity )
 {
-    CBaseHandle *hWeapon =
-        ( CBaseHandle * )lua_newuserdata( L, sizeof( CBaseHandle ) );
-    hWeapon->Set( ( CBaseEntity * )pWeapon );
-    luaL_getmetatable( L, LUA_BASECOMBATWEAPONLIBNAME );
-    lua_setmetatable( L, -2 );
+    LUA_SAFE_PUSH_ENTITY_INSTANCE( L, pEntity );
 }
 
 LUALIB_API lua_CBaseCombatWeapon *luaL_checkweapon( lua_State *L, int narg )
@@ -984,6 +980,9 @@ static int CBaseCombatWeapon___index( lua_State *L )
         {
             LUA_METATABLE_INDEX_CHECK_TABLE( L );
         }
+
+        luaL_getmetatable( L, LUA_CBASEFLEXLIBNAME );
+        LUA_METATABLE_INDEX_CHECK_TABLE( L );
 
         luaL_getmetatable( L, LUA_BASEANIMATINGLIBNAME );
         LUA_METATABLE_INDEX_CHECK_TABLE( L );

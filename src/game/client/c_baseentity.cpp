@@ -196,6 +196,21 @@ int CPredictableList::GetPredictableCount(void) {
     return m_Predictables.Count();
 }
 
+#ifdef LUA_SDK
+void *C_BaseEntity::CreateLuaInstance( lua_State *L )
+{
+    CBaseHandle *hEntity =
+        ( CBaseHandle * )lua_newuserdata( L, sizeof( CBaseHandle ) );
+    hEntity->Set( this );
+    return hEntity;
+}
+
+const char *C_BaseEntity::GetMetatableName()
+{
+    return LUA_BASEENTITYLIBNAME;
+}
+#endif
+
 //-----------------------------------------------------------------------------
 // Purpose: Searc predictables for previously created entity (by testId)
 // Input  : testId -

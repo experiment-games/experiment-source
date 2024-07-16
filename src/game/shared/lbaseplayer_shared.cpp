@@ -42,7 +42,7 @@ LUA_API lua_CBasePlayer *lua_toplayer( lua_State *L, int idx )
 ** push functions (C -> stack)
 */
 
-LUA_API void lua_pushplayer( lua_State *L, CBasePlayer *pPlayer )
+LUA_API void lua_pushplayer( lua_State *L, CBasePlayer *pEntity )
 {
     /*CBaseHandle *phPlayer =
         ( CBaseHandle * )lua_newuserdata( L, sizeof( CBaseHandle ) );
@@ -50,7 +50,10 @@ LUA_API void lua_pushplayer( lua_State *L, CBasePlayer *pPlayer )
     luaL_getmetatable( L, LUA_BASEPLAYERLIBNAME );
     lua_setmetatable( L, -2 );*/
     // Experiment; We always want to push the player as the most specific type
-    lua_pushhl2mpplayer( L, ToHL2MPPlayer( pPlayer ) );
+    //lua_pushhl2mpplayer( L, ToHL2MPPlayer( pEntity ) );
+
+    CHL2MP_Player *pPlayer = ToHL2MPPlayer( pEntity );
+    LUA_SAFE_PUSH_ENTITY_INSTANCE( L, pPlayer );
 }
 
 LUALIB_API lua_CBasePlayer *luaL_checkplayer( lua_State *L, int narg )
@@ -424,6 +427,25 @@ static int CBasePlayer_GetUseEntity( lua_State *L )
 static int CBasePlayer_GetUserID( lua_State *L )
 {
     lua_pushinteger( L, luaL_checkplayer( L, 1 )->GetUserID() );
+    return 1;
+}
+
+static int CBasePlayer_GetViewEntity( lua_State *L )
+{
+#ifdef CLIENT_DLL
+    CBasePlayer *pPlayer = luaL_checkplayer( L, 1 );
+
+    if (pPlayer != C_BasePlayer::GetLocalPlayer())
+    {
+        // For now we can only return the view entity clientside, if it's the local player
+        luaL_typeerror( L, 1, "local player" );
+        return 0;
+    }
+
+    lua_pushentity( L, cl_entitylist->GetEnt( render->GetViewEntity() ) );
+#else
+    lua_pushentity( L, luaL_checkplayer( L, 1 )->GetViewEntity() );
+#endif
     return 1;
 }
 
@@ -962,6 +984,9 @@ static int CBasePlayer___index( lua_State *L )
             LUA_METATABLE_INDEX_CHECK_TABLE( L );
         }
 
+        luaL_getmetatable( L, LUA_CBASEFLEXLIBNAME );
+        LUA_METATABLE_INDEX_CHECK_TABLE( L );
+
         luaL_getmetatable( L, LUA_BASEANIMATINGLIBNAME );
         LUA_METATABLE_INDEX_CHECK_TABLE( L );
 
@@ -1106,6 +1131,7 @@ static const luaL_Reg CBasePlayermeta[] = {
     { "GetTracerType", CBasePlayer_GetTracerType },
     { "GetUseEntity", CBasePlayer_GetUseEntity },
     { "GetUserID", CBasePlayer_GetUserID },
+    { "GetViewEntity", CBasePlayer_GetViewEntity },
     { "GetViewModel", CBasePlayer_GetViewModel },
     { "GetWaterJumpTime", CBasePlayer_GetWaterJumpTime },
     { "GetWeapon", CBasePlayer_GetWeapon },

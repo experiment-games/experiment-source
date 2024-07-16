@@ -35,7 +35,12 @@ class CHL2MPPlayerStateInfo {
     void (CHL2MP_Player::*pfnPreThink)();  // Do a PreThink() in this state.
 };
 
-class CHL2MP_Player : public CHL2_Player {
+class CHL2MP_Player : public CHL2_Player
+{
+#ifdef LUA_SDK
+    LUA_OVERRIDE_SINGLE_LUA_INSTANCE_METATABLE( LUA_HL2MPPLAYERLIBNAME )
+#endif
+
    public:
     DECLARE_CLASS(CHL2MP_Player, CHL2_Player);
 

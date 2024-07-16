@@ -125,7 +125,7 @@
 #include "sourcevr/isourcevirtualreality.h"
 #include "client_virtualreality.h"
 #include "mumble.h"
-#include "lc_baseflex.h"
+#include "lbaseflex_shared.h"
 
 // NVNT includes
 #include "hud_macros.h"

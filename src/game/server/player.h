@@ -236,7 +236,11 @@ private:
 
 class CBasePlayer : public CBaseCombatCharacter
 {
-public:
+#ifdef LUA_SDK
+    LUA_OVERRIDE_SINGLE_LUA_INSTANCE_METATABLE( LUA_BASEPLAYERLIBNAME )
+#endif
+
+   public:
 	DECLARE_CLASS( CBasePlayer, CBaseCombatCharacter );
 protected:
 	// HACK FOR BOTS

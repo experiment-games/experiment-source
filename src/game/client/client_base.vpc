@@ -513,6 +513,9 @@ $Project
 
 		$Folder	"Lua"
 		{
+            $File "$SRCDIR\game\shared\lsingleluainstance.h"
+            $File "$SRCDIR\game\shared\lsingleluainstance.cpp"
+
             $File "$SRCDIR\public\lua_compat.cpp"
             $File "$SRCDIR\game\client\testui.cpp"
             $File "$SRCDIR\game\shared\basescripted.cpp"
@@ -529,8 +532,8 @@ $Project
             $File "$SRCDIR\public\lbspflags.cpp"
             $File "lc_baseanimating.cpp"
             $File "lc_baseanimating.h"
-            $File "lc_baseflex.cpp"
-            $File "lc_baseflex.h"
+            $File "$SRCDIR\game\shared\lbaseflex_shared.cpp"
+            $File "$SRCDIR\game\shared\lbaseflex_shared.h"
             $File "lc_baseentity.cpp"
             $File "lc_baseplayer.cpp"
             $File "$SRCDIR\public\lcdll_int.cpp"

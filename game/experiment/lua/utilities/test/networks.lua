@@ -13,7 +13,7 @@ if (SERVER) then
         Networks.Start("CTestMessage")
 		Networks.WriteFloat(1234.5677490234)
         Networks.WriteString("Hello, client!")
-		Networks.WriteVector(client:GetAbsOrigin())
+		Networks.WriteVector(client:GetPosition())
         Networks.Send(client)
 
 		countReceived = countReceived + 1

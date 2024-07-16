@@ -41,13 +41,9 @@ LUA_API lua_CHL2MP_Player *lua_tohl2mpplayer( lua_State *L, int idx )
 ** push functions (C -> stack)
 */
 
-LUA_API void lua_pushhl2mpplayer( lua_State *L, CHL2MP_Player *pPlayer )
+LUA_API void lua_pushhl2mpplayer( lua_State *L, CHL2MP_Player *pEntity )
 {
-    CBaseHandle *hPlayer =
-        ( CBaseHandle * )lua_newuserdata( L, sizeof( CBaseHandle ) );
-    hPlayer->Set( pPlayer );
-    luaL_getmetatable( L, LUA_HL2MPPLAYERLIBNAME );
-    lua_setmetatable( L, -2 );
+    LUA_SAFE_PUSH_ENTITY_INSTANCE( L, pEntity );
 }
 
 LUALIB_API lua_CHL2MP_Player *luaL_checkhl2mpplayer( lua_State *L, int narg )
@@ -126,6 +122,9 @@ static int CHL2MP_Player___index( lua_State *L )
     }
 
     luaL_getmetatable( L, LUA_BASEPLAYERLIBNAME );
+    LUA_METATABLE_INDEX_CHECK_TABLE( L );
+
+    luaL_getmetatable( L, LUA_CBASEFLEXLIBNAME );
     LUA_METATABLE_INDEX_CHECK_TABLE( L );
 
     luaL_getmetatable( L, LUA_BASEANIMATINGLIBNAME );

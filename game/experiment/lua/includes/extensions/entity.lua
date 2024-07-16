@@ -5,6 +5,10 @@
 	Modified for Experiment.
 --]]
 
+if (GAMEUI) then
+	return
+end
+
 local printError = debug.PrintError
 
 function ToBaseEntity( pEntity )

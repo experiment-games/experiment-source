@@ -7,7 +7,7 @@
 #include "cbase.h"
 #include "luamanager.h"
 #include "luasrclib.h"
-#include "lc_baseflex.h"
+#include "lbaseflex_shared.h"
 #include "lbaseentity_shared.h"
 #include "lbaseplayer_shared.h"
 #include "mathlib/lvector.h"
@@ -17,6 +17,7 @@
 #include "tier0/memdbgon.h"
 #include <model_types.h>
 
+#ifdef CLIENT_DLL
 static CClientSideEntityManager s_ClientSideEntityManager;
 CClientSideEntityManager *g_pClientSideEntityManager = &s_ClientSideEntityManager;
 
@@ -80,6 +81,7 @@ void CClientSideEntityManager::InitClientEntity( lua_CBaseFlex *pClientSideEntit
     pClientSideEntity->Interp_SetupMappings( pClientSideEntity->GetVarMapping() );
     pClientSideEntity->SetAbsOrigin( vec3_origin );
 }
+#endif
 
 /*
 ** access functions (stack -> C)
@@ -101,51 +103,17 @@ LUA_API lua_CBaseFlex *lua_tobaseflex( lua_State *L, int idx )
 
 LUA_API void lua_pushbaseflex( lua_State *L, lua_CBaseFlex *pEntity )
 {
-    CBaseHandle *hEntity =
-        ( CBaseHandle * )lua_newuserdata( L, sizeof( CBaseHandle ) );
-    hEntity->Set( pEntity );
-    luaL_getmetatable( L, LUA_CBASEFLEXLIBNAME );
-    lua_setmetatable( L, -2 );
+    LUA_SAFE_PUSH_ENTITY_INSTANCE( L, pEntity );
 }
 
 LUALIB_API lua_CBaseFlex *luaL_checkbaseflex( lua_State *L, int narg )
 {
     lua_CBaseFlex *d = lua_tobaseflex( L, narg );
+
     if ( d == NULL ) /* avoid extra test when d is not 0 */
         luaL_argerror( L, narg, "CBaseFlex expected, got NULL entity" );
+
     return d;
-}
-
-static int CBaseFlex_SetPos( lua_State *L )
-{
-    luaL_checkbaseflex( L, 1 )->SetAbsOrigin( luaL_checkvector( L, 2 ) );
-    return 0;
-}
-
-static int CBaseFlex_GetPos( lua_State *L )
-{
-    Vector vPos = luaL_checkbaseflex( L, 1 )->GetAbsOrigin();
-    lua_pushvector( L, vPos );
-    return 1;
-}
-
-static int CBaseFlex_SetAngles( lua_State *L )
-{
-    luaL_checkbaseflex( L, 1 )->SetAbsAngles( luaL_checkangle( L, 2 ) );
-    return 0;
-}
-
-static int CBaseFlex_GetAngles( lua_State *L )
-{
-    QAngle vAngles = luaL_checkbaseflex( L, 1 )->GetAbsAngles();
-    lua_pushangle( L, vAngles );
-    return 1;
-}
-
-static int CBaseFlex_Spawn( lua_State *L )
-{
-    luaL_checkbaseflex( L, 1 )->Spawn();
-    return 0;
 }
 
 static int CBaseFlex___index( lua_State *L )
@@ -206,17 +174,13 @@ static int CBaseFlex___tostring( lua_State *L )
 }
 
 static const luaL_Reg CBaseFlexmeta[] = {
-    { "SetPos", CBaseFlex_SetPos },
-    { "GetPos", CBaseFlex_GetPos },
-    { "SetAngles", CBaseFlex_SetAngles },
-    { "GetAngles", CBaseFlex_GetAngles },
-    { "Spawn", CBaseFlex_Spawn },
     { "__index", CBaseFlex___index },
     { "__newindex", CBaseFlex___newindex },
     { "__eq", CBaseFlex___eq },
     { "__tostring", CBaseFlex___tostring },
     { NULL, NULL } };
 
+#ifdef CLIENT_DLL
 static int CBaseFlex_ClientsideModel( lua_State *L )
 {
     const char *pszModelName = luaL_checkstring( L, 1 );
@@ -233,9 +197,12 @@ static int CBaseFlex_ClientsideModel( lua_State *L )
     lua_pushbaseflex( L, pEntity );
     return 1;
 }
+#endif
 
 static const luaL_Reg CBaseFlex_funcs[] = {
+#ifdef CLIENT_DLL
     { "ClientsideModel", CBaseFlex_ClientsideModel },
+#endif
     { NULL, NULL } };
 
 /*
@@ -250,5 +217,6 @@ LUALIB_API int luaopen_CBaseFlex( lua_State *L )
     luaL_register( L, NULL, CBaseFlexmeta );
     lua_pushstring( L, "Entity" );
     lua_setfield( L, -2, "__type" ); /* metatable.__type = "Entity" */
+    lua_pop( L, 1 );
     return 1;
 }

@@ -6,6 +6,7 @@
 Include("extensions/console_variables.lua")
 Include("extensions/debug.lua")
 Include("extensions/entity.lua")
+Include("extensions/entity_networked_variables.lua")
 Include("extensions/key_values.lua")
 Include("extensions/math.lua")
 Include("extensions/string.lua")

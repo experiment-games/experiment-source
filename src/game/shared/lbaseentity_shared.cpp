@@ -30,6 +30,7 @@
 #include "mathlib/lvector.h"
 #include "lvphysics_interface.h"
 #include "engine/IEngineSound.h"
+#include <lbasecombatweapon_shared.h>
 
 // memdbgon must be the last include file in a .cpp file!!!
 #include "tier0/memdbgon.h"
@@ -53,11 +54,20 @@ LUA_API lua_CBaseEntity *lua_toentity( lua_State *L, int idx )
 
 LUA_API void lua_pushentity( lua_State *L, CBaseEntity *pEntity )
 {
-    CBaseHandle *hEntity =
-        ( CBaseHandle * )lua_newuserdata( L, sizeof( CBaseHandle ) );
-    hEntity->Set( pEntity );
-    luaL_getmetatable( L, LUA_BASEENTITYLIBNAME );
-    lua_setmetatable( L, -2 );
+    // Always send as most specific type, so if the entity is a player, send as a player
+    // We need to dynamic cast, otherwise the base class entity will be called
+    if ( pEntity && pEntity->IsPlayer() )
+    {
+        lua_pushplayer( L, dynamic_cast< CBasePlayer * >( pEntity ) );
+        return;
+    }
+    else if ( pEntity && pEntity->IsWeapon() )
+    {
+        lua_pushweapon( L, dynamic_cast< CBaseCombatWeapon * >( pEntity ) );
+        return;
+    }
+
+    LUA_SAFE_PUSH_ENTITY_INSTANCE( L, pEntity );
 }
 
 LUALIB_API lua_CBaseEntity *luaL_checkentity( lua_State *L, int narg )
@@ -599,9 +609,9 @@ static int CBaseEntity_GetModelIndex( lua_State *L )
 
 static int CBaseEntity_GetModelName( lua_State *L )
 {
-    //lua_pushstring( L, STRING( luaL_checkentity( L, 1 )->GetModelName() ) ); // Must be explicitly set?
+    // lua_pushstring( L, STRING( luaL_checkentity( L, 1 )->GetModelName() ) ); // Must be explicitly set?
     lua_pushstring( L, luaL_checkanimating( L, 1 )->GetModelPtr()->pszName() );
-    
+
     return 1;
 }
 
@@ -1135,12 +1145,12 @@ static int CBaseEntity_RegisterThinkContext( lua_State *L )
 
 static int CBaseEntity_Remove( lua_State *L )
 {
-    luaL_checkentity( L, 1 )->Remove(); // Causes crashes (does it? Perhaps only when the ent manually has memory assigned)
-    //#if CLIENT_DLL
-    //luaL_checkentity( L, 1 )->AddEFlags( EFL_KILLME );
-    //#else
-    //UTIL_Remove( luaL_checkentity( L, 1 ) );
-    //#endif
+    luaL_checkentity( L, 1 )->Remove();  // Causes crashes (does it? Perhaps only when the ent manually has memory assigned)
+    // #if CLIENT_DLL
+    // luaL_checkentity( L, 1 )->AddEFlags( EFL_KILLME );
+    // #else
+    // UTIL_Remove( luaL_checkentity( L, 1 ) );
+    // #endif
     return 0;
 }
 
@@ -1456,9 +1466,9 @@ static int CBaseEntity_SetRenderColorR( lua_State *L )
 static int CBaseEntity_SetRenderMode( lua_State *L )
 {
 #ifdef CLIENT_DLL
-    luaL_checkentity( L, 1 )->SetRenderMode( (RenderMode_t) luaL_checkint( L, 2 ), true );
+    luaL_checkentity( L, 1 )->SetRenderMode( ( RenderMode_t )luaL_checkint( L, 2 ), true );
 #else
-    luaL_checkentity( L, 1 )->SetRenderMode( (RenderMode_t) luaL_checkint( L, 2 ) );
+    luaL_checkentity( L, 1 )->SetRenderMode( ( RenderMode_t )luaL_checkint( L, 2 ) );
 #endif
     return 0;
 }
@@ -1482,7 +1492,7 @@ static int CBaseEntity_SetSize( lua_State *L )
     return 0;
 }
 
-static int CBaseEntity_SetSkin(lua_State* L)
+static int CBaseEntity_SetSkin( lua_State *L )
 {
     // TODO: SetSkin
     // TODO: There's also logic in lbaseanimating.__newindex for this
@@ -1770,7 +1780,7 @@ int CBaseEntity_IsValid( lua_State *L )
 }
 
 static int CBaseEntity___index( lua_State *L )
-{    
+{
     CBaseEntity *pEntity = lua_toentity( L, 1 );
 
     LUA_METATABLE_INDEX_CHECK_VALID( L, CBaseEntity_IsValid );
@@ -1912,9 +1922,16 @@ static const luaL_Reg CBaseEntitymeta[] = {
     { "FirstMoveChild", CBaseEntity_FirstMoveChild },
     { "FollowEntity", CBaseEntity_FollowEntity },
     { "GenderExpandString", CBaseEntity_GenderExpandString },
-    { "GetAbsAngles", CBaseEntity_GetAbsAngles },
-    { "GetAbsOrigin", CBaseEntity_GetAbsOrigin },
+
+    { "GetAngles", CBaseEntity_GetAbsAngles },
+
+    // Abbreviated variants here for compatibility reasons, but our convention is to not abbreviate
+    { "GetPos", CBaseEntity_GetAbsOrigin },
+    { "GetPosition", CBaseEntity_GetAbsOrigin },
+
     { "GetAbsVelocity", CBaseEntity_GetAbsVelocity },
+    { "GetAbsoluteVelocity", CBaseEntity_GetAbsVelocity },
+
     { "GetAnimTime", CBaseEntity_GetAnimTime },
     { "GetBaseAnimating", CBaseEntity_GetBaseAnimating },
     { "GetBaseEntity", CBaseEntity_GetBaseEntity },
@@ -2036,10 +2053,16 @@ static const luaL_Reg CBaseEntitymeta[] = {
     { "RemoveEFlags", CBaseEntity_RemoveEFlags },
     { "RemoveFlag", CBaseEntity_RemoveFlag },
     { "RemoveSolidFlags", CBaseEntity_RemoveSolidFlags },
+
     { "SetAngles", CBaseEntity_SetAbsAngles },
     { "SetPos", CBaseEntity_SetAbsOrigin },
+    { "SetPosition", CBaseEntity_SetAbsOrigin },
+
     { "SetAbsQueriesValid", CBaseEntity_SetAbsQueriesValid },
+    { "SetAbsoluteQueriesValid", CBaseEntity_SetAbsQueriesValid },
     { "SetAbsVelocity", CBaseEntity_SetAbsVelocity },
+    { "SetAbsoluteVelocity", CBaseEntity_SetAbsVelocity },
+
     { "SetAIWalkable", CBaseEntity_SetAIWalkable },
     { "SetAllowPrecache", CBaseEntity_SetAllowPrecache },
     { "SetAnimatedEveryTick", CBaseEntity_SetAnimatedEveryTick },
@@ -2135,10 +2158,11 @@ static int luasrc_Entity( lua_State *L )
 
     if ( !ent )
     {
-        lua_pushnil( L );
+        lua_pushentity( L, NULL );
         return 1;
     }
 
+    lua_pushentity( L, ent );
     return 1;
 }
 

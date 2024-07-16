@@ -36,11 +36,7 @@ LUA_API lua_CBaseAnimating *lua_toanimating( lua_State *L, int idx )
 
 LUA_API void lua_pushanimating( lua_State *L, CBaseAnimating *pEntity )
 {
-    CBaseHandle *hEntity =
-        ( CBaseHandle * )lua_newuserdata( L, sizeof( CBaseHandle ) );
-    hEntity->Set( pEntity );
-    luaL_getmetatable( L, LUA_BASEANIMATINGLIBNAME );
-    lua_setmetatable( L, -2 );
+    LUA_SAFE_PUSH_ENTITY_INSTANCE( L, pEntity );
 }
 
 LUALIB_API lua_CBaseAnimating *luaL_checkanimating( lua_State *L, int narg )

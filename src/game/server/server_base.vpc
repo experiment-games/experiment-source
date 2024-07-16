@@ -672,6 +672,9 @@ $Project
 
 		$Folder	"Lua"
 		{
+            $File "$SRCDIR\game\shared\lsingleluainstance.h"
+            $File "$SRCDIR\game\shared\lsingleluainstance.cpp"
+
             $File "$SRCDIR\public\lua_compat.cpp"
             $File "$SRCDIR\game\shared\basescripted.cpp"
             $File "$SRCDIR\game\shared\basescripted.h"
@@ -694,6 +697,8 @@ $Project
             $File "lbaseentity.h"
             $File "lbaseanimating.cpp"
             $File "lbaseanimating.cpp"
+            $File "$SRCDIR\game\shared\lbaseflex_shared.cpp"
+            $File "$SRCDIR\game\shared\lbaseflex_shared.h"
             $File "$SRCDIR\public\lColor.cpp"
             $File "$SRCDIR\public\tier1\lconvar.cpp"
             $File "$SRCDIR\public\tier0\ldbg.cpp"
