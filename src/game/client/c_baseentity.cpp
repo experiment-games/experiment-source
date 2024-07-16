@@ -1188,6 +1188,10 @@ void C_BaseEntity::Term() {
     RemoveFromLeafSystem();
 
     RemoveFromAimEntsList();
+
+#ifdef CLIENT_DLL
+    m_pLuaInstance = nullptr;
+#endif
 }
 
 void C_BaseEntity::SetRefEHandle(const CBaseHandle &handle) {

@@ -733,7 +733,6 @@ if (SERVER) then
 		local count, entitiesInPVS = Util.EntitiesInPVS(origin)
 
         for _, ent in ipairs(entitiesInPVS) do
-			print(ent)
             if (not ent:IsPlayer()) then
                 continue
             end

@@ -34,6 +34,12 @@ function ENTITY_META:SetNetworkedVariable(key, value)
 
     self.__networkedVariables[key] = value
 
+    if (not SERVER) then
+        -- TODO: Okay so the server should be updating the client sometimes,
+		-- otherwise clientside SetNetworkedVariables will differ from the server for too long.
+        return
+    end
+
 	debugPrint("Setting networked variable", self, key, value)
 
     Networks.Start("EntityNetworkedVar")
