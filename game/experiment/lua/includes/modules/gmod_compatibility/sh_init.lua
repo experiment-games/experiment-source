@@ -10,6 +10,19 @@ Include("sh_file.lua")
 package.IncludePath = "lua/includes/modules/gmod_compatibility/;" .. package.IncludePath
 
 --[[
+	All our libraries are plural, while with Garry's Mod they vary between plural and singular.
+--]]
+
+bit = require("bitwise")
+concommand = require("console_commands")
+scripted_ents = require("entities")
+gamemode = require("gamemodes")
+hook = require("hooks")
+net = require("networks")
+timer = require("timers")
+weapons = require("weapons")
+
+--[[
 	Renames and other polyfills
 --]]
 DeriveGamemode = InheritGamemode
@@ -19,7 +32,8 @@ include = Include
 function GetConVar_Internal(name)
 	local consoleVariable = GetConsoleVariable(name)
 
-	if (not IsValid(consoleVariable)) then
+    if (not IsValid(consoleVariable)) then
+		debug.PrintError("GetConVar: Couldn't find convar '" .. name .. "'")
 		return nil
 	end
 
@@ -346,6 +360,8 @@ VECTOR_META.Distance2D = VECTOR_META.DistanceTo2D
 VECTOR_META.Distance2DSqr = VECTOR_META.DistanceToAsSqr2D
 
 local ENTITY_META = FindMetaTable("Entity")
+ENTITY_META.EyePos = ENTITY_META.GetEyePosition
+ENTITY_META.EyeAngles = ENTITY_META.GetEyeAngles
 ENTITY_META.GetModel = ENTITY_META.GetModelName
 ENTITY_META.GetTable = ENTITY_META.GetRefTable
 
@@ -358,10 +374,24 @@ function ENTITY_META:SetNoDraw(bBool)
 end
 
 local PLAYER_META = FindMetaTable("Player")
+PLAYER_META.GetShootPos = ENTITY_META.GetEyePosition
 
 function PLAYER_META:UniqueID()
-	local uniqueid = util.CRC( "gm_" .. self:SteamID() .. "_gm" )
-	return uniqueid
+    local uniqueid = util.CRC("gm_" .. self:SteamID() .. "_gm")
+    return uniqueid
+end
+
+if (SERVER) then
+    function PLAYER_META:SendLua(lua)
+        net.Start("__PlayerLuaRun")
+        net.WriteString(lua)
+        net.Send(self)
+    end
+else
+	net.Receive("__PlayerLuaRun", function()
+		local lua = net.ReadString()
+		RunString(lua)
+	end)
 end
 
 function PLAYER_META:SetClassID(id)
@@ -904,19 +934,6 @@ else
 	end
 end
 
---[[
-	All our libraries are plural, while with Garry's Mod they vary between plural and singular.
---]]
-
-bit = require("bitwise")
-concommand = require("console_commands")
-scripted_ents = require("entities")
-gamemode = require("gamemodes")
-hook = require("hooks")
-net = require("networks")
-timer = require("timers")
-weapons = require("weapons")
-
 Include("sh_util.lua")
 Include("util/sql.lua")
 
@@ -1067,8 +1084,76 @@ ErrorNoHalt = function(...)
 end
 
 ErrorNoHaltWithStack = function(...)
-	Msg(debug.traceback(table.concat({ ... }, " "), 2))
+    Msg(debug.traceback(table.concat({ ... }, " "), 2))
 end
+
+--[[
+	sbox_ convars that aren't normally defined in Lua
+	TODO: Read these from the gamemodes/gmname/gmname.txt keyvalues file
+--]]
+local sbox_godmode = CreateConVar("sbox_godmode", "0",
+    { FCVAR_ARCHIVE, FCVAR_NOTIFY, FCVAR_REPLICATED, FCVAR_SERVER_CAN_EXECUTE },
+    "If enabled, all players will be invincible")
+local sbox_maxballoons = CreateConVar("sbox_maxballoons", "100",
+	{ FCVAR_ARCHIVE, FCVAR_NOTIFY, FCVAR_REPLICATED, FCVAR_SERVER_CAN_EXECUTE },
+    "Maximum balloons a single player can create")
+local sbox_maxbuttons = CreateConVar("sbox_maxbuttons", "50",
+	{ FCVAR_ARCHIVE, FCVAR_NOTIFY, FCVAR_REPLICATED, FCVAR_SERVER_CAN_EXECUTE },
+    "Maximum buttons a single player can create")
+local sbox_maxcameras = CreateConVar("sbox_maxcameras", "10",
+	{ FCVAR_ARCHIVE, FCVAR_NOTIFY, FCVAR_REPLICATED, FCVAR_SERVER_CAN_EXECUTE },
+    "Maximum cameras a single player can create")
+local sbox_maxdynamite = CreateConVar("sbox_maxdynamite", "10",
+	{ FCVAR_ARCHIVE, FCVAR_NOTIFY, FCVAR_REPLICATED, FCVAR_SERVER_CAN_EXECUTE },
+    "Maximum dynamites a single player can create")
+local sbox_maxeffects = CreateConVar("sbox_maxeffects", "200",
+	{ FCVAR_ARCHIVE, FCVAR_NOTIFY, FCVAR_REPLICATED, FCVAR_SERVER_CAN_EXECUTE },
+    "Maximum effect props a single player can create")
+local sbox_maxemitters = CreateConVar("sbox_maxemitters", "20",
+	{ FCVAR_ARCHIVE, FCVAR_NOTIFY, FCVAR_REPLICATED, FCVAR_SERVER_CAN_EXECUTE },
+    "Maximum emitters a single player can create")
+local sbox_maxhoverballs = CreateConVar("sbox_maxhoverballs", "50",
+	{ FCVAR_ARCHIVE, FCVAR_NOTIFY, FCVAR_REPLICATED, FCVAR_SERVER_CAN_EXECUTE },
+    "Maximum hoverballs a single player can create")
+local sbox_maxlamps = CreateConVar("sbox_maxlamps", "3",
+	{ FCVAR_ARCHIVE, FCVAR_NOTIFY, FCVAR_REPLICATED, FCVAR_SERVER_CAN_EXECUTE },
+    "Maximum lamps a single player can create")
+local sbox_maxlights = CreateConVar("sbox_maxlights", "5",
+	{ FCVAR_ARCHIVE, FCVAR_NOTIFY, FCVAR_REPLICATED, FCVAR_SERVER_CAN_EXECUTE },
+    "Maximum lights a single player can create")
+local sbox_maxnpcs = CreateConVar("sbox_maxnpcs", "10",
+	{ FCVAR_ARCHIVE, FCVAR_NOTIFY, FCVAR_REPLICATED, FCVAR_SERVER_CAN_EXECUTE },
+    "Maximum NPCs a single player can create")
+local sbox_maxprops = CreateConVar("sbox_maxprops", "200",
+	{ FCVAR_ARCHIVE, FCVAR_NOTIFY, FCVAR_REPLICATED, FCVAR_SERVER_CAN_EXECUTE },
+    "Maximum props a single player can create")
+local sbox_maxragdolls = CreateConVar("sbox_maxragdolls", "10",
+	{ FCVAR_ARCHIVE, FCVAR_NOTIFY, FCVAR_REPLICATED, FCVAR_SERVER_CAN_EXECUTE },
+    "Maximum ragdolls a single player can create")
+local sbox_maxsents = CreateConVar("sbox_maxsents", "100",
+	{ FCVAR_ARCHIVE, FCVAR_NOTIFY, FCVAR_REPLICATED, FCVAR_SERVER_CAN_EXECUTE },
+    "Maximum entities a single player can create")
+local sbox_maxthrusters = CreateConVar("sbox_maxthrusters", "50",
+	{ FCVAR_ARCHIVE, FCVAR_NOTIFY, FCVAR_REPLICATED, FCVAR_SERVER_CAN_EXECUTE },
+    "Maximum thrusters a single player can create")
+local sbox_maxvehicles = CreateConVar("sbox_maxvehicles", "4",
+	{ FCVAR_ARCHIVE, FCVAR_NOTIFY, FCVAR_REPLICATED, FCVAR_SERVER_CAN_EXECUTE },
+    "Maximum vehicles a single player can create")
+local sbox_maxwheels = CreateConVar("sbox_maxwheels", "50",
+	{ FCVAR_ARCHIVE, FCVAR_NOTIFY, FCVAR_REPLICATED, FCVAR_SERVER_CAN_EXECUTE },
+    "Maximum wheels a single player can create")
+local sbox_noclip = CreateConVar("sbox_noclip", "1",
+	{ FCVAR_ARCHIVE, FCVAR_NOTIFY, FCVAR_REPLICATED, FCVAR_SERVER_CAN_EXECUTE },
+    "If enabled, players will be able to use noclip")
+local sbox_persist = CreateConVar("sbox_persist", "1",
+	{ FCVAR_ARCHIVE, FCVAR_NOTIFY, FCVAR_REPLICATED, FCVAR_SERVER_CAN_EXECUTE },
+    "If not empty, enables 'Make Persistent' option when you right click on props while holding C, allowing you to save them across")
+local sbox_playershurtplayers = CreateConVar("sbox_playershurtplayers", "1",
+	{ FCVAR_ARCHIVE, FCVAR_NOTIFY, FCVAR_REPLICATED, FCVAR_SERVER_CAN_EXECUTE },
+    "If enabled, players will be able to hurt each other")
+local sbox_weapons = CreateConVar("sbox_weapons", "1",
+	{ FCVAR_ARCHIVE, FCVAR_NOTIFY, FCVAR_REPLICATED, FCVAR_SERVER_CAN_EXECUTE },
+    "If enabled, each player will receive default Half-Life 2 weapons on each spawn")
 
 --[[
 	Now that the compatibility libraries have been loaded, we can start changing hooks

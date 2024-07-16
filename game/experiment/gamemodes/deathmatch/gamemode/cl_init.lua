@@ -26,7 +26,7 @@ function GM:PlayerUpdateFlashlight(client, position, vecForward, vecRight, vecUp
 	local origin = Vector()
 
 	--Tony; EyeAngles will return proper whether it's local player or not.
-	local eyeAngles = client:EyeAngles()
+	local eyeAngles = client:GetEyeAngles()
 
 	vm:GetAttachment(attachmentId, origin, eyeAngles)
 

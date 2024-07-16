@@ -189,6 +189,48 @@ static int luasrc_include( lua_State *L )
     return returnedValueCount;
 }
 
+/// <summary>
+/// Lets users run Lua code from a string.
+/// </summary>
+/// <param name="L"></param>
+/// <returns></returns>
+static int luasrc_RunString( lua_State *L )
+{
+    const char *code = luaL_checkstring( L, 1 );
+    const char *identifier = luaL_optstring( L, 2, "RunString" );
+    bool handleErrors = luaL_optboolean( L, 3, true );  // If false, will return the error message instead of throwing an error
+
+    int iError = luaL_loadbuffer( L, code, strlen( code ), identifier );
+
+    if ( iError != 0 )
+    {
+        if ( handleErrors )
+        {
+            luaL_error( L, "Error loading buffer: %s", lua_tostring( L, -1 ) );
+        }
+        else
+        {
+            return 1;
+        }
+    }
+
+    iError = lua_pcall( L, 0, LUA_MULTRET, 0 );
+
+    if ( iError != 0 )
+    {
+        if ( handleErrors )
+        {
+            luaL_error( L, "Error running buffer: %s", lua_tostring( L, -1 ) );
+        }
+        else
+        {
+            return 1;
+        }
+    }
+
+    return 0;
+}
+
 // Prints blue text on the server, yellow text on the client
 static int luasrc_Msg( lua_State *L )
 {
@@ -275,6 +317,7 @@ static const luaL_Reg base_funcs[] = {
     { "MsgN", luasrc_MsgN },
     { "type", luasrc_type },
     { "Include", luasrc_include },
+    { "RunString", luasrc_RunString },
     { "InheritGamemode", luasrc_InheritGamemode },
     { "LuaLogToFile", luasrc_LuaLogToFile },
     { NULL, NULL } };

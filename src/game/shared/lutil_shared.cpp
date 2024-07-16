@@ -197,8 +197,108 @@ static int luasrc_SharedRandomAngle( lua_State *L )
 
 static int luasrc_Util_TraceLine( lua_State *L )
 {
-    UTIL_TraceLine( luaL_checkvector( L, 1 ), luaL_checkvector( L, 2 ), luaL_checkint( L, 3 ), lua_toentity( L, 4 ), luaL_checkint( L, 5 ), &luaL_checktrace( L, 6 ) );
-    return 0;
+    trace_t gameTrace;
+    UTIL_TraceLine( luaL_checkvector( L, 1 ), luaL_checkvector( L, 2 ), luaL_checkint( L, 3 ), lua_toentity( L, 4 ), luaL_checkint( L, 5 ), &gameTrace );
+    //lua_pushtrace( L, gameTrace );
+    /* For gmod compatibility we create a table with more values */
+    const surfacedata_t *pSurfaceData = physprops->GetSurfaceData( gameTrace.surface.surfaceProps );
+    lua_newtable( L );
+
+    lua_pushstring( L, "Entity" );
+    lua_pushentity( L, gameTrace.m_pEnt );
+    lua_settable( L, -3 );
+
+    lua_pushstring( L, "Fraction" );
+    lua_pushnumber( L, gameTrace.fraction );
+    lua_settable( L, -3 );
+
+    lua_pushstring( L, "FractionLeftSolid" );
+    lua_pushnumber( L, gameTrace.fractionleftsolid );
+    lua_settable( L, -3 );
+
+    lua_pushstring( L, "Hit" );
+    lua_pushboolean( L, gameTrace.DidHit() );
+    lua_settable( L, -3 );
+
+    lua_pushstring( L, "HitBox" );
+    lua_pushinteger( L, gameTrace.hitbox );
+    lua_settable( L, -3 );
+
+    lua_pushstring( L, "HitGroup" );
+    lua_pushinteger( L, gameTrace.hitgroup );
+    lua_settable( L, -3 );
+
+    lua_pushstring( L, "HitNoDraw" );
+    lua_pushboolean( L, gameTrace.DidHitNonWorldEntity() );
+    lua_settable( L, -3 );
+
+    lua_pushstring( L, "HitNonWorld" );
+    lua_pushboolean( L, gameTrace.DidHitNonWorldEntity() );
+    lua_settable( L, -3 );
+
+    lua_pushstring( L, "HitNormal" );
+    lua_pushvector( L, gameTrace.plane.normal );
+    lua_settable( L, -3 );
+
+    lua_pushstring( L, "HitPos" );
+    lua_pushvector( L, gameTrace.endpos );
+    lua_settable( L, -3 );
+
+    lua_pushstring( L, "HitSky" );
+    lua_pushboolean( L, gameTrace.surface.flags & SURF_SKY );
+    lua_settable( L, -3 );
+
+    lua_pushstring( L, "HitTexture" );
+    lua_pushstring( L, gameTrace.surface.name );
+    lua_settable( L, -3 );
+
+    lua_pushstring( L, "HitWorld" );
+    lua_pushboolean( L, gameTrace.DidHitWorld() );
+    lua_settable( L, -3 );
+
+    lua_pushstring( L, "MatType" );
+    lua_pushinteger( L, pSurfaceData->game.material );
+    lua_settable( L, -3 );
+
+    Vector normal = gameTrace.endpos - gameTrace.startpos;
+    VectorNormalizeFast( normal );
+    lua_pushstring( L, "Normal" );
+    lua_pushvector( L, normal );
+    lua_settable( L, -3 );
+
+    lua_pushstring( L, "PhysicsBone" );
+    lua_pushinteger( L, gameTrace.physicsbone );
+    lua_settable( L, -3 );
+
+    lua_pushstring( L, "StartPos" );
+    lua_pushvector( L, gameTrace.startpos );
+    lua_settable( L, -3 );
+
+    lua_pushstring( L, "SurfaceProps" );
+    lua_pushinteger( L, gameTrace.surface.surfaceProps );
+    lua_settable( L, -3 );
+
+    lua_pushstring( L, "StartSolid" );
+    lua_pushboolean( L, gameTrace.startsolid );
+    lua_settable( L, -3 );
+
+    lua_pushstring( L, "AllSolid" );
+    lua_pushboolean( L, gameTrace.allsolid );
+    lua_settable( L, -3 );
+
+    lua_pushstring( L, "SurfaceFlags" );
+    lua_pushinteger( L, gameTrace.surface.flags );
+    lua_settable( L, -3 );
+
+    lua_pushstring( L, "DispFlags" );
+    lua_pushinteger( L, gameTrace.dispFlags );
+    lua_settable( L, -3 );
+
+    lua_pushstring( L, "Contents" );
+    lua_pushinteger( L, gameTrace.contents );
+    lua_settable( L, -3 );
+
+    return 1;
 }
 
 static int luasrc_Util_TraceHull( lua_State *L )

@@ -96,7 +96,8 @@ if (SERVER) then
 	function ENTITY_META:SendNetworkedVariables(player, networkedVariables)
 		Networks.Start("EntityNetworkedVariablesSet")
 		Networks.WriteEntity(self)
-		Networks.WriteInt(table.Count(networkedVariables))
+
+		Networks.WriteUInt(table.Count(networkedVariables), 16)
 
 		for key, value in pairs(networkedVariables) do
 			Networks.WriteString(key)
@@ -136,10 +137,11 @@ ENTITY_META.SetNWVarProxy = ENTITY_META.SetNetworkedVariableCallback
 ENTITY_META.SetNW2VarProxy = ENTITY_META.SetNetworkedVariableCallback
 
 if (SERVER) then
+	local bit = require("bitwise")
 	local playerForcedUpdateConvar = CreateConsoleVariable(
 		"sv_playerforcedupdate",
 		10,
-		{ FCVAR_REPLICATED, FCVAR_ARCHIVE },
+		bit.bor(FCVAR_REPLICATED, FCVAR_ARCHIVE),
 		"Time in seconds between forced updates of networked variables for players",
 		0
 	)
@@ -201,7 +203,7 @@ else
 
 	Networks.Receive("EntityNetworkedVariablesSet", function(length, socketClient)
 		local entity = Networks.ReadEntity()
-		local count = Networks.ReadInt()
+		local count = Networks.ReadUInt(16)
 		local networkedVariables = {}
 
 		for i = 1, count do

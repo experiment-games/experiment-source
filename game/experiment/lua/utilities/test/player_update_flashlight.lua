@@ -20,7 +20,7 @@ Hooks.Add("PlayerUpdateFlashlight", "PlayerUpdateWeaponFlashlight",
 				local vecOrigin = Vector()
 
 				--Tony; EyeAngles will return proper whether it's local player or not.
-				local eyeAngles = client:EyeAngles()
+				local eyeAngles = client:GetEyeAngles()
 
 				print("before", vecOrigin, eyeAngles)
 				vm:GetAttachment(iAttachment, vecOrigin, eyeAngles)

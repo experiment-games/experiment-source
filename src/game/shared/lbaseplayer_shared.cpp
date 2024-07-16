@@ -171,7 +171,7 @@ static int CBasePlayer_GetAmmoCount( lua_State *L )
 
 static int CBasePlayer_GetAutoaimVector( lua_State *L )
 {
-    Vector v = luaL_checkplayer( L, 1 )->GetAutoaimVector( luaL_checknumber( L, 2 ) );
+    Vector v = luaL_checkplayer( L, 1 )->GetAutoaimVector( luaL_optnumber( L, 2, 1 ) );
     lua_pushvector( L, v );
     return 1;
 }
@@ -1093,7 +1093,7 @@ static const luaL_Reg CBasePlayermeta[] = {
     { "FindUseEntity", CBasePlayer_FindUseEntity },
     { "GetActiveWeapon", CBasePlayer_GetActiveWeapon },
     { "GetAmmoCount", CBasePlayer_GetAmmoCount },
-    { "GetAutoaimVector", CBasePlayer_GetAutoaimVector },
+    { "GetAimVector", CBasePlayer_GetAutoaimVector },
     { "GetBonusChallenge", CBasePlayer_GetBonusChallenge },
     { "GetBonusProgress", CBasePlayer_GetBonusProgress },
     { "GetDeathTime", CBasePlayer_GetDeathTime },

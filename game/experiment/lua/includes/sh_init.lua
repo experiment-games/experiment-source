@@ -3,6 +3,7 @@
 	to bootstrap extensions and modules.
 --]]
 
+Include("extensions/enumerations.lua")
 Include("extensions/console_variables.lua")
 Include("extensions/debug.lua")
 Include("extensions/entity.lua")
