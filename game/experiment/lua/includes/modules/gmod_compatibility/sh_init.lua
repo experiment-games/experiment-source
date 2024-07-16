@@ -41,7 +41,12 @@ util.JSONToTable = function(json)
 end
 
 util.TableToJSON = function(table)
-	return Json.Encode(table)
+    return Json.Encode(table)
+end
+
+util.IsValidProp = util.IsValidPhysicsProp
+util.CRC = function()
+	return tostring(util.CRC32)
 end
 
 ents = {
@@ -338,6 +343,11 @@ function ENTITY_META:SetNoDraw(bBool)
 end
 
 local PLAYER_META = FindMetaTable("Player")
+
+function PLAYER_META:UniqueID()
+	local uniqueid = util.CRC( "gm_" .. self:SteamID() .. "_gm" )
+	return uniqueid
+end
 
 function PLAYER_META:SetClassID(id)
 	-- We don't use this function, so we just store the class ID in the player.

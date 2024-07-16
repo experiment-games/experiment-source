@@ -508,6 +508,9 @@ $Project
 		$File	"$SRCDIR\public\haptics\haptic_msgs.cpp"	[!$X360]
 		$File	"$SRCDIR\public\haptics\haptic_utils.cpp"	[$WIN32&&!$X360]
 
+		$File	"$SRCDIR\public\base64.h"
+		$File	"$SRCDIR\public\base64.cpp"
+
 		$Folder	"Lua"
 		{
             $File "$SRCDIR\public\lua_compat.cpp"

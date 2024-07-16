@@ -14,6 +14,8 @@
 #include "collisionutils.h"
 #include "util_shared.h"
 #include "datacache/imdlcache.h"
+#include "tier3/tier3.h"
+#include "base64.h"
 
 #ifdef CLIENT_DLL
 #include "cdll_util.h"
@@ -305,7 +307,7 @@ static int luasrc_Util_IsValidModel( lua_State *L )
 
     studiohdr_t *pStudioModel = modelinfo->GetStudiomodel( pModel );
 
-    if ( !pStudioModel )
+    if ( !pStudioModel || Q_strcmp( pStudioModel->name, "error.mdl" ) == 0 )
     {
         lua_pushboolean( L, false );
         return 1;
@@ -313,6 +315,37 @@ static int luasrc_Util_IsValidModel( lua_State *L )
 
     lua_pushboolean( L, true );
     return 1;
+}
+
+static int luasrc_Util_IsValidPhysicsProp(lua_State* L)
+{
+    const char *pszModel = luaL_checkstring( L, 1 );
+
+    const MDLHandle_t modelHandle = g_pMDLCache->FindMDL( pszModel );
+
+    if ( modelHandle == MDLHANDLE_INVALID )
+    {
+        lua_pushboolean( L, false );
+        return 1;
+    }
+
+    studiohdr_t *pStudioModel = g_pMDLCache->GetStudioHdr( modelHandle );
+
+    if ( !pStudioModel )
+    {
+        lua_pushboolean( L, false );
+        return 1;
+    }
+
+    if ( !mdlcache->GetVCollide( modelHandle ) )
+    {
+        lua_pushboolean( L, false );
+        return 1;
+    }
+
+    lua_pushboolean( L, true );
+    return 1;
+
 }
 
 static int luasrc_Util_ShouldShowBlood( lua_State *L )
@@ -481,6 +514,41 @@ static int luasrc_Util_WaterLevel( lua_State *L )
     return 1;
 }
 
+static int luasrc_Util_CRC32( lua_State *L )
+{
+    const char *pszString = luaL_checkstring( L, 1 );
+
+    lua_pushinteger( L, CRC32_ProcessSingleBuffer( pszString, Q_strlen( pszString ) ) );
+    return 1;
+}
+
+static int luasrc_Util_Base64Encode( lua_State *L )
+{
+    const char *pszString = luaL_checkstring( L, 1 );
+    bool bDisableRfc2045Compliance = luaL_optboolean( L, 2, false );
+
+    std::string encodedString;
+
+    if ( bDisableRfc2045Compliance )
+        encodedString = base64_encode( pszString, false );
+    else
+        encodedString = base64_encode_mime( pszString );
+
+    lua_pushstring( L, encodedString.c_str() );
+
+    return 1;
+}
+
+static int luasrc_Util_Base64Decode( lua_State *L )
+{
+    const char *pszString = luaL_checkstring( L, 1 );
+    std::string decodedString = base64_decode( pszString );
+
+    lua_pushstring( L, decodedString.c_str() );
+
+    return 1;
+}
+
 static const luaL_Reg util_funcs[] = {
     { "IntersectRayWithPlane", luasrc_Util_IntersectRayWithPlane },
     { "IntersectRayWithOBB", luasrc_Util_IntersectRayWithOBB },
@@ -506,6 +574,7 @@ static const luaL_Reg util_funcs[] = {
     { "Tracer", luasrc_Util_Tracer },
     { "IsLowViolence", luasrc_Util_IsLowViolence },
     { "IsValidModel", luasrc_Util_IsValidModel },
+    { "IsValidPhysicsProp", luasrc_Util_IsValidPhysicsProp },
     { "ShouldShowBlood", luasrc_Util_ShouldShowBlood },
     { "BloodDrips", luasrc_Util_BloodDrips },
     { "BloodImpact", luasrc_Util_BloodImpact },
@@ -524,6 +593,9 @@ static const luaL_Reg util_funcs[] = {
     { "EntitiesInBox", luasrc_Util_EntitiesInBox },
     { "EntitiesInSphere", luasrc_Util_EntitiesInSphere },
     { "WaterLevel", luasrc_Util_WaterLevel },
+    { "CRC32", luasrc_Util_CRC32 },
+    { "Base64Encode", luasrc_Util_Base64Encode },
+    { "Base64Decode", luasrc_Util_Base64Decode },
     { NULL, NULL } };
 
 LUALIB_API int luaopen_Util_shared( lua_State *L )

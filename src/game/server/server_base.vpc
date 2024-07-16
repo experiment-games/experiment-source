@@ -667,6 +667,9 @@ $Project
 		$File "$SRCDIR\public\haptics\haptic_msgs.cpp"
 		$File "$SRCDIR\public\haptics\haptic_utils.cpp"	[$WIN32]
 
+		$File	"$SRCDIR\public\base64.h"
+		$File	"$SRCDIR\public\base64.cpp"
+
 		$Folder	"Lua"
 		{
             $File "$SRCDIR\public\lua_compat.cpp"
