@@ -49,6 +49,9 @@ void lua_pushuserdata_associateinstance( lua_State *L, void *p );
 in the registry for later retrieval. */
 void *lua_newuserdatainstance( lua_State *L, size_t sz );
 
+/* Destroys the userdata instance by removing it from the registry. */
+void lua_destroyuserdatainstance( lua_State *L, void *p );
+
 /* When userdata are resurrected in finalizer, the weak value
  * in PUDATA_RIDX is already gone. Use this to explicitly
  * resurrect. */

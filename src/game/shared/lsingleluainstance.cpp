@@ -17,8 +17,11 @@ void lua_pushuserdata_associateinstance( lua_State *L, void *p )
     { /* Create if missing. */
         lua_pushvalue( L, -1 );
         lua_setmetatable( L, -2 ); /* Point to self. */
-        lua_pushliteral( L, "v" );
-        lua_setfield( L, -2, "__mode" ); /* Weak values (udata). */
+        // Let's not use weak tables for now (they went away too fast).
+        // instead we manually remove the instance from the registry when
+        // the entity to which the userdata points is destroyed.
+        //lua_pushliteral( L, "v" );
+        //lua_setfield( L, -2, "__mode" ); /* Weak values (udata). */
     }
     lua_pushlightuserdata( L, p ); /* Key. */
     lua_pushvalue( L, -3 );        /* Value. */
@@ -33,4 +36,14 @@ void *lua_newuserdatainstance( lua_State *L, size_t sz )
     void *p = lua_newuserdata( L, sz );
     lua_pushuserdata_associateinstance( L, p );
     return p;
+}
+
+/* Destroys the userdata instance by removing it from the registry. */
+void lua_destroyuserdatainstance( lua_State *L, void *p )
+{
+    luaL_getmetatable( L, PUDATA_RIDX );
+    lua_pushlightuserdata( L, p );
+    lua_pushnil( L );
+    lua_rawset( L, -3 );
+    lua_pop( L, 1 );
 }

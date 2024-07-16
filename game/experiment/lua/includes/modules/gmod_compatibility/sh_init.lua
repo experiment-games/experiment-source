@@ -1083,3 +1083,9 @@ hook.Add("Initialize", "GModCompatibility.CallInitializeHooks", function()
 	hook.Run("OnGamemodeLoaded")
 	hook.Run("PostGamemodeLoaded")
 end)
+
+hook.Add("Think", "GModCompatibility.CallTickHooks", function()
+	-- TODO: Call Tick from C in the correct place
+    hook.Run("Tick")
+	-- TODO: Call PlayerThink from C in the correct place
+end)

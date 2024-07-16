@@ -44,14 +44,6 @@ LUA_API lua_CBasePlayer *lua_toplayer( lua_State *L, int idx )
 
 LUA_API void lua_pushplayer( lua_State *L, CBasePlayer *pEntity )
 {
-    /*CBaseHandle *phPlayer =
-        ( CBaseHandle * )lua_newuserdata( L, sizeof( CBaseHandle ) );
-    phPlayer->Set( pPlayer );
-    luaL_getmetatable( L, LUA_BASEPLAYERLIBNAME );
-    lua_setmetatable( L, -2 );*/
-    // Experiment; We always want to push the player as the most specific type
-    //lua_pushhl2mpplayer( L, ToHL2MPPlayer( pEntity ) );
-
     CHL2MP_Player *pPlayer = ToHL2MPPlayer( pEntity );
     LUA_SAFE_PUSH_ENTITY_INSTANCE( L, pPlayer );
 }

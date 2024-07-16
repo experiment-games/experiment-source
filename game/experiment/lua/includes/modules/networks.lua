@@ -171,7 +171,7 @@ elseif (SERVER) then
 			local socketClient = MODULE.ClientToSocketClient(client)
 			socketClient:send(packedData)
 
-			debug("Sent queued message to client")
+			debug("Sent queued message to client", client, packedData, socketClient)
 		end
 
 		clientPackedDataQueue[client] = nil
@@ -578,7 +578,6 @@ end
 function READER:ReadEntity()
     local index = self:ReadUInt(SIZE_ENTITY_INDEX)
     local entityGetter = function()
-		print(index, Entity, Entity(index))
         return Entity(index)
     end
 

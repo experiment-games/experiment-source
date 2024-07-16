@@ -1189,7 +1189,9 @@ void C_BaseEntity::Term() {
 
     RemoveFromAimEntsList();
 
-#ifdef CLIENT_DLL
+#ifdef LUA_SDK
+    if ( L )
+        lua_destroyuserdatainstance( L, m_pLuaInstance );
     m_pLuaInstance = nullptr;
 #endif
 }

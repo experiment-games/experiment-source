@@ -42,7 +42,7 @@ function ENTITY_META:SetNetworkedVariable(key, value)
 
 	debugPrint("Setting networked variable", self, key, value)
 
-    Networks.Start("EntityNetworkedVar")
+    Networks.Start("EntityNetworkedVariable")
     Networks.WriteEntity(self)
     Networks.WriteString(key)
     Networks.WriteType(value)
@@ -82,10 +82,28 @@ function ENTITY_META:CallNetworkedVariableCallbacks(key, oldValue, newValue)
         return
     end
 
-	debugPrint("Calling networked variable callbacks", key)
+    debugPrint("Calling networked variable callbacks", key)
 
-	for _, callback in pairs(self.__networkedVarCallbacks) do
-		callback(self, key, oldValue, newValue)
+    for _, callback in pairs(self.__networkedVarCallbacks) do
+        callback(self, key, oldValue, newValue)
+    end
+end
+
+if (SERVER) then
+	--- Sends a set of networked variables to a player
+	--- @param player Player
+	--- @param networkedVariables table
+	function ENTITY_META:SendNetworkedVariables(player, networkedVariables)
+		Networks.Start("EntityNetworkedVariablesSet")
+		Networks.WriteEntity(self)
+		Networks.WriteInt(table.Count(networkedVariables))
+
+		for key, value in pairs(networkedVariables) do
+			Networks.WriteString(key)
+			Networks.WriteType(value)
+		end
+
+		Networks.Send(player)
 	end
 end
 
@@ -117,30 +135,94 @@ ENTITY_META.SetNetworked2VarProxy = ENTITY_META.SetNetworkedVariableCallback
 ENTITY_META.SetNWVarProxy = ENTITY_META.SetNetworkedVariableCallback
 ENTITY_META.SetNW2VarProxy = ENTITY_META.SetNetworkedVariableCallback
 
---[[
-	Receiver for entity networked variables, calls
-	'EntityNetworkedVarChanged' hook with the entity, key,
-	old value and new value.
---]]
-Networks.Receive("EntityNetworkedVar", function(length, socketClient)
-	local entity = Networks.ReadEntity()
-	local key = Networks.ReadString()
-    local newValue = Networks.ReadType()
+if (SERVER) then
+	local playerForcedUpdateConvar = CreateConsoleVariable(
+		"sv_playerforcedupdate",
+		10,
+		{ FCVAR_REPLICATED, FCVAR_ARCHIVE },
+		"Time in seconds between forced updates of networked variables for players",
+		0
+	)
+	local nextForcedUpdate = 0
 
-	debugPrint("Received networked variable", key, newValue, "for", entity)
+	Hooks.Add("Tick", "__EntityNetworkVariableUpdate", function()
+		local curTime = Globals.CurrentTime()
 
-    if (not IsValid(entity)) then
-        -- TODO: Should this happen? We should only be sending to players that are in the PVS of the entity
-		-- Erroring for debug, but perhaps we should just ignore it
-		error("Received networked variable for invalid entity")
-		return
-	end
+		if (curTime < nextForcedUpdate) then
+			return
+		end
 
-    local oldValue = entity:GetNetworkedVariable(key)
+        nextForcedUpdate = curTime + playerForcedUpdateConvar:GetFloat()
 
-	entity:CallNetworkedVariableCallbacks(key, oldValue, newValue)
+		local players = Util.GetAllPlayers()
 
-	Hooks.Call("EntityNetworkedVarChanged", entity, key, oldValue, newValue)
+        for _, player in ipairs(players) do
+            local count, entities = Util.EntitiesInPVS(player:GetPos())
 
-	entity:SetNetworkedVariable(key, newValue)
-end)
+            for _, entity in ipairs(entities) do
+                if (not entity.__networkedVariables) then
+                    continue
+                end
+
+                entity:SendNetworkedVariables(player, entity.__networkedVariables)
+            end
+        end
+
+		debugPrint("Forced update of networked variables for players")
+    end)
+else
+	--[[
+		Receiver for entity networked variables, calls
+		'EntityNetworkedVarChanged' hook with the entity, key,
+		old value and new value.
+	--]]
+	Networks.Receive("EntityNetworkedVariable", function(length, socketClient)
+		local entity = Networks.ReadEntity()
+		local key = Networks.ReadString()
+		local newValue = Networks.ReadType()
+
+		debugPrint("Received networked variable", key, newValue, "for", entity)
+
+		if (not IsValid(entity)) then
+			-- TODO: Should this happen? We should only be sending to players that are in the PVS of the entity
+			-- Erroring for debug, but perhaps we should just ignore it
+			error("Received networked variable for invalid entity")
+			return
+		end
+
+		local oldValue = entity:GetNetworkedVariable(key)
+
+		entity:CallNetworkedVariableCallbacks(key, oldValue, newValue)
+
+		Hooks.Call("EntityNetworkedVarChanged", entity, key, oldValue, newValue)
+
+		entity:SetNetworkedVariable(key, newValue)
+    end)
+
+	Networks.Receive("EntityNetworkedVariablesSet", function(length, socketClient)
+		local entity = Networks.ReadEntity()
+		local count = Networks.ReadInt()
+		local networkedVariables = {}
+
+		for i = 1, count do
+			local key = Networks.ReadString()
+			local value = Networks.ReadType()
+
+			networkedVariables[key] = value
+		end
+
+		debugPrint("(set) Received networked variables for", entity)
+
+		for key, value in pairs(networkedVariables) do
+			local oldValue = entity:GetNetworkedVariable(key)
+
+			entity:CallNetworkedVariableCallbacks(key, oldValue, value)
+
+			Hooks.Call("EntityNetworkedVarChanged", entity, key, oldValue, value)
+		end
+
+		for key, value in pairs(networkedVariables) do
+			entity:SetNetworkedVariable(key, value)
+		end
+	end)
+end
