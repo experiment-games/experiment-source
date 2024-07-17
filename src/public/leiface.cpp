@@ -85,7 +85,27 @@ static int engine_GetAppID( lua_State *L )
 
 static int engine_GetClientConVarValue( lua_State *L )
 {
-    lua_pushstring( L, engine->GetClientConVarValue( luaL_checkinteger( L, 1 ), luaL_checkstring( L, 2 ) ) );
+    int iPlayer;
+
+    if ( lua_toplayer( L, 1 ) )
+        iPlayer = lua_toplayer( L, 1 )->entindex();
+    else
+        iPlayer = luaL_checkinteger( L, 1 );
+
+    lua_pushstring( L, engine->GetClientConVarValue( iPlayer, luaL_checkstring( L, 2 ) ) );
+    return 1;
+}
+
+static int engine_GetClientConVarValueAsNumber( lua_State *L )
+{
+    int iPlayer;
+
+    if ( lua_toplayer( L, 1 ) )
+        iPlayer = lua_toplayer( L, 1 )->entindex();
+    else
+        iPlayer = luaL_checkinteger( L, 1 );
+
+    lua_pushnumber( L, Q_atoi( engine->GetClientConVarValue( iPlayer, luaL_checkstring( L, 2 ) ) ) );
     return 1;
 }
 
@@ -351,6 +371,7 @@ static const luaL_Reg enginelib[] = {
     { "ForceSimpleMaterial", engine_ForceSimpleMaterial },
     { "GetAppID", engine_GetAppID },
     { "GetClientConVarValue", engine_GetClientConVarValue },
+    { "GetClientConVarValueAsNumber", engine_GetClientConVarValueAsNumber },
     { "GetEntityCount", engine_GetEntityCount },
     { "GetLevelName", engine_GetLevelName },
     { "GetGameDir", engine_GetGameDir },

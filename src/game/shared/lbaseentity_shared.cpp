@@ -742,6 +742,24 @@ static int CBaseEntity_GetSimulationTime( lua_State *L )
     return 1;
 }
 
+static int CBaseEntity_GetSkinCount( lua_State *L )
+{
+    CBaseEntity *pEntity = luaL_checkentity( L, 1 );
+    studiohdr_t * pStudioModel = modelinfo->GetStudiomodel( pEntity->GetModel() );
+
+    if ( pStudioModel )
+    {
+        lua_pushinteger( L, pStudioModel->numskinfamilies );
+    }
+    else
+    {
+        DevWarning( "CBaseEntity::GetSkinCount: Failed to get studio model\n" );
+        lua_pushinteger( L, 0 );
+    }
+
+    return 1;
+}
+
 static int CBaseEntity_GetSolid( lua_State *L )
 {
     lua_pushinteger( L, luaL_checkentity( L, 1 )->GetSolid() );
@@ -2215,6 +2233,7 @@ static const luaL_Reg CBaseEntitymeta[] = {
     { "GetRefTable", CBaseEntity_GetRefTable },
     { "GetSimulatingPlayer", CBaseEntity_GetSimulatingPlayer },
     { "GetSimulationTime", CBaseEntity_GetSimulationTime },
+    { "GetSkinCount", CBaseEntity_GetSkinCount },
     { "GetSolid", CBaseEntity_GetSolid },
     { "GetSolidFlags", CBaseEntity_GetSolidFlags },
     { "GetSoundDuration", CBaseEntity_GetSoundDuration },

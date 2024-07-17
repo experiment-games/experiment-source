@@ -146,15 +146,29 @@ static int Color___index( lua_State *L )
     lua_Color *color = &luaL_checkcolor( L, 1 );
     LUA_METATABLE_INDEX_CHECK( L, color );
 
-    LUA_GET_REF_TABLE( L, color );
-    LUA_METATABLE_INDEX_CHECK_REF_TABLE( L, color );
+    const char *field = luaL_checkstring( L, 2 );
 
-    if ( lua_getmetatable( L, 1 ) )
+    if ( Q_strcmp( field, "r" ) == 0 || strcmp( field, "1" ) == 0 )
+        lua_pushinteger( L, color->r() );
+    else if ( Q_strcmp( field, "g" ) == 0 || strcmp( field, "2" ) == 0 )
+        lua_pushinteger( L, color->g() );
+    else if ( Q_strcmp( field, "b" ) == 0 || strcmp( field, "3" ) == 0 )
+        lua_pushinteger( L, color->b() );
+    else if ( Q_strcmp( field, "a" ) == 0 || strcmp( field, "4" ) == 0 )
+        lua_pushinteger( L, color->a() );
+    else
     {
-        LUA_METATABLE_INDEX_CHECK_TABLE( L );
+        LUA_GET_REF_TABLE( L, color );
+        LUA_METATABLE_INDEX_CHECK_REF_TABLE( L, color );
+
+        if ( lua_getmetatable( L, 1 ) )
+        {
+            LUA_METATABLE_INDEX_CHECK_TABLE( L );
+        }
+
+        lua_pushnil( L );
     }
 
-    lua_pushnil( L );
     return 1;
 }
 
@@ -165,10 +179,21 @@ static int Color___newindex( lua_State *L )
 
     const char *field = luaL_checkstring( L, 2 );
 
-    LUA_GET_REF_TABLE( L, color );
-    lua_pushvalue( L, 3 );
-    lua_setfield( L, -2, field );
-    lua_pop( L, 1 );
+    if ( Q_strcmp( field, "r" ) == 0 || strcmp( field, "1" ) == 0 )
+        color->SetColor( luaL_checknumber( L, 3 ), color->g(), color->b(), color->a() );
+    else if ( Q_strcmp( field, "g" ) == 0 || strcmp( field, "2" ) == 0 )
+        color->SetColor( color->r(), luaL_checknumber( L, 3 ), color->b(), color->a() );
+    else if ( Q_strcmp( field, "b" ) == 0 || strcmp( field, "3" ) == 0 )
+        color->SetColor( color->r(), color->g(), luaL_checknumber( L, 3 ), color->a() );
+    else if ( Q_strcmp( field, "a" ) == 0 || strcmp( field, "4" ) == 0 )
+        color->SetColor( color->r(), color->g(), color->b(), luaL_checknumber( L, 3 ) );
+    else
+    {
+        LUA_GET_REF_TABLE( L, color );
+        lua_pushvalue( L, 3 );
+        lua_setfield( L, -2, field );
+        lua_pop( L, 1 );
+    }
 
     return 0;
 }

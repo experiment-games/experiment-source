@@ -137,14 +137,14 @@ function MakeTestPanel(title)
 	return testPanel
 end
 
-ConsoleCommands.Add("+buildmenu", function(client, pCmd, args)
+ConsoleCommands.Add("+menu", function(client, pCmd, args)
 	local testPanel = vgui.Create("TestPanel2")
 	testPanel:SetTitle("TestPanel2 WithTestEarlyMakePopup")
     testPanel:SetSize(512, 512)
 	testPanel:Center()
 end)
 
-ConsoleCommands.Add("-buildmenu", function(client, pCmd, args)
+ConsoleCommands.Add("-menu", function(client, pCmd, args)
 end)
 TEST_PANEL = MakeTestPanel("TestPanel (1)")
 TEST_PANEL:MakePopup()

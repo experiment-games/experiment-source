@@ -8,6 +8,7 @@
 #include "luamanager.h"
 #include "luasrclib.h"
 #include "mathlib/lvector.h"
+#include <lbaseplayer_shared.h>
 
 // memdbgon must be the last include file in a .cpp file!!!
 #include "tier0/memdbgon.h"
@@ -121,6 +122,57 @@ static int engine_GetAppID( lua_State *L )
     return 1;
 }
 
+static int engine_GetClientConVarValue( lua_State *L )
+{
+    int iPlayer;
+
+    if ( lua_toplayer( L, 1 ) )
+        iPlayer = lua_toplayer( L, 1 )->entindex();
+    else
+        iPlayer = luaL_checkinteger( L, 1 );
+
+    if ( iPlayer != ( *C_BasePlayer::GetLocalPlayer() ).entindex() )
+        Warning( "engine.GetClientConVarValue: Cannot get convars for other players. Returning own convar value.\n" );
+
+    ConVarRef var( luaL_checkstring( L, 2 ) );
+
+    if ( var.IsValid() )
+    {
+        lua_pushstring( L, var.GetString() );
+    }
+    else
+    {
+        lua_pushstring( L, "" );
+    }
+
+    return 1;
+}
+
+static int engine_GetClientConVarValueAsNumber( lua_State *L )
+{
+    int iPlayer;
+
+    if ( lua_toplayer( L, 1 ) )
+        iPlayer = lua_toplayer( L, 1 )->entindex();
+    else
+        iPlayer = luaL_checkinteger( L, 1 );
+
+    if ( iPlayer != ( *C_BasePlayer::GetLocalPlayer() ).entindex() )
+        Warning( "engine.GetClientConVarValueAsNumber: Cannot get convars for other players. Returning own convar value.\n" );
+
+    ConVarRef var( luaL_checkstring( L, 2 ) );
+
+    if ( var.IsValid() )
+    {
+        lua_pushnumber( L, var.GetFloat() );
+    }
+    else
+    {
+        lua_pushnumber( L, 0 );
+    }
+
+    return 1;
+}
 static int engine_GetDXSupportLevel( lua_State *L )
 {
     lua_pushinteger( L, engine->GetDXSupportLevel() );
@@ -527,6 +579,8 @@ static const luaL_Reg enginelib[] = {
     { "EngineStats_EndFrame", engine_EngineStats_EndFrame },
     { "GameLumpSize", engine_GameLumpSize },
     { "GetAppID", engine_GetAppID },
+    { "GetClientConVarValue", engine_GetClientConVarValue },
+    { "GetClientConVarValueAsNumber", engine_GetClientConVarValueAsNumber },
     { "GetDXSupportLevel", engine_GetDXSupportLevel },
     { "GetEngineBuildNumber", engine_GetEngineBuildNumber },
     { "GetGameDirectory", engine_GetGameDirectory },

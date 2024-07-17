@@ -212,10 +212,10 @@ static int IMaterial_GetShaderName( lua_State *L )
 
 static int IMaterial_GetFloat( lua_State *L )
 {
-    bool *foundVar = new bool;
+    bool foundVar;
     size_t len;
     IMaterialVar *materialVar = luaL_checkmaterial( L, 1 )
-                                    ->FindVar( luaL_checklstring( L, 2, &len ), foundVar );
+                                    ->FindVar( luaL_checklstring( L, 2, &len ), &foundVar );
 
     if ( !foundVar )
     {
@@ -230,10 +230,10 @@ static int IMaterial_GetFloat( lua_State *L )
 
 static int IMaterial_GetInt( lua_State *L )
 {
-    bool *foundVar = new bool;
+    bool foundVar;
     size_t len;
     IMaterialVar *materialVar = luaL_checkmaterial( L, 1 )
-                                    ->FindVar( luaL_checklstring( L, 2, &len ), foundVar );
+                                    ->FindVar( luaL_checklstring( L, 2, &len ), &foundVar );
 
     if ( !foundVar )
     {
@@ -248,10 +248,10 @@ static int IMaterial_GetInt( lua_State *L )
 
 static int IMaterial_GetString( lua_State *L )
 {
-    bool *foundVar = new bool;
+    bool foundVar;
     size_t len;
     IMaterialVar *materialVar = luaL_checkmaterial( L, 1 )
-                                    ->FindVar( luaL_checklstring( L, 2, &len ), foundVar );
+                                    ->FindVar( luaL_checklstring( L, 2, &len ), &foundVar );
 
     if ( !foundVar )
     {
@@ -266,10 +266,10 @@ static int IMaterial_GetString( lua_State *L )
 
 static int IMaterial_GetTexture(lua_State* L)
 {
-    bool *foundVar = new bool;
+    bool foundVar;
     size_t len;
     IMaterialVar *materialVar = luaL_checkmaterial( L, 1 )
-                                    ->FindVar( luaL_checklstring( L, 2, &len ), foundVar );
+                                    ->FindVar( luaL_checklstring( L, 2, &len ), &foundVar );
 
     if ( !foundVar )
     {
@@ -285,10 +285,10 @@ static int IMaterial_GetTexture(lua_State* L)
 
 static int IMaterial_GetVector( lua_State *L )
 {
-    bool *foundVar = new bool;
+    bool foundVar;
     size_t len;
     IMaterialVar *materialVar = luaL_checkmaterial( L, 1 )
-                                    ->FindVar( luaL_checklstring( L, 2, &len ), foundVar );
+                                    ->FindVar( luaL_checklstring( L, 2, &len ), &foundVar );
 
     if ( !foundVar )
     {
@@ -303,6 +303,29 @@ static int IMaterial_GetVector( lua_State *L )
     lua_pushvector( L, vector );
 
     return 1;
+}
+
+static int IMaterial_GetVector4D( lua_State *L )
+{
+    bool foundVar;
+    size_t len;
+    IMaterialVar *materialVar = luaL_checkmaterial( L, 1 )
+                                    ->FindVar( luaL_checklstring( L, 2, &len ), &foundVar );
+
+    if ( !foundVar )
+    {
+        lua_pushnil( L );
+        return 1;
+    }
+
+    const float *vectorValues = materialVar->GetVecValue();
+
+    lua_pushnumber( L, vectorValues[0] );
+    lua_pushnumber( L, vectorValues[1] );
+    lua_pushnumber( L, vectorValues[2] );
+    lua_pushnumber( L, vectorValues[3] );
+
+    return 4;
 }
 
 static int IMaterial_GetTextureGroupName( lua_State *L )
@@ -444,6 +467,116 @@ static int IMaterial_SetShader( lua_State *L )
     return 0;
 }
 
+static int IMaterial_SetFloat( lua_State *L )
+{
+    bool foundVar;
+    size_t len;
+    IMaterialVar *materialVar = luaL_checkmaterial( L, 1 )
+                                    ->FindVar( luaL_checklstring( L, 2, &len ), &foundVar );
+
+    if ( !foundVar )
+    {
+        lua_pushnil( L );
+        return 1;
+    }
+
+    materialVar->SetFloatValue( luaL_checknumber( L, 3 ) );
+
+    return 0;
+}
+
+static int IMaterial_SetInt( lua_State *L )
+{
+    bool foundVar;
+    size_t len;
+    IMaterialVar *materialVar = luaL_checkmaterial( L, 1 )
+                                    ->FindVar( luaL_checklstring( L, 2, &len ), &foundVar );
+
+    if ( !foundVar )
+    {
+        lua_pushnil( L );
+        return 1;
+    }
+
+    materialVar->SetIntValue( luaL_checkint( L, 3 ) );
+
+    return 0;
+}
+
+static int IMaterial_SetString( lua_State *L )
+{
+    bool foundVar;
+    size_t len;
+    IMaterialVar *materialVar = luaL_checkmaterial( L, 1 )
+                                    ->FindVar( luaL_checklstring( L, 2, &len ), &foundVar );
+
+    if ( !foundVar )
+    {
+        lua_pushnil( L );
+        return 1;
+    }
+
+    materialVar->SetStringValue( luaL_checkstring( L, 3 ) );
+
+    return 0;
+}
+
+static int IMaterial_SetTexture( lua_State *L )
+{
+    bool foundVar;
+    size_t len;
+    IMaterialVar *materialVar = luaL_checkmaterial( L, 1 )
+                                    ->FindVar( luaL_checklstring( L, 2, &len ), &foundVar );
+
+    if ( !foundVar )
+    {
+        lua_pushnil( L );
+        return 1;
+    }
+
+    ITexture *texture = luaL_checkitexture( L, 3 );
+    materialVar->SetTextureValue( texture );
+
+    return 0;
+}
+
+static int IMaterial_SetVector( lua_State *L )
+{
+    bool foundVar;
+    size_t len;
+    IMaterialVar *materialVar = luaL_checkmaterial( L, 1 )
+                                    ->FindVar( luaL_checklstring( L, 2, &len ), &foundVar );
+
+    if ( !foundVar )
+    {
+        lua_pushnil( L );
+        return 1;
+    }
+
+    Vector vector = luaL_checkvector( L, 3 );
+    materialVar->SetVecValue( vector.x, vector.y, vector.z );
+
+    return 0;
+}
+
+static int IMaterial_SetVector4D( lua_State *L )
+{
+    bool foundVar;
+    size_t len;
+    IMaterialVar *materialVar = luaL_checkmaterial( L, 1 )
+                                    ->FindVar( luaL_checklstring( L, 2, &len ), &foundVar );
+
+    if ( !foundVar )
+    {
+        lua_pushnil( L );
+        return 1;
+    }
+
+    materialVar->SetVecValue( luaL_checknumber( L, 3 ), luaL_checknumber( L, 4 ), luaL_checknumber( L, 5 ), luaL_checknumber( L, 6 ) );
+
+    return 0;
+}
+
 static int IMaterial_SetUseFixedFunctionBakedLighting( lua_State *L )
 {
     luaL_checkmaterial( L, 1 )->SetUseFixedFunctionBakedLighting( luaL_checkboolean( L, 1 ) );
@@ -500,6 +633,7 @@ static const luaL_Reg IMaterialmeta[] = {
     { "GetString", IMaterial_GetString },
     { "GetTexture", IMaterial_GetTexture },
     { "GetVector", IMaterial_GetVector },
+    { "GetVector4D", IMaterial_GetVector4D },
     { "GetTextureGroupName", IMaterial_GetTextureGroupName },
     { "GetTextureMemoryBytes", IMaterial_GetTextureMemoryBytes },
     { "IncrementReferenceCount", IMaterial_IncrementReferenceCount },
@@ -522,6 +656,12 @@ static const luaL_Reg IMaterialmeta[] = {
     { "Release", IMaterial_Release },
     { "SetMaterialVarFlag", IMaterial_SetMaterialVarFlag },
     { "SetShader", IMaterial_SetShader },
+    { "SetFloat", IMaterial_SetFloat },
+    { "SetInt", IMaterial_SetInt },
+    { "SetString", IMaterial_SetString },
+    { "SetTexture", IMaterial_SetTexture },
+    { "SetVector", IMaterial_SetVector },
+    { "SetVector4D", IMaterial_SetVector4D },
     { "SetUseFixedFunctionBakedLighting", IMaterial_SetUseFixedFunctionBakedLighting },
     { "ShaderParamCount", IMaterial_ShaderParamCount },
     { "UsesEnvCubemap", IMaterial_UsesEnvCubemap },

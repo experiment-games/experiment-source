@@ -327,6 +327,7 @@ IMaterial *CPngTextureRegen::GetOrCreateProceduralMaterial(
     {
         pVMTKeyValues = new KeyValues( "UnlitGeneric" );
         pVMTKeyValues->SetInt( "$vertexalpha", 1 );
+        pVMTKeyValues->SetInt( "$vertexcolor", 1 );
     }
 
     Assert( !pVMTKeyValues->FindKey( "$basetexture" ) );

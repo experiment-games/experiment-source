@@ -10,11 +10,11 @@
 "."				"+moveright"
 "SPACE"			"+jump"
 "CTRL"			"+duck"
-"TAB"			"+showscores"
+
 "e"				"+use"
+
 "v"				"+moveup"
 "'"				"+moveup"
-"c"				"impulse 50"
 "/"				"+movedown"
 "PGUP"			"+lookup"
 "PGDN"			"+lookdown"
@@ -22,6 +22,7 @@
 "z"				"+strafe"
 "INS"			"+klook"
 ";"				"+mlook"
+
 "r"				"+reload"
 "ALT"			"+walk"
 "SHIFT"			"+speed"
@@ -55,5 +56,13 @@
 "y"				"messagemode"
 "u"				"messagemode2"
 "g"				"dropprimary"
-"q"				"+buildmenu"
+
 "z"				"undo"
+"q"				"+menu"
+"c"				"+menu_context"
+
+"TAB"			"+showscores"
+"F1" 			"gm_showhelp"
+"F2" 			"gm_showteam"
+"F3" 			"gm_showspare1"
+"F4" 			"gm_showspare2"

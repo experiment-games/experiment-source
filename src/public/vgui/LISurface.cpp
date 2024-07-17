@@ -214,12 +214,17 @@ static int surface_DrawSetColor( lua_State *L )
 {
     if ( lua_isnumber( L, 1 ) )
     {
-        surface()->DrawSetColor( luaL_checknumber( L, 1 ), luaL_checknumber( L, 2 ), luaL_checknumber( L, 3 ), luaL_checknumber( L, 4 ) );
+        int r = luaL_checknumber( L, 1 );
+        int g = luaL_checknumber( L, 2 );
+        int b = luaL_checknumber( L, 3 );
+        int a = luaL_optnumber( L, 4, 255 );
+        surface()->DrawSetColor( r, g, b, a );
         return 0;
     }
 
     lua_Color color = luaL_checkcolor( L, 1 );
-    surface()->DrawSetColor( color.r(), color.g(), color.b(), color.a() );
+    surface()->DrawSetColor( color );
+    //DevWarning( "surface_DrawSetColor: Setting Color(%s)\n", color ); // <-- TODO: Find out why printing a color like this causes a crash
 
     return 0;
 }

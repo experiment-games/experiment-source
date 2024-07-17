@@ -3,6 +3,20 @@
 	to bootstrap extensions and modules.
 --]]
 
+function IsValid(target)
+	if (not target) then
+		return false
+	end
+
+	local isValidChecker = target.IsValid
+
+	if (not isValidChecker) then
+		return false
+	end
+
+	return isValidChecker(object)
+end
+
 Include("extensions/enumerations.lua")
 Include("extensions/console_variables.lua")
 Include("extensions/debug.lua")
@@ -37,17 +51,17 @@ Weapons = require("weapons")
 
 local json = require("json")
 Json = {
-    Encode = json.encode,
+	Encode = json.encode,
 	Decode = json.decode,
 }
 
 function RunConsoleCommand(command, ...)
-    local commandString = command .. " " .. table.concat({ ... }, " ")
-    commandString = commandString:Trim()
+	local commandString = command .. " " .. table.concat({ ... }, " ")
+	commandString = commandString:Trim()
 
 	if (CLIENT) then
 		return Engine.ClientCommand(commandString)
-    else
+	else
 		return Engine.ServerCommand(commandString)
 	end
 end

@@ -215,24 +215,11 @@ for _, languageFile in ipairs(languageFiles) do
 		end
 
 		local key, value = line:match("([^=]+)=(.*)")
+		value = value:gsub("\\(.)", "%1")
 
 		language.Add(key, value)
 	end
 end
-
-notification = {
-	AddLegacy = function(text, type, length)
-		print("Notification: " .. text)
-	end,
-
-	AddProgress = function(id, text, frac)
-		print("Progress Notification: " .. text)
-	end,
-
-	Kill = function(uid)
-		print("Killing notification with UID: " .. uid)
-	end,
-}
 
 umsg = require("UserMessages")
 umsg.Angle = umsg.WriteAngles
@@ -386,6 +373,7 @@ ENTITY_META.OBBCenter = ENTITY_META.GetOBBCenter
 ENTITY_META.OBBMaxs = ENTITY_META.GetOBBMaxs
 ENTITY_META.OBBMins = ENTITY_META.GetOBBMins
 ENTITY_META.LocalToWorld = ENTITY_META.EntityToWorldSpace
+ENTITY_META.SkinCount = ENTITY_META.GetSkinCount
 
 function ENTITY_META:SetSpawnEffect(effect)
     -- TODO: Implement
@@ -406,6 +394,14 @@ end
 
 local PLAYER_META = FindMetaTable("Player")
 PLAYER_META.GetShootPos = ENTITY_META.GetEyePosition
+
+function PLAYER_META:GetInfo(consoleVariableName)
+	return engine.GetClientConVarValue(self, consoleVariableName)
+end
+
+function PLAYER_META:GetInfoNum(consoleVariableName, default)
+	return engine.GetClientConVarValueAsNumber(self, consoleVariableName) or default
+end
 
 function PLAYER_META:UniqueID()
     local uniqueid = util.CRC("gm_" .. self:SteamID() .. "_gm")
@@ -455,6 +451,7 @@ end
 local MATERIAL_META = FindMetaTable("IMaterial")
 MATERIAL_META.GetShader = MATERIAL_META.GetShaderName
 MATERIAL_META.IsError = MATERIAL_META.IsErrorMaterial
+MATERIAL_META.Recompute = MATERIAL_META.RecomputeStateSnapshots
 
 function MATERIAL_META:Width()
 	local baseTexture = self:GetTexture("$basetexture")
@@ -1086,7 +1083,6 @@ if (CLIENT) then
 	require("gmod_compatibility/modules/menubar")
 	require("gmod_compatibility/modules/matproxy")
 
-	-- require("gmod_compatibility/modules/notification")
 	require("gmod_compatibility/modules/search")
 
 	Include("extensions/client/entity.lua")
@@ -1099,6 +1095,9 @@ if (CLIENT) then
 	Include("vgui_base.lua")
 
 	Include("skins/default.lua")
+
+	-- Must load after vgui so base panels are available.
+	require("gmod_compatibility/modules/notification")
 end
 
 --[[

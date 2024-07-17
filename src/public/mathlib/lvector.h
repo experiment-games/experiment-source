@@ -1,4 +1,4 @@
-//====== Copyright © 1996-2005, Valve Corporation, All rights reserved. =======//
+//====== Copyright Â© 1996-2005, Valve Corporation, All rights reserved. =======//
 //
 // Purpose: 
 //
@@ -28,7 +28,8 @@ typedef QAngle lua_QAngle;
 
 LUA_API lua_Vector     &(lua_tovector) (lua_State *L, int idx);
 LUA_API lua_QAngle     &(lua_toangle) (lua_State *L, int idx);
-
+LUA_API bool(lua_isvector) (lua_State *L, int idx);
+LUA_API bool(lua_isangle) (lua_State *L, int idx);
 
 /*
 ** push functions (C -> stack)

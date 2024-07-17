@@ -33,6 +33,22 @@ LUA_API lua_QAngle &lua_toangle( lua_State *L, int idx )
 }
 
 /*
+** checker functions (without type error)
+*/
+
+LUA_API bool lua_isvector(lua_State* L, int idx)
+{
+    void *p = luaL_testudata( L, idx, LUA_VECTORLIBNAME );
+    return p != NULL;
+}
+
+LUA_API bool lua_isangle(lua_State* L, int idx)
+{
+    void *p = luaL_testudata( L, idx, LUA_QANGLELIBNAME );
+    return p != NULL;
+}
+
+/*
 ** push functions (C -> stack)
 */
 
@@ -261,11 +277,12 @@ static int Vector___index( lua_State *L )
     Vector vector = luaL_checkvector( L, 1 );
     const char *field = luaL_checkstring( L, 2 );
 
-    if ( strcmp( field, "x" ) == 0 )
+    // r, g, b... Really? GMod compat.
+    if ( strcmp( field, "x" ) == 0 || strcmp( field, "r" ) == 0 || strcmp( field, "1" ) == 0 )
         lua_pushnumber( L, vector.x );
-    else if ( strcmp( field, "y" ) == 0 )
+    else if ( strcmp( field, "y" ) == 0 || strcmp( field, "g" ) == 0 || strcmp( field, "2" ) == 0 )
         lua_pushnumber( L, vector.y );
-    else if ( strcmp( field, "z" ) == 0 )
+    else if ( strcmp( field, "z" ) == 0 || strcmp( field, "b" ) == 0 || strcmp( field, "3" ) == 0 )
         lua_pushnumber( L, vector.z );
     else
     {
@@ -283,11 +300,11 @@ static int Vector___index( lua_State *L )
 static int Vector___newindex( lua_State *L )
 {
     const char *field = luaL_checkstring( L, 2 );
-    if ( strcmp( field, "x" ) == 0 )
+    if ( strcmp( field, "x" ) == 0 || strcmp( field, "r" ) == 0 || strcmp( field, "1" ) == 0 )
         luaL_checkvector( L, 1 ).x = ( vec_t )luaL_checknumber( L, 3 );
-    else if ( strcmp( field, "y" ) == 0 )
+    else if ( strcmp( field, "y" ) == 0 || strcmp( field, "g" ) == 0 || strcmp( field, "2" ) == 0 )
         luaL_checkvector( L, 1 ).y = ( vec_t )luaL_checknumber( L, 3 );
-    else if ( strcmp( field, "z" ) == 0 )
+    else if ( strcmp( field, "z" ) == 0 || strcmp( field, "b" ) == 0 || strcmp( field, "3" ) == 0 )
         luaL_checkvector( L, 1 ).z = ( vec_t )luaL_checknumber( L, 3 );
     return 0;
 }
@@ -382,6 +399,24 @@ static const luaL_Reg Vectormeta[] = {
 
 static int luasrc_Vector( lua_State *L )
 {
+    // If the argument is a vector, copy it
+    if ( lua_isvector( L, 1 ) )
+    {
+        lua_pushvector( L, lua_tovector( L, 1 ) );
+        return 1;
+    }
+
+    // If its a string, parse the space separated values
+    if ( lua_type( L, 1 ) == LUA_TSTRING )
+    {
+        Vector vec;
+        const char *str = luaL_checkstring( L, 1 );
+        sscanf( str, "%f %f %f", &vec.x, &vec.y, &vec.z );
+        lua_pushvector( L, vec );
+        return 1;
+    }
+
+    // Otherwise, create a new vector where all values are 0 if no x, y, z are provided
     lua_pushvector( L, Vector( ( vec_t )luaL_optnumber( L, 1, 0.0f ), ( vec_t )luaL_optnumber( L, 2, 0.0f ), ( vec_t )luaL_optnumber( L, 3, 0.0f ) ) );
     return 1;
 }
@@ -511,11 +546,11 @@ static int QAngle___index( lua_State *L )
 static int QAngle___newindex( lua_State *L )
 {
     const char *field = luaL_checkstring( L, 2 );
-    if ( strcmp( field, "x" ) == 0 || strcmp( field, "p" ) == 0 || strcmp( field, "pitch" ) == 0 )
+    if ( strcmp( field, "x" ) == 0 || strcmp( field, "p" ) == 0 || strcmp( field, "pitch" ) == 0 || strcmp( field, "1" ) == 0 )
         luaL_checkangle( L, 1 ).x = ( vec_t )luaL_checknumber( L, 3 );
-    else if ( strcmp( field, "y" ) == 0 || strcmp( field, "y" ) == 0 || strcmp( field, "yaw" ) == 0 )
+    else if ( strcmp( field, "y" ) == 0 || strcmp( field, "y" ) == 0 || strcmp( field, "yaw" ) == 0 || strcmp( field, "2" ) == 0 )
         luaL_checkangle( L, 1 ).y = ( vec_t )luaL_checknumber( L, 3 );
-    else if ( strcmp( field, "z" ) == 0 || strcmp( field, "r" ) == 0 || strcmp( field, "roll" ) == 0 )
+    else if ( strcmp( field, "z" ) == 0 || strcmp( field, "r" ) == 0 || strcmp( field, "roll" ) == 0 || strcmp( field, "3" ) == 0 )
         luaL_checkangle( L, 1 ).z = ( vec_t )luaL_checknumber( L, 3 );
 
     return 0;
@@ -586,6 +621,24 @@ static const luaL_Reg QAnglemeta[] = {
 
 static int luasrc_QAngle( lua_State *L )
 {
+    // If the argument is an angle, copy it
+    if ( lua_isangle( L, 1 ) )
+    {
+        lua_pushangle( L, lua_toangle( L, 1 ) );
+        return 1;
+    }
+
+    // If its a string, parse the space separated values
+    if ( lua_type( L, 1 ) == LUA_TSTRING )
+    {
+        QAngle angle;
+        const char *str = luaL_checkstring( L, 1 );
+        sscanf( str, "%f %f %f", &angle.x, &angle.y, &angle.z );
+        lua_pushangle( L, angle );
+        return 1;
+    }
+
+    // Otherwise, create a new angle where all values are 0 if no x, y, z are provided
     lua_pushangle( L, QAngle( ( vec_t )luaL_optnumber( L, 1, 0.0f ), ( vec_t )luaL_optnumber( L, 2, 0.0f ), ( vec_t )luaL_optnumber( L, 3, 0.0f ) ) );
     return 1;
 }

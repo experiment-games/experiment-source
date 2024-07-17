@@ -204,6 +204,13 @@ function PANEL:UpdateDocking()
 
 	for i = 1, self:GetChildCount() do
 		local child = self:GetChild(i)
+
+		if (not IsValid(child)) then
+			-- TODO: Fix and find out why this happens with DMenu
+			print("Invalid child panel found in UpdateDocking", child, self, i, self:GetChildCount())
+			continue
+		end
+
 		local leftPadding, topPadding, rightPadding, bottomPadding = child:GetDockPadding()
 		local dockType = child:GetDock()
 
