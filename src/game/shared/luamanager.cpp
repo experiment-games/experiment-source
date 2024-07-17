@@ -251,11 +251,9 @@ static int luasrc_Msg( lua_State *L )
         if ( i > 1 )
             ConColorMsg( REALM_COLOR, "\t" );
 
-        ConColorMsg( REALM_COLOR, s );
+        ConColorMsg( REALM_COLOR, "%s", s );
         lua_pop( L, 1 );  // pop result
     }
-
-    ConColorMsg( REALM_COLOR, "\n" );
 
     return 0;
 }
@@ -264,7 +262,7 @@ static int luasrc_MsgN( lua_State *L )
 {
     luasrc_Msg( L );
 
-    Msg( "\n" );
+    ConColorMsg( REALM_COLOR, "\n" );
 
     return 0;
 }

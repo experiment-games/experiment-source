@@ -186,7 +186,7 @@ end
 function PANEL:UpdateDockingParent()
 	local parent = self:GetParent()
 
-	if (parent) then
+	if (IsValid(parent)) then
 		parent:UpdateDocking()
 	end
 end
