@@ -215,6 +215,20 @@ static int Panel_GetChildCount( lua_State *L )
     return 1;
 }
 
+static int Panel_GetChildren( lua_State *L )
+{
+    lua_newtable( L );
+    CUtlVector< VPANEL > &children = luaL_checkpanel( L, 1 )->GetChildren();
+
+    for ( int i = 0; i < children.Count(); i++ )
+    {
+        lua_pushpanel( L, children[ i ] );
+        lua_rawseti( L, -2, i + 1 );
+    }
+
+    return 1;
+}
+
 static int Panel_GetChildrenSize( lua_State *L )
 {
     Panel *pPanel = luaL_checkpanel( L, 1 );
@@ -282,6 +296,32 @@ static int Panel_GetDropFrameColor( lua_State *L )
 {
     lua_pushcolor( L, luaL_checkpanel( L, 1 )->GetDropFrameColor() );
     return 1;
+}
+
+static int Panel_GetDock( lua_State *L )
+{
+    lua_pushinteger( L, luaL_checkpanel( L, 1 )->GetDock() );
+    return 1;
+}
+
+static int Panel_GetDockMargin( lua_State *L )
+{
+    Thickness margin = luaL_checkpanel( L, 1 )->GetDockMargin();
+    lua_pushinteger( L, margin.left );
+    lua_pushinteger( L, margin.top );
+    lua_pushinteger( L, margin.right );
+    lua_pushinteger( L, margin.bottom );
+    return 4;
+}
+
+static int Panel_GetDockPadding( lua_State *L )
+{
+    Thickness padding = luaL_checkpanel( L, 1 )->GetDockPadding();
+    lua_pushinteger( L, padding.left );
+    lua_pushinteger( L, padding.top );
+    lua_pushinteger( L, padding.right );
+    lua_pushinteger( L, padding.bottom );
+    return 4;
 }
 
 static int Panel_GetFgColor( lua_State *L )
@@ -478,6 +518,12 @@ static int Panel_GetWide( lua_State *L )
 static int Panel_GetZPos( lua_State *L )
 {
     lua_pushinteger( L, luaL_checkpanel( L, 1 )->GetZPos() );
+    return 1;
+}
+
+static int Panel_HasChildren( lua_State *L )
+{
+    lua_pushboolean( L, luaL_checkpanel( L, 1 )->GetChildCount() > 0 );
     return 1;
 }
 
@@ -1093,6 +1139,26 @@ static int Panel_SetCursor( lua_State *L )
     return 0;
 }
 
+static int Panel_SetDock( lua_State *L )
+{
+    luaL_checkpanel( L, 1 )->SetDock( (vgui::DockStyle) luaL_checkint( L, 2 ) );
+    return 0;
+}
+
+static int Panel_SetDockMargin( lua_State *L )
+{
+    Thickness margin( luaL_checknumber( L, 2 ), luaL_checknumber( L, 3 ), luaL_checknumber( L, 4 ), luaL_checknumber( L, 5 ) );
+    luaL_checkpanel( L, 1 )->SetDockMargin( margin );
+    return 0;
+}
+
+static int Panel_SetDockPadding( lua_State *L )
+{
+    Thickness padding( luaL_checknumber( L, 2 ), luaL_checknumber( L, 3 ), luaL_checknumber( L, 4 ), luaL_checknumber( L, 5 ) );
+    luaL_checkpanel( L, 1 )->SetDockPadding( padding );
+    return 0;
+}
+
 static int Panel_SetDragEnabled( lua_State *L )
 {
     luaL_checkpanel( L, 1 )->SetDragEnabled( luaL_checkboolean( L, 2 ) );
@@ -1279,6 +1345,13 @@ static int Panel_SetZPos( lua_State *L )
     return 0;
 }
 
+static int Panel_SizeToChildren( lua_State *L )
+{
+    // false, false defaults cause no-op by default. This is akin to gmod's SizeToChildren (reason: compatibility)
+    luaL_checkpanel( L, 1 )->SizeToChildren( luaL_optboolean( L, 2, false ), luaL_optboolean( L, 2, false ) );
+    return 0;
+}
+
 static int Panel_ShouldHandleInputMessage( lua_State *L )
 {
     lua_pushboolean( L, luaL_checkpanel( L, 1 )->ShouldHandleInputMessage() );
@@ -1422,11 +1495,15 @@ static const luaL_Reg Panelmeta[] = {
     { "GetBounds", Panel_GetBounds },
     { "GetChild", Panel_GetChild },
     { "GetChildCount", Panel_GetChildCount },
+    { "GetChildren", Panel_GetChildren },
     { "GetChildrenSize", Panel_GetChildrenSize },
     { "GetClassName", Panel_GetClassName },
     { "GetClipRect", Panel_GetClipRect },
     { "GetCornerTextureSize", Panel_GetCornerTextureSize },
     { "GetDescription", Panel_GetDescription },
+    { "GetDock", Panel_GetDock },
+    { "GetDockMargin", Panel_GetDockMargin },
+    { "GetDockPadding", Panel_GetDockPadding },
     { "GetDragFrameColor", Panel_GetDragFrameColor },
     { "GetDragPanel", Panel_GetDragPanel },
     { "GetDragStartTolerance", Panel_GetDragStartTolerance },
@@ -1459,6 +1536,7 @@ static const luaL_Reg Panelmeta[] = {
     { "GetVParent", Panel_GetVParent },
     { "GetWide", Panel_GetWide },
     { "GetZPos", Panel_GetZPos },
+    { "HasChildren", Panel_HasChildren },
     { "HasFocus", Panel_HasFocus },
     { "HasHierarchicalFocus", Panel_HasHierarchicalFocus },
     { "HasUserConfigSettings", Panel_HasUserConfigSettings },
@@ -1556,6 +1634,9 @@ static const luaL_Reg Panelmeta[] = {
     { "SetBuildModeDeletable", Panel_SetBuildModeDeletable },
     { "SetBuildModeEditable", Panel_SetBuildModeEditable },
     { "SetCursor", Panel_SetCursor },
+    { "SetDock", Panel_SetDock },
+    { "SetDockMargin", Panel_SetDockMargin },
+    { "SetDockPadding", Panel_SetDockPadding },
     { "SetDragEnabled", Panel_SetDragEnabled },
     { "SetDragSTartTolerance", Panel_SetDragSTartTolerance },
     { "SetDropEnabled", Panel_SetDropEnabled },
@@ -1586,6 +1667,7 @@ static const luaL_Reg Panelmeta[] = {
     { "SetVisible", Panel_SetVisible },
     { "SetWide", Panel_SetWide },
     { "SetZPos", Panel_SetZPos },
+    { "SizeToChildren", Panel_SizeToChildren },
     { "ShouldHandleInputMessage", Panel_ShouldHandleInputMessage },
     { "StringToKeyCode", Panel_StringToKeyCode },
     { "__index", Panel___index },

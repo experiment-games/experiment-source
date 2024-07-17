@@ -1243,10 +1243,16 @@ void Panel::Think()
         {
             m_pTooltips->PerformLayout();
         }
+
+#ifdef LUA_SDK
+        // We initiate perform layout inside RecurseLayout (recursively for children too)
+        RecurseLayout();
+#else
         if ( _flags.IsFlagSet( NEEDS_LAYOUT ) )
         {
             InternalPerformLayout();
         }
+#endif
     }
 
     OnThink();
@@ -1693,12 +1699,10 @@ void Panel::OnSizeChanged( int newWide, int newTall )
     BEGIN_LUA_CALL_PANEL_METHOD( "OnSizeChanged" );
     lua_pushinteger( m_lua_State, newWide );
     lua_pushinteger( m_lua_State, newTall );
-    END_LUA_CALL_PANEL_METHOD( 2, 1 );
-
-    RETURN_LUA_PANEL_NONE();
-#endif
-
+    END_LUA_CALL_PANEL_METHOD( 2, 0 );
+#else
     InvalidateLayout();  // our size changed so force us to layout again
+#endif
 }
 
 //-----------------------------------------------------------------------------
@@ -3142,10 +3146,7 @@ void Panel::InternalSetCursor()
 //-----------------------------------------------------------------------------
 void Panel::OnThink()
 {
-#ifdef LUA_SDK
-    BEGIN_LUA_CALL_PANEL_METHOD( "Think" );
-    END_LUA_CALL_PANEL_METHOD( 0, 0 );
-#else
+#ifndef LUA_SDK
 #if defined( VGUI_USEDRAGDROP )
     if ( IsPC() &&
          m_pDragDrop->m_bDragEnabled &&
@@ -3821,6 +3822,196 @@ CUtlVector< VPANEL > &Panel::GetChildren()
     return ipanel()->GetChildren( GetVPanel() );
 }
 
+#ifdef LUA_SDK
+void Panel::GetChildrenSize(int& wide, int& tall)
+{
+    wide = 0;
+    tall = 0;
+
+    for ( int i = 0; i < GetChildCount(); i++ )
+    {
+        Panel *child = GetChild( i );
+
+        if ( !child->IsVisible() )
+            continue;
+
+        int x, y, childWide, childTall;
+        child->GetBounds( x, y, childWide, childTall );
+
+        wide = MAX( wide, x + childWide );
+        tall = MAX( tall, y + childTall );
+    }
+}
+
+void Panel::SizeToChildren( bool w, bool h )
+{
+    int wide = 0, tall = 0;
+    GetChildrenSize( wide, tall );
+
+    const Thickness padding = GetDockPadding();
+    wide += padding.right;
+    tall += padding.bottom;
+
+    return SetSize( w ? wide : GetWide(), h ? tall : GetTall() );
+}
+
+/*
+    virtual void SetDockPadding( Thickness padding );
+    virtual void GetDockPadding( Thickness &padding );
+
+    virtual void SetDockMargin( Thickness padding );
+    virtual void GetDockMargin( Thickness &padding );*/
+
+void Panel::SetDockPadding( Thickness padding )
+{
+    if ( m_DockPadding.left == padding.left &&
+         m_DockPadding.top == padding.top &&
+         m_DockPadding.right == padding.right &&
+         m_DockPadding.bottom == padding.bottom )
+        return;
+
+    m_DockPadding = padding;
+
+    InvalidateLayout();
+    InvalidateParentLayout();
+}
+
+Thickness Panel::GetDockPadding()
+{
+    return m_DockPadding;
+}
+
+void Panel::SetDockMargin( Thickness padding )
+{
+    if ( m_DockMargin.left == padding.left &&
+         m_DockMargin.top == padding.top &&
+         m_DockMargin.right == padding.right &&
+         m_DockMargin.bottom == padding.bottom )
+        return;
+
+    m_DockMargin = padding;
+
+    InvalidateLayout();
+    InvalidateParentLayout();
+}
+
+Thickness Panel::GetDockMargin()
+{
+    return m_DockMargin;
+}
+
+void Panel::SetDock(DockStyle dockStyle)
+{
+    if ( m_DockStyle == dockStyle )
+        return;
+
+    m_DockStyle = dockStyle;
+
+    InvalidateLayout();
+    InvalidateParentLayout();
+}
+
+DockStyle Panel::GetDock()
+{
+    return m_DockStyle;
+}
+
+/*
+** Based on GWEN's Docking system:
+** https://github.com/garrynewman/GWEN/blob/ca010e87e3df13749d7a9420918c566f99a28021/gwen/src/Controls/Base.cpp#L704
+*/
+void Panel::RecurseLayout()
+{
+    if ( _flags.IsFlagSet( NEEDS_LAYOUT ) )
+    {
+        InternalPerformLayout();
+    }
+
+    int x, y, wide, tall;
+    //GetBounds( x, y, wide, tall );
+    //ScreenToLocal( x, y );
+    GetSize( wide, tall );
+    x = 0;
+    y = 0;
+    Size renderBounds( x, y, wide, tall );
+    renderBounds.x += m_DockPadding.left;
+    renderBounds.y += m_DockPadding.top;
+    renderBounds.wide -= m_DockPadding.left + m_DockMargin.right;
+    renderBounds.tall -= m_DockPadding.top + m_DockMargin.bottom;
+
+    for ( int i = 0; i < ipanel()->GetChildCount( GetVPanel() ); i++ )
+    {
+        VPANEL child = ipanel()->GetChild( GetVPanel(), i );
+        Panel *pChild = ipanel()->GetPanel( child, GetModuleName() );
+
+        if ( !pChild->IsVisible() )
+            continue;
+
+        DockStyle dock = pChild->GetDock();
+
+        // We'll handle fill after this loop
+        if ( dock & Fill )
+            continue;
+
+        if ( dock & Top )
+        {
+            const Thickness margin = pChild->GetDockMargin();
+            pChild->SetBounds( renderBounds.x + margin.left, renderBounds.y + margin.top, renderBounds.wide - margin.left - margin.right, pChild->GetTall() );
+            int iHeight = margin.top + margin.bottom + pChild->GetTall();
+            renderBounds.y += iHeight;
+            renderBounds.tall -= iHeight;
+        }
+        else if ( dock & Left )
+        {
+            const Thickness margin = pChild->GetDockMargin();
+            pChild->SetBounds( renderBounds.x + margin.left, renderBounds.y + margin.top, pChild->GetWide(), renderBounds.tall - margin.top - margin.bottom );
+            int iWidth = margin.left + margin.right + pChild->GetWide();
+            renderBounds.x += iWidth;
+            renderBounds.wide -= iWidth;
+        }
+        else if ( dock & Right )
+        {
+            const Thickness margin = pChild->GetDockMargin();
+            pChild->SetBounds( ( renderBounds.x + renderBounds.wide ) - pChild->GetWide() - margin.right, renderBounds.y + margin.top, pChild->GetWide(), renderBounds.tall - margin.top - margin.bottom );
+            int iWidth = margin.left + margin.right + pChild->GetWide();
+            renderBounds.wide -= iWidth;
+        }
+        else if ( dock & Bottom )
+        {
+            const Thickness margin = pChild->GetDockMargin();
+            pChild->SetBounds( renderBounds.x + margin.left, ( renderBounds.y + renderBounds.tall ) - pChild->GetTall() - margin.bottom, renderBounds.wide - margin.left - margin.right, pChild->GetTall() );
+            int iHeight = margin.top + margin.bottom + pChild->GetTall();
+            renderBounds.tall -= iHeight;
+        }
+
+        pChild->RecurseLayout();
+    }
+
+    m_InnerBounds = renderBounds;
+
+    // Fill the left over space
+    for ( int i = 0; i < ipanel()->GetChildCount( GetVPanel() ); i++ )
+    {
+        VPANEL childHandle = ipanel()->GetChild( GetVPanel(), i );
+        Panel *child = ipanel()->GetPanel( childHandle, GetModuleName() );
+
+        DockStyle dock = child->GetDock();
+
+        if ( dock & Fill )
+        {
+            const Thickness margin = child->GetDockMargin();
+            child->SetBounds( renderBounds.x + margin.left, renderBounds.y + margin.top, renderBounds.wide - margin.left - margin.right, renderBounds.tall - margin.top - margin.bottom );
+            child->RecurseLayout();
+        }
+    }
+
+    // PostLayout();
+
+    BEGIN_LUA_CALL_PANEL_METHOD( "Think" );
+    END_LUA_CALL_PANEL_METHOD( 0, 0 );
+}
+#endif
+
 //-----------------------------------------------------------------------------
 // Purpose: moves the key focus back
 //-----------------------------------------------------------------------------
@@ -4179,6 +4370,8 @@ void Panel::PerformLayout()
     // Hack so we can implement Docking in Lua (see game/experiment/lua/includes/extensions/panel.lua)
     if ( m_lua_State && m_nTableReference >= 0 )
     {
+        Panel::GetSize( wide, tall );
+
         BEGIN_LUA_CALL_HOOK_FOR_STATE( m_lua_State, "OnPanelPerformLayout" );
         this->PushPanelToLua( m_lua_State );
         lua_pushinteger( m_lua_State, wide );

@@ -127,6 +127,44 @@ class IForceVirtualInheritancePanel
     // declarations of points to members as used in MessageMap.
 };
 
+#ifdef LUA_SDK
+struct Thickness
+{
+    int left;
+    int top;
+    int right;
+    int bottom;
+
+    Thickness( int l = 0, int t = 0, int r = 0, int b = 0 )
+        : left( l ), top( t ), right( r ), bottom( b )
+    {
+    }
+};
+
+struct Size
+{
+    int x;
+    int y;
+    int wide;
+    int tall;
+
+    Size( int x = 0, int y = 0, int wide = 0, int tall = 0 )
+        : x( x ), y( y ), wide( wide ), tall( tall )
+    {
+    }
+};
+
+enum DockStyle
+{
+    None = 0,
+    Fill = 1,
+    Left = 2,
+    Right = 3,
+    Top = 4,
+    Bottom = 5,
+};
+#endif
+
 //=============================================================================
 // HPE_BEGIN:
 // [tj] bitwise defines for rounded corners
@@ -167,34 +205,47 @@ class Panel : public IClientPanel, virtual IForceVirtualInheritancePanel
     virtual ~Panel();
 
 #ifdef LUA_SDK
+   protected:
+    lua_State *m_lua_State = nullptr;
+    bool m_bIsPaintClipping = true;
+    int m_nLastLocalCursorX = 0;
+    int m_nLastLocalCursorY = 0;
+    Thickness m_DockPadding;
+    Thickness m_DockMargin;
+    Size m_InnerBounds;
+    DockStyle m_DockStyle = DockStyle::None;
+    CUtlDict<int, int> m_PreparedFunctions;
+
+   public:
+    int m_nTableReference;
+    int m_nRefCount;
+
     Panel( Panel *parent, const char *panelName, lua_State *L );
     virtual void PushPanelToLua( lua_State *L );
     virtual void SetupRefTable( lua_State *L );
     virtual bool IsFunctionPrepared( const char *functionName );
     virtual void UpdatePreparedFunctions();
 
-    lua_State *m_lua_State = nullptr;
-    int m_nTableReference;
-    int m_nRefCount;
-    bool m_bIsPaintClipping = true;
-    int m_nLastLocalCursorX = 0;
-    int m_nLastLocalCursorY = 0;
-    CUtlDict<int, int> m_PreparedFunctions;
+    virtual void RecurseLayout();
 
-    virtual void GetChildrenSize(int& wide, int& tall)
+    virtual void GetChildrenSize( int &wide, int &tall );
+    virtual void SizeToChildren( bool w = true, bool h = true );
+
+    virtual void SetDock( DockStyle dockStyle );
+    virtual DockStyle GetDock();
+
+    virtual void SetDockPadding( Thickness padding );
+    virtual Thickness GetDockPadding();
+
+    virtual void SetDockMargin( Thickness padding );
+    virtual Thickness GetDockMargin();
+
+    virtual void InvalidateParentLayout( bool layoutNow = false, bool reloadScheme = false )
     {
-        wide = 0;
-        tall = 0;
-
-        for ( int i = 0; i < GetChildCount(); i++ )
+        Panel *parent = GetParent();
+        if ( parent )
         {
-            Panel *pChild = GetChild( i );
-            pChild->InvalidateLayout( true, false ); // by setting reloadScheme to true, children recursively will also be invalidated (causing lag)
-            int x, y, w, t;
-            pChild->GetBounds( x, y, w, t );
-
-            wide = max( wide, x + w );
-            tall = max( tall, y + t );
+            parent->InvalidateLayout( layoutNow, reloadScheme );
         }
     }
 

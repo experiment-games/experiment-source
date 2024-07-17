@@ -621,6 +621,12 @@ else
 	PANEL_META.ChildrenSize = PANEL_META.GetChildrenSize
 	PANEL_META.NoClipping = PANEL_META.SetPaintClippingEnabled
 
+	function PANEL_META:SizeToContents(sizeWidth, sizeHeight)
+        -- For some reason DTree_Node uses SizeToContents on a DListLayout, which doesn't have a SizeToContents function.
+		-- :/
+		self:SizeToChildren(sizeWidth, sizeHeight)
+	end
+
 	function PANEL_META:DrawFilledRect()
 		local width, height = self:GetSize()
 		surface.DrawRect(0, 0, width, height)
