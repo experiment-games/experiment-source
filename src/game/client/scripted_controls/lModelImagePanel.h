@@ -18,7 +18,7 @@ class LModelImagePanel : public EditablePanel
     virtual  ~LModelImagePanel();
     virtual void PushPanelToLua( lua_State *L );
 
-    virtual void RebuildSpawnIcon( Camera_t camera, const char *pszSavePath = NULL );
+    virtual void RebuildSpawnIcon( Camera_t *camera = NULL, const char *pszSavePath = NULL );
     virtual void SetModelImage( const char *pngImagePath );
 
     virtual void Paint();
@@ -30,7 +30,7 @@ class LModelImagePanel : public EditablePanel
     const char *m_pszBodyGroups;
     int m_nTextureID;
 
-    virtual void LoadIfExists();
+    virtual void LoadIfExistsOrRebuild();
 
    public:
     virtual void SetModel( const char *modelPath, int skin = 0, const char *bodyGroups = NULL )
@@ -39,7 +39,7 @@ class LModelImagePanel : public EditablePanel
         m_iSkin = skin;
         m_pszBodyGroups = bodyGroups;
 
-        LoadIfExists();
+        LoadIfExistsOrRebuild();
     }
 
     virtual const char *GetModel()

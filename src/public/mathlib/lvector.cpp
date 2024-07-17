@@ -519,6 +519,26 @@ static int QAngle_LengthSqr( lua_State *L )
     return 1;
 }
 
+// Rotates the angle around the specified axis by the specified degrees. (doesnt return a new angle)
+static int QAngle_RotateAroundAxis( lua_State *L )
+{
+    QAngle angle = luaL_checkangle( L, 1 );
+    Vector axis = luaL_checkvector( L, 2 );
+    float degrees = luaL_checknumber( L, 3 );
+
+    matrix3x4_t matrix;
+    MatrixBuildRotationAboutAxis( axis, degrees, matrix );
+    QAngle newAngle;
+    MatrixToAngles( matrix, newAngle );
+
+    // Copy the new angle to the old angle
+    angle.x = newAngle.x;
+    angle.y = newAngle.y;
+    angle.z = newAngle.z;
+
+    return 0;
+}
+
 static int QAngle___index( lua_State *L )
 {
     QAngle angle = luaL_checkangle( L, 1 );
@@ -608,6 +628,7 @@ static const luaL_Reg QAnglemeta[] = {
     { "IsValid", QAngle_IsValid },
     { "Length", QAngle_Length },
     { "LengthSqr", QAngle_LengthSqr },
+    { "RotateAroundAxis", QAngle_RotateAroundAxis },
     { "__index", QAngle___index },
     { "__newindex", QAngle___newindex },
     { "__tostring", QAngle___tostring },

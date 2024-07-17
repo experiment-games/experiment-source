@@ -81,14 +81,258 @@ static const char *PathToMaterialName( const char *pngImagePath )
     return materialName;
 }
 
+static void SetupViewForEntity_Prop( lua_CBaseFlex *pEntity, CViewSetup &viewSetup, Vector vecPos, Vector vecMiddle, float flSize )
+{
+    QAngle viewAngle( 25, 220, 0 );
+    Vector forward;
+    AngleVectors( viewAngle, &forward );
+
+    Vector vecViewPos = vecPos + forward * flSize * -15;
+    viewSetup.fov = 4 + flSize * 0.04;
+    viewSetup.origin = vecViewPos + vecMiddle;
+    viewSetup.zNear = 1;
+    viewSetup.zFar = vecViewPos.DistTo( vecPos ) + flSize * 2;
+    viewSetup.angles = viewAngle;
+}
+
+static void SetupViewForEntity_Ragdoll( lua_CBaseFlex *pEntity, CViewSetup &viewSetup, Vector vecPos, Vector vecMiddle, float flSize )
+{
+    Vector vecViewPos;
+    QAngle viewAngle;
+
+    Vector attachmentOrigin;
+    QAngle attachmentAngles;
+    bool bFound = pEntity->GetAttachment( pEntity->LookupAttachment( "eyes" ), attachmentOrigin, attachmentAngles );
+
+    if ( !bFound )
+    {
+        attachmentOrigin = pEntity->GetAbsOrigin();
+        attachmentAngles = pEntity->GetAbsAngles();
+    }
+
+    Vector forward;
+    Vector up;
+
+    AngleVectors( viewAngle, &forward, NULL, &up );
+
+    viewAngle = attachmentAngles + QAngle( -10, 160, 0 );
+    vecViewPos = attachmentOrigin + forward * -60 + up * -2;
+
+    viewSetup.fov = 10;
+    viewSetup.origin = vecViewPos;
+    viewSetup.zNear = 0.1;
+    viewSetup.zFar = 100;
+    viewSetup.angles = viewAngle;
+}
+
+static void SetupViewForEntity_Ragdoll_Head( lua_CBaseFlex *pEntity, CViewSetup &viewSetup, Vector vecPos, Vector vecMiddle, float flSize )
+{
+    Vector vecViewPos;
+    QAngle viewAngle;
+
+    Vector attachmentOrigin;
+    QAngle attachmentAngles;
+    bool bFound = pEntity->GetAttachment( pEntity->LookupAttachment( "head" ), attachmentOrigin, attachmentAngles );
+
+    if ( !bFound )
+    {
+        attachmentOrigin = pEntity->GetAbsOrigin();
+        attachmentAngles = pEntity->GetAbsAngles();
+    }
+
+    Vector forward;
+    Vector up;
+
+    AngleVectors( viewAngle, &forward, NULL, &up );
+
+    viewAngle = attachmentAngles + QAngle( -10, 160, 0 );
+    vecViewPos = attachmentOrigin + forward * -67 + up * -7 + forward * 1.5;
+
+    viewSetup.fov = 10;
+    viewSetup.origin = vecViewPos;
+    viewSetup.zNear = 0.1;
+    viewSetup.zFar = 100;
+    viewSetup.angles = viewAngle;
+}
+
+static void SetupViewForEntity_Ragdoll_Facemask( lua_CBaseFlex *pEntity, CViewSetup &viewSetup, Vector vecPos, Vector vecMiddle, float flSize )
+{
+    Vector vecViewPos;
+    QAngle viewAngle;
+
+    Vector attachmentOrigin;
+    QAngle attachmentAngles;
+    bool bFound = pEntity->GetAttachment( pEntity->LookupAttachment( "facemask" ), attachmentOrigin, attachmentAngles );
+
+    if ( !bFound )
+    {
+        attachmentOrigin = pEntity->GetAbsOrigin();
+        attachmentAngles = pEntity->GetAbsAngles();
+    }
+
+    Vector forward;
+    Vector right;
+    Vector up;
+
+    AngleVectors( viewAngle, &forward, &right, &up );
+
+    viewAngle = attachmentAngles;
+    
+    matrix3x4_t matrix;
+    MatrixBuildRotationAboutAxis( right, -10, matrix );
+    MatrixBuildRotationAboutAxis( up, 160, matrix );
+    QAngle newAngle;
+    MatrixToAngles( matrix, newAngle );
+
+    viewAngle = newAngle;
+
+    vecViewPos = attachmentOrigin + forward * -67 + up * -2 + right * -1;
+
+    viewSetup.fov = 10;
+    viewSetup.origin = vecViewPos;
+    viewSetup.zNear = 0.1;
+    viewSetup.zFar = 100;
+    viewSetup.angles = viewAngle;
+}
+
+static void SetupViewForEntity_Ragdoll_Forward( lua_CBaseFlex *pEntity, CViewSetup &viewSetup, Vector vecPos, Vector vecMiddle, float flSize )
+{
+    Vector vecViewPos;
+    QAngle viewAngle;
+
+    Vector attachmentOrigin;
+    QAngle attachmentAngles;
+    bool bFound = pEntity->GetAttachment( pEntity->LookupAttachment( "forward" ), attachmentOrigin, attachmentAngles );
+
+    if ( !bFound )
+    {
+        attachmentOrigin = pEntity->GetAbsOrigin();
+        attachmentAngles = pEntity->GetAbsAngles();
+    }
+
+    Vector forward;
+    Vector right;
+    Vector up;
+
+    AngleVectors( viewAngle, &forward, &right, &up );
+
+    viewAngle = attachmentAngles + QAngle( 10, -20, 0 );
+    vecViewPos = attachmentOrigin + forward * -67 + up * -1 + right * 2.5;
+
+    viewSetup.fov = 10;
+    viewSetup.origin = vecViewPos;
+    viewSetup.zNear = 0.1;
+    viewSetup.zFar = 100;
+    viewSetup.angles = viewAngle;
+}
+
+static void SetupViewForEntity_DOD( lua_CBaseFlex *pEntity, CViewSetup &viewSetup, Vector vecPos, Vector vecMiddle, float flSize )
+{
+    Vector vecViewPos;
+    QAngle viewAngle;
+
+    Vector forward;
+    Vector right;
+    Vector up;
+
+    AngleVectors( viewAngle, &forward, &right, &up );
+
+    viewAngle = QAngle( 0, 160, 0 );
+    vecViewPos = vecPos + forward * -67 + up * 30 + right * 2.5;
+
+    viewSetup.fov = 10;
+    viewSetup.origin = vecViewPos + vecMiddle;
+    viewSetup.zNear = 1;
+    viewSetup.zFar = vecViewPos.DistTo( vecPos ) + flSize * 2;
+    viewSetup.angles = viewAngle;
+}
+
+static void SetupViewForEntity_CS( lua_CBaseFlex *pEntity, CViewSetup &viewSetup, Vector vecPos, Vector vecMiddle, float flSize )
+{
+    Vector vecViewPos;
+    QAngle viewAngle;
+
+    Vector forward;
+    Vector right;
+    Vector up;
+
+    AngleVectors( viewAngle, &forward, &right, &up );
+
+    viewAngle = QAngle( 0, 160, 0 );
+    vecViewPos = vecPos + forward * -70 + up * 32.4 + right * 1.5;
+
+    viewSetup.fov = 10;
+    viewSetup.origin = vecViewPos + vecMiddle;
+    viewSetup.zNear = 1;
+    viewSetup.zFar = vecViewPos.DistTo( vecPos ) + flSize * 2;
+    viewSetup.angles = viewAngle;
+}
+
+static void SetupViewForEntity_Special( lua_CBaseFlex *pEntity, CViewSetup &viewSetup, Vector vecPos, Vector vecMiddle, float flSize, float x, float y, float z )
+{
+    Vector vecViewPos;
+    QAngle viewAngle;
+
+    Vector forward;
+    Vector right;
+    Vector up;
+
+    AngleVectors( viewAngle, &forward, &right, &up );
+
+    viewAngle = QAngle( 15, 140, 0 );
+    vecViewPos = vecPos + forward * x + up * y + right * z;
+
+    viewSetup.fov = 20;
+    viewSetup.origin = vecViewPos + vecMiddle;
+    viewSetup.zNear = 1;
+    viewSetup.zFar = vecViewPos.DistTo( vecPos ) + flSize * 2;
+    viewSetup.angles = viewAngle;
+}
+
+static void SetupViewForEntity( lua_CBaseFlex *pEntity, CViewSetup &viewSetup )
+{
+    Vector vecPos = pEntity->GetAbsOrigin();
+    Vector vecMins, vecMaxs;
+    pEntity->GetRenderBounds( vecMins, vecMaxs );
+    Vector vecMiddle = ( vecMins + vecMaxs ) * 0.5;
+    float flSize = 0;
+    flSize = MAX( flSize, fabs( vecMins.x ) + fabs( vecMaxs.x ) );
+    flSize = MAX( flSize, fabs( vecMins.y ) + fabs( vecMaxs.y ) );
+    flSize = MAX( flSize, fabs( vecMins.z ) + fabs( vecMaxs.z ) );
+
+    pEntity->SetAbsOrigin( vecPos );
+
+    if ( pEntity->LookupAttachment( "eyes" ) )
+    {
+        SetupViewForEntity_Ragdoll( pEntity, viewSetup, vecPos, vecMiddle, flSize );
+    }
+    else if ( pEntity->LookupAttachment( "head" ) )
+    {
+        SetupViewForEntity_Ragdoll_Head( pEntity, viewSetup, vecPos, vecMiddle, flSize );
+    }
+    else if ( pEntity->LookupAttachment( "facemask" ) )
+    {
+        SetupViewForEntity_Ragdoll_Facemask( pEntity, viewSetup, vecPos, vecMiddle, flSize );
+    }
+    else if ( pEntity->LookupAttachment( "forward" ) )
+    {
+        SetupViewForEntity_Ragdoll_Forward( pEntity, viewSetup, vecPos, vecMiddle, flSize );
+    }
+    else
+    {
+        SetupViewForEntity_Prop( pEntity, viewSetup, vecPos, vecMiddle, flSize );
+    }
+}
+
 /// <summary>
 /// This function is used to render a model to a PNG file given a camera setup.
+/// If no camera is given, it will try calculate the best fit view for the model.
 /// If pszSavePath is not NULL, the PNG file will be saved to that path. If it is NULL, the PNG
 /// file will be saved to materials/spawnicons/<path to the model relative to GAME root>.png
 /// </summary>
 /// <param name="camera"></param>
 /// <param name="pszSavePath"></param>
-void LModelImagePanel::RebuildSpawnIcon( Camera_t camera, const char *pszSavePath /*= NULL*/ )
+void LModelImagePanel::RebuildSpawnIcon( Camera_t *camera /* = NULL*/, const char *pszSavePath /* = NULL*/ )
 {
     char pngPathFull[MAX_PATH];
     char pngPath[MAX_PATH];
@@ -162,11 +406,20 @@ void LModelImagePanel::RebuildSpawnIcon( Camera_t camera, const char *pszSavePat
     viewSetup.y = 0;
     viewSetup.width = outputWidth;
     viewSetup.height = outputHeight;
-    viewSetup.fov = camera.m_flFOV;
-    viewSetup.origin = camera.m_origin;
-    viewSetup.angles = camera.m_angles;
-    viewSetup.zNear = camera.m_flZNear;
-    viewSetup.zFar = camera.m_flZFar;
+
+    if ( camera )
+    {
+        viewSetup.fov = camera->m_flFOV;
+        viewSetup.origin = camera->m_origin;
+        viewSetup.angles = camera->m_angles;
+        viewSetup.zNear = camera->m_flZNear;
+        viewSetup.zFar = camera->m_flZFar;
+    }
+    else
+    {
+        SetupViewForEntity( pEntity, viewSetup );
+    }
+
     viewSetup.m_eStereoEye = STEREO_EYE_MONO;
 
     Frustum dummyFrustum;
@@ -258,7 +511,7 @@ void LModelImagePanel::RebuildSpawnIcon( Camera_t camera, const char *pszSavePat
 /// <summary>
 /// Loads the model image if it exists in the spawnicons directory already.
 /// </summary>
-void LModelImagePanel::LoadIfExists()
+void LModelImagePanel::LoadIfExistsOrRebuild()
 {
     char pngPathFull[MAX_PATH];
     char pngPath[MAX_PATH];
@@ -274,6 +527,11 @@ void LModelImagePanel::LoadIfExists()
     if ( filesystem->FileExists( pngPathFull, "GAME" ) )
     {
         SetModelImage( pngPath );
+    }
+    else
+    {
+        // TODO: Async this
+        RebuildSpawnIcon();
     }
 }
 
@@ -292,8 +550,12 @@ void LModelImagePanel::SetModelImage( const char *pngImagePath )
 
     m_pszModelImagePath = pngImagePath;
 
-    if ( m_nTextureID == -1 )
-        m_nTextureID = surface()->CreateNewTextureID();
+    if ( m_nTextureID != -1 )
+    {
+        surface()->DestroyTextureID( m_nTextureID );
+    }
+
+    m_nTextureID = surface()->CreateNewTextureID();
 
     const char *materialName = PathToMaterialName( pngImagePath );
 
@@ -430,7 +692,7 @@ static int ModelImagePanel_RebuildSpawnIcon( lua_State *L )
     lua_pop( L, 1 );
     camera.m_flZFar = zFar;
 
-    pModelImagePanel->RebuildSpawnIcon( camera, pszSavePath );
+    pModelImagePanel->RebuildSpawnIcon( &camera, pszSavePath );
 
     return 0;
 }
