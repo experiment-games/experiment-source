@@ -53,9 +53,7 @@ static const luaL_RegForState luasrclibs[] = {
 #ifdef CLIENT_DLL
     { LUA_FONTFLAGLIBNAME, luaopen_FONTFLAG, true },
 #endif
-#ifndef CLIENT_DLL
-    { LUA_ENTLISTLIBNAME, luaopen_gEntList, false },
-#endif
+    { LUA_ENTLISTLIBNAME, luaopen_EntityList, false },
     { LUA_GLOBALSLIBNAME, luaopen_gpGlobals, true },
 #ifdef CLIENT_DLL
     { LUA_CLIENTSHADOWMGRLIBNAME, luaopen_g_pClientShadowMgr, false },

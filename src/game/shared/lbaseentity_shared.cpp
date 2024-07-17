@@ -1937,7 +1937,7 @@ static const luaL_Reg CBaseEntitymeta[] = {
     { "GetBaseEntity", CBaseEntity_GetBaseEntity },
     { "GetBaseVelocity", CBaseEntity_GetBaseVelocity },
     { "GetCheckUntouch", CBaseEntity_GetCheckUntouch },
-    { "GetClassname", CBaseEntity_GetClassname },
+    { "GetClassName", CBaseEntity_GetClassname },
     { "GetCollisionGroup", CBaseEntity_GetCollisionGroup },
     { "GetDataObject", CBaseEntity_GetDataObject },
     { "GetDebugName", CBaseEntity_GetDebugName },

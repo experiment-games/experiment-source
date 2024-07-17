@@ -202,10 +202,11 @@ static int luasrc_SharedRandomAngle( lua_State *L )
 class CTraceLuaFilter : public CTraceFilterSimple
 {
    public:
-    CTraceLuaFilter( lua_State *L, int filterArg, int collisionGroup, bool ignoreWorld )
+    CTraceLuaFilter( lua_State *L, int filterArg, int collisionGroup, bool bIgnoreWorld, bool bFilterTableInverted = false )
         : CTraceFilterSimple( NULL, collisionGroup ),
           m_pLuaState( L ),
-          m_ignoreWorld( ignoreWorld )
+          m_bIgnoreWorld( bIgnoreWorld ),
+          m_bFilterTableInverted( bFilterTableInverted )
     {
         m_iFilterArgIndex = filterArg = lua_absindex( L, filterArg );
         m_pPassEntity = nullptr;
@@ -235,10 +236,12 @@ class CTraceLuaFilter : public CTraceFilterSimple
 
     virtual bool ShouldHitEntity( IHandleEntity *pHandleEntity, int contentsMask )
     {
-        if ( m_ignoreWorld && pHandleEntity == GetWorldEntity() )
+        if ( m_bIgnoreWorld && pHandleEntity == GetWorldEntity() )
             return false;
 
-        if ( m_iFilterType == LUA_TFUNCTION ) // TODO: Test this
+        // Do not hit entities returned by the function, or have the function return a
+        // boolean to determine if the entity should be hit
+        if ( m_iFilterType == LUA_TFUNCTION )
         {
             lua_pushvalue( m_pLuaState, m_iFilterArgIndex );
             lua_pushentity( m_pLuaState, EntityFromEntityHandle( pHandleEntity ) );
@@ -257,7 +260,7 @@ class CTraceLuaFilter : public CTraceFilterSimple
 
                 if ( pEntity == EntityFromEntityHandle( pHandleEntity ) )
                 {
-                    return true;
+                    return false;
                 }
 
                 return false;
@@ -265,43 +268,45 @@ class CTraceLuaFilter : public CTraceFilterSimple
 
             luaL_error( m_pLuaState, "Filter function must return a boolean or valid entity" );
         }
-        else if ( m_iFilterType == LUA_TTABLE ) // TODO: Test this
+        // Do not hit entities in the table, or entities that have one of the class names in the table
+        else if ( m_iFilterType == LUA_TTABLE )
         {
             lua_pushvalue( m_pLuaState, m_iFilterArgIndex );
-            lua_pushinteger( m_pLuaState, 1 );
 
-            while ( lua_next( m_pLuaState, -2 ) != 0 )
+            lua_pushnil( m_pLuaState ); // Push a nil key to start iteration
+            while ( lua_next( m_pLuaState, -2 ) )
             {
-                lua_CBaseEntity *pEntity = lua_toentity( m_pLuaState, -1 );
-                lua_pop( m_pLuaState, 1 );  // Pop the value
-
-                if ( pEntity != NULL )
-                {
-                    if ( pEntity == EntityFromEntityHandle( pHandleEntity ) )
-                    {
-                        lua_pop( m_pLuaState, 1 );  // Pop the table
-                        return true;
-                    }
-                }
-                else if ( lua_isstring( m_pLuaState, -1 ) )
+                if ( lua_type( m_pLuaState, -1 ) == LUA_TSTRING )
                 {
                     CBaseEntity *pEntity = EntityFromEntityHandle( pHandleEntity );
                     if ( pEntity && FClassnameIs( pEntity, lua_tostring( m_pLuaState, -1 ) ) )
                     {
-                        lua_pop( m_pLuaState, 1 );  // Pop the table
-                        return true;
+                        lua_pop( m_pLuaState, 2 );  // Pop the value and the key
+                        return m_bFilterTableInverted;
+                    }
+                }
+                else
+                {
+                    lua_CBaseEntity *pEntity = lua_toentity( m_pLuaState, -1 );
+
+                    if ( !pEntity )
+                    {
+                        luaL_typeerror( m_pLuaState, -1, "Entity or string" );
+                    }
+                    else if ( pEntity == EntityFromEntityHandle( pHandleEntity ) )
+                    {
+                        lua_pop( m_pLuaState, 2 );  // Pop the value and the key
+                        return m_bFilterTableInverted;
                     }
                 }
 
-                lua_pop( m_pLuaState, 1 );  // Pop the key
+                lua_pop( m_pLuaState, 1 );  // Pop the value, keep the key
             }
 
             lua_pop( m_pLuaState, 1 );  // Pop the table
-            return false;
+            return CTraceFilterSimple::ShouldHitEntity( pHandleEntity, contentsMask ) != m_bFilterTableInverted;
         }
         else if ( m_pPassEntity && m_pPassEntity == EntityFromEntityHandle( pHandleEntity ) )
-            // tested with:
-            // lua_run_cl table.Print(Util.TraceLine({start=LocalPlayer():GetShootPos(),endpos=LocalPlayer():GetShootPos()+(LocalPlayer():GetAimVector() * 100000),filter=LocalPlayer()}))
         {
             return false;
         }
@@ -314,7 +319,8 @@ class CTraceLuaFilter : public CTraceFilterSimple
     lua_State *m_pLuaState;
     int m_iFilterType;
     int m_iFilterArgIndex;
-    bool m_ignoreWorld;
+    bool m_bIgnoreWorld;
+    bool m_bFilterTableInverted;
 
 #ifdef CLIENT_DLL  // Server has its own GetWorldEntity in world.h
     C_BaseEntity *GetWorldEntity( void )
@@ -348,11 +354,15 @@ static int luasrc_Util_TraceLine( lua_State *L )
     lua_pop( L, 1 );
 
     lua_getfield( L, 1, "ignoreworld" );
-    bool ignoreWorld = luaL_optboolean( L, -1, false );
+    bool bIgnoreWorld = luaL_optboolean( L, -1, false );
+    lua_pop( L, 1 );
+
+    lua_getfield( L, 1, "whitelist" );
+    bool bFilterTableInverted = luaL_optboolean( L, -1, false );
     lua_pop( L, 1 );
 
     lua_getfield( L, 1, "filter" );
-    CTraceLuaFilter traceFilter( L, -1, collisionGroup, ignoreWorld );
+    CTraceLuaFilter traceFilter( L, -1, collisionGroup, bIgnoreWorld, bFilterTableInverted );
 
     trace_t gameTrace;
     Ray_t ray;
@@ -361,7 +371,19 @@ static int luasrc_Util_TraceLine( lua_State *L )
 
     // For gmod compatibility we create a table with more values
     const surfacedata_t *pSurfaceData = physprops->GetSurfaceData( gameTrace.surface.surfaceProps );
-    lua_newtable( L );
+
+    // Let users pass a table to get the output placed in
+    lua_getfield( L, 1, "output" );
+
+    if ( lua_isnil( L, -1 ) )
+    {
+        lua_pop( L, 1 ); // Pop the nil value
+        lua_newtable( L );
+    }
+    else
+    {
+        luaL_checktype( L, -1, LUA_TTABLE );
+    }
 
     lua_pushstring( L, "Entity" );
     lua_pushentity( L, gameTrace.m_pEnt );

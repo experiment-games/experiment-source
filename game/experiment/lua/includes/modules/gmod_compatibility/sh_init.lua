@@ -64,15 +64,30 @@ util.CRC = function()
 end
 
 ents = {
+	GetAll = function()
+		return EntityList.GetAllEntities()
+    end,
+
+	GetCount = function()
+		return EntityList.GetEntityCount()
+	end,
+
+	GetEdictCount = function()
+		return EntityList.GetEdictCount()
+	end,
+
 	FindAlongRay = function(...)
 		return select(2, Util.EntitiesAlongRay(...))
-	end,
+    end,
+
 	FindInBox = function(...)
 		return select(2, Util.EntitiesInBox(...))
-	end,
+    end,
+
 	FindInSphere = function(...)
 		return select(2, Util.EntitiesInSphere(...))
-	end,
+    end,
+
     FindInPVS = function(viewOrigin)
         if (type(viewOrigin) == "Entity") then
             viewOrigin = viewOrigin:GetPos()
@@ -364,6 +379,7 @@ ENTITY_META.EyePos = ENTITY_META.GetEyePosition
 ENTITY_META.EyeAngles = ENTITY_META.GetEyeAngles
 ENTITY_META.GetModel = ENTITY_META.GetModelName
 ENTITY_META.GetTable = ENTITY_META.GetRefTable
+ENTITY_META.GetClass = ENTITY_META.GetClassName
 
 function ENTITY_META:SetNoDraw(bBool)
     if (bBool) then
