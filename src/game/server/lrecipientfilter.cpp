@@ -254,21 +254,13 @@ static int CPASFilter___index( lua_State *L )
 {
     if ( lua_getmetatable( L, 1 ) )
     {
-        lua_pushvalue( L, 2 );
-        lua_gettable( L, -2 );
-        if ( lua_isnil( L, -1 ) )
-        {
-            lua_pop( L, 2 );
-            luaL_getmetatable( L, "CRecipientFilter" );
-            lua_pushvalue( L, 2 );
-            lua_gettable( L, -2 );
-        }
-    }
-    else
-    {
-        lua_pushnil( L );
+        LUA_METATABLE_INDEX_CHECK_TABLE( L );
     }
 
+    luaL_getmetatable( L, "CRecipientFilter" );
+    LUA_METATABLE_INDEX_CHECK_TABLE( L );
+
+    lua_pushnil( L );
     return 1;
 }
 
@@ -301,8 +293,8 @@ LUALIB_API int luaopen_CPASFilter( lua_State *L )
 {
     LUA_PUSH_NEW_METATABLE( L, LUA_PASFILTERLIBNAME );
     luaL_register( L, NULL, CPASFiltermeta );
-    lua_pushstring( L, "CPASFilter" );
-    lua_setfield( L, -2, "__type" ); /* metatable.__type = "CPASFilter" */
+    lua_pushstring( L, "CRecipientFilter" );
+    lua_setfield( L, -2, "__type" ); /* metatable.__type = "CRecipientFilter" */
     luaL_register( L, LUA_GNAME, CPASFilter_funcs );
     lua_pop( L, 1 );
     return 1;

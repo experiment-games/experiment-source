@@ -31,6 +31,7 @@
 #include "lvphysics_interface.h"
 #include "engine/IEngineSound.h"
 #include <lbasecombatweapon_shared.h>
+#include "vcollide_parse.h"
 
 // memdbgon must be the last include file in a .cpp file!!!
 #include "tier0/memdbgon.h"
@@ -147,6 +148,23 @@ static int CBaseEntity_BloodColor( lua_State *L )
 static int CBaseEntity_BoundingRadius( lua_State *L )
 {
     lua_pushnumber( L, luaL_checkentity( L, 1 )->BoundingRadius() );
+    return 1;
+}
+
+static int CBaseEntity_CalcNearestPoint( lua_State *L )
+{
+    Vector v;
+    CCollisionProperty *pCollisionProp = luaL_checkentity( L, 1 )->CollisionProp();
+
+    if ( !pCollisionProp )
+    {
+        luaL_typeerror( L, 1, "CBaseEntity with collision" );
+        return 0;
+    }
+
+    pCollisionProp->CalcNearestPoint( luaL_checkvector( L, 2 ), &v );
+    lua_pushvector( L, v );
+
     return 1;
 }
 
@@ -338,9 +356,11 @@ static int CBaseEntity_entindex( lua_State *L )
 
 static int CBaseEntity_EntityToWorldSpace( lua_State *L )
 {
-    luaL_checkentity( L, 1 )->EntityToWorldSpace( luaL_checkvector( L, 2 ),
-                                                  &luaL_checkvector( L, 3 ) );
-    return 0;
+    Vector vecWorld;
+    luaL_checkentity( L, 1 )->EntityToWorldSpace( luaL_checkvector( L, 2 ), &vecWorld );
+
+    lua_pushvector( L, vecWorld );
+    return 1;
 }
 
 static int CBaseEntity_EyeAngles( lua_State *L )
@@ -627,6 +647,54 @@ static int CBaseEntity_GetMoveType( lua_State *L )
     return 1;
 }
 
+static int CBaseEntity_GetOBBCenter( lua_State *L )
+{
+    CCollisionProperty *pCollisionProp = luaL_checkentity( L, 1 )->CollisionProp();
+
+    if ( !pCollisionProp )
+    {
+        luaL_typeerror( L, 1, "CBaseEntity with collision" );
+        return 0;
+    }
+    
+    Vector v = pCollisionProp->OBBCenter();
+    lua_pushvector( L, v );
+
+    return 1;
+}
+
+static int CBaseEntity_GetOBBMaxs( lua_State *L )
+{
+    CCollisionProperty *pCollisionProp = luaL_checkentity( L, 1 )->CollisionProp();
+
+    if ( !pCollisionProp )
+    {
+        luaL_typeerror( L, 1, "CBaseEntity with collision" );
+        return 0;
+    }
+
+    Vector v = pCollisionProp->OBBMaxs();
+    lua_pushvector( L, v );
+
+    return 1;
+}
+
+static int CBaseEntity_GetOBBMins( lua_State *L )
+{
+    CCollisionProperty *pCollisionProp = luaL_checkentity( L, 1 )->CollisionProp();
+
+    if ( !pCollisionProp )
+    {
+        luaL_typeerror( L, 1, "CBaseEntity with collision" );
+        return 0;
+    }
+
+    Vector v = pCollisionProp->OBBMins();
+    lua_pushvector( L, v );
+
+    return 1;
+}
+
 static int CBaseEntity_GetOwnerEntity( lua_State *L )
 {
     lua_pushentity( L, luaL_checkentity( L, 1 )->GetOwnerEntity() );
@@ -898,6 +966,22 @@ static int CBaseEntity_IsPlayer( lua_State *L )
 static int CBaseEntity_IsPlayerSimulated( lua_State *L )
 {
     lua_pushboolean( L, luaL_checkentity( L, 1 )->IsPlayerSimulated() );
+    return 1;
+}
+
+static int CBaseEntity_IsPointInBounds( lua_State *L )
+{
+    Vector v;
+    CCollisionProperty *pCollisionProp = luaL_checkentity( L, 1 )->CollisionProp();
+
+    if ( !pCollisionProp )
+    {
+        luaL_typeerror( L, 1, "CBaseEntity with collision" );
+        return 0;
+    }
+
+    lua_pushboolean( L, pCollisionProp->IsPointInBounds( luaL_checkvector( L, 2 ) ) );
+
     return 1;
 }
 
@@ -1647,12 +1731,60 @@ static int CBaseEntity_VPhysicsGetObjectList( lua_State *L )
 static int CBaseEntity_VPhysicsInitNormal( lua_State *L )
 {
     // TODO: Implement a Lua solid_t object.
-    lua_pushphysicsobject( L, luaL_checkentity( L, 1 )->VPhysicsInitNormal( ( SolidType_t )luaL_checkint( L, 2 ), luaL_checkint( L, 3 ), luaL_checkboolean( L, 4 ) ) );
+    lua_pushphysicsobject( L,
+        luaL_checkentity( L, 1 )->VPhysicsInitNormal(
+            ( SolidType_t )luaL_optinteger( L, 2, SOLID_VPHYSICS ),
+            luaL_optnumber( L, 3, 0 ),
+            luaL_optboolean( L, 4, false ) ) );
+    return 1;
+}
+
+static int CBaseEntity_VPhysicsInitBox( lua_State *L )
+{
+    lua_CBaseEntity *pEntity = luaL_checkentity( L, 1 );
+    Vector mins = luaL_checkvector( L, 2 );
+    Vector maxs = luaL_checkvector( L, 3 );
+    const char *pszSurfaceProperty = luaL_optstring( L, 4, "default" );
+
+    // Copied mostly from PhysModelCreateBox
+    solid_t solid;
+    PhysGetDefaultAABBSolid( solid );
+    Vector dims = maxs - mins;
+    solid.params.volume = dims.x * dims.y * dims.z;
+    Q_strncpy( solid.surfaceprop, pszSurfaceProperty, sizeof( solid.surfaceprop ) );
+
+    CPhysCollide *pCollide = PhysCreateBbox( mins, maxs );
+    if ( !pCollide )
+        return NULL;
+
+    const bool bStatic = false;
+    // TODO: Check if origin needs to be in world space (like it is now)
+    IPhysicsObject *pPhysicsObject = PhysModelCreateCustom(
+        pEntity,
+        pCollide,
+        pEntity->GetAbsOrigin(),
+        vec3_angle, // AABB
+        STRING( pEntity->GetModelName() ),
+        bStatic,
+        &solid
+    );
+    pEntity->VPhysicsSetObject( pPhysicsObject );
+    pEntity->SetCollisionBounds( mins, maxs );
+
+    lua_pushphysicsobject( L, pPhysicsObject );
     return 1;
 }
 
 static int CBaseEntity_VPhysicsInitStatic( lua_State *L )
 {
+    SolidType_t solidType = ( SolidType_t )luaL_optinteger( L, 2, SOLID_VPHYSICS );
+    lua_CBaseEntity *pEntity = luaL_checkentity( L, 1 );
+
+    if ( pEntity->GetSolid() != solidType )
+    {
+        pEntity->SetSolid( solidType );
+    }
+
     lua_pushphysicsobject( L, luaL_checkentity( L, 1 )->VPhysicsInitStatic() );
     return 1;
 }
@@ -1716,6 +1848,7 @@ static int CBaseEntity_WorldToEntitySpace( lua_State *L )
     return 0;
 }
 
+// TODO: Move these CBaseAnimating to a shared file for CBaseAnimating instead of here (this was just quicker for now)
 static int CBaseAnimating_GetAttachment( lua_State *L )
 {
     int iArg2Type = lua_type( L, 2 );
@@ -1757,6 +1890,106 @@ static int CBaseAnimating_GetAttachment( lua_State *L )
     lua_setfield( L, -2, "Ang" );  // TODO: Write gmod compat and rename this to our own conventions
     lua_pushinteger( L, boneID );
     lua_setfield( L, -2, "Bone" );  // TODO: Write gmod compat and rename this to our own conventions
+    return 1;
+}
+
+static int CBaseAnimating_FindBodygroupByName( lua_State *L )
+{
+    lua_pushinteger( L, luaL_checkanimating( L, 1 )->FindBodygroupByName( luaL_checkstring( L, 2 ) ) );
+    return 1;
+}
+
+static int CBaseAnimating_GetBodygroup( lua_State *L )
+{
+    lua_pushinteger(
+        L, luaL_checkanimating( L, 1 )->GetBodygroup( luaL_checkint( L, 2 ) ) );
+    return 1;
+}
+
+static int CBaseAnimating_GetBodygroupCount( lua_State *L )
+{
+    lua_pushinteger(
+        L, luaL_checkanimating( L, 1 )->GetBodygroupCount( luaL_checkint( L, 2 ) ) );
+    return 1;
+}
+
+static int CBaseAnimating_GetBodygroupName( lua_State *L )
+{
+    lua_pushstring(
+        L, luaL_checkanimating( L, 1 )->GetBodygroupName( luaL_checkint( L, 2 ) ) );
+    return 1;
+}
+
+static int CBaseAnimating_GetNumBodyGroups( lua_State *L )
+{
+    lua_pushinteger( L, luaL_checkanimating( L, 1 )->GetNumBodyGroups() );
+    return 1;
+}
+
+static int CBaseAnimating_SetBodygroup( lua_State *L )
+{
+    luaL_checkanimating( L, 1 )->SetBodygroup( luaL_checkint( L, 2 ),
+                                               luaL_checkint( L, 3 ) );
+    return 0;
+}
+
+static int CBaseAnimating_SetBodyGroups( lua_State *L )
+{
+    const char *pBodyGroups = luaL_checkstring( L, 2 );
+    int iNumGroups = Q_strlen( pBodyGroups );
+
+    if ( iNumGroups > 0 )
+    {
+        lua_CBaseAnimating *pAnimating = luaL_checkanimating( L, 1 );
+        int nMaxGroups = pAnimating->GetNumBodyGroups();
+
+        for ( int iGroup = 0; iGroup < iNumGroups && iGroup < nMaxGroups; ++iGroup )
+        {
+            char c = pBodyGroups[iGroup];
+            int iValue = 0;
+
+            if ( c >= '0' && c <= '9' )
+            {
+                iValue = c - '0';  // 0 - 9
+            }
+            else if ( c >= 'a' && c <= 'z' )
+            {
+                iValue = c - 'a' + 10;  // 10 - 35
+            }
+
+            pAnimating->SetBodygroup( iGroup, iValue );
+        }
+    }
+    return 0;
+}
+
+static int CBaseAnimating_GetBodyGroups( lua_State *L )
+{
+    lua_CBaseAnimating *pAnimating = luaL_checkanimating( L, 1 );
+    int nMaxGroups = pAnimating->GetNumBodyGroups();
+
+    char *pBodyGroups = ( char * )_alloca( nMaxGroups + 1 );
+    pBodyGroups[nMaxGroups] = 0;
+
+    for ( int iGroup = 0; iGroup < nMaxGroups; ++iGroup )
+    {
+        int iValue = pAnimating->GetBodygroup( iGroup );
+
+        if ( iValue >= 0 && iValue <= 9 )
+        {
+            pBodyGroups[iGroup] = '0' + iValue;
+        }
+        else if ( iValue >= 10 && iValue <= 35 )
+        {
+            pBodyGroups[iGroup] = 'a' + iValue - 10;
+        }
+        else
+        {
+            pBodyGroups[iGroup] = '0';
+        }
+    }
+
+    lua_pushstring( L, pBodyGroups );
     return 1;
 }
 
@@ -1892,6 +2125,9 @@ static const luaL_Reg CBaseEntitymeta[] = {
     { "BlocksLOS", CBaseEntity_BlocksLOS },
     { "BloodColor", CBaseEntity_BloodColor },
     { "BoundingRadius", CBaseEntity_BoundingRadius },
+
+    { "CalculateNearestPoint", CBaseEntity_CalcNearestPoint },
+
     { "ChangeTeam", CBaseEntity_ChangeTeam },
     { "ClearEffects", CBaseEntity_ClearEffects },
     { "ClearFlags", CBaseEntity_ClearFlags },
@@ -1914,7 +2150,10 @@ static const luaL_Reg CBaseEntitymeta[] = {
     { "EmitAmbientSound", CBaseEntity_EmitAmbientSound },
     { "EndGroundContact", CBaseEntity_EndGroundContact },
     { "EndTouch", CBaseEntity_EndTouch },
+
     { "entindex", CBaseEntity_entindex },
+    { "GetEntityIndex", CBaseEntity_entindex },
+
     { "EntityToWorldSpace", CBaseEntity_EntityToWorldSpace },
     { "GetEyeAngles", CBaseEntity_EyeAngles },
     { "GetEyePosition", CBaseEntity_EyePosition },
@@ -1966,6 +2205,9 @@ static const luaL_Reg CBaseEntitymeta[] = {
     { "GetModelName", CBaseEntity_GetModelName },
     { "GetMoveParent", CBaseEntity_GetMoveParent },
     { "GetMoveType", CBaseEntity_GetMoveType },
+    { "GetOBBCenter", CBaseEntity_GetOBBCenter },
+    { "GetOBBMaxs", CBaseEntity_GetOBBMaxs },
+    { "GetOBBMins", CBaseEntity_GetOBBMins },
     { "GetOwnerEntity", CBaseEntity_GetOwnerEntity },
     { "GetParametersForSound", CBaseEntity_GetParametersForSound },
     { "GetPredictionPlayer", CBaseEntity_GetPredictionPlayer },
@@ -2009,6 +2251,7 @@ static const luaL_Reg CBaseEntitymeta[] = {
     { "IsNPC", CBaseEntity_IsNPC },
     { "IsPlayer", CBaseEntity_IsPlayer },
     { "IsPlayerSimulated", CBaseEntity_IsPlayerSimulated },
+    { "IsPointInBounds", CBaseEntity_IsPointInBounds },
     { "IsPointSized", CBaseEntity_IsPointSized },
     { "IsPrecacheAllowed", CBaseEntity_IsPrecacheAllowed },
     { "IsServer", CBaseEntity_IsServer },
@@ -2125,21 +2368,45 @@ static const luaL_Reg CBaseEntitymeta[] = {
     { "TraceBleed", CBaseEntity_TraceBleed },
     { "UnsetPlayerSimulated", CBaseEntity_UnsetPlayerSimulated },
     { "UpdateOnRemove", CBaseEntity_UpdateOnRemove },
-    { "VPhysicsDestroyObject", CBaseEntity_VPhysicsDestroyObject },
-    { "VPhysicsGetObject", CBaseEntity_VPhysicsGetObject },
-    { "VPhysicsGetObjectList", CBaseEntity_VPhysicsGetObjectList },
-    { "VPhysicsInitNormal", CBaseEntity_VPhysicsInitNormal },
-    { "VPhysicsInitStatic", CBaseEntity_VPhysicsInitStatic },
+
+    { "DestroyPhysicsObject", CBaseEntity_VPhysicsDestroyObject },
+    { "GetPhysicsObject", CBaseEntity_VPhysicsGetObject },
+    { "GetPhysicsObjects", CBaseEntity_VPhysicsGetObjectList },
+    { "PhysicsInit", CBaseEntity_VPhysicsInitNormal },
+    { "PhysicsInitBox", CBaseEntity_VPhysicsInitBox },
+    { "PhysicsInitStatic", CBaseEntity_VPhysicsInitStatic },
     { "VPhysicsIsFlesh", CBaseEntity_VPhysicsIsFlesh },
     { "VPhysicsSetObject", CBaseEntity_VPhysicsSetObject },
-    { "VPhysicsUpdate", CBaseEntity_VPhysicsUpdate },
+    { "CallPhysicsUpdate", CBaseEntity_VPhysicsUpdate },
+
     { "WakeRestingObjects", CBaseEntity_WakeRestingObjects },
     { "WorldAlignMaxs", CBaseEntity_WorldAlignMaxs },
     { "WorldAlignMins", CBaseEntity_WorldAlignMins },
     { "WorldAlignSize", CBaseEntity_WorldAlignSize },
     { "WorldSpaceCenter", CBaseEntity_WorldSpaceCenter },
     { "WorldToEntitySpace", CBaseEntity_WorldToEntitySpace },
+
     { "GetAttachment", CBaseAnimating_GetAttachment },
+    // Wonky naming conventions, lets just support both out-of-the-box
+    { "FindBodygroupByName", CBaseAnimating_FindBodygroupByName },
+    { "FindBodyGroupByName", CBaseAnimating_FindBodygroupByName },
+    { "GetBodygroup", CBaseAnimating_GetBodygroup },
+    { "GetBodyGroup", CBaseAnimating_GetBodygroup },
+    { "GetBodygroupCount", CBaseAnimating_GetBodygroupCount },
+    { "GetBodyGroupCount", CBaseAnimating_GetBodygroupCount },
+    { "GetBodygroupName", CBaseAnimating_GetBodygroupName },
+    { "GetBodyGroupName", CBaseAnimating_GetBodygroupName },
+
+    { "GetBodygroup", CBaseAnimating_GetBodyGroups },
+    { "GetBodyGroup", CBaseAnimating_GetBodyGroups },
+    { "SetBodygroup", CBaseAnimating_SetBodygroup },
+    { "SetBodyGroup", CBaseAnimating_SetBodygroup },
+    { "SetBodygroups", CBaseAnimating_SetBodyGroups },
+    { "SetBodyGroups", CBaseAnimating_SetBodyGroups },
+
+    { "GetNumBodygroups", CBaseAnimating_GetNumBodyGroups },
+    { "GetNumBodyGroups", CBaseAnimating_GetNumBodyGroups },
+
     { "__index", CBaseEntity___index },
     { "__newindex", CBaseEntity___newindex },
     { "__eq", CBaseEntity___eq },

@@ -118,6 +118,7 @@ static int CEffectData___index( lua_State *L )
             lua_pushnil( L );
         }
     }
+
     return 1;
 }
 

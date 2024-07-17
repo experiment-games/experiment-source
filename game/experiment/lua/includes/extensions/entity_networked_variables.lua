@@ -20,6 +20,10 @@ local Networks = require("networks")
 local Hooks = require("hooks")
 
 local debugPrint = function(...)
+    if (not EntityNetworkedVariablesDebug) then
+        return
+    end
+
 	local prefix = CLIENT and "Client]" or "Server]"
 	print("[EntityNetworking ", prefix, ...)
 end

@@ -20,5 +20,5 @@ end
 function ENT:EndTouch( pOther )
 end
 
-function ENT:VPhysicsUpdate( pPhysics )
+function ENT:PhysicsUpdate( pPhysics )
 end

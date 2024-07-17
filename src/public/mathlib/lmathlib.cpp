@@ -100,11 +100,10 @@ static int matrix3x4_t___index( lua_State *L )
         {
             LUA_METATABLE_INDEX_CHECK_TABLE( L );
         }
-        else
-        {
-            lua_pushnil( L );
-        }
+
+        lua_pushnil( L );
     }
+
     return 1;
 }
 

@@ -20,7 +20,7 @@ function ENT:Initialize()
 	self:SetModel("models/props_junk/wood_crate001a.mdl")
 	self.SetAllowPrecache(allowPrecache)
 
-	local pPhysicsObject = self:VPhysicsInitNormal(6, 0, false)
+	local pPhysicsObject = self:PhysicsInit(6, 0, false)
 
 	if (not pPhysicsObject) then
 		self:SetSolid(0)
@@ -38,5 +38,5 @@ end
 function ENT:EndTouch(pEntity)
 end
 
-function ENT:VPhysicsUpdate(pPhysics)
+function ENT:PhysicsUpdate(pPhysics)
 end

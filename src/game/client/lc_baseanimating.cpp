@@ -11,7 +11,6 @@
 #include "lbaseentity_shared.h"
 #include "lbaseplayer_shared.h"
 #include "mathlib/lvector.h"
-#include "lvphysics_interface.h"
 #include "model_types.h"
 
 // memdbgon must be the last include file in a .cpp file!!!
@@ -165,12 +164,6 @@ static int CBaseAnimating_DrawModel( lua_State *L )
     return 1;
 }
 
-static int CBaseAnimating_FindBodygroupByName( lua_State *L )
-{
-    lua_pushinteger( L, luaL_checkanimating( L, 1 )->FindBodygroupByName( luaL_checkstring( L, 2 ) ) );
-    return 1;
-}
-
 static int CBaseAnimating_FindFollowedEntity( lua_State *L )
 {
     lua_pushanimating( L, luaL_checkanimating( L, 1 )->FindFollowedEntity() );
@@ -263,27 +256,6 @@ static int CBaseAnimating_GetBody( lua_State *L )
     return 1;
 }
 
-static int CBaseAnimating_GetBodygroup( lua_State *L )
-{
-    lua_pushinteger(
-        L, luaL_checkanimating( L, 1 )->GetBodygroup( luaL_checkint( L, 2 ) ) );
-    return 1;
-}
-
-static int CBaseAnimating_GetBodygroupCount( lua_State *L )
-{
-    lua_pushinteger(
-        L, luaL_checkanimating( L, 1 )->GetBodygroupCount( luaL_checkint( L, 2 ) ) );
-    return 1;
-}
-
-static int CBaseAnimating_GetBodygroupName( lua_State *L )
-{
-    lua_pushstring(
-        L, luaL_checkanimating( L, 1 )->GetBodygroupName( luaL_checkint( L, 2 ) ) );
-    return 1;
-}
-
 static int CBaseAnimating_GetBoneControllers( lua_State *L )
 {
     float controllers[MAXSTUDIOBONECTRLS];
@@ -362,12 +334,6 @@ static int CBaseAnimating_GetHitboxSetName( lua_State *L )
 //   lua_pushnumber(L, luaL_checkanimating(L, 1)->GetModelWidthScale());
 //   return 1;
 // }
-
-static int CBaseAnimating_GetNumBodyGroups( lua_State *L )
-{
-    lua_pushinteger( L, luaL_checkanimating( L, 1 )->GetNumBodyGroups() );
-    return 1;
-}
 
 static int CBaseAnimating_GetNumFlexControllers( lua_State *L )
 {
@@ -758,13 +724,6 @@ static int CBaseAnimating_SequenceLoops( lua_State *L )
     return 1;
 }
 
-static int CBaseAnimating_SetBodygroup( lua_State *L )
-{
-    luaL_checkanimating( L, 1 )->SetBodygroup( luaL_checkint( L, 2 ),
-                                               luaL_checkint( L, 3 ) );
-    return 0;
-}
-
 static int CBaseAnimating_SetBoneController( lua_State *L )
 {
     lua_pushnumber( L, luaL_checkanimating( L, 1 )->SetBoneController( luaL_checkint( L, 2 ), luaL_checknumber( L, 3 ) ) );
@@ -940,28 +899,6 @@ static int CBaseAnimating_UsesPowerOfTwoFrameBufferTexture( lua_State *L )
     return 1;
 }
 
-static int CBaseAnimating_VPhysicsGetObjectList( lua_State *L )
-{
-    IPhysicsObject *pList[VPHYSICS_MAX_OBJECT_LIST_COUNT];
-    int count = luaL_checkanimating( L, 1 )->VPhysicsGetObjectList(
-        pList, ARRAYSIZE( pList ) );
-    lua_pushinteger( L, count );
-    lua_newtable( L );
-    for ( int i = 0; i < count; i++ )
-    {
-        lua_pushinteger( L, i );
-        lua_pushphysicsobject( L, pList[i] );
-        lua_settable( L, -3 );
-    }
-    return 2;
-}
-
-static int CBaseAnimating_VPhysicsUpdate( lua_State *L )
-{
-    luaL_checkanimating( L, 1 )->VPhysicsUpdate( luaL_checkphysicsobject( L, 2 ) );
-    return 0;
-}
-
 static int CBaseAnimating___index( lua_State *L )
 {
     CBaseAnimating *pEntity = lua_toanimating( L, 1 );
@@ -1059,7 +996,6 @@ static const luaL_Reg CBaseAnimatingmeta[] = {
     { "DoMuzzleFlash", CBaseAnimating_DoMuzzleFlash },
     { "DrawClientHitboxes", CBaseAnimating_DrawClientHitboxes },
     { "DrawModel", CBaseAnimating_DrawModel },
-    { "FindBodygroupByName", CBaseAnimating_FindBodygroupByName },
     { "FindFollowedEntity", CBaseAnimating_FindFollowedEntity },
     { "FindTransitionSequence", CBaseAnimating_FindTransitionSequence },
     { "FireEvent", CBaseAnimating_FireEvent },
@@ -1073,9 +1009,7 @@ static const luaL_Reg CBaseAnimatingmeta[] = {
     { "GetBaseAnimating", CBaseAnimating_GetBaseAnimating },
     { "GetBlendedLinearVelocity", CBaseAnimating_GetBlendedLinearVelocity },
     { "GetBody", CBaseAnimating_GetBody },
-    { "GetBodygroup", CBaseAnimating_GetBodygroup },
-    { "GetBodygroupCount", CBaseAnimating_GetBodygroupCount },
-    { "GetBodygroupName", CBaseAnimating_GetBodygroupName },
+
     { "GetBoneControllers", CBaseAnimating_GetBoneControllers },
     { "GetBonePosition", CBaseAnimating_GetBonePosition },
     { "GetClientSideFade", CBaseAnimating_GetClientSideFade },
@@ -1088,7 +1022,7 @@ static const luaL_Reg CBaseAnimatingmeta[] = {
     { "GetHitboxSetCount", CBaseAnimating_GetHitboxSetCount },
     { "GetHitboxSetName", CBaseAnimating_GetHitboxSetName },
     //{"GetModelWidthScale", CBaseAnimating_GetModelWidthScale},
-    { "GetNumBodyGroups", CBaseAnimating_GetNumBodyGroups },
+
     { "GetNumFlexControllers", CBaseAnimating_GetNumFlexControllers },
     { "GetPlaybackRate", CBaseAnimating_GetPlaybackRate },
     { "GetPoseParameter", CBaseAnimating_GetPoseParameter },
@@ -1146,7 +1080,7 @@ static const luaL_Reg CBaseAnimatingmeta[] = {
     { "SelectWeightedSequence", CBaseAnimating_SelectWeightedSequence },
     { "SequenceDuration", CBaseAnimating_SequenceDuration },
     { "SequenceLoops", CBaseAnimating_SequenceLoops },
-    { "SetBodygroup", CBaseAnimating_SetBodygroup },
+
     { "SetBoneController", CBaseAnimating_SetBoneController },
     { "SetCycle", CBaseAnimating_SetCycle },
     { "SetHitboxSet", CBaseAnimating_SetHitboxSet },
@@ -1177,8 +1111,6 @@ static const luaL_Reg CBaseAnimatingmeta[] = {
     { "UseClientSideAnimation", CBaseAnimating_UseClientSideAnimation },
     { "UsesPowerOfTwoFrameBufferTexture",
       CBaseAnimating_UsesPowerOfTwoFrameBufferTexture },
-    { "VPhysicsGetObjectList", CBaseAnimating_VPhysicsGetObjectList },
-    { "VPhysicsUpdate", CBaseAnimating_VPhysicsUpdate },
     { "__index", CBaseAnimating___index },
     { "__newindex", CBaseAnimating___newindex },
     { "__eq", CBaseAnimating___eq },

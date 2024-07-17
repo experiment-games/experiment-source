@@ -651,10 +651,20 @@ LUALIB_API int luaopen_physenv( lua_State *L )
     return 1;
 }
 
+static int IPhysicsObject_AddAngleVelocity( lua_State *L )
+{
+    AngularImpulse angularVelocity = luaL_checkvector( L, 2 );
+    Vector velocity( 0, 0, 0 );
+
+    luaL_checkphysicsobject( L, 1 )->AddVelocity( &velocity, &angularVelocity );
+    return 0;
+}
+
 static int IPhysicsObject_AddVelocity( lua_State *L )
 {
     Vector velocity = luaL_checkvector( L, 2 );
-    AngularImpulse angularVelocity = luaL_checkvector( L, 3 );
+    AngularImpulse angularVelocity( 0, 0, 0 );
+    angularVelocity = luaL_optvector( L, 3, &angularVelocity );
     luaL_checkphysicsobject( L, 1 )->AddVelocity( &velocity, &angularVelocity );
     return 0;
 }
@@ -741,6 +751,15 @@ static int IPhysicsObject_EnableMotion( lua_State *L )
 {
     luaL_checkphysicsobject( L, 1 )->EnableMotion( luaL_checkboolean( L, 2 ) );
     return 0;
+}
+
+static int IPhysicsObject_GetAABB( lua_State *L )
+{
+    Vector mins, maxs;
+    physcollision->CollideGetAABB( &mins, &maxs, luaL_checkphysicsobject( L, 1 )->GetCollide(), vec3_origin, vec3_angle );
+    lua_pushvector( L, mins );
+    lua_pushvector( L, maxs );
+    return 2;
 }
 
 static int IPhysicsObject_GetCallbackFlags( lua_State *L )
@@ -1107,6 +1126,7 @@ static int IPhysicsObject___tostring( lua_State *L )
 }
 
 static const luaL_Reg IPhysicsObjectmeta[] = {
+    { "AddAngleVelocity", IPhysicsObject_AddAngleVelocity },
     { "AddVelocity", IPhysicsObject_AddVelocity },
     { "ApplyForceCenter", IPhysicsObject_ApplyForceCenter },
     { "ApplyForceOffset", IPhysicsObject_ApplyForceOffset },
@@ -1121,6 +1141,7 @@ static const luaL_Reg IPhysicsObjectmeta[] = {
     { "EnableDrag", IPhysicsObject_EnableDrag },
     { "EnableGravity", IPhysicsObject_EnableGravity },
     { "EnableMotion", IPhysicsObject_EnableMotion },
+    { "GetAABB", IPhysicsObject_GetAABB },
     { "GetCallbackFlags", IPhysicsObject_GetCallbackFlags },
     { "GetContactPoint", IPhysicsObject_GetContactPoint },
     { "GetContents", IPhysicsObject_GetContents },

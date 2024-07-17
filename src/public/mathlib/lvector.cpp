@@ -273,10 +273,8 @@ static int Vector___index( lua_State *L )
         {
             LUA_METATABLE_INDEX_CHECK_TABLE( L );
         }
-        else
-        {
-            lua_pushnil( L );
-        }
+
+        lua_pushnil( L );
     }
 
     return 1;
@@ -491,11 +489,11 @@ static int QAngle___index( lua_State *L )
     QAngle angle = luaL_checkangle( L, 1 );
     const char *field = luaL_checkstring( L, 2 );
 
-    if ( strcmp( field, "x" ) == 0 || strcmp( field, "p" ) == 0 )
+    if ( strcmp( field, "x" ) == 0 || strcmp( field, "p" ) == 0 || strcmp( field, "pitch" ) == 0 )
         lua_pushnumber( L, angle.x );
-    else if ( strcmp( field, "y" ) == 0 || strcmp( field, "y" ) == 0 )
+    else if ( strcmp( field, "y" ) == 0 || strcmp( field, "y" ) == 0 || strcmp( field, "yaw" ) == 0 )
         lua_pushnumber( L, angle.y );
-    else if ( strcmp( field, "z" ) == 0 || strcmp( field, "r" ) == 0 )
+    else if ( strcmp( field, "z" ) == 0 || strcmp( field, "r" ) == 0 || strcmp( field, "roll" ) == 0 )
         lua_pushnumber( L, angle.z );
     else
     {
@@ -503,10 +501,8 @@ static int QAngle___index( lua_State *L )
         {
             LUA_METATABLE_INDEX_CHECK_TABLE( L );
         }
-        else
-        {
-            lua_pushnil( L );
-        }
+
+        lua_pushnil( L );
     }
 
     return 1;
@@ -515,12 +511,13 @@ static int QAngle___index( lua_State *L )
 static int QAngle___newindex( lua_State *L )
 {
     const char *field = luaL_checkstring( L, 2 );
-    if ( strcmp( field, "x" ) == 0 )
+    if ( strcmp( field, "x" ) == 0 || strcmp( field, "p" ) == 0 || strcmp( field, "pitch" ) == 0 )
         luaL_checkangle( L, 1 ).x = ( vec_t )luaL_checknumber( L, 3 );
-    else if ( strcmp( field, "y" ) == 0 )
+    else if ( strcmp( field, "y" ) == 0 || strcmp( field, "y" ) == 0 || strcmp( field, "yaw" ) == 0 )
         luaL_checkangle( L, 1 ).y = ( vec_t )luaL_checknumber( L, 3 );
-    else if ( strcmp( field, "z" ) == 0 )
+    else if ( strcmp( field, "z" ) == 0 || strcmp( field, "r" ) == 0 || strcmp( field, "roll" ) == 0 )
         luaL_checkangle( L, 1 ).z = ( vec_t )luaL_checknumber( L, 3 );
+
     return 0;
 }
 

@@ -9,7 +9,6 @@
 #include "luamanager.h"
 #include "lbaseanimating.h"
 #include "mathlib/lvector.h"
-#include "lvphysics_interface.h"
 #include "lbaseentity_shared.h"
 
 // memdbgon must be the last include file in a .cpp file!!!
@@ -76,12 +75,6 @@ static int CBaseAnimating_DoMuzzleFlash( lua_State *L )
     return 0;
 }
 
-static int CBaseAnimating_FindBodygroupByName( lua_State *L )
-{
-    lua_pushinteger( L, luaL_checkanimating( L, 1 )->FindBodygroupByName( luaL_checkstring( L, 2 ) ) );
-    return 1;
-}
-
 static int CBaseAnimating_FindTransitionSequence( lua_State *L )
 {
     lua_pushinteger(
@@ -104,25 +97,6 @@ static int CBaseAnimating_GetAttachmentLocal( lua_State *L )
 static int CBaseAnimating_GetBaseAnimating( lua_State *L )
 {
     lua_pushanimating( L, luaL_checkanimating( L, 1 )->GetBaseAnimating() );
-    return 1;
-}
-
-static int CBaseAnimating_GetBodygroup( lua_State *L )
-{
-    lua_pushinteger(
-        L, luaL_checkanimating( L, 1 )->GetBodygroup( luaL_checkinteger( L, 2 ) ) );
-    return 1;
-}
-
-static int CBaseAnimating_GetBodygroupCount( lua_State *L )
-{
-    lua_pushinteger( L, luaL_checkanimating( L, 1 )->GetBodygroupCount( luaL_checkinteger( L, 2 ) ) );
-    return 1;
-}
-
-static int CBaseAnimating_GetBodygroupName( lua_State *L )
-{
-    lua_pushstring( L, luaL_checkanimating( L, 1 )->GetBodygroupName( luaL_checkinteger( L, 2 ) ) );
     return 1;
 }
 
@@ -171,12 +145,6 @@ static int CBaseAnimating_GetHitboxSetName( lua_State *L )
 //   lua_pushnumber(L, luaL_checkanimating(L, 1)->GetModelWidthScale());
 //   return 1;
 // }
-
-static int CBaseAnimating_GetNumBodyGroups( lua_State *L )
-{
-    lua_pushinteger( L, luaL_checkanimating( L, 1 )->GetNumBodyGroups() );
-    return 1;
-}
 
 static int CBaseAnimating_GetNumFlexControllers( lua_State *L )
 {
@@ -425,12 +393,6 @@ static int CBaseAnimating_UseClientSideAnimation( lua_State *L )
     return 0;
 }
 
-static int CBaseAnimating_VPhysicsUpdate( lua_State *L )
-{
-    luaL_checkanimating( L, 1 )->VPhysicsUpdate( luaL_checkphysicsobject( L, 2 ) );
-    return 0;
-}
-
 static int CBaseAnimating___index( lua_State *L )
 {
     CBaseAnimating *pEntity = lua_toanimating( L, 1 );
@@ -508,14 +470,10 @@ static const luaL_Reg CBaseAnimatingmeta[] = {
       CBaseAnimating_ComputeEntitySpaceHitboxSurroundingBox },
     { "ComputeHitboxSurroundingBox", CBaseAnimating_ComputeHitboxSurroundingBox },
     { "DoMuzzleFlash", CBaseAnimating_DoMuzzleFlash },
-    { "FindBodygroupByName", CBaseAnimating_FindBodygroupByName },
     { "FindTransitionSequence", CBaseAnimating_FindTransitionSequence },
     { "GetAnimTimeInterval", CBaseAnimating_GetAnimTimeInterval },
     { "GetAttachmentLocal", CBaseAnimating_GetAttachmentLocal },
     { "GetBaseAnimating", CBaseAnimating_GetBaseAnimating },
-    { "GetBodygroup", CBaseAnimating_GetBodygroup },
-    { "GetBodygroupCount", CBaseAnimating_GetBodygroupCount },
-    { "GetBodygroupName", CBaseAnimating_GetBodygroupName },
     { "GetBonePosition", CBaseAnimating_GetBonePosition },
     { "GetCycle", CBaseAnimating_GetCycle },
     { "GetFlexDescFacs", CBaseAnimating_GetFlexDescFacs },
@@ -523,7 +481,6 @@ static const luaL_Reg CBaseAnimatingmeta[] = {
     { "GetHitboxSetCount", CBaseAnimating_GetHitboxSetCount },
     { "GetHitboxSetName", CBaseAnimating_GetHitboxSetName },
     //{"GetModelWidthScale", CBaseAnimating_GetModelWidthScale},
-    { "GetNumBodyGroups", CBaseAnimating_GetNumBodyGroups },
     { "GetNumFlexControllers", CBaseAnimating_GetNumFlexControllers },
     { "GetPlaybackRate", CBaseAnimating_GetPlaybackRate },
     { "GetPoseParameter", CBaseAnimating_GetPoseParameter },
@@ -562,7 +519,6 @@ static const luaL_Reg CBaseAnimatingmeta[] = {
     { "StudioFrameAdvance", CBaseAnimating_StudioFrameAdvance },
     { "TransferDissolveFrom", CBaseAnimating_TransferDissolveFrom },
     { "UseClientSideAnimation", CBaseAnimating_UseClientSideAnimation },
-    { "VPhysicsUpdate", CBaseAnimating_VPhysicsUpdate },
     { "__index", CBaseAnimating___index },
     { "__newindex", CBaseAnimating___newindex },
     { "__eq", CBaseAnimating___eq },

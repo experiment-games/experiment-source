@@ -64,6 +64,7 @@ util.CRC = function()
 end
 
 ents = {
+	Create = CreateEntityByName,
 	GetAll = function()
 		return EntityList.GetAllEntities()
     end,
@@ -380,6 +381,20 @@ ENTITY_META.EyeAngles = ENTITY_META.GetEyeAngles
 ENTITY_META.GetModel = ENTITY_META.GetModelName
 ENTITY_META.GetTable = ENTITY_META.GetRefTable
 ENTITY_META.GetClass = ENTITY_META.GetClassName
+ENTITY_META.NearestPoint = ENTITY_META.CalculateNearestPoint
+ENTITY_META.OBBCenter = ENTITY_META.GetOBBCenter
+ENTITY_META.OBBMaxs = ENTITY_META.GetOBBMaxs
+ENTITY_META.OBBMins = ENTITY_META.GetOBBMins
+ENTITY_META.LocalToWorld = ENTITY_META.EntityToWorldSpace
+
+function ENTITY_META:SetSpawnEffect(effect)
+    -- TODO: Implement
+    self.__spawnEffect = effect
+end
+
+function ENTITY_META:GetSpawnEffect()
+	return self.__spawnEffect
+end
 
 function ENTITY_META:SetNoDraw(bBool)
     if (bBool) then
@@ -969,7 +984,7 @@ require("gmod_compatibility/modules/saverestore")
 require("gmod_compatibility/modules/player_manager")
 require("gmod_compatibility/modules/numpad")
 require("gmod_compatibility/modules/team")
--- require("gmod_compatibility/modules/undo")
+require("gmod_compatibility/modules/undo")
 require("gmod_compatibility/modules/cleanup")
 require("gmod_compatibility/modules/duplicator")
 -- require("gmod_compatibility/modules/constraint")
