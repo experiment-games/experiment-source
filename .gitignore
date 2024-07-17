@@ -88,3 +88,4 @@ game/experiment/cache/*
 game/experiment/**/*.ztmp
 game/experiment/downloadlists/*
 game/experiment/cfg/settings.scr
+/src/thirdparty/protobuf-2.3.0/java/target
