@@ -19,6 +19,9 @@
 
 #ifdef CLIENT_DLL
 #include "cdll_util.h"
+#include "c_world.h"
+#else
+#include "world.h"
 #endif
 
 // memdbgon must be the last include file in a .cpp file!!!
@@ -195,12 +198,168 @@ static int luasrc_SharedRandomAngle( lua_State *L )
     return 1;
 }
 
+// TODO: Move this to seperate file and trace library
+class CTraceLuaFilter : public CTraceFilterSimple
+{
+   public:
+    CTraceLuaFilter( lua_State *L, int filterArg, int collisionGroup, bool ignoreWorld )
+        : CTraceFilterSimple( NULL, collisionGroup ),
+          m_pLuaState( L ),
+          m_ignoreWorld( ignoreWorld )
+    {
+        m_iFilterArgIndex = filterArg = lua_absindex( L, filterArg );
+        m_pPassEntity = nullptr;
+
+        if ( lua_isfunction( m_pLuaState, filterArg ) )
+        {
+            // Keep function arg on stack, ready to poll in ShouldHitEntity later
+            m_iFilterType = LUA_TFUNCTION;
+        }
+        else if ( lua_toentity( m_pLuaState, filterArg ) )
+        {
+            m_pPassEntity = lua_toentity( m_pLuaState, filterArg );
+            // No need to keep the entity on the stack
+            lua_remove( m_pLuaState, filterArg );
+        }
+        else if ( lua_istable( m_pLuaState, filterArg ) )
+        {
+            // Keep table on stack, ready to check in ShouldHitEntity later
+            // Might be a table of entities, or table of classnames
+            m_iFilterType = LUA_TTABLE;
+        }
+        else if ( !lua_isnil( m_pLuaState, filterArg ) )
+        {
+            luaL_typeerror( m_pLuaState, filterArg, "Entity, function, or table" );
+        }
+    }
+
+    virtual bool ShouldHitEntity( IHandleEntity *pHandleEntity, int contentsMask )
+    {
+        if ( m_ignoreWorld && pHandleEntity == GetWorldEntity() )
+            return false;
+
+        if ( m_iFilterType == LUA_TFUNCTION ) // TODO: Test this
+        {
+            lua_pushvalue( m_pLuaState, m_iFilterArgIndex );
+            lua_pushentity( m_pLuaState, EntityFromEntityHandle( pHandleEntity ) );
+            lua_call( m_pLuaState, 1, 1 );
+
+            if ( lua_isboolean( m_pLuaState, -1 ) )
+            {
+                bool bResult = lua_toboolean( m_pLuaState, -1 );
+                lua_pop( m_pLuaState, 1 );  // Pop the result
+                return bResult;
+            }
+            else if ( lua_toentity( m_pLuaState, -1 ) != NULL )
+            {
+                lua_CBaseEntity *pEntity = lua_toentity( m_pLuaState, -1 );
+                lua_pop( m_pLuaState, 1 );  // Pop the result
+
+                if ( pEntity == EntityFromEntityHandle( pHandleEntity ) )
+                {
+                    return true;
+                }
+
+                return false;
+            }
+
+            luaL_error( m_pLuaState, "Filter function must return a boolean or valid entity" );
+        }
+        else if ( m_iFilterType == LUA_TTABLE ) // TODO: Test this
+        {
+            lua_pushvalue( m_pLuaState, m_iFilterArgIndex );
+            lua_pushinteger( m_pLuaState, 1 );
+
+            while ( lua_next( m_pLuaState, -2 ) != 0 )
+            {
+                lua_CBaseEntity *pEntity = lua_toentity( m_pLuaState, -1 );
+                lua_pop( m_pLuaState, 1 );  // Pop the value
+
+                if ( pEntity != NULL )
+                {
+                    if ( pEntity == EntityFromEntityHandle( pHandleEntity ) )
+                    {
+                        lua_pop( m_pLuaState, 1 );  // Pop the table
+                        return true;
+                    }
+                }
+                else if ( lua_isstring( m_pLuaState, -1 ) )
+                {
+                    CBaseEntity *pEntity = EntityFromEntityHandle( pHandleEntity );
+                    if ( pEntity && FClassnameIs( pEntity, lua_tostring( m_pLuaState, -1 ) ) )
+                    {
+                        lua_pop( m_pLuaState, 1 );  // Pop the table
+                        return true;
+                    }
+                }
+
+                lua_pop( m_pLuaState, 1 );  // Pop the key
+            }
+
+            lua_pop( m_pLuaState, 1 );  // Pop the table
+            return false;
+        }
+        else if ( m_pPassEntity && m_pPassEntity == EntityFromEntityHandle( pHandleEntity ) )
+            // tested with:
+            // lua_run_cl table.Print(Util.TraceLine({start=LocalPlayer():GetShootPos(),endpos=LocalPlayer():GetShootPos()+(LocalPlayer():GetAimVector() * 100000),filter=LocalPlayer()}))
+        {
+            return false;
+        }
+
+        return CTraceFilterSimple::ShouldHitEntity( pHandleEntity, contentsMask );
+    }
+
+   private:
+    const IHandleEntity *m_pPassEntity;
+    lua_State *m_pLuaState;
+    int m_iFilterType;
+    int m_iFilterArgIndex;
+    bool m_ignoreWorld;
+
+#ifdef CLIENT_DLL  // Server has its own GetWorldEntity in world.h
+    C_BaseEntity *GetWorldEntity( void )
+    {
+        return GetClientWorldEntity();
+    }
+#endif
+};
+
 static int luasrc_Util_TraceLine( lua_State *L )
 {
+    // For quick compatibility with gmod we use its inconsistent naming in the trace table
+    luaL_checktype( L, 1, LUA_TTABLE );
+
+    lua_getfield( L, 1, "start" );
+    Vector vecStart = Vector( 0, 0, 0 );
+    vecStart = luaL_optvector( L, -1, &vecStart );
+    lua_pop( L, 1 );
+
+    lua_getfield( L, 1, "endpos" );
+    Vector vecEnd = Vector( 0, 0, 0 );
+    vecEnd = luaL_optvector( L, -1, &vecEnd );
+    lua_pop( L, 1 );
+
+    lua_getfield( L, 1, "mask" );
+    int mask = luaL_optnumber( L, -1, MASK_SOLID );
+    lua_pop( L, 1 );
+
+    lua_getfield( L, 1, "collisiongroup" );
+    int collisionGroup = luaL_optnumber( L, -1, COLLISION_GROUP_NONE );
+    lua_pop( L, 1 );
+
+    lua_getfield( L, 1, "ignoreworld" );
+    bool ignoreWorld = luaL_optboolean( L, -1, false );
+    lua_pop( L, 1 );
+
+    lua_getfield( L, 1, "filter" );
+    CTraceLuaFilter traceFilter( L, -1, collisionGroup, ignoreWorld );
+
     trace_t gameTrace;
-    UTIL_TraceLine( luaL_checkvector( L, 1 ), luaL_checkvector( L, 2 ), luaL_checkint( L, 3 ), lua_toentity( L, 4 ), luaL_checkint( L, 5 ), &gameTrace );
-    //lua_pushtrace( L, gameTrace );
-    /* For gmod compatibility we create a table with more values */
+    Ray_t ray;
+    ray.Init( vecStart, vecEnd );
+    enginetrace->TraceRay( ray, mask, &traceFilter, &gameTrace );
+
+    // For gmod compatibility we create a table with more values
     const surfacedata_t *pSurfaceData = physprops->GetSurfaceData( gameTrace.surface.surfaceProps );
     lua_newtable( L );
 
@@ -374,16 +533,7 @@ static int luasrc_Util_IsValidModel( lua_State *L )
     }
 
     // Invalid if the string contains any of the following
-    if ( Q_strstr( pszModel, "_gestures" )
-        || Q_strstr( pszModel, "_animations" )
-        || Q_strstr( pszModel, "_postures" )
-        || Q_strstr( pszModel, "_gst" )
-        || Q_strstr( pszModel, "_pst" )
-        || Q_strstr( pszModel, "_shd" )
-        || Q_strstr( pszModel, "_ss" )
-        || Q_strstr( pszModel, "_anm" )
-        || Q_strstr( pszModel, ".bsp" )
-        || Q_strstr( pszModel, "cs_fix" ) )
+    if ( Q_strstr( pszModel, "_gestures" ) || Q_strstr( pszModel, "_animations" ) || Q_strstr( pszModel, "_postures" ) || Q_strstr( pszModel, "_gst" ) || Q_strstr( pszModel, "_pst" ) || Q_strstr( pszModel, "_shd" ) || Q_strstr( pszModel, "_ss" ) || Q_strstr( pszModel, "_anm" ) || Q_strstr( pszModel, ".bsp" ) || Q_strstr( pszModel, "cs_fix" ) )
     {
         lua_pushboolean( L, false );
         return 1;
@@ -417,7 +567,7 @@ static int luasrc_Util_IsValidModel( lua_State *L )
     return 1;
 }
 
-static int luasrc_Util_IsValidPhysicsProp(lua_State* L)
+static int luasrc_Util_IsValidPhysicsProp( lua_State *L )
 {
     const char *pszModel = luaL_checkstring( L, 1 );
 
@@ -445,7 +595,6 @@ static int luasrc_Util_IsValidPhysicsProp(lua_State* L)
 
     lua_pushboolean( L, true );
     return 1;
-
 }
 
 static int luasrc_Util_ShouldShowBlood( lua_State *L )
