@@ -28,7 +28,6 @@ LFrame::LFrame( Panel *parent, const char *panelName, bool showTaskbarIcon, lua_
     : Frame( parent, panelName, showTaskbarIcon )
 {
     m_lua_State = L;
-    MakeReadyForUse();
 }
 
 //-----------------------------------------------------------------------------

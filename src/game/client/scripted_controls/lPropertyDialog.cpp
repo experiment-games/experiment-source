@@ -30,7 +30,6 @@ LPropertyDialog::LPropertyDialog( Panel *parent, const char *panelName, lua_Stat
     : PropertyDialog( parent, panelName )
 {
     m_lua_State = L;
-    MakeReadyForUse();
 }
 
 //-----------------------------------------------------------------------------

@@ -27,7 +27,6 @@ LPropertyPage::LPropertyPage( Panel *parent, const char *panelName, lua_State *L
     : PropertyPage( parent, panelName )
 {
     m_lua_State = L;
-    MakeReadyForUse();
 }
 
 //-----------------------------------------------------------------------------

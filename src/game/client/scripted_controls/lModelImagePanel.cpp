@@ -54,7 +54,6 @@ LModelImagePanel::LModelImagePanel( Panel *parent, const char *panelName, lua_St
     m_iSkin = 0;
     m_pszBodyGroups = NULL;
     m_nTextureID = -1;
-    MakeReadyForUse();
 }
 
 LModelImagePanel::~LModelImagePanel()

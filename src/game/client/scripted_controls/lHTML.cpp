@@ -20,7 +20,6 @@ LHTML::LHTML( Panel *parent, const char *name, bool allowJavaScript, bool bPopup
     : HTML( parent, name, allowJavaScript, bPopupWindow )
 {
     m_lua_State = L;
-    MakeReadyForUse();
 }
 
 void LHTML::PushPanelToLua( lua_State *L )

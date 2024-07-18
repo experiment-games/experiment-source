@@ -28,7 +28,6 @@ LCheckButton::LCheckButton( Panel *parent, const char *panelName, const char *te
     : CheckButton( parent, panelName, text )
 {
     m_lua_State = L;
-    MakeReadyForUse();  // Label derived classes already get made ready somewhere (TODO: Understand where)
 }
 
 //-----------------------------------------------------------------------------

@@ -23,7 +23,6 @@ LLabel::LLabel( Panel *parent, const char *panelName, const char *text, lua_Stat
     : Label( parent, panelName, text )
 {
     m_lua_State = L;
-    MakeReadyForUse();  // Label derived classes already get made ready somewhere (TODO: Understand where)
 }
 
 void LLabel::PushPanelToLua( lua_State *L )

@@ -20,7 +20,6 @@ LButton::LButton( Panel *parent, const char *panelName, const char *text, Panel 
     : Button( parent, panelName, text, pActionSignalTarget, pCmd )
 {
     m_lua_State = L;
-    MakeReadyForUse(); // Label derived classes already get made ready somewhere (TODO: Understand where)
 }
 
 void LButton::PushPanelToLua( lua_State *L )

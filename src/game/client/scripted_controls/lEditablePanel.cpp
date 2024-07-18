@@ -24,7 +24,6 @@ LEditablePanel::LEditablePanel( Panel *parent, const char *panelName, lua_State 
     : EditablePanel( parent, panelName )
 {
     m_lua_State = L;
-    MakeReadyForUse();
 }
 
 LEditablePanel::~LEditablePanel()

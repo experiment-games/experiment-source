@@ -680,10 +680,6 @@ Panel::Panel( Panel *parent, const char *panelName, lua_State *L )
     : Panel( parent, panelName )
 {
     m_lua_State = L;
-
-    // We call this so the scheme is applied and the NEEDS_SCHEME_UPDATE flag is cleared
-    // Otherwise InternalPerformLayout wont get past that flag check
-    MakeReadyForUse();
 }
 
 //-----------------------------------------------------------------------------
@@ -1238,17 +1234,14 @@ void Panel::Think()
             m_pTooltips->PerformLayout();
         }
 
-#ifdef LUA_SDK
-        BEGIN_LUA_CALL_PANEL_METHOD( "Think" );
-        END_LUA_CALL_PANEL_METHOD( 0, 0 );
-
-        // We initiate perform layout inside RecurseLayout (recursively for children too)
-        RecurseLayout();
-#else
         if ( _flags.IsFlagSet( NEEDS_LAYOUT ) )
         {
             InternalPerformLayout();
         }
+
+#ifdef LUA_SDK
+        BEGIN_LUA_CALL_PANEL_METHOD( "Think" );
+        END_LUA_CALL_PANEL_METHOD( 0, 0 );
 #endif
     }
 
@@ -3914,10 +3907,10 @@ Dock::Type Panel::GetDock()
 */
 void Panel::RecurseLayout()
 {
-    if ( _flags.IsFlagSet( NEEDS_LAYOUT ) )
-    {
-        InternalPerformLayout();
-    }
+    //if ( _flags.IsFlagSet( NEEDS_LAYOUT ) )
+    //{
+    //    InternalPerformLayout();
+    //}
 
     // Start calculating the dock layout sizes
     // Assume 0, 0 as the starting point. True positioning will occur in PostLayout
@@ -4406,6 +4399,8 @@ void Panel::PerformLayout()
     lua_pushinteger( m_lua_State, tall );
     END_LUA_CALL_PANEL_METHOD( 2, 0 );
 
+    // We initiate perform layout inside RecurseLayout (recursively for children too)
+    RecurseLayout();
     // Hack so we can implement Docking in Lua (see game/experiment/lua/includes/extensions/panel.lua)
     /*if ( m_lua_State && m_nTableReference >= 0 )
     {

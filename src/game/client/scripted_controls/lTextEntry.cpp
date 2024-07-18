@@ -22,7 +22,6 @@ LTextEntry::LTextEntry( Panel *parent, const char *panelName, lua_State *L )
     : TextEntry( parent, panelName )
 {
     m_lua_State = L;
-    MakeReadyForUse();
 }
 
 void LTextEntry::PushPanelToLua( lua_State *L )
