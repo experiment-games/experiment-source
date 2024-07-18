@@ -22,6 +22,7 @@ LTextEntry::LTextEntry( Panel *parent, const char *panelName, lua_State *L )
     : TextEntry( parent, panelName )
 {
     m_lua_State = L;
+    MakeReadyForUse();
 }
 
 void LTextEntry::PushPanelToLua( lua_State *L )
@@ -46,9 +47,9 @@ LUA_API lua_TextEntry *lua_totextentry( lua_State *L, int idx )
 ** push functions (C -> stack)
 */
 
-LUA_API void lua_pushtextentry( lua_State *L, TextEntry *pTextEntry )
+LUA_API void lua_pushtextentry( lua_State *L, lua_TextEntry *pTextEntry )
 {
-    LUA_PUSH_PANEL_USERDATA( L, pTextEntry, LTextEntry, "TextEntry" );
+    LUA_PUSH_PANEL_USERDATA( L, pTextEntry, lua_TextEntry, "TextEntry" );
 }
 
 LUALIB_API lua_TextEntry *luaL_checktextentry( lua_State *L, int narg )
@@ -499,6 +500,7 @@ static int TextEntry___index( lua_State *L )
 static int TextEntry___newindex( lua_State *L )
 {
     TextEntry *pTextEntry = lua_totextentry( L, 1 );
+
     if ( pTextEntry == NULL )
     { /* avoid extra test when d is not 0 */
         lua_Debug ar1;
@@ -509,25 +511,14 @@ static int TextEntry___newindex( lua_State *L )
         lua_pushfstring( L, "%s:%d: attempt to index an INVALID_PANEL", ar2.short_src, ar1.currentline );
         return lua_error( L );
     }
+
     LTextEntry *plTextEntry = dynamic_cast< LTextEntry * >( pTextEntry );
-    if ( plTextEntry )
-    {
-        LUA_GET_REF_TABLE( L, plTextEntry );
-        lua_pushvalue( L, 3 );
-        lua_setfield( L, -2, luaL_checkstring( L, 2 ) );
-        lua_pop( L, 1 );
-        return 0;
-    }
-    else
-    {
-        lua_Debug ar1;
-        lua_getstack( L, 1, &ar1 );
-        lua_getinfo( L, "fl", &ar1 );
-        lua_Debug ar2;
-        lua_getinfo( L, ">S", &ar2 );
-        lua_pushfstring( L, "%s:%d: attempt to index a non-scripted panel", ar2.short_src, ar1.currentline );
-        return lua_error( L );
-    }
+
+    LUA_GET_REF_TABLE( L, plTextEntry );
+    lua_pushvalue( L, 3 );
+    lua_setfield( L, -2, luaL_checkstring( L, 2 ) );
+    lua_pop( L, 1 );
+    return 0;
 }
 
 static int TextEntry___eq( lua_State *L )
@@ -629,11 +620,11 @@ static const luaL_Reg TextEntrymeta[] = {
 
 static int luasrc_TextEntry( lua_State *L )
 {
-    TextEntry *pTextEntry =
-        new LTextEntry( luaL_optpanel( L, 1, VGui_GetClientLuaRootPanel() ),
+    lua_TextEntry *pPanel =
+        new lua_TextEntry( luaL_optpanel( L, 1, VGui_GetClientLuaRootPanel() ),
                         luaL_optstring( L, 2, "TextEntry" ),
                         L );
-    lua_pushtextentry( L, pTextEntry );
+    lua_pushtextentry( L, pPanel );
     return 1;
 }
 

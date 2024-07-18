@@ -2085,7 +2085,9 @@ static int CBaseEntity___newindex( lua_State *L )
         lua_pushfstring( L, "%s:%d: attempt to index a NULL entity", ar2.short_src, ar1.currentline );
         return lua_error( L );
     }
+
     const char *field = luaL_checkstring( L, 2 );
+
     if ( Q_strcmp( field, "m_bAllowPrecache" ) == 0 )
         pEntity->m_bAllowPrecache = luaL_checkboolean( L, 3 );
     else if ( Q_strcmp( field, "m_flAnimTime" ) == 0 )
@@ -2111,6 +2113,7 @@ static int CBaseEntity___newindex( lua_State *L )
         lua_setfield( L, -2, field );
         lua_pop( L, 1 );
     }
+
     return 0;
 }
 

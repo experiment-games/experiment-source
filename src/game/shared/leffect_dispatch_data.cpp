@@ -126,6 +126,7 @@ static int CEffectData___newindex( lua_State *L )
 {
     CEffectData data = luaL_checkeffect( L, 1 );
     const char *field = luaL_checkstring( L, 2 );
+
     if ( Q_strcmp( field, "m_fFlags" ) == 0 )
         data.m_fFlags = luaL_checkint( L, 3 );
     else if ( Q_strcmp( field, "m_flMagnitude" ) == 0 )
@@ -159,6 +160,7 @@ static int CEffectData___newindex( lua_State *L )
         data.m_vOrigin = luaL_checkvector( L, 3 );
     else if ( Q_strcmp( field, "m_vStart" ) == 0 )
         data.m_vStart = luaL_checkvector( L, 3 );
+
     return 0;
 }
 

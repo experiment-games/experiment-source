@@ -68,6 +68,7 @@ game/experiment/textwindow_temp.html
 game/experiment/logs/*
 game/experiment/lua_cache/*
 game/experiment/materials/spawnicons/*
+game/experiment/screenshots/*
 
 # shader files
 *.tmp

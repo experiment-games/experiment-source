@@ -26,6 +26,14 @@ class LHTML : public HTML
 
     bool IsLoading() { return m_bIsLoading; }
 
+   protected:
+    virtual void ApplySchemeSettings( vgui::IScheme *pScheme )
+    {
+        BaseClass::ApplySchemeSettings( pScheme );
+        BEGIN_LUA_CALL_PANEL_METHOD( "ApplySchemeSettings" );
+        END_LUA_CALL_PANEL_METHOD( 0, 0 );
+    }
+
    private:
     bool m_bIsLoading;
 };
@@ -33,7 +41,7 @@ class LHTML : public HTML
 }  // namespace vgui
 
 /* type for HTML functions */
-typedef vgui::HTML lua_HTML;
+typedef LHTML lua_HTML;
 
 /*
 ** access functions (stack -> C)

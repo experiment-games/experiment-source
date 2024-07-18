@@ -27,9 +27,8 @@ using namespace vgui;
 LFrame::LFrame( Panel *parent, const char *panelName, bool showTaskbarIcon, lua_State *L )
     : Frame( parent, panelName, showTaskbarIcon )
 {
-#if defined( LUA_SDK )
     m_lua_State = L;
-#endif
+    MakeReadyForUse();
 }
 
 //-----------------------------------------------------------------------------
@@ -61,9 +60,9 @@ LUA_API lua_Frame *lua_toframe( lua_State *L, int idx )
 ** push functions (C -> stack)
 */
 
-LUA_API void lua_pushframe( lua_State *L, Frame *pFrame )
+LUA_API void lua_pushframe( lua_State *L, lua_Frame *pFrame )
 {
-    LUA_PUSH_PANEL_USERDATA( L, pFrame, LFrame, "Frame" );
+    LUA_PUSH_PANEL_USERDATA( L, pFrame, lua_Frame, "Frame" );
 }
 
 LUALIB_API lua_Frame *luaL_checkframe( lua_State *L, int narg )
@@ -391,26 +390,12 @@ static int Frame___newindex( lua_State *L )
 
     LFrame *plFrame = dynamic_cast< LFrame * >( pFrame );
 
-    if ( plFrame )
-    {
-        LUA_GET_REF_TABLE( L, plFrame );
-        lua_pushvalue( L, 3 );
-        lua_setfield( L, -2, luaL_checkstring( L, 2 ) );
-        lua_pop( L, 1 );
+    LUA_GET_REF_TABLE( L, plFrame );
+    lua_pushvalue( L, 3 );
+    lua_setfield( L, -2, luaL_checkstring( L, 2 ) );
+    lua_pop( L, 1 );
 
-        return 0;
-    }
-    else
-    {
-        lua_Debug ar1;
-        lua_getstack( L, 1, &ar1 );
-        lua_getinfo( L, "fl", &ar1 );
-        lua_Debug ar2;
-        lua_getinfo( L, ">S", &ar2 );
-        lua_pushfstring( L, "%s:%d: attempt to index a non-scripted panel", ar2.short_src, ar1.currentline );
-
-        return lua_error( L );
-    }
+    return 0;
 }
 
 static int Frame___eq( lua_State *L )
@@ -490,12 +475,12 @@ static const luaL_Reg Framemeta[] = {
 
 static int luasrc_Frame( lua_State *L )
 {
-    Frame *pFrame =
-        new LFrame( luaL_optpanel( L, 1, VGui_GetClientLuaRootPanel() ),
+    lua_Frame *pPanel =
+        new lua_Frame( luaL_optpanel( L, 1, VGui_GetClientLuaRootPanel() ),
                     luaL_optstring( L, 2, NULL ),
                     luaL_optboolean( L, 3, true ),
                     L );
-    lua_pushframe( L, pFrame );
+    lua_pushframe( L, pPanel );
     return 1;
 }
 

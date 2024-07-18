@@ -154,7 +154,9 @@ struct Size
     }
 };
 
-enum DockStyle
+namespace Dock
+{
+enum Type
 {
     None = 0,
     Fill = 1,
@@ -163,6 +165,22 @@ enum DockStyle
     Top = 4,
     Bottom = 5,
 };
+}
+
+namespace Alignment
+{
+enum Type
+{
+    None = 0,
+    Left = ( 1 << 1 ),
+    Right = ( 1 << 2 ),
+    Top = ( 1 << 3 ),
+    Bottom = ( 1 << 4 ),
+    CenterVertical = ( 1 << 5 ),
+    CenterHorizontal = ( 1 << 6 ),
+    Center = CenterVertical | CenterHorizontal,
+};
+}
 #endif
 
 //=============================================================================
@@ -210,11 +228,12 @@ class Panel : public IClientPanel, virtual IForceVirtualInheritancePanel
     bool m_bIsPaintClipping = true;
     int m_nLastLocalCursorX = 0;
     int m_nLastLocalCursorY = 0;
+    int m_AlignmentMask = Alignment::None; // Let it be absolutely positioned by its x and y
     Thickness m_DockPadding;
     Thickness m_DockMargin;
     Size m_InnerBounds;
-    DockStyle m_DockStyle = DockStyle::None;
-    CUtlDict<int, int> m_PreparedFunctions;
+    Dock::Type m_DockStyle = Dock::None;
+    CUtlDict< int, int > m_PreparedFunctions;
 
    public:
     int m_nTableReference;
@@ -227,18 +246,41 @@ class Panel : public IClientPanel, virtual IForceVirtualInheritancePanel
     virtual void UpdatePreparedFunctions();
 
     virtual void RecurseLayout();
+    virtual void Position( int alignmentBitmask, int xpadding = 0, int ypadding = 0 );
+    virtual void PostLayout();
 
     virtual void GetChildrenSize( int &wide, int &tall );
-    virtual void SizeToChildren( bool w = true, bool h = true );
+    virtual void SizeToChildren( bool w = false, bool h = false );
 
-    virtual void SetDock( DockStyle dockStyle );
-    virtual DockStyle GetDock();
+    void SetDock( Dock::Type dockStyle );
+    Dock::Type GetDock();
 
-    virtual void SetDockPadding( Thickness padding );
-    virtual Thickness GetDockPadding();
+    void SetDockPadding( Thickness padding );
+    Thickness GetDockPadding();
 
-    virtual void SetDockMargin( Thickness padding );
-    virtual Thickness GetDockMargin();
+    void SetDockMargin( Thickness padding );
+    Thickness GetDockMargin();
+
+    void SetAlignment( int alignmentBitmask )
+    {
+        if ( m_AlignmentMask == alignmentBitmask )
+        {
+            return;
+        }
+
+        m_AlignmentMask = alignmentBitmask;
+        InvalidateLayout();
+    }
+
+    int GetAlignment() const
+    {
+        return m_AlignmentMask;
+    }
+
+    void Center()
+    {
+        SetAlignment( Alignment::Center );
+    }
 
     virtual void InvalidateParentLayout( bool layoutNow = false, bool reloadScheme = false )
     {
@@ -249,7 +291,24 @@ class Panel : public IClientPanel, virtual IForceVirtualInheritancePanel
         }
     }
 
-    virtual void GetLocalCursorPosition( int& x, int& y )
+    virtual void InvalidateChildrenLayout(bool bRecursive = false)
+    {
+        for ( int i = 0; i < GetChildCount(); i++ )
+        {
+            Panel *child = GetChild( i );
+            if ( !child )
+                continue;
+
+            child->InvalidateLayout( true, false );
+
+            if ( bRecursive )
+            {
+                child->InvalidateChildrenLayout( true );
+            }
+        }
+    }
+
+    virtual void GetLocalCursorPosition( int &x, int &y )
     {
         x = m_nLastLocalCursorX;
         y = m_nLastLocalCursorY;
@@ -443,8 +502,8 @@ class Panel : public IClientPanel, virtual IForceVirtualInheritancePanel
     virtual void SetBuildGroup( BuildGroup *buildGroup );
     virtual bool IsBuildGroupEnabled();
     virtual bool IsCursorNone();
-    virtual bool IsCursorOver();              // returns true if the cursor is currently over the panel
-    virtual void MarkForDeletion();           // object will free it's memory next tick
+    virtual bool IsCursorOver();     // returns true if the cursor is currently over the panel
+    virtual void MarkForDeletion();  // object will free it's memory next tick
     virtual bool IsMarkedForDeletion();
     virtual bool IsLayoutInvalid();           // does this object require a perform layout?
     virtual Panel *HasHotkey( wchar_t key );  // returns the panel that has this hotkey
@@ -831,6 +890,7 @@ class Panel : public IClientPanel, virtual IForceVirtualInheritancePanel
 
     MESSAGE_FUNC_ENUM_ENUM( OnRequestFocus, "OnRequestFocus", VPANEL, subFocus, VPANEL, defaultPanel );
     MESSAGE_FUNC_INT_INT( OnScreenSizeChanged, "OnScreenSizeChanged", oldwide, oldtall );
+
     virtual void *QueryInterface( EInterfaceID id );
 
     void AddToOverridableColors( Color *pColor, char const *scriptname )

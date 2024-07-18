@@ -999,6 +999,7 @@ static int CBaseCombatWeapon___index( lua_State *L )
 static int CBaseCombatWeapon___newindex( lua_State *L )
 {
     CBaseCombatWeapon *pWeapon = lua_toweapon( L, 1 );
+
     if ( pWeapon == NULL )
     { /* avoid extra test when d is not 0 */
         lua_Debug ar1;
@@ -1009,7 +1010,9 @@ static int CBaseCombatWeapon___newindex( lua_State *L )
         lua_pushfstring( L, "%s:%d: attempt to index a NULL entity", ar2.short_src, ar1.currentline );
         return lua_error( L );
     }
+
     const char *field = luaL_checkstring( L, 2 );
+
     if ( Q_strcmp( field, "m_bAltFiresUnderwater" ) == 0 )
         pWeapon->m_bAltFiresUnderwater = luaL_checkboolean( L, 3 );
     else if ( Q_strcmp( field, "m_bFireOnEmpty" ) == 0 )
@@ -1066,6 +1069,7 @@ static int CBaseCombatWeapon___newindex( lua_State *L )
         lua_setfield( L, -2, field );
         lua_pop( L, 1 );
     }
+
     return 0;
 }
 

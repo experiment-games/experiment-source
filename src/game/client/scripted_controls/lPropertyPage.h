@@ -49,6 +49,12 @@ class LPropertyPage : public PropertyPage
     // if overridden this must be chained back to
     MESSAGE_FUNC_PTR( OnPageTabActivated, "PageTabActivated", panel );
 
+    virtual void ApplySchemeSettings( vgui::IScheme *pScheme )
+    {
+        BaseClass::ApplySchemeSettings( pScheme );
+        BEGIN_LUA_CALL_PANEL_METHOD( "ApplySchemeSettings" );
+        END_LUA_CALL_PANEL_METHOD( 0, 0 );
+    }
    private:
     PHandle _pageTab;
 
@@ -73,7 +79,7 @@ class LPropertyPage : public PropertyPage
             ++args;
 
 /* type for PropertyPage functions */
-typedef vgui::PropertyPage lua_PropertyPage;
+typedef LPropertyPage lua_PropertyPage;
 
 /*
 ** access functions (stack -> C)

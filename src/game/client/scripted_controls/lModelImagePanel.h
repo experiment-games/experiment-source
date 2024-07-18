@@ -15,7 +15,7 @@ class LModelImagePanel : public EditablePanel
 
    public:
     LModelImagePanel( Panel *parent, const char *panelName, lua_State *L );
-    virtual  ~LModelImagePanel();
+    virtual ~LModelImagePanel();
     virtual void PushPanelToLua( lua_State *L );
 
     virtual void RebuildSpawnIcon( Camera_t *camera = NULL, const char *pszSavePath = NULL );
@@ -31,6 +31,13 @@ class LModelImagePanel : public EditablePanel
     int m_nTextureID;
 
     virtual void LoadIfExistsOrRebuild();
+
+    virtual void ApplySchemeSettings( vgui::IScheme *pScheme )
+    {
+        BaseClass::ApplySchemeSettings( pScheme );
+        BEGIN_LUA_CALL_PANEL_METHOD( "ApplySchemeSettings" );
+        END_LUA_CALL_PANEL_METHOD( 0, 0 );
+    }
 
    public:
     virtual void SetModel( const char *modelPath, int skin = 0, const char *bodyGroups = NULL )

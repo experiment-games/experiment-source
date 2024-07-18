@@ -29,9 +29,8 @@ using namespace vgui;
 LPropertyDialog::LPropertyDialog( Panel *parent, const char *panelName, lua_State *L )
     : PropertyDialog( parent, panelName )
 {
-#if defined( LUA_SDK )
     m_lua_State = L;
-#endif
+    MakeReadyForUse();
 }
 
 //-----------------------------------------------------------------------------
@@ -152,9 +151,9 @@ LUA_API lua_PropertyDialog *lua_topropertydialog( lua_State *L, int idx )
 ** push functions (C -> stack)
 */
 
-LUA_API void lua_pushpropertydialog( lua_State *L, PropertyDialog *pDialog )
+LUA_API void lua_pushpropertydialog( lua_State *L, lua_PropertyDialog *pDialog )
 {
-    LUA_PUSH_PANEL_USERDATA( L, pDialog, LPropertyDialog, "PropertyDialog" );
+    LUA_PUSH_PANEL_USERDATA( L, pDialog, lua_PropertyDialog, "PropertyDialog" );
 }
 
 LUALIB_API lua_PropertyDialog *luaL_checkpropertydialog( lua_State *L,
@@ -305,6 +304,7 @@ static int PropertyDialog___index( lua_State *L )
 static int PropertyDialog___newindex( lua_State *L )
 {
     PropertyDialog *pDialog = lua_topropertydialog( L, 1 );
+
     if ( pDialog == NULL )
     { /* avoid extra test when d is not 0 */
         lua_Debug ar1;
@@ -315,25 +315,14 @@ static int PropertyDialog___newindex( lua_State *L )
         lua_pushfstring( L, "%s:%d: attempt to index an INVALID_PANEL", ar2.short_src, ar1.currentline );
         return lua_error( L );
     }
+
     LPropertyDialog *plDialog = dynamic_cast< LPropertyDialog * >( pDialog );
-    if ( plDialog )
-    {
-        LUA_GET_REF_TABLE( L, plDialog );
-        lua_pushvalue( L, 3 );
-        lua_setfield( L, -2, luaL_checkstring( L, 2 ) );
-        lua_pop( L, 1 );
-        return 0;
-    }
-    else
-    {
-        lua_Debug ar1;
-        lua_getstack( L, 1, &ar1 );
-        lua_getinfo( L, "fl", &ar1 );
-        lua_Debug ar2;
-        lua_getinfo( L, ">S", &ar2 );
-        lua_pushfstring( L, "%s:%d: attempt to index a non-scripted panel", ar2.short_src, ar1.currentline );
-        return lua_error( L );
-    }
+
+    LUA_GET_REF_TABLE( L, plDialog );
+    lua_pushvalue( L, 3 );
+    lua_setfield( L, -2, luaL_checkstring( L, 2 ) );
+    lua_pop( L, 1 );
+    return 0;
 }
 
 static int PropertyDialog___eq( lua_State *L )
@@ -385,11 +374,11 @@ static const luaL_Reg PropertyDialogmeta[] = {
 
 static int luasrc_PropertyDialog( lua_State *L )
 {
-    PropertyDialog *pDialog =
-        new LPropertyDialog( luaL_optpanel( L, 1, VGui_GetClientLuaRootPanel() ),
+    lua_PropertyDialog *pPanel =
+        new lua_PropertyDialog( luaL_optpanel( L, 1, VGui_GetClientLuaRootPanel() ),
                              luaL_checkstring( L, 2 ),
                              L );
-    lua_pushpropertydialog( L, pDialog );
+    lua_pushpropertydialog( L, pPanel );
     return 1;
 }
 

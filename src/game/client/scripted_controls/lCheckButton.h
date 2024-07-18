@@ -35,12 +35,19 @@ class LCheckButton : public CheckButton
 
    protected:
     MESSAGE_FUNC( OnCheckButtonChecked, "CheckButtonChecked" );
+
+    virtual void ApplySchemeSettings( vgui::IScheme *pScheme )
+    {
+        BaseClass::ApplySchemeSettings( pScheme );
+        BEGIN_LUA_CALL_PANEL_METHOD( "ApplySchemeSettings" );
+        END_LUA_CALL_PANEL_METHOD( 0, 0 );
+    }
 };
 
 }  // namespace vgui
 
 /* type for CheckButton functions */
-typedef vgui::CheckButton lua_CheckButton;
+typedef LCheckButton lua_CheckButton;
 
 /*
 ** access functions (stack -> C)

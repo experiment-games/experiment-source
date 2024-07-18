@@ -22,12 +22,20 @@ class LButton : public Button
    public:
     virtual void DoClick( void );
     virtual void PushPanelToLua( lua_State *L );
+
+   protected:
+    virtual void ApplySchemeSettings( vgui::IScheme *pScheme )
+    {
+        BaseClass::ApplySchemeSettings( pScheme );
+        BEGIN_LUA_CALL_PANEL_METHOD( "ApplySchemeSettings" );
+        END_LUA_CALL_PANEL_METHOD( 0, 0 );
+    }
 };
 
 }  // namespace vgui
 
 /* type for Button functions */
-typedef vgui::Button lua_Button;
+typedef LButton lua_Button;
 
 /*
 ** access functions (stack -> C)

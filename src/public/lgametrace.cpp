@@ -144,6 +144,7 @@ static int CGameTrace___index( lua_State *L )
 static int CGameTrace___newindex( lua_State *L )
 {
     const char *field = luaL_checkstring( L, 2 );
+
     if ( Q_strcmp( field, "allsolid" ) == 0 )
         luaL_checktrace( L, 1 ).allsolid = luaL_checkboolean( L, 3 );
     else if ( Q_strcmp( field, "contents" ) == 0 )
@@ -168,6 +169,7 @@ static int CGameTrace___newindex( lua_State *L )
         luaL_checktrace( L, 1 ).startpos = luaL_checkvector( L, 3 );
     else if ( Q_strcmp( field, "startsolid" ) == 0 )
         luaL_checktrace( L, 1 ).startsolid = luaL_checkboolean( L, 3 );
+
     return 0;
 }
 

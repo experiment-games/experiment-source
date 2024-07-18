@@ -20,6 +20,7 @@ LButton::LButton( Panel *parent, const char *panelName, const char *text, Panel 
     : Button( parent, panelName, text, pActionSignalTarget, pCmd )
 {
     m_lua_State = L;
+    MakeReadyForUse(); // Label derived classes already get made ready somewhere (TODO: Understand where)
 }
 
 void LButton::PushPanelToLua( lua_State *L )
@@ -54,9 +55,9 @@ LUA_API lua_Button *lua_tobutton( lua_State *L, int idx )
 ** push functions (C -> stack)
 */
 
-LUA_API void lua_pushbutton( lua_State *L, Button *pButton )
+LUA_API void lua_pushbutton( lua_State *L, lua_Button *pButton )
 {
-    LUA_PUSH_PANEL_USERDATA( L, pButton, LButton, "Button" );
+    LUA_PUSH_PANEL_USERDATA( L, pButton, lua_Button, "Button" );
 }
 
 LUALIB_API lua_Button *luaL_checkbutton( lua_State *L, int narg )
@@ -304,6 +305,7 @@ static int Button___index( lua_State *L )
 static int Button___newindex( lua_State *L )
 {
     Button *pButton = lua_tobutton( L, 1 );
+
     if ( pButton == NULL )
     { /* avoid extra test when d is not 0 */
         lua_Debug ar1;
@@ -314,26 +316,15 @@ static int Button___newindex( lua_State *L )
         lua_pushfstring( L, "%s:%d: attempt to index an INVALID_PANEL", ar2.short_src, ar1.currentline );
         return lua_error( L );
     }
-    LButton *plButton = dynamic_cast< LButton * >( pButton );
-    if ( plButton )
-    {
-        LUA_GET_REF_TABLE( L, plButton );
-        lua_pushvalue( L, 3 );
-        lua_setfield( L, -2, luaL_checkstring( L, 2 ) );
-        lua_pop( L, 1 );
 
-        return 0;
-    }
-    else
-    {
-        lua_Debug ar1;
-        lua_getstack( L, 1, &ar1 );
-        lua_getinfo( L, "fl", &ar1 );
-        lua_Debug ar2;
-        lua_getinfo( L, ">S", &ar2 );
-        lua_pushfstring( L, "%s:%d: attempt to index a non-scripted panel", ar2.short_src, ar1.currentline );
-        return lua_error( L );
-    }
+    LButton *plButton = dynamic_cast< LButton * >( pButton );
+
+    LUA_GET_REF_TABLE( L, plButton );
+    lua_pushvalue( L, 3 );
+    lua_setfield( L, -2, luaL_checkstring( L, 2 ) );
+    lua_pop( L, 1 );
+
+    return 0;
 }
 
 static int Button___eq( lua_State *L )
@@ -402,14 +393,14 @@ static const luaL_Reg Buttonmeta[] = {
 
 static int luasrc_Button( lua_State *L )
 {
-    Button *pButton =
-        new LButton( luaL_optpanel( L, 1, VGui_GetClientLuaRootPanel() ),
+    lua_Button *pPanel =
+        new lua_Button( luaL_optpanel( L, 1, VGui_GetClientLuaRootPanel() ),
                      luaL_checkstring( L, 2 ),
                      luaL_optstring( L, 3, "Button" ),
                      luaL_optpanel( L, 4, 0 ),
                      luaL_optstring( L, 5, 0 ),
                      L );
-    lua_pushbutton( L, pButton );
+    lua_pushbutton( L, pPanel );
     return 1;
 }
 

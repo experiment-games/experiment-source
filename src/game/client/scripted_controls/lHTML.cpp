@@ -20,6 +20,7 @@ LHTML::LHTML( Panel *parent, const char *name, bool allowJavaScript, bool bPopup
     : HTML( parent, name, allowJavaScript, bPopupWindow )
 {
     m_lua_State = L;
+    MakeReadyForUse();
 }
 
 void LHTML::PushPanelToLua( lua_State *L )
@@ -57,9 +58,9 @@ LUA_API lua_HTML *lua_tohtml( lua_State *L, int idx )
 ** push functions (C -> stack)
 */
 
-LUA_API void lua_pushhtml( lua_State *L, HTML *pHTML )
+LUA_API void lua_pushhtml( lua_State *L, lua_HTML *pHTML )
 {
-    LUA_PUSH_PANEL_USERDATA( L, pHTML, LHTML, "HTML" );
+    LUA_PUSH_PANEL_USERDATA( L, pHTML, lua_HTML, "HTML" );
 }
 
 LUALIB_API lua_HTML *luaL_checkhtml( lua_State *L, int narg )
@@ -279,26 +280,12 @@ static int HTML___newindex( lua_State *L )
 
     LHTML *plHTML = dynamic_cast< LHTML * >( pHTML );
 
-    if ( plHTML )
-    {
-        LUA_GET_REF_TABLE( L, plHTML );
-        lua_pushvalue( L, 3 );
-        lua_setfield( L, -2, luaL_checkstring( L, 2 ) );
-        lua_pop( L, 1 );
+    LUA_GET_REF_TABLE( L, plHTML );
+    lua_pushvalue( L, 3 );
+    lua_setfield( L, -2, luaL_checkstring( L, 2 ) );
+    lua_pop( L, 1 );
 
-        return 0;
-    }
-    else
-    {
-        lua_Debug ar1;
-        lua_getstack( L, 1, &ar1 );
-        lua_getinfo( L, "fl", &ar1 );
-        lua_Debug ar2;
-        lua_getinfo( L, ">S", &ar2 );
-        lua_pushfstring( L, "%s:%d: attempt to index a non-scripted panel", ar2.short_src, ar1.currentline );
-
-        return lua_error( L );
-    }
+    return 0;
 }
 
 static int HTML___eq( lua_State *L )
@@ -360,13 +347,13 @@ static const luaL_Reg HTMLmeta[] = {
 
 static int luasrc_HTML( lua_State *L )
 {
-    HTML *pHTML =
-        new LHTML( luaL_optpanel( L, 1, VGui_GetClientLuaRootPanel() ),
+    lua_HTML *pPanel =
+        new lua_HTML( luaL_optpanel( L, 1, VGui_GetClientLuaRootPanel() ),
                    luaL_optstring( L, 2, "HTML" ),
                    luaL_optboolean( L, 3, false ),
                    luaL_optboolean( L, 4, false ),
                    L );
-    lua_pushhtml( L, pHTML );
+    lua_pushhtml( L, pPanel );
     return 1;
 }
 

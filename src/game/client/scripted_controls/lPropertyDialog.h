@@ -40,6 +40,12 @@ class LPropertyDialog : public PropertyDialog
     virtual void OnCommand( const char *command );
     virtual void OnKeyCodeTyped( KeyCode code );
 
+    virtual void ApplySchemeSettings( vgui::IScheme *pScheme )
+    {
+        BaseClass::ApplySchemeSettings( pScheme );
+        BEGIN_LUA_CALL_PANEL_METHOD( "ApplySchemeSettings" );
+        END_LUA_CALL_PANEL_METHOD( 0, 0 );
+    }
    public:
     void EnableApplyButton( bool bEnable );
 
@@ -64,7 +70,7 @@ class LPropertyDialog : public PropertyDialog
             ++args;
 
 /* type for PropertyDialog functions */
-typedef vgui::PropertyDialog lua_PropertyDialog;
+typedef LPropertyDialog lua_PropertyDialog;
 
 /*
 ** access functions (stack -> C)

@@ -26,9 +26,8 @@ using namespace vgui;
 LPropertyPage::LPropertyPage( Panel *parent, const char *panelName, lua_State *L )
     : PropertyPage( parent, panelName )
 {
-#if defined( LUA_SDK )
     m_lua_State = L;
-#endif
+    MakeReadyForUse();
 }
 
 //-----------------------------------------------------------------------------
@@ -137,9 +136,9 @@ LUA_API lua_PropertyPage *lua_topropertypage( lua_State *L, int idx )
 ** push functions (C -> stack)
 */
 
-LUA_API void lua_pushpropertypage( lua_State *L, PropertyPage *pPage )
+LUA_API void lua_pushpropertypage( lua_State *L, lua_PropertyPage *pPage )
 {
-    LUA_PUSH_PANEL_USERDATA( L, pPage, LPropertyPage, "PropertyPage" );
+    LUA_PUSH_PANEL_USERDATA( L, pPage, lua_PropertyPage, "PropertyPage" );
 }
 
 LUALIB_API lua_PropertyPage *luaL_checkpropertypage( lua_State *L, int narg )
@@ -250,6 +249,7 @@ static int PropertyPage___index( lua_State *L )
 static int PropertyPage___newindex( lua_State *L )
 {
     PropertyPage *pPage = lua_topropertypage( L, 1 );
+
     if ( pPage == NULL )
     { /* avoid extra test when d is not 0 */
         lua_Debug ar1;
@@ -260,25 +260,14 @@ static int PropertyPage___newindex( lua_State *L )
         lua_pushfstring( L, "%s:%d: attempt to index an INVALID_PANEL", ar2.short_src, ar1.currentline );
         return lua_error( L );
     }
+
     LPropertyPage *plPage = dynamic_cast< LPropertyPage * >( pPage );
-    if ( plPage )
-    {
-        LUA_GET_REF_TABLE( L, plPage );
-        lua_pushvalue( L, 3 );
-        lua_setfield( L, -2, luaL_checkstring( L, 2 ) );
-        lua_pop( L, 1 );
-        return 0;
-    }
-    else
-    {
-        lua_Debug ar1;
-        lua_getstack( L, 1, &ar1 );
-        lua_getinfo( L, "fl", &ar1 );
-        lua_Debug ar2;
-        lua_getinfo( L, ">S", &ar2 );
-        lua_pushfstring( L, "%s:%d: attempt to index a non-scripted panel", ar2.short_src, ar1.currentline );
-        return lua_error( L );
-    }
+
+    LUA_GET_REF_TABLE( L, plPage );
+    lua_pushvalue( L, 3 );
+    lua_setfield( L, -2, luaL_checkstring( L, 2 ) );
+    lua_pop( L, 1 );
+    return 0;
 }
 
 static int PropertyPage___eq( lua_State *L )
@@ -324,11 +313,11 @@ static const luaL_Reg PropertyPagemeta[] = {
 
 static int luasrc_PropertyPage( lua_State *L )
 {
-    PropertyPage *pPage =
-        new LPropertyPage( luaL_optpanel( L, 1, VGui_GetClientLuaRootPanel() ),
+    lua_PropertyPage *pPanel =
+        new lua_PropertyPage( luaL_optpanel( L, 1, VGui_GetClientLuaRootPanel() ),
                            luaL_checkstring( L, 2 ),
                            L );
-    lua_pushpropertypage( L, pPage );
+    lua_pushpropertypage( L, pPanel );
     return 1;
 }
 

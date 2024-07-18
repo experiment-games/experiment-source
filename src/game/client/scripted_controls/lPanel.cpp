@@ -33,9 +33,9 @@ LUA_API lua_Panel *lua_topanel( lua_State *L, int idx )
 ** push functions (C -> stack)
 */
 
-LUA_API void lua_pushpanel( lua_State *L, Panel *pPanel )
+LUA_API void lua_pushpanel( lua_State *L, lua_Panel *pPanel )
 {
-    LUA_PUSH_PANEL_USERDATA( L, pPanel, Panel, "Panel" );
+    LUA_PUSH_PANEL_USERDATA( L, pPanel, lua_Panel, "Panel" );
 }
 
 LUA_API void lua_pushpanel( lua_State *L, VPANEL panel )
@@ -63,7 +63,7 @@ LUALIB_API VPANEL luaL_checkvpanel( lua_State *L, int narg )
     return ivgui()->HandleToPanel( hPanel.m_iPanelID );
 }
 
-LUALIB_API lua_Panel *luaL_optpanel( lua_State *L, int narg, Panel *def )
+LUALIB_API lua_Panel *luaL_optpanel( lua_State *L, int narg, lua_Panel *def )
 {
     return luaL_opt( L, luaL_checkpanel, narg, def );
 }
@@ -1141,7 +1141,7 @@ static int Panel_SetCursor( lua_State *L )
 
 static int Panel_SetDock( lua_State *L )
 {
-    luaL_checkpanel( L, 1 )->SetDock( (vgui::DockStyle) luaL_checkint( L, 2 ) );
+    luaL_checkpanel( L, 1 )->SetDock( (Dock::Type) luaL_checkint( L, 2 ) );
     return 0;
 }
 
@@ -1348,7 +1348,7 @@ static int Panel_SetZPos( lua_State *L )
 static int Panel_SizeToChildren( lua_State *L )
 {
     // false, false defaults cause no-op by default. This is akin to gmod's SizeToChildren (reason: compatibility)
-    luaL_checkpanel( L, 1 )->SizeToChildren( luaL_optboolean( L, 2, false ), luaL_optboolean( L, 2, false ) );
+    luaL_checkpanel( L, 1 )->SizeToChildren( luaL_optboolean( L, 2, false ), luaL_optboolean( L, 3, false ) );
     return 0;
 }
 
@@ -1372,14 +1372,28 @@ static int Panel___index( lua_State *L )
     LUA_METATABLE_INDEX_CHECK_VALID( L, Panel_IsValid );
     LUA_METATABLE_INDEX_CHECK( L, plPanel );
 
-    LUA_METATABLE_INDEX_CHECK_REF_TABLE( L, plPanel );
+    const char *field = luaL_checkstring( L, 2 );
 
-    if ( lua_getmetatable( L, 1 ) )
+    if ( Q_strcmp( field, "x" ) == 0 )
+        lua_pushnumber( L, plPanel->GetXPos() );
+    else if ( Q_strcmp( field, "y" ) == 0 )
+        lua_pushnumber( L, plPanel->GetYPos() );
+    if ( Q_strcmp( field, "wide" ) == 0 )
+        lua_pushnumber( L, plPanel->GetWide() );
+    else if ( Q_strcmp( field, "tall" ) == 0 )
+        lua_pushnumber( L, plPanel->GetTall() );
+    else
     {
-        LUA_METATABLE_INDEX_CHECK_TABLE( L );
+        LUA_METATABLE_INDEX_CHECK_REF_TABLE( L, plPanel );
+
+        if ( lua_getmetatable( L, 1 ) )
+        {
+            LUA_METATABLE_INDEX_CHECK_TABLE( L );
+        }
+
+        lua_pushnil( L );
     }
 
-    lua_pushnil( L );
     return 1;
 }
 
@@ -1406,31 +1420,29 @@ static int Panel___newindex( lua_State *L )
         plPanel->GetPos( x, y );
         plPanel->SetPos( luaL_checknumber( L, 3 ), y );
     }
-    if ( Q_strcmp( field, "y" ) == 0 )
+    else if ( Q_strcmp( field, "y" ) == 0 )
     {
         int x, y;
         plPanel->GetPos( x, y );
         plPanel->SetPos( x, luaL_checknumber( L, 3 ) );
     }
-
-    if ( plPanel )
+    else if ( Q_strcmp( field, "wide" ) == 0 )
+    {
+        plPanel->SetWide( luaL_checknumber( L, 3 ) );
+    }
+    else if ( Q_strcmp( field, "tall" ) == 0 )
+    {
+        plPanel->SetTall( luaL_checknumber( L, 3 ) );
+    }
+    else
     {
         LUA_GET_REF_TABLE( L, plPanel );
         lua_pushvalue( L, 3 );
         lua_setfield( L, -2, luaL_checkstring( L, 2 ) );
         lua_pop( L, 1 );
-        return 0;
     }
-    else
-    {
-        lua_Debug ar1;
-        lua_getstack( L, 1, &ar1 );
-        lua_getinfo( L, "fl", &ar1 );
-        lua_Debug ar2;
-        lua_getinfo( L, ">S", &ar2 );
-        lua_pushfstring( L, "%s:%d: attempt to index a non-scripted panel", ar2.short_src, ar1.currentline );
-        return lua_error( L );
-    }
+
+    return 0;
 }
 
 int Panel___gc( lua_State *L )
@@ -1679,7 +1691,7 @@ static const luaL_Reg Panelmeta[] = {
 
 static int luasrc_Panel( lua_State *L )
 {
-    Panel *pPanel = new Panel(
+    lua_Panel *pPanel = new lua_Panel(
         luaL_optpanel( L, 1, VGui_GetClientLuaRootPanel() ),
         luaL_optstring( L, 2, NULL ),
         L );

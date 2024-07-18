@@ -24,6 +24,7 @@ LEditablePanel::LEditablePanel( Panel *parent, const char *panelName, lua_State 
     : EditablePanel( parent, panelName )
 {
     m_lua_State = L;
+    MakeReadyForUse();
 }
 
 LEditablePanel::~LEditablePanel()
@@ -426,26 +427,12 @@ static int EditablePanel___newindex( lua_State *L )
 
     LEditablePanel *plEditablePanel = dynamic_cast< LEditablePanel * >( pEditablePanel );
 
-    if ( plEditablePanel )
-    {
-        LUA_GET_REF_TABLE( L, plEditablePanel );
-        lua_pushvalue( L, 3 );
-        lua_setfield( L, -2, luaL_checkstring( L, 2 ) );
-        lua_pop( L, 1 );
+    LUA_GET_REF_TABLE( L, plEditablePanel );
+    lua_pushvalue( L, 3 );
+    lua_setfield( L, -2, luaL_checkstring( L, 2 ) );
+    lua_pop( L, 1 );
 
-        return 0;
-    }
-    else
-    {
-        lua_Debug ar1;
-        lua_getstack( L, 1, &ar1 );
-        lua_getinfo( L, "fl", &ar1 );
-        lua_Debug ar2;
-        lua_getinfo( L, ">S", &ar2 );
-        lua_pushfstring( L, "%s:%d: attempt to index a non-scripted panel", ar2.short_src, ar1.currentline );
-
-        return lua_error( L );
-    }
+    return 0;
 }
 
 static int EditablePanel___eq( lua_State *L )
@@ -515,12 +502,12 @@ static const luaL_Reg EditablePanelmeta[] = {
 
 static int luasrc_EditablePanel( lua_State *L )
 {
-    LEditablePanel *pEditablePanel =
-        new LEditablePanel(
+    lua_EditablePanel *pPanel =
+        new lua_EditablePanel(
             luaL_optpanel( L, 1, VGui_GetClientLuaRootPanel() ),
             luaL_checkstring( L, 2 ),
             L );
-    lua_pusheditablepanel( L, pEditablePanel );
+    lua_pusheditablepanel( L, pPanel );
     return 1;
 }
 

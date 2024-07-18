@@ -27,9 +27,8 @@ using namespace vgui;
 LCheckButton::LCheckButton( Panel *parent, const char *panelName, const char *text, lua_State *L )
     : CheckButton( parent, panelName, text )
 {
-#if defined( LUA_SDK )
     m_lua_State = L;
-#endif
+    MakeReadyForUse();  // Label derived classes already get made ready somewhere (TODO: Understand where)
 }
 
 //-----------------------------------------------------------------------------
@@ -72,9 +71,9 @@ LUA_API lua_CheckButton *lua_tocheckbutton( lua_State *L, int idx )
 ** push functions (C -> stack)
 */
 
-LUA_API void lua_pushcheckbutton( lua_State *L, CheckButton *pCheckButton )
+LUA_API void lua_pushcheckbutton( lua_State *L, lua_CheckButton *pCheckButton )
 {
-    LUA_PUSH_PANEL_USERDATA( L, pCheckButton, LCheckButton, "CheckButton" );
+    LUA_PUSH_PANEL_USERDATA( L, pCheckButton, lua_CheckButton, "CheckButton" );
 }
 
 LUALIB_API lua_CheckButton *luaL_checkcheckbutton( lua_State *L, int narg )
@@ -200,24 +199,11 @@ static int CheckButton___newindex( lua_State *L )
 
     LCheckButton *plCheckButton = dynamic_cast< LCheckButton * >( pCheckButton );
 
-    if ( plCheckButton )
-    {
-        LUA_GET_REF_TABLE( L, plCheckButton );
-        lua_pushvalue( L, 3 );
-        lua_setfield( L, -2, luaL_checkstring( L, 2 ) );
-        lua_pop( L, 1 );
-        return 0;
-    }
-    else
-    {
-        lua_Debug ar1;
-        lua_getstack( L, 1, &ar1 );
-        lua_getinfo( L, "fl", &ar1 );
-        lua_Debug ar2;
-        lua_getinfo( L, ">S", &ar2 );
-        lua_pushfstring( L, "%s:%d: attempt to index a non-scripted panel", ar2.short_src, ar1.currentline );
-        return lua_error( L );
-    }
+    LUA_GET_REF_TABLE( L, plCheckButton );
+    lua_pushvalue( L, 3 );
+    lua_setfield( L, -2, luaL_checkstring( L, 2 ) );
+    lua_pop( L, 1 );
+    return 0;
 }
 
 static int CheckButton___eq( lua_State *L )
@@ -262,12 +248,12 @@ static const luaL_Reg CheckButtonmeta[] = {
 
 static int luasrc_CheckButton( lua_State *L )
 {
-    CheckButton *pCheckButton = new LCheckButton(
+    lua_CheckButton *pPanel = new lua_CheckButton(
         luaL_optpanel( L, 1, VGui_GetClientLuaRootPanel() ),
         luaL_optstring( L, 2, NULL ),
         luaL_optstring( L, 3, NULL ),
         L );
-    lua_pushcheckbutton( L, pCheckButton );
+    lua_pushcheckbutton( L, pPanel );
     return 1;
 }
 

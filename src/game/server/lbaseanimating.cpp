@@ -427,7 +427,9 @@ static int CBaseAnimating___newindex( lua_State *L )
         lua_pushfstring( L, "%s:%d: attempt to index a NULL entity", ar2.short_src, ar1.currentline );
         return lua_error( L );
     }
+
     const char *field = luaL_checkstring( L, 2 );
+
     if ( Q_strcmp( field, "m_bClientSideAnimation" ) == 0 )
         luaL_checkboolean( L, 3 );
     // TODO: m_bClientSideAnimation only exists on client?
@@ -445,6 +447,7 @@ static int CBaseAnimating___newindex( lua_State *L )
         lua_setfield( L, -2, field );
         lua_pop( L, 1 );
     }
+
     return 0;
 }
 

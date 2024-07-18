@@ -300,12 +300,14 @@ static int Vector___index( lua_State *L )
 static int Vector___newindex( lua_State *L )
 {
     const char *field = luaL_checkstring( L, 2 );
+
     if ( strcmp( field, "x" ) == 0 || strcmp( field, "r" ) == 0 || strcmp( field, "1" ) == 0 )
         luaL_checkvector( L, 1 ).x = ( vec_t )luaL_checknumber( L, 3 );
     else if ( strcmp( field, "y" ) == 0 || strcmp( field, "g" ) == 0 || strcmp( field, "2" ) == 0 )
         luaL_checkvector( L, 1 ).y = ( vec_t )luaL_checknumber( L, 3 );
     else if ( strcmp( field, "z" ) == 0 || strcmp( field, "b" ) == 0 || strcmp( field, "3" ) == 0 )
         luaL_checkvector( L, 1 ).z = ( vec_t )luaL_checknumber( L, 3 );
+
     return 0;
 }
 
@@ -566,6 +568,7 @@ static int QAngle___index( lua_State *L )
 static int QAngle___newindex( lua_State *L )
 {
     const char *field = luaL_checkstring( L, 2 );
+
     if ( strcmp( field, "x" ) == 0 || strcmp( field, "p" ) == 0 || strcmp( field, "pitch" ) == 0 || strcmp( field, "1" ) == 0 )
         luaL_checkangle( L, 1 ).x = ( vec_t )luaL_checknumber( L, 3 );
     else if ( strcmp( field, "y" ) == 0 || strcmp( field, "y" ) == 0 || strcmp( field, "yaw" ) == 0 || strcmp( field, "2" ) == 0 )

@@ -18,14 +18,21 @@ class LLabel : public Label
    public:
     LLabel( Panel *parent, const char *panelName, const char *text, lua_State *L = NULL );
 
-   public:
     virtual void PushPanelToLua( lua_State *L );
+
+   protected:
+    virtual void ApplySchemeSettings( vgui::IScheme *pScheme )
+    {
+        BaseClass::ApplySchemeSettings( pScheme );
+        BEGIN_LUA_CALL_PANEL_METHOD( "ApplySchemeSettings" );
+        END_LUA_CALL_PANEL_METHOD( 0, 0 );
+    }
 };
 
 }  // namespace vgui
 
 /* type for Label functions */
-typedef vgui::Label lua_Label;
+typedef LLabel lua_Label;
 
 /*
 ** access functions (stack -> C)

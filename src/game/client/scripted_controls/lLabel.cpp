@@ -23,6 +23,7 @@ LLabel::LLabel( Panel *parent, const char *panelName, const char *text, lua_Stat
     : Label( parent, panelName, text )
 {
     m_lua_State = L;
+    MakeReadyForUse();  // Label derived classes already get made ready somewhere (TODO: Understand where)
 }
 
 void LLabel::PushPanelToLua( lua_State *L )
@@ -47,9 +48,9 @@ LUA_API lua_Label *lua_tolabel( lua_State *L, int idx )
 ** push functions (C -> stack)
 */
 
-LUA_API void lua_pushlabel( lua_State *L, Label *pLabel )
+LUA_API void lua_pushlabel( lua_State *L, lua_Label *pLabel )
 {
-    LUA_PUSH_PANEL_USERDATA( L, pLabel, LLabel, "Label" );
+    LUA_PUSH_PANEL_USERDATA( L, pLabel, lua_Label, "Label" );
 }
 
 LUALIB_API lua_Label *luaL_checklabel( lua_State *L, int narg )
@@ -366,22 +367,11 @@ static int Label___newindex( lua_State *L )
     // This is a quick fix for now
     LButton *plButton = dynamic_cast< LButton * >( pLabel );
 
-    if ( plButton )
-    {
-        LUA_GET_REF_TABLE( L, plButton );
-        lua_pushvalue( L, 3 );
-        lua_setfield( L, -2, luaL_checkstring( L, 2 ) );
-        lua_pop( L, 1 );
-        return 0;
-    }
-
-    lua_Debug ar1;
-    lua_getstack( L, 1, &ar1 );
-    lua_getinfo( L, "fl", &ar1 );
-    lua_Debug ar2;
-    lua_getinfo( L, ">S", &ar2 );
-    lua_pushfstring( L, "%s:%d: attempt to index a non-scripted panel", ar2.short_src, ar1.currentline );
-    return lua_error( L );
+    LUA_GET_REF_TABLE( L, plButton );
+    lua_pushvalue( L, 3 );
+    lua_setfield( L, -2, luaL_checkstring( L, 2 ) );
+    lua_pop( L, 1 );
+    return 0;
 }
 
 static int Label___eq( lua_State *L )
@@ -456,12 +446,12 @@ static const luaL_Reg Labelmeta[] = {
 
 static int luasrc_Label( lua_State *L )
 {
-    Label *pLabel =
-        new LLabel( luaL_optpanel( L, 1, VGui_GetClientLuaRootPanel() ),
+    lua_Label *pPanel =
+        new lua_Label( luaL_optpanel( L, 1, VGui_GetClientLuaRootPanel() ),
                     luaL_checkstring( L, 2 ),
                     luaL_optstring( L, 3, "Label" ),
                     L );
-    lua_pushlabel( L, pLabel );
+    lua_pushlabel( L, pPanel );
     return 1;
 }
 

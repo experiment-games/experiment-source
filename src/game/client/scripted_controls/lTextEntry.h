@@ -18,14 +18,21 @@ class LTextEntry : public TextEntry
    public:
     LTextEntry(Panel *parent, const char *panelName, lua_State *L = NULL );
 
-   public:
     virtual void PushPanelToLua( lua_State *L );
+
+   protected:
+    virtual void ApplySchemeSettings( vgui::IScheme *pScheme )
+    {
+        BaseClass::ApplySchemeSettings( pScheme );
+        BEGIN_LUA_CALL_PANEL_METHOD( "ApplySchemeSettings" );
+        END_LUA_CALL_PANEL_METHOD( 0, 0 );
+    }
 };
 
 }  // namespace vgui
 
 /* type for TextEntry functions */
-typedef vgui::TextEntry lua_TextEntry;
+typedef LTextEntry lua_TextEntry;
 
 /*
 ** access functions (stack -> C)

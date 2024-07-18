@@ -680,6 +680,10 @@ Panel::Panel( Panel *parent, const char *panelName, lua_State *L )
     : Panel( parent, panelName )
 {
     m_lua_State = L;
+
+    // We call this so the scheme is applied and the NEEDS_SCHEME_UPDATE flag is cleared
+    // Otherwise InternalPerformLayout wont get past that flag check
+    MakeReadyForUse();
 }
 
 //-----------------------------------------------------------------------------
@@ -723,7 +727,21 @@ void Panel::SetupRefTable( lua_State *L )
 //-----------------------------------------------------------------------------
 bool Panel::IsFunctionPrepared( const char *functionName )
 {
-    return m_PreparedFunctions.Find( functionName ) != m_PreparedFunctions.InvalidIndex();
+    // This whole mess is really only for OnChildAdded. That causes problems
+    // when a panel is vgui.Create'd in Init and used in OnChildAdded.
+    // For example DScrollPanel does:
+    // function PANEL:Init()
+	//      self.pnlCanvas = vgui.Create( "Panel", self )
+    //      ...etc
+    // end
+    // 
+    // Then in OnChildAdded expects self.pnlCanvas to exist, but that's not
+    // the case if we call OnChildAdded immediately.
+    if ( Q_strcmp( functionName, "OnChildAdded" ) == 0 )
+    {
+        return m_PreparedFunctions.Find( functionName ) != m_PreparedFunctions.InvalidIndex();
+    }
+    return true;
 }
 
 //-----------------------------------------------------------------------------
@@ -933,7 +951,7 @@ void Panel::MakeReadyForUse()
 {
     //	PerformApplySchemeSettings();
     UpdateSiblingPin();
-    surface()->SolveTraverse( GetVPanel(), true );
+    surface()->SolveTraverse( GetVPanel(), true );// true so scheme settings are force applied
 }
 
 //-----------------------------------------------------------------------------
@@ -1007,18 +1025,6 @@ void Panel::SetPos( int x, int y )
         Assert( abs( x ) < 32768 && abs( y ) < 32768 );
     }
     ipanel()->SetPos( GetVPanel(), x, y );
-
-#if defined( LUA_SDK )
-    if ( m_lua_State )
-    {
-        LUA_GET_REF_TABLE( m_lua_State, this );
-        lua_pushinteger( m_lua_State, x );
-        lua_setfield( m_lua_State, -2, "x" );
-        lua_pushinteger( m_lua_State, y );
-        lua_setfield( m_lua_State, -2, "y" );
-        lua_pop( m_lua_State, 1 );
-    }
-#endif
 }
 
 //-----------------------------------------------------------------------------
@@ -1056,18 +1062,6 @@ void Panel::SetSize( int wide, int tall )
 {
     Assert( abs( wide ) < 32768 && abs( tall ) < 32768 );
     ipanel()->SetSize( GetVPanel(), wide, tall );
-
-#if defined( LUA_SDK )
-    if ( m_lua_State )
-    {
-        LUA_GET_REF_TABLE( m_lua_State, this );
-        lua_pushinteger( m_lua_State, wide );
-        lua_setfield( m_lua_State, -2, "wide" );
-        lua_pushinteger( m_lua_State, tall );
-        lua_setfield( m_lua_State, -2, "tall" );
-        lua_pop( m_lua_State, 1 );  // pop the ref table
-    }
-#endif
 }
 
 //-----------------------------------------------------------------------------
@@ -1245,6 +1239,9 @@ void Panel::Think()
         }
 
 #ifdef LUA_SDK
+        BEGIN_LUA_CALL_PANEL_METHOD( "Think" );
+        END_LUA_CALL_PANEL_METHOD( 0, 0 );
+
         // We initiate perform layout inside RecurseLayout (recursively for children too)
         RecurseLayout();
 #else
@@ -1366,7 +1363,7 @@ void Panel::PaintTraverse( bool repaint, bool allowForce )
             if ( !paintOverride )
             {
 #endif
-            Paint();
+                Paint();
 #ifdef LUA_SDK
             }
 #endif
@@ -1385,17 +1382,17 @@ void Panel::PaintTraverse( bool repaint, bool allowForce )
         // Experiment;  We've commented these checks, since they prevented popups
         //              from drawing back to front. Let's hope this doesn't break
         //              anything else.
-        //if ( surface()->ShouldPaintChildPanel( child ) )
+        // if ( surface()->ShouldPaintChildPanel( child ) )
         {
             if ( bVisible )
             {
                 ipanel()->PaintTraverse( child, repaint, allowForce );
             }
         }
-        //else
+        // else
         //{
-        //    // Invalidate the child panel so that it gets redrawn
-        //    surface()->Invalidate( child );
+        //     // Invalidate the child panel so that it gets redrawn
+        //     surface()->Invalidate( child );
 
         //    // keep traversing the tree, just don't allow anyone to paint after here
         //    if ( bVisible )
@@ -1539,7 +1536,6 @@ void Panel::PaintBackground()
             break;
         }
     }
-
 }
 
 //-----------------------------------------------------------------------------
@@ -1695,13 +1691,12 @@ void Panel::OnChildAdded( VPANEL child )
 //-----------------------------------------------------------------------------
 void Panel::OnSizeChanged( int newWide, int newTall )
 {
+    InvalidateLayout();  // our size changed so force us to layout again
 #ifdef LUA_SDK
     BEGIN_LUA_CALL_PANEL_METHOD( "OnSizeChanged" );
     lua_pushinteger( m_lua_State, newWide );
     lua_pushinteger( m_lua_State, newTall );
     END_LUA_CALL_PANEL_METHOD( 2, 0 );
-#else
-    InvalidateLayout();  // our size changed so force us to layout again
 #endif
 }
 
@@ -3787,7 +3782,7 @@ void Panel::GetClipRect( int &x0, int &y0, int &x1, int &y1 )
         // If we're not clipping, then return the entire screen
         x0 = 0;
         y0 = 0;
-        surface()->GetScreenSize(x1, y1);
+        surface()->GetScreenSize( x1, y1 );
         return;
     }
 #endif
@@ -3823,7 +3818,7 @@ CUtlVector< VPANEL > &Panel::GetChildren()
 }
 
 #ifdef LUA_SDK
-void Panel::GetChildrenSize(int& wide, int& tall)
+void Panel::GetChildrenSize( int &wide, int &tall )
 {
     wide = 0;
     tall = 0;
@@ -3838,29 +3833,26 @@ void Panel::GetChildrenSize(int& wide, int& tall)
         int x, y, childWide, childTall;
         child->GetBounds( x, y, childWide, childTall );
 
+        //const Thickness padding = child->GetDockPadding();
+        //childWide += padding.right;
+        //childTall += padding.bottom;
+
         wide = MAX( wide, x + childWide );
         tall = MAX( tall, y + childTall );
     }
 }
 
-void Panel::SizeToChildren( bool w, bool h )
+void Panel::SizeToChildren( bool sizeWide /* = false */, bool sizeTall /* = false */ )
 {
     int wide = 0, tall = 0;
     GetChildrenSize( wide, tall );
 
-    const Thickness padding = GetDockPadding();
-    wide += padding.right;
-    tall += padding.bottom;
+    //const Thickness padding = GetDockPadding();
+    //wide += padding.right;
+    //tall += padding.bottom;
 
-    return SetSize( w ? wide : GetWide(), h ? tall : GetTall() );
+    SetSize( sizeWide ? wide : GetWide(), sizeTall ? tall : GetTall() );
 }
-
-/*
-    virtual void SetDockPadding( Thickness padding );
-    virtual void GetDockPadding( Thickness &padding );
-
-    virtual void SetDockMargin( Thickness padding );
-    virtual void GetDockMargin( Thickness &padding );*/
 
 void Panel::SetDockPadding( Thickness padding )
 {
@@ -3900,7 +3892,7 @@ Thickness Panel::GetDockMargin()
     return m_DockMargin;
 }
 
-void Panel::SetDock(DockStyle dockStyle)
+void Panel::SetDock( Dock::Type dockStyle )
 {
     if ( m_DockStyle == dockStyle )
         return;
@@ -3911,7 +3903,7 @@ void Panel::SetDock(DockStyle dockStyle)
     InvalidateParentLayout();
 }
 
-DockStyle Panel::GetDock()
+Dock::Type Panel::GetDock()
 {
     return m_DockStyle;
 }
@@ -3927,33 +3919,30 @@ void Panel::RecurseLayout()
         InternalPerformLayout();
     }
 
-    int x, y, wide, tall;
-    //GetBounds( x, y, wide, tall );
-    //ScreenToLocal( x, y );
+    // Start calculating the dock layout sizes
+    // Assume 0, 0 as the starting point. True positioning will occur in PostLayout
+    int wide, tall;
     GetSize( wide, tall );
-    x = 0;
-    y = 0;
-    Size renderBounds( x, y, wide, tall );
+    Size renderBounds( 0, 0, wide, tall );
     renderBounds.x += m_DockPadding.left;
     renderBounds.y += m_DockPadding.top;
-    renderBounds.wide -= m_DockPadding.left + m_DockMargin.right;
-    renderBounds.tall -= m_DockPadding.top + m_DockMargin.bottom;
+    renderBounds.wide -= m_DockPadding.left + m_DockPadding.right;
+    renderBounds.tall -= m_DockPadding.top + m_DockPadding.bottom;
 
-    for ( int i = 0; i < ipanel()->GetChildCount( GetVPanel() ); i++ )
+    for ( int i = 0; i < GetChildCount(); i++ )
     {
-        VPANEL child = ipanel()->GetChild( GetVPanel(), i );
-        Panel *pChild = ipanel()->GetPanel( child, GetModuleName() );
+        Panel *pChild = GetChild( i );
 
         if ( !pChild->IsVisible() )
             continue;
 
-        DockStyle dock = pChild->GetDock();
+        Dock::Type dock = pChild->GetDock();
 
         // We'll handle fill after this loop
-        if ( dock & Fill )
+        if ( dock & Dock::Fill )
             continue;
 
-        if ( dock & Top )
+        if ( dock & Dock::Top )
         {
             const Thickness margin = pChild->GetDockMargin();
             pChild->SetBounds( renderBounds.x + margin.left, renderBounds.y + margin.top, renderBounds.wide - margin.left - margin.right, pChild->GetTall() );
@@ -3961,7 +3950,7 @@ void Panel::RecurseLayout()
             renderBounds.y += iHeight;
             renderBounds.tall -= iHeight;
         }
-        else if ( dock & Left )
+        else if ( dock & Dock::Left )
         {
             const Thickness margin = pChild->GetDockMargin();
             pChild->SetBounds( renderBounds.x + margin.left, renderBounds.y + margin.top, pChild->GetWide(), renderBounds.tall - margin.top - margin.bottom );
@@ -3969,18 +3958,18 @@ void Panel::RecurseLayout()
             renderBounds.x += iWidth;
             renderBounds.wide -= iWidth;
         }
-        else if ( dock & Right )
+        else if ( dock & Dock::Right )
         {
             const Thickness margin = pChild->GetDockMargin();
             pChild->SetBounds( ( renderBounds.x + renderBounds.wide ) - pChild->GetWide() - margin.right, renderBounds.y + margin.top, pChild->GetWide(), renderBounds.tall - margin.top - margin.bottom );
             int iWidth = margin.left + margin.right + pChild->GetWide();
             renderBounds.wide -= iWidth;
         }
-        else if ( dock & Bottom )
+        else if ( dock & Dock::Bottom )
         {
             const Thickness margin = pChild->GetDockMargin();
             pChild->SetBounds( renderBounds.x + margin.left, ( renderBounds.y + renderBounds.tall ) - pChild->GetTall() - margin.bottom, renderBounds.wide - margin.left - margin.right, pChild->GetTall() );
-            int iHeight = margin.top + margin.bottom + pChild->GetTall();
+            int iHeight = pChild->GetTall() - margin.bottom - margin.top;
             renderBounds.tall -= iHeight;
         }
 
@@ -3992,23 +3981,73 @@ void Panel::RecurseLayout()
     // Fill the left over space
     for ( int i = 0; i < ipanel()->GetChildCount( GetVPanel() ); i++ )
     {
-        VPANEL childHandle = ipanel()->GetChild( GetVPanel(), i );
-        Panel *child = ipanel()->GetPanel( childHandle, GetModuleName() );
+        Panel *pChild = GetChild( i );
+        Dock::Type dock = pChild->GetDock();
 
-        DockStyle dock = child->GetDock();
-
-        if ( dock & Fill )
+        if ( dock & Dock::Fill )
         {
-            const Thickness margin = child->GetDockMargin();
-            child->SetBounds( renderBounds.x + margin.left, renderBounds.y + margin.top, renderBounds.wide - margin.left - margin.right, renderBounds.tall - margin.top - margin.bottom );
-            child->RecurseLayout();
+            const Thickness margin = pChild->GetDockMargin();
+            pChild->SetBounds( renderBounds.x + margin.left, renderBounds.y + margin.top, renderBounds.wide - margin.left - margin.right, renderBounds.tall - margin.top - margin.bottom );
+            pChild->RecurseLayout();
         }
     }
 
-    // PostLayout();
+    PostLayout();
+}
 
-    BEGIN_LUA_CALL_PANEL_METHOD( "Think" );
-    END_LUA_CALL_PANEL_METHOD( 0, 0 );
+void Panel::Position( int alignmentBitmask, int xpadding /* = 0*/, int ypadding /* = 0*/ )
+{
+    const Size &bounds = m_InnerBounds;
+    const Thickness &margin = GetDockMargin();
+    int x, y;
+    GetPos( x, y );
+
+    if ( alignmentBitmask & Alignment::Left )
+    {
+        x = bounds.x + xpadding + margin.left;
+    }
+
+    if ( alignmentBitmask & Alignment::Right )
+    {
+        x = bounds.x + ( bounds.wide - GetWide() - xpadding - margin.right );
+    }
+
+    if ( alignmentBitmask & Alignment::CenterHorizontal )
+    {
+        x = bounds.x + ( bounds.wide - GetWide() ) * 0.5;
+    }
+
+    if ( alignmentBitmask & Alignment::Top )
+    {
+        y = bounds.y + ypadding;
+    }
+
+    if ( alignmentBitmask & Alignment::Bottom )
+    {
+        y = bounds.y + ( bounds.tall - GetTall() - ypadding );
+    }
+
+    if ( alignmentBitmask & Alignment::CenterVertical )
+    {
+        y = bounds.y + ( bounds.tall - GetTall() ) * 0.5;
+    }
+
+    SetPos( x, y );
+}
+
+void Panel::PostLayout()
+{
+    for ( int i = 0; i < GetChildCount(); i++ )
+    {
+        Panel *pChild = GetChild( i );
+
+        if ( pChild->GetDock() != Dock::None )
+        {
+            continue;
+        }
+
+        pChild->Position( m_AlignmentMask );
+    }
 }
 #endif
 
@@ -4368,7 +4407,7 @@ void Panel::PerformLayout()
     END_LUA_CALL_PANEL_METHOD( 2, 0 );
 
     // Hack so we can implement Docking in Lua (see game/experiment/lua/includes/extensions/panel.lua)
-    if ( m_lua_State && m_nTableReference >= 0 )
+    /*if ( m_lua_State && m_nTableReference >= 0 )
     {
         Panel::GetSize( wide, tall );
 
@@ -4377,7 +4416,7 @@ void Panel::PerformLayout()
         lua_pushinteger( m_lua_State, wide );
         lua_pushinteger( m_lua_State, tall );
         END_LUA_CALL_HOOK_FOR_STATE( m_lua_State, 3, 0 );
-    }
+    }*/
 #endif
 }
 
@@ -4666,11 +4705,6 @@ void Panel::ApplySchemeSettings( IScheme *pScheme )
         _buildGroup->ApplySchemeSettings( pScheme );
         return;
     }
-
-#ifdef LUA_SDK
-    BEGIN_LUA_CALL_PANEL_METHOD( "ApplySchemeSettings" );
-    END_LUA_CALL_PANEL_METHOD( 0, 0 );
-#endif
 }
 
 //-----------------------------------------------------------------------------

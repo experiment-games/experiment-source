@@ -54,6 +54,7 @@ LModelImagePanel::LModelImagePanel( Panel *parent, const char *panelName, lua_St
     m_iSkin = 0;
     m_pszBodyGroups = NULL;
     m_nTextureID = -1;
+    MakeReadyForUse();
 }
 
 LModelImagePanel::~LModelImagePanel()
@@ -788,12 +789,12 @@ static const luaL_Reg ModelImagePanelmeta[] = {
 
 static int luasrc_ModelImagePanel( lua_State *L )
 {
-    lua_ModelImagePanel *pModelImagePanel =
+    lua_ModelImagePanel *pPanel =
         new lua_ModelImagePanel(
             luaL_optpanel( L, 1, VGui_GetClientLuaRootPanel() ),
             luaL_checkstring( L, 2 ),
             L );
-    lua_pushmodelimagepanel( L, pModelImagePanel );
+    lua_pushmodelimagepanel( L, pPanel );
     return 1;
 }
 
