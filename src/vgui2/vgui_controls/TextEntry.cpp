@@ -632,7 +632,7 @@ void TextEntry::PaintBackground()
 {
     BaseClass::PaintBackground();
 
-    // PaintText( GetFgColor(), _selectionColor, _cursorColor );
+    PaintText( GetFgColor(), _selectionColor, _cursorColor );
 }
 
 void TextEntry::PaintText( Color foregroundColor, Color highlightColor, Color cursorColor )
