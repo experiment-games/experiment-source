@@ -35,8 +35,10 @@ LUA_API lua_Panel *lua_topanel( lua_State *L, int idx )
 LUALIB_API lua_Panel *luaL_checkpanel( lua_State *L, int narg )
 {
     lua_Panel *d = lua_topanel( L, narg );
+
     if ( d == NULL ) /* avoid extra test when d is not 0 */
         luaL_argerror( L, narg, "Panel expected, got INVALID_PANEL" );
+
     return d;
 }
 

@@ -731,20 +731,22 @@ void Panel::SetupRefTable( lua_State *L )
 //-----------------------------------------------------------------------------
 bool Panel::IsFunctionPrepared( const char *functionName )
 {
-    // This whole mess is really only for OnChildAdded. That causes problems
-    // when a panel is vgui.Create'd in Init and used in OnChildAdded.
-    // For example DScrollPanel does:
-    // function PANEL:Init()
-    //      self.pnlCanvas = vgui.Create( "Panel", self )
-    //      ...etc
-    // end
-    //
-    // Then in OnChildAdded expects self.pnlCanvas to exist, but that's not
-    // the case if we call OnChildAdded immediately.
-    if ( Q_strcmp( functionName, "OnChildAdded" ) == 0 )
-    {
-        return m_PreparedFunctions.Find( functionName ) != m_PreparedFunctions.InvalidIndex();
-    }
+    // This comment is commented because of the issue described in OnChildAdded
+    // The comment below seems incorrect. TODO: Remove IsFunctionPrepared logic.
+    //// This whole mess is really only for OnChildAdded. That causes problems
+    //// when a panel is vgui.Create'd in Init and used in OnChildAdded.
+    //// For example DScrollPanel does:
+    //// function PANEL:Init()
+    ////      self.pnlCanvas = vgui.Create( "Panel", self )
+    ////      ...etc
+    //// end
+    ////
+    //// Then in OnChildAdded expects self.pnlCanvas to exist, but that's not
+    //// the case if we call OnChildAdded immediately.
+    //if ( Q_strcmp( functionName, "OnChildAdded" ) == 0 )
+    //{
+    //    //return m_PreparedFunctions.Find( functionName ) != m_PreparedFunctions.InvalidIndex();
+    //}
     return true;
 }
 
@@ -1673,15 +1675,28 @@ void Panel::SetParent( VPANEL newParent )
     UpdateSiblingPin();
 }
 
+static int dbg = 0;
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
 void Panel::OnChildAdded( VPANEL child )
 {
 #ifdef LUA_SDK
-    BEGIN_LUA_CALL_PANEL_METHOD( "OnChildAdded" );
-    PushVPanelLuaInstance( m_lua_State, child );
-    END_LUA_CALL_PANEL_METHOD( 1, 0 );
+    // BEGIN_LUA_CALL_PANEL_METHOD( "OnChildAdded" );
+    // PushVPanelLuaInstance( m_lua_State, child );
+    // END_LUA_CALL_PANEL_METHOD( 1, 0 );
+    // When OnChildAdded is called for the panel, it may not have its Lua state
+    // initialized yet. So we need to check if it has a Lua state and if it does,
+    // only then call OnChildAdded with it as an argument.
+    Panel *pPanel = ipanel()->GetPanel( child, GetControlsModuleName() );
+
+    if ( pPanel && pPanel->m_lua_State != NULL )
+    {
+        pPanel->PushLuaInstance( pPanel->m_lua_State );
+        BEGIN_LUA_CALL_PANEL_METHOD( "OnChildAdded" );
+        pPanel->PushLuaInstance( m_lua_State );
+        END_LUA_CALL_PANEL_METHOD( 1, 0 );
+    }
 #endif
 
     Assert( !_flags.IsFlagSet( IN_PERFORM_LAYOUT ) );

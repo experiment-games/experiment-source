@@ -63,7 +63,13 @@ void lua_destroyuserdatainstance( lua_State *L, void *p );
 
 // Apply this to a class to mark it as having a single Lua instance that will
 // have the specified metatable applied to its userdata.
-#define LUA_DECLARE_SINGLE_LUA_INSTANCE( ClassName, MetatableName )                                                        \
+#define LUA_DECLARE_SINGLE_LUA_INSTANCE( ClassName, BaseMetatableName )                                                    \
+   public:                                                                                                                 \
+    virtual const char *GetMetatableName() const                                                                           \
+    {                                                                                                                      \
+        return BaseMetatableName;                                                                                          \
+    }                                                                                                                      \
+                                                                                                                           \
    protected:                                                                                                              \
     void *m_pLuaInstance = nullptr;                                                                                        \
                                                                                                                            \
@@ -75,11 +81,6 @@ void lua_destroyuserdatainstance( lua_State *L, void *p );
     static void *CreateLuaInstance( lua_State *L, ClassName *pInstance );                                                  \
                                                                                                                            \
    public:                                                                                                                 \
-    virtual const char *GetMetatableName() const                                                                           \
-    {                                                                                                                      \
-        return MetatableName;                                                                                              \
-    }                                                                                                                      \
-                                                                                                                           \
     /*  Pushes the instance to the Lua stack. It will check if there's already an                                          \
      instance in the registry, and if there is, it will push that instead.                                                 \
      If no instance is found, it will create a new one and store it in the                                                 \
@@ -107,7 +108,7 @@ void lua_destroyuserdatainstance( lua_State *L, void *p );
         {                                                                                                                  \
             void *pLuaInstance = CreateLuaInstance( L, pInstance );                                                        \
             lua_pushuserdata_associateinstance( L, pLuaInstance );                                                         \
-            luaL_getmetatable( L, MetatableName ); /* We fall back to the MetatableName we know from the baseclass*/       \
+            luaL_getmetatable( L, BaseMetatableName ); /* We fall back to the MetatableName we know from the baseclass*/   \
             AssertMsg( !lua_isnil( L, -1 ), "Invalid MetatableName! Must return a valid metatable on client and server" ); \
             lua_setmetatable( L, -2 );                                                                                     \
             return;                                                                                                        \
@@ -134,8 +135,9 @@ void lua_destroyuserdatainstance( lua_State *L, void *p );
         hEntity->Set( pEntity );                                                             \
         luaL_getmetatable( L, LUA_BASEENTITYLIBNAME );                                       \
         lua_setmetatable( L, -2 );                                                           \
+        return;                                                                              \
     }                                                                                        \
-    else                                                                                     \
-        EntityStatement->PushLuaInstance( L );
+                                                                                             \
+    EntityStatement->PushLuaInstance( L );
 
 #endif
