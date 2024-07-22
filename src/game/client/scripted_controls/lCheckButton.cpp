@@ -154,17 +154,12 @@ static int CheckButton___index( lua_State *L )
         LUA_METATABLE_INDEX_CHECK_TABLE( L );
     }
 
-    // luaL_getmetatable( L, "ToggleButton" ); // This doesnt have a Lua panel yet
-    // LUA_METATABLE_INDEX_CHECK_TABLE( L );
-
-    luaL_getmetatable( L, "Button" );
+    luaL_getmetatable( L, "CheckButton" );
     LUA_METATABLE_INDEX_CHECK_TABLE( L );
 
-    luaL_getmetatable( L, "Label" );
-    LUA_METATABLE_INDEX_CHECK_TABLE( L );
-
-    luaL_getmetatable( L, "Panel" );
-    LUA_METATABLE_INDEX_CHECK_TABLE( L );
+    // LUA_METATABLE_INDEX_DERIVE_INDEX( L, "ToggleButton" ); // This doesnt have a Lua panel yet
+    
+    LUA_METATABLE_INDEX_DERIVE_INDEX( L, "Button" );
 
     lua_pushnil( L );
     return 1;

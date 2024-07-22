@@ -1366,7 +1366,7 @@ static int Panel___index( lua_State *L )
         lua_pushnumber( L, plPanel->GetXPos() );
     else if ( Q_strcmp( field, "y" ) == 0 )
         lua_pushnumber( L, plPanel->GetYPos() );
-    if ( Q_strcmp( field, "wide" ) == 0 )
+    else if( Q_strcmp( field, "wide" ) == 0 )
         lua_pushnumber( L, plPanel->GetWide() );
     else if ( Q_strcmp( field, "tall" ) == 0 )
         lua_pushnumber( L, plPanel->GetTall() );
@@ -1378,6 +1378,9 @@ static int Panel___index( lua_State *L )
         {
             LUA_METATABLE_INDEX_CHECK_TABLE( L );
         }
+
+        luaL_getmetatable( L, "Panel" );
+        LUA_METATABLE_INDEX_CHECK_TABLE( L );
 
         lua_pushnil( L );
     }

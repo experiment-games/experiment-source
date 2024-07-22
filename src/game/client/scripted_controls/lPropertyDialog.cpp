@@ -276,14 +276,10 @@ static int PropertyDialog___index( lua_State *L )
         LUA_METATABLE_INDEX_CHECK_TABLE( L );
     }
 
-    luaL_getmetatable( L, "Frame" );
+    luaL_getmetatable( L, "PropertyDialog" );
     LUA_METATABLE_INDEX_CHECK_TABLE( L );
 
-    luaL_getmetatable( L, "EditablePanel" );
-    LUA_METATABLE_INDEX_CHECK_TABLE( L );
-
-    luaL_getmetatable( L, "Panel" );
-    LUA_METATABLE_INDEX_CHECK_TABLE( L );
+    LUA_METATABLE_INDEX_DERIVE_INDEX( L, "Frame" );
 
     lua_pushnil( L );
     return 1;

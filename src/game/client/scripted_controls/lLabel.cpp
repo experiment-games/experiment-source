@@ -316,8 +316,10 @@ static int Label___index( lua_State *L )
         LUA_METATABLE_INDEX_CHECK_TABLE( L );
     }
 
-    luaL_getmetatable( L, "Panel" );
+    luaL_getmetatable( L, "Label" );
     LUA_METATABLE_INDEX_CHECK_TABLE( L );
+
+    LUA_METATABLE_INDEX_DERIVE_INDEX( L, "Panel" );
 
     lua_pushnil( L );
     return 1;

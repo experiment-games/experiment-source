@@ -224,11 +224,10 @@ static int PropertyPage___index( lua_State *L )
         LUA_METATABLE_INDEX_CHECK_TABLE( L );
     }
 
-    luaL_getmetatable( L, "EditablePanel" );
+    luaL_getmetatable( L, "PropertyPage" );
     LUA_METATABLE_INDEX_CHECK_TABLE( L );
 
-    luaL_getmetatable( L, "Panel" );
-    LUA_METATABLE_INDEX_CHECK_TABLE( L );
+    LUA_METATABLE_INDEX_DERIVE_INDEX( L, "EditablePanel" );
 
     lua_pushnil( L );
     return 1;

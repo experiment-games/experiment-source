@@ -280,11 +280,10 @@ static int Button___index( lua_State *L )
         LUA_METATABLE_INDEX_CHECK_TABLE( L );
     }
 
-    luaL_getmetatable( L, "Label" );
+    luaL_getmetatable( L, "Button" );
     LUA_METATABLE_INDEX_CHECK_TABLE( L );
 
-    luaL_getmetatable( L, "Panel" );
-    LUA_METATABLE_INDEX_CHECK_TABLE( L );
+    LUA_METATABLE_INDEX_DERIVE_INDEX( L, "Label" );
 
     lua_pushnil( L );
     return 1;

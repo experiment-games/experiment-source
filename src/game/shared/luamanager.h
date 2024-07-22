@@ -450,6 +450,27 @@
         LUA_METATABLE_INDEX_CHECK_TABLE( L );                                               \
     }
 
+#define LUA_METATABLE_INDEX_DERIVE_INDEX( L, DerivedFrom )         \
+    if ( luaL_getmetatable( L, DerivedFrom ) )                     \
+    {                                                              \
+        lua_getfield( L, -1, "__index" );                          \
+        if ( lua_isfunction( L, -1 ) )                             \
+        {                                                          \
+            lua_pushvalue( L, 1 );                                 \
+            lua_pushvalue( L, 2 );                                 \
+            lua_call( L, 2, 1 );                                   \
+            return 1;                                              \
+        }                                                          \
+        else if ( lua_istable( L, -1 ) )                           \
+        {                                                          \
+            lua_pushvalue( L, 2 );                                 \
+            lua_gettable( L, -2 );                                 \
+            return 1;                                              \
+        }                                                          \
+                                                                   \
+        lua_pop( L, 1 ); /* Pop the result of luaL_getmetatable */ \
+    }
+
 #define LUA_PUSH_PANEL_USERDATA_METATABLE( L, MetaTableName ) \
     luaL_getmetatable( L, MetaTableName );                    \
     lua_setmetatable( L, -2 );
