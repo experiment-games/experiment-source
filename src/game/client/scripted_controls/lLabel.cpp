@@ -25,11 +25,6 @@ LLabel::LLabel( Panel *parent, const char *panelName, const char *text, lua_Stat
     m_lua_State = L;
 }
 
-void LLabel::PushPanelToLua( lua_State *L )
-{
-    lua_pushlabel( L, this );
-}
-
 /*
 ** access functions (stack -> C)
 */
@@ -46,11 +41,6 @@ LUA_API lua_Label *lua_tolabel( lua_State *L, int idx )
 /*
 ** push functions (C -> stack)
 */
-
-LUA_API void lua_pushlabel( lua_State *L, lua_Label *pLabel )
-{
-    LUA_PUSH_PANEL_USERDATA( L, pLabel, lua_Label, "Label" );
-}
 
 LUALIB_API lua_Label *luaL_checklabel( lua_State *L, int narg )
 {
@@ -217,7 +207,7 @@ static int Label_GetHotKey( lua_State *L )
 
 static int Label_HasHotkey( lua_State *L )
 {
-    lua_pushpanel( L, luaL_checklabel( L, 1 )->HasHotkey( luaL_checknumber( L, 2 ) ) );
+    luaL_checklabel( L, 1 )->HasHotkey( luaL_checknumber( L, 2 ) )->PushLuaInstance( L );
     return 1;
 }
 
@@ -450,7 +440,7 @@ static int luasrc_Label( lua_State *L )
                     luaL_checkstring( L, 2 ),
                     luaL_optstring( L, 3, "Label" ),
                     L );
-    lua_pushlabel( L, pPanel );
+    pPanel->PushLuaInstance( L );
     return 1;
 }
 

@@ -21,10 +21,11 @@ class LEditablePanel : public EditablePanel
 {
     DECLARE_CLASS_SIMPLE( LEditablePanel, EditablePanel );
 
+    LUA_OVERRIDE_SINGLE_LUA_INSTANCE_METATABLE( "EditablePanel" );
+
    public:
     LEditablePanel( Panel *parent, const char *panelName, lua_State *L );
     ~LEditablePanel();
-    virtual void PushPanelToLua( lua_State *L );
     void SetFocusTopLevel( bool state );
 
     virtual void Activate();
@@ -62,8 +63,6 @@ LUA_API lua_EditablePanel *( lua_toeditablepanel )( lua_State *L, int idx );
 /*
 ** push functions (C -> stack)
 */
-LUA_API void( lua_pusheditablepanel )( lua_State *L, lua_EditablePanel *pPanel );
-
 LUALIB_API lua_EditablePanel *( luaL_checkeditablepanel )( lua_State *L, int narg );
 
 #endif  // LEDITABLEPANEL_H

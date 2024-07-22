@@ -12,6 +12,7 @@
 #include <LKeyValues.h>
 #include <vgui_int.h>
 #include <vgui/IInput.h>
+#include <vgui/IVGui.h>
 #include <vgui/ISurface.h>
 #include <vgui_controls/Panel.h>
 
@@ -37,11 +38,6 @@ LEditablePanel::~LEditablePanel()
             m_hPreviousModal = 0;
         }
     }
-}
-
-void LEditablePanel::PushPanelToLua( lua_State *L )
-{
-    lua_pusheditablepanel( L, this );
 }
 
 void LEditablePanel::SetFocusTopLevel( bool state )
@@ -146,12 +142,6 @@ LUA_API lua_EditablePanel *lua_toeditablepanel( lua_State *L, int idx )
 /*
 ** push functions (C -> stack)
 */
-
-LUA_API void lua_pusheditablepanel( lua_State *L, lua_EditablePanel *plEditablePanel )
-{
-    LUA_PUSH_PANEL_USERDATA( L, plEditablePanel, lua_EditablePanel, "EditablePanel" );
-}
-
 LUALIB_API lua_EditablePanel *luaL_checkeditablepanel( lua_State *L, int narg )
 {
     lua_EditablePanel *d = lua_toeditablepanel( L, narg );
@@ -188,7 +178,7 @@ static int EditablePanel_ChainToMap( lua_State *L )
 
 static int EditablePanel_CreateControlByName( lua_State *L )
 {
-    lua_pushpanel( L, luaL_checkeditablepanel( L, 1 )->CreateControlByName( luaL_checkstring( L, 2 ) ) );
+    luaL_checkeditablepanel( L, 1 )->CreateControlByName( luaL_checkstring( L, 2 ) )->PushLuaInstance( L );
     return 1;
 }
 
@@ -218,7 +208,7 @@ static int EditablePanel_GetControlString( lua_State *L )
 
 static int EditablePanel_GetCurrentKeyFocus( lua_State *L )
 {
-    lua_pushpanel( L, luaL_checkeditablepanel( L, 1 )->GetCurrentKeyFocus() );
+    Panel::PushVPanelLuaInstance( L, luaL_checkeditablepanel( L, 1 )->GetCurrentKeyFocus() );
     return 1;
 }
 
@@ -243,7 +233,8 @@ static int EditablePanel_GetPanelClassName( lua_State *L )
 static int EditablePanel_HasHotkey( lua_State *L )
 {
     size_t l;
-    lua_pushpanel( L, luaL_checkeditablepanel( L, 1 )->HasHotkey( ( wchar_t )luaL_checklstring( L, 2, &l ) ) );
+    Panel *pPanel = luaL_checkeditablepanel( L, 1 )->HasHotkey( ( wchar_t )luaL_checklstring( L, 2, &l ) );
+    pPanel->PushLuaInstance( L );
     return 1;
 }
 
@@ -505,7 +496,7 @@ static int luasrc_EditablePanel( lua_State *L )
             luaL_optpanel( L, 1, VGui_GetClientLuaRootPanel() ),
             luaL_checkstring( L, 2 ),
             L );
-    lua_pusheditablepanel( L, pPanel );
+    pPanel->PushLuaInstance( L );
     return 1;
 }
 

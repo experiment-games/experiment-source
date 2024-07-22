@@ -15,10 +15,10 @@ class LTextEntry : public TextEntry
 {
     DECLARE_CLASS_SIMPLE( LTextEntry, TextEntry );
 
+    LUA_OVERRIDE_SINGLE_LUA_INSTANCE_METATABLE( "TextEntry" );
+
    public:
     LTextEntry(Panel *parent, const char *panelName, lua_State *L = NULL );
-
-    virtual void PushPanelToLua( lua_State *L );
 
    protected:
     virtual void ApplySchemeSettings( vgui::IScheme *pScheme )
@@ -45,8 +45,6 @@ LUA_API lua_TextEntry *( lua_totextentry )( lua_State *L, int idx );
 /*
 ** push functions (C -> stack)
 */
-LUA_API void( lua_pushtextentry )( lua_State *L, lua_TextEntry *pTextEntry );
-
 LUALIB_API lua_TextEntry *( luaL_checktextentry )( lua_State *L, int narg );
 
 #endif  // LTEXTENTRY_H

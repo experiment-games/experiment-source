@@ -24,14 +24,11 @@ class LCheckButton : public CheckButton
 {
     DECLARE_CLASS_SIMPLE( LCheckButton, CheckButton );
 
+    LUA_OVERRIDE_SINGLE_LUA_INSTANCE_METATABLE( "CheckButton" );
+
    public:
     LCheckButton( Panel *parent, const char *panelName, const char *text, lua_State *L );
     virtual ~LCheckButton();
-
-#if defined( LUA_SDK )
-   public:
-    virtual void PushPanelToLua( lua_State *L );
-#endif
 
    protected:
     MESSAGE_FUNC( OnCheckButtonChecked, "CheckButtonChecked" );
@@ -59,8 +56,6 @@ LUA_API lua_CheckButton *( lua_tocheckbutton )( lua_State *L, int idx );
 /*
 ** push functions (C -> stack)
 */
-LUA_API void( lua_pushcheckbutton )( lua_State *L, lua_CheckButton *pCheckButton );
-
 LUALIB_API lua_CheckButton *( luaL_checkcheckbutton )( lua_State *L, int narg );
 
 #endif  // VGUI_LCHECKBUTTON_H

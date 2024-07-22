@@ -164,7 +164,7 @@
         if ( lua_isfunction( m_lua_State, -1 ) )                                       \
         {                                                                              \
             int args = 0;                                                              \
-            this->PushPanelToLua( m_lua_State );                                       \
+            this->PushLuaInstance( m_lua_State );                                      \
             ++args;
 
 // Will call the function if it exists, leaving the specified amount of
@@ -256,30 +256,30 @@
             lua_pop( L, 1 );                       \
     }
 
-#define RETURN_LUA_INTEGER()                  \
-    if ( lua_gettop( L ) == 1 )               \
-    {                                         \
-        if ( lua_isnumber( L, -1 ) )          \
-        {                                     \
+#define RETURN_LUA_INTEGER()                     \
+    if ( lua_gettop( L ) == 1 )                  \
+    {                                            \
+        if ( lua_isnumber( L, -1 ) )             \
+        {                                        \
             int res = luaL_checknumber( L, -1 ); \
-            lua_pop( L, 1 );                  \
-            return res;                       \
-        }                                     \
-        else                                  \
-            lua_pop( L, 1 );                  \
+            lua_pop( L, 1 );                     \
+            return res;                          \
+        }                                        \
+        else                                     \
+            lua_pop( L, 1 );                     \
     }
 
-#define RETURN_LUA_ACTIVITY()                 \
-    if ( lua_gettop( L ) == 1 )               \
-    {                                         \
-        if ( lua_isnumber( L, -1 ) )          \
-        {                                     \
+#define RETURN_LUA_ACTIVITY()                    \
+    if ( lua_gettop( L ) == 1 )                  \
+    {                                            \
+        if ( lua_isnumber( L, -1 ) )             \
+        {                                        \
             int res = luaL_checknumber( L, -1 ); \
-            lua_pop( L, 1 );                  \
-            return ( Activity )res;           \
-        }                                     \
-        else                                  \
-            lua_pop( L, 1 );                  \
+            lua_pop( L, 1 );                     \
+            return ( Activity )res;              \
+        }                                        \
+        else                                     \
+            lua_pop( L, 1 );                     \
     }
 
 #define RETURN_LUA_STRING()                              \

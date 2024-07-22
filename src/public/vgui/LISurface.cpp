@@ -371,7 +371,7 @@ static int surface_GetCharacterWidth( lua_State *L )
 
 static int surface_GetEmbeddedPanel( lua_State *L )
 {
-    lua_pushpanel( L, surface()->GetEmbeddedPanel() );
+    Panel::PushVPanelLuaInstance( L, surface()->GetEmbeddedPanel() );
     return 1;
 }
 
@@ -391,19 +391,19 @@ static int surface_GetFontTall( lua_State *L )
 
 static int surface_GetModalPanel( lua_State *L )
 {
-    lua_pushpanel( L, surface()->GetModalPanel() );
+    Panel::PushVPanelLuaInstance( L, surface()->GetModalPanel() );
     return 1;
 }
 
 static int surface_GetNotifyPanel( lua_State *L )
 {
-    lua_pushpanel( L, surface()->GetNotifyPanel() );
+    Panel::PushVPanelLuaInstance( L, surface()->GetNotifyPanel() );
     return 1;
 }
 
 static int surface_GetPopup( lua_State *L )
 {
-    lua_pushpanel( L, surface()->GetPopup( luaL_checknumber( L, 1 ) ) );
+    Panel::PushVPanelLuaInstance( L, surface()->GetPopup( luaL_checknumber( L, 1 ) ) );
     return 1;
 }
 
@@ -464,7 +464,7 @@ static int surface_GetTitle( lua_State *L )
 
 static int surface_GetTopmostPopup( lua_State *L )
 {
-    lua_pushpanel( L, surface()->GetTopmostPopup() );
+    Panel::PushVPanelLuaInstance( L, surface()->GetTopmostPopup() );
     return 1;
 }
 

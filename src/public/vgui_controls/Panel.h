@@ -32,6 +32,7 @@
 #ifdef LUA_SDK
 #include "lua.hpp"
 #include "utldict.h"
+#include "lsingleluainstance.h"
 #endif
 
 // undefine windows function macros that overlap
@@ -205,6 +206,11 @@ class Panel : public IClientPanel, virtual IForceVirtualInheritancePanel
 {
     DECLARE_CLASS_SIMPLE_NOBASE( Panel );
 
+#ifdef LUA_SDK
+    LUA_DECLARE_SINGLE_LUA_INSTANCE( Panel, "Panel" );
+    static void PushVPanelLuaInstance( lua_State *L, VPANEL panel );
+#endif
+
    public:
     // For property mapping
     static void InitPropertyConverters( void );
@@ -228,7 +234,7 @@ class Panel : public IClientPanel, virtual IForceVirtualInheritancePanel
     bool m_bIsPaintClipping = true;
     int m_nLastLocalCursorX = 0;
     int m_nLastLocalCursorY = 0;
-    int m_AlignmentMask = Alignment::None; // Let it be absolutely positioned by its x and y
+    int m_AlignmentMask = Alignment::None;  // Let it be absolutely positioned by its x and y
     Thickness m_DockPadding;
     Thickness m_DockMargin;
     Size m_InnerBounds;
@@ -240,7 +246,6 @@ class Panel : public IClientPanel, virtual IForceVirtualInheritancePanel
     int m_nRefCount;
 
     Panel( Panel *parent, const char *panelName, lua_State *L );
-    virtual void PushPanelToLua( lua_State *L );
     virtual void SetupRefTable( lua_State *L );
     virtual bool IsFunctionPrepared( const char *functionName );
     virtual void UpdatePreparedFunctions();
@@ -291,7 +296,7 @@ class Panel : public IClientPanel, virtual IForceVirtualInheritancePanel
         }
     }
 
-    virtual void InvalidateChildrenLayout(bool bRecursive = false)
+    virtual void InvalidateChildrenLayout( bool bRecursive = false )
     {
         for ( int i = 0; i < GetChildCount(); i++ )
         {

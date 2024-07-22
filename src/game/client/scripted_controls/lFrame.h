@@ -24,11 +24,11 @@ class LFrame : public Frame
 {
     DECLARE_CLASS_SIMPLE( LFrame, Frame );
 
+    LUA_OVERRIDE_SINGLE_LUA_INSTANCE_METATABLE( "Frame" );
+
    public:
     LFrame( Panel *parent, const char *panelName, bool showTaskbarIcon = true, lua_State *L = NULL );
     virtual ~LFrame();
-
-    virtual void PushPanelToLua( lua_State *L );
 
    protected:
     virtual void ApplySchemeSettings( vgui::IScheme *pScheme )
@@ -54,8 +54,6 @@ LUA_API lua_Frame *( lua_toframe )( lua_State *L, int idx );
 /*
 ** push functions (C -> stack)
 */
-LUA_API void( lua_pushframe )( lua_State *L, lua_Frame *pFrame );
-
 LUALIB_API lua_Frame *( luaL_checkframe )( lua_State *L, int narg );
 
 #endif  // VGUI_LFRAME_H

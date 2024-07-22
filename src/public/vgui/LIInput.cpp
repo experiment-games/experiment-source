@@ -26,7 +26,7 @@ static int input_CandidateListStartsAtOne( lua_State *L )
 
 static int input_GetAppModalSurface( lua_State *L )
 {
-    lua_pushpanel( L, input()->GetAppModalSurface() );
+    Panel::PushVPanelLuaInstance( L, input()->GetAppModalSurface() );
     return 1;
 }
 
@@ -86,25 +86,25 @@ static int input_GetEnglishIMEHandle( lua_State *L )
 
 static int input_GetFocus( lua_State *L )
 {
-    lua_pushpanel( L, input()->GetFocus() );
+    Panel::PushVPanelLuaInstance( L, input()->GetFocus() );
     return 1;
 }
 
 static int input_GetModalSubTree( lua_State *L )
 {
-    lua_pushpanel( L, input()->GetModalSubTree() );
+    Panel::PushVPanelLuaInstance( L, input()->GetModalSubTree() );
     return 1;
 }
 
 static int input_GetMouseCapture( lua_State *L )
 {
-    lua_pushpanel( L, input()->GetMouseCapture() );
+    Panel::PushVPanelLuaInstance( L, input()->GetMouseCapture() );
     return 1;
 }
 
 static int input_GetMouseOver( lua_State *L )
 {
-    lua_pushpanel( L, input()->GetMouseOver() );
+    Panel::PushVPanelLuaInstance( L, input()->GetMouseOver() );
     return 1;
 }
 

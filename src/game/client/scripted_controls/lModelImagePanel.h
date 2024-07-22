@@ -13,10 +13,11 @@ class LModelImagePanel : public EditablePanel
 {
     DECLARE_CLASS_SIMPLE( LModelImagePanel, EditablePanel );
 
+    LUA_OVERRIDE_SINGLE_LUA_INSTANCE_METATABLE( "ModelImagePanel" );
+
    public:
     LModelImagePanel( Panel *parent, const char *panelName, lua_State *L );
     virtual ~LModelImagePanel();
-    virtual void PushPanelToLua( lua_State *L );
 
     virtual void RebuildSpawnIcon( Camera_t *camera = NULL, const char *pszSavePath = NULL );
     virtual void SetModelImage( const char *pngImagePath );
@@ -88,8 +89,6 @@ LUA_API lua_ModelImagePanel *( lua_tomodelimagepanel )( lua_State *L, int idx );
 /*
 ** push functions (C -> stack)
 */
-LUA_API void( lua_pushmodelimagepanel )( lua_State *L, lua_ModelImagePanel *plModelImagePanel );
-
 LUALIB_API lua_ModelImagePanel *( luaL_checkmodelimagepanel )( lua_State *L, int narg );
 LUALIB_API lua_ModelImagePanel *( luaL_optmodelimagepanel )( lua_State *L, int narg, lua_ModelImagePanel *def );
 

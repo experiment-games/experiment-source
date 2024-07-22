@@ -39,11 +39,6 @@ LPropertyDialog::~LPropertyDialog()
 {
 }
 
-void LPropertyDialog::PushPanelToLua( lua_State *L )
-{
-    lua_pushpropertydialog( L, this );
-}
-
 //-----------------------------------------------------------------------------
 // Purpose: Sets up the sheet
 //-----------------------------------------------------------------------------
@@ -149,12 +144,6 @@ LUA_API lua_PropertyDialog *lua_topropertydialog( lua_State *L, int idx )
 /*
 ** push functions (C -> stack)
 */
-
-LUA_API void lua_pushpropertydialog( lua_State *L, lua_PropertyDialog *pDialog )
-{
-    LUA_PUSH_PANEL_USERDATA( L, pDialog, lua_PropertyDialog, "PropertyDialog" );
-}
-
 LUALIB_API lua_PropertyDialog *luaL_checkpropertydialog( lua_State *L,
                                                          int narg )
 {
@@ -200,7 +189,7 @@ static int PropertyDialog_EnableApplyButton( lua_State *L )
 
 static int PropertyDialog_GetActivePage( lua_State *L )
 {
-    lua_pushpanel( L, luaL_checkpropertydialog( L, 1 )->GetActivePage() );
+    luaL_checkpropertydialog( L, 1 )->GetActivePage()->PushLuaInstance( L );
     return 1;
 }
 
@@ -377,7 +366,7 @@ static int luasrc_PropertyDialog( lua_State *L )
         new lua_PropertyDialog( luaL_optpanel( L, 1, VGui_GetClientLuaRootPanel() ),
                              luaL_checkstring( L, 2 ),
                              L );
-    lua_pushpropertydialog( L, pPanel );
+    pPanel->PushLuaInstance( L );
     return 1;
 }
 

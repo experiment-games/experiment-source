@@ -197,17 +197,12 @@ int CPredictableList::GetPredictableCount(void) {
 }
 
 #ifdef LUA_SDK
-void *C_BaseEntity::CreateLuaInstance( lua_State *L )
+void *C_BaseEntity::CreateLuaInstance( lua_State *L, C_BaseEntity *pInstance )
 {
     CBaseHandle *hEntity =
         ( CBaseHandle * )lua_newuserdata( L, sizeof( CBaseHandle ) );
-    hEntity->Set( this );
+    hEntity->Set( pInstance );
     return hEntity;
-}
-
-const char *C_BaseEntity::GetMetatableName()
-{
-    return LUA_BASEENTITYLIBNAME;
 }
 #endif
 

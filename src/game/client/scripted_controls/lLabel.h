@@ -15,10 +15,10 @@ class LLabel : public Label
 {
     DECLARE_CLASS_SIMPLE( LLabel, Label );
 
+    LUA_OVERRIDE_SINGLE_LUA_INSTANCE_METATABLE( "Label" );
+
    public:
     LLabel( Panel *parent, const char *panelName, const char *text, lua_State *L = NULL );
-
-    virtual void PushPanelToLua( lua_State *L );
 
    protected:
     virtual void ApplySchemeSettings( vgui::IScheme *pScheme )
@@ -44,8 +44,6 @@ LUA_API lua_Label *( lua_tolabel )( lua_State *L, int idx );
 /*
 ** push functions (C -> stack)
 */
-LUA_API void( lua_pushlabel )( lua_State *L, lua_Label *pLabel );
-
 LUALIB_API lua_Label *( luaL_checklabel )( lua_State *L, int narg );
 
 #endif  // LLABEL_H

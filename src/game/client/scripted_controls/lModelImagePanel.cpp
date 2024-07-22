@@ -60,11 +60,6 @@ LModelImagePanel::~LModelImagePanel()
 {
 }
 
-void LModelImagePanel::PushPanelToLua( lua_State *L )
-{
-    lua_pushmodelimagepanel( L, this );
-}
-
 /// <summary>
 /// Get a name for png materials (prefixed with ! and no png extension)
 /// </summary>
@@ -598,12 +593,6 @@ LUA_API lua_ModelImagePanel *lua_tomodelimagepanel( lua_State *L, int idx )
 /*
 ** push functions (C -> stack)
 */
-
-LUA_API void lua_pushmodelimagepanel( lua_State *L, lua_ModelImagePanel *plModelImagePanel )
-{
-    LUA_PUSH_PANEL_USERDATA( L, plModelImagePanel, lua_ModelImagePanel, "ModelImagePanel" );
-}
-
 LUALIB_API lua_ModelImagePanel *luaL_checkmodelimagepanel( lua_State *L, int narg )
 {
     lua_ModelImagePanel *d = lua_tomodelimagepanel( L, narg );
@@ -793,7 +782,7 @@ static int luasrc_ModelImagePanel( lua_State *L )
             luaL_optpanel( L, 1, VGui_GetClientLuaRootPanel() ),
             luaL_checkstring( L, 2 ),
             L );
-    lua_pushmodelimagepanel( L, pPanel );
+    pPanel->PushLuaInstance( L );
     return 1;
 }
 

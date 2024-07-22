@@ -37,11 +37,6 @@ LCheckButton::~LCheckButton()
 {
 }
 
-void LCheckButton::PushPanelToLua( lua_State *L )
-{
-    lua_pushcheckbutton( L, this );
-}
-
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
@@ -69,12 +64,6 @@ LUA_API lua_CheckButton *lua_tocheckbutton( lua_State *L, int idx )
 /*
 ** push functions (C -> stack)
 */
-
-LUA_API void lua_pushcheckbutton( lua_State *L, lua_CheckButton *pCheckButton )
-{
-    LUA_PUSH_PANEL_USERDATA( L, pCheckButton, lua_CheckButton, "CheckButton" );
-}
-
 LUALIB_API lua_CheckButton *luaL_checkcheckbutton( lua_State *L, int narg )
 {
     lua_CheckButton *d = lua_tocheckbutton( L, narg );
@@ -252,7 +241,7 @@ static int luasrc_CheckButton( lua_State *L )
         luaL_optstring( L, 2, NULL ),
         luaL_optstring( L, 3, NULL ),
         L );
-    lua_pushcheckbutton( L, pPanel );
+    pPanel->PushLuaInstance( L );
     return 1;
 }
 

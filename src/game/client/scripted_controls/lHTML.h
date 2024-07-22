@@ -15,11 +15,11 @@ class LHTML : public HTML
 {
     DECLARE_CLASS_SIMPLE( LHTML, HTML );
 
+    LUA_OVERRIDE_SINGLE_LUA_INSTANCE_METATABLE( "HTML" );
+
    public:
     // You can optionally pass in the panel to send the click message to and the name of the command to send to that panel.
     LHTML( Panel *parent, const char *name, bool allowJavaScript = false, bool bPopupWindow = false, lua_State *L = NULL );
-
-    virtual void PushPanelToLua( lua_State *L );
 
     virtual bool OnStartRequest( const char *url, const char *target, const char *pchPostData, bool bIsRedirect );
     virtual void OnFinishRequest( const char *url, const char *pageTitle, const CUtlMap< CUtlString, CUtlString > &headers );
@@ -53,8 +53,6 @@ LUA_API lua_HTML *( lua_tohtml )( lua_State *L, int idx );
 /*
 ** push functions (C -> stack)
 */
-LUA_API void( lua_pushhtml )( lua_State *L, lua_HTML *pHTML );
-
 LUALIB_API lua_HTML *( luaL_checkhtml )( lua_State *L, int narg );
 
 #endif  // LHTML_H

@@ -24,6 +24,8 @@ class LPropertyPage : public PropertyPage
 {
     DECLARE_CLASS_SIMPLE( LPropertyPage, PropertyPage );
 
+    LUA_OVERRIDE_SINGLE_LUA_INSTANCE_METATABLE( "PropertyPage" );
+
    public:
     LPropertyPage( Panel *parent, const char *panelName, lua_State *L );
     ~LPropertyPage();
@@ -56,13 +58,9 @@ class LPropertyPage : public PropertyPage
 
         BaseClass::ApplySchemeSettings( pScheme );
     }
+
    private:
     PHandle _pageTab;
-
-#if defined( LUA_SDK )
-   public:
-    virtual void PushPanelToLua( lua_State *L );
-#endif
 };
 
 }  // namespace vgui
@@ -76,7 +74,7 @@ class LPropertyPage : public PropertyPage
         if ( lua_isfunction( m_lua_State, -1 ) )           \
         {                                                  \
             int args = 0;                                  \
-            lua_pushpropertypage( m_lua_State, this );     \
+            this->PushLuaInstance( m_lua_State );          \
             ++args;
 
 /* type for PropertyPage functions */
@@ -91,8 +89,6 @@ LUA_API lua_PropertyPage *( lua_topropertypage )( lua_State *L, int idx );
 /*
 ** push functions (C -> stack)
 */
-LUA_API void( lua_pushpropertypage )( lua_State *L, lua_PropertyPage *pPage );
-
 LUALIB_API lua_PropertyPage *( luaL_checkpropertypage )( lua_State *L, int narg );
 
 #endif  // LPROPERTYPAGE_H

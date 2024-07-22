@@ -22,11 +22,6 @@ LHTML::LHTML( Panel *parent, const char *name, bool allowJavaScript, bool bPopup
     m_lua_State = L;
 }
 
-void LHTML::PushPanelToLua( lua_State *L )
-{
-    lua_pushhtml( L, this );
-}
-
 bool LHTML::OnStartRequest( const char *url, const char *target, const char *pchPostData, bool bIsRedirect )
 {
     m_bIsLoading = true;
@@ -56,12 +51,6 @@ LUA_API lua_HTML *lua_tohtml( lua_State *L, int idx )
 /*
 ** push functions (C -> stack)
 */
-
-LUA_API void lua_pushhtml( lua_State *L, lua_HTML *pHTML )
-{
-    LUA_PUSH_PANEL_USERDATA( L, pHTML, lua_HTML, "HTML" );
-}
-
 LUALIB_API lua_HTML *luaL_checkhtml( lua_State *L, int narg )
 {
     lua_HTML *d = lua_tohtml( L, narg );
@@ -352,7 +341,7 @@ static int luasrc_HTML( lua_State *L )
                    luaL_optboolean( L, 3, false ),
                    luaL_optboolean( L, 4, false ),
                    L );
-    lua_pushhtml( L, pPanel );
+    pPanel->PushLuaInstance( L );
     return 1;
 }
 

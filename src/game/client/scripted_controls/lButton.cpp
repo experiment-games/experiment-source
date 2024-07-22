@@ -22,11 +22,6 @@ LButton::LButton( Panel *parent, const char *panelName, const char *text, Panel 
     m_lua_State = L;
 }
 
-void LButton::PushPanelToLua( lua_State *L )
-{
-    lua_pushbutton( L, this );
-}
-
 void LButton::DoClick()
 {
     Button::DoClick();
@@ -53,12 +48,6 @@ LUA_API lua_Button *lua_tobutton( lua_State *L, int idx )
 /*
 ** push functions (C -> stack)
 */
-
-LUA_API void lua_pushbutton( lua_State *L, lua_Button *pButton )
-{
-    LUA_PUSH_PANEL_USERDATA( L, pButton, lua_Button, "Button" );
-}
-
 LUALIB_API lua_Button *luaL_checkbutton( lua_State *L, int narg )
 {
     lua_Button *d = lua_tobutton( L, narg );
@@ -399,7 +388,7 @@ static int luasrc_Button( lua_State *L )
                         luaL_optpanel( L, 4, 0 ),
                         luaL_optstring( L, 5, 0 ),
                         L );
-    lua_pushbutton( L, pPanel );
+    pPanel->PushLuaInstance( L );
     return 1;
 }
 

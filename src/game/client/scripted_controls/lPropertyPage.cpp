@@ -36,11 +36,6 @@ LPropertyPage::~LPropertyPage()
 {
 }
 
-void LPropertyPage::PushPanelToLua( lua_State *L )
-{
-    lua_pushpropertypage( L, this );
-}
-
 //-----------------------------------------------------------------------------
 // Purpose: Called when page is loaded.  Data should be reloaded from document
 // into controls.
@@ -97,7 +92,7 @@ void LPropertyPage::OnPageTabActivated( Panel *pageTab )
 
 #ifdef LUA_SDK
     BEGIN_LUA_CALL_PROPERTYPAGE_METHOD( "OnPageTabActivated" );
-    lua_pushpanel( m_lua_State, pageTab );
+    pageTab->PushLuaInstance( m_lua_State );
     END_LUA_CALL_PANEL_METHOD( 1, 0 );
 #endif
 }
@@ -134,12 +129,6 @@ LUA_API lua_PropertyPage *lua_topropertypage( lua_State *L, int idx )
 /*
 ** push functions (C -> stack)
 */
-
-LUA_API void lua_pushpropertypage( lua_State *L, lua_PropertyPage *pPage )
-{
-    LUA_PUSH_PANEL_USERDATA( L, pPage, lua_PropertyPage, "PropertyPage" );
-}
-
 LUALIB_API lua_PropertyPage *luaL_checkpropertypage( lua_State *L, int narg )
 {
     lua_PropertyPage *d = lua_topropertypage( L, narg );
@@ -316,7 +305,7 @@ static int luasrc_PropertyPage( lua_State *L )
         new lua_PropertyPage( luaL_optpanel( L, 1, VGui_GetClientLuaRootPanel() ),
                            luaL_checkstring( L, 2 ),
                            L );
-    lua_pushpropertypage( L, pPanel );
+    pPanel->PushLuaInstance( L );
     return 1;
 }
 

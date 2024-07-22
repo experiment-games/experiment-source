@@ -24,6 +24,8 @@ class LPropertyDialog : public PropertyDialog
 {
     DECLARE_CLASS_SIMPLE( LPropertyDialog, PropertyDialog );
 
+    LUA_OVERRIDE_SINGLE_LUA_INSTANCE_METATABLE( "PropertyDialog" );
+
    public:
     LPropertyDialog( Panel *parent, const char *panelName, lua_State *L );
     ~LPropertyDialog();
@@ -47,13 +49,9 @@ class LPropertyDialog : public PropertyDialog
 
         BaseClass::ApplySchemeSettings( pScheme );
     }
+
    public:
     void EnableApplyButton( bool bEnable );
-
-#if defined( LUA_SDK )
-   public:
-    virtual void PushPanelToLua( lua_State *L );
-#endif
 };
 
 };  // vgui
@@ -67,7 +65,7 @@ class LPropertyDialog : public PropertyDialog
         if ( lua_isfunction( m_lua_State, -1 ) )             \
         {                                                    \
             int args = 0;                                    \
-            lua_pushpropertydialog( m_lua_State, this );     \
+            this->PushLuaInstance( m_lua_State );            \
             ++args;
 
 /* type for PropertyDialog functions */
@@ -82,8 +80,6 @@ LUA_API lua_PropertyDialog *( lua_topropertydialog )( lua_State *L, int idx );
 /*
 ** push functions (C -> stack)
 */
-LUA_API void( lua_pushpropertydialog )( lua_State *L, lua_PropertyDialog *pDialog );
-
 LUALIB_API lua_PropertyDialog *( luaL_checkpropertydialog )( lua_State *L, int narg );
 
 #endif  // LPROPERTYDIALOG_H

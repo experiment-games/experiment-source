@@ -431,17 +431,12 @@ CBaseEntity::CBaseEntity( bool bServerOnly )
 }
 
 #ifdef LUA_SDK
-void *CBaseEntity::CreateLuaInstance( lua_State *L )
+void *CBaseEntity::CreateLuaInstance( lua_State *L, CBaseEntity *pInstance )
 {
     CBaseHandle *hEntity =
         ( CBaseHandle * )lua_newuserdata( L, sizeof( CBaseHandle ) );
-    hEntity->Set( this );
+    hEntity->Set( pInstance );
     return hEntity;
-}
-
-const char *CBaseEntity::GetMetatableName()
-{
-    return LUA_BASEENTITYLIBNAME;
 }
 #endif
 

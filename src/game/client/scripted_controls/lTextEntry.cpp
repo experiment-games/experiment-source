@@ -24,11 +24,6 @@ LTextEntry::LTextEntry( Panel *parent, const char *panelName, lua_State *L )
     m_lua_State = L;
 }
 
-void LTextEntry::PushPanelToLua( lua_State *L )
-{
-    lua_pushtextentry( L, this );
-}
-
 /*
 ** access functions (stack -> C)
 */
@@ -45,12 +40,6 @@ LUA_API lua_TextEntry *lua_totextentry( lua_State *L, int idx )
 /*
 ** push functions (C -> stack)
 */
-
-LUA_API void lua_pushtextentry( lua_State *L, lua_TextEntry *pTextEntry )
-{
-    LUA_PUSH_PANEL_USERDATA( L, pTextEntry, lua_TextEntry, "TextEntry" );
-}
-
 LUALIB_API lua_TextEntry *luaL_checktextentry( lua_State *L, int narg )
 {
     lua_TextEntry *d = lua_totextentry( L, narg );
@@ -435,7 +424,7 @@ static int TextEntry_OnPanelDropped( lua_State *L )
 
 static int TextEntry_GetDragPanel( lua_State *L )
 {
-    lua_pushpanel( L, luaL_checktextentry( L, 1 )->GetDragPanel() );
+    luaL_checktextentry( L, 1 )->GetDragPanel()->PushLuaInstance( L );
     return 1;
 }
 
@@ -622,7 +611,7 @@ static int luasrc_TextEntry( lua_State *L )
         new lua_TextEntry( luaL_optpanel( L, 1, VGui_GetClientLuaRootPanel() ),
                         luaL_optstring( L, 2, "TextEntry" ),
                         L );
-    lua_pushtextentry( L, pPanel );
+    pPanel->PushLuaInstance( L );
     return 1;
 }
 

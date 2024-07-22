@@ -32,19 +32,6 @@ LUA_API lua_Panel *lua_topanel( lua_State *L, int idx )
 /*
 ** push functions (C -> stack)
 */
-
-LUA_API void lua_pushpanel( lua_State *L, lua_Panel *pPanel )
-{
-    LUA_PUSH_PANEL_USERDATA( L, pPanel, lua_Panel, "Panel" );
-}
-
-LUA_API void lua_pushpanel( lua_State *L, VPANEL panel )
-{
-    PHandle *phPanel = ( PHandle * )lua_newuserdata( L, sizeof( PHandle ) );
-    phPanel->Set( ivgui()->PanelToHandle( panel ) );
-    LUA_PUSH_PANEL_USERDATA_METATABLE( L, "Panel" );
-}
-
 LUALIB_API lua_Panel *luaL_checkpanel( lua_State *L, int narg )
 {
     lua_Panel *d = lua_topanel( L, narg );
@@ -160,7 +147,7 @@ static int Panel_FillRectSkippingPanel( lua_State *L )
 
 static int Panel_FindChildByName( lua_State *L )
 {
-    lua_pushpanel( L, luaL_checkpanel( L, 1 )->FindChildByName( luaL_checkstring( L, 2 ), luaL_optboolean( L, 3, 0 ) ) );
+    luaL_checkpanel( L, 1 )->FindChildByName( luaL_checkstring( L, 2 ), luaL_optboolean( L, 3, 0 ) )->PushLuaInstance( L );
     return 1;
 }
 
@@ -173,8 +160,7 @@ static int Panel_FindChildIndexByName( lua_State *L )
 
 static int Panel_FindSiblingByName( lua_State *L )
 {
-    lua_pushpanel(
-        L, luaL_checkpanel( L, 1 )->FindSiblingByName( luaL_checkstring( L, 2 ) ) );
+    luaL_checkpanel( L, 1 )->FindSiblingByName( luaL_checkstring( L, 2 ) )->PushLuaInstance( L );
     return 1;
 }
 
@@ -205,7 +191,7 @@ static int Panel_GetChild( lua_State *L )
 {
     // ! Note: We are using 1-based indexing here, while the original
     // code uses 0-based indexing.
-    lua_pushpanel( L, luaL_checkpanel( L, 1 )->GetChild( luaL_checknumber( L, 2 ) - 1 ) );
+    luaL_checkpanel( L, 1 )->GetChild( luaL_checknumber( L, 2 ) - 1 )->PushLuaInstance( L );
     return 1;
 }
 
@@ -222,7 +208,7 @@ static int Panel_GetChildren( lua_State *L )
 
     for ( int i = 0; i < children.Count(); i++ )
     {
-        lua_pushpanel( L, children[ i ] );
+        Panel::PushVPanelLuaInstance( L, children[i] );
         lua_rawseti( L, -2, i + 1 );
     }
 
@@ -282,7 +268,7 @@ static int Panel_GetDragFrameColor( lua_State *L )
 
 static int Panel_GetDragPanel( lua_State *L )
 {
-    lua_pushpanel( L, luaL_checkpanel( L, 1 )->GetDragPanel() );
+    luaL_checkpanel( L, 1 )->GetDragPanel()->PushLuaInstance( L );
     return 1;
 }
 
@@ -419,7 +405,7 @@ static int Panel_GetPanelClassName( lua_State *L )
 static int Panel_GetParent( lua_State *L )
 {
     lua_Panel *pPanel = luaL_checkpanel( L, 1 )->GetParent();
-    lua_pushpanel( L, pPanel );
+    Panel::PushLuaInstanceSafe( L, pPanel );
     return 1;
 }
 
@@ -493,7 +479,7 @@ static int Panel_GetTall( lua_State *L )
 
 static int Panel_GetVPanel( lua_State *L )
 {
-    lua_pushpanel( L, luaL_checkpanel( L, 1 )->GetVPanel() );
+    Panel::PushVPanelLuaInstance( L, luaL_checkpanel( L, 1 )->GetVPanel() );
     return 1;
 }
 
@@ -505,7 +491,7 @@ static int Panel_GetVPanelAsInteger( lua_State *L )
 
 static int Panel_GetVParent( lua_State *L )
 {
-    lua_pushpanel( L, luaL_checkpanel( L, 1 )->GetVParent() );
+    Panel::PushVPanelLuaInstance( L, luaL_checkpanel( L, 1 )->GetVParent() );
     return 1;
 }
 
@@ -1695,19 +1681,19 @@ static int luasrc_Panel( lua_State *L )
         luaL_optpanel( L, 1, VGui_GetClientLuaRootPanel() ),
         luaL_optstring( L, 2, NULL ),
         L );
-    pPanel->PushPanelToLua( L );
+    pPanel->PushLuaInstance( L );
     return 1;
 }
 
 static int luasrc_GetGameUIPanel( lua_State *L )
 {
-    lua_pushpanel( L, VGui_GetGameUIPanel() );
+    VGui_GetGameUIPanel()->PushLuaInstance( L );
     return 1;
 }
 
 static int luasrc_GetClientLuaRootPanel( lua_State *L )
 {
-    lua_pushpanel( L, VGui_GetClientLuaRootPanel() );
+    VGui_GetClientLuaRootPanel()->PushLuaInstance( L );
     return 1;
 }
 
@@ -1733,7 +1719,7 @@ LUALIB_API int luaopen_vgui_Panel( lua_State *L )
     // Andrew; Don't be mislead, INVALID_PANEL is not NULL internally, but we
     // need a name other than NULL, because NULL has already been assigned as an
     // entity.
-    lua_pushpanel( L, ( Panel * )0 );
+    Panel::PushVPanelLuaInstance( L, NULL );
     lua_setglobal( L, "INVALID_PANEL" ); /* set global INVALID_PANEL */
     return 1;
 }

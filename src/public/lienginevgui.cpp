@@ -25,7 +25,7 @@ class Panel;
 
 static int enginevgui_GetPanel( lua_State *L )
 {
-    lua_pushpanel( L, enginevgui->GetPanel( ( VGuiPanel_t )( int )luaL_checknumber( L, 1 ) ) );
+    Panel::PushVPanelLuaInstance( L, enginevgui->GetPanel( ( VGuiPanel_t )( int )luaL_checknumber( L, 1 ) ) );
     return 1;
 }
 

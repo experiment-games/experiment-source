@@ -672,7 +672,7 @@ Panel::Panel( Panel *parent, const char *panelName, HScheme scheme )
     SetScheme( scheme );
 }
 
-#if defined( LUA_SDK )
+#ifdef LUA_SDK
 //-----------------------------------------------------------------------------
 // Purpose: Constructor for Lua create Panels
 //-----------------------------------------------------------------------------
@@ -682,13 +682,31 @@ Panel::Panel( Panel *parent, const char *panelName, lua_State *L )
     m_lua_State = L;
 }
 
-//-----------------------------------------------------------------------------
-// Purpose: Member classes override this to customize with which metatable
-//          the panel is pushed to Lua.
-//-----------------------------------------------------------------------------
-void Panel::PushPanelToLua( lua_State *L )
+void *Panel::CreateLuaInstance( lua_State *L, Panel *pInstance )
 {
-    lua_pushpanel( L, this );
+    if (pInstance)
+        pInstance->m_nRefCount++;
+
+    PHandle *_pPanelHandle = ( PHandle * )lua_newuserdata( L, sizeof( PHandle ) );
+    _pPanelHandle->Set( pInstance );
+
+    return _pPanelHandle;
+}
+
+void Panel::PushVPanelLuaInstance( lua_State *L, VPANEL panel )
+{
+    Panel *pPanel = ipanel()->GetPanel( panel, GetControlsModuleName() );
+
+    if ( !pPanel )
+    {
+        PHandle *_pPanelHandle = ( PHandle * )lua_newuserdata( L, sizeof( PHandle ) );
+        _pPanelHandle->Set( (Panel *) 0 );
+        luaL_getmetatable( L, "Panel" );
+        lua_setmetatable( L, -2 );
+        return;
+    }
+
+    pPanel->PushLuaInstance( L );
 }
 
 //-----------------------------------------------------------------------------
@@ -705,16 +723,6 @@ void Panel::SetupRefTable( lua_State *L )
     Assert( m_lua_State == L );
 
     lua_newtable( L );
-    int x, y, wide, tall;
-    GetBounds( x, y, wide, tall );
-    lua_pushinteger( L, x );
-    lua_setfield( L, -2, "x" );
-    lua_pushinteger( L, y );
-    lua_setfield( L, -2, "y" );
-    lua_pushinteger( L, wide );
-    lua_setfield( L, -2, "wide" );
-    lua_pushinteger( L, tall );
-    lua_setfield( L, -2, "tall" );
     m_nTableReference = luaL_ref( L, LUA_REGISTRYINDEX );
 }
 
@@ -1672,7 +1680,7 @@ void Panel::OnChildAdded( VPANEL child )
 {
 #ifdef LUA_SDK
     BEGIN_LUA_CALL_PANEL_METHOD( "OnChildAdded" );
-    lua_pushpanel( m_lua_State, child );
+    PushVPanelLuaInstance( m_lua_State, child );
     END_LUA_CALL_PANEL_METHOD( 1, 0 );
 #endif
 
@@ -4100,8 +4108,8 @@ void Panel::OnRequestFocus( VPANEL subFocus, VPANEL defaultPanel )
 {
 #ifdef LUA_SDK
     BEGIN_LUA_CALL_PANEL_METHOD( "OnRequestFocus" );
-    lua_pushpanel( m_lua_State, subFocus );
-    lua_pushpanel( m_lua_State, defaultPanel );
+    PushVPanelLuaInstance( m_lua_State, subFocus );
+    PushVPanelLuaInstance( m_lua_State, defaultPanel );
     END_LUA_CALL_PANEL_METHOD( 2, 1 );
 
     RETURN_LUA_PANEL_NONE();
@@ -5762,7 +5770,7 @@ void Panel::OnMessage( const KeyValues *params, VPANEL ifromPanel )
 {
 #ifdef LUA_SDK
     BEGIN_LUA_CALL_PANEL_METHOD( "OnMessage" );
-    lua_pushpanel( m_lua_State, ifromPanel );
+    PushVPanelLuaInstance( m_lua_State, ifromPanel );
     END_LUA_CALL_PANEL_METHOD( 1, 1 );
 
     RETURN_LUA_PANEL_NONE();

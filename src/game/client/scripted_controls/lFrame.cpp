@@ -37,11 +37,6 @@ LFrame::~LFrame()
 {
 }
 
-void LFrame::PushPanelToLua( lua_State *L )
-{
-    lua_pushframe( L, this );
-}
-
 /*
 ** access functions (stack -> C)
 */
@@ -58,12 +53,6 @@ LUA_API lua_Frame *lua_toframe( lua_State *L, int idx )
 /*
 ** push functions (C -> stack)
 */
-
-LUA_API void lua_pushframe( lua_State *L, lua_Frame *pFrame )
-{
-    LUA_PUSH_PANEL_USERDATA( L, pFrame, lua_Frame, "Frame" );
-}
-
 LUALIB_API lua_Frame *luaL_checkframe( lua_State *L, int narg )
 {
     lua_Frame *d = lua_toframe( L, narg );
@@ -479,7 +468,7 @@ static int luasrc_Frame( lua_State *L )
                     luaL_optstring( L, 2, NULL ),
                     luaL_optboolean( L, 3, true ),
                     L );
-    lua_pushframe( L, pPanel );
+    pPanel->PushLuaInstance( L );
     return 1;
 }
 
