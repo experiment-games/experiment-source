@@ -66,12 +66,12 @@ static int prediction_PostEntityPacketReceived (lua_State *L) {
 }
 
 static int prediction_PostNetworkDataReceived (lua_State *L) {
-  prediction->PostNetworkDataReceived(luaL_checkint(L, 1));
+  prediction->PostNetworkDataReceived(luaL_checknumber(L, 1));
   return 0;
 }
 
 static int prediction_PreEntityPacketReceived (lua_State *L) {
-  prediction->PreEntityPacketReceived(luaL_checkint(L, 1), luaL_checkint(L, 2));
+  prediction->PreEntityPacketReceived(luaL_checknumber(L, 1), luaL_checknumber(L, 2));
   return 0;
 }
 
@@ -91,7 +91,7 @@ static int prediction_SetViewOrigin (lua_State *L) {
 }
 
 static int prediction_Update (lua_State *L) {
-  prediction->Update(luaL_checkint(L, 1), luaL_checkboolean(L, 2), luaL_checkint(L, 3), luaL_checkint(L, 4));
+  prediction->Update(luaL_checknumber(L, 1), luaL_checkboolean(L, 2), luaL_checknumber(L, 3), luaL_checknumber(L, 4));
   return 0;
 }
 

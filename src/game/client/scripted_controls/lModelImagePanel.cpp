@@ -618,7 +618,7 @@ static int ModelImagePanel_SetModel( lua_State *L )
 {
     lua_ModelImagePanel *pModelImagePanel = luaL_checkmodelimagepanel( L, 1 );
     const char *modelPath = luaL_checkstring( L, 2 );
-    int skin = luaL_optint( L, 3, 0 );
+    int skin = ( int )luaL_optnumber( L, 3, 0 );
     const char *bodyGroups = luaL_optstring( L, 4, NULL );
 
     pModelImagePanel->SetModel( modelPath, skin, bodyGroups );
@@ -636,7 +636,7 @@ static int ModelImagePanel_GetModel( lua_State *L )
 static int ModelImagePanel_SetSkin( lua_State *L )
 {
     lua_ModelImagePanel *pModelImagePanel = luaL_checkmodelimagepanel( L, 1 );
-    pModelImagePanel->SetSkin( luaL_checkint( L, 2 ) );
+    pModelImagePanel->SetSkin( luaL_checknumber( L, 2 ) );
     return 0;
 }
 

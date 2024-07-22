@@ -38,7 +38,7 @@ LUA_API lua_FireBulletsInfo_t lua_tofirebulletsinfo (lua_State *L, int idx) {
   lua_pop(L, 1);
   lua_getfield(L, idx, "m_iAmmoType");
   if (!lua_isnil(L, -1))
-    info.m_iAmmoType = luaL_checkint(L, -1);
+    info.m_iAmmoType = luaL_checknumber(L, -1);
   lua_pop(L, 1);
   lua_getfield(L, idx, "m_iDamage");
   if (!lua_isnil(L, -1))
@@ -46,19 +46,19 @@ LUA_API lua_FireBulletsInfo_t lua_tofirebulletsinfo (lua_State *L, int idx) {
   lua_pop(L, 1);
   lua_getfield(L, idx, "m_iPlayerDamage");
   if (!lua_isnil(L, -1))
-    info.m_iPlayerDamage = luaL_checkint(L, -1);
+    info.m_iPlayerDamage = luaL_checknumber(L, -1);
   lua_pop(L, 1);
   lua_getfield(L, idx, "m_iShots");
   if (!lua_isnil(L, -1))
-    info.m_iShots = luaL_checkint(L, -1);
+    info.m_iShots = luaL_checknumber(L, -1);
   lua_pop(L, 1);
   lua_getfield(L, idx, "m_iTracerFreq");
   if (!lua_isnil(L, -1))
-    info.m_iTracerFreq = luaL_checkint(L, -1);
+    info.m_iTracerFreq = luaL_checknumber(L, -1);
   lua_pop(L, 1);
   lua_getfield(L, idx, "m_nFlags");
   if (!lua_isnil(L, -1))
-    info.m_nFlags = luaL_checkint(L, -1);
+    info.m_nFlags = luaL_checknumber(L, -1);
   lua_pop(L, 1);
   lua_getfield(L, idx, "m_pAdditionalIgnoreEnt");
   if (!lua_isnil(L, -1))
@@ -87,7 +87,7 @@ LUA_API void lua_toemitsound (lua_State *L, int idx, EmitSound_t &ep) {
   luaL_checktype(L, idx, LUA_TTABLE);
   lua_getfield(L, idx, "m_nChannel");
   if (!lua_isnil(L, -1))
-    ep.m_nChannel = luaL_checkint(L, -1);
+    ep.m_nChannel = luaL_checknumber(L, -1);
   lua_pop(L, 1);
   lua_getfield(L, idx, "m_pSoundName");
   if (!lua_isnil(L, -1))
@@ -103,11 +103,11 @@ LUA_API void lua_toemitsound (lua_State *L, int idx, EmitSound_t &ep) {
   lua_pop(L, 1);
   lua_getfield(L, idx, "m_nFlags");
   if (!lua_isnil(L, -1))
-    ep.m_nFlags = luaL_checkint(L, -1);
+    ep.m_nFlags = luaL_checknumber(L, -1);
   lua_pop(L, 1);
   lua_getfield(L, idx, "m_nPitch");
   if (!lua_isnil(L, -1))
-    ep.m_nPitch = luaL_checkint(L, -1);
+    ep.m_nPitch = luaL_checknumber(L, -1);
   lua_pop(L, 1);
   lua_getfield(L, idx, "m_pOrigin");
   if (!lua_isnil(L, -1))

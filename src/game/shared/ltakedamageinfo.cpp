@@ -52,7 +52,7 @@ static int CTakeDamageInfo_AddDamage( lua_State *L )
 
 static int CTakeDamageInfo_AddDamageType( lua_State *L )
 {
-    luaL_checkdamageinfo( L, 1 ).AddDamageType( luaL_checkint( L, 2 ) );
+    luaL_checkdamageinfo( L, 1 ).AddDamageType( luaL_checknumber( L, 2 ) );
     return 0;
 }
 
@@ -84,7 +84,7 @@ static int CTakeDamageInfo_DebugGetDamageTypeString( lua_State *L )
 {
     char outbuf[256];
     outbuf[0] = '\0';
-    luaL_checkdamageinfo( L, 1 ).DebugGetDamageTypeString( luaL_checkint( L, 2 ), outbuf, sizeof( outbuf ) );
+    luaL_checkdamageinfo( L, 1 ).DebugGetDamageTypeString( luaL_checknumber( L, 2 ), outbuf, sizeof( outbuf ) );
     lua_pushstring( L, outbuf );
     return 1;
 }
@@ -187,7 +187,7 @@ static int CTakeDamageInfo_ScaleDamageForce( lua_State *L )
 
 static int CTakeDamageInfo_SetAmmoType( lua_State *L )
 {
-    luaL_checkdamageinfo( L, 1 ).SetAmmoType( luaL_checkint( L, 2 ) );
+    luaL_checkdamageinfo( L, 1 ).SetAmmoType( luaL_checknumber( L, 2 ) );
     return 0;
 }
 
@@ -205,7 +205,7 @@ static int CTakeDamageInfo_SetDamage( lua_State *L )
 
 static int CTakeDamageInfo_SetDamageCustom( lua_State *L )
 {
-    luaL_checkdamageinfo( L, 1 ).SetDamageCustom( luaL_checkint( L, 2 ) );
+    luaL_checkdamageinfo( L, 1 ).SetDamageCustom( luaL_checknumber( L, 2 ) );
     return 0;
 }
 
@@ -223,13 +223,13 @@ static int CTakeDamageInfo_SetDamagePosition( lua_State *L )
 
 static int CTakeDamageInfo_SetDamageStats( lua_State *L )
 {
-    luaL_checkdamageinfo( L, 1 ).SetDamageStats( luaL_checkint( L, 2 ) );
+    luaL_checkdamageinfo( L, 1 ).SetDamageStats( luaL_checknumber( L, 2 ) );
     return 0;
 }
 
 static int CTakeDamageInfo_SetDamageType( lua_State *L )
 {
-    luaL_checkdamageinfo( L, 1 ).SetDamageType( luaL_checkint( L, 2 ) );
+    luaL_checkdamageinfo( L, 1 ).SetDamageType( luaL_checknumber( L, 2 ) );
     return 0;
 }
 
@@ -318,22 +318,22 @@ static int luasrc_CTakeDamageInfo( lua_State *L )
     }
     else if ( lua_gettop( L ) <= 5 )
     {
-        CTakeDamageInfo info = CTakeDamageInfo( luaL_checkentity( L, 1 ), luaL_checkentity( L, 2 ), luaL_checknumber( L, 3 ), luaL_checkint( L, 4 ), luaL_optint( L, 5, 0 ) );
+        CTakeDamageInfo info = CTakeDamageInfo( luaL_checkentity( L, 1 ), luaL_checkentity( L, 2 ), luaL_checknumber( L, 3 ), luaL_checknumber( L, 4 ), ( int )luaL_optnumber( L, 5, 0 ) );
         lua_pushdamageinfo( L, info );
     }
     else if ( lua_gettop( L ) <= 6 )
     {
-        CTakeDamageInfo info = CTakeDamageInfo( luaL_checkentity( L, 1 ), luaL_checkentity( L, 2 ), luaL_checkentity( L, 3 ), luaL_checknumber( L, 4 ), luaL_checkint( L, 5 ), luaL_optint( L, 6, 0 ) );
+        CTakeDamageInfo info = CTakeDamageInfo( luaL_checkentity( L, 1 ), luaL_checkentity( L, 2 ), luaL_checkentity( L, 3 ), luaL_checknumber( L, 4 ), luaL_checknumber( L, 5 ), ( int )luaL_optnumber( L, 6, 0 ) );
         lua_pushdamageinfo( L, info );
     }
     else if ( lua_gettop( L ) < 9 )
     {
-        CTakeDamageInfo info = CTakeDamageInfo( luaL_checkentity( L, 1 ), luaL_checkentity( L, 2 ), luaL_checkvector( L, 3 ), luaL_checkvector( L, 4 ), luaL_checknumber( L, 5 ), luaL_checkint( L, 6 ), luaL_optint( L, 7, 0 ), &luaL_optvector( L, 8, NULL ) );
+        CTakeDamageInfo info = CTakeDamageInfo( luaL_checkentity( L, 1 ), luaL_checkentity( L, 2 ), luaL_checkvector( L, 3 ), luaL_checkvector( L, 4 ), luaL_checknumber( L, 5 ), luaL_checknumber( L, 6 ), ( int )luaL_optnumber( L, 7, 0 ), &luaL_optvector( L, 8, NULL ) );
         lua_pushdamageinfo( L, info );
     }
     else
     {
-        CTakeDamageInfo info = CTakeDamageInfo( luaL_checkentity( L, 1 ), luaL_checkentity( L, 2 ), luaL_checkentity( L, 3 ), luaL_checkvector( L, 4 ), luaL_checkvector( L, 5 ), luaL_checknumber( L, 6 ), luaL_checkint( L, 7 ), luaL_optint( L, 8, 0 ), &luaL_optvector( L, 9, NULL ) );
+        CTakeDamageInfo info = CTakeDamageInfo( luaL_checkentity( L, 1 ), luaL_checkentity( L, 2 ), luaL_checkentity( L, 3 ), luaL_checkvector( L, 4 ), luaL_checkvector( L, 5 ), luaL_checknumber( L, 6 ), luaL_checknumber( L, 7 ), ( int )luaL_optnumber( L, 8, 0 ), &luaL_optvector( L, 9, NULL ) );
         lua_pushdamageinfo( L, info );
     }
     return 1;
@@ -371,7 +371,7 @@ static int luasrc_CalculateExplosiveDamageForce( lua_State *L )
 
 static int luasrc_CalculateBulletDamageForce( lua_State *L )
 {
-    CalculateBulletDamageForce( &luaL_checkdamageinfo( L, 1 ), luaL_checkint( L, 2 ), luaL_checkvector( L, 3 ), luaL_checkvector( L, 4 ), luaL_optnumber( L, 5, 1.0 ) );
+    CalculateBulletDamageForce( &luaL_checkdamageinfo( L, 1 ), luaL_checknumber( L, 2 ), luaL_checkvector( L, 3 ), luaL_checkvector( L, 4 ), luaL_optnumber( L, 5, 1.0 ) );
     return 0;
 }
 

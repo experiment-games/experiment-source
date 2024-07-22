@@ -51,7 +51,7 @@ static int cvar_GetCommandLineValue( lua_State *L )
 
 static int cvar_RevertFlaggedConVars( lua_State *L )
 {
-    cvar->RevertFlaggedConVars( luaL_checkint( L, 1 ) );
+    cvar->RevertFlaggedConVars( luaL_checknumber( L, 1 ) );
     return 0;
 }
 

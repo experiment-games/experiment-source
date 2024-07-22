@@ -219,7 +219,7 @@ static int PropertyDialog_GetPanelClassName( lua_State *L )
 static int PropertyDialog_KB_AddBoundKey( lua_State *L )
 {
     luaL_checkpropertydialog( L, 1 )->KB_AddBoundKey(
-        luaL_checkstring( L, 2 ), luaL_checkint( L, 3 ), luaL_checkint( L, 4 ) );
+        luaL_checkstring( L, 2 ), luaL_checknumber( L, 3 ), luaL_checknumber( L, 4 ) );
     return 0;
 }
 

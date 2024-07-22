@@ -521,25 +521,25 @@ static int vmatrix_MatrixMultiply( lua_State *L )
 
 static int vmatrix_MatrixGetColumn( lua_State *L )
 {
-    MatrixGetColumn( luaL_checkvmatrix( L, 1 ), luaL_checkint( L, 2 ), &luaL_checkvector( L, 3 ) );
+    MatrixGetColumn( luaL_checkvmatrix( L, 1 ), luaL_checknumber( L, 2 ), &luaL_checkvector( L, 3 ) );
     return 0;
 }
 
 static int vmatrix_MatrixSetColumn( lua_State *L )
 {
-    MatrixSetColumn( luaL_checkvmatrix( L, 1 ), luaL_checkint( L, 2 ), luaL_checkvector( L, 3 ) );
+    MatrixSetColumn( luaL_checkvmatrix( L, 1 ), luaL_checknumber( L, 2 ), luaL_checkvector( L, 3 ) );
     return 0;
 }
 
 static int vmatrix_MatrixGetRow( lua_State *L )
 {
-    MatrixGetRow( luaL_checkvmatrix( L, 1 ), luaL_checkint( L, 2 ), &luaL_checkvector( L, 3 ) );
+    MatrixGetRow( luaL_checkvmatrix( L, 1 ), luaL_checknumber( L, 2 ), &luaL_checkvector( L, 3 ) );
     return 0;
 }
 
 static int vmatrix_MatrixSetRow( lua_State *L )
 {
-    MatrixSetRow( luaL_checkvmatrix( L, 1 ), luaL_checkint( L, 2 ), luaL_checkvector( L, 3 ) );
+    MatrixSetRow( luaL_checkvmatrix( L, 1 ), luaL_checknumber( L, 2 ), luaL_checkvector( L, 3 ) );
     return 0;
 }
 

@@ -100,14 +100,14 @@ lua_Color ColorAtPosition( unsigned char *imageData, int width, int height, int 
     return lua_Color( imageData[i], imageData[i + 1], imageData[i + 2], imageData[i + 3] );
 }
 
-static int IMaterial_GetColor(lua_State* L)
+static int IMaterial_GetColor( lua_State *L )
 {
-    int x = luaL_checkint( L, 2 );
-    int y = luaL_checkint( L, 3 );
+    int x = luaL_checknumber( L, 2 );
+    int y = luaL_checknumber( L, 3 );
 
     bool bFound = false;
-    IMaterialVar* pVar = luaL_checkmaterial( L, 1 )->FindVar( "$basetexture", &bFound );
-    ITexture* pTexture = pVar->GetTextureValue();
+    IMaterialVar *pVar = luaL_checkmaterial( L, 1 )->FindVar( "$basetexture", &bFound );
+    ITexture *pTexture = pVar->GetTextureValue();
     CPngMaterialProxy *pMaterialProxy = CPngTextureRegen::GetProceduralMaterialProxy( pTexture->GetName() );
     unsigned char *pTextureData = pMaterialProxy->GetTexturePointer();
 
@@ -164,7 +164,7 @@ static int IMaterial_GetMaterialPage( lua_State *L )
 
 static int IMaterial_GetMaterialVarFlag( lua_State *L )
 {
-    lua_pushboolean( L, luaL_checkmaterial( L, 1 )->GetMaterialVarFlag( ( MaterialVarFlags_t )luaL_checkint( L, 1 ) ) );
+    lua_pushboolean( L, luaL_checkmaterial( L, 1 )->GetMaterialVarFlag( ( MaterialVarFlags_t )( int )luaL_checknumber( L, 1 ) ) );
     return 1;
 }
 
@@ -194,7 +194,7 @@ static int IMaterial_GetNumPasses( lua_State *L )
 
 static int IMaterial_GetPropertyFlag( lua_State *L )
 {
-    lua_pushboolean( L, luaL_checkmaterial( L, 1 )->GetPropertyFlag( ( MaterialPropertyTypes_t )luaL_checkint( L, 1 ) ) );
+    lua_pushboolean( L, luaL_checkmaterial( L, 1 )->GetPropertyFlag( ( MaterialPropertyTypes_t )( int )luaL_checknumber( L, 1 ) ) );
     return 1;
 }
 
@@ -225,7 +225,7 @@ static int IMaterial_GetFloat( lua_State *L )
 
     lua_pushnumber( L, materialVar->GetFloatValue() );
 
-    return 1;   
+    return 1;
 }
 
 static int IMaterial_GetInt( lua_State *L )
@@ -264,7 +264,7 @@ static int IMaterial_GetString( lua_State *L )
     return 1;
 }
 
-static int IMaterial_GetTexture(lua_State* L)
+static int IMaterial_GetTexture( lua_State *L )
 {
     bool foundVar;
     size_t len;
@@ -457,7 +457,7 @@ static int IMaterial_Release( lua_State *L )
 
 static int IMaterial_SetMaterialVarFlag( lua_State *L )
 {
-    luaL_checkmaterial( L, 1 )->SetMaterialVarFlag( ( MaterialVarFlags_t )luaL_checkint( L, 1 ), luaL_checkboolean( L, 2 ) );
+    luaL_checkmaterial( L, 1 )->SetMaterialVarFlag( ( MaterialVarFlags_t )( int )luaL_checknumber( L, 1 ), luaL_checkboolean( L, 2 ) );
     return 0;
 }
 
@@ -498,7 +498,7 @@ static int IMaterial_SetInt( lua_State *L )
         return 1;
     }
 
-    materialVar->SetIntValue( luaL_checkint( L, 3 ) );
+    materialVar->SetIntValue( luaL_checknumber( L, 3 ) );
 
     return 0;
 }

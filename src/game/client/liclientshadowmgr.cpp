@@ -41,7 +41,7 @@ static int g_pClientShadowMgr_SetShadowBlobbyCutoffArea( lua_State *L )
 
 static int g_pClientShadowMgr_SetShadowColor( lua_State *L )
 {
-    g_pClientShadowMgr->SetShadowColor( luaL_checkint( L, 1 ), luaL_checkint( L, 2 ), luaL_checkint( L, 3 ) );
+    g_pClientShadowMgr->SetShadowColor( luaL_checknumber( L, 1 ), luaL_checknumber( L, 2 ), luaL_checknumber( L, 3 ) );
     return 0;
 }
 

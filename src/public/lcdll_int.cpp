@@ -15,7 +15,7 @@
 
 static int engine_ActivateOccluder( lua_State *L )
 {
-    engine->ActivateOccluder( luaL_checkint( L, 1 ), luaL_checkboolean( L, 2 ) );
+    engine->ActivateOccluder( luaL_checknumber( L, 1 ), luaL_checkboolean( L, 2 ) );
     return 0;
 }
 
@@ -27,7 +27,7 @@ static int engine_ChangeTeam( lua_State *L )
 
 static int engine_CheckDoneKeyTrapping( lua_State *L )
 {
-    ButtonCode_t code = ( ButtonCode_t )luaL_checkint( L, 1 );
+    ButtonCode_t code = ( ButtonCode_t )( int )luaL_checknumber( L, 1 );
     lua_pushboolean( L, engine->CheckDoneKeyTrapping( code ) );
     return 1;
 }
@@ -70,7 +70,7 @@ static int engine_CullBox( lua_State *L )
 
 static int engine_DoesBoxTouchAreaFrustum( lua_State *L )
 {
-    lua_pushboolean( L, engine->DoesBoxTouchAreaFrustum( luaL_checkvector( L, 1 ), luaL_checkvector( L, 2 ), luaL_checkint( L, 3 ) ) );
+    lua_pushboolean( L, engine->DoesBoxTouchAreaFrustum( luaL_checkvector( L, 1 ), luaL_checkvector( L, 2 ), luaL_checknumber( L, 3 ) ) );
     return 1;
 }
 
@@ -106,13 +106,13 @@ static int engine_FireEvents( lua_State *L )
 
 static int engine_GameLumpSize( lua_State *L )
 {
-    engine->GameLumpSize( luaL_checkint( L, 1 ) );
+    engine->GameLumpSize( luaL_checknumber( L, 1 ) );
     return 1;
 }
 
 static int engine_GameLumpVersion( lua_State *L )
 {
-    engine->GameLumpVersion( luaL_checkint( L, 1 ) );
+    engine->GameLumpVersion( luaL_checknumber( L, 1 ) );
     return 1;
 }
 
@@ -226,7 +226,7 @@ static int engine_GetLocalPlayer( lua_State *L )
 static int engine_GetMainMenuBackgroundName( lua_State *L )
 {
     char *dest = "";
-    engine->GetMainMenuBackgroundName( dest, luaL_checkint( L, 2 ) );
+    engine->GetMainMenuBackgroundName( dest, luaL_checknumber( L, 2 ) );
     lua_pushstring( L, dest );
     return 1;
 }
@@ -251,14 +251,14 @@ static int engine_GetMostRecentSaveGame( lua_State *L )
 
 static int engine_GetPlayerForUserID( lua_State *L )
 {
-    lua_pushinteger( L, engine->GetPlayerForUserID( luaL_checkint( L, 1 ) ) );
+    lua_pushinteger( L, engine->GetPlayerForUserID( luaL_checknumber( L, 1 ) ) );
     return 1;
 }
 
 static int engine_GetPlayerInfo( lua_State *L )
 {
     player_info_t pinfo;
-    lua_pushboolean( L, engine->GetPlayerInfo( luaL_checkint( L, 1 ), &pinfo ) );
+    lua_pushboolean( L, engine->GetPlayerInfo( luaL_checknumber( L, 1 ), &pinfo ) );
     lua_newtable( L );
     lua_pushstring( L, "name" );
     lua_pushstring( L, pinfo.name );
@@ -308,26 +308,26 @@ static int engine_GetScreenSize( lua_State *L )
 static int engine_GetUILanguage( lua_State *L )
 {
     char *dest = "";
-    engine->GetUILanguage( dest, luaL_checkint( L, 1 ) );
+    engine->GetUILanguage( dest, luaL_checknumber( L, 1 ) );
     lua_pushstring( L, dest );
     return 1;
 }
 
 static int engine_GrabPreColorCorrectedFrame( lua_State *L )
 {
-    engine->GrabPreColorCorrectedFrame( luaL_checkint( L, 1 ), luaL_checkint( L, 2 ), luaL_checkint( L, 3 ), luaL_checkint( L, 4 ) );
+    engine->GrabPreColorCorrectedFrame( luaL_checknumber( L, 1 ), luaL_checknumber( L, 2 ), luaL_checknumber( L, 3 ), luaL_checknumber( L, 4 ) );
     return 0;
 }
 
 static int engine_IsBoxInViewCluster( lua_State *L )
 {
-    luaL_checkint( L, engine->IsBoxInViewCluster( luaL_checkvector( L, 1 ), luaL_checkvector( L, 2 ) ) );
+    luaL_checknumber( L, engine->IsBoxInViewCluster( luaL_checkvector( L, 1 ), luaL_checkvector( L, 2 ) ) );
     return 1;
 }
 
 static int engine_IsBoxVisible( lua_State *L )
 {
-    luaL_checkint( L, engine->IsBoxVisible( luaL_checkvector( L, 1 ), luaL_checkvector( L, 2 ) ) );
+    luaL_checknumber( L, engine->IsBoxVisible( luaL_checkvector( L, 1 ), luaL_checkvector( L, 2 ) ) );
     return 1;
 }
 
@@ -435,7 +435,7 @@ static int engine_LevelLeafCount( lua_State *L )
 
 static int engine_LightStyleValue( lua_State *L )
 {
-    lua_pushnumber( L, engine->LightStyleValue( luaL_checkint( L, 1 ) ) );
+    lua_pushnumber( L, engine->LightStyleValue( luaL_checknumber( L, 1 ) ) );
     return 1;
 }
 
@@ -487,7 +487,7 @@ static int engine_SentenceGroupIndexFromName( lua_State *L )
 
 static int engine_SentenceGroupNameFromIndex( lua_State *L )
 {
-    lua_pushstring( L, engine->SentenceGroupNameFromIndex( luaL_checkint( L, 1 ) ) );
+    lua_pushstring( L, engine->SentenceGroupNameFromIndex( luaL_checknumber( L, 1 ) ) );
     return 1;
 }
 
@@ -499,13 +499,13 @@ static int engine_SentenceIndexFromName( lua_State *L )
 
 static int engine_SentenceLength( lua_State *L )
 {
-    lua_pushnumber( L, engine->SentenceLength( luaL_checkint( L, 1 ) ) );
+    lua_pushnumber( L, engine->SentenceLength( luaL_checknumber( L, 1 ) ) );
     return 1;
 }
 
 static int engine_SentenceNameFromIndex( lua_State *L )
 {
-    lua_pushstring( L, engine->SentenceNameFromIndex( luaL_checkint( L, 1 ) ) );
+    lua_pushstring( L, engine->SentenceNameFromIndex( luaL_checknumber( L, 1 ) ) );
     return 1;
 }
 

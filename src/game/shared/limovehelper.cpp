@@ -69,7 +69,7 @@ static int IMoveHelper_ProcessImpacts( lua_State *L )
 
 static int IMoveHelper_Con_NPrintf( lua_State *L )
 {
-    luaL_checkmovehelper( L, 1 )->Con_NPrintf( luaL_checkint( L, 2 ), luaL_checkstring( L, 3 ) );
+    luaL_checkmovehelper( L, 1 )->Con_NPrintf( luaL_checknumber( L, 2 ), luaL_checkstring( L, 3 ) );
     return 0;
 }
 

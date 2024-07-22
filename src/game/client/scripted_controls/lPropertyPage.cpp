@@ -181,7 +181,7 @@ static int PropertyPage_HasUserConfigSettings( lua_State *L )
 static int PropertyPage_KB_AddBoundKey( lua_State *L )
 {
     luaL_checkpropertypage( L, 1 )->KB_AddBoundKey(
-        luaL_checkstring( L, 2 ), luaL_checkint( L, 3 ), luaL_checkint( L, 4 ) );
+        luaL_checkstring( L, 2 ), luaL_checknumber( L, 3 ), luaL_checknumber( L, 4 ) );
     return 0;
 }
 
@@ -199,7 +199,7 @@ static int PropertyPage_OnApplyChanges( lua_State *L )
 
 static int PropertyPage_OnKeyCodeTyped( lua_State *L )
 {
-    luaL_checkpropertypage( L, 1 )->OnKeyCodeTyped( ( KeyCode )luaL_checkint( L, 2 ) );
+    luaL_checkpropertypage( L, 1 )->OnKeyCodeTyped( ( KeyCode )( int )luaL_checknumber( L, 2 ) );
     return 0;
 }
 

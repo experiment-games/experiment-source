@@ -70,7 +70,7 @@ static int CBaseCombatWeapon_ActivityListCount( lua_State *L )
 static int CBaseCombatWeapon_ActivityOverride( lua_State *L )
 {
     bool *pRequired = ( bool * )luaL_checkboolean( L, 3 );
-    lua_pushinteger( L, luaL_checkweapon( L, 1 )->ActivityOverride( ( Activity )luaL_checkint( L, 2 ), pRequired ) );
+    lua_pushinteger( L, luaL_checkweapon( L, 1 )->ActivityOverride( ( Activity )( int )luaL_checknumber( L, 2 ), pRequired ) );
     return 1;
 }
 
@@ -149,14 +149,14 @@ static int CBaseCombatWeapon_Clip2( lua_State *L )
 static int CBaseCombatWeapon_DefaultDeploy( lua_State *L )
 {
     lua_pushboolean(
-        L, luaL_checkweapon( L, 1 )->DefaultDeploy( ( char * )luaL_checkstring( L, 2 ), ( char * )luaL_checkstring( L, 3 ), luaL_checkint( L, 4 ), ( char * )luaL_checkstring( L, 5 ) ) );
+        L, luaL_checkweapon( L, 1 )->DefaultDeploy( ( char * )luaL_checkstring( L, 2 ), ( char * )luaL_checkstring( L, 3 ), luaL_checknumber( L, 4 ), ( char * )luaL_checkstring( L, 5 ) ) );
     return 1;
 }
 
 static int CBaseCombatWeapon_DefaultReload( lua_State *L )
 {
     lua_pushboolean(
-        L, luaL_checkweapon( L, 1 )->DefaultReload( luaL_checkint( L, 2 ), luaL_checkint( L, 3 ), luaL_checkint( L, 4 ) ) );
+        L, luaL_checkweapon( L, 1 )->DefaultReload( luaL_checknumber( L, 2 ), luaL_checknumber( L, 3 ), luaL_checknumber( L, 4 ) ) );
     return 1;
 }
 
@@ -216,7 +216,7 @@ static int CBaseCombatWeapon_GetBulletType( lua_State *L )
 
 static int CBaseCombatWeapon_GetDamage( lua_State *L )
 {
-    lua_pushnumber( L, luaL_checkweapon( L, 1 )->GetDamage( luaL_checknumber( L, 2 ), luaL_checkint( L, 3 ) ) );
+    lua_pushnumber( L, luaL_checkweapon( L, 1 )->GetDamage( luaL_checknumber( L, 2 ), luaL_checknumber( L, 3 ) ) );
     return 1;
 }
 
@@ -386,7 +386,7 @@ static int CBaseCombatWeapon_GetSecondaryAttackActivity( lua_State *L )
 static int CBaseCombatWeapon_GetShootSound( lua_State *L )
 {
     lua_pushstring( L,
-                    luaL_checkweapon( L, 1 )->GetShootSound( luaL_checkint( L, 2 ) ) );
+                    luaL_checkweapon( L, 1 )->GetShootSound( luaL_checknumber( L, 2 ) ) );
     return 1;
 }
 
@@ -405,7 +405,7 @@ static int CBaseCombatWeapon_GetSubType( lua_State *L )
 static int CBaseCombatWeapon_GetViewModel( lua_State *L )
 {
     lua_pushstring( L,
-                    luaL_checkweapon( L, 1 )->GetViewModel( luaL_optint( L, 2, 0 ) ) );
+                    luaL_checkweapon( L, 1 )->GetViewModel( ( int )luaL_optnumber( L, 2, 0 ) ) );
     return 1;
 }
 
@@ -688,7 +688,7 @@ static int CBaseCombatWeapon_MaintainIdealActivity( lua_State *L )
 
 static int CBaseCombatWeapon_OnActiveStateChanged( lua_State *L )
 {
-    luaL_checkweapon( L, 1 )->OnActiveStateChanged( luaL_checkint( L, 2 ) );
+    luaL_checkweapon( L, 1 )->OnActiveStateChanged( luaL_checknumber( L, 2 ) );
     return 0;
 }
 
@@ -748,26 +748,26 @@ static int CBaseCombatWeapon_SecondaryAttack( lua_State *L )
 
 static int CBaseCombatWeapon_SendViewModelAnim( lua_State *L )
 {
-    luaL_checkweapon( L, 1 )->SendViewModelAnim( luaL_checkint( L, 2 ) );
+    luaL_checkweapon( L, 1 )->SendViewModelAnim( luaL_checknumber( L, 2 ) );
     return 0;
 }
 
 static int CBaseCombatWeapon_SendWeaponAnim( lua_State *L )
 {
     lua_pushboolean(
-        L, luaL_checkweapon( L, 1 )->SendWeaponAnim( luaL_checkint( L, 2 ) ) );
+        L, luaL_checkweapon( L, 1 )->SendWeaponAnim( luaL_checknumber( L, 2 ) ) );
     return 1;
 }
 
 static int CBaseCombatWeapon_SetActivity( lua_State *L )
 {
-    luaL_checkweapon( L, 1 )->SetActivity( ( Activity )luaL_checkint( L, 2 ) );
+    luaL_checkweapon( L, 1 )->SetActivity( ( Activity )( int )luaL_checknumber( L, 2 ) );
     return 0;
 }
 
 static int CBaseCombatWeapon_SetIdealActivity( lua_State *L )
 {
-    lua_pushboolean( L, luaL_checkweapon( L, 1 )->SetIdealActivity( ( Activity )luaL_checkint( L, 2 ) ) );
+    lua_pushboolean( L, luaL_checkweapon( L, 1 )->SetIdealActivity( ( Activity )( int )luaL_checknumber( L, 2 ) ) );
     return 1;
 }
 
@@ -779,19 +779,19 @@ static int CBaseCombatWeapon_SetPickupTouch( lua_State *L )
 
 static int CBaseCombatWeapon_SetPrimaryAmmoCount( lua_State *L )
 {
-    luaL_checkweapon( L, 1 )->SetPrimaryAmmoCount( luaL_checkint( L, 2 ) );
+    luaL_checkweapon( L, 1 )->SetPrimaryAmmoCount( luaL_checknumber( L, 2 ) );
     return 0;
 }
 
 static int CBaseCombatWeapon_SetSecondaryAmmoCount( lua_State *L )
 {
-    luaL_checkweapon( L, 1 )->SetSecondaryAmmoCount( luaL_checkint( L, 2 ) );
+    luaL_checkweapon( L, 1 )->SetSecondaryAmmoCount( luaL_checknumber( L, 2 ) );
     return 0;
 }
 
 static int CBaseCombatWeapon_SetSubType( lua_State *L )
 {
-    luaL_checkweapon( L, 1 )->SetSubType( luaL_checkint( L, 2 ) );
+    luaL_checkweapon( L, 1 )->SetSubType( luaL_checknumber( L, 2 ) );
     return 0;
 }
 
@@ -803,7 +803,7 @@ static int CBaseCombatWeapon_SetViewModel( lua_State *L )
 
 static int CBaseCombatWeapon_SetViewModelIndex( lua_State *L )
 {
-    luaL_checkweapon( L, 1 )->SetViewModelIndex( luaL_optint( L, 2, 0 ) );
+    luaL_checkweapon( L, 1 )->SetViewModelIndex( ( int )luaL_optnumber( L, 2, 0 ) );
     return 0;
 }
 
@@ -857,7 +857,7 @@ static int CBaseCombatWeapon_StopSprinting( lua_State *L )
 
 static int CBaseCombatWeapon_StopWeaponSound( lua_State *L )
 {
-    luaL_checkweapon( L, 1 )->StopWeaponSound( ( WeaponSound_t )luaL_checkint( L, 2 ) );
+    luaL_checkweapon( L, 1 )->StopWeaponSound( ( WeaponSound_t )( int )luaL_checknumber( L, 2 ) );
     return 0;
 }
 
@@ -905,7 +905,7 @@ static int CBaseCombatWeapon_WeaponIdle( lua_State *L )
 
 static int CBaseCombatWeapon_WeaponSound( lua_State *L )
 {
-    luaL_checkweapon( L, 1 )->WeaponSound( ( WeaponSound_t )luaL_checkint( L, 2 ),
+    luaL_checkweapon( L, 1 )->WeaponSound( ( WeaponSound_t )( int )luaL_checknumber( L, 2 ),
                                            luaL_optnumber( L, 2, 0.0f ) );
     return 0;
 }
@@ -1045,23 +1045,23 @@ static int CBaseCombatWeapon___newindex( lua_State *L )
     else if ( Q_strcmp( field, "m_fMinRange2" ) == 0 )
         pWeapon->m_fMinRange2 = luaL_checknumber( L, 3 );
     else if ( Q_strcmp( field, "m_iClip1" ) == 0 )
-        pWeapon->m_iClip1.GetForModify() = luaL_checkint( L, 3 );
+        pWeapon->m_iClip1.GetForModify() = luaL_checknumber( L, 3 );
     else if ( Q_strcmp( field, "m_iClip2" ) == 0 )
-        pWeapon->m_iClip2.GetForModify() = luaL_checkint( L, 3 );
+        pWeapon->m_iClip2.GetForModify() = luaL_checknumber( L, 3 );
     else if ( Q_strcmp( field, "m_iPrimaryAmmoType" ) == 0 )
-        pWeapon->m_iPrimaryAmmoType.GetForModify() = luaL_checkint( L, 3 );
+        pWeapon->m_iPrimaryAmmoType.GetForModify() = luaL_checknumber( L, 3 );
     else if ( Q_strcmp( field, "m_iSecondaryAmmoType" ) == 0 )
-        pWeapon->m_iSecondaryAmmoType.GetForModify() = luaL_checkint( L, 3 );
+        pWeapon->m_iSecondaryAmmoType.GetForModify() = luaL_checknumber( L, 3 );
     else if ( Q_strcmp( field, "m_iState" ) == 0 )
-        pWeapon->m_iState.GetForModify() = luaL_checkint( L, 3 );
+        pWeapon->m_iState.GetForModify() = luaL_checknumber( L, 3 );
     else if ( Q_strcmp( field, "m_iSubType" ) == 0 )
-        pWeapon->m_iSubType = luaL_checkint( L, 3 );
+        pWeapon->m_iSubType = luaL_checknumber( L, 3 );
     else if ( Q_strcmp( field, "m_iViewModelIndex" ) == 0 )
-        pWeapon->m_iViewModelIndex.GetForModify() = luaL_checkint( L, 3 );
+        pWeapon->m_iViewModelIndex.GetForModify() = luaL_checknumber( L, 3 );
     else if ( Q_strcmp( field, "m_iWorldModelIndex" ) == 0 )
-        pWeapon->m_iWorldModelIndex.GetForModify() = luaL_checkint( L, 3 );
+        pWeapon->m_iWorldModelIndex.GetForModify() = luaL_checknumber( L, 3 );
     else if ( Q_strcmp( field, "m_nViewModelIndex" ) == 0 )
-        pWeapon->m_nViewModelIndex.GetForModify() = luaL_checkint( L, 3 );
+        pWeapon->m_nViewModelIndex.GetForModify() = luaL_checknumber( L, 3 );
     else
     {
         LUA_GET_REF_TABLE( L, pWeapon );

@@ -135,7 +135,7 @@ static int Button_IsDrawingFocusBox( lua_State *L )
 
 static int Button_IsMouseClickEnabled( lua_State *L )
 {
-    lua_pushboolean( L, luaL_checkbutton( L, 1 )->IsMouseClickEnabled( ( MouseCode )luaL_checkint( L, 2 ) ) );
+    lua_pushboolean( L, luaL_checkbutton( L, 1 )->IsMouseClickEnabled( ( MouseCode )( int )luaL_checknumber( L, 2 ) ) );
     return 1;
 }
 
@@ -184,13 +184,13 @@ static int Button_SetArmedSound( lua_State *L )
 
 static int Button_SetAsCurrentDefaultButton( lua_State *L )
 {
-    luaL_checkbutton( L, 1 )->SetAsCurrentDefaultButton( luaL_checkint( L, 2 ) );
+    luaL_checkbutton( L, 1 )->SetAsCurrentDefaultButton( luaL_checknumber( L, 2 ) );
     return 0;
 }
 
 static int Button_SetAsDefaultButton( lua_State *L )
 {
-    luaL_checkbutton( L, 1 )->SetAsDefaultButton( luaL_checkint( L, 2 ) );
+    luaL_checkbutton( L, 1 )->SetAsDefaultButton( luaL_checknumber( L, 2 ) );
     return 0;
 }
 
@@ -209,7 +209,7 @@ static int Button_SetBlinkColor( lua_State *L )
 static int Button_SetButtonActivationType( lua_State *L )
 {
     luaL_checkbutton( L, 1 )->SetButtonActivationType(
-        ( Button::ActivationType_t )luaL_checkint( L, 2 ) );
+        ( Button::ActivationType_t )( int )luaL_checknumber( L, 2 ) );
     return 0;
 }
 
@@ -241,7 +241,7 @@ static int Button_SetDepressedSound( lua_State *L )
 
 static int Button_SetMouseClickEnabled( lua_State *L )
 {
-    luaL_checkbutton( L, 1 )->SetMouseClickEnabled( ( MouseCode )luaL_checkint( L, 2 ),
+    luaL_checkbutton( L, 1 )->SetMouseClickEnabled( ( MouseCode )( int )luaL_checknumber( L, 2 ),
                                                     luaL_checkboolean( L, 3 ) );
     return 0;
 }
@@ -394,11 +394,11 @@ static int luasrc_Button( lua_State *L )
 {
     lua_Button *pPanel =
         new lua_Button( luaL_optpanel( L, 1, VGui_GetClientLuaRootPanel() ),
-                     luaL_checkstring( L, 2 ),
-                     luaL_optstring( L, 3, "Button" ),
-                     luaL_optpanel( L, 4, 0 ),
-                     luaL_optstring( L, 5, 0 ),
-                     L );
+                        luaL_checkstring( L, 2 ),
+                        luaL_optstring( L, 3, "Button" ),
+                        luaL_optpanel( L, 4, 0 ),
+                        luaL_optstring( L, 5, 0 ),
+                        L );
     lua_pushbutton( L, pPanel );
     return 1;
 }

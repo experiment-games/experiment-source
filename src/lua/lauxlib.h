@@ -285,7 +285,7 @@ typedef struct luaL_Stream {
 #define luaL_optunsigned(L,a,d)	\
 	((lua_Unsigned)luaL_optinteger(L,a,(lua_Integer)(d)))
 
-#define luaL_checkint(L,n)	((int)luaL_checkinteger(L, (n)))
+#define luaL_checknumber(L,n)	((int)luaL_checkinteger(L, (n)))
 #define luaL_optint(L,n,d)	((int)luaL_optinteger(L, (n), (d)))
 
 #define luaL_checklong(L,n)	((long)luaL_checkinteger(L, (n)))

@@ -22,7 +22,7 @@ LUA_API lua_CSoundParameters lua_tosoundparameters( lua_State *L, int idx )
     CSoundParameters SoundParameters = CSoundParameters();
     lua_getfield( L, idx, "channel" );
     if ( !lua_isnil( L, -1 ) )
-        SoundParameters.channel = luaL_checkint( L, -1 );
+        SoundParameters.channel = luaL_checknumber( L, -1 );
     lua_pop( L, 1 );
     lua_getfield( L, idx, "volume" );
     if ( !lua_isnil( L, -1 ) )
@@ -30,15 +30,15 @@ LUA_API lua_CSoundParameters lua_tosoundparameters( lua_State *L, int idx )
     lua_pop( L, 1 );
     lua_getfield( L, idx, "pitch" );
     if ( !lua_isnil( L, -1 ) )
-        SoundParameters.pitch = luaL_checkint( L, -1 );
+        SoundParameters.pitch = luaL_checknumber( L, -1 );
     lua_pop( L, 1 );
     lua_getfield( L, idx, "pitchlow" );
     if ( !lua_isnil( L, -1 ) )
-        SoundParameters.pitchlow = luaL_checkint( L, -1 );
+        SoundParameters.pitchlow = luaL_checknumber( L, -1 );
     lua_pop( L, 1 );
     lua_getfield( L, idx, "pitchhigh" );
     if ( !lua_isnil( L, -1 ) )
-        SoundParameters.pitchhigh = luaL_checkint( L, -1 );
+        SoundParameters.pitchhigh = luaL_checknumber( L, -1 );
     lua_pop( L, 1 );
     lua_getfield( L, idx, "soundlevel" );
     if ( !lua_isnil( L, -1 ) )
@@ -50,7 +50,7 @@ LUA_API lua_CSoundParameters lua_tosoundparameters( lua_State *L, int idx )
     lua_pop( L, 1 );
     lua_getfield( L, idx, "count" );
     if ( !lua_isnil( L, -1 ) )
-        SoundParameters.count = luaL_checkint( L, -1 );
+        SoundParameters.count = luaL_checknumber( L, -1 );
     lua_pop( L, 1 );
     lua_getfield( L, idx, "soundname" );
     if ( !lua_isnil( L, -1 ) )
@@ -61,7 +61,7 @@ LUA_API lua_CSoundParameters lua_tosoundparameters( lua_State *L, int idx )
     lua_pop( L, 1 );
     lua_getfield( L, idx, "delay_msec" );
     if ( !lua_isnil( L, -1 ) )
-        SoundParameters.delay_msec = luaL_checkint( L, -1 );
+        SoundParameters.delay_msec = luaL_checknumber( L, -1 );
     lua_pop( L, 1 );
     return SoundParameters;
 }

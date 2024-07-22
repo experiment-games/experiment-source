@@ -111,7 +111,7 @@ static int C_RecipientFilter_GetRecipientCount( lua_State *L )
 
 static int C_RecipientFilter_GetRecipientIndex( lua_State *L )
 {
-    lua_pushinteger( L, luaL_checkrecipientfilter( L, 1 ).GetRecipientIndex( luaL_checkint( L, 2 ) ) );
+    lua_pushinteger( L, luaL_checkrecipientfilter( L, 1 ).GetRecipientIndex( luaL_checknumber( L, 2 ) ) );
     return 1;
 }
 

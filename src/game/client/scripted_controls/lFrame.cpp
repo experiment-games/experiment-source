@@ -92,7 +92,7 @@ static int Frame_CanChainKeysToParent( lua_State *L )
 
 static int Frame_CanStartDragging( lua_State *L )
 {
-    lua_pushboolean( L, luaL_checkframe( L, 1 )->CanStartDragging( luaL_checkint( L, 2 ), luaL_checkint( L, 3 ), luaL_checkint( L, 4 ), luaL_checkint( L, 5 ) ) );
+    lua_pushboolean( L, luaL_checkframe( L, 1 )->CanStartDragging( luaL_checknumber( L, 2 ), luaL_checknumber( L, 3 ), luaL_checknumber( L, 4 ), luaL_checknumber( L, 5 ) ) );
     return 1;
 }
 
@@ -219,7 +219,7 @@ static int Frame_IsSmallCaption( lua_State *L )
 static int Frame_KB_AddBoundKey( lua_State *L )
 {
     luaL_checkframe( L, 1 )->KB_AddBoundKey(
-        luaL_checkstring( L, 2 ), luaL_checkint( L, 3 ), luaL_checkint( L, 4 ) );
+        luaL_checkstring( L, 2 ), luaL_checknumber( L, 3 ), luaL_checknumber( L, 4 ) );
     return 0;
 }
 

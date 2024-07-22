@@ -689,7 +689,7 @@ static int IPhysicsObject_ApplyTorqueCenter( lua_State *L )
 
 static int IPhysicsObject_BecomeHinged( lua_State *L )
 {
-    luaL_checkphysicsobject( L, 1 )->BecomeHinged( luaL_checkint( L, 2 ) );
+    luaL_checkphysicsobject( L, 1 )->BecomeHinged( luaL_checknumber( L, 2 ) );
     return 0;
 }
 
@@ -1031,13 +1031,13 @@ static int IPhysicsObject_SetBuoyancyRatio( lua_State *L )
 
 static int IPhysicsObject_SetCallbackFlags( lua_State *L )
 {
-    luaL_checkphysicsobject( L, 1 )->SetCallbackFlags( luaL_checkint( L, 2 ) );
+    luaL_checkphysicsobject( L, 1 )->SetCallbackFlags( luaL_checknumber( L, 2 ) );
     return 0;
 }
 
 static int IPhysicsObject_SetContents( lua_State *L )
 {
-    luaL_checkphysicsobject( L, 1 )->SetContents( luaL_checkint( L, 2 ) );
+    luaL_checkphysicsobject( L, 1 )->SetContents( luaL_checknumber( L, 2 ) );
     return 0;
 }
 
@@ -1051,13 +1051,13 @@ static int IPhysicsObject_SetDragCoefficient( lua_State *L )
 
 static int IPhysicsObject_SetGameFlags( lua_State *L )
 {
-    luaL_checkphysicsobject( L, 1 )->SetGameFlags( luaL_checkint( L, 2 ) );
+    luaL_checkphysicsobject( L, 1 )->SetGameFlags( luaL_checknumber( L, 2 ) );
     return 0;
 }
 
 static int IPhysicsObject_SetGameIndex( lua_State *L )
 {
-    luaL_checkphysicsobject( L, 1 )->SetGameIndex( luaL_checkint( L, 2 ) );
+    luaL_checkphysicsobject( L, 1 )->SetGameIndex( luaL_checknumber( L, 2 ) );
     return 0;
 }
 
@@ -1069,7 +1069,7 @@ static int IPhysicsObject_SetMass( lua_State *L )
 
 static int IPhysicsObject_SetMaterialIndex( lua_State *L )
 {
-    luaL_checkphysicsobject( L, 1 )->SetMaterialIndex( luaL_checkint( L, 2 ) );
+    luaL_checkphysicsobject( L, 1 )->SetMaterialIndex( luaL_checknumber( L, 2 ) );
     return 0;
 }
 
@@ -1216,7 +1216,7 @@ LUALIB_API int luaopen_IPhysicsObject( lua_State *L )
 static int IPhysicsSurfaceProps_GetPhysicsParameters( lua_State *L )
 {
     surfacephysicsparams_t pParamsOut;
-    luaL_checkphysicssurfaceprops( L, 1 )->GetPhysicsParameters( luaL_checkint( L, 2 ), &pParamsOut );
+    luaL_checkphysicssurfaceprops( L, 1 )->GetPhysicsParameters( luaL_checknumber( L, 2 ), &pParamsOut );
     lua_pushsurfacephysicsparams( L, &pParamsOut );
     return 1;
 }
@@ -1224,7 +1224,7 @@ static int IPhysicsSurfaceProps_GetPhysicsParameters( lua_State *L )
 static int IPhysicsSurfaceProps_GetPhysicsProperties( lua_State *L )
 {
     float density, thickness, friction, elasticity;
-    luaL_checkphysicssurfaceprops( L, 1 )->GetPhysicsProperties( luaL_checkint( L, 2 ), &density, &thickness, &friction, &elasticity );
+    luaL_checkphysicssurfaceprops( L, 1 )->GetPhysicsProperties( luaL_checknumber( L, 2 ), &density, &thickness, &friction, &elasticity );
     lua_pushnumber( L, density );
     lua_pushnumber( L, thickness );
     lua_pushnumber( L, friction );
@@ -1234,7 +1234,7 @@ static int IPhysicsSurfaceProps_GetPhysicsProperties( lua_State *L )
 
 static int IPhysicsSurfaceProps_GetPropName( lua_State *L )
 {
-    lua_pushstring( L, luaL_checkphysicssurfaceprops( L, 1 )->GetPropName( luaL_checkint( L, 2 ) ) );
+    lua_pushstring( L, luaL_checkphysicssurfaceprops( L, 1 )->GetPropName( luaL_checknumber( L, 2 ) ) );
     return 1;
 }
 
@@ -1246,7 +1246,7 @@ static int IPhysicsSurfaceProps_GetString( lua_State *L )
 
 static int IPhysicsSurfaceProps_GetSurfaceData( lua_State *L )
 {
-    lua_pushsurfacedata( L, luaL_checkphysicssurfaceprops( L, 1 )->GetSurfaceData( luaL_checkint( L, 2 ) ) );
+    lua_pushsurfacedata( L, luaL_checkphysicssurfaceprops( L, 1 )->GetSurfaceData( luaL_checknumber( L, 2 ) ) );
     return 1;
 }
 

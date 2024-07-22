@@ -111,7 +111,7 @@ static int CRecipientFilter_GetRecipientCount( lua_State *L )
 
 static int CRecipientFilter_GetRecipientIndex( lua_State *L )
 {
-    lua_pushinteger( L, luaL_checkrecipientfilter( L, 1 ).GetRecipientIndex( luaL_checkint( L, 2 ) ) );
+    lua_pushinteger( L, luaL_checkrecipientfilter( L, 1 ).GetRecipientIndex( luaL_checknumber( L, 2 ) ) );
     return 1;
 }
 
@@ -165,7 +165,7 @@ static int CRecipientFilter_RemoveRecipient( lua_State *L )
 
 static int CRecipientFilter_RemoveRecipientByPlayerIndex( lua_State *L )
 {
-    luaL_checkrecipientfilter( L, 1 ).RemoveRecipientByPlayerIndex( luaL_checkint( L, 2 ) );
+    luaL_checkrecipientfilter( L, 1 ).RemoveRecipientByPlayerIndex( luaL_checknumber( L, 2 ) );
     return 0;
 }
 

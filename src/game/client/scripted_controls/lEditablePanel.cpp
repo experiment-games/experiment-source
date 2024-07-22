@@ -73,7 +73,7 @@ void LEditablePanel::DoModal()
 {
     InvalidateLayout();
     Activate();
-    m_hPreviousModal = vgui::input()->GetAppModalSurface(); // TODO: Crashes?
+    m_hPreviousModal = vgui::input()->GetAppModalSurface();  // TODO: Crashes?
     vgui::input()->SetAppModalSurface( GetVPanel() );
 }
 
@@ -121,7 +121,7 @@ void LEditablePanel::FinishClose()
 {
     SetVisible( false );
 
-    //if ( m_bDeleteSelfOnClose )
+    // if ( m_bDeleteSelfOnClose )
     {
         // Must be last because if vgui is not running then this will call delete this!!!
         MarkForDeletion();
@@ -198,7 +198,6 @@ static int EditablePanel_DoModal( lua_State *L )
     return 0;
 }
 
-
 static int EditablePanel_IsModal( lua_State *L )
 {
     lua_pushboolean( L, luaL_checkeditablepanel( L, 1 )->IsModal() );
@@ -207,7 +206,7 @@ static int EditablePanel_IsModal( lua_State *L )
 
 static int EditablePanel_GetControlInt( lua_State *L )
 {
-    lua_pushinteger( L, luaL_checkeditablepanel( L, 1 )->GetControlInt( luaL_checkstring( L, 2 ), luaL_checkint( L, 3 ) ) );
+    lua_pushinteger( L, luaL_checkeditablepanel( L, 1 )->GetControlInt( luaL_checkstring( L, 2 ), luaL_checknumber( L, 3 ) ) );
     return 1;
 }
 
@@ -250,7 +249,7 @@ static int EditablePanel_HasHotkey( lua_State *L )
 
 static int EditablePanel_KB_AddBoundKey( lua_State *L )
 {
-    luaL_checkeditablepanel( L, 1 )->KB_AddBoundKey( luaL_checkstring( L, 2 ), luaL_checkint( L, 3 ), luaL_checkint( L, 3 ) );
+    luaL_checkeditablepanel( L, 1 )->KB_AddBoundKey( luaL_checkstring( L, 2 ), luaL_checknumber( L, 3 ), luaL_checknumber( L, 3 ) );
     return 0;
 }
 
@@ -262,7 +261,7 @@ static int EditablePanel_KB_ChainToMap( lua_State *L )
 
 static int EditablePanel_KeyCodeToString( lua_State *L )
 {
-    lua_pushstring( L, luaL_checkeditablepanel( L, 1 )->KeyCodeToString( ( KeyCode )luaL_checkint( L, 2 ) ) );
+    lua_pushstring( L, luaL_checkeditablepanel( L, 1 )->KeyCodeToString( ( KeyCode )( int )luaL_checknumber( L, 2 ) ) );
     return 1;
 }
 
@@ -274,19 +273,19 @@ static int EditablePanel_LoadControlSettings( lua_State *L )
 
 static int EditablePanel_LoadControlSettingsAndUserConfig( lua_State *L )
 {
-    luaL_checkeditablepanel( L, 1 )->LoadControlSettingsAndUserConfig( luaL_checkstring( L, 2 ), luaL_optint( L, 3, 0 ) );
+    luaL_checkeditablepanel( L, 1 )->LoadControlSettingsAndUserConfig( luaL_checkstring( L, 2 ), ( int )luaL_optnumber( L, 3, 0 ) );
     return 0;
 }
 
 static int EditablePanel_LoadUserConfig( lua_State *L )
 {
-    luaL_checkeditablepanel( L, 1 )->LoadUserConfig( luaL_checkstring( L, 2 ), luaL_optint( L, 3, 0 ) );
+    luaL_checkeditablepanel( L, 1 )->LoadUserConfig( luaL_checkstring( L, 2 ), ( int )luaL_optnumber( L, 3, 0 ) );
     return 0;
 }
 
 static int EditablePanel_OnKeyCodeTyped( lua_State *L )
 {
-    luaL_checkeditablepanel( L, 1 )->OnKeyCodeTyped( ( KeyCode )luaL_checkint( L, 2 ) );
+    luaL_checkeditablepanel( L, 1 )->OnKeyCodeTyped( ( KeyCode )( int )luaL_checknumber( L, 2 ) );
     return 0;
 }
 
@@ -310,7 +309,7 @@ static int EditablePanel_RegisterControlSettingsFile( lua_State *L )
 
 static int EditablePanel_RequestFocus( lua_State *L )
 {
-    luaL_checkeditablepanel( L, 1 )->RequestFocus( luaL_optint( L, 2, 0 ) );
+    luaL_checkeditablepanel( L, 1 )->RequestFocus( ( int )luaL_optnumber( L, 2, 0 ) );
     return 0;
 }
 
@@ -352,7 +351,7 @@ static int EditablePanel_SetControlEnabled( lua_State *L )
 
 static int EditablePanel_SetControlInt( lua_State *L )
 {
-    luaL_checkeditablepanel( L, 1 )->SetControlInt( luaL_checkstring( L, 2 ), luaL_checkint( L, 3 ) );
+    luaL_checkeditablepanel( L, 1 )->SetControlInt( luaL_checkstring( L, 2 ), luaL_checknumber( L, 3 ) );
     return 0;
 }
 

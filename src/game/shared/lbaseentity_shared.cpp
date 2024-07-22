@@ -92,31 +92,31 @@ static int CBaseEntity_Activate( lua_State *L )
 
 static int CBaseEntity_AddDataObjectType( lua_State *L )
 {
-    luaL_checkentity( L, 1 )->AddDataObjectType( luaL_checkint( L, 2 ) );
+    luaL_checkentity( L, 1 )->AddDataObjectType( luaL_checknumber( L, 2 ) );
     return 0;
 }
 
 static int CBaseEntity_AddEffects( lua_State *L )
 {
-    luaL_checkentity( L, 1 )->AddEffects( luaL_checkint( L, 2 ) );
+    luaL_checkentity( L, 1 )->AddEffects( luaL_checknumber( L, 2 ) );
     return 0;
 }
 
 static int CBaseEntity_AddEFlags( lua_State *L )
 {
-    luaL_checkentity( L, 1 )->AddEFlags( luaL_checkint( L, 2 ) );
+    luaL_checkentity( L, 1 )->AddEFlags( luaL_checknumber( L, 2 ) );
     return 0;
 }
 
 static int CBaseEntity_AddFlag( lua_State *L )
 {
-    luaL_checkentity( L, 1 )->AddFlag( luaL_checkint( L, 2 ) );
+    luaL_checkentity( L, 1 )->AddFlag( luaL_checknumber( L, 2 ) );
     return 0;
 }
 
 static int CBaseEntity_AddSolidFlags( lua_State *L )
 {
-    luaL_checkentity( L, 1 )->AddSolidFlags( luaL_checkint( L, 2 ) );
+    luaL_checkentity( L, 1 )->AddSolidFlags( luaL_checknumber( L, 2 ) );
     return 0;
 }
 
@@ -170,7 +170,7 @@ static int CBaseEntity_CalcNearestPoint( lua_State *L )
 
 static int CBaseEntity_ChangeTeam( lua_State *L )
 {
-    luaL_checkentity( L, 1 )->ChangeTeam( luaL_checkint( L, 2 ) );
+    luaL_checkentity( L, 1 )->ChangeTeam( luaL_checknumber( L, 2 ) );
     return 0;
 }
 
@@ -215,13 +215,13 @@ static int CBaseEntity_ComputeWorldSpaceSurroundingBox( lua_State *L )
 
 static int CBaseEntity_CreateDataObject( lua_State *L )
 {
-    luaL_checkentity( L, 1 )->CreateDataObject( luaL_checkint( L, 2 ) );
+    luaL_checkentity( L, 1 )->CreateDataObject( luaL_checknumber( L, 2 ) );
     return 0;
 }
 
 static int CBaseEntity_CreatePredictedEntityByName( lua_State *L )
 {
-    lua_pushentity( L, CBaseEntity::CreatePredictedEntityByName( luaL_checkstring( L, 2 ), luaL_checkstring( L, 3 ), luaL_checkint( L, 4 ), luaL_optboolean( L, 5, 0 ) ) );
+    lua_pushentity( L, CBaseEntity::CreatePredictedEntityByName( luaL_checkstring( L, 2 ), luaL_checkstring( L, 3 ), luaL_checknumber( L, 4 ), luaL_optboolean( L, 5, 0 ) ) );
     return 1;
 }
 
@@ -233,7 +233,7 @@ static int CBaseEntity_CreateVPhysics( lua_State *L )
 
 static int CBaseEntity_DamageDecal( lua_State *L )
 {
-    lua_pushstring( L, luaL_checkentity( L, 1 )->DamageDecal( luaL_checkint( L, 2 ), luaL_checkint( L, 3 ) ) );
+    lua_pushstring( L, luaL_checkentity( L, 1 )->DamageDecal( luaL_checknumber( L, 2 ), luaL_checknumber( L, 3 ) ) );
     return 1;
 }
 
@@ -252,7 +252,7 @@ static int CBaseEntity_DestroyAllDataObjects( lua_State *L )
 
 static int CBaseEntity_DestroyDataObject( lua_State *L )
 {
-    luaL_checkentity( L, 1 )->DestroyDataObject( luaL_checkint( L, 2 ) );
+    luaL_checkentity( L, 1 )->DestroyDataObject( luaL_checknumber( L, 2 ) );
     return 0;
 }
 
@@ -267,7 +267,7 @@ static int CBaseEntity_DispatchTraceAttack( lua_State *L )
 static int CBaseEntity_DoImpactEffect( lua_State *L )
 {
     luaL_checkentity( L, 1 )->DoImpactEffect( luaL_checktrace( L, 2 ),
-                                              luaL_checkint( L, 3 ) );
+                                              luaL_checknumber( L, 3 ) );
     return 1;
 }
 
@@ -280,7 +280,7 @@ static int CBaseEntity_EarPosition( lua_State *L )
 static int CBaseEntity_EmitAmbientSound( lua_State *L )
 {
     float duration = luaL_optnumber( L, 6, 0 );
-    CBaseEntity::EmitAmbientSound( luaL_checkint( L, 1 ), luaL_checkvector( L, 2 ), luaL_checkstring( L, 3 ), luaL_optint( L, 4, 0 ), luaL_optnumber( L, 5, 0.0f ), &duration );
+    CBaseEntity::EmitAmbientSound( luaL_checknumber( L, 1 ), luaL_checkvector( L, 2 ), luaL_checkstring( L, 3 ), ( int )luaL_optnumber( L, 4, 0 ), luaL_optnumber( L, 5, 0.0f ), &duration );
     return 0;
 }
 
@@ -304,13 +304,13 @@ static int CBaseEntity_EmitSound( lua_State *L )
             {
                 if ( lua_gettop( L ) <= 3 )
                     CBaseEntity::EmitSound( luaL_checkrecipientfilter( L, 1 ),
-                                            luaL_checkint( L, 2 ),
+                                            luaL_checknumber( L, 2 ),
                                             luaL_checkstring( L, 3 ) );
                 else
                 {
                     float duration = 0;
                     CBaseEntity::EmitSound(
-                        luaL_checkrecipientfilter( L, 1 ), luaL_checkint( L, 2 ), luaL_checkstring( L, 3 ), &luaL_checkvector( L, 4 ), luaL_optnumber( L, 5, 0.0f ), &duration );
+                        luaL_checkrecipientfilter( L, 1 ), luaL_checknumber( L, 2 ), luaL_checkstring( L, 3 ), &luaL_checkvector( L, 4 ), luaL_optnumber( L, 5, 0.0f ), &duration );
                     lua_pushnumber( L, duration );
                     return 1;
                 }
@@ -322,7 +322,7 @@ static int CBaseEntity_EmitSound( lua_State *L )
                 lua_toemitsound( L, 3, ep );
 
                 CBaseEntity::EmitSound( luaL_checkrecipientfilter( L, 1 ),
-                                        luaL_checkint( L, 2 ),
+                                        luaL_checknumber( L, 2 ),
                                         ep );
                 break;
             }
@@ -470,7 +470,7 @@ static int CBaseEntity_GetCollisionGroup( lua_State *L )
 
 static int CBaseEntity_GetDataObject( lua_State *L )
 {
-    luaL_checkentity( L, 1 )->GetDataObject( luaL_checkint( L, 2 ) );
+    luaL_checkentity( L, 1 )->GetDataObject( luaL_checknumber( L, 2 ) );
     return 0;
 }
 
@@ -656,7 +656,7 @@ static int CBaseEntity_GetOBBCenter( lua_State *L )
         luaL_typeerror( L, 1, "CBaseEntity with collision" );
         return 0;
     }
-    
+
     Vector v = pCollisionProp->OBBCenter();
     lua_pushvector( L, v );
 
@@ -745,7 +745,7 @@ static int CBaseEntity_GetSimulationTime( lua_State *L )
 static int CBaseEntity_GetSkinCount( lua_State *L )
 {
     CBaseEntity *pEntity = luaL_checkentity( L, 1 );
-    studiohdr_t * pStudioModel = modelinfo->GetStudiomodel( pEntity->GetModel() );
+    studiohdr_t *pStudioModel = modelinfo->GetStudiomodel( pEntity->GetModel() );
 
     if ( pStudioModel )
     {
@@ -847,7 +847,7 @@ static int CBaseEntity_GetWaterType( lua_State *L )
 static int CBaseEntity_HasDataObjectType( lua_State *L )
 {
     lua_pushboolean(
-        L, luaL_checkentity( L, 1 )->HasDataObjectType( luaL_checkint( L, 2 ) ) );
+        L, luaL_checkentity( L, 1 )->HasDataObjectType( luaL_checknumber( L, 2 ) ) );
     return 1;
 }
 
@@ -860,7 +860,7 @@ static int CBaseEntity_HasNPCsOnIt( lua_State *L )
 static int CBaseEntity_ImpactTrace( lua_State *L )
 {
     luaL_checkentity( L, 1 )->ImpactTrace( &luaL_checktrace( L, 2 ),
-                                           luaL_checkint( L, 3 ),
+                                           luaL_checknumber( L, 3 ),
                                            ( char * )luaL_optstring( L, 4, 0 ) );
     return 0;
 }
@@ -935,13 +935,13 @@ static int CBaseEntity_IsDormant( lua_State *L )
 static int CBaseEntity_IsEffectActive( lua_State *L )
 {
     lua_pushboolean(
-        L, luaL_checkentity( L, 1 )->IsEffectActive( luaL_checkint( L, 2 ) ) );
+        L, luaL_checkentity( L, 1 )->IsEffectActive( luaL_checknumber( L, 2 ) ) );
     return 1;
 }
 
 static int CBaseEntity_IsEFlagSet( lua_State *L )
 {
-    lua_pushboolean( L, luaL_checkentity( L, 1 )->IsEFlagSet( luaL_checkint( L, 2 ) ) );
+    lua_pushboolean( L, luaL_checkentity( L, 1 )->IsEFlagSet( luaL_checknumber( L, 2 ) ) );
     return 1;
 }
 
@@ -1042,7 +1042,7 @@ static int CBaseEntity_IsSolid( lua_State *L )
 static int CBaseEntity_IsSolidFlagSet( lua_State *L )
 {
     lua_pushboolean(
-        L, luaL_checkentity( L, 1 )->IsSolidFlagSet( luaL_checkint( L, 2 ) ) );
+        L, luaL_checkentity( L, 1 )->IsSolidFlagSet( luaL_checknumber( L, 2 ) ) );
     return 1;
 }
 
@@ -1264,31 +1264,31 @@ static int CBaseEntity_RemoveAllDecals( lua_State *L )
 
 static int CBaseEntity_RemoveDataObjectType( lua_State *L )
 {
-    luaL_checkentity( L, 1 )->RemoveDataObjectType( luaL_checkint( L, 2 ) );
+    luaL_checkentity( L, 1 )->RemoveDataObjectType( luaL_checknumber( L, 2 ) );
     return 0;
 }
 
 static int CBaseEntity_RemoveEffects( lua_State *L )
 {
-    luaL_checkentity( L, 1 )->RemoveEffects( luaL_checkint( L, 2 ) );
+    luaL_checkentity( L, 1 )->RemoveEffects( luaL_checknumber( L, 2 ) );
     return 0;
 }
 
 static int CBaseEntity_RemoveEFlags( lua_State *L )
 {
-    luaL_checkentity( L, 1 )->RemoveEFlags( luaL_checkint( L, 2 ) );
+    luaL_checkentity( L, 1 )->RemoveEFlags( luaL_checknumber( L, 2 ) );
     return 0;
 }
 
 static int CBaseEntity_RemoveFlag( lua_State *L )
 {
-    luaL_checkentity( L, 1 )->RemoveFlag( luaL_checkint( L, 2 ) );
+    luaL_checkentity( L, 1 )->RemoveFlag( luaL_checknumber( L, 2 ) );
     return 0;
 }
 
 static int CBaseEntity_RemoveSolidFlags( lua_State *L )
 {
-    luaL_checkentity( L, 1 )->RemoveSolidFlags( luaL_checkint( L, 2 ) );
+    luaL_checkentity( L, 1 )->RemoveSolidFlags( luaL_checknumber( L, 2 ) );
     return 0;
 }
 
@@ -1373,7 +1373,7 @@ static int CBaseEntity_SetCollisionBounds( lua_State *L )
 
 static int CBaseEntity_SetCollisionGroup( lua_State *L )
 {
-    luaL_checkentity( L, 1 )->SetCollisionGroup( luaL_checkint( L, 2 ) );
+    luaL_checkentity( L, 1 )->SetCollisionGroup( luaL_checknumber( L, 2 ) );
     return 0;
 }
 
@@ -1385,13 +1385,13 @@ static int CBaseEntity_SetEffectEntity( lua_State *L )
 
 static int CBaseEntity_SetEffects( lua_State *L )
 {
-    luaL_checkentity( L, 1 )->SetEffects( luaL_checkint( L, 2 ) );
+    luaL_checkentity( L, 1 )->SetEffects( luaL_checknumber( L, 2 ) );
     return 0;
 }
 
 static int CBaseEntity_SetEFlags( lua_State *L )
 {
-    luaL_checkentity( L, 1 )->SetEFlags( luaL_checkint( L, 2 ) );
+    luaL_checkentity( L, 1 )->SetEFlags( luaL_checknumber( L, 2 ) );
     return 0;
 }
 
@@ -1421,7 +1421,7 @@ static int CBaseEntity_SetGroundEntity( lua_State *L )
 
 static int CBaseEntity_SetHealth( lua_State *L )
 {
-    luaL_checkentity( L, 1 )->SetHealth( luaL_checkint( L, 2 ) );
+    luaL_checkentity( L, 1 )->SetHealth( luaL_checknumber( L, 2 ) );
     return 0;
 }
 
@@ -1472,7 +1472,7 @@ static int CBaseEntity_SetModel( lua_State *L )
 
 static int CBaseEntity_SetModelIndex( lua_State *L )
 {
-    luaL_checkentity( L, 1 )->SetModelIndex( luaL_checkint( L, 2 ) );
+    luaL_checkentity( L, 1 )->SetModelIndex( luaL_checknumber( L, 2 ) );
     return 0;
 }
 
@@ -1485,15 +1485,15 @@ static int CBaseEntity_SetModelName( lua_State *L )
 
 static int CBaseEntity_SetMoveCollide( lua_State *L )
 {
-    luaL_checkentity( L, 1 )->SetMoveCollide( ( MoveCollide_t )luaL_checkint( L, 2 ) );
+    luaL_checkentity( L, 1 )->SetMoveCollide( ( MoveCollide_t )( int )luaL_checknumber( L, 2 ) );
     return 0;
 }
 
 static int CBaseEntity_SetMoveType( lua_State *L )
 {
     luaL_checkentity( L, 1 )->SetMoveType(
-        ( MoveType_t )luaL_checkint( L, 2 ),
-        ( MoveCollide_t )luaL_optint( L, 3, MOVECOLLIDE_DEFAULT ) );
+        ( MoveType_t )( int )luaL_checknumber( L, 2 ),
+        ( MoveCollide_t )( int )luaL_optnumber( L, 3, MOVECOLLIDE_DEFAULT ) );
     return 0;
 }
 
@@ -1512,7 +1512,7 @@ static int CBaseEntity_SetOwnerEntity( lua_State *L )
 static int CBaseEntity_SetParent( lua_State *L )
 {
     luaL_checkentity( L, 1 )->SetParent( luaL_checkentity( L, 2 ),
-                                         luaL_optint( L, 3, 0 ) );
+                                         ( int )luaL_optnumber( L, 3, 0 ) );
     return 0;
 }
 
@@ -1568,9 +1568,9 @@ static int CBaseEntity_SetRenderColorR( lua_State *L )
 static int CBaseEntity_SetRenderMode( lua_State *L )
 {
 #ifdef CLIENT_DLL
-    luaL_checkentity( L, 1 )->SetRenderMode( ( RenderMode_t )luaL_checkint( L, 2 ), true );
+    luaL_checkentity( L, 1 )->SetRenderMode( ( RenderMode_t )( int )luaL_checknumber( L, 2 ), true );
 #else
-    luaL_checkentity( L, 1 )->SetRenderMode( ( RenderMode_t )luaL_checkint( L, 2 ) );
+    luaL_checkentity( L, 1 )->SetRenderMode( ( RenderMode_t )( int )luaL_checknumber( L, 2 ) );
 #endif
     return 0;
 }
@@ -1599,25 +1599,25 @@ static int CBaseEntity_SetSkin( lua_State *L )
     // TODO: SetSkin
     // TODO: There's also logic in lbaseanimating.__newindex for this
     // TODO: Placed here because its easily shared, but we should really create a common place for baseanimating shared functions
-    lua_toanimating( L, 1 )->m_nSkin = luaL_checkint( L, 2 );
+    lua_toanimating( L, 1 )->m_nSkin = luaL_checknumber( L, 2 );
     return 0;
 }
 
 static int CBaseEntity_SetSolid( lua_State *L )
 {
-    luaL_checkentity( L, 1 )->SetSolid( ( SolidType_t )luaL_checkint( L, 2 ) );
+    luaL_checkentity( L, 1 )->SetSolid( ( SolidType_t )( int )luaL_checknumber( L, 2 ) );
     return 0;
 }
 
 static int CBaseEntity_SetSolidFlags( lua_State *L )
 {
-    luaL_checkentity( L, 1 )->SetSolidFlags( luaL_checkint( L, 2 ) );
+    luaL_checkentity( L, 1 )->SetSolidFlags( luaL_checknumber( L, 2 ) );
     return 0;
 }
 
 static int CBaseEntity_SetTextureFrameIndex( lua_State *L )
 {
-    luaL_checkentity( L, 1 )->SetTextureFrameIndex( luaL_checkint( L, 2 ) );
+    luaL_checkentity( L, 1 )->SetTextureFrameIndex( luaL_checknumber( L, 2 ) );
     return 0;
 }
 
@@ -1629,19 +1629,19 @@ static int CBaseEntity_SetViewOffset( lua_State *L )
 
 static int CBaseEntity_SetWaterLevel( lua_State *L )
 {
-    luaL_checkentity( L, 1 )->SetWaterLevel( luaL_checkint( L, 2 ) );
+    luaL_checkentity( L, 1 )->SetWaterLevel( luaL_checknumber( L, 2 ) );
     return 0;
 }
 
 static int CBaseEntity_SetWaterType( lua_State *L )
 {
-    luaL_checkentity( L, 1 )->SetWaterType( luaL_checkint( L, 2 ) );
+    luaL_checkentity( L, 1 )->SetWaterType( luaL_checknumber( L, 2 ) );
     return 0;
 }
 
 static int CBaseEntity_ShouldCollide( lua_State *L )
 {
-    lua_pushboolean( L, luaL_checkentity( L, 1 )->ShouldCollide( luaL_checkint( L, 2 ), luaL_checkint( L, 3 ) ) );
+    lua_pushboolean( L, luaL_checkentity( L, 1 )->ShouldCollide( luaL_checknumber( L, 2 ), luaL_checknumber( L, 3 ) ) );
     return 1;
 }
 
@@ -1689,7 +1689,7 @@ static int CBaseEntity_Think( lua_State *L )
 
 static int CBaseEntity_ToggleFlag( lua_State *L )
 {
-    luaL_checkentity( L, 1 )->ToggleFlag( luaL_checkint( L, 2 ) );
+    luaL_checkentity( L, 1 )->ToggleFlag( luaL_checknumber( L, 2 ) );
     return 0;
 }
 
@@ -1702,7 +1702,7 @@ static int CBaseEntity_Touch( lua_State *L )
 static int CBaseEntity_TraceBleed( lua_State *L )
 {
     luaL_checkentity( L, 1 )->TraceBleed(
-        luaL_checknumber( L, 2 ), luaL_checkvector( L, 3 ), &luaL_checktrace( L, 4 ), luaL_checkint( L, 5 ) );
+        luaL_checknumber( L, 2 ), luaL_checkvector( L, 3 ), &luaL_checktrace( L, 4 ), luaL_checknumber( L, 5 ) );
     return 0;
 }
 
@@ -1750,10 +1750,10 @@ static int CBaseEntity_VPhysicsInitNormal( lua_State *L )
 {
     // TODO: Implement a Lua solid_t object.
     lua_pushphysicsobject( L,
-        luaL_checkentity( L, 1 )->VPhysicsInitNormal(
-            ( SolidType_t )luaL_optinteger( L, 2, SOLID_VPHYSICS ),
-            luaL_optnumber( L, 3, 0 ),
-            luaL_optboolean( L, 4, false ) ) );
+                           luaL_checkentity( L, 1 )->VPhysicsInitNormal(
+                               ( SolidType_t )luaL_optinteger( L, 2, SOLID_VPHYSICS ),
+                               luaL_optnumber( L, 3, 0 ),
+                               luaL_optboolean( L, 4, false ) ) );
     return 1;
 }
 
@@ -1781,11 +1781,10 @@ static int CBaseEntity_VPhysicsInitBox( lua_State *L )
         pEntity,
         pCollide,
         pEntity->GetAbsOrigin(),
-        vec3_angle, // AABB
+        vec3_angle,  // AABB
         STRING( pEntity->GetModelName() ),
         bStatic,
-        &solid
-    );
+        &solid );
     pEntity->VPhysicsSetObject( pPhysicsObject );
     pEntity->SetCollisionBounds( mins, maxs );
 
@@ -1876,7 +1875,7 @@ static int CBaseAnimating_GetAttachment( lua_State *L )
 
     if ( iArg2Type == LUA_TNUMBER )
     {
-        boneID = luaL_checkint( L, 2 );
+        boneID = luaL_checknumber( L, 2 );
 
         if ( !luaL_checkanimating( L, 1 )->GetAttachment( boneID, pVecOrigin, pVecAngles ) )
         {
@@ -1920,21 +1919,21 @@ static int CBaseAnimating_FindBodygroupByName( lua_State *L )
 static int CBaseAnimating_GetBodygroup( lua_State *L )
 {
     lua_pushinteger(
-        L, luaL_checkanimating( L, 1 )->GetBodygroup( luaL_checkint( L, 2 ) ) );
+        L, luaL_checkanimating( L, 1 )->GetBodygroup( luaL_checknumber( L, 2 ) ) );
     return 1;
 }
 
 static int CBaseAnimating_GetBodygroupCount( lua_State *L )
 {
     lua_pushinteger(
-        L, luaL_checkanimating( L, 1 )->GetBodygroupCount( luaL_checkint( L, 2 ) ) );
+        L, luaL_checkanimating( L, 1 )->GetBodygroupCount( luaL_checknumber( L, 2 ) ) );
     return 1;
 }
 
 static int CBaseAnimating_GetBodygroupName( lua_State *L )
 {
     lua_pushstring(
-        L, luaL_checkanimating( L, 1 )->GetBodygroupName( luaL_checkint( L, 2 ) ) );
+        L, luaL_checkanimating( L, 1 )->GetBodygroupName( luaL_checknumber( L, 2 ) ) );
     return 1;
 }
 
@@ -1946,8 +1945,8 @@ static int CBaseAnimating_GetNumBodyGroups( lua_State *L )
 
 static int CBaseAnimating_SetBodygroup( lua_State *L )
 {
-    luaL_checkanimating( L, 1 )->SetBodygroup( luaL_checkint( L, 2 ),
-                                               luaL_checkint( L, 3 ) );
+    luaL_checkanimating( L, 1 )->SetBodygroup( luaL_checknumber( L, 2 ),
+                                               luaL_checknumber( L, 3 ) );
     return 0;
 }
 
@@ -2099,13 +2098,13 @@ static int CBaseEntity___newindex( lua_State *L )
     else if ( Q_strcmp( field, "m_iClassname" ) == 0 )
         pEntity->m_iClassname = MAKE_STRING( luaL_checkstring( L, 3 ) );
     else if ( Q_strcmp( field, "m_iHealth" ) == 0 )
-        pEntity->m_iHealth = luaL_checkint( L, 3 );
+        pEntity->m_iHealth = luaL_checknumber( L, 3 );
     else if ( Q_strcmp( field, "m_nLastThinkTick" ) == 0 )
-        pEntity->m_nLastThinkTick = luaL_checkint( L, 3 );
+        pEntity->m_nLastThinkTick = luaL_checknumber( L, 3 );
     else if ( Q_strcmp( field, "m_nModelIndex" ) == 0 )
-        pEntity->m_nModelIndex = luaL_checkint( L, 3 );
+        pEntity->m_nModelIndex = luaL_checknumber( L, 3 );
     else if ( Q_strcmp( field, "touchStamp" ) == 0 )
-        pEntity->touchStamp = luaL_checkint( L, 3 );
+        pEntity->touchStamp = luaL_checknumber( L, 3 );
     else
     {
         LUA_GET_REF_TABLE( L, pEntity );
@@ -2443,7 +2442,7 @@ static int luasrc_CreateEntityByName( lua_State *L )
 
 static int luasrc_Entity( lua_State *L )
 {
-    CBaseEntity *ent = CBaseEntity::Instance( luaL_checkint( L, 1 ) );
+    CBaseEntity *ent = CBaseEntity::Instance( luaL_checknumber( L, 1 ) );
 
     if ( !ent )
     {

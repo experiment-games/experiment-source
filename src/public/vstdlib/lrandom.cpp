@@ -26,12 +26,12 @@ static int random_RandomFloatExp (lua_State *L) {
 }
 
 static int random_RandomInt (lua_State *L) {
-  lua_pushinteger(L, random->RandomInt(luaL_checkint(L, 1), luaL_checkint(L, 2)));
+  lua_pushinteger(L, random->RandomInt(luaL_checknumber(L, 1), luaL_checknumber(L, 2)));
   return 1;
 }
 
 static int random_SetSeed (lua_State *L) {
-  random->SetSeed(luaL_checkint(L, 1));
+  random->SetSeed(luaL_checknumber(L, 1));
   return 0;
 }
 
@@ -47,7 +47,7 @@ static const luaL_Reg randomlib[] = {
 
 #if 0
 static int luasrc_RandomSeed (lua_State *L) {
-  RandomSeed(luaL_checkint(L, 1));
+  RandomSeed(luaL_checknumber(L, 1));
   return 0;
 }
 
@@ -62,7 +62,7 @@ static int luasrc_RandomFloatExp (lua_State *L) {
 }
 
 static int luasrc_RandomInt (lua_State *L) {
-  lua_pushinteger(L, RandomInt(luaL_checkint(L, 1), luaL_checkint(L, 2)));
+  lua_pushinteger(L, RandomInt(luaL_checknumber(L, 1), luaL_checknumber(L, 2)));
   return 1;
 }
 

@@ -20,7 +20,7 @@
 
 static int luasrc_IsPlayerIndex( lua_State *L )
 {
-    lua_pushboolean( L, IsPlayerIndex( luaL_checkint( L, 1 ) ) );
+    lua_pushboolean( L, IsPlayerIndex( luaL_checknumber( L, 1 ) ) );
     return 1;
 }
 
@@ -92,19 +92,19 @@ static int luasrc_Util_AngleDiff( lua_State *L )
 
 static int luasrc_Util_Bubbles( lua_State *L )
 {
-    UTIL_Bubbles( luaL_checkvector( L, 1 ), luaL_checkvector( L, 2 ), luaL_checkint( L, 3 ) );
+    UTIL_Bubbles( luaL_checkvector( L, 1 ), luaL_checkvector( L, 2 ), luaL_checknumber( L, 3 ) );
     return 0;
 }
 
 static int luasrc_Util_ScreenShake( lua_State *L )
 {
-    UTIL_ScreenShake( luaL_checkvector( L, 1 ), luaL_checknumber( L, 2 ), luaL_checknumber( L, 3 ), luaL_checknumber( L, 4 ), luaL_checknumber( L, 5 ), ( ShakeCommand_t )luaL_checkint( L, 6 ), luaL_optboolean( L, 7, 0 ) );
+    UTIL_ScreenShake( luaL_checkvector( L, 1 ), luaL_checknumber( L, 2 ), luaL_checknumber( L, 3 ), luaL_checknumber( L, 4 ), luaL_checknumber( L, 5 ), ( ShakeCommand_t )( int )luaL_checknumber( L, 6 ), luaL_optboolean( L, 7, 0 ) );
     return 0;
 }
 
 static int luasrc_Util_Tracer( lua_State *L )
 {
-    UTIL_Tracer( luaL_checkvector( L, 1 ), luaL_checkvector( L, 2 ), luaL_checkint( L, 3 ), luaL_checkint( L, 4 ), luaL_checknumber( L, 5 ), luaL_checkboolean( L, 6 ), luaL_checkstring( L, 7 ) );
+    UTIL_Tracer( luaL_checkvector( L, 1 ), luaL_checkvector( L, 2 ), luaL_checknumber( L, 3 ), luaL_checknumber( L, 4 ), luaL_checknumber( L, 5 ), luaL_checkboolean( L, 6 ), luaL_checkstring( L, 7 ) );
     return 0;
 }
 
@@ -116,7 +116,7 @@ static int luasrc_Util_Smoke( lua_State *L )
 
 static int luasrc_Util_ImpactTrace( lua_State *L )
 {
-    UTIL_ImpactTrace( &luaL_checktrace( L, 1 ), luaL_checkint( L, 2 ), ( char * )luaL_optstring( L, 3, 0 ) );
+    UTIL_ImpactTrace( &luaL_checktrace( L, 1 ), luaL_checknumber( L, 2 ), ( char * )luaL_optstring( L, 3, 0 ) );
     return 0;
 }
 
@@ -134,7 +134,7 @@ static int luasrc_Util_PrecacheOther( lua_State *L )
 
 static int luasrc_ClientPrint( lua_State *L )
 {
-    ClientPrint( luaL_checkplayer( L, 1 ), luaL_checkint( L, 2 ), luaL_checkstring( L, 3 ), luaL_optstring( L, 4, 0 ), luaL_optstring( L, 5, 0 ), luaL_optstring( L, 6, 0 ), luaL_optstring( L, 7, 0 ) );
+    ClientPrint( luaL_checkplayer( L, 1 ), luaL_checknumber( L, 2 ), luaL_checkstring( L, 3 ), luaL_optstring( L, 4, 0 ), luaL_optstring( L, 5, 0 ), luaL_optstring( L, 6, 0 ), luaL_optstring( L, 7, 0 ) );
     return 0;
 }
 
@@ -162,7 +162,7 @@ static int luasrc_Util_EntitiesInBox( lua_State *L )
 {
     C_BaseEntity *pList[MAX_ENTITYARRAY];
 
-    int count = UTIL_EntitiesInBox( pList, luaL_checkint( L, 1 ), luaL_checkvector( L, 2 ), luaL_checkvector( L, 3 ), luaL_checkint( L, 4 ), luaL_optint( L, 5, PARTITION_CLIENT_NON_STATIC_EDICTS ) );
+    int count = UTIL_EntitiesInBox( pList, luaL_checknumber( L, 1 ), luaL_checkvector( L, 2 ), luaL_checkvector( L, 3 ), luaL_checknumber( L, 4 ), ( int )luaL_optnumber( L, 5, PARTITION_CLIENT_NON_STATIC_EDICTS ) );
     lua_pushinteger( L, count );
     lua_newtable( L );
     for ( int i = 0; i < count; i++ )
@@ -178,7 +178,7 @@ static int luasrc_Util_EntitiesInSphere( lua_State *L )
 {
     C_BaseEntity *pList[MAX_ENTITYARRAY];
 
-    int count = UTIL_EntitiesInSphere( pList, luaL_checkint( L, 1 ), luaL_checkvector( L, 2 ), luaL_checknumber( L, 3 ), luaL_checkint( L, 4 ), luaL_optint( L, 5, PARTITION_CLIENT_NON_STATIC_EDICTS ) );
+    int count = UTIL_EntitiesInSphere( pList, luaL_checknumber( L, 1 ), luaL_checkvector( L, 2 ), luaL_checknumber( L, 3 ), luaL_checknumber( L, 4 ), ( int )luaL_optnumber( L, 5, PARTITION_CLIENT_NON_STATIC_EDICTS ) );
     lua_pushinteger( L, count );
     lua_newtable( L );
     for ( int i = 0; i < count; i++ )

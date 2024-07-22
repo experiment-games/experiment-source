@@ -121,7 +121,7 @@ static int umsg_WriteByte( lua_State *L )
     if ( !isMessageQueued )
         Warning( "[Lua] umsg.WriteByte called with no active message\n" );
 
-    queuedMessageBuffer.WriteByte( luaL_checkint( L, 1 ) );
+    queuedMessageBuffer.WriteByte( luaL_checknumber( L, 1 ) );
     return 0;
 }
 
@@ -130,7 +130,7 @@ static int umsg_WriteChar( lua_State *L )
     if ( !isMessageQueued )
         Warning( "[Lua] umsg.WriteChar called with no active message\n" );
 
-    queuedMessageBuffer.WriteChar( luaL_checkint( L, 1 ) );
+    queuedMessageBuffer.WriteChar( luaL_checknumber( L, 1 ) );
     return 0;
 }
 
@@ -139,7 +139,7 @@ static int umsg_WriteShort( lua_State *L )
     if ( !isMessageQueued )
         Warning( "[Lua] umsg.WriteShort called with no active message\n" );
 
-    queuedMessageBuffer.WriteShort( luaL_checkint( L, 1 ) );
+    queuedMessageBuffer.WriteShort( luaL_checknumber( L, 1 ) );
 
     return 0;
 }
@@ -149,7 +149,7 @@ static int umsg_WriteWord( lua_State *L )
     if ( !isMessageQueued )
         Warning( "[Lua] umsg.WriteWord called with no active message\n" );
 
-    queuedMessageBuffer.WriteWord( luaL_checkint( L, 1 ) );
+    queuedMessageBuffer.WriteWord( luaL_checknumber( L, 1 ) );
 
     return 0;
 }
@@ -159,7 +159,7 @@ static int umsg_WriteLong( lua_State *L )
     if ( !isMessageQueued )
         Warning( "[Lua] umsg.WriteLong called with no active message\n" );
 
-    queuedMessageBuffer.WriteLong( luaL_checkint( L, 1 ) );
+    queuedMessageBuffer.WriteLong( luaL_checknumber( L, 1 ) );
 
     return 0;
 }
@@ -254,7 +254,7 @@ static int umsg_WriteUBitLong( lua_State *L )
     if ( !isMessageQueued )
         Warning( "[Lua] umsg.WriteUBitLong called with no active message\n" );
 
-    queuedMessageBuffer.WriteUBitLong( luaL_checkint( L, 1 ), luaL_checkint( L, 2 ) );
+    queuedMessageBuffer.WriteUBitLong( luaL_checknumber( L, 1 ), luaL_checknumber( L, 2 ) );
 
     return 0;
 }
@@ -264,7 +264,7 @@ static int umsg_WriteSBitLong( lua_State *L )
     if ( !isMessageQueued )
         Warning( "[Lua] umsg.WriteSBitLong called with no active message\n" );
 
-    queuedMessageBuffer.WriteSBitLong( luaL_checkint( L, 1 ), luaL_checkint( L, 2 ) );
+    queuedMessageBuffer.WriteSBitLong( luaL_checknumber( L, 1 ), luaL_checknumber( L, 2 ) );
 
     return 0;
 }
@@ -381,7 +381,7 @@ static int bfRead_ReadWord( lua_State *L )
 static int bfRead_ReadLong( lua_State *L )
 {
     bf_read *bf = luaL_checkbf_read( L, 1 );
-    lua_pushinteger( L, bf->ReadBitLong( luaL_checkint( L, 2 ), lua_toboolean( L, 3 ) ) );
+    lua_pushinteger( L, bf->ReadBitLong( luaL_checknumber( L, 2 ), lua_toboolean( L, 3 ) ) );
     return 1;
 }
 
@@ -431,7 +431,7 @@ static int bfRead_ReadString( lua_State *L )
 static int bfRead_ReadBytes( lua_State *L )
 {
     bf_read *bf = luaL_checkbf_read( L, 1 );
-    int len = luaL_checkint( L, 2 );
+    int len = luaL_checknumber( L, 2 );
     char *buf = new char[len];
     bf->ReadBytes( buf, len );
     lua_pushlstring( L, buf, len );

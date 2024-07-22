@@ -128,7 +128,7 @@ static int CEffectData___newindex( lua_State *L )
     const char *field = luaL_checkstring( L, 2 );
 
     if ( Q_strcmp( field, "m_fFlags" ) == 0 )
-        data.m_fFlags = luaL_checkint( L, 3 );
+        data.m_fFlags = luaL_checknumber( L, 3 );
     else if ( Q_strcmp( field, "m_flMagnitude" ) == 0 )
         data.m_flMagnitude = luaL_checknumber( L, 3 );
     else if ( Q_strcmp( field, "m_flRadius" ) == 0 )
@@ -140,18 +140,18 @@ static int CEffectData___newindex( lua_State *L )
         data.m_hEntity = lua_toentity( L, 3 )->GetRefEHandle();
 #else
     else if ( Q_strcmp( field, "m_nEntIndex" ) == 0 )
-        data.m_nEntIndex = luaL_checkint( L, 3 );
+        data.m_nEntIndex = luaL_checknumber( L, 3 );
 #endif
     else if ( Q_strcmp( field, "m_nAttachmentIndex" ) == 0 )
-        data.m_nAttachmentIndex = luaL_checkint( L, 3 );
+        data.m_nAttachmentIndex = luaL_checknumber( L, 3 );
     else if ( Q_strcmp( field, "m_nDamageType" ) == 0 )
-        data.m_nDamageType = luaL_checkint( L, 3 );
+        data.m_nDamageType = luaL_checknumber( L, 3 );
     else if ( Q_strcmp( field, "m_nHitBox" ) == 0 )
-        data.m_nHitBox = luaL_checkint( L, 3 );
+        data.m_nHitBox = luaL_checknumber( L, 3 );
     else if ( Q_strcmp( field, "m_nMaterial" ) == 0 )
-        data.m_nMaterial = luaL_checkint( L, 3 );
+        data.m_nMaterial = luaL_checknumber( L, 3 );
     else if ( Q_strcmp( field, "m_nSurfaceProp" ) == 0 )
-        data.m_nSurfaceProp = luaL_checkint( L, 3 );
+        data.m_nSurfaceProp = luaL_checknumber( L, 3 );
     else if ( Q_strcmp( field, "m_vAngles" ) == 0 )
         data.m_vAngles = luaL_checkangle( L, 3 );
     else if ( Q_strcmp( field, "m_vNormal" ) == 0 )

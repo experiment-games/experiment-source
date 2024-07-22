@@ -23,11 +23,11 @@ LUA_API lua_Physics_performanceparams_t lua_toperformanceparams( lua_State *L, i
     params.Defaults();
     lua_getfield( L, idx, "maxCollisionsPerObjectPerTimestep" );
     if ( !lua_isnil( L, -1 ) )
-        params.maxCollisionsPerObjectPerTimestep = luaL_checkint( L, -1 );
+        params.maxCollisionsPerObjectPerTimestep = luaL_checknumber( L, -1 );
     lua_pop( L, 1 );
     lua_getfield( L, idx, "maxCollisionChecksPerTimestep" );
     if ( !lua_isnil( L, -1 ) )
-        params.maxCollisionChecksPerTimestep = luaL_checkint( L, -1 );
+        params.maxCollisionChecksPerTimestep = luaL_checknumber( L, -1 );
     lua_pop( L, 1 );
     lua_getfield( L, idx, "maxVelocity" );
     if ( !lua_isnil( L, -1 ) )

@@ -90,7 +90,7 @@ static int CBaseAnimating_GetAnimTimeInterval( lua_State *L )
 
 static int CBaseAnimating_GetAttachmentLocal( lua_State *L )
 {
-    lua_pushboolean( L, luaL_checkanimating( L, 1 )->GetAttachmentLocal( luaL_checkint( L, 2 ), luaL_checkvector( L, 3 ), luaL_checkangle( L, 4 ) ) );
+    lua_pushboolean( L, luaL_checkanimating( L, 1 )->GetAttachmentLocal( luaL_checknumber( L, 2 ), luaL_checkvector( L, 3 ), luaL_checkangle( L, 4 ) ) );
     return 1;
 }
 
@@ -316,7 +316,7 @@ static int CBaseAnimating_SequenceDuration( lua_State *L )
             lua_pushnumber( L, luaL_checkanimating( L, 1 )->SequenceDuration() );
             break;
         case LUA_TNUMBER:
-            lua_pushnumber( L, luaL_checkanimating( L, 1 )->SequenceDuration( luaL_checkint( L, 2 ) ) );
+            lua_pushnumber( L, luaL_checkanimating( L, 1 )->SequenceDuration( luaL_checknumber( L, 2 ) ) );
             break;
     }
     return 1;
@@ -435,11 +435,11 @@ static int CBaseAnimating___newindex( lua_State *L )
     // TODO: m_bClientSideAnimation only exists on client?
     // pEntity->m_bClientSideAnimation = (bool)luaL_checkboolean(L, 3);
     else if ( Q_strcmp( field, "m_nBody" ) == 0 )
-        pEntity->m_nBody = luaL_checkint( L, 3 );
+        pEntity->m_nBody = luaL_checknumber( L, 3 );
     else if ( Q_strcmp( field, "m_nHitboxSet" ) == 0 )
-        pEntity->m_nHitboxSet = luaL_checkint( L, 3 );
+        pEntity->m_nHitboxSet = luaL_checknumber( L, 3 );
     else if ( Q_strcmp( field, "m_nSkin" ) == 0 )
-        pEntity->m_nSkin = luaL_checkint( L, 3 );
+        pEntity->m_nSkin = luaL_checknumber( L, 3 );
     else
     {
         LUA_GET_REF_TABLE( L, pEntity );

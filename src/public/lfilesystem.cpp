@@ -64,7 +64,7 @@ static int filesystem_AddSearchPath( lua_State *L )
 #endif
         V_SetCurrentDirectory( gamePath );
     }
-    filesystem->AddSearchPath( luaL_checkstring( L, 1 ), luaL_checkstring( L, 2 ), ( SearchPathAdd_t )luaL_optint( L, 3, PATH_ADD_TO_TAIL ) );
+    filesystem->AddSearchPath( luaL_checkstring( L, 1 ), luaL_checkstring( L, 2 ), ( SearchPathAdd_t )( int )luaL_optnumber( L, 3, PATH_ADD_TO_TAIL ) );
     if ( bGetCurrentDirectory )
         V_SetCurrentDirectory( fullpath );
     return 0;
@@ -78,7 +78,7 @@ static int filesystem_BeginMapAccess( lua_State *L )
 
 static int filesystem_CancelWaitForResources( lua_State *L )
 {
-    filesystem->CancelWaitForResources( luaL_checkint( L, 1 ) );
+    filesystem->CancelWaitForResources( luaL_checknumber( L, 1 ) );
     return 0;
 }
 
@@ -159,7 +159,7 @@ static int filesystem_GetWhitelistSpewFlags( lua_State *L )
 
 static int filesystem_HintResourceNeed( lua_State *L )
 {
-    lua_pushinteger( L, filesystem->HintResourceNeed( luaL_checkstring( L, 1 ), luaL_checkint( L, 2 ) ) );
+    lua_pushinteger( L, filesystem->HintResourceNeed( luaL_checkstring( L, 1 ), luaL_checknumber( L, 2 ) ) );
     return 1;
 }
 
@@ -195,7 +195,7 @@ static int filesystem_IsSteam( lua_State *L )
 
 static int filesystem_LoadCompiledKeyValues( lua_State *L )
 {
-    filesystem->LoadCompiledKeyValues( ( IFileSystem::KeyValuesPreloadType_t )luaL_checkint( L, 1 ), luaL_checkstring( L, 2 ) );
+    filesystem->LoadCompiledKeyValues( ( IFileSystem::KeyValuesPreloadType_t )( int )luaL_checknumber( L, 1 ), luaL_checkstring( L, 2 ) );
     return 0;
 }
 
@@ -213,7 +213,7 @@ static int filesystem_MarkPathIDByRequestOnly( lua_State *L )
 
 static int filesystem_MountSteamContent( lua_State *L )
 {
-    lua_pushinteger( L, filesystem->MountSteamContent( luaL_optint( L, 1, -1 ) ) );
+    lua_pushinteger( L, filesystem->MountSteamContent( ( int )luaL_optnumber( L, 1, -1 ) ) );
     return 1;
 }
 
@@ -258,7 +258,7 @@ static int filesystem_PrintSearchPaths( lua_State *L )
 static int filesystem_Read( lua_State *L )
 {
     FileHandle_t file = luaL_checkfilehandle( L, 2 );
-    int size = luaL_checkint( L, 1 );
+    int size = luaL_checknumber( L, 1 );
 
     if ( size < 0 )
     {
@@ -334,13 +334,13 @@ static int filesystem_SetupPreloadData( lua_State *L )
 
 static int filesystem_SetWarningLevel( lua_State *L )
 {
-    filesystem->SetWarningLevel( ( FileWarningLevel_t )luaL_checkint( L, 1 ) );
+    filesystem->SetWarningLevel( ( FileWarningLevel_t )( int )luaL_checknumber( L, 1 ) );
     return 0;
 }
 
 static int filesystem_SetWhitelistSpewFlags( lua_State *L )
 {
-    filesystem->SetWhitelistSpewFlags( luaL_checkint( L, 1 ) );
+    filesystem->SetWhitelistSpewFlags( luaL_checknumber( L, 1 ) );
     return 0;
 }
 

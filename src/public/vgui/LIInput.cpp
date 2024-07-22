@@ -116,13 +116,13 @@ static int input_GetShouldInvertCompositionString( lua_State *L )
 
 static int input_IsKeyDown( lua_State *L )
 {
-    lua_pushboolean( L, input()->IsKeyDown( ( KeyCode )luaL_checkint( L, 1 ) ) );
+    lua_pushboolean( L, input()->IsKeyDown( ( KeyCode )( int )luaL_checknumber( L, 1 ) ) );
     return 1;
 }
 
 static int input_IsMouseDown( lua_State *L )
 {
-    lua_pushboolean( L, input()->IsMouseDown( ( KeyCode )luaL_checkint( L, 1 ) ) );
+    lua_pushboolean( L, input()->IsMouseDown( ( KeyCode )( int )luaL_checknumber( L, 1 ) ) );
     return 1;
 }
 
@@ -130,7 +130,7 @@ static int engine_Key_LookupBinding( lua_State *L )
 {
     bool exact = lua_toboolean( L, 2 );
 
-    if (exact)
+    if ( exact )
         lua_pushstring( L, engine->Key_LookupBindingExact( luaL_checkstring( L, 1 ) ) );
     else
         lua_pushstring( L, engine->Key_LookupBinding( luaL_checkstring( L, 1 ) ) );
@@ -140,7 +140,7 @@ static int engine_Key_LookupBinding( lua_State *L )
 
 static int engine_Key_BindingForKey( lua_State *L )
 {
-    ButtonCode_t code = ( ButtonCode_t )luaL_checkint( L, 1 );
+    ButtonCode_t code = ( ButtonCode_t )( int )luaL_checknumber( L, 1 );
     const char *binding = engine->Key_BindingForKey( code );
 
     // Dunno why binding returns 0x10000 for BUTTON_CODE_LAST, but lets catch that
@@ -160,19 +160,19 @@ static int input_OnChangeIME( lua_State *L )
 
 static int input_OnChangeIMEByHandle( lua_State *L )
 {
-    input()->OnChangeIMEByHandle( luaL_checkint( L, 1 ) );
+    input()->OnChangeIMEByHandle( luaL_checknumber( L, 1 ) );
     return 0;
 }
 
 static int input_OnChangeIMEConversionModeByHandle( lua_State *L )
 {
-    input()->OnChangeIMEConversionModeByHandle( luaL_checkint( L, 1 ) );
+    input()->OnChangeIMEConversionModeByHandle( luaL_checknumber( L, 1 ) );
     return 0;
 }
 
 static int input_OnChangeIMESentenceModeByHandle( lua_State *L )
 {
-    input()->OnChangeIMESentenceModeByHandle( luaL_checkint( L, 1 ) );
+    input()->OnChangeIMESentenceModeByHandle( luaL_checknumber( L, 1 ) );
     return 0;
 }
 
@@ -190,7 +190,7 @@ static int input_OnIMECloseCandidates( lua_State *L )
 
 static int input_OnIMEComposition( lua_State *L )
 {
-    input()->OnIMEComposition( luaL_checkint( L, 1 ) );
+    input()->OnIMEComposition( luaL_checknumber( L, 1 ) );
     return 0;
 }
 
@@ -226,7 +226,7 @@ static int input_OnInputLanguageChanged( lua_State *L )
 
 static int input_OnKeyCodeUnhandled( lua_State *L )
 {
-    input()->OnKeyCodeUnhandled( luaL_checkint( L, 1 ) );
+    input()->OnKeyCodeUnhandled( luaL_checknumber( L, 1 ) );
     return 0;
 }
 
@@ -256,19 +256,19 @@ static int input_SetAppModalSurface( lua_State *L )
 
 static int input_SetCandidateListPageStart( lua_State *L )
 {
-    input()->SetCandidateListPageStart( luaL_checkint( L, 1 ) );
+    input()->SetCandidateListPageStart( luaL_checknumber( L, 1 ) );
     return 0;
 }
 
 static int input_SetCandidateWindowPos( lua_State *L )
 {
-    input()->SetCandidateWindowPos( luaL_checkint( L, 1 ), luaL_checkint( L, 2 ) );
+    input()->SetCandidateWindowPos( luaL_checknumber( L, 1 ), luaL_checknumber( L, 2 ) );
     return 0;
 }
 
 static int input_SetCursorPos( lua_State *L )
 {
-    input()->SetCursorPos( luaL_checkint( L, 1 ), luaL_checkint( L, 2 ) );
+    input()->SetCursorPos( luaL_checknumber( L, 1 ), luaL_checknumber( L, 2 ) );
     return 0;
 }
 
@@ -292,7 +292,7 @@ static int input_SetMouseCapture( lua_State *L )
 
 static int input_SetMouseCaptureEx( lua_State *L )
 {
-    input()->SetMouseCaptureEx( luaL_checkvpanel( L, 1 ), ( MouseCode )luaL_checkint( L, 2 ) );
+    input()->SetMouseCaptureEx( luaL_checkvpanel( L, 1 ), ( MouseCode )( int )luaL_checknumber( L, 2 ) );
     return 0;
 }
 
@@ -316,37 +316,37 @@ static int input_UnregisterKeyCodeUnhandledListener( lua_State *L )
 
 static int input_WasKeyPressed( lua_State *L )
 {
-    lua_pushboolean( L, input()->WasKeyPressed( ( KeyCode )luaL_checkint( L, 1 ) ) );
+    lua_pushboolean( L, input()->WasKeyPressed( ( KeyCode )( int )luaL_checknumber( L, 1 ) ) );
     return 1;
 }
 
 static int input_WasKeyReleased( lua_State *L )
 {
-    lua_pushboolean( L, input()->WasKeyReleased( ( KeyCode )luaL_checkint( L, 1 ) ) );
+    lua_pushboolean( L, input()->WasKeyReleased( ( KeyCode )( int )luaL_checknumber( L, 1 ) ) );
     return 1;
 }
 
 static int input_WasKeyTyped( lua_State *L )
 {
-    lua_pushboolean( L, input()->WasKeyTyped( ( KeyCode )luaL_checkint( L, 1 ) ) );
+    lua_pushboolean( L, input()->WasKeyTyped( ( KeyCode )( int )luaL_checknumber( L, 1 ) ) );
     return 1;
 }
 
 static int input_WasMouseDoublePressed( lua_State *L )
 {
-    lua_pushboolean( L, input()->WasMouseDoublePressed( ( MouseCode )luaL_checkint( L, 1 ) ) );
+    lua_pushboolean( L, input()->WasMouseDoublePressed( ( MouseCode )( int )luaL_checknumber( L, 1 ) ) );
     return 1;
 }
 
 static int input_WasMousePressed( lua_State *L )
 {
-    lua_pushboolean( L, input()->WasMousePressed( ( MouseCode )luaL_checkint( L, 1 ) ) );
+    lua_pushboolean( L, input()->WasMousePressed( ( MouseCode )( int )luaL_checknumber( L, 1 ) ) );
     return 1;
 }
 
 static int input_WasMouseReleased( lua_State *L )
 {
-    lua_pushboolean( L, input()->WasMouseReleased( ( MouseCode )luaL_checkint( L, 1 ) ) );
+    lua_pushboolean( L, input()->WasMouseReleased( ( MouseCode )( int )luaL_checknumber( L, 1 ) ) );
     return 1;
 }
 

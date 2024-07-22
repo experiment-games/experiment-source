@@ -148,9 +148,9 @@ static int CGameTrace___newindex( lua_State *L )
     if ( Q_strcmp( field, "allsolid" ) == 0 )
         luaL_checktrace( L, 1 ).allsolid = luaL_checkboolean( L, 3 );
     else if ( Q_strcmp( field, "contents" ) == 0 )
-        luaL_checktrace( L, 1 ).contents = luaL_checkint( L, 3 );
+        luaL_checktrace( L, 1 ).contents = luaL_checknumber( L, 3 );
     else if ( Q_strcmp( field, "dispFlags" ) == 0 )
-        luaL_checktrace( L, 1 ).dispFlags = luaL_checkint( L, 3 );
+        luaL_checktrace( L, 1 ).dispFlags = luaL_checknumber( L, 3 );
     else if ( Q_strcmp( field, "endpos" ) == 0 )
         luaL_checktrace( L, 1 ).endpos = luaL_checkvector( L, 3 );
     else if ( Q_strcmp( field, "fraction" ) == 0 )
@@ -158,13 +158,13 @@ static int CGameTrace___newindex( lua_State *L )
     else if ( Q_strcmp( field, "fractionleftsolid" ) == 0 )
         luaL_checktrace( L, 1 ).fractionleftsolid = luaL_checknumber( L, 3 );
     else if ( Q_strcmp( field, "hitbox" ) == 0 )
-        luaL_checktrace( L, 1 ).hitbox = luaL_checkint( L, 3 );
+        luaL_checktrace( L, 1 ).hitbox = luaL_checknumber( L, 3 );
     else if ( Q_strcmp( field, "hitgroup" ) == 0 )
-        luaL_checktrace( L, 1 ).hitgroup = luaL_checkint( L, 3 );
+        luaL_checktrace( L, 1 ).hitgroup = luaL_checknumber( L, 3 );
     else if ( Q_strcmp( field, "m_pEnt" ) == 0 )
         luaL_checktrace( L, 1 ).m_pEnt = lua_toentity( L, 3 );
     else if ( Q_strcmp( field, "physicsbone" ) == 0 )
-        luaL_checktrace( L, 1 ).physicsbone = luaL_checkint( L, 3 );
+        luaL_checktrace( L, 1 ).physicsbone = luaL_checknumber( L, 3 );
     else if ( Q_strcmp( field, "startpos" ) == 0 )
         luaL_checktrace( L, 1 ).startpos = luaL_checkvector( L, 3 );
     else if ( Q_strcmp( field, "startsolid" ) == 0 )

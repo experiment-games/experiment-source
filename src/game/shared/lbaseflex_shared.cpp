@@ -184,7 +184,7 @@ static const luaL_Reg CBaseFlexmeta[] = {
 static int CBaseFlex_ClientsideModel( lua_State *L )
 {
     const char *pszModelName = luaL_checkstring( L, 1 );
-    int renderGroup = luaL_optint( L, 2, RENDER_GROUP_OTHER );
+    int renderGroup = ( int )luaL_optnumber( L, 2, RENDER_GROUP_OTHER );
 
     if ( pszModelName == NULL )
     {

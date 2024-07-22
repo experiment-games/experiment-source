@@ -97,13 +97,13 @@ static int CHL2MP_Player_CanSprint( lua_State *L )
 
 static int CHL2MP_Player_DoAnimationEvent( lua_State *L )
 {
-    luaL_checkhl2mpplayer( L, 1 )->DoAnimationEvent( ( PlayerAnimEvent_t )luaL_checkint( L, 2 ), luaL_optinteger( L, 3, 0 ) );
+    luaL_checkhl2mpplayer( L, 1 )->DoAnimationEvent( ( PlayerAnimEvent_t )(int)luaL_checknumber( L, 2 ), luaL_optinteger( L, 3, 0 ) );
     return 0;
 }
 
 static int CHL2MP_Player_KeyDown( lua_State *L )
 {
-    luaL_checkhl2mpplayer( L, 1 )->KeyDown( luaL_checkint( L, 2 ) );
+    luaL_checkhl2mpplayer( L, 1 )->KeyDown( luaL_checknumber( L, 2 ) );
     return 0;
 }
 

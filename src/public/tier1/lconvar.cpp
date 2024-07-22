@@ -233,7 +233,7 @@ static int luasrc_ConCommand( lua_State *L )
 #ifdef CLIENT_DLL
     if ( bIsGameUI )
 #if 0
-    pConCommand = new ConCommand(strdup(pName), CC_GameUIConCommand, strdup(luaL_optstring(L, 2, 0)), luaL_optint(L, 3, 0), NULL);
+    pConCommand = new ConCommand(strdup(pName), CC_GameUIConCommand, strdup(luaL_optstring(L, 2, 0)), ( int )luaL_optnumber(L, 3, 0), NULL);
 #else
         pConCommand = new ConCommand( strdup( pName ), CC_GameUIConCommand, strdup( luaL_optstring( L, 2, 0 ) ), 0, NULL );
 #endif
@@ -241,7 +241,7 @@ static int luasrc_ConCommand( lua_State *L )
         pConCommand = new ConCommand( strdup( pName ), CC_ConCommand, strdup( luaL_optstring( L, 2, 0 ) ), FCVAR_CLIENTDLL | FCVAR_CLIENTCMD_CAN_EXECUTE | FCVAR_SERVER_CAN_EXECUTE, NULL );
 #else
 #if 0
-    pConCommand = new ConCommand(strdup(pName), CC_ConCommand, strdup(luaL_optstring(L, 2, 0)), luaL_optint(L, 3, 0), NULL);
+    pConCommand = new ConCommand(strdup(pName), CC_ConCommand, strdup(luaL_optstring(L, 2, 0)), ( int )luaL_optnumber(L, 3, 0), NULL);
 #else
     pConCommand = new ConCommand( strdup( pName ), CC_ConCommand, strdup( luaL_optstring( L, 2, 0 ) ), FCVAR_GAMEDLL | FCVAR_CLIENTCMD_CAN_EXECUTE, NULL );
 #endif
@@ -311,7 +311,7 @@ LUALIB_API int luaopen_ConCommand( lua_State *L )
 
 static int ConVar_AddFlags( lua_State *L )
 {
-    luaL_checkconvar( L, 1 )->AddFlags( luaL_checkint( L, 2 ) );
+    luaL_checkconvar( L, 1 )->AddFlags( luaL_checknumber( L, 2 ) );
     return 0;
 }
 
@@ -381,7 +381,7 @@ static int ConVar_IsCommand( lua_State *L )
 
 static int ConVar_IsFlagSet( lua_State *L )
 {
-    lua_pushboolean( L, luaL_checkconvar( L, 1 )->IsFlagSet( luaL_checkint( L, 2 ) ) );
+    lua_pushboolean( L, luaL_checkconvar( L, 1 )->IsFlagSet( luaL_checknumber( L, 2 ) ) );
     return 1;
 }
 
@@ -458,7 +458,7 @@ static int luasrc_CreateConVar( lua_State *L )
         return 1;
     }
 
-    ConVar *pConVar = new ConVar( strdup( pName ), luaL_checkstring( L, 2 ), luaL_optint( L, 3, 0 ), strdup( luaL_optstring( L, 4, 0 ) ), luaL_optboolean( L, 5, 0 ), luaL_optnumber( L, 6, 0.0 ), luaL_optboolean( L, 7, 0 ), luaL_optnumber( L, 8, 0 ) );
+    ConVar *pConVar = new ConVar( strdup( pName ), luaL_checkstring( L, 2 ), ( int )luaL_optnumber( L, 3, 0 ), strdup( luaL_optstring( L, 4, 0 ) ), luaL_optboolean( L, 5, 0 ), luaL_optnumber( L, 6, 0.0 ), luaL_optboolean( L, 7, 0 ), luaL_optnumber( L, 8, 0 ) );
 
     lookup = m_ConVarDatabase.Insert( pName, pConVar );
     Assert( lookup != m_ConVarDatabase.InvalidIndex() );

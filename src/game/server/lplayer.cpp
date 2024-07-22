@@ -20,13 +20,13 @@ static int CBasePlayer_GiveAmmo( lua_State *L )
     switch ( lua_type( L, 3 ) )
     {
         case LUA_TNUMBER:
-            lua_pushinteger( L, luaL_checkplayer( L, 1 )->GiveAmmo( luaL_checkint( L, 2 ), luaL_checkint( L, 3 ), luaL_optboolean( L, 4, false ) ) );
+            lua_pushinteger( L, luaL_checkplayer( L, 1 )->GiveAmmo( luaL_checknumber( L, 2 ), luaL_checknumber( L, 3 ), luaL_optboolean( L, 4, false ) ) );
             break;
         case LUA_TSTRING:
-            lua_pushinteger( L, luaL_checkplayer( L, 1 )->GiveAmmo( luaL_checkint( L, 2 ), luaL_checkstring( L, 3 ), luaL_optboolean( L, 4, false ) ) );
+            lua_pushinteger( L, luaL_checkplayer( L, 1 )->GiveAmmo( luaL_checknumber( L, 2 ), luaL_checkstring( L, 3 ), luaL_optboolean( L, 4, false ) ) );
             break;
         default:
-            lua_pushinteger( L, luaL_checkplayer( L, 1 )->GiveAmmo( luaL_checkint( L, 2 ), luaL_checkint( L, 3 ), luaL_optboolean( L, 4, false ) ) );
+            lua_pushinteger( L, luaL_checkplayer( L, 1 )->GiveAmmo( luaL_checknumber( L, 2 ), luaL_checknumber( L, 3 ), luaL_optboolean( L, 4, false ) ) );
             break;
     }
     return 1;

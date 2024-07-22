@@ -348,7 +348,7 @@
 /*
 @@ LUA_COMPAT_APIINTCASTS controls the presence of macros for
 ** manipulating other integer types (lua_pushunsigned, lua_tounsigned,
-** luaL_checkint, luaL_checklong, etc.)
+** luaL_checknumber, luaL_checklong, etc.)
 ** (These macros were also officially removed in 5.3, but they are still
 ** available here.)
 */

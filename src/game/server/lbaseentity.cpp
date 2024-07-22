@@ -179,7 +179,7 @@ static int CBaseEntity_RemoveDeferred( lua_State *L )
 static int CBaseEntity_AcceptInput( lua_State *L )
 {
     variant_t emptyVariant;
-    lua_pushboolean( L, luaL_checkentity( L, 1 )->AcceptInput( luaL_checkstring( L, 2 ), lua_toentity( L, 3 ), lua_toentity( L, 4 ), emptyVariant, luaL_checkint( L, 5 ) ) );
+    lua_pushboolean( L, luaL_checkentity( L, 1 )->AcceptInput( luaL_checkstring( L, 2 ), lua_toentity( L, 3 ), lua_toentity( L, 4 ), emptyVariant, luaL_checknumber( L, 5 ) ) );
     return 1;
 }
 

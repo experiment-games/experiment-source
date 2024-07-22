@@ -115,25 +115,25 @@ static int scheme_GetIScheme( lua_State *L )
 
 static int scheme_GetProportionalNormalizedValue( lua_State *L )
 {
-    lua_pushinteger( L, scheme()->GetProportionalNormalizedValue( luaL_checkint( L, 1 ) ) );
+    lua_pushinteger( L, scheme()->GetProportionalNormalizedValue( luaL_checknumber( L, 1 ) ) );
     return 1;
 }
 
 static int scheme_GetProportionalNormalizedValueEx( lua_State *L )
 {
-    lua_pushinteger( L, scheme()->GetProportionalNormalizedValueEx( luaL_checkscheme( L, 1 ), luaL_checkint( L, 2 ) ) );
+    lua_pushinteger( L, scheme()->GetProportionalNormalizedValueEx( luaL_checkscheme( L, 1 ), luaL_checknumber( L, 2 ) ) );
     return 1;
 }
 
 static int scheme_GetProportionalScaledValue( lua_State *L )
 {
-    lua_pushinteger( L, scheme()->GetProportionalScaledValue( luaL_checkint( L, 1 ) ) );
+    lua_pushinteger( L, scheme()->GetProportionalScaledValue( luaL_checknumber( L, 1 ) ) );
     return 1;
 }
 
 static int scheme_GetProportionalScaledValueEx( lua_State *L )
 {
-    lua_pushinteger( L, scheme()->GetProportionalScaledValueEx( luaL_checkscheme( L, 1 ), luaL_checkint( L, 2 ) ) );
+    lua_pushinteger( L, scheme()->GetProportionalScaledValueEx( luaL_checkscheme( L, 1 ), luaL_checknumber( L, 2 ) ) );
     return 1;
 }
 

@@ -261,7 +261,7 @@
     {                                         \
         if ( lua_isnumber( L, -1 ) )          \
         {                                     \
-            int res = luaL_checkint( L, -1 ); \
+            int res = luaL_checknumber( L, -1 ); \
             lua_pop( L, 1 );                  \
             return res;                       \
         }                                     \
@@ -274,7 +274,7 @@
     {                                         \
         if ( lua_isnumber( L, -1 ) )          \
         {                                     \
-            int res = luaL_checkint( L, -1 ); \
+            int res = luaL_checknumber( L, -1 ); \
             lua_pop( L, 1 );                  \
             return ( Activity )res;           \
         }                                     \

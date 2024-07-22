@@ -37,11 +37,6 @@ int luaL_typerror(lua_State *L, int narg, const char *tname) {
     return luaL_argerror(L, narg, msg);
 }
 
-#define luaL_checkint(L, n) ((int)luaL_checkinteger(L, (n)))
-#define luaL_optint(L, n, d) ((int)luaL_optinteger(L, (n), (d)))
-#define luaL_checklong(L, n) ((long)luaL_checkinteger(L, (n)))
-#define luaL_optlong(L, n, d) ((long)luaL_optinteger(L, (n), (d)))
-
 void lua_getref(lua_State *L, int ref) {
     lua_rawgeti(L, LUA_REGISTRYINDEX, ref);
 }

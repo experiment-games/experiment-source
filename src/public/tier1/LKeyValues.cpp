@@ -96,7 +96,7 @@ static int KeyValues_FindKey( lua_State *L )
     switch ( lua_type( L, 2 ) )
     {
         case LUA_TNUMBER:
-            lua_pushkeyvalues( L, luaL_checkkeyvalues( L, 1 )->FindKey( luaL_checkint( L, 2 ) ) );
+            lua_pushkeyvalues( L, luaL_checkkeyvalues( L, 1 )->FindKey( luaL_checknumber( L, 2 ) ) );
             break;
         case LUA_TSTRING:
         default:
@@ -111,7 +111,7 @@ static int KeyValues_GetColor( lua_State *L )
     switch ( lua_type( L, 2 ) )
     {
         case LUA_TNUMBER:
-            lua_pushcolor( L, luaL_checkkeyvalues( L, 1 )->GetColor( luaL_checkint( L, 2 ) ) );
+            lua_pushcolor( L, luaL_checkkeyvalues( L, 1 )->GetColor( luaL_checknumber( L, 2 ) ) );
             break;
         case LUA_TNONE:
         case LUA_TSTRING:
@@ -151,7 +151,7 @@ static int KeyValues_GetFloat( lua_State *L )
     switch ( lua_type( L, 2 ) )
     {
         case LUA_TNUMBER:
-            lua_pushnumber( L, luaL_checkkeyvalues( L, 1 )->GetFloat( luaL_checkint( L, 2 ), luaL_optnumber( L, 3, 0.0f ) ) );
+            lua_pushnumber( L, luaL_checkkeyvalues( L, 1 )->GetFloat( luaL_checknumber( L, 2 ), luaL_optnumber( L, 3, 0.0f ) ) );
             break;
         case LUA_TNONE:
         case LUA_TSTRING:
@@ -167,12 +167,12 @@ static int KeyValues_GetInt( lua_State *L )
     switch ( lua_type( L, 2 ) )
     {
         case LUA_TNUMBER:
-            lua_pushinteger( L, luaL_checkkeyvalues( L, 1 )->GetInt( luaL_checkint( L, 2 ), luaL_optint( L, 3, 0 ) ) );
+            lua_pushinteger( L, luaL_checkkeyvalues( L, 1 )->GetInt( luaL_checknumber( L, 2 ), ( int )luaL_optnumber( L, 3, 0 ) ) );
             break;
         case LUA_TNONE:
         case LUA_TSTRING:
         default:
-            lua_pushinteger( L, luaL_checkkeyvalues( L, 1 )->GetInt( luaL_optstring( L, 2, 0 ), luaL_optint( L, 3, 0 ) ) );
+            lua_pushinteger( L, luaL_checkkeyvalues( L, 1 )->GetInt( luaL_optstring( L, 2, 0 ), ( int )luaL_optnumber( L, 3, 0 ) ) );
             break;
     }
     return 1;
@@ -213,7 +213,7 @@ static int KeyValues_GetString( lua_State *L )
     switch ( lua_type( L, 2 ) )
     {
         case LUA_TNUMBER:
-            lua_pushstring( L, luaL_checkkeyvalues( L, 1 )->GetString( luaL_checkint( L, 2 ), luaL_optstring( L, 3, "" ) ) );
+            lua_pushstring( L, luaL_checkkeyvalues( L, 1 )->GetString( luaL_checknumber( L, 2 ), luaL_optstring( L, 3, "" ) ) );
             break;
         case LUA_TNONE:
         case LUA_TSTRING:
@@ -229,7 +229,7 @@ static int KeyValues_IsEmpty( lua_State *L )
     switch ( lua_type( L, 2 ) )
     {
         case LUA_TNUMBER:
-            lua_pushboolean( L, luaL_checkkeyvalues( L, 1 )->IsEmpty( luaL_checkint( L, 2 ) ) );
+            lua_pushboolean( L, luaL_checkkeyvalues( L, 1 )->IsEmpty( luaL_checknumber( L, 2 ) ) );
             break;
         case LUA_TNONE:
         case LUA_TSTRING:
@@ -284,7 +284,7 @@ static int KeyValues_SetFloat( lua_State *L )
 
 static int KeyValues_SetInt( lua_State *L )
 {
-    luaL_checkkeyvalues( L, 1 )->SetInt( luaL_checkstring( L, 2 ), luaL_checkint( L, 3 ) );
+    luaL_checkkeyvalues( L, 1 )->SetInt( luaL_checkstring( L, 2 ), luaL_checknumber( L, 3 ) );
     return 0;
 }
 
@@ -383,7 +383,7 @@ static int luasrc_KeyValues( lua_State *L )
         switch ( lua_type( L, 3 ) )
         {
             case LUA_TNUMBER:
-                pKV = new KeyValues( luaL_checkstring( L, 1 ), luaL_checkstring( L, 2 ), luaL_checkint( L, 3 ) );
+                pKV = new KeyValues( luaL_checkstring( L, 1 ), luaL_checkstring( L, 2 ), luaL_checknumber( L, 3 ) );
                 break;
             case LUA_TSTRING:
                 pKV = new KeyValues( luaL_checkstring( L, 1 ), luaL_checkstring( L, 2 ), luaL_checkstring( L, 3 ) );
@@ -398,7 +398,7 @@ static int luasrc_KeyValues( lua_State *L )
         switch ( lua_type( L, 3 ) )
         {
             case LUA_TNUMBER:
-                pKV = new KeyValues( luaL_checkstring( L, 1 ), luaL_checkstring( L, 2 ), luaL_checkint( L, 3 ), luaL_checkstring( L, 4 ), luaL_checkint( L, 5 ) );
+                pKV = new KeyValues( luaL_checkstring( L, 1 ), luaL_checkstring( L, 2 ), luaL_checknumber( L, 3 ), luaL_checkstring( L, 4 ), luaL_checknumber( L, 5 ) );
                 break;
             case LUA_TSTRING:
                 pKV = new KeyValues( luaL_checkstring( L, 1 ), luaL_checkstring( L, 2 ), luaL_checkstring( L, 3 ), luaL_checkstring( L, 4 ), luaL_checkstring( L, 5 ) );

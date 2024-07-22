@@ -121,7 +121,7 @@ static int surface_DrawFilledRectFade( lua_State *L )
     float y = luaL_checknumber( L, 2 );
     float width = luaL_checknumber( L, 3 );
     float height = luaL_checknumber( L, 4 );
-    surface()->DrawFilledRectFade( x, y, x + width, y + height, luaL_checkint( L, 5 ), luaL_checkint( L, 6 ), luaL_checkboolean( L, 7 ) );
+    surface()->DrawFilledRectFade( x, y, x + width, y + height, luaL_checknumber( L, 5 ), luaL_checknumber( L, 6 ), luaL_checkboolean( L, 7 ) );
     return 0;
 }
 
@@ -149,7 +149,7 @@ static int surface_DrawGetTextPos( lua_State *L )
 static int surface_DrawGetTextureFile( lua_State *L )
 {
     char *filename = "";
-    lua_pushboolean( L, surface()->DrawGetTextureFile( luaL_checkint( L, 1 ), filename, luaL_optint( L, 2, 0 ) ) );
+    lua_pushboolean( L, surface()->DrawGetTextureFile( luaL_checknumber( L, 1 ), filename, ( int )luaL_optnumber( L, 2, 0 ) ) );
     lua_pushstring( L, filename );
     return 2;
 }
@@ -163,7 +163,7 @@ static int surface_DrawGetTextureId( lua_State *L )
 static int surface_DrawGetTextureSize( lua_State *L )
 {
     int wide, tall;
-    surface()->DrawGetTextureSize( luaL_checkint( L, 1 ), wide, tall );
+    surface()->DrawGetTextureSize( luaL_checknumber( L, 1 ), wide, tall );
     lua_pushinteger( L, wide );
     lua_pushinteger( L, tall );
     return 2;
@@ -199,7 +199,7 @@ static int surface_DrawPrintText( lua_State *L )
     if ( wbuf )
     {
         g_pVGuiLocalize->ConvertANSIToUnicode( sz, wbuf, bufSize );
-        surface()->DrawPrintText( wbuf, wcslen( wbuf ), ( FontDrawType_t )luaL_optint( L, 3, FONT_DRAW_DEFAULT ) );
+        surface()->DrawPrintText( wbuf, wcslen( wbuf ), ( FontDrawType_t )( int )luaL_optnumber( L, 3, FONT_DRAW_DEFAULT ) );
     }
     return 0;
 }
@@ -263,7 +263,7 @@ static int surface_DrawSetTextScale( lua_State *L )
 
 static int surface_DrawSetTexture( lua_State *L )
 {
-    surface()->DrawSetTexture( luaL_checkint( L, 1 ) );
+    surface()->DrawSetTexture( luaL_checknumber( L, 1 ) );
     return 0;
 }
 
@@ -274,7 +274,7 @@ static int surface_DrawSetTexture( lua_State *L )
 /// <returns></returns>
 static int surface_DrawSetTextureFile( lua_State *L )
 {
-    surface()->DrawSetTextureFile( luaL_checkint( L, 1 ), luaL_checkstring( L, 2 ), luaL_optint( L, 3, 0 ), luaL_optboolean( L, 4, true ) );
+    surface()->DrawSetTextureFile( luaL_checknumber( L, 1 ), luaL_checkstring( L, 2 ), ( int )luaL_optnumber( L, 3, 0 ), luaL_optboolean( L, 4, true ) );
     return 0;
 }
 
@@ -285,17 +285,17 @@ static int surface_DrawSetTextureFile( lua_State *L )
 /// <returns></returns>
 static int surface_DrawSetTextureRGBA( lua_State *L )
 {
-    int id = luaL_checkint( L, 1 );
+    int id = luaL_checknumber( L, 1 );
     float width = luaL_checknumber( L, 2 );
     float height = luaL_checknumber( L, 3 );
     const unsigned char *rgba = ( const unsigned char * )luaL_checkstring( L, 4 );
-    surface()->DrawSetTextureRGBA( id, rgba, width, height, luaL_optint( L, 5, 0 ), luaL_optboolean( L, 6, true ) );
+    surface()->DrawSetTextureRGBA( id, rgba, width, height, ( int )luaL_optnumber( L, 5, 0 ), luaL_optboolean( L, 6, true ) );
     return 0;
 }
 
 static int surface_DrawSetTextureMaterial( lua_State *L )
 {
-    g_pMatSystemSurface->DrawSetTextureMaterial( luaL_checkint( L, 1 ), luaL_checkmaterial( L, 2 ) );
+    g_pMatSystemSurface->DrawSetTextureMaterial( luaL_checknumber( L, 1 ), luaL_checkmaterial( L, 2 ) );
     return 0;
 }
 
@@ -356,7 +356,7 @@ static int surface_GetBitmapFontName( lua_State *L )
 static int surface_GetCharABCwide( lua_State *L )
 {
     int a, b, c;
-    surface()->GetCharABCwide( luaL_checkfont( L, 1 ), luaL_checkint( L, 2 ), a, b, c );
+    surface()->GetCharABCwide( luaL_checkfont( L, 1 ), luaL_checknumber( L, 2 ), a, b, c );
     lua_pushinteger( L, a );
     lua_pushinteger( L, b );
     lua_pushinteger( L, c );
@@ -365,7 +365,7 @@ static int surface_GetCharABCwide( lua_State *L )
 
 static int surface_GetCharacterWidth( lua_State *L )
 {
-    lua_pushinteger( L, surface()->GetCharacterWidth( luaL_checkfont( L, 1 ), luaL_checkint( L, 2 ) ) );
+    lua_pushinteger( L, surface()->GetCharacterWidth( luaL_checkfont( L, 1 ), luaL_checknumber( L, 2 ) ) );
     return 1;
 }
 
@@ -403,7 +403,7 @@ static int surface_GetNotifyPanel( lua_State *L )
 
 static int surface_GetPopup( lua_State *L )
 {
-    lua_pushpanel( L, surface()->GetPopup( luaL_checkint( L, 1 ) ) );
+    lua_pushpanel( L, surface()->GetPopup( luaL_checknumber( L, 1 ) ) );
     return 1;
 }
 
@@ -529,13 +529,13 @@ static int surface_IsMinimized( lua_State *L )
 
 static int surface_IsTextureIDValid( lua_State *L )
 {
-    lua_pushboolean( L, surface()->IsTextureIDValid( luaL_checkint( L, 1 ) ) );
+    lua_pushboolean( L, surface()->IsTextureIDValid( luaL_checknumber( L, 1 ) ) );
     return 1;
 }
 
 static int surface_IsWithin( lua_State *L )
 {
-    lua_pushboolean( L, surface()->IsWithin( luaL_checkint( L, 1 ), luaL_checkint( L, 2 ) ) );
+    lua_pushboolean( L, surface()->IsWithin( luaL_checknumber( L, 1 ), luaL_checknumber( L, 2 ) ) );
     return 1;
 }
 
@@ -565,7 +565,7 @@ static int surface_NeedKBInput( lua_State *L )
 
 static int surface_OnScreenSizeChanged( lua_State *L )
 {
-    surface()->OnScreenSizeChanged( luaL_checkint( L, 1 ), luaL_checkint( L, 2 ) );
+    surface()->OnScreenSizeChanged( luaL_checknumber( L, 1 ), luaL_checknumber( L, 2 ) );
     return 0;
 }
 
@@ -619,7 +619,7 @@ static int surface_SetEmbeddedPanel( lua_State *L )
 
 static int surface_SetFontGlyphSet( lua_State *L )
 {
-    lua_pushboolean( L, surface()->SetFontGlyphSet( luaL_checkfont( L, 1 ), luaL_checkstring( L, 2 ), luaL_checkint( L, 3 ), luaL_checkint( L, 4 ), luaL_checkint( L, 5 ), luaL_checkint( L, 6 ), luaL_checkint( L, 7 ), luaL_optint( L, 8, 0 ), luaL_optint( L, 9, 0 ) ) );
+    lua_pushboolean( L, surface()->SetFontGlyphSet( luaL_checkfont( L, 1 ), luaL_checkstring( L, 2 ), luaL_checknumber( L, 3 ), luaL_checknumber( L, 4 ), luaL_checknumber( L, 5 ), luaL_checknumber( L, 6 ), luaL_checknumber( L, 7 ), ( int )luaL_optnumber( L, 8, 0 ), ( int )luaL_optnumber( L, 9, 0 ) ) );
     return 1;
 }
 
@@ -631,13 +631,13 @@ static int surface_SetTranslateExtendedKeys( lua_State *L )
 
 static int surface_SetWorkspaceInsets( lua_State *L )
 {
-    surface()->SetWorkspaceInsets( luaL_checkint( L, 1 ), luaL_checkint( L, 2 ), luaL_checkint( L, 3 ), luaL_checkint( L, 4 ) );
+    surface()->SetWorkspaceInsets( luaL_checknumber( L, 1 ), luaL_checknumber( L, 2 ), luaL_checknumber( L, 3 ), luaL_checknumber( L, 4 ) );
     return 0;
 }
 
 static int surface_SupportsFeature( lua_State *L )
 {
-    surface()->SupportsFeature( ( ISurface::SurfaceFeature_e )luaL_checkint( L, 1 ) );
+    surface()->SupportsFeature( ( ISurface::SurfaceFeature_e )( int )luaL_checknumber( L, 1 ) );
     return 0;
 }
 
@@ -652,7 +652,7 @@ static int surface_SurfaceGetCursorPos( lua_State *L )
 
 static int surface_SurfaceSetCursorPos( lua_State *L )
 {
-    surface()->SurfaceSetCursorPos( luaL_checkint( L, 1 ), luaL_checkint( L, 2 ) );
+    surface()->SurfaceSetCursorPos( luaL_checknumber( L, 1 ), luaL_checknumber( L, 2 ) );
     return 0;
 }
 

@@ -87,13 +87,13 @@ LUALIB_API lua_ITexture *luaL_checkitexture( lua_State *L, int narg )
 static int render_CreateRenderTargetTextureEx( lua_State *L )
 {
     const char *name = luaL_checkstring( L, 1 );
-    int width = luaL_checkint( L, 2 );
-    int height = luaL_checkint( L, 3 );
-    int sizeMode = luaL_optint( L, 4, RT_SIZE_DEFAULT );
-    int depthMode = luaL_optint( L, 5, MATERIAL_RT_DEPTH_SHARED );
-    int textureFlags = luaL_optint( L, 6, TEXTUREFLAGS_CLAMPS | TEXTUREFLAGS_CLAMPT );
-    int renderTargetFlags = luaL_optint( L, 7, 0 );
-    int imageFormat = luaL_optint( L, 8, IMAGE_FORMAT_RGBA8888 );
+    int width = luaL_checknumber( L, 2 );
+    int height = luaL_checknumber( L, 3 );
+    int sizeMode = ( int )luaL_optnumber( L, 4, RT_SIZE_DEFAULT );
+    int depthMode = ( int )luaL_optnumber( L, 5, MATERIAL_RT_DEPTH_SHARED );
+    int textureFlags = ( int )luaL_optnumber( L, 6, TEXTUREFLAGS_CLAMPS | TEXTUREFLAGS_CLAMPT );
+    int renderTargetFlags = ( int )luaL_optnumber( L, 7, 0 );
+    int imageFormat = ( int )luaL_optnumber( L, 8, IMAGE_FORMAT_RGBA8888 );
 
     g_pMaterialSystem->OverrideRenderTargetAllocation( true );
     ITexture *pTexture = materials->CreateNamedRenderTargetTextureEx(
@@ -112,7 +112,7 @@ static int render_CreateRenderTargetTextureEx( lua_State *L )
 
 static int render_GetScreenEffectTexture( lua_State *L )
 {
-    lua_ITexture *pTexture = GetFullFrameFrameBufferTexture( luaL_checkint( L, 1 ) );
+    lua_ITexture *pTexture = GetFullFrameFrameBufferTexture( luaL_checknumber( L, 1 ) );
     lua_pushlightuserdata( L, pTexture );
     return 1;
 }
@@ -132,10 +132,10 @@ static int render_Push3DView( lua_State *L )
     Vector origin = luaL_optvector( L, 1, &playerView.origin );
     QAngle angles = luaL_optangle( L, 2, &playerView.angles );
     float fov = luaL_optnumber( L, 3, playerView.fov );
-    int x = luaL_optint( L, 4, playerView.x );
-    int y = luaL_optint( L, 5, playerView.y );
-    int width = luaL_optint( L, 6, playerView.width );
-    int height = luaL_optint( L, 7, playerView.height );
+    int x = ( int )luaL_optnumber( L, 4, playerView.x );
+    int y = ( int )luaL_optnumber( L, 5, playerView.y );
+    int width = ( int )luaL_optnumber( L, 6, playerView.width );
+    int height = ( int )luaL_optnumber( L, 7, playerView.height );
     float zNear = luaL_optnumber( L, 8, playerView.zNear );
     float zFar = luaL_optnumber( L, 9, playerView.zFar );
 
@@ -184,7 +184,7 @@ BOX_BOTTOM	5	Place the light to the bottom
 */
 static int render_SetAmbientLightCube( lua_State *L )
 {
-    int directionFace = luaL_checkint( L, 1 );
+    int directionFace = luaL_checknumber( L, 1 );
     float r = luaL_checknumber( L, 2 );
     float g = luaL_checknumber( L, 3 );
     float b = luaL_checknumber( L, 4 );
@@ -249,7 +249,7 @@ static int render_SetLight( lua_State *L )
     desc.m_Phi = 0.0f;
     desc.m_Falloff = 1.0f;
 
-    g_pMaterialSystem->GetRenderContext()->SetLight( luaL_checkint( L, 6 ), desc );
+    g_pMaterialSystem->GetRenderContext()->SetLight( luaL_checknumber( L, 6 ), desc );
     return 0;
 }
 
@@ -290,10 +290,10 @@ static int render_ClearColor( lua_State *L )
 
 static int render_SetScissorRect( lua_State *L )
 {
-    int nLeft = luaL_checkint( L, 1 );
-    int nTop = luaL_checkint( L, 2 );
-    int nRight = luaL_checkint( L, 3 );
-    int nBottom = luaL_checkint( L, 4 );
+    int nLeft = luaL_checknumber( L, 1 );
+    int nTop = luaL_checknumber( L, 2 );
+    int nRight = luaL_checknumber( L, 3 );
+    int nBottom = luaL_checknumber( L, 4 );
     bool bEnableScissor = lua_toboolean( L, 5 );
 
     g_pMaterialSystem->GetRenderContext()->SetScissorRect( nLeft, nTop, nRight, nBottom, bEnableScissor );

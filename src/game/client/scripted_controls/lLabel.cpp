@@ -104,7 +104,7 @@ static int Label_GetValue( lua_State *L )
 static int Label_KB_AddBoundKey( lua_State *L )
 {
     luaL_checklabel( L, 1 )->KB_AddBoundKey(
-        luaL_checkstring( L, 2 ), luaL_checkint( L, 3 ), luaL_checkint( L, 4 ) );
+        luaL_checkstring( L, 2 ), luaL_checknumber( L, 3 ), luaL_checknumber( L, 4 ) );
     return 0;
 }
 
@@ -152,7 +152,7 @@ static int Label_SizeToContents( lua_State *L )
 
 static int Label_SetContentAlignment( lua_State *L )
 {
-    luaL_checklabel( L, 1 )->SetContentAlignment( ( vgui::Label::Alignment )luaL_checkint( L, 2 ) );
+    luaL_checklabel( L, 1 )->SetContentAlignment( ( vgui::Label::Alignment )( int )luaL_checknumber( L, 2 ) );
     return 0;
 }
 
@@ -217,13 +217,13 @@ static int Label_GetHotKey( lua_State *L )
 
 static int Label_HasHotkey( lua_State *L )
 {
-    lua_pushpanel( L, luaL_checklabel( L, 1 )->HasHotkey( luaL_checkint( L, 2 ) ) );
+    lua_pushpanel( L, luaL_checklabel( L, 1 )->HasHotkey( luaL_checknumber( L, 2 ) ) );
     return 1;
 }
 
 static int Label_SetHotkey( lua_State *L )
 {
-    luaL_checklabel( L, 1 )->SetHotkey( luaL_checkint( L, 2 ) );
+    luaL_checklabel( L, 1 )->SetHotkey( luaL_checknumber( L, 2 ) );
     return 0;
 }
 
@@ -236,13 +236,13 @@ static int Label_SetAssociatedControl( lua_State *L )
 // TODO: Implement luaL_checkimage etc. (low priority, used nowhere)
 // static int Label_AddImage( lua_State *L )
 //{
-//    luaL_checklabel( L, 1 )->AddImage( luaL_checkimage( L, 2 ), luaL_checkint( L, 3 ) );
+//    luaL_checklabel( L, 1 )->AddImage( luaL_checkimage( L, 2 ), luaL_checknumber( L, 3 ) );
 //    return 0;
 //}
 //
 // static int Label_SetImageAtIndex( lua_State *L )
 //{
-//    luaL_checklabel( L, 1 )->SetImageAtIndex( luaL_checkint( L, 2 ), luaL_checkimage( L, 3 ), luaL_checkint( L, 4 ) );
+//    luaL_checklabel( L, 1 )->SetImageAtIndex( luaL_checknumber( L, 2 ), luaL_checkimage( L, 3 ), luaL_checknumber( L, 4 ) );
 //    return 0;
 //}
 
@@ -254,7 +254,7 @@ static int Label_SetImagePreOffset( lua_State *L )
 
 // static int Label_GetImageAtIndex( lua_State *L )
 //{
-//     lua_pushimage( L, luaL_checklabel( L, 1 )->GetImageAtIndex( luaL_checkint( L, 2 ) ) );
+//     lua_pushimage( L, luaL_checklabel( L, 1 )->GetImageAtIndex( luaL_checknumber( L, 2 ) ) );
 //     return 1;
 // }
 
@@ -290,7 +290,7 @@ static int Label_SetImageBounds( lua_State *L )
 
 static int Label_SetTextImageIndex( lua_State *L )
 {
-    lua_pushinteger( L, luaL_checklabel( L, 1 )->SetTextImageIndex( luaL_checkint( L, 2 ) ) );
+    lua_pushinteger( L, luaL_checklabel( L, 1 )->SetTextImageIndex( luaL_checknumber( L, 2 ) ) );
     return 1;
 }
 

@@ -53,7 +53,7 @@ static int INetworkStringTable_AddString( lua_State *L )
 
 static int INetworkStringTable_ChangedSinceTick( lua_State *L )
 {
-    lua_pushboolean( L, luaL_checkstringtable( L, 1 )->ChangedSinceTick( luaL_checkint( L, 2 ) ) );
+    lua_pushboolean( L, luaL_checkstringtable( L, 1 )->ChangedSinceTick( luaL_checknumber( L, 2 ) ) );
     return 1;
 }
 
@@ -83,7 +83,7 @@ static int INetworkStringTable_GetNumStrings( lua_State *L )
 
 static int INetworkStringTable_GetString( lua_State *L )
 {
-    lua_pushstring( L, luaL_checkstringtable( L, 1 )->GetString( luaL_checkint( L, 2 ) ) );
+    lua_pushstring( L, luaL_checkstringtable( L, 1 )->GetString( luaL_checknumber( L, 2 ) ) );
     return 1;
 }
 
@@ -101,13 +101,13 @@ static int INetworkStringTable_GetTableName( lua_State *L )
 
 static int INetworkStringTable_SetStringUserData( lua_State *L )
 {
-    luaL_checkstringtable( L, 1 )->SetStringUserData( luaL_checkint( L, 2 ), strlen( luaL_checkstring( L, 3 ) ) + 1, luaL_checkstring( L, 3 ) );
+    luaL_checkstringtable( L, 1 )->SetStringUserData( luaL_checknumber( L, 2 ), strlen( luaL_checkstring( L, 3 ) ) + 1, luaL_checkstring( L, 3 ) );
     return 0;
 }
 
 static int INetworkStringTable_SetTick( lua_State *L )
 {
-    luaL_checkstringtable( L, 1 )->SetTick( luaL_checkint( L, 2 ) );
+    luaL_checkstringtable( L, 1 )->SetTick( luaL_checknumber( L, 2 ) );
     return 0;
 }
 
@@ -152,13 +152,13 @@ extern INetworkStringTableContainer *networkstringtable;
 
 static int networkstringtable_CreateStringTable( lua_State *L )
 {
-    networkstringtable->CreateStringTable( luaL_checkstring( L, 1 ), luaL_checkint( L, 2 ), luaL_optint( L, 3, 0 ), luaL_optint( L, 4, 0 ) );
+    networkstringtable->CreateStringTable( luaL_checkstring( L, 1 ), luaL_checknumber( L, 2 ), ( int )luaL_optnumber( L, 3, 0 ), ( int )luaL_optnumber( L, 4, 0 ) );
     return 0;
 }
 
 static int networkstringtable_CreateStringTableEx( lua_State *L )
 {
-    lua_pushstringtable( L, networkstringtable->CreateStringTableEx( luaL_checkstring( L, 1 ), luaL_checkint( L, 2 ), luaL_optint( L, 3, 0 ), luaL_optint( L, 4, 0 ), luaL_optboolean( L, 5, 0 ) ) );
+    lua_pushstringtable( L, networkstringtable->CreateStringTableEx( luaL_checkstring( L, 1 ), luaL_checknumber( L, 2 ), ( int )luaL_optnumber( L, 3, 0 ), ( int )luaL_optnumber( L, 4, 0 ), luaL_optboolean( L, 5, 0 ) ) );
     return 1;
 }
 
@@ -176,7 +176,7 @@ static int networkstringtable_GetNumTables( lua_State *L )
 
 static int networkstringtable_GetTable( lua_State *L )
 {
-    lua_pushstringtable( L, networkstringtable->GetTable( luaL_checkint( L, 1 ) ) );
+    lua_pushstringtable( L, networkstringtable->GetTable( luaL_checknumber( L, 1 ) ) );
     return 1;
 }
 

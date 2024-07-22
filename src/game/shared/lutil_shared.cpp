@@ -176,25 +176,25 @@ static int luasrc_Util_YawToVector( lua_State *L )
 
 static int luasrc_SharedRandomFloat( lua_State *L )
 {
-    lua_pushnumber( L, SharedRandomFloat( luaL_checkstring( L, 1 ), luaL_checknumber( L, 2 ), luaL_checknumber( L, 3 ), luaL_optint( L, 4, 0 ) ) );
+    lua_pushnumber( L, SharedRandomFloat( luaL_checkstring( L, 1 ), luaL_checknumber( L, 2 ), luaL_checknumber( L, 3 ), ( int )luaL_optnumber( L, 4, 0 ) ) );
     return 1;
 }
 
 static int luasrc_SharedRandomInt( lua_State *L )
 {
-    lua_pushinteger( L, SharedRandomInt( luaL_checkstring( L, 1 ), luaL_checkint( L, 2 ), luaL_checkint( L, 3 ), luaL_optint( L, 4, 0 ) ) );
+    lua_pushinteger( L, SharedRandomInt( luaL_checkstring( L, 1 ), luaL_checknumber( L, 2 ), luaL_checknumber( L, 3 ), ( int )luaL_optnumber( L, 4, 0 ) ) );
     return 1;
 }
 
 static int luasrc_SharedRandomVector( lua_State *L )
 {
-    lua_pushvector( L, SharedRandomVector( luaL_checkstring( L, 1 ), luaL_checknumber( L, 2 ), luaL_checknumber( L, 3 ), luaL_optint( L, 4, 0 ) ) );
+    lua_pushvector( L, SharedRandomVector( luaL_checkstring( L, 1 ), luaL_checknumber( L, 2 ), luaL_checknumber( L, 3 ), ( int )luaL_optnumber( L, 4, 0 ) ) );
     return 1;
 }
 
 static int luasrc_SharedRandomAngle( lua_State *L )
 {
-    lua_pushangle( L, SharedRandomAngle( luaL_checkstring( L, 1 ), luaL_checknumber( L, 2 ), luaL_checknumber( L, 3 ), luaL_optint( L, 4, 0 ) ) );
+    lua_pushangle( L, SharedRandomAngle( luaL_checkstring( L, 1 ), luaL_checknumber( L, 2 ), luaL_checknumber( L, 3 ), ( int )luaL_optnumber( L, 4, 0 ) ) );
     return 1;
 }
 
@@ -273,7 +273,7 @@ class CTraceLuaFilter : public CTraceFilterSimple
         {
             lua_pushvalue( m_pLuaState, m_iFilterArgIndex );
 
-            lua_pushnil( m_pLuaState ); // Push a nil key to start iteration
+            lua_pushnil( m_pLuaState );  // Push a nil key to start iteration
             while ( lua_next( m_pLuaState, -2 ) )
             {
                 if ( lua_type( m_pLuaState, -1 ) == LUA_TSTRING )
@@ -377,7 +377,7 @@ static int luasrc_Util_TraceLine( lua_State *L )
 
     if ( lua_isnil( L, -1 ) )
     {
-        lua_pop( L, 1 ); // Pop the nil value
+        lua_pop( L, 1 );  // Pop the nil value
         lua_newtable( L );
     }
     else
@@ -484,13 +484,13 @@ static int luasrc_Util_TraceLine( lua_State *L )
 
 static int luasrc_Util_TraceHull( lua_State *L )
 {
-    UTIL_TraceHull( luaL_checkvector( L, 1 ), luaL_checkvector( L, 2 ), luaL_checkvector( L, 3 ), luaL_checkvector( L, 4 ), luaL_checkint( L, 5 ), luaL_checkentity( L, 6 ), luaL_checkint( L, 7 ), &luaL_checktrace( L, 8 ) );
+    UTIL_TraceHull( luaL_checkvector( L, 1 ), luaL_checkvector( L, 2 ), luaL_checkvector( L, 3 ), luaL_checkvector( L, 4 ), luaL_checknumber( L, 5 ), luaL_checkentity( L, 6 ), luaL_checknumber( L, 7 ), &luaL_checktrace( L, 8 ) );
     return 0;
 }
 
 static int luasrc_Util_TraceEntity( lua_State *L )
 {
-    UTIL_TraceEntity( luaL_checkentity( L, 1 ), luaL_checkvector( L, 2 ), luaL_checkvector( L, 3 ), luaL_checkint( L, 4 ), luaL_checkentity( L, 5 ), luaL_checkint( L, 5 ), &luaL_checktrace( L, 6 ) );
+    UTIL_TraceEntity( luaL_checkentity( L, 1 ), luaL_checkvector( L, 2 ), luaL_checkvector( L, 3 ), luaL_checknumber( L, 4 ), luaL_checkentity( L, 5 ), luaL_checknumber( L, 5 ), &luaL_checktrace( L, 6 ) );
     return 0;
 }
 
@@ -508,25 +508,25 @@ static int luasrc_Util_PointContents( lua_State *L )
 
 static int luasrc_Util_TraceModel( lua_State *L )
 {
-    UTIL_TraceModel( luaL_checkvector( L, 1 ), luaL_checkvector( L, 2 ), luaL_checkvector( L, 3 ), luaL_checkvector( L, 4 ), luaL_checkentity( L, 5 ), luaL_checkint( L, 6 ), &luaL_checktrace( L, 7 ) );
+    UTIL_TraceModel( luaL_checkvector( L, 1 ), luaL_checkvector( L, 2 ), luaL_checkvector( L, 3 ), luaL_checkvector( L, 4 ), luaL_checkentity( L, 5 ), luaL_checknumber( L, 6 ), &luaL_checktrace( L, 7 ) );
     return 0;
 }
 
 static int luasrc_Util_ParticleTracer( lua_State *L )
 {
-    UTIL_ParticleTracer( luaL_checkstring( L, 1 ), luaL_checkvector( L, 2 ), luaL_checkvector( L, 3 ), luaL_optint( L, 4, 0 ), luaL_optint( L, 5, 0 ), luaL_optboolean( L, 6, 0 ) );
+    UTIL_ParticleTracer( luaL_checkstring( L, 1 ), luaL_checkvector( L, 2 ), luaL_checkvector( L, 3 ), ( int )luaL_optnumber( L, 4, 0 ), ( int )luaL_optnumber( L, 5, 0 ), luaL_optboolean( L, 6, 0 ) );
     return 0;
 }
 
 static int luasrc_Util_Tracer( lua_State *L )
 {
-    UTIL_Tracer( luaL_checkvector( L, 1 ), luaL_checkvector( L, 2 ), luaL_optint( L, 3, 0 ), luaL_optint( L, 4, -1 ), luaL_optnumber( L, 5, 0 ), luaL_optboolean( L, 6, 0 ), luaL_optstring( L, 7, 0 ), luaL_optint( L, 8, 0 ) );
+    UTIL_Tracer( luaL_checkvector( L, 1 ), luaL_checkvector( L, 2 ), ( int )luaL_optnumber( L, 3, 0 ), ( int )luaL_optnumber( L, 4, -1 ), luaL_optnumber( L, 5, 0 ), luaL_optboolean( L, 6, 0 ), luaL_optstring( L, 7, 0 ), ( int )luaL_optnumber( L, 8, 0 ) );
     return 0;
 }
 
 static int luasrc_Util_BloodDrips( lua_State *L )
 {
-    UTIL_BloodDrips( luaL_checkvector( L, 1 ), luaL_checkvector( L, 2 ), luaL_checkint( L, 3 ), luaL_checkint( L, 4 ) );
+    UTIL_BloodDrips( luaL_checkvector( L, 1 ), luaL_checkvector( L, 2 ), luaL_checknumber( L, 3 ), luaL_checknumber( L, 4 ) );
     return 0;
 }
 
@@ -621,19 +621,19 @@ static int luasrc_Util_IsValidPhysicsProp( lua_State *L )
 
 static int luasrc_Util_ShouldShowBlood( lua_State *L )
 {
-    lua_pushboolean( L, UTIL_ShouldShowBlood( luaL_checkint( L, 1 ) ) );
+    lua_pushboolean( L, UTIL_ShouldShowBlood( luaL_checknumber( L, 1 ) ) );
     return 1;
 }
 
 static int luasrc_Util_BloodImpact( lua_State *L )
 {
-    UTIL_BloodImpact( luaL_checkvector( L, 1 ), luaL_checkvector( L, 2 ), luaL_checkint( L, 3 ), luaL_checkint( L, 4 ) );
+    UTIL_BloodImpact( luaL_checkvector( L, 1 ), luaL_checkvector( L, 2 ), luaL_checknumber( L, 3 ), luaL_checknumber( L, 4 ) );
     return 0;
 }
 
 static int luasrc_Util_BloodDecalTrace( lua_State *L )
 {
-    UTIL_BloodDecalTrace( &luaL_checktrace( L, 1 ), luaL_checkint( L, 2 ) );
+    UTIL_BloodDecalTrace( &luaL_checktrace( L, 1 ), luaL_checknumber( L, 2 ) );
     return 0;
 }
 

@@ -160,7 +160,7 @@ static int CBaseAnimating_DrawClientHitboxes( lua_State *L )
 static int CBaseAnimating_DrawModel( lua_State *L )
 {
     lua_pushinteger( L,
-                     luaL_checkanimating( L, 1 )->DrawModel( luaL_optint( L, 2, STUDIO_RENDER ) ) );
+                     luaL_checkanimating( L, 1 )->DrawModel( ( int )luaL_optnumber( L, 2, STUDIO_RENDER ) ) );
     return 1;
 }
 
@@ -173,7 +173,7 @@ static int CBaseAnimating_FindFollowedEntity( lua_State *L )
 static int CBaseAnimating_FindTransitionSequence( lua_State *L )
 {
     int piDir;
-    lua_pushinteger( L, luaL_checkanimating( L, 1 )->FindTransitionSequence( luaL_checkint( L, 2 ), luaL_checkint( L, 3 ), &piDir ) );
+    lua_pushinteger( L, luaL_checkanimating( L, 1 )->FindTransitionSequence( luaL_checknumber( L, 2 ), luaL_checknumber( L, 3 ), &piDir ) );
     lua_pushinteger( L, piDir );
     return 2;
 }
@@ -181,14 +181,14 @@ static int CBaseAnimating_FindTransitionSequence( lua_State *L )
 static int CBaseAnimating_FireEvent( lua_State *L )
 {
     luaL_checkanimating( L, 1 )->FireEvent(
-        luaL_checkvector( L, 2 ), luaL_checkangle( L, 3 ), luaL_checkint( L, 4 ), luaL_checkstring( L, 5 ) );
+        luaL_checkvector( L, 2 ), luaL_checkangle( L, 3 ), luaL_checknumber( L, 4 ), luaL_checkstring( L, 5 ) );
     return 0;
 }
 
 static int CBaseAnimating_FireObsoleteEvent( lua_State *L )
 {
     luaL_checkanimating( L, 1 )->FireObsoleteEvent(
-        luaL_checkvector( L, 2 ), luaL_checkangle( L, 3 ), luaL_checkint( L, 4 ), luaL_checkstring( L, 5 ) );
+        luaL_checkvector( L, 2 ), luaL_checkangle( L, 3 ), luaL_checknumber( L, 4 ), luaL_checkstring( L, 5 ) );
     return 0;
 }
 
@@ -221,7 +221,7 @@ static int CBaseAnimating_GetAnimTimeInterval( lua_State *L )
 
 static int CBaseAnimating_GetAttachmentLocal( lua_State *L )
 {
-    lua_pushboolean( L, luaL_checkanimating( L, 1 )->GetAttachmentLocal( luaL_checkint( L, 2 ), luaL_checkvector( L, 3 ), luaL_checkangle( L, 4 ) ) );
+    lua_pushboolean( L, luaL_checkanimating( L, 1 )->GetAttachmentLocal( luaL_checknumber( L, 2 ), luaL_checkvector( L, 3 ), luaL_checkangle( L, 4 ) ) );
     return 1;
 }
 
@@ -229,7 +229,7 @@ static int CBaseAnimating_GetAttachmentVelocity( lua_State *L )
 {
     Vector originVel;
     Quaternion angleVel;
-    lua_pushboolean( L, luaL_checkanimating( L, 1 )->GetAttachmentVelocity( luaL_checkint( L, 2 ), originVel, angleVel ) );
+    lua_pushboolean( L, luaL_checkanimating( L, 1 )->GetAttachmentVelocity( luaL_checknumber( L, 2 ), originVel, angleVel ) );
     lua_pushvector( L, originVel );
     // Todo: implement Quaternion class!!
     // lua_pushquaternion(L, &angleVel);
@@ -271,7 +271,7 @@ static int CBaseAnimating_GetBoneControllers( lua_State *L )
 static int CBaseAnimating_GetBonePosition( lua_State *L )
 {
     luaL_checkanimating( L, 1 )->GetBonePosition(
-        luaL_checkint( L, 2 ), luaL_checkvector( L, 3 ), luaL_checkangle( L, 4 ) );
+        luaL_checknumber( L, 2 ), luaL_checkvector( L, 3 ), luaL_checkangle( L, 4 ) );
     return 0;
 }
 
@@ -295,20 +295,20 @@ static int CBaseAnimating_GetCycle( lua_State *L )
 
 static int CBaseAnimating_GetFlexControllerName( lua_State *L )
 {
-    lua_pushstring( L, luaL_checkanimating( L, 1 )->GetFlexControllerName( ( LocalFlexController_t )luaL_checkint( L, 2 ) ) );
+    lua_pushstring( L, luaL_checkanimating( L, 1 )->GetFlexControllerName( ( LocalFlexController_t )( int )luaL_checknumber( L, 2 ) ) );
     return 1;
 }
 
 static int CBaseAnimating_GetFlexControllerType( lua_State *L )
 {
-    lua_pushstring( L, luaL_checkanimating( L, 1 )->GetFlexControllerType( ( LocalFlexController_t )luaL_checkint( L, 2 ) ) );
+    lua_pushstring( L, luaL_checkanimating( L, 1 )->GetFlexControllerType( ( LocalFlexController_t )( int )luaL_checknumber( L, 2 ) ) );
     return 1;
 }
 
 static int CBaseAnimating_GetFlexDescFacs( lua_State *L )
 {
     lua_pushstring(
-        L, luaL_checkanimating( L, 1 )->GetFlexDescFacs( luaL_checkint( L, 2 ) ) );
+        L, luaL_checkanimating( L, 1 )->GetFlexDescFacs( luaL_checknumber( L, 2 ) ) );
     return 1;
 }
 
@@ -350,14 +350,14 @@ static int CBaseAnimating_GetPlaybackRate( lua_State *L )
 static int CBaseAnimating_GetPoseParameter( lua_State *L )
 {
     lua_pushnumber(
-        L, luaL_checkanimating( L, 1 )->GetPoseParameter( luaL_checkint( L, 2 ) ) );
+        L, luaL_checkanimating( L, 1 )->GetPoseParameter( luaL_checknumber( L, 2 ) ) );
     return 1;
 }
 
 static int CBaseAnimating_GetPoseParameterRange( lua_State *L )
 {
     float minValue, maxValue;
-    lua_pushboolean( L, luaL_checkanimating( L, 1 )->GetPoseParameterRange( luaL_checkint( L, 2 ), minValue, maxValue ) );
+    lua_pushboolean( L, luaL_checkanimating( L, 1 )->GetPoseParameterRange( luaL_checknumber( L, 2 ), minValue, maxValue ) );
     lua_pushnumber( L, minValue );
     lua_pushnumber( L, maxValue );
     return 3;
@@ -395,26 +395,26 @@ static int CBaseAnimating_GetSequence( lua_State *L )
 static int CBaseAnimating_GetSequenceActivity( lua_State *L )
 {
     lua_pushinteger(
-        L, luaL_checkanimating( L, 1 )->GetSequenceActivity( luaL_checkint( L, 2 ) ) );
+        L, luaL_checkanimating( L, 1 )->GetSequenceActivity( luaL_checknumber( L, 2 ) ) );
     return 1;
 }
 
 static int CBaseAnimating_GetSequenceActivityName( lua_State *L )
 {
-    lua_pushstring( L, luaL_checkanimating( L, 1 )->GetSequenceActivityName( luaL_checkint( L, 2 ) ) );
+    lua_pushstring( L, luaL_checkanimating( L, 1 )->GetSequenceActivityName( luaL_checknumber( L, 2 ) ) );
     return 1;
 }
 
 static int CBaseAnimating_GetSequenceGroundSpeed( lua_State *L )
 {
-    lua_pushnumber( L, luaL_checkanimating( L, 1 )->GetSequenceGroundSpeed( luaL_checkint( L, 2 ) ) );
+    lua_pushnumber( L, luaL_checkanimating( L, 1 )->GetSequenceGroundSpeed( luaL_checknumber( L, 2 ) ) );
     return 1;
 }
 
 static int CBaseAnimating_GetSequenceLinearMotion( lua_State *L )
 {
     Vector pVec;
-    luaL_checkanimating( L, 1 )->GetSequenceLinearMotion( luaL_checkint( L, 2 ),
+    luaL_checkanimating( L, 1 )->GetSequenceLinearMotion( luaL_checknumber( L, 2 ),
                                                           &pVec );
     lua_pushvector( L, pVec );
     return 1;
@@ -423,7 +423,7 @@ static int CBaseAnimating_GetSequenceLinearMotion( lua_State *L )
 static int CBaseAnimating_GetSequenceName( lua_State *L )
 {
     lua_pushstring(
-        L, luaL_checkanimating( L, 1 )->GetSequenceName( luaL_checkint( L, 2 ) ) );
+        L, luaL_checkanimating( L, 1 )->GetSequenceName( luaL_checknumber( L, 2 ) ) );
     return 1;
 }
 
@@ -460,7 +460,7 @@ static int CBaseAnimating_InitModelEffects( lua_State *L )
 static int CBaseAnimating_InternalDrawModel( lua_State *L )
 {
     lua_pushinteger(
-        L, luaL_checkanimating( L, 1 )->InternalDrawModel( luaL_checkint( L, 2 ) ) );
+        L, luaL_checkanimating( L, 1 )->InternalDrawModel( luaL_checknumber( L, 2 ) ) );
     return 1;
 }
 
@@ -528,7 +528,7 @@ static int CBaseAnimating_IsSequenceFinished( lua_State *L )
 static int CBaseAnimating_IsSequenceLooping( lua_State *L )
 {
     lua_pushboolean(
-        L, luaL_checkanimating( L, 1 )->IsSequenceLooping( luaL_checkint( L, 2 ) ) );
+        L, luaL_checkanimating( L, 1 )->IsSequenceLooping( luaL_checknumber( L, 2 ) ) );
     return 1;
 }
 
@@ -581,21 +581,21 @@ static int CBaseAnimating_LookupSequence( lua_State *L )
 static int CBaseAnimating_NotifyShouldTransmit( lua_State *L )
 {
     luaL_checkanimating( L, 1 )->NotifyShouldTransmit(
-        ( ShouldTransmitState_t )luaL_checkint( L, 2 ) );
+        ( ShouldTransmitState_t )( int )luaL_checknumber( L, 2 ) );
     return 0;
 }
 
 static int CBaseAnimating_OnDataChanged( lua_State *L )
 {
     luaL_checkanimating( L, 1 )->OnDataChanged(
-        ( DataUpdateType_t )luaL_checkint( L, 2 ) );
+        ( DataUpdateType_t )( int )luaL_checknumber( L, 2 ) );
     return 0;
 }
 
 static int CBaseAnimating_OnPreDataChanged( lua_State *L )
 {
     luaL_checkanimating( L, 1 )->OnPreDataChanged(
-        ( DataUpdateType_t )luaL_checkint( L, 2 ) );
+        ( DataUpdateType_t )( int )luaL_checknumber( L, 2 ) );
     return 0;
 }
 
@@ -608,14 +608,14 @@ static int CBaseAnimating_PopBoneAccess( lua_State *L )
 static int CBaseAnimating_PostDataUpdate( lua_State *L )
 {
     luaL_checkanimating( L, 1 )->PostDataUpdate(
-        ( DataUpdateType_t )luaL_checkint( L, 2 ) );
+        ( DataUpdateType_t )( int )luaL_checknumber( L, 2 ) );
     return 0;
 }
 
 static int CBaseAnimating_PreDataUpdate( lua_State *L )
 {
     luaL_checkanimating( L, 1 )->PreDataUpdate(
-        ( DataUpdateType_t )luaL_checkint( L, 2 ) );
+        ( DataUpdateType_t )( int )luaL_checknumber( L, 2 ) );
     return 0;
 }
 
@@ -665,7 +665,7 @@ static int CBaseAnimating_ResetLatched( lua_State *L )
 static int CBaseAnimating_ResetSequence( lua_State *L )
 {
     auto entity = luaL_checkanimating( L, 1 );
-    int sequence = luaL_checkint( L, 2 );
+    int sequence = luaL_checknumber( L, 2 );
     auto model = entity->GetModelPtr();
 
     if ( !model )
@@ -705,7 +705,7 @@ static int CBaseAnimating_RetrieveRagdollInfo( lua_State *L )
 
 static int CBaseAnimating_SelectWeightedSequence( lua_State *L )
 {
-    lua_pushinteger( L, luaL_checkanimating( L, 1 )->SelectWeightedSequence( luaL_checkint( L, 2 ) ) );
+    lua_pushinteger( L, luaL_checkanimating( L, 1 )->SelectWeightedSequence( luaL_checknumber( L, 2 ) ) );
     return 1;
 }
 
@@ -714,7 +714,8 @@ static int CBaseAnimating_SequenceDuration( lua_State *L )
     if ( lua_isnoneornil( L, 2 ) )
         lua_pushnumber( L, luaL_checkanimating( L, 1 )->SequenceDuration() );
     else
-        lua_pushnumber( L, luaL_checkanimating( L, 1 )->SequenceDuration( luaL_checkint( L, 2 ) ) );
+        lua_pushnumber( L, luaL_checkanimating( L, 1 )->SequenceDuration( luaL_checknumber( L, 2 ) ) );
+
     return 1;
 }
 
@@ -726,7 +727,7 @@ static int CBaseAnimating_SequenceLoops( lua_State *L )
 
 static int CBaseAnimating_SetBoneController( lua_State *L )
 {
-    lua_pushnumber( L, luaL_checkanimating( L, 1 )->SetBoneController( luaL_checkint( L, 2 ), luaL_checknumber( L, 3 ) ) );
+    lua_pushnumber( L, luaL_checkanimating( L, 1 )->SetBoneController( luaL_checknumber( L, 2 ), luaL_checknumber( L, 3 ) ) );
     return 1;
 }
 
@@ -738,7 +739,7 @@ static int CBaseAnimating_SetCycle( lua_State *L )
 
 static int CBaseAnimating_SetHitboxSet( lua_State *L )
 {
-    luaL_checkanimating( L, 1 )->SetHitboxSet( luaL_checkint( L, 2 ) );
+    luaL_checkanimating( L, 1 )->SetHitboxSet( luaL_checknumber( L, 2 ) );
     return 0;
 }
 
@@ -764,7 +765,7 @@ static int CBaseAnimating_SetPoseParameter( lua_State *L )
     switch ( lua_type( L, 2 ) )
     {
         case LUA_TNUMBER:
-            lua_pushnumber( L, luaL_checkanimating( L, 1 )->SetPoseParameter( luaL_checkint( L, 2 ), luaL_checknumber( L, 3 ) ) );
+            lua_pushnumber( L, luaL_checkanimating( L, 1 )->SetPoseParameter( luaL_checknumber( L, 2 ), luaL_checknumber( L, 3 ) ) );
             break;
         case LUA_TSTRING:
         default:
@@ -802,7 +803,7 @@ static int CBaseAnimating_SetReceivedSequence( lua_State *L )
 
 static int CBaseAnimating_SetSequence( lua_State *L )
 {
-    luaL_checkanimating( L, 1 )->SetSequence( luaL_checkint( L, 2 ) );
+    luaL_checkanimating( L, 1 )->SetSequence( luaL_checknumber( L, 2 ) );
     return 0;
 }
 
@@ -942,11 +943,11 @@ static int CBaseAnimating___newindex( lua_State *L )
     else if ( Q_strcmp( field, "m_bLastClientSideFrameReset" ) == 0 )
         pEntity->m_bLastClientSideFrameReset = luaL_checkboolean( L, 3 );
     else if ( Q_strcmp( field, "m_nBody" ) == 0 )
-        pEntity->m_nBody = luaL_checkint( L, 3 );
+        pEntity->m_nBody = luaL_checknumber( L, 3 );
     else if ( Q_strcmp( field, "m_nHitboxSet" ) == 0 )
-        pEntity->m_nHitboxSet = luaL_checkint( L, 3 );
+        pEntity->m_nHitboxSet = luaL_checknumber( L, 3 );
     else if ( Q_strcmp( field, "m_nSkin" ) == 0 )
-        pEntity->m_nSkin = luaL_checkint( L, 3 );
+        pEntity->m_nSkin = luaL_checknumber( L, 3 );
     else
     {
         LUA_GET_REF_TABLE( L, pEntity );

@@ -1,6 +1,6 @@
 //========= Copyright © 1996-2005, Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $Workfile:     $
 // $Date:         $
@@ -20,33 +20,31 @@
 // Forward declarations.
 namespace vgui
 {
-	class Panel;
+class Panel;
 };
 
-
-static int enginevgui_GetPanel (lua_State *L) {
-  lua_pushpanel(L, enginevgui->GetPanel((VGuiPanel_t)luaL_checkint(L, 1)));
-  return 1;
+static int enginevgui_GetPanel( lua_State *L )
+{
+    lua_pushpanel( L, enginevgui->GetPanel( ( VGuiPanel_t )( int )luaL_checknumber( L, 1 ) ) );
+    return 1;
 }
 
-static int enginevgui_IsGameUIVisible (lua_State *L) {
-  lua_pushboolean(L, enginevgui->IsGameUIVisible());
-  return 1;
+static int enginevgui_IsGameUIVisible( lua_State *L )
+{
+    lua_pushboolean( L, enginevgui->IsGameUIVisible() );
+    return 1;
 }
-
 
 static const luaL_Reg enginevguilib[] = {
-  {"GetPanel",   enginevgui_GetPanel},
-  {"IsGameUIVisible",   enginevgui_IsGameUIVisible},
-  {NULL, NULL}
-};
-
+    { "GetPanel", enginevgui_GetPanel },
+    { "IsGameUIVisible", enginevgui_IsGameUIVisible },
+    { NULL, NULL } };
 
 /*
 ** Open enginevgui library
 */
-LUALIB_API int luaopen_enginevgui (lua_State *L) {
-  luaL_register(L, LUA_ENGINEVGUILIBNAME, enginevguilib);
-  return 1;
+LUALIB_API int luaopen_enginevgui( lua_State *L )
+{
+    luaL_register( L, LUA_ENGINEVGUILIBNAME, enginevguilib );
+    return 1;
 }
-
