@@ -155,16 +155,16 @@
     }                                                  \
     else lua_pop( L, 1 );
 
-#define BEGIN_LUA_CALL_PANEL_METHOD( functionName )                                    \
-    if ( m_lua_State && m_nTableReference >= 0 && IsFunctionPrepared( functionName ) ) \
-    {                                                                                  \
-        lua_getref( m_lua_State, m_nTableReference );                                  \
-        lua_getfield( m_lua_State, -1, functionName );                                 \
-        lua_remove( m_lua_State, -2 );                                                 \
-        if ( lua_isfunction( m_lua_State, -1 ) )                                       \
-        {                                                                              \
-            int args = 0;                                                              \
-            this->PushLuaInstance( m_lua_State );                                      \
+#define BEGIN_LUA_CALL_PANEL_METHOD( functionName )    \
+    if ( m_lua_State && m_nTableReference >= 0 )       \
+    {                                                  \
+        lua_getref( m_lua_State, m_nTableReference );  \
+        lua_getfield( m_lua_State, -1, functionName ); \
+        lua_remove( m_lua_State, -2 );                 \
+        if ( lua_isfunction( m_lua_State, -1 ) )       \
+        {                                              \
+            int args = 0;                              \
+            this->PushLuaInstance( m_lua_State );      \
             ++args;
 
 // Will call the function if it exists, leaving the specified amount of

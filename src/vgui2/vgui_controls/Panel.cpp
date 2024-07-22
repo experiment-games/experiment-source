@@ -684,7 +684,7 @@ Panel::Panel( Panel *parent, const char *panelName, lua_State *L )
 
 void *Panel::CreateLuaInstance( lua_State *L, Panel *pInstance )
 {
-    if (pInstance)
+    if ( pInstance )
         pInstance->m_nRefCount++;
 
     PHandle *_pPanelHandle = ( PHandle * )lua_newuserdata( L, sizeof( PHandle ) );
@@ -700,7 +700,7 @@ void Panel::PushVPanelLuaInstance( lua_State *L, VPANEL panel )
     if ( !pPanel )
     {
         PHandle *_pPanelHandle = ( PHandle * )lua_newuserdata( L, sizeof( PHandle ) );
-        _pPanelHandle->Set( (Panel *) 0 );
+        _pPanelHandle->Set( ( Panel * )0 );
         luaL_getmetatable( L, "Panel" );
         lua_setmetatable( L, -2 );
         return;
@@ -724,53 +724,6 @@ void Panel::SetupRefTable( lua_State *L )
 
     lua_newtable( L );
     m_nTableReference = luaL_ref( L, LUA_REGISTRYINDEX );
-}
-
-//-----------------------------------------------------------------------------
-// Purpose: Checks whether a function on the panel has been marked as prepared
-//-----------------------------------------------------------------------------
-bool Panel::IsFunctionPrepared( const char *functionName )
-{
-    // This comment is commented because of the issue described in OnChildAdded
-    // The comment below seems incorrect. TODO: Remove IsFunctionPrepared logic.
-    //// This whole mess is really only for OnChildAdded. That causes problems
-    //// when a panel is vgui.Create'd in Init and used in OnChildAdded.
-    //// For example DScrollPanel does:
-    //// function PANEL:Init()
-    ////      self.pnlCanvas = vgui.Create( "Panel", self )
-    ////      ...etc
-    //// end
-    ////
-    //// Then in OnChildAdded expects self.pnlCanvas to exist, but that's not
-    //// the case if we call OnChildAdded immediately.
-    //if ( Q_strcmp( functionName, "OnChildAdded" ) == 0 )
-    //{
-    //    //return m_PreparedFunctions.Find( functionName ) != m_PreparedFunctions.InvalidIndex();
-    //}
-    return true;
-}
-
-//-----------------------------------------------------------------------------
-// Purpose: For all functions in the table reference, add them to the prepared
-//      functions list if they are not already there.
-//-----------------------------------------------------------------------------
-void Panel::UpdatePreparedFunctions()
-{
-    lua_rawgeti( m_lua_State, LUA_REGISTRYINDEX, m_nTableReference );
-    lua_pushnil( m_lua_State );
-    while ( lua_next( m_lua_State, -2 ) != 0 )
-    {
-        if ( lua_isfunction( m_lua_State, -1 ) )
-        {
-            const char *functionName = lua_tostring( m_lua_State, -2 );
-            if ( !IsFunctionPrepared( functionName ) )
-            {
-                m_PreparedFunctions.Insert( functionName, 0 );
-            }
-        }
-        lua_pop( m_lua_State, 1 );
-    }
-    lua_pop( m_lua_State, 1 );
 }
 #endif
 
@@ -1357,7 +1310,7 @@ void Panel::PaintTraverse( bool repaint, bool allowForce )
 
             bool paintOverride = false;
 
-            if ( m_lua_State && m_nTableReference >= 0 && IsFunctionPrepared( "Paint" ) )
+            if ( m_lua_State && m_nTableReference >= 0 )
             {
                 paintOverride = lua_isboolean( m_lua_State, -1 ) && lua_toboolean( m_lua_State, -1 );
                 lua_pop( m_lua_State, 1 );

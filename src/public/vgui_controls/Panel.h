@@ -247,8 +247,6 @@ class Panel : public IClientPanel, virtual IForceVirtualInheritancePanel
 
     Panel( Panel *parent, const char *panelName, lua_State *L );
     virtual void SetupRefTable( lua_State *L );
-    virtual bool IsFunctionPrepared( const char *functionName );
-    virtual void UpdatePreparedFunctions();
 
     virtual void RecurseLayout();
     virtual void Position( int alignmentBitmask, int xpadding = 0, int ypadding = 0 );

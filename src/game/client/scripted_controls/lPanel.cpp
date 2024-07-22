@@ -1005,7 +1005,7 @@ static int Panel_PerformLayout( lua_State *L )
 
 static int Panel_Prepare( lua_State *L )
 {
-    luaL_checkpanel( L, 1 )->UpdatePreparedFunctions();
+    // TODO: What should this do?
     return 0;
 }
 
