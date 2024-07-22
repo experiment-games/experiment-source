@@ -727,10 +727,10 @@ bool Panel::IsFunctionPrepared( const char *functionName )
     // when a panel is vgui.Create'd in Init and used in OnChildAdded.
     // For example DScrollPanel does:
     // function PANEL:Init()
-	//      self.pnlCanvas = vgui.Create( "Panel", self )
+    //      self.pnlCanvas = vgui.Create( "Panel", self )
     //      ...etc
     // end
-    // 
+    //
     // Then in OnChildAdded expects self.pnlCanvas to exist, but that's not
     // the case if we call OnChildAdded immediately.
     if ( Q_strcmp( functionName, "OnChildAdded" ) == 0 )
@@ -947,7 +947,7 @@ void Panel::MakeReadyForUse()
 {
     //	PerformApplySchemeSettings();
     UpdateSiblingPin();
-    surface()->SolveTraverse( GetVPanel(), true );// true so scheme settings are force applied
+    surface()->SolveTraverse( GetVPanel(), true );  // true so scheme settings are force applied
 }
 
 //-----------------------------------------------------------------------------
@@ -3826,9 +3826,9 @@ void Panel::GetChildrenSize( int &wide, int &tall )
         int x, y, childWide, childTall;
         child->GetBounds( x, y, childWide, childTall );
 
-        //const Thickness padding = child->GetDockPadding();
-        //childWide += padding.right;
-        //childTall += padding.bottom;
+        // const Thickness padding = child->GetDockPadding();
+        // childWide += padding.right;
+        // childTall += padding.bottom;
 
         wide = MAX( wide, x + childWide );
         tall = MAX( tall, y + childTall );
@@ -3840,9 +3840,9 @@ void Panel::SizeToChildren( bool sizeWide /* = false */, bool sizeTall /* = fals
     int wide = 0, tall = 0;
     GetChildrenSize( wide, tall );
 
-    //const Thickness padding = GetDockPadding();
-    //wide += padding.right;
-    //tall += padding.bottom;
+    // const Thickness padding = GetDockPadding();
+    // wide += padding.right;
+    // tall += padding.bottom;
 
     SetSize( sizeWide ? wide : GetWide(), sizeTall ? tall : GetTall() );
 }
@@ -3907,10 +3907,10 @@ Dock::Type Panel::GetDock()
 */
 void Panel::RecurseLayout()
 {
-    //if ( _flags.IsFlagSet( NEEDS_LAYOUT ) )
+    // if ( _flags.IsFlagSet( NEEDS_LAYOUT ) )
     //{
-    //    InternalPerformLayout();
-    //}
+    //     InternalPerformLayout();
+    // }
 
     // Start calculating the dock layout sizes
     // Assume 0, 0 as the starting point. True positioning will occur in PostLayout
@@ -3932,10 +3932,10 @@ void Panel::RecurseLayout()
         Dock::Type dock = pChild->GetDock();
 
         // We'll handle fill after this loop
-        if ( dock & Dock::Fill )
+        if ( dock == Dock::Fill )
             continue;
 
-        if ( dock & Dock::Top )
+        if ( dock == Dock::Top )
         {
             const Thickness margin = pChild->GetDockMargin();
             pChild->SetBounds( renderBounds.x + margin.left, renderBounds.y + margin.top, renderBounds.wide - margin.left - margin.right, pChild->GetTall() );
@@ -3943,7 +3943,7 @@ void Panel::RecurseLayout()
             renderBounds.y += iHeight;
             renderBounds.tall -= iHeight;
         }
-        else if ( dock & Dock::Left )
+        else if ( dock == Dock::Left )
         {
             const Thickness margin = pChild->GetDockMargin();
             pChild->SetBounds( renderBounds.x + margin.left, renderBounds.y + margin.top, pChild->GetWide(), renderBounds.tall - margin.top - margin.bottom );
@@ -3951,14 +3951,14 @@ void Panel::RecurseLayout()
             renderBounds.x += iWidth;
             renderBounds.wide -= iWidth;
         }
-        else if ( dock & Dock::Right )
+        else if ( dock == Dock::Right )
         {
             const Thickness margin = pChild->GetDockMargin();
             pChild->SetBounds( ( renderBounds.x + renderBounds.wide ) - pChild->GetWide() - margin.right, renderBounds.y + margin.top, pChild->GetWide(), renderBounds.tall - margin.top - margin.bottom );
             int iWidth = margin.left + margin.right + pChild->GetWide();
             renderBounds.wide -= iWidth;
         }
-        else if ( dock & Dock::Bottom )
+        else if ( dock == Dock::Bottom )
         {
             const Thickness margin = pChild->GetDockMargin();
             pChild->SetBounds( renderBounds.x + margin.left, ( renderBounds.y + renderBounds.tall ) - pChild->GetTall() - margin.bottom, renderBounds.wide - margin.left - margin.right, pChild->GetTall() );
@@ -3977,7 +3977,7 @@ void Panel::RecurseLayout()
         Panel *pChild = GetChild( i );
         Dock::Type dock = pChild->GetDock();
 
-        if ( dock & Dock::Fill )
+        if ( dock == Dock::Fill )
         {
             const Thickness margin = pChild->GetDockMargin();
             pChild->SetBounds( renderBounds.x + margin.left, renderBounds.y + margin.top, renderBounds.wide - margin.left - margin.right, renderBounds.tall - margin.top - margin.bottom );
