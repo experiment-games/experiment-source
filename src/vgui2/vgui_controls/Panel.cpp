@@ -3816,19 +3816,32 @@ void Panel::GetChildrenSize( int &wide, int &tall )
     wide = 0;
     tall = 0;
 
+    // If we need laying out, do it now
+    if ( _flags.IsFlagSet( NEEDS_LAYOUT ) && !_flags.IsFlagSet( IN_PERFORM_LAYOUT ) )
+    {
+        // TODO: This feels like a hack, but we need it to have the spawnmenu AND derma_controls layout to get the correct height on init.
+        RecurseInternalPerformChildrenLayout();
+        InternalPerformLayout();
+    }
+
     for ( int i = 0; i < GetChildCount(); i++ )
     {
         Panel *child = GetChild( i );
 
         if ( !child->IsVisible() )
+        {
             continue;
+        }
+
+        // If the child needs laying out, do it now
+        if ( child->_flags.IsFlagSet( NEEDS_LAYOUT ) && !child->_flags.IsFlagSet( IN_PERFORM_LAYOUT ) )
+        {
+            // TODO: This feels like a hack, but we need it to have the spawnmenu AND derma_controls layout to get the correct height on init.
+            child->InternalPerformLayout();
+        }
 
         int x, y, childWide, childTall;
         child->GetBounds( x, y, childWide, childTall );
-
-        // const Thickness padding = child->GetDockPadding();
-        // childWide += padding.right;
-        // childTall += padding.bottom;
 
         wide = MAX( wide, x + childWide );
         tall = MAX( tall, y + childTall );
@@ -3839,10 +3852,6 @@ void Panel::SizeToChildren( bool sizeWide /* = false */, bool sizeTall /* = fals
 {
     int wide = 0, tall = 0;
     GetChildrenSize( wide, tall );
-
-    // const Thickness padding = GetDockPadding();
-    // wide += padding.right;
-    // tall += padding.bottom;
 
     SetSize( sizeWide ? wide : GetWide(), sizeTall ? tall : GetTall() );
 }
@@ -4391,6 +4400,9 @@ void Panel::PerformLayout()
     // this should be overridden to relayout controls
 
 #ifdef LUA_SDK
+    // We initiate perform layout inside RecurseLayout (recursively for children too)
+    RecurseLayout();
+
     int wide, tall;
     Panel::GetSize( wide, tall );
 
@@ -4398,20 +4410,6 @@ void Panel::PerformLayout()
     lua_pushinteger( m_lua_State, wide );
     lua_pushinteger( m_lua_State, tall );
     END_LUA_CALL_PANEL_METHOD( 2, 0 );
-
-    // We initiate perform layout inside RecurseLayout (recursively for children too)
-    RecurseLayout();
-    // Hack so we can implement Docking in Lua (see game/experiment/lua/includes/extensions/panel.lua)
-    /*if ( m_lua_State && m_nTableReference >= 0 )
-    {
-        Panel::GetSize( wide, tall );
-
-        BEGIN_LUA_CALL_HOOK_FOR_STATE( m_lua_State, "OnPanelPerformLayout" );
-        this->PushPanelToLua( m_lua_State );
-        lua_pushinteger( m_lua_State, wide );
-        lua_pushinteger( m_lua_State, tall );
-        END_LUA_CALL_HOOK_FOR_STATE( m_lua_State, 3, 0 );
-    }*/
 #endif
 }
 

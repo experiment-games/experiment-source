@@ -308,6 +308,24 @@ class Panel : public IClientPanel, virtual IForceVirtualInheritancePanel
         }
     }
 
+    // Recursively go through the children, and perform layout on them if they need it
+    virtual void RecurseInternalPerformChildrenLayout( bool bForce = false )
+    {
+        for ( int i = 0; i < GetChildCount(); i++ )
+        {
+            Panel *child = GetChild( i );
+            if ( !child )
+                continue;
+
+            child->RecurseInternalPerformChildrenLayout( bForce );
+
+            if ( ( child->_flags.IsFlagSet( NEEDS_LAYOUT ) && !child->_flags.IsFlagSet( IN_PERFORM_LAYOUT ) ) || bForce )
+            {
+                child->InternalPerformLayout();
+            }
+        }
+    }
+
     virtual void GetLocalCursorPosition( int &x, int &y )
     {
         x = m_nLastLocalCursorX;
