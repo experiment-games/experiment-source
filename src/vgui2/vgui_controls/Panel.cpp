@@ -693,7 +693,12 @@ void *Panel::CreateLuaInstance( lua_State *L, Panel *pInstance )
     return _pPanelHandle;
 }
 
-void Panel::PushVPanelLuaInstance( lua_State *L, VPANEL panel )
+/// <summary>
+/// 
+/// </summary>
+/// <param name="L"></param>
+/// <param name="panel"></param>
+DEPRECATED void Panel::PushVPanelLuaInstance( lua_State *L, VPANEL panel )
 {
     Panel *pPanel = ipanel()->GetPanel( panel, GetControlsModuleName() );
 
@@ -705,6 +710,12 @@ void Panel::PushVPanelLuaInstance( lua_State *L, VPANEL panel )
         lua_setmetatable( L, -2 );
         return;
     }
+
+    // TODO:    Remove this function and handle its functionality the same as done in
+    //          Panel::OnChildAdded. Using ipanel()->GetPanel and calling PushLuaInstance
+    //          on it in the place where this function is called.
+    AssertMsg( pPanel->m_lua_State != nullptr, "Non-Lua or not yet initialized Lua Panel" );
+    AssertMsg( pPanel->m_lua_State == L, "Lua Panel with wrong Lua state" );
 
     pPanel->PushLuaInstance( L );
 }
@@ -3795,8 +3806,6 @@ void Panel::GetChildrenSize( int &wide, int &tall )
     // If we need laying out, do it now
     if ( _flags.IsFlagSet( NEEDS_LAYOUT ) && !_flags.IsFlagSet( IN_PERFORM_LAYOUT ) )
     {
-        // TODO: This feels like a hack, but we need it to have the spawnmenu AND derma_controls layout to get the correct height on init.
-        RecurseInternalPerformChildrenLayout();
         InternalPerformLayout();
     }
 
@@ -3812,8 +3821,7 @@ void Panel::GetChildrenSize( int &wide, int &tall )
         // If the child needs laying out, do it now
         if ( child->_flags.IsFlagSet( NEEDS_LAYOUT ) && !child->_flags.IsFlagSet( IN_PERFORM_LAYOUT ) )
         {
-            // TODO: This feels like a hack, but we need it to have the spawnmenu AND derma_controls layout to get the correct height on init.
-            child->InternalPerformLayout();
+            //child->InternalPerformLayout();
         }
 
         int x, y, childWide, childTall;
@@ -3826,6 +3834,10 @@ void Panel::GetChildrenSize( int &wide, int &tall )
 
 void Panel::SizeToChildren( bool sizeWide /* = false */, bool sizeTall /* = false */ )
 {
+    // If we need laying out, do it now
+    // TODO: This feels like a hack, but we need it to have the spawnmenu AND derma_controls layout to get the correct height on init.
+    RecurseInternalPerformChildrenLayout();
+
     int wide = 0, tall = 0;
     GetChildrenSize( wide, tall );
 

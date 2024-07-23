@@ -683,6 +683,15 @@ typedef void * HINSTANCE;
 
 #endif // _WIN32
 
+#if defined( __GNUC__ ) || defined( __clang__ )
+#define DEPRECATED __attribute__( ( deprecated ) )
+#elif defined( _MSC_VER )
+#define DEPRECATED __declspec( deprecated )
+#else
+#pragma message( "WARNING: You need to implement DEPRECATED for this compiler" )
+#define DEPRECATED
+#endif
+
 #if defined( LINUX ) && ((__GNUC__ * 100) + __GNUC_MINOR__) >= 406
   // based on some Jonathan Wakely macros on the net...
   #define GCC_DIAG_STR(s) #s
