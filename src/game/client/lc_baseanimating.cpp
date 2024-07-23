@@ -35,7 +35,7 @@ LUA_API lua_CBaseAnimating *lua_toanimating( lua_State *L, int idx )
 
 LUA_API void lua_pushanimating( lua_State *L, CBaseAnimating *pEntity )
 {
-    LUA_SAFE_PUSH_ENTITY_INSTANCE( L, pEntity );
+    CBaseEntity::PushLuaInstanceSafe( L, pEntity );
 }
 
 LUALIB_API lua_CBaseAnimating *luaL_checkanimating( lua_State *L, int narg )

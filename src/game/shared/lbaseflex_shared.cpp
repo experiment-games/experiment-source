@@ -103,7 +103,7 @@ LUA_API lua_CBaseFlex *lua_tobaseflex( lua_State *L, int idx )
 
 LUA_API void lua_pushbaseflex( lua_State *L, lua_CBaseFlex *pEntity )
 {
-    LUA_SAFE_PUSH_ENTITY_INSTANCE( L, pEntity );
+    CBaseEntity::PushLuaInstanceSafe( L, pEntity );
 }
 
 LUALIB_API lua_CBaseFlex *luaL_checkbaseflex( lua_State *L, int narg )

@@ -43,7 +43,7 @@ LUA_API lua_CHL2MP_Player *lua_tohl2mpplayer( lua_State *L, int idx )
 
 LUA_API void lua_pushhl2mpplayer( lua_State *L, CHL2MP_Player *pEntity )
 {
-    LUA_SAFE_PUSH_ENTITY_INSTANCE( L, pEntity );
+    CBaseEntity::PushLuaInstanceSafe( L, pEntity );
 }
 
 LUALIB_API lua_CHL2MP_Player *luaL_checkhl2mpplayer( lua_State *L, int narg )
@@ -112,6 +112,11 @@ static int CHL2MP_Player___index( lua_State *L )
     CHL2MP_Player *pPlayer = lua_tohl2mpplayer( L, 1 );
 
     LUA_METATABLE_INDEX_CHECK_VALID( L, CBaseEntity_IsValid );
+    if ( !pPlayer )
+    {
+        // dump the metatable
+        luasrc_dumpstack( L );
+    }
     LUA_METATABLE_INDEX_CHECK( L, pPlayer );
 
     LUA_METATABLE_INDEX_CHECK_REF_TABLE( L, pPlayer );

@@ -50,13 +50,6 @@ CBaseEntity *CreateEntityByName( const char *className, int iForceEdictIndex )
     CBaseEntity *pEntity = pNetwork->GetBaseEntity();
     Assert( pEntity );
 
-    if ( L )
-    {
-        BEGIN_LUA_CALL_HOOK( "OnEntityCreated" );
-        pEntity->PushLuaInstance( L );
-        END_LUA_CALL_HOOK( 1, 0 );
-    }
-
     return pEntity;
 }
 

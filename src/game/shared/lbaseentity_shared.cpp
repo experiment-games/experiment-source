@@ -55,21 +55,22 @@ LUA_API lua_CBaseEntity *lua_toentity( lua_State *L, int idx )
 
 LUA_API void lua_pushentity( lua_State *L, CBaseEntity *pEntity )
 {
-    // Always send as most specific type, so if the entity is a player, send as a player
-    // We need to dynamic cast, otherwise the base class entity will be called
-    if ( pEntity && pEntity->IsPlayer() )
-    {
-        lua_pushplayer( L, dynamic_cast< CBasePlayer * >( pEntity ) );
-        return;
-    }
-    else if ( pEntity && pEntity->IsWeapon() )
-    {
-        lua_pushweapon( L, dynamic_cast< CBaseCombatWeapon * >( pEntity ) );
-        return;
-    }
+    //// Always send as most specific type, so if the entity is a player, send as a player
+    //// We need to dynamic cast, otherwise the base class entity will be called
+    // if ( pEntity && pEntity->IsPlayer() )
+    //{
+    //     lua_pushplayer( L, dynamic_cast< CBasePlayer * >( pEntity ) );
+    //     return;
+    // }
+    // else if ( pEntity && pEntity->IsWeapon() )
+    //{
+    //     lua_pushweapon( L, dynamic_cast< CBaseCombatWeapon * >( pEntity ) );
+    //     return;
+    // }
 
-    LUA_SAFE_PUSH_ENTITY_INSTANCE( L, pEntity );
-}
+    // LUA_SAFE_PUSH_ENTITY_INSTANCE( L, pEntity );
+    CBaseEntity::PushLuaInstanceSafe( L, pEntity );
+} 
 
 LUALIB_API lua_CBaseEntity *luaL_checkentity( lua_State *L, int narg )
 {

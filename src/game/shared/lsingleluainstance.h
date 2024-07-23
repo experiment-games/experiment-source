@@ -126,18 +126,4 @@ void lua_destroyuserdatainstance( lua_State *L, void *p );
         return MetaTableName;                                       \
     }
 
-// Safely pushes an entity instance, pushing a NULL entity if no valid entity
-// is provided
-#define LUA_SAFE_PUSH_ENTITY_INSTANCE( L, EntityStatement )                                  \
-    if ( !EntityStatement )                                                                  \
-    {                                                                                        \
-        CBaseHandle *hEntity = ( CBaseHandle * )lua_newuserdata( L, sizeof( CBaseHandle ) ); \
-        hEntity->Set( pEntity );                                                             \
-        luaL_getmetatable( L, LUA_BASEENTITYLIBNAME );                                       \
-        lua_setmetatable( L, -2 );                                                           \
-        return;                                                                              \
-    }                                                                                        \
-                                                                                             \
-    EntityStatement->PushLuaInstance( L );
-
 #endif

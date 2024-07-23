@@ -44,8 +44,7 @@ LUA_API lua_CBasePlayer *lua_toplayer( lua_State *L, int idx )
 
 LUA_API void lua_pushplayer( lua_State *L, CBasePlayer *pEntity )
 {
-    CHL2MP_Player *pPlayer = ToHL2MPPlayer( pEntity );
-    LUA_SAFE_PUSH_ENTITY_INSTANCE( L, pPlayer );
+    CBaseEntity::PushLuaInstanceSafe( L, ToHL2MPPlayer( pEntity ) );
 }
 
 LUALIB_API lua_CBasePlayer *luaL_checkplayer( lua_State *L, int narg )
@@ -427,7 +426,7 @@ static int CBasePlayer_GetViewEntity( lua_State *L )
 #ifdef CLIENT_DLL
     CBasePlayer *pPlayer = luaL_checkplayer( L, 1 );
 
-    if (pPlayer != C_BasePlayer::GetLocalPlayer())
+    if ( pPlayer != C_BasePlayer::GetLocalPlayer() )
     {
         // For now we can only return the view entity clientside, if it's the local player
         luaL_typeerror( L, 1, "local player" );
@@ -493,12 +492,6 @@ static int CBasePlayer_IsInAVehicle( lua_State *L )
 static int CBasePlayer_IsObserver( lua_State *L )
 {
     lua_pushboolean( L, luaL_checkplayer( L, 1 )->IsObserver() );
-    return 1;
-}
-
-static int CBasePlayer_IsPlayer( lua_State *L )
-{
-    lua_pushboolean( L, luaL_checkplayer( L, 1 )->IsPlayer() );
     return 1;
 }
 
@@ -1137,7 +1130,6 @@ static const luaL_Reg CBasePlayermeta[] = {
     { "IsHLTV", CBasePlayer_IsHLTV },
     { "IsInAVehicle", CBasePlayer_IsInAVehicle },
     { "IsObserver", CBasePlayer_IsObserver },
-    { "IsPlayer", CBasePlayer_IsPlayer },
     { "IsPlayerUnderwater", CBasePlayer_IsPlayerUnderwater },
     { "IsSuitEquipped", CBasePlayer_IsSuitEquipped },
     { "IsUseableEntity", CBasePlayer_IsUseableEntity },

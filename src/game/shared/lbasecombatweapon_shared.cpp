@@ -36,7 +36,7 @@ LUA_API lua_CBaseCombatWeapon *lua_toweapon( lua_State *L, int idx )
 
 LUA_API void lua_pushweapon( lua_State *L, lua_CBaseCombatWeapon *pEntity )
 {
-    LUA_SAFE_PUSH_ENTITY_INSTANCE( L, pEntity );
+    CBaseEntity::PushLuaInstanceSafe( L, pEntity );
 }
 
 LUALIB_API lua_CBaseCombatWeapon *luaL_checkweapon( lua_State *L, int narg )
