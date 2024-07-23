@@ -1015,7 +1015,8 @@ C_BaseEntity::~C_BaseEntity()
     RemoveFromTeleportList();
 
 #if defined( LUA_SDK )
-    lua_unref( L, m_nTableReference );
+    if( L )
+        lua_unref( L, m_nTableReference );
 #endif
 }
 
@@ -2170,7 +2171,7 @@ void C_BaseEntity::NotifyShouldTransmit( ShouldTransmitState_t state )
             UpdatePartitionListEntry();
 
 #ifdef LUA_SDK
-            if ( L )
+            if ( L && m_pLuaInstance )
             {
                 BEGIN_LUA_CALL_HOOK( "NetworkEntityCreated" );
                 PushLuaInstance( L );
@@ -4857,14 +4858,18 @@ int C_BaseEntity::PrecacheModel( const char *name )
 //-----------------------------------------------------------------------------
 // Purpose:
 // Input  : *obj -
+// Experiment;  Friendly reminder that a DevWarning inside this method will
+//              cause an unhelpful error in GetModelPtr :/
 //-----------------------------------------------------------------------------
 void C_BaseEntity::Remove()
 {
-    DevWarning( "EntityRemoved %s\n", entindex() );  // TODO: Remove once we found out if its called only once
-    BEGIN_LUA_CALL_HOOK( "EntityRemoved" );
-    PushLuaInstance( L );
-    lua_pushboolean( L, false );  // TODO: "Whether the removal is happening due to a full update clientside." <- See OnPredictedEntityRemove, is that calling EntityRemoved correctly? Won't this be called doubly?
-    END_LUA_CALL_HOOK( 2, 0 );
+    if ( L && m_pLuaInstance )
+    {
+        BEGIN_LUA_CALL_HOOK( "EntityRemoved" );
+        PushLuaInstance( L );
+        lua_pushboolean( L, false );  // TODO: "Whether the removal is happening due to a full update clientside." <- See OnPredictedEntityRemove, is that calling EntityRemoved correctly? Won't this be called doubly?
+        END_LUA_CALL_HOOK( 2, 0 );
+    }
 
     // Nothing for now, if it's a predicted entity, could flag as "delete" or
     // dormant
@@ -5178,11 +5183,13 @@ bool C_BaseEntity::OnPredictedEntityRemove( bool isbeingremoved,
     //  DATA_UPDATE_CREATED messages passes
 #endif
 
-    DevWarning( "EntityRemoved %s\n", entindex() );  // TODO: Remove once we found out if its called only once
-    BEGIN_LUA_CALL_HOOK( "EntityRemoved" );
-    PushLuaInstance( L );
-    lua_pushboolean( L, true );
-    END_LUA_CALL_HOOK( 2, 0 );
+    if ( L && m_pLuaInstance )
+    {
+        BEGIN_LUA_CALL_HOOK( "EntityRemoved" );
+        PushLuaInstance( L );
+        lua_pushboolean( L, true );
+        END_LUA_CALL_HOOK( 2, 0 );
+    }
 
     return true;
 }

@@ -89,7 +89,8 @@ CBaseScriptedTrigger::CBaseScriptedTrigger( void )
 CBaseScriptedTrigger::~CBaseScriptedTrigger( void )
 {
 #ifdef LUA_SDK
-    lua_unref( L, m_nTableReference );
+    if ( L )
+        lua_unref( L, m_nTableReference );
 #endif
 }
 

@@ -203,7 +203,8 @@ CHL2MPScriptedWeapon::~CHL2MPScriptedWeapon( void )
     // Andrew; This is actually done in CBaseEntity. I'm doing it here because
     // this is the class that initialized the reference.
 #ifdef LUA_SDK
-    lua_unref( L, m_nTableReference );
+    if ( L )
+        lua_unref( L, m_nTableReference );
 #endif
 }
 
