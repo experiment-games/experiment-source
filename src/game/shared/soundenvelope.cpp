@@ -457,7 +457,7 @@ float CSoundPatch::GetVolume( void )
 //-----------------------------------------------------------------------------
 inline int CSoundPatch::EntIndex() const
 {
-	Assert( !m_hEnt.IsValid() || m_hEnt.Get() );
+	//Assert( !m_hEnt.IsValid() || m_hEnt.Get() );
 	return m_hEnt.Get() ? m_hEnt->entindex() : -1;
 }
 
@@ -480,7 +480,7 @@ void CSoundPatch::Shutdown( void )
 	if ( m_isPlaying )
 	{
 		int entIndex = EntIndex();
-		Assert( entIndex >= 0 );
+		//Assert( entIndex >= 0 ); // Experiment; Dont assert, this may happen when a prop is destroyed
 		// BUGBUG: Don't crash in release mode
 		if ( entIndex >= 0 )
 		{

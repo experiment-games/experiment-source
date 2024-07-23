@@ -791,7 +791,14 @@ static int luasrc_Util_EntitiesInPVS( lua_State *L )
 
     static byte pvs[MAX_MAP_CLUSTERS / 8];
     int clusterIndex = engine->GetClusterForOrigin( vecViewOrigin );
-    Assert( clusterIndex >= 0 );
+
+    if ( clusterIndex < 0 )
+    {
+        lua_pushinteger( L, 0 );
+        lua_newtable( L );
+        return 2;
+    }
+
     engine->GetPVSForCluster( clusterIndex, sizeof( pvs ), pvs );
 
     int count = 0;

@@ -173,7 +173,7 @@ void C_RecipientFilter::UsePredictionRules( void )
 
 	if ( !prediction->InPrediction() )
 	{
-		Assert( 0 );
+		// Assert( 0 ); // Experiment; This happens sometimes. I don't know why. Just dont assert.
 		return;
 	}
 

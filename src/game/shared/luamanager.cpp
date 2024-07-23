@@ -812,7 +812,7 @@ void luasrc_ui_disable( void )
 void luasrc_shutdown( void )
 {
 #ifdef CLIENT_DLL
-    Msg( "Lua Menu shutdown - Client\n" );
+    Msg( "Lua shutdown - Client\n" );
 
     delete g_pClientLuaPanel;
     g_pClientLuaPanel = NULL;
@@ -828,6 +828,9 @@ void luasrc_shutdown( void )
 
     if ( !g_bLuaInitialized )
         return;
+
+    BEGIN_LUA_CALL_HOOK( "ShutDown" );
+    END_LUA_CALL_HOOK( 0, 0 );
 
     g_bLuaInitialized = false;
 

@@ -1196,11 +1196,21 @@ local sbox_weapons = CreateConVar("sbox_weapons", "1",
 --]]
 if (CLIENT) then
 	Include("cl_hooks.lua")
+
+	hook.Add("LevelInitPostEntity", "GModCompatibility.CallInitPostEntityHooks", function()
+		hook.Run("InitPostEntity")
+    end)
+else
+	-- Include("sv_hooks.lua")
+
+	hook.Add("ServerActivate", "GModCompatibility.CallInitPostEntityHooks", function()
+		hook.Run("InitPostEntity")
+	end)
 end
 
 hook.Add("Initialize", "GModCompatibility.CallInitializeHooks", function()
+	hook.Run("CreateTeams")
 	hook.Run("PreGamemodeLoaded")
-
 	hook.Run("OnGamemodeLoaded")
 	hook.Run("PostGamemodeLoaded")
 end)
