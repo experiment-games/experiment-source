@@ -1703,7 +1703,7 @@ void CBasePlayer::CalcPlayerView( Vector &eyeOrigin, QAngle &eyeAngles, float &f
 
 #if defined( LUA_SDK )
     BEGIN_LUA_CALL_HOOK( "CalcPlayerView" );
-    lua_pushplayer( L, this );
+    CBaseEntity::PushLuaInstanceSafe( L, this );
     lua_pushvector( L, eyeOrigin );
     lua_pushangle( L, eyeAngles );
     lua_pushnumber( L, fov );

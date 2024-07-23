@@ -325,7 +325,7 @@ bool CBaseEntity::KeyValue( const char *szKeyName, const char *szValue )
 {
 #ifdef LUA_SDK
     BEGIN_LUA_CALL_HOOK( "EntityKeyValue" );
-    lua_pushentity( L, this );
+    CBaseEntity::PushLuaInstanceSafe( L, this );
     lua_pushstring( L, szKeyName );
     lua_pushstring( L, szValue );
     END_LUA_CALL_HOOK( 3, 1 );

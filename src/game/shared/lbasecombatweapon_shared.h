@@ -1,4 +1,4 @@
-//===== Copyright © 1996-2005, Valve Corporation, All rights reserved. ======//
+//===== Copyright Â© 1996-2005, Valve Corporation, All rights reserved. ======//
 //
 // Purpose: 
 //
@@ -25,10 +25,6 @@ LUA_API lua_CBaseCombatWeapon     *(lua_toweapon) (lua_State *L, int idx);
 /*
 ** push functions (C -> stack)
 */
-LUA_API void  (lua_pushweapon) (lua_State *L, lua_CBaseCombatWeapon *pWeapon);
-
-
-
 LUALIB_API lua_CBaseCombatWeapon *(luaL_checkweapon) (lua_State *L, int narg);
 
 

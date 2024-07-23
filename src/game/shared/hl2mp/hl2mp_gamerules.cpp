@@ -187,8 +187,8 @@ public:
                                   bool &bProximity) {
 #if defined(LUA_SDK)
         BEGIN_LUA_CALL_HOOK("CanPlayerHearPlayer");
-        lua_pushplayer(L, pListener);
-        lua_pushplayer(L, pTalker);
+        CBaseEntity::PushLuaInstanceSafe(L, pListener);
+        CBaseEntity::PushLuaInstanceSafe(L, pTalker);
         lua_pushboolean(L, bProximity);
         END_LUA_CALL_HOOK(3, 2);
 
@@ -286,7 +286,7 @@ void CHL2MPRules::CreateStandardEntities(void) {
 float CHL2MPRules::FlWeaponRespawnTime(CBaseCombatWeapon *pWeapon) {
 #if defined(LUA_SDK)
     BEGIN_LUA_CALL_HOOK("FlWeaponRespawnTime");
-    lua_pushweapon(L, pWeapon);
+    CBaseEntity::PushLuaInstanceSafe(L, pWeapon);
     END_LUA_CALL_HOOK(1, 1);
 
     RETURN_LUA_NUMBER();
@@ -327,7 +327,7 @@ void CHL2MPRules::PlayerKilled(CBasePlayer *pVictim,
     CTakeDamageInfo linfo = info;
 
     BEGIN_LUA_CALL_HOOK("PlayerKilled");
-    lua_pushplayer(L, pVictim);
+    CBaseEntity::PushLuaInstanceSafe(L, pVictim);
     lua_pushdamageinfo(L, linfo);
     END_LUA_CALL_HOOK(2, 0);
 #endif
@@ -345,8 +345,8 @@ bool CHL2MPRules::FPlayerCanTakeDamage(CBasePlayer *pPlayer,
                                        CBaseEntity *pAttacker) {
     CTakeDamageInfo info;
     BEGIN_LUA_CALL_HOOK("FPlayerCanTakeDamage");
-    lua_pushplayer(L, pPlayer);
-    lua_pushentity(L, pAttacker);
+    CBaseEntity::PushLuaInstanceSafe(L, pPlayer);
+    CBaseEntity::PushLuaInstanceSafe(L, pAttacker);
     lua_pushdamageinfo(L, info);
     END_LUA_CALL_HOOK(2, 1);
 
@@ -360,7 +360,7 @@ bool CHL2MPRules::AllowDamage(CBaseEntity *pVictim,
     CTakeDamageInfo lInfo = info;
 
     BEGIN_LUA_CALL_HOOK("AllowDamage");
-    lua_pushentity(L, pVictim);
+    CBaseEntity::PushLuaInstanceSafe(L, pVictim);
     lua_pushdamageinfo(L, lInfo);
     END_LUA_CALL_HOOK(2, 1);
 
@@ -428,7 +428,7 @@ void CHL2MPRules::NPC_DroppedGrenade(void) {
 
 void CHL2MPRules::PlayerThink(CBasePlayer *pPlayer) {
     BEGIN_LUA_CALL_HOOK("PlayerThink");
-    lua_pushplayer(L, pPlayer);
+    CBaseEntity::PushLuaInstanceSafe(L, pPlayer);
     END_LUA_CALL_HOOK(1, 0);
 
     BaseClass::PlayerThink(pPlayer);
@@ -436,7 +436,7 @@ void CHL2MPRules::PlayerThink(CBasePlayer *pPlayer) {
 
 void CHL2MPRules::PlayerSpawn(CBasePlayer *pPlayer) {
     BEGIN_LUA_CALL_HOOK("PlayerSpawn");
-    lua_pushplayer(L, pPlayer);
+    CBaseEntity::PushLuaInstanceSafe(L, pPlayer);
     END_LUA_CALL_HOOK(1, 1);
 
     RETURN_LUA_NONE();
@@ -446,7 +446,7 @@ void CHL2MPRules::PlayerSpawn(CBasePlayer *pPlayer) {
 
 bool CHL2MPRules::FPlayerCanRespawn(CBasePlayer *pPlayer) {
     BEGIN_LUA_CALL_HOOK("FPlayerCanRespawn");
-    lua_pushplayer(L, pPlayer);
+    CBaseEntity::PushLuaInstanceSafe(L, pPlayer);
     END_LUA_CALL_HOOK(1, 1);
 
     RETURN_LUA_BOOLEAN();
@@ -456,7 +456,7 @@ bool CHL2MPRules::FPlayerCanRespawn(CBasePlayer *pPlayer) {
 
 float CHL2MPRules::FlPlayerSpawnTime(CBasePlayer *pPlayer) {
     BEGIN_LUA_CALL_HOOK("FlPlayerSpawnTime");
-    lua_pushplayer(L, pPlayer);
+    CBaseEntity::PushLuaInstanceSafe(L, pPlayer);
     END_LUA_CALL_HOOK(1, 1);
 
     RETURN_LUA_NUMBER();
@@ -609,7 +609,7 @@ bool CHL2MPRules::CheckGameOver() {
 float CHL2MPRules::FlWeaponTryRespawn(CBaseCombatWeapon *pWeapon) {
 #if defined(LUA_SDK)
     BEGIN_LUA_CALL_HOOK("FlWeaponTryRespawn");
-    lua_pushweapon(L, pWeapon);
+    CBaseEntity::PushLuaInstanceSafe(L, pWeapon);
     END_LUA_CALL_HOOK(1, 1);
 
     RETURN_LUA_NUMBER();
@@ -635,7 +635,7 @@ float CHL2MPRules::FlWeaponTryRespawn(CBaseCombatWeapon *pWeapon) {
 Vector CHL2MPRules::VecWeaponRespawnSpot(CBaseCombatWeapon *pWeapon) {
 #if defined(LUA_SDK)
     BEGIN_LUA_CALL_HOOK("VecWeaponRespawnSpot");
-    lua_pushweapon(L, pWeapon);
+    CBaseEntity::PushLuaInstanceSafe(L, pWeapon);
     END_LUA_CALL_HOOK(1, 1);
 
     RETURN_LUA_VECTOR();
@@ -742,7 +742,7 @@ void CHL2MPRules::ManageObjectRelocation(void) {
 void CHL2MPRules::AddLevelDesignerPlacedObject(CBaseEntity *pEntity) {
 #if defined(LUA_SDK)
     BEGIN_LUA_CALL_HOOK("AddLevelDesignerPlacedObject");
-    lua_pushentity(L, pEntity);
+    CBaseEntity::PushLuaInstanceSafe(L, pEntity);
     END_LUA_CALL_HOOK(1, 1);
 
     RETURN_LUA_NONE();
@@ -759,7 +759,7 @@ void CHL2MPRules::AddLevelDesignerPlacedObject(CBaseEntity *pEntity) {
 void CHL2MPRules::RemoveLevelDesignerPlacedObject(CBaseEntity *pEntity) {
 #if defined(LUA_SDK)
     BEGIN_LUA_CALL_HOOK("RemoveLevelDesignerPlacedObject");
-    lua_pushentity(L, pEntity);
+    CBaseEntity::PushLuaInstanceSafe(L, pEntity);
     END_LUA_CALL_HOOK(1, 1);
 
     RETURN_LUA_NONE();
@@ -777,7 +777,7 @@ void CHL2MPRules::RemoveLevelDesignerPlacedObject(CBaseEntity *pEntity) {
 Vector CHL2MPRules::VecItemRespawnSpot(CItem *pItem) {
 #if defined(LUA_SDK)
     BEGIN_LUA_CALL_HOOK("VecItemRespawnSpot");
-    lua_pushentity(L, pItem);
+    CBaseEntity::PushLuaInstanceSafe(L, pItem);
     END_LUA_CALL_HOOK(1, 1);
 
     RETURN_LUA_VECTOR();
@@ -792,7 +792,7 @@ Vector CHL2MPRules::VecItemRespawnSpot(CItem *pItem) {
 QAngle CHL2MPRules::VecItemRespawnAngles(CItem *pItem) {
 #if defined(LUA_SDK)
     BEGIN_LUA_CALL_HOOK("VecItemRespawnAngles");
-    lua_pushentity(L, pItem);
+    CBaseEntity::PushLuaInstanceSafe(L, pItem);
     END_LUA_CALL_HOOK(1, 1);
 
     RETURN_LUA_ANGLE();
@@ -807,7 +807,7 @@ QAngle CHL2MPRules::VecItemRespawnAngles(CItem *pItem) {
 float CHL2MPRules::FlItemRespawnTime(CItem *pItem) {
 #if defined(LUA_SDK)
     BEGIN_LUA_CALL_HOOK("FlItemRespawnTime");
-    lua_pushentity(L, pItem);
+    CBaseEntity::PushLuaInstanceSafe(L, pItem);
     END_LUA_CALL_HOOK(1, 1);
 
     RETURN_LUA_NUMBER();
@@ -821,8 +821,8 @@ float CHL2MPRules::FlItemRespawnTime(CItem *pItem) {
 //=========================================================
 void CHL2MPRules::PlayerGotItem(CBasePlayer *pPlayer, CItem *pItem) {
     BEGIN_LUA_CALL_HOOK("PlayerGotItem");
-    lua_pushentity(L, pPlayer);
-    lua_pushentity(L, pItem);
+    CBaseEntity::PushLuaInstanceSafe(L, pPlayer);
+    CBaseEntity::PushLuaInstanceSafe(L, pItem);
     END_LUA_CALL_HOOK(2, 0);
 }
 
@@ -830,7 +830,7 @@ void CHL2MPRules::PlayerGotItem(CBasePlayer *pPlayer, CItem *pItem) {
 //=========================================================
 int CHL2MPRules::ItemShouldRespawn(CItem *pItem) {
     BEGIN_LUA_CALL_HOOK("ItemShouldRespawn");
-    lua_pushentity(L, pItem);
+    CBaseEntity::PushLuaInstanceSafe(L, pItem);
     END_LUA_CALL_HOOK(1, 1);
 
     RETURN_LUA_INTEGER();
@@ -853,8 +853,8 @@ bool CHL2MPRules::CanHavePlayerItem(CBasePlayer *pPlayer,
     }
 #else
     BEGIN_LUA_CALL_HOOK("CanHavePlayerItem");
-    lua_pushplayer(L, pPlayer);
-    lua_pushweapon(L, pItem);
+    CBaseEntity::PushLuaInstanceSafe(L, pPlayer);
+    CBaseEntity::PushLuaInstanceSafe(L, pItem);
     END_LUA_CALL_HOOK(2, 1);
 
     RETURN_LUA_BOOLEAN();
@@ -872,7 +872,7 @@ bool CHL2MPRules::CanHavePlayerItem(CBasePlayer *pPlayer,
 int CHL2MPRules::WeaponShouldRespawn(CBaseCombatWeapon *pWeapon) {
 #if defined(LUA_SDK)
     BEGIN_LUA_CALL_HOOK("WeaponShouldRespawn");
-    lua_pushweapon(L, pWeapon);
+    CBaseEntity::PushLuaInstanceSafe(L, pWeapon);
     END_LUA_CALL_HOOK(1, 1);
 
     RETURN_LUA_INTEGER();
@@ -894,7 +894,7 @@ void CHL2MPRules::ClientDisconnected(edict_t *pClient) {
 #ifndef CLIENT_DLL
 #if defined(LUA_SDK)
     BEGIN_LUA_CALL_HOOK("ClientDisconnected");
-    lua_pushplayer(L, (CBasePlayer *)CBaseEntity::Instance(pClient));
+    CBaseEntity::PushLuaInstanceSafe(L, (CBasePlayer *)CBaseEntity::Instance(pClient));
     END_LUA_CALL_HOOK(1, 0);
 #endif
 
@@ -917,7 +917,7 @@ void CHL2MPRules::ClientDisconnected(edict_t *pClient) {
 #if defined(LUA_SDK)
 float CHL2MPRules::FlPlayerFallDamage(CBasePlayer *pPlayer) {
     BEGIN_LUA_CALL_HOOK("FlPlayerFallDamage");
-    lua_pushplayer(L, pPlayer);
+    CBaseEntity::PushLuaInstanceSafe(L, pPlayer);
     END_LUA_CALL_HOOK(1, 1);
 
     RETURN_LUA_NUMBER();
@@ -936,7 +936,7 @@ void CHL2MPRules::DeathNotice(CBasePlayer *pVictim,
     CTakeDamageInfo lInfo = info;
 
     BEGIN_LUA_CALL_HOOK("DeathNotice");
-    lua_pushplayer(L, pVictim);
+    CBaseEntity::PushLuaInstanceSafe(L, pVictim);
     lua_pushdamageinfo(L, lInfo);
     END_LUA_CALL_HOOK(2, 0);
 #endif
@@ -1066,7 +1066,7 @@ void CHL2MPRules::DeathNotice(CBasePlayer *pVictim,
 void CHL2MPRules::ClientSettingsChanged(CBasePlayer *pPlayer) {
 #if defined(LUA_SDK)
     BEGIN_LUA_CALL_HOOK("ClientSettingsChanged");
-    lua_pushplayer(L, pPlayer);
+    CBaseEntity::PushLuaInstanceSafe(L, pPlayer);
     END_LUA_CALL_HOOK(1, 0);
 #endif
 
@@ -1156,8 +1156,8 @@ int CHL2MPRules::PlayerRelationship(CBaseEntity *pPlayer,
                                     CBaseEntity *pTarget) {
 #if defined(LUA_SDK)
     BEGIN_LUA_CALL_HOOK("PlayerRelationship");
-    lua_pushentity(L, pPlayer);
-    lua_pushentity(L, pTarget);
+    CBaseEntity::PushLuaInstanceSafe(L, pPlayer);
+    CBaseEntity::PushLuaInstanceSafe(L, pTarget);
     END_LUA_CALL_HOOK(2, 1);
 
     RETURN_LUA_INTEGER();
@@ -1183,8 +1183,8 @@ int CHL2MPRules::PlayerRelationship(CBaseEntity *pPlayer,
 bool CHL2MPRules::PlayerCanHearChat(CBasePlayer *pListener,
                                     CBasePlayer *pSpeaker) {
     BEGIN_LUA_CALL_HOOK("PlayerCanHearChat");
-    lua_pushplayer(L, pListener);
-    lua_pushplayer(L, pSpeaker);
+    CBaseEntity::PushLuaInstanceSafe(L, pListener);
+    CBaseEntity::PushLuaInstanceSafe(L, pSpeaker);
     END_LUA_CALL_HOOK(2, 1);
 
     RETURN_LUA_BOOLEAN();
@@ -1196,7 +1196,7 @@ bool CHL2MPRules::ClientConnected(edict_t *pEntity, const char *pszName,
                                   const char *pszAddress, char *reject,
                                   int maxrejectlen) {
     BEGIN_LUA_CALL_HOOK("ClientConnected");
-    lua_pushplayer(L, (CBasePlayer *)CBaseEntity::Instance(pEntity));
+    CBaseEntity::PushLuaInstanceSafe(L, (CBasePlayer *)CBaseEntity::Instance(pEntity));
     lua_pushstring(L, pszName);
     lua_pushstring(L, pszAddress);
     lua_pushstring(L, reject);
@@ -1211,7 +1211,7 @@ bool CHL2MPRules::ClientConnected(edict_t *pEntity, const char *pszName,
 
 void CHL2MPRules::InitHUD(CBasePlayer *pPlayer) {
     BEGIN_LUA_CALL_HOOK("InitHUD");
-    lua_pushplayer(L, pPlayer);
+    CBaseEntity::PushLuaInstanceSafe(L, pPlayer);
     END_LUA_CALL_HOOK(1, 0);
 
     BaseClass::InitHUD(pPlayer);
@@ -1405,8 +1405,8 @@ bool CHL2MPRules::FShouldSwitchWeapon(CBasePlayer *pPlayer,
                                       CBaseCombatWeapon *pWeapon) {
 #if defined(LUA_SDK)
     BEGIN_LUA_CALL_HOOK("FShouldSwitchWeapon");
-    lua_pushplayer(L, pPlayer);
-    lua_pushweapon(L, pWeapon);
+    CBaseEntity::PushLuaInstanceSafe(L, pPlayer);
+    CBaseEntity::PushLuaInstanceSafe(L, pWeapon);
     END_LUA_CALL_HOOK(2, 1);
 
     RETURN_LUA_BOOLEAN();
@@ -1585,7 +1585,7 @@ void CHL2MPRules::CheckChatForReadySignal(CHL2MP_Player *pPlayer,
                                           const char *chatmsg) {
 #if defined(LUA_SDK)
     BEGIN_LUA_CALL_HOOK("CheckChatForReadySignal");
-    lua_pushplayer(L, pPlayer);
+    CBaseEntity::PushLuaInstanceSafe(L, pPlayer);
     lua_pushstring(L, chatmsg);
     END_LUA_CALL_HOOK(2, 0);
 #endif

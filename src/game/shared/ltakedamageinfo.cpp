@@ -103,7 +103,7 @@ static int CTakeDamageInfo_GetAmmoType( lua_State *L )
 
 static int CTakeDamageInfo_GetAttacker( lua_State *L )
 {
-    lua_pushentity( L, luaL_checkdamageinfo( L, 1 ).GetAttacker() );
+    CBaseEntity::PushLuaInstanceSafe( L, luaL_checkdamageinfo( L, 1 ).GetAttacker() );
     return 1;
 }
 
@@ -151,7 +151,7 @@ static int CTakeDamageInfo_GetDamageType( lua_State *L )
 
 static int CTakeDamageInfo_GetInflictor( lua_State *L )
 {
-    lua_pushentity( L, luaL_checkdamageinfo( L, 1 ).GetInflictor() );
+    CBaseEntity::PushLuaInstanceSafe( L, luaL_checkdamageinfo( L, 1 ).GetInflictor() );
     return 1;
 }
 
@@ -169,7 +169,7 @@ static int CTakeDamageInfo_GetReportedPosition( lua_State *L )
 
 static int CTakeDamageInfo_GetWeapon( lua_State *L )
 {
-    lua_pushentity( L, luaL_checkdamageinfo( L, 1 ).GetWeapon() );
+    CBaseEntity::PushLuaInstanceSafe( L, luaL_checkdamageinfo( L, 1 ).GetWeapon() );
     return 1;
 }
 

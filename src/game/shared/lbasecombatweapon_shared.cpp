@@ -33,12 +33,6 @@ LUA_API lua_CBaseCombatWeapon *lua_toweapon( lua_State *L, int idx )
 /*
 ** push functions (C -> stack)
 */
-
-LUA_API void lua_pushweapon( lua_State *L, lua_CBaseCombatWeapon *pEntity )
-{
-    CBaseEntity::PushLuaInstanceSafe( L, pEntity );
-}
-
 LUALIB_API lua_CBaseCombatWeapon *luaL_checkweapon( lua_State *L, int narg )
 {
     lua_CBaseCombatWeapon *d = lua_toweapon( L, narg );
@@ -319,7 +313,7 @@ static int CBaseCombatWeapon_GetName( lua_State *L )
 // FIXME: push CBaseCombatCharacter instead
 static int CBaseCombatWeapon_GetOwner( lua_State *L )
 {
-    lua_pushplayer( L, ( CBasePlayer * )luaL_checkweapon( L, 1 )->GetOwner() );
+    CBaseEntity::PushLuaInstanceSafe( L, ( CBasePlayer * )luaL_checkweapon( L, 1 )->GetOwner() );
     return 1;
 }
 

@@ -2654,8 +2654,8 @@ bool CHL2_Player::Weapon_CanUse( CBaseCombatWeapon *pWeapon )
 void CHL2_Player::Weapon_Equip( CBaseCombatWeapon *pWeapon ) {
 #if LUA_SDK
     BEGIN_LUA_CALL_HOOK("Weapon_Equip");
-    lua_pushplayer(L, this);
-    lua_pushweapon(L, pWeapon);
+    CBaseEntity::PushLuaInstanceSafe(L, this);
+    CBaseEntity::PushLuaInstanceSafe(L, pWeapon);
     END_LUA_CALL_HOOK(2, 0);
 #endif
 

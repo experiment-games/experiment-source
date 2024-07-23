@@ -53,25 +53,6 @@ LUA_API lua_CBaseEntity *lua_toentity( lua_State *L, int idx )
 ** push functions (C -> stack)
 */
 
-LUA_API void lua_pushentity( lua_State *L, CBaseEntity *pEntity )
-{
-    //// Always send as most specific type, so if the entity is a player, send as a player
-    //// We need to dynamic cast, otherwise the base class entity will be called
-    // if ( pEntity && pEntity->IsPlayer() )
-    //{
-    //     lua_pushplayer( L, dynamic_cast< CBasePlayer * >( pEntity ) );
-    //     return;
-    // }
-    // else if ( pEntity && pEntity->IsWeapon() )
-    //{
-    //     lua_pushweapon( L, dynamic_cast< CBaseCombatWeapon * >( pEntity ) );
-    //     return;
-    // }
-
-    // LUA_SAFE_PUSH_ENTITY_INSTANCE( L, pEntity );
-    CBaseEntity::PushLuaInstanceSafe( L, pEntity );
-} 
-
 LUALIB_API lua_CBaseEntity *luaL_checkentity( lua_State *L, int narg )
 {
     lua_CBaseEntity *d = lua_toentity( L, narg );
@@ -222,7 +203,7 @@ static int CBaseEntity_CreateDataObject( lua_State *L )
 
 static int CBaseEntity_CreatePredictedEntityByName( lua_State *L )
 {
-    lua_pushentity( L, CBaseEntity::CreatePredictedEntityByName( luaL_checkstring( L, 2 ), luaL_checkstring( L, 3 ), luaL_checknumber( L, 4 ), luaL_optboolean( L, 5, 0 ) ) );
+    CBaseEntity::PushLuaInstanceSafe( L, CBaseEntity::CreatePredictedEntityByName( luaL_checkstring( L, 2 ), luaL_checkstring( L, 3 ), luaL_checknumber( L, 4 ), luaL_optboolean( L, 5, 0 ) ) );
     return 1;
 }
 
@@ -385,7 +366,7 @@ static int CBaseEntity_FireBullets( lua_State *L )
 
 static int CBaseEntity_FirstMoveChild( lua_State *L )
 {
-    lua_pushentity( L, luaL_checkentity( L, 1 )->FirstMoveChild() );
+    CBaseEntity::PushLuaInstanceSafe( L, luaL_checkentity( L, 1 )->FirstMoveChild() );
     return 1;
 }
 
@@ -434,13 +415,13 @@ static int CBaseEntity_GetAnimTime( lua_State *L )
 
 static int CBaseEntity_GetBaseAnimating( lua_State *L )
 {
-    lua_pushanimating( L, luaL_checkentity( L, 1 )->GetBaseAnimating() );
+    CBaseEntity::PushLuaInstanceSafe( L, luaL_checkentity( L, 1 )->GetBaseAnimating() );
     return 1;
 }
 
 static int CBaseEntity_GetBaseEntity( lua_State *L )
 {
-    lua_pushentity( L, luaL_checkentity( L, 1 )->GetBaseEntity() );
+    CBaseEntity::PushLuaInstanceSafe( L, luaL_checkentity( L, 1 )->GetBaseEntity() );
     return 1;
 }
 
@@ -489,7 +470,7 @@ static int CBaseEntity_GetDLLType( lua_State *L )
 
 static int CBaseEntity_GetEffectEntity( lua_State *L )
 {
-    lua_pushentity( L, luaL_checkentity( L, 1 )->GetEffectEntity() );
+    CBaseEntity::PushLuaInstanceSafe( L, luaL_checkentity( L, 1 )->GetEffectEntity() );
     return 1;
 }
 
@@ -525,7 +506,7 @@ static int CBaseEntity_GetFlags( lua_State *L )
 
 static int CBaseEntity_GetFollowedEntity( lua_State *L )
 {
-    lua_pushentity( L, luaL_checkentity( L, 1 )->GetFollowedEntity() );
+    CBaseEntity::PushLuaInstanceSafe( L, luaL_checkentity( L, 1 )->GetFollowedEntity() );
     return 1;
 }
 
@@ -543,7 +524,7 @@ static int CBaseEntity_GetGroundChangeTime( lua_State *L )
 
 static int CBaseEntity_GetGroundEntity( lua_State *L )
 {
-    lua_pushentity( L, luaL_checkentity( L, 1 )->GetGroundEntity() );
+    CBaseEntity::PushLuaInstanceSafe( L, luaL_checkentity( L, 1 )->GetGroundEntity() );
     return 1;
 }
 
@@ -638,7 +619,7 @@ static int CBaseEntity_GetModelName( lua_State *L )
 
 static int CBaseEntity_GetMoveParent( lua_State *L )
 {
-    lua_pushentity( L, luaL_checkentity( L, 1 )->GetMoveParent() );
+    CBaseEntity::PushLuaInstanceSafe( L, luaL_checkentity( L, 1 )->GetMoveParent() );
     return 1;
 }
 
@@ -698,7 +679,7 @@ static int CBaseEntity_GetOBBMins( lua_State *L )
 
 static int CBaseEntity_GetOwnerEntity( lua_State *L )
 {
-    lua_pushentity( L, luaL_checkentity( L, 1 )->GetOwnerEntity() );
+    CBaseEntity::PushLuaInstanceSafe( L, luaL_checkentity( L, 1 )->GetOwnerEntity() );
     return 1;
 }
 
@@ -713,7 +694,7 @@ static int CBaseEntity_GetParametersForSound( lua_State *L )
 
 static int CBaseEntity_GetPredictionPlayer( lua_State *L )
 {
-    lua_pushplayer( L, CBaseEntity::GetPredictionPlayer() );
+    CBaseEntity::PushLuaInstanceSafe( L, CBaseEntity::GetPredictionPlayer() );
     return 1;
 }
 
@@ -733,7 +714,7 @@ static int CBaseEntity_GetRefTable( lua_State *L )
 
 static int CBaseEntity_GetSimulatingPlayer( lua_State *L )
 {
-    lua_pushplayer( L, luaL_checkentity( L, 1 )->GetSimulatingPlayer() );
+    CBaseEntity::PushLuaInstanceSafe( L, luaL_checkentity( L, 1 )->GetSimulatingPlayer() );
     return 1;
 }
 
@@ -1098,7 +1079,7 @@ static int CBaseEntity_LocalEyeAngles( lua_State *L )
 
 static int CBaseEntity_NextMovePeer( lua_State *L )
 {
-    lua_pushentity( L, luaL_checkentity( L, 1 )->NextMovePeer() );
+    CBaseEntity::PushLuaInstanceSafe( L, luaL_checkentity( L, 1 )->NextMovePeer() );
     return 1;
 }
 
@@ -2438,7 +2419,7 @@ static const luaL_Reg CBaseEntitymeta[] = {
 
 static int luasrc_CreateEntityByName( lua_State *L )
 {
-    lua_pushentity( L, CreateEntityByName( luaL_checkstring( L, 1 ) ) );
+    CBaseEntity::PushLuaInstanceSafe( L, CreateEntityByName( luaL_checkstring( L, 1 ) ) );
     return 1;
 }
 
@@ -2448,11 +2429,11 @@ static int luasrc_Entity( lua_State *L )
 
     if ( !ent )
     {
-        lua_pushentity( L, NULL );
+        CBaseEntity::PushLuaInstanceSafe( L, NULL );
         return 1;
     }
 
-    lua_pushentity( L, ent );
+    CBaseEntity::PushLuaInstanceSafe( L, ent );
     return 1;
 }
 
@@ -2472,7 +2453,7 @@ LUALIB_API int luaopen_CBaseEntity_shared( lua_State *L )
     lua_setfield( L, -2, "__type" ); /* metatable.__type = "Entity" */
     luaL_register( L, LUA_GNAME, CBaseEntity_funcs );
     lua_pop( L, 1 );
-    lua_pushentity( L, NULL );
+    CBaseEntity::PushLuaInstanceSafe( L, NULL );
     lua_setglobal( L, "NULL" ); /* set global NULL */
     return 1;
 }

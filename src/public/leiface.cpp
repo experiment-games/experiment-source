@@ -61,7 +61,7 @@ static int engine_CreateFakeClient( lua_State *L )
     }
 
     CBasePlayer *pPlayer = ( ( CBasePlayer * )CBaseEntity::Instance( pEdict ) );
-    lua_pushplayer( L, pPlayer );
+    CBaseEntity::PushLuaInstanceSafe( L, pPlayer );
     return 1;
 }
 

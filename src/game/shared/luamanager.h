@@ -99,7 +99,7 @@
     if ( lua_isfunction( L, -1 ) )                   \
     {                                                \
         int args = 0;                                \
-        lua_pushweapon( L, this );                   \
+        CBaseEntity::PushLuaInstanceSafe( L, this );                   \
         ++args;
 
 #define END_LUA_CALL_WEAPON_METHOD( nArgs, nresults ) \
@@ -115,7 +115,7 @@
         lua_getfield( L, -1, functionName );                \
         lua_remove( L, -2 );                                \
         int args = 0;                                       \
-        lua_pushweapon( L, pWeapon );                       \
+        CBaseEntity::PushLuaInstanceSafe( L, pWeapon );                       \
         ++args;
 
 #define END_LUA_CALL_WEAPON_HOOK( nArgs, nresults ) \
@@ -130,7 +130,7 @@
     if ( lua_isfunction( L, -1 ) )                   \
     {                                                \
         int args = 0;                                \
-        lua_pushanimating( L, this );                \
+        CBaseEntity::PushLuaInstanceSafe( L, this ); \
         ++args;
 
 #define END_LUA_CALL_ENTITY_METHOD( nArgs, nresults ) \
@@ -146,7 +146,7 @@
     if ( lua_isfunction( L, -1 ) )                    \
     {                                                 \
         int args = 0;                                 \
-        lua_pushentity( L, this );                    \
+        CBaseEntity::PushLuaInstanceSafe( L, this );  \
         ++args;
 
 #define END_LUA_CALL_TRIGGER_METHOD( nArgs, nresults ) \

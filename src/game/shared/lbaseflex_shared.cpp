@@ -100,12 +100,6 @@ LUA_API lua_CBaseFlex *lua_tobaseflex( lua_State *L, int idx )
 /*
 ** push functions (C -> stack)
 */
-
-LUA_API void lua_pushbaseflex( lua_State *L, lua_CBaseFlex *pEntity )
-{
-    CBaseEntity::PushLuaInstanceSafe( L, pEntity );
-}
-
 LUALIB_API lua_CBaseFlex *luaL_checkbaseflex( lua_State *L, int narg )
 {
     lua_CBaseFlex *d = lua_tobaseflex( L, narg );
@@ -193,8 +187,8 @@ static int CBaseFlex_ClientsideModel( lua_State *L )
     }
 
     lua_CBaseFlex *pEntity = g_pClientSideEntityManager->CreateClientSideEntity( pszModelName, ( RenderGroup_t )renderGroup );
+    CBaseEntity::PushLuaInstanceSafe( L, pEntity );
 
-    lua_pushbaseflex( L, pEntity );
     return 1;
 }
 #endif

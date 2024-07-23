@@ -244,7 +244,7 @@ class CTraceLuaFilter : public CTraceFilterSimple
         if ( m_iFilterType == LUA_TFUNCTION )
         {
             lua_pushvalue( m_pLuaState, m_iFilterArgIndex );
-            lua_pushentity( m_pLuaState, EntityFromEntityHandle( pHandleEntity ) );
+            CBaseEntity::PushLuaInstanceSafe( m_pLuaState, EntityFromEntityHandle( pHandleEntity ) );
             lua_call( m_pLuaState, 1, 1 );
 
             if ( lua_isboolean( m_pLuaState, -1 ) )
@@ -386,7 +386,14 @@ static int luasrc_Util_TraceLine( lua_State *L )
     }
 
     lua_pushstring( L, "Entity" );
-    lua_pushentity( L, gameTrace.m_pEnt );
+    if ( gameTrace.m_pEnt && gameTrace.m_pEnt->IsWorld() )
+    {
+        CBaseEntity::PushLuaInstanceSafe( L, NULL );
+    }
+    else
+    {
+        CBaseEntity::PushLuaInstanceSafe( L, gameTrace.m_pEnt );
+    }
     lua_settable( L, -3 );
 
     lua_pushstring( L, "Fraction" );
@@ -663,7 +670,7 @@ static int CBasePlayer_GetAllBots( lua_State *L )
     lua_newtable( L );
     for ( int i = 0; i < curPlayers.Count(); i++ )
     {
-        lua_pushplayer( L, curPlayers[i] );
+        CBaseEntity::PushLuaInstanceSafe( L, curPlayers[i] );
         lua_rawseti( L, -2, i + 1 );
     }
     return 1;
@@ -683,7 +690,7 @@ static int CBasePlayer_GetAllHumans( lua_State *L )
     lua_newtable( L );
     for ( int i = 0; i < curPlayers.Count(); i++ )
     {
-        lua_pushplayer( L, curPlayers[i] );
+        CBaseEntity::PushLuaInstanceSafe( L, curPlayers[i] );
         lua_rawseti( L, -2, i + 1 );
     }
     return 1;
@@ -703,7 +710,7 @@ static int CBasePlayer_GetAllPlayers( lua_State *L )
     lua_newtable( L );
     for ( int i = 0; i < curPlayers.Count(); i++ )
     {
-        lua_pushplayer( L, curPlayers[i] );
+        CBaseEntity::PushLuaInstanceSafe( L, curPlayers[i] );
         lua_rawseti( L, -2, i + 1 );
     }
     return 1;
@@ -711,19 +718,19 @@ static int CBasePlayer_GetAllPlayers( lua_State *L )
 
 static int luasrc_Util_PlayerByIndex( lua_State *L )
 {
-    lua_pushplayer( L, UTIL_PlayerByIndex( luaL_checkinteger( L, 1 ) ) );
+    CBaseEntity::PushLuaInstanceSafe( L, UTIL_PlayerByIndex( luaL_checkinteger( L, 1 ) ) );
     return 1;
 }
 
 static int luasrc_Util_PlayerByUserId( lua_State *L )
 {
-    lua_pushplayer( L, UTIL_PlayerByUserId( luaL_checkinteger( L, 1 ) ) );
+    CBaseEntity::PushLuaInstanceSafe( L, UTIL_PlayerByUserId( luaL_checkinteger( L, 1 ) ) );
     return 1;
 }
 
 static int luasrc_Util_PlayerByName( lua_State *L )
 {
-    lua_pushplayer( L, UTIL_PlayerByName( luaL_checkstring( L, 1 ) ) );
+    CBaseEntity::PushLuaInstanceSafe( L, UTIL_PlayerByName( luaL_checkstring( L, 1 ) ) );
     return 1;
 }
 
@@ -741,7 +748,7 @@ static int luasrc_Util_EntitiesAlongRay( lua_State *L )
     for ( int i = 0; i < count; i++ )
     {
         lua_pushinteger( L, i );
-        lua_pushentity( L, pList[i] );
+        CBaseEntity::PushLuaInstanceSafe( L, pList[i] );
         lua_settable( L, -3 );
     }
     return 2;
@@ -757,7 +764,7 @@ static int luasrc_Util_EntitiesInBox( lua_State *L )
     for ( int i = 0; i < count; i++ )
     {
         lua_pushinteger( L, i );
-        lua_pushentity( L, pList[i] );
+        CBaseEntity::PushLuaInstanceSafe( L, pList[i] );
         lua_settable( L, -3 );
     }
     return 2;
@@ -773,7 +780,7 @@ static int luasrc_Util_EntitiesInSphere( lua_State *L )
     for ( int i = 0; i < count; i++ )
     {
         lua_pushinteger( L, i );
-        lua_pushentity( L, pList[i] );
+        CBaseEntity::PushLuaInstanceSafe( L, pList[i] );
         lua_settable( L, -3 );
     }
     return 2;
@@ -819,7 +826,7 @@ static int luasrc_Util_EntitiesInPVS( lua_State *L )
             continue;
 
         lua_pushinteger( L, count );
-        lua_pushentity( L, pEntity );
+        CBaseEntity::PushLuaInstanceSafe( L, pEntity );
         lua_settable( L, -3 );
         count++;
 

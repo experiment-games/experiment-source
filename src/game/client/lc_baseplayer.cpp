@@ -16,7 +16,7 @@
 
 static int CBasePlayer_GetLocalPlayer( lua_State *L )
 {
-    lua_pushplayer( L, CBasePlayer::GetLocalPlayer() );
+    CBaseEntity::PushLuaInstanceSafe( L, CBasePlayer::GetLocalPlayer() );
     return 1;
 }
 

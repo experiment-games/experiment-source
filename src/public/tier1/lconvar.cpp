@@ -144,7 +144,7 @@ void RunConCommand( lua_State *L, const CCommand &args )
     lua_remove( L, -2 ); // remove the library table
 
     // Push the player and command. With arguments as a table
-    lua_pushplayer( L, pPlayer );
+    CBaseEntity::PushLuaInstanceSafe( L, pPlayer );
     lua_pushstring( L, pCmd );
     lua_newtable( L );
     for ( int i = 1; i < args.ArgC(); i++ )

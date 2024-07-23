@@ -31,8 +31,6 @@ LUA_API lua_CBaseFlex *( lua_tobaseflex )( lua_State *L, int idx );
 /*
 ** push functions (C -> stack)
 */
-LUA_API void( lua_pushbaseflex )( lua_State *L, lua_CBaseFlex *pEntity );
-
 LUALIB_API lua_CBaseFlex *( luaL_checkbaseflex )( lua_State *L, int narg );
 
 #ifdef CLIENT_DLL

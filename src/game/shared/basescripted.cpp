@@ -271,7 +271,7 @@ void CBaseScripted::StartTouch( CBaseEntity *pOther )
 {
 #ifdef LUA_SDK
     BEGIN_LUA_CALL_ENTITY_METHOD( "StartTouch" );
-    lua_pushentity( L, pOther );
+    CBaseEntity::PushLuaInstanceSafe( L, pOther );
     END_LUA_CALL_ENTITY_METHOD( 1, 0 );
 #endif
 }
@@ -280,7 +280,7 @@ void CBaseScripted::Touch( CBaseEntity *pOther )
 {
 #ifdef LUA_SDK
     BEGIN_LUA_CALL_ENTITY_METHOD( "Touch" );
-    lua_pushentity( L, pOther );
+    CBaseEntity::PushLuaInstanceSafe( L, pOther );
     END_LUA_CALL_ENTITY_METHOD( 1, 0 );
 #endif
 }
@@ -289,7 +289,7 @@ void CBaseScripted::EndTouch( CBaseEntity *pOther )
 {
 #ifdef LUA_SDK
     BEGIN_LUA_CALL_ENTITY_METHOD( "EndTouch" );
-    lua_pushentity( L, pOther );
+    CBaseEntity::PushLuaInstanceSafe( L, pOther );
     END_LUA_CALL_ENTITY_METHOD( 1, 0 );
 #endif
 }

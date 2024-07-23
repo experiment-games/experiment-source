@@ -119,7 +119,7 @@ static int CGameTrace___index( lua_State *L )
     else if ( Q_strcmp( field, "hitgroup" ) == 0 )
         lua_pushinteger( L, tr.hitgroup );
     else if ( Q_strcmp( field, "m_pEnt" ) == 0 )
-        lua_pushentity( L, tr.m_pEnt );
+        CBaseEntity::PushLuaInstanceSafe( L, tr.m_pEnt );
     else if ( Q_strcmp( field, "physicsbone" ) == 0 )
         lua_pushinteger( L, tr.physicsbone );
     else if ( Q_strcmp( field, "startpos" ) == 0 )

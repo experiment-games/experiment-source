@@ -30,8 +30,6 @@ LUA_API lua_CHL2MP_Player     *(lua_tohl2mpplayer) (lua_State *L, int idx);
 /*
 ** push functions (C -> stack)
 */
-LUA_API void  (lua_pushhl2mpplayer) (lua_State *L, lua_CHL2MP_Player *pPlayer);
-
 LUALIB_API lua_CHL2MP_Player *(luaL_checkhl2mpplayer) (lua_State *L, int narg);
 LUALIB_API lua_CHL2MP_Player *(luaL_opthl2mpplayer) (lua_State *L, int narg,
                                                                    lua_CHL2MP_Player *def);

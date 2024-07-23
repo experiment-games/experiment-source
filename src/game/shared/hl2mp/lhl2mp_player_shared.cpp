@@ -40,12 +40,6 @@ LUA_API lua_CHL2MP_Player *lua_tohl2mpplayer( lua_State *L, int idx )
 /*
 ** push functions (C -> stack)
 */
-
-LUA_API void lua_pushhl2mpplayer( lua_State *L, CHL2MP_Player *pEntity )
-{
-    CBaseEntity::PushLuaInstanceSafe( L, pEntity );
-}
-
 LUALIB_API lua_CHL2MP_Player *luaL_checkhl2mpplayer( lua_State *L, int narg )
 {
     lua_CHL2MP_Player *d = lua_tohl2mpplayer( L, narg );
@@ -62,7 +56,7 @@ LUALIB_API lua_CHL2MP_Player *luaL_opthl2mpplayer( lua_State *L, int narg, CHL2M
 static int CHL2MP_Player_BecomeRagdollOnClient( lua_State *L )
 {
 #ifdef CLIENT_DLL
-    lua_pushanimating( L, luaL_checkhl2mpplayer( L, 1 )->BecomeRagdollOnClient() );
+    CBaseEntity::PushLuaInstanceSafe( L, luaL_checkhl2mpplayer( L, 1 )->BecomeRagdollOnClient() );
 #else
     lua_pushboolean( L, luaL_checkhl2mpplayer( L, 1 )->BecomeRagdollOnClient( luaL_checkvector( L, 2 ) ) );
 #endif
@@ -210,7 +204,7 @@ static const luaL_Reg CHL2MP_Playermeta[] = {
 
 static int luasrc_ToHL2MPPlayer( lua_State *L )
 {
-    lua_pushhl2mpplayer( L, ToHL2MPPlayer( lua_toentity( L, 1 ) ) );
+    CBaseEntity::PushLuaInstanceSafe( L, ToHL2MPPlayer( lua_toentity( L, 1 ) ) );
     return 1;
 }
 

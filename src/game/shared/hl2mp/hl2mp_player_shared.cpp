@@ -106,7 +106,7 @@ void CHL2MP_Player::PlayStepSound(Vector &vecOrigin, surfacedata_t *psurface,
                                   float fvol, bool force) {
 #if defined(LUA_SDK)
     BEGIN_LUA_CALL_HOOK("PlayerPlayStepSound");
-    lua_pushhl2mpplayer(L, this);
+    CBaseEntity::PushLuaInstanceSafe( L, this );
     lua_pushvector(L, vecOrigin);
     lua_pushsurfacedata(L, psurface);
     lua_pushnumber(L, fvol);

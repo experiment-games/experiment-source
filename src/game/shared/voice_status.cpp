@@ -206,7 +206,7 @@ void CVoiceStatus::DrawHeadLabels() {
 
 #if defined(LUA_SDK)
         BEGIN_LUA_CALL_HOOK("DrawHeadLabels");
-        lua_pushplayer(L, pPlayer);
+        CBaseEntity::PushLuaInstanceSafe(L, pPlayer);
         END_LUA_CALL_HOOK(1, 1);
 
         RETURN_LUA_NONE();

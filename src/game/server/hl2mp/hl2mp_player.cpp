@@ -260,7 +260,7 @@ void CHL2MP_Player::GiveDefaultItems( void )
 {
 #if defined( LUA_SDK )
     BEGIN_LUA_CALL_HOOK( "GiveDefaultItems" );
-    lua_pushhl2mpplayer( L, this );
+    CBaseEntity::PushLuaInstanceSafe( L, this );
     END_LUA_CALL_HOOK( 1, 0 );
 #else
     EquipSuit();
@@ -413,8 +413,8 @@ void CHL2MP_Player::PickupObject( CBaseEntity *pObject, bool bLimitMassAndSize )
 {
 #ifdef LUA_SDK
     BEGIN_LUA_CALL_HOOK( "PlayerPickupObject" );
-    lua_pushhl2mpplayer( L, this );
-    lua_pushentity( L, pObject );
+    CBaseEntity::PushLuaInstanceSafe( L, this );
+    CBaseEntity::PushLuaInstanceSafe( L, pObject );
     lua_pushboolean( L, bLimitMassAndSize );
     END_LUA_CALL_HOOK( 3, 1 );
 
@@ -656,7 +656,7 @@ void CHL2MP_Player::PlayerDeathThink()
 {
 #if defined( LUA_SDK )
     BEGIN_LUA_CALL_HOOK( "PlayerDeathThink" );
-    lua_pushhl2mpplayer( L, this );
+    CBaseEntity::PushLuaInstanceSafe( L, this );
     END_LUA_CALL_HOOK( 1, 0 );
 #endif
 
@@ -957,7 +957,7 @@ void CHL2MP_Player::CheatImpulseCommands( int iImpulse )
 {
 #if defined( LUA_SDK )
     BEGIN_LUA_CALL_HOOK( "CheatImpulseCommands" );
-    lua_pushhl2mpplayer( L, this );
+    CBaseEntity::PushLuaInstanceSafe( L, this );
     lua_pushinteger( L, iImpulse );
     END_LUA_CALL_HOOK( 2, 1 );
 
@@ -1240,7 +1240,7 @@ void CHL2MP_Player::DeathSound( const CTakeDamageInfo &info )
     CTakeDamageInfo lInfo = info;
 
     BEGIN_LUA_CALL_HOOK( "PlayerDeathSound" );
-    lua_pushhl2mpplayer( L, this );
+    CBaseEntity::PushLuaInstanceSafe( L, this );
     lua_pushdamageinfo( L, lInfo );
     END_LUA_CALL_HOOK( 2, 1 );
 
@@ -1281,7 +1281,7 @@ CBaseEntity *CHL2MP_Player::EntSelectSpawnPoint( void )
 {
 #ifdef LUA_SDK
     BEGIN_LUA_CALL_HOOK( "PlayerEntSelectSpawnPoint" );
-    lua_pushhl2mpplayer( L, this );
+    CBaseEntity::PushLuaInstanceSafe( L, this );
     END_LUA_CALL_HOOK( 1, 1 );
 
     RETURN_LUA_ENTITY();

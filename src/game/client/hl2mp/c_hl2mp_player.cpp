@@ -158,7 +158,7 @@ void C_HL2MP_Player::TraceAttack( const CTakeDamageInfo &info,
     Vector lvecDir = vecDir;
 
     BEGIN_LUA_CALL_HOOK( "PlayerTraceAttack" );
-    lua_pushhl2mpplayer( L, this );
+    CBaseEntity::PushLuaInstanceSafe( L, this );
     lua_pushdamageinfo( L, lInfo );
     lua_pushvector( L, lvecDir );
     lua_pushtrace( L, *ptr );

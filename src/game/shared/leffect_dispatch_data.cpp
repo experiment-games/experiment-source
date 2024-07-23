@@ -64,7 +64,7 @@ static int CEffectData_GetEffectNameIndex( lua_State *L )
 #ifdef CLIENT_DLL
 static int CEffectData_GetEntity( lua_State *L )
 {
-    lua_pushentity( L, luaL_checkeffect( L, 1 ).GetEntity() );
+    CBaseEntity::PushLuaInstanceSafe( L, luaL_checkeffect( L, 1 ).GetEntity() );
     return 1;
 }
 #endif
@@ -83,7 +83,7 @@ static int CEffectData___index( lua_State *L )
         lua_pushnumber( L, data.m_flScale );
 #ifdef CLIENT_DLL
     else if ( Q_strcmp( field, "m_hEntity" ) == 0 )
-        lua_pushentity( L, C_BaseEntity::Instance( data.m_hEntity ) );
+        CBaseEntity::PushLuaInstanceSafe( L, C_BaseEntity::Instance( data.m_hEntity ) );
 #else
     else if ( Q_strcmp( field, "m_nEntIndex" ) == 0 )
         lua_pushinteger( L, data.m_nEntIndex );

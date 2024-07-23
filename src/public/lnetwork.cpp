@@ -468,7 +468,7 @@ static int bfRead_ReadEntity( lua_State *L )
         return 1;
     }
 
-    lua_pushentity( L, pEntity );
+    CBaseEntity::PushLuaInstanceSafe( L, pEntity );
 
     return 1;
 }

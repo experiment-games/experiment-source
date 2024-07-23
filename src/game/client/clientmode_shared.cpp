@@ -550,7 +550,7 @@ bool ClientModeShared::ShouldDrawEntity( C_BaseEntity *pEnt )
 {
 #ifdef LUA_SDK
     BEGIN_LUA_CALL_HOOK( "ShouldDrawEntity" );
-    lua_pushentity( L, pEnt );
+    CBaseEntity::PushLuaInstanceSafe( L, pEnt );
     END_LUA_CALL_HOOK( 1, 1 );
 
     RETURN_LUA_BOOLEAN();
@@ -674,7 +674,7 @@ bool ClientModeShared::ShouldDrawLocalPlayer( C_BasePlayer *pPlayer )
 {
 #ifdef LUA_SDK
     BEGIN_LUA_CALL_HOOK( "ShouldDrawLocalPlayer" );
-    lua_pushplayer( L, pPlayer );
+    CBaseEntity::PushLuaInstanceSafe( L, pPlayer );
     END_LUA_CALL_HOOK( 1, 1 );
 
     RETURN_LUA_BOOLEAN();

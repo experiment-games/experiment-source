@@ -31,7 +31,7 @@ static int luasrc_ENTINDEX( lua_State *L )
 static int luasrc_INDEXENT( lua_State *L )
 {
     CBaseEntity *pEntity = CBaseEntity::Instance( INDEXENT( luaL_checkinteger( L, 1 ) ) );
-    lua_pushentity( L, pEntity );
+    CBaseEntity::PushLuaInstanceSafe( L, pEntity );
     return 1;
 }
 
@@ -73,7 +73,7 @@ static int luasrc_Util_GetSimulationInterval( lua_State *L )
 
 static int luasrc_Util_GetListenServerHost( lua_State *L )
 {
-    lua_pushplayer( L, UTIL_GetListenServerHost() );
+    CBaseEntity::PushLuaInstanceSafe( L, UTIL_GetListenServerHost() );
     return 1;
 }
 
@@ -85,7 +85,7 @@ static int luasrc_Util_IsCommandIssuedByServerAdmin( lua_State *L )
 
 static int luasrc_Util_EntityByIndex( lua_State *L )
 {
-    lua_pushentity( L, UTIL_EntityByIndex( luaL_checkinteger( L, 1 ) ) );
+    CBaseEntity::PushLuaInstanceSafe( L, UTIL_EntityByIndex( luaL_checkinteger( L, 1 ) ) );
     return 1;
 }
 
@@ -106,7 +106,7 @@ static int luasrc_Util_ClientPVSIsExpanded( lua_State *L )
 
 static int luasrc_Util_FindClientInPVS( lua_State *L )
 {
-    lua_pushentity( L, UTIL_FindClientInPVS( luaL_checkvector( L, 1 ), luaL_checkvector( L, 2 ) ) );
+    CBaseEntity::PushLuaInstanceSafe( L, UTIL_FindClientInPVS( luaL_checkvector( L, 1 ), luaL_checkvector( L, 2 ) ) );
     return 1;
 }
 
@@ -378,7 +378,7 @@ static int luasrc_Util_GetCommandClientIndex( lua_State *L )
 
 static int luasrc_Util_GetCommandClient( lua_State *L )
 {
-    lua_pushplayer( L, UTIL_GetCommandClient() );
+    CBaseEntity::PushLuaInstanceSafe( L, UTIL_GetCommandClient() );
     return 1;
 }
 
@@ -395,7 +395,7 @@ static int luasrc_Util_PlayerBySteamID( lua_State *L )
     uint64 product = unAccountID * 2;
     uint64 steamID = STEAM_BASELINE + product + eAccountType;
 
-    lua_pushplayer( L, UTIL_PlayerBySteamID( steamID ) );
+    CBaseEntity::PushLuaInstanceSafe( L, UTIL_PlayerBySteamID( steamID ) );
     return 1;
 }
 
@@ -403,7 +403,7 @@ static int luasrc_Util_PlayerBySteamID64( lua_State *L )
 {
     uint64 id = Q_atoui64( luaL_checkstring( L, 1 ) );
     CSteamID steamID( id );
-    lua_pushplayer( L, UTIL_PlayerBySteamID( steamID ) );
+    CBaseEntity::PushLuaInstanceSafe( L, UTIL_PlayerBySteamID( steamID ) );
     return 1;
 }
 

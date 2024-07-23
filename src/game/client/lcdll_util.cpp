@@ -152,7 +152,7 @@ static int luasrc_Util_EntitiesAlongRay( lua_State *L )
     for ( int i = 0; i < count; i++ )
     {
         lua_pushinteger( L, i );
-        lua_pushentity( L, pList[i] );
+        CBaseEntity::PushLuaInstanceSafe( L, pList[i] );
         lua_settable( L, -3 );
     }
     return 2;
@@ -168,7 +168,7 @@ static int luasrc_Util_EntitiesInBox( lua_State *L )
     for ( int i = 0; i < count; i++ )
     {
         lua_pushinteger( L, i );
-        lua_pushentity( L, pList[i] );
+        CBaseEntity::PushLuaInstanceSafe( L, pList[i] );
         lua_settable( L, -3 );
     }
     return 2;
@@ -184,7 +184,7 @@ static int luasrc_Util_EntitiesInSphere( lua_State *L )
     for ( int i = 0; i < count; i++ )
     {
         lua_pushinteger( L, i );
-        lua_pushentity( L, pList[i] );
+        CBaseEntity::PushLuaInstanceSafe( L, pList[i] );
         lua_settable( L, -3 );
     }
     return 2;
@@ -205,9 +205,9 @@ static int luasrc_Util_BoundToWorldSize( lua_State *L )
 static int luasrc_Util_GetLocalPlayer( lua_State *L )
 {
 #ifdef CLIENT_DLL
-    lua_pushplayer( L, C_BasePlayer::GetLocalPlayer() );
+    CBaseEntity::PushLuaInstanceSafe( L, C_BasePlayer::GetLocalPlayer() );
 #else
-    lua_pushplayer( L, UTIL_GetLocalPlayer() );
+    CBaseEntity::PushLuaInstanceSafe( L, UTIL_GetLocalPlayer() );
 #endif
     return 1;
 }

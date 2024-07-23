@@ -902,7 +902,7 @@ void CBasePlayer::TraceAttack( const CTakeDamageInfo &inputInfo, const Vector &v
     Vector lvecDir = vecDir;
 
     BEGIN_LUA_CALL_HOOK( "PlayerTraceAttack" );
-    lua_pushplayer( L, this );
+    CBaseEntity::PushLuaInstanceSafe( L, this );
     lua_pushdamageinfo( L, linputInfo );
     lua_pushvector( L, lvecDir );
     lua_pushtrace( L, *ptr );
@@ -2803,7 +2803,7 @@ bool CBasePlayer::CanPickupObject( CBaseEntity *pObject, float massLimit, float 
 {
 #ifdef LUA_SDK
     BEGIN_LUA_CALL_HOOK( "PlayerCanPickupObject" );
-    lua_pushentity( L, pObject );
+    CBaseEntity::PushLuaInstanceSafe( L, pObject );
     lua_pushnumber( L, massLimit );
     lua_pushnumber( L, sizeLimit );
     END_LUA_CALL_HOOK( 3, 1 );
@@ -4887,7 +4887,7 @@ void CBasePlayer::InitialSpawn( void )
 {
 #if defined( LUA_SDK )
     BEGIN_LUA_CALL_HOOK( "PlayerInitialSpawn" );
-    lua_pushplayer( L, this );
+    CBaseEntity::PushLuaInstanceSafe( L, this );
     END_LUA_CALL_HOOK( 1, 0 );
 #endif
 
@@ -5382,9 +5382,9 @@ bool CBasePlayer::CanEnterVehicle( IServerVehicle *pVehicle, int nRole )
 {
 #ifdef LUA_SDK
     BEGIN_LUA_CALL_HOOK( "CanEnterVehicle" );
-    lua_pushplayer( L, this );
+    CBaseEntity::PushLuaInstanceSafe( L, this );
     // FIXME: implement lua_pushvehicle()!
-    lua_pushentity( L, pVehicle->GetVehicleEnt() );
+    CBaseEntity::PushLuaInstanceSafe( L, pVehicle->GetVehicleEnt() );
     lua_pushinteger( L, nRole );
     END_LUA_CALL_HOOK( 3, 1 );
 

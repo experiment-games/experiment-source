@@ -41,12 +41,6 @@ LUA_API lua_CBasePlayer *lua_toplayer( lua_State *L, int idx )
 /*
 ** push functions (C -> stack)
 */
-
-LUA_API void lua_pushplayer( lua_State *L, CBasePlayer *pEntity )
-{
-    CBaseEntity::PushLuaInstanceSafe( L, ToHL2MPPlayer( pEntity ) );
-}
-
 LUALIB_API lua_CBasePlayer *luaL_checkplayer( lua_State *L, int narg )
 {
     lua_CBasePlayer *d = lua_toplayer( L, narg );
@@ -140,14 +134,14 @@ static int CBasePlayer_EyeVectors( lua_State *L )
 static int CBasePlayer_FindUseEntity( lua_State *L )
 {
     CBaseEntity *pUseEntity = luaL_checkplayer( L, 1 )->FindUseEntity();
-    lua_pushentity( L, pUseEntity );
+    CBaseEntity::PushLuaInstanceSafe( L, pUseEntity );
     return 1;
 }
 
 static int CBasePlayer_GetActiveWeapon( lua_State *L )
 {
     CBaseCombatWeapon *pWeapon = luaL_checkplayer( L, 1 )->GetActiveWeapon();
-    lua_pushweapon( L, pWeapon );
+    CBaseEntity::PushLuaInstanceSafe( L, pWeapon );
     return 1;
 }
 
@@ -260,7 +254,7 @@ static int CBasePlayer_GetObserverMode( lua_State *L )
 
 static int CBasePlayer_GetObserverTarget( lua_State *L )
 {
-    lua_pushentity( L, luaL_checkplayer( L, 1 )->GetObserverTarget() );
+    CBaseEntity::PushLuaInstanceSafe( L, luaL_checkplayer( L, 1 )->GetObserverTarget() );
     return 1;
 }
 
@@ -411,7 +405,7 @@ static int CBasePlayer_GetTracerType( lua_State *L )
 
 static int CBasePlayer_GetUseEntity( lua_State *L )
 {
-    lua_pushentity( L, luaL_checkplayer( L, 1 )->GetUseEntity() );
+    CBaseEntity::PushLuaInstanceSafe( L, luaL_checkplayer( L, 1 )->GetUseEntity() );
     return 1;
 }
 
@@ -433,9 +427,9 @@ static int CBasePlayer_GetViewEntity( lua_State *L )
         return 0;
     }
 
-    lua_pushentity( L, cl_entitylist->GetEnt( render->GetViewEntity() ) );
+    CBaseEntity::PushLuaInstanceSafe( L, cl_entitylist->GetEnt( render->GetViewEntity() ) );
 #else
-    lua_pushentity( L, luaL_checkplayer( L, 1 )->GetViewEntity() );
+    CBaseEntity::PushLuaInstanceSafe( L, luaL_checkplayer( L, 1 )->GetViewEntity() );
 #endif
     return 1;
 }
@@ -443,7 +437,7 @@ static int CBasePlayer_GetViewEntity( lua_State *L )
 // FIXME: push CBaseViewModel instead
 static int CBasePlayer_GetViewModel( lua_State *L )
 {
-    lua_pushanimating(
+    CBaseEntity::PushLuaInstanceSafe(
         L, luaL_checkplayer( L, 1 )->GetViewModel( ( int )luaL_optnumber( L, 2, 0 ) ) );
     return 1;
 }
@@ -456,7 +450,7 @@ static int CBasePlayer_GetWaterJumpTime( lua_State *L )
 
 static int CBasePlayer_GetWeapon( lua_State *L )
 {
-    lua_pushweapon( L, luaL_checkplayer( L, 1 )->GetWeapon( luaL_checknumber( L, 2 ) ) );
+    CBaseEntity::PushLuaInstanceSafe( L, luaL_checkplayer( L, 1 )->GetWeapon( luaL_checknumber( L, 2 ) ) );
     return 1;
 }
 
@@ -546,7 +540,7 @@ static int CBasePlayer_MaxSpeed( lua_State *L )
 
 static int CBasePlayer_MyCombatCharacterPointer( lua_State *L )
 {
-    lua_pushplayer(
+    CBaseEntity::PushLuaInstanceSafe(
         L, ( CBasePlayer * )luaL_checkplayer( L, 1 )->MyCombatCharacterPointer() );
     return 1;
 }
@@ -894,7 +888,7 @@ static int CBasePlayer_Weapon_CanSwitchTo( lua_State *L )
 
 static int CBasePlayer_Weapon_OwnsThisType( lua_State *L )
 {
-    lua_pushweapon( L, luaL_checkplayer( L, 1 )->Weapon_OwnsThisType( luaL_checkstring( L, 2 ), ( int )luaL_optnumber( L, 3, 0 ) ) );
+    CBaseEntity::PushLuaInstanceSafe( L, luaL_checkplayer( L, 1 )->Weapon_OwnsThisType( luaL_checkstring( L, 2 ), ( int )luaL_optnumber( L, 3, 0 ) ) );
     return 1;
 }
 
@@ -1202,7 +1196,7 @@ static const luaL_Reg CBasePlayermeta[] = {
 
 static int luasrc_ToBasePlayer( lua_State *L )
 {
-    lua_pushplayer( L, ToBasePlayer( luaL_checkentity( L, 1 ) ) );
+    CBaseEntity::PushLuaInstanceSafe( L, ToBasePlayer( luaL_checkentity( L, 1 ) ) );
     return 1;
 }
 

@@ -207,7 +207,7 @@ bool CBaseScriptedTrigger::PassesTriggerFilters( CBaseEntity *pOther )
 {
 #ifdef LUA_SDK
     BEGIN_LUA_CALL_TRIGGER_METHOD( "PassesTriggerFilters" );
-    lua_pushentity( L, pOther );
+    CBaseEntity::PushLuaInstanceSafe( L, pOther );
     END_LUA_CALL_TRIGGER_METHOD( 1, 1 );
 
     RETURN_LUA_BOOLEAN();
@@ -232,7 +232,7 @@ void CBaseScriptedTrigger::StartTouch( CBaseEntity *pOther )
 {
 #ifdef LUA_SDK
     BEGIN_LUA_CALL_TRIGGER_METHOD( "StartTouch" );
-    lua_pushentity( L, pOther );
+    CBaseEntity::PushLuaInstanceSafe( L, pOther );
     END_LUA_CALL_TRIGGER_METHOD( 1, 0 );
 #endif
 }
@@ -241,7 +241,7 @@ void CBaseScriptedTrigger::Touch( CBaseEntity *pOther )
 {
 #ifdef LUA_SDK
     BEGIN_LUA_CALL_TRIGGER_METHOD( "Touch" );
-    lua_pushentity( L, pOther );
+    CBaseEntity::PushLuaInstanceSafe( L, pOther );
     END_LUA_CALL_TRIGGER_METHOD( 1, 0 );
 #endif
 }
@@ -254,7 +254,7 @@ void CBaseScriptedTrigger::EndTouch( CBaseEntity *pOther )
 {
 #ifdef LUA_SDK
     BEGIN_LUA_CALL_TRIGGER_METHOD( "EndTouch" );
-    lua_pushentity( L, pOther );
+    CBaseEntity::PushLuaInstanceSafe( L, pOther );
     END_LUA_CALL_TRIGGER_METHOD( 1, 0 );
 #endif
 }

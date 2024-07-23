@@ -30,12 +30,6 @@ LUA_API lua_CBaseAnimating *lua_toanimating( lua_State *L, int idx )
 /*
 ** push functions (C -> stack)
 */
-
-LUA_API void lua_pushanimating( lua_State *L, CBaseAnimating *pEntity )
-{
-    CBaseEntity::PushLuaInstanceSafe( L, pEntity );
-}
-
 LUALIB_API lua_CBaseAnimating *luaL_checkanimating( lua_State *L, int narg )
 {
     lua_CBaseAnimating *d = lua_toanimating( L, narg );
@@ -96,7 +90,7 @@ static int CBaseAnimating_GetAttachmentLocal( lua_State *L )
 
 static int CBaseAnimating_GetBaseAnimating( lua_State *L )
 {
-    lua_pushanimating( L, luaL_checkanimating( L, 1 )->GetBaseAnimating() );
+    CBaseEntity::PushLuaInstanceSafe( L, luaL_checkanimating( L, 1 )->GetBaseAnimating() );
     return 1;
 }
 

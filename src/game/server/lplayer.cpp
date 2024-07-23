@@ -316,7 +316,7 @@ static int CBasePlayer_Weapon_DropSlot( lua_State *L )
 
 static int CBasePlayer_Weapon_GetLastWeapon( lua_State *L )
 {
-    lua_pushweapon( L, luaL_checkplayer( L, 1 )->GetLastWeapon() );
+    CBaseEntity::PushLuaInstanceSafe( L, luaL_checkplayer( L, 1 )->GetLastWeapon() );
     return 1;
 }
 
@@ -443,7 +443,7 @@ static int CBasePlayer_ModeWantsSpectatorGUI( lua_State *L )
 
 static int CBasePlayer_FindNextObserverTarget( lua_State *L )
 {
-    lua_pushentity( L, luaL_checkplayer( L, 1 )->FindNextObserverTarget( luaL_checkboolean( L, 2 ) ) );
+    CBaseEntity::PushLuaInstanceSafe( L, luaL_checkplayer( L, 1 )->FindNextObserverTarget( luaL_checkboolean( L, 2 ) ) );
     return 1;
 }
 
@@ -516,7 +516,7 @@ static int CBasePlayer_CreateCorpse( lua_State *L )
 
 static int CBasePlayer_EntSelectSpawnPoint( lua_State *L )
 {
-    lua_pushentity( L, luaL_checkplayer( L, 1 )->EntSelectSpawnPoint() );
+    CBaseEntity::PushLuaInstanceSafe( L, luaL_checkplayer( L, 1 )->EntSelectSpawnPoint() );
     return 1;
 }
 
@@ -541,7 +541,7 @@ static int CBasePlayer_OnVehicleStart( lua_State *L )
 
 static int CBasePlayer_GetVehicleEntity( lua_State *L )
 {
-    lua_pushentity( L, luaL_checkplayer( L, 1 )->GetVehicleEntity() );
+    CBaseEntity::PushLuaInstanceSafe( L, luaL_checkplayer( L, 1 )->GetVehicleEntity() );
     return 1;
 }
 
@@ -561,7 +561,7 @@ static int CBasePlayer_RemovePlayerItem( lua_State *L )
 
 static int CBasePlayer_HasNamedPlayerItem( lua_State *L )
 {
-    lua_pushentity(
+    CBaseEntity::PushLuaInstanceSafe(
         L, luaL_checkplayer( L, 1 )->HasNamedPlayerItem( luaL_checkstring( L, 2 ) ) );
     return 1;
 }
@@ -574,7 +574,7 @@ static int CBasePlayer_HasWeapons( lua_State *L )
 
 static int CBasePlayer_GiveNamedItem( lua_State *L )
 {
-    lua_pushentity( L, luaL_checkplayer( L, 1 )->GiveNamedItem( luaL_checkstring( L, 2 ), luaL_optinteger( L, 3, 0 ) ) );
+    CBaseEntity::PushLuaInstanceSafe( L, luaL_checkplayer( L, 1 )->GiveNamedItem( luaL_checkstring( L, 2 ), luaL_optinteger( L, 3, 0 ) ) );
     return 1;
 }
 

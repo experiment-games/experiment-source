@@ -83,7 +83,7 @@ static int CBaseEntity_DetectInSkybox( lua_State *L )
 
 static int CBaseEntity_GetEntitySkybox( lua_State *L )
 {
-    lua_pushentity( L, ( CBaseEntity * )luaL_checkentity( L, 1 )->GetEntitySkybox() );
+    CBaseEntity::PushLuaInstanceSafe( L, ( CBaseEntity * )luaL_checkentity( L, 1 )->GetEntitySkybox() );
     return 1;
 }
 
@@ -261,7 +261,7 @@ static int CBaseEntity_MoveDone( lua_State *L )
 
 static int CBaseEntity_Instance( lua_State *L )
 {
-    lua_pushentity( L, CBaseEntity::Instance( luaL_checkinteger( L, 1 ) ) );
+    CBaseEntity::PushLuaInstanceSafe( L, CBaseEntity::Instance( luaL_checkinteger( L, 1 ) ) );
     return 1;
 }
 
@@ -435,7 +435,7 @@ static int CBaseEntity_CanStandOn( lua_State *L )
 
 static int CBaseEntity_GetEnemy( lua_State *L )
 {
-    lua_pushentity( L, luaL_checkentity( L, 1 )->GetEnemy() );
+    CBaseEntity::PushLuaInstanceSafe( L, luaL_checkentity( L, 1 )->GetEnemy() );
     return 1;
 }
 
@@ -447,7 +447,7 @@ static int CBaseEntity_VelocityPunch( lua_State *L )
 
 static int CBaseEntity_GetNextTarget( lua_State *L )
 {
-    lua_pushentity( L, luaL_checkentity( L, 1 )->GetNextTarget() );
+    CBaseEntity::PushLuaInstanceSafe( L, luaL_checkentity( L, 1 )->GetNextTarget() );
     return 1;
 }
 
@@ -561,7 +561,7 @@ static int CBaseEntity_ShouldToggle( lua_State *L )
 
 static int CBaseEntity_Respawn( lua_State *L )
 {
-    lua_pushentity( L, luaL_checkentity( L, 1 )->Respawn() );
+    CBaseEntity::PushLuaInstanceSafe( L, luaL_checkentity( L, 1 )->Respawn() );
     return 1;
 }
 
@@ -597,13 +597,13 @@ static int CBaseEntity_DumpResponseCriteria( lua_State *L )
 
 static int CBaseEntity_Create( lua_State *L )
 {
-    lua_pushentity( L, CBaseEntity::Create( luaL_checkstring( L, 1 ), luaL_checkvector( L, 2 ), luaL_checkangle( L, 3 ), luaL_optentity( L, 4, NULL ) ) );
+    CBaseEntity::PushLuaInstanceSafe( L, CBaseEntity::Create( luaL_checkstring( L, 1 ), luaL_checkvector( L, 2 ), luaL_checkangle( L, 3 ), luaL_optentity( L, 4, NULL ) ) );
     return 1;
 }
 
 static int CBaseEntity_CreateNoSpawn( lua_State *L )
 {
-    lua_pushentity( L, CBaseEntity::CreateNoSpawn( luaL_checkstring( L, 1 ), luaL_checkvector( L, 2 ), luaL_checkangle( L, 3 ), luaL_optentity( L, 4, NULL ) ) );
+    CBaseEntity::PushLuaInstanceSafe( L, CBaseEntity::CreateNoSpawn( luaL_checkstring( L, 1 ), luaL_checkvector( L, 2 ), luaL_checkangle( L, 3 ), luaL_optentity( L, 4, NULL ) ) );
     return 1;
 }
 

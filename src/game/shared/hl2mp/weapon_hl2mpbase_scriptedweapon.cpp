@@ -986,7 +986,7 @@ bool CHL2MPScriptedWeapon::Holster( CBaseCombatWeapon *pSwitchingTo )
 {
 #if defined( LUA_SDK )
     BEGIN_LUA_CALL_WEAPON_METHOD( "Holster" );
-    lua_pushweapon( L, pSwitchingTo );
+    CBaseEntity::PushLuaInstanceSafe( L, pSwitchingTo );
     END_LUA_CALL_WEAPON_METHOD( 1, 1 );
 
     RETURN_LUA_BOOLEAN();

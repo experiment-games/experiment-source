@@ -34,91 +34,91 @@ static int gEntList_Clear( lua_State *L )
 
 static int gEntList_FindEntityByClassname( lua_State *L )
 {
-    lua_pushentity( L, gEntList.FindEntityByClassname( lua_toentity( L, 1 ), luaL_checkstring( L, 2 ) ) );
+    CBaseEntity::PushLuaInstanceSafe( L, gEntList.FindEntityByClassname( lua_toentity( L, 1 ), luaL_checkstring( L, 2 ) ) );
     return 1;
 }
 
 static int gEntList_FindEntityByClassnameNearest( lua_State *L )
 {
-    lua_pushentity( L, gEntList.FindEntityByClassnameNearest( luaL_checkstring( L, 1 ), luaL_checkvector( L, 2 ), luaL_checknumber( L, 3 ) ) );
+    CBaseEntity::PushLuaInstanceSafe( L, gEntList.FindEntityByClassnameNearest( luaL_checkstring( L, 1 ), luaL_checkvector( L, 2 ), luaL_checknumber( L, 3 ) ) );
     return 1;
 }
 
 static int gEntList_FindEntityByClassnameWithin( lua_State *L )
 {
-    lua_pushentity( L, gEntList.FindEntityByClassnameWithin( lua_toentity( L, 1 ), luaL_checkstring( L, 2 ), luaL_checkvector( L, 3 ), luaL_checknumber( L, 4 ) ) );
+    CBaseEntity::PushLuaInstanceSafe( L, gEntList.FindEntityByClassnameWithin( lua_toentity( L, 1 ), luaL_checkstring( L, 2 ), luaL_checkvector( L, 3 ), luaL_checknumber( L, 4 ) ) );
     return 1;
 }
 
 static int gEntList_FindEntityByModel( lua_State *L )
 {
-    lua_pushentity( L, gEntList.FindEntityByModel( lua_toentity( L, 1 ), luaL_checkstring( L, 2 ) ) );
+    CBaseEntity::PushLuaInstanceSafe( L, gEntList.FindEntityByModel( lua_toentity( L, 1 ), luaL_checkstring( L, 2 ) ) );
     return 1;
 }
 
 static int gEntList_FindEntityByName( lua_State *L )
 {
-    lua_pushentity( L, gEntList.FindEntityByName( lua_toentity( L, 1 ), luaL_checkstring( L, 2 ), luaL_optentity( L, 3, 0 ), luaL_optentity( L, 4, 0 ), luaL_optentity( L, 5, 0 ) ) );
+    CBaseEntity::PushLuaInstanceSafe( L, gEntList.FindEntityByName( lua_toentity( L, 1 ), luaL_checkstring( L, 2 ), luaL_optentity( L, 3, 0 ), luaL_optentity( L, 4, 0 ), luaL_optentity( L, 5, 0 ) ) );
     return 1;
 }
 
 static int gEntList_FindEntityByNameNearest( lua_State *L )
 {
-    lua_pushentity( L, gEntList.FindEntityByNameNearest( luaL_checkstring( L, 1 ), luaL_checkvector( L, 2 ), luaL_checknumber( L, 3 ), luaL_optentity( L, 4, 0 ), luaL_optentity( L, 5, 0 ), luaL_optentity( L, 6, 0 ) ) );
+    CBaseEntity::PushLuaInstanceSafe( L, gEntList.FindEntityByNameNearest( luaL_checkstring( L, 1 ), luaL_checkvector( L, 2 ), luaL_checknumber( L, 3 ), luaL_optentity( L, 4, 0 ), luaL_optentity( L, 5, 0 ), luaL_optentity( L, 6, 0 ) ) );
     return 1;
 }
 
 static int gEntList_FindEntityByNameWithin( lua_State *L )
 {
-    lua_pushentity( L, gEntList.FindEntityByNameWithin( lua_toentity( L, 1 ), luaL_checkstring( L, 2 ), luaL_checkvector( L, 3 ), luaL_checknumber( L, 4 ), luaL_optentity( L, 5, 0 ), luaL_optentity( L, 6, 0 ), luaL_optentity( L, 7, 0 ) ) );
+    CBaseEntity::PushLuaInstanceSafe( L, gEntList.FindEntityByNameWithin( lua_toentity( L, 1 ), luaL_checkstring( L, 2 ), luaL_checkvector( L, 3 ), luaL_checknumber( L, 4 ), luaL_optentity( L, 5, 0 ), luaL_optentity( L, 6, 0 ), luaL_optentity( L, 7, 0 ) ) );
     return 1;
 }
 
 static int gEntList_FindEntityByTarget( lua_State *L )
 {
-    lua_pushentity( L, gEntList.FindEntityByTarget( lua_toentity( L, 1 ), luaL_checkstring( L, 2 ) ) );
+    CBaseEntity::PushLuaInstanceSafe( L, gEntList.FindEntityByTarget( lua_toentity( L, 1 ), luaL_checkstring( L, 2 ) ) );
     return 1;
 }
 
 static int gEntList_FindEntityClassNearestFacing( lua_State *L )
 {
-    lua_pushentity( L, gEntList.FindEntityClassNearestFacing( luaL_checkvector( L, 1 ), luaL_checkvector( L, 2 ), luaL_checknumber( L, 3 ), ( char * )luaL_checkstring( L, 4 ) ) );
+    CBaseEntity::PushLuaInstanceSafe( L, gEntList.FindEntityClassNearestFacing( luaL_checkvector( L, 1 ), luaL_checkvector( L, 2 ), luaL_checknumber( L, 3 ), ( char * )luaL_checkstring( L, 4 ) ) );
     return 1;
 }
 
 static int gEntList_FindEntityGeneric( lua_State *L )
 {
-    lua_pushentity( L, gEntList.FindEntityGeneric( lua_toentity( L, 1 ), luaL_checkstring( L, 2 ), luaL_optentity( L, 3, 0 ), luaL_optentity( L, 4, 0 ), luaL_optentity( L, 5, 0 ) ) );
+    CBaseEntity::PushLuaInstanceSafe( L, gEntList.FindEntityGeneric( lua_toentity( L, 1 ), luaL_checkstring( L, 2 ), luaL_optentity( L, 3, 0 ), luaL_optentity( L, 4, 0 ), luaL_optentity( L, 5, 0 ) ) );
     return 1;
 }
 
 static int gEntList_FindEntityGenericNearest( lua_State *L )
 {
-    lua_pushentity( L, gEntList.FindEntityGenericNearest( luaL_checkstring( L, 1 ), luaL_checkvector( L, 2 ), luaL_checknumber( L, 3 ), luaL_optentity( L, 4, 0 ), luaL_optentity( L, 5, 0 ), luaL_optentity( L, 6, 0 ) ) );
+    CBaseEntity::PushLuaInstanceSafe( L, gEntList.FindEntityGenericNearest( luaL_checkstring( L, 1 ), luaL_checkvector( L, 2 ), luaL_checknumber( L, 3 ), luaL_optentity( L, 4, 0 ), luaL_optentity( L, 5, 0 ), luaL_optentity( L, 6, 0 ) ) );
     return 1;
 }
 
 static int gEntList_FindEntityGenericWithin( lua_State *L )
 {
-    lua_pushentity( L, gEntList.FindEntityGenericWithin( lua_toentity( L, 1 ), luaL_checkstring( L, 2 ), luaL_checkvector( L, 3 ), luaL_checknumber( L, 4 ), luaL_optentity( L, 5, 0 ), luaL_optentity( L, 6, 0 ), luaL_optentity( L, 7, 0 ) ) );
+    CBaseEntity::PushLuaInstanceSafe( L, gEntList.FindEntityGenericWithin( lua_toentity( L, 1 ), luaL_checkstring( L, 2 ), luaL_checkvector( L, 3 ), luaL_checknumber( L, 4 ), luaL_optentity( L, 5, 0 ), luaL_optentity( L, 6, 0 ), luaL_optentity( L, 7, 0 ) ) );
     return 1;
 }
 
 static int gEntList_FindEntityInSphere( lua_State *L )
 {
-    lua_pushentity( L, gEntList.FindEntityInSphere( lua_toentity( L, 1 ), luaL_checkvector( L, 2 ), luaL_checknumber( L, 3 ) ) );
+    CBaseEntity::PushLuaInstanceSafe( L, gEntList.FindEntityInSphere( lua_toentity( L, 1 ), luaL_checkvector( L, 2 ), luaL_checknumber( L, 3 ) ) );
     return 1;
 }
 
 static int gEntList_FindEntityNearestFacing( lua_State *L )
 {
-    lua_pushentity( L, gEntList.FindEntityNearestFacing( luaL_checkvector( L, 1 ), luaL_checkvector( L, 2 ), luaL_checknumber( L, 3 ) ) );
+    CBaseEntity::PushLuaInstanceSafe( L, gEntList.FindEntityNearestFacing( luaL_checkvector( L, 1 ), luaL_checkvector( L, 2 ), luaL_checknumber( L, 3 ) ) );
     return 1;
 }
 
 static int gEntList_FindEntityProcedural( lua_State *L )
 {
-    lua_pushentity( L, gEntList.FindEntityProcedural( luaL_checkstring( L, 1 ), luaL_optentity( L, 2, 0 ), luaL_optentity( L, 3, 0 ), luaL_optentity( L, 4, 0 ) ) );
+    CBaseEntity::PushLuaInstanceSafe( L, gEntList.FindEntityProcedural( luaL_checkstring( L, 1 ), luaL_optentity( L, 2, 0 ), luaL_optentity( L, 3, 0 ), luaL_optentity( L, 4, 0 ) ) );
     return 1;
 }
 
@@ -167,9 +167,9 @@ static int gEntList_ResetDeleteList( lua_State *L )
 static int gEntList_FirstEnt( lua_State *L )
 {
 #ifdef CLIENT_DLL
-    lua_pushentity( L, ClientEntityList().FirstBaseEntity() );
+    CBaseEntity::PushLuaInstanceSafe( L, ClientEntityList().FirstBaseEntity() );
 #else
-    lua_pushentity( L, gEntList.FirstEnt() );
+    CBaseEntity::PushLuaInstanceSafe( L, gEntList.FirstEnt() );
 #endif
 
     return 1;
@@ -188,7 +188,7 @@ static int gEntList_GetAllEntities( lua_State *L )
 #endif
     {
         lua_pushinteger( L, ++i ); // 1-based index
-        lua_pushentity( L, pEnt );
+        CBaseEntity::PushLuaInstanceSafe( L, pEnt );
         lua_settable( L, -3 );
     }
 
@@ -198,9 +198,9 @@ static int gEntList_GetAllEntities( lua_State *L )
 static int gEntList_NextEnt( lua_State *L )
 {
 #ifdef CLIENT_DLL
-    lua_pushentity( L, ClientEntityList().NextBaseEntity( lua_toentity( L, 1 ) ) );
+    CBaseEntity::PushLuaInstanceSafe( L, ClientEntityList().NextBaseEntity( lua_toentity( L, 1 ) ) );
 #else
-    lua_pushentity( L, gEntList.NextEnt( lua_toentity( L, 1 ) ) );
+    CBaseEntity::PushLuaInstanceSafe( L, gEntList.NextEnt( lua_toentity( L, 1 ) ) );
 #endif
 
     return 1;
