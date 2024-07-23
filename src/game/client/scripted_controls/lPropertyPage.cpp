@@ -23,8 +23,8 @@ using namespace vgui;
 //-----------------------------------------------------------------------------
 // Purpose: Constructor
 //-----------------------------------------------------------------------------
-LPropertyPage::LPropertyPage( Panel *parent, const char *panelName, lua_State *L )
-    : PropertyPage( parent, panelName )
+LPropertyPage::LPropertyPage( Panel *parent, const char *panelName, lua_State *L /* = nullptr */ )
+    : PropertyPage( parent, panelName, L )
 {
     m_lua_State = L;
 }

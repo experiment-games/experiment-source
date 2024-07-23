@@ -26,7 +26,11 @@ class PropertyDialog : public Frame
 	DECLARE_CLASS_SIMPLE( PropertyDialog, Frame );
 
 public:
-	PropertyDialog(Panel *parent, const char *panelName);
+#ifdef LUA_SDK
+    PropertyDialog( Panel *parent, const char *panelName, lua_State *L = nullptr );
+#else
+    PropertyDialog( Panel *parent, const char *panelName );
+#endif
 	~PropertyDialog();
 
 	// returns a pointer to the PropertySheet this dialog encapsulates 

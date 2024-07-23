@@ -45,10 +45,9 @@ struct MDLData_t
 
 const char *g_pszModelImagePanelRenderTargetName = "_rt_ModelImagePanel";
 
-LModelImagePanel::LModelImagePanel( Panel *parent, const char *panelName, lua_State *L )
-    : EditablePanel( parent, panelName )
+LModelImagePanel::LModelImagePanel( Panel *parent, const char *panelName, lua_State *L /* = nullptr */ )
+    : EditablePanel( parent, panelName, L )
 {
-    m_lua_State = L;
     m_pszModelImagePath = NULL;
     m_pszModelPath = NULL;
     m_iSkin = 0;

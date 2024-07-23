@@ -16,7 +16,7 @@ class LModelImagePanel : public EditablePanel
     LUA_OVERRIDE_SINGLE_LUA_INSTANCE_METATABLE( "ModelImagePanel" );
 
    public:
-    LModelImagePanel( Panel *parent, const char *panelName, lua_State *L );
+    LModelImagePanel( Panel *parent, const char *panelName, lua_State *L = nullptr );
     virtual ~LModelImagePanel();
 
     virtual void RebuildSpawnIcon( Camera_t *camera = NULL, const char *pszSavePath = NULL );

@@ -30,7 +30,11 @@ class Label : public Panel
 
    public:
     // Constructors
+#ifdef LUA_SDK
+    Label( Panel *parent, const char *panelName, const char *text, lua_State *L = nullptr );
+#else
     Label( Panel *parent, const char *panelName, const char *text );
+#endif
     Label( Panel *parent, const char *panelName, const wchar_t *wszText );
     ~Label();
 

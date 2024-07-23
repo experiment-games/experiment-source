@@ -18,8 +18,8 @@ using namespace vgui;
 //-----------------------------------------------------------------------------
 // Purpose: Constructor
 //-----------------------------------------------------------------------------
-LTextEntry::LTextEntry( Panel *parent, const char *panelName, lua_State *L )
-    : TextEntry( parent, panelName )
+LTextEntry::LTextEntry( Panel *parent, const char *panelName, lua_State *L /* = nullptr */ )
+    : TextEntry( parent, panelName, L )
 {
     m_lua_State = L;
 }

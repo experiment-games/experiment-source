@@ -24,10 +24,9 @@ using namespace vgui;
 //-----------------------------------------------------------------------------
 // Purpose: Constructor
 //-----------------------------------------------------------------------------
-LCheckButton::LCheckButton( Panel *parent, const char *panelName, const char *text, lua_State *L )
-    : CheckButton( parent, panelName, text )
+LCheckButton::LCheckButton( Panel *parent, const char *panelName, const char *text, lua_State *L /* = nullptr */ )
+    : CheckButton( parent, panelName, text, L )
 {
-    m_lua_State = L;
 }
 
 //-----------------------------------------------------------------------------

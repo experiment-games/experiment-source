@@ -24,10 +24,9 @@ using namespace vgui;
 //-----------------------------------------------------------------------------
 // Purpose: Constructor
 //-----------------------------------------------------------------------------
-LFrame::LFrame( Panel *parent, const char *panelName, bool showTaskbarIcon, lua_State *L )
-    : Frame( parent, panelName, showTaskbarIcon )
+LFrame::LFrame( Panel *parent, const char *panelName, bool showTaskbarIcon, lua_State *L /* = nullptr */ )
+    : Frame( parent, panelName, showTaskbarIcon, L )
 {
-    m_lua_State = L;
 }
 
 //-----------------------------------------------------------------------------

@@ -230,7 +230,6 @@ class Panel : public IClientPanel, virtual IForceVirtualInheritancePanel
 
 #ifdef LUA_SDK
    protected:
-    lua_State *m_lua_State = nullptr;
     bool m_bIsPaintClipping = true;
     int m_nLastLocalCursorX = 0;
     int m_nLastLocalCursorY = 0;
@@ -242,6 +241,7 @@ class Panel : public IClientPanel, virtual IForceVirtualInheritancePanel
     CUtlDict< int, int > m_PreparedFunctions;
 
    public:
+    lua_State *m_lua_State = nullptr;
     int m_nTableReference;
     int m_nRefCount;
 
@@ -339,6 +339,30 @@ class Panel : public IClientPanel, virtual IForceVirtualInheritancePanel
     {
         m_bIsPaintClipping = state;
     }
+
+    bool IsFunctionPrepared( const char *functionName )
+    {
+        // This whole mess is really only for OnChildAdded. 
+        // Init may not have been finished calling yet, so we need to check if
+        // the Init of this panel has completed (signalled by PANEL:Prepare),
+        // Otherwise some derma panels which hook to OnChildAdded will expect
+        // panels created inside Init to exist and be ready to be used.
+        // See DScrollPanel for an example of this situation:
+        //  function PANEL:Init()
+        //      self.pnlCanvas = vgui.Create( "Panel", self )
+        //      // etc...
+        //  end
+        //  function PANEL:OnChildAdded( child )
+        //	    child:SetParent( self.pnlCanvas ) -- self.pnlCanvas does not exist if vgui.Create( "Panel", self ) calls OnChildAdded
+        //  end
+        if ( Q_strcmp( functionName, "OnChildAdded" ) == 0 )
+        {
+            return m_PreparedFunctions.Find( functionName ) != m_PreparedFunctions.InvalidIndex();
+        }
+        return true;
+    }
+
+    virtual void Prepare();
 #endif
 
     // returns pointer to Panel's vgui VPanel interface handle

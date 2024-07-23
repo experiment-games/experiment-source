@@ -43,8 +43,13 @@ DECLARE_BUILD_FACTORY( TextEntry );
 //-----------------------------------------------------------------------------
 // Purpose: Constructor
 //-----------------------------------------------------------------------------
+#ifdef LUA_SDK
+TextEntry::TextEntry( Panel *parent, const char *panelName, lua_State *L /* = nullptr */ )
+    : BaseClass( parent, panelName, L )
+#else
 TextEntry::TextEntry( Panel *parent, const char *panelName )
     : BaseClass( parent, panelName )
+#endif
 {
     SetTriplePressAllowed( true );
 

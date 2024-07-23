@@ -1005,7 +1005,7 @@ static int Panel_PerformLayout( lua_State *L )
 
 static int Panel_Prepare( lua_State *L )
 {
-    // TODO: What should this do?
+    luaL_checkpanel( L, 1 )->Prepare();
     return 0;
 }
 
@@ -1249,7 +1249,8 @@ static int Panel_SetPinCorner( lua_State *L )
 
 static int Panel_SetPos( lua_State *L )
 {
-    luaL_checkpanel( L, 1 )->SetPos( luaL_checknumber( L, 2 ),
+    Panel *pPanel = luaL_checkpanel( L, 1 );
+    pPanel->SetPos( luaL_checknumber( L, 2 ),
                                      luaL_checknumber( L, 3 ) );
     return 0;
 }

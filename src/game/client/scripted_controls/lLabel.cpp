@@ -19,10 +19,9 @@ using namespace vgui;
 //-----------------------------------------------------------------------------
 // Purpose: Constructor
 //-----------------------------------------------------------------------------
-LLabel::LLabel( Panel *parent, const char *panelName, const char *text, lua_State *L )
-    : Label( parent, panelName, text )
+LLabel::LLabel( Panel *parent, const char *panelName, const char *text, lua_State *L /* = nullptr */ )
+    : Label( parent, panelName, text, L )
 {
-    m_lua_State = L;
 }
 
 /*

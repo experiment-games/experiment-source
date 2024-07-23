@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -21,39 +21,45 @@ DECLARE_BUILD_FACTORY_DEFAULT_TEXT( ToggleButton, ToggleButton );
 //-----------------------------------------------------------------------------
 // Purpose: Constructor
 //-----------------------------------------------------------------------------
-ToggleButton::ToggleButton(Panel *parent, const char *panelName, const char* text) : Button(parent, panelName, text)
+#ifdef LUA_SDK
+ToggleButton::ToggleButton( Panel *parent, const char *panelName, const char *text, lua_State *L /* = nullptr */ )
+    : Button( parent, panelName, text, nullptr, nullptr, L )
+#else
+ToggleButton::ToggleButton( Panel *parent, const char *panelName, const char *text )
+    : Button( parent, panelName, text )
+#endif
 {
-	SetButtonActivationType(ACTIVATE_ONPRESSED);
+    SetButtonActivationType( ACTIVATE_ONPRESSED );
 }
 
 //-----------------------------------------------------------------------------
 // Purpose: Turns double-click into normal click
 //-----------------------------------------------------------------------------
-void ToggleButton::OnMouseDoublePressed(MouseCode code)
+void ToggleButton::OnMouseDoublePressed( MouseCode code )
 {
-	OnMousePressed(code);
+    OnMousePressed( code );
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 Color ToggleButton::GetButtonFgColor()
 {
-	if (IsSelected())
-	{
-		// highlight the text when depressed
-		return _selectedColor;
-	}
-	else
-	{
-		return BaseClass::GetButtonFgColor();
-	}
+    if ( IsSelected() )
+    {
+        // highlight the text when depressed
+        return _selectedColor;
+    }
+    else
+    {
+        return BaseClass::GetButtonFgColor();
+    }
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-bool ToggleButton::CanBeDefaultButton(void)
+bool ToggleButton::CanBeDefaultButton( void )
 {
     return false;
 }
@@ -63,40 +69,39 @@ bool ToggleButton::CanBeDefaultButton(void)
 //-----------------------------------------------------------------------------
 void ToggleButton::DoClick()
 {
-	if (IsSelected())
-	{
-		ForceDepressed(false);
-	}
-	else if (!IsSelected())
-	{
-		ForceDepressed(true);
-	}
-
-	SetSelected(!IsSelected());
-	FireActionSignal();
-
-	// post a button toggled message
-	KeyValues *msg = new KeyValues("ButtonToggled");
-	msg->SetInt("state", (int)IsSelected());
-	PostActionSignal(msg);
-	
-	Repaint();
-}
-
-//-----------------------------------------------------------------------------
-// Purpose: 
-//-----------------------------------------------------------------------------
-void ToggleButton::ApplySchemeSettings(IScheme *pScheme)
-{
-	BaseClass::ApplySchemeSettings(pScheme);
-	_selectedColor = GetSchemeColor("ToggleButton.SelectedTextColor", pScheme);
-}
-
-void ToggleButton::OnKeyCodePressed(KeyCode code)
-{
-    if (code != KEY_ENTER)
+    if ( IsSelected() )
     {
-        BaseClass::OnKeyCodePressed(code);
+        ForceDepressed( false );
+    }
+    else if ( !IsSelected() )
+    {
+        ForceDepressed( true );
+    }
+
+    SetSelected( !IsSelected() );
+    FireActionSignal();
+
+    // post a button toggled message
+    KeyValues *msg = new KeyValues( "ButtonToggled" );
+    msg->SetInt( "state", ( int )IsSelected() );
+    PostActionSignal( msg );
+
+    Repaint();
+}
+
+//-----------------------------------------------------------------------------
+// Purpose:
+//-----------------------------------------------------------------------------
+void ToggleButton::ApplySchemeSettings( IScheme *pScheme )
+{
+    BaseClass::ApplySchemeSettings( pScheme );
+    _selectedColor = GetSchemeColor( "ToggleButton.SelectedTextColor", pScheme );
+}
+
+void ToggleButton::OnKeyCodePressed( KeyCode code )
+{
+    if ( code != KEY_ENTER )
+    {
+        BaseClass::OnKeyCodePressed( code );
     }
 }
-

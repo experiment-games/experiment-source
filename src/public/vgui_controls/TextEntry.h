@@ -87,7 +87,11 @@ class TextEntry : public Panel
     DECLARE_CLASS_SIMPLE( TextEntry, Panel );
 
    public:
+#ifdef LUA_SDK
+    TextEntry( Panel *parent, const char *panelName, lua_State *L = nullptr );
+#else
     TextEntry( Panel *parent, const char *panelName );
+#endif
     virtual ~TextEntry();
 
     virtual void SetText( const wchar_t *wszText );

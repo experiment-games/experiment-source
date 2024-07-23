@@ -16,10 +16,9 @@ using namespace vgui;
 //-----------------------------------------------------------------------------
 // Purpose: Constructor
 //-----------------------------------------------------------------------------
-LHTML::LHTML( Panel *parent, const char *name, bool allowJavaScript, bool bPopupWindow, lua_State *L )
-    : HTML( parent, name, allowJavaScript, bPopupWindow )
+LHTML::LHTML( Panel *parent, const char *name, bool allowJavaScript, bool bPopupWindow, lua_State *L /* = nullptr */ )
+    : HTML( parent, name, allowJavaScript, bPopupWindow, L )
 {
-    m_lua_State = L;
 }
 
 bool LHTML::OnStartRequest( const char *url, const char *target, const char *pchPostData, bool bIsRedirect )

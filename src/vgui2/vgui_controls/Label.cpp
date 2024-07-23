@@ -36,8 +36,13 @@ DECLARE_BUILD_FACTORY_DEFAULT_TEXT( Label, Label );
 //-----------------------------------------------------------------------------
 // Purpose: Constructor
 //-----------------------------------------------------------------------------
+#ifdef LUA_SDK
+Label::Label( Panel *parent, const char *panelName, const char *text, lua_State *L /* = nullptr */ )
+    : BaseClass( parent, panelName, L )
+#else
 Label::Label( Panel *parent, const char *panelName, const char *text )
     : BaseClass( parent, panelName )
+#endif
 {
     Init();
 

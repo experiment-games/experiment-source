@@ -40,7 +40,11 @@ class HTML: public Panel
 	//DECLARE_STYLE_BASE( "HTML" );
 public:
 
-	HTML(Panel *parent,const char *name, bool allowJavaScript = false, bool bPopupWindow = false);
+#ifdef LUA_SDK
+	HTML( Panel *parent, const char *name, bool allowJavaScript = false, bool bPopupWindow = false, lua_State *L = nullptr );
+#else
+    HTML( Panel *parent, const char *name, bool allowJavaScript = false, bool bPopupWindow = false );
+ #endif
 	~HTML();
 
 	// IHTML pass through functions

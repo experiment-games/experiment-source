@@ -120,8 +120,13 @@ class HTMLPopup : public vgui::Frame
 // Purpose: Constructor
 //-----------------------------------------------------------------------------
 #pragma warning( disable : 4355 )
+#ifdef LUA_SDK
+HTML::HTML( Panel *parent, const char *name, bool allowJavaScript, bool bPopupWindow, lua_State *L /* = nullptr */ )
+    : Panel( parent, name, L ),
+#else
 HTML::HTML( Panel *parent, const char *name, bool allowJavaScript, bool bPopupWindow )
     : Panel( parent, name ),
+#endif
       m_NeedsPaint( this, &HTML::BrowserNeedsPaint ),
       m_StartRequest( this, &HTML::BrowserStartRequest ),
       m_URLChanged( this, &HTML::BrowserURLChanged ),

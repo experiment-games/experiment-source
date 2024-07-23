@@ -26,10 +26,9 @@ using namespace vgui;
 //-----------------------------------------------------------------------------
 // Purpose: Constructor
 //-----------------------------------------------------------------------------
-LPropertyDialog::LPropertyDialog( Panel *parent, const char *panelName, lua_State *L )
-    : PropertyDialog( parent, panelName )
+LPropertyDialog::LPropertyDialog( Panel *parent, const char *panelName, lua_State *L /* = nullptr */ )
+    : PropertyDialog( parent, panelName, L )
 {
-    m_lua_State = L;
 }
 
 //-----------------------------------------------------------------------------

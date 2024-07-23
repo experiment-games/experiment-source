@@ -21,10 +21,9 @@
 
 using namespace vgui;
 
-LEditablePanel::LEditablePanel( Panel *parent, const char *panelName, lua_State *L )
-    : EditablePanel( parent, panelName )
+LEditablePanel::LEditablePanel( Panel *parent, const char *panelName, lua_State *L /* = nullptr */ )
+    : EditablePanel( parent, panelName, L )
 {
-    m_lua_State = L;
 }
 
 LEditablePanel::~LEditablePanel()

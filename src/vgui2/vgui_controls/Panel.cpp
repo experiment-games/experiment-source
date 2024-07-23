@@ -677,9 +677,12 @@ Panel::Panel( Panel *parent, const char *panelName, HScheme scheme )
 // Purpose: Constructor for Lua create Panels
 //-----------------------------------------------------------------------------
 Panel::Panel( Panel *parent, const char *panelName, lua_State *L )
-    : Panel( parent, panelName )
 {
     m_lua_State = L;
+    Init( 0, 0, 64, 24 );
+    SetName( panelName );
+    SetParent( parent );
+    SetBuildModeEditable( true );
 }
 
 void *Panel::CreateLuaInstance( lua_State *L, Panel *pInstance )
@@ -735,6 +738,38 @@ void Panel::SetupRefTable( lua_State *L )
 
     lua_newtable( L );
     m_nTableReference = luaL_ref( L, LUA_REGISTRYINDEX );
+}
+
+void Panel::Prepare()
+{
+    lua_rawgeti( m_lua_State, LUA_REGISTRYINDEX, m_nTableReference );
+    lua_pushnil( m_lua_State );
+    while ( lua_next( m_lua_State, -2 ) != 0 )
+    {
+        if ( lua_isfunction( m_lua_State, -1 ) )
+        {
+            const char *functionName = lua_tostring( m_lua_State, -2 );
+            if ( !IsFunctionPrepared( functionName ) )
+            {
+                m_PreparedFunctions.Insert( functionName, 0 );
+            }
+        }
+        lua_pop( m_lua_State, 1 );
+    }
+    lua_pop( m_lua_State, 1 );
+
+    // If we have a parent AND it has had OnChildAdded prepared, call it for this
+    // panel.
+    Panel *pParent = GetParent();
+
+    // TODO:    HACK, find out how/when prepare whatever ChildAdded should be called
+    //          safely. See IsFunctionPrepared for details on bug this works around.
+    if ( pParent && pParent->IsFunctionPrepared( "OnChildAdded" ) )
+    {
+        BEGIN_LUA_CALL_PANEL_METHOD_FOR( pParent, "OnChildAdded" );
+        this->PushLuaInstance( m_lua_State );
+        END_LUA_CALL_PANEL_METHOD( 1, 0 );
+    }
 }
 #endif
 
@@ -1646,17 +1681,17 @@ static int dbg = 0;
 void Panel::OnChildAdded( VPANEL child )
 {
 #ifdef LUA_SDK
-    // BEGIN_LUA_CALL_PANEL_METHOD( "OnChildAdded" );
-    // PushVPanelLuaInstance( m_lua_State, child );
-    // END_LUA_CALL_PANEL_METHOD( 1, 0 );
     // When OnChildAdded is called for the panel, it may not have its Lua state
     // initialized yet. So we need to check if it has a Lua state and if it does,
     // only then call OnChildAdded with it as an argument.
     Panel *pPanel = ipanel()->GetPanel( child, GetControlsModuleName() );
 
-    if ( pPanel && pPanel->m_lua_State != NULL )
+    // Additionally, the panel we push must have already been pushed once, so its
+    // metatable is set up by the most specific subclass of Panel that it is.
+    // Otherwise we might push it as Panel, meaning less specific methods will be
+    // available.
+    if ( pPanel && pPanel->m_lua_State != NULL && pPanel->m_pLuaInstance != nullptr)
     {
-        pPanel->PushLuaInstance( pPanel->m_lua_State );
         BEGIN_LUA_CALL_PANEL_METHOD( "OnChildAdded" );
         pPanel->PushLuaInstance( m_lua_State );
         END_LUA_CALL_PANEL_METHOD( 1, 0 );
