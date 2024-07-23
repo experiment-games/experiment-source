@@ -427,8 +427,10 @@ bool CBaseEntity::KeyValue( const char *szKeyName, const char *szValue )
             Q_strncpy( szBuf, "90 0 0", sizeof( szBuf ) );
         }
 
-        // Do this so inherited classes looking for 'angles' don't have to bother with 'angle'
-        return KeyValue( szKeyName, szBuf );
+        // Do this so inherited classes looking for 'angles' don't have to bother
+        // with 'angle' Experiment; ZehMatt fix applied
+        // (https://github.com/ValveSoftware/source-sdk-2013/pull/380/files)
+        return KeyValue( "angles", szBuf );
     }
 
     // NOTE: Have to do these separate because they set two values instead of one

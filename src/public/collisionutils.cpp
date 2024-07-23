@@ -1666,7 +1666,8 @@ bool IntersectRayWithOBB( const Ray_t &ray, const matrix3x4_t &matOBBToWorld,
 		}
 		temp.type = 3;
 
-		MatrixITransformPlane( matOBBToWorld, temp, pTrace->plane );
+        // Experiment; fix by samisalreadytaken applied (https://github.com/ValveSoftware/source-sdk-2013/pull/552/files)
+		MatrixTransformPlane( matOBBToWorld, temp, pTrace->plane );
 		return true;
 	}
 

@@ -440,6 +440,8 @@ face_t *MakeBrushFace( side_t *originalSide, winding_t *winding )
 	f->split[0] = f->split[1] = NULL;
 	f->w = CopyWinding( winding );
 	f->originalface = originalSide;
+    // Experiment; Applied fix by tgnottingham (https://github.com/ValveSoftware/source-sdk-2013/pull/391/files)
+	f->smoothingGroups = originalSide->smoothingGroups;
 	//
 	// save material info
 	//

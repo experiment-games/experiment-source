@@ -3030,11 +3030,12 @@ FORCEINLINE bool NamesMatch( const char *pszQuery, string_t nameToMatch )
         unsigned char cName = *pszNameToMatch;
         unsigned char cQuery = *pszQuery;
         // simple ascii case conversion
+        // Experiment; applied fix by TotallyMehis (https://github.com/ValveSoftware/source-sdk-2013/pull/498)
         if ( cName == cQuery )
             ;
-        else if ( cName - 'A' <= ( unsigned char )'Z' - 'A' && cName - 'A' + 'a' == cQuery )
+        else if ( ( unsigned char )( cName - 'A' ) <= ( unsigned char )( 'Z' - 'A' ) && ( unsigned char )( cName - 'A' + 'a' ) == cQuery )
             ;
-        else if ( cName - 'a' <= ( unsigned char )'z' - 'a' && cName - 'a' + 'A' == cQuery )
+        else if ( ( unsigned char )( cName - 'a' ) <= ( unsigned char )( 'z' - 'a' ) && ( unsigned char )( cName - 'a' + 'A' ) == cQuery )
             ;
         else
             break;

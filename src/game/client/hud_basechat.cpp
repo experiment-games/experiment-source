@@ -1203,7 +1203,7 @@ void CBaseHudChat::StartMessageMode( int iMessageModeType )
 
 	//Place the mouse cursor near the text so people notice it.
 	int x, y, w, h;
-	GetChatHistory()->GetBounds( x, y, w, h );
+	GetBounds( x, y, w, h ); // Experiment; fix by TomyLobo applied (https://github.com/ValveSoftware/source-sdk-2013/pull/376/files)
 	vgui::input()->SetCursorPos( x + ( w/2), y + (h/2) );
 
 	m_flHistoryFadeTime = gpGlobals->curtime + CHAT_HISTORY_FADE_TIME;

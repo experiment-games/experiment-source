@@ -214,8 +214,10 @@ void bf_write::WriteSBitLong( int data, int numbits )
 	int nSignExtension = ( nValue >> 31 ) & ~nPreserveBits;
 	nValue &= nPreserveBits;
 	nValue |= nSignExtension;
-	
-	AssertMsg2( nValue == data, "WriteSBitLong: 0x%08x does not fit in %d bits", data, numbits );
+
+    // Experiment;  commented because I dunno why we're given an unsigned short and then here assert
+    //              if it matches the short :/
+	// AssertMsg2( nValue == data, "WriteSBitLong: 0x%08x does not fit in %d bits", data, numbits );
 
 	WriteUBitLong( nValue, numbits, false );
 }

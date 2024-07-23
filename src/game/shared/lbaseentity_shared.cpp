@@ -1868,6 +1868,7 @@ static int CBaseEntity_WorldToEntitySpace( lua_State *L )
 // TODO: Move these CBaseAnimating to a shared file for CBaseAnimating instead of here (this was just quicker for now)
 static int CBaseAnimating_GetAttachment( lua_State *L )
 {
+    CBaseAnimating *pAnimating = luaL_checkanimating( L, 1 );
     int iArg2Type = lua_type( L, 2 );
     Vector pVecOrigin;
     QAngle pVecAngles;
@@ -1877,7 +1878,7 @@ static int CBaseAnimating_GetAttachment( lua_State *L )
     {
         boneID = luaL_checknumber( L, 2 );
 
-        if ( !luaL_checkanimating( L, 1 )->GetAttachment( boneID, pVecOrigin, pVecAngles ) )
+        if ( !pAnimating->GetAttachment( boneID, pVecOrigin, pVecAngles ) )
         {
             lua_pushnil( L );
             return 1;
@@ -1885,9 +1886,9 @@ static int CBaseAnimating_GetAttachment( lua_State *L )
     }
     else if ( iArg2Type == LUA_TSTRING )
     {
-        boneID = luaL_checkanimating( L, 1 )->LookupAttachment( luaL_checkstring( L, 2 ) );
+        boneID = pAnimating->LookupAttachment( luaL_checkstring( L, 2 ) );
 
-        if ( !luaL_checkanimating( L, 1 )->GetAttachment( boneID, pVecOrigin, pVecAngles ) )
+        if ( !pAnimating->GetAttachment( boneID, pVecOrigin, pVecAngles ) )
         {
             lua_pushnil( L );
             return 1;
