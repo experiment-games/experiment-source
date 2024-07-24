@@ -506,6 +506,7 @@ void CViewRender::OnRenderStart()
         localFOV = MAX( min_fov, localFOV );
 
         gHUD.m_flFOVSensitivityAdjust = 1.0f;
+
 #ifndef _XBOX
         if ( gHUD.m_flMouseSensitivityFactor )
         {
@@ -539,6 +540,34 @@ void CViewRender::OnRenderStart()
 #endif
             }
         }
+
+#ifdef LUA_SDK
+        BEGIN_LUA_CALL_HOOK( "AdjustMouseSensitivity" );
+        lua_pushnumber( L, gHUD.m_flMouseSensitivity );
+        END_LUA_CALL_HOOK( 1, 1 );
+
+        bool bCallWeaponAdjustMouseSensitivityHook = true;
+
+        if ( lua_isnumber( L, -1 ) )
+        {
+            lua_Number flSensitivity = lua_tonumber( L, -1 );
+
+            if (flSensitivity == -1)
+            {
+                bCallWeaponAdjustMouseSensitivityHook = false;
+            }
+            else
+            {
+                gHUD.m_flMouseSensitivity = flSensitivity;
+            }
+        }
+        lua_pop( L, 1 ); // pop the return value
+
+        if ( bCallWeaponAdjustMouseSensitivityHook )
+        {
+            // TODO: Call WEAPON:AdjustMouseSensitivity hook
+        }
+#endif
     }
 }
 

@@ -272,6 +272,45 @@ static int Vector_Zero( lua_State *L )
     return 0;
 }
 
+// modifies the existing vector, adding another vector to it
+static int Vector_Add( lua_State *L )
+{
+    Vector vector = luaL_checkvector( L, 1 );
+    Vector vectorToAdd = luaL_checkvector( L, 1 );
+
+    vector.x += vectorToAdd.x;
+    vector.y += vectorToAdd.y;
+    vector.z += vectorToAdd.z;
+
+    return 0;
+}
+
+// modifies the existing vector, dividing it by a number
+static int Vector_Divide( lua_State *L )
+{
+    Vector vector = luaL_checkvector( L, 1 );
+    float divideBy = luaL_checknumber( L, 2 );
+
+    vector.x /= divideBy;
+    vector.y /= divideBy;
+    vector.z /= divideBy;
+
+    return 0;
+}
+
+// modifies the existing vector, scaling it by a number
+static int Vector_Scale( lua_State *L )
+{
+    Vector vector = luaL_checkvector( L, 1 );
+    float scaleBy = luaL_checknumber( L, 2 );
+
+    vector.x *= scaleBy;
+    vector.y *= scaleBy;
+    vector.z *= scaleBy;
+
+    return 0;
+}
+
 static int Vector___index( lua_State *L )
 {
     Vector vector = luaL_checkvector( L, 1 );
@@ -388,6 +427,9 @@ static const luaL_Reg Vectormeta[] = {
     { "Random", Vector_Random },
     { "WithinAABox", Vector_WithinAABox },
     { "Zero", Vector_Zero },
+    { "Add", Vector_Add },
+    { "Divide", Vector_Divide },
+    { "Scale", Vector_Scale },
     { "__index", Vector___index },
     { "__newindex", Vector___newindex },
     { "__tostring", Vector___tostring },
@@ -541,6 +583,45 @@ static int QAngle_RotateAroundAxis( lua_State *L )
     return 0;
 }
 
+// modifies the existing angle, adding another angle to it
+static int QAngle_Add( lua_State *L )
+{
+    QAngle angle = luaL_checkangle( L, 1 );
+    QAngle angleToAdd = luaL_checkangle( L, 1 );
+
+    angle.x += angleToAdd.x;
+    angle.y += angleToAdd.y;
+    angle.z += angleToAdd.z;
+
+    return 0;
+}
+
+// modifies the existing angle, dividing it by a number
+static int QAngle_Divide( lua_State *L )
+{
+    QAngle angle = luaL_checkangle( L, 1 );
+    float divideBy = luaL_checknumber( L, 2 );
+
+    angle.x /= divideBy;
+    angle.y /= divideBy;
+    angle.z /= divideBy;
+
+    return 0;
+}
+
+// modifies the existing angle, scaling it by a number
+static int QAngle_Scale( lua_State *L )
+{
+    QAngle angle = luaL_checkangle( L, 1 );
+    float scaleBy = luaL_checknumber( L, 2 );
+
+    angle.x *= scaleBy;
+    angle.y *= scaleBy;
+    angle.z *= scaleBy;
+
+    return 0;
+}
+
 static int QAngle___index( lua_State *L )
 {
     QAngle angle = luaL_checkangle( L, 1 );
@@ -632,6 +713,9 @@ static const luaL_Reg QAnglemeta[] = {
     { "Length", QAngle_Length },
     { "LengthSqr", QAngle_LengthSqr },
     { "RotateAroundAxis", QAngle_RotateAroundAxis },
+    { "Add", QAngle_Add },
+    { "Divide", QAngle_Divide },
+    { "Scale", QAngle_Scale },
     { "__index", QAngle___index },
     { "__newindex", QAngle___newindex },
     { "__tostring", QAngle___tostring },

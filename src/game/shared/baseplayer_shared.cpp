@@ -62,6 +62,7 @@ extern int TrainSpeed( int iSpeed, int iMax );
 #include "luamanager.h"
 #include "luasrclib.h"
 #include "lbaseplayer_shared.h"
+#include "lbaseentity_shared.h"
 #include "mathlib/lvector.h"
 #endif
 
@@ -1340,6 +1341,15 @@ CBaseEntity *CBasePlayer::FindUseEntity()
         Msg( "Using: %s\n", pNearest ? pNearest->GetDebugName() : "no usable entity found" );
     }
 
+#ifdef LUA_SDK
+    BEGIN_LUA_CALL_HOOK( "FindUseEntity" );
+    CBaseEntity::PushLuaInstanceSafe( L, this );
+    CBaseEntity::PushLuaInstanceSafe( L, pNearest );
+    END_LUA_CALL_HOOK( 2, 1 );
+
+    RETURN_LUA_ENTITY();
+#endif
+
     return pNearest;
 }
 
@@ -1438,6 +1448,15 @@ void CBasePlayer::PlayerUse( void )
     // Found an object
     if ( pUseEntity )
     {
+#ifdef LUA_SDK
+        BEGIN_LUA_CALL_HOOK( "PlayerUse" );
+        CBaseEntity::PushLuaInstanceSafe( L, this );
+        CBaseEntity::PushLuaInstanceSafe( L, pUseEntity );
+        END_LUA_CALL_HOOK( 2, 1 );
+
+        RETURN_LUA_NONE();
+#endif
+
         //!!!UNDONE: traceline here to prevent +USEing buttons through walls
 
         int caps = pUseEntity->ObjectCaps();

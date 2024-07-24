@@ -2177,6 +2177,14 @@ bool CHLClient::DispatchUserMessage( int msg_type, bf_read &msg_data )
 
 void SimulateEntities()
 {
+#ifdef LUA_SDK
+    if ( L )
+    {
+        BEGIN_LUA_CALL_HOOK( "Tick" );
+        END_LUA_CALL_HOOK( 0, 0 );
+    }
+#endif
+
     VPROF_BUDGET( "Client SimulateEntities", VPROF_BUDGETGROUP_CLIENT_SIM );
 
     // Service timer events (think functions).

@@ -33,7 +33,19 @@ class C_PropVehicleDriveable : public C_BaseAnimating, public IClientVehicle
     virtual void GetVehicleViewPosition( int nRole, Vector *pOrigin, QAngle *pAngles, float *pFOV = NULL );
 
     virtual void SetupMove( C_BasePlayer *player, CUserCmd *ucmd, IMoveHelper *pHelper, CMoveData *move ) {}
-    virtual void ProcessMovement( C_BasePlayer *pPlayer, CMoveData *pMoveData ) {}
+    virtual void ProcessMovement( C_BasePlayer *pPlayer, CMoveData *pMoveData )
+    {
+#ifdef LUA_SDK
+        BEGIN_LUA_CALL_HOOK( "VehicleMove" );
+        CBaseEntity::PushLuaInstanceSafe( L, pPlayer );
+        CBaseEntity::PushLuaInstanceSafe( L, this->GetVehicleEnt() );
+        // lua_pushmovedata( L, pMoveData );  // TODO
+        lua_pushnil( L );
+        END_LUA_CALL_HOOK( 3, 1 );
+
+        RETURN_LUA_NONE();
+#endif
+    }
     virtual void FinishMove( C_BasePlayer *player, CUserCmd *ucmd, CMoveData *move ) {}
 
     virtual void ItemPostFrame( C_BasePlayer *pPlayer ) {}

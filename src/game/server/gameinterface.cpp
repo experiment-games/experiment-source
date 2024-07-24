@@ -1365,6 +1365,11 @@ void CServerGameDLL::GameFrame( bool simulating )
 {
     VPROF( "CServerGameDLL::GameFrame" );
 
+#ifdef LUA_SDK
+    BEGIN_LUA_CALL_HOOK( "Tick" );
+    END_LUA_CALL_HOOK( 0, 0 );
+#endif
+
     // Don't run frames until fully restored
     if ( g_InRestore )
         return;
@@ -1517,6 +1522,7 @@ void CServerGameDLL::PreClientUpdate( bool simulating )
 
 void CServerGameDLL::Think( bool finalTick )
 {
+    // Experiment; TODO: Shouldn't we disable this since we dont use autosave?
     if ( m_fAutoSaveDangerousTime != 0.0f &&
          m_fAutoSaveDangerousTime < gpGlobals->curtime )
     {

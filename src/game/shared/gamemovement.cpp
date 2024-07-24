@@ -1157,6 +1157,14 @@ void CGameMovement::ProcessMovement( CBasePlayer *pPlayer, CMoveData *pMove )
     mv = pMove;
     mv->m_flMaxSpeed = pPlayer->GetPlayerMaxSpeed();
 
+#ifdef LUA_SDK
+    BEGIN_LUA_CALL_HOOK( "PlayerTick" );
+    CBaseEntity::PushLuaInstanceSafe( L, player );
+    // lua_pushmovedata( L, mv );  // TODO
+    lua_pushnil( L );
+    END_LUA_CALL_HOOK( 2, 0 );
+#endif
+
     // CheckV( player->CurrentCommandNumber(), "StartPos", mv->GetAbsOrigin() );
 
     DiffPrint( "start %f %f %f", mv->GetAbsOrigin().x, mv->GetAbsOrigin().y, mv->GetAbsOrigin().z );
@@ -4534,6 +4542,16 @@ void CGameMovement::PlayerMove( void )
 {
     VPROF( "CGameMovement::PlayerMove" );
 
+#ifdef LUA_SDK
+    BEGIN_LUA_CALL_HOOK( "Move" );
+    CBaseEntity::PushLuaInstanceSafe( L, player );
+    // lua_pushmovedata( L, mv );  // TODO
+    lua_pushnil( L );
+    END_LUA_CALL_HOOK( 2, 1 );
+
+    RETURN_LUA_NONE();
+#endif
+
     CheckParameters();
 
     // clear output applied velocity
@@ -4627,8 +4645,38 @@ void CGameMovement::PlayerMove( void )
 
 #endif
 
+    MoveType_t newMoveType = player->GetMoveType();
+
+#ifdef LUA_SDK
+    if ( newMoveType != m_nOldMoveType )
+    {
+        if ( newMoveType == MOVETYPE_NOCLIP || m_nOldMoveType == MOVETYPE_NOCLIP )
+        {
+            bool bNoClipDesired = newMoveType == MOVETYPE_NOCLIP;
+            BEGIN_LUA_CALL_HOOK( "PlayerNoClip" );
+            CBaseEntity::PushLuaInstanceSafe( L, player );
+            lua_pushboolean( L, bNoClipDesired );
+            END_LUA_CALL_HOOK( 2, 1 );
+
+            // On false, block the switch
+            if ( lua_isboolean( L, -1 ) && !lua_toboolean( L, -1 ) )
+            {
+                lua_pop( L, 1 );  // Pop the return value (must do this before SetMoveType or we'll get a stack corruption)
+                newMoveType = m_nOldMoveType;
+                player->SetMoveType( newMoveType );
+            }
+            else
+            {
+                lua_pop( L, 1 ); // Pop the return value
+            }
+        }
+    }
+#endif
+
+    m_nOldMoveType = newMoveType;
+
     // Handle movement modes.
-    switch ( player->GetMoveType() )
+    switch ( newMoveType )
     {
         case MOVETYPE_NONE:
             break;

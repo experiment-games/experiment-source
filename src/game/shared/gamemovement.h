@@ -292,6 +292,8 @@ class CGameMovement : public IGameMovement
 
     float m_flStuckCheckTime[MAX_PLAYERS + 1][2];  // Last time we did a full test
 
+    MoveType_t m_nOldMoveType;
+
     // special function for teleport-with-duck for episodic
 #ifdef HL2_EPISODIC
    public:

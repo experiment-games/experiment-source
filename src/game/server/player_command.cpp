@@ -308,6 +308,12 @@ void CPlayerMove::RunPostThink( CBasePlayer *player )
 
     // Run post-think
     player->PostThink();
+
+#ifdef LUA_SDK
+    BEGIN_LUA_CALL_HOOK( "PlayerPostThink" );
+    CBaseEntity::PushLuaInstanceSafe( L, player );
+    END_LUA_CALL_HOOK( 1, 0 );
+#endif
 }
 
 void CommentarySystem_PePlayerRunCommand( CBasePlayer *player, CUserCmd *ucmd );

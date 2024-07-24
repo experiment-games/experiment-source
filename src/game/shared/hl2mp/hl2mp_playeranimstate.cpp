@@ -10,6 +10,7 @@
 #include "hl2mp_playeranimstate.h"
 #include "base_playeranimstate.h"
 #include "datacache/imdlcache.h"
+#include <mathlib/lvector.h>
 
 #ifdef CLIENT_DLL
 #include "c_hl2mp_player.h"
@@ -97,14 +98,31 @@ void CHL2MPPlayerAnimState::ClearAnimationState( void )
 
 Activity CHL2MPPlayerAnimState::TranslateActivity( Activity actDesired )
 {
+    CHL2MP_Player *pPlayer = GetHL2MPPlayer();
+
+#ifdef LUA_SDK
+    BEGIN_LUA_CALL_HOOK( "TranslateActivity" );
+    CBaseEntity::PushLuaInstanceSafe( L, pPlayer );
+    lua_pushinteger( L, actDesired );
+    END_LUA_CALL_HOOK( 2, 1 );
+
+    if ( lua_isnumber( L, -1 ) ) // The new, translated activity
+    {
+        Activity iActivity = ( Activity )( int )lua_tonumber( L, -1 );
+        lua_pop( L, 1 );
+        return iActivity;
+    }
+    lua_pop( L, 1 );
+#endif
+
     // Hook into baseclass when / if hl2mp player models get swim animations.
     Activity translateActivity =
         actDesired;  // BaseClass::TranslateActivity( actDesired );
 
-    if ( GetHL2MPPlayer()->GetActiveWeapon() )
+    if ( pPlayer->GetActiveWeapon() )
     {
         translateActivity =
-            GetHL2MPPlayer()->GetActiveWeapon()->ActivityOverride(
+            pPlayer->GetActiveWeapon()->ActivityOverride(
                 translateActivity, false );
     }
 
@@ -159,6 +177,17 @@ void CHL2MPPlayerAnimState::Update( float eyeYaw, float eyePitch )
         m_pHL2MPPlayer->SetPlaybackRate( 1.0f );
     }
 #endif
+
+#ifdef LUA_SDK
+    Vector vecVelocity;
+    GetOuterAbsVelocity( vecVelocity );
+
+    BEGIN_LUA_CALL_HOOK( "UpdateAnimation" );
+    CBaseEntity::PushLuaInstanceSafe( L, pHL2MPPlayer );
+    lua_pushvector( L, vecVelocity );
+    lua_pushnumber( L, m_flMaxGroundSpeed );
+    END_LUA_CALL_HOOK( 3, 0 );
+#endif
 }
 
 void CHL2MPPlayerAnimState::DoAnimationEvent( PlayerAnimEvent_t event,
@@ -166,12 +195,14 @@ void CHL2MPPlayerAnimState::DoAnimationEvent( PlayerAnimEvent_t event,
 {
     Activity iGestureActivity = ACT_INVALID;
 
+    CHL2MP_Player *pPlayer = GetHL2MPPlayer();
+
     switch ( event )
     {
         case PLAYERANIMEVENT_ATTACK_PRIMARY:
         {
             // Weapon primary fire.
-            if ( m_pHL2MPPlayer->GetFlags() & FL_DUCKING )
+            if ( pPlayer->GetFlags() & FL_DUCKING )
                 RestartGesture( GESTURE_SLOT_ATTACK_AND_RELOAD,
                                 ACT_MP_ATTACK_CROUCH_PRIMARYFIRE );
             else
@@ -192,7 +223,7 @@ void CHL2MPPlayerAnimState::DoAnimationEvent( PlayerAnimEvent_t event,
         case PLAYERANIMEVENT_ATTACK_SECONDARY:
         {
             // Weapon secondary fire.
-            if ( m_pHL2MPPlayer->GetFlags() & FL_DUCKING )
+            if ( pPlayer->GetFlags() & FL_DUCKING )
                 RestartGesture( GESTURE_SLOT_ATTACK_AND_RELOAD,
                                 ACT_MP_ATTACK_CROUCH_SECONDARYFIRE );
             else
@@ -204,7 +235,7 @@ void CHL2MPPlayerAnimState::DoAnimationEvent( PlayerAnimEvent_t event,
         }
         case PLAYERANIMEVENT_ATTACK_PRE:
         {
-            if ( m_pHL2MPPlayer->GetFlags() & FL_DUCKING )
+            if ( pPlayer->GetFlags() & FL_DUCKING )
             {
                 // Weapon pre-fire. Used for minigun windup, sniper aiming
                 // start, etc in crouch.
@@ -231,7 +262,7 @@ void CHL2MPPlayerAnimState::DoAnimationEvent( PlayerAnimEvent_t event,
         case PLAYERANIMEVENT_RELOAD:
         {
             // Weapon reload.
-            if ( GetBasePlayer()->GetFlags() & FL_DUCKING )
+            if ( pPlayer->GetFlags() & FL_DUCKING )
                 RestartGesture( GESTURE_SLOT_ATTACK_AND_RELOAD,
                                 ACT_MP_RELOAD_CROUCH );
             else
@@ -242,7 +273,7 @@ void CHL2MPPlayerAnimState::DoAnimationEvent( PlayerAnimEvent_t event,
         case PLAYERANIMEVENT_RELOAD_LOOP:
         {
             // Weapon reload.
-            if ( GetBasePlayer()->GetFlags() & FL_DUCKING )
+            if ( pPlayer->GetFlags() & FL_DUCKING )
                 RestartGesture( GESTURE_SLOT_ATTACK_AND_RELOAD,
                                 ACT_MP_RELOAD_CROUCH_LOOP );
             else
@@ -253,7 +284,7 @@ void CHL2MPPlayerAnimState::DoAnimationEvent( PlayerAnimEvent_t event,
         case PLAYERANIMEVENT_RELOAD_END:
         {
             // Weapon reload.
-            if ( GetBasePlayer()->GetFlags() & FL_DUCKING )
+            if ( pPlayer->GetFlags() & FL_DUCKING )
                 RestartGesture( GESTURE_SLOT_ATTACK_AND_RELOAD,
                                 ACT_MP_RELOAD_CROUCH_END );
             else
@@ -271,6 +302,21 @@ void CHL2MPPlayerAnimState::DoAnimationEvent( PlayerAnimEvent_t event,
             break;
         }
     }
+
+#ifdef LUA_SDK
+    BEGIN_LUA_CALL_HOOK( "DoAnimationEvent" );
+    CBaseEntity::PushLuaInstanceSafe( L, pPlayer );
+    lua_pushinteger( L, ( int )event );
+    lua_pushinteger( L, nData );
+    END_LUA_CALL_HOOK( 3, 1 );
+
+    if ( lua_isnumber( L, -1 ) )  // The translated activity to send to the weapon
+    {
+        iGestureActivity = ( Activity )( int )lua_tonumber( L, -2 );
+    }
+
+    lua_pop( L, 1 );
+#endif
 
 #ifdef CLIENT_DLL
     // Make the weapon play the animation as well
@@ -360,7 +406,35 @@ bool CHL2MPPlayerAnimState::HandleJumping( Activity &idealActivity )
 
 Activity CHL2MPPlayerAnimState::CalcMainActivity()
 {
-    Activity idealActivity = BaseClass::CalcMainActivity();
+    Activity idealActivity = ACT_INVALID;
+
+#ifdef LUA_SDK
+    CHL2MP_Player *pPlayer = GetHL2MPPlayer();
+    Vector vecVelocity;
+    GetOuterAbsVelocity( vecVelocity );
+    
+    BEGIN_LUA_CALL_HOOK( "CalcMainActivity" );
+    CBaseEntity::PushLuaInstanceSafe( L, pPlayer );
+    lua_pushvector( L, vecVelocity );
+    END_LUA_CALL_HOOK( 2, 2 );
+
+    if ( lua_isnumber( L, -2 ) ) // Activity
+    {
+        idealActivity = ( Activity )(int)lua_tonumber( L, -2 );
+    }
+
+    if ( lua_isnumber( L, -1 ) ) // Sequence
+    {
+        int sequence = ( int )lua_tonumber( L, -1 );
+
+        if ( sequence != -1 )
+            m_nSpecificMainSequence = sequence;
+    }
+
+    lua_pop( L, 2 );
+#endif
+
+    idealActivity = BaseClass::CalcMainActivity();
 
 #ifdef CLIENT_DLL
     // If the player is using voice, add the gesture for that

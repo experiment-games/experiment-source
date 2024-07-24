@@ -867,6 +867,12 @@ void CPrediction::RunPostThink( C_BasePlayer *player )
     // Run post-think
     player->PostThink();
 #endif
+
+#ifdef LUA_SDK
+    BEGIN_LUA_CALL_HOOK( "PlayerPostThink" );
+    CBaseEntity::PushLuaInstanceSafe( L, player );
+    END_LUA_CALL_HOOK( 1, 0 );
+#endif
 }
 
 //-----------------------------------------------------------------------------

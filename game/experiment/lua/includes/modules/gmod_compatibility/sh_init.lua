@@ -361,6 +361,12 @@ VECTOR_META.Distance = VECTOR_META.DistanceTo
 VECTOR_META.DistToSqr = VECTOR_META.DistanceToAsSqr
 VECTOR_META.Distance2D = VECTOR_META.DistanceTo2D
 VECTOR_META.Distance2DSqr = VECTOR_META.DistanceToAsSqr2D
+VECTOR_META.Div = VECTOR_META.Divide
+VECTOR_META.Mul = VECTOR_META.Scale
+
+local ANGLE_META = FindMetaTable("Angle")
+ANGLE_META.Div = ANGLE_META.Divide
+ANGLE_META.Mul = ANGLE_META.Scale
 
 local ENTITY_META = FindMetaTable("Entity")
 ENTITY_META.EyePos = ENTITY_META.GetEyePosition
@@ -374,6 +380,8 @@ ENTITY_META.OBBMaxs = ENTITY_META.GetOBBMaxs
 ENTITY_META.OBBMins = ENTITY_META.GetOBBMins
 ENTITY_META.LocalToWorld = ENTITY_META.EntityToWorldSpace
 ENTITY_META.SkinCount = ENTITY_META.GetSkinCount
+ENTITY_META.Alive = ENTITY_META.IsAlive
+ENTITY_META.Widget = false
 
 function ENTITY_META:SetSpawnEffect(effect)
     -- TODO: Implement
@@ -398,6 +406,7 @@ PLAYER_META.AccountID = PLAYER_META.GetAccountID
 PLAYER_META.SteamID = PLAYER_META.GetSteamID
 PLAYER_META.SteamID64 = PLAYER_META.GetSteamID64
 PLAYER_META.UniqueID = PLAYER_META.GetUniqueID
+PLAYER_META.InVehicle = PLAYER_META.IsInAVehicle
 
 function PLAYER_META:GetInfo(consoleVariableName)
 	return engine.GetClientConVarValue(self, consoleVariableName)
@@ -405,6 +414,21 @@ end
 
 function PLAYER_META:GetInfoNum(consoleVariableName, default)
 	return engine.GetClientConVarValueAsNumber(self, consoleVariableName) or default
+end
+
+-- TODO: Implement these correctly (I'm not sure what they do atm)
+function PLAYER_META:SetHoveredWidget(widget)
+    self.__hoveredWidget = widget
+end
+function PLAYER_META:GetHoveredWidget()
+	return self.__hoveredWidget
+end
+
+function PLAYER_META:SetPressedWidget(widget)
+    self.__pressedWidget = widget
+end
+function PLAYER_META:GetPressedWidget()
+	return self.__pressedWidget
 end
 
 if (SERVER) then
@@ -996,7 +1020,7 @@ require("gmod_compatibility/modules/list")
 require("gmod_compatibility/modules/cvars")
 require("gmod_compatibility/modules/http")
 require("gmod_compatibility/modules/properties")
-require("gmod_compatibility/modules/widget")
+-- require("gmod_compatibility/modules/widget")
 require("gmod_compatibility/modules/cookie")
 require("gmod_compatibility/modules/utf8")
 
@@ -1212,10 +1236,4 @@ hook.Add("Initialize", "GModCompatibility.CallInitializeHooks", function()
 	hook.Run("PreGamemodeLoaded")
 	hook.Run("OnGamemodeLoaded")
 	hook.Run("PostGamemodeLoaded")
-end)
-
-hook.Add("Think", "GModCompatibility.CallTickHooks", function()
-	-- TODO: Call Tick from C in the correct place
-    hook.Run("Tick")
-	-- TODO: Call PlayerThink from C in the correct place
 end)
