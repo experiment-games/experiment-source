@@ -778,7 +778,7 @@ void Panel::Prepare()
 //-----------------------------------------------------------------------------
 void Panel::Init( int x, int y, int wide, int tall )
 {
-#if defined( LUA_SDK )
+#ifdef LUA_SDK
     m_nTableReference = LUA_NOREF;
     m_nRefCount = 0;
 #endif  // LUA_SDK
@@ -916,7 +916,7 @@ Panel::~Panel()
         }
     }
 
-#if defined( LUA_SDK )
+#ifdef LUA_SDK
     if ( m_lua_State )
     {
         lua_unref( m_lua_State, m_nTableReference );

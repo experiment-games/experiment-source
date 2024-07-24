@@ -205,7 +205,7 @@ void Host_Say( edict_t *pEdict, const CCommand &args, bool teamonly )
         pPlayer = ( ( CBasePlayer * )CBaseEntity::Instance( pEdict ) );
         Assert( pPlayer );
 
-#if defined( LUA_SDK )
+#ifdef LUA_SDK
         BEGIN_LUA_CALL_HOOK( "Host_Say" );
         CBaseEntity::PushLuaInstanceSafe( L, pPlayer );
         lua_pushstring( L, p );

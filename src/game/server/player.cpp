@@ -897,7 +897,7 @@ void CBasePlayer::DrawDebugGeometryOverlays( void )
 //=========================================================
 void CBasePlayer::TraceAttack( const CTakeDamageInfo &inputInfo, const Vector &vecDir, trace_t *ptr, CDmgAccumulator *pAccumulator )
 {
-#if defined( LUA_SDK )
+#ifdef LUA_SDK
     CTakeDamageInfo linputInfo = inputInfo;
     Vector lvecDir = vecDir;
 
@@ -913,7 +913,7 @@ void CBasePlayer::TraceAttack( const CTakeDamageInfo &inputInfo, const Vector &v
 
     if ( m_takedamage )
     {
-#if defined( LUA_SDK )
+#ifdef LUA_SDK
         CTakeDamageInfo info = linputInfo;
 #else
         CTakeDamageInfo info = inputInfo;
@@ -4885,7 +4885,7 @@ ReturnSpot:
 //-----------------------------------------------------------------------------
 void CBasePlayer::InitialSpawn( void )
 {
-#if defined( LUA_SDK )
+#ifdef LUA_SDK
     BEGIN_LUA_CALL_HOOK( "PlayerInitialSpawn" );
     CBaseEntity::PushLuaInstanceSafe( L, this );
     END_LUA_CALL_HOOK( 1, 0 );

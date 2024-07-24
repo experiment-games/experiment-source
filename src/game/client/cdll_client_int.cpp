@@ -504,7 +504,7 @@ class CHLVoiceStatusHelper : public IVoiceStatusHelper
     {
         color[0] = color[1] = color[2] = 128;
 
-#if defined( LUA_SDK )
+#ifdef LUA_SDK
         BEGIN_LUA_CALL_HOOK( "GetPlayerTextColor" );
         lua_pushinteger( L, entindex );
         lua_pushinteger( L, color[0] );
@@ -529,7 +529,7 @@ class CHLVoiceStatusHelper : public IVoiceStatusHelper
 
     virtual bool CanShowSpeakerLabels()
     {
-#if defined( LUA_SDK )
+#ifdef LUA_SDK
         BEGIN_LUA_CALL_HOOK( "CanShowSpeakerLabels" );
         END_LUA_CALL_HOOK( 0, 1 );
 
@@ -1821,7 +1821,7 @@ void CHLClient::LevelInitPreEntity( char const *pMapName )
 //-----------------------------------------------------------------------------
 void CHLClient::LevelInitPostEntity()
 {
-#if defined( LUA_SDK )
+#ifdef LUA_SDK
     BEGIN_LUA_CALL_HOOK( "LevelInitPostEntity" );
     END_LUA_CALL_HOOK( 0, 0 );
 #endif
@@ -1861,7 +1861,7 @@ void CHLClient::LevelShutdown( void )
 
     g_bLevelInitialized = false;
 
-#if defined( LUA_SDK )
+#ifdef LUA_SDK
     if ( g_bLuaInitialized )
     {
         BEGIN_LUA_CALL_HOOK( "LevelShutdown" );
@@ -1935,7 +1935,7 @@ void CHLClient::LevelShutdown( void )
     CReplayRagdollCache::Instance().Shutdown();
 #endif
 
-#if defined( LUA_SDK )
+#ifdef LUA_SDK
     luasrc_shutdown();
 #endif
 }

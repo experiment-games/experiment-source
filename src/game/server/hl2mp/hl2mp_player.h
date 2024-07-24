@@ -20,6 +20,7 @@ class CHL2MP_Player;
 #include "hl2mp_player_shared.h"
 #include "hl2mp_gamerules.h"
 #include "utldict.h"
+#include "steam/steam_gameserver.h"
 
 //=============================================================================
 // >> HL2MP_Player
@@ -189,6 +190,10 @@ class CHL2MP_Player : public CHL2_Player
 
 	CNetworkVar(int, m_cycleLatch);  // Network the cycle to clients periodically
     CountdownTimer m_cycleLatchTimer;
+
+#ifndef NO_STEAM
+    STEAM_GAMESERVER_CALLBACK( CHL2MP_Player, OnValidateAuthTicketResponse, ValidateAuthTicketResponse_t, m_CallbackValidateAuthTicketResponse );
+#endif
 };
 
 inline CHL2MP_Player *ToHL2MPPlayer(CBaseEntity *pEntity) {

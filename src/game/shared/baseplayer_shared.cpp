@@ -54,7 +54,11 @@ extern int TrainSpeed( int iSpeed, int iMax );
 // NVNT haptic utils
 #include "haptics/haptic_utils.h"
 
-#if defined( LUA_SDK )
+#ifndef NO_STEAM
+#include "steam/steam_api_common.h"
+#endif
+
+#ifdef LUA_SDK
 #include "luamanager.h"
 #include "luasrclib.h"
 #include "lbaseplayer_shared.h"
@@ -148,6 +152,19 @@ void CopySoundNameWithModifierToken( char *pchDest, const char *pchSource, int n
 
     pchDest[nDest] = '\0';
 }
+
+#ifndef NO_STEAM
+uint CBasePlayer::GetUniqueID()
+{
+    CSteamID steamID = GetSteamIDForPlayerIndex( entindex() );
+    const char *pszSteamID = steamID.Render();
+
+    char uniqueID[64];
+    Q_snprintf( uniqueID, sizeof( uniqueID ), "gm_%s_gm", pszSteamID );
+
+    return CRC32_ProcessSingleBuffer( uniqueID, Q_strlen( uniqueID ) );
+}
+#endif
 
 //-----------------------------------------------------------------------------
 // Purpose:
@@ -1701,7 +1718,7 @@ void CBasePlayer::CalcPlayerView( Vector &eyeOrigin, QAngle &eyeAngles, float &f
     // calc current FOV
     fov = GetFOV();
 
-#if defined( LUA_SDK )
+#ifdef LUA_SDK
     BEGIN_LUA_CALL_HOOK( "CalcPlayerView" );
     CBaseEntity::PushLuaInstanceSafe( L, this );
     lua_pushvector( L, eyeOrigin );

@@ -1202,7 +1202,7 @@ bool CServerGameDLL::LevelInit( const char *pMapName, char const *pMapEntities, 
     m_fAutoSaveDangerousTime = 0.0f;
     m_fAutoSaveDangerousMinHealthToCommit = 0.0f;
 
-#if defined( LUA_SDK )
+#ifdef LUA_SDK
     BEGIN_LUA_CALL_HOOK( "LevelInit" );
     lua_pushstring( L, pMapName );
     lua_pushstring( L, pMapEntities );
@@ -1309,7 +1309,7 @@ void CServerGameDLL::ServerActivate( edict_t *pEdictList, int edictCount, int cl
     TheNextBots().OnMapLoaded();
 #endif
 
-#if defined( LUA_SDK )
+#ifdef LUA_SDK
     // Andrew; call activate on the gamemode
     BEGIN_LUA_CALL_HOOK( "ServerActivate" );
     lua_pushinteger( L, edictCount );
@@ -1551,7 +1551,7 @@ void CServerGameDLL::OnQueryCvarValueFinished( QueryCvarCookie_t iCookie,
 // Called when a level is shutdown (including changing levels)
 void CServerGameDLL::LevelShutdown( void )
 {
-#if defined( LUA_SDK )
+#ifdef LUA_SDK
     if ( g_bLuaInitialized )
     {
         BEGIN_LUA_CALL_HOOK( "LevelShutdown" );
@@ -1596,7 +1596,7 @@ void CServerGameDLL::LevelShutdown( void )
 #endif
 #endif
 
-#if defined( LUA_SDK )
+#ifdef LUA_SDK
     luasrc_shutdown();
 #endif
 }
@@ -2045,7 +2045,7 @@ void CServerGameDLL::PreSaveGameLoaded( char const *pSaveName, bool bInGame )
 //-----------------------------------------------------------------------------
 bool CServerGameDLL::ShouldHideServer( void )
 {
-#if defined( LUA_SDK )
+#ifdef LUA_SDK
     if ( g_bLuaInitialized )
     {
         BEGIN_LUA_CALL_HOOK( "ShouldHideServer" );
@@ -3549,7 +3549,7 @@ void CServerGameClients::GetBugReportInfo( char *buf, int buflen )
 void CServerGameClients::NetworkIDValidated( const char *pszUserName,
                                              const char *pszNetworkID )
 {
-#if defined( LUA_SDK )
+#ifdef LUA_SDK
     BEGIN_LUA_CALL_HOOK( "NetworkIDValidated" );
     lua_pushstring( L, pszUserName );
     lua_pushstring( L, pszNetworkID );

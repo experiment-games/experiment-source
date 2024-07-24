@@ -1234,7 +1234,7 @@ void CNotifyList::LevelShutdownPreEntity( void )
 
 void CNotifyList::OnEntityCreated( CBaseEntity *pEntity )
 {
-#if defined( LUA_SDK )
+#ifdef LUA_SDK
     BEGIN_LUA_CALL_HOOK( "OnEntityCreated" );
     CBaseEntity::PushLuaInstanceSafe( L, pEntity );
     END_LUA_CALL_HOOK( 1, 0 );

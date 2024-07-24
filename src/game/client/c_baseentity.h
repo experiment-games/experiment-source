@@ -1829,7 +1829,7 @@ class C_BaseEntity : public IClientEntity
     bool m_bEnableRenderingClipPlane;   // true to use the custom clip plane when drawing
     float *GetRenderClipPlane( void );  // Rendering clip plane, should be 4 floats, return value of NULL indicates a disabled render clip plane
 
-#if defined( LUA_SDK )
+#ifdef LUA_SDK
                                         // Andrew; This is used to determine an entity's reference in Lua's
     // LUA_REGISTRYINDEX. I'd rather do this than create a struct and pass
     // that to each bounded function, plus it'll save some perf for massive

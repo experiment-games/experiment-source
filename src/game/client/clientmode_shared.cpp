@@ -757,7 +757,7 @@ void ClientModeShared::Update()
     UpdateReplayMessages();
 #endif
 
-#if defined( LUA_SDK )
+#ifdef LUA_SDK
     if ( m_pScriptedViewport->IsVisible() != cl_drawhud.GetBool() )
     {
         m_pScriptedViewport->SetVisible( cl_drawhud.GetBool() );

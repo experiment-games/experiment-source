@@ -133,7 +133,7 @@ void CBaseScripted::LoadScriptedEntity( void )
 
 void CBaseScripted::InitScriptedEntity( void )
 {
-#if defined( LUA_SDK )
+#ifdef LUA_SDK
 #if 0
 #ifndef CLIENT_DLL
 	// Let the instance reinitialize itself for the client.

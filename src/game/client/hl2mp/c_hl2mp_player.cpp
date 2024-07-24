@@ -18,7 +18,7 @@
 #include "prediction.h"
 #include "bone_setup.h"
 
-#if defined( LUA_SDK )
+#ifdef LUA_SDK
 #include "luamanager.h"
 #include "lgametrace.h"
 #include "lhl2mp_player_shared.h"
@@ -151,7 +151,7 @@ void C_HL2MP_Player::TraceAttack( const CTakeDamageInfo &info,
                                   trace_t *ptr,
                                   CDmgAccumulator *pAccumulator )
 {
-#if defined( LUA_SDK )
+#ifdef LUA_SDK
     // Andrew; push a copy of the damageinfo/vector, bring the changes back out
     // of Lua and set info/vecDir to the new value if it's been modified.
     CTakeDamageInfo lInfo = info;
@@ -173,7 +173,7 @@ void C_HL2MP_Player::TraceAttack( const CTakeDamageInfo &info,
 
     float flDistance = 0.0f;
 
-#if defined( LUA_SDK )
+#ifdef LUA_SDK
     if ( lInfo.GetAttacker() )
     {
         flDistance =
@@ -189,7 +189,7 @@ void C_HL2MP_Player::TraceAttack( const CTakeDamageInfo &info,
 
     if ( m_takedamage )
     {
-#if defined( LUA_SDK )
+#ifdef LUA_SDK
         AddMultiDamage( lInfo, this );
 #else
         AddMultiDamage( info, this );
@@ -197,7 +197,7 @@ void C_HL2MP_Player::TraceAttack( const CTakeDamageInfo &info,
 
         int blood = BloodColor();
 
-#if defined( LUA_SDK )
+#ifdef LUA_SDK
         CBaseEntity *pAttacker = lInfo.GetAttacker();
 #else
         CBaseEntity *pAttacker = info.GetAttacker();
@@ -213,7 +213,7 @@ void C_HL2MP_Player::TraceAttack( const CTakeDamageInfo &info,
         if ( blood != DONT_BLEED )
         {
             // a little surface blood.
-#if defined( LUA_SDK )
+#ifdef LUA_SDK
             SpawnBlood( vecOrigin, lvecDir, blood, flDistance );
             TraceBleed( flDistance, lvecDir, ptr, lInfo.GetDamageType() );
 #else

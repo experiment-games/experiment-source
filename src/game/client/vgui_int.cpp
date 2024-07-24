@@ -175,7 +175,7 @@ bool VGui_Startup( CreateInterfaceFn appSystemFactory )
         return false;  // c_vguiscreen.cpp needs this!
     }
 
-#if defined( LUA_SDK )
+#ifdef LUA_SDK
     // Create the root panel for our scripted GameUI state
     VGUI_CreateGameUIRootPanel();
 #endif
@@ -250,7 +250,7 @@ void VGui_Shutdown()
         g_pClientMode->VGui_Shutdown();
     }
 
-#if defined( LUA_SDK )
+#ifdef LUA_SDK
     VGUI_DestroyGameUIRootPanel();
 #endif
 

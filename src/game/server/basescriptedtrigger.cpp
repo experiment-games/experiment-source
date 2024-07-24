@@ -119,7 +119,7 @@ void CBaseScriptedTrigger::LoadScriptedTrigger( void )
 
 void CBaseScriptedTrigger::InitScriptedTrigger( void )
 {
-#if defined( LUA_SDK )
+#ifdef LUA_SDK
 #if 0
 	// Let the instance reinitialize itself for the client.
 	if (lua_isrefvalid(L, m_nTableReference))

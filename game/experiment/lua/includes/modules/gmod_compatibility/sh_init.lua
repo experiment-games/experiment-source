@@ -394,6 +394,10 @@ end
 
 local PLAYER_META = FindMetaTable("Player")
 PLAYER_META.GetShootPos = ENTITY_META.GetEyePosition
+PLAYER_META.AccountID = PLAYER_META.GetAccountID
+PLAYER_META.SteamID = PLAYER_META.GetSteamID
+PLAYER_META.SteamID64 = PLAYER_META.GetSteamID64
+PLAYER_META.UniqueID = PLAYER_META.GetUniqueID
 
 function PLAYER_META:GetInfo(consoleVariableName)
 	return engine.GetClientConVarValue(self, consoleVariableName)
@@ -401,11 +405,6 @@ end
 
 function PLAYER_META:GetInfoNum(consoleVariableName, default)
 	return engine.GetClientConVarValueAsNumber(self, consoleVariableName) or default
-end
-
-function PLAYER_META:UniqueID()
-    local uniqueid = util.CRC("gm_" .. self:SteamID() .. "_gm")
-    return uniqueid
 end
 
 if (SERVER) then

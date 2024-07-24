@@ -154,6 +154,9 @@ const char *g_ppszDefaultModel = "models/stalkertnb/exo_free.mdl";
 #pragma warning( disable : 4355 )
 
 CHL2MP_Player::CHL2MP_Player()
+#ifndef NO_STEAM
+    : m_CallbackValidateAuthTicketResponse( this, &CHL2MP_Player::OnValidateAuthTicketResponse )
+#endif
 {
     // Tony; create our player animation state.
     m_PlayerAnimState = CreateHL2MPPlayerAnimState( this );
@@ -181,6 +184,25 @@ CHL2MP_Player::~CHL2MP_Player( void )
 {
     m_PlayerAnimState->Release();
 }
+
+#ifndef NO_STEAM
+void CHL2MP_Player::OnValidateAuthTicketResponse( ValidateAuthTicketResponse_t *pResponse )
+{
+#ifdef LUA_SDK
+    const char *pszSteamID = pResponse->m_SteamID.Render();
+
+    // GetUniqueID() relies on engine->GetClientSteamID getting the correct SteamID
+    const CSteamID *pClientID = engine->GetClientSteamID( edict() );
+    Assert( Q_strcmp( pClientID->Render(), pszSteamID ) == 0 );
+
+    BEGIN_LUA_CALL_HOOK( "PlayerAuthed" );
+    CBaseEntity::PushLuaInstanceSafe( L, this );
+    lua_pushstring( L, pszSteamID );
+    lua_pushinteger( L, ( lua_Integer )GetUniqueID() );
+    END_LUA_CALL_HOOK( 3, 0 );
+#endif
+}
+#endif
 
 void CHL2MP_Player::UpdateOnRemove( void )
 {
@@ -258,7 +280,7 @@ void CHL2MP_Player::GiveAllItems( void )
 
 void CHL2MP_Player::GiveDefaultItems( void )
 {
-#if defined( LUA_SDK )
+#ifdef LUA_SDK
     BEGIN_LUA_CALL_HOOK( "GiveDefaultItems" );
     CBaseEntity::PushLuaInstanceSafe( L, this );
     END_LUA_CALL_HOOK( 1, 0 );
@@ -654,7 +676,7 @@ void CHL2MP_Player::PostThink( void )
 
 void CHL2MP_Player::PlayerDeathThink()
 {
-#if defined( LUA_SDK )
+#ifdef LUA_SDK
     BEGIN_LUA_CALL_HOOK( "PlayerDeathThink" );
     CBaseEntity::PushLuaInstanceSafe( L, this );
     END_LUA_CALL_HOOK( 1, 0 );
@@ -955,7 +977,7 @@ bool CHL2MP_Player::ClientCommand( const CCommand &args )
 
 void CHL2MP_Player::CheatImpulseCommands( int iImpulse )
 {
-#if defined( LUA_SDK )
+#ifdef LUA_SDK
     BEGIN_LUA_CALL_HOOK( "CheatImpulseCommands" );
     CBaseEntity::PushLuaInstanceSafe( L, this );
     lua_pushinteger( L, iImpulse );
@@ -1236,7 +1258,7 @@ int CHL2MP_Player::OnTakeDamage( const CTakeDamageInfo &inputInfo )
 
 void CHL2MP_Player::DeathSound( const CTakeDamageInfo &info )
 {
-#if defined( LUA_SDK )
+#ifdef LUA_SDK
     CTakeDamageInfo lInfo = info;
 
     BEGIN_LUA_CALL_HOOK( "PlayerDeathSound" );

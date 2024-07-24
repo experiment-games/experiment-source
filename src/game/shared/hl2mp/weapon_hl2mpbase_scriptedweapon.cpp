@@ -216,7 +216,7 @@ extern ConVar hud_fastswitch;
 
 void CHL2MPScriptedWeapon::InitScriptedWeapon( void )
 {
-#if defined( LUA_SDK )
+#ifdef LUA_SDK
 #ifndef CLIENT_DLL
     // Let the instance reinitialize itself for the client.
     if ( lua_isrefvalid( L, m_nTableReference ) )
@@ -660,7 +660,7 @@ void CHL2MPScriptedWeapon::Precache( void )
         }
     }
 
-#if defined( LUA_SDK ) && !defined( CLIENT_DLL )
+#if defined ( LUA_SDK ) && !defined( CLIENT_DLL )
     BEGIN_LUA_CALL_WEAPON_METHOD( "Precache" );
     END_LUA_CALL_WEAPON_METHOD( 0, 0 );
 #endif
@@ -676,7 +676,7 @@ const FileWeaponInfo_t &CHL2MPScriptedWeapon::GetWpnData( void ) const
 
 const char *CHL2MPScriptedWeapon::GetViewModel( int ) const
 {
-#if defined( LUA_SDK )
+#ifdef LUA_SDK
     lua_getref( L, m_nTableReference );
     lua_getfield( L, -1, "ViewModel" );
     lua_remove( L, -2 );
@@ -689,7 +689,7 @@ const char *CHL2MPScriptedWeapon::GetViewModel( int ) const
 
 const char *CHL2MPScriptedWeapon::GetWorldModel( void ) const
 {
-#if defined( LUA_SDK )
+#ifdef LUA_SDK
     lua_getref( L, m_nTableReference );
     lua_getfield( L, -1, "WorldModel" );
     lua_remove( L, -2 );
@@ -702,7 +702,7 @@ const char *CHL2MPScriptedWeapon::GetWorldModel( void ) const
 
 const char *CHL2MPScriptedWeapon::GetAnimPrefix( void ) const
 {
-#if defined( LUA_SDK )
+#ifdef LUA_SDK
     lua_getref( L, m_nTableReference );
     lua_getfield( L, -1, "AnimationPrefix" );
     lua_remove( L, -2 );
@@ -715,7 +715,7 @@ const char *CHL2MPScriptedWeapon::GetAnimPrefix( void ) const
 
 const char *CHL2MPScriptedWeapon::GetPrintName( void ) const
 {
-#if defined( LUA_SDK )
+#ifdef LUA_SDK
     lua_getref( L, m_nTableReference );
     lua_getfield( L, -1, "PrintName" );
     lua_remove( L, -2 );
@@ -728,7 +728,7 @@ const char *CHL2MPScriptedWeapon::GetPrintName( void ) const
 
 int CHL2MPScriptedWeapon::GetMaxClip1( void ) const
 {
-#if defined( LUA_SDK )
+#ifdef LUA_SDK
     lua_getref( L, m_nTableReference );
     lua_getfield( L, -1, "MaxClip" );
     lua_remove( L, -2 );
@@ -741,7 +741,7 @@ int CHL2MPScriptedWeapon::GetMaxClip1( void ) const
 
 int CHL2MPScriptedWeapon::GetMaxClip2( void ) const
 {
-#if defined( LUA_SDK )
+#ifdef LUA_SDK
     lua_getref( L, m_nTableReference );
     lua_getfield( L, -1, "MaxClip2" );
     lua_remove( L, -2 );
@@ -754,7 +754,7 @@ int CHL2MPScriptedWeapon::GetMaxClip2( void ) const
 
 int CHL2MPScriptedWeapon::GetDefaultClip1( void ) const
 {
-#if defined( LUA_SDK )
+#ifdef LUA_SDK
     lua_getref( L, m_nTableReference );
     lua_getfield( L, -1, "DefaultClip" );
     lua_remove( L, -2 );
@@ -767,7 +767,7 @@ int CHL2MPScriptedWeapon::GetDefaultClip1( void ) const
 
 int CHL2MPScriptedWeapon::GetDefaultClip2( void ) const
 {
-#if defined( LUA_SDK )
+#ifdef LUA_SDK
     lua_getref( L, m_nTableReference );
     lua_getfield( L, -1, "DefaultClip2" );
     lua_remove( L, -2 );
@@ -780,7 +780,7 @@ int CHL2MPScriptedWeapon::GetDefaultClip2( void ) const
 
 bool CHL2MPScriptedWeapon::IsMeleeWeapon() const
 {
-#if defined( LUA_SDK )
+#ifdef LUA_SDK
     lua_getref( L, m_nTableReference );
     lua_getfield( L, -1, "MeleeWeapon" );
     lua_remove( L, -2 );
@@ -803,7 +803,7 @@ bool CHL2MPScriptedWeapon::IsMeleeWeapon() const
 
 int CHL2MPScriptedWeapon::GetWeight( void ) const
 {
-#if defined( LUA_SDK )
+#ifdef LUA_SDK
     lua_getref( L, m_nTableReference );
     lua_getfield( L, -1, "Weight" );
     lua_remove( L, -2 );
@@ -816,7 +816,7 @@ int CHL2MPScriptedWeapon::GetWeight( void ) const
 
 bool CHL2MPScriptedWeapon::AllowsAutoSwitchTo( void ) const
 {
-#if defined( LUA_SDK )
+#ifdef LUA_SDK
     lua_getref( L, m_nTableReference );
     lua_getfield( L, -1, "AutoSwitchTo" );
     lua_remove( L, -2 );
@@ -839,7 +839,7 @@ bool CHL2MPScriptedWeapon::AllowsAutoSwitchTo( void ) const
 
 bool CHL2MPScriptedWeapon::AllowsAutoSwitchFrom( void ) const
 {
-#if defined( LUA_SDK )
+#ifdef LUA_SDK
     lua_getref( L, m_nTableReference );
     lua_getfield( L, -1, "AutoSwitchFrom" );
     lua_remove( L, -2 );
@@ -862,7 +862,7 @@ bool CHL2MPScriptedWeapon::AllowsAutoSwitchFrom( void ) const
 
 int CHL2MPScriptedWeapon::GetWeaponFlags( void ) const
 {
-#if defined( LUA_SDK )
+#ifdef LUA_SDK
     lua_getref( L, m_nTableReference );
     lua_getfield( L, -1, "WeaponFlags" );
     lua_remove( L, -2 );
@@ -875,7 +875,7 @@ int CHL2MPScriptedWeapon::GetWeaponFlags( void ) const
 
 int CHL2MPScriptedWeapon::GetSlot( void ) const
 {
-#if defined( LUA_SDK )
+#ifdef LUA_SDK
     lua_getref( L, m_nTableReference );
     lua_getfield( L, -1, "InventorySlot" );
     lua_remove( L, -2 );
@@ -888,7 +888,7 @@ int CHL2MPScriptedWeapon::GetSlot( void ) const
 
 int CHL2MPScriptedWeapon::GetPosition( void ) const
 {
-#if defined( LUA_SDK )
+#ifdef LUA_SDK
     lua_getref( L, m_nTableReference );
     lua_getfield( L, -1, "InventorySlotPosition" );
     lua_remove( L, -2 );
@@ -912,7 +912,7 @@ const Vector &CHL2MPScriptedWeapon::GetBulletSpread( void )
 //-----------------------------------------------------------------------------
 void CHL2MPScriptedWeapon::PrimaryAttack( void )
 {
-#if defined( LUA_SDK )
+#ifdef LUA_SDK
     BEGIN_LUA_CALL_WEAPON_METHOD( "PrimaryAttack" );
     END_LUA_CALL_WEAPON_METHOD( 0, 0 );
 #endif
@@ -920,7 +920,7 @@ void CHL2MPScriptedWeapon::PrimaryAttack( void )
 
 void CHL2MPScriptedWeapon::SecondaryAttack( void )
 {
-#if defined( LUA_SDK )
+#ifdef LUA_SDK
     BEGIN_LUA_CALL_WEAPON_METHOD( "SecondaryAttack" );
     END_LUA_CALL_WEAPON_METHOD( 0, 0 );
 #endif
@@ -940,7 +940,7 @@ void CHL2MPScriptedWeapon::FireBullets( const FireBulletsInfo_t &info )
 
 bool CHL2MPScriptedWeapon::Reload( void )
 {
-#if defined( LUA_SDK )
+#ifdef LUA_SDK
     BEGIN_LUA_CALL_WEAPON_METHOD( "Reload" );
     END_LUA_CALL_WEAPON_METHOD( 0, 1 );
 
@@ -955,7 +955,7 @@ bool CHL2MPScriptedWeapon::Reload( void )
 //-----------------------------------------------------------------------------
 bool CHL2MPScriptedWeapon::Deploy( void )
 {
-#if defined( LUA_SDK )
+#ifdef LUA_SDK
     BEGIN_LUA_CALL_WEAPON_METHOD( "Deploy" );
     END_LUA_CALL_WEAPON_METHOD( 0, 1 );
 
@@ -967,7 +967,7 @@ bool CHL2MPScriptedWeapon::Deploy( void )
 
 Activity CHL2MPScriptedWeapon::GetDrawActivity( void )
 {
-#if defined( LUA_SDK )
+#ifdef LUA_SDK
     BEGIN_LUA_CALL_WEAPON_METHOD( "GetDrawActivity" );
     END_LUA_CALL_WEAPON_METHOD( 0, 1 );
 
@@ -984,7 +984,7 @@ Activity CHL2MPScriptedWeapon::GetDrawActivity( void )
 //-----------------------------------------------------------------------------
 bool CHL2MPScriptedWeapon::Holster( CBaseCombatWeapon *pSwitchingTo )
 {
-#if defined( LUA_SDK )
+#ifdef LUA_SDK
     BEGIN_LUA_CALL_WEAPON_METHOD( "Holster" );
     CBaseEntity::PushLuaInstanceSafe( L, pSwitchingTo );
     END_LUA_CALL_WEAPON_METHOD( 1, 1 );
@@ -1000,7 +1000,7 @@ bool CHL2MPScriptedWeapon::Holster( CBaseCombatWeapon *pSwitchingTo )
 //-----------------------------------------------------------------------------
 void CHL2MPScriptedWeapon::ItemPostFrame( void )
 {
-#if defined( LUA_SDK )
+#ifdef LUA_SDK
     BEGIN_LUA_CALL_WEAPON_METHOD( "ItemPostFrame" );
     END_LUA_CALL_WEAPON_METHOD( 0, 1 );
 
@@ -1016,7 +1016,7 @@ void CHL2MPScriptedWeapon::ItemPostFrame( void )
 //-----------------------------------------------------------------------------
 void CHL2MPScriptedWeapon::ItemBusyFrame( void )
 {
-#if defined( LUA_SDK )
+#ifdef LUA_SDK
     BEGIN_LUA_CALL_WEAPON_METHOD( "ItemBusyFrame" );
     END_LUA_CALL_WEAPON_METHOD( 0, 1 );
 
@@ -1029,7 +1029,7 @@ void CHL2MPScriptedWeapon::ItemBusyFrame( void )
 #ifndef CLIENT_DLL
 int CHL2MPScriptedWeapon::CapabilitiesGet( void )
 {
-#if defined( LUA_SDK )
+#ifdef LUA_SDK
     BEGIN_LUA_CALL_WEAPON_METHOD( "CapabilitiesGet" );
     END_LUA_CALL_WEAPON_METHOD( 0, 1 );
 
@@ -1041,7 +1041,7 @@ int CHL2MPScriptedWeapon::CapabilitiesGet( void )
 #else
 int CHL2MPScriptedWeapon::DrawModel( int flags )
 {
-#if defined( LUA_SDK )
+#ifdef LUA_SDK
     BEGIN_LUA_CALL_WEAPON_METHOD( "DrawModel" );
     lua_pushinteger( L, flags );
     END_LUA_CALL_WEAPON_METHOD( 1, 1 );

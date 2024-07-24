@@ -1059,10 +1059,19 @@ static int CBasePlayer_SteamID64( lua_State *L )
 {
     CBasePlayer *pPlayer = luaL_checkplayer( L, 1 );
     CSteamID steamID = GetSteamIDForPlayerIndex( pPlayer->entindex() );
+
     uint64 steamID64 = steamID.ConvertToUint64();
     char steamID64str[20];
     Q_snprintf( steamID64str, sizeof( steamID64str ), "%llu", steamID64 );
+
     lua_pushstring( L, steamID64str );
+    return 1;
+}
+
+static int CBasePlayer_UniqueID( lua_State *L )
+{
+    CBasePlayer *pPlayer = luaL_checkplayer( L, 1 );
+    lua_pushinteger( L, ( lua_Integer )pPlayer->GetUniqueID() );
     return 1;
 }
 
@@ -1181,13 +1190,16 @@ static const luaL_Reg CBasePlayermeta[] = {
     { "Weapon_ShouldSetLast", CBasePlayer_Weapon_ShouldSetLast },
     { "Weapon_Switch", CBasePlayer_Weapon_Switch },
     { "WeaponCount", CBasePlayer_WeaponCount },
+
+    { "GetAccountID", CBasePlayer_AccountID },
+    { "GetSteamID", CBasePlayer_SteamID },
+    { "GetSteamID64", CBasePlayer_SteamID64 },
+    { "GetUniqueID", CBasePlayer_UniqueID },
+
     { "__index", CBasePlayer___index },
     { "__newindex", CBasePlayer___newindex },
     { "__eq", CBasePlayer___eq },
     { "__tostring", CBasePlayer___tostring },
-    { "AccountID", CBasePlayer_AccountID },
-    { "SteamID", CBasePlayer_SteamID },
-    { "SteamID64", CBasePlayer_SteamID64 },
     { NULL, NULL } };
 
 static int luasrc_ToBasePlayer( lua_State *L )

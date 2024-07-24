@@ -1014,7 +1014,7 @@ C_BaseEntity::~C_BaseEntity()
     RemoveFromInterpolationList();
     RemoveFromTeleportList();
 
-#if defined( LUA_SDK )
+#ifdef LUA_SDK
     if( L )
         lua_unref( L, m_nTableReference );
 #endif
@@ -4930,7 +4930,7 @@ const char *C_BaseEntity::GetClassname( void )
     outstr[0] = 0;
     bool gotname = false;
 
-#if defined( LUA_SDK )
+#ifdef LUA_SDK
     if ( m_iClassname && m_iClassname[0] )
     {
         Q_snprintf( outstr, sizeof( outstr ), "%s", m_iClassname );
