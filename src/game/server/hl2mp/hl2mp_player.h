@@ -25,15 +25,16 @@ class CHL2MP_Player;
 //=============================================================================
 // >> HL2MP_Player
 //=============================================================================
-class CHL2MPPlayerStateInfo {
+class CHL2MPPlayerStateInfo
+{
    public:
     HL2MPPlayerState m_iPlayerState;
     const char *m_pStateName;
 
-    void (CHL2MP_Player::*pfnEnterState)();  // Init and deinit the state.
-    void (CHL2MP_Player::*pfnLeaveState)();
+    void ( CHL2MP_Player::*pfnEnterState )();  // Init and deinit the state.
+    void ( CHL2MP_Player::*pfnLeaveState )();
 
-    void (CHL2MP_Player::*pfnPreThink)();  // Do a PreThink() in this state.
+    void ( CHL2MP_Player::*pfnPreThink )();  // Do a PreThink() in this state.
 };
 
 class CHL2MP_Player : public CHL2_Player
@@ -43,14 +44,15 @@ class CHL2MP_Player : public CHL2_Player
 #endif
 
    public:
-    DECLARE_CLASS(CHL2MP_Player, CHL2_Player);
+    DECLARE_CLASS( CHL2MP_Player, CHL2_Player );
 
     CHL2MP_Player();
-    ~CHL2MP_Player(void);
+    ~CHL2MP_Player( void );
 
-    static CHL2MP_Player *CreatePlayer(const char *className, edict_t *ed) {
+    static CHL2MP_Player *CreatePlayer( const char *className, edict_t *ed )
+    {
         CHL2MP_Player::s_PlayerEdict = ed;
-        return (CHL2MP_Player *)CreateEntityByName(className);
+        return ( CHL2MP_Player * )CreateEntityByName( className );
     }
 
     DECLARE_SERVERCLASS();
@@ -58,118 +60,122 @@ class CHL2MP_Player : public CHL2_Player
     DECLARE_PREDICTABLE();
 
     // This passes the event to the client's and server's CHL2MPPlayerAnimState.
-    void DoAnimationEvent(PlayerAnimEvent_t event, int nData = 0);
-    void SetupBones(matrix3x4_t *pBoneToWorld, int boneMask);
-    bool KeyDown(int buttonCode);
+    void DoAnimationEvent( PlayerAnimEvent_t event, int nData = 0 );
+    void SetupBones( matrix3x4_t *pBoneToWorld, int boneMask );
+    bool KeyDown( int buttonCode );
 
-    virtual void Precache(void);
-    virtual void Spawn(void);
-    virtual void PostThink(void);
-    virtual void PreThink(void);
-    virtual void PlayerDeathThink(void);
-    virtual bool HandleCommand_JoinTeam(int team);
-    virtual bool ClientCommand(const CCommand &args);
-    virtual void CreateViewModel(int viewmodelindex = 0);
-    virtual bool BecomeRagdollOnClient(const Vector &force);
-    virtual void Event_Killed(const CTakeDamageInfo &info);
-    virtual int OnTakeDamage(const CTakeDamageInfo &inputInfo);
+    virtual void Precache( void );
+    virtual void Spawn( void );
+    virtual void PostThink( void );
+    virtual void PreThink( void );
+    virtual void PlayerDeathThink( void );
+    virtual bool HandleCommand_JoinTeam( int team );
+    virtual bool ClientCommand( const CCommand &args );
+    virtual void CreateViewModel( int viewmodelindex = 0 );
+    virtual bool BecomeRagdollOnClient( const Vector &force );
+    virtual void Event_Killed( const CTakeDamageInfo &info );
+    virtual int OnTakeDamage( const CTakeDamageInfo &inputInfo );
     virtual bool WantsLagCompensationOnEntity(
-        const CBasePlayer *pPlayer, const CUserCmd *pCmd,
-        const CBitVec<MAX_EDICTS> *pEntityTransmitBits) const;
-    virtual void FireBullets(const FireBulletsInfo_t &info);
-    virtual bool Weapon_Switch(CBaseCombatWeapon *pWeapon,
-                               int viewmodelindex = 0);
-    virtual bool BumpWeapon(CBaseCombatWeapon *pWeapon);
-    virtual void ChangeTeam(int iTeam);
-    virtual void PickupObject(CBaseEntity *pObject, bool bLimitMassAndSize);
-    virtual void PlayStepSound(Vector &vecOrigin, surfacedata_t *psurface,
-                               float fvol, bool force);
-    virtual void Weapon_Drop(CBaseCombatWeapon *pWeapon,
-                             const Vector *pvecTarget = NULL,
-                             const Vector *pVelocity = NULL);
-    virtual void UpdateOnRemove(void);
-    virtual void DeathSound(const CTakeDamageInfo &info);
-    virtual CBaseEntity *EntSelectSpawnPoint(void);
+        const CBasePlayer *pPlayer,
+        const CUserCmd *pCmd,
+        const CBitVec< MAX_EDICTS > *pEntityTransmitBits ) const;
+    virtual void FireBullets( const FireBulletsInfo_t &info );
+    virtual bool Weapon_Switch( CBaseCombatWeapon *pWeapon,
+                                int viewmodelindex = 0 );
+    virtual bool BumpWeapon( CBaseCombatWeapon *pWeapon );
+    virtual void ChangeTeam( int iTeam );
+    virtual void PickupObject( CBaseEntity *pObject, bool bLimitMassAndSize );
+    virtual void PlayStepSound( Vector &vecOrigin, surfacedata_t *psurface, float fvol, bool force );
+    virtual void Weapon_Drop( CBaseCombatWeapon *pWeapon,
+                              const Vector *pvecTarget = NULL,
+                              const Vector *pVelocity = NULL );
+    virtual void UpdateOnRemove( void );
+    virtual void DeathSound( const CTakeDamageInfo &info );
+    virtual CBaseEntity *EntSelectSpawnPoint( void );
 
-    int FlashlightIsOn(void);
-    void FlashlightTurnOn(void);
-    void FlashlightTurnOff(void);
-    void PrecacheFootStepSounds(void);
-    bool ValidatePlayerModel(const char *pModel);
+    int FlashlightIsOn( void );
+    void FlashlightTurnOn( void );
+    void FlashlightTurnOff( void );
+    void PrecacheFootStepSounds( void );
+    bool ValidatePlayerModel( const char *pModel );
 
-    Vector GetAttackSpread(CBaseCombatWeapon *pWeapon,
-                           CBaseEntity *pTarget = NULL);
-    virtual Vector GetAutoaimVector(float flDelta);
+    Vector GetAttackSpread( CBaseCombatWeapon *pWeapon,
+                            CBaseEntity *pTarget = NULL );
+    virtual Vector GetAutoaimVector( float flDelta );
 
-    void CheatImpulseCommands(int iImpulse);
-    void CreateRagdollEntity(void);
-    void GiveAllItems(void);
-    void GiveDefaultItems(void);
+    void CheatImpulseCommands( int iImpulse );
+    void CreateRagdollEntity( void );
+    void GiveAllItems( void );
+    void GiveDefaultItems( void );
 
-    void NoteWeaponFired(void);
+    void NoteWeaponFired( void );
 
-    void SetAnimation(PLAYER_ANIM playerAnim);
-    void SetPlayerModel(void);
-    void SetPlayerTeamModel(void);
-    Activity TranslateTeamActivity(Activity ActToTranslate);
+    void SetAnimation( PLAYER_ANIM playerAnim );
+    void SetPlayerModel( void );
+    void SetPlayerTeamModel( void );
+    Activity TranslateTeamActivity( Activity ActToTranslate );
 
-    float GetNextModelChangeTime(void) {
+    float GetNextModelChangeTime( void )
+    {
         return m_flNextModelChangeTime;
     }
-    float GetNextTeamChangeTime(void) {
+    float GetNextTeamChangeTime( void )
+    {
         return m_flNextTeamChangeTime;
     }
-    void PickDefaultSpawnTeam(void);
-    void SetupPlayerSoundsByModel(const char *pModelName);
-    const char *GetPlayerModelSoundPrefix(void);
-    int GetPlayerModelType(void) {
+    void PickDefaultSpawnTeam( void );
+    void SetupPlayerSoundsByModel( const char *pModelName );
+    const char *GetPlayerModelSoundPrefix( void );
+    int GetPlayerModelType( void )
+    {
         return m_iPlayerSoundType;
     }
 
-    void DetonateTripmines(void);
+    void DetonateTripmines( void );
 
     void Reset();
 
     bool IsReady();
-    void SetReady(bool bReady);
+    void SetReady( bool bReady );
 
-    void CheckChatText(char *p, int bufsize);
+    void CheckChatText( char *p, int bufsize );
 
-    void State_Transition(HL2MPPlayerState newState);
-    void State_Enter(HL2MPPlayerState newState);
+    void State_Transition( HL2MPPlayerState newState );
+    void State_Enter( HL2MPPlayerState newState );
     void State_Leave();
     void State_PreThink();
-    CHL2MPPlayerStateInfo *State_LookupInfo(HL2MPPlayerState state);
+    CHL2MPPlayerStateInfo *State_LookupInfo( HL2MPPlayerState state );
 
     void State_Enter_ACTIVE();
     void State_PreThink_ACTIVE();
     void State_Enter_OBSERVER_MODE();
     void State_PreThink_OBSERVER_MODE();
 
-    virtual bool StartObserverMode(int mode);
-    virtual void StopObserverMode(void);
+    virtual bool StartObserverMode( int mode );
+    virtual void StopObserverMode( void );
 
     Vector m_vecTotalBulletForce;  // Accumulator for bullet force in a single
                                    // frame
 
     // Tracks our ragdoll entity.
-    CNetworkHandle(CBaseEntity, m_hRagdoll);  // networked entity handle
+    CNetworkHandle( CBaseEntity, m_hRagdoll );  // networked entity handle
 
-    virtual bool CanHearAndReadChatFrom(CBasePlayer *pPlayer);
+    virtual bool CanHearAndReadChatFrom( CBasePlayer *pPlayer );
 
-    bool IsAirborne() const {
-        return (!(GetFlags() & FL_ONGROUND));
+    bool IsAirborne() const
+    {
+        return ( !( GetFlags() & FL_ONGROUND ) );
     }
 
    private:
     CHL2MPPlayerAnimState *m_PlayerAnimState;
 
-    CNetworkQAngle(m_angEyeAngles);
+    CNetworkQAngle( m_angEyeAngles );
 
     int m_iLastWeaponFireUsercmd;
     int m_iModelType;
-    CNetworkVar(int, m_iSpawnInterpCounter);
-    CNetworkVar(int, m_iPlayerSoundType);
+    CNetworkVar( int, m_iSpawnInterpCounter );
+    CNetworkVar( int, m_iPlayerSoundType );
 
     float m_flNextModelChangeTime;
     float m_flNextTeamChangeTime;
@@ -179,16 +185,16 @@ class CHL2MP_Player : public CHL2_Player
     HL2MPPlayerState m_iPlayerState;
     CHL2MPPlayerStateInfo *m_pCurStateInfo;
 
-    bool ShouldRunRateLimitedCommand(const CCommand &args);
+    bool ShouldRunRateLimitedCommand( const CCommand &args );
 
     // This lets us rate limit the commands the players can execute so they
     // don't overflow things like reliable buffers.
-    CUtlDict<float, int> m_RateLimitLastCommandTimes;
+    CUtlDict< float, int > m_RateLimitLastCommandTimes;
 
     bool m_bEnterObserver;
     bool m_bReady;
 
-	CNetworkVar(int, m_cycleLatch);  // Network the cycle to clients periodically
+    CNetworkVar( int, m_cycleLatch );  // Network the cycle to clients periodically
     CountdownTimer m_cycleLatchTimer;
 
 #ifndef NO_STEAM
@@ -196,11 +202,12 @@ class CHL2MP_Player : public CHL2_Player
 #endif
 };
 
-inline CHL2MP_Player *ToHL2MPPlayer(CBaseEntity *pEntity) {
-    if (!pEntity || !pEntity->IsPlayer())
+inline CHL2MP_Player *ToHL2MPPlayer( CBaseEntity *pEntity )
+{
+    if ( !pEntity || !pEntity->IsPlayer() )
         return NULL;
 
-    return dynamic_cast<CHL2MP_Player *>(pEntity);
+    return dynamic_cast< CHL2MP_Player * >( pEntity );
 }
 
 #endif  // HL2MP_PLAYER_H

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -34,42 +34,42 @@ const float DEFAULT_SKID_THRESHOLD = 10.0f;
 //-----------------------------------------------------------------------------
 class CFourWheelServerVehicle : public CBaseServerVehicle
 {
-	DECLARE_CLASS( CFourWheelServerVehicle, CBaseServerVehicle );
+    DECLARE_CLASS( CFourWheelServerVehicle, CBaseServerVehicle );
 
-// IServerVehicle
-public:
-	virtual ~CFourWheelServerVehicle( void )
-	{
-	}
+    // IServerVehicle
+   public:
+    virtual ~CFourWheelServerVehicle( void )
+    {
+    }
 
-							CFourWheelServerVehicle( void );
-	virtual bool			IsVehicleUpright( void );
-	virtual bool			IsVehicleBodyInWater( void );
-	virtual void			GetVehicleViewPosition( int nRole, Vector *pOrigin, QAngle *pAngles, float *pFOV = NULL );
-	IPhysicsVehicleController *GetVehicleController();
-	const vehicleparams_t	*GetVehicleParams( void );
-	const vehicle_controlparams_t *GetVehicleControlParams( void );
-	const vehicle_operatingparams_t	*GetVehicleOperatingParams( void );
+    CFourWheelServerVehicle( void );
+    virtual bool IsVehicleUpright( void );
+    virtual bool IsVehicleBodyInWater( void );
+    virtual void GetVehicleViewPosition( int nRole, Vector *pOrigin, QAngle *pAngles, float *pFOV = NULL );
+    IPhysicsVehicleController *GetVehicleController();
+    const vehicleparams_t *GetVehicleParams( void );
+    const vehicle_controlparams_t *GetVehicleControlParams( void );
+    const vehicle_operatingparams_t *GetVehicleOperatingParams( void );
 
-	// NPC Driving
-	void					NPC_SetDriver( CNPC_VehicleDriver *pDriver );
-	void					NPC_DriveVehicle( void );
+    // NPC Driving
+    void NPC_SetDriver( CNPC_VehicleDriver *pDriver );
+    void NPC_DriveVehicle( void );
 
-	CPropVehicleDriveable	*GetFourWheelVehicle( void );
-	bool					GetWheelContactPoint( int nWheelIndex, Vector &vecPos );
+    CPropVehicleDriveable *GetFourWheelVehicle( void );
+    bool GetWheelContactPoint( int nWheelIndex, Vector &vecPos );
 
-public:
-	virtual void	SetVehicle( CBaseEntity *pVehicle );
-	void	InitViewSmoothing( const Vector &vecStartOrigin, const QAngle &vecStartAngles );
-	bool	IsPassengerEntering( void );
-	bool	IsPassengerExiting( void );
+   public:
+    virtual void SetVehicle( CBaseEntity *pVehicle );
+    void InitViewSmoothing( const Vector &vecStartOrigin, const QAngle &vecStartAngles );
+    bool IsPassengerEntering( void );
+    bool IsPassengerExiting( void );
 
-	DECLARE_SIMPLE_DATADESC();
+    DECLARE_SIMPLE_DATADESC();
 
-private:
-	CFourWheelVehiclePhysics	*GetFourWheelVehiclePhysics( void );
-	
-	ViewSmoothingData_t		m_ViewSmoothing;
+   private:
+    CFourWheelVehiclePhysics *GetFourWheelVehiclePhysics( void );
+
+    ViewSmoothingData_t m_ViewSmoothing;
 };
 
 //-----------------------------------------------------------------------------
@@ -77,71 +77,87 @@ private:
 //-----------------------------------------------------------------------------
 class CPropVehicle : public CBaseProp, public CDefaultPlayerPickupVPhysics
 {
-	DECLARE_CLASS( CPropVehicle, CBaseProp );
-public:
-	CPropVehicle();
-	virtual ~CPropVehicle();
+    DECLARE_CLASS( CPropVehicle, CBaseProp );
 
-	void SetVehicleType( unsigned int nVehicleType )			{ m_nVehicleType = nVehicleType; }
-	unsigned int GetVehicleType( void )							{ return m_nVehicleType; }
+   public:
+    CPropVehicle();
+    virtual ~CPropVehicle();
 
-	// CBaseEntity
-	void			Spawn( void );
-	virtual int		Restore( IRestore &restore );
-	void			VPhysicsUpdate( IPhysicsObject *pPhysics );
-	void			DrawDebugGeometryOverlays();
-	int				DrawDebugTextOverlays();
-	void			Teleport( const Vector *newPosition, const QAngle *newAngles, const Vector *newVelocity );
-	virtual void	Think( void );
-	CFourWheelVehiclePhysics *GetPhysics( void ) { return &m_VehiclePhysics; }
-	CBasePlayer		*HasPhysicsAttacker( float dt );
-	void			OnPhysGunPickup( CBasePlayer *pPhysGunUser, PhysGunPickup_t reason );
+    void SetVehicleType( unsigned int nVehicleType )
+    {
+        m_nVehicleType = nVehicleType;
+    }
+    unsigned int GetVehicleType( void )
+    {
+        return m_nVehicleType;
+    }
 
-	Vector GetSmoothedVelocity( void );	//Save and update our smoothed velocity for prediction
+    // CBaseEntity
+    void Spawn( void );
+    virtual int Restore( IRestore &restore );
+    void VPhysicsUpdate( IPhysicsObject *pPhysics );
+    void DrawDebugGeometryOverlays();
+    int DrawDebugTextOverlays();
+    void Teleport( const Vector *newPosition, const QAngle *newAngles, const Vector *newVelocity );
+    virtual void Think( void );
+    CFourWheelVehiclePhysics *GetPhysics( void )
+    {
+        return &m_VehiclePhysics;
+    }
+    CBasePlayer *HasPhysicsAttacker( float dt );
+    void OnPhysGunPickup( CBasePlayer *pPhysGunUser, PhysGunPickup_t reason );
 
-	virtual void DampenEyePosition( Vector &vecVehicleEyePos, QAngle &vecVehicleEyeAngles ) {}
+    Vector GetSmoothedVelocity( void );  // Save and update our smoothed velocity for prediction
 
-	// Inputs
-	void InputThrottle( inputdata_t &inputdata );
-	void InputSteering( inputdata_t &inputdata );
-	void InputAction( inputdata_t &inputdata );
-	void InputHandBrakeOn( inputdata_t &inputdata );
-	void InputHandBrakeOff( inputdata_t &inputdata );
+    virtual void DampenEyePosition( Vector &vecVehicleEyePos, QAngle &vecVehicleEyeAngles ) {}
 
-	DECLARE_DATADESC();
+    // Inputs
+    void InputThrottle( inputdata_t &inputdata );
+    void InputSteering( inputdata_t &inputdata );
+    void InputAction( inputdata_t &inputdata );
+    void InputHandBrakeOn( inputdata_t &inputdata );
+    void InputHandBrakeOff( inputdata_t &inputdata );
 
-#ifdef HL2_EPISODIC
-	void AddPhysicsChild( CBaseEntity *pChild );
-	void RemovePhysicsChild( CBaseEntity *pChild );
-#endif //HL2_EPISODIC
-		
-protected:
-	// engine sounds
-	void SoundInit();
-	void SoundShutdown();
-	void SoundUpdate( const vehicle_operatingparams_t &params, const vehicleparams_t &vehicle );
-	void CalcWheelData( vehicleparams_t &vehicle );
-	void ResetControls();
-	
-	// Upright strength of the controller (angular limit)
-	virtual float GetUprightStrength( void ) { return 8.0f; }
-	virtual float GetUprightTime( void ) { return 5.0f; }
-
-protected:
-	CFourWheelVehiclePhysics		m_VehiclePhysics;
-	unsigned int					m_nVehicleType;
-	string_t						m_vehicleScript;
+    DECLARE_DATADESC();
 
 #ifdef HL2_EPISODIC
-	CUtlVector<EHANDLE>				m_hPhysicsChildren;	// List of entities who wish to get physics callbacks from the vehicle
-#endif //HL2_EPISODIC
+    void AddPhysicsChild( CBaseEntity *pChild );
+    void RemovePhysicsChild( CBaseEntity *pChild );
+#endif  // HL2_EPISODIC
 
-private:
-	Vector							m_vecSmoothedVelocity;
+   protected:
+    // engine sounds
+    void SoundInit();
+    void SoundShutdown();
+    void SoundUpdate( const vehicle_operatingparams_t &params, const vehicleparams_t &vehicle );
+    void CalcWheelData( vehicleparams_t &vehicle );
+    void ResetControls();
 
-	CHandle<CBasePlayer>			m_hPhysicsAttacker;
+    // Upright strength of the controller (angular limit)
+    virtual float GetUprightStrength( void )
+    {
+        return 8.0f;
+    }
+    virtual float GetUprightTime( void )
+    {
+        return 5.0f;
+    }
 
-	float							m_flLastPhysicsInfluenceTime;
+   protected:
+    CFourWheelVehiclePhysics m_VehiclePhysics;
+    unsigned int m_nVehicleType;
+    string_t m_vehicleScript;
+
+#ifdef HL2_EPISODIC
+    CUtlVector< EHANDLE > m_hPhysicsChildren;  // List of entities who wish to get physics callbacks from the vehicle
+#endif                                         // HL2_EPISODIC
+
+   private:
+    Vector m_vecSmoothedVelocity;
+
+    CHandle< CBasePlayer > m_hPhysicsAttacker;
+
+    float m_flLastPhysicsInfluenceTime;
 };
 
 //=============================================================================
@@ -149,13 +165,13 @@ private:
 
 class INPCPassengerCarrier
 {
-public:
-	virtual bool	NPC_CanEnterVehicle( CAI_BaseNPC *pPassenger, bool bCompanion ) = 0;
-	virtual bool	NPC_CanExitVehicle( CAI_BaseNPC *pPassenger, bool bCompanion ) = 0;
-	virtual bool	NPC_AddPassenger( CAI_BaseNPC *pPassenger, string_t strRoleName, int nSeatID ) = 0;
-	virtual bool	NPC_RemovePassenger( CAI_BaseNPC *pPassenger ) = 0;
-	virtual void	NPC_FinishedEnterVehicle( CAI_BaseNPC *pPassenger, bool bCompanion ) = 0;
-	virtual void	NPC_FinishedExitVehicle( CAI_BaseNPC *pPassenger, bool bCompanion ) = 0;
+   public:
+    virtual bool NPC_CanEnterVehicle( CAI_BaseNPC *pPassenger, bool bCompanion ) = 0;
+    virtual bool NPC_CanExitVehicle( CAI_BaseNPC *pPassenger, bool bCompanion ) = 0;
+    virtual bool NPC_AddPassenger( CAI_BaseNPC *pPassenger, string_t strRoleName, int nSeatID ) = 0;
+    virtual bool NPC_RemovePassenger( CAI_BaseNPC *pPassenger ) = 0;
+    virtual void NPC_FinishedEnterVehicle( CAI_BaseNPC *pPassenger, bool bCompanion ) = 0;
+    virtual void NPC_FinishedExitVehicle( CAI_BaseNPC *pPassenger, bool bCompanion ) = 0;
 };
 
 //-----------------------------------------------------------------------------
@@ -163,151 +179,197 @@ public:
 //-----------------------------------------------------------------------------
 class CPropVehicleDriveable : public CPropVehicle, public IDrivableVehicle, public INPCPassengerCarrier
 {
-	DECLARE_CLASS( CPropVehicleDriveable, CPropVehicle );
-	DECLARE_SERVERCLASS();
-	DECLARE_DATADESC();
-public:
-	CPropVehicleDriveable( void );
-	~CPropVehicleDriveable( void );
+    DECLARE_CLASS( CPropVehicleDriveable, CPropVehicle );
+    DECLARE_SERVERCLASS();
+    DECLARE_DATADESC();
 
-	virtual void	Precache( void );
-	virtual void	Spawn( void );
-	virtual int		Restore( IRestore &restore );
-	virtual void	OnRestore();
-	virtual void	CreateServerVehicle( void );
-	virtual int		ObjectCaps( void ) { return BaseClass::ObjectCaps() | FCAP_IMPULSE_USE; };
-	virtual void	GetVectors(Vector* pForward, Vector* pRight, Vector* pUp) const;
-	virtual void	VehicleAngleVectors( const QAngle &angles, Vector *pForward, Vector *pRight, Vector *pUp );
-	virtual void	Use( CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYPE useType, float value );
-	virtual void	Think( void );
-	virtual void	TraceAttack( const CTakeDamageInfo &info, const Vector &vecDir, trace_t *ptr, CDmgAccumulator *pAccumulator );
-	virtual void	Event_KilledOther( CBaseEntity *pVictim, const CTakeDamageInfo &info );
+   public:
+    CPropVehicleDriveable( void );
+    ~CPropVehicleDriveable( void );
 
-	// Vehicle handling
-	virtual void	VPhysicsCollision( int index, gamevcollisionevent_t *pEvent );
-	virtual int		VPhysicsGetObjectList( IPhysicsObject **pList, int listMax );
+    virtual void Precache( void );
+    virtual void Spawn( void );
+    virtual int Restore( IRestore &restore );
+    virtual void OnRestore();
+    virtual void CreateServerVehicle( void );
+    virtual int ObjectCaps( void )
+    {
+        return BaseClass::ObjectCaps() | FCAP_IMPULSE_USE;
+    };
+    virtual void GetVectors( Vector *pForward, Vector *pRight, Vector *pUp ) const;
+    virtual void VehicleAngleVectors( const QAngle &angles, Vector *pForward, Vector *pRight, Vector *pUp );
+    virtual void Use( CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYPE useType, float value );
+    virtual void Think( void );
+    virtual void TraceAttack( const CTakeDamageInfo &info, const Vector &vecDir, trace_t *ptr, CDmgAccumulator *pAccumulator );
+    virtual void Event_KilledOther( CBaseEntity *pVictim, const CTakeDamageInfo &info );
 
-	// Inputs
-	void	InputLock( inputdata_t &inputdata );
-	void	InputUnlock( inputdata_t &inputdata );
-	void	InputTurnOn( inputdata_t &inputdata );
-	void	InputTurnOff( inputdata_t &inputdata );
+    // Vehicle handling
+    virtual void VPhysicsCollision( int index, gamevcollisionevent_t *pEvent );
+    virtual int VPhysicsGetObjectList( IPhysicsObject **pList, int listMax );
 
-	// Locals
-	void	ResetUseKey( CBasePlayer *pPlayer );
+    // Inputs
+    void InputLock( inputdata_t &inputdata );
+    void InputUnlock( inputdata_t &inputdata );
+    void InputTurnOn( inputdata_t &inputdata );
+    void InputTurnOff( inputdata_t &inputdata );
 
-	// Driving
-	void	DriveVehicle( CBasePlayer *pPlayer, CUserCmd *ucmd );	// Player driving entrypoint
-	virtual void DriveVehicle( float flFrameTime, CUserCmd *ucmd, int iButtonsDown, int iButtonsReleased ); // Driving Button handling
+    // Locals
+    void ResetUseKey( CBasePlayer *pPlayer );
 
-	virtual bool IsOverturned( void );
-	virtual bool IsVehicleBodyInWater( void ) { return false; }
-		
-	// Engine handling
-	void	StartEngine( void );
-	void	StopEngine( void );
-	bool	IsEngineOn( void );
+    // Driving
+    void DriveVehicle( CBasePlayer *pPlayer, CUserCmd *ucmd );                                               // Player driving entrypoint
+    virtual void DriveVehicle( float flFrameTime, CUserCmd *ucmd, int iButtonsDown, int iButtonsReleased );  // Driving Button handling
 
-// IDrivableVehicle
-public:
-	virtual CBaseEntity *GetDriver( void );
-	virtual void		ItemPostFrame( CBasePlayer *pPlayer ) { return; }
-	virtual void		SetupMove( CBasePlayer *player, CUserCmd *ucmd, IMoveHelper *pHelper, CMoveData *move );
-	virtual void		ProcessMovement( CBasePlayer *pPlayer, CMoveData *pMoveData ) { return; }
-	virtual void		FinishMove( CBasePlayer *player, CUserCmd *ucmd, CMoveData *move ) { return; }
-	virtual bool		CanEnterVehicle( CBaseEntity *pEntity );
-	virtual bool		CanExitVehicle( CBaseEntity *pEntity );
-	virtual void		SetVehicleEntryAnim( bool bOn ) { m_bEnterAnimOn = bOn; }
-	virtual void		SetVehicleExitAnim( bool bOn, Vector vecEyeExitEndpoint ) { m_bExitAnimOn = bOn; if ( bOn ) m_vecEyeExitEndpoint = vecEyeExitEndpoint; }
-	virtual void		EnterVehicle( CBaseCombatCharacter *pPassenger );
+    virtual bool IsOverturned( void );
+    virtual bool IsVehicleBodyInWater( void )
+    {
+        return false;
+    }
 
-	virtual bool		AllowBlockedExit( CBaseCombatCharacter *pPassenger, int nRole ) { return true; }
-	virtual bool		AllowMidairExit( CBaseCombatCharacter *pPassenger, int nRole ) { return false; }
-	virtual void		PreExitVehicle( CBaseCombatCharacter *pPassenger, int nRole ) {}
-	virtual void		ExitVehicle( int nRole );
-	virtual string_t	GetVehicleScriptName() { return m_vehicleScript; }
-	
-	virtual bool		PassengerShouldReceiveDamage( CTakeDamageInfo &info ) { return true; }
+    // Engine handling
+    void StartEngine( void );
+    void StopEngine( void );
+    bool IsEngineOn( void );
 
-	// If this is a vehicle, returns the vehicle interface
-	virtual IServerVehicle *GetServerVehicle() { return m_pServerVehicle; }
+    // IDrivableVehicle
+   public:
+    virtual CBaseEntity *GetDriver( void );
+    virtual void ItemPostFrame( CBasePlayer *pPlayer )
+    {
+        return;
+    }
+    virtual void SetupMove( CBasePlayer *player, CUserCmd *ucmd, IMoveHelper *pHelper, CMoveData *move );
+    virtual void ProcessMovement( CBasePlayer *pPlayer, CMoveData *pMoveData )
+    {
+        return;
+    }
+    virtual void FinishMove( CBasePlayer *player, CUserCmd *ucmd, CMoveData *move )
+    {
+        return;
+    }
+    virtual bool CanEnterVehicle( CBaseEntity *pEntity );
+    virtual bool CanExitVehicle( CBaseEntity *pEntity );
+    virtual void SetVehicleEntryAnim( bool bOn )
+    {
+        m_bEnterAnimOn = bOn;
+    }
+    virtual void SetVehicleExitAnim( bool bOn, Vector vecEyeExitEndpoint )
+    {
+        m_bExitAnimOn = bOn;
+        if ( bOn ) m_vecEyeExitEndpoint = vecEyeExitEndpoint;
+    }
+    virtual void EnterVehicle( CBaseCombatCharacter *pPassenger );
 
-protected:
+    virtual bool AllowBlockedExit( CBaseCombatCharacter *pPassenger, int nRole )
+    {
+        return true;
+    }
+    virtual bool AllowMidairExit( CBaseCombatCharacter *pPassenger, int nRole )
+    {
+        return false;
+    }
+    virtual void PreExitVehicle( CBaseCombatCharacter *pPassenger, int nRole ) {}
+    virtual void ExitVehicle( int nRole );
+    virtual string_t GetVehicleScriptName()
+    {
+        return m_vehicleScript;
+    }
 
-	virtual bool	ShouldThink() { return ( GetDriver() != NULL ); }
+    virtual bool PassengerShouldReceiveDamage( CTakeDamageInfo &info )
+    {
+        return true;
+    }
 
-	inline bool HasGun();
-	void DestroyServerVehicle();
+    // If this is a vehicle, returns the vehicle interface
+    virtual IServerVehicle *GetServerVehicle()
+    {
+        return m_pServerVehicle;
+    }
 
-	// Contained IServerVehicle
-	CFourWheelServerVehicle	*m_pServerVehicle;
+   protected:
+    virtual bool ShouldThink()
+    {
+        return ( GetDriver() != NULL );
+    }
 
-	COutputEvent		m_playerOn;
-	COutputEvent		m_playerOff;
+    inline bool HasGun();
+    void DestroyServerVehicle();
 
-	COutputEvent		m_pressedAttack;
-	COutputEvent		m_pressedAttack2;
+    // Contained IServerVehicle
+    CFourWheelServerVehicle *m_pServerVehicle;
 
-	COutputFloat		m_attackaxis;
-	COutputFloat		m_attack2axis;
+    COutputEvent m_playerOn;
+    COutputEvent m_playerOff;
 
-	CNetworkHandle( CBasePlayer, m_hPlayer );
-public:
+    COutputEvent m_pressedAttack;
+    COutputEvent m_pressedAttack2;
 
-	CNetworkVar( int, m_nSpeed );
-	CNetworkVar( int, m_nRPM );
-	CNetworkVar( float, m_flThrottle );
-	CNetworkVar( int, m_nBoostTimeLeft );
-	CNetworkVar( int, m_nHasBoost );
+    COutputFloat m_attackaxis;
+    COutputFloat m_attack2axis;
 
-	CNetworkVector( m_vecEyeExitEndpoint );
-	CNetworkVector( m_vecGunCrosshair );
-	CNetworkVar( bool, m_bUnableToFire );
-	CNetworkVar( bool, m_bHasGun );
+    CNetworkHandle( CBasePlayer, m_hPlayer );
 
-	CNetworkVar( bool, m_nScannerDisabledWeapons );
-	CNetworkVar( bool, m_nScannerDisabledVehicle );
+   public:
+    CNetworkVar( int, m_nSpeed );
+    CNetworkVar( int, m_nRPM );
+    CNetworkVar( float, m_flThrottle );
+    CNetworkVar( int, m_nBoostTimeLeft );
+    CNetworkVar( int, m_nHasBoost );
 
-	// NPC Driver
-	CHandle<CNPC_VehicleDriver>	 m_hNPCDriver;
-	EHANDLE						 m_hKeepUpright;
+    CNetworkVector( m_vecEyeExitEndpoint );
+    CNetworkVector( m_vecGunCrosshair );
+    CNetworkVar( bool, m_bUnableToFire );
+    CNetworkVar( bool, m_bHasGun );
 
-	// --------------------------------
-	// NPC Passengers
-public:
+    CNetworkVar( bool, m_nScannerDisabledWeapons );
+    CNetworkVar( bool, m_nScannerDisabledVehicle );
 
-	virtual bool	NPC_CanEnterVehicle( CAI_BaseNPC *pPassenger, bool bCompanion );
-	virtual bool	NPC_CanExitVehicle( CAI_BaseNPC *pPassenger, bool bCompanion );
-	virtual bool	NPC_AddPassenger( CAI_BaseNPC *pPassenger, string_t strRoleName, int nSeatID );
-	virtual bool 	NPC_RemovePassenger( CAI_BaseNPC *pPassenger );
-	virtual void	NPC_FinishedEnterVehicle( CAI_BaseNPC *pPassenger, bool bCompanion ) {} 
-	virtual void	NPC_FinishedExitVehicle( CAI_BaseNPC *pPassenger, bool bCompanion ) {}
+    // NPC Driver
+    CHandle< CNPC_VehicleDriver > m_hNPCDriver;
+    EHANDLE m_hKeepUpright;
 
-	// NPC Passengers
-	// --------------------------------
+    // --------------------------------
+    // NPC Passengers
+   public:
+    virtual bool NPC_CanEnterVehicle( CAI_BaseNPC *pPassenger, bool bCompanion );
+    virtual bool NPC_CanExitVehicle( CAI_BaseNPC *pPassenger, bool bCompanion );
+    virtual bool NPC_AddPassenger( CAI_BaseNPC *pPassenger, string_t strRoleName, int nSeatID );
+    virtual bool NPC_RemovePassenger( CAI_BaseNPC *pPassenger );
+    virtual void NPC_FinishedEnterVehicle( CAI_BaseNPC *pPassenger, bool bCompanion ) {}
+    virtual void NPC_FinishedExitVehicle( CAI_BaseNPC *pPassenger, bool bCompanion ) {}
 
-	bool IsEnterAnimOn( void ) { return m_bEnterAnimOn; }
-	bool IsExitAnimOn( void ) { return m_bExitAnimOn; }
-	const Vector &GetEyeExitEndpoint( void ) { return m_vecEyeExitEndpoint; }
+    // NPC Passengers
+    // --------------------------------
 
-protected:
-	// Entering / Exiting
-	bool		m_bEngineLocked;	// Mapmaker override on whether the vehicle's allowed to be turned on/off
-	bool		m_bLocked;
-	float		m_flMinimumSpeedToEnterExit;
-	CNetworkVar( bool, m_bEnterAnimOn );
-	CNetworkVar( bool, m_bExitAnimOn );
-	
-	// Used to turn the keepupright off after a short time
-	float		m_flTurnOffKeepUpright;
-	float		m_flNoImpactDamageTime;
+    bool IsEnterAnimOn( void )
+    {
+        return m_bEnterAnimOn;
+    }
+    bool IsExitAnimOn( void )
+    {
+        return m_bExitAnimOn;
+    }
+    const Vector &GetEyeExitEndpoint( void )
+    {
+        return m_vecEyeExitEndpoint;
+    }
+
+   protected:
+    // Entering / Exiting
+    bool m_bEngineLocked;  // Mapmaker override on whether the vehicle's allowed to be turned on/off
+    bool m_bLocked;
+    float m_flMinimumSpeedToEnterExit;
+    CNetworkVar( bool, m_bEnterAnimOn );
+    CNetworkVar( bool, m_bExitAnimOn );
+
+    // Used to turn the keepupright off after a short time
+    float m_flTurnOffKeepUpright;
+    float m_flNoImpactDamageTime;
 };
-
 
 inline bool CPropVehicleDriveable::HasGun()
 {
-	return m_bHasGun;
+    return m_bHasGun;
 }
 
-
-#endif // VEHICLE_BASE_H
+#endif  // VEHICLE_BASE_H
