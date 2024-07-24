@@ -2141,9 +2141,9 @@ static int DoFileCompletion( const char *partial,
     int current = 0;
 
 #ifdef CLIENT_DLL
-    const char *cmdname = "lua_dofile_cl";
+    const char *cmdname = "lua_openscript_cl";
 #else
-    const char *cmdname = "lua_dofile";
+    const char *cmdname = "lua_openscript";
 #endif
     char *substring = NULL;
     int substringLen = 0;
@@ -2183,24 +2183,24 @@ static int DoFileCompletion( const char *partial,
 }
 
 #ifdef CLIENT_DLL
-CON_COMMAND_F_COMPLETION( lua_dofile_cl, "Load and run a Lua file", 0, DoFileCompletion )
+CON_COMMAND_F_COMPLETION( lua_openscript_cl, "Load and run a Lua file", 0, DoFileCompletion )
 {
     if ( !g_bLuaInitialized )
         return;
 
     if ( args.ArgC() == 1 )
     {
-        Msg( "Usage: lua_dofile_cl <fileName>\n" );
+        Msg( "Usage: lua_openscript_cl <fileName>\n" );
         return;
     }
 
     ProcessLuaFile( L, args.ArgS() );
 }
-CON_COMMAND_F_COMPLETION( lua_dofile_menu, "Load and run a Lua file", 0, DoFileCompletion )
+CON_COMMAND_F_COMPLETION( lua_openscript_menu, "Load and run a Lua file", 0, DoFileCompletion )
 {
     if ( args.ArgC() == 1 )
     {
-        Msg( "Usage: lua_dofile_menu <fileName>\n" );
+        Msg( "Usage: lua_openscript_menu <fileName>\n" );
         return;
     }
 
@@ -2208,7 +2208,7 @@ CON_COMMAND_F_COMPLETION( lua_dofile_menu, "Load and run a Lua file", 0, DoFileC
 }
 
 #else
-CON_COMMAND_F_COMPLETION( lua_dofile, "Load and run a Lua file", 0, DoFileCompletion )
+CON_COMMAND_F_COMPLETION( lua_openscript, "Load and run a Lua file", 0, DoFileCompletion )
 {
     if ( !g_bLuaInitialized )
         return;
@@ -2218,7 +2218,7 @@ CON_COMMAND_F_COMPLETION( lua_dofile, "Load and run a Lua file", 0, DoFileComple
 
     if ( args.ArgC() == 1 )
     {
-        Msg( "Usage: lua_dofile <fileName>\n" );
+        Msg( "Usage: lua_openscript <fileName>\n" );
         return;
     }
 

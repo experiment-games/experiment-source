@@ -1,4 +1,4 @@
--- lua_dofile utilities/test/luasocket.lua
+-- lua_openscript utilities/test/luasocket.lua
 local socket = require("luasocket")
 local IP = "127.0.0.1" -- TODO: game server IP here
 local PORT = 12346 -- Different port from what is used by the Networks.* library

@@ -69,20 +69,6 @@ static int CHL2MP_Player_CalculateIKLocks( lua_State *L )
     return 0;
 }
 
-static int CHL2MP_Player_CalcView( lua_State *L )
-{
-    Vector eyeOrigin;
-    QAngle eyeAngles;
-    float zNear, zFar, fov;
-    luaL_checkhl2mpplayer( L, 1 )->CalcView( eyeOrigin, eyeAngles, zNear, zFar, fov );
-    lua_pushvector( L, eyeOrigin );
-    lua_pushangle( L, eyeAngles );
-    lua_pushnumber( L, zNear );
-    lua_pushnumber( L, zFar );
-    lua_pushnumber( L, fov );
-    return 5;
-}
-
 static int CHL2MP_Player_CanSprint( lua_State *L )
 {
     lua_pushboolean( L, luaL_checkhl2mpplayer( L, 1 )->CanSprint() );
@@ -180,7 +166,6 @@ static int CHL2MP_Player___tostring( lua_State *L )
 static const luaL_Reg CHL2MP_Playermeta[] = {
     { "BecomeRagdollOnClient", CHL2MP_Player_BecomeRagdollOnClient },
     { "CalculateIKLocks", CHL2MP_Player_CalculateIKLocks },
-    { "CalcView", CHL2MP_Player_CalcView },
     { "CanSprint", CHL2MP_Player_CanSprint },
     { "DoAnimationEvent", CHL2MP_Player_DoAnimationEvent },
     { "KeyDown", CHL2MP_Player_KeyDown },

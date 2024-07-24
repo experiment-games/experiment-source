@@ -1,5 +1,5 @@
--- lua_dofile_menu utilities/test/panel_with_labels.lua
--- or: lua_dofile_cl utilities/test/panel_with_labels.lua
+-- lua_openscript_menu utilities/test/panel_with_labels.lua
+-- or: lua_openscript_cl utilities/test/panel_with_labels.lua
 
 Include("includes/extensions/panel.lua")
 Include("includes/extensions/label.lua")

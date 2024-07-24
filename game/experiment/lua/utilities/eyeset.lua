@@ -5,18 +5,17 @@
 	Modified for Experiment.
 --]]
 
-local EYE_PRESET_ORIGIN = Vector(27.044645, -906.119995, 165.712967)
-local EYE_PRESET_ANGLES = Angle(-7.722018, 102.617867, 0.000000)
-local EYE_PRESET_FOV = 90
+local r_eyeset = CreateConsoleVariable("r_eyeset", "1", FCVAR_CLIENTDLL)
 
-local r_eyeset = ConVar("r_eyeset", "0", FCVAR_CLIENTDLL)
-
-Hooks.Add("CalcPlayerView", "SetPlayerView", function(client, eyeOrigin, eyeAngles, fov)
-	if (r_eyeset:GetBool() == true) then
-		-- FIXME: eyeOrigin isn't getting set (overriden) correctly.
-		eyeOrigin = EYE_PRESET_ORIGIN
-		eyeAngles = EYE_PRESET_ANGLES
-		fov = EYE_PRESET_FOV
-	end
-	return eyeOrigin, eyeAngles, fov
+-- lua_openscript_cl utilities/eyeset.lua
+Hooks.Add("CalcView", "SetPlayerView", function(client, eyeOrigin, eyeAngles, fov, zNear, zFar)
+    if (r_eyeset:GetBool() == true) then
+        -- Draws the LocalPlayer and sets the view behind.
+		return {
+			origin = eyeOrigin - (eyeAngles:Forward() * 100),
+			angles = eyeAngles,
+			fov = fov,
+			drawviewer = true
+		}
+    end
 end)

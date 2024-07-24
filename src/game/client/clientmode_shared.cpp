@@ -477,6 +477,15 @@ void ClientModeShared::Shutdown()
 //-----------------------------------------------------------------------------
 bool ClientModeShared::CreateMove( float flInputSampleTime, CUserCmd *cmd )
 {
+#ifdef LUA_SDK
+    BEGIN_LUA_CALL_HOOK( "CreateMove" );
+    // lua_pushusercommand( L, ucmd ); // TODO
+    lua_pushnil( L );
+    END_LUA_CALL_HOOK( 1, 1 );
+
+    RETURN_LUA_BOOLEAN();
+#endif
+
     // Let the player override the view.
     C_BasePlayer *pPlayer = C_BasePlayer::GetLocalPlayer();
     if ( !pPlayer )

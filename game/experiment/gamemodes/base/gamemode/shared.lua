@@ -14,7 +14,7 @@ function GM:Shutdown()
 	-- it's implementation to be redundant.
 end
 
-function GM:CalcPlayerView(client, eyeOrigin, eyeAngles, fov)
+function GM:CalcView(client, eyeOrigin, eyeAngles, fov, zNear, zFar)
 end
 
 function GM:CheckGameOver()

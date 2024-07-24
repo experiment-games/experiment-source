@@ -18,6 +18,7 @@
 #include "hintsystem.h"
 #include "SoundEmitterSystem/isoundemittersystembase.h"
 #include "util_shared.h"
+#include <view_shared.h>
 
 #if defined USES_ECON_ITEMS
 #include "game_item_schema.h"
@@ -434,7 +435,7 @@ class CBasePlayer : public CBaseCombatCharacter
     void ShowCrosshair( bool bShow );
 
     // View model prediction setup
-    void CalcView( Vector &eyeOrigin, QAngle &eyeAngles, float &zNear, float &zFar, float &fov );
+    virtual void CalcView( CViewSetup &viewSetup );
 
     // Handle view smoothing when going up stairs
     void SmoothViewOnStairs( Vector &eyeOrigin );
@@ -1183,10 +1184,11 @@ class CBasePlayer : public CBaseCombatCharacter
     float m_flLastObjectiveTime;  // Last curtime player touched/killed something the gamemode considers an objective
 
    protected:
-    void CalcPlayerView( Vector &eyeOrigin, QAngle &eyeAngles, float &fov );
-    void CalcVehicleView( IServerVehicle *pVehicle, Vector &eyeOrigin, QAngle &eyeAngles, float &zNear, float &zFar, float &fov );
-    void CalcObserverView( Vector &eyeOrigin, QAngle &eyeAngles, float &fov );
+    void CalcPlayerView( CViewSetup &viewSetup, bool &bForceDrawLocalPlayer );
+    void CalcVehicleView( IServerVehicle *pVehicle, CViewSetup &viewSetup, bool &bForceDrawLocalPlayer );
     void CalcViewModelView( const Vector &eyeOrigin, const QAngle &eyeAngles );
+
+    bool m_bCalcViewForceDrawPlayer;
 
     virtual void Internal_HandleMapEvent( inputdata_t &inputdata ) {}
 

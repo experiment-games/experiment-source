@@ -1,4 +1,4 @@
--- lua_dofile utilities/test/networks.lua;lua_dofile_cl utilities/test/networks.lua;
+-- lua_openscript utilities/test/networks.lua;lua_openscript_cl utilities/test/networks.lua;
 
 local countReceived = 0
 

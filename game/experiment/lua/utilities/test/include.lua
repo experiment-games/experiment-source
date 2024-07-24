@@ -1,4 +1,4 @@
--- lua_dofile utilities/test/include.lua
+-- lua_openscript utilities/test/include.lua
 
 SOME_GLOBAL_VALUE = "test"
 

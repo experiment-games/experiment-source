@@ -112,7 +112,7 @@ class C_BasePlayer : public C_BaseCombatCharacter, public CGameEventListener
     const char *GetTracerType( void );
 
     // View model prediction setup
-    virtual void CalcView( Vector &eyeOrigin, QAngle &eyeAngles, float &zNear, float &zFar, float &fov );
+    virtual void CalcView( CViewSetup &viewSetup );
     virtual void CalcViewModelView( const Vector &eyeOrigin, const QAngle &eyeAngles );
 
     // Handle view smoothing when going up stairs
@@ -561,9 +561,8 @@ class C_BasePlayer : public C_BaseCombatCharacter, public CGameEventListener
     float m_flConstraintSpeedFactor;
 
    protected:
-    void CalcPlayerView( Vector &eyeOrigin, QAngle &eyeAngles, float &fov );
-    void CalcVehicleView( IClientVehicle *pVehicle, Vector &eyeOrigin, QAngle &eyeAngles, float &zNear, float &zFar, float &fov );
-    virtual void CalcObserverView( Vector &eyeOrigin, QAngle &eyeAngles, float &fov );
+    void CalcPlayerView( CViewSetup &viewSetup, bool &bForceDrawLocalPlayer );
+    void CalcVehicleView( IClientVehicle *pVehicle, CViewSetup &viewSetup, bool &bForceDrawLocalPlayer );
     virtual Vector GetChaseCamViewOffset( CBaseEntity *target );
     void CalcChaseCamView( Vector &eyeOrigin, QAngle &eyeAngles, float &fov );
     virtual void CalcInEyeCamView( Vector &eyeOrigin, QAngle &eyeAngles, float &fov );
@@ -602,6 +601,8 @@ class C_BasePlayer : public C_BaseCombatCharacter, public CGameEventListener
 
     float m_flStepSoundTime;
     bool m_IsFootprintOnLeft;
+
+    bool m_bCalcViewForceDrawPlayer;
 
    private:
     // Make sure no one calls this...

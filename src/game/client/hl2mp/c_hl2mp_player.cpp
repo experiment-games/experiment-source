@@ -770,49 +770,9 @@ C_BaseAnimating *C_HL2MP_Player::BecomeRagdollOnClient()
     return NULL;
 }
 
-void C_HL2MP_Player::CalcView( Vector &eyeOrigin, QAngle &eyeAngles, float &zNear, float &zFar, float &fov )
+void C_HL2MP_Player::CalcView( CViewSetup &viewSetup )
 {
-    if ( m_lifeState != LIFE_ALIVE && !IsObserver() )
-    {
-        Vector origin = EyePosition();
-
-        IRagdoll *pRagdoll = GetRepresentativeRagdoll();
-
-        if ( pRagdoll )
-        {
-            origin = pRagdoll->GetRagdollOrigin();
-            origin.z += VEC_DEAD_VIEWHEIGHT_SCALED( this )
-                            .z;  // look over ragdoll, not through
-        }
-
-        BaseClass::CalcView( eyeOrigin, eyeAngles, zNear, zFar, fov );
-
-        eyeOrigin = origin;
-
-        Vector vForward;
-        AngleVectors( eyeAngles, &vForward );
-
-        VectorNormalize( vForward );
-        VectorMA( origin, -CHASE_CAM_DISTANCE_MAX, vForward, eyeOrigin );
-
-        Vector WALL_MIN( -WALL_OFFSET, -WALL_OFFSET, -WALL_OFFSET );
-        Vector WALL_MAX( WALL_OFFSET, WALL_OFFSET, WALL_OFFSET );
-
-        trace_t trace;  // clip against world
-        C_BaseEntity::PushEnableAbsRecomputations(
-            false );  // HACK don't recompute positions while doing RayTrace
-        UTIL_TraceHull( origin, eyeOrigin, WALL_MIN, WALL_MAX, MASK_SOLID_BRUSHONLY, this, COLLISION_GROUP_NONE, &trace );
-        C_BaseEntity::PopEnableAbsRecomputations();
-
-        if ( trace.fraction < 1.0 )
-        {
-            eyeOrigin = trace.endpos;
-        }
-
-        return;
-    }
-
-    BaseClass::CalcView( eyeOrigin, eyeAngles, zNear, zFar, fov );
+    BaseClass::CalcView( viewSetup );
 }
 
 IRagdoll *C_HL2MP_Player::GetRepresentativeRagdoll() const

@@ -5,9 +5,9 @@
 	Modified for Experiment.
 --]]
 
-Hooks.Add("CalcPlayerView", "DumpPlayerView", function(client, eyeOrigin, eyeAngles, fov)
+Hooks.Add("CalcView", "DumpPlayerView", function(client, eyeOrigin, eyeAngles, fov, zNear, zFar)
 	MsgN("eyeOrigin: " .. tostring(eyeOrigin))
 	MsgN("eyeAngles: " .. tostring(eyeAngles))
 	MsgN("fov: " .. tostring(fov))
-	Hooks.Remove("CalcPlayerView", "CalcPlayerView")
+	Hooks.Remove("CalcView", "DumpPlayerView")
 end)

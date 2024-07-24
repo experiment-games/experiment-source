@@ -4,7 +4,7 @@
 
 	Modified for Experiment.
 
-	lua_dofile_cl utilities/test/HFont.lua
+	lua_openscript_cl utilities/test/HFont.lua
 --]]
 
 if (not CLIENT) then

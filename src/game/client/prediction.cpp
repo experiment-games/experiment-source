@@ -663,6 +663,16 @@ void CPrediction::SetupMove( C_BasePlayer *player, CUserCmd *ucmd, IMoveHelper *
     pHLMove->m_bIsSprinting = pHLPlayer->IsSprinting();
 #endif
 #endif
+
+#ifdef LUA_SDK
+    BEGIN_LUA_CALL_HOOK( "SetupMove" );
+    CBaseEntity::PushLuaInstanceSafe( L, player );
+    // lua_pushmovedata( L, mv );  // TODO
+    // lua_pushusercommand( L, ucmd ); // TODO
+    lua_pushnil( L );
+    lua_pushnil( L );
+    END_LUA_CALL_HOOK( 3, 0 );
+#endif
 }
 
 //-----------------------------------------------------------------------------
@@ -672,6 +682,16 @@ void CPrediction::SetupMove( C_BasePlayer *player, CUserCmd *ucmd, IMoveHelper *
 //-----------------------------------------------------------------------------
 void CPrediction::FinishMove( C_BasePlayer *player, CUserCmd *ucmd, CMoveData *move )
 {
+#ifdef LUA_SDK
+    BEGIN_LUA_CALL_HOOK( "FinishMove" );
+    CBaseEntity::PushLuaInstanceSafe( L, player );
+    // lua_pushmovedata( L, mv );  // TODO
+    lua_pushnil( L );
+    END_LUA_CALL_HOOK( 2, 1 );
+
+    RETURN_LUA_NONE();
+#endif
+
 #if !defined( NO_ENTITY_PREDICTION )
     VPROF( "CPrediction::FinishMove" );
 
@@ -722,6 +742,14 @@ void CPrediction::StartCommand( C_BasePlayer *player, CUserCmd *cmd )
     player->m_pCurrentCommand = cmd;
     C_BaseEntity::SetPredictionRandomSeed( cmd );
     C_BaseEntity::SetPredictionPlayer( player );
+#endif
+
+#ifdef LUA_SDK
+    BEGIN_LUA_CALL_HOOK( "StartCommand" );
+    CBaseEntity::PushLuaInstanceSafe( L, player );
+    // lua_pushusercommand( L, ucmd ); // TODO
+    lua_pushnil( L );
+    END_LUA_CALL_HOOK( 2, 0 );
 #endif
 }
 

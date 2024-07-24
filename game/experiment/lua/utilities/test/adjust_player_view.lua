@@ -11,7 +11,7 @@ end
 
 local currentTime = Globals.CurrentTime
 
-Hooks.Add("CalcPlayerView", "CalcPlayerView", function(client, eyeOrigin, eyeAngles, fov)
+Hooks.Add("CalcView", "CalcView", function(client, eyeOrigin, eyeAngles, fov, zNear, zFar)
 	-- Give a subtle breathing effect.
 	eyeAngles = eyeAngles + Angle(math.sin(currentTime()) / 2, 0, 0)
 
@@ -22,5 +22,9 @@ Hooks.Add("CalcPlayerView", "CalcPlayerView", function(client, eyeOrigin, eyeAng
 	-- however if we return nil for the first value, nothing will change at all.
 	-- This is due to our hook system's mechanics (similar to the way Garry's
 	-- Mod's hook system works, so left for compatiblity).
-	return eyeOrigin, eyeAngles, fov
+    return {
+        origin = eyeOrigin,
+        angles = eyeAngles,
+		fov = fov,
+	}
 end)

@@ -11,4 +11,4 @@ Include("player_update_flashlight.lua")
 Include("util_entities_in.lua")
 Include("luasocket.lua")
 
--- lua_dofile utilities/test/run_all.lua
+-- lua_openscript utilities/test/run_all.lua

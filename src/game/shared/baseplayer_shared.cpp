@@ -1610,7 +1610,7 @@ void CBasePlayer::ResetObserverMode()
 //			zFar -
 //			fov -
 //-----------------------------------------------------------------------------
-void CBasePlayer::CalcView( Vector &eyeOrigin, QAngle &eyeAngles, float &zNear, float &zFar, float &fov )
+void CBasePlayer::CalcView( CViewSetup &viewSetup )
 {
 #if defined( CLIENT_DLL )
     IClientVehicle *pVehicle;
@@ -1619,6 +1619,12 @@ void CBasePlayer::CalcView( Vector &eyeOrigin, QAngle &eyeAngles, float &zNear, 
 #endif
     pVehicle = GetVehicle();
 
+#ifdef CLIENT_DLL
+    bool bOldForceDrawLocalPlayer = m_bCalcViewForceDrawPlayer;
+#endif
+
+    m_bCalcViewForceDrawPlayer = false;
+
     if ( !pVehicle )
     {
 #if defined( CLIENT_DLL )
@@ -1626,23 +1632,23 @@ void CBasePlayer::CalcView( Vector &eyeOrigin, QAngle &eyeAngles, float &zNear, 
             g_ClientVirtualReality.CancelTorsoTransformOverride();
 #endif
 
-        if ( IsObserver() )
-        {
-            CalcObserverView( eyeOrigin, eyeAngles, fov );
-        }
-        else
-        {
-            CalcPlayerView( eyeOrigin, eyeAngles, fov );
-        }
+        CalcPlayerView( viewSetup, m_bCalcViewForceDrawPlayer );
     }
     else
     {
-        CalcVehicleView( pVehicle, eyeOrigin, eyeAngles, zNear, zFar, fov );
+        CalcVehicleView( pVehicle, viewSetup, m_bCalcViewForceDrawPlayer );
     }
     // NVNT update fov on the haptics dll for input scaling.
 #if defined( CLIENT_DLL )
     if ( IsLocalPlayer() && haptics )
-        haptics->UpdatePlayerFOV( fov );
+        haptics->UpdatePlayerFOV( viewSetup.fov );
+#endif
+
+#ifdef CLIENT_DLL
+    if ( m_bCalcViewForceDrawPlayer && bOldForceDrawLocalPlayer != m_bCalcViewForceDrawPlayer )
+    {
+        ThirdPersonSwitch( m_bCalcViewForceDrawPlayer );
+    }
 #endif
 }
 
@@ -1659,7 +1665,94 @@ void CBasePlayer::CalcViewModelView( const Vector &eyeOrigin,
     }
 }
 
-void CBasePlayer::CalcPlayerView( Vector &eyeOrigin, QAngle &eyeAngles, float &fov )
+#ifdef LUA_SDK
+void PopCalcViewFromLuaTable( lua_State *L, CViewSetup &viewSetup, bool &bForceDrawLocalPlayer )
+{
+    if ( lua_istable( L, -1 ) )
+    {
+        lua_getfield( L, -1, "origin" );
+        if ( lua_isvector( L, -1 ) )
+        {
+            viewSetup.origin = lua_tovector( L, -1 );
+        }
+        lua_pop( L, 1 );  // pop origin
+
+        lua_getfield( L, -1, "angles" );
+        if ( lua_isangle( L, -1 ) )
+        {
+            viewSetup.angles = lua_toangle( L, -1 );
+        }
+        lua_pop( L, 1 );  // pop angles
+
+        lua_getfield( L, -1, "fov" );
+        if ( lua_isnumber( L, -1 ) )
+        {
+            viewSetup.fov = lua_tonumber( L, -1 );
+        }
+        lua_pop( L, 1 );  // pop fov
+
+        lua_getfield( L, -1, "znear" );
+        if ( lua_isnumber( L, -1 ) )
+        {
+            viewSetup.zNear = lua_tonumber( L, -1 );
+        }
+        lua_pop( L, 1 );  // pop znear
+
+        lua_getfield( L, -1, "zfar" );
+        if ( lua_isnumber( L, -1 ) )
+        {
+            viewSetup.zFar = lua_tonumber( L, -1 );
+        }
+        lua_pop( L, 1 );  // pop zfar
+
+        lua_getfield( L, -1, "drawviewer" );
+        if ( lua_isboolean( L, -1 ) )
+        {
+            bForceDrawLocalPlayer = lua_toboolean( L, -1 );
+        }
+        lua_pop( L, 1 );  // pop drawviewer
+
+        lua_getfield( L, -1, "ortho" );  // table with left, right, top, bottom
+        if ( lua_istable( L, -1 ) )
+        {
+            viewSetup.m_bOrtho = true;
+
+            lua_getfield( L, -1, "left" );
+            if ( lua_isnumber( L, -1 ) )
+            {
+                viewSetup.m_OrthoLeft = lua_tonumber( L, -1 );
+            }
+            lua_pop( L, 1 );  // pop left
+
+            lua_getfield( L, -1, "right" );
+            if ( lua_isnumber( L, -1 ) )
+            {
+                viewSetup.m_OrthoRight = lua_tonumber( L, -1 );
+            }
+            lua_pop( L, 1 );  // pop right
+
+            lua_getfield( L, -1, "top" );
+            if ( lua_isnumber( L, -1 ) )
+            {
+                viewSetup.m_OrthoTop = lua_tonumber( L, -1 );
+            }
+            lua_pop( L, 1 );  // pop top
+
+            lua_getfield( L, -1, "bottom" );
+            if ( lua_isnumber( L, -1 ) )
+            {
+                viewSetup.m_OrthoBottom = lua_tonumber( L, -1 );
+            }
+            lua_pop( L, 1 );  // pop bottom
+        }
+        lua_pop( L, 1 );  // pop ortho
+    }
+
+    lua_pop( L, 1 );  // pop return value
+}
+#endif
+
+void CBasePlayer::CalcPlayerView( CViewSetup &viewSetup, bool &bForceDrawLocalPlayer )
 {
 #if defined( CLIENT_DLL )
     if ( !prediction->InPrediction() )
@@ -1669,7 +1762,7 @@ void CBasePlayer::CalcPlayerView( Vector &eyeOrigin, QAngle &eyeAngles, float &f
     }
 #endif
 
-    VectorCopy( EyePosition(), eyeOrigin );
+    VectorCopy( EyePosition(), viewSetup.origin );
 #ifdef SIXENSE
     if ( g_pSixenseInput->IsEnabled() )
     {
@@ -1680,30 +1773,30 @@ void CBasePlayer::CalcPlayerView( Vector &eyeOrigin, QAngle &eyeAngles, float &f
         VectorCopy( EyeAngles(), eyeAngles );
     }
 #else
-    VectorCopy( EyeAngles(), eyeAngles );
+    VectorCopy( EyeAngles(), viewSetup.angles );
 #endif
 
 #if defined( CLIENT_DLL )
     if ( !prediction->InPrediction() )
 #endif
     {
-        SmoothViewOnStairs( eyeOrigin );
+        SmoothViewOnStairs( viewSetup.origin );
     }
 
     // Snack off the origin before bob + water offset are applied
-    Vector vecBaseEyePosition = eyeOrigin;
+    Vector vecBaseEyePosition = viewSetup.origin;
 
-    CalcViewRoll( eyeAngles );
+    CalcViewRoll( viewSetup.angles );
 
     // Apply punch angle
-    VectorAdd( eyeAngles, m_Local.m_vecPunchAngle, eyeAngles );
+    VectorAdd( viewSetup.angles, m_Local.m_vecPunchAngle, viewSetup.angles );
 
 #if defined( CLIENT_DLL )
     if ( !prediction->InPrediction() )
     {
         // Shake it up baby!
         vieweffects->CalcShake();
-        vieweffects->ApplyShake( eyeOrigin, eyeAngles, 1.0 );
+        vieweffects->ApplyShake( viewSetup.origin, viewSetup.angles, 1.0 );
     }
 #endif
 
@@ -1711,29 +1804,24 @@ void CBasePlayer::CalcPlayerView( Vector &eyeOrigin, QAngle &eyeAngles, float &f
     // Apply a smoothing offset to smooth out prediction errors.
     Vector vSmoothOffset;
     GetPredictionErrorSmoothingVector( vSmoothOffset );
-    eyeOrigin += vSmoothOffset;
+    viewSetup.origin += vSmoothOffset;
     m_flObserverChaseDistance = 0.0;
 #endif
 
     // calc current FOV
-    fov = GetFOV();
+    viewSetup.fov = GetFOV();
 
 #ifdef LUA_SDK
-    BEGIN_LUA_CALL_HOOK( "CalcPlayerView" );
+    BEGIN_LUA_CALL_HOOK( "CalcView" );
     CBaseEntity::PushLuaInstanceSafe( L, this );
-    lua_pushvector( L, eyeOrigin );
-    lua_pushangle( L, eyeAngles );
-    lua_pushnumber( L, fov );
-    END_LUA_CALL_HOOK( 4, 3 );
+    lua_pushvector( L, viewSetup.origin );
+    lua_pushangle( L, viewSetup.angles );
+    lua_pushnumber( L, viewSetup.fov );
+    lua_pushnumber( L, viewSetup.zNear );
+    lua_pushnumber( L, viewSetup.zFar );
+    END_LUA_CALL_HOOK( 6, 1 );
 
-    if ( lua_isuserdata( L, -3 ) && luaL_checkudata( L, -3, LUA_VECTORLIBNAME ) )
-        VectorCopy( luaL_checkvector( L, -3 ), eyeOrigin );
-    if ( lua_isuserdata( L, -2 ) && luaL_checkudata( L, -2, LUA_QANGLELIBNAME ) )
-        VectorCopy( luaL_checkangle( L, -2 ), eyeAngles );
-    if ( lua_isnumber( L, -1 ) )
-        fov = luaL_checknumber( L, -1 );
-
-    lua_pop( L, 3 );
+    PopCalcViewFromLuaTable( L, viewSetup, bForceDrawLocalPlayer );
 #endif
 }
 
@@ -1746,78 +1834,61 @@ void CBasePlayer::CalcVehicleView(
 #else
     IServerVehicle *pVehicle,
 #endif
-    Vector &eyeOrigin,
-    QAngle &eyeAngles,
-    float &zNear,
-    float &zFar,
-    float &fov )
+    CViewSetup &viewSetup,
+    bool &bForceDrawLocalPlayer )
 {
     Assert( pVehicle );
 
     // Start with our base origin and angles
     CacheVehicleView();
-    eyeOrigin = m_vecVehicleViewOrigin;
-    eyeAngles = m_vecVehicleViewAngles;
+    viewSetup.origin = m_vecVehicleViewOrigin;
+    viewSetup.angles = m_vecVehicleViewAngles;
 
 #if defined( CLIENT_DLL )
 
-    fov = GetFOV();
+    viewSetup.fov = GetFOV();
 
     // Allows the vehicle to change the clip planes
-    pVehicle->GetVehicleClipPlanes( zNear, zFar );
+    pVehicle->GetVehicleClipPlanes( viewSetup.zNear, viewSetup.zFar );
 #endif
 
     // Snack off the origin before bob + water offset are applied
-    Vector vecBaseEyePosition = eyeOrigin;
+    Vector vecBaseEyePosition = viewSetup.origin;
 
-    CalcViewRoll( eyeAngles );
+    CalcViewRoll( viewSetup.angles );
 
     // Apply punch angle
-    VectorAdd( eyeAngles, m_Local.m_vecPunchAngle, eyeAngles );
+    VectorAdd( viewSetup.angles, m_Local.m_vecPunchAngle, viewSetup.angles );
 
 #if defined( CLIENT_DLL )
     if ( !prediction->InPrediction() )
     {
         // Shake it up baby!
         vieweffects->CalcShake();
-        vieweffects->ApplyShake( eyeOrigin, eyeAngles, 1.0 );
+        vieweffects->ApplyShake( viewSetup.origin, viewSetup.angles, 1.0 );
     }
 #endif
-}
 
-void CBasePlayer::CalcObserverView( Vector &eyeOrigin, QAngle &eyeAngles, float &fov )
-{
-#if defined( CLIENT_DLL )
-    switch ( GetObserverMode() )
-    {
-        case OBS_MODE_DEATHCAM:
-            CalcDeathCamView( eyeOrigin, eyeAngles, fov );
-            break;
+#ifdef LUA_SDK
+    BEGIN_LUA_CALL_HOOK( "CalcVehicleView" );
+    CBaseEntity::PushLuaInstanceSafe( L, pVehicle->GetVehicleEnt() );
+    CBaseEntity::PushLuaInstanceSafe( L, this );
 
-        case OBS_MODE_ROAMING:  // just copy current position without view
-                                // offset
-        case OBS_MODE_FIXED:
-            CalcRoamingView( eyeOrigin, eyeAngles, fov );
-            break;
+    // In contrast to CalcView, CalcVehicleView provides the viewSetup as a table instead of individual arguments.
+    lua_newtable( L );
+    lua_pushvector( L, viewSetup.origin );
+    lua_setfield( L, -2, "origin" );
+    lua_pushangle( L, viewSetup.angles );
+    lua_setfield( L, -2, "angles" );
+    lua_pushnumber( L, viewSetup.fov );
+    lua_setfield( L, -2, "fov" );
+    lua_pushnumber( L, viewSetup.zNear );
+    lua_setfield( L, -2, "znear" );
+    lua_pushnumber( L, viewSetup.zFar );
+    lua_setfield( L, -2, "zfar" );
+    END_LUA_CALL_HOOK( 3, 1 );
 
-        case OBS_MODE_IN_EYE:
-            CalcInEyeCamView( eyeOrigin, eyeAngles, fov );
-            break;
-
-        case OBS_MODE_POI:  // PASSTIME
-        case OBS_MODE_CHASE:
-            CalcChaseCamView( eyeOrigin, eyeAngles, fov );
-            break;
-
-        case OBS_MODE_FREEZECAM:
-            CalcFreezeCamView( eyeOrigin, eyeAngles, fov );
-            break;
-    }
-#else
-    // on server just copy target postions, final view positions will be
-    // calculated on client
-    VectorCopy( EyePosition(), eyeOrigin );
-    VectorCopy( EyeAngles(), eyeAngles );
+    PopCalcViewFromLuaTable( L, viewSetup, bForceDrawLocalPlayer );
 #endif
 }
 

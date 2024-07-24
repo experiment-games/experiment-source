@@ -1,5 +1,5 @@
--- lua_dofile_menu utilities/test/panel_docking.lua
--- or: lua_dofile_cl utilities/test/panel_docking.lua
+-- lua_openscript_menu utilities/test/panel_docking.lua
+-- or: lua_openscript_cl utilities/test/panel_docking.lua
 
 Include("includes/extensions/panel.lua")
 

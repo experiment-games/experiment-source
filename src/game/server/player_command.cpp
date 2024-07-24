@@ -67,7 +67,14 @@ void CPlayerMove::StartCommand( CBasePlayer *player, CUserCmd *cmd )
             }
         }
     }
+#endif
 
+#ifdef LUA_SDK
+    BEGIN_LUA_CALL_HOOK( "StartCommand" );
+    CBaseEntity::PushLuaInstanceSafe( L, player );
+    // lua_pushusercommand( L, ucmd ); // TODO
+    lua_pushnil( L );
+    END_LUA_CALL_HOOK( 2, 0 );
 #endif
 }
 
