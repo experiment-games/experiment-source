@@ -1430,7 +1430,7 @@ static int Panel___newindex( lua_State *L )
     {
         LUA_GET_REF_TABLE( L, plPanel );
         lua_pushvalue( L, 3 );
-        lua_setfield( L, -2, luaL_checkstring( L, 2 ) );
+        lua_setfield( L, -2, field );
         lua_pop( L, 1 );
     }
 

@@ -908,8 +908,10 @@ static int CBaseAnimating___index( lua_State *L )
         LUA_METATABLE_INDEX_CHECK_TABLE( L );
     }
 
-    luaL_getmetatable( L, LUA_BASEENTITYLIBNAME );
+    luaL_getmetatable( L, LUA_BASEANIMATINGLIBNAME );
     LUA_METATABLE_INDEX_CHECK_TABLE( L );
+
+    LUA_METATABLE_INDEX_DERIVE_INDEX( L, LUA_BASEENTITYLIBNAME );
 
     lua_pushnil( L );
     return 1;

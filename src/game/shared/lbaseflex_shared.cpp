@@ -124,11 +124,10 @@ static int CBaseFlex___index( lua_State *L )
         LUA_METATABLE_INDEX_CHECK_TABLE( L );
     }
 
-    luaL_getmetatable( L, LUA_BASEANIMATINGLIBNAME );
+    luaL_getmetatable( L, LUA_CBASEFLEXLIBNAME );
     LUA_METATABLE_INDEX_CHECK_TABLE( L );
 
-    luaL_getmetatable( L, LUA_BASEENTITYLIBNAME );
-    LUA_METATABLE_INDEX_CHECK_TABLE( L );
+    LUA_METATABLE_INDEX_DERIVE_INDEX( L, LUA_BASEANIMATINGLIBNAME );
 
     lua_pushnil( L );
     return 1;

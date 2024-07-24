@@ -106,11 +106,6 @@ static int CHL2MP_Player___index( lua_State *L )
     CHL2MP_Player *pPlayer = lua_tohl2mpplayer( L, 1 );
 
     LUA_METATABLE_INDEX_CHECK_VALID( L, CBaseEntity_IsValid );
-    if ( !pPlayer )
-    {
-        // dump the metatable
-        luasrc_dumpstack( L );
-    }
     LUA_METATABLE_INDEX_CHECK( L, pPlayer );
 
     LUA_METATABLE_INDEX_CHECK_REF_TABLE( L, pPlayer );
@@ -120,17 +115,10 @@ static int CHL2MP_Player___index( lua_State *L )
         LUA_METATABLE_INDEX_CHECK_TABLE( L );
     }
 
-    luaL_getmetatable( L, LUA_BASEPLAYERLIBNAME );
+    luaL_getmetatable( L, LUA_HL2MPPLAYERLIBNAME );
     LUA_METATABLE_INDEX_CHECK_TABLE( L );
 
-    luaL_getmetatable( L, LUA_CBASEFLEXLIBNAME );
-    LUA_METATABLE_INDEX_CHECK_TABLE( L );
-
-    luaL_getmetatable( L, LUA_BASEANIMATINGLIBNAME );
-    LUA_METATABLE_INDEX_CHECK_TABLE( L );
-
-    luaL_getmetatable( L, LUA_BASEENTITYLIBNAME );
-    LUA_METATABLE_INDEX_CHECK_TABLE( L );
+    LUA_METATABLE_INDEX_DERIVE_INDEX( L, LUA_BASEPLAYERLIBNAME );
 
     lua_pushnil( L );
     return 1;

@@ -2048,6 +2048,9 @@ static int CBaseEntity___index( lua_State *L )
             LUA_METATABLE_INDEX_CHECK_TABLE( L );
         }
 
+        luaL_getmetatable( L, LUA_BASEENTITYLIBNAME );
+        LUA_METATABLE_INDEX_CHECK_TABLE( L );
+
         lua_pushnil( L );
     }
 

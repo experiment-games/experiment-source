@@ -963,14 +963,10 @@ static int CBasePlayer___index( lua_State *L )
             LUA_METATABLE_INDEX_CHECK_TABLE( L );
         }
 
-        luaL_getmetatable( L, LUA_CBASEFLEXLIBNAME );
+        luaL_getmetatable( L, LUA_BASEPLAYERLIBNAME );
         LUA_METATABLE_INDEX_CHECK_TABLE( L );
 
-        luaL_getmetatable( L, LUA_BASEANIMATINGLIBNAME );
-        LUA_METATABLE_INDEX_CHECK_TABLE( L );
-
-        luaL_getmetatable( L, LUA_BASEENTITYLIBNAME );
-        LUA_METATABLE_INDEX_CHECK_TABLE( L );
+        LUA_METATABLE_INDEX_DERIVE_INDEX( L, LUA_CBASEFLEXLIBNAME );
 
         lua_pushnil( L );
     }
