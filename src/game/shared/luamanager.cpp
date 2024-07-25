@@ -59,7 +59,7 @@ void LuaLogToFile( const char *format, ... )
 
     va_start( argp, format );
     Q_vsnprintf( msg, sizeof( msg ), format, argp );
-    va_end(argp);
+    va_end( argp );
 
 #ifdef CLIENT_DLL
     if ( lua_log_cl.GetBool() )
@@ -147,7 +147,7 @@ LUA_API int luasrc_print( lua_State *L )
                 LUA_QL( "tostring" ) " must return a string to " LUA_QL( "print" ) );
         if ( i > 1 )
             Msg( "\t" );
-        Msg( "%s", s ); // By providing the string as second parameter, we prevent formatting from user input
+        Msg( "%s", s );  // By providing the string as second parameter, we prevent formatting from user input
         lua_pop( L, 1 ); /* pop result */
     }
     Msg( "\n" );
@@ -304,7 +304,12 @@ static int luasrc_InheritGamemode( lua_State *L )
     lua_getglobal( L, "GM" );
     lua_pushstring( L, baseGamemodeName );
     lua_setfield( L, -2, "InheritsFrom" );
-    lua_pop( L, 1 );  // Pop the GM table
+
+    // Leave the GM table on the stack so it isn't lost while we load this derived gamemode
+    luasrc_LoadGamemode( baseGamemodeName );  // Overwrites the GM global table
+
+    // Now that the base gamemode has loaded, restore the GM table we left on the stack as GM
+    lua_setglobal( L, "GM" );
 
     return 0;
 }
@@ -1934,22 +1939,8 @@ bool luasrc_LoadGamemode( const char *gamemode )
     lua_pushvalue( L, -2 );
     lua_remove( L, -3 );  // Remove the GM table that was below the Register function
 
-    // If InheritGamemode has been called through the loaded scripts above,
-    // the GM.InheritsFrom field will be set. Lets get it from the GM table
-    // and load the base gamemode if it exists.
+    // Get GM.InheritsFrom for the registration
     lua_getfield( L, -1, "InheritsFrom" );
-    const char *baseGamemodeName;
-
-    if ( lua_isstring( L, -1 ) )
-    {
-        baseGamemodeName = lua_tostring( L, -1 );
-
-        luasrc_LoadGamemode( baseGamemodeName );  // Overwrites the GM global table
-    }
-    else
-    {
-        baseGamemodeName = LUA_BASE_GAMEMODE;
-    }
 
     // (gamemodes.)Register and the original GM table are on the stack
     // Call gamemodes.Register(gamemodeTable, gamemodeName, baseGameMode)
@@ -1993,7 +1984,7 @@ bool luasrc_SetGamemode( const char *gamemode )
 
     lua_remove( L, -2 );             // Remove gamemode table
     lua_pushstring( L, gamemode );   // Push gamemode name
-    luasrc_pcall( L, 1, 1 );      // Call gamemodes.Get(gamemode)
+    luasrc_pcall( L, 1, 1 );         // Call gamemodes.Get(gamemode)
     lua_setglobal( L, "GAMEMODE" );  // Set GAMEMODE to the active gamemode table
 
     lua_getglobal( L, LUA_GAMEMODESLIBNAME );
@@ -2009,7 +2000,7 @@ bool luasrc_SetGamemode( const char *gamemode )
 
     lua_remove( L, -2 );            // Remove gamemode table
     lua_pushstring( L, gamemode );  // Push gamemode name
-    luasrc_pcall( L, 1, 0 );     // Call gamemodes.InternalSetActiveName(gamemode)
+    luasrc_pcall( L, 1, 0 );        // Call gamemodes.InternalSetActiveName(gamemode)
 
 #ifdef CLIENT_DLL
     const char *gamePath = engine->GetGameDirectory();

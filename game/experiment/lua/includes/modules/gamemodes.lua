@@ -5,7 +5,7 @@
 	Modified for Experiment.
 --]]
 
-_BASE_GAMEMODE = "base"
+_BASE_GAMEMODE = "super"
 
 local hooks = require("hooks")
 local debugTraceback = debug.traceback

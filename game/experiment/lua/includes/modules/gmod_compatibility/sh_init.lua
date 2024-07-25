@@ -1035,7 +1035,7 @@ require("gmod_compatibility/modules/drive")
 
 function baseclassGetCompatibility(name)
 	if (name:sub(1, 9) == "gamemode_") then
-		name = name:sub(10)
+        name = name:sub(10)
 
 		return Gamemodes.Get(name)
 	end

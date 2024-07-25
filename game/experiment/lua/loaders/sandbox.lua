@@ -1,63 +1,25 @@
---[[
-	If Experiment finds a file named {gamemodename}.lua in a the lua/loaders
-	directory, it will load it before any file in the gamemode.
-
-	This file must return a table containing the following possible methods:
-
-	- PreProcessFile( string fileContent, string filePath ) : string
-		This method is called before the file is loaded. It receives the file's
-		path and content as arguments and must return the content as a string.
-
-		You can use this to replace or modify the content of the file before it
-		is loaded into the final Lua environment.
-
-	Currently no other methods are supported.
-
-	The loader environment only gets the following libraries and functions loaded:
-
-		- Base Lua Functions: error, ipairs, next, pairs, print, select, tonumber,
-			tostring, type
-		- Lua Libraries with their functions:
-			- table
-			- string
-			- utf8
-			- math
-		- Globals: _G, _VERSION
-
-	Finally this file is always sent to the client, this is so that the client
-	can also load the files with the same modifications as the server.
---]]
+local baseLoader = Include("base.lua") -- Garry's Mod compatibility.
 
 return {
 	--- @param fileContent string
 	--- @param filePath string
 	--- @return string
     PreProcessFile = function(fileContent, filePath)
-		-- Replace DEFINE_BASECLASS with local BaseClass = baseclass
-		fileContent = fileContent:gsub("DEFINE_BASECLASS", "local BaseClass = baseclassGetCompatibility")
+        fileContent = baseLoader.PreProcessFile(fileContent, filePath)
 
         if (not filePath:match("gamemode[/\\]cl_init%.lua$") and not filePath:match("gamemode[/\\]init%.lua$")) then
             return fileContent
         end
 
-        -- Split the paths at \ or / and get the last part
-        local parts = {}
+        -- Derive from "base" instead of "super" (unless this is the "base" gamemode)
+        local isBaseGamemode = filePath:match("[/\\]base[/\\]gamemode[/\\]cl_init%.lua$")
+			or filePath:match("[/\\]base[/\\]gamemode[/\\]init%.lua$")
 
-        for part in filePath:gmatch("([^/\\]+)[/\\]") do
-            table.insert(parts, part)
-        end
+		if (isBaseGamemode) then
+			return fileContent
+		end
 
-        -- Folder where gamemode folder (which contains cl_init.lua and init.lua) is located
-        local rootFolder = ""
-
-		-- -1 tp not get the last part (cl_init.lua or init.lua) nor the gamemode/ folder
-        for i = 1, #parts - 1 do
-            rootFolder = rootFolder .. parts[i] .. "/"
-        end
-
-		-- Load the gmod_compatibility module to make Garry's Mod code compatible with Experiment
-		return "require(\"gmod_compatibility\")\n\n" -- Add the gmod_compatibility module
-            .. fileContent
-			.. "\nEntities.LoadFromDirectory( \""..rootFolder.."entities/entities\" ) Weapons.LoadFromDirectory( \""..rootFolder.."entities/weapons\" )\n" -- Load entities and weapons
-	end,
+        return "InheritGamemode(\"base\")\n\n"
+			.. fileContent
+	end
 }
