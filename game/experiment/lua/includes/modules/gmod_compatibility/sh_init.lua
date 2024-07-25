@@ -402,6 +402,12 @@ function ENTITY_META:SetNoDraw(bBool)
     end
 end
 
+function ENTITY_META:IsOnGround()
+    return self:GetFlags() & FL_ONGROUND ~= 0
+end
+
+ENTITY_META.OnGround = ENTITY_META.IsOnGround
+
 local PLAYER_META = FindMetaTable("Player")
 PLAYER_META.GetShootPos = ENTITY_META.GetEyePosition
 PLAYER_META.AccountID = PLAYER_META.GetAccountID
@@ -416,7 +422,11 @@ function PLAYER_META:GetInfo(consoleVariableName)
 end
 
 function PLAYER_META:GetInfoNum(consoleVariableName, default)
-	return engine.GetClientConVarValueAsNumber(self, consoleVariableName) or default
+    return engine.GetClientConVarValueAsNumber(self, consoleVariableName) or default
+end
+
+function PLAYER_META:IsDrivingEntity()
+	return false -- TODO: implement this
 end
 
 -- TODO: Implement these correctly (I'm not sure what they do atm)
@@ -440,6 +450,13 @@ if (SERVER) then
         net.WriteString(lua)
         net.Send(self)
     end
+
+    PLAYER_META.Spectate = PLAYER_META.SetObserverMode
+	PLAYER_META.SpectateEntity = PLAYER_META.SetObserverTarget
+
+	function PLAYER_META:UnSpectate()
+		self:SetObserverMode(OBS_MODE_NONE)
+	end
 else
 	net.Receive("__PlayerLuaRun", function()
 		local lua = net.ReadString()

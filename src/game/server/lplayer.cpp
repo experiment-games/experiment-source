@@ -596,6 +596,24 @@ static int CBasePlayer_RemoveSuit( lua_State *L )
     return 0;
 }
 
+static int CBasePlayer_ChangeTeam( lua_State *L )
+{
+    luaL_checkplayer( L, 1 )->ChangeTeam( luaL_checkinteger( L, 2 ) );
+    return 0;
+}
+
+static int CBasePlayer_SetObserverMode( lua_State *L )
+{
+    luaL_checkplayer( L, 1 )->ForceObserverMode( luaL_checkinteger( L, 2 ) );
+    return 0;
+}
+
+static int CBasePlayer_SetObserverTarget( lua_State *L )
+{
+    luaL_checkplayer( L, 1 )->SetObserverTarget( luaL_checkentity( L, 2 ) );
+    return 0;
+}
+
 static const luaL_Reg CBasePlayermeta[] = {
     { "GiveAmmo", CBasePlayer_GiveAmmo },
     { "SetBodyPitch", CBasePlayer_SetBodyPitch },
@@ -691,6 +709,9 @@ static const luaL_Reg CBasePlayermeta[] = {
     { "CheckTrainUpdate", CBasePlayer_CheckTrainUpdate },
     { "EquipSuit", CBasePlayer_EquipSuit },
     { "RemoveSuit", CBasePlayer_RemoveSuit },
+    { "SetTeam", CBasePlayer_ChangeTeam },
+    { "SetObserverMode", CBasePlayer_SetObserverMode },
+    { "SetObserverTarget", CBasePlayer_SetObserverTarget },
     { NULL, NULL } };
 
 /*
