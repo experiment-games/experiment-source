@@ -196,4 +196,7 @@ void ScreenToWorld( int mousex,
                     int nScreenWidth = -1,
                     int nScreenHeight = -1 );
 
+Vector ScreenToWorld( int mousex,
+                      int mousey );
+
 #endif  // VGUI_IINPUT_H

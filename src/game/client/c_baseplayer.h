@@ -261,6 +261,7 @@ class C_BasePlayer : public C_BaseCombatCharacter, public CGameEventListener
     static bool ShouldDrawLocalPlayer();
     static C_BasePlayer *GetLocalPlayer( void );
     int GetUserID( void );
+    C_BaseEntity *GetVehicleEntity( void );
     virtual bool CanSetSoundMixer( void );
     virtual int GetVisionFilterFlags( bool bWeaponsCheck = false )
     {

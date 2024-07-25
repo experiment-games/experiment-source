@@ -382,6 +382,8 @@ ENTITY_META.LocalToWorld = ENTITY_META.EntityToWorldSpace
 ENTITY_META.SkinCount = ENTITY_META.GetSkinCount
 ENTITY_META.Alive = ENTITY_META.IsAlive
 ENTITY_META.Widget = false
+ENTITY_META.AddFlags = ENTITY_META.AddFlag
+ENTITY_META.RemoveFlags = ENTITY_META.RemoveFlag
 
 function ENTITY_META:SetSpawnEffect(effect)
     -- TODO: Implement
@@ -407,6 +409,7 @@ PLAYER_META.SteamID = PLAYER_META.GetSteamID
 PLAYER_META.SteamID64 = PLAYER_META.GetSteamID64
 PLAYER_META.UniqueID = PLAYER_META.GetUniqueID
 PLAYER_META.InVehicle = PLAYER_META.IsInAVehicle
+PLAYER_META.GetVehicle = PLAYER_META.GetVehicleEntity
 
 function PLAYER_META:GetInfo(consoleVariableName)
 	return engine.GetClientConVarValue(self, consoleVariableName)
@@ -589,7 +592,8 @@ else
 	end
 
 	input.SetCursorPos = input.SetCursorPosition
-	input.GetCursorPos = input.GetCursorPosition
+    input.GetCursorPos = input.GetCursorPosition
+	input.IsButtonDown = input.IsKeyDown
 
 	function input.IsShiftDown()
 		return input.IsKeyDown(KEY_LSHIFT) or input.IsKeyDown(KEY_RSHIFT)
@@ -683,14 +687,6 @@ else
 		end
 
 		return parent
-	end
-
-    function PANEL_META:SetWorldClicker(isEnabled)
-        self.__isWorldClicker = isEnabled
-    end
-
-	function PANEL_META:IsWorldClicker()
-		return self.__isWorldClicker
 	end
 
 	-- Change casing and add functionality to pass individual color components.
@@ -1019,8 +1015,8 @@ require("gmod_compatibility/modules/team")
 require("gmod_compatibility/modules/undo")
 require("gmod_compatibility/modules/cleanup")
 require("gmod_compatibility/modules/duplicator")
--- require("gmod_compatibility/modules/constraint")
--- require("gmod_compatibility/modules/construct")
+require("gmod_compatibility/modules/constraint")
+require("gmod_compatibility/modules/construct")
 -- require("gmod_compatibility/modules/usermessage") -- We have our own usermessage library.
 require("gmod_compatibility/modules/list")
 require("gmod_compatibility/modules/cvars")
@@ -1104,17 +1100,39 @@ if (CLIENT) then
 				file.Write("settings/gmod_compatibility_content/spawnlist/" .. filename, data.contents)
 			end
 		end,
-	}
+    }
+
+    function LoadPresets()
+		local loadedPresets = {}
+        local _, directories = file.Find("settings/gmod_compatibility_content/presets/*", "GAME")
+
+		for _, directory in ipairs(directories) do
+			local presetFiles = file.Find("settings/gmod_compatibility_content/presets/" .. directory .. "/*.txt", "GAME")
+
+            loadedPresets[directory] = {}
+
+			for _, presetFileName in ipairs(presetFiles) do
+				local presetKeyValues = KeyValues(presetFileName)
+				presetKeyValues:LoadFromFile("settings/gmod_compatibility_content/presets/" .. directory .. "/" .. presetFileName,
+					"GAME")
+				local preset = presetKeyValues:ToTable()
+
+				loadedPresets[directory][presetKeyValues:GetName()] = preset
+			end
+		end
+
+		return loadedPresets
+	end
 
 	-- Client-side modules.
 	require("gmod_compatibility/modules/draw")
-	-- require("gmod_compatibility/modules/markup") -- Not implemented atm.
+	require("gmod_compatibility/modules/markup")
 	require("gmod_compatibility/modules/effects")
 	require("gmod_compatibility/modules/halo")
 	require("gmod_compatibility/modules/killicon")
 	require("gmod_compatibility/modules/spawnmenu")
 	require("gmod_compatibility/modules/controlpanel")
-	-- require("gmod_compatibility/modules/presets") -- Not implemented atm.
+	require("gmod_compatibility/modules/presets")
 	require("gmod_compatibility/modules/menubar")
 	require("gmod_compatibility/modules/matproxy")
 

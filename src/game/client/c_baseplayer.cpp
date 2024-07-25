@@ -2157,6 +2157,11 @@ int C_BasePlayer::GetUserID( void )
     return pi.userID;
 }
 
+C_BaseEntity *C_BasePlayer::GetVehicleEntity( void )
+{
+    return m_hVehicle.Get();
+}
+
 // For weapon prediction
 void C_BasePlayer::SetAnimation( PLAYER_ANIM playerAnim )
 {

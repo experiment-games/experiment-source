@@ -361,6 +361,19 @@ void ScreenToWorld( int mousex,
     VectorNormalize( vecPickingRay );
 }
 
+Vector ScreenToWorld( int mousex,
+                      int mousey )
+{
+    CBasePlayer *pPlayer = CBasePlayer::GetLocalPlayer();
+    float fov = pPlayer->GetFOV();
+    QAngle vecRenderAngles = pPlayer->GetRenderAngles();
+
+    Vector vecPickingRay;
+    ScreenToWorld( mousex, mousey, fov, vecRenderAngles, vecPickingRay );
+
+    return vecPickingRay;
+}
+
 //-----------------------------------------------------------------------------
 // Purpose: Deal with input
 //-----------------------------------------------------------------------------

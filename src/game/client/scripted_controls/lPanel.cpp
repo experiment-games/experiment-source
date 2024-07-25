@@ -768,6 +768,12 @@ static int Panel_IsWithinTraverse( lua_State *L )
     return 1;
 }
 
+static int Panel_IsWorldClicker( lua_State *L )
+{
+    lua_pushboolean( L, luaL_checkpanel( L, 1 )->IsWorldClicker() );
+    return 1;
+}
+
 static int Panel_KB_AddBoundKey( lua_State *L )
 {
     luaL_checkpanel( L, 1 )->KB_AddBoundKey(
@@ -1328,6 +1334,12 @@ static int Panel_SetWide( lua_State *L )
     return 0;
 }
 
+static int Panel_SetWorldClicker( lua_State *L )
+{
+    luaL_checkpanel( L, 1 )->SetWorldClicker( luaL_checkboolean( L, 2 ) );
+    return 0;
+}
+
 static int Panel_SetZPos( lua_State *L )
 {
     luaL_checkpanel( L, 1 )->SetZPos( luaL_checknumber( L, 2 ) );
@@ -1582,6 +1594,7 @@ static const luaL_Reg Panelmeta[] = {
     { "IsVisible", Panel_IsVisible },
     { "IsWithin", Panel_IsWithin },
     { "IsWithinTraverse", Panel_IsWithinTraverse },
+    { "IsWorldClicker", Panel_IsWorldClicker },
     { "KB_AddBoundKey", Panel_KB_AddBoundKey },
     { "KB_ChainToMap", Panel_KB_ChainToMap },
     { "KeyCodeToString", Panel_KeyCodeToString },
@@ -1670,6 +1683,7 @@ static const luaL_Reg Panelmeta[] = {
     { "SetTriplePressAllowed", Panel_SetTriplePressAllowed },
     { "SetVisible", Panel_SetVisible },
     { "SetWide", Panel_SetWide },
+    { "SetWorldClicker", Panel_SetWorldClicker },
     { "SetZPos", Panel_SetZPos },
     { "SizeToChildren", Panel_SizeToChildren },
     { "ShouldHandleInputMessage", Panel_ShouldHandleInputMessage },

@@ -539,12 +539,6 @@ static int CBasePlayer_OnVehicleStart( lua_State *L )
     return 0;
 }
 
-static int CBasePlayer_GetVehicleEntity( lua_State *L )
-{
-    CBaseEntity::PushLuaInstanceSafe( L, luaL_checkplayer( L, 1 )->GetVehicleEntity() );
-    return 1;
-}
-
 static int CBasePlayer_BumpWeapon( lua_State *L )
 {
     lua_pushboolean( L,
@@ -688,7 +682,6 @@ static const luaL_Reg CBasePlayermeta[] = {
     { "GetVehicleAnalogControlBias", CBasePlayer_GetVehicleAnalogControlBias },
     { "SetVehicleAnalogControlBias", CBasePlayer_SetVehicleAnalogControlBias },
     { "OnVehicleStart", CBasePlayer_OnVehicleStart },
-    { "GetVehicleEntity", CBasePlayer_GetVehicleEntity },
     { "BumpWeapon", CBasePlayer_BumpWeapon },
     { "RemovePlayerItem", CBasePlayer_RemovePlayerItem },
     { "HasNamedPlayerItem", CBasePlayer_HasNamedPlayerItem },

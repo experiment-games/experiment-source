@@ -239,6 +239,7 @@ class Panel : public IClientPanel, virtual IForceVirtualInheritancePanel
     Size m_InnerBounds;
     Dock::Type m_DockStyle = Dock::None;
     CUtlDict< int, int > m_PreparedFunctions;
+    bool m_bIsWorldClicker = false;
 
    public:
     lua_State *m_lua_State = nullptr;
@@ -360,6 +361,16 @@ class Panel : public IClientPanel, virtual IForceVirtualInheritancePanel
             return m_PreparedFunctions.Find( functionName ) != m_PreparedFunctions.InvalidIndex();
         }
         return true;
+    }
+
+    virtual void SetWorldClicker( bool state )
+    {
+        m_bIsWorldClicker = state;
+    }
+
+    virtual bool IsWorldClicker()
+    {
+        return m_bIsWorldClicker;
     }
 
     virtual void Prepare();

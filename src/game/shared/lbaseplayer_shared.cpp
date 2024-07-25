@@ -415,6 +415,12 @@ static int CBasePlayer_GetUserID( lua_State *L )
     return 1;
 }
 
+static int CBasePlayer_GetVehicleEntity( lua_State *L )
+{
+    CBaseEntity::PushLuaInstanceSafe( L, luaL_checkplayer( L, 1 )->GetVehicleEntity() );
+    return 1;
+}
+
 static int CBasePlayer_GetViewEntity( lua_State *L )
 {
 #ifdef CLIENT_DLL
@@ -1119,6 +1125,7 @@ static const luaL_Reg CBasePlayermeta[] = {
     { "GetTracerType", CBasePlayer_GetTracerType },
     { "GetUseEntity", CBasePlayer_GetUseEntity },
     { "GetUserID", CBasePlayer_GetUserID },
+    { "GetVehicleEntity", CBasePlayer_GetVehicleEntity },
     { "GetViewEntity", CBasePlayer_GetViewEntity },
     { "GetViewModel", CBasePlayer_GetViewModel },
     { "GetWaterJumpTime", CBasePlayer_GetWaterJumpTime },
