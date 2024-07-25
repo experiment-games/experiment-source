@@ -40,7 +40,7 @@
 #define LUA_BASE_ENTITY_CLASS "prop_scripted"
 #define LUA_BASE_ENTITY_FACTORY "CBaseAnimating"
 #define LUA_BASE_WEAPON "weapon_hl2mpbase_scriptedweapon"
-#define LUA_BASE_GAMEMODE "base"
+#define LUA_BASE_GAMEMODE "super"
 
 #define LUA_MAX_WEAPON_ACTIVITIES 32
 
@@ -192,7 +192,7 @@
     }                                                      \
     }
 
-#define RETURN_LUA_NONE()                                  \
+#define RETURN_LUA_NONE_IF_FALSE()                         \
     if ( lua_gettop( L ) == 1 )                            \
     {                                                      \
         if ( lua_isboolean( L, -1 ) )                      \
@@ -200,6 +200,20 @@
             bool res = ( bool )luaL_checkboolean( L, -1 ); \
             lua_pop( L, 1 );                               \
             if ( !res )                                    \
+                return;                                    \
+        }                                                  \
+        else                                               \
+            lua_pop( L, 1 );                               \
+    }
+
+#define RETURN_LUA_NONE_IF_TRUE()                          \
+    if ( lua_gettop( L ) == 1 )                            \
+    {                                                      \
+        if ( lua_isboolean( L, -1 ) )                      \
+        {                                                  \
+            bool res = ( bool )luaL_checkboolean( L, -1 ); \
+            lua_pop( L, 1 );                               \
+            if ( res )                                     \
                 return;                                    \
         }                                                  \
         else                                               \
@@ -362,6 +376,20 @@
         }                                                                             \
         else                                                                          \
             lua_pop( L, 1 );                                                          \
+    }
+
+#define RETURN_LUA_VALUE_IF_TRUE( value )          \
+    if ( lua_gettop( L ) == 1 )                    \
+    {                                              \
+        if ( lua_isboolean( L, -1 ) )              \
+        {                                          \
+            bool res = luaL_checkboolean( L, -1 ); \
+            lua_pop( L, 1 );                       \
+            if ( res )                             \
+                return value;                      \
+        }                                          \
+        else                                       \
+            lua_pop( L, 1 );                       \
     }
 
 // Merge any methods from the metatable with the given name into the metatable at the top of the stack.

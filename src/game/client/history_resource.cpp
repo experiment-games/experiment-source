@@ -292,6 +292,13 @@ bool CHudHistoryResource::ShouldDraw( void )
 //-----------------------------------------------------------------------------
 void CHudHistoryResource::Paint( void )
 {
+#ifdef LUA_SDK
+    BEGIN_LUA_CALL_HOOK( "HUDDrawPickupHistory" );
+    END_LUA_CALL_HOOK( 0, 1 );
+
+    RETURN_LUA_NONE_IF_FALSE();
+#endif
+
 	if ( m_bDoNotDraw )
 	{
 		// this is to not draw things until the first rendered

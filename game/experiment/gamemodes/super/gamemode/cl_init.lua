@@ -21,10 +21,10 @@ end
 function GM:HideClientUI()
 end
 
-function GM:HudElementShouldDraw(elementName)
+function GM:HUDShouldDraw(elementName)
 end
 
-function GM:HudViewportPaint()
+function GM:HUDPaint()
 end
 
 function GM:KeyInput(down, keyNumber, currentBinding)

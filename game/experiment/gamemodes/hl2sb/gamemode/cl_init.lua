@@ -82,7 +82,7 @@ function test()
 end
 Timers.Simple(2, test)
 
-function GM:HudViewportPaint()
+function GM:HUDPaint()
 	if (not STOP) then -- TODO: How to detect freed material textures?
 		Surface.SetMaterial(testMat)
 		Surface.DrawSetColor(255, 255, 255, 255)

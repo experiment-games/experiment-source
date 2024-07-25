@@ -4551,7 +4551,7 @@ void CGameMovement::PlayerMove( void )
     lua_pushmovedata( L, mv );
     END_LUA_CALL_HOOK( 2, 1 );
 
-    RETURN_LUA_NONE();
+    RETURN_LUA_NONE_IF_FALSE();
 #endif
 
     CheckParameters();

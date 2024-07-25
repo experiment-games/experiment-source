@@ -264,7 +264,7 @@ bool C_BaseViewModel::ShouldDraw() {
 int C_BaseViewModel::DrawModel(int flags) {
     if (!m_bReadyToDraw)
         return 0;
-
+    
     if (flags & STUDIO_RENDER) {
         // Determine blending amount and tell engine
         float blend = (float)(GetFxBlend() / 255.0f);
@@ -283,6 +283,17 @@ int C_BaseViewModel::DrawModel(int flags) {
 
     C_BasePlayer *pPlayer = C_BasePlayer::GetLocalPlayer();
     C_BaseCombatWeapon *pWeapon = GetOwningWeapon();
+    
+#ifdef LUA_SDK
+    BEGIN_LUA_CALL_HOOK( "PreDrawViewModel" );
+    CBaseEntity::PushLuaInstanceSafe( L, this );
+    CBaseEntity::PushLuaInstanceSafe( L, pPlayer );
+    CBaseEntity::PushLuaInstanceSafe( L, pWeapon );
+    END_LUA_CALL_HOOK( 3, 1 );
+
+    RETURN_LUA_VALUE_IF_TRUE( 0 );
+#endif
+
     int ret;
     // If the local player's overriding the viewmodel rendering, let him do it
     if (pPlayer && pPlayer->IsOverridingViewmodel()) {
@@ -313,6 +324,14 @@ int C_BaseViewModel::DrawModel(int flags) {
         pTFWeapon->m_viewmodelStatTrakAddon->DrawModel(flags);
         pTFWeapon->m_viewmodelStatTrakAddon->AddEffects(EF_NODRAW);
     }
+#endif
+
+#ifdef LUA_SDK
+    BEGIN_LUA_CALL_HOOK( "PostDrawViewModel" );
+    CBaseEntity::PushLuaInstanceSafe( L, this );
+    CBaseEntity::PushLuaInstanceSafe( L, pPlayer );
+    CBaseEntity::PushLuaInstanceSafe( L, pWeapon );
+    END_LUA_CALL_HOOK( 3, 0 );
 #endif
 
     return ret;

@@ -209,7 +209,7 @@ void CVoiceStatus::DrawHeadLabels() {
         CBaseEntity::PushLuaInstanceSafe(L, pPlayer);
         END_LUA_CALL_HOOK(1, 1);
 
-        RETURN_LUA_NONE();
+        RETURN_LUA_NONE_IF_FALSE();
 #endif
 
         // Don't show an icon for dead or spectating players (ie: invisible

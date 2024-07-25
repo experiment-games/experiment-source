@@ -1,7 +1,3 @@
-hook.Add("HudViewportPaint", "GModCompatibility.CallHUDPaint", function()
-	hook.Run("HUDPaint")
-end)
-
 ConsoleCommands.Add("+menu", function(client, pCmd, args)
 	hook.Run("OnSpawnMenuOpen")
 end)

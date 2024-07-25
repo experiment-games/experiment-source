@@ -280,10 +280,19 @@ void VGui_PreRender()
         loadingdisc->SetPausedVisible( !enginevgui->IsGameUIVisible() && bShowPausedImage && engine->IsPaused() && !engine->IsTakingScreenshot() && !engine->IsPlayingDemo() );
 #endif
     }
+
+#ifdef LUA_SDK
+    BEGIN_LUA_CALL_HOOK( "PreDrawHUD" );
+    END_LUA_CALL_HOOK( 0, 0 );
+#endif
 }
 
 void VGui_PostRender()
 {
+#ifdef LUA_SDK
+    BEGIN_LUA_CALL_HOOK( "PostDrawHUD" );
+    END_LUA_CALL_HOOK( 0, 0 );
+#endif
 }
 
 //-----------------------------------------------------------------------------

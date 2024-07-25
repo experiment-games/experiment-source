@@ -434,13 +434,13 @@ void CHL2MP_Player::Spawn( void )
 void CHL2MP_Player::PickupObject( CBaseEntity *pObject, bool bLimitMassAndSize )
 {
 #ifdef LUA_SDK
-    BEGIN_LUA_CALL_HOOK( "PlayerPickupObject" );
+    BEGIN_LUA_CALL_HOOK( "AllowPlayerPickup" );
     CBaseEntity::PushLuaInstanceSafe( L, this );
     CBaseEntity::PushLuaInstanceSafe( L, pObject );
     lua_pushboolean( L, bLimitMassAndSize );
     END_LUA_CALL_HOOK( 3, 1 );
 
-    RETURN_LUA_NONE();
+    RETURN_LUA_NONE_IF_FALSE();
 #endif
 
 #ifdef EXPERIMENT_SOURCE
@@ -983,7 +983,7 @@ void CHL2MP_Player::CheatImpulseCommands( int iImpulse )
     lua_pushinteger( L, iImpulse );
     END_LUA_CALL_HOOK( 2, 1 );
 
-    RETURN_LUA_NONE();
+    RETURN_LUA_NONE_IF_FALSE();
 #endif
 
     switch ( iImpulse )
@@ -1266,7 +1266,7 @@ void CHL2MP_Player::DeathSound( const CTakeDamageInfo &info )
     lua_pushdamageinfo( L, lInfo );
     END_LUA_CALL_HOOK( 2, 1 );
 
-    RETURN_LUA_NONE();
+    RETURN_LUA_NONE_IF_TRUE();
 #endif
 
     if ( m_hRagdoll && m_hRagdoll->GetBaseAnimating()->IsDissolving() )

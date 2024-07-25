@@ -1745,7 +1745,7 @@ void CTempEnts::MuzzleFlash( int type, ClientEntityHandle_t hEntity, int attachm
             lua_pushboolean(L, firstPerson);
             END_LUA_CALL_WEAPON_HOOK(4, 1);
 
-            RETURN_LUA_NONE();
+            RETURN_LUA_NONE_IF_FALSE();
         }
     }
 #endif

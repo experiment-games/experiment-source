@@ -47,7 +47,7 @@ class C_PropVehicleDriveable : public C_BaseAnimating, public IClientVehicle
         lua_pushmovedata( L, pMoveData );
         END_LUA_CALL_HOOK( 3, 1 );
 
-        RETURN_LUA_NONE();
+        RETURN_LUA_NONE_IF_FALSE();
 #endif
     }
     virtual void FinishMove( C_BasePlayer *player, CUserCmd *ucmd, CMoveData *move ) {}

@@ -12,6 +12,7 @@
 #include "mathlib/lvector.h"
 #include <lColor.h>
 #include <renderparm.h>
+#include <view.h>
 #endif
 
 // memdbgon must be the last include file in a .cpp file!!!
@@ -305,6 +306,24 @@ static int render_SetWriteDepthToDestAlpha( lua_State *L )
     g_pMaterialSystem->GetRenderContext()->SetIntRenderingParameter( INT_RENDERPARM_WRITE_DEPTH_TO_DESTALPHA, bEnable );
     return 0;
 }
+
+static int render_MainViewOrigin( lua_State *L )
+{
+    lua_pushvector( L, MainViewOrigin() );
+    return 1;
+}
+
+static int render_MainViewAngles( lua_State *L )
+{
+    lua_pushangle( L, MainViewAngles() );
+    return 1;
+}
+
+static int render_MainViewForward( lua_State *L )
+{
+    lua_pushvector( L, MainViewForward() );
+    return 1;
+}
 #endif
 
 static const luaL_Reg renderLib[] = {
@@ -325,6 +344,9 @@ static const luaL_Reg renderLib[] = {
     { "SetScissorRect", render_SetScissorRect },
     { "UpdateScreenEffectTexture", render_UpdateScreenEffectTexture },
     { "SetWriteDepthToDestAlpha", render_SetWriteDepthToDestAlpha },
+    { "MainViewOrigin", render_MainViewOrigin },
+    { "MainViewAngles", render_MainViewAngles },
+    { "MainViewForward", render_MainViewForward },
 #endif
     { NULL, NULL } };
 

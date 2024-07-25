@@ -73,7 +73,8 @@ protected:
 	virtual void InitScoreboardSections();
 	virtual void UpdateTeamInfo();
 	virtual void UpdatePlayerInfo();
-	virtual void OnThink();
+    virtual void Paint();
+    virtual void OnThink();
 	virtual void AddHeader(); // add the start header of the scoreboard
 	virtual void AddSection(int teamType, int teamNumber); // add a new section header for a team
 	virtual int GetAdditionalHeight() { return 0; }

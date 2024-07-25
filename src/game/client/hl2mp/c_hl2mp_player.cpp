@@ -164,7 +164,7 @@ void C_HL2MP_Player::TraceAttack( const CTakeDamageInfo &info,
     lua_pushtrace( L, *ptr );
     END_LUA_CALL_HOOK( 4, 1 );
 
-    RETURN_LUA_NONE();
+    RETURN_LUA_NONE_IF_FALSE();
 
     Vector vecOrigin = ptr->endpos - lvecDir * 4;
 #else

@@ -68,10 +68,6 @@ extern ConVar replay_rendersetting_renderglow;
 
 #ifdef LUA_SDK
 #include "luamanager.h"
-#include "lbaseentity_shared.h"
-#include "lbaseplayer_shared.h"
-#include <lmovedata.h>
-#include <lusercmd.h>
 #endif
 
 // memdbgon must be the last include file in a .cpp file!!!
@@ -484,52 +480,6 @@ bool ClientModeShared::CreateMove( float flInputSampleTime, CUserCmd *cmd )
     if ( !pPlayer )
         return true;
 
-#ifdef LUA_SDK
-    BEGIN_LUA_CALL_HOOK( "CreateMove" );
-    lua_pushusercmd( L, cmd );
-    END_LUA_CALL_HOOK( 1, 1 );
-
-    RETURN_LUA_BOOLEAN();
-
-    // Get the current vgui panel. If it IsWorldClicker, setup the aim to follow the mouse
-    int mouseX, mouseY;
-    vgui::input()->GetCursorPos( mouseX, mouseY );
-
-    for ( int i = 0; i < g_pClientLuaPanel->GetChildCount(); i++ )
-    {
-        Panel *pChild = g_pClientLuaPanel->GetChild( i );
-
-        if ( pChild )
-        {
-            VPANEL hover = pChild->IsWithinTraverse( mouseX, mouseY, false );
-
-            if ( hover )
-            {
-                Panel *pHover = ipanel()->GetPanel( hover, GetControlsModuleName() );
-
-                if ( pHover && pHover->IsWorldClicker() )
-                {
-                    Vector aimDirection = ScreenToWorld( mouseX, mouseY );
-                    VectorAngles( aimDirection, cmd->viewangles );
-
-                    if ( aimDirection.z > 0 )
-                    {
-                        cmd->viewangles[PITCH] = aimDirection.z * -90;
-                    }
-
-                    cmd->forwardmove = 0.0f;
-                    cmd->sidemove = 0.0f;
-                    cmd->upmove = 0.0f;
-
-                    //engine->SetViewAngles( cmd->viewangles  );
-		            // prediction->SetLocalViewAngles( cmd->viewangles );
-                    //return true;
-                }
-            }
-        }
-    }
-#endif
-
     return pPlayer->CreateMove( flInputSampleTime, cmd );
 }
 
@@ -793,6 +743,10 @@ void ClientModeShared::PostRender()
 
 void ClientModeShared::PostRenderVGui()
 {
+#ifdef LUA_SDK
+    BEGIN_LUA_CALL_HOOK( "PostRenderVGUI" );
+    END_LUA_CALL_HOOK( 0, 0 );
+#endif
 }
 
 //-----------------------------------------------------------------------------

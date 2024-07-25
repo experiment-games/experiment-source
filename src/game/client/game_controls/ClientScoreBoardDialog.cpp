@@ -95,6 +95,14 @@ CClientScoreBoardDialog::~CClientScoreBoardDialog()
 	}
 }
 
+void CClientScoreBoardDialog::Paint()
+{
+#ifdef LUA_SDK
+    BEGIN_LUA_CALL_HOOK( "HUDDrawScoreBoard" );
+    END_LUA_CALL_HOOK( 0, 0 );
+#endif
+}
+
 //-----------------------------------------------------------------------------
 // Call every frame
 //-----------------------------------------------------------------------------

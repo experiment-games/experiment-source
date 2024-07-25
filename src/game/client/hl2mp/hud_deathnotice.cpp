@@ -146,6 +146,18 @@ void CHudDeathNotice::Paint()
     if ( !m_iconD_skull )
         return;
 
+#ifdef LUA_SDK
+    int panelX, panelY;
+    GetPos( panelX, panelY );
+
+    BEGIN_LUA_CALL_HOOK( "DrawDeathNotice" );
+    lua_pushnumber( L, panelX );
+    lua_pushnumber( L, panelY );
+    END_LUA_CALL_HOOK( 2, 1 );
+
+    RETURN_LUA_NONE_IF_FALSE();
+#endif
+
     int yStart = GetClientModeHL2MPNormal()->GetDeathMessageStartHeight();
 
     surface()->DrawSetTextFont( m_hTextFont );

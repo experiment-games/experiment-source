@@ -1555,7 +1555,7 @@ void CBaseServerVehicle::ProcessMovement( CBasePlayer *pPlayer, CMoveData *pMove
     lua_pushmovedata( L, pMoveData );
     END_LUA_CALL_HOOK( 3, 1 );
 
-    RETURN_LUA_NONE();
+    RETURN_LUA_NONE_IF_TRUE();
 #endif
 
     GetDrivableVehicle()->ProcessMovement( pPlayer, pMoveData );

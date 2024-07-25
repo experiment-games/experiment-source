@@ -126,7 +126,7 @@ void CHLPlayerMove::FinishMove( CBasePlayer *player, CUserCmd *ucmd, CMoveData *
     lua_pushmovedata( L, move );
     END_LUA_CALL_HOOK( 2, 1 );
 
-    RETURN_LUA_NONE();
+    RETURN_LUA_NONE_IF_TRUE();
 #endif
 
     // Call the default FinishMove code.

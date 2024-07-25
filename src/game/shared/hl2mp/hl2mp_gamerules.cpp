@@ -454,7 +454,7 @@ void CHL2MPRules::PlayerSpawn( CBasePlayer *pPlayer )
     CBaseEntity::PushLuaInstanceSafe( L, pPlayer );
     END_LUA_CALL_HOOK( 1, 1 );
 
-    RETURN_LUA_NONE();
+    RETURN_LUA_NONE_IF_FALSE();
 
     BaseClass::PlayerSpawn( pPlayer );
 }
@@ -798,7 +798,7 @@ void CHL2MPRules::AddLevelDesignerPlacedObject( CBaseEntity *pEntity )
     CBaseEntity::PushLuaInstanceSafe( L, pEntity );
     END_LUA_CALL_HOOK( 1, 1 );
 
-    RETURN_LUA_NONE();
+    RETURN_LUA_NONE_IF_FALSE();
 #endif
 
     if ( m_hRespawnableItemsAndWeapons.Find( pEntity ) == -1 )
@@ -817,7 +817,7 @@ void CHL2MPRules::RemoveLevelDesignerPlacedObject( CBaseEntity *pEntity )
     CBaseEntity::PushLuaInstanceSafe( L, pEntity );
     END_LUA_CALL_HOOK( 1, 1 );
 
-    RETURN_LUA_NONE();
+    RETURN_LUA_NONE_IF_FALSE();
 #endif
 
     if ( m_hRespawnableItemsAndWeapons.Find( pEntity ) != -1 )

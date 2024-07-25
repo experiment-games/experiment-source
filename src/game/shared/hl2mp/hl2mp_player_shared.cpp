@@ -113,7 +113,7 @@ void CHL2MP_Player::PlayStepSound(Vector &vecOrigin, surfacedata_t *psurface,
     lua_pushboolean(L, force);
     END_LUA_CALL_HOOK(5, 1);
 
-    RETURN_LUA_NONE();
+    RETURN_LUA_NONE_IF_FALSE();
 #endif
 
     if (gpGlobals->maxClients > 1 && !sv_footsteps.GetFloat())

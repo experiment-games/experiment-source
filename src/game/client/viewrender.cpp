@@ -77,6 +77,10 @@
 // Projective textures
 #include "C_Env_Projected_Texture.h"
 
+#ifdef LUA_SDK
+#include <mathlib/lvector.h>
+#endif
+
 // memdbgon must be the last include file in a .cpp file!!!
 #include "tier0/memdbgon.h"
 
@@ -377,6 +381,7 @@ class CSkyboxView : public CRendering3dView
     }
 
     bool Setup( const CViewSetup &view, int *pClearFlags, SkyboxVisibility_t *pSkyboxVisible );
+    void DrawWorld( float waterZAdjust );
     void Draw();
 
    protected:
@@ -1093,6 +1098,11 @@ void CViewRender::DrawViewModels( const CViewSetup &view, bool drawViewmodel )
 
     render->Push3DView( viewModelSetup, 0, pRTColor, GetFrustum(), pRTDepth );
 
+#ifdef LUA_SDK
+    BEGIN_LUA_CALL_HOOK( "PreDrawViewModels" );
+    END_LUA_CALL_HOOK( 0, 0 );
+#endif
+
 #ifdef PORTAL  // the depth range hack doesn't work well enough for the portal mod (and messing with the depth hack values makes some models draw incorrectly)
     // step up to a full depth clear if we're extremely close to a portal (in a portal environment)
     extern bool LocalPlayerIsCloseToPortal( void );  // defined in C_Portal_Player.cpp, abstracting to a single bool function to remove explicit dependence on c_portal_player.h/cpp, you can define the function as a "return true" in other build configurations at the cost of some perf
@@ -1152,6 +1162,11 @@ void CViewRender::DrawViewModels( const CViewSetup &view, bool drawViewmodel )
         DrawRenderablesInList( opaqueViewModelList );
         DrawRenderablesInList( translucentViewModelList, STUDIO_TRANSPARENCY );
     }
+
+#ifdef LUA_SDK
+    BEGIN_LUA_CALL_HOOK( "PreDrawEffects" );
+    END_LUA_CALL_HOOK( 0, 0 );
+#endif
 
     // Reset the depth range to the original values
     if ( bUseDepthHack )
@@ -2185,6 +2200,19 @@ void CViewRender::RenderView( const CViewSetup &view, int nClearFlags, int whatT
     // Draw the 2D graphics
     render->Push2DView( view, 0, saveRenderTarget, GetFrustum() );
 
+#ifdef LUA_SDK
+    // According to the gmod wiki, this is a 2D rendering context hook. So that is why it
+    // is here and not above near PerformScreenSpaceEffects
+    // TODO: Shouldn't that be moved to this 2D rendering context?
+    BEGIN_LUA_CALL_HOOK( "RenderScreenspaceEffects" );
+    END_LUA_CALL_HOOK( 0, 0 );
+#endif
+
+#ifdef LUA_SDK
+    BEGIN_LUA_CALL_HOOK( "PostDrawEffects" );
+    END_LUA_CALL_HOOK( 0, 0 );
+#endif
+
     Render2DEffectsPreHUD( view );
 
     if ( whatToDraw & RENDERVIEW_DRAWHUD )
@@ -2203,6 +2231,7 @@ void CViewRender::RenderView( const CViewSetup &view, int nClearFlags, int whatT
         bool bClear = false;
         bool bPaintMainMenu = false;
         ITexture *pTexture = NULL;
+
         if ( UseVR() )
         {
             if ( g_ClientVirtualReality.ShouldRenderHUDInWorld() )
@@ -2342,6 +2371,11 @@ void CViewRender::RenderView( const CViewSetup &view, int nClearFlags, int whatT
     {
         CDebugViewRender::GenerateOverdrawForTesting();
     }
+
+#ifdef LUA_SDK
+    BEGIN_LUA_CALL_HOOK( "DrawOverlay" );
+    END_LUA_CALL_HOOK( 0, 0 );
+#endif
 
     render->PopView( GetFrustum() );
     g_WorldListCache.Flush();
@@ -3116,6 +3150,11 @@ bool CViewRender::DrawOneMonitor( ITexture *pRenderTarget, int cameraNum, C_Poin
 
 void CViewRender::DrawMonitors( const CViewSetup &cameraView )
 {
+#ifdef LUA_SDK
+    BEGIN_LUA_CALL_HOOK( "DrawMonitors" );
+    END_LUA_CALL_HOOK( 0, 0 );
+#endif
+
 #ifdef PORTAL
     g_pPortalRender->DrawPortalsToTextures( this, cameraView );
 #endif
@@ -3264,7 +3303,7 @@ void CRendering3dView::Setup( const CViewSetup &setup )
     m_pRenderablesList = new CClientRenderablesList;
     m_pCustomVisibility = NULL;
 
-    // To be able to color this material, requires $vertexcolor in the vmt
+    // Experiment; To be able to color this material, requires $vertexcolor in the vmt
     pSkyPaintMaterial = materials->FindMaterial( "skypaint", TEXTURE_GROUP_OTHER );
 }
 
@@ -3506,22 +3545,23 @@ void CRendering3dView::BuildRenderableRenderLists( int viewID )
 #define SKYBOX_VECTOR_COMPONENT_NUM 3
 #define SKYBOX_SIDE_VERTEX_NUM 4
 
+ConVar skypaint_enabled( "skypaint_enabled", "0", FCVAR_ARCHIVE | FCVAR_REPLICATED, "Enable the skypaint system" );
 ConVar skypaint_topcolor( "skypaint_topcolor", "1.0 1.0 0.0 1.0", FCVAR_ARCHIVE | FCVAR_REPLICATED, "The colour of the top of the sky" );
 ConVar skypaint_bottomcolor( "skypaint_bottomcolor", "0.0 0.0 1.0 1.0", FCVAR_ARCHIVE | FCVAR_REPLICATED, "The colour of the bottom of the sky" );
 ConVar skypaint_fadebias( "skypaint_fadebias", "0.5", FCVAR_ARCHIVE | FCVAR_REPLICATED, "Controls the bias of the fade between top/bottom (1.0 is even)" );
-//ConVar skypaint_sunsize( "skypaint_sunsize", "0.5", FCVAR_ARCHIVE | FCVAR_REPLICATED, "Controls the size of the sun glow" );
-//ConVar skypaint_sunnormal( "skypaint_sunnormal", "0.0 0.0 0.0", FCVAR_ARCHIVE | FCVAR_REPLICATED, "The position of the sun, expressed as a normal from the center of the world" );
-//ConVar skypaint_sunposmethod( "skypaint_sunposmethod", "0", FCVAR_ARCHIVE | FCVAR_REPLICATED, "How should we determine the position of the sun? 0: Custom, 1: Automatic" );
-//ConVar skypaint_suncolor( "skypaint_suncolor", "1.0 1.0 1.0 1.0", FCVAR_ARCHIVE | FCVAR_REPLICATED, "The color of the sun glow (this is additive)" );
-//ConVar skypaint_duskscale( "skypaint_duskscale", "1.0", FCVAR_ARCHIVE | FCVAR_REPLICATED, "The size of the dusk effect (colouring of the horizon)" );
-//ConVar skypaint_duskintensity( "skypaint_duskintensity", "1.0", FCVAR_ARCHIVE | FCVAR_REPLICATED, "How powerful the dusk effect is" );
-//ConVar skypaint_duskcolor( "skypaint_duskcolor", "1.0 0.5 0.5 1.0", FCVAR_ARCHIVE | FCVAR_REPLICATED, "The color of the dusk effect" );
-//ConVar skypaint_drawstars( "skypaint_drawstars", "0", FCVAR_ARCHIVE | FCVAR_REPLICATED, "Draws a specified texture as an overlay 0: No, 1: Yes" );
-//ConVar skypaint_starstexture( "skypaint_starstexture", "", FCVAR_ARCHIVE | FCVAR_REPLICATED, "The star texture" );
-//ConVar skypaint_starsscale( "skypaint_starsscale", "1.0", FCVAR_ARCHIVE | FCVAR_REPLICATED, "How big the star texture should be" );
-//ConVar skypaint_starsfade( "skypaint_starsfade", "1.0", FCVAR_ARCHIVE | FCVAR_REPLICATED, "Fade the star texture towards the horizon" );
-//ConVar skypaint_starsspeed( "skypaint_starsspeed", "1.0", FCVAR_ARCHIVE | FCVAR_REPLICATED, "How fast the star texture should scroll across the sky" );
-//ConVar skypaint_hdrscale( "skypaint_hdrscale", "1.0", FCVAR_ARCHIVE | FCVAR_REPLICATED, "When rendering your skybox in HDR mode, output will be scaled by this amount" );
+// ConVar skypaint_sunsize( "skypaint_sunsize", "0.5", FCVAR_ARCHIVE | FCVAR_REPLICATED, "Controls the size of the sun glow" );
+// ConVar skypaint_sunnormal( "skypaint_sunnormal", "0.0 0.0 0.0", FCVAR_ARCHIVE | FCVAR_REPLICATED, "The position of the sun, expressed as a normal from the center of the world" );
+// ConVar skypaint_sunposmethod( "skypaint_sunposmethod", "0", FCVAR_ARCHIVE | FCVAR_REPLICATED, "How should we determine the position of the sun? 0: Custom, 1: Automatic" );
+// ConVar skypaint_suncolor( "skypaint_suncolor", "1.0 1.0 1.0 1.0", FCVAR_ARCHIVE | FCVAR_REPLICATED, "The color of the sun glow (this is additive)" );
+// ConVar skypaint_duskscale( "skypaint_duskscale", "1.0", FCVAR_ARCHIVE | FCVAR_REPLICATED, "The size of the dusk effect (colouring of the horizon)" );
+// ConVar skypaint_duskintensity( "skypaint_duskintensity", "1.0", FCVAR_ARCHIVE | FCVAR_REPLICATED, "How powerful the dusk effect is" );
+// ConVar skypaint_duskcolor( "skypaint_duskcolor", "1.0 0.5 0.5 1.0", FCVAR_ARCHIVE | FCVAR_REPLICATED, "The color of the dusk effect" );
+// ConVar skypaint_drawstars( "skypaint_drawstars", "0", FCVAR_ARCHIVE | FCVAR_REPLICATED, "Draws a specified texture as an overlay 0: No, 1: Yes" );
+// ConVar skypaint_starstexture( "skypaint_starstexture", "", FCVAR_ARCHIVE | FCVAR_REPLICATED, "The star texture" );
+// ConVar skypaint_starsscale( "skypaint_starsscale", "1.0", FCVAR_ARCHIVE | FCVAR_REPLICATED, "How big the star texture should be" );
+// ConVar skypaint_starsfade( "skypaint_starsfade", "1.0", FCVAR_ARCHIVE | FCVAR_REPLICATED, "Fade the star texture towards the horizon" );
+// ConVar skypaint_starsspeed( "skypaint_starsspeed", "1.0", FCVAR_ARCHIVE | FCVAR_REPLICATED, "How fast the star texture should scroll across the sky" );
+// ConVar skypaint_hdrscale( "skypaint_hdrscale", "1.0", FCVAR_ARCHIVE | FCVAR_REPLICATED, "When rendering your skybox in HDR mode, output will be scaled by this amount" );
 
 int skyboxSideVectorsLookup[SKYBOX_SIDE_NUM][SKYBOX_VECTOR_COMPONENT_NUM] =
     {
@@ -3663,14 +3703,14 @@ void CRendering3dView::DrawWorld( float waterZAdjust )
         return;
     }
 
-    // Experiment; disable skybox drawing and draw our own
-    // TODO: Only do this if env_skypaint is detected
-    m_DrawFlags &= ~DF_DRAWSKYBOX;
-    DrawSkyPaint( *this );
-
     unsigned long engineFlags = BuildEngineDrawWorldListFlags( m_DrawFlags );
 
     render->DrawWorldLists( m_pWorldRenderList, engineFlags, waterZAdjust );
+
+#ifdef LUA_SDK
+    BEGIN_LUA_CALL_HOOK( "PostDraw2DSkyBox" );
+    END_LUA_CALL_HOOK( 0, 0 );
+#endif
 }
 
 CMaterialReference g_material_WriteZ;  // init'ed on by CViewRender::Init()
@@ -4049,7 +4089,7 @@ static void DrawOpaqueRenderables_Range( CClientRenderablesList::CEntry *pEntiti
     }
 }
 
-void CRendering3dView::DrawOpaqueRenderables( ERenderDepthMode DepthMode )
+void CRendering3dView::DrawOpaqueRenderables( ERenderDepthMode DepthMode, bool bInSkybox, bool bSkyboxIs3D )
 {
     VPROF_BUDGET( "CViewRender::DrawOpaqueRenderables", "DrawOpaqueRenderables" );
 
@@ -4060,6 +4100,18 @@ void CRendering3dView::DrawOpaqueRenderables( ERenderDepthMode DepthMode )
         return;
 
     render->SetBlend( 1 );
+
+#ifdef LUA_SDK
+    bool bIsDepthDraw = DepthMode != DEPTH_MODE_NORMAL;
+
+    BEGIN_LUA_CALL_HOOK( "PreDrawOpaqueRenderables" );
+    lua_pushboolean( L, bIsDepthDraw );
+    lua_pushboolean( L, bInSkybox );
+    lua_pushboolean( L, bSkyboxIs3D );
+    END_LUA_CALL_HOOK( 3, 1 );
+
+    RETURN_LUA_NONE_IF_TRUE();
+#endif
 
     //
     // Prepare to iterate over all leaves that were visible, and draw opaque things in them.
@@ -4254,6 +4306,14 @@ void CRendering3dView::DrawOpaqueRenderables( ERenderDepthMode DepthMode )
     //
     RopeManager()->DrawRenderCache( DepthMode );
     g_pParticleSystemMgr->DrawRenderCache( DepthMode );
+
+#ifdef LUA_SDK
+    BEGIN_LUA_CALL_HOOK( "PostDrawOpaqueRenderables" );
+    lua_pushboolean( L, bIsDepthDraw );
+    lua_pushboolean( L, bInSkybox );
+    lua_pushboolean( L, bSkyboxIs3D );
+    END_LUA_CALL_HOOK( 3, 0 );
+#endif
 }
 
 //-----------------------------------------------------------------------------
@@ -4440,7 +4500,7 @@ void CRendering3dView::DrawNoZBufferTranslucentRenderables( void )
 //-----------------------------------------------------------------------------
 // Renders all translucent world, entities, and detail objects in a particular set of leaves
 //-----------------------------------------------------------------------------
-void CRendering3dView::DrawTranslucentRenderables( bool bInSkybox, bool bShadowDepth )
+void CRendering3dView::DrawTranslucentRenderables( bool bInSkybox, bool bShadowDepth, bool bSkyboxIs3D )
 {
     const ClientWorldListInfo_t &info = *m_pWorldListInfo;
 
@@ -4529,6 +4589,7 @@ void CRendering3dView::DrawTranslucentRenderables( bool bInSkybox, bool bShadowD
     }
 
     VPROF_BUDGET( "CViewRender::DrawTranslucentRenderables", "DrawTranslucentRenderables" );
+
     int iPrevLeaf = info.m_LeafCount - 1;
     int nDetailLeafCount = 0;
     LeafIndex_t *pDetailLeafList = ( LeafIndex_t * )stackalloc( info.m_LeafCount * sizeof( LeafIndex_t ) );
@@ -4540,6 +4601,20 @@ void CRendering3dView::DrawTranslucentRenderables( bool bInSkybox, bool bShadowD
     unsigned long nEngineDrawFlags = BuildEngineDrawWorldListFlags( m_DrawFlags & ~DF_DRAWSKYBOX );
 
     DetailObjectSystem()->BeginTranslucentDetailRendering();
+
+#ifdef LUA_SDK
+    // We might also suffer from this same bug as gmod
+    // https://github.com/Facepunch/garrysmod-issues/issues/3295
+    bool bIsDepthDraw = bShadowDepth;
+
+    BEGIN_LUA_CALL_HOOK( "PreDrawTranslucentRenderables" );
+    lua_pushboolean( L, bIsDepthDraw );
+    lua_pushboolean( L, bInSkybox );
+    lua_pushboolean( L, bSkyboxIs3D );
+    END_LUA_CALL_HOOK( 3, 1 );
+
+    RETURN_LUA_NONE_IF_TRUE();
+#endif
 
     if ( m_pMainView->ShouldDrawEntities() && r_drawtranslucentrenderables.GetBool() )
     {
@@ -4677,6 +4752,14 @@ void CRendering3dView::DrawTranslucentRenderables( bool bInSkybox, bool bShadowD
 
     // Reset the blend state.
     render->SetBlend( 1 );
+
+#ifdef LUA_SDK
+    BEGIN_LUA_CALL_HOOK( "PostDrawTranslucentRenderables" );
+    lua_pushboolean( L, bIsDepthDraw );
+    lua_pushboolean( L, bInSkybox );
+    lua_pushboolean( L, bSkyboxIs3D );
+    END_LUA_CALL_HOOK( 3, 0 );
+#endif
 }
 
 //-----------------------------------------------------------------------------
@@ -4685,6 +4768,14 @@ void CRendering3dView::DrawTranslucentRenderables( bool bInSkybox, bool bShadowD
 void CRendering3dView::EnableWorldFog( void )
 {
     VPROF( "CViewRender::EnableWorldFog" );
+
+#ifdef LUA_SDK
+    BEGIN_LUA_CALL_HOOK( "SetupWorldFog" );
+    END_LUA_CALL_HOOK( 0, 1 );
+
+    RETURN_LUA_NONE_IF_TRUE();
+#endif
+
     CMatRenderContextPtr pRenderContext( materials );
 
     fogparams_t *pFogParams = NULL;
@@ -4789,6 +4880,14 @@ void CSkyboxView::Enable3dSkyboxFog( void )
     }
     CPlayerLocalData *local = &pbp->m_Local;
 
+#ifdef LUA_SDK
+    BEGIN_LUA_CALL_HOOK( "SetupSkyboxFog" );
+    lua_pushnumber( L, local->m_skybox3d.scale );
+    END_LUA_CALL_HOOK( 1, 1 );
+
+    RETURN_LUA_NONE_IF_TRUE();
+#endif
+
     CMatRenderContextPtr pRenderContext( materials );
 
     if ( GetSkyboxFogEnable() )
@@ -4823,6 +4922,13 @@ sky3dparams_t *CSkyboxView::PreRender3dSkyboxWorld( SkyboxVisibility_t nSkyboxVi
     // render the 3D skybox
     if ( !r_3dsky.GetInt() )
         return NULL;
+
+#ifdef LUA_SDK
+    BEGIN_LUA_CALL_HOOK( "PreDrawSkyBox" );
+    END_LUA_CALL_HOOK( 0, 1 );
+
+    RETURN_LUA_VALUE_IF_TRUE( NULL );
+#endif
 
     C_BasePlayer *pbp = C_BasePlayer::GetLocalPlayer();
 
@@ -4900,10 +5006,10 @@ void CSkyboxView::DrawInternal( view_id_t iSkyBoxViewID, bool bInvokePreAndPostR
     DrawWorld( 0.0f );
 
     // Iterate over all leaves and render objects in those leaves
-    DrawOpaqueRenderables( DEPTH_MODE_NORMAL );
+    DrawOpaqueRenderables( DEPTH_MODE_NORMAL, true, iSkyBoxViewID == VIEW_3DSKY );
 
     // Iterate over all leaves and render objects in those leaves
-    DrawTranslucentRenderables( true, false );
+    DrawTranslucentRenderables( true, false, iSkyBoxViewID == VIEW_3DSKY );
     DrawNoZBufferTranslucentRenderables();
 
     m_pMainView->DisableFog();
@@ -4927,6 +5033,11 @@ void CSkyboxView::DrawInternal( view_id_t iSkyBoxViewID, bool bInvokePreAndPostR
 #if defined( _X360 )
     pRenderContext.GetFrom( materials );
     pRenderContext->PopVertexShaderGPRAllocation();
+#endif
+
+#ifdef LUA_SDK
+    BEGIN_LUA_CALL_HOOK( "PostDrawSkyBox" );
+    END_LUA_CALL_HOOK( 0, 0 );
 #endif
 }
 
@@ -4959,6 +5070,27 @@ bool CSkyboxView::Setup( const CViewSetup &view, int *pClearFlags, SkyboxVisibil
     }
 
     return true;
+}
+
+//-----------------------------------------------------------------------------
+//
+//-----------------------------------------------------------------------------
+void CSkyboxView::DrawWorld( float waterZAdjust )
+{
+    if ( !r_drawopaqueworld.GetBool() )
+    {
+        return;
+    }
+
+    if ( skypaint_enabled.GetBool() )
+    {
+        // Experiment; disable skybox drawing and draw our own
+        // TODO: Only do this if env_skypaint is detected
+        m_DrawFlags &= ~DF_DRAWSKYBOX;
+        DrawSkyPaint( *this );
+    }
+
+    BaseClass::DrawWorld( waterZAdjust );
 }
 
 //-----------------------------------------------------------------------------
@@ -5114,7 +5246,7 @@ void CShadowDepthView::Draw()
 
     {
         VPROF_BUDGET( "DrawOpaqueRenderables", VPROF_BUDGETGROUP_SHADOW_DEPTH_TEXTURING );
-        DrawOpaqueRenderables( DEPTH_MODE_SHADOW );
+        DrawOpaqueRenderables( DEPTH_MODE_SHADOW, m_DrawFlags & DF_DRAWSKYBOX, false );
     }
 
     modelrender->ForcedMaterialOverride( 0 );
@@ -5410,6 +5542,19 @@ void CBaseWorldView::DrawSetup( float waterHeight, int nSetupFlags, float waterZ
     }
 #endif
 
+#ifdef LUA_SDK
+    BEGIN_LUA_CALL_HOOK( "NeedsDepthPass" );
+    END_LUA_CALL_HOOK( 0, 1 );
+
+    bool bNeedsDepthPass = lua_isboolean( L, -1 ) && lua_toboolean( L, -1 );
+    lua_pop( L, 1 );
+
+    if ( bNeedsDepthPass )
+    {
+        SSAO_DepthPass();
+    }
+#endif
+
     g_CurrentViewID = savedViewID;
 }
 
@@ -5483,7 +5628,7 @@ void CBaseWorldView::DrawExecute( float waterHeight, view_id_t viewID, float wat
     if ( m_DrawFlags & DF_DRAW_ENTITITES )
     {
         DrawWorld( waterZAdjust );
-        DrawOpaqueRenderables( DepthMode );
+        DrawOpaqueRenderables( DepthMode, m_DrawFlags & DF_DRAWSKYBOX, false );
 
 #ifdef TF_CLIENT_DLL
         bool bVisionOverride = ( localplayer_visionflags.GetInt() & ( 0x01 ) );  // Pyro-vision Goggles
@@ -5493,7 +5638,7 @@ void CBaseWorldView::DrawExecute( float waterHeight, view_id_t viewID, float wat
             DrawDepthOfField();
         }
 #endif
-        DrawTranslucentRenderables( false, false );
+        DrawTranslucentRenderables( m_DrawFlags & DF_DRAWSKYBOX, false, false );
         DrawNoZBufferTranslucentRenderables();
     }
     else
@@ -5583,14 +5728,14 @@ void CBaseWorldView::SSAO_DepthPass()
 
     {
         VPROF_BUDGET( "DrawOpaqueRenderables", VPROF_BUDGETGROUP_SHADOW_DEPTH_TEXTURING );
-        DrawOpaqueRenderables( DEPTH_MODE_SSA0 );
+        DrawOpaqueRenderables( DEPTH_MODE_SSA0, m_DrawFlags & DF_DRAWSKYBOX, false );
     }
 
 #if 0
 	if ( m_bRenderFlashlightDepthTranslucents || r_flashlightdepth_drawtranslucents.GetBool() )
 	{
 		VPROF_BUDGET( "DrawTranslucentRenderables", VPROF_BUDGETGROUP_SHADOW_DEPTH_TEXTURING );
-		DrawTranslucentRenderables( false, true );
+		DrawTranslucentRenderables( m_DrawFlags & DF_DRAWSKYBOX, false, ???3d );
 	}
 #endif
 

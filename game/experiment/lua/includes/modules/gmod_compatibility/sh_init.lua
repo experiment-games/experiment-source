@@ -852,7 +852,10 @@ else
 	Util.IsSkyboxVisibleFromPoint = engine.IsSkyboxVisibleFromPoint
 
 	GetRenderTargetEx = render.CreateRenderTargetTextureEx
-	GetRenderTarget = render.CreateRenderTargetTextureEx
+    GetRenderTarget = render.CreateRenderTargetTextureEx
+    EyePos = render.MainViewOrigin
+    EyeAngles = render.MainViewAngles
+	EyeVector = render.MainViewForward
 
 	LocalPlayer = _R.CBasePlayer.GetLocalPlayer
 

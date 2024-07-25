@@ -688,7 +688,7 @@ void CPrediction::FinishMove( C_BasePlayer *player, CUserCmd *ucmd, CMoveData *m
     lua_pushmovedata( L, move );
     END_LUA_CALL_HOOK( 2, 1 );
 
-    RETURN_LUA_NONE();
+    RETURN_LUA_NONE_IF_FALSE();
 #endif
 
 #if !defined( NO_ENTITY_PREDICTION )

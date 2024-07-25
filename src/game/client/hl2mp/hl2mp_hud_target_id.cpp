@@ -102,6 +102,13 @@ Color CTargetID::GetColorForTargetTeam( int iTeamNumber )
 //-----------------------------------------------------------------------------
 void CTargetID::Paint()
 {
+#ifdef LUA_SDK
+    BEGIN_LUA_CALL_HOOK( "HUDDrawTargetID" );
+    END_LUA_CALL_HOOK( 0, 1 );
+
+    RETURN_LUA_NONE_IF_FALSE();
+#endif
+
 #define MAX_ID_STRING 256
 	wchar_t sIDString[ MAX_ID_STRING ];
 	sIDString[0] = 0;

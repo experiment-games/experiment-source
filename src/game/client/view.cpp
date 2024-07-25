@@ -59,6 +59,11 @@
 #include "c_prop_portal.h"  //portal surface rendering functions
 #endif
 
+#ifdef LUA_SDK
+#include <vgui/IInput.h>
+#include <mathlib/lvector.h>
+#endif
+
 // memdbgon must be the last include file in a .cpp file!!!
 #include "tier0/memdbgon.h"
 
@@ -552,7 +557,7 @@ void CViewRender::OnRenderStart()
         {
             lua_Number flSensitivity = lua_tonumber( L, -1 );
 
-            if (flSensitivity == -1)
+            if ( flSensitivity == -1 )
             {
                 bCallWeaponAdjustMouseSensitivityHook = false;
             }
@@ -561,7 +566,7 @@ void CViewRender::OnRenderStart()
                 gHUD.m_flMouseSensitivity = flSensitivity;
             }
         }
-        lua_pop( L, 1 ); // pop the return value
+        lua_pop( L, 1 );  // pop the return value
 
         if ( bCallWeaponAdjustMouseSensitivityHook )
         {
@@ -779,6 +784,36 @@ void CViewRender::SetUpViews()
     if ( bCalcViewModelView )
     {
         Assert( pPlayer != NULL );
+
+#ifdef LUA_SDK
+        // If the top panel under the cursor IsWorldClicker, setup the aim to follow the mouse
+        int mouseX, mouseY;
+        vgui::input()->GetCursorPos( mouseX, mouseY );
+
+        for ( int i = 0; i < g_pClientLuaPanel->GetChildCount(); i++ )
+        {
+            vgui::Panel *pChild = g_pClientLuaPanel->GetChild( i );
+
+            if ( pChild )
+            {
+                vgui::VPANEL hover = pChild->IsWithinTraverse( mouseX, mouseY, false );
+
+                if ( hover )
+                {
+                    vgui::Panel *pHover = vgui::ipanel()->GetPanel( hover, vgui::GetControlsModuleName() );
+
+                    if ( pHover && pHover->IsWorldClicker() )
+                    {
+                        // TODO: Clamp so we don't see the nodraw part of the viewmodel
+                        Vector aimDirection;
+                        ScreenToWorld( mouseX, mouseY, view.fov, view.angles, aimDirection, view.width, view.height );
+                        VectorAngles( aimDirection, ViewModelAngles );
+                    }
+                }
+            }
+        }
+#endif
+
         pPlayer->CalcViewModelView( ViewModelOrigin, ViewModelAngles );
     }
 
@@ -1073,83 +1108,53 @@ void CViewRender::Render( vrect_t *rect )
     // Set for console commands, etc.
     render->SetMainView( m_View.origin, m_View.angles );
 
-    for ( StereoEye_t eEye = GetFirstEye(); eEye <= GetLastEye(); eEye = ( StereoEye_t )( eEye + 1 ) )
+#ifdef LUA_SDK
+    BEGIN_LUA_CALL_HOOK( "RenderScene" );
+    lua_pushvector( L, m_View.origin );
+    lua_pushangle( L, m_View.angles );
+    lua_pushnumber( L, m_View.fov );
+    END_LUA_CALL_HOOK( 3, 1 );
+
+    bool bOverrideRenderScene = lua_isboolean( L, -1 ) && lua_toboolean( L, -1 );
+    lua_pop( L, 1 );
+
+    if ( !bOverrideRenderScene )
     {
-        CViewSetup &view = GetView( eEye );
-
-#if 0 && defined( CSTRIKE_DLL )
-			const bool bPlayingBackReplay = g_pEngineClientReplay && g_pEngineClientReplay->IsPlayingReplayDemo();
-			if ( pPlayer && !bPlayingBackReplay )
-			{
-				C_BasePlayer *pViewTarget = pPlayer;
-
-				if ( pPlayer->IsObserver() && pPlayer->GetObserverMode() == OBS_MODE_IN_EYE )
-				{
-					pViewTarget = dynamic_cast<C_BasePlayer*>( pPlayer->GetObserverTarget() );
-				}
-
-				if ( pViewTarget )
-				{
-					float targetFOV = (float)pViewTarget->m_iFOV;
-
-					if ( targetFOV == 0 )
-					{
-						// FOV of 0 means use the default FOV
-						targetFOV = g_pGameRules->DefaultFOV();
-					}
-
-					float deltaFOV = view.fov - m_flLastFOV;
-					float FOVDirection = targetFOV - pViewTarget->m_iFOVStart;
-
-					// Clamp FOV changes to stop FOV oscillation
-					if ( ( deltaFOV < 0.0f && FOVDirection > 0.0f ) ||
-						( deltaFOV > 0.0f && FOVDirection < 0.0f ) )
-					{
-						view.fov = m_flLastFOV;
-					}
-
-					// Catch case where FOV overshoots its target FOV
-					if ( ( view.fov < targetFOV && FOVDirection <= 0.0f ) ||
-						( view.fov > targetFOV && FOVDirection >= 0.0f ) )
-					{
-						view.fov = targetFOV;
-					}
-
-					m_flLastFOV = view.fov;
-				}
-			}
 #endif
-
-        static ConVarRef sv_restrict_aspect_ratio_fov( "sv_restrict_aspect_ratio_fov" );
-        float aspectRatio = engine->GetScreenAspectRatio() * 0.75f;  // / (4/3)
-        float limitedAspectRatio = aspectRatio;
-        if ( ( sv_restrict_aspect_ratio_fov.GetInt() > 0 && engine->IsWindowedMode() && gpGlobals->maxClients > 1 ) ||
-             sv_restrict_aspect_ratio_fov.GetInt() == 2 )
+        for ( StereoEye_t eEye = GetFirstEye(); eEye <= GetLastEye(); eEye = ( StereoEye_t )( eEye + 1 ) )
         {
-            limitedAspectRatio = MIN( aspectRatio, 1.85f * 0.75f );  // cap out the FOV advantage at a 1.85:1 ratio (about the widest any legit user should be)
-        }
+            CViewSetup &view = GetView( eEye );
 
-        view.fov = ScaleFOVByWidthRatio( view.fov, limitedAspectRatio );
-        view.fovViewmodel = ScaleFOVByWidthRatio( view.fovViewmodel, aspectRatio );
-
-        // Let the client mode hook stuff.
-        g_pClientMode->PreRender( &view );
-
-        g_pClientMode->AdjustEngineViewport( vr.x, vr.y, vr.width, vr.height );
-
-        ToolFramework_AdjustEngineViewport( vr.x, vr.y, vr.width, vr.height );
-
-        float flViewportScale = mat_viewportscale.GetFloat();
-
-        view.m_nUnscaledX = vr.x;
-        view.m_nUnscaledY = vr.y;
-        view.m_nUnscaledWidth = vr.width;
-        view.m_nUnscaledHeight = vr.height;
-
-        switch ( eEye )
-        {
-            case STEREO_EYE_MONO:
+            static ConVarRef sv_restrict_aspect_ratio_fov( "sv_restrict_aspect_ratio_fov" );
+            float aspectRatio = engine->GetScreenAspectRatio() * 0.75f;  // / (4/3)
+            float limitedAspectRatio = aspectRatio;
+            if ( ( sv_restrict_aspect_ratio_fov.GetInt() > 0 && engine->IsWindowedMode() && gpGlobals->maxClients > 1 ) ||
+                 sv_restrict_aspect_ratio_fov.GetInt() == 2 )
             {
+                limitedAspectRatio = MIN( aspectRatio, 1.85f * 0.75f );  // cap out the FOV advantage at a 1.85:1 ratio (about the widest any legit user should be)
+            }
+
+            view.fov = ScaleFOVByWidthRatio( view.fov, limitedAspectRatio );
+            view.fovViewmodel = ScaleFOVByWidthRatio( view.fovViewmodel, aspectRatio );
+
+            // Let the client mode hook stuff.
+            g_pClientMode->PreRender( &view );
+
+            g_pClientMode->AdjustEngineViewport( vr.x, vr.y, vr.width, vr.height );
+
+            ToolFramework_AdjustEngineViewport( vr.x, vr.y, vr.width, vr.height );
+
+            float flViewportScale = mat_viewportscale.GetFloat();
+
+            view.m_nUnscaledX = vr.x;
+            view.m_nUnscaledY = vr.y;
+            view.m_nUnscaledWidth = vr.width;
+            view.m_nUnscaledHeight = vr.height;
+
+            switch ( eEye )
+            {
+                case STEREO_EYE_MONO:
+                {
 #if 0
                 // Good test mode for debugging viewports that are not full-size.
 	            view.width			= vr.width * flViewportScale * 0.75f;
@@ -1157,128 +1162,136 @@ void CViewRender::Render( vrect_t *rect )
 	            view.x				= vr.x + view.width * 0.10f;
 	            view.y				= vr.y + view.height * 0.20f;
 #else
-                view.x = vr.x * flViewportScale;
-                view.y = vr.y * flViewportScale;
-                view.width = vr.width * flViewportScale;
-                view.height = vr.height * flViewportScale;
+                    view.x = vr.x * flViewportScale;
+                    view.y = vr.y * flViewportScale;
+                    view.width = vr.width * flViewportScale;
+                    view.height = vr.height * flViewportScale;
 #endif
-                float engineAspectRatio = engine->GetScreenAspectRatio();
-                view.m_flAspectRatio = ( engineAspectRatio > 0.0f ) ? engineAspectRatio : ( ( float )view.width / ( float )view.height );
-            }
-            break;
-
-            case STEREO_EYE_RIGHT:
-            case STEREO_EYE_LEFT:
-            {
-                g_pSourceVR->GetViewportBounds( ( ISourceVirtualReality::VREye )( eEye - 1 ), &view.x, &view.y, &view.width, &view.height );
-                view.m_nUnscaledWidth = view.width;
-                view.m_nUnscaledHeight = view.height;
-                view.m_nUnscaledX = view.x;
-                view.m_nUnscaledY = view.y;
-            }
-            break;
-
-            default:
-                Assert( false );
+                    float engineAspectRatio = engine->GetScreenAspectRatio();
+                    view.m_flAspectRatio = ( engineAspectRatio > 0.0f ) ? engineAspectRatio : ( ( float )view.width / ( float )view.height );
+                }
                 break;
-        }
 
-        // if we still don't have an aspect ratio, compute it from the view size
-        if ( view.m_flAspectRatio <= 0.f )
-            view.m_flAspectRatio = ( float )view.width / ( float )view.height;
-
-        int nClearFlags = VIEW_CLEAR_DEPTH | VIEW_CLEAR_STENCIL;
-
-        if ( gl_clear_randomcolor.GetBool() )
-        {
-            CMatRenderContextPtr pRenderContext( materials );
-            pRenderContext->ClearColor3ub( rand() % 256, rand() % 256, rand() % 256 );
-            pRenderContext->ClearBuffers( true, false, false );
-            pRenderContext->Release();
-        }
-        else if ( gl_clear.GetBool() )
-        {
-            nClearFlags |= VIEW_CLEAR_COLOR;
-        }
-        else if ( IsPosix() )
-        {
-            MaterialAdapterInfo_t adapterInfo;
-            materials->GetDisplayAdapterInfo( materials->GetCurrentAdapter(), adapterInfo );
-
-            // On Posix, on ATI, we always clear color if we're antialiasing
-            if ( adapterInfo.m_VendorID == 0x1002 )
-            {
-                if ( g_pMaterialSystem->GetCurrentConfigForVideoCard().m_nAASamples > 0 )
+                case STEREO_EYE_RIGHT:
+                case STEREO_EYE_LEFT:
                 {
-                    nClearFlags |= VIEW_CLEAR_COLOR;
+                    g_pSourceVR->GetViewportBounds( ( ISourceVirtualReality::VREye )( eEye - 1 ), &view.x, &view.y, &view.width, &view.height );
+                    view.m_nUnscaledWidth = view.width;
+                    view.m_nUnscaledHeight = view.height;
+                    view.m_nUnscaledX = view.x;
+                    view.m_nUnscaledY = view.y;
+                }
+                break;
+
+                default:
+                    Assert( false );
+                    break;
+            }
+
+            // if we still don't have an aspect ratio, compute it from the view size
+            if ( view.m_flAspectRatio <= 0.f )
+                view.m_flAspectRatio = ( float )view.width / ( float )view.height;
+
+            int nClearFlags = VIEW_CLEAR_DEPTH | VIEW_CLEAR_STENCIL;
+
+            if ( gl_clear_randomcolor.GetBool() )
+            {
+                CMatRenderContextPtr pRenderContext( materials );
+                pRenderContext->ClearColor3ub( rand() % 256, rand() % 256, rand() % 256 );
+                pRenderContext->ClearBuffers( true, false, false );
+                pRenderContext->Release();
+            }
+            else if ( gl_clear.GetBool() )
+            {
+                nClearFlags |= VIEW_CLEAR_COLOR;
+            }
+            else if ( IsPosix() )
+            {
+                MaterialAdapterInfo_t adapterInfo;
+                materials->GetDisplayAdapterInfo( materials->GetCurrentAdapter(), adapterInfo );
+
+                // On Posix, on ATI, we always clear color if we're antialiasing
+                if ( adapterInfo.m_VendorID == 0x1002 )
+                {
+                    if ( g_pMaterialSystem->GetCurrentConfigForVideoCard().m_nAASamples > 0 )
+                    {
+                        nClearFlags |= VIEW_CLEAR_COLOR;
+                    }
+                }
+            }
+
+            // Determine if we should draw view model ( client mode override )
+            bool drawViewModel = g_pClientMode->ShouldDrawViewModel();
+
+            if ( cl_leveloverview.GetFloat() > 0 )
+            {
+                SetUpOverView();
+                nClearFlags |= VIEW_CLEAR_COLOR;
+                drawViewModel = false;
+            }
+
+            // Apply any player specific overrides
+            if ( pPlayer )
+            {
+                // Override view model if necessary
+                if ( !pPlayer->m_Local.m_bDrawViewmodel )
+                {
+                    drawViewModel = false;
+                }
+            }
+
+            int flags = 0;
+            if ( eEye == STEREO_EYE_MONO || eEye == STEREO_EYE_LEFT || ( g_ClientVirtualReality.ShouldRenderHUDInWorld() ) )
+            {
+                flags = RENDERVIEW_DRAWHUD;
+            }
+            if ( drawViewModel )
+            {
+                flags |= RENDERVIEW_DRAWVIEWMODEL;
+            }
+            if ( eEye == STEREO_EYE_RIGHT )
+            {
+                // we should use the monitor view from the left eye for both eyes
+                flags |= RENDERVIEW_SUPPRESSMONITORRENDERING;
+            }
+
+            RenderView( view, nClearFlags, flags );
+
+            if ( UseVR() )
+            {
+                bool bDoUndistort = !engine->IsTakingScreenshot();
+
+                if ( bDoUndistort )
+                {
+                    g_ClientVirtualReality.PostProcessFrame( eEye );
+                }
+
+                // logic here all cloned from code in viewrender.cpp around RenderHUDQuad:
+
+                // figure out if we really want to draw the HUD based on freeze cam
+                bool bInFreezeCam = ( pPlayer && pPlayer->GetObserverMode() == OBS_MODE_FREEZECAM );
+
+                // draw the HUD after the view model so its "I'm closer" depth queues work right.
+                if ( !bInFreezeCam && g_ClientVirtualReality.ShouldRenderHUDInWorld() )
+                {
+                    // TODO - a bit of a shonky test - basically trying to catch the main menu, the briefing screen, the loadout screen, etc.
+                    bool bTranslucent = !g_pMatSystemSurface->IsCursorVisible();
+                    g_ClientVirtualReality.OverlayHUDQuadWithUndistort( view, bDoUndistort, g_pClientMode->ShouldBlackoutAroundHUD(), bTranslucent );
                 }
             }
         }
-
-        // Determine if we should draw view model ( client mode override )
-        bool drawViewModel = g_pClientMode->ShouldDrawViewModel();
-
-        if ( cl_leveloverview.GetFloat() > 0 )
-        {
-            SetUpOverView();
-            nClearFlags |= VIEW_CLEAR_COLOR;
-            drawViewModel = false;
-        }
-
-        // Apply any player specific overrides
-        if ( pPlayer )
-        {
-            // Override view model if necessary
-            if ( !pPlayer->m_Local.m_bDrawViewmodel )
-            {
-                drawViewModel = false;
-            }
-        }
-
-        int flags = 0;
-        if ( eEye == STEREO_EYE_MONO || eEye == STEREO_EYE_LEFT || ( g_ClientVirtualReality.ShouldRenderHUDInWorld() ) )
-        {
-            flags = RENDERVIEW_DRAWHUD;
-        }
-        if ( drawViewModel )
-        {
-            flags |= RENDERVIEW_DRAWVIEWMODEL;
-        }
-        if ( eEye == STEREO_EYE_RIGHT )
-        {
-            // we should use the monitor view from the left eye for both eyes
-            flags |= RENDERVIEW_SUPPRESSMONITORRENDERING;
-        }
-
-        RenderView( view, nClearFlags, flags );
-
-        if ( UseVR() )
-        {
-            bool bDoUndistort = !engine->IsTakingScreenshot();
-
-            if ( bDoUndistort )
-            {
-                g_ClientVirtualReality.PostProcessFrame( eEye );
-            }
-
-            // logic here all cloned from code in viewrender.cpp around RenderHUDQuad:
-
-            // figure out if we really want to draw the HUD based on freeze cam
-            bool bInFreezeCam = ( pPlayer && pPlayer->GetObserverMode() == OBS_MODE_FREEZECAM );
-
-            // draw the HUD after the view model so its "I'm closer" depth queues work right.
-            if ( !bInFreezeCam && g_ClientVirtualReality.ShouldRenderHUDInWorld() )
-            {
-                // TODO - a bit of a shonky test - basically trying to catch the main menu, the briefing screen, the loadout screen, etc.
-                bool bTranslucent = !g_pMatSystemSurface->IsCursorVisible();
-                g_ClientVirtualReality.OverlayHUDQuadWithUndistort( view, bDoUndistort, g_pClientMode->ShouldBlackoutAroundHUD(), bTranslucent );
-            }
-        }
-    }
+#ifdef LUA_SDK
+    } // if ( !bOverrideRenderScene )
+#endif
 
     // TODO: should these be inside or outside the stereo eye stuff?
     g_pClientMode->PostRender();
     engine->EngineStats_EndFrame();
+
+#ifdef LUA_SDK
+    BEGIN_LUA_CALL_HOOK( "PostRender" );
+    END_LUA_CALL_HOOK( 0, 0 );
+#endif
 
 #if !defined( _X360 )
     // Stop stubbing the material system so we can see the budget panel

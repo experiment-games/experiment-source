@@ -59,7 +59,21 @@ LUA_API void lua_pushvector( lua_State *L, lua_Vector &v )
     LUA_SAFE_SET_METATABLE( L, LUA_VECTORLIBNAME );
 }
 
+LUA_API void lua_pushvector( lua_State *L, const lua_Vector &v )
+{
+    lua_Vector *pVec = ( lua_Vector * )lua_newuserdata( L, sizeof( lua_Vector ) );
+    *pVec = v;
+    LUA_SAFE_SET_METATABLE( L, LUA_VECTORLIBNAME );
+}
+
 LUA_API void lua_pushangle( lua_State *L, lua_QAngle &v )
+{
+    lua_QAngle *pVec = ( lua_QAngle * )lua_newuserdata( L, sizeof( lua_QAngle ) );
+    *pVec = v;
+    LUA_SAFE_SET_METATABLE( L, LUA_QANGLELIBNAME );
+}
+
+LUA_API void lua_pushangle( lua_State *L, const lua_QAngle &v )
 {
     lua_QAngle *pVec = ( lua_QAngle * )lua_newuserdata( L, sizeof( lua_QAngle ) );
     *pVec = v;

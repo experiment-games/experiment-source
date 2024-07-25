@@ -34,9 +34,10 @@ LUA_API bool(lua_isangle) (lua_State *L, int idx);
 /*
 ** push functions (C -> stack)
 */
-LUA_API void  (lua_pushvector) (lua_State *L, lua_Vector &v);
-LUA_API void  (lua_pushangle) (lua_State *L, lua_QAngle &v);
-
+LUA_API void( lua_pushvector )( lua_State *L, lua_Vector &v );
+LUA_API void lua_pushvector( lua_State *L, const lua_Vector &v );
+LUA_API void( lua_pushangle )( lua_State *L, lua_QAngle &v );
+LUA_API void lua_pushangle( lua_State *L, const lua_QAngle &v );
 
 
 LUALIB_API lua_Vector &(luaL_checkvector) (lua_State *L, int narg);

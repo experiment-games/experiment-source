@@ -1454,7 +1454,7 @@ void CBasePlayer::PlayerUse( void )
         CBaseEntity::PushLuaInstanceSafe( L, pUseEntity );
         END_LUA_CALL_HOOK( 2, 1 );
 
-        RETURN_LUA_NONE();
+        RETURN_LUA_NONE_IF_FALSE();
 #endif
 
         //!!!UNDONE: traceline here to prevent +USEing buttons through walls

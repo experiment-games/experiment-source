@@ -705,7 +705,8 @@ DEPRECATED void Panel::PushVPanelLuaInstance( lua_State *L, VPANEL panel )
 {
     Panel *pPanel = ipanel()->GetPanel( panel, GetControlsModuleName() );
 
-    if ( !pPanel )
+    // We push non Lua panels as NULL (happens for internal panels like the root/gameui panels)
+    if ( !pPanel || pPanel->m_lua_State == nullptr )
     {
         PHandle *_pPanelHandle = ( PHandle * )lua_newuserdata( L, sizeof( PHandle ) );
         _pPanelHandle->Set( ( Panel * )0 );
@@ -714,10 +715,6 @@ DEPRECATED void Panel::PushVPanelLuaInstance( lua_State *L, VPANEL panel )
         return;
     }
 
-    // TODO:    Remove this function and handle its functionality the same as done in
-    //          Panel::OnChildAdded. Using ipanel()->GetPanel and calling PushLuaInstance
-    //          on it in the place where this function is called.
-    AssertMsg( pPanel->m_lua_State != nullptr, "Non-Lua or not yet initialized Lua Panel" );
     AssertMsg( pPanel->m_lua_State == L, "Lua Panel with wrong Lua state" );
 
     pPanel->PushLuaInstance( L );
