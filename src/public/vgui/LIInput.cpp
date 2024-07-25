@@ -10,6 +10,7 @@
 #include "vgui_controls/Controls.h"
 #include <luamanager.h>
 #include "luasrclib.h"
+#include <mathlib/lvector.h>
 
 #include "scripted_controls/lPanel.h"
 
@@ -248,6 +249,37 @@ static int input_ReleaseModalSubTree( lua_State *L )
     return 0;
 }
 
+static int input_ScreenToWorld( lua_State *L )
+{
+    CBasePlayer *pPlayer = CBasePlayer::GetLocalPlayer();
+    float fov = pPlayer->GetFOV();
+    QAngle vecRenderAngles = pPlayer->GetRenderAngles();
+    float x = luaL_checknumber( L, 1 );
+    float y = luaL_checknumber( L, 2 );
+
+    Vector vecPickingRay;
+    ScreenToWorld( x, y, fov, vecRenderAngles, vecPickingRay );
+    lua_pushvector( L, vecPickingRay );
+
+    return 1;
+}
+
+static int input_AimToVector( lua_State *L )
+{
+    QAngle vecAngles = luaL_checkangle( L, 1 );
+    float fov = luaL_checknumber( L, 2 );
+    float x = luaL_checknumber( L, 3 );
+    float y = luaL_checknumber( L, 4 );
+    float nScreenWidth = luaL_checknumber( L, 5 );
+    float nScreenHeight = luaL_checknumber( L, 6 );
+
+    Vector vecPickingRay;
+    ScreenToWorld( x, y, fov, vecAngles, vecPickingRay, nScreenWidth, nScreenHeight );
+    lua_pushvector( L, vecPickingRay );
+
+    return 1;
+}
+
 static int input_SetAppModalSurface( lua_State *L )
 {
     input()->SetAppModalSurface( luaL_checkvpanel( L, 1 ) );
@@ -387,6 +419,8 @@ static const luaL_Reg inputlib[] = {
     { "RegisterKeyCodeUnhandledListener", input_RegisterKeyCodeUnhandledListener },
     { "ReleaseAppModalSurface", input_ReleaseAppModalSurface },
     { "ReleaseModalSubTree", input_ReleaseModalSubTree },
+    { "ScreenToWorld", input_ScreenToWorld },
+    { "AimToVector", input_AimToVector },
     { "SetAppModalSurface", input_SetAppModalSurface },
     { "SetCandidateListPageStart", input_SetCandidateListPageStart },
     { "SetCandidateWindowPos", input_SetCandidateWindowPos },

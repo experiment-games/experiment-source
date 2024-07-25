@@ -69,8 +69,7 @@ LUA_API void lua_pushitexture( lua_State *L, lua_ITexture *pTexture )
 {
     lua_ITexture **ppTexture = ( lua_ITexture ** )lua_newuserdata( L, sizeof( pTexture ) );
     *ppTexture = pTexture;
-    luaL_getmetatable( L, "ITexture" );
-    lua_setmetatable( L, -2 );
+    LUA_SAFE_SET_METATABLE( L, "ITexture" );
 }
 
 LUALIB_API lua_ITexture *luaL_checkitexture( lua_State *L, int narg )

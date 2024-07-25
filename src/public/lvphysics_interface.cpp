@@ -348,8 +348,7 @@ LUA_API void lua_pushphysicsobject( lua_State *L, lua_IPhysicsObject *pPhysicsOb
 {
     lua_IPhysicsObject **ppPhysicsObject = ( lua_IPhysicsObject ** )lua_newuserdata( L, sizeof( pPhysicsObject ) );
     *ppPhysicsObject = pPhysicsObject;
-    luaL_getmetatable( L, "IPhysicsObject" );
-    lua_setmetatable( L, -2 );
+    LUA_SAFE_SET_METATABLE( L, LUA_PHYSICSOBJECTLIBNAME );
 }
 
 LUA_API void lua_pushsurfacephysicsparams( lua_State *L, lua_surfacephysicsparams_t *pphysics )
@@ -480,8 +479,7 @@ LUA_API void lua_pushphysicssurfaceprops( lua_State *L, lua_IPhysicsSurfaceProps
 {
     lua_IPhysicsSurfaceProps **ppProps = ( lua_IPhysicsSurfaceProps ** )lua_newuserdata( L, sizeof( pProps ) );
     *ppProps = pProps;
-    luaL_getmetatable( L, "IPhysicsSurfaceProps" );
-    lua_setmetatable( L, -2 );
+    LUA_SAFE_SET_METATABLE( L, LUA_PHYSICSSURFACEPROPSLIBNAME );
 }
 
 LUALIB_API lua_IPhysicsObject *luaL_checkphysicsobject( lua_State *L, int narg )
@@ -494,7 +492,7 @@ LUALIB_API lua_IPhysicsObject *luaL_checkphysicsobject( lua_State *L, int narg )
 
 LUALIB_API lua_IPhysicsSurfaceProps *luaL_checkphysicssurfaceprops( lua_State *L, int narg )
 {
-    lua_IPhysicsSurfaceProps **d = ( lua_IPhysicsSurfaceProps ** )luaL_checkudata( L, narg, "IPhysicsSurfaceProps" );
+    lua_IPhysicsSurfaceProps **d = ( lua_IPhysicsSurfaceProps ** )luaL_checkudata( L, narg, LUA_PHYSICSSURFACEPROPSLIBNAME );
 
     if ( *d == 0 ) /* avoid extra test when d is not 0 */
         luaL_argerror( L, narg, "IPhysicsSurfaceProps expected, got NULL" );
@@ -1121,7 +1119,7 @@ static int IPhysicsObject_WorldToLocalVector( lua_State *L )
 
 static int IPhysicsObject___tostring( lua_State *L )
 {
-    lua_pushfstring( L, "IPhysicsObject: %p", luaL_checkudata( L, 1, "IPhysicsObject" ) );
+    lua_pushfstring( L, "IPhysicsObject: %p", luaL_checkudata( L, 1, LUA_PHYSICSOBJECTLIBNAME ) );
     return 1;
 }
 
@@ -1270,7 +1268,7 @@ static int IPhysicsSurfaceProps_SurfacePropCount( lua_State *L )
 
 static int IPhysicsSurfaceProps___tostring( lua_State *L )
 {
-    lua_pushfstring( L, "IPhysicsSurfaceProps: %p", luaL_checkudata( L, 1, "IPhysicsSurfaceProps" ) );
+    lua_pushfstring( L, "IPhysicsSurfaceProps: %p", luaL_checkudata( L, 1, LUA_PHYSICSSURFACEPROPSLIBNAME ) );
     return 1;
 }
 

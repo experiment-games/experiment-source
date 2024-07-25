@@ -56,16 +56,14 @@ LUA_API void lua_pushvector( lua_State *L, lua_Vector &v )
 {
     lua_Vector *pVec = ( lua_Vector * )lua_newuserdata( L, sizeof( lua_Vector ) );
     *pVec = v;
-    luaL_getmetatable( L, LUA_VECTORLIBNAME );
-    lua_setmetatable( L, -2 );
+    LUA_SAFE_SET_METATABLE( L, LUA_VECTORLIBNAME );
 }
 
 LUA_API void lua_pushangle( lua_State *L, lua_QAngle &v )
 {
     lua_QAngle *pVec = ( lua_QAngle * )lua_newuserdata( L, sizeof( lua_QAngle ) );
     *pVec = v;
-    luaL_getmetatable( L, LUA_QANGLELIBNAME );
-    lua_setmetatable( L, -2 );
+    LUA_SAFE_SET_METATABLE( L, LUA_QANGLELIBNAME );
 }
 
 LUALIB_API lua_Vector &luaL_checkvector( lua_State *L, int narg )
@@ -454,8 +452,7 @@ static int luasrc_Vector( lua_State *L )
     if ( lua_type( L, 1 ) == LUA_TSTRING )
     {
         Vector vec;
-        const char *str = luaL_checkstring( L, 1 );
-        sscanf( str, "%f %f %f", &vec.x, &vec.y, &vec.z );
+        UTIL_StringToVector( vec.Base(), luaL_checkstring( L, 1 ) );
         lua_pushvector( L, vec );
         return 1;
     }
@@ -740,8 +737,7 @@ static int luasrc_QAngle( lua_State *L )
     if ( lua_type( L, 1 ) == LUA_TSTRING )
     {
         QAngle angle;
-        const char *str = luaL_checkstring( L, 1 );
-        sscanf( str, "%f %f %f", &angle.x, &angle.y, &angle.z );
+        UTIL_StringToVector( angle.Base(), luaL_checkstring( L, 1 ) );
         lua_pushangle( L, angle );
         return 1;
     }

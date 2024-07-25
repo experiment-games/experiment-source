@@ -37,8 +37,7 @@ LUA_API void lua_pusheffect( lua_State *L, lua_CEffectData &data )
 {
     lua_CEffectData *pData = ( lua_CEffectData * )lua_newuserdata( L, sizeof( lua_CEffectData ) );
     *pData = data;
-    luaL_getmetatable( L, "CEffectData" );
-    lua_setmetatable( L, -2 );
+    LUA_SAFE_SET_METATABLE( L, "CEffectData" );
 }
 
 LUALIB_API lua_CEffectData &luaL_checkeffect( lua_State *L, int narg )

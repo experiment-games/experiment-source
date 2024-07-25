@@ -33,16 +33,14 @@ LUA_API void lua_pushcolor( lua_State *L, lua_Color &clr )
 {
     lua_Color *pColor = ( lua_Color * )lua_newuserdata( L, sizeof( lua_Color ) );
     *pColor = clr;
-    luaL_getmetatable( L, "Color" );
-    lua_setmetatable( L, -2 );
+    LUA_SAFE_SET_METATABLE( L, "Color" );
 }
 
 LUA_API void lua_pushcolor( lua_State *L, Color &clr )
 {
     lua_Color *pColor = ( lua_Color * )lua_newuserdata( L, sizeof( lua_Color ) );
     *pColor = lua_Color( clr.r(), clr.g(), clr.b(), clr.a() );
-    luaL_getmetatable( L, "Color" );
-    lua_setmetatable( L, -2 );
+    LUA_SAFE_SET_METATABLE( L, "Color" );
 }
 
 LUALIB_API lua_Color &luaL_checkcolor( lua_State *L, int narg )

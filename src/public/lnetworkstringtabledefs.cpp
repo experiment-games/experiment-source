@@ -31,13 +31,12 @@ LUA_API void lua_pushstringtable( lua_State *L, lua_INetworkStringTable *pNetwor
 {
     lua_INetworkStringTable **ppNetworkStringTable = ( lua_INetworkStringTable ** )lua_newuserdata( L, sizeof( pNetworkStringTable ) );
     *ppNetworkStringTable = pNetworkStringTable;
-    luaL_getmetatable( L, "INetworkStringTable" );
-    lua_setmetatable( L, -2 );
+    LUA_SAFE_SET_METATABLE( L, LUA_INETWORKSTRINGTABLELIBNAME );
 }
 
 LUALIB_API lua_INetworkStringTable *luaL_checkstringtable( lua_State *L, int narg )
 {
-    lua_INetworkStringTable **ppData = ( lua_INetworkStringTable ** )luaL_checkudata( L, narg, "INetworkStringTable" );
+    lua_INetworkStringTable **ppData = ( lua_INetworkStringTable ** )luaL_checkudata( L, narg, LUA_INETWORKSTRINGTABLELIBNAME );
 
     if ( *ppData == 0 ) /* avoid extra test when d is not 0 */
         luaL_argerror( L, narg, "INetworkStringTable expected, got NULL" );

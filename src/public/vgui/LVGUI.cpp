@@ -40,16 +40,14 @@ LUA_API void lua_pushscheme( lua_State *L, lua_HScheme hScheme )
 {
     lua_HScheme *phScheme = ( lua_HScheme * )lua_newuserdata( L, sizeof( lua_HScheme ) );
     *phScheme = hScheme;
-    luaL_getmetatable( L, LUA_HSCHEMELIBNAME );
-    lua_setmetatable( L, -2 );
+    LUA_SAFE_SET_METATABLE( L, LUA_HSCHEMELIBNAME );
 }
 
 LUA_API void lua_pushfont( lua_State *L, lua_HFont hFont )
 {
     lua_HFont *phFont = ( lua_HFont * )lua_newuserdata( L, sizeof( hFont ) );
     *phFont = hFont;
-    luaL_getmetatable( L, LUA_FONTLIBNAME );
-    lua_setmetatable( L, -2 );
+    LUA_SAFE_SET_METATABLE( L, LUA_FONTLIBNAME );
 }
 
 LUALIB_API lua_HScheme luaL_checkscheme( lua_State *L, int narg )

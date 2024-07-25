@@ -38,8 +38,7 @@ LUA_API void lua_pushmaterial( lua_State *L, lua_IMaterial *pMaterial )
 {
     lua_IMaterial **ppMaterial = ( lua_IMaterial ** )lua_newuserdata( L, sizeof( pMaterial ) );
     *ppMaterial = pMaterial;
-    luaL_getmetatable( L, "IMaterial" );
-    lua_setmetatable( L, -2 );
+    LUA_SAFE_SET_METATABLE( L, LUA_MATERIALLIBNAME );
 }
 
 LUALIB_API lua_IMaterial *luaL_checkmaterial( lua_State *L, int narg )

@@ -31,8 +31,7 @@ LUA_API void lua_pushsteamfriends( lua_State *L, ISteamFriends *pSteamFriends )
 {
     lua_ISteamFriends **ppSteamFriends = ( lua_ISteamFriends ** )lua_newuserdata( L, sizeof( pSteamFriends ) );
     *ppSteamFriends = pSteamFriends;
-    luaL_getmetatable( L, LUA_STEAMFRIENDSLIBNAME );
-    lua_setmetatable( L, -2 );
+    LUA_SAFE_SET_METATABLE( L, LUA_STEAMFRIENDSLIBNAME );
 }
 
 LUALIB_API lua_ISteamFriends *luaL_checksteamfriends( lua_State *L, int narg )

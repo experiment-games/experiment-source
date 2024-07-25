@@ -35,8 +35,7 @@ LUA_API void lua_pushmovehelper( lua_State *L, lua_IMoveHelper *pHelper )
 {
     lua_IMoveHelper **ppHelper = ( lua_IMoveHelper ** )lua_newuserdata( L, sizeof( lua_IMoveHelper ) );
     *ppHelper = pHelper;
-    luaL_getmetatable( L, "IMoveHelper" );
-    lua_setmetatable( L, -2 );
+    LUA_SAFE_SET_METATABLE( L, "IMoveHelper" );
 }
 
 LUALIB_API lua_IMoveHelper *luaL_checkmovehelper( lua_State *L, int narg )

@@ -34,8 +34,7 @@ LUA_API void lua_pushkeyvalues( lua_State *L, lua_KeyValues *pKV )
 {
     lua_KeyValues **ppKV = ( lua_KeyValues ** )lua_newuserdata( L, sizeof( lua_KeyValues * ) );
     *ppKV = pKV;
-    luaL_getmetatable( L, "KeyValues" );
-    lua_setmetatable( L, -2 );
+    LUA_SAFE_SET_METATABLE( L, "KeyValues" );
 }
 
 LUALIB_API lua_KeyValues *luaL_checkkeyvalues( lua_State *L, int narg )

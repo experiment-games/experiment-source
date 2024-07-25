@@ -209,6 +209,12 @@ LUALIB_API int( luaopen_ITexture )( lua_State *L );
 #define LUA_LOCALIZATIONLIBNAME "Localization"
 LUALIB_API int luaopen_localization( lua_State *L );
 
+#define LUA_MOVEDATALIBNAME "CMoveData"
+LUALIB_API int( luaopen_CMoveData )( lua_State *L );
+
+#define LUA_USERCMDLIBNAME "CUserCmd"
+LUALIB_API int( luaopen_CUserCmd )( lua_State *L );
+
 /* open all Source Engine libraries */
 LUALIB_API void( luasrc_openlibs )( lua_State *L, bool isStateGameUI = false );
 

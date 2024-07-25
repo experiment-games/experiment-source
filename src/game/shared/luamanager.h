@@ -99,7 +99,7 @@
     if ( lua_isfunction( L, -1 ) )                   \
     {                                                \
         int args = 0;                                \
-        CBaseEntity::PushLuaInstanceSafe( L, this );                   \
+        CBaseEntity::PushLuaInstanceSafe( L, this ); \
         ++args;
 
 #define END_LUA_CALL_WEAPON_METHOD( nArgs, nresults ) \
@@ -115,7 +115,7 @@
         lua_getfield( L, -1, functionName );                \
         lua_remove( L, -2 );                                \
         int args = 0;                                       \
-        CBaseEntity::PushLuaInstanceSafe( L, pWeapon );                       \
+        CBaseEntity::PushLuaInstanceSafe( L, pWeapon );     \
         ++args;
 
 #define END_LUA_CALL_WEAPON_HOOK( nArgs, nresults ) \
@@ -495,6 +495,11 @@
 #define LUA_PUSH_METATABLE_TO_EXTEND( L, MetaTableName ) \
     luaL_getmetatable( L, MetaTableName );               \
     AssertMsg( lua_istable( L, -1 ), "Metatable doesn't exist!" );
+
+#define LUA_SAFE_SET_METATABLE( L, MetaTableName )                 \
+    luaL_getmetatable( L, MetaTableName );                         \
+    AssertMsg( lua_istable( L, -1 ), "Metatable doesn't exist!" ); \
+    lua_setmetatable( L, -2 );
 
 extern ConVar gamemode;
 

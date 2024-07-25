@@ -15,6 +15,10 @@
 #include "iservervehicle.h"
 #include "tier0/vprof.h"
 
+#ifdef LUA_SDK
+#include <lusercmd.h>
+#endif
+
 // memdbgon must be the last include file in a .cpp file!!!
 #include "tier0/memdbgon.h"
 
@@ -72,8 +76,7 @@ void CPlayerMove::StartCommand( CBasePlayer *player, CUserCmd *cmd )
 #ifdef LUA_SDK
     BEGIN_LUA_CALL_HOOK( "StartCommand" );
     CBaseEntity::PushLuaInstanceSafe( L, player );
-    // lua_pushusercommand( L, ucmd ); // TODO
-    lua_pushnil( L );
+    lua_pushusercmd( L, cmd );
     END_LUA_CALL_HOOK( 2, 0 );
 #endif
 }

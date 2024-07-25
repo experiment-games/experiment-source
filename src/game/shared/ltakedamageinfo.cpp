@@ -34,8 +34,7 @@ LUA_API void lua_pushdamageinfo( lua_State *L, lua_CTakeDamageInfo &info )
 {
     lua_CTakeDamageInfo *pInfo = ( lua_CTakeDamageInfo * )lua_newuserdata( L, sizeof( lua_CTakeDamageInfo ) );
     *pInfo = info;
-    luaL_getmetatable( L, "CTakeDamageInfo" );
-    lua_setmetatable( L, -2 );
+    LUA_SAFE_SET_METATABLE( L, "CTakeDamageInfo" );
 }
 
 LUALIB_API lua_CTakeDamageInfo &luaL_checkdamageinfo( lua_State *L, int narg )

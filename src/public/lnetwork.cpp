@@ -328,8 +328,7 @@ static const luaL_Reg netLib[] = {
 LUA_API void lua_pushbf_read( lua_State *L, bf_read *message )
 {
     lua_pushlightuserdata( L, message );
-    luaL_getmetatable( L, LUA_BFREADLIBNAME );
-    lua_setmetatable( L, -2 );
+    LUA_SAFE_SET_METATABLE( L, LUA_BFREADLIBNAME );
 }
 
 LUALIB_API bf_read *luaL_checkbf_read( lua_State *L, int narg )

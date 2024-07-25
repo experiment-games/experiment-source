@@ -70,6 +70,8 @@ extern ConVar replay_rendersetting_renderglow;
 #include "luamanager.h"
 #include "lbaseentity_shared.h"
 #include "lbaseplayer_shared.h"
+#include <lmovedata.h>
+#include <lusercmd.h>
 #endif
 
 // memdbgon must be the last include file in a .cpp file!!!
@@ -479,8 +481,7 @@ bool ClientModeShared::CreateMove( float flInputSampleTime, CUserCmd *cmd )
 {
 #ifdef LUA_SDK
     BEGIN_LUA_CALL_HOOK( "CreateMove" );
-    // lua_pushusercommand( L, ucmd ); // TODO
-    lua_pushnil( L );
+    lua_pushusercmd( L, cmd );
     END_LUA_CALL_HOOK( 1, 1 );
 
     RETURN_LUA_BOOLEAN();

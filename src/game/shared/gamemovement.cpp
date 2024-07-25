@@ -19,6 +19,10 @@
 #include "hl_movedata.h"
 #endif
 
+#ifdef LUA_SDK
+#include <lmovedata.h>
+#endif
+
 // memdbgon must be the last include file in a .cpp file!!!
 #include "tier0/memdbgon.h"
 
@@ -1160,8 +1164,7 @@ void CGameMovement::ProcessMovement( CBasePlayer *pPlayer, CMoveData *pMove )
 #ifdef LUA_SDK
     BEGIN_LUA_CALL_HOOK( "PlayerTick" );
     CBaseEntity::PushLuaInstanceSafe( L, player );
-    // lua_pushmovedata( L, mv );  // TODO
-    lua_pushnil( L );
+    lua_pushmovedata( L, mv );
     END_LUA_CALL_HOOK( 2, 0 );
 #endif
 
@@ -4545,8 +4548,7 @@ void CGameMovement::PlayerMove( void )
 #ifdef LUA_SDK
     BEGIN_LUA_CALL_HOOK( "Move" );
     CBaseEntity::PushLuaInstanceSafe( L, player );
-    // lua_pushmovedata( L, mv );  // TODO
-    lua_pushnil( L );
+    lua_pushmovedata( L, mv );
     END_LUA_CALL_HOOK( 2, 1 );
 
     RETURN_LUA_NONE();

@@ -25,7 +25,7 @@
 
 LUA_API lua_INetChannelInfo *lua_tonetchannel( lua_State *L, int idx )
 {
-    lua_INetChannelInfo *pNetChannel = *( lua_INetChannelInfo ** )luaL_checkudata( L, idx, "INetChannelInfo" );
+    lua_INetChannelInfo *pNetChannel = *( lua_INetChannelInfo ** )luaL_checkudata( L, idx, LUA_NETCHANNELINFOLIBNAME );
     return pNetChannel;
 }
 
@@ -37,13 +37,12 @@ LUA_API void lua_pushnetchannel( lua_State *L, INetChannelInfo *netchannel )
 {
     lua_INetChannelInfo **ppNetChannel = ( lua_INetChannelInfo ** )lua_newuserdata( L, sizeof( netchannel ) );
     *ppNetChannel = netchannel;
-    luaL_getmetatable( L, "INetChannelInfo" );
-    lua_setmetatable( L, -2 );
+    LUA_SAFE_SET_METATABLE( L, LUA_NETCHANNELINFOLIBNAME );
 }
 
 LUALIB_API lua_INetChannelInfo *luaL_checknetchannel( lua_State *L, int narg )
 {
-    lua_INetChannelInfo *d = *( lua_INetChannelInfo ** )luaL_checkudata( L, narg, "INetChannelInfo" );
+    lua_INetChannelInfo *d = *( lua_INetChannelInfo ** )luaL_checkudata( L, narg, LUA_NETCHANNELINFOLIBNAME );
     if ( d == NULL ) /* avoid extra test when d is not 0 */
         luaL_argerror( L, narg, "INetChannelInfo expected, got NULL" );
     return d;

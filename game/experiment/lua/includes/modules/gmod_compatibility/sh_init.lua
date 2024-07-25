@@ -562,7 +562,9 @@ else
 			local x, y = input.GetCursorPosition()
 			return y
 		end,
-		SetMousePos = input.SetCursorPosition,
+        SetMousePos = input.SetCursorPosition,
+        ScreenToVector = input.ScreenToWorld,
+		AimToVector = input.AimToVector,
     }
 
     cam = {
@@ -683,8 +685,12 @@ else
 		return parent
 	end
 
-	function PANEL_META:SetWorldClicker(isEnabled)
-		-- TODO: Implement this in Lua
+    function PANEL_META:SetWorldClicker(isEnabled)
+        self.__isWorldClicker = isEnabled
+    end
+
+	function PANEL_META:IsWorldClicker()
+		return self.__isWorldClicker
 	end
 
 	-- Change casing and add functionality to pass individual color components.
@@ -1020,7 +1026,7 @@ require("gmod_compatibility/modules/list")
 require("gmod_compatibility/modules/cvars")
 require("gmod_compatibility/modules/http")
 require("gmod_compatibility/modules/properties")
--- require("gmod_compatibility/modules/widget")
+require("gmod_compatibility/modules/widget")
 require("gmod_compatibility/modules/cookie")
 require("gmod_compatibility/modules/utf8")
 

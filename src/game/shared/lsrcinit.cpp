@@ -119,6 +119,9 @@ static const luaL_RegForState luasrclibs[] = {
     ,
     { LUA_LOCALIZATIONLIBNAME, luaopen_localization, true },
     
+    { LUA_MOVEDATALIBNAME, luaopen_CMoveData, false },
+    { LUA_USERCMDLIBNAME, luaopen_CUserCmd, false },
+    
     { NULL, NULL, NULL } };
 
 LUALIB_API void luasrc_openlibs( lua_State *L, bool isStateGameUI )

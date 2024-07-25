@@ -39,8 +39,7 @@ LUA_API void lua_pushischeme( lua_State *L, lua_IScheme *pScheme )
 {
     lua_IScheme **ppScheme = ( lua_IScheme ** )lua_newuserdata( L, sizeof( lua_IScheme ) );
     *ppScheme = pScheme;
-    luaL_getmetatable( L, LUA_ISCHEMELIBNAME );
-    lua_setmetatable( L, -2 );
+    LUA_SAFE_SET_METATABLE( L, LUA_ISCHEMELIBNAME );
 }
 
 LUALIB_API lua_IScheme *luaL_checkischeme( lua_State *L, int narg )

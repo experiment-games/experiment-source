@@ -32,8 +32,7 @@ LUA_API void lua_pushfilehandle( lua_State *L, lua_FileHandle_t hFile )
 {
     lua_FileHandle_t *phFile = ( lua_FileHandle_t * )lua_newuserdata( L, sizeof( lua_FileHandle_t ) );
     *phFile = hFile;
-    luaL_getmetatable( L, "FileHandle_t" );
-    lua_setmetatable( L, -2 );
+    LUA_SAFE_SET_METATABLE( L, "FileHandle_t" );
 }
 
 LUALIB_API lua_FileHandle_t &luaL_checkfilehandle( lua_State *L, int narg )

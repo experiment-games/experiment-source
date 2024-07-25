@@ -10,6 +10,11 @@
 
 #include "iclientvehicle.h"
 #include "vehicle_viewblend_shared.h"
+
+#ifdef LUA_SDK
+#include <lmovedata.h>
+#endif
+
 class C_PropVehicleDriveable : public C_BaseAnimating, public IClientVehicle
 {
     DECLARE_CLASS( C_PropVehicleDriveable, C_BaseAnimating );
@@ -39,8 +44,7 @@ class C_PropVehicleDriveable : public C_BaseAnimating, public IClientVehicle
         BEGIN_LUA_CALL_HOOK( "VehicleMove" );
         CBaseEntity::PushLuaInstanceSafe( L, pPlayer );
         CBaseEntity::PushLuaInstanceSafe( L, this->GetVehicleEnt() );
-        // lua_pushmovedata( L, pMoveData );  // TODO
-        lua_pushnil( L );
+        lua_pushmovedata( L, pMoveData );
         END_LUA_CALL_HOOK( 3, 1 );
 
         RETURN_LUA_NONE();

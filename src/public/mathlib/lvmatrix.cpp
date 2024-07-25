@@ -53,8 +53,7 @@ LUA_API void lua_pushvmatrix( lua_State *L, lua_VMatrix &matrix )
 {
     lua_VMatrix *pMat = ( lua_VMatrix * )lua_newuserdata( L, sizeof( lua_VMatrix ) );
     *pMat = matrix;
-    luaL_getmetatable( L, LUA_VMATRIXLIBNAME );
-    lua_setmetatable( L, -2 );
+    LUA_SAFE_SET_METATABLE( L, LUA_VMATRIXLIBNAME );
 }
 
 LUALIB_API lua_VMatrix &luaL_checkvmatrix( lua_State *L, int narg )

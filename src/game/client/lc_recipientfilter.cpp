@@ -45,8 +45,7 @@ LUA_API void lua_pushrecipientfilter( lua_State *L, lua_CRecipientFilter &filter
     s_pFilter->Reset();
     s_pFilter->CopyFrom( filter );
     *ppFilter = s_pFilter;
-    luaL_getmetatable( L, "CRecipientFilter" );
-    lua_setmetatable( L, -2 );
+    LUA_SAFE_SET_METATABLE( L, "CRecipientFilter" );
 }
 
 LUA_API void lua_pushpasfilter( lua_State *L, lua_CPASFilter &filter )
@@ -55,8 +54,7 @@ LUA_API void lua_pushpasfilter( lua_State *L, lua_CPASFilter &filter )
     s_pPASFilter->Reset();
     s_pPASFilter->CopyFrom( filter );
     *ppFilter = s_pPASFilter;
-    luaL_getmetatable( L, "CPASFilter" );
-    lua_setmetatable( L, -2 );
+    LUA_SAFE_SET_METATABLE( L, "CPASFilter" );
 }
 
 LUALIB_API lua_CRecipientFilter &luaL_checkrecipientfilter( lua_State *L, int narg )

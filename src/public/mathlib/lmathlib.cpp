@@ -32,8 +32,7 @@ LUA_API void lua_pushmatrix( lua_State *L, lua_matrix3x4_t &matrix )
 {
     lua_matrix3x4_t *pMat = ( lua_matrix3x4_t * )lua_newuserdata( L, sizeof( lua_matrix3x4_t ) );
     *pMat = matrix;
-    luaL_getmetatable( L, LUA_MATRIXLIBNAME );
-    lua_setmetatable( L, -2 );
+    LUA_SAFE_SET_METATABLE( L, LUA_MATRIXLIBNAME );
 }
 
 LUALIB_API lua_matrix3x4_t &luaL_checkmatrix( lua_State *L, int narg )
