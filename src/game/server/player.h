@@ -277,7 +277,9 @@ class CBasePlayer : public CBaseCombatCharacter
     static CBasePlayer *CreatePlayer( const char *className, edict_t *ed );
 
     virtual void CreateViewModel( int viewmodelindex = 0 );
+    virtual void CreateHandModel( int viewmodelindex = 1, int iOtherVm = 0 );
     CBaseViewModel *GetViewModel( int viewmodelindex = 0, bool bObserverOK = true );
+    CBaseViewModel *GetHands();
     void HideViewModels( void );
     void DestroyViewModels( void );
 

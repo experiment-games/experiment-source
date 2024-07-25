@@ -139,6 +139,7 @@ static const char *s_PreserveEnts[] = {
     "trigger_soundscape",
     "viewmodel",
     "predicted_viewmodel",
+    "hand_viewmodel",
     "worldspawn",
     "point_devshot_camera",
     "",  // END Marker

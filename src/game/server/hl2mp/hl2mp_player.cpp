@@ -222,6 +222,10 @@ void CHL2MP_Player::Precache( void )
     PrecacheModel( "sprites/glow01.vmt" );
     PrecacheModel( g_ppszDefaultModel );
 
+    // https://developer.valvesoftware.com/wiki/Hand_Viewmodels
+    // TODO: Make dependant on model:
+    PrecacheModel( "models/weapons/c_arms_citizen.mdl" );
+
     // Precache Citizen models
     int nHeads = ARRAYSIZE( g_ppszRandomCitizenModels );
     int i;
@@ -388,6 +392,7 @@ void CHL2MP_Player::Spawn( void )
     PickDefaultSpawnTeam();
 
     BaseClass::Spawn();
+    GetHands()->SetModel( "models/weapons/c_arms_citizen.mdl" );
 
     if ( !IsObserver() )
     {

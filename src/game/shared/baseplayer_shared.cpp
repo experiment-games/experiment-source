@@ -916,6 +916,16 @@ bool CBasePlayer::Weapon_Switch( CBaseCombatWeapon *pWeapon,
     return false;
 }
 
+//-----------------------------------------------------------------------------
+// Purpose: 
+// Input  :
+// Output :
+//-----------------------------------------------------------------------------
+CBaseViewModel *CBasePlayer::GetHands()
+{
+    return GetViewModel( 1 );
+}
+
 void CBasePlayer::SelectLastItem( void )
 {
     if ( m_hLastWeapon.Get() == NULL )

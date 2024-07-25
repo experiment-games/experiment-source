@@ -216,6 +216,12 @@ static int CBasePlayer_GetFOVTime( lua_State *L )
     return 1;
 }
 
+static int CBasePlayer_GetHands( lua_State *L )
+{
+    CBaseEntity::PushLuaInstanceSafe( L, luaL_checkplayer( L, 1 )->GetHands() );
+    return 1;
+}
+
 static int CBasePlayer_GetHealth( lua_State *L )
 {
     lua_pushinteger( L, luaL_checkplayer( L, 1 )->GetHealth() );
@@ -1104,6 +1110,7 @@ static const luaL_Reg CBasePlayermeta[] = {
     { "GetFOV", CBasePlayer_GetFOV },
     { "GetFOVDistanceAdjustFactor", CBasePlayer_GetFOVDistanceAdjustFactor },
     { "GetFOVTime", CBasePlayer_GetFOVTime },
+    { "GetHands", CBasePlayer_GetHands },
     { "GetHealth", CBasePlayer_GetHealth },
     { "GetImpulse", CBasePlayer_GetImpulse },
     { "GetLaggedMovementValue", CBasePlayer_GetLaggedMovementValue },

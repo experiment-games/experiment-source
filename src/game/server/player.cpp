@@ -513,6 +513,28 @@ void CBasePlayer::CreateViewModel( int index /*=0*/ )
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
+void CBasePlayer::CreateHandModel( int index, int iOtherVm )
+{
+    Assert( index >= 0 && index < MAX_VIEWMODELS && iOtherVm >= 0 && iOtherVm < MAX_VIEWMODELS );
+
+    if ( GetViewModel( index ) )
+        return;
+
+    CBaseViewModel *vm = ( CBaseViewModel * )CreateEntityByName( "hand_viewmodel" );
+    if ( vm )
+    {
+        vm->SetAbsOrigin( GetAbsOrigin() );
+        vm->SetOwner( this );
+        vm->SetIndex( index );
+        DispatchSpawn( vm );
+        vm->FollowEntity( GetViewModel( iOtherVm ), true );
+        m_hViewModel.Set( index, vm );
+    }
+}
+
+//-----------------------------------------------------------------------------
+// Purpose:
+//-----------------------------------------------------------------------------
 void CBasePlayer::DestroyViewModels( void )
 {
     int i;
@@ -2119,6 +2141,8 @@ void CBasePlayer::PlayerDeathThink( void )
     }
 
     StopAnimation();
+
+    GetHands()->SetModel( "" );  // FIX: Removes hand model when the player is dead
 
     IncrementInterpolationFrame();
     m_flPlaybackRate = 0.0;
@@ -5002,7 +5026,8 @@ void CBasePlayer::Spawn( void )
     CSingleUserRecipientFilter user( this );
     enginesound->SetPlayerDSP( user, 0, false );
 
-    CreateViewModel();
+    CreateViewModel(); // Index 0
+    CreateHandModel(); // Index 1 for GetViewModel( 1 ) is intentional (see CBasePlayer::GetHands)
 
     SetCollisionGroup( COLLISION_GROUP_PLAYER );
 
