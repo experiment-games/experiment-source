@@ -115,6 +115,11 @@ class C_HL2MP_Player : public C_BaseHLPlayer
         return ( !( GetFlags() & FL_ONGROUND ) );
     }
 
+    CHL2MPPlayerAnimState *GetAnimState() const
+    {
+        return m_PlayerAnimState;
+    }
+
    private:
     C_HL2MP_Player( const C_HL2MP_Player & );
 

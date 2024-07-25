@@ -32,7 +32,7 @@ include = Include
 function GetConVar_Internal(name)
 	local consoleVariable = GetConsoleVariable(name)
 
-    if (not IsValid(consoleVariable)) then
+	if (not IsValid(consoleVariable)) then
 		debug.PrintError("GetConVar: Couldn't find convar '" .. name .. "'")
 		return nil
 	end
@@ -46,16 +46,16 @@ util.PrecacheSound = _R.CBaseEntity.PrecacheSound
 
 -- TODO: 	Things like the player manager and drive system depend on these three functions
 --			returning sensible data. Find a way to implement it:
-util.AddNetworkString = function(name) end     -- Not needed for us.
+util.AddNetworkString = function(name) end        -- Not needed for us.
 util.NetworkIDToString = function() return "" end -- Not needed for us.
-util.NetworkStringToID = function() return 0 end -- Not needed for us.
+util.NetworkStringToID = function() return 0 end  -- Not needed for us.
 
 util.JSONToTable = function(json)
 	return Json.Decode(json)
 end
 
 util.TableToJSON = function(table)
-    return Json.Encode(table)
+	return Json.Encode(table)
 end
 
 util.IsValidProp = util.IsValidPhysicsProp
@@ -67,7 +67,7 @@ ents = {
 	Create = CreateEntityByName,
 	GetAll = function()
 		return EntityList.GetAllEntities()
-    end,
+	end,
 
 	GetCount = function()
 		return EntityList.GetEntityCount()
@@ -79,25 +79,25 @@ ents = {
 
 	FindAlongRay = function(...)
 		return select(2, Util.EntitiesAlongRay(...))
-    end,
+	end,
 
 	FindInBox = function(...)
 		return select(2, Util.EntitiesInBox(...))
-    end,
+	end,
 
 	FindInSphere = function(...)
 		return select(2, Util.EntitiesInSphere(...))
-    end,
+	end,
 
-    FindInPVS = function(viewOrigin)
-        if (type(viewOrigin) == "Entity") then
-            viewOrigin = viewOrigin:GetPos()
-        elseif (type(viewOrigin) == "Player") then
-            local viewEntity = viewOrigin:GetViewEntity()
+	FindInPVS = function(viewOrigin)
+		if (type(viewOrigin) == "Entity") then
+			viewOrigin = viewOrigin:GetPos()
+		elseif (type(viewOrigin) == "Player") then
+			local viewEntity = viewOrigin:GetViewEntity()
 
 			if (IsValid(viewEntity)) then
-                viewOrigin = viewEntity:GetPos()
-            else
+				viewOrigin = viewEntity:GetPos()
+			else
 				viewOrigin = viewOrigin:GetPos()
 			end
 		end
@@ -107,7 +107,7 @@ ents = {
 }
 
 player = {
-    GetAll = Util.GetAllPlayers,
+	GetAll = Util.GetAllPlayers,
 	GetByID = Util.PlayerByIndex,
 	GetBots = Util.GetAllBots,
 	GetHumans = Util.GetAllHumans,
@@ -386,8 +386,8 @@ ENTITY_META.AddFlags = ENTITY_META.AddFlag
 ENTITY_META.RemoveFlags = ENTITY_META.RemoveFlag
 
 function ENTITY_META:SetSpawnEffect(effect)
-    -- TODO: Implement
-    self.__spawnEffect = effect
+	-- TODO: Implement
+	self.__spawnEffect = effect
 end
 
 function ENTITY_META:GetSpawnEffect()
@@ -395,18 +395,23 @@ function ENTITY_META:GetSpawnEffect()
 end
 
 function ENTITY_META:SetNoDraw(bBool)
-    if (bBool) then
-        self:AddEffects(EF_NODRAW)
-    else
-        self:RemoveEffects(EF_NODRAW)
-    end
+	if (bBool) then
+		self:AddEffects(EF_NODRAW)
+	else
+		self:RemoveEffects(EF_NODRAW)
+	end
+end
+
+function ENTITY_META:IsFlagSet(flag)
+	return self:GetFlags() & flag ~= 0
 end
 
 function ENTITY_META:IsOnGround()
-    return self:GetFlags() & FL_ONGROUND ~= 0
+	return self:IsFlagSet(FL_ONGROUND)
 end
 
 ENTITY_META.OnGround = ENTITY_META.IsOnGround
+ENTITY_META.WaterLevel = ENTITY_META.GetWaterLevel
 
 local PLAYER_META = FindMetaTable("Player")
 PLAYER_META.GetShootPos = ENTITY_META.GetEyePosition
@@ -416,42 +421,53 @@ PLAYER_META.SteamID64 = PLAYER_META.GetSteamID64
 PLAYER_META.UniqueID = PLAYER_META.GetUniqueID
 PLAYER_META.InVehicle = PLAYER_META.IsInAVehicle
 PLAYER_META.GetVehicle = PLAYER_META.GetVehicleEntity
+PLAYER_META.AnimRestartGesture = PLAYER_META.AnimationRestartGesture
 
 function PLAYER_META:GetInfo(consoleVariableName)
 	return engine.GetClientConVarValue(self, consoleVariableName)
 end
 
 function PLAYER_META:GetInfoNum(consoleVariableName, default)
-    return engine.GetClientConVarValueAsNumber(self, consoleVariableName) or default
+	return engine.GetClientConVarValueAsNumber(self, consoleVariableName) or default
 end
 
 function PLAYER_META:IsDrivingEntity()
 	return false -- TODO: implement this
 end
 
+function PLAYER_META:IsPlayingTaunt()
+	return false -- TODO: implement this
+end
+
+function PLAYER_META:IsTyping()
+	return false -- TODO: implement this
+end
+
 -- TODO: Implement these correctly (I'm not sure what they do atm)
 function PLAYER_META:SetHoveredWidget(widget)
-    self.__hoveredWidget = widget
+	self.__hoveredWidget = widget
 end
+
 function PLAYER_META:GetHoveredWidget()
 	return self.__hoveredWidget
 end
 
 function PLAYER_META:SetPressedWidget(widget)
-    self.__pressedWidget = widget
+	self.__pressedWidget = widget
 end
+
 function PLAYER_META:GetPressedWidget()
 	return self.__pressedWidget
 end
 
 if (SERVER) then
-    function PLAYER_META:SendLua(lua)
-        net.Start("__PlayerLuaRun")
-        net.WriteString(lua)
-        net.Send(self)
-    end
+	function PLAYER_META:SendLua(lua)
+		net.Start("__PlayerLuaRun")
+		net.WriteString(lua)
+		net.Send(self)
+	end
 
-    PLAYER_META.Spectate = PLAYER_META.SetObserverMode
+	PLAYER_META.Spectate = PLAYER_META.SetObserverMode
 	PLAYER_META.SpectateEntity = PLAYER_META.SetObserverTarget
 
 	function PLAYER_META:UnSpectate()
@@ -582,34 +598,34 @@ else
 			local x, y = input.GetCursorPosition()
 			return y
 		end,
-        SetMousePos = input.SetCursorPosition,
-        ScreenToVector = input.ScreenToWorld,
+		SetMousePos = input.SetCursorPosition,
+		ScreenToVector = input.ScreenToWorld,
 		AimToVector = input.AimToVector,
-    }
+	}
 
-    cam = {
-        Start3D = render.Push3DView,
+	cam = {
+		Start3D = render.Push3DView,
 		End3D = render.PopView,
-    }
+	}
 
-    render.SetModelLighting = render.SetAmbientLightCube
-    render.ResetModelLighting = render.ResetAmbientLightCube
+	render.SetModelLighting = render.SetAmbientLightCube
+	render.ResetModelLighting = render.ResetAmbientLightCube
 
-    function render.Clear(r, g, b, a, clearDepth, clearStencil)
-        render.ClearBuffers(true, clearDepth or false, clearStencil or false)
-        render.ClearColor(r, g, b, a)
-    end
+	function render.Clear(r, g, b, a, clearDepth, clearStencil)
+		render.ClearBuffers(true, clearDepth or false, clearStencil or false)
+		render.ClearColor(r, g, b, a)
+	end
 
-    function render.ClearDepth(clearStencil)
-        render.ClearBuffers(false, true, clearStencil or false)
-    end
+	function render.ClearDepth(clearStencil)
+		render.ClearBuffers(false, true, clearStencil or false)
+	end
 
 	function render.ClearStencil()
-        render.ClearBuffers(false, false, true)
+		render.ClearBuffers(false, false, true)
 	end
 
 	input.SetCursorPos = input.SetCursorPosition
-    input.GetCursorPos = input.GetCursorPosition
+	input.GetCursorPos = input.GetCursorPosition
 	input.IsButtonDown = input.IsKeyDown
 
 	function input.IsShiftDown()
@@ -624,7 +640,8 @@ else
 	DisableClipping = Surface.DisableClipping
 
 	local MODEL_IMAGE_PANEL_META = FindMetaTable("ModelImagePanel")
-	MODEL_IMAGE_PANEL_META._OriginalRebuildSpawnIcon = MODEL_IMAGE_PANEL_META._OriginalRebuildSpawnIcon or MODEL_IMAGE_PANEL_META.RebuildSpawnIcon
+	MODEL_IMAGE_PANEL_META._OriginalRebuildSpawnIcon = MODEL_IMAGE_PANEL_META._OriginalRebuildSpawnIcon or
+	MODEL_IMAGE_PANEL_META.RebuildSpawnIcon
 	registry.ModelImage = MODEL_IMAGE_PANEL_META
 
 	MODEL_IMAGE_PANEL_META.SetSpawnIcon = MODEL_IMAGE_PANEL_META.SetModelImage
@@ -632,7 +649,7 @@ else
 	function MODEL_IMAGE_PANEL_META:RebuildSpawnIcon()
 		local ent = ClientsideModel(self:GetModel(), RENDERGROUP_OTHER)
 		local result = PositionSpawnIcon(ent, vector_origin)
-        ent:Remove()
+		ent:Remove()
 
 		self:_OriginalRebuildSpawnIcon({
 			origin = result.origin,
@@ -647,8 +664,8 @@ else
 		self:_OriginalRebuildSpawnIcon({
 			origin = tab.cam_pos or tab.origin or Vector(0, 0, 0),
 			angles = tab.cam_ang or tab.angles or Angle(0, 0, 0),
-            fieldOfView = tab.cam_fov or tab.fieldOfView or 90,
-            zNear = tab.nearz or tab.zNear or 1,
+			fieldOfView = tab.cam_fov or tab.fieldOfView or 90,
+			zNear = tab.nearz or tab.zNear or 1,
 			zFar = tab.farz or tab.zFar or 1000,
 		})
 	end
@@ -668,7 +685,7 @@ else
 	PANEL_META.NoClipping = PANEL_META.SetPaintClippingEnabled
 
 	function PANEL_META:SizeToContents(sizeWidth, sizeHeight)
-        -- For some reason DTree_Node uses SizeToContents on a DListLayout, which doesn't have a SizeToContents function.
+		-- For some reason DTree_Node uses SizeToContents on a DListLayout, which doesn't have a SizeToContents function.
 		-- :/
 		self:SizeToChildren(sizeWidth, sizeHeight)
 	end
@@ -727,7 +744,8 @@ else
 	local LABEL_PANEL_META = FindMetaTable("Label")
 	LABEL_PANEL_META._OriginalSetFont = LABEL_PANEL_META._OriginalSetFont or LABEL_PANEL_META.SetFont
 	LABEL_PANEL_META._OriginalGetFont = LABEL_PANEL_META._OriginalGetFont or LABEL_PANEL_META.GetFont
-	LABEL_PANEL_META._OriginalSetContentAlignment = LABEL_PANEL_META._OriginalSetContentAlignment or LABEL_PANEL_META.SetContentAlignment
+	LABEL_PANEL_META._OriginalSetContentAlignment = LABEL_PANEL_META._OriginalSetContentAlignment or
+	LABEL_PANEL_META.SetContentAlignment
 
 	LABEL_PANEL_META.GetTextSize = LABEL_PANEL_META.GetContentSize
 
@@ -864,14 +882,14 @@ else
 	end
 
 	ScrW = Util.ScreenWidth
-    ScrH = Util.ScreenHeight
+	ScrH = Util.ScreenHeight
 
 	Util.IsSkyboxVisibleFromPoint = engine.IsSkyboxVisibleFromPoint
 
 	GetRenderTargetEx = render.CreateRenderTargetTextureEx
-    GetRenderTarget = render.CreateRenderTargetTextureEx
-    EyePos = render.MainViewOrigin
-    EyeAngles = render.MainViewAngles
+	GetRenderTarget = render.CreateRenderTargetTextureEx
+	EyePos = render.MainViewOrigin
+	EyeAngles = render.MainViewAngles
 	EyeVector = render.MainViewForward
 
 	LocalPlayer = _R.CBasePlayer.GetLocalPlayer
@@ -1052,7 +1070,7 @@ require("gmod_compatibility/modules/drive")
 
 function baseclassGetCompatibility(name)
 	if (name:sub(1, 9) == "gamemode_") then
-        name = name:sub(10)
+		name = name:sub(10)
 
 		return Gamemodes.Get(name)
 	end
@@ -1087,11 +1105,11 @@ Include("extensions/coroutine.lua")
 Include("../../extensions/table.lua")
 
 if (CLIENT) then
-    matproxy = {
+	matproxy = {
 		Add = function(name, data) end -- TODO: Implement
 	}
 
-    Include("util/client.lua")
+	Include("util/client.lua")
 
 	spawnmenu = {
 		PopulateFromTextFiles = function(callback)
@@ -1120,20 +1138,21 @@ if (CLIENT) then
 				file.Write("settings/gmod_compatibility_content/spawnlist/" .. filename, data.contents)
 			end
 		end,
-    }
+	}
 
-    function LoadPresets()
+	function LoadPresets()
 		local loadedPresets = {}
-        local _, directories = file.Find("settings/gmod_compatibility_content/presets/*", "GAME")
+		local _, directories = file.Find("settings/gmod_compatibility_content/presets/*", "GAME")
 
 		for _, directory in ipairs(directories) do
 			local presetFiles = file.Find("settings/gmod_compatibility_content/presets/" .. directory .. "/*.txt", "GAME")
 
-            loadedPresets[directory] = {}
+			loadedPresets[directory] = {}
 
 			for _, presetFileName in ipairs(presetFiles) do
 				local presetKeyValues = KeyValues(presetFileName)
-				presetKeyValues:LoadFromFile("settings/gmod_compatibility_content/presets/" .. directory .. "/" .. presetFileName,
+				presetKeyValues:LoadFromFile(
+					"settings/gmod_compatibility_content/presets/" .. directory .. "/" .. presetFileName,
 					"GAME")
 				local preset = presetKeyValues:ToTable()
 
@@ -1187,7 +1206,7 @@ ErrorNoHalt = function(...)
 end
 
 ErrorNoHaltWithStack = function(...)
-    Msg(debug.traceback(table.concat({ ... }, " "), 2))
+	Msg(debug.traceback(table.concat({ ... }, " "), 2))
 end
 
 --[[
@@ -1195,68 +1214,68 @@ end
 	TODO: Read these from the gamemodes/gmname/gmname.txt keyvalues file
 --]]
 local sbox_godmode = CreateConVar("sbox_godmode", "0",
-    { FCVAR_ARCHIVE, FCVAR_NOTIFY, FCVAR_REPLICATED, FCVAR_SERVER_CAN_EXECUTE },
-    "If enabled, all players will be invincible")
+	{ FCVAR_ARCHIVE, FCVAR_NOTIFY, FCVAR_REPLICATED, FCVAR_SERVER_CAN_EXECUTE },
+	"If enabled, all players will be invincible")
 local sbox_maxballoons = CreateConVar("sbox_maxballoons", "100",
 	{ FCVAR_ARCHIVE, FCVAR_NOTIFY, FCVAR_REPLICATED, FCVAR_SERVER_CAN_EXECUTE },
-    "Maximum balloons a single player can create")
+	"Maximum balloons a single player can create")
 local sbox_maxbuttons = CreateConVar("sbox_maxbuttons", "50",
 	{ FCVAR_ARCHIVE, FCVAR_NOTIFY, FCVAR_REPLICATED, FCVAR_SERVER_CAN_EXECUTE },
-    "Maximum buttons a single player can create")
+	"Maximum buttons a single player can create")
 local sbox_maxcameras = CreateConVar("sbox_maxcameras", "10",
 	{ FCVAR_ARCHIVE, FCVAR_NOTIFY, FCVAR_REPLICATED, FCVAR_SERVER_CAN_EXECUTE },
-    "Maximum cameras a single player can create")
+	"Maximum cameras a single player can create")
 local sbox_maxdynamite = CreateConVar("sbox_maxdynamite", "10",
 	{ FCVAR_ARCHIVE, FCVAR_NOTIFY, FCVAR_REPLICATED, FCVAR_SERVER_CAN_EXECUTE },
-    "Maximum dynamites a single player can create")
+	"Maximum dynamites a single player can create")
 local sbox_maxeffects = CreateConVar("sbox_maxeffects", "200",
 	{ FCVAR_ARCHIVE, FCVAR_NOTIFY, FCVAR_REPLICATED, FCVAR_SERVER_CAN_EXECUTE },
-    "Maximum effect props a single player can create")
+	"Maximum effect props a single player can create")
 local sbox_maxemitters = CreateConVar("sbox_maxemitters", "20",
 	{ FCVAR_ARCHIVE, FCVAR_NOTIFY, FCVAR_REPLICATED, FCVAR_SERVER_CAN_EXECUTE },
-    "Maximum emitters a single player can create")
+	"Maximum emitters a single player can create")
 local sbox_maxhoverballs = CreateConVar("sbox_maxhoverballs", "50",
 	{ FCVAR_ARCHIVE, FCVAR_NOTIFY, FCVAR_REPLICATED, FCVAR_SERVER_CAN_EXECUTE },
-    "Maximum hoverballs a single player can create")
+	"Maximum hoverballs a single player can create")
 local sbox_maxlamps = CreateConVar("sbox_maxlamps", "3",
 	{ FCVAR_ARCHIVE, FCVAR_NOTIFY, FCVAR_REPLICATED, FCVAR_SERVER_CAN_EXECUTE },
-    "Maximum lamps a single player can create")
+	"Maximum lamps a single player can create")
 local sbox_maxlights = CreateConVar("sbox_maxlights", "5",
 	{ FCVAR_ARCHIVE, FCVAR_NOTIFY, FCVAR_REPLICATED, FCVAR_SERVER_CAN_EXECUTE },
-    "Maximum lights a single player can create")
+	"Maximum lights a single player can create")
 local sbox_maxnpcs = CreateConVar("sbox_maxnpcs", "10",
 	{ FCVAR_ARCHIVE, FCVAR_NOTIFY, FCVAR_REPLICATED, FCVAR_SERVER_CAN_EXECUTE },
-    "Maximum NPCs a single player can create")
+	"Maximum NPCs a single player can create")
 local sbox_maxprops = CreateConVar("sbox_maxprops", "200",
 	{ FCVAR_ARCHIVE, FCVAR_NOTIFY, FCVAR_REPLICATED, FCVAR_SERVER_CAN_EXECUTE },
-    "Maximum props a single player can create")
+	"Maximum props a single player can create")
 local sbox_maxragdolls = CreateConVar("sbox_maxragdolls", "10",
 	{ FCVAR_ARCHIVE, FCVAR_NOTIFY, FCVAR_REPLICATED, FCVAR_SERVER_CAN_EXECUTE },
-    "Maximum ragdolls a single player can create")
+	"Maximum ragdolls a single player can create")
 local sbox_maxsents = CreateConVar("sbox_maxsents", "100",
 	{ FCVAR_ARCHIVE, FCVAR_NOTIFY, FCVAR_REPLICATED, FCVAR_SERVER_CAN_EXECUTE },
-    "Maximum entities a single player can create")
+	"Maximum entities a single player can create")
 local sbox_maxthrusters = CreateConVar("sbox_maxthrusters", "50",
 	{ FCVAR_ARCHIVE, FCVAR_NOTIFY, FCVAR_REPLICATED, FCVAR_SERVER_CAN_EXECUTE },
-    "Maximum thrusters a single player can create")
+	"Maximum thrusters a single player can create")
 local sbox_maxvehicles = CreateConVar("sbox_maxvehicles", "4",
 	{ FCVAR_ARCHIVE, FCVAR_NOTIFY, FCVAR_REPLICATED, FCVAR_SERVER_CAN_EXECUTE },
-    "Maximum vehicles a single player can create")
+	"Maximum vehicles a single player can create")
 local sbox_maxwheels = CreateConVar("sbox_maxwheels", "50",
 	{ FCVAR_ARCHIVE, FCVAR_NOTIFY, FCVAR_REPLICATED, FCVAR_SERVER_CAN_EXECUTE },
-    "Maximum wheels a single player can create")
+	"Maximum wheels a single player can create")
 local sbox_noclip = CreateConVar("sbox_noclip", "1",
 	{ FCVAR_ARCHIVE, FCVAR_NOTIFY, FCVAR_REPLICATED, FCVAR_SERVER_CAN_EXECUTE },
-    "If enabled, players will be able to use noclip")
+	"If enabled, players will be able to use noclip")
 local sbox_persist = CreateConVar("sbox_persist", "1",
 	{ FCVAR_ARCHIVE, FCVAR_NOTIFY, FCVAR_REPLICATED, FCVAR_SERVER_CAN_EXECUTE },
-    "If not empty, enables 'Make Persistent' option when you right click on props while holding C, allowing you to save them across")
+	"If not empty, enables 'Make Persistent' option when you right click on props while holding C, allowing you to save them across")
 local sbox_playershurtplayers = CreateConVar("sbox_playershurtplayers", "1",
 	{ FCVAR_ARCHIVE, FCVAR_NOTIFY, FCVAR_REPLICATED, FCVAR_SERVER_CAN_EXECUTE },
-    "If enabled, players will be able to hurt each other")
+	"If enabled, players will be able to hurt each other")
 local sbox_weapons = CreateConVar("sbox_weapons", "1",
 	{ FCVAR_ARCHIVE, FCVAR_NOTIFY, FCVAR_REPLICATED, FCVAR_SERVER_CAN_EXECUTE },
-    "If enabled, each player will receive default Half-Life 2 weapons on each spawn")
+	"If enabled, each player will receive default Half-Life 2 weapons on each spawn")
 
 --[[
 	Now that the compatibility libraries have been loaded, we can start changing hooks
@@ -1266,7 +1285,7 @@ if (CLIENT) then
 
 	hook.Add("LevelInitPostEntity", "GModCompatibility.CallInitPostEntityHooks", function()
 		hook.Run("InitPostEntity")
-    end)
+	end)
 else
 	-- Include("sv_hooks.lua")
 

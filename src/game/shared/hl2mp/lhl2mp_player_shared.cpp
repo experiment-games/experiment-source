@@ -81,6 +81,15 @@ static int CHL2MP_Player_DoAnimationEvent( lua_State *L )
     return 0;
 }
 
+static int CHL2MP_Player_AnimationRestartGesture( lua_State *L )
+{
+    luaL_checkhl2mpplayer( L, 1 )->GetAnimState()->RestartGesture(
+        ( int )luaL_checknumber( L, 2 ),
+        ( Activity ) (int)luaL_checknumber( L, 3 ),
+        ( bool )luaL_optboolean( L, 4, false ) );
+    return 0;
+}
+
 static int CHL2MP_Player_KeyDown( lua_State *L )
 {
     luaL_checkhl2mpplayer( L, 1 )->KeyDown( luaL_checknumber( L, 2 ) );
@@ -168,6 +177,7 @@ static const luaL_Reg CHL2MP_Playermeta[] = {
     { "CalculateIKLocks", CHL2MP_Player_CalculateIKLocks },
     { "CanSprint", CHL2MP_Player_CanSprint },
     { "DoAnimationEvent", CHL2MP_Player_DoAnimationEvent },
+    { "AnimationRestartGesture", CHL2MP_Player_AnimationRestartGesture },
     { "KeyDown", CHL2MP_Player_KeyDown },
     { "__index", CHL2MP_Player___index },
     { "__newindex", CHL2MP_Player___newindex },
@@ -190,7 +200,7 @@ static const luaL_Reg CHL2MP_Player_funcs[] = {
 */
 LUALIB_API int luaopen_CHL2MP_Player_shared( lua_State *L )
 {
-    LUA_PUSH_NEW_METATABLE( L, LUA_HL2MPPLAYERLIBNAME );
+    LUA_PUSH_METATABLE_TO_EXTEND( L, LUA_HL2MPPLAYERLIBNAME );
     luaL_register( L, NULL, CHL2MP_Playermeta );
     lua_pushstring( L, "Entity" );
     lua_setfield( L, -2, "__type" ); /* metatable.__type = "Entity" */

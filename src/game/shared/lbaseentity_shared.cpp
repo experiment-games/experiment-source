@@ -1993,6 +1993,12 @@ static int CBaseAnimating_GetBodyGroups( lua_State *L )
     return 1;
 }
 
+static int CBaseAnimating_SetPlaybackRate( lua_State *L )
+{
+    luaL_checkanimating( L, 1 )->SetPlaybackRate( luaL_checknumber( L, 2 ) );
+    return 0;
+}
+
 int CBaseEntity_IsValid( lua_State *L )
 {
     lua_CBaseEntity *d = lua_toentity( L, 1 );
@@ -2413,6 +2419,8 @@ static const luaL_Reg CBaseEntitymeta[] = {
 
     { "GetNumBodygroups", CBaseAnimating_GetNumBodyGroups },
     { "GetNumBodyGroups", CBaseAnimating_GetNumBodyGroups },
+
+    { "SetPlaybackRate", CBaseAnimating_SetPlaybackRate },
 
     { "__index", CBaseEntity___index },
     { "__newindex", CBaseEntity___newindex },

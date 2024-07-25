@@ -167,6 +167,11 @@ class CHL2MP_Player : public CHL2_Player
         return ( !( GetFlags() & FL_ONGROUND ) );
     }
 
+    CHL2MPPlayerAnimState *GetAnimState() const
+    {
+        return m_PlayerAnimState;
+    }
+
    private:
     CHL2MPPlayerAnimState *m_PlayerAnimState;
 

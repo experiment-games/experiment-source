@@ -748,12 +748,6 @@ static int CBaseAnimating_SetHitboxSetByName( lua_State *L )
 //   return 0;
 // }
 
-static int CBaseAnimating_SetPlaybackRate( lua_State *L )
-{
-    luaL_checkanimating( L, 1 )->SetPlaybackRate( luaL_checknumber( L, 2 ) );
-    return 0;
-}
-
 static int CBaseAnimating_SetPoseParameter( lua_State *L )
 {
     switch ( lua_type( L, 2 ) )
@@ -1083,7 +1077,6 @@ static const luaL_Reg CBaseAnimatingmeta[] = {
     { "SetHitboxSet", CBaseAnimating_SetHitboxSet },
     { "SetHitboxSetByName", CBaseAnimating_SetHitboxSetByName },
     //{"SetModelWidthScale", CBaseAnimating_SetModelWidthScale},
-    { "SetPlaybackRate", CBaseAnimating_SetPlaybackRate },
     { "SetPoseParameter", CBaseAnimating_SetPoseParameter },
     { "SetPredictable", CBaseAnimating_SetPredictable },
     { "SetPredictionEligible", CBaseAnimating_SetPredictionEligible },

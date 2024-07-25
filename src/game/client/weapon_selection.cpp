@@ -120,13 +120,6 @@ void CBaseHudWeaponSelection::VidInit(void)
 	// If we've already loaded weapons, let's get new sprites
 	gWR.LoadAllWeaponSprites();
 
-	// set spacing of pickup history
-	CHudHistoryResource *pHudHR = GET_HUDELEMENT( CHudHistoryResource );
-	if( pHudHR )
-	{
-		pHudHR->SetHistoryGap( 21 );
-	}
-
 	Reset();
 }
 
@@ -268,13 +261,6 @@ int	CBaseHudWeaponSelection::KeyInput( int down, ButtonCode_t keynum, const char
 //-----------------------------------------------------------------------------
 void CBaseHudWeaponSelection::OnWeaponPickup( C_BaseCombatWeapon *pWeapon )
 {
-	// add to pickup history
-	CHudHistoryResource *pHudHR = GET_HUDELEMENT( CHudHistoryResource );
-	
-	if ( pHudHR )
-	{
-		pHudHR->AddToHistory( pWeapon );
-	}
 }
 
 //------------------------------------------------------------------------

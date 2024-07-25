@@ -935,6 +935,16 @@ static int CBasePlayer_Weapon_Switch( lua_State *L )
     return 1;
 }
 
+static int CBasePlayer_Weapon_TranslateActivity(lua_State* L)
+{
+#ifdef CLIENT_DLL
+    DevWarning( "Weapon_TranslateActivity not yet implemented clientside\n" );
+#else
+    lua_pushinteger( L, luaL_checkplayer( L, 1 )->Weapon_TranslateActivity( (Activity) ( int )luaL_optnumber( L, 2, 0 ), NULL ) );
+#endif
+    return 1;
+}
+
 static int CBasePlayer_WeaponCount( lua_State *L )
 {
     lua_pushinteger( L, luaL_checkplayer( L, 1 )->WeaponCount() );
@@ -1203,6 +1213,7 @@ static const luaL_Reg CBasePlayermeta[] = {
     { "Weapon_ShouldSelectItem", CBasePlayer_Weapon_ShouldSelectItem },
     { "Weapon_ShouldSetLast", CBasePlayer_Weapon_ShouldSetLast },
     { "Weapon_Switch", CBasePlayer_Weapon_Switch },
+    { "TranslateWeaponActivity", CBasePlayer_Weapon_TranslateActivity },
     { "WeaponCount", CBasePlayer_WeaponCount },
 
     { "GetAccountID", CBasePlayer_AccountID },

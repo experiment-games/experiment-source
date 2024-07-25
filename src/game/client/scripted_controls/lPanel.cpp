@@ -191,9 +191,8 @@ static int Panel_GetBounds( lua_State *L )
 
 static int Panel_GetChild( lua_State *L )
 {
-    // ! Note: We are using 1-based indexing here, while the original
-    // code uses 0-based indexing.
-    luaL_checkpanel( L, 1 )->GetChild( luaL_checknumber( L, 2 ) - 1 )->PushLuaInstance( L );
+    // ! Note: We are using 0-based indexing here
+    luaL_checkpanel( L, 1 )->GetChild( luaL_checknumber( L, 2 ) )->PushLuaInstance( L );
     return 1;
 }
 

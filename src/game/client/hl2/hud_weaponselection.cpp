@@ -233,11 +233,7 @@ CHudWeaponSelection::CHudWeaponSelection(const char *pElementName)
 // Purpose: sets up display for showing weapon pickup
 //-----------------------------------------------------------------------------
 void CHudWeaponSelection::OnWeaponPickup(C_BaseCombatWeapon *pWeapon) {
-    // add to pickup history
-    CHudHistoryResource *pHudHR = GET_HUDELEMENT(CHudHistoryResource);
-    if (pHudHR) {
-        pHudHR->AddToHistory(pWeapon);
-    }
+
 }
 
 //-----------------------------------------------------------------------------
