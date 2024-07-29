@@ -730,6 +730,10 @@ void ClientModeShared::AdjustEngineViewport( int &x, int &y, int &width, int &he
 //-----------------------------------------------------------------------------
 void ClientModeShared::PreRender( CViewSetup *pSetup )
 {
+#ifdef LUA_SDK
+    BEGIN_LUA_CALL_HOOK( "PreRender" );
+    END_LUA_CALL_HOOK( 0, 0 );
+#endif
 }
 
 //-----------------------------------------------------------------------------
@@ -739,6 +743,11 @@ void ClientModeShared::PostRender()
 {
     // Let the particle manager simulate things that haven't been simulated.
     ParticleMgr()->PostRender();
+
+#ifdef LUA_SDK
+    BEGIN_LUA_CALL_HOOK( "PostRender" );
+    END_LUA_CALL_HOOK( 0, 0 );
+#endif
 }
 
 void ClientModeShared::PostRenderVGui()

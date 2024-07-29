@@ -1288,11 +1288,6 @@ void CViewRender::Render( vrect_t *rect )
     g_pClientMode->PostRender();
     engine->EngineStats_EndFrame();
 
-#ifdef LUA_SDK
-    BEGIN_LUA_CALL_HOOK( "PostRender" );
-    END_LUA_CALL_HOOK( 0, 0 );
-#endif
-
 #if !defined( _X360 )
     // Stop stubbing the material system so we can see the budget panel
     matStub.End();
