@@ -384,6 +384,7 @@ ENTITY_META.Alive = ENTITY_META.IsAlive
 ENTITY_META.Widget = false
 ENTITY_META.AddFlags = ENTITY_META.AddFlag
 ENTITY_META.RemoveFlags = ENTITY_META.RemoveFlag
+ENTITY_META.GetFlexNum = ENTITY_META.GetFlexCount
 
 function ENTITY_META:SetSpawnEffect(effect)
 	-- TODO: Implement

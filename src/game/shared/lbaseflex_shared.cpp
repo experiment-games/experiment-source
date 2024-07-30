@@ -50,7 +50,7 @@ lua_CBaseFlex *CClientSideEntityManager::CreateClientSideEntity( const char *psz
         }
     }
 
-    if (pModel == nullptr)
+    if ( pModel == nullptr )
     {
         // Force loading of the model into memory immediately
         pModel = ( model_t * )engine->LoadModel( pszModelName, true );
@@ -110,6 +110,53 @@ LUALIB_API lua_CBaseFlex *luaL_checkbaseflex( lua_State *L, int narg )
     return d;
 }
 
+static int CBaseFlex_GetFlexIDByName( lua_State *L )
+{
+    lua_CBaseFlex *pEntity = luaL_checkbaseflex( L, 1 );
+    const char *szFlexName = luaL_checkstring( L, 2 );
+
+    LocalFlexController_t iFlexController = pEntity->FindFlexController( szFlexName );
+
+    lua_pushnumber( L, iFlexController );
+    return 1;
+}
+
+static int CBaseFlex_GetFlexWeight( lua_State *L )
+{
+    lua_CBaseFlex *pEntity = luaL_checkbaseflex( L, 1 );
+    LocalFlexController_t iFlexController = ( LocalFlexController_t )( int )luaL_checknumber( L, 2 );
+
+    lua_pushnumber( L, pEntity->GetFlexWeight( iFlexController ) );
+    return 1;
+}
+
+static int CBaseFlex_SetFlexWeight( lua_State *L )
+{
+    lua_CBaseFlex *pEntity = luaL_checkbaseflex( L, 1 );
+    LocalFlexController_t iFlexController = ( LocalFlexController_t )( int )luaL_checknumber( L, 2 );
+    float flWeight = luaL_checknumber( L, 3 );
+
+    pEntity->SetFlexWeight( iFlexController, flWeight );
+    return 0;
+}
+
+static int CBaseAnimating_HasFlexManipulator( lua_State *L )
+{
+    lua_CBaseFlex *pEntity = luaL_checkbaseflex( L, 1 );
+
+    for ( LocalFlexController_t i = LocalFlexController_t( 0 ); i < pEntity->GetNumFlexControllers(); i++ )
+    {
+        if ( pEntity->GetFlexWeight( i ) != 0.0f )
+        {
+            lua_pushboolean( L, true );
+            return 1;
+        }
+    }
+
+    lua_pushboolean( L, false );
+    return 1;
+}
+
 static int CBaseFlex___index( lua_State *L )
 {
     CBaseFlex *pEntity = lua_tobaseflex( L, 1 );
@@ -167,6 +214,11 @@ static int CBaseFlex___tostring( lua_State *L )
 }
 
 static const luaL_Reg CBaseFlexmeta[] = {
+    { "GetFlexIDByName", CBaseFlex_GetFlexIDByName },
+    { "GetFlexWeight", CBaseFlex_GetFlexWeight },
+    { "SetFlexWeight", CBaseFlex_SetFlexWeight },
+    { "HasFlexManipulator", CBaseAnimating_HasFlexManipulator },
+
     { "__index", CBaseFlex___index },
     { "__newindex", CBaseFlex___newindex },
     { "__eq", CBaseFlex___eq },
@@ -201,15 +253,16 @@ static const luaL_Reg CBaseFlex_funcs[] = {
 /*
 ** Open CBaseFlex object
 */
-LUALIB_API int luaopen_CBaseFlex( lua_State *L )
+LUALIB_API int luaopen_CBaseFlex_shared( lua_State *L )
 {
-    luaL_register( L, LUA_GNAME, CBaseFlex_funcs );
-    lua_pop( L, 1 );
-
     LUA_PUSH_NEW_METATABLE( L, LUA_CBASEFLEXLIBNAME );
     luaL_register( L, NULL, CBaseFlexmeta );
-    lua_pushstring( L, "Entity" );
-    lua_setfield( L, -2, "__type" ); /* metatable.__type = "Entity" */
+
+    // Extends the CBaseEntity metatable with every method part of CBaseFlex
+    LUA_PUSH_METATABLE_TO_EXTEND( L, LUA_BASEENTITYLIBNAME );
+    luaL_register( L, NULL, CBaseFlexmeta );
+
+    luaL_register( L, LUA_GNAME, CBaseFlex_funcs );
     lua_pop( L, 1 );
     return 1;
 }

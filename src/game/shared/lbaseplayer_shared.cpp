@@ -13,6 +13,7 @@
 #include "lbaseplayer_shared.h"
 #ifdef CLIENT_DLL
 #include "lc_baseanimating.h"
+#include <voice_status.h>
 #else
 #include "lbaseanimating.h"
 #endif
@@ -504,6 +505,25 @@ static int CBasePlayer_IsObserver( lua_State *L )
 static int CBasePlayer_IsPlayerUnderwater( lua_State *L )
 {
     lua_pushboolean( L, luaL_checkplayer( L, 1 )->IsPlayerUnderwater() );
+    return 1;
+}
+
+static int CBasePlayer_IsSpeaking( lua_State *L )
+{
+#ifdef CLIENT_DLL
+    CBasePlayer *pPlayer = luaL_checkplayer( L, 1 );
+
+    if ( ( pPlayer == C_BasePlayer::GetLocalPlayer() && GetClientVoiceMgr()->IsLocalPlayerSpeaking() )
+        || GetClientVoiceMgr()->IsPlayerSpeaking( pPlayer->entindex() ) )
+    {
+        lua_pushboolean( L, true );
+        return 1;
+    }
+#else
+    DevWarning( "CBasePlayer::IsSpeaking is not implemented on the server\n" );
+#endif
+
+    lua_pushboolean( L, false );
     return 1;
 }
 
@@ -1155,6 +1175,7 @@ static const luaL_Reg CBasePlayermeta[] = {
     { "IsObserver", CBasePlayer_IsObserver },
     { "IsPlayerUnderwater", CBasePlayer_IsPlayerUnderwater },
     { "IsSuitEquipped", CBasePlayer_IsSuitEquipped },
+    { "IsSpeaking", CBasePlayer_IsSpeaking },
     { "IsUseableEntity", CBasePlayer_IsUseableEntity },
     { "ItemPostFrame", CBasePlayer_ItemPostFrame },
     { "ItemPreFrame", CBasePlayer_ItemPreFrame },

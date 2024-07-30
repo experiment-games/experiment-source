@@ -170,13 +170,47 @@ static int CBaseAnimating_SetPlaybackRate( lua_State *L )
     return 0;
 }
 
-static int CBaseEntity_SetSkin( lua_State *L )
+static int CBaseAnimating_SetSkin( lua_State *L )
 {
     // TODO: SetSkin
     // TODO: There's also logic in lbaseanimating.__newindex for this
     // TODO: Placed here because its easily shared, but we should really create a common place for baseanimating shared functions
     lua_toanimating( L, 1 )->m_nSkin = luaL_checknumber( L, 2 );
     return 0;
+}
+
+// returns the min and max values for the flex controller
+static int CBaseAnimating_GetFlexBounds( lua_State *L )
+{
+    lua_CBaseAnimating *pAnimating = luaL_checkanimating( L, 1 );
+    LocalFlexController_t iFlexController = ( LocalFlexController_t )( int )luaL_checknumber( L, 2 );
+    CStudioHdr *pStudioHdr = pAnimating->GetModelPtr();
+
+    Assert( pStudioHdr );
+
+    mstudioflexcontroller_t *flex = pStudioHdr->pFlexcontroller( iFlexController );
+
+    Assert( flex );
+
+    lua_pushnumber( L, flex->min );
+    lua_pushnumber( L, flex->max );
+
+    return 2;
+}
+
+static int CBaseAnimating_GetFlexCount( lua_State *L )
+{
+    lua_pushinteger( L, luaL_checkanimating( L, 1 )->GetNumFlexControllers() );
+    return 1;
+}
+
+static int CBaseAnimating_GetFlexName( lua_State *L )
+{
+    lua_CBaseAnimating *pAnimating = luaL_checkanimating( L, 1 );
+    LocalFlexController_t iFlexController = ( LocalFlexController_t )( int )luaL_checknumber( L, 2 );
+
+    lua_pushstring( L, pAnimating->GetFlexControllerName( iFlexController ) );
+    return 1;
 }
 
 static const luaL_Reg CBaseAnimatingmeta[] = {
@@ -204,7 +238,12 @@ static const luaL_Reg CBaseAnimatingmeta[] = {
     { "GetNumBodyGroups", CBaseAnimating_GetNumBodyGroups },
 
     { "SetPlaybackRate", CBaseAnimating_SetPlaybackRate },
-    { "SetSkin", CBaseEntity_SetSkin },
+    { "SetSkin", CBaseAnimating_SetSkin },
+
+    { "GetFlexBounds", CBaseAnimating_GetFlexBounds },
+    { "GetFlexCount", CBaseAnimating_GetFlexCount },
+    { "GetFlexName", CBaseAnimating_GetFlexName },
+    // { "GetFlexScale", CBaseAnimating_GetFlexScale }, // TODO: How is this implemented?
 
     { NULL, NULL } };
 
@@ -213,8 +252,12 @@ static const luaL_Reg CBaseAnimatingmeta[] = {
 */
 LUALIB_API int luaopen_CBaseAnimating_shared( lua_State *L )
 {
+    LUA_PUSH_METATABLE_TO_EXTEND( L, LUA_BASEANIMATINGLIBNAME );
+    luaL_register( L, NULL, CBaseAnimatingmeta );
+
     // Extends the CBaseEntity metatable with every method part of CBaseAnimating
     LUA_PUSH_METATABLE_TO_EXTEND( L, LUA_BASEENTITYLIBNAME );
     luaL_register( L, NULL, CBaseAnimatingmeta );
+
     return 1;
 }

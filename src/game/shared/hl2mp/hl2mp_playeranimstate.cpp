@@ -436,15 +436,6 @@ Activity CHL2MPPlayerAnimState::CalcMainActivity()
 
     idealActivity = BaseClass::CalcMainActivity();
 
-#ifdef CLIENT_DLL
-    // If the player is using voice, add the gesture for that
-    if ( ( m_pPlayer == C_BasePlayer::GetLocalPlayer() && GetClientVoiceMgr()->IsLocalPlayerSpeaking() )
-        || GetClientVoiceMgr()->IsPlayerSpeaking( m_pPlayer->entindex() ) )
-    {
-        AddToGestureSlot( GESTURE_SLOT_CUSTOM, ACT_GMOD_IN_CHAT, true );
-    }
-#endif
-
     return idealActivity;
 }
 
