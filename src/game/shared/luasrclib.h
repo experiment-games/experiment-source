@@ -23,6 +23,7 @@ LUALIB_API int( luaopen_CBaseCombatWeapon )( lua_State *L );
 #define LUA_BASEENTITYLIBNAME "CBaseEntity"
 LUALIB_API int( luaopen_CBaseEntity )( lua_State *L );
 LUALIB_API int( luaopen_CBaseEntity_shared )( lua_State *L );
+LUALIB_API int( luaopen_CBaseAnimating_shared )( lua_State *L );
 
 #define LUA_BASEPLAYERLIBNAME "CBasePlayer"
 LUALIB_API int( luaopen_CBasePlayer )( lua_State *L );

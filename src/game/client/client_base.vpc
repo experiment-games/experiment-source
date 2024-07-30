@@ -521,6 +521,7 @@ $Project
             $File "$SRCDIR\game\shared\basescripted.cpp"
             $File "$SRCDIR\game\shared\basescripted.h"
 		    $File "$SRCDIR\game\shared\lbasecombatweapon_shared.cpp"
+            $File "$SRCDIR\game\shared\lbaseanimating_shared.cpp"
             $File "$SRCDIR\game\shared\lbaseentity_shared.cpp"
             $File "$SRCDIR\game\shared\lbaseplayer_shared.cpp"
             $File "$SRCDIR\game\shared\llocalization.cpp"

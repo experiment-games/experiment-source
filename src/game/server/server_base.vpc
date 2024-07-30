@@ -683,6 +683,7 @@ $Project
             $File "$SRCDIR\game\server\basescriptedtrigger.h"
 		    $File "$SRCDIR\game\shared\lbasecombatweapon_shared.cpp"
 		    $File "$SRCDIR\game\shared\lbasecombatweapon_shared.h"
+            $File "$SRCDIR\game\shared\lbaseanimating_shared.cpp"
             $File "$SRCDIR\game\shared\lbaseentity_shared.cpp"
             $File "$SRCDIR\game\shared\lbaseentity_shared.h"
             $File "$SRCDIR\game\shared\lbaseplayer_shared.cpp"
