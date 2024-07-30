@@ -81,6 +81,9 @@ LUALIB_API int( luaopen_EntityList )( lua_State *L );
 #define LUA_ENGINEFLAGSLIBNAME "FL"
 LUALIB_API int( luaopen_FL )( lua_State *L );
 
+#define LUA_FLEDICTLIBNAME "FL_EDICT"
+LUALIB_API int( luaopen_FL_EDICT )( lua_State *L );
+
 #define LUA_ENGINEVGUILIBNAME "EngineGui"
 LUALIB_API int( luaopen_enginevgui )( lua_State *L );
 

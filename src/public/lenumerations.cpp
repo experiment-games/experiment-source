@@ -193,3 +193,23 @@ LUALIB_API int luaopen_EF( lua_State *L )
     END_LUA_SET_ENUM_LIB( L );
     return 0;
 }
+
+/*
+** Open FL_EDICT_* enum library
+*/
+LUALIB_API int luaopen_FL_EDICT( lua_State *L )
+{
+    BEGIN_LUA_SET_ENUM_LIB( L, LUA_FLEDICTLIBNAME );
+    lua_pushenum( L, FL_EDICT_CHANGED, "CHANGED" );
+    lua_pushenum( L, FL_EDICT_FREE, "FREE" );
+    lua_pushenum( L, FL_EDICT_FULL, "FULL" );
+    lua_pushenum( L, FL_EDICT_FULLCHECK, "FULLCHECK" );
+    lua_pushenum( L, FL_EDICT_ALWAYS, "ALWAYS" );
+    lua_pushenum( L, FL_EDICT_DONTSEND, "DONTSEND" );
+    lua_pushenum( L, FL_EDICT_PVSCHECK, "PVSCHECK" );
+    lua_pushenum( L, FL_EDICT_PENDING_DORMANT_CHECK, "PENDING_DORMANT_CHECK" );
+    lua_pushenum( L, FL_EDICT_DIRTY_PVS_INFORMATION, "DIRTY_PVS_INFORMATION" );
+    lua_pushenum( L, FL_FULL_EDICT_CHANGED, "FULL_CHANGED" );
+    END_LUA_SET_ENUM_LIB( L );
+    return 0;
+}

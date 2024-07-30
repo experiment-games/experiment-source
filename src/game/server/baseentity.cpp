@@ -62,6 +62,7 @@
 #include "env_debughistory.h"
 #include "tier1/utlstring.h"
 #include "utlhashtable.h"
+#include "recipientfilter.h"
 
 #if defined( TF_DLL )
 #include "tf_gamerules.h"
@@ -501,6 +502,12 @@ CBaseEntity::~CBaseEntity()
     }
     m_pLuaInstance = nullptr;
 #endif
+
+    if ( m_rfPreventTransmitEntities )
+    {
+        delete m_rfPreventTransmitEntities;
+        m_rfPreventTransmitEntities = NULL;
+    }
 }
 
 #ifdef LUA_SDK
@@ -3549,6 +3556,11 @@ int CBaseEntity::UpdateTransmitState()
     // instead of UpdateTransmitState.
     Assert( g_nInsideDispatchUpdateTransmitState > 0 );
 
+    if ( m_rfPreventTransmitEntities && m_rfPreventTransmitEntities->GetRecipientCount() > 0 )
+    {
+        return SetTransmitState( FL_EDICT_FULLCHECK );  // TODO: Check if this never resets to a sensible value. If it doesn't, we must somehow reset it to something sensible when no prevent transmit players are left for optimization.
+    }
+
     // If an object is the moveparent of something else, don't skip it just because it's marked EF_NODRAW or else
     //  the client won't have a proper origin for the child since the hierarchy won't be correctly transmitted down
     if ( IsEffectActive( EF_NODRAW ) &&
@@ -3603,6 +3615,25 @@ int CBaseEntity::DispatchUpdateTransmitState()
 //-----------------------------------------------------------------------------
 int CBaseEntity::ShouldTransmit( const CCheckTransmitInfo *pInfo )
 {
+    CBaseEntity *pRecipientEntity = CBaseEntity::Instance( pInfo->m_pClientEnt );
+
+    Assert( pRecipientEntity->IsPlayer() );
+
+    // Check if have registered to prevent transmitting to this entity
+    if ( m_rfPreventTransmitEntities )
+    {
+        int c = m_rfPreventTransmitEntities->GetRecipientCount();
+        for ( int i = 0; i < c; i++ )
+        {
+            CBasePlayer *player = UTIL_PlayerByIndex( m_rfPreventTransmitEntities->GetRecipientIndex( i ) );
+            if ( !player )
+                continue;
+
+            if ( player == pRecipientEntity )
+                return FL_EDICT_DONTSEND;
+        }
+    }
+
     int fFlags = DispatchUpdateTransmitState();
 
     if ( fFlags & FL_EDICT_PVSCHECK )
@@ -3622,10 +3653,6 @@ int CBaseEntity::ShouldTransmit( const CCheckTransmitInfo *pInfo )
     //	{
     //		return FL_EDICT_ALWAYS;
     //	}
-
-    CBaseEntity *pRecipientEntity = CBaseEntity::Instance( pInfo->m_pClientEnt );
-
-    Assert( pRecipientEntity->IsPlayer() );
 
     CBasePlayer *pRecipientPlayer = static_cast< CBasePlayer * >( pRecipientEntity );
 
@@ -3647,6 +3674,37 @@ int CBaseEntity::ShouldTransmit( const CCheckTransmitInfo *pInfo )
     // by default do a PVS check
 
     return FL_EDICT_PVSCHECK;
+}
+
+void CBaseEntity::SetPreventTransmit( CBasePlayer *filter, bool bPreventTransmitting )
+{
+    if ( !m_rfPreventTransmitEntities )
+    {
+        m_rfPreventTransmitEntities = new CRecipientFilter();
+    }
+
+    if ( bPreventTransmitting )
+    {
+        m_rfPreventTransmitEntities->AddRecipient( filter );
+    }
+    else
+    {
+        m_rfPreventTransmitEntities->RemoveRecipient( filter );
+    }
+}
+
+void CBaseEntity::SetPreventTransmit( CRecipientFilter &filter, bool bPreventTransmitting )
+{
+    int c = filter.GetRecipientCount();
+
+    for ( int i = 0; i < c; i++ )
+    {
+        CBasePlayer *player = UTIL_PlayerByIndex( filter.GetRecipientIndex( i ) );
+        if ( !player )
+            continue;
+
+        SetPreventTransmit( player, bPreventTransmitting );
+    }
 }
 
 //-----------------------------------------------------------------------------

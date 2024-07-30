@@ -57,17 +57,23 @@ LUA_API void lua_pushpasfilter( lua_State *L, lua_CPASFilter &filter )
     LUA_SAFE_SET_METATABLE( L, "CPASFilter" );
 }
 
-LUALIB_API lua_CRecipientFilter &luaL_checkrecipientfilter( lua_State *L, int narg )
+LUALIB_API lua_CRecipientFilter &luaL_checkrecipientfilter( lua_State *L, int idx )
 {
-    lua_CRecipientFilter *d = ( lua_CRecipientFilter * )lua_touserdata( L, narg );
+    lua_CRecipientFilter *d = ( lua_CRecipientFilter * )lua_touserdata( L, idx );
     if ( !d )
-        luaL_typerror( L, narg, "CRecipientFilter" );
+        luaL_typerror( L, idx, "CRecipientFilter" );
     return **( lua_CRecipientFilter ** )d;
 }
 
-LUALIB_API lua_CPASFilter &luaL_checkpasfilter( lua_State *L, int narg )
+LUALIB_API bool lua_isrecipientfilter( lua_State *L, int idx )
 {
-    lua_CPASFilter **d = ( lua_CPASFilter ** )luaL_checkudata( L, narg, "CPASFilter" );
+    void *p = luaL_testudata( L, idx, "CRecipientFilter" );
+    return p != NULL;
+}
+
+LUALIB_API lua_CPASFilter &luaL_checkpasfilter( lua_State *L, int idx )
+{
+    lua_CPASFilter **d = ( lua_CPASFilter ** )luaL_checkudata( L, idx, "CPASFilter" );
     return **d;
 }
 

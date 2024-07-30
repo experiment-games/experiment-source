@@ -53,6 +53,7 @@ static const luaL_RegForState luasrclibs[] = {
 #endif
     { LUA_FCVARLIBNAME, luaopen_FCVAR, true },
     { LUA_ENGINEFLAGSLIBNAME, luaopen_FL, true },
+    { LUA_FLEDICTLIBNAME, luaopen_FL_EDICT, true },
     { LUA_FILESYSTEMLIBNAME, luaopen_filesystem, true },
 #ifdef CLIENT_DLL
     { LUA_FONTFLAGLIBNAME, luaopen_FONTFLAG, true },
@@ -110,7 +111,7 @@ static const luaL_RegForState luasrclibs[] = {
     { LUA_SURFACELIBNAME, luaopen_surface, true },
 #endif
     { LUA_UTILLIBNAME, luaopen_Util_shared, false },
-    { LUA_UTILLIBNAME, luaopen_Util, false }, // Implemented by server in server/lutil.cpp, client in client/cdll_util.cpp
+    { LUA_UTILLIBNAME, luaopen_Util, false },  // Implemented by server in server/lutil.cpp, client in client/cdll_util.cpp
     { LUA_VECTORLIBNAME, luaopen_Vector, true },
 #ifdef CLIENT_DLL
     { LUA_VGUILIBNAME, luaopen_vgui, true },
@@ -122,16 +123,15 @@ static const luaL_RegForState luasrclibs[] = {
 #endif
     { LUA_UMSGLIBNAME, luaopen_umsg, false },
 
-    { LUA_PARTICLESYSTEMLIBNAME, luaopen_ParticleSystem, false},
+    { LUA_PARTICLESYSTEMLIBNAME, luaopen_ParticleSystem, false },
     { LUA_SYSTEMLIBNAME, luaopen_system, true },
     { LUA_RENDERLIBNAME, luaopen_render, true },
-    { LUA_ITEXTURELIBNAME, luaopen_ITexture, true }
-    ,
+    { LUA_ITEXTURELIBNAME, luaopen_ITexture, true },
     { LUA_LOCALIZATIONLIBNAME, luaopen_localization, true },
-    
+
     { LUA_MOVEDATALIBNAME, luaopen_CMoveData, false },
     { LUA_USERCMDLIBNAME, luaopen_CUserCmd, false },
-    
+
     { NULL, NULL, NULL } };
 
 LUALIB_API void luasrc_openlibs( lua_State *L, bool isStateGameUI )

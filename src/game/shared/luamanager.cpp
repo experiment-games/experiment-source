@@ -47,12 +47,6 @@ ConVar lua_log_cl( "lua_log_cl", "1", FCVAR_ARCHIVE );
 ConVar lua_log_sv( "lua_log_sv", "1", FCVAR_ARCHIVE );
 ConVar lua_log_loader( "lua_log_loader", "1", FCVAR_ARCHIVE );
 
-#ifdef CLIENT_DLL
-#define REALM_COLOR Color( 255, 202, 58, 255 )
-#else
-#define REALM_COLOR Color( 120, 205, 215, 255 )
-#endif
-
 void LuaLogToFile( const char *format, ... )
 {
     va_list argp;

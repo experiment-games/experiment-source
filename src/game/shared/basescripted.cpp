@@ -304,3 +304,17 @@ void CBaseScripted::VPhysicsUpdate( IPhysicsObject *pPhysics )
     END_LUA_CALL_ENTITY_METHOD( 1, 0 );
 #endif
 }
+
+#ifndef CLIENT_DLL
+int CBaseScripted::UpdateTransmitState()
+{
+#ifdef LUA_SDK
+    BEGIN_LUA_CALL_ENTITY_METHOD( "UpdateTransmitState" );
+    END_LUA_CALL_ENTITY_METHOD( 0, 1 );
+
+    RETURN_LUA_INTEGER();
+#endif
+
+    return BaseClass::UpdateTransmitState();
+}
+#endif

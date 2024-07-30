@@ -44,6 +44,12 @@
 
 #define LUA_MAX_WEAPON_ACTIVITIES 32
 
+#ifdef CLIENT_DLL
+#define REALM_COLOR Color( 255, 202, 58, 255 )
+#else
+#define REALM_COLOR Color( 120, 205, 215, 255 )
+#endif
+
 #pragma warning( disable : 4800 )  // forcing value to bool 'true' or 'false'
                                    // (performance warning)
 

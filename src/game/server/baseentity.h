@@ -526,6 +526,8 @@ class CBaseEntity : public IServerEntity
     // Only CBaseEntity implements these. CheckTransmit calls the virtual ShouldTransmit to see if the
     // entity wants to be sent. If so, it calls SetTransmit, which will mark any dependents for transmission too.
     virtual int ShouldTransmit( const CCheckTransmitInfo *pInfo );
+    virtual void SetPreventTransmit( CRecipientFilter &filter, bool bPreventTransmitting );
+    virtual void SetPreventTransmit( CBasePlayer *filter, bool bPreventTransmitting );
 
     // update the global transmit state if a transmission rule changed
     int SetTransmitState( int nFlag );
@@ -895,6 +897,7 @@ class CBaseEntity : public IServerEntity
     };
     int GetIndexForThinkContext( const char *pszContext );
     CUtlVector< thinkfunc_t > m_aThinkFunctions;
+    CRecipientFilter *m_rfPreventTransmitEntities;
 
 #ifdef _DEBUG
     int m_iCurrentThinkContext;

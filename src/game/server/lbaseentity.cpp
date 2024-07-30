@@ -11,6 +11,7 @@
 #include "ltakedamageinfo.h"
 #include "mathlib/lvector.h"
 #include "items.h"
+#include <lrecipientfilter.h>
 
 // memdbgon must be the last include file in a .cpp file!!!
 #include "tier0/memdbgon.h"
@@ -57,10 +58,34 @@ static int CBaseEntity_GetTransmitState( lua_State *L )
     return 1;
 }
 
-static int CBaseEntity_UpdateTransmitState( lua_State *L )
+static int CBaseEntity_SetPreventTransmit( lua_State *L )
 {
-    lua_pushinteger( L, luaL_checkentity( L, 1 )->UpdateTransmitState() );
-    return 1;
+    CBaseEntity *pEntity = luaL_checkentity( L, 1 );
+    CRecipientFilter filter;
+
+    if ( lua_isrecipientfilter( L, 2 ) )
+    {
+        filter.CopyFrom( luaL_checkrecipientfilter( L, 2 ) );
+    }
+    else if ( lua_istable( L, 2 ) )
+    {
+        lua_pushnil( L );  // First key
+        while ( lua_next( L, 2 ) != 0 )
+        {
+            const CBasePlayer *pPlayer = dynamic_cast< const CBasePlayer * >( luaL_checkentity( L, -1 ) );
+            filter.AddRecipient( pPlayer );
+            lua_pop( L, 1 );  // Remove the value, keep the key for the next iteration
+        }
+    }
+    else
+    {
+        const CBasePlayer *pPlayer = dynamic_cast< const CBasePlayer * >( luaL_checkentity( L, 2 ) );
+        filter.AddRecipient( pPlayer );
+    }
+
+    pEntity->SetPreventTransmit( filter, luaL_checkboolean( L, 3 ) );
+    pEntity->DispatchUpdateTransmitState();
+    return 0;
 }
 
 static int CBaseEntity_IncrementTransmitStateOwnedCounter( lua_State *L )
@@ -596,13 +621,13 @@ static int CBaseEntity_DumpResponseCriteria( lua_State *L )
 }
 
 // Experiment; Disabled in favor of CreateEntityByName which also calls DispatchSpawn (that installs the correct ENT table)
-//static int CBaseEntity_Create( lua_State *L )
+// static int CBaseEntity_Create( lua_State *L )
 //{
 //    CBaseEntity::PushLuaInstanceSafe( L, CBaseEntity::Create( luaL_checkstring( L, 1 ), luaL_checkvector( L, 2 ), luaL_checkangle( L, 3 ), luaL_optentity( L, 4, NULL ) ) );
 //    return 1;
 //}
 //
-//static int CBaseEntity_CreateNoSpawn( lua_State *L )
+// static int CBaseEntity_CreateNoSpawn( lua_State *L )
 //{
 //    CBaseEntity::PushLuaInstanceSafe( L, CBaseEntity::CreateNoSpawn( luaL_checkstring( L, 1 ), luaL_checkvector( L, 2 ), luaL_checkangle( L, 3 ), luaL_optentity( L, 4, NULL ) ) );
 //    return 1;
@@ -769,7 +794,7 @@ static const luaL_Reg CBaseEntitymeta[] = {
     { "IsNavIgnored", CBaseEntity_IsNavIgnored },
     { "SetTransmitState", CBaseEntity_SetTransmitState },
     { "GetTransmitState", CBaseEntity_GetTransmitState },
-    { "UpdateTransmitState", CBaseEntity_UpdateTransmitState },
+    { "SetPreventTransmit", CBaseEntity_SetPreventTransmit },
     { "IncrementTransmitStateOwnedCounter", CBaseEntity_IncrementTransmitStateOwnedCounter },
     { "DecrementTransmitStateOwnedCounter", CBaseEntity_DecrementTransmitStateOwnedCounter },
     { "DetectInSkybox", CBaseEntity_DetectInSkybox },

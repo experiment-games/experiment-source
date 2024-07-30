@@ -80,12 +80,6 @@ static int CBasePlayer_DrawDebugGeometryOverlays( lua_State *L )
     return 0;
 }
 
-static int CBasePlayer_UpdateTransmitState( lua_State *L )
-{
-    luaL_checkplayer( L, 1 )->UpdateTransmitState();
-    return 0;
-}
-
 static int CBasePlayer_ForceRespawn( lua_State *L )
 {
     luaL_checkplayer( L, 1 )->ForceRespawn();
@@ -624,7 +618,6 @@ static const luaL_Reg CBasePlayermeta[] = {
     { "LockPlayerInPlace", CBasePlayer_LockPlayerInPlace },
     { "UnlockPlayer", CBasePlayer_UnlockPlayer },
     { "DrawDebugGeometryOverlays", CBasePlayer_DrawDebugGeometryOverlays },
-    { "UpdateTransmitState", CBasePlayer_UpdateTransmitState },
     { "ForceRespawn", CBasePlayer_ForceRespawn },
     { "InitialSpawn", CBasePlayer_InitialSpawn },
     { "InitHUD", CBasePlayer_InitHUD },
