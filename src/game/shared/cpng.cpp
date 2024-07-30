@@ -264,6 +264,11 @@ void CleanMaterialName( const char *pMaterialName, char *pCleanMaterialName, int
     Q_FixSlashes( pCleanMaterialName, '/' );
 }
 
+IMaterial* GetErrorMaterial()
+{
+    return g_pMaterialSystem->FindMaterial( "___error.vmt", TEXTURE_GROUP_OTHER, true );
+}
+
 IMaterial *CPngTextureRegen::GetOrCreateProceduralMaterial(
     const char *pMaterialName,
     const char *pFilePath,
@@ -285,7 +290,7 @@ IMaterial *CPngTextureRegen::GetOrCreateProceduralMaterial(
     if ( !filesystem->ReadFile( fullFilePath, "GAME", buffer ) )
     {
         DevWarning( "Failed loading PNG as Material! Couldn't read PNG from file \"%s\"\n", pFilePath );
-        return NULL;
+        return GetErrorMaterial();
     }
 
     PNG_ReadInfoFromBuffer( buffer, pFilePath, width, height );
