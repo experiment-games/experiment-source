@@ -39,7 +39,7 @@
 
 #define LUA_BASE_ENTITY_CLASS "prop_scripted"
 #define LUA_BASE_ENTITY_FACTORY "CBaseAnimating"
-#define LUA_BASE_WEAPON "weapon_hl2mpbase_scriptedweapon"
+#define LUA_BASE_WEAPON "weapon_experimentbase_scriptedweapon"
 #define LUA_BASE_GAMEMODE "super"
 
 #define LUA_MAX_WEAPON_ACTIVITIES 32

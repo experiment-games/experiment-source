@@ -20,7 +20,7 @@
 #include "ienginevgui.h"
 #endif
 #include "basescripted.h"
-#include "weapon_hl2mpbase_scriptedweapon.h"
+#include "weapon_experimentbase_scriptedweapon.h"
 #include "luamanager.h"
 #include "luasrclib.h"
 #include "luacachefile.h"
@@ -772,13 +772,13 @@ void luasrc_init( void )
 #ifdef CLIENT_DLL
 void luasrc_ui_enable( void )
 {
-    if (!g_pClientLuaPanel)
+    if ( !g_pClientLuaPanel )
         return;
 
     vgui::VPANEL pRoot = enginevgui->GetPanel( PANEL_ROOT );
     g_pClientLuaPanel->SetParent( pRoot );
     g_pClientLuaPanel->SetProportional( false );
-    //g_pClientLuaPanel->SetCursor( vgui::dc_none );
+    // g_pClientLuaPanel->SetCursor( vgui::dc_none );
     g_pClientLuaPanel->SetVisible( true );
 
     if ( g_pClientLuaPanel->IsKeyBoardInputEnabled() )

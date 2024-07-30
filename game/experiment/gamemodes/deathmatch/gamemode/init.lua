@@ -22,7 +22,7 @@ function GM:CanHavePlayerItem(client, item)
 end
 
 function GM:FlItemRespawnTime(pItem)
-	return ConsoleVariables.FindVar("sv_hl2mp_item_respawn_time"):GetFloat()
+	return ConsoleVariables.FindVar("sv_experiment_item_respawn_time"):GetFloat()
 end
 
 function GM:GiveDefaultItems(client)

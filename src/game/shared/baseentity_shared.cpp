@@ -33,10 +33,7 @@
 #include "player_pickup.h"
 #include "waterbullet.h"
 #include "func_break.h"
-
-#ifdef HL2MP
-#include "te_hl2mp_shotgun_shot.h"
-#endif
+#include "te_experiment_shotgun_shot.h"
 
 #include "gamestats.h"
 
@@ -1634,7 +1631,7 @@ void CBaseEntity::FireBullets( const FireBulletsInfo_t &info )
 
     bool bDoServerEffects = true;
 
-#if defined( HL2MP ) && defined( GAME_DLL )
+#if ( defined( HL2MP ) || defined( EXPERIMENT_SOURCE ) ) && defined( GAME_DLL )
     bDoServerEffects = false;
 #endif
 
@@ -1713,7 +1710,7 @@ void CBaseEntity::FireBullets( const FireBulletsInfo_t &info )
         iSeed = CBaseEntity::GetPredictionRandomSeed( info.m_bUseServerRandomSeed ) & 255;
     }
 
-#if defined( HL2MP ) && defined( GAME_DLL )
+#if ( defined( HL2MP ) || defined( EXPERIMENT_SOURCE ) ) && defined( GAME_DLL )
     int iEffectSeed = iSeed;
 #endif
     //-----------------------------------------------------
@@ -2043,10 +2040,10 @@ void CBaseEntity::FireBullets( const FireBulletsInfo_t &info )
         iSeed++;
     }
 
-#if defined( HL2MP ) && defined( GAME_DLL )
+#if defined( EXPERIMENT_SOURCE ) && defined( GAME_DLL )
     if ( bDoServerEffects == false )
     {
-        TE_HL2MPFireBullets( entindex(), tr.startpos, info.m_vecDirShooting, info.m_iAmmoType, iEffectSeed, info.m_iShots, info.m_vecSpread.x, bDoTracers, bDoImpacts );
+        TE_ExperimentFireBullets( entindex(), tr.startpos, info.m_vecDirShooting, info.m_iAmmoType, iEffectSeed, info.m_iShots, info.m_vecSpread.x, bDoTracers, bDoImpacts );
     }
 #endif
 
@@ -2188,7 +2185,7 @@ void CBaseEntity::DoImpactEffect( trace_t &tr, int nDamageType )
 //-----------------------------------------------------------------------------
 void CBaseEntity::ComputeTracerStartPosition( const Vector &vecShotSrc, Vector *pVecTracerStart )
 {
-#ifndef HL2MP
+#if !defined( HL2MP ) && !defined( EXPERIMENT_SOURCE )
     if ( g_pGameRules->IsMultiplayer() )
     {
         // NOTE: we do this because in MakeTracer, we force it to use the attachment position

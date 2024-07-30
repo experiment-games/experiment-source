@@ -106,8 +106,8 @@ ConVar sv_allow_point_servercommand( "sv_allow_point_servercommand",
                                      // The default value here should match the default of the convar
                                      "official",
 #else
-                                      // Other games may use this in their official maps, and only TF exposes IsValveMap() currently
-                                      "always",
+                                     // Other games may use this in their official maps, and only TF exposes IsValveMap() currently
+                                     "always",
 #endif  // TF_DLL
                                      FCVAR_NONE,
                                      "Allow use of point_servercommand entities in map. Potentially dangerous for untrusted maps.\n"
@@ -397,7 +397,7 @@ void ClientPrecache( void )
     CBaseEntity::PrecacheModel( "sprites/purpleglow1.vmt" );
     CBaseEntity::PrecacheModel( "sprites/purplelaser1.vmt" );
 
-#ifndef HL2MP
+#if !defined( HL2MP ) && !defined( EXPERIMENT_SOURCE )
     CBaseEntity::PrecacheScriptSound( "Hud.Hint" );
 #endif  // HL2MP
     CBaseEntity::PrecacheScriptSound( "Player.FallDamage" );

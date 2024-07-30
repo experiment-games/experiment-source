@@ -29,9 +29,9 @@ static const luaL_RegForState luasrclibs[] = {
     { LUA_BASEPLAYERLIBNAME, luaopen_CBasePlayer, false },
     { LUA_EFFECTDATALIBNAME, luaopen_CEffectData, false },
     { LUA_GAMETRACELIBNAME, luaopen_CGameTrace, false },
-    { LUA_HL2MPPLAYERLIBNAME, luaopen_CHL2MP_Player_shared, false },
+    { LUA_EXPERIMENTPLAYERLIBNAME, luaopen_CExperiment_Player_shared, false },
 #ifndef CLIENT_DLL
-    { LUA_HL2MPPLAYERLIBNAME, luaopen_CHL2MP_Player, false },
+    { LUA_EXPERIMENTPLAYERLIBNAME, luaopen_CExperiment_Player, false },
 #endif
     { LUA_COLORLIBNAME, luaopen_Color, true },
     { LUA_CONCOMMANDLIBNAME, luaopen_ConCommand, true },

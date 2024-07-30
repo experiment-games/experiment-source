@@ -21,7 +21,7 @@ if [ -z "$STEAM_SDK_DIR" ]; then
     exit 1
 fi
 
-PROJECT_FILE="game/client/client_hl2mp.vcxproj.user"
+PROJECT_FILE="game/client/client_experiment.vcxproj.user"
 
 # Create the file, remove it if it already exists
 if [ -f $PROJECT_FILE ]; then
@@ -72,11 +72,11 @@ function addDependenciesToProject {
     fi
 }
 
-addDependenciesToProject "Client (HL2MP)" "950C58AA-39F0-9CA2-8BB5-1AD6B8011443"
-addDependenciesToProject "Client (HL2MP)" "11C4CA93-C3BB-5EF6-0C85-700D6B69A2F6"
-addDependenciesToProject "Client (HL2MP)" "378EBA0C-3BA5-1CB2-6A4B-13E100D0686B"
+addDependenciesToProject "Client (Experiment)" "950C58AA-39F0-9CA2-8BB5-1AD6B8011443"
+addDependenciesToProject "Client (Experiment)" "11C4CA93-C3BB-5EF6-0C85-700D6B69A2F6"
+addDependenciesToProject "Client (Experiment)" "378EBA0C-3BA5-1CB2-6A4B-13E100D0686B"
 
-addDependenciesToProject "Server (HL2MP)" "950C58AA-39F0-9CA2-8BB5-1AD6B8011443"
-addDependenciesToProject "Server (HL2MP)" "11C4CA93-C3BB-5EF6-0C85-700D6B69A2F6"
+addDependenciesToProject "Server (Experiment)" "950C58AA-39F0-9CA2-8BB5-1AD6B8011443"
+addDependenciesToProject "Server (Experiment)" "11C4CA93-C3BB-5EF6-0C85-700D6B69A2F6"
 
 addDependenciesToProject "luasocket" "11C4CA93-C3BB-5EF6-0C85-700D6B69A2F6"

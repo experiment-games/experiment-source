@@ -5,7 +5,7 @@
 	Modified for Experiment.
 --]]
 
-_BASE_WEAPON = "weapon_hl2mpbase_scriptedweapon"
+_BASE_WEAPON = "weapon_experimentbase_scriptedweapon"
 
 local Warning = debug.Warning
 

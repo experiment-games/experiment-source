@@ -4848,7 +4848,7 @@ int CNPC_Hunter::MeleeAttack1Conditions ( float flDot, float flDist )
 				return MeleeAttack1ConditionsVsEnemyInVehicle( pCCEnemy, flDot );
 			}
 
-#if defined(HL2_DLL) && !defined(HL2MP)
+#if defined(HL2_DLL) && !defined(HL2MP) && !defined( EXPERIMENT_SOURCE )
 			// If the player is holding an object, knock it down.
 			if ( GetEnemy()->IsPlayer() )
 			{

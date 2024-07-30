@@ -1866,7 +1866,7 @@ void C_BasePlayer::CalcInEyeCamView( Vector &eyeOrigin, QAngle &eyeAngles, float
     else
     {
         Vector offset = GetViewOffset();
-#ifdef HL2MP
+#if defined( HL2MP ) || defined( EXPERIMENT_SOURCE )
         offset = target->GetViewOffset();
 #endif
         eyeOrigin += offset;  // hack hack

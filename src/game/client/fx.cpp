@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $Workfile:     $
 // $NoKeywords: $
@@ -40,7 +40,7 @@ CLIENTEFFECT_MATERIAL( "effects/muzzleflash4" )
 CLIENTEFFECT_MATERIAL( "effects/bluemuzzle" )
 CLIENTEFFECT_MATERIAL( "effects/gunshipmuzzle" )
 CLIENTEFFECT_MATERIAL( "effects/gunshiptracer" )
-#ifndef HL2MP
+#ifdef HL2_EPISODIC
 CLIENTEFFECT_MATERIAL( "effects/huntertracer" )
 #endif
 CLIENTEFFECT_MATERIAL( "sprites/physcannon_bluelight2" )
@@ -62,11 +62,11 @@ extern void FX_TracerSound( const Vector &start, const Vector &end, int iTracerT
 class CImpactOverlay : public CWarpOverlay
 {
 public:
-	
+
 	virtual bool Update( void )
 	{
 		m_flLifetime += gpGlobals->frametime;
-		
+
 		const float flTotalLifetime = 0.1f;
 
 		if ( m_flLifetime < flTotalLifetime )
@@ -76,14 +76,14 @@ public:
 			for( int i=0; i < m_nSprites; i++ )
 			{
 				m_Sprites[i].m_vColor = m_vBaseColors[i] * flColorScale;
-				
+
 				m_Sprites[i].m_flHorzSize += 1.0f * gpGlobals->frametime;
 				m_Sprites[i].m_flVertSize += 1.0f * gpGlobals->frametime;
 			}
-	
+
 			return true;
 		}
-	
+
 		return false;
 	}
 
@@ -96,7 +96,7 @@ public:
 
 //-----------------------------------------------------------------------------
 // Purpose: Play random ricochet sound
-// Input  : *pos - 
+// Input  : *pos -
 //-----------------------------------------------------------------------------
 void FX_RicochetSound( const Vector& pos )
 {
@@ -106,11 +106,11 @@ void FX_RicochetSound( const Vector& pos )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : entityIndex - 
-//			attachmentIndex - 
-//			*origin - 
-//			*angles - 
+// Purpose:
+// Input  : entityIndex -
+//			attachmentIndex -
+//			*origin -
+//			*angles -
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
 bool FX_GetAttachmentTransform( ClientEntityHandle_t hEntity, int attachmentIndex, Vector *origin, QAngle *angles )
@@ -122,7 +122,7 @@ bool FX_GetAttachmentTransform( ClientEntityHandle_t hEntity, int attachmentInde
 		{
 			*origin = vec3_origin;
 		}
-		
+
 		if ( angles != NULL )
 		{
 			*angles = QAngle(0,0,0);
@@ -140,17 +140,17 @@ bool FX_GetAttachmentTransform( ClientEntityHandle_t hEntity, int attachmentInde
 
 		// Find the attachment's matrix
 		pRenderable->GetAttachment( attachmentIndex, attachOrigin, attachAngles );
-	
+
 		if ( origin != NULL )
 		{
 			*origin = attachOrigin;
 		}
-		
+
 		if ( angles != NULL )
 		{
 			*angles = attachAngles;
 		}
-		
+
 		return true;
 	}
 
@@ -158,10 +158,10 @@ bool FX_GetAttachmentTransform( ClientEntityHandle_t hEntity, int attachmentInde
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : entityIndex - 
-//			attachmentIndex - 
-//			&transform - 
+// Purpose:
+// Input  : entityIndex -
+//			attachmentIndex -
+//			&transform -
 //-----------------------------------------------------------------------------
 bool FX_GetAttachmentTransform( ClientEntityHandle_t hEntity, int attachmentIndex, matrix3x4_t &transform )
 {
@@ -180,21 +180,21 @@ bool FX_GetAttachmentTransform( ClientEntityHandle_t hEntity, int attachmentInde
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-void FX_MuzzleEffect( 
-	const Vector &origin, 
-	const QAngle &angles, 
-	float scale, 
-	ClientEntityHandle_t hEntity, 
+void FX_MuzzleEffect(
+	const Vector &origin,
+	const QAngle &angles,
+	float scale,
+	ClientEntityHandle_t hEntity,
 	unsigned char *pFlashColor,
 	bool bOneFrame )
 {
 	VPROF_BUDGET( "FX_MuzzleEffect", VPROF_BUDGETGROUP_PARTICLE_RENDERING );
-	
+
 	CSmartPtr<CSimpleEmitter> pSimple = CSimpleEmitter::Create( "MuzzleFlash" );
 	pSimple->SetSortOrigin( origin );
-	
+
 	SimpleParticle *pParticle;
 	Vector			forward, offset;
 
@@ -220,7 +220,7 @@ void FX_MuzzleEffect(
 		offset = origin + (forward * (i*2.0f*scale));
 
 		pParticle = (SimpleParticle *) pSimple->AddParticle( sizeof( SimpleParticle ), pSimple->GetPMaterial( VarArgs( "effects/muzzleflash%d", random->RandomInt(1,4) ) ), offset );
-			
+
 		if ( pParticle == NULL )
 			return;
 
@@ -259,7 +259,7 @@ void FX_MuzzleEffect(
 	for ( i = 0; i < 4; i++ )
 	{
 		pParticle = (SimpleParticle *) pSimple->AddParticle( sizeof( SimpleParticle ), pSimple->GetPMaterial( "particle/particle_smokegrenade" ), origin );
-			
+
 		if ( pParticle == NULL )
 			return;
 
@@ -290,15 +290,15 @@ void FX_MuzzleEffect(
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : scale - 
-//			attachmentIndex - 
-//			bOneFrame - 
+// Purpose:
+// Input  : scale -
+//			attachmentIndex -
+//			bOneFrame -
 //-----------------------------------------------------------------------------
-void FX_MuzzleEffectAttached( 
-	float scale, 
-	ClientEntityHandle_t hEntity, 
-	int attachmentIndex, 
+void FX_MuzzleEffectAttached(
+	float scale,
+	ClientEntityHandle_t hEntity,
+	int attachmentIndex,
 	unsigned char *pFlashColor,
 	bool bOneFrame )
 {
@@ -309,15 +309,15 @@ void FX_MuzzleEffectAttached(
 	{
 		return;
 	}
-	
+
 	CSmartPtr<CLocalSpaceEmitter> pSimple = CLocalSpaceEmitter::Create( "MuzzleFlash", hEntity, attachmentIndex );
 	Assert( pSimple );
 	if ( pSimple == NULL )
 		return;
-	
+
 	// Lock our bounding box
 	pSimple->GetBinding().SetBBox( -( Vector( 16, 16, 16 ) * scale ), ( Vector( 16, 16, 16 ) * scale ) );
-	
+
 	SimpleParticle *pParticle;
 	Vector			forward(1,0,0), offset;
 
@@ -342,7 +342,7 @@ void FX_MuzzleEffectAttached(
 		offset = (forward * (i*2.0f*scale));
 
 		pParticle = (SimpleParticle *) pSimple->AddParticle( sizeof( SimpleParticle ), g_Mat_SMG_Muzzleflash[random->RandomInt(0,3)], offset );
-			
+
 		if ( pParticle == NULL )
 			return;
 
@@ -484,22 +484,22 @@ void MuzzleFlashCallback( const CEffectData &data )
 		}
 	}
 
-	tempents->MuzzleFlash( vecOrigin, vecAngles, data.m_fFlags & (~MUZZLEFLASH_FIRSTPERSON), data.m_hEntity, (data.m_fFlags & MUZZLEFLASH_FIRSTPERSON) != 0 );	
+	tempents->MuzzleFlash( vecOrigin, vecAngles, data.m_fFlags & (~MUZZLEFLASH_FIRSTPERSON), data.m_hEntity, (data.m_fFlags & MUZZLEFLASH_FIRSTPERSON) != 0 );
 }
 
 DECLARE_CLIENT_EFFECT( "MuzzleFlash", MuzzleFlashCallback );
- 
+
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : &origin - 
-//			&velocity - 
-//			scale - 
-//			numParticles - 
-//			*pColor - 
-//			iAlpha - 
-//			*pMaterial - 
-//			flRoll - 
-//			flRollDelta - 
+// Purpose:
+// Input  : &origin -
+//			&velocity -
+//			scale -
+//			numParticles -
+//			*pColor -
+//			iAlpha -
+//			*pMaterial -
+//			flRoll -
+//			flRollDelta -
 //-----------------------------------------------------------------------------
 CSmartPtr<CSimpleEmitter> FX_Smoke( const Vector &origin, const Vector &velocity, float scale, int numParticles, float flDietime, unsigned char *pColor, int iAlpha, const char *pMaterial, float flRoll, float flRollDelta )
 {
@@ -513,7 +513,7 @@ CSmartPtr<CSimpleEmitter> FX_Smoke( const Vector &origin, const Vector &velocity
 	for ( int i = 0; i < numParticles; i++ )
 	{
 		PMaterialHandle hMaterial = pSimple->GetPMaterial( pMaterial );
-		pParticle = (SimpleParticle *) pSimple->AddParticle( sizeof( SimpleParticle ), hMaterial, origin );			
+		pParticle = (SimpleParticle *) pSimple->AddParticle( sizeof( SimpleParticle ), hMaterial, origin );
 		if ( pParticle == NULL )
 			return NULL;
 
@@ -601,14 +601,14 @@ class CSmokeEmitter : public CSimpleEmitter
 {
 	typedef CSimpleEmitter BaseClass;
 public:
-	CSmokeEmitter( ClientEntityHandle_t hEntity, int nAttachment, const char *pDebugName ) : CSimpleEmitter( pDebugName ) 
+	CSmokeEmitter( ClientEntityHandle_t hEntity, int nAttachment, const char *pDebugName ) : CSimpleEmitter( pDebugName )
 	{
 		m_hEntity = hEntity;
 		m_nAttachmentIndex = nAttachment;
 		m_flDeathTime = 0;
 		m_flLastParticleSpawnTime = 0;
 	}
-	
+
 	// Create
 	static CSmokeEmitter *Create( ClientEntityHandle_t hEntity, int nAttachment, const char *pDebugName="smoke" )
 	{
@@ -656,7 +656,7 @@ public:
 		int numParticles = RandomInt( 1,2 );
 		for ( int i = 0; i < numParticles; i++ )
 		{
-			pParticle = (SimpleParticle *) AddParticle( sizeof( SimpleParticle ), g_Mat_DustPuff[0], vecOrigin );			
+			pParticle = (SimpleParticle *) AddParticle( sizeof( SimpleParticle ), g_Mat_DustPuff[0], vecOrigin );
 			if ( pParticle == NULL )
 				break;
 
@@ -688,7 +688,7 @@ public:
 			pParticle->m_uchEndSize = pParticle->m_uchStartSize*3;
 			pParticle->m_flRoll	= RandomFloat( 0, 360 );
 			pParticle->m_flRollDelta = RandomFloat( -4.0f, 4.0f );
-		}			
+		}
 
 		m_flLastParticleSpawnTime = gpGlobals->curtime + m_flSpawnRate;
 	}
@@ -706,7 +706,7 @@ public:
 					CreateSpurtParticles();
 				}
 			}
-			
+
 			pParticle = pIterator->GetNext();
 		}
 
@@ -749,7 +749,7 @@ void SmokeCallback( const CEffectData &data )
 	QAngle vecAngles = data.m_vAngles;
 
 	Vector4D color( 50,50,50,255 );
-	FX_BuildSmoke( vecOrigin, vecAngles, data.m_hEntity, data.m_nAttachmentIndex, 100.0, color ); 
+	FX_BuildSmoke( vecOrigin, vecAngles, data.m_hEntity, data.m_nAttachmentIndex, 100.0, color );
 }
 
 DECLARE_CLIENT_EFFECT( "Smoke", SmokeCallback );
@@ -757,7 +757,7 @@ DECLARE_CLIENT_EFFECT( "Smoke", SmokeCallback );
 
 //-----------------------------------------------------------------------------
 // Purpose: Shockwave for gunship bullet impacts!
-// Input  : &pos - 
+// Input  : &pos -
 //
 // NOTES:	-Don't draw this effect when the viewer is very far away.
 //-----------------------------------------------------------------------------
@@ -769,7 +769,7 @@ void FX_GunshipImpact( const Vector &pos, const Vector &normal, float r, float g
 		pOverlay->m_flLifetime	= 0;
 		VectorMA( pos, 1.0f, normal, pOverlay->m_vPos ); // Doesn't show up on terrain if you don't do this(sjb)
 		pOverlay->m_nSprites	= 1;
-		
+
 		pOverlay->m_vBaseColors[0].Init( r, g, b );
 
 		pOverlay->m_Sprites[0].m_flHorzSize = 0.01f;
@@ -780,8 +780,8 @@ void FX_GunshipImpact( const Vector &pos, const Vector &normal, float r, float g
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : data - 
+// Purpose:
+// Input  : data -
 //-----------------------------------------------------------------------------
 void GunshipImpactCallback( const CEffectData & data )
 {
@@ -813,14 +813,14 @@ DECLARE_CLIENT_EFFECT( "CommandPointer", CommandPointerCallback );
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void FX_GunshipMuzzleEffect( const Vector &origin, const QAngle &angles, float scale, ClientEntityHandle_t hEntity, unsigned char *pFlashColor )
 {
 	VPROF_BUDGET( "FX_GunshipMuzzleEffect", VPROF_BUDGETGROUP_PARTICLE_RENDERING );
 	CSmartPtr<CSimpleEmitter> pSimple = CSimpleEmitter::Create( "MuzzleFlash" );
 	pSimple->SetSortOrigin( origin );
-	
+
 	SimpleParticle *pParticle;
 	Vector			forward, offset;
 
@@ -832,7 +832,7 @@ void FX_GunshipMuzzleEffect( const Vector &origin, const QAngle &angles, float s
 	offset = origin;
 
 	pParticle = (SimpleParticle *) pSimple->AddParticle( sizeof( SimpleParticle ), pSimple->GetPMaterial( "effects/gunshipmuzzle" ), offset );
-		
+
 	if ( pParticle == NULL )
 		return;
 
@@ -856,11 +856,11 @@ void FX_GunshipMuzzleEffect( const Vector &origin, const QAngle &angles, float s
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : start - 
-//			end - 
-//			velocity - 
-//			makeWhiz - 
+// Purpose:
+// Input  : start -
+//			end -
+//			velocity -
+//			makeWhiz -
 //-----------------------------------------------------------------------------
 void FX_GunshipTracer( Vector& start, Vector& end, int velocity, bool makeWhiz )
 {
@@ -878,7 +878,7 @@ void FX_GunshipTracer( Vector& start, Vector& end, int velocity, bool makeWhiz )
 
 	float length = random->RandomFloat( 128.0f, 256.0f );
 	float life = ( totalDist + length ) / velocity;	//NOTENOTE: We want the tail to finish its run as well
-	
+
 	//Add it
 	FX_AddDiscreetLine( start, shotDir, velocity, length, totalDist, 5.0f, life, "effects/gunshiptracer" );
 
@@ -906,11 +906,11 @@ void FX_StriderMuzzleEffect( const Vector &origin, const QAngle &angles, float s
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : start - 
-//			end - 
-//			velocity - 
-//			makeWhiz - 
+// Purpose:
+// Input  : start -
+//			end -
+//			velocity -
+//			makeWhiz -
 //-----------------------------------------------------------------------------
 void FX_StriderTracer( Vector& start, Vector& end, int velocity, bool makeWhiz )
 {
@@ -928,7 +928,7 @@ void FX_StriderTracer( Vector& start, Vector& end, int velocity, bool makeWhiz )
 
 	float length = random->RandomFloat( 64.0f, 128.0f );
 	float life = ( totalDist + length ) / velocity;	//NOTENOTE: We want the tail to finish its run as well
-	
+
 	//Add it
 	FX_AddDiscreetLine( start, shotDir, velocity, length, totalDist, 2.5f, life, "effects/gunshiptracer" );
 
@@ -938,13 +938,13 @@ void FX_StriderTracer( Vector& start, Vector& end, int velocity, bool makeWhiz )
 	}
 }
 
-	
+
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : start - 
-//			end - 
-//			velocity - 
-//			makeWhiz - 
+// Purpose:
+// Input  : start -
+//			end -
+//			velocity -
+//			makeWhiz -
 //-----------------------------------------------------------------------------
 void FX_HunterTracer( Vector& start, Vector& end, int velocity, bool makeWhiz )
 {
@@ -962,23 +962,23 @@ void FX_HunterTracer( Vector& start, Vector& end, int velocity, bool makeWhiz )
 
 	float length = 128.0f;//random->RandomFloat( flMinLength, flMaxLength );
 	float life = ( totalDist + length ) / velocity;	// NOTENOTE: We want the tail to finish its run as well
-	
+
 	// Add it
 	FX_AddDiscreetLine( start, shotDir, velocity*0.5f, length, totalDist, 2.0f, life, "effects/huntertracer" );
 
-	if( makeWhiz ) 
+	if( makeWhiz )
 	{
 		FX_TracerSound( start, end, TRACER_TYPE_STRIDER );
 	}
 }
 
-	
+
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : start - 
-//			end - 
-//			velocity - 
-//			makeWhiz - 
+// Purpose:
+// Input  : start -
+//			end -
+//			velocity -
+//			makeWhiz -
 //-----------------------------------------------------------------------------
 void FX_GaussTracer( Vector& start, Vector& end, int velocity, bool makeWhiz )
 {
@@ -996,7 +996,7 @@ void FX_GaussTracer( Vector& start, Vector& end, int velocity, bool makeWhiz )
 
 	float length = random->RandomFloat( 250.0f, 500.0f );
 	float life = ( totalDist + length ) / velocity;	//NOTENOTE: We want the tail to finish its run as well
-	
+
 	//Add it
 	FX_AddDiscreetLine( start, shotDir, velocity, length, totalDist, random->RandomFloat( 5.0f, 8.0f ), life, "effects/spark" );
 }
@@ -1005,9 +1005,9 @@ void FX_GaussTracer( Vector& start, Vector& end, int velocity, bool makeWhiz )
 //-----------------------------------------------------------------------------
 // Purpose: Create a tesla effect between two points
 //-----------------------------------------------------------------------------
-void FX_BuildTesla( 
-	C_BaseEntity *pEntity, 
-	const Vector &vecOrigin, 
+void FX_BuildTesla(
+	C_BaseEntity *pEntity,
+	const Vector &vecOrigin,
 	const Vector &vecEnd,
 	const char *pModelName,
 	float flBeamWidth,
@@ -1036,7 +1036,7 @@ void FX_BuildTesla(
 	beamInfo.m_nSegments = 20;
 	beamInfo.m_bRenderable = true;
 	beamInfo.m_nFlags = nFlags;
-	
+
 	beams->CreateBeamPoints( beamInfo );
 }
 
@@ -1151,7 +1151,7 @@ void BuildTeslaCallback( const CEffectData &data )
 //-----------------------------------------------------------------------------
 // Purpose: Tesla hitbox
 //-----------------------------------------------------------------------------
-void FX_BuildTeslaHitbox( 
+void FX_BuildTeslaHitbox(
 	C_BaseEntity *pEntity,
 	int nStartAttachment,
 	int nEndAttachment,
@@ -1320,7 +1320,7 @@ void FX_BuildTeslaZap( const CEffectData &data )
 	beamInfo.m_nSegments = 20;
 	beamInfo.m_bRenderable = true;
 	beamInfo.m_nFlags = 0;
-	
+
 	beams->CreateBeamEntPoint( beamInfo );
 }
 

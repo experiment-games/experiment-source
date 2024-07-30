@@ -40,7 +40,7 @@ function GM:ItemShouldRespawn(pItem)
 	-- return 6
 end
 
-function GM:PlayerEntSelectSpawnPoint(pHL2MPPlayer)
+function GM:PlayerEntSelectSpawnPoint(client)
 	local tSpawnPoints = {}
     local pSpot = NULL
 

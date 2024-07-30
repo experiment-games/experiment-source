@@ -110,7 +110,7 @@ private:
 //-----------------------------------------------------------------------------
 inline CHalfLife2* HL2GameRules()
 {
-#if ( !defined( HL2_DLL ) && !defined( HL2_CLIENT_DLL ) ) || defined( HL2MP )
+#if ( !defined( HL2_DLL ) && !defined( HL2_CLIENT_DLL ) ) || ( defined( HL2MP ) || defined( EXPERIMENT_SOURCE ) )
 	Assert( 0 );	// g_pGameRules is NOT an instance of CHalfLife2 and bad things happen
 #endif
 

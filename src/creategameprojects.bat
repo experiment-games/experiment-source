@@ -1,1 +1,1 @@
-devtools\bin\vpc.exe /hl2mp +game /mksln experiment.sln
+devtools\bin\vpc.exe /experiment +game /mksln experiment.sln

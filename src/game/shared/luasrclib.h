@@ -35,9 +35,9 @@ LUALIB_API int( luaopen_CEffectData )( lua_State *L );
 #define LUA_GAMETRACELIBNAME "CGameTrace"
 LUALIB_API int( luaopen_CGameTrace )( lua_State *L );
 
-#define LUA_HL2MPPLAYERLIBNAME "CBasePlayer" // Same as CBasePlayer to merge player classes
-LUALIB_API int( luaopen_CHL2MP_Player )( lua_State *L );
-LUALIB_API int( luaopen_CHL2MP_Player_shared )( lua_State *L );
+#define LUA_EXPERIMENTPLAYERLIBNAME "CBasePlayer"  // Same as CBasePlayer to merge player classes
+LUALIB_API int( luaopen_CExperiment_Player )( lua_State *L );
+LUALIB_API int( luaopen_CExperiment_Player_shared )( lua_State *L );
 
 #define LUA_COLORLIBNAME "Color"
 LUALIB_API int( luaopen_Color )( lua_State *L );
@@ -63,7 +63,7 @@ LUALIB_API int( luaopen_CTakeDamageInfo )( lua_State *L );
 #define LUA_CVARLIBNAME "ConsoleVariables"
 LUALIB_API int( luaopen_cvars )( lua_State *L );
 
-#define LUA_DBGLIBNAME "Debug" // Unused, since we extend the default debug library
+#define LUA_DBGLIBNAME "Debug"  // Unused, since we extend the default debug library
 LUALIB_API int( luaopen_dbg )( lua_State *L );
 
 #define LUA_DEBUGOVERLAYLIBNAME "DebugOverlay"
@@ -153,7 +153,7 @@ LUALIB_API int( luaopen_LIFE )( lua_State *L );
 #define LUA_MASKLIBNAME "MASK"
 LUALIB_API int( luaopen_MASK )( lua_State *L );
 
-#define LUA_MATHLIBLIBNAME "Math" // Unused, since we extend the default math library
+#define LUA_MATHLIBLIBNAME "Math"  // Unused, since we extend the default math library
 LUALIB_API int( luaopen_mathlib )( lua_State *L );
 
 #define LUA_MATRIXLIBNAME "Matrix3x4"

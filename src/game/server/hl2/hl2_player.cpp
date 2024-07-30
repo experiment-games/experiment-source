@@ -91,7 +91,7 @@ ConVar hl2_sprintspeed( "hl2_sprintspeed", "320" );
 
 ConVar hl2_darkness_flashlight_factor( "hl2_darkness_flashlight_factor", "1" );
 
-#ifdef HL2MP
+#if defined( HL2MP ) || defined( EXPERIMENT_SOURCE )
 #define HL2_WALK_SPEED 150
 #define HL2_NORM_SPEED 190
 #define HL2_SPRINT_SPEED 320
@@ -292,7 +292,7 @@ void CC_ToggleDuck( void )
 
 static ConCommand toggle_duck( "toggle_duck", CC_ToggleDuck, "Toggles duck" );
 
-#ifndef HL2MP
+#if !defined( HL2MP ) && !defined( EXPERIMENT_SOURCE )
 #ifndef PORTAL
 LINK_ENTITY_TO_CLASS( player, CHL2_Player );
 #endif
@@ -403,7 +403,7 @@ DEFINE_FIELD( m_bForceLadderMove, FIELD_BOOLEAN ),
 //
 #define SUITPOWER_CHARGE_RATE 12.5  // 100 units in 8 seconds
 
-#ifdef HL2MP
+#if defined( HL2MP ) || defined( EXPERIMENT_SOURCE )
 CSuitPowerDevice SuitDeviceSprint( bits_SUIT_DEVICE_SPRINT, 25.0f );  // 100 units in 4 seconds
 #else
 CSuitPowerDevice SuitDeviceSprint( bits_SUIT_DEVICE_SPRINT, 12.5f );  // 100 units in 8 seconds
@@ -1102,7 +1102,7 @@ void CHL2_Player::PlayerRunCommand( CUserCmd *ucmd, IMoveHelper *moveHelper )
 //-----------------------------------------------------------------------------
 void CHL2_Player::Spawn( void )
 {
-#ifndef HL2MP
+#if !defined( HL2MP ) && !defined( EXPERIMENT_SOURCE )
 #ifndef PORTAL
     SetModel( "models/player.mdl" );
 #endif
@@ -1811,7 +1811,7 @@ void CHL2_Player::SuitPower_Update( void )
             {
                 if ( FlashlightIsOn() )
                 {
-#ifndef HL2MP
+#if !defined( HL2MP ) && !defined( EXPERIMENT_SOURCE )
                     FlashlightTurnOff();
 #endif
                 }
@@ -1823,7 +1823,7 @@ void CHL2_Player::SuitPower_Update( void )
             // turn off flashlight a little bit after it hits below one aux power notch (5%)
             if ( m_HL2Local.m_flSuitPower < 4.8f && FlashlightIsOn() )
             {
-#ifndef HL2MP
+#if !defined( HL2MP ) && !defined( EXPERIMENT_SOURCE )
                 FlashlightTurnOff();
 #endif
             }
@@ -2604,7 +2604,7 @@ int CHL2_Player::GiveAmmo( int nCount, int nAmmoIndex, bool bSuppressSound )
 //-----------------------------------------------------------------------------
 bool CHL2_Player::Weapon_CanUse( CBaseCombatWeapon *pWeapon )
 {
-#ifndef HL2MP
+#if !defined( HL2MP ) && !defined( EXPERIMENT_SOURCE )
     if ( pWeapon->ClassMatches( "weapon_stunstick" ) )
     {
         if ( ApplyBattery( 0.5 ) )

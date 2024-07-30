@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -50,7 +50,7 @@ END_PREDICTION_DATA()
 ConVar sk_auto_reload_time( "sk_auto_reload_time", "3", FCVAR_REPLICATED );
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CBaseHLCombatWeapon::ItemHolsterFrame( void )
 {
@@ -106,13 +106,13 @@ bool CBaseHLCombatWeapon::Ready( void )
 	if ( SelectWeightedSequence( ACT_VM_LOWERED_TO_IDLE ) == ACTIVITY_NOT_AVAILABLE )
 		return false;
 
-	m_bLowered = false;	
+	m_bLowered = false;
 	m_flRaiseTime = gpGlobals->curtime + 0.5f;
 	return true;
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
 bool CBaseHLCombatWeapon::Deploy( void )
@@ -145,7 +145,7 @@ bool CBaseHLCombatWeapon::Deploy( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
 bool CBaseHLCombatWeapon::Holster( CBaseCombatWeapon *pSwitchingTo )
@@ -160,7 +160,7 @@ bool CBaseHLCombatWeapon::Holster( CBaseCombatWeapon *pSwitchingTo )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
 bool CBaseHLCombatWeapon::WeaponShouldBeLowered( void )
@@ -172,7 +172,7 @@ bool CBaseHLCombatWeapon::WeaponShouldBeLowered( void )
 
 	if ( m_bLowered )
 		return true;
-	
+
 #if !defined( CLIENT_DLL )
 
 	if ( GlobalEntity_GetState( "friendly_encounter" ) == GLOBAL_ON )
@@ -201,7 +201,7 @@ void CBaseHLCombatWeapon::WeaponIdle( void )
 #endif
 
 		// Move to lowered position if we're not there yet
-		if ( GetActivity() != ACT_VM_IDLE_LOWERED && GetActivity() != ACT_VM_IDLE_TO_LOWERED 
+		if ( GetActivity() != ACT_VM_IDLE_LOWERED && GetActivity() != ACT_VM_IDLE_TO_LOWERED
 			 && GetActivity() != ACT_TRANSITION )
 		{
 			SendWeaponAnim( ACT_VM_IDLE_LOWERED );
@@ -215,11 +215,11 @@ void CBaseHLCombatWeapon::WeaponIdle( void )
 	else
 	{
 		// See if we need to raise immediately
-		if ( m_flRaiseTime < gpGlobals->curtime && GetActivity() == ACT_VM_IDLE_LOWERED ) 
+		if ( m_flRaiseTime < gpGlobals->curtime && GetActivity() == ACT_VM_IDLE_LOWERED )
 		{
 			SendWeaponAnim( ACT_VM_IDLE );
 		}
-		else if ( HasWeaponIdleTimeElapsed() ) 
+		else if ( HasWeaponIdleTimeElapsed() )
 		{
 			SendWeaponAnim( ACT_VM_IDLE );
 		}
@@ -229,7 +229,7 @@ void CBaseHLCombatWeapon::WeaponIdle( void )
 float	g_lateralBob;
 float	g_verticalBob;
 
-#if defined( CLIENT_DLL ) && ( !defined( HL2MP ) && !defined( PORTAL ) )
+#if defined( CLIENT_DLL ) && ( !defined( HL2MP ) && !defined( PORTAL ) && !defined( EXPERIMENT_SOURCE ) )
 
 #define	HL2_BOB_CYCLE_MIN	1.0f
 #define	HL2_BOB_CYCLE_MAX	0.45f
@@ -250,7 +250,7 @@ static ConVar	v_iroll_level( "v_iroll_level", "0.1"/*, FCVAR_UNREGISTERED*/ );
 static ConVar	v_ipitch_level( "v_ipitch_level", "0.3"/*, FCVAR_UNREGISTERED*/ );
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : float
 //-----------------------------------------------------------------------------
 float CBaseHLCombatWeapon::CalcViewmodelBob( void )
@@ -258,7 +258,7 @@ float CBaseHLCombatWeapon::CalcViewmodelBob( void )
 	static	float bobtime;
 	static	float lastbobtime;
 	float	cycle;
-	
+
 	CBasePlayer *player = ToBasePlayer( GetOwner() );
 	//Assert( player );
 
@@ -279,7 +279,7 @@ float CBaseHLCombatWeapon::CalcViewmodelBob( void )
 	speed = clamp( speed, -320, 320 );
 
 	float bob_offset = RemapVal( speed, 0, 320, 0.0f, 1.0f );
-	
+
 	bobtime += ( gpGlobals->curtime - lastbobtime ) * bob_offset;
 	lastbobtime = gpGlobals->curtime;
 
@@ -295,7 +295,7 @@ float CBaseHLCombatWeapon::CalcViewmodelBob( void )
 	{
 		cycle = M_PI + M_PI*(cycle-HL2_BOB_UP)/(1.0 - HL2_BOB_UP);
 	}
-	
+
 	g_verticalBob = speed*0.005f;
 	g_verticalBob = g_verticalBob*0.3 + g_verticalBob*0.7*sin(cycle);
 
@@ -317,16 +317,16 @@ float CBaseHLCombatWeapon::CalcViewmodelBob( void )
 	g_lateralBob = speed*0.005f;
 	g_lateralBob = g_lateralBob*0.3 + g_lateralBob*0.7*sin(cycle);
 	g_lateralBob = clamp( g_lateralBob, -7.0f, 4.0f );
-	
+
 	//NOTENOTE: We don't use this return value in our case (need to restructure the calculation function setup!)
 	return 0.0f;
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : &origin - 
-//			&angles - 
-//			viewmodelindex - 
+// Purpose:
+// Input  : &origin -
+//			&angles -
+//			viewmodelindex -
 //-----------------------------------------------------------------------------
 void CBaseHLCombatWeapon::AddViewmodelBob( CBaseViewModel *viewmodel, Vector &origin, QAngle &angles )
 {
@@ -337,10 +337,10 @@ void CBaseHLCombatWeapon::AddViewmodelBob( CBaseViewModel *viewmodel, Vector &or
 
 	// Apply bob, but scaled down to 40%
 	VectorMA( origin, g_verticalBob * 0.1f, forward, origin );
-	
+
 	// Z bob a bit more
 	origin[2] += g_verticalBob * 0.1f;
-	
+
 	// bob the angles
 	angles[ ROLL ]	+= g_verticalBob * 0.5f;
 	angles[ PITCH ]	-= g_verticalBob * 0.4f;
@@ -377,10 +377,10 @@ float CBaseHLCombatWeapon::CalcViewmodelBob( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : &origin - 
-//			&angles - 
-//			viewmodelindex - 
+// Purpose:
+// Input  : &origin -
+//			&angles -
+//			viewmodelindex -
 //-----------------------------------------------------------------------------
 void CBaseHLCombatWeapon::AddViewmodelBob( CBaseViewModel *viewmodel, Vector &origin, QAngle &angles )
 {
