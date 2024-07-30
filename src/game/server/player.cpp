@@ -513,22 +513,14 @@ void CBasePlayer::CreateViewModel( int index /*=0*/ )
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-void CBasePlayer::CreateHandModel( int index, int iOtherVm )
+void CBasePlayer::CreateDefaultHandModel()
 {
-    Assert( index >= 0 && index < MAX_VIEWMODELS && iOtherVm >= 0 && iOtherVm < MAX_VIEWMODELS );
-
-    if ( GetViewModel( index ) )
-        return;
-
     CBaseViewModel *vm = ( CBaseViewModel * )CreateEntityByName( "hand_viewmodel" );
+
     if ( vm )
     {
-        vm->SetAbsOrigin( GetAbsOrigin() );
-        vm->SetOwner( this );
-        vm->SetIndex( index );
         DispatchSpawn( vm );
-        vm->FollowEntity( GetViewModel( iOtherVm ), true );
-        m_hViewModel.Set( index, vm );
+        SetHands( vm );
     }
 }
 
@@ -5026,8 +5018,8 @@ void CBasePlayer::Spawn( void )
     CSingleUserRecipientFilter user( this );
     enginesound->SetPlayerDSP( user, 0, false );
 
-    CreateViewModel(); // Index 0
-    CreateHandModel(); // Index 1 for GetViewModel( 1 ) is intentional (see CBasePlayer::GetHands)
+    CreateViewModel();
+    // CreateDefaultHandModel();
 
     SetCollisionGroup( COLLISION_GROUP_PLAYER );
 

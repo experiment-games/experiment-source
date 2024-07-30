@@ -209,7 +209,6 @@ LUALIB_API int luaopen_FL_EDICT( lua_State *L )
     lua_pushenum( L, FL_EDICT_PVSCHECK, "PVSCHECK" );
     lua_pushenum( L, FL_EDICT_PENDING_DORMANT_CHECK, "PENDING_DORMANT_CHECK" );
     lua_pushenum( L, FL_EDICT_DIRTY_PVS_INFORMATION, "DIRTY_PVS_INFORMATION" );
-    lua_pushenum( L, FL_FULL_EDICT_CHANGED, "FULL_CHANGED" );
     END_LUA_SET_ENUM_LIB( L );
     return 0;
 }

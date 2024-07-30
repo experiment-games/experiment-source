@@ -108,7 +108,13 @@ class C_BasePlayer : public C_BaseCombatCharacter, public CGameEventListener
     void SetAnimationExtension( const char *pExtension );
 
     C_BaseViewModel *GetViewModel( int viewmodelindex = 0, bool bObserverOK = true );
-    C_BaseViewModel *GetHands();
+    C_BaseAnimating *GetHands();
+    void SetHands( C_BaseAnimating *pHandsEntity );
+
+   protected:
+    C_BaseAnimating *m_pHandsEntity;
+
+   public:
     C_BaseCombatWeapon *GetActiveWeapon( void ) const;
     const char *GetTracerType( void );
 

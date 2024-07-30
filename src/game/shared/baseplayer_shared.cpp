@@ -913,17 +913,22 @@ bool CBasePlayer::Weapon_Switch( CBaseCombatWeapon *pWeapon,
         ResetAutoaim();
         return true;
     }
+
     return false;
 }
 
-//-----------------------------------------------------------------------------
-// Purpose: 
-// Input  :
-// Output :
-//-----------------------------------------------------------------------------
-CBaseViewModel *CBasePlayer::GetHands()
+CBaseAnimating *CBasePlayer::GetHands()
 {
-    return GetViewModel( 1 );
+    return m_pHandsEntity;
+}
+
+void CBasePlayer::SetHands( CBaseAnimating *pHandsEntity )
+{
+    // Experiment; Commented since This is done in ViewModelChanged of gmod_hands:
+    // pHandsEntity->SetAbsOrigin( GetAbsOrigin() );
+    // pHandsEntity->SetOwnerEntity( this );
+    // pHandsEntity->FollowEntity( GetViewModel( 0 ), true );
+    m_pHandsEntity = pHandsEntity;
 }
 
 void CBasePlayer::SelectLastItem( void )

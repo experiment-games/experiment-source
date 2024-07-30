@@ -384,6 +384,8 @@ ENTITY_META.Widget = false
 ENTITY_META.AddFlags = ENTITY_META.AddFlag
 ENTITY_META.RemoveFlags = ENTITY_META.RemoveFlag
 ENTITY_META.GetFlexNum = ENTITY_META.GetFlexCount
+ENTITY_META.SetOwner = ENTITY_META.SetOwnerEntity
+ENTITY_META.GetOwner = ENTITY_META.GetOwnerEntity
 
 function ENTITY_META:SetSpawnEffect(effect)
 	-- TODO: Implement

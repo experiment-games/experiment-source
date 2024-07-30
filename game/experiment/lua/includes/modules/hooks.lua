@@ -41,14 +41,34 @@ function MODULE.Call(eventName, gamemodeTable, ...)
 				break
 			end
 
-			returnValues = { xpcall(callback, printError, ...) }
+			-- String identifiers are handled normally
+			if (isstring(hookIdentifier)) then
+				returnValues = { xpcall(callback, printError, ...) }
 
-			if (returnValues[1] == false) then
-				printError("Hook Error! '" ..
-					tostring(hookIdentifier) .. "' (" .. tostring(eventName) .. ") Failed\n")
-				-- callbacks[hookIdentifier] = nil
-			elseif (returnValues[2] ~= nil) then
-				return unpack(returnValues, 2)
+				if (returnValues[1] == false) then
+					printError("Hook Error! '" ..
+						tostring(hookIdentifier) .. "' (" .. tostring(eventName) .. ") Failed\n")
+					-- callbacks[hookIdentifier] = nil
+				elseif (returnValues[2] ~= nil) then
+					return unpack(returnValues, 2)
+				end
+			else
+				-- Non-string identifiers are expected to be an object which responds to IsValid
+				-- In that case we check if they're still valid and insert them before all other arguments
+				if (IsValid(hookIdentifier)) then
+					returnValues = { xpcall(callback, printError, hookIdentifier, ...) }
+
+					if (returnValues[1] == false) then
+						printError("Hook Error! '" ..
+							tostring(hookIdentifier) .. "' (" .. tostring(eventName) .. ") Failed\n")
+						-- callbacks[hookIdentifier] = nil
+					elseif (returnValues[2] ~= nil) then
+						return unpack(returnValues, 2)
+					end
+				else
+					-- Since they're no longer valid, unset them for future calls
+					callbacks[hookIdentifier] = nil
+				end
 			end
 		end
 	end
@@ -96,9 +116,9 @@ end
 --- @param eventName string The name of the internal GameRules method.
 --- @param hookIdentifier string The name of the hook.
 function MODULE.Remove(eventName, hookIdentifier)
-    if (not MODULE.registeredHooks[eventName]) then
-        return
-    end
+	if (not MODULE.registeredHooks[eventName]) then
+		return
+	end
 
 	if (MODULE.registeredHooks[eventName][hookIdentifier]) then
 		MODULE.registeredHooks[eventName][hookIdentifier] = nil
