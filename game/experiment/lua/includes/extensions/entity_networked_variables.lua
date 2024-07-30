@@ -158,24 +158,24 @@ if (SERVER) then
 			return
 		end
 
-        nextForcedUpdate = curTime + playerForcedUpdateConvar:GetFloat()
+		nextForcedUpdate = curTime + playerForcedUpdateConvar:GetFloat()
 
 		local players = Util.GetAllPlayers()
 
-        for _, player in ipairs(players) do
-            local count, entities = Util.EntitiesInPVS(player:GetPos())
+		for _, player in ipairs(players) do
+			local count, entities = Util.EntitiesInPVS(player:GetPos())
 
-            for _, entity in ipairs(entities) do
-                if (not entity.__networkedVariables) then
-                    continue
-                end
+			for _, entity in ipairs(entities) do
+				if (not entity.__networkedVariables) then
+					continue
+				end
 
-                entity:SendNetworkedVariables(player, entity.__networkedVariables)
-            end
-        end
+				entity:SendNetworkedVariables(player, entity.__networkedVariables)
+			end
+		end
 
 		debugPrint("Forced update of networked variables for players")
-    end)
+	end)
 else
 	--[[
 		Receiver for entity networked variables, calls
@@ -203,7 +203,7 @@ else
 		Hooks.Call("EntityNetworkedVarChanged", entity, key, oldValue, newValue)
 
 		entity:SetNetworkedVariable(key, newValue)
-    end)
+	end)
 
 	Networks.Receive("EntityNetworkedVariablesSet", function(length, socketClient)
 		local entity = Networks.ReadEntity()

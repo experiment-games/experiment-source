@@ -26,11 +26,24 @@ static int engine_ChangeTeam( lua_State *L )
     return 0;
 }
 
-static int engine_CheckDoneKeyTrapping( lua_State *L )
+static int engine_CheckKeyTrapping( lua_State *L )
 {
-    ButtonCode_t code = ( ButtonCode_t )( int )luaL_checknumber( L, 1 );
+    ButtonCode_t code;
+    engine->CheckDoneKeyTrapping( code );
+    lua_pushinteger( L, code );
+    return 1;
+}
+static int engine_IsKeyTrapping( lua_State *L )
+{
+    ButtonCode_t code;
     lua_pushboolean( L, engine->CheckDoneKeyTrapping( code ) );
     return 1;
+}
+
+static int engine_StartKeyTrapMode( lua_State *L )
+{
+    engine->StartKeyTrapMode();
+    return 0;
 }
 
 static int engine_CheckPoint( lua_State *L )
@@ -546,12 +559,6 @@ static int engine_Sound_ExtraUpdate( lua_State *L )
     return 0;
 }
 
-static int engine_StartKeyTrapMode( lua_State *L )
-{
-    engine->StartKeyTrapMode();
-    return 0;
-}
-
 static int engine_StartXboxExitingProcess( lua_State *L )
 {
     engine->StartXboxExitingProcess();
@@ -573,7 +580,11 @@ static int engine_Time( lua_State *L )
 static const luaL_Reg enginelib[] = {
     { "ActivateOccluder", engine_ActivateOccluder },
     { "ChangeTeam", engine_ChangeTeam },
-    { "CheckDoneKeyTrapping", engine_CheckDoneKeyTrapping },
+
+    { "CheckKeyTrapping", engine_CheckKeyTrapping },
+    { "IsKeyTrapping", engine_IsKeyTrapping },
+    { "StartKeyTrapMode", engine_StartKeyTrapMode },
+
     { "CheckPoint", engine_CheckPoint },
     { "ClientCommand", engine_ClientCmd },
     { "ClientCommand_Unrestricted", engine_ClientCmd_Unrestricted },
@@ -644,7 +655,6 @@ static const luaL_Reg enginelib[] = {
     { "SetRestrictClientCommands", engine_SetRestrictClientCommands },
     { "SetRestrictServerCommands", engine_SetRestrictServerCommands },
     { "Sound_ExtraUpdate", engine_Sound_ExtraUpdate },
-    { "StartKeyTrapMode", engine_StartKeyTrapMode },
     { "StartXboxExitingProcess", engine_StartXboxExitingProcess },
     { "SupportsHDR", engine_SupportsHDR },
     { "Time", engine_Time },

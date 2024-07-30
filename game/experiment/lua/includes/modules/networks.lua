@@ -709,13 +709,14 @@ if (SERVER) then
 
 		socketClient:send(data)
 	end
+
     function MODULE.Broadcast()
         if (not currentOutgoingMessage) then
             error("Networks.Broadcast was called without calling Networks.Start.")
         end
 
         for _, socketClient in ipairs(socketClients) do
-            MODULE.Send(socketClient)
+            MODULE.Send(socketClient.client)
         end
 
         currentOutgoingMessage = nil

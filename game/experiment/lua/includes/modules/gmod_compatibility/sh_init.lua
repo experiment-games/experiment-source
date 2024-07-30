@@ -659,6 +659,9 @@ else
 	input.SetCursorPos = input.SetCursorPosition
 	input.GetCursorPos = input.GetCursorPosition
 	input.IsButtonDown = input.IsKeyDown
+	input.StartKeyTrapping = engine.StartKeyTrapMode
+	input.IsKeyTrapping = engine.IsKeyTrapping
+	input.CheckKeyTrapping = engine.CheckKeyTrapping
 
 	function input.IsShiftDown()
 		return input.IsKeyDown(KEY_LSHIFT) or input.IsKeyDown(KEY_RSHIFT)
