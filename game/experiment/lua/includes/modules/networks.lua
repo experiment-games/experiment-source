@@ -1,9 +1,14 @@
 local MODULE = {}
 
 local Hooks = require("hooks")
+local Engine = require("Engine")
 local socket = require("luasocket")
-local IP = "127.0.0.1" -- TODO: game server IP here
-local PORT = 12345
+local IP
+local PORT = 12345 -- TODO: Make this configurable
+
+if (CLIENT) then
+	IP = Engine.GetServerAddress()
+end
 
 local BYTE_SIZE_IN_BITS = 8
 local SIZE_STRING_BYTES = 2
@@ -140,7 +145,7 @@ if (CLIENT) then
 	Hooks.Add("Think", "__NetModuleClientUpdate", clientUpdate)
 elseif (SERVER) then
 	localServer = socket.tcp()
-    local success, err = localServer:bind(IP, PORT)
+    local success, err = localServer:bind("*", PORT)
 
 	if (not success) then
 		debug("Error binding server:", err)
@@ -175,6 +180,22 @@ elseif (SERVER) then
 		end
 
 		clientPackedDataQueue[client] = nil
+	end
+
+	local function normalizeAddress(ip, port, ipFamily)
+		-- Normalize the IP address
+		-- TODO: Move this to a utility function
+		if (ipFamily == "inet6") then
+			if (ip == "::1") then
+				ip = "loopback"
+			end
+		else
+			if (ip == "127.0.0.1") then
+				ip = "loopback"
+			end
+		end
+
+		return ip
 	end
 
     local function handleClient(clientData)
@@ -230,10 +251,8 @@ elseif (SERVER) then
         -- Accept any new clients
         local newSocketClient = localServer:accept()
 
-        if (newSocketClient) then
-            -- TODO: We need some sort of: Util.PlayerByAddress(socketClient:getpeername()) here
-			-- ! This will stop working once we're not the only client anymore
-            local client = Util.PlayerByIndex(1)
+		if (newSocketClient) then
+            local client = Engine.GetPlayerByAddress(normalizeAddress(newSocketClient:getpeername()))
 
             -- TODO: We need to clean this up when the client disconnects
             table.insert(socketClients, {

@@ -43,12 +43,15 @@ end
 
 Bitwise = require("bitwise")
 ConsoleCommands = require("console_commands")
-Entities = require("entities")
 Gamemodes = require("gamemodes")
 Hooks = require("hooks")
-Networks = require("networks")
 Timers = require("timers")
-Weapons = require("weapons")
+
+if (not GAMEUI) then
+	Entities = require("entities")
+	Networks = require("networks")
+	Weapons = require("weapons")
+end
 
 local json = require("json")
 Json = {

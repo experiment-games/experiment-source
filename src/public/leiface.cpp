@@ -116,6 +116,12 @@ static int engine_GetEntityCount( lua_State *L )
     return 1;
 }
 
+static int engine_GetServerAddress( lua_State *L )
+{
+    lua_pushstring( L, g_pGameInfoStore->GetServerAddress() );
+    return 1;
+}
+
 static int engine_GetServerName( lua_State *L )
 {
     lua_pushstring( L, g_pGameInfoStore->GetServerName() );
@@ -128,6 +134,19 @@ static int engine_GetLevelName( lua_State *L )
     Q_strncpy( szMap, gpGlobals->mapname.ToCStr(), ARRAYSIZE( szMap ) );
     lua_pushstring( L, szMap );
     return 1;
+}
+
+static int engine_GetPlayerByAddress( lua_State *L )
+{
+    CBasePlayer *pPlayer = g_pGameInfoStore->GetPlayerByAddress( luaL_checkstring( L, 1 ) );
+
+    if ( pPlayer )
+    {
+        CBaseEntity::PushLuaInstanceSafe( L, pPlayer );
+        return 1;
+    }
+
+    return 0;
 }
 
 static int engine_GetGameDir( lua_State *L )
@@ -380,8 +399,10 @@ static const luaL_Reg enginelib[] = {
     { "GetClientConVarValue", engine_GetClientConVarValue },
     { "GetClientConVarValueAsNumber", engine_GetClientConVarValueAsNumber },
     { "GetEntityCount", engine_GetEntityCount },
+    { "GetServerAddress", engine_GetServerAddress },
     { "GetServerName", engine_GetServerName },
     { "GetLevelName", engine_GetLevelName },
+    { "GetPlayerByAddress", engine_GetPlayerByAddress },
     { "GetGameDir", engine_GetGameDir },
     { "GetMapEntitiesString", engine_GetMapEntitiesString },
     { "GetMostRecentlyLoadedFileName", engine_GetMostRecentlyLoadedFileName },

@@ -211,6 +211,12 @@ static int engine_GetLastTimeStamp( lua_State *L )
     return 1;
 }
 
+static int engine_GetServerAddress( lua_State *L )
+{
+    lua_pushstring( L, g_pGameInfoStore->GetServerAddress() );
+    return 1;
+}
+
 static int engine_GetServerName( lua_State *L )
 {
     lua_pushstring( L, g_pGameInfoStore->GetServerName() );
@@ -603,6 +609,7 @@ static const luaL_Reg enginelib[] = {
     { "GetEngineBuildNumber", engine_GetEngineBuildNumber },
     { "GetGameDirectory", engine_GetGameDirectory },
     { "GetLastTimeStamp", engine_GetLastTimeStamp },
+    { "GetServerAddress", engine_GetServerAddress },
     { "GetServerName", engine_GetServerName },
     { "GetLevelName", engine_GetLevelName },
     { "GetLightForPoint", engine_GetLightForPoint },
