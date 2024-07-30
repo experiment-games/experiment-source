@@ -106,7 +106,7 @@ Activity CHL2MPPlayerAnimState::TranslateActivity( Activity actDesired )
     lua_pushinteger( L, actDesired );
     END_LUA_CALL_HOOK( 2, 1 );
 
-    if ( lua_isnumber( L, -1 ) ) // The new, translated activity
+    if ( lua_isnumber( L, -1 ) )  // The new, translated activity
     {
         Activity iActivity = ( Activity )( int )lua_tonumber( L, -1 );
         lua_pop( L, 1 );
@@ -412,18 +412,18 @@ Activity CHL2MPPlayerAnimState::CalcMainActivity()
     CHL2MP_Player *pPlayer = GetHL2MPPlayer();
     Vector vecVelocity;
     GetOuterAbsVelocity( vecVelocity );
-    
+
     BEGIN_LUA_CALL_HOOK( "CalcMainActivity" );
     CBaseEntity::PushLuaInstanceSafe( L, pPlayer );
     lua_pushvector( L, vecVelocity );
     END_LUA_CALL_HOOK( 2, 2 );
 
-    if ( lua_isnumber( L, -2 ) ) // Activity
+    if ( lua_isnumber( L, -2 ) )  // Activity
     {
-        idealActivity = ( Activity )(int)lua_tonumber( L, -2 );
+        idealActivity = ( Activity )( int )lua_tonumber( L, -2 );
     }
 
-    if ( lua_isnumber( L, -1 ) ) // Sequence
+    if ( lua_isnumber( L, -1 ) )  // Sequence
     {
         int sequence = ( int )lua_tonumber( L, -1 );
 

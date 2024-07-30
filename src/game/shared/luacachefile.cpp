@@ -28,6 +28,14 @@
 
 static IZip *s_lcfFile = 0;
 
+ConVar lua_lcf_debug( "lua_lcf_debug", "0", FCVAR_ARCHIVE, "Displays Lua Cache File debug messages when the 'developer' ConVar is enabled." );
+
+#define LUA_LCF_DEBUG( FormatString, ... )             \
+    if ( lua_lcf_debug.GetBool() )                     \
+    {                                                  \
+        DevMsg( "LCF: " FormatString, ##__VA_ARGS__ ); \
+    }
+
 //-----------------------------------------------------------------------------
 // Purpose: // Get a lcffile instance
 // Output : IZip*
@@ -114,9 +122,9 @@ LUA_API void luasrc_ExtractLcf()
 
                     Q_snprintf( fullpath, sizeof( fullpath ), "%s%s", cachePath, path + Q_strlen( LUA_PATH_CACHE ) );
 
-                    DevMsg( "LCF: setting current directory to %s...\n", fullpath );
+                    LUA_LCF_DEBUG( "setting current directory to %s...\n", fullpath );
                     V_SetCurrentDirectory( fullpath );
-                    DevMsg( "LCF: unpacking %s...\n", ze.name );
+                    LUA_LCF_DEBUG( "unpacking %s...\n", ze.name );
                     UnzipItem( hz, i, ( void * )V_UnqualifiedFileName( ze.name ), 0, ZIP_FILENAME );
                 }
             }
@@ -137,7 +145,7 @@ LUA_API void luasrc_ExtractLcf()
     filesystem->AddSearchPath( cacheDirectoryPath, "MOD" );
 }
 
-#else // SERVER:
+#else  // SERVER:
 
 static CUtlDict< char *, int > m_LcfDatabase;
 
@@ -183,7 +191,7 @@ extern int luasrc_sendfile( lua_State *L )
 
     int iLength = Q_strlen( ar2.source );
     char source[MAX_PATH];
-    Q_StrRight( ar2.source, iLength - 1, source, sizeof( source ) ); // remove the @ from the beginning
+    Q_StrRight( ar2.source, iLength - 1, source, sizeof( source ) );  // remove the @ from the beginning
 
     // If there is no file passed, send the file that called this function
     if ( lua_isnoneornil( L, 1 ) )
@@ -198,7 +206,7 @@ extern int luasrc_sendfile( lua_State *L )
     Q_snprintf( fileName, sizeof( fileName ), "%s\\%s", source, luaL_checkstring( L, 1 ) );
 
     luasrc_sendfile( L, fileName );
-    
+
     return 0;
 }
 
@@ -208,7 +216,7 @@ void luasrc_sendfile( lua_State *L, const char *fullPath )
 
     if ( !filesystem->FullPathToRelativePathEx( fullPath, "MOD", relativePath, MAX_PATH ) )
     {
-        DevMsg( "LCF: couldn't find relative path to %s!\n", fullPath );
+        LUA_LCF_DEBUG( "couldn't find relative path to %s!\n", fullPath );
         return;
     }
 
@@ -228,7 +236,7 @@ void luasrc_sendfile( lua_State *L, const char *fullPath )
     char gamePath[256];
     engine->GetGameDir( gamePath, 256 );
 
-    DevMsg( "LCF: adding %s to the Lua cache file...\n", zipPath );
+    LUA_LCF_DEBUG( "adding %s to the Lua cache file...\n", zipPath );
     m_LcfDatabase.Insert( zipPath, strdup( fullPath ) );
 }
 

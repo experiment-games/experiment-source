@@ -513,8 +513,7 @@ static int CBasePlayer_IsSpeaking( lua_State *L )
 #ifdef CLIENT_DLL
     CBasePlayer *pPlayer = luaL_checkplayer( L, 1 );
 
-    if ( ( pPlayer == C_BasePlayer::GetLocalPlayer() && GetClientVoiceMgr()->IsLocalPlayerSpeaking() )
-        || GetClientVoiceMgr()->IsPlayerSpeaking( pPlayer->entindex() ) )
+    if ( ( pPlayer == C_BasePlayer::GetLocalPlayer() && GetClientVoiceMgr()->IsLocalPlayerSpeaking() ) || GetClientVoiceMgr()->IsPlayerSpeaking( pPlayer->entindex() ) )
     {
         lua_pushboolean( L, true );
         return 1;
@@ -955,13 +954,10 @@ static int CBasePlayer_Weapon_Switch( lua_State *L )
     return 1;
 }
 
-static int CBasePlayer_Weapon_TranslateActivity(lua_State* L)
+static int CBasePlayer_Weapon_TranslateActivity( lua_State *L )
 {
-#ifdef CLIENT_DLL
-    DevWarning( "Weapon_TranslateActivity not yet implemented clientside\n" );
-#else
-    lua_pushinteger( L, luaL_checkplayer( L, 1 )->Weapon_TranslateActivity( (Activity) ( int )luaL_optnumber( L, 2, 0 ), NULL ) );
-#endif
+    Activity activity = ( Activity )( int )luaL_checknumber( L, 2 );
+    lua_pushinteger( L, luaL_checkplayer( L, 1 )->Weapon_TranslateActivity( activity, NULL ) );
     return 1;
 }
 

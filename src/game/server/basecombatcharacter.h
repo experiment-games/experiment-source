@@ -219,7 +219,6 @@ public:
 	// Weapons
 	// -----------------------
 	CBaseCombatWeapon*	Weapon_Create( const char *pWeaponName );
-	virtual Activity	Weapon_TranslateActivity( Activity baseAct, bool *pRequired = NULL );
 	void				Weapon_SetActivity( Activity newActivity, float duration );
 	virtual void		Weapon_FrameUpdate( void );
 	virtual void		Weapon_HandleAnimEvent( animevent_t *pEvent );
@@ -230,6 +229,7 @@ public:
 	bool				Weapon_Detach( CBaseCombatWeapon *pWeapon );		// Clear any pointers to the weapon.
 	virtual void		Weapon_Drop( CBaseCombatWeapon *pWeapon, const Vector *pvecTarget = NULL, const Vector *pVelocity = NULL );
 	virtual	bool		Weapon_Switch( CBaseCombatWeapon *pWeapon, int viewmodelindex = 0 );		// Switch to given weapon if has ammo (false if failed)
+    virtual Activity    Weapon_TranslateActivity( Activity baseAct, bool *pRequired = NULL );
 	virtual	Vector		Weapon_ShootPosition( );		// gun position at current position/orientation
 	bool				Weapon_IsOnGround( CBaseCombatWeapon *pWeapon );
 	CBaseEntity*		Weapon_FindUsable( const Vector &range );			// search for a usable weapon in this range
