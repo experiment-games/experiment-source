@@ -19,6 +19,7 @@
 #include "lc_recipientfilter.h"
 #else
 #include "lrecipientfilter.h"
+#include "basescripted.h"
 #endif
 #include "lbaseplayer_shared.h"
 #include "lgametrace.h"
@@ -2251,7 +2252,10 @@ static const luaL_Reg CBaseEntitymeta[] = {
 static int luasrc_CreateEntityByName( lua_State *L )
 {
     CBaseEntity *pEntity = CreateEntityByName( luaL_checkstring( L, 1 ) );
-    DispatchSpawn( pEntity );
+
+    if ( dynamic_cast< CBaseScripted * >( pEntity ) != NULL )
+        DispatchSpawn( pEntity );
+
     CBaseEntity::PushLuaInstanceSafe( L, pEntity );
     return 1;
 }

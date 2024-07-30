@@ -20,11 +20,7 @@ CGameInfoStore::CGameInfoStore()
 
 CGameInfoStore::~CGameInfoStore()
 {
-    // free the player address strings
-    for ( int i = 0; i < m_mapPlayerIndexToAddress.GetNumStrings(); i++ )
-    {
-        delete[] m_mapPlayerIndexToAddress.String( i );
-    }
+    m_mapPlayerIndexToAddress.Purge();
 }
 
 // Copies the hostname and mapname strings to buffers that will persist
