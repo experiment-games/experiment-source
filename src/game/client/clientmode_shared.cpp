@@ -454,7 +454,7 @@ void ClientModeShared::VGui_Shutdown()
 
     delete m_pViewport;
     m_pViewport = NULL;
-// Redundant?
+// Experiment; This is redundant since its unset in luasrc_shutdown
 //#ifdef LUA_SDK
 //    delete g_pClientLuaPanel;
 //    g_pClientLuaPanel = NULL;

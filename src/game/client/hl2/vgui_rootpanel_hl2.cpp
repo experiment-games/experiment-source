@@ -73,8 +73,12 @@ vgui::Panel *VGui_GetGameUIPanel(void) {
 //-----------------------------------------------------------------------------
 CScriptedClientLuaPanel *VGui_GetClientLuaRootPanel( void )
 {
-    CScriptedClientLuaPanel *pRoot = g_pClientLuaPanel;
-    return pRoot;
+    return g_pClientLuaPanel;
+}
+
+CScriptedClientLuaPanel *VGui_GetClientLuaRootPanelHUD( void )
+{
+    return g_pClientLuaPanelHUD;
 }
 #endif
 

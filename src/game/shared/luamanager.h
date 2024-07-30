@@ -537,6 +537,7 @@ LUALIB_API int luaL_optboolean( lua_State *L, int narg, int def );
 #ifdef CLIENT_DLL
 extern lua_State *LGameUI;  // gameui state
 extern CScriptedClientLuaPanel *g_pClientLuaPanel;
+extern CScriptedClientLuaPanel *g_pClientLuaPanelHUD;
 #endif
 
 extern lua_State *L;

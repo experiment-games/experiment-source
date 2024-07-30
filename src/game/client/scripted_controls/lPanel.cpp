@@ -1002,6 +1002,12 @@ static int Panel_ParentLocalToScreen( lua_State *L )
     return 2;
 }
 
+static int Panel_ParentToHUD( lua_State *L )
+{
+    luaL_checkpanel( L, 1 )->SetParent( VGui_GetClientLuaRootPanelHUD() );
+    return 0;
+}
+
 static int Panel_PerformLayout( lua_State *L )
 {
     luaL_checkpanel( L, 1 )->PerformLayout();
@@ -1630,6 +1636,7 @@ static const luaL_Reg Panelmeta[] = {
     { "PaintBorder", Panel_PaintBorder },
     { "PaintBuildOverlay", Panel_PaintBuildOverlay },
     { "ParentLocalToScreen", Panel_ParentLocalToScreen },
+    { "ParentToHUD", Panel_ParentToHUD },
     { "PerformLayout", Panel_PerformLayout },
     { "Prepare", Panel_Prepare },
     { "PostChildPaint", Panel_PostChildPaint },
