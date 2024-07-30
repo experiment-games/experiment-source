@@ -81,12 +81,40 @@ static int CHL2MP_Player_DoAnimationEvent( lua_State *L )
     return 0;
 }
 
+static int CHL2MP_Player_AnimationResetGestureSlot( lua_State *L )
+{
+    luaL_checkhl2mpplayer( L, 1 )->GetAnimState()->ResetGestureSlot( ( int )luaL_checknumber( L, 2 ) );
+    return 0;
+}
+
 static int CHL2MP_Player_AnimationRestartGesture( lua_State *L )
 {
     luaL_checkhl2mpplayer( L, 1 )->GetAnimState()->RestartGesture(
         ( int )luaL_checknumber( L, 2 ),
         ( Activity ) (int)luaL_checknumber( L, 3 ),
         ( bool )luaL_optboolean( L, 4, false ) );
+    return 0;
+}
+
+static int CHL2MP_Player_AnimationRestartMainSequence( lua_State *L )
+{
+    luaL_checkhl2mpplayer( L, 1 )->GetAnimState()->RestartMainSequence();
+    return 0;
+}
+
+static int CHL2MP_Player_AnimationSetGestureSequence( lua_State *L )
+{
+    luaL_checkhl2mpplayer( L, 1 )->GetAnimState()->AddVCDSequenceToGestureSlot(
+        ( int )luaL_checknumber( L, 2 ),
+        ( int )luaL_checknumber( L, 3 ) );
+    return 0;
+}
+
+static int CHL2MP_Player_AnimationSetGestureWeight( lua_State *L )
+{
+    luaL_checkhl2mpplayer( L, 1 )->GetAnimState()->SetGestureWeight(
+        ( int )luaL_checknumber( L, 2 ),
+        ( float )luaL_checknumber( L, 3 ) );
     return 0;
 }
 
@@ -178,6 +206,10 @@ static const luaL_Reg CHL2MP_Playermeta[] = {
     { "CanSprint", CHL2MP_Player_CanSprint },
     { "DoAnimationEvent", CHL2MP_Player_DoAnimationEvent },
     { "AnimationRestartGesture", CHL2MP_Player_AnimationRestartGesture },
+    { "AnimationRestartMainSequence", CHL2MP_Player_AnimationRestartMainSequence },
+    { "AnimationResetGestureSlot", CHL2MP_Player_AnimationResetGestureSlot },
+    { "AnimationSetGestureSequence", CHL2MP_Player_AnimationSetGestureSequence },
+    { "AnimationSetGestureWeight", CHL2MP_Player_AnimationSetGestureWeight },
     { "KeyDown", CHL2MP_Player_KeyDown },
     { "__index", CHL2MP_Player___index },
     { "__newindex", CHL2MP_Player___newindex },

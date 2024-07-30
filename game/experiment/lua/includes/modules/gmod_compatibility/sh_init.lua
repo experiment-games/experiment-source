@@ -170,6 +170,7 @@ FrameTime = Globals.FrameTime
 engine.TickCount = Globals.TickCount
 engine.TickInterval = Globals.IntervalPerTick
 SoundDuration = Engine.GetSoundDuration
+GetHostName = Engine.GetServerName
 
 PrecacheParticleSystem = ParticleSystem.Precache
 
@@ -386,6 +387,8 @@ ENTITY_META.RemoveFlags = ENTITY_META.RemoveFlag
 ENTITY_META.GetFlexNum = ENTITY_META.GetFlexCount
 ENTITY_META.SetOwner = ENTITY_META.SetOwnerEntity
 ENTITY_META.GetOwner = ENTITY_META.GetOwnerEntity
+ENTITY_META.DeleteOnRemove = ENTITY_META.AddDeleteOnRemove
+ENTITY_META.DontDeleteOnRemove = ENTITY_META.RemoveDeleteOnRemove
 
 function ENTITY_META:SetSpawnEffect(effect)
 	-- TODO: Implement
@@ -446,7 +449,11 @@ PLAYER_META.SteamID64 = PLAYER_META.GetSteamID64
 PLAYER_META.UniqueID = PLAYER_META.GetUniqueID
 PLAYER_META.InVehicle = PLAYER_META.IsInAVehicle
 PLAYER_META.GetVehicle = PLAYER_META.GetVehicleEntity
+PLAYER_META.AnimResetGestureSlot = PLAYER_META.AnimationResetGestureSlot
 PLAYER_META.AnimRestartGesture = PLAYER_META.AnimationRestartGesture
+PLAYER_META.AnimRestartMainSequence = PLAYER_META.AnimationRestartMainSequence
+PLAYER_META.AnimSetGestureSequence = PLAYER_META.AnimationSetGestureSequence
+PLAYER_META.AnimSetGestureWeight = PLAYER_META.AnimationSetGestureWeight
 
 function PLAYER_META:GetInfo(consoleVariableName)
 	return engine.GetClientConVarValue(self, consoleVariableName)

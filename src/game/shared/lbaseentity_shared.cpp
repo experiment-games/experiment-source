@@ -1584,6 +1584,18 @@ static int CBaseEntity_SetTextureFrameIndex( lua_State *L )
     return 0;
 }
 
+static int CBaseEntity_SetTransmitWithParent( lua_State *L )
+{
+    luaL_checkentity( L, 1 )->SetTransmitWithParent( luaL_checkboolean( L, 2 ) );
+    return 0;
+}
+
+static int CBaseEntity_GetTransmitWithParent( lua_State *L )
+{
+    lua_pushboolean( L, luaL_checkentity( L, 1 )->GetTransmitWithParent() );
+    return 1;
+}
+
 static int CBaseEntity_SetViewOffset( lua_State *L )
 {
     luaL_checkentity( L, 1 )->SetViewOffset( luaL_checkvector( L, 2 ) );
@@ -2191,6 +2203,9 @@ static const luaL_Reg CBaseEntitymeta[] = {
     { "SetSize", CBaseEntity_SetSize },
     { "SetSolid", CBaseEntity_SetSolid },
     { "SetSolidFlags", CBaseEntity_SetSolidFlags },
+    { "SetTextureFrameIndex", CBaseEntity_SetTextureFrameIndex },
+    { "SetTransmitWithParent", CBaseEntity_SetTransmitWithParent },
+    { "GetTransmitWithParent", CBaseEntity_GetTransmitWithParent },
     { "SetTextureFrameIndex", CBaseEntity_SetTextureFrameIndex },
     { "SetViewOffset", CBaseEntity_SetViewOffset },
     { "SetWaterLevel", CBaseEntity_SetWaterLevel },

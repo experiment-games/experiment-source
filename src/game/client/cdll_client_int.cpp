@@ -88,6 +88,7 @@
 #include "toolframework_client.h"
 #include "hltvcamera.h"
 #include "mapload_background.h"
+#include "gameinfostore.h"
 #if defined( REPLAY_ENABLED )
 #include "replay/replaycamera.h"
 #include "replay/replay_ragdoll.h"
@@ -1090,6 +1091,8 @@ int CHLClient::Init( CreateInterfaceFn appSystemFactory,
 
     g_pcv_ThreadMode = g_pCVar->FindVar( "host_thread_mode" );
 
+    g_pGameInfoStore = new CGameInfoStore();
+
     if ( !Initializer::InitializeAllObjects() )
         return false;
 
@@ -1337,6 +1340,9 @@ void CHLClient::Shutdown( void )
     // Only shutdown the GameUI Lua State after VGui has shut down and cleaned up
     luasrc_shutdown_gameui();
 #endif
+
+    delete g_pGameInfoStore;
+    g_pGameInfoStore = NULL;
 
     ParticleMgr()->Term();
 

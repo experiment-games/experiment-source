@@ -22,6 +22,18 @@ static int CBaseEntity_RecalcHasPlayerChildBit( lua_State *L )
     return 0;
 }
 
+static int CBaseEntity_AddDeleteOnRemove( lua_State *L )
+{
+    luaL_checkentity( L, 1 )->AddDeleteOnRemove( luaL_checkentity( L, 2 ) );
+    return 0;
+}
+
+static int CBaseEntity_RemoveDeleteOnRemove( lua_State *L )
+{
+    luaL_checkentity( L, 1 )->RemoveDeleteOnRemove( luaL_checkentity( L, 2 ) );
+    return 0;
+}
+
 static int CBaseEntity_DoesHavePlayerChild( lua_State *L )
 {
     luaL_checkentity( L, 1 )->DoesHavePlayerChild();
@@ -788,6 +800,8 @@ static int CBaseEntity_IsItem( lua_State *L )
 
 static const luaL_Reg CBaseEntitymeta[] = {
     { "RecalcHasPlayerChildBit", CBaseEntity_RecalcHasPlayerChildBit },
+    { "AddDeleteOnRemove", CBaseEntity_AddDeleteOnRemove },
+    { "RemoveDeleteOnRemove", CBaseEntity_RemoveDeleteOnRemove },
     { "DoesHavePlayerChild", CBaseEntity_DoesHavePlayerChild },
     { "SetNavIgnore", CBaseEntity_SetNavIgnore },
     { "ClearNavIgnore", CBaseEntity_ClearNavIgnore },

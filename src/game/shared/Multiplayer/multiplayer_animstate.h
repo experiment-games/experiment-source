@@ -212,9 +212,11 @@ class CMultiPlayerAnimState
     void ResetGestureSlots( void );
     void ResetGestureSlot( int iGestureSlot );
     void AddVCDSequenceToGestureSlot( int iGestureSlot, int iGestureSequence, float flCycle = 0.0f, bool bAutoKill = true );
+    void SetGestureWeight( int iGestureSlot, float flWeight );
     CAnimationLayer *GetGestureSlotLayer( int iGestureSlot );
     bool IsGestureSlotActive( int iGestureSlot );
     bool VerifyAnimLayerInSlot( int iGestureSlot );
+    virtual void RestartMainSequence();
 
     // Feet.
     // If you are forcing aim yaw, your code is almost definitely broken if you don't include a delay between
@@ -235,7 +237,6 @@ class CMultiPlayerAnimState
     {
         return GetBasePlayer()->SelectWeightedSequence( activity );
     }
-    virtual void RestartMainSequence();
 
     virtual void GetOuterAbsVelocity( Vector &vel );
     float GetOuterXYSpeed();

@@ -730,6 +730,16 @@ void CMultiPlayerAnimState::AddVCDSequenceToGestureSlot( int iGestureSlot, int i
 #endif
 }
 
+void CMultiPlayerAnimState::SetGestureWeight( int iGestureSlot, float flWeight )
+{
+    Assert( iGestureSlot >= 0 && iGestureSlot < GESTURE_SLOT_COUNT );
+
+    if ( !VerifyAnimLayerInSlot( iGestureSlot ) )
+        return;
+
+    m_aGestureSlots[iGestureSlot].m_pAnimLayer->m_flWeight = flWeight;
+}
+
 //-----------------------------------------------------------------------------
 // Purpose: 
 //-----------------------------------------------------------------------------

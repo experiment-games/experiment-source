@@ -90,6 +90,7 @@
 #include "tier3/tier3.h"
 #include "serverbenchmark_base.h"
 #include "querycache.h"
+#include "gameinfostore.h"
 
 #ifdef TF_DLL
 #include "gc_clientsystem.h"
@@ -711,6 +712,8 @@ bool CServerGameDLL::DLLInit( CreateInterfaceFn appSystemFactory,
 
     g_pSharedChangeInfo = engine->GetSharedEdictChangeInfo();
 
+    g_pGameInfoStore = new CGameInfoStore();
+
     MathLib_Init( 2.2f, 2.2f, 0.0f, 2.0f );
 
     // save these in case other system inits need them
@@ -881,6 +884,9 @@ void CServerGameDLL::DLLShutdown( void )
     s_SteamAPIContext.Clear();  // Steam API context shutdown
     s_SteamGameServerAPIContext.Clear();
 #endif
+
+    delete g_pGameInfoStore;
+    g_pGameInfoStore = NULL;
 
     gameeventmanager = NULL;
 

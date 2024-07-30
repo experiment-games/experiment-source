@@ -13,6 +13,7 @@
 #include "lbaseplayer_shared.h"
 #include "linetchannelinfo.h"
 #include "engine/IEngineSound.h"
+#include <gameinfostore.h>
 
 // memdbgon must be the last include file in a .cpp file!!!
 #include "tier0/memdbgon.h"
@@ -112,6 +113,12 @@ static int engine_GetClientConVarValueAsNumber( lua_State *L )
 static int engine_GetEntityCount( lua_State *L )
 {
     lua_pushinteger( L, engine->GetEntityCount() );
+    return 1;
+}
+
+static int engine_GetServerName( lua_State *L )
+{
+    lua_pushstring( L, g_pGameInfoStore->GetServerName() );
     return 1;
 }
 
@@ -373,6 +380,7 @@ static const luaL_Reg enginelib[] = {
     { "GetClientConVarValue", engine_GetClientConVarValue },
     { "GetClientConVarValueAsNumber", engine_GetClientConVarValueAsNumber },
     { "GetEntityCount", engine_GetEntityCount },
+    { "GetServerName", engine_GetServerName },
     { "GetLevelName", engine_GetLevelName },
     { "GetGameDir", engine_GetGameDir },
     { "GetMapEntitiesString", engine_GetMapEntitiesString },

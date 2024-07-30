@@ -108,6 +108,16 @@ void SpawnBlood( Vector vecSpot, const Vector &vecDir, int bloodColor, float flD
     UTIL_BloodDrips( vecSpot, vecDir, bloodColor, ( int )flDamage );
 }
 
+void CBaseEntity::SetTransmitWithParent( bool bTransmitWithParent )
+{
+    m_bTransmitWithParent = bTransmitWithParent;
+}
+
+bool CBaseEntity::GetTransmitWithParent()
+{
+    return m_bTransmitWithParent;
+}
+
 #if !defined( NO_ENTITY_PREDICTION )
 //-----------------------------------------------------------------------------
 // The player drives simulation of this entity

@@ -9,6 +9,7 @@
 #include "luasrclib.h"
 #include "mathlib/lvector.h"
 #include <lbaseplayer_shared.h>
+#include "gameinfostore.h"
 
 // memdbgon must be the last include file in a .cpp file!!!
 #include "tier0/memdbgon.h"
@@ -194,6 +195,12 @@ static int engine_GetGameDirectory( lua_State *L )
 static int engine_GetLastTimeStamp( lua_State *L )
 {
     lua_pushnumber( L, engine->GetLastTimeStamp() );
+    return 1;
+}
+
+static int engine_GetServerName( lua_State *L )
+{
+    lua_pushstring( L, g_pGameInfoStore->GetServerName() );
     return 1;
 }
 
@@ -585,6 +592,7 @@ static const luaL_Reg enginelib[] = {
     { "GetEngineBuildNumber", engine_GetEngineBuildNumber },
     { "GetGameDirectory", engine_GetGameDirectory },
     { "GetLastTimeStamp", engine_GetLastTimeStamp },
+    { "GetServerName", engine_GetServerName },
     { "GetLevelName", engine_GetLevelName },
     { "GetLightForPoint", engine_GetLightForPoint },
     { "GetLightForPointFast", engine_GetLightForPointFast },

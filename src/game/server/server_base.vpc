@@ -670,6 +670,8 @@ $Project
 		$File	"$SRCDIR\public\base64.h"
 		$File	"$SRCDIR\public\base64.cpp"
         $File	"$SRCDIR\game\shared\handviewmodel_shared.cpp"
+		$File	"$SRCDIR\game\shared\gameinfostore.h"
+		$File	"$SRCDIR\game\shared\gameinfostore.cpp"
 
 		$Folder	"Lua"
 		{

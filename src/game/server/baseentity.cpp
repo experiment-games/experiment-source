@@ -464,6 +464,12 @@ extern bool g_bDisableEhandleAccess;
 //-----------------------------------------------------------------------------
 CBaseEntity::~CBaseEntity()
 {
+    for ( int i = m_EntitiesToDeleteOnRemove.Count() - 1; i >= 0; i-- )
+    {
+        UTIL_Remove( m_EntitiesToDeleteOnRemove[i] );
+    }
+    m_EntitiesToDeleteOnRemove.RemoveAll();
+
     // FIXME: This can't be called from UpdateOnRemove! There's at least one
     // case where friction sounds are added between the call to UpdateOnRemove + ~CBaseEntity
     PhysCleanupFrictionSounds( this );
@@ -3520,6 +3526,16 @@ CBaseEntity *CBaseEntity::Instance( const CBaseHandle &hEnt )
     return gEntList.GetBaseEntity( hEnt );
 }
 
+void CBaseEntity::AddDeleteOnRemove( CBaseEntity *pEntity )
+{
+    m_EntitiesToDeleteOnRemove.AddToTail( pEntity );
+}
+
+void CBaseEntity::RemoveDeleteOnRemove( CBaseEntity *pEntity )
+{
+    m_EntitiesToDeleteOnRemove.FindAndRemove( pEntity );
+}
+
 int CBaseEntity::GetTransmitState( void )
 {
     edict_t *ed = edict();
@@ -3555,6 +3571,14 @@ int CBaseEntity::UpdateTransmitState()
     // If you get this assert, you should be calling DispatchUpdateTransmitState
     // instead of UpdateTransmitState.
     Assert( g_nInsideDispatchUpdateTransmitState > 0 );
+
+    if ( m_bTransmitWithParent )
+    {
+        if ( GetParent() )
+        {
+            return GetParent()->UpdateTransmitState();
+        }
+    }
 
     if ( m_rfPreventTransmitEntities && m_rfPreventTransmitEntities->GetRecipientCount() > 0 )
     {

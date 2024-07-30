@@ -114,20 +114,6 @@ public:
 
 	virtual void	ComputeVguiResConditions( KeyValues *pkvConditions ) = 0;
 
-	//=============================================================================
-	// HPE_BEGIN:
-	// [menglish] Save server information shown to the client in a persistent place
-	//=============================================================================
-	 
-	virtual wchar_t* GetServerName() = 0;
-	virtual void SetServerName(wchar_t* name) = 0;
-	virtual wchar_t* GetMapName() = 0;
-	virtual void SetMapName(wchar_t* name) = 0;
-	 
-	//=============================================================================
-	// HPE_END
-	//=============================================================================
-
 	virtual bool	DoPostScreenSpaceEffects( const CViewSetup *pSetup ) = 0;
 
 	virtual void	DisplayReplayMessage( const char *pLocalizeName, float flDuration, bool bUrgent,

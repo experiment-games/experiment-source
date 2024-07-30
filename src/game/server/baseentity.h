@@ -523,11 +523,16 @@ class CBaseEntity : public IServerEntity
     void SetEffectEntity( CBaseEntity *pEffectEnt );
     CBaseEntity *GetEffectEntity() const;
 
+    void AddDeleteOnRemove( CBaseEntity *pEntity );
+    void RemoveDeleteOnRemove( CBaseEntity *pEntity );
+
     // Only CBaseEntity implements these. CheckTransmit calls the virtual ShouldTransmit to see if the
     // entity wants to be sent. If so, it calls SetTransmit, which will mark any dependents for transmission too.
     virtual int ShouldTransmit( const CCheckTransmitInfo *pInfo );
     virtual void SetPreventTransmit( CRecipientFilter &filter, bool bPreventTransmitting );
     virtual void SetPreventTransmit( CBasePlayer *filter, bool bPreventTransmitting );
+    virtual void SetTransmitWithParent( bool bTransmitWithParent );
+    virtual bool GetTransmitWithParent();
 
     // update the global transmit state if a transmission rule changed
     int SetTransmitState( int nFlag );
@@ -898,6 +903,7 @@ class CBaseEntity : public IServerEntity
     int GetIndexForThinkContext( const char *pszContext );
     CUtlVector< thinkfunc_t > m_aThinkFunctions;
     CRecipientFilter *m_rfPreventTransmitEntities;
+    bool m_bTransmitWithParent = false;
 
 #ifdef _DEBUG
     int m_iCurrentThinkContext;
@@ -1898,6 +1904,8 @@ class CBaseEntity : public IServerEntity
 
     // was pev->view_ofs ( FIXME:  Move somewhere up the hierarch, CBaseAnimating, etc. )
     CNetworkVectorForDerived( m_vecViewOffset );
+
+    CUtlVector< EHANDLE > m_EntitiesToDeleteOnRemove;
 
    private:
     // dynamic model state tracking

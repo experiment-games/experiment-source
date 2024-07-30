@@ -371,6 +371,8 @@ class C_BaseEntity : public IClientEntity
     // IClientNetworkable implementation.
    public:
     virtual void NotifyShouldTransmit( ShouldTransmitState_t state );
+    virtual void SetTransmitWithParent( bool bTransmitWithParent );
+    virtual bool GetTransmitWithParent();
 
     // save out interpolated values
     virtual void PreDataUpdate( DataUpdateType_t updateType );
@@ -994,6 +996,7 @@ class C_BaseEntity : public IClientEntity
 
    protected:
     static bool sm_bDisableTouchFuncs;  // Disables PhysicsTouch and PhysicsStartTouch function calls
+    bool m_bTransmitWithParent = false;
 
    public:
     touchlink_t *PhysicsMarkEntityAsTouched( C_BaseEntity *other );
