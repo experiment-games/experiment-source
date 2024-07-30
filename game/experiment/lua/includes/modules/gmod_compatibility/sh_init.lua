@@ -15,7 +15,6 @@ package.IncludePath = "lua/includes/modules/gmod_compatibility/;" .. package.Inc
 
 bit = require("bitwise")
 concommand = require("console_commands")
-scripted_ents = require("entities")
 gamemode = require("gamemodes")
 hook = require("hooks")
 net = require("networks")
@@ -131,7 +130,7 @@ function FindMetaTable(name)
 	elseif (name == "Player") then
 		name = "CBasePlayer"
 	elseif (name == "Vehicle") then
-		-- We don't have vehicles, so lets not waste time on it
+		-- We don't have vehicles in Experiment, so lets not waste time on it
 		return {}
 	end
 
@@ -409,6 +408,29 @@ end
 
 function ENTITY_META:IsOnGround()
 	return self:IsFlagSet(FL_ONGROUND)
+end
+
+--[[
+	We implement SetNotSolid and DrawShadow using engine flags/effects, but I'm not sure
+	if that's the way gmod does it. If it isn't, these flags may be unexpectedly set by
+	some scripts.
+	TODO: Check if DrawShadow/SetNotSolid on gmod, causes any flags to be set.
+--]]
+function ENTITY_META:SetNotSolid(bBool)
+	if (bBool) then
+		self:AddSolidFlags(SOLID_NONE)
+    else
+		print("ENTITY_META:SetNotSolid - Not sure if SOLID_VPHYSICS is correct for SetNotSolid(false)")
+		self:RemoveSolidFlags(SOLID_VPHYSICS)
+	end
+end
+
+function ENTITY_META:DrawShadow(bBool)
+	if (bBool) then
+		self:RemoveEffects(EF_NOSHADOW)
+	else
+		self:AddEffects(EF_NOSHADOW)
+	end
 end
 
 ENTITY_META.OnGround = ENTITY_META.IsOnGround
@@ -1047,7 +1069,7 @@ require("gmod_compatibility/modules/saverestore")
 -- require("gmod_compatibility/modules/hook") -- We have our own hook library.
 -- require("gmod_compatibility/modules/gamemode") -- We have our own gamemode library.
 -- require("gmod_compatibility/modules/weapons") -- We have our own weapons library.
--- require("gmod_compatibility/modules/scripted_ents") -- We have our own scripted_ents library.
+require("gmod_compatibility/modules/scripted_ents")
 require("gmod_compatibility/modules/player_manager")
 require("gmod_compatibility/modules/numpad")
 require("gmod_compatibility/modules/team")
@@ -1296,6 +1318,13 @@ else
 end
 
 hook.Add("Initialize", "GModCompatibility.CallInitializeHooks", function()
+    -- Copy ents from our system to the GMod system.
+    local scriptedEntities = Entities.GetList()
+	for className, scriptedEntity in pairs(scriptedEntities) do
+		scripted_ents.Register(scriptedEntity, className)
+	end
+    scripted_ents.OnLoaded()
+
 	hook.Run("CreateTeams")
 	hook.Run("PreGamemodeLoaded")
 	hook.Run("OnGamemodeLoaded")

@@ -595,17 +595,18 @@ static int CBaseEntity_DumpResponseCriteria( lua_State *L )
     return 0;
 }
 
-static int CBaseEntity_Create( lua_State *L )
-{
-    CBaseEntity::PushLuaInstanceSafe( L, CBaseEntity::Create( luaL_checkstring( L, 1 ), luaL_checkvector( L, 2 ), luaL_checkangle( L, 3 ), luaL_optentity( L, 4, NULL ) ) );
-    return 1;
-}
-
-static int CBaseEntity_CreateNoSpawn( lua_State *L )
-{
-    CBaseEntity::PushLuaInstanceSafe( L, CBaseEntity::CreateNoSpawn( luaL_checkstring( L, 1 ), luaL_checkvector( L, 2 ), luaL_checkangle( L, 3 ), luaL_optentity( L, 4, NULL ) ) );
-    return 1;
-}
+// Experiment; Disabled in favor of CreateEntityByName which also calls DispatchSpawn (that installs the correct ENT table)
+//static int CBaseEntity_Create( lua_State *L )
+//{
+//    CBaseEntity::PushLuaInstanceSafe( L, CBaseEntity::Create( luaL_checkstring( L, 1 ), luaL_checkvector( L, 2 ), luaL_checkangle( L, 3 ), luaL_optentity( L, 4, NULL ) ) );
+//    return 1;
+//}
+//
+//static int CBaseEntity_CreateNoSpawn( lua_State *L )
+//{
+//    CBaseEntity::PushLuaInstanceSafe( L, CBaseEntity::CreateNoSpawn( luaL_checkstring( L, 1 ), luaL_checkvector( L, 2 ), luaL_checkangle( L, 3 ), luaL_optentity( L, 4, NULL ) ) );
+//    return 1;
+//}
 
 static int CBaseEntity_GetDamageType( lua_State *L )
 {
@@ -857,8 +858,8 @@ static const luaL_Reg CBaseEntitymeta[] = {
     { "IsLockedByMaster", CBaseEntity_IsLockedByMaster },
     { "SetMaxHealth", CBaseEntity_SetMaxHealth },
     { "DumpResponseCriteria", CBaseEntity_DumpResponseCriteria },
-    { "Create", CBaseEntity_Create },
-    { "CreateNoSpawn", CBaseEntity_CreateNoSpawn },
+    //{ "Create", CBaseEntity_Create },
+    //{ "CreateNoSpawn", CBaseEntity_CreateNoSpawn },
     { "GetDamageType", CBaseEntity_GetDamageType },
     { "GetDamage", CBaseEntity_GetDamage },
     { "SetDamage", CBaseEntity_SetDamage },

@@ -239,7 +239,7 @@ void CHL2MPScriptedWeapon::InitScriptedWeapon( void )
     Q_strncpy( m_pLuaWeaponInfo->szClassName, className, MAX_WEAPON_STRING );
     SetClassname( className );
 
-    lua_getglobal( L, "weapons" );
+    lua_getglobal( L, LUA_WEAPONSLIBNAME );
     if ( lua_istable( L, -1 ) )
     {
         lua_getfield( L, -1, "Get" );

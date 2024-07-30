@@ -69,8 +69,17 @@ LUALIB_API int( luaopen_dbg )( lua_State *L );
 #define LUA_DEBUGOVERLAYLIBNAME "DebugOverlay"
 LUALIB_API int( luaopen_debugoverlay )( lua_State *L );
 
+#define LUA_EFLIBNAME "EF"
+LUALIB_API int( luaopen_EF )( lua_State *L );
+
 #define LUA_ENGINELIBNAME "Engine"
 LUALIB_API int( luaopen_engine )( lua_State *L );
+
+#define LUA_ENTLISTLIBNAME "EntityList"
+LUALIB_API int( luaopen_EntityList )( lua_State *L );
+
+#define LUA_ENGINEFLAGSLIBNAME "FL"
+LUALIB_API int( luaopen_FL )( lua_State *L );
 
 #define LUA_ENGINEVGUILIBNAME "EngineGui"
 LUALIB_API int( luaopen_enginevgui )( lua_State *L );
@@ -84,8 +93,8 @@ LUALIB_API int( luaopen_filesystem )( lua_State *L );
 #define LUA_FONTFLAGLIBNAME "FONTFLAG"
 LUALIB_API int( luaopen_FONTFLAG )( lua_State *L );
 
-#define LUA_ENTLISTLIBNAME "EntityList"
-LUALIB_API int( luaopen_EntityList )( lua_State *L );
+#define LUA_GESTURESLOTLIBNAME "GESTURE_SLOT"
+LUALIB_API int( luaopen_GESTURE_SLOT )( lua_State *L );
 
 #define LUA_GLOBALSLIBNAME "Globals"
 LUALIB_API int( luaopen_gpGlobals )( lua_State *L );
@@ -135,6 +144,9 @@ LUALIB_API int( luaopen_ISteamFriends )( lua_State *L );
 #define LUA_KEYVALUESLIBNAME "KeyValues"
 LUALIB_API int( luaopen_KeyValues )( lua_State *L );
 
+#define LUA_LIFELIBNAME "LIFE"
+LUALIB_API int( luaopen_LIFE )( lua_State *L );
+
 #define LUA_MASKLIBNAME "MASK"
 LUALIB_API int( luaopen_MASK )( lua_State *L );
 
@@ -144,8 +156,17 @@ LUALIB_API int( luaopen_mathlib )( lua_State *L );
 #define LUA_MATRIXLIBNAME "Matrix3x4"
 LUALIB_API int( luaopen_matrix3x4_t )( lua_State *L );
 
+#define LUA_MOVECOLLIDELIBNAME "MOVECOLLIDE"
+LUALIB_API int( luaopen_MOVECOLLIDE )( lua_State *L );
+
+#define LUA_MOVETYPELIBNAME "MOVETYPE"
+LUALIB_API int( luaopen_MOVETYPE )( lua_State *L );
+
 #define LUA_NETWORKSTRINGTABLELIBNAME "NetworkStringTable"
 LUALIB_API int( luaopen_networkstringtable )( lua_State *L );
+
+#define LUA_OBSMODELIBNAME "OBS_MODE"
+LUALIB_API int( luaopen_OBS_MODE )( lua_State *L );
 
 #define LUA_PARTICLESYSTEMLIBNAME "ParticleSystem"
 LUALIB_API int( luaopen_ParticleSystem )( lua_State *L );
@@ -167,6 +188,12 @@ LUALIB_API int( luaopen_resources )( lua_State *L );
 
 #define LUA_SCHEMELIBNAME "Scheme"
 LUALIB_API int( luaopen_scheme )( lua_State *L );
+
+#define LUA_SOLIDLIBNAME "SOLID"
+LUALIB_API int( luaopen_SOLID )( lua_State *L );
+
+#define LUA_SOLIDFLAGLIBNAME "FSOLID"
+LUALIB_API int( luaopen_SOLIDFLAG )( lua_State *L );
 
 #define LUA_STEAMAPICONTEXTLIBNAME "SteamApiContext"
 LUALIB_API int( luaopen_steamapicontext )( lua_State *L );

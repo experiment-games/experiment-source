@@ -2232,11 +2232,15 @@ static const luaL_Reg CBaseEntitymeta[] = {
     { "__tostring", CBaseEntity___tostring },
     { NULL, NULL } };
 
+#ifndef CLIENT_DLL
 static int luasrc_CreateEntityByName( lua_State *L )
 {
-    CBaseEntity::PushLuaInstanceSafe( L, CreateEntityByName( luaL_checkstring( L, 1 ) ) );
+    CBaseEntity *pEntity = CreateEntityByName( luaL_checkstring( L, 1 ) );
+    DispatchSpawn( pEntity );
+    CBaseEntity::PushLuaInstanceSafe( L, pEntity );
     return 1;
 }
+#endif
 
 static int luasrc_Entity( lua_State *L )
 {
@@ -2253,7 +2257,9 @@ static int luasrc_Entity( lua_State *L )
 }
 
 static const luaL_Reg CBaseEntity_funcs[] = {
+#ifndef CLIENT_DLL
     { "CreateEntityByName", luasrc_CreateEntityByName },
+#endif
     { "Entity", luasrc_Entity },
     { NULL, NULL } };
 

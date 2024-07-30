@@ -303,7 +303,7 @@ extern void lcf_recursivedeletefile( const char *current )
                 {
                     Q_snprintf( relative, sizeof( relative ), "%s", fn );
                 }
-                DevMsg( "Deleting '%s/%s'...\n", current, fn );
+                LUA_LCF_DEBUG( "Deleting '%s/%s'...\n", current, fn );
 
                 Q_FixSlashes( relative );
                 g_pFullFileSystem->SetFileWritable( relative, true, "MOD" );
@@ -338,7 +338,7 @@ extern void lcf_preparecachefile( void )
 
     if ( c > 0 )
     {
-        DevMsg( "Preparing Lua cache file...\n" );
+        LUA_LCF_DEBUG( "Preparing Lua cache file...\n" );
     }
     else
     {

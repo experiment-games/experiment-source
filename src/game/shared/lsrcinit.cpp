@@ -43,19 +43,23 @@ static const luaL_RegForState luasrclibs[] = {
     { LUA_CVARLIBNAME, luaopen_cvars, false },
     { LUA_DBGLIBNAME, luaopen_dbg, true },
     { LUA_DEBUGOVERLAYLIBNAME, luaopen_debugoverlay, false },
+    { LUA_EFLIBNAME, luaopen_EF, true },
     { LUA_ENGINELIBNAME, luaopen_engine, true },
+    { LUA_ENTLISTLIBNAME, luaopen_EntityList, false },
 #ifdef CLIENT_DLL
     // FIXME: obsolete? should be passing VPANELs, but passes Panel instead,
     // which always ends up being invalid (we can't access them by pointer)
     { LUA_ENGINEVGUILIBNAME, luaopen_enginevgui, true },
 #endif
     { LUA_FCVARLIBNAME, luaopen_FCVAR, true },
+    { LUA_ENGINEFLAGSLIBNAME, luaopen_FL, true },
     { LUA_FILESYSTEMLIBNAME, luaopen_filesystem, true },
 #ifdef CLIENT_DLL
     { LUA_FONTFLAGLIBNAME, luaopen_FONTFLAG, true },
 #endif
-    { LUA_ENTLISTLIBNAME, luaopen_EntityList, false },
+    { LUA_GESTURESLOTLIBNAME, luaopen_GESTURE_SLOT, true },
     { LUA_GLOBALSLIBNAME, luaopen_gpGlobals, true },
+    { LUA_LIFELIBNAME, luaopen_LIFE, true },
 #ifdef CLIENT_DLL
     { LUA_CLIENTSHADOWMGRLIBNAME, luaopen_g_pClientShadowMgr, false },
     { LUA_FONTLIBNAME, luaopen_HFont, true },
@@ -82,7 +86,10 @@ static const luaL_RegForState luasrclibs[] = {
     { LUA_MASKLIBNAME, luaopen_MASK, true },
     { LUA_MATHLIBLIBNAME, luaopen_mathlib, true },
     { LUA_MATRIXLIBNAME, luaopen_matrix3x4_t, true },
+    { LUA_MOVETYPELIBNAME, luaopen_MOVETYPE, true },
+    { LUA_MOVECOLLIDELIBNAME, luaopen_MOVECOLLIDE, true },
     { LUA_NETWORKSTRINGTABLELIBNAME, luaopen_networkstringtable, true },
+    { LUA_OBSMODELIBNAME, luaopen_OBS_MODE, true },
     { LUA_PHYSENVLIBNAME, luaopen_physenv, false },
 #ifdef CLIENT_DLL
     { LUA_PREDICTIONLIBNAME, luaopen_prediction, false },
@@ -95,6 +102,8 @@ static const luaL_RegForState luasrclibs[] = {
 #ifdef CLIENT_DLL
     { LUA_SCHEMELIBNAME, luaopen_scheme, true },
 #endif
+    { LUA_SOLIDLIBNAME, luaopen_SOLID, true },
+    { LUA_SOLIDFLAGLIBNAME, luaopen_SOLIDFLAG, true },
     { LUA_STEAMAPICONTEXTLIBNAME, luaopen_steamapicontext, true },
     { LUA_SURFLIBNAME, luaopen_SURF, true },
 #ifdef CLIENT_DLL
