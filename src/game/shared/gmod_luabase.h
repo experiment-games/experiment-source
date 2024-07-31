@@ -308,7 +308,8 @@ class ILuaBase
         ud->type = iType;
 
         // Set the metatable
-        if ( PushMetaTable( iType ) ) SetMetaTable( -2 );
+        if ( PushMetaTable( iType ) )
+            SetMetaTable( -2 );
     }
 };
 
