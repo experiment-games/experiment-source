@@ -343,6 +343,8 @@ static int LoadAndInitModule( lua_State *L )
     const char *moduleName = luaL_checkstring( L, 1 );
     const char *modulePath = luaL_checkstring( L, 2 );
 
+    lua_settop( L, 0 );  // Clear the stack
+
     HMODULE hModule = LoadLibrary( modulePath );
 
     if ( !hModule )
@@ -352,18 +354,11 @@ static int LoadAndInitModule( lua_State *L )
     }
 
     module_open_func open = ( module_open_func )GetProcAddress( hModule, "experiment_open" );
-    int top = lua_gettop( L );
+    int nReturnValues = 0;
 
     if ( open )
     {
-        if ( open( L ) != 0 )
-        {
-            DevWarning( "Module open function reported an error.\n" );
-            FreeLibrary( hModule );
-            lua_settop( L, top );  // Reset the stack
-            return 0;
-        }
-
+        nReturnValues = open( L );
         DevMsg( "Loaded Experiment binary module: %s (%s)\n", moduleName, modulePath );
     }
     else
@@ -374,34 +369,25 @@ static int LoadAndInitModule( lua_State *L )
         {
             DevWarning( "Failed to find experiment_open (or gmod13_open) in module: %s\n", modulePath );
             FreeLibrary( hModule );
-            lua_settop( L, top );  // Reset the stack
             return 0;
         }
 
         // Create a compatibility Lua state for loading modules
         lua_StateWithCompat *LCompat = CreateLuaStateWithCompat( L );
 
-        if ( open( LCompat ) != 0 )
-        {
-            DevWarning( "GMod 13 module open function reported an error.\n" );
-            FreeLibrary( hModule );
-            free( LCompat );
-            lua_settop( L, top );  // Reset the stack
-            return 0;
-        }
+        nReturnValues = open( LCompat );
 
         DevMsg( "Loaded GMOD13 binary module: %s (%s)\n", moduleName, modulePath );
 
         free( LCompat );  // can be freed as the CLuaBase remains. Compat will be recreated by PushCFunction
     }
 
-    lua_settop( L, top );  // Reset the stack
     g_ModulesToUnload[modulePath] = hModule;
 #else
     DevWarning( "Module loading is not yet supported on this platform.\n" );
 #endif
 
-    return 0;
+    return nReturnValues;
 }
 
 static int luasrc_UnloadLoadedModules( lua_State *L )
@@ -412,7 +398,6 @@ static int luasrc_UnloadLoadedModules( lua_State *L )
         const char *modulePath = g_ModulesToUnload.String( i );
         HMODULE hModule = g_ModulesToUnload[i];
 
-        int top = lua_gettop( L );
         module_close_func close = ( module_close_func )GetProcAddress( hModule, "experiment_close" );
 
         if ( close )
@@ -439,14 +424,13 @@ static int luasrc_UnloadLoadedModules( lua_State *L )
                 DevWarning( "Failed to find experiment_close (or gmod13_close) in module: %s\n", modulePath );
                 FreeLibrary( hModule );
                 free( LCompat );
-                lua_settop( L, top );  // Reset the stack
                 continue;
             }
 
             free( LCompat );  // can be freed as the CLuaBase remains. Compat will be recreated by PushCFunction
         }
 
-        lua_settop( L, top );  // Reset the stack
+        lua_settop( L, 0 );  // Reset the stack if close left anything
     }
 
     g_ModulesToUnload.Purge();

@@ -32,9 +32,9 @@
 
 #ifdef _WIN32
 #ifdef CLIENT_DLL
-#define LUA_BINARY_MODULES_GLOB "*cl_%s.dll" // allows gm prefix (gmcl_modulename.dll)
+#define LUA_BINARY_MODULES_GLOB "*cl_%s_win32.dll" // * allows gm prefix (gmcl_helloworld_win32.dll)
 #else
-#define LUA_BINARY_MODULES_GLOB "*sv_%s.dll"
+#define LUA_BINARY_MODULES_GLOB "*sv_%s_win32.dll"
 #endif
 #else
 // TODO: other platforms

@@ -10,7 +10,7 @@ $Macro SRCDIR		"..\.."
 $Macro GAMENAME     "experiment"
 
 $Macro OUTBINDIR	"$SRCDIR\..\game\$GAMENAME\lua\bin"
-$Macro OUTBINNAME	"sv_helloworld"
+$Macro OUTBINNAME	"sv_helloworld_win32"
 
 $MacroRequired		"OUTDLLEXT" "$_DLL_EXT"
 
