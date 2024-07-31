@@ -6,6 +6,7 @@
 
 #include "cbase.h"
 #include "utlbuffer.h"
+#include "UtlStringMap.h"
 #include "activitylist.h"
 #include "filesystem.h"
 #ifndef CLIENT_DLL
@@ -328,6 +329,175 @@ static const luaL_Reg base_funcs[] = {
     { "LuaLogToFile", luasrc_LuaLogToFile },
     { NULL, NULL } };
 
+static CUtlStringMap< HMODULE > g_ModulesToUnload;
+
+/// <summary>
+/// Loads the specified module and calls the experiment_open function.
+/// Has compatibility with GMod 13 modules and will look for gmod13_open
+/// if experiment_open is not found.
+/// </summary>
+/// <param name="L"></param>
+static int LoadAndInitModule( lua_State *L )
+{
+#ifdef _WIN32
+    const char *moduleName = luaL_checkstring( L, 1 );
+    const char *modulePath = luaL_checkstring( L, 2 );
+
+    HMODULE hModule = LoadLibrary( modulePath );
+
+    if ( !hModule )
+    {
+        DevWarning( "Failed to load module: %s\n", modulePath );
+        return 0;
+    }
+
+    module_open_func open = ( module_open_func )GetProcAddress( hModule, "experiment_open" );
+    int top = lua_gettop( L );
+
+    if ( open )
+    {
+        if ( open( L ) != 0 )
+        {
+            DevWarning( "Module open function reported an error.\n" );
+            FreeLibrary( hModule );
+            lua_settop( L, top );  // Reset the stack
+            return 0;
+        }
+
+        DevMsg( "Loaded Experiment binary module: %s (%s)\n", moduleName, modulePath );
+    }
+    else
+    {
+        module_open_func_compat open = ( module_open_func_compat )GetProcAddress( hModule, "gmod13_open" );
+
+        if ( !open )
+        {
+            DevWarning( "Failed to find experiment_open (or gmod13_open) in module: %s\n", modulePath );
+            FreeLibrary( hModule );
+            lua_settop( L, top );  // Reset the stack
+            return 0;
+        }
+
+        // Create a compatibility Lua state for loading modules
+        lua_StateWithCompat *LCompat = CreateLuaStateWithCompat( L );
+
+        if ( open( LCompat ) != 0 )
+        {
+            DevWarning( "GMod 13 module open function reported an error.\n" );
+            FreeLibrary( hModule );
+            free( LCompat );
+            lua_settop( L, top );  // Reset the stack
+            return 0;
+        }
+
+        DevMsg( "Loaded GMOD13 binary module: %s (%s)\n", moduleName, modulePath );
+
+        free( LCompat );  // can be freed as the CLuaBase remains. Compat will be recreated by PushCFunction
+    }
+
+    lua_settop( L, top );  // Reset the stack
+    g_ModulesToUnload[modulePath] = hModule;
+#else
+    DevWarning( "Module loading is not yet supported on this platform.\n" );
+#endif
+
+    return 0;
+}
+
+static int luasrc_UnloadLoadedModules( lua_State *L )
+{
+    int nCount = g_ModulesToUnload.GetNumStrings();
+    for ( int i = 0; i < nCount; ++i )
+    {
+        const char *modulePath = g_ModulesToUnload.String( i );
+        HMODULE hModule = g_ModulesToUnload[i];
+
+        int top = lua_gettop( L );
+        module_close_func close = ( module_close_func )GetProcAddress( hModule, "experiment_close" );
+
+        if ( close )
+        {
+            close( L );
+            FreeLibrary( hModule );
+        }
+        else
+        {
+            module_close_func_compat close = ( module_close_func_compat )GetProcAddress( hModule, "gmod13_close" );
+
+            // Create a compatibility Lua state for loading modules
+            lua_StateWithCompat *LCompat = CreateLuaStateWithCompat( L );
+
+            if ( close )
+            {
+                close( LCompat );
+                FreeLibrary( hModule );
+
+                DevMsg( "Unloaded GMOD13 binary module: %s\n", modulePath );
+            }
+            else
+            {
+                DevWarning( "Failed to find experiment_close (or gmod13_close) in module: %s\n", modulePath );
+                FreeLibrary( hModule );
+                free( LCompat );
+                lua_settop( L, top );  // Reset the stack
+                continue;
+            }
+
+            free( LCompat );  // can be freed as the CLuaBase remains. Compat will be recreated by PushCFunction
+        }
+
+        lua_settop( L, top );  // Reset the stack
+    }
+
+    g_ModulesToUnload.Purge();
+    return 0;
+}
+
+/// <summary>
+/// Loader function to be added to the package.loaders table.
+/// This will load LUA_BINARY_MODULES_GLOB files from the lua/bin directory.
+/// </summary>
+/// <param name="L"></param>
+/// <returns></returns>
+static int luasrc_CustomModuleLoader( lua_State *L )
+{
+    const char *moduleName = luaL_checkstring( L, 1 );
+
+    char modulePath[MAX_PATH];
+    Q_snprintf( modulePath, sizeof( modulePath ), "%s\\" LUA_BINARY_MODULES_GLOB, LUA_PATH_BINARY_MODULES, moduleName );
+
+    filesystem->RelativePathToFullPath( modulePath, "GAME", modulePath, sizeof( modulePath ) );
+
+    FileFindHandle_t findHandle;
+    const char *fileName = filesystem->FindFirst( modulePath, &findHandle );
+
+    while ( fileName )
+    {
+        if ( !filesystem->FindIsDirectory( findHandle ) )
+        {
+            Q_snprintf( modulePath, sizeof( modulePath ), "%s\\%s", LUA_PATH_BINARY_MODULES, fileName );
+
+            filesystem->RelativePathToFullPath( modulePath, "GAME", modulePath, sizeof( modulePath ) );
+            break;
+        }
+
+        fileName = filesystem->FindNext( findHandle );
+    }
+
+    filesystem->FindClose( findHandle );
+
+    if ( !filesystem->FileExists( modulePath ) )
+    {
+        // Let other loaders try to load the module
+        lua_pushnil( L );
+        return 1;
+    }
+
+    lua_pushcfunction( L, LoadAndInitModule );
+    lua_pushstring( L, modulePath );
+    return 2;
+}
+
 static void base_open( lua_State *L )
 {
     /* set global _R */
@@ -400,7 +570,7 @@ void luasrc_setmodulepaths( lua_State *L )
                      "%s\\%s\\?.so;%s",
 #endif
                      gamePath,
-                     LUA_PATH_MODULES,
+                     LUA_PATH_BINARY_MODULES,
                      currentCPath );
     lua_setfield( L, -2, "cpath" );
 
@@ -414,6 +584,14 @@ void luasrc_setmodulepaths( lua_State *L )
                      LUA_ROOT,
                      LUA_PATH_GAMEMODES );
     lua_setfield( L, -2, "IncludePath" );
+
+    // setup luasrc_CustomModuleLoader as a cpath loader for LUA_PATH_BINARY_MODULES
+    lua_getfield( L, -1, "searchers" );
+    lua_pushcfunction(L, luasrc_CustomModuleLoader);
+    // Place it at the end for now
+    lua_rawseti( L, -2, luaL_len( L, -2 ) + 1 );
+    lua_pop( L, 1 );  // Pop the searchers table
+    
 
     lua_pop( L, 1 );  // Pop the package table
 }
@@ -558,114 +736,6 @@ static void RegisterButtonCodeString( const char *name, ButtonCode_t code, bool 
 #define JUMP_TO_BUTTON_CODE_INDEX( index ) \
     JumpToButtonCodeIndex( index );
 
-/// <summary>
-/// Loads the specified module and calls the experiment_open function.
-/// Has compatibility with GMod 13 modules and will look for gmod13_open
-/// if experiment_open is not found.
-/// </summary>
-/// <param name="L"></param>
-/// <param name="modulePath"></param>
-static void LoadAndInitModule( lua_State *L, const char *modulePath )
-{
-#ifdef _WIN32
-    HMODULE hModule = LoadLibrary( modulePath );
-
-    if ( !hModule )
-    {
-        DevWarning( "Failed to load module: %s\n", modulePath );
-        return;
-    }
-
-    module_open_func open = ( module_open_func )GetProcAddress( hModule, "experiment_open" );
-
-    if ( open )
-    {
-        if ( open( L ) != 0 )
-        {
-            DevWarning( "Module open function reported an error.\n" );
-            FreeLibrary( hModule );
-            return;
-        }
-
-        DevMsg( "Loaded Experiment binary module: %s\n", modulePath );
-    }
-    else
-    {
-        module_open_func_compat open = ( module_open_func_compat )GetProcAddress( hModule, "gmod13_open" );
-
-        if ( !open )
-        {
-            DevWarning( "Failed to find experiment_open (or gmod13_open) in module: %s\n", modulePath );
-            FreeLibrary( hModule );
-            return;
-        }
-
-        // Create a compatibility Lua state for loading modules
-        lua_StateWithCompat *LCompat = CreateLuaStateWithCompat( L );
-
-        if ( open( LCompat ) != 0 )
-        {
-            DevWarning( "GMod 13 module open function reported an error.\n" );
-            FreeLibrary( hModule );
-            free( LCompat );
-            return;
-        }
-
-        DevMsg( "Loaded GMOD13 binary module: %s\n", modulePath );
-
-        free( LCompat ); // can be freed as the CLuaBase remains. Compat will be recreated by PushCFunction
-    }
-
-    // TODO: Close at some point
-    /*module_close_func close = ( module_close_func )GetProcAddress( hModule, "experiment_close" );
-
-    if ( !close )
-        close = ( module_close_func )GetProcAddress( hModule, "gmod13_close" );
-
-    if ( close && close( L ) != 0 )
-    {
-        DevWarning( "Module close function reported an error.\n" );
-    }
-
-    FreeLibrary( hModule );*/
-#else
-    DevWarning( "Module loading is not yet supported on this platform.\n" );
-#endif
-}
-
-/// <summary>
-/// Loads and initializes all modules in the lua/bin directory.
-/// </summary>
-/// <param name="L"></param>
-static void LoadAndInitModules( lua_State *L )
-{
-    char searchPath[MAX_PATH];
-    Q_snprintf( searchPath, sizeof( searchPath ), "%s\\%s", LUA_PATH_BINARY_MODULES, LUA_BINARY_MODULES_GLOB );
-
-    FileFindHandle_t findHandle;
-    const char *fileName = filesystem->FindFirst( searchPath, &findHandle );
-
-    int top = lua_gettop( L );
-
-    while ( fileName )
-    {
-        if ( !filesystem->FindIsDirectory( findHandle ) )
-        {
-            char modulePath[MAX_PATH];
-            Q_snprintf( modulePath, sizeof( modulePath ), "%s\\%s", LUA_PATH_BINARY_MODULES, fileName );
-
-            filesystem->RelativePathToFullPath( modulePath, "GAME", modulePath, sizeof( modulePath ) );
-
-            LoadAndInitModule( L, modulePath );
-            lua_settop( L, top ); // Reset the stack
-        }
-
-        fileName = filesystem->FindNext( findHandle );
-    }
-
-    filesystem->FindClose( findHandle );
-}
-
 void luasrc_init( void )
 {
     if ( g_LuaLogFileHandle == FILESYSTEM_INVALID_HANDLE )
@@ -705,8 +775,6 @@ void luasrc_init( void )
     luasrc_openlibs( L );
 
     RegisterLuaUserMessages();
-
-    LoadAndInitModules( L );
 
     Msg( "Lua initialized (" LUA_VERSION ")\n" );
 
@@ -955,6 +1023,8 @@ void luasrc_shutdown( void )
 
     BEGIN_LUA_CALL_HOOK( "ShutDown" );
     END_LUA_CALL_HOOK( 0, 0 );
+
+    luasrc_UnloadLoadedModules( L );
 
     g_bLuaInitialized = false;
 
