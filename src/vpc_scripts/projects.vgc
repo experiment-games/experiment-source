@@ -143,3 +143,8 @@ $Project "libpng"
 {
     "libpng\libpng_base.vpc"
 }
+
+$Project "helloworldmodule"
+{
+	"modules\helloworld\helloworld_base.vpc"		[($WIN32||$POSIX) && $EXPERIMENT]
+}

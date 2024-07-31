@@ -31,6 +31,7 @@ $Group "game"
     "lua54"
     "luasocket"
     "libpng"
+    "helloworldmodule"
 }
 
 $Group "shaders"

@@ -1,0 +1,68 @@
+//-----------------------------------------------------------------------------
+//	LUA_BASE.VPC
+//
+//	Project Script
+//-----------------------------------------------------------------------------
+
+$IgnoreRedundancyWarning	"ON"
+
+$Macro SRCDIR		"..\.."
+$Macro GAMENAME     "experiment"
+
+$Macro OUTBINDIR	"$SRCDIR\..\game\$GAMENAME\lua\bin"
+$Macro OUTBINNAME	"sv_helloworld"
+
+$MacroRequired		"OUTDLLEXT" "$_DLL_EXT"
+
+$Include "$SRCDIR\vpc_scripts\source_dll_base.vpc"
+$Include "$SRCDIR\tier0\tier0_exclude.vpc"
+$Include "$SRCDIR\tier1\tier1_exclude.vpc"
+$Include "$SRCDIR\vstdlib\vstdlib_exclude.vpc"
+
+$MacroRequired PLATSUBDIR
+$MacroRequired OUTLIBNAME   "$OUTBINNAME"
+$MacroRequired OUTLIBDIR	"$SRCDIR\lib\public$PLATSUBDIR"
+
+$Configuration	"Debug"
+{
+	$General
+	{
+		$OutputDirectory			".\Debug_$GAMENAME"			[$WIN32]
+		$IntermediateDirectory		".\Debug_$GAMENAME"			[$WIN32]
+
+		$OutputDirectory			".\Debug_$GAMENAME_360"		[$X360]
+		$IntermediateDirectory		".\Debug_$GAMENAME_360"		[$X360]
+	}
+}
+
+$Configuration	"Release"
+{
+	$General
+	{
+		$OutputDirectory			".\Release_$GAMENAME"		[$WIN32]
+		$IntermediateDirectory		".\Release_$GAMENAME"		[$WIN32]
+
+		$OutputDirectory			".\Release_$GAMENAME_360"	[$X360]
+		$IntermediateDirectory		".\Release_$GAMENAME_360"	[$X360]
+	}
+}
+
+$Configuration
+{
+	$Compiler
+	{
+		$AdditionalIncludeDirectories   "$BASE;$SRCDIR\modules\helloworld;$SRCDIR\modules\helloworld\include"
+        $PreprocessorDefinitions        "$BASE;"
+		$RuntimeLibrary					"Multi-threaded DLL (/MD)"
+		$WarningLevel					"Level 3 (/W3)"
+        $EnableC++Exceptions	        "Yes (/EHsc)" [!$X360]
+	}
+}
+
+$Project "HelloWorld (Experiment Module)"
+{
+	$Folder	"Source Files"
+	{
+        $File	"HelloWorld.cpp"
+    }
+}

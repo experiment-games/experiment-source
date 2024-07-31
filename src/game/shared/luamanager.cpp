@@ -31,6 +31,10 @@
 #include <stack>
 #include <cpng.h>
 
+#ifdef _WIN32
+#include <winlite.h>
+#endif
+
 extern "C"
 {
 #include "luasocket.h"
@@ -554,6 +558,114 @@ static void RegisterButtonCodeString( const char *name, ButtonCode_t code, bool 
 #define JUMP_TO_BUTTON_CODE_INDEX( index ) \
     JumpToButtonCodeIndex( index );
 
+/// <summary>
+/// Loads the specified module and calls the experiment_open function.
+/// Has compatibility with GMod 13 modules and will look for gmod13_open
+/// if experiment_open is not found.
+/// </summary>
+/// <param name="L"></param>
+/// <param name="modulePath"></param>
+static void LoadAndInitModule( lua_State *L, const char *modulePath )
+{
+#ifdef _WIN32
+    HMODULE hModule = LoadLibrary( modulePath );
+
+    if ( !hModule )
+    {
+        DevWarning( "Failed to load module: %s\n", modulePath );
+        return;
+    }
+
+    module_open_func open = ( module_open_func )GetProcAddress( hModule, "experiment_open" );
+
+    if ( open )
+    {
+        if ( open( L ) != 0 )
+        {
+            DevWarning( "Module open function reported an error.\n" );
+            FreeLibrary( hModule );
+            return;
+        }
+
+        DevMsg( "Loaded Experiment binary module: %s\n", modulePath );
+    }
+    else
+    {
+        module_open_func_compat open = ( module_open_func_compat )GetProcAddress( hModule, "gmod13_open" );
+
+        if ( !open )
+        {
+            DevWarning( "Failed to find experiment_open (or gmod13_open) in module: %s\n", modulePath );
+            FreeLibrary( hModule );
+            return;
+        }
+
+        // Create a compatibility Lua state for loading modules
+        lua_StateWithCompat *LCompat = CreateLuaStateWithCompat( L );
+
+        if ( open( LCompat ) != 0 )
+        {
+            DevWarning( "GMod 13 module open function reported an error.\n" );
+            FreeLibrary( hModule );
+            free( LCompat );
+            return;
+        }
+
+        DevMsg( "Loaded GMOD13 binary module: %s\n", modulePath );
+
+        free( LCompat ); // can be freed as the CLuaBase remains. Compat will be recreated by PushCFunction
+    }
+
+    // TODO: Close at some point
+    /*module_close_func close = ( module_close_func )GetProcAddress( hModule, "experiment_close" );
+
+    if ( !close )
+        close = ( module_close_func )GetProcAddress( hModule, "gmod13_close" );
+
+    if ( close && close( L ) != 0 )
+    {
+        DevWarning( "Module close function reported an error.\n" );
+    }
+
+    FreeLibrary( hModule );*/
+#else
+    DevWarning( "Module loading is not yet supported on this platform.\n" );
+#endif
+}
+
+/// <summary>
+/// Loads and initializes all modules in the lua/bin directory.
+/// </summary>
+/// <param name="L"></param>
+static void LoadAndInitModules( lua_State *L )
+{
+    char searchPath[MAX_PATH];
+    Q_snprintf( searchPath, sizeof( searchPath ), "%s\\%s", LUA_PATH_BINARY_MODULES, LUA_BINARY_MODULES_GLOB );
+
+    FileFindHandle_t findHandle;
+    const char *fileName = filesystem->FindFirst( searchPath, &findHandle );
+
+    int top = lua_gettop( L );
+
+    while ( fileName )
+    {
+        if ( !filesystem->FindIsDirectory( findHandle ) )
+        {
+            char modulePath[MAX_PATH];
+            Q_snprintf( modulePath, sizeof( modulePath ), "%s\\%s", LUA_PATH_BINARY_MODULES, fileName );
+
+            filesystem->RelativePathToFullPath( modulePath, "GAME", modulePath, sizeof( modulePath ) );
+
+            LoadAndInitModule( L, modulePath );
+            lua_settop( L, top ); // Reset the stack
+        }
+
+        fileName = filesystem->FindNext( findHandle );
+    }
+
+    filesystem->FindClose( findHandle );
+}
+
 void luasrc_init( void )
 {
     if ( g_LuaLogFileHandle == FILESYSTEM_INVALID_HANDLE )
@@ -593,6 +705,8 @@ void luasrc_init( void )
     luasrc_openlibs( L );
 
     RegisterLuaUserMessages();
+
+    LoadAndInitModules( L );
 
     Msg( "Lua initialized (" LUA_VERSION ")\n" );
 
@@ -2033,7 +2147,6 @@ bool luasrc_SetGamemode( const char *gamemode )
     return true;
 }
 
-#ifdef LUA_SDK
 static void CommandLuaRun( lua_State *L, const CCommand &args )
 {
     int status = luasrc_dostring( L, args.ArgS() );
@@ -2047,6 +2160,7 @@ static void CommandLuaRun( lua_State *L, const CCommand &args )
     }
     lua_settop( L, 0 ); /* clear stack */
 }
+
 #ifdef CLIENT_DLL
 CON_COMMAND( lua_run_cl, "Run a Lua string on the client" )
 {
@@ -2277,6 +2391,5 @@ CON_COMMAND( lua_dumpstack, "Prints the Lua stack" )
 
     DumpLuaStack( L );
 }
-#endif
 #endif
 #endif

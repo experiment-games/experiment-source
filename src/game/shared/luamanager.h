@@ -15,6 +15,7 @@
 #include "lua.hpp"
 #include "luasrclib.h"
 #include "lsingleluainstance.h"
+#include <gmod_luabase.h>
 
 #if CLIENT_DLL
 #include <scriptedclientluapanel.h>
@@ -27,6 +28,18 @@
 #define LUA_PATH_ENUM LUA_ROOT "\\includes\\enum"
 #define LUA_PATH_EXTENSIONS LUA_ROOT "\\includes\\extensions"
 #define LUA_PATH_MODULES LUA_ROOT "\\includes\\modules"
+#define LUA_PATH_BINARY_MODULES LUA_ROOT "\\bin"
+
+#ifdef _WIN32
+#ifdef CLIENT_DLL
+#define LUA_BINARY_MODULES_GLOB "*cl_*.dll" // allows gm prefix (gmcl_*.dll)
+#else
+#define LUA_BINARY_MODULES_GLOB "*sv_*.dll"
+#endif
+#else
+// TODO: other platforms
+#endif
+
 #define LUA_PATH_INCLUDES LUA_ROOT "\\includes"
 #define LUA_PATH_INCLUDES_INIT_FILE LUA_PATH_INCLUDES "\\sh_init.lua"
 #define LUA_PATH_GAME_CLIENT LUA_ROOT "\\game\\client"
@@ -580,5 +593,12 @@ void luasrc_LoadWeapons( const char *path = 0 );
 
 bool luasrc_LoadGamemode( const char *gamemode );
 bool luasrc_SetGamemode( const char *gamemode );
+
+struct lua_StateWithCompat; // forward declaration
+
+typedef int ( *module_open_func )( lua_State * );
+typedef int ( *module_open_func_compat )( lua_StateWithCompat * );
+typedef int ( *module_close_func )( lua_State * );
+typedef int ( *module_close_func_compat )( lua_StateWithCompat * );
 
 #endif  // LUAMANAGER_H
