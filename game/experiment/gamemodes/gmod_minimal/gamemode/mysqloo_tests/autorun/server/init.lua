@@ -3,7 +3,7 @@ DatabaseSettings = {
 	Port = 3306,
 	Username = "root",
 	Password = "",
-	Database = "test"
+	Database = "mysqloo_test"
 }
 
 print("Loading MySQLOO Testing Framework")

@@ -326,6 +326,7 @@ class CLuaBase : public GarrysMod::Lua::ILuaBase
 {
    private:
     CLuaBase() {}
+    CUtlVector< const char * > m_mapMetaTableNameToID;
 
    public:
     // Singleton based on: https://stackoverflow.com/a/1008289
@@ -605,14 +606,25 @@ class CLuaBase : public GarrysMod::Lua::ILuaBase
 
     virtual int CreateMetaTable( const char *strName )
     {
-        luaL_newmetatable( L, strName );
-        return luaL_getmetafield( L, -1, "__type" );
+        if ( luaL_newmetatable( L, strName ) )
+        {
+            m_mapMetaTableNameToID.AddToTail( strName );
+        }
+        else
+        {
+            Assert( 0 ); // TODO: Does this happen?
+        }
+
+        return m_mapMetaTableNameToID.Count() - 1;
     }
 
     virtual bool PushMetaTable( int iType )
     {
-        lua_getfield( L, LUA_REGISTRYINDEX, lua_typename( L, iType ) );
-        return !lua_isnil( L, -1 );
+        if ( iType < 0 || iType >= m_mapMetaTableNameToID.Count() )
+            return false;
+
+        luaL_getmetatable( L, m_mapMetaTableNameToID[ iType ] );
+        return true;
     }
 
     virtual void PushUserType( void *data, int iType )

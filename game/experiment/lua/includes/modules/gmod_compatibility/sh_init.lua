@@ -1238,8 +1238,8 @@ MsgC = function(...)
     for k, stringOrColor in ipairs({ ... }) do
         if (IsColor(stringOrColor)) then
             currentColor = stringOrColor
-        elseif (isstring(stringOrColor)) then
-            debug.ConDColorMsg(currentColor, stringOrColor)
+        else
+            debug.ConDColorMsg(currentColor, tostring(stringOrColor))
         end
     end
 
