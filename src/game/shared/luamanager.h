@@ -42,9 +42,9 @@
 
 #define LUA_PATH_INCLUDES LUA_ROOT "\\includes"
 #define LUA_PATH_INCLUDES_INIT_FILE LUA_PATH_INCLUDES "\\sh_init.lua"
-#define LUA_PATH_GAME_CLIENT LUA_ROOT "\\game\\client"
-#define LUA_PATH_GAME_SERVER LUA_ROOT "\\game\\server"
-#define LUA_PATH_GAME_SHARED LUA_ROOT "\\game\\shared"
+#define LUA_PATH_AUTORUN_CLIENT LUA_ROOT "\\autorun\\client"
+#define LUA_PATH_AUTORUN_SERVER LUA_ROOT "\\autorun\\server"
+#define LUA_PATH_AUTORUN_SHARED LUA_ROOT "\\autorun\\shared"
 #define LUA_PATH_EFFECTS LUA_ROOT "\\effects"
 #define LUA_PATH_ENTITIES LUA_ROOT "\\entities"
 #define LUA_PATH_GAMEUI LUA_ROOT "\\gameui"

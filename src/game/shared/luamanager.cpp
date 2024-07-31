@@ -452,8 +452,6 @@ static int luasrc_CustomModuleLoader( lua_State *L )
     char modulePath[MAX_PATH];
     Q_snprintf( modulePath, sizeof( modulePath ), "%s\\" LUA_BINARY_MODULES_GLOB, LUA_PATH_BINARY_MODULES, moduleName );
 
-    filesystem->RelativePathToFullPath( modulePath, "GAME", modulePath, sizeof( modulePath ) );
-
     FileFindHandle_t findHandle;
     const char *fileName = filesystem->FindFirst( modulePath, &findHandle );
 

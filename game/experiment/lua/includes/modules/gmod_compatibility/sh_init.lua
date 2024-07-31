@@ -1232,7 +1232,19 @@ end
 --]]
 unpack = unpack or table.unpack
 
-MsgC = ConDColorMsg
+MsgC = function(...)
+    local currentColor = debug.GetRealmColor()
+
+    for k, stringOrColor in ipairs({ ... }) do
+        if (IsColor(stringOrColor)) then
+            currentColor = stringOrColor
+        elseif (isstring(stringOrColor)) then
+            debug.ConDColorMsg(currentColor, stringOrColor)
+        end
+    end
+
+	debug.ConDColorMsg(currentColor, "\n")
+end
 
 PrintTable = table.Print
 

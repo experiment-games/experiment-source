@@ -1737,13 +1737,13 @@ void CHLClient::LevelInitPreEntity( char const *pMapName )
 
     if ( gpGlobals->maxClients > 1 )
     {
-        luasrc_dofolder( L, LUA_PATH_CACHE LUA_PATH_GAME_SHARED );
-        luasrc_dofolder( L, LUA_PATH_CACHE LUA_PATH_GAME_CLIENT );
+        luasrc_dofolder( L, LUA_PATH_CACHE LUA_PATH_AUTORUN_SHARED );
+        luasrc_dofolder( L, LUA_PATH_CACHE LUA_PATH_AUTORUN_CLIENT );
     }
 
     luasrc_dofile( L, LUA_PATH_INCLUDES_INIT_FILE );
-    luasrc_dofolder( L, LUA_PATH_GAME_SHARED );
-    luasrc_dofolder( L, LUA_PATH_GAME_CLIENT );
+    luasrc_dofolder( L, LUA_PATH_AUTORUN_SHARED );
+    luasrc_dofolder( L, LUA_PATH_AUTORUN_CLIENT );
 
     luasrc_LoadWeapons();
     luasrc_LoadEntities();

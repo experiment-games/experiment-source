@@ -392,7 +392,7 @@ void CExperiment_Player::Spawn( void )
     PickDefaultSpawnTeam();
 
     BaseClass::Spawn();
-    GetHands()->SetModel( "models/weapons/c_arms_citizen.mdl" );
+    //GetHands()->SetModel( "models/weapons/c_arms_citizen.mdl" ); // implemented lua-side
 
     if ( !IsObserver() )
     {
