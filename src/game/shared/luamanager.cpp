@@ -447,6 +447,8 @@ static int luasrc_CustomModuleLoader( lua_State *L )
 {
     const char *moduleName = luaL_checkstring( L, 1 );
 
+    lua_settop( L, 0 );  // Clear the stack
+
     char modulePath[MAX_PATH];
     Q_snprintf( modulePath, sizeof( modulePath ), "%s\\" LUA_BINARY_MODULES_GLOB, LUA_PATH_BINARY_MODULES, moduleName );
 
@@ -472,8 +474,9 @@ static int luasrc_CustomModuleLoader( lua_State *L )
 
     if ( !filesystem->FileExists( modulePath ) )
     {
-        // Let other loaders try to load the module
-        lua_pushnil( L );
+        char error[MAX_PATH + 128];
+        Q_snprintf( error, sizeof( error ), "no file: '(Experiment Game Directory)\\%s' (* can be anything like nothing, or 'gm')", modulePath );
+        lua_pushstring( L, error );
         return 1;
     }
 
