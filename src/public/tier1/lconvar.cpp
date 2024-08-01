@@ -108,7 +108,7 @@ static CUtlDict< ConCommand *, unsigned short > m_GameUIConCommandDatabase;
 #endif
 static CUtlDict< ConCommand *, unsigned short > m_ConCommandDatabase;
 
-void RunConCommand( lua_State *L, const CCommand &args )
+static void LuaRunConCommand( lua_State *L, const CCommand &args )
 {
 #ifdef CLIENT_DLL
     C_BasePlayer *pPlayer = C_BasePlayer::GetLocalPlayer();
@@ -184,13 +184,42 @@ void RunConCommand( lua_State *L, const CCommand &args )
 // Experiment; pass the correct lua state to the function when in the gameui
 void CC_GameUIConCommand( const CCommand &args )
 {
-    RunConCommand( LGameUI, args );
+    LuaRunConCommand( LGameUI, args );
 }
 #endif
 
 void CC_ConCommand( const CCommand &args )
 {
-    RunConCommand( L, args );
+    LuaRunConCommand( L, args );
+}
+
+/// <summary>
+/// Looks for the command in the ConCommand database and runs it if found
+/// The command string is expected to be in the format "command arg1 arg2 arg3 ..."
+/// </summary>
+/// <param name="pszCommandString"></param>
+/// <returns>Whether the command was found and executed</returns>
+bool TryRunConsoleCommand( const char *pszCommandString )
+{
+    CCommand args;
+    args.Tokenize( pszCommandString );
+
+    if ( args.ArgC() == 0 )
+    {
+        return false;
+    }
+
+    // TODO: GameUI find the command
+
+    const char *pName = args[0];
+    unsigned short lookup = m_ConCommandDatabase.Find( pName );
+    if ( lookup == m_ConCommandDatabase.InvalidIndex() || !cvar->FindCommand( pName ) )
+    {
+        return false;
+    }
+
+    LuaRunConCommand( L, args );
+    return true;
 }
 
 static int luasrc_ConCommand( lua_State *L )

@@ -14,6 +14,7 @@
 #include "linetchannelinfo.h"
 #include "engine/IEngineSound.h"
 #include <gameinfostore.h>
+#include <lconvar.h>
 
 // memdbgon must be the last include file in a .cpp file!!!
 #include "tier0/memdbgon.h"
@@ -351,7 +352,12 @@ static int engine_SentenceNameFromIndex( lua_State *L )
 
 static int engine_ServerCommand( lua_State *L )
 {
-    engine->ServerCommand( luaL_checkstring( L, 1 ) );
+    const char *pszCommandString = luaL_checkstring( L, 1 );
+
+    if ( TryRunConsoleCommand( pszCommandString ) )
+        return 0;
+
+    engine->ServerCommand( pszCommandString );
     return 0;
 }
 

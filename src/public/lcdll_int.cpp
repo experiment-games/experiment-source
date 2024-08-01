@@ -10,6 +10,7 @@
 #include "mathlib/lvector.h"
 #include <lbaseplayer_shared.h>
 #include "gameinfostore.h"
+#include <lconvar.h>
 
 // memdbgon must be the last include file in a .cpp file!!!
 #include "tier0/memdbgon.h"
@@ -54,6 +55,11 @@ static int engine_CheckPoint( lua_State *L )
 
 static int engine_ClientCmd( lua_State *L )
 {
+    const char *pszCommandString = luaL_checkstring( L, 1 );
+
+    if ( TryRunConsoleCommand( pszCommandString ) )
+        return 0;
+
     engine->ClientCmd( luaL_checkstring( L, 1 ) );
     return 0;
 }
