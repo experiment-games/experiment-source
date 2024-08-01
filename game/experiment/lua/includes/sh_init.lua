@@ -153,15 +153,29 @@ if (not GAMEUI) then
 	--- @param ... unknown
 	--- @return table # The metatable merged into.
 	local function collapseMetatables(base, ...)
-		local merged = base
+		local target = base
 
-		for _, metatable in ipairs({ ... }) do
-			if (metatable) then
-				merged = table.Merge(merged, metatable)
+		for _, metatableToMergeFrom in ipairs({ ... }) do
+			if (not metatableToMergeFrom) then
+				continue
+			end
+
+			for key, value in pairs(metatableToMergeFrom) do
+				-- TODO: Find a better way to inherit without having to exclude these keys.
+				-- TODO: Because this feels hard to maintain.
+				if (key == "__tostring" or key == "__eq" or key == "__gc") then
+					continue
+				end
+
+				if (type(target[key]) == "table" and type(value) == "table") then
+					table.Merge(target[key], value)
+				else
+					target[key] = value
+				end
 			end
 		end
 
-		return merged
+		return target
 	end
 
 	-- Setup our inheritance structures so the __index metamethods exist.
