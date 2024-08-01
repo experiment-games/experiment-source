@@ -16,6 +16,12 @@ end
 
 function TestFramework:RunNextTest()
 	TestFramework.CurrentIndex = (TestFramework.CurrentIndex or 0) + 1
+
+	if (TestFramework.RunOneTest and TestFramework.CurrentIndex > 1) then
+		TestFramework:OnCompleted()
+		return
+	end
+
 	TestFramework.TestTimeout = CurTime() + 3
 	local test = TestFramework.RegisteredTests[TestFramework.CurrentIndex]
 	TestFramework.CurrentTest = test
@@ -64,7 +70,7 @@ function TestFramework:OnCompleted()
 		local diffBefore = TestFramework.AllocationCount - TestFramework.DeallocationCount
 		local diffAfter = mysqloo.allocationCount() - mysqloo.deallocationCount()
 		if (diffAfter > diffBefore) then
-			MsgC(Color(255, 255, 255), "Found potential memory leak with ", diffAfter - diffBefore, " new allocations that were not freed\n")
+			MsgC(Color(255, 255, 255), "Found potential memory leak with ", diffAfter - diffBefore, " new allocations that were not freed (before: ", diffBefore, " after: ", diffAfter, ")\n")
 		else
 			MsgC(Color(255, 255, 255), "All allocated objects were freed\n")
 		end
@@ -73,7 +79,7 @@ function TestFramework:OnCompleted()
 		diffBefore = TestFramework.ReferenceCreatedCount - TestFramework.ReferenceFreedCount
 		diffAfter = mysqloo.referenceCreatedCount() - mysqloo.referenceFreedCount()
 		if (diffAfter > diffBefore) then
-			MsgC(Color(255, 255, 255), "Found potential memory leak with ", diffAfter - diffBefore, " new references created that were not freed\n")
+			MsgC(Color(255, 255, 255), "Found potential memory leak with ", diffAfter - diffBefore, " new references created that were not freed (before: ", diffBefore, " after: ", diffAfter, ")\n")
 		else
 			MsgC(Color(255, 255, 255), "All created references were freed\n")
 		end
@@ -169,6 +175,7 @@ function TestMT:shouldHaveLength(tbl, exactLength)
 end
 
 concommand.Add("mysqloo_start_tests", function(ply)
+	TestFramework.RunOneTest = false
 	-- if (IsValid(ply)) then return end
 	print("Starting MySQLOO Tests")
 	if (#player.GetBots() == 0) then
@@ -177,4 +184,9 @@ concommand.Add("mysqloo_start_tests", function(ply)
 	timer.Simple(0.1, function()
 		TestFramework:Start()
 	end)
+end)
+
+concommand.Add("mysqloo_start_one_test", function(ply)
+	TestFramework.RunOneTest = true
+	RunConsoleCommand("mysqloo_start_tests")
 end)

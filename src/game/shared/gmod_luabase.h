@@ -328,6 +328,7 @@ class CLuaBase : public GarrysMod::Lua::ILuaBase
    private:
     CLuaBase() {}
     CUtlVector< const char * > m_mapMetaTableNameToID;
+    lua_State *L;
 
    public:
     // Singleton based on: https://stackoverflow.com/a/1008289
@@ -462,20 +463,11 @@ class CLuaBase : public GarrysMod::Lua::ILuaBase
         lua_pushlightuserdata( L, data );
     }
 
-    virtual int ReferenceCreate()
-    {
-        return luaL_ref( L, LUA_REGISTRYINDEX );
-    }
+    virtual int ReferenceCreate();
 
-    virtual void ReferenceFree( int i )
-    {
-        luaL_unref( L, LUA_REGISTRYINDEX, i );
-    }
+    virtual void ReferenceFree( int i );
 
-    virtual void ReferencePush( int i )
-    {
-        lua_rawgeti( L, LUA_REGISTRYINDEX, i );
-    }
+    virtual void ReferencePush( int i );
 
     virtual bool IsType( int iStackPos, int iType )
     {
@@ -600,49 +592,15 @@ class CLuaBase : public GarrysMod::Lua::ILuaBase
 
     virtual void PushCFunction( GarrysMod::Lua::CFunc val );
 
-    virtual void PushCClosure( GarrysMod::Lua::CFunc val, int iVars )
-    {
-        lua_pushcclosure( L, reinterpret_cast< lua_CFunction >( val ), iVars );
-    }
+    virtual void PushCClosure( GarrysMod::Lua::CFunc val, int iVars );
 
-    virtual int CreateMetaTable( const char *strName )
-    {
-        if ( luaL_newmetatable( L, strName ) )
-        {
-            m_mapMetaTableNameToID.AddToTail( strName );
-        }
-        else
-        {
-            Assert( 0 ); // TODO: Does this happen?
-        }
+    virtual int CreateMetaTable( const char *strName );
 
-        return m_mapMetaTableNameToID.Count() - 1;
-    }
+    virtual bool PushMetaTable( int iType );
 
-    virtual bool PushMetaTable( int iType )
-    {
-        if ( iType < 0 || iType >= m_mapMetaTableNameToID.Count() )
-            return false;
+    virtual void PushUserType( void *data, int iType );
 
-        luaL_getmetatable( L, m_mapMetaTableNameToID[ iType ] );
-        return true;
-    }
-
-    virtual void PushUserType( void *data, int iType )
-    {
-        auto *ud = static_cast< GarrysMod::Lua::UserData * >( lua_newuserdata( L, sizeof( GarrysMod::Lua::UserData ) ) );
-        ud->data = data;
-        ud->type = iType;
-    }
-
-    virtual void SetUserType( int iStackPos, void *data )
-    {
-        auto *ud = static_cast< GarrysMod::Lua::UserData * >( lua_touserdata( L, iStackPos ) );
-        ud->data = data;
-    }
-
-   private:
-    lua_State *L;
+    virtual void SetUserType( int iStackPos, void *data );
 };
 
 // Not really a lua_State, but it's compatible with gmod
