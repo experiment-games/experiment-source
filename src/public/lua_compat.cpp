@@ -31,6 +31,39 @@ void luaL_register(lua_State *L, const char *libname, const luaL_Reg *l) {
     }
 }
 
+void luaL_register_assert_no_duplicate( lua_State *L, const char *libname, const luaL_Reg *l )
+{
+    if ( libname )
+    {
+        luaL_getsubtable( L, LUA_REGISTRYINDEX, LUA_LOADED_TABLE );
+        lua_getfield( L, -1, libname );  // get package.loaded[libname]
+        if ( !lua_istable( L, -1 ) )
+        {
+            lua_pop( L, 1 );  // remove previous result
+            lua_newtable( L );
+            lua_pushvalue( L, -1 );
+            lua_setfield( L, -3,
+                         libname );  // package.loaded[libname] = new table
+        }
+        lua_remove( L, -2 );  // remove package.loaded
+        lua_pushvalue( L, -1 );
+        lua_setglobal( L, libname );  // _G[libname] = new table
+    }
+
+    for ( ; l->name != NULL; l++ )
+    {
+        lua_getfield( L, -1, l->name );
+        if ( !lua_isnil( L, -1 ) )
+        {
+            AssertMsg( 0, "Duplicate luaL_Reg name" );
+        }
+        lua_pop( L, 1 );
+
+        lua_pushcfunction( L, l->func );
+        lua_setfield( L, -2, l->name );
+    }
+}
+
 int luaL_typerror(lua_State *L, int narg, const char *tname) {
     const char *msg = lua_pushfstring(L, "%s expected, got %s", tname,
                                       luaL_typename(L, narg));

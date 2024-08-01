@@ -19,11 +19,11 @@ typedef struct luaL_RegForState
 } luaL_RegForState;
 
 static const luaL_RegForState luasrclibs[] = {
+    { LUA_BASEANIMATINGLIBNAME, luaopen_CBaseAnimating_shared, false },
     { LUA_BASEANIMATINGLIBNAME, luaopen_CBaseAnimating, false },
     { LUA_BASECOMBATWEAPONLIBNAME, luaopen_CBaseCombatWeapon, false },
     { LUA_BASEENTITYLIBNAME, luaopen_CBaseEntity_shared, false },
     { LUA_BASEENTITYLIBNAME, luaopen_CBaseEntity, false },
-    { LUA_BASEANIMATINGLIBNAME, luaopen_CBaseAnimating_shared, false },
     { LUA_CBASEFLEXLIBNAME, luaopen_CBaseFlex_shared, false },
     { LUA_BASEPLAYERLIBNAME, luaopen_CBasePlayer_shared, false },
     { LUA_BASEPLAYERLIBNAME, luaopen_CBasePlayer, false },

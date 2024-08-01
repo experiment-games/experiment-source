@@ -387,80 +387,6 @@ static int CBaseAnimating_UseClientSideAnimation( lua_State *L )
     return 0;
 }
 
-static int CBaseAnimating___index( lua_State *L )
-{
-    CBaseAnimating *pEntity = lua_toanimating( L, 1 );
-
-    LUA_METATABLE_INDEX_CHECK_VALID( L, CBaseEntity_IsValid );
-    LUA_METATABLE_INDEX_CHECK( L, pEntity );
-
-    LUA_METATABLE_INDEX_CHECK_REF_TABLE( L, pEntity );
-
-    if ( lua_getmetatable( L, 1 ) )
-    {
-        LUA_METATABLE_INDEX_CHECK_TABLE( L );
-    }
-
-    luaL_getmetatable( L, LUA_BASEENTITYLIBNAME );
-    LUA_METATABLE_INDEX_CHECK_TABLE( L );
-
-    lua_pushnil( L );
-    return 1;
-}
-
-static int CBaseAnimating___newindex( lua_State *L )
-{
-    CBaseAnimating *pEntity = lua_toanimating( L, 1 );
-    if ( pEntity == NULL )
-    { /* avoid extra test when d is not 0 */
-        lua_Debug ar1;
-        lua_getstack( L, 1, &ar1 );
-        lua_getinfo( L, "fl", &ar1 );
-        lua_Debug ar2;
-        lua_getinfo( L, ">S", &ar2 );
-        lua_pushfstring( L, "%s:%d: attempt to index a NULL entity", ar2.short_src, ar1.currentline );
-        return lua_error( L );
-    }
-
-    const char *field = luaL_checkstring( L, 2 );
-
-    if ( Q_strcmp( field, "m_bClientSideAnimation" ) == 0 )
-        luaL_checkboolean( L, 3 );
-    // TODO: m_bClientSideAnimation only exists on client?
-    // pEntity->m_bClientSideAnimation = (bool)luaL_checkboolean(L, 3);
-    else if ( Q_strcmp( field, "m_nBody" ) == 0 )
-        pEntity->m_nBody = luaL_checknumber( L, 3 );
-    else if ( Q_strcmp( field, "m_nHitboxSet" ) == 0 )
-        pEntity->m_nHitboxSet = luaL_checknumber( L, 3 );
-    else if ( Q_strcmp( field, "m_nSkin" ) == 0 )
-        pEntity->m_nSkin = luaL_checknumber( L, 3 );
-    else
-    {
-        LUA_GET_REF_TABLE( L, pEntity );
-        lua_pushvalue( L, 3 );
-        lua_setfield( L, -2, field );
-        lua_pop( L, 1 );
-    }
-
-    return 0;
-}
-
-static int CBaseAnimating___eq( lua_State *L )
-{
-    lua_pushboolean( L, lua_toanimating( L, 1 ) == lua_toanimating( L, 2 ) );
-    return 1;
-}
-
-static int CBaseAnimating___tostring( lua_State *L )
-{
-    CBaseAnimating *pEntity = lua_toanimating( L, 1 );
-    if ( pEntity == NULL )
-        lua_pushstring( L, "NULL" );
-    else
-        lua_pushfstring( L, "CBaseAnimating: %d \"%s\"", pEntity->entindex(), pEntity->GetClassname() );
-    return 1;
-}
-
 static const luaL_Reg CBaseAnimatingmeta[] = {
     { "CalculateIKLocks", CBaseAnimating_CalculateIKLocks },
     { "ComputeEntitySpaceHitboxSurroundingBox",
@@ -516,10 +442,6 @@ static const luaL_Reg CBaseAnimatingmeta[] = {
     { "StudioFrameAdvance", CBaseAnimating_StudioFrameAdvance },
     { "TransferDissolveFrom", CBaseAnimating_TransferDissolveFrom },
     { "UseClientSideAnimation", CBaseAnimating_UseClientSideAnimation },
-    { "__index", CBaseAnimating___index },
-    { "__newindex", CBaseAnimating___newindex },
-    { "__eq", CBaseAnimating___eq },
-    { "__tostring", CBaseAnimating___tostring },
     { NULL, NULL } };
 
 /*
@@ -527,7 +449,7 @@ static const luaL_Reg CBaseAnimatingmeta[] = {
 */
 LUALIB_API int luaopen_CBaseAnimating( lua_State *L )
 {
-    LUA_PUSH_NEW_METATABLE( L, "CBaseAnimating" );
+    LUA_PUSH_METATABLE_TO_EXTEND( L, LUA_BASEANIMATINGLIBNAME );
     luaL_register( L, NULL, CBaseAnimatingmeta );
     lua_pushstring( L, "Entity" );
     lua_setfield( L, -2, "__type" ); /* metatable.__type = "Entity" */

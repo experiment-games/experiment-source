@@ -13,6 +13,7 @@
 
 #define LUA_BASEANIMATINGLIBNAME "CBaseAnimating"
 LUALIB_API int( luaopen_CBaseAnimating )( lua_State *L );
+LUALIB_API int( luaopen_CBaseAnimating_shared )( lua_State *L );
 
 #define LUA_CBASEFLEXLIBNAME "CBaseFlex"
 LUALIB_API int( luaopen_CBaseFlex_shared )( lua_State *L );
@@ -23,7 +24,6 @@ LUALIB_API int( luaopen_CBaseCombatWeapon )( lua_State *L );
 #define LUA_BASEENTITYLIBNAME "CBaseEntity"
 LUALIB_API int( luaopen_CBaseEntity )( lua_State *L );
 LUALIB_API int( luaopen_CBaseEntity_shared )( lua_State *L );
-LUALIB_API int( luaopen_CBaseAnimating_shared )( lua_State *L );
 
 #define LUA_BASEPLAYERLIBNAME "CBasePlayer"
 LUALIB_API int( luaopen_CBasePlayer )( lua_State *L );
@@ -35,7 +35,7 @@ LUALIB_API int( luaopen_CEffectData )( lua_State *L );
 #define LUA_GAMETRACELIBNAME "CGameTrace"
 LUALIB_API int( luaopen_CGameTrace )( lua_State *L );
 
-#define LUA_EXPERIMENTPLAYERLIBNAME "CBasePlayer"  // Same as CBasePlayer to merge player classes
+#define LUA_EXPERIMENTPLAYERLIBNAME "CExperimentPlayer"
 LUALIB_API int( luaopen_CExperiment_Player )( lua_State *L );
 LUALIB_API int( luaopen_CExperiment_Player_shared )( lua_State *L );
 

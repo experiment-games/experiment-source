@@ -1456,13 +1456,6 @@ bool CBaseCombatWeapon::DefaultDeploy( char *szViewModel, char *szWeaponModel, i
 
     SetContextThink( NULL, 0, HIDEWEAPON_THINK_CONTEXT );
 
-#ifdef LUA_SDK  // TODO: This is here attempting to replicate this gmod functionality "Return true to allow switching away from this weapon using lastinv command"
-    BEGIN_LUA_CALL_WEAPON_METHOD( "Deploy" );
-    END_LUA_CALL_WEAPON_METHOD( 0, 1 );
-
-    RETURN_LUA_VALUE_IF_TRUE( false );
-#endif
-
     return true;
 }
 

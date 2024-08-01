@@ -29,8 +29,6 @@ local function initPanel(panel)
         panel:Init()
     end
 
-    panel:MarkAsInitialized()
-
 	return panel
 end
 

@@ -959,7 +959,7 @@ bool CExperimentScriptedWeapon::Deploy( void )
     BEGIN_LUA_CALL_WEAPON_METHOD( "Deploy" );
     END_LUA_CALL_WEAPON_METHOD( 0, 1 );
 
-    RETURN_LUA_BOOLEAN();
+    RETURN_LUA_VALUE_IF_TRUE( false );
 #endif
 
     return BaseClass::Deploy();

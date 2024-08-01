@@ -234,51 +234,6 @@ umsg.Vector = umsg.WriteVector
 umsg.VectorNormal = umsg.WriteNormal
 umsg.Send = umsg.MessageEnd
 
-function isangle(variable)
-	return type(variable) == "Angle"
-end
-
-function isbool(variable)
-	return type(variable) == "boolean"
-end
-
-function IsColor(variable)
-	return type(variable) == "Color"
-end
-
-function ispanel(variable)
-	return type(variable) == "Panel"
-end
-
-function isentity(variable)
-	return type(variable) == "Entity"
-end
-
-function isfunction(variable)
-	return type(variable) == "function"
-end
-
-function ismatrix(variable)
-	return type(variable) == "Matrix"
-end
-
-function isnumber(variable)
-	return type(variable) == "number"
-end
-
-function isstring(variable)
-	return type(variable) == "string"
-end
-
-function istable(variable)
-	return type(variable) == "table"
-		or type(variable) == "Color"
-end
-
-function isvector(variable)
-	return type(variable) == "Vector"
-end
-
 unpack = table.unpack
 
 -- Have table.insert return the position where the value was inserted

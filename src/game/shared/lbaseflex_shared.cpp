@@ -156,46 +156,46 @@ static int CBaseAnimating_HasFlexManipulator( lua_State *L )
     lua_pushboolean( L, false );
     return 1;
 }
+//
+//static int CBaseFlex___index( lua_State *L )
+//{
+//    CBaseFlex *pEntity = lua_tobaseflex( L, 1 );
+//
+//    LUA_METATABLE_INDEX_CHECK_VALID( L, CBaseEntity_IsValid );
+//    LUA_METATABLE_INDEX_CHECK( L, pEntity );
+//
+//    LUA_METATABLE_INDEX_CHECK_REF_TABLE( L, pEntity );
+//
+//    if ( lua_getmetatable( L, 1 ) )
+//    {
+//        LUA_METATABLE_INDEX_CHECK_TABLE( L );
+//    }
+//
+//    luaL_getmetatable( L, LUA_CBASEFLEXLIBNAME );
+//    LUA_METATABLE_INDEX_CHECK_TABLE( L );
+//
+//    LUA_METATABLE_INDEX_DERIVE_INDEX( L, LUA_BASEANIMATINGLIBNAME );
+//
+//    lua_pushnil( L );
+//    return 1;
+//}
 
-static int CBaseFlex___index( lua_State *L )
-{
-    CBaseFlex *pEntity = lua_tobaseflex( L, 1 );
-
-    LUA_METATABLE_INDEX_CHECK_VALID( L, CBaseEntity_IsValid );
-    LUA_METATABLE_INDEX_CHECK( L, pEntity );
-
-    LUA_METATABLE_INDEX_CHECK_REF_TABLE( L, pEntity );
-
-    if ( lua_getmetatable( L, 1 ) )
-    {
-        LUA_METATABLE_INDEX_CHECK_TABLE( L );
-    }
-
-    luaL_getmetatable( L, LUA_CBASEFLEXLIBNAME );
-    LUA_METATABLE_INDEX_CHECK_TABLE( L );
-
-    LUA_METATABLE_INDEX_DERIVE_INDEX( L, LUA_BASEANIMATINGLIBNAME );
-
-    lua_pushnil( L );
-    return 1;
-}
-
-static int CBaseFlex___newindex( lua_State *L )
-{
-    CBaseFlex *pEntity = lua_tobaseflex( L, 1 );
-
-    LUA_METATABLE_INDEX_CHECK_VALID( L, CBaseEntity_IsValid );
-    LUA_METATABLE_INDEX_CHECK( L, pEntity );
-
-    const char *field = luaL_checkstring( L, 2 );
-
-    LUA_GET_REF_TABLE( L, pEntity );
-    lua_pushvalue( L, 3 );
-    lua_setfield( L, -2, field );
-    lua_pop( L, 1 );
-
-    return 0;
-}
+//static int CBaseFlex___newindex( lua_State *L )
+//{
+//    CBaseFlex *pEntity = lua_tobaseflex( L, 1 );
+//
+//    LUA_METATABLE_INDEX_CHECK_VALID( L, CBaseEntity_IsValid );
+//    LUA_METATABLE_INDEX_CHECK( L, pEntity );
+//
+//    const char *field = luaL_checkstring( L, 2 );
+//
+//    LUA_GET_REF_TABLE( L, pEntity );
+//    lua_pushvalue( L, 3 );
+//    lua_setfield( L, -2, field );
+//    lua_pop( L, 1 );
+//
+//    return 0;
+//}
 
 static int CBaseFlex___eq( lua_State *L )
 {
@@ -219,8 +219,8 @@ static const luaL_Reg CBaseFlexmeta[] = {
     { "SetFlexWeight", CBaseFlex_SetFlexWeight },
     { "HasFlexManipulator", CBaseAnimating_HasFlexManipulator },
 
-    { "__index", CBaseFlex___index },
-    { "__newindex", CBaseFlex___newindex },
+    // { "__index", CBaseFlex___index }, // In Lua now
+    // { "__newindex", CBaseFlex___newindex }, // Conflicts when storing with CBaseEntity ref table
     { "__eq", CBaseFlex___eq },
     { "__tostring", CBaseFlex___tostring },
     { NULL, NULL } };
@@ -256,10 +256,6 @@ static const luaL_Reg CBaseFlex_funcs[] = {
 LUALIB_API int luaopen_CBaseFlex_shared( lua_State *L )
 {
     LUA_PUSH_NEW_METATABLE( L, LUA_CBASEFLEXLIBNAME );
-    luaL_register( L, NULL, CBaseFlexmeta );
-
-    // Extends the CBaseEntity metatable with every method part of CBaseFlex
-    LUA_PUSH_METATABLE_TO_EXTEND( L, LUA_BASEENTITYLIBNAME );
     luaL_register( L, NULL, CBaseFlexmeta );
 
     luaL_register( L, LUA_GNAME, CBaseFlex_funcs );

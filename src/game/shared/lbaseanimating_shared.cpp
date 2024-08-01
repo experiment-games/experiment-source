@@ -2,6 +2,7 @@
 #include "luamanager.h"
 #include "luasrclib.h"
 #include "mathlib/lvector.h"
+#include "lbaseentity_shared.h"
 #ifdef CLIENT_DLL
 #include "lc_baseanimating.h"
 #else
@@ -213,6 +214,103 @@ static int CBaseAnimating_GetFlexName( lua_State *L )
     return 1;
 }
 
+//static int CBaseAnimating___index( lua_State *L )
+//{
+//    CBaseAnimating *pEntity = lua_toanimating( L, 1 );
+//
+//    LUA_METATABLE_INDEX_CHECK_VALID( L, CBaseEntity_IsValid );
+//    LUA_METATABLE_INDEX_CHECK( L, pEntity );
+//
+//    const char *field = luaL_checkstring( L, 2 );
+//
+//    if ( Q_strcmp( field, "m_nBody" ) == 0 )
+//        lua_pushnumber( L, pEntity->m_nBody );
+//    else if ( Q_strcmp( field, "m_nHitboxSet" ) == 0 )
+//        lua_pushnumber( L, pEntity->m_nHitboxSet );
+//    else if ( Q_strcmp( field, "m_nSkin" ) == 0 )
+//        lua_pushnumber( L, pEntity->m_nSkin );
+//#ifdef CLIENT_DLL
+//    else if ( Q_strcmp( field, "m_bClientSideAnimation" ) == 0 )
+//        lua_pushboolean( L, pEntity->m_bClientSideAnimation );
+//    else if ( Q_strcmp( field, "m_bLastClientSideFrameReset" ) == 0 )
+//        lua_pushboolean( L, pEntity->m_bLastClientSideFrameReset );
+//#endif
+//    else
+//    {
+//        LUA_METATABLE_INDEX_CHECK_REF_TABLE( L, pEntity );
+//
+//        if ( lua_getmetatable( L, 1 ) )
+//        {
+//            LUA_METATABLE_INDEX_CHECK_TABLE( L );
+//        }
+//
+//        luaL_getmetatable( L, LUA_BASEANIMATINGLIBNAME );
+//        LUA_METATABLE_INDEX_CHECK_TABLE( L );
+//
+//        LUA_METATABLE_INDEX_DERIVE_INDEX( L, LUA_BASEENTITYLIBNAME );
+//
+//        lua_pushnil( L );
+//    }
+//
+//    return 1;
+//}
+
+//static int CBaseAnimating___newindex( lua_State *L )
+//{
+//    CBaseAnimating *pEntity = lua_toanimating( L, 1 );
+//
+//    if ( pEntity == NULL )
+//    { /* avoid extra test when d is not 0 */
+//        lua_Debug ar1;
+//        lua_getstack( L, 1, &ar1 );
+//        lua_getinfo( L, "fl", &ar1 );
+//        lua_Debug ar2;
+//        lua_getinfo( L, ">S", &ar2 );
+//        lua_pushfstring( L, "%s:%d: attempt to index a NULL entity", ar2.short_src, ar1.currentline );
+//        return lua_error( L );
+//    }
+//
+//    const char *field = luaL_checkstring( L, 2 );
+//
+//    if ( Q_strcmp( field, "m_nBody" ) == 0 )
+//        pEntity->m_nBody = luaL_checknumber( L, 3 );
+//    else if ( Q_strcmp( field, "m_nHitboxSet" ) == 0 )
+//        pEntity->m_nHitboxSet = luaL_checknumber( L, 3 );
+//    else if ( Q_strcmp( field, "m_nSkin" ) == 0 )
+//        pEntity->m_nSkin = luaL_checknumber( L, 3 );
+//#ifdef CLIENT_DLL
+//    else if( Q_strcmp( field, "m_bClientSideAnimation" ) == 0 )
+//        pEntity->m_bClientSideAnimation = luaL_checkboolean( L, 3 );
+//    else if ( Q_strcmp( field, "m_bLastClientSideFrameReset" ) == 0 )
+//        pEntity->m_bLastClientSideFrameReset = luaL_checkboolean( L, 3 );
+//#endif
+//    else
+//    {
+//        LUA_GET_REF_TABLE( L, pEntity );
+//        lua_pushvalue( L, 3 );
+//        lua_setfield( L, -2, field );
+//        lua_pop( L, 1 );
+//    }
+//
+//    return 0;
+//}
+
+static int CBaseAnimating___eq( lua_State *L )
+{
+    lua_pushboolean( L, lua_toanimating( L, 1 ) == lua_toanimating( L, 2 ) );
+    return 1;
+}
+
+static int CBaseAnimating___tostring( lua_State *L )
+{
+    CBaseAnimating *pEntity = lua_toanimating( L, 1 );
+    if ( pEntity == NULL )
+        lua_pushstring( L, "NULL" );
+    else
+        lua_pushfstring( L, "CBaseAnimating: %d \"%s\"", pEntity->entindex(), pEntity->GetClassname() );
+    return 1;
+}
+
 static const luaL_Reg CBaseAnimatingmeta[] = {
     { "GetModelName", CBaseAnimating_GetModelName },
     { "GetAttachment", CBaseAnimating_GetAttachment },
@@ -220,15 +318,16 @@ static const luaL_Reg CBaseAnimatingmeta[] = {
     // Wonky naming conventions, lets just support both out-of-the-box
     { "FindBodygroupByName", CBaseAnimating_FindBodygroupByName },
     { "FindBodyGroupByName", CBaseAnimating_FindBodygroupByName },
+
     { "GetBodygroup", CBaseAnimating_GetBodygroup },
     { "GetBodyGroup", CBaseAnimating_GetBodygroup },
     { "GetBodygroupCount", CBaseAnimating_GetBodygroupCount },
     { "GetBodyGroupCount", CBaseAnimating_GetBodygroupCount },
     { "GetBodygroupName", CBaseAnimating_GetBodygroupName },
     { "GetBodyGroupName", CBaseAnimating_GetBodygroupName },
+    { "GetBodygroups", CBaseAnimating_GetBodyGroups },
+    { "GetBodyGroups", CBaseAnimating_GetBodyGroups },
 
-    { "GetBodygroup", CBaseAnimating_GetBodyGroups },
-    { "GetBodyGroup", CBaseAnimating_GetBodyGroups },
     { "SetBodygroup", CBaseAnimating_SetBodygroup },
     { "SetBodyGroup", CBaseAnimating_SetBodygroup },
     { "SetBodygroups", CBaseAnimating_SetBodyGroups },
@@ -245,6 +344,11 @@ static const luaL_Reg CBaseAnimatingmeta[] = {
     { "GetFlexName", CBaseAnimating_GetFlexName },
     // { "GetFlexScale", CBaseAnimating_GetFlexScale }, // TODO: How is this implemented?
 
+    // { "__index", CBaseAnimating___index }, // In Lua now
+    // { "__newindex", CBaseAnimating___newindex }, // Conflicts when storing with CBaseEntity ref table
+    { "__eq", CBaseAnimating___eq },
+    { "__tostring", CBaseAnimating___tostring },
+
     { NULL, NULL } };
 
 /*
@@ -252,11 +356,7 @@ static const luaL_Reg CBaseAnimatingmeta[] = {
 */
 LUALIB_API int luaopen_CBaseAnimating_shared( lua_State *L )
 {
-    LUA_PUSH_METATABLE_TO_EXTEND( L, LUA_BASEANIMATINGLIBNAME );
-    luaL_register( L, NULL, CBaseAnimatingmeta );
-
-    // Extends the CBaseEntity metatable with every method part of CBaseAnimating
-    LUA_PUSH_METATABLE_TO_EXTEND( L, LUA_BASEENTITYLIBNAME );
+    LUA_PUSH_NEW_METATABLE( L, LUA_BASEANIMATINGLIBNAME );
     luaL_register( L, NULL, CBaseAnimatingmeta );
 
     return 1;

@@ -1962,7 +1962,7 @@ static int CBaseEntity___tostring( lua_State *L )
     if ( pEntity == NULL )
         lua_pushstring( L, "NULL" );
     else
-        lua_pushfstring( L, "CBaseEntity: %d %s", pEntity->entindex(), pEntity->GetClassname() );
+        lua_pushfstring( L, "CBaseEntity: %s (%d)", pEntity->GetClassname(), pEntity->entindex() );
     return 1;
 }
 

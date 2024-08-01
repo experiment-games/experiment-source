@@ -123,66 +123,68 @@ static int CExperiment_Player_KeyDown( lua_State *L )
     luaL_checkexperimentplayer( L, 1 )->KeyDown( luaL_checknumber( L, 2 ) );
     return 0;
 }
+//
+//static int CExperiment_Player___index( lua_State *L )
+//{
+//    CExperiment_Player *pPlayer = luaL_toexperimentplayer( L, 1 );
+//
+//    LUA_METATABLE_INDEX_CHECK_VALID( L, CBaseEntity_IsValid );
+//    LUA_METATABLE_INDEX_CHECK( L, pPlayer );
+//
+//    LUA_METATABLE_INDEX_CHECK_REF_TABLE( L, pPlayer );
+//
+//    if ( lua_getmetatable( L, 1 ) )
+//    {
+//        LUA_METATABLE_INDEX_CHECK_TABLE( L );
+//    }
+//
+//    luaL_getmetatable( L, LUA_EXPERIMENTPLAYERLIBNAME );
+//    LUA_METATABLE_INDEX_CHECK_TABLE( L );
+//
+//    const char *field = luaL_checkstring( L, 2 );
+//
+//    LUA_METATABLE_INDEX_DERIVE_INDEX( L, LUA_BASEPLAYERLIBNAME );
+//
+//    lua_pushnil( L );
+//    return 1;
+//}
 
-static int CExperiment_Player___index( lua_State *L )
-{
-    CExperiment_Player *pPlayer = luaL_toexperimentplayer( L, 1 );
-
-    LUA_METATABLE_INDEX_CHECK_VALID( L, CBaseEntity_IsValid );
-    LUA_METATABLE_INDEX_CHECK( L, pPlayer );
-
-    LUA_METATABLE_INDEX_CHECK_REF_TABLE( L, pPlayer );
-
-    if ( lua_getmetatable( L, 1 ) )
-    {
-        LUA_METATABLE_INDEX_CHECK_TABLE( L );
-    }
-
-    luaL_getmetatable( L, LUA_EXPERIMENTPLAYERLIBNAME );
-    LUA_METATABLE_INDEX_CHECK_TABLE( L );
-
-    LUA_METATABLE_INDEX_DERIVE_INDEX( L, LUA_BASEPLAYERLIBNAME );
-
-    lua_pushnil( L );
-    return 1;
-}
-
-static int CExperiment_Player___newindex( lua_State *L )
-{
-    CExperiment_Player *pPlayer = luaL_toexperimentplayer( L, 1 );
-
-    if ( pPlayer == NULL )
-    { /* avoid extra test when d is not 0 */
-        lua_Debug ar1;
-        lua_getstack( L, 1, &ar1 );
-        lua_getinfo( L, "fl", &ar1 );
-        lua_Debug ar2;
-        lua_getinfo( L, ">S", &ar2 );
-        lua_pushfstring( L, "%s:%d: attempt to index a NULL entity", ar2.short_src, ar1.currentline );
-        return lua_error( L );
-    }
-
-    const char *field = luaL_checkstring( L, 2 );
-
-#ifdef CLIENT_DLL
-    if ( Q_strcmp( field, "m_fNextThinkPushAway" ) == 0 )
-    {
-        // TODO: This doesn't exist in SourceSDK2013?
-        // pPlayer->m_fNextThinkPushAway = luaL_checknumber(L, 3);
-    }
-    else
-    {
-#endif
-        LUA_GET_REF_TABLE( L, pPlayer );
-        lua_pushvalue( L, 3 );
-        lua_setfield( L, -2, field );
-        lua_pop( L, 1 );
-#ifdef CLIENT_DLL
-    }
-#endif
-
-    return 0;
-}
+//static int CExperiment_Player___newindex( lua_State *L )
+//{
+//    CExperiment_Player *pPlayer = luaL_toexperimentplayer( L, 1 );
+//
+//    if ( pPlayer == NULL )
+//    { /* avoid extra test when d is not 0 */
+//        lua_Debug ar1;
+//        lua_getstack( L, 1, &ar1 );
+//        lua_getinfo( L, "fl", &ar1 );
+//        lua_Debug ar2;
+//        lua_getinfo( L, ">S", &ar2 );
+//        lua_pushfstring( L, "%s:%d: attempt to index a NULL entity", ar2.short_src, ar1.currentline );
+//        return lua_error( L );
+//    }
+//
+//    const char *field = luaL_checkstring( L, 2 );
+//
+//#ifdef CLIENT_DLL
+//    if ( Q_strcmp( field, "m_fNextThinkPushAway" ) == 0 )
+//    {
+//        // TODO: This doesn't exist in SourceSDK2013?
+//        // pPlayer->m_fNextThinkPushAway = luaL_checknumber(L, 3);
+//    }
+//    else
+//    {
+//#endif
+//        LUA_GET_REF_TABLE( L, pPlayer );
+//        lua_pushvalue( L, 3 );
+//        lua_setfield( L, -2, field );
+//        lua_pop( L, 1 );
+//#ifdef CLIENT_DLL
+//    }
+//#endif
+//
+//    return 0;
+//}
 
 static int CExperiment_Player___eq( lua_State *L )
 {
@@ -199,7 +201,6 @@ static int CExperiment_Player___tostring( lua_State *L )
         lua_pushfstring( L, "CExperiment_Player: %d \"%s\"", pPlayer->GetUserID(), pPlayer->GetPlayerName() );
     return 1;
 }
-
 static const luaL_Reg CExperiment_Playermeta[] = {
     { "BecomeRagdollOnClient", CExperiment_Player_BecomeRagdollOnClient },
     { "CalculateIKLocks", CExperiment_Player_CalculateIKLocks },
@@ -211,8 +212,8 @@ static const luaL_Reg CExperiment_Playermeta[] = {
     { "AnimationSetGestureSequence", CExperiment_Player_AnimationSetGestureSequence },
     { "AnimationSetGestureWeight", CExperiment_Player_AnimationSetGestureWeight },
     { "KeyDown", CExperiment_Player_KeyDown },
-    { "__index", CExperiment_Player___index },
-    { "__newindex", CExperiment_Player___newindex },
+    // { "__index", CExperiment_Player___index },// In Lua now
+    // { "__newindex", CExperiment_Player___newindex }, // Conflicts when storing with CBaseEntity ref table
     { "__eq", CExperiment_Player___eq },
     { "__tostring", CExperiment_Player___tostring },
     { NULL, NULL } };
@@ -232,7 +233,7 @@ static const luaL_Reg CExperiment_Player_funcs[] = {
 */
 LUALIB_API int luaopen_CExperiment_Player_shared( lua_State *L )
 {
-    LUA_PUSH_METATABLE_TO_EXTEND( L, LUA_EXPERIMENTPLAYERLIBNAME );
+    LUA_PUSH_NEW_METATABLE( L, LUA_EXPERIMENTPLAYERLIBNAME );
     luaL_register( L, NULL, CExperiment_Playermeta );
     lua_pushstring( L, "Entity" );
     lua_setfield( L, -2, "__type" ); /* metatable.__type = "Entity" */

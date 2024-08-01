@@ -909,159 +909,159 @@ static int CBaseCombatWeapon_WeaponState( lua_State *L )
     lua_pushinteger( L, luaL_checkweapon( L, 1 )->WeaponState() );
     return 1;
 }
+//
+//static int CBaseCombatWeapon___index( lua_State *L )
+//{
+//    CBaseCombatWeapon *pWeapon = lua_toweapon( L, 1 );
+//
+//    LUA_METATABLE_INDEX_CHECK_VALID( L, CBaseEntity_IsValid );
+//    LUA_METATABLE_INDEX_CHECK( L, pWeapon );
+//
+//    const char *field = luaL_checkstring( L, 2 );
+//    if ( Q_strcmp( field, "m_bAltFiresUnderwater" ) == 0 )
+//        lua_pushboolean( L, pWeapon->m_bAltFiresUnderwater );
+//    else if ( Q_strcmp( field, "m_bFireOnEmpty" ) == 0 )
+//        lua_pushboolean( L, pWeapon->m_bFireOnEmpty );
+//    else if ( Q_strcmp( field, "m_bFiresUnderwater" ) == 0 )
+//        lua_pushboolean( L, pWeapon->m_bFiresUnderwater );
+//    else if ( Q_strcmp( field, "m_bInReload" ) == 0 )
+//        lua_pushboolean( L, pWeapon->m_bInReload );
+//    else if ( Q_strcmp( field, "m_bReloadsSingly" ) == 0 )
+//        lua_pushboolean( L, pWeapon->m_bReloadsSingly );
+//    else if ( Q_strcmp( field, "m_fFireDuration" ) == 0 )
+//        lua_pushnumber( L, pWeapon->m_fFireDuration );
+//    else if ( Q_strcmp( field, "m_flNextEmptySoundTime" ) == 0 )
+//        lua_pushnumber( L, pWeapon->m_flNextEmptySoundTime );
+//    else if ( Q_strcmp( field, "m_flNextPrimaryAttack" ) == 0 )
+//        lua_pushnumber( L, pWeapon->m_flNextPrimaryAttack );
+//    else if ( Q_strcmp( field, "m_flNextSecondaryAttack" ) == 0 )
+//        lua_pushnumber( L, pWeapon->m_flNextSecondaryAttack );
+//    else if ( Q_strcmp( field, "m_flTimeWeaponIdle" ) == 0 )
+//        lua_pushnumber( L, pWeapon->m_flTimeWeaponIdle );
+//    else if ( Q_strcmp( field, "m_flUnlockTime" ) == 0 )
+//        lua_pushnumber( L, pWeapon->m_flUnlockTime );
+//    else if ( Q_strcmp( field, "m_fMaxRange1" ) == 0 )
+//        lua_pushnumber( L, pWeapon->m_fMaxRange1 );
+//    else if ( Q_strcmp( field, "m_fMaxRange2" ) == 0 )
+//        lua_pushnumber( L, pWeapon->m_fMaxRange2 );
+//    else if ( Q_strcmp( field, "m_fMinRange1" ) == 0 )
+//        lua_pushnumber( L, pWeapon->m_fMinRange1 );
+//    else if ( Q_strcmp( field, "m_fMinRange2" ) == 0 )
+//        lua_pushnumber( L, pWeapon->m_fMinRange2 );
+//    else if ( Q_strcmp( field, "m_iClip1" ) == 0 )
+//        lua_pushinteger( L, pWeapon->m_iClip1 );
+//    else if ( Q_strcmp( field, "m_iClip2" ) == 0 )
+//        lua_pushinteger( L, pWeapon->m_iClip2 );
+//    else if ( Q_strcmp( field, "m_iPrimaryAmmoType" ) == 0 )
+//        lua_pushinteger( L, pWeapon->m_iPrimaryAmmoType );
+//    else if ( Q_strcmp( field, "m_iSecondaryAmmoType" ) == 0 )
+//        lua_pushinteger( L, pWeapon->m_iSecondaryAmmoType );
+//    else if ( Q_strcmp( field, "m_iState" ) == 0 )
+//        lua_pushinteger( L, pWeapon->m_iState );
+//    else if ( Q_strcmp( field, "m_iSubType" ) == 0 )
+//        lua_pushinteger( L, pWeapon->m_iSubType );
+//    else if ( Q_strcmp( field, "m_iViewModelIndex" ) == 0 )
+//        lua_pushinteger( L, pWeapon->m_iViewModelIndex );
+//    else if ( Q_strcmp( field, "m_iWorldModelIndex" ) == 0 )
+//        lua_pushinteger( L, pWeapon->m_iWorldModelIndex );
+//    else if ( Q_strcmp( field, "m_nViewModelIndex" ) == 0 )
+//        lua_pushinteger( L, pWeapon->m_nViewModelIndex );
+//    else
+//    {
+//        LUA_METATABLE_INDEX_CHECK_REF_TABLE( L, pWeapon );
+//
+//        if ( lua_getmetatable( L, 1 ) )
+//        {
+//            LUA_METATABLE_INDEX_CHECK_TABLE( L );
+//        }
+//
+//        luaL_getmetatable( L, LUA_BASECOMBATWEAPONLIBNAME );
+//        LUA_METATABLE_INDEX_CHECK_TABLE( L );
+//
+//        LUA_METATABLE_INDEX_DERIVE_INDEX( L, LUA_BASEANIMATINGLIBNAME );
+//
+//        lua_pushnil( L );
+//    }
+//
+//    return 1;
+//}
 
-static int CBaseCombatWeapon___index( lua_State *L )
-{
-    CBaseCombatWeapon *pWeapon = lua_toweapon( L, 1 );
-
-    LUA_METATABLE_INDEX_CHECK_VALID( L, CBaseEntity_IsValid );
-    LUA_METATABLE_INDEX_CHECK( L, pWeapon );
-
-    const char *field = luaL_checkstring( L, 2 );
-    if ( Q_strcmp( field, "m_bAltFiresUnderwater" ) == 0 )
-        lua_pushboolean( L, pWeapon->m_bAltFiresUnderwater );
-    else if ( Q_strcmp( field, "m_bFireOnEmpty" ) == 0 )
-        lua_pushboolean( L, pWeapon->m_bFireOnEmpty );
-    else if ( Q_strcmp( field, "m_bFiresUnderwater" ) == 0 )
-        lua_pushboolean( L, pWeapon->m_bFiresUnderwater );
-    else if ( Q_strcmp( field, "m_bInReload" ) == 0 )
-        lua_pushboolean( L, pWeapon->m_bInReload );
-    else if ( Q_strcmp( field, "m_bReloadsSingly" ) == 0 )
-        lua_pushboolean( L, pWeapon->m_bReloadsSingly );
-    else if ( Q_strcmp( field, "m_fFireDuration" ) == 0 )
-        lua_pushnumber( L, pWeapon->m_fFireDuration );
-    else if ( Q_strcmp( field, "m_flNextEmptySoundTime" ) == 0 )
-        lua_pushnumber( L, pWeapon->m_flNextEmptySoundTime );
-    else if ( Q_strcmp( field, "m_flNextPrimaryAttack" ) == 0 )
-        lua_pushnumber( L, pWeapon->m_flNextPrimaryAttack );
-    else if ( Q_strcmp( field, "m_flNextSecondaryAttack" ) == 0 )
-        lua_pushnumber( L, pWeapon->m_flNextSecondaryAttack );
-    else if ( Q_strcmp( field, "m_flTimeWeaponIdle" ) == 0 )
-        lua_pushnumber( L, pWeapon->m_flTimeWeaponIdle );
-    else if ( Q_strcmp( field, "m_flUnlockTime" ) == 0 )
-        lua_pushnumber( L, pWeapon->m_flUnlockTime );
-    else if ( Q_strcmp( field, "m_fMaxRange1" ) == 0 )
-        lua_pushnumber( L, pWeapon->m_fMaxRange1 );
-    else if ( Q_strcmp( field, "m_fMaxRange2" ) == 0 )
-        lua_pushnumber( L, pWeapon->m_fMaxRange2 );
-    else if ( Q_strcmp( field, "m_fMinRange1" ) == 0 )
-        lua_pushnumber( L, pWeapon->m_fMinRange1 );
-    else if ( Q_strcmp( field, "m_fMinRange2" ) == 0 )
-        lua_pushnumber( L, pWeapon->m_fMinRange2 );
-    else if ( Q_strcmp( field, "m_iClip1" ) == 0 )
-        lua_pushinteger( L, pWeapon->m_iClip1 );
-    else if ( Q_strcmp( field, "m_iClip2" ) == 0 )
-        lua_pushinteger( L, pWeapon->m_iClip2 );
-    else if ( Q_strcmp( field, "m_iPrimaryAmmoType" ) == 0 )
-        lua_pushinteger( L, pWeapon->m_iPrimaryAmmoType );
-    else if ( Q_strcmp( field, "m_iSecondaryAmmoType" ) == 0 )
-        lua_pushinteger( L, pWeapon->m_iSecondaryAmmoType );
-    else if ( Q_strcmp( field, "m_iState" ) == 0 )
-        lua_pushinteger( L, pWeapon->m_iState );
-    else if ( Q_strcmp( field, "m_iSubType" ) == 0 )
-        lua_pushinteger( L, pWeapon->m_iSubType );
-    else if ( Q_strcmp( field, "m_iViewModelIndex" ) == 0 )
-        lua_pushinteger( L, pWeapon->m_iViewModelIndex );
-    else if ( Q_strcmp( field, "m_iWorldModelIndex" ) == 0 )
-        lua_pushinteger( L, pWeapon->m_iWorldModelIndex );
-    else if ( Q_strcmp( field, "m_nViewModelIndex" ) == 0 )
-        lua_pushinteger( L, pWeapon->m_nViewModelIndex );
-    else
-    {
-        LUA_METATABLE_INDEX_CHECK_REF_TABLE( L, pWeapon );
-
-        if ( lua_getmetatable( L, 1 ) )
-        {
-            LUA_METATABLE_INDEX_CHECK_TABLE( L );
-        }
-
-        luaL_getmetatable( L, LUA_BASECOMBATWEAPONLIBNAME );
-        LUA_METATABLE_INDEX_CHECK_TABLE( L );
-
-        LUA_METATABLE_INDEX_DERIVE_INDEX( L, LUA_BASEANIMATINGLIBNAME );
-
-        lua_pushnil( L );
-    }
-
-    return 1;
-}
-
-static int CBaseCombatWeapon___newindex( lua_State *L )
-{
-    CBaseCombatWeapon *pWeapon = lua_toweapon( L, 1 );
-
-    if ( pWeapon == NULL )
-    { /* avoid extra test when d is not 0 */
-        lua_Debug ar1;
-        lua_getstack( L, 1, &ar1 );
-        lua_getinfo( L, "fl", &ar1 );
-        lua_Debug ar2;
-        lua_getinfo( L, ">S", &ar2 );
-        lua_pushfstring( L, "%s:%d: attempt to index a NULL entity", ar2.short_src, ar1.currentline );
-        return lua_error( L );
-    }
-
-    const char *field = luaL_checkstring( L, 2 );
-
-    if ( Q_strcmp( field, "m_bAltFiresUnderwater" ) == 0 )
-        pWeapon->m_bAltFiresUnderwater = luaL_checkboolean( L, 3 );
-    else if ( Q_strcmp( field, "m_bFireOnEmpty" ) == 0 )
-        pWeapon->m_bFireOnEmpty = luaL_checkboolean( L, 3 );
-    else if ( Q_strcmp( field, "m_bFiresUnderwater" ) == 0 )
-        pWeapon->m_bFiresUnderwater = luaL_checkboolean( L, 3 );
-    else if ( Q_strcmp( field, "m_bInReload" ) == 0 )
-        pWeapon->m_bInReload = luaL_checkboolean( L, 3 );
-    else if ( Q_strcmp( field, "m_bReloadsSingly" ) == 0 )
-        pWeapon->m_bReloadsSingly = luaL_checkboolean( L, 3 );
-    else if ( Q_strcmp( field, "m_fFireDuration" ) == 0 )
-        pWeapon->m_fFireDuration = luaL_checknumber( L, 3 );
-    else if ( Q_strcmp( field, "m_flNextEmptySoundTime" ) == 0 )
-        pWeapon->m_flNextEmptySoundTime = luaL_checknumber( L, 3 );
-    else if ( Q_strcmp( field, "m_flNextPrimaryAttack" ) == 0 )
-        pWeapon->m_flNextPrimaryAttack.GetForModify() = luaL_checknumber( L, 3 );
-    else if ( Q_strcmp( field, "m_flNextSecondaryAttack" ) == 0 )
-        pWeapon->m_flNextSecondaryAttack.GetForModify() =
-            luaL_checknumber( L, 3 );
-    else if ( Q_strcmp( field, "m_flTimeWeaponIdle" ) == 0 )
-        pWeapon->m_flTimeWeaponIdle.GetForModify() = luaL_checknumber( L, 3 );
-    else if ( Q_strcmp( field, "m_flUnlockTime" ) == 0 )
-        pWeapon->m_flUnlockTime = luaL_checknumber( L, 3 );
-    else if ( Q_strcmp( field, "m_fMaxRange1" ) == 0 )
-        pWeapon->m_fMaxRange1 = luaL_checknumber( L, 3 );
-    else if ( Q_strcmp( field, "m_fMaxRange2" ) == 0 )
-        pWeapon->m_fMaxRange2 = luaL_checknumber( L, 3 );
-    else if ( Q_strcmp( field, "m_fMinRange1" ) == 0 )
-        pWeapon->m_fMinRange1 = luaL_checknumber( L, 3 );
-    else if ( Q_strcmp( field, "m_fMinRange2" ) == 0 )
-        pWeapon->m_fMinRange2 = luaL_checknumber( L, 3 );
-    else if ( Q_strcmp( field, "m_iClip1" ) == 0 )
-        pWeapon->m_iClip1.GetForModify() = luaL_checknumber( L, 3 );
-    else if ( Q_strcmp( field, "m_iClip2" ) == 0 )
-        pWeapon->m_iClip2.GetForModify() = luaL_checknumber( L, 3 );
-    else if ( Q_strcmp( field, "m_iPrimaryAmmoType" ) == 0 )
-        pWeapon->m_iPrimaryAmmoType.GetForModify() = luaL_checknumber( L, 3 );
-    else if ( Q_strcmp( field, "m_iSecondaryAmmoType" ) == 0 )
-        pWeapon->m_iSecondaryAmmoType.GetForModify() = luaL_checknumber( L, 3 );
-    else if ( Q_strcmp( field, "m_iState" ) == 0 )
-        pWeapon->m_iState.GetForModify() = luaL_checknumber( L, 3 );
-    else if ( Q_strcmp( field, "m_iSubType" ) == 0 )
-        pWeapon->m_iSubType = luaL_checknumber( L, 3 );
-    else if ( Q_strcmp( field, "m_iViewModelIndex" ) == 0 )
-        pWeapon->m_iViewModelIndex.GetForModify() = luaL_checknumber( L, 3 );
-    else if ( Q_strcmp( field, "m_iWorldModelIndex" ) == 0 )
-        pWeapon->m_iWorldModelIndex.GetForModify() = luaL_checknumber( L, 3 );
-    else if ( Q_strcmp( field, "m_nViewModelIndex" ) == 0 )
-        pWeapon->m_nViewModelIndex.GetForModify() = luaL_checknumber( L, 3 );
-    else
-    {
-        LUA_GET_REF_TABLE( L, pWeapon );
-        lua_pushvalue( L, 3 );
-        lua_setfield( L, -2, field );
-        lua_pop( L, 1 );
-    }
-
-    return 0;
-}
+//static int CBaseCombatWeapon___newindex( lua_State *L )
+//{
+//    CBaseCombatWeapon *pWeapon = lua_toweapon( L, 1 );
+//
+//    if ( pWeapon == NULL )
+//    { /* avoid extra test when d is not 0 */
+//        lua_Debug ar1;
+//        lua_getstack( L, 1, &ar1 );
+//        lua_getinfo( L, "fl", &ar1 );
+//        lua_Debug ar2;
+//        lua_getinfo( L, ">S", &ar2 );
+//        lua_pushfstring( L, "%s:%d: attempt to index a NULL entity", ar2.short_src, ar1.currentline );
+//        return lua_error( L );
+//    }
+//
+//    const char *field = luaL_checkstring( L, 2 );
+//
+//    if ( Q_strcmp( field, "m_bAltFiresUnderwater" ) == 0 )
+//        pWeapon->m_bAltFiresUnderwater = luaL_checkboolean( L, 3 );
+//    else if ( Q_strcmp( field, "m_bFireOnEmpty" ) == 0 )
+//        pWeapon->m_bFireOnEmpty = luaL_checkboolean( L, 3 );
+//    else if ( Q_strcmp( field, "m_bFiresUnderwater" ) == 0 )
+//        pWeapon->m_bFiresUnderwater = luaL_checkboolean( L, 3 );
+//    else if ( Q_strcmp( field, "m_bInReload" ) == 0 )
+//        pWeapon->m_bInReload = luaL_checkboolean( L, 3 );
+//    else if ( Q_strcmp( field, "m_bReloadsSingly" ) == 0 )
+//        pWeapon->m_bReloadsSingly = luaL_checkboolean( L, 3 );
+//    else if ( Q_strcmp( field, "m_fFireDuration" ) == 0 )
+//        pWeapon->m_fFireDuration = luaL_checknumber( L, 3 );
+//    else if ( Q_strcmp( field, "m_flNextEmptySoundTime" ) == 0 )
+//        pWeapon->m_flNextEmptySoundTime = luaL_checknumber( L, 3 );
+//    else if ( Q_strcmp( field, "m_flNextPrimaryAttack" ) == 0 )
+//        pWeapon->m_flNextPrimaryAttack.GetForModify() = luaL_checknumber( L, 3 );
+//    else if ( Q_strcmp( field, "m_flNextSecondaryAttack" ) == 0 )
+//        pWeapon->m_flNextSecondaryAttack.GetForModify() =
+//            luaL_checknumber( L, 3 );
+//    else if ( Q_strcmp( field, "m_flTimeWeaponIdle" ) == 0 )
+//        pWeapon->m_flTimeWeaponIdle.GetForModify() = luaL_checknumber( L, 3 );
+//    else if ( Q_strcmp( field, "m_flUnlockTime" ) == 0 )
+//        pWeapon->m_flUnlockTime = luaL_checknumber( L, 3 );
+//    else if ( Q_strcmp( field, "m_fMaxRange1" ) == 0 )
+//        pWeapon->m_fMaxRange1 = luaL_checknumber( L, 3 );
+//    else if ( Q_strcmp( field, "m_fMaxRange2" ) == 0 )
+//        pWeapon->m_fMaxRange2 = luaL_checknumber( L, 3 );
+//    else if ( Q_strcmp( field, "m_fMinRange1" ) == 0 )
+//        pWeapon->m_fMinRange1 = luaL_checknumber( L, 3 );
+//    else if ( Q_strcmp( field, "m_fMinRange2" ) == 0 )
+//        pWeapon->m_fMinRange2 = luaL_checknumber( L, 3 );
+//    else if ( Q_strcmp( field, "m_iClip1" ) == 0 )
+//        pWeapon->m_iClip1.GetForModify() = luaL_checknumber( L, 3 );
+//    else if ( Q_strcmp( field, "m_iClip2" ) == 0 )
+//        pWeapon->m_iClip2.GetForModify() = luaL_checknumber( L, 3 );
+//    else if ( Q_strcmp( field, "m_iPrimaryAmmoType" ) == 0 )
+//        pWeapon->m_iPrimaryAmmoType.GetForModify() = luaL_checknumber( L, 3 );
+//    else if ( Q_strcmp( field, "m_iSecondaryAmmoType" ) == 0 )
+//        pWeapon->m_iSecondaryAmmoType.GetForModify() = luaL_checknumber( L, 3 );
+//    else if ( Q_strcmp( field, "m_iState" ) == 0 )
+//        pWeapon->m_iState.GetForModify() = luaL_checknumber( L, 3 );
+//    else if ( Q_strcmp( field, "m_iSubType" ) == 0 )
+//        pWeapon->m_iSubType = luaL_checknumber( L, 3 );
+//    else if ( Q_strcmp( field, "m_iViewModelIndex" ) == 0 )
+//        pWeapon->m_iViewModelIndex.GetForModify() = luaL_checknumber( L, 3 );
+//    else if ( Q_strcmp( field, "m_iWorldModelIndex" ) == 0 )
+//        pWeapon->m_iWorldModelIndex.GetForModify() = luaL_checknumber( L, 3 );
+//    else if ( Q_strcmp( field, "m_nViewModelIndex" ) == 0 )
+//        pWeapon->m_nViewModelIndex.GetForModify() = luaL_checknumber( L, 3 );
+//    else
+//    {
+//        LUA_GET_REF_TABLE( L, pWeapon );
+//        lua_pushvalue( L, 3 );
+//        lua_setfield( L, -2, field );
+//        lua_pop( L, 1 );
+//    }
+//
+//    return 0;
+//}
 
 static int CBaseCombatWeapon___eq( lua_State *L )
 {
@@ -1211,8 +1211,9 @@ static const luaL_Reg CBaseCombatWeaponmeta[] = {
     { "WeaponIdle", CBaseCombatWeapon_WeaponIdle },
     { "WeaponSound", CBaseCombatWeapon_WeaponSound },
     { "WeaponState", CBaseCombatWeapon_WeaponState },
-    { "__index", CBaseCombatWeapon___index },
-    { "__newindex", CBaseCombatWeapon___newindex },
+
+    // { "__index", CBaseCombatWeapon___index }, // In Lua now
+    // { "__newindex", CBaseCombatWeapon___newindex },  // Conflicts when storing with CBaseEntity ref table
     { "__eq", CBaseCombatWeapon___eq },
     { "__tostring", CBaseCombatWeapon___tostring },
     { NULL, NULL } };

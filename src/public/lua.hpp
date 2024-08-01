@@ -32,6 +32,7 @@ extern "C" {
 lua_State *lua_open();
 
 void luaL_register(lua_State *L, const char *libname, const luaL_Reg *l);
+void luaL_register_assert_no_duplicate( lua_State *L, const char *libname, const luaL_Reg *l );
 
 int luaL_typerror(lua_State *L, int narg, const char *tname);
 
