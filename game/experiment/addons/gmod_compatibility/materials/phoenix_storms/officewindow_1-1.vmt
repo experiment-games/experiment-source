@@ -1,0 +1,14 @@
+"VertexLitGeneric"
+{
+	"$basetexture" "phoenix_storms/officewindow_1-1"
+	"$bumpmap" "phoenix_storms/officewindow_bump"
+	"$surfaceprop"	"metal"
+	"$halflambert"	"1"
+
+	"$phong"				"1"
+	"$phongexponent"		"60"
+	"$phongboost"			"2"
+	"$phongfresnelranges"	"[.5 .8 1]"
+}
+
+

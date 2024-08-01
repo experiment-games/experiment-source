@@ -1,0 +1,14 @@
+"VertexLitGeneric"
+{
+	"$basetexture" "phoenix_storms/wire/pcb_red"
+ 	"$selfillum" "1"
+	"$surfaceprop" "computer"
+	"$bumpmap" "phoenix_storms/wire/pcb_normal"
+	"$phong"     "1"
+	"$halflambert"	1
+ 	"$phongexponent"   "60"
+ 	"$phongboost"   "2"
+ 	"$phongfresnelranges"   "[.5 .8 1]"
+}
+
+

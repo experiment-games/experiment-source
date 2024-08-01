@@ -1074,7 +1074,11 @@ bool CServerGameDLL::LevelInit( const char *pMapName, char const *pMapEntities, 
     // luasrc_LoadEffects();
 
     luasrc_LoadGamemode( LUA_BASE_GAMEMODE );
-    luasrc_LoadGamemode( gamemode.GetString() );
+    if ( !luasrc_LoadGamemode( gamemode.GetString() ) )
+    {
+        Assert( 0 ); // Should've been prevented by gamemode command
+    }
+
     luasrc_SetGamemode( gamemode.GetString() );
 
     if ( gpGlobals->maxClients > 1 )

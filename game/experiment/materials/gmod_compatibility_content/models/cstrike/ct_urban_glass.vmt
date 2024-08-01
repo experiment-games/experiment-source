@@ -1,7 +1,0 @@
-"vertexlitgeneric"
-{
-	"$basetexture" "gmod_compatibility_content/models/cstrike/ct_urban_glass"
-	"$envmap" 			"env_cubemap"
-	"$envmapmask" "models/cstrike/ct_urban_glass_spec"
-	"$translucent" 1
-}

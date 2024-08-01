@@ -1,0 +1,8 @@
+"LightmappedGeneric"
+{
+	"$translucent" 		"1"
+	"$basetexture" "Tools/toolsclip_wood_basket"
+	"%compileclip" 		"1"
+	"$surfaceprop" 		"Wood_Basket"
+	"%keywords" 		"clip,wood"
+}

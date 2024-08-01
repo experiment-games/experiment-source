@@ -1,0 +1,16 @@
+"VertexLitGeneric"
+{
+	"$basetexture" "models\chairs\armchair"
+	"$bumpmap" "models\chairs\armchair_normal"
+	"$envmap" "env_cubemap"
+	$normalmapalphaenvmapmask 1
+
+	"$phong" "1"
+	"$phongexponent" "2"
+	"$phongboost" "1"
+	"$phongfresnelranges" "[0.01 0.5 0.01]"
+
+	"$envmaptint" "[0.05 0.05 0.05]"
+
+}
+

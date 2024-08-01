@@ -1,0 +1,7 @@
+"VertexLitGeneric"
+{
+	"$basetexture" "models/balloon/balloon_hl2"
+	"$envmap" 		"env_cubemap"
+	"$envmaptint" 		"[ .2 .2 .2 ]"
+	"$model" 			1
+}

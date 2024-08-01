@@ -1,0 +1,8 @@
+"LightmappedGeneric"
+{
+	"$translucent" 		"1"
+	"$basetexture" "Tools/toolsclip_tile"
+	"%compileclip" 		"1"
+	"$surfaceprop" 		"tile"
+	"%keywords" 		"clip,tile"
+}

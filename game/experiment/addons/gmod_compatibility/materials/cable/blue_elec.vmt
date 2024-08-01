@@ -1,0 +1,8 @@
+"UnlitGeneric"
+{
+	"$basetexture" "sprites\physcannon_bluelight1b"
+	"$nocull"			1
+	"$MinLight"		1
+	"$MaxLight"		1
+	"$additive"		1
+}

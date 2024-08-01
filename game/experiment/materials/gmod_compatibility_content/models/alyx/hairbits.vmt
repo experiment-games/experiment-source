@@ -1,7 +1,0 @@
-"VertexLitGeneric"
-{
-	"$translucent" 1
-	"$basetexture" "gmod_compatibility_content/models/Alyx/hairbits"
-	"$halflambert" 1
-	"$nodecal" "1"
-}

@@ -1,9 +1,0 @@
-"Sprite"
-{
-	"$spriteorientation" "vp_parallel"
-	"$spriteorigin" "[ 0.50 0.50 ]"
-	"$basetexture" "gmod_compatibility_content/sprites/orangeflare1"
-	"$nocompress" "1"
-	//"$ignorez" "1"
-	"$spriterendermode" "5"
-}

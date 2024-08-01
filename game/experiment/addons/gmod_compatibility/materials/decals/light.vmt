@@ -1,0 +1,5 @@
+"DecalModulate"
+{
+	"$basetexture" "decals/light"
+	"$decalscale" "0.4"
+}

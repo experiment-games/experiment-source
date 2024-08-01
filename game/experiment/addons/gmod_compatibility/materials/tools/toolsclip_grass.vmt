@@ -1,0 +1,8 @@
+"LightmappedGeneric"
+{
+	"$translucent" 		"1"
+	"$basetexture" "Tools/toolsclip_grass"
+	"%compileclip" 		"1"
+	"$surfaceprop" 		"grass"
+	"%keywords" 		"clip,grass"
+}

@@ -1,0 +1,11 @@
+"VertexLitGeneric"
+{
+	"$basetexture" "MaxOfS2D/models/hover_plate"
+	"$bumpmap" "MaxOfS2D/models/hover_plate_normal"
+
+
+	"$phong" "1"
+	"$phongexponent" "10.0"
+	"$phongboost" "3"
+	"$phongfresnelranges"	"[0.2 0.7 1]"
+}

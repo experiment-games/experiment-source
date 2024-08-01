@@ -1,0 +1,8 @@
+"VertexlitGeneric"
+{
+	"$basetexture" "models/Noesis/noIcon"
+	"$surfaceprop" "Tile"
+	"$surfaceprop2" "Tile"
+	"$alphatest" 1
+	"$translucent" 1
+}

@@ -1,7 +1,0 @@
-"eyes"
-{
-	"$basetexture" "gmod_compatibility_content/models/Alyx/eyeball_l"
-	"$iris" "models/alyx/pupil_l"
-	"$halflambert" 1
-	"$nodecal" "1"
-}

@@ -1,0 +1,10 @@
+"VertexLitGeneric"
+{
+	"$basetexture" "phoenix_storms/concrete1"
+	"$surfaceprop" "concrete"
+	"$bumpmap" "phoenix_storms/concrete_bump"
+	"$model" 1
+	"$HalfLambert" 1
+}
+
+

@@ -1,0 +1,10 @@
+"VertexLitGeneric"
+{
+	"$basetexture" "phoenix_storms/mat/mat_phx_debug"
+	"$surfaceprop" "metal"
+	"$model" 1
+	"$HalfLambert" 1
+	"$selfillum" 1
+}
+
+

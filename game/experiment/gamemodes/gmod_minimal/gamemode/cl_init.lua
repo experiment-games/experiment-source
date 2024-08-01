@@ -1,8 +1,8 @@
 include("shared.lua")
 
-GM.TestAsd2 = Material("gmod_compatibility_content/gwenskin/gmoddefault.png")
+GM.TestAsd2 = Material("gwenskin/gmoddefault.png")
 
-GM.TestAsd = Material("gmod_compatibility_content/gwenskin/gmoddefault.png")
+GM.TestAsd = Material("gwenskin/gmoddefault.png")
 print(GM.TestAsd, GM.TestAsd2)
 
 -- Test loading many materials at once
@@ -41,8 +41,8 @@ local files = {
 local mats = {}
 
 for _, file in ipairs(files) do
-	print("Loading ", "gmod_compatibility_content/gui/"..file)
-	local mat = Material("gmod_compatibility_content/gui/" .. file)
+	print("Loading ", "gui/"..file)
+	local mat = Material("gui/" .. file)
 	mats[file] = mat
 end
 

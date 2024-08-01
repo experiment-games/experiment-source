@@ -1,7 +1,0 @@
-"UnlitGeneric"
-{
-	"$basetexture" "gmod_compatibility_content/phoenix_storms/icons/phw_seat"
-	"$vertexcolor" 		1
-	"$vertexalpha" 		1
-	"$nolod" 			1
-}

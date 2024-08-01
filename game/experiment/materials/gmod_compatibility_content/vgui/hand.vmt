@@ -1,7 +1,0 @@
-"UnlitGeneric"
-{
-	"$basetexture" "gmod_compatibility_content/vgui/hand"
-	"$vertexcolor" 		0
-	"$vertexalpha" 		0
-	"$nolod" 			1
-}

@@ -1,6 +1,0 @@
-"eyes"
-{
-	"$basetexture" "gmod_compatibility_content/models/Kleiner/eyeball_r"
-	"$iris" "models/Kleiner/pupil_r"
-	"$halflambert" 1
-}

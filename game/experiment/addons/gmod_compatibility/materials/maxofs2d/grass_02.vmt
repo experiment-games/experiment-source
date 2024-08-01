@@ -1,0 +1,14 @@
+"LightmappedGeneric"
+{
+	"$basetexture" "MaxOfS2D/grass"
+	"$color2"      "[1.0 0.9 1.1]"
+
+	"$reflectivity" "[0.03 0.06 0.01]"
+
+	"$detail"             "MaxOfS2D/terrain_detail"
+	"$detailscale"        "0.002"
+	"$detailblendfactor"  "0.25"
+	"$detailblendmode"    "0"
+
+	"$surfaceprop" "grass"
+}

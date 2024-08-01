@@ -1,8 +1,0 @@
-"LightmappedGeneric"
-{
-	"$translucent" 		"1"
-	"$basetexture" "gmod_compatibility_content/Tools/toolsclip_metal_sand_barrel"
-	"%compileclip" 		"1"
-	"$surfaceprop" 		"metal_sand_barrel"
-	"%keywords" 		"clip,metal"
-}

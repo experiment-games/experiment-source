@@ -47,10 +47,38 @@ extern "C"
 
 static FileHandle_t g_LuaLogFileHandle = FILESYSTEM_INVALID_HANDLE;
 
-ConVar gamemode( "gamemode", "hl2sb", FCVAR_ARCHIVE | FCVAR_REPLICATED );
+void Gamemode_ChangeCallback( IConVar *pConVar, char const *pOldString, float flOldValue );
+
+#define DEFAULT_GAMEMODE "hl2sb"
+
+ConVar gamemode( "gamemode", DEFAULT_GAMEMODE, FCVAR_ARCHIVE | FCVAR_REPLICATED, "The Lua gamemode to run", Gamemode_ChangeCallback );
 ConVar lua_log_cl( "lua_log_cl", "1", FCVAR_ARCHIVE );
 ConVar lua_log_sv( "lua_log_sv", "1", FCVAR_ARCHIVE );
 ConVar lua_log_loader( "lua_log_loader", "1", FCVAR_ARCHIVE );
+
+
+void Gamemode_ChangeCallback( IConVar *pConVar, char const *pOldString, float flOldValue )
+{
+    const char *newGamemode = gamemode.GetString();
+
+    // Build the gamemode path
+    char gamemodePath[MAX_PATH];
+    Q_snprintf( gamemodePath, sizeof( gamemodePath ), "gamemodes\\%s", newGamemode );
+
+    char initialFileName[MAX_PATH];
+#ifdef CLIENT_DLL
+    Q_snprintf( initialFileName, sizeof( initialFileName ), "%s\\gamemode\\cl_init.lua", gamemodePath );
+#else
+    Q_snprintf( initialFileName, sizeof( initialFileName ), "%s\\gamemode\\init.lua", gamemodePath );
+#endif
+
+    if ( !filesystem->FileExists( initialFileName, "MOD" ) )
+    {
+        Warning( "Failed to set gamemode %s: %s does not exist (defaulting to %s)\n", newGamemode, initialFileName, DEFAULT_GAMEMODE );
+        pConVar->SetValue( DEFAULT_GAMEMODE );
+        return;
+    }
+}
 
 void LuaLogToFile( const char *format, ... )
 {

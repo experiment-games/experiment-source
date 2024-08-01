@@ -1,0 +1,13 @@
+
+"VertexLitGeneric"
+{
+	"$basetexture" "models/XQM/WoodTexture_1"
+	"$surfaceprop" "concrete"
+	"$bumpmap" "models/XQM/WoodTexture_1_normal"
+	"$model" 1
+	"$phong" "1"
+	"$phongexponent" "40"
+	"$phongboost" "4"
+	"$phongfresnelranges" "[.1 .6 1]"
+	"$halflambert" "1"
+}

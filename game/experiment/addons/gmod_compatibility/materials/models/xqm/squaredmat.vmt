@@ -1,0 +1,13 @@
+
+"VertexLitGeneric"
+{
+	"$basetexture" "models/XQM/SquaredMat"
+	"$surfaceprop" "metal"
+	"$bumpmap" "models/XQM/SquaredMat_normal"
+	"$phong" "1"
+	"$phongexponent" "40"
+	"$phongboost" "3"
+	"$phongfresnelranges" "[.1 .6 1]"
+	"$halflambert" "1"
+	"$model" 1
+}

@@ -1,6 +1,0 @@
-"VertexLitGeneric"
-{
-	"$basetexture" "gmod_compatibility_content/Brick/brickwall003a"
-	"$bumpmap" "gmod_compatibility_content/brick/brickwall003a_normal"
-	"$model" 1
-}

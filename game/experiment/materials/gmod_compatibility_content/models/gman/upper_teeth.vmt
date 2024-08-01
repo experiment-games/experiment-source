@@ -1,7 +1,0 @@
-"Teeth"
-{
-	"$basetexture" "gmod_compatibility_content/models/gman/upper_teeth"
-	"$model" 1
-	"$clientshader" "MouthShader"
-	"$halflambert" 1
-}

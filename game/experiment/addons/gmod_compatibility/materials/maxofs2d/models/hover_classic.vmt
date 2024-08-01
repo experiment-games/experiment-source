@@ -1,0 +1,14 @@
+"VertexLitGeneric"
+{
+	"$basetexture" "MaxOfS2D/models/hover_classic"
+	"$bumpmap" "MaxOfS2D/models/hover_classic_normal"
+
+	// "$color2" "{60 150 245}"
+
+	"$blendtintbybasealpha" 1
+
+	"$phong" "1"
+	"$phongexponent" "6.0"
+	"$phongboost" "0.3"
+	"$phongfresnelranges"	"[1 2 5]"
+}

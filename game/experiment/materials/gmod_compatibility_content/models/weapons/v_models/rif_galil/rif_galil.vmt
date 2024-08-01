@@ -1,8 +1,0 @@
-VertexLitGeneric
-{
-	"$basetexture" "gmod_compatibility_content/models\weapons\v_models\rif_galil\rif_galil"
-	"$envmap" "env_cubemap"
-	"$envmapmask" "models\weapons\v_models\rif_galil\rif_galil_ref"
-
-	"$halflambert" "1"
-}

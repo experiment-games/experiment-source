@@ -1,0 +1,8 @@
+"UnlitGeneric"
+{
+	"$basetexture" "vgui/spawnmenu/hover"
+	"$vertexcolor" 		0
+	"$vertexalpha" 		1
+	"$nolod" 			1
+	"$additive"		1
+}

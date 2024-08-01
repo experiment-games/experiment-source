@@ -1,0 +1,14 @@
+"LightmappedGeneric"
+{
+	"$basetexture" "MaxOfS2D/grass"
+	// "$basetexture" "gm_construct/construct_sand"
+
+	"$detail"             "MaxOfS2D/terrain_detail"
+	"$detailscale"        "0.04"
+	"$detailblendfactor"  "0.3"
+	"$detailblendmode"    "0"
+
+	"$surfaceprop" "grass"
+
+	// "%detailtype" "tf_forest_grass"
+}

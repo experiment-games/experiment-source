@@ -1,0 +1,6 @@
+"UnlitGeneric"
+{
+	"$basetexture" "effects/bloodstream"
+	"$vertexcolor" 1
+	"$vertexalpha" 1
+}

@@ -1,8 +1,0 @@
-"UnlitGeneric"
-{
-	"$basetexture" "gmod_compatibility_content/gui/HTML/back"
-	"$vertexcolor" 		1
-	"$vertexalpha" 		1
-	"$nolod" 			1
-	"$ignorez"		1
-}

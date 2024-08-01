@@ -1,0 +1,12 @@
+"VertexLitGeneric"
+{
+	"$basetexture" "phoenix_storms/roadside"
+	"$surfaceprop" "concrete"
+	"$envmap" "env_cubemap"
+	"$envmaptint" "[ .05 .05 .05 ]"
+	"$selfillum" 0
+	"$model" 1
+	"$halflambert" 1
+}
+
+

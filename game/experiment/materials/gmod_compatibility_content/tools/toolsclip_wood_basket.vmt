@@ -1,8 +1,0 @@
-"LightmappedGeneric"
-{
-	"$translucent" 		"1"
-	"$basetexture" "gmod_compatibility_content/Tools/toolsclip_wood_basket"
-	"%compileclip" 		"1"
-	"$surfaceprop" 		"Wood_Basket"
-	"%keywords" 		"clip,wood"
-}

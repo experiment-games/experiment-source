@@ -1,9 +1,0 @@
-"UnlitGeneric"
-{
-	"$basetexture" "gmod_compatibility_content/sprites\smoke"
-	"$vertexcolor"		1
-	"$nocull"			1
-	"$MinLight"		1
-	"$MaxLight"		1
-	"$additive"		1
-}

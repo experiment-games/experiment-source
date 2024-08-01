@@ -1,7 +1,0 @@
-//"LightmappedGeneric"
-"UnlitGeneric"
-{
-	"$basetexture" "gmod_compatibility_content/hlmv/background"
-	"$selfillum" "1"
-
-}

@@ -1,0 +1,14 @@
+"VertexLitGeneric"
+{
+	"$basetexture" "phoenix_storms/chrome"
+	"$surfaceprop" "metal"
+	//"$bumpmap" "phoenix_storms/tire_bump"
+	"$envmap" "env_cubemap"
+	"$envmaptint" "[ .7 .7 .9 ]"
+	//"$envmapmask" "Models/props_combine/combine_binocular01_mask"
+	"$selfillum" 0
+	"$model" 1
+	"$HalfLambert" 1
+}
+
+

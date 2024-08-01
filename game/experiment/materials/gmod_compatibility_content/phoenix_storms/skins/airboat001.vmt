@@ -1,8 +1,0 @@
-"VertexLitGeneric"
-{
-	"$basetexture" "gmod_compatibility_content/phoenix_storms/Airboat"
-	"$surfaceprop" "metal"
- 	"$envmaptint" "[ .4 .4 .4]"
-	"$envmap" "env_cubemap"
-	"$basealphaenvmapmask" 1
-}

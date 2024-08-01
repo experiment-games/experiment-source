@@ -1,0 +1,11 @@
+"VertexLitGeneric"
+{
+	"$basetexture" "xeon133/Off-road_40"
+	"$bumpmap" "xeon133/Off-road_40_normal"
+	"$surfaceprop" "rubbertire"
+	"$phong"     "1"
+	"$halflambert"	1
+ 	"$phongexponent"   "150"
+ 	"$phongboost"   "2"
+ 	"$phongfresnelranges"   "[.5 .8 1]"
+}

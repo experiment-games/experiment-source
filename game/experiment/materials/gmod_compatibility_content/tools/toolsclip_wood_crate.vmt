@@ -1,8 +1,0 @@
-"LightmappedGeneric"
-{
-	"$translucent" 		"1"
-	"$basetexture" "gmod_compatibility_content/Tools/toolsclip_wood_crate"
-	"%compileclip" 		"1"
-	"$surfaceprop" 		"Wood_Crate"
-	"%keywords" 		"clip,wood"
-}

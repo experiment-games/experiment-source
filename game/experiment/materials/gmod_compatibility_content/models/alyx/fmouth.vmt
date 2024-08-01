@@ -1,8 +1,0 @@
-"Teeth"
-{
-	"$basetexture" "gmod_compatibility_content/models/alyx/fmouth"
-	"$clientshader" "MouthShader"
-	"$model" 1
-	"$halflambert" 1
-	"$nodecal" "1"
-}

@@ -1,0 +1,14 @@
+
+"VertexLitGeneric"
+{
+	"$basetexture" "models/XQM/JetBody2CockpitGlass_diffuse"
+	"$translucent" 1
+	"$surfaceprop" "metal"
+	"$bumpmap" "models/XQM/JetBody2CockpitGlass_normal"
+	"$phong" "1"
+	"$phongexponent" "40"
+	"$phongboost" "4"
+	"$phongfresnelranges" "[.05 .5 1]"
+	"$halflambert" "1"
+	"$model" 1
+}

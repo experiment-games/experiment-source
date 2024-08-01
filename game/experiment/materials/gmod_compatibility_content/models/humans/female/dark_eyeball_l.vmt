@@ -1,6 +1,0 @@
-"eyes"
-{
-	"$basetexture" "gmod_compatibility_content/models/Humans/Female/dark_eyeball_l"
-	"$iris" "models/Humans/Female/pupil_l"
-	"$halflambert" 1
-}

@@ -1,6 +1,0 @@
-"eyes"
-{
-	"$basetexture" "gmod_compatibility_content/models/eli/eyeball_l"
-	"$iris" "models/eli/pupil_l"
-	"$halflambert" 1
-}

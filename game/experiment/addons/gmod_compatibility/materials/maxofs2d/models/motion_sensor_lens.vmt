@@ -1,0 +1,6 @@
+"VertexLitGeneric"
+{
+	"$basetexture" "MaxOfS2D/models/motion_sensor"
+	"$envmap" "env_cubemap"
+	"$envmaptint" "[ .5 .5 .5 ]"
+}

@@ -1,7 +1,0 @@
-"LightmappedGeneric"
-{
-	"$basetexture" "gmod_compatibility_content/concrete/concretefloor009a"
-	"$bumpmap" "gmod_compatibility_content/concrete/concretefloor009a_normal"
-	"$surfaceprop" 	"concrete"
-	"%keywords" 	"c17downtown gm_construct"
-}

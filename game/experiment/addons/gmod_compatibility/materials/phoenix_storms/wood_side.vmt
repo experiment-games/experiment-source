@@ -1,0 +1,13 @@
+"VertexLitGeneric"
+{
+	"$basetexture" "phoenix_storms/wood_side"
+	"$surfaceprop" "tile"
+	"$envmap" "env_cubemap"
+	"$basealphaenvmapmask" 1
+	"$envmapcontrast" 1
+	"$envmapsaturation" 0
+	"$envmaptint" "[ .8 .8 .8 ]"
+	"$model" 1
+}
+
+

@@ -1,0 +1,14 @@
+"UnlitGeneric"
+{
+	"$basetexture" "effects/flashlight/caustics"
+
+	"Proxies"
+	{
+		"AnimatedTexture"
+		{
+			"animatedtexturevar" "$basetexture"
+			"animatedtextureframenumvar" "$frame"
+			"animatedtextureframerate" 30
+		}
+	}
+}

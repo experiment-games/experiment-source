@@ -1,9 +1,0 @@
-"vertexlitgeneric"
-{
-	"$basetexture" "gmod_compatibility_content/models/cstrike/t_leet_glass"
-	"$envmap" 			"env_cubemap"
-	"$envmapmask" "models/cstrike/t_leet_glass_spec"
-	"$translucent" 1
-	"$nocull" 1
-
-}

@@ -1,9 +1,0 @@
-VertexLitGeneric
-{
-	"$basetexture" "gmod_compatibility_content/models\weapons\v_models\eq_flashbang\flashbang"
-	"$envmap" "env_cubemap"
-	"$envmapmask" "models\weapons\v_models\eq_flashbang\flashbang_ref"
-
-	// "$bumpmap" "gmod_compatibility_content/null-bumpmap"
-	"$halflambert" "1"
-}

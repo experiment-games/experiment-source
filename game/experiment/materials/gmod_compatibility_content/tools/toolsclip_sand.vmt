@@ -1,8 +1,0 @@
-"LightmappedGeneric"
-{
-	"$translucent" 		"1"
-	"$basetexture" "gmod_compatibility_content/Tools/toolsclip_sand"
-	"%compileclip" 		"1"
-	"$surfaceprop" 		"sand"
-	"%keywords" 		"clip,sand"
-}

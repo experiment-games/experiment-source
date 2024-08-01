@@ -1,1 +1,1 @@
-return Include("sandbox.lua") -- Garry's Mod compatibility. (do the same as sandbox does)
+return Include("loaders/sandbox.lua") -- Garry's Mod compatibility. (do the same as sandbox does)

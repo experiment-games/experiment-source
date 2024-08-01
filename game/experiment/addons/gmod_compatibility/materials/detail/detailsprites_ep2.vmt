@@ -1,0 +1,9 @@
+"UnlitGeneric"
+{
+	"$basetexture" "detail/detailsprites_ep2"
+	"$nocull" 1
+	"$translucent" "1"
+	"$VertexColor" 1
+	"$VertexAlpha" 1
+	"$receiveflashlight" "1"
+}

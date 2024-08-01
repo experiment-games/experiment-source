@@ -1,8 +1,0 @@
-"VertexLitGeneric"
-{
-	"$basetexture" "gmod_compatibility_content/phoenix_storms/trains/track_beamend"
-	"$surfaceprop" "metal"
-	"$halflambert"	1
-}
-
-

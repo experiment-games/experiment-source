@@ -1,0 +1,10 @@
+"VertexLitGeneric"
+{
+	"$basetexture" "xeon133/Slider_12x12x48"
+	"$surfaceprop" "metal"
+	"$phong"     "1"
+	"$halflambert"	1
+ 	"$phongexponent"   "150"
+ 	"$phongboost"   "2"
+ 	"$phongfresnelranges"   "[.5 .8 1]"
+}

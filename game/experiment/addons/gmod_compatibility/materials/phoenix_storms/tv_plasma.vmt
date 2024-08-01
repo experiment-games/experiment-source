@@ -1,0 +1,11 @@
+"VertexLitGeneric"
+{
+	"$basetexture" "phoenix_storms/tv_plasma"
+	"$surfaceprop" "metal"
+	"$envmap" "env_cubemap"
+	"$envmaptint" "[ .2 .2 .3 ]"
+	"$model" 1
+	"$halflambert" 1
+}
+
+

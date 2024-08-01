@@ -1,0 +1,10 @@
+"VertexLitGeneric"
+{
+	"$basetexture" "MaxOfS2D/models/button_03"
+	"$bumpmap" "MaxOfS2D/models/button_03_normal"
+
+	"$phong" "1"
+	"$phongexponent" "10"
+	"$phongboost" "5"
+	"$phongfresnelranges"	"[0.01 0.5 1]"
+}

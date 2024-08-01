@@ -1,0 +1,6 @@
+"UnlitGeneric"
+{
+	"$basetexture" "gm_construct/scenic_3_alpha"
+	"$surfaceprop" "default"
+	"$alphatest" "1"
+}
