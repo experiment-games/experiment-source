@@ -12,5 +12,7 @@
 #endif
 
 void MountAddons();
+int GetMountedAddons( CUtlVector< CUtlString > &addons );
+void SetupMountedAddons( lua_State *L );
 
 #endif  // MOUNTADDONS_H

@@ -346,6 +346,10 @@ public:
 
 	// Install a change callback (there shouldn't already be one....)
 	void InstallChangeCallback( FnChangeCallback_t callback );
+    bool HasChangeCallback() const
+    {
+        return m_fnChangeCallback != NULL;
+    }
 
 	// Retrieve value
 	FORCEINLINE_CVAR float			GetFloat( void ) const;

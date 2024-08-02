@@ -32,7 +32,7 @@
 
 #ifdef _WIN32
 #ifdef CLIENT_DLL
-#define LUA_BINARY_MODULES_GLOB "*cl_%s_win32.dll" // * allows gm prefix (gmcl_helloworld_win32.dll)
+#define LUA_BINARY_MODULES_GLOB "*cl_%s_win32.dll"  // * allows gm prefix (gmcl_helloworld_win32.dll)
 #else
 #define LUA_BINARY_MODULES_GLOB "*sv_%s_win32.dll"
 #endif
@@ -550,6 +550,9 @@
 
 extern ConVar gamemode;
 
+#define DEFAULT_GAMEMODE "hl2sb"
+#define CONTENT_SEARCH_PATH "GAME"
+
 LUALIB_API int luaL_checkboolean( lua_State *L, int narg );
 LUALIB_API int luaL_optboolean( lua_State *L, int narg, int def );
 
@@ -583,9 +586,13 @@ LUA_API int( luasrc_dofile_leave_stack )( lua_State *L, const char *filename );
 LUA_API void( luasrc_dofolder )( lua_State *L, const char *path );
 
 #define LUA_DEFAULT_ERROR_HANDLER 0
+
 LUA_API int( luasrc_pcall )( lua_State *L, int amountOfArguments, int amountOfResults, int errorFunctionStackPos = LUA_DEFAULT_ERROR_HANDLER );
 LUA_API int( luasrc_print )( lua_State *L );
 LUA_API void( luasrc_dumpstack )( lua_State *L );
+
+void luasrc_add_to_package_path( lua_State *L, const char *searchPath, bool isPathC = false );
+void luasrc_remove_from_package_path( lua_State *L, const char *searchPath, bool isPathC = false );
 
 // void    luasrc_LoadEffects (const char *path = 0);
 void luasrc_LoadEntities( const char *path = 0 );
@@ -594,7 +601,7 @@ void luasrc_LoadWeapons( const char *path = 0 );
 bool luasrc_LoadGamemode( const char *gamemode );
 bool luasrc_SetGamemode( const char *gamemode );
 
-struct lua_StateWithCompat; // forward declaration
+struct lua_StateWithCompat;  // forward declaration
 
 typedef int ( *module_open_func )( lua_State * );
 typedef int ( *module_open_func_compat )( lua_StateWithCompat * );
