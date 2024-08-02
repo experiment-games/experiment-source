@@ -1,4 +1,0 @@
-"Horn 2"
-{
-	"simfphysmiscsoundeditor_HornSound"		"simulated_vehicles/horn_2.wav"
-}

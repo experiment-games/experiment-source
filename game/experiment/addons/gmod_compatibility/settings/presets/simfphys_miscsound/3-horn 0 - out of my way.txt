@@ -1,4 +1,0 @@
-"Horn 0 - Out of my way"
-{
-	"simfphysmiscsoundeditor_HornSound"		"simulated_vehicles/horn_0.wav"
-}
