@@ -10,7 +10,7 @@ local printError = debug.PrintError
 local MODULE = {}
 MODULE.registeredCallbacks = MODULE.registeredCallbacks or {}
 
-local didCallbackError, callbackError
+local wasCallbackSuccessful, callbackError
 
 --- Creates a command that can be called from the console.
 --- @param command string The name of the command that you type into the console.
@@ -29,15 +29,15 @@ end
 --- @param arguments table The arguments that were passed to the command.
 --- @return boolean # Whether or not the command was dispatched.
 function MODULE.Dispatch(client, command, arguments)
-	local callback = MODULE.registeredCallbacks[command]
+    local callback = MODULE.registeredCallbacks[command]
 
 	if (not callback) then
 		return false
 	end
 
-	didCallbackError, callbackError = xpcall(callback, printError, client, command, arguments)
+    wasCallbackSuccessful, callbackError = xpcall(callback, printError, client, command, arguments)
 
-	if (didCallbackError == false) then
+	if (not wasCallbackSuccessful) then
 		printError("ConsoleCommand Error! '" .. tostring(command) .. "' Failed: " .. tostring(callbackError) .. "\n")
 	end
 

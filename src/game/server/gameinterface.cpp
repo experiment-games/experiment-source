@@ -131,6 +131,7 @@ extern ConVar tf_mm_servermode;
 #include "luacachefile.h"
 #include "luamanager.h"
 #include "mountaddons.h"
+#include <mountsteamcontent.h>
 #endif
 
 #if defined( REPLAY_ENABLED )
@@ -156,6 +157,9 @@ CSteamGameServerAPIContext *steamgameserverapicontext =
 #endif
 
 IUploadGameStats *gamestatsuploader = NULL;
+
+#include "ai_network.h"
+#include <lresources.h>
 
 // memdbgon must be the last include file in a .cpp file!!!
 #include "tier0/memdbgon.h"
@@ -358,9 +362,6 @@ CAI_Link *FindPickerAILink( CBasePlayer *pPlayer );
 float GetFloorZ( const Vector &origin );
 void UpdateAllClientData( void );
 void DrawMessageEntities();
-
-#include "ai_network.h"
-#include <lresources.h>
 
 // For now just using one big AI network
 extern ConVar think_limit;
@@ -697,7 +698,7 @@ bool CServerGameDLL::DLLInit( CreateInterfaceFn appSystemFactory,
 
 #if defined( EXPERIMENT_SOURCE )
     // Andrew; then mount everything the user wants to use.
-    // MountUserContent();
+    MountUserContent();
 
     // Finally, load all of the player's addons.
     MountAddons();

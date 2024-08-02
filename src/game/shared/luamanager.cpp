@@ -2643,6 +2643,8 @@ class GmodCompatDownloader
 
         Msg( "Successfully downloaded the GMod repository to 'garrysmod' in the 'addons' folder\n" );
 
+        MountAddon( "garrysmod" );
+
         delete this;
     }
 };

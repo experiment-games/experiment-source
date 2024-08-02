@@ -5,15 +5,12 @@
 // $NoKeywords: $
 //===========================================================================//
 
-#ifndef MOUNTADDONS_H
-#define MOUNTADDONS_H
+#ifndef MOUNTSTEAMCONTENT_H
+#define MOUNTSTEAMCONTENT_H
 #ifdef _WIN32
 #pragma once
 #endif
 
-void MountAddon( const char *addonName );
-void MountAddons();
-int GetMountedAddons( CUtlVector< CUtlString > &addons );
-void SetupMountedAddons( lua_State *L );
+void MountUserContent();
 
-#endif  // MOUNTADDONS_H
+#endif  // MOUNTSTEAMCONTENT_H

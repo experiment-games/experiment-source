@@ -13,7 +13,7 @@
 
 static CUtlVector< CUtlString > g_MountedAddons;
 
-static void MountAddon( const char *addonName )
+void MountAddon( const char *addonName )
 {
     char relativeAddonPath[MAX_PATH];
     Q_snprintf( relativeAddonPath, sizeof( relativeAddonPath ), LUA_PATH_ADDONS "\\%s", addonName );
@@ -39,6 +39,10 @@ static void MountAddon( const char *addonName )
     if ( bGetCurrentDirectory )
         V_SetCurrentDirectory( currentDirectoryPath );
 
+#ifdef GAME_DLL
+    ConColorMsg( Color( 200, 255, 0, 255 ), "Mounting addon \"%s\"...\n", addonName );
+#endif
+
     g_MountedAddons.AddToTail( CUtlString( addonName ) );
 }
 
@@ -57,10 +61,6 @@ void MountAddons()
         {
             if ( g_pFullFileSystem->FindIsDirectory( fh ) )
             {
-#ifdef GAME_DLL
-                ConColorMsg( Color( 200, 255, 0, 255 ), "Mounting addon \"%s\"...\n", addonName );
-#endif
-
                 MountAddon( addonName );
             }
         }

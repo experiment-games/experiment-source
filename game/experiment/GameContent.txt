@@ -1,0 +1,7 @@
+"GameContent"
+{
+	FileSystem
+	{
+		"AppId"	4000
+	}
+}

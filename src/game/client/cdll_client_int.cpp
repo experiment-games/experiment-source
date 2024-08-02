@@ -168,6 +168,7 @@ extern vgui::IInputInternal *g_InputInternal;
 #include "luacachefile.h"
 #include "luamanager.h"
 #include "mountaddons.h"
+#include "mountsteamcontent.h"
 #include <lrender.h>
 #include <cpng.h>
 #endif
@@ -1064,7 +1065,7 @@ int CHLClient::Init( CreateInterfaceFn appSystemFactory,
 
 #if defined( EXPERIMENT_SOURCE )
     // Andrew; then mount everything the user wants to use.
-    // MountUserContent();
+    MountUserContent();
 
     // Finally, load all of the player's addons.
     MountAddons();
