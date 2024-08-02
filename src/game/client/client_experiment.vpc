@@ -164,6 +164,8 @@ $Project "Client (Experiment)"
 
 			$Folder	"UI"
 			{
+				$File	"experiment\ui\mainmenu.cpp"
+				$File	"experiment\ui\mainmenu.h"
 				$File	"experiment\ui\backgroundpanel.cpp"
 				$File	"experiment\ui\backgroundpanel.h"
 				$File	"experiment\experiment_hud_chat.cpp"

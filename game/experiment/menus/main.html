@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+    <title>Experiment Main Menu</title>
+
+    <link rel="stylesheet"
+          href="main.css">
+</head>
+
+<body>
+    <div class="overlay"></div>
+
+    <div class="flex h-full flex-col justify-between">
+        <header class="bg-gradient-to-b p-4">
+            <img src="images/logo.png"
+                 alt="Experiment"
+                 class="logo">
+        </header>
+
+        <footer class="flex flex-row justify-between bg-gradient-to-t p-4">
+            <div class="flex flex-row gap-4">
+                <a href="gamemenucommand://OpenServerBrowser">Play Online</a>
+                <a href="gamemenucommand://OpenCreateMultiplayerGameDialog">HOST OWN SERVER</a>
+            </div>
+            <div class="flex flex-row gap-4">
+                <a href="gamemenucommand://OpenOptionsDialog">Options</a>
+                <a href="gamemenucommand://QuitNoConfirm">Quit</a>
+            </div>
+        </footer>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            document.body.classList.add('loaded');
+        });
+    </script>
+</body>
+
+</html>

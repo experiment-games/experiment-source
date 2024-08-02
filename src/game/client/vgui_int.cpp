@@ -41,6 +41,7 @@ void MP3Player_Destroy();
 vgui::IInputInternal *g_InputInternal = NULL;
 
 #include <vgui_controls/Controls.h>
+#include <mainmenu.h>
 
 // memdbgon must be the last include file in a .cpp file!!!
 #include "tier0/memdbgon.h"
@@ -204,6 +205,9 @@ void VGui_CreateGlobalPanels( void )
 #if defined( TRACK_BLOCKING_IO )
     VPANEL gameDLLPanel = enginevgui->GetPanel( PANEL_GAMEDLL );
 #endif
+
+    InitMainMenu();
+
     // Part of game
     internalCenterPrint->Create( gameToolParent );
     loadingdisc->Create( gameToolParent );

@@ -469,7 +469,6 @@ $Project
 		$File	"vgui_bitmappanel.cpp"
 		$File	"vgui_schemevisualizer.cpp"
 		$File	"vgui_centerstringpanel.cpp"
-		$File	"vgui_consolepanel.cpp"
 		$File	"vgui_debugoverlaypanel.cpp"
 		$File	"vgui_fpspanel.cpp"
 		$File	"vgui_game_viewport.cpp"

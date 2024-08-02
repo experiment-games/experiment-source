@@ -369,6 +369,20 @@ void HTML::OpenURL( const char *URL, const char *postData, bool force )
 //-----------------------------------------------------------------------------
 void HTML::PostURL( const char *URL, const char *pchPostData, bool force )
 {
+#ifdef EXPERIMENT_SOURCE
+    // If the url starts with "asset://", then we need to resolve the path relative to the mod's root directory
+    if ( Q_strncmp( URL, "asset://", 8 ) == 0 )
+    {
+        char assetPath[MAX_PATH];
+        Q_snprintf( assetPath, sizeof( assetPath ), "..\\%s", URL + 8 );
+
+        char fullPath[MAX_PATH];
+        g_pFullFileSystem->RelativePathToFullPath_safe( assetPath, "GAME", fullPath );
+
+        URL = fullPath;
+    }
+#endif 
+
     if ( m_unBrowserHandle == INVALID_HTMLBROWSER )
     {
         m_sPendingURLLoad = URL;
@@ -391,7 +405,7 @@ void HTML::PostURL( const char *URL, const char *pchPostData, bool force )
                 Q_snprintf( otherName, sizeof( otherName ), "%senglish.html", OFFLINE_FILE );
                 baseDir = otherName;
             }
-            g_pFullFileSystem->GetLocalCopy( baseDir );  // put this file on disk for IE to load
+            g_pFullFileSystem->GetLocalCopy( baseDir );  // put this file on disk for browser to load
 
             g_pFullFileSystem->GetLocalPath( baseDir, fileLocation, sizeof( fileLocation ) );
             Q_snprintf( htmlLocation, sizeof( htmlLocation ), "file://%s", fileLocation );
@@ -1244,7 +1258,8 @@ bool HTML::OnStartRequest( const char *url, const char *target, const char *pchP
             Panel *targetPanel = m_CustomURLHandlers[i].hPanel;
             if ( targetPanel )
             {
-                PostMessage( targetPanel, new KeyValues( "CustomURL", "url", m_CustomURLHandlers[i].url ) );
+                // Experiment: changed this to send the entire URL instead of only the protocol
+                PostMessage( targetPanel, new KeyValues( "CustomURL", "url", url ) );
             }
 
             bURLHandled = true;
