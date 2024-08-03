@@ -66,7 +66,7 @@ CMainMenu::CMainMenu( VPANEL parent )
 
     // Add a HTML panel that takes up the whole screen
     // This is where the main menu will be displayed
-    m_pHTML = new HTML( this, "HTML" );
+    m_pHTML = new HTML( this, "HTML", true );
     m_pHTML->AddCustomURLHandler( "mainmenu", this );
     m_pHTML->AddCustomURLHandler( "gamemenucommand", this );
     m_pHTML->OpenURL( "asset://experiment/menus/main.html", NULL );
@@ -142,7 +142,7 @@ void CMainMenu::OnCustomURLHandler( const char *pszUrl )
 
 void CMainMenu::OnRequestFocus( VPANEL subFocus, VPANEL defaultPanel )
 {
-    BaseClass::OnRequestFocus( GetVPanel(), defaultPanel );
+    BaseClass::OnRequestFocus( subFocus, defaultPanel );
     BringConsoleToFrontIfNeeded();
 }
 
@@ -152,5 +152,9 @@ void CMainMenu::OnKeyCodeReleased( int code )
     {
         // Let's make the menu development a bit easier by refreshing the main menu easily
         m_pHTML->Refresh();
+    }
+    else if (code == KEY_2)
+    {
+        m_pHTML->OpenDeveloperTools();
     }
 }

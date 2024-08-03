@@ -507,6 +507,15 @@ void HTML::RunJavascript( const char *pchScript )
 }
 
 //-----------------------------------------------------------------------------
+// Purpose: Open the developer tools window
+//-----------------------------------------------------------------------------
+void HTML::OpenDeveloperTools()
+{
+    if ( m_SteamAPIContext.SteamHTMLSurface() )
+        m_SteamAPIContext.SteamHTMLSurface()->OpenDeveloperTools( m_unBrowserHandle );
+}
+
+//-----------------------------------------------------------------------------
 // Purpose: helper to convert UI mouse codes to CEF ones
 //-----------------------------------------------------------------------------
 ISteamHTMLSurface::EHTMLMouseButton ConvertMouseCodeToCEFCode( MouseCode code )

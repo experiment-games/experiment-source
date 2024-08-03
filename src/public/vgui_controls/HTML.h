@@ -53,6 +53,7 @@ public:
 	virtual bool Refresh();
 	virtual void OnMove();
 	virtual void RunJavascript( const char *pchScript );
+    virtual void OpenDeveloperTools();
 	virtual void GoBack();
 	virtual void GoForward();
 	virtual bool BCanGoBack();
