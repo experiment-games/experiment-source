@@ -10,6 +10,8 @@ const contentListElement = document.querySelector('#contentList');
 const contentItemTemplateElement = document.querySelector('#contentItemTemplate');
 
 const registeredPages = new Map();
+let currentPage = null;
+
 const registeredMountableContent = []; // TODO: Fetch from menus.mountableContent
 
 registeredMountableContent.push({
@@ -85,6 +87,10 @@ customElements.define('game-menu-link', class extends HTMLElement {
         const href = this.getAttribute('href');
 
         if (href) {
+            if (currentPage) {
+                currentPage.hide();
+            }
+
             window.location.href = href;
             return;
         }
@@ -99,7 +105,12 @@ customElements.define('game-menu-link', class extends HTMLElement {
                 return;
             }
 
+            if (currentPage) {
+                currentPage.hide();
+            }
+
             registeredPage.show();
+            currentPage = registeredPage;
             return;
         }
     }
