@@ -36,7 +36,7 @@ Scheme
 	BaseSettings
 	{
 		// vgui_controls color specifications
-		Border.Bright					"199 199 199 255"	    // the lit side of a control
+		Border.Bright					"144 144 144 255"	    // the lit side of a control
 		Border.Dark						"22 22 22 196"		// the dark/unlit side of a control
 		Border.Selection				"0 0 0 196"			// the additional border color for displaying the default/selected button
 

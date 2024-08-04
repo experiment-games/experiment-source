@@ -5,6 +5,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 const pageElement = document.querySelector('#page');
 const pageTitleElement = document.querySelector('#pageTitle');
+const pageCloseElement = document.querySelector('#pageClose');
 const pageContentElement = document.querySelector('#pageContent');
 const contentListElement = document.querySelector('#contentList');
 const contentItemTemplateElement = document.querySelector('#contentItemTemplate');
@@ -30,7 +31,7 @@ registeredMountableContent.push({
 registeredMountableContent.forEach((content, index) => {
     const contentItemElement = contentItemTemplateElement.content.firstElementChild.cloneNode(true);
 
-    contentItemElement.classList.add(index % 2 === 0 ? 'bg-back/80' : 'bg-back/40');
+    contentItemElement.classList.add(index % 2 === 0 ? 'bg-white/10' : 'bg-white/5');
 
     const iconElement = contentItemElement.querySelector('img');
     iconElement.src = content.icon;
@@ -48,6 +49,13 @@ registeredMountableContent.forEach((content, index) => {
     });
 
     contentList.appendChild(contentItemElement);
+});
+
+pageCloseElement.addEventListener('click', () => {
+    if (currentPage) {
+        currentPage.hide();
+        currentPage = null;
+    }
 });
 
 // Custom element for links
@@ -170,3 +178,40 @@ customElements.define('game-page', class extends HTMLElement {
         }, 500);
     }
 });
+
+// Source: https://codepen.io/marcusparsons/pen/NMyzgR
+function makeDraggable(element) {
+    let currentPosX = 0, currentPosY = 0, previousPosX = 0, previousPosY = 0;
+    element.querySelector('[x-draggable-handle]').onmousedown = dragMouseDown;
+
+    function dragMouseDown(e) {
+        e.preventDefault();
+        // Get the mouse cursor position and set the initial previous positions to begin
+        previousPosX = e.clientX;
+        previousPosY = e.clientY;
+        // When the mouse is let go, call the closing event
+        document.onmouseup = closeDragElement;
+        // call a function whenever the cursor moves
+        document.onmousemove = elementDrag;
+    }
+
+    function elementDrag(e) {
+        e.preventDefault();
+        // Calculate the new cursor position by using the previous x and y positions of the mouse
+        currentPosX = previousPosX - e.clientX;
+        currentPosY = previousPosY - e.clientY;
+        // Replace the previous positions with the new x and y positions of the mouse
+        previousPosX = e.clientX;
+        previousPosY = e.clientY;
+        // Set the element's new position
+        element.style.top = (element.offsetTop - currentPosY) + 'px';
+        element.style.left = (element.offsetLeft - currentPosX) + 'px';
+    }
+
+    function closeDragElement() {
+        document.onmouseup = null;
+        document.onmousemove = null;
+    }
+}
+
+document.querySelectorAll('[x-draggable]').forEach(makeDraggable);

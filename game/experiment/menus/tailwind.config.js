@@ -20,6 +20,16 @@ module.exports = {
                     '950': '#40140f',
                 },
                 'back': '#201f1f',
+                'back-highlight': '#919191',
+                'back-shadow': '#141313',
+            },
+            fontFamily: {
+                'source-uibold': ['Tahoma', 'sans-serif'],
+                'source-default': ['Tahoma', 'sans-serif'],
+            },
+            fontSize: {
+                'source-uibold': '11px',
+                'source-default': '13px',
             },
         },
     },
