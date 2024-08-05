@@ -11,7 +11,7 @@
           href="dist/main.css">
 </head>
 
-<body class="group">
+<body class="group/body">
     <div class="overlay"></div>
 
     <div class="flex flex-col h-full justify-between">
@@ -71,14 +71,14 @@
             <game-menu-link href="gamemenucommand://OpenCreateMultiplayerGameDialog"
                             translation="GameUI_GameMenu_HostOwnServer"
                             icon="images/icon-globe.png"
-                            class="flex group-[.in-level]:hidden"
+                            class="flex group-[.in-level]/body:hidden"
                             label-above>
                 HOST OWN SERVER
             </game-menu-link>
             <game-menu-link href="gamemenucommand://DisconnectNoConfirm"
                             translation="GameUI_GameMenu_Disconnect"
                             icon="images/icon-disconnect.png"
-                            class="hidden group-[.in-level]:flex"
+                            class="hidden group-[.in-level]/body:flex"
                             label-above>
                 DISCONNECT
             </game-menu-link>
