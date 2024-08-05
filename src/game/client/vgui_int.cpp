@@ -160,6 +160,8 @@ static void VGui_OneTimeInit()
     vgui::Panel::AddPropertyConverter( "CHudTextureHandle", &textureHandleConverter );
 
     g_pMaterialSystem->AddModeChangeCallBack( &VGui_VideoMode_AdjustForModeChange );
+
+    CBaseMenuPanel::Init();
 }
 
 bool VGui_Startup( CreateInterfaceFn appSystemFactory )
@@ -205,8 +207,6 @@ void VGui_CreateGlobalPanels( void )
 #if defined( TRACK_BLOCKING_IO )
     VPANEL gameDLLPanel = enginevgui->GetPanel( PANEL_GAMEDLL );
 #endif
-
-    InitMainMenu();
 
     // Part of game
     internalCenterPrint->Create( gameToolParent );

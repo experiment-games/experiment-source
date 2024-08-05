@@ -487,6 +487,14 @@ bool HTML::BCanGoFoward()
 {
     return m_bCanGoForward;
 }
+//-----------------------------------------------------------------------------
+// Purpose: 
+//-----------------------------------------------------------------------------
+void HTML::PerformMouseMove( int x, int y )
+{
+    if ( m_SteamAPIContext.SteamHTMLSurface() )
+        m_SteamAPIContext.SteamHTMLSurface()->MouseMove( m_unBrowserHandle, x, y );
+}
 
 //-----------------------------------------------------------------------------
 // Purpose: handle resizing
@@ -1207,6 +1215,10 @@ void HTML::CHTMLFindBar::OnCommand( const char *pchCmd )
 //-----------------------------------------------------------------------------
 void HTML::BrowserNeedsPaint( HTML_NeedsPaint_t *pCallback )
 {
+    // Experiment; STEAM_CALLBACKs are called for every instance :/ So we need to check if this is for us.
+    if ( pCallback->unBrowserHandle != m_unBrowserHandle )
+        return;
+
     int tw = 0, tt = 0;
     if ( m_iHTMLTextureID != 0 )
     {
@@ -1309,6 +1321,10 @@ bool HTML::OnStartRequest( const char *url, const char *target, const char *pchP
 //-----------------------------------------------------------------------------
 void HTML::BrowserStartRequest( HTML_StartRequest_t *pCmd )
 {
+    // Experiment; STEAM_CALLBACKs are called for every instance :/ So we need to check if this is for us.
+    if ( pCmd->unBrowserHandle != m_unBrowserHandle )
+        return;
+
     bool bRes = OnStartRequest( pCmd->pchURL, pCmd->pchTarget, pCmd->pchPostData, pCmd->bIsRedirect );
 
     if ( m_SteamAPIContext.SteamHTMLSurface() )
@@ -1320,6 +1336,10 @@ void HTML::BrowserStartRequest( HTML_StartRequest_t *pCmd )
 //-----------------------------------------------------------------------------
 void HTML::BrowserURLChanged( HTML_URLChanged_t *pCmd )
 {
+    // Experiment; STEAM_CALLBACKs are called for every instance :/ So we need to check if this is for us.
+    if ( pCmd->unBrowserHandle != m_unBrowserHandle )
+        return;
+
     m_sCurrentURL = pCmd->pchURL;
 
     KeyValues *pMessage = new KeyValues( "OnURLChanged" );
@@ -1337,6 +1357,10 @@ void HTML::BrowserURLChanged( HTML_URLChanged_t *pCmd )
 //-----------------------------------------------------------------------------
 void HTML::BrowserFinishedRequest( HTML_FinishedRequest_t *pCmd )
 {
+    // Experiment; STEAM_CALLBACKs are called for every instance :/ So we need to check if this is for us.
+    if ( pCmd->unBrowserHandle != m_unBrowserHandle )
+        return;
+
     PostActionSignal( new KeyValues( "OnFinishRequest", "url", pCmd->pchURL ) );
     if ( pCmd->pchPageTitle && pCmd->pchPageTitle[0] )
         PostActionSignal( new KeyValues( "PageTitleChange", "title", pCmd->pchPageTitle ) );
@@ -1362,6 +1386,10 @@ void HTML::BrowserOpenNewTab( HTML_OpenLinkInNewTab_t *pCmd )
 //-----------------------------------------------------------------------------
 void HTML::BrowserPopupHTMLWindow( HTML_NewWindow_t *pCmd )
 {
+    // Experiment; STEAM_CALLBACKs are called for every instance :/ So we need to check if this is for us.
+    if ( pCmd->unBrowserHandle != m_unBrowserHandle )
+        return;
+
     HTMLPopup *p = new HTMLPopup( this, pCmd->pchURL, "" );
     int wide = pCmd->unWide;
     int tall = pCmd->unTall;
@@ -1383,6 +1411,10 @@ void HTML::BrowserPopupHTMLWindow( HTML_NewWindow_t *pCmd )
 //-----------------------------------------------------------------------------
 void HTML::BrowserSetHTMLTitle( HTML_ChangedTitle_t *pCmd )
 {
+    // Experiment; STEAM_CALLBACKs are called for every instance :/ So we need to check if this is for us.
+    if ( pCmd->unBrowserHandle != m_unBrowserHandle )
+        return;
+
     PostMessage( GetParent(), new KeyValues( "OnSetHTMLTitle", "title", pCmd->pchTitle ) );
     OnSetHTMLTitle( pCmd->pchTitle );
 }
@@ -1392,6 +1424,10 @@ void HTML::BrowserSetHTMLTitle( HTML_ChangedTitle_t *pCmd )
 //-----------------------------------------------------------------------------
 void HTML::BrowserStatusText( HTML_StatusText_t *pCmd )
 {
+    // Experiment; STEAM_CALLBACKs are called for every instance :/ So we need to check if this is for us.
+    if ( pCmd->unBrowserHandle != m_unBrowserHandle )
+        return;
+
     PostActionSignal( new KeyValues( "OnSetStatusText", "status", pCmd->pchMsg ) );
 }
 
@@ -1400,6 +1436,10 @@ void HTML::BrowserStatusText( HTML_StatusText_t *pCmd )
 //-----------------------------------------------------------------------------
 void HTML::BrowserSetCursor( HTML_SetCursor_t *pCmd )
 {
+    // Experiment; STEAM_CALLBACKs are called for every instance :/ So we need to check if this is for us.
+    if ( pCmd->unBrowserHandle != m_unBrowserHandle )
+        return;
+
     vgui::CursorCode cursor = dc_last;
 
     switch ( pCmd->eMouseCursor )
@@ -1543,6 +1583,10 @@ void HTML::BrowserSetCursor( HTML_SetCursor_t *pCmd )
 //-----------------------------------------------------------------------------
 void HTML::BrowserFileLoadDialog( HTML_FileOpenDialog_t *pCmd )
 {
+    // Experiment; STEAM_CALLBACKs are called for every instance :/ So we need to check if this is for us.
+    if ( pCmd->unBrowserHandle != m_unBrowserHandle )
+        return;
+
     // couldn't access an OS-specific dialog, use the internal one
     if ( m_hFileOpenDialog.Get() )
     {
@@ -1561,6 +1605,10 @@ void HTML::BrowserFileLoadDialog( HTML_FileOpenDialog_t *pCmd )
 //-----------------------------------------------------------------------------
 void HTML::BrowserShowToolTip( HTML_ShowToolTip_t *pCmd )
 {
+    // Experiment; STEAM_CALLBACKs are called for every instance :/ So we need to check if this is for us.
+    if ( pCmd->unBrowserHandle != m_unBrowserHandle )
+        return;
+
     /*
       BR FIXME
       Tooltip *tip = GetTooltip();
@@ -1577,6 +1625,10 @@ void HTML::BrowserShowToolTip( HTML_ShowToolTip_t *pCmd )
 //-----------------------------------------------------------------------------
 void HTML::BrowserUpdateToolTip( HTML_UpdateToolTip_t *pCmd )
 {
+    // Experiment; STEAM_CALLBACKs are called for every instance :/ So we need to check if this is for us.
+    if ( pCmd->unBrowserHandle != m_unBrowserHandle )
+        return;
+
     //	GetTooltip()->SetText( pCmd->text().c_str() );
 }
 
@@ -1585,6 +1637,10 @@ void HTML::BrowserUpdateToolTip( HTML_UpdateToolTip_t *pCmd )
 //-----------------------------------------------------------------------------
 void HTML::BrowserHideToolTip( HTML_HideToolTip_t *pCmd )
 {
+    // Experiment; STEAM_CALLBACKs are called for every instance :/ So we need to check if this is for us.
+    if ( pCmd->unBrowserHandle != m_unBrowserHandle )
+        return;
+
     //	GetTooltip()->HideTooltip();
     //	DeleteToolTip();
 }
@@ -1594,6 +1650,10 @@ void HTML::BrowserHideToolTip( HTML_HideToolTip_t *pCmd )
 //-----------------------------------------------------------------------------
 void HTML::BrowserSearchResults( HTML_SearchResults_t *pCmd )
 {
+    // Experiment; STEAM_CALLBACKs are called for every instance :/ So we need to check if this is for us.
+    if ( pCmd->unBrowserHandle != m_unBrowserHandle )
+        return;
+
     if ( pCmd->unResults == 0 )
         m_pFindBar->HideCountLabel();
     else
@@ -1611,6 +1671,10 @@ void HTML::BrowserSearchResults( HTML_SearchResults_t *pCmd )
 //-----------------------------------------------------------------------------
 void HTML::BrowserClose( HTML_CloseBrowser_t *pCmd )
 {
+    // Experiment; STEAM_CALLBACKs are called for every instance :/ So we need to check if this is for us.
+    if ( pCmd->unBrowserHandle != m_unBrowserHandle )
+        return;
+
     PostActionSignal( new KeyValues( "OnCloseWindow" ) );
 }
 
@@ -1619,6 +1683,10 @@ void HTML::BrowserClose( HTML_CloseBrowser_t *pCmd )
 //-----------------------------------------------------------------------------
 void HTML::BrowserHorizontalScrollBarSizeResponse( HTML_HorizontalScroll_t *pCmd )
 {
+    // Experiment; STEAM_CALLBACKs are called for every instance :/ So we need to check if this is for us.
+    if ( pCmd->unBrowserHandle != m_unBrowserHandle )
+        return;
+
     ScrollData_t scrollHorizontal;
     scrollHorizontal.m_nScroll = pCmd->unScrollCurrent;
     scrollHorizontal.m_nMax = pCmd->unScrollMax;
@@ -1640,6 +1708,10 @@ void HTML::BrowserHorizontalScrollBarSizeResponse( HTML_HorizontalScroll_t *pCmd
 //-----------------------------------------------------------------------------
 void HTML::BrowserVerticalScrollBarSizeResponse( HTML_VerticalScroll_t *pCmd )
 {
+    // Experiment; STEAM_CALLBACKs are called for every instance :/ So we need to check if this is for us.
+    if ( pCmd->unBrowserHandle != m_unBrowserHandle )
+        return;
+
     ScrollData_t scrollVertical;
     scrollVertical.m_nScroll = pCmd->unScrollCurrent;
     scrollVertical.m_nMax = pCmd->unScrollMax;
@@ -1661,6 +1733,10 @@ void HTML::BrowserVerticalScrollBarSizeResponse( HTML_VerticalScroll_t *pCmd )
 //-----------------------------------------------------------------------------
 void HTML::BrowserLinkAtPositionResponse( HTML_LinkAtPosition_t *pCmd )
 {
+    // Experiment; STEAM_CALLBACKs are called for every instance :/ So we need to check if this is for us.
+    if ( pCmd->unBrowserHandle != m_unBrowserHandle )
+        return;
+
     m_LinkAtPos.m_sURL = pCmd->pchURL;
     m_LinkAtPos.m_nX = pCmd->x;
     m_LinkAtPos.m_nY = pCmd->y;
@@ -1694,6 +1770,10 @@ void HTML::BrowserLinkAtPositionResponse( HTML_LinkAtPosition_t *pCmd )
 //-----------------------------------------------------------------------------
 void HTML::BrowserJSAlert( HTML_JSAlert_t *pCmd )
 {
+    // Experiment; STEAM_CALLBACKs are called for every instance :/ So we need to check if this is for us.
+    if ( pCmd->unBrowserHandle != m_unBrowserHandle )
+        return;
+
     MessageBox *pDlg = new MessageBox( m_sCurrentURL, ( const char * )pCmd->pchMessage, this );
     pDlg->AddActionSignalTarget( this );
     pDlg->SetCommand( new KeyValues( "DismissJSDialog", "result", false ) );
@@ -1705,6 +1785,10 @@ void HTML::BrowserJSAlert( HTML_JSAlert_t *pCmd )
 //-----------------------------------------------------------------------------
 void HTML::BrowserJSConfirm( HTML_JSConfirm_t *pCmd )
 {
+    // Experiment; STEAM_CALLBACKs are called for every instance :/ So we need to check if this is for us.
+    if ( pCmd->unBrowserHandle != m_unBrowserHandle )
+        return;
+
     QueryBox *pDlg = new QueryBox( m_sCurrentURL, ( const char * )pCmd->pchMessage, this );
     pDlg->AddActionSignalTarget( this );
     pDlg->SetOKCommand( new KeyValues( "DismissJSDialog", "result", true ) );
@@ -1726,6 +1810,10 @@ void HTML::DismissJSDialog( int bResult )
 //-----------------------------------------------------------------------------
 void HTML::BrowserCanGoBackandForward( HTML_CanGoBackAndForward_t *pCmd )
 {
+    // Experiment; STEAM_CALLBACKs are called for every instance :/ So we need to check if this is for us.
+    if ( pCmd->unBrowserHandle != m_unBrowserHandle )
+        return;
+
     m_bCanGoBack = pCmd->bCanGoBack;
     m_bCanGoForward = pCmd->bCanGoForward;
 }

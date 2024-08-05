@@ -11,6 +11,7 @@
 #include "filesystem.h"
 #include <icommandline.h>
 #include "GameUI/IGameConsole.h"
+#include "vgui/IInput.h"
 
 using namespace vgui;
 
@@ -19,75 +20,78 @@ using namespace vgui;
 //  over and over again.
 static CDllDemandLoader g_GameUIDLL( "GameUI" );
 
-CMainMenu *g_MainMenuPanel = NULL;
+CBaseMenuPanel *g_BaseMenuPanel = NULL;
 
-void InitMainMenu( vgui::VPANEL parent )
+bool GameUIUtil::IsInLevel()
 {
-    g_MainMenuPanel = new CMainMenu( parent );
+    return engine->IsInGame() && !engine->IsLevelMainMenuBackground();
 }
 
-void DestroyMainMenu()
+bool GameUIUtil::IsInBackgroundLevel()
 {
-    if ( !g_MainMenuPanel )
-        return;
-
-    g_MainMenuPanel->SetParent( ( vgui::Panel * )NULL );
-    delete g_MainMenuPanel;
-    g_MainMenuPanel = NULL;
+    return engine->IsInGame() && engine->IsLevelMainMenuBackground();
 }
 
-/// <summary>
-/// Prevents the Console from dissapearing behind the main menu panel on
-/// bootup. Or when the user clicks on the main menu panel.
-/// </summary>
-static void BringConsoleToFrontIfNeeded()
+bool GameUIUtil::IsInMenu()
 {
-    auto gameUIFactory = g_GameUIDLL.GetFactory();
-    auto console = ( IGameConsole * )gameUIFactory( GAMECONSOLE_INTERFACE_VERSION, NULL );
-
-    if ( !console )
-        return;
-
-    if ( console->IsConsoleVisible() )
-        console->Activate();
+    return IsInBackgroundLevel() || g_BaseMenuPanel->GetMenuBackgroundState() == BACKGROUND_DISCONNECTED;
 }
 
-CMainMenu::CMainMenu( VPANEL parent )
-    : BaseClass( NULL, "MainMenuUI" )
+CBaseMenuPanel::CBaseMenuPanel()
+    : BaseClass( NULL, "ExperimentBaseMenuPanel" )
 {
-    SetAutoDelete( false );
-    SetVisible( true );
-    SetParent( parent );
+    g_BaseMenuPanel = this;
+
+    SetParent( enginevgui->GetPanel( PANEL_GAMEUIDLL ) );
+
+    SetBounds( 0, 0, 640, 480 );
+    SetPaintBorderEnabled( false );
+    SetPaintBackgroundEnabled( true );
+    SetPaintEnabled( true );
+
+    SetMouseInputEnabled( true );
     SetKeyBoardInputEnabled( true );
 
-    m_bCopyFrameBuffer = false;
+    SetVisible( true );
+    SetAutoDelete( false );
+    SetProportional( true );
+    SetCursor( dc_arrow );
+
     m_pGameUI = NULL;
-    m_ExitingFrameCount = 0;
+    m_eBackgroundState = BACKGROUND_INITIAL;
 
     // Add a HTML panel that takes up the whole screen
     // This is where the main menu will be displayed
-    m_pHTML = new HTML( this, "HTML", true );
-    m_pHTML->AddCustomURLHandler( "mainmenu", this );
-    m_pHTML->AddCustomURLHandler( "gamemenucommand", this );
-    m_pHTML->OpenURL( "asset://experiment/menus/main.html", NULL );
+    m_pMainMenu = new CMainMenu( this );
 
-    if ( LoadGameUI() )
-    {
-        m_pGameUI->SetMainMenuOverride( this->GetVPanel() );
-        MakePopup( false );  // Without this, closing the console crashes the game :/
-    }
-
-    BringConsoleToFrontIfNeeded();
+    // OnGameUIActivated();
 }
 
-CMainMenu::~CMainMenu()
+CBaseMenuPanel::~CBaseMenuPanel()
 {
-    m_pGameUI->SetMainMenuOverride( NULL );
-    m_pGameUI = NULL;
+    // m_pGameUI->SetMainMenuOverride( NULL );
+    // m_pGameUI = NULL;
     g_GameUIDLL.Unload();
 }
 
-bool CMainMenu::LoadGameUI()
+CBaseMenuPanel *CBaseMenuPanel::Init()
+{
+    if ( g_BaseMenuPanel )
+        return g_BaseMenuPanel;
+
+    g_BaseMenuPanel = new CBaseMenuPanel();
+    return g_BaseMenuPanel;
+}
+
+void CBaseMenuPanel::AttachToGameUI()
+{
+    // if ( LoadGameUI() )
+    //{
+    //     m_pGameUI->SetMainMenuOverride( GetVPanel() );
+    // }
+}
+
+bool CBaseMenuPanel::LoadGameUI()
 {
     if ( !m_pGameUI )
     {
@@ -111,15 +115,134 @@ bool CMainMenu::LoadGameUI()
     return true;
 }
 
-void CMainMenu::ApplySchemeSettings( IScheme *pScheme )
+void CBaseMenuPanel::SetBackgroundRenderState( EBackgroundState state )
 {
-    BaseClass::ApplySchemeSettings( pScheme );
+    if ( state == m_eBackgroundState )
+    {
+        return;
+    }
+
+    m_eBackgroundState = state;
+
+    if ( m_pMainMenu )
+    {
+        m_pMainMenu->SetBackgroundRenderState( state );
+    }
+}
+
+void CBaseMenuPanel::UpdateBackgroundState()
+{
+    if ( GameUIUtil::IsInLevel() )
+    {
+        SetBackgroundRenderState( BACKGROUND_LEVEL );
+    }
+    else if ( GameUIUtil::IsInBackgroundLevel() /*&& !m_bLevelLoading*/ )
+    {
+        // level loading is truly completed when the progress bar is gone, then transition to main menu
+        SetBackgroundRenderState( BACKGROUND_MAINMENU );
+    }
+    // else if ( m_bLevelLoading )
+    //{
+    //     SetBackgroundRenderState( BACKGROUND_LOADING );
+    // }
+    // else if ( m_bEverActivated )
+    //{
+    //     SetBackgroundRenderState( BACKGROUND_DISCONNECTED );
+    // }
+}
+
+void CBaseMenuPanel::OnThink()
+{
+    BaseClass::OnThink();
+
+    UpdateBackgroundState();
+
+    if ( ipanel() )
+    {
+        int screenWide, screenTall;
+        engine->GetScreenSize( screenWide, screenTall );
+        SetBounds( 0, 0, screenWide, screenTall );
+    }
+}
+
+CMainMenu::CMainMenu( Panel *pParent )
+    : BaseClass( pParent, "MainMenuPanel" )
+{
+    MakePopup( false );
+    SetProportional( true );
+    SetMouseInputEnabled( true );
+    SetKeyBoardInputEnabled( true );
+    SetPaintBorderEnabled( false );
+    SetPaintBackgroundEnabled( false );
+    AddActionSignalTarget( this );
+    SetZPos( 0 );
+
+    // Set our initial size
+    int screenWide, screenTall;
+    surface()->GetScreenSize( screenWide, screenTall );
+    SetBounds( 0, 0, screenWide, screenTall );
+
+    // Add a HTML panel that takes up the whole screen
+    // This is where the main menu will be displayed
+    m_pHTML = new HTML( this, "MainMenuHTML", true );
+    m_pHTML->AddCustomURLHandler( "mainmenu", this );
+    m_pHTML->AddCustomURLHandler( "gamemenucommand", this );
+    m_pHTML->OpenURL( "asset://experiment/menus/main.html", NULL );
+
+    MakeReadyForUse();
+    InvalidateLayout( true );
+    RequestFocus();
+}
+
+CMainMenu::~CMainMenu()
+{
+}
+
+void CMainMenu::PerformLayout()
+{
+    BaseClass::PerformLayout();
 
     int wide, tall;
     vgui::surface()->GetScreenSize( wide, tall );
     SetSize( wide, tall );
 
-    m_pHTML->SetBounds( 0, 0, wide, tall );
+    if ( m_pHTML )
+    {
+        m_pHTML->SetBounds( 0, 0, wide, tall );
+    }
+}
+
+void CMainMenu::SetBackgroundRenderState( EBackgroundState state )
+{
+    if ( state == BACKGROUND_DISCONNECTED || state == BACKGROUND_MAINMENU )
+    {
+        if ( state == BACKGROUND_MAINMENU )
+        {
+            if ( m_pHTML )
+                m_pHTML->RunJavascript( "SetBackgroundRenderState( BACKGROUND_MAINMENU )" );
+        }
+    }
+    else if ( state == BACKGROUND_LOADING )
+    {
+        if ( m_pHTML )
+            m_pHTML->RunJavascript( "SetBackgroundRenderState( BACKGROUND_LOADING )" );
+
+        SetAlpha( 0 );
+    }
+    else if ( state == BACKGROUND_LEVEL )
+    {
+        if ( m_pHTML )
+            m_pHTML->RunJavascript( "SetBackgroundRenderState( BACKGROUND_LEVEL )" );
+
+        SetAlpha( 255 );
+    }
+}
+
+void CMainMenu::OnThink()
+{
+    BaseClass::OnThink();
+
+    surface()->MovePopupToBack( GetVPanel() );
 }
 
 void CMainMenu::OnCustomURLHandler( const char *pszUrl )
@@ -140,20 +263,17 @@ void CMainMenu::OnCustomURLHandler( const char *pszUrl )
     }
 }
 
-void CMainMenu::OnRequestFocus( VPANEL subFocus, VPANEL defaultPanel )
+void CMainMenu::OnKeyCodeUnhandled( int code )
 {
-    BaseClass::OnRequestFocus( subFocus, defaultPanel );
-    BringConsoleToFrontIfNeeded();
-}
+    if ( !m_pHTML )
+        return;
 
-void CMainMenu::OnKeyCodeReleased( int code )
-{
     if ( code == KEY_1 )
     {
         // Let's make the menu development a bit easier by refreshing the main menu easily
         m_pHTML->Refresh();
     }
-    else if (code == KEY_2)
+    else if ( code == KEY_2 )
     {
         m_pHTML->OpenDeveloperTools();
     }

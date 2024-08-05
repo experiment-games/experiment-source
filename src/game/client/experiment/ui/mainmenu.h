@@ -1,37 +1,84 @@
 #include "vgui_controls/Panel.h"
 #include "vgui_controls/EditablePanel.h"
+#include <game/client/iviewport.h>
 #include "vgui_controls/HTML.h"
 #include "GameUI/IGameUI.h"
+#include "GameEventListener.h"
 
 using namespace vgui;
 
-class CMainMenu : public EditablePanel
+enum EBackgroundState
 {
-    DECLARE_CLASS_SIMPLE( CMainMenu, EditablePanel );
+    BACKGROUND_INITIAL,
+    BACKGROUND_LOADING,
+    BACKGROUND_MAINMENU,
+    BACKGROUND_LEVEL,
+    BACKGROUND_DISCONNECTED
+};
+
+namespace GameUIUtil
+{
+bool IsInLevel();
+bool IsInBackgroundLevel();
+bool IsInMenu();
+}  // namespace GameUIUtil
+
+class CMainMenu;  // Forward declaration
+
+class CBaseMenuPanel : public EditablePanel
+{
+    DECLARE_CLASS_SIMPLE( CBaseMenuPanel, EditablePanel );
 
    public:
-    CMainMenu( VPANEL parent );
-    virtual ~CMainMenu();
+    CBaseMenuPanel();
+    virtual ~CBaseMenuPanel();
+
+    static CBaseMenuPanel* Init();
+    void AttachToGameUI();
+
+    EBackgroundState GetMenuBackgroundState() const
+    {
+        return m_eBackgroundState;
+    }
+
+    // Never called if we don't use SetMainMenuOverride (which causes crash on closing console)
+    //MESSAGE_FUNC( OnGameUIActivated, "OnGameUIActivated" );
+    //MESSAGE_FUNC( OnGameUIHidden, "GameUIHidden" );
 
    protected:
-    virtual void ApplySchemeSettings( IScheme* pScheme );
-
-    MESSAGE_FUNC_CHARPTR( OnCustomURLHandler, "CustomURL", url );
-    MESSAGE_FUNC_ENUM_ENUM( OnRequestFocus, "OnRequestFocus", VPANEL, subFocus, VPANEL, defaultPanel );
-    MESSAGE_FUNC_INT( OnKeyCodeReleased, "KeyCodeReleased", code );
+    void OnThink() OVERRIDE;
 
    private:
+    void SetBackgroundRenderState( EBackgroundState state );
     bool LoadGameUI();
-
-    int m_ExitingFrameCount;
-    bool m_bCopyFrameBuffer;
+    void UpdateBackgroundState();
+    EBackgroundState m_eBackgroundState;
 
     IGameUI* m_pGameUI;
 
+    CMainMenu* m_pMainMenu;
+};
+
+class CMainMenu : public Panel
+{
+    DECLARE_CLASS_SIMPLE( CMainMenu, Panel );
+
+   public:
+    CMainMenu( Panel* pParent );
+    virtual ~CMainMenu();
+
+    void SetBackgroundRenderState( EBackgroundState state );
+
+    MESSAGE_FUNC_CHARPTR( OnCustomURLHandler, "CustomURL", url );
+    MESSAGE_FUNC_INT( OnKeyCodeUnhandled, "KeyCodeUnhandled", code );
+
+   protected:
+    void OnThink() OVERRIDE;
+
+    virtual void PerformLayout() OVERRIDE;
+
+   private:
     HTML* m_pHTML;
 };
 
-void InitMainMenu( VPANEL parent = NULL );
-void DestroyMainMenu();
-
-extern CMainMenu* g_MainMenuPanel;
+extern CBaseMenuPanel* g_BaseMenuPanel;

@@ -3,6 +3,20 @@ document.addEventListener('DOMContentLoaded', () => {
     document.body.classList.add('loaded');
 });
 
+const BACKGROUND_INITIAL = 0;
+const BACKGROUND_LOADING = 1;
+const BACKGROUND_MAINMENU = 2;
+const BACKGROUND_LEVEL = 3;
+const BACKGROUND_DISCONNECTED = 4;
+
+function SetBackgroundRenderState(state) {
+    if (state === BACKGROUND_LEVEL) {
+        document.body.classList.add('in-level');
+    } else {
+        document.body.classList.remove('in-level');
+    }
+}
+
 const pageElement = document.querySelector('#page');
 const pageTitleElement = document.querySelector('#pageTitle');
 const pageCloseElement = document.querySelector('#pageClose');

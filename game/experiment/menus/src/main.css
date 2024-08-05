@@ -35,8 +35,6 @@ body {
 }
 
 body {
-    background: black;
-
     font-family: "RomanAntique", 'Times New Roman', Times, serif;
     font-size: 1.4em;
     color: white;
@@ -60,7 +58,7 @@ body::before {
     background-position: center;
 
     z-index: -1;
-    animation: zoom-in 30s infinite linear;
+    /*animation: zoom-in 30s infinite linear;*/
 }
 
 .overlay {
@@ -79,4 +77,9 @@ body::before {
 
 body.loaded .overlay {
     opacity: 0.5;
+}
+
+body.in-level::before {
+    background: rgba(0, 0, 0, 0.2);
+    background-image: none;
 }

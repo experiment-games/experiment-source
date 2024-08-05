@@ -263,7 +263,8 @@ static int surface_DrawSetTextScale( lua_State *L )
 
 static int surface_DrawSetTexture( lua_State *L )
 {
-    surface()->DrawSetTexture( luaL_checknumber( L, 1 ) );
+    int id = luaL_checknumber( L, 1 );
+    surface()->DrawSetTexture( id );
     return 0;
 }
 
@@ -274,7 +275,8 @@ static int surface_DrawSetTexture( lua_State *L )
 /// <returns></returns>
 static int surface_DrawSetTextureFile( lua_State *L )
 {
-    surface()->DrawSetTextureFile( luaL_checknumber( L, 1 ), luaL_checkstring( L, 2 ), ( int )luaL_optnumber( L, 3, 0 ), luaL_optboolean( L, 4, true ) );
+    int id = luaL_checknumber( L, 1 );
+    surface()->DrawSetTextureFile( id, luaL_checkstring( L, 2 ), ( int )luaL_optnumber( L, 3, 0 ), luaL_optboolean( L, 4, true ) );
     return 0;
 }
 
@@ -295,7 +297,8 @@ static int surface_DrawSetTextureRGBA( lua_State *L )
 
 static int surface_DrawSetTextureMaterial( lua_State *L )
 {
-    g_pMatSystemSurface->DrawSetTextureMaterial( luaL_checknumber( L, 1 ), luaL_checkmaterial( L, 2 ) );
+    int id = luaL_checknumber( L, 1 );
+    g_pMatSystemSurface->DrawSetTextureMaterial( id, luaL_checkmaterial( L, 2 ) );
     return 0;
 }
 
@@ -744,10 +747,11 @@ static int surface_FindMaterial( lua_State *L )
             KeyValues *keyValues = ParseParameters( parameters, isSmooth );
             pMaterial = CPngTextureRegen::GetOrCreateProceduralMaterial( materialName, name, keyValues, isSmooth );
 
-            // We need to assign a TextureID to the material, or else the game will crash in MaterialSystem.pdb
-            // when shutting down the game, after having created (but never assigning a CreateNewTextureID)
-            // a material with this FindMaterial call.
-            g_pMatSystemSurface->DrawSetTextureMaterial( surface_SafeCreateNewTextureID( true ), pMaterial );
+            // Experiment; Commented @ 5-8-2024 since this no longer seems to be the case.
+            //// We need to assign a TextureID to the material, or else the game will crash in MaterialSystem.pdb
+            //// when shutting down the game, after having created (but never assigning a CreateNewTextureID)
+            //// a material with this FindMaterial call.
+            //g_pMatSystemSurface->DrawSetTextureMaterial( surface_SafeCreateNewTextureID( true ), pMaterial );
         }
     }
 
