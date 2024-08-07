@@ -19,7 +19,7 @@ module.exports = {
                     '900': '#772e25',
                     '950': '#40140f',
                 },
-                'back': '#201f1f',
+                'back': 'rgba(51, 50, 50, 1)',
                 'back-highlight': '#919191',
                 'back-shadow': '#141313',
             },

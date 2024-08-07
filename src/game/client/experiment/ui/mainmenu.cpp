@@ -153,6 +153,8 @@ void CBaseMenuPanel::UpdateBackgroundState()
 
 class MainMenuHTML : public HTML
 {
+    DECLARE_CLASS_SIMPLE( MainMenuHTML, HTML );
+
    public:
     MainMenuHTML( Panel *parent, const char *name, bool allowJavaScript = true )
         : HTML( parent, name, allowJavaScript )
@@ -160,12 +162,10 @@ class MainMenuHTML : public HTML
     }
 
     protected:
-    virtual void OnFinishRequest( const char *url, const char *pageTitle, const CUtlMap< CUtlString, CUtlString > &headers ) OVERRIDE
+    virtual void OnInstallJavaScriptInterop() OVERRIDE
     {
         AddJavascriptObject( "GameUI" );
         AddJavascriptObjectCallback( "GameUI", "LoadMountableContentInfo" );
-
-        RunJavascript( "dispatchMainMenuReadyEvent();" );
     }
 
     virtual void OnJavaScriptCallback(KeyValues* pData) OVERRIDE

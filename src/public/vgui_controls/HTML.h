@@ -25,6 +25,8 @@
 #include "steam/steam_api.h"
 
 #define HTML_INTEROP_PREFIX "HTMLINTEROP:"
+#define HTML_ERROR_PREFIX "ERRORINTEROP:"
+#define HTML_LOG_PREFIX "LOGINTEROP:"
 
 namespace vgui
 {
@@ -62,7 +64,7 @@ class HTML : public Panel
 
     // event functions you can override and specialize behavior of
     virtual bool OnStartRequest( const char *url, const char *target, const char *pchPostData, bool bIsRedirect );
-    virtual void OnFinishRequest( const char *url, const char *pageTitle, const CUtlMap< CUtlString, CUtlString > &headers ) {}
+    virtual void OnFinishRequest( const char *url, const char *pageTitle, const CUtlMap< CUtlString, CUtlString > &headers );
     virtual void OnSetHTMLTitle( const char *pchTitle ) {}
     virtual void OnLinkAtPosition( const char *pchURL ) {}
     virtual void OnURLChanged( const char *url, const char *pchPostData, bool bIsRedirect ) {}
@@ -173,6 +175,8 @@ class HTML : public Panel
     }
 
     // Javascript interop
+    virtual void InstallInteropStubs();
+    virtual void OnInstallJavaScriptInterop(){};
     virtual void RunJavascript( const char *pchScript );
     virtual void AddJavascriptObject( const char *pszObjectName );
     virtual void AddJavascriptObjectCallback( const char *pszObjectName, const char *pszPropertyName );

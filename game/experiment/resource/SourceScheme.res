@@ -67,8 +67,8 @@ Scheme
 		Frame.TitleTextInsetX			16
 		Frame.ClientInsetX				8
 		Frame.ClientInsetY				6
-		Frame.BgColor					"51 50 50 128"
-		Frame.OutOfFocusBgColor			"51 50 50 32"
+		Frame.BgColor					"51 50 50 255"
+		Frame.OutOfFocusBgColor			"51 50 50 200"
 		Frame.FocusTransitionEffectTime	"0.3"				// time it takes for a window to fade in/out on focus/out of focus
 		Frame.TransitionEffectTime		"0.3"				// time it takes for a window to fade in/out on open/close
 		Frame.AutoSnapRange				"0"

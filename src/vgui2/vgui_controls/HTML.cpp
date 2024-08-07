@@ -264,6 +264,59 @@ void HTML::AddJavascriptObject( const char *pszObjectName )
 }
 
 /// <summary>
+/// </summary>
+void HTML::InstallInteropStubs()
+{
+    if ( !m_SteamAPIContext.SteamHTMLSurface() )
+        return;
+
+    // Let's set up a message queue so any return values that are returned from the callback, can be sent back
+    char szScript[8096];
+
+    // The last argument is the callback function if it is a function. The rest are arguments. Only store
+    // the callback and get its id so we can later call it with new return values
+    Q_snprintf( szScript, sizeof( szScript ),
+                // Library where we store Interop functions
+                "window.g_Interop = window.g_Interop ? window.g_Interop : {}; "
+
+                // Place to store callbacks so they can be called later by their id
+                "window.g_Interop.__callbackQueue = window.g_Interop.__callbackQueue ? window.g_Interop.__callbackQueue : []; "
+
+                // Dispatches an event to mark the page as ready (and these stubs having been installed)
+                "window.g_Interop.__isReady = typeof window.g_Interop.__isReady === 'boolean' ? window.g_Interop.__isReady : false; "
+                "if ( !window.g_Interop.__isReady ) {"
+                "   window.g_Interop.DispatchReadyEvent = function() { "
+                "      if (window.g_Interop.__isReady) return; "
+                "      window.g_Interop.__isReady = true; "
+                "      window.dispatchEvent(new Event('interop:ready')); "
+                "   }; "
+                // Redirect error messages to C++
+                "   window.addEventListener('error', function(e) { alert('%s' + JSON.stringify({type:e.type,message:e.message,file:e.filename,line:e.lineno,column:e.colno})); }); "
+                // Redirect log messages to C++
+                "   (function() {"
+                "      let oldLog = console.log;"
+                "      console.log = function() {"
+                "          oldLog.apply(console, arguments);"
+                "          alert('%s' + JSON.stringify({type:'log',arguments:Array.prototype.slice.call(arguments)}));"
+                "      };"
+                "   })(); "
+                "} "
+                /* start of printf parameter values */,
+                HTML_ERROR_PREFIX,
+                HTML_LOG_PREFIX );
+
+    m_SteamAPIContext.SteamHTMLSurface()->ExecuteJavascript( m_unBrowserHandle, szScript );
+
+    // Give classes deriving from HTML a chance to install interop before we mark interop as ready
+    // e.g: AddJavascriptObject( "GameUI" );
+    //      AddJavascriptObjectCallback( "GameUI", "LoadMountableContentInfo" );
+    OnInstallJavaScriptInterop();
+
+    // Mark the page as ready
+    m_SteamAPIContext.SteamHTMLSurface()->ExecuteJavascript( m_unBrowserHandle, "window.g_Interop.DispatchReadyEvent();" );
+}
+
+/// <summary>
 /// Adds a function field to the specified object. When this field is called, it will use
 /// 'alert' to signal the browser that the function was called.
 /// </summary>
@@ -279,7 +332,23 @@ void HTML::AddJavascriptObjectCallback( const char *pszObjectName, const char *p
 
     // The last argument is the callback function if it is a function. The rest are arguments. Only store
     // the callback and get its id so we can later call it with new return values
-    Q_snprintf( szScript, sizeof( szScript ), "window.__callbackQueue = window.__callbackQueue || []; window.%s.%s = function() { let callback = typeof arguments[arguments.length-1] === 'function' ? arguments[arguments.length-1] : null; let args; if (callback) { args = Array.prototype.slice.call(arguments, 0, -1); } else { args = Array.prototype.slice.call(arguments); } var __cId = window.__callbackQueue.push(callback)-1; alert('" HTML_INTEROP_PREFIX "' + JSON.stringify({object:'%s',property:'%s',arguments:args,callbackId:__cId}));};", pszObjectName, pszPropertyName, pszObjectName, pszPropertyName );
+    Q_snprintf( szScript, sizeof( szScript ),
+                "window.%s.%s = function() { "
+                "   let callback = typeof arguments[arguments.length-1] === 'function' ? arguments[arguments.length-1] : null; "
+                "   let args; "
+                "   if (callback) {"
+                "       args = Array.prototype.slice.call(arguments, 0, -1); "
+                "   } else { "
+                "       args = Array.prototype.slice.call(arguments); "
+                "   } "
+                "   let __cId = window.g_Interop.__callbackQueue.push(callback)-1; "
+                "   alert('%s' + JSON.stringify({object:'%s',property:'%s',arguments:args,callbackId:__cId})); "
+                "}; ",
+                pszObjectName,
+                pszPropertyName,
+                HTML_INTEROP_PREFIX,
+                pszObjectName,
+                pszPropertyName );
 
     m_SteamAPIContext.SteamHTMLSurface()->ExecuteJavascript( m_unBrowserHandle, szScript );
 }
@@ -298,7 +367,7 @@ void HTML::CallJavascriptObjectCallback( int callbackId, KeyValues *args )
     CJsonToKeyValues::ConvertKeyValuesToJson( args, szJson, sizeof( szJson ) );
 
     char szScript[8096];
-    Q_snprintf( szScript, sizeof( szScript ), "if (typeof window.__callbackQueue[%i] === 'function') window.__callbackQueue[%i](%s);", callbackId, callbackId, szJson );
+    Q_snprintf( szScript, sizeof( szScript ), "if (typeof window.g_Interop.__callbackQueue[%i] === 'function') window.g_Interop.__callbackQueue[%i](%s);", callbackId, callbackId, szJson );
 
     m_SteamAPIContext.SteamHTMLSurface()->ExecuteJavascript( m_unBrowserHandle, szScript );
 }
@@ -309,13 +378,25 @@ void HTML::CallJavascriptObjectCallback( int callbackId, KeyValues *args )
 /// <param name="pData"></param>
 void HTML::OnJavaScriptCallback( KeyValues *pData )
 {
-    //const char *pszObject = pData->GetString( "object" );
-    //const char *pszProperty = pData->GetString( "property" );
+    // const char *pszObject = pData->GetString( "object" );
+    // const char *pszProperty = pData->GetString( "property" );
 
-    //for ( KeyValues *pArg = pData->FindKey( "arguments" ); pArg; pArg = pArg->GetNextKey() )
+    // for ( KeyValues *pArg = pData->FindKey( "arguments" ); pArg; pArg = pArg->GetNextKey() )
     //{
-    //    DevMsg( "Argument: %s (inside %s.%s call)\n", pArg->GetName(), pszObject, pszProperty );
-    //}
+    //     DevMsg( "Argument: %s (inside %s.%s call)\n", pArg->GetName(), pszObject, pszProperty );
+    // }
+}
+
+/// <summary>
+/// Called to mark the request as having finished. When overriding this function, make sure to call the base class function
+/// first. Since this installs the interop stubs required for JS to C++ communication.
+/// </summary>
+/// <param name="url"></param>
+/// <param name="pageTitle"></param>
+/// <param name="headers"></param>
+void HTML::OnFinishRequest( const char *url, const char *pageTitle, const CUtlMap< CUtlString, CUtlString > &headers )
+{
+    InstallInteropStubs();
 }
 
 //-----------------------------------------------------------------------------
@@ -1847,9 +1928,9 @@ void HTML::BrowserJSAlert( HTML_JSAlert_t *pCmd )
     if ( pCmd->unBrowserHandle != m_unBrowserHandle )
         return;
 
-    // We abuse JS alerts to enable interop between JS and C++ code. We don't want to show the alert to the user.
-    // If the alert starts with HTML_INTEROP_PREFIX then we want to call MESSAGE_FUNC_PARAMS( OnJavaScriptCallback, "JavaScriptCallback", pKV )
-    if ( !Q_strncmp( pCmd->pchMessage, HTML_INTEROP_PREFIX, Q_strlen( HTML_INTEROP_PREFIX ) ) )
+    // We don't want to show the alert to the user in every case. Given special prefixes we may
+    // abuse these JS alerts to enable interop between JS and C++ code.
+    if ( Q_strncmp( pCmd->pchMessage, HTML_INTEROP_PREFIX, Q_strlen( HTML_INTEROP_PREFIX ) ) == 0 )
     {
         KeyValues *pKv = new KeyValues( "JavaScriptCallback" );
 
@@ -1859,8 +1940,16 @@ void HTML::BrowserJSAlert( HTML_JSAlert_t *pCmd )
             DevWarning( "Failed to convert JSON to KeyValues during HTML Interop\n" );
             return;
         }
-        
+
         PostActionSignal( pKv );
+    }
+    else if ( Q_strncmp( pCmd->pchMessage, HTML_LOG_PREFIX, Q_strlen( HTML_LOG_PREFIX ) ) == 0 )
+    {
+        DevMsg( "HTML Log: %s\n", pCmd->pchMessage + Q_strlen( HTML_LOG_PREFIX ) );
+    }
+    else if ( Q_strncmp( pCmd->pchMessage, HTML_ERROR_PREFIX, Q_strlen( HTML_ERROR_PREFIX ) ) == 0 )
+    {
+        DevWarning( "HTML Error: %s\n", pCmd->pchMessage + Q_strlen( HTML_ERROR_PREFIX ) );
     }
     else
     {

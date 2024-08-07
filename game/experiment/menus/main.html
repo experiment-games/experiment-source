@@ -11,7 +11,7 @@
           href="dist/main.css">
 </head>
 
-<body class="group/body">
+<body class="group/body select-none">
     <div class="overlay"></div>
 
     <div class="flex flex-col h-full justify-between">
@@ -46,7 +46,7 @@
 
         <div id="page"
              x-draggable
-             class="fixed select-none flex flex-col flex-1 opacity-0 transition max-h-screen overflow-hidden w-[600px] top-1/4 left-1/4 bg-back px-4 py-3">
+             class="fixed flex flex-col flex-1 opacity-0 transition max-h-screen overflow-hidden w-[600px] top-1/4 left-1/4 bg-back px-4 py-3">
             <div class="flex flex-row justify-between"
                  x-draggable-handle>
                 <h2 class="font-source-uibold text-source-uibold font-semibold mb-4 text-white uppercase"
@@ -110,6 +110,7 @@
     </template>
 
     <script src="init.js"></script>
+    <script src="main.js"></script>
 </body>
 
 </html>
