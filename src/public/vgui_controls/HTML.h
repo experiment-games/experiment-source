@@ -24,6 +24,8 @@
 #endif
 #include "steam/steam_api.h"
 
+#define HTML_INTEROP_PREFIX "HTMLINTEROP:"
+
 namespace vgui
 {
 
@@ -51,7 +53,6 @@ class HTML : public Panel
     virtual bool StopLoading();
     virtual bool Refresh();
     virtual void OnMove();
-    virtual void RunJavascript( const char *pchScript );
     virtual void OpenDeveloperTools();
     virtual void GoBack();
     virtual void GoForward();
@@ -171,7 +172,16 @@ class HTML : public Panel
             m_SteamAPIContext.SteamHTMLSurface()->MouseMove( m_unBrowserHandle, x, y );
     }
 
+    // Javascript interop
+    virtual void RunJavascript( const char *pchScript );
+    virtual void AddJavascriptObject( const char *pszObjectName );
+    virtual void AddJavascriptObjectCallback( const char *pszObjectName, const char *pszPropertyName );
+    virtual void CallJavascriptObjectCallback( int callbackId, KeyValues *args );
+    // Override OnJavaScriptCallback in a subclass to customize how to react to the callback
+
    protected:
+    MESSAGE_FUNC_PARAMS( OnJavaScriptCallback, "JavaScriptCallback", pKV );
+
     virtual void ApplySchemeSettings( IScheme *pScheme );
 
     vgui::Menu *m_pContextMenu;

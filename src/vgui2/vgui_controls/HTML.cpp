@@ -20,6 +20,7 @@
 #undef MessageBox
 
 #include "OfflineMode.h"
+#include <experiment/util/jsontokv.h>
 
 // memdbgon must be the last include file in a .cpp file
 #include "tier0/memdbgon.h"
@@ -206,6 +207,8 @@ HTML::HTML( Panel *parent, const char *name, bool allowJavaScript, bool bPopupWi
     m_pContextMenu->AddMenuItem( "#TextEntry_Paste", new KeyValues( "Command", "command", "paste" ), this );
     m_pContextMenu->AddSeparator();
     m_nViewSourceAllowedIndex = m_pContextMenu->AddMenuItem( "#vgui_HTMLViewSource", new KeyValues( "Command", "command", "viewsource" ), this );
+
+    AddActionSignalTarget( this );
 }
 
 #pragma warning( default : 4355 )
@@ -243,6 +246,76 @@ HTML::~HTML()
         //		surface()->DeleteCursor( m_vecHCursor[i].m_Cursor );
     }
     m_vecHCursor.RemoveAll();
+}
+
+/// <summary>
+/// Adds an object to the browser's javascript context
+/// </summary>
+/// <param name="pszObjectName"></param>
+void HTML::AddJavascriptObject( const char *pszObjectName )
+{
+    if ( !m_SteamAPIContext.SteamHTMLSurface() )
+        return;
+
+    char szScript[1024];
+    Q_snprintf( szScript, sizeof( szScript ), "window.%s = new Object();", pszObjectName );
+
+    m_SteamAPIContext.SteamHTMLSurface()->ExecuteJavascript( m_unBrowserHandle, szScript );
+}
+
+/// <summary>
+/// Adds a function field to the specified object. When this field is called, it will use
+/// 'alert' to signal the browser that the function was called.
+/// </summary>
+/// <param name="pszObjectName"></param>
+/// <param name="pszPropertyName"></param>
+void HTML::AddJavascriptObjectCallback( const char *pszObjectName, const char *pszPropertyName )
+{
+    if ( !m_SteamAPIContext.SteamHTMLSurface() )
+        return;
+
+    // Let's set up a message queue so any return values that are returned from the callback, can be sent back
+    char szScript[8096];
+
+    // The last argument is the callback function if it is a function. The rest are arguments. Only store
+    // the callback and get its id so we can later call it with new return values
+    Q_snprintf( szScript, sizeof( szScript ), "window.__callbackQueue = window.__callbackQueue || []; window.%s.%s = function() { let callback = typeof arguments[arguments.length-1] === 'function' ? arguments[arguments.length-1] : null; let args; if (callback) { args = Array.prototype.slice.call(arguments, 0, -1); } else { args = Array.prototype.slice.call(arguments); } var __cId = window.__callbackQueue.push(callback)-1; alert('" HTML_INTEROP_PREFIX "' + JSON.stringify({object:'%s',property:'%s',arguments:args,callbackId:__cId}));};", pszObjectName, pszPropertyName, pszObjectName, pszPropertyName );
+
+    m_SteamAPIContext.SteamHTMLSurface()->ExecuteJavascript( m_unBrowserHandle, szScript );
+}
+
+/// <summary>
+/// Calls the callback in JS for the given callback id. Sends the provided arguments to the callback.
+/// </summary>
+/// <param name="callbackId"></param>
+/// <param name="args"></param>
+void HTML::CallJavascriptObjectCallback( int callbackId, KeyValues *args )
+{
+    if ( !m_SteamAPIContext.SteamHTMLSurface() )
+        return;
+
+    char szJson[8096];
+    CJsonToKeyValues::ConvertKeyValuesToJson( args, szJson, sizeof( szJson ) );
+
+    char szScript[8096];
+    Q_snprintf( szScript, sizeof( szScript ), "if (typeof window.__callbackQueue[%i] === 'function') window.__callbackQueue[%i](%s);", callbackId, callbackId, szJson );
+
+    m_SteamAPIContext.SteamHTMLSurface()->ExecuteJavascript( m_unBrowserHandle, szScript );
+}
+
+/// <summary>
+/// Override this in a subclass to customize how to handle javascript callbacks
+/// </summary>
+/// <param name="pData"></param>
+void HTML::OnJavaScriptCallback( KeyValues *pData )
+{
+    //const char *pszObject = pData->GetString( "object" );
+    //const char *pszProperty = pData->GetString( "property" );
+
+    //for ( KeyValues *pArg = pData->FindKey( "arguments" ); pArg; pArg = pArg->GetNextKey() )
+    //{
+    //    DevMsg( "Argument: %s (inside %s.%s call)\n", pArg->GetName(), pszObject, pszProperty );
+    //}
 }
 
 //-----------------------------------------------------------------------------
@@ -381,7 +454,7 @@ void HTML::PostURL( const char *URL, const char *pchPostData, bool force )
 
         URL = fullPath;
     }
-#endif 
+#endif
 
     if ( m_unBrowserHandle == INVALID_HTMLBROWSER )
     {
@@ -488,7 +561,7 @@ bool HTML::BCanGoFoward()
     return m_bCanGoForward;
 }
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void HTML::PerformMouseMove( int x, int y )
 {
@@ -1774,10 +1847,31 @@ void HTML::BrowserJSAlert( HTML_JSAlert_t *pCmd )
     if ( pCmd->unBrowserHandle != m_unBrowserHandle )
         return;
 
-    MessageBox *pDlg = new MessageBox( m_sCurrentURL, ( const char * )pCmd->pchMessage, this );
-    pDlg->AddActionSignalTarget( this );
-    pDlg->SetCommand( new KeyValues( "DismissJSDialog", "result", false ) );
-    pDlg->DoModal();
+    // We abuse JS alerts to enable interop between JS and C++ code. We don't want to show the alert to the user.
+    // If the alert starts with HTML_INTEROP_PREFIX then we want to call MESSAGE_FUNC_PARAMS( OnJavaScriptCallback, "JavaScriptCallback", pKV )
+    if ( !Q_strncmp( pCmd->pchMessage, HTML_INTEROP_PREFIX, Q_strlen( HTML_INTEROP_PREFIX ) ) )
+    {
+        KeyValues *pKv = new KeyValues( "JavaScriptCallback" );
+
+        const char *json = pCmd->pchMessage + Q_strlen( HTML_INTEROP_PREFIX );
+        if ( !CJsonToKeyValues::ConvertJsonToKeyValues( json, pKv ) )
+        {
+            DevWarning( "Failed to convert JSON to KeyValues during HTML Interop\n" );
+            return;
+        }
+        
+        PostActionSignal( pKv );
+    }
+    else
+    {
+        QueryBox *pDlg = new QueryBox( m_sCurrentURL, ( const char * )pCmd->pchMessage, this );
+        pDlg->AddActionSignalTarget( this );
+        pDlg->SetOKCommand( new KeyValues( "DismissJSDialog", "result", true ) );
+        pDlg->DoModal();
+    }
+
+    // This must be called!
+    DismissJSDialog( true );
 }
 
 //-----------------------------------------------------------------------------

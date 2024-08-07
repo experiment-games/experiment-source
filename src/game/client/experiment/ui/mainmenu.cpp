@@ -151,6 +151,62 @@ void CBaseMenuPanel::UpdateBackgroundState()
     // }
 }
 
+class MainMenuHTML : public HTML
+{
+   public:
+    MainMenuHTML( Panel *parent, const char *name, bool allowJavaScript = true )
+        : HTML( parent, name, allowJavaScript )
+    {
+    }
+
+    protected:
+    virtual void OnFinishRequest( const char *url, const char *pageTitle, const CUtlMap< CUtlString, CUtlString > &headers ) OVERRIDE
+    {
+        AddJavascriptObject( "GameUI" );
+        AddJavascriptObjectCallback( "GameUI", "LoadMountableContentInfo" );
+
+        RunJavascript( "dispatchMainMenuReadyEvent();" );
+    }
+
+    virtual void OnJavaScriptCallback(KeyValues* pData) OVERRIDE
+    {
+        const char *pszObject = pData->GetString( "object" );
+        const char *pszProperty = pData->GetString( "property" );
+        int callbackId = pData->GetInt( "callbackId" );
+        //KeyValues *pArguments = pData->FindKey( "arguments" );
+
+        //for ( KeyValues *pArg = pArguments->GetFirstSubKey(); pArg; pArg = pArg->GetNextKey() )
+        //{
+        //    DevMsg( "Argument: %s (inside %s.%s call)\n", pArg->GetName(), pszObject, pszProperty );
+        //}
+
+        if ( Q_strcmp( pszObject, "GameUI" ) == 0 )
+        {
+            if ( Q_strcmp( pszProperty, "LoadMountableContentInfo" ) == 0 )
+            {
+                // TODO: Load this automatically:
+                KeyValues *pResponse = new KeyValues( "response" );
+
+                KeyValues *pGarrysMod = new KeyValues( "" );
+                pGarrysMod->SetString( "icon", "images/game-icons/garrysmod.png" );
+                pGarrysMod->SetString( "name", "Garry's Mod" );
+                pGarrysMod->SetString( "id", "garrysmod" );
+                pGarrysMod->SetBool( "mounted", true );
+                pResponse->AddSubKey( pGarrysMod );
+
+                KeyValues *pCounterStrike = new KeyValues( "" );
+                pCounterStrike->SetString( "icon", "images/game-icons/cstrike.png" );
+                pCounterStrike->SetString( "name", "Counter-Strike: Source" );
+                pCounterStrike->SetString( "id", "cstrike" );
+                pCounterStrike->SetBool( "mounted", false );
+                pResponse->AddSubKey( pCounterStrike );
+
+                CallJavascriptObjectCallback( callbackId, pResponse );
+            }
+        }
+    }
+};
+
 void CBaseMenuPanel::OnThink()
 {
     BaseClass::OnThink();
@@ -184,7 +240,7 @@ CMainMenu::CMainMenu( Panel *pParent )
 
     // Add a HTML panel that takes up the whole screen
     // This is where the main menu will be displayed
-    m_pHTML = new HTML( this, "MainMenuHTML", true );
+    m_pHTML = new MainMenuHTML( this, "MainMenuHTML" );
     m_pHTML->AddCustomURLHandler( "mainmenu", this );
     m_pHTML->AddCustomURLHandler( "gamemenucommand", this );
     m_pHTML->OpenURL( "asset://experiment/menus/main.html", NULL );

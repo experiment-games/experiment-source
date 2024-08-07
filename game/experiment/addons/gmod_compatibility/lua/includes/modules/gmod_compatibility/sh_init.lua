@@ -1173,7 +1173,9 @@ if (CLIENT) then
 	Include("extensions/client/player.lua")
 	Include("extensions/client/render.lua")
 
-	Include("derma/init.lua")
+    Include("derma/init.lua")
+
+	Include("cl_awesomium.lua")
 	Include("vgui_base.lua")
 
 	Include("skins/default.lua")
@@ -1287,7 +1289,7 @@ if (CLIENT) then
 
 	hook.Add("LevelInitPostEntity", "GModCompatibility.CallInitPostEntityHooks", function()
 		hook.Run("InitPostEntity")
-	end)
+    end)
 else
 	-- Include("sv_hooks.lua")
 

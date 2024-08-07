@@ -2,12 +2,12 @@ local PANEL = {}
 
 -- Adds a new object in JavaScript
 function PANEL:NewObject(objectName)
-	self:RunJavascript("window." .. objectName .. " = {};")
+	self:AddJavascriptObject(objectName)
 end
 
 -- Adds a new object callback in JavaScript
 function PANEL:NewObjectCallback(objectName, callbackName)
-	-- TODO: Implement this somehow
+	self:AddJavascriptObjectCallback(objectName, callbackName)
 end
 
 -- TODO: Adds javascript function 'language.Update' to an HTML panel as a method to call Lua's language.GetPhrase function.

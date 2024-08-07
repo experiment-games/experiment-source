@@ -176,6 +176,12 @@ $Project "Client (Experiment)"
 				$File	"experiment\ui\experimenttextwindow.cpp"
 				$File	"experiment\ui\experimenttextwindow.h"
 			}
+
+            $Folder "Util"
+            {
+                $File "$SRCDIR\game\shared\experiment\util\jsontokv.h"
+                $File "$SRCDIR\game\shared\experiment\util\jsontokv.cpp"
+            }
 		}
 	}
 }

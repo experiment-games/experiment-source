@@ -23,6 +23,7 @@ class LHTML : public HTML
 
     virtual bool OnStartRequest( const char *url, const char *target, const char *pchPostData, bool bIsRedirect );
     virtual void OnFinishRequest( const char *url, const char *pageTitle, const CUtlMap< CUtlString, CUtlString > &headers );
+    virtual void OnJavaScriptCallback( KeyValues *pData ) OVERRIDE;
 
     bool IsLoading() { return m_bIsLoading; }
 

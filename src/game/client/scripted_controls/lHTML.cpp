@@ -34,6 +34,30 @@ void LHTML::OnFinishRequest( const char *url, const char *pageTitle, const CUtlM
     m_bIsLoading = false;
 }
 
+void LHTML::OnJavaScriptCallback( KeyValues *pData )
+{
+    // Call OnCallback with the data
+    BEGIN_LUA_CALL_PANEL_METHOD( "OnCallback" );
+    lua_pushstring( L, pData->GetString( "object" ) );
+    lua_pushstring( L, pData->GetString( "field" ) );
+
+    // Push all arguments in 'arguments' as a table
+    lua_newtable( L );
+
+    for ( KeyValues *pArg = pData->FindKey( "arguments" ); pArg; pArg = pArg->GetNextKey() )
+    {
+        lua_pushstring( L, pArg->GetName() );
+        lua_pushstring( L, pArg->GetString() );
+        lua_settable( L, -3 );
+    }
+
+    END_LUA_CALL_PANEL_METHOD( 3, 1 );
+
+    RETURN_LUA_PANEL_NONE();
+
+    BaseClass::OnJavaScriptCallback( pData );
+}
+
 /*
 ** access functions (stack -> C)
 */
@@ -85,6 +109,18 @@ static int HTML_OnMove( lua_State *L )
 static int HTML_RunJavascript( lua_State *L )
 {
     luaL_checkhtml( L, 1 )->RunJavascript( luaL_checkstring( L, 2 ) );
+    return 0;
+}
+
+static int HTML_AddJavascriptObject( lua_State *L )
+{
+    luaL_checkhtml( L, 1 )->AddJavascriptObject( luaL_checkstring( L, 2 ) );
+    return 0;
+}
+
+static int HTML_AddJavascriptObjectCallback(lua_State* L)
+{
+    luaL_checkhtml( L, 1 )->AddJavascriptObjectCallback( luaL_checkstring( L, 2 ), luaL_checkstring( L, 3 ) );
     return 0;
 }
 
@@ -304,6 +340,8 @@ static const luaL_Reg HTMLmeta[] = {
     { "Refresh", HTML_Refresh },
     { "OnMove", HTML_OnMove },
     { "RunJavascript", HTML_RunJavascript },
+    { "AddJavascriptObject", HTML_AddJavascriptObject },
+    { "AddJavascriptObjectCallback", HTML_AddJavascriptObjectCallback },
     { "GoBack", HTML_GoBack },
     { "GoForward", HTML_GoForward },
     { "BCanGoBack", HTML_BCanGoBack },
