@@ -1,0 +1,57 @@
+{% extends "main.html" %}
+
+{% block content %}
+<div class="lua">
+    <div class="lua__title">
+        <h1>
+            <span class="lua__symbol">
+                <a href="{{ config.site_url }}libraries/{{ page.meta.lua.library }}">{{ page.meta.lua.library }}</a>.{{ page.meta.lua.function }}({%- for arg in page.meta.lua.arguments %}{{- arg.name -}}{% if not loop.last %}, {% endif -%}{% endfor %})
+            </span>
+        </h1>
+
+        <div class="lua__realm lua__realm--{{ page.meta.lua.realm }}">{{ page.meta.lua.realm }}</div>
+    </div>
+
+    {{ page.meta.lua.description }}
+
+    {% if page.meta.lua.arguments %}
+    <h2>Arguments</h2>
+    <ul class="lua__variable_list">
+        {% for argument in page.meta.lua.arguments %}
+        <li>
+            <span class="lua__symbol">{{ argument.name }}</span>
+            <span class="lua__type">{{ argument.type }}</span>
+            <span class="lua__variable_list__description">{{ argument.description }}</span>
+        </li>
+        {% endfor %}
+    </ul>
+    {% endif %}
+
+    {% if page.meta.lua.returns %}
+    <h2>Returns</h2>
+    <ul class="lua__variable_list">
+        {% for return in page.meta.lua.returns %}
+        <li>
+            <span class="lua__type">{{ return.type }}</span>
+            <span class="lua__variable_list__description">{{ return.description }}</span>
+        </li>
+        {% endfor %}
+    </ul>
+    {% endif %}
+
+    {% if page.meta.lua.remarks %}
+    <h2>Remarks</h2>
+    {% for remark in page.meta.lua.remarks %}
+    <div class="admonition {{ remark.type }}">
+        <p class="admonition-title">{{ remark.title | default(remark.type | capitalize ) }}</p>
+        <p>{{ remark.content }}</p>
+    </div>
+    {% endfor %}
+    {% endif %}
+
+    {% if page.content %}
+    <h2>Examples</h2>
+    {{ page.content }}
+    {% endif %}
+</div>
+{% endblock %}

@@ -4,6 +4,7 @@ extra_css:
   - stylesheets/extra.css
 theme:
   name: material
+  custom_dir: docs_custom/theme
   logo: logo-white.png
   palette:
     scheme: slate
@@ -22,10 +23,12 @@ theme:
     - toc.follow
     - toc.integrate
     - navigation.top
+    - content.code.copy
 repo_url: https://github.com/luttje/experiment-source
 edit_uri: edit/experiment-main/docs/
 copyright: Copyright &copy; 2024 - experiment.games
 not_in_nav: /index.md
+use_directory_urls: true
 extra:
   social:
     - icon: fontawesome/solid/house
@@ -51,3 +54,14 @@ markdown_extensions:
   - attr_list
   - pymdownx.details
   - pymdownx.tasklist
+  - pymdownx.highlight:
+      anchor_linenums: true
+      line_spans: __span
+      pygments_lang_class: true
+  - pymdownx.inlinehilite
+  - pymdownx.snippets
+  - pymdownx.superfences
+  - pymdownx.tabbed:
+      alternate_style: true
+  - toc:
+      permalink: 🔗

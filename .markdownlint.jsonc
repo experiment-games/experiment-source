@@ -1,0 +1,7 @@
+{
+    // Markdownlint configuration
+    "default": true,
+
+    // For the docs we want to allow examples without a H1 (since that's set by the template)
+    "MD041": false
+}
