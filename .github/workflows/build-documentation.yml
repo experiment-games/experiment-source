@@ -2,7 +2,7 @@ name: build-documentation
 on:
   push:
     branches:
-      - main
+      - experiment-main
 permissions:
   contents: write
 jobs:
