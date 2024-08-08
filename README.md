@@ -25,24 +25,64 @@
     creategameprojects.bat
     ```
 
-2. Open the created `experiment.sln` solution in Visual Studio 2022 (or newer).
+2. Copy the `.env.example` file to `.env`.
+
+    ```bash
+    cp .env.example .env
+    ```
+
+3. Fill the `.env` file with the described values
+
+4. Next run the `setupprojects.sh` script to modify the Visual Studio project files and solution.
+
+    ```bash
+    ./setupprojects.sh
+    ```
+
+    _This sets up debugging and enforces the correct dependencies of the client & server projects._
+
+5. Open the created `experiment.sln` solution in Visual Studio 2022 (or newer).
 
     > [!WARNING]
     > Despite building in Visual Studio 2022, the Source SDK 2013 solution requires Visual Studio 2013 to be installed.
 
-3. Build the solution in `Release` mode.
+6. Build the solution in `Release` mode.
 
-4. After the build is complete make a symlink from the `game/experiment` directory to your `steamapps/sourcemods` directory. E.g:
+7. After the build is complete make a symlink from the `game/experiment` directory to your `steamapps/sourcemods` directory. E.g:
 
     ```bash
     mklink /J "C:\Program Files (x86)\Steam\steamapps\sourcemods\experiment" "<path to this repo>\game\experiment"
     ```
 
-5. To setup the game mod directory, run:
+8. To setup the game mod directory, run:
 
     ```bash
     ./tools/setup-game.sh
     ```
+
+## Documentation
+
+We build and present the Experiment Developer Documentation using [mkdocs-material](https://squidfunk.github.io/mkdocs-material/).
+
+### Requirements
+
+- Python 3.8 or newer
+
+### Installation
+
+1. Install the required Python packages.
+
+    ```bash
+    pip install -r requirements.txt
+    ```
+
+2. Start the development server.
+
+    ```bash
+    mkdocs serve
+    ```
+
+3. Open the documentation in your browser @ [http://localhost:8000/experiment-source/]
 
 ## Extras
 
@@ -98,26 +138,13 @@
 
 <details>
 
-<summary>Attaching the debugger</summary>
+<summary>Attaching the debugger manually</summary>
 
-1. Copy the `.env.example` file to `.env`.
+This should not be necessary if you've run the `setupprojects.sh` script.
 
-    ```bash
-    cp .env.example .env
-    ```
+More instructions can be found here: [check the official docs and use values like this:](https://developer.valvesoftware.com/wiki/Installing_and_Debugging_the_Source_Code)
 
-2. Fill the `.env` file with the described values
-
-3. Then run the `setupprojects.sh` script to modify the Visual Studio project files and solution.
-
-    ```bash
-    ./setupprojects.sh
-    ```
-
-    _This sets up debugging and enforces the correct dependencies of the client & server projects._
-
-> Setting up debugging manually: [check the official docs and use values like this:](https://developer.valvesoftware.com/wiki/Installing_and_Debugging_the_Source_Code)
->
+Setup the debugger with the following values:
 > - Command: `C:\Program Files %28x86%29\Steam\steamapps\common\Source SDK Base 2013 Multiplayer\hl2.exe`
 > - Command Arguments: `-allowdebug -dev -sw -game "C:\Program Files (x86)\Steam\steamapps\sourcemods\experiment"`
 > - Working Directory: `C:\Program Files %28x86%29\Steam\steamapps\common\Source SDK Base 2013 Multiplayer`

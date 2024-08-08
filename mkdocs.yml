@@ -1,0 +1,53 @@
+site_name: Developer Portal
+site_url: https://luttje.github.io/experiment-source
+extra_css:
+  - stylesheets/extra.css
+theme:
+  name: material
+  logo: logo-white.png
+  palette:
+    scheme: slate
+    primary: custom
+  features:
+    - navigation.footer
+    - content.action.edit
+    - content.action.view
+    - navigation.instant
+    - navigation.instant.progress
+    - navigation.tracking
+    - navigation.tabs
+    - navigation.tabs.sticky
+    - navigation.path
+    - navigation.indexes
+    - toc.follow
+    - toc.integrate
+    - navigation.top
+repo_url: https://github.com/luttje/experiment-source
+edit_uri: edit/main/docs/
+copyright: Copyright &copy; 2024 - experiment.games
+not_in_nav: /index.md
+extra:
+  social:
+    - icon: fontawesome/solid/house
+      link: https://experiment.games
+      name: Experiment.games Homepage
+plugins:
+  - awesome-pages:
+      enabled: true
+      filename: .pages.yml
+  - redirects:
+      enabled: true
+      redirect_maps:
+        'index.md': 'general/welcome.md'
+  - search:
+      enabled: true
+  - privacy:
+      enabled: true
+  - tags:
+      enabled: true
+      tags_file: general/tags.md
+markdown_extensions:
+  - admonition
+  - attr_list
+  - pymdownx.details
+  - pymdownx.tasklist
