@@ -1,9 +1,0 @@
-"VertexLitGeneric"
-{
-	"$basetexture" "MaxOfS2D/models/hover_basic"
-	"$bumpmap" "null-bumpmap"
-
-	"$translucent" "1"
-
-	// "$BasemapAlphaPhongMask" "1"
-}

@@ -1,7 +1,0 @@
-"UnlitGeneric"
-{
-	"$ignorez" "1"
-	"$writez" "0"
-	"$linearwrite" "0"
-	"$fbtexture" "_rt_FullFrameFB"
-}

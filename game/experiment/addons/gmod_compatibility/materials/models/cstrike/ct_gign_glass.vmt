@@ -1,9 +1,0 @@
-"vertexlitgeneric"
-{
-	"$basetexture" "models/cstrike/ct_gign_glass"
-	"$envmap" 			"env_cubemap"
-	"$envmapmask" "models/cstrike/ct_gign_glass_spec"
-	"$translucent" 1
-	"$nocull" 1
-}
-

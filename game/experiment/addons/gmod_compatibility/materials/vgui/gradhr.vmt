@@ -1,7 +1,0 @@
-"UnlitGeneric"
-{
-	"$basetexture" "vgui/gradhr"
-	"$vertexcolor" 		1
-	"$vertexalpha" 		1
-	"$nolod" 			1
-}

@@ -1,7 +1,0 @@
-"UnlitGeneric"
-{
-	"$basetexture" "vgui/face/angry_eyebrows"
-	"$vertexcolor" 		1
-	"$vertexalpha" 		1
-	"$nolod" 			1
-}

@@ -1,8 +1,0 @@
-"UnlitGeneric"
-{
-	"$basetexture" "SGM/playercircle"
-	"$ignorez"			0
-	"$vertexcolor" 		1
-	"$vertexalpha" 		1
-	"$nolod" 			1
-}

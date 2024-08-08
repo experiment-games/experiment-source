@@ -1,8 +1,0 @@
-"UnlitGeneric"
-{
-	"$basetexture" "gui/info"
-	"$vertexcolor" 		1
-	"$vertexalpha" 		1
-	"$nolod" 			1
-	"$ignorez"		1
-}

@@ -1,8 +1,0 @@
-"LightmappedGeneric"
-{
-	"$translucent" 		"1"
-	"$basetexture" "Tools/toolsclip_rubber"
-	"%compileclip" 		"1"
-	"$surfaceprop" 		"rubber"
-	"%keywords" 		"clip,rubber"
-}

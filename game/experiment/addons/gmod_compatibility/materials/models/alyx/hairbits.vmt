@@ -1,7 +1,0 @@
-"VertexLitGeneric"
-{
-	"$translucent" 1
-	"$basetexture" "models/Alyx/hairbits"
-	"$halflambert" 1
-	"$nodecal" "1"
-}

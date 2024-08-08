@@ -1,6 +1,0 @@
-"g_texturize"
-{
-	"$fbtexture" "_rt_FullFrameFB"
-	"$basetexture" "_rt_FullFrameFB"
-	"$ignorez" "1"
-}

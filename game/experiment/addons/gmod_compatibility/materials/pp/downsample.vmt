@@ -1,7 +1,0 @@
-"g_downsample"
-{
-	"$darken" "0.4" 
-	"$multiply" "1.55"
-	"$ignorez" "1"
-	"$fbtexture" "_rt_FullFrameFB"
-}

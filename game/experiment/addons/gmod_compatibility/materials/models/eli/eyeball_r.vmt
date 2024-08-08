@@ -1,6 +1,0 @@
-"eyes"
-{
-	"$basetexture" "models/eli/eyeball_r"
-	"$iris" "models/eli/pupil_r"
-	"$halflambert" 1
-}

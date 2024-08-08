@@ -1,9 +1,0 @@
-"UnlitGeneric"
-{
-	"$basetexture" "effects/select_dot"
-	"$ignorez"		0
-	"$vertexcolor" 		1
-	"$vertexalpha" 		1
-	"$nolod" 			1
-	"$nocull"			1
-}

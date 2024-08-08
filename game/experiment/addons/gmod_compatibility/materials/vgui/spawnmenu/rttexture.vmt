@@ -1,8 +1,0 @@
-"UnlitGeneric"
-{
-	"$basetexture" "_rt_spawnicon"
-	"$vertexcolor" 		0
-	"$vertexalpha" 		0
-	"$nolod" 			1
-	"$additive"		0
-}

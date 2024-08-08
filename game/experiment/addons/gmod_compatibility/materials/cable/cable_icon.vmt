@@ -1,6 +1,0 @@
-"UnlitGeneric"
-{
-	"$basetexture" "cable\cable"
-	"$vertexcolor"		1
-	"$nocull"			1
-}

@@ -1,9 +1,0 @@
-"VertexLitGeneric"
-{
-	// Original shader: VertexLitMaskedEnvMappedTexture
-	"$basetexture" "models/Kleiner/glassesside_walter"
-	"$envmapmask" "models/Kleiner/glassessidemask_walter"
-	"$envmap" "env_cubemap"
-	"$envmapcontrast" "1"
-	"$halflambert" 1
-}

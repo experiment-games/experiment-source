@@ -1,8 +1,0 @@
-"UnlitGeneric"
-{
-	"$basetexture" "sprites\xbeam2"
-	"$nocull"			1
-	"$MinLight"		1
-	"$MaxLight"		1
-	"$additive"		1
-}
