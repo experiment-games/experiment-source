@@ -255,8 +255,8 @@ class CBaseCombatWeapon : public BASECOMBATWEAPON_DERIVED_FROM
     // HUD Hints
     virtual bool ShouldDisplayAltFireHUDHint();
     virtual void DisplayAltFireHudHint();
-    virtual void RescindAltFireHudHint();  ///< undisplay the hud hint and
-                                           ///< pretend it never showed.
+    virtual void RescindAltFireHudHint();  // < undisplay the hud hint and
+                                           // < pretend it never showed.
 
     virtual bool ShouldDisplayReloadHUDHint();
     virtual void DisplayReloadHudHint();

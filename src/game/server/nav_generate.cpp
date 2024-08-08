@@ -708,7 +708,7 @@ void AdjustObstacleDistances( float *pObstacleStartDist, float *pObstacleEndDist
 }
 
 //--------------------------------------------------------------------------------------------------------------
-/**
+/*
 * Makes sure tall, slim obstacles like fencetops, railings and narrow walls have nav areas placed on top of them
 * to allow climbing & traversal
 */
