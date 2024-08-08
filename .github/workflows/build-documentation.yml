@@ -3,7 +3,6 @@ on:
   push:
     branches:
       - main
-      - refactor/gmod-compat-as-addon
 permissions:
   contents: write
 jobs:
