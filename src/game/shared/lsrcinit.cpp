@@ -136,8 +136,9 @@ static const luaL_RegForState luasrclibs[] = {
 
 LUALIB_API void luasrc_openlibs( lua_State *L, bool isStateGameUI )
 {
-    const luaL_RegForState *lib = luasrclibs;
-    for ( ; lib->func; lib++ )
+    const luaL_RegForState *lib;
+
+    for ( lib = luasrclibs; lib->func; lib++ )
     {
         if ( isStateGameUI && !lib->availableInGameUI )
             continue;
@@ -146,4 +147,25 @@ LUALIB_API void luasrc_openlibs( lua_State *L, bool isStateGameUI )
         lua_pushstring( L, lib->name );
         lua_call( L, 1, 0 );
     }
+
+    // An array of all the libraries that were loaded so we can easily
+    // iiterate them in Lua (and generate docs).
+    lua_newtable( L );
+    lua_setglobal( L, "Experiment" );
+    lua_getglobal( L, "Experiment" );
+
+    lua_newtable( L );
+    int i = 1;
+    for ( lib = luasrclibs; lib->func; lib++ )
+    {
+        if ( isStateGameUI && !lib->availableInGameUI )
+            continue;
+
+        lua_pushstring( L, lib->name );
+        lua_rawseti( L, -2, i++ );
+    }
+
+    // Set it as _G.Experiment.LibraryNames
+    lua_setfield( L, -2, "LibraryNames" );
+    lua_pop( L, 1 );  // Pop the Experiment table off the stack
 }

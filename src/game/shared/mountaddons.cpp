@@ -105,19 +105,19 @@ void SetupMountedAddons( lua_State *L )
         char fullAddonPath[MAX_PATH];
         Q_snprintf( fullAddonPath, sizeof( fullAddonPath ), "%s\\" LUA_PATH_ADDONS "\\%s", gamePath, addonName );
 
-        // <full game dir>/addons/<addon name>/lua/?.lua
+        // <full game dir>/addons/<addon name>/scripts/lua/?.lua
         char addonLuaRootPath[MAX_PATH];
         Q_snprintf( addonLuaRootPath, sizeof( addonLuaRootPath ), "%s\\%s\\?.lua", fullAddonPath, LUA_ROOT );
 
         luasrc_add_to_package_path( L, addonLuaRootPath );
 
-        // <full game dir>/addons/<addon name>/lua/modules/?.lua
+        // <full game dir>/addons/<addon name>/scripts/lua/modules/?.lua
         char addonLuaModulesPath[MAX_PATH];
         Q_snprintf( addonLuaModulesPath, sizeof( addonLuaModulesPath ), "%s\\%s\\?.lua", fullAddonPath, LUA_PATH_MODULES );
 
         luasrc_add_to_package_path( L, addonLuaModulesPath );
 
-        // <full game dir>/addons/<addon name>/lua/bin/?.[dll|so] (cpath)
+        // <full game dir>/addons/<addon name>/scripts/lua/bin/?.[dll|so] (cpath)
         char addonLuaBinaryModulesPath[MAX_PATH];
 
         Q_snprintf(
@@ -133,7 +133,7 @@ void SetupMountedAddons( lua_State *L )
 
         luasrc_add_to_package_path( L, addonLuaBinaryModulesPath, /* isPathC = */ true );
 
-        // <full game dir>/addons/<addon name>/lua/gamemodes/?.lua
+        // <full game dir>/addons/<addon name>/gamemodes/?.lua
         char addonLuaGamemodesPath[MAX_PATH];
         Q_snprintf( addonLuaGamemodesPath, sizeof( addonLuaGamemodesPath ), "%s%s\\?.lua", fullAddonPath, LUA_PATH_GAMEMODES );
 

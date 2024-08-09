@@ -94,7 +94,7 @@ gameinfo
 
 			// Paths for Lua and data files
 			data	"|gameinfo_path|data"
-			lua		"|gameinfo_path|lua"
+			lua		"|gameinfo_path|scripts/lua"
 			lua		"|gameinfo_path|gamemodes"
 
 			// This is where downloaded files go.

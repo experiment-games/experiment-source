@@ -1067,8 +1067,8 @@ bool CServerGameDLL::LevelInit( const char *pMapName, char const *pMapEntities, 
     luasrc_init();
 
     luasrc_dofile( L, LUA_PATH_INCLUDES_INIT_FILE );
-    luasrc_dofolder( L, LUA_PATH_AUTORUN_SHARED );
-    luasrc_dofolder( L, LUA_PATH_AUTORUN_SERVER );
+    luasrc_dofolder( L, LUA_PATH_AUTOLOAD_SHARED );
+    luasrc_dofolder( L, LUA_PATH_AUTOLOAD_SERVER );
 
     luasrc_LoadWeapons();
     luasrc_LoadEntities();

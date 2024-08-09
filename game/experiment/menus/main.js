@@ -212,7 +212,6 @@ function initialize() {
             contentList.appendChild(contentItemElement);
         });
     });
-    console.log(navigator.userAgent);
 }
 
 window.addEventListener('interop:ready', () => {

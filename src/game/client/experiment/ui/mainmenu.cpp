@@ -34,7 +34,7 @@ bool GameUIUtil::IsInBackgroundLevel()
 
 bool GameUIUtil::IsInMenu()
 {
-    return IsInBackgroundLevel() || g_BaseMenuPanel->GetMenuBackgroundState() == BACKGROUND_DISCONNECTED;
+    return !engine->IsInGame();
 }
 
 CBaseMenuPanel::CBaseMenuPanel()
@@ -145,10 +145,14 @@ void CBaseMenuPanel::UpdateBackgroundState()
     //{
     //     SetBackgroundRenderState( BACKGROUND_LOADING );
     // }
-    // else if ( m_bEverActivated )
-    //{
-    //     SetBackgroundRenderState( BACKGROUND_DISCONNECTED );
-    // }
+    else if ( GameUIUtil::IsInMenu() )
+    {
+        SetBackgroundRenderState( BACKGROUND_MAINMENU );
+    }
+    /*else
+    {
+        SetBackgroundRenderState( BACKGROUND_DISCONNECTED );
+    }*/
 }
 
 class MainMenuHTML : public HTML
@@ -161,24 +165,24 @@ class MainMenuHTML : public HTML
     {
     }
 
-    protected:
+   protected:
     virtual void OnInstallJavaScriptInterop() OVERRIDE
     {
         AddJavascriptObject( "GameUI" );
         AddJavascriptObjectCallback( "GameUI", "LoadMountableContentInfo" );
     }
 
-    virtual void OnJavaScriptCallback(KeyValues* pData) OVERRIDE
+    virtual void OnJavaScriptCallback( KeyValues *pData ) OVERRIDE
     {
         const char *pszObject = pData->GetString( "object" );
         const char *pszProperty = pData->GetString( "property" );
         int callbackId = pData->GetInt( "callbackId" );
-        //KeyValues *pArguments = pData->FindKey( "arguments" );
+        // KeyValues *pArguments = pData->FindKey( "arguments" );
 
-        //for ( KeyValues *pArg = pArguments->GetFirstSubKey(); pArg; pArg = pArg->GetNextKey() )
+        // for ( KeyValues *pArg = pArguments->GetFirstSubKey(); pArg; pArg = pArg->GetNextKey() )
         //{
-        //    DevMsg( "Argument: %s (inside %s.%s call)\n", pArg->GetName(), pszObject, pszProperty );
-        //}
+        //     DevMsg( "Argument: %s (inside %s.%s call)\n", pArg->GetName(), pszObject, pszProperty );
+        // }
 
         if ( Q_strcmp( pszObject, "GameUI" ) == 0 )
         {
@@ -270,26 +274,27 @@ void CMainMenu::PerformLayout()
 
 void CMainMenu::SetBackgroundRenderState( EBackgroundState state )
 {
-    if ( state == BACKGROUND_DISCONNECTED || state == BACKGROUND_MAINMENU )
-    {
-        if ( state == BACKGROUND_MAINMENU )
-        {
-            if ( m_pHTML )
-                m_pHTML->RunJavascript( "SetBackgroundRenderState( BACKGROUND_MAINMENU )" );
-        }
-    }
-    else if ( state == BACKGROUND_LOADING )
-    {
-        if ( m_pHTML )
-            m_pHTML->RunJavascript( "SetBackgroundRenderState( BACKGROUND_LOADING )" );
+    char szScript[256];
+    Q_snprintf( szScript, sizeof( szScript ), "SetBackgroundRenderState( %d )", state );
 
+    if ( m_pHTML )
+        m_pHTML->RunJavascript( szScript );
+
+    // if ( state == BACKGROUND_DISCONNECTED || state == BACKGROUND_MAINMENU )
+    // {
+    //     if ( state == BACKGROUND_MAINMENU )
+    //     {
+    //         if ( m_pHTML )
+    //             m_pHTML->RunJavascript( "SetBackgroundRenderState( BACKGROUND_MAINMENU )" );
+    //     }
+    // }
+    // else
+    if ( state == BACKGROUND_LOADING )
+    {
         SetAlpha( 0 );
     }
     else if ( state == BACKGROUND_LEVEL )
     {
-        if ( m_pHTML )
-            m_pHTML->RunJavascript( "SetBackgroundRenderState( BACKGROUND_LEVEL )" );
-
         SetAlpha( 255 );
     }
 }

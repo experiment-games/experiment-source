@@ -6,9 +6,6 @@
 Include("sh_enumerations.lua")
 Include("sh_file.lua")
 
--- Add the gmod_compatibility path to the Lua include search path.
-package.IncludePath = "lua/includes/modules/gmod_compatibility/;" .. package.IncludePath
-
 --[[
 	All our libraries are plural, while with Garry's Mod they vary between plural and singular.
 --]]
@@ -1021,43 +1018,6 @@ else
 	end
 end
 
-Include("sh_util.lua")
-Include("util/sql.lua")
-
---[[
-	Libraries taken from Garry's Mod.
---]]
-
--- Shared modules.
-
-require("gmod_compatibility/modules/baseclass")
--- require("gmod_compatibility/modules/concommand") -- We have our own concommand library.
-require("gmod_compatibility/modules/saverestore")
--- require("gmod_compatibility/modules/hook") -- We have our own hook library.
--- require("gmod_compatibility/modules/gamemode") -- We have our own gamemode library.
--- require("gmod_compatibility/modules/weapons") -- We have our own weapons library.
-require("gmod_compatibility/modules/scripted_ents")
-require("gmod_compatibility/modules/player_manager")
-require("gmod_compatibility/modules/numpad")
-require("gmod_compatibility/modules/team")
-require("gmod_compatibility/modules/undo")
-require("gmod_compatibility/modules/cleanup")
-require("gmod_compatibility/modules/duplicator")
-require("gmod_compatibility/modules/constraint")
-require("gmod_compatibility/modules/construct")
--- require("gmod_compatibility/modules/usermessage") -- We have our own usermessage library.
-require("gmod_compatibility/modules/list")
-require("gmod_compatibility/modules/cvars")
-require("gmod_compatibility/modules/http")
-require("gmod_compatibility/modules/properties")
-require("gmod_compatibility/modules/widget")
-require("gmod_compatibility/modules/cookie")
-require("gmod_compatibility/modules/utf8")
-
-require("gmod_compatibility/modules/drive")
--- Include("drive/drive_base.lua")
--- Include("drive/drive_noclip.lua")
-
 function baseclassGetCompatibility(name)
 	if (name:sub(1, 9) == "gamemode_") then
 		name = name:sub(10)
@@ -1068,38 +1028,10 @@ function baseclassGetCompatibility(name)
 	return baseclass.Get(name)
 end
 
-if (SERVER) then
-	-- Server-side modules.
-	require("gmod_compatibility/modules/ai_task")
-	require("gmod_compatibility/modules/ai_schedule")
-end
-
--- Include("extensions/file.lua")
-Include("extensions/angle.lua")
-Include("extensions/debug.lua")
-Include("extensions/entity.lua")
-Include("extensions/ents.lua")
-Include("extensions/math.lua")
-Include("extensions/player.lua")
-Include("extensions/player_auth.lua")
-Include("extensions/string.lua")
-Include("extensions/table.lua")
-Include("extensions/util.lua")
-Include("extensions/vector.lua")
-Include("extensions/game.lua")
-Include("extensions/motionsensor.lua")
-Include("extensions/weapon.lua")
-Include("extensions/coroutine.lua")
-
--- Experiment; we load our table lib again to overwrite the GMod one.
-Include("../../extensions/table.lua")
-
 if (CLIENT) then
 	matproxy = {
 		Add = function(name, data) end -- TODO: Implement
 	}
-
-	Include("util/client.lua")
 
 	spawnmenu = {
 		PopulateFromTextFiles = function(callback)
@@ -1152,36 +1084,6 @@ if (CLIENT) then
 
 		return loadedPresets
 	end
-
-	-- Client-side modules.
-	require("gmod_compatibility/modules/draw")
-	require("gmod_compatibility/modules/markup")
-	require("gmod_compatibility/modules/effects")
-	require("gmod_compatibility/modules/halo")
-	require("gmod_compatibility/modules/killicon")
-	require("gmod_compatibility/modules/spawnmenu")
-	require("gmod_compatibility/modules/controlpanel")
-	require("gmod_compatibility/modules/presets")
-	require("gmod_compatibility/modules/menubar")
-	require("gmod_compatibility/modules/matproxy")
-
-	require("gmod_compatibility/modules/search")
-
-	Include("extensions/client/entity.lua")
-	Include("extensions/client/globals.lua")
-	Include("extensions/client/panel.lua")
-	Include("extensions/client/player.lua")
-	Include("extensions/client/render.lua")
-
-    Include("derma/init.lua")
-
-	Include("cl_awesomium.lua")
-	Include("vgui_base.lua")
-
-	Include("skins/default.lua")
-
-	-- Must load after vgui so base panels are available.
-	require("gmod_compatibility/modules/notification")
 end
 
 --[[
@@ -1311,3 +1213,111 @@ hook.Add("Initialize", "GModCompatibility.CallInitializeHooks", function()
 	hook.Run("OnGamemodeLoaded")
 	hook.Run("PostGamemodeLoaded")
 end)
+
+-- Setup the Garry's Mod lua include path so Include can find scripts
+-- No need to prefix search paths here, since Include already finds scripts using
+-- the configured search paths.
+package.IncludePath = "lua/;" .. package.IncludePath
+
+-- Setup to search for modules in all search paths
+local searchPathsString = FileSystem.GetSearchPath("GAME")
+
+for searchPath in searchPathsString:gmatch("([^;]+)") do
+    if (searchPath:find("%.bsp$") or searchPath:find("%.vpk$")) then
+        continue
+    end
+
+	if (searchPath:sub(-1) ~= "/" and searchPath:sub(-1) ~= "\\") then
+		searchPath = searchPath .. "/"
+	end
+
+    -- Prepend the searchpath to the lua dirs
+    package.path = searchPath .. "lua/includes/modules/?.lua;" .. package.path
+
+	if (System.IsWindows()) then
+		package.cpath = searchPath .. "lua/bin/?.dll;" .. package.cpath
+    elseif (System.IsLinux()) then
+		package.cpath = searchPath .. "lua/bin/?.so;" .. package.cpath
+	end
+end
+
+-- Now that the entire compatibility setup is done, we can execute the scripts in 'autorun' (shared), 'autorun/client' and 'autorun/server'.
+local function includeFolder(folder)
+    local files = file.Find(folder .. "/*.lua", "GAME")
+
+    for _, fileName in ipairs(files) do
+        include(folder .. "/" .. fileName)
+    end
+end
+
+-- We implement this ourselves, because the gmod util/color.lua messes up the metatable
+include("sh_color.lua")
+
+--[[
+	Load the Garry's Mod init scripts and panels
+--]]
+
+-- Let's setup a temporary filter so we don't load the extensions and modules we implemented ourselves.
+local filter = {
+	require = {
+		["concommand"] = true,
+		["hook"] = true,
+		["gamemode"] = true,
+		["weapons"] = true,
+		["usermessage"] = true,
+    },
+	include = {
+		["extensions/net.lua"] = true, -- We implement networking using luasocket
+        ["extensions/file.lua"] = true, -- Our filesystem works slightly different
+		["util/color.lua"] = true, -- In contrast with gmod, we should properly get metatables everywhere (so don't need this hack util)
+	},
+}
+
+local originalRequire = require
+local originalInclude = Include
+
+require = function(name)
+    if (not filter.require[name]) then
+        return originalRequire(name)
+    end
+end
+
+include = function(name)
+	if (not filter.include[name]) then
+		return originalInclude(name)
+	end
+end
+
+include("includes/init.lua")
+
+include = originalInclude
+require = originalRequire
+
+if (CLIENT) then
+    --[[
+		Load VGUI
+	--]]
+
+    include("derma/init.lua")
+
+    -- include("includes/vgui_base.lua") -- I don't think this is actually loaded in Garry's Mod since it's missing a bunch of includes
+    -- So let's just include all files inside lua/vgui/
+	includeFolder("lua/vgui")
+
+    include("cl_awesomium.lua")
+
+	include("skins/default.lua")
+
+	require( "notification" )
+end
+
+--[[
+	Load the autorun scripts.
+--]]
+includeFolder("lua/autorun")
+
+if (CLIENT) then
+	includeFolder("lua/autorun/client")
+else
+	includeFolder("lua/autorun/server")
+end

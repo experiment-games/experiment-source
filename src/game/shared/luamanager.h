@@ -21,7 +21,13 @@
 #include <scriptedclientluapanel.h>
 #endif
 
-#define LUA_ROOT "lua"  // Can't be "LUA_PATH" because luaconf.h uses it.
+// 'LUA_ROOT' can't be "LUA_PATH" because luaconf.h uses it.
+// We place the lua folder in scripts for Garry's Mod compatibility. This
+// works because we'll not accidentally load Garry's Mod Lua files.
+// Instead our compatibility module can load them only after it's setup
+// compatibility.
+#define LUA_ROOT "scripts\\lua"
+
 #define LUA_PATH_CACHE "lua_cache\\"
 #define LUA_PATH_ADDONS "addons"
 #define LUA_PATH_GAMEMODES "\\gamemodes"
@@ -42,9 +48,9 @@
 
 #define LUA_PATH_INCLUDES LUA_ROOT "\\includes"
 #define LUA_PATH_INCLUDES_INIT_FILE LUA_PATH_INCLUDES "\\sh_init.lua"
-#define LUA_PATH_AUTORUN_CLIENT LUA_ROOT "\\autorun\\client"
-#define LUA_PATH_AUTORUN_SERVER LUA_ROOT "\\autorun\\server"
-#define LUA_PATH_AUTORUN_SHARED LUA_ROOT "\\autorun\\shared"
+#define LUA_PATH_AUTOLOAD_CLIENT LUA_ROOT "\\autoload\\client"
+#define LUA_PATH_AUTOLOAD_SERVER LUA_ROOT "\\autoload\\server"
+#define LUA_PATH_AUTOLOAD_SHARED LUA_ROOT "\\autoload\\shared"
 #define LUA_PATH_EFFECTS LUA_ROOT "\\effects"
 #define LUA_PATH_ENTITIES LUA_ROOT "\\entities"
 #define LUA_PATH_GAMEUI LUA_ROOT "\\gameui"

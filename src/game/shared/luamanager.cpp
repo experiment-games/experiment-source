@@ -493,8 +493,8 @@ static int luasrc_UnloadLoadedModules( lua_State *L )
 }
 
 /// <summary>
-/// Loader function to be added to the package.loaders table.
-/// This will load LUA_BINARY_MODULES_GLOB files from the lua/bin directory.
+/// Loader function to be added to the package.loaders table. This will
+/// load LUA_BINARY_MODULES_GLOB files from the scripts/lua/bin directory.
 /// </summary>
 /// <param name="L"></param>
 /// <returns></returns>
@@ -1927,19 +1927,19 @@ void luasrc_LoadWeapons( const char *path )
 }
 
 /// <summary>
-/// As soon as a `{gamemode name}.lua` file exists in the lua/loaders folder
-/// for the gamemode being loaded, it and all its dependencies will be loaded
-/// using this loader lua state.
+/// As soon as a `{gamemode name}.lua` file exists in the scripts/lua/loaders
+/// folder for the gamemode being loaded, it and all its dependencies will be
+/// loaded using this loader lua state.
 /// Each file can be preprocessed by the loader, which can modify the file
 /// contents before they are loaded into the main Lua state.
 /// </summary>
 /// <param name="gamemodePath"></param>
 void luasrc_InitCustomLoader( const char *gamemode )
 {
-    // Check if the lua/loaders/{gamemode}.lua file exists, if it does,
+    // Check if the scripts/lua/loaders/{gamemode}.lua file exists, if it does,
     // load it into the  loader Lua state
     char loaderFilePath[MAX_PATH];
-    Q_snprintf( loaderFilePath, sizeof( loaderFilePath ), "lua\\loaders\\%s.lua", gamemode );
+    Q_snprintf( loaderFilePath, sizeof( loaderFilePath ), LUA_ROOT "\\loaders\\%s.lua", gamemode );
 
     if ( !filesystem->FileExists( loaderFilePath, CONTENT_SEARCH_PATH ) )
     {

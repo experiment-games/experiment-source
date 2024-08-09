@@ -150,6 +150,14 @@ static int filesystem_GetLocalCopy( lua_State *L )
     return 0;
 }
 
+static int filesystem_GetSearchPath( lua_State *L )
+{
+    char searchPath[MAX_PATH * 25];  // TODO: How do we know how many paths there are? This is a guess.
+    filesystem->GetSearchPath_safe( luaL_checkstring( L, 1 ), luaL_optboolean( L, 2, false ), searchPath );
+    lua_pushstring( L, searchPath );
+    return 1;
+}
+
 static int filesystem_GetWhitelistSpewFlags( lua_State *L )
 {
     lua_pushinteger( L, filesystem->GetWhitelistSpewFlags() );
@@ -439,6 +447,7 @@ static const luaL_Reg filesystemlib[] = {
     { "Flush", filesystem_Flush },
     { "GetDVDMode", filesystem_GetDVDMode },
     { "GetLocalCopy", filesystem_GetLocalCopy },
+    { "GetSearchPath", filesystem_GetSearchPath },
     { "GetWhitelistSpewFlags", filesystem_GetWhitelistSpewFlags },
     { "HintResourceNeed", filesystem_HintResourceNeed },
     { "IsDirectory", filesystem_IsDirectory },

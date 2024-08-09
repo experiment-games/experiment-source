@@ -32,50 +32,12 @@ static int gEntList_Clear( lua_State *L )
     return 0;
 }
 
-/// <luadoc>
-///     <summary>
-///         Finds an entity by the given classname, it starts at the entity given in the first argument.
-///     </summary>
-///     <library>%LUA_ENTLISTLIBNAME%</library>
-///     <function>FindEntityByClassname</function>
-///     <param name="entity">The entity to start searching from.</param>
-///     <param name="classname">The classname of the entity to find.</param>
-///     <returns>An entity with the given classname.</returns>
-///     <realm>server</realm>
-///     <example>
-///         Finds an entity by the classname "npc_zombie".
-///         By providing NULL as the first argument, it will search from the beginning of the entity list.
-///         <code>
-///             local entity = EntityList.FindEntityByClassname( NULL, "npc_zombie" )
-///             print( entity:GetClassname(), entity:GetPosition() )
-///         </code>
-///     </example>
-///     <example>
-///         Finds an entity by the classname "player", starting from the player with the name "Anne".
-///         <code>
-///            local entity = EntityList.FindEntityByClassname( Util.PlayerByName( "Anne" ), "player" )
-///            print( entity:GetClassname(), entity:GetPosition() )
-///         </code>
-///     </example>
-/// </luadoc>
 static int gEntList_FindEntityByClassname( lua_State *L )
 {
     CBaseEntity::PushLuaInstanceSafe( L, gEntList.FindEntityByClassname( lua_toentity( L, 1 ), luaL_checkstring( L, 2 ) ) );
     return 1;
 }
 
-/// <luadoc>
-///     <summary>
-///         Finds an entity by the given classname, it narrows the search within the radius of the given vector.
-///     </summary>
-///     <library>%LUA_ENTLISTLIBNAME%</library>
-///     <function>FindEntityByClassnameNearest</function>
-///     <param name="classname">The classname of the entity to find.</param>
-///     <param name="origin">The origin to search from.</param>
-///     <param name="radius">The radius to search within.</param>
-///     <returns>An entity with the given classname.</returns>
-///     <realm>server</realm>
-/// </luadoc>
 static int gEntList_FindEntityByClassnameNearest( lua_State *L )
 {
     CBaseEntity::PushLuaInstanceSafe( L, gEntList.FindEntityByClassnameNearest( luaL_checkstring( L, 1 ), luaL_checkvector( L, 2 ), luaL_checknumber( L, 3 ) ) );
