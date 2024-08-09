@@ -2,6 +2,11 @@
 template: lua-class-function.html
 title: SetBodyGroups
 icon: lua-shared
+tags:
+  - lua
+  - shared
+  - needs-verification
+  - needs-example
 lua:
   library: CBaseAnimating
   function: SetBodyGroups

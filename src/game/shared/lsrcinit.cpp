@@ -27,11 +27,13 @@ typedef struct luaL_RegForState
     int availableRealms;
 } luaL_RegForState;
 
+// I'm in the process of documenting using the LUA_BINDING_* macros.
+// I'll track progress here:                                                        Done:
 static const luaL_RegForState luasrclibs[] = {
     //
     // Shared
     //
-    { LUA_BASEANIMATINGLIBNAME, luaopen_CBaseAnimating_shared, REALM_SHARED },
+    { LUA_BASEANIMATINGLIBNAME, luaopen_CBaseAnimating_shared, REALM_SHARED },      // ✔
     { LUA_BASEANIMATINGLIBNAME, luaopen_CBaseAnimating, REALM_SHARED },
     { LUA_BASECOMBATWEAPONLIBNAME, luaopen_CBaseCombatWeapon, REALM_SHARED },
     { LUA_BASEENTITYLIBNAME, luaopen_CBaseEntity_shared, REALM_SHARED },

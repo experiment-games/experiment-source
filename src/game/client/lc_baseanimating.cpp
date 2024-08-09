@@ -40,209 +40,538 @@ LUALIB_API lua_CBaseAnimating *luaL_checkanimating( lua_State *L, int narg )
     return d;
 }
 
-static int CBaseAnimating_AddEntity( lua_State *L )
+LUA_REGISTRATION_INIT()
+
+//LUA_BINDING_BEGIN( CBaseAnimating, GetModelName, "class", "Get the model path of the entity" )
+//{
+//    lua_CBaseAnimating *pAnimating = LUA_BINDING_ARGUMENT( luaL_checkanimating, 1, "entity" );
+//
+//    lua_pushstring( L, pAnimating->GetModelPtr()->pszName() );
+//
+//    return 1;
+//}
+//LUA_BINDING_END( "string", "The model name" )
+
+//static int CBaseAnimating_AddEntity( lua_State *L )
+//{
+//    luaL_checkanimating( L, 1 )->AddEntity();
+//    return 0;
+//}
+LUA_BINDING_BEGIN( CBaseAnimating, AddEntityToVisibleList, "class", "Add the entity to the visible entity list. Seems to only call CreateLightEffects internally." )
 {
-    luaL_checkanimating( L, 1 )->AddEntity();
+    lua_CBaseAnimating *pAnimating = LUA_BINDING_ARGUMENT( luaL_checkanimating, 1, "entity" );
+
+    pAnimating->AddEntity();
+
     return 0;
 }
+LUA_BINDING_END()
 
-static int CBaseAnimating_AddToClientSideAnimationList( lua_State *L )
+//static int CBaseAnimating_AddToClientSideAnimationList( lua_State *L )
+//{
+//    luaL_checkanimating( L, 1 )->AddToClientSideAnimationList();
+//    return 0;
+//}
+LUA_BINDING_BEGIN( CBaseAnimating, AddToClientSideAnimationList, "class", "Add the entity to the client side animation list." )
 {
-    luaL_checkanimating( L, 1 )->AddToClientSideAnimationList();
+    lua_CBaseAnimating *pAnimating = LUA_BINDING_ARGUMENT( luaL_checkanimating, 1, "entity" );
+
+    pAnimating->AddToClientSideAnimationList();
+
     return 0;
 }
+LUA_BINDING_END()
 
-static int CBaseAnimating_BecomeRagdollOnClient( lua_State *L )
+//static int CBaseAnimating_BecomeRagdollOnClient( lua_State *L )
+//{
+//    CBaseEntity::PushLuaInstanceSafe( L, luaL_checkanimating( L, 1 )->BecomeRagdollOnClient() );
+//    return 1;
+//}
+LUA_BINDING_BEGIN( CBaseAnimating, BecomeRagdollOnClient, "class", "Become a ragdoll on the client." )
 {
-    CBaseEntity::PushLuaInstanceSafe( L, luaL_checkanimating( L, 1 )->BecomeRagdollOnClient() );
+    lua_CBaseAnimating *pAnimating = LUA_BINDING_ARGUMENT( luaL_checkanimating, 1, "entity" );
+
+    CBaseEntity::PushLuaInstanceSafe( L, pAnimating->BecomeRagdollOnClient() );
+
     return 1;
 }
+LUA_BINDING_END( "entity", "The ragdoll entity" )
 
-static int CBaseAnimating_CalculateIKLocks( lua_State *L )
+//static int CBaseAnimating_CalculateIKLocks( lua_State *L )
+//{
+//    luaL_checkanimating( L, 1 )->CalculateIKLocks( luaL_checknumber( L, 2 ) );
+//    return 0;
+//}
+LUA_BINDING_BEGIN( CBaseAnimating, CalculateIKLocks, "class", "Calculate IK locks." )
 {
-    luaL_checkanimating( L, 1 )->CalculateIKLocks( luaL_checknumber( L, 2 ) );
+    lua_CBaseAnimating *pAnimating = LUA_BINDING_ARGUMENT( luaL_checkanimating, 1, "entity" );
+    float flTime = LUA_BINDING_ARGUMENT( luaL_checknumber, 2, "currentTime" );
+
+    pAnimating->CalculateIKLocks( flTime );
+
     return 0;
 }
+LUA_BINDING_END()
 
-static int CBaseAnimating_ClampCycle( lua_State *L )
+//static int CBaseAnimating_ClampCycle( lua_State *L )
+//{
+//    lua_pushnumber( L, luaL_checkanimating( L, 1 )->ClampCycle( luaL_checknumber( L, 2 ), luaL_checkboolean( L, 3 ) ) );
+//    return 1;
+//}
+LUA_BINDING_BEGIN( CBaseAnimating, ClampCycle, "class", "Clamp the cycle." )
 {
-    lua_pushnumber( L, luaL_checkanimating( L, 1 )->ClampCycle( luaL_checknumber( L, 2 ), luaL_checkboolean( L, 3 ) ) );
+    lua_CBaseAnimating *pAnimating = LUA_BINDING_ARGUMENT( luaL_checkanimating, 1, "entity" );
+    float flCycle = LUA_BINDING_ARGUMENT( luaL_checknumber, 2, "cycle" );
+    bool bIsLooping = LUA_BINDING_ARGUMENT( luaL_checkboolean, 3, "isLooping" );
+
+    lua_pushnumber( L, pAnimating->ClampCycle( flCycle, bIsLooping ) );
+
     return 1;
 }
+LUA_BINDING_END( "number", "The clamped cycle" )
 
-static int CBaseAnimating_Clear( lua_State *L )
+//static int CBaseAnimating_Clear( lua_State *L )
+//{
+//    luaL_checkanimating( L, 1 )->Clear();
+//    return 0;
+//}
+LUA_BINDING_BEGIN( CBaseAnimating, Clear, "class", "Resets internal fields." )
 {
-    luaL_checkanimating( L, 1 )->Clear();
+    lua_CBaseAnimating *pAnimating = LUA_BINDING_ARGUMENT( luaL_checkanimating, 1, "entity" );
+
+    pAnimating->Clear();
+
     return 0;
 }
+LUA_BINDING_END()
 
-static int CBaseAnimating_ClearRagdoll( lua_State *L )
+//static int CBaseAnimating_ClearRagdoll( lua_State *L )
+//{
+//    luaL_checkanimating( L, 1 )->ClearRagdoll();
+//    return 0;
+//}
+LUA_BINDING_BEGIN( CBaseAnimating, ClearRagdoll, "class", "Clear/destroy the clientside ragdoll." )
 {
-    luaL_checkanimating( L, 1 )->ClearRagdoll();
+    lua_CBaseAnimating *pAnimating = LUA_BINDING_ARGUMENT( luaL_checkanimating, 1, "entity" );
+
+    pAnimating->ClearRagdoll();
+
     return 0;
 }
+LUA_BINDING_END()
 
-static int CBaseAnimating_ClientSideAnimationChanged( lua_State *L )
+//static int CBaseAnimating_ClientSideAnimationChanged( lua_State *L )
+//{
+//    luaL_checkanimating( L, 1 )->ClientSideAnimationChanged();
+//    return 0;
+//}
+LUA_BINDING_BEGIN( CBaseAnimating, ClientSideAnimationChanged, "class", "Called when the client side animation changes." )
 {
-    luaL_checkanimating( L, 1 )->ClientSideAnimationChanged();
+    lua_CBaseAnimating *pAnimating = LUA_BINDING_ARGUMENT( luaL_checkanimating, 1, "entity" );
+
+    pAnimating->ClientSideAnimationChanged();
+
     return 0;
 }
+LUA_BINDING_END()
 
-static int CBaseAnimating_ComputeClientSideAnimationFlags( lua_State *L )
+//static int CBaseAnimating_ComputeClientSideAnimationFlags( lua_State *L )
+//{
+//    lua_pushinteger(
+//        L, luaL_checkanimating( L, 1 )->ComputeClientSideAnimationFlags() );
+//    return 1;
+//}
+LUA_BINDING_BEGIN( CBaseAnimating, ComputeClientSideAnimationFlags, "class", "Compute the client side animation flags." )
 {
-    lua_pushinteger(
-        L, luaL_checkanimating( L, 1 )->ComputeClientSideAnimationFlags() );
+    lua_CBaseAnimating *pAnimating = LUA_BINDING_ARGUMENT( luaL_checkanimating, 1, "entity" );
+
+    lua_pushinteger( L, pAnimating->ComputeClientSideAnimationFlags() );
+
     return 1;
 }
+LUA_BINDING_END( "number", "The client side animation flags" )
 
-static int CBaseAnimating_ComputeEntitySpaceHitboxSurroundingBox( lua_State *L )
+//static int CBaseAnimating_ComputeEntitySpaceHitboxSurroundingBox( lua_State *L )
+//{
+//    Vector pVecWorldMins, pVecWorldMaxs;
+//    lua_pushboolean(
+//        L, luaL_checkanimating( L, 1 )->ComputeEntitySpaceHitboxSurroundingBox( &pVecWorldMins, &pVecWorldMaxs ) );
+//    lua_pushvector( L, pVecWorldMins );
+//    lua_pushvector( L, pVecWorldMaxs );
+//    return 3;
+//}
+LUA_BINDING_BEGIN( CBaseAnimating, ComputeEntitySpaceHitboxSurroundingBox, "class", "Compute the entity space hitbox surrounding box." )
 {
+    lua_CBaseAnimating *pAnimating = LUA_BINDING_ARGUMENT( luaL_checkanimating, 1, "entity" );
+
     Vector pVecWorldMins, pVecWorldMaxs;
-    lua_pushboolean(
-        L, luaL_checkanimating( L, 1 )->ComputeEntitySpaceHitboxSurroundingBox( &pVecWorldMins, &pVecWorldMaxs ) );
+    lua_pushboolean( L, pAnimating->ComputeEntitySpaceHitboxSurroundingBox( &pVecWorldMins, &pVecWorldMaxs ) );
     lua_pushvector( L, pVecWorldMins );
     lua_pushvector( L, pVecWorldMaxs );
+
     return 3;
 }
+LUA_BINDING_END( "boolean", "Whether the operation was successful", "vector", "The world mins", "vector", "The world maxs" )
 
-static int CBaseAnimating_ComputeHitboxSurroundingBox( lua_State *L )
+//static int CBaseAnimating_ComputeHitboxSurroundingBox( lua_State *L )
+//{
+//    Vector pVecWorldMins, pVecWorldMaxs;
+//    lua_pushboolean( L, luaL_checkanimating( L, 1 )->ComputeHitboxSurroundingBox( &pVecWorldMins, &pVecWorldMaxs ) );
+//    lua_pushvector( L, pVecWorldMins );
+//    lua_pushvector( L, pVecWorldMaxs );
+//    return 3;
+//}
+LUA_BINDING_BEGIN( CBaseAnimating, ComputeHitboxSurroundingBox, "class", "Compute the hitbox surrounding box." )
 {
+    lua_CBaseAnimating *pAnimating = LUA_BINDING_ARGUMENT( luaL_checkanimating, 1, "entity" );
+
     Vector pVecWorldMins, pVecWorldMaxs;
-    lua_pushboolean( L, luaL_checkanimating( L, 1 )->ComputeHitboxSurroundingBox( &pVecWorldMins, &pVecWorldMaxs ) );
+    lua_pushboolean( L, pAnimating->ComputeHitboxSurroundingBox( &pVecWorldMins, &pVecWorldMaxs ) );
     lua_pushvector( L, pVecWorldMins );
     lua_pushvector( L, pVecWorldMaxs );
+
     return 3;
 }
+LUA_BINDING_END( "boolean", "Whether the operation was successful", "vector", "The world mins", "vector", "The world maxs" )
 
-static int CBaseAnimating_CreateRagdollCopy( lua_State *L )
+//static int CBaseAnimating_CreateRagdollCopy( lua_State *L )
+//{
+//    CBaseEntity::PushLuaInstanceSafe( L, luaL_checkanimating( L, 1 )->CreateRagdollCopy() );
+//    return 1;
+//}
+LUA_BINDING_BEGIN( CBaseAnimating, CreateRagdollCopy, "class", "Create a copy of the ragdoll." )
 {
-    CBaseEntity::PushLuaInstanceSafe( L, luaL_checkanimating( L, 1 )->CreateRagdollCopy() );
+    lua_CBaseAnimating *pAnimating = LUA_BINDING_ARGUMENT( luaL_checkanimating, 1, "entity" );
+
+    CBaseEntity::PushLuaInstanceSafe( L, pAnimating->CreateRagdollCopy() );
+
     return 1;
 }
+LUA_BINDING_END( "entity", "The ragdoll entity" )
 
-static int CBaseAnimating_CreateUnragdollInfo( lua_State *L )
+//static int CBaseAnimating_CreateUnragdollInfo( lua_State *L )
+//{
+//    luaL_checkanimating( L, 1 )->CreateUnragdollInfo( luaL_checkanimating( L, 2 ) );
+//    return 0;
+//}
+LUA_BINDING_BEGIN( CBaseAnimating, CreateUnragdollInfo, "class", "Create unragdoll info." )
 {
-    luaL_checkanimating( L, 1 )->CreateUnragdollInfo( luaL_checkanimating( L, 2 ) );
+    lua_CBaseAnimating *pAnimating = LUA_BINDING_ARGUMENT( luaL_checkanimating, 1, "entity" );
+    lua_CBaseAnimating *pRagdoll = LUA_BINDING_ARGUMENT( luaL_checkanimating, 2, "ragdoll" );
+
+    pAnimating->CreateUnragdollInfo( pRagdoll );
+
     return 0;
 }
+LUA_BINDING_END()
 
-static int CBaseAnimating_DisableMuzzleFlash( lua_State *L )
+//static int CBaseAnimating_DisableMuzzleFlash( lua_State *L )
+//{
+//    luaL_checkanimating( L, 1 )->DisableMuzzleFlash();
+//    return 0;
+//}
+LUA_BINDING_BEGIN( CBaseAnimating, DisableMuzzleFlash, "class", "Disable the muzzle flash." )
 {
-    luaL_checkanimating( L, 1 )->DisableMuzzleFlash();
+    lua_CBaseAnimating *pAnimating = LUA_BINDING_ARGUMENT( luaL_checkanimating, 1, "entity" );
+
+    pAnimating->DisableMuzzleFlash();
+
     return 0;
 }
+LUA_BINDING_END()
 
-static int CBaseAnimating_DispatchMuzzleEffect( lua_State *L )
+//static int CBaseAnimating_DispatchMuzzleEffect( lua_State *L )
+//{
+//    lua_pushboolean( L, luaL_checkanimating( L, 1 )->DispatchMuzzleEffect( luaL_checkstring( L, 2 ), luaL_checkboolean( L, 3 ) ) );
+//    return 1;
+//}
+LUA_BINDING_BEGIN( CBaseAnimating, DispatchMuzzleEffect, "class", "Dispatch the muzzle effect." )
 {
-    lua_pushboolean( L, luaL_checkanimating( L, 1 )->DispatchMuzzleEffect( luaL_checkstring( L, 2 ), luaL_checkboolean( L, 3 ) ) );
+    lua_CBaseAnimating *pAnimating = LUA_BINDING_ARGUMENT( luaL_checkanimating, 1, "entity" );
+    const char *pszEffectName = LUA_BINDING_ARGUMENT( luaL_checkstring, 2, "effectName" );
+    bool bForce = LUA_BINDING_ARGUMENT( luaL_checkboolean, 3, "force" );
+
+    lua_pushboolean( L, pAnimating->DispatchMuzzleEffect( pszEffectName, bForce ) );
+
     return 1;
 }
+LUA_BINDING_END( "boolean", "Whether the operation was successful" )
 
-static int CBaseAnimating_DoMuzzleFlash( lua_State *L )
+//static int CBaseAnimating_DoMuzzleFlash( lua_State *L )
+//{
+//    luaL_checkanimating( L, 1 )->DoMuzzleFlash();
+//    return 0;
+//}
+LUA_BINDING_BEGIN( CBaseAnimating, DoMuzzleFlash, "class", "Do the muzzle flash." )
 {
-    luaL_checkanimating( L, 1 )->DoMuzzleFlash();
+    lua_CBaseAnimating *pAnimating = LUA_BINDING_ARGUMENT( luaL_checkanimating, 1, "entity" );
+
+    pAnimating->DoMuzzleFlash();
+
     return 0;
 }
+LUA_BINDING_END()
 
-static int CBaseAnimating_DrawClientHitboxes( lua_State *L )
+//static int CBaseAnimating_DrawClientHitboxes( lua_State *L )
+//{
+//    luaL_checkanimating( L, 1 )->DrawClientHitboxes( luaL_optnumber( L, 2, 0.0f ),
+//                                                     luaL_optboolean( L, 3, false ) );
+//    return 0;
+//}
+LUA_BINDING_BEGIN( CBaseAnimating, DrawClientHitboxes, "class", "Draw the client hitboxes." )
 {
-    luaL_checkanimating( L, 1 )->DrawClientHitboxes( luaL_optnumber( L, 2, 0.0f ),
-                                                     luaL_optboolean( L, 3, false ) );
+    lua_CBaseAnimating *pAnimating = LUA_BINDING_ARGUMENT( luaL_checkanimating, 1, "entity" );
+    float flDuration = LUA_BINDING_ARGUMENT_OPT( luaL_optnumber, 2, 0.0f, "duration" );
+    bool bMonoColor = LUA_BINDING_ARGUMENT_OPT( luaL_optboolean, 3, false, "monoColor" );
+
+    pAnimating->DrawClientHitboxes( flDuration, bMonoColor );
+
     return 0;
 }
+LUA_BINDING_END()
 
-static int CBaseAnimating_DrawModel( lua_State *L )
+//static int CBaseAnimating_DrawModel( lua_State *L )
+//{
+//    lua_pushinteger( L,
+//                     luaL_checkanimating( L, 1 )->DrawModel( ( int )luaL_optnumber( L, 2, STUDIO_RENDER ) ) );
+//    return 1;
+//}
+LUA_BINDING_BEGIN( CBaseAnimating, DrawModel, "class", "Draw the model." )
 {
-    lua_pushinteger( L,
-                     luaL_checkanimating( L, 1 )->DrawModel( ( int )luaL_optnumber( L, 2, STUDIO_RENDER ) ) );
+    lua_CBaseAnimating *pAnimating = LUA_BINDING_ARGUMENT( luaL_checkanimating, 1, "entity" );
+    int nFlags = LUA_BINDING_ARGUMENT_OPT( luaL_optnumber, 2, STUDIO_RENDER, "flags" );
+
+    lua_pushinteger( L, pAnimating->DrawModel( nFlags ) );
+
     return 1;
 }
+LUA_BINDING_END( "number", "The result of the operation" )
 
-static int CBaseAnimating_FindFollowedEntity( lua_State *L )
+//static int CBaseAnimating_FindFollowedEntity( lua_State *L )
+//{
+//    CBaseEntity::PushLuaInstanceSafe( L, luaL_checkanimating( L, 1 )->FindFollowedEntity() );
+//    return 1;
+//}
+LUA_BINDING_BEGIN( CBaseAnimating, FindFollowedEntity, "class", "Find the followed entity." )
 {
-    CBaseEntity::PushLuaInstanceSafe( L, luaL_checkanimating( L, 1 )->FindFollowedEntity() );
+    lua_CBaseAnimating *pAnimating = LUA_BINDING_ARGUMENT( luaL_checkanimating, 1, "entity" );
+
+    CBaseEntity::PushLuaInstanceSafe( L, pAnimating->FindFollowedEntity() );
+
     return 1;
 }
+LUA_BINDING_END( "entity", "The followed entity" )
 
-static int CBaseAnimating_FindTransitionSequence( lua_State *L )
+//static int CBaseAnimating_FindTransitionSequence( lua_State *L )
+//{
+//    int piDir;
+//    lua_pushinteger( L, luaL_checkanimating( L, 1 )->FindTransitionSequence( luaL_checknumber( L, 2 ), luaL_checknumber( L, 3 ), &piDir ) );
+//    lua_pushinteger( L, piDir );
+//    return 2;
+//}
+LUA_BINDING_BEGIN( CBaseAnimating, FindTransitionSequence, "class", "Find the transition sequence." )
 {
+    lua_CBaseAnimating *pAnimating = LUA_BINDING_ARGUMENT( luaL_checkanimating, 1, "entity" );
+    int iSequence = LUA_BINDING_ARGUMENT( luaL_checknumber, 2, "sequence" );
+    int iGoalSequence = LUA_BINDING_ARGUMENT( luaL_checknumber, 3, "goalSequence" );
+
     int piDir;
-    lua_pushinteger( L, luaL_checkanimating( L, 1 )->FindTransitionSequence( luaL_checknumber( L, 2 ), luaL_checknumber( L, 3 ), &piDir ) );
+    lua_pushinteger( L, pAnimating->FindTransitionSequence( iSequence, iGoalSequence, &piDir ) );
     lua_pushinteger( L, piDir );
+
     return 2;
 }
+LUA_BINDING_END( "number", "The transition sequence", "number", "The direction" )
 
-static int CBaseAnimating_FireEvent( lua_State *L )
+//static int CBaseAnimating_FireEvent( lua_State *L )
+//{
+//    luaL_checkanimating( L, 1 )->FireEvent(
+//        luaL_checkvector( L, 2 ), luaL_checkangle( L, 3 ), luaL_checknumber( L, 4 ), luaL_checkstring( L, 5 ) );
+//    return 0;
+//}
+LUA_BINDING_BEGIN( CBaseAnimating, FireEvent, "class", "Fire an event." )
 {
-    luaL_checkanimating( L, 1 )->FireEvent(
-        luaL_checkvector( L, 2 ), luaL_checkangle( L, 3 ), luaL_checknumber( L, 4 ), luaL_checkstring( L, 5 ) );
+    lua_CBaseAnimating *pAnimating = LUA_BINDING_ARGUMENT( luaL_checkanimating, 1, "entity" );
+    Vector pVecOrigin = LUA_BINDING_ARGUMENT( luaL_checkvector, 2, "origin" );
+    QAngle pAngAngles = LUA_BINDING_ARGUMENT( luaL_checkangle, 3, "angles" );
+    float flEventTime = LUA_BINDING_ARGUMENT( luaL_checknumber, 4, "eventTime" );
+    const char *pszOptions = LUA_BINDING_ARGUMENT( luaL_checkstring, 5, "options" );
+
+    pAnimating->FireEvent( pVecOrigin, pAngAngles, flEventTime, pszOptions );
+
     return 0;
 }
+LUA_BINDING_END()
 
-static int CBaseAnimating_FireObsoleteEvent( lua_State *L )
+//static int CBaseAnimating_FireObsoleteEvent( lua_State *L )
+//{
+//    luaL_checkanimating( L, 1 )->FireObsoleteEvent(
+//        luaL_checkvector( L, 2 ), luaL_checkangle( L, 3 ), luaL_checknumber( L, 4 ), luaL_checkstring( L, 5 ) );
+//    return 0;
+//}
+LUA_BINDING_BEGIN( CBaseAnimating, FireObsoleteEvent, "class", "Fire an obsolete event." )
 {
-    luaL_checkanimating( L, 1 )->FireObsoleteEvent(
-        luaL_checkvector( L, 2 ), luaL_checkangle( L, 3 ), luaL_checknumber( L, 4 ), luaL_checkstring( L, 5 ) );
+    lua_CBaseAnimating *pAnimating = LUA_BINDING_ARGUMENT( luaL_checkanimating, 1, "entity" );
+    Vector pVecOrigin = LUA_BINDING_ARGUMENT( luaL_checkvector, 2, "origin" );
+    QAngle pAngAngles = LUA_BINDING_ARGUMENT( luaL_checkangle, 3, "angles" );
+    float flEventTime = LUA_BINDING_ARGUMENT( luaL_checknumber, 4, "eventTime" );
+    const char *pszOptions = LUA_BINDING_ARGUMENT( luaL_checkstring, 5, "options" );
+
+    pAnimating->FireObsoleteEvent( pVecOrigin, pAngAngles, flEventTime, pszOptions );
+
     return 0;
 }
+LUA_BINDING_END()
 
-static int CBaseAnimating_ForceClientSideAnimationOn( lua_State *L )
+//static int CBaseAnimating_ForceClientSideAnimationOn( lua_State *L )
+//{
+//    luaL_checkanimating( L, 1 )->ForceClientSideAnimationOn();
+//    return 0;
+//}
+LUA_BINDING_BEGIN( CBaseAnimating, ForceClientSideAnimationOn, "class", "Force the client side animation on." )
 {
-    luaL_checkanimating( L, 1 )->ForceClientSideAnimationOn();
+    lua_CBaseAnimating *pAnimating = LUA_BINDING_ARGUMENT( luaL_checkanimating, 1, "entity" );
+
+    pAnimating->ForceClientSideAnimationOn();
+
     return 0;
 }
+LUA_BINDING_END()
 
-static int CBaseAnimating_FrameAdvance( lua_State *L )
+//static int CBaseAnimating_FrameAdvance( lua_State *L )
+//{
+//    lua_pushnumber(
+//        L, luaL_checkanimating( L, 1 )->FrameAdvance( luaL_optnumber( L, 2, 0.0f ) ) );
+//    return 1;
+//}
+LUA_BINDING_BEGIN( CBaseAnimating, FrameAdvance, "class", "Advance the frame." )
 {
-    lua_pushnumber(
-        L, luaL_checkanimating( L, 1 )->FrameAdvance( luaL_optnumber( L, 2, 0.0f ) ) );
+    lua_CBaseAnimating *pAnimating = LUA_BINDING_ARGUMENT( luaL_checkanimating, 1, "entity" );
+    float flInterval = LUA_BINDING_ARGUMENT_OPT( luaL_optnumber, 2, 0.0f, "interval" );
+
+    lua_pushnumber( L, pAnimating->FrameAdvance( flInterval ) );
+
     return 1;
 }
+LUA_BINDING_END( "number", "The new cycle" )
 
-static int CBaseAnimating_GetAimEntOrigin( lua_State *L )
+//static int CBaseAnimating_GetAimEntOrigin( lua_State *L )
+//{
+//    luaL_checkanimating( L, 1 )->GetAimEntOrigin( luaL_checkentity( L, 2 ),
+//                                                  &luaL_checkvector( L, 3 ),
+//                                                  &luaL_checkangle( L, 4 ) );
+//    return 0;
+//}
+LUA_BINDING_BEGIN( CBaseAnimating, GetAimEntOrigin, "class", "Get the aim entity origin." )
 {
-    luaL_checkanimating( L, 1 )->GetAimEntOrigin( luaL_checkentity( L, 2 ),
-                                                  &luaL_checkvector( L, 3 ),
-                                                  &luaL_checkangle( L, 4 ) );
-    return 0;
+    lua_CBaseAnimating *pAnimating = LUA_BINDING_ARGUMENT( luaL_checkanimating, 1, "entity" );
+    lua_CBaseEntity *pAimEnt = LUA_BINDING_ARGUMENT( luaL_checkentity, 2, "aimEntity" );
+    Vector pVecOrigin;
+    QAngle pAngAngles;
+
+    pAnimating->GetAimEntOrigin( pAimEnt, &pVecOrigin, &pAngAngles );
+
+    lua_pushvector( L, pVecOrigin );
+    lua_pushangle( L, pAngAngles );
+
+    return 2;
 }
+LUA_BINDING_END( "vector", "The aim entity origin", "angle", "The aim entity angles" )
 
-static int CBaseAnimating_GetAnimTimeInterval( lua_State *L )
+//static int CBaseAnimating_GetAnimTimeInterval( lua_State *L )
+//{
+//    lua_pushnumber( L, luaL_checkanimating( L, 1 )->GetAnimTimeInterval() );
+//    return 1;
+//}
+LUA_BINDING_BEGIN( CBaseAnimating, GetAnimTimeInterval, "class", "Get the animation time interval." )
 {
-    lua_pushnumber( L, luaL_checkanimating( L, 1 )->GetAnimTimeInterval() );
+    lua_CBaseAnimating *pAnimating = LUA_BINDING_ARGUMENT( luaL_checkanimating, 1, "entity" );
+
+    lua_pushnumber( L, pAnimating->GetAnimTimeInterval() );
+
     return 1;
 }
+LUA_BINDING_END( "number", "The animation time interval" )
 
-static int CBaseAnimating_GetAttachmentLocal( lua_State *L )
+//static int CBaseAnimating_GetAttachmentLocal( lua_State *L )
+//{
+//    lua_pushboolean( L, luaL_checkanimating( L, 1 )->GetAttachmentLocal( luaL_checknumber( L, 2 ), luaL_checkvector( L, 3 ), luaL_checkangle( L, 4 ) ) );
+//    return 1;
+//}
+LUA_BINDING_BEGIN( CBaseAnimating, GetAttachmentLocal, "class", "Get the local attachment." )
 {
-    lua_pushboolean( L, luaL_checkanimating( L, 1 )->GetAttachmentLocal( luaL_checknumber( L, 2 ), luaL_checkvector( L, 3 ), luaL_checkangle( L, 4 ) ) );
-    return 1;
+    lua_CBaseAnimating *pAnimating = LUA_BINDING_ARGUMENT( luaL_checkanimating, 1, "entity" );
+    int iAttachment = LUA_BINDING_ARGUMENT( luaL_checknumber, 2, "attachment" );
+    Vector pVecOrigin;
+    QAngle pAngAngles;
+
+    lua_pushboolean( L, pAnimating->GetAttachmentLocal( iAttachment, pVecOrigin, pAngAngles ) );
+    lua_pushvector( L, pVecOrigin );
+    lua_pushangle( L, pAngAngles );
+
+    return 3;
 }
+LUA_BINDING_END( "boolean", "Whether the operation was successful", "vector", "The origin", "angle", "The angles" )
 
-static int CBaseAnimating_GetAttachmentVelocity( lua_State *L )
+//static int CBaseAnimating_GetAttachmentVelocity( lua_State *L )
+//{
+//    Vector originVel;
+//    Quaternion angleVel;
+//    lua_pushboolean( L, luaL_checkanimating( L, 1 )->GetAttachmentVelocity( luaL_checknumber( L, 2 ), originVel, angleVel ) );
+//    lua_pushvector( L, originVel );
+//    // Todo: implement Quaternion class!!
+//    // lua_pushquaternion(L, &angleVel);
+//    return 2;
+//}
+LUA_BINDING_BEGIN( CBaseAnimating, GetAttachmentVelocity, "class", "Get the attachment velocity." )
 {
+    lua_CBaseAnimating *pAnimating = LUA_BINDING_ARGUMENT( luaL_checkanimating, 1, "entity" );
+    int iAttachment = LUA_BINDING_ARGUMENT( luaL_checknumber, 2, "attachment" );
     Vector originVel;
     Quaternion angleVel;
-    lua_pushboolean( L, luaL_checkanimating( L, 1 )->GetAttachmentVelocity( luaL_checknumber( L, 2 ), originVel, angleVel ) );
+
+    lua_pushboolean( L, pAnimating->GetAttachmentVelocity( iAttachment, originVel, angleVel ) );
     lua_pushvector( L, originVel );
     // Todo: implement Quaternion class!!
     // lua_pushquaternion(L, &angleVel);
     return 2;
 }
+LUA_BINDING_END( "boolean", "Whether the operation was successful", "vector", "The origin velocity" )
 
-static int CBaseAnimating_GetBaseAnimating( lua_State *L )
+//static int CBaseAnimating_GetBaseAnimating( lua_State *L )
+//{
+//    CBaseEntity::PushLuaInstanceSafe( L, luaL_checkanimating( L, 1 )->GetBaseAnimating() );
+//    return 1;
+//}
+LUA_BINDING_BEGIN( CBaseAnimating, GetBaseAnimating, "class", "Get the base animating entity." )
 {
-    CBaseEntity::PushLuaInstanceSafe( L, luaL_checkanimating( L, 1 )->GetBaseAnimating() );
+    lua_CBaseAnimating *pAnimating = LUA_BINDING_ARGUMENT( luaL_checkanimating, 1, "entity" );
+
+    CBaseEntity::PushLuaInstanceSafe( L, pAnimating->GetBaseAnimating() );
+
     return 1;
 }
+LUA_BINDING_END( "entity", "The base animating entity" )
 
-static int CBaseAnimating_GetBlendedLinearVelocity( lua_State *L )
+//static int CBaseAnimating_GetBlendedLinearVelocity( lua_State *L )
+//{
+//    Vector pVec;
+//    luaL_checkanimating( L, 1 )->GetBlendedLinearVelocity( &pVec );
+//    lua_pushvector( L, pVec );
+//    return 1;
+//}
+LUA_BINDING_BEGIN( CBaseAnimating, GetBlendedLinearVelocity, "class", "Get the blended linear velocity." )
 {
+    lua_CBaseAnimating *pAnimating = LUA_BINDING_ARGUMENT( luaL_checkanimating, 1, "entity" );
     Vector pVec;
-    luaL_checkanimating( L, 1 )->GetBlendedLinearVelocity( &pVec );
+
+    pAnimating->GetBlendedLinearVelocity( &pVec );
+
     lua_pushvector( L, pVec );
+
     return 1;
 }
+LUA_BINDING_END( "vector", "The blended linear velocity" )
 
 static int CBaseAnimating_GetBody( lua_State *L )
 {
@@ -888,143 +1217,143 @@ static int CBaseAnimating_UsesPowerOfTwoFrameBufferTexture( lua_State *L )
     return 1;
 }
 
-static const luaL_Reg CBaseAnimatingmeta[] = {
-    { "AddEntity", CBaseAnimating_AddEntity },
-    { "AddToClientSideAnimationList",
-      CBaseAnimating_AddToClientSideAnimationList },
-    { "BecomeRagdollOnClient", CBaseAnimating_BecomeRagdollOnClient },
-    { "CalculateIKLocks", CBaseAnimating_CalculateIKLocks },
-    { "ClampCycle", CBaseAnimating_ClampCycle },
-    { "Clear", CBaseAnimating_Clear },
-    { "ClearRagdoll", CBaseAnimating_ClearRagdoll },
-    { "ClientSideAnimationChanged", CBaseAnimating_ClientSideAnimationChanged },
-    { "ComputeClientSideAnimationFlags",
-      CBaseAnimating_ComputeClientSideAnimationFlags },
-    { "ComputeEntitySpaceHitboxSurroundingBox",
-      CBaseAnimating_ComputeEntitySpaceHitboxSurroundingBox },
-    { "ComputeHitboxSurroundingBox", CBaseAnimating_ComputeHitboxSurroundingBox },
-    { "CreateRagdollCopy", CBaseAnimating_CreateRagdollCopy },
-    { "CreateUnragdollInfo", CBaseAnimating_CreateUnragdollInfo },
-    { "DisableMuzzleFlash", CBaseAnimating_DisableMuzzleFlash },
-    { "DispatchMuzzleEffect", CBaseAnimating_DispatchMuzzleEffect },
-    { "DoMuzzleFlash", CBaseAnimating_DoMuzzleFlash },
-    { "DrawClientHitboxes", CBaseAnimating_DrawClientHitboxes },
-    { "DrawModel", CBaseAnimating_DrawModel },
-    { "FindFollowedEntity", CBaseAnimating_FindFollowedEntity },
-    { "FindTransitionSequence", CBaseAnimating_FindTransitionSequence },
-    { "FireEvent", CBaseAnimating_FireEvent },
-    { "FireObsoleteEvent", CBaseAnimating_FireObsoleteEvent },
-    { "ForceClientSideAnimationOn", CBaseAnimating_ForceClientSideAnimationOn },
-    { "FrameAdvance", CBaseAnimating_FrameAdvance },
-    { "GetAimEntOrigin", CBaseAnimating_GetAimEntOrigin },
-    { "GetAnimTimeInterval", CBaseAnimating_GetAnimTimeInterval },
-    { "GetAttachmentLocal", CBaseAnimating_GetAttachmentLocal },
-    { "GetAttachmentVelocity", CBaseAnimating_GetAttachmentVelocity },
-    { "GetBaseAnimating", CBaseAnimating_GetBaseAnimating },
-    { "GetBlendedLinearVelocity", CBaseAnimating_GetBlendedLinearVelocity },
-    { "GetBody", CBaseAnimating_GetBody },
-
-    { "GetBoneControllers", CBaseAnimating_GetBoneControllers },
-    { "GetBonePosition", CBaseAnimating_GetBonePosition },
-    { "GetClientSideFade", CBaseAnimating_GetClientSideFade },
-    { "GetCollideType", CBaseAnimating_GetCollideType },
-    { "GetCycle", CBaseAnimating_GetCycle },
-    { "GetFlexControllerName", CBaseAnimating_GetFlexControllerName },
-    { "GetFlexControllerType", CBaseAnimating_GetFlexControllerType },
-    { "GetFlexDescFacs", CBaseAnimating_GetFlexDescFacs },
-    { "GetHitboxSet", CBaseAnimating_GetHitboxSet },
-    { "GetHitboxSetCount", CBaseAnimating_GetHitboxSetCount },
-    { "GetHitboxSetName", CBaseAnimating_GetHitboxSetName },
-    //{"GetModelWidthScale", CBaseAnimating_GetModelWidthScale},
-
-    { "GetNumFlexControllers", CBaseAnimating_GetNumFlexControllers },
-    { "GetPlaybackRate", CBaseAnimating_GetPlaybackRate },
-    { "GetPoseParameter", CBaseAnimating_GetPoseParameter },
-    { "GetPoseParameterRange", CBaseAnimating_GetPoseParameterRange },
-    { "GetRenderAngles", CBaseAnimating_GetRenderAngles },
-    { "GetRenderBounds", CBaseAnimating_GetRenderBounds },
-    { "GetRenderOrigin", CBaseAnimating_GetRenderOrigin },
-    { "GetSequence", CBaseAnimating_GetSequence },
-    { "GetSequenceActivity", CBaseAnimating_GetSequenceActivity },
-    { "GetSequenceActivityName", CBaseAnimating_GetSequenceActivityName },
-    { "GetSequenceGroundSpeed", CBaseAnimating_GetSequenceGroundSpeed },
-    { "GetSequenceLinearMotion", CBaseAnimating_GetSequenceLinearMotion },
-    { "GetSequenceName", CBaseAnimating_GetSequenceName },
-    { "GetServerIntendedCycle", CBaseAnimating_GetServerIntendedCycle },
-    { "GetSkin", CBaseAnimating_GetSkin },
-    { "IgniteRagdoll", CBaseAnimating_IgniteRagdoll },
-    { "InitBoneSetupThreadPool", CBaseAnimating_InitBoneSetupThreadPool },
-    { "InitModelEffects", CBaseAnimating_InitModelEffects },
-    { "InternalDrawModel", CBaseAnimating_InternalDrawModel },
-    { "Interpolate", CBaseAnimating_Interpolate },
-    { "InvalidateBoneCache", CBaseAnimating_InvalidateBoneCache },
-    { "InvalidateBoneCaches", CBaseAnimating_InvalidateBoneCaches },
-    { "InvalidateMdlCache", CBaseAnimating_InvalidateMdlCache },
-    { "IsActivityFinished", CBaseAnimating_IsActivityFinished },
-    { "IsBoneCacheValid", CBaseAnimating_IsBoneCacheValid },
-    { "IsOnFire", CBaseAnimating_IsOnFire },
-    { "IsRagdoll", CBaseAnimating_IsRagdoll },
-    { "IsSelfAnimating", CBaseAnimating_IsSelfAnimating },
-    { "IsSequenceFinished", CBaseAnimating_IsSequenceFinished },
-    { "IsSequenceLooping", CBaseAnimating_IsSequenceLooping },
-    { "IsViewModel", CBaseAnimating_IsViewModel },
-    { "LookupActivity", CBaseAnimating_LookupActivity },
-    { "LookupAttachment", CBaseAnimating_LookupAttachment },
-    { "LookupBone", CBaseAnimating_LookupBone },
-    { "LookupPoseParameter", CBaseAnimating_LookupPoseParameter },
-    { "LookupRandomAttachment", CBaseAnimating_LookupRandomAttachment },
-    { "LookupSequence", CBaseAnimating_LookupSequence },
-    { "NotifyShouldTransmit", CBaseAnimating_NotifyShouldTransmit },
-    { "OnDataChanged", CBaseAnimating_OnDataChanged },
-    { "OnPreDataChanged", CBaseAnimating_OnPreDataChanged },
-    { "PopBoneAccess", CBaseAnimating_PopBoneAccess },
-    { "PostDataUpdate", CBaseAnimating_PostDataUpdate },
-    { "PreDataUpdate", CBaseAnimating_PreDataUpdate },
-    { "ProcessMuzzleFlashEvent", CBaseAnimating_ProcessMuzzleFlashEvent },
-    { "PushAllowBoneAccess", CBaseAnimating_PushAllowBoneAccess },
-    { "RagdollMoved", CBaseAnimating_RagdollMoved },
-    { "Release", CBaseAnimating_Release },
-    { "RemoveFromClientSideAnimationList",
-      CBaseAnimating_RemoveFromClientSideAnimationList },
-    //{"ResetEventsParity", CBaseAnimating_ResetEventsParity},
-    { "ResetLatched", CBaseAnimating_ResetLatched },
-    { "ResetSequence", CBaseAnimating_ResetSequence },
-    { "ResetSequenceInfo", CBaseAnimating_ResetSequenceInfo },
-    { "RetrieveRagdollInfo", CBaseAnimating_RetrieveRagdollInfo },
-    { "SelectWeightedSequence", CBaseAnimating_SelectWeightedSequence },
-    { "SequenceDuration", CBaseAnimating_SequenceDuration },
-    { "SequenceLoops", CBaseAnimating_SequenceLoops },
-
-    { "SetBoneController", CBaseAnimating_SetBoneController },
-    { "SetCycle", CBaseAnimating_SetCycle },
-    { "SetHitboxSet", CBaseAnimating_SetHitboxSet },
-    { "SetHitboxSetByName", CBaseAnimating_SetHitboxSetByName },
-    //{"SetModelWidthScale", CBaseAnimating_SetModelWidthScale},
-    { "SetPoseParameter", CBaseAnimating_SetPoseParameter },
-    { "SetPredictable", CBaseAnimating_SetPredictable },
-    { "SetPredictionEligible", CBaseAnimating_SetPredictionEligible },
-    { "SetPredictionPlayer", CBaseAnimating_SetPredictionPlayer },
-    { "SetReceivedSequence", CBaseAnimating_SetReceivedSequence },
-    { "SetSequence", CBaseAnimating_SetSequence },
-    { "SetServerIntendedCycle", CBaseAnimating_SetServerIntendedCycle },
-    { "ShadowCastType", CBaseAnimating_ShadowCastType },
-    { "ShouldMuzzleFlash", CBaseAnimating_ShouldMuzzleFlash },
-    { "ShouldResetSequenceOnNewModel",
-      CBaseAnimating_ShouldResetSequenceOnNewModel },
-    { "ShutdownBoneSetupThreadPool", CBaseAnimating_ShutdownBoneSetupThreadPool },
-    { "Simulate", CBaseAnimating_Simulate },
-    { "StudioFrameAdvance", CBaseAnimating_StudioFrameAdvance },
-    { "ThreadedBoneSetup", CBaseAnimating_ThreadedBoneSetup },
-    { "TransferDissolveFrom", CBaseAnimating_TransferDissolveFrom },
-    { "UncorrectViewModelAttachment",
-      CBaseAnimating_UncorrectViewModelAttachment },
-    { "UpdateClientSideAnimation", CBaseAnimating_UpdateClientSideAnimation },
-    { "UpdateClientSideAnimations", CBaseAnimating_UpdateClientSideAnimations },
-    { "UpdateIKLocks", CBaseAnimating_UpdateIKLocks },
-    { "UseClientSideAnimation", CBaseAnimating_UseClientSideAnimation },
-    { "UsesPowerOfTwoFrameBufferTexture",
-      CBaseAnimating_UsesPowerOfTwoFrameBufferTexture },
-    { NULL, NULL } };
+//static const luaL_Reg CBaseAnimatingmeta[] = {
+//    { "AddEntity", CBaseAnimating_AddEntity },
+//    { "AddToClientSideAnimationList",
+//      CBaseAnimating_AddToClientSideAnimationList },
+//    { "BecomeRagdollOnClient", CBaseAnimating_BecomeRagdollOnClient },
+//    { "CalculateIKLocks", CBaseAnimating_CalculateIKLocks },
+//    { "ClampCycle", CBaseAnimating_ClampCycle },
+//    { "Clear", CBaseAnimating_Clear },
+//    { "ClearRagdoll", CBaseAnimating_ClearRagdoll },
+//    { "ClientSideAnimationChanged", CBaseAnimating_ClientSideAnimationChanged },
+//    { "ComputeClientSideAnimationFlags",
+//      CBaseAnimating_ComputeClientSideAnimationFlags },
+//    { "ComputeEntitySpaceHitboxSurroundingBox",
+//      CBaseAnimating_ComputeEntitySpaceHitboxSurroundingBox },
+//    { "ComputeHitboxSurroundingBox", CBaseAnimating_ComputeHitboxSurroundingBox },
+//    { "CreateRagdollCopy", CBaseAnimating_CreateRagdollCopy },
+//    { "CreateUnragdollInfo", CBaseAnimating_CreateUnragdollInfo },
+//    { "DisableMuzzleFlash", CBaseAnimating_DisableMuzzleFlash },
+//    { "DispatchMuzzleEffect", CBaseAnimating_DispatchMuzzleEffect },
+//    { "DoMuzzleFlash", CBaseAnimating_DoMuzzleFlash },
+//    { "DrawClientHitboxes", CBaseAnimating_DrawClientHitboxes },
+//    { "DrawModel", CBaseAnimating_DrawModel },
+//    { "FindFollowedEntity", CBaseAnimating_FindFollowedEntity },
+//    { "FindTransitionSequence", CBaseAnimating_FindTransitionSequence },
+//    { "FireEvent", CBaseAnimating_FireEvent },
+//    { "FireObsoleteEvent", CBaseAnimating_FireObsoleteEvent },
+//    { "ForceClientSideAnimationOn", CBaseAnimating_ForceClientSideAnimationOn },
+//    { "FrameAdvance", CBaseAnimating_FrameAdvance },
+//    { "GetAimEntOrigin", CBaseAnimating_GetAimEntOrigin },
+//    { "GetAnimTimeInterval", CBaseAnimating_GetAnimTimeInterval },
+//    { "GetAttachmentLocal", CBaseAnimating_GetAttachmentLocal },
+//    { "GetAttachmentVelocity", CBaseAnimating_GetAttachmentVelocity },
+//    { "GetBaseAnimating", CBaseAnimating_GetBaseAnimating },
+//    { "GetBlendedLinearVelocity", CBaseAnimating_GetBlendedLinearVelocity },
+//    { "GetBody", CBaseAnimating_GetBody },
+//
+//    { "GetBoneControllers", CBaseAnimating_GetBoneControllers },
+//    { "GetBonePosition", CBaseAnimating_GetBonePosition },
+//    { "GetClientSideFade", CBaseAnimating_GetClientSideFade },
+//    { "GetCollideType", CBaseAnimating_GetCollideType },
+//    { "GetCycle", CBaseAnimating_GetCycle },
+//    { "GetFlexControllerName", CBaseAnimating_GetFlexControllerName },
+//    { "GetFlexControllerType", CBaseAnimating_GetFlexControllerType },
+//    { "GetFlexDescFacs", CBaseAnimating_GetFlexDescFacs },
+//    { "GetHitboxSet", CBaseAnimating_GetHitboxSet },
+//    { "GetHitboxSetCount", CBaseAnimating_GetHitboxSetCount },
+//    { "GetHitboxSetName", CBaseAnimating_GetHitboxSetName },
+//    //{"GetModelWidthScale", CBaseAnimating_GetModelWidthScale},
+//
+//    { "GetNumFlexControllers", CBaseAnimating_GetNumFlexControllers },
+//    { "GetPlaybackRate", CBaseAnimating_GetPlaybackRate },
+//    { "GetPoseParameter", CBaseAnimating_GetPoseParameter },
+//    { "GetPoseParameterRange", CBaseAnimating_GetPoseParameterRange },
+//    { "GetRenderAngles", CBaseAnimating_GetRenderAngles },
+//    { "GetRenderBounds", CBaseAnimating_GetRenderBounds },
+//    { "GetRenderOrigin", CBaseAnimating_GetRenderOrigin },
+//    { "GetSequence", CBaseAnimating_GetSequence },
+//    { "GetSequenceActivity", CBaseAnimating_GetSequenceActivity },
+//    { "GetSequenceActivityName", CBaseAnimating_GetSequenceActivityName },
+//    { "GetSequenceGroundSpeed", CBaseAnimating_GetSequenceGroundSpeed },
+//    { "GetSequenceLinearMotion", CBaseAnimating_GetSequenceLinearMotion },
+//    { "GetSequenceName", CBaseAnimating_GetSequenceName },
+//    { "GetServerIntendedCycle", CBaseAnimating_GetServerIntendedCycle },
+//    { "GetSkin", CBaseAnimating_GetSkin },
+//    { "IgniteRagdoll", CBaseAnimating_IgniteRagdoll },
+//    { "InitBoneSetupThreadPool", CBaseAnimating_InitBoneSetupThreadPool },
+//    { "InitModelEffects", CBaseAnimating_InitModelEffects },
+//    { "InternalDrawModel", CBaseAnimating_InternalDrawModel },
+//    { "Interpolate", CBaseAnimating_Interpolate },
+//    { "InvalidateBoneCache", CBaseAnimating_InvalidateBoneCache },
+//    { "InvalidateBoneCaches", CBaseAnimating_InvalidateBoneCaches },
+//    { "InvalidateMdlCache", CBaseAnimating_InvalidateMdlCache },
+//    { "IsActivityFinished", CBaseAnimating_IsActivityFinished },
+//    { "IsBoneCacheValid", CBaseAnimating_IsBoneCacheValid },
+//    { "IsOnFire", CBaseAnimating_IsOnFire },
+//    { "IsRagdoll", CBaseAnimating_IsRagdoll },
+//    { "IsSelfAnimating", CBaseAnimating_IsSelfAnimating },
+//    { "IsSequenceFinished", CBaseAnimating_IsSequenceFinished },
+//    { "IsSequenceLooping", CBaseAnimating_IsSequenceLooping },
+//    { "IsViewModel", CBaseAnimating_IsViewModel },
+//    { "LookupActivity", CBaseAnimating_LookupActivity },
+//    { "LookupAttachment", CBaseAnimating_LookupAttachment },
+//    { "LookupBone", CBaseAnimating_LookupBone },
+//    { "LookupPoseParameter", CBaseAnimating_LookupPoseParameter },
+//    { "LookupRandomAttachment", CBaseAnimating_LookupRandomAttachment },
+//    { "LookupSequence", CBaseAnimating_LookupSequence },
+//    { "NotifyShouldTransmit", CBaseAnimating_NotifyShouldTransmit },
+//    { "OnDataChanged", CBaseAnimating_OnDataChanged },
+//    { "OnPreDataChanged", CBaseAnimating_OnPreDataChanged },
+//    { "PopBoneAccess", CBaseAnimating_PopBoneAccess },
+//    { "PostDataUpdate", CBaseAnimating_PostDataUpdate },
+//    { "PreDataUpdate", CBaseAnimating_PreDataUpdate },
+//    { "ProcessMuzzleFlashEvent", CBaseAnimating_ProcessMuzzleFlashEvent },
+//    { "PushAllowBoneAccess", CBaseAnimating_PushAllowBoneAccess },
+//    { "RagdollMoved", CBaseAnimating_RagdollMoved },
+//    { "Release", CBaseAnimating_Release },
+//    { "RemoveFromClientSideAnimationList",
+//      CBaseAnimating_RemoveFromClientSideAnimationList },
+//    //{"ResetEventsParity", CBaseAnimating_ResetEventsParity},
+//    { "ResetLatched", CBaseAnimating_ResetLatched },
+//    { "ResetSequence", CBaseAnimating_ResetSequence },
+//    { "ResetSequenceInfo", CBaseAnimating_ResetSequenceInfo },
+//    { "RetrieveRagdollInfo", CBaseAnimating_RetrieveRagdollInfo },
+//    { "SelectWeightedSequence", CBaseAnimating_SelectWeightedSequence },
+//    { "SequenceDuration", CBaseAnimating_SequenceDuration },
+//    { "SequenceLoops", CBaseAnimating_SequenceLoops },
+//
+//    { "SetBoneController", CBaseAnimating_SetBoneController },
+//    { "SetCycle", CBaseAnimating_SetCycle },
+//    { "SetHitboxSet", CBaseAnimating_SetHitboxSet },
+//    { "SetHitboxSetByName", CBaseAnimating_SetHitboxSetByName },
+//    //{"SetModelWidthScale", CBaseAnimating_SetModelWidthScale},
+//    { "SetPoseParameter", CBaseAnimating_SetPoseParameter },
+//    { "SetPredictable", CBaseAnimating_SetPredictable },
+//    { "SetPredictionEligible", CBaseAnimating_SetPredictionEligible },
+//    { "SetPredictionPlayer", CBaseAnimating_SetPredictionPlayer },
+//    { "SetReceivedSequence", CBaseAnimating_SetReceivedSequence },
+//    { "SetSequence", CBaseAnimating_SetSequence },
+//    { "SetServerIntendedCycle", CBaseAnimating_SetServerIntendedCycle },
+//    { "ShadowCastType", CBaseAnimating_ShadowCastType },
+//    { "ShouldMuzzleFlash", CBaseAnimating_ShouldMuzzleFlash },
+//    { "ShouldResetSequenceOnNewModel",
+//      CBaseAnimating_ShouldResetSequenceOnNewModel },
+//    { "ShutdownBoneSetupThreadPool", CBaseAnimating_ShutdownBoneSetupThreadPool },
+//    { "Simulate", CBaseAnimating_Simulate },
+//    { "StudioFrameAdvance", CBaseAnimating_StudioFrameAdvance },
+//    { "ThreadedBoneSetup", CBaseAnimating_ThreadedBoneSetup },
+//    { "TransferDissolveFrom", CBaseAnimating_TransferDissolveFrom },
+//    { "UncorrectViewModelAttachment",
+//      CBaseAnimating_UncorrectViewModelAttachment },
+//    { "UpdateClientSideAnimation", CBaseAnimating_UpdateClientSideAnimation },
+//    { "UpdateClientSideAnimations", CBaseAnimating_UpdateClientSideAnimations },
+//    { "UpdateIKLocks", CBaseAnimating_UpdateIKLocks },
+//    { "UseClientSideAnimation", CBaseAnimating_UseClientSideAnimation },
+//    { "UsesPowerOfTwoFrameBufferTexture",
+//      CBaseAnimating_UsesPowerOfTwoFrameBufferTexture },
+//    { NULL, NULL } };
 
 /*
 ** Open CBaseAnimating object
@@ -1032,8 +1361,10 @@ static const luaL_Reg CBaseAnimatingmeta[] = {
 LUALIB_API int luaopen_CBaseAnimating( lua_State *L )
 {
     LUA_PUSH_METATABLE_TO_EXTEND( L, LUA_BASEANIMATINGLIBNAME );
-    luaL_register( L, NULL, CBaseAnimatingmeta );
-    lua_pushstring( L, "Entity" );
-    lua_setfield( L, -2, "__type" ); /* metatable.__type = "Entity" */
+    //luaL_register( L, NULL, CBaseAnimatingmeta );
+    //lua_pushstring( L, "Entity" );
+    //lua_setfield( L, -2, "__type" ); /* metatable.__type = "Entity" */ // moved to lbaseanimating_shared
+    LUA_REGISTRATION_COMMIT();
+
     return 1;
 }

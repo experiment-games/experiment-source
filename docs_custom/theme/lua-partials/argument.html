@@ -4,4 +4,7 @@
     {% if argument.description %}
     <span class="lua__variable_list__description">{{ argument.description }}</span>
     {% endif %}
+    {% if argument.default %}
+    <span class="lua__variable_list__default">{{ argument.default }}</span>
+    {% endif %}
 </li>

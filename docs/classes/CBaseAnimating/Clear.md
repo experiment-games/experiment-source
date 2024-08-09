@@ -1,6 +1,6 @@
 ---
 template: lua-class-function.html
-title: GetModelName
+title: Clear
 icon: lua-client
 tags:
   - lua
@@ -9,11 +9,10 @@ tags:
   - needs-example
 lua:
   library: CBaseAnimating
-  function: GetModelName
+  function: Clear
   realm: client
-  description: "Get the model path of the entity"
+  description: "Resets internal fields."
   
   returns:
-    - type: string
-      description: "The model name"
+    
 ---

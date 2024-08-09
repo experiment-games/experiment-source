@@ -14,6 +14,7 @@ const outputDir = './docs';
 
 const luaBindingBeginPattern = /LUA_BINDING_BEGIN\(\s*(\w+)\s*,\s*(\w+)\s*,\s*"(\w+)"\s*,\s*"([^"]+)"\s*\)/;
 const luaBindingArgumentPattern = /LUA_BINDING_ARGUMENT\(\s*(\w+)\s*,\s*(\d+)\s*,\s*"([^"]+)"\s*\)/;
+const luaBindingOptionalArgumentPattern = /LUA_BINDING_ARGUMENT_OPT\(\s*(\w+)\s*,\s*(\d+)\s*,\s*([^,]+)\s*,\s*"([^"]+)"\s*\)/;
 const luaBindingEndPattern = /LUA_BINDING_END\((.*)\)$/m;
 
 const projectFileClient = './src/game/client/client_base.vpc';
@@ -56,6 +57,11 @@ const markdownTemplate = `---
 template: %template%
 title: %title%
 icon: lua-%realm%
+tags:
+  - lua
+  - %realm%
+  - needs-verification
+  - needs-example
 lua:
   library: %library%
   function: %function%
@@ -89,7 +95,15 @@ function writeFunctionToFile(func) {
   let argumentSection = '';
 
   const buildArguments = (args) => {
-    return args.map(arg => indentEachLine(`- name: ${wrapQuotes(arg.name)}\n  type: ${arg.type}`, 2)).join('\n');
+    return args.map(arg => {
+      let defaults = '';
+
+      if (arg.defaultValue) {
+        defaults = `\n  default: ${wrapQuotes(arg.defaultValue)}`;
+      }
+
+      return indentEachLine(`- name: ${wrapQuotes(arg.name)}\n  type: ${arg.type}${defaults}`, 2);
+    }).join('\n');
   };
 
   if (func.arguments) {
@@ -111,7 +125,8 @@ function writeFunctionToFile(func) {
     .replace(/%realm%/g, func.realm)
     .replace(/%description%/g, wrapQuotes(func.description))
     .replace(/%arguments%/g, argumentSection)
-    .replace(/%returns%/g, returnSection);
+    .replace(/%returns%/g, returnSection)
+    .replace(/%concept%/g, func.concept);
 
   fs.mkdir(path.dirname(filePath), { recursive: true }, (err) => {
     if (err) {
@@ -238,6 +253,41 @@ function processBindingsInFile(file) {
         position,
         name,
       });
+    } else if (luaBindingOptionalArgumentPattern.test(line)) {
+      const match = line.match(luaBindingOptionalArgumentPattern);
+      const typeChecker = match[1];
+      const position = parseInt(match[2]);
+      const defaultValue = match[3];
+      const name = match[4];
+
+      if (position == 1 && currentFunction.concept === 'class') {
+        // Skip the first argument for classes, as it's always the class instance itself
+        continue;
+      }
+
+      // Put the argument in the current argument set, or if that already
+      // has a different type argument in the same position, create a new
+      // argument set to indicate the function can be called with different
+      // types in the same position.
+      if (currentFunctionArgumentSet) {
+        const existingArgument = currentFunctionArgumentSet.arguments.find(arg => arg.position === position);
+        if (existingArgument && existingArgument.typeChecker !== typeChecker) {
+          // Put this argument in a new set
+          newFunctionArgumentSet();
+        } else if (existingArgument) {
+          // We've already pushed the argument set, so we don't need to do anything
+          continue;
+        }
+      } else {
+        newFunctionArgumentSet();
+      }
+
+      currentFunctionArgumentSet.arguments.push({
+        type: fromTypeChecker(typeChecker),
+        position,
+        name,
+        defaultValue,
+      });
     } else if (luaBindingEndPattern.test(line)) {
       const match = line.match(luaBindingEndPattern);
 
@@ -265,8 +315,9 @@ function processBindingsInFile(file) {
 }
 
 function getRealmByFile(file) {
-  // remove src\ from the beginning
-  file = file.substring(4);
+  // remove src\ from the beginning if it's there
+  if (file.startsWith('src\\') || file.startsWith('src/'))
+    file = file.substring(4);
 
   // Convert file to a regex where all slashes are checked [/\\]
   const fileRegex = RegExp(file.replace(/\\/g, '[/\\\\]'));
@@ -275,6 +326,7 @@ function getRealmByFile(file) {
   const inServer = fileRegex.test(projectFileServerContents);
 
   if (inClient && inServer) {
+    console.log(`File ${file} is in both client and server`);
     return 'shared';
   }
 
@@ -284,6 +336,11 @@ function getRealmByFile(file) {
 
   if (inServer) {
     return 'server';
+  }
+
+  // If the file contains any slashes, let's try to determine the realm based on the filename without the path
+  if (file.includes('/') || file.includes('\\')) {
+    return getRealmByFile(`"${path.basename(file)}"`);
   }
 
   return 'unknown';

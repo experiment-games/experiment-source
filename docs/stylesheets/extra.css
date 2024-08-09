@@ -92,3 +92,18 @@
     content: "— ";
     margin-right: 0.5em;
 }
+
+.lua .lua__variable_list__default {
+    font-family: monospace;
+    font-weight: bolder;
+}
+
+.lua .lua__variable_list__default::before {
+    content: "[default: ";
+    font-weight: normal;
+}
+
+.lua .lua__variable_list__default::after {
+    content: "]";
+    font-weight: normal;
+}

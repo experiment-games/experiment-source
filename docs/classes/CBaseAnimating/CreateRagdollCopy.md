@@ -1,6 +1,6 @@
 ---
 template: lua-class-function.html
-title: GetModelName
+title: CreateRagdollCopy
 icon: lua-client
 tags:
   - lua
@@ -9,11 +9,11 @@ tags:
   - needs-example
 lua:
   library: CBaseAnimating
-  function: GetModelName
+  function: CreateRagdollCopy
   realm: client
-  description: "Get the model path of the entity"
+  description: "Create a copy of the ragdoll."
   
   returns:
-    - type: string
-      description: "The model name"
+    - type: entity
+      description: "The ragdoll entity"
 ---

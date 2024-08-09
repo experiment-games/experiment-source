@@ -1,6 +1,6 @@
 ---
 template: lua-class-function.html
-title: GetModelName
+title: GetBaseAnimating
 icon: lua-client
 tags:
   - lua
@@ -9,11 +9,11 @@ tags:
   - needs-example
 lua:
   library: CBaseAnimating
-  function: GetModelName
+  function: GetBaseAnimating
   realm: client
-  description: "Get the model path of the entity"
+  description: "Get the base animating entity."
   
   returns:
-    - type: string
-      description: "The model name"
+    - type: entity
+      description: "The base animating entity"
 ---

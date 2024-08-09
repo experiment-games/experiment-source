@@ -1,6 +1,6 @@
 ---
 template: lua-class-function.html
-title: GetModelName
+title: DoMuzzleFlash
 icon: lua-client
 tags:
   - lua
@@ -9,11 +9,10 @@ tags:
   - needs-example
 lua:
   library: CBaseAnimating
-  function: GetModelName
+  function: DoMuzzleFlash
   realm: client
-  description: "Get the model path of the entity"
+  description: "Do the muzzle flash."
   
   returns:
-    - type: string
-      description: "The model name"
+    
 ---

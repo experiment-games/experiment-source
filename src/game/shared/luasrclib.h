@@ -281,8 +281,12 @@ struct LuaRegEntry
     LUA_REGISTER_METHOD( #FunctionName, ClassName##_##FunctionName )                    \
     static int ClassName##_##FunctionName( lua_State *L )                               \
     {
+
 #define LUA_BINDING_ARGUMENT( CheckFunction, ArgIndex, DocumentationName ) \
     CheckFunction( L, ArgIndex )
+
+#define LUA_BINDING_ARGUMENT_OPT( OptCheckFunction, ArgIndex, OptValue, DocumentationName ) \
+    OptCheckFunction( L, ArgIndex, OptValue )
 
 #define LUA_BINDING_END( ... ) \
     }

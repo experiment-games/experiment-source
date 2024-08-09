@@ -387,6 +387,9 @@ LUALIB_API int luaopen_CBaseAnimating_shared( lua_State *L )
 {
     LUA_PUSH_NEW_METATABLE( L, LUA_BASEANIMATINGLIBNAME );
 
+    lua_pushstring( L, "Entity" );
+    lua_setfield( L, -2, "__type" ); /* metatable.__type = "Entity" */
+
     LUA_REGISTRATION_COMMIT();
 
     return 1;

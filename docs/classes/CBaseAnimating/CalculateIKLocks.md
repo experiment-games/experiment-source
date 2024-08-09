@@ -1,19 +1,19 @@
 ---
 template: lua-class-function.html
-title: SetPlaybackRate
-icon: lua-shared
+title: CalculateIKLocks
+icon: lua-client
 tags:
   - lua
-  - shared
+  - client
   - needs-verification
   - needs-example
 lua:
   library: CBaseAnimating
-  function: SetPlaybackRate
-  realm: shared
-  description: "Set the playback rate of the animation"
+  function: CalculateIKLocks
+  realm: client
+  description: "Calculate IK locks."
   arguments:
-    - name: "rate"
+    - name: "currentTime"
       type: number
   returns:
     
