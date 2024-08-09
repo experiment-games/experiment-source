@@ -47,6 +47,14 @@ LUALIB_API lua_Vector &(luaL_optvector) (lua_State *L, int narg,
 LUALIB_API lua_QAngle &(luaL_optangle) (lua_State *L, int narg,
                                                       lua_QAngle *def);
 
+#define LUA_BINDING_PUSH_RESULT_VECTOR( ReturnPosition, Value ) \
+    LUA_BINDING_PUSH_RESULT( lua_pushvector, Value.x, Value.y, Value.z );
+
+#define LUA_BINDING_PUSH_RESULT_VECTOR4D( ReturnPosition, Value ) \
+    LUA_BINDING_PUSH_RESULT( lua_pushvector4d, Value.x, Value.y, Value.z, Value.w );
+
+#define LUA_BINDING_PUSH_RESULT_ANGLE( ReturnPosition, Value ) \
+    LUA_BINDING_PUSH_RESULT( lua_pushangle, Value.x, Value.y, Value.z );
 
 #endif
 

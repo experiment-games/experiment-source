@@ -255,4 +255,37 @@ LUALIB_API void( luasrc_openlibs )( lua_State *L, bool isStateGameUI = false );
 #define LUA_WEAPONSLIBNAME "Weapons"
 #define LUA_GAMEMODESLIBNAME "Gamemodes"
 
+struct LuaRegEntry
+{
+    const char *name;
+    lua_CFunction function;
+};
+
+#define LUA_REGISTER_METHOD( name, func )            \
+    static struct RegHelper_##func                   \
+    {                                                \
+        RegHelper_##func()                           \
+        {                                            \
+            luaRegistry.AddToTail( { name, func } ); \
+        }                                            \
+    } regHelper_##func;
+
+#define LUA_BINDING_BEGIN( ClassName, FunctionName, Concept, DocumentationDescription ) \
+    static int ClassName##_##FunctionName( lua_State *L );                     \
+    LUA_REGISTER_METHOD( #FunctionName, ClassName##_##FunctionName )           \
+    static int ClassName##_##FunctionName( lua_State *L )                      \
+    {
+#define LUA_BINDING_ARGUMENT( CheckFunction, ArgIndex, DocumentationName ) \
+    CheckFunction( L, ArgIndex )
+
+// Marks the given code as part of the result. For documentation purposes you can include
+// the return position (1-based) and a description.
+#define LUA_BINDING_MARK_RESULT( PushCode, ReturnPosition, DocumentationDescription ) \
+    PushCode;
+
+#define LUA_BINDING_END() \
+    }
+
+void luaL_register( lua_State *L, const char *libname, CUtlVector< LuaRegEntry > &luaRegistry );
+
 #endif  // LUASRCLIB_H

@@ -1,0 +1,25 @@
+{% extends "main.html" %}
+
+{% block content %}
+<div class="lua">
+    <div class="lua__title">
+        <h1>
+            <span class="lua__symbol">
+                <a href="{{ config.site_url }}libraries/{{ page.meta.lua.library }}">{{ page.meta.lua.library }}</a>{{ functionSeparator }}{{ page.meta.lua.function }}({%- for arg in page.meta.lua.arguments %}{{- arg.name -}}{% if not loop.last %}, {% endif -%}{% endfor %})
+            </span>
+        </h1>
+
+        <div class="lua__realm lua__realm--{{ page.meta.lua.realm }}">{{ page.meta.lua.realm }}</div>
+    </div>
+
+    {{ page.meta.lua.description }}
+
+    {% include "lua-partials/arguments.html" %}
+
+    {% include "lua-partials/returns.html" %}
+
+    {% include "lua-partials/remarks.html" %}
+
+    {% include "lua-partials/content.html" %}
+</div>
+{% endblock %}

@@ -1,0 +1,11 @@
+{% if page.meta.lua.returns %}
+<h2>Returns</h2>
+<ul class="lua__variable_list">
+    {% for return in page.meta.lua.returns %}
+    <li>
+        <span class="lua__type">{{ return.type }}</span>
+        <span class="lua__variable_list__description">{{ return.description }}</span>
+    </li>
+    {% endfor %}
+</ul>
+{% endif %}

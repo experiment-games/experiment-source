@@ -12,17 +12,22 @@
 // memdbgon must be the last include file in a .cpp file!!!
 #include "tier0/memdbgon.h"
 
-static int CBaseAnimating_GetModelName( lua_State *L )
+static CUtlVector< LuaRegEntry > luaRegistry;
+
+LUA_BINDING_BEGIN( CBaseAnimating, GetModelName, "class", "Get the model path of the entity" )
 {
-    // lua_pushstring( L, STRING( luaL_checkentity( L, 1 )->GetModelName() ) ); // Must be explicitly set?
-    lua_pushstring( L, luaL_checkanimating( L, 1 )->GetModelPtr()->pszName() );
+    lua_CBaseAnimating *pAnimating = LUA_BINDING_ARGUMENT( luaL_checkanimating, 1, "entity" );
+
+    LUA_BINDING_MARK_RESULT( pAnimating->GetModelPtr()->pszName(), 1, "The model name" );
 
     return 1;
 }
+LUA_BINDING_END()
 
-static int CBaseAnimating_GetAttachment( lua_State *L )
+LUA_BINDING_BEGIN( CBaseAnimating, GetAttachment, "class", "Get the attachment table for the specified attachment (by bone id or attachment name)" )
 {
-    CBaseAnimating *pAnimating = luaL_checkanimating( L, 1 );
+    lua_CBaseAnimating *pAnimating = LUA_BINDING_ARGUMENT( luaL_checkanimating, 1, "entity" );
+
     int iArg2Type = lua_type( L, 2 );
     Vector pVecOrigin;
     QAngle pVecAngles;
@@ -30,40 +35,46 @@ static int CBaseAnimating_GetAttachment( lua_State *L )
 
     if ( iArg2Type == LUA_TNUMBER )
     {
-        boneID = luaL_checknumber( L, 2 );
+        boneID = LUA_BINDING_ARGUMENT( luaL_checknumber, 2, "boneId" );
 
         if ( !pAnimating->GetAttachment( boneID, pVecOrigin, pVecAngles ) )
         {
-            lua_pushnil( L );
+            LUA_BINDING_MARK_RESULT( lua_pushnil( L ), 1, "Attachment not found" );
             return 1;
         }
     }
     else if ( iArg2Type == LUA_TSTRING )
     {
-        boneID = pAnimating->LookupAttachment( luaL_checkstring( L, 2 ) );
+        boneID = pAnimating->LookupAttachment( LUA_BINDING_ARGUMENT( luaL_checkstring, 2, "attachmentName" ) );
 
         if ( !pAnimating->GetAttachment( boneID, pVecOrigin, pVecAngles ) )
         {
-            lua_pushnil( L );
+            LUA_BINDING_MARK_RESULT( lua_pushnil( L ), 1, "Attachment not found" );
             return 1;
         }
+    }
+    else
+    {
+        luaL_typeerror( L, 2, "number or string" );
     }
 
     if ( boneID == -1 )
     {
-        lua_pushnil( L );
+        LUA_BINDING_MARK_RESULT( lua_pushnil( L ), 1, "Attachment not found" );
         return 1;
     }
 
-    lua_newtable( L );
+    LUA_BINDING_MARK_RESULT( lua_newtable( L ), 1, "Attachment table" );
     lua_pushvector( L, pVecOrigin );
     lua_setfield( L, -2, "Pos" );  // TODO: Write gmod compat and rename this to our own conventions
     lua_pushangle( L, pVecAngles );
     lua_setfield( L, -2, "Ang" );  // TODO: Write gmod compat and rename this to our own conventions
     lua_pushinteger( L, boneID );
     lua_setfield( L, -2, "Bone" );  // TODO: Write gmod compat and rename this to our own conventions
+
     return 1;
 }
+LUA_BINDING_END()
 
 static int CBaseAnimating_FindBodygroupByName( lua_State *L )
 {
@@ -214,86 +225,86 @@ static int CBaseAnimating_GetFlexName( lua_State *L )
     return 1;
 }
 
-//static int CBaseAnimating___index( lua_State *L )
+// static int CBaseAnimating___index( lua_State *L )
 //{
-//    CBaseAnimating *pEntity = lua_toanimating( L, 1 );
+//     CBaseAnimating *pEntity = lua_toanimating( L, 1 );
 //
-//    LUA_METATABLE_INDEX_CHECK_VALID( L, CBaseEntity_IsValid );
-//    LUA_METATABLE_INDEX_CHECK( L, pEntity );
+//     LUA_METATABLE_INDEX_CHECK_VALID( L, CBaseEntity_IsValid );
+//     LUA_METATABLE_INDEX_CHECK( L, pEntity );
 //
-//    const char *field = luaL_checkstring( L, 2 );
+//     const char *field = luaL_checkstring( L, 2 );
 //
-//    if ( Q_strcmp( field, "m_nBody" ) == 0 )
-//        lua_pushnumber( L, pEntity->m_nBody );
-//    else if ( Q_strcmp( field, "m_nHitboxSet" ) == 0 )
-//        lua_pushnumber( L, pEntity->m_nHitboxSet );
-//    else if ( Q_strcmp( field, "m_nSkin" ) == 0 )
-//        lua_pushnumber( L, pEntity->m_nSkin );
-//#ifdef CLIENT_DLL
-//    else if ( Q_strcmp( field, "m_bClientSideAnimation" ) == 0 )
-//        lua_pushboolean( L, pEntity->m_bClientSideAnimation );
-//    else if ( Q_strcmp( field, "m_bLastClientSideFrameReset" ) == 0 )
-//        lua_pushboolean( L, pEntity->m_bLastClientSideFrameReset );
-//#endif
-//    else
-//    {
-//        LUA_METATABLE_INDEX_CHECK_REF_TABLE( L, pEntity );
+//     if ( Q_strcmp( field, "m_nBody" ) == 0 )
+//         lua_pushnumber( L, pEntity->m_nBody );
+//     else if ( Q_strcmp( field, "m_nHitboxSet" ) == 0 )
+//         lua_pushnumber( L, pEntity->m_nHitboxSet );
+//     else if ( Q_strcmp( field, "m_nSkin" ) == 0 )
+//         lua_pushnumber( L, pEntity->m_nSkin );
+// #ifdef CLIENT_DLL
+//     else if ( Q_strcmp( field, "m_bClientSideAnimation" ) == 0 )
+//         lua_pushboolean( L, pEntity->m_bClientSideAnimation );
+//     else if ( Q_strcmp( field, "m_bLastClientSideFrameReset" ) == 0 )
+//         lua_pushboolean( L, pEntity->m_bLastClientSideFrameReset );
+// #endif
+//     else
+//     {
+//         LUA_METATABLE_INDEX_CHECK_REF_TABLE( L, pEntity );
 //
-//        if ( lua_getmetatable( L, 1 ) )
-//        {
-//            LUA_METATABLE_INDEX_CHECK_TABLE( L );
-//        }
+//         if ( lua_getmetatable( L, 1 ) )
+//         {
+//             LUA_METATABLE_INDEX_CHECK_TABLE( L );
+//         }
 //
-//        luaL_getmetatable( L, LUA_BASEANIMATINGLIBNAME );
-//        LUA_METATABLE_INDEX_CHECK_TABLE( L );
+//         luaL_getmetatable( L, LUA_BASEANIMATINGLIBNAME );
+//         LUA_METATABLE_INDEX_CHECK_TABLE( L );
 //
-//        LUA_METATABLE_INDEX_DERIVE_INDEX( L, LUA_BASEENTITYLIBNAME );
+//         LUA_METATABLE_INDEX_DERIVE_INDEX( L, LUA_BASEENTITYLIBNAME );
 //
-//        lua_pushnil( L );
-//    }
+//         lua_pushnil( L );
+//     }
 //
-//    return 1;
-//}
+//     return 1;
+// }
 
-//static int CBaseAnimating___newindex( lua_State *L )
+// static int CBaseAnimating___newindex( lua_State *L )
 //{
-//    CBaseAnimating *pEntity = lua_toanimating( L, 1 );
+//     CBaseAnimating *pEntity = lua_toanimating( L, 1 );
 //
-//    if ( pEntity == NULL )
-//    { /* avoid extra test when d is not 0 */
-//        lua_Debug ar1;
-//        lua_getstack( L, 1, &ar1 );
-//        lua_getinfo( L, "fl", &ar1 );
-//        lua_Debug ar2;
-//        lua_getinfo( L, ">S", &ar2 );
-//        lua_pushfstring( L, "%s:%d: attempt to index a NULL entity", ar2.short_src, ar1.currentline );
-//        return lua_error( L );
-//    }
+//     if ( pEntity == NULL )
+//     { /* avoid extra test when d is not 0 */
+//         lua_Debug ar1;
+//         lua_getstack( L, 1, &ar1 );
+//         lua_getinfo( L, "fl", &ar1 );
+//         lua_Debug ar2;
+//         lua_getinfo( L, ">S", &ar2 );
+//         lua_pushfstring( L, "%s:%d: attempt to index a NULL entity", ar2.short_src, ar1.currentline );
+//         return lua_error( L );
+//     }
 //
-//    const char *field = luaL_checkstring( L, 2 );
+//     const char *field = luaL_checkstring( L, 2 );
 //
-//    if ( Q_strcmp( field, "m_nBody" ) == 0 )
-//        pEntity->m_nBody = luaL_checknumber( L, 3 );
-//    else if ( Q_strcmp( field, "m_nHitboxSet" ) == 0 )
-//        pEntity->m_nHitboxSet = luaL_checknumber( L, 3 );
-//    else if ( Q_strcmp( field, "m_nSkin" ) == 0 )
-//        pEntity->m_nSkin = luaL_checknumber( L, 3 );
-//#ifdef CLIENT_DLL
-//    else if( Q_strcmp( field, "m_bClientSideAnimation" ) == 0 )
-//        pEntity->m_bClientSideAnimation = luaL_checkboolean( L, 3 );
-//    else if ( Q_strcmp( field, "m_bLastClientSideFrameReset" ) == 0 )
-//        pEntity->m_bLastClientSideFrameReset = luaL_checkboolean( L, 3 );
-//#endif
-//    else
-//    {
-//        LUA_GET_REF_TABLE( L, pEntity );
-//        lua_pushvalue( L, 3 );
-//        lua_setfield( L, -2, field );
-//        lua_pop( L, 1 );
-//    }
+//     if ( Q_strcmp( field, "m_nBody" ) == 0 )
+//         pEntity->m_nBody = luaL_checknumber( L, 3 );
+//     else if ( Q_strcmp( field, "m_nHitboxSet" ) == 0 )
+//         pEntity->m_nHitboxSet = luaL_checknumber( L, 3 );
+//     else if ( Q_strcmp( field, "m_nSkin" ) == 0 )
+//         pEntity->m_nSkin = luaL_checknumber( L, 3 );
+// #ifdef CLIENT_DLL
+//     else if( Q_strcmp( field, "m_bClientSideAnimation" ) == 0 )
+//         pEntity->m_bClientSideAnimation = luaL_checkboolean( L, 3 );
+//     else if ( Q_strcmp( field, "m_bLastClientSideFrameReset" ) == 0 )
+//         pEntity->m_bLastClientSideFrameReset = luaL_checkboolean( L, 3 );
+// #endif
+//     else
+//     {
+//         LUA_GET_REF_TABLE( L, pEntity );
+//         lua_pushvalue( L, 3 );
+//         lua_setfield( L, -2, field );
+//         lua_pop( L, 1 );
+//     }
 //
-//    return 0;
-//}
+//     return 0;
+// }
 
 static int CBaseAnimating___eq( lua_State *L )
 {
@@ -312,8 +323,8 @@ static int CBaseAnimating___tostring( lua_State *L )
 }
 
 static const luaL_Reg CBaseAnimatingmeta[] = {
-    { "GetModelName", CBaseAnimating_GetModelName },
-    { "GetAttachment", CBaseAnimating_GetAttachment },
+    //{ "GetModelName", CBaseAnimating_GetModelName },
+    //{ "GetAttachment", CBaseAnimating_GetAttachment },
 
     // Wonky naming conventions, lets just support both out-of-the-box
     { "FindBodygroupByName", CBaseAnimating_FindBodygroupByName },
@@ -358,6 +369,8 @@ LUALIB_API int luaopen_CBaseAnimating_shared( lua_State *L )
 {
     LUA_PUSH_NEW_METATABLE( L, LUA_BASEANIMATINGLIBNAME );
     luaL_register( L, NULL, CBaseAnimatingmeta );
+
+    luaL_register( L, NULL, luaRegistry );
 
     return 1;
 }
