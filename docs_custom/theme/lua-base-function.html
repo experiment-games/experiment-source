@@ -4,9 +4,7 @@
 <div class="lua">
     <div class="lua__title">
         <h1>
-            <span class="lua__symbol">
-                <a href="{{ config.site_url }}libraries/{{ page.meta.lua.library }}">{{ page.meta.lua.library }}</a>{{ functionSeparator }}{{ page.meta.lua.function }}({%- for arg in page.meta.lua.arguments %}{{- arg.name -}}{% if not loop.last %}, {% endif -%}{% endfor %})
-            </span>
+            {% include "lua-partials/function-title-wrapper.html" %}
         </h1>
 
         <div class="lua__realm lua__realm--{{ page.meta.lua.realm }}">{{ page.meta.lua.realm }}</div>

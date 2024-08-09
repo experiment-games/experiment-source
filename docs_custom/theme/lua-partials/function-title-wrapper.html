@@ -1,0 +1,14 @@
+{%- if page.meta.lua.arguments -%}
+{% set argumentString = "(" ~ (page.meta.lua.arguments | join(", ", attribute='type')) ~ ")" %}
+{% include "lua-partials/function-title.html" %}
+{%- elif page.meta.lua.argumentSets -%}
+<div class="lua__symbol__list">
+    {% for argumentSet in page.meta.lua.argumentSets -%}
+    {% set argumentString = "(" ~ (argumentSet.arguments | join(", ", attribute='type')) ~ ")" %}
+    {% include "lua-partials/function-title.html" %}
+    {% endfor -%}
+</div>
+{%- else -%}
+{% set argumentString = "()" %}
+{% include "lua-partials/function-title.html" %}
+{%- endif -%}

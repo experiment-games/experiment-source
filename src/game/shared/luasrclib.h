@@ -278,12 +278,7 @@ struct LuaRegEntry
 #define LUA_BINDING_ARGUMENT( CheckFunction, ArgIndex, DocumentationName ) \
     CheckFunction( L, ArgIndex )
 
-// Marks the given code as part of the result. For documentation purposes you can include
-// the return position (1-based) and a description.
-#define LUA_BINDING_MARK_RESULT( PushCode, ReturnPosition, DocumentationDescription ) \
-    PushCode;
-
-#define LUA_BINDING_END() \
+#define LUA_BINDING_END( ReturnType, ReturnTypeDescription ) \
     }
 
 void luaL_register( lua_State *L, const char *libname, CUtlVector< LuaRegEntry > &luaRegistry );

@@ -18,11 +18,11 @@ LUA_BINDING_BEGIN( CBaseAnimating, GetModelName, "class", "Get the model path of
 {
     lua_CBaseAnimating *pAnimating = LUA_BINDING_ARGUMENT( luaL_checkanimating, 1, "entity" );
 
-    LUA_BINDING_MARK_RESULT( pAnimating->GetModelPtr()->pszName(), 1, "The model name" );
+    pAnimating->GetModelPtr()->pszName();
 
     return 1;
 }
-LUA_BINDING_END()
+LUA_BINDING_END( "string", "The model name" )
 
 LUA_BINDING_BEGIN( CBaseAnimating, GetAttachment, "class", "Get the attachment table for the specified attachment (by bone id or attachment name)" )
 {
@@ -39,7 +39,7 @@ LUA_BINDING_BEGIN( CBaseAnimating, GetAttachment, "class", "Get the attachment t
 
         if ( !pAnimating->GetAttachment( boneID, pVecOrigin, pVecAngles ) )
         {
-            LUA_BINDING_MARK_RESULT( lua_pushnil( L ), 1, "Attachment not found" );
+            lua_pushnil( L );
             return 1;
         }
     }
@@ -49,7 +49,7 @@ LUA_BINDING_BEGIN( CBaseAnimating, GetAttachment, "class", "Get the attachment t
 
         if ( !pAnimating->GetAttachment( boneID, pVecOrigin, pVecAngles ) )
         {
-            LUA_BINDING_MARK_RESULT( lua_pushnil( L ), 1, "Attachment not found" );
+            lua_pushnil( L );
             return 1;
         }
     }
@@ -60,11 +60,11 @@ LUA_BINDING_BEGIN( CBaseAnimating, GetAttachment, "class", "Get the attachment t
 
     if ( boneID == -1 )
     {
-        LUA_BINDING_MARK_RESULT( lua_pushnil( L ), 1, "Attachment not found" );
+        lua_pushnil( L );
         return 1;
     }
 
-    LUA_BINDING_MARK_RESULT( lua_newtable( L ), 1, "Attachment table" );
+    lua_newtable( L );
     lua_pushvector( L, pVecOrigin );
     lua_setfield( L, -2, "Pos" );  // TODO: Write gmod compat and rename this to our own conventions
     lua_pushangle( L, pVecAngles );
@@ -74,7 +74,7 @@ LUA_BINDING_BEGIN( CBaseAnimating, GetAttachment, "class", "Get the attachment t
 
     return 1;
 }
-LUA_BINDING_END()
+LUA_BINDING_END( "table", "The attachment information" )
 
 static int CBaseAnimating_FindBodygroupByName( lua_State *L )
 {

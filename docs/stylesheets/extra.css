@@ -11,6 +11,12 @@
     align-items: start;
 }
 
+.lua .lua__symbol__list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5em;
+}
+
 .lua .lua__symbol, .lua .lua__type {
     font-family: monospace;
     padding: 0.2em 0.5em;
