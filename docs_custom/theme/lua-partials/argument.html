@@ -1,5 +1,7 @@
 <li>
     <span class="lua__symbol">{{ argument.name }}</span>
     <span class="lua__type">{{ argument.type }}</span>
+    {% if argument.description %}
     <span class="lua__variable_list__description">{{ argument.description }}</span>
+    {% endif %}
 </li>

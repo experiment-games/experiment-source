@@ -10,11 +10,9 @@ lua:
     - arguments:
       - name: boneId
         type: number
-        description: undefined
     - arguments:
       - name: attachmentName
         type: string
-        description: undefined
   returns:
     - type: table
       description: The attachment information

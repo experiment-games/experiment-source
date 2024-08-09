@@ -6,7 +6,7 @@ lua:
   function: GetModelName
   realm: shared
   description: Get the model path of the entity
-
+  
   returns:
     - type: string
       description: The model name

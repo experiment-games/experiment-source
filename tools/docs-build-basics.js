@@ -6,139 +6,6 @@
     node tools/docs-build-basics.js
  */
 
-/*
-Example code:
-
-LUA_BINDING_BEGIN( CBaseAnimating, GetModelName, "class", "Get the model path of the entity" )
-{
-    lua_CBaseAnimating *pAnimating = LUA_BINDING_ARGUMENT( luaL_checkanimating, 1, "entity" );
-
-    pAnimating->GetModelPtr()->pszName();
-
-    return 1;
-}
-LUA_BINDING_END( "string", "The model name" )
-
-LUA_BINDING_BEGIN( CBaseAnimating, GetAttachment, "class", "Get the attachment table for the specified attachment (by bone id or attachment name)" )
-{
-    lua_CBaseAnimating *pAnimating = LUA_BINDING_ARGUMENT( luaL_checkanimating, 1, "entity" );
-
-    int iArg2Type = lua_type( L, 2 );
-    Vector pVecOrigin;
-    QAngle pVecAngles;
-    int boneID = -1;
-
-    if ( iArg2Type == LUA_TNUMBER )
-    {
-        boneID = LUA_BINDING_ARGUMENT( luaL_checknumber, 2, "boneId" );
-
-        if ( !pAnimating->GetAttachment( boneID, pVecOrigin, pVecAngles ) )
-        {
-            lua_pushnil( L );
-            return 1;
-        }
-    }
-    else if ( iArg2Type == LUA_TSTRING )
-    {
-        boneID = pAnimating->LookupAttachment( LUA_BINDING_ARGUMENT( luaL_checkstring, 2, "attachmentName" ) );
-
-        if ( !pAnimating->GetAttachment( boneID, pVecOrigin, pVecAngles ) )
-        {
-            lua_pushnil( L );
-            return 1;
-        }
-    }
-    else
-    {
-        luaL_typeerror( L, 2, "number or string" );
-    }
-
-    if ( boneID == -1 )
-    {
-        lua_pushnil( L );
-        return 1;
-    }
-
-    lua_newtable( L );
-    lua_pushvector( L, pVecOrigin );
-    lua_setfield( L, -2, "Pos" );  // TODO: Write gmod compat and rename this to our own conventions
-    lua_pushangle( L, pVecAngles );
-    lua_setfield( L, -2, "Ang" );  // TODO: Write gmod compat and rename this to our own conventions
-    lua_pushinteger( L, boneID );
-    lua_setfield( L, -2, "Bone" );  // TODO: Write gmod compat and rename this to our own conventions
-
-    return 1;
-}
-LUA_BINDING_END( "table", "The attachment information" )
-*/
-
-/*
- Example output (unrelated function):
-    file: libraries/Bitwise/bor.md
-    ---
-    template: lua-library-function.html
-    title: bor
-    lua:
-        library: Bitwise
-        function: bor
-        realm: shared
-        description: Performs a bitwise OR operation on two numbers.
-        arguments:
-            - name: a
-              type: number
-              description: The first number.
-            - name: b
-              type: number
-              description: The second number.
-        returns:
-            - type: number
-              description: The result of the bitwise OR operation.
-    ---
-
-    So the output for the above example would be:
-    file: classes/CBaseAnimating/GetModelName.md
-    ---
-    template: lua-class-function.html
-    title: GetModelName
-    lua:
-        library: CBaseAnimating
-        function: GetModelName
-        realm: shared
-        description: Get the model path of the entity.
-        returns:
-            - type: string
-              description: The model name.
-    ---
-
-    file: classes/CBaseAnimating/GetAttachment.md
-    ---
-    template: lua-class-function.html
-    title: GetAttachment
-    lua:
-        library: CBaseAnimating
-        function: GetAttachment
-        realm: shared
-        description: Returns attachment information by the bone id or attachment name.
-        argumentSets:
-            - arguments:
-                - name: boneID
-                  type: number
-                  description: The bone id.
-            - arguments:
-                - name: attachmentName
-                  type: number
-                  description: The attachment name.
-        returns:
-            - type: table
-              description: The attachment information.
-    ---
-
-    Some things to note:
-    - We determine the realm by checking if the file the function is in is found in `src/game/client/client_base.vpc` and/or `src/game/server/server_base.vpc`
-    - With classes we skip the first argument, as it's always the class instance itself.
-    - The number in LUA_BINDING_ARGUMENT marks the argument. In case of duplicates
- */
-
 const fs = require('fs');
 const path = require('path');
 
@@ -210,7 +77,7 @@ function writeFunctionToFile(func) {
   let argumentSection = '';
 
   const buildArguments = (args) => {
-    return args.map(arg => indentEachLine(`- name: ${arg.name}\n  type: ${arg.type}\n  description: ${arg.description}`, 2)).join('\n');
+    return args.map(arg => indentEachLine(`- name: ${arg.name}\n  type: ${arg.type}`, 2)).join('\n');
   };
 
   if (func.arguments) {
@@ -362,7 +229,6 @@ function processBindingsInFile(file) {
       currentFunction.returns = parseReturns(match[1]);
       currentFunction.realm = getRealmByFile(file);
 
-      console.log("Found function", currentFunction);
       writeFunctionToFile(currentFunction);
     }
   }
