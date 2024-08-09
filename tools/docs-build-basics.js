@@ -55,6 +55,7 @@ function traverseDirectory(dir) {
 const markdownTemplate = `---
 template: %template%
 title: %title%
+icon: lua-%realm%
 lua:
   library: %library%
   function: %function%
@@ -69,15 +70,26 @@ function indentEachLine(text, indentLevel) {
   return text.split('\n').map(line => ' '.repeat(indentLevel) + line).join('\n');
 }
 
+function wrapQuotes(text) {
+  text = text.replace(/"/g, '\\"');
+  return `"${text}"`;
+}
+
 function writeFunctionToFile(func) {
   const directory = func.concept === 'class' ? 'classes' : 'libraries';
   const filePath = path.join(outputDir, directory, func.library, `${func.function}.md`);
+
+  // If the file already exists, don't overwrite it
+  if (fs.existsSync(filePath) && !process.argv.includes('--force')) {
+    console.warn(`Skipping function ${func.function} as it already exists at ${filePath} (use --force to overwrite)`);
+    return;
+  }
 
   const template = func.concept === 'class' ? 'lua-class-function.html' : 'lua-library-function.html';
   let argumentSection = '';
 
   const buildArguments = (args) => {
-    return args.map(arg => indentEachLine(`- name: ${arg.name}\n  type: ${arg.type}`, 2)).join('\n');
+    return args.map(arg => indentEachLine(`- name: ${wrapQuotes(arg.name)}\n  type: ${arg.type}`, 2)).join('\n');
   };
 
   if (func.arguments) {
@@ -89,7 +101,7 @@ function writeFunctionToFile(func) {
   let returnSection = '';
 
   if (func.returns) {
-    returnSection = `returns:\n${indentEachLine(func.returns.map(ret => `- type: ${ret.type}\n  description: ${ret.description}`).join('\n'), 4)}`;
+    returnSection = `returns:\n${indentEachLine(func.returns.map(ret => `- type: ${ret.type}\n  description: ${wrapQuotes(ret.description)}`).join('\n'), 4)}`;
   }
 
   const content = markdownTemplate.replace(/%template%/g, template)
@@ -97,7 +109,7 @@ function writeFunctionToFile(func) {
     .replace(/%library%/g, func.library)
     .replace(/%function%/g, func.function)
     .replace(/%realm%/g, func.realm)
-    .replace(/%description%/g, func.description)
+    .replace(/%description%/g, wrapQuotes(func.description))
     .replace(/%arguments%/g, argumentSection)
     .replace(/%returns%/g, returnSection);
 
@@ -119,16 +131,29 @@ function writeFunctionToFile(func) {
 function fromTypeChecker(typeChecker) {
   switch (typeChecker) {
     case 'luaL_checknumber':
+    case 'luaL_optnumber':
+    case 'lua_tonumber':
       return 'number';
     case 'luaL_checkstring':
+    case 'luaL_optstring':
+    case 'lua_tostring':
       return 'string';
     case 'luaL_checkboolean':
+    case 'luaL_optboolean':
+    case 'lua_toboolean':
       return 'boolean';
     case 'luaL_checkentity':
+    case 'luaL_optentity':
+    case 'lua_toentity':
     case 'luaL_checkanimating':
+    case 'luaL_optanimating':
+    case 'lua_toanimating':
       return 'Entity';
     case 'luaL_checkplayer':
+    case 'luaL_optplayer':
+    case 'lua_toplayer':
     case 'luaL_checkexperimentplayer':
+    case 'luaL_optexperimentplayer':
       return 'Player';
     default:
       return 'unknown';
@@ -230,6 +255,11 @@ function processBindingsInFile(file) {
       currentFunction.realm = getRealmByFile(file);
 
       writeFunctionToFile(currentFunction);
+
+      // Reset the function
+      currentFunction = null;
+      currentFunctionArgumentSets = [];
+      currentFunctionArgumentSet = null;
     }
   }
 }

@@ -46,16 +46,28 @@
     color: var(--md-code-bg-color);
 }
 
-.lua .lua__realm--client {
+.lua__icon {
+    display: inline-block;
+    width: 10px !important;
+    height: 10px !important;
+    margin: auto 0;
+    border-radius: 0.2em;
+}
+
+.lua .lua__realm--client, .lua__icon.lua__realm--client {
     background-color: rgba(255, 202, 58, 0.8);
 }
 
-.lua .lua__realm--server {
+.lua .lua__realm--server, .lua__icon.lua__realm--server {
     background-color: rgba(120, 205, 215, 0.8);
 }
 
-.lua .lua__realm--shared {
+.lua .lua__realm--shared, .lua__icon.lua__realm--shared {
     background: linear-gradient(-40deg, rgba(255, 202, 58, 0.8) 50%, rgba(120, 205, 215, 0.8) 50%);
+}
+
+.lua .lua__realm--unknown, .lua__icon.lua__realm--unknown {
+    background: #b3b3b3;
 }
 
 .lua .lua__variable_list {

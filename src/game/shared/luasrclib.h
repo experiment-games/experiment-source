@@ -261,6 +261,12 @@ struct LuaRegEntry
     lua_CFunction function;
 };
 
+#define LUA_REGISTRATION_INIT() \
+    static CUtlVector< LuaRegEntry > luaRegistry;
+
+#define LUA_REGISTRATION_COMMIT() \
+    luaL_register( L, NULL, luaRegistry );
+
 #define LUA_REGISTER_METHOD( name, func )            \
     static struct RegHelper_##func                   \
     {                                                \
@@ -271,14 +277,14 @@ struct LuaRegEntry
     } regHelper_##func;
 
 #define LUA_BINDING_BEGIN( ClassName, FunctionName, Concept, DocumentationDescription ) \
-    static int ClassName##_##FunctionName( lua_State *L );                     \
-    LUA_REGISTER_METHOD( #FunctionName, ClassName##_##FunctionName )           \
-    static int ClassName##_##FunctionName( lua_State *L )                      \
+    static int ClassName##_##FunctionName( lua_State *L );                              \
+    LUA_REGISTER_METHOD( #FunctionName, ClassName##_##FunctionName )                    \
+    static int ClassName##_##FunctionName( lua_State *L )                               \
     {
 #define LUA_BINDING_ARGUMENT( CheckFunction, ArgIndex, DocumentationName ) \
     CheckFunction( L, ArgIndex )
 
-#define LUA_BINDING_END( ReturnType, ReturnTypeDescription ) \
+#define LUA_BINDING_END( ... ) \
     }
 
 void luaL_register( lua_State *L, const char *libname, CUtlVector< LuaRegEntry > &luaRegistry );

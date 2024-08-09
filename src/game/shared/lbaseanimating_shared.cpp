@@ -12,22 +12,22 @@
 // memdbgon must be the last include file in a .cpp file!!!
 #include "tier0/memdbgon.h"
 
-static CUtlVector< LuaRegEntry > luaRegistry;
+LUA_REGISTRATION_INIT()
 
 LUA_BINDING_BEGIN( CBaseAnimating, GetModelName, "class", "Get the model path of the entity" )
 {
     lua_CBaseAnimating *pAnimating = LUA_BINDING_ARGUMENT( luaL_checkanimating, 1, "entity" );
 
-    pAnimating->GetModelPtr()->pszName();
+    lua_pushstring( L, pAnimating->GetModelPtr()->pszName() );
 
     return 1;
 }
 LUA_BINDING_END( "string", "The model name" )
 
+// static int CBaseAnimating_GetAttachment( lua_State *L )
 LUA_BINDING_BEGIN( CBaseAnimating, GetAttachment, "class", "Get the attachment table for the specified attachment (by bone id or attachment name)" )
 {
     lua_CBaseAnimating *pAnimating = LUA_BINDING_ARGUMENT( luaL_checkanimating, 1, "entity" );
-
     int iArg2Type = lua_type( L, 2 );
     Vector pVecOrigin;
     QAngle pVecAngles;
@@ -76,79 +76,108 @@ LUA_BINDING_BEGIN( CBaseAnimating, GetAttachment, "class", "Get the attachment t
 }
 LUA_BINDING_END( "table", "The attachment information" )
 
-static int CBaseAnimating_FindBodygroupByName( lua_State *L )
+LUA_BINDING_BEGIN( CBaseAnimating, FindBodyGroupByName, "class", "Find the bodygroup id by the bodygroup name" )
 {
-    lua_pushinteger( L, luaL_checkanimating( L, 1 )->FindBodygroupByName( luaL_checkstring( L, 2 ) ) );
+    lua_CBaseAnimating *pAnimating = LUA_BINDING_ARGUMENT( luaL_checkanimating, 1, "entity" );
+    const char *pBodyGroupName = LUA_BINDING_ARGUMENT( luaL_checkstring, 2, "bodyGroupName" );
+
+    lua_pushinteger( L, pAnimating->FindBodygroupByName( pBodyGroupName ) );
+
     return 1;
 }
+LUA_BINDING_END( "number", "The bodygroup id" )
 
-static int CBaseAnimating_GetBodygroup( lua_State *L )
+LUA_BINDING_BEGIN( CBaseAnimating, GetBodyGroup, "class", "Get the bodygroup value by the bodygroup id" )
 {
-    lua_pushinteger(
-        L, luaL_checkanimating( L, 1 )->GetBodygroup( luaL_checknumber( L, 2 ) ) );
+    lua_CBaseAnimating *pAnimating = LUA_BINDING_ARGUMENT( luaL_checkanimating, 1, "entity" );
+    int iBodyGroup = LUA_BINDING_ARGUMENT( luaL_checknumber, 2, "bodyGroupId" );
+
+    lua_pushinteger( L, pAnimating->GetBodygroup( iBodyGroup ) );
+
     return 1;
 }
+LUA_BINDING_END( "number", "The bodygroup value" )
 
-static int CBaseAnimating_GetBodygroupCount( lua_State *L )
+LUA_BINDING_BEGIN( CBaseAnimating, GetBodyGroupCount, "class", "Get the number of bodygroups" )
 {
-    lua_pushinteger(
-        L, luaL_checkanimating( L, 1 )->GetBodygroupCount( luaL_checknumber( L, 2 ) ) );
+    lua_CBaseAnimating *pAnimating = LUA_BINDING_ARGUMENT( luaL_checkanimating, 1, "entity" );
+    int iBodyGroup = LUA_BINDING_ARGUMENT( luaL_checknumber, 2, "bodyGroupId" );
+
+    lua_pushinteger( L, pAnimating->GetBodygroupCount( iBodyGroup ) );
+
     return 1;
 }
+LUA_BINDING_END( "number", "The number of bodygroups" )
 
-static int CBaseAnimating_GetBodygroupName( lua_State *L )
+LUA_BINDING_BEGIN( CBaseAnimating, GetBodyGroupName, "class", "Get the bodygroup name by the bodygroup id" )
 {
-    lua_pushstring(
-        L, luaL_checkanimating( L, 1 )->GetBodygroupName( luaL_checknumber( L, 2 ) ) );
+    lua_CBaseAnimating *pAnimating = LUA_BINDING_ARGUMENT( luaL_checkanimating, 1, "entity" );
+    int iBodyGroup = LUA_BINDING_ARGUMENT( luaL_checknumber, 2, "bodyGroupId" );
+
+    lua_pushstring( L, pAnimating->GetBodygroupName( iBodyGroup ) );
+
     return 1;
 }
+LUA_BINDING_END( "string", "The bodygroup name" )
 
-static int CBaseAnimating_GetNumBodyGroups( lua_State *L )
+LUA_BINDING_BEGIN( CBaseAnimating, GetNumBodyGroups, "class", "Get the number of bodygroups" )
 {
-    lua_pushinteger( L, luaL_checkanimating( L, 1 )->GetNumBodyGroups() );
+    lua_CBaseAnimating *pAnimating = LUA_BINDING_ARGUMENT( luaL_checkanimating, 1, "entity" );
+
+    lua_pushinteger( L, pAnimating->GetNumBodyGroups() );
+
     return 1;
 }
+LUA_BINDING_END( "number", "The number of bodygroups" )
 
-static int CBaseAnimating_SetBodygroup( lua_State *L )
+LUA_BINDING_BEGIN( CBaseAnimating, SetBodyGroup, "class", "Set the bodygroup value by the bodygroup id" )
 {
-    luaL_checkanimating( L, 1 )->SetBodygroup( luaL_checknumber( L, 2 ),
-                                               luaL_checknumber( L, 3 ) );
+    lua_CBaseAnimating *pAnimating = LUA_BINDING_ARGUMENT( luaL_checkanimating, 1, "entity" );
+    int iBodyGroup = LUA_BINDING_ARGUMENT( luaL_checknumber, 2, "bodyGroupId" );
+    int iValue = LUA_BINDING_ARGUMENT( luaL_checknumber, 3, "value" );
+
+    pAnimating->SetBodygroup( iBodyGroup, iValue );
+
     return 0;
 }
+LUA_BINDING_END()
 
-static int CBaseAnimating_SetBodyGroups( lua_State *L )
+LUA_BINDING_BEGIN( CBaseAnimating, SetBodyGroups, "class", "Set the bodygroup values by the bodygroup string. Each hexadecimal character represents the bodygroup at its index, e.g: 0a00001 sets bodygroup 1 to 10(a) and bodygroup 6 to 1, the rest are set to 0" )
 {
-    const char *pBodyGroups = luaL_checkstring( L, 2 );
+    lua_CBaseAnimating *pAnimating = LUA_BINDING_ARGUMENT( luaL_checkanimating, 1, "entity" );
+
+    const char *pBodyGroups = LUA_BINDING_ARGUMENT( luaL_checkstring, 2, "bodyGroupString" );
     int iNumGroups = Q_strlen( pBodyGroups );
 
-    if ( iNumGroups > 0 )
+    if ( iNumGroups <= 0 )
+        return 0;
+
+    int nMaxGroups = pAnimating->GetNumBodyGroups();
+
+    for ( int iGroup = 0; iGroup < iNumGroups && iGroup < nMaxGroups; ++iGroup )
     {
-        lua_CBaseAnimating *pAnimating = luaL_checkanimating( L, 1 );
-        int nMaxGroups = pAnimating->GetNumBodyGroups();
+        char c = pBodyGroups[iGroup];
+        int iValue = 0;
 
-        for ( int iGroup = 0; iGroup < iNumGroups && iGroup < nMaxGroups; ++iGroup )
+        if ( c >= '0' && c <= '9' )
         {
-            char c = pBodyGroups[iGroup];
-            int iValue = 0;
-
-            if ( c >= '0' && c <= '9' )
-            {
-                iValue = c - '0';  // 0 - 9
-            }
-            else if ( c >= 'a' && c <= 'z' )
-            {
-                iValue = c - 'a' + 10;  // 10 - 35
-            }
-
-            pAnimating->SetBodygroup( iGroup, iValue );
+            iValue = c - '0';  // 0 - 9
         }
+        else if ( c >= 'a' && c <= 'z' )
+        {
+            iValue = c - 'a' + 10;  // 10 - 35
+        }
+
+        pAnimating->SetBodygroup( iGroup, iValue );
     }
+
     return 0;
 }
+LUA_BINDING_END()
 
-static int CBaseAnimating_GetBodyGroups( lua_State *L )
+LUA_BINDING_BEGIN( CBaseAnimating, GetBodyGroups, "class", "Get the bodygroup values as a string of hexadecimal values. Each hexadecimal character represents the bodygroup at its index, e.g: 0a00001 means bodygroup 1 is 10(a) and bodygroup 6 is 1, the rest are 0" )
 {
-    lua_CBaseAnimating *pAnimating = luaL_checkanimating( L, 1 );
+    lua_CBaseAnimating *pAnimating = LUA_BINDING_ARGUMENT( luaL_checkanimating, 1, "entity" );
     int nMaxGroups = pAnimating->GetNumBodyGroups();
 
     char *pBodyGroups = ( char * )_alloca( nMaxGroups + 1 );
@@ -173,29 +202,38 @@ static int CBaseAnimating_GetBodyGroups( lua_State *L )
     }
 
     lua_pushstring( L, pBodyGroups );
+
     return 1;
 }
+LUA_BINDING_END( "string", "The bodygroup values as a string of hexadecimal values" )
 
-static int CBaseAnimating_SetPlaybackRate( lua_State *L )
+LUA_BINDING_BEGIN( CBaseAnimating, SetPlaybackRate, "class", "Set the playback rate of the animation" )
 {
-    luaL_checkanimating( L, 1 )->SetPlaybackRate( luaL_checknumber( L, 2 ) );
+    lua_CBaseAnimating *pAnimating = LUA_BINDING_ARGUMENT( luaL_checkanimating, 1, "entity" );
+    float flPlaybackRate = LUA_BINDING_ARGUMENT( luaL_checknumber, 2, "rate" );
+
+    pAnimating->SetPlaybackRate( flPlaybackRate );
+
     return 0;
 }
+LUA_BINDING_END()
 
-static int CBaseAnimating_SetSkin( lua_State *L )
+LUA_BINDING_BEGIN( CBaseAnimating, SetSkin, "class", "Set the skin of the entity" )
 {
-    // TODO: SetSkin
-    // TODO: There's also logic in lbaseanimating.__newindex for this
-    // TODO: Placed here because its easily shared, but we should really create a common place for baseanimating shared functions
-    lua_toanimating( L, 1 )->m_nSkin = luaL_checknumber( L, 2 );
+    lua_CBaseAnimating *pAnimating = LUA_BINDING_ARGUMENT( luaL_checkanimating, 1, "entity" );
+    int iSkin = LUA_BINDING_ARGUMENT( luaL_checknumber, 2, "skin" );
+
+    pAnimating->m_nSkin = iSkin;
+
     return 0;
 }
+LUA_BINDING_END()
 
-// returns the min and max values for the flex controller
-static int CBaseAnimating_GetFlexBounds( lua_State *L )
+LUA_BINDING_BEGIN( CBaseAnimating, GetFlexBounds, "class", "Returns the min and max values for the target flex controller" )
 {
-    lua_CBaseAnimating *pAnimating = luaL_checkanimating( L, 1 );
-    LocalFlexController_t iFlexController = ( LocalFlexController_t )( int )luaL_checknumber( L, 2 );
+    lua_CBaseAnimating *pAnimating = LUA_BINDING_ARGUMENT( luaL_checkanimating, 1, "entity" );
+    int flexControllerIndex = ( int )LUA_BINDING_ARGUMENT( luaL_checknumber, 2, "flexControllerIndex" );
+    LocalFlexController_t iFlexController = ( LocalFlexController_t )flexControllerIndex;
     CStudioHdr *pStudioHdr = pAnimating->GetModelPtr();
 
     Assert( pStudioHdr );
@@ -209,21 +247,29 @@ static int CBaseAnimating_GetFlexBounds( lua_State *L )
 
     return 2;
 }
+LUA_BINDING_END( "number", "The min value", "number", "The max value" )
 
-static int CBaseAnimating_GetFlexCount( lua_State *L )
+LUA_BINDING_BEGIN( CBaseAnimating, GetFlexCount, "class", "Get the number of flex controllers" )
 {
-    lua_pushinteger( L, luaL_checkanimating( L, 1 )->GetNumFlexControllers() );
+    lua_CBaseAnimating *pAnimating = LUA_BINDING_ARGUMENT( luaL_checkanimating, 1, "entity" );
+
+    lua_pushinteger( L, pAnimating->GetNumFlexControllers() );
+
     return 1;
 }
+LUA_BINDING_END( "number", "The number of flex controllers" )
 
-static int CBaseAnimating_GetFlexName( lua_State *L )
+LUA_BINDING_BEGIN( CBaseAnimating, GetFlexName, "class", "Get the flex controller name by the flex controller index" )
 {
-    lua_CBaseAnimating *pAnimating = luaL_checkanimating( L, 1 );
-    LocalFlexController_t iFlexController = ( LocalFlexController_t )( int )luaL_checknumber( L, 2 );
+    lua_CBaseAnimating *pAnimating = LUA_BINDING_ARGUMENT( luaL_checkanimating, 1, "entity" );
+    int flexControllerIndex = ( int )LUA_BINDING_ARGUMENT( luaL_checknumber, 2, "flexControllerIndex" );
+    LocalFlexController_t iFlexController = ( LocalFlexController_t )flexControllerIndex;
 
     lua_pushstring( L, pAnimating->GetFlexControllerName( iFlexController ) );
+
     return 1;
 }
+LUA_BINDING_END( "string", "The flex controller name" )
 
 // static int CBaseAnimating___index( lua_State *L )
 //{
@@ -306,61 +352,33 @@ static int CBaseAnimating_GetFlexName( lua_State *L )
 //     return 0;
 // }
 
-static int CBaseAnimating___eq( lua_State *L )
+LUA_BINDING_BEGIN( CBaseAnimating, __eq, "class", "Metamethod to check if the two entities are the same" )
 {
-    lua_pushboolean( L, lua_toanimating( L, 1 ) == lua_toanimating( L, 2 ) );
+    lua_CBaseAnimating *pAnimating1 = LUA_BINDING_ARGUMENT( lua_toanimating, 1, "entity1" );
+    lua_CBaseAnimating *pAnimating2 = LUA_BINDING_ARGUMENT( lua_toanimating, 2, "entity2" );
+
+    lua_pushboolean( L, pAnimating1 == pAnimating2 );
+
     return 1;
 }
+LUA_BINDING_END( "boolean", "True if the entities are the same, false otherwise" )
 
-static int CBaseAnimating___tostring( lua_State *L )
+LUA_BINDING_BEGIN( CBaseAnimating, __tostring, "class", "Metamethod to get the string representation of the entity" )
 {
-    CBaseAnimating *pEntity = lua_toanimating( L, 1 );
-    if ( pEntity == NULL )
+    lua_CBaseAnimating *pAnimating = LUA_BINDING_ARGUMENT( lua_toanimating, 1, "entity" );
+
+    if ( pAnimating == NULL )
+    {
         lua_pushstring( L, "NULL" );
+    }
     else
-        lua_pushfstring( L, "CBaseAnimating: %d \"%s\"", pEntity->entindex(), pEntity->GetClassname() );
+    {
+        lua_pushfstring( L, "CBaseAnimating: %d \"%s\"", pAnimating->entindex(), pAnimating->GetClassname() );
+    }
+
     return 1;
 }
-
-static const luaL_Reg CBaseAnimatingmeta[] = {
-    //{ "GetModelName", CBaseAnimating_GetModelName },
-    //{ "GetAttachment", CBaseAnimating_GetAttachment },
-
-    // Wonky naming conventions, lets just support both out-of-the-box
-    { "FindBodygroupByName", CBaseAnimating_FindBodygroupByName },
-    { "FindBodyGroupByName", CBaseAnimating_FindBodygroupByName },
-
-    { "GetBodygroup", CBaseAnimating_GetBodygroup },
-    { "GetBodyGroup", CBaseAnimating_GetBodygroup },
-    { "GetBodygroupCount", CBaseAnimating_GetBodygroupCount },
-    { "GetBodyGroupCount", CBaseAnimating_GetBodygroupCount },
-    { "GetBodygroupName", CBaseAnimating_GetBodygroupName },
-    { "GetBodyGroupName", CBaseAnimating_GetBodygroupName },
-    { "GetBodygroups", CBaseAnimating_GetBodyGroups },
-    { "GetBodyGroups", CBaseAnimating_GetBodyGroups },
-
-    { "SetBodygroup", CBaseAnimating_SetBodygroup },
-    { "SetBodyGroup", CBaseAnimating_SetBodygroup },
-    { "SetBodygroups", CBaseAnimating_SetBodyGroups },
-    { "SetBodyGroups", CBaseAnimating_SetBodyGroups },
-
-    { "GetNumBodygroups", CBaseAnimating_GetNumBodyGroups },
-    { "GetNumBodyGroups", CBaseAnimating_GetNumBodyGroups },
-
-    { "SetPlaybackRate", CBaseAnimating_SetPlaybackRate },
-    { "SetSkin", CBaseAnimating_SetSkin },
-
-    { "GetFlexBounds", CBaseAnimating_GetFlexBounds },
-    { "GetFlexCount", CBaseAnimating_GetFlexCount },
-    { "GetFlexName", CBaseAnimating_GetFlexName },
-    // { "GetFlexScale", CBaseAnimating_GetFlexScale }, // TODO: How is this implemented?
-
-    // { "__index", CBaseAnimating___index }, // In Lua now
-    // { "__newindex", CBaseAnimating___newindex }, // Conflicts when storing with CBaseEntity ref table
-    { "__eq", CBaseAnimating___eq },
-    { "__tostring", CBaseAnimating___tostring },
-
-    { NULL, NULL } };
+LUA_BINDING_END( "string", "The string representation of the entity" )
 
 /*
 ** Open CBaseAnimating object
@@ -368,9 +386,8 @@ static const luaL_Reg CBaseAnimatingmeta[] = {
 LUALIB_API int luaopen_CBaseAnimating_shared( lua_State *L )
 {
     LUA_PUSH_NEW_METATABLE( L, LUA_BASEANIMATINGLIBNAME );
-    luaL_register( L, NULL, CBaseAnimatingmeta );
 
-    luaL_register( L, NULL, luaRegistry );
+    LUA_REGISTRATION_COMMIT();
 
     return 1;
 }
