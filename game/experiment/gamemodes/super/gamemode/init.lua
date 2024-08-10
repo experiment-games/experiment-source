@@ -61,7 +61,7 @@ function GM:GiveDefaultItems(client)
 	end
 end
 
-function GM:Host_Say(client, p, isTeamOnly)
+function GM:PlayerSay(client, p, isTeamOnly)
 end
 
 function GM:InitHUD(client)

@@ -3,11 +3,13 @@
     and generating the basics of the documentation as markdown files.
 
     In the root of the project, run:
-    node tools/docs-build-basics.js
+    node tools/docs-build-functions.js
  */
 
 const fs = require('fs');
 const path = require('path');
+const { getRealmByFile } = require('./common/vpc');
+const { indentEachLine, wrapQuotes } = require('./common/string');
 
 const srcDir = './src';
 const outputDir = './docs';
@@ -17,12 +19,6 @@ const luaBindingArgumentPattern = /LUA_BINDING_ARGUMENT\(\s*(\w+)\s*,\s*(\d+)\s*
 const luaBindingArgumentNillablePattern = /LUA_BINDING_ARGUMENT_NILLABLE\(\s*(\w+)\s*,\s*(\d+)\s*,\s*"([^"]+)"\s*\)/;
 const luaBindingArgumentWithDefaultPattern = /LUA_BINDING_ARGUMENT_WITH_DEFAULT\(\s*(\w+)\s*,\s*(\d+)\s*,\s*([^,]+)\s*,\s*"([^"]+)"\s*\)/;
 const luaBindingEndPattern = /LUA_BINDING_END\((.*)\)$/m;
-
-const projectFileClient = './src/game/client/client_base.vpc';
-const projectFileServer = './src/game/server/server_base.vpc';
-
-const projectFileClientContents = fs.readFileSync(projectFileClient, 'utf8');
-const projectFileServerContents = fs.readFileSync(projectFileServer, 'utf8');
 
 function traverseDirectory(dir) {
   if (dir.includes('node_modules') || dir.includes('.git')) {
@@ -77,15 +73,6 @@ lua:
 %searchKeywords%
 </div>
 `;
-
-function indentEachLine(text, indentLevel) {
-  return text.split('\n').map(line => ' '.repeat(indentLevel) + line).join('\n');
-}
-
-function wrapQuotes(text) {
-  text = text.replace(/"/g, '\\"');
-  return `"${text}"`;
-}
 
 function writeFunctionToFile(func) {
   const directory = func.concept.startsWith('class') ? 'classes' : 'libraries';
@@ -181,8 +168,6 @@ function writeFunctionToFile(func) {
       });
     }
   });
-
-  console.log(`Wrote function ${func.function} to ${filePath}`);
 }
 
 function fromTypeChecker(typeChecker) {
@@ -291,8 +276,13 @@ function processBindingsInFile(file) {
         newFunctionArgumentSet();
       }
 
+      const type = fromTypeChecker(typeChecker);
+
+      if (type === 'unknown')
+        console.warn(`Unknown type checker ${typeChecker} in ${file}:${i}`);
+
       currentFunctionArgumentSet.arguments.push({
-        type: fromTypeChecker(typeChecker),
+        type: type,
         position,
         name,
         isNillable,
@@ -359,38 +349,6 @@ function processBindingsInFile(file) {
       currentFunctionArgumentSet = null;
     }
   }
-}
-
-function getRealmByFile(file) {
-  // remove src\ from the beginning if it's there
-  if (file.startsWith('src\\') || file.startsWith('src/'))
-    file = file.substring(4);
-
-  // Convert file to a regex where all slashes are checked [/\\]
-  const fileRegex = RegExp(file.replace(/\\/g, '[/\\\\]'));
-
-  const inClient = fileRegex.test(projectFileClientContents);
-  const inServer = fileRegex.test(projectFileServerContents);
-
-  if (inClient && inServer) {
-    console.log(`File ${file} is in both client and server`);
-    return 'shared';
-  }
-
-  if (inClient) {
-    return 'client';
-  }
-
-  if (inServer) {
-    return 'server';
-  }
-
-  // If the file contains any slashes, let's try to determine the realm based on the filename without the path
-  if (file.includes('/') || file.includes('\\')) {
-    return getRealmByFile(`"${path.basename(file)}"`);
-  }
-
-  return 'unknown';
 }
 
 traverseDirectory(srcDir);

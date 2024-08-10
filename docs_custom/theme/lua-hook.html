@@ -1,0 +1,29 @@
+{% extends "main.html" %}
+
+{% block content %}
+<div class="lua">
+    {% set noLibrary = true %}
+    {% include "lua-partials/function-title-wrapper.html" %}
+
+    {{ page.meta.lua.description }}
+
+    {% include "lua-partials/arguments.html" %}
+
+    {% include "lua-partials/returns.html" %}
+
+    {% if page.meta.lua.returns %}
+    <div class="admonition note">
+        <p class="admonition-title">Note: Returning is not required</p>
+        <p>
+            Returning from hooks is not required.
+            Only do so if you mean to override behaviour.
+            The first hook that returns a value will be the final value, skipping all following hooks.
+        </p>
+    </div>
+    {% endif %}
+
+    {% include "lua-partials/remarks.html" %}
+
+    {% include "lua-partials/content.html" %}
+</div>
+{% endblock %}

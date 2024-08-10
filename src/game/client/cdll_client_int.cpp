@@ -507,12 +507,12 @@ class CHLVoiceStatusHelper : public IVoiceStatusHelper
         color[0] = color[1] = color[2] = 128;
 
 #ifdef LUA_SDK
-        LUA_CALL_HOOK_BEGIN( "GetPlayerTextColor" );
-        lua_pushinteger( L, entindex );
-        lua_pushinteger( L, color[0] );
-        lua_pushinteger( L, color[1] );
-        lua_pushinteger( L, color[2] );
-        LUA_CALL_HOOK_END( 4, 3 );
+        LUA_CALL_HOOK_BEGIN( "GetPlayerTextColor", "Allows overriding the color of the player's name in the scoreboard." );
+        lua_pushinteger( L, entindex ); // doc: playerEntityIndex
+        lua_pushinteger( L, color[0] ); // doc: red
+        lua_pushinteger( L, color[1] ); // doc: green
+        lua_pushinteger( L, color[2] ); // doc: blue
+        LUA_CALL_HOOK_END( 4, 3 ); // doc: number (red component of the color), number (green component), number (blue component)
 
         if ( lua_isnumber( L, -3 ) )
             color[2] = ( int )lua_tointeger( L, -3 );
@@ -533,7 +533,7 @@ class CHLVoiceStatusHelper : public IVoiceStatusHelper
     {
 #ifdef LUA_SDK
         LUA_CALL_HOOK_BEGIN( "CanShowSpeakerLabels" );
-        LUA_CALL_HOOK_END( 0, 1 );
+        LUA_CALL_HOOK_END( 0, 1 ); // doc: boolean (whether the speaker labels should be shown)
 
         LUA_RETURN_BOOLEAN();
 #endif

@@ -1,9 +1,11 @@
 <span class="lua__symbol">
-    {% if functionPrefix %}{{ functionPrefix }}{% endif -%}
+    {%- if functionPrefix -%}{{ functionPrefix }}{%- endif -%}
+    {%- if not noLibrary -%}
     <a href="{{ config.site_url }}libraries/{{ page.meta.lua.library }}">
         {{- page.meta.lua.library -}}
     </a>
     {{- functionSeparator -}}<wbr>
+    {%- endif -%}
     {{- page.meta.lua.function -}}<wbr>
     {{- argumentString -}}
 </span>

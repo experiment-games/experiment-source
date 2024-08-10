@@ -103,7 +103,7 @@
             lua_getglobal( L, "GAMEMODE" );              \
             args = 2;
 
-#define LUA_CALL_HOOK_BEGIN( functionName ) \
+#define LUA_CALL_HOOK_BEGIN( functionName, ... ) \
     LUA_CALL_HOOK_FOR_STATE_BEGIN( L, functionName )
 
 #define LUA_CALL_HOOK_FOR_STATE_END( L, nArgs, nresults ) \
