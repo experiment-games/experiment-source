@@ -51,6 +51,7 @@ static const luaL_RegForState luasrclibs[] = {
     { LUA_EFFECTDATALIBNAME, luaopen_CEffectData, REALM_SHARED },
     { LUA_EFLIBNAME, luaopen_EF, REALM_SHARED | REALM_GAMEUI },
     { LUA_ENGINEFLAGSLIBNAME, luaopen_FL, REALM_SHARED | REALM_GAMEUI },
+    { LUA_ENGINELIBNAME, luaopen_engine_shared, REALM_SHARED | REALM_GAMEUI },
     { LUA_ENGINELIBNAME, luaopen_engine, REALM_SHARED | REALM_GAMEUI },
     { LUA_ENTLISTLIBNAME, luaopen_EntityList, REALM_SHARED },
     { LUA_EXPERIMENTPLAYERLIBNAME, luaopen_CExperiment_Player_shared, REALM_SHARED },

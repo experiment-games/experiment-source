@@ -1,7 +1,8 @@
 "GameContent"
 {
-	FileSystem
+	"filesystem"
 	{
-		"AppId"	4000
+		"garrysmod"		"4000"
+		"cstrike"		"240"
 	}
 }

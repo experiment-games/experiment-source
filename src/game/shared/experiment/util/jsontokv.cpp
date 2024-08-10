@@ -41,9 +41,31 @@ inline void MapNode( Value::ConstMemberIterator itr, KeyValues *kv )
             pKv->SetName( itr->name.GetString() );
             for ( Value::ConstValueIterator arrItr = itr->value.Begin(); arrItr != itr->value.End(); ++arrItr )
             {
-                // We can only support arrays of objects... for now
                 if ( arrItr->GetType() == kObjectType )
                     IterObject( nullptr, arrItr->GetObject(), pKv );
+                else
+                {
+                    char keyName[12];
+                    pKv->GetNextKeyName( keyName, sizeof( keyName ) );
+
+                    if ( arrItr->GetType() == kNumberType )
+                    {
+                        if ( arrItr->IsInt() )
+                            pKv->SetInt( keyName, arrItr->GetInt() );
+                        else if ( arrItr->IsUint64() )
+                            pKv->SetUint64( keyName, arrItr->GetUint64() );
+                        else if ( arrItr->IsLosslessFloat() )
+                            pKv->SetFloat( keyName, arrItr->GetFloat() );
+                        else  // Default to float
+                            pKv->SetFloat( keyName, arrItr->GetDouble() );
+                    }
+                    else if ( arrItr->GetType() == kStringType )
+                        pKv->SetString( keyName, arrItr->GetString() );
+                    else if ( arrItr->GetType() == kTrueType || arrItr->GetType() == kFalseType )
+                        pKv->SetBool( keyName, arrItr->GetType() == kTrueType );
+                    else
+                        DevWarning( "Unsupported data type in JSON array %i!\n", arrItr->GetType() );
+                }
                 // MOM_TODO: theoretically any array can work, it's just the keys would be disregarded, like the array of objects are
                 // Consider creating garbage keys for used values, and iterating over only values of the array.
                 // The thing to keep in mind is that whoever is reading the array would know what data type it should be...
@@ -111,7 +133,7 @@ inline void WriteObject(KeyValues* kv, PrettyWriter< StringBuffer >& writer)
 
 inline void WriteObjectOrArray( KeyValues *kv, PrettyWriter< StringBuffer > &writer )
 {
-    const char *pName = kv->GetFirstSubKey()->GetName();
+    const char *pName = kv->GetFirstSubKey() ? kv->GetFirstSubKey()->GetName() : nullptr;
     const bool bIsObject = pName && *pName;
 
     if ( bIsObject )

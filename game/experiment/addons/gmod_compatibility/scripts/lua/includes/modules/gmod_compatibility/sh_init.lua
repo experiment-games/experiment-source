@@ -190,7 +190,24 @@ PrecacheParticleSystem = ParticleSystem.Precache
 engine.ActiveGamemode = function()
 	return Gamemodes.GetActiveName()
 end
-engine.GetGames = function() return {} end
+engine.GetGames = function()
+    local games = Engine.GetMountableGames()
+    local result = {}
+
+	for i, game in ipairs(games) do
+		result[i] = {
+			depot = game.appId,
+			title = game.name,
+            folder = game.directoryName,
+
+			owned = game.isOwned,
+			mounted = game.isMounted,
+			installed = game.isInstalled,
+		}
+	end
+
+	return result
+end
 engine.GetAddons = function() return {} end    -- TODO: Implement with our addon system
 engine.GetGamemodes = function() return {} end -- TODO: Implement with our gamemode system
 engine.GetUserContent = function() return {} end

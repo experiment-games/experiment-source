@@ -698,7 +698,7 @@ bool CServerGameDLL::DLLInit( CreateInterfaceFn appSystemFactory,
 
 #if defined( EXPERIMENT_SOURCE )
     // Andrew; then mount everything the user wants to use.
-    MountUserContent();
+    InitializeGameContentMounting();
 
     // Finally, load all of the player's addons.
     MountAddons();

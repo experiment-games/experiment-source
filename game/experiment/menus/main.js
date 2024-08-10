@@ -5,11 +5,11 @@ const BACKGROUND_LEVEL = 3;
 const BACKGROUND_DISCONNECTED = 4;
 
 function SetBackgroundRenderState(state) {
-    if (state === BACKGROUND_LEVEL) {
-        document.body.classList.add('in-level');
-    } else {
-        document.body.classList.remove('in-level');
-    }
+  if (state === BACKGROUND_LEVEL) {
+    document.body.classList.add('in-level');
+  } else {
+    document.body.classList.remove('in-level');
+  }
 }
 
 const pageElement = document.querySelector('#page');
@@ -23,228 +23,263 @@ const registeredPages = new Map();
 let currentPage = null;
 
 pageCloseElement.addEventListener('click', () => {
-    if (currentPage) {
-        currentPage.hide();
-        currentPage = null;
-    }
+  if (currentPage) {
+    currentPage.hide();
+    currentPage = null;
+  }
 });
 
 // Custom element for links
 customElements.define('game-menu-link', class extends HTMLElement {
-    constructor() {
-        super();
+  constructor() {
+    super();
 
-        this.addEventListener('click', this.onClick);
+    this.addEventListener('click', this.onClick);
 
-        this.classList.add('group', 'flex', 'gap-2', 'items-center', 'hover:scale-125', 'cursor-pointer', 'transition');
+    this.classList.add('group', 'flex', 'gap-2', 'items-center', 'hover:scale-125', 'cursor-pointer', 'transition');
 
-        if (this.hasAttribute('label-above')) {
-            this.classList.add('flex-col-reverse');
-        } else {
-            this.classList.add('flex-col');
-        }
-
-        const key = this.getAttribute('translation');
-        console.log(key); // TODO: request the menu for translations
-        // this.textContent = menus.localize.getTranslation(key); // TODO: Set this on the span (not the element itself) or sub-links will break
+    if (this.hasAttribute('label-above')) {
+      this.classList.add('flex-col-reverse');
+    } else {
+      this.classList.add('flex-col');
     }
 
-    connectedCallback() {
-        const sizeClassImage = this.hasAttribute('small') ? 'w-12 h-12' : 'w-24 h-24';
-        const sizeClassText = this.hasAttribute('small') ? 'text-sm' : 'text-md';
-        this.innerHTML = `
+    const key = this.getAttribute('translation');
+    console.log(key); // TODO: request the menu for translations
+    // this.textContent = menus.localize.getTranslation(key); // TODO: Set this on the span (not the element itself) or sub-links will break
+  }
+
+  connectedCallback() {
+    const sizeClassImage = this.hasAttribute('small') ? 'w-12 h-12' : 'w-24 h-24';
+    const sizeClassText = this.hasAttribute('small') ? 'text-sm' : 'text-md';
+    this.innerHTML = `
             <img src="${this.getAttribute('icon')}"
                 alt="${this.textContent}"
                 class="${sizeClassImage}">
             <span class="scale-0 opacity-0 group-hover:opacity-100 group-hover:scale-100 transition-all ${sizeClassText}">${this.textContent}</span>
         `;
+  }
+
+  onClick(event) {
+    event.preventDefault();
+
+    const href = this.getAttribute('href');
+
+    if (href) {
+      if (currentPage) {
+        currentPage.hide();
+      }
+
+      window.location.href = href;
+      return;
     }
 
-    onClick(event) {
-        event.preventDefault();
+    const pageRef = this.getAttribute('pageref');
 
-        const href = this.getAttribute('href');
+    if (pageRef) {
+      const registeredPage = registeredPages.get(pageRef);
 
-        if (href) {
-            if (currentPage) {
-                currentPage.hide();
-            }
+      if (registeredPage.isShowing()) {
+        registeredPage.hide();
+        return;
+      }
 
-            window.location.href = href;
-            return;
-        }
+      if (currentPage) {
+        currentPage.hide();
+      }
 
-        const pageRef = this.getAttribute('pageref');
-
-        if (pageRef) {
-            const registeredPage = registeredPages.get(pageRef);
-
-            if (registeredPage.isShowing()) {
-                registeredPage.hide();
-                return;
-            }
-
-            if (currentPage) {
-                currentPage.hide();
-            }
-
-            registeredPage.show();
-            currentPage = registeredPage;
-            return;
-        }
+      registeredPage.show();
+      currentPage = registeredPage;
+      return;
     }
+  }
 });
 
 // Custom element for pages (invisible until selected)
 customElements.define('game-page', class extends HTMLElement {
-    _lastShowHandler = 0;
-    _isShowing = false;
+  _lastShowHandler = 0;
+  _isShowing = false;
 
-    constructor() {
-        super();
+  constructor() {
+    super();
 
-        this.classList.add('hidden');
+    this.classList.add('hidden');
+  }
+
+  connectedCallback() {
+    registeredPages.set(this.id, this);
+  }
+
+  show() {
+    this._isShowing = true;
+    this._lastShowHandler++;
+
+    pageTitleElement.textContent = this.getAttribute('title');
+    // pageContentElement.innerHTML = this.innerHTML; // This messes up any values set (e.g: checked on checkboxes)
+    // Lets teleport the children instead
+    while (this.firstChild) {
+      pageContentElement.appendChild(this.firstChild);
     }
 
-    connectedCallback() {
-        registeredPages.set(this.id, this);
-    }
+    pageElement.classList.remove('opacity-0');
+  }
 
-    show() {
-        this._isShowing = true;
-        this._lastShowHandler++;
+  isShowing() {
+    return this._isShowing;
+  }
 
-        pageTitleElement.textContent = this.getAttribute('title');
-        // pageContentElement.innerHTML = this.innerHTML; // This messes up any values set (e.g: checked on checkboxes)
-        // Lets teleport the children instead
-        while (this.firstChild) {
-            pageContentElement.appendChild(this.firstChild);
-        }
+  hide() {
+    this._isShowing = false;
 
-        pageElement.classList.remove('opacity-0');
-    }
+    const showHandler = this._lastShowHandler;
 
-    isShowing() {
-        return this._isShowing;
-    }
+    pageElement.classList.add('opacity-0');
 
-    hide() {
-        this._isShowing = false;
+    // Move the children back after the animation
+    setTimeout(() => {
+      // Don't move them if the show handler changed, meaning the page was shown again
+      // (happens when spam clicking)
+      if (showHandler !== this._lastShowHandler) {
+        return;
+      }
 
-        const showHandler = this._lastShowHandler;
-
-        pageElement.classList.add('opacity-0');
-
-        // Move the children back after the animation
-        setTimeout(() => {
-            // Don't move them if the show handler changed, meaning the page was shown again
-            // (happens when spam clicking)
-            if (showHandler !== this._lastShowHandler) {
-                return;
-            }
-
-            while (pageContentElement.firstChild) {
-                this.appendChild(pageContentElement.firstChild);
-            }
-        }, 500);
-    }
+      while (pageContentElement.firstChild) {
+        this.appendChild(pageContentElement.firstChild);
+      }
+    }, 500);
+  }
 });
 
 // Source: https://codepen.io/marcusparsons/pen/NMyzgR
 function makeDraggable(element) {
-    let currentPosX = 0, currentPosY = 0, previousPosX = 0, previousPosY = 0;
-    element.querySelector('[x-draggable-handle]').onmousedown = dragMouseDown;
+  let currentPosX = 0, currentPosY = 0, previousPosX = 0, previousPosY = 0;
+  element.querySelector('[x-draggable-handle]').onmousedown = dragMouseDown;
 
-    function dragMouseDown(e) {
-        e.preventDefault();
-        // Get the mouse cursor position and set the initial previous positions to begin
-        previousPosX = e.clientX;
-        previousPosY = e.clientY;
-        // When the mouse is let go, call the closing event
-        document.onmouseup = closeDragElement;
-        // call a function whenever the cursor moves
-        document.onmousemove = elementDrag;
-    }
+  function dragMouseDown(e) {
+    e.preventDefault();
+    // Get the mouse cursor position and set the initial previous positions to begin
+    previousPosX = e.clientX;
+    previousPosY = e.clientY;
+    // When the mouse is let go, call the closing event
+    document.onmouseup = closeDragElement;
+    // call a function whenever the cursor moves
+    document.onmousemove = elementDrag;
+  }
 
-    function elementDrag(e) {
-        e.preventDefault();
-        // Calculate the new cursor position by using the previous x and y positions of the mouse
-        currentPosX = previousPosX - e.clientX;
-        currentPosY = previousPosY - e.clientY;
-        // Replace the previous positions with the new x and y positions of the mouse
-        previousPosX = e.clientX;
-        previousPosY = e.clientY;
-        // Set the element's new position
-        element.style.top = (element.offsetTop - currentPosY) + 'px';
-        element.style.left = (element.offsetLeft - currentPosX) + 'px';
-    }
+  function elementDrag(e) {
+    e.preventDefault();
+    // Calculate the new cursor position by using the previous x and y positions of the mouse
+    currentPosX = previousPosX - e.clientX;
+    currentPosY = previousPosY - e.clientY;
+    // Replace the previous positions with the new x and y positions of the mouse
+    previousPosX = e.clientX;
+    previousPosY = e.clientY;
+    // Set the element's new position
+    element.style.top = (element.offsetTop - currentPosY) + 'px';
+    element.style.left = (element.offsetLeft - currentPosX) + 'px';
+  }
 
-    function closeDragElement() {
-        document.onmouseup = null;
-        document.onmousemove = null;
-    }
+  function closeDragElement() {
+    document.onmouseup = null;
+    document.onmousemove = null;
+  }
 }
 
 document.querySelectorAll('[x-draggable]').forEach(makeDraggable);
 
+/**
+ * Loads the mountable content info from the game, populating the list
+ * and setting up the event listeners for mounting and unmounting content.
+ */
 function initialize() {
-    GameUI.LoadMountableContentInfo(function (registeredMountableContent) {
-        registeredMountableContent.forEach((content, index) => {
-            const contentItemElement = contentItemTemplateElement.content.firstElementChild.cloneNode(true);
+  GameUI.LoadMountableContentInfo(function (registeredMountableContent) {
+    // sort it by name first
+    registeredMountableContent.sort((a, b) => a.name.localeCompare(b.name));
+    registeredMountableContent.forEach((content, index) => {
+      const contentItemElement = contentItemTemplateElement.content.firstElementChild.cloneNode(true);
 
-            contentItemElement.classList.add(index % 2 === 0 ? 'bg-white/10' : 'bg-white/5');
+      contentItemElement.classList.add(index % 2 === 0 ? 'bg-white/10' : 'bg-white/5');
 
-            const iconElement = contentItemElement.querySelector('img');
-            iconElement.src = content.icon;
-            iconElement.alt = content.name;
+      const iconElement = contentItemElement.querySelector('img');
+      iconElement.src = content.icon;
+      iconElement.alt = content.name;
 
-            const nameElement = contentItemElement.querySelector('span');
-            nameElement.textContent = content.name;
+      const nameElement = contentItemElement.querySelector('span');
+      nameElement.textContent = content.name;
 
-            const inputElement = contentItemElement.querySelector('input');
-            inputElement.value = content.id;
-            inputElement.checked = content.mounted;
+      const inputElement = contentItemElement.querySelector('input');
+      inputElement.value = content.id;
+      inputElement.checked = content.mounted;
 
-            contentItemElement.addEventListener('click', () => {
-                inputElement.checked = !inputElement.checked;
+      inputElement.addEventListener('change', () => {
+        showLoadingOverlay('Mounting content...', function (finish) {
+          if (inputElement.checked) {
+            GameUI.MountGameContent(inputElement.value, function (wasSuccessful) {
+              if (!wasSuccessful) {
+                inputElement.checked = false;
+              }
+
+              finish();
             });
+          } else {
+            GameUI.UnmountGameContent(inputElement.value, function (wasSuccessful) {
+              if (!wasSuccessful) {
+                inputElement.checked = true;
+              }
 
-            contentList.appendChild(contentItemElement);
+              finish();
+            });
+          }
         });
+      });
+
+      contentItemElement.addEventListener('click', (ev) => {
+        // Don't toggle the checkbox if the click was on the checkbox itself
+        // otherwise we immediately toggle it back
+        if (ev.target.tagName === 'INPUT') {
+          return;
+        }
+
+        inputElement.checked = !inputElement.checked;
+        inputElement.dispatchEvent(new Event('change'));
+      });
+
+      contentList.appendChild(contentItemElement);
     });
+  });
 }
 
 window.addEventListener('interop:ready', () => {
-    // Intro effect when the page is loaded
-    document.body.classList.add('loaded');
+  // Intro effect when the page is loaded
+  document.body.classList.add('loaded');
 
-    initialize();
+  initialize();
 });
 
 // When working in the browser we want to mock the GameUI API
 window.addEventListener('interop:installmock', () => {
-    window.GameUI = {
-        LoadMountableContentInfo: function (callback) {
-            callback([
-                {
-                    id: 'gmod',
-                    name: 'Garry\'s Mod',
-                    mounted: true,
-                    icon: './images/game-icons/garrysmod.png',
-                },
-                {
-                    id: 'cstrike',
-                    name: 'Counter-Strike: Source',
-                    mounted: false,
-                    icon: './images/game-icons/cstrike.png',
-                },
-                {
-                    id: 'hl2',
-                    name: 'Dev Note: this mountable game data is mocked',
-                    mounted: false,
-                    icon: './images/game-icons/hl2.png',
-                },
-            ]);
+  window.GameUI = {
+    LoadMountableContentInfo: function (callback) {
+      callback([
+        {
+          id: 4000,
+          name: 'Garry\'s Mod',
+          mounted: true,
+          icon: './images/game-icons/garrysmod.png',
         },
-    };
+        {
+          id: 240,
+          name: 'Counter-Strike: Source',
+          mounted: false,
+          icon: './images/game-icons/cstrike.png',
+        },
+        {
+          id: 220,
+          name: 'Dev Note: this mountable game data is mocked',
+          mounted: false,
+          icon: './images/game-icons/hl2.png',
+        },
+      ]);
+    },
+  };
 });

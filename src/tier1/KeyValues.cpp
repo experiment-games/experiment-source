@@ -1085,10 +1085,18 @@ KeyValues *KeyValues::FindKey( const char *keyName, bool bCreate )
 //-----------------------------------------------------------------------------
 KeyValues *KeyValues::CreateNewKey()
 {
+    char buf[12];
+    KeyValues *pLastChild = GetNextKeyName( buf, sizeof( buf ) );
+
+    return CreateKeyUsingKnownLastChild( buf, pLastChild );
+}
+
+KeyValues *KeyValues::GetNextKeyName( char *newKeyName, int newKeyNameBufferSize )
+{
+    KeyValues *pLastChild = NULL;
     int newID = 1;
 
     // search for any key with higher values
-    KeyValues *pLastChild = NULL;
     for ( KeyValues *dat = m_pSub; dat != NULL; dat = dat->m_pPeer )
     {
         // case-insensitive string compare
@@ -1101,10 +1109,9 @@ KeyValues *KeyValues::CreateNewKey()
         pLastChild = dat;
     }
 
-    char buf[12];
-    Q_snprintf( buf, sizeof( buf ), "%d", newID );
+    Q_snprintf( newKeyName, newKeyNameBufferSize, "%d", newID );
 
-    return CreateKeyUsingKnownLastChild( buf, pLastChild );
+    return pLastChild;
 }
 
 //-----------------------------------------------------------------------------

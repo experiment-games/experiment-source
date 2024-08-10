@@ -544,6 +544,7 @@ $Project
             $File "lc_baseentity.cpp"
             $File "lc_baseplayer.cpp"
             $File "$SRCDIR\public\lcdll_int.cpp"
+		    $File "$SRCDIR\public\lengine_shared.cpp"
             $File "lcdll_util.cpp"
             $File "$SRCDIR\public\lColor.cpp"
             $File "$SRCDIR\public\tier1\lconvar.cpp"

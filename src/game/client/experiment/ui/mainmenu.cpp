@@ -12,6 +12,7 @@
 #include <icommandline.h>
 #include "GameUI/IGameConsole.h"
 #include "vgui/IInput.h"
+#include <mountsteamcontent.h>
 
 using namespace vgui;
 
@@ -170,6 +171,8 @@ class MainMenuHTML : public HTML
     {
         AddJavascriptObject( "GameUI" );
         AddJavascriptObjectCallback( "GameUI", "LoadMountableContentInfo" );
+        AddJavascriptObjectCallback( "GameUI", "MountGameContent" );
+        AddJavascriptObjectCallback( "GameUI", "UnmountGameContent" );
     }
 
     virtual void OnJavaScriptCallback( KeyValues *pData ) OVERRIDE
@@ -184,29 +187,52 @@ class MainMenuHTML : public HTML
         //     DevMsg( "Argument: %s (inside %s.%s call)\n", pArg->GetName(), pszObject, pszProperty );
         // }
 
-        if ( Q_strcmp( pszObject, "GameUI" ) == 0 )
+        // This panel only handles GameUI callbacks
+        if ( Q_strcmp( pszObject, "GameUI" ) != 0 )
+            return;
+
+        if ( Q_strcmp( pszProperty, "LoadMountableContentInfo" ) == 0 )
         {
-            if ( Q_strcmp( pszProperty, "LoadMountableContentInfo" ) == 0 )
+            KeyValues *pParameters = new KeyValues( "parameters" );
+            CUtlVector< mountableGame_t > &mountableGames = GetMountableGames();
+
+            KeyValues *pMountableGames = new KeyValues( "mountableGames" );
+            pParameters->AddSubKey( pMountableGames );
+
+            for ( int i = 0; i < mountableGames.Count(); i++ )
             {
-                // TODO: Load this automatically:
-                KeyValues *pResponse = new KeyValues( "response" );
+                mountableGame_t &game = mountableGames[i];
 
-                KeyValues *pGarrysMod = new KeyValues( "" );
-                pGarrysMod->SetString( "icon", "images/game-icons/garrysmod.png" );
-                pGarrysMod->SetString( "name", "Garry's Mod" );
-                pGarrysMod->SetString( "id", "garrysmod" );
-                pGarrysMod->SetBool( "mounted", true );
-                pResponse->AddSubKey( pGarrysMod );
+                char icon[MAX_PATH];
+                Q_snprintf( icon, sizeof( icon ), "images/game-icons/%s.png", game.directoryName );
 
-                KeyValues *pCounterStrike = new KeyValues( "" );
-                pCounterStrike->SetString( "icon", "images/game-icons/cstrike.png" );
-                pCounterStrike->SetString( "name", "Counter-Strike: Source" );
-                pCounterStrike->SetString( "id", "cstrike" );
-                pCounterStrike->SetBool( "mounted", false );
-                pResponse->AddSubKey( pCounterStrike );
-
-                CallJavascriptObjectCallback( callbackId, pResponse );
+                KeyValues *pGame = new KeyValues( "" );
+                pGame->SetString( "icon", icon );
+                pGame->SetString( "name", game.name );
+                pGame->SetInt( "id", game.appId );
+                pGame->SetBool( "mounted", game.isMounted );
+                pMountableGames->AddSubKey( pGame );
             }
+
+            CallJavascriptObjectCallback( callbackId, pParameters );
+        }
+        else if ( Q_strcmp( pszProperty, "MountGameContent" ) == 0 )
+        {
+            KeyValues *pArguments = pData->FindKey( "arguments" );
+            int nGameAppId = pArguments->GetInt( "1" );
+
+            KeyValues *pResponse = new KeyValues( "parameters" );
+            pResponse->SetBool( "wasSuccessful", MountGameContentByAppId( nGameAppId ) );
+            CallJavascriptObjectCallback( callbackId, pResponse );
+        }
+        else if ( Q_strcmp( pszProperty, "UnmountGameContent" ) == 0 )
+        {
+            KeyValues *pArguments = pData->FindKey( "arguments" );
+            int nGameAppId = pArguments->GetInt( "1" );
+
+            KeyValues *pResponse = new KeyValues( "parameters" );
+            pResponse->SetBool( "wasSuccessful", UnmountGameContentByAppId( nGameAppId ) );
+            CallJavascriptObjectCallback( callbackId, pResponse );
         }
     }
 };

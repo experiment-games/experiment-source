@@ -342,6 +342,7 @@ void HTML::AddJavascriptObjectCallback( const char *pszObjectName, const char *p
                 "       args = Array.prototype.slice.call(arguments); "
                 "   } "
                 "   let __cId = window.g_Interop.__callbackQueue.push(callback)-1; "
+                "   console.log('Callback ID: ' + __cId + ' with args: ' + JSON.stringify(args)); "
                 "   alert('%s' + JSON.stringify({object:'%s',property:'%s',arguments:args,callbackId:__cId})); "
                 "}; ",
                 pszObjectName,
@@ -367,7 +368,7 @@ void HTML::CallJavascriptObjectCallback( int callbackId, KeyValues *args )
     CJsonToKeyValues::ConvertKeyValuesToJson( args, szJson, sizeof( szJson ) );
 
     char szScript[8096];
-    Q_snprintf( szScript, sizeof( szScript ), "if (typeof window.g_Interop.__callbackQueue[%i] === 'function') window.g_Interop.__callbackQueue[%i](%s);", callbackId, callbackId, szJson );
+    Q_snprintf( szScript, sizeof( szScript ), "if (typeof window.g_Interop.__callbackQueue[%i] === 'function') window.g_Interop.__callbackQueue[%i].apply(null, Object.values(%s));", callbackId, callbackId, szJson );
 
     m_SteamAPIContext.SteamHTMLSurface()->ExecuteJavascript( m_unBrowserHandle, szScript );
 }
@@ -380,11 +381,14 @@ void HTML::OnJavaScriptCallback( KeyValues *pData )
 {
     // const char *pszObject = pData->GetString( "object" );
     // const char *pszProperty = pData->GetString( "property" );
+    //KeyValues *pArguments = pData->FindKey( "arguments" );
 
-    // for ( KeyValues *pArg = pData->FindKey( "arguments" ); pArg; pArg = pArg->GetNextKey() )
+    //for ( KeyValues *pArg = pArguments->GetFirstSubKey(); pArg; pArg = pArg->GetNextKey() )
     //{
-    //     DevMsg( "Argument: %s (inside %s.%s call)\n", pArg->GetName(), pszObject, pszProperty );
-    // }
+    //    lua_pushstring( L, pArg->GetName() );
+    //    lua_pushstring( L, pArg->GetString() );
+    //    lua_settable( L, -3 );
+    //}
 }
 
 /// <summary>

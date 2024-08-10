@@ -39,7 +39,7 @@ void MountAddon( const char *addonName )
     if ( bGetCurrentDirectory )
         V_SetCurrentDirectory( currentDirectoryPath );
 
-#ifdef GAME_DLL
+#ifdef GAME_DLL // Prevent the message from printing twice in clients
     ConColorMsg( Color( 200, 255, 0, 255 ), "Mounting addon \"%s\"...\n", addonName );
 #endif
 

@@ -75,6 +75,7 @@ LUALIB_API int( luaopen_debugoverlay )( lua_State *L );
 LUALIB_API int( luaopen_EF )( lua_State *L );
 
 #define LUA_ENGINELIBNAME "Engine"
+LUALIB_API int( luaopen_engine_shared )( lua_State *L );
 LUALIB_API int( luaopen_engine )( lua_State *L );
 
 #define LUA_ENTLISTLIBNAME "EntityList"

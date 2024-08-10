@@ -22,12 +22,6 @@ static int engine_ActivateOccluder( lua_State *L )
     return 0;
 }
 
-static int engine_ChangeTeam( lua_State *L )
-{
-    engine->ChangeTeam( luaL_checkstring( L, 1 ) );
-    return 0;
-}
-
 static int engine_CheckKeyTrapping( lua_State *L )
 {
     ButtonCode_t code;
@@ -137,12 +131,6 @@ static int engine_GameLumpVersion( lua_State *L )
     return 1;
 }
 
-static int engine_GetAppID( lua_State *L )
-{
-    lua_pushinteger( L, engine->GetAppID() );
-    return 1;
-}
-
 static int engine_GetClientConVarValue( lua_State *L )
 {
     int iPlayer;
@@ -218,24 +206,6 @@ static int engine_GetLastTimeStamp( lua_State *L )
     return 1;
 }
 
-static int engine_GetServerAddress( lua_State *L )
-{
-    lua_pushstring( L, g_pGameInfoStore->GetServerAddress() );
-    return 1;
-}
-
-static int engine_GetServerName( lua_State *L )
-{
-    lua_pushstring( L, g_pGameInfoStore->GetServerName() );
-    return 1;
-}
-
-static int engine_GetLevelName( lua_State *L )
-{
-    lua_pushstring( L, engine->GetLevelName() );
-    return 1;
-}
-
 static int engine_GetLightForPoint( lua_State *L )
 {
     Vector v = engine->GetLightForPoint( luaL_checkvector( L, 1 ), luaL_checkboolean( L, 2 ) );
@@ -261,12 +231,6 @@ static int engine_GetMainMenuBackgroundName( lua_State *L )
     char *dest = "";
     engine->GetMainMenuBackgroundName( dest, luaL_checknumber( L, 2 ) );
     lua_pushstring( L, dest );
-    return 1;
-}
-
-static int engine_GetMapEntitiesString( lua_State *L )
-{
-    lua_pushstring( L, engine->GetMapEntitiesString() );
     return 1;
 }
 
@@ -388,12 +352,6 @@ static int engine_IsHLTV( lua_State *L )
     return 1;
 }
 
-static int engine_IsInEditMode( lua_State *L )
-{
-    lua_pushboolean( L, engine->IsInEditMode() );
-    return 1;
-}
-
 static int engine_IsInGame( lua_State *L )
 {
     lua_pushboolean( L, engine->IsInGame() );
@@ -406,21 +364,9 @@ static int engine_IsLevelMainMenuBackground( lua_State *L )
     return 1;
 }
 
-static int engine_IsLowViolence( lua_State *L )
-{
-    lua_pushboolean( L, engine->IsLowViolence() );
-    return 1;
-}
-
 static int engine_IsOccluded( lua_State *L )
 {
     luaL_checkboolean( L, engine->IsOccluded( luaL_checkvector( L, 1 ), luaL_checkvector( L, 2 ) ) );
-    return 1;
-}
-
-static int engine_IsPaused( lua_State *L )
-{
-    lua_pushboolean( L, engine->IsPaused() );
     return 1;
 }
 
@@ -512,36 +458,6 @@ static int engine_ResetDemoInterpolation( lua_State *L )
     return 0;
 }
 
-static int engine_SentenceGroupIndexFromName( lua_State *L )
-{
-    lua_pushinteger( L, engine->SentenceGroupIndexFromName( luaL_checkstring( L, 1 ) ) );
-    return 1;
-}
-
-static int engine_SentenceGroupNameFromIndex( lua_State *L )
-{
-    lua_pushstring( L, engine->SentenceGroupNameFromIndex( luaL_checknumber( L, 1 ) ) );
-    return 1;
-}
-
-static int engine_SentenceIndexFromName( lua_State *L )
-{
-    lua_pushinteger( L, engine->SentenceIndexFromName( luaL_checkstring( L, 1 ) ) );
-    return 1;
-}
-
-static int engine_SentenceLength( lua_State *L )
-{
-    lua_pushnumber( L, engine->SentenceLength( luaL_checknumber( L, 1 ) ) );
-    return 1;
-}
-
-static int engine_SentenceNameFromIndex( lua_State *L )
-{
-    lua_pushstring( L, engine->SentenceNameFromIndex( luaL_checknumber( L, 1 ) ) );
-    return 1;
-}
-
 static int engine_ServerCmd( lua_State *L )
 {
     engine->ServerCmd( luaL_checkstring( L, 1 ), luaL_checkboolean( L, 2 ) );
@@ -584,15 +500,8 @@ static int engine_SupportsHDR( lua_State *L )
     return 1;
 }
 
-static int engine_Time( lua_State *L )
-{
-    lua_pushnumber( L, engine->Time() );
-    return 1;
-}
-
 static const luaL_Reg enginelib[] = {
     { "ActivateOccluder", engine_ActivateOccluder },
-    { "ChangeTeam", engine_ChangeTeam },
 
     { "CheckKeyTrapping", engine_CheckKeyTrapping },
     { "IsKeyTrapping", engine_IsKeyTrapping },
@@ -609,21 +518,16 @@ static const luaL_Reg enginelib[] = {
     { "EngineStats_BeginFrame", engine_EngineStats_BeginFrame },
     { "EngineStats_EndFrame", engine_EngineStats_EndFrame },
     { "GameLumpSize", engine_GameLumpSize },
-    { "GetAppID", engine_GetAppID },
     { "GetClientConVarValue", engine_GetClientConVarValue },
     { "GetClientConVarValueAsNumber", engine_GetClientConVarValueAsNumber },
     { "GetDXSupportLevel", engine_GetDXSupportLevel },
     { "GetEngineBuildNumber", engine_GetEngineBuildNumber },
     { "GetGameDirectory", engine_GetGameDirectory },
     { "GetLastTimeStamp", engine_GetLastTimeStamp },
-    { "GetServerAddress", engine_GetServerAddress },
-    { "GetServerName", engine_GetServerName },
-    { "GetLevelName", engine_GetLevelName },
     { "GetLightForPoint", engine_GetLightForPoint },
     { "GetLightForPointFast", engine_GetLightForPointFast },
     { "GetLocalPlayer", engine_GetLocalPlayer },
     { "GetMainMenuBackgroundName", engine_GetMainMenuBackgroundName },
-    { "GetMapEntitiesString", engine_GetMapEntitiesString },
     { "GetMaxClients", engine_GetMaxClients },
     { "GetMostRecentSaveGame", engine_GetMostRecentSaveGame },
     { "GetPlayerForUserID", engine_GetPlayerForUserID },
@@ -639,12 +543,9 @@ static const luaL_Reg enginelib[] = {
     { "IsDrawingLoadingImage", engine_IsDrawingLoadingImage },
     { "IsHammerRunning", engine_IsHammerRunning },
     { "IsHLTV", engine_IsHLTV },
-    { "IsInEditMode", engine_IsInEditMode },
     { "IsInGame", engine_IsInGame },
     { "IsLevelMainMenuBackground", engine_IsLevelMainMenuBackground },
-    { "IsLowViolence", engine_IsLowViolence },
     { "IsOccluded", engine_IsOccluded },
-    { "IsPaused", engine_IsPaused },
     { "IsPlayingDemo", engine_IsPlayingDemo },
     { "IsPlayingTimeDemo", engine_IsPlayingTimeDemo },
     { "IsRecordingDemo", engine_IsRecordingDemo },
@@ -659,11 +560,6 @@ static const luaL_Reg enginelib[] = {
     { "OnStorageDeviceDetached", engine_OnStorageDeviceDetached },
     { "REMOVED_SteamProcessCall", engine_REMOVED_SteamProcessCall },
     { "ResetDemoInterpolation", engine_ResetDemoInterpolation },
-    { "SentenceGroupIndexFromName", engine_SentenceGroupIndexFromName },
-    { "SentenceGroupNameFromIndex", engine_SentenceGroupNameFromIndex },
-    { "SentenceIndexFromName", engine_SentenceIndexFromName },
-    { "SentenceLength", engine_SentenceLength },
-    { "SentenceNameFromIndex", engine_SentenceNameFromIndex },
     { "ServerCmd", engine_ServerCmd },
     { "SetMapLoadFailed", engine_SetMapLoadFailed },
     { "SetRestrictClientCommands", engine_SetRestrictClientCommands },
@@ -671,7 +567,6 @@ static const luaL_Reg enginelib[] = {
     { "Sound_ExtraUpdate", engine_Sound_ExtraUpdate },
     { "StartXboxExitingProcess", engine_StartXboxExitingProcess },
     { "SupportsHDR", engine_SupportsHDR },
-    { "Time", engine_Time },
     { NULL, NULL } };
 
 /*

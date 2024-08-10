@@ -44,7 +44,9 @@ void LHTML::OnJavaScriptCallback( KeyValues *pData )
     // Push all arguments in 'arguments' as a table
     lua_newtable( L );
 
-    for ( KeyValues *pArg = pData->FindKey( "arguments" ); pArg; pArg = pArg->GetNextKey() )
+    KeyValues *pArguments = pData->FindKey( "arguments" );
+
+    for ( KeyValues *pArg = pArguments->GetFirstSubKey(); pArg; pArg = pArg->GetNextKey() )
     {
         lua_pushstring( L, pArg->GetName() );
         lua_pushstring( L, pArg->GetString() );
