@@ -21,4 +21,3 @@ lua:
 <div class="lua__search__keywords">
 hook EntityRemoved &#x2013; ""
 </div>
-

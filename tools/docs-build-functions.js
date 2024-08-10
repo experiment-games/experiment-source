@@ -133,17 +133,8 @@ function writeFunctionToFile(func) {
     .replace(/%static%/g, staticSection)
     .replace(/%searchKeywords%/g, searchKeywords);
 
-  fs.mkdir(path.dirname(filePath), { recursive: true }, (err) => {
-    if (err) {
-      console.error(`Error creating directory ${path.dirname(filePath)}: ${err.message}`);
-    } else {
-      fs.writeFile(filePath, content, (err) => {
-        if (err) {
-          console.error(`Error writing file ${filePath}: ${err.message}`);
-        }
-      });
-    }
-  });
+  fs.mkdirSync(path.dirname(filePath), { recursive: true });
+  fs.writeFileSync(filePath, content);
 }
 
 function fromTypeChecker(typeChecker) {

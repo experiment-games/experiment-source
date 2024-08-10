@@ -13,9 +13,11 @@ const { indentEachLine, wrapQuotes } = require('./common/string');
 const { getAllFilesInDirectoriesAsMap, traverseDirectory } = require('./common/filesystem');
 
 const srcDir = './src/';
-const outputDir = './docs/hooks/';
+const docsDir = './docs/';
+const outputDir = path.join(docsDir, 'hooks');
 
 const filesToUpdate = getAllFilesInDirectoriesAsMap(outputDir);
+const hooksTouchedThisRun = new Map();
 
 const luaHookBeginPattern = /LUA_CALL_HOOK_BEGIN\(\s*"([^"]+)"\s*(?:,\s*"([^"]+)")?\s*\)/;
 // luaL_ or lua_, // doc: is optional
@@ -163,6 +165,21 @@ hook %title% &#x2013; %description%
 </div>
 `;
 
+const markdownTemplateRedirect = `---
+template: lua-redirect.html
+title: %title%
+icon: lua-%realm%
+tags:
+  - lua
+  - %realm%
+  - needs-verification
+lua:
+  redirects:
+    %redirects%
+---
+
+`;
+
 function writeHookToFile(hook) {
   const filePath = path.join(outputDir, hook.realm, `${hook.name}.md`);
 
@@ -175,6 +192,29 @@ function writeHookToFile(hook) {
 
   // Remove this file so we know it's up to date
   filesToUpdate.delete(filePath);
+
+  // Track files touched this run, so we can find cases where a hook is in multiple files,
+  // client and server, but not obviously shared. If we see a hook in multiple files, we
+  // will add a file that simply redirects to the client- and server-specific hooks.
+  if (hooksTouchedThisRun.has(hook.name)) {
+    const otherHook = hooksTouchedThisRun.get(hook.name);
+    let redirects = `- label: '${hook.realm}/${hook.name}'\n      url: '${hook.realm}/${hook.name}'`;
+    redirects += `\n    - label: '${otherHook.realm}/${otherHook.name}'\n      url: '${otherHook.realm}/${otherHook.name}'`;
+
+    const redirectFilePath = path.join(outputDir, 'shared', `${hook.name}.md`);
+    const redirectContent = markdownTemplateRedirect.replace(/%title%/g, hook.name)
+      .replace(/%realm%/g, 'shared')
+      .replace(/%description%/g, hook.description)
+      .replace(/%redirects%/g, redirects);
+
+    fs.mkdirSync(path.dirname(redirectFilePath), { recursive: true });
+    fs.writeFileSync(redirectFilePath, redirectContent);
+
+    // Remove this file so we know it's up to date
+    filesToUpdate.delete(redirectFilePath);
+  }
+
+  hooksTouchedThisRun.set(hook.name, hook);
 
   let argumentSection = '';
 
@@ -210,17 +250,8 @@ function writeHookToFile(hook) {
     .replace(/%arguments%/g, argumentSection)
     .replace(/%returns%/g, returnSection);
 
-  fs.mkdir(path.dirname(filePath), { recursive: true }, (err) => {
-    if (err) {
-      console.error(`Error creating directory ${path.dirname(filePath)}: ${err.message}`);
-    } else {
-      fs.writeFile(filePath, content, (err) => {
-        if (err) {
-          console.error(`Error writing file ${filePath}: ${err.message}`);
-        }
-      });
-    }
-  });
+  fs.mkdirSync(path.dirname(filePath), { recursive: true });
+  fs.writeFileSync(filePath, content);
 }
 
 function processHooksInFile(file) {

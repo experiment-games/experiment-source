@@ -1,0 +1,24 @@
+{% extends "main.html" %}
+
+{% block content %}
+<div class="lua">
+    <h1>{{ page.meta.title }}</h1>
+    <div class="admonition note">
+        <p class="admonition-title">Internal hook logic separated: implementation may vary</p>
+        <p>
+            Internally this hook is implemented in separate files for client and server.
+            Because of this, the implementation may vary between the two.
+            This means the server or client may have additional parameters or different return values.
+        </p>
+    </div>
+
+    <h2>Redirects</h2>
+    <ul>
+    {% for redirect in page.meta.lua.redirects %}
+        <li>
+            <a href="{{ config.site_url }}hooks/{{ redirect.url }}">{{ redirect.label }}</a>
+        </li>
+    {% endfor %}
+    </ul>
+</div>
+{% endblock %}
