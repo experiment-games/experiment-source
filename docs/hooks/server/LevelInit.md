@@ -12,17 +12,17 @@ lua:
   realm: server
   description: ""
   arguments:
-    - name: "pMapName "
+    - name: "pMapName"
       type: string
-    - name: "pMapEntities "
+    - name: "pMapEntities"
       type: string
-    - name: "pOldLevel "
+    - name: "pOldLevel"
       type: string
-    - name: "pLandmarkName "
+    - name: "pLandmarkName"
       type: string
-    - name: "loadGame "
+    - name: "loadGame"
       type: boolean
-    - name: "background "
+    - name: "background"
       type: boolean
   returns:
     

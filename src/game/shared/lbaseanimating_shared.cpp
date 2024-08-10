@@ -12,7 +12,7 @@
 // memdbgon must be the last include file in a .cpp file!!!
 #include "tier0/memdbgon.h"
 
-LUA_REGISTRATION_INIT()
+LUA_REGISTRATION_INIT( CBaseAnimating )
 
 LUA_BINDING_BEGIN( CBaseAnimating, GetModelName, "class", "Get the model path of the entity" )
 {
@@ -390,7 +390,7 @@ LUALIB_API int luaopen_CBaseAnimating_shared( lua_State *L )
     lua_pushstring( L, "Entity" );
     lua_setfield( L, -2, "__type" ); /* metatable.__type = "Entity" */
 
-    LUA_REGISTRATION_COMMIT();
+    LUA_REGISTRATION_COMMIT( CBaseAnimating );
 
     return 1;
 }

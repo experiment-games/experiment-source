@@ -14,10 +14,13 @@ lua:
   arguments:
     - name: "pPlayer"
       type: entity
-    - name: "vecVelocity "
+    - name: "vecVelocity"
       type: Vector
   returns:
-    
+    - type: unknown
+      description: ""
+    - type: unknown
+      description: ""
 ---
 
 <div class="lua__search__keywords">

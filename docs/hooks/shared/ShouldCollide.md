@@ -12,12 +12,13 @@ lua:
   realm: shared
   description: ""
   arguments:
-    - name: "collisionGroup0 "
+    - name: "collisionGroup0"
       type: number
-    - name: "collisionGroup1 "
+    - name: "collisionGroup1"
       type: number
   returns:
-    
+    - type: unknown
+      description: ""
 ---
 
 <div class="lua__search__keywords">

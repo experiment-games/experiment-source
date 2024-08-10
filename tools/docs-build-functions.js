@@ -108,14 +108,14 @@ function writeFunctionToFile(func) {
       let defaults = '';
 
       if (arg.defaultValue) {
-        defaults = `\n  default: ${wrapQuotes(arg.defaultValue)}`;
+        defaults = `\n  default: ${wrapQuotes(arg.defaultValue.trim())}`;
       }
 
       if (arg.isNillable) {
         defaults += '\n  nillable: true';
       }
 
-      return indentEachLine(`- name: ${wrapQuotes(arg.name)}\n  type: ${arg.type}${defaults}`, 2);
+      return indentEachLine(`- name: ${wrapQuotes(arg.name.replace('.', '_').trim())}\n  type: ${arg.type}${defaults}`, 2);
     }).join('\n');
   };
 
@@ -197,6 +197,14 @@ function fromTypeChecker(typeChecker) {
     case 'luaL_checkexperimentplayer':
     case 'luaL_optexperimentplayer':
       return 'Player';
+    case 'luaL_checkvector':
+    case 'luaL_optvector':
+    case 'lua_tovector':
+      return 'Vector';
+    case 'luaL_checkangle':
+    case 'luaL_optangle':
+    case 'lua_toangle':
+      return 'Angle';
     default:
       return 'unknown';
   }

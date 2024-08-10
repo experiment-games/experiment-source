@@ -15,9 +15,9 @@ lua:
   
   arguments:
     - name: "origin"
-      type: unknown
+      type: Vector
     - name: "angles"
-      type: unknown
+      type: Angle
     - name: "event"
       type: number
     - name: "options"

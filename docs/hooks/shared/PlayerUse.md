@@ -17,7 +17,8 @@ lua:
     - name: "pUseEntity"
       type: entity
   returns:
-    
+    - type: unknown
+      description: ""
 ---
 
 <div class="lua__search__keywords">

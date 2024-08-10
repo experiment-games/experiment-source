@@ -12,7 +12,7 @@ lua:
   realm: client
   description: ""
   arguments:
-    - name: "true "
+    - name: "true"
       type: boolean
   returns:
     

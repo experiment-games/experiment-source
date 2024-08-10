@@ -6,6 +6,11 @@
     </a>
     {{- functionSeparator -}}<wbr>
     {%- endif -%}
-    {{- page.meta.lua.function -}}<wbr>
-    {{- argumentString -}}
+    {{- page.meta.lua.function -}}<wbr>({% for argument in arguments -%}
+    {{- argument.name -}}
+    {%- if argument.nillable -%}?{% endif -%}
+    {%- if argument.default %} = {{ argument.default -}}
+    {%- endif -%}
+    {%- if not loop.last -%}, <wbr>{%- endif -%}
+    {%- endfor -%})
 </span>

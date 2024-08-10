@@ -40,7 +40,7 @@ LUALIB_API lua_CBaseAnimating *luaL_checkanimating( lua_State *L, int narg )
     return d;
 }
 
-LUA_REGISTRATION_INIT()
+LUA_REGISTRATION_INIT( CBaseAnimating  )
 
 LUA_BINDING_BEGIN( CBaseAnimating, AddEntityToVisibleList, "class", "Add the entity to the visible entity list. Seems to only call CreateLightEffects internally." )
 {
@@ -1426,7 +1426,7 @@ LUALIB_API int luaopen_CBaseAnimating( lua_State *L )
     //luaL_register( L, NULL, CBaseAnimatingmeta );
     //lua_pushstring( L, "Entity" );
     //lua_setfield( L, -2, "__type" ); /* metatable.__type = "Entity" */ // moved to lbaseanimating_shared
-    LUA_REGISTRATION_COMMIT();
+    LUA_REGISTRATION_COMMIT( CBaseAnimating );
 
     return 1;
 }

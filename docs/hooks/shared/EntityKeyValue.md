@@ -14,12 +14,13 @@ lua:
   arguments:
     - name: "this"
       type: entity
-    - name: "szKeyName "
+    - name: "szKeyName"
       type: string
-    - name: "szValue "
+    - name: "szValue"
       type: string
   returns:
-    
+    - type: unknown
+      description: ""
 ---
 
 <div class="lua__search__keywords">

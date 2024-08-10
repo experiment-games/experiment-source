@@ -12,9 +12,9 @@ lua:
   realm: server
   description: ""
   arguments:
-    - name: "edictCount "
+    - name: "edictCount"
       type: number
-    - name: "clientMax "
+    - name: "clientMax"
       type: number
   returns:
     

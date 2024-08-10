@@ -15,7 +15,7 @@ lua:
   
   arguments:
     - name: "origin"
-      type: unknown
+      type: Vector
   returns:
     - type: vector
       description: "The uncorrected view model attachment origin"

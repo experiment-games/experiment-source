@@ -14,7 +14,7 @@ lua:
   arguments:
     - name: "pPlayer"
       type: entity
-    - name: "chatmsg "
+    - name: "chatmsg"
       type: string
   returns:
     

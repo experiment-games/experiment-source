@@ -12,10 +12,11 @@ lua:
   realm: client
   description: ""
   arguments:
-    - name: "cmd "
+    - name: "cmd"
       type: UserCmd
   returns:
-    
+    - type: unknown
+      description: ""
 ---
 
 <div class="lua__search__keywords">

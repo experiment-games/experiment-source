@@ -14,7 +14,8 @@ lua:
   arguments:
   
   returns:
-    
+    - type: unknown
+      description: ""
 ---
 
 <div class="lua__search__keywords">

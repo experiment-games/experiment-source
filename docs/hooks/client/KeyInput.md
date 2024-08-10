@@ -12,14 +12,15 @@ lua:
   realm: client
   description: ""
   arguments:
-    - name: "down "
+    - name: "down"
       type: number
-    - name: "keynum "
+    - name: "keynum"
       type: number
-    - name: "pszCurrentBinding "
+    - name: "pszCurrentBinding"
       type: string
   returns:
-    
+    - type: unknown
+      description: ""
 ---
 
 <div class="lua__search__keywords">

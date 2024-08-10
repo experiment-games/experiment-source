@@ -43,12 +43,14 @@ LUALIB_API int( luaopen_CExperiment_Player_shared )( lua_State *L );
 LUALIB_API int( luaopen_Color )( lua_State *L );
 
 #define LUA_CONCOMMANDLIBNAME "ConsoleCommands"
+#define LUA_CONCOMMANDMETANAME "ConsoleCommand"
 LUALIB_API int( luaopen_ConCommand )( lua_State *L );
 
 #define LUA_CONTENTSLIBNAME "CONTENTS"
 LUALIB_API int( luaopen_CONTENTS )( lua_State *L );
 
-#define LUA_CONVARLIBNAME "ConsoleVariable"
+#define LUA_CONVARLIBNAME "ConsoleVariables"
+#define LUA_CONVARMETANAME "ConsoleVariable"
 LUALIB_API int( luaopen_ConVar )( lua_State *L );
 
 #define LUA_PASFILTERLIBNAME "CPASFilter"
@@ -261,24 +263,27 @@ struct LuaRegEntry
     lua_CFunction function;
 };
 
-#define LUA_REGISTRATION_INIT() \
-    static CUtlVector< LuaRegEntry > luaRegistry;
+#define LUA_REGISTRATION_INIT( ClassName ) \
+    static CUtlVector< LuaRegEntry > ClassName##_luaRegistry;
 
-#define LUA_REGISTRATION_COMMIT() \
-    luaL_register( L, NULL, luaRegistry );
+#define LUA_REGISTRATION_COMMIT( ClassName ) \
+    luaL_register( L, NULL, ClassName##_luaRegistry );
 
-#define LUA_REGISTER_METHOD( name, func )            \
+#define LUA_REGISTRATION_COMMIT_GLOBAL( ClassName ) \
+    luaL_register( L, LUA_GNAME, ClassName##_luaRegistry );
+
+#define LUA_REGISTER_METHOD( Registry, name, func )            \
     static struct RegHelper_##func                   \
     {                                                \
         RegHelper_##func()                           \
         {                                            \
-            luaRegistry.AddToTail( { name, func } ); \
+            Registry.AddToTail( { name, func } ); \
         }                                            \
     } regHelper_##func;
 
 #define LUA_BINDING_BEGIN( ClassName, FunctionName, Concept, DocumentationDescription ) \
     static int ClassName##_##FunctionName( lua_State *L );                              \
-    LUA_REGISTER_METHOD( #FunctionName, ClassName##_##FunctionName )                    \
+    LUA_REGISTER_METHOD( ClassName##_luaRegistry, #FunctionName, ClassName##_##FunctionName )                    \
     static int ClassName##_##FunctionName( lua_State *L )                               \
     {
 

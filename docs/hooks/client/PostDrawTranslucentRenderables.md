@@ -12,11 +12,11 @@ lua:
   realm: client
   description: ""
   arguments:
-    - name: "bIsDepthDraw "
+    - name: "bIsDepthDraw"
       type: boolean
-    - name: "bInSkybox "
+    - name: "bInSkybox"
       type: boolean
-    - name: "bSkyboxIs3D "
+    - name: "bSkyboxIs3D"
       type: boolean
   returns:
     

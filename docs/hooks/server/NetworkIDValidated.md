@@ -12,9 +12,9 @@ lua:
   realm: server
   description: ""
   arguments:
-    - name: "pszUserName "
+    - name: "pszUserName"
       type: string
-    - name: "pszNetworkID "
+    - name: "pszNetworkID"
       type: string
   returns:
     

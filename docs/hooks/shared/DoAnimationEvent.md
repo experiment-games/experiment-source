@@ -14,10 +14,11 @@ lua:
   arguments:
     - name: "pPlayer"
       type: entity
-    - name: "nData "
+    - name: "nData"
       type: number
   returns:
-    
+    - type: unknown
+      description: ""
 ---
 
 <div class="lua__search__keywords">

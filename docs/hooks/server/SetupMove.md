@@ -14,9 +14,9 @@ lua:
   arguments:
     - name: "player"
       type: entity
-    - name: "move "
+    - name: "move"
       type: MoveData
-    - name: "ucmd "
+    - name: "ucmd"
       type: UserCmd
   returns:
     

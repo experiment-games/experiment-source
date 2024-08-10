@@ -26,161 +26,183 @@ LUA_API void lua_pushconvar( lua_State *L, lua_ConVar *pConVar )
 {
     lua_ConVar **ppConVar = ( lua_ConVar ** )lua_newuserdata( L, sizeof( pConVar ) );
     *ppConVar = pConVar;
-    LUA_SAFE_SET_METATABLE( L, LUA_CONVARLIBNAME );
+    LUA_SAFE_SET_METATABLE( L, LUA_CONVARMETANAME );
 }
 
 LUALIB_API lua_ConVar *luaL_checkconvar( lua_State *L, int narg )
 {
-    lua_ConVar **d = ( lua_ConVar ** )luaL_checkudata( L, narg, LUA_CONVARLIBNAME );
+    lua_ConVar **d = ( lua_ConVar ** )luaL_checkudata( L, narg, LUA_CONVARMETANAME );
     if ( *d == NULL ) /* avoid extra test when d is not 0 */
-        luaL_argerror( L, narg, "ConVar expected, got NULL" );
+        luaL_argerror( L, narg, "ConsoleVariable expected, got NULL" );
     return *d;
 }
 
-LUA_REGISTRATION_INIT()
+LUA_REGISTRATION_INIT( ConsoleVariable )
 
-static int ConVar_AddFlags( lua_State *L )
+LUA_BINDING_BEGIN( ConsoleVariable, AddFlags, "class", "Adds flags to the ConsoleVariable" )
 {
-    luaL_checkconvar( L, 1 )->AddFlags( luaL_checknumber( L, 2 ) );
+    lua_ConVar *pConVar = LUA_BINDING_ARGUMENT( luaL_checkconvar, 1, "consoleVariable" );
+    pConVar->AddFlags( luaL_checknumber( L, 2 ) );
     return 0;
 }
+LUA_BINDING_END( "void", "Adds flags to the ConsoleVariable" )
 
-static int ConVar_GetBool( lua_State *L )
+LUA_BINDING_BEGIN( ConsoleVariable, GetBool, "class", "Gets the value of the ConsoleVariable as a boolean" )
 {
-    lua_pushboolean( L, luaL_checkconvar( L, 1 )->GetBool() );
+    lua_ConVar *pConVar = LUA_BINDING_ARGUMENT( luaL_checkconvar, 1, "consoleVariable" );
+    lua_pushboolean( L, pConVar->GetBool() );
     return 1;
 }
+LUA_BINDING_END( "boolean", "Gets the value of the ConsoleVariable as a boolean" )
 
-static int ConVar_GetDefault( lua_State *L )
+LUA_BINDING_BEGIN( ConsoleVariable, GetDefault, "class", "Gets the default value of the ConsoleVariable" )
 {
-    lua_pushstring( L, luaL_checkconvar( L, 1 )->GetDefault() );
+    lua_ConVar *pConVar = LUA_BINDING_ARGUMENT( luaL_checkconvar, 1, "consoleVariable" );
+    lua_pushstring( L, pConVar->GetDefault() );
     return 1;
 }
+LUA_BINDING_END( "string", "Gets the default value of the ConsoleVariable" )
 
-static int ConVar_GetFloat( lua_State *L )
+LUA_BINDING_BEGIN( ConsoleVariable, GetFloat, "class", "Gets the value of the ConsoleVariable as a float" )
 {
-    lua_pushnumber( L, luaL_checkconvar( L, 1 )->GetFloat() );
+    lua_ConVar *pConVar = LUA_BINDING_ARGUMENT( luaL_checkconvar, 1, "consoleVariable" );
+    lua_pushnumber( L, pConVar->GetFloat() );
     return 1;
 }
+LUA_BINDING_END( "number", "Gets the value of the ConsoleVariable as a float" )
 
-static int ConVar_GetHelpText( lua_State *L )
+LUA_BINDING_BEGIN( ConsoleVariable, GetHelpText, "class", "Gets the help text of the ConsoleVariable" )
 {
-    lua_pushstring( L, luaL_checkconvar( L, 1 )->GetHelpText() );
+    lua_ConVar *pConVar = LUA_BINDING_ARGUMENT( luaL_checkconvar, 1, "consoleVariable" );
+    lua_pushstring( L, pConVar->GetHelpText() );
     return 1;
 }
+LUA_BINDING_END( "string", "Gets the help text of the ConsoleVariable" )
 
-static int ConVar_GetInt( lua_State *L )
+LUA_BINDING_BEGIN( ConsoleVariable, GetInt, "class", "Gets the value of the ConsoleVariable as an integer" )
 {
-    lua_pushinteger( L, luaL_checkconvar( L, 1 )->GetInt() );
+    lua_ConVar *pConVar = LUA_BINDING_ARGUMENT( luaL_checkconvar, 1, "consoleVariable" );
+    lua_pushinteger( L, pConVar->GetInt() );
     return 1;
 }
+LUA_BINDING_END( "number", "Gets the value of the ConsoleVariable as an integer" )
 
-static int ConVar_GetMax( lua_State *L )
+LUA_BINDING_BEGIN( ConsoleVariable, GetMax, "class", "Gets the maximum value of the ConsoleVariable" )
 {
+    lua_ConVar *pConVar = LUA_BINDING_ARGUMENT( luaL_checkconvar, 1, "consoleVariable" );
     float maxVal;
-    lua_pushboolean( L, luaL_checkconvar( L, 1 )->GetMax( maxVal ) );
+    lua_pushboolean( L, pConVar->GetMax( maxVal ) );
     lua_pushnumber( L, maxVal );
     return 2;
 }
+LUA_BINDING_END( "boolean, number", "Gets the maximum value of the ConsoleVariable" )
 
-static int ConVar_GetMin( lua_State *L )
+LUA_BINDING_BEGIN( ConsoleVariable, GetMin, "class", "Gets the minimum value of the ConsoleVariable" )
 {
+    lua_ConVar *pConVar = LUA_BINDING_ARGUMENT( luaL_checkconvar, 1, "consoleVariable" );
     float minVal;
-    lua_pushboolean( L, luaL_checkconvar( L, 1 )->GetMin( minVal ) );
+    lua_pushboolean( L, pConVar->GetMin( minVal ) );
     lua_pushnumber( L, minVal );
     return 2;
 }
+LUA_BINDING_END( "boolean, number", "Gets the minimum value of the ConsoleVariable" )
 
-static int ConVar_GetName( lua_State *L )
+LUA_BINDING_BEGIN( ConsoleVariable, GetName, "class", "Gets the name of the ConsoleVariable" )
 {
-    lua_pushstring( L, luaL_checkconvar( L, 1 )->GetName() );
+    lua_ConVar *pConVar = LUA_BINDING_ARGUMENT( luaL_checkconvar, 1, "consoleVariable" );
+    lua_pushstring( L, pConVar->GetName() );
     return 1;
 }
+LUA_BINDING_END( "string", "Gets the name of the ConsoleVariable" )
 
-static int ConVar_GetString( lua_State *L )
+LUA_BINDING_BEGIN( ConsoleVariable, GetString, "class", "Gets the value of the ConsoleVariable as a string" )
 {
-    lua_pushstring( L, luaL_checkconvar( L, 1 )->GetString() );
+    lua_ConVar *pConVar = LUA_BINDING_ARGUMENT( luaL_checkconvar, 1, "consoleVariable" );
+    lua_pushstring( L, pConVar->GetString() );
     return 1;
 }
+LUA_BINDING_END( "string", "Gets the value of the ConsoleVariable as a string" )
 
-static int ConVar_IsCommand( lua_State *L )
+LUA_BINDING_BEGIN( ConsoleVariable, IsCommand, "class", "Whether the ConsoleVariable is a command (and not a ConsoleVariable)" )
 {
-    lua_pushboolean( L, luaL_checkconvar( L, 1 )->IsCommand() );
+    lua_ConVar *pConVar = LUA_BINDING_ARGUMENT( luaL_checkconvar, 1, "consoleVariable" );
+    lua_pushboolean( L, pConVar->IsCommand() );
     return 1;
 }
+LUA_BINDING_END( "boolean", "Whether the ConsoleVariable is a command (and not a ConsoleVariable)" )
 
-static int ConVar_IsFlagSet( lua_State *L )
+LUA_BINDING_BEGIN( ConsoleVariable, IsFlagSet, "class", "Whether the ConsoleVariable has a flag set" )
 {
-    lua_pushboolean( L, luaL_checkconvar( L, 1 )->IsFlagSet( luaL_checknumber( L, 2 ) ) );
+    lua_ConVar *pConVar = LUA_BINDING_ARGUMENT( luaL_checkconvar, 1, "consoleVariable" );
+    lua_pushboolean( L, pConVar->IsFlagSet( luaL_checknumber( L, 2 ) ) );
     return 1;
 }
+LUA_BINDING_END( "boolean", "Whether the ConsoleVariable has a flag set" )
 
-static int ConVar_IsRegistered( lua_State *L )
+LUA_BINDING_BEGIN( ConsoleVariable, IsRegistered, "class", "Whether the ConsoleVariable is registered" )
 {
-    lua_pushboolean( L, luaL_checkconvar( L, 1 )->IsRegistered() );
+    lua_ConVar *pConVar = LUA_BINDING_ARGUMENT( luaL_checkconvar, 1, "consoleVariable" );
+    lua_pushboolean( L, pConVar->IsRegistered() );
     return 1;
 }
+LUA_BINDING_END( "boolean", "Whether the ConsoleVariable is registered" )
 
-static int ConVar_IsValid( lua_State *L )
+LUA_BINDING_BEGIN( ConsoleVariable, IsValid, "class", "Whether the ConsoleVariable is valid" )
 {
-    lua_ConVar *d = lua_toconvar( L, 1 );
-    lua_pushboolean( L, d != NULL );
+    lua_ConVar *pConVar = LUA_BINDING_ARGUMENT( lua_toconvar, 1, "consoleVariable" );
+    lua_pushboolean( L, pConVar != NULL );
     return 1;
 }
+LUA_BINDING_END( "boolean", "Whether the ConsoleVariable is valid" )
 
-static int ConVar_Revert( lua_State *L )
+LUA_BINDING_BEGIN( ConsoleVariable, Revert, "class", "Reverts the ConsoleVariable to its default value" )
 {
-    luaL_checkconvar( L, 1 )->Revert();
+    lua_ConVar *pConVar = LUA_BINDING_ARGUMENT( luaL_checkconvar, 1, "consoleVariable" );
+    pConVar->Revert();
     return 0;
 }
+LUA_BINDING_END()
 
-static int ConVar_SetValue( lua_State *L )
+LUA_BINDING_BEGIN( ConsoleVariable, SetValue, "class", "Sets the value of the ConsoleVariable" )
 {
+    lua_ConVar *pConVar = LUA_BINDING_ARGUMENT( luaL_checkconvar, 1, "consoleVariable" );
     switch ( lua_type( L, 2 ) )
     {
         case LUA_TNUMBER:
-            luaL_checkconvar( L, 1 )->SetValue( ( float )luaL_checknumber( L, 2 ) );
+            pConVar->SetValue( ( float )luaL_checknumber( L, 2 ) );
             break;
         case LUA_TSTRING:
         default:
-            luaL_checkconvar( L, 1 )->SetValue( luaL_checkstring( L, 2 ) );
+            pConVar->SetValue( luaL_checkstring( L, 2 ) );
             break;
     }
     return 0;
 }
+LUA_BINDING_END()
 
-static int ConVar___tostring( lua_State *L )
+LUA_BINDING_BEGIN( ConsoleVariable, __tostring, "class", "Returns a string representation of the ConsoleVariable" )
 {
-    lua_pushfstring( L, "ConVar: \"%s\" = \"%s\"", luaL_checkconvar( L, 1 )->GetName(), luaL_checkconvar( L, 1 )->GetString() );
+    lua_ConVar *pConVar = LUA_BINDING_ARGUMENT( luaL_checkconvar, 1, "consoleVariable" );
+    lua_pushfstring( L, "ConsoleVariable: \"%s\" = \"%s\"", pConVar->GetName(), pConVar->GetString() );
     return 1;
 }
-
-static const luaL_Reg ConVarmeta[] = {
-    { "AddFlags", ConVar_AddFlags },
-    { "GetBool", ConVar_GetBool },
-    { "GetDefault", ConVar_GetDefault },
-    { "GetFloat", ConVar_GetFloat },
-    { "GetHelpText", ConVar_GetHelpText },
-    { "GetInt", ConVar_GetInt },
-    { "GetMax", ConVar_GetMax },
-    { "GetMin", ConVar_GetMin },
-    { "GetName", ConVar_GetName },
-    { "GetString", ConVar_GetString },
-    { "IsCommand", ConVar_IsCommand },
-    { "IsFlagSet", ConVar_IsFlagSet },
-    { "IsRegistered", ConVar_IsRegistered },
-    { "IsValid", ConVar_IsValid },
-    { "Revert", ConVar_Revert },
-    { "SetValue", ConVar_SetValue },
-    { "__tostring", ConVar___tostring },
-    { NULL, NULL } };
+LUA_BINDING_END( "string", "Returns a string representation of the ConsoleVariable" )
 
 static CUtlDict< ConVar *, unsigned short > m_ConVarDatabase;
 
-static int luasrc_CreateConVar( lua_State *L )
+LUA_REGISTRATION_INIT( _G )
+
+LUA_BINDING_BEGIN( _G, CreateConsoleVariable, "library", "Creates a console variable or returns the existing one with the given name" )
 {
-    const char *pName = luaL_checkstring( L, 1 );
-    // Complain about duplicately defined ConVar names...
+    const char *pName = LUA_BINDING_ARGUMENT( luaL_checkstring, 1, "name" );
+    const char *pValue = LUA_BINDING_ARGUMENT( luaL_checkstring, 2, "value" );
+    int flags = LUA_BINDING_ARGUMENT_WITH_DEFAULT( luaL_optnumber, 3, 0, "flags" );
+    const char *pHelpText = LUA_BINDING_ARGUMENT_WITH_DEFAULT( luaL_optstring, 4, "", "helpText" );
+    bool bMin = LUA_BINDING_ARGUMENT_WITH_DEFAULT( luaL_optboolean, 5, false, "hasMinimum" );
+    float min = LUA_BINDING_ARGUMENT_WITH_DEFAULT( luaL_optnumber, 6, 0.0, "minimum" );
+    bool bMax = LUA_BINDING_ARGUMENT_WITH_DEFAULT( luaL_optboolean, 7, false, "hasMaximum" );
+    float max = LUA_BINDING_ARGUMENT_WITH_DEFAULT( luaL_optnumber, 8, 0, "maximum" );
+
     unsigned short lookup = m_ConVarDatabase.Find( pName );
     if ( lookup != m_ConVarDatabase.InvalidIndex() || cvar->FindVar( pName ) )
     {
@@ -188,20 +210,23 @@ static int luasrc_CreateConVar( lua_State *L )
         return 1;
     }
 
-    ConVar *pConVar = new ConVar( strdup( pName ), luaL_checkstring( L, 2 ), ( int )luaL_optnumber( L, 3, 0 ), strdup( luaL_optstring( L, 4, 0 ) ), luaL_optboolean( L, 5, 0 ), luaL_optnumber( L, 6, 0.0 ), luaL_optboolean( L, 7, 0 ), luaL_optnumber( L, 8, 0 ) );
+    ConVar *pConVar = new ConVar( strdup( pName ), pValue, flags, strdup( pHelpText ), bMin, min, bMax, max );
 
     lookup = m_ConVarDatabase.Insert( pName, pConVar );
     Assert( lookup != m_ConVarDatabase.InvalidIndex() );
     lua_pushconvar( L, pConVar );
     return 1;
 }
+LUA_BINDING_END( "ConsoleVariable", "The ConsoleVariable created or found" )
 
-static int luasrc_GetConVar( lua_State *L )
+//static int luasrc_GetConVar( lua_State *L )
+LUA_BINDING_BEGIN( _G, GetConsoleVariable, "library", "Gets a console variable" )
 {
-    const char *pName = luaL_checkstring( L, 1 );
+    const char *pName = LUA_BINDING_ARGUMENT( luaL_checkstring, 1, "name" );
     lua_pushconvar( L, cvar->FindVar( pName ) );
     return 1;
 }
+LUA_BINDING_END( "ConsoleVariable", "The ConsoleVariable found" )
 
 void ResetConVarDatabase( void )
 {
@@ -214,23 +239,22 @@ void ResetConVarDatabase( void )
     m_ConVarDatabase.RemoveAll();
 }
 
-static const luaL_Reg ConVar_funcs[] = {
-    { "CreateConsoleVariable", luasrc_CreateConVar },
-    { "GetConsoleVariable", luasrc_GetConVar },
-    { NULL, NULL } };
-
 /*
-** Open ConVar object
+** Open ConsoleVariable object
 */
 LUALIB_API int luaopen_ConVar( lua_State *L )
 {
-    LUA_PUSH_NEW_METATABLE( L, LUA_CONVARLIBNAME );
-    luaL_register( L, NULL, ConVarmeta );
+    LUA_PUSH_NEW_METATABLE( L, LUA_CONVARMETANAME );
+    
+    LUA_REGISTRATION_COMMIT( ConsoleVariable );
+
     lua_pushvalue( L, -1 );           /* push metatable */
     lua_setfield( L, -2, "__index" ); /* metatable.__index = metatable */
-    lua_pushstring( L, LUA_CONVARLIBNAME );
+    lua_pushstring( L, LUA_CONVARMETANAME );
     lua_setfield( L, -2, "__type" ); /* metatable.__type = "ConsoleVariable" */
-    luaL_register( L, LUA_GNAME, ConVar_funcs );
+
+    LUA_REGISTRATION_COMMIT_GLOBAL( _G );
+
     lua_pop( L, 1 );
     return 1;
 }

@@ -16,10 +16,11 @@ lua:
       type: entity
     - name: "pAttacker"
       type: entity
-    - name: "info "
+    - name: "info"
       type: CTakeDamageInfo
   returns:
-    
+    - type: unknown
+      description: ""
 ---
 
 <div class="lua__search__keywords">

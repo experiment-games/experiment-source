@@ -26,12 +26,12 @@ LUA_API void lua_pushconcommand( lua_State *L, lua_ConCommand *pConCommand )
 {
     lua_ConCommand **ppConCommand = ( lua_ConCommand ** )lua_newuserdata( L, sizeof( pConCommand ) );
     *ppConCommand = pConCommand;
-    LUA_SAFE_SET_METATABLE( L, "ConsoleCommand" );
+    LUA_SAFE_SET_METATABLE( L, LUA_CONCOMMANDMETANAME );
 }
 
 LUALIB_API lua_ConCommand *luaL_checkconcommand( lua_State *L, int narg )
 {
-    lua_ConCommand **d = ( lua_ConCommand ** )luaL_checkudata( L, narg, "ConsoleCommand" );
+    lua_ConCommand **d = ( lua_ConCommand ** )luaL_checkudata( L, narg, LUA_CONCOMMANDMETANAME );
 
     if ( *d == 0 ) /* avoid extra test when d is not 0 */
         luaL_argerror( L, narg, "ConsoleCommand expected, got NULL" );
@@ -39,9 +39,9 @@ LUALIB_API lua_ConCommand *luaL_checkconcommand( lua_State *L, int narg )
     return *d;
 }
 
-LUA_REGISTRATION_INIT()
+LUA_REGISTRATION_INIT( ConsoleCommand )
 
-LUA_BINDING_BEGIN( ConCommand, CanAutoComplete, "class", "Whether the command can be auto-completed" )
+LUA_BINDING_BEGIN( ConsoleCommand, CanAutoComplete, "class", "Whether the command can be auto-completed" )
 {
     lua_ConCommand *pConCommand = LUA_BINDING_ARGUMENT( luaL_checkconcommand, 1, "consoleCommand" );
     lua_pushboolean( L, pConCommand->CanAutoComplete() );
@@ -49,7 +49,7 @@ LUA_BINDING_BEGIN( ConCommand, CanAutoComplete, "class", "Whether the command ca
 }
 LUA_BINDING_END( "boolean", "Whether the command can be auto-completed" )
 
-LUA_BINDING_BEGIN( ConCommand, IsCommand, "class", "Whether the command is a command (and not a convar)" )
+LUA_BINDING_BEGIN( ConsoleCommand, IsCommand, "class", "Whether the command is a command (and not a ConsoleVariable)" )
 {
     lua_ConCommand *pConCommand = LUA_BINDING_ARGUMENT( luaL_checkconcommand, 1, "consoleCommand" );
     lua_pushboolean( L, pConCommand->IsCommand() );
@@ -57,7 +57,7 @@ LUA_BINDING_BEGIN( ConCommand, IsCommand, "class", "Whether the command is a com
 }
 LUA_BINDING_END( "boolean", "Whether the command is a command" )
 
-LUA_BINDING_BEGIN( ConCommand, IsValid, "class", "Whether the command is valid" )
+LUA_BINDING_BEGIN( ConsoleCommand, IsValid, "class", "Whether the command is valid" )
 {
     lua_ConCommand *pConCommand = LUA_BINDING_ARGUMENT( luaL_checkconcommand, 1, "consoleCommand" );
     lua_pushboolean( L, pConCommand != NULL );
@@ -65,10 +65,10 @@ LUA_BINDING_BEGIN( ConCommand, IsValid, "class", "Whether the command is valid" 
 }
 LUA_BINDING_END( "boolean", "Whether the command is valid" )
 
-LUA_BINDING_BEGIN( ConCommand, __tostring, "class", "Returns a string representation of the command" )
+LUA_BINDING_BEGIN( ConsoleCommand, __tostring, "class", "Returns a string representation of the command" )
 {
     lua_ConCommand *pConCommand = LUA_BINDING_ARGUMENT( luaL_checkconcommand, 1, "consoleCommand" );
-    lua_pushfstring( L, "ConCommand: \"%s\"", pConCommand->GetName() );
+    lua_pushfstring( L, "ConsoleCommand: \"%s\"", pConCommand->GetName() );
     return 1;
 }
 LUA_BINDING_END( "string", "Returns a string representation of the command" )
@@ -97,7 +97,7 @@ static void LuaRunConCommand( lua_State *L, const CCommand &args )
     if ( !lua_istable( L, -1 ) )
     {
         lua_pop( L, 1 );  // pop the nil value
-        Warning( "ConCommand: ConsoleCommands library table not found.\n" );
+        Warning( "ConsoleCommand: ConsoleCommands library table not found.\n" );
         return;
     }
 
@@ -105,14 +105,19 @@ static void LuaRunConCommand( lua_State *L, const CCommand &args )
     if ( !lua_isfunction( L, -1 ) )
     {
         lua_pop( L, 2 );  // pop the function and the table
-        Warning( "ConCommand: ConsoleCommands.Dispatch function not found.\n" );
+        Warning( "ConsoleCommand: ConsoleCommands.Dispatch function not found.\n" );
         return;
     }
 
-    lua_remove( L, -2 ); // remove the library table
+    lua_remove( L, -2 );  // remove the library table
 
     // Push the player and command. With arguments as a table
-    CBaseEntity::PushLuaInstanceSafe( L, pPlayer );
+#ifdef CLIENT_DLL
+    if ( L == LGameUI )
+        lua_pushnil( L );
+    else
+#endif
+        CBaseEntity::PushLuaInstanceSafe( L, pPlayer );
     lua_pushstring( L, pCmd );
     lua_newtable( L );
     for ( int i = 1; i < args.ArgC(); i++ )
@@ -130,7 +135,7 @@ static void LuaRunConCommand( lua_State *L, const CCommand &args )
     }
 
     bool res = ( bool )luaL_checkboolean( L, -1 );
-    lua_pop( L, 1 ); // pop the return value
+    lua_pop( L, 1 );  // pop the return value
 
     if ( res )
     {
@@ -164,7 +169,7 @@ void CC_ConCommand( const CCommand &args )
 }
 
 /// <summary>
-/// Looks for the command in the ConCommand database and runs it if found
+/// Looks for the command in the ConsoleCommand database and runs it if found
 /// The command string is expected to be in the format "command arg1 arg2 arg3 ..."
 /// </summary>
 /// <param name="pszCommandString"></param>
@@ -192,9 +197,15 @@ bool TryRunConsoleCommand( const char *pszCommandString )
     return true;
 }
 
-static int luasrc_ConCommand( lua_State *L )
+LUA_REGISTRATION_INIT( _G )
+
+LUA_BINDING_BEGIN( _G, ConsoleCommand, "library", "Creates a console command or returns the existing one with the given name" )
 {
-    const char *pName = luaL_checkstring( L, 1 );
+    const char *pName = LUA_BINDING_ARGUMENT( luaL_checkstring, 1, "name" );
+    const char *pHelpString = LUA_BINDING_ARGUMENT_WITH_DEFAULT( luaL_optstring, 2, "", "helpString" );
+    int flags = LUA_BINDING_ARGUMENT_WITH_DEFAULT( luaL_optnumber, 3, 0, "flags" );
+
+    // On the client we may check the GameUI database instead of the main one if GAMEUI is true
 #ifdef CLIENT_DLL
     bool bIsGameUI = false;
     unsigned short lookup;
@@ -203,7 +214,6 @@ static int luasrc_ConCommand( lua_State *L )
     {
         bIsGameUI = true;
 
-        // Complain about duplicately defined ConCommand names...
         lookup = m_GameUIConCommandDatabase.Find( pName );
         if ( lookup != m_GameUIConCommandDatabase.InvalidIndex() || cvar->FindCommand( pName ) )
         {
@@ -214,7 +224,6 @@ static int luasrc_ConCommand( lua_State *L )
     else
     {
 #endif
-        // Complain about duplicately defined ConCommand names...
         unsigned short lookup = m_ConCommandDatabase.Find( pName );
         if ( lookup != m_ConCommandDatabase.InvalidIndex() || cvar->FindCommand( pName ) )
         {
@@ -223,24 +232,24 @@ static int luasrc_ConCommand( lua_State *L )
         }
 #ifdef CLIENT_DLL
     }
+    lua_pop( L, 1 );  // pop the GAMEUI value
 #endif
-    lua_pop( L, 1 );
 
     ConCommand *pConCommand;
 #ifdef CLIENT_DLL
     if ( bIsGameUI )
-#if 0
-    pConCommand = new ConCommand(strdup(pName), CC_GameUIConCommand, strdup(luaL_optstring(L, 2, 0)), ( int )luaL_optnumber(L, 3, 0), NULL);
+#if 1  // TODO: (Experiment) Why was this disabled?
+        pConCommand = new ConCommand( strdup( pName ), CC_GameUIConCommand, strdup( pHelpString ), ( int )flags, NULL );
 #else
-        pConCommand = new ConCommand( strdup( pName ), CC_GameUIConCommand, strdup( luaL_optstring( L, 2, 0 ) ), 0, NULL );
+        pConCommand = new ConCommand( strdup( pName ), CC_GameUIConCommand, strdup( pHelpString ), 0, NULL );
 #endif
     else
-        pConCommand = new ConCommand( strdup( pName ), CC_ConCommand, strdup( luaL_optstring( L, 2, 0 ) ), FCVAR_CLIENTDLL | FCVAR_CLIENTCMD_CAN_EXECUTE | FCVAR_SERVER_CAN_EXECUTE, NULL );
+        pConCommand = new ConCommand( strdup( pName ), CC_ConCommand, strdup( pHelpString ), FCVAR_CLIENTDLL | FCVAR_CLIENTCMD_CAN_EXECUTE | FCVAR_SERVER_CAN_EXECUTE, NULL );
 #else
-#if 0
-    pConCommand = new ConCommand(strdup(pName), CC_ConCommand, strdup(luaL_optstring(L, 2, 0)), ( int )luaL_optnumber(L, 3, 0), NULL);
+#if 1  // Experiment; FCVAR_GAMEDLL | FCVAR_CLIENTCMD_CAN_EXECUTE must be set for UTIL_GetCommandClient to get the player running the command
+    pConCommand = new ConCommand( strdup( pName ), CC_ConCommand, strdup( pHelpString ), ( ( int )flags | FCVAR_GAMEDLL | FCVAR_CLIENTCMD_CAN_EXECUTE ), NULL );
 #else
-    pConCommand = new ConCommand( strdup( pName ), CC_ConCommand, strdup( luaL_optstring( L, 2, 0 ) ), FCVAR_GAMEDLL | FCVAR_CLIENTCMD_CAN_EXECUTE, NULL );
+    pConCommand = new ConCommand( strdup( pName ), CC_ConCommand, strdup( pHelpString ), FCVAR_GAMEDLL | FCVAR_CLIENTCMD_CAN_EXECUTE, NULL );
 #endif
 #endif
 
@@ -261,6 +270,7 @@ static int luasrc_ConCommand( lua_State *L )
     lua_pushconcommand( L, pConCommand );
     return 1;
 }
+LUA_BINDING_END( "ConsoleCommand", "Created console command (returns existing command if one with the same name exists)" )
 
 #ifdef CLIENT_DLL
 void ResetGameUIConCommandDatabase( void )
@@ -286,24 +296,22 @@ void ResetConCommandDatabase( void )
     m_ConCommandDatabase.RemoveAll();
 }
 
-static const luaL_Reg ConCommand_funcs[] = {
-    { "ConsoleCommand", luasrc_ConCommand },
-    { NULL, NULL } };
-
 /*
-** Open ConCommand object
+** Open ConsoleCommand object
 */
 LUALIB_API int luaopen_ConCommand( lua_State *L )
 {
-    LUA_PUSH_NEW_METATABLE( L, "ConsoleCommand" );
+    LUA_PUSH_NEW_METATABLE( L, LUA_CONCOMMANDMETANAME );
 
-    LUA_REGISTRATION_COMMIT();
+    LUA_REGISTRATION_COMMIT( ConsoleCommand );
 
     lua_pushvalue( L, -1 );           /* push metatable */
     lua_setfield( L, -2, "__index" ); /* metatable.__index = metatable */
-    lua_pushstring( L, "ConsoleCommand" );
+    lua_pushstring( L, LUA_CONCOMMANDMETANAME );
     lua_setfield( L, -2, "__type" ); /* metatable.__type = "ConsoleCommand" */
-    luaL_register( L, LUA_GNAME, ConCommand_funcs );
+
+    LUA_REGISTRATION_COMMIT_GLOBAL( _G );
+
     lua_pop( L, 1 );
     return 1;
 }

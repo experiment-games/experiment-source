@@ -14,14 +14,15 @@ lua:
   arguments:
     - name: "this"
       type: entity
-    - name: "linputInfo "
+    - name: "linputInfo"
       type: CTakeDamageInfo
-    - name: "lvecDir "
+    - name: "lvecDir"
       type: Vector
-    - name: "*ptr "
+    - name: "*ptr"
       type: CGameTrace
   returns:
-    
+    - type: unknown
+      description: ""
 ---
 
 <div class="lua__search__keywords">

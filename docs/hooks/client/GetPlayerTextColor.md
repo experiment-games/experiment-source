@@ -12,13 +12,13 @@ lua:
   realm: client
   description: "Allows overriding the color of the player's name in the scoreboard."
   arguments:
-    - name: "entindex "
+    - name: "entindex"
       type: number
-    - name: "color[0] "
+    - name: "color[0]"
       type: number
-    - name: "color[1] "
+    - name: "color[1]"
       type: number
-    - name: "color[2] "
+    - name: "color[2]"
       type: number
   returns:
     - type: number

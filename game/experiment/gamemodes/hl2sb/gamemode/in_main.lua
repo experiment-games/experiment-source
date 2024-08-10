@@ -13,7 +13,7 @@ local function IN_BuildDown(client, pCmd, args)
 	end
 end
 
-ConsoleCommands.Add("+menu", IN_BuildDown, nil)
+ConsoleCommands.Add("+menu", IN_BuildDown)
 
 local function IN_BuildUp(client, pCmd, args)
 	if (gBuildMenuInterface) then
@@ -21,4 +21,4 @@ local function IN_BuildUp(client, pCmd, args)
 	end
 end
 
-ConsoleCommands.Add("-menu", IN_BuildUp, nil)
+ConsoleCommands.Add("-menu", IN_BuildUp)

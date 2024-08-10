@@ -14,18 +14,19 @@ lua:
   arguments:
     - name: "this"
       type: entity
-    - name: "viewSetup.origin "
+    - name: "viewSetup_origin"
       type: Vector
-    - name: "viewSetup.angles "
+    - name: "viewSetup_angles"
       type: Angle
-    - name: "viewSetup.fov "
+    - name: "viewSetup_fov"
       type: number
-    - name: "viewSetup.zNear "
+    - name: "viewSetup_zNear"
       type: number
-    - name: "viewSetup.zFar "
+    - name: "viewSetup_zFar"
       type: number
   returns:
-    
+    - type: unknown
+      description: ""
 ---
 
 <div class="lua__search__keywords">

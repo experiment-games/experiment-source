@@ -107,7 +107,7 @@
 }
 
 .lua .lua__variable_list__default::before {
-    content: "[default: ";
+    content: "[defaults to: ";
     font-weight: normal;
 }
 

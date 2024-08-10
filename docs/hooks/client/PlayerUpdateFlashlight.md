@@ -14,18 +14,27 @@ lua:
   arguments:
     - name: "this"
       type: entity
-    - name: "position "
+    - name: "position"
       type: Vector
-    - name: "vecForward "
+    - name: "vecForward"
       type: Vector
-    - name: "vecRight "
+    - name: "vecRight"
       type: Vector
-    - name: "vecUp "
+    - name: "vecUp"
       type: Vector
-    - name: "distance "
+    - name: "distance"
       type: number
   returns:
-    
+    - type: unknown
+      description: ""
+    - type: unknown
+      description: ""
+    - type: unknown
+      description: ""
+    - type: unknown
+      description: ""
+    - type: unknown
+      description: ""
 ---
 
 <div class="lua__search__keywords">

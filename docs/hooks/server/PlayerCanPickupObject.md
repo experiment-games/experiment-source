@@ -14,12 +14,13 @@ lua:
   arguments:
     - name: "pObject"
       type: entity
-    - name: "massLimit "
+    - name: "massLimit"
       type: number
-    - name: "sizeLimit "
+    - name: "sizeLimit"
       type: number
   returns:
-    
+    - type: unknown
+      description: ""
 ---
 
 <div class="lua__search__keywords">

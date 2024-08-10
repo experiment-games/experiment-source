@@ -12,16 +12,23 @@ lua:
   realm: client
   description: ""
   arguments:
-    - name: "x "
+    - name: "x"
       type: number
-    - name: "y "
+    - name: "y"
       type: number
-    - name: "width "
+    - name: "width"
       type: number
-    - name: "height "
+    - name: "height"
       type: number
   returns:
-    
+    - type: unknown
+      description: ""
+    - type: unknown
+      description: ""
+    - type: unknown
+      description: ""
+    - type: unknown
+      description: ""
 ---
 
 <div class="lua__search__keywords">

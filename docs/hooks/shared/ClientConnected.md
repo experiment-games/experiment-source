@@ -12,16 +12,17 @@ lua:
   realm: shared
   description: ""
   arguments:
-    - name: "pszName "
+    - name: "pszName"
       type: string
-    - name: "pszAddress "
+    - name: "pszAddress"
       type: string
-    - name: "reject "
+    - name: "reject"
       type: string
-    - name: "maxrejectlen "
+    - name: "maxrejectlen"
       type: number
   returns:
-    
+    - type: unknown
+      description: ""
 ---
 
 <div class="lua__search__keywords">

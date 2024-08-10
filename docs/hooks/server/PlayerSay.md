@@ -14,12 +14,13 @@ lua:
   arguments:
     - name: "pPlayer"
       type: entity
-    - name: "p "
+    - name: "p"
       type: string
-    - name: "teamonly "
+    - name: "teamonly"
       type: boolean
   returns:
-    
+    - type: unknown
+      description: ""
 ---
 
 <div class="lua__search__keywords">

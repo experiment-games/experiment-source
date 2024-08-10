@@ -12,7 +12,7 @@ lua:
   realm: client
   description: ""
   arguments:
-    - name: "pMapName "
+    - name: "pMapName"
       type: string
   returns:
     

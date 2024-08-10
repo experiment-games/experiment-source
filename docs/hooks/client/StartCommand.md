@@ -14,7 +14,7 @@ lua:
   arguments:
     - name: "player"
       type: entity
-    - name: "cmd "
+    - name: "cmd"
       type: UserCmd
   returns:
     

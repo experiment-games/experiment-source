@@ -18,6 +18,22 @@ net = require("networks")
 timer = require("timers")
 weapons = require("weapons")
 
+local originalConCommandAdd = concommand.Add
+
+function concommand.Add(command, callback, autoCompleteHandler, helpText, flags)
+	if (istable(flags)) then
+		if (#flags == 0) then
+			flags = 0
+		elseif (#flags == 1) then
+			flags = flags[1]
+		else
+			flags = bit.bor(table.unpack(flags))
+		end
+	end
+
+	return originalConCommandAdd(command, callback, helpText, flags)
+end
+
 --[[
 	Renames and other polyfills
 --]]

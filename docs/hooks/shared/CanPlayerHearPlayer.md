@@ -16,10 +16,13 @@ lua:
       type: entity
     - name: "pTalker"
       type: entity
-    - name: "bProximity "
+    - name: "bProximity"
       type: boolean
   returns:
-    
+    - type: unknown
+      description: ""
+    - type: unknown
+      description: ""
 ---
 
 <div class="lua__search__keywords">

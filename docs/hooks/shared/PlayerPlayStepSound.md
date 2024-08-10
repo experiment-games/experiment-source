@@ -14,16 +14,17 @@ lua:
   arguments:
     - name: "this"
       type: entity
-    - name: "vecOrigin "
+    - name: "vecOrigin"
       type: Vector
-    - name: "psurface "
+    - name: "psurface"
       type: surfacedata_t
-    - name: "fvol "
+    - name: "fvol"
       type: number
-    - name: "force "
+    - name: "force"
       type: boolean
   returns:
-    
+    - type: unknown
+      description: ""
 ---
 
 <div class="lua__search__keywords">

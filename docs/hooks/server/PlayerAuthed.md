@@ -14,7 +14,7 @@ lua:
   arguments:
     - name: "this"
       type: entity
-    - name: "pszSteamID "
+    - name: "pszSteamID"
       type: string
   returns:
     

@@ -14,9 +14,9 @@ lua:
   arguments:
     - name: "pExperimentPlayer"
       type: entity
-    - name: "vecVelocity "
+    - name: "vecVelocity"
       type: Vector
-    - name: "m_flMaxGroundSpeed "
+    - name: "m_flMaxGroundSpeed"
       type: number
   returns:
     

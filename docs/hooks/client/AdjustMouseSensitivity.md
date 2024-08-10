@@ -12,10 +12,11 @@ lua:
   realm: client
   description: ""
   arguments:
-    - name: "gHUD.m_flMouseSensitivity "
+    - name: "gHUD_m_flMouseSensitivity"
       type: number
   returns:
-    
+    - type: unknown
+      description: ""
 ---
 
 <div class="lua__search__keywords">

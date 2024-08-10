@@ -14,10 +14,11 @@ lua:
   arguments:
     - name: "pPlayer"
       type: entity
-    - name: "pMoveData "
+    - name: "pMoveData"
       type: MoveData
   returns:
-    
+    - type: unknown
+      description: ""
 ---
 
 <div class="lua__search__keywords">

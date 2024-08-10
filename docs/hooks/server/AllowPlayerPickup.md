@@ -16,10 +16,11 @@ lua:
       type: entity
     - name: "pObject"
       type: entity
-    - name: "bLimitMassAndSize "
+    - name: "bLimitMassAndSize"
       type: boolean
   returns:
-    
+    - type: unknown
+      description: ""
 ---
 
 <div class="lua__search__keywords">

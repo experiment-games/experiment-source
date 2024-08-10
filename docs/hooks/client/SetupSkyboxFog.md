@@ -12,10 +12,11 @@ lua:
   realm: client
   description: ""
   arguments:
-    - name: "local->m_skybox3d.scale "
+    - name: "local->m_skybox3d_scale"
       type: number
   returns:
-    
+    - type: unknown
+      description: ""
 ---
 
 <div class="lua__search__keywords">

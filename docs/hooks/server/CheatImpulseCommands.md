@@ -14,10 +14,11 @@ lua:
   arguments:
     - name: "this"
       type: entity
-    - name: "iImpulse "
+    - name: "iImpulse"
       type: number
   returns:
-    
+    - type: unknown
+      description: ""
 ---
 
 <div class="lua__search__keywords">

@@ -106,6 +106,11 @@ function fromHookEndLine(line) {
     return null;
   }
 
+  if (!match[3]) {
+    // Use match[2] to specify the number of return values (of unknown type)
+    return Array.from({ length: parseInt(match[2]) }, () => ({ type: 'unknown', description: '' }));
+  }
+
   return fromReturnsDescription(match[3]);
 }
 
@@ -172,14 +177,14 @@ function writeHookToFile(hook) {
       let defaults = '';
 
       if (arg.defaultValue) {
-        defaults = `\n  default: ${wrapQuotes(arg.defaultValue)}`;
+        defaults = `\n  default: ${wrapQuotes(arg.defaultValue.trim())}`;
       }
 
       if (arg.isNillable) {
         defaults += '\n  nillable: true';
       }
 
-      return indentEachLine(`- name: ${wrapQuotes(arg.name)}\n  type: ${arg.type}${defaults}`, 2);
+      return indentEachLine(`- name: ${wrapQuotes(arg.name.replace('.', '_').trim())}\n  type: ${arg.type}${defaults}`, 2);
     }).join('\n');
   };
 

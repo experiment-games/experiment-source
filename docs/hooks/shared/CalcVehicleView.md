@@ -17,7 +17,8 @@ lua:
     - name: "table"
       type: table
   returns:
-    
+    - type: unknown
+      description: ""
 ---
 
 <div class="lua__search__keywords">

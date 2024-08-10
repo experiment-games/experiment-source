@@ -14,10 +14,11 @@ lua:
   arguments:
     - name: "player"
       type: entity
-    - name: "bNoClipDesired "
+    - name: "bNoClipDesired"
       type: boolean
   returns:
-    
+    - type: unknown
+      description: ""
 ---
 
 <div class="lua__search__keywords">

@@ -14,10 +14,11 @@ lua:
   arguments:
     - name: "pVictim"
       type: entity
-    - name: "lInfo "
+    - name: "lInfo"
       type: CTakeDamageInfo
   returns:
-    
+    - type: unknown
+      description: ""
 ---
 
 <div class="lua__search__keywords">
