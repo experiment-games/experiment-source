@@ -12,6 +12,7 @@ lua:
   function: FindTransitionSequence
   realm: client
   description: "Find the transition sequence."
+  
   arguments:
     - name: "sequence"
       type: number
@@ -23,3 +24,7 @@ lua:
     - type: number
       description: "The direction"
 ---
+
+<div class="lua__search__keywords">
+CBaseAnimating:FindTransitionSequence &#x2013; Find the transition sequence.
+</div>

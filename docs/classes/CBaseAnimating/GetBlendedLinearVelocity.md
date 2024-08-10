@@ -13,7 +13,12 @@ lua:
   realm: client
   description: "Get the blended linear velocity."
   
+  
   returns:
     - type: vector
       description: "The blended linear velocity"
 ---
+
+<div class="lua__search__keywords">
+CBaseAnimating:GetBlendedLinearVelocity &#x2013; Get the blended linear velocity.
+</div>

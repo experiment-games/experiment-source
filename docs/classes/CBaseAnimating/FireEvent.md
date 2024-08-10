@@ -12,15 +12,20 @@ lua:
   function: FireEvent
   realm: client
   description: "Fire an event."
+  
   arguments:
     - name: "origin"
       type: unknown
     - name: "angles"
       type: unknown
-    - name: "eventTime"
+    - name: "event"
       type: number
     - name: "options"
       type: string
   returns:
     
 ---
+
+<div class="lua__search__keywords">
+CBaseAnimating:FireEvent &#x2013; Fire an event.
+</div>

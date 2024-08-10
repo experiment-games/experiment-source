@@ -2,13 +2,7 @@
 
 {% block content %}
 <div class="lua">
-    <div class="lua__title">
-        <h1>
-            {% include "lua-partials/function-title-wrapper.html" %}
-        </h1>
-
-        <div class="lua__realm lua__realm--{{ page.meta.lua.realm }}">{{ page.meta.lua.realm }}</div>
-    </div>
+    {% include "lua-partials/function-title-wrapper.html" %}
 
     {{ page.meta.lua.description }}
 

@@ -13,6 +13,11 @@ lua:
   realm: client
   description: "Clear/destroy the clientside ragdoll."
   
+  
   returns:
     
 ---
+
+<div class="lua__search__keywords">
+CBaseAnimating:ClearRagdoll &#x2013; Clear/destroy the clientside ragdoll.
+</div>

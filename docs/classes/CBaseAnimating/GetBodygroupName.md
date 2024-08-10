@@ -12,6 +12,7 @@ lua:
   function: GetBodyGroupName
   realm: shared
   description: "Get the bodygroup name by the bodygroup id"
+  
   arguments:
     - name: "bodyGroupId"
       type: number
@@ -19,3 +20,7 @@ lua:
     - type: string
       description: "The bodygroup name"
 ---
+
+<div class="lua__search__keywords">
+CBaseAnimating:GetBodyGroupName &#x2013; Get the bodygroup name by the bodygroup id
+</div>

@@ -13,6 +13,11 @@ lua:
   realm: client
   description: "Resets internal fields."
   
+  
   returns:
     
 ---
+
+<div class="lua__search__keywords">
+CBaseAnimating:Clear &#x2013; Resets internal fields.
+</div>

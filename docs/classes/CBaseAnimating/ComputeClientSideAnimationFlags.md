@@ -13,7 +13,12 @@ lua:
   realm: client
   description: "Compute the client side animation flags."
   
+  
   returns:
     - type: number
       description: "The client side animation flags"
 ---
+
+<div class="lua__search__keywords">
+CBaseAnimating:ComputeClientSideAnimationFlags &#x2013; Compute the client side animation flags.
+</div>

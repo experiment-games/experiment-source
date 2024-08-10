@@ -12,9 +12,10 @@ const path = require('path');
 const srcDir = './src';
 const outputDir = './docs';
 
-const luaBindingBeginPattern = /LUA_BINDING_BEGIN\(\s*(\w+)\s*,\s*(\w+)\s*,\s*"(\w+)"\s*,\s*"([^"]+)"\s*\)/;
+const luaBindingBeginPattern = /LUA_BINDING_BEGIN\(\s*(\w+)\s*,\s*(\w+)\s*,\s*"([^"]+)"\s*,\s*"([^"]+)"\s*\)/;
 const luaBindingArgumentPattern = /LUA_BINDING_ARGUMENT\(\s*(\w+)\s*,\s*(\d+)\s*,\s*"([^"]+)"\s*\)/;
-const luaBindingOptionalArgumentPattern = /LUA_BINDING_ARGUMENT_OPT\(\s*(\w+)\s*,\s*(\d+)\s*,\s*([^,]+)\s*,\s*"([^"]+)"\s*\)/;
+const luaBindingArgumentNillablePattern = /LUA_BINDING_ARGUMENT_NILLABLE\(\s*(\w+)\s*,\s*(\d+)\s*,\s*"([^"]+)"\s*\)/;
+const luaBindingArgumentWithDefaultPattern = /LUA_BINDING_ARGUMENT_WITH_DEFAULT\(\s*(\w+)\s*,\s*(\d+)\s*,\s*([^,]+)\s*,\s*"([^"]+)"\s*\)/;
 const luaBindingEndPattern = /LUA_BINDING_END\((.*)\)$/m;
 
 const projectFileClient = './src/game/client/client_base.vpc';
@@ -67,9 +68,14 @@ lua:
   function: %function%
   realm: %realm%
   description: %description%
+  %static%
   %arguments%
   %returns%
 ---
+
+<div class="lua__search__keywords">
+%searchKeywords%
+</div>
 `;
 
 function indentEachLine(text, indentLevel) {
@@ -82,7 +88,7 @@ function wrapQuotes(text) {
 }
 
 function writeFunctionToFile(func) {
-  const directory = func.concept === 'class' ? 'classes' : 'libraries';
+  const directory = func.concept.startsWith('class') ? 'classes' : 'libraries';
   const filePath = path.join(outputDir, directory, func.library, `${func.function}.md`);
 
   // If the file already exists, don't overwrite it
@@ -91,7 +97,23 @@ function writeFunctionToFile(func) {
     return;
   }
 
-  const template = func.concept === 'class' ? 'lua-class-function.html' : 'lua-library-function.html';
+  let templateFile;
+  let staticSection = '';
+
+  if (func.concept === 'class' || func.concept === 'class|static') {
+    templateFile = 'lua-class-function.html';
+
+    if (func.concept === 'class|static') {
+      staticSection = '\n  static: true';
+    }
+  }
+  else if (func.concept === 'library') {
+    templateFile = 'lua-library-function.html';
+  }
+  else {
+    throw new Error(`Unknown concept ${func.concept}`);
+  }
+
   let argumentSection = '';
 
   const buildArguments = (args) => {
@@ -100,6 +122,10 @@ function writeFunctionToFile(func) {
 
       if (arg.defaultValue) {
         defaults = `\n  default: ${wrapQuotes(arg.defaultValue)}`;
+      }
+
+      if (arg.isNillable) {
+        defaults += '\n  nillable: true';
       }
 
       return indentEachLine(`- name: ${wrapQuotes(arg.name)}\n  type: ${arg.type}${defaults}`, 2);
@@ -118,7 +144,22 @@ function writeFunctionToFile(func) {
     returnSection = `returns:\n${indentEachLine(func.returns.map(ret => `- type: ${ret.type}\n  description: ${wrapQuotes(ret.description)}`).join('\n'), 4)}`;
   }
 
-  const content = markdownTemplate.replace(/%template%/g, template)
+  let searchKeywords = func.library;
+
+  if (func.concept === 'class|static') {
+    searchKeywords = `_R.${searchKeywords}`;
+  }
+
+  if (func.concept === 'class') {
+    searchKeywords += `:${func.function}`;
+  } else {
+    searchKeywords += `.${func.function}`;
+  }
+
+  if (func.description)
+    searchKeywords += ` &#x2013; ${func.description}`;
+
+  const content = markdownTemplate.replace(/%template%/g, templateFile)
     .replace(/%title%/g, func.function)
     .replace(/%library%/g, func.library)
     .replace(/%function%/g, func.function)
@@ -126,7 +167,8 @@ function writeFunctionToFile(func) {
     .replace(/%description%/g, wrapQuotes(func.description))
     .replace(/%arguments%/g, argumentSection)
     .replace(/%returns%/g, returnSection)
-    .replace(/%concept%/g, func.concept);
+    .replace(/%static%/g, staticSection)
+    .replace(/%searchKeywords%/g, searchKeywords);
 
   fs.mkdir(path.dirname(filePath), { recursive: true }, (err) => {
     if (err) {
@@ -220,8 +262,9 @@ function processBindingsInFile(file) {
         concept: match[3],
         description: match[4],
       };
-    } else if (luaBindingArgumentPattern.test(line)) {
-      const match = line.match(luaBindingArgumentPattern);
+    } else if (luaBindingArgumentPattern.test(line) || luaBindingArgumentNillablePattern.test(line)) {
+      const isNillable = luaBindingArgumentNillablePattern.test(line);
+      const match = isNillable ? line.match(luaBindingArgumentNillablePattern) : line.match(luaBindingArgumentPattern);
       const typeChecker = match[1];
       const position = parseInt(match[2]);
       const name = match[3];
@@ -252,9 +295,10 @@ function processBindingsInFile(file) {
         type: fromTypeChecker(typeChecker),
         position,
         name,
+        isNillable,
       });
-    } else if (luaBindingOptionalArgumentPattern.test(line)) {
-      const match = line.match(luaBindingOptionalArgumentPattern);
+    } else if (luaBindingArgumentWithDefaultPattern.test(line)) {
+      const match = line.match(luaBindingArgumentWithDefaultPattern);
       const typeChecker = match[1];
       const position = parseInt(match[2]);
       const defaultValue = match[3];
@@ -289,6 +333,9 @@ function processBindingsInFile(file) {
         defaultValue,
       });
     } else if (luaBindingEndPattern.test(line)) {
+      if (!currentFunction) {
+        throw new Error(`Found LUA_BINDING_END without a LUA_BINDING_BEGIN in ${file} at line ${i}`);
+      }
       const match = line.match(luaBindingEndPattern);
 
       // If there's only one set, push it to 'arguments'

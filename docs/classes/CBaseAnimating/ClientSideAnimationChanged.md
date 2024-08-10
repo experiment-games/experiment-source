@@ -13,6 +13,11 @@ lua:
   realm: client
   description: "Called when the client side animation changes."
   
+  
   returns:
     
 ---
+
+<div class="lua__search__keywords">
+CBaseAnimating:ClientSideAnimationChanged &#x2013; Called when the client side animation changes.
+</div>

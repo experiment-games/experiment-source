@@ -12,6 +12,7 @@ lua:
   function: FrameAdvance
   realm: client
   description: "Advance the frame."
+  
   arguments:
     - name: "interval"
       type: number
@@ -20,3 +21,7 @@ lua:
     - type: number
       description: "The new cycle"
 ---
+
+<div class="lua__search__keywords">
+CBaseAnimating:FrameAdvance &#x2013; Advance the frame.
+</div>

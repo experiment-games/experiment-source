@@ -12,6 +12,7 @@ lua:
   function: DrawClientHitboxes
   realm: client
   description: "Draw the client hitboxes."
+  
   arguments:
     - name: "duration"
       type: number
@@ -22,3 +23,7 @@ lua:
   returns:
     
 ---
+
+<div class="lua__search__keywords">
+CBaseAnimating:DrawClientHitboxes &#x2013; Draw the client hitboxes.
+</div>

@@ -12,6 +12,7 @@ lua:
   function: GetFlexBounds
   realm: shared
   description: "Returns the min and max values for the target flex controller"
+  
   arguments:
     - name: "flexControllerIndex"
       type: number
@@ -21,3 +22,7 @@ lua:
     - type: number
       description: "The max value"
 ---
+
+<div class="lua__search__keywords">
+CBaseAnimating:GetFlexBounds &#x2013; Returns the min and max values for the target flex controller
+</div>

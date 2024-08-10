@@ -42,21 +42,6 @@ LUALIB_API lua_CBaseAnimating *luaL_checkanimating( lua_State *L, int narg )
 
 LUA_REGISTRATION_INIT()
 
-//LUA_BINDING_BEGIN( CBaseAnimating, GetModelName, "class", "Get the model path of the entity" )
-//{
-//    lua_CBaseAnimating *pAnimating = LUA_BINDING_ARGUMENT( luaL_checkanimating, 1, "entity" );
-//
-//    lua_pushstring( L, pAnimating->GetModelPtr()->pszName() );
-//
-//    return 1;
-//}
-//LUA_BINDING_END( "string", "The model name" )
-
-//static int CBaseAnimating_AddEntity( lua_State *L )
-//{
-//    luaL_checkanimating( L, 1 )->AddEntity();
-//    return 0;
-//}
 LUA_BINDING_BEGIN( CBaseAnimating, AddEntityToVisibleList, "class", "Add the entity to the visible entity list. Seems to only call CreateLightEffects internally." )
 {
     lua_CBaseAnimating *pAnimating = LUA_BINDING_ARGUMENT( luaL_checkanimating, 1, "entity" );
@@ -67,11 +52,6 @@ LUA_BINDING_BEGIN( CBaseAnimating, AddEntityToVisibleList, "class", "Add the ent
 }
 LUA_BINDING_END()
 
-//static int CBaseAnimating_AddToClientSideAnimationList( lua_State *L )
-//{
-//    luaL_checkanimating( L, 1 )->AddToClientSideAnimationList();
-//    return 0;
-//}
 LUA_BINDING_BEGIN( CBaseAnimating, AddToClientSideAnimationList, "class", "Add the entity to the client side animation list." )
 {
     lua_CBaseAnimating *pAnimating = LUA_BINDING_ARGUMENT( luaL_checkanimating, 1, "entity" );
@@ -82,11 +62,6 @@ LUA_BINDING_BEGIN( CBaseAnimating, AddToClientSideAnimationList, "class", "Add t
 }
 LUA_BINDING_END()
 
-//static int CBaseAnimating_BecomeRagdollOnClient( lua_State *L )
-//{
-//    CBaseEntity::PushLuaInstanceSafe( L, luaL_checkanimating( L, 1 )->BecomeRagdollOnClient() );
-//    return 1;
-//}
 LUA_BINDING_BEGIN( CBaseAnimating, BecomeRagdollOnClient, "class", "Become a ragdoll on the client." )
 {
     lua_CBaseAnimating *pAnimating = LUA_BINDING_ARGUMENT( luaL_checkanimating, 1, "entity" );
@@ -97,11 +72,6 @@ LUA_BINDING_BEGIN( CBaseAnimating, BecomeRagdollOnClient, "class", "Become a rag
 }
 LUA_BINDING_END( "entity", "The ragdoll entity" )
 
-//static int CBaseAnimating_CalculateIKLocks( lua_State *L )
-//{
-//    luaL_checkanimating( L, 1 )->CalculateIKLocks( luaL_checknumber( L, 2 ) );
-//    return 0;
-//}
 LUA_BINDING_BEGIN( CBaseAnimating, CalculateIKLocks, "class", "Calculate IK locks." )
 {
     lua_CBaseAnimating *pAnimating = LUA_BINDING_ARGUMENT( luaL_checkanimating, 1, "entity" );
@@ -113,11 +83,6 @@ LUA_BINDING_BEGIN( CBaseAnimating, CalculateIKLocks, "class", "Calculate IK lock
 }
 LUA_BINDING_END()
 
-//static int CBaseAnimating_ClampCycle( lua_State *L )
-//{
-//    lua_pushnumber( L, luaL_checkanimating( L, 1 )->ClampCycle( luaL_checknumber( L, 2 ), luaL_checkboolean( L, 3 ) ) );
-//    return 1;
-//}
 LUA_BINDING_BEGIN( CBaseAnimating, ClampCycle, "class", "Clamp the cycle." )
 {
     lua_CBaseAnimating *pAnimating = LUA_BINDING_ARGUMENT( luaL_checkanimating, 1, "entity" );
@@ -130,11 +95,6 @@ LUA_BINDING_BEGIN( CBaseAnimating, ClampCycle, "class", "Clamp the cycle." )
 }
 LUA_BINDING_END( "number", "The clamped cycle" )
 
-//static int CBaseAnimating_Clear( lua_State *L )
-//{
-//    luaL_checkanimating( L, 1 )->Clear();
-//    return 0;
-//}
 LUA_BINDING_BEGIN( CBaseAnimating, Clear, "class", "Resets internal fields." )
 {
     lua_CBaseAnimating *pAnimating = LUA_BINDING_ARGUMENT( luaL_checkanimating, 1, "entity" );
@@ -145,11 +105,6 @@ LUA_BINDING_BEGIN( CBaseAnimating, Clear, "class", "Resets internal fields." )
 }
 LUA_BINDING_END()
 
-//static int CBaseAnimating_ClearRagdoll( lua_State *L )
-//{
-//    luaL_checkanimating( L, 1 )->ClearRagdoll();
-//    return 0;
-//}
 LUA_BINDING_BEGIN( CBaseAnimating, ClearRagdoll, "class", "Clear/destroy the clientside ragdoll." )
 {
     lua_CBaseAnimating *pAnimating = LUA_BINDING_ARGUMENT( luaL_checkanimating, 1, "entity" );
@@ -160,11 +115,6 @@ LUA_BINDING_BEGIN( CBaseAnimating, ClearRagdoll, "class", "Clear/destroy the cli
 }
 LUA_BINDING_END()
 
-//static int CBaseAnimating_ClientSideAnimationChanged( lua_State *L )
-//{
-//    luaL_checkanimating( L, 1 )->ClientSideAnimationChanged();
-//    return 0;
-//}
 LUA_BINDING_BEGIN( CBaseAnimating, ClientSideAnimationChanged, "class", "Called when the client side animation changes." )
 {
     lua_CBaseAnimating *pAnimating = LUA_BINDING_ARGUMENT( luaL_checkanimating, 1, "entity" );
@@ -175,31 +125,16 @@ LUA_BINDING_BEGIN( CBaseAnimating, ClientSideAnimationChanged, "class", "Called 
 }
 LUA_BINDING_END()
 
-//static int CBaseAnimating_ComputeClientSideAnimationFlags( lua_State *L )
-//{
-//    lua_pushinteger(
-//        L, luaL_checkanimating( L, 1 )->ComputeClientSideAnimationFlags() );
-//    return 1;
-//}
 LUA_BINDING_BEGIN( CBaseAnimating, ComputeClientSideAnimationFlags, "class", "Compute the client side animation flags." )
 {
     lua_CBaseAnimating *pAnimating = LUA_BINDING_ARGUMENT( luaL_checkanimating, 1, "entity" );
 
-    lua_pushinteger( L, pAnimating->ComputeClientSideAnimationFlags() );
+    lua_pushnumber( L, pAnimating->ComputeClientSideAnimationFlags() );
 
     return 1;
 }
 LUA_BINDING_END( "number", "The client side animation flags" )
 
-//static int CBaseAnimating_ComputeEntitySpaceHitboxSurroundingBox( lua_State *L )
-//{
-//    Vector pVecWorldMins, pVecWorldMaxs;
-//    lua_pushboolean(
-//        L, luaL_checkanimating( L, 1 )->ComputeEntitySpaceHitboxSurroundingBox( &pVecWorldMins, &pVecWorldMaxs ) );
-//    lua_pushvector( L, pVecWorldMins );
-//    lua_pushvector( L, pVecWorldMaxs );
-//    return 3;
-//}
 LUA_BINDING_BEGIN( CBaseAnimating, ComputeEntitySpaceHitboxSurroundingBox, "class", "Compute the entity space hitbox surrounding box." )
 {
     lua_CBaseAnimating *pAnimating = LUA_BINDING_ARGUMENT( luaL_checkanimating, 1, "entity" );
@@ -213,14 +148,6 @@ LUA_BINDING_BEGIN( CBaseAnimating, ComputeEntitySpaceHitboxSurroundingBox, "clas
 }
 LUA_BINDING_END( "boolean", "Whether the operation was successful", "vector", "The world mins", "vector", "The world maxs" )
 
-//static int CBaseAnimating_ComputeHitboxSurroundingBox( lua_State *L )
-//{
-//    Vector pVecWorldMins, pVecWorldMaxs;
-//    lua_pushboolean( L, luaL_checkanimating( L, 1 )->ComputeHitboxSurroundingBox( &pVecWorldMins, &pVecWorldMaxs ) );
-//    lua_pushvector( L, pVecWorldMins );
-//    lua_pushvector( L, pVecWorldMaxs );
-//    return 3;
-//}
 LUA_BINDING_BEGIN( CBaseAnimating, ComputeHitboxSurroundingBox, "class", "Compute the hitbox surrounding box." )
 {
     lua_CBaseAnimating *pAnimating = LUA_BINDING_ARGUMENT( luaL_checkanimating, 1, "entity" );
@@ -234,12 +161,7 @@ LUA_BINDING_BEGIN( CBaseAnimating, ComputeHitboxSurroundingBox, "class", "Comput
 }
 LUA_BINDING_END( "boolean", "Whether the operation was successful", "vector", "The world mins", "vector", "The world maxs" )
 
-//static int CBaseAnimating_CreateRagdollCopy( lua_State *L )
-//{
-//    CBaseEntity::PushLuaInstanceSafe( L, luaL_checkanimating( L, 1 )->CreateRagdollCopy() );
-//    return 1;
-//}
-LUA_BINDING_BEGIN( CBaseAnimating, CreateRagdollCopy, "class", "Create a copy of the ragdoll." )
+LUA_BINDING_BEGIN( CBaseAnimating, CreateRagdollCopy, "class", "Create a ragdoll copy of the entity." )
 {
     lua_CBaseAnimating *pAnimating = LUA_BINDING_ARGUMENT( luaL_checkanimating, 1, "entity" );
 
@@ -249,12 +171,7 @@ LUA_BINDING_BEGIN( CBaseAnimating, CreateRagdollCopy, "class", "Create a copy of
 }
 LUA_BINDING_END( "entity", "The ragdoll entity" )
 
-//static int CBaseAnimating_CreateUnragdollInfo( lua_State *L )
-//{
-//    luaL_checkanimating( L, 1 )->CreateUnragdollInfo( luaL_checkanimating( L, 2 ) );
-//    return 0;
-//}
-LUA_BINDING_BEGIN( CBaseAnimating, CreateUnragdollInfo, "class", "Create unragdoll info." )
+LUA_BINDING_BEGIN( CBaseAnimating, CreateUnragdollInfo, "class", "Creates unragdoll info for the given ragdoll, setting it on the entity internally." )
 {
     lua_CBaseAnimating *pAnimating = LUA_BINDING_ARGUMENT( luaL_checkanimating, 1, "entity" );
     lua_CBaseAnimating *pRagdoll = LUA_BINDING_ARGUMENT( luaL_checkanimating, 2, "ragdoll" );
@@ -265,11 +182,6 @@ LUA_BINDING_BEGIN( CBaseAnimating, CreateUnragdollInfo, "class", "Create unragdo
 }
 LUA_BINDING_END()
 
-//static int CBaseAnimating_DisableMuzzleFlash( lua_State *L )
-//{
-//    luaL_checkanimating( L, 1 )->DisableMuzzleFlash();
-//    return 0;
-//}
 LUA_BINDING_BEGIN( CBaseAnimating, DisableMuzzleFlash, "class", "Disable the muzzle flash." )
 {
     lua_CBaseAnimating *pAnimating = LUA_BINDING_ARGUMENT( luaL_checkanimating, 1, "entity" );
@@ -280,29 +192,19 @@ LUA_BINDING_BEGIN( CBaseAnimating, DisableMuzzleFlash, "class", "Disable the muz
 }
 LUA_BINDING_END()
 
-//static int CBaseAnimating_DispatchMuzzleEffect( lua_State *L )
-//{
-//    lua_pushboolean( L, luaL_checkanimating( L, 1 )->DispatchMuzzleEffect( luaL_checkstring( L, 2 ), luaL_checkboolean( L, 3 ) ) );
-//    return 1;
-//}
 LUA_BINDING_BEGIN( CBaseAnimating, DispatchMuzzleEffect, "class", "Dispatch the muzzle effect." )
 {
     lua_CBaseAnimating *pAnimating = LUA_BINDING_ARGUMENT( luaL_checkanimating, 1, "entity" );
-    const char *pszEffectName = LUA_BINDING_ARGUMENT( luaL_checkstring, 2, "effectName" );
-    bool bForce = LUA_BINDING_ARGUMENT( luaL_checkboolean, 3, "force" );
+    const char *pszOptions = LUA_BINDING_ARGUMENT( luaL_checkstring, 2, "options" );
+    bool bIsFirstPerson = LUA_BINDING_ARGUMENT( luaL_checkboolean, 3, "isFirstPerson" );
 
-    lua_pushboolean( L, pAnimating->DispatchMuzzleEffect( pszEffectName, bForce ) );
+    lua_pushboolean( L, pAnimating->DispatchMuzzleEffect( pszOptions, bIsFirstPerson ) );
 
     return 1;
 }
 LUA_BINDING_END( "boolean", "Whether the operation was successful" )
 
-//static int CBaseAnimating_DoMuzzleFlash( lua_State *L )
-//{
-//    luaL_checkanimating( L, 1 )->DoMuzzleFlash();
-//    return 0;
-//}
-LUA_BINDING_BEGIN( CBaseAnimating, DoMuzzleFlash, "class", "Do the muzzle flash." )
+LUA_BINDING_BEGIN( CBaseAnimating, DoMuzzleFlash, "class", "Sets up muzzle flash parity." )
 {
     lua_CBaseAnimating *pAnimating = LUA_BINDING_ARGUMENT( luaL_checkanimating, 1, "entity" );
 
@@ -312,17 +214,11 @@ LUA_BINDING_BEGIN( CBaseAnimating, DoMuzzleFlash, "class", "Do the muzzle flash.
 }
 LUA_BINDING_END()
 
-//static int CBaseAnimating_DrawClientHitboxes( lua_State *L )
-//{
-//    luaL_checkanimating( L, 1 )->DrawClientHitboxes( luaL_optnumber( L, 2, 0.0f ),
-//                                                     luaL_optboolean( L, 3, false ) );
-//    return 0;
-//}
 LUA_BINDING_BEGIN( CBaseAnimating, DrawClientHitboxes, "class", "Draw the client hitboxes." )
 {
     lua_CBaseAnimating *pAnimating = LUA_BINDING_ARGUMENT( luaL_checkanimating, 1, "entity" );
-    float flDuration = LUA_BINDING_ARGUMENT_OPT( luaL_optnumber, 2, 0.0f, "duration" );
-    bool bMonoColor = LUA_BINDING_ARGUMENT_OPT( luaL_optboolean, 3, false, "monoColor" );
+    float flDuration = LUA_BINDING_ARGUMENT_WITH_DEFAULT( luaL_optnumber, 2, 0.0f, "duration" );
+    bool bMonoColor = LUA_BINDING_ARGUMENT_WITH_DEFAULT( luaL_optboolean, 3, false, "monoColor" );
 
     pAnimating->DrawClientHitboxes( flDuration, bMonoColor );
 
@@ -330,16 +226,10 @@ LUA_BINDING_BEGIN( CBaseAnimating, DrawClientHitboxes, "class", "Draw the client
 }
 LUA_BINDING_END()
 
-//static int CBaseAnimating_DrawModel( lua_State *L )
-//{
-//    lua_pushinteger( L,
-//                     luaL_checkanimating( L, 1 )->DrawModel( ( int )luaL_optnumber( L, 2, STUDIO_RENDER ) ) );
-//    return 1;
-//}
 LUA_BINDING_BEGIN( CBaseAnimating, DrawModel, "class", "Draw the model." )
 {
     lua_CBaseAnimating *pAnimating = LUA_BINDING_ARGUMENT( luaL_checkanimating, 1, "entity" );
-    int nFlags = LUA_BINDING_ARGUMENT_OPT( luaL_optnumber, 2, STUDIO_RENDER, "flags" );
+    int nFlags = LUA_BINDING_ARGUMENT_WITH_DEFAULT( luaL_optnumber, 2, STUDIO_RENDER, "flags" );
 
     lua_pushinteger( L, pAnimating->DrawModel( nFlags ) );
 
@@ -347,11 +237,6 @@ LUA_BINDING_BEGIN( CBaseAnimating, DrawModel, "class", "Draw the model." )
 }
 LUA_BINDING_END( "number", "The result of the operation" )
 
-//static int CBaseAnimating_FindFollowedEntity( lua_State *L )
-//{
-//    CBaseEntity::PushLuaInstanceSafe( L, luaL_checkanimating( L, 1 )->FindFollowedEntity() );
-//    return 1;
-//}
 LUA_BINDING_BEGIN( CBaseAnimating, FindFollowedEntity, "class", "Find the followed entity." )
 {
     lua_CBaseAnimating *pAnimating = LUA_BINDING_ARGUMENT( luaL_checkanimating, 1, "entity" );
@@ -362,13 +247,6 @@ LUA_BINDING_BEGIN( CBaseAnimating, FindFollowedEntity, "class", "Find the follow
 }
 LUA_BINDING_END( "entity", "The followed entity" )
 
-//static int CBaseAnimating_FindTransitionSequence( lua_State *L )
-//{
-//    int piDir;
-//    lua_pushinteger( L, luaL_checkanimating( L, 1 )->FindTransitionSequence( luaL_checknumber( L, 2 ), luaL_checknumber( L, 3 ), &piDir ) );
-//    lua_pushinteger( L, piDir );
-//    return 2;
-//}
 LUA_BINDING_BEGIN( CBaseAnimating, FindTransitionSequence, "class", "Find the transition sequence." )
 {
     lua_CBaseAnimating *pAnimating = LUA_BINDING_ARGUMENT( luaL_checkanimating, 1, "entity" );
@@ -383,52 +261,35 @@ LUA_BINDING_BEGIN( CBaseAnimating, FindTransitionSequence, "class", "Find the tr
 }
 LUA_BINDING_END( "number", "The transition sequence", "number", "The direction" )
 
-//static int CBaseAnimating_FireEvent( lua_State *L )
-//{
-//    luaL_checkanimating( L, 1 )->FireEvent(
-//        luaL_checkvector( L, 2 ), luaL_checkangle( L, 3 ), luaL_checknumber( L, 4 ), luaL_checkstring( L, 5 ) );
-//    return 0;
-//}
 LUA_BINDING_BEGIN( CBaseAnimating, FireEvent, "class", "Fire an event." )
 {
     lua_CBaseAnimating *pAnimating = LUA_BINDING_ARGUMENT( luaL_checkanimating, 1, "entity" );
     Vector pVecOrigin = LUA_BINDING_ARGUMENT( luaL_checkvector, 2, "origin" );
     QAngle pAngAngles = LUA_BINDING_ARGUMENT( luaL_checkangle, 3, "angles" );
-    float flEventTime = LUA_BINDING_ARGUMENT( luaL_checknumber, 4, "eventTime" );
+    float iEvent = LUA_BINDING_ARGUMENT( luaL_checknumber, 4, "event" );
     const char *pszOptions = LUA_BINDING_ARGUMENT( luaL_checkstring, 5, "options" );
 
-    pAnimating->FireEvent( pVecOrigin, pAngAngles, flEventTime, pszOptions );
+    pAnimating->FireEvent( pVecOrigin, pAngAngles, iEvent, pszOptions );
 
     return 0;
 }
 LUA_BINDING_END()
 
-//static int CBaseAnimating_FireObsoleteEvent( lua_State *L )
-//{
-//    luaL_checkanimating( L, 1 )->FireObsoleteEvent(
-//        luaL_checkvector( L, 2 ), luaL_checkangle( L, 3 ), luaL_checknumber( L, 4 ), luaL_checkstring( L, 5 ) );
-//    return 0;
-//}
-LUA_BINDING_BEGIN( CBaseAnimating, FireObsoleteEvent, "class", "Fire an obsolete event." )
+LUA_BINDING_BEGIN( CBaseAnimating, FireObsoleteEvent, "class", "These events are all obsolete events, left here to support old games. Their systems have all been replaced with better ones." )
 {
     lua_CBaseAnimating *pAnimating = LUA_BINDING_ARGUMENT( luaL_checkanimating, 1, "entity" );
     Vector pVecOrigin = LUA_BINDING_ARGUMENT( luaL_checkvector, 2, "origin" );
     QAngle pAngAngles = LUA_BINDING_ARGUMENT( luaL_checkangle, 3, "angles" );
-    float flEventTime = LUA_BINDING_ARGUMENT( luaL_checknumber, 4, "eventTime" );
+    int iEvent = LUA_BINDING_ARGUMENT( luaL_checknumber, 4, "event" );
     const char *pszOptions = LUA_BINDING_ARGUMENT( luaL_checkstring, 5, "options" );
 
-    pAnimating->FireObsoleteEvent( pVecOrigin, pAngAngles, flEventTime, pszOptions );
+    pAnimating->FireObsoleteEvent( pVecOrigin, pAngAngles, iEvent, pszOptions );
 
     return 0;
 }
 LUA_BINDING_END()
 
-//static int CBaseAnimating_ForceClientSideAnimationOn( lua_State *L )
-//{
-//    luaL_checkanimating( L, 1 )->ForceClientSideAnimationOn();
-//    return 0;
-//}
-LUA_BINDING_BEGIN( CBaseAnimating, ForceClientSideAnimationOn, "class", "Force the client side animation on." )
+LUA_BINDING_BEGIN( CBaseAnimating, ForceClientSideAnimationOn, "class", "This can be used to force client side animation to be on. Only use if you know what you're doing! Normally, the server entity should set this." )
 {
     lua_CBaseAnimating *pAnimating = LUA_BINDING_ARGUMENT( luaL_checkanimating, 1, "entity" );
 
@@ -438,16 +299,10 @@ LUA_BINDING_BEGIN( CBaseAnimating, ForceClientSideAnimationOn, "class", "Force t
 }
 LUA_BINDING_END()
 
-//static int CBaseAnimating_FrameAdvance( lua_State *L )
-//{
-//    lua_pushnumber(
-//        L, luaL_checkanimating( L, 1 )->FrameAdvance( luaL_optnumber( L, 2, 0.0f ) ) );
-//    return 1;
-//}
 LUA_BINDING_BEGIN( CBaseAnimating, FrameAdvance, "class", "Advance the frame." )
 {
     lua_CBaseAnimating *pAnimating = LUA_BINDING_ARGUMENT( luaL_checkanimating, 1, "entity" );
-    float flInterval = LUA_BINDING_ARGUMENT_OPT( luaL_optnumber, 2, 0.0f, "interval" );
+    float flInterval = LUA_BINDING_ARGUMENT_WITH_DEFAULT( luaL_optnumber, 2, 0.0f, "interval" );
 
     lua_pushnumber( L, pAnimating->FrameAdvance( flInterval ) );
 
@@ -455,21 +310,14 @@ LUA_BINDING_BEGIN( CBaseAnimating, FrameAdvance, "class", "Advance the frame." )
 }
 LUA_BINDING_END( "number", "The new cycle" )
 
-//static int CBaseAnimating_GetAimEntOrigin( lua_State *L )
-//{
-//    luaL_checkanimating( L, 1 )->GetAimEntOrigin( luaL_checkentity( L, 2 ),
-//                                                  &luaL_checkvector( L, 3 ),
-//                                                  &luaL_checkangle( L, 4 ) );
-//    return 0;
-//}
 LUA_BINDING_BEGIN( CBaseAnimating, GetAimEntOrigin, "class", "Get the aim entity origin." )
 {
     lua_CBaseAnimating *pAnimating = LUA_BINDING_ARGUMENT( luaL_checkanimating, 1, "entity" );
-    lua_CBaseEntity *pAimEnt = LUA_BINDING_ARGUMENT( luaL_checkentity, 2, "aimEntity" );
+    lua_CBaseEntity *pAttachedTo = LUA_BINDING_ARGUMENT( luaL_checkentity, 2, "attachedTo" );
     Vector pVecOrigin;
     QAngle pAngAngles;
 
-    pAnimating->GetAimEntOrigin( pAimEnt, &pVecOrigin, &pAngAngles );
+    pAnimating->GetAimEntOrigin( pAttachedTo, &pVecOrigin, &pAngAngles );
 
     lua_pushvector( L, pVecOrigin );
     lua_pushangle( L, pAngAngles );
@@ -478,11 +326,6 @@ LUA_BINDING_BEGIN( CBaseAnimating, GetAimEntOrigin, "class", "Get the aim entity
 }
 LUA_BINDING_END( "vector", "The aim entity origin", "angle", "The aim entity angles" )
 
-//static int CBaseAnimating_GetAnimTimeInterval( lua_State *L )
-//{
-//    lua_pushnumber( L, luaL_checkanimating( L, 1 )->GetAnimTimeInterval() );
-//    return 1;
-//}
 LUA_BINDING_BEGIN( CBaseAnimating, GetAnimTimeInterval, "class", "Get the animation time interval." )
 {
     lua_CBaseAnimating *pAnimating = LUA_BINDING_ARGUMENT( luaL_checkanimating, 1, "entity" );
@@ -493,11 +336,6 @@ LUA_BINDING_BEGIN( CBaseAnimating, GetAnimTimeInterval, "class", "Get the animat
 }
 LUA_BINDING_END( "number", "The animation time interval" )
 
-//static int CBaseAnimating_GetAttachmentLocal( lua_State *L )
-//{
-//    lua_pushboolean( L, luaL_checkanimating( L, 1 )->GetAttachmentLocal( luaL_checknumber( L, 2 ), luaL_checkvector( L, 3 ), luaL_checkangle( L, 4 ) ) );
-//    return 1;
-//}
 LUA_BINDING_BEGIN( CBaseAnimating, GetAttachmentLocal, "class", "Get the local attachment." )
 {
     lua_CBaseAnimating *pAnimating = LUA_BINDING_ARGUMENT( luaL_checkanimating, 1, "entity" );
@@ -513,16 +351,6 @@ LUA_BINDING_BEGIN( CBaseAnimating, GetAttachmentLocal, "class", "Get the local a
 }
 LUA_BINDING_END( "boolean", "Whether the operation was successful", "vector", "The origin", "angle", "The angles" )
 
-//static int CBaseAnimating_GetAttachmentVelocity( lua_State *L )
-//{
-//    Vector originVel;
-//    Quaternion angleVel;
-//    lua_pushboolean( L, luaL_checkanimating( L, 1 )->GetAttachmentVelocity( luaL_checknumber( L, 2 ), originVel, angleVel ) );
-//    lua_pushvector( L, originVel );
-//    // Todo: implement Quaternion class!!
-//    // lua_pushquaternion(L, &angleVel);
-//    return 2;
-//}
 LUA_BINDING_BEGIN( CBaseAnimating, GetAttachmentVelocity, "class", "Get the attachment velocity." )
 {
     lua_CBaseAnimating *pAnimating = LUA_BINDING_ARGUMENT( luaL_checkanimating, 1, "entity" );
@@ -538,11 +366,6 @@ LUA_BINDING_BEGIN( CBaseAnimating, GetAttachmentVelocity, "class", "Get the atta
 }
 LUA_BINDING_END( "boolean", "Whether the operation was successful", "vector", "The origin velocity" )
 
-//static int CBaseAnimating_GetBaseAnimating( lua_State *L )
-//{
-//    CBaseEntity::PushLuaInstanceSafe( L, luaL_checkanimating( L, 1 )->GetBaseAnimating() );
-//    return 1;
-//}
 LUA_BINDING_BEGIN( CBaseAnimating, GetBaseAnimating, "class", "Get the base animating entity." )
 {
     lua_CBaseAnimating *pAnimating = LUA_BINDING_ARGUMENT( luaL_checkanimating, 1, "entity" );
@@ -553,13 +376,6 @@ LUA_BINDING_BEGIN( CBaseAnimating, GetBaseAnimating, "class", "Get the base anim
 }
 LUA_BINDING_END( "entity", "The base animating entity" )
 
-//static int CBaseAnimating_GetBlendedLinearVelocity( lua_State *L )
-//{
-//    Vector pVec;
-//    luaL_checkanimating( L, 1 )->GetBlendedLinearVelocity( &pVec );
-//    lua_pushvector( L, pVec );
-//    return 1;
-//}
 LUA_BINDING_BEGIN( CBaseAnimating, GetBlendedLinearVelocity, "class", "Get the blended linear velocity." )
 {
     lua_CBaseAnimating *pAnimating = LUA_BINDING_ARGUMENT( luaL_checkanimating, 1, "entity" );
@@ -573,423 +389,684 @@ LUA_BINDING_BEGIN( CBaseAnimating, GetBlendedLinearVelocity, "class", "Get the b
 }
 LUA_BINDING_END( "vector", "The blended linear velocity" )
 
-static int CBaseAnimating_GetBody( lua_State *L )
+LUA_BINDING_BEGIN( CBaseAnimating, GetBody, "class", "Get the body (internally described as 'Object bodygroup'?)." )
 {
-    lua_pushinteger( L, luaL_checkanimating( L, 1 )->GetBody() );
+    lua_CBaseAnimating *pAnimating = LUA_BINDING_ARGUMENT( luaL_checkanimating, 1, "entity" );
+
+    lua_pushinteger( L, pAnimating->GetBody() );
+
     return 1;
 }
+LUA_BINDING_END( "number", "The body" )
 
-static int CBaseAnimating_GetBoneControllers( lua_State *L )
+LUA_BINDING_BEGIN( CBaseAnimating, GetBoneControllers, "class", "Get all bone controller values." )
 {
+    lua_CBaseAnimating *pAnimating = LUA_BINDING_ARGUMENT( luaL_checkanimating, 1, "entity" );
     float controllers[MAXSTUDIOBONECTRLS];
-    luaL_checkanimating( L, 1 )->GetBoneControllers( controllers );
-    int i;
-    for ( i = 0; i < MAXSTUDIOBONECTRLS; i++ )
+
+    pAnimating->GetBoneControllers( controllers );
+
+    for ( int i = 0; i < MAXSTUDIOBONECTRLS; i++ )
     {
         lua_pushnumber( L, controllers[i] );
     }
+
     return MAXSTUDIOBONECTRLS;
 }
+LUA_BINDING_END( "number", "The bone controllers" )
 
-static int CBaseAnimating_GetBonePosition( lua_State *L )
+LUA_BINDING_BEGIN( CBaseAnimating, GetBonePosition, "class", "Get the bone position." )
 {
-    luaL_checkanimating( L, 1 )->GetBonePosition(
-        luaL_checknumber( L, 2 ), luaL_checkvector( L, 3 ), luaL_checkangle( L, 4 ) );
-    return 0;
+    lua_CBaseAnimating *pAnimating = LUA_BINDING_ARGUMENT( luaL_checkanimating, 1, "entity" );
+    int iBone = LUA_BINDING_ARGUMENT( luaL_checknumber, 2, "bone" );
+    Vector pVecOrigin;
+    QAngle pAngAngles;
+
+    pAnimating->GetBonePosition( iBone, pVecOrigin, pAngAngles );
+
+    lua_pushvector( L, pVecOrigin );
+    lua_pushangle( L, pAngAngles );
+
+    return 2;
 }
+LUA_BINDING_END( "vector", "The origin", "angle", "The angles" )
 
-static int CBaseAnimating_GetClientSideFade( lua_State *L )
+LUA_BINDING_BEGIN( CBaseAnimating, GetClientSideFade, "class", "Get the client side fade." )
 {
-    lua_pushinteger( L, luaL_checkanimating( L, 1 )->GetClientSideFade() );
+    lua_CBaseAnimating *pAnimating = LUA_BINDING_ARGUMENT( luaL_checkanimating, 1, "entity" );
+
+    lua_pushinteger( L, pAnimating->GetClientSideFade() );
+
     return 1;
 }
+LUA_BINDING_END( "number", "The client side fade" )
 
-static int CBaseAnimating_GetCollideType( lua_State *L )
+LUA_BINDING_BEGIN( CBaseAnimating, GetCollideType, "class", "Get the collide type." )
 {
-    lua_pushinteger( L, luaL_checkanimating( L, 1 )->GetCollideType() );
+    lua_CBaseAnimating *pAnimating = LUA_BINDING_ARGUMENT( luaL_checkanimating, 1, "entity" );
+
+    lua_pushinteger( L, pAnimating->GetCollideType() );
+
     return 1;
 }
+LUA_BINDING_END( "integer|CollideType_t", "The collide type" )
 
-static int CBaseAnimating_GetCycle( lua_State *L )
+LUA_BINDING_BEGIN( CBaseAnimating, GetCycle, "class", "Get the current cycle." )
 {
-    lua_pushnumber( L, luaL_checkanimating( L, 1 )->GetCycle() );
+    lua_CBaseAnimating *pAnimating = LUA_BINDING_ARGUMENT( luaL_checkanimating, 1, "entity" );
+
+    lua_pushnumber( L, pAnimating->GetCycle() );
+
     return 1;
 }
+LUA_BINDING_END( "number", "The cycle" )
 
-static int CBaseAnimating_GetFlexControllerName( lua_State *L )
+LUA_BINDING_BEGIN( CBaseAnimating, GetFlexControllerName, "class", "Get the flex controller name." )
 {
-    lua_pushstring( L, luaL_checkanimating( L, 1 )->GetFlexControllerName( ( LocalFlexController_t )( int )luaL_checknumber( L, 2 ) ) );
+    lua_CBaseAnimating *pAnimating = LUA_BINDING_ARGUMENT( luaL_checkanimating, 1, "entity" );
+    int iFlexControllerIndex = LUA_BINDING_ARGUMENT( luaL_checknumber, 2, "flexControllerIndex" );
+    LocalFlexController_t iFlexController = ( LocalFlexController_t )iFlexControllerIndex;
+
+    lua_pushstring( L, pAnimating->GetFlexControllerName( iFlexController ) );
+
     return 1;
 }
+LUA_BINDING_END( "string", "The flex controller name" )
 
-static int CBaseAnimating_GetFlexControllerType( lua_State *L )
+LUA_BINDING_BEGIN( CBaseAnimating, GetFlexControllerType, "class", "Get the flex controller type." )
 {
-    lua_pushstring( L, luaL_checkanimating( L, 1 )->GetFlexControllerType( ( LocalFlexController_t )( int )luaL_checknumber( L, 2 ) ) );
+    lua_CBaseAnimating *pAnimating = LUA_BINDING_ARGUMENT( luaL_checkanimating, 1, "entity" );
+    int iFlexControllerIndex = LUA_BINDING_ARGUMENT( luaL_checknumber, 2, "flexControllerIndex" );
+    LocalFlexController_t iFlexController = ( LocalFlexController_t )iFlexControllerIndex;
+
+    lua_pushstring( L, pAnimating->GetFlexControllerType( iFlexController ) );
+
     return 1;
 }
+LUA_BINDING_END( "string", "The flex controller type" )
 
-static int CBaseAnimating_GetFlexDescFacs( lua_State *L )
+LUA_BINDING_BEGIN( CBaseAnimating, GetFlexDescFacs, "class", "Get the flex desc facs." )
 {
-    lua_pushstring(
-        L, luaL_checkanimating( L, 1 )->GetFlexDescFacs( luaL_checknumber( L, 2 ) ) );
+    lua_CBaseAnimating *pAnimating = LUA_BINDING_ARGUMENT( luaL_checkanimating, 1, "entity" );
+    int iFlexDescIndex = LUA_BINDING_ARGUMENT( luaL_checknumber, 2, "flexDescIndex" );
+
+    lua_pushstring( L, pAnimating->GetFlexDescFacs( iFlexDescIndex ) );
+
     return 1;
 }
+LUA_BINDING_END( "string", "The flex desc facs" )
 
-static int CBaseAnimating_GetHitboxSet( lua_State *L )
+LUA_BINDING_BEGIN( CBaseAnimating, GetHitboxSet, "class", "Get the index of the hitbox set in use." )
 {
-    lua_pushinteger( L, luaL_checkanimating( L, 1 )->GetHitboxSet() );
+    lua_CBaseAnimating *pAnimating = LUA_BINDING_ARGUMENT( luaL_checkanimating, 1, "entity" );
+
+    lua_pushinteger( L, pAnimating->GetHitboxSet() );
+
     return 1;
 }
+LUA_BINDING_END( "number", "The hitbox set" )
 
-static int CBaseAnimating_GetHitboxSetCount( lua_State *L )
+LUA_BINDING_BEGIN( CBaseAnimating, GetHitboxSetCount, "class", "Get the hitbox set count." )
 {
-    lua_pushinteger( L, luaL_checkanimating( L, 1 )->GetHitboxSetCount() );
+    lua_CBaseAnimating *pAnimating = LUA_BINDING_ARGUMENT( luaL_checkanimating, 1, "entity" );
+
+    lua_pushinteger( L, pAnimating->GetHitboxSetCount() );
+
     return 1;
 }
+LUA_BINDING_END( "number", "The hitbox set count" )
 
-static int CBaseAnimating_GetHitboxSetName( lua_State *L )
+LUA_BINDING_BEGIN( CBaseAnimating, GetHitboxSetName, "class", "Get the hitbox set name." )
 {
-    lua_pushstring( L, luaL_checkanimating( L, 1 )->GetHitboxSetName() );
+    lua_CBaseAnimating *pAnimating = LUA_BINDING_ARGUMENT( luaL_checkanimating, 1, "entity" );
+
+    lua_pushstring( L, pAnimating->GetHitboxSetName() );
+
     return 1;
 }
+LUA_BINDING_END( "string", "The hitbox set name" )
 
 // static int CBaseAnimating_GetModelWidthScale (lua_State *L) {
 //   lua_pushnumber(L, luaL_checkanimating(L, 1)->GetModelWidthScale());
 //   return 1;
 // }
 
-static int CBaseAnimating_GetNumFlexControllers( lua_State *L )
+LUA_BINDING_BEGIN( CBaseAnimating, GetNumFlexControllers, "class", "Get the number of flex controllers." )
 {
-    lua_pushinteger( L, luaL_checkanimating( L, 1 )->GetNumFlexControllers() );
+    lua_CBaseAnimating *pAnimating = LUA_BINDING_ARGUMENT( luaL_checkanimating, 1, "entity" );
+
+    lua_pushinteger( L, pAnimating->GetNumFlexControllers() );
+
     return 1;
 }
+LUA_BINDING_END( "number", "The number of flex controllers" )
 
-static int CBaseAnimating_GetPlaybackRate( lua_State *L )
+LUA_BINDING_BEGIN( CBaseAnimating, GetPlaybackRate, "class", "Get the playback rate." )
 {
-    lua_pushnumber( L, luaL_checkanimating( L, 1 )->GetPlaybackRate() );
+    lua_CBaseAnimating *pAnimating = LUA_BINDING_ARGUMENT( luaL_checkanimating, 1, "entity" );
+
+    lua_pushnumber( L, pAnimating->GetPlaybackRate() );
+
     return 1;
 }
+LUA_BINDING_END( "number", "The playback rate" )
 
-static int CBaseAnimating_GetPoseParameter( lua_State *L )
+LUA_BINDING_BEGIN( CBaseAnimating, GetPoseParameter, "class", "Get the pose parameter." )
 {
-    lua_pushnumber(
-        L, luaL_checkanimating( L, 1 )->GetPoseParameter( luaL_checknumber( L, 2 ) ) );
+    lua_CBaseAnimating *pAnimating = LUA_BINDING_ARGUMENT( luaL_checkanimating, 1, "entity" );
+    int iPoseParameter = LUA_BINDING_ARGUMENT( luaL_checknumber, 2, "poseParameter" );
+
+    lua_pushnumber( L, pAnimating->GetPoseParameter( iPoseParameter ) );
+
     return 1;
 }
+LUA_BINDING_END( "number", "The pose parameter" )
 
-static int CBaseAnimating_GetPoseParameterRange( lua_State *L )
+LUA_BINDING_BEGIN( CBaseAnimating, GetPoseParameterRange, "class", "Get the pose parameter range." )
 {
+    lua_CBaseAnimating *pAnimating = LUA_BINDING_ARGUMENT( luaL_checkanimating, 1, "entity" );
+    int iPoseParameter = LUA_BINDING_ARGUMENT( luaL_checknumber, 2, "poseParameter" );
     float minValue, maxValue;
-    lua_pushboolean( L, luaL_checkanimating( L, 1 )->GetPoseParameterRange( luaL_checknumber( L, 2 ), minValue, maxValue ) );
+
+    lua_pushboolean( L, pAnimating->GetPoseParameterRange( iPoseParameter, minValue, maxValue ) );
     lua_pushnumber( L, minValue );
     lua_pushnumber( L, maxValue );
+
     return 3;
 }
+LUA_BINDING_END( "boolean", "Whether the operation was successful", "number", "The minimum value", "number", "The maximum value" )
 
-static int CBaseAnimating_GetRenderAngles( lua_State *L )
+LUA_BINDING_BEGIN( CBaseAnimating, GetRenderAngles, "class", "Get the render angles." )
 {
-    QAngle v = luaL_checkanimating( L, 1 )->GetRenderAngles();
+    lua_CBaseAnimating *pAnimating = LUA_BINDING_ARGUMENT( luaL_checkanimating, 1, "entity" );
+
+    QAngle v = pAnimating->GetRenderAngles();
+
     lua_pushangle( L, v );
+
     return 1;
 }
+LUA_BINDING_END( "angle", "The render angles" )
 
-static int CBaseAnimating_GetRenderBounds( lua_State *L )
+LUA_BINDING_BEGIN( CBaseAnimating, GetRenderBounds, "class", "Get the render bounds." )
 {
+    lua_CBaseAnimating *pAnimating = LUA_BINDING_ARGUMENT( luaL_checkanimating, 1, "entity" );
     Vector theMins, theMaxs;
-    luaL_checkanimating( L, 1 )->GetRenderBounds( theMins, theMaxs );
+
+    pAnimating->GetRenderBounds( theMins, theMaxs );
+
     lua_pushvector( L, theMins );
     lua_pushvector( L, theMaxs );
+
     return 2;
 }
+LUA_BINDING_END( "vector", "The minimum bounds", "vector", "The maximum bounds" )
 
-static int CBaseAnimating_GetRenderOrigin( lua_State *L )
+LUA_BINDING_BEGIN( CBaseAnimating, GetRenderOrigin, "class", "Get the render origin." )
 {
-    Vector v = luaL_checkanimating( L, 1 )->GetRenderOrigin();
+    lua_CBaseAnimating *pAnimating = LUA_BINDING_ARGUMENT( luaL_checkanimating, 1, "entity" );
+
+    Vector v = pAnimating->GetRenderOrigin();
+
     lua_pushvector( L, v );
+
     return 1;
 }
+LUA_BINDING_END( "vector", "The render origin" )
 
-static int CBaseAnimating_GetSequence( lua_State *L )
+LUA_BINDING_BEGIN( CBaseAnimating, GetSequence, "class", "Get the sequence." )
 {
-    lua_pushinteger( L, luaL_checkanimating( L, 1 )->GetSequence() );
+    lua_CBaseAnimating *pAnimating = LUA_BINDING_ARGUMENT( luaL_checkanimating, 1, "entity" );
+
+    lua_pushinteger( L, pAnimating->GetSequence() );
+
     return 1;
 }
+LUA_BINDING_END( "number", "The sequence" )
 
-static int CBaseAnimating_GetSequenceActivity( lua_State *L )
+LUA_BINDING_BEGIN( CBaseAnimating, GetSequenceActivity, "class", "Get the sequence activity." )
 {
-    lua_pushinteger(
-        L, luaL_checkanimating( L, 1 )->GetSequenceActivity( luaL_checknumber( L, 2 ) ) );
+    lua_CBaseAnimating *pAnimating = LUA_BINDING_ARGUMENT( luaL_checkanimating, 1, "entity" );
+    int iSequence = LUA_BINDING_ARGUMENT( luaL_checknumber, 2, "sequence" );
+
+    lua_pushinteger( L, pAnimating->GetSequenceActivity( iSequence ) );
+
     return 1;
 }
+LUA_BINDING_END( "number", "The sequence activity" )
 
-static int CBaseAnimating_GetSequenceActivityName( lua_State *L )
+LUA_BINDING_BEGIN( CBaseAnimating, GetSequenceActivityName, "class", "Get the sequence activity name." )
 {
-    lua_pushstring( L, luaL_checkanimating( L, 1 )->GetSequenceActivityName( luaL_checknumber( L, 2 ) ) );
+    lua_CBaseAnimating *pAnimating = LUA_BINDING_ARGUMENT( luaL_checkanimating, 1, "entity" );
+    int iSequence = LUA_BINDING_ARGUMENT( luaL_checknumber, 2, "sequence" );
+
+    lua_pushstring( L, pAnimating->GetSequenceActivityName( iSequence ) );
+
     return 1;
 }
+LUA_BINDING_END( "string", "The sequence activity name" )
 
-static int CBaseAnimating_GetSequenceGroundSpeed( lua_State *L )
+LUA_BINDING_BEGIN( CBaseAnimating, GetSequenceGroundSpeed, "class", "Get the sequence ground speed." )
 {
-    lua_pushnumber( L, luaL_checkanimating( L, 1 )->GetSequenceGroundSpeed( luaL_checknumber( L, 2 ) ) );
+    lua_CBaseAnimating *pAnimating = LUA_BINDING_ARGUMENT( luaL_checkanimating, 1, "entity" );
+    int iSequence = LUA_BINDING_ARGUMENT( luaL_checknumber, 2, "sequence" );
+
+    lua_pushnumber( L, pAnimating->GetSequenceGroundSpeed( iSequence ) );
+
     return 1;
 }
+LUA_BINDING_END( "number", "The sequence ground speed" )
 
-static int CBaseAnimating_GetSequenceLinearMotion( lua_State *L )
+LUA_BINDING_BEGIN( CBaseAnimating, GetSequenceLinearMotion, "class", "Get the sequence linear motion." )
 {
+    lua_CBaseAnimating *pAnimating = LUA_BINDING_ARGUMENT( luaL_checkanimating, 1, "entity" );
+    int iSequence = LUA_BINDING_ARGUMENT( luaL_checknumber, 2, "sequence" );
     Vector pVec;
-    luaL_checkanimating( L, 1 )->GetSequenceLinearMotion( luaL_checknumber( L, 2 ),
-                                                          &pVec );
+
+    pAnimating->GetSequenceLinearMotion( iSequence, &pVec );
+
     lua_pushvector( L, pVec );
+
     return 1;
 }
+LUA_BINDING_END( "vector", "The sequence linear motion" )
 
-static int CBaseAnimating_GetSequenceName( lua_State *L )
+LUA_BINDING_BEGIN( CBaseAnimating, GetSequenceName, "class", "Get the sequence name." )
 {
-    lua_pushstring(
-        L, luaL_checkanimating( L, 1 )->GetSequenceName( luaL_checknumber( L, 2 ) ) );
+    lua_CBaseAnimating *pAnimating = LUA_BINDING_ARGUMENT( luaL_checkanimating, 1, "entity" );
+    int iSequence = LUA_BINDING_ARGUMENT( luaL_checknumber, 2, "sequence" );
+
+    lua_pushstring( L, pAnimating->GetSequenceName( iSequence ) );
+
     return 1;
 }
+LUA_BINDING_END( "string", "The sequence name" )
 
-static int CBaseAnimating_GetServerIntendedCycle( lua_State *L )
+LUA_BINDING_BEGIN( CBaseAnimating, GetServerIntendedCycle, "class", "Get the server intended cycle." )
 {
-    lua_pushnumber( L, luaL_checkanimating( L, 1 )->GetServerIntendedCycle() );
+    lua_CBaseAnimating *pAnimating = LUA_BINDING_ARGUMENT( luaL_checkanimating, 1, "entity" );
+
+    lua_pushnumber( L, pAnimating->GetServerIntendedCycle() );
+
     return 1;
 }
+LUA_BINDING_END( "number", "The server intended cycle" )
 
-static int CBaseAnimating_GetSkin( lua_State *L )
+LUA_BINDING_BEGIN( CBaseAnimating, GetSkin, "class", "Get the skin." )
 {
-    lua_pushinteger( L, luaL_checkanimating( L, 1 )->GetSkin() );
+    lua_CBaseAnimating *pAnimating = LUA_BINDING_ARGUMENT( luaL_checkanimating, 1, "entity" );
+
+    lua_pushinteger( L, pAnimating->GetSkin() );
+
     return 1;
 }
+LUA_BINDING_END( "number", "The skin" )
 
-static int CBaseAnimating_IgniteRagdoll( lua_State *L )
+LUA_BINDING_BEGIN( CBaseAnimating, IgniteRagdoll, "class", "Ignite the ragdoll." )
 {
-    luaL_checkanimating( L, 1 )->IgniteRagdoll( luaL_checkanimating( L, 2 ) );
+    lua_CBaseAnimating *pAnimating = LUA_BINDING_ARGUMENT( luaL_checkanimating, 1, "entity" );
+    lua_CBaseAnimating *pIgniter = LUA_BINDING_ARGUMENT( luaL_checkanimating, 2, "igniter" );
+
+    pAnimating->IgniteRagdoll( pIgniter );
+
     return 0;
 }
+LUA_BINDING_END()
 
-static int CBaseAnimating_InitBoneSetupThreadPool( lua_State *L )
+LUA_BINDING_BEGIN( CBaseAnimating, InitBoneSetupThreadPool, "class|static", "Initialize the bone setup thread pool." )
 {
     CBaseAnimating::InitBoneSetupThreadPool();
+
     return 0;
 }
+LUA_BINDING_END()
 
-static int CBaseAnimating_InitModelEffects( lua_State *L )
+LUA_BINDING_BEGIN( CBaseAnimating, InitModelEffects, "class", "Initialize the model effects." )
 {
-    luaL_checkanimating( L, 1 )->InitModelEffects();
+    lua_CBaseAnimating *pAnimating = LUA_BINDING_ARGUMENT( luaL_checkanimating, 1, "entity" );
+
+    pAnimating->InitModelEffects();
+
     return 0;
 }
+LUA_BINDING_END()
 
-static int CBaseAnimating_InternalDrawModel( lua_State *L )
+LUA_BINDING_BEGIN( CBaseAnimating, InternalDrawModel, "class", "Internal draw the model." )
 {
-    lua_pushinteger(
-        L, luaL_checkanimating( L, 1 )->InternalDrawModel( luaL_checknumber( L, 2 ) ) );
+    lua_CBaseAnimating *pAnimating = LUA_BINDING_ARGUMENT( luaL_checkanimating, 1, "entity" );
+    int flags = LUA_BINDING_ARGUMENT( luaL_checknumber, 2, "flags" );
+
+    lua_pushinteger( L, pAnimating->InternalDrawModel( flags ) );
+
     return 1;
 }
+LUA_BINDING_END( "number", "The resulting draw flag" )
 
-static int CBaseAnimating_Interpolate( lua_State *L )
+LUA_BINDING_BEGIN( CBaseAnimating, Interpolate, "class", "Interpolate the entity." )
 {
-    lua_pushboolean(
-        L, luaL_checkanimating( L, 1 )->Interpolate( luaL_checknumber( L, 2 ) ) );
+    lua_CBaseAnimating *pAnimating = LUA_BINDING_ARGUMENT( luaL_checkanimating, 1, "entity" );
+    float flCurrentTime = LUA_BINDING_ARGUMENT( luaL_checknumber, 2, "currentTime" );
+
+    lua_pushboolean( L, pAnimating->Interpolate( flCurrentTime ) );
+
     return 1;
 }
+LUA_BINDING_END( "boolean", "Whether the operation was successful" )
 
-static int CBaseAnimating_InvalidateBoneCache( lua_State *L )
+LUA_BINDING_BEGIN( CBaseAnimating, InvalidateBoneCache, "class", "Invalidate the bone cache." )
 {
-    luaL_checkanimating( L, 1 )->InvalidateBoneCache();
+    lua_CBaseAnimating *pAnimating = LUA_BINDING_ARGUMENT( luaL_checkanimating, 1, "entity" );
+
+    pAnimating->InvalidateBoneCache();
+
     return 0;
 }
+LUA_BINDING_END()
 
-static int CBaseAnimating_InvalidateBoneCaches( lua_State *L )
+LUA_BINDING_BEGIN( CBaseAnimating, InvalidateBoneCaches, "class|static", "Invalidate the bone caches." )
 {
     CBaseAnimating::InvalidateBoneCaches();
+
     return 0;
 }
+LUA_BINDING_END()
 
-static int CBaseAnimating_InvalidateMdlCache( lua_State *L )
+LUA_BINDING_BEGIN( CBaseAnimating, InvalidateMdlCache, "class", "Invalidate the MDL cache." )
 {
-    luaL_checkanimating( L, 1 )->InvalidateMdlCache();
+    lua_CBaseAnimating *pAnimating = LUA_BINDING_ARGUMENT( luaL_checkanimating, 1, "entity" );
+
+    pAnimating->InvalidateMdlCache();
+
     return 0;
 }
+LUA_BINDING_END()
 
-static int CBaseAnimating_IsActivityFinished( lua_State *L )
+LUA_BINDING_BEGIN( CBaseAnimating, IsActivityFinished, "class", "Check if the activity is finished." )
 {
-    lua_pushboolean( L, luaL_checkanimating( L, 1 )->IsActivityFinished() );
+    lua_CBaseAnimating *pAnimating = LUA_BINDING_ARGUMENT( luaL_checkanimating, 1, "entity" );
+
+    lua_pushboolean( L, pAnimating->IsActivityFinished() );
+
     return 1;
 }
+LUA_BINDING_END( "boolean", "Whether the activity is finished" )
 
-static int CBaseAnimating_IsBoneCacheValid( lua_State *L )
+LUA_BINDING_BEGIN( CBaseAnimating, IsBoneCacheValid, "class", "Check if the bone cache is valid." )
 {
-    lua_pushboolean( L, luaL_checkanimating( L, 1 )->IsBoneCacheValid() );
+    lua_CBaseAnimating *pAnimating = LUA_BINDING_ARGUMENT( luaL_checkanimating, 1, "entity" );
+
+    lua_pushboolean( L, pAnimating->IsBoneCacheValid() );
+
     return 1;
 }
+LUA_BINDING_END( "boolean", "Whether the bone cache is valid" )
 
-static int CBaseAnimating_IsOnFire( lua_State *L )
+LUA_BINDING_BEGIN( CBaseAnimating, IsOnFire, "class", "Check if the entity is on fire." )
 {
-    lua_pushboolean( L, luaL_checkanimating( L, 1 )->IsOnFire() );
+    lua_CBaseAnimating *pAnimating = LUA_BINDING_ARGUMENT( luaL_checkanimating, 1, "entity" );
+
+    lua_pushboolean( L, pAnimating->IsOnFire() );
+
     return 1;
 }
+LUA_BINDING_END( "boolean", "Whether the entity is on fire" )
 
-static int CBaseAnimating_IsRagdoll( lua_State *L )
+LUA_BINDING_BEGIN( CBaseAnimating, IsRagdoll, "class", "Check if the entity is a ragdoll." )
 {
-    lua_pushboolean( L, luaL_checkanimating( L, 1 )->IsRagdoll() );
+    lua_CBaseAnimating *pAnimating = LUA_BINDING_ARGUMENT( luaL_checkanimating, 1, "entity" );
+
+    lua_pushboolean( L, pAnimating->IsRagdoll() );
+
     return 1;
 }
+LUA_BINDING_END( "boolean", "Whether the entity is a ragdoll" )
 
-static int CBaseAnimating_IsSelfAnimating( lua_State *L )
+LUA_BINDING_BEGIN( CBaseAnimating, IsSelfAnimating, "class", "Check if the entity is self animating." )
 {
-    lua_pushboolean( L, luaL_checkanimating( L, 1 )->IsSelfAnimating() );
+    lua_CBaseAnimating *pAnimating = LUA_BINDING_ARGUMENT( luaL_checkanimating, 1, "entity" );
+
+    lua_pushboolean( L, pAnimating->IsSelfAnimating() );
+
     return 1;
 }
+LUA_BINDING_END( "boolean", "Whether the entity is self animating" )
 
-static int CBaseAnimating_IsSequenceFinished( lua_State *L )
+LUA_BINDING_BEGIN( CBaseAnimating, IsSequenceFinished, "class", "Check if the sequence is finished." )
 {
-    lua_pushboolean( L, luaL_checkanimating( L, 1 )->IsSequenceFinished() );
+    lua_CBaseAnimating *pAnimating = LUA_BINDING_ARGUMENT( luaL_checkanimating, 1, "entity" );
+
+    lua_pushboolean( L, pAnimating->IsSequenceFinished() );
+
     return 1;
 }
+LUA_BINDING_END( "boolean", "Whether the sequence is finished" )
 
-static int CBaseAnimating_IsSequenceLooping( lua_State *L )
+LUA_BINDING_BEGIN( CBaseAnimating, IsSequenceLooping, "class", "Check if the sequence is looping." )
 {
-    lua_pushboolean(
-        L, luaL_checkanimating( L, 1 )->IsSequenceLooping( luaL_checknumber( L, 2 ) ) );
+    lua_CBaseAnimating *pAnimating = LUA_BINDING_ARGUMENT( luaL_checkanimating, 1, "entity" );
+    int iSequence = LUA_BINDING_ARGUMENT( luaL_checknumber, 2, "sequence" );
+
+    lua_pushboolean( L, pAnimating->IsSequenceLooping( iSequence ) );
+
     return 1;
 }
+LUA_BINDING_END( "boolean", "Whether the sequence is looping" )
 
-static int CBaseAnimating_IsViewModel( lua_State *L )
+LUA_BINDING_BEGIN( CBaseAnimating, IsViewModel, "class", "Check if the entity is a view model." )
 {
-    lua_pushboolean( L, luaL_checkanimating( L, 1 )->IsViewModel() );
+    lua_CBaseAnimating *pAnimating = LUA_BINDING_ARGUMENT( luaL_checkanimating, 1, "entity" );
+
+    lua_pushboolean( L, pAnimating->IsViewModel() );
+
     return 1;
 }
+LUA_BINDING_END( "boolean", "Whether the entity is a view model" )
 
-static int CBaseAnimating_LookupActivity( lua_State *L )
+LUA_BINDING_BEGIN( CBaseAnimating, LookupActivity, "class", "Looks up an activity by name." )
 {
-    lua_pushinteger(
-        L, luaL_checkanimating( L, 1 )->LookupActivity( luaL_checkstring( L, 2 ) ) );
+    lua_CBaseAnimating *pAnimating = LUA_BINDING_ARGUMENT( luaL_checkanimating, 1, "entity" );
+    const char *pszActivityName = LUA_BINDING_ARGUMENT( luaL_checkstring, 2, "activityName" );
+
+    lua_pushinteger( L, pAnimating->LookupActivity( pszActivityName ) );
+
     return 1;
 }
+LUA_BINDING_END( "integer|ACT", "The activity" )
 
-static int CBaseAnimating_LookupAttachment( lua_State *L )
+LUA_BINDING_BEGIN( CBaseAnimating, LookupAttachment, "class", "Lookup the attachment." )
 {
-    lua_pushinteger(
-        L, luaL_checkanimating( L, 1 )->LookupAttachment( luaL_checkstring( L, 2 ) ) );
+    lua_CBaseAnimating *pAnimating = LUA_BINDING_ARGUMENT( luaL_checkanimating, 1, "entity" );
+    const char *pszAttachmentName = LUA_BINDING_ARGUMENT( luaL_checkstring, 2, "attachmentName" );
+
+    lua_pushinteger( L, pAnimating->LookupAttachment( pszAttachmentName ) );
+
     return 1;
 }
+LUA_BINDING_END( "number", "The attachment" )
 
-static int CBaseAnimating_LookupBone( lua_State *L )
+LUA_BINDING_BEGIN( CBaseAnimating, LookupBone, "class", "Lookup the bone." )
 {
-    lua_pushinteger(
-        L, luaL_checkanimating( L, 1 )->LookupBone( luaL_checkstring( L, 2 ) ) );
+    lua_CBaseAnimating *pAnimating = LUA_BINDING_ARGUMENT( luaL_checkanimating, 1, "entity" );
+    const char *pszBoneName = LUA_BINDING_ARGUMENT( luaL_checkstring, 2, "boneName" );
+
+    lua_pushinteger( L, pAnimating->LookupBone( pszBoneName ) );
+
     return 1;
 }
+LUA_BINDING_END( "number", "The bone" )
 
-static int CBaseAnimating_LookupPoseParameter( lua_State *L )
+LUA_BINDING_BEGIN( CBaseAnimating, LookupPoseParameter, "class", "Lookup the pose parameter." )
 {
-    lua_pushinteger( L, luaL_checkanimating( L, 1 )->LookupPoseParameter( luaL_checkstring( L, 2 ) ) );
+    lua_CBaseAnimating *pAnimating = LUA_BINDING_ARGUMENT( luaL_checkanimating, 1, "entity" );
+    const char *pszPoseParameterName = LUA_BINDING_ARGUMENT( luaL_checkstring, 2, "poseParameterName" );
+
+    lua_pushinteger( L, pAnimating->LookupPoseParameter( pszPoseParameterName ) );
+
     return 1;
 }
+LUA_BINDING_END( "number", "The pose parameter" )
 
-static int CBaseAnimating_LookupRandomAttachment( lua_State *L )
+LUA_BINDING_BEGIN( CBaseAnimating, LookupRandomAttachment, "class", "Get a random index of an attachment point with the specified substring in its name." )
 {
-    lua_pushinteger( L, luaL_checkanimating( L, 1 )->LookupRandomAttachment( luaL_checkstring( L, 2 ) ) );
+    lua_CBaseAnimating *pAnimating = LUA_BINDING_ARGUMENT( luaL_checkanimating, 1, "entity" );
+    const char *pszAttachmentName = LUA_BINDING_ARGUMENT( luaL_checkstring, 2, "attachmentNameSubstring" );
+
+    lua_pushinteger( L, pAnimating->LookupRandomAttachment( pszAttachmentName ) );
+
     return 1;
 }
+LUA_BINDING_END( "number", "The random attachment" )
 
-static int CBaseAnimating_LookupSequence( lua_State *L )
+LUA_BINDING_BEGIN( CBaseAnimating, LookupSequence, "class", "Lookup the sequence." )
 {
-    lua_pushinteger(
-        L, luaL_checkanimating( L, 1 )->LookupSequence( luaL_checkstring( L, 2 ) ) );
+    lua_CBaseAnimating *pAnimating = LUA_BINDING_ARGUMENT( luaL_checkanimating, 1, "entity" );
+    const char *pszSequenceName = LUA_BINDING_ARGUMENT( luaL_checkstring, 2, "sequenceName" );
+
+    lua_pushinteger( L, pAnimating->LookupSequence( pszSequenceName ) );
+
     return 1;
 }
+LUA_BINDING_END( "number", "The sequence" )
 
-static int CBaseAnimating_NotifyShouldTransmit( lua_State *L )
+LUA_BINDING_BEGIN( CBaseAnimating, NotifyShouldTransmit, "class", "Notify should transmit." )
 {
-    luaL_checkanimating( L, 1 )->NotifyShouldTransmit(
-        ( ShouldTransmitState_t )( int )luaL_checknumber( L, 2 ) );
+    lua_CBaseAnimating *pAnimating = LUA_BINDING_ARGUMENT( luaL_checkanimating, 1, "entity" );
+    int iState = LUA_BINDING_ARGUMENT( luaL_checknumber, 2, "state" );
+    ShouldTransmitState_t state = ( ShouldTransmitState_t )iState;
+
+    pAnimating->NotifyShouldTransmit( state );
+
     return 0;
 }
+LUA_BINDING_END()
 
-static int CBaseAnimating_OnDataChanged( lua_State *L )
+LUA_BINDING_BEGIN( CBaseAnimating, OnDataChanged, "class", "Call to inform that data changed. Creates/removes ragdolls, sets internal variables + other things that happen to an entity when data changes." )
 {
-    luaL_checkanimating( L, 1 )->OnDataChanged(
-        ( DataUpdateType_t )( int )luaL_checknumber( L, 2 ) );
+    lua_CBaseAnimating *pAnimating = LUA_BINDING_ARGUMENT( luaL_checkanimating, 1, "entity" );
+    int iUpdateType = LUA_BINDING_ARGUMENT( luaL_checknumber, 2, "updateType" );
+    DataUpdateType_t updateType = ( DataUpdateType_t )iUpdateType;
+
+    pAnimating->OnDataChanged( updateType );
+
     return 0;
 }
+LUA_BINDING_END()
 
-static int CBaseAnimating_OnPreDataChanged( lua_State *L )
+LUA_BINDING_BEGIN( CBaseAnimating, OnPreDataChanged, "class", "Internally sets up 'old*' and 'last*' variables to track changes." )
 {
-    luaL_checkanimating( L, 1 )->OnPreDataChanged(
-        ( DataUpdateType_t )( int )luaL_checknumber( L, 2 ) );
+    lua_CBaseAnimating *pAnimating = LUA_BINDING_ARGUMENT( luaL_checkanimating, 1, "entity" );
+    int iUpdateType = LUA_BINDING_ARGUMENT( luaL_checknumber, 2, "updateType" );
+    DataUpdateType_t updateType = ( DataUpdateType_t )iUpdateType;
+
+    pAnimating->OnPreDataChanged( updateType );
+
     return 0;
 }
+LUA_BINDING_END()
 
-static int CBaseAnimating_PopBoneAccess( lua_State *L )
+LUA_BINDING_BEGIN( CBaseAnimating, PopBoneAccess, "class|static", "Pop bone access." )
 {
-    C_BaseAnimating::PopBoneAccess( luaL_checkstring( L, 1 ) );
+    C_BaseAnimating::PopBoneAccess( LUA_BINDING_ARGUMENT( luaL_checkstring, 1, "name" ) );
+
     return 0;
 }
+LUA_BINDING_END()
 
-static int CBaseAnimating_PostDataUpdate( lua_State *L )
+LUA_BINDING_BEGIN( CBaseAnimating, PostDataUpdate, "class", "Post data update." )
 {
-    luaL_checkanimating( L, 1 )->PostDataUpdate(
-        ( DataUpdateType_t )( int )luaL_checknumber( L, 2 ) );
+    lua_CBaseAnimating *pAnimating = LUA_BINDING_ARGUMENT( luaL_checkanimating, 1, "entity" );
+    int iUpdateType = LUA_BINDING_ARGUMENT( luaL_checknumber, 2, "updateType" );
+    DataUpdateType_t updateType = ( DataUpdateType_t )iUpdateType;
+
+    pAnimating->PostDataUpdate( updateType );
+
     return 0;
 }
+LUA_BINDING_END()
 
-static int CBaseAnimating_PreDataUpdate( lua_State *L )
+LUA_BINDING_BEGIN( CBaseAnimating, PreDataUpdate, "class", "Pre data update." )
 {
-    luaL_checkanimating( L, 1 )->PreDataUpdate(
-        ( DataUpdateType_t )( int )luaL_checknumber( L, 2 ) );
+    lua_CBaseAnimating *pAnimating = LUA_BINDING_ARGUMENT( luaL_checkanimating, 1, "entity" );
+    int iUpdateType = LUA_BINDING_ARGUMENT( luaL_checknumber, 2, "updateType" );
+    DataUpdateType_t updateType = ( DataUpdateType_t )iUpdateType;
+
+    pAnimating->PreDataUpdate( updateType );
+
     return 0;
 }
+LUA_BINDING_END()
 
-static int CBaseAnimating_ProcessMuzzleFlashEvent( lua_State *L )
+LUA_BINDING_BEGIN( CBaseAnimating, ProcessMuzzleFlashEvent, "class", "Performs the muzzle flash effect." )
 {
-    luaL_checkanimating( L, 1 )->ProcessMuzzleFlashEvent();
+    lua_CBaseAnimating *pAnimating = LUA_BINDING_ARGUMENT( luaL_checkanimating, 1, "entity" );
+
+    pAnimating->ProcessMuzzleFlashEvent();
+
     return 0;
 }
+LUA_BINDING_END()
 
-static int CBaseAnimating_PushAllowBoneAccess( lua_State *L )
+LUA_BINDING_BEGIN( CBaseAnimating, PushAllowBoneAccess, "class|static", "Push allow bone access." )
 {
-    C_BaseAnimating::PushAllowBoneAccess( luaL_checkboolean( L, 1 ),
-                                          luaL_checkboolean( L, 2 ),
-                                          luaL_checkstring( L, 3 ) );
+    C_BaseAnimating::PushAllowBoneAccess( LUA_BINDING_ARGUMENT( luaL_checkboolean, 1, "allowForNormalModels" ),
+                                          LUA_BINDING_ARGUMENT( luaL_checkboolean, 2, "allowForViewModels" ),
+                                          LUA_BINDING_ARGUMENT( luaL_checkstring, 3, "tagPush" ) );
+
     return 0;
 }
+LUA_BINDING_END()
 
-static int CBaseAnimating_RagdollMoved( lua_State *L )
+LUA_BINDING_BEGIN( CBaseAnimating, RagdollMoved, "class", "Call this when the ragdoll moved to update the entity's position, angles and bounds to that of its ragdoll." )
 {
-    luaL_checkanimating( L, 1 )->RagdollMoved();
+    lua_CBaseAnimating *pAnimating = LUA_BINDING_ARGUMENT( luaL_checkanimating, 1, "entity" );
+
+    pAnimating->RagdollMoved();
+
     return 0;
 }
+LUA_BINDING_END()
 
-static int CBaseAnimating_Release( lua_State *L )
+LUA_BINDING_BEGIN( CBaseAnimating, Release, "class", "Release the entity. This clears the ragdoll and destroys the entity." )
 {
-    luaL_checkanimating( L, 1 )->Release();
+    lua_CBaseAnimating *pAnimating = LUA_BINDING_ARGUMENT( luaL_checkanimating, 1, "entity" );
+
+    pAnimating->Release();
+
     return 0;
 }
+LUA_BINDING_END()
 
-static int CBaseAnimating_RemoveFromClientSideAnimationList( lua_State *L )
+LUA_BINDING_BEGIN( CBaseAnimating, RemoveFromClientSideAnimationList, "class", "Remove from the client side animation list." )
 {
-    luaL_checkanimating( L, 1 )->RemoveFromClientSideAnimationList();
+    lua_CBaseAnimating *pAnimating = LUA_BINDING_ARGUMENT( luaL_checkanimating, 1, "entity" );
+
+    pAnimating->RemoveFromClientSideAnimationList();
+
     return 0;
 }
+LUA_BINDING_END()
 
 // static int CBaseAnimating_ResetEventsParity (lua_State *L) {
 //   luaL_checkanimating(L, 1)->ResetEventsParity();
 //   return 0;
 // }
 
-static int CBaseAnimating_ResetLatched( lua_State *L )
+LUA_BINDING_BEGIN( CBaseAnimating, ResetLatched, "class", "Reset the latched." )
 {
-    luaL_checkanimating( L, 1 )->ResetLatched();
+    lua_CBaseAnimating *pAnimating = LUA_BINDING_ARGUMENT( luaL_checkanimating, 1, "entity" );
+
+    pAnimating->ResetLatched();
+
     return 0;
 }
+LUA_BINDING_END()
 
-static int CBaseAnimating_ResetSequence( lua_State *L )
+LUA_BINDING_BEGIN( CBaseAnimating, ResetSequence, "class", "Reset the sequence." )
 {
-    auto entity = luaL_checkanimating( L, 1 );
-    int sequence = luaL_checknumber( L, 2 );
-    auto model = entity->GetModelPtr();
+    lua_CBaseAnimating *pAnimating = LUA_BINDING_ARGUMENT( luaL_checkanimating, 1, "entity" );
+    int iSequence = LUA_BINDING_ARGUMENT( luaL_checknumber, 2, "sequence" );
+
+    auto model = pAnimating->GetModelPtr();
 
     if ( !model )
     {
@@ -997,363 +1074,348 @@ static int CBaseAnimating_ResetSequence( lua_State *L )
         return 0;
     }
 
-    if ( sequence >= model->GetNumSeq() )
+    if ( iSequence >= model->GetNumSeq() )
     {
-        Warning( "CBaseAnimating::ResetSequence failed: invalid sequence %d\n", sequence );
+        Warning( "CBaseAnimating::ResetSequence failed: invalid sequence %d\n", iSequence );
         return 0;
     }
 
-    entity->ResetSequence( sequence );
+    pAnimating->ResetSequence( iSequence );
 
     return 0;
 }
+LUA_BINDING_END()
 
-static int CBaseAnimating_ResetSequenceInfo( lua_State *L )
+LUA_BINDING_BEGIN( CBaseAnimating, ResetSequenceInfo, "class", "Reset the sequence info." )
 {
-    luaL_checkanimating( L, 1 )->ResetSequenceInfo();
+    lua_CBaseAnimating *pAnimating = LUA_BINDING_ARGUMENT( luaL_checkanimating, 1, "entity" );
+
+    pAnimating->ResetSequenceInfo();
+
     return 0;
 }
+LUA_BINDING_END()
 
-static int CBaseAnimating_RetrieveRagdollInfo( lua_State *L )
+LUA_BINDING_BEGIN( CBaseAnimating, RetrieveRagdollInfo, "class", "Retrieve the ragdoll info." )
 {
+    lua_CBaseAnimating *pAnimating = LUA_BINDING_ARGUMENT( luaL_checkanimating, 1, "entity" );
     Vector pos;
     Quaternion q;
-    lua_pushboolean( L,
-                     luaL_checkanimating( L, 1 )->RetrieveRagdollInfo( &pos, &q ) );
+
+    lua_pushboolean( L, pAnimating->RetrieveRagdollInfo( &pos, &q ) );
     lua_pushvector( L, pos );
     // Todo: implement Quaternion class!!
     // lua_pushquaternion(L, &q);
+
     return 2;
 }
+LUA_BINDING_END( "boolean", "Whether the operation was successful", "vector", "The position" )
 
-static int CBaseAnimating_SelectWeightedSequence( lua_State *L )
+LUA_BINDING_BEGIN( CBaseAnimating, SelectWeightedSequence, "class", "Select the weighted sequence." )
 {
-    lua_pushinteger( L, luaL_checkanimating( L, 1 )->SelectWeightedSequence( luaL_checknumber( L, 2 ) ) );
+    lua_CBaseAnimating *pAnimating = LUA_BINDING_ARGUMENT( luaL_checkanimating, 1, "entity" );
+    int iActivity = LUA_BINDING_ARGUMENT( luaL_checknumber, 2, "activity" );
+
+    lua_pushinteger( L, pAnimating->SelectWeightedSequence( iActivity ) );
+
     return 1;
 }
+LUA_BINDING_END( "number", "The weighted sequence" )
 
-static int CBaseAnimating_SequenceDuration( lua_State *L )
+LUA_BINDING_BEGIN( CBaseAnimating, SequenceDuration, "class", "Get the sequence duration." )
 {
+    lua_CBaseAnimating *pAnimating = LUA_BINDING_ARGUMENT( luaL_checkanimating, 1, "entity" );
+
     if ( lua_isnoneornil( L, 2 ) )
-        lua_pushnumber( L, luaL_checkanimating( L, 1 )->SequenceDuration() );
+        lua_pushnumber( L, pAnimating->SequenceDuration() );
     else
-        lua_pushnumber( L, luaL_checkanimating( L, 1 )->SequenceDuration( luaL_checknumber( L, 2 ) ) );
+        lua_pushnumber( L, pAnimating->SequenceDuration( LUA_BINDING_ARGUMENT_NILLABLE( luaL_checknumber, 2, "sequence" ) ) );
 
     return 1;
 }
+LUA_BINDING_END( "number", "The sequence duration" )
 
-static int CBaseAnimating_SequenceLoops( lua_State *L )
+LUA_BINDING_BEGIN( CBaseAnimating, SequenceLoops, "class", "Check if the sequence loops." )
 {
-    lua_pushboolean( L, luaL_checkanimating( L, 1 )->SequenceLoops() );
+    lua_CBaseAnimating *pAnimating = LUA_BINDING_ARGUMENT( luaL_checkanimating, 1, "entity" );
+
+    lua_pushboolean( L, pAnimating->SequenceLoops() );
+
     return 1;
 }
+LUA_BINDING_END( "boolean", "Whether the sequence loops" )
 
-static int CBaseAnimating_SetBoneController( lua_State *L )
+LUA_BINDING_BEGIN( CBaseAnimating, SetBoneController, "class", "Set the value for the specified bone controller." )
 {
-    lua_pushnumber( L, luaL_checkanimating( L, 1 )->SetBoneController( luaL_checknumber( L, 2 ), luaL_checknumber( L, 3 ) ) );
+    lua_CBaseAnimating *pAnimating = LUA_BINDING_ARGUMENT( luaL_checkanimating, 1, "entity" );
+    int iBoneController = LUA_BINDING_ARGUMENT( luaL_checknumber, 2, "boneController" );
+    float flValue = LUA_BINDING_ARGUMENT( luaL_checknumber, 3, "value" );
+
+    lua_pushnumber( L, pAnimating->SetBoneController( iBoneController, flValue ) );
+
     return 1;
 }
+LUA_BINDING_END( "number", "The bone controller" )
 
-static int CBaseAnimating_SetCycle( lua_State *L )
+LUA_BINDING_BEGIN( CBaseAnimating, SetCycle, "class", "Set the cycle." )
 {
-    luaL_checkanimating( L, 1 )->SetCycle( luaL_checknumber( L, 2 ) );
+    lua_CBaseAnimating *pAnimating = LUA_BINDING_ARGUMENT( luaL_checkanimating, 1, "entity" );
+    float flCycle = LUA_BINDING_ARGUMENT( luaL_checknumber, 2, "cycle" );
+
+    pAnimating->SetCycle( flCycle );
+
     return 0;
 }
+LUA_BINDING_END()
 
-static int CBaseAnimating_SetHitboxSet( lua_State *L )
+LUA_BINDING_BEGIN( CBaseAnimating, SetHitboxSet, "class", "Set the hitbox set." )
 {
-    luaL_checkanimating( L, 1 )->SetHitboxSet( luaL_checknumber( L, 2 ) );
+    lua_CBaseAnimating *pAnimating = LUA_BINDING_ARGUMENT( luaL_checkanimating, 1, "entity" );
+    int iHitboxSet = LUA_BINDING_ARGUMENT( luaL_checknumber, 2, "hitboxSet" );
+
+    pAnimating->SetHitboxSet( iHitboxSet );
+
     return 0;
 }
+LUA_BINDING_END()
 
-static int CBaseAnimating_SetHitboxSetByName( lua_State *L )
+LUA_BINDING_BEGIN( CBaseAnimating, SetHitboxSetByName, "class", "Set the hitbox set by name." )
 {
-    luaL_checkanimating( L, 1 )->SetHitboxSetByName( luaL_checkstring( L, 2 ) );
+    lua_CBaseAnimating *pAnimating = LUA_BINDING_ARGUMENT( luaL_checkanimating, 1, "entity" );
+    const char *pszHitboxSetName = LUA_BINDING_ARGUMENT( luaL_checkstring, 2, "hitboxSetName" );
+
+    pAnimating->SetHitboxSetByName( pszHitboxSetName );
+
     return 0;
 }
+LUA_BINDING_END()
 
+// TODO:
 // static int CBaseAnimating_SetModelWidthScale (lua_State *L) {
 //   luaL_checkanimating(L, 1)->SetModelWidthScale(luaL_checknumber(L, 2));
 //   return 0;
 // }
 
-static int CBaseAnimating_SetPoseParameter( lua_State *L )
+LUA_BINDING_BEGIN( CBaseAnimating, SetPoseParameter, "class", "Set the pose parameter." )
 {
+    lua_CBaseAnimating *pAnimating = LUA_BINDING_ARGUMENT( luaL_checkanimating, 1, "entity" );
+
     switch ( lua_type( L, 2 ) )
     {
         case LUA_TNUMBER:
-            lua_pushnumber( L, luaL_checkanimating( L, 1 )->SetPoseParameter( luaL_checknumber( L, 2 ), luaL_checknumber( L, 3 ) ) );
+            lua_pushnumber( L, pAnimating->SetPoseParameter( LUA_BINDING_ARGUMENT( luaL_checknumber, 2, "poseParameter" ), LUA_BINDING_ARGUMENT( luaL_checknumber, 3, "value" ) ) );
             break;
         case LUA_TSTRING:
         default:
-            lua_pushnumber( L,
-                            luaL_checkanimating( L, 1 )->SetPoseParameter(
-                                luaL_checkstring( L, 2 ), luaL_checknumber( L, 3 ) ) );
+            lua_pushnumber( L, pAnimating->SetPoseParameter( LUA_BINDING_ARGUMENT( luaL_checkstring, 2, "poseParameter" ), LUA_BINDING_ARGUMENT( luaL_checknumber, 3, "value" ) ) );
             break;
     }
+
     return 1;
 }
+LUA_BINDING_END( "number", "The pose parameter" )
 
-static int CBaseAnimating_SetPredictable( lua_State *L )
+LUA_BINDING_BEGIN( CBaseAnimating, SetPredictable, "class", "Set predictable." )
 {
-    luaL_checkanimating( L, 1 )->SetPredictable( luaL_checkboolean( L, 2 ) );
+    lua_CBaseAnimating *pAnimating = LUA_BINDING_ARGUMENT( luaL_checkanimating, 1, "entity" );
+    bool bPredictable = LUA_BINDING_ARGUMENT( luaL_checkboolean, 2, "predictable" );
+
+    pAnimating->SetPredictable( bPredictable );
+
     return 0;
 }
+LUA_BINDING_END()
 
-static int CBaseAnimating_SetPredictionEligible( lua_State *L )
+LUA_BINDING_BEGIN( CBaseAnimating, SetPredictionEligible, "class", "Set prediction eligible." )
 {
-    luaL_checkanimating( L, 1 )->SetPredictionEligible( luaL_checkboolean( L, 2 ) );
+    lua_CBaseAnimating *pAnimating = LUA_BINDING_ARGUMENT( luaL_checkanimating, 1, "entity" );
+    bool bCanPredict = LUA_BINDING_ARGUMENT( luaL_checkboolean, 2, "canPredict" );
+
+    pAnimating->SetPredictionEligible( bCanPredict );
+
     return 0;
 }
+LUA_BINDING_END()
 
-static int CBaseAnimating_SetPredictionPlayer( lua_State *L )
+LUA_BINDING_BEGIN( CBaseAnimating, SetPredictionPlayer, "class|static", "Set prediction player locally." )
 {
-    luaL_checkanimating( L, 1 )->SetPredictionPlayer( luaL_checkplayer( L, 2 ) );
+    C_BasePlayer *pPlayer = LUA_BINDING_ARGUMENT( luaL_checkplayer, 1, "player" );
+
+    lua_CBaseAnimating::SetPredictionPlayer( pPlayer );
+
     return 0;
 }
+LUA_BINDING_END()
 
-static int CBaseAnimating_SetReceivedSequence( lua_State *L )
+LUA_BINDING_BEGIN( CBaseAnimating, SetReceivedSequence, "class", "Set the received sequence." )
 {
-    luaL_checkanimating( L, 1 )->SetReceivedSequence();
+    lua_CBaseAnimating *pAnimating = LUA_BINDING_ARGUMENT( luaL_checkanimating, 1, "entity" );
+
+    pAnimating->SetReceivedSequence();
+
     return 0;
 }
+LUA_BINDING_END()
 
-static int CBaseAnimating_SetSequence( lua_State *L )
+LUA_BINDING_BEGIN( CBaseAnimating, SetSequence, "class", "Set the sequence." )
 {
-    luaL_checkanimating( L, 1 )->SetSequence( luaL_checknumber( L, 2 ) );
+    lua_CBaseAnimating *pAnimating = LUA_BINDING_ARGUMENT( luaL_checkanimating, 1, "entity" );
+    int iSequence = LUA_BINDING_ARGUMENT( luaL_checknumber, 2, "sequence" );
+
+    pAnimating->SetSequence( iSequence );
+
     return 0;
 }
+LUA_BINDING_END()
 
-static int CBaseAnimating_SetServerIntendedCycle( lua_State *L )
+LUA_BINDING_BEGIN( CBaseAnimating, SetServerIntendedCycle, "class", "Set the server intended cycle." )
 {
-    luaL_checkanimating( L, 1 )->SetServerIntendedCycle( luaL_checknumber( L, 2 ) );
+    lua_CBaseAnimating *pAnimating = LUA_BINDING_ARGUMENT( luaL_checkanimating, 1, "entity" );
+    float flCycle = LUA_BINDING_ARGUMENT( luaL_checknumber, 2, "cycle" );
+
+    pAnimating->SetServerIntendedCycle( flCycle );
+
     return 0;
 }
+LUA_BINDING_END()
 
-static int CBaseAnimating_ShadowCastType( lua_State *L )
+LUA_BINDING_BEGIN( CBaseAnimating, ShadowCastType, "class", "Should this object cast render-to-texture shadows?." )
 {
-    lua_pushinteger( L, luaL_checkanimating( L, 1 )->ShadowCastType() );
+    lua_CBaseAnimating *pAnimating = LUA_BINDING_ARGUMENT( luaL_checkanimating, 1, "entity" );
+
+    lua_pushinteger( L, pAnimating->ShadowCastType() );
+
     return 1;
 }
+LUA_BINDING_END( "integer|ShadowType_t", "The shadow cast type" )
 
-static int CBaseAnimating_ShouldMuzzleFlash( lua_State *L )
+LUA_BINDING_BEGIN( CBaseAnimating, ShouldMuzzleFlash, "class", "Is the muzzle flash event on?" )
 {
-    lua_pushboolean( L, luaL_checkanimating( L, 1 )->ShouldMuzzleFlash() );
+    lua_CBaseAnimating *pAnimating = LUA_BINDING_ARGUMENT( luaL_checkanimating, 1, "entity" );
+
+    lua_pushboolean( L, pAnimating->ShouldMuzzleFlash() );
+
     return 1;
 }
+LUA_BINDING_END( "boolean", "Whether the entity should muzzle flash" )
 
-static int CBaseAnimating_ShouldResetSequenceOnNewModel( lua_State *L )
+LUA_BINDING_BEGIN( CBaseAnimating, ShouldResetSequenceOnNewModel, "class", "Check if the sequence should reset on a new model." )
 {
-    lua_pushboolean( L,
-                     luaL_checkanimating( L, 1 )->ShouldResetSequenceOnNewModel() );
+    lua_CBaseAnimating *pAnimating = LUA_BINDING_ARGUMENT( luaL_checkanimating, 1, "entity" );
+
+    lua_pushboolean( L, pAnimating->ShouldResetSequenceOnNewModel() );
+
     return 1;
 }
+LUA_BINDING_END( "boolean", "Whether the sequence should reset on a new model" )
 
-static int CBaseAnimating_ShutdownBoneSetupThreadPool( lua_State *L )
+LUA_BINDING_BEGIN( CBaseAnimating, ShutdownBoneSetupThreadPool, "class|static", "Shutdown the bone setup thread pool." )
 {
     CBaseAnimating::ShutdownBoneSetupThreadPool();
+
     return 0;
 }
+LUA_BINDING_END()
 
-static int CBaseAnimating_Simulate( lua_State *L )
+LUA_BINDING_BEGIN( CBaseAnimating, Simulate, "class", "Simulate." )
 {
-    luaL_checkanimating( L, 1 )->Simulate();
+    lua_CBaseAnimating *pAnimating = LUA_BINDING_ARGUMENT( luaL_checkanimating, 1, "entity" );
+
+    pAnimating->Simulate();
+
     return 0;
 }
+LUA_BINDING_END()
 
-static int CBaseAnimating_StudioFrameAdvance( lua_State *L )
+LUA_BINDING_BEGIN( CBaseAnimating, StudioFrameAdvance, "class", "Advances the animation frame." )
 {
-    luaL_checkanimating( L, 1 )->StudioFrameAdvance();
+    lua_CBaseAnimating *pAnimating = LUA_BINDING_ARGUMENT( luaL_checkanimating, 1, "entity" );
+
+    pAnimating->StudioFrameAdvance();
+
     return 0;
 }
+LUA_BINDING_END()
 
-static int CBaseAnimating_ThreadedBoneSetup( lua_State *L )
+LUA_BINDING_BEGIN( CBaseAnimating, ThreadedBoneSetup, "class|static", "Threaded bone setup." )
 {
     CBaseAnimating::ThreadedBoneSetup();
+
     return 0;
 }
+LUA_BINDING_END()
 
-static int CBaseAnimating_TransferDissolveFrom( lua_State *L )
+LUA_BINDING_BEGIN( CBaseAnimating, TransferDissolveFrom, "class", "Transfer the dissolve from." )
 {
-    luaL_checkanimating( L, 1 )->TransferDissolveFrom( luaL_checkanimating( L, 2 ) );
+    lua_CBaseAnimating *pAnimating = LUA_BINDING_ARGUMENT( luaL_checkanimating, 1, "entity" );
+    C_BaseAnimating *pAnimatingFrom = LUA_BINDING_ARGUMENT( luaL_checkanimating, 2, "entityFrom" );
+
+    pAnimating->TransferDissolveFrom( pAnimatingFrom );
+
     return 0;
 }
+LUA_BINDING_END()
 
-static int CBaseAnimating_UncorrectViewModelAttachment( lua_State *L )
+LUA_BINDING_BEGIN( CBaseAnimating, UncorrectViewModelAttachment, "class", "All view model attachments origins are stretched so you can place entities at them an dthey will match up with where the attachment winds up being drawn on the view model, since the view models are drawn with a different FOV.\n\nIf you're drawing something inside of a view model's DrawModel() function, then you want the original attachment origin instead of the adjusted one. To get that, call this on the adjusted attachment origin. \nThis only works for C_BaseViewModel entities." )
 {
-    luaL_checkanimating( L, 1 )->UncorrectViewModelAttachment(
-        luaL_checkvector( L, 2 ) );
-    return 0;
-}
+    lua_CBaseAnimating *pAnimating = LUA_BINDING_ARGUMENT( luaL_checkanimating, 1, "entity" );
+    Vector vecOrigin = LUA_BINDING_ARGUMENT( luaL_checkvector, 2, "origin" );
 
-static int CBaseAnimating_UpdateClientSideAnimation( lua_State *L )
-{
-    luaL_checkanimating( L, 1 )->UpdateClientSideAnimation();
-    return 0;
-}
+    pAnimating->UncorrectViewModelAttachment( vecOrigin );
+    lua_pushvector( L, vecOrigin );
 
-static int CBaseAnimating_UpdateClientSideAnimations( lua_State *L )
-{
-    CBaseAnimating::UpdateClientSideAnimations();
-    return 0;
-}
-
-static int CBaseAnimating_UpdateIKLocks( lua_State *L )
-{
-    luaL_checkanimating( L, 1 )->UpdateIKLocks( luaL_checknumber( L, 2 ) );
-    return 0;
-}
-
-static int CBaseAnimating_UseClientSideAnimation( lua_State *L )
-{
-    luaL_checkanimating( L, 1 )->UseClientSideAnimation();
-    return 0;
-}
-
-static int CBaseAnimating_UsesPowerOfTwoFrameBufferTexture( lua_State *L )
-{
-    lua_pushboolean(
-        L, luaL_checkanimating( L, 1 )->UsesPowerOfTwoFrameBufferTexture() );
     return 1;
 }
+LUA_BINDING_END( "vector", "The uncorrected view model attachment origin" )
 
-//static const luaL_Reg CBaseAnimatingmeta[] = {
-//    { "AddEntity", CBaseAnimating_AddEntity },
-//    { "AddToClientSideAnimationList",
-//      CBaseAnimating_AddToClientSideAnimationList },
-//    { "BecomeRagdollOnClient", CBaseAnimating_BecomeRagdollOnClient },
-//    { "CalculateIKLocks", CBaseAnimating_CalculateIKLocks },
-//    { "ClampCycle", CBaseAnimating_ClampCycle },
-//    { "Clear", CBaseAnimating_Clear },
-//    { "ClearRagdoll", CBaseAnimating_ClearRagdoll },
-//    { "ClientSideAnimationChanged", CBaseAnimating_ClientSideAnimationChanged },
-//    { "ComputeClientSideAnimationFlags",
-//      CBaseAnimating_ComputeClientSideAnimationFlags },
-//    { "ComputeEntitySpaceHitboxSurroundingBox",
-//      CBaseAnimating_ComputeEntitySpaceHitboxSurroundingBox },
-//    { "ComputeHitboxSurroundingBox", CBaseAnimating_ComputeHitboxSurroundingBox },
-//    { "CreateRagdollCopy", CBaseAnimating_CreateRagdollCopy },
-//    { "CreateUnragdollInfo", CBaseAnimating_CreateUnragdollInfo },
-//    { "DisableMuzzleFlash", CBaseAnimating_DisableMuzzleFlash },
-//    { "DispatchMuzzleEffect", CBaseAnimating_DispatchMuzzleEffect },
-//    { "DoMuzzleFlash", CBaseAnimating_DoMuzzleFlash },
-//    { "DrawClientHitboxes", CBaseAnimating_DrawClientHitboxes },
-//    { "DrawModel", CBaseAnimating_DrawModel },
-//    { "FindFollowedEntity", CBaseAnimating_FindFollowedEntity },
-//    { "FindTransitionSequence", CBaseAnimating_FindTransitionSequence },
-//    { "FireEvent", CBaseAnimating_FireEvent },
-//    { "FireObsoleteEvent", CBaseAnimating_FireObsoleteEvent },
-//    { "ForceClientSideAnimationOn", CBaseAnimating_ForceClientSideAnimationOn },
-//    { "FrameAdvance", CBaseAnimating_FrameAdvance },
-//    { "GetAimEntOrigin", CBaseAnimating_GetAimEntOrigin },
-//    { "GetAnimTimeInterval", CBaseAnimating_GetAnimTimeInterval },
-//    { "GetAttachmentLocal", CBaseAnimating_GetAttachmentLocal },
-//    { "GetAttachmentVelocity", CBaseAnimating_GetAttachmentVelocity },
-//    { "GetBaseAnimating", CBaseAnimating_GetBaseAnimating },
-//    { "GetBlendedLinearVelocity", CBaseAnimating_GetBlendedLinearVelocity },
-//    { "GetBody", CBaseAnimating_GetBody },
-//
-//    { "GetBoneControllers", CBaseAnimating_GetBoneControllers },
-//    { "GetBonePosition", CBaseAnimating_GetBonePosition },
-//    { "GetClientSideFade", CBaseAnimating_GetClientSideFade },
-//    { "GetCollideType", CBaseAnimating_GetCollideType },
-//    { "GetCycle", CBaseAnimating_GetCycle },
-//    { "GetFlexControllerName", CBaseAnimating_GetFlexControllerName },
-//    { "GetFlexControllerType", CBaseAnimating_GetFlexControllerType },
-//    { "GetFlexDescFacs", CBaseAnimating_GetFlexDescFacs },
-//    { "GetHitboxSet", CBaseAnimating_GetHitboxSet },
-//    { "GetHitboxSetCount", CBaseAnimating_GetHitboxSetCount },
-//    { "GetHitboxSetName", CBaseAnimating_GetHitboxSetName },
-//    //{"GetModelWidthScale", CBaseAnimating_GetModelWidthScale},
-//
-//    { "GetNumFlexControllers", CBaseAnimating_GetNumFlexControllers },
-//    { "GetPlaybackRate", CBaseAnimating_GetPlaybackRate },
-//    { "GetPoseParameter", CBaseAnimating_GetPoseParameter },
-//    { "GetPoseParameterRange", CBaseAnimating_GetPoseParameterRange },
-//    { "GetRenderAngles", CBaseAnimating_GetRenderAngles },
-//    { "GetRenderBounds", CBaseAnimating_GetRenderBounds },
-//    { "GetRenderOrigin", CBaseAnimating_GetRenderOrigin },
-//    { "GetSequence", CBaseAnimating_GetSequence },
-//    { "GetSequenceActivity", CBaseAnimating_GetSequenceActivity },
-//    { "GetSequenceActivityName", CBaseAnimating_GetSequenceActivityName },
-//    { "GetSequenceGroundSpeed", CBaseAnimating_GetSequenceGroundSpeed },
-//    { "GetSequenceLinearMotion", CBaseAnimating_GetSequenceLinearMotion },
-//    { "GetSequenceName", CBaseAnimating_GetSequenceName },
-//    { "GetServerIntendedCycle", CBaseAnimating_GetServerIntendedCycle },
-//    { "GetSkin", CBaseAnimating_GetSkin },
-//    { "IgniteRagdoll", CBaseAnimating_IgniteRagdoll },
-//    { "InitBoneSetupThreadPool", CBaseAnimating_InitBoneSetupThreadPool },
-//    { "InitModelEffects", CBaseAnimating_InitModelEffects },
-//    { "InternalDrawModel", CBaseAnimating_InternalDrawModel },
-//    { "Interpolate", CBaseAnimating_Interpolate },
-//    { "InvalidateBoneCache", CBaseAnimating_InvalidateBoneCache },
-//    { "InvalidateBoneCaches", CBaseAnimating_InvalidateBoneCaches },
-//    { "InvalidateMdlCache", CBaseAnimating_InvalidateMdlCache },
-//    { "IsActivityFinished", CBaseAnimating_IsActivityFinished },
-//    { "IsBoneCacheValid", CBaseAnimating_IsBoneCacheValid },
-//    { "IsOnFire", CBaseAnimating_IsOnFire },
-//    { "IsRagdoll", CBaseAnimating_IsRagdoll },
-//    { "IsSelfAnimating", CBaseAnimating_IsSelfAnimating },
-//    { "IsSequenceFinished", CBaseAnimating_IsSequenceFinished },
-//    { "IsSequenceLooping", CBaseAnimating_IsSequenceLooping },
-//    { "IsViewModel", CBaseAnimating_IsViewModel },
-//    { "LookupActivity", CBaseAnimating_LookupActivity },
-//    { "LookupAttachment", CBaseAnimating_LookupAttachment },
-//    { "LookupBone", CBaseAnimating_LookupBone },
-//    { "LookupPoseParameter", CBaseAnimating_LookupPoseParameter },
-//    { "LookupRandomAttachment", CBaseAnimating_LookupRandomAttachment },
-//    { "LookupSequence", CBaseAnimating_LookupSequence },
-//    { "NotifyShouldTransmit", CBaseAnimating_NotifyShouldTransmit },
-//    { "OnDataChanged", CBaseAnimating_OnDataChanged },
-//    { "OnPreDataChanged", CBaseAnimating_OnPreDataChanged },
-//    { "PopBoneAccess", CBaseAnimating_PopBoneAccess },
-//    { "PostDataUpdate", CBaseAnimating_PostDataUpdate },
-//    { "PreDataUpdate", CBaseAnimating_PreDataUpdate },
-//    { "ProcessMuzzleFlashEvent", CBaseAnimating_ProcessMuzzleFlashEvent },
-//    { "PushAllowBoneAccess", CBaseAnimating_PushAllowBoneAccess },
-//    { "RagdollMoved", CBaseAnimating_RagdollMoved },
-//    { "Release", CBaseAnimating_Release },
-//    { "RemoveFromClientSideAnimationList",
-//      CBaseAnimating_RemoveFromClientSideAnimationList },
-//    //{"ResetEventsParity", CBaseAnimating_ResetEventsParity},
-//    { "ResetLatched", CBaseAnimating_ResetLatched },
-//    { "ResetSequence", CBaseAnimating_ResetSequence },
-//    { "ResetSequenceInfo", CBaseAnimating_ResetSequenceInfo },
-//    { "RetrieveRagdollInfo", CBaseAnimating_RetrieveRagdollInfo },
-//    { "SelectWeightedSequence", CBaseAnimating_SelectWeightedSequence },
-//    { "SequenceDuration", CBaseAnimating_SequenceDuration },
-//    { "SequenceLoops", CBaseAnimating_SequenceLoops },
-//
-//    { "SetBoneController", CBaseAnimating_SetBoneController },
-//    { "SetCycle", CBaseAnimating_SetCycle },
-//    { "SetHitboxSet", CBaseAnimating_SetHitboxSet },
-//    { "SetHitboxSetByName", CBaseAnimating_SetHitboxSetByName },
-//    //{"SetModelWidthScale", CBaseAnimating_SetModelWidthScale},
-//    { "SetPoseParameter", CBaseAnimating_SetPoseParameter },
-//    { "SetPredictable", CBaseAnimating_SetPredictable },
-//    { "SetPredictionEligible", CBaseAnimating_SetPredictionEligible },
-//    { "SetPredictionPlayer", CBaseAnimating_SetPredictionPlayer },
-//    { "SetReceivedSequence", CBaseAnimating_SetReceivedSequence },
-//    { "SetSequence", CBaseAnimating_SetSequence },
-//    { "SetServerIntendedCycle", CBaseAnimating_SetServerIntendedCycle },
-//    { "ShadowCastType", CBaseAnimating_ShadowCastType },
-//    { "ShouldMuzzleFlash", CBaseAnimating_ShouldMuzzleFlash },
-//    { "ShouldResetSequenceOnNewModel",
-//      CBaseAnimating_ShouldResetSequenceOnNewModel },
-//    { "ShutdownBoneSetupThreadPool", CBaseAnimating_ShutdownBoneSetupThreadPool },
-//    { "Simulate", CBaseAnimating_Simulate },
-//    { "StudioFrameAdvance", CBaseAnimating_StudioFrameAdvance },
-//    { "ThreadedBoneSetup", CBaseAnimating_ThreadedBoneSetup },
-//    { "TransferDissolveFrom", CBaseAnimating_TransferDissolveFrom },
-//    { "UncorrectViewModelAttachment",
-//      CBaseAnimating_UncorrectViewModelAttachment },
-//    { "UpdateClientSideAnimation", CBaseAnimating_UpdateClientSideAnimation },
-//    { "UpdateClientSideAnimations", CBaseAnimating_UpdateClientSideAnimations },
-//    { "UpdateIKLocks", CBaseAnimating_UpdateIKLocks },
-//    { "UseClientSideAnimation", CBaseAnimating_UseClientSideAnimation },
-//    { "UsesPowerOfTwoFrameBufferTexture",
-//      CBaseAnimating_UsesPowerOfTwoFrameBufferTexture },
-//    { NULL, NULL } };
+LUA_BINDING_BEGIN( CBaseAnimating, UpdateClientSideAnimation, "class", "Update the client side animation for the given entity." )
+{
+    lua_CBaseAnimating *pAnimating = LUA_BINDING_ARGUMENT( luaL_checkanimating, 1, "entity" );
+
+    pAnimating->UpdateClientSideAnimation();
+
+    return 0;
+}
+LUA_BINDING_END()
+
+LUA_BINDING_BEGIN( CBaseAnimating, UpdateClientSideAnimations, "class|static", "Update the client side animations for all in the g_ClientSideAnimationList." )
+{
+    CBaseAnimating::UpdateClientSideAnimations();
+
+    return 0;
+}
+LUA_BINDING_END()
+
+LUA_BINDING_BEGIN( CBaseAnimating, UpdateIKLocks, "class", "Update the IK locks." )
+{
+    lua_CBaseAnimating *pAnimating = LUA_BINDING_ARGUMENT( luaL_checkanimating, 1, "entity" );
+    float flTime = LUA_BINDING_ARGUMENT( luaL_checknumber, 2, "`currentTime" );
+
+    pAnimating->UpdateIKLocks( flTime );
+
+    return 0;
+}
+LUA_BINDING_END()
+
+LUA_BINDING_BEGIN( CBaseAnimating, UseClientSideAnimation, "class", "Use the client side animation." )
+{
+    lua_CBaseAnimating *pAnimating = LUA_BINDING_ARGUMENT( luaL_checkanimating, 1, "entity" );
+
+    pAnimating->UseClientSideAnimation();
+
+    return 0;
+}
+LUA_BINDING_END()
+
+LUA_BINDING_BEGIN( CBaseAnimating, UsesPowerOfTwoFrameBufferTexture, "class", "Check if the entity uses a power of two frame buffer texture." )
+{
+    lua_CBaseAnimating *pAnimating = LUA_BINDING_ARGUMENT( luaL_checkanimating, 1, "entity" );
+
+    lua_pushboolean( L, pAnimating->UsesPowerOfTwoFrameBufferTexture() );
+
+    return 1;
+}
+LUA_BINDING_END( "boolean", "Whether the entity uses a power of two frame buffer texture" )
 
 /*
 ** Open CBaseAnimating object

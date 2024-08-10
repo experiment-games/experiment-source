@@ -4,11 +4,17 @@
     --md-primary-fg-color--dark: #772e25;
 }
 
+.lua .lua__search__keywords {
+    /* Hack while we wait for: https://github.com/squidfunk/mkdocs-material/issues/6307 */
+    display: none;
+}
+
 .lua .lua__title {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
     align-items: start;
+    /* word-break: break-all; */
 }
 
 .lua .lua__symbol__list {
@@ -44,6 +50,7 @@
     padding: 0.2em 0.5em;
     border-radius: 0.2em;
     color: var(--md-code-bg-color);
+    word-break: keep-all;
 }
 
 .lua__icon {
@@ -93,9 +100,10 @@
     margin-right: 0.5em;
 }
 
-.lua .lua__variable_list__default {
+.lua .lua__variable_list__default, .lua .lua__variable_list__nillable {
     font-family: monospace;
     font-weight: bolder;
+    font-size: 0.8em;
 }
 
 .lua .lua__variable_list__default::before {

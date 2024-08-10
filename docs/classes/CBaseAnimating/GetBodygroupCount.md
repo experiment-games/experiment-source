@@ -12,6 +12,7 @@ lua:
   function: GetBodyGroupCount
   realm: shared
   description: "Get the number of bodygroups"
+  
   arguments:
     - name: "bodyGroupId"
       type: number
@@ -19,3 +20,7 @@ lua:
     - type: number
       description: "The number of bodygroups"
 ---
+
+<div class="lua__search__keywords">
+CBaseAnimating:GetBodyGroupCount &#x2013; Get the number of bodygroups
+</div>

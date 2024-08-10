@@ -1,19 +1,24 @@
 ---
 template: lua-class-function.html
 title: GetModelName
-icon: lua-client
+icon: lua-shared
 tags:
   - lua
-  - client
+  - shared
   - needs-verification
   - needs-example
 lua:
   library: CBaseAnimating
   function: GetModelName
-  realm: client
+  realm: shared
   description: "Get the model path of the entity"
+  
   
   returns:
     - type: string
       description: "The model name"
 ---
+
+<div class="lua__search__keywords">
+CBaseAnimating:GetModelName &#x2013; Get the model path of the entity
+</div>

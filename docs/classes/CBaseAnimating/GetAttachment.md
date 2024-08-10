@@ -12,6 +12,7 @@ lua:
   function: GetAttachment
   realm: shared
   description: "Get the attachment table for the specified attachment (by bone id or attachment name)"
+  
   argumentSets:
     - arguments:
       - name: "boneId"
@@ -23,3 +24,7 @@ lua:
     - type: table
       description: "The attachment information"
 ---
+
+<div class="lua__search__keywords">
+CBaseAnimating:GetAttachment &#x2013; Get the attachment table for the specified attachment (by bone id or attachment name)
+</div>

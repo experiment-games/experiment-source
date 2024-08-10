@@ -13,7 +13,12 @@ lua:
   realm: client
   description: "Become a ragdoll on the client."
   
+  
   returns:
     - type: entity
       description: "The ragdoll entity"
 ---
+
+<div class="lua__search__keywords">
+CBaseAnimating:BecomeRagdollOnClient &#x2013; Become a ragdoll on the client.
+</div>

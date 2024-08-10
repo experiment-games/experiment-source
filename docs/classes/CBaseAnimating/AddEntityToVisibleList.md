@@ -13,6 +13,11 @@ lua:
   realm: client
   description: "Add the entity to the visible entity list. Seems to only call CreateLightEffects internally."
   
+  
   returns:
     
 ---
+
+<div class="lua__search__keywords">
+CBaseAnimating:AddEntityToVisibleList &#x2013; Add the entity to the visible entity list. Seems to only call CreateLightEffects internally.
+</div>

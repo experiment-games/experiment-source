@@ -1,3 +1,7 @@
+---
+search:
+  exclude: true
+---
 # Tags
 
 To help categorize and organize content, we use tags. Tags are short keywords

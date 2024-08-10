@@ -13,7 +13,12 @@ lua:
   realm: shared
   description: "Get the number of bodygroups"
   
+  
   returns:
     - type: number
       description: "The number of bodygroups"
 ---
+
+<div class="lua__search__keywords">
+CBaseAnimating:GetNumBodyGroups &#x2013; Get the number of bodygroups
+</div>

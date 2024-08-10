@@ -1,4 +1,7 @@
 <li>
+    {% if argument.nillable %}
+    <span class="lua__variable_list__nillable">Optional</span>
+    {% endif %}
     <span class="lua__symbol">{{ argument.name }}</span>
     <span class="lua__type">{{ argument.type }}</span>
     {% if argument.description %}

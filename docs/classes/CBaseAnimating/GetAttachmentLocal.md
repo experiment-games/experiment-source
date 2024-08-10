@@ -12,6 +12,7 @@ lua:
   function: GetAttachmentLocal
   realm: client
   description: "Get the local attachment."
+  
   arguments:
     - name: "attachment"
       type: number
@@ -23,3 +24,7 @@ lua:
     - type: angle
       description: "The angles"
 ---
+
+<div class="lua__search__keywords">
+CBaseAnimating:GetAttachmentLocal &#x2013; Get the local attachment.
+</div>

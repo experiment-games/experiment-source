@@ -12,6 +12,7 @@ lua:
   function: GetAttachmentVelocity
   realm: client
   description: "Get the attachment velocity."
+  
   arguments:
     - name: "attachment"
       type: number
@@ -21,3 +22,7 @@ lua:
     - type: vector
       description: "The origin velocity"
 ---
+
+<div class="lua__search__keywords">
+CBaseAnimating:GetAttachmentVelocity &#x2013; Get the attachment velocity.
+</div>

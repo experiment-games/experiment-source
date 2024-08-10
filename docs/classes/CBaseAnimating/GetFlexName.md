@@ -12,6 +12,7 @@ lua:
   function: GetFlexName
   realm: shared
   description: "Get the flex controller name by the flex controller index"
+  
   arguments:
     - name: "flexControllerIndex"
       type: number
@@ -19,3 +20,7 @@ lua:
     - type: string
       description: "The flex controller name"
 ---
+
+<div class="lua__search__keywords">
+CBaseAnimating:GetFlexName &#x2013; Get the flex controller name by the flex controller index
+</div>

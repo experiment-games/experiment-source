@@ -13,7 +13,12 @@ lua:
   realm: shared
   description: "Get the number of flex controllers"
   
+  
   returns:
     - type: number
       description: "The number of flex controllers"
 ---
+
+<div class="lua__search__keywords">
+CBaseAnimating:GetFlexCount &#x2013; Get the number of flex controllers
+</div>

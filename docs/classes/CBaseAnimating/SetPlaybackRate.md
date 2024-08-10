@@ -12,9 +12,14 @@ lua:
   function: SetPlaybackRate
   realm: shared
   description: "Set the playback rate of the animation"
+  
   arguments:
     - name: "rate"
       type: number
   returns:
     
 ---
+
+<div class="lua__search__keywords">
+CBaseAnimating:SetPlaybackRate &#x2013; Set the playback rate of the animation
+</div>

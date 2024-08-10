@@ -285,7 +285,10 @@ struct LuaRegEntry
 #define LUA_BINDING_ARGUMENT( CheckFunction, ArgIndex, DocumentationName ) \
     CheckFunction( L, ArgIndex )
 
-#define LUA_BINDING_ARGUMENT_OPT( OptCheckFunction, ArgIndex, OptValue, DocumentationName ) \
+#define LUA_BINDING_ARGUMENT_NILLABLE( CheckFunction, ArgIndex, DocumentationName ) \
+    CheckFunction( L, ArgIndex )
+
+#define LUA_BINDING_ARGUMENT_WITH_DEFAULT( OptCheckFunction, ArgIndex, OptValue, DocumentationName ) \
     OptCheckFunction( L, ArgIndex, OptValue )
 
 #define LUA_BINDING_END( ... ) \

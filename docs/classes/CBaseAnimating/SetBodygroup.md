@@ -12,6 +12,7 @@ lua:
   function: SetBodyGroup
   realm: shared
   description: "Set the bodygroup value by the bodygroup id"
+  
   arguments:
     - name: "bodyGroupId"
       type: number
@@ -20,3 +21,7 @@ lua:
   returns:
     
 ---
+
+<div class="lua__search__keywords">
+CBaseAnimating:SetBodyGroup &#x2013; Set the bodygroup value by the bodygroup id
+</div>

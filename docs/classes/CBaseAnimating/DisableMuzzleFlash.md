@@ -13,6 +13,11 @@ lua:
   realm: client
   description: "Disable the muzzle flash."
   
+  
   returns:
     
 ---
+
+<div class="lua__search__keywords">
+CBaseAnimating:DisableMuzzleFlash &#x2013; Disable the muzzle flash.
+</div>

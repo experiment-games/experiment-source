@@ -12,8 +12,9 @@ lua:
   function: GetAimEntOrigin
   realm: client
   description: "Get the aim entity origin."
+  
   arguments:
-    - name: "aimEntity"
+    - name: "attachedTo"
       type: Entity
   returns:
     - type: vector
@@ -21,3 +22,7 @@ lua:
     - type: angle
       description: "The aim entity angles"
 ---
+
+<div class="lua__search__keywords">
+CBaseAnimating:GetAimEntOrigin &#x2013; Get the aim entity origin.
+</div>

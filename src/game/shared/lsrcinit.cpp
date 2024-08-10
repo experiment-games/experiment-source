@@ -28,13 +28,13 @@ typedef struct luaL_RegForState
 } luaL_RegForState;
 
 // I'm in the process of documenting using the LUA_BINDING_* macros.
-// I'll track progress here:                                                        Done:
+// I'll track progress here:                                                        Shared  Client  Server
 static const luaL_RegForState luasrclibs[] = {
     //
     // Shared
     //
-    { LUA_BASEANIMATINGLIBNAME, luaopen_CBaseAnimating_shared, REALM_SHARED },      // ✔
-    { LUA_BASEANIMATINGLIBNAME, luaopen_CBaseAnimating, REALM_SHARED },
+    { LUA_BASEANIMATINGLIBNAME, luaopen_CBaseAnimating_shared, REALM_SHARED },      // ✔    n/a     n/a
+    { LUA_BASEANIMATINGLIBNAME, luaopen_CBaseAnimating, REALM_SHARED },             // n/a   ✔
     { LUA_BASECOMBATWEAPONLIBNAME, luaopen_CBaseCombatWeapon, REALM_SHARED },
     { LUA_BASEENTITYLIBNAME, luaopen_CBaseEntity_shared, REALM_SHARED },
     { LUA_BASEENTITYLIBNAME, luaopen_CBaseEntity, REALM_SHARED },

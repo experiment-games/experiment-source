@@ -12,6 +12,7 @@ lua:
   function: ClampCycle
   realm: client
   description: "Clamp the cycle."
+  
   arguments:
     - name: "cycle"
       type: number
@@ -21,3 +22,7 @@ lua:
     - type: number
       description: "The clamped cycle"
 ---
+
+<div class="lua__search__keywords">
+CBaseAnimating:ClampCycle &#x2013; Clamp the cycle.
+</div>

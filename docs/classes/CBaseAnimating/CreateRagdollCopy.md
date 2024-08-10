@@ -11,9 +11,14 @@ lua:
   library: CBaseAnimating
   function: CreateRagdollCopy
   realm: client
-  description: "Create a copy of the ragdoll."
+  description: "Create a ragdoll copy of the entity."
+  
   
   returns:
     - type: entity
       description: "The ragdoll entity"
 ---
+
+<div class="lua__search__keywords">
+CBaseAnimating:CreateRagdollCopy &#x2013; Create a ragdoll copy of the entity.
+</div>
