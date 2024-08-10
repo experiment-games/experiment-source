@@ -157,14 +157,14 @@ void C_Experiment_Player::TraceAttack( const CTakeDamageInfo &info,
     CTakeDamageInfo lInfo = info;
     Vector lvecDir = vecDir;
 
-    BEGIN_LUA_CALL_HOOK( "PlayerTraceAttack" );
+    LUA_CALL_HOOK_BEGIN( "PlayerTraceAttack" );
     CBaseEntity::PushLuaInstanceSafe( L, this );
     lua_pushdamageinfo( L, lInfo );
     lua_pushvector( L, lvecDir );
     lua_pushtrace( L, *ptr );
-    END_LUA_CALL_HOOK( 4, 1 );
+    LUA_CALL_HOOK_END( 4, 1 );
 
-    RETURN_LUA_NONE_IF_FALSE();
+    LUA_RETURN_NONE_IF_FALSE();
 
     Vector vecOrigin = ptr->endpos - lvecDir * 4;
 #else

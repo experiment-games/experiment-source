@@ -182,17 +182,17 @@ class CVoiceGameMgrHelper : public IVoiceGameMgrHelper
     virtual bool CanPlayerHearPlayer( CBasePlayer *pListener, CBasePlayer *pTalker, bool &bProximity )
     {
 #if defined( LUA_SDK )
-        BEGIN_LUA_CALL_HOOK( "CanPlayerHearPlayer" );
+        LUA_CALL_HOOK_BEGIN( "CanPlayerHearPlayer" );
         CBaseEntity::PushLuaInstanceSafe( L, pListener );
         CBaseEntity::PushLuaInstanceSafe( L, pTalker );
         lua_pushboolean( L, bProximity );
-        END_LUA_CALL_HOOK( 3, 2 );
+        LUA_CALL_HOOK_END( 3, 2 );
 
         if ( lua_isboolean( L, -2 ) )
             bProximity = ( bool )lua_toboolean( L, -2 );
         lua_remove( L, -2 );
 
-        RETURN_LUA_BOOLEAN();
+        LUA_RETURN_BOOLEAN();
 #endif
 
         return ( pListener->GetTeamNumber() == pTalker->GetTeamNumber() );
@@ -260,8 +260,8 @@ CExperimentRules::~CExperimentRules( void )
 void CExperimentRules::CreateStandardEntities( void )
 {
 #if defined( LUA_SDK )
-    BEGIN_LUA_CALL_HOOK( "CreateStandardEntities" );
-    END_LUA_CALL_HOOK( 0, 0 );
+    LUA_CALL_HOOK_BEGIN( "CreateStandardEntities" );
+    LUA_CALL_HOOK_END( 0, 0 );
 #endif
 
 #ifndef CLIENT_DLL
@@ -287,11 +287,11 @@ void CExperimentRules::CreateStandardEntities( void )
 float CExperimentRules::FlWeaponRespawnTime( CBaseCombatWeapon *pWeapon )
 {
 #if defined( LUA_SDK )
-    BEGIN_LUA_CALL_HOOK( "FlWeaponRespawnTime" );
+    LUA_CALL_HOOK_BEGIN( "FlWeaponRespawnTime" );
     CBaseEntity::PushLuaInstanceSafe( L, pWeapon );
-    END_LUA_CALL_HOOK( 1, 1 );
+    LUA_CALL_HOOK_END( 1, 1 );
 
-    RETURN_LUA_NUMBER();
+    LUA_RETURN_NUMBER();
 #endif
 
 #ifndef CLIENT_DLL
@@ -313,10 +313,10 @@ float CExperimentRules::FlWeaponRespawnTime( CBaseCombatWeapon *pWeapon )
 bool CExperimentRules::IsIntermission( void )
 {
 #if defined( LUA_SDK )
-    BEGIN_LUA_CALL_HOOK( "IsIntermission" );
-    END_LUA_CALL_HOOK( 0, 1 );
+    LUA_CALL_HOOK_BEGIN( "IsIntermission" );
+    LUA_CALL_HOOK_END( 0, 1 );
 
-    RETURN_LUA_BOOLEAN();
+    LUA_RETURN_BOOLEAN();
 #endif
 
 #ifndef CLIENT_DLL
@@ -332,10 +332,10 @@ void CExperimentRules::PlayerKilled( CBasePlayer *pVictim,
 #if defined( LUA_SDK )
     CTakeDamageInfo linfo = info;
 
-    BEGIN_LUA_CALL_HOOK( "PlayerKilled" );
+    LUA_CALL_HOOK_BEGIN( "PlayerKilled" );
     CBaseEntity::PushLuaInstanceSafe( L, pVictim );
     lua_pushdamageinfo( L, linfo );
-    END_LUA_CALL_HOOK( 2, 0 );
+    LUA_CALL_HOOK_END( 2, 0 );
 #endif
 
 #ifndef CLIENT_DLL
@@ -351,13 +351,13 @@ bool CExperimentRules::FPlayerCanTakeDamage( CBasePlayer *pPlayer,
                                              CBaseEntity *pAttacker )
 {
     CTakeDamageInfo info;
-    BEGIN_LUA_CALL_HOOK( "FPlayerCanTakeDamage" );
+    LUA_CALL_HOOK_BEGIN( "FPlayerCanTakeDamage" );
     CBaseEntity::PushLuaInstanceSafe( L, pPlayer );
     CBaseEntity::PushLuaInstanceSafe( L, pAttacker );
     lua_pushdamageinfo( L, info );
-    END_LUA_CALL_HOOK( 2, 1 );
+    LUA_CALL_HOOK_END( 2, 1 );
 
-    RETURN_LUA_BOOLEAN();
+    LUA_RETURN_BOOLEAN();
 
     return BaseClass::FPlayerCanTakeDamage( pPlayer, pAttacker, info );
 }
@@ -367,12 +367,12 @@ bool CExperimentRules::AllowDamage( CBaseEntity *pVictim,
 {
     CTakeDamageInfo lInfo = info;
 
-    BEGIN_LUA_CALL_HOOK( "AllowDamage" );
+    LUA_CALL_HOOK_BEGIN( "AllowDamage" );
     CBaseEntity::PushLuaInstanceSafe( L, pVictim );
     lua_pushdamageinfo( L, lInfo );
-    END_LUA_CALL_HOOK( 2, 1 );
+    LUA_CALL_HOOK_END( 2, 1 );
 
-    RETURN_LUA_BOOLEAN();
+    LUA_RETURN_BOOLEAN();
 
     return BaseClass::AllowDamage( pVictim, lInfo );
 }
@@ -441,42 +441,42 @@ void CExperimentRules::NPC_DroppedGrenade( void )
 void CExperimentRules::PlayerThink( CBasePlayer *pPlayer )
 {
     // Many Gmod gamemodes implement this themselves
-    // BEGIN_LUA_CALL_HOOK( "PlayerThink" );
+    // LUA_CALL_HOOK_BEGIN( "PlayerThink" );
     // CBaseEntity::PushLuaInstanceSafe( L, pPlayer );
-    // END_LUA_CALL_HOOK( 1, 0 );
+    // LUA_CALL_HOOK_END( 1, 0 );
 
     BaseClass::PlayerThink( pPlayer );
 }
 
 void CExperimentRules::PlayerSpawn( CBasePlayer *pPlayer )
 {
-    BEGIN_LUA_CALL_HOOK( "PlayerSpawn" );
+    LUA_CALL_HOOK_BEGIN( "PlayerSpawn" );
     CBaseEntity::PushLuaInstanceSafe( L, pPlayer );
-    END_LUA_CALL_HOOK( 1, 1 );
+    LUA_CALL_HOOK_END( 1, 1 );
 
-    RETURN_LUA_NONE_IF_FALSE();
+    LUA_RETURN_NONE_IF_FALSE();
 
     BaseClass::PlayerSpawn( pPlayer );
 }
 
 bool CExperimentRules::FPlayerCanRespawn( CBasePlayer *pPlayer )
 {
-    BEGIN_LUA_CALL_HOOK( "FPlayerCanRespawn" );
+    LUA_CALL_HOOK_BEGIN( "FPlayerCanRespawn" );
     CBaseEntity::PushLuaInstanceSafe( L, pPlayer );
-    END_LUA_CALL_HOOK( 1, 1 );
+    LUA_CALL_HOOK_END( 1, 1 );
 
-    RETURN_LUA_BOOLEAN();
+    LUA_RETURN_BOOLEAN();
 
     return BaseClass::FPlayerCanRespawn( pPlayer );
 }
 
 float CExperimentRules::FlPlayerSpawnTime( CBasePlayer *pPlayer )
 {
-    BEGIN_LUA_CALL_HOOK( "FlPlayerSpawnTime" );
+    LUA_CALL_HOOK_BEGIN( "FlPlayerSpawnTime" );
     CBaseEntity::PushLuaInstanceSafe( L, pPlayer );
-    END_LUA_CALL_HOOK( 1, 1 );
+    LUA_CALL_HOOK_END( 1, 1 );
 
-    RETURN_LUA_NUMBER();
+    LUA_RETURN_NUMBER();
 
     return BaseClass::FlPlayerSpawnTime( pPlayer );
 }
@@ -486,8 +486,8 @@ float CExperimentRules::FlPlayerSpawnTime( CBasePlayer *pPlayer )
 void CExperimentRules::Think( void )
 {
 #ifdef LUA_SDK
-    BEGIN_LUA_CALL_HOOK( "Think" );
-    END_LUA_CALL_HOOK( 0, 0 );
+    LUA_CALL_HOOK_BEGIN( "Think" );
+    LUA_CALL_HOOK_END( 0, 0 );
 #endif
 
 #ifndef CLIENT_DLL
@@ -581,8 +581,8 @@ void CExperimentRules::Think( void )
 void CExperimentRules::GoToIntermission( void )
 {
 #if defined( LUA_SDK )
-    BEGIN_LUA_CALL_HOOK( "GoToIntermission" );
-    END_LUA_CALL_HOOK( 0, 0 );
+    LUA_CALL_HOOK_BEGIN( "GoToIntermission" );
+    LUA_CALL_HOOK_END( 0, 0 );
 #endif
 
 #ifndef CLIENT_DLL
@@ -609,10 +609,10 @@ void CExperimentRules::GoToIntermission( void )
 bool CExperimentRules::CheckGameOver()
 {
 #if defined( LUA_SDK )
-    BEGIN_LUA_CALL_HOOK( "CheckGameOver" );
-    END_LUA_CALL_HOOK( 0, 1 );
+    LUA_CALL_HOOK_BEGIN( "CheckGameOver" );
+    LUA_CALL_HOOK_END( 0, 1 );
 
-    RETURN_LUA_BOOLEAN();
+    LUA_RETURN_BOOLEAN();
 #endif
 
 #ifndef CLIENT_DLL
@@ -643,11 +643,11 @@ bool CExperimentRules::CheckGameOver()
 float CExperimentRules::FlWeaponTryRespawn( CBaseCombatWeapon *pWeapon )
 {
 #if defined( LUA_SDK )
-    BEGIN_LUA_CALL_HOOK( "FlWeaponTryRespawn" );
+    LUA_CALL_HOOK_BEGIN( "FlWeaponTryRespawn" );
     CBaseEntity::PushLuaInstanceSafe( L, pWeapon );
-    END_LUA_CALL_HOOK( 1, 1 );
+    LUA_CALL_HOOK_END( 1, 1 );
 
-    RETURN_LUA_NUMBER();
+    LUA_RETURN_NUMBER();
 #endif
 
 #ifndef CLIENT_DLL
@@ -671,11 +671,11 @@ float CExperimentRules::FlWeaponTryRespawn( CBaseCombatWeapon *pWeapon )
 Vector CExperimentRules::VecWeaponRespawnSpot( CBaseCombatWeapon *pWeapon )
 {
 #if defined( LUA_SDK )
-    BEGIN_LUA_CALL_HOOK( "VecWeaponRespawnSpot" );
+    LUA_CALL_HOOK_BEGIN( "VecWeaponRespawnSpot" );
     CBaseEntity::PushLuaInstanceSafe( L, pWeapon );
-    END_LUA_CALL_HOOK( 1, 1 );
+    LUA_CALL_HOOK_END( 1, 1 );
 
-    RETURN_LUA_VECTOR();
+    LUA_RETURN_VECTOR();
 #endif
 
 #ifndef CLIENT_DLL
@@ -794,11 +794,11 @@ void CExperimentRules::ManageObjectRelocation( void )
 void CExperimentRules::AddLevelDesignerPlacedObject( CBaseEntity *pEntity )
 {
 #if defined( LUA_SDK )
-    BEGIN_LUA_CALL_HOOK( "AddLevelDesignerPlacedObject" );
+    LUA_CALL_HOOK_BEGIN( "AddLevelDesignerPlacedObject" );
     CBaseEntity::PushLuaInstanceSafe( L, pEntity );
-    END_LUA_CALL_HOOK( 1, 1 );
+    LUA_CALL_HOOK_END( 1, 1 );
 
-    RETURN_LUA_NONE_IF_FALSE();
+    LUA_RETURN_NONE_IF_FALSE();
 #endif
 
     if ( m_hRespawnableItemsAndWeapons.Find( pEntity ) == -1 )
@@ -813,11 +813,11 @@ void CExperimentRules::AddLevelDesignerPlacedObject( CBaseEntity *pEntity )
 void CExperimentRules::RemoveLevelDesignerPlacedObject( CBaseEntity *pEntity )
 {
 #if defined( LUA_SDK )
-    BEGIN_LUA_CALL_HOOK( "RemoveLevelDesignerPlacedObject" );
+    LUA_CALL_HOOK_BEGIN( "RemoveLevelDesignerPlacedObject" );
     CBaseEntity::PushLuaInstanceSafe( L, pEntity );
-    END_LUA_CALL_HOOK( 1, 1 );
+    LUA_CALL_HOOK_END( 1, 1 );
 
-    RETURN_LUA_NONE_IF_FALSE();
+    LUA_RETURN_NONE_IF_FALSE();
 #endif
 
     if ( m_hRespawnableItemsAndWeapons.Find( pEntity ) != -1 )
@@ -833,11 +833,11 @@ void CExperimentRules::RemoveLevelDesignerPlacedObject( CBaseEntity *pEntity )
 Vector CExperimentRules::VecItemRespawnSpot( CItem *pItem )
 {
 #if defined( LUA_SDK )
-    BEGIN_LUA_CALL_HOOK( "VecItemRespawnSpot" );
+    LUA_CALL_HOOK_BEGIN( "VecItemRespawnSpot" );
     CBaseEntity::PushLuaInstanceSafe( L, pItem );
-    END_LUA_CALL_HOOK( 1, 1 );
+    LUA_CALL_HOOK_END( 1, 1 );
 
-    RETURN_LUA_VECTOR();
+    LUA_RETURN_VECTOR();
 #endif
 
     return pItem->GetOriginalSpawnOrigin();
@@ -849,11 +849,11 @@ Vector CExperimentRules::VecItemRespawnSpot( CItem *pItem )
 QAngle CExperimentRules::VecItemRespawnAngles( CItem *pItem )
 {
 #if defined( LUA_SDK )
-    BEGIN_LUA_CALL_HOOK( "VecItemRespawnAngles" );
+    LUA_CALL_HOOK_BEGIN( "VecItemRespawnAngles" );
     CBaseEntity::PushLuaInstanceSafe( L, pItem );
-    END_LUA_CALL_HOOK( 1, 1 );
+    LUA_CALL_HOOK_END( 1, 1 );
 
-    RETURN_LUA_ANGLE();
+    LUA_RETURN_ANGLE();
 #endif
 
     return pItem->GetOriginalSpawnAngles();
@@ -865,11 +865,11 @@ QAngle CExperimentRules::VecItemRespawnAngles( CItem *pItem )
 float CExperimentRules::FlItemRespawnTime( CItem *pItem )
 {
 #if defined( LUA_SDK )
-    BEGIN_LUA_CALL_HOOK( "FlItemRespawnTime" );
+    LUA_CALL_HOOK_BEGIN( "FlItemRespawnTime" );
     CBaseEntity::PushLuaInstanceSafe( L, pItem );
-    END_LUA_CALL_HOOK( 1, 1 );
+    LUA_CALL_HOOK_END( 1, 1 );
 
-    RETURN_LUA_NUMBER();
+    LUA_RETURN_NUMBER();
 #endif
 
     return sv_experiment_item_respawn_time.GetFloat();
@@ -880,21 +880,21 @@ float CExperimentRules::FlItemRespawnTime( CItem *pItem )
 //=========================================================
 void CExperimentRules::PlayerGotItem( CBasePlayer *pPlayer, CItem *pItem )
 {
-    BEGIN_LUA_CALL_HOOK( "PlayerGotItem" );
+    LUA_CALL_HOOK_BEGIN( "PlayerGotItem" );
     CBaseEntity::PushLuaInstanceSafe( L, pPlayer );
     CBaseEntity::PushLuaInstanceSafe( L, pItem );
-    END_LUA_CALL_HOOK( 2, 0 );
+    LUA_CALL_HOOK_END( 2, 0 );
 }
 
 //=========================================================
 //=========================================================
 int CExperimentRules::ItemShouldRespawn( CItem *pItem )
 {
-    BEGIN_LUA_CALL_HOOK( "ItemShouldRespawn" );
+    LUA_CALL_HOOK_BEGIN( "ItemShouldRespawn" );
     CBaseEntity::PushLuaInstanceSafe( L, pItem );
-    END_LUA_CALL_HOOK( 1, 1 );
+    LUA_CALL_HOOK_END( 1, 1 );
 
-    RETURN_LUA_INTEGER();
+    LUA_RETURN_INTEGER();
 
     return BaseClass::ItemShouldRespawn( pItem );
 }
@@ -915,12 +915,12 @@ bool CExperimentRules::CanHavePlayerItem( CBasePlayer *pPlayer,
             return false;
     }
 #else
-    BEGIN_LUA_CALL_HOOK( "CanHavePlayerItem" );
+    LUA_CALL_HOOK_BEGIN( "CanHavePlayerItem" );
     CBaseEntity::PushLuaInstanceSafe( L, pPlayer );
     CBaseEntity::PushLuaInstanceSafe( L, pItem );
-    END_LUA_CALL_HOOK( 2, 1 );
+    LUA_CALL_HOOK_END( 2, 1 );
 
-    RETURN_LUA_BOOLEAN();
+    LUA_RETURN_BOOLEAN();
 #endif
 
     return BaseClass::CanHavePlayerItem( pPlayer, pItem );
@@ -935,11 +935,11 @@ bool CExperimentRules::CanHavePlayerItem( CBasePlayer *pPlayer,
 int CExperimentRules::WeaponShouldRespawn( CBaseCombatWeapon *pWeapon )
 {
 #if defined( LUA_SDK )
-    BEGIN_LUA_CALL_HOOK( "WeaponShouldRespawn" );
+    LUA_CALL_HOOK_BEGIN( "WeaponShouldRespawn" );
     CBaseEntity::PushLuaInstanceSafe( L, pWeapon );
-    END_LUA_CALL_HOOK( 1, 1 );
+    LUA_CALL_HOOK_END( 1, 1 );
 
-    RETURN_LUA_INTEGER();
+    LUA_RETURN_INTEGER();
 #endif
 
 #ifndef CLIENT_DLL
@@ -959,9 +959,9 @@ void CExperimentRules::ClientDisconnected( edict_t *pClient )
 {
 #ifndef CLIENT_DLL
 #if defined( LUA_SDK )
-    BEGIN_LUA_CALL_HOOK( "ClientDisconnected" );
+    LUA_CALL_HOOK_BEGIN( "ClientDisconnected" );
     CBaseEntity::PushLuaInstanceSafe( L, ( CBasePlayer * )CBaseEntity::Instance( pClient ) );
-    END_LUA_CALL_HOOK( 1, 0 );
+    LUA_CALL_HOOK_END( 1, 0 );
 #endif
 
     // Msg( "CLIENT DISCONNECTED, REMOVING FROM TEAM.\n" );
@@ -985,11 +985,11 @@ void CExperimentRules::ClientDisconnected( edict_t *pClient )
 #if defined( LUA_SDK )
 float CExperimentRules::FlPlayerFallDamage( CBasePlayer *pPlayer )
 {
-    BEGIN_LUA_CALL_HOOK( "FlPlayerFallDamage" );
+    LUA_CALL_HOOK_BEGIN( "FlPlayerFallDamage" );
     CBaseEntity::PushLuaInstanceSafe( L, pPlayer );
-    END_LUA_CALL_HOOK( 1, 1 );
+    LUA_CALL_HOOK_END( 1, 1 );
 
-    RETURN_LUA_NUMBER();
+    LUA_RETURN_NUMBER();
 
     return BaseClass::FlPlayerFallDamage( pPlayer );
 }
@@ -1005,10 +1005,10 @@ void CExperimentRules::DeathNotice( CBasePlayer *pVictim,
 #if defined( LUA_SDK )
     CTakeDamageInfo lInfo = info;
 
-    BEGIN_LUA_CALL_HOOK( "DeathNotice" );
+    LUA_CALL_HOOK_BEGIN( "DeathNotice" );
     CBaseEntity::PushLuaInstanceSafe( L, pVictim );
     lua_pushdamageinfo( L, lInfo );
-    END_LUA_CALL_HOOK( 2, 0 );
+    LUA_CALL_HOOK_END( 2, 0 );
 #endif
 
 #ifndef CLIENT_DLL
@@ -1166,9 +1166,9 @@ void CExperimentRules::DeathNotice( CBasePlayer *pVictim,
 void CExperimentRules::ClientSettingsChanged( CBasePlayer *pPlayer )
 {
 #if defined( LUA_SDK )
-    BEGIN_LUA_CALL_HOOK( "ClientSettingsChanged" );
+    LUA_CALL_HOOK_BEGIN( "ClientSettingsChanged" );
     CBaseEntity::PushLuaInstanceSafe( L, pPlayer );
-    END_LUA_CALL_HOOK( 1, 0 );
+    LUA_CALL_HOOK_END( 1, 0 );
 #endif
 
 #ifndef CLIENT_DLL
@@ -1260,12 +1260,12 @@ int CExperimentRules::PlayerRelationship( CBaseEntity *pPlayer,
                                           CBaseEntity *pTarget )
 {
 #if defined( LUA_SDK )
-    BEGIN_LUA_CALL_HOOK( "PlayerRelationship" );
+    LUA_CALL_HOOK_BEGIN( "PlayerRelationship" );
     CBaseEntity::PushLuaInstanceSafe( L, pPlayer );
     CBaseEntity::PushLuaInstanceSafe( L, pTarget );
-    END_LUA_CALL_HOOK( 2, 1 );
+    LUA_CALL_HOOK_END( 2, 1 );
 
-    RETURN_LUA_INTEGER();
+    LUA_RETURN_INTEGER();
 #endif
 
 #ifndef CLIENT_DLL
@@ -1289,36 +1289,36 @@ int CExperimentRules::PlayerRelationship( CBaseEntity *pPlayer,
 bool CExperimentRules::PlayerCanHearChat( CBasePlayer *pListener,
                                           CBasePlayer *pSpeaker )
 {
-    BEGIN_LUA_CALL_HOOK( "PlayerCanHearChat" );
+    LUA_CALL_HOOK_BEGIN( "PlayerCanHearChat" );
     CBaseEntity::PushLuaInstanceSafe( L, pListener );
     CBaseEntity::PushLuaInstanceSafe( L, pSpeaker );
-    END_LUA_CALL_HOOK( 2, 1 );
+    LUA_CALL_HOOK_END( 2, 1 );
 
-    RETURN_LUA_BOOLEAN();
+    LUA_RETURN_BOOLEAN();
 
     return BaseClass::PlayerCanHearChat( pListener, pSpeaker );
 }
 
 bool CExperimentRules::ClientConnected( edict_t *pEntity, const char *pszName, const char *pszAddress, char *reject, int maxrejectlen )
 {
-    BEGIN_LUA_CALL_HOOK( "ClientConnected" );
+    LUA_CALL_HOOK_BEGIN( "ClientConnected" );
     CBaseEntity::PushLuaInstanceSafe( L, ( CBasePlayer * )CBaseEntity::Instance( pEntity ) );
     lua_pushstring( L, pszName );
     lua_pushstring( L, pszAddress );
     lua_pushstring( L, reject );
     lua_pushinteger( L, maxrejectlen );
-    END_LUA_CALL_HOOK( 5, 1 );
+    LUA_CALL_HOOK_END( 5, 1 );
 
-    RETURN_LUA_BOOLEAN();
+    LUA_RETURN_BOOLEAN();
 
     return BaseClass::ClientConnected( pEntity, pszName, pszAddress, reject, maxrejectlen );
 }
 
 void CExperimentRules::InitHUD( CBasePlayer *pPlayer )
 {
-    BEGIN_LUA_CALL_HOOK( "InitHUD" );
+    LUA_CALL_HOOK_BEGIN( "InitHUD" );
     CBaseEntity::PushLuaInstanceSafe( L, pPlayer );
-    END_LUA_CALL_HOOK( 1, 0 );
+    LUA_CALL_HOOK_END( 1, 0 );
 
     BaseClass::InitHUD( pPlayer );
 }
@@ -1331,10 +1331,10 @@ const char *CExperimentRules::GetGameDescription( void )
     if ( IsTeamplay() )
         return "Team Deathmatch";
 #else
-    BEGIN_LUA_CALL_HOOK( "GetGameDescription" );
-    END_LUA_CALL_HOOK( 0, 1 );
+    LUA_CALL_HOOK_BEGIN( "GetGameDescription" );
+    LUA_CALL_HOOK_END( 0, 1 );
 
-    RETURN_LUA_STRING();
+    LUA_RETURN_STRING();
 #endif
 
 #if !defined( EXPERIMENT_SOURCE )
@@ -1356,10 +1356,10 @@ float CExperimentRules::GetMapRemainingTime()
     if ( mp_timelimit.GetInt() <= 0 )
         return 0;
 #else
-    BEGIN_LUA_CALL_HOOK( "GetMapRemainingTime" );
-    END_LUA_CALL_HOOK( 0, 1 );
+    LUA_CALL_HOOK_BEGIN( "GetMapRemainingTime" );
+    LUA_CALL_HOOK_END( 0, 1 );
 
-    RETURN_LUA_NUMBER();
+    LUA_RETURN_NUMBER();
 #endif
 
     // timelimit is in minutes
@@ -1378,20 +1378,20 @@ void CExperimentRules::Precache( void )
 #if !defined( LUA_SDK )
     CBaseEntity::PrecacheScriptSound( "AlyxEmp.Charge" );
 #else
-    BEGIN_LUA_CALL_HOOK( "Precache" );
-    END_LUA_CALL_HOOK( 0, 0 );
+    LUA_CALL_HOOK_BEGIN( "Precache" );
+    LUA_CALL_HOOK_END( 0, 0 );
 #endif
 }
 
 bool CExperimentRules::ShouldCollide( int collisionGroup0, int collisionGroup1 )
 {
 #if defined( LUA_SDK )
-    BEGIN_LUA_CALL_HOOK( "ShouldCollide" );
+    LUA_CALL_HOOK_BEGIN( "ShouldCollide" );
     lua_pushinteger( L, collisionGroup0 );
     lua_pushinteger( L, collisionGroup1 );
-    END_LUA_CALL_HOOK( 2, 1 );
+    LUA_CALL_HOOK_END( 2, 1 );
 
-    RETURN_LUA_BOOLEAN();
+    LUA_RETURN_BOOLEAN();
 #endif
 
     if ( collisionGroup0 > collisionGroup1 )
@@ -1519,12 +1519,12 @@ bool CExperimentRules::FShouldSwitchWeapon( CBasePlayer *pPlayer,
                                             CBaseCombatWeapon *pWeapon )
 {
 #if defined( LUA_SDK )
-    BEGIN_LUA_CALL_HOOK( "FShouldSwitchWeapon" );
+    LUA_CALL_HOOK_BEGIN( "FShouldSwitchWeapon" );
     CBaseEntity::PushLuaInstanceSafe( L, pPlayer );
     CBaseEntity::PushLuaInstanceSafe( L, pWeapon );
-    END_LUA_CALL_HOOK( 2, 1 );
+    LUA_CALL_HOOK_END( 2, 1 );
 
-    RETURN_LUA_BOOLEAN();
+    LUA_RETURN_BOOLEAN();
 #endif
 
     if ( pPlayer->GetActiveWeapon() && pPlayer->IsNetClient() )
@@ -1548,8 +1548,8 @@ bool CExperimentRules::FShouldSwitchWeapon( CBasePlayer *pPlayer,
 void CExperimentRules::RestartGame()
 {
 #if defined( LUA_SDK )
-    BEGIN_LUA_CALL_HOOK( "RestartGame" );
-    END_LUA_CALL_HOOK( 0, 0 );
+    LUA_CALL_HOOK_BEGIN( "RestartGame" );
+    LUA_CALL_HOOK_END( 0, 0 );
 #endif
 
     // bounds check
@@ -1718,8 +1718,8 @@ void CExperimentRules::CleanUpMap()
     MapEntity_ParseAllEntities( engine->GetMapEntitiesString(), &filter, true );
 
 #if defined( LUA_SDK )
-    BEGIN_LUA_CALL_HOOK( "CleanUpMap" );
-    END_LUA_CALL_HOOK( 0, 0 );
+    LUA_CALL_HOOK_BEGIN( "CleanUpMap" );
+    LUA_CALL_HOOK_END( 0, 0 );
 #endif
 }
 
@@ -1727,10 +1727,10 @@ void CExperimentRules::CheckChatForReadySignal( CExperiment_Player *pPlayer,
                                                 const char *chatmsg )
 {
 #if defined( LUA_SDK )
-    BEGIN_LUA_CALL_HOOK( "CheckChatForReadySignal" );
+    LUA_CALL_HOOK_BEGIN( "CheckChatForReadySignal" );
     CBaseEntity::PushLuaInstanceSafe( L, pPlayer );
     lua_pushstring( L, chatmsg );
-    END_LUA_CALL_HOOK( 2, 0 );
+    LUA_CALL_HOOK_END( 2, 0 );
 #endif
 
     if ( m_bAwaitingReadyRestart &&

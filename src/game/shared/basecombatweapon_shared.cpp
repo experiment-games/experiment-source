@@ -1192,11 +1192,11 @@ void CBaseCombatWeapon::SetViewModel()
     vm->SetWeaponModel( pszNewModel, this );
 
 #ifdef LUA_SDK
-    BEGIN_LUA_CALL_HOOK( "OnViewModelChanged" )
+    LUA_CALL_HOOK_BEGIN( "OnViewModelChanged" )
     CBaseEntity::PushLuaInstanceSafe( L, vm );
     lua_pushstring( L, pszCurrentModel );
     lua_pushstring( L, pszNewModel );
-    END_LUA_CALL_HOOK( 3, 0 )
+    LUA_CALL_HOOK_END( 3, 0 )
 #endif
 }
 

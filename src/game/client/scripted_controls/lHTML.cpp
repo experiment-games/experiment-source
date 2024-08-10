@@ -37,7 +37,7 @@ void LHTML::OnFinishRequest( const char *url, const char *pageTitle, const CUtlM
 void LHTML::OnJavaScriptCallback( KeyValues *pData )
 {
     // Call OnCallback with the data
-    BEGIN_LUA_CALL_PANEL_METHOD( "OnCallback" );
+    LUA_CALL_PANEL_METHOD_BEGIN( "OnCallback" );
     lua_pushstring( L, pData->GetString( "object" ) );
     lua_pushstring( L, pData->GetString( "field" ) );
 
@@ -51,9 +51,9 @@ void LHTML::OnJavaScriptCallback( KeyValues *pData )
         lua_settable( L, -3 );
     }
 
-    END_LUA_CALL_PANEL_METHOD( 3, 1 );
+    LUA_CALL_PANEL_METHOD_END( 3, 1 );
 
-    RETURN_LUA_PANEL_NONE();
+    LUA_RETURN_PANEL_NONE();
 
     BaseClass::OnJavaScriptCallback( pData );
 }

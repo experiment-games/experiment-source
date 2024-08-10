@@ -1379,9 +1379,9 @@ void CInput::CreateMove( int sequence_number, float input_sample_frametime, bool
     }
 
 #ifdef LUA_SDK
-    BEGIN_LUA_CALL_HOOK( "CreateMove" );
+    LUA_CALL_HOOK_BEGIN( "CreateMove" );
     lua_pushusercmd( L, cmd );
-    END_LUA_CALL_HOOK( 1, 1 );
+    LUA_CALL_HOOK_END( 1, 1 );
 
     bool bLuaOverride = lua_isboolean( L, -1 ) && lua_toboolean( L, -1 );
     lua_pop( L, 1 );

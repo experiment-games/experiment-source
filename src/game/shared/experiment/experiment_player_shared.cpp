@@ -108,15 +108,15 @@ Vector CExperiment_Player::GetAttackSpread( CBaseCombatWeapon *pWeapon,
 void CExperiment_Player::PlayStepSound( Vector &vecOrigin, surfacedata_t *psurface, float fvol, bool force )
 {
 #if defined( LUA_SDK )
-    BEGIN_LUA_CALL_HOOK( "PlayerPlayStepSound" );
+    LUA_CALL_HOOK_BEGIN( "PlayerPlayStepSound" );
     CBaseEntity::PushLuaInstanceSafe( L, this );
     lua_pushvector( L, vecOrigin );
     lua_pushsurfacedata( L, psurface );
     lua_pushnumber( L, fvol );
     lua_pushboolean( L, force );
-    END_LUA_CALL_HOOK( 5, 1 );
+    LUA_CALL_HOOK_END( 5, 1 );
 
-    RETURN_LUA_NONE_IF_FALSE();
+    LUA_RETURN_NONE_IF_FALSE();
 #endif
 
     if ( gpGlobals->maxClients > 1 && !sv_footsteps.GetFloat() )

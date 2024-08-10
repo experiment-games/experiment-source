@@ -915,14 +915,14 @@ void CBasePlayer::TraceAttack( const CTakeDamageInfo &inputInfo, const Vector &v
     CTakeDamageInfo linputInfo = inputInfo;
     Vector lvecDir = vecDir;
 
-    BEGIN_LUA_CALL_HOOK( "PlayerTraceAttack" );
+    LUA_CALL_HOOK_BEGIN( "PlayerTraceAttack" );
     CBaseEntity::PushLuaInstanceSafe( L, this );
     lua_pushdamageinfo( L, linputInfo );
     lua_pushvector( L, lvecDir );
     lua_pushtrace( L, *ptr );
-    END_LUA_CALL_HOOK( 4, 1 );
+    LUA_CALL_HOOK_END( 4, 1 );
 
-    RETURN_LUA_NONE_IF_TRUE();
+    LUA_RETURN_NONE_IF_TRUE();
 #endif
 
     if ( m_takedamage )
@@ -2818,13 +2818,13 @@ bool CBasePlayer::IsUseableEntity( CBaseEntity *pEntity, unsigned int requiredCa
 bool CBasePlayer::CanPickupObject( CBaseEntity *pObject, float massLimit, float sizeLimit )
 {
 #ifdef LUA_SDK
-    BEGIN_LUA_CALL_HOOK( "PlayerCanPickupObject" );
+    LUA_CALL_HOOK_BEGIN( "PlayerCanPickupObject" );
     CBaseEntity::PushLuaInstanceSafe( L, pObject );
     lua_pushnumber( L, massLimit );
     lua_pushnumber( L, sizeLimit );
-    END_LUA_CALL_HOOK( 3, 1 );
+    LUA_CALL_HOOK_END( 3, 1 );
 
-    RETURN_LUA_BOOLEAN();
+    LUA_RETURN_BOOLEAN();
 #endif
 
     // UNDONE: Make this virtual and move to HL2 player
@@ -4902,9 +4902,9 @@ ReturnSpot:
 void CBasePlayer::InitialSpawn( void )
 {
 #ifdef LUA_SDK
-    BEGIN_LUA_CALL_HOOK( "PlayerInitialSpawn" );
+    LUA_CALL_HOOK_BEGIN( "PlayerInitialSpawn" );
     CBaseEntity::PushLuaInstanceSafe( L, this );
-    END_LUA_CALL_HOOK( 1, 0 );
+    LUA_CALL_HOOK_END( 1, 0 );
 #endif
 
     m_iConnected = PlayerConnected;
@@ -5398,14 +5398,14 @@ void CBasePlayer::VelocityPunch( const Vector &vecForce )
 bool CBasePlayer::CanEnterVehicle( IServerVehicle *pVehicle, int nRole )
 {
 #ifdef LUA_SDK
-    BEGIN_LUA_CALL_HOOK( "CanEnterVehicle" );
+    LUA_CALL_HOOK_BEGIN( "CanEnterVehicle" );
     CBaseEntity::PushLuaInstanceSafe( L, this );
     // FIXME: implement lua_pushvehicle()!
     CBaseEntity::PushLuaInstanceSafe( L, pVehicle->GetVehicleEnt() );
     lua_pushinteger( L, nRole );
-    END_LUA_CALL_HOOK( 3, 1 );
+    LUA_CALL_HOOK_END( 3, 1 );
 
-    RETURN_LUA_BOOLEAN();
+    LUA_RETURN_BOOLEAN();
 #endif
 
     // Must not have a passenger there already

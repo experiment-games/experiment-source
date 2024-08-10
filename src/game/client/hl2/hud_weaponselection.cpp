@@ -933,7 +933,7 @@ void CHudWeaponSelection::DrawLargeWeaponBox(C_BaseCombatWeapon *pWeapon,
     }
 
 #if defined(LUA_SDK)
-    BEGIN_LUA_CALL_WEAPON_HOOK("DrawLargeWeaponBox", pWeapon);
+    LUA_CALL_WEAPON_HOOK_BEGIN("DrawLargeWeaponBox", pWeapon);
     lua_pushboolean(L, bSelected);
     lua_pushinteger(L, xpos);
     lua_pushinteger(L, ypos);
@@ -942,7 +942,7 @@ void CHudWeaponSelection::DrawLargeWeaponBox(C_BaseCombatWeapon *pWeapon,
     lua_pushcolor(L, selectedColor);
     lua_pushnumber(L, alpha);
     lua_pushinteger(L, number);
-    END_LUA_CALL_WEAPON_HOOK(8, 0);
+    LUA_CALL_WEAPON_HOOK_END(8, 0);
 #endif
 
     // draw text

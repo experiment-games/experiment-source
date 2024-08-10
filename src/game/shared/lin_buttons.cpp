@@ -15,7 +15,7 @@
 ** Open IN library
 */
 LUALIB_API int luaopen_IN (lua_State *L) {
-  BEGIN_LUA_SET_ENUM_LIB(L, LUA_INLIBNAME);
+  LUA_SET_ENUM_LIB_BEGIN(L, LUA_INLIBNAME);
     lua_pushenum(L, IN_ATTACK, "ATTACK");
     lua_pushenum(L, IN_JUMP, "JUMP");
     lua_pushenum(L, IN_DUCK, "DUCK");
@@ -41,6 +41,6 @@ LUALIB_API int luaopen_IN (lua_State *L) {
     lua_pushenum(L, IN_BULLRUSH, "BULLRUSH");
     lua_pushenum(L, IN_GRENADE1, "GRENADE1");
     lua_pushenum(L, IN_GRENADE2, "GRENADE2");
-  END_LUA_SET_ENUM_LIB(L);
+  LUA_SET_ENUM_LIB_END(L);
   return 0;
 }

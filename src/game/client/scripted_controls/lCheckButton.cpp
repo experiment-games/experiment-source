@@ -42,8 +42,8 @@ LCheckButton::~LCheckButton()
 void LCheckButton::OnCheckButtonChecked()
 {
 #ifdef LUA_SDK
-    BEGIN_LUA_CALL_PANEL_METHOD( "OnCheckButtonChecked" );
-    END_LUA_CALL_PANEL_METHOD( 0, 0 );
+    LUA_CALL_PANEL_METHOD_BEGIN( "OnCheckButtonChecked" );
+    LUA_CALL_PANEL_METHOD_END( 0, 0 );
 #endif
 }
 

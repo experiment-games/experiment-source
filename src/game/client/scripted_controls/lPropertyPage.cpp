@@ -44,7 +44,7 @@ void LPropertyPage::OnResetData()
 {
 #ifdef LUA_SDK
     BEGIN_LUA_CALL_PROPERTYPAGE_METHOD( "OnResetData" );
-    END_LUA_CALL_PANEL_METHOD( 0, 0 );
+    LUA_CALL_PANEL_METHOD_END( 0, 0 );
 #endif
 }
 
@@ -56,7 +56,7 @@ void LPropertyPage::OnApplyChanges()
 {
 #ifdef LUA_SDK
     BEGIN_LUA_CALL_PROPERTYPAGE_METHOD( "OnApplyChanges" );
-    END_LUA_CALL_PANEL_METHOD( 0, 0 );
+    LUA_CALL_PANEL_METHOD_END( 0, 0 );
 #endif
 }
 
@@ -67,7 +67,7 @@ void LPropertyPage::OnPageShow()
 {
 #ifdef LUA_SDK
     BEGIN_LUA_CALL_PROPERTYPAGE_METHOD( "OnPageShow" );
-    END_LUA_CALL_PANEL_METHOD( 0, 0 );
+    LUA_CALL_PANEL_METHOD_END( 0, 0 );
 #endif
 }
 
@@ -78,7 +78,7 @@ void LPropertyPage::OnPageHide()
 {
 #ifdef LUA_SDK
     BEGIN_LUA_CALL_PROPERTYPAGE_METHOD( "OnPageHide" );
-    END_LUA_CALL_PANEL_METHOD( 0, 0 );
+    LUA_CALL_PANEL_METHOD_END( 0, 0 );
 #endif
 }
 
@@ -93,7 +93,7 @@ void LPropertyPage::OnPageTabActivated( Panel *pageTab )
 #ifdef LUA_SDK
     BEGIN_LUA_CALL_PROPERTYPAGE_METHOD( "OnPageTabActivated" );
     pageTab->PushLuaInstance( m_lua_State );
-    END_LUA_CALL_PANEL_METHOD( 1, 0 );
+    LUA_CALL_PANEL_METHOD_END( 1, 0 );
 #endif
 }
 
@@ -105,9 +105,9 @@ void LPropertyPage::OnKeyCodeTyped( KeyCode code )
 #ifdef LUA_SDK
     BEGIN_LUA_CALL_PROPERTYPAGE_METHOD( "OnKeyCodeTyped" );
     lua_pushinteger( m_lua_State, code );
-    END_LUA_CALL_PANEL_METHOD( 1, 1 );
+    LUA_CALL_PANEL_METHOD_END( 1, 1 );
 
-    RETURN_LUA_PANEL_NONE();
+    LUA_RETURN_PANEL_NONE();
 #endif
 
     BaseClass::OnKeyCodeTyped( code );

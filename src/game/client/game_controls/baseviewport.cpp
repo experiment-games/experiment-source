@@ -238,10 +238,10 @@ void CBaseViewport::OnScreenSizeChanged(int iOldWide, int iOldTall)
 
 #ifdef LUA_SDK
         if (g_bLuaInitialized) {
-            BEGIN_LUA_CALL_HOOK("OnScreenSizeChanged");
+            LUA_CALL_HOOK_BEGIN("OnScreenSizeChanged");
             lua_pushinteger(L, iOldWide);
             lua_pushinteger(L, iOldTall);
-            END_LUA_CALL_HOOK(2, 0);
+            LUA_CALL_HOOK_END(2, 0);
         }
 #endif
 }
@@ -654,8 +654,8 @@ void CBaseViewport::SetParent(vgui::VPANEL parent)
 void CBaseViewport::ActivateClientUI() 
 {
 #ifdef LUA_SDK
-    BEGIN_LUA_CALL_HOOK("ActivateClientUI");
-    END_LUA_CALL_HOOK(0, 0);
+    LUA_CALL_HOOK_BEGIN("ActivateClientUI");
+    LUA_CALL_HOOK_END(0, 0);
 #endif
 }
 
@@ -664,8 +664,8 @@ void CBaseViewport::ActivateClientUI()
 //-----------------------------------------------------------------------------
 void CBaseViewport::HideClientUI() {
 #ifdef LUA_SDK
-    BEGIN_LUA_CALL_HOOK("HideClientUI");
-    END_LUA_CALL_HOOK(0, 0);
+    LUA_CALL_HOOK_BEGIN("HideClientUI");
+    LUA_CALL_HOOK_END(0, 0);
 #endif
 }
 

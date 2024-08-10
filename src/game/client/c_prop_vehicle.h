@@ -41,13 +41,13 @@ class C_PropVehicleDriveable : public C_BaseAnimating, public IClientVehicle
     virtual void ProcessMovement( C_BasePlayer *pPlayer, CMoveData *pMoveData )
     {
 #ifdef LUA_SDK
-        BEGIN_LUA_CALL_HOOK( "VehicleMove" );
+        LUA_CALL_HOOK_BEGIN( "VehicleMove" );
         CBaseEntity::PushLuaInstanceSafe( L, pPlayer );
         CBaseEntity::PushLuaInstanceSafe( L, this->GetVehicleEnt() );
         lua_pushmovedata( L, pMoveData );
-        END_LUA_CALL_HOOK( 3, 1 );
+        LUA_CALL_HOOK_END( 3, 1 );
 
-        RETURN_LUA_NONE_IF_FALSE();
+        LUA_RETURN_NONE_IF_FALSE();
 #endif
     }
     virtual void FinishMove( C_BasePlayer *player, CUserCmd *ucmd, CMoveData *move ) {}

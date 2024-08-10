@@ -206,13 +206,13 @@ void Host_Say( edict_t *pEdict, const CCommand &args, bool teamonly )
         Assert( pPlayer );
 
 #ifdef LUA_SDK
-        BEGIN_LUA_CALL_HOOK( "Host_Say" );
+        LUA_CALL_HOOK_BEGIN( "Host_Say" );
         CBaseEntity::PushLuaInstanceSafe( L, pPlayer );
         lua_pushstring( L, p );
         lua_pushboolean( L, teamonly );
-        END_LUA_CALL_HOOK( 3, 1 );
+        LUA_CALL_HOOK_END( 3, 1 );
 
-        // Andrew; this is just a continuation of RETURN_LUA_NONE().
+        // Andrew; this is just a continuation of LUA_RETURN_NONE().
         if ( lua_isboolean( L, -1 ) )
         {
             bool res = ( bool )luaL_checkboolean( L, -1 );

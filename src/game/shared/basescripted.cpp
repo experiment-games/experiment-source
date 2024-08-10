@@ -192,8 +192,8 @@ void CBaseScripted::InitScriptedEntity( void )
         }
     }
 
-    BEGIN_LUA_CALL_ENTITY_METHOD( "Initialize" );
-    END_LUA_CALL_ENTITY_METHOD( 0, 0 );
+    LUA_CALL_ENTITY_METHOD_BEGIN( "Initialize" );
+    LUA_CALL_ENTITY_METHOD_END( 0, 0 );
 #endif
 }
 
@@ -201,11 +201,11 @@ void CBaseScripted::InitScriptedEntity( void )
 int CBaseScripted::DrawModel( int flags )
 {
 #ifdef LUA_SDK
-    BEGIN_LUA_CALL_ENTITY_METHOD( "DrawModel" );
+    LUA_CALL_ENTITY_METHOD_BEGIN( "DrawModel" );
     lua_pushinteger( L, flags );
-    END_LUA_CALL_ENTITY_METHOD( 1, 1 );
+    LUA_CALL_ENTITY_METHOD_END( 1, 1 );
 
-    RETURN_LUA_INTEGER();
+    LUA_RETURN_INTEGER();
 #endif
 
     return BaseClass::DrawModel( flags );
@@ -253,8 +253,8 @@ void CBaseScripted::Precache( void )
 void CBaseScripted::ClientThink()
 {
 #ifdef LUA_SDK
-    BEGIN_LUA_CALL_ENTITY_METHOD( "ClientThink" );
-    END_LUA_CALL_ENTITY_METHOD( 0, 0 );
+    LUA_CALL_ENTITY_METHOD_BEGIN( "ClientThink" );
+    LUA_CALL_ENTITY_METHOD_END( 0, 0 );
 #endif
 }
 #endif
@@ -262,35 +262,35 @@ void CBaseScripted::ClientThink()
 void CBaseScripted::Think()
 {
 #ifdef LUA_SDK
-    BEGIN_LUA_CALL_ENTITY_METHOD( "Think" );
-    END_LUA_CALL_ENTITY_METHOD( 0, 0 );
+    LUA_CALL_ENTITY_METHOD_BEGIN( "Think" );
+    LUA_CALL_ENTITY_METHOD_END( 0, 0 );
 #endif
 }
 
 void CBaseScripted::StartTouch( CBaseEntity *pOther )
 {
 #ifdef LUA_SDK
-    BEGIN_LUA_CALL_ENTITY_METHOD( "StartTouch" );
+    LUA_CALL_ENTITY_METHOD_BEGIN( "StartTouch" );
     CBaseEntity::PushLuaInstanceSafe( L, pOther );
-    END_LUA_CALL_ENTITY_METHOD( 1, 0 );
+    LUA_CALL_ENTITY_METHOD_END( 1, 0 );
 #endif
 }
 
 void CBaseScripted::Touch( CBaseEntity *pOther )
 {
 #ifdef LUA_SDK
-    BEGIN_LUA_CALL_ENTITY_METHOD( "Touch" );
+    LUA_CALL_ENTITY_METHOD_BEGIN( "Touch" );
     CBaseEntity::PushLuaInstanceSafe( L, pOther );
-    END_LUA_CALL_ENTITY_METHOD( 1, 0 );
+    LUA_CALL_ENTITY_METHOD_END( 1, 0 );
 #endif
 }
 
 void CBaseScripted::EndTouch( CBaseEntity *pOther )
 {
 #ifdef LUA_SDK
-    BEGIN_LUA_CALL_ENTITY_METHOD( "EndTouch" );
+    LUA_CALL_ENTITY_METHOD_BEGIN( "EndTouch" );
     CBaseEntity::PushLuaInstanceSafe( L, pOther );
-    END_LUA_CALL_ENTITY_METHOD( 1, 0 );
+    LUA_CALL_ENTITY_METHOD_END( 1, 0 );
 #endif
 }
 
@@ -299,9 +299,9 @@ void CBaseScripted::VPhysicsUpdate( IPhysicsObject *pPhysics )
     BaseClass::VPhysicsUpdate( pPhysics );
 
 #ifdef LUA_SDK
-    BEGIN_LUA_CALL_ENTITY_METHOD( "PhysicsUpdate" );
+    LUA_CALL_ENTITY_METHOD_BEGIN( "PhysicsUpdate" );
     lua_pushphysicsobject( L, pPhysics );
-    END_LUA_CALL_ENTITY_METHOD( 1, 0 );
+    LUA_CALL_ENTITY_METHOD_END( 1, 0 );
 #endif
 }
 
@@ -309,10 +309,10 @@ void CBaseScripted::VPhysicsUpdate( IPhysicsObject *pPhysics )
 int CBaseScripted::UpdateTransmitState()
 {
 #ifdef LUA_SDK
-    BEGIN_LUA_CALL_ENTITY_METHOD( "UpdateTransmitState" );
-    END_LUA_CALL_ENTITY_METHOD( 0, 1 );
+    LUA_CALL_ENTITY_METHOD_BEGIN( "UpdateTransmitState" );
+    LUA_CALL_ENTITY_METHOD_END( 0, 1 );
 
-    RETURN_LUA_INTEGER();
+    LUA_RETURN_INTEGER();
 #endif
 
     return BaseClass::UpdateTransmitState();

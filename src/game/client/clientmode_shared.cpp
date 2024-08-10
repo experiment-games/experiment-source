@@ -546,11 +546,11 @@ void ClientModeShared::OverrideView( CViewSetup *pSetup )
 bool ClientModeShared::ShouldDrawEntity( C_BaseEntity *pEnt )
 {
 #ifdef LUA_SDK
-    BEGIN_LUA_CALL_HOOK( "ShouldDrawEntity" );
+    LUA_CALL_HOOK_BEGIN( "ShouldDrawEntity" );
     CBaseEntity::PushLuaInstanceSafe( L, pEnt );
-    END_LUA_CALL_HOOK( 1, 1 );
+    LUA_CALL_HOOK_END( 1, 1 );
 
-    RETURN_LUA_BOOLEAN();
+    LUA_RETURN_BOOLEAN();
 #endif
 
     return true;
@@ -562,10 +562,10 @@ bool ClientModeShared::ShouldDrawEntity( C_BaseEntity *pEnt )
 bool ClientModeShared::ShouldDrawParticles()
 {
 #ifdef LUA_SDK
-    BEGIN_LUA_CALL_HOOK( "ShouldDrawParticles" );
-    END_LUA_CALL_HOOK( 0, 1 );
+    LUA_CALL_HOOK_BEGIN( "ShouldDrawParticles" );
+    LUA_CALL_HOOK_END( 0, 1 );
 
-    RETURN_LUA_BOOLEAN();
+    LUA_RETURN_BOOLEAN();
 #endif
 
 #ifdef TF_CLIENT_DLL
@@ -615,10 +615,10 @@ void ClientModeShared::OverrideMouseInput( float *x, float *y )
 bool ClientModeShared::ShouldDrawViewModel()
 {
 #ifdef LUA_SDK
-    BEGIN_LUA_CALL_HOOK( "ShouldDrawViewModel" );
-    END_LUA_CALL_HOOK( 0, 1 );
+    LUA_CALL_HOOK_BEGIN( "ShouldDrawViewModel" );
+    LUA_CALL_HOOK_END( 0, 1 );
 
-    RETURN_LUA_BOOLEAN();
+    LUA_RETURN_BOOLEAN();
 #endif
 
     return true;
@@ -627,10 +627,10 @@ bool ClientModeShared::ShouldDrawViewModel()
 bool ClientModeShared::ShouldDrawDetailObjects()
 {
 #ifdef LUA_SDK
-    BEGIN_LUA_CALL_HOOK( "ShouldDrawDetailObjects" );
-    END_LUA_CALL_HOOK( 0, 1 );
+    LUA_CALL_HOOK_BEGIN( "ShouldDrawDetailObjects" );
+    LUA_CALL_HOOK_END( 0, 1 );
 
-    RETURN_LUA_BOOLEAN();
+    LUA_RETURN_BOOLEAN();
 #endif
 
     return true;
@@ -670,11 +670,11 @@ bool ClientModeShared::ShouldDrawCrosshair( void )
 bool ClientModeShared::ShouldDrawLocalPlayer( C_BasePlayer *pPlayer )
 {
 #ifdef LUA_SDK
-    BEGIN_LUA_CALL_HOOK( "ShouldDrawLocalPlayer" );
+    LUA_CALL_HOOK_BEGIN( "ShouldDrawLocalPlayer" );
     CBaseEntity::PushLuaInstanceSafe( L, pPlayer );
-    END_LUA_CALL_HOOK( 1, 1 );
+    LUA_CALL_HOOK_END( 1, 1 );
 
-    RETURN_LUA_BOOLEAN();
+    LUA_RETURN_BOOLEAN();
 #endif
 
     if ( ( pPlayer->index == render->GetViewEntity() ) &&
@@ -690,10 +690,10 @@ bool ClientModeShared::ShouldDrawLocalPlayer( C_BasePlayer *pPlayer )
 bool ClientModeShared::ShouldDrawFog( void )
 {
 #ifdef LUA_SDK
-    BEGIN_LUA_CALL_HOOK( "ShouldDrawFog" );
-    END_LUA_CALL_HOOK( 0, 1 );
+    LUA_CALL_HOOK_BEGIN( "ShouldDrawFog" );
+    LUA_CALL_HOOK_END( 0, 1 );
 
-    RETURN_LUA_BOOLEAN();
+    LUA_RETURN_BOOLEAN();
 #endif
 
     return true;
@@ -705,12 +705,12 @@ bool ClientModeShared::ShouldDrawFog( void )
 void ClientModeShared::AdjustEngineViewport( int &x, int &y, int &width, int &height )
 {
 #ifdef LUA_SDK
-    BEGIN_LUA_CALL_HOOK( "AdjustEngineViewport" );
+    LUA_CALL_HOOK_BEGIN( "AdjustEngineViewport" );
     lua_pushinteger( L, x );
     lua_pushinteger( L, y );
     lua_pushinteger( L, width );
     lua_pushinteger( L, height );
-    END_LUA_CALL_HOOK( 4, 4 );
+    LUA_CALL_HOOK_END( 4, 4 );
 
     if ( lua_isnumber( L, -4 ) )
         x = luaL_checknumber( L, -4 );
@@ -731,8 +731,8 @@ void ClientModeShared::AdjustEngineViewport( int &x, int &y, int &width, int &he
 void ClientModeShared::PreRender( CViewSetup *pSetup )
 {
 #ifdef LUA_SDK
-    BEGIN_LUA_CALL_HOOK( "PreRender" );
-    END_LUA_CALL_HOOK( 0, 0 );
+    LUA_CALL_HOOK_BEGIN( "PreRender" );
+    LUA_CALL_HOOK_END( 0, 0 );
 #endif
 }
 
@@ -745,16 +745,16 @@ void ClientModeShared::PostRender()
     ParticleMgr()->PostRender();
 
 #ifdef LUA_SDK
-    BEGIN_LUA_CALL_HOOK( "PostRender" );
-    END_LUA_CALL_HOOK( 0, 0 );
+    LUA_CALL_HOOK_BEGIN( "PostRender" );
+    LUA_CALL_HOOK_END( 0, 0 );
 #endif
 }
 
 void ClientModeShared::PostRenderVGui()
 {
 #ifdef LUA_SDK
-    BEGIN_LUA_CALL_HOOK( "PostRenderVGUI" );
-    END_LUA_CALL_HOOK( 0, 0 );
+    LUA_CALL_HOOK_BEGIN( "PostRenderVGUI" );
+    LUA_CALL_HOOK_END( 0, 0 );
 #endif
 }
 
@@ -831,13 +831,13 @@ int ClientModeShared::KeyInput( int down, ButtonCode_t keynum, const char *pszCu
     // Let the Console always dominate key input, only then let Lua handle it
     if ( g_bLuaInitialized )
     {
-        BEGIN_LUA_CALL_HOOK( "KeyInput" );
+        LUA_CALL_HOOK_BEGIN( "KeyInput" );
         lua_pushinteger( L, down );
         lua_pushinteger( L, keynum );
         lua_pushstring( L, pszCurrentBinding );
-        END_LUA_CALL_HOOK( 3, 1 );
+        LUA_CALL_HOOK_END( 3, 1 );
 
-        RETURN_LUA_INTEGER();
+        LUA_RETURN_INTEGER();
     }
 #endif
 

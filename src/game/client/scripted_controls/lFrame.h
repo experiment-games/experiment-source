@@ -33,8 +33,8 @@ class LFrame : public Frame
    protected:
     virtual void ApplySchemeSettings( vgui::IScheme *pScheme )
     {
-        BEGIN_LUA_CALL_PANEL_METHOD( "ApplySchemeSettings" );
-        END_LUA_CALL_PANEL_METHOD( 0, 0 );
+        LUA_CALL_PANEL_METHOD_BEGIN( "ApplySchemeSettings" );
+        LUA_CALL_PANEL_METHOD_END( 0, 0 );
 
         BaseClass::ApplySchemeSettings( pScheme );
     }

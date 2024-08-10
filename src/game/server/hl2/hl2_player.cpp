@@ -2623,10 +2623,10 @@ bool CHL2_Player::Weapon_CanUse( CBaseCombatWeapon *pWeapon )
 void CHL2_Player::Weapon_Equip( CBaseCombatWeapon *pWeapon )
 {
 #if LUA_SDK
-    BEGIN_LUA_CALL_HOOK( "Weapon_Equip" );
+    LUA_CALL_HOOK_BEGIN( "Weapon_Equip" );
     CBaseEntity::PushLuaInstanceSafe( L, this );
     CBaseEntity::PushLuaInstanceSafe( L, pWeapon );
-    END_LUA_CALL_HOOK( 2, 0 );
+    LUA_CALL_HOOK_END( 2, 0 );
 #endif
 
 #if HL2_SINGLE_PRIMARY_WEAPON_MODE

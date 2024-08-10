@@ -954,7 +954,7 @@ LUALIB_API int luaopen_surface( lua_State *L )
 */
 LUALIB_API int luaopen_FONTFLAG( lua_State *L )
 {
-    BEGIN_LUA_SET_ENUM_LIB( L, LUA_FONTFLAGLIBNAME );
+    LUA_SET_ENUM_LIB_BEGIN( L, LUA_FONTFLAGLIBNAME );
     lua_pushenum( L, vgui::ISurface::FONTFLAG_NONE, "NONE" );
     lua_pushenum( L, vgui::ISurface::FONTFLAG_ITALIC, "ITALIC" );
     lua_pushenum( L, vgui::ISurface::FONTFLAG_UNDERLINE, "UNDERLINE" );
@@ -968,6 +968,6 @@ LUALIB_API int luaopen_FONTFLAG( lua_State *L )
     lua_pushenum( L, vgui::ISurface::FONTFLAG_OUTLINE, "OUTLINE" );
     lua_pushenum( L, vgui::ISurface::FONTFLAG_CUSTOM, "CUSTOM" );
     lua_pushenum( L, vgui::ISurface::FONTFLAG_BITMAP, "BITMAP" );
-    END_LUA_SET_ENUM_LIB( L );
+    LUA_SET_ENUM_LIB_END( L );
     return 0;
 }

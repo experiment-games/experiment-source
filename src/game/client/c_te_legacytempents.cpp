@@ -1730,13 +1730,13 @@ void CTempEnts::MuzzleFlash( int type, ClientEntityHandle_t hEntity, int attachm
 
         if ( pWeapon != NULL )
         {
-            BEGIN_LUA_CALL_WEAPON_HOOK( "MuzzleFlash", pWeapon );
+            LUA_CALL_WEAPON_HOOK_BEGIN( "MuzzleFlash", pWeapon );
             lua_pushinteger( L, type );
             lua_pushinteger( L, attachmentIndex );
             lua_pushboolean( L, firstPerson );
-            END_LUA_CALL_WEAPON_HOOK( 4, 1 );
+            LUA_CALL_WEAPON_HOOK_END( 4, 1 );
 
-            RETURN_LUA_NONE_IF_FALSE();
+            LUA_RETURN_NONE_IF_FALSE();
         }
     }
 #endif

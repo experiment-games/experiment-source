@@ -185,8 +185,8 @@ void CBaseScriptedTrigger::InitScriptedTrigger( void )
         }
     }
 
-    BEGIN_LUA_CALL_TRIGGER_METHOD( "Initialize" );
-    END_LUA_CALL_TRIGGER_METHOD( 0, 0 );
+    LUA_CALL_TRIGGER_METHOD_BEGIN( "Initialize" );
+    LUA_CALL_TRIGGER_METHOD_END( 0, 0 );
 #endif
 }
 
@@ -206,11 +206,11 @@ void CBaseScriptedTrigger::Spawn()
 bool CBaseScriptedTrigger::PassesTriggerFilters( CBaseEntity *pOther )
 {
 #ifdef LUA_SDK
-    BEGIN_LUA_CALL_TRIGGER_METHOD( "PassesTriggerFilters" );
+    LUA_CALL_TRIGGER_METHOD_BEGIN( "PassesTriggerFilters" );
     CBaseEntity::PushLuaInstanceSafe( L, pOther );
-    END_LUA_CALL_TRIGGER_METHOD( 1, 1 );
+    LUA_CALL_TRIGGER_METHOD_END( 1, 1 );
 
-    RETURN_LUA_BOOLEAN();
+    LUA_RETURN_BOOLEAN();
 #endif
 
     return BaseClass::PassesTriggerFilters( pOther );
@@ -219,8 +219,8 @@ bool CBaseScriptedTrigger::PassesTriggerFilters( CBaseEntity *pOther )
 void CBaseScriptedTrigger::Think()
 {
 #ifdef LUA_SDK
-    BEGIN_LUA_CALL_TRIGGER_METHOD( "Think" );
-    END_LUA_CALL_TRIGGER_METHOD( 0, 0 );
+    LUA_CALL_TRIGGER_METHOD_BEGIN( "Think" );
+    LUA_CALL_TRIGGER_METHOD_END( 0, 0 );
 #endif
 }
 
@@ -231,18 +231,18 @@ void CBaseScriptedTrigger::Think()
 void CBaseScriptedTrigger::StartTouch( CBaseEntity *pOther )
 {
 #ifdef LUA_SDK
-    BEGIN_LUA_CALL_TRIGGER_METHOD( "StartTouch" );
+    LUA_CALL_TRIGGER_METHOD_BEGIN( "StartTouch" );
     CBaseEntity::PushLuaInstanceSafe( L, pOther );
-    END_LUA_CALL_TRIGGER_METHOD( 1, 0 );
+    LUA_CALL_TRIGGER_METHOD_END( 1, 0 );
 #endif
 }
 
 void CBaseScriptedTrigger::Touch( CBaseEntity *pOther )
 {
 #ifdef LUA_SDK
-    BEGIN_LUA_CALL_TRIGGER_METHOD( "Touch" );
+    LUA_CALL_TRIGGER_METHOD_BEGIN( "Touch" );
     CBaseEntity::PushLuaInstanceSafe( L, pOther );
-    END_LUA_CALL_TRIGGER_METHOD( 1, 0 );
+    LUA_CALL_TRIGGER_METHOD_END( 1, 0 );
 #endif
 }
 
@@ -253,8 +253,8 @@ void CBaseScriptedTrigger::Touch( CBaseEntity *pOther )
 void CBaseScriptedTrigger::EndTouch( CBaseEntity *pOther )
 {
 #ifdef LUA_SDK
-    BEGIN_LUA_CALL_TRIGGER_METHOD( "EndTouch" );
+    LUA_CALL_TRIGGER_METHOD_BEGIN( "EndTouch" );
     CBaseEntity::PushLuaInstanceSafe( L, pOther );
-    END_LUA_CALL_TRIGGER_METHOD( 1, 0 );
+    LUA_CALL_TRIGGER_METHOD_END( 1, 0 );
 #endif
 }

@@ -195,11 +195,11 @@ void CExperiment_Player::OnValidateAuthTicketResponse( ValidateAuthTicketRespons
     const CSteamID *pClientID = engine->GetClientSteamID( edict() );
     Assert( Q_strcmp( pClientID->Render(), pszSteamID ) == 0 );
 
-    BEGIN_LUA_CALL_HOOK( "PlayerAuthed" );
+    LUA_CALL_HOOK_BEGIN( "PlayerAuthed" );
     CBaseEntity::PushLuaInstanceSafe( L, this );
     lua_pushstring( L, pszSteamID );
     lua_pushinteger( L, ( lua_Integer )GetUniqueID() );
-    END_LUA_CALL_HOOK( 3, 0 );
+    LUA_CALL_HOOK_END( 3, 0 );
 #endif
 }
 #endif
@@ -285,9 +285,9 @@ void CExperiment_Player::GiveAllItems( void )
 void CExperiment_Player::GiveDefaultItems( void )
 {
 #ifdef LUA_SDK
-    BEGIN_LUA_CALL_HOOK( "GiveDefaultItems" );
+    LUA_CALL_HOOK_BEGIN( "GiveDefaultItems" );
     CBaseEntity::PushLuaInstanceSafe( L, this );
-    END_LUA_CALL_HOOK( 1, 0 );
+    LUA_CALL_HOOK_END( 1, 0 );
 #else
     EquipSuit();
 
@@ -439,13 +439,13 @@ void CExperiment_Player::Spawn( void )
 void CExperiment_Player::PickupObject( CBaseEntity *pObject, bool bLimitMassAndSize )
 {
 #ifdef LUA_SDK
-    BEGIN_LUA_CALL_HOOK( "AllowPlayerPickup" );
+    LUA_CALL_HOOK_BEGIN( "AllowPlayerPickup" );
     CBaseEntity::PushLuaInstanceSafe( L, this );
     CBaseEntity::PushLuaInstanceSafe( L, pObject );
     lua_pushboolean( L, bLimitMassAndSize );
-    END_LUA_CALL_HOOK( 3, 1 );
+    LUA_CALL_HOOK_END( 3, 1 );
 
-    RETURN_LUA_NONE_IF_FALSE();
+    LUA_RETURN_NONE_IF_FALSE();
 #endif
 
 #ifdef EXPERIMENT_SOURCE
@@ -682,9 +682,9 @@ void CExperiment_Player::PostThink( void )
 void CExperiment_Player::PlayerDeathThink()
 {
 #ifdef LUA_SDK
-    BEGIN_LUA_CALL_HOOK( "PlayerDeathThink" );
+    LUA_CALL_HOOK_BEGIN( "PlayerDeathThink" );
     CBaseEntity::PushLuaInstanceSafe( L, this );
-    END_LUA_CALL_HOOK( 1, 0 );
+    LUA_CALL_HOOK_END( 1, 0 );
 #endif
 
     if ( !IsObserver() )
@@ -983,12 +983,12 @@ bool CExperiment_Player::ClientCommand( const CCommand &args )
 void CExperiment_Player::CheatImpulseCommands( int iImpulse )
 {
 #ifdef LUA_SDK
-    BEGIN_LUA_CALL_HOOK( "CheatImpulseCommands" );
+    LUA_CALL_HOOK_BEGIN( "CheatImpulseCommands" );
     CBaseEntity::PushLuaInstanceSafe( L, this );
     lua_pushinteger( L, iImpulse );
-    END_LUA_CALL_HOOK( 2, 1 );
+    LUA_CALL_HOOK_END( 2, 1 );
 
-    RETURN_LUA_NONE_IF_FALSE();
+    LUA_RETURN_NONE_IF_FALSE();
 #endif
 
     switch ( iImpulse )
@@ -1123,10 +1123,10 @@ SendPropVector( SENDINFO( m_vecRagdollOrigin ), -1, SPROP_COORD ),
 
     if ( L )
     {
-        BEGIN_LUA_CALL_HOOK( "CreateEntityRagdoll" );
+        LUA_CALL_HOOK_BEGIN( "CreateEntityRagdoll" );
         this->PushLuaInstance( L );
         pRagdoll->PushLuaInstance( L );
-        END_LUA_CALL_HOOK( 2, 0 );
+        LUA_CALL_HOOK_END( 2, 0 );
     }
 }
 
@@ -1266,12 +1266,12 @@ void CExperiment_Player::DeathSound( const CTakeDamageInfo &info )
 #ifdef LUA_SDK
     CTakeDamageInfo lInfo = info;
 
-    BEGIN_LUA_CALL_HOOK( "PlayerDeathSound" );
+    LUA_CALL_HOOK_BEGIN( "PlayerDeathSound" );
     CBaseEntity::PushLuaInstanceSafe( L, this );
     lua_pushdamageinfo( L, lInfo );
-    END_LUA_CALL_HOOK( 2, 1 );
+    LUA_CALL_HOOK_END( 2, 1 );
 
-    RETURN_LUA_NONE_IF_TRUE();
+    LUA_RETURN_NONE_IF_TRUE();
 #endif
 
     if ( m_hRagdoll && m_hRagdoll->GetBaseAnimating()->IsDissolving() )
@@ -1307,11 +1307,11 @@ void CExperiment_Player::DeathSound( const CTakeDamageInfo &info )
 CBaseEntity *CExperiment_Player::EntSelectSpawnPoint( void )
 {
 #ifdef LUA_SDK
-    BEGIN_LUA_CALL_HOOK( "PlayerEntSelectSpawnPoint" );
+    LUA_CALL_HOOK_BEGIN( "PlayerEntSelectSpawnPoint" );
     CBaseEntity::PushLuaInstanceSafe( L, this );
-    END_LUA_CALL_HOOK( 1, 1 );
+    LUA_CALL_HOOK_END( 1, 1 );
 
-    RETURN_LUA_ENTITY();
+    LUA_RETURN_ENTITY();
 
     // Experiment; Note that HL2SB has a bunch more code below that we
     // didn't copy over. It handled choosing a spawn point based on the

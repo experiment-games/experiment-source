@@ -17,7 +17,7 @@
 ** Open CONTENTS library
 */
 LUALIB_API int luaopen_CONTENTS (lua_State *L) {
-  BEGIN_LUA_SET_ENUM_LIB(L, LUA_CONTENTSLIBNAME);
+  LUA_SET_ENUM_LIB_BEGIN(L, LUA_CONTENTSLIBNAME);
     lua_pushenum(L, CONTENTS_EMPTY, "EMPTY");
 
     lua_pushenum(L, CONTENTS_SOLID, "SOLID");
@@ -59,7 +59,7 @@ LUALIB_API int luaopen_CONTENTS (lua_State *L) {
 	lua_pushenum(L, CONTENTS_TRANSLUCENT, "TRANSLUCENT");
 	lua_pushenum(L, CONTENTS_LADDER, "LADDER");
 	lua_pushenum(L, CONTENTS_HITBOX, "HITBOX");
-  END_LUA_SET_ENUM_LIB(L);
+  LUA_SET_ENUM_LIB_END(L);
   return 0;
 }
 
@@ -68,7 +68,7 @@ LUALIB_API int luaopen_CONTENTS (lua_State *L) {
 ** Open SURF library
 */
 LUALIB_API int luaopen_SURF (lua_State *L) {
-  BEGIN_LUA_SET_ENUM_LIB(L, LUA_SURFLIBNAME);
+  LUA_SET_ENUM_LIB_BEGIN(L, LUA_SURFLIBNAME);
     lua_pushenum(L, SURF_LIGHT, "LIGHT");
     lua_pushenum(L, SURF_SKY2D, "SKY2D");
     lua_pushenum(L, SURF_SKY, "SKY");
@@ -87,7 +87,7 @@ LUALIB_API int luaopen_SURF (lua_State *L) {
     lua_pushenum(L, SURF_NODECALS, "NODECALS");
     lua_pushenum(L, SURF_NOCHOP, "NOCHOP");
     lua_pushenum(L, SURF_HITBOX, "HITBOX");
-  END_LUA_SET_ENUM_LIB(L);
+  LUA_SET_ENUM_LIB_END(L);
   return 0;
 }
 
@@ -96,7 +96,7 @@ LUALIB_API int luaopen_SURF (lua_State *L) {
 ** Open MASK library
 */
 LUALIB_API int luaopen_MASK (lua_State *L) {
-  BEGIN_LUA_SET_ENUM_LIB(L, LUA_MASKLIBNAME);
+  LUA_SET_ENUM_LIB_BEGIN(L, LUA_MASKLIBNAME);
     lua_pushenum(L, MASK_ALL, "ALL");
     lua_pushenum(L, MASK_SOLID, "SOLID");
     lua_pushenum(L, MASK_PLAYERSOLID, "PLAYERSOLID");
@@ -120,6 +120,6 @@ LUALIB_API int luaopen_MASK (lua_State *L) {
     lua_pushenum(L, MASK_CURRENT, "CURRENT");
 
     lua_pushenum(L, MASK_DEADSOLID, "DEADSOLID");
-  END_LUA_SET_ENUM_LIB(L);
+  LUA_SET_ENUM_LIB_END(L);
   return 0;
 }

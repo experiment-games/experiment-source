@@ -110,23 +110,23 @@ void CHLPlayerMove::SetupMove( CBasePlayer *player, CUserCmd *ucmd, IMoveHelper 
     }
 
 #ifdef LUA_SDK
-    BEGIN_LUA_CALL_HOOK( "SetupMove" );
+    LUA_CALL_HOOK_BEGIN( "SetupMove" );
     CBaseEntity::PushLuaInstanceSafe( L, player );
     lua_pushmovedata( L, move );
     lua_pushusercmd( L, ucmd );
-    END_LUA_CALL_HOOK( 3, 0 );
+    LUA_CALL_HOOK_END( 3, 0 );
 #endif
 }
 
 void CHLPlayerMove::FinishMove( CBasePlayer *player, CUserCmd *ucmd, CMoveData *move )
 {
 #ifdef LUA_SDK
-    BEGIN_LUA_CALL_HOOK( "FinishMove" );
+    LUA_CALL_HOOK_BEGIN( "FinishMove" );
     CBaseEntity::PushLuaInstanceSafe( L, player );
     lua_pushmovedata( L, move );
-    END_LUA_CALL_HOOK( 2, 1 );
+    LUA_CALL_HOOK_END( 2, 1 );
 
-    RETURN_LUA_NONE_IF_TRUE();
+    LUA_RETURN_NONE_IF_TRUE();
 #endif
 
     // Call the default FinishMove code.

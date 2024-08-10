@@ -46,8 +46,8 @@ void LPropertyDialog::PerformLayout()
     BaseClass::PerformLayout();
 
 #ifdef LUA_SDK
-    BEGIN_LUA_CALL_PROPERTYDIALOG_METHOD( "PerformLayout" );
-    END_LUA_CALL_PANEL_METHOD( 0, 0 );
+    LUA_CALL_PROPERTYDIALOG_METHOD_BEGIN( "PerformLayout" );
+    LUA_CALL_PANEL_METHOD_END( 0, 0 );
 #endif
 }
 
@@ -57,11 +57,11 @@ void LPropertyDialog::PerformLayout()
 void LPropertyDialog::OnCommand( const char *command )
 {
 #ifdef LUA_SDK
-    BEGIN_LUA_CALL_PROPERTYDIALOG_METHOD( "OnCommand" );
+    LUA_CALL_PROPERTYDIALOG_METHOD_BEGIN( "OnCommand" );
     lua_pushstring( m_lua_State, command );
-    END_LUA_CALL_PANEL_METHOD( 1, 1 );
+    LUA_CALL_PANEL_METHOD_END( 1, 1 );
 
-    RETURN_LUA_PANEL_NONE();
+    LUA_RETURN_PANEL_NONE();
 #endif
 
     BaseClass::OnCommand( command );
@@ -73,8 +73,8 @@ void LPropertyDialog::OnCommand( const char *command )
 void LPropertyDialog::OnCancel()
 {
 #ifdef LUA_SDK
-    BEGIN_LUA_CALL_PROPERTYDIALOG_METHOD( "OnCancel" );
-    END_LUA_CALL_PANEL_METHOD( 0, 0 );
+    LUA_CALL_PROPERTYDIALOG_METHOD_BEGIN( "OnCancel" );
+    LUA_CALL_PANEL_METHOD_END( 0, 0 );
 #endif
 }
 
@@ -85,11 +85,11 @@ void LPropertyDialog::OnCancel()
 void LPropertyDialog::OnKeyCodeTyped( KeyCode code )
 {
 #ifdef LUA_SDK
-    BEGIN_LUA_CALL_PROPERTYDIALOG_METHOD( "OnKeyCodeTyped" );
+    LUA_CALL_PROPERTYDIALOG_METHOD_BEGIN( "OnKeyCodeTyped" );
     lua_pushinteger( m_lua_State, code );
-    END_LUA_CALL_PANEL_METHOD( 1, 1 );
+    LUA_CALL_PANEL_METHOD_END( 1, 1 );
 
-    RETURN_LUA_PANEL_NONE();
+    LUA_RETURN_PANEL_NONE();
 #endif
 
     BaseClass::OnKeyCodeTyped( code );
@@ -101,11 +101,11 @@ void LPropertyDialog::OnKeyCodeTyped( KeyCode code )
 bool LPropertyDialog::OnOK( bool applyOnly )
 {
 #ifdef LUA_SDK
-    BEGIN_LUA_CALL_PROPERTYDIALOG_METHOD( "OnOK" );
+    LUA_CALL_PROPERTYDIALOG_METHOD_BEGIN( "OnOK" );
     lua_pushboolean( m_lua_State, applyOnly );
-    END_LUA_CALL_PANEL_METHOD( 1, 1 );
+    LUA_CALL_PANEL_METHOD_END( 1, 1 );
 
-    RETURN_LUA_PANEL_BOOLEAN();
+    LUA_RETURN_PANEL_BOOLEAN();
 #endif
 
     // the sheet should have the pages apply changes before we tell the world

@@ -763,9 +763,9 @@ void Panel::Prepare()
     //          safely. See IsFunctionPrepared for details on bug this works around.
     if ( pParent && pParent->IsFunctionPrepared( "OnChildAdded" ) )
     {
-        BEGIN_LUA_CALL_PANEL_METHOD_FOR( pParent, "OnChildAdded" );
+        LUA_CALL_PANEL_METHOD_FOR_BEGIN( pParent, "OnChildAdded" );
         this->PushLuaInstance( m_lua_State );
-        END_LUA_CALL_PANEL_METHOD( 1, 0 );
+        LUA_CALL_PANEL_METHOD_END( 1, 0 );
     }
 }
 #endif
@@ -1158,10 +1158,10 @@ void Panel::OnScreenSizeChanged( int nOldWide, int nOldTall )
     InvalidateLayout();
 
 #ifdef LUA_SDK
-    BEGIN_LUA_CALL_PANEL_METHOD( "OnScreenSizeChanged" );
+    LUA_CALL_PANEL_METHOD_BEGIN( "OnScreenSizeChanged" );
     lua_pushinteger( m_lua_State, nOldWide );
     lua_pushinteger( m_lua_State, nOldTall );
-    END_LUA_CALL_PANEL_METHOD( 2, 0 );
+    LUA_CALL_PANEL_METHOD_END( 2, 0 );
 #endif
 }
 
@@ -1246,8 +1246,8 @@ void Panel::Think()
         }
 
 #ifdef LUA_SDK
-        BEGIN_LUA_CALL_PANEL_METHOD( "Think" );
-        END_LUA_CALL_PANEL_METHOD( 0, 0 );
+        LUA_CALL_PANEL_METHOD_BEGIN( "Think" );
+        LUA_CALL_PANEL_METHOD_END( 0, 0 );
 #endif
     }
 
@@ -1346,10 +1346,10 @@ void Panel::PaintTraverse( bool repaint, bool allowForce )
         {
             surface()->PushMakeCurrent( vpanel, true );
 #ifdef LUA_SDK
-            BEGIN_LUA_CALL_PANEL_METHOD( "Paint" );
+            LUA_CALL_PANEL_METHOD_BEGIN( "Paint" );
             lua_pushinteger( m_lua_State, GetWide() );
             lua_pushinteger( m_lua_State, GetTall() );
-            END_LUA_CALL_PANEL_METHOD( 2, 1 );
+            LUA_CALL_PANEL_METHOD_END( 2, 1 );
 
             bool paintOverride = false;
 
@@ -1444,10 +1444,10 @@ void Panel::PaintTraverse( bool repaint, bool allowForce )
 
 #ifdef LUA_SDK
         surface()->PushMakeCurrent( vpanel, false );
-        BEGIN_LUA_CALL_PANEL_METHOD( "PaintOver" );
+        LUA_CALL_PANEL_METHOD_BEGIN( "PaintOver" );
         lua_pushinteger( m_lua_State, GetWide() );
         lua_pushinteger( m_lua_State, GetTall() );
-        END_LUA_CALL_PANEL_METHOD( 2, 0 );
+        LUA_CALL_PANEL_METHOD_END( 2, 0 );
         surface()->PopMakeCurrent( vpanel );
 #endif
     }
@@ -1473,8 +1473,8 @@ void Panel::PaintBorder()
     _border->Paint( GetVPanel() );
 
 #ifdef LUA_SDK
-    BEGIN_LUA_CALL_PANEL_METHOD( "PaintBorder" );
-    END_LUA_CALL_PANEL_METHOD( 0, 0 );
+    LUA_CALL_PANEL_METHOD_BEGIN( "PaintBorder" );
+    LUA_CALL_PANEL_METHOD_END( 0, 0 );
 #endif
 }
 
@@ -1557,8 +1557,8 @@ void Panel::PostChildPaint()
     //  themselves.  Allows drawing an overlay on top of the children, etc.
 
 #ifdef LUA_SDK  // Except for Lua
-    BEGIN_LUA_CALL_PANEL_METHOD( "PostChildPaint" );
-    END_LUA_CALL_PANEL_METHOD( 0, 0 );
+    LUA_CALL_PANEL_METHOD_BEGIN( "PostChildPaint" );
+    LUA_CALL_PANEL_METHOD_END( 0, 0 );
 #endif
 }
 
@@ -1568,10 +1568,10 @@ void Panel::PostChildPaint()
 void Panel::PaintBuildOverlay()
 {
 #ifdef LUA_SDK
-    BEGIN_LUA_CALL_PANEL_METHOD( "PaintBuildOverlay" );
-    END_LUA_CALL_PANEL_METHOD( 0, 1 );
+    LUA_CALL_PANEL_METHOD_BEGIN( "PaintBuildOverlay" );
+    LUA_CALL_PANEL_METHOD_END( 0, 1 );
 
-    RETURN_LUA_PANEL_NONE();
+    LUA_RETURN_PANEL_NONE();
 #endif
 
     int wide, tall;
@@ -1689,9 +1689,9 @@ void Panel::OnChildAdded( VPANEL child )
     // available.
     if ( pPanel && pPanel->m_lua_State != NULL && pPanel->m_pLuaInstance != nullptr)
     {
-        BEGIN_LUA_CALL_PANEL_METHOD( "OnChildAdded" );
+        LUA_CALL_PANEL_METHOD_BEGIN( "OnChildAdded" );
         pPanel->PushLuaInstance( m_lua_State );
-        END_LUA_CALL_PANEL_METHOD( 1, 0 );
+        LUA_CALL_PANEL_METHOD_END( 1, 0 );
     }
 #endif
 
@@ -1705,10 +1705,10 @@ void Panel::OnSizeChanged( int newWide, int newTall )
 {
     InvalidateLayout();  // our size changed so force us to layout again
 #ifdef LUA_SDK
-    BEGIN_LUA_CALL_PANEL_METHOD( "OnSizeChanged" );
+    LUA_CALL_PANEL_METHOD_BEGIN( "OnSizeChanged" );
     lua_pushinteger( m_lua_State, newWide );
     lua_pushinteger( m_lua_State, newTall );
-    END_LUA_CALL_PANEL_METHOD( 2, 0 );
+    LUA_CALL_PANEL_METHOD_END( 2, 0 );
 #endif
 }
 
@@ -3242,10 +3242,10 @@ void Panel::OnThink()
 void Panel::OnCursorMoved( int x, int y )
 {
 #ifdef LUA_SDK
-    BEGIN_LUA_CALL_PANEL_METHOD( "OnCursorMoved" );
+    LUA_CALL_PANEL_METHOD_BEGIN( "OnCursorMoved" );
     lua_pushinteger( m_lua_State, x );
     lua_pushinteger( m_lua_State, y );
-    END_LUA_CALL_PANEL_METHOD( 2, 0 );
+    LUA_CALL_PANEL_METHOD_END( 2, 0 );
 #else
     if ( ParentNeedsCursorMoveEvents() )
     {
@@ -3268,8 +3268,8 @@ void Panel::OnCursorEntered()
         lua_pop( m_lua_State, 1 );
     }
 
-    BEGIN_LUA_CALL_PANEL_METHOD( "OnCursorEntered" );
-    END_LUA_CALL_PANEL_METHOD( 0, 0 );
+    LUA_CALL_PANEL_METHOD_BEGIN( "OnCursorEntered" );
+    LUA_CALL_PANEL_METHOD_END( 0, 0 );
 #endif
 }
 
@@ -3284,44 +3284,44 @@ void Panel::OnCursorExited()
         lua_pop( m_lua_State, 1 );
     }
 
-    BEGIN_LUA_CALL_PANEL_METHOD( "OnCursorExited" );
-    END_LUA_CALL_PANEL_METHOD( 0, 0 );
+    LUA_CALL_PANEL_METHOD_BEGIN( "OnCursorExited" );
+    LUA_CALL_PANEL_METHOD_END( 0, 0 );
 #endif
 }
 
 void Panel::OnMousePressed( MouseCode code )
 {
 #ifdef LUA_SDK
-    BEGIN_LUA_CALL_PANEL_METHOD( "OnMousePressed" );
+    LUA_CALL_PANEL_METHOD_BEGIN( "OnMousePressed" );
     lua_pushinteger( m_lua_State, code );
-    END_LUA_CALL_PANEL_METHOD( 1, 0 );
+    LUA_CALL_PANEL_METHOD_END( 1, 0 );
 #endif
 }
 
 void Panel::OnMouseDoublePressed( MouseCode code )
 {
 #ifdef LUA_SDK
-    BEGIN_LUA_CALL_PANEL_METHOD( "OnMouseDoublePressed" );
+    LUA_CALL_PANEL_METHOD_BEGIN( "OnMouseDoublePressed" );
     lua_pushinteger( m_lua_State, code );
-    END_LUA_CALL_PANEL_METHOD( 1, 0 );
+    LUA_CALL_PANEL_METHOD_END( 1, 0 );
 #endif
 }
 
 void Panel::OnMouseTriplePressed( MouseCode code )
 {
 #ifdef LUA_SDK
-    BEGIN_LUA_CALL_PANEL_METHOD( "OnMouseTriplePressed" );
+    LUA_CALL_PANEL_METHOD_BEGIN( "OnMouseTriplePressed" );
     lua_pushinteger( m_lua_State, code );
-    END_LUA_CALL_PANEL_METHOD( 1, 0 );
+    LUA_CALL_PANEL_METHOD_END( 1, 0 );
 #endif
 }
 
 void Panel::OnMouseReleased( MouseCode code )
 {
 #ifdef LUA_SDK
-    BEGIN_LUA_CALL_PANEL_METHOD( "OnMouseReleased" );
+    LUA_CALL_PANEL_METHOD_BEGIN( "OnMouseReleased" );
     lua_pushinteger( m_lua_State, code );
-    END_LUA_CALL_PANEL_METHOD( 1, 0 );
+    LUA_CALL_PANEL_METHOD_END( 1, 0 );
 #endif
 }
 
@@ -3332,11 +3332,11 @@ void Panel::OnMouseMismatchedRelease( MouseCode code, Panel *pPressedPanel )
 void Panel::OnMouseWheeled( int delta )
 {
 #ifdef LUA_SDK
-    BEGIN_LUA_CALL_PANEL_METHOD( "OnMouseWheeled" );
+    LUA_CALL_PANEL_METHOD_BEGIN( "OnMouseWheeled" );
     lua_pushinteger( m_lua_State, delta );
-    END_LUA_CALL_PANEL_METHOD( 1, 1 );
+    LUA_CALL_PANEL_METHOD_END( 1, 1 );
 
-    RETURN_LUA_PANEL_NONE();
+    LUA_RETURN_PANEL_NONE();
 #endif
 
     CallParentFunction( new KeyValues( "MouseWheeled", "delta", delta ) );
@@ -3346,11 +3346,11 @@ void Panel::OnMouseWheeled( int delta )
 void Panel::OnKeyCodePressed( KeyCode code )
 {
 #ifdef LUA_SDK
-    BEGIN_LUA_CALL_PANEL_METHOD( "OnKeyCodePressed" );
+    LUA_CALL_PANEL_METHOD_BEGIN( "OnKeyCodePressed" );
     lua_pushinteger( m_lua_State, code );
-    END_LUA_CALL_PANEL_METHOD( 1, 1 );
+    LUA_CALL_PANEL_METHOD_END( 1, 1 );
 
-    RETURN_LUA_PANEL_NONE();
+    LUA_RETURN_PANEL_NONE();
 #endif
 
     static ConVarRef vgui_nav_lock( "vgui_nav_lock" );
@@ -3423,11 +3423,11 @@ void Panel::OnKeyCodeTyped( KeyCode keycode )
     vgui::KeyCode code = GetBaseButtonCode( keycode );
 
 #ifdef LUA_SDK
-    BEGIN_LUA_CALL_PANEL_METHOD( "OnKeyCodeTyped" );
+    LUA_CALL_PANEL_METHOD_BEGIN( "OnKeyCodeTyped" );
     lua_pushinteger( m_lua_State, code );
-    END_LUA_CALL_PANEL_METHOD( 1, 1 );
+    LUA_CALL_PANEL_METHOD_END( 1, 1 );
 
-    RETURN_LUA_PANEL_NONE();
+    LUA_RETURN_PANEL_NONE();
 #endif
 
     // handle focus change
@@ -3530,11 +3530,11 @@ void Panel::OnKeyTyped( wchar_t unichar )
 void Panel::OnKeyCodeReleased( KeyCode code )
 {
 #ifdef LUA_SDK
-    BEGIN_LUA_CALL_PANEL_METHOD( "OnKeyCodeReleased" );
+    LUA_CALL_PANEL_METHOD_BEGIN( "OnKeyCodeReleased" );
     lua_pushinteger( m_lua_State, code );
-    END_LUA_CALL_PANEL_METHOD( 1, 1 );
+    LUA_CALL_PANEL_METHOD_END( 1, 1 );
 
-    RETURN_LUA_PANEL_NONE();
+    LUA_RETURN_PANEL_NONE();
 #endif
 
     CallParentFunction( new KeyValues( "KeyCodeReleased", "code", code ) );
@@ -3543,10 +3543,10 @@ void Panel::OnKeyCodeReleased( KeyCode code )
 void Panel::OnKeyFocusTicked()
 {
 #ifdef LUA_SDK
-    BEGIN_LUA_CALL_PANEL_METHOD( "OnKeyFocusTicked" );
-    END_LUA_CALL_PANEL_METHOD( 0, 1 );
+    LUA_CALL_PANEL_METHOD_BEGIN( "OnKeyFocusTicked" );
+    LUA_CALL_PANEL_METHOD_END( 0, 1 );
 
-    RETURN_LUA_PANEL_NONE();
+    LUA_RETURN_PANEL_NONE();
 #endif
 
     CallParentFunction( new KeyValues( "KeyFocusTicked" ) );
@@ -3555,10 +3555,10 @@ void Panel::OnKeyFocusTicked()
 void Panel::OnMouseFocusTicked()
 {
 #ifdef LUA_SDK
-    BEGIN_LUA_CALL_PANEL_METHOD( "OnMouseFocusTicked" );
-    END_LUA_CALL_PANEL_METHOD( 0, 1 );
+    LUA_CALL_PANEL_METHOD_BEGIN( "OnMouseFocusTicked" );
+    LUA_CALL_PANEL_METHOD_END( 0, 1 );
 
-    RETURN_LUA_PANEL_NONE();
+    LUA_RETURN_PANEL_NONE();
 #endif
 
     CallParentFunction( new KeyValues( "OnMouseFocusTicked" ) );
@@ -4119,12 +4119,12 @@ void Panel::RequestFocus( int direction )
 void Panel::OnRequestFocus( VPANEL subFocus, VPANEL defaultPanel )
 {
 #ifdef LUA_SDK
-    BEGIN_LUA_CALL_PANEL_METHOD( "OnRequestFocus" );
+    LUA_CALL_PANEL_METHOD_BEGIN( "OnRequestFocus" );
     PushVPanelLuaInstance( m_lua_State, subFocus );
     PushVPanelLuaInstance( m_lua_State, defaultPanel );
-    END_LUA_CALL_PANEL_METHOD( 2, 1 );
+    LUA_CALL_PANEL_METHOD_END( 2, 1 );
 
-    RETURN_LUA_PANEL_NONE();
+    LUA_RETURN_PANEL_NONE();
 #endif
 
     CallParentFunction( new KeyValues( "OnRequestFocus", "subFocus", subFocus, "defaultPanel", defaultPanel ) );
@@ -4186,10 +4186,10 @@ void Panel::InternalFocusChanged( bool lost )
 void Panel::OnMouseCaptureLost()
 {
 #ifdef LUA_SDK
-    BEGIN_LUA_CALL_PANEL_METHOD( "OnMouseCaptureLost" );
-    END_LUA_CALL_PANEL_METHOD( 0, 1 );
+    LUA_CALL_PANEL_METHOD_BEGIN( "OnMouseCaptureLost" );
+    LUA_CALL_PANEL_METHOD_END( 0, 1 );
 
-    RETURN_LUA_PANEL_NONE();
+    LUA_RETURN_PANEL_NONE();
 #endif
 
     if ( m_pTooltips )
@@ -4426,10 +4426,10 @@ void Panel::PerformLayout()
     int wide, tall;
     Panel::GetSize( wide, tall );
 
-    BEGIN_LUA_CALL_PANEL_METHOD( "PerformLayout" );
+    LUA_CALL_PANEL_METHOD_BEGIN( "PerformLayout" );
     lua_pushinteger( m_lua_State, wide );
     lua_pushinteger( m_lua_State, tall );
-    END_LUA_CALL_PANEL_METHOD( 2, 0 );
+    LUA_CALL_PANEL_METHOD_END( 2, 0 );
 #endif
 }
 
@@ -4490,11 +4490,11 @@ bool Panel::IsCursorOver( void )
 void Panel::OnCommand( const char *command )
 {
 #ifdef LUA_SDK
-    BEGIN_LUA_CALL_PANEL_METHOD( "OnCommand" );
+    LUA_CALL_PANEL_METHOD_BEGIN( "OnCommand" );
     lua_pushstring( m_lua_State, command );
-    END_LUA_CALL_PANEL_METHOD( 1, 1 );
+    LUA_CALL_PANEL_METHOD_END( 1, 1 );
 
-    RETURN_LUA_PANEL_NONE();
+    LUA_RETURN_PANEL_NONE();
 #endif
 
     if ( !Q_stricmp( "performlayout", command ) )
@@ -4520,10 +4520,10 @@ void Panel::OnCommand( const char *command )
 void Panel::OnSetFocus()
 {
 #ifdef LUA_SDK
-    BEGIN_LUA_CALL_PANEL_METHOD( "OnSetFocus" );
-    END_LUA_CALL_PANEL_METHOD( 0, 1 );
+    LUA_CALL_PANEL_METHOD_BEGIN( "OnSetFocus" );
+    LUA_CALL_PANEL_METHOD_END( 0, 1 );
 
-    RETURN_LUA_PANEL_NONE();
+    LUA_RETURN_PANEL_NONE();
 #endif
 
     Repaint();
@@ -4535,10 +4535,10 @@ void Panel::OnSetFocus()
 void Panel::OnKillFocus()
 {
 #ifdef LUA_SDK
-    BEGIN_LUA_CALL_PANEL_METHOD( "OnKillFocus" );
-    END_LUA_CALL_PANEL_METHOD( 0, 1 );
+    LUA_CALL_PANEL_METHOD_BEGIN( "OnKillFocus" );
+    LUA_CALL_PANEL_METHOD_END( 0, 1 );
 
-    RETURN_LUA_PANEL_NONE();
+    LUA_RETURN_PANEL_NONE();
 #endif
 
     Repaint();
@@ -5447,8 +5447,8 @@ void Panel::ApplySettings( KeyValues *inResourceData )
     OnChildSettingsApplied( inResourceData, this );
 
 #ifdef LUA_SDK
-    BEGIN_LUA_CALL_PANEL_METHOD( "ApplySettings" );
-    END_LUA_CALL_PANEL_METHOD( 0, 0 );
+    LUA_CALL_PANEL_METHOD_BEGIN( "ApplySettings" );
+    LUA_CALL_PANEL_METHOD_END( 0, 0 );
 #endif
 }
 
@@ -5673,8 +5673,8 @@ void Panel::InternalInvalidateLayout()
 void Panel::OnMove()
 {
 #ifdef LUA_SDK
-    BEGIN_LUA_CALL_PANEL_METHOD( "OnMove" );
-    END_LUA_CALL_PANEL_METHOD( 0, 0 );
+    LUA_CALL_PANEL_METHOD_BEGIN( "OnMove" );
+    LUA_CALL_PANEL_METHOD_END( 0, 0 );
 #endif
 }
 
@@ -5697,8 +5697,8 @@ void Panel::InternalMove()
 void Panel::OnTick()
 {
 #ifdef LUA_SDK
-    BEGIN_LUA_CALL_PANEL_METHOD( "OnTick" );
-    END_LUA_CALL_PANEL_METHOD( 0, 0 );
+    LUA_CALL_PANEL_METHOD_BEGIN( "OnTick" );
+    LUA_CALL_PANEL_METHOD_END( 0, 0 );
 #endif
 }
 
@@ -5781,11 +5781,11 @@ void PreparePanelMessageMap( PanelMessageMap *panelMap )
 void Panel::OnMessage( const KeyValues *params, VPANEL ifromPanel )
 {
 #ifdef LUA_SDK
-    BEGIN_LUA_CALL_PANEL_METHOD( "OnMessage" );
+    LUA_CALL_PANEL_METHOD_BEGIN( "OnMessage" );
     PushVPanelLuaInstance( m_lua_State, ifromPanel );
-    END_LUA_CALL_PANEL_METHOD( 1, 1 );
+    LUA_CALL_PANEL_METHOD_END( 1, 1 );
 
-    RETURN_LUA_PANEL_NONE();
+    LUA_RETURN_PANEL_NONE();
 #endif
 
     PanelMessageMap *panelMap = GetMessageMap();
@@ -6319,8 +6319,8 @@ void Panel::PreparePanelMap( PanelMap_t *panelMap )
 void Panel::OnDelete()
 {
 #ifdef LUA_SDK
-    BEGIN_LUA_CALL_PANEL_METHOD( "OnDelete" );
-    END_LUA_CALL_PANEL_METHOD( 0, 0 );
+    LUA_CALL_PANEL_METHOD_BEGIN( "OnDelete" );
+    LUA_CALL_PANEL_METHOD_END( 0, 0 );
 #endif
 
 #ifdef WIN32

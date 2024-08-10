@@ -101,10 +101,10 @@ Activity CExperimentPlayerAnimState::TranslateActivity( Activity actDesired )
     CExperiment_Player *pPlayer = GetExperimentPlayer();
 
 #ifdef LUA_SDK
-    BEGIN_LUA_CALL_HOOK( "TranslateActivity" );
+    LUA_CALL_HOOK_BEGIN( "TranslateActivity" );
     CBaseEntity::PushLuaInstanceSafe( L, pPlayer );
     lua_pushinteger( L, actDesired );
-    END_LUA_CALL_HOOK( 2, 1 );
+    LUA_CALL_HOOK_END( 2, 1 );
 
     if ( lua_isnumber( L, -1 ) )  // The new, translated activity
     {
@@ -182,11 +182,11 @@ void CExperimentPlayerAnimState::Update( float eyeYaw, float eyePitch )
     Vector vecVelocity;
     GetOuterAbsVelocity( vecVelocity );
 
-    BEGIN_LUA_CALL_HOOK( "UpdateAnimation" );
+    LUA_CALL_HOOK_BEGIN( "UpdateAnimation" );
     CBaseEntity::PushLuaInstanceSafe( L, pExperimentPlayer );
     lua_pushvector( L, vecVelocity );
     lua_pushnumber( L, m_flMaxGroundSpeed );
-    END_LUA_CALL_HOOK( 3, 0 );
+    LUA_CALL_HOOK_END( 3, 0 );
 #endif
 }
 
@@ -304,11 +304,11 @@ void CExperimentPlayerAnimState::DoAnimationEvent( PlayerAnimEvent_t event,
     }
 
 #ifdef LUA_SDK
-    BEGIN_LUA_CALL_HOOK( "DoAnimationEvent" );
+    LUA_CALL_HOOK_BEGIN( "DoAnimationEvent" );
     CBaseEntity::PushLuaInstanceSafe( L, pPlayer );
     lua_pushinteger( L, ( int )event );
     lua_pushinteger( L, nData );
-    END_LUA_CALL_HOOK( 3, 1 );
+    LUA_CALL_HOOK_END( 3, 1 );
 
     if ( lua_isnumber( L, -1 ) )  // The translated activity to send to the weapon
     {
@@ -413,10 +413,10 @@ Activity CExperimentPlayerAnimState::CalcMainActivity()
     Vector vecVelocity;
     GetOuterAbsVelocity( vecVelocity );
 
-    BEGIN_LUA_CALL_HOOK( "CalcMainActivity" );
+    LUA_CALL_HOOK_BEGIN( "CalcMainActivity" );
     CBaseEntity::PushLuaInstanceSafe( L, pPlayer );
     lua_pushvector( L, vecVelocity );
-    END_LUA_CALL_HOOK( 2, 2 );
+    LUA_CALL_HOOK_END( 2, 2 );
 
     if ( lua_isnumber( L, -2 ) )  // Activity
     {

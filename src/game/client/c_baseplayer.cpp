@@ -1311,14 +1311,14 @@ void C_BasePlayer::UpdateFlashlight()
         int distance = FLASHLIGHT_DISTANCE;
 
 #if defined( LUA_SDK )
-        BEGIN_LUA_CALL_HOOK( "PlayerUpdateFlashlight" )
+        LUA_CALL_HOOK_BEGIN( "PlayerUpdateFlashlight" )
         CBaseEntity::PushLuaInstanceSafe( L, this );
         lua_pushvector( L, position );
         lua_pushvector( L, vecForward );
         lua_pushvector( L, vecRight );
         lua_pushvector( L, vecUp );
         lua_pushnumber( L, distance );
-        END_LUA_CALL_HOOK( 6, 5 );
+        LUA_CALL_HOOK_END( 6, 5 );
 
         if ( lua_isuserdata( L, -5 ) && luaL_checkudata( L, -5, LUA_VECTORLIBNAME ) )
             VectorCopy( luaL_checkvector( L, -5 ), position );

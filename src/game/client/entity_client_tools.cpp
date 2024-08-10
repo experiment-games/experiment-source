@@ -572,9 +572,9 @@ void CClientTools::OnEntityDeleted( CBaseEntity *pEntity )
 
 void CClientTools::OnEntityCreated( CBaseEntity *pEntity ) {
 #if defined(LUA_SDK)
-    BEGIN_LUA_CALL_HOOK("OnEntityCreated");
+    LUA_CALL_HOOK_BEGIN("OnEntityCreated");
     CBaseEntity::PushLuaInstanceSafe(L, pEntity);
-    END_LUA_CALL_HOOK(1, 0);
+    LUA_CALL_HOOK_END(1, 0);
 #endif
 
 	if ( !m_bInRecordingMode )

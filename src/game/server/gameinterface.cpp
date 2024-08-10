@@ -1214,14 +1214,14 @@ bool CServerGameDLL::LevelInit( const char *pMapName, char const *pMapEntities, 
     m_fAutoSaveDangerousMinHealthToCommit = 0.0f;
 
 #ifdef LUA_SDK
-    BEGIN_LUA_CALL_HOOK( "LevelInit" );
+    LUA_CALL_HOOK_BEGIN( "LevelInit" );
     lua_pushstring( L, pMapName );
     lua_pushstring( L, pMapEntities );
     lua_pushstring( L, pOldLevel );
     lua_pushstring( L, pLandmarkName );
     lua_pushboolean( L, loadGame );
     lua_pushboolean( L, background );
-    END_LUA_CALL_HOOK( 6, 0 );
+    LUA_CALL_HOOK_END( 6, 0 );
 #endif
 
     return true;
@@ -1322,10 +1322,10 @@ void CServerGameDLL::ServerActivate( edict_t *pEdictList, int edictCount, int cl
 
 #ifdef LUA_SDK
     // Andrew; call activate on the gamemode
-    BEGIN_LUA_CALL_HOOK( "ServerActivate" );
+    LUA_CALL_HOOK_BEGIN( "ServerActivate" );
     lua_pushinteger( L, edictCount );
     lua_pushinteger( L, clientMax );
-    END_LUA_CALL_HOOK( 2, 0 );
+    LUA_CALL_HOOK_END( 2, 0 );
 #endif
 }
 
@@ -1377,8 +1377,8 @@ void CServerGameDLL::GameFrame( bool simulating )
     VPROF( "CServerGameDLL::GameFrame" );
 
 #ifdef LUA_SDK
-    BEGIN_LUA_CALL_HOOK( "Tick" );
-    END_LUA_CALL_HOOK( 0, 0 );
+    LUA_CALL_HOOK_BEGIN( "Tick" );
+    LUA_CALL_HOOK_END( 0, 0 );
 #endif
 
     // Don't run frames until fully restored
@@ -1571,8 +1571,8 @@ void CServerGameDLL::LevelShutdown( void )
 #ifdef LUA_SDK
     if ( g_bLuaInitialized )
     {
-        BEGIN_LUA_CALL_HOOK( "LevelShutdown" );
-        END_LUA_CALL_HOOK( 0, 0 );
+        LUA_CALL_HOOK_BEGIN( "LevelShutdown" );
+        LUA_CALL_HOOK_END( 0, 0 );
     }
 #endif
 
@@ -2065,10 +2065,10 @@ bool CServerGameDLL::ShouldHideServer( void )
 #ifdef LUA_SDK
     if ( g_bLuaInitialized )
     {
-        BEGIN_LUA_CALL_HOOK( "ShouldHideServer" );
-        END_LUA_CALL_HOOK( 0, 1 );
+        LUA_CALL_HOOK_BEGIN( "ShouldHideServer" );
+        LUA_CALL_HOOK_END( 0, 1 );
 
-        RETURN_LUA_BOOLEAN();
+        LUA_RETURN_BOOLEAN();
     }
 #endif
 
@@ -3567,10 +3567,10 @@ void CServerGameClients::NetworkIDValidated( const char *pszUserName,
                                              const char *pszNetworkID )
 {
 #ifdef LUA_SDK
-    BEGIN_LUA_CALL_HOOK( "NetworkIDValidated" );
+    LUA_CALL_HOOK_BEGIN( "NetworkIDValidated" );
     lua_pushstring( L, pszUserName );
     lua_pushstring( L, pszNetworkID );
-    END_LUA_CALL_HOOK( 2, 0 );
+    LUA_CALL_HOOK_END( 2, 0 );
 #endif
 }
 

@@ -1357,12 +1357,12 @@ CBaseEntity *CBasePlayer::FindUseEntity()
     }
 
 #ifdef LUA_SDK
-    BEGIN_LUA_CALL_HOOK( "FindUseEntity" );
+    LUA_CALL_HOOK_BEGIN( "FindUseEntity" );
     CBaseEntity::PushLuaInstanceSafe( L, this );
     CBaseEntity::PushLuaInstanceSafe( L, pNearest );
-    END_LUA_CALL_HOOK( 2, 1 );
+    LUA_CALL_HOOK_END( 2, 1 );
 
-    RETURN_LUA_ENTITY();
+    LUA_RETURN_ENTITY();
 #endif
 
     return pNearest;
@@ -1464,12 +1464,12 @@ void CBasePlayer::PlayerUse( void )
     if ( pUseEntity )
     {
 #ifdef LUA_SDK
-        BEGIN_LUA_CALL_HOOK( "PlayerUse" );
+        LUA_CALL_HOOK_BEGIN( "PlayerUse" );
         CBaseEntity::PushLuaInstanceSafe( L, this );
         CBaseEntity::PushLuaInstanceSafe( L, pUseEntity );
-        END_LUA_CALL_HOOK( 2, 1 );
+        LUA_CALL_HOOK_END( 2, 1 );
 
-        RETURN_LUA_NONE_IF_FALSE();
+        LUA_RETURN_NONE_IF_FALSE();
 #endif
 
         //!!!UNDONE: traceline here to prevent +USEing buttons through walls
@@ -1846,14 +1846,14 @@ void CBasePlayer::CalcPlayerView( CViewSetup &viewSetup, bool &bForceDrawLocalPl
     viewSetup.fov = GetFOV();
 
 #ifdef LUA_SDK
-    BEGIN_LUA_CALL_HOOK( "CalcView" );
+    LUA_CALL_HOOK_BEGIN( "CalcView" );
     CBaseEntity::PushLuaInstanceSafe( L, this );
     lua_pushvector( L, viewSetup.origin );
     lua_pushangle( L, viewSetup.angles );
     lua_pushnumber( L, viewSetup.fov );
     lua_pushnumber( L, viewSetup.zNear );
     lua_pushnumber( L, viewSetup.zFar );
-    END_LUA_CALL_HOOK( 6, 1 );
+    LUA_CALL_HOOK_END( 6, 1 );
 
     PopCalcViewFromLuaTable( L, viewSetup, bForceDrawLocalPlayer );
 #endif
@@ -1904,7 +1904,7 @@ void CBasePlayer::CalcVehicleView(
 #endif
 
 #ifdef LUA_SDK
-    BEGIN_LUA_CALL_HOOK( "CalcVehicleView" );
+    LUA_CALL_HOOK_BEGIN( "CalcVehicleView" );
     CBaseEntity::PushLuaInstanceSafe( L, pVehicle->GetVehicleEnt() );
     CBaseEntity::PushLuaInstanceSafe( L, this );
 
@@ -1920,7 +1920,7 @@ void CBasePlayer::CalcVehicleView(
     lua_setfield( L, -2, "znear" );
     lua_pushnumber( L, viewSetup.zFar );
     lua_setfield( L, -2, "zfar" );
-    END_LUA_CALL_HOOK( 3, 1 );
+    LUA_CALL_HOOK_END( 3, 1 );
 
     PopCalcViewFromLuaTable( L, viewSetup, bForceDrawLocalPlayer );
 #endif

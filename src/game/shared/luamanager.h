@@ -72,12 +72,12 @@
 #pragma warning( disable : 4800 )  // forcing value to bool 'true' or 'false'
                                    // (performance warning)
 
-#define BEGIN_LUA_SET_ENUM_LIB( L, libraryName ) \
+#define LUA_SET_ENUM_LIB_BEGIN( L, libraryName ) \
     const char *lib = libraryName;               \
     lua_getglobal( L, LUA_ENAME );               \
     lua_newtable( L );
 
-#define BEGIN_LUA_SET_ENUM_LIB_CONTINUED( L, libraryName ) \
+#define LUA_SET_ENUM_LIB_BEGIN_CONTINUED( L, libraryName ) \
     lib = libraryName;                                     \
     lua_getglobal( L, LUA_ENAME );                         \
     lua_newtable( L );
@@ -86,11 +86,11 @@
     lua_pushinteger( L, enum );            \
     lua_setfield( L, -2, shortname );
 
-#define END_LUA_SET_ENUM_LIB( L ) \
+#define LUA_SET_ENUM_LIB_END( L ) \
     lua_setfield( L, -2, lib );   \
     lua_pop( L, 1 );
 
-#define BEGIN_LUA_CALL_HOOK_FOR_STATE( L, functionName ) \
+#define LUA_CALL_HOOK_FOR_STATE_BEGIN( L, functionName ) \
     lua_getglobal( L, LUA_HOOKSLIBNAME );                \
     if ( lua_istable( L, -1 ) )                          \
     {                                                    \
@@ -103,10 +103,10 @@
             lua_getglobal( L, "GAMEMODE" );              \
             args = 2;
 
-#define BEGIN_LUA_CALL_HOOK( functionName ) \
-    BEGIN_LUA_CALL_HOOK_FOR_STATE( L, functionName )
+#define LUA_CALL_HOOK_BEGIN( functionName ) \
+    LUA_CALL_HOOK_FOR_STATE_BEGIN( L, functionName )
 
-#define END_LUA_CALL_HOOK_FOR_STATE( L, nArgs, nresults ) \
+#define LUA_CALL_HOOK_FOR_STATE_END( L, nArgs, nresults ) \
     args += nArgs;                                        \
     luasrc_pcall( L, args, nresults );                    \
     }                                                     \
@@ -114,10 +114,10 @@
     }                                                     \
     else lua_pop( L, 1 );
 
-#define END_LUA_CALL_HOOK( nArgs, nresults ) \
-    END_LUA_CALL_HOOK_FOR_STATE( L, nArgs, nresults )
+#define LUA_CALL_HOOK_END( nArgs, nresults ) \
+    LUA_CALL_HOOK_FOR_STATE_END( L, nArgs, nresults )
 
-#define BEGIN_LUA_CALL_WEAPON_METHOD( functionName ) \
+#define LUA_CALL_WEAPON_METHOD_BEGIN( functionName ) \
     lua_getref( L, m_nTableReference );              \
     lua_getfield( L, -1, functionName );             \
     lua_remove( L, -2 );                             \
@@ -127,13 +127,13 @@
         CBaseEntity::PushLuaInstanceSafe( L, this ); \
         ++args;
 
-#define END_LUA_CALL_WEAPON_METHOD( nArgs, nresults ) \
+#define LUA_CALL_WEAPON_METHOD_END( nArgs, nresults ) \
     args += nArgs;                                    \
     luasrc_pcall( L, args, nresults );                \
     }                                                 \
     else lua_pop( L, 1 );
 
-#define BEGIN_LUA_CALL_WEAPON_HOOK( functionName, pWeapon ) \
+#define LUA_CALL_WEAPON_HOOK_BEGIN( functionName, pWeapon ) \
     if ( pWeapon->IsScripted() )                            \
     {                                                       \
         lua_getref( L, pWeapon->m_nTableReference );        \
@@ -143,12 +143,12 @@
         CBaseEntity::PushLuaInstanceSafe( L, pWeapon );     \
         ++args;
 
-#define END_LUA_CALL_WEAPON_HOOK( nArgs, nresults ) \
+#define LUA_CALL_WEAPON_HOOK_END( nArgs, nresults ) \
     args += nArgs;                                  \
     luasrc_pcall( L, args, nresults );              \
     }
 
-#define BEGIN_LUA_CALL_ENTITY_METHOD( functionName ) \
+#define LUA_CALL_ENTITY_METHOD_BEGIN( functionName ) \
     lua_getref( L, m_nTableReference );              \
     lua_getfield( L, -1, functionName );             \
     lua_remove( L, -2 );                             \
@@ -158,13 +158,13 @@
         CBaseEntity::PushLuaInstanceSafe( L, this ); \
         ++args;
 
-#define END_LUA_CALL_ENTITY_METHOD( nArgs, nresults ) \
+#define LUA_CALL_ENTITY_METHOD_END( nArgs, nresults ) \
     args += nArgs;                                    \
     luasrc_pcall( L, args, nresults );                \
     }                                                 \
     else lua_pop( L, 1 );
 
-#define BEGIN_LUA_CALL_TRIGGER_METHOD( functionName ) \
+#define LUA_CALL_TRIGGER_METHOD_BEGIN( functionName ) \
     lua_getref( L, m_nTableReference );               \
     lua_getfield( L, -1, functionName );              \
     lua_remove( L, -2 );                              \
@@ -174,13 +174,13 @@
         CBaseEntity::PushLuaInstanceSafe( L, this );  \
         ++args;
 
-#define END_LUA_CALL_TRIGGER_METHOD( nArgs, nresults ) \
+#define LUA_CALL_TRIGGER_METHOD_END( nArgs, nresults ) \
     args += nArgs;                                     \
     luasrc_pcall( L, args, nresults );                 \
     }                                                  \
     else lua_pop( L, 1 );
 
-#define BEGIN_LUA_CALL_PANEL_METHOD_FOR( Target, functionName ) \
+#define LUA_CALL_PANEL_METHOD_FOR_BEGIN( Target, functionName ) \
     if ( m_lua_State && Target->m_nTableReference >= 0 )        \
     {                                                           \
         lua_getref( m_lua_State, Target->m_nTableReference );   \
@@ -192,12 +192,12 @@
             Target->PushLuaInstance( m_lua_State );             \
             ++args;
 
-#define BEGIN_LUA_CALL_PANEL_METHOD( functionName ) \
-    BEGIN_LUA_CALL_PANEL_METHOD_FOR( this, functionName )
+#define LUA_CALL_PANEL_METHOD_BEGIN( functionName ) \
+    LUA_CALL_PANEL_METHOD_FOR_BEGIN( this, functionName )
 
 // Will call the function if it exists, leaving the specified amount of
 // return values on the stack (or nils if the function doesn't exist).
-#define END_LUA_CALL_PANEL_METHOD( nArgs, nresults )       \
+#define LUA_CALL_PANEL_METHOD_END( nArgs, nresults )       \
     args += nArgs;                                         \
     if ( luasrc_pcall( m_lua_State, args, nresults ) > 0 ) \
     {                                                      \
@@ -217,7 +217,7 @@
     }                                                      \
     }
 
-#define RETURN_LUA_NONE_IF_FALSE()                         \
+#define LUA_RETURN_NONE_IF_FALSE()                         \
     if ( lua_gettop( L ) == 1 )                            \
     {                                                      \
         if ( lua_isboolean( L, -1 ) )                      \
@@ -231,7 +231,7 @@
             lua_pop( L, 1 );                               \
     }
 
-#define RETURN_LUA_NONE_IF_TRUE()                          \
+#define LUA_RETURN_NONE_IF_TRUE()                          \
     if ( lua_gettop( L ) == 1 )                            \
     {                                                      \
         if ( lua_isboolean( L, -1 ) )                      \
@@ -245,7 +245,7 @@
             lua_pop( L, 1 );                               \
     }
 
-#define RETURN_LUA_PANEL_NONE()                                      \
+#define LUA_RETURN_PANEL_NONE()                                      \
     if ( m_lua_State && lua_gettop( m_lua_State ) == 1 )             \
     {                                                                \
         if ( lua_isboolean( m_lua_State, -1 ) )                      \
@@ -259,7 +259,7 @@
             lua_pop( m_lua_State, 1 );                               \
     }
 
-#define RETURN_LUA_BOOLEAN()                               \
+#define LUA_RETURN_BOOLEAN()                               \
     if ( lua_gettop( L ) == 1 )                            \
     {                                                      \
         if ( lua_isboolean( L, -1 ) )                      \
@@ -272,7 +272,7 @@
             lua_pop( L, 1 );                               \
     }
 
-#define RETURN_LUA_PANEL_BOOLEAN()                                   \
+#define LUA_RETURN_PANEL_BOOLEAN()                                   \
     if ( m_lua_State && lua_gettop( m_lua_State ) == 1 )             \
     {                                                                \
         if ( lua_isboolean( m_lua_State, -1 ) )                      \
@@ -285,7 +285,7 @@
             lua_pop( m_lua_State, 1 );                               \
     }
 
-#define RETURN_LUA_NUMBER()                        \
+#define LUA_RETURN_NUMBER()                        \
     if ( lua_gettop( L ) == 1 )                    \
     {                                              \
         if ( lua_isnumber( L, -1 ) )               \
@@ -298,7 +298,7 @@
             lua_pop( L, 1 );                       \
     }
 
-#define RETURN_LUA_INTEGER()                     \
+#define LUA_RETURN_INTEGER()                     \
     if ( lua_gettop( L ) == 1 )                  \
     {                                            \
         if ( lua_isnumber( L, -1 ) )             \
@@ -311,7 +311,7 @@
             lua_pop( L, 1 );                     \
     }
 
-#define RETURN_LUA_ACTIVITY()                    \
+#define LUA_RETURN_ACTIVITY()                    \
     if ( lua_gettop( L ) == 1 )                  \
     {                                            \
         if ( lua_isnumber( L, -1 ) )             \
@@ -324,7 +324,7 @@
             lua_pop( L, 1 );                     \
     }
 
-#define RETURN_LUA_STRING()                              \
+#define LUA_RETURN_STRING()                              \
     if ( lua_gettop( L ) == 1 )                          \
     {                                                    \
         if ( lua_isstring( L, -1 ) )                     \
@@ -337,7 +337,7 @@
             lua_pop( L, 1 );                             \
     }
 
-#define RETURN_LUA_WEAPON()                                          \
+#define LUA_RETURN_WEAPON()                                          \
     if ( lua_gettop( L ) == 1 )                                      \
     {                                                                \
         if ( lua_isuserdata( L, -1 ) &&                              \
@@ -351,7 +351,7 @@
             lua_pop( L, 1 );                                         \
     }
 
-#define RETURN_LUA_ENTITY()                                                               \
+#define LUA_RETURN_ENTITY()                                                               \
     if ( lua_gettop( L ) == 1 )                                                           \
     {                                                                                     \
         if ( lua_isuserdata( L, -1 ) && luaL_checkudata( L, -1, LUA_BASEENTITYLIBNAME ) ) \
@@ -364,7 +364,7 @@
             lua_pop( L, 1 );                                                              \
     }
 
-#define RETURN_LUA_PLAYER()                                                               \
+#define LUA_RETURN_PLAYER()                                                               \
     if ( lua_gettop( L ) == 1 )                                                           \
     {                                                                                     \
         if ( lua_isuserdata( L, -1 ) && luaL_checkudata( L, -1, LUA_BASEPLAYERLIBNAME ) ) \
@@ -377,7 +377,7 @@
             lua_pop( L, 1 );                                                              \
     }
 
-#define RETURN_LUA_VECTOR()                                                           \
+#define LUA_RETURN_VECTOR()                                                           \
     if ( lua_gettop( L ) == 1 )                                                       \
     {                                                                                 \
         if ( lua_isuserdata( L, -1 ) && luaL_checkudata( L, -1, LUA_VECTORLIBNAME ) ) \
@@ -390,7 +390,7 @@
             lua_pop( L, 1 );                                                          \
     }
 
-#define RETURN_LUA_ANGLE()                                                            \
+#define LUA_RETURN_ANGLE()                                                            \
     if ( lua_gettop( L ) == 1 )                                                       \
     {                                                                                 \
         if ( lua_isuserdata( L, -1 ) && luaL_checkudata( L, -1, LUA_QANGLELIBNAME ) ) \
@@ -403,7 +403,7 @@
             lua_pop( L, 1 );                                                          \
     }
 
-#define RETURN_LUA_VALUE_IF_TRUE( value )          \
+#define LUA_RETURN_VALUE_IF_TRUE( value )          \
     if ( lua_gettop( L ) == 1 )                    \
     {                                              \
         if ( lua_isboolean( L, -1 ) )              \

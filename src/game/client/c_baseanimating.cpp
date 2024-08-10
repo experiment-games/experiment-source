@@ -4626,10 +4626,10 @@ C_BaseAnimating *C_BaseAnimating::CreateRagdollCopy()
 
     if ( L )
     {
-        BEGIN_LUA_CALL_HOOK( "CreateClientsideRagdoll" );
+        LUA_CALL_HOOK_BEGIN( "CreateClientsideRagdoll" );
         this->PushLuaInstance( L );
         pRagdoll->PushLuaInstance( L );
-        END_LUA_CALL_HOOK( 2, 0 );
+        LUA_CALL_HOOK_END( 2, 0 );
     }
 
     return pRagdoll;

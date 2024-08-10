@@ -1162,10 +1162,10 @@ void CGameMovement::ProcessMovement( CBasePlayer *pPlayer, CMoveData *pMove )
     mv->m_flMaxSpeed = pPlayer->GetPlayerMaxSpeed();
 
 #ifdef LUA_SDK
-    BEGIN_LUA_CALL_HOOK( "PlayerTick" );
+    LUA_CALL_HOOK_BEGIN( "PlayerTick" );
     CBaseEntity::PushLuaInstanceSafe( L, player );
     lua_pushmovedata( L, mv );
-    END_LUA_CALL_HOOK( 2, 0 );
+    LUA_CALL_HOOK_END( 2, 0 );
 #endif
 
     // CheckV( player->CurrentCommandNumber(), "StartPos", mv->GetAbsOrigin() );
@@ -4546,12 +4546,12 @@ void CGameMovement::PlayerMove( void )
     VPROF( "CGameMovement::PlayerMove" );
 
 #ifdef LUA_SDK
-    BEGIN_LUA_CALL_HOOK( "Move" );
+    LUA_CALL_HOOK_BEGIN( "Move" );
     CBaseEntity::PushLuaInstanceSafe( L, player );
     lua_pushmovedata( L, mv );
-    END_LUA_CALL_HOOK( 2, 1 );
+    LUA_CALL_HOOK_END( 2, 1 );
 
-    RETURN_LUA_NONE_IF_FALSE();
+    LUA_RETURN_NONE_IF_FALSE();
 #endif
 
     CheckParameters();
@@ -4655,10 +4655,10 @@ void CGameMovement::PlayerMove( void )
         if ( newMoveType == MOVETYPE_NOCLIP || m_nOldMoveType == MOVETYPE_NOCLIP )
         {
             bool bNoClipDesired = newMoveType == MOVETYPE_NOCLIP;
-            BEGIN_LUA_CALL_HOOK( "PlayerNoClip" );
+            LUA_CALL_HOOK_BEGIN( "PlayerNoClip" );
             CBaseEntity::PushLuaInstanceSafe( L, player );
             lua_pushboolean( L, bNoClipDesired );
-            END_LUA_CALL_HOOK( 2, 1 );
+            LUA_CALL_HOOK_END( 2, 1 );
 
             // On false, block the switch
             if ( lua_isboolean( L, -1 ) && !lua_toboolean( L, -1 ) )

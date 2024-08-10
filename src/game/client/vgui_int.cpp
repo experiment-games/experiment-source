@@ -286,16 +286,16 @@ void VGui_PreRender()
     }
 
 #ifdef LUA_SDK
-    BEGIN_LUA_CALL_HOOK( "PreDrawHUD" );
-    END_LUA_CALL_HOOK( 0, 0 );
+    LUA_CALL_HOOK_BEGIN( "PreDrawHUD" );
+    LUA_CALL_HOOK_END( 0, 0 );
 #endif
 }
 
 void VGui_PostRender()
 {
 #ifdef LUA_SDK
-    BEGIN_LUA_CALL_HOOK( "PostDrawHUD" );
-    END_LUA_CALL_HOOK( 0, 0 );
+    LUA_CALL_HOOK_BEGIN( "PostDrawHUD" );
+    LUA_CALL_HOOK_END( 0, 0 );
 #endif
 }
 

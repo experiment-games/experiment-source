@@ -3039,12 +3039,12 @@ void DoImageSpaceMotionBlur( const CViewSetup &view, int x, int y, int w, int h 
     }
 
 #ifdef LUA_SDK
-    BEGIN_LUA_CALL_HOOK( "GetMotionBlurValues" );
+    LUA_CALL_HOOK_BEGIN( "GetMotionBlurValues" );
     lua_pushnumber( L, g_vMotionBlurValues[0] ); // horizontal blur
     lua_pushnumber( L, g_vMotionBlurValues[1] ); // vertical blur
     lua_pushnumber( L, g_vMotionBlurValues[2] ); // forward blur
     lua_pushnumber( L, g_vMotionBlurValues[3] ); // rotational blur
-    END_LUA_CALL_HOOK( 4, 4 );
+    LUA_CALL_HOOK_END( 4, 4 );
 
     if ( lua_isnumber(L, -4) )
         g_vMotionBlurValues[0] = lua_tonumber( L, -4 );

@@ -507,12 +507,12 @@ class CHLVoiceStatusHelper : public IVoiceStatusHelper
         color[0] = color[1] = color[2] = 128;
 
 #ifdef LUA_SDK
-        BEGIN_LUA_CALL_HOOK( "GetPlayerTextColor" );
+        LUA_CALL_HOOK_BEGIN( "GetPlayerTextColor" );
         lua_pushinteger( L, entindex );
         lua_pushinteger( L, color[0] );
         lua_pushinteger( L, color[1] );
         lua_pushinteger( L, color[2] );
-        END_LUA_CALL_HOOK( 4, 3 );
+        LUA_CALL_HOOK_END( 4, 3 );
 
         if ( lua_isnumber( L, -3 ) )
             color[2] = ( int )lua_tointeger( L, -3 );
@@ -532,10 +532,10 @@ class CHLVoiceStatusHelper : public IVoiceStatusHelper
     virtual bool CanShowSpeakerLabels()
     {
 #ifdef LUA_SDK
-        BEGIN_LUA_CALL_HOOK( "CanShowSpeakerLabels" );
-        END_LUA_CALL_HOOK( 0, 1 );
+        LUA_CALL_HOOK_BEGIN( "CanShowSpeakerLabels" );
+        LUA_CALL_HOOK_END( 0, 1 );
 
-        RETURN_LUA_BOOLEAN();
+        LUA_RETURN_BOOLEAN();
 #endif
 
         return true;
@@ -1754,9 +1754,9 @@ void CHLClient::LevelInitPreEntity( char const *pMapName )
     luasrc_LoadGamemode( gamemode.GetString() );
     luasrc_SetGamemode( gamemode.GetString() );
 
-    BEGIN_LUA_CALL_HOOK( "LevelInitPreEntity" );
+    LUA_CALL_HOOK_BEGIN( "LevelInitPreEntity" );
     lua_pushstring( L, pMapName );
-    END_LUA_CALL_HOOK( 1, 0 );
+    LUA_CALL_HOOK_END( 1, 0 );
 #endif
 
     input->LevelInit();
@@ -1829,8 +1829,8 @@ void CHLClient::LevelInitPreEntity( char const *pMapName )
 void CHLClient::LevelInitPostEntity()
 {
 #ifdef LUA_SDK
-    BEGIN_LUA_CALL_HOOK( "LevelInitPostEntity" );
-    END_LUA_CALL_HOOK( 0, 0 );
+    LUA_CALL_HOOK_BEGIN( "LevelInitPostEntity" );
+    LUA_CALL_HOOK_END( 0, 0 );
 #endif
 
     IGameSystem::LevelInitPostEntityAllSystems();
@@ -1871,8 +1871,8 @@ void CHLClient::LevelShutdown( void )
 #ifdef LUA_SDK
     if ( g_bLuaInitialized )
     {
-        BEGIN_LUA_CALL_HOOK( "LevelShutdown" );
-        END_LUA_CALL_HOOK( 0, 0 );
+        LUA_CALL_HOOK_BEGIN( "LevelShutdown" );
+        LUA_CALL_HOOK_END( 0, 0 );
     }
 #endif
 
@@ -2187,8 +2187,8 @@ void SimulateEntities()
 #ifdef LUA_SDK
     if ( L )
     {
-        BEGIN_LUA_CALL_HOOK( "Tick" );
-        END_LUA_CALL_HOOK( 0, 0 );
+        LUA_CALL_HOOK_BEGIN( "Tick" );
+        LUA_CALL_HOOK_END( 0, 0 );
     }
 #endif
 

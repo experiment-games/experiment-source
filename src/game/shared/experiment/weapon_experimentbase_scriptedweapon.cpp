@@ -576,8 +576,8 @@ void CExperimentScriptedWeapon::InitScriptedWeapon( void )
     }
     lua_pop( L, 1 );
 
-    BEGIN_LUA_CALL_WEAPON_METHOD( "Initialize" );
-    END_LUA_CALL_WEAPON_METHOD( 0, 0 );
+    LUA_CALL_WEAPON_METHOD_BEGIN( "Initialize" );
+    LUA_CALL_WEAPON_METHOD_END( 0, 0 );
 #endif
 }
 
@@ -595,8 +595,8 @@ void CExperimentScriptedWeapon::OnDataChanged( DataUpdateType_t updateType )
             InitScriptedWeapon();
 
 #ifdef LUA_SDK
-            BEGIN_LUA_CALL_WEAPON_METHOD( "Precache" );
-            END_LUA_CALL_WEAPON_METHOD( 0, 0 );
+            LUA_CALL_WEAPON_METHOD_BEGIN( "Precache" );
+            LUA_CALL_WEAPON_METHOD_END( 0, 0 );
 #endif
         }
     }
@@ -661,8 +661,8 @@ void CExperimentScriptedWeapon::Precache( void )
     }
 
 #if defined( LUA_SDK ) && !defined( CLIENT_DLL )
-    BEGIN_LUA_CALL_WEAPON_METHOD( "Precache" );
-    END_LUA_CALL_WEAPON_METHOD( 0, 0 );
+    LUA_CALL_WEAPON_METHOD_BEGIN( "Precache" );
+    LUA_CALL_WEAPON_METHOD_END( 0, 0 );
 #endif
 }
 
@@ -681,7 +681,7 @@ const char *CExperimentScriptedWeapon::GetViewModel( int ) const
     lua_getfield( L, -1, "ViewModel" );
     lua_remove( L, -2 );
 
-    RETURN_LUA_STRING();
+    LUA_RETURN_STRING();
 #endif
 
     return BaseClass::GetViewModel();
@@ -694,7 +694,7 @@ const char *CExperimentScriptedWeapon::GetWorldModel( void ) const
     lua_getfield( L, -1, "WorldModel" );
     lua_remove( L, -2 );
 
-    RETURN_LUA_STRING();
+    LUA_RETURN_STRING();
 #endif
 
     return BaseClass::GetWorldModel();
@@ -707,7 +707,7 @@ const char *CExperimentScriptedWeapon::GetAnimPrefix( void ) const
     lua_getfield( L, -1, "AnimationPrefix" );
     lua_remove( L, -2 );
 
-    RETURN_LUA_STRING();
+    LUA_RETURN_STRING();
 #endif
 
     return BaseClass::GetAnimPrefix();
@@ -720,7 +720,7 @@ const char *CExperimentScriptedWeapon::GetPrintName( void ) const
     lua_getfield( L, -1, "PrintName" );
     lua_remove( L, -2 );
 
-    RETURN_LUA_STRING();
+    LUA_RETURN_STRING();
 #endif
 
     return BaseClass::GetPrintName();
@@ -733,7 +733,7 @@ int CExperimentScriptedWeapon::GetMaxClip1( void ) const
     lua_getfield( L, -1, "MaxClip" );
     lua_remove( L, -2 );
 
-    RETURN_LUA_INTEGER();
+    LUA_RETURN_INTEGER();
 #endif
 
     return BaseClass::GetMaxClip1();
@@ -746,7 +746,7 @@ int CExperimentScriptedWeapon::GetMaxClip2( void ) const
     lua_getfield( L, -1, "MaxClip2" );
     lua_remove( L, -2 );
 
-    RETURN_LUA_INTEGER();
+    LUA_RETURN_INTEGER();
 #endif
 
     return BaseClass::GetMaxClip2();
@@ -759,7 +759,7 @@ int CExperimentScriptedWeapon::GetDefaultClip1( void ) const
     lua_getfield( L, -1, "DefaultClip" );
     lua_remove( L, -2 );
 
-    RETURN_LUA_INTEGER();
+    LUA_RETURN_INTEGER();
 #endif
 
     return BaseClass::GetDefaultClip1();
@@ -772,7 +772,7 @@ int CExperimentScriptedWeapon::GetDefaultClip2( void ) const
     lua_getfield( L, -1, "DefaultClip2" );
     lua_remove( L, -2 );
 
-    RETURN_LUA_INTEGER();
+    LUA_RETURN_INTEGER();
 #endif
 
     return BaseClass::GetDefaultClip2();
@@ -808,7 +808,7 @@ int CExperimentScriptedWeapon::GetWeight( void ) const
     lua_getfield( L, -1, "Weight" );
     lua_remove( L, -2 );
 
-    RETURN_LUA_INTEGER();
+    LUA_RETURN_INTEGER();
 #endif
 
     return BaseClass::GetWeight();
@@ -867,7 +867,7 @@ int CExperimentScriptedWeapon::GetWeaponFlags( void ) const
     lua_getfield( L, -1, "WeaponFlags" );
     lua_remove( L, -2 );
 
-    RETURN_LUA_INTEGER();
+    LUA_RETURN_INTEGER();
 #endif
 
     return BaseClass::GetWeaponFlags();
@@ -880,7 +880,7 @@ int CExperimentScriptedWeapon::GetSlot( void ) const
     lua_getfield( L, -1, "InventorySlot" );
     lua_remove( L, -2 );
 
-    RETURN_LUA_INTEGER();
+    LUA_RETURN_INTEGER();
 #endif
 
     return BaseClass::GetSlot();
@@ -893,7 +893,7 @@ int CExperimentScriptedWeapon::GetPosition( void ) const
     lua_getfield( L, -1, "InventorySlotPosition" );
     lua_remove( L, -2 );
 
-    RETURN_LUA_INTEGER();
+    LUA_RETURN_INTEGER();
 #endif
 
     return BaseClass::GetPosition();
@@ -913,16 +913,16 @@ const Vector &CExperimentScriptedWeapon::GetBulletSpread( void )
 void CExperimentScriptedWeapon::PrimaryAttack( void )
 {
 #ifdef LUA_SDK
-    BEGIN_LUA_CALL_WEAPON_METHOD( "PrimaryAttack" );
-    END_LUA_CALL_WEAPON_METHOD( 0, 0 );
+    LUA_CALL_WEAPON_METHOD_BEGIN( "PrimaryAttack" );
+    LUA_CALL_WEAPON_METHOD_END( 0, 0 );
 #endif
 }
 
 void CExperimentScriptedWeapon::SecondaryAttack( void )
 {
 #ifdef LUA_SDK
-    BEGIN_LUA_CALL_WEAPON_METHOD( "SecondaryAttack" );
-    END_LUA_CALL_WEAPON_METHOD( 0, 0 );
+    LUA_CALL_WEAPON_METHOD_BEGIN( "SecondaryAttack" );
+    LUA_CALL_WEAPON_METHOD_END( 0, 0 );
 #endif
 }
 
@@ -941,10 +941,10 @@ void CExperimentScriptedWeapon::FireBullets( const FireBulletsInfo_t &info )
 bool CExperimentScriptedWeapon::Reload( void )
 {
 #ifdef LUA_SDK
-    BEGIN_LUA_CALL_WEAPON_METHOD( "Reload" );
-    END_LUA_CALL_WEAPON_METHOD( 0, 1 );
+    LUA_CALL_WEAPON_METHOD_BEGIN( "Reload" );
+    LUA_CALL_WEAPON_METHOD_END( 0, 1 );
 
-    RETURN_LUA_BOOLEAN();
+    LUA_RETURN_BOOLEAN();
 #endif
     return BaseClass::Reload();
 }
@@ -956,10 +956,10 @@ bool CExperimentScriptedWeapon::Reload( void )
 bool CExperimentScriptedWeapon::Deploy( void )
 {
 #ifdef LUA_SDK
-    BEGIN_LUA_CALL_WEAPON_METHOD( "Deploy" );
-    END_LUA_CALL_WEAPON_METHOD( 0, 1 );
+    LUA_CALL_WEAPON_METHOD_BEGIN( "Deploy" );
+    LUA_CALL_WEAPON_METHOD_END( 0, 1 );
 
-    RETURN_LUA_VALUE_IF_TRUE( false );
+    LUA_RETURN_VALUE_IF_TRUE( false );
 #endif
 
     return BaseClass::Deploy();
@@ -968,11 +968,11 @@ bool CExperimentScriptedWeapon::Deploy( void )
 Activity CExperimentScriptedWeapon::GetDrawActivity( void )
 {
 #ifdef LUA_SDK
-    BEGIN_LUA_CALL_WEAPON_METHOD( "GetDrawActivity" );
-    END_LUA_CALL_WEAPON_METHOD( 0, 1 );
+    LUA_CALL_WEAPON_METHOD_BEGIN( "GetDrawActivity" );
+    LUA_CALL_WEAPON_METHOD_END( 0, 1 );
 
     // Kind of lame, but we're required to explicitly cast
-    RETURN_LUA_ACTIVITY();
+    LUA_RETURN_ACTIVITY();
 #endif
 
     return BaseClass::GetDrawActivity();
@@ -985,11 +985,11 @@ Activity CExperimentScriptedWeapon::GetDrawActivity( void )
 bool CExperimentScriptedWeapon::Holster( CBaseCombatWeapon *pSwitchingTo )
 {
 #ifdef LUA_SDK
-    BEGIN_LUA_CALL_WEAPON_METHOD( "Holster" );
+    LUA_CALL_WEAPON_METHOD_BEGIN( "Holster" );
     CBaseEntity::PushLuaInstanceSafe( L, pSwitchingTo );
-    END_LUA_CALL_WEAPON_METHOD( 1, 1 );
+    LUA_CALL_WEAPON_METHOD_END( 1, 1 );
 
-    RETURN_LUA_BOOLEAN();
+    LUA_RETURN_BOOLEAN();
 #endif
 
     return BaseClass::Holster( pSwitchingTo );
@@ -1001,10 +1001,10 @@ bool CExperimentScriptedWeapon::Holster( CBaseCombatWeapon *pSwitchingTo )
 void CExperimentScriptedWeapon::ItemPostFrame( void )
 {
 #ifdef LUA_SDK
-    BEGIN_LUA_CALL_WEAPON_METHOD( "ItemPostFrame" );
-    END_LUA_CALL_WEAPON_METHOD( 0, 1 );
+    LUA_CALL_WEAPON_METHOD_BEGIN( "ItemPostFrame" );
+    LUA_CALL_WEAPON_METHOD_END( 0, 1 );
 
-    RETURN_LUA_NONE_IF_FALSE();
+    LUA_RETURN_NONE_IF_FALSE();
 #endif
 
     BaseClass::ItemPostFrame();
@@ -1017,10 +1017,10 @@ void CExperimentScriptedWeapon::ItemPostFrame( void )
 void CExperimentScriptedWeapon::ItemBusyFrame( void )
 {
 #ifdef LUA_SDK
-    BEGIN_LUA_CALL_WEAPON_METHOD( "ItemBusyFrame" );
-    END_LUA_CALL_WEAPON_METHOD( 0, 1 );
+    LUA_CALL_WEAPON_METHOD_BEGIN( "ItemBusyFrame" );
+    LUA_CALL_WEAPON_METHOD_END( 0, 1 );
 
-    RETURN_LUA_NONE_IF_FALSE();
+    LUA_RETURN_NONE_IF_FALSE();
 #endif
 
     BaseClass::ItemBusyFrame();
@@ -1030,10 +1030,10 @@ void CExperimentScriptedWeapon::ItemBusyFrame( void )
 int CExperimentScriptedWeapon::CapabilitiesGet( void )
 {
 #ifdef LUA_SDK
-    BEGIN_LUA_CALL_WEAPON_METHOD( "CapabilitiesGet" );
-    END_LUA_CALL_WEAPON_METHOD( 0, 1 );
+    LUA_CALL_WEAPON_METHOD_BEGIN( "CapabilitiesGet" );
+    LUA_CALL_WEAPON_METHOD_END( 0, 1 );
 
-    RETURN_LUA_INTEGER();
+    LUA_RETURN_INTEGER();
 #endif
 
     return BaseClass::CapabilitiesGet();
@@ -1042,11 +1042,11 @@ int CExperimentScriptedWeapon::CapabilitiesGet( void )
 int CExperimentScriptedWeapon::DrawModel( int flags )
 {
 #ifdef LUA_SDK
-    BEGIN_LUA_CALL_WEAPON_METHOD( "DrawModel" );
+    LUA_CALL_WEAPON_METHOD_BEGIN( "DrawModel" );
     lua_pushinteger( L, flags );
-    END_LUA_CALL_WEAPON_METHOD( 1, 1 );
+    LUA_CALL_WEAPON_METHOD_END( 1, 1 );
 
-    RETURN_LUA_INTEGER();
+    LUA_RETURN_INTEGER();
 #endif
 
     return BaseClass::DrawModel( flags );

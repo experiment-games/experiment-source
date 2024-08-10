@@ -285,13 +285,13 @@ int C_BaseViewModel::DrawModel(int flags) {
     C_BaseCombatWeapon *pWeapon = GetOwningWeapon();
     
 #ifdef LUA_SDK
-    BEGIN_LUA_CALL_HOOK( "PreDrawViewModel" );
+    LUA_CALL_HOOK_BEGIN( "PreDrawViewModel" );
     CBaseEntity::PushLuaInstanceSafe( L, this );
     CBaseEntity::PushLuaInstanceSafe( L, pPlayer );
     CBaseEntity::PushLuaInstanceSafe( L, pWeapon );
-    END_LUA_CALL_HOOK( 3, 1 );
+    LUA_CALL_HOOK_END( 3, 1 );
 
-    RETURN_LUA_VALUE_IF_TRUE( 0 );
+    LUA_RETURN_VALUE_IF_TRUE( 0 );
 #endif
 
     int ret;
@@ -327,11 +327,11 @@ int C_BaseViewModel::DrawModel(int flags) {
 #endif
 
 #ifdef LUA_SDK
-    BEGIN_LUA_CALL_HOOK( "PostDrawViewModel" );
+    LUA_CALL_HOOK_BEGIN( "PostDrawViewModel" );
     CBaseEntity::PushLuaInstanceSafe( L, this );
     CBaseEntity::PushLuaInstanceSafe( L, pPlayer );
     CBaseEntity::PushLuaInstanceSafe( L, pWeapon );
-    END_LUA_CALL_HOOK( 3, 0 );
+    LUA_CALL_HOOK_END( 3, 0 );
 #endif
 
     return ret;

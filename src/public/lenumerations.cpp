@@ -9,7 +9,7 @@
 */
 LUALIB_API int luaopen_FL( lua_State *L )
 {
-    BEGIN_LUA_SET_ENUM_LIB( L, LUA_ENGINEFLAGSLIBNAME );
+    LUA_SET_ENUM_LIB_BEGIN( L, LUA_ENGINEFLAGSLIBNAME );
     lua_pushenum( L, FL_ONGROUND, "ONGROUND" );
     lua_pushenum( L, FL_DUCKING, "DUCKING" );
     lua_pushenum( L, FL_ANIMDUCKING, "ANIMDUCKING" );
@@ -42,7 +42,7 @@ LUALIB_API int luaopen_FL( lua_State *L )
     lua_pushenum( L, FL_DISSOLVING, "DISSOLVING" );
     lua_pushenum( L, FL_TRANSRAGDOLL, "TRANSRAGDOLL" );
     lua_pushenum( L, FL_UNBLOCKABLE_BY_PLAYER, "UNBLOCKABLE_BY_PLAYER" );
-    END_LUA_SET_ENUM_LIB( L );
+    LUA_SET_ENUM_LIB_END( L );
     return 0;
 }
 
@@ -51,7 +51,7 @@ LUALIB_API int luaopen_FL( lua_State *L )
 */
 LUALIB_API int luaopen_OBS_MODE( lua_State *L )
 {
-    BEGIN_LUA_SET_ENUM_LIB( L, LUA_OBSMODELIBNAME );
+    LUA_SET_ENUM_LIB_BEGIN( L, LUA_OBSMODELIBNAME );
     lua_pushenum( L, OBS_MODE_NONE, "NONE" );
     lua_pushenum( L, OBS_MODE_DEATHCAM, "DEATHCAM" );
     lua_pushenum( L, OBS_MODE_FREEZECAM, "FREEZECAM" );
@@ -60,7 +60,7 @@ LUALIB_API int luaopen_OBS_MODE( lua_State *L )
     lua_pushenum( L, OBS_MODE_CHASE, "CHASE" );
     lua_pushenum( L, OBS_MODE_POI, "POI" );
     lua_pushenum( L, OBS_MODE_ROAMING, "ROAMING" );
-    END_LUA_SET_ENUM_LIB( L );
+    LUA_SET_ENUM_LIB_END( L );
     return 0;
 }
 
@@ -69,7 +69,7 @@ LUALIB_API int luaopen_OBS_MODE( lua_State *L )
 */
 LUALIB_API int luaopen_GESTURE_SLOT( lua_State *L )
 {
-    BEGIN_LUA_SET_ENUM_LIB( L, LUA_GESTURESLOTLIBNAME );
+    LUA_SET_ENUM_LIB_BEGIN( L, LUA_GESTURESLOTLIBNAME );
     lua_pushenum( L, GESTURE_SLOT_ATTACK_AND_RELOAD, "ATTACK_AND_RELOAD" );
     lua_pushenum( L, GESTURE_SLOT_GRENADE, "GRENADE" );
     lua_pushenum( L, GESTURE_SLOT_JUMP, "JUMP" );
@@ -79,7 +79,7 @@ LUALIB_API int luaopen_GESTURE_SLOT( lua_State *L )
     lua_pushenum( L, GESTURE_SLOT_CUSTOM, "CUSTOM" );
     lua_pushenum( L, GESTURE_SLOT_COUNT, "COUNT" );
     lua_pushenum( L, GESTURE_SLOT_INVALID, "INVALID" );
-    END_LUA_SET_ENUM_LIB( L );
+    LUA_SET_ENUM_LIB_END( L );
     return 0;
 }
 
@@ -88,7 +88,7 @@ LUALIB_API int luaopen_GESTURE_SLOT( lua_State *L )
 */
 LUALIB_API int luaopen_MOVETYPE( lua_State *L )
 {
-    BEGIN_LUA_SET_ENUM_LIB( L, LUA_MOVETYPELIBNAME );
+    LUA_SET_ENUM_LIB_BEGIN( L, LUA_MOVETYPELIBNAME );
     lua_pushenum( L, MOVETYPE_NONE, "NONE" );
     lua_pushenum( L, MOVETYPE_ISOMETRIC, "ISOMETRIC" );
     lua_pushenum( L, MOVETYPE_WALK, "WALK" );
@@ -102,7 +102,7 @@ LUALIB_API int luaopen_MOVETYPE( lua_State *L )
     lua_pushenum( L, MOVETYPE_OBSERVER, "OBSERVER" );
     lua_pushenum( L, MOVETYPE_CUSTOM, "CUSTOM" );
     lua_pushenum( L, MOVETYPE_LAST, "LAST" );
-    END_LUA_SET_ENUM_LIB( L );
+    LUA_SET_ENUM_LIB_END( L );
     return 0;
 }
 
@@ -111,13 +111,13 @@ LUALIB_API int luaopen_MOVETYPE( lua_State *L )
 */
 LUALIB_API int luaopen_MOVECOLLIDE( lua_State *L )
 {
-    BEGIN_LUA_SET_ENUM_LIB( L, LUA_MOVECOLLIDELIBNAME );
+    LUA_SET_ENUM_LIB_BEGIN( L, LUA_MOVECOLLIDELIBNAME );
     lua_pushenum( L, MOVECOLLIDE_DEFAULT, "DEFAULT" );
     lua_pushenum( L, MOVECOLLIDE_FLY_BOUNCE, "FLY_BOUNCE" );
     lua_pushenum( L, MOVECOLLIDE_FLY_CUSTOM, "FLY_CUSTOM" );
     lua_pushenum( L, MOVECOLLIDE_FLY_SLIDE, "FLY_SLIDE" );
     lua_pushenum( L, MOVECOLLIDE_COUNT, "COUNT" );
-    END_LUA_SET_ENUM_LIB( L );
+    LUA_SET_ENUM_LIB_END( L );
     return 0;
 }
 
@@ -126,7 +126,7 @@ LUALIB_API int luaopen_MOVECOLLIDE( lua_State *L )
 */
 LUALIB_API int luaopen_SOLID( lua_State *L )
 {
-    BEGIN_LUA_SET_ENUM_LIB( L, LUA_SOLIDLIBNAME );
+    LUA_SET_ENUM_LIB_BEGIN( L, LUA_SOLIDLIBNAME );
     lua_pushenum( L, SOLID_NONE, "NONE" );
     lua_pushenum( L, SOLID_BSP, "BSP" );
     lua_pushenum( L, SOLID_BBOX, "BBOX" );
@@ -135,7 +135,7 @@ LUALIB_API int luaopen_SOLID( lua_State *L )
     lua_pushenum( L, SOLID_CUSTOM, "CUSTOM" );
     lua_pushenum( L, SOLID_VPHYSICS, "VPHYSICS" );
     lua_pushenum( L, SOLID_LAST, "LAST" );
-    END_LUA_SET_ENUM_LIB( L );
+    LUA_SET_ENUM_LIB_END( L );
     return 0;
 }
 
@@ -144,7 +144,7 @@ LUALIB_API int luaopen_SOLID( lua_State *L )
 */
 LUALIB_API int luaopen_SOLIDFLAG( lua_State *L )
 {
-    BEGIN_LUA_SET_ENUM_LIB( L, LUA_SOLIDFLAGLIBNAME );
+    LUA_SET_ENUM_LIB_BEGIN( L, LUA_SOLIDFLAGLIBNAME );
     lua_pushenum( L, FSOLID_CUSTOMRAYTEST, "CUSTOMRAYTEST" );
     lua_pushenum( L, FSOLID_CUSTOMBOXTEST, "CUSTOMBOXTEST" );
     lua_pushenum( L, FSOLID_NOT_SOLID, "NOT_SOLID" );
@@ -155,7 +155,7 @@ LUALIB_API int luaopen_SOLIDFLAG( lua_State *L )
     lua_pushenum( L, FSOLID_USE_TRIGGER_BOUNDS, "USE_TRIGGER_BOUNDS" );
     lua_pushenum( L, FSOLID_ROOT_PARENT_ALIGNED, "ROOT_PARENT_ALIGNED" );
     lua_pushenum( L, FSOLID_TRIGGER_TOUCH_DEBRIS, "TRIGGER_TOUCH_DEBRIS" );
-    END_LUA_SET_ENUM_LIB( L );
+    LUA_SET_ENUM_LIB_END( L );
     return 0;
 }
 
@@ -164,13 +164,13 @@ LUALIB_API int luaopen_SOLIDFLAG( lua_State *L )
 */
 LUALIB_API int luaopen_LIFE( lua_State *L )
 {
-    BEGIN_LUA_SET_ENUM_LIB( L, LUA_LIFELIBNAME );
+    LUA_SET_ENUM_LIB_BEGIN( L, LUA_LIFELIBNAME );
     lua_pushenum( L, LIFE_ALIVE, "ALIVE" );
     lua_pushenum( L, LIFE_DYING, "DYING" );
     lua_pushenum( L, LIFE_DEAD, "DEAD" );
     lua_pushenum( L, LIFE_RESPAWNABLE, "RESPAWNABLE" );
     lua_pushenum( L, LIFE_DISCARDBODY, "DISCARDBODY" );
-    END_LUA_SET_ENUM_LIB( L );
+    LUA_SET_ENUM_LIB_END( L );
     return 0;
 }
 
@@ -179,7 +179,7 @@ LUALIB_API int luaopen_LIFE( lua_State *L )
 */
 LUALIB_API int luaopen_EF( lua_State *L )
 {
-    BEGIN_LUA_SET_ENUM_LIB( L, LUA_EFLIBNAME );
+    LUA_SET_ENUM_LIB_BEGIN( L, LUA_EFLIBNAME );
     lua_pushenum( L, EF_BONEMERGE, "BONEMERGE" );
     lua_pushenum( L, EF_BRIGHTLIGHT, "BRIGHTLIGHT" );
     lua_pushenum( L, EF_DIMLIGHT, "DIMLIGHT" );
@@ -190,7 +190,7 @@ LUALIB_API int luaopen_EF( lua_State *L )
     lua_pushenum( L, EF_BONEMERGE_FASTCULL, "BONEMERGE_FASTCULL" );
     lua_pushenum( L, EF_ITEM_BLINK, "ITEM_BLINK" );
     lua_pushenum( L, EF_PARENT_ANIMATES, "PARENT_ANIMATES" );
-    END_LUA_SET_ENUM_LIB( L );
+    LUA_SET_ENUM_LIB_END( L );
     return 0;
 }
 
@@ -199,7 +199,7 @@ LUALIB_API int luaopen_EF( lua_State *L )
 */
 LUALIB_API int luaopen_FL_EDICT( lua_State *L )
 {
-    BEGIN_LUA_SET_ENUM_LIB( L, LUA_FLEDICTLIBNAME );
+    LUA_SET_ENUM_LIB_BEGIN( L, LUA_FLEDICTLIBNAME );
     lua_pushenum( L, FL_EDICT_CHANGED, "CHANGED" );
     lua_pushenum( L, FL_EDICT_FREE, "FREE" );
     lua_pushenum( L, FL_EDICT_FULL, "FULL" );
@@ -209,6 +209,6 @@ LUALIB_API int luaopen_FL_EDICT( lua_State *L )
     lua_pushenum( L, FL_EDICT_PVSCHECK, "PVSCHECK" );
     lua_pushenum( L, FL_EDICT_PENDING_DORMANT_CHECK, "PENDING_DORMANT_CHECK" );
     lua_pushenum( L, FL_EDICT_DIRTY_PVS_INFORMATION, "DIRTY_PVS_INFORMATION" );
-    END_LUA_SET_ENUM_LIB( L );
+    LUA_SET_ENUM_LIB_END( L );
     return 0;
 }

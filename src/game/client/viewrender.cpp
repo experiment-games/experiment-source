@@ -1099,8 +1099,8 @@ void CViewRender::DrawViewModels( const CViewSetup &view, bool drawViewmodel )
     render->Push3DView( viewModelSetup, 0, pRTColor, GetFrustum(), pRTDepth );
 
 #ifdef LUA_SDK
-    BEGIN_LUA_CALL_HOOK( "PreDrawViewModels" );
-    END_LUA_CALL_HOOK( 0, 0 );
+    LUA_CALL_HOOK_BEGIN( "PreDrawViewModels" );
+    LUA_CALL_HOOK_END( 0, 0 );
 #endif
 
 #ifdef PORTAL  // the depth range hack doesn't work well enough for the portal mod (and messing with the depth hack values makes some models draw incorrectly)
@@ -1164,8 +1164,8 @@ void CViewRender::DrawViewModels( const CViewSetup &view, bool drawViewmodel )
     }
 
 #ifdef LUA_SDK
-    BEGIN_LUA_CALL_HOOK( "PreDrawEffects" );
-    END_LUA_CALL_HOOK( 0, 0 );
+    LUA_CALL_HOOK_BEGIN( "PreDrawEffects" );
+    LUA_CALL_HOOK_END( 0, 0 );
 #endif
 
     // Reset the depth range to the original values
@@ -2204,13 +2204,13 @@ void CViewRender::RenderView( const CViewSetup &view, int nClearFlags, int whatT
     // According to the gmod wiki, this is a 2D rendering context hook. So that is why it
     // is here and not above near PerformScreenSpaceEffects
     // TODO: Shouldn't that be moved to this 2D rendering context?
-    BEGIN_LUA_CALL_HOOK( "RenderScreenspaceEffects" );
-    END_LUA_CALL_HOOK( 0, 0 );
+    LUA_CALL_HOOK_BEGIN( "RenderScreenspaceEffects" );
+    LUA_CALL_HOOK_END( 0, 0 );
 #endif
 
 #ifdef LUA_SDK
-    BEGIN_LUA_CALL_HOOK( "PostDrawEffects" );
-    END_LUA_CALL_HOOK( 0, 0 );
+    LUA_CALL_HOOK_BEGIN( "PostDrawEffects" );
+    LUA_CALL_HOOK_END( 0, 0 );
 #endif
 
     Render2DEffectsPreHUD( view );
@@ -2373,8 +2373,8 @@ void CViewRender::RenderView( const CViewSetup &view, int nClearFlags, int whatT
     }
 
 #ifdef LUA_SDK
-    BEGIN_LUA_CALL_HOOK( "DrawOverlay" );
-    END_LUA_CALL_HOOK( 0, 0 );
+    LUA_CALL_HOOK_BEGIN( "DrawOverlay" );
+    LUA_CALL_HOOK_END( 0, 0 );
 #endif
 
     render->PopView( GetFrustum() );
@@ -3151,8 +3151,8 @@ bool CViewRender::DrawOneMonitor( ITexture *pRenderTarget, int cameraNum, C_Poin
 void CViewRender::DrawMonitors( const CViewSetup &cameraView )
 {
 #ifdef LUA_SDK
-    BEGIN_LUA_CALL_HOOK( "DrawMonitors" );
-    END_LUA_CALL_HOOK( 0, 0 );
+    LUA_CALL_HOOK_BEGIN( "DrawMonitors" );
+    LUA_CALL_HOOK_END( 0, 0 );
 #endif
 
 #ifdef PORTAL
@@ -3708,8 +3708,8 @@ void CRendering3dView::DrawWorld( float waterZAdjust )
     render->DrawWorldLists( m_pWorldRenderList, engineFlags, waterZAdjust );
 
 #ifdef LUA_SDK
-    BEGIN_LUA_CALL_HOOK( "PostDraw2DSkyBox" );
-    END_LUA_CALL_HOOK( 0, 0 );
+    LUA_CALL_HOOK_BEGIN( "PostDraw2DSkyBox" );
+    LUA_CALL_HOOK_END( 0, 0 );
 #endif
 }
 
@@ -4104,13 +4104,13 @@ void CRendering3dView::DrawOpaqueRenderables( ERenderDepthMode DepthMode, bool b
 #ifdef LUA_SDK
     bool bIsDepthDraw = DepthMode != DEPTH_MODE_NORMAL;
 
-    BEGIN_LUA_CALL_HOOK( "PreDrawOpaqueRenderables" );
+    LUA_CALL_HOOK_BEGIN( "PreDrawOpaqueRenderables" );
     lua_pushboolean( L, bIsDepthDraw );
     lua_pushboolean( L, bInSkybox );
     lua_pushboolean( L, bSkyboxIs3D );
-    END_LUA_CALL_HOOK( 3, 1 );
+    LUA_CALL_HOOK_END( 3, 1 );
 
-    RETURN_LUA_NONE_IF_TRUE();
+    LUA_RETURN_NONE_IF_TRUE();
 #endif
 
     //
@@ -4308,11 +4308,11 @@ void CRendering3dView::DrawOpaqueRenderables( ERenderDepthMode DepthMode, bool b
     g_pParticleSystemMgr->DrawRenderCache( DepthMode );
 
 #ifdef LUA_SDK
-    BEGIN_LUA_CALL_HOOK( "PostDrawOpaqueRenderables" );
+    LUA_CALL_HOOK_BEGIN( "PostDrawOpaqueRenderables" );
     lua_pushboolean( L, bIsDepthDraw );
     lua_pushboolean( L, bInSkybox );
     lua_pushboolean( L, bSkyboxIs3D );
-    END_LUA_CALL_HOOK( 3, 0 );
+    LUA_CALL_HOOK_END( 3, 0 );
 #endif
 }
 
@@ -4607,13 +4607,13 @@ void CRendering3dView::DrawTranslucentRenderables( bool bInSkybox, bool bShadowD
     // https://github.com/Facepunch/garrysmod-issues/issues/3295
     bool bIsDepthDraw = bShadowDepth;
 
-    BEGIN_LUA_CALL_HOOK( "PreDrawTranslucentRenderables" );
+    LUA_CALL_HOOK_BEGIN( "PreDrawTranslucentRenderables" );
     lua_pushboolean( L, bIsDepthDraw );
     lua_pushboolean( L, bInSkybox );
     lua_pushboolean( L, bSkyboxIs3D );
-    END_LUA_CALL_HOOK( 3, 1 );
+    LUA_CALL_HOOK_END( 3, 1 );
 
-    RETURN_LUA_NONE_IF_TRUE();
+    LUA_RETURN_NONE_IF_TRUE();
 #endif
 
     if ( m_pMainView->ShouldDrawEntities() && r_drawtranslucentrenderables.GetBool() )
@@ -4754,11 +4754,11 @@ void CRendering3dView::DrawTranslucentRenderables( bool bInSkybox, bool bShadowD
     render->SetBlend( 1 );
 
 #ifdef LUA_SDK
-    BEGIN_LUA_CALL_HOOK( "PostDrawTranslucentRenderables" );
+    LUA_CALL_HOOK_BEGIN( "PostDrawTranslucentRenderables" );
     lua_pushboolean( L, bIsDepthDraw );
     lua_pushboolean( L, bInSkybox );
     lua_pushboolean( L, bSkyboxIs3D );
-    END_LUA_CALL_HOOK( 3, 0 );
+    LUA_CALL_HOOK_END( 3, 0 );
 #endif
 }
 
@@ -4770,10 +4770,10 @@ void CRendering3dView::EnableWorldFog( void )
     VPROF( "CViewRender::EnableWorldFog" );
 
 #ifdef LUA_SDK
-    BEGIN_LUA_CALL_HOOK( "SetupWorldFog" );
-    END_LUA_CALL_HOOK( 0, 1 );
+    LUA_CALL_HOOK_BEGIN( "SetupWorldFog" );
+    LUA_CALL_HOOK_END( 0, 1 );
 
-    RETURN_LUA_NONE_IF_TRUE();
+    LUA_RETURN_NONE_IF_TRUE();
 #endif
 
     CMatRenderContextPtr pRenderContext( materials );
@@ -4881,11 +4881,11 @@ void CSkyboxView::Enable3dSkyboxFog( void )
     CPlayerLocalData *local = &pbp->m_Local;
 
 #ifdef LUA_SDK
-    BEGIN_LUA_CALL_HOOK( "SetupSkyboxFog" );
+    LUA_CALL_HOOK_BEGIN( "SetupSkyboxFog" );
     lua_pushnumber( L, local->m_skybox3d.scale );
-    END_LUA_CALL_HOOK( 1, 1 );
+    LUA_CALL_HOOK_END( 1, 1 );
 
-    RETURN_LUA_NONE_IF_TRUE();
+    LUA_RETURN_NONE_IF_TRUE();
 #endif
 
     CMatRenderContextPtr pRenderContext( materials );
@@ -4924,10 +4924,10 @@ sky3dparams_t *CSkyboxView::PreRender3dSkyboxWorld( SkyboxVisibility_t nSkyboxVi
         return NULL;
 
 #ifdef LUA_SDK
-    BEGIN_LUA_CALL_HOOK( "PreDrawSkyBox" );
-    END_LUA_CALL_HOOK( 0, 1 );
+    LUA_CALL_HOOK_BEGIN( "PreDrawSkyBox" );
+    LUA_CALL_HOOK_END( 0, 1 );
 
-    RETURN_LUA_VALUE_IF_TRUE( NULL );
+    LUA_RETURN_VALUE_IF_TRUE( NULL );
 #endif
 
     C_BasePlayer *pbp = C_BasePlayer::GetLocalPlayer();
@@ -5036,8 +5036,8 @@ void CSkyboxView::DrawInternal( view_id_t iSkyBoxViewID, bool bInvokePreAndPostR
 #endif
 
 #ifdef LUA_SDK
-    BEGIN_LUA_CALL_HOOK( "PostDrawSkyBox" );
-    END_LUA_CALL_HOOK( 0, 0 );
+    LUA_CALL_HOOK_BEGIN( "PostDrawSkyBox" );
+    LUA_CALL_HOOK_END( 0, 0 );
 #endif
 }
 
@@ -5543,8 +5543,8 @@ void CBaseWorldView::DrawSetup( float waterHeight, int nSetupFlags, float waterZ
 #endif
 
 #ifdef LUA_SDK
-    BEGIN_LUA_CALL_HOOK( "NeedsDepthPass" );
-    END_LUA_CALL_HOOK( 0, 1 );
+    LUA_CALL_HOOK_BEGIN( "NeedsDepthPass" );
+    LUA_CALL_HOOK_END( 0, 1 );
 
     bool bNeedsDepthPass = lua_isboolean( L, -1 ) && lua_toboolean( L, -1 );
     lua_pop( L, 1 );

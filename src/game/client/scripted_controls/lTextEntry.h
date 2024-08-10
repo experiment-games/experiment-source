@@ -24,8 +24,8 @@ class LTextEntry : public TextEntry
     virtual void ApplySchemeSettings( vgui::IScheme *pScheme )
     {
         // Not sure why this is the order that causes text to be drawn in the Lua specified colour :/
-        BEGIN_LUA_CALL_PANEL_METHOD( "ApplySchemeSettings" );
-        END_LUA_CALL_PANEL_METHOD( 0, 0 );
+        LUA_CALL_PANEL_METHOD_BEGIN( "ApplySchemeSettings" );
+        LUA_CALL_PANEL_METHOD_END( 0, 0 );
 
         BaseClass::ApplySchemeSettings( pScheme );
     }

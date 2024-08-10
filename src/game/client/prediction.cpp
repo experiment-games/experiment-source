@@ -667,11 +667,11 @@ void CPrediction::SetupMove( C_BasePlayer *player, CUserCmd *ucmd, IMoveHelper *
 #endif
 
 #ifdef LUA_SDK
-    BEGIN_LUA_CALL_HOOK( "SetupMove" );
+    LUA_CALL_HOOK_BEGIN( "SetupMove" );
     CBaseEntity::PushLuaInstanceSafe( L, player );
     lua_pushmovedata( L, move );
     lua_pushusercmd( L, ucmd );
-    END_LUA_CALL_HOOK( 3, 0 );
+    LUA_CALL_HOOK_END( 3, 0 );
 #endif
 }
 
@@ -683,12 +683,12 @@ void CPrediction::SetupMove( C_BasePlayer *player, CUserCmd *ucmd, IMoveHelper *
 void CPrediction::FinishMove( C_BasePlayer *player, CUserCmd *ucmd, CMoveData *move )
 {
 #ifdef LUA_SDK
-    BEGIN_LUA_CALL_HOOK( "FinishMove" );
+    LUA_CALL_HOOK_BEGIN( "FinishMove" );
     CBaseEntity::PushLuaInstanceSafe( L, player );
     lua_pushmovedata( L, move );
-    END_LUA_CALL_HOOK( 2, 1 );
+    LUA_CALL_HOOK_END( 2, 1 );
 
-    RETURN_LUA_NONE_IF_FALSE();
+    LUA_RETURN_NONE_IF_FALSE();
 #endif
 
 #if !defined( NO_ENTITY_PREDICTION )
@@ -744,10 +744,10 @@ void CPrediction::StartCommand( C_BasePlayer *player, CUserCmd *cmd )
 #endif
 
 #ifdef LUA_SDK
-    BEGIN_LUA_CALL_HOOK( "StartCommand" );
+    LUA_CALL_HOOK_BEGIN( "StartCommand" );
     CBaseEntity::PushLuaInstanceSafe( L, player );
     lua_pushusercmd( L, cmd );
-    END_LUA_CALL_HOOK( 2, 0 );
+    LUA_CALL_HOOK_END( 2, 0 );
 #endif
 }
 
@@ -867,9 +867,9 @@ void CPrediction::RunPostThink( C_BasePlayer *player )
 #endif
 
 #ifdef LUA_SDK
-    BEGIN_LUA_CALL_HOOK( "PlayerPostThink" );
+    LUA_CALL_HOOK_BEGIN( "PlayerPostThink" );
     CBaseEntity::PushLuaInstanceSafe( L, player );
-    END_LUA_CALL_HOOK( 1, 0 );
+    LUA_CALL_HOOK_END( 1, 0 );
 #endif
 }
 

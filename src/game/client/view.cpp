@@ -547,9 +547,9 @@ void CViewRender::OnRenderStart()
         }
 
 #ifdef LUA_SDK
-        BEGIN_LUA_CALL_HOOK( "AdjustMouseSensitivity" );
+        LUA_CALL_HOOK_BEGIN( "AdjustMouseSensitivity" );
         lua_pushnumber( L, gHUD.m_flMouseSensitivity );
-        END_LUA_CALL_HOOK( 1, 1 );
+        LUA_CALL_HOOK_END( 1, 1 );
 
         bool bCallWeaponAdjustMouseSensitivityHook = true;
 
@@ -1109,11 +1109,11 @@ void CViewRender::Render( vrect_t *rect )
     render->SetMainView( m_View.origin, m_View.angles );
 
 #ifdef LUA_SDK
-    BEGIN_LUA_CALL_HOOK( "RenderScene" );
+    LUA_CALL_HOOK_BEGIN( "RenderScene" );
     lua_pushvector( L, m_View.origin );
     lua_pushangle( L, m_View.angles );
     lua_pushnumber( L, m_View.fov );
-    END_LUA_CALL_HOOK( 3, 1 );
+    LUA_CALL_HOOK_END( 3, 1 );
 
     bool bOverrideRenderScene = lua_isboolean( L, -1 ) && lua_toboolean( L, -1 );
     lua_pop( L, 1 );

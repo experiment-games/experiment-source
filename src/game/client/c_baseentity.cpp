@@ -2173,9 +2173,9 @@ void C_BaseEntity::NotifyShouldTransmit( ShouldTransmitState_t state )
 #ifdef LUA_SDK
             if ( L && m_pLuaInstance )
             {
-                BEGIN_LUA_CALL_HOOK( "NetworkEntityCreated" );
+                LUA_CALL_HOOK_BEGIN( "NetworkEntityCreated" );
                 PushLuaInstance( L );
-                END_LUA_CALL_HOOK( 1, 0 );
+                LUA_CALL_HOOK_END( 1, 0 );
             }
 #endif
 
@@ -4865,10 +4865,10 @@ void C_BaseEntity::Remove()
 {
     if ( L && m_pLuaInstance )
     {
-        BEGIN_LUA_CALL_HOOK( "EntityRemoved" );
+        LUA_CALL_HOOK_BEGIN( "EntityRemoved" );
         PushLuaInstance( L );
         lua_pushboolean( L, false );  // TODO: "Whether the removal is happening due to a full update clientside." <- See OnPredictedEntityRemove, is that calling EntityRemoved correctly? Won't this be called doubly?
-        END_LUA_CALL_HOOK( 2, 0 );
+        LUA_CALL_HOOK_END( 2, 0 );
     }
 
     // Nothing for now, if it's a predicted entity, could flag as "delete" or
@@ -5185,10 +5185,10 @@ bool C_BaseEntity::OnPredictedEntityRemove( bool isbeingremoved,
 
     if ( L && m_pLuaInstance )
     {
-        BEGIN_LUA_CALL_HOOK( "EntityRemoved" );
+        LUA_CALL_HOOK_BEGIN( "EntityRemoved" );
         PushLuaInstance( L );
         lua_pushboolean( L, true );
-        END_LUA_CALL_HOOK( 2, 0 );
+        LUA_CALL_HOOK_END( 2, 0 );
     }
 
     return true;

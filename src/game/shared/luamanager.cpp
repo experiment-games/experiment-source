@@ -828,14 +828,14 @@ void luasrc_init( void )
 
     // Experiment; Thanks Andrew, but for GMod compatibility we have to ignore
     // the above advice and registers all enumerations.
-    BEGIN_LUA_SET_ENUM_LIB( L, "Activity" );
+    LUA_SET_ENUM_LIB_BEGIN( L, "Activity" );
 
     ActivityList_RegisterSharedActivities();
 
-    END_LUA_SET_ENUM_LIB( L );
+    LUA_SET_ENUM_LIB_END( L );
 
     // Expose ButtonCode_t as enums
-    BEGIN_LUA_SET_ENUM_LIB_CONTINUED( L, "BUTTON" );
+    LUA_SET_ENUM_LIB_BEGIN_CONTINUED( L, "BUTTON" );
     REGISTER_BUTTON_CODE_STRING( BUTTON_CODE_INVALID );
     REGISTER_BUTTON_CODE_ALIAS3( BUTTON_CODE_NONE, KEY_FIRST, KEY_NONE );
     REGISTER_BUTTON_CODE_STRING( KEY_0 );
@@ -982,7 +982,7 @@ void luasrc_init( void )
 
     REGISTER_BUTTON_CODE_STRING( BUTTON_CODE_LAST );
     REGISTER_BUTTON_CODE_STRING( BUTTON_CODE_COUNT );
-    END_LUA_SET_ENUM_LIB( L );
+    LUA_SET_ENUM_LIB_END( L );
     buttonCodeStringNext = -1;  // Clean up for next time
 
     Msg( "Lua initialized (" LUA_VERSION ")\n" );
@@ -1060,8 +1060,8 @@ void luasrc_shutdown( void )
     if ( !g_bLuaInitialized )
         return;
 
-    BEGIN_LUA_CALL_HOOK( "ShutDown" );
-    END_LUA_CALL_HOOK( 0, 0 );
+    LUA_CALL_HOOK_BEGIN( "ShutDown" );
+    LUA_CALL_HOOK_END( 0, 0 );
 
     luasrc_UnloadLoadedModules( L );
 
@@ -2273,8 +2273,8 @@ bool luasrc_SetGamemode( const char *gamemodeName )
     luasrc_LoadEntities( loadPath );
     // luasrc_LoadEffects( loadPath );
 
-    BEGIN_LUA_CALL_HOOK( "Initialize" );
-    END_LUA_CALL_HOOK( 0, 0 );
+    LUA_CALL_HOOK_BEGIN( "Initialize" );
+    LUA_CALL_HOOK_END( 0, 0 );
 
     return true;
 }

@@ -26,8 +26,8 @@ void LButton::DoClick()
     Button::DoClick();
 
 #ifdef LUA_SDK
-    BEGIN_LUA_CALL_PANEL_METHOD( "OnClick" );
-    END_LUA_CALL_PANEL_METHOD( 0, 0 );
+    LUA_CALL_PANEL_METHOD_BEGIN( "OnClick" );
+    LUA_CALL_PANEL_METHOD_END( 0, 0 );
 #endif
 }
 
