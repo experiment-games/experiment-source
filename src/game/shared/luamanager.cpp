@@ -26,6 +26,7 @@
 #include "luasrclib.h"
 #include "luacachefile.h"
 #include "lconvar.h"
+#include <lconcommand.h>
 #include "licvar.h"
 #include "lnetwork.h"
 #include "inputsystem/ButtonCode.h"

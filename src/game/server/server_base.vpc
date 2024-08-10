@@ -710,6 +710,7 @@ $Project
             $File "$SRCDIR\game\shared\lbaseflex_shared.h"
             $File "$SRCDIR\public\lColor.cpp"
             $File "$SRCDIR\public\tier1\lconvar.cpp"
+            $File "$SRCDIR\public\tier1\lconcommand.cpp"
             $File "$SRCDIR\public\tier0\ldbg.cpp"
 		    $File "$SRCDIR\game\shared\leffect_dispatch_data.cpp"
 		    $File "$SRCDIR\game\shared\lentitylist.cpp"
