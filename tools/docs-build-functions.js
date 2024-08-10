@@ -10,45 +10,18 @@ const fs = require('fs');
 const path = require('path');
 const { getRealmByFile } = require('./common/vpc');
 const { indentEachLine, wrapQuotes } = require('./common/string');
+const { getAllFilesInDirectoriesAsMap, traverseDirectory  } = require('./common/filesystem');
 
 const srcDir = './src';
 const outputDir = './docs';
+
+const filesToUpdate = getAllFilesInDirectoriesAsMap(`${outputDir}/libraries`, `${outputDir}/classes`);
 
 const luaBindingBeginPattern = /LUA_BINDING_BEGIN\(\s*(\w+)\s*,\s*(\w+)\s*,\s*"([^"]+)"\s*,\s*"([^"]+)"\s*\)/;
 const luaBindingArgumentPattern = /LUA_BINDING_ARGUMENT\(\s*(\w+)\s*,\s*(\d+)\s*,\s*"([^"]+)"\s*\)/;
 const luaBindingArgumentNillablePattern = /LUA_BINDING_ARGUMENT_NILLABLE\(\s*(\w+)\s*,\s*(\d+)\s*,\s*"([^"]+)"\s*\)/;
 const luaBindingArgumentWithDefaultPattern = /LUA_BINDING_ARGUMENT_WITH_DEFAULT\(\s*(\w+)\s*,\s*(\d+)\s*,\s*([^,]+)\s*,\s*"([^"]+)"\s*\)/;
 const luaBindingEndPattern = /LUA_BINDING_END\((.*)\)$/m;
-
-function traverseDirectory(dir) {
-  if (dir.includes('node_modules') || dir.includes('.git')) {
-    return;
-  }
-
-  fs.readdir(dir, (err, files) => {
-    if (err) {
-      console.error(`Error reading directory ${dir}: ${err.message}`);
-      return;
-    }
-
-    files.forEach(file => {
-      const filePath = path.join(dir, file);
-
-      fs.stat(filePath, (err, stats) => {
-        if (err) {
-          console.error(`Error reading file stats ${filePath}: ${err.message}`);
-          return;
-        }
-
-        if (stats.isDirectory()) {
-          traverseDirectory(filePath);
-        } else if (stats.isFile() && file.endsWith('.cpp')) {
-          processBindingsInFile(filePath);
-        }
-      });
-    });
-  });
-}
 
 const markdownTemplate = `---
 template: %template%
@@ -83,6 +56,9 @@ function writeFunctionToFile(func) {
     console.warn(`Skipping function ${func.function} as it already exists at ${filePath} (use --force to overwrite)`);
     return;
   }
+
+  // Remove this file so we know it's up to date
+  filesToUpdate.delete(filePath);
 
   let templateFile;
   let staticSection = '';
@@ -359,4 +335,12 @@ function processBindingsInFile(file) {
   }
 }
 
-traverseDirectory(srcDir);
+traverseDirectory(srcDir, processBindingsInFile);
+
+if (filesToUpdate.size > 0) {
+  console.warn('The following files were not updated (maybe they\'re no longer relevant?):');
+
+  for (const file of filesToUpdate.keys()) {
+    console.warn(file);
+  }
+}

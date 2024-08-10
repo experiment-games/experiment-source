@@ -10,9 +10,12 @@ const fs = require('fs');
 const path = require('path');
 const { getRealmByFile } = require('./common/vpc');
 const { indentEachLine, wrapQuotes } = require('./common/string');
+const { getAllFilesInDirectoriesAsMap, traverseDirectory } = require('./common/filesystem');
 
-const srcDir = './src';
-const outputDir = './docs';
+const srcDir = './src/';
+const outputDir = './docs/hooks/';
+
+const filesToUpdate = getAllFilesInDirectoriesAsMap(outputDir);
 
 const luaHookBeginPattern = /LUA_CALL_HOOK_BEGIN\(\s*"([^"]+)"\s*(?:,\s*"([^"]+)")?\s*\)/;
 // luaL_ or lua_, // doc: is optional
@@ -161,7 +164,7 @@ hook %title% &#x2013; %description%
 `;
 
 function writeHookToFile(hook) {
-  const filePath = path.join(outputDir, 'hooks', hook.realm, `${hook.name}.md`);
+  const filePath = path.join(outputDir, hook.realm, `${hook.name}.md`);
 
   // If the file already exists, don't overwrite it without --force
   if (fs.existsSync(filePath)
@@ -169,6 +172,9 @@ function writeHookToFile(hook) {
     console.warn(`Skipping hook ${hook.name} as it already exists at ${filePath} (use --force to overwrite)`);
     return;
   }
+
+  // Remove this file so we know it's up to date
+  filesToUpdate.delete(filePath);
 
   let argumentSection = '';
 
@@ -287,34 +293,12 @@ function processHooksInFile(file) {
   }
 }
 
-function traverseDirectory(dir) {
-  if (dir.includes('node_modules') || dir.includes('.git')) {
-    return;
+traverseDirectory(srcDir, processHooksInFile);
+
+if (filesToUpdate.size > 0) {
+  console.warn('The following files were not updated (maybe they\'re no longer relevant?):');
+
+  for (const file of filesToUpdate.keys()) {
+    console.warn(file);
   }
-
-  fs.readdir(dir, (err, files) => {
-    if (err) {
-      console.error(`Error reading directory ${dir}: ${err.message}`);
-      return;
-    }
-
-    files.forEach(file => {
-      const filePath = path.join(dir, file);
-
-      fs.stat(filePath, (err, stats) => {
-        if (err) {
-          console.error(`Error reading file stats ${filePath}: ${err.message}`);
-          return;
-        }
-
-        if (stats.isDirectory()) {
-          traverseDirectory(filePath);
-        } else if (stats.isFile() && file.endsWith('.cpp')) {
-          processHooksInFile(filePath);
-        }
-      });
-    });
-  });
 }
-
-traverseDirectory(srcDir);
