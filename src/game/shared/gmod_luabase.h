@@ -12,6 +12,7 @@
 #pragma once
 #endif
 
+#include <mathlib/langle.h>
 #include <mathlib/lvector.h>
 
 struct lua_StateWithCompat;  // Forward declaration

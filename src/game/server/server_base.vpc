@@ -764,6 +764,7 @@ $Project
             $File "$SRCDIR\game\shared\mountsteamcontent.cpp"
             $File "$SRCDIR\game\shared\lsystem.cpp"
             $File "$SRCDIR\game\shared\lsystem.h"
+            $File "$SRCDIR\public\mathlib\langle.cpp"
             $File "$SRCDIR\public\mathlib\lvector.cpp"
             $File "$SRCDIR\public\mathlib\lvmatrix.cpp"
             $File "$SRCDIR\public\mathlib\lvmatrix.h"
@@ -1122,6 +1123,7 @@ $Project
         $File "$SRCDIR\game\shared\lshareddefs.h"
         $File "$SRCDIR\game\shared\ltakedamageinfo.h"
         $File "$SRCDIR\game\shared\luasrclib.h"
+        $File "$SRCDIR\public\mathlib\langle.h"
         $File "$SRCDIR\public\mathlib\lvector.h"
         $File "$SRCDIR\public\lvphysics_interface.h"
 	}
