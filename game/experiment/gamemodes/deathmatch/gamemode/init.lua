@@ -13,7 +13,7 @@ local PLAYER_SOUNDS_METROPOLICE = 2
 
 function GM:CanHavePlayerItem(client, item)
 	if (ConsoleVariables.FindVar("mp_weaponstay"):GetInt() > 0) then
-		if (client:Weapon_OwnsThisType(item:GetClassname(), item:GetSubType())) then
+		if (client:Weapon_OwnsThisType(item:GetClass(), item:GetSubType())) then
 			return false
 		end
 	end

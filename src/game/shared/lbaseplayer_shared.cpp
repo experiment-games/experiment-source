@@ -582,12 +582,6 @@ static int CBasePlayer_MyCombatCharacterPointer( lua_State *L )
     return 1;
 }
 
-static int CBasePlayer_OnRestore( lua_State *L )
-{
-    luaL_checkplayer( L, 1 )->OnRestore();
-    return 0;
-}
-
 static int CBasePlayer_PhysicsSimulate( lua_State *L )
 {
     luaL_checkplayer( L, 1 )->PhysicsSimulate();
@@ -1186,7 +1180,6 @@ static const luaL_Reg CBasePlayermeta[] = {
     { "LocalEyeAngles", CBasePlayer_LocalEyeAngles },
     { "MaxSpeed", CBasePlayer_MaxSpeed },
     { "MyCombatCharacterPointer", CBasePlayer_MyCombatCharacterPointer },
-    { "OnRestore", CBasePlayer_OnRestore },
     { "PhysicsSimulate", CBasePlayer_PhysicsSimulate },
     { "PhysicsSolidMaskForEntity", CBasePlayer_PhysicsSolidMaskForEntity },
     { "PlayerUse", CBasePlayer_PlayerUse },

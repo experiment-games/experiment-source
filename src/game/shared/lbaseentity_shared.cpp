@@ -437,7 +437,7 @@ static int CBaseEntity_GetCheckUntouch( lua_State *L )
     return 1;
 }
 
-static int CBaseEntity_GetClassname( lua_State *L )
+static int CBaseEntity_GetClass( lua_State *L )
 {
     lua_pushstring( L, luaL_checkentity( L, 1 )->GetClassname() );
     return 1;
@@ -2030,7 +2030,7 @@ static const luaL_Reg CBaseEntitymeta[] = {
     { "GetBaseEntity", CBaseEntity_GetBaseEntity },
     { "GetBaseVelocity", CBaseEntity_GetBaseVelocity },
     { "GetCheckUntouch", CBaseEntity_GetCheckUntouch },
-    { "GetClassName", CBaseEntity_GetClassname },
+    { "GetClass", CBaseEntity_GetClass },
     { "GetCollisionGroup", CBaseEntity_GetCollisionGroup },
     { "GetDataObject", CBaseEntity_GetDataObject },
     { "GetDebugName", CBaseEntity_GetDebugName },

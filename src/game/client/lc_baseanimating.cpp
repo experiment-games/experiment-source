@@ -811,7 +811,7 @@ LUA_BINDING_END( "boolean", "Whether the entity uses a power of two frame buffer
 LUALIB_API int luaopen_CBaseAnimating( lua_State *L )
 {
     LUA_PUSH_METATABLE_TO_EXTEND( L, LUA_BASEANIMATINGLIBNAME );
-    //luaL_register( L, NULL, CBaseAnimatingmeta );
+    
     //lua_pushstring( L, "Entity" );
     //lua_setfield( L, -2, "__type" ); /* metatable.__type = "Entity" */ // moved to lbaseanimating_shared
     LUA_REGISTRATION_COMMIT( CBaseAnimating );
