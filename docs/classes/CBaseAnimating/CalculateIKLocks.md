@@ -1,16 +1,16 @@
 ---
 template: lua-class-function.html
 title: CalculateIKLocks
-icon: lua-client
+icon: lua-shared
 tags:
   - lua
-  - client
+  - shared
   - needs-verification
   - needs-example
 lua:
   library: CBaseAnimating
   function: CalculateIKLocks
-  realm: client
+  realm: shared
   description: "Calculate IK locks."
   
   arguments:

@@ -1,27 +1,26 @@
 ---
 template: lua-class-function.html
 title: SequenceDuration
-icon: lua-client
+icon: lua-shared
 tags:
   - lua
-  - client
+  - shared
   - needs-verification
   - needs-example
 lua:
   library: CBaseAnimating
   function: SequenceDuration
-  realm: client
-  description: "Get the sequence duration."
+  realm: shared
+  description: "Sequence duration."
   
   arguments:
     - name: "sequence"
       type: number
       nillable: true
   returns:
-    - type: number
-      description: "The sequence duration"
+    
 ---
 
 <div class="lua__search__keywords">
-CBaseAnimating:SequenceDuration &#x2013; Get the sequence duration.
+CBaseAnimating:SequenceDuration &#x2013; Sequence duration.
 </div>

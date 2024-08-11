@@ -1,16 +1,16 @@
 ---
 template: lua-class-function.html
 title: SelectWeightedSequence
-icon: lua-client
+icon: lua-shared
 tags:
   - lua
-  - client
+  - shared
   - needs-verification
   - needs-example
 lua:
   library: CBaseAnimating
   function: SelectWeightedSequence
-  realm: client
+  realm: shared
   description: "Select the weighted sequence."
   
   arguments:

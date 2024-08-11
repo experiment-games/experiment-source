@@ -1,16 +1,16 @@
 ---
 template: lua-class-function.html
 title: GetNumFlexControllers
-icon: lua-client
+icon: lua-shared
 tags:
   - lua
-  - client
+  - shared
   - needs-verification
   - needs-example
 lua:
   library: CBaseAnimating
   function: GetNumFlexControllers
-  realm: client
+  realm: shared
   description: "Get the number of flex controllers."
   
   

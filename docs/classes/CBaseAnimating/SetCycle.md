@@ -1,16 +1,16 @@
 ---
 template: lua-class-function.html
 title: SetCycle
-icon: lua-client
+icon: lua-shared
 tags:
   - lua
-  - client
+  - shared
   - needs-verification
   - needs-example
 lua:
   library: CBaseAnimating
   function: SetCycle
-  realm: client
+  realm: shared
   description: "Set the cycle."
   
   arguments:

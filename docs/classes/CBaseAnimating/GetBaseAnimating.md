@@ -1,16 +1,16 @@
 ---
 template: lua-class-function.html
 title: GetBaseAnimating
-icon: lua-client
+icon: lua-shared
 tags:
   - lua
-  - client
+  - shared
   - needs-verification
   - needs-example
 lua:
   library: CBaseAnimating
   function: GetBaseAnimating
-  realm: client
+  realm: shared
   description: "Get the base animating entity."
   
   

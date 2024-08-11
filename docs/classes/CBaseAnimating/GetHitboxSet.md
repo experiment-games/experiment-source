@@ -1,16 +1,16 @@
 ---
 template: lua-class-function.html
 title: GetHitboxSet
-icon: lua-client
+icon: lua-shared
 tags:
   - lua
-  - client
+  - shared
   - needs-verification
   - needs-example
 lua:
   library: CBaseAnimating
   function: GetHitboxSet
-  realm: client
+  realm: shared
   description: "Get the index of the hitbox set in use."
   
   

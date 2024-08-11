@@ -1,16 +1,16 @@
 ---
 template: lua-class-function.html
 title: GetCycle
-icon: lua-client
+icon: lua-shared
 tags:
   - lua
-  - client
+  - shared
   - needs-verification
   - needs-example
 lua:
   library: CBaseAnimating
   function: GetCycle
-  realm: client
+  realm: shared
   description: "Get the current cycle."
   
   

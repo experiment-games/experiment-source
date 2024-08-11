@@ -1,16 +1,16 @@
 ---
 template: lua-class-function.html
 title: IsActivityFinished
-icon: lua-client
+icon: lua-shared
 tags:
   - lua
-  - client
+  - shared
   - needs-verification
   - needs-example
 lua:
   library: CBaseAnimating
   function: IsActivityFinished
-  realm: client
+  realm: shared
   description: "Check if the activity is finished."
   
   

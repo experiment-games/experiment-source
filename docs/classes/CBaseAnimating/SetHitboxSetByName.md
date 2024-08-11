@@ -1,16 +1,16 @@
 ---
 template: lua-class-function.html
 title: SetHitboxSetByName
-icon: lua-client
+icon: lua-shared
 tags:
   - lua
-  - client
+  - shared
   - needs-verification
   - needs-example
 lua:
   library: CBaseAnimating
   function: SetHitboxSetByName
-  realm: client
+  realm: shared
   description: "Set the hitbox set by name."
   
   arguments:

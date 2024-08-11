@@ -1,16 +1,16 @@
 ---
 template: lua-class-function.html
 title: SetBoneController
-icon: lua-client
+icon: lua-shared
 tags:
   - lua
-  - client
+  - shared
   - needs-verification
   - needs-example
 lua:
   library: CBaseAnimating
   function: SetBoneController
-  realm: client
+  realm: shared
   description: "Set the value for the specified bone controller."
   
   arguments:

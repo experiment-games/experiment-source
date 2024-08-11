@@ -1,16 +1,16 @@
 ---
 template: lua-class-function.html
 title: LookupActivity
-icon: lua-client
+icon: lua-shared
 tags:
   - lua
-  - client
+  - shared
   - needs-verification
   - needs-example
 lua:
   library: CBaseAnimating
   function: LookupActivity
-  realm: client
+  realm: shared
   description: "Looks up an activity by name."
   
   arguments:

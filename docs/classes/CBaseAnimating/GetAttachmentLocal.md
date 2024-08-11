@@ -1,16 +1,16 @@
 ---
 template: lua-class-function.html
 title: GetAttachmentLocal
-icon: lua-client
+icon: lua-shared
 tags:
   - lua
-  - client
+  - shared
   - needs-verification
   - needs-example
 lua:
   library: CBaseAnimating
   function: GetAttachmentLocal
-  realm: client
+  realm: shared
   description: "Get the local attachment."
   
   arguments:

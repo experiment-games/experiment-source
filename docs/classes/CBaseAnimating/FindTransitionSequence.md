@@ -1,16 +1,16 @@
 ---
 template: lua-class-function.html
 title: FindTransitionSequence
-icon: lua-client
+icon: lua-shared
 tags:
   - lua
-  - client
+  - shared
   - needs-verification
   - needs-example
 lua:
   library: CBaseAnimating
   function: FindTransitionSequence
-  realm: client
+  realm: shared
   description: "Find the transition sequence."
   
   arguments:

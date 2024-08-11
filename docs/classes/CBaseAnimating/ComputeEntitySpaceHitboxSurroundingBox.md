@@ -1,16 +1,16 @@
 ---
 template: lua-class-function.html
 title: ComputeEntitySpaceHitboxSurroundingBox
-icon: lua-client
+icon: lua-shared
 tags:
   - lua
-  - client
+  - shared
   - needs-verification
   - needs-example
 lua:
   library: CBaseAnimating
   function: ComputeEntitySpaceHitboxSurroundingBox
-  realm: client
+  realm: shared
   description: "Compute the entity space hitbox surrounding box."
   
   

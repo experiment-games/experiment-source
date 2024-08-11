@@ -1,16 +1,16 @@
 ---
 template: lua-class-function.html
 title: IsSequenceLooping
-icon: lua-client
+icon: lua-shared
 tags:
   - lua
-  - client
+  - shared
   - needs-verification
   - needs-example
 lua:
   library: CBaseAnimating
   function: IsSequenceLooping
-  realm: client
+  realm: shared
   description: "Check if the sequence is looping."
   
   arguments:

@@ -1,16 +1,16 @@
 ---
 template: lua-class-function.html
 title: ResetSequence
-icon: lua-client
+icon: lua-shared
 tags:
   - lua
-  - client
+  - shared
   - needs-verification
   - needs-example
 lua:
   library: CBaseAnimating
   function: ResetSequence
-  realm: client
+  realm: shared
   description: "Reset the sequence."
   
   arguments:

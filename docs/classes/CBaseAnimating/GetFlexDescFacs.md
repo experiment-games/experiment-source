@@ -1,16 +1,16 @@
 ---
 template: lua-class-function.html
 title: GetFlexDescFacs
-icon: lua-client
+icon: lua-shared
 tags:
   - lua
-  - client
+  - shared
   - needs-verification
   - needs-example
 lua:
   library: CBaseAnimating
   function: GetFlexDescFacs
-  realm: client
+  realm: shared
   description: "Get the flex desc facs."
   
   arguments:

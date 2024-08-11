@@ -1,16 +1,16 @@
 ---
 template: lua-class-function.html
 title: LookupBone
-icon: lua-client
+icon: lua-shared
 tags:
   - lua
-  - client
+  - shared
   - needs-verification
   - needs-example
 lua:
   library: CBaseAnimating
   function: LookupBone
-  realm: client
+  realm: shared
   description: "Lookup the bone."
   
   arguments:

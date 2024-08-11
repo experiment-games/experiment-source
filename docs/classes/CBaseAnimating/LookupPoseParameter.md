@@ -1,16 +1,16 @@
 ---
 template: lua-class-function.html
 title: LookupPoseParameter
-icon: lua-client
+icon: lua-shared
 tags:
   - lua
-  - client
+  - shared
   - needs-verification
   - needs-example
 lua:
   library: CBaseAnimating
   function: LookupPoseParameter
-  realm: client
+  realm: shared
   description: "Lookup the pose parameter."
   
   arguments:

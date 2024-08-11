@@ -1,16 +1,16 @@
 ---
 template: lua-class-function.html
 title: SetPoseParameter
-icon: lua-client
+icon: lua-shared
 tags:
   - lua
-  - client
+  - shared
   - needs-verification
   - needs-example
 lua:
   library: CBaseAnimating
   function: SetPoseParameter
-  realm: client
+  realm: shared
   description: "Set the pose parameter."
   
   argumentSets:

@@ -1,16 +1,16 @@
 ---
 template: lua-class-function.html
 title: InvalidateBoneCache
-icon: lua-client
+icon: lua-shared
 tags:
   - lua
-  - client
+  - shared
   - needs-verification
   - needs-example
 lua:
   library: CBaseAnimating
   function: InvalidateBoneCache
-  realm: client
+  realm: shared
   description: "Invalidate the bone cache."
   
   

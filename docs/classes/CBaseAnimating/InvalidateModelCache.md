@@ -1,6 +1,6 @@
 ---
 template: lua-class-function.html
-title: IsRagdoll
+title: InvalidateModelCache
 icon: lua-shared
 tags:
   - lua
@@ -9,16 +9,15 @@ tags:
   - needs-example
 lua:
   library: CBaseAnimating
-  function: IsRagdoll
+  function: InvalidateModelCache
   realm: shared
-  description: "Check if the entity is a ragdoll."
+  description: "Invalidate the model cache."
   
   
   returns:
-    - type: boolean
-      description: "Whether the entity is a ragdoll"
+    
 ---
 
 <div class="lua__search__keywords">
-CBaseAnimating:IsRagdoll &#x2013; Check if the entity is a ragdoll.
+CBaseAnimating:InvalidateModelCache &#x2013; Invalidate the model cache.
 </div>

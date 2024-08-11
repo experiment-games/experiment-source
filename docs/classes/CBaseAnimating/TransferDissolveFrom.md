@@ -1,16 +1,16 @@
 ---
 template: lua-class-function.html
 title: TransferDissolveFrom
-icon: lua-client
+icon: lua-shared
 tags:
   - lua
-  - client
+  - shared
   - needs-verification
   - needs-example
 lua:
   library: CBaseAnimating
   function: TransferDissolveFrom
-  realm: client
+  realm: shared
   description: "Transfer the dissolve from."
   
   arguments:

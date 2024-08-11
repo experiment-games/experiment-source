@@ -34,7 +34,7 @@ static const luaL_RegForState luasrclibs[] = {
     // Shared
     //
     { LUA_BASEANIMATINGLIBNAME, luaopen_CBaseAnimating_shared, REALM_SHARED },      // ✔    n/a     n/a
-    { LUA_BASEANIMATINGLIBNAME, luaopen_CBaseAnimating, REALM_SHARED },             // n/a   ✔      TODO
+    { LUA_BASEANIMATINGLIBNAME, luaopen_CBaseAnimating, REALM_SHARED },             // n/a   ✔      ✔
     { LUA_BASECOMBATWEAPONLIBNAME, luaopen_CBaseCombatWeapon, REALM_SHARED },
     { LUA_BASEENTITYLIBNAME, luaopen_CBaseEntity_shared, REALM_SHARED },
     { LUA_BASEENTITYLIBNAME, luaopen_CBaseEntity, REALM_SHARED },
