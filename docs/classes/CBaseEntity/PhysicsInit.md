@@ -15,7 +15,7 @@ lua:
   
   arguments:
     - name: "solidType"
-      type: unknown
+      type: integer
       default: "SOLID_VPHYSICS"
     - name: "solidFlags"
       type: number

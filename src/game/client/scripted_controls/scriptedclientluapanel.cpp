@@ -43,7 +43,6 @@ CScriptedClientLuaPanel::CScriptedClientLuaPanel( lua_State *L )
 
 CScriptedClientLuaPanel::~CScriptedClientLuaPanel()
 {
-    DevWarning( "CScriptedClientLuaPanel::~CScriptedClientLuaPanel\n" );
 }
 
 void CScriptedClientLuaPanel::CreateDefaultPanels( void )

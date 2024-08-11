@@ -143,6 +143,10 @@ function fromTypeChecker(typeChecker) {
     case 'luaL_optnumber':
     case 'lua_tonumber':
       return 'number';
+    case 'luaL_checkinteger':
+    case 'luaL_optinteger':
+    case 'lua_tointeger':
+      return 'integer';
     case 'luaL_checkstring':
     case 'luaL_optstring':
     case 'lua_tostring':
