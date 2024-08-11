@@ -23,7 +23,7 @@ local function PositionDialog(dlg)
 	wide, tall = dlg:GetSize()
 
 	-- Center it, keeping requested size
-	dlg:SetPos(x + ((ww - wide) / 2), y + ((wt - tall) / 2))
+	dlg:SetPosition(x + ((ww - wide) / 2), y + ((wt - tall) / 2))
 end
 
 -- Experiment; Broken:

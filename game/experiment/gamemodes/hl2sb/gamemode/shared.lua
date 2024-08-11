@@ -94,7 +94,7 @@ function GM:PlayerPlayStepSound(client, vecOrigin, psurface, fvol, force)
 	ep.m_nPitch = params.pitch
 	ep.m_pOrigin = vecOrigin
 
-	_R.CBaseEntity.EmitSound(filter, client:entindex(), ep)
+	_R.CBaseEntity.EmitSound(filter, client:GetEntityIndex(), ep)
 	return false
 end
 

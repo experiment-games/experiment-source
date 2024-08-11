@@ -8,7 +8,7 @@ local parent = Gui.Create("Frame")
 local parentWide, parentTall = 256, 256
 parent:SetBgColor(Color(255, 0, 0, 255))
 parent:SetSize(parentWide, parentTall)
-parent:SetPos(50, 50)
+parent:SetPosition(50, 50)
 parent:SetTitle("Parent panel")
 
 parent:MakePopup()

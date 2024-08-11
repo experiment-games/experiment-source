@@ -13,7 +13,7 @@ Hooks.Add("PlayerTraceAttack", "PlayerTraceTeslaHitboxesAttack", function(client
 		if (CLIENT) then
 			data.m_hEntity = pEntity
 		else
-			data.m_nEntIndex = pEntity:entindex()
+			data.m_nEntIndex = pEntity:GetEntityIndex()
 		end
 		data.m_flMagnitude = 3
 		data.m_flScale = 0.5

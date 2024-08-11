@@ -93,7 +93,7 @@ function PANEL:Init()
 		local img = vgui.Create("DImage", panel1)
 		img:SetMaterial(mat)
 		img:SetSize(16, 16)
-        img:SetPos(0, 16 * #panel1:GetChildren())
+        img:SetPosition(0, 16 * #panel1:GetChildren())
 	end
 
 	-- forAllChildren({sheet, panel1, panel2}, function(child)

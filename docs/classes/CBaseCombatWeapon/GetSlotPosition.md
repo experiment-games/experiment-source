@@ -1,6 +1,6 @@
 ---
 template: lua-class-function.html
-title: GetPosition
+title: GetSlotPosition
 icon: lua-shared
 tags:
   - lua
@@ -9,9 +9,9 @@ tags:
   - needs-example
 lua:
   library: CBaseCombatWeapon
-  function: GetPosition
+  function: GetSlotPosition
   realm: shared
-  description: "Get the weapon position in the selection screen."
+  description: "Get the weapon slot position in the selection screen."
   
   
   returns:
@@ -20,5 +20,5 @@ lua:
 ---
 
 <div class="lua__search__keywords">
-CBaseCombatWeapon:GetPosition &#x2013; Get the weapon position in the selection screen.
+CBaseCombatWeapon:GetSlotPosition &#x2013; Get the weapon slot position in the selection screen.
 </div>

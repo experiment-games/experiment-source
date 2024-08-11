@@ -30,6 +30,4 @@ LUALIB_API lua_CBaseEntity *(luaL_checkentity) (lua_State *L, int narg);
 LUALIB_API lua_CBaseEntity *(luaL_optentity) (lua_State *L, int narg,
                                                             lua_CBaseEntity *def);
 
-int CBaseEntity_IsValid( lua_State *L );
-
 #endif // LBASEENTITY_SHARED_H

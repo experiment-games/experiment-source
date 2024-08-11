@@ -65,6 +65,13 @@ LUALIB_API lua_CRecipientFilter &luaL_checkrecipientfilter( lua_State *L, int id
     return **( lua_CRecipientFilter ** )d;
 }
 
+LUALIB_API lua_CRecipientFilter &luaL_optrecipientfilter( lua_State *L, int narg, lua_CRecipientFilter &def )
+{
+    if ( lua_isnoneornil( L, narg ) )
+        return def;
+    return luaL_checkrecipientfilter( L, narg );
+}
+
 LUALIB_API bool lua_isrecipientfilter( lua_State *L, int idx )
 {
     void *p = luaL_testudata( L, idx, "CRecipientFilter" );

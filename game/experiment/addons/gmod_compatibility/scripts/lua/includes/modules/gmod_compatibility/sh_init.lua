@@ -103,14 +103,14 @@ ents = {
 
 	FindInPVS = function(viewOrigin)
 		if (type(viewOrigin) == "Entity") then
-			viewOrigin = viewOrigin:GetPos()
+			viewOrigin = viewOrigin:GetPosition()
 		elseif (type(viewOrigin) == "Player") then
 			local viewEntity = viewOrigin:GetViewEntity()
 
 			if (IsValid(viewEntity)) then
-				viewOrigin = viewEntity:GetPos()
+				viewOrigin = viewEntity:GetPosition()
 			else
-				viewOrigin = viewOrigin:GetPos()
+				viewOrigin = viewOrigin:GetPosition()
 			end
 		end
 
@@ -354,6 +354,8 @@ ANGLE_META.Div = ANGLE_META.Divide
 ANGLE_META.Mul = ANGLE_META.Scale
 
 local ENTITY_META = FindMetaTable("Entity")
+ENTITY_META.GetPos = ENTITY_META.GetPosition
+ENTITY_META.SetPos = ENTITY_META.SetPosition
 ENTITY_META.EyePos = ENTITY_META.GetEyePosition
 ENTITY_META.EyeAngles = ENTITY_META.GetEyeAngles
 ENTITY_META.GetModel = ENTITY_META.GetModelName
@@ -689,7 +691,9 @@ else
 		})
 	end
 
-	local PANEL_META = FindMetaTable("Panel")
+    local PANEL_META = FindMetaTable("Panel")
+    PANEL_META.GetPos = PANEL_META.GetPosition
+	PANEL_META.SetPos = PANEL_META.SetPosition
 	PANEL_META._OriginalSetCursor = PANEL_META._OriginalSetCursor or PANEL_META.SetCursor
 	PANEL_META._OriginalGetParent = PANEL_META._OriginalGetParent or PANEL_META.GetParent
 

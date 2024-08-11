@@ -157,6 +157,7 @@ function fromTypeChecker(typeChecker) {
     case 'luaL_checkanimating':
     case 'luaL_optanimating':
     case 'lua_toanimating':
+    case 'lua_toweapon':
       return 'Entity';
     case 'luaL_checkplayer':
     case 'luaL_optplayer':
@@ -172,6 +173,16 @@ function fromTypeChecker(typeChecker) {
     case 'luaL_optangle':
     case 'lua_toangle':
       return 'Angle';
+    case 'luaL_checktrace':
+      return 'Trace';
+    case 'luaL_checkdamageinfo':
+      return 'DamageInfo';
+    case 'luaL_checkrecipientfilter':
+      return 'RecipientFilter';
+    case 'luaL_checkphysicsobject':
+      return 'PhysicsObject';
+    case 'lua_tofirebulletsinfo':
+      return 'FireBulletsInfo';
     default:
       return 'unknown';
   }

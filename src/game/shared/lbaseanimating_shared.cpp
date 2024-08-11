@@ -630,7 +630,7 @@ LUA_BINDING_BEGIN( CBaseAnimating, SequenceDuration, "class", "Sequence duration
 
     return 1;
 }
-LUA_BINDING_END()
+LUA_BINDING_END( "number", "The sequence duration" )
 
 LUA_BINDING_BEGIN( CBaseAnimating, SequenceLoops, "class", "Check if the sequence loops." )
 {

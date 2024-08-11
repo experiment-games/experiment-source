@@ -163,7 +163,7 @@ if (SERVER) then
 		local players = Util.GetAllPlayers()
 
 		for _, player in ipairs(players) do
-			local count, entities = Util.EntitiesInPVS(player:GetPos())
+			local count, entities = Util.EntitiesInPVS(player:GetPosition())
 
 			for _, entity in ipairs(entities) do
 				if (not entity.__networkedVariables) then

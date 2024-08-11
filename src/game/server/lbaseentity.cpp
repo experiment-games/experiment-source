@@ -494,24 +494,6 @@ static int CBaseEntity_Use( lua_State *L )
     return 0;
 }
 
-static int CBaseEntity_StartTouch( lua_State *L )
-{
-    luaL_checkentity( L, 1 )->StartTouch( luaL_checkentity( L, 2 ) );
-    return 0;
-}
-
-static int CBaseEntity_Touch( lua_State *L )
-{
-    luaL_checkentity( L, 1 )->Touch( luaL_checkentity( L, 2 ) );
-    return 0;
-}
-
-static int CBaseEntity_EndTouch( lua_State *L )
-{
-    luaL_checkentity( L, 1 )->EndTouch( luaL_checkentity( L, 2 ) );
-    return 0;
-}
-
 static int CBaseEntity_StartBlocked( lua_State *L )
 {
     luaL_checkentity( L, 1 )->StartBlocked( luaL_checkentity( L, 2 ) );
@@ -874,9 +856,6 @@ static const luaL_Reg CBaseEntitymeta[] = {
     { "VelocityPunch", CBaseEntity_VelocityPunch },
     { "GetNextTarget", CBaseEntity_GetNextTarget },
     { "Use", CBaseEntity_Use },
-    { "StartTouch", CBaseEntity_StartTouch },
-    { "Touch", CBaseEntity_Touch },
-    { "EndTouch", CBaseEntity_EndTouch },
     { "StartBlocked", CBaseEntity_StartBlocked },
     { "Blocked", CBaseEntity_Blocked },
     { "EndBlocked", CBaseEntity_EndBlocked },

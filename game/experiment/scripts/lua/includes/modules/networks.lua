@@ -14,7 +14,7 @@ local BYTE_SIZE_IN_BITS = 8
 local SIZE_STRING_BYTES = 2
 local SIZE_FLOAT_BYTES = 4
 local SIZE_INT_BYTES = 4
-local SIZE_ENTITY_INDEX = 24 -- TODO: Find out if we should use entindex or GetSerialNumber, or something else
+local SIZE_ENTITY_INDEX = 24 -- TODO: Find out if we should use GetEntityIndex or GetSerialNumber, or something else
 
 -- Client only:
 local localClient
@@ -398,7 +398,7 @@ end
 --- @param entity CBaseEntity
 function WRITER:WriteEntity(entity)
     -- TODO: See note near SIZE_ENTITY_INDEX
-    self:WriteUInt(entity:entindex(), SIZE_ENTITY_INDEX)
+    self:WriteUInt(entity:GetEntityIndex(), SIZE_ENTITY_INDEX)
 end
 
 --- Writes the given float

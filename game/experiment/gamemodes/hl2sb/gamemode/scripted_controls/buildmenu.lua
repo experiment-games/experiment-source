@@ -29,7 +29,7 @@ function CBuildMenu:Init(pViewPort)
 	self.m_pImage = Gui.CImagePanel(self, "test_image")
 	self.m_pImage:SetImage("silkicons/monkey.png")
 	self.m_pImage:SizeToContents()
-	self.m_pImage:SetPos(
+	self.m_pImage:SetPosition(
 		(ScreenWidth() - self.m_pImage:GetWide()) * .5,
 		(ScreenHeight() - self.m_pImage:GetTall()) * .5
 	)

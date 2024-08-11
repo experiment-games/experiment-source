@@ -417,7 +417,7 @@ LUA_BINDING_BEGIN( CBaseCombatWeapon, GetOwner, "class", "Get owner." )
 }
 LUA_BINDING_END( "entity", "Owner entity." )
 
-LUA_BINDING_BEGIN( CBaseCombatWeapon, GetPosition, "class", "Get the weapon position in the selection screen." )
+LUA_BINDING_BEGIN( CBaseCombatWeapon, GetSlotPosition, "class", "Get the weapon slot position in the selection screen." )
 {
     lua_CBaseCombatWeapon *pWeapon = LUA_BINDING_ARGUMENT( luaL_checkweapon, 1, "entity" );
     lua_pushinteger( L, pWeapon->GetPosition() );

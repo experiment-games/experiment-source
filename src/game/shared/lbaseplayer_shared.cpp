@@ -110,13 +110,6 @@ static int CBasePlayer_EyeAngles( lua_State *L )
     return 1;
 }
 
-static int CBasePlayer_EyePosition( lua_State *L )
-{
-    Vector v = luaL_checkplayer( L, 1 )->EyePosition();
-    lua_pushvector( L, v );
-    return 1;
-}
-
 static int CBasePlayer_EyePositionAndVectors( lua_State *L )
 {
     luaL_checkplayer( L, 1 )->EyePositionAndVectors(
@@ -227,12 +220,6 @@ static int CBasePlayer_SetHands( lua_State *L )
 {
     luaL_checkplayer( L, 1 )->SetHands( luaL_checkanimating( L, 2 ) );
     return 0;
-}
-
-static int CBasePlayer_GetHealth( lua_State *L )
-{
-    lua_pushinteger( L, luaL_checkplayer( L, 1 )->GetHealth() );
-    return 1;
 }
 
 static int CBasePlayer_GetImpulse( lua_State *L )
@@ -410,12 +397,6 @@ static int CBasePlayer_GetTimeBase( lua_State *L )
     return 1;
 }
 
-static int CBasePlayer_GetTracerType( lua_State *L )
-{
-    lua_pushstring( L, luaL_checkplayer( L, 1 )->GetTracerType() );
-    return 1;
-}
-
 static int CBasePlayer_GetUseEntity( lua_State *L )
 {
     CBaseEntity::PushLuaInstanceSafe( L, luaL_checkplayer( L, 1 )->GetUseEntity() );
@@ -562,13 +543,6 @@ static int CBasePlayer_LeaveVehicle( lua_State *L )
     return 0;
 }
 
-static int CBasePlayer_LocalEyeAngles( lua_State *L )
-{
-    QAngle v = luaL_checkplayer( L, 1 )->LocalEyeAngles();
-    lua_pushangle( L, v );
-    return 1;
-}
-
 static int CBasePlayer_MaxSpeed( lua_State *L )
 {
     lua_pushnumber( L, luaL_checkplayer( L, 1 )->MaxSpeed() );
@@ -579,18 +553,6 @@ static int CBasePlayer_MyCombatCharacterPointer( lua_State *L )
 {
     CBaseEntity::PushLuaInstanceSafe(
         L, ( CBasePlayer * )luaL_checkplayer( L, 1 )->MyCombatCharacterPointer() );
-    return 1;
-}
-
-static int CBasePlayer_PhysicsSimulate( lua_State *L )
-{
-    luaL_checkplayer( L, 1 )->PhysicsSimulate();
-    return 0;
-}
-
-static int CBasePlayer_PhysicsSolidMaskForEntity( lua_State *L )
-{
-    lua_pushinteger( L, luaL_checkplayer( L, 1 )->PhysicsSolidMaskForEntity() );
     return 1;
 }
 
@@ -868,12 +830,6 @@ static int CBasePlayer_SmoothViewOnStairs( lua_State *L )
     return 0;
 }
 
-static int CBasePlayer_Spawn( lua_State *L )
-{
-    luaL_checkplayer( L, 1 )->Spawn();
-    return 0;
-}
-
 static int CBasePlayer_SwitchToNextBestWeapon( lua_State *L )
 {
     lua_pushboolean( L, luaL_checkplayer( L, 1 )->SwitchToNextBestWeapon( luaL_checkweapon( L, 2 ) ) );
@@ -1121,7 +1077,6 @@ static const luaL_Reg CBasePlayermeta[] = {
     { "DoMuzzleFlash", CBasePlayer_DoMuzzleFlash },
     { "ExitLadder", CBasePlayer_ExitLadder },
     { "EyeAngles", CBasePlayer_EyeAngles },
-    { "GetEyePosition", CBasePlayer_EyePosition },
     { "GetEyePositionAndVectors", CBasePlayer_EyePositionAndVectors },
     { "GetEyeVectors", CBasePlayer_EyeVectors },
     { "FindUseEntity", CBasePlayer_FindUseEntity },
@@ -1138,7 +1093,6 @@ static const luaL_Reg CBasePlayermeta[] = {
     { "GetFOVTime", CBasePlayer_GetFOVTime },
     { "GetHands", CBasePlayer_GetHands },
     { "SetHands", CBasePlayer_SetHands },
-    { "GetHealth", CBasePlayer_GetHealth },
     { "GetImpulse", CBasePlayer_GetImpulse },
     { "GetLaggedMovementValue", CBasePlayer_GetLaggedMovementValue },
     { "GetLastKnownPlaceName", CBasePlayer_GetLastKnownPlaceName },
@@ -1156,7 +1110,6 @@ static const luaL_Reg CBasePlayermeta[] = {
     { "GetStepSoundVelocities", CBasePlayer_GetStepSoundVelocities },
     { "GetSwimSoundTime", CBasePlayer_GetSwimSoundTime },
     { "GetTimeBase", CBasePlayer_GetTimeBase },
-    { "GetTracerType", CBasePlayer_GetTracerType },
     { "GetUseEntity", CBasePlayer_GetUseEntity },
     { "GetUserID", CBasePlayer_GetUserID },
     { "GetVehicleEntity", CBasePlayer_GetVehicleEntity },
@@ -1177,11 +1130,8 @@ static const luaL_Reg CBasePlayermeta[] = {
     { "ItemPostFrame", CBasePlayer_ItemPostFrame },
     { "ItemPreFrame", CBasePlayer_ItemPreFrame },
     { "LeaveVehicle", CBasePlayer_LeaveVehicle },
-    { "LocalEyeAngles", CBasePlayer_LocalEyeAngles },
     { "MaxSpeed", CBasePlayer_MaxSpeed },
     { "MyCombatCharacterPointer", CBasePlayer_MyCombatCharacterPointer },
-    { "PhysicsSimulate", CBasePlayer_PhysicsSimulate },
-    { "PhysicsSolidMaskForEntity", CBasePlayer_PhysicsSolidMaskForEntity },
     { "PlayerUse", CBasePlayer_PlayerUse },
     { "PlayStepSound", CBasePlayer_PlayStepSound },
     { "PostThink", CBasePlayer_PostThink },
@@ -1215,7 +1165,6 @@ static const luaL_Reg CBasePlayermeta[] = {
     { "SimulatePlayerSimulatedEntities",
       CBasePlayer_SimulatePlayerSimulatedEntities },
     { "SmoothViewOnStairs", CBasePlayer_SmoothViewOnStairs },
-    { "Spawn", CBasePlayer_Spawn },
     { "SwitchToNextBestWeapon", CBasePlayer_SwitchToNextBestWeapon },
     { "UpdateClientData", CBasePlayer_UpdateClientData },
     { "UpdateUnderwaterState", CBasePlayer_UpdateUnderwaterState },

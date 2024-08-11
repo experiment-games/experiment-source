@@ -18,7 +18,8 @@ lua:
       type: number
       nillable: true
   returns:
-    
+    - type: number
+      description: "The sequence duration"
 ---
 
 <div class="lua__search__keywords">
