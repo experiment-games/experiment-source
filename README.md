@@ -79,8 +79,11 @@ We build and present the Experiment Developer Documentation using [mkdocs-materi
 2. Start the development server.
 
     ```bash
-    mkdocs serve
+    mkdocs serve --dirty
     ```
+
+    _The `--dirty` flag is used to make live-reloading only rebuild the changed_
+    _files, rather than the entire site. This is useful for faster development._
 
 3. Open the documentation in your browser @ [http://localhost:8000/experiment-source/]
 
