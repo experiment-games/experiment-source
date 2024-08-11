@@ -13,7 +13,9 @@ lua:
   realm: shared
   description: "Metatable that is called to set a value to a key that is not found in the table."
   
-  
+  arguments:
+    - name: "field"
+      type: string
   returns:
     
 ---

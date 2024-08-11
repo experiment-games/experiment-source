@@ -31,7 +31,7 @@ LUA_API lua_Vector &lua_tovector( lua_State *L, int idx )
 ** checker functions (without type error)
 */
 
-LUA_API bool lua_isvector(lua_State* L, int idx)
+LUA_API bool lua_isvector( lua_State *L, int idx )
 {
     void *p = luaL_testudata( L, idx, LUA_VECTORLIBNAME );
     return p != NULL;
@@ -165,7 +165,10 @@ LUA_BINDING_END( "number", "The dot product of the two vectors." )
 LUA_BINDING_BEGIN( Vector, Init, "class", "Initializes the vector with the specified values." )
 {
     lua_Vector vec = LUA_BINDING_ARGUMENT( luaL_checkvector, 1, "vector" );
-    vec.Init( luaL_optnumber( L, 2, 0.0f ), luaL_optnumber( L, 3, 0.0f ), luaL_optnumber( L, 4, 0.0f ) );
+    vec_t x = ( vec_t )LUA_BINDING_ARGUMENT( luaL_checknumber, 2, "x" );
+    vec_t y = ( vec_t )LUA_BINDING_ARGUMENT( luaL_checknumber, 3, "y" );
+    vec_t z = ( vec_t )LUA_BINDING_ARGUMENT( luaL_checknumber, 4, "z" );
+    vec.Init( x, y, z );
 
     return 0;
 }
@@ -379,17 +382,17 @@ LUA_BINDING_BEGIN( Vector, __index, "class", "Gets the value of a vector field."
 }
 LUA_BINDING_END( "number", "The value of the vector field." )
 
-
 LUA_BINDING_BEGIN( Vector, __newindex, "class", "Sets the value of a vector field." )
 {
+    lua_Vector vec = LUA_BINDING_ARGUMENT( luaL_checkvector, 1, "vector" );
     const char *field = LUA_BINDING_ARGUMENT( luaL_checkstring, 2, "field" );
 
     if ( strcmp( field, "x" ) == 0 || strcmp( field, "r" ) == 0 || strcmp( field, "1" ) == 0 )
-        luaL_checkvector( L, 1 ).x = ( vec_t )luaL_checknumber( L, 3 );
+        vec.x = ( vec_t )luaL_checknumber( L, 3 );
     else if ( strcmp( field, "y" ) == 0 || strcmp( field, "g" ) == 0 || strcmp( field, "2" ) == 0 )
-        luaL_checkvector( L, 1 ).y = ( vec_t )luaL_checknumber( L, 3 );
+        vec.y = ( vec_t )luaL_checknumber( L, 3 );
     else if ( strcmp( field, "z" ) == 0 || strcmp( field, "b" ) == 0 || strcmp( field, "3" ) == 0 )
-        luaL_checkvector( L, 1 ).z = ( vec_t )luaL_checknumber( L, 3 );
+        vec.z = ( vec_t )luaL_checknumber( L, 3 );
 
     return 0;
 }
@@ -397,7 +400,8 @@ LUA_BINDING_END()
 
 LUA_BINDING_BEGIN( Vector, __tostring, "class", "Converts the vector to a string." )
 {
-    lua_pushfstring( L, "Vector: %s", VecToString( luaL_checkvector( L, 1 ) ) );
+    lua_Vector vec = LUA_BINDING_ARGUMENT( luaL_checkvector, 1, "vector" );
+    lua_pushfstring( L, "Vector: %s", VecToString( vec ) );
 
     return 1;
 }
@@ -405,7 +409,9 @@ LUA_BINDING_END( "string", "The string representation of the vector." )
 
 LUA_BINDING_BEGIN( Vector, __eq, "class", "Checks if two vectors are equal." )
 {
-    lua_pushboolean( L, luaL_checkvector( L, 1 ) == luaL_checkvector( L, 2 ) );
+    lua_Vector vectorA = LUA_BINDING_ARGUMENT( lua_tovector, 1, "vectorA" );
+    lua_Vector vectorB = LUA_BINDING_ARGUMENT( lua_tovector, 2, "vectorB" );
+    lua_pushboolean( L, vectorA == vectorB );
 
     return 1;
 }
@@ -413,7 +419,9 @@ LUA_BINDING_END( "boolean", "True if the vectors are equal, false otherwise." )
 
 LUA_BINDING_BEGIN( Vector, __add, "class", "Adds two vectors." )
 {
-    lua_pushvector( L, luaL_checkvector( L, 1 ) + luaL_checkvector( L, 2 ) );
+    lua_Vector vectorA = LUA_BINDING_ARGUMENT( luaL_checkvector, 1, "vectorA" );
+    lua_Vector vectorB = LUA_BINDING_ARGUMENT( luaL_checkvector, 2, "vectorB" );
+    lua_pushvector( L, vectorA + vectorB );
 
     return 1;
 }
@@ -421,7 +429,8 @@ LUA_BINDING_END( "vector", "The sum of the two vectors." )
 
 LUA_BINDING_BEGIN( Vector, __sub, "class", "Subtracts two vectors." )
 {
-    lua_pushvector( L, luaL_checkvector( L, 1 ) - luaL_checkvector( L, 2 ) );
+    lua_Vector vectorA = LUA_BINDING_ARGUMENT( luaL_checkvector, 1, "vectorA" );
+    lua_Vector vectorB = LUA_BINDING_ARGUMENT( luaL_checkvector, 2, "vectorB" );
 
     return 1;
 }
@@ -429,15 +438,23 @@ LUA_BINDING_END( "vector", "The difference of the two vectors." )
 
 LUA_BINDING_BEGIN( Vector, __mul, "class", "Multiplies two vectors or a vector by a number." )
 {
-    switch ( lua_type( L, 1 ) )
+    if ( lua_isnumber( L, 1 ) )
     {
-        case LUA_TNUMBER:
-            lua_pushvector( L, luaL_checknumber( L, 1 ) * luaL_checkvector( L, 2 ) );
-            break;
-        case LUA_TUSERDATA:
-        default:
-            lua_pushvector( L, luaL_checkvector( L, 1 ) * luaL_checknumber( L, 2 ) );
-            break;
+        lua_Number number = LUA_BINDING_ARGUMENT( luaL_checknumber, 1, "number" );
+        lua_Vector vector = LUA_BINDING_ARGUMENT( luaL_checkvector, 2, "vector" );
+        lua_pushvector( L, vector * number );
+    }
+    else if ( lua_isnumber( L, 2 ) )
+    {
+        lua_Vector vector = LUA_BINDING_ARGUMENT( luaL_checkvector, 1, "vector" );
+        lua_Number number = LUA_BINDING_ARGUMENT( luaL_checknumber, 2, "number" );
+        lua_pushvector( L, vector * number );
+    }
+    else
+    {
+        lua_Vector vectorA = LUA_BINDING_ARGUMENT( luaL_checkvector, 1, "vectorA" );
+        lua_Vector vectorB = LUA_BINDING_ARGUMENT( luaL_checkvector, 2, "vectorB" );
+        lua_pushvector( L, vectorA * vectorB );
     }
 
     return 1;
@@ -446,7 +463,9 @@ LUA_BINDING_END( "vector", "The product of the two vectors or the vector and the
 
 LUA_BINDING_BEGIN( Vector, __div, "class", "Divides a vector by a number." )
 {
-    lua_pushvector( L, luaL_checkvector( L, 1 ) / luaL_checknumber( L, 2 ) );
+    lua_Vector vector = LUA_BINDING_ARGUMENT( luaL_checkvector, 1, "vector" );
+    lua_Number number = LUA_BINDING_ARGUMENT( luaL_checknumber, 2, "number" );
+    lua_pushvector( L, vector / number );
 
     return 1;
 }
@@ -454,7 +473,8 @@ LUA_BINDING_END( "vector", "The vector divided by the number." )
 
 LUA_BINDING_BEGIN( Vector, __unm, "class", "Negates the vector." )
 {
-    lua_pushvector( L, -luaL_checkvector( L, 1 ) );
+    lua_Vector vector = LUA_BINDING_ARGUMENT( luaL_checkvector, 1, "vector" );
+    lua_pushvector( L, -vector );
 
     return 1;
 }
@@ -502,7 +522,7 @@ LUALIB_API int luaopen_Vector( lua_State *L )
     lua_setfield( L, -2, "__type" ); /* metatable.__type = "Vector" */
 
     LUA_REGISTRATION_COMMIT_GLOBAL( _G );
-    lua_pop( L, 1 ); // pop metatable
+    lua_pop( L, 1 );  // pop metatable
 
     Vector origin = vec3_origin;
     lua_pushvector( L, origin );

@@ -13,7 +13,9 @@ lua:
   realm: shared
   description: "Metatable that is called when the angle is to be added to another angle."
   
-  
+  arguments:
+    - name: "angle2"
+      type: Angle
   returns:
     - type: angle
       description: "The added angle."

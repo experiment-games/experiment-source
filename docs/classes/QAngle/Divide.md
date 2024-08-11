@@ -13,7 +13,9 @@ lua:
   realm: shared
   description: "Modifies the existing angle, dividing it by a number."
   
-  
+  arguments:
+    - name: "divideBy"
+      type: number
   returns:
     - type: angle
       description: "The divided angle."

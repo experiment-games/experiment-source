@@ -13,7 +13,9 @@ lua:
   realm: shared
   description: "Modifies the existing angle, scaling it by a number."
   
-  
+  arguments:
+    - name: "scaleBy"
+      type: number
   returns:
     - type: angle
       description: "The scaled angle."

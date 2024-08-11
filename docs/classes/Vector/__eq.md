@@ -13,7 +13,9 @@ lua:
   realm: shared
   description: "Checks if two vectors are equal."
   
-  
+  arguments:
+    - name: "vectorB"
+      type: Vector
   returns:
     - type: boolean
       description: "True if the vectors are equal, false otherwise."

@@ -13,7 +13,9 @@ lua:
   realm: shared
   description: "Subtracts two vectors."
   
-  
+  arguments:
+    - name: "vectorB"
+      type: Vector
   returns:
     - type: vector
       description: "The difference of the two vectors."

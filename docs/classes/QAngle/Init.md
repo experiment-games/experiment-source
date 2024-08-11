@@ -13,7 +13,13 @@ lua:
   realm: shared
   description: "Initializes the angle with the specified values."
   
-  
+  arguments:
+    - name: "x"
+      type: number
+    - name: "y"
+      type: number
+    - name: "z"
+      type: number
   returns:
     - type: angle
       description: "The initialized angle."

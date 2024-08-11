@@ -13,7 +13,9 @@ lua:
   realm: shared
   description: "Divides a vector by a number."
   
-  
+  arguments:
+    - name: "number"
+      type: number
   returns:
     - type: vector
       description: "The vector divided by the number."

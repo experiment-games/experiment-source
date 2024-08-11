@@ -13,7 +13,11 @@ lua:
   realm: shared
   description: "Rotates the angle around the specified axis by the specified degrees."
   
-  
+  arguments:
+    - name: "axis"
+      type: Vector
+    - name: "degrees"
+      type: number
   returns:
     - type: angle
       description: "The rotated angle."

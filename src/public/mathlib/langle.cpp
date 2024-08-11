@@ -114,8 +114,11 @@ LUA_BINDING_END( "boolean", "True if the angles are equal within the tolerance, 
 
 LUA_BINDING_BEGIN( QAngle, Init, "class", "Initializes the angle with the specified values." )
 {
-    lua_QAngle angle = luaL_checkangle( L, 1 );
-    angle.Init( luaL_optnumber( L, 2, 0.0f ), luaL_optnumber( L, 3, 0.0f ), luaL_optnumber( L, 4, 0.0f ) );
+    lua_QAngle angle = LUA_BINDING_ARGUMENT( luaL_checkangle, 1, "angle" );
+    vec_t x = ( vec_t )LUA_BINDING_ARGUMENT( luaL_checknumber, 2, "x" );
+    vec_t y = ( vec_t )LUA_BINDING_ARGUMENT( luaL_checknumber, 3, "y" );
+    vec_t z = ( vec_t )LUA_BINDING_ARGUMENT( luaL_checknumber, 4, "z" );
+    angle.Init( x, y, z );
     lua_pushangle( L, angle );
 
     return 1;
@@ -124,7 +127,7 @@ LUA_BINDING_END( "angle", "The initialized angle." )
 
 LUA_BINDING_BEGIN( QAngle, Invalidate, "class", "Invalidates the angle." )
 {
-    lua_QAngle angle = luaL_checkangle( L, 1 );
+    lua_QAngle angle = LUA_BINDING_ARGUMENT( luaL_checkangle, 1, "angle" );
     angle.Invalidate();
     lua_pushangle( L, angle );
 
@@ -134,7 +137,8 @@ LUA_BINDING_END( "angle", "The invalidated angle." )
 
 LUA_BINDING_BEGIN( QAngle, IsValid, "class", "Checks if the angle is valid." )
 {
-    lua_pushboolean( L, luaL_checkangle( L, 1 ).IsValid() );
+    lua_QAngle angle = LUA_BINDING_ARGUMENT( luaL_checkangle, 1, "angle" );
+    lua_pushboolean( L, angle.IsValid() );
 
     return 1;
 }
@@ -142,7 +146,8 @@ LUA_BINDING_END( "boolean", "True if the angle is valid, false otherwise." )
 
 LUA_BINDING_BEGIN( QAngle, Length, "class", "Returns the length of the angle." )
 {
-    lua_pushnumber( L, luaL_checkangle( L, 1 ).Length() );
+    lua_QAngle angle = LUA_BINDING_ARGUMENT( luaL_checkangle, 1, "angle" );
+    lua_pushnumber( L, angle.Length() );
 
     return 1;
 }
@@ -150,7 +155,8 @@ LUA_BINDING_END( "number", "The length of the angle." )
 
 LUA_BINDING_BEGIN( QAngle, LengthSqr, "class", "Returns the squared length of the angle." )
 {
-    lua_pushnumber( L, luaL_checkangle( L, 1 ).LengthSqr() );
+    lua_QAngle angle = LUA_BINDING_ARGUMENT( luaL_checkangle, 1, "angle" );
+    lua_pushnumber( L, angle.LengthSqr() );
 
     return 1;
 }
@@ -159,9 +165,9 @@ LUA_BINDING_END( "number", "The squared length of the angle." )
 //  Rotates the angle around the specified axis by the specified degrees. (doesnt return a new angle)
 LUA_BINDING_BEGIN( QAngle, RotateAroundAxis, "class", "Rotates the angle around the specified axis by the specified degrees." )
 {
-    lua_QAngle angle = luaL_checkangle( L, 1 );
-    lua_Vector axis = luaL_checkvector( L, 2 );
-    float degrees = luaL_checknumber( L, 3 );
+    lua_QAngle angle = LUA_BINDING_ARGUMENT( luaL_checkangle, 1, "angle" );
+    lua_Vector axis = LUA_BINDING_ARGUMENT( luaL_checkvector, 2, "axis" );
+    float degrees = LUA_BINDING_ARGUMENT( luaL_checknumber, 3, "degrees" );
 
     matrix3x4_t matrix;
     MatrixBuildRotationAboutAxis( axis, degrees, matrix );
@@ -182,8 +188,8 @@ LUA_BINDING_END( "angle", "The rotated angle." )
 //  Modifies the existing angle, adding another angle to it
 LUA_BINDING_BEGIN( QAngle, Add, "class", "Modifies the existing angle, adding another angle to it." )
 {
-    lua_QAngle angle = luaL_checkangle( L, 1 );
-    lua_QAngle angleToAdd = luaL_checkangle( L, 2 );
+    lua_QAngle angle = LUA_BINDING_ARGUMENT( luaL_checkangle, 1, "angle" );
+    lua_QAngle angleToAdd = LUA_BINDING_ARGUMENT( luaL_checkangle, 2, "angle2" );
 
     lua_pushangle( L, angle + angleToAdd );
 
@@ -194,8 +200,8 @@ LUA_BINDING_END( "angle", "The added angle." )
 //  Modifies the existing angle, dividing it by a number
 LUA_BINDING_BEGIN( QAngle, Divide, "class", "Modifies the existing angle, dividing it by a number." )
 {
-    lua_QAngle angle = luaL_checkangle( L, 1 );
-    float divideBy = luaL_checknumber( L, 2 );
+    lua_QAngle angle = LUA_BINDING_ARGUMENT( luaL_checkangle, 1, "angle" );
+    float divideBy = LUA_BINDING_ARGUMENT( luaL_checknumber, 2, "divideBy" );
 
     lua_pushangle( L, angle / divideBy );
 
@@ -206,8 +212,8 @@ LUA_BINDING_END( "angle", "The divided angle." )
 //  Modifies the existing angle, scaling it by a number
 LUA_BINDING_BEGIN( QAngle, Scale, "class", "Modifies the existing angle, scaling it by a number." )
 {
-    lua_QAngle angle = luaL_checkangle( L, 1 );
-    float scaleBy = luaL_checknumber( L, 2 );
+    lua_QAngle angle = LUA_BINDING_ARGUMENT( luaL_checkangle, 1, "angle" );
+    float scaleBy = LUA_BINDING_ARGUMENT( luaL_checknumber, 2, "scaleBy" );
 
     lua_pushangle( L, angle * scaleBy );
 
@@ -217,8 +223,8 @@ LUA_BINDING_END( "angle", "The scaled angle." )
 
 LUA_BINDING_BEGIN( QAngle, __index, "class", "Metatable that is called when a key is not found in the table." )
 {
-    lua_QAngle angle = luaL_checkangle( L, 1 );
-    const char *field = luaL_checkstring( L, 2 );
+    lua_QAngle angle = LUA_BINDING_ARGUMENT( luaL_checkangle, 1, "angle" );
+    const char *field = LUA_BINDING_ARGUMENT( luaL_checkstring, 2, "field" );
 
     if ( strcmp( field, "x" ) == 0 || strcmp( field, "p" ) == 0 || strcmp( field, "pitch" ) == 0 )
         lua_pushnumber( L, angle.x );
@@ -242,14 +248,15 @@ LUA_BINDING_END( "any", "The value of the key." )
 
 LUA_BINDING_BEGIN( QAngle, __newindex, "class", "Metatable that is called to set a value to a key that is not found in the table." )
 {
-    const char *field = luaL_checkstring( L, 2 );
+    lua_QAngle angle = LUA_BINDING_ARGUMENT( luaL_checkangle, 1, "angle" );
+    const char *field = LUA_BINDING_ARGUMENT( luaL_checkstring, 2, "field" );
 
     if ( strcmp( field, "x" ) == 0 || strcmp( field, "p" ) == 0 || strcmp( field, "pitch" ) == 0 || strcmp( field, "1" ) == 0 )
-        luaL_checkangle( L, 1 ).x = ( vec_t )luaL_checknumber( L, 3 );
+        angle.x = ( vec_t )luaL_checknumber( L, 3 );
     else if ( strcmp( field, "y" ) == 0 || strcmp( field, "y" ) == 0 || strcmp( field, "yaw" ) == 0 || strcmp( field, "2" ) == 0 )
-        luaL_checkangle( L, 1 ).y = ( vec_t )luaL_checknumber( L, 3 );
+        angle.y = ( vec_t )luaL_checknumber( L, 3 );
     else if ( strcmp( field, "z" ) == 0 || strcmp( field, "r" ) == 0 || strcmp( field, "roll" ) == 0 || strcmp( field, "3" ) == 0 )
-        luaL_checkangle( L, 1 ).z = ( vec_t )luaL_checknumber( L, 3 );
+        angle.z = ( vec_t )luaL_checknumber( L, 3 );
 
     return 0;
 }
@@ -257,49 +264,61 @@ LUA_BINDING_END()
 
 LUA_BINDING_BEGIN( QAngle, __tostring, "class", "Metatable that is called when the angle is to be converted to a string." )
 {
-    lua_pushfstring( L, VecToString( luaL_checkangle( L, 1 ) ) );
+    lua_QAngle angle = LUA_BINDING_ARGUMENT( luaL_checkangle, 1, "angle" );
+    lua_pushfstring( L, VecToString( angle ) );
     return 1;
 }
 LUA_BINDING_END( "string", "The string representation of the angle." )
 
 LUA_BINDING_BEGIN( QAngle, __eq, "class", "Metatable that is called when the angle is to be compared with another angle." )
 {
-    lua_pushboolean( L, luaL_checkangle( L, 1 ) == luaL_checkangle( L, 2 ) );
+    lua_QAngle angle = LUA_BINDING_ARGUMENT( luaL_checkangle, 1, "angle" );
+    lua_QAngle angle2 = LUA_BINDING_ARGUMENT( luaL_checkangle, 2, "angle2" );
+    lua_pushboolean( L, angle == angle2 );
     return 1;
 }
 LUA_BINDING_END( "boolean", "True if the angles are equal, false otherwise." )
 
 LUA_BINDING_BEGIN( QAngle, __add, "class", "Metatable that is called when the angle is to be added to another angle." )
 {
-    lua_pushangle( L, luaL_checkangle( L, 1 ) + luaL_checkangle( L, 2 ) );
+    lua_QAngle angle = LUA_BINDING_ARGUMENT( luaL_checkangle, 1, "angle" );
+    lua_QAngle angle2 = LUA_BINDING_ARGUMENT( luaL_checkangle, 2, "angle2" );
+    lua_pushangle( L, angle + angle2 );
     return 1;
 }
 LUA_BINDING_END( "angle", "The added angle." )
 
 LUA_BINDING_BEGIN( QAngle, __sub, "class", "Metatable that is called when the angle is to be subtracted from another angle." )
 {
-    lua_pushangle( L, luaL_checkangle( L, 1 ) - luaL_checkangle( L, 2 ) );
+    lua_QAngle angle = LUA_BINDING_ARGUMENT( luaL_checkangle, 1, "angle" );
+    lua_QAngle angle2 = LUA_BINDING_ARGUMENT( luaL_checkangle, 2, "angle2" );
+    lua_pushangle( L, angle - angle2 );
     return 1;
 }
 LUA_BINDING_END( "angle", "The subtracted angle." )
 
 LUA_BINDING_BEGIN( QAngle, __mul, "class", "Metatable that is called when the angle is to be multiplied by a number." )
 {
-    lua_pushangle( L, luaL_checkangle( L, 1 ) * luaL_checknumber( L, 2 ) );
+    lua_QAngle angle = LUA_BINDING_ARGUMENT( luaL_checkangle, 1, "angle" );
+    float number = luaL_checknumber( L, 2 );
+    lua_pushangle( L, angle * number );
     return 1;
 }
 LUA_BINDING_END( "angle", "The multiplied angle." )
 
 LUA_BINDING_BEGIN( QAngle, __div, "class", "Metatable that is called when the angle is to be divided by a number." )
 {
-    lua_pushangle( L, luaL_checkangle( L, 1 ) / luaL_checknumber( L, 2 ) );
+    lua_QAngle angle = LUA_BINDING_ARGUMENT( luaL_checkangle, 1, "angle" );
+    float number = LUA_BINDING_ARGUMENT( luaL_checknumber, 2, "number" );
+    lua_pushangle( L, angle / number );
     return 1;
 }
 LUA_BINDING_END( "angle", "The divided angle." )
 
 LUA_BINDING_BEGIN( QAngle, __unm, "class", "Metatable that is called when the angle is to be negated." )
 {
-    lua_pushangle( L, -luaL_checkangle( L, 1 ) );
+    lua_QAngle angle = LUA_BINDING_ARGUMENT( luaL_checkangle, 1, "angle" );
+    lua_pushangle( L, -angle );
     return 1;
 }
 LUA_BINDING_END( "angle", "The negated angle." )

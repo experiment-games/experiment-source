@@ -13,7 +13,9 @@ lua:
   realm: shared
   description: "Adds two vectors."
   
-  
+  arguments:
+    - name: "vectorB"
+      type: Vector
   returns:
     - type: vector
       description: "The sum of the two vectors."

@@ -13,7 +13,9 @@ lua:
   realm: shared
   description: "Metatable that is called when a key is not found in the table."
   
-  
+  arguments:
+    - name: "field"
+      type: string
   returns:
     - type: any
       description: "The value of the key."

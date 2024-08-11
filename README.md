@@ -64,6 +64,8 @@
 
 We build and present the Experiment Developer Documentation using [mkdocs-material](https://squidfunk.github.io/mkdocs-material/).
 
+- [Read our conventions](./docs/general/conventions.md)
+
 ### Requirements
 
 - Python 3.8 or newer

@@ -13,7 +13,16 @@ lua:
   realm: shared
   description: "Multiplies two vectors or a vector by a number."
   
-  
+  argumentSets:
+    - arguments:
+      - name: "vector"
+        type: Vector
+    - arguments:
+      - name: "number"
+        type: number
+    - arguments:
+      - name: "vectorB"
+        type: Vector
   returns:
     - type: vector
       description: "The product of the two vectors or the vector and the number."

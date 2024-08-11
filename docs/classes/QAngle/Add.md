@@ -13,7 +13,9 @@ lua:
   realm: shared
   description: "Modifies the existing angle, adding another angle to it."
   
-  
+  arguments:
+    - name: "angle2"
+      type: Angle
   returns:
     - type: angle
       description: "The added angle."

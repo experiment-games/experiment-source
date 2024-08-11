@@ -13,7 +13,9 @@ lua:
   realm: shared
   description: "Metatable that is called when the angle is to be compared with another angle."
   
-  
+  arguments:
+    - name: "angle2"
+      type: Angle
   returns:
     - type: boolean
       description: "True if the angles are equal, false otherwise."

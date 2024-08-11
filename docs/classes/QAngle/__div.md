@@ -13,7 +13,9 @@ lua:
   realm: shared
   description: "Metatable that is called when the angle is to be divided by a number."
   
-  
+  arguments:
+    - name: "number"
+      type: number
   returns:
     - type: angle
       description: "The divided angle."
