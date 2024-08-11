@@ -12,12 +12,12 @@ lua:
   function: IgniteRagdoll
   realm: client
   description: "Ignite the ragdoll."
-  
+
   arguments:
     - name: "igniter"
       type: Entity
   returns:
-    
+
 ---
 
 <div class="lua__search__keywords">
