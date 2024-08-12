@@ -1,16 +1,16 @@
 ---
 template: lua-library-function.html
 title: SetWriteDepthToDestAlpha
-icon: lua-shared
+icon: lua-client
 tags:
   - lua
-  - shared
+  - client
   - needs-verification
   - needs-example
 lua:
   library: Renders
   function: SetWriteDepthToDestAlpha
-  realm: shared
+  realm: client
   description: "Set the write depth to destination alpha."
   
   arguments:

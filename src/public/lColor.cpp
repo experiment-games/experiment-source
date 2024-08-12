@@ -1,10 +1,3 @@
-//========= Copyright © 1996-2005, Valve Corporation, All rights reserved. ============//
-//
-// Purpose:
-//
-// $NoKeywords: $
-//=============================================================================//
-
 #include "cbase.h"
 #include "Color.h"
 #include "fmtstr.h"
@@ -72,79 +65,103 @@ LUALIB_API lua_Color &luaL_checkcolor( lua_State *L, int narg )
     return *static_cast< lua_Color * >( 0 );
 }
 
-static int Color_a( lua_State *L )
+LUA_REGISTRATION_INIT( Color )
+
+LUA_BINDING_BEGIN( Color, GetAlpha, "class", "Gets the alpha value of the color." )
 {
-    lua_pushinteger( L, luaL_checkcolor( L, 1 ).a() );
+    lua_Color color = LUA_BINDING_ARGUMENT( luaL_checkcolor, 1, "color" );
+    lua_pushinteger( L, color.a() );
     return 1;
 }
+LUA_BINDING_END( "number", "The alpha value." )
 
-static int Color_b( lua_State *L )
+LUA_BINDING_BEGIN( Color, GetBlue, "class", "Gets the blue value of the color." )
 {
-    lua_pushinteger( L, luaL_checkcolor( L, 1 ).b() );
+    lua_Color color = LUA_BINDING_ARGUMENT( luaL_checkcolor, 1, "color" );
+    lua_pushinteger( L, color.b() );
     return 1;
 }
+LUA_BINDING_END( "number", "The blue value." )
 
-static int Color_g( lua_State *L )
+LUA_BINDING_BEGIN( Color, GetColor, "class", "Gets the color values." )
 {
-    lua_pushinteger( L, luaL_checkcolor( L, 1 ).g() );
-    return 1;
-}
-
-static int Color_GetColor( lua_State *L )
-{
-    int r, g, b, a;
-    luaL_checkcolor( L, 1 ).GetColor( r, g, b, a );
-    lua_pushinteger( L, r );
-    lua_pushinteger( L, g );
-    lua_pushinteger( L, b );
-    lua_pushinteger( L, a );
+    lua_Color color = LUA_BINDING_ARGUMENT( luaL_checkcolor, 1, "color" );
+    lua_pushinteger( L, color.r() );
+    lua_pushinteger( L, color.g() );
+    lua_pushinteger( L, color.b() );
+    lua_pushinteger( L, color.a() );
     return 4;
 }
+LUA_BINDING_END( "number", "The red value.", "number", "The green value.", "number", "The blue value.", "number", "The alpha value." )
 
-static int Color_GetRawColor( lua_State *L )
+LUA_BINDING_BEGIN( Color, GetGreen, "class", "Gets the green value of the color." )
 {
-    lua_pushinteger( L, luaL_checkcolor( L, 1 ).GetRawColor() );
+    lua_Color color = LUA_BINDING_ARGUMENT( luaL_checkcolor, 1, "color" );
+    lua_pushinteger( L, color.g() );
     return 1;
 }
+LUA_BINDING_END( "number", "The green value." )
 
-static int Color_r( lua_State *L )
+LUA_BINDING_BEGIN( Color, GetRawColor, "class", "Gets the raw color value." )
 {
-    lua_pushinteger( L, luaL_checkcolor( L, 1 ).r() );
+    lua_Color color = LUA_BINDING_ARGUMENT( luaL_checkcolor, 1, "color" );
+    lua_pushinteger( L, color.GetRawColor() );
     return 1;
 }
+LUA_BINDING_END( "number", "The raw color value." )
 
-static int Color_SetColor( lua_State *L )
+LUA_BINDING_BEGIN( Color, GetRed, "class", "Gets the red value of the color." )
 {
-    luaL_checkcolor( L, 1 ).SetColor( luaL_checknumber( L, 2 ), luaL_checknumber( L, 3 ), luaL_checknumber( L, 4 ), luaL_optnumber( L, 5, 255 ) );
+    lua_Color color = LUA_BINDING_ARGUMENT( luaL_checkcolor, 1, "color" );
+    lua_pushinteger( L, color.r() );
+    return 1;
+}
+LUA_BINDING_END( "number", "The red value." )
+
+LUA_BINDING_BEGIN( Color, SetColor, "class", "Sets the color values." )
+{
+    lua_Color &color = luaL_checkcolor( L, 1 );
+    int red = LUA_BINDING_ARGUMENT( luaL_checknumber, 2, "red" );
+    int green = LUA_BINDING_ARGUMENT( luaL_checknumber, 3, "green" );
+    int blue = LUA_BINDING_ARGUMENT( luaL_checknumber, 4, "blue" );
+    int alpha = LUA_BINDING_ARGUMENT_WITH_DEFAULT( luaL_optnumber, 5, 255, "alpha" );
+    color.SetColor( red, green, blue, alpha );
     return 0;
 }
+LUA_BINDING_END()
 
-static int Color_SetRawColor( lua_State *L )
+LUA_BINDING_BEGIN( Color, SetRawColor, "class", "Sets the raw color value." )
 {
-    luaL_checkcolor( L, 1 ).SetRawColor( luaL_checknumber( L, 2 ) );
+    lua_Color &color = luaL_checkcolor( L, 1 );
+    int rawColor = LUA_BINDING_ARGUMENT( luaL_checknumber, 2, "rawColor" );
+    color.SetRawColor( rawColor );
     return 0;
 }
+LUA_BINDING_END()
 
-static int Color___tostring( lua_State *L )
+LUA_BINDING_BEGIN( Color, __tostring, "class", "Returns a string representation of the color." )
 {
     lua_Color color = luaL_checkcolor( L, 1 );
     lua_pushfstring( L, "Color: %s", static_cast< const char * >( CFmtStr( "(%i, %i, %i, %i)", color.r(), color.g(), color.b(), color.a() ) ) );
     return 1;
 }
+LUA_BINDING_END( "string", "The string representation of the color." )
 
-static int Color___eq( lua_State *L )
+LUA_BINDING_BEGIN( Color, __eq, "class", "Compares two colors." )
 {
-    lua_pushboolean( L, luaL_checkcolor( L, 1 ) == luaL_checkcolor( L, 2 ) );
+    lua_Color colorA = LUA_BINDING_ARGUMENT( lua_tocolor, 1, "colorA" );
+    lua_Color colorB = LUA_BINDING_ARGUMENT( lua_tocolor, 2, "colorB" );
+    lua_pushboolean( L, colorA == colorB );
     return 1;
 }
+LUA_BINDING_END( "boolean", "Whether the colors are equal." )
 
-// Returns the color's r, g, b, a values or fallsback to the Color metatable
-static int Color___index( lua_State *L )
+LUA_BINDING_BEGIN( Color, __index, "class", "Metamethod for when the index field doesn't exist. Returns values when indexing r, g, b, a or 1, 2, 3, 4." )
 {
-    lua_Color *color = &luaL_checkcolor( L, 1 );
+    lua_Color *color = &LUA_BINDING_ARGUMENT( lua_tocolor, 1, "color" );
     LUA_METATABLE_INDEX_CHECK( L, color );
 
-    const char *field = luaL_checkstring( L, 2 );
+    const char *field = LUA_BINDING_ARGUMENT( luaL_checkstring, 2, "field" );
 
     if ( Q_strcmp( field, "r" ) == 0 || strcmp( field, "1" ) == 0 )
         lua_pushinteger( L, color->r() );
@@ -169,22 +186,23 @@ static int Color___index( lua_State *L )
 
     return 1;
 }
+LUA_BINDING_END( "any", "The value of the field." )
 
-static int Color___newindex( lua_State *L )
+LUA_BINDING_BEGIN( Color, __newindex, "class", "Metamethod for when the newindex field doesn't exist. Sets values when indexing r, g, b, a or 1, 2, 3, 4." )
 {
-    lua_Color *color = &luaL_checkcolor( L, 1 );
+    lua_Color *color = &LUA_BINDING_ARGUMENT( lua_tocolor, 1, "color" );
     LUA_METATABLE_INDEX_CHECK( L, color );
 
-    const char *field = luaL_checkstring( L, 2 );
+    const char *field = LUA_BINDING_ARGUMENT( luaL_checkstring, 2, "field" );
 
     if ( Q_strcmp( field, "r" ) == 0 || strcmp( field, "1" ) == 0 )
-        color->SetColor( luaL_checknumber( L, 3 ), color->g(), color->b(), color->a() );
+        color->SetColor( LUA_BINDING_ARGUMENT( luaL_checknumber, 3, "red" ), color->g(), color->b(), color->a() );
     else if ( Q_strcmp( field, "g" ) == 0 || strcmp( field, "2" ) == 0 )
-        color->SetColor( color->r(), luaL_checknumber( L, 3 ), color->b(), color->a() );
+        color->SetColor( color->r(), LUA_BINDING_ARGUMENT( luaL_checknumber, 3, "green" ), color->b(), color->a() );
     else if ( Q_strcmp( field, "b" ) == 0 || strcmp( field, "3" ) == 0 )
-        color->SetColor( color->r(), color->g(), luaL_checknumber( L, 3 ), color->a() );
+        color->SetColor( color->r(), color->g(), LUA_BINDING_ARGUMENT( luaL_checknumber, 3, "blue" ), color->a() );
     else if ( Q_strcmp( field, "a" ) == 0 || strcmp( field, "4" ) == 0 )
-        color->SetColor( color->r(), color->g(), color->b(), luaL_checknumber( L, 3 ) );
+        color->SetColor( color->r(), color->g(), color->b(), LUA_BINDING_ARGUMENT( luaL_checknumber, 3, "alpha" ) );
     else
     {
         LUA_GET_REF_TABLE( L, color );
@@ -195,48 +213,9 @@ static int Color___newindex( lua_State *L )
 
     return 0;
 }
+LUA_BINDING_END()
 
-static const luaL_Reg Colormeta[] = {
-    { "GetAlpha", Color_a },
-    { "GetBlue", Color_b },
-    { "GetColor", Color_GetColor },
-    { "GetGreen", Color_g },
-    { "GetRawColor", Color_GetRawColor },
-    { "GetRed", Color_r },
-    { "SetColor", Color_SetColor },
-    { "SetRawColor", Color_SetRawColor },
-    { "__tostring", Color___tostring },
-    { "__eq", Color___eq },
-    { "__index", Color___index },
-    { "__newindex", Color___newindex },
-    { NULL, NULL } };
-
-static int luasrc_Color( lua_State *L )
-{
-    lua_Color clr = lua_Color( luaL_checknumber( L, 1 ), luaL_checknumber( L, 2 ), luaL_checknumber( L, 3 ), luaL_optnumber( L, 4, 255 ) );
-    lua_pushcolor( L, clr );
-    return 1;
-}
-
-static int luasrc_RGBToHSV( lua_State *L )
-{
-    lua_Color clr = luaL_checkcolor( L, 1 );
-    Vector hsv;
-    RGBtoHSV( Vector( clr.r(), clr.g(), clr.b() ), hsv );
-    lua_pushnumber( L, hsv.x );
-    lua_pushnumber( L, hsv.y );
-    lua_pushnumber( L, hsv.z );
-    return 3;
-}
-
-static int luasrc_HSVToRGB( lua_State *L )
-{
-    Vector hsv = Vector( luaL_checknumber( L, 1 ), luaL_checknumber( L, 2 ), luaL_checknumber( L, 3 ) );
-    Vector rgb;
-    HSVtoRGB( hsv, rgb );
-    lua_pushcolor( L, lua_Color( rgb.x, rgb.y, rgb.z, 255 ) );
-    return 1;
-}
+LUA_REGISTRATION_INIT( _G );
 
 // These Hue & HSL functions are taken from the shadersdk @ src\materialsystem\stdshaders\common_ps_fxc.h
 float HueToRGB( float v1, float v2, float vH )
@@ -261,7 +240,43 @@ float HueToRGB( float v1, float v2, float vH )
     return fResult;
 }
 
-static int luasrc_RGBToHSL( lua_State *L )
+LUA_BINDING_BEGIN( _G, Color, "library", "Creates a new color." )
+{
+    int red = LUA_BINDING_ARGUMENT( luaL_checknumber, 1, "red" );
+    int green = LUA_BINDING_ARGUMENT( luaL_checknumber, 2, "green" );
+    int blue = LUA_BINDING_ARGUMENT( luaL_checknumber, 3, "blue" );
+    int alpha = LUA_BINDING_ARGUMENT_WITH_DEFAULT( luaL_optnumber, 4, 255, "alpha" );
+    lua_Color color = lua_Color( red, green, blue, alpha );
+    lua_pushcolor( L, color );
+    return 1;
+}
+LUA_BINDING_END( "color", "The created color." )
+
+LUA_BINDING_BEGIN( _G, HSVToColor, "library", "Converts HSV to RGB." )
+{
+    float hue = LUA_BINDING_ARGUMENT( luaL_checknumber, 1, "hue" );
+    float saturation = LUA_BINDING_ARGUMENT( luaL_checknumber, 2, "saturation" );
+    float value = LUA_BINDING_ARGUMENT( luaL_checknumber, 3, "value" );
+    Vector rgb;
+    HSVtoRGB( Vector( hue, saturation, value ), rgb );
+    lua_pushcolor( L, lua_Color( rgb.x, rgb.y, rgb.z, 255 ) );
+    return 1;
+}
+LUA_BINDING_END( "color", "The converted color." )
+
+LUA_BINDING_BEGIN( _G, ColorToHSV, "library", "Converts RGB to HSV." )
+{
+    lua_Color clr = luaL_checkcolor( L, 1 );
+    Vector hsv;
+    RGBtoHSV( Vector( clr.r(), clr.g(), clr.b() ), hsv );
+    lua_pushnumber( L, hsv.x );
+    lua_pushnumber( L, hsv.y );
+    lua_pushnumber( L, hsv.z );
+    return 3;
+}
+LUA_BINDING_END( "number", "The hue.", "number", "The saturation.", "number", "The value." )
+
+LUA_BINDING_BEGIN( _G, ColorToHSL, "library", "Converts RGB to HSL." )
 {
     lua_Color clr = luaL_checkcolor( L, 1 );
     float h, s;
@@ -318,8 +333,9 @@ static int luasrc_RGBToHSL( lua_State *L )
 
     return 3;
 }
+LUA_BINDING_END( "number", "The hue.", "number", "The saturation.", "number", "The lightness." )
 
-static int luasrc_HSLToRGB( lua_State *L )
+LUA_BINDING_BEGIN( _G, HSLToColor, "library", "Converts HSL to RGB." )
 {
     float r, g, b;
     float h = luaL_checknumber( L, 1 );
@@ -350,14 +366,7 @@ static int luasrc_HSLToRGB( lua_State *L )
 
     return 1;
 }
-
-static const luaL_Reg Color_funcs[] = {
-    { "Color", luasrc_Color },
-    { "HSVToColor", luasrc_HSVToRGB },
-    { "ColorToHSV", luasrc_RGBToHSV },
-    { "ColorToHSL", luasrc_RGBToHSL },
-    { "HSLToColor", luasrc_HSLToRGB },
-    { NULL, NULL } };
+LUA_BINDING_END( "color", "The converted color." )
 
 /*
 ** Open Color object
@@ -365,10 +374,14 @@ static const luaL_Reg Color_funcs[] = {
 LUALIB_API int luaopen_Color( lua_State *L )
 {
     LUA_PUSH_NEW_METATABLE( L, LUA_COLORLIBNAME );
-    luaL_register( L, NULL, Colormeta );
+
+    LUA_REGISTRATION_COMMIT( Color );
+
     lua_pushstring( L, "Color" );
     lua_setfield( L, -2, "__type" ); /* metatable.__type = "Color" */
-    luaL_register( L, LUA_GNAME, Color_funcs );
-    lua_pop( L, 1 );
+
+    LUA_REGISTRATION_COMMIT_LIBRARY( _G );
+    lua_pop( L, 1 );  // pop metatable
+
     return 1;
 }

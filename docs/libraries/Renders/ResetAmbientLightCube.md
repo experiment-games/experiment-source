@@ -1,16 +1,16 @@
 ---
 template: lua-library-function.html
 title: ResetAmbientLightCube
-icon: lua-shared
+icon: lua-client
 tags:
   - lua
-  - shared
+  - client
   - needs-verification
   - needs-example
 lua:
   library: Renders
   function: ResetAmbientLightCube
-  realm: shared
+  realm: client
   description: "Reset the ambient light cube."
   
   arguments:

@@ -1,16 +1,16 @@
 ---
 template: lua-library-function.html
 title: PopView2D
-icon: lua-shared
+icon: lua-client
 tags:
   - lua
-  - shared
+  - client
   - needs-verification
   - needs-example
 lua:
   library: Renders
   function: PopView2D
-  realm: shared
+  realm: client
   description: "Pop a 2D view."
   
   

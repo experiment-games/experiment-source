@@ -553,7 +553,7 @@ $Project
             $File "$SRCDIR\public\tier1\lconcommand.cpp"
             $File "$SRCDIR\public\tier0\ldbg.cpp"
 		    $File "$SRCDIR\game\shared\leffect_dispatch_data.cpp"
-		    $File "$SRCDIR\game\shared\lentitylist.cpp"
+		    $File "$SRCDIR\game\shared\lentities.cpp"
 		    $File "$SRCDIR\public\lfilesystem.cpp"
 		    $File "$SRCDIR\public\lgametrace.cpp"
 		    $File "$SRCDIR\public\lglobalvars_base.cpp"

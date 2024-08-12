@@ -9,8 +9,9 @@ if (not SERVER) then
 	return
 end
 
-local pEntity = EntityList.FindEntityByClassname(pEntity, "prop_physics*")
+local pEntity = Entities.FindByClass("prop_physics*")
+
 while (pEntity ~= NULL) do
 	pEntity:SetRenderColor(255, 0, 0, 255)
-	pEntity = EntityList.FindEntityByClassname(pEntity, "prop_physics*")
+	pEntity = Entities.FindByClass("prop_physics*", pEntity)
 end

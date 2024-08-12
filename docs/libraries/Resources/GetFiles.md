@@ -1,16 +1,16 @@
 ---
 template: lua-library-function.html
 title: GetFiles
-icon: lua-shared
+icon: lua-server
 tags:
   - lua
-  - shared
+  - server
   - needs-verification
   - needs-example
 lua:
   library: Resources
   function: GetFiles
-  realm: shared
+  realm: server
   description: "Get the list of files added with Resources.AddFile."
   
   

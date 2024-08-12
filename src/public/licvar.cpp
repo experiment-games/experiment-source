@@ -13,57 +13,69 @@
 // memdbgon must be the last include file in a .cpp file!!!
 #include "tier0/memdbgon.h"
 
-static int cvar_AllocateDLLIdentifier( lua_State *L )
+LUA_REGISTRATION_INIT( ConsoleVariables );
+
+LUA_BINDING_BEGIN( ConsoleVariables, AllocateDllIdentifier, "library", "Allocate a DLL identifier." )
 {
     lua_pushinteger( L, cvar->AllocateDLLIdentifier() );
     return 1;
 }
+LUA_BINDING_END( "integer", "DLL identifier." )
 
-static int cvar_ConsoleColorPrintf( lua_State *L )
+LUA_BINDING_BEGIN( ConsoleVariables, ConsoleColorColorPrint, "library", "Print a message to the console with a specific color." )
 {
-    cvar->ConsoleColorPrintf( luaL_checkcolor( L, 1 ), luaL_checkstring( L, 2 ) );
+    lua_Color color = LUA_BINDING_ARGUMENT( luaL_checkcolor, 1, "color" );
+    const char *pMessage = LUA_BINDING_ARGUMENT( luaL_checkstring, 2, "message" );
+
+    cvar->ConsoleColorPrintf( color, "%s", pMessage );
     return 0;
 }
+LUA_BINDING_END()
 
-static int cvar_ConsoleDPrintf( lua_State *L )
+LUA_BINDING_BEGIN( ConsoleVariables, ConsoleDebugPrint, "library", "Print a debug message to the console." )
 {
-    cvar->ConsoleDPrintf( luaL_checkstring( L, 1 ) );
+    const char *pMessage = LUA_BINDING_ARGUMENT( luaL_checkstring, 1, "message" );
+
+    cvar->ConsoleDPrintf( "%s", pMessage );
     return 0;
 }
+LUA_BINDING_END()
 
-static int cvar_ConsolePrintf( lua_State *L )
+LUA_BINDING_BEGIN( ConsoleVariables, ConsolePrint, "library", "Print a message to the console." )
 {
-    cvar->ConsolePrintf( luaL_checkstring( L, 1 ) );
+    const char *pMessage = LUA_BINDING_ARGUMENT( luaL_checkstring, 1, "message" );
+
+    cvar->ConsolePrintf( "%s", pMessage );
     return 0;
 }
+LUA_BINDING_END()
 
-static int cvar_FindVar( lua_State *L )
+LUA_BINDING_BEGIN( ConsoleVariables, FindVariable, "library", "Find a console variable by name." )
 {
-    lua_pushconvar( L, cvar->FindVar( luaL_checkstring( L, 1 ) ) );
+    const char *pName = LUA_BINDING_ARGUMENT( luaL_checkstring, 1, "name" );
+
+    lua_pushconvar( L, cvar->FindVar( pName ) );
     return 1;
 }
+LUA_BINDING_END( "ConsoleVariable", "Found console variable or NULL." )
 
-static int cvar_GetCommandLineValue( lua_State *L )
+LUA_BINDING_BEGIN( ConsoleVariables, GetCommandLineValue, "library", "Get the value of a command line parameter." )
 {
-    lua_pushstring( L, cvar->GetCommandLineValue( luaL_checkstring( L, 1 ) ) );
+    const char *pName = LUA_BINDING_ARGUMENT( luaL_checkstring, 1, "name" );
+
+    lua_pushstring( L, cvar->GetCommandLineValue( pName ) );
     return 1;
 }
+LUA_BINDING_END( "string", "Value of the command line parameter." )
 
-static int cvar_RevertFlaggedConVars( lua_State *L )
+LUA_BINDING_BEGIN( ConsoleVariables, RevertFlaggedConVars, "library", "Revert flagged console variables." )
 {
-    cvar->RevertFlaggedConVars( luaL_checknumber( L, 1 ) );
+    int iFlag = LUA_BINDING_ARGUMENT( luaL_checkinteger, 1, "flag" );
+
+    cvar->RevertFlaggedConVars( iFlag );
     return 0;
 }
-
-static const luaL_Reg cvarlib[] = {
-    { "AllocateDLLIdentifier", cvar_AllocateDLLIdentifier },
-    { "ConsoleColorPrintf", cvar_ConsoleColorPrintf },
-    { "ConsoleDPrintf", cvar_ConsoleDPrintf },
-    { "ConsolePrintf", cvar_ConsolePrintf },
-    { "FindVar", cvar_FindVar },
-    { "GetCommandLineValue", cvar_GetCommandLineValue },
-    { "RevertFlaggedConVars", cvar_RevertFlaggedConVars },
-    { NULL, NULL } };
+LUA_BINDING_END()
 
 void CV_GlobalChange_Lua( IConVar *var, const char *pOldString, float flOldValue )
 {
@@ -117,9 +129,11 @@ void RemoveGlobalChangeCallbacks( void )
 /*
 ** Open cvar library
 */
-LUALIB_API int luaopen_cvars( lua_State *L )
+LUALIB_API int luaopen_ConsoleVariablesLib( lua_State *L )
 {
-    luaL_register( L, LUA_CVARLIBNAME, cvarlib );
+    LUA_REGISTRATION_COMMIT_LIBRARY( ConsoleVariables );
+
     InstallGlobalChangeCallbacks();
+
     return 1;
 }

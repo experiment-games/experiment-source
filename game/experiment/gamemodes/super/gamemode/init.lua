@@ -51,7 +51,7 @@ end
 function GM:GiveDefaultItems(client)
 	client:GiveNamedItem("weapon_physcannon")
 
-	local defaultWeaponName = Engine.GetClientConVarValue(Engine.IndexOfEdict(client), "cl_defaultweapon")
+	local defaultWeaponName = Engines.GetClientConsoleVariableValue(Engines.IndexOfEdict(client), "cl_defaultweapon")
 	local defaultWeapon = client:Weapon_OwnsThisType(defaultWeaponName)
 
 	if (ToBaseEntity(defaultWeapon) ~= NULL) then

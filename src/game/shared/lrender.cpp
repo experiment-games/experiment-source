@@ -26,7 +26,7 @@ LUA_REGISTRATION_INIT( Renders );
 static Frustum renderFrustum3D;
 static Frustum renderFrustum2D;
 
-LUA_BINDING_BEGIN( Renders, CreateRenderTargetTextureEx, "library", "Create a new render target texture." )
+LUA_BINDING_BEGIN( Renders, CreateRenderTargetTextureEx, "library", "Create a new render target texture.", "client" )
 {
     const char *name = LUA_BINDING_ARGUMENT( luaL_checkstring, 1, "name" );
     int width = LUA_BINDING_ARGUMENT( luaL_checknumber, 2, "width" );
@@ -55,7 +55,7 @@ LUA_BINDING_BEGIN( Renders, CreateRenderTargetTextureEx, "library", "Create a ne
 }
 LUA_BINDING_END( "Texture", "The created render target texture." )
 
-LUA_BINDING_BEGIN( Renders, GetScreenEffectTexture, "library", "Get the screen effect texture." )
+LUA_BINDING_BEGIN( Renders, GetScreenEffectTexture, "library", "Get the screen effect texture.", "client" )
 {
     lua_ITexture *pTexture = GetFullFrameFrameBufferTexture( LUA_BINDING_ARGUMENT( luaL_checknumber, 1, "textureIndex" ) );
     lua_pushitexture( L, pTexture );
@@ -63,7 +63,7 @@ LUA_BINDING_BEGIN( Renders, GetScreenEffectTexture, "library", "Get the screen e
 }
 LUA_BINDING_END( "Texture", "The screen effect texture." )
 
-LUA_BINDING_BEGIN( Renders, UpdateScreenEffectTexture, "library", "Update the screen effect texture." )
+LUA_BINDING_BEGIN( Renders, UpdateScreenEffectTexture, "library", "Update the screen effect texture.", "client" )
 {
     const CViewSetup *pViewSetup = view->GetViewSetup();
     UpdateScreenEffectTexture( LUA_BINDING_ARGUMENT( luaL_checkinteger, 1, "textureIndex" ), pViewSetup->x, pViewSetup->y, pViewSetup->width, pViewSetup->height );
@@ -71,7 +71,7 @@ LUA_BINDING_BEGIN( Renders, UpdateScreenEffectTexture, "library", "Update the sc
 }
 LUA_BINDING_END()
 
-LUA_BINDING_BEGIN( Renders, PushView3D, "library", "Push a 3D view." )
+LUA_BINDING_BEGIN( Renders, PushView3D, "library", "Push a 3D view.", "client" )
 {
     CViewSetup playerView = *view->GetPlayerViewSetup();
 
@@ -102,14 +102,14 @@ LUA_BINDING_BEGIN( Renders, PushView3D, "library", "Push a 3D view." )
 }
 LUA_BINDING_END()
 
-LUA_BINDING_BEGIN( Renders, PopView3D, "library", "Pop a 3D view." )
+LUA_BINDING_BEGIN( Renders, PopView3D, "library", "Pop a 3D view.", "client" )
 {
     render->PopView( renderFrustum3D );
     return 0;
 }
 LUA_BINDING_END()
 
-LUA_BINDING_BEGIN( Renders, PushView2D, "library", "Push a 2D view." )
+LUA_BINDING_BEGIN( Renders, PushView2D, "library", "Push a 2D view.", "client" )
 {
     CViewSetup viewSetup = *view->GetPlayerViewSetup();
     render->Push2DView( viewSetup, 0, NULL, renderFrustum2D );
@@ -117,21 +117,21 @@ LUA_BINDING_BEGIN( Renders, PushView2D, "library", "Push a 2D view." )
 }
 LUA_BINDING_END()
 
-LUA_BINDING_BEGIN( Renders, PopView2D, "library", "Pop a 2D view." )
+LUA_BINDING_BEGIN( Renders, PopView2D, "library", "Pop a 2D view.", "client" )
 {
     render->PopView( renderFrustum2D );
     return 0;
 }
 LUA_BINDING_END()
 
-LUA_BINDING_BEGIN( Renders, SuppressEngineLighting, "library", "Suppress engine lighting." )
+LUA_BINDING_BEGIN( Renders, SuppressEngineLighting, "library", "Suppress engine lighting.", "client" )
 {
     modelrender->SuppressEngineLighting( LUA_BINDING_ARGUMENT( lua_toboolean, 1, "suppress" ) );
     return 0;
 }
 LUA_BINDING_END()
 
-LUA_BINDING_BEGIN( Renders, SetLightingOrigin, "library", "Set the lighting origin." )
+LUA_BINDING_BEGIN( Renders, SetLightingOrigin, "library", "Set the lighting origin.", "client" )
 {
     g_pMaterialSystem->GetRenderContext()->SetLightingOrigin( LUA_BINDING_ARGUMENT( luaL_checkvector, 1, "lightingOrigin" ) );
     return 0;
@@ -148,7 +148,7 @@ directionFace:
     BOX_TOP	4	Place the light to the top
     BOX_BOTTOM	5	Place the light to the bottom
 */
-LUA_BINDING_BEGIN( Renders, SetAmbientLightCube, "library", "Set the ambient light cube." )
+LUA_BINDING_BEGIN( Renders, SetAmbientLightCube, "library", "Set the ambient light cube.", "client" )
 {
     int directionFace = LUA_BINDING_ARGUMENT( luaL_checknumber, 1, "directionFace" );
     float r = LUA_BINDING_ARGUMENT( luaL_checknumber, 2, "r" );
@@ -175,7 +175,7 @@ LUA_BINDING_BEGIN( Renders, SetAmbientLightCube, "library", "Set the ambient lig
 }
 LUA_BINDING_END()
 
-LUA_BINDING_BEGIN( Renders, ResetAmbientLightCube, "library", "Reset the ambient light cube." )
+LUA_BINDING_BEGIN( Renders, ResetAmbientLightCube, "library", "Reset the ambient light cube.", "client" )
 {
     float r = LUA_BINDING_ARGUMENT( luaL_checknumber, 1, "r" );
     float g = LUA_BINDING_ARGUMENT( luaL_checknumber, 2, "g" );
@@ -195,7 +195,7 @@ LUA_BINDING_BEGIN( Renders, ResetAmbientLightCube, "library", "Reset the ambient
 }
 LUA_BINDING_END()
 
-LUA_BINDING_BEGIN( Renders, SetLight, "library", "Set a light." )
+LUA_BINDING_BEGIN( Renders, SetLight, "library", "Set a light.", "client" )
 {
     LightDesc_t desc;
     memset( &desc, 0, sizeof( desc ) );
@@ -225,7 +225,7 @@ LUA_BINDING_BEGIN( Renders, SetLight, "library", "Set a light." )
 }
 LUA_BINDING_END()
 
-LUA_BINDING_BEGIN( Renders, SetColorModulation, "library", "Set the color modulation." )
+LUA_BINDING_BEGIN( Renders, SetColorModulation, "library", "Set the color modulation.", "client" )
 {
     float color[3];
     color[0] = LUA_BINDING_ARGUMENT( luaL_checknumber, 1, "r" );
@@ -238,14 +238,14 @@ LUA_BINDING_BEGIN( Renders, SetColorModulation, "library", "Set the color modula
 }
 LUA_BINDING_END()
 
-LUA_BINDING_BEGIN( Renders, SetBlend, "library", "Set the blend." )
+LUA_BINDING_BEGIN( Renders, SetBlend, "library", "Set the blend.", "client" )
 {
     render->SetBlend( LUA_BINDING_ARGUMENT( luaL_checknumber, 1, "blend" ) );
     return 0;
 }
 LUA_BINDING_END()
 
-LUA_BINDING_BEGIN( Renders, ClearBuffers, "library", "Clear the buffers." )
+LUA_BINDING_BEGIN( Renders, ClearBuffers, "library", "Clear the buffers.", "client" )
 {
     bool bClearColor = LUA_BINDING_ARGUMENT( lua_toboolean, 1, "clearColor" );
     bool bClearDepth = LUA_BINDING_ARGUMENT( lua_toboolean, 2, "clearDepth" );
@@ -257,7 +257,7 @@ LUA_BINDING_BEGIN( Renders, ClearBuffers, "library", "Clear the buffers." )
 }
 LUA_BINDING_END()
 
-LUA_BINDING_BEGIN( Renders, ClearColor, "library", "Clear the color." )
+LUA_BINDING_BEGIN( Renders, ClearColor, "library", "Clear the color.", "client" )
 {
     lua_Color clr = LUA_BINDING_ARGUMENT( luaL_checkcolor, 1, "color" );
     g_pMaterialSystem->GetRenderContext()->ClearColor4ub( clr.r(), clr.g(), clr.b(), clr.a() );
@@ -265,7 +265,7 @@ LUA_BINDING_BEGIN( Renders, ClearColor, "library", "Clear the color." )
 }
 LUA_BINDING_END()
 
-LUA_BINDING_BEGIN( Renders, SetScissorRect, "library", "Set the scissor rectangle." )
+LUA_BINDING_BEGIN( Renders, SetScissorRect, "library", "Set the scissor rectangle.", "client" )
 {
     int nLeft = LUA_BINDING_ARGUMENT( luaL_checknumber, 1, "left" );
     int nTop = LUA_BINDING_ARGUMENT( luaL_checknumber, 2, "top" );
@@ -279,7 +279,7 @@ LUA_BINDING_BEGIN( Renders, SetScissorRect, "library", "Set the scissor rectangl
 }
 LUA_BINDING_END()
 
-LUA_BINDING_BEGIN( Renders, SetWriteDepthToDestAlpha, "library", "Set the write depth to destination alpha." )
+LUA_BINDING_BEGIN( Renders, SetWriteDepthToDestAlpha, "library", "Set the write depth to destination alpha.", "client" )
 {
     bool bEnable = LUA_BINDING_ARGUMENT( lua_toboolean, 1, "enable" );
     g_pMaterialSystem->GetRenderContext()->SetIntRenderingParameter( INT_RENDERPARM_WRITE_DEPTH_TO_DESTALPHA, bEnable );
@@ -287,34 +287,33 @@ LUA_BINDING_BEGIN( Renders, SetWriteDepthToDestAlpha, "library", "Set the write 
 }
 LUA_BINDING_END()
 
-LUA_BINDING_BEGIN( Renders, MainViewOrigin, "library", "Get the main view origin." )
+LUA_BINDING_BEGIN( Renders, MainViewOrigin, "library", "Get the main view origin.", "client" )
 {
     lua_pushvector( L, MainViewOrigin() );
     return 1;
 }
 LUA_BINDING_END( "Vector", "The main view origin." )
 
-LUA_BINDING_BEGIN( Renders, MainViewAngles, "library", "Get the main view angles." )
+LUA_BINDING_BEGIN( Renders, MainViewAngles, "library", "Get the main view angles.", "client" )
 {
     lua_pushangle( L, MainViewAngles() );
     return 1;
 }
 LUA_BINDING_END( "Angle", "The main view angles." )
 
-LUA_BINDING_BEGIN( Renders, MainViewForward, "library", "Get the main view forward." )
+LUA_BINDING_BEGIN( Renders, MainViewForward, "library", "Get the main view forward.", "client" )
 {
     lua_pushvector( L, MainViewForward() );
     return 1;
 }
 LUA_BINDING_END( "Vector", "The main view forward." )
-#endif // CLIENT_DLL
+#endif  // CLIENT_DLL
 
 /*
 ** Open render library
 */
 LUALIB_API int luaopen_render( lua_State *L )
 {
-    LUA_REGISTRATION_COMMIT_LIBRARY( Renders, LUA_RENDERLIBNAME );
+    LUA_REGISTRATION_COMMIT_LIBRARY( Renders );
     return 1;
 }
-

@@ -45,11 +45,11 @@ function GM:PlayerEntSelectSpawnPoint(client)
     local pSpot = NULL
 
     for _, classname in ipairs(tSpawnPointClassnames) do
-		pSpot = EntityList.FindEntityByClassname(NULL, classname)
+		pSpot = Entities.FindByClass(classname)
 
         while (pSpot ~= NULL) do
             table.insert(tSpawnPoints, pSpot)
-            pSpot = EntityList.FindEntityByClassname(pSpot, classname)
+            pSpot = Entities.FindByClass(classname, pSpot)
         end
     end
 

@@ -1,16 +1,16 @@
 ---
 template: lua-library-function.html
 title: SetAmbientLightCube
-icon: lua-shared
+icon: lua-client
 tags:
   - lua
-  - shared
+  - client
   - needs-verification
   - needs-example
 lua:
   library: Renders
   function: SetAmbientLightCube
-  realm: shared
+  realm: client
   description: "Set the ambient light cube."
   
   arguments:

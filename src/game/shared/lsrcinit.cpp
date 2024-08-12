@@ -1,10 +1,3 @@
-/*
-    Original code by Team Sandbox:
-        Copyleft © 2010 - 2013, Team Sandbox, Some rights reserved.
-
-    Modified for Experiment.
-*/
-
 #include "cbase.h"
 #include "lua.hpp"
 
@@ -40,21 +33,21 @@ static const luaL_RegForState luasrclibs[] = {
     { LUA_BASEENTITYLIBNAME, luaopen_CBaseEntity, REALM_SHARED },                   // n/a   ✔      ✔  
     { LUA_BASEPLAYERLIBNAME, luaopen_CBasePlayer_shared, REALM_SHARED },
     { LUA_BASEPLAYERLIBNAME, luaopen_CBasePlayer, REALM_SHARED },
-    { LUA_CBASEFLEXLIBNAME, luaopen_CBaseFlex_shared, REALM_SHARED },
-    { LUA_COLORLIBNAME, luaopen_Color, REALM_SHARED | REALM_GAMEUI },
-    { LUA_CONCOMMANDLIBNAME, luaopen_ConCommand, REALM_SHARED | REALM_GAMEUI },
+    { LUA_CBASEFLEXLIBNAME, luaopen_CBaseFlex_shared, REALM_SHARED },                   // ✔    n/a     n/a
+    { LUA_COLORLIBNAME, luaopen_Color, REALM_SHARED | REALM_GAMEUI },                   // ✔    n/a     n/a
+    { LUA_CONCOMMANDLIBNAME, luaopen_ConsoleCommandMeta, REALM_SHARED | REALM_GAMEUI }, // ✔    n/a     n/a
     { LUA_CONTENTSLIBNAME, luaopen_CONTENTS, REALM_SHARED | REALM_GAMEUI },
-    { LUA_CONVARLIBNAME, luaopen_ConVar, REALM_SHARED | REALM_GAMEUI },
-    { LUA_CVARLIBNAME, luaopen_cvars, REALM_SHARED },
-    { LUA_DBGLIBNAME, luaopen_dbg, REALM_SHARED | REALM_GAMEUI },
-    { LUA_DEBUGOVERLAYLIBNAME, luaopen_debugoverlay, REALM_SHARED },
-    { LUA_EFFECTDATALIBNAME, luaopen_CEffectData, REALM_SHARED },
+    { LUA_CONVARLIBNAME, luaopen_ConsoleVariableMeta, REALM_SHARED | REALM_GAMEUI },    // ✔    n/a     n/a
+    { LUA_CVARLIBNAME, luaopen_ConsoleVariablesLib, REALM_SHARED },                     // ✔    n/a     n/a
+    { LUA_DBGLIBNAME, luaopen_dbg, REALM_SHARED | REALM_GAMEUI },                       // ✔    n/a     n/a
+    { LUA_DEBUGOVERLAYLIBNAME, luaopen_debugoverlay, REALM_SHARED },                    // ✔    n/a     n/a
+    { LUA_EFFECTDATALIBNAME, luaopen_CEffectData, REALM_SHARED },                       // ✔    n/a     n/a
     { LUA_EFLIBNAME, luaopen_EF, REALM_SHARED | REALM_GAMEUI },
     { LUA_ENGINEFLAGSLIBNAME, luaopen_FL, REALM_SHARED | REALM_GAMEUI },
-    { LUA_ENGINELIBNAME, luaopen_engine_shared, REALM_SHARED | REALM_GAMEUI },
-    { LUA_ENGINELIBNAME, luaopen_engine, REALM_SHARED | REALM_GAMEUI },
-    { LUA_ENTLISTLIBNAME, luaopen_EntityList, REALM_SHARED },
-    { LUA_EXPERIMENTPLAYERLIBNAME, luaopen_CExperiment_Player_shared, REALM_SHARED },
+    { LUA_ENGINELIBNAME, luaopen_engine_shared, REALM_SHARED | REALM_GAMEUI },          // ✔    n/a     n/a
+    { LUA_ENGINELIBNAME, luaopen_engine, REALM_SHARED | REALM_GAMEUI },                 // n/a   ✔      ✔
+    { LUA_ENTITIESLIBNAME, luaopen_Entities, REALM_SHARED },                            // ✔    n/a     n/a
+    { LUA_EXPERIMENTPLAYERLIBNAME, luaopen_CExperiment_Player_shared, REALM_SHARED },   // ✔    n/a     n/a
     { LUA_FCVARLIBNAME, luaopen_FCVAR, REALM_SHARED | REALM_GAMEUI },
     { LUA_FILESYSTEMLIBNAME, luaopen_filesystem, REALM_SHARED | REALM_GAMEUI },
     { LUA_FLEDICTLIBNAME, luaopen_FL_EDICT, REALM_SHARED | REALM_GAMEUI },
@@ -63,12 +56,12 @@ static const luaL_RegForState luasrclibs[] = {
     { LUA_GLOBALSLIBNAME, luaopen_gpGlobals, REALM_SHARED | REALM_GAMEUI },
     { LUA_INETWORKSTRINGTABLELIBNAME, luaopen_INetworkStringTable, REALM_SHARED },
     { LUA_INLIBNAME, luaopen_IN, REALM_SHARED | REALM_GAMEUI },
-    { LUA_ITEXTUREMETANAME, luaopen_ITexture, REALM_SHARED | REALM_GAMEUI },
+    { LUA_ITEXTUREMETANAME, luaopen_ITexture, REALM_SHARED | REALM_GAMEUI },            // ✔    n/a     n/a
     { LUA_KEYVALUESLIBNAME, luaopen_KeyValues, REALM_SHARED | REALM_GAMEUI },
     { LUA_LIFELIBNAME, luaopen_LIFE, REALM_SHARED | REALM_GAMEUI },
     { LUA_LOCALIZATIONLIBNAME, luaopen_localization, REALM_SHARED | REALM_GAMEUI },
     { LUA_MASKLIBNAME, luaopen_MASK, REALM_SHARED | REALM_GAMEUI },
-    { LUA_MATERIALMETANAME, luaopen_IMaterial, REALM_SHARED | REALM_GAMEUI },
+    { LUA_MATERIALMETANAME, luaopen_IMaterial, REALM_SHARED | REALM_GAMEUI },           // ✔    n/a     n/a
     { LUA_MATHLIBLIBNAME, luaopen_mathlib, REALM_SHARED | REALM_GAMEUI },
     { LUA_MATRIXLIBNAME, luaopen_matrix3x4_t, REALM_SHARED | REALM_GAMEUI },
     { LUA_MOVECOLLIDELIBNAME, luaopen_MOVECOLLIDE, REALM_SHARED | REALM_GAMEUI },

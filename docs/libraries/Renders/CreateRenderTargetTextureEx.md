@@ -1,16 +1,16 @@
 ---
 template: lua-library-function.html
 title: CreateRenderTargetTextureEx
-icon: lua-shared
+icon: lua-client
 tags:
   - lua
-  - shared
+  - client
   - needs-verification
   - needs-example
 lua:
   library: Renders
   function: CreateRenderTargetTextureEx
-  realm: shared
+  realm: client
   description: "Create a new render target texture."
   
   arguments:

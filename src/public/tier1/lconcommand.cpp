@@ -299,7 +299,7 @@ void ResetConCommandDatabase( void )
 /*
 ** Open ConsoleCommand object
 */
-LUALIB_API int luaopen_ConCommand( lua_State *L )
+LUALIB_API int luaopen_ConsoleCommandMeta( lua_State *L )
 {
     LUA_PUSH_NEW_METATABLE( L, LUA_CONCOMMANDMETANAME );
 
@@ -310,7 +310,7 @@ LUALIB_API int luaopen_ConCommand( lua_State *L )
     lua_pushstring( L, LUA_CONCOMMANDMETANAME );
     lua_setfield( L, -2, "__type" ); /* metatable.__type = "ConsoleCommand" */
 
-    LUA_REGISTRATION_COMMIT_LIBRARY( _G, LUA_GNAME );
+    LUA_REGISTRATION_COMMIT_LIBRARY( _G );
 
     lua_pop( L, 1 );
     return 1;

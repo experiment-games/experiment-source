@@ -7,9 +7,9 @@
 
 local gamePath
 if CLIENT then
-	gamePath = Engine.GetGameDirectory()
+	gamePath = Engines.GetGameDirectory()
 else
-	gamePath = Engine.GetGameDir()
+	gamePath = Engines.GetGameDir()
 end
 
 local pMainFile = KeyValues("gameinfo.txt")

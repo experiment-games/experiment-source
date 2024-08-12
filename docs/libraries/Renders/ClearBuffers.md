@@ -1,16 +1,16 @@
 ---
 template: lua-library-function.html
 title: ClearBuffers
-icon: lua-shared
+icon: lua-client
 tags:
   - lua
-  - shared
+  - client
   - needs-verification
   - needs-example
 lua:
   library: Renders
   function: ClearBuffers
-  realm: shared
+  realm: client
   description: "Clear the buffers."
   
   arguments:

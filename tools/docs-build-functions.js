@@ -78,9 +78,12 @@ function writeFunctionToFile(func) {
       console.warn(`Renamed ${existingFunc.filePath} to ${newFilePath} to include realm ${existingFunc.realm}`);
 
       existingFunc.filePath = newFilePath;
+      filesToUpdate.delete(existingFunc.filePath);
+
       // have our file path also include the realm
       const newFuncFileName = `${func.function}.${func.realm}.md`;
       filePath = path.join(outputDir, directory, func.library, newFuncFileName);
+      filesToUpdate.delete(filePath);
     }
   }
 
@@ -188,6 +191,9 @@ function fromTypeChecker(typeChecker) {
     case 'luaL_checkentity':
     case 'luaL_optentity':
     case 'lua_toentity':
+    case 'luaL_checkbaseflex':
+    case 'luaL_optbaseflex':
+    case 'lua_tobaseflex':
     case 'luaL_checkanimating':
     case 'luaL_optanimating':
     case 'lua_toanimating':
@@ -198,7 +204,12 @@ function fromTypeChecker(typeChecker) {
     case 'lua_toplayer':
     case 'luaL_checkexperimentplayer':
     case 'luaL_optexperimentplayer':
+    case 'luaL_toexperimentplayer':
       return 'Player';
+    case 'luaL_checkeffect':
+    case 'luaL_opteffect':
+    case 'lua_toeffect':
+      return 'EffectData';
     case 'luaL_checkvector':
     case 'luaL_optvector':
     case 'lua_tovector':

@@ -93,9 +93,9 @@ Hooks = require("hooks")
 Timers = require("timers")
 
 if (not GAMEUI) then
-	Entities = require("entities")
+	ScriptedEntities = require("scripted_entities")
 	Networks = require("networks")
-	Weapons = require("weapons")
+	ScriptedWeapons = require("scripted_weapons")
 end
 
 local json = require("json")
@@ -109,9 +109,9 @@ function RunConsoleCommand(command, ...)
 	commandString = commandString:Trim()
 
 	if (CLIENT) then
-		return Engine.ClientCommand(commandString)
+		return Engines.ClientCommand(commandString)
 	else
-		return Engine.ServerCommand(commandString)
+		return Engines.ServerCommand(commandString)
 	end
 end
 

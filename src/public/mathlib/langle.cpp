@@ -364,7 +364,7 @@ LUALIB_API int luaopen_QAngle( lua_State *L )
     lua_pushstring( L, "Angle" );
     lua_setfield( L, -2, "__type" ); /* metatable.__type = "Angle" */
 
-    LUA_REGISTRATION_COMMIT_LIBRARY( _G, LUA_GNAME );
+    LUA_REGISTRATION_COMMIT_LIBRARY( _G );
     lua_pop( L, 1 );  // pop metatable
 
     lua_QAngle v = vec3_angle;

@@ -1,13 +1,13 @@
 local MODULE = {}
 
 local Hooks = require("hooks")
-local Engine = require("Engine")
+local Engines = require("Engines")
 local socket = require("luasocket")
 local IP
 local PORT = 12345 -- TODO: Make this configurable
 
 if (CLIENT) then
-	IP = Engine.GetServerAddress()
+	IP = Engines.GetServerAddress()
 end
 
 local BYTE_SIZE_IN_BITS = 8
@@ -252,7 +252,7 @@ elseif (SERVER) then
         local newSocketClient = localServer:accept()
 
 		if (newSocketClient) then
-            local client = Engine.GetPlayerByAddress(normalizeAddress(newSocketClient:getpeername()))
+            local client = Engines.GetPlayerByAddress(normalizeAddress(newSocketClient:getpeername()))
 
             -- TODO: We need to clean this up when the client disconnects
             table.insert(socketClients, {

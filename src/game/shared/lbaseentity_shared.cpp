@@ -2804,7 +2804,7 @@ LUA_BINDING_END()
 LUA_REGISTRATION_INIT( _G )
 
 #ifndef CLIENT_DLL
-LUA_BINDING_BEGIN( _G, CreateEntityByName, "library", "Creates an entity by the given class name" )
+LUA_BINDING_BEGIN( _G, CreateEntityByName, "library", "Creates an entity by the given class name", "server" )
 {
     const char *pszClassName = LUA_BINDING_ARGUMENT( luaL_checkstring, 1, "className" );
     CBaseEntity *pEntity = CreateEntityByName( pszClassName );
@@ -2846,7 +2846,7 @@ LUALIB_API int luaopen_CBaseEntity_shared( lua_State *L )
 
     LUA_REGISTRATION_COMMIT( CBaseEntity );
 
-    LUA_REGISTRATION_COMMIT_LIBRARY( _G, LUA_GNAME );
+    LUA_REGISTRATION_COMMIT_LIBRARY( _G );
 
     lua_pop( L, 1 );
     CBaseEntity::PushLuaInstanceSafe( L, NULL );

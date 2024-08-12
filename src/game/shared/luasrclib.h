@@ -43,14 +43,14 @@ LUALIB_API int( luaopen_Color )( lua_State *L );
 
 #define LUA_CONCOMMANDLIBNAME "ConsoleCommands"
 #define LUA_CONCOMMANDMETANAME "ConsoleCommand"
-LUALIB_API int( luaopen_ConCommand )( lua_State *L );
+LUALIB_API int( luaopen_ConsoleCommandMeta )( lua_State *L );
 
 #define LUA_CONTENTSLIBNAME "CONTENTS"
 LUALIB_API int( luaopen_CONTENTS )( lua_State *L );
 
 #define LUA_CONVARLIBNAME "ConsoleVariables"
 #define LUA_CONVARMETANAME "ConsoleVariable"
-LUALIB_API int( luaopen_ConVar )( lua_State *L );
+LUALIB_API int( luaopen_ConsoleVariableMeta )( lua_State *L );
 
 #define LUA_PASFILTERLIBNAME "CPASFilter"
 LUALIB_API int( luaopen_CPASFilter )( lua_State *L );
@@ -62,7 +62,7 @@ LUALIB_API int( luaopen_CRecipientFilter )( lua_State *L );
 LUALIB_API int( luaopen_CTakeDamageInfo )( lua_State *L );
 
 #define LUA_CVARLIBNAME "ConsoleVariables"
-LUALIB_API int( luaopen_cvars )( lua_State *L );
+LUALIB_API int( luaopen_ConsoleVariablesLib )( lua_State *L );
 
 #define LUA_DBGLIBNAME "Debug"  // Unused, since we extend the default debug library
 LUALIB_API int( luaopen_dbg )( lua_State *L );
@@ -73,12 +73,12 @@ LUALIB_API int( luaopen_debugoverlay )( lua_State *L );
 #define LUA_EFLIBNAME "EF"
 LUALIB_API int( luaopen_EF )( lua_State *L );
 
-#define LUA_ENGINELIBNAME "Engine"
+#define LUA_ENGINELIBNAME "Engines"
 LUALIB_API int( luaopen_engine_shared )( lua_State *L );
 LUALIB_API int( luaopen_engine )( lua_State *L );
 
-#define LUA_ENTLISTLIBNAME "EntityList"
-LUALIB_API int( luaopen_EntityList )( lua_State *L );
+#define LUA_ENTITIESLIBNAME "Entities"
+LUALIB_API int( luaopen_Entities )( lua_State *L );
 
 #define LUA_ENGINEFLAGSLIBNAME "FL"
 LUALIB_API int( luaopen_FL )( lua_State *L );
@@ -252,9 +252,9 @@ LUALIB_API int( luaopen_CUserCmd )( lua_State *L );
 LUALIB_API void( luasrc_openlibs )( lua_State *L, bool isStateGameUI = false );
 
 // Lua defined libraries
-#define LUA_ENTITIESLIBNAME "Entities"
+#define LUA_SCRIPTEDENTITIESLIBNAME "ScriptedEntities"
+#define LUA_SCRIPTEDWEAPONSLIBNAME "ScriptedWeapons"
 #define LUA_HOOKSLIBNAME "Hooks"
-#define LUA_WEAPONSLIBNAME "Weapons"
 #define LUA_GAMEMODESLIBNAME "Gamemodes"
 
 struct LuaRegEntry
@@ -269,8 +269,8 @@ struct LuaRegEntry
 #define LUA_REGISTRATION_COMMIT( ClassName ) \
     luaL_register( L, NULL, ClassName##_luaRegistry );
 
-#define LUA_REGISTRATION_COMMIT_LIBRARY( ClassName, LibraryTableName ) \
-    luaL_register( L, LibraryTableName, ClassName##_luaRegistry );
+#define LUA_REGISTRATION_COMMIT_LIBRARY( ClassName ) \
+    luaL_register( L, #ClassName, ClassName##_luaRegistry );
 
 #define LUA_REGISTER_METHOD( Registry, name, func )            \
     static struct RegHelper_##func                   \

@@ -5,9 +5,6 @@
 	Modified for Experiment.
 --]]
 
-local Warning = debug.Warning
-local Msg = debug.Msg
-
 function ENT:Initialize()
 	if (CLIENT) then
 		return
@@ -25,7 +22,7 @@ function ENT:Initialize()
 	if (not pPhysicsObject) then
 		self:SetSolid(0)
 		self:SetMoveType(0)
-		Warning("ERROR!: Can't create physics object for " .. self:GetModelName() .. "\n")
+		debug.PrintWarning("ERROR!: Can't create physics object for " .. self:GetModelName() .. "\n")
 	end
 end
 

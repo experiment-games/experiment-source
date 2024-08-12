@@ -16,246 +16,281 @@
 // memdbgon must be the last include file in a .cpp file!!!
 #include "tier0/memdbgon.h"
 
-static int engine_ActivateOccluder( lua_State *L )
+LUA_REGISTRATION_INIT( Engines );
+
+LUA_BINDING_BEGIN( Engines, ActivateOccluder, "library", "Allow immediate edict reuse." )
 {
-    engine->ActivateOccluder( luaL_checknumber( L, 1 ), luaL_checkboolean( L, 2 ) );
+    int occluderIndex = LUA_BINDING_ARGUMENT( luaL_checknumber, 1, "occluderIndex" );
+    bool shouldActivate = LUA_BINDING_ARGUMENT( luaL_checkboolean, 2, "shouldActivate" );
+    engine->ActivateOccluder( occluderIndex, shouldActivate );
     return 0;
 }
+LUA_BINDING_END()
 
-static int engine_CheckKeyTrapping( lua_State *L )
+LUA_BINDING_BEGIN( Engines, IsKeyTrapping, "library", "Check if a key is being trapped." )
+{
+    ButtonCode_t code;
+    lua_pushboolean( L, engine->CheckDoneKeyTrapping( code ) );
+    lua_pushinteger( L, code );
+    return 2;
+}
+LUA_BINDING_END( "boolean", "True if a key is being trapped, false otherwise.", "integer", "The key code being trapped." )
+
+LUA_BINDING_BEGIN( Engines, CheckKeyTrapping, "library", "Check which key was last trapped." )
 {
     ButtonCode_t code;
     engine->CheckDoneKeyTrapping( code );
     lua_pushinteger( L, code );
     return 1;
 }
-static int engine_IsKeyTrapping( lua_State *L )
-{
-    ButtonCode_t code;
-    lua_pushboolean( L, engine->CheckDoneKeyTrapping( code ) );
-    return 1;
-}
+LUA_BINDING_END( "integer", "The key code being trapped." )
 
-static int engine_StartKeyTrapMode( lua_State *L )
+LUA_BINDING_BEGIN( Engines, StartKeyTrapMode, "library", "Start trapping a key." )
 {
     engine->StartKeyTrapMode();
     return 0;
 }
+LUA_BINDING_END()
 
-static int engine_CheckPoint( lua_State *L )
+LUA_BINDING_BEGIN( Engines, CheckPoint, "library", "Check a point." )
 {
-    engine->CheckPoint( luaL_checkstring( L, 1 ) );
+    const char *pointName = LUA_BINDING_ARGUMENT( luaL_checkstring, 1, "pointName" );
+    engine->CheckPoint( pointName );
     return 0;
 }
+LUA_BINDING_END()
 
-static int engine_ClientCmd( lua_State *L )
+LUA_BINDING_BEGIN( Engines, ClientCommand, "library", "Send a command to the client." )
 {
-    const char *pszCommandString = luaL_checkstring( L, 1 );
-
-    if ( TryRunConsoleCommand( pszCommandString ) )
-        return 0;
-
-    engine->ClientCmd( luaL_checkstring( L, 1 ) );
+    const char *command = LUA_BINDING_ARGUMENT( luaL_checkstring, 1, "command" );
+    engine->ClientCmd( command );
     return 0;
 }
+LUA_BINDING_END()
 
-static int engine_ClientCmd_Unrestricted( lua_State *L )
+LUA_BINDING_BEGIN( Engines, ClientCommandUnrestricted, "library", "Send a command to the client without any restrictions." )
 {
-    engine->ClientCmd_Unrestricted( luaL_checkstring( L, 1 ) );
+    const char *command = LUA_BINDING_ARGUMENT( luaL_checkstring, 1, "command" );
+    engine->ClientCmd_Unrestricted( command );
     return 0;
 }
+LUA_BINDING_END()
 
-static int engine_Con_IsVisible( lua_State *L )
+LUA_BINDING_BEGIN( Engines, ConIsVisible, "library", "Check if the console is visible." )
 {
     lua_pushboolean( L, engine->Con_IsVisible() );
     return 1;
 }
+LUA_BINDING_END( "boolean", "True if the console is visible, false otherwise." )
 
-static int engine_CopyFrameBufferToMaterial( lua_State *L )
+LUA_BINDING_BEGIN( Engines, CopyFrameBufferToMaterial, "library", "Copy the frame buffer to a material." )
 {
-    lua_pushboolean( L, engine->CopyFrameBufferToMaterial( luaL_checkstring( L, 1 ) ) );
+    const char *materialName = LUA_BINDING_ARGUMENT( luaL_checkstring, 1, "materialName" );
+    lua_pushboolean( L, engine->CopyFrameBufferToMaterial( materialName ) );
     return 1;
 }
+LUA_BINDING_END( "boolean", "True if the frame buffer was copied to the material, false otherwise." )
 
-static int engine_CullBox( lua_State *L )
+LUA_BINDING_BEGIN( Engines, CullBox, "library", "Cull a box." )
 {
-    lua_pushboolean( L, engine->CullBox( luaL_checkvector( L, 1 ), luaL_checkvector( L, 2 ) ) );
+    Vector boxMin = LUA_BINDING_ARGUMENT( luaL_checkvector, 1, "boxMin" );
+    Vector boxMax = LUA_BINDING_ARGUMENT( luaL_checkvector, 2, "boxMax" );
+    lua_pushboolean( L, engine->CullBox( boxMin, boxMax ) );
     return 1;
 }
+LUA_BINDING_END( "boolean", "True if the box was culled, false otherwise." )
 
-static int engine_DoesBoxTouchAreaFrustum( lua_State *L )
+LUA_BINDING_BEGIN( Engines, DoesBoxTouchAreaFrustum, "library", "Check if a box touches an area frustum." )
 {
-    lua_pushboolean( L, engine->DoesBoxTouchAreaFrustum( luaL_checkvector( L, 1 ), luaL_checkvector( L, 2 ), luaL_checknumber( L, 3 ) ) );
+    Vector boxMin = LUA_BINDING_ARGUMENT( luaL_checkvector, 1, "boxMin" );
+    Vector boxMax = LUA_BINDING_ARGUMENT( luaL_checkvector, 2, "boxMax" );
+    int area = LUA_BINDING_ARGUMENT( luaL_checknumber, 3, "area" );
+    lua_pushboolean( L, engine->DoesBoxTouchAreaFrustum( boxMin, boxMax, area ) );
     return 1;
 }
+LUA_BINDING_END( "boolean", "True if the box touches the area frustum, false otherwise." )
 
-static int engine_DrawPortals( lua_State *L )
+LUA_BINDING_BEGIN( Engines, DrawPortals, "library", "Draw portals." )
 {
     engine->DrawPortals();
     return 0;
 }
+LUA_BINDING_END()
 
-static int engine_EngineStats_BeginFrame( lua_State *L )
+LUA_BINDING_BEGIN( Engines, EngineStatsBeginFrame, "library", "Begin engine stats frame." )
 {
     engine->EngineStats_BeginFrame();
     return 0;
 }
+LUA_BINDING_END()
 
-static int engine_EngineStats_EndFrame( lua_State *L )
+LUA_BINDING_BEGIN( Engines, EngineStatsEndFrame, "library", "End engine stats frame." )
 {
     engine->EngineStats_EndFrame();
     return 0;
 }
+LUA_BINDING_END()
 
-static int engine_ExecuteClientCmd( lua_State *L )
+LUA_BINDING_BEGIN( Engines, ExecuteClientCommand, "library", "Execute a client command." )
 {
-    engine->ExecuteClientCmd( luaL_checkstring( L, 1 ) );
+    const char *command = LUA_BINDING_ARGUMENT( luaL_checkstring, 1, "command" );
+    engine->ExecuteClientCmd( command );
     return 0;
 }
+LUA_BINDING_END()
 
-static int engine_FireEvents( lua_State *L )
+LUA_BINDING_BEGIN( Engines, FireEvents, "library", "Fire events." )
 {
     engine->FireEvents();
     return 0;
 }
+LUA_BINDING_END()
 
-static int engine_GameLumpSize( lua_State *L )
+LUA_BINDING_BEGIN( Engines, GameLumpSize, "library", "Get the size of a game lump." )
 {
-    engine->GameLumpSize( luaL_checknumber( L, 1 ) );
+    int lumpId = LUA_BINDING_ARGUMENT( luaL_checknumber, 1, "lumpId" );
+    lua_pushnumber( L, engine->GameLumpSize( lumpId ) );
     return 1;
 }
+LUA_BINDING_END( "number", "The size of the game lump." )
 
-static int engine_GameLumpVersion( lua_State *L )
+LUA_BINDING_BEGIN( Engines, GameLumpVersion, "library", "Get the version of a game lump." )
 {
-    engine->GameLumpVersion( luaL_checknumber( L, 1 ) );
+    int lumpId = LUA_BINDING_ARGUMENT( luaL_checknumber, 1, "lumpId" );
+    lua_pushnumber( L, engine->GameLumpVersion( lumpId ) );
     return 1;
 }
+LUA_BINDING_END( "number", "The version of the game lump." )
 
-static int engine_GetClientConVarValue( lua_State *L )
+LUA_BINDING_BEGIN( Engines, GetClientConsoleVariableValue, "library", "Get the value of a client console variable." )
 {
-    int iPlayer;
+    int playerIndex;
 
     if ( lua_toplayer( L, 1 ) )
-        iPlayer = lua_toplayer( L, 1 )->entindex();
+        playerIndex = LUA_BINDING_ARGUMENT( lua_toplayer, 1, "playerOrIndex" )->entindex();
     else
-        iPlayer = luaL_checkinteger( L, 1 );
+        playerIndex = LUA_BINDING_ARGUMENT( luaL_checkinteger, 1, "playerOrIndex" );
 
-    if ( iPlayer != ( *C_BasePlayer::GetLocalPlayer() ).entindex() )
-        Warning( "engine.GetClientConVarValue: Cannot get convars for other players. Returning own convar value.\n" );
+    if ( playerIndex != ( *C_BasePlayer::GetLocalPlayer() ).entindex() )
+        Warning( "Engines.GetClientConsoleVariableValue: Cannot get convars for other players. Returning own convar value.\n" );
 
-    ConVarRef var( luaL_checkstring( L, 2 ) );
-
-    if ( var.IsValid() )
-    {
-        lua_pushstring( L, var.GetString() );
-    }
-    else
-    {
-        lua_pushstring( L, "" );
-    }
-
+    const char *varName = LUA_BINDING_ARGUMENT( luaL_checkstring, 2, "varName" );
+    ConVarRef var( varName );
+    lua_pushstring( L, var.IsValid() ? var.GetString() : "" );
     return 1;
 }
+LUA_BINDING_END( "string", "The value of the client console variable." )
 
-static int engine_GetClientConVarValueAsNumber( lua_State *L )
+LUA_BINDING_BEGIN( Engines, GetClientConsoleVariableValueAsNumber, "library", "Get the value of a client console variable as a number." )
 {
-    int iPlayer;
+    int playerIndex;
 
     if ( lua_toplayer( L, 1 ) )
-        iPlayer = lua_toplayer( L, 1 )->entindex();
+        playerIndex = LUA_BINDING_ARGUMENT( lua_toplayer, 1, "playerOrIndex" )->entindex();
     else
-        iPlayer = luaL_checkinteger( L, 1 );
+        playerIndex = LUA_BINDING_ARGUMENT( luaL_checkinteger, 1, "playerOrIndex" );
 
-    if ( iPlayer != ( *C_BasePlayer::GetLocalPlayer() ).entindex() )
-        Warning( "engine.GetClientConVarValueAsNumber: Cannot get convars for other players. Returning own convar value.\n" );
+    if ( playerIndex != ( *C_BasePlayer::GetLocalPlayer() ).entindex() )
+        Warning( "Engines.GetClientConsoleVariableValueAsNumber: Cannot get convars for other players. Returning own convar value.\n" );
 
-    ConVarRef var( luaL_checkstring( L, 2 ) );
-
-    if ( var.IsValid() )
-    {
-        lua_pushnumber( L, var.GetFloat() );
-    }
-    else
-    {
-        lua_pushnumber( L, 0 );
-    }
-
+    const char *varName = LUA_BINDING_ARGUMENT( luaL_checkstring, 2, "varName" );
+    ConVarRef var( varName );
+    lua_pushnumber( L, var.IsValid() ? var.GetFloat() : 0 );
     return 1;
 }
-static int engine_GetDXSupportLevel( lua_State *L )
+LUA_BINDING_END( "number", "The value of the client console variable as a number." )
+
+LUA_BINDING_BEGIN( Engines, GetDxSupportLevel, "library", "Get the DirectX support level." )
 {
-    lua_pushinteger( L, engine->GetDXSupportLevel() );
+    lua_pushnumber( L, engine->GetDXSupportLevel() );
     return 1;
 }
+LUA_BINDING_END( "number", "The DirectX support level." )
 
-static int engine_GetEngineBuildNumber( lua_State *L )
+LUA_BINDING_BEGIN( Engines, GetEngineBuildNumber, "library", "Get the engine build number." )
 {
-    lua_pushinteger( L, engine->GetEngineBuildNumber() );
+    lua_pushnumber( L, engine->GetEngineBuildNumber() );
     return 1;
 }
+LUA_BINDING_END( "number", "The engine build number." )
 
-static int engine_GetGameDirectory( lua_State *L )
+LUA_BINDING_BEGIN( Engines, GetGameDirectory, "library", "Get the game directory." )
 {
     lua_pushstring( L, engine->GetGameDirectory() );
     return 1;
 }
+LUA_BINDING_END( "string", "The game directory." )
 
-static int engine_GetLastTimeStamp( lua_State *L )
+LUA_BINDING_BEGIN( Engines, GetLastTimeStamp, "library", "Get the last time stamp." )
 {
     lua_pushnumber( L, engine->GetLastTimeStamp() );
     return 1;
 }
+LUA_BINDING_END( "number", "The last time stamp." )
 
-static int engine_GetLightForPoint( lua_State *L )
+LUA_BINDING_BEGIN( Engines, GetLightForPoint, "library", "Get the light for a point." )
 {
-    Vector v = engine->GetLightForPoint( luaL_checkvector( L, 1 ), luaL_checkboolean( L, 2 ) );
-    lua_pushvector( L, v );
+    Vector point = LUA_BINDING_ARGUMENT( luaL_checkvector, 1, "point" );
+    bool clamp = LUA_BINDING_ARGUMENT( luaL_checkboolean, 2, "clamp" );
+    Vector light = engine->GetLightForPoint( point, clamp );
+    lua_pushvector( L, light );
     return 1;
 }
+LUA_BINDING_END( "vector", "The light for the point." )
 
-static int engine_GetLightForPointFast( lua_State *L )
+LUA_BINDING_BEGIN( Engines, GetLightForPointFast, "library", "Get the light for a point quickly." )
 {
-    Vector v = engine->GetLightForPointFast( luaL_checkvector( L, 1 ), luaL_checkboolean( L, 2 ) );
-    lua_pushvector( L, v );
+    Vector point = LUA_BINDING_ARGUMENT( luaL_checkvector, 1, "point" );
+    bool clamp = LUA_BINDING_ARGUMENT( luaL_checkboolean, 2, "clamp" );
+    Vector light = engine->GetLightForPointFast( point, clamp );
+    lua_pushvector( L, light );
     return 1;
 }
+LUA_BINDING_END( "vector", "The light for the point." )
 
-static int engine_GetLocalPlayer( lua_State *L )
+LUA_BINDING_BEGIN( Engines, GetLocalPlayer, "library", "Get the local player." )
 {
-    lua_pushinteger( L, engine->GetLocalPlayer() );
+    lua_pushnumber( L, engine->GetLocalPlayer() );
     return 1;
 }
+LUA_BINDING_END( "number", "The local player." )
 
-static int engine_GetMainMenuBackgroundName( lua_State *L )
+LUA_BINDING_BEGIN( Engines, GetMainMenuBackgroundName, "library", "Get the main menu background name." )
 {
-    char *dest = "";
-    engine->GetMainMenuBackgroundName( dest, luaL_checknumber( L, 2 ) );
-    lua_pushstring( L, dest );
+    char name[256];
+    engine->GetMainMenuBackgroundName( name, sizeof( name ) );
+    lua_pushstring( L, name );
     return 1;
 }
+LUA_BINDING_END( "string", "The main menu background name." )
 
-static int engine_GetMaxClients( lua_State *L )
+LUA_BINDING_BEGIN( Engines, GetMaxClients, "library", "Get the maximum number of clients." )
 {
-    lua_pushinteger( L, engine->GetMaxClients() );
+    lua_pushnumber( L, engine->GetMaxClients() );
     return 1;
 }
+LUA_BINDING_END( "number", "The maximum number of clients." )
 
-static int engine_GetMostRecentSaveGame( lua_State *L )
+LUA_BINDING_BEGIN( Engines, GetMostRecentSaveGame, "library", "Get the most recent save game." )
 {
     lua_pushstring( L, engine->GetMostRecentSaveGame() );
     return 1;
 }
+LUA_BINDING_END( "string", "The most recent save game." )
 
-static int engine_GetPlayerForUserID( lua_State *L )
+LUA_BINDING_BEGIN( Engines, GetPlayerEntityIndexForUserId, "library", "Get the player entity number for a user ID." )
 {
-    lua_pushinteger( L, engine->GetPlayerForUserID( luaL_checknumber( L, 1 ) ) );
+    int userId = LUA_BINDING_ARGUMENT( luaL_checknumber, 1, "userId" );
+    lua_pushnumber( L, engine->GetPlayerForUserID( userId ) );
     return 1;
 }
+LUA_BINDING_END( "number", "The player entity number for the user ID." )
 
-static int engine_GetPlayerInfo( lua_State *L )
+LUA_BINDING_BEGIN( Engines, GetPlayerInfo, "library", "Get the player information." )
 {
+    int playerIndex = LUA_BINDING_ARGUMENT( luaL_checknumber, 1, "playerIndex" );
     player_info_t pinfo;
-    lua_pushboolean( L, engine->GetPlayerInfo( luaL_checknumber( L, 1 ), &pinfo ) );
+    lua_pushboolean( L, engine->GetPlayerInfo( playerIndex, &pinfo ) );
     lua_newtable( L );
     lua_pushstring( L, "name" );
     lua_pushstring( L, pinfo.name );
@@ -280,20 +315,23 @@ static int engine_GetPlayerInfo( lua_State *L )
     lua_settable( L, -3 );
     return 2;
 }
+LUA_BINDING_END( "table", "The player information." )
 
-static int engine_GetProductVersionString( lua_State *L )
+LUA_BINDING_BEGIN( Engines, GetProductVersionString, "library", "Get the product version string." )
 {
     lua_pushstring( L, engine->GetProductVersionString() );
     return 1;
 }
+LUA_BINDING_END( "string", "The product version string." )
 
-static int engine_GetScreenAspectRatio( lua_State *L )
+LUA_BINDING_BEGIN( Engines, GetScreenAspectRatio, "library", "Get the screen aspect ratio." )
 {
     lua_pushnumber( L, engine->GetScreenAspectRatio() );
     return 1;
 }
+LUA_BINDING_END( "number", "The screen aspect ratio." )
 
-static int engine_GetScreenSize( lua_State *L )
+LUA_BINDING_BEGIN( Engines, GetScreenSize, "library", "Get the screen size." )
 {
     int width, height;
     engine->GetScreenSize( width, height );
@@ -301,279 +339,255 @@ static int engine_GetScreenSize( lua_State *L )
     lua_pushinteger( L, height );
     return 2;
 }
+LUA_BINDING_END( "number", "The screen width.", "number", "The screen height." )
 
-static int engine_GetUILanguage( lua_State *L )
+LUA_BINDING_BEGIN( Engines, GetUiLanguage, "library", "Get the UI language." )
 {
-    char *dest = "";
-    engine->GetUILanguage( dest, luaL_checknumber( L, 1 ) );
+    char dest[64];
+    engine->GetUILanguage( dest, sizeof( dest ) );
     lua_pushstring( L, dest );
     return 1;
 }
+LUA_BINDING_END( "string", "The UI language." )
 
-static int engine_GrabPreColorCorrectedFrame( lua_State *L )
+LUA_BINDING_BEGIN( Engines, GrabPreColorCorrectedFrame, "library", "Grab a pre-color corrected frame." )
 {
-    engine->GrabPreColorCorrectedFrame( luaL_checknumber( L, 1 ), luaL_checknumber( L, 2 ), luaL_checknumber( L, 3 ), luaL_checknumber( L, 4 ) );
+    int x = LUA_BINDING_ARGUMENT( luaL_checknumber, 1, "x" );
+    int y = LUA_BINDING_ARGUMENT( luaL_checknumber, 2, "y" );
+    int width = LUA_BINDING_ARGUMENT( luaL_checknumber, 3, "width" );
+    int height = LUA_BINDING_ARGUMENT( luaL_checknumber, 4, "height" );
+    engine->GrabPreColorCorrectedFrame( x, y, width, height );
     return 0;
 }
+LUA_BINDING_END()
 
-static int engine_IsBoxInViewCluster( lua_State *L )
+LUA_BINDING_BEGIN( Engines, IsBoxInViewCluster, "library", "Check if a box is in a view cluster." )
 {
-    luaL_checknumber( L, engine->IsBoxInViewCluster( luaL_checkvector( L, 1 ), luaL_checkvector( L, 2 ) ) );
+    Vector boxMin = LUA_BINDING_ARGUMENT( luaL_checkvector, 1, "boxMin" );
+    Vector boxMax = LUA_BINDING_ARGUMENT( luaL_checkvector, 2, "boxMax" );
+    lua_pushboolean( L, engine->IsBoxInViewCluster( boxMin, boxMax ) );
     return 1;
 }
+LUA_BINDING_END( "boolean", "True if the box is in the view cluster, false otherwise." )
 
-static int engine_IsBoxVisible( lua_State *L )
+LUA_BINDING_BEGIN( Engines, IsBoxVisible, "library", "Check if a box is visible." )
 {
-    luaL_checknumber( L, engine->IsBoxVisible( luaL_checkvector( L, 1 ), luaL_checkvector( L, 2 ) ) );
+    Vector boxMin = LUA_BINDING_ARGUMENT( luaL_checkvector, 1, "boxMin" );
+    Vector boxMax = LUA_BINDING_ARGUMENT( luaL_checkvector, 2, "boxMax" );
+    lua_pushboolean( L, engine->IsBoxVisible( boxMin, boxMax ) );
     return 1;
 }
+LUA_BINDING_END( "boolean", "True if the box is visible, false otherwise." )
 
-static int engine_IsConnected( lua_State *L )
+LUA_BINDING_BEGIN( Engines, IsConnected, "library", "Check if the client is connected." )
 {
     lua_pushboolean( L, engine->IsConnected() );
     return 1;
 }
+LUA_BINDING_END( "boolean", "True if the client is connected, false otherwise." )
 
-static int engine_IsDrawingLoadingImage( lua_State *L )
+LUA_BINDING_BEGIN( Engines, IsDrawingLoadingImage, "library", "Check if the client is drawing a loading image." )
 {
     lua_pushboolean( L, engine->IsDrawingLoadingImage() );
     return 1;
 }
+LUA_BINDING_END( "boolean", "True if the client is drawing a loading image, false otherwise." )
 
-static int engine_IsHammerRunning( lua_State *L )
+LUA_BINDING_BEGIN( Engines, IsHammerRunning, "library", "Check if Hammer is running." )
 {
     lua_pushboolean( L, engine->IsHammerRunning() );
     return 1;
 }
+LUA_BINDING_END( "boolean", "True if Hammer is running, false otherwise." )
 
-static int engine_IsHLTV( lua_State *L )
+LUA_BINDING_BEGIN( Engines, IsHLTV, "library", "Check if the client is an HLTV." )
 {
     lua_pushboolean( L, engine->IsHLTV() );
     return 1;
 }
+LUA_BINDING_END( "boolean", "True if the client is an HLTV, false otherwise." )
 
-static int engine_IsInGame( lua_State *L )
+LUA_BINDING_BEGIN( Engines, IsInGame, "library", "Check if the client is in a game." )
 {
     lua_pushboolean( L, engine->IsInGame() );
     return 1;
 }
+LUA_BINDING_END( "boolean", "True if the client is in a game, false otherwise." )
 
-static int engine_IsLevelMainMenuBackground( lua_State *L )
+LUA_BINDING_BEGIN( Engines, IsLevelMainMenuBackground, "library", "Check if the level is a main menu background." )
 {
     lua_pushboolean( L, engine->IsLevelMainMenuBackground() );
     return 1;
 }
+LUA_BINDING_END( "boolean", "True if the level is a main menu background, false otherwise." )
 
-static int engine_IsOccluded( lua_State *L )
+LUA_BINDING_BEGIN( Engines, IsOccluded, "library", "Check if a box is occluded." )
 {
-    luaL_checkboolean( L, engine->IsOccluded( luaL_checkvector( L, 1 ), luaL_checkvector( L, 2 ) ) );
+    Vector boxMin = LUA_BINDING_ARGUMENT( luaL_checkvector, 1, "boxMin" );
+    Vector boxMax = LUA_BINDING_ARGUMENT( luaL_checkvector, 2, "boxMax" );
+    lua_pushboolean( L, engine->IsOccluded( boxMin, boxMax ) );
     return 1;
 }
+LUA_BINDING_END( "boolean", "True if the box is occluded, false otherwise." )
 
-static int engine_IsPlayingDemo( lua_State *L )
+LUA_BINDING_BEGIN( Engines, IsPlayingDemo, "library", "Check if the client is playing a demo." )
 {
     lua_pushboolean( L, engine->IsPlayingDemo() );
     return 1;
 }
+LUA_BINDING_END( "boolean", "True if the client is playing a demo, false otherwise." )
 
-static int engine_IsPlayingTimeDemo( lua_State *L )
+LUA_BINDING_BEGIN( Engines, IsPlayingTimeDemo, "library", "Check if the client is playing a time demo." )
 {
     lua_pushboolean( L, engine->IsPlayingTimeDemo() );
     return 1;
 }
+LUA_BINDING_END( "boolean", "True if the client is playing a time demo, false otherwise." )
 
-static int engine_IsRecordingDemo( lua_State *L )
+LUA_BINDING_BEGIN( Engines, IsRecordingDemo, "library", "Check if the client is recording a demo." )
 {
     lua_pushboolean( L, engine->IsRecordingDemo() );
     return 1;
 }
+LUA_BINDING_END( "boolean", "True if the client is recording a demo, false otherwise." )
 
-static int engine_IsSaveInProgress( lua_State *L )
+LUA_BINDING_BEGIN( Engines, IsSaveInProgress, "library", "Check if a save is in progress." )
 {
     lua_pushboolean( L, engine->IsSaveInProgress() );
     return 1;
 }
+LUA_BINDING_END( "boolean", "True if a save is in progress, false otherwise." )
 
-static int engine_IsSkyboxVisibleFromPoint( lua_State *L )
+LUA_BINDING_BEGIN( Engines, IsSkyboxVisibleFromPoint, "library", "Check if the skybox is visible from a point." )
 {
-    lua_pushinteger( L, engine->IsSkyboxVisibleFromPoint( luaL_checkvector( L, 1 ) ) );
+    Vector point = LUA_BINDING_ARGUMENT( luaL_checkvector, 1, "point" );
+    lua_pushinteger( L, engine->IsSkyboxVisibleFromPoint( point ) );
     return 1;
 }
+LUA_BINDING_END( "number", "The skybox visibility." )
 
-static int engine_IsTakingScreenshot( lua_State *L )
+LUA_BINDING_BEGIN( Engines, IsTakingScreenshot, "library", "Check if a screenshot is being taken." )
 {
     lua_pushboolean( L, engine->IsTakingScreenshot() );
     return 1;
 }
+LUA_BINDING_END( "boolean", "True if a screenshot is being taken, false otherwise." )
 
-static int engine_LevelLeafCount( lua_State *L )
+LUA_BINDING_BEGIN( Engines, LevelLeafCount, "library", "Get the level leaf count." )
 {
     lua_pushinteger( L, engine->LevelLeafCount() );
     return 1;
 }
+LUA_BINDING_END( "number", "The level leaf count." )
 
-static int engine_LightStyleValue( lua_State *L )
+LUA_BINDING_BEGIN( Engines, LightStyleValue, "library", "Get the light style value." )
 {
     lua_pushnumber( L, engine->LightStyleValue( luaL_checknumber( L, 1 ) ) );
     return 1;
 }
+LUA_BINDING_END( "number", "The light style value." )
 
-static int engine_LinearToGamma( lua_State *L )
+LUA_BINDING_BEGIN( Engines, LinearToGamma, "library", "Convert a linear value to a gamma value." )
 {
-    float linear = luaL_checknumber( L, 1 );
+    float linear = LUA_BINDING_ARGUMENT( luaL_checknumber, 1, "linear" );
     float gamma;
     engine->LinearToGamma( &linear, &gamma );
     lua_pushnumber( L, gamma );
     return 1;
 }
+LUA_BINDING_END( "number", "The gamma value." )
 
-static int engine_MapHasHDRLighting( lua_State *L )
+LUA_BINDING_BEGIN( Engines, MapHasHdrLighting, "library", "Check if the map has HDR lighting." )
 {
     lua_pushboolean( L, engine->MapHasHDRLighting() );
     return 1;
 }
+LUA_BINDING_END( "boolean", "True if the map has HDR lighting, false otherwise." )
 
-static int engine_MapLoadFailed( lua_State *L )
+LUA_BINDING_BEGIN( Engines, MapLoadFailed, "library", "Check if the map load failed." )
 {
     lua_pushboolean( L, engine->MapLoadFailed() );
     return 1;
 }
+LUA_BINDING_END( "boolean", "True if the map load failed, false otherwise." )
 
-static int engine_OnStorageDeviceDetached( lua_State *L )
+LUA_BINDING_BEGIN( Engines, OnStorageDeviceDetached, "library", "Handle a storage device detachment." )
 {
     engine->OnStorageDeviceDetached();
     return 0;
 }
+LUA_BINDING_END()
 
-static int engine_REMOVED_SteamProcessCall( lua_State *L )
-{
-    bool finished = luaL_checkboolean( L, 1 );
-    lua_pushboolean( L, engine->REMOVED_SteamProcessCall( finished ) );
-    return 1;
-}
+//LUA_BINDING_BEGIN( Engines, REMOVED_SteamProcessCall, "library", "Process a Steam call." )
+//{
+//    bool finished = LUA_BINDING_ARGUMENT( luaL_checkboolean, 1, "finished" );
+//    lua_pushboolean( L, engine->REMOVED_SteamProcessCall( finished ) );
+//    return 1;
+//}
+//LUA_BINDING_END( "boolean", "True if the Steam call was processed, false otherwise." )
 
-static int engine_ResetDemoInterpolation( lua_State *L )
+LUA_BINDING_BEGIN( Engines, ResetDemoInterpolation, "library", "Reset demo interpolation." )
 {
     engine->ResetDemoInterpolation();
     return 0;
 }
+LUA_BINDING_END()
 
-static int engine_ServerCmd( lua_State *L )
+LUA_BINDING_BEGIN( Engines, ServerCommand, "library", "Send a command to the server." )
 {
-    engine->ServerCmd( luaL_checkstring( L, 1 ), luaL_checkboolean( L, 2 ) );
+    const char *command = LUA_BINDING_ARGUMENT( luaL_checkstring, 1, "command" );
+    engine->ServerCmd( command, LUA_BINDING_ARGUMENT_WITH_DEFAULT( luaL_optboolean, 2, true, "reliable" ) );
     return 0;
 }
+LUA_BINDING_END()
 
-static int engine_SetMapLoadFailed( lua_State *L )
+LUA_BINDING_BEGIN( Engines, SetMapLoadFailed, "library", "Set the map load failed state." )
 {
-    engine->SetMapLoadFailed( luaL_checkboolean( L, 1 ) );
+    engine->SetMapLoadFailed( LUA_BINDING_ARGUMENT( luaL_checkboolean, 1, "failed" ) );
     return 0;
 }
+LUA_BINDING_END()
 
-static int engine_SetRestrictClientCommands( lua_State *L )
+LUA_BINDING_BEGIN( Engines, SetRestrictClientCommands, "library", "Set the restrict client commands state." )
 {
-    engine->SetRestrictClientCommands( luaL_checkboolean( L, 1 ) );
+    engine->SetRestrictClientCommands( LUA_BINDING_ARGUMENT( luaL_checkboolean, 1, "restrict" ) );
     return 0;
 }
+LUA_BINDING_END()
 
-static int engine_SetRestrictServerCommands( lua_State *L )
+LUA_BINDING_BEGIN( Engines, SetRestrictServerCommands, "library", "Set the restrict server commands state." )
 {
-    engine->SetRestrictServerCommands( luaL_checkboolean( L, 1 ) );
+    engine->SetRestrictServerCommands( LUA_BINDING_ARGUMENT( luaL_checkboolean, 1, "restrict" ) );
     return 0;
 }
+LUA_BINDING_END()
 
-static int engine_Sound_ExtraUpdate( lua_State *L )
+LUA_BINDING_BEGIN( Engines, SoundExtraUpdate, "library", "Update sound." )
 {
     engine->Sound_ExtraUpdate();
     return 0;
 }
+LUA_BINDING_END()
 
-static int engine_StartXboxExitingProcess( lua_State *L )
-{
-    engine->StartXboxExitingProcess();
-    return 0;
-}
+//LUA_BINDING_BEGIN( Engines, StartXboxExitingProcess, "library", "Start the Xbox exiting process." )
+//{
+//    engine->StartXboxExitingProcess();
+//    return 0;
+//}
+//LUA_BINDING_END()
 
-static int engine_SupportsHDR( lua_State *L )
+LUA_BINDING_BEGIN( Engines, SupportsHdr, "library", "Check if HDR is supported." )
 {
     lua_pushboolean( L, engine->SupportsHDR() );
     return 1;
 }
-
-static const luaL_Reg enginelib[] = {
-    { "ActivateOccluder", engine_ActivateOccluder },
-
-    { "CheckKeyTrapping", engine_CheckKeyTrapping },
-    { "IsKeyTrapping", engine_IsKeyTrapping },
-    { "StartKeyTrapMode", engine_StartKeyTrapMode },
-
-    { "CheckPoint", engine_CheckPoint },
-    { "ClientCommand", engine_ClientCmd },
-    { "ClientCommand_Unrestricted", engine_ClientCmd_Unrestricted },
-    { "Con_IsVisible", engine_Con_IsVisible },
-    { "CopyFrameBufferToMaterial", engine_CopyFrameBufferToMaterial },
-    { "CullBox", engine_CullBox },
-    { "DoesBoxTouchAreaFrustum", engine_DoesBoxTouchAreaFrustum },
-    { "DrawPortals", engine_DrawPortals },
-    { "EngineStats_BeginFrame", engine_EngineStats_BeginFrame },
-    { "EngineStats_EndFrame", engine_EngineStats_EndFrame },
-    { "GameLumpSize", engine_GameLumpSize },
-    { "GetClientConVarValue", engine_GetClientConVarValue },
-    { "GetClientConVarValueAsNumber", engine_GetClientConVarValueAsNumber },
-    { "GetDXSupportLevel", engine_GetDXSupportLevel },
-    { "GetEngineBuildNumber", engine_GetEngineBuildNumber },
-    { "GetGameDirectory", engine_GetGameDirectory },
-    { "GetLastTimeStamp", engine_GetLastTimeStamp },
-    { "GetLightForPoint", engine_GetLightForPoint },
-    { "GetLightForPointFast", engine_GetLightForPointFast },
-    { "GetLocalPlayer", engine_GetLocalPlayer },
-    { "GetMainMenuBackgroundName", engine_GetMainMenuBackgroundName },
-    { "GetMaxClients", engine_GetMaxClients },
-    { "GetMostRecentSaveGame", engine_GetMostRecentSaveGame },
-    { "GetPlayerForUserID", engine_GetPlayerForUserID },
-    { "GetPlayerInfo", engine_GetPlayerInfo },
-    { "GetProductVersionString", engine_GetProductVersionString },
-    { "GetScreenAspectRatio", engine_GetScreenAspectRatio },
-    { "GetScreenSize", engine_GetScreenSize },
-    { "GetUILanguage", engine_GetUILanguage },
-    { "GrabPreColorCorrectedFrame", engine_GrabPreColorCorrectedFrame },
-    { "IsBoxInViewCluster", engine_IsBoxInViewCluster },
-    { "IsBoxVisible", engine_IsBoxVisible },
-    { "IsConnected", engine_IsConnected },
-    { "IsDrawingLoadingImage", engine_IsDrawingLoadingImage },
-    { "IsHammerRunning", engine_IsHammerRunning },
-    { "IsHLTV", engine_IsHLTV },
-    { "IsInGame", engine_IsInGame },
-    { "IsLevelMainMenuBackground", engine_IsLevelMainMenuBackground },
-    { "IsOccluded", engine_IsOccluded },
-    { "IsPlayingDemo", engine_IsPlayingDemo },
-    { "IsPlayingTimeDemo", engine_IsPlayingTimeDemo },
-    { "IsRecordingDemo", engine_IsRecordingDemo },
-    { "IsSaveInProgress", engine_IsSaveInProgress },
-    { "IsSkyboxVisibleFromPoint", engine_IsSkyboxVisibleFromPoint },
-    { "IsTakingScreenshot", engine_IsTakingScreenshot },
-    { "LevelLeafCount", engine_LevelLeafCount },
-    { "LightStyleValue", engine_LightStyleValue },
-    { "LinearToGamma", engine_LinearToGamma },
-    { "MapHasHDRLighting", engine_MapHasHDRLighting },
-    { "MapLoadFailed", engine_MapLoadFailed },
-    { "OnStorageDeviceDetached", engine_OnStorageDeviceDetached },
-    { "REMOVED_SteamProcessCall", engine_REMOVED_SteamProcessCall },
-    { "ResetDemoInterpolation", engine_ResetDemoInterpolation },
-    { "ServerCmd", engine_ServerCmd },
-    { "SetMapLoadFailed", engine_SetMapLoadFailed },
-    { "SetRestrictClientCommands", engine_SetRestrictClientCommands },
-    { "SetRestrictServerCommands", engine_SetRestrictServerCommands },
-    { "Sound_ExtraUpdate", engine_Sound_ExtraUpdate },
-    { "StartXboxExitingProcess", engine_StartXboxExitingProcess },
-    { "SupportsHDR", engine_SupportsHDR },
-    { NULL, NULL } };
+LUA_BINDING_END( "boolean", "True if HDR is supported, false otherwise." )
 
 /*
 ** Open engine library
 */
 LUALIB_API int luaopen_engine( lua_State *L )
 {
-    luaL_register( L, LUA_ENGINELIBNAME, enginelib );
+    LUA_REGISTRATION_COMMIT_LIBRARY( Engines );
     return 1;
 }

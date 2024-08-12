@@ -10,4 +10,5 @@ of functions and utilities that are useful for creating scripts.
 - [Json](../libraries/Json/index.md)
 - [Networks](../libraries/Networks/index.md)
 - [Timers](../libraries/Timers/index.md)
-- [Weapons](../libraries/Weapons/index.md)
+- [ScriptedEntities](../libraries/ScriptedEntities/index.md)
+- [ScriptedWeapons](../libraries/ScriptedWeapons/index.md)

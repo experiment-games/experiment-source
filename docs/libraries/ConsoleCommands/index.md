@@ -7,4 +7,4 @@ exclude:
   isIndex: true
 ---
 
-# Console Commands Library
+# ConsoleCommands Library

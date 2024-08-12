@@ -710,21 +710,6 @@ void luasrc_init_gameui( void )
 
     luasrc_setmodulepaths( LGameUI );
 
-    // int leftOnStack = 0;
-    // leftOnStack += luaopen_ConCommand( LGameUI );
-    // leftOnStack += luaopen_dbg( LGameUI );
-    // leftOnStack += luaopen_system( LGameUI );
-    // leftOnStack += luaopen_engine( LGameUI );
-    // leftOnStack += luaopen_enginevgui( LGameUI );
-    // leftOnStack += luaopen_FCVAR( LGameUI );
-    // leftOnStack += luaopen_KeyValues( LGameUI );
-    // leftOnStack += luaopen_surface( LGameUI );
-    // leftOnStack += luaopen_vgui( LGameUI );
-    // leftOnStack += luaopen_scheme( LGameUI );
-    // leftOnStack += luaopen_Color( LGameUI );
-    // lua_pop( LGameUI, leftOnStack );
-    //  Experiment; The above is unmaintainable. Find another way, for now lets open all
-    //  at the risk of opening libraries not functional in the menu.
     luasrc_openlibs( LGameUI, true );
     luasrc_dofile( LGameUI, LUA_PATH_INCLUDES_INIT_FILE );
 
@@ -1543,7 +1528,7 @@ static void luasrc_LoadEntityFromFile( char *fullPath, char *className )
 
     if ( luasrc_dofile( L, fullPath ) == 0 )
     {
-        lua_getglobal( L, LUA_ENTITIESLIBNAME );
+        lua_getglobal( L, LUA_SCRIPTEDENTITIESLIBNAME );
         if ( lua_istable( L, -1 ) )
         {
             lua_getfield( L, -1, "Register" );
@@ -1594,7 +1579,7 @@ static void luasrc_LoadEntityFromFile( char *fullPath, char *className )
 void luasrc_LoadEntities( const char *path )
 {
     // First register this function so other directories can be loaded from Lua
-    lua_getglobal( L, LUA_ENTITIESLIBNAME );
+    lua_getglobal( L, LUA_SCRIPTEDENTITIESLIBNAME );
     lua_pushcfunction( L, luasrc_LoadEntities );
     lua_setfield( L, -2, "LoadFromDirectory" );
     lua_pop( L, 1 );  // Pop the entities library
@@ -1826,7 +1811,7 @@ static void luasrc_LoadWeaponFromFile( char *fullPath, char *className )
 
     if ( luasrc_dofile( L, fullPath ) == 0 )
     {
-        lua_getglobal( L, LUA_WEAPONSLIBNAME );
+        lua_getglobal( L, LUA_SCRIPTEDWEAPONSLIBNAME );
 
         if ( lua_istable( L, -1 ) )
         {
@@ -1858,7 +1843,7 @@ static void luasrc_LoadWeaponFromFile( char *fullPath, char *className )
 void luasrc_LoadWeapons( const char *path )
 {
     // First register this function so other directories can be loaded from Lua
-    lua_getglobal( L, LUA_WEAPONSLIBNAME );
+    lua_getglobal( L, LUA_SCRIPTEDWEAPONSLIBNAME );
     lua_pushcfunction( L, luasrc_LoadWeapons );
     lua_setfield( L, -2, "LoadFromDirectory" );
     lua_pop( L, 1 );  // Pop the weapons library

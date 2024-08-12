@@ -1,16 +1,16 @@
 ---
 template: lua-library-function.html
 title: GetScreenEffectTexture
-icon: lua-shared
+icon: lua-client
 tags:
   - lua
-  - shared
+  - client
   - needs-verification
   - needs-example
 lua:
   library: Renders
   function: GetScreenEffectTexture
-  realm: shared
+  realm: client
   description: "Get the screen effect texture."
   
   arguments:

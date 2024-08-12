@@ -242,7 +242,7 @@ void ResetConVarDatabase( void )
 /*
 ** Open ConsoleVariable object
 */
-LUALIB_API int luaopen_ConVar( lua_State *L )
+LUALIB_API int luaopen_ConsoleVariableMeta( lua_State *L )
 {
     LUA_PUSH_NEW_METATABLE( L, LUA_CONVARMETANAME );
     
@@ -253,7 +253,7 @@ LUALIB_API int luaopen_ConVar( lua_State *L )
     lua_pushstring( L, LUA_CONVARMETANAME );
     lua_setfield( L, -2, "__type" ); /* metatable.__type = "ConsoleVariable" */
 
-    LUA_REGISTRATION_COMMIT_LIBRARY( _G, LUA_GNAME );
+    LUA_REGISTRATION_COMMIT_LIBRARY( _G );
 
     lua_pop( L, 1 );
     return 1;

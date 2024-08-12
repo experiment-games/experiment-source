@@ -1,16 +1,16 @@
 ---
 template: lua-library-function.html
 title: MainViewForward
-icon: lua-shared
+icon: lua-client
 tags:
   - lua
-  - shared
+  - client
   - needs-verification
   - needs-example
 lua:
   library: Renders
   function: MainViewForward
-  realm: shared
+  realm: client
   description: "Get the main view forward."
   
   

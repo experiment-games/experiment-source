@@ -1,16 +1,16 @@
 ---
 template: lua-library-function.html
 title: SetLightingOrigin
-icon: lua-shared
+icon: lua-client
 tags:
   - lua
-  - shared
+  - client
   - needs-verification
   - needs-example
 lua:
   library: Renders
   function: SetLightingOrigin
-  realm: shared
+  realm: client
   description: "Set the lighting origin."
   
   arguments:

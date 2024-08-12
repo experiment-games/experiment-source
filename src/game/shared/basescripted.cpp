@@ -110,7 +110,7 @@ CBaseScripted::~CBaseScripted( void )
 
 void CBaseScripted::LoadScriptedEntity( void )
 {
-    lua_getglobal( L, LUA_ENTITIESLIBNAME );
+    lua_getglobal( L, LUA_SCRIPTEDENTITIESLIBNAME );
     if ( lua_istable( L, -1 ) )
     {
         lua_getfield( L, -1, "Get" );

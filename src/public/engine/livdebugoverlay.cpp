@@ -1,6 +1,6 @@
-//========= Copyright © 1996-2005, Valve Corporation, All rights reserved. ============//
+//========= Copyright Â© 1996-2005, Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -8,7 +8,7 @@
 //
 //  cdll_int.h
 //
-// 4-23-98  
+// 4-23-98
 // JOHN:  client dll interface declarations
 //
 
@@ -22,85 +22,196 @@
 // memdbgon must be the last include file in a .cpp file!!!
 #include "tier0/memdbgon.h"
 
+LUA_REGISTRATION_INIT( DebugOverlay );
 
+LUA_BINDING_BEGIN( DebugOverlay, AddBoxOverlay, "library", "Add a box overlay to the screen." )
+{
+    Vector start = LUA_BINDING_ARGUMENT( luaL_checkvector, 1, "start" );
+    Vector mins = LUA_BINDING_ARGUMENT( luaL_checkvector, 2, "mins" );
+    Vector maxs = LUA_BINDING_ARGUMENT( luaL_checkvector, 3, "maxs" );
+    QAngle angles = LUA_BINDING_ARGUMENT( luaL_checkangle, 4, "angles" );
+    int r = LUA_BINDING_ARGUMENT( luaL_checkinteger, 5, "r" );
+    int g = LUA_BINDING_ARGUMENT( luaL_checkinteger, 6, "g" );
+    int b = LUA_BINDING_ARGUMENT( luaL_checkinteger, 7, "b" );
+    int a = LUA_BINDING_ARGUMENT( luaL_checkinteger, 8, "a" );
+    float duration = LUA_BINDING_ARGUMENT( luaL_checknumber, 9, "duration" );
 
-static int debugoverlay_AddBoxOverlay (lua_State *L) {
-  debugoverlay->AddBoxOverlay(luaL_checkvector(L, 1), luaL_checkvector(L, 2), luaL_checkvector(L, 3), luaL_checkangle(L, 4), luaL_checknumber(L, 5), luaL_checknumber(L, 6), luaL_checknumber(L, 7), luaL_checknumber(L, 8), luaL_checknumber(L, 9));
-  return 0;
+    debugoverlay->AddBoxOverlay( start, mins, maxs, angles, r, g, b, a, duration );
+    return 0;
 }
+LUA_BINDING_END()
 
-static int debugoverlay_AddBoxOverlay2 (lua_State *L) {
-  debugoverlay->AddBoxOverlay2(luaL_checkvector(L, 1), luaL_checkvector(L, 2), luaL_checkvector(L, 3), luaL_checkangle(L, 4), luaL_checkcolor(L, 5), luaL_checkcolor(L, 6), luaL_checknumber(L, 7));
-  return 0;
+LUA_BINDING_BEGIN( DebugOverlay, AddBoxOverlay2, "library", "Add a box overlay to the screen with specific colors." )
+{
+    Vector start = LUA_BINDING_ARGUMENT( luaL_checkvector, 1, "start" );
+    Vector mins = LUA_BINDING_ARGUMENT( luaL_checkvector, 2, "mins" );
+    Vector maxs = LUA_BINDING_ARGUMENT( luaL_checkvector, 3, "maxs" );
+    QAngle angles = LUA_BINDING_ARGUMENT( luaL_checkangle, 4, "angles" );
+    lua_Color color1 = LUA_BINDING_ARGUMENT( luaL_checkcolor, 5, "color1" );
+    lua_Color color2 = LUA_BINDING_ARGUMENT( luaL_checkcolor, 6, "color2" );
+    float duration = LUA_BINDING_ARGUMENT( luaL_checknumber, 7, "duration" );
+
+    debugoverlay->AddBoxOverlay2( start, mins, maxs, angles, color1, color2, duration );
+    return 0;
 }
+LUA_BINDING_END()
 
-static int debugoverlay_AddGridOverlay (lua_State *L) {
-  debugoverlay->AddGridOverlay(luaL_checkvector(L, 1));
-  return 0;
+LUA_BINDING_BEGIN( DebugOverlay, AddGridOverlay, "library", "Add a grid overlay to the screen." )
+{
+    Vector origin = LUA_BINDING_ARGUMENT( luaL_checkvector, 1, "origin" );
+
+    debugoverlay->AddGridOverlay( origin );
+    return 0;
 }
+LUA_BINDING_END()
 
-static int debugoverlay_AddLineOverlay (lua_State *L) {
-  debugoverlay->AddLineOverlay(luaL_checkvector(L, 1), luaL_checkvector(L, 2), luaL_checknumber(L, 3), luaL_checknumber(L, 4), luaL_checknumber(L, 5), luaL_checkboolean(L, 6), luaL_checknumber(L, 7));
-  return 0;
+LUA_BINDING_BEGIN( DebugOverlay, AddLineOverlay, "library", "Add a line overlay to the screen." )
+{
+    Vector start = LUA_BINDING_ARGUMENT( luaL_checkvector, 1, "start" );
+    Vector end = LUA_BINDING_ARGUMENT( luaL_checkvector, 2, "end" );
+    int r = LUA_BINDING_ARGUMENT( luaL_checkinteger, 3, "r" );
+    int g = LUA_BINDING_ARGUMENT( luaL_checkinteger, 4, "g" );
+    int b = LUA_BINDING_ARGUMENT( luaL_checkinteger, 5, "b" );
+    bool noDepthTest = LUA_BINDING_ARGUMENT( luaL_checkboolean, 6, "noDepthTest" );
+    float duration = LUA_BINDING_ARGUMENT( luaL_checknumber, 7, "duration" );
+
+    debugoverlay->AddLineOverlay( start, end, r, g, b, noDepthTest, duration );
+    return 0;
 }
+LUA_BINDING_END()
 
-static int debugoverlay_AddLineOverlayAlpha (lua_State *L) {
-  debugoverlay->AddLineOverlayAlpha(luaL_checkvector(L, 1), luaL_checkvector(L, 2), luaL_checknumber(L, 3), luaL_checknumber(L, 4), luaL_checknumber(L, 5), luaL_checknumber(L, 6), luaL_checkboolean(L, 7), luaL_checknumber(L, 8));
-  return 0;
+LUA_BINDING_BEGIN( DebugOverlay, AddLineOverlayAlpha, "library", "Add a line overlay to the screen with alpha." )
+{
+    Vector start = LUA_BINDING_ARGUMENT( luaL_checkvector, 1, "start" );
+    Vector end = LUA_BINDING_ARGUMENT( luaL_checkvector, 2, "end" );
+    int r = LUA_BINDING_ARGUMENT( luaL_checkinteger, 3, "r" );
+    int g = LUA_BINDING_ARGUMENT( luaL_checkinteger, 4, "g" );
+    int b = LUA_BINDING_ARGUMENT( luaL_checkinteger, 5, "b" );
+    int a = LUA_BINDING_ARGUMENT( luaL_checkinteger, 6, "a" );
+    bool noDepthTest = LUA_BINDING_ARGUMENT( luaL_checkboolean, 7, "noDepthTest" );
+    float duration = LUA_BINDING_ARGUMENT( luaL_checknumber, 8, "duration" );
+
+    debugoverlay->AddLineOverlayAlpha( start, end, r, g, b, a, noDepthTest, duration );
+    return 0;
 }
+LUA_BINDING_END()
 
-static int debugoverlay_AddScreenTextOverlay (lua_State *L) {
-  debugoverlay->AddScreenTextOverlay(luaL_checknumber(L, 1), luaL_checknumber(L, 2), luaL_checknumber(L, 3), luaL_checknumber(L, 4), luaL_checknumber(L, 5), luaL_checknumber(L, 6), luaL_checkboolean(L, 7), luaL_checkstring(L, 8));
-  return 0;
+LUA_BINDING_BEGIN( DebugOverlay, AddScreenTextOverlay, "library", "Add a screen text overlay." )
+{
+    float x = LUA_BINDING_ARGUMENT( luaL_checknumber, 1, "x" );
+    float y = LUA_BINDING_ARGUMENT( luaL_checknumber, 2, "y" );
+    float scale = LUA_BINDING_ARGUMENT( luaL_checknumber, 3, "scale" );
+    int r = LUA_BINDING_ARGUMENT( luaL_checkinteger, 4, "r" );
+    int g = LUA_BINDING_ARGUMENT( luaL_checkinteger, 5, "g" );
+    int b = LUA_BINDING_ARGUMENT( luaL_checkinteger, 6, "b" );
+    int a = LUA_BINDING_ARGUMENT( luaL_checkinteger, 7, "a" );
+    const char *text = LUA_BINDING_ARGUMENT( luaL_checkstring, 8, "text" );
+
+    debugoverlay->AddScreenTextOverlay( x, y, scale, r, g, b, a, text );
+    return 0;
 }
+LUA_BINDING_END()
 
-static int debugoverlay_AddSweptBoxOverlay (lua_State *L) {
-  debugoverlay->AddSweptBoxOverlay(luaL_checkvector(L, 1), luaL_checkvector(L, 2), luaL_checkvector(L, 3), luaL_checkvector(L, 4), luaL_checkangle(L, 5), luaL_checknumber(L, 6), luaL_checknumber(L, 7), luaL_checknumber(L, 8), luaL_checknumber(L, 9), luaL_checknumber(L, 10));
-  return 0;
+LUA_BINDING_BEGIN( DebugOverlay, AddSweptBoxOverlay, "library", "Add a swept box overlay to the screen." )
+{
+    Vector start = LUA_BINDING_ARGUMENT( luaL_checkvector, 1, "start" );
+    Vector end = LUA_BINDING_ARGUMENT( luaL_checkvector, 2, "end" );
+    Vector mins = LUA_BINDING_ARGUMENT( luaL_checkvector, 3, "mins" );
+    Vector maxs = LUA_BINDING_ARGUMENT( luaL_checkvector, 4, "maxs" );
+    QAngle angles = LUA_BINDING_ARGUMENT( luaL_checkangle, 5, "angles" );
+    int r = LUA_BINDING_ARGUMENT( luaL_checkinteger, 6, "r" );
+    int g = LUA_BINDING_ARGUMENT( luaL_checkinteger, 7, "g" );
+    int b = LUA_BINDING_ARGUMENT( luaL_checkinteger, 8, "b" );
+    int a = LUA_BINDING_ARGUMENT( luaL_checkinteger, 9, "a" );
+    float duration = LUA_BINDING_ARGUMENT( luaL_checknumber, 10, "duration" );
+
+    debugoverlay->AddSweptBoxOverlay( start, end, mins, maxs, angles, r, g, b, a, duration );
+    return 0;
 }
+LUA_BINDING_END()
 
-static int debugoverlay_AddTriangleOverlay (lua_State *L) {
-  debugoverlay->AddTriangleOverlay(luaL_checkvector(L, 1), luaL_checkvector(L, 2), luaL_checkvector(L, 3), luaL_checknumber(L, 4), luaL_checknumber(L, 5), luaL_checknumber(L, 6), luaL_checknumber(L, 7), luaL_checkboolean(L, 8), luaL_checknumber(L, 9));
-  return 0;
+LUA_BINDING_BEGIN( DebugOverlay, AddTriangleOverlay, "library", "Add a triangle overlay to the screen." )
+{
+    Vector p1 = LUA_BINDING_ARGUMENT( luaL_checkvector, 1, "p1" );
+    Vector p2 = LUA_BINDING_ARGUMENT( luaL_checkvector, 2, "p2" );
+    Vector p3 = LUA_BINDING_ARGUMENT( luaL_checkvector, 3, "p3" );
+    int r = LUA_BINDING_ARGUMENT( luaL_checkinteger, 4, "r" );
+    int g = LUA_BINDING_ARGUMENT( luaL_checkinteger, 5, "g" );
+    int b = LUA_BINDING_ARGUMENT( luaL_checkinteger, 6, "b" );
+    int a = LUA_BINDING_ARGUMENT( luaL_checkinteger, 7, "a" );
+    bool noDepthTest = LUA_BINDING_ARGUMENT( luaL_checkboolean, 8, "noDepthTest" );
+    float duration = LUA_BINDING_ARGUMENT( luaL_checknumber, 9, "duration" );
+
+    debugoverlay->AddTriangleOverlay( p1, p2, p3, r, g, b, a, noDepthTest, duration );
+    return 0;
 }
+LUA_BINDING_END()
 
-static int debugoverlay_ClearAllOverlays (lua_State *L) {
-  debugoverlay->ClearAllOverlays();
-  return 0;
+LUA_BINDING_BEGIN( DebugOverlay, ClearAllOverlays, "library", "Clear all overlays." )
+{
+    debugoverlay->ClearAllOverlays();
+    return 0;
 }
+LUA_BINDING_END()
 
-static int debugoverlay_ClearDeadOverlays (lua_State *L) {
-  debugoverlay->ClearDeadOverlays();
-  return 0;
+LUA_BINDING_BEGIN( DebugOverlay, ClearDeadOverlays, "library", "Clear dead overlays." )
+{
+    debugoverlay->ClearDeadOverlays();
+    return 0;
 }
+LUA_BINDING_END()
 
-static int debugoverlay_ScreenPosition (lua_State *L) {
-  lua_pushinteger(L, debugoverlay->ScreenPosition(luaL_checkvector(L, 1), luaL_checkvector(L, 2)));
-  return 0;
+LUA_BINDING_BEGIN( DebugOverlay, ScreenPosition, "library", "Get the screen position of a vector." )
+{
+    Vector vec = LUA_BINDING_ARGUMENT( luaL_checkvector, 1, "vec" );
+    Vector screen;
+
+    if ( debugoverlay->ScreenPosition( vec, screen ) )
+    {
+        lua_pushvector( L, screen );
+    }
+    else
+    {
+        lua_pushnil( L );
+    }
+
+    return 1;
 }
+LUA_BINDING_END( "Vector", "The screen position of the vector, or nil if the vector is not on the screen." )
 
+LUA_BINDING_BEGIN( DebugOverlay, AddTextOverlay, "library", "Add a text overlay to the screen." )
+{
+    Vector origin = LUA_BINDING_ARGUMENT( luaL_checkvector, 1, "origin" );
+    int lineOffset = LUA_BINDING_ARGUMENT( luaL_checkinteger, 2, "lineOffset" );
+    float duration = LUA_BINDING_ARGUMENT( luaL_checknumber, 3, "duration" );
+    const char *text = LUA_BINDING_ARGUMENT( luaL_checkstring, 4, "text" );
 
-static const luaL_Reg debugoverlaylib[] = {
-  {"AddBoxOverlay",   debugoverlay_AddBoxOverlay},
-  {"AddBoxOverlay2",   debugoverlay_AddBoxOverlay2},
-  {"AddGridOverlay",   debugoverlay_AddGridOverlay},
-  {"AddLineOverlay",   debugoverlay_AddLineOverlay},
-  {"AddLineOverlayAlpha",   debugoverlay_AddLineOverlayAlpha},
-  {"AddScreenTextOverlay",   debugoverlay_AddScreenTextOverlay},
-  {"AddSweptBoxOverlay",   debugoverlay_AddSweptBoxOverlay},
-  {"AddTriangleOverlay",   debugoverlay_AddTriangleOverlay},
-  {"ClearAllOverlays",   debugoverlay_ClearAllOverlays},
-  {"ClearDeadOverlays",   debugoverlay_ClearDeadOverlays},
-  {"ScreenPosition",   debugoverlay_ScreenPosition},
-  {NULL, NULL}
-};
+    debugoverlay->AddTextOverlay( origin, lineOffset, duration, text );
+    return 0;
+}
+LUA_BINDING_END()
 
+LUA_BINDING_BEGIN( DebugOverlay, AddTextOverlayRGB, "library", "Add a text overlay to the screen with specific colors." )
+{
+    Vector origin = LUA_BINDING_ARGUMENT( luaL_checkvector, 1, "origin" );
+    int lineOffset = LUA_BINDING_ARGUMENT( luaL_checkinteger, 2, "lineOffset" );
+    float duration = LUA_BINDING_ARGUMENT( luaL_checknumber, 3, "duration" );
+    int r = LUA_BINDING_ARGUMENT( luaL_checkinteger, 4, "r" );
+    int g = LUA_BINDING_ARGUMENT( luaL_checkinteger, 5, "g" );
+    int b = LUA_BINDING_ARGUMENT( luaL_checkinteger, 6, "b" );
+    int a = LUA_BINDING_ARGUMENT( luaL_checkinteger, 7, "a" );
+    const char *text = LUA_BINDING_ARGUMENT( luaL_checkstring, 8, "text" );
+
+    debugoverlay->AddTextOverlayRGB( origin, lineOffset, duration, r, g, b, a, text );
+    return 0;
+}
+LUA_BINDING_END()
 
 /*
 ** Open debugoverlay library
 */
-LUALIB_API int luaopen_debugoverlay (lua_State *L) {
-  luaL_register(L, LUA_DEBUGOVERLAYLIBNAME, debugoverlaylib);
-  return 1;
+LUALIB_API int luaopen_debugoverlay( lua_State *L )
+{
+    LUA_REGISTRATION_COMMIT_LIBRARY( DebugOverlay );
+    return 1;
 }
-

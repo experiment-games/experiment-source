@@ -1,16 +1,16 @@
 ---
 template: lua-library-function.html
 title: PushView2D
-icon: lua-shared
+icon: lua-client
 tags:
   - lua
-  - shared
+  - client
   - needs-verification
   - needs-example
 lua:
   library: Renders
   function: PushView2D
-  realm: shared
+  realm: client
   description: "Push a 2D view."
   
   

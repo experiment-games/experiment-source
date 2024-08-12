@@ -1,16 +1,16 @@
 ---
 template: lua-library-function.html
 title: UpdateScreenEffectTexture
-icon: lua-shared
+icon: lua-client
 tags:
   - lua
-  - shared
+  - client
   - needs-verification
   - needs-example
 lua:
   library: Renders
   function: UpdateScreenEffectTexture
-  realm: shared
+  realm: client
   description: "Update the screen effect texture."
   
   arguments:

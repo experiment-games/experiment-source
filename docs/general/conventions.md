@@ -11,7 +11,14 @@ code.
 
 ### General
 
-- Use English for all code, comments, and documentation.
+- Use American English for all code, comments, and documentation.
+
+    For example:
+
+    - `color` instead of `colour`
+    - `center` instead of `centre`
+    - `armor` instead of `armour`
+    - `behavior` instead of `behaviour`
 
 - Write descriptive comments for code that is not self-explanatory.
 
@@ -59,6 +66,11 @@ See the `.editorconfig` file for the code style.
     - `Ik` (short for inverse kinematics)
     - `Json`, `Xml`, `Html`, `Css` and other data format/language names
     - `2D`, `3D`, `4D` and other dimensions
+    - `Dev`
+    - `RGB`, `RGBA`, `HSV`, `HSL` and other color spaces
+    - `HLTV` (short for Half-Life TV)
+    - `Dx` (DirectX), `HDR` and other graphic settings
+    - `Demo`
 
 - Abbreviations should be treated as words when capitalizing:
 

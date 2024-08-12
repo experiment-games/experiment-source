@@ -46,32 +46,41 @@ LUALIB_API lua_CEffectData &luaL_checkeffect( lua_State *L, int narg )
     return *d;
 }
 
-#ifdef CLIENT_DLL
-static int CEffectData_entindex( lua_State *L )
-{
-    lua_pushinteger( L, luaL_checkeffect( L, 1 ).entindex() );
-    return 1;
-}
-#endif
-
-static int CEffectData_GetEffectNameIndex( lua_State *L )
-{
-    lua_pushinteger( L, luaL_checkeffect( L, 1 ).GetEffectNameIndex() );
-    return 1;
-}
+LUA_REGISTRATION_INIT( CEffectData )
 
 #ifdef CLIENT_DLL
-static int CEffectData_GetEntity( lua_State *L )
+LUA_BINDING_BEGIN( CEffectData, GetEntityIndex, "class", "Get the entity index.", "client" )
 {
-    CBaseEntity::PushLuaInstanceSafe( L, luaL_checkeffect( L, 1 ).GetEntity() );
+    lua_CEffectData &data = LUA_BINDING_ARGUMENT( luaL_checkeffect, 1, "effectData" );
+    lua_pushinteger( L, data.entindex() );
     return 1;
 }
+LUA_BINDING_END( "number", "Entity index." )
 #endif
 
-static int CEffectData___index( lua_State *L )
+LUA_BINDING_BEGIN( CEffectData, GetEffectNameIndex, "class", "Get the effect name index." )
 {
-    CEffectData data = luaL_checkeffect( L, 1 );
-    const char *field = luaL_checkstring( L, 2 );
+    lua_CEffectData &data = LUA_BINDING_ARGUMENT( luaL_checkeffect, 1, "effectData" );
+    lua_pushinteger( L, data.GetEffectNameIndex() );
+    return 1;
+}
+LUA_BINDING_END( "number", "Effect name index." )
+
+#ifdef CLIENT_DLL
+LUA_BINDING_BEGIN( CEffectData, GetEntity, "class", "Get the entity.", "client" )
+{
+    lua_CEffectData &data = LUA_BINDING_ARGUMENT( luaL_checkeffect, 1, "effectData" );
+    CBaseEntity::PushLuaInstanceSafe( L, data.GetEntity() );
+    return 1;
+}
+LUA_BINDING_END( "entity", "Entity." )
+#endif
+
+LUA_BINDING_BEGIN( CEffectData, __index, "class", "Get the entity." )
+{
+    lua_CEffectData &data = LUA_BINDING_ARGUMENT( luaL_checkeffect, 1, "effectData" );
+    const char *field = LUA_BINDING_ARGUMENT( luaL_checkstring, 2, "field" );
+
     if ( Q_strcmp( field, "m_fFlags" ) == 0 )
         lua_pushinteger( L, data.m_fFlags );
     else if ( Q_strcmp( field, "m_flMagnitude" ) == 0 )
@@ -120,11 +129,12 @@ static int CEffectData___index( lua_State *L )
 
     return 1;
 }
+LUA_BINDING_END( "any", "Value" )
 
-static int CEffectData___newindex( lua_State *L )
+LUA_BINDING_BEGIN( CEffectData, __newindex, "class", "Metamethod called when a non-existant field is added" )
 {
-    CEffectData data = luaL_checkeffect( L, 1 );
-    const char *field = luaL_checkstring( L, 2 );
+    lua_CEffectData &data = LUA_BINDING_ARGUMENT( luaL_checkeffect, 1, "effectData" );
+    const char *field = LUA_BINDING_ARGUMENT( luaL_checkstring, 2, "field" );
 
     if ( Q_strcmp( field, "m_fFlags" ) == 0 )
         data.m_fFlags = luaL_checknumber( L, 3 );
@@ -162,43 +172,35 @@ static int CEffectData___newindex( lua_State *L )
 
     return 0;
 }
+LUA_BINDING_END()
 
-static int CEffectData___tostring( lua_State *L )
+LUA_BINDING_BEGIN( CEffectData, __tostring, "class", "To string operator." )
 {
-    lua_pushfstring( L, "CEffectData: %p", luaL_checkudata( L, 1, "CEffectData" ) );
+    lua_CEffectData &data = LUA_BINDING_ARGUMENT( luaL_checkeffect, 1, "effectData" );
+    lua_pushfstring( L, "CEffectData: %p", &data );
     return 1;
 }
+LUA_BINDING_END( "string", "String representation of the effect data." )
 
-static const luaL_Reg CEffectDatameta[] = {
-#ifdef CLIENT_DLL
-    { "entindex", CEffectData_entindex },
-#endif
-    { "GetEffectNameIndex", CEffectData_GetEffectNameIndex },
-#ifdef CLIENT_DLL
-    { "GetEntity", CEffectData_GetEntity },
-#endif
-    { "__index", CEffectData___index },
-    { "__newindex", CEffectData___newindex },
-    { "__tostring", CEffectData___tostring },
-    { NULL, NULL } };
+LUA_REGISTRATION_INIT( _G )
 
-static int luasrc_CEffectData( lua_State *L )
+LUA_BINDING_BEGIN( _G, CEffectData, "library", "Creates an effect." )
 {
     CEffectData data = CEffectData();
     lua_pusheffect( L, data );
     return 1;
 }
+LUA_BINDING_END( "EffectData", "Effect data." )
 
-static int luasrc_DispatchEffect( lua_State *L )
+LUA_BINDING_BEGIN( _G, DispatchEffect, "library", "Dispatches an effect." )
 {
-    DispatchEffect( luaL_checkstring( L, 1 ), luaL_checkeffect( L, 2 ) );
+    const char *effectName = LUA_BINDING_ARGUMENT( luaL_checkstring, 1, "effectName" );
+    lua_CEffectData &data = LUA_BINDING_ARGUMENT( luaL_checkeffect, 2, "effectData" );
+
+    DispatchEffect( effectName, data );
     return 0;
 }
-
-static const luaL_Reg CEffectData_funcs[] = {
-    { "CEffectData", luasrc_CEffectData },
-    { "DispatchEffect", luasrc_DispatchEffect },
-    { NULL, NULL } };
+LUA_BINDING_END()
 
 /*
 ** Open CEffectData object
@@ -206,10 +208,14 @@ static const luaL_Reg CEffectData_funcs[] = {
 LUALIB_API int luaopen_CEffectData( lua_State *L )
 {
     LUA_PUSH_NEW_METATABLE( L, LUA_EFFECTDATALIBNAME );
-    luaL_register( L, NULL, CEffectDatameta );
+
+    LUA_REGISTRATION_COMMIT( CEffectData );
+
     lua_pushstring( L, "Effect" );
     lua_setfield( L, -2, "__type" ); /* metatable.__type = "Effect" */
-    luaL_register( L, LUA_GNAME, CEffectData_funcs );
-    lua_pop( L, 1 );
+
+    LUA_REGISTRATION_COMMIT_LIBRARY( _G );
+    lua_pop( L, 1 ); /* pop metatable */
+
     return 1;
 }

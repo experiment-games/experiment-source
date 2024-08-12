@@ -7,6 +7,10 @@
 // memdbgon must be the last include file in a .cpp file!!!
 #include "tier0/memdbgon.h"
 
+LUA_REGISTRATION_INIT( Resources );
+
+#ifndef CLIENT_DLL
+
 static CUtlVector< const char * > g_pLuaResources;
 
 /// <summary>
@@ -40,9 +44,7 @@ void ResourcesFreeFiles()
     g_pLuaResources.RemoveAll();
 }
 
-LUA_REGISTRATION_INIT( Resources );
-
-LUA_BINDING_BEGIN( Resources, AddFile, "library", "Add a file to the list of resources so it's downloaded when players connect to the server." )
+LUA_BINDING_BEGIN( Resources, AddFile, "library", "Add a file to the list of resources so it's downloaded when players connect to the server.", "server" )
 {
     const char *pFile = LUA_BINDING_ARGUMENT( luaL_checkstring, 1, "filePath" );
 
@@ -55,7 +57,7 @@ LUA_BINDING_BEGIN( Resources, AddFile, "library", "Add a file to the list of res
 }
 LUA_BINDING_END()
 
-LUA_BINDING_BEGIN( Resources, GetFiles, "library", "Get the list of files added with Resources.AddFile." )
+LUA_BINDING_BEGIN( Resources, GetFiles, "library", "Get the list of files added with Resources.AddFile.", "server" )
 {
     lua_newtable( L );
 
@@ -69,11 +71,13 @@ LUA_BINDING_BEGIN( Resources, GetFiles, "library", "Get the list of files added 
 }
 LUA_BINDING_END( "table", "List of files added with Resources.AddFile." )
 
+#endif
+
 /*
 ** Open resources library
 */
 LUALIB_API int luaopen_resources( lua_State *L )
 {
-    LUA_REGISTRATION_COMMIT_LIBRARY( Resources, LUA_RESOURCESLIBNAME );
+    LUA_REGISTRATION_COMMIT_LIBRARY( Resources );
     return 1;
 }

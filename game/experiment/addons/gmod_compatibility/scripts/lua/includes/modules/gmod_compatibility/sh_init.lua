@@ -16,7 +16,8 @@ gamemode = require("gamemodes")
 hook = require("hooks")
 net = require("networks")
 timer = require("timers")
-weapons = require("weapons")
+weapons = require("scripted_weapons")
+-- scripted_ents = require("scripted_entities") -- Gmods scripted_ents is compatible with our ScriptedEntities
 
 local originalConCommandAdd = concommand.Add
 
@@ -78,15 +79,15 @@ end
 ents = {
 	Create = CreateEntityByName,
 	GetAll = function()
-		return EntityList.GetAllEntities()
+		return Entities.GetAll()
 	end,
 
 	GetCount = function()
-		return EntityList.GetEntityCount()
+		return Entities.GetCount()
 	end,
 
 	GetEdictCount = function()
-		return EntityList.GetEdictCount()
+		return Entities.GetEdictCount()
 	end,
 
 	FindAlongRay = function(...)
@@ -168,7 +169,7 @@ sql = {
 }
 
 cvars = ConsoleVariables
-engine = Engine
+engine = Engines
 input = Input
 render = Renders
 resource = Resources
@@ -186,8 +187,8 @@ FrameNumber = Globals.FrameCount
 FrameTime = Globals.FrameTime
 engine.TickCount = Globals.TickCount
 engine.TickInterval = Globals.IntervalPerTick
-SoundDuration = Engine.GetSoundDuration
-GetHostName = Engine.GetServerName
+SoundDuration = Engines.GetSoundDuration
+GetHostName = Engines.GetServerName
 
 PrecacheParticleSystem = ParticleSystem.Precache
 
@@ -195,7 +196,7 @@ engine.ActiveGamemode = function()
 	return Gamemodes.GetActiveName()
 end
 engine.GetGames = function()
-    local games = Engine.GetMountableGames()
+    local games = Engines.GetMountableGames()
     local result = {}
 
 	for i, game in ipairs(games) do
@@ -321,7 +322,7 @@ end
 
 game = {
 	IsDedicated = function()
-		return Engine.IsDedicatedServer()
+		return Engines.IsDedicatedServer()
 	end,
 
 	SinglePlayer = function()
@@ -341,7 +342,7 @@ game = {
 		return ParticleSystem.ReadConfigFile("particles/" .. tostring(filePath))
 	end,
 
-	GetMap = Engine.GetLevelName,
+	GetMap = Engines.GetLevelName,
 }
 
 local VECTOR_META = FindMetaTable("Vector")
@@ -379,6 +380,7 @@ ENTITY_META.SetOwner = ENTITY_META.SetOwnerEntity
 ENTITY_META.GetOwner = ENTITY_META.GetOwnerEntity
 ENTITY_META.DeleteOnRemove = ENTITY_META.AddDeleteOnRemove
 ENTITY_META.DontDeleteOnRemove = ENTITY_META.RemoveDeleteOnRemove
+ENTITY_META.GetFlexIDByName = ENTITY_META.GetFlexIdByName
 
 function ENTITY_META:SetSpawnEffect(effect)
 	-- TODO: Implement
@@ -446,11 +448,11 @@ PLAYER_META.AnimSetGestureSequence = PLAYER_META.AnimationSetGestureSequence
 PLAYER_META.AnimSetGestureWeight = PLAYER_META.AnimationSetGestureWeight
 
 function PLAYER_META:GetInfo(consoleVariableName)
-	return engine.GetClientConVarValue(self, consoleVariableName)
+	return engine.GetClientConsoleVariableValue(self, consoleVariableName)
 end
 
 function PLAYER_META:GetInfoNum(consoleVariableName, default)
-	return engine.GetClientConVarValueAsNumber(self, consoleVariableName) or default
+	return engine.GetClientConsoleVariableValueAsNumber(self, consoleVariableName) or default
 end
 
 function PLAYER_META:IsDrivingEntity()
@@ -1140,11 +1142,11 @@ MsgC = function(...)
         if (IsColor(stringOrColor)) then
             currentColor = stringOrColor
         else
-            debug.ConDColorMsg(currentColor, tostring(stringOrColor))
+            debug.PrintDebugColorMessage(currentColor, tostring(stringOrColor))
         end
     end
 
-	debug.ConDColorMsg(currentColor, "\n")
+	debug.PrintDebugColorMessage(currentColor, "\n")
 end
 
 PrintTable = table.Print
@@ -1244,7 +1246,7 @@ end
 
 hook.Add("Initialize", "GModCompatibility.CallInitializeHooks", function()
     -- Copy ents from our system to the GMod system.
-    local scriptedEntities = Entities.GetList()
+    local scriptedEntities = ScriptedEntities.GetList()
 	for className, scriptedEntity in pairs(scriptedEntities) do
 		scripted_ents.Register(scriptedEntity, className)
 	end

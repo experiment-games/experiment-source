@@ -1,11 +1,3 @@
-//====== Copyright © 1996-2005, Valve Corporation, All rights reserved. =======//
-//
-// Purpose:
-//
-// $NoKeywords: $
-//
-//=============================================================================//
-
 #include "cbase.h"
 #include "vector.h"
 #include "fmtstr.h"
@@ -521,7 +513,7 @@ LUALIB_API int luaopen_Vector( lua_State *L )
     lua_pushstring( L, "Vector" );
     lua_setfield( L, -2, "__type" ); /* metatable.__type = "Vector" */
 
-    LUA_REGISTRATION_COMMIT_LIBRARY( _G, LUA_GNAME );
+    LUA_REGISTRATION_COMMIT_LIBRARY( _G );
     lua_pop( L, 1 );  // pop metatable
 
     Vector origin = vec3_origin;

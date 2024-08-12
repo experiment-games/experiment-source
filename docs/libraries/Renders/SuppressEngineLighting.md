@@ -1,16 +1,16 @@
 ---
 template: lua-library-function.html
 title: SuppressEngineLighting
-icon: lua-shared
+icon: lua-client
 tags:
   - lua
-  - shared
+  - client
   - needs-verification
   - needs-example
 lua:
   library: Renders
   function: SuppressEngineLighting
-  realm: shared
+  realm: client
   description: "Suppress engine lighting."
   
   arguments:

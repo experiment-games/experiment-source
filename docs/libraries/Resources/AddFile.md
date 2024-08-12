@@ -1,16 +1,16 @@
 ---
 template: lua-library-function.html
 title: AddFile
-icon: lua-shared
+icon: lua-server
 tags:
   - lua
-  - shared
+  - server
   - needs-verification
   - needs-example
 lua:
   library: Resources
   function: AddFile
-  realm: shared
+  realm: server
   description: "Add a file to the list of resources so it's downloaded when players connect to the server."
   
   arguments:

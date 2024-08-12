@@ -110,39 +110,44 @@ LUALIB_API lua_CBaseFlex *luaL_checkbaseflex( lua_State *L, int narg )
     return d;
 }
 
-static int CBaseFlex_GetFlexIDByName( lua_State *L )
+LUA_REGISTRATION_INIT( CBaseFlex )
+
+LUA_BINDING_BEGIN( CBaseFlex, GetFlexIdByName, "class", "Get flex ID by name." )
 {
-    lua_CBaseFlex *pEntity = luaL_checkbaseflex( L, 1 );
-    const char *szFlexName = luaL_checkstring( L, 2 );
+    lua_CBaseFlex *pEntity = LUA_BINDING_ARGUMENT( luaL_checkbaseflex, 1, "entity" );
+    const char *szFlexName = LUA_BINDING_ARGUMENT( luaL_checkstring, 2, "flexName" );
 
     LocalFlexController_t iFlexController = pEntity->FindFlexController( szFlexName );
 
     lua_pushnumber( L, iFlexController );
     return 1;
 }
+LUA_BINDING_END( "number", "Flex ID." )
 
-static int CBaseFlex_GetFlexWeight( lua_State *L )
+LUA_BINDING_BEGIN( CBaseFlex, GetFlexWeight, "class", "Get flex weight." )
 {
-    lua_CBaseFlex *pEntity = luaL_checkbaseflex( L, 1 );
-    LocalFlexController_t iFlexController = ( LocalFlexController_t )( int )luaL_checknumber( L, 2 );
+    lua_CBaseFlex *pEntity = LUA_BINDING_ARGUMENT( luaL_checkbaseflex, 1, "entity" );
+    LocalFlexController_t iFlexController = ( LocalFlexController_t )( int )LUA_BINDING_ARGUMENT( luaL_checknumber, 2, "flexId" );
 
     lua_pushnumber( L, pEntity->GetFlexWeight( iFlexController ) );
     return 1;
 }
+LUA_BINDING_END( "number", "Flex weight." )
 
-static int CBaseFlex_SetFlexWeight( lua_State *L )
+LUA_BINDING_BEGIN( CBaseFlex, SetFlexWeight, "class", "Set flex weight." )
 {
-    lua_CBaseFlex *pEntity = luaL_checkbaseflex( L, 1 );
-    LocalFlexController_t iFlexController = ( LocalFlexController_t )( int )luaL_checknumber( L, 2 );
-    float flWeight = luaL_checknumber( L, 3 );
+    lua_CBaseFlex *pEntity = LUA_BINDING_ARGUMENT( luaL_checkbaseflex, 1, "entity" );
+    LocalFlexController_t iFlexController = ( LocalFlexController_t )( int )LUA_BINDING_ARGUMENT( luaL_checknumber, 2, "flexId" );
+    float flWeight = LUA_BINDING_ARGUMENT( luaL_checknumber, 3, "weight" );
 
     pEntity->SetFlexWeight( iFlexController, flWeight );
     return 0;
 }
+LUA_BINDING_END()
 
-static int CBaseAnimating_HasFlexManipulator( lua_State *L )
+LUA_BINDING_BEGIN( CBaseFlex, HasFlexManipulator, "class", "Check if the entity has flex manipulator." )
 {
-    lua_CBaseFlex *pEntity = luaL_checkbaseflex( L, 1 );
+    lua_CBaseFlex *pEntity = LUA_BINDING_ARGUMENT( luaL_checkbaseflex, 1, "entity" );
 
     for ( LocalFlexController_t i = LocalFlexController_t( 0 ); i < pEntity->GetNumFlexControllers(); i++ )
     {
@@ -156,38 +161,38 @@ static int CBaseAnimating_HasFlexManipulator( lua_State *L )
     lua_pushboolean( L, false );
     return 1;
 }
+LUA_BINDING_END( "boolean", "True if the entity has flex manipulator." )
 
-static int CBaseFlex___eq( lua_State *L )
+LUA_BINDING_BEGIN( CBaseFlex, __eq, "class", "Equality operator." )
 {
-    lua_pushboolean( L, lua_tobaseflex( L, 1 ) == lua_tobaseflex( L, 2 ) );
+    lua_CBaseFlex *pEntityA = LUA_BINDING_ARGUMENT( luaL_checkbaseflex, 1, "entityA" );
+    lua_CBaseFlex *pEntityB = LUA_BINDING_ARGUMENT( luaL_checkbaseflex, 2, "entityB" );
+
+    lua_pushboolean( L, pEntityA == pEntityB );
     return 1;
 }
+LUA_BINDING_END( "boolean", "True if the entities are equal." )
 
-static int CBaseFlex___tostring( lua_State *L )
+LUA_BINDING_BEGIN( CBaseFlex, __tostring, "class", "To string operator." )
 {
-    lua_CBaseFlex *pEntity = lua_tobaseflex( L, 1 );
+    lua_CBaseFlex *pEntity = LUA_BINDING_ARGUMENT( luaL_checkbaseflex, 1, "entity" );
+
     if ( pEntity == NULL )
         lua_pushstring( L, "NULL" );
     else
         lua_pushfstring( L, "CBaseFlex: %d \"%s\"", pEntity->entindex(), pEntity->GetClassname() );
+
     return 1;
 }
+LUA_BINDING_END( "string", "String representation of the entity." )
 
-static const luaL_Reg CBaseFlexmeta[] = {
-    { "GetFlexIDByName", CBaseFlex_GetFlexIDByName },
-    { "GetFlexWeight", CBaseFlex_GetFlexWeight },
-    { "SetFlexWeight", CBaseFlex_SetFlexWeight },
-    { "HasFlexManipulator", CBaseAnimating_HasFlexManipulator },
-
-    { "__eq", CBaseFlex___eq },
-    { "__tostring", CBaseFlex___tostring },
-    { NULL, NULL } };
+LUA_REGISTRATION_INIT( _G )
 
 #ifdef CLIENT_DLL
-static int CBaseFlex_ClientsideModel( lua_State *L )
+LUA_BINDING_BEGIN( _G, ClientsideModel, "library", "Create a clientside model.", "client" )
 {
-    const char *pszModelName = luaL_checkstring( L, 1 );
-    int renderGroup = ( int )luaL_optnumber( L, 2, RENDER_GROUP_OTHER );
+    const char *pszModelName = LUA_BINDING_ARGUMENT( luaL_checkstring, 1, "model" );
+    int renderGroup = ( int )LUA_BINDING_ARGUMENT_WITH_DEFAULT( luaL_optnumber, 2, RENDER_GROUP_OTHER, "renderGroup" );
 
     if ( pszModelName == NULL )
     {
@@ -200,13 +205,8 @@ static int CBaseFlex_ClientsideModel( lua_State *L )
 
     return 1;
 }
+LUA_BINDING_END( "Entity", "Clientside model entity." )
 #endif
-
-static const luaL_Reg CBaseFlex_funcs[] = {
-#ifdef CLIENT_DLL
-    { "ClientsideModel", CBaseFlex_ClientsideModel },
-#endif
-    { NULL, NULL } };
 
 /*
 ** Open CBaseFlex object
@@ -214,9 +214,10 @@ static const luaL_Reg CBaseFlex_funcs[] = {
 LUALIB_API int luaopen_CBaseFlex_shared( lua_State *L )
 {
     LUA_PUSH_NEW_METATABLE( L, LUA_CBASEFLEXLIBNAME );
-    luaL_register( L, NULL, CBaseFlexmeta );
 
-    luaL_register( L, LUA_GNAME, CBaseFlex_funcs );
-    lua_pop( L, 1 );
+    LUA_REGISTRATION_COMMIT( CBaseFlex );
+
+    LUA_REGISTRATION_COMMIT_LIBRARY( _G );
+
     return 1;
 }

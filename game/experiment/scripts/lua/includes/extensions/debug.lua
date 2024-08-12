@@ -8,6 +8,6 @@ end
 
 function debug.PrintError(message)
 	message = debug.traceback(message or "<error without message>", 2)
-    debug.ConDColorMsg(debug.GetRealmColor(), errorPrefix .. message .. "\n")
+    debug.PrintDebugColorMessage(debug.GetRealmColor(), errorPrefix .. message .. "\n")
 	LuaLogToFile(message .. "\n")
 end

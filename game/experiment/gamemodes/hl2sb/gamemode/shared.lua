@@ -12,8 +12,8 @@ GM.Manual    = nil
 
 function GM:Initialize()
 	if (not CLIENT) then
-		Engine.ServerCommand("mp_falldamage 1\n")
-		Engine.ServerCommand("mp_flashlight 1\n")
+		Engines.ServerCommand("mp_falldamage 1\n")
+		Engines.ServerCommand("mp_flashlight 1\n")
 	else
 		-- Andrew; not the right place to put this, but oh well.
 		self:CreateDefaultPanels()

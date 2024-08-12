@@ -15,7 +15,7 @@ lua:
   
   arguments:
     - name: "entityB"
-      type: unknown
+      type: Player
   returns:
     - type: boolean
       description: "Whether the entities are equal"

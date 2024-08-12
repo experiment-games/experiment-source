@@ -1,16 +1,16 @@
 ---
 template: lua-library-function.html
 title: SetScissorRect
-icon: lua-shared
+icon: lua-client
 tags:
   - lua
-  - shared
+  - client
   - needs-verification
   - needs-example
 lua:
   library: Renders
   function: SetScissorRect
-  realm: shared
+  realm: client
   description: "Set the scissor rectangle."
   
   arguments:

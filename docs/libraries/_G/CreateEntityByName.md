@@ -1,16 +1,16 @@
 ---
 template: lua-library-function.html
 title: CreateEntityByName
-icon: lua-shared
+icon: lua-server
 tags:
   - lua
-  - shared
+  - server
   - needs-verification
   - needs-example
 lua:
   library: _G
   function: CreateEntityByName
-  realm: shared
+  realm: server
   description: "Creates an entity by the given class name"
   
   arguments:

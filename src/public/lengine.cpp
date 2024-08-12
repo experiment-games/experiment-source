@@ -23,300 +23,401 @@
 // Engine interfaces.
 // IVEngineServer	*engine = NULL;
 
-static int engine_AllowImmediateEdictReuse( lua_State *L )
+LUA_REGISTRATION_INIT( Engines );
+
+LUA_BINDING_BEGIN( Engines, AllowEdictReuse, "library", "Allow immediate edict reuse." )
 {
     engine->AllowImmediateEdictReuse();
     return 0;
 }
+LUA_BINDING_END()
 
-static int engine_ChangeLevel( lua_State *L )
+LUA_BINDING_BEGIN( Engines, ChangeLevel, "library", "Change the level." )
 {
-    engine->ChangeLevel( luaL_checkstring( L, 1 ), luaL_optstring( L, 2, NULL ) );
+    const char *levelName = LUA_BINDING_ARGUMENT( luaL_checkstring, 1, "levelName" );
+    const char *transitionMap = LUA_BINDING_ARGUMENT_WITH_DEFAULT( luaL_optstring, 2, NULL, "transitionMap" );
+
+    engine->ChangeLevel( levelName, transitionMap );
+
     return 0;
 }
+LUA_BINDING_END()
 
-static int engine_CheckAreasConnected( lua_State *L )
+LUA_BINDING_BEGIN( Engines, CheckAreasConnected, "library", "Check if two areas are connected." )
 {
-    lua_pushinteger( L, engine->CheckAreasConnected( luaL_checkinteger( L, 1 ), luaL_checkinteger( L, 2 ) ) );
+    int startArea = LUA_BINDING_ARGUMENT( luaL_checkinteger, 1, "startArea" );
+    int endArea = LUA_BINDING_ARGUMENT( luaL_checkinteger, 2, "endArea" );
+
+    lua_pushboolean( L, engine->CheckAreasConnected( startArea, endArea ) );
+
     return 1;
 }
+LUA_BINDING_END( "boolean", "True if the areas are connected, false otherwise." )
 
-static int engine_CopyFile( lua_State *L )
+LUA_BINDING_BEGIN( Engines, CopyFile, "library", "Copy a file." )
 {
-    lua_pushboolean( L, engine->CopyFile( luaL_checkstring( L, 1 ), luaL_checkstring( L, 2 ) ) );
+    const char *source = LUA_BINDING_ARGUMENT( luaL_checkstring, 1, "source" );
+    const char *destination = LUA_BINDING_ARGUMENT( luaL_checkstring, 2, "destination" );
+
+    lua_pushboolean( L, engine->CopyFile( source, destination ) );
+
     return 1;
 }
+LUA_BINDING_END( "boolean", "True if the file was copied, false otherwise." )
 
-static int engine_CreateFakeClient( lua_State *L )
+LUA_BINDING_BEGIN( Engines, CreateFakeClient, "library", "Create a fake client." )
 {
-    edict_t *pEdict = engine->CreateFakeClient( luaL_checkstring( L, 1 ) );
+    const char *name = LUA_BINDING_ARGUMENT( luaL_checkstring, 1, "name" );
 
-    if ( !pEdict )
+    edict_t *edict = engine->CreateFakeClient( name );
+
+    if ( !edict )
     {
         Msg( "Failed to create Bot.\n" );
         return 0;
     }
 
-    CBasePlayer *pPlayer = ( ( CBasePlayer * )CBaseEntity::Instance( pEdict ) );
-    CBaseEntity::PushLuaInstanceSafe( L, pPlayer );
+    CBasePlayer *player = ( ( CBasePlayer * )CBaseEntity::Instance( edict ) );
+    CBaseEntity::PushLuaInstanceSafe( L, player );
+
     return 1;
 }
+LUA_BINDING_END( "entity", "The created fake client." )
 
-static int engine_ForceExactFile( lua_State *L )
+LUA_BINDING_BEGIN( Engines, ForceExactFile, "library", "Force a file to be exact." )
 {
-    engine->ForceExactFile( luaL_checkstring( L, 1 ) );
+    const char *fileName = LUA_BINDING_ARGUMENT( luaL_checkstring, 1, "fileName" );
+
+    engine->ForceExactFile( fileName );
+
     return 0;
 }
+LUA_BINDING_END()
 
-static int engine_ForceSimpleMaterial( lua_State *L )
+LUA_BINDING_BEGIN( Engines, ForceSimpleMaterial, "library", "Force a material to be simple." )
 {
-    engine->ForceSimpleMaterial( luaL_checkstring( L, 1 ) );
+    const char *materialName = LUA_BINDING_ARGUMENT( luaL_checkstring, 1, "materialName" );
+
+    engine->ForceSimpleMaterial( materialName );
+
     return 0;
 }
+LUA_BINDING_END()
 
-static int engine_GetClientConVarValue( lua_State *L )
+LUA_BINDING_BEGIN( Engines, GetClientConsoleVariableValue, "library", "Get a client's ConsoleVariable value." )
 {
-    int iPlayer;
+    int playerIndex;
 
     if ( lua_toplayer( L, 1 ) )
-        iPlayer = lua_toplayer( L, 1 )->entindex();
+        playerIndex = LUA_BINDING_ARGUMENT( lua_toplayer, 1, "playerOrIndex" )->entindex();
     else
-        iPlayer = luaL_checkinteger( L, 1 );
+        playerIndex = LUA_BINDING_ARGUMENT( luaL_checkinteger, 1, "playerOrIndex" );
 
-    lua_pushstring( L, engine->GetClientConVarValue( iPlayer, luaL_checkstring( L, 2 ) ) );
+    const char *conVarName = LUA_BINDING_ARGUMENT( luaL_checkstring, 2, "conVarName" );
+
+    lua_pushstring( L, engine->GetClientConVarValue( playerIndex, conVarName ) );
+
     return 1;
 }
+LUA_BINDING_END( "string", "The client's ConsoleVariable value." )
 
-static int engine_GetClientConVarValueAsNumber( lua_State *L )
+LUA_BINDING_BEGIN( Engines, GetClientConsoleVariableValueAsNumber, "library", "Get a client's ConsoleVariable value as a number." )
 {
-    int iPlayer;
+    int playerIndex;
 
     if ( lua_toplayer( L, 1 ) )
-        iPlayer = lua_toplayer( L, 1 )->entindex();
+        playerIndex = LUA_BINDING_ARGUMENT( lua_toplayer, 1, "playerOrIndex" )->entindex();
     else
-        iPlayer = luaL_checkinteger( L, 1 );
+        playerIndex = LUA_BINDING_ARGUMENT( luaL_checkinteger, 1, "playerOrIndex" );
 
-    lua_pushnumber( L, Q_atoi( engine->GetClientConVarValue( iPlayer, luaL_checkstring( L, 2 ) ) ) );
+    const char *conVarName = LUA_BINDING_ARGUMENT( luaL_checkstring, 2, "conVarName" );
+
+    lua_pushnumber( L, Q_atoi( engine->GetClientConVarValue( playerIndex, conVarName ) ) );
+
     return 1;
 }
+LUA_BINDING_END( "number", "The client's ConsoleVariable value as a number." )
 
-static int engine_GetEntityCount( lua_State *L )
+LUA_BINDING_BEGIN( Engines, GetEntityCount, "library", "Get the entity count." )
 {
     lua_pushinteger( L, engine->GetEntityCount() );
+
     return 1;
 }
+LUA_BINDING_END( "integer", "The entity count." )
 
-static int engine_GetMostRecentlyLoadedFileName( lua_State *L )
+LUA_BINDING_BEGIN( Engines, GetMostRecentlyLoadedFileName, "library", "Get the most recently loaded file name." )
 {
     lua_pushstring( L, engine->GetMostRecentlyLoadedFileName() );
+
     return 1;
 }
+LUA_BINDING_END( "string", "The most recently loaded file name." )
 
-static int engine_GetPlayerNetInfo( lua_State *L )
+LUA_BINDING_BEGIN( Engines, GetPlayerNetInfo, "library", "Get the player's net info." )
 {
-    lua_pushnetchannel( L, engine->GetPlayerNetInfo( luaL_checkinteger( L, 1 ) ) );
+    int playerIndex = LUA_BINDING_ARGUMENT( luaL_checkinteger, 1, "playerIndex" );
+
+    lua_pushnetchannel( L, engine->GetPlayerNetInfo( playerIndex ) );
+
     return 1;
 }
+LUA_BINDING_END( "netchannel", "The player's net info." )
 
-static int engine_GetSaveFileName( lua_State *L )
+LUA_BINDING_BEGIN( Engines, GetSaveFileName, "library", "Get the save file name." )
 {
     lua_pushstring( L, engine->GetSaveFileName() );
+
     return 1;
 }
+LUA_BINDING_END( "string", "The save file name." )
 
-static int engine_IndexOfEdict( lua_State *L )
+LUA_BINDING_BEGIN( Engines, IndexOfEdict, "library", "Get the index of an edict." )
 {
-    lua_pushinteger( L, engine->IndexOfEdict( luaL_checkentity( L, 1 )->edict() ) );
+    CBaseEntity *entity = LUA_BINDING_ARGUMENT( luaL_checkentity, 1, "entity" );
+
+    lua_pushinteger( L, engine->IndexOfEdict( entity->edict() ) );
+
     return 1;
 }
+LUA_BINDING_END( "integer", "The index of the edict." )
 
-static int engine_InsertServerCommand( lua_State *L )
+LUA_BINDING_BEGIN( Engines, InsertServerCommand, "library", "Insert a server command." )
 {
-    engine->InsertServerCommand( luaL_checkstring( L, 1 ) );
+    const char *command = LUA_BINDING_ARGUMENT( luaL_checkstring, 1, "command" );
+
+    engine->InsertServerCommand( command );
+
     return 0;
 }
+LUA_BINDING_END()
 
-static int engine_IsDecalPrecached( lua_State *L )
+LUA_BINDING_BEGIN( Engines, IsDecalPrecached, "library", "Check if a decal is precached." )
 {
-    lua_pushboolean( L, engine->IsDecalPrecached( luaL_checkstring( L, 1 ) ) );
+    const char *decalName = LUA_BINDING_ARGUMENT( luaL_checkstring, 1, "decalName" );
+
+    lua_pushboolean( L, engine->IsDecalPrecached( decalName ) );
+
     return 1;
 }
+LUA_BINDING_END( "boolean", "True if the decal is precached, false otherwise." )
 
-static int engine_IsDedicatedServer( lua_State *L )
+LUA_BINDING_BEGIN( Engines, IsDedicatedServer, "library", "Check if the server is dedicated." )
 {
     lua_pushboolean( L, engine->IsDedicatedServer() );
+
     return 1;
 }
+LUA_BINDING_END( "boolean", "True if the server is dedicated, false otherwise." )
 
-static int engine_IsGenericPrecached( lua_State *L )
+LUA_BINDING_BEGIN( Engines, IsGenericPrecached, "library", "Check if a generic is precached." )
 {
-    lua_pushboolean( L, engine->IsGenericPrecached( luaL_checkstring( L, 1 ) ) );
+    const char *genericName = LUA_BINDING_ARGUMENT( luaL_checkstring, 1, "genericName" );
+
+    lua_pushboolean( L, engine->IsGenericPrecached( genericName ) );
+
     return 1;
 }
+LUA_BINDING_END( "boolean", "True if the generic is precached, false otherwise." )
 
-static int engine_IsInCommentaryMode( lua_State *L )
+LUA_BINDING_BEGIN( Engines, IsInCommentaryMode, "library", "Check if the game is in commentary mode." )
 {
-    lua_pushinteger( L, engine->IsInCommentaryMode() );
+    lua_pushboolean( L, engine->IsInCommentaryMode() );
+
     return 1;
 }
+LUA_BINDING_END( "boolean", "True if in commentary mode." )
 
-static int engine_IsInternalBuild( lua_State *L )
+LUA_BINDING_BEGIN( Engines, IsInternalBuild, "library", "Check if the build is internal." )
 {
     lua_pushboolean( L, engine->IsInternalBuild() );
+
     return 1;
 }
+LUA_BINDING_END( "boolean", "True if the build is internal, false otherwise." )
 
-static int engine_IsMapValid( lua_State *L )
+LUA_BINDING_BEGIN( Engines, IsMapValid, "library", "Check if a map is valid." )
 {
-    lua_pushinteger( L, engine->IsMapValid( luaL_checkstring( L, 1 ) ) );
+    const char *mapName = LUA_BINDING_ARGUMENT( luaL_checkstring, 1, "mapName" );
+
+    lua_pushboolean( L, engine->IsMapValid( mapName ) );
+
     return 1;
 }
+LUA_BINDING_END( "integer", "True if the map is valid, false otherwise." )
 
-static int engine_IsModelPrecached( lua_State *L )
+LUA_BINDING_BEGIN( Engines, IsModelPrecached, "library", "Check if a model is precached." )
 {
-    lua_pushboolean( L, engine->IsModelPrecached( luaL_checkstring( L, 1 ) ) );
+    const char *modelName = LUA_BINDING_ARGUMENT( luaL_checkstring, 1, "modelName" );
+
+    lua_pushboolean( L, engine->IsModelPrecached( modelName ) );
+
     return 1;
 }
+LUA_BINDING_END( "boolean", "True if the model is precached, false otherwise." )
 
-static int engine_LightStyle( lua_State *L )
+LUA_BINDING_BEGIN( Engines, LightStyle, "library", "Set a light style." )
 {
-    engine->LightStyle( luaL_checkinteger( L, 1 ), luaL_checkstring( L, 2 ) );
+    int styleIndex = LUA_BINDING_ARGUMENT( luaL_checkinteger, 1, "styleIndex" );
+    const char *styleValue = LUA_BINDING_ARGUMENT( luaL_checkstring, 2, "styleValue" );
+
+    engine->LightStyle( styleIndex, styleValue );
+
     return 0;
 }
+LUA_BINDING_END()
 
-static int engine_LoadAdjacentEnts( lua_State *L )
+LUA_BINDING_BEGIN( Engines, LoadAdjacentEnts, "library", "Load adjacent entities." )
 {
-    engine->LoadAdjacentEnts( luaL_checkstring( L, 1 ), luaL_checkstring( L, 2 ) );
+    const char *mapName = LUA_BINDING_ARGUMENT( luaL_checkstring, 1, "mapName" );
+    const char *baseMapName = LUA_BINDING_ARGUMENT( luaL_checkstring, 2, "baseMapName" );
+
+    engine->LoadAdjacentEnts( mapName, baseMapName );
+
     return 0;
 }
+LUA_BINDING_END()
 
-static int engine_LoadGameState( lua_State *L )
+LUA_BINDING_BEGIN( Engines, LoadGameState, "library", "Load the game state." )
 {
-    lua_pushboolean( L, engine->LoadGameState( luaL_checkstring( L, 1 ), luaL_checkboolean( L, 2 ) ) );
+    const char *fileName = LUA_BINDING_ARGUMENT( luaL_checkstring, 1, "fileName" );
+    bool isDemo = LUA_BINDING_ARGUMENT_WITH_DEFAULT( luaL_optboolean, 2, false, "isDemo" );
+
+    lua_pushboolean( L, engine->LoadGameState( fileName, isDemo ) );
+
     return 1;
 }
+LUA_BINDING_END( "boolean", "True if the game state was loaded, false otherwise." )
 
-static int engine_LockNetworkStringTables( lua_State *L )
+LUA_BINDING_BEGIN( Engines, LockNetworkStringTables, "library", "Lock the network string tables." )
 {
-    lua_pushboolean( L, engine->LockNetworkStringTables( luaL_checkboolean( L, 1 ) ) );
+    bool lock = LUA_BINDING_ARGUMENT( luaL_checkboolean, 1, "lock" );
+
+    lua_pushboolean( L, engine->LockNetworkStringTables( lock ) );
+
     return 1;
 }
+LUA_BINDING_END( "boolean", "True if the network string tables were locked, false otherwise." )
 
-static int engine_LogPrint( lua_State *L )
+LUA_BINDING_BEGIN( Engines, LogPrint, "library", "Print a message to the log." )
 {
-    engine->LogPrint( luaL_checkstring( L, 1 ) );
+    const char *message = LUA_BINDING_ARGUMENT( luaL_checkstring, 1, "message" );
+
+    engine->LogPrint( message );
+
     return 0;
 }
+LUA_BINDING_END()
 
-static int engine_MultiplayerEndGame( lua_State *L )
+LUA_BINDING_BEGIN( Engines, MultiplayerEndGame, "library", "End the multiplayer game." )
 {
     engine->MultiplayerEndGame();
+
     return 0;
 }
+LUA_BINDING_END()
 
-static int engine_NotifyEdictFlagsChange( lua_State *L )
+LUA_BINDING_BEGIN( Engines, NotifyEdictFlagsChange, "library", "Notify of an edict flags change." )
 {
-    engine->NotifyEdictFlagsChange( luaL_checkinteger( L, 1 ) );
+    int flags = LUA_BINDING_ARGUMENT( luaL_checkinteger, 1, "flags" );
+
+    engine->NotifyEdictFlagsChange( flags );
+
     return 0;
 }
+LUA_BINDING_END()
 
-static int engine_PrecacheDecal( lua_State *L )
+LUA_BINDING_BEGIN( Engines, PrecacheDecal, "library", "Precache a decal." )
 {
-    lua_pushinteger( L, engine->PrecacheDecal( luaL_checkstring( L, 1 ), luaL_checkboolean( L, 2 ) ) );
+    const char *decalName = LUA_BINDING_ARGUMENT( luaL_checkstring, 1, "decalName" );
+    bool preload = LUA_BINDING_ARGUMENT_WITH_DEFAULT( luaL_optboolean, 2, false, "preload" );
+
+    lua_pushinteger( L, engine->PrecacheDecal( decalName, preload ) );
+
     return 1;
 }
+LUA_BINDING_END( "integer", "The decal index." )
 
-static int engine_PrecacheGeneric( lua_State *L )
+LUA_BINDING_BEGIN( Engines, PrecacheGeneric, "library", "Precache a generic." )
 {
-    lua_pushinteger( L, engine->PrecacheGeneric( luaL_checkstring( L, 1 ), luaL_checkboolean( L, 2 ) ) );
+    const char *genericName = LUA_BINDING_ARGUMENT( luaL_checkstring, 1, "genericName" );
+    bool preload = LUA_BINDING_ARGUMENT_WITH_DEFAULT( luaL_optboolean, 2, false, "preload" );
+
+    lua_pushinteger( L, engine->PrecacheGeneric( genericName, preload ) );
+
     return 1;
 }
+LUA_BINDING_END( "integer", "The generic index." )
 
-static int engine_PrecacheModel( lua_State *L )
+LUA_BINDING_BEGIN( Engines, PrecacheModel, "library", "Precache a model." )
 {
-    lua_pushinteger( L, engine->PrecacheModel( luaL_checkstring( L, 1 ), luaL_checkboolean( L, 2 ) ) );
+    const char *modelName = LUA_BINDING_ARGUMENT( luaL_checkstring, 1, "modelName" );
+    bool preload = LUA_BINDING_ARGUMENT_WITH_DEFAULT( luaL_optboolean, 2, false, "preload" );
+
+    lua_pushinteger( L, engine->PrecacheModel( modelName, preload ) );
+
     return 1;
 }
+LUA_BINDING_END( "integer", "The model index." )
 
-static int engine_PrecacheSentenceFile( lua_State *L )
+LUA_BINDING_BEGIN( Engines, PrecacheSentenceFile, "library", "Precache a sentence file." )
 {
-    lua_pushinteger( L, engine->PrecacheSentenceFile( luaL_checkstring( L, 1 ), luaL_checkboolean( L, 2 ) ) );
+    const char *sentenceFileName = LUA_BINDING_ARGUMENT( luaL_checkstring, 1, "sentenceFileName" );
+    bool preload = LUA_BINDING_ARGUMENT_WITH_DEFAULT( luaL_optboolean, 2, false, "preload" );
+
+    lua_pushinteger( L, engine->PrecacheSentenceFile( sentenceFileName, preload ) );
+
     return 1;
 }
+LUA_BINDING_END( "integer", "The sentence file index." )
 
-static int engine_ServerCommand( lua_State *L )
+LUA_BINDING_BEGIN( Engines, ServerCommand, "library", "Run a server command." )
 {
-    const char *pszCommandString = luaL_checkstring( L, 1 );
+    const char *command = LUA_BINDING_ARGUMENT( luaL_checkstring, 1, "command" );
 
-    if ( TryRunConsoleCommand( pszCommandString ) )
+    if ( TryRunConsoleCommand( command ) )
         return 0;
 
-    engine->ServerCommand( pszCommandString );
+    engine->ServerCommand( command );
+
     return 0;
 }
+LUA_BINDING_END()
 
-static int engine_ServerExecute( lua_State *L )
+LUA_BINDING_BEGIN( Engines, ServerExecute, "library", "Execute the server." )
 {
     engine->ServerExecute();
+
     return 0;
 }
+LUA_BINDING_END()
 
-static int engine_SetAreaPortalState( lua_State *L )
+LUA_BINDING_BEGIN( Engines, SetAreaPortalState, "library", "Set the area portal state." )
 {
-    engine->SetAreaPortalState( luaL_checkinteger( L, 1 ), luaL_checkinteger( L, 2 ) );
+    int portalIndex = LUA_BINDING_ARGUMENT( luaL_checkinteger, 1, "portalIndex" );
+    int isOpen = LUA_BINDING_ARGUMENT( luaL_checkinteger, 2, "isOpen" );
+
+    engine->SetAreaPortalState( portalIndex, isOpen );
+
     return 0;
 }
+LUA_BINDING_END()
 
-static int engine_SetDedicatedServerBenchmarkMode( lua_State *L )
+LUA_BINDING_BEGIN( Engines, SetDedicatedServerBenchmarkMode, "library", "Set the dedicated server benchmark mode." )
 {
-    engine->SetDedicatedServerBenchmarkMode( luaL_checkboolean( L, 1 ) );
+    bool enabled = LUA_BINDING_ARGUMENT( luaL_checkboolean, 1, "enabled" );
+
+    engine->SetDedicatedServerBenchmarkMode( enabled );
+
     return 0;
 }
-
-static const luaL_Reg enginelib[] = {
-    { "AllowImmediateEdictReuse", engine_AllowImmediateEdictReuse },
-    { "ChangeLevel", engine_ChangeLevel },
-    { "CheckAreasConnected", engine_CheckAreasConnected },
-    { "CopyFile", engine_CopyFile },
-    { "CreateFakeClient", engine_CreateFakeClient },
-    { "ForceExactFile", engine_ForceExactFile },
-    { "ForceSimpleMaterial", engine_ForceSimpleMaterial },
-    { "GetClientConVarValue", engine_GetClientConVarValue },
-    { "GetClientConVarValueAsNumber", engine_GetClientConVarValueAsNumber },
-    { "GetEntityCount", engine_GetEntityCount },
-    { "GetMostRecentlyLoadedFileName", engine_GetMostRecentlyLoadedFileName },
-    { "GetPlayerNetInfo", engine_GetPlayerNetInfo },
-    { "GetSaveFileName", engine_GetSaveFileName },
-    { "IndexOfEdict", engine_IndexOfEdict },
-    { "InsertServerCommand", engine_InsertServerCommand },
-    { "IsDecalPrecached", engine_IsDecalPrecached },
-    { "IsDedicatedServer", engine_IsDedicatedServer },
-    { "IsGenericPrecached", engine_IsGenericPrecached },
-    { "IsInCommentaryMode", engine_IsInCommentaryMode },
-    { "IsInternalBuild", engine_IsInternalBuild },
-    { "IsMapValid", engine_IsMapValid },
-    { "IsModelPrecached", engine_IsModelPrecached },
-    { "LoadAdjacentEnts", engine_LoadAdjacentEnts },
-    { "LoadGameState", engine_LoadGameState },
-    { "LockNetworkStringTables", engine_LockNetworkStringTables },
-    { "LogPrint", engine_LogPrint },
-    { "MultiplayerEndGame", engine_MultiplayerEndGame },
-    { "NotifyEdictFlagsChange", engine_NotifyEdictFlagsChange },
-    { "PrecacheDecal", engine_PrecacheDecal },
-    { "PrecacheGeneric", engine_PrecacheGeneric },
-    { "PrecacheModel", engine_PrecacheModel },
-    { "PrecacheSentenceFile", engine_PrecacheSentenceFile },
-    { "ServerCommand", engine_ServerCommand },
-    { "ServerExecute", engine_ServerExecute },
-    { "SetAreaPortalState", engine_SetAreaPortalState },
-    { "SetDedicatedServerBenchmarkMode", engine_SetDedicatedServerBenchmarkMode },
-    { NULL, NULL } };
+LUA_BINDING_END()
 
 /*
 ** Open engine library
 */
 LUALIB_API int luaopen_engine( lua_State *L )
 {
-    luaL_register( L, LUA_ENGINELIBNAME, enginelib );
+    LUA_REGISTRATION_COMMIT_LIBRARY( Engines );
     return 1;
 }
