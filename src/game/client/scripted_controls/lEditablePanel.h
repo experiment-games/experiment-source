@@ -1,10 +1,3 @@
-//========= Copyright © 1996-2005, Valve Corporation, All rights reserved. ============//
-//
-// Purpose:
-//
-// $NoKeywords: $
-//=============================================================================//
-
 #ifndef LEDITABLEPANEL_H
 #define LEDITABLEPANEL_H
 

@@ -332,7 +332,7 @@ static ShaderTexFilterMode_t FilterModeFromEnumeration( int enumeration )
     }
 }
 
-LUA_BINDING_BEGIN( Renders, PushFilterMinification, "library", "Push a minification filter.", "client" )
+LUA_BINDING_BEGIN( Renders, PushFilterMinification, "library", "Push a minification filter. (Non-functional; help wanted)", "client" )
 {
     int filterMode = LUA_BINDING_ARGUMENT( luaL_checknumber, 1, "filter" );
 
@@ -351,7 +351,7 @@ LUA_BINDING_BEGIN( Renders, PushFilterMinification, "library", "Push a minificat
         "RenderTarget" );
 
     filterTextureHandlesMinification.Push( hTexture );
-    //g_pShaderApi->ModifyTexture( hTexture );
+    g_pShaderApi->ModifyTexture( hTexture );
     g_pShaderApi->TexMinFilter( FilterModeFromEnumeration( filterMode ) );
 
     return 0;
@@ -386,14 +386,14 @@ LUA_BINDING_BEGIN( Renders, PushFilterMagnification, "library", "Push a magnific
         "RenderTarget" );
 
     filterTextureHandlesMagnification.Push( hTexture );
-    //g_pShaderApi->ModifyTexture( hTexture );
+    g_pShaderApi->ModifyTexture( hTexture );
     g_pShaderApi->TexMagFilter( FilterModeFromEnumeration( filterMode ) );
 
     return 0;
 }
 LUA_BINDING_END()
 
-LUA_BINDING_BEGIN( Renders, PopFilterMagnification, "library", "Pop a magnification filter.", "client" )
+LUA_BINDING_BEGIN( Renders, PopFilterMagnification, "library", "Pop a magnification filter. (Non-functional; help wanted)", "client" )
 {
     g_pShaderApi->DeleteTexture( filterTextureHandlesMagnification.Top() );
     filterTextureHandlesMagnification.Pop();

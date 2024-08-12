@@ -1,11 +1,3 @@
-//========= Copyright © 1996-2005, Valve Corporation, All rights reserved.
-//============//
-//
-// Purpose: Implements shared baseplayer class functionality
-//
-// $NoKeywords: $
-//=============================================================================//
-
 #include "cbase.h"
 #include "luamanager.h"
 #include "luasrclib.h"

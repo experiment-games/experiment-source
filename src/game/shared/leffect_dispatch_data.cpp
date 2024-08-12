@@ -1,9 +1,3 @@
-//========= Copyright © 1996-2005, Valve Corporation, All rights reserved. ============//
-//
-// Purpose:
-//
-// $NoKeywords: $
-//=============================================================================//
 #include "cbase.h"
 #if CLIENT_DLL
 #include "c_te_effect_dispatch.h"

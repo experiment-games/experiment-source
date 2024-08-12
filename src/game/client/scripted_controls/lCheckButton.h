@@ -1,10 +1,3 @@
-//========= Copyright © 1996-2005, Valve Corporation, All rights reserved. ============//
-//
-// Purpose:
-//
-// $NoKeywords: $
-//=============================================================================//
-
 #ifndef VGUI_LCHECKBUTTON_H
 #define VGUI_LCHECKBUTTON_H
 

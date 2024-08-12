@@ -1,12 +1,3 @@
-//========= Copyright © 1996-2005, Valve Corporation, All rights reserved. ============//
-//
-// Purpose:
-//
-// $Workfile:     $
-// $Date:         $
-// $NoKeywords: $
-//=============================================================================//
-
 #include "cbase.h"
 #include "ienginevgui.h"
 #include "lua.hpp"

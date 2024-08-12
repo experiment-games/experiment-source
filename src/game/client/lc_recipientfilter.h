@@ -1,10 +1,3 @@
-//========= Copyright © 1996-2005, Valve Corporation, All rights reserved. ============//
-//
-// Purpose: 
-//
-// $NoKeywords: $
-//=============================================================================//
-
 #ifndef LC_RECIPIENTFILTER_H
 #define LC_RECIPIENTFILTER_H
 #ifdef _WIN32

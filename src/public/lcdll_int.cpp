@@ -1,9 +1,3 @@
-//===== Copyright © 1996-2005, Valve Corporation, All rights reserved. ======//
-//
-// Purpose: Interfaces between the client.dll and engine
-//
-//===========================================================================//
-
 #include "cbase.h"
 #include "luamanager.h"
 #include "luasrclib.h"

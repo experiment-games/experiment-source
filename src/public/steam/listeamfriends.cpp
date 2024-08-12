@@ -1,10 +1,3 @@
-
-//====== Copyright � 1996-2004, Valve Corporation, All rights reserved. =======
-//
-// Purpose: interface to friends data in Steam
-//
-//=============================================================================
-
 #include "cbase.h"
 #include "lua.hpp"
 #include "luasrclib.h"

@@ -1,10 +1,3 @@
-//========= Copyright � 1996-2005, Valve Corporation, All rights reserved. ============//
-//
-// Purpose: Basic header for using vgui
-//
-// $NoKeywords: $
-//=============================================================================//
-
 #include "cbase.h"
 #include "lua.hpp"
 #include "luasrclib.h"

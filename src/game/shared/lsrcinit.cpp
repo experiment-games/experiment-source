@@ -49,7 +49,8 @@ static const luaL_RegForState luasrclibs[] = {
     { LUA_ENTITIESLIBNAME, luaopen_Entities, REALM_SHARED },                            // ✔    n/a     n/a
     { LUA_EXPERIMENTPLAYERLIBNAME, luaopen_CExperiment_Player_shared, REALM_SHARED },   // ✔    n/a     n/a
     { LUA_FCVARLIBNAME, luaopen_FCVAR, REALM_SHARED | REALM_GAMEUI },
-    { LUA_FILESYSTEMLIBNAME, luaopen_filesystem, REALM_SHARED | REALM_GAMEUI },
+    { LUA_FILEHANDLEMETANAME, luaopen_FileHandle, REALM_SHARED | REALM_GAMEUI },    // ✔    n/a     n/a
+    { LUA_FILESYSTEMLIBNAME, luaopen_Files, REALM_SHARED | REALM_GAMEUI },          // ✔    n/a     n/a
     { LUA_FLEDICTLIBNAME, luaopen_FL_EDICT, REALM_SHARED | REALM_GAMEUI },
     { LUA_GAMETRACELIBNAME, luaopen_CGameTrace, REALM_SHARED },
     { LUA_GESTURESLOTLIBNAME, luaopen_GESTURE_SLOT, REALM_SHARED | REALM_GAMEUI },
@@ -77,7 +78,7 @@ static const luaL_RegForState luasrclibs[] = {
     { LUA_PHYSICSSURFACEPROPSLIBNAME, luaopen_IPhysicsSurfaceProps, REALM_SHARED },
     { LUA_PREDICTIONSYSTEMLIBNAME, luaopen_IPredictionSystem, REALM_SHARED },
     { LUA_QANGLELIBNAME, luaopen_QAngle, REALM_SHARED | REALM_GAMEUI },             // ✔    n/a     n/a  
-    { LUA_RANDOMLIBNAME, luaopen_random, REALM_SHARED | REALM_GAMEUI },
+    { LUA_RANDOMLIBNAME, luaopen_random, REALM_SHARED | REALM_GAMEUI },             // ✔    n/a     n/a  
     { LUA_RECIPIENTFILTERLIBNAME, luaopen_CRecipientFilter, REALM_SHARED },
     { LUA_RENDERLIBNAME, luaopen_render, REALM_SHARED | REALM_GAMEUI },             // ✔    n/a     n/a  
     { LUA_SOLIDFLAGLIBNAME, luaopen_SOLIDFLAG, REALM_SHARED | REALM_GAMEUI },

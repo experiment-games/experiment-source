@@ -1,9 +1,3 @@
-//========= Copyright © 1996-2005, Valve Corporation, All rights reserved. ============//
-//
-// Purpose: 
-//
-//=============================================================================//
-
 #ifndef LBASEANIMATING_H
 #define LBASEANIMATING_H
 #ifdef _WIN32

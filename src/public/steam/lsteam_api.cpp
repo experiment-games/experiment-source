@@ -1,9 +1,3 @@
-//====== Copyright © 1996-2004, Valve Corporation, All rights reserved. =======
-//
-// Purpose: 
-//
-//=============================================================================
-
 #include "cbase.h"
 #include "steam_api.h"
 #include "lua.hpp"

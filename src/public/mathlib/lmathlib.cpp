@@ -1,9 +1,3 @@
-//===== Copyright © 1996-2005, Valve Corporation, All rights reserved. ======//
-//
-// Purpose:
-//
-//===========================================================================//
-
 #include "cbase.h"
 #include "mathlib.h"
 #include "lua.hpp"

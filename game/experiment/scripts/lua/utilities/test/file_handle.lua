@@ -5,24 +5,24 @@
 	Modified for Experiment.
 --]]
 
-require("FileSystem")
+require("Files")
 
 local printError = debug.PrintError
 
-local hFile = FileSystem.Open("gameinfo.txt", "r")
+local hFile = Files.Open("gameinfo.txt", "r")
 -- ...ourcemods\experiment\lua\utilities\test\FileHandle_t.lua:14: bad argument #1 to 'Size' (FileHandle_t expected, got FILESYSTEM_INVALID_HANDLE)
-local size = FileSystem.Size(hFile)
+local size = Files.Size(hFile)
 MsgN("hFile = " .. tostring(hFile))
-local bytesRead, pOutput = FileSystem.Read(size, hFile)
+local bytesRead, pOutput = Files.Read(size, hFile)
 MsgN("bytes: " .. bytesRead)
 MsgN("output:\n" .. pOutput)
 MsgN("Closing hFile, handle should become invalid!")
-FileSystem.Close(hFile)
+Files.Close(hFile)
 MsgN("hFile = " .. tostring(hFile))
 
 MsgN("Testing error handling...")
 local failedTest = xpcall(function(strError)
-	MsgN("FileSystem.IsOk( hFile ) = " .. tostring(FileSystem.IsOk(hFile)))
+	MsgN("Files.IsOk( hFile ) = " .. tostring(Files.IsOk(hFile)))
 end, printError)
 
 if (failedTest) then
@@ -31,7 +31,7 @@ end
 
 MsgN("Testing error handling with non-filehandle type...")
 local failedTest = xpcall(function(strError)
-	MsgN("FileSystem.IsOk( hFile ) = " .. tostring(FileSystem.IsOk(-1)))
+	MsgN("Files.IsOk( hFile ) = " .. tostring(Files.IsOk(-1)))
 end, printError)
 
 if (failedTest) then

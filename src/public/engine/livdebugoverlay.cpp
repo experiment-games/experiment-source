@@ -1,17 +1,3 @@
-//========= Copyright © 1996-2005, Valve Corporation, All rights reserved. ============//
-//
-// Purpose:
-//
-// $NoKeywords: $
-//
-//=============================================================================//
-//
-//  cdll_int.h
-//
-// 4-23-98
-// JOHN:  client dll interface declarations
-//
-
 #include "cbase.h"
 #include "engine/ivdebugoverlay.h"
 #include "luamanager.h"

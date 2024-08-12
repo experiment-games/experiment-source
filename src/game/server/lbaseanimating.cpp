@@ -1,10 +1,3 @@
-//========= Copyright © 1996-2005, Valve Corporation, All rights reserved.
-//============//
-//
-// Purpose: Base class for all animating characters and objects.
-//
-//=============================================================================//
-
 #include "cbase.h"
 #include "luamanager.h"
 #include "lbaseanimating.h"

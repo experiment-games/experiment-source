@@ -1,10 +1,3 @@
-//========= Copyright © 1996-2005, Valve Corporation, All rights reserved. ============//
-//
-// Purpose:
-//
-// $NoKeywords: $
-//
-//=============================================================================//
 #ifndef LExperiment_PLAYER_SHARED_H
 #define LExperiment_PLAYER_SHARED_H
 #pragma once

@@ -232,6 +232,10 @@ function fromTypeChecker(typeChecker) {
     case 'luaL_optcolor':
     case 'lua_tocolor':
       return 'Color';
+    case 'luaL_checkfilehandle':
+    case 'luaL_optfilehandle':
+    case 'lua_tofilehandle':
+      return 'FileHandle';
     default:
       return 'unknown';
   }

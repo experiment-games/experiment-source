@@ -1279,7 +1279,7 @@ end)
 package.IncludePath = "lua/;" .. package.IncludePath
 
 -- Setup to search for modules in all search paths
-local searchPathsString = FileSystem.GetSearchPath("GAME")
+local searchPathsString = Files.GetSearchPath("GAME")
 
 for searchPath in searchPathsString:gmatch("([^;]+)") do
     if (searchPath:find("%.bsp$") or searchPath:find("%.vpk$")) then

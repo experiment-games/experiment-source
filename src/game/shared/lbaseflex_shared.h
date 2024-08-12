@@ -1,10 +1,3 @@
-//========= Copyright � 1996-2005, Valve Corporation, All rights reserved. ============//
-//
-// Purpose:
-//
-// $Workfile:     $
-// $NoKeywords: $
-//=============================================================================//
 #ifndef LBASEFLEX_SHARED_H
 #define LBASEFLEX_SHARED_H
 

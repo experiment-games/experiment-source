@@ -1,14 +1,3 @@
-//===== Copyright © 1996-2005, Valve Corporation, All rights reserved. ======//
-//
-// Purpose: 
-//
-// $Workfile:     $
-// $Date:         $
-//
-//-----------------------------------------------------------------------------
-// $NoKeywords: $
-//===========================================================================//
-
 #include "cbase.h"
 #include "luamanager.h"
 #include "luasrclib.h"

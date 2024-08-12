@@ -1,9 +1,3 @@
-//===== Copyright © 1996-2005, Valve Corporation, All rights reserved. ======//
-//
-// Purpose: The base class from which all game entities are derived.
-//
-//===========================================================================//
-
 #include "cbase.h"
 #include "luamanager.h"
 #include "luasrclib.h"

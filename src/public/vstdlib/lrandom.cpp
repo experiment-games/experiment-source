@@ -1,11 +1,3 @@
-//===== Copyright © 1996-2005, Valve Corporation, All rights reserved. ======//
-//
-// Purpose: Random number generator
-//
-// $Workfile: $
-// $NoKeywords: $
-//===========================================================================//
-
 #include "cbase.h"
 #include "lua.hpp"
 #include "luasrclib.h"
@@ -13,83 +5,57 @@
 // memdbgon must be the last include file in a .cpp file!!!
 #include "tier0/memdbgon.h"
 
+LUA_REGISTRATION_INIT( Randoms );
 
+LUA_BINDING_BEGIN( Randoms, RandomFloat, "library", "Generate a random float.", "shared" )
+{
+    float min = LUA_BINDING_ARGUMENT_WITH_DEFAULT( luaL_optnumber, 1, 0.0f, "min" );
+    float max = LUA_BINDING_ARGUMENT_WITH_DEFAULT( luaL_optnumber, 2, 0.0f, "max" );
 
-static int random_RandomFloat (lua_State *L) {
-  lua_pushnumber(L, random->RandomFloat(luaL_optnumber(L, 1, 0.0f), luaL_optnumber(L, 2, 0.0f)));
-  return 1;
+    lua_pushnumber( L, random->RandomFloat( min, max ) );
+
+    return 1;
 }
+LUA_BINDING_END( "number", "The generated random float." )
 
-static int random_RandomFloatExp (lua_State *L) {
-  lua_pushnumber(L, random->RandomFloatExp(luaL_optnumber(L, 1, 0.0f), luaL_optnumber(L, 2, 0.0f), luaL_optnumber(L, 3, 1.0f)));
-  return 1;
+LUA_BINDING_BEGIN( Randoms, RandomFloatExponential, "library", "Generate a random float with an exponential distribution.", "shared" )
+{
+    float min = LUA_BINDING_ARGUMENT_WITH_DEFAULT( luaL_optnumber, 1, 0.0f, "min" );
+    float max = LUA_BINDING_ARGUMENT_WITH_DEFAULT( luaL_optnumber, 2, 0.0f, "max" );
+    float exponent = LUA_BINDING_ARGUMENT_WITH_DEFAULT( luaL_optnumber, 3, 1.0f, "exponent" );
+
+    lua_pushnumber( L, random->RandomFloatExp( min, max, exponent ) );
+
+    return 1;
 }
+LUA_BINDING_END( "number", "The generated random float." )
 
-static int random_RandomInt (lua_State *L) {
-  lua_pushinteger(L, random->RandomInt(luaL_checknumber(L, 1), luaL_checknumber(L, 2)));
-  return 1;
+LUA_BINDING_BEGIN( Randoms, RandomInteger, "library", "Generate a random integer.", "shared" )
+{
+    int min = LUA_BINDING_ARGUMENT( luaL_checknumber, 1, "min" );
+    int max = LUA_BINDING_ARGUMENT( luaL_checknumber, 2, "max" );
+
+    lua_pushinteger( L, random->RandomInt( min, max ) );
+
+    return 1;
 }
+LUA_BINDING_END( "number", "The generated random integer." )
 
-static int random_SetSeed (lua_State *L) {
-  random->SetSeed(luaL_checknumber(L, 1));
-  return 0;
+LUA_BINDING_BEGIN( Randoms, SetSeed, "library", "Set the seed for the random number generator.", "shared" )
+{
+    int seed = LUA_BINDING_ARGUMENT( luaL_checknumber, 1, "seed" );
+
+    random->SetSeed( seed );
+
+    return 0;
 }
-
-
-static const luaL_Reg randomlib[] = {
-  {"RandomFloat",   random_RandomFloat},
-  {"RandomFloatExp",   random_RandomFloatExp},
-  {"RandomInt",   random_RandomInt},
-  {"SetSeed",   random_SetSeed},
-  {NULL, NULL}
-};
-
-
-#if 0
-static int luasrc_RandomSeed (lua_State *L) {
-  RandomSeed(luaL_checknumber(L, 1));
-  return 0;
-}
-
-static int luasrc_RandomFloat (lua_State *L) {
-  lua_pushnumber(L, RandomFloat(luaL_optnumber(L, 1, 0.0f), luaL_optnumber(L, 2, 0.0f)));
-  return 1;
-}
-
-static int luasrc_RandomFloatExp (lua_State *L) {
-  lua_pushnumber(L, RandomFloatExp(luaL_optnumber(L, 1, 0.0f), luaL_optnumber(L, 2, 1.0f), luaL_optnumber(L, 3, 1.0f)));
-  return 1;
-}
-
-static int luasrc_RandomInt (lua_State *L) {
-  lua_pushinteger(L, RandomInt(luaL_checknumber(L, 1), luaL_checknumber(L, 2)));
-  return 1;
-}
-
-static int luasrc_RandomGaussianFloat (lua_State *L) {
-  lua_pushnumber(L, RandomGaussianFloat(luaL_optnumber(L, 1, 0.0f), luaL_optnumber(L, 2, 1.0f)));
-  return 1;
-}
-
-
-static const luaL_Reg random_funcs[] = {
-  {"RandomSeed",  luasrc_RandomSeed},
-  {"RandomFloat",  luasrc_RandomFloat},
-  {"RandomFloatExp",  luasrc_RandomFloatExp},
-  {"RandomInt",  luasrc_RandomInt},
-  {"RandomGaussianFloat",  luasrc_RandomGaussianFloat},
-  {NULL, NULL}
-};
-#endif
-
+LUA_BINDING_END()
 
 /*
 ** Open random library
 */
-LUALIB_API int luaopen_random (lua_State *L) {
-  luaL_register(L, LUA_RANDOMLIBNAME, randomlib);
-  // UNDONE: this has always been redundant.
-  // luaL_register(L, LUA_GNAME, random_funcs);
-  return 1;
+LUALIB_API int luaopen_random( lua_State *L )
+{
+    LUA_REGISTRATION_COMMIT_LIBRARY( Randoms );
+    return 1;
 }
-

@@ -1,25 +1,8 @@
-//========= Copyright © 1996-2005, Valve Corporation, All rights reserved. ============//
-//
-// Purpose:
-//
-// $Workfile:     $
-// $Date:         $
-// $NoKeywords: $
-//=============================================================================//
-
 #ifndef LCMODEL_H
 #define LCMODEL_H
 #ifdef _WIN32
 #pragma once
 #endif
-
-/*
-==============================================================
-
-COLLISION DETECTION
-
-==============================================================
-*/
 
 LUA_API void lua_pushcsurface( lua_State *L, csurface_t surface )
 {

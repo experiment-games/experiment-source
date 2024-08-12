@@ -54,7 +54,7 @@ See the `.editorconfig` file for the code style.
     - `sv_` for server files
 
 - Variables and functions are not abbreviated, with the exception of these
-  abbreviations:
+  common abbreviations:
 
     - `Hud`
     - `Ui`

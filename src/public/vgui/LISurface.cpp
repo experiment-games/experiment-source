@@ -1,10 +1,3 @@
-//===== Copyright © 1996-2005, Valve Corporation, All rights reserved. ======//
-//
-// Purpose:
-//
-// $NoKeywords: $
-//===========================================================================//
-
 #include "cbase.h"
 #include "vgui/isurface.h"
 #include "vgui/ILocalize.h"
@@ -224,7 +217,7 @@ static int surface_DrawSetColor( lua_State *L )
 
     lua_Color color = luaL_checkcolor( L, 1 );
     surface()->DrawSetColor( color );
-    //DevWarning( "surface_DrawSetColor: Setting Color(%s)\n", color ); // <-- TODO: Find out why printing a color like this causes a crash
+    // DevWarning( "surface_DrawSetColor: Setting Color(%s)\n", color ); // <-- TODO: Find out why printing a color like this causes a crash
 
     return 0;
 }
@@ -751,7 +744,7 @@ static int surface_FindMaterial( lua_State *L )
             //// We need to assign a TextureID to the material, or else the game will crash in MaterialSystem.pdb
             //// when shutting down the game, after having created (but never assigning a CreateNewTextureID)
             //// a material with this FindMaterial call.
-            //g_pMatSystemSurface->DrawSetTextureMaterial( CreateNewAutoDestroyTextureId( true ), pMaterial );
+            // g_pMatSystemSurface->DrawSetTextureMaterial( CreateNewAutoDestroyTextureId( true ), pMaterial );
         }
     }
 

@@ -1,10 +1,3 @@
-//====== Copyright © 1996-2005, Valve Corporation, All rights reserved. =====//
-//
-// Purpose: Client-side CBasePlayer.
-//
-//			- Manages the player's flashlight effect.
-//
-//===========================================================================//
 #include "cbase.h"
 #include "c_baseplayer.h"
 #include "luamanager.h"

@@ -1,10 +1,3 @@
-//========= Copyright � 1996-2005, Valve Corporation, All rights reserved. ============//
-//
-// Purpose: 
-//
-// $NoKeywords: $
-//=============================================================================//
-
 #ifndef LUSERCMD_H
 #define LUSERCMD_H
 
@@ -12,11 +5,8 @@
 #pragma once
 #endif
 
-
 /* type for CUserCmd functions */
 typedef CUserCmd lua_CUserCmd;
-
-
 
 /*
 ** access functions (stack -> C)
@@ -24,15 +14,11 @@ typedef CUserCmd lua_CUserCmd;
 
 LUA_API lua_CUserCmd             *(lua_tousercmd) (lua_State *L, int idx);
 
-
 /*
 ** push functions (C -> stack)
 */
 LUA_API void  (lua_pushusercmd) (lua_State *L, lua_CUserCmd *pHelper);
 
-
-
 LUALIB_API lua_CUserCmd *(luaL_checkusercmd) (lua_State *L, int narg);
-
 
 #endif // LUSERCMD_H

@@ -1,11 +1,3 @@
-//========= Copyright © 1996-2005, Valve Corporation, All rights reserved.
-//============//
-//
-// Purpose:
-//
-// $NoKeywords: $
-//=============================================================================//
-
 #ifndef LUAMANAGER_H
 #define LUAMANAGER_H
 #ifdef _WIN32

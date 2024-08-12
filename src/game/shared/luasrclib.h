@@ -92,8 +92,10 @@ LUALIB_API int( luaopen_enginevgui )( lua_State *L );
 #define LUA_FCVARLIBNAME "FCVAR"
 LUALIB_API int( luaopen_FCVAR )( lua_State *L );
 
-#define LUA_FILESYSTEMLIBNAME "FileSystem"
-LUALIB_API int( luaopen_filesystem )( lua_State *L );
+#define LUA_FILESYSTEMLIBNAME "Files"
+#define LUA_FILEHANDLEMETANAME "FileHandle"
+LUALIB_API int( luaopen_Files )( lua_State *L );
+LUALIB_API int( luaopen_FileHandle )( lua_State *L );
 
 #define LUA_FONTFLAGLIBNAME "FONTFLAG"
 LUALIB_API int( luaopen_FONTFLAG )( lua_State *L );
@@ -292,6 +294,9 @@ struct LuaRegEntry
 
 #define LUA_BINDING_ARGUMENT_NILLABLE( CheckFunction, ArgIndex, DocumentationName ) \
     CheckFunction( L, ArgIndex )
+
+#define LUA_BINDING_ARGUMENT_WITH_EXTRA( CheckFunction, ArgIndex, Extra, DocumentationName ) \
+    CheckFunction( L, ArgIndex, Extra )
 
 #define LUA_BINDING_ARGUMENT_WITH_DEFAULT( OptCheckFunction, ArgIndex, OptValue, DocumentationName ) \
     OptCheckFunction( L, ArgIndex, OptValue )
