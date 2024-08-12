@@ -83,10 +83,10 @@ static const luaL_RegForState luasrclibs[] = {
     { LUA_PHYSICSOBJECTLIBNAME, luaopen_IPhysicsObject, REALM_SHARED },
     { LUA_PHYSICSSURFACEPROPSLIBNAME, luaopen_IPhysicsSurfaceProps, REALM_SHARED },
     { LUA_PREDICTIONSYSTEMLIBNAME, luaopen_IPredictionSystem, REALM_SHARED },
-    { LUA_QANGLELIBNAME, luaopen_QAngle, REALM_SHARED | REALM_GAMEUI },
+    { LUA_QANGLELIBNAME, luaopen_QAngle, REALM_SHARED | REALM_GAMEUI },             // ✔    n/a     n/a  
     { LUA_RANDOMLIBNAME, luaopen_random, REALM_SHARED | REALM_GAMEUI },
     { LUA_RECIPIENTFILTERLIBNAME, luaopen_CRecipientFilter, REALM_SHARED },
-    { LUA_RENDERLIBNAME, luaopen_render, REALM_SHARED | REALM_GAMEUI },
+    { LUA_RENDERLIBNAME, luaopen_render, REALM_SHARED | REALM_GAMEUI },             // ✔    n/a     n/a  
     { LUA_SOLIDFLAGLIBNAME, luaopen_SOLIDFLAG, REALM_SHARED | REALM_GAMEUI },
     { LUA_SOLIDLIBNAME, luaopen_SOLID, REALM_SHARED | REALM_GAMEUI },
     { LUA_STEAMAPICONTEXTLIBNAME, luaopen_steamapicontext, REALM_SHARED | REALM_GAMEUI },
@@ -98,16 +98,15 @@ static const luaL_RegForState luasrclibs[] = {
     { LUA_USERCMDLIBNAME, luaopen_CUserCmd, REALM_SHARED },
     { LUA_UTILLIBNAME, luaopen_Util_shared, REALM_SHARED },
     { LUA_UTILLIBNAME, luaopen_Util, REALM_SHARED },  // Implemented by server in server/lutil.cpp, client in client/cdll_util.cpp
-    { LUA_VECTORLIBNAME, luaopen_Vector, REALM_SHARED | REALM_GAMEUI },
+    { LUA_VECTORLIBNAME, luaopen_Vector, REALM_SHARED | REALM_GAMEUI },             // ✔    n/a     n/a  
     { LUA_VMATRIXLIBNAME, luaopen_VMatrix, REALM_SHARED | REALM_GAMEUI },
 
 #ifndef CLIENT_DLL
     //
     // Server only
     //
-    { LUA_EXPERIMENTPLAYERLIBNAME, luaopen_CExperiment_Player, REALM_SERVER },
     { LUA_NETCHANNELINFOLIBNAME, luaopen_INetChannelInfo, REALM_SERVER },
-    { LUA_RESOURCESLIBNAME, luaopen_resources, REALM_SERVER },
+    { LUA_RESOURCESLIBNAME, luaopen_resources, REALM_SERVER },                      // n/a   n/a     ✔
 #endif
 
 #ifdef CLIENT_DLL

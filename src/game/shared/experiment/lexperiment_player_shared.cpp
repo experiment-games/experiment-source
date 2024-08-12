@@ -53,180 +53,154 @@ LUALIB_API lua_CExperiment_Player *luaL_optexperimentplayer( lua_State *L, int n
     return luaL_opt( L, luaL_checkexperimentplayer, narg, def );
 }
 
-static int CExperiment_Player_BecomeRagdollOnClient( lua_State *L )
-{
+LUA_REGISTRATION_INIT( CExperimentPlayer );
+
 #ifdef CLIENT_DLL
-    CBaseEntity::PushLuaInstanceSafe( L, luaL_checkexperimentplayer( L, 1 )->BecomeRagdollOnClient() );
+LUA_BINDING_BEGIN( CExperimentPlayer, BecomeRagdollOnClient, "class", "Become ragdoll on client.", "client" )
+{
+    CExperiment_Player *player = LUA_BINDING_ARGUMENT( luaL_checkexperimentplayer, 1, "entity" );
+    CBaseEntity::PushLuaInstanceSafe( L, player->BecomeRagdollOnClient() );
+    return 1;
+}
+LUA_BINDING_END( "entity", "The ragdoll entity" )
 #else
-    lua_pushboolean( L, luaL_checkexperimentplayer( L, 1 )->BecomeRagdollOnClient( luaL_checkvector( L, 2 ) ) );
+LUA_BINDING_BEGIN( CExperimentPlayer, BecomeRagdollOnClient, "class", "Become ragdoll on client.", "server" )
+{
+    CExperiment_Player *player = LUA_BINDING_ARGUMENT( luaL_checkexperimentplayer, 1, "entity" );
+    lua_pushboolean( L, player->BecomeRagdollOnClient( LUA_BINDING_ARGUMENT( luaL_checkvector, 2, "force" ) ) );
+    return 1;
+}
+LUA_BINDING_END( "boolean", "Whether the player can (and has) become a ragdoll" )
 #endif
+
+LUA_BINDING_BEGIN( CExperimentPlayer, CalculateIkLocks, "class", "Calculate IK locks." )
+{
+    CExperiment_Player *player = LUA_BINDING_ARGUMENT( luaL_checkexperimentplayer, 1, "entity" );
+    player->CalculateIKLocks( LUA_BINDING_ARGUMENT( luaL_checknumber, 2, "currentTime" ) );
+    return 0;
+}
+LUA_BINDING_END()
+
+LUA_BINDING_BEGIN( CExperimentPlayer, CanSprint, "class", "Check if the player can sprint." )
+{
+    CExperiment_Player *player = LUA_BINDING_ARGUMENT( luaL_checkexperimentplayer, 1, "entity" );
+    lua_pushboolean( L, player->CanSprint() );
     return 1;
 }
+LUA_BINDING_END( "boolean", "Whether the player can sprint" )
 
-static int CExperiment_Player_CalculateIKLocks( lua_State *L )
+LUA_BINDING_BEGIN( CExperimentPlayer, DoAnimationEvent, "class", "Do an animation event." )
 {
-    luaL_checkexperimentplayer( L, 1 )->CalculateIKLocks( luaL_checknumber( L, 2 ) );
+    CExperiment_Player *player = LUA_BINDING_ARGUMENT( luaL_checkexperimentplayer, 1, "entity" );
+    int iEvent = LUA_BINDING_ARGUMENT( luaL_checknumber, 2, "event" );
+    int iData = LUA_BINDING_ARGUMENT_WITH_DEFAULT( luaL_optinteger, 3, 0, "data" );
+    player->DoAnimationEvent( ( PlayerAnimEvent_t )iEvent, iData );
     return 0;
 }
+LUA_BINDING_END()
 
-static int CExperiment_Player_CanSprint( lua_State *L )
+LUA_BINDING_BEGIN( CExperimentPlayer, AnimationResetGestureSlot, "class", "Reset a gesture slot." )
 {
-    lua_pushboolean( L, luaL_checkexperimentplayer( L, 1 )->CanSprint() );
+    CExperiment_Player *player = LUA_BINDING_ARGUMENT( luaL_checkexperimentplayer, 1, "entity" );
+    player->GetAnimState()->ResetGestureSlot( LUA_BINDING_ARGUMENT( luaL_checknumber, 2, "slot" ) );
+    return 0;
+}
+LUA_BINDING_END()
+
+LUA_BINDING_BEGIN( CExperimentPlayer, AnimationRestartGesture, "class", "Restart a gesture." )
+{
+    CExperiment_Player *player = LUA_BINDING_ARGUMENT( luaL_checkexperimentplayer, 1, "entity" );
+    int iSlot = LUA_BINDING_ARGUMENT( luaL_checknumber, 2, "slot" );
+    int iActivity = LUA_BINDING_ARGUMENT( luaL_checknumber, 3, "activity" );
+    bool bAutoKill = LUA_BINDING_ARGUMENT_WITH_DEFAULT( luaL_optboolean, 4, false, "autoKill" );
+    player->GetAnimState()->RestartGesture( iSlot, ( Activity )iActivity, bAutoKill );
+    return 0;
+}
+LUA_BINDING_END()
+
+LUA_BINDING_BEGIN( CExperimentPlayer, AnimationRestartMainSequence, "class", "Restart the main sequence." )
+{
+    CExperiment_Player *player = LUA_BINDING_ARGUMENT( luaL_checkexperimentplayer, 1, "entity" );
+    player->GetAnimState()->RestartMainSequence();
+    return 0;
+}
+LUA_BINDING_END()
+
+LUA_BINDING_BEGIN( CExperimentPlayer, AnimationSetGestureSequence, "class", "Set a gesture sequence." )
+{
+    CExperiment_Player *player = LUA_BINDING_ARGUMENT( luaL_checkexperimentplayer, 1, "entity" );
+    int iSlot = LUA_BINDING_ARGUMENT( luaL_checknumber, 2, "slot" );
+    int iSequence = LUA_BINDING_ARGUMENT( luaL_checknumber, 3, "sequence" );
+    player->GetAnimState()->AddVCDSequenceToGestureSlot( iSlot, iSequence );
+    return 0;
+}
+LUA_BINDING_END()
+
+LUA_BINDING_BEGIN( CExperimentPlayer, AnimationSetGestureWeight, "class", "Set a gesture weight." )
+{
+    CExperiment_Player *player = LUA_BINDING_ARGUMENT( luaL_checkexperimentplayer, 1, "entity" );
+    int iSlot = LUA_BINDING_ARGUMENT( luaL_checknumber, 2, "slot" );
+    float flWeight = LUA_BINDING_ARGUMENT( luaL_checknumber, 3, "weight" );
+    player->GetAnimState()->SetGestureWeight( iSlot, flWeight );
+    return 0;
+}
+LUA_BINDING_END()
+
+LUA_BINDING_BEGIN( CExperimentPlayer, KeyDown, "class", "Key down." )
+{
+    CExperiment_Player *player = LUA_BINDING_ARGUMENT( luaL_checkexperimentplayer, 1, "entity" );
+    player->KeyDown( LUA_BINDING_ARGUMENT( luaL_checknumber, 2, "key" ) );
+    return 0;
+}
+LUA_BINDING_END()
+
+#ifndef CLIENT_DLL
+LUA_BINDING_BEGIN( CExperimentPlayer, GetPlayerModelType, "class", "Get the player model type.", "server" )
+{
+    CExperiment_Player *player = LUA_BINDING_ARGUMENT( luaL_checkexperimentplayer, 1, "entity" );
+    lua_pushinteger( L, player->GetPlayerModelType() );
     return 1;
 }
+LUA_BINDING_END( "number", "The player model type" )
+#endif
 
-static int CExperiment_Player_DoAnimationEvent( lua_State *L )
+LUA_BINDING_BEGIN( CExperimentPlayer, __eq, "class", "Metamethod for comparing two entities." )
 {
-    luaL_checkexperimentplayer( L, 1 )->DoAnimationEvent( ( PlayerAnimEvent_t )( int )luaL_checknumber( L, 2 ), luaL_optinteger( L, 3, 0 ) );
-    return 0;
-}
+    CExperiment_Player *playerA = LUA_BINDING_ARGUMENT( luaL_toexperimentplayer, 1, "entityA" );
+    CExperiment_Player *playerB = LUA_BINDING_ARGUMENT( luaL_toexperimentplayer, 2, "entityB" );
 
-static int CExperiment_Player_AnimationResetGestureSlot( lua_State *L )
-{
-    luaL_checkexperimentplayer( L, 1 )->GetAnimState()->ResetGestureSlot( ( int )luaL_checknumber( L, 2 ) );
-    return 0;
+    lua_pushboolean( L, playerA == playerB );
+    return 1;
 }
+LUA_BINDING_END( "boolean", "Whether the entities are equal" )
 
-static int CExperiment_Player_AnimationRestartGesture( lua_State *L )
+LUA_BINDING_BEGIN( CExperimentPlayer, __tostring, "class", "Metamethod for converting the entity to a string." )
 {
-    luaL_checkexperimentplayer( L, 1 )->GetAnimState()->RestartGesture(
-        ( int )luaL_checknumber( L, 2 ),
-        ( Activity )( int )luaL_checknumber( L, 3 ),
-        ( bool )luaL_optboolean( L, 4, false ) );
-    return 0;
-}
+    CExperiment_Player *player = LUA_BINDING_ARGUMENT( luaL_toexperimentplayer, 1, "entity" );
 
-static int CExperiment_Player_AnimationRestartMainSequence( lua_State *L )
-{
-    luaL_checkexperimentplayer( L, 1 )->GetAnimState()->RestartMainSequence();
-    return 0;
-}
+    if ( player == NULL )
+    {
+        lua_pushstring( L, "NULL" );
+    }
+    else
+    {
+        lua_pushfstring( L, "CExperiment_Player: %d \"%s\"", player->GetUserID(), player->GetPlayerName() );
+    }
 
-static int CExperiment_Player_AnimationSetGestureSequence( lua_State *L )
-{
-    luaL_checkexperimentplayer( L, 1 )->GetAnimState()->AddVCDSequenceToGestureSlot(
-        ( int )luaL_checknumber( L, 2 ),
-        ( int )luaL_checknumber( L, 3 ) );
-    return 0;
+    return 1;
 }
+LUA_BINDING_END( "string", "The string representation of the entity" )
 
-static int CExperiment_Player_AnimationSetGestureWeight( lua_State *L )
-{
-    luaL_checkexperimentplayer( L, 1 )->GetAnimState()->SetGestureWeight(
-        ( int )luaL_checknumber( L, 2 ),
-        ( float )luaL_checknumber( L, 3 ) );
-    return 0;
-}
-
-static int CExperiment_Player_KeyDown( lua_State *L )
-{
-    luaL_checkexperimentplayer( L, 1 )->KeyDown( luaL_checknumber( L, 2 ) );
-    return 0;
-}
-//
-//static int CExperiment_Player___index( lua_State *L )
+// Experiment; Is this at all useful to Lua?
+// static int luasrc_ToExperimentPlayer( lua_State *L )
 //{
-//    CExperiment_Player *pPlayer = luaL_toexperimentplayer( L, 1 );
-//
-//    LUA_METATABLE_INDEX_CHECK_VALID( L, CBaseEntity_IsValid );
-//    LUA_METATABLE_INDEX_CHECK( L, pPlayer );
-//
-//    LUA_METATABLE_INDEX_CHECK_REF_TABLE( L, pPlayer );
-//
-//    if ( lua_getmetatable( L, 1 ) )
-//    {
-//        LUA_METATABLE_INDEX_CHECK_TABLE( L );
-//    }
-//
-//    luaL_getmetatable( L, LUA_EXPERIMENTPLAYERLIBNAME );
-//    LUA_METATABLE_INDEX_CHECK_TABLE( L );
-//
-//    const char *field = luaL_checkstring( L, 2 );
-//
-//    LUA_METATABLE_INDEX_DERIVE_INDEX( L, LUA_BASEPLAYERLIBNAME );
-//
-//    lua_pushnil( L );
+//    CBaseEntity::PushLuaInstanceSafe( L, ToExperimentPlayer( lua_toentity( L, 1 ) ) );
 //    return 1;
 //}
-
-//static int CExperiment_Player___newindex( lua_State *L )
-//{
-//    CExperiment_Player *pPlayer = luaL_toexperimentplayer( L, 1 );
 //
-//    if ( pPlayer == NULL )
-//    { /* avoid extra test when d is not 0 */
-//        lua_Debug ar1;
-//        lua_getstack( L, 1, &ar1 );
-//        lua_getinfo( L, "fl", &ar1 );
-//        lua_Debug ar2;
-//        lua_getinfo( L, ">S", &ar2 );
-//        lua_pushfstring( L, "%s:%d: attempt to index a NULL entity", ar2.short_src, ar1.currentline );
-//        return lua_error( L );
-//    }
-//
-//    const char *field = luaL_checkstring( L, 2 );
-//
-//#ifdef CLIENT_DLL
-//    if ( Q_strcmp( field, "m_fNextThinkPushAway" ) == 0 )
-//    {
-//        // TODO: This doesn't exist in SourceSDK2013?
-//        // pPlayer->m_fNextThinkPushAway = luaL_checknumber(L, 3);
-//    }
-//    else
-//    {
-//#endif
-//        LUA_GET_REF_TABLE( L, pPlayer );
-//        lua_pushvalue( L, 3 );
-//        lua_setfield( L, -2, field );
-//        lua_pop( L, 1 );
-//#ifdef CLIENT_DLL
-//    }
-//#endif
-//
-//    return 0;
-//}
-
-static int CExperiment_Player___eq( lua_State *L )
-{
-    lua_pushboolean( L, luaL_toexperimentplayer( L, 1 ) == luaL_toexperimentplayer( L, 2 ) );
-    return 1;
-}
-
-static int CExperiment_Player___tostring( lua_State *L )
-{
-    CExperiment_Player *pPlayer = luaL_toexperimentplayer( L, 1 );
-    if ( pPlayer == NULL )
-        lua_pushstring( L, "NULL" );
-    else
-        lua_pushfstring( L, "CExperiment_Player: %d \"%s\"", pPlayer->GetUserID(), pPlayer->GetPlayerName() );
-    return 1;
-}
-static const luaL_Reg CExperiment_Playermeta[] = {
-    { "BecomeRagdollOnClient", CExperiment_Player_BecomeRagdollOnClient },
-    { "CalculateIKLocks", CExperiment_Player_CalculateIKLocks },
-    { "CanSprint", CExperiment_Player_CanSprint },
-    { "DoAnimationEvent", CExperiment_Player_DoAnimationEvent },
-    { "AnimationRestartGesture", CExperiment_Player_AnimationRestartGesture },
-    { "AnimationRestartMainSequence", CExperiment_Player_AnimationRestartMainSequence },
-    { "AnimationResetGestureSlot", CExperiment_Player_AnimationResetGestureSlot },
-    { "AnimationSetGestureSequence", CExperiment_Player_AnimationSetGestureSequence },
-    { "AnimationSetGestureWeight", CExperiment_Player_AnimationSetGestureWeight },
-    { "KeyDown", CExperiment_Player_KeyDown },
-    // { "__index", CExperiment_Player___index },// In Lua now
-    // { "__newindex", CExperiment_Player___newindex }, // Conflicts when storing with CBaseEntity ref table
-    { "__eq", CExperiment_Player___eq },
-    { "__tostring", CExperiment_Player___tostring },
-    { NULL, NULL } };
-
-static int luasrc_ToExperimentPlayer( lua_State *L )
-{
-    CBaseEntity::PushLuaInstanceSafe( L, ToExperimentPlayer( lua_toentity( L, 1 ) ) );
-    return 1;
-}
-
-static const luaL_Reg CExperiment_Player_funcs[] = {
-    { "ToPlayer", luasrc_ToExperimentPlayer },
-    { NULL, NULL } };
+// static const luaL_Reg CExperiment_Player_funcs[] = {
+//    { "ToPlayer", luasrc_ToExperimentPlayer },
+//    { NULL, NULL } };
 
 /*
 ** Open CExperiment_Player object
@@ -234,10 +208,14 @@ static const luaL_Reg CExperiment_Player_funcs[] = {
 LUALIB_API int luaopen_CExperiment_Player_shared( lua_State *L )
 {
     LUA_PUSH_NEW_METATABLE( L, LUA_EXPERIMENTPLAYERLIBNAME );
-    luaL_register( L, NULL, CExperiment_Playermeta );
+
+    LUA_REGISTRATION_COMMIT( CExperimentPlayer );
+
     lua_pushstring( L, "Entity" );
     lua_setfield( L, -2, "__type" ); /* metatable.__type = "Entity" */
-    luaL_register( L, LUA_GNAME, CExperiment_Player_funcs );
+
+    // luaL_register( L, LUA_GNAME, CExperiment_Player_funcs );
+
     lua_pop( L, 1 );
     return 1;
 }

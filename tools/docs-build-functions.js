@@ -16,8 +16,12 @@ const srcDir = './src';
 const outputDir = './docs';
 
 const filesToUpdate = getAllFilesInDirectoriesAsMap(`${outputDir}/libraries`, `${outputDir}/classes`);
+const functionsThisRun = new Map();
 
-const luaBindingBeginPattern = /LUA_BINDING_BEGIN\(\s*(\w+)\s*,\s*(\w+)\s*,\s*"([^"]+)"\s*,\s*"([^"]+)"\s*\)/;
+//LUA_BINDING_BEGIN( CExperimentPlayer, BecomeRagdollOnClient, "class", "Become ragdoll on client." )
+//const luaBindingBeginPattern = /LUA_BINDING_BEGIN\(\s*(\w+)\s*,\s*(\w+)\s*,\s*"([^"]+)"\s*,\s*"([^"]+)"\s*\)/;
+// Also accept optional:LUA_BINDING_BEGIN( CExperimentPlayer, BecomeRagdollOnClient, "class", "Become ragdoll on client.", "server" )
+const luaBindingBeginPattern = /LUA_BINDING_BEGIN\(\s*(\w+)\s*,\s*(\w+)\s*,\s*"([^"]+)"\s*,\s*"([^"]+)"\s*(?:,\s*"([^"]+)")?\s*\)/;
 const luaBindingArgumentPattern = /LUA_BINDING_ARGUMENT\(\s*(\w+)\s*,\s*(\d+)\s*,\s*"([^"]+)"\s*\)/;
 const luaBindingArgumentNillablePattern = /LUA_BINDING_ARGUMENT_NILLABLE\(\s*(\w+)\s*,\s*(\d+)\s*,\s*"([^"]+)"\s*\)/;
 const luaBindingArgumentWithDefaultPattern = /LUA_BINDING_ARGUMENT_WITH_DEFAULT\(\s*(\w+)\s*,\s*(\d+)\s*,\s*([^,]+)\s*,\s*"([^"]+)"\s*\)/;
@@ -49,7 +53,7 @@ lua:
 
 function writeFunctionToFile(func) {
   const directory = func.concept.startsWith('class') ? 'classes' : 'libraries';
-  const filePath = path.join(outputDir, directory, func.library, `${func.function}.md`);
+  let filePath = path.join(outputDir, directory, func.library, `${func.function}.md`);
 
   // If the file already exists, don't overwrite it
   if (fs.existsSync(filePath) && !process.argv.includes('--force')) {
@@ -59,6 +63,30 @@ function writeFunctionToFile(func) {
 
   // Remove this file so we know it's up to date
   filesToUpdate.delete(filePath);
+
+  // If this function was already processed in this run, it's a shared function that has different realms
+  // Rename the files so their realms are included in the name
+  if (functionsThisRun.has(filePath)) {
+    const existingFunc = functionsThisRun.get(filePath);
+
+    if (existingFunc.realm !== func.realm) {
+      const newFileName = `${existingFunc.function}.${existingFunc.realm}.md`;
+      const newFilePath = path.join(outputDir, directory, func.library, newFileName);
+
+      fs.renameSync(existingFunc.filePath, newFilePath);
+
+      console.warn(`Renamed ${existingFunc.filePath} to ${newFilePath} to include realm ${existingFunc.realm}`);
+
+      existingFunc.filePath = newFilePath;
+      // have our file path also include the realm
+      const newFuncFileName = `${func.function}.${func.realm}.md`;
+      filePath = path.join(outputDir, directory, func.library, newFuncFileName);
+    }
+  }
+
+  func.filePath = filePath;
+
+  functionsThisRun.set(func.filePath, func);
 
   let templateFile;
   let staticSection = '';
@@ -242,6 +270,7 @@ function processBindingsInFile(file) {
         function: match[2],
         concept: match[3],
         description: match[4],
+        realm: match[5],
       };
     } else if (luaBindingArgumentPattern.test(line) || luaBindingArgumentNillablePattern.test(line)) {
       const isNillable = luaBindingArgumentNillablePattern.test(line);
@@ -335,7 +364,11 @@ function processBindingsInFile(file) {
       }
 
       currentFunction.returns = parseReturns(match[1]);
-      currentFunction.realm = getRealmByFile(file);
+
+      // Some functions in shared files may specify the realm in the LUA_BINDING_BEGIN
+      if (!currentFunction.realm) {
+        currentFunction.realm = getRealmByFile(file);
+      }
 
       writeFunctionToFile(currentFunction);
 

@@ -1088,15 +1088,15 @@ bool CServerGameDLL::LevelInit( const char *pMapName, char const *pMapEntities, 
         // to be sent to clients when they connect.
         INetworkStringTable *downloadables =
             networkstringtable->FindTable( "downloadables" );
-        int resourceFileCount = resources_GetFilesCount();
+        int resourceFileCount = ResourcesGetFilesCount();
 
         for ( int i = 0; i < resourceFileCount; i++ )
         {
-            const char *resourceFile = resources_GetFile( i );
+            const char *resourceFile = ResourcesGetFile( i );
             downloadables->AddString( true, resourceFile, -1 );
         }
 
-        resources_Free();
+        ResourcesFreeFiles();
 
         // Load the Lua cache files (zipped) into the downloadables table
         lcf_preparecachefile();

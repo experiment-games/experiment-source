@@ -1,23 +1,24 @@
 ---
 template: lua-class-function.html
 title: SetModel
-icon: lua-shared
+icon: lua-client
 tags:
   - lua
-  - shared
+  - client
   - needs-verification
   - needs-example
 lua:
   library: CBaseEntity
   function: SetModel
-  realm: shared
+  realm: client
   description: "Set model."
   
   arguments:
     - name: "model"
       type: string
   returns:
-    
+    - type: boolean
+      description: "False if the name is bogus or otherwise can't be loaded."
 ---
 
 <div class="lua__search__keywords">

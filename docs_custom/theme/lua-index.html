@@ -18,6 +18,9 @@
     )
 %}
 <li>
+    {%- if item.meta.icon %}
+    {% include ".icons/" ~ item.meta.icon ~ ".svg" %}&nbsp;
+    {%- endif %}
     {%- if item.url %}
     <a href="{{ item.url|url }}">{{ item.title }}</a>
     {%- else %}
@@ -52,7 +55,7 @@
 
     <h2>{{ page.meta.childrenTitle }}</h2>
     {%- if nav|length>1 %}
-    <ul>
+    <ul class="lua__index__list">
         {%- for item in nav %}
         {{ page_item(item) }}
         {%- endfor %}

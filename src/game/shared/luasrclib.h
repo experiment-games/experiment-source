@@ -36,7 +36,6 @@ LUALIB_API int( luaopen_CEffectData )( lua_State *L );
 LUALIB_API int( luaopen_CGameTrace )( lua_State *L );
 
 #define LUA_EXPERIMENTPLAYERLIBNAME "CExperimentPlayer"
-LUALIB_API int( luaopen_CExperiment_Player )( lua_State *L );
 LUALIB_API int( luaopen_CExperiment_Player_shared )( lua_State *L );
 
 #define LUA_COLORLIBNAME "Color"
@@ -282,7 +281,7 @@ struct LuaRegEntry
         }                                            \
     } regHelper_##func;
 
-#define LUA_BINDING_BEGIN( ClassName, FunctionName, Concept, DocumentationDescription ) \
+#define LUA_BINDING_BEGIN( ClassName, FunctionName, Concept, DocumentationDescription, ... ) \
     static int ClassName##_##FunctionName( lua_State *L );                              \
     LUA_REGISTER_METHOD( ClassName##_luaRegistry, #FunctionName, ClassName##_##FunctionName )                    \
     static int ClassName##_##FunctionName( lua_State *L )                               \

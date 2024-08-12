@@ -2031,7 +2031,8 @@ LUA_BINDING_BEGIN( CBaseEntity, SetLocalVelocity, "class", "Set local velocity."
 }
 LUA_BINDING_END()
 
-LUA_BINDING_BEGIN( CBaseEntity, SetModel, "class", "Set model." )
+#ifdef CLIENT_DLL
+LUA_BINDING_BEGIN( CBaseEntity, SetModel, "class", "Set model.", "client" )
 {
     lua_CBaseEntity *pEntity = LUA_BINDING_ARGUMENT( luaL_checkentity, 1, "entity" );
     const char *pszModel = LUA_BINDING_ARGUMENT( luaL_checkstring, 2, "model" );
@@ -2043,15 +2044,28 @@ LUA_BINDING_BEGIN( CBaseEntity, SetModel, "class", "Set model." )
         CBaseEntity::PrecacheModel( pszModel );
     }
 
-#ifdef CLIENT_DLL
     lua_pushboolean( L, pEntity->SetModel( pszModel ) );
     return 1;
+}
+LUA_BINDING_END( "boolean", "False if the name is bogus or otherwise can't be loaded." )
 #else
+LUA_BINDING_BEGIN( CBaseEntity, SetModel, "class", "Set model.", "server" )
+{
+    lua_CBaseEntity *pEntity = LUA_BINDING_ARGUMENT( luaL_checkentity, 1, "entity" );
+    const char *pszModel = LUA_BINDING_ARGUMENT( luaL_checkstring, 2, "model" );
+
+    // Precache if not yet done
+    int i = modelinfo->GetModelIndex( pszModel );
+    if ( i == -1 )
+    {
+        CBaseEntity::PrecacheModel( pszModel );
+    }
+
     pEntity->SetModel( pszModel );
     return 0;
-#endif
 }
 LUA_BINDING_END()
+#endif
 
 LUA_BINDING_BEGIN( CBaseEntity, SetModelIndex, "class", "Set model index." )
 {

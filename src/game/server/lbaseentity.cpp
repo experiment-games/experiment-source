@@ -940,18 +940,6 @@ LUA_BINDING_BEGIN( CBaseEntity, GetSmoothedVelocity, "class", "Get smoothed velo
 }
 LUA_BINDING_END( "vector", "The smoothed velocity" )
 
-LUA_BINDING_BEGIN( CBaseEntity, GetVelocity, "class", "Get velocity." )
-{
-    lua_CBaseEntity *pEntity = LUA_BINDING_ARGUMENT( luaL_checkentity, 1, "entity" );
-    Vector vVelocity;
-    AngularImpulse vAngVelocity;
-    pEntity->GetVelocity( &vVelocity, &vAngVelocity );
-    lua_pushvector( L, vVelocity );
-    lua_pushvector( L, ( Vector & )vAngVelocity );
-    return 2;
-}
-LUA_BINDING_END( "vector, vector", "The velocity and angular velocity" )
-
 LUA_BINDING_BEGIN( CBaseEntity, GetFriction, "class", "Get friction." )
 {
     lua_CBaseEntity *pEntity = LUA_BINDING_ARGUMENT( luaL_checkentity, 1, "entity" );

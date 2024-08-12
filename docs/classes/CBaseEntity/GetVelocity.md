@@ -12,8 +12,8 @@ lua:
   function: GetVelocity
   realm: shared
   description: "Get absolute velocity."
-  
-  
+
+
   returns:
     - type: vector
       description: "The absolute velocity."

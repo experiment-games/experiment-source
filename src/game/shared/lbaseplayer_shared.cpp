@@ -923,100 +923,6 @@ static int CBasePlayer_WeaponCount( lua_State *L )
     return 1;
 }
 
-//static int CBasePlayer___index( lua_State *L )
-//{
-//    CBasePlayer *pPlayer = lua_toplayer( L, 1 );
-//
-//    LUA_METATABLE_INDEX_CHECK_VALID( L, CBaseEntity_IsValid );
-//    LUA_METATABLE_INDEX_CHECK( L, pPlayer );
-//
-//    const char *field = luaL_checkstring( L, 2 );
-//
-//    if ( Q_strcmp( field, "m_afButtonLast" ) == 0 )
-//        lua_pushinteger( L, pPlayer->m_afButtonLast );
-//    else if ( Q_strcmp( field, "m_afButtonPressed" ) == 0 )
-//        lua_pushinteger( L, pPlayer->m_afButtonPressed );
-//    else if ( Q_strcmp( field, "m_afButtonReleased" ) == 0 )
-//        lua_pushinteger( L, pPlayer->m_afButtonReleased );
-//    else if ( Q_strcmp( field, "m_flNextAttack" ) == 0 )
-//        lua_pushnumber( L, pPlayer->m_flNextAttack );
-//    else if ( Q_strcmp( field, "m_fOnTarget" ) == 0 )
-//        lua_pushboolean( L, pPlayer->m_fOnTarget );
-//    else if ( Q_strcmp( field, "m_nButtons" ) == 0 )
-//        lua_pushinteger( L, pPlayer->m_nButtons );
-//    else if ( Q_strcmp( field, "m_StuckLast" ) == 0 )
-//        lua_pushinteger( L, pPlayer->m_StuckLast );
-//    else if ( Q_strcmp( field, "m_szAnimExtension" ) == 0 )
-//        lua_pushstring( L, pPlayer->m_szAnimExtension );
-//    else
-//    {
-//        LUA_METATABLE_INDEX_CHECK_REF_TABLE( L, pPlayer );
-//
-//        if ( lua_getmetatable( L, 1 ) )
-//        {
-//            LUA_METATABLE_INDEX_CHECK_TABLE( L );
-//        }
-//
-//        luaL_getmetatable( L, LUA_BASEPLAYERLIBNAME );
-//        LUA_METATABLE_INDEX_CHECK_TABLE( L );
-//
-//        LUA_METATABLE_INDEX_DERIVE_INDEX( L, LUA_CBASEFLEXLIBNAME );
-//
-//        lua_pushnil( L );
-//    }
-//
-//    return 1;
-//}
-
-//static int CBasePlayer___newindex( lua_State *L )
-//{
-//    CBasePlayer *pPlayer = lua_toplayer( L, 1 );
-//
-//    if ( pPlayer == NULL )
-//    { /* avoid extra test when d is not 0 */
-//        lua_Debug ar1;
-//        lua_getstack( L, 1, &ar1 );
-//        lua_getinfo( L, "fl", &ar1 );
-//        lua_Debug ar2;
-//        lua_getinfo( L, ">S", &ar2 );
-//        lua_pushfstring( L, "%s:%d: attempt to index a NULL entity", ar2.short_src, ar1.currentline );
-//        return lua_error( L );
-//    }
-//
-//    const char *field = luaL_checkstring( L, 2 );
-//
-//    if ( Q_strcmp( field, "m_afButtonLast" ) == 0 )
-//        pPlayer->m_afButtonLast = luaL_checknumber( L, 3 );
-//    else if ( Q_strcmp( field, "m_afButtonPressed" ) == 0 )
-//        pPlayer->m_afButtonPressed = luaL_checknumber( L, 3 );
-//    else if ( Q_strcmp( field, "m_afButtonReleased" ) == 0 )
-//        pPlayer->m_afButtonReleased = luaL_checknumber( L, 3 );
-//    else if ( Q_strcmp( field, "m_flNextAttack" ) == 0 )
-//        pPlayer->m_flNextAttack = luaL_checknumber( L, 3 );
-//#ifdef CLIENT_DLL
-//    else if ( Q_strcmp( field, "m_fOnTarget" ) == 0 )
-//        pPlayer->m_fOnTarget = luaL_checkboolean( L, 3 );
-//#else
-//    else if ( Q_strcmp( field, "m_fOnTarget" ) == 0 )
-//        pPlayer->m_fOnTarget.GetForModify() = ( bool )luaL_checkboolean( L, 3 );
-//#endif
-//    else if ( Q_strcmp( field, "m_nButtons" ) == 0 )
-//        pPlayer->m_nButtons = luaL_checknumber( L, 3 );
-//    else if ( Q_strcmp( field, "m_StuckLast" ) == 0 )
-//        pPlayer->m_StuckLast = luaL_checknumber( L, 3 );
-//    else if ( Q_strcmp( field, "m_szAnimExtension" ) == 0 )
-//        Q_strcpy( pPlayer->m_szAnimExtension, luaL_checkstring( L, 3 ) );
-//    else
-//    {
-//        LUA_GET_REF_TABLE( L, pPlayer );
-//        lua_pushvalue( L, 3 );
-//        lua_setfield( L, -2, field );
-//        lua_pop( L, 1 );
-//    }
-//
-//    return 0;
-//}
-
 static int CBasePlayer___eq( lua_State *L )
 {
     lua_pushboolean( L, lua_toplayer( L, 1 ) == lua_toplayer( L, 2 ) );
@@ -1187,8 +1093,6 @@ static const luaL_Reg CBasePlayermeta[] = {
     { "GetSteamID64", CBasePlayer_SteamID64 },
     { "GetUniqueID", CBasePlayer_UniqueID },
 
-    // { "__index", CBasePlayer___index }, // In Lua now
-    // { "__newindex", CBasePlayer___newindex }, // Conflicts when storing with CBaseEntity ref table
     { "__eq", CBasePlayer___eq },
     { "__tostring", CBasePlayer___tostring },
     { NULL, NULL } };

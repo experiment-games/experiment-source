@@ -11,8 +11,8 @@
 #pragma once
 #endif
 
-int resources_GetFilesCount();
-const char *resources_GetFile( int i );
-void resources_Free();
+int ResourcesGetFilesCount();
+const char *ResourcesGetFile( int i );
+void ResourcesFreeFiles();
 
 #endif  // LRESOURCES_H

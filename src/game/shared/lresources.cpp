@@ -9,32 +9,29 @@
 
 static CUtlVector< const char * > g_pLuaResources;
 
-// Get amount of registered resources registerd with resources.AddFile
-int resources_GetFilesCount()
+/// <summary>
+/// Get amount of registered resources registerd with Resources.AddFile
+/// </summary>
+/// <returns></returns>
+int ResourcesGetFilesCount()
 {
     return g_pLuaResources.Count();
 }
 
-// Get iterator for resources registered with resources.AddFile
-const char *resources_GetFile( int i )
+/// <summary>
+/// Get iterator for resources registered with Resources.AddFile
+/// </summary>
+/// <param name="i"></param>
+/// <returns></returns>
+const char *ResourcesGetFile( int i )
 {
     return g_pLuaResources[i];
 }
 
-// Add a file to the list of resources
-static int resources_AddFile( lua_State *L )
-{
-    const char *pFile = luaL_checkstring( L, 1 );
-
-    // We duplicate the string, because the memory will get overwritten
-    g_pLuaResources.AddToTail( strdup(pFile) );
-
-    lua_pop( L, 1 ); // Pop the file name off the stack
-
-    return 0;
-}
-
-void resources_Free()
+/// <summary>
+/// Free all resources registered with Resources.AddFile
+/// </summary>
+void ResourcesFreeFiles()
 {
     for ( int i = 0; i < g_pLuaResources.Count(); ++i )
     {
@@ -43,15 +40,40 @@ void resources_Free()
     g_pLuaResources.RemoveAll();
 }
 
-static const luaL_Reg resourcesLib[] = {
-    { "AddFile", resources_AddFile },
-    { NULL, NULL } };
+LUA_REGISTRATION_INIT( Resources );
+
+LUA_BINDING_BEGIN( Resources, AddFile, "library", "Add a file to the list of resources so it's downloaded when players connect to the server." )
+{
+    const char *pFile = LUA_BINDING_ARGUMENT( luaL_checkstring, 1, "filePath" );
+
+    // We duplicate the string, because the memory will get overwritten
+    g_pLuaResources.AddToTail( strdup( pFile ) );
+
+    lua_pop( L, 1 );  // Pop the file name off the stack
+
+    return 0;
+}
+LUA_BINDING_END()
+
+LUA_BINDING_BEGIN( Resources, GetFiles, "library", "Get the list of files added with Resources.AddFile." )
+{
+    lua_newtable( L );
+
+    for ( int i = 0; i < g_pLuaResources.Count(); ++i )
+    {
+        lua_pushstring( L, g_pLuaResources[i] );
+        lua_rawseti( L, -2, i + 1 );
+    }
+
+    return 1;
+}
+LUA_BINDING_END( "table", "List of files added with Resources.AddFile." )
 
 /*
 ** Open resources library
 */
 LUALIB_API int luaopen_resources( lua_State *L )
 {
-    luaL_register( L, LUA_RESOURCESLIBNAME, resourcesLib );
+    LUA_REGISTRATION_COMMIT_LIBRARY( Resources, LUA_RESOURCESLIBNAME );
     return 1;
 }

@@ -319,6 +319,23 @@ For now let's set this as the standard going forward:
       - Abbreviations (don't abbreviate, with exceptions)
       - Descriptive names (prefer descriptive names over short names)
 
+- In contrast to the Lua convention, we use the `m_` prefix for member variables:
+
+    ```cpp
+    class Player {
+    private:
+      int m_health = 100;
+    };
+    ```
+
+- In contrast to the Lua convention, we use the `g_` prefix for global variables:
+
+    ```cpp
+    int g_lastPlayerDiedAt = time(nullptr);
+    ```
+
+    *(This doesn't apply to global functions)*
+
 !!! todo
 
     Add more naming conventions for C++.
