@@ -12,7 +12,6 @@
 #include "luamanager.h"
 #include "luasrclib.h"
 #include "vgui/lvgui.h"
-#include "lrender.h"
 #include <litexture.h>
 #include <cpng.h>
 #include "VGuiMatSurface/IMatSystemSurface.h"

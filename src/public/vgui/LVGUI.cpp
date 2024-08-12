@@ -45,7 +45,7 @@ LUA_API void lua_pushscheme( lua_State *L, lua_HScheme hScheme )
 
 LUA_API void lua_pushfont( lua_State *L, lua_HFont hFont )
 {
-    lua_HFont *phFont = ( lua_HFont * )lua_newuserdata( L, sizeof( hFont ) );
+    lua_HFont *phFont = ( lua_HFont * )lua_newuserdata( L, sizeof( lua_HFont ) );
     *phFont = hFont;
     LUA_SAFE_SET_METATABLE( L, LUA_FONTLIBNAME );
 }

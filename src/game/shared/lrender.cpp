@@ -14,6 +14,8 @@
 #include <renderparm.h>
 #include <view.h>
 #include <litexture.h>
+#include <shaderapi/ishaderapi.h>
+#include <utlstack.h>
 #endif
 
 // memdbgon must be the last include file in a .cpp file!!!
@@ -25,6 +27,10 @@ LUA_REGISTRATION_INIT( Renders );
 // Frustrums for PushView2D and -3D functions
 static Frustum renderFrustum3D;
 static Frustum renderFrustum2D;
+
+// Minifaction and magnification filter stacks
+static CUtlStack< ShaderAPITextureHandle_t > filterTextureHandlesMinification;
+static CUtlStack< ShaderAPITextureHandle_t > filterTextureHandlesMagnification;
 
 LUA_BINDING_BEGIN( Renders, CreateRenderTargetTextureEx, "library", "Create a new render target texture.", "client" )
 {
@@ -307,6 +313,95 @@ LUA_BINDING_BEGIN( Renders, MainViewForward, "library", "Get the main view forwa
     return 1;
 }
 LUA_BINDING_END( "Vector", "The main view forward." )
+
+static ShaderTexFilterMode_t FilterModeFromEnumeration( int enumeration )
+{
+    switch ( enumeration )
+    {
+        case 0:
+            return SHADER_TEXFILTERMODE_NEAREST;
+        case 1:
+            return SHADER_TEXFILTERMODE_NEAREST;
+        case 2:
+            return SHADER_TEXFILTERMODE_LINEAR;
+        case 3:
+            return SHADER_TEXFILTERMODE_ANISOTROPIC;
+        default:
+            return SHADER_TEXFILTERMODE_NEAREST;
+            break;
+    }
+}
+
+LUA_BINDING_BEGIN( Renders, PushFilterMinification, "library", "Push a minification filter.", "client" )
+{
+    int filterMode = LUA_BINDING_ARGUMENT( luaL_checknumber, 1, "filter" );
+
+    // TODO: This doesn't work
+    CMatRenderContextPtr pRenderContext( materials );
+    ITexture *screenTexture = pRenderContext->GetFrameBufferCopyTexture( 0 );
+    ShaderAPITextureHandle_t hTexture = g_pShaderApi->CreateTexture(
+        screenTexture->GetActualWidth(),
+        screenTexture->GetActualHeight(),
+        1,
+        screenTexture->GetImageFormat(),
+        1,
+        1,
+        TEXTUREFLAGS_CLAMPS | TEXTUREFLAGS_CLAMPT,
+        "filterTextureMinification",
+        "RenderTarget" );
+
+    filterTextureHandlesMinification.Push( hTexture );
+    //g_pShaderApi->ModifyTexture( hTexture );
+    g_pShaderApi->TexMinFilter( FilterModeFromEnumeration( filterMode ) );
+
+    return 0;
+}
+LUA_BINDING_END()
+
+LUA_BINDING_BEGIN( Renders, PopFilterMinification, "library", "Pop a minification filter.", "client" )
+{
+    g_pShaderApi->DeleteTexture( filterTextureHandlesMinification.Top() );
+    filterTextureHandlesMinification.Pop();
+
+    return 0;
+}
+LUA_BINDING_END()
+
+LUA_BINDING_BEGIN( Renders, PushFilterMagnification, "library", "Push a magnification filter.", "client" )
+{
+    int filterMode = LUA_BINDING_ARGUMENT( luaL_checknumber, 1, "filter" );
+
+    // TODO: This doesn't work
+    CMatRenderContextPtr pRenderContext( materials );
+    ITexture *screenTexture = pRenderContext->GetFrameBufferCopyTexture( 0 );
+    ShaderAPITextureHandle_t hTexture = g_pShaderApi->CreateTexture(
+        screenTexture->GetActualWidth(),
+        screenTexture->GetActualHeight(),
+        1,
+        screenTexture->GetImageFormat(),
+        1,
+        1,
+        TEXTUREFLAGS_CLAMPS | TEXTUREFLAGS_CLAMPT,
+        "filterTextureMagnification",
+        "RenderTarget" );
+
+    filterTextureHandlesMagnification.Push( hTexture );
+    //g_pShaderApi->ModifyTexture( hTexture );
+    g_pShaderApi->TexMagFilter( FilterModeFromEnumeration( filterMode ) );
+
+    return 0;
+}
+LUA_BINDING_END()
+
+LUA_BINDING_BEGIN( Renders, PopFilterMagnification, "library", "Pop a magnification filter.", "client" )
+{
+    g_pShaderApi->DeleteTexture( filterTextureHandlesMagnification.Top() );
+    filterTextureHandlesMagnification.Pop();
+
+    return 0;
+}
+LUA_BINDING_END()
+
 #endif  // CLIENT_DLL
 
 /*

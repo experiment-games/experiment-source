@@ -14,7 +14,6 @@
 #include "mathlib/lvector.h"
 #include "lColor.h"
 #include "materialsystem/itexture.h"
-#include <lrender.h>
 #include <litexture.h>
 #include <cpng.h>
 

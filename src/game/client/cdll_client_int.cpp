@@ -89,6 +89,7 @@
 #include "hltvcamera.h"
 #include "mapload_background.h"
 #include "gameinfostore.h"
+#include <shaderapi/ishaderapi.h>
 #if defined( REPLAY_ENABLED )
 #include "replay/replaycamera.h"
 #include "replay/replay_ragdoll.h"
@@ -169,7 +170,6 @@ extern vgui::IInputInternal *g_InputInternal;
 #include "luamanager.h"
 #include "mountaddons.h"
 #include "mountsteamcontent.h"
-#include <lrender.h>
 #include <litexture.h>
 #include <cpng.h>
 #endif
@@ -217,6 +217,7 @@ IXboxSystem *xboxsystem = NULL;  // Xbox 360 only
 IMatchmaking *matchmaking = NULL;
 IUploadGameStats *gamestatsuploader = NULL;
 IClientReplayContext *g_pClientReplayContext = NULL;
+IShaderAPI *g_pShaderApi = NULL;
 #if defined( REPLAY_ENABLED )
 IReplayManager *g_pReplayManager = NULL;
 IReplayMovieManager *g_pReplayMovieManager = NULL;
@@ -1026,6 +1027,9 @@ int CHLClient::Init( CreateInterfaceFn appSystemFactory,
                INTERFACEVERSION_UPLOADGAMESTATS, NULL ) ) == NULL )
         return false;
 #endif
+    if ( ( g_pShaderApi = ( IShaderAPI * )appSystemFactory(
+               SHADERAPI_INTERFACE_VERSION, NULL ) ) == NULL )
+        return false;
 
 #if defined( REPLAY_ENABLED )
     if ( IsPC() && ( g_pEngineReplay = ( IEngineReplay * )appSystemFactory(

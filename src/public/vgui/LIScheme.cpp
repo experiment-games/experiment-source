@@ -56,7 +56,11 @@ static int IScheme_GetColor( lua_State *L )
 
 static int IScheme_GetFont( lua_State *L )
 {
-    lua_pushfont( L, luaL_checkischeme( L, 1 )->GetFont( luaL_checkstring( L, 2 ), luaL_optboolean( L, 3, false ) ) );
+    const char *fontName = luaL_checkstring( L, 2 );
+    bool proportional = luaL_optboolean( L, 3, false );
+    IScheme *scheme = luaL_checkischeme( L, 1 );
+    vgui::HFont font = scheme->GetFont( fontName, proportional );
+    lua_pushfont( L, font );
     return 1;
 }
 

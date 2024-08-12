@@ -635,7 +635,11 @@ else
 	}
 
 	render.SetModelLighting = render.SetAmbientLightCube
-	render.ResetModelLighting = render.ResetAmbientLightCube
+    render.ResetModelLighting = render.ResetAmbientLightCube
+    render.PushFilterMin = render.PushFilterMinification
+    render.PopFilterMin = render.PopFilterMinification
+    render.PushFilterMag = render.PushFilterMagnification
+	render.PopFilterMag = render.PopFilterMagnification
 
 	function render.Clear(r, g, b, a, clearDepth, clearStencil)
 		render.ClearBuffers(true, clearDepth or false, clearStencil or false)
@@ -981,11 +985,22 @@ else
 	surface.DrawRect = surface.DrawFilledRect
 	surface.DrawTexturedRectUV = surface.DrawTexturedSubRect
 	surface.GetTextPos = surface.DrawGetTextPos
-	surface.SetFont = surface.DrawSetTextFont
 	surface.SetTextPos = surface.DrawSetTextPos
 	surface.SetTextColor = surface.DrawSetTextColor
 	surface.DrawText = surface.DrawPrintText
-	surface.SetTexture = surface.DrawSetTexture
+    surface.SetTexture = surface.DrawSetTexture
+
+	local currentFont
+    surface.SetFont = function(font)
+        currentFont = font
+        surface.DrawSetTextFont(font)
+    end
+
+	local oldTextSize = Surface.GetTextSize
+
+    surface.GetTextSize = function(text)
+		return oldTextSize(currentFont, text)
+	end
 
 	surface.SetMaterial = function(material)
 		local name = material:GetString("$basetexture")
