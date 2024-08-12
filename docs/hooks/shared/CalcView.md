@@ -14,15 +14,15 @@ lua:
   arguments:
     - name: "this"
       type: entity
-    - name: "viewSetup_origin"
+    - name: "origin"
       type: Vector
-    - name: "viewSetup_angles"
+    - name: "angles"
       type: Angle
-    - name: "viewSetup_fov"
+    - name: "fov"
       type: number
-    - name: "viewSetup_zNear"
+    - name: "zNear"
       type: number
-    - name: "viewSetup_zFar"
+    - name: "zFar"
       type: number
   returns:
     - type: unknown

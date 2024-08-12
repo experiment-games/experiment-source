@@ -12,11 +12,11 @@ lua:
   realm: client
   description: ""
   arguments:
-    - name: "m_View_origin"
+    - name: "origin"
       type: Vector
-    - name: "m_View_angles"
+    - name: "angles"
       type: Angle
-    - name: "m_View_fov"
+    - name: "fov"
       type: number
   returns:
     - type: unknown

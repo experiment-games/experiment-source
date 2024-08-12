@@ -12,13 +12,13 @@ lua:
   realm: client
   description: ""
   arguments:
-    - name: "g_vMotionBlurValues[0]"
+    - name: "vMotionBlurValues0"
       type: number
-    - name: "g_vMotionBlurValues[1]"
+    - name: "vMotionBlurValues1"
       type: number
-    - name: "g_vMotionBlurValues[2]"
+    - name: "vMotionBlurValues2"
       type: number
-    - name: "g_vMotionBlurValues[3]"
+    - name: "vMotionBlurValues3"
       type: number
   returns:
     - type: unknown

@@ -230,7 +230,14 @@ function writeHookToFile(hook) {
         defaults += '\n  nillable: true';
       }
 
-      return indentEachLine(`- name: ${wrapQuotes(arg.name.replace('.', '_').trim())}\n  type: ${arg.type}${defaults}`, 2);
+      arg.name = arg.name.replace('->', '_');
+      arg.name = arg.name.replace('.', '_');
+      arg.name = arg.name.replace(/.*_/, '');
+      arg.name = arg.name.replace('[', '');
+      arg.name = arg.name.replace(']', '');
+      arg.name = arg.name.trim();
+
+      return indentEachLine(`- name: ${wrapQuotes(arg.name)}\n  type: ${arg.type}${defaults}`, 2);
     }).join('\n');
   };
 

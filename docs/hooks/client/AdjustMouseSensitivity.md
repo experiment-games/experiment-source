@@ -12,7 +12,7 @@ lua:
   realm: client
   description: ""
   arguments:
-    - name: "gHUD_m_flMouseSensitivity"
+    - name: "flMouseSensitivity"
       type: number
   returns:
     - type: unknown

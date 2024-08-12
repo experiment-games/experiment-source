@@ -14,11 +14,11 @@ lua:
   arguments:
     - name: "entindex"
       type: number
-    - name: "color[0]"
+    - name: "color0"
       type: number
-    - name: "color[1]"
+    - name: "color1"
       type: number
-    - name: "color[2]"
+    - name: "color2"
       type: number
   returns:
     - type: number

@@ -985,9 +985,10 @@ void CExperimentRules::ClientDisconnected( edict_t *pClient )
 #if defined( LUA_SDK )
 float CExperimentRules::FlPlayerFallDamage( CBasePlayer *pPlayer )
 {
-    LUA_CALL_HOOK_BEGIN( "FlPlayerFallDamage" );
-    CBaseEntity::PushLuaInstanceSafe( L, pPlayer );
-    LUA_CALL_HOOK_END( 1, 1 );
+    LUA_CALL_HOOK_BEGIN( "GetFallDamage", "Called when a player falls and fall damage is calculated." );
+    CBaseEntity::PushLuaInstanceSafe( L, pPlayer );// doc: player
+    lua_pushnumber( L, pPlayer->m_Local.m_flFallVelocity );// doc: fallVelocity
+    LUA_CALL_HOOK_END( 1, 1 ); // doc: number (override fall damage amount)
 
     LUA_RETURN_NUMBER();
 

@@ -16,7 +16,7 @@ lua:
       type: entity
     - name: "vecVelocity"
       type: Vector
-    - name: "m_flMaxGroundSpeed"
+    - name: "flMaxGroundSpeed"
       type: number
   returns:
     

@@ -12,7 +12,7 @@ lua:
   realm: client
   description: ""
   arguments:
-    - name: "local->m_skybox3d_scale"
+    - name: "scale"
       type: number
   returns:
     - type: unknown
