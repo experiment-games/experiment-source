@@ -147,6 +147,8 @@ function fromTypeChecker(typeChecker) {
     case 'luaL_optinteger':
     case 'lua_tointeger':
       return 'integer';
+    case 'lua_istable':
+      return 'table';
     case 'luaL_checkstring':
     case 'luaL_optstring':
     case 'lua_tostring':
@@ -187,6 +189,10 @@ function fromTypeChecker(typeChecker) {
       return 'PhysicsObject';
     case 'lua_tofirebulletsinfo':
       return 'FireBulletsInfo';
+    case 'luaL_checkcolor':
+    case 'luaL_optcolor':
+    case 'lua_tocolor':
+      return 'Color';
     default:
       return 'unknown';
   }

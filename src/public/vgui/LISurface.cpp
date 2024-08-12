@@ -13,6 +13,7 @@
 #include "luasrclib.h"
 #include "vgui/lvgui.h"
 #include "lrender.h"
+#include <litexture.h>
 #include <cpng.h>
 #include "VGuiMatSurface/IMatSystemSurface.h"
 #include <materialsystem/limaterial.h>
@@ -84,7 +85,7 @@ static int surface_CreateFont( lua_State *L )
 
 static int surface_CreateNewTextureID( lua_State *L )
 {
-    lua_pushinteger( L, surface_SafeCreateNewTextureID( luaL_optboolean( L, 1, false ) ) );
+    lua_pushinteger( L, CreateNewAutoDestroyTextureId( luaL_optboolean( L, 1, false ) ) );
     return 1;
 }
 
@@ -751,13 +752,13 @@ static int surface_FindMaterial( lua_State *L )
             //// We need to assign a TextureID to the material, or else the game will crash in MaterialSystem.pdb
             //// when shutting down the game, after having created (but never assigning a CreateNewTextureID)
             //// a material with this FindMaterial call.
-            //g_pMatSystemSurface->DrawSetTextureMaterial( surface_SafeCreateNewTextureID( true ), pMaterial );
+            //g_pMatSystemSurface->DrawSetTextureMaterial( CreateNewAutoDestroyTextureId( true ), pMaterial );
         }
     }
 
     IMaterial **pUserData = ( IMaterial ** )lua_newuserdata( L, sizeof( IMaterial * ) );
     *pUserData = pMaterial;
-    luaL_getmetatable( L, LUA_MATERIALLIBNAME );
+    luaL_getmetatable( L, LUA_MATERIALMETANAME );
     lua_setmetatable( L, -2 );
 
     return 1;
@@ -837,7 +838,7 @@ static int surface_CreateMaterial( lua_State *L )
     {
         IMaterial **pUserData = ( IMaterial ** )lua_newuserdata( L, sizeof( IMaterial * ) );
         *pUserData = pMaterial;
-        luaL_getmetatable( L, LUA_MATERIALLIBNAME );
+        luaL_getmetatable( L, LUA_MATERIALMETANAME );
         lua_setmetatable( L, -2 );
     }
     else

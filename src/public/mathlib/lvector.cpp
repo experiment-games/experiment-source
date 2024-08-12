@@ -521,7 +521,7 @@ LUALIB_API int luaopen_Vector( lua_State *L )
     lua_pushstring( L, "Vector" );
     lua_setfield( L, -2, "__type" ); /* metatable.__type = "Vector" */
 
-    LUA_REGISTRATION_COMMIT_GLOBAL( _G );
+    LUA_REGISTRATION_COMMIT_LIBRARY( _G, LUA_GNAME );
     lua_pop( L, 1 );  // pop metatable
 
     Vector origin = vec3_origin;

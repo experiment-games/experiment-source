@@ -19,7 +19,7 @@ lua:
         type: RecipientFilter
     - arguments:
       - name: "filter"
-        type: unknown
+        type: table
     - arguments:
       - name: "filter"
         type: Entity

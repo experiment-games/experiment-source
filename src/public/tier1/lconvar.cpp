@@ -253,7 +253,7 @@ LUALIB_API int luaopen_ConVar( lua_State *L )
     lua_pushstring( L, LUA_CONVARMETANAME );
     lua_setfield( L, -2, "__type" ); /* metatable.__type = "ConsoleVariable" */
 
-    LUA_REGISTRATION_COMMIT_GLOBAL( _G );
+    LUA_REGISTRATION_COMMIT_LIBRARY( _G, LUA_GNAME );
 
     lua_pop( L, 1 );
     return 1;

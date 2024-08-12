@@ -139,6 +139,12 @@ void InitializeGameContentMounting()
 {
     ISteamApps *pSteamApps = steamapicontext->SteamApps();
 
+    if ( !pSteamApps )
+    {
+        Error("Failed to mount game content (are you not signed into Steam?)\n");
+        return;
+    }
+
     REGISTER_GAME( pSteamApps, "Half-Life 2", "hl2", 220 );
     REGISTER_GAME( pSteamApps, "Half-Life", "hl1", 280 );
     

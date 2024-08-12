@@ -144,7 +144,11 @@ function FindMetaTable(name)
 		name = "CBasePlayer"
 	elseif (name == "Vehicle") then
 		-- We don't have vehicles in Experiment, so lets not waste time on it
-		return {}
+        return {}
+    elseif (name == "IMaterial") then
+        name = "Material"
+	elseif (name == "ITexture") then
+		name = "Texture"
 	end
 
 	return registry[name]
@@ -166,7 +170,7 @@ sql = {
 cvars = ConsoleVariables
 engine = Engine
 input = Input
-render = Render
+render = Renders
 resource = Resources
 surface = Surface
 system = System
@@ -515,7 +519,7 @@ function PLAYER_META:IsListenServerHost()
 	return self == Util.GetListenServerHost()
 end
 
-local TEXTURE_META = FindMetaTable("ITexture")
+local TEXTURE_META = FindMetaTable("Texture")
 
 function TEXTURE_META:Width()
 	return self:GetActualWidth()
@@ -525,7 +529,7 @@ function TEXTURE_META:Height()
 	return self:GetActualHeight()
 end
 
-local MATERIAL_META = FindMetaTable("IMaterial")
+local MATERIAL_META = FindMetaTable("Material")
 MATERIAL_META.GetShader = MATERIAL_META.GetShaderName
 MATERIAL_META.IsError = MATERIAL_META.IsErrorMaterial
 MATERIAL_META.Recompute = MATERIAL_META.RecomputeStateSnapshots
@@ -622,8 +626,10 @@ else
 	}
 
 	cam = {
-		Start3D = render.Push3DView,
-		End3D = render.PopView,
+		Start3D = render.PushView3D,
+		Start2D = render.PushView2D,
+		End3D = render.PopView3D,
+		End2D = render.PopView2D,
 	}
 
 	render.SetModelLighting = render.SetAmbientLightCube

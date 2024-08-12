@@ -698,6 +698,8 @@ $Project
             $File "$SRCDIR\game\shared\lparticle_system.h"
             $File "$SRCDIR\game\shared\lrender.cpp"
             $File "$SRCDIR\game\shared\lrender.h"
+            $File "$SRCDIR\game\shared\litexture.cpp"
+            $File "$SRCDIR\game\shared\litexture.h"
             $File "$SRCDIR\game\shared\lusercmd.cpp"
             $File "$SRCDIR\game\shared\lusercmd.h"
             $File "$SRCDIR\public\lbspflags.cpp"

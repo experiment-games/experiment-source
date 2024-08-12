@@ -50,12 +50,15 @@ See the `.editorconfig` file for the code style.
   abbreviations:
 
     - `Hud`
+    - `Ui`
+    - `Vgui`
     - `Api`
     - `Id` (short for identifier)
     - `Url`
     - `Sqr` (short for square root)
     - `Ik` (short for inverse kinematics)
     - `Json`, `Xml`, `Html`, `Css` and other data format/language names
+    - `2D`, `3D`, `4D` and other dimensions
 
 - Abbreviations should be treated as words when capitalizing:
 

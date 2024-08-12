@@ -13,87 +13,29 @@
 #include <lColor.h>
 #include <renderparm.h>
 #include <view.h>
+#include <litexture.h>
 #endif
 
 // memdbgon must be the last include file in a .cpp file!!!
 #include "tier0/memdbgon.h"
 
-#ifdef CLIENT_DLL
-// List of all texture ids created during the lifetime of the client Lua state
-static CUtlVector< int > g_TextureIDs;
-
-/// <summary>
-/// Creates a new TextureID, keeping track of it, so it can be destroyed on shutdown
-/// of the client Lua state.
-/// </summary>
-/// <param name="procedural"></param>
-/// <returns></returns>
-int surface_SafeCreateNewTextureID( bool procedural )
-{
-    int textureID = vgui::surface()->CreateNewTextureID( procedural );
-
-    if ( textureID != -1 )
-    {
-        g_TextureIDs.AddToTail( textureID );
-    }
-
-    return textureID;
-}
-
-/// <summary>
-/// Destroys all TextureIDs created during the lifetime of the client Lua state
-/// </summary>
-void surface_DestroyAllTextureIDs()
-{
-    for ( int i = 0; i < g_TextureIDs.Count(); i++ )
-    {
-        vgui::surface()->DestroyTextureID( g_TextureIDs[i] );
-    }
-
-    g_TextureIDs.RemoveAll();
-}
-#endif
-
-/*
-** access functions (stack -> C)
-*/
-LUA_API lua_ITexture *lua_toitexture( lua_State *L, int idx )
-{
-    lua_ITexture **ppTexture = ( lua_ITexture ** )lua_touserdata( L, idx );
-    return *ppTexture;
-}
-
-/*
-** push functions (C -> stack)
-*/
-LUA_API void lua_pushitexture( lua_State *L, lua_ITexture *pTexture )
-{
-    lua_ITexture **ppTexture = ( lua_ITexture ** )lua_newuserdata( L, sizeof( pTexture ) );
-    *ppTexture = pTexture;
-    LUA_SAFE_SET_METATABLE( L, "ITexture" );
-}
-
-LUALIB_API lua_ITexture *luaL_checkitexture( lua_State *L, int narg )
-{
-    lua_ITexture **ppData = ( lua_ITexture ** )luaL_checkudata( L, narg, "ITexture" );
-
-    if ( *ppData == 0 ) /* avoid extra test when d is not 0 */
-        luaL_argerror( L, narg, "ITexture expected, got NULL" );
-
-    return *ppData;
-}
+LUA_REGISTRATION_INIT( Renders );
 
 #ifdef CLIENT_DLL
-static int render_CreateRenderTargetTextureEx( lua_State *L )
+// Frustrums for PushView2D and -3D functions
+static Frustum renderFrustum3D;
+static Frustum renderFrustum2D;
+
+LUA_BINDING_BEGIN( Renders, CreateRenderTargetTextureEx, "library", "Create a new render target texture." )
 {
-    const char *name = luaL_checkstring( L, 1 );
-    int width = luaL_checknumber( L, 2 );
-    int height = luaL_checknumber( L, 3 );
-    int sizeMode = ( int )luaL_optnumber( L, 4, RT_SIZE_DEFAULT );
-    int depthMode = ( int )luaL_optnumber( L, 5, MATERIAL_RT_DEPTH_SHARED );
-    int textureFlags = ( int )luaL_optnumber( L, 6, TEXTUREFLAGS_CLAMPS | TEXTUREFLAGS_CLAMPT );
-    int renderTargetFlags = ( int )luaL_optnumber( L, 7, 0 );
-    int imageFormat = ( int )luaL_optnumber( L, 8, IMAGE_FORMAT_RGBA8888 );
+    const char *name = LUA_BINDING_ARGUMENT( luaL_checkstring, 1, "name" );
+    int width = LUA_BINDING_ARGUMENT( luaL_checknumber, 2, "width" );
+    int height = LUA_BINDING_ARGUMENT( luaL_checknumber, 3, "height" );
+    int sizeMode = LUA_BINDING_ARGUMENT_WITH_DEFAULT( luaL_optnumber, 4, RT_SIZE_DEFAULT, "sizeMode" );
+    int depthMode = LUA_BINDING_ARGUMENT_WITH_DEFAULT( luaL_optnumber, 5, MATERIAL_RT_DEPTH_SHARED, "depthMode" );
+    int textureFlags = LUA_BINDING_ARGUMENT_WITH_DEFAULT( luaL_optnumber, 6, TEXTUREFLAGS_CLAMPS | TEXTUREFLAGS_CLAMPT, "textureFlags" );
+    int renderTargetFlags = LUA_BINDING_ARGUMENT_WITH_DEFAULT( luaL_optnumber, 7, 0, "renderTargetFlags" );
+    int imageFormat = LUA_BINDING_ARGUMENT_WITH_DEFAULT( luaL_optnumber, 8, IMAGE_FORMAT_RGBA8888, "imageFormat" );
 
     g_pMaterialSystem->OverrideRenderTargetAllocation( true );
     ITexture *pTexture = materials->CreateNamedRenderTargetTextureEx(
@@ -106,88 +48,112 @@ static int render_CreateRenderTargetTextureEx( lua_State *L )
         textureFlags,
         renderTargetFlags );
     g_pMaterialSystem->OverrideRenderTargetAllocation( false );
+
+    lua_pushitexture( L, pTexture );
+
+    return 1;
+}
+LUA_BINDING_END( "Texture", "The created render target texture." )
+
+LUA_BINDING_BEGIN( Renders, GetScreenEffectTexture, "library", "Get the screen effect texture." )
+{
+    lua_ITexture *pTexture = GetFullFrameFrameBufferTexture( LUA_BINDING_ARGUMENT( luaL_checknumber, 1, "textureIndex" ) );
     lua_pushitexture( L, pTexture );
     return 1;
 }
+LUA_BINDING_END( "Texture", "The screen effect texture." )
 
-static int render_GetScreenEffectTexture( lua_State *L )
-{
-    lua_ITexture *pTexture = GetFullFrameFrameBufferTexture( luaL_checknumber( L, 1 ) );
-    lua_pushlightuserdata( L, pTexture );
-    return 1;
-}
-
-static int render_UpdateScreenEffectTexture( lua_State *L )
+LUA_BINDING_BEGIN( Renders, UpdateScreenEffectTexture, "library", "Update the screen effect texture." )
 {
     const CViewSetup *pViewSetup = view->GetViewSetup();
-    UpdateScreenEffectTexture( luaL_checkinteger( L, 1 ), pViewSetup->x, pViewSetup->y, pViewSetup->width, pViewSetup->height );
+    UpdateScreenEffectTexture( LUA_BINDING_ARGUMENT( luaL_checkinteger, 1, "textureIndex" ), pViewSetup->x, pViewSetup->y, pViewSetup->width, pViewSetup->height );
     return 0;
 }
+LUA_BINDING_END()
 
-Frustum renderFrustum;
-static int render_Push3DView( lua_State *L )
+LUA_BINDING_BEGIN( Renders, PushView3D, "library", "Push a 3D view." )
 {
     CViewSetup playerView = *view->GetPlayerViewSetup();
 
-    Vector origin = luaL_optvector( L, 1, &playerView.origin );
-    QAngle angles = luaL_optangle( L, 2, &playerView.angles );
-    float fov = luaL_optnumber( L, 3, playerView.fov );
-    int x = ( int )luaL_optnumber( L, 4, playerView.x );
-    int y = ( int )luaL_optnumber( L, 5, playerView.y );
-    int width = ( int )luaL_optnumber( L, 6, playerView.width );
-    int height = ( int )luaL_optnumber( L, 7, playerView.height );
-    float zNear = luaL_optnumber( L, 8, playerView.zNear );
-    float zFar = luaL_optnumber( L, 9, playerView.zFar );
+    Vector origin = LUA_BINDING_ARGUMENT_WITH_DEFAULT( luaL_optvector, 1, &playerView.origin, "origin" );
+    QAngle angles = LUA_BINDING_ARGUMENT_WITH_DEFAULT( luaL_optangle, 2, &playerView.angles, "angles" );
+    float fov = LUA_BINDING_ARGUMENT_WITH_DEFAULT( luaL_optnumber, 3, playerView.fov, "fov" );
+    int x = LUA_BINDING_ARGUMENT_WITH_DEFAULT( luaL_optnumber, 4, playerView.x, "x" );
+    int y = LUA_BINDING_ARGUMENT_WITH_DEFAULT( luaL_optnumber, 5, playerView.y, "y" );
+    int width = LUA_BINDING_ARGUMENT_WITH_DEFAULT( luaL_optnumber, 6, playerView.width, "width" );
+    int height = LUA_BINDING_ARGUMENT_WITH_DEFAULT( luaL_optnumber, 7, playerView.height, "height" );
+    float zNear = LUA_BINDING_ARGUMENT_WITH_DEFAULT( luaL_optnumber, 8, playerView.zNear, "zNear" );
+    float zFar = LUA_BINDING_ARGUMENT_WITH_DEFAULT( luaL_optnumber, 9, playerView.zFar, "zFar" );
 
-    CViewSetup viewModelSetup( playerView );
-    viewModelSetup.origin = origin;
-    viewModelSetup.angles = angles;
-    viewModelSetup.fov = fov;
-    viewModelSetup.x = x;
-    viewModelSetup.y = y;
-    viewModelSetup.width = width;
-    viewModelSetup.height = height;
-    viewModelSetup.zNear = zNear;
-    viewModelSetup.zFar = zFar;
+    CViewSetup viewSetup( playerView );
+    viewSetup.origin = origin;
+    viewSetup.angles = angles;
+    viewSetup.fov = fov;
+    viewSetup.x = x;
+    viewSetup.y = y;
+    viewSetup.width = width;
+    viewSetup.height = height;
+    viewSetup.zNear = zNear;
+    viewSetup.zFar = zFar;
 
-    render->Push3DView( viewModelSetup, 0, NULL, renderFrustum );
+    render->Push3DView( viewSetup, 0, NULL, renderFrustum3D );
 
     return 0;
 }
+LUA_BINDING_END()
 
-static int render_PopView( lua_State *L )
+LUA_BINDING_BEGIN( Renders, PopView3D, "library", "Pop a 3D view." )
 {
-    render->PopView( renderFrustum );
+    render->PopView( renderFrustum3D );
     return 0;
 }
+LUA_BINDING_END()
 
-static int modelrender_SuppressEngineLighting( lua_State *L )
+LUA_BINDING_BEGIN( Renders, PushView2D, "library", "Push a 2D view." )
 {
-    modelrender->SuppressEngineLighting( lua_toboolean( L, 1 ) );
+    CViewSetup viewSetup = *view->GetPlayerViewSetup();
+    render->Push2DView( viewSetup, 0, NULL, renderFrustum2D );
     return 0;
 }
+LUA_BINDING_END()
 
-static int render_SetLightingOrigin( lua_State *L )
+LUA_BINDING_BEGIN( Renders, PopView2D, "library", "Pop a 2D view." )
 {
-    g_pMaterialSystem->GetRenderContext()->SetLightingOrigin( luaL_checkvector( L, 1 ) );
+    render->PopView( renderFrustum2D );
     return 0;
 }
+LUA_BINDING_END()
 
-/*directionFace:
-TODO: Check that these match the values in the engine
-BOX_FRONT	0	Place the light from the front
-BOX_BACK	1	Place the light behind
-BOX_RIGHT	2	Place the light to the right
-BOX_LEFT	3	Place the light to the left
-BOX_TOP	4	Place the light to the top
-BOX_BOTTOM	5	Place the light to the bottom
+LUA_BINDING_BEGIN( Renders, SuppressEngineLighting, "library", "Suppress engine lighting." )
+{
+    modelrender->SuppressEngineLighting( LUA_BINDING_ARGUMENT( lua_toboolean, 1, "suppress" ) );
+    return 0;
+}
+LUA_BINDING_END()
+
+LUA_BINDING_BEGIN( Renders, SetLightingOrigin, "library", "Set the lighting origin." )
+{
+    g_pMaterialSystem->GetRenderContext()->SetLightingOrigin( LUA_BINDING_ARGUMENT( luaL_checkvector, 1, "lightingOrigin" ) );
+    return 0;
+}
+LUA_BINDING_END()
+
+/*
+directionFace:
+    TODO: Check that these match the values in the engine
+    BOX_FRONT	0	Place the light from the front
+    BOX_BACK	1	Place the light behind
+    BOX_RIGHT	2	Place the light to the right
+    BOX_LEFT	3	Place the light to the left
+    BOX_TOP	4	Place the light to the top
+    BOX_BOTTOM	5	Place the light to the bottom
 */
-static int render_SetAmbientLightCube( lua_State *L )
+LUA_BINDING_BEGIN( Renders, SetAmbientLightCube, "library", "Set the ambient light cube." )
 {
-    int directionFace = luaL_checknumber( L, 1 );
-    float r = luaL_checknumber( L, 2 );
-    float g = luaL_checknumber( L, 3 );
-    float b = luaL_checknumber( L, 4 );
+    int directionFace = LUA_BINDING_ARGUMENT( luaL_checknumber, 1, "directionFace" );
+    float r = LUA_BINDING_ARGUMENT( luaL_checknumber, 2, "r" );
+    float g = LUA_BINDING_ARGUMENT( luaL_checknumber, 3, "g" );
+    float b = LUA_BINDING_ARGUMENT( luaL_checknumber, 4, "b" );
     static Vector4D cubeFaces[6];
     int i;
 
@@ -204,14 +170,16 @@ static int render_SetAmbientLightCube( lua_State *L )
     }
 
     g_pMaterialSystem->GetRenderContext()->SetAmbientLightCube( cubeFaces );
+
     return 0;
 }
+LUA_BINDING_END()
 
-static int render_ResetAmbientLightCube( lua_State *L )
+LUA_BINDING_BEGIN( Renders, ResetAmbientLightCube, "library", "Reset the ambient light cube." )
 {
-    float r = luaL_checknumber( L, 1 );
-    float g = luaL_checknumber( L, 2 );
-    float b = luaL_checknumber( L, 3 );
+    float r = LUA_BINDING_ARGUMENT( luaL_checknumber, 1, "r" );
+    float g = LUA_BINDING_ARGUMENT( luaL_checknumber, 2, "g" );
+    float b = LUA_BINDING_ARGUMENT( luaL_checknumber, 3, "b" );
 
     static Vector4D cubeFaces[6];
     int i;
@@ -222,247 +190,131 @@ static int render_ResetAmbientLightCube( lua_State *L )
     }
 
     g_pMaterialSystem->GetRenderContext()->SetAmbientLightCube( cubeFaces );
+
     return 0;
 }
+LUA_BINDING_END()
 
-static int render_SetLight( lua_State *L )
+LUA_BINDING_BEGIN( Renders, SetLight, "library", "Set a light." )
 {
     LightDesc_t desc;
     memset( &desc, 0, sizeof( desc ) );
 
     desc.m_Type = MATERIAL_LIGHT_DIRECTIONAL;
 
-    desc.m_Color[0] = luaL_checknumber( L, 1 );
-    desc.m_Color[1] = luaL_checknumber( L, 2 );
-    desc.m_Color[2] = luaL_checknumber( L, 3 );
-    desc.m_Color *= luaL_checknumber( L, 4 ) / 255.0f;
+    desc.m_Color[0] = LUA_BINDING_ARGUMENT( luaL_checknumber, 1, "r" );
+    desc.m_Color[1] = LUA_BINDING_ARGUMENT( luaL_checknumber, 2, "g" );
+    desc.m_Color[2] = LUA_BINDING_ARGUMENT( luaL_checknumber, 3, "b" );
+    desc.m_Color *= LUA_BINDING_ARGUMENT( luaL_checknumber, 4, "intensity" ) / 255.0f;
 
     desc.m_Attenuation0 = 1.0f;
     desc.m_Attenuation1 = 0.0f;
     desc.m_Attenuation2 = 0.0f;
     desc.m_Flags = LIGHTTYPE_OPTIMIZATIONFLAGS_HAS_ATTENUATION0;
 
-    desc.m_Direction = luaL_checkvector( L, 5 );
+    desc.m_Direction = LUA_BINDING_ARGUMENT( luaL_checkvector, 5, "direction" );
     VectorNormalize( desc.m_Direction );
 
     desc.m_Theta = 0.0f;
     desc.m_Phi = 0.0f;
     desc.m_Falloff = 1.0f;
 
-    g_pMaterialSystem->GetRenderContext()->SetLight( luaL_checknumber( L, 6 ), desc );
+    g_pMaterialSystem->GetRenderContext()->SetLight( LUA_BINDING_ARGUMENT( luaL_checknumber, 6, "lightIndex" ), desc );
+
     return 0;
 }
+LUA_BINDING_END()
 
-static int render_SetColorModulation( lua_State *L )
+LUA_BINDING_BEGIN( Renders, SetColorModulation, "library", "Set the color modulation." )
 {
     float color[3];
-    color[0] = luaL_checknumber( L, 1 );
-    color[1] = luaL_checknumber( L, 2 );
-    color[2] = luaL_checknumber( L, 3 );
+    color[0] = LUA_BINDING_ARGUMENT( luaL_checknumber, 1, "r" );
+    color[1] = LUA_BINDING_ARGUMENT( luaL_checknumber, 2, "g" );
+    color[2] = LUA_BINDING_ARGUMENT( luaL_checknumber, 3, "b" );
 
     render->SetColorModulation( color );
 
     return 0;
 }
+LUA_BINDING_END()
 
-static int render_SetBlend( lua_State *L )
+LUA_BINDING_BEGIN( Renders, SetBlend, "library", "Set the blend." )
 {
-    render->SetBlend( luaL_checknumber( L, 1 ) );
+    render->SetBlend( LUA_BINDING_ARGUMENT( luaL_checknumber, 1, "blend" ) );
     return 0;
 }
+LUA_BINDING_END()
 
-static int render_ClearBuffers( lua_State *L )
+LUA_BINDING_BEGIN( Renders, ClearBuffers, "library", "Clear the buffers." )
 {
-    bool bClearColor = lua_toboolean( L, 1 );
-    bool bClearDepth = lua_toboolean( L, 2 );
-    bool bClearStencil = lua_toboolean( L, 3 );
+    bool bClearColor = LUA_BINDING_ARGUMENT( lua_toboolean, 1, "clearColor" );
+    bool bClearDepth = LUA_BINDING_ARGUMENT( lua_toboolean, 2, "clearDepth" );
+    bool bClearStencil = LUA_BINDING_ARGUMENT( lua_toboolean, 3, "clearStencil" );
 
     g_pMaterialSystem->GetRenderContext()->ClearBuffers( bClearColor, bClearDepth, bClearStencil );
+
     return 0;
 }
+LUA_BINDING_END()
 
-static int render_ClearColor( lua_State *L )
+LUA_BINDING_BEGIN( Renders, ClearColor, "library", "Clear the color." )
 {
-    lua_Color clr = luaL_checkcolor( L, 1 );
+    lua_Color clr = LUA_BINDING_ARGUMENT( luaL_checkcolor, 1, "color" );
     g_pMaterialSystem->GetRenderContext()->ClearColor4ub( clr.r(), clr.g(), clr.b(), clr.a() );
     return 0;
 }
+LUA_BINDING_END()
 
-static int render_SetScissorRect( lua_State *L )
+LUA_BINDING_BEGIN( Renders, SetScissorRect, "library", "Set the scissor rectangle." )
 {
-    int nLeft = luaL_checknumber( L, 1 );
-    int nTop = luaL_checknumber( L, 2 );
-    int nRight = luaL_checknumber( L, 3 );
-    int nBottom = luaL_checknumber( L, 4 );
-    bool bEnableScissor = lua_toboolean( L, 5 );
+    int nLeft = LUA_BINDING_ARGUMENT( luaL_checknumber, 1, "left" );
+    int nTop = LUA_BINDING_ARGUMENT( luaL_checknumber, 2, "top" );
+    int nRight = LUA_BINDING_ARGUMENT( luaL_checknumber, 3, "right" );
+    int nBottom = LUA_BINDING_ARGUMENT( luaL_checknumber, 4, "bottom" );
+    bool bEnableScissor = LUA_BINDING_ARGUMENT( lua_toboolean, 5, "enableScissor" );
 
     g_pMaterialSystem->GetRenderContext()->SetScissorRect( nLeft, nTop, nRight, nBottom, bEnableScissor );
+
     return 0;
 }
+LUA_BINDING_END()
 
-static int render_SetWriteDepthToDestAlpha( lua_State *L )
+LUA_BINDING_BEGIN( Renders, SetWriteDepthToDestAlpha, "library", "Set the write depth to destination alpha." )
 {
-    bool bEnable = lua_toboolean( L, 1 );
+    bool bEnable = LUA_BINDING_ARGUMENT( lua_toboolean, 1, "enable" );
     g_pMaterialSystem->GetRenderContext()->SetIntRenderingParameter( INT_RENDERPARM_WRITE_DEPTH_TO_DESTALPHA, bEnable );
     return 0;
 }
+LUA_BINDING_END()
 
-static int render_MainViewOrigin( lua_State *L )
+LUA_BINDING_BEGIN( Renders, MainViewOrigin, "library", "Get the main view origin." )
 {
     lua_pushvector( L, MainViewOrigin() );
     return 1;
 }
+LUA_BINDING_END( "Vector", "The main view origin." )
 
-static int render_MainViewAngles( lua_State *L )
+LUA_BINDING_BEGIN( Renders, MainViewAngles, "library", "Get the main view angles." )
 {
     lua_pushangle( L, MainViewAngles() );
     return 1;
 }
+LUA_BINDING_END( "Angle", "The main view angles." )
 
-static int render_MainViewForward( lua_State *L )
+LUA_BINDING_BEGIN( Renders, MainViewForward, "library", "Get the main view forward." )
 {
     lua_pushvector( L, MainViewForward() );
     return 1;
 }
-#endif
-
-static const luaL_Reg renderLib[] = {
-#ifdef CLIENT_DLL
-    { "CreateRenderTargetTextureEx", render_CreateRenderTargetTextureEx },
-    { "GetScreenEffectTexture", render_GetScreenEffectTexture },
-    { "Push3DView", render_Push3DView },
-    { "PopView", render_PopView },
-    { "SuppressEngineLighting", modelrender_SuppressEngineLighting },
-    { "SetLightingOrigin", render_SetLightingOrigin },
-    { "SetAmbientLightCube", render_SetAmbientLightCube },
-    { "ResetAmbientLightCube", render_ResetAmbientLightCube },
-    { "SetLight", render_SetLight },
-    { "SetColorModulation", render_SetColorModulation },
-    { "SetBlend", render_SetBlend },
-    { "ClearBuffers", render_ClearBuffers },
-    { "ClearColor", render_ClearColor },
-    { "SetScissorRect", render_SetScissorRect },
-    { "UpdateScreenEffectTexture", render_UpdateScreenEffectTexture },
-    { "SetWriteDepthToDestAlpha", render_SetWriteDepthToDestAlpha },
-    { "MainViewOrigin", render_MainViewOrigin },
-    { "MainViewAngles", render_MainViewAngles },
-    { "MainViewForward", render_MainViewForward },
-#endif
-    { NULL, NULL } };
+LUA_BINDING_END( "Vector", "The main view forward." )
+#endif // CLIENT_DLL
 
 /*
-** ITexture Meta
-*/
-static int ITexture_Download( lua_State *L )
-{
-    luaL_checkitexture( L, 1 )->Download();
-    return 0;
-}
-
-static int ITexture_GetName( lua_State *L )
-{
-    lua_pushstring( L, luaL_checkitexture( L, 1 )->GetName() );
-    return 1;
-}
-
-static int ITexture_GetActualWidth( lua_State *L )
-{
-    lua_pushnumber( L, luaL_checkitexture( L, 1 )->GetActualWidth() );
-    return 1;
-}
-
-static int ITexture_GetActualHeight( lua_State *L )
-{
-    lua_pushnumber( L, luaL_checkitexture( L, 1 )->GetActualHeight() );
-    return 1;
-}
-
-static int ITexture_GetMappingWidth( lua_State *L )
-{
-    lua_pushnumber( L, luaL_checkitexture( L, 1 )->GetMappingWidth() );
-    return 1;
-}
-
-static int ITexture_GetMappingHeight( lua_State *L )
-{
-    lua_pushnumber( L, luaL_checkitexture( L, 1 )->GetMappingHeight() );
-    return 1;
-}
-
-static int ITexture_GetNumAnimationFrames( lua_State *L )
-{
-    lua_pushinteger( L, luaL_checkitexture( L, 1 )->GetNumAnimationFrames() );
-    return 1;
-}
-
-static int ITexture_IsTranslucent( lua_State *L )
-{
-    lua_pushboolean( L, luaL_checkitexture( L, 1 )->IsTranslucent() );
-    return 1;
-}
-
-static int ITexture_IsMipmapped( lua_State *L )
-{
-    lua_pushboolean( L, luaL_checkitexture( L, 1 )->IsMipmapped() );
-    return 1;
-}
-
-static int ITexture_IsError( lua_State *L )
-{
-    lua_pushboolean( L, luaL_checkitexture( L, 1 )->IsError() );
-    return 1;
-}
-
-static int ITexture_IsErrorTexture( lua_State *L )
-{
-    lua_pushboolean( L, IsErrorTexture( luaL_checkitexture( L, 1 ) ) );
-    return 1;
-}
-
-static int ITexture_Release( lua_State *L )
-{
-    luaL_checkitexture( L, 1 )->Release();
-    return 0;
-}
-
-static int ITexture___tostring( lua_State *L )
-{
-    lua_pushfstring( L, "ITexture: %s", luaL_checkitexture( L, 1 )->GetName() );
-    return 1;
-}
-
-static const luaL_Reg ITextureMetaLib[] = {
-    { "Download", ITexture_Download },
-    { "GetName", ITexture_GetName },
-    { "GetActualWidth", ITexture_GetActualWidth },
-    { "GetActualHeight", ITexture_GetActualHeight },
-    { "GetMappingWidth", ITexture_GetMappingWidth },
-    { "GetMappingHeight", ITexture_GetMappingHeight },
-    { "GetNumAnimationFrames", ITexture_GetNumAnimationFrames },
-    { "IsTranslucent", ITexture_IsTranslucent },
-    { "IsMipmapped", ITexture_IsMipmapped },
-    { "IsError", ITexture_IsError },
-    { "IsErrorTexture", ITexture_IsErrorTexture },
-    { "Release", ITexture_Release },
-    { "__tostring", ITexture___tostring },
-    { NULL, NULL } };
-
-/*
-** Open render library and ITexture metatable
+** Open render library
 */
 LUALIB_API int luaopen_render( lua_State *L )
 {
-    luaL_register( L, LUA_RENDERLIBNAME, renderLib );
+    LUA_REGISTRATION_COMMIT_LIBRARY( Renders, LUA_RENDERLIBNAME );
     return 1;
 }
 
-LUALIB_API int luaopen_ITexture( lua_State *L )
-{
-    LUA_PUSH_NEW_METATABLE( L, LUA_ITEXTURELIBNAME );
-    luaL_register( L, NULL, ITextureMetaLib );
-    lua_pushvalue( L, -1 );           /* push metatable */
-    lua_setfield( L, -2, "__index" ); /* metatable.__index = metatable */
-    lua_pushstring( L, LUA_ITEXTURELIBNAME );
-    lua_setfield( L, -2, "__type" ); /* metatable.__type = "ITexture" */
-    return 1;
-}

@@ -114,7 +114,7 @@ LUALIB_API int( luaopen_HFont )( lua_State *L );
 #define LUA_HSCHEMELIBNAME "SchemeHandle"
 LUALIB_API int( luaopen_HScheme )( lua_State *L );
 
-#define LUA_MATERIALLIBNAME "IMaterial"
+#define LUA_MATERIALMETANAME "Material"
 LUALIB_API int( luaopen_IMaterial )( lua_State *L );
 
 #define LUA_MOVEHELPERLIBNAME "IMoveHelper"
@@ -235,8 +235,8 @@ LUALIB_API int( luaopen_umsg )( lua_State *L );
 #define LUA_SYSTEMLIBNAME "System"
 LUALIB_API int( luaopen_system )( lua_State *L );
 
-#define LUA_RENDERLIBNAME "Render"
-#define LUA_ITEXTURELIBNAME "ITexture"
+#define LUA_RENDERLIBNAME "Renders"
+#define LUA_ITEXTUREMETANAME "Texture"
 LUALIB_API int( luaopen_render )( lua_State *L );
 LUALIB_API int( luaopen_ITexture )( lua_State *L );
 
@@ -270,8 +270,8 @@ struct LuaRegEntry
 #define LUA_REGISTRATION_COMMIT( ClassName ) \
     luaL_register( L, NULL, ClassName##_luaRegistry );
 
-#define LUA_REGISTRATION_COMMIT_GLOBAL( ClassName ) \
-    luaL_register( L, LUA_GNAME, ClassName##_luaRegistry );
+#define LUA_REGISTRATION_COMMIT_LIBRARY( ClassName, LibraryTableName ) \
+    luaL_register( L, LibraryTableName, ClassName##_luaRegistry );
 
 #define LUA_REGISTER_METHOD( Registry, name, func )            \
     static struct RegHelper_##func                   \

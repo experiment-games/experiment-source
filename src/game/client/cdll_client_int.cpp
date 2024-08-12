@@ -170,6 +170,7 @@ extern vgui::IInputInternal *g_InputInternal;
 #include "mountaddons.h"
 #include "mountsteamcontent.h"
 #include <lrender.h>
+#include <litexture.h>
 #include <cpng.h>
 #endif
 
@@ -1923,7 +1924,7 @@ void CHLClient::LevelShutdown( void )
     g_pParticleSystemMgr->UncacheAllParticleSystems();
 #endif
 #ifdef LUA_SDK
-    surface_DestroyAllTextureIDs();
+    DestroyCreatedTextureIds();
     CPngTextureRegen::ReleaseAllTextureData();
 #endif
     UncacheAllMaterials();

@@ -2832,7 +2832,7 @@ LUALIB_API int luaopen_CBaseEntity_shared( lua_State *L )
 
     LUA_REGISTRATION_COMMIT( CBaseEntity );
 
-    LUA_REGISTRATION_COMMIT_GLOBAL( _G );
+    LUA_REGISTRATION_COMMIT_LIBRARY( _G, LUA_GNAME );
 
     lua_pop( L, 1 );
     CBaseEntity::PushLuaInstanceSafe( L, NULL );

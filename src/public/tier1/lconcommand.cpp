@@ -310,7 +310,7 @@ LUALIB_API int luaopen_ConCommand( lua_State *L )
     lua_pushstring( L, LUA_CONCOMMANDMETANAME );
     lua_setfield( L, -2, "__type" ); /* metatable.__type = "ConsoleCommand" */
 
-    LUA_REGISTRATION_COMMIT_GLOBAL( _G );
+    LUA_REGISTRATION_COMMIT_LIBRARY( _G, LUA_GNAME );
 
     lua_pop( L, 1 );
     return 1;
