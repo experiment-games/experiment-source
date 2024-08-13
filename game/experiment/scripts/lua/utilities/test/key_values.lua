@@ -12,7 +12,7 @@ else
 	gamePath = Engines.GetGameDir()
 end
 
-local pMainFile = KeyValues("gameinfo.txt")
+local pMainFile = KeyValues.Create("gameinfo.txt")
 if (pMainFile:LoadFromFile(gamePath .. "/gameinfo.txt", "MOD")) then
 	MsgN("KeyValues: ")
 	pMainFile:Print(1)
@@ -25,7 +25,7 @@ if (pMainFile:LoadFromFile(gamePath .. "/gameinfo.txt", "MOD")) then
 		print( "Table -> KeyValues: ")
 		local pNewMainFile = table.ToKeyValues( tMainFile, "gameinfo.txt" )
 		pNewMainFile:Print( 1 )
-		pNewMainFile:deleteThis()
+		pNewMainFile:DeleteThis()
 	]]
 
 	MsgN("KeyValues -> Table (Order preserved): ")
@@ -35,6 +35,6 @@ if (pMainFile:LoadFromFile(gamePath .. "/gameinfo.txt", "MOD")) then
 	MsgN("Table (Order preserved) -> KeyValues: ")
 	local pNewMainFile = table.ToKeyValues(tMainFile, "gameinfo.txt", true)
 	pNewMainFile:Print(1)
-	pNewMainFile:deleteThis()
+	pNewMainFile:DeleteThis()
 end
-pMainFile:deleteThis()
+pMainFile:DeleteThis()

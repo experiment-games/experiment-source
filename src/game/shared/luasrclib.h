@@ -32,7 +32,7 @@ LUALIB_API int( luaopen_CBasePlayer_shared )( lua_State *L );
 #define LUA_EFFECTDATALIBNAME "CEffectData"
 LUALIB_API int( luaopen_CEffectData )( lua_State *L );
 
-#define LUA_GAMETRACELIBNAME "CGameTrace"
+#define LUA_GAMETRACELIBNAME "Trace"
 LUALIB_API int( luaopen_CGameTrace )( lua_State *L );
 
 #define LUA_EXPERIMENTPLAYERLIBNAME "CExperimentPlayer"
@@ -103,9 +103,6 @@ LUALIB_API int( luaopen_FONTFLAG )( lua_State *L );
 #define LUA_GESTURESLOTLIBNAME "GESTURE_SLOT"
 LUALIB_API int( luaopen_GESTURE_SLOT )( lua_State *L );
 
-#define LUA_GLOBALSLIBNAME "Globals"
-LUALIB_API int( luaopen_gpGlobals )( lua_State *L );
-
 #define LUA_CLIENTSHADOWMGRLIBNAME "ClientShadowManager"
 LUALIB_API int( luaopen_g_pClientShadowMgr )( lua_State *L );
 
@@ -127,7 +124,7 @@ LUALIB_API int( luaopen_IN )( lua_State *L );
 #define LUA_NETCHANNELINFOLIBNAME "INetChannelInfo"
 LUALIB_API int( luaopen_INetChannelInfo )( lua_State *L );
 
-#define LUA_INETWORKSTRINGTABLELIBNAME "INetworkStringTable"
+#define LUA_INETWORKSTRINGTABLELIBNAME "NetworkStringTable"
 LUALIB_API int( luaopen_INetworkStringTable )( lua_State *L );
 
 #define LUA_INPUTLIBNAME "Input"
@@ -149,6 +146,7 @@ LUALIB_API int( luaopen_IScheme )( lua_State *L );
 LUALIB_API int( luaopen_ISteamFriends )( lua_State *L );
 
 #define LUA_KEYVALUESLIBNAME "KeyValues"
+#define LUA_KEYVALUESMETANAME "KeyValuesHandle"
 LUALIB_API int( luaopen_KeyValues )( lua_State *L );
 
 #define LUA_LIFELIBNAME "LIFE"
@@ -170,7 +168,7 @@ LUALIB_API int( luaopen_MOVECOLLIDE )( lua_State *L );
 LUALIB_API int( luaopen_MOVETYPE )( lua_State *L );
 
 #define LUA_NETWORKSTRINGTABLELIBNAME "NetworkStringTable"
-LUALIB_API int( luaopen_networkstringtable )( lua_State *L );
+LUALIB_API int( luaopen_NetworkStringTables )( lua_State *L );
 
 #define LUA_OBSMODELIBNAME "OBS_MODE"
 LUALIB_API int( luaopen_OBS_MODE )( lua_State *L );

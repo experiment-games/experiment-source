@@ -36,91 +36,111 @@ LUALIB_API lua_CGameTrace &luaL_checktrace( lua_State *L, int narg )
     return *d;
 }
 
-static int CGameTrace_DidHit( lua_State *L )
+LUA_REGISTRATION_INIT( Trace )
+
+LUA_BINDING_BEGIN( Trace, DidHit, "class", "Check if the trace hit anything." )
 {
-    lua_pushboolean( L, luaL_checktrace( L, 1 ).DidHit() );
+    lua_CGameTrace &trace = LUA_BINDING_ARGUMENT( lua_totrace, 1, "trace" );
+    lua_pushboolean( L, trace.DidHit() );
     return 1;
 }
+LUA_BINDING_END( "boolean", "true if the trace hit something, false otherwise." )
 
-static int CGameTrace_DidHitNonWorldEntity( lua_State *L )
+LUA_BINDING_BEGIN( Trace, DidHitNonWorldEntity, "class", "Check if the trace hit a non-world entity." )
 {
-    lua_pushboolean( L, luaL_checktrace( L, 1 ).DidHitNonWorldEntity() );
+    lua_CGameTrace &trace = LUA_BINDING_ARGUMENT( lua_totrace, 1, "trace" );
+    lua_pushboolean( L, trace.DidHitNonWorldEntity() );
     return 1;
 }
+LUA_BINDING_END( "boolean", "true if the trace hit a non-world entity, false otherwise." )
 
-static int CGameTrace_DidHitWorld( lua_State *L )
+LUA_BINDING_BEGIN( Trace, DidHitWorld, "class", "Check if the trace hit the world." )
 {
-    lua_pushboolean( L, luaL_checktrace( L, 1 ).DidHitWorld() );
+    lua_CGameTrace &trace = LUA_BINDING_ARGUMENT( lua_totrace, 1, "trace" );
+    lua_pushboolean( L, trace.DidHitWorld() );
     return 1;
 }
+LUA_BINDING_END( "boolean", "true if the trace hit the world, false otherwise." )
 
-static int CGameTrace_GetEntityIndex( lua_State *L )
+LUA_BINDING_BEGIN( Trace, GetEntityIndex, "class", "Get the index of the entity that was hit." )
 {
-    lua_pushinteger( L, luaL_checktrace( L, 1 ).GetEntityIndex() );
+    lua_CGameTrace &trace = LUA_BINDING_ARGUMENT( lua_totrace, 1, "trace" );
+    lua_pushinteger( L, trace.GetEntityIndex() );
     return 1;
 }
+LUA_BINDING_END( "number", "The index of the entity that was hit." )
 
-static int CGameTrace_IsDispSurface( lua_State *L )
+LUA_BINDING_BEGIN( Trace, IsDisplacementSurface, "class", "Check if the trace hit a displacement surface." )
 {
-    lua_pushboolean( L, luaL_checktrace( L, 1 ).IsDispSurface() );
+    lua_CGameTrace &trace = LUA_BINDING_ARGUMENT( lua_totrace, 1, "trace" );
+    lua_pushboolean( L, trace.IsDispSurface() );
     return 1;
 }
+LUA_BINDING_END( "boolean", "true if the trace hit a displacement surface, false otherwise." )
 
-static int CGameTrace_IsDispSurfaceBuildable( lua_State *L )
+LUA_BINDING_BEGIN( Trace, IsDisplacementSurfaceBuildable, "class", "Check if the trace hit a buildable displacement surface." )
 {
-    lua_pushboolean( L, luaL_checktrace( L, 1 ).IsDispSurfaceBuildable() );
+    lua_CGameTrace &trace = LUA_BINDING_ARGUMENT( lua_totrace, 1, "trace" );
+    lua_pushboolean( L, trace.IsDispSurfaceBuildable() );
     return 1;
 }
+LUA_BINDING_END( "boolean", "true if the trace hit a buildable displacement surface, false otherwise." )
 
-static int CGameTrace_IsDispSurfaceProp1( lua_State *L )
+LUA_BINDING_BEGIN( Trace, IsDisplacementSurfaceProp1, "class", "Check if the trace hit a displacement surface with prop1 physics." )
 {
-    lua_pushboolean( L, luaL_checktrace( L, 1 ).IsDispSurfaceProp1() );
+    lua_CGameTrace &trace = LUA_BINDING_ARGUMENT( lua_totrace, 1, "trace" );
+    lua_pushboolean( L, trace.IsDispSurfaceProp1() );
     return 1;
 }
+LUA_BINDING_END( "boolean", "true if the trace hit a displacement surface with prop1 physics, false otherwise." )
 
-static int CGameTrace_IsDispSurfaceProp2( lua_State *L )
+LUA_BINDING_BEGIN( Trace, IsDisplacementSurfaceProp2, "class", "Check if the trace hit a displacement surface with prop2 physics." )
 {
-    lua_pushboolean( L, luaL_checktrace( L, 1 ).IsDispSurfaceProp2() );
+    lua_CGameTrace &trace = LUA_BINDING_ARGUMENT( lua_totrace, 1, "trace" );
+    lua_pushboolean( L, trace.IsDispSurfaceProp2() );
     return 1;
 }
+LUA_BINDING_END( "boolean", "true if the trace hit a displacement surface with prop2 physics, false otherwise." )
 
-static int CGameTrace_IsDispSurfaceWalkable( lua_State *L )
+LUA_BINDING_BEGIN( Trace, IsDisplacementSurfaceWalkable, "class", "Check if the trace hit a walkable displacement surface." )
 {
-    lua_pushboolean( L, luaL_checktrace( L, 1 ).IsDispSurfaceWalkable() );
+    lua_CGameTrace &trace = LUA_BINDING_ARGUMENT( lua_totrace, 1, "trace" );
+    lua_pushboolean( L, trace.IsDispSurfaceWalkable() );
     return 1;
 }
+LUA_BINDING_END( "boolean", "true if the trace hit a walkable displacement surface, false otherwise." )
 
-static int CGameTrace___index( lua_State *L )
-{    
-    trace_t tr = luaL_checktrace( L, 1 );
-    const char *field = luaL_checkstring( L, 2 );
+LUA_BINDING_BEGIN( Trace, __index, "class", "Get a field from the trace." )
+{
+    lua_CGameTrace &trace = LUA_BINDING_ARGUMENT( lua_totrace, 1, "trace" );
+    const char *field = LUA_BINDING_ARGUMENT( lua_tostring, 2, "field" );
 
     if ( Q_strcmp( field, "allsolid" ) == 0 )
-        lua_pushboolean( L, tr.allsolid );
+        lua_pushboolean( L, trace.allsolid );
     else if ( Q_strcmp( field, "contents" ) == 0 )
-        lua_pushinteger( L, tr.contents );
+        lua_pushinteger( L, trace.contents );
     else if ( Q_strcmp( field, "dispFlags" ) == 0 )
-        lua_pushinteger( L, tr.dispFlags );
+        lua_pushinteger( L, trace.dispFlags );
     else if ( Q_strcmp( field, "endpos" ) == 0 )
-        lua_pushvector( L, tr.endpos );
+        lua_pushvector( L, trace.endpos );
     else if ( Q_strcmp( field, "fraction" ) == 0 )
-        lua_pushnumber( L, tr.fraction );
+        lua_pushnumber( L, trace.fraction );
     else if ( Q_strcmp( field, "fractionleftsolid" ) == 0 )
-        lua_pushnumber( L, tr.fractionleftsolid );
+        lua_pushnumber( L, trace.fractionleftsolid );
     else if ( Q_strcmp( field, "hitbox" ) == 0 )
-        lua_pushinteger( L, tr.hitbox );
+        lua_pushinteger( L, trace.hitbox );
     else if ( Q_strcmp( field, "hitgroup" ) == 0 )
-        lua_pushinteger( L, tr.hitgroup );
+        lua_pushinteger( L, trace.hitgroup );
     else if ( Q_strcmp( field, "m_pEnt" ) == 0 )
-        CBaseEntity::PushLuaInstanceSafe( L, tr.m_pEnt );
+        CBaseEntity::PushLuaInstanceSafe( L, trace.m_pEnt );
     else if ( Q_strcmp( field, "physicsbone" ) == 0 )
-        lua_pushinteger( L, tr.physicsbone );
+        lua_pushinteger( L, trace.physicsbone );
     else if ( Q_strcmp( field, "startpos" ) == 0 )
-        lua_pushvector( L, tr.startpos );
+        lua_pushvector( L, trace.startpos );
     else if ( Q_strcmp( field, "startsolid" ) == 0 )
-        lua_pushboolean( L, tr.startsolid );
+        lua_pushboolean( L, trace.startsolid );
     else if ( Q_strcmp( field, "surface" ) == 0 )
-        lua_pushcsurface( L, tr.surface );
+        lua_pushcsurface( L, trace.surface );
     else
     {
         if ( lua_getmetatable( L, 1 ) )
@@ -133,71 +153,58 @@ static int CGameTrace___index( lua_State *L )
 
     return 1;
 }
+LUA_BINDING_END( "any", "The value of the field." )
 
-static int CGameTrace___newindex( lua_State *L )
+LUA_BINDING_BEGIN( Trace, __newindex, "class", "Set a field in the trace." )
 {
-    const char *field = luaL_checkstring( L, 2 );
+    lua_CGameTrace &trace = LUA_BINDING_ARGUMENT( lua_totrace, 1, "trace" );
+    const char *field = LUA_BINDING_ARGUMENT( lua_tostring, 2, "field" );
 
     if ( Q_strcmp( field, "allsolid" ) == 0 )
-        luaL_checktrace( L, 1 ).allsolid = luaL_checkboolean( L, 3 );
+        trace.allsolid = luaL_checkboolean( L, 3 );
     else if ( Q_strcmp( field, "contents" ) == 0 )
-        luaL_checktrace( L, 1 ).contents = luaL_checknumber( L, 3 );
+        trace.contents = luaL_checknumber( L, 3 );
     else if ( Q_strcmp( field, "dispFlags" ) == 0 )
-        luaL_checktrace( L, 1 ).dispFlags = luaL_checknumber( L, 3 );
+        trace.dispFlags = luaL_checknumber( L, 3 );
     else if ( Q_strcmp( field, "endpos" ) == 0 )
-        luaL_checktrace( L, 1 ).endpos = luaL_checkvector( L, 3 );
+        trace.endpos = luaL_checkvector( L, 3 );
     else if ( Q_strcmp( field, "fraction" ) == 0 )
-        luaL_checktrace( L, 1 ).fraction = luaL_checknumber( L, 3 );
+        trace.fraction = luaL_checknumber( L, 3 );
     else if ( Q_strcmp( field, "fractionleftsolid" ) == 0 )
-        luaL_checktrace( L, 1 ).fractionleftsolid = luaL_checknumber( L, 3 );
+        trace.fractionleftsolid = luaL_checknumber( L, 3 );
     else if ( Q_strcmp( field, "hitbox" ) == 0 )
-        luaL_checktrace( L, 1 ).hitbox = luaL_checknumber( L, 3 );
+        trace.hitbox = luaL_checknumber( L, 3 );
     else if ( Q_strcmp( field, "hitgroup" ) == 0 )
-        luaL_checktrace( L, 1 ).hitgroup = luaL_checknumber( L, 3 );
+        trace.hitgroup = luaL_checknumber( L, 3 );
     else if ( Q_strcmp( field, "m_pEnt" ) == 0 )
-        luaL_checktrace( L, 1 ).m_pEnt = lua_toentity( L, 3 );
+        trace.m_pEnt = lua_toentity( L, 3 );
     else if ( Q_strcmp( field, "physicsbone" ) == 0 )
-        luaL_checktrace( L, 1 ).physicsbone = luaL_checknumber( L, 3 );
+        trace.physicsbone = luaL_checknumber( L, 3 );
     else if ( Q_strcmp( field, "startpos" ) == 0 )
-        luaL_checktrace( L, 1 ).startpos = luaL_checkvector( L, 3 );
+        trace.startpos = luaL_checkvector( L, 3 );
     else if ( Q_strcmp( field, "startsolid" ) == 0 )
-        luaL_checktrace( L, 1 ).startsolid = luaL_checkboolean( L, 3 );
+        trace.startsolid = luaL_checkboolean( L, 3 );
 
     return 0;
 }
+LUA_BINDING_END()
 
-static int CGameTrace___tostring( lua_State *L )
+LUA_BINDING_BEGIN( Trace, __tostring, "class", "Get a string representation of the trace." )
 {
-    lua_pushfstring( L, "CGameTrace: %p", luaL_checkudata( L, 1, "CGameTrace" ) );
+    lua_pushfstring( L, "CGameTrace: %p", LUA_BINDING_ARGUMENT( luaL_checktrace, 1, "trace" ) );
     return 1;
 }
+LUA_BINDING_END( "string", "The string representation of the trace." )
 
-static const luaL_Reg CGameTracemeta[] = {
-    { "DidHit", CGameTrace_DidHit },
-    { "DidHitNonWorldEntity", CGameTrace_DidHitNonWorldEntity },
-    { "DidHitWorld", CGameTrace_DidHitWorld },
-    { "GetEntityIndex", CGameTrace_GetEntityIndex },
-    { "IsDispSurface", CGameTrace_IsDispSurface },
-    { "IsDispSurfaceBuildable", CGameTrace_IsDispSurfaceBuildable },
-    { "IsDispSurfaceProp1", CGameTrace_IsDispSurfaceProp1 },
-    { "IsDispSurfaceProp2", CGameTrace_IsDispSurfaceProp2 },
-    { "IsDispSurfaceWalkable", CGameTrace_IsDispSurfaceWalkable },
-    { "__index", CGameTrace___index },
-    { "__newindex", CGameTrace___newindex },
-    { "__tostring", CGameTrace___tostring },
-    { NULL, NULL } };
+LUA_REGISTRATION_INIT( _G )
 
-static int luasrc_trace_t( lua_State *L )
+LUA_BINDING_BEGIN( _G, CreateTrace, "library", "Create a new trace object." )
 {
-    trace_t tr;
-    memset( &tr, 0, sizeof( trace_t ) );
-    lua_pushtrace( L, tr );
+    lua_CGameTrace trace;
+    lua_pushtrace( L, trace );
     return 1;
 }
-
-static const luaL_Reg CGameTrace_funcs[] = {
-    { "trace_t", luasrc_trace_t },
-    { NULL, NULL } };
+LUA_BINDING_END( "Trace", "The new trace object." )
 
 /*
 ** Open CGameTrace object
@@ -205,10 +212,14 @@ static const luaL_Reg CGameTrace_funcs[] = {
 LUALIB_API int luaopen_CGameTrace( lua_State *L )
 {
     LUA_PUSH_NEW_METATABLE( L, LUA_GAMETRACELIBNAME );
-    luaL_register( L, NULL, CGameTracemeta );
-    lua_pushstring( L, "Trace" );
+
+    LUA_REGISTRATION_COMMIT( Trace );
+
+    lua_pushstring( L, LUA_GAMETRACELIBNAME );
     lua_setfield( L, -2, "__type" ); /* metatable.__type = "Trace" */
-    luaL_register( L, LUA_GNAME, CGameTrace_funcs );
-    lua_pop( L, 1 );
+    lua_pop( L, 1 );                 /* pop metatable */
+
+    LUA_REGISTRATION_COMMIT_LIBRARY( _G );
+
     return 1;
 }

@@ -180,6 +180,7 @@ function fromTypeChecker(typeChecker) {
     case 'luaL_checkstring':
     case 'luaL_optstring':
     case 'lua_tostring':
+    case 'luaL_checklstring':
       return 'string';
     case 'luaL_checkboolean':
     case 'luaL_optboolean':
@@ -233,6 +234,13 @@ function fromTypeChecker(typeChecker) {
     case 'luaL_optfilehandle':
     case 'lua_tofilehandle':
       return 'FileHandle';
+    case 'luaL_checkstringtable':
+    case 'lua_tostringtable':
+      return 'NetworkStringTable';
+    case 'luaL_checkkeyvalues':
+    case 'luaL_optkeyvalues':
+    case 'lua_tokeyvalues':
+      return 'KeyValuesHandle';
     default:
       return 'unknown';
   }

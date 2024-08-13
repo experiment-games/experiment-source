@@ -720,7 +720,6 @@ $Project
 		    $File "$SRCDIR\public\lengine_shared.cpp"
 		    $File "$SRCDIR\public\lfilesystem.cpp"
 		    $File "$SRCDIR\public\lgametrace.cpp"
-		    $File "$SRCDIR\public\lglobalvars_base.cpp"
 		    $File "$SRCDIR\public\tier1\liconvar.cpp"
 		    $File "$SRCDIR\public\licvar.cpp"
 		    $File "$SRCDIR\public\materialsystem\limaterial.cpp"

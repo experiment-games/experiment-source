@@ -139,7 +139,7 @@ function table.Print(target, isSequential, indentLevel, tablesVisited)
 end
 
 function table.ToKeyValues(target, setName, isSequential)
-	local keyValueSet = KeyValues(setName)
+	local keyValueSet = KeyValues.Create(setName)
 
 	if (not isSequential) then
 		for key, value in pairs(target) do

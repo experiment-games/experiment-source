@@ -125,7 +125,7 @@ end
 -- Purpose:
 -------------------------------------------------------------------------------
 function CContentSubGames:OnResetData()
-	local pMainFile = KeyValues("gamecontent.txt")
+	local pMainFile = KeyValues.Create("gamecontent.txt")
 	if (pMainFile:LoadFromFile(engine.GetGameDirectory() .. "/gamecontent.txt", "MOD")) then
 		local tMainFile = pMainFile:ToTable(true)
 		if (tMainFile[1].value and type(tMainFile[1].value) == "table") then
@@ -142,7 +142,7 @@ function CContentSubGames:OnResetData()
 			end
 		end
 	end
-	pMainFile:deleteThis()
+	pMainFile:DeleteThis()
 end
 
 -------------------------------------------------------------------------------
@@ -156,7 +156,7 @@ end
 -- Purpose:
 -------------------------------------------------------------------------------
 function CContentSubGames:OnApplyChanges()
-	local pGameContent = KeyValues("GameContent")
+	local pGameContent = KeyValues.Create("GameContent")
 	local pFileSystemKey = pGameContent:CreateNewKey()
 	pFileSystemKey:SetName("FileSystem")
 	local checkButtonName
@@ -165,13 +165,13 @@ function CContentSubGames:OnApplyChanges()
 		checkButtonName = g_GameCheckButtons[i][1]
 		pCheckButton = self[checkButtonName]
 		if (pCheckButton and pCheckButton:IsSelected()) then
-			local AppId = KeyValues("AppId")
+			local AppId = KeyValues.Create("AppId")
 			AppId:SetStringValue(tostring(g_GameCheckButtons[i][2]))
 			pFileSystemKey:AddSubKey(AppId)
 		end
 	end
 	pGameContent:SaveToFile("gamecontent.txt", "MOD")
-	pGameContent:deleteThis()
+	pGameContent:DeleteThis()
 end
 
 Gui.Register(CContentSubGames, "CContentSubGames", "PropertyPage")

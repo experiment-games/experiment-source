@@ -15,7 +15,7 @@ lua:
   
   arguments:
     - name: "input"
-      type: unknown
+      type: string
     - name: "file"
       type: FileHandle
   returns:

@@ -27,14 +27,16 @@ LUA_API void lua_pushkeyvalues( lua_State *L, lua_KeyValues *pKV )
 {
     lua_KeyValues **ppKV = ( lua_KeyValues ** )lua_newuserdata( L, sizeof( lua_KeyValues * ) );
     *ppKV = pKV;
-    LUA_SAFE_SET_METATABLE( L, "KeyValues" );
+    LUA_SAFE_SET_METATABLE( L, LUA_KEYVALUESMETANAME );
 }
 
 LUALIB_API lua_KeyValues *luaL_checkkeyvalues( lua_State *L, int narg )
 {
-    lua_KeyValues **d = ( lua_KeyValues ** )luaL_checkudata( L, narg, "KeyValues" );
+    lua_KeyValues **d = ( lua_KeyValues ** )luaL_checkudata( L, narg, LUA_KEYVALUESMETANAME );
+
     if ( *d == 0 ) /* avoid extra test when d is not 0 */
         luaL_argerror( L, narg, "KeyValues expected, got NULL" );
+
     return *d;
 }
 
@@ -43,387 +45,511 @@ LUALIB_API lua_KeyValues *luaL_optkeyvalues( lua_State *L, int narg, KeyValues *
     return luaL_opt( L, luaL_checkkeyvalues, narg, def );
 }
 
-static int KeyValues_AddSubKey( lua_State *L )
+LUA_REGISTRATION_INIT( KeyValuesHandle )
+
+LUA_BINDING_BEGIN( KeyValuesHandle, AddSubKey, "class", "Add a subkey to the keyvalues." )
 {
-    luaL_checkkeyvalues( L, 1 )->AddSubKey( luaL_checkkeyvalues( L, 2 ) );
+    lua_KeyValues *keyValues = LUA_BINDING_ARGUMENT( luaL_checkkeyvalues, 1, "keyValues" );
+    KeyValues *subKey = LUA_BINDING_ARGUMENT( luaL_checkkeyvalues, 2, "subKey" );
+    keyValues->AddSubKey( subKey );
     return 0;
 }
+LUA_BINDING_END()
 
-static int KeyValues_ChainKeyValue( lua_State *L )
+LUA_BINDING_BEGIN( KeyValuesHandle, ChainKeyValue, "class", "Chain a keyvalue to the keyvalues." )
 {
-    luaL_checkkeyvalues( L, 1 )->ChainKeyValue( luaL_checkkeyvalues( L, 2 ) );
+    lua_KeyValues *keyValues = LUA_BINDING_ARGUMENT( luaL_checkkeyvalues, 1, "keyValues" );
+    KeyValues *keyValue = LUA_BINDING_ARGUMENT( luaL_checkkeyvalues, 2, "keyValue" );
+    keyValues->ChainKeyValue( keyValue );
     return 0;
 }
+LUA_BINDING_END()
 
-static int KeyValues_Clear( lua_State *L )
+LUA_BINDING_BEGIN( KeyValuesHandle, Clear, "class", "Clear the keyvalues." )
 {
-    luaL_checkkeyvalues( L, 1 )->Clear();
+    lua_KeyValues *keyValues = LUA_BINDING_ARGUMENT( luaL_checkkeyvalues, 1, "keyValues" );
+    keyValues->Clear();
     return 0;
 }
+LUA_BINDING_END()
 
-static int KeyValues_CopySubkeys( lua_State *L )
+LUA_BINDING_BEGIN( KeyValuesHandle, CopySubkeys, "class", "Copy the subkeys from another keyvalues." )
 {
-    luaL_checkkeyvalues( L, 1 )->CopySubkeys( luaL_checkkeyvalues( L, 2 ) );
+    lua_KeyValues *keyValues = LUA_BINDING_ARGUMENT( luaL_checkkeyvalues, 1, "keyValues" );
+    KeyValues *subKey = LUA_BINDING_ARGUMENT( luaL_checkkeyvalues, 2, "subKey" );
+    keyValues->CopySubkeys( subKey );
     return 0;
 }
+LUA_BINDING_END()
 
-static int KeyValues_CreateNewKey( lua_State *L )
+LUA_BINDING_BEGIN( KeyValuesHandle, CreateNewKey, "class", "Create a new keyvalues key." )
 {
-    lua_pushkeyvalues( L, luaL_checkkeyvalues( L, 1 )->CreateNewKey() );
+    lua_KeyValues *keyValues = LUA_BINDING_ARGUMENT( luaL_checkkeyvalues, 1, "keyValues" );
+    lua_pushkeyvalues( L, keyValues->CreateNewKey() );
     return 1;
 }
+LUA_BINDING_END( "KeyValuesHandle", "The new keyvalues key." )
 
-static int KeyValues_deleteThis( lua_State *L )
+LUA_BINDING_BEGIN( KeyValuesHandle, DeleteThis, "class", "Delete the keyvalues." )
 {
-    KeyValues *pKV = luaL_checkkeyvalues( L, 1 );
-    pKV->deleteThis();
+    lua_KeyValues *keyValues = LUA_BINDING_ARGUMENT( luaL_checkkeyvalues, 1, "keyValues" );
+    keyValues->deleteThis();
     // Andrew; this isn't standard behavior or usage, but we do this for the sake
     // of things being safe in Lua
     *( void ** )lua_touserdata( L, 1 ) = ( void ** )NULL;
     return 0;
 }
+LUA_BINDING_END()
 
-static int KeyValues_FindKey( lua_State *L )
+LUA_BINDING_BEGIN( KeyValuesHandle, FindKey, "class", "Find a key in the keyvalues." )
 {
+    lua_KeyValues *keyValues = LUA_BINDING_ARGUMENT( luaL_checkkeyvalues, 1, "keyValues" );
     switch ( lua_type( L, 2 ) )
     {
         case LUA_TNUMBER:
-            lua_pushkeyvalues( L, luaL_checkkeyvalues( L, 1 )->FindKey( luaL_checknumber( L, 2 ) ) );
+            lua_pushkeyvalues( L,
+                               keyValues->FindKey(
+                                   LUA_BINDING_ARGUMENT( luaL_checknumber, 2, "key" ) ) );
             break;
         case LUA_TSTRING:
         default:
-            lua_pushkeyvalues( L, luaL_checkkeyvalues( L, 1 )->FindKey( luaL_checkstring( L, 2 ), luaL_optboolean( L, 3, false ) ) );
+            lua_pushkeyvalues( L,
+                               keyValues->FindKey(
+                                   LUA_BINDING_ARGUMENT( luaL_checkstring, 2, "key" ),
+                                   LUA_BINDING_ARGUMENT_WITH_DEFAULT( luaL_optboolean, 3, false, "recursive" ) ) );
             break;
     }
     return 1;
 }
+LUA_BINDING_END( "KeyValuesHandle", "The keyvalues key." )
 
-static int KeyValues_GetColor( lua_State *L )
+LUA_BINDING_BEGIN( KeyValuesHandle, GetColor, "class", "Get a color from the keyvalues." )
 {
+    lua_KeyValues *keyValues = LUA_BINDING_ARGUMENT( luaL_checkkeyvalues, 1, "keyValues" );
     switch ( lua_type( L, 2 ) )
     {
         case LUA_TNUMBER:
-            lua_pushcolor( L, luaL_checkkeyvalues( L, 1 )->GetColor( luaL_checknumber( L, 2 ) ) );
+            lua_pushcolor( L,
+                           keyValues->GetColor(
+                               LUA_BINDING_ARGUMENT( luaL_checknumber, 2, "key" ) ) );
             break;
         case LUA_TNONE:
         case LUA_TSTRING:
         default:
-            lua_pushcolor( L, luaL_checkkeyvalues( L, 1 )->GetColor( luaL_optstring( L, 2, 0 ) ) );
+            lua_pushcolor( L,
+                           keyValues->GetColor(
+                               LUA_BINDING_ARGUMENT_WITH_DEFAULT( luaL_optstring, 2, 0, "key" ) ) );
             break;
     }
     return 1;
 }
+LUA_BINDING_END( "Color", "The value as a color." )
 
-static int KeyValues_GetDataType( lua_State *L )
+LUA_BINDING_BEGIN( KeyValuesHandle, GetDataType, "class", "Get the data type of a key in the keyvalues." )
 {
-    lua_pushinteger( L, luaL_checkkeyvalues( L, 1 )->GetDataType( luaL_optstring( L, 2, 0 ) ) );
+    lua_KeyValues *keyValues = LUA_BINDING_ARGUMENT( luaL_checkkeyvalues, 1, "keyValues" );
+    lua_pushinteger( L,
+                     keyValues->GetDataType(
+                         LUA_BINDING_ARGUMENT_WITH_DEFAULT( luaL_optstring, 2, 0, "key" ) ) );
     return 1;
 }
+LUA_BINDING_END( "integer", "The data type." )
 
-static int KeyValues_GetFirstSubKey( lua_State *L )
+LUA_BINDING_BEGIN( KeyValuesHandle, GetFirstSubKey, "class", "Get the first subkey of the keyvalues." )
 {
-    lua_pushkeyvalues( L, luaL_checkkeyvalues( L, 1 )->GetFirstSubKey() );
+    lua_KeyValues *keyValues = LUA_BINDING_ARGUMENT( luaL_checkkeyvalues, 1, "keyValues" );
+    lua_pushkeyvalues( L, keyValues->GetFirstSubKey() );
     return 1;
 }
+LUA_BINDING_END( "KeyValuesHandle", "The first subkey." )
 
-static int KeyValues_GetFirstTrueSubKey( lua_State *L )
+LUA_BINDING_BEGIN( KeyValuesHandle, GetFirstTrueSubKey, "class", "Get the first true subkey of the keyvalues." )
 {
-    lua_pushkeyvalues( L, luaL_checkkeyvalues( L, 1 )->GetFirstTrueSubKey() );
+    lua_KeyValues *keyValues = LUA_BINDING_ARGUMENT( luaL_checkkeyvalues, 1, "keyValues" );
+    lua_pushkeyvalues( L, keyValues->GetFirstTrueSubKey() );
     return 1;
 }
+LUA_BINDING_END( "KeyValuesHandle", "The first true subkey." )
 
-static int KeyValues_GetFirstValue( lua_State *L )
+LUA_BINDING_BEGIN( KeyValuesHandle, GetFirstValue, "class", "Get the first value of the keyvalues." )
 {
-    lua_pushkeyvalues( L, luaL_checkkeyvalues( L, 1 )->GetFirstValue() );
+    lua_KeyValues *keyValues = LUA_BINDING_ARGUMENT( luaL_checkkeyvalues, 1, "keyValues" );
+    lua_pushkeyvalues( L, keyValues->GetFirstValue() );
     return 1;
 }
+LUA_BINDING_END( "KeyValuesHandle", "The first value." )
 
-static int KeyValues_GetFloat( lua_State *L )
+LUA_BINDING_BEGIN( KeyValuesHandle, GetFloat, "class", "Get a float from the keyvalues." )
 {
+    lua_KeyValues *keyValues = LUA_BINDING_ARGUMENT( luaL_checkkeyvalues, 1, "keyValues" );
     switch ( lua_type( L, 2 ) )
     {
         case LUA_TNUMBER:
-            lua_pushnumber( L, luaL_checkkeyvalues( L, 1 )->GetFloat( luaL_checknumber( L, 2 ), luaL_optnumber( L, 3, 0.0f ) ) );
+            lua_pushnumber( L,
+                            keyValues->GetFloat(
+                                LUA_BINDING_ARGUMENT( luaL_checknumber, 2, "key" ),
+                                LUA_BINDING_ARGUMENT_WITH_DEFAULT( luaL_optnumber, 3, 0.0f, "default" ) ) );
             break;
         case LUA_TNONE:
         case LUA_TSTRING:
         default:
-            lua_pushnumber( L, luaL_checkkeyvalues( L, 1 )->GetFloat( luaL_optstring( L, 2, 0 ), luaL_optnumber( L, 3, 0.0f ) ) );
+            lua_pushnumber( L,
+                            keyValues->GetFloat(
+                                LUA_BINDING_ARGUMENT_WITH_DEFAULT( luaL_optstring, 2, 0, "key" ),
+                                LUA_BINDING_ARGUMENT_WITH_DEFAULT( luaL_optnumber, 3, 0.0f, "default" ) ) );
             break;
     }
     return 1;
 }
+LUA_BINDING_END( "number", "The value as a float." )
 
-static int KeyValues_GetInt( lua_State *L )
+LUA_BINDING_BEGIN( KeyValuesHandle, GetInt, "class", "Get an integer from the keyvalues." )
 {
+    lua_KeyValues *keyValues = LUA_BINDING_ARGUMENT( luaL_checkkeyvalues, 1, "keyValues" );
     switch ( lua_type( L, 2 ) )
     {
         case LUA_TNUMBER:
-            lua_pushinteger( L, luaL_checkkeyvalues( L, 1 )->GetInt( luaL_checknumber( L, 2 ), ( int )luaL_optnumber( L, 3, 0 ) ) );
+            lua_pushinteger( L,
+                             keyValues->GetInt(
+                                 LUA_BINDING_ARGUMENT( luaL_checknumber, 2, "key" ),
+                                 ( int )LUA_BINDING_ARGUMENT_WITH_DEFAULT( luaL_optnumber, 3, 0, "default" ) ) );
             break;
         case LUA_TNONE:
         case LUA_TSTRING:
         default:
-            lua_pushinteger( L, luaL_checkkeyvalues( L, 1 )->GetInt( luaL_optstring( L, 2, 0 ), ( int )luaL_optnumber( L, 3, 0 ) ) );
+            lua_pushinteger( L,
+                             keyValues->GetInt(
+                                 LUA_BINDING_ARGUMENT_WITH_DEFAULT( luaL_optstring, 2, 0, "key" ),
+                                 ( int )LUA_BINDING_ARGUMENT_WITH_DEFAULT( luaL_optnumber, 3, 0, "default" ) ) );
             break;
     }
     return 1;
 }
+LUA_BINDING_END( "integer", "The value as an integer." )
 
-static int KeyValues_GetName( lua_State *L )
+LUA_BINDING_BEGIN( KeyValuesHandle, GetName, "class", "Get the name of the keyvalues." )
 {
-    lua_pushstring( L, luaL_checkkeyvalues( L, 1 )->GetName() );
+    lua_KeyValues *keyValues = LUA_BINDING_ARGUMENT( luaL_checkkeyvalues, 1, "keyValues" );
+    lua_pushstring( L, keyValues->GetName() );
     return 1;
 }
+LUA_BINDING_END( "string", "The name." )
 
-static int KeyValues_GetNameSymbol( lua_State *L )
+LUA_BINDING_BEGIN( KeyValuesHandle, GetNameSymbol, "class", "Get the name symbol of the keyvalues." )
 {
-    lua_pushinteger( L, luaL_checkkeyvalues( L, 1 )->GetNameSymbol() );
+    lua_KeyValues *keyValues = LUA_BINDING_ARGUMENT( luaL_checkkeyvalues, 1, "keyValues" );
+    lua_pushinteger( L, keyValues->GetNameSymbol() );
     return 1;
 }
+LUA_BINDING_END( "integer", "The name symbol." )
 
-static int KeyValues_GetNextKey( lua_State *L )
+LUA_BINDING_BEGIN( KeyValuesHandle, GetNextKey, "class", "Get the next key of the keyvalues." )
 {
-    lua_pushkeyvalues( L, luaL_checkkeyvalues( L, 1 )->GetNextKey() );
+    lua_KeyValues *keyValues = LUA_BINDING_ARGUMENT( luaL_checkkeyvalues, 1, "keyValues" );
+    lua_pushkeyvalues( L, keyValues->GetNextKey() );
     return 1;
 }
+LUA_BINDING_END( "KeyValuesHandle", "The next key." )
 
-static int KeyValues_GetNextTrueSubKey( lua_State *L )
+LUA_BINDING_BEGIN( KeyValuesHandle, GetNextTrueSubKey, "class", "Get the next true subkey of the keyvalues." )
 {
-    lua_pushkeyvalues( L, luaL_checkkeyvalues( L, 1 )->GetNextTrueSubKey() );
+    lua_KeyValues *keyValues = LUA_BINDING_ARGUMENT( luaL_checkkeyvalues, 1, "keyValues" );
+    lua_pushkeyvalues( L, keyValues->GetNextTrueSubKey() );
     return 1;
 }
+LUA_BINDING_END( "KeyValuesHandle", "The next true subkey." )
 
-static int KeyValues_GetNextValue( lua_State *L )
+LUA_BINDING_BEGIN( KeyValuesHandle, GetNextValue, "class", "Get the next value of the keyvalues." )
 {
-    lua_pushkeyvalues( L, luaL_checkkeyvalues( L, 1 )->GetNextValue() );
+    lua_KeyValues *keyValues = LUA_BINDING_ARGUMENT( luaL_checkkeyvalues, 1, "keyValues" );
+    lua_pushkeyvalues( L, keyValues->GetNextValue() );
     return 1;
 }
+LUA_BINDING_END( "KeyValuesHandle", "The next value." )
 
-static int KeyValues_GetString( lua_State *L )
+LUA_BINDING_BEGIN( KeyValuesHandle, GetString, "class", "Get a string from the keyvalues." )
 {
+    lua_KeyValues *keyValues = LUA_BINDING_ARGUMENT( luaL_checkkeyvalues, 1, "keyValues" );
     switch ( lua_type( L, 2 ) )
     {
         case LUA_TNUMBER:
-            lua_pushstring( L, luaL_checkkeyvalues( L, 1 )->GetString( luaL_checknumber( L, 2 ), luaL_optstring( L, 3, "" ) ) );
+            lua_pushstring( L,
+                            keyValues->GetString(
+                                LUA_BINDING_ARGUMENT( luaL_checknumber, 2, "key" ),
+                                LUA_BINDING_ARGUMENT_WITH_DEFAULT( luaL_optstring, 3, "", "default" ) ) );
             break;
         case LUA_TNONE:
         case LUA_TSTRING:
         default:
-            lua_pushstring( L, luaL_checkkeyvalues( L, 1 )->GetString( luaL_optstring( L, 2, 0 ), luaL_optstring( L, 3, "" ) ) );
+            lua_pushstring( L,
+                            keyValues->GetString(
+                                LUA_BINDING_ARGUMENT_WITH_DEFAULT( luaL_optstring, 2, 0, "key" ),
+                                LUA_BINDING_ARGUMENT_WITH_DEFAULT( luaL_optstring, 3, "", "default" ) ) );
             break;
     }
     return 1;
 }
+LUA_BINDING_END( "string", "The value as a string." )
 
-static int KeyValues_IsEmpty( lua_State *L )
+LUA_BINDING_BEGIN( KeyValuesHandle, IsEmpty, "class", "Check if the keyvalues is empty." )
 {
+    lua_KeyValues *keyValues = LUA_BINDING_ARGUMENT( luaL_checkkeyvalues, 1, "keyValues" );
     switch ( lua_type( L, 2 ) )
     {
         case LUA_TNUMBER:
-            lua_pushboolean( L, luaL_checkkeyvalues( L, 1 )->IsEmpty( luaL_checknumber( L, 2 ) ) );
+            lua_pushboolean( L,
+                             keyValues->IsEmpty(
+                                 LUA_BINDING_ARGUMENT( luaL_checknumber, 2, "key" ) ) );
             break;
         case LUA_TNONE:
         case LUA_TSTRING:
         default:
-            lua_pushboolean( L, luaL_checkkeyvalues( L, 1 )->IsEmpty( luaL_optstring( L, 2, 0 ) ) );
+            lua_pushboolean( L,
+                             keyValues->IsEmpty(
+                                 LUA_BINDING_ARGUMENT_WITH_DEFAULT( luaL_optstring, 2, 0, "key" ) ) );
             break;
     }
     return 1;
 }
+LUA_BINDING_END( "boolean", "true if the keyvalues is empty, false otherwise." )
 
-static int KeyValues_LoadFromFile( lua_State *L )
+LUA_BINDING_BEGIN( KeyValuesHandle, LoadFromFile, "class", "Load keyvalues from a file." )
 {
-    lua_pushboolean( L, luaL_checkkeyvalues( L, 1 )->LoadFromFile( filesystem, luaL_checkstring( L, 2 ), luaL_optstring( L, 3, 0 ) ) );
+    lua_KeyValues *keyValues = LUA_BINDING_ARGUMENT( luaL_checkkeyvalues, 1, "keyValues" );
+    lua_pushboolean( L,
+                     keyValues->LoadFromFile(
+                         filesystem,
+                         LUA_BINDING_ARGUMENT( luaL_checkstring, 2, "filename" ),
+                         LUA_BINDING_ARGUMENT_WITH_DEFAULT( luaL_optstring, 3, 0, "pathID" ) ) );
     return 1;
 }
+LUA_BINDING_END( "boolean", "true if the keyvalues were loaded, false otherwise." )
 
-static int KeyValues_MakeCopy( lua_State *L )
+LUA_BINDING_BEGIN( KeyValuesHandle, MakeCopy, "class", "Make a copy of the keyvalues." )
 {
-    lua_pushkeyvalues( L, luaL_checkkeyvalues( L, 1 )->MakeCopy() );
+    lua_KeyValues *keyValues = LUA_BINDING_ARGUMENT( luaL_checkkeyvalues, 1, "keyValues" );
+    lua_pushkeyvalues( L, keyValues->MakeCopy() );
     return 1;
 }
+LUA_BINDING_END( "KeyValuesHandle", "The copy." )
 
-static int KeyValues_ProcessResolutionKeys( lua_State *L )
+LUA_BINDING_BEGIN( KeyValuesHandle, ProcessResolutionKeys, "class", "Process resolution keys in the keyvalues." )
 {
-    lua_pushboolean( L, luaL_checkkeyvalues( L, 1 )->ProcessResolutionKeys( luaL_checkstring( L, 2 ) ) );
+    lua_KeyValues *keyValues = LUA_BINDING_ARGUMENT( luaL_checkkeyvalues, 1, "keyValues" );
+    lua_pushboolean( L,
+                     keyValues->ProcessResolutionKeys(
+                         LUA_BINDING_ARGUMENT( luaL_checkstring, 2, "key" ) ) );
     return 1;
 }
+LUA_BINDING_END( "boolean", "true if the resolution keys were processed, false otherwise." )
 
-static int KeyValues_RemoveSubKey( lua_State *L )
+LUA_BINDING_BEGIN( KeyValuesHandle, RemoveSubKey, "class", "Remove a subkey from the keyvalues." )
 {
-    luaL_checkkeyvalues( L, 1 )->RemoveSubKey( luaL_checkkeyvalues( L, 2 ) );
+    lua_KeyValues *keyValues = LUA_BINDING_ARGUMENT( luaL_checkkeyvalues, 1, "keyValues" );
+    KeyValues *subKey = LUA_BINDING_ARGUMENT( luaL_checkkeyvalues, 2, "subKey" );
+    keyValues->RemoveSubKey( subKey );
     return 0;
 }
+LUA_BINDING_END()
 
-static int KeyValues_SaveToFile( lua_State *L )
+LUA_BINDING_BEGIN( KeyValuesHandle, SaveToFile, "class", "Save keyvalues to a file." )
 {
-    lua_pushboolean( L, luaL_checkkeyvalues( L, 1 )->SaveToFile( filesystem, luaL_checkstring( L, 2 ), luaL_optstring( L, 3, 0 ) ) );
+    lua_KeyValues *keyValues = LUA_BINDING_ARGUMENT( luaL_checkkeyvalues, 1, "keyValues" );
+    lua_pushboolean( L,
+                     keyValues->SaveToFile(
+                         filesystem,
+                         LUA_BINDING_ARGUMENT( luaL_checkstring, 2, "filename" ),
+                         LUA_BINDING_ARGUMENT_WITH_DEFAULT( luaL_optstring, 3, 0, "pathID" ) ) );
     return 1;
 }
+LUA_BINDING_END( "boolean", "true if the keyvalues were saved, false otherwise." )
 
-static int KeyValues_SetColor( lua_State *L )
+LUA_BINDING_BEGIN( KeyValuesHandle, SetColor, "class", "Set a color in the keyvalues." )
 {
-    luaL_checkkeyvalues( L, 1 )->SetColor( luaL_checkstring( L, 2 ), luaL_checkcolor( L, 3 ) );
+    lua_KeyValues *keyValues = LUA_BINDING_ARGUMENT( luaL_checkkeyvalues, 1, "keyValues" );
+    keyValues->SetColor(
+        LUA_BINDING_ARGUMENT( luaL_checkstring, 2, "key" ),
+        LUA_BINDING_ARGUMENT( luaL_checkcolor, 3, "color" ) );
     return 0;
 }
+LUA_BINDING_END()
 
-static int KeyValues_SetFloat( lua_State *L )
+LUA_BINDING_BEGIN( KeyValuesHandle, SetFloat, "class", "Set a float in the keyvalues." )
 {
-    luaL_checkkeyvalues( L, 1 )->SetFloat( luaL_checkstring( L, 2 ), luaL_checknumber( L, 3 ) );
+    lua_KeyValues *keyValues = LUA_BINDING_ARGUMENT( luaL_checkkeyvalues, 1, "keyValues" );
+    keyValues->SetFloat(
+        LUA_BINDING_ARGUMENT( luaL_checkstring, 2, "key" ),
+        LUA_BINDING_ARGUMENT( luaL_checknumber, 3, "value" ) );
     return 0;
 }
+LUA_BINDING_END()
 
-static int KeyValues_SetInt( lua_State *L )
+LUA_BINDING_BEGIN( KeyValuesHandle, SetInt, "class", "Set an integer in the keyvalues." )
 {
-    luaL_checkkeyvalues( L, 1 )->SetInt( luaL_checkstring( L, 2 ), luaL_checknumber( L, 3 ) );
+    lua_KeyValues *keyValues = LUA_BINDING_ARGUMENT( luaL_checkkeyvalues, 1, "keyValues" );
+    keyValues->SetInt(
+        LUA_BINDING_ARGUMENT( luaL_checkstring, 2, "key" ),
+        LUA_BINDING_ARGUMENT( luaL_checknumber, 3, "value" ) );
     return 0;
 }
+LUA_BINDING_END()
 
-static int KeyValues_SetName( lua_State *L )
+LUA_BINDING_BEGIN( KeyValuesHandle, SetName, "class", "Set the name of the keyvalues." )
 {
-    luaL_checkkeyvalues( L, 1 )->SetName( luaL_checkstring( L, 2 ) );
+    lua_KeyValues *keyValues = LUA_BINDING_ARGUMENT( luaL_checkkeyvalues, 1, "keyValues" );
+    keyValues->SetName(
+        LUA_BINDING_ARGUMENT( luaL_checkstring, 2, "name" ) );
     return 0;
 }
+LUA_BINDING_END()
 
-static int KeyValues_SetNextKey( lua_State *L )
+LUA_BINDING_BEGIN( KeyValuesHandle, SetNextKey, "class", "Set the next key of the keyvalues." )
 {
-    luaL_checkkeyvalues( L, 1 )->SetNextKey( luaL_checkkeyvalues( L, 2 ) );
+    lua_KeyValues *keyValues = LUA_BINDING_ARGUMENT( luaL_checkkeyvalues, 1, "keyValues" );
+    KeyValues *nextKey = LUA_BINDING_ARGUMENT( luaL_checkkeyvalues, 2, "nextKey" );
+    keyValues->SetNextKey( nextKey );
     return 0;
 }
+LUA_BINDING_END()
 
-static int KeyValues_SetString( lua_State *L )
+LUA_BINDING_BEGIN( KeyValuesHandle, SetString, "class", "Set a string in the keyvalues." )
 {
-    luaL_checkkeyvalues( L, 1 )->SetString( luaL_checkstring( L, 2 ), luaL_checkstring( L, 3 ) );
+    lua_KeyValues *keyValues = LUA_BINDING_ARGUMENT( luaL_checkkeyvalues, 1, "keyValues" );
+    keyValues->SetString(
+        LUA_BINDING_ARGUMENT( luaL_checkstring, 2, "key" ),
+        LUA_BINDING_ARGUMENT( luaL_checkstring, 3, "value" ) );
     return 0;
 }
+LUA_BINDING_END()
 
-static int KeyValues_SetStringValue( lua_State *L )
+LUA_BINDING_BEGIN( KeyValuesHandle, SetStringValue, "class", "Set a string value in the keyvalues." )
 {
-    luaL_checkkeyvalues( L, 1 )->SetStringValue( luaL_checkstring( L, 2 ) );
+    lua_KeyValues *keyValues = LUA_BINDING_ARGUMENT( luaL_checkkeyvalues, 1, "keyValues" );
+    keyValues->SetStringValue(
+        LUA_BINDING_ARGUMENT( luaL_checkstring, 2, "value" ) );
     return 0;
 }
+LUA_BINDING_END()
 
-static int KeyValues_UsesEscapeSequences( lua_State *L )
+LUA_BINDING_BEGIN( KeyValuesHandle, UsesEscapeSequences, "class", "Set if the keyvalues uses escape sequences." )
 {
-    luaL_checkkeyvalues( L, 1 )->UsesEscapeSequences( luaL_checkboolean( L, 2 ) );
+    lua_KeyValues *keyValues = LUA_BINDING_ARGUMENT( luaL_checkkeyvalues, 1, "keyValues" );
+    keyValues->UsesEscapeSequences(
+        LUA_BINDING_ARGUMENT( luaL_checkboolean, 2, "usesEscapeSequences" ) );
     return 0;
 }
+LUA_BINDING_END()
 
-static int KeyValues___eq( lua_State *L )
+LUA_BINDING_BEGIN( KeyValuesHandle, __eq, "class", "Check if two keyvalues are equal." )
 {
-    lua_pushboolean( L, lua_tokeyvalues( L, 1 ) == lua_tokeyvalues( L, 2 ) );
+    lua_pushboolean( L,
+                     LUA_BINDING_ARGUMENT( lua_tokeyvalues, 1, "keyValues" ) ==
+                         LUA_BINDING_ARGUMENT( lua_tokeyvalues, 2, "keyValues" ) );
     return 1;
 }
+LUA_BINDING_END( "boolean", "true if the keyvalues are equal, false otherwise." )
 
-static int KeyValues___tostring( lua_State *L )
+LUA_BINDING_BEGIN( KeyValuesHandle, __tostring, "class", "Get the string representation of the keyvalues." )
 {
-    KeyValues *pKV = lua_tokeyvalues( L, 1 );
-    if ( pKV == NULL )
+    KeyValues *keyValues = LUA_BINDING_ARGUMENT( lua_tokeyvalues, 1, "keyValues" );
+    if ( keyValues == NULL )
         lua_pushstring( L, "NULL_KEYVALUES" );
     else
-        lua_pushfstring( L, "KeyValues: %p", pKV );
+        lua_pushfstring( L, "KeyValues: %p", keyValues );
     return 1;
 }
+LUA_BINDING_END( "string", "The string representation." )
 
-static const luaL_Reg KeyValuesmeta[] = {
-    { "AddSubKey", KeyValues_AddSubKey },
-    { "ChainKeyValue", KeyValues_ChainKeyValue },
-    { "Clear", KeyValues_Clear },
-    { "CopySubkeys", KeyValues_CopySubkeys },
-    { "CreateNewKey", KeyValues_CreateNewKey },
-    { "deleteThis", KeyValues_deleteThis },
-    { "FindKey", KeyValues_FindKey },
-    { "GetColor", KeyValues_GetColor },
-    { "GetDataType", KeyValues_GetDataType },
-    { "GetFirstSubKey", KeyValues_GetFirstSubKey },
-    { "GetFirstTrueSubKey", KeyValues_GetFirstTrueSubKey },
-    { "GetFirstValue", KeyValues_GetFirstValue },
-    { "GetFloat", KeyValues_GetFloat },
-    { "GetInt", KeyValues_GetInt },
-    { "GetName", KeyValues_GetName },
-    { "GetNameSymbol", KeyValues_GetNameSymbol },
-    { "GetNextKey", KeyValues_GetNextKey },
-    { "GetNextTrueSubKey", KeyValues_GetNextTrueSubKey },
-    { "GetNextValue", KeyValues_GetNextValue },
-    { "GetString", KeyValues_GetString },
-    { "IsEmpty", KeyValues_IsEmpty },
-    { "LoadFromFile", KeyValues_LoadFromFile },
-    { "MakeCopy", KeyValues_MakeCopy },
-    { "ProcessResolutionKeys", KeyValues_ProcessResolutionKeys },
-    { "RemoveSubKey", KeyValues_RemoveSubKey },
-    { "SaveToFile", KeyValues_SaveToFile },
-    { "SetColor", KeyValues_SetColor },
-    { "SetFloat", KeyValues_SetFloat },
-    { "SetInt", KeyValues_SetInt },
-    { "SetName", KeyValues_SetName },
-    { "SetNextKey", KeyValues_SetNextKey },
-    { "SetString", KeyValues_SetString },
-    { "SetStringValue", KeyValues_SetStringValue },
-    { "UsesEscapeSequences", KeyValues_UsesEscapeSequences },
-    { "__eq", KeyValues___eq },
-    { "__tostring", KeyValues___tostring },
-    { NULL, NULL } };
+LUA_REGISTRATION_INIT( KeyValues )
 
-static int luasrc_KeyValues( lua_State *L )
+LUA_BINDING_BEGIN( KeyValues, Create, "library", "Create a new keyvalues object." )
 {
+    const char *name = LUA_BINDING_ARGUMENT( luaL_checkstring, 1, "name" );
+
     KeyValues *pKV = NULL;
+
     if ( lua_gettop( L ) <= 1 )
-        pKV = new KeyValues( luaL_checkstring( L, 1 ) );
-    else if ( lua_gettop( L ) <= 3 )
+        pKV = new KeyValues( name );
+    else
     {
-        switch ( lua_type( L, 3 ) )
+        const char *firstSubKey = LUA_BINDING_ARGUMENT_NILLABLE( luaL_checkstring, 2, "firstKey" );
+
+        if ( lua_gettop( L ) <= 3 )
         {
-            case LUA_TNUMBER:
-                pKV = new KeyValues( luaL_checkstring( L, 1 ), luaL_checkstring( L, 2 ), luaL_checknumber( L, 3 ) );
-                break;
-            case LUA_TSTRING:
-                pKV = new KeyValues( luaL_checkstring( L, 1 ), luaL_checkstring( L, 2 ), luaL_checkstring( L, 3 ) );
-                break;
-            default:
-                luaL_typerror( L, 3, "string or number" );
-                break;
+            switch ( lua_type( L, 3 ) )
+            {
+                case LUA_TNUMBER:
+                    pKV = new KeyValues(
+                        name,
+                        firstSubKey,
+                        LUA_BINDING_ARGUMENT_NILLABLE( luaL_checknumber, 3, "firstValue" ) );
+                    break;
+                case LUA_TSTRING:
+                    pKV = new KeyValues(
+                        name,
+                        firstSubKey,
+                        LUA_BINDING_ARGUMENT_NILLABLE( luaL_checkstring, 3, "firstValue" ) );
+                    break;
+                default:
+                    luaL_typerror( L, 3, "string or number" );
+                    break;
+            }
+        }
+        else if ( lua_gettop( L ) <= 5 )
+        {
+            switch ( lua_type( L, 3 ) )
+            {
+                case LUA_TNUMBER:
+                    pKV = new KeyValues(
+                        name,
+                        firstSubKey,
+                        LUA_BINDING_ARGUMENT_NILLABLE( luaL_checknumber, 3, "firstValue" ),
+                        LUA_BINDING_ARGUMENT_NILLABLE( luaL_checkstring, 4, "secondKey" ),
+                        LUA_BINDING_ARGUMENT_NILLABLE( luaL_checknumber, 5, "secondValue" ) );
+                    break;
+                case LUA_TSTRING:
+                    pKV = new KeyValues(
+                        name,
+                        firstSubKey,
+                        LUA_BINDING_ARGUMENT_NILLABLE( luaL_checkstring, 3, "firstValue" ),
+                        LUA_BINDING_ARGUMENT_NILLABLE( luaL_checkstring, 4, "secondKey" ),
+                        LUA_BINDING_ARGUMENT_NILLABLE( luaL_checkstring, 5, "secondValue" ) );
+                    break;
+                default:
+                    luaL_typerror( L, 3, "string or number" );
+                    break;
+            }
         }
     }
-    else if ( lua_gettop( L ) <= 5 )
-    {
-        switch ( lua_type( L, 3 ) )
-        {
-            case LUA_TNUMBER:
-                pKV = new KeyValues( luaL_checkstring( L, 1 ), luaL_checkstring( L, 2 ), luaL_checknumber( L, 3 ), luaL_checkstring( L, 4 ), luaL_checknumber( L, 5 ) );
-                break;
-            case LUA_TSTRING:
-                pKV = new KeyValues( luaL_checkstring( L, 1 ), luaL_checkstring( L, 2 ), luaL_checkstring( L, 3 ), luaL_checkstring( L, 4 ), luaL_checkstring( L, 5 ) );
-                break;
-            default:
-                luaL_typerror( L, 3, "string or number" );
-                break;
-        }
-    }
+
     lua_pushkeyvalues( L, pKV );
+
     return 1;
 }
-
-static const luaL_Reg KeyValues_funcs[] = {
-    { "KeyValues", luasrc_KeyValues },
-    { NULL, NULL } };
+LUA_BINDING_END( "KeyValuesHandle", "The new keyvalues object." )
 
 /*
 ** Open KeyValues object
 */
 LUALIB_API int luaopen_KeyValues( lua_State *L )
 {
-    LUA_PUSH_NEW_METATABLE( L, LUA_KEYVALUESLIBNAME );
-    luaL_register( L, NULL, KeyValuesmeta );
+    LUA_PUSH_NEW_METATABLE( L, LUA_KEYVALUESMETANAME );
+
+    LUA_REGISTRATION_COMMIT( KeyValuesHandle );
+
     lua_pushvalue( L, -1 );           /* push metatable */
     lua_setfield( L, -2, "__index" ); /* metatable.__index = metatable */
-    lua_pushstring( L, "KeyValues" );
-    lua_setfield( L, -2, "__type" ); /* metatable.__type = "KeyValues" */
-    luaL_register( L, LUA_GNAME, KeyValues_funcs );
-    lua_pop( L, 1 );
+    lua_pushstring( L, LUA_KEYVALUESMETANAME );
+    lua_setfield( L, -2, "__type" ); /* metatable.__type = "KeyValuesHandle" */
+
+    LUA_REGISTRATION_COMMIT_LIBRARY( KeyValues );
+
+    lua_pop( L, 1 );  // pop metatable
+
     // Andrew; This is nasty, but we can't really repurpose the NULL global
     // entity.
     lua_pushkeyvalues( L, NULL );
     lua_setglobal( L, "NULL_KEYVALUES" ); /* set global NULL_KEYVALUES */
+
     return 1;
 }

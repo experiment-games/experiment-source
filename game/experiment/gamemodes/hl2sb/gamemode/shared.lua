@@ -29,7 +29,7 @@ function GM:FlWeaponTryRespawn(targetWeapon)
 end
 
 function GM:PlayerPlayStepSound(client, vecOrigin, psurface, fvol, force)
-	if (Globals.MaxClients() > 1 and ConsoleVariables.FindVar("sv_footsteps"):GetFloat() == 0) then
+	if (Engines.GetMaxClients() > 1 and ConsoleVariables.FindVar("sv_footsteps"):GetFloat() == 0) then
 		return false
 	end
 
@@ -80,7 +80,7 @@ function GM:PlayerPlayStepSound(client, vecOrigin, psurface, fvol, force)
 
 	if not CLIENT then
 		-- in MP, server removes all players in the vecOrigin's PVS, these players generate the footsteps client side
-		if (Globals.MaxClients() > 1) then
+		if (Engines.GetMaxClients() > 1) then
 			filter:RemoveRecipientsByPVS(vecOrigin)
 		end
 	end

@@ -178,15 +178,15 @@ system = System
 vgui = Gui
 VMatrix = Matrix
 
-RealFrameTime = Globals.AbsoluteFrameTime
-CurTime = Globals.CurrentTime
-SysTime = Globals.SystemTime
-VGUIFrameTime = Globals.SystemTime
-RealTime = Globals.RealTime
-FrameNumber = Globals.FrameCount
-FrameTime = Globals.FrameTime
-engine.TickCount = Globals.TickCount
-engine.TickInterval = Globals.IntervalPerTick
+RealFrameTime = Engines.GetAbsoluteFrameTime
+CurTime = Engines.GetCurrentTime
+SysTime = Engines.GetSystemTime
+VGUIFrameTime = Engines.GetSystemTime
+RealTime = Engines.GetRealTime
+FrameNumber = Engines.GetFrameCount
+FrameTime = Engines.GetFrameTime
+engine.TickCount = Engines.GetTickCount
+engine.TickInterval = Engines.GetIntervalPerTick
 SoundDuration = Engines.GetSoundDuration
 GetHostName = Engines.GetServerName
 
@@ -326,12 +326,10 @@ game = {
 	end,
 
 	SinglePlayer = function()
-		return Globals.MaxClients == 1
+		return Engines.GetMaxClients() == 1
 	end,
 
-	MaxPlayers = function()
-		return Globals.MaxClients
-	end,
+	MaxPlayers = Engines.GetMaxClients,
 
 	ConsoleCommand = RunConsoleCommand,
 
@@ -1097,7 +1095,7 @@ if (CLIENT) then
 			local spawnlists = file.Find("settings/spawnlist/*.txt", "GAME")
 
 			for _, spawnlistFileName in ipairs(spawnlists) do
-				local spawnlistKeyValues = KeyValues(spawnlistFileName)
+				local spawnlistKeyValues = KeyValues.Create(spawnlistFileName)
 				spawnlistKeyValues:LoadFromFile("settings/spawnlist/" .. spawnlistFileName,
 					"GAME")
 				local spawnlist = spawnlistKeyValues:ToTable()
@@ -1131,7 +1129,7 @@ if (CLIENT) then
 			loadedPresets[directory] = {}
 
 			for _, presetFileName in ipairs(presetFiles) do
-				local presetKeyValues = KeyValues(presetFileName)
+				local presetKeyValues = KeyValues.Create(presetFileName)
 				presetKeyValues:LoadFromFile(
 					"settings/presets/" .. directory .. "/" .. presetFileName,
 					"GAME")

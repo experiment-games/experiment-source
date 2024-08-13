@@ -52,13 +52,12 @@ static const luaL_RegForState luasrclibs[] = {
     { LUA_FILEHANDLEMETANAME, luaopen_FileHandle, REALM_SHARED | REALM_GAMEUI },    // ✔    n/a     n/a
     { LUA_FILESYSTEMLIBNAME, luaopen_Files, REALM_SHARED | REALM_GAMEUI },          // ✔    n/a     n/a
     { LUA_FLEDICTLIBNAME, luaopen_FL_EDICT, REALM_SHARED | REALM_GAMEUI },
-    { LUA_GAMETRACELIBNAME, luaopen_CGameTrace, REALM_SHARED },
+    { LUA_GAMETRACELIBNAME, luaopen_CGameTrace, REALM_SHARED },                     // ✔    n/a     n/a
     { LUA_GESTURESLOTLIBNAME, luaopen_GESTURE_SLOT, REALM_SHARED | REALM_GAMEUI },
-    { LUA_GLOBALSLIBNAME, luaopen_gpGlobals, REALM_SHARED | REALM_GAMEUI },
-    { LUA_INETWORKSTRINGTABLELIBNAME, luaopen_INetworkStringTable, REALM_SHARED },
+    { LUA_INETWORKSTRINGTABLELIBNAME, luaopen_INetworkStringTable, REALM_SHARED },  // ✔    n/a     n/a
     { LUA_INLIBNAME, luaopen_IN, REALM_SHARED | REALM_GAMEUI },
     { LUA_ITEXTUREMETANAME, luaopen_ITexture, REALM_SHARED | REALM_GAMEUI },            // ✔    n/a     n/a
-    { LUA_KEYVALUESLIBNAME, luaopen_KeyValues, REALM_SHARED | REALM_GAMEUI },
+    { LUA_KEYVALUESLIBNAME, luaopen_KeyValues, REALM_SHARED | REALM_GAMEUI },           // ✔    n/a     n/a
     { LUA_LIFELIBNAME, luaopen_LIFE, REALM_SHARED | REALM_GAMEUI },
     { LUA_LOCALIZATIONLIBNAME, luaopen_localization, REALM_SHARED | REALM_GAMEUI },
     { LUA_MASKLIBNAME, luaopen_MASK, REALM_SHARED | REALM_GAMEUI },
@@ -69,7 +68,7 @@ static const luaL_RegForState luasrclibs[] = {
     { LUA_MOVEDATALIBNAME, luaopen_CMoveData, REALM_SHARED },
     { LUA_MOVEHELPERLIBNAME, luaopen_IMoveHelper, REALM_SHARED },
     { LUA_MOVETYPELIBNAME, luaopen_MOVETYPE, REALM_SHARED | REALM_GAMEUI },
-    { LUA_NETWORKSTRINGTABLELIBNAME, luaopen_networkstringtable, REALM_SHARED | REALM_GAMEUI },
+    { LUA_NETWORKSTRINGTABLELIBNAME, luaopen_NetworkStringTables, REALM_SHARED | REALM_GAMEUI },    // ✔    n/a     n/a
     { LUA_OBSMODELIBNAME, luaopen_OBS_MODE, REALM_SHARED | REALM_GAMEUI },
     { LUA_PARTICLESYSTEMLIBNAME, luaopen_ParticleSystem, REALM_SHARED },
     { LUA_PASFILTERLIBNAME, luaopen_CPASFilter, REALM_SHARED },

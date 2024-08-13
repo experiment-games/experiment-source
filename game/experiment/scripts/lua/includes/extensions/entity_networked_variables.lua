@@ -152,7 +152,7 @@ if (SERVER) then
 	local nextForcedUpdate = 0
 
 	Hooks.Add("Tick", "__EntityNetworkVariableUpdate", function()
-		local curTime = Globals.CurrentTime()
+		local curTime = Engines.GetCurrentTime()
 
 		if (curTime < nextForcedUpdate) then
 			return

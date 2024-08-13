@@ -9,7 +9,7 @@ if (not CLIENT) then
 	return
 end
 
-local currentTime = Globals.CurrentTime
+local currentTime = Engines.GetCurrentTime
 
 Hooks.Add("CalcView", "CalcView", function(client, eyeOrigin, eyeAngles, fov, zNear, zFar)
 	-- Give a subtle breathing effect.

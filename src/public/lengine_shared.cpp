@@ -15,6 +15,98 @@
 
 LUA_REGISTRATION_INIT( Engines );
 
+/*
+** pgGlobals bindings
+*/
+
+LUA_BINDING_BEGIN( Engines, GetAbsoluteFrameTime, "library", "Get the absolute frame time." )
+{
+    lua_pushnumber( L, gpGlobals->absoluteframetime );
+    return 1;
+}
+LUA_BINDING_END( "number", "The absolute frame time." )
+
+LUA_BINDING_BEGIN( Engines, GetCurrentTime, "library", "Get the current time." )
+{
+    lua_pushnumber( L, gpGlobals->curtime );
+    return 1;
+}
+LUA_BINDING_END( "number", "The current time." )
+
+LUA_BINDING_BEGIN( Engines, GetSystemTime, "library", "Get the system time." )
+{
+    lua_pushnumber( L, Plat_FloatTime() );
+    return 1;
+}
+LUA_BINDING_END( "number", "The system time." )
+
+LUA_BINDING_BEGIN( Engines, GetFrameCount, "library", "Get the frame count." )
+{
+    lua_pushinteger( L, gpGlobals->framecount );
+    return 1;
+}
+LUA_BINDING_END( "integer", "The frame count." )
+
+LUA_BINDING_BEGIN( Engines, GetFrameTime, "library", "Get the frame time." )
+{
+    lua_pushnumber( L, gpGlobals->frametime );
+    return 1;
+}
+LUA_BINDING_END( "number", "The frame time." )
+
+LUA_BINDING_BEGIN( Engines, GetIntervalPerTick, "library", "Get the interval per tick." )
+{
+    lua_pushnumber( L, gpGlobals->interval_per_tick );
+    return 1;
+}
+LUA_BINDING_END( "number", "The interval per tick." )
+
+LUA_BINDING_BEGIN( Engines, IsClient, "library", "Check if the game is running on the client." )
+{
+    lua_pushboolean( L, gpGlobals->IsClient() );
+    return 1;
+}
+LUA_BINDING_END( "boolean", "True if the game is running on the client, false otherwise." )
+
+LUA_BINDING_BEGIN( Engines, GetMaxClients, "library", "Get the maximum number of clients." )
+{
+    lua_pushinteger( L, gpGlobals->maxClients );
+    return 1;
+}
+LUA_BINDING_END( "integer", "The maximum number of clients." )
+
+LUA_BINDING_BEGIN( Engines, GetNetworkProtocol, "library", "Get the network protocol." )
+{
+    lua_pushinteger( L, gpGlobals->network_protocol );
+    return 1;
+}
+LUA_BINDING_END( "integer", "The network protocol." )
+
+LUA_BINDING_BEGIN( Engines, GetRealTime, "library", "Get the real time." )
+{
+    lua_pushnumber( L, gpGlobals->realtime );
+    return 1;
+}
+LUA_BINDING_END( "number", "The real time." )
+
+LUA_BINDING_BEGIN( Engines, GetSimulatedTicksThisFrame, "library", "Get the number of simulated ticks this frame." )
+{
+    lua_pushinteger( L, gpGlobals->simTicksThisFrame );
+    return 1;
+}
+LUA_BINDING_END( "integer", "The number of simulated ticks this frame." )
+
+LUA_BINDING_BEGIN( Engines, GetTickCount, "library", "Get the tick count." )
+{
+    lua_pushinteger( L, gpGlobals->tickcount );
+    return 1;
+}
+LUA_BINDING_END( "integer", "The tick count." )
+
+/*
+** Engine bindings
+*/
+
 LUA_BINDING_BEGIN( Engines, ChangeTeam, "library", "Change the player's team." )
 {
     const char *teamName = LUA_BINDING_ARGUMENT( luaL_checkstring, 1, "teamName" );

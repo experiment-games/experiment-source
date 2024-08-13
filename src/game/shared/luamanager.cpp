@@ -2364,15 +2364,18 @@ static int DoFileCompletion( const char *partial,
 
 #ifdef CLIENT_DLL
     const char *cmdname = "lua_openscript_cl";
+
+    if ( Q_strstr( partial, "lua_openscript_menu" ) )
+    {
+        cmdname = "lua_openscript_menu";
+    }
 #else
     const char *cmdname = "lua_openscript";
 #endif
     char *substring = NULL;
-    int substringLen = 0;
     if ( Q_strstr( partial, cmdname ) && strlen( partial ) > strlen( cmdname ) + 1 )
     {
         substring = ( char * )partial + strlen( cmdname ) + 1;
-        substringLen = strlen( substring );
     }
 
     FileFindHandle_t fh;
@@ -2380,19 +2383,35 @@ static int DoFileCompletion( const char *partial,
     char WildCard[MAX_PATH] = { 0 };
     if ( substring == NULL )
         substring = "";
+
     Q_snprintf( WildCard, sizeof( WildCard ), LUA_ROOT "\\%s*", substring );
     Q_FixSlashes( WildCard );
+
     char const *fn = g_pFullFileSystem->FindFirstEx( WildCard, CONTENT_SEARCH_PATH, &fh );
+
+    char searchFileDirectory[MAX_PATH] = { 0 };
+
+    char searchFileName[MAX_PATH] = { 0 };
+    Q_snprintf( searchFileName, sizeof( searchFileName ), LUA_ROOT "\\%s", substring );
+    Q_FixSlashes( searchFileName );
+
+    if ( !filesystem->IsDirectory( searchFileName, CONTENT_SEARCH_PATH ) )
+        Q_ExtractFilePath( substring, searchFileDirectory, sizeof( searchFileDirectory ) );
+    else
+        V_strcpy_safe( searchFileDirectory, substring );
+
     while ( fn && current < COMMAND_COMPLETION_MAXITEMS )
     {
         if ( fn[0] != '.' )
         {
             char fileName[MAX_PATH] = { 0 };
-            Q_snprintf( fileName, sizeof( fileName ), LUA_ROOT "\\%s\\%s", substring, fn );
+            Q_snprintf( fileName, sizeof( fileName ), LUA_ROOT "\\%s\\%s", searchFileDirectory, fn );
             Q_FixSlashes( fileName );
-            if ( filesystem->FileExists( fileName, CONTENT_SEARCH_PATH ) )
+
+            if ( filesystem->FileExists( fileName, CONTENT_SEARCH_PATH )
+                || filesystem->IsDirectory( fileName, CONTENT_SEARCH_PATH ) )
             {
-                Q_snprintf( commands[current], sizeof( commands[current] ), "%s %s%s", cmdname, substring, fn );
+                Q_snprintf( commands[current], sizeof( commands[current] ), "%s %s%s", cmdname, searchFileDirectory, fn );
                 current++;
             }
         }

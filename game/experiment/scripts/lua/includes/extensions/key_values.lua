@@ -7,7 +7,7 @@
 
 local print = MsgN
 
-function _R.KeyValues.Print( self, i )
+function _R.KeyValuesHandle.Print( self, i )
   i = i or 0
   local indent = ""
   for j = 1, i do
@@ -22,7 +22,7 @@ function _R.KeyValues.Print( self, i )
   end
 end
 
-function _R.KeyValues.ToTable( self, bPreserveOrder )
+function _R.KeyValuesHandle.ToTable( self, bPreserveOrder )
   local i = 1
   local t = {}
   local pair = self:GetFirstSubKey()
