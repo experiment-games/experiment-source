@@ -59,15 +59,17 @@
 // memdbgon must be the last include file in a .cpp file!!!
 #include "tier0/memdbgon.h"
 
-static int system_AppTime( lua_State *L )
+LUA_REGISTRATION_INIT( Systems );
+
+LUA_BINDING_BEGIN( Systems, GetSecondsSinceAppActive, "library", "Get the number of seconds since the application was started." )
 {
     lua_pushnumber( L, steamapicontext->SteamUtils()->GetSecondsSinceAppActive() );
     return 1;
 }
+LUA_BINDING_END( "number", "The number of seconds since the application was started." )
 
-static int system_GetCountry( lua_State *L )
+LUA_BINDING_BEGIN( Systems, GetCountry, "library", "Get the country code of the user." )
 {
-#ifdef _WIN32
     char country[10];
 
     if ( GetLocaleInfo( LOCALE_USER_DEFAULT, LOCALE_SISO3166CTRYNAME, country, sizeof( country ) ) )
@@ -75,28 +77,20 @@ static int system_GetCountry( lua_State *L )
         lua_pushstring( L, country );
         return 1;
     }
-#elif __linux__
-    // TODO
-#endif
 
     lua_pushnil( L );
     return 1;
 }
+LUA_BINDING_END( "string", "The country code of the user." )
 
-static int system_HasFocus( lua_State *L )
+LUA_BINDING_BEGIN( Systems, HasFocus, "library", "Check if the application has focus." )
 {
-#ifdef _WIN32
     lua_pushboolean( L, GetForegroundWindow() == GetActiveWindow() );
     return 1;
-#elif __linux__
-    // TODO
-#endif
-
-    lua_pushnil( L );
-    return 1;
 }
+LUA_BINDING_END( "boolean", "Whether the application has focus." )
 
-static int system_IsLinux( lua_State *L )
+LUA_BINDING_BEGIN( Systems, IsLinux, "library", "Check if the application is running on Linux." )
 {
 #ifdef __linux__
     lua_pushboolean( L, true );
@@ -105,8 +99,9 @@ static int system_IsLinux( lua_State *L )
 #endif
     return 1;
 }
+LUA_BINDING_END( "boolean", "Whether the application is running on Linux." )
 
-static int system_IsOSX( lua_State *L )
+LUA_BINDING_BEGIN( Systems, IsOsx, "library", "Check if the application is running on macOS." )
 {
 #ifdef __APPLE__
     lua_pushboolean( L, true );
@@ -115,18 +110,21 @@ static int system_IsOSX( lua_State *L )
 #endif
     return 1;
 }
+LUA_BINDING_END( "boolean", "Whether the application is running on macOS." )
 
-static int system_IsWindows( lua_State *L )
+LUA_BINDING_BEGIN( Systems, IsWindows, "library", "Check if the application is running on Windows." )
 {
 #ifdef _WIN32
     lua_pushboolean( L, true );
 #else
     lua_pushboolean( L, false );
 #endif
+
     return 1;
 }
+LUA_BINDING_END( "boolean", "Whether the application is running on Windows." )
 
-static int system_IsWindowed( lua_State *L )
+LUA_BINDING_BEGIN( Systems, IsWindowed, "library", "Check if the application is running in windowed mode." )
 {
 #ifdef _WIN32
     HWND hWnd = GetForegroundWindow();
@@ -138,39 +136,30 @@ static int system_IsWindowed( lua_State *L )
         return 1;
     }
 #elif __linux__
-    // TODO
+// TODO
 #endif
 
     lua_pushboolean( L, false );
     return 1;
 }
+LUA_BINDING_END( "boolean", "Whether the application is running in windowed mode." )
 
-static int system_SteamTime( lua_State *L )
+LUA_BINDING_BEGIN( Systems, GetSteamServerRealTime, "library", "Get the server time." )
 {
     lua_pushnumber( L, steamapicontext->SteamUtils()->GetServerRealTime() );
     return 1;
 }
+LUA_BINDING_END( "number", "The server time." )
 
-static int system_UpTime( lua_State *L )
+LUA_BINDING_BEGIN( Systems, GetSecondsSinceComputerActive, "library", "Get the number of seconds since the computer was started." )
 {
     lua_pushnumber( L, steamapicontext->SteamUtils()->GetSecondsSinceComputerActive() );
     return 1;
 }
+LUA_BINDING_END( "number", "The number of seconds since the computer was started." )
 
-static const luaL_Reg systemLib[] = {
-    { "AppTime", system_AppTime },
-    { "GetCountry", system_GetCountry },
-    { "HasFocus", system_HasFocus },
-    { "IsLinux", system_IsLinux },
-    { "IsOSX", system_IsOSX },
-    { "IsWindows", system_IsWindows },
-    { "IsWindowed", system_IsWindowed },
-    { "SteamTime", system_SteamTime },
-    { "UpTime", system_UpTime },
-    { NULL, NULL } };
-
-LUALIB_API int( luaopen_system )( lua_State * L )
+LUALIB_API int( luaopen_Systems )( lua_State* L )
 {
-    luaL_register( L, LUA_SYSTEMLIBNAME, systemLib );
+    LUA_REGISTRATION_COMMIT_LIBRARY( Systems );
     return 1;
 }

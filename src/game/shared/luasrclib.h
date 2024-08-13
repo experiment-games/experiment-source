@@ -233,8 +233,8 @@ LUALIB_API int( luaopen_bf_read )( lua_State *L );
 #define LUA_UMSGLIBNAME "UserMessages"
 LUALIB_API int( luaopen_umsg )( lua_State *L );
 
-#define LUA_SYSTEMLIBNAME "System"
-LUALIB_API int( luaopen_system )( lua_State *L );
+#define LUA_SYSTEMSLIBNAME "Systems"
+LUALIB_API int( luaopen_Systems )( lua_State *L );
 
 #define LUA_RENDERLIBNAME "Renders"
 #define LUA_ITEXTUREMETANAME "Texture"

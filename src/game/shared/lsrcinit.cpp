@@ -86,12 +86,12 @@ static const luaL_RegForState luasrclibs[] = {
     { LUA_STEAMAPICONTEXTLIBNAME, luaopen_steamapicontext, REALM_SHARED | REALM_GAMEUI },
     { LUA_STEAMFRIENDSLIBNAME, luaopen_ISteamFriends, REALM_SHARED | REALM_GAMEUI },
     { LUA_SURFLIBNAME, luaopen_SURF, REALM_SHARED | REALM_GAMEUI },
-    { LUA_SYSTEMLIBNAME, luaopen_system, REALM_SHARED | REALM_GAMEUI },
+    { LUA_SYSTEMSLIBNAME, luaopen_Systems, REALM_SHARED | REALM_GAMEUI },           // ✔    n/a     n/a  
     { LUA_TAKEDAMAGEINFOLIBNAME, luaopen_CTakeDamageInfo, REALM_SHARED },
     { LUA_UMSGLIBNAME, luaopen_umsg, REALM_SHARED },
     { LUA_USERCMDLIBNAME, luaopen_CUserCmd, REALM_SHARED },
     { LUA_UTILLIBNAME, luaopen_Util_shared, REALM_SHARED },
-    { LUA_UTILLIBNAME, luaopen_Util, REALM_SHARED },  // Implemented by server in server/lutil.cpp, client in client/cdll_util.cpp
+    { LUA_UTILLIBNAME, luaopen_Util, REALM_SHARED },
     { LUA_VECTORLIBNAME, luaopen_Vector, REALM_SHARED | REALM_GAMEUI },             // ✔    n/a     n/a  
     { LUA_VMATRIXLIBNAME, luaopen_VMatrix, REALM_SHARED | REALM_GAMEUI },
 

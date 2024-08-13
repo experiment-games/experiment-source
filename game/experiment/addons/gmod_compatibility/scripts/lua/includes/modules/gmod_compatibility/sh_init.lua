@@ -174,7 +174,7 @@ input = Input
 render = Renders
 resource = Resources
 surface = Surface
-system = System
+system = Systems
 vgui = Gui
 VMatrix = Matrix
 
@@ -191,6 +191,11 @@ SoundDuration = Engines.GetSoundDuration
 GetHostName = Engines.GetServerName
 
 PrecacheParticleSystem = ParticleSystem.Precache
+
+system.AppTime = Systems.GetSecondsSinceAppActive
+system.IsOSX = Systems.IsOsx
+system.SteamTime = Systems.GetSteamServerRealTime
+system.UpTime = Systems.GetSecondsSinceComputerActive
 
 engine.ActiveGamemode = function()
 	return Gamemodes.GetActiveName()
@@ -1292,9 +1297,9 @@ for searchPath in searchPathsString:gmatch("([^;]+)") do
     -- Prepend the searchpath to the lua dirs
     package.path = searchPath .. "lua/includes/modules/?.lua;" .. package.path
 
-	if (System.IsWindows()) then
+	if (Systems.IsWindows()) then
 		package.cpath = searchPath .. "lua/bin/?.dll;" .. package.cpath
-    elseif (System.IsLinux()) then
+    elseif (Systems.IsLinux()) then
 		package.cpath = searchPath .. "lua/bin/?.so;" .. package.cpath
 	end
 end
