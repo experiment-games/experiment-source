@@ -14,6 +14,8 @@ lua:
   description: "Write to a file."
   
   arguments:
+    - name: "input"
+      type: unknown
     - name: "file"
       type: FileHandle
   returns:

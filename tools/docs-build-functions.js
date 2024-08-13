@@ -18,14 +18,11 @@ const outputDir = './docs';
 const filesToUpdate = getAllFilesInDirectoriesAsMap(`${outputDir}/libraries`, `${outputDir}/classes`);
 const functionsThisRun = new Map();
 
-//LUA_BINDING_BEGIN( CExperimentPlayer, BecomeRagdollOnClient, "class", "Become ragdoll on client." )
-//const luaBindingBeginPattern = /LUA_BINDING_BEGIN\(\s*(\w+)\s*,\s*(\w+)\s*,\s*"([^"]+)"\s*,\s*"([^"]+)"\s*\)/;
-// Also accept optional:LUA_BINDING_BEGIN( CExperimentPlayer, BecomeRagdollOnClient, "class", "Become ragdoll on client.", "server" )
-const luaBindingBeginPattern = /LUA_BINDING_BEGIN\(\s*(\w+)\s*,\s*(\w+)\s*,\s*"([^"]+)"\s*,\s*"([^"]+)"\s*(?:,\s*"([^"]+)")?\s*\)/;
-const luaBindingArgumentPattern = /LUA_BINDING_ARGUMENT\(\s*(\w+)\s*,\s*(\d+)\s*,\s*"([^"]+)"\s*\)/;
+const luaBindingBeginPattern = /^LUA_BINDING_BEGIN\(\s*(\w+)\s*,\s*(\w+)\s*,\s*"([^"]+)"\s*,\s*"([^"]+)"\s*(?:,\s*"([^"]+)")?\s*\)/;
+const luaBindingArgumentPattern = /LUA_BINDING_ARGUMENT(?:_WITH_EXTRA)?\(\s*(\w+)\s*,\s*(\d+)\s*,\s*(?:[^,]+,\s*)?"([^"]+)"\s*\)/;
 const luaBindingArgumentNillablePattern = /LUA_BINDING_ARGUMENT_NILLABLE\(\s*(\w+)\s*,\s*(\d+)\s*,\s*"([^"]+)"\s*\)/;
 const luaBindingArgumentWithDefaultPattern = /LUA_BINDING_ARGUMENT_WITH_DEFAULT\(\s*(\w+)\s*,\s*(\d+)\s*,\s*([^,]+)\s*,\s*"([^"]+)"\s*\)/;
-const luaBindingEndPattern = /LUA_BINDING_END\((.*)\)$/m;
+const luaBindingEndPattern = /^LUA_BINDING_END\((.*)\)$/m;
 
 const markdownTemplate = `---
 template: %template%
@@ -287,7 +284,7 @@ function processBindingsInFile(file) {
         description: match[4],
         realm: match[5],
       };
-    } else if (luaBindingArgumentPattern.test(line) || luaBindingArgumentNillablePattern.test(line)) {
+    } else if (currentFunction && (luaBindingArgumentPattern.test(line) || luaBindingArgumentNillablePattern.test(line))) {
       const isNillable = luaBindingArgumentNillablePattern.test(line);
       const match = isNillable ? line.match(luaBindingArgumentNillablePattern) : line.match(luaBindingArgumentPattern);
       const typeChecker = match[1];
@@ -327,7 +324,7 @@ function processBindingsInFile(file) {
         name,
         isNillable,
       });
-    } else if (luaBindingArgumentWithDefaultPattern.test(line)) {
+    } else if (currentFunction && luaBindingArgumentWithDefaultPattern.test(line)) {
       const match = line.match(luaBindingArgumentWithDefaultPattern);
       const typeChecker = match[1];
       const position = parseInt(match[2]);
@@ -362,7 +359,7 @@ function processBindingsInFile(file) {
         name,
         defaultValue,
       });
-    } else if (luaBindingEndPattern.test(line)) {
+    } else if (currentFunction && luaBindingEndPattern.test(line)) {
       if (!currentFunction) {
         throw new Error(`Found LUA_BINDING_END without a LUA_BINDING_BEGIN in ${file} at line ${i}`);
       }
