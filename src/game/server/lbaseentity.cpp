@@ -1100,7 +1100,7 @@ LUA_BINDING_END( "boolean", "true if item, false otherwise." )
 */
 LUALIB_API int luaopen_CBaseEntity( lua_State *L )
 {
-    LUA_PUSH_METATABLE_TO_EXTEND( L, LUA_BASEENTITYLIBNAME );
+    LUA_PUSH_METATABLE_TO_EXTEND( L, LUA_BASEENTITYMETANAME );
 
     LUA_REGISTRATION_COMMIT( CBaseEntity );
 

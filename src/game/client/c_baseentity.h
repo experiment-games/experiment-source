@@ -171,7 +171,7 @@ struct thinkfunc_t
 class C_BaseEntity : public IClientEntity
 {
 #ifdef LUA_SDK
-    LUA_DECLARE_SINGLE_LUA_INSTANCE( C_BaseEntity, LUA_BASEENTITYLIBNAME );
+    LUA_DECLARE_SINGLE_LUA_INSTANCE( C_BaseEntity, LUA_BASEENTITYMETANAME );
 #endif
 
     // Construction

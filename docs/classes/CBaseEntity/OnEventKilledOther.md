@@ -15,7 +15,7 @@ lua:
   
   arguments:
     - name: "victim"
-      type: Entity
+      type: CBaseEntity
     - name: "damageInfo"
       type: DamageInfo
   returns:

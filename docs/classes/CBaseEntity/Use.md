@@ -15,9 +15,9 @@ lua:
   
   arguments:
     - name: "activator"
-      type: Entity
+      type: CBaseEntity
     - name: "caller"
-      type: Entity
+      type: CBaseEntity
     - name: "useType"
       type: integer
     - name: "value"

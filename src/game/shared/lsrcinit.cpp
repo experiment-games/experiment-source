@@ -21,18 +21,19 @@ typedef struct luaL_RegForState
 } luaL_RegForState;
 
 // I'm in the process of documenting using the LUA_BINDING_* macros.
-// I'll track progress here:                                                        Shared  Client  Server
+// I'll track progress here:                                                            Shared  Client  Server
 static const luaL_RegForState luasrclibs[] = {
     //
     // Shared
     //
-    { LUA_BASEANIMATINGLIBNAME, luaopen_CBaseAnimating_shared, REALM_SHARED },      // ✔    n/a     n/a
-    { LUA_BASEANIMATINGLIBNAME, luaopen_CBaseAnimating, REALM_SHARED },             // n/a   ✔      ✔
-    { LUA_BASECOMBATWEAPONLIBNAME, luaopen_CBaseCombatWeapon, REALM_SHARED },       // ✔    n/a     n/a
-    { LUA_BASEENTITYLIBNAME, luaopen_CBaseEntity_shared, REALM_SHARED },            // ✔    n/a     n/a
-    { LUA_BASEENTITYLIBNAME, luaopen_CBaseEntity, REALM_SHARED },                   // n/a   ✔      ✔  
-    { LUA_BASEPLAYERLIBNAME, luaopen_CBasePlayer_shared, REALM_SHARED },
-    { LUA_BASEPLAYERLIBNAME, luaopen_CBasePlayer, REALM_SHARED },
+    { LUA_BASEANIMATINGLIBNAME, luaopen_CBaseAnimating_shared, REALM_SHARED },          // ✔    n/a     n/a
+    { LUA_BASEANIMATINGLIBNAME, luaopen_CBaseAnimating, REALM_SHARED },                 // n/a   ✔      ✔
+    { LUA_BASECOMBATWEAPONLIBNAME, luaopen_CBaseCombatWeapon, REALM_SHARED },           // ✔    n/a     n/a
+    { LUA_BASEENTITYMETANAME, luaopen_CBaseEntity_shared, REALM_SHARED },               // ✔    n/a     n/a
+    { LUA_BASEENTITYMETANAME, luaopen_CBaseEntity, REALM_SHARED },                      // n/a   ✔      ✔  
+    { LUA_BASEPLAYERMETANAME, luaopen_CBasePlayer_shared, REALM_SHARED },               // ✔    n/a     n/a
+    { LUA_BASEPLAYERMETANAME, luaopen_CBasePlayer, REALM_SHARED },                      // n/a   empty      ✔
+    { LUA_PLAYERSLIBNAME, luaopen_Players, REALM_SHARED },                              // ✔    n/a     n/a
     { LUA_CBASEFLEXLIBNAME, luaopen_CBaseFlex_shared, REALM_SHARED },                   // ✔    n/a     n/a
     { LUA_COLORLIBNAME, luaopen_Color, REALM_SHARED | REALM_GAMEUI },                   // ✔    n/a     n/a
     { LUA_CONCOMMANDLIBNAME, luaopen_ConsoleCommandMeta, REALM_SHARED | REALM_GAMEUI }, // ✔    n/a     n/a
@@ -49,12 +50,12 @@ static const luaL_RegForState luasrclibs[] = {
     { LUA_ENTITIESLIBNAME, luaopen_Entities, REALM_SHARED },                            // ✔    n/a     n/a
     { LUA_EXPERIMENTPLAYERLIBNAME, luaopen_CExperiment_Player_shared, REALM_SHARED },   // ✔    n/a     n/a
     { LUA_FCVARLIBNAME, luaopen_FCVAR, REALM_SHARED | REALM_GAMEUI },
-    { LUA_FILEHANDLEMETANAME, luaopen_FileHandle, REALM_SHARED | REALM_GAMEUI },    // ✔    n/a     n/a
-    { LUA_FILESYSTEMLIBNAME, luaopen_Files, REALM_SHARED | REALM_GAMEUI },          // ✔    n/a     n/a
+    { LUA_FILEHANDLEMETANAME, luaopen_FileHandle, REALM_SHARED | REALM_GAMEUI },        // ✔    n/a     n/a
+    { LUA_FILESYSTEMLIBNAME, luaopen_Files, REALM_SHARED | REALM_GAMEUI },              // ✔    n/a     n/a
     { LUA_FLEDICTLIBNAME, luaopen_FL_EDICT, REALM_SHARED | REALM_GAMEUI },
-    { LUA_GAMETRACELIBNAME, luaopen_CGameTrace, REALM_SHARED },                     // ✔    n/a     n/a
+    { LUA_GAMETRACELIBNAME, luaopen_CGameTrace, REALM_SHARED },                         // ✔    n/a     n/a
     { LUA_GESTURESLOTLIBNAME, luaopen_GESTURE_SLOT, REALM_SHARED | REALM_GAMEUI },
-    { LUA_INETWORKSTRINGTABLELIBNAME, luaopen_INetworkStringTable, REALM_SHARED },  // ✔    n/a     n/a
+    { LUA_INETWORKSTRINGTABLELIBNAME, luaopen_INetworkStringTable, REALM_SHARED },      // ✔    n/a     n/a
     { LUA_INLIBNAME, luaopen_IN, REALM_SHARED | REALM_GAMEUI },
     { LUA_ITEXTUREMETANAME, luaopen_ITexture, REALM_SHARED | REALM_GAMEUI },            // ✔    n/a     n/a
     { LUA_KEYVALUESLIBNAME, luaopen_KeyValues, REALM_SHARED | REALM_GAMEUI },           // ✔    n/a     n/a

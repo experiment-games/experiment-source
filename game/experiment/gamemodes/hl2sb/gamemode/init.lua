@@ -32,7 +32,7 @@ function GM:GiveDefaultItems(client)
 	self.BaseClass.GiveDefaultItems(self, client)
 
 	-- client:GiveNamedItem("weapon_test")
-	-- client:Weapon_Switch(client:Weapon_OwnsThisType("weapon_test"))
+	-- client:SwitchWeapon(client:OwnsWeaponOfType("weapon_test"))
 end
 
 function GM:ItemShouldRespawn(pItem)

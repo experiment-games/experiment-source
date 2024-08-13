@@ -15,7 +15,7 @@ lua:
   
   arguments:
     - name: "entity"
-      type: Entity
+      type: CBaseEntity
   returns:
     - type: integer
       description: "The index of the edict."

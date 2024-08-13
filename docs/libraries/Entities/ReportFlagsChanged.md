@@ -15,7 +15,7 @@ lua:
   
   arguments:
     - name: "entity"
-      type: Entity
+      type: CBaseEntity
     - name: "flagsOld"
       type: integer
     - name: "flagsNow"

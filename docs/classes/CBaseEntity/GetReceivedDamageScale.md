@@ -15,7 +15,7 @@ lua:
   
   arguments:
     - name: "inflictor"
-      type: Entity
+      type: CBaseEntity
   returns:
     - type: number
       description: "The received damage scale"

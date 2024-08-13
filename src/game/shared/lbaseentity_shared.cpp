@@ -2721,7 +2721,7 @@ LUA_BINDING_BEGIN( CBaseEntity, __index, "class", "Metamethod that is called whe
             LUA_METATABLE_INDEX_CHECK_TABLE( L );
         }
 
-        luaL_getmetatable( L, LUA_BASEENTITYLIBNAME );
+        luaL_getmetatable( L, LUA_BASEENTITYMETANAME );
         LUA_METATABLE_INDEX_CHECK_TABLE( L );
 
         lua_pushnil( L );
@@ -2839,7 +2839,7 @@ LUA_BINDING_END( "entity", "The found entity or NULL entity" )
 */
 LUALIB_API int luaopen_CBaseEntity_shared( lua_State *L )
 {
-    LUA_PUSH_NEW_METATABLE( L, LUA_BASEENTITYLIBNAME );
+    LUA_PUSH_NEW_METATABLE( L, LUA_BASEENTITYMETANAME );
 
     lua_pushstring( L, "Entity" );
     lua_setfield( L, -2, "__type" ); /* metatable.__type = "Entity" */

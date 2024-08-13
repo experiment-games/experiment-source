@@ -1,0 +1,32 @@
+---
+template: lua-class-function.html
+title: GiveAmmo
+icon: lua-server
+tags:
+  - lua
+  - server
+  - needs-verification
+  - needs-example
+lua:
+  library: CBasePlayer
+  function: GiveAmmo
+  realm: server
+  description: "Give ammo to the player."
+  
+  argumentSets:
+    - arguments:
+      - name: "ammoCount"
+        type: integer
+      - name: "ammoType"
+        type: number
+    - arguments:
+      - name: "ammoName"
+        type: string
+  returns:
+    - type: integer
+      description: "The amount of ammo actually given."
+---
+
+<div class="lua__search__keywords">
+CBasePlayer:GiveAmmo &#x2013; Give ammo to the player.
+</div>

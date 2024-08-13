@@ -15,7 +15,7 @@ lua:
   
   arguments:
     - name: "otherEntity"
-      type: Entity
+      type: Weapon
   returns:
     - type: boolean
       description: "Whether the two entities are equal."

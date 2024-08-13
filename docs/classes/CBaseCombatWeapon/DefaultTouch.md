@@ -15,7 +15,7 @@ lua:
   
   arguments:
     - name: "touchingEntity"
-      type: Entity
+      type: CBaseEntity
   returns:
     
 ---

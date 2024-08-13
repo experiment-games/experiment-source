@@ -13,7 +13,7 @@ local PLAYER_SOUNDS_METROPOLICE = 2
 
 function GM:CanHavePlayerItem(client, item)
 	if (ConsoleVariables.FindVar("mp_weaponstay"):GetInt() > 0) then
-		if (client:Weapon_OwnsThisType(item:GetClass(), item:GetSubType())) then
+		if (client:OwnsWeaponOfType(item:GetClass(), item:GetSubType())) then
 			return false
 		end
 	end
@@ -47,12 +47,12 @@ function GM:GiveDefaultItems(client)
 	client:GiveNamedItem("weapon_physcannon")
 
 	local defaultWeaponName = Engines.GetClientConsoleVariableValue(Engines.IndexOfEdict(client), "cl_defaultweapon")
-	local defaultWeapon = client:Weapon_OwnsThisType(defaultWeaponName)
+	local defaultWeapon = client:OwnsWeaponOfType(defaultWeaponName)
 
 	if (ToBaseEntity(defaultWeapon) ~= NULL) then
-		client:Weapon_Switch(defaultWeapon)
+		client:SwitchWeapon(defaultWeapon)
 	else
-		client:Weapon_Switch(client:Weapon_OwnsThisType("weapon_physcannon"))
+		client:SwitchWeapon(client:OwnsWeaponOfType("weapon_physcannon"))
 	end
 end
 

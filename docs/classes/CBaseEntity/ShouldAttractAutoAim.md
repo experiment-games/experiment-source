@@ -15,7 +15,7 @@ lua:
   
   arguments:
     - name: "aimingEntity"
-      type: Entity
+      type: CBaseEntity
   returns:
     - type: boolean
       description: "true if should attract, false otherwise."

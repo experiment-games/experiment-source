@@ -15,7 +15,7 @@ lua:
   
   arguments:
     - name: "entityB"
-      type: Entity
+      type: CBaseFlex
   returns:
     - type: boolean
       description: "True if the entities are equal."

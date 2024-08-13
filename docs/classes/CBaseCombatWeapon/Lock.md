@@ -17,7 +17,7 @@ lua:
     - name: "lockTime"
       type: number
     - name: "locker"
-      type: Entity
+      type: CBaseEntity
   returns:
     
 ---

@@ -189,14 +189,18 @@ function fromTypeChecker(typeChecker) {
     case 'luaL_checkentity':
     case 'luaL_optentity':
     case 'lua_toentity':
+      return 'CBaseEntity';
     case 'luaL_checkbaseflex':
     case 'luaL_optbaseflex':
     case 'lua_tobaseflex':
+      return 'CBaseFlex';
     case 'luaL_checkanimating':
     case 'luaL_optanimating':
     case 'lua_toanimating':
+      return 'CBaseAnimating';
     case 'lua_toweapon':
-      return 'Entity';
+    case 'luaL_checkweapon':
+      return 'Weapon';
     case 'luaL_checkplayer':
     case 'luaL_optplayer':
     case 'lua_toplayer':

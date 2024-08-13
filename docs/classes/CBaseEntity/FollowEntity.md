@@ -15,7 +15,7 @@ lua:
   
   arguments:
     - name: "target"
-      type: Entity
+      type: CBaseEntity
     - name: "boneMerge"
       type: boolean
   returns:

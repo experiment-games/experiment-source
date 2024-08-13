@@ -346,7 +346,7 @@
 #define LUA_RETURN_ENTITY()                                                               \
     if ( lua_gettop( L ) == 1 )                                                           \
     {                                                                                     \
-        if ( lua_isuserdata( L, -1 ) && luaL_checkudata( L, -1, LUA_BASEENTITYLIBNAME ) ) \
+        if ( lua_isuserdata( L, -1 ) && luaL_checkudata( L, -1, LUA_BASEENTITYMETANAME ) ) \
         {                                                                                 \
             CBaseEntity *res = luaL_checkentity( L, -1 );                                 \
             lua_pop( L, 1 );                                                              \
@@ -356,17 +356,17 @@
             lua_pop( L, 1 );                                                              \
     }
 
-#define LUA_RETURN_PLAYER()                                                               \
-    if ( lua_gettop( L ) == 1 )                                                           \
-    {                                                                                     \
-        if ( lua_isuserdata( L, -1 ) && luaL_checkudata( L, -1, LUA_BASEPLAYERLIBNAME ) ) \
-        {                                                                                 \
-            CBasePlayer *res = luaL_checkplayer( L, -1 );                                 \
-            lua_pop( L, 1 );                                                              \
-            return res;                                                                   \
-        }                                                                                 \
-        else                                                                              \
-            lua_pop( L, 1 );                                                              \
+#define LUA_RETURN_PLAYER()                                                                \
+    if ( lua_gettop( L ) == 1 )                                                            \
+    {                                                                                      \
+        if ( lua_isuserdata( L, -1 ) && luaL_checkudata( L, -1, LUA_BASEPLAYERMETANAME ) ) \
+        {                                                                                  \
+            CBasePlayer *res = luaL_checkplayer( L, -1 );                                  \
+            lua_pop( L, 1 );                                                               \
+            return res;                                                                    \
+        }                                                                                  \
+        else                                                                               \
+            lua_pop( L, 1 );                                                               \
     }
 
 #define LUA_RETURN_VECTOR()                                                           \

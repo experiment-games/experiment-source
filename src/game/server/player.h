@@ -242,7 +242,7 @@ class CPlayerInfo : public IBotController, public IPlayerInfo
 class CBasePlayer : public CBaseCombatCharacter
 {
 #ifdef LUA_SDK
-    LUA_OVERRIDE_SINGLE_LUA_INSTANCE_METATABLE( LUA_BASEPLAYERLIBNAME )
+    LUA_OVERRIDE_SINGLE_LUA_INSTANCE_METATABLE( LUA_BASEPLAYERMETANAME )
 #endif
 
    public:

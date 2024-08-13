@@ -433,11 +433,12 @@ ENTITY_META.WaterLevel = ENTITY_META.GetWaterLevel
 
 local PLAYER_META = FindMetaTable("Player")
 PLAYER_META.GetShootPos = ENTITY_META.GetEyePosition
-PLAYER_META.AccountID = PLAYER_META.GetAccountID
-PLAYER_META.SteamID = PLAYER_META.GetSteamID
-PLAYER_META.SteamID64 = PLAYER_META.GetSteamID64
-PLAYER_META.UniqueID = PLAYER_META.GetUniqueID
-PLAYER_META.InVehicle = PLAYER_META.IsInAVehicle
+PLAYER_META.UserID = PLAYER_META.GetUserId
+PLAYER_META.AccountID = PLAYER_META.GetAccountId
+PLAYER_META.SteamID = PLAYER_META.GetSteamId
+PLAYER_META.SteamID64 = PLAYER_META.GetSteamId64
+PLAYER_META.UniqueID = PLAYER_META.GetUniqueId
+PLAYER_META.InVehicle = PLAYER_META.IsInVehicle
 PLAYER_META.GetVehicle = PLAYER_META.GetVehicleEntity
 PLAYER_META.AnimResetGestureSlot = PLAYER_META.AnimationResetGestureSlot
 PLAYER_META.AnimRestartGesture = PLAYER_META.AnimationRestartGesture
@@ -925,7 +926,7 @@ else
 	EyeAngles = render.MainViewAngles
 	EyeVector = render.MainViewForward
 
-	LocalPlayer = _R.CBasePlayer.GetLocalPlayer
+	LocalPlayer = Players.GetLocalPlayer
 
 	surface.SetDrawColor = surface.DrawSetColor
 	surface.DrawRect = surface.DrawFilledRect

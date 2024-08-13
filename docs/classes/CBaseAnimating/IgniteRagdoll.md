@@ -15,7 +15,7 @@ lua:
   
   arguments:
     - name: "igniter"
-      type: Entity
+      type: CBaseAnimating
   returns:
     
 ---

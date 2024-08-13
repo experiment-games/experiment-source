@@ -15,7 +15,7 @@ lua:
   
   arguments:
     - name: "entityFrom"
-      type: Entity
+      type: CBaseAnimating
   returns:
     
 ---

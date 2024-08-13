@@ -1,0 +1,26 @@
+---
+template: lua-class-function.html
+title: RemoveAllItems
+icon: lua-server
+tags:
+  - lua
+  - server
+  - needs-verification
+  - needs-example
+lua:
+  library: CBasePlayer
+  function: RemoveAllItems
+  realm: server
+  description: "Remove all items from the player."
+  
+  arguments:
+    - name: "shouldRemoveSuit"
+      type: boolean
+      default: "false"
+  returns:
+    
+---
+
+<div class="lua__search__keywords">
+CBasePlayer:RemoveAllItems &#x2013; Remove all items from the player.
+</div>

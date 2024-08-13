@@ -15,7 +15,7 @@ lua:
   
   arguments:
     - name: "ragdoll"
-      type: Entity
+      type: CBaseAnimating
   returns:
     
 ---

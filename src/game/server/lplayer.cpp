@@ -9,704 +9,790 @@
 // memdbgon must be the last include file in a .cpp file!!!
 #include "tier0/memdbgon.h"
 
-static int CBasePlayer_GiveAmmo( lua_State *L )
+LUA_REGISTRATION_INIT( CBasePlayer )
+
+LUA_BINDING_BEGIN( CBasePlayer, GiveAmmo, "class", "Give ammo to the player." )
 {
+    lua_CBasePlayer *player = LUA_BINDING_ARGUMENT( luaL_checkplayer, 1, "player" );
+    int ammoCount = LUA_BINDING_ARGUMENT( luaL_checkinteger, 2, "ammoCount" );
+
     switch ( lua_type( L, 3 ) )
     {
         case LUA_TNUMBER:
-            lua_pushinteger( L, luaL_checkplayer( L, 1 )->GiveAmmo( luaL_checknumber( L, 2 ), luaL_checknumber( L, 3 ), luaL_optboolean( L, 4, false ) ) );
+        default:
+            lua_pushinteger( L, player->GiveAmmo( ammoCount, LUA_BINDING_ARGUMENT( luaL_checknumber, 3, "ammoType" ), LUA_BINDING_ARGUMENT_WITH_DEFAULT( luaL_optboolean, 4, false, "shouldSuppressSound" ) ) );
             break;
         case LUA_TSTRING:
-            lua_pushinteger( L, luaL_checkplayer( L, 1 )->GiveAmmo( luaL_checknumber( L, 2 ), luaL_checkstring( L, 3 ), luaL_optboolean( L, 4, false ) ) );
-            break;
-        default:
-            lua_pushinteger( L, luaL_checkplayer( L, 1 )->GiveAmmo( luaL_checknumber( L, 2 ), luaL_checknumber( L, 3 ), luaL_optboolean( L, 4, false ) ) );
+            lua_pushinteger( L, player->GiveAmmo( ammoCount, LUA_BINDING_ARGUMENT( luaL_checkstring, 3, "ammoName" ), LUA_BINDING_ARGUMENT_WITH_DEFAULT( luaL_optboolean, 4, false, "shouldSuppressSound" ) ) );
             break;
     }
+
     return 1;
 }
+LUA_BINDING_END( "integer", "The amount of ammo actually given." )
 
-static int CBasePlayer_SetBodyPitch( lua_State *L )
+LUA_BINDING_BEGIN( CBasePlayer, SetBodyPitch, "class", "Set the body pitch of the player." )
 {
-    luaL_checkplayer( L, 1 )->SetBodyPitch( luaL_checknumber( L, 2 ) );
+    lua_CBasePlayer *player = LUA_BINDING_ARGUMENT( luaL_checkplayer, 1, "player" );
+    float pitch = LUA_BINDING_ARGUMENT( luaL_checknumber, 2, "pitch" );
+    player->SetBodyPitch( pitch );
     return 0;
 }
+LUA_BINDING_END()
 
-static int CBasePlayer_CreateViewModel( lua_State *L )
+LUA_BINDING_BEGIN( CBasePlayer, CreateViewModel, "class", "Create a view model for the player." )
 {
-    luaL_checkplayer( L, 1 )->CreateViewModel( luaL_optinteger( L, 2, 0 ) );
+    lua_CBasePlayer *player = LUA_BINDING_ARGUMENT( luaL_checkplayer, 1, "player" );
+    int viewModelIndex = LUA_BINDING_ARGUMENT_WITH_DEFAULT( luaL_optinteger, 2, 0, "viewModelIndex" );
+    player->CreateViewModel( viewModelIndex );
     return 0;
 }
+LUA_BINDING_END()
 
-static int CBasePlayer_HideViewModels( lua_State *L )
+LUA_BINDING_BEGIN( CBasePlayer, HideViewModels, "class", "Hide all view models for the player." )
 {
-    luaL_checkplayer( L, 1 )->HideViewModels();
+    lua_CBasePlayer *player = LUA_BINDING_ARGUMENT( luaL_checkplayer, 1, "player" );
+    player->HideViewModels();
     return 0;
 }
+LUA_BINDING_END()
 
-static int CBasePlayer_DestroyViewModels( lua_State *L )
+LUA_BINDING_BEGIN( CBasePlayer, DestroyViewModels, "class", "Destroy all view models for the player." )
 {
-    luaL_checkplayer( L, 1 )->DestroyViewModels();
+    lua_CBasePlayer *player = LUA_BINDING_ARGUMENT( luaL_checkplayer, 1, "player" );
+    player->DestroyViewModels();
     return 0;
 }
+LUA_BINDING_END()
 
-static int CBasePlayer_RequiredEdictIndex( lua_State *L )
+LUA_BINDING_BEGIN( CBasePlayer, RequiredEdictIndex, "class", "Get the required edict index for the player." )
 {
-    lua_pushinteger( L, luaL_checkplayer( L, 1 )->RequiredEdictIndex() );
+    lua_CBasePlayer *player = LUA_BINDING_ARGUMENT( luaL_checkplayer, 1, "player" );
+    lua_pushinteger( L, player->RequiredEdictIndex() );
     return 1;
 }
+LUA_BINDING_END( "integer", "The required edict index." )
 
-static int CBasePlayer_LockPlayerInPlace( lua_State *L )
+LUA_BINDING_BEGIN( CBasePlayer, LockPlayerInPlace, "class", "Lock the player in place." )
 {
-    luaL_checkplayer( L, 1 )->LockPlayerInPlace();
+    lua_CBasePlayer *player = LUA_BINDING_ARGUMENT( luaL_checkplayer, 1, "player" );
+    player->LockPlayerInPlace();
     return 0;
 }
+LUA_BINDING_END()
 
-static int CBasePlayer_UnlockPlayer( lua_State *L )
+LUA_BINDING_BEGIN( CBasePlayer, UnlockPlayer, "class", "Unlock the player." )
 {
-    luaL_checkplayer( L, 1 )->UnlockPlayer();
+    lua_CBasePlayer *player = LUA_BINDING_ARGUMENT( luaL_checkplayer, 1, "player" );
+    player->UnlockPlayer();
     return 0;
 }
+LUA_BINDING_END()
 
-static int CBasePlayer_DrawDebugGeometryOverlays( lua_State *L )
+LUA_BINDING_BEGIN( CBasePlayer, DrawDebugGeometryOverlays, "class", "Draw debug geometry overlays for the player." )
 {
-    luaL_checkplayer( L, 1 )->DrawDebugGeometryOverlays();
+    lua_CBasePlayer *player = LUA_BINDING_ARGUMENT( luaL_checkplayer, 1, "player" );
+    player->DrawDebugGeometryOverlays();
     return 0;
 }
+LUA_BINDING_END()
 
-static int CBasePlayer_ForceRespawn( lua_State *L )
+LUA_BINDING_BEGIN( CBasePlayer, ForceRespawn, "class", "Force the player to respawn." )
 {
-    luaL_checkplayer( L, 1 )->ForceRespawn();
+    lua_CBasePlayer *player = LUA_BINDING_ARGUMENT( luaL_checkplayer, 1, "player" );
+    player->ForceRespawn();
     return 0;
 }
+LUA_BINDING_END()
 
-static int CBasePlayer_InitialSpawn( lua_State *L )
+LUA_BINDING_BEGIN( CBasePlayer, InitialSpawn, "class", "Perform the initial spawn for the player." )
 {
-    luaL_checkplayer( L, 1 )->InitialSpawn();
+    lua_CBasePlayer *player = LUA_BINDING_ARGUMENT( luaL_checkplayer, 1, "player" );
+    player->InitialSpawn();
     return 0;
 }
+LUA_BINDING_END()
 
-static int CBasePlayer_InitHUD( lua_State *L )
+LUA_BINDING_BEGIN( CBasePlayer, InitHud, "class", "Initialize the HUD for the player." )
 {
-    luaL_checkplayer( L, 1 )->InitHUD();
+    lua_CBasePlayer *player = LUA_BINDING_ARGUMENT( luaL_checkplayer, 1, "player" );
+    player->InitHUD();
     return 0;
 }
+LUA_BINDING_END()
 
-static int CBasePlayer_PlayerDeathThink( lua_State *L )
+LUA_BINDING_BEGIN( CBasePlayer, PlayerDeathThink, "class", "Think about death for the player." )
 {
-    luaL_checkplayer( L, 1 )->PlayerDeathThink();
+    lua_CBasePlayer *player = LUA_BINDING_ARGUMENT( luaL_checkplayer, 1, "player" );
+    player->PlayerDeathThink();
     return 0;
 }
+LUA_BINDING_END()
 
-static int CBasePlayer_Jump( lua_State *L )
+LUA_BINDING_BEGIN( CBasePlayer, Jump, "class", "Make the player jump." )
 {
-    luaL_checkplayer( L, 1 )->Jump();
+    lua_CBasePlayer *player = LUA_BINDING_ARGUMENT( luaL_checkplayer, 1, "player" );
+    player->Jump();
     return 0;
 }
+LUA_BINDING_END()
 
-static int CBasePlayer_Duck( lua_State *L )
+LUA_BINDING_BEGIN( CBasePlayer, Duck, "class", "Make the player duck." )
 {
-    luaL_checkplayer( L, 1 )->Duck();
+    lua_CBasePlayer *player = LUA_BINDING_ARGUMENT( luaL_checkplayer, 1, "player" );
+    player->Duck();
     return 0;
 }
+LUA_BINDING_END()
 
-static int CBasePlayer_ForceSimulation( lua_State *L )
+LUA_BINDING_BEGIN( CBasePlayer, ForceSimulation, "class", "Force the player to simulate." )
 {
-    luaL_checkplayer( L, 1 )->ForceSimulation();
+    lua_CBasePlayer *player = LUA_BINDING_ARGUMENT( luaL_checkplayer, 1, "player" );
+    player->ForceSimulation();
     return 0;
 }
+LUA_BINDING_END()
 
-static int CBasePlayer_TakeHealth( lua_State *L )
+LUA_BINDING_BEGIN( CBasePlayer, TakeHealth, "class", "Take health from the player." )
 {
-    lua_pushinteger( L, luaL_checkplayer( L, 1 )->TakeHealth( luaL_checknumber( L, 2 ), luaL_checkinteger( L, 3 ) ) );
+    lua_CBasePlayer *player = LUA_BINDING_ARGUMENT( luaL_checkplayer, 1, "player" );
+    float health = LUA_BINDING_ARGUMENT( luaL_checknumber, 2, "health" );
+    int damageType = LUA_BINDING_ARGUMENT( luaL_checkinteger, 3, "damageType" );
+    lua_pushinteger( L, player->TakeHealth( health, damageType ) );
     return 1;
 }
+LUA_BINDING_END( "integer", "The amount of health actually taken." )
 
-static int CBasePlayer_DamageEffect( lua_State *L )
+LUA_BINDING_BEGIN( CBasePlayer, DamageEffect, "class", "Apply a damage effect to the player." )
 {
-    luaL_checkplayer( L, 1 )->DamageEffect( luaL_checknumber( L, 2 ),
-                                            luaL_checkinteger( L, 3 ) );
+    lua_CBasePlayer *player = LUA_BINDING_ARGUMENT( luaL_checkplayer, 1, "player" );
+    float damage = LUA_BINDING_ARGUMENT( luaL_checknumber, 2, "damage" );
+    int damageType = LUA_BINDING_ARGUMENT( luaL_checkinteger, 3, "damageType" );
+    player->DamageEffect( damage, damageType );
     return 0;
 }
+LUA_BINDING_END()
 
-static int CBasePlayer_PauseBonusProgress( lua_State *L )
+LUA_BINDING_BEGIN( CBasePlayer, PauseBonusProgress, "class", "Pause or unpause the bonus progress for the player." )
 {
-    luaL_checkplayer( L, 1 )->PauseBonusProgress( luaL_optboolean( L, 2, true ) );
+    lua_CBasePlayer *player = LUA_BINDING_ARGUMENT( luaL_checkplayer, 1, "player" );
+    bool shouldPause = LUA_BINDING_ARGUMENT_WITH_DEFAULT( luaL_optboolean, 2, true, "shouldPause" );
+    player->PauseBonusProgress( shouldPause );
     return 0;
 }
+LUA_BINDING_END()
 
-static int CBasePlayer_SetBonusProgress( lua_State *L )
+LUA_BINDING_BEGIN( CBasePlayer, SetBonusProgress, "class", "Set the bonus progress for the player." )
 {
-    luaL_checkplayer( L, 1 )->SetBonusProgress( luaL_checkinteger( L, 2 ) );
+    lua_CBasePlayer *player = LUA_BINDING_ARGUMENT( luaL_checkplayer, 1, "player" );
+    int progress = LUA_BINDING_ARGUMENT( luaL_checkinteger, 2, "progress" );
+    player->SetBonusProgress( progress );
     return 0;
 }
+LUA_BINDING_END()
 
-static int CBasePlayer_SetBonusChallenge( lua_State *L )
+LUA_BINDING_BEGIN( CBasePlayer, SetBonusChallenge, "class", "Set the bonus challenge for the player." )
 {
-    luaL_checkplayer( L, 1 )->SetBonusChallenge( luaL_checkinteger( L, 2 ) );
+    lua_CBasePlayer *player = LUA_BINDING_ARGUMENT( luaL_checkplayer, 1, "player" );
+    int challenge = LUA_BINDING_ARGUMENT( luaL_checkinteger, 2, "challenge" );
+    player->SetBonusChallenge( challenge );
     return 0;
 }
+LUA_BINDING_END()
 
-static int CBasePlayer_GetBonusProgress( lua_State *L )
+LUA_BINDING_BEGIN( CBasePlayer, GetBonusProgress, "class", "Get the bonus progress for the player." )
 {
-    lua_pushinteger( L, luaL_checkplayer( L, 1 )->GetBonusProgress() );
+    lua_CBasePlayer *player = LUA_BINDING_ARGUMENT( luaL_checkplayer, 1, "player" );
+    lua_pushinteger( L, player->GetBonusProgress() );
     return 1;
 }
+LUA_BINDING_END( "integer", "The bonus progress." )
 
-static int CBasePlayer_GetBonusChallenge( lua_State *L )
+LUA_BINDING_BEGIN( CBasePlayer, GetBonusChallenge, "class", "Get the bonus challenge for the player." )
 {
-    lua_pushinteger( L, luaL_checkplayer( L, 1 )->GetBonusChallenge() );
+    lua_CBasePlayer *player = LUA_BINDING_ARGUMENT( luaL_checkplayer, 1, "player" );
+    lua_pushinteger( L, player->GetBonusChallenge() );
     return 1;
 }
+LUA_BINDING_END( "integer", "The bonus challenge." )
 
-static int CBasePlayer_SnapEyeAngles( lua_State *L )
+LUA_BINDING_BEGIN( CBasePlayer, SnapEyeAngles, "class", "Snap the eye angles of the player." )
 {
-    luaL_checkplayer( L, 1 )->SnapEyeAngles( luaL_checkangle( L, 2 ) );
+    lua_CBasePlayer *player = LUA_BINDING_ARGUMENT( luaL_checkplayer, 1, "player" );
+    QAngle angles = LUA_BINDING_ARGUMENT( luaL_checkangle, 2, "angles" );
+    player->SnapEyeAngles( angles );
     return 0;
 }
+LUA_BINDING_END()
 
-static int CBasePlayer_BodyAngles( lua_State *L )
+LUA_BINDING_BEGIN( CBasePlayer, GetBodyAngles, "class", "Get the body angles of the player." )
 {
-    lua_pushangle( L, luaL_checkplayer( L, 1 )->BodyAngles() );
+    lua_CBasePlayer *player = LUA_BINDING_ARGUMENT( luaL_checkplayer, 1, "player" );
+    lua_pushangle( L, player->BodyAngles() );
     return 1;
 }
+LUA_BINDING_END( "angle", "The body angles." )
 
-static int CBasePlayer_BodyTarget( lua_State *L )
+LUA_BINDING_BEGIN( CBasePlayer, GetBodyTarget, "class", "Get the body target of the player." )
 {
-    lua_pushvector( L, luaL_checkplayer( L, 1 )->BodyTarget( luaL_checkvector( L, 2 ), luaL_checkboolean( L, 3 ) ) );
+    lua_CBasePlayer *player = LUA_BINDING_ARGUMENT( luaL_checkplayer, 1, "player" );
+    Vector target = player->BodyTarget( LUA_BINDING_ARGUMENT( luaL_checkvector, 2, "target" ), LUA_BINDING_ARGUMENT( luaL_checkboolean, 3, "isNoisy" ) );
+    lua_pushvector( L, target );
     return 1;
 }
+LUA_BINDING_END( "vector", "The body target." )
 
-static int CBasePlayer_ShouldFadeOnDeath( lua_State *L )
+LUA_BINDING_BEGIN( CBasePlayer, ShouldFadeOnDeath, "class", "Check if the player should fade on death." )
 {
-    lua_pushboolean( L, luaL_checkplayer( L, 1 )->ShouldFadeOnDeath() );
+    lua_CBasePlayer *player = LUA_BINDING_ARGUMENT( luaL_checkplayer, 1, "player" );
+    lua_pushboolean( L, player->ShouldFadeOnDeath() );
     return 1;
 }
+LUA_BINDING_END( "boolean", "Whether the player should fade on death." )
 
-static int CBasePlayer_OnTakeDamage_Alive( lua_State *L )
+LUA_BINDING_BEGIN( CBasePlayer, OnEventTakeDamageAlive, "class", "Call to handle taking damage while alive for the player." )
 {
-    lua_pushinteger( L, luaL_checkplayer( L, 1 )->OnTakeDamage_Alive( luaL_checkdamageinfo( L, 2 ) ) );
+    lua_CBasePlayer *player = LUA_BINDING_ARGUMENT( luaL_checkplayer, 1, "player" );
+    int result = player->OnTakeDamage_Alive( LUA_BINDING_ARGUMENT( luaL_checkdamageinfo, 2, "info" ) );
+    lua_pushinteger( L, result );
     return 1;
 }
+LUA_BINDING_END( "integer", "The result of taking damage." )
 
-static int CBasePlayer_Event_Killed( lua_State *L )
+LUA_BINDING_BEGIN( CBasePlayer, OnEventDying, "class", "Call to handle dying for the player." )
 {
-    luaL_checkplayer( L, 1 )->Event_Killed( luaL_checkdamageinfo( L, 2 ) );
+    lua_CBasePlayer *player = LUA_BINDING_ARGUMENT( luaL_checkplayer, 1, "player" );
+    player->Event_Dying( LUA_BINDING_ARGUMENT( luaL_checkdamageinfo, 2, "info" ) );
     return 0;
 }
+LUA_BINDING_END()
 
-static int CBasePlayer_Event_KilledOther( lua_State *L )
+LUA_BINDING_BEGIN( CBasePlayer, IsNetClient, "class", "Check if the player is a net client." )
 {
-    luaL_checkplayer( L, 1 )->Event_KilledOther( luaL_checkentity( L, 2 ),
-                                                 luaL_checkdamageinfo( L, 3 ) );
-    return 0;
-}
-
-static int CBasePlayer_Event_Dying( lua_State *L )
-{
-    luaL_checkplayer( L, 1 )->Event_Dying( luaL_checkdamageinfo( L, 2 ) );
-    return 0;
-}
-
-static int CBasePlayer_IsNetClient( lua_State *L )
-{
-    lua_pushboolean( L, luaL_checkplayer( L, 1 )->IsNetClient() );
+    lua_CBasePlayer *player = LUA_BINDING_ARGUMENT( luaL_checkplayer, 1, "player" );
+    lua_pushboolean( L, player->IsNetClient() );
     return 1;
 }
+LUA_BINDING_END( "boolean", "Whether the player is a net client." )
 
-static int CBasePlayer_IsFakeClient( lua_State *L )
+LUA_BINDING_BEGIN( CBasePlayer, IsFakeClient, "class", "Check if the player is a fake client." )
 {
-    lua_pushboolean( L, luaL_checkplayer( L, 1 )->IsFakeClient() );
+    lua_CBasePlayer *player = LUA_BINDING_ARGUMENT( luaL_checkplayer, 1, "player" );
+    lua_pushboolean( L, player->IsFakeClient() );
     return 1;
 }
+LUA_BINDING_END( "boolean", "Whether the player is a fake client." )
 
-static int CBasePlayer_GetClientIndex( lua_State *L )
+LUA_BINDING_BEGIN( CBasePlayer, GetClientIndex, "class", "Get the client index of the player." )
 {
-    lua_pushinteger( L, luaL_checkplayer( L, 1 )->GetClientIndex() );
+    lua_CBasePlayer *player = LUA_BINDING_ARGUMENT( luaL_checkplayer, 1, "player" );
+    lua_pushinteger( L, player->GetClientIndex() );
     return 1;
 }
+LUA_BINDING_END( "integer", "The client index." )
 
-static int CBasePlayer_SetPlayerName( lua_State *L )
+LUA_BINDING_BEGIN( CBasePlayer, SetPlayerName, "class", "Set the name of the player." )
 {
-    luaL_checkplayer( L, 1 )->SetPlayerName( luaL_checkstring( L, 2 ) );
+    lua_CBasePlayer *player = LUA_BINDING_ARGUMENT( luaL_checkplayer, 1, "player" );
+    player->SetPlayerName( LUA_BINDING_ARGUMENT( luaL_checkstring, 2, "name" ) );
     return 0;
 }
+LUA_BINDING_END()
 
-static int CBasePlayer_GetNetworkIDString( lua_State *L )
+LUA_BINDING_BEGIN( CBasePlayer, GetNetworkIdString, "class", "Get the network ID string of the player." )
 {
-    lua_pushstring( L, luaL_checkplayer( L, 1 )->GetNetworkIDString() );
+    lua_CBasePlayer *player = LUA_BINDING_ARGUMENT( luaL_checkplayer, 1, "player" );
+    lua_pushstring( L, player->GetNetworkIDString() );
     return 1;
 }
+LUA_BINDING_END( "string", "The network ID string." )
 
-static int CBasePlayer_ShowViewModel( lua_State *L )
+LUA_BINDING_BEGIN( CBasePlayer, ShowViewModel, "class", "Show or hide the view model for the player." )
 {
-    luaL_checkplayer( L, 1 )->ShowViewModel( luaL_checkboolean( L, 2 ) );
+    lua_CBasePlayer *player = LUA_BINDING_ARGUMENT( luaL_checkplayer, 1, "player" );
+    player->ShowViewModel( LUA_BINDING_ARGUMENT( luaL_checkboolean, 2, "shouldShow" ) );
     return 0;
 }
+LUA_BINDING_END()
 
-static int CBasePlayer_ShowCrosshair( lua_State *L )
+LUA_BINDING_BEGIN( CBasePlayer, ShowCrosshair, "class", "Show or hide the crosshair for the player." )
 {
-    luaL_checkplayer( L, 1 )->ShowCrosshair( luaL_checkboolean( L, 2 ) );
+    lua_CBasePlayer *player = LUA_BINDING_ARGUMENT( luaL_checkplayer, 1, "player" );
+    player->ShowCrosshair( LUA_BINDING_ARGUMENT( luaL_checkboolean, 2, "shouldShow" ) );
     return 0;
 }
+LUA_BINDING_END()
 
-static int CBasePlayer_PackDeadPlayerItems( lua_State *L )
+LUA_BINDING_BEGIN( CBasePlayer, PackDeadPlayerItems, "class", "Pack the dead player items." )
 {
-    luaL_checkplayer( L, 1 )->PackDeadPlayerItems();
+    lua_CBasePlayer *player = LUA_BINDING_ARGUMENT( luaL_checkplayer, 1, "player" );
+    player->PackDeadPlayerItems();
     return 0;
 }
+LUA_BINDING_END()
 
-static int CBasePlayer_RemoveAllItems( lua_State *L )
+LUA_BINDING_BEGIN( CBasePlayer, RemoveAllItems, "class", "Remove all items from the player." )
 {
-    luaL_checkplayer( L, 1 )->RemoveAllItems( luaL_checkboolean( L, 2 ) );
+    lua_CBasePlayer *player = LUA_BINDING_ARGUMENT( luaL_checkplayer, 1, "player" );
+    player->RemoveAllItems( LUA_BINDING_ARGUMENT_WITH_DEFAULT( luaL_optboolean, 2, false, "shouldRemoveSuit" ) );
     return 0;
 }
+LUA_BINDING_END()
 
-static int CBasePlayer_IsDead( lua_State *L )
+LUA_BINDING_BEGIN( CBasePlayer, IsDead, "class", "Check if the player is dead." )
 {
-    lua_pushboolean( L, luaL_checkplayer( L, 1 )->IsDead() );
+    lua_CBasePlayer *player = LUA_BINDING_ARGUMENT( luaL_checkplayer, 1, "player" );
+    lua_pushboolean( L, player->IsDead() );
     return 1;
 }
+LUA_BINDING_END( "boolean", "Whether the player is dead." )
 
-static int CBasePlayer_HasPhysicsFlag( lua_State *L )
+LUA_BINDING_BEGIN( CBasePlayer, HasPhysicsFlag, "class", "Check if the player has a physics flag." )
 {
-    lua_pushboolean(
-        L, luaL_checkplayer( L, 1 )->HasPhysicsFlag( luaL_checkinteger( L, 2 ) ) );
+    lua_CBasePlayer *player = LUA_BINDING_ARGUMENT( luaL_checkplayer, 1, "player" );
+    lua_pushboolean( L, player->HasPhysicsFlag( LUA_BINDING_ARGUMENT( luaL_checkinteger, 2, "flag" ) ) );
     return 1;
 }
+LUA_BINDING_END( "boolean", "Whether the player has the physics flag." )
 
-static int CBasePlayer_Weapon_CanUse( lua_State *L )
+LUA_BINDING_BEGIN( CBasePlayer, CanUseWeapon, "class", "Check if the player can use a weapon." )
 {
-    lua_pushboolean(
-        L, luaL_checkplayer( L, 1 )->Weapon_CanUse( luaL_checkweapon( L, 2 ) ) );
+    lua_CBasePlayer *player = LUA_BINDING_ARGUMENT( luaL_checkplayer, 1, "player" );
+    lua_pushboolean( L, player->Weapon_CanUse( LUA_BINDING_ARGUMENT( luaL_checkweapon, 2, "weapon" ) ) );
     return 1;
 }
+LUA_BINDING_END( "boolean", "Whether the player can use the weapon." )
 
-static int CBasePlayer_Weapon_Equip( lua_State *L )
+LUA_BINDING_BEGIN( CBasePlayer, EquipWeapon, "class", "Equip a weapon for the player." )
 {
-    luaL_checkplayer( L, 1 )->Weapon_Equip( luaL_checkweapon( L, 2 ) );
+    lua_CBasePlayer *player = LUA_BINDING_ARGUMENT( luaL_checkplayer, 1, "player" );
+    player->Weapon_Equip( LUA_BINDING_ARGUMENT( luaL_checkweapon, 2, "weapon" ) );
     return 0;
 }
+LUA_BINDING_END()
 
-static int CBasePlayer_Weapon_Drop( lua_State *L )
+LUA_BINDING_BEGIN( CBasePlayer, DropWeapon, "class", "Drop a weapon for the player." )
 {
-    luaL_checkplayer( L, 1 )->Weapon_Drop( luaL_checkweapon( L, 2 ),
-                                           &luaL_optvector( L, 3, NULL ),
-                                           &luaL_optvector( L, 4, NULL ) );
+    lua_CBasePlayer *player = LUA_BINDING_ARGUMENT( luaL_checkplayer, 1, "player" );
+    player->Weapon_Drop(
+        LUA_BINDING_ARGUMENT( luaL_checkweapon, 2, "weapon" ),
+        &LUA_BINDING_ARGUMENT_WITH_DEFAULT( luaL_optvector, 3, NULL, "position" ),
+        &LUA_BINDING_ARGUMENT_WITH_DEFAULT( luaL_optvector, 4, NULL, "velocity" ) );
     return 0;
 }
+LUA_BINDING_END()
 
-static int CBasePlayer_Weapon_DropSlot( lua_State *L )
+LUA_BINDING_BEGIN( CBasePlayer, DropWeaponInSlot, "class", "Drop the weapon in the specified slot." )
 {
-    luaL_checkplayer( L, 1 )->Weapon_DropSlot( luaL_checkinteger( L, 2 ) );
+    lua_CBasePlayer *player = LUA_BINDING_ARGUMENT( luaL_checkplayer, 1, "player" );
+    player->Weapon_DropSlot( LUA_BINDING_ARGUMENT( luaL_checkinteger, 2, "slot" ) );
     return 0;
 }
+LUA_BINDING_END()
 
-static int CBasePlayer_Weapon_GetLastWeapon( lua_State *L )
+LUA_BINDING_BEGIN( CBasePlayer, GetLastWeapon, "class", "Get the previous weapon of the player." )
 {
-    CBaseEntity::PushLuaInstanceSafe( L, luaL_checkplayer( L, 1 )->GetLastWeapon() );
+    lua_CBasePlayer *player = LUA_BINDING_ARGUMENT( luaL_checkplayer, 1, "player" );
+    CBaseEntity::PushLuaInstanceSafe( L, player->GetLastWeapon() );
     return 1;
 }
+LUA_BINDING_END()
 
-static int CBasePlayer_HasAnyAmmoOfType( lua_State *L )
+LUA_BINDING_BEGIN( CBasePlayer, HasAnyAmmoOfType, "class", "Check if the player has any ammo of the specified type." )
 {
-    lua_pushboolean(
-        L, luaL_checkplayer( L, 1 )->HasAnyAmmoOfType( luaL_checkinteger( L, 2 ) ) );
+    lua_CBasePlayer *player = LUA_BINDING_ARGUMENT( luaL_checkplayer, 1, "player" );
+    lua_pushboolean( L, player->HasAnyAmmoOfType( LUA_BINDING_ARGUMENT( luaL_checkinteger, 2, "type" ) ) );
     return 1;
 }
+LUA_BINDING_END( "boolean", "Whether the player has any ammo of the specified type." )
 
-static int CBasePlayer_RumbleEffect( lua_State *L )
+LUA_BINDING_BEGIN( CBasePlayer, RumbleEffect, "class", "Apply a rumble effect to the player." )
 {
-    luaL_checkplayer( L, 1 )->RumbleEffect( luaL_checkinteger( L, 2 ),
-                                            luaL_checkinteger( L, 3 ),
-                                            luaL_checkinteger( L, 4 ) );
+    lua_CBasePlayer *player = LUA_BINDING_ARGUMENT( luaL_checkplayer, 1, "player" );
+    player->RumbleEffect(
+        LUA_BINDING_ARGUMENT( luaL_checkinteger, 2, "index" ),
+        LUA_BINDING_ARGUMENT( luaL_checkinteger, 3, "duration" ),
+        LUA_BINDING_ARGUMENT( luaL_checkinteger, 4, "flags" ) );
     return 0;
 }
+LUA_BINDING_END()
 
-static int CBasePlayer_IsOnLadder( lua_State *L )
+LUA_BINDING_BEGIN( CBasePlayer, IsOnLadder, "class", "Check if the player is on a ladder." )
 {
-    lua_pushboolean( L, luaL_checkplayer( L, 1 )->IsOnLadder() );
+    lua_CBasePlayer *player = LUA_BINDING_ARGUMENT( luaL_checkplayer, 1, "player" );
+    lua_pushboolean( L, player->IsOnLadder() );
     return 1;
 }
+LUA_BINDING_END( "boolean", "Whether the player is on a ladder." )
 
-static int CBasePlayer_SetFlashlightEnabled( lua_State *L )
+LUA_BINDING_BEGIN( CBasePlayer, SetFlashlightEnabled, "class", "Enable or disable the flashlight for the player." )
 {
-    luaL_checkplayer( L, 1 )->SetFlashlightEnabled( luaL_checkboolean( L, 2 ) );
+    lua_CBasePlayer *player = LUA_BINDING_ARGUMENT( luaL_checkplayer, 1, "player" );
+    player->SetFlashlightEnabled( LUA_BINDING_ARGUMENT( luaL_checkboolean, 2, "shouldEnable" ) );
     return 0;
 }
+LUA_BINDING_END()
 
-static int CBasePlayer_FlashlightIsOn( lua_State *L )
+LUA_BINDING_BEGIN( CBasePlayer, IsFlashlightOn, "class", "Check if the flashlight is on for the player." )
 {
-    lua_pushinteger( L, luaL_checkplayer( L, 1 )->FlashlightIsOn() );
+    lua_CBasePlayer *player = LUA_BINDING_ARGUMENT( luaL_checkplayer, 1, "player" );
+    lua_pushinteger( L, player->FlashlightIsOn() );
     return 1;
 }
+LUA_BINDING_END( "integer", "The flashlight state." )
 
-static int CBasePlayer_FlashlightTurnOn( lua_State *L )
+LUA_BINDING_BEGIN( CBasePlayer, TurnFlashlightOn, "class", "Turn the flashlight on for the player." )
 {
-    luaL_checkplayer( L, 1 )->FlashlightTurnOn();
+    lua_CBasePlayer *player = LUA_BINDING_ARGUMENT( luaL_checkplayer, 1, "player" );
+    player->FlashlightTurnOn();
     return 0;
 }
+LUA_BINDING_END()
 
-static int CBasePlayer_FlashlightTurnOff( lua_State *L )
+LUA_BINDING_BEGIN( CBasePlayer, TurnFlashlightOff, "class", "Turn the flashlight off for the player." )
 {
-    luaL_checkplayer( L, 1 )->FlashlightTurnOff();
+    lua_CBasePlayer *player = LUA_BINDING_ARGUMENT( luaL_checkplayer, 1, "player" );
+    player->FlashlightTurnOff();
     return 0;
 }
+LUA_BINDING_END()
 
-static int CBasePlayer_IsIlluminatedByFlashlight( lua_State *L )
+LUA_BINDING_BEGIN( CBasePlayer, IsIlluminatedByFlashlight, "class", "Check if the player is illuminated by the flashlight." )
 {
+    lua_CBasePlayer *player = LUA_BINDING_ARGUMENT( luaL_checkplayer, 1, "player" );
     float flDot;
-    lua_pushboolean( L, luaL_checkplayer( L, 1 )->IsIlluminatedByFlashlight( luaL_checkentity( L, 2 ), &flDot ) );
+    lua_pushboolean( L, player->IsIlluminatedByFlashlight( LUA_BINDING_ARGUMENT( luaL_checkentity, 2, "entity" ), &flDot ) );
     lua_pushnumber( L, flDot );
     return 2;
 }
+LUA_BINDING_END( "boolean", "Whether the player is illuminated by the flashlight.", "number", "The dot product." )
 
-static int CBasePlayer_UpdatePlayerSound( lua_State *L )
+LUA_BINDING_BEGIN( CBasePlayer, UpdatePlayerSound, "class", "Update the player sound." )
 {
-    luaL_checkplayer( L, 1 )->UpdatePlayerSound();
+    lua_CBasePlayer *player = LUA_BINDING_ARGUMENT( luaL_checkplayer, 1, "player" );
+    player->UpdatePlayerSound();
     return 0;
 }
+LUA_BINDING_END()
 
-static int CBasePlayer_DeathSound( lua_State *L )
+LUA_BINDING_BEGIN( CBasePlayer, PlayDeathSound, "class", "Play the death sound for the player." )
 {
-    luaL_checkplayer( L, 1 )->DeathSound( luaL_checkdamageinfo( L, 2 ) );
+    lua_CBasePlayer *player = LUA_BINDING_ARGUMENT( luaL_checkplayer, 1, "player" );
+    player->DeathSound( LUA_BINDING_ARGUMENT( luaL_checkdamageinfo, 2, "info" ) );
     return 0;
 }
+LUA_BINDING_END()
 
-static int CBasePlayer_Classify( lua_State *L )
+LUA_BINDING_BEGIN( CBasePlayer, Classify, "class", "Get the classification of the player (for AI to determine friends/foes)." )
 {
-    lua_pushinteger( L, luaL_checkplayer( L, 1 )->Classify() );
+    lua_CBasePlayer *player = LUA_BINDING_ARGUMENT( luaL_checkplayer, 1, "player" );
+    lua_pushinteger( L, player->Classify() );
     return 1;
 }
+LUA_BINDING_END( "integer", "The classification." )
 
-static int CBasePlayer_SetWeaponAnimType( lua_State *L )
+// Experiment; SetWeaponAnimType has no existing implementation anywhere
+//LUA_BINDING_BEGIN( CBasePlayer, SetWeaponAnimationType, "class", "Set the weapon animation type for the player." )
+//{
+//    lua_CBasePlayer *player = LUA_BINDING_ARGUMENT( luaL_checkplayer, 1, "player" );
+//    player->SetWeaponAnimType( LUA_BINDING_ARGUMENT( luaL_checkstring, 2, "extension" ) );
+//    return 0;
+//}
+//LUA_BINDING_END()
+
+LUA_BINDING_BEGIN( CBasePlayer, ImpulseCommands, "class", "Handle impulse commands for the player." )
 {
-    // Huh?
-    // luaL_checkplayer(L, 1)->SetWeaponAnimType(luaL_checkstring(L, 2));
+    lua_CBasePlayer *player = LUA_BINDING_ARGUMENT( luaL_checkplayer, 1, "player" );
+    player->ImpulseCommands();
     return 0;
 }
+LUA_BINDING_END()
 
-static int CBasePlayer_ImpulseCommands( lua_State *L )
+LUA_BINDING_BEGIN( CBasePlayer, CheatImpulseCommands, "class", "Handle cheat impulse commands for the player." )
 {
-    luaL_checkplayer( L, 1 )->ImpulseCommands();
+    lua_CBasePlayer *player = LUA_BINDING_ARGUMENT( luaL_checkplayer, 1, "player" );
+    player->CheatImpulseCommands( LUA_BINDING_ARGUMENT( luaL_checkinteger, 2, "impulse" ) );
     return 0;
 }
+LUA_BINDING_END()
 
-static int CBasePlayer_CheatImpulseCommands( lua_State *L )
+LUA_BINDING_BEGIN( CBasePlayer, NotifySinglePlayerGameEnding, "class", "Notify the player that the single player game is ending." )
 {
-    luaL_checkplayer( L, 1 )->CheatImpulseCommands( luaL_checkinteger( L, 2 ) );
+    lua_CBasePlayer *player = LUA_BINDING_ARGUMENT( luaL_checkplayer, 1, "player" );
+    player->NotifySinglePlayerGameEnding();
     return 0;
 }
+LUA_BINDING_END()
 
-static int CBasePlayer_NotifySinglePlayerGameEnding( lua_State *L )
+LUA_BINDING_BEGIN( CBasePlayer, IsSinglePlayerGameEnding, "class", "Check if the single player game is ending for the player." )
 {
-    luaL_checkplayer( L, 1 )->NotifySinglePlayerGameEnding();
-    return 0;
-}
-
-static int CBasePlayer_IsSinglePlayerGameEnding( lua_State *L )
-{
-    lua_pushboolean( L, luaL_checkplayer( L, 1 )->IsSinglePlayerGameEnding() );
+    lua_CBasePlayer *player = LUA_BINDING_ARGUMENT( luaL_checkplayer, 1, "player" );
+    lua_pushboolean( L, player->IsSinglePlayerGameEnding() );
     return 1;
 }
+LUA_BINDING_END( "boolean", "Whether the single player game is ending." )
 
-static int CBasePlayer_StartObserverMode( lua_State *L )
+LUA_BINDING_BEGIN( CBasePlayer, StartObserverMode, "class", "Start the observer mode for the player." )
 {
-    lua_pushboolean(
-        L, luaL_checkplayer( L, 1 )->StartObserverMode( luaL_checkinteger( L, 2 ) ) );
+    lua_CBasePlayer *player = LUA_BINDING_ARGUMENT( luaL_checkplayer, 1, "player" );
+    lua_pushboolean( L, player->StartObserverMode( LUA_BINDING_ARGUMENT( luaL_checkinteger, 2, "mode" ) ) );
     return 1;
 }
+LUA_BINDING_END( "boolean", "Whether the observer mode was started." )
 
-static int CBasePlayer_StopObserverMode( lua_State *L )
+LUA_BINDING_BEGIN( CBasePlayer, StopObserverMode, "class", "Stop the observer mode for the player." )
 {
-    luaL_checkplayer( L, 1 )->StopObserverMode();
+    lua_CBasePlayer *player = LUA_BINDING_ARGUMENT( luaL_checkplayer, 1, "player" );
+    player->StopObserverMode();
     return 0;
 }
+LUA_BINDING_END()
 
-static int CBasePlayer_ModeWantsSpectatorGUI( lua_State *L )
+LUA_BINDING_BEGIN( CBasePlayer, ModeWantsSpectatorGui, "class", "Check if the observer mode wants the spectator GUI for the player." )
 {
-    lua_pushboolean( L, luaL_checkplayer( L, 1 )->ModeWantsSpectatorGUI( luaL_checkinteger( L, 2 ) ) );
+    lua_CBasePlayer *player = LUA_BINDING_ARGUMENT( luaL_checkplayer, 1, "player" );
+    lua_pushboolean( L, player->ModeWantsSpectatorGUI( LUA_BINDING_ARGUMENT( luaL_checkinteger, 2, "mode" ) ) );
     return 1;
 }
+LUA_BINDING_END( "boolean", "Whether the observer mode wants the spectator GUI." )
 
-static int CBasePlayer_FindNextObserverTarget( lua_State *L )
+LUA_BINDING_BEGIN( CBasePlayer, FindNextObserverTarget, "class", "Find the next observer target for the player." )
 {
-    CBaseEntity::PushLuaInstanceSafe( L, luaL_checkplayer( L, 1 )->FindNextObserverTarget( luaL_checkboolean( L, 2 ) ) );
+    lua_CBasePlayer *player = LUA_BINDING_ARGUMENT( luaL_checkplayer, 1, "player" );
+    CBaseEntity::PushLuaInstanceSafe( L, player->FindNextObserverTarget( LUA_BINDING_ARGUMENT( luaL_checkboolean, 2, "reverse" ) ) );
     return 1;
 }
+LUA_BINDING_END()
 
-static int CBasePlayer_GetNextObserverSearchStartPoint( lua_State *L )
+LUA_BINDING_BEGIN( CBasePlayer, GetNextObserverSearchStartPoint, "class", "Get the next observer search start point for the player." )
 {
-    lua_pushinteger( L, luaL_checkplayer( L, 1 )->GetNextObserverSearchStartPoint( luaL_checkboolean( L, 2 ) ) );
+    lua_CBasePlayer *player = LUA_BINDING_ARGUMENT( luaL_checkplayer, 1, "player" );
+    lua_pushinteger( L, player->GetNextObserverSearchStartPoint( LUA_BINDING_ARGUMENT( luaL_checkboolean, 2, "reverse" ) ) );
     return 1;
 }
+LUA_BINDING_END( "integer", "The next observer search start point." )
 
-static int CBasePlayer_IsValidObserverTarget( lua_State *L )
+LUA_BINDING_BEGIN( CBasePlayer, IsValidObserverTarget, "class", "Check if the observer target is valid for the player." )
 {
-    lua_pushboolean( L, luaL_checkplayer( L, 1 )->IsValidObserverTarget( luaL_checkentity( L, 2 ) ) );
+    lua_CBasePlayer *player = LUA_BINDING_ARGUMENT( luaL_checkplayer, 1, "player" );
+    lua_pushboolean( L, player->IsValidObserverTarget( LUA_BINDING_ARGUMENT( luaL_checkentity, 2, "target" ) ) );
     return 1;
 }
+LUA_BINDING_END( "boolean", "Whether the observer target is valid." )
 
-static int CBasePlayer_CheckObserverSettings( lua_State *L )
+LUA_BINDING_BEGIN( CBasePlayer, CheckObserverSettings, "class", "Check the observer settings for the player." )
 {
-    luaL_checkplayer( L, 1 )->CheckObserverSettings();
+    lua_CBasePlayer *player = LUA_BINDING_ARGUMENT( luaL_checkplayer, 1, "player" );
+    player->CheckObserverSettings();
     return 0;
 }
+LUA_BINDING_END()
 
-static int CBasePlayer_JumptoPosition( lua_State *L )
+LUA_BINDING_BEGIN( CBasePlayer, JumpToPosition, "class", "Jump to the specified position for the player." )
 {
-    luaL_checkplayer( L, 1 )->JumptoPosition( luaL_checkvector( L, 2 ),
-                                              luaL_checkangle( L, 3 ) );
+    lua_CBasePlayer *player = LUA_BINDING_ARGUMENT( luaL_checkplayer, 1, "player" );
+    player->JumptoPosition(
+        LUA_BINDING_ARGUMENT( luaL_checkvector, 2, "position" ),
+        LUA_BINDING_ARGUMENT( luaL_checkangle, 3, "angle" ) );
     return 0;
 }
+LUA_BINDING_END()
 
-static int CBasePlayer_ForceObserverMode( lua_State *L )
+LUA_BINDING_BEGIN( CBasePlayer, ForceObserverMode, "class", "Force the observer mode for the player." )
 {
-    luaL_checkplayer( L, 1 )->ForceObserverMode( luaL_checkinteger( L, 2 ) );
+    lua_CBasePlayer *player = LUA_BINDING_ARGUMENT( luaL_checkplayer, 1, "player" );
+    player->ForceObserverMode( LUA_BINDING_ARGUMENT( luaL_checkinteger, 2, "mode" ) );
     return 0;
 }
+LUA_BINDING_END()
 
-static int CBasePlayer_ValidateCurrentObserverTarget( lua_State *L )
+LUA_BINDING_BEGIN( CBasePlayer, ValidateCurrentObserverTarget, "class", "Validate the current observer target for the player." )
 {
-    luaL_checkplayer( L, 1 )->ValidateCurrentObserverTarget();
+    lua_CBasePlayer *player = LUA_BINDING_ARGUMENT( luaL_checkplayer, 1, "player" );
+    player->ValidateCurrentObserverTarget();
     return 0;
 }
+LUA_BINDING_END()
 
-static int CBasePlayer_StartReplayMode( lua_State *L )
+LUA_BINDING_BEGIN( CBasePlayer, StartReplayMode, "class", "Start the replay mode for the player." )
 {
-    lua_pushboolean( L, luaL_checkplayer( L, 1 )->StartReplayMode( luaL_checknumber( L, 2 ), luaL_checknumber( L, 3 ), luaL_checkinteger( L, 4 ) ) );
+    lua_CBasePlayer *player = LUA_BINDING_ARGUMENT( luaL_checkplayer, 1, "player" );
+    lua_pushboolean( L, player->StartReplayMode(
+                           LUA_BINDING_ARGUMENT( luaL_checknumber, 2, "delay" ),
+                           LUA_BINDING_ARGUMENT( luaL_checknumber, 3, "duration" ),
+                           LUA_BINDING_ARGUMENT( luaL_checkinteger, 4, "entityIndex" ) ) );
     return 1;
 }
+LUA_BINDING_END( "boolean", "Whether the replay mode was started." )
 
-static int CBasePlayer_StopReplayMode( lua_State *L )
+LUA_BINDING_BEGIN( CBasePlayer, StopReplayMode, "class", "Stop the replay mode for the player." )
 {
-    luaL_checkplayer( L, 1 )->StopReplayMode();
+    lua_CBasePlayer *player = LUA_BINDING_ARGUMENT( luaL_checkplayer, 1, "player" );
+    player->StopReplayMode();
     return 0;
 }
+LUA_BINDING_END()
 
-static int CBasePlayer_GetDelayTicks( lua_State *L )
+LUA_BINDING_BEGIN( CBasePlayer, GetDelayTicks, "class", "Get the delay ticks for the player." )
 {
-    lua_pushinteger( L, luaL_checkplayer( L, 1 )->GetDelayTicks() );
+    lua_CBasePlayer *player = LUA_BINDING_ARGUMENT( luaL_checkplayer, 1, "player" );
+    lua_pushinteger( L, player->GetDelayTicks() );
     return 1;
 }
+LUA_BINDING_END( "integer", "The delay ticks." )
 
-static int CBasePlayer_GetReplayEntity( lua_State *L )
+LUA_BINDING_BEGIN( CBasePlayer, GetReplayEntity, "class", "Get the replay entity for the player." )
 {
-    lua_pushinteger( L, luaL_checkplayer( L, 1 )->GetReplayEntity() );
+    lua_CBasePlayer *player = LUA_BINDING_ARGUMENT( luaL_checkplayer, 1, "player" );
+    lua_pushinteger( L, player->GetReplayEntity() );
     return 1;
 }
+LUA_BINDING_END( "integer", "The replay entity." )
 
-static int CBasePlayer_CreateCorpse( lua_State *L )
+LUA_BINDING_BEGIN( CBasePlayer, CreateCorpse, "class", "Create a corpse for the player." )
 {
-    luaL_checkplayer( L, 1 )->CreateCorpse();
+    lua_CBasePlayer *player = LUA_BINDING_ARGUMENT( luaL_checkplayer, 1, "player" );
+    player->CreateCorpse();
     return 0;
 }
+LUA_BINDING_END()
 
-static int CBasePlayer_EntSelectSpawnPoint( lua_State *L )
+LUA_BINDING_BEGIN( CBasePlayer, SelectSpawnPoint, "class", "Select a spawn point for the player." )
 {
-    CBaseEntity::PushLuaInstanceSafe( L, luaL_checkplayer( L, 1 )->EntSelectSpawnPoint() );
+    lua_CBasePlayer *player = LUA_BINDING_ARGUMENT( luaL_checkplayer, 1, "player" );
+    CBaseEntity::PushLuaInstanceSafe( L, player->EntSelectSpawnPoint() );
     return 1;
 }
+LUA_BINDING_END()
 
-static int CBasePlayer_GetVehicleAnalogControlBias( lua_State *L )
+LUA_BINDING_BEGIN( CBasePlayer, GetVehicleAnalogControlBias, "class", "Get the vehicle analog control bias for the player." )
 {
-    lua_pushinteger( L, luaL_checkplayer( L, 1 )->GetVehicleAnalogControlBias() );
+    lua_CBasePlayer *player = LUA_BINDING_ARGUMENT( luaL_checkplayer, 1, "player" );
+    lua_pushinteger( L, player->GetVehicleAnalogControlBias() );
     return 1;
 }
+LUA_BINDING_END( "integer", "The vehicle analog control bias." )
 
-static int CBasePlayer_SetVehicleAnalogControlBias( lua_State *L )
+LUA_BINDING_BEGIN( CBasePlayer, SetVehicleAnalogControlBias, "class", "Set the vehicle analog control bias for the player." )
 {
-    luaL_checkplayer( L, 1 )->SetVehicleAnalogControlBias(
-        luaL_checkinteger( L, 2 ) );
+    lua_CBasePlayer *player = LUA_BINDING_ARGUMENT( luaL_checkplayer, 1, "player" );
+    player->SetVehicleAnalogControlBias( LUA_BINDING_ARGUMENT( luaL_checkinteger, 2, "bias" ) );
     return 0;
 }
+LUA_BINDING_END()
 
-static int CBasePlayer_OnVehicleStart( lua_State *L )
+LUA_BINDING_BEGIN( CBasePlayer, OnVehicleStart, "class", "Handle the vehicle start for the player." )
 {
-    luaL_checkplayer( L, 1 )->OnVehicleStart();
+    lua_CBasePlayer *player = LUA_BINDING_ARGUMENT( luaL_checkplayer, 1, "player" );
+    player->OnVehicleStart();
     return 0;
 }
+LUA_BINDING_END()
 
-static int CBasePlayer_BumpWeapon( lua_State *L )
+LUA_BINDING_BEGIN( CBasePlayer, BumpWeapon, "class", "Bump the weapon for the player." )
 {
-    lua_pushboolean( L,
-                     luaL_checkplayer( L, 1 )->BumpWeapon( luaL_checkweapon( L, 2 ) ) );
+    lua_CBasePlayer *player = LUA_BINDING_ARGUMENT( luaL_checkplayer, 1, "player" );
+    lua_pushboolean( L, player->BumpWeapon( LUA_BINDING_ARGUMENT( luaL_checkweapon, 2, "weapon" ) ) );
     return 1;
 }
+LUA_BINDING_END( "boolean", "Whether the weapon was bumped." )
 
-static int CBasePlayer_RemovePlayerItem( lua_State *L )
+LUA_BINDING_BEGIN( CBasePlayer, RemoveWeapon, "class", "Remove the weapon for the player." )
 {
-    lua_pushboolean(
-        L, luaL_checkplayer( L, 1 )->RemovePlayerItem( luaL_checkweapon( L, 2 ) ) );
+    lua_CBasePlayer *player = LUA_BINDING_ARGUMENT( luaL_checkplayer, 1, "player" );
+    lua_pushboolean( L, player->RemovePlayerItem( LUA_BINDING_ARGUMENT( luaL_checkweapon, 2, "weapon" ) ) );
     return 1;
 }
+LUA_BINDING_END( "boolean", "Whether the weapon was removed." )
 
-static int CBasePlayer_HasNamedPlayerItem( lua_State *L )
+LUA_BINDING_BEGIN( CBasePlayer, HasNamedWeapon, "class", "Check if the player has the named weapon." )
 {
-    CBaseEntity::PushLuaInstanceSafe(
-        L, luaL_checkplayer( L, 1 )->HasNamedPlayerItem( luaL_checkstring( L, 2 ) ) );
+    lua_CBasePlayer *player = LUA_BINDING_ARGUMENT( luaL_checkplayer, 1, "player" );
+    CBaseEntity::PushLuaInstanceSafe( L, player->HasNamedPlayerItem( LUA_BINDING_ARGUMENT( luaL_checkstring, 2, "name" ) ) );
     return 1;
 }
+LUA_BINDING_END()
 
-static int CBasePlayer_HasWeapons( lua_State *L )
+LUA_BINDING_BEGIN( CBasePlayer, HasWeapons, "class", "Check if the player has weapons." )
 {
-    lua_pushboolean( L, luaL_checkplayer( L, 1 )->HasWeapons() );
+    lua_CBasePlayer *player = LUA_BINDING_ARGUMENT( luaL_checkplayer, 1, "player" );
+    lua_pushboolean( L, player->HasWeapons() );
     return 1;
 }
+LUA_BINDING_END( "boolean", "Whether the player has weapons." )
 
-static int CBasePlayer_GiveNamedItem( lua_State *L )
+LUA_BINDING_BEGIN( CBasePlayer, GiveNamedItem, "class", "Give the named weapon to the player." )
 {
-    CBaseEntity::PushLuaInstanceSafe( L, luaL_checkplayer( L, 1 )->GiveNamedItem( luaL_checkstring( L, 2 ), luaL_optinteger( L, 3, 0 ) ) );
+    lua_CBasePlayer *player = LUA_BINDING_ARGUMENT( luaL_checkplayer, 1, "player" );
+    CBaseEntity::PushLuaInstanceSafe( L, player->GiveNamedItem( LUA_BINDING_ARGUMENT( luaL_checkstring, 2, "name" ), LUA_BINDING_ARGUMENT_WITH_DEFAULT( luaL_optinteger, 3, 0, "amount" ) ) );
     return 1;
 }
+LUA_BINDING_END()
 
-static int CBasePlayer_EnableControl( lua_State *L )
+LUA_BINDING_BEGIN( CBasePlayer, EnableControl, "class", "Enable or disable control for the player." )
 {
-    luaL_checkplayer( L, 1 )->EnableControl( luaL_checkboolean( L, 2 ) );
+    lua_CBasePlayer *player = LUA_BINDING_ARGUMENT( luaL_checkplayer, 1, "player" );
+    player->EnableControl( LUA_BINDING_ARGUMENT( luaL_checkboolean, 2, "shouldEnable" ) );
     return 0;
 }
+LUA_BINDING_END()
 
-static int CBasePlayer_CheckTrainUpdate( lua_State *L )
+LUA_BINDING_BEGIN( CBasePlayer, CheckTrainUpdate, "class", "Check the train update for the player." )
 {
-    luaL_checkplayer( L, 1 )->CheckTrainUpdate();
+    lua_CBasePlayer *player = LUA_BINDING_ARGUMENT( luaL_checkplayer, 1, "player" );
+    player->CheckTrainUpdate();
     return 0;
 }
+LUA_BINDING_END()
 
-static int CBasePlayer_EquipSuit( lua_State *L )
+LUA_BINDING_BEGIN( CBasePlayer, EquipSuit, "class", "Equip or remove the suit for the player." )
 {
-    luaL_checkplayer( L, 1 )->EquipSuit( luaL_optboolean( L, 2, true ) );
+    lua_CBasePlayer *player = LUA_BINDING_ARGUMENT( luaL_checkplayer, 1, "player" );
+    player->EquipSuit( LUA_BINDING_ARGUMENT_WITH_DEFAULT( luaL_optboolean, 2, true, "shouldPlayEffects" ) );
     return 0;
 }
+LUA_BINDING_END()
 
-static int CBasePlayer_RemoveSuit( lua_State *L )
+LUA_BINDING_BEGIN( CBasePlayer, RemoveSuit, "class", "Remove the suit for the player." )
 {
-    luaL_checkplayer( L, 1 )->RemoveSuit();
+    lua_CBasePlayer *player = LUA_BINDING_ARGUMENT( luaL_checkplayer, 1, "player" );
+    player->RemoveSuit();
     return 0;
 }
+LUA_BINDING_END()
 
-static int CBasePlayer_ChangeTeam( lua_State *L )
+LUA_BINDING_BEGIN( CBasePlayer, SetTeam, "class", "Change the team for the player." )
 {
-    luaL_checkplayer( L, 1 )->ChangeTeam( luaL_checkinteger( L, 2 ) );
+    lua_CBasePlayer *player = LUA_BINDING_ARGUMENT( luaL_checkplayer, 1, "player" );
+    player->ChangeTeam( LUA_BINDING_ARGUMENT( luaL_checkinteger, 2, "team" ) );
     return 0;
 }
+LUA_BINDING_END()
 
-static int CBasePlayer_SetObserverMode( lua_State *L )
+LUA_BINDING_BEGIN( CBasePlayer, SetObserverMode, "class", "Set the observer mode for the player." )
 {
-    luaL_checkplayer( L, 1 )->ForceObserverMode( luaL_checkinteger( L, 2 ) );
+    lua_CBasePlayer *player = LUA_BINDING_ARGUMENT( luaL_checkplayer, 1, "player" );
+    player->ForceObserverMode( LUA_BINDING_ARGUMENT( luaL_checkinteger, 2, "mode" ) );
     return 0;
 }
+LUA_BINDING_END()
 
-static int CBasePlayer_SetObserverTarget( lua_State *L )
+LUA_BINDING_BEGIN( CBasePlayer, SetObserverTarget, "class", "Set the observer target for the player." )
 {
-    luaL_checkplayer( L, 1 )->SetObserverTarget( luaL_checkentity( L, 2 ) );
+    lua_CBasePlayer *player = LUA_BINDING_ARGUMENT( luaL_checkplayer, 1, "player" );
+    player->SetObserverTarget( LUA_BINDING_ARGUMENT( luaL_checkentity, 2, "target" ) );
     return 0;
 }
-
-static const luaL_Reg CBasePlayermeta[] = {
-    { "GiveAmmo", CBasePlayer_GiveAmmo },
-    { "SetBodyPitch", CBasePlayer_SetBodyPitch },
-    { "CreateViewModel", CBasePlayer_CreateViewModel },
-    { "HideViewModels", CBasePlayer_HideViewModels },
-    { "DestroyViewModels", CBasePlayer_DestroyViewModels },
-    { "RequiredEdictIndex", CBasePlayer_RequiredEdictIndex },
-    { "LockPlayerInPlace", CBasePlayer_LockPlayerInPlace },
-    { "UnlockPlayer", CBasePlayer_UnlockPlayer },
-    { "DrawDebugGeometryOverlays", CBasePlayer_DrawDebugGeometryOverlays },
-    { "ForceRespawn", CBasePlayer_ForceRespawn },
-    { "InitialSpawn", CBasePlayer_InitialSpawn },
-    { "InitHUD", CBasePlayer_InitHUD },
-    { "PlayerDeathThink", CBasePlayer_PlayerDeathThink },
-    { "Jump", CBasePlayer_Jump },
-    { "Duck", CBasePlayer_Duck },
-    { "ForceSimulation", CBasePlayer_ForceSimulation },
-    { "TakeHealth", CBasePlayer_TakeHealth },
-    { "DamageEffect", CBasePlayer_DamageEffect },
-    { "PauseBonusProgress", CBasePlayer_PauseBonusProgress },
-    { "SetBonusProgress", CBasePlayer_SetBonusProgress },
-    { "SetBonusChallenge", CBasePlayer_SetBonusChallenge },
-    { "GetBonusProgress", CBasePlayer_GetBonusProgress },
-    { "GetBonusChallenge", CBasePlayer_GetBonusChallenge },
-    { "SnapEyeAngles", CBasePlayer_SnapEyeAngles },
-    { "BodyAngles", CBasePlayer_BodyAngles },
-    { "BodyTarget", CBasePlayer_BodyTarget },
-    { "ShouldFadeOnDeath", CBasePlayer_ShouldFadeOnDeath },
-    { "OnTakeDamage_Alive", CBasePlayer_OnTakeDamage_Alive },
-    { "Event_Killed", CBasePlayer_Event_Killed },
-    { "Event_KilledOther", CBasePlayer_Event_KilledOther },
-    { "Event_Dying", CBasePlayer_Event_Dying },
-    { "IsNetClient", CBasePlayer_IsNetClient },
-    { "IsFakeClient", CBasePlayer_IsFakeClient },
-    { "GetClientIndex", CBasePlayer_GetClientIndex },
-    { "SetPlayerName", CBasePlayer_SetPlayerName },
-    { "GetNetworkIDString", CBasePlayer_GetNetworkIDString },
-    { "ShowViewModel", CBasePlayer_ShowViewModel },
-    { "ShowCrosshair", CBasePlayer_ShowCrosshair },
-    { "PackDeadPlayerItems", CBasePlayer_PackDeadPlayerItems },
-    { "RemoveAllItems", CBasePlayer_RemoveAllItems },
-    { "IsDead", CBasePlayer_IsDead },
-    { "HasPhysicsFlag", CBasePlayer_HasPhysicsFlag },
-    { "Weapon_CanUse", CBasePlayer_Weapon_CanUse },
-    { "Weapon_Equip", CBasePlayer_Weapon_Equip },
-    { "Weapon_Drop", CBasePlayer_Weapon_Drop },
-    { "Weapon_DropSlot", CBasePlayer_Weapon_DropSlot },
-    { "Weapon_GetLastWeapon", CBasePlayer_Weapon_GetLastWeapon },
-    { "HasAnyAmmoOfType", CBasePlayer_HasAnyAmmoOfType },
-    { "RumbleEffect", CBasePlayer_RumbleEffect },
-    { "IsOnLadder", CBasePlayer_IsOnLadder },
-    { "SetFlashlightEnabled", CBasePlayer_SetFlashlightEnabled },
-    { "FlashlightIsOn", CBasePlayer_FlashlightIsOn },
-    { "FlashlightTurnOn", CBasePlayer_FlashlightTurnOn },
-    { "FlashlightTurnOff", CBasePlayer_FlashlightTurnOff },
-    { "IsIlluminatedByFlashlight", CBasePlayer_IsIlluminatedByFlashlight },
-    { "UpdatePlayerSound", CBasePlayer_UpdatePlayerSound },
-    { "DeathSound", CBasePlayer_DeathSound },
-    { "Classify", CBasePlayer_Classify },
-    { "SetWeaponAnimType", CBasePlayer_SetWeaponAnimType },
-    { "ImpulseCommands", CBasePlayer_ImpulseCommands },
-    { "CheatImpulseCommands", CBasePlayer_CheatImpulseCommands },
-    { "NotifySinglePlayerGameEnding", CBasePlayer_NotifySinglePlayerGameEnding },
-    { "IsSinglePlayerGameEnding", CBasePlayer_IsSinglePlayerGameEnding },
-    { "StartObserverMode", CBasePlayer_StartObserverMode },
-    { "StopObserverMode", CBasePlayer_StopObserverMode },
-    { "ModeWantsSpectatorGUI", CBasePlayer_ModeWantsSpectatorGUI },
-    { "FindNextObserverTarget", CBasePlayer_FindNextObserverTarget },
-    { "GetNextObserverSearchStartPoint",
-      CBasePlayer_GetNextObserverSearchStartPoint },
-    { "IsValidObserverTarget", CBasePlayer_IsValidObserverTarget },
-    { "CheckObserverSettings", CBasePlayer_CheckObserverSettings },
-    { "JumptoPosition", CBasePlayer_JumptoPosition },
-    { "ForceObserverMode", CBasePlayer_ForceObserverMode },
-    { "ValidateCurrentObserverTarget",
-      CBasePlayer_ValidateCurrentObserverTarget },
-    { "StartReplayMode", CBasePlayer_StartReplayMode },
-    { "StopReplayMode", CBasePlayer_StopReplayMode },
-    { "GetDelayTicks", CBasePlayer_GetDelayTicks },
-    { "GetReplayEntity", CBasePlayer_GetReplayEntity },
-    { "CreateCorpse", CBasePlayer_CreateCorpse },
-    { "EntSelectSpawnPoint", CBasePlayer_EntSelectSpawnPoint },
-    { "GetVehicleAnalogControlBias", CBasePlayer_GetVehicleAnalogControlBias },
-    { "SetVehicleAnalogControlBias", CBasePlayer_SetVehicleAnalogControlBias },
-    { "OnVehicleStart", CBasePlayer_OnVehicleStart },
-    { "BumpWeapon", CBasePlayer_BumpWeapon },
-    { "RemovePlayerItem", CBasePlayer_RemovePlayerItem },
-    { "HasNamedPlayerItem", CBasePlayer_HasNamedPlayerItem },
-    { "HasWeapons", CBasePlayer_HasWeapons },
-    { "GiveNamedItem", CBasePlayer_GiveNamedItem },
-    { "EnableControl", CBasePlayer_EnableControl },
-    { "CheckTrainUpdate", CBasePlayer_CheckTrainUpdate },
-    { "EquipSuit", CBasePlayer_EquipSuit },
-    { "RemoveSuit", CBasePlayer_RemoveSuit },
-    { "SetTeam", CBasePlayer_ChangeTeam },
-    { "SetObserverMode", CBasePlayer_SetObserverMode },
-    { "SetObserverTarget", CBasePlayer_SetObserverTarget },
-    { NULL, NULL } };
+LUA_BINDING_END()
 
 /*
 ** Open CBasePlayer object
 */
 LUALIB_API int luaopen_CBasePlayer( lua_State *L )
 {
-    LUA_PUSH_METATABLE_TO_EXTEND( L, LUA_BASEPLAYERLIBNAME );
-    luaL_register( L, NULL, CBasePlayermeta );
+    LUA_PUSH_METATABLE_TO_EXTEND( L, LUA_BASEPLAYERMETANAME );
+
+    LUA_REGISTRATION_COMMIT( CBasePlayer );
+
     return 1;
 }

@@ -15,7 +15,7 @@ lua:
   
   arguments:
     - name: "ground"
-      type: Entity
+      type: CBaseEntity
   returns:
     
 ---

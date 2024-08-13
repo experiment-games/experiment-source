@@ -21,7 +21,7 @@ lua:
     - name: "maxDistance"
       type: number
     - name: "startEntity"
-      type: Entity
+      type: CBaseEntity
       default: "NULL"
   returns:
     - type: Entity

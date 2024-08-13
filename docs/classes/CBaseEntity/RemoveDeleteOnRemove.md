@@ -15,7 +15,7 @@ lua:
   
   arguments:
     - name: "entityToDelete"
-      type: Entity
+      type: CBaseEntity
   returns:
     
 ---

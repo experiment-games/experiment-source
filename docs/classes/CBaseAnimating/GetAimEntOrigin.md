@@ -15,7 +15,7 @@ lua:
   
   arguments:
     - name: "attachedTo"
-      type: Entity
+      type: CBaseEntity
   returns:
     - type: vector
       description: "The aim entity origin"

@@ -15,7 +15,7 @@ lua:
   
   arguments:
     - name: "owner"
-      type: Entity
+      type: CBaseEntity
   returns:
     
 ---

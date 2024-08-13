@@ -15,7 +15,7 @@ lua:
   
   arguments:
     - name: "entity2"
-      type: Entity
+      type: CBaseAnimating
   returns:
     - type: boolean
       description: "True if the entities are the same, false otherwise"

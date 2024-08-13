@@ -1,0 +1,24 @@
+---
+template: lua-class-function.html
+title: GetPreviouslyPredictedOrigin
+icon: lua-shared
+tags:
+  - lua
+  - shared
+  - needs-verification
+  - needs-example
+lua:
+  library: CBasePlayer
+  function: GetPreviouslyPredictedOrigin
+  realm: shared
+  description: "Get the player's previously predicted origin."
+  
+  
+  returns:
+    - type: Vector
+      description: "The player's previously predicted origin."
+---
+
+<div class="lua__search__keywords">
+CBasePlayer:GetPreviouslyPredictedOrigin &#x2013; Get the player's previously predicted origin.
+</div>

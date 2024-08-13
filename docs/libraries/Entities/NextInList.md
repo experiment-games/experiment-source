@@ -15,7 +15,7 @@ lua:
   
   arguments:
     - name: "startingEntity"
-      type: Entity
+      type: CBaseEntity
       default: "NULL"
   returns:
     - type: Entity

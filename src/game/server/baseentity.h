@@ -363,7 +363,7 @@ struct rotatingpushmove_t;
 class CBaseEntity : public IServerEntity
 {
 #ifdef LUA_SDK
-    LUA_DECLARE_SINGLE_LUA_INSTANCE( CBaseEntity, LUA_BASEENTITYLIBNAME );
+    LUA_DECLARE_SINGLE_LUA_INSTANCE( CBaseEntity, LUA_BASEENTITYMETANAME );
 #endif
 
    public:

@@ -15,7 +15,7 @@ lua:
   
   arguments:
     - name: "parent"
-      type: Entity
+      type: CBaseEntity
     - name: "attachment"
       type: number
       default: "0"

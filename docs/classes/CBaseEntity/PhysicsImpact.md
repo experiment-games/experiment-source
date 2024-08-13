@@ -15,7 +15,7 @@ lua:
   
   arguments:
     - name: "other"
-      type: Entity
+      type: CBaseEntity
     - name: "trace"
       type: Trace
   returns:

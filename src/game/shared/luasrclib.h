@@ -21,13 +21,15 @@ LUALIB_API int( luaopen_CBaseFlex_shared )( lua_State *L );
 #define LUA_BASECOMBATWEAPONLIBNAME "CBaseCombatWeapon"
 LUALIB_API int( luaopen_CBaseCombatWeapon )( lua_State *L );
 
-#define LUA_BASEENTITYLIBNAME "CBaseEntity"
+#define LUA_BASEENTITYMETANAME "CBaseEntity"
 LUALIB_API int( luaopen_CBaseEntity )( lua_State *L );
 LUALIB_API int( luaopen_CBaseEntity_shared )( lua_State *L );
 
-#define LUA_BASEPLAYERLIBNAME "CBasePlayer"
+#define LUA_PLAYERSLIBNAME "Players"
+#define LUA_BASEPLAYERMETANAME "CBasePlayer"
 LUALIB_API int( luaopen_CBasePlayer )( lua_State *L );
 LUALIB_API int( luaopen_CBasePlayer_shared )( lua_State *L );
+LUALIB_API int( luaopen_Players )( lua_State *L );
 
 #define LUA_EFFECTDATALIBNAME "CEffectData"
 LUALIB_API int( luaopen_CEffectData )( lua_State *L );
