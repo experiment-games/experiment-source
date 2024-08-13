@@ -2,9 +2,9 @@
 template: lua-index.html
 childrenTitle: Methods
 include:
-  startsWith: classes/ConsoleCommand/
+  startsWith: classes/Angle/
 exclude:
   isIndex: true
 ---
 
-# ConsoleCommand
+# Angle

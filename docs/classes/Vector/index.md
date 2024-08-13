@@ -2,9 +2,9 @@
 template: lua-index.html
 childrenTitle: Methods
 include:
-  startsWith: classes/ConsoleCommand/
+  startsWith: classes/Vector/
 exclude:
   isIndex: true
 ---
 
-# ConsoleCommand
+# Vector

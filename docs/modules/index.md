@@ -1,14 +1,14 @@
 ---
 template: lua-index.html
-childrenTitle: All Libraries
+childrenTitle: Modules
 include:
-  startsWith: libraries/
+  startsWith: modules/
   isIndex: true
 exclude:
-  exact: libraries/
+  exact: modules/
 format:
   label: '%parentTitle%'
   hideParent: true
 ---
 
-# Libraries
+# Modules

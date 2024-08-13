@@ -1,10 +1,14 @@
 ---
 template: lua-index.html
-childrenTitle: All Class Methods (in all classes)
+childrenTitle: All Classes
 include:
   startsWith: classes/
-exclude:
   isIndex: true
+exclude:
+  exact: classes/
+format:
+  label: '%parentTitle%'
+  hideParent: true
 ---
 
 A class is a type of object that defines how objects of that class behave. Methods

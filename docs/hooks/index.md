@@ -1,10 +1,14 @@
 ---
 template: lua-index.html
-childrenTitle: All Hooks (in all realms)
+childrenTitle: Hooks by Realm
 include:
   startsWith: hooks/
-exclude:
   isIndex: true
+exclude:
+  exact: hooks/
+format:
+  label: '%parentTitle%'
+  hideParent: true
 ---
 
 # Hooks
