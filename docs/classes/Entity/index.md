@@ -8,3 +8,6 @@ exclude:
 ---
 
 # Entity
+
+This represents an entity in the game world. It is the base class for Player,
+Weapon, and other entities.

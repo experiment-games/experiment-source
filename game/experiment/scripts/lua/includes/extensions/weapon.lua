@@ -9,13 +9,13 @@ if (GAMEUI) then
 	return
 end
 
-_R.CBaseCombatWeapon.__WeaponSound = _R.CBaseCombatWeapon.WeaponSound
-local WeaponSound = _R.CBaseCombatWeapon.WeaponSound
+_R.Weapon.__WeaponSound = _R.Weapon.WeaponSound
+local WeaponSound = _R.Weapon.WeaponSound
 local Globals = Globals
 
 -- HACKHACK: We override this here, because for some reason scripted weapons
 -- don't properly play weapon sounds in singleplayer
-function _R.CBaseCombatWeapon.WeaponSound( self, sound_type, soundtime )
+function _R.Weapon.WeaponSound( self, sound_type, soundtime )
   if ( CLIENT ) then
     return
   end

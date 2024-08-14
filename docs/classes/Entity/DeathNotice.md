@@ -15,7 +15,7 @@ lua:
   
   arguments:
     - name: "killer"
-      type: CBaseEntity
+      type: Entity
   returns:
     
 ---

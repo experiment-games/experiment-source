@@ -15,7 +15,7 @@ lua:
   
   arguments:
     - name: "target"
-      type: CBaseEntity
+      type: Entity
   returns:
     
 ---

@@ -15,7 +15,7 @@ lua:
   
   arguments:
     - name: "blockingEntity"
-      type: CBaseEntity
+      type: Entity
   returns:
     
 ---

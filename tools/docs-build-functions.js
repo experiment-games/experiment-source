@@ -49,15 +49,10 @@ lua:
 `;
 
 const mergeClassInto = {
-  CBaseEntity: 'Entity',
   CBaseAnimating: 'Entity',
   CBaseFlex: 'Entity',
 
-  CBasePlayer: 'Player',
   CExperimentPlayer: 'Player',
-
-  // Just rename CBaseCombatWeapon:
-  CBaseCombatWeapon: 'Weapon',
 };
 
 function getLibrary(func) {
@@ -209,25 +204,26 @@ function fromTypeChecker(typeChecker) {
     case 'luaL_checkentity':
     case 'luaL_optentity':
     case 'lua_toentity':
-      return 'CBaseEntity';
+      return 'Entity'; // (CBaseEntity)'; // Disabled because I'm not sure we want to be so specific in Lua
     case 'luaL_checkbaseflex':
     case 'luaL_optbaseflex':
     case 'lua_tobaseflex':
-      return 'CBaseFlex';
+      return 'Entity'; // (CBaseFlex)';
     case 'luaL_checkanimating':
     case 'luaL_optanimating':
     case 'lua_toanimating':
-      return 'CBaseAnimating';
+      return 'Entity'; // (CBaseAnimating)';
     case 'lua_toweapon':
     case 'luaL_checkweapon':
-      return 'Weapon';
+      return 'Weapon'; // Entity (Weapon)';
     case 'luaL_checkplayer':
     case 'luaL_optplayer':
     case 'lua_toplayer':
+      return 'Player'; // Entity (Player)';
     case 'luaL_checkexperimentplayer':
     case 'luaL_optexperimentplayer':
     case 'luaL_toexperimentplayer':
-      return 'Player';
+      return 'Player'; // Entity (CExperimentPlayer)';
     case 'luaL_checkeffect':
     case 'luaL_opteffect':
     case 'lua_toeffect':
@@ -458,6 +454,9 @@ if (filesToUpdate.size > 0) {
   console.warn('The following files were not updated (maybe they\'re no longer relevant?):');
 
   for (const file of filesToUpdate.keys()) {
+    if (!process.argv.includes('--list-unchanged-indexes') && file.includes('index.md'))
+      continue;
+
     console.warn(file);
   }
 }

@@ -15,7 +15,7 @@ lua:
   
   arguments:
     - name: "activator"
-      type: CBaseEntity
+      type: Entity
   returns:
     - type: boolean
       description: "true if triggered, false otherwise."

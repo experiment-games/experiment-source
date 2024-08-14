@@ -15,7 +15,7 @@ lua:
   
   arguments:
     - name: "attacker"
-      type: CBaseEntity
+      type: Entity
   returns:
     - type: boolean
       description: "true if can be hit, false otherwise."

@@ -395,7 +395,7 @@ function WRITER:WriteColor(color, withAlpha)
 end
 
 --- Writes the given entity as an index
---- @param entity CBaseEntity
+--- @param entity Entity
 function WRITER:WriteEntity(entity)
     -- TODO: See note near SIZE_ENTITY_INDEX
     self:WriteUInt(entity:GetEntityIndex(), SIZE_ENTITY_INDEX)
@@ -593,7 +593,7 @@ end
 --- Seeing how only entities in the PVS will be available, it is best
 --- to use the second return value, which is a function that will return
 --- the entity when called (if it is then in the PVS).
---- @return CBaseEntity|nil, fun(): CBaseEntity
+--- @return Entity|nil, fun(): Entity
 function READER:ReadEntity()
     local index = self:ReadUInt(SIZE_ENTITY_INDEX)
     local entityGetter = function()

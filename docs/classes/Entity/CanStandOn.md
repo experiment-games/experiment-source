@@ -15,7 +15,7 @@ lua:
   
   arguments:
     - name: "surfaceEntity"
-      type: CBaseEntity
+      type: Entity
   returns:
     - type: boolean
       description: "true if can stand on, false otherwise."

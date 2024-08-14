@@ -54,8 +54,8 @@ function GetConVar_Internal(name)
 end
 
 util = Util
-util.PrecacheModel = _R.CBaseEntity.PrecacheModel
-util.PrecacheSound = _R.CBaseEntity.PrecacheSound
+util.PrecacheModel = _R.Entity.PrecacheModel
+util.PrecacheSound = _R.Entity.PrecacheSound
 
 -- TODO: 	Things like the player manager and drive system depend on these three functions
 --			returning sensible data. Find a way to implement it:
@@ -139,17 +139,27 @@ jit = {
 
 local registry = debug.getregistry()
 function FindMetaTable(name)
-	if (name == "Entity") then
-		name = "CBaseEntity"
-	elseif (name == "Player") then
-		name = "CBasePlayer"
-	elseif (name == "Vehicle") then
+	if (name == "Vehicle") then
 		-- We don't have vehicles in Experiment, so lets not waste time on it
-        return {}
-    elseif (name == "IMaterial") then
-        name = "Material"
+		return {}
+	elseif (name == "IMaterial") then
+		name = "Material"
 	elseif (name == "ITexture") then
 		name = "Texture"
+	elseif (name == "CEffectData") then
+		name = "EffectData"
+	elseif (name == "CMoveData") then
+		name = "MoveData"
+	-- elseif (name == "CRecipientFilter") then
+	-- name = "RecipientFilter"
+	-- elseif (name == "CTakeDamageInfo") then
+	-- 	name = "TakeDamageInfo"
+	-- elseif (name == "CUserCmd") then
+	-- 	name = "UserCommand"
+	-- elseif (name == "PhysObj") then
+	-- 	name = "PhysicsObject"
+	-- elseif (name == "PhysCollide") then
+	-- 	name = "PhysicsCollide"
 	end
 
 	return registry[name]
@@ -201,14 +211,14 @@ engine.ActiveGamemode = function()
 	return Gamemodes.GetActiveName()
 end
 engine.GetGames = function()
-    local games = Engines.GetMountableGames()
-    local result = {}
+	local games = Engines.GetMountableGames()
+	local result = {}
 
 	for i, game in ipairs(games) do
 		result[i] = {
 			depot = game.appId,
 			title = game.name,
-            folder = game.directoryName,
+			folder = game.directoryName,
 
 			owned = game.isOwned,
 			mounted = game.isMounted,
@@ -419,7 +429,7 @@ end
 function ENTITY_META:SetNotSolid(bBool)
 	if (bBool) then
 		self:AddSolidFlags(SOLID_NONE)
-    else
+	else
 		print("ENTITY_META:SetNotSolid - Not sure if SOLID_VPHYSICS is correct for SetNotSolid(false)")
 		self:RemoveSolidFlags(SOLID_VPHYSICS)
 	end
@@ -518,11 +528,11 @@ function PLAYER_META:GetClassID()
 end
 
 function PLAYER_META:IsListenServerHost()
-    if (CLIENT) then
-        ErrorNoHalt("IsListenServerHost has not yet been implemented on the client.")
-    end
+	if (CLIENT) then
+		ErrorNoHalt("IsListenServerHost has not yet been implemented on the client.")
+	end
 
-    return self == Util.GetListenServerHost()
+	return self == Util.GetListenServerHost()
 end
 
 local MOVE_DATA_META = FindMetaTable("MoveData")
@@ -647,10 +657,10 @@ else
 	}
 
 	render.SetModelLighting = render.SetAmbientLightCube
-    render.ResetModelLighting = render.ResetAmbientLightCube
-    render.PushFilterMin = render.PushFilterMinification
-    render.PopFilterMin = render.PopFilterMinification
-    render.PushFilterMag = render.PushFilterMagnification
+	render.ResetModelLighting = render.ResetAmbientLightCube
+	render.PushFilterMin = render.PushFilterMinification
+	render.PopFilterMin = render.PopFilterMinification
+	render.PushFilterMag = render.PushFilterMagnification
 	render.PopFilterMag = render.PopFilterMagnification
 
 	function render.Clear(r, g, b, a, clearDepth, clearStencil)
@@ -686,7 +696,7 @@ else
 
 	local MODEL_IMAGE_PANEL_META = FindMetaTable("ModelImagePanel")
 	MODEL_IMAGE_PANEL_META._OriginalRebuildSpawnIcon = MODEL_IMAGE_PANEL_META._OriginalRebuildSpawnIcon or
-	MODEL_IMAGE_PANEL_META.RebuildSpawnIcon
+		MODEL_IMAGE_PANEL_META.RebuildSpawnIcon
 	registry.ModelImage = MODEL_IMAGE_PANEL_META
 
 	MODEL_IMAGE_PANEL_META.SetSpawnIcon = MODEL_IMAGE_PANEL_META.SetModelImage
@@ -715,8 +725,8 @@ else
 		})
 	end
 
-    local PANEL_META = FindMetaTable("Panel")
-    PANEL_META.GetPos = PANEL_META.GetPosition
+	local PANEL_META = FindMetaTable("Panel")
+	PANEL_META.GetPos = PANEL_META.GetPosition
 	PANEL_META.SetPos = PANEL_META.SetPosition
 	PANEL_META._OriginalSetCursor = PANEL_META._OriginalSetCursor or PANEL_META.SetCursor
 	PANEL_META._OriginalGetParent = PANEL_META._OriginalGetParent or PANEL_META.GetParent
@@ -792,7 +802,7 @@ else
 	LABEL_PANEL_META._OriginalSetFont = LABEL_PANEL_META._OriginalSetFont or LABEL_PANEL_META.SetFont
 	LABEL_PANEL_META._OriginalGetFont = LABEL_PANEL_META._OriginalGetFont or LABEL_PANEL_META.GetFont
 	LABEL_PANEL_META._OriginalSetContentAlignment = LABEL_PANEL_META._OriginalSetContentAlignment or
-	LABEL_PANEL_META.SetContentAlignment
+		LABEL_PANEL_META.SetContentAlignment
 
 	LABEL_PANEL_META.GetTextSize = LABEL_PANEL_META.GetContentSize
 
@@ -1000,17 +1010,17 @@ else
 	surface.SetTextPos = surface.DrawSetTextPos
 	surface.SetTextColor = surface.DrawSetTextColor
 	surface.DrawText = surface.DrawPrintText
-    surface.SetTexture = surface.DrawSetTexture
+	surface.SetTexture = surface.DrawSetTexture
 
 	local currentFont
-    surface.SetFont = function(font)
-        currentFont = font
-        surface.DrawSetTextFont(font)
-    end
+	surface.SetFont = function(font)
+		currentFont = font
+		surface.DrawSetTextFont(font)
+	end
 
 	local oldTextSize = Surface.GetTextSize
 
-    surface.GetTextSize = function(text)
+	surface.GetTextSize = function(text)
 		return oldTextSize(currentFont, text)
 	end
 
@@ -1163,15 +1173,15 @@ end
 unpack = unpack or table.unpack
 
 MsgC = function(...)
-    local currentColor = debug.GetRealmColor()
+	local currentColor = debug.GetRealmColor()
 
-    for k, stringOrColor in ipairs({ ... }) do
-        if (IsColor(stringOrColor)) then
-            currentColor = stringOrColor
-        else
-            debug.PrintDebugColorMessage(currentColor, tostring(stringOrColor))
-        end
-    end
+	for k, stringOrColor in ipairs({ ... }) do
+		if (IsColor(stringOrColor)) then
+			currentColor = stringOrColor
+		else
+			debug.PrintDebugColorMessage(currentColor, tostring(stringOrColor))
+		end
+	end
 
 	debug.PrintDebugColorMessage(currentColor, "\n")
 end
@@ -1262,7 +1272,7 @@ if (CLIENT) then
 
 	hook.Add("LevelInitPostEntity", "GModCompatibility.CallInitPostEntityHooks", function()
 		hook.Run("InitPostEntity")
-    end)
+	end)
 else
 	-- Include("sv_hooks.lua")
 
@@ -1272,12 +1282,12 @@ else
 end
 
 hook.Add("Initialize", "GModCompatibility.CallInitializeHooks", function()
-    -- Copy ents from our system to the GMod system.
-    local scriptedEntities = ScriptedEntities.GetList()
+	-- Copy ents from our system to the GMod system.
+	local scriptedEntities = ScriptedEntities.GetList()
 	for className, scriptedEntity in pairs(scriptedEntities) do
 		scripted_ents.Register(scriptedEntity, className)
 	end
-    scripted_ents.OnLoaded()
+	scripted_ents.OnLoaded()
 
 	hook.Run("CreateTeams")
 	hook.Run("PreGamemodeLoaded")
@@ -1294,31 +1304,31 @@ package.IncludePath = "lua/;" .. package.IncludePath
 local searchPathsString = Files.GetSearchPath("GAME")
 
 for searchPath in searchPathsString:gmatch("([^;]+)") do
-    if (searchPath:find("%.bsp$") or searchPath:find("%.vpk$")) then
-        continue
-    end
+	if (searchPath:find("%.bsp$") or searchPath:find("%.vpk$")) then
+		continue
+	end
 
 	if (searchPath:sub(-1) ~= "/" and searchPath:sub(-1) ~= "\\") then
 		searchPath = searchPath .. "/"
 	end
 
-    -- Prepend the searchpath to the lua dirs
-    package.path = searchPath .. "lua/includes/modules/?.lua;" .. package.path
+	-- Prepend the searchpath to the lua dirs
+	package.path = searchPath .. "lua/includes/modules/?.lua;" .. package.path
 
 	if (Systems.IsWindows()) then
 		package.cpath = searchPath .. "lua/bin/?.dll;" .. package.cpath
-    elseif (Systems.IsLinux()) then
+	elseif (Systems.IsLinux()) then
 		package.cpath = searchPath .. "lua/bin/?.so;" .. package.cpath
 	end
 end
 
 -- Now that the entire compatibility setup is done, we can execute the scripts in 'autorun' (shared), 'autorun/client' and 'autorun/server'.
 local function includeFolder(folder)
-    local files = file.Find(folder .. "/*.lua", "GAME")
+	local files = file.Find(folder .. "/*.lua", "GAME")
 
-    for _, fileName in ipairs(files) do
-        include(folder .. "/" .. fileName)
-    end
+	for _, fileName in ipairs(files) do
+		include(folder .. "/" .. fileName)
+	end
 end
 
 -- We implement this ourselves, because the gmod util/color.lua messes up the metatable
@@ -1336,11 +1346,11 @@ local filter = {
 		["gamemode"] = true,
 		["weapons"] = true,
 		["usermessage"] = true,
-    },
+	},
 	include = {
-		["extensions/net.lua"] = true, -- We implement networking using luasocket
-        ["extensions/file.lua"] = true, -- Our filesystem works slightly different
-		["util/color.lua"] = true, -- In contrast with gmod, we should properly get metatables everywhere (so don't need this hack util)
+		["extensions/net.lua"] = true,  -- We implement networking using luasocket
+		["extensions/file.lua"] = true, -- Our filesystem works slightly different
+		["util/color.lua"] = true,      -- In contrast with gmod, we should properly get metatables everywhere (so don't need this hack util)
 	},
 }
 
@@ -1348,9 +1358,9 @@ local originalRequire = require
 local originalInclude = Include
 
 require = function(name)
-    if (not filter.require[name]) then
-        return originalRequire(name)
-    end
+	if (not filter.require[name]) then
+		return originalRequire(name)
+	end
 end
 
 include = function(name)
@@ -1365,21 +1375,21 @@ include = originalInclude
 require = originalRequire
 
 if (CLIENT) then
-    --[[
+	--[[
 		Load VGUI
 	--]]
 
-    include("derma/init.lua")
+	include("derma/init.lua")
 
-    -- include("includes/vgui_base.lua") -- I don't think this is actually loaded in Garry's Mod since it's missing a bunch of includes
-    -- So let's just include all files inside lua/vgui/
+	-- include("includes/vgui_base.lua") -- I don't think this is actually loaded in Garry's Mod since it's missing a bunch of includes
+	-- So let's just include all files inside lua/vgui/
 	includeFolder("lua/vgui")
 
-    include("cl_awesomium.lua")
+	include("cl_awesomium.lua")
 
 	include("skins/default.lua")
 
-	require( "notification" )
+	require("notification")
 end
 
 --[[

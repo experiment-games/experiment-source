@@ -29,11 +29,11 @@ function GM:GiveDefaultItems(client)
 	client:EquipSuit()
 
 	-- TODO: Just do client:GiveAmmo(255, "Pistol") etc.
-	_R.CBasePlayer.GiveAmmo(client, 255, "Pistol")
-	_R.CBasePlayer.GiveAmmo(client, 45, "SMG1")
-	_R.CBasePlayer.GiveAmmo(client, 1, "grenade")
-	_R.CBasePlayer.GiveAmmo(client, 6, "Buckshot")
-	_R.CBasePlayer.GiveAmmo(client, 6, "357")
+	_R.Player.GiveAmmo(client, 255, "Pistol")
+	_R.Player.GiveAmmo(client, 45, "SMG1")
+	_R.Player.GiveAmmo(client, 1, "grenade")
+	_R.Player.GiveAmmo(client, 6, "Buckshot")
+	_R.Player.GiveAmmo(client, 6, "357")
 
 	if (client:GetPlayerModelType() == PLAYER_SOUNDS_METROPOLICE or client:GetPlayerModelType() == PLAYER_SOUNDS_COMBINESOLDIER) then
 		client:GiveNamedItem("weapon_stunstick")

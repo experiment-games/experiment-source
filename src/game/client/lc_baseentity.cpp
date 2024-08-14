@@ -8,9 +8,9 @@
 // memdbgon must be the last include file in a .cpp file!!!
 #include "tier0/memdbgon.h"
 
-LUA_REGISTRATION_INIT( CBaseEntity )
+LUA_REGISTRATION_INIT( Entity )
 
-LUA_BINDING_BEGIN( CBaseEntity, SpawnClientEntity, "class", "Spawn client entity." )
+LUA_BINDING_BEGIN( Entity, SpawnClientEntity, "class", "Spawn client entity." )
 {
     lua_CBaseEntity *pEntity = LUA_BINDING_ARGUMENT( luaL_checkentity, 1, "entity" );
     pEntity->SpawnClientEntity();
@@ -18,7 +18,7 @@ LUA_BINDING_BEGIN( CBaseEntity, SpawnClientEntity, "class", "Spawn client entity
 }
 LUA_BINDING_END()
 
-LUA_BINDING_BEGIN( CBaseEntity, Interp_HierarchyUpdateInterpolationAmounts, "class", "Update interpolation amounts." )
+LUA_BINDING_BEGIN( Entity, Interp_HierarchyUpdateInterpolationAmounts, "class", "Update interpolation amounts." )
 {
     lua_CBaseEntity *pEntity = LUA_BINDING_ARGUMENT( luaL_checkentity, 1, "entity" );
     pEntity->Interp_HierarchyUpdateInterpolationAmounts();
@@ -27,7 +27,7 @@ LUA_BINDING_BEGIN( CBaseEntity, Interp_HierarchyUpdateInterpolationAmounts, "cla
 LUA_BINDING_END()
 
 // Experiment; not binding this, since I feel it'll conflict with gmod Init on scripted ents
-//LUA_BINDING_BEGIN( CBaseEntity, Init, "class", "Initialize." )
+//LUA_BINDING_BEGIN( Entity, Init, "class", "Initialize." )
 //{
 //    lua_CBaseEntity *pEntity = LUA_BINDING_ARGUMENT( luaL_checkentity, 1, "entity" );
 //    int entnum = LUA_BINDING_ARGUMENT( luaL_checknumber, 2, "entityNumber" );
@@ -37,7 +37,7 @@ LUA_BINDING_END()
 //}
 //LUA_BINDING_END( "boolean", "true if successful, false otherwise." )
 
-LUA_BINDING_BEGIN( CBaseEntity, Terminate, "class", "Called in the destructor to shutdown everything." )
+LUA_BINDING_BEGIN( Entity, Terminate, "class", "Called in the destructor to shutdown everything." )
 {
     lua_CBaseEntity *pEntity = LUA_BINDING_ARGUMENT( luaL_checkentity, 1, "entity" );
     pEntity->Term();
@@ -45,7 +45,7 @@ LUA_BINDING_BEGIN( CBaseEntity, Terminate, "class", "Called in the destructor to
 }
 LUA_BINDING_END()
 
-LUA_BINDING_BEGIN( CBaseEntity, EnableInToolView, "class", "Enable in tool view." )
+LUA_BINDING_BEGIN( Entity, EnableInToolView, "class", "Enable in tool view." )
 {
     lua_CBaseEntity *pEntity = LUA_BINDING_ARGUMENT( luaL_checkentity, 1, "entity" );
     bool bEnable = LUA_BINDING_ARGUMENT( luaL_checkboolean, 2, "enable" );
@@ -54,7 +54,7 @@ LUA_BINDING_BEGIN( CBaseEntity, EnableInToolView, "class", "Enable in tool view.
 }
 LUA_BINDING_END()
 
-LUA_BINDING_BEGIN( CBaseEntity, IsEnabledInToolView, "class", "Is enabled in tool view." )
+LUA_BINDING_BEGIN( Entity, IsEnabledInToolView, "class", "Is enabled in tool view." )
 {
     lua_CBaseEntity *pEntity = LUA_BINDING_ARGUMENT( luaL_checkentity, 1, "entity" );
     lua_pushboolean( L, pEntity->IsEnabledInToolView() );
@@ -62,7 +62,7 @@ LUA_BINDING_BEGIN( CBaseEntity, IsEnabledInToolView, "class", "Is enabled in too
 }
 LUA_BINDING_END( "boolean", "true if enabled, false otherwise." )
 
-LUA_BINDING_BEGIN( CBaseEntity, SetIK, "class", "Set IK." )
+LUA_BINDING_BEGIN( Entity, SetIK, "class", "Set IK." )
 {
     lua_CBaseEntity *pEntity = LUA_BINDING_ARGUMENT( luaL_checkentity, 1, "entity" );
     bool bUseIK = LUA_BINDING_ARGUMENT( luaL_checkboolean, 2, "useIK" );
@@ -74,7 +74,7 @@ LUA_BINDING_BEGIN( CBaseEntity, SetIK, "class", "Set IK." )
 }
 LUA_BINDING_END()
 
-LUA_BINDING_BEGIN( CBaseEntity, SetToolRecording, "class", "Set tool recording." )
+LUA_BINDING_BEGIN( Entity, SetToolRecording, "class", "Set tool recording." )
 {
     lua_CBaseEntity *pEntity = LUA_BINDING_ARGUMENT( luaL_checkentity, 1, "entity" );
     bool bRecording = LUA_BINDING_ARGUMENT( luaL_checkboolean, 2, "recording" );
@@ -83,7 +83,7 @@ LUA_BINDING_BEGIN( CBaseEntity, SetToolRecording, "class", "Set tool recording."
 }
 LUA_BINDING_END()
 
-LUA_BINDING_BEGIN( CBaseEntity, IsToolRecording, "class", "Is tool recording." )
+LUA_BINDING_BEGIN( Entity, IsToolRecording, "class", "Is tool recording." )
 {
     lua_CBaseEntity *pEntity = LUA_BINDING_ARGUMENT( luaL_checkentity, 1, "entity" );
     lua_pushboolean( L, pEntity->IsToolRecording() );
@@ -91,7 +91,7 @@ LUA_BINDING_BEGIN( CBaseEntity, IsToolRecording, "class", "Is tool recording." )
 }
 LUA_BINDING_END( "boolean", "true if recording, false otherwise." )
 
-LUA_BINDING_BEGIN( CBaseEntity, HasRecordedThisFrame, "class", "Has recorded this frame." )
+LUA_BINDING_BEGIN( Entity, HasRecordedThisFrame, "class", "Has recorded this frame." )
 {
     lua_CBaseEntity *pEntity = LUA_BINDING_ARGUMENT( luaL_checkentity, 1, "entity" );
     lua_pushboolean( L, pEntity->HasRecordedThisFrame() );
@@ -99,7 +99,7 @@ LUA_BINDING_BEGIN( CBaseEntity, HasRecordedThisFrame, "class", "Has recorded thi
 }
 LUA_BINDING_END( "boolean", "true if recorded, false otherwise." )
 
-LUA_BINDING_BEGIN( CBaseEntity, RecordToolMessage, "class", "Record tool message." )
+LUA_BINDING_BEGIN( Entity, RecordToolMessage, "class", "Record tool message." )
 {
     lua_CBaseEntity *pEntity = LUA_BINDING_ARGUMENT( luaL_checkentity, 1, "entity" );
     pEntity->RecordToolMessage();
@@ -107,7 +107,7 @@ LUA_BINDING_BEGIN( CBaseEntity, RecordToolMessage, "class", "Record tool message
 }
 LUA_BINDING_END()
 
-LUA_BINDING_BEGIN( CBaseEntity, DontRecordInTools, "class", "Don't record in tools." )
+LUA_BINDING_BEGIN( Entity, DontRecordInTools, "class", "Don't record in tools." )
 {
     lua_CBaseEntity *pEntity = LUA_BINDING_ARGUMENT( luaL_checkentity, 1, "entity" );
     pEntity->DontRecordInTools();
@@ -115,7 +115,7 @@ LUA_BINDING_BEGIN( CBaseEntity, DontRecordInTools, "class", "Don't record in too
 }
 LUA_BINDING_END()
 
-LUA_BINDING_BEGIN( CBaseEntity, ShouldRecordInTools, "class", "Should record in tools." )
+LUA_BINDING_BEGIN( Entity, ShouldRecordInTools, "class", "Should record in tools." )
 {
     lua_CBaseEntity *pEntity = LUA_BINDING_ARGUMENT( luaL_checkentity, 1, "entity" );
     lua_pushboolean( L, pEntity->ShouldRecordInTools() );
@@ -123,7 +123,7 @@ LUA_BINDING_BEGIN( CBaseEntity, ShouldRecordInTools, "class", "Should record in 
 }
 LUA_BINDING_END( "boolean", "true if should record, false otherwise." )
 
-LUA_BINDING_BEGIN( CBaseEntity, Release, "class", "Release." )
+LUA_BINDING_BEGIN( Entity, Release, "class", "Release." )
 {
     lua_CBaseEntity *pEntity = LUA_BINDING_ARGUMENT( luaL_checkentity, 1, "entity" );
     pEntity->Release();
@@ -131,7 +131,7 @@ LUA_BINDING_BEGIN( CBaseEntity, Release, "class", "Release." )
 }
 LUA_BINDING_END()
 
-LUA_BINDING_BEGIN( CBaseEntity, GetRenderOrigin, "class", "Get render origin." )
+LUA_BINDING_BEGIN( Entity, GetRenderOrigin, "class", "Get render origin." )
 {
     lua_CBaseEntity *pEntity = LUA_BINDING_ARGUMENT( luaL_checkentity, 1, "entity" );
     Vector v = pEntity->GetRenderOrigin();
@@ -140,7 +140,7 @@ LUA_BINDING_BEGIN( CBaseEntity, GetRenderOrigin, "class", "Get render origin." )
 }
 LUA_BINDING_END( "vector", "Render origin." )
 
-LUA_BINDING_BEGIN( CBaseEntity, GetRenderAngles, "class", "Get render angles." )
+LUA_BINDING_BEGIN( Entity, GetRenderAngles, "class", "Get render angles." )
 {
     lua_CBaseEntity *pEntity = LUA_BINDING_ARGUMENT( luaL_checkentity, 1, "entity" );
     QAngle v = pEntity->GetRenderAngles();
@@ -149,7 +149,7 @@ LUA_BINDING_BEGIN( CBaseEntity, GetRenderAngles, "class", "Get render angles." )
 }
 LUA_BINDING_END( "angle", "Render angles." )
 
-LUA_BINDING_BEGIN( CBaseEntity, GetObserverCameraOrigin, "class", "Get observer camera origin." )
+LUA_BINDING_BEGIN( Entity, GetObserverCameraOrigin, "class", "Get observer camera origin." )
 {
     lua_CBaseEntity *pEntity = LUA_BINDING_ARGUMENT( luaL_checkentity, 1, "entity" );
     Vector v = pEntity->GetObserverCamOrigin();
@@ -158,7 +158,7 @@ LUA_BINDING_BEGIN( CBaseEntity, GetObserverCameraOrigin, "class", "Get observer 
 }
 LUA_BINDING_END( "vector", "Observer camera origin." )
 
-LUA_BINDING_BEGIN( CBaseEntity, IsTwoPass, "class", "Is two pass." )
+LUA_BINDING_BEGIN( Entity, IsTwoPass, "class", "Is two pass." )
 {
     lua_CBaseEntity *pEntity = LUA_BINDING_ARGUMENT( luaL_checkentity, 1, "entity" );
     lua_pushboolean( L, pEntity->IsTwoPass() );
@@ -166,7 +166,7 @@ LUA_BINDING_BEGIN( CBaseEntity, IsTwoPass, "class", "Is two pass." )
 }
 LUA_BINDING_END( "boolean", "true if two pass, false otherwise." )
 
-LUA_BINDING_BEGIN( CBaseEntity, UsesPowerOfTwoFrameBufferTexture, "class", "Uses power of two frame buffer texture." )
+LUA_BINDING_BEGIN( Entity, UsesPowerOfTwoFrameBufferTexture, "class", "Uses power of two frame buffer texture." )
 {
     lua_CBaseEntity *pEntity = LUA_BINDING_ARGUMENT( luaL_checkentity, 1, "entity" );
     lua_pushboolean( L, pEntity->UsesPowerOfTwoFrameBufferTexture() );
@@ -174,7 +174,7 @@ LUA_BINDING_BEGIN( CBaseEntity, UsesPowerOfTwoFrameBufferTexture, "class", "Uses
 }
 LUA_BINDING_END( "boolean", "true if uses power of two frame buffer texture, false otherwise." )
 
-LUA_BINDING_BEGIN( CBaseEntity, UsesFullFrameBufferTexture, "class", "Uses full frame buffer texture." )
+LUA_BINDING_BEGIN( Entity, UsesFullFrameBufferTexture, "class", "Uses full frame buffer texture." )
 {
     lua_CBaseEntity *pEntity = LUA_BINDING_ARGUMENT( luaL_checkentity, 1, "entity" );
     lua_pushboolean( L, pEntity->UsesFullFrameBufferTexture() );
@@ -182,7 +182,7 @@ LUA_BINDING_BEGIN( CBaseEntity, UsesFullFrameBufferTexture, "class", "Uses full 
 }
 LUA_BINDING_END( "boolean", "true if uses full frame buffer texture, false otherwise." )
 
-LUA_BINDING_BEGIN( CBaseEntity, DrawModel, "class", "Draw model." )
+LUA_BINDING_BEGIN( Entity, DrawModel, "class", "Draw model." )
 {
     lua_CBaseEntity *pEntity = LUA_BINDING_ARGUMENT( luaL_checkentity, 1, "entity" );
     int flags = ( int )LUA_BINDING_ARGUMENT_WITH_DEFAULT( luaL_optnumber, 2, STUDIO_RENDER, "flags" );
@@ -191,7 +191,7 @@ LUA_BINDING_BEGIN( CBaseEntity, DrawModel, "class", "Draw model." )
 }
 LUA_BINDING_END( "integer", "Draw model result." )
 
-LUA_BINDING_BEGIN( CBaseEntity, ComputeRenderEffectsBlend, "class", "Compute RenderFX blend." )
+LUA_BINDING_BEGIN( Entity, ComputeRenderEffectsBlend, "class", "Compute RenderFX blend." )
 {
     lua_CBaseEntity *pEntity = LUA_BINDING_ARGUMENT( luaL_checkentity, 1, "entity" );
     pEntity->ComputeFxBlend();
@@ -199,7 +199,7 @@ LUA_BINDING_BEGIN( CBaseEntity, ComputeRenderEffectsBlend, "class", "Compute Ren
 }
 LUA_BINDING_END()
 
-LUA_BINDING_BEGIN( CBaseEntity, GetRenderEffectsBlend, "class", "Get RenderFX blend." )
+LUA_BINDING_BEGIN( Entity, GetRenderEffectsBlend, "class", "Get RenderFX blend." )
 {
     lua_CBaseEntity *pEntity = LUA_BINDING_ARGUMENT( luaL_checkentity, 1, "entity" );
     lua_pushinteger( L, pEntity->GetFxBlend() );
@@ -208,7 +208,7 @@ LUA_BINDING_BEGIN( CBaseEntity, GetRenderEffectsBlend, "class", "Get RenderFX bl
 LUA_BINDING_END( "integer", "RenderFX blend." )
 
 // Experiment; not binding this, since it's commented as being there for backwards compatibility
-//LUA_BINDING_BEGIN( CBaseEntity, LODTest, "class", "Level of detail test." )
+//LUA_BINDING_BEGIN( Entity, LODTest, "class", "Level of detail test." )
 //{
 //    lua_CBaseEntity *pEntity = LUA_BINDING_ARGUMENT( luaL_checkentity, 1, "entity" );
 //    lua_pushboolean( L, pEntity->LODTest() );
@@ -216,7 +216,7 @@ LUA_BINDING_END( "integer", "RenderFX blend." )
 //}
 //LUA_BINDING_END( "boolean", "true if LOD test passed, false otherwise." )
 
-LUA_BINDING_BEGIN( CBaseEntity, SetNextClientThink, "class", "Set next client think." )
+LUA_BINDING_BEGIN( Entity, SetNextClientThink, "class", "Set next client think." )
 {
     lua_CBaseEntity *pEntity = LUA_BINDING_ARGUMENT( luaL_checkentity, 1, "entity" );
     float flNextThink = LUA_BINDING_ARGUMENT( luaL_checknumber, 2, "nextThink" );
@@ -232,7 +232,7 @@ LUALIB_API int luaopen_CBaseEntity( lua_State *L )
 {
     LUA_PUSH_METATABLE_TO_EXTEND( L, LUA_BASEENTITYMETANAME );
 
-    LUA_REGISTRATION_COMMIT( CBaseEntity );
+    LUA_REGISTRATION_COMMIT( Entity );
 
     return 1;
 }

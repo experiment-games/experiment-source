@@ -15,7 +15,7 @@ lua:
   
   arguments:
     - name: "asker"
-      type: CBaseEntity
+      type: Entity
   returns:
     - type: boolean
       description: "Whether the weapon is locked."

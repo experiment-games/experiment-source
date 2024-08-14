@@ -29,13 +29,13 @@ LUALIB_API lua_CBaseCombatWeapon *luaL_checkweapon( lua_State *L, int narg )
 {
     lua_CBaseCombatWeapon *d = lua_toweapon( L, narg );
     if ( d == NULL ) /* avoid extra test when d is not 0 */
-        luaL_argerror( L, narg, "CBaseCombatWeapon expected, got NULL entity" );
+        luaL_argerror( L, narg, "Weapon expected, got NULL entity" );
     return d;
 }
 
-LUA_REGISTRATION_INIT( CBaseCombatWeapon )
+LUA_REGISTRATION_INIT( Weapon )
 
-LUA_BINDING_BEGIN( CBaseCombatWeapon, AbortReload, "class", "Abort reload." )
+LUA_BINDING_BEGIN( Weapon, AbortReload, "class", "Abort reload." )
 {
     lua_CBaseCombatWeapon *pWeapon = LUA_BINDING_ARGUMENT( luaL_checkweapon, 1, "entity" );
     pWeapon->AbortReload();
@@ -43,7 +43,7 @@ LUA_BINDING_BEGIN( CBaseCombatWeapon, AbortReload, "class", "Abort reload." )
 }
 LUA_BINDING_END()
 
-LUA_BINDING_BEGIN( CBaseCombatWeapon, ActivityListCount, "class", "Activity list count." )
+LUA_BINDING_BEGIN( Weapon, ActivityListCount, "class", "Activity list count." )
 {
     lua_CBaseCombatWeapon *pWeapon = LUA_BINDING_ARGUMENT( luaL_checkweapon, 1, "entity" );
     int iCount = 0;
@@ -53,7 +53,7 @@ LUA_BINDING_BEGIN( CBaseCombatWeapon, ActivityListCount, "class", "Activity list
 }
 LUA_BINDING_END( "integer", "Number of activities in the list." )
 
-LUA_BINDING_BEGIN( CBaseCombatWeapon, ActivityOverride, "class", "Asks which Activity override the weapon wants." )
+LUA_BINDING_BEGIN( Weapon, ActivityOverride, "class", "Asks which Activity override the weapon wants." )
 {
     lua_CBaseCombatWeapon *pWeapon = LUA_BINDING_ARGUMENT( luaL_checkweapon, 1, "entity" );
     int iActivity = LUA_BINDING_ARGUMENT( luaL_checknumber, 2, "activity" );
@@ -64,7 +64,7 @@ LUA_BINDING_BEGIN( CBaseCombatWeapon, ActivityOverride, "class", "Asks which Act
 }
 LUA_BINDING_END( "integer", "Override activity ID.", "boolean", "Whether the activity is required." )
 
-LUA_BINDING_BEGIN( CBaseCombatWeapon, AddViewKick, "class", "Add view kick." )
+LUA_BINDING_BEGIN( Weapon, AddViewKick, "class", "Add view kick." )
 {
     lua_CBaseCombatWeapon *pWeapon = LUA_BINDING_ARGUMENT( luaL_checkweapon, 1, "entity" );
     pWeapon->AddViewKick();
@@ -72,7 +72,7 @@ LUA_BINDING_BEGIN( CBaseCombatWeapon, AddViewKick, "class", "Add view kick." )
 }
 LUA_BINDING_END()
 
-LUA_BINDING_BEGIN( CBaseCombatWeapon, AllowsAutoSwitchFrom, "class", "Allows auto switch from." )
+LUA_BINDING_BEGIN( Weapon, AllowsAutoSwitchFrom, "class", "Allows auto switch from." )
 {
     lua_CBaseCombatWeapon *pWeapon = LUA_BINDING_ARGUMENT( luaL_checkweapon, 1, "entity" );
     lua_pushboolean( L, pWeapon->AllowsAutoSwitchFrom() );
@@ -80,7 +80,7 @@ LUA_BINDING_BEGIN( CBaseCombatWeapon, AllowsAutoSwitchFrom, "class", "Allows aut
 }
 LUA_BINDING_END( "boolean", "Whether the weapon allows auto switch from." )
 
-LUA_BINDING_BEGIN( CBaseCombatWeapon, AllowsAutoSwitchTo, "class", "Allows auto switch to." )
+LUA_BINDING_BEGIN( Weapon, AllowsAutoSwitchTo, "class", "Allows auto switch to." )
 {
     lua_CBaseCombatWeapon *pWeapon = LUA_BINDING_ARGUMENT( luaL_checkweapon, 1, "entity" );
     lua_pushboolean( L, pWeapon->AllowsAutoSwitchTo() );
@@ -88,7 +88,7 @@ LUA_BINDING_BEGIN( CBaseCombatWeapon, AllowsAutoSwitchTo, "class", "Allows auto 
 }
 LUA_BINDING_END( "boolean", "Whether the weapon allows auto switch to." )
 
-LUA_BINDING_BEGIN( CBaseCombatWeapon, CalcViewmodelBob, "class", "Calculate viewmodel bob." )
+LUA_BINDING_BEGIN( Weapon, CalcViewmodelBob, "class", "Calculate viewmodel bob." )
 {
     lua_CBaseCombatWeapon *pWeapon = LUA_BINDING_ARGUMENT( luaL_checkweapon, 1, "entity" );
     lua_pushnumber( L, pWeapon->CalcViewmodelBob() );
@@ -96,7 +96,7 @@ LUA_BINDING_BEGIN( CBaseCombatWeapon, CalcViewmodelBob, "class", "Calculate view
 }
 LUA_BINDING_END( "number", "Viewmodel bob." )
 
-LUA_BINDING_BEGIN( CBaseCombatWeapon, CanBePickedUpByNPCs, "class", "Can be picked up by NPCs." )
+LUA_BINDING_BEGIN( Weapon, CanBePickedUpByNPCs, "class", "Can be picked up by NPCs." )
 {
     lua_CBaseCombatWeapon *pWeapon = LUA_BINDING_ARGUMENT( luaL_checkweapon, 1, "entity" );
     lua_pushboolean( L, pWeapon->CanBePickedUpByNPCs() );
@@ -104,7 +104,7 @@ LUA_BINDING_BEGIN( CBaseCombatWeapon, CanBePickedUpByNPCs, "class", "Can be pick
 }
 LUA_BINDING_END( "boolean", "Whether the weapon can be picked up by NPCs." )
 
-LUA_BINDING_BEGIN( CBaseCombatWeapon, CanBeSelected, "class", "Can be selected." )
+LUA_BINDING_BEGIN( Weapon, CanBeSelected, "class", "Can be selected." )
 {
     lua_CBaseCombatWeapon *pWeapon = LUA_BINDING_ARGUMENT( luaL_checkweapon, 1, "entity" );
     lua_pushboolean( L, pWeapon->CanBeSelected() );
@@ -112,7 +112,7 @@ LUA_BINDING_BEGIN( CBaseCombatWeapon, CanBeSelected, "class", "Can be selected."
 }
 LUA_BINDING_END( "boolean", "Whether the weapon can be selected." )
 
-LUA_BINDING_BEGIN( CBaseCombatWeapon, CanDeploy, "class", "Can deploy." )
+LUA_BINDING_BEGIN( Weapon, CanDeploy, "class", "Can deploy." )
 {
     lua_CBaseCombatWeapon *pWeapon = LUA_BINDING_ARGUMENT( luaL_checkweapon, 1, "entity" );
     lua_pushboolean( L, pWeapon->CanDeploy() );
@@ -120,7 +120,7 @@ LUA_BINDING_BEGIN( CBaseCombatWeapon, CanDeploy, "class", "Can deploy." )
 }
 LUA_BINDING_END( "boolean", "Whether the weapon can deploy." )
 
-LUA_BINDING_BEGIN( CBaseCombatWeapon, CanHolster, "class", "Can holster." )
+LUA_BINDING_BEGIN( Weapon, CanHolster, "class", "Can holster." )
 {
     lua_CBaseCombatWeapon *pWeapon = LUA_BINDING_ARGUMENT( luaL_checkweapon, 1, "entity" );
     lua_pushboolean( L, pWeapon->CanHolster() );
@@ -128,7 +128,7 @@ LUA_BINDING_BEGIN( CBaseCombatWeapon, CanHolster, "class", "Can holster." )
 }
 LUA_BINDING_END( "boolean", "Whether the weapon can holster." )
 
-LUA_BINDING_BEGIN( CBaseCombatWeapon, CanLower, "class", "Can lower." )
+LUA_BINDING_BEGIN( Weapon, CanLower, "class", "Can lower." )
 {
     lua_CBaseCombatWeapon *pWeapon = LUA_BINDING_ARGUMENT( luaL_checkweapon, 1, "entity" );
     lua_pushboolean( L, pWeapon->CanLower() );
@@ -136,7 +136,7 @@ LUA_BINDING_BEGIN( CBaseCombatWeapon, CanLower, "class", "Can lower." )
 }
 LUA_BINDING_END( "boolean", "Whether the weapon can lower." )
 
-LUA_BINDING_BEGIN( CBaseCombatWeapon, CheckReload, "class", "Check reload." )
+LUA_BINDING_BEGIN( Weapon, CheckReload, "class", "Check reload." )
 {
     lua_CBaseCombatWeapon *pWeapon = LUA_BINDING_ARGUMENT( luaL_checkweapon, 1, "entity" );
     pWeapon->CheckReload();
@@ -144,7 +144,7 @@ LUA_BINDING_BEGIN( CBaseCombatWeapon, CheckReload, "class", "Check reload." )
 }
 LUA_BINDING_END()
 
-LUA_BINDING_BEGIN( CBaseCombatWeapon, Clip1, "class", "The amount of ammo in the primary clip." )
+LUA_BINDING_BEGIN( Weapon, Clip1, "class", "The amount of ammo in the primary clip." )
 {
     lua_CBaseCombatWeapon *pWeapon = LUA_BINDING_ARGUMENT( luaL_checkweapon, 1, "entity" );
     lua_pushinteger( L, pWeapon->Clip1() );
@@ -152,7 +152,7 @@ LUA_BINDING_BEGIN( CBaseCombatWeapon, Clip1, "class", "The amount of ammo in the
 }
 LUA_BINDING_END( "integer", "The amount of ammo in the primary clip." )
 
-LUA_BINDING_BEGIN( CBaseCombatWeapon, Clip2, "class", "The amount of ammo in the secondary clip." )
+LUA_BINDING_BEGIN( Weapon, Clip2, "class", "The amount of ammo in the secondary clip." )
 {
     lua_CBaseCombatWeapon *pWeapon = LUA_BINDING_ARGUMENT( luaL_checkweapon, 1, "entity" );
     lua_pushinteger( L, pWeapon->Clip2() );
@@ -160,7 +160,7 @@ LUA_BINDING_BEGIN( CBaseCombatWeapon, Clip2, "class", "The amount of ammo in the
 }
 LUA_BINDING_END( "integer", "The amount of ammo in the secondary clip." )
 
-LUA_BINDING_BEGIN( CBaseCombatWeapon, DefaultDeploy, "class", "Default deploy." )
+LUA_BINDING_BEGIN( Weapon, DefaultDeploy, "class", "Default deploy." )
 {
     lua_CBaseCombatWeapon *pWeapon = LUA_BINDING_ARGUMENT( luaL_checkweapon, 1, "entity" );
     const char *pszViewModel = LUA_BINDING_ARGUMENT( luaL_checkstring, 2, "viewModel" );
@@ -172,7 +172,7 @@ LUA_BINDING_BEGIN( CBaseCombatWeapon, DefaultDeploy, "class", "Default deploy." 
 }
 LUA_BINDING_END( "boolean", "Whether the weapon was successfully deployed." )
 
-LUA_BINDING_BEGIN( CBaseCombatWeapon, DefaultReload, "class", "Default reload." )
+LUA_BINDING_BEGIN( Weapon, DefaultReload, "class", "Default reload." )
 {
     lua_CBaseCombatWeapon *pWeapon = LUA_BINDING_ARGUMENT( luaL_checkweapon, 1, "entity" );
     int iClipSize1 = LUA_BINDING_ARGUMENT( luaL_checknumber, 2, "clipSize1" );
@@ -183,7 +183,7 @@ LUA_BINDING_BEGIN( CBaseCombatWeapon, DefaultReload, "class", "Default reload." 
 }
 LUA_BINDING_END( "boolean", "Whether the weapon was successfully reloaded." )
 
-LUA_BINDING_BEGIN( CBaseCombatWeapon, DefaultTouch, "class", "Default touch." )
+LUA_BINDING_BEGIN( Weapon, DefaultTouch, "class", "Default touch." )
 {
     lua_CBaseCombatWeapon *pWeapon = LUA_BINDING_ARGUMENT( luaL_checkweapon, 1, "entity" );
     lua_CBaseEntity *pOther = LUA_BINDING_ARGUMENT( luaL_checkentity, 2, "touchingEntity" );
@@ -192,7 +192,7 @@ LUA_BINDING_BEGIN( CBaseCombatWeapon, DefaultTouch, "class", "Default touch." )
 }
 LUA_BINDING_END()
 
-LUA_BINDING_BEGIN( CBaseCombatWeapon, Deploy, "class", "Deploy." )
+LUA_BINDING_BEGIN( Weapon, Deploy, "class", "Deploy." )
 {
     lua_CBaseCombatWeapon *pWeapon = LUA_BINDING_ARGUMENT( luaL_checkweapon, 1, "entity" );
     lua_pushboolean( L, pWeapon->Deploy() );
@@ -200,7 +200,7 @@ LUA_BINDING_BEGIN( CBaseCombatWeapon, Deploy, "class", "Deploy." )
 }
 LUA_BINDING_END( "boolean", "Whether the weapon was successfully deployed." )
 
-LUA_BINDING_BEGIN( CBaseCombatWeapon, DisplayAltFireHudHint, "class", "Display alt fire HUD hint." )
+LUA_BINDING_BEGIN( Weapon, DisplayAltFireHudHint, "class", "Display alt fire HUD hint." )
 {
     lua_CBaseCombatWeapon *pWeapon = LUA_BINDING_ARGUMENT( luaL_checkweapon, 1, "entity" );
     pWeapon->DisplayAltFireHudHint();
@@ -208,7 +208,7 @@ LUA_BINDING_BEGIN( CBaseCombatWeapon, DisplayAltFireHudHint, "class", "Display a
 }
 LUA_BINDING_END()
 
-LUA_BINDING_BEGIN( CBaseCombatWeapon, DisplayReloadHudHint, "class", "Display reload HUD hint." )
+LUA_BINDING_BEGIN( Weapon, DisplayReloadHudHint, "class", "Display reload HUD hint." )
 {
     lua_CBaseCombatWeapon *pWeapon = LUA_BINDING_ARGUMENT( luaL_checkweapon, 1, "entity" );
     pWeapon->DisplayReloadHudHint();
@@ -216,7 +216,7 @@ LUA_BINDING_BEGIN( CBaseCombatWeapon, DisplayReloadHudHint, "class", "Display re
 }
 LUA_BINDING_END()
 
-LUA_BINDING_BEGIN( CBaseCombatWeapon, Drop, "class", "Drop." )
+LUA_BINDING_BEGIN( Weapon, Drop, "class", "Drop." )
 {
     lua_CBaseCombatWeapon *pWeapon = LUA_BINDING_ARGUMENT( luaL_checkweapon, 1, "entity" );
     Vector vecThrowVelocity;
@@ -231,7 +231,7 @@ LUA_BINDING_BEGIN( CBaseCombatWeapon, Drop, "class", "Drop." )
 }
 LUA_BINDING_END()
 
-LUA_BINDING_BEGIN( CBaseCombatWeapon, FinishReload, "class", "Finish reload." )
+LUA_BINDING_BEGIN( Weapon, FinishReload, "class", "Finish reload." )
 {
     lua_CBaseCombatWeapon *pWeapon = LUA_BINDING_ARGUMENT( luaL_checkweapon, 1, "entity" );
     pWeapon->FinishReload();
@@ -239,7 +239,7 @@ LUA_BINDING_BEGIN( CBaseCombatWeapon, FinishReload, "class", "Finish reload." )
 }
 LUA_BINDING_END()
 
-LUA_BINDING_BEGIN( CBaseCombatWeapon, GetActivity, "class", "Get activity." )
+LUA_BINDING_BEGIN( Weapon, GetActivity, "class", "Get activity." )
 {
     lua_CBaseCombatWeapon *pWeapon = LUA_BINDING_ARGUMENT( luaL_checkweapon, 1, "entity" );
     lua_pushinteger( L, pWeapon->GetActivity() );
@@ -247,7 +247,7 @@ LUA_BINDING_BEGIN( CBaseCombatWeapon, GetActivity, "class", "Get activity." )
 }
 LUA_BINDING_END( "integer", "Activity ID." )
 
-LUA_BINDING_BEGIN( CBaseCombatWeapon, GetAnimPrefix, "class", "Get animation prefix." )
+LUA_BINDING_BEGIN( Weapon, GetAnimPrefix, "class", "Get animation prefix." )
 {
     lua_CBaseCombatWeapon *pWeapon = LUA_BINDING_ARGUMENT( luaL_checkweapon, 1, "entity" );
     lua_pushstring( L, pWeapon->GetAnimPrefix() );
@@ -255,7 +255,7 @@ LUA_BINDING_BEGIN( CBaseCombatWeapon, GetAnimPrefix, "class", "Get animation pre
 }
 LUA_BINDING_END( "string", "Animation prefix." )
 
-LUA_BINDING_BEGIN( CBaseCombatWeapon, GetBulletType, "class", "Get bullet type." )
+LUA_BINDING_BEGIN( Weapon, GetBulletType, "class", "Get bullet type." )
 {
     lua_CBaseCombatWeapon *pWeapon = LUA_BINDING_ARGUMENT( luaL_checkweapon, 1, "entity" );
     lua_pushinteger( L, pWeapon->GetBulletType() );
@@ -263,7 +263,7 @@ LUA_BINDING_BEGIN( CBaseCombatWeapon, GetBulletType, "class", "Get bullet type."
 }
 LUA_BINDING_END( "integer", "Bullet type." )
 
-LUA_BINDING_BEGIN( CBaseCombatWeapon, GetDamageAtLocation, "class", "Get damage." )
+LUA_BINDING_BEGIN( Weapon, GetDamageAtLocation, "class", "Get damage." )
 {
     lua_CBaseCombatWeapon *pWeapon = LUA_BINDING_ARGUMENT( luaL_checkweapon, 1, "entity" );
     float flDamage = LUA_BINDING_ARGUMENT( luaL_checknumber, 2, "damage" );
@@ -273,7 +273,7 @@ LUA_BINDING_BEGIN( CBaseCombatWeapon, GetDamageAtLocation, "class", "Get damage.
 }
 LUA_BINDING_END( "number", "Damage." )
 
-LUA_BINDING_BEGIN( CBaseCombatWeapon, GetDeathNoticeName, "class", "Get death notice name." )
+LUA_BINDING_BEGIN( Weapon, GetDeathNoticeName, "class", "Get death notice name." )
 {
     lua_CBaseCombatWeapon *pWeapon = LUA_BINDING_ARGUMENT( luaL_checkweapon, 1, "entity" );
     lua_pushstring( L, pWeapon->GetDeathNoticeName() );
@@ -281,7 +281,7 @@ LUA_BINDING_BEGIN( CBaseCombatWeapon, GetDeathNoticeName, "class", "Get death no
 }
 LUA_BINDING_END( "string", "Death notice name." )
 
-LUA_BINDING_BEGIN( CBaseCombatWeapon, GetDefaultAnimSpeed, "class", "Get default animation speed." )
+LUA_BINDING_BEGIN( Weapon, GetDefaultAnimSpeed, "class", "Get default animation speed." )
 {
     lua_CBaseCombatWeapon *pWeapon = LUA_BINDING_ARGUMENT( luaL_checkweapon, 1, "entity" );
     lua_pushnumber( L, pWeapon->GetDefaultAnimSpeed() );
@@ -289,7 +289,7 @@ LUA_BINDING_BEGIN( CBaseCombatWeapon, GetDefaultAnimSpeed, "class", "Get default
 }
 LUA_BINDING_END( "number", "Default animation speed." )
 
-LUA_BINDING_BEGIN( CBaseCombatWeapon, GetDefaultClip1, "class", "Get default clip 1." )
+LUA_BINDING_BEGIN( Weapon, GetDefaultClip1, "class", "Get default clip 1." )
 {
     lua_CBaseCombatWeapon *pWeapon = LUA_BINDING_ARGUMENT( luaL_checkweapon, 1, "entity" );
     lua_pushinteger( L, pWeapon->GetDefaultClip1() );
@@ -297,7 +297,7 @@ LUA_BINDING_BEGIN( CBaseCombatWeapon, GetDefaultClip1, "class", "Get default cli
 }
 LUA_BINDING_END( "integer", "Default clip 1." )
 
-LUA_BINDING_BEGIN( CBaseCombatWeapon, GetDefaultClip2, "class", "Get default clip 2." )
+LUA_BINDING_BEGIN( Weapon, GetDefaultClip2, "class", "Get default clip 2." )
 {
     lua_CBaseCombatWeapon *pWeapon = LUA_BINDING_ARGUMENT( luaL_checkweapon, 1, "entity" );
     lua_pushinteger( L, pWeapon->GetDefaultClip2() );
@@ -305,7 +305,7 @@ LUA_BINDING_BEGIN( CBaseCombatWeapon, GetDefaultClip2, "class", "Get default cli
 }
 LUA_BINDING_END( "integer", "Default clip 2." )
 
-LUA_BINDING_BEGIN( CBaseCombatWeapon, GetDrawActivity, "class", "Get draw activity." )
+LUA_BINDING_BEGIN( Weapon, GetDrawActivity, "class", "Get draw activity." )
 {
     lua_CBaseCombatWeapon *pWeapon = LUA_BINDING_ARGUMENT( luaL_checkweapon, 1, "entity" );
     lua_pushinteger( L, pWeapon->GetDrawActivity() );
@@ -313,7 +313,7 @@ LUA_BINDING_BEGIN( CBaseCombatWeapon, GetDrawActivity, "class", "Get draw activi
 }
 LUA_BINDING_END( "integer", "Draw activity ID." )
 
-LUA_BINDING_BEGIN( CBaseCombatWeapon, GetFireRate, "class", "Get fire rate." )
+LUA_BINDING_BEGIN( Weapon, GetFireRate, "class", "Get fire rate." )
 {
     lua_CBaseCombatWeapon *pWeapon = LUA_BINDING_ARGUMENT( luaL_checkweapon, 1, "entity" );
     lua_pushnumber( L, pWeapon->GetFireRate() );
@@ -321,7 +321,7 @@ LUA_BINDING_BEGIN( CBaseCombatWeapon, GetFireRate, "class", "Get fire rate." )
 }
 LUA_BINDING_END( "number", "Fire rate." )
 
-LUA_BINDING_BEGIN( CBaseCombatWeapon, GetIdealActivity, "class", "Get ideal activity." )
+LUA_BINDING_BEGIN( Weapon, GetIdealActivity, "class", "Get ideal activity." )
 {
     lua_CBaseCombatWeapon *pWeapon = LUA_BINDING_ARGUMENT( luaL_checkweapon, 1, "entity" );
     lua_pushinteger( L, pWeapon->GetIdealActivity() );
@@ -329,7 +329,7 @@ LUA_BINDING_BEGIN( CBaseCombatWeapon, GetIdealActivity, "class", "Get ideal acti
 }
 LUA_BINDING_END( "integer", "Ideal activity ID." )
 
-LUA_BINDING_BEGIN( CBaseCombatWeapon, GetIdealSequence, "class", "Get ideal sequence." )
+LUA_BINDING_BEGIN( Weapon, GetIdealSequence, "class", "Get ideal sequence." )
 {
     lua_CBaseCombatWeapon *pWeapon = LUA_BINDING_ARGUMENT( luaL_checkweapon, 1, "entity" );
     lua_pushinteger( L, pWeapon->GetIdealSequence() );
@@ -337,7 +337,7 @@ LUA_BINDING_BEGIN( CBaseCombatWeapon, GetIdealSequence, "class", "Get ideal sequ
 }
 LUA_BINDING_END( "integer", "Ideal sequence ID." )
 
-LUA_BINDING_BEGIN( CBaseCombatWeapon, GetMaxAutoAimDeflection, "class", "Get max auto aim deflection." )
+LUA_BINDING_BEGIN( Weapon, GetMaxAutoAimDeflection, "class", "Get max auto aim deflection." )
 {
     lua_CBaseCombatWeapon *pWeapon = LUA_BINDING_ARGUMENT( luaL_checkweapon, 1, "entity" );
     lua_pushnumber( L, pWeapon->GetMaxAutoAimDeflection() );
@@ -345,7 +345,7 @@ LUA_BINDING_BEGIN( CBaseCombatWeapon, GetMaxAutoAimDeflection, "class", "Get max
 }
 LUA_BINDING_END( "number", "Max auto aim deflection." )
 
-LUA_BINDING_BEGIN( CBaseCombatWeapon, GetMaxBurst, "class", "Get max burst." )
+LUA_BINDING_BEGIN( Weapon, GetMaxBurst, "class", "Get max burst." )
 {
     lua_CBaseCombatWeapon *pWeapon = LUA_BINDING_ARGUMENT( luaL_checkweapon, 1, "entity" );
     lua_pushinteger( L, pWeapon->GetMaxBurst() );
@@ -353,7 +353,7 @@ LUA_BINDING_BEGIN( CBaseCombatWeapon, GetMaxBurst, "class", "Get max burst." )
 }
 LUA_BINDING_END( "integer", "Max burst." )
 
-LUA_BINDING_BEGIN( CBaseCombatWeapon, GetMaxClip1, "class", "Get max clip 1." )
+LUA_BINDING_BEGIN( Weapon, GetMaxClip1, "class", "Get max clip 1." )
 {
     lua_CBaseCombatWeapon *pWeapon = LUA_BINDING_ARGUMENT( luaL_checkweapon, 1, "entity" );
     lua_pushinteger( L, pWeapon->GetMaxClip1() );
@@ -361,7 +361,7 @@ LUA_BINDING_BEGIN( CBaseCombatWeapon, GetMaxClip1, "class", "Get max clip 1." )
 }
 LUA_BINDING_END( "integer", "Max clip 1." )
 
-LUA_BINDING_BEGIN( CBaseCombatWeapon, GetMaxClip2, "class", "Get max clip 2." )
+LUA_BINDING_BEGIN( Weapon, GetMaxClip2, "class", "Get max clip 2." )
 {
     lua_CBaseCombatWeapon *pWeapon = LUA_BINDING_ARGUMENT( luaL_checkweapon, 1, "entity" );
     lua_pushinteger( L, pWeapon->GetMaxClip2() );
@@ -369,7 +369,7 @@ LUA_BINDING_BEGIN( CBaseCombatWeapon, GetMaxClip2, "class", "Get max clip 2." )
 }
 LUA_BINDING_END( "integer", "Max clip 2." )
 
-LUA_BINDING_BEGIN( CBaseCombatWeapon, GetMaxRestTime, "class", "Get max rest time." )
+LUA_BINDING_BEGIN( Weapon, GetMaxRestTime, "class", "Get max rest time." )
 {
     lua_CBaseCombatWeapon *pWeapon = LUA_BINDING_ARGUMENT( luaL_checkweapon, 1, "entity" );
     lua_pushnumber( L, pWeapon->GetMaxRestTime() );
@@ -377,7 +377,7 @@ LUA_BINDING_BEGIN( CBaseCombatWeapon, GetMaxRestTime, "class", "Get max rest tim
 }
 LUA_BINDING_END( "number", "Max rest time." )
 
-LUA_BINDING_BEGIN( CBaseCombatWeapon, GetMinBurst, "class", "Get min burst." )
+LUA_BINDING_BEGIN( Weapon, GetMinBurst, "class", "Get min burst." )
 {
     lua_CBaseCombatWeapon *pWeapon = LUA_BINDING_ARGUMENT( luaL_checkweapon, 1, "entity" );
     lua_pushinteger( L, pWeapon->GetMinBurst() );
@@ -385,7 +385,7 @@ LUA_BINDING_BEGIN( CBaseCombatWeapon, GetMinBurst, "class", "Get min burst." )
 }
 LUA_BINDING_END( "integer", "Min burst." )
 
-LUA_BINDING_BEGIN( CBaseCombatWeapon, GetMinRestTime, "class", "Get min rest time." )
+LUA_BINDING_BEGIN( Weapon, GetMinRestTime, "class", "Get min rest time." )
 {
     lua_CBaseCombatWeapon *pWeapon = LUA_BINDING_ARGUMENT( luaL_checkweapon, 1, "entity" );
     lua_pushnumber( L, pWeapon->GetMinRestTime() );
@@ -393,7 +393,7 @@ LUA_BINDING_BEGIN( CBaseCombatWeapon, GetMinRestTime, "class", "Get min rest tim
 }
 LUA_BINDING_END( "number", "Min rest time." )
 
-LUA_BINDING_BEGIN( CBaseCombatWeapon, GetClassName, "class", "Get class name." )
+LUA_BINDING_BEGIN( Weapon, GetClassName, "class", "Get class name." )
 {
     lua_CBaseCombatWeapon *pWeapon = LUA_BINDING_ARGUMENT( luaL_checkweapon, 1, "entity" );
     lua_pushstring( L, pWeapon->GetName() );
@@ -401,7 +401,7 @@ LUA_BINDING_BEGIN( CBaseCombatWeapon, GetClassName, "class", "Get class name." )
 }
 LUA_BINDING_END( "string", "Class name." )
 
-LUA_BINDING_BEGIN( CBaseCombatWeapon, GetOwner, "class", "Get owner." )
+LUA_BINDING_BEGIN( Weapon, GetOwner, "class", "Get owner." )
 {
     lua_CBaseCombatWeapon *pWeapon = LUA_BINDING_ARGUMENT( luaL_checkweapon, 1, "entity" );
     CBaseEntity::PushLuaInstanceSafe( L, ( CBasePlayer * )pWeapon->GetOwner() );
@@ -409,7 +409,7 @@ LUA_BINDING_BEGIN( CBaseCombatWeapon, GetOwner, "class", "Get owner." )
 }
 LUA_BINDING_END( "entity", "Owner entity." )
 
-LUA_BINDING_BEGIN( CBaseCombatWeapon, GetSlotPosition, "class", "Get the weapon slot position in the selection screen." )
+LUA_BINDING_BEGIN( Weapon, GetSlotPosition, "class", "Get the weapon slot position in the selection screen." )
 {
     lua_CBaseCombatWeapon *pWeapon = LUA_BINDING_ARGUMENT( luaL_checkweapon, 1, "entity" );
     lua_pushinteger( L, pWeapon->GetPosition() );
@@ -417,7 +417,7 @@ LUA_BINDING_BEGIN( CBaseCombatWeapon, GetSlotPosition, "class", "Get the weapon 
 }
 LUA_BINDING_END( "integer", "Position in the selection screen." )
 
-LUA_BINDING_BEGIN( CBaseCombatWeapon, GetPrimaryAmmoCount, "class", "Get the amount of primary ammo." )
+LUA_BINDING_BEGIN( Weapon, GetPrimaryAmmoCount, "class", "Get the amount of primary ammo." )
 {
     lua_CBaseCombatWeapon *pWeapon = LUA_BINDING_ARGUMENT( luaL_checkweapon, 1, "entity" );
     lua_pushinteger( L, pWeapon->GetPrimaryAmmoCount() );
@@ -425,7 +425,7 @@ LUA_BINDING_BEGIN( CBaseCombatWeapon, GetPrimaryAmmoCount, "class", "Get the amo
 }
 LUA_BINDING_END( "integer", "Amount of primary ammo." )
 
-LUA_BINDING_BEGIN( CBaseCombatWeapon, GetPrimaryAmmoType, "class", "Get the primary ammo type." )
+LUA_BINDING_BEGIN( Weapon, GetPrimaryAmmoType, "class", "Get the primary ammo type." )
 {
     lua_CBaseCombatWeapon *pWeapon = LUA_BINDING_ARGUMENT( luaL_checkweapon, 1, "entity" );
     lua_pushinteger( L, pWeapon->GetPrimaryAmmoType() );
@@ -433,7 +433,7 @@ LUA_BINDING_BEGIN( CBaseCombatWeapon, GetPrimaryAmmoType, "class", "Get the prim
 }
 LUA_BINDING_END( "integer", "Primary ammo type." )
 
-LUA_BINDING_BEGIN( CBaseCombatWeapon, GetPrimaryAttackActivity, "class", "Get the primary attack activity." )
+LUA_BINDING_BEGIN( Weapon, GetPrimaryAttackActivity, "class", "Get the primary attack activity." )
 {
     lua_CBaseCombatWeapon *pWeapon = LUA_BINDING_ARGUMENT( luaL_checkweapon, 1, "entity" );
     lua_pushinteger( L, pWeapon->GetPrimaryAttackActivity() );
@@ -441,7 +441,7 @@ LUA_BINDING_BEGIN( CBaseCombatWeapon, GetPrimaryAttackActivity, "class", "Get th
 }
 LUA_BINDING_END( "integer", "Primary attack activity ID." )
 
-LUA_BINDING_BEGIN( CBaseCombatWeapon, GetPrintName, "class", "Get the print name." )
+LUA_BINDING_BEGIN( Weapon, GetPrintName, "class", "Get the print name." )
 {
     lua_CBaseCombatWeapon *pWeapon = LUA_BINDING_ARGUMENT( luaL_checkweapon, 1, "entity" );
     lua_pushstring( L, pWeapon->GetPrintName() );
@@ -449,7 +449,7 @@ LUA_BINDING_BEGIN( CBaseCombatWeapon, GetPrintName, "class", "Get the print name
 }
 LUA_BINDING_END( "string", "Print name." )
 
-LUA_BINDING_BEGIN( CBaseCombatWeapon, GetRandomBurst, "class", "Get a random burst." )
+LUA_BINDING_BEGIN( Weapon, GetRandomBurst, "class", "Get a random burst." )
 {
     lua_CBaseCombatWeapon *pWeapon = LUA_BINDING_ARGUMENT( luaL_checkweapon, 1, "entity" );
     lua_pushinteger( L, pWeapon->GetRandomBurst() );
@@ -457,7 +457,7 @@ LUA_BINDING_BEGIN( CBaseCombatWeapon, GetRandomBurst, "class", "Get a random bur
 }
 LUA_BINDING_END( "integer", "Random burst." )
 
-LUA_BINDING_BEGIN( CBaseCombatWeapon, GetRumbleEffect, "class", "Get the rumble effect." )
+LUA_BINDING_BEGIN( Weapon, GetRumbleEffect, "class", "Get the rumble effect." )
 {
     lua_CBaseCombatWeapon *pWeapon = LUA_BINDING_ARGUMENT( luaL_checkweapon, 1, "entity" );
     lua_pushinteger( L, pWeapon->GetRumbleEffect() );
@@ -465,7 +465,7 @@ LUA_BINDING_BEGIN( CBaseCombatWeapon, GetRumbleEffect, "class", "Get the rumble 
 }
 LUA_BINDING_END( "integer", "Rumble effect." )
 
-LUA_BINDING_BEGIN( CBaseCombatWeapon, GetSecondaryAmmoCount, "class", "Get the amount of secondary ammo." )
+LUA_BINDING_BEGIN( Weapon, GetSecondaryAmmoCount, "class", "Get the amount of secondary ammo." )
 {
     lua_CBaseCombatWeapon *pWeapon = LUA_BINDING_ARGUMENT( luaL_checkweapon, 1, "entity" );
     lua_pushinteger( L, pWeapon->GetSecondaryAmmoCount() );
@@ -473,7 +473,7 @@ LUA_BINDING_BEGIN( CBaseCombatWeapon, GetSecondaryAmmoCount, "class", "Get the a
 }
 LUA_BINDING_END( "integer", "Amount of secondary ammo." )
 //}
-LUA_BINDING_BEGIN( CBaseCombatWeapon, GetSecondaryAmmoType, "class", "Get the secondary ammo type." )
+LUA_BINDING_BEGIN( Weapon, GetSecondaryAmmoType, "class", "Get the secondary ammo type." )
 {
     lua_CBaseCombatWeapon *pWeapon = LUA_BINDING_ARGUMENT( luaL_checkweapon, 1, "entity" );
     lua_pushinteger( L, pWeapon->GetSecondaryAmmoType() );
@@ -481,7 +481,7 @@ LUA_BINDING_BEGIN( CBaseCombatWeapon, GetSecondaryAmmoType, "class", "Get the se
 }
 LUA_BINDING_END( "integer", "Secondary ammo type." )
 
-LUA_BINDING_BEGIN( CBaseCombatWeapon, GetSecondaryAttackActivity, "class", "Get the secondary attack activity." )
+LUA_BINDING_BEGIN( Weapon, GetSecondaryAttackActivity, "class", "Get the secondary attack activity." )
 {
     lua_CBaseCombatWeapon *pWeapon = LUA_BINDING_ARGUMENT( luaL_checkweapon, 1, "entity" );
     lua_pushinteger( L, pWeapon->GetSecondaryAttackActivity() );
@@ -489,7 +489,7 @@ LUA_BINDING_BEGIN( CBaseCombatWeapon, GetSecondaryAttackActivity, "class", "Get 
 }
 LUA_BINDING_END( "integer", "Secondary attack activity ID." )
 
-LUA_BINDING_BEGIN( CBaseCombatWeapon, GetShootSound, "class", "Get the shoot sound." )
+LUA_BINDING_BEGIN( Weapon, GetShootSound, "class", "Get the shoot sound." )
 {
     lua_CBaseCombatWeapon *pWeapon = LUA_BINDING_ARGUMENT( luaL_checkweapon, 1, "entity" );
     int iIndex = LUA_BINDING_ARGUMENT( luaL_checknumber, 2, "index" );
@@ -498,7 +498,7 @@ LUA_BINDING_BEGIN( CBaseCombatWeapon, GetShootSound, "class", "Get the shoot sou
 }
 LUA_BINDING_END( "string", "Shoot sound." )
 
-LUA_BINDING_BEGIN( CBaseCombatWeapon, GetSlot, "class", "Get the slot." )
+LUA_BINDING_BEGIN( Weapon, GetSlot, "class", "Get the slot." )
 {
     lua_CBaseCombatWeapon *pWeapon = LUA_BINDING_ARGUMENT( luaL_checkweapon, 1, "entity" );
     lua_pushinteger( L, pWeapon->GetSlot() );
@@ -506,7 +506,7 @@ LUA_BINDING_BEGIN( CBaseCombatWeapon, GetSlot, "class", "Get the slot." )
 }
 LUA_BINDING_END( "integer", "Slot." )
 
-LUA_BINDING_BEGIN( CBaseCombatWeapon, GetSubType, "class", "Get the sub type." )
+LUA_BINDING_BEGIN( Weapon, GetSubType, "class", "Get the sub type." )
 {
     lua_CBaseCombatWeapon *pWeapon = LUA_BINDING_ARGUMENT( luaL_checkweapon, 1, "entity" );
     lua_pushinteger( L, pWeapon->GetSubType() );
@@ -514,7 +514,7 @@ LUA_BINDING_BEGIN( CBaseCombatWeapon, GetSubType, "class", "Get the sub type." )
 }
 LUA_BINDING_END( "integer", "Sub type." )
 
-LUA_BINDING_BEGIN( CBaseCombatWeapon, GetViewModel, "class", "Get the view model." )
+LUA_BINDING_BEGIN( Weapon, GetViewModel, "class", "Get the view model." )
 {
     lua_CBaseCombatWeapon *pWeapon = LUA_BINDING_ARGUMENT( luaL_checkweapon, 1, "entity" );
     int iViewModelIndex = LUA_BINDING_ARGUMENT_WITH_DEFAULT( luaL_optnumber, 2, 0, "index" );
@@ -523,7 +523,7 @@ LUA_BINDING_BEGIN( CBaseCombatWeapon, GetViewModel, "class", "Get the view model
 }
 LUA_BINDING_END( "string", "View model." )
 
-LUA_BINDING_BEGIN( CBaseCombatWeapon, GetViewModelSequenceDuration, "class", "Get the view model sequence duration." )
+LUA_BINDING_BEGIN( Weapon, GetViewModelSequenceDuration, "class", "Get the view model sequence duration." )
 {
     lua_CBaseCombatWeapon *pWeapon = LUA_BINDING_ARGUMENT( luaL_checkweapon, 1, "entity" );
     lua_pushnumber( L, pWeapon->GetViewModelSequenceDuration() );
@@ -531,7 +531,7 @@ LUA_BINDING_BEGIN( CBaseCombatWeapon, GetViewModelSequenceDuration, "class", "Ge
 }
 LUA_BINDING_END( "number", "View model sequence duration." )
 
-LUA_BINDING_BEGIN( CBaseCombatWeapon, GetWeaponFlags, "class", "Get the weapon flags." )
+LUA_BINDING_BEGIN( Weapon, GetWeaponFlags, "class", "Get the weapon flags." )
 {
     lua_CBaseCombatWeapon *pWeapon = LUA_BINDING_ARGUMENT( luaL_checkweapon, 1, "entity" );
     lua_pushinteger( L, pWeapon->GetWeaponFlags() );
@@ -539,7 +539,7 @@ LUA_BINDING_BEGIN( CBaseCombatWeapon, GetWeaponFlags, "class", "Get the weapon f
 }
 LUA_BINDING_END( "integer", "Weapon flags." )
 
-LUA_BINDING_BEGIN( CBaseCombatWeapon, GetWeaponIdleTime, "class", "Get the weapon idle time." )
+LUA_BINDING_BEGIN( Weapon, GetWeaponIdleTime, "class", "Get the weapon idle time." )
 {
     lua_CBaseCombatWeapon *pWeapon = LUA_BINDING_ARGUMENT( luaL_checkweapon, 1, "entity" );
     lua_pushnumber( L, pWeapon->GetWeaponIdleTime() );
@@ -547,7 +547,7 @@ LUA_BINDING_BEGIN( CBaseCombatWeapon, GetWeaponIdleTime, "class", "Get the weapo
 }
 LUA_BINDING_END( "number", "Weapon idle time." )
 
-LUA_BINDING_BEGIN( CBaseCombatWeapon, GetWeight, "class", "Get the weight." )
+LUA_BINDING_BEGIN( Weapon, GetWeight, "class", "Get the weight." )
 {
     lua_CBaseCombatWeapon *pWeapon = LUA_BINDING_ARGUMENT( luaL_checkweapon, 1, "entity" );
     lua_pushinteger( L, pWeapon->GetWeight() );
@@ -555,7 +555,7 @@ LUA_BINDING_BEGIN( CBaseCombatWeapon, GetWeight, "class", "Get the weight." )
 }
 LUA_BINDING_END( "integer", "Weight." )
 
-LUA_BINDING_BEGIN( CBaseCombatWeapon, GetWorldModel, "class", "Get the world model." )
+LUA_BINDING_BEGIN( Weapon, GetWorldModel, "class", "Get the world model." )
 {
     lua_CBaseCombatWeapon *pWeapon = LUA_BINDING_ARGUMENT( luaL_checkweapon, 1, "entity" );
     lua_pushstring( L, pWeapon->GetWorldModel() );
@@ -565,7 +565,7 @@ LUA_BINDING_END( "string", "World model." )
 
 extern const char *pWeaponSoundCategories[NUM_SHOOT_SOUND_TYPES];
 
-LUA_BINDING_BEGIN( CBaseCombatWeapon, GetWeaponData, "class", "Get weapon data" )
+LUA_BINDING_BEGIN( Weapon, GetWeaponData, "class", "Get weapon data" )
 {
     lua_CBaseCombatWeapon *pWeapon = LUA_BINDING_ARGUMENT( luaL_checkweapon, 1, "entity" );
     const FileWeaponInfo_t &weaponInfo = pWeapon->GetWpnData();
@@ -676,7 +676,7 @@ LUA_BINDING_BEGIN( CBaseCombatWeapon, GetWeaponData, "class", "Get weapon data" 
 }
 LUA_BINDING_END( "table", "Weapon data." )
 
-LUA_BINDING_BEGIN( CBaseCombatWeapon, GiveDefaultAmmo, "class", "Give default ammo." )
+LUA_BINDING_BEGIN( Weapon, GiveDefaultAmmo, "class", "Give default ammo." )
 {
     lua_CBaseCombatWeapon *pWeapon = LUA_BINDING_ARGUMENT( luaL_checkweapon, 1, "entity" );
     pWeapon->GiveDefaultAmmo();
@@ -684,7 +684,7 @@ LUA_BINDING_BEGIN( CBaseCombatWeapon, GiveDefaultAmmo, "class", "Give default am
 }
 LUA_BINDING_END()
 
-LUA_BINDING_BEGIN( CBaseCombatWeapon, HandleFireOnEmpty, "class", "Handle fire on empty." )
+LUA_BINDING_BEGIN( Weapon, HandleFireOnEmpty, "class", "Handle fire on empty." )
 {
     lua_CBaseCombatWeapon *pWeapon = LUA_BINDING_ARGUMENT( luaL_checkweapon, 1, "entity" );
     pWeapon->HandleFireOnEmpty();
@@ -692,7 +692,7 @@ LUA_BINDING_BEGIN( CBaseCombatWeapon, HandleFireOnEmpty, "class", "Handle fire o
 }
 LUA_BINDING_END()
 
-LUA_BINDING_BEGIN( CBaseCombatWeapon, HasAmmo, "class", "Check if the weapon has ammo." )
+LUA_BINDING_BEGIN( Weapon, HasAmmo, "class", "Check if the weapon has ammo." )
 {
     lua_CBaseCombatWeapon *pWeapon = LUA_BINDING_ARGUMENT( luaL_checkweapon, 1, "entity" );
     lua_pushboolean( L, pWeapon->HasAmmo() );
@@ -700,7 +700,7 @@ LUA_BINDING_BEGIN( CBaseCombatWeapon, HasAmmo, "class", "Check if the weapon has
 }
 LUA_BINDING_END( "boolean", "Whether the weapon has ammo." )
 
-LUA_BINDING_BEGIN( CBaseCombatWeapon, HasAnyAmmo, "class", "Check if the weapon has any ammo." )
+LUA_BINDING_BEGIN( Weapon, HasAnyAmmo, "class", "Check if the weapon has any ammo." )
 {
     lua_CBaseCombatWeapon *pWeapon = LUA_BINDING_ARGUMENT( luaL_checkweapon, 1, "entity" );
     lua_pushboolean( L, pWeapon->HasAnyAmmo() );
@@ -708,7 +708,7 @@ LUA_BINDING_BEGIN( CBaseCombatWeapon, HasAnyAmmo, "class", "Check if the weapon 
 }
 LUA_BINDING_END( "boolean", "Whether the weapon has any ammo." )
 
-LUA_BINDING_BEGIN( CBaseCombatWeapon, HasPrimaryAmmo, "class", "Check if the weapon has primary ammo." )
+LUA_BINDING_BEGIN( Weapon, HasPrimaryAmmo, "class", "Check if the weapon has primary ammo." )
 {
     lua_CBaseCombatWeapon *pWeapon = LUA_BINDING_ARGUMENT( luaL_checkweapon, 1, "entity" );
     lua_pushboolean( L, pWeapon->HasPrimaryAmmo() );
@@ -716,7 +716,7 @@ LUA_BINDING_BEGIN( CBaseCombatWeapon, HasPrimaryAmmo, "class", "Check if the wea
 }
 LUA_BINDING_END( "boolean", "Whether the weapon has primary ammo." )
 
-LUA_BINDING_BEGIN( CBaseCombatWeapon, HasSecondaryAmmo, "class", "Check if the weapon has secondary ammo." )
+LUA_BINDING_BEGIN( Weapon, HasSecondaryAmmo, "class", "Check if the weapon has secondary ammo." )
 {
     lua_CBaseCombatWeapon *pWeapon = LUA_BINDING_ARGUMENT( luaL_checkweapon, 1, "entity" );
     lua_pushboolean( L, pWeapon->HasSecondaryAmmo() );
@@ -724,7 +724,7 @@ LUA_BINDING_BEGIN( CBaseCombatWeapon, HasSecondaryAmmo, "class", "Check if the w
 }
 LUA_BINDING_END( "boolean", "Whether the weapon has secondary ammo." )
 
-LUA_BINDING_BEGIN( CBaseCombatWeapon, HasWeaponIdleTimeElapsed, "class", "Check if the weapon idle time has elapsed." )
+LUA_BINDING_BEGIN( Weapon, HasWeaponIdleTimeElapsed, "class", "Check if the weapon idle time has elapsed." )
 {
     lua_CBaseCombatWeapon *pWeapon = LUA_BINDING_ARGUMENT( luaL_checkweapon, 1, "entity" );
     lua_pushboolean( L, pWeapon->HasWeaponIdleTimeElapsed() );
@@ -732,7 +732,7 @@ LUA_BINDING_BEGIN( CBaseCombatWeapon, HasWeaponIdleTimeElapsed, "class", "Check 
 }
 LUA_BINDING_END( "boolean", "Whether the weapon idle time has elapsed." )
 
-LUA_BINDING_BEGIN( CBaseCombatWeapon, HideThink, "class", "Hide think." )
+LUA_BINDING_BEGIN( Weapon, HideThink, "class", "Hide think." )
 {
     lua_CBaseCombatWeapon *pWeapon = LUA_BINDING_ARGUMENT( luaL_checkweapon, 1, "entity" );
     pWeapon->HideThink();
@@ -740,7 +740,7 @@ LUA_BINDING_BEGIN( CBaseCombatWeapon, HideThink, "class", "Hide think." )
 }
 LUA_BINDING_END()
 
-LUA_BINDING_BEGIN( CBaseCombatWeapon, IsAllowedToSwitch, "class", "Check if the weapon is allowed to switch." )
+LUA_BINDING_BEGIN( Weapon, IsAllowedToSwitch, "class", "Check if the weapon is allowed to switch." )
 {
     lua_CBaseCombatWeapon *pWeapon = LUA_BINDING_ARGUMENT( luaL_checkweapon, 1, "entity" );
     lua_pushboolean( L, pWeapon->IsAllowedToSwitch() );
@@ -748,7 +748,7 @@ LUA_BINDING_BEGIN( CBaseCombatWeapon, IsAllowedToSwitch, "class", "Check if the 
 }
 LUA_BINDING_END( "boolean", "Whether the weapon is allowed to switch." )
 
-LUA_BINDING_BEGIN( CBaseCombatWeapon, IsLocked, "class", "Check if the weapon is locked." )
+LUA_BINDING_BEGIN( Weapon, IsLocked, "class", "Check if the weapon is locked." )
 {
     lua_CBaseCombatWeapon *pWeapon = LUA_BINDING_ARGUMENT( luaL_checkweapon, 1, "entity" );
     lua_CBaseEntity *pEntity = LUA_BINDING_ARGUMENT( luaL_checkentity, 2, "asker" );
@@ -757,7 +757,7 @@ LUA_BINDING_BEGIN( CBaseCombatWeapon, IsLocked, "class", "Check if the weapon is
 }
 LUA_BINDING_END( "boolean", "Whether the weapon is locked." )
 
-LUA_BINDING_BEGIN( CBaseCombatWeapon, IsMeleeWeapon, "class", "Check if the weapon is a melee weapon." )
+LUA_BINDING_BEGIN( Weapon, IsMeleeWeapon, "class", "Check if the weapon is a melee weapon." )
 {
     lua_CBaseCombatWeapon *pWeapon = LUA_BINDING_ARGUMENT( luaL_checkweapon, 1, "entity" );
     lua_pushboolean( L, pWeapon->IsMeleeWeapon() );
@@ -765,7 +765,7 @@ LUA_BINDING_BEGIN( CBaseCombatWeapon, IsMeleeWeapon, "class", "Check if the weap
 }
 LUA_BINDING_END( "boolean", "Whether the weapon is a melee weapon." )
 
-LUA_BINDING_BEGIN( CBaseCombatWeapon, IsPredicted, "class", "Check if the weapon is predicted." )
+LUA_BINDING_BEGIN( Weapon, IsPredicted, "class", "Check if the weapon is predicted." )
 {
     lua_CBaseCombatWeapon *pWeapon = LUA_BINDING_ARGUMENT( luaL_checkweapon, 1, "entity" );
     lua_pushboolean( L, pWeapon->IsPredicted() );
@@ -773,7 +773,7 @@ LUA_BINDING_BEGIN( CBaseCombatWeapon, IsPredicted, "class", "Check if the weapon
 }
 LUA_BINDING_END( "boolean", "Whether the weapon is predicted." )
 
-LUA_BINDING_BEGIN( CBaseCombatWeapon, IsScripted, "class", "Check if the weapon is scripted." )
+LUA_BINDING_BEGIN( Weapon, IsScripted, "class", "Check if the weapon is scripted." )
 {
     lua_CBaseCombatWeapon *pWeapon = LUA_BINDING_ARGUMENT( luaL_checkweapon, 1, "entity" );
     lua_pushboolean( L, pWeapon->IsScripted() );
@@ -781,7 +781,7 @@ LUA_BINDING_BEGIN( CBaseCombatWeapon, IsScripted, "class", "Check if the weapon 
 }
 LUA_BINDING_END( "boolean", "Whether the weapon is scripted." )
 
-LUA_BINDING_BEGIN( CBaseCombatWeapon, IsViewModelSequenceFinished, "class", "Check if the view model sequence is finished." )
+LUA_BINDING_BEGIN( Weapon, IsViewModelSequenceFinished, "class", "Check if the view model sequence is finished." )
 {
     lua_CBaseCombatWeapon *pWeapon = LUA_BINDING_ARGUMENT( luaL_checkweapon, 1, "entity" );
     lua_pushboolean( L, pWeapon->IsViewModelSequenceFinished() );
@@ -789,7 +789,7 @@ LUA_BINDING_BEGIN( CBaseCombatWeapon, IsViewModelSequenceFinished, "class", "Che
 }
 LUA_BINDING_END( "boolean", "Whether the view model sequence is finished." )
 
-LUA_BINDING_BEGIN( CBaseCombatWeapon, IsWeaponVisible, "class", "Check if the weapon is visible." )
+LUA_BINDING_BEGIN( Weapon, IsWeaponVisible, "class", "Check if the weapon is visible." )
 {
     lua_CBaseCombatWeapon *pWeapon = LUA_BINDING_ARGUMENT( luaL_checkweapon, 1, "entity" );
     lua_pushboolean( L, pWeapon->IsWeaponVisible() );
@@ -797,7 +797,7 @@ LUA_BINDING_BEGIN( CBaseCombatWeapon, IsWeaponVisible, "class", "Check if the we
 }
 LUA_BINDING_END( "boolean", "Whether the weapon is visible." )
 
-LUA_BINDING_BEGIN( CBaseCombatWeapon, IsWeaponZoomed, "class", "Check if the weapon is zoomed." )
+LUA_BINDING_BEGIN( Weapon, IsWeaponZoomed, "class", "Check if the weapon is zoomed." )
 {
     lua_CBaseCombatWeapon *pWeapon = LUA_BINDING_ARGUMENT( luaL_checkweapon, 1, "entity" );
     lua_pushboolean( L, pWeapon->IsWeaponZoomed() );
@@ -805,7 +805,7 @@ LUA_BINDING_BEGIN( CBaseCombatWeapon, IsWeaponZoomed, "class", "Check if the wea
 }
 LUA_BINDING_END( "boolean", "Whether the weapon is zoomed." )
 
-LUA_BINDING_BEGIN( CBaseCombatWeapon, ItemBusyFrame, "class", "Item busy frame." )
+LUA_BINDING_BEGIN( Weapon, ItemBusyFrame, "class", "Item busy frame." )
 {
     lua_CBaseCombatWeapon *pWeapon = LUA_BINDING_ARGUMENT( luaL_checkweapon, 1, "entity" );
     pWeapon->ItemBusyFrame();
@@ -813,7 +813,7 @@ LUA_BINDING_BEGIN( CBaseCombatWeapon, ItemBusyFrame, "class", "Item busy frame."
 }
 LUA_BINDING_END()
 
-LUA_BINDING_BEGIN( CBaseCombatWeapon, ItemHolsterFrame, "class", "Item holster frame." )
+LUA_BINDING_BEGIN( Weapon, ItemHolsterFrame, "class", "Item holster frame." )
 {
     lua_CBaseCombatWeapon *pWeapon = LUA_BINDING_ARGUMENT( luaL_checkweapon, 1, "entity" );
     pWeapon->ItemHolsterFrame();
@@ -821,7 +821,7 @@ LUA_BINDING_BEGIN( CBaseCombatWeapon, ItemHolsterFrame, "class", "Item holster f
 }
 LUA_BINDING_END()
 
-LUA_BINDING_BEGIN( CBaseCombatWeapon, ItemPostFrame, "class", "Item post frame." )
+LUA_BINDING_BEGIN( Weapon, ItemPostFrame, "class", "Item post frame." )
 {
     lua_CBaseCombatWeapon *pWeapon = LUA_BINDING_ARGUMENT( luaL_checkweapon, 1, "entity" );
     pWeapon->ItemPostFrame();
@@ -829,7 +829,7 @@ LUA_BINDING_BEGIN( CBaseCombatWeapon, ItemPostFrame, "class", "Item post frame."
 }
 LUA_BINDING_END()
 
-LUA_BINDING_BEGIN( CBaseCombatWeapon, ItemPreFrame, "class", "Item pre frame." )
+LUA_BINDING_BEGIN( Weapon, ItemPreFrame, "class", "Item pre frame." )
 {
     lua_CBaseCombatWeapon *pWeapon = LUA_BINDING_ARGUMENT( luaL_checkweapon, 1, "entity" );
     pWeapon->ItemPreFrame();
@@ -837,7 +837,7 @@ LUA_BINDING_BEGIN( CBaseCombatWeapon, ItemPreFrame, "class", "Item pre frame." )
 }
 LUA_BINDING_END()
 
-LUA_BINDING_BEGIN( CBaseCombatWeapon, Lock, "class", "Lock the weapon." )
+LUA_BINDING_BEGIN( Weapon, Lock, "class", "Lock the weapon." )
 {
     lua_CBaseCombatWeapon *pWeapon = LUA_BINDING_ARGUMENT( luaL_checkweapon, 1, "entity" );
     float flTime = LUA_BINDING_ARGUMENT( luaL_checknumber, 2, "lockTime" );
@@ -847,7 +847,7 @@ LUA_BINDING_BEGIN( CBaseCombatWeapon, Lock, "class", "Lock the weapon." )
 }
 LUA_BINDING_END()
 
-LUA_BINDING_BEGIN( CBaseCombatWeapon, Lower, "class", "Lower the weapon." )
+LUA_BINDING_BEGIN( Weapon, Lower, "class", "Lower the weapon." )
 {
     lua_CBaseCombatWeapon *pWeapon = LUA_BINDING_ARGUMENT( luaL_checkweapon, 1, "entity" );
     lua_pushboolean( L, pWeapon->Lower() );
@@ -855,7 +855,7 @@ LUA_BINDING_BEGIN( CBaseCombatWeapon, Lower, "class", "Lower the weapon." )
 }
 LUA_BINDING_END( "boolean", "Whether the weapon was lowered." )
 
-LUA_BINDING_BEGIN( CBaseCombatWeapon, MaintainIdealActivity, "class", "Maintain ideal activity." )
+LUA_BINDING_BEGIN( Weapon, MaintainIdealActivity, "class", "Maintain ideal activity." )
 {
     lua_CBaseCombatWeapon *pWeapon = LUA_BINDING_ARGUMENT( luaL_checkweapon, 1, "entity" );
     pWeapon->MaintainIdealActivity();
@@ -863,7 +863,7 @@ LUA_BINDING_BEGIN( CBaseCombatWeapon, MaintainIdealActivity, "class", "Maintain 
 }
 LUA_BINDING_END()
 
-LUA_BINDING_BEGIN( CBaseCombatWeapon, OnActiveStateChanged, "class", "On active state changed." )
+LUA_BINDING_BEGIN( Weapon, OnActiveStateChanged, "class", "On active state changed." )
 {
     lua_CBaseCombatWeapon *pWeapon = LUA_BINDING_ARGUMENT( luaL_checkweapon, 1, "entity" );
     int iOldState = LUA_BINDING_ARGUMENT( luaL_checknumber, 2, "oldState" );
@@ -872,7 +872,7 @@ LUA_BINDING_BEGIN( CBaseCombatWeapon, OnActiveStateChanged, "class", "On active 
 }
 LUA_BINDING_END()
 
-LUA_BINDING_BEGIN( CBaseCombatWeapon, PrimaryAttack, "class", "Primary attack." )
+LUA_BINDING_BEGIN( Weapon, PrimaryAttack, "class", "Primary attack." )
 {
     lua_CBaseCombatWeapon *pWeapon = LUA_BINDING_ARGUMENT( luaL_checkweapon, 1, "entity" );
     pWeapon->PrimaryAttack();
@@ -880,7 +880,7 @@ LUA_BINDING_BEGIN( CBaseCombatWeapon, PrimaryAttack, "class", "Primary attack." 
 }
 LUA_BINDING_END()
 
-LUA_BINDING_BEGIN( CBaseCombatWeapon, Ready, "class", "Ready." )
+LUA_BINDING_BEGIN( Weapon, Ready, "class", "Ready." )
 {
     lua_CBaseCombatWeapon *pWeapon = LUA_BINDING_ARGUMENT( luaL_checkweapon, 1, "entity" );
     lua_pushboolean( L, pWeapon->Ready() );
@@ -888,7 +888,7 @@ LUA_BINDING_BEGIN( CBaseCombatWeapon, Ready, "class", "Ready." )
 }
 LUA_BINDING_END( "boolean", "Whether the weapon is ready." )
 
-LUA_BINDING_BEGIN( CBaseCombatWeapon, Reload, "class", "Reload." )
+LUA_BINDING_BEGIN( Weapon, Reload, "class", "Reload." )
 {
     lua_CBaseCombatWeapon *pWeapon = LUA_BINDING_ARGUMENT( luaL_checkweapon, 1, "entity" );
     lua_pushboolean( L, pWeapon->Reload() );
@@ -896,7 +896,7 @@ LUA_BINDING_BEGIN( CBaseCombatWeapon, Reload, "class", "Reload." )
 }
 LUA_BINDING_END()
 
-LUA_BINDING_BEGIN( CBaseCombatWeapon, ReloadOrSwitchWeapons, "class", "Reload or switch weapons." )
+LUA_BINDING_BEGIN( Weapon, ReloadOrSwitchWeapons, "class", "Reload or switch weapons." )
 {
     lua_CBaseCombatWeapon *pWeapon = LUA_BINDING_ARGUMENT( luaL_checkweapon, 1, "entity" );
     lua_pushboolean( L, pWeapon->ReloadOrSwitchWeapons() );
@@ -904,7 +904,7 @@ LUA_BINDING_BEGIN( CBaseCombatWeapon, ReloadOrSwitchWeapons, "class", "Reload or
 }
 LUA_BINDING_END()
 
-LUA_BINDING_BEGIN( CBaseCombatWeapon, RescindAltFireHudHint, "class", "Rescind alt fire HUD hint." )
+LUA_BINDING_BEGIN( Weapon, RescindAltFireHudHint, "class", "Rescind alt fire HUD hint." )
 {
     lua_CBaseCombatWeapon *pWeapon = LUA_BINDING_ARGUMENT( luaL_checkweapon, 1, "entity" );
     pWeapon->RescindAltFireHudHint();
@@ -912,7 +912,7 @@ LUA_BINDING_BEGIN( CBaseCombatWeapon, RescindAltFireHudHint, "class", "Rescind a
 }
 LUA_BINDING_END()
 
-LUA_BINDING_BEGIN( CBaseCombatWeapon, RescindReloadHudHint, "class", "Rescind reload HUD hint." )
+LUA_BINDING_BEGIN( Weapon, RescindReloadHudHint, "class", "Rescind reload HUD hint." )
 {
     lua_CBaseCombatWeapon *pWeapon = LUA_BINDING_ARGUMENT( luaL_checkweapon, 1, "entity" );
     pWeapon->RescindReloadHudHint();
@@ -920,7 +920,7 @@ LUA_BINDING_BEGIN( CBaseCombatWeapon, RescindReloadHudHint, "class", "Rescind re
 }
 LUA_BINDING_END()
 
-LUA_BINDING_BEGIN( CBaseCombatWeapon, SecondaryAttack, "class", "Secondary attack." )
+LUA_BINDING_BEGIN( Weapon, SecondaryAttack, "class", "Secondary attack." )
 {
     lua_CBaseCombatWeapon *pWeapon = LUA_BINDING_ARGUMENT( luaL_checkweapon, 1, "entity" );
     pWeapon->SecondaryAttack();
@@ -928,7 +928,7 @@ LUA_BINDING_BEGIN( CBaseCombatWeapon, SecondaryAttack, "class", "Secondary attac
 }
 LUA_BINDING_END()
 
-LUA_BINDING_BEGIN( CBaseCombatWeapon, SendViewModelAnim, "class", "Send view model animation." )
+LUA_BINDING_BEGIN( Weapon, SendViewModelAnim, "class", "Send view model animation." )
 {
     lua_CBaseCombatWeapon *pWeapon = LUA_BINDING_ARGUMENT( luaL_checkweapon, 1, "entity" );
     int iSequence = LUA_BINDING_ARGUMENT( luaL_checknumber, 2, "sequence" );
@@ -937,7 +937,7 @@ LUA_BINDING_BEGIN( CBaseCombatWeapon, SendViewModelAnim, "class", "Send view mod
 }
 LUA_BINDING_END()
 
-LUA_BINDING_BEGIN( CBaseCombatWeapon, SendWeaponAnim, "class", "Send weapon animation." )
+LUA_BINDING_BEGIN( Weapon, SendWeaponAnim, "class", "Send weapon animation." )
 {
     lua_CBaseCombatWeapon *pWeapon = LUA_BINDING_ARGUMENT( luaL_checkweapon, 1, "entity" );
     int iActivity = LUA_BINDING_ARGUMENT( luaL_checknumber, 2, "activity" );
@@ -946,7 +946,7 @@ LUA_BINDING_BEGIN( CBaseCombatWeapon, SendWeaponAnim, "class", "Send weapon anim
 }
 LUA_BINDING_END()
 
-LUA_BINDING_BEGIN( CBaseCombatWeapon, SetActivity, "class", "Set activity." )
+LUA_BINDING_BEGIN( Weapon, SetActivity, "class", "Set activity." )
 {
     lua_CBaseCombatWeapon *pWeapon = LUA_BINDING_ARGUMENT( luaL_checkweapon, 1, "entity" );
     int iActivity = LUA_BINDING_ARGUMENT( luaL_checknumber, 2, "activity" );
@@ -955,7 +955,7 @@ LUA_BINDING_BEGIN( CBaseCombatWeapon, SetActivity, "class", "Set activity." )
 }
 LUA_BINDING_END()
 
-LUA_BINDING_BEGIN( CBaseCombatWeapon, SetIdealActivity, "class", "Set ideal activity." )
+LUA_BINDING_BEGIN( Weapon, SetIdealActivity, "class", "Set ideal activity." )
 {
     lua_CBaseCombatWeapon *pWeapon = LUA_BINDING_ARGUMENT( luaL_checkweapon, 1, "entity" );
     int iActivity = LUA_BINDING_ARGUMENT( luaL_checknumber, 2, "activity" );
@@ -964,7 +964,7 @@ LUA_BINDING_BEGIN( CBaseCombatWeapon, SetIdealActivity, "class", "Set ideal acti
 }
 LUA_BINDING_END()
 
-LUA_BINDING_BEGIN( CBaseCombatWeapon, SetPickupTouch, "class", "Set pickup touch." )
+LUA_BINDING_BEGIN( Weapon, SetPickupTouch, "class", "Set pickup touch." )
 {
     lua_CBaseCombatWeapon *pWeapon = LUA_BINDING_ARGUMENT( luaL_checkweapon, 1, "entity" );
     pWeapon->SetPickupTouch();
@@ -972,7 +972,7 @@ LUA_BINDING_BEGIN( CBaseCombatWeapon, SetPickupTouch, "class", "Set pickup touch
 }
 LUA_BINDING_END()
 
-LUA_BINDING_BEGIN( CBaseCombatWeapon, SetPrimaryAmmoCount, "class", "Set primary ammo count." )
+LUA_BINDING_BEGIN( Weapon, SetPrimaryAmmoCount, "class", "Set primary ammo count." )
 {
     lua_CBaseCombatWeapon *pWeapon = LUA_BINDING_ARGUMENT( luaL_checkweapon, 1, "entity" );
     int iCount = LUA_BINDING_ARGUMENT( luaL_checknumber, 2, "count" );
@@ -981,7 +981,7 @@ LUA_BINDING_BEGIN( CBaseCombatWeapon, SetPrimaryAmmoCount, "class", "Set primary
 }
 LUA_BINDING_END()
 
-LUA_BINDING_BEGIN( CBaseCombatWeapon, SetSecondaryAmmoCount, "class", "Set secondary ammo count." )
+LUA_BINDING_BEGIN( Weapon, SetSecondaryAmmoCount, "class", "Set secondary ammo count." )
 {
     lua_CBaseCombatWeapon *pWeapon = LUA_BINDING_ARGUMENT( luaL_checkweapon, 1, "entity" );
     int iCount = LUA_BINDING_ARGUMENT( luaL_checknumber, 2, "count" );
@@ -990,7 +990,7 @@ LUA_BINDING_BEGIN( CBaseCombatWeapon, SetSecondaryAmmoCount, "class", "Set secon
 }
 LUA_BINDING_END()
 
-LUA_BINDING_BEGIN( CBaseCombatWeapon, SetSubType, "class", "Set sub type." )
+LUA_BINDING_BEGIN( Weapon, SetSubType, "class", "Set sub type." )
 {
     lua_CBaseCombatWeapon *pWeapon = LUA_BINDING_ARGUMENT( luaL_checkweapon, 1, "entity" );
     int iSubType = LUA_BINDING_ARGUMENT( luaL_checknumber, 2, "subType" );
@@ -999,7 +999,7 @@ LUA_BINDING_BEGIN( CBaseCombatWeapon, SetSubType, "class", "Set sub type." )
 }
 LUA_BINDING_END()
 
-LUA_BINDING_BEGIN( CBaseCombatWeapon, SetViewModel, "class", "Set view model." )
+LUA_BINDING_BEGIN( Weapon, SetViewModel, "class", "Set view model." )
 {
     lua_CBaseCombatWeapon *pWeapon = LUA_BINDING_ARGUMENT( luaL_checkweapon, 1, "entity" );
     pWeapon->SetViewModel();
@@ -1007,7 +1007,7 @@ LUA_BINDING_BEGIN( CBaseCombatWeapon, SetViewModel, "class", "Set view model." )
 }
 LUA_BINDING_END()
 
-LUA_BINDING_BEGIN( CBaseCombatWeapon, SetViewModelIndex, "class", "Set view model index." )
+LUA_BINDING_BEGIN( Weapon, SetViewModelIndex, "class", "Set view model index." )
 {
     lua_CBaseCombatWeapon *pWeapon = LUA_BINDING_ARGUMENT( luaL_checkweapon, 1, "entity" );
     int iIndex = LUA_BINDING_ARGUMENT( luaL_checknumber, 2, "index" );
@@ -1016,7 +1016,7 @@ LUA_BINDING_BEGIN( CBaseCombatWeapon, SetViewModelIndex, "class", "Set view mode
 }
 LUA_BINDING_END()
 
-LUA_BINDING_BEGIN( CBaseCombatWeapon, SetWeaponIdleTime, "class", "Set weapon idle time." )
+LUA_BINDING_BEGIN( Weapon, SetWeaponIdleTime, "class", "Set weapon idle time." )
 {
     lua_CBaseCombatWeapon *pWeapon = LUA_BINDING_ARGUMENT( luaL_checkweapon, 1, "entity" );
     float flTime = LUA_BINDING_ARGUMENT( luaL_checknumber, 2, "time" );
@@ -1025,7 +1025,7 @@ LUA_BINDING_BEGIN( CBaseCombatWeapon, SetWeaponIdleTime, "class", "Set weapon id
 }
 LUA_BINDING_END()
 
-LUA_BINDING_BEGIN( CBaseCombatWeapon, SetWeaponVisible, "class", "Set weapon visible." )
+LUA_BINDING_BEGIN( Weapon, SetWeaponVisible, "class", "Set weapon visible." )
 {
     lua_CBaseCombatWeapon *pWeapon = LUA_BINDING_ARGUMENT( luaL_checkweapon, 1, "entity" );
     bool bVisible = LUA_BINDING_ARGUMENT( luaL_checkboolean, 2, "visible" );
@@ -1034,7 +1034,7 @@ LUA_BINDING_BEGIN( CBaseCombatWeapon, SetWeaponVisible, "class", "Set weapon vis
 }
 LUA_BINDING_END()
 
-LUA_BINDING_BEGIN( CBaseCombatWeapon, ShouldDisplayAltFireHUDHint, "class", "Should display alt fire HUD hint." )
+LUA_BINDING_BEGIN( Weapon, ShouldDisplayAltFireHUDHint, "class", "Should display alt fire HUD hint." )
 {
     lua_CBaseCombatWeapon *pWeapon = LUA_BINDING_ARGUMENT( luaL_checkweapon, 1, "entity" );
     lua_pushboolean( L, pWeapon->ShouldDisplayAltFireHUDHint() );
@@ -1042,7 +1042,7 @@ LUA_BINDING_BEGIN( CBaseCombatWeapon, ShouldDisplayAltFireHUDHint, "class", "Sho
 }
 LUA_BINDING_END( "boolean", "Whether the alt fire HUD hint should be displayed." )
 
-LUA_BINDING_BEGIN( CBaseCombatWeapon, ShouldDisplayReloadHUDHint, "class", "Should display reload HUD hint." )
+LUA_BINDING_BEGIN( Weapon, ShouldDisplayReloadHUDHint, "class", "Should display reload HUD hint." )
 {
     lua_CBaseCombatWeapon *pWeapon = LUA_BINDING_ARGUMENT( luaL_checkweapon, 1, "entity" );
     lua_pushboolean( L, pWeapon->ShouldDisplayReloadHUDHint() );
@@ -1050,7 +1050,7 @@ LUA_BINDING_BEGIN( CBaseCombatWeapon, ShouldDisplayReloadHUDHint, "class", "Shou
 }
 LUA_BINDING_END( "boolean", "Whether the reload HUD hint should be displayed." )
 
-LUA_BINDING_BEGIN( CBaseCombatWeapon, ShouldShowControlPanels, "class", "Should show control panels." )
+LUA_BINDING_BEGIN( Weapon, ShouldShowControlPanels, "class", "Should show control panels." )
 {
     lua_CBaseCombatWeapon *pWeapon = LUA_BINDING_ARGUMENT( luaL_checkweapon, 1, "entity" );
     lua_pushboolean( L, pWeapon->ShouldShowControlPanels() );
@@ -1058,7 +1058,7 @@ LUA_BINDING_BEGIN( CBaseCombatWeapon, ShouldShowControlPanels, "class", "Should 
 }
 LUA_BINDING_END( "boolean", "Whether the control panels should be shown." )
 
-LUA_BINDING_BEGIN( CBaseCombatWeapon, StartSprinting, "class", "Start sprinting." )
+LUA_BINDING_BEGIN( Weapon, StartSprinting, "class", "Start sprinting." )
 {
     lua_CBaseCombatWeapon *pWeapon = LUA_BINDING_ARGUMENT( luaL_checkweapon, 1, "entity" );
     lua_pushboolean( L, pWeapon->StartSprinting() );
@@ -1066,7 +1066,7 @@ LUA_BINDING_BEGIN( CBaseCombatWeapon, StartSprinting, "class", "Start sprinting.
 }
 LUA_BINDING_END( "boolean", "Whether sprinting was started." )
 
-LUA_BINDING_BEGIN( CBaseCombatWeapon, StopSprinting, "class", "Stop sprinting." )
+LUA_BINDING_BEGIN( Weapon, StopSprinting, "class", "Stop sprinting." )
 {
     lua_CBaseCombatWeapon *pWeapon = LUA_BINDING_ARGUMENT( luaL_checkweapon, 1, "entity" );
     lua_pushboolean( L, pWeapon->StopSprinting() );
@@ -1074,7 +1074,7 @@ LUA_BINDING_BEGIN( CBaseCombatWeapon, StopSprinting, "class", "Stop sprinting." 
 }
 LUA_BINDING_END( "boolean", "Whether sprinting was stopped." )
 
-LUA_BINDING_BEGIN( CBaseCombatWeapon, StopWeaponSound, "class", "Stop weapon sound." )
+LUA_BINDING_BEGIN( Weapon, StopWeaponSound, "class", "Stop weapon sound." )
 {
     lua_CBaseCombatWeapon *pWeapon = LUA_BINDING_ARGUMENT( luaL_checkweapon, 1, "entity" );
     int iSound = LUA_BINDING_ARGUMENT( luaL_checknumber, 2, "soundType" );
@@ -1083,7 +1083,7 @@ LUA_BINDING_BEGIN( CBaseCombatWeapon, StopWeaponSound, "class", "Stop weapon sou
 }
 LUA_BINDING_END()
 
-LUA_BINDING_BEGIN( CBaseCombatWeapon, UsesClipsForAmmo1, "class", "Uses clips for ammo 1." )
+LUA_BINDING_BEGIN( Weapon, UsesClipsForAmmo1, "class", "Uses clips for ammo 1." )
 {
     lua_CBaseCombatWeapon *pWeapon = LUA_BINDING_ARGUMENT( luaL_checkweapon, 1, "entity" );
     lua_pushboolean( L, pWeapon->UsesClipsForAmmo1() );
@@ -1091,7 +1091,7 @@ LUA_BINDING_BEGIN( CBaseCombatWeapon, UsesClipsForAmmo1, "class", "Uses clips fo
 }
 LUA_BINDING_END( "boolean", "Whether clips are used for ammo 1." )
 
-LUA_BINDING_BEGIN( CBaseCombatWeapon, UsesClipsForAmmo2, "class", "Uses clips for ammo 2." )
+LUA_BINDING_BEGIN( Weapon, UsesClipsForAmmo2, "class", "Uses clips for ammo 2." )
 {
     lua_CBaseCombatWeapon *pWeapon = LUA_BINDING_ARGUMENT( luaL_checkweapon, 1, "entity" );
     lua_pushboolean( L, pWeapon->UsesClipsForAmmo2() );
@@ -1099,7 +1099,7 @@ LUA_BINDING_BEGIN( CBaseCombatWeapon, UsesClipsForAmmo2, "class", "Uses clips fo
 }
 LUA_BINDING_END( "boolean", "Whether clips are used for ammo 2." )
 
-LUA_BINDING_BEGIN( CBaseCombatWeapon, UsesPrimaryAmmo, "class", "Uses primary ammo." )
+LUA_BINDING_BEGIN( Weapon, UsesPrimaryAmmo, "class", "Uses primary ammo." )
 {
     lua_CBaseCombatWeapon *pWeapon = LUA_BINDING_ARGUMENT( luaL_checkweapon, 1, "entity" );
     lua_pushboolean( L, pWeapon->UsesPrimaryAmmo() );
@@ -1107,7 +1107,7 @@ LUA_BINDING_BEGIN( CBaseCombatWeapon, UsesPrimaryAmmo, "class", "Uses primary am
 }
 LUA_BINDING_END( "boolean", "Whether primary ammo is used." )
 
-LUA_BINDING_BEGIN( CBaseCombatWeapon, UsesSecondaryAmmo, "class", "Uses secondary ammo." )
+LUA_BINDING_BEGIN( Weapon, UsesSecondaryAmmo, "class", "Uses secondary ammo." )
 {
     lua_CBaseCombatWeapon *pWeapon = LUA_BINDING_ARGUMENT( luaL_checkweapon, 1, "entity" );
     lua_pushboolean( L, pWeapon->UsesSecondaryAmmo() );
@@ -1115,7 +1115,7 @@ LUA_BINDING_BEGIN( CBaseCombatWeapon, UsesSecondaryAmmo, "class", "Uses secondar
 }
 LUA_BINDING_END( "boolean", "Whether secondary ammo is used." )
 
-LUA_BINDING_BEGIN( CBaseCombatWeapon, VisibleInWeaponSelection, "class", "Visible in weapon selection." )
+LUA_BINDING_BEGIN( Weapon, VisibleInWeaponSelection, "class", "Visible in weapon selection." )
 {
     lua_CBaseCombatWeapon *pWeapon = LUA_BINDING_ARGUMENT( luaL_checkweapon, 1, "entity" );
     lua_pushboolean( L, pWeapon->VisibleInWeaponSelection() );
@@ -1123,7 +1123,7 @@ LUA_BINDING_BEGIN( CBaseCombatWeapon, VisibleInWeaponSelection, "class", "Visibl
 }
 LUA_BINDING_END( "boolean", "Whether the weapon is visible in weapon selection." )
 
-LUA_BINDING_BEGIN( CBaseCombatWeapon, WeaponAutoAimScale, "class", "Weapon auto aim scale." )
+LUA_BINDING_BEGIN( Weapon, WeaponAutoAimScale, "class", "Weapon auto aim scale." )
 {
     lua_CBaseCombatWeapon *pWeapon = LUA_BINDING_ARGUMENT( luaL_checkweapon, 1, "entity" );
     lua_pushnumber( L, pWeapon->WeaponAutoAimScale() );
@@ -1131,7 +1131,7 @@ LUA_BINDING_BEGIN( CBaseCombatWeapon, WeaponAutoAimScale, "class", "Weapon auto 
 }
 LUA_BINDING_END( "number", "Weapon auto aim scale." )
 
-LUA_BINDING_BEGIN( CBaseCombatWeapon, WeaponIdle, "class", "Weapon idle." )
+LUA_BINDING_BEGIN( Weapon, WeaponIdle, "class", "Weapon idle." )
 {
     lua_CBaseCombatWeapon *pWeapon = LUA_BINDING_ARGUMENT( luaL_checkweapon, 1, "entity" );
     pWeapon->WeaponIdle();
@@ -1139,7 +1139,7 @@ LUA_BINDING_BEGIN( CBaseCombatWeapon, WeaponIdle, "class", "Weapon idle." )
 }
 LUA_BINDING_END()
 
-LUA_BINDING_BEGIN( CBaseCombatWeapon, WeaponSound, "class", "Weapon sound." )
+LUA_BINDING_BEGIN( Weapon, WeaponSound, "class", "Weapon sound." )
 {
     lua_CBaseCombatWeapon *pWeapon = LUA_BINDING_ARGUMENT( luaL_checkweapon, 1, "entity" );
     int iSound = LUA_BINDING_ARGUMENT( luaL_checknumber, 2, "soundType" );
@@ -1149,7 +1149,7 @@ LUA_BINDING_BEGIN( CBaseCombatWeapon, WeaponSound, "class", "Weapon sound." )
 }
 LUA_BINDING_END()
 
-LUA_BINDING_BEGIN( CBaseCombatWeapon, WeaponState, "class", "Weapon state." )
+LUA_BINDING_BEGIN( Weapon, WeaponState, "class", "Weapon state." )
 {
     lua_CBaseCombatWeapon *pWeapon = LUA_BINDING_ARGUMENT( luaL_checkweapon, 1, "entity" );
     lua_pushinteger( L, pWeapon->WeaponState() );
@@ -1159,7 +1159,7 @@ LUA_BINDING_END( "number", "Weapon state." )
 
 // static int CBaseCombatWeapon___index( lua_State *L )
 //{
-//     CBaseCombatWeapon *pWeapon = lua_toweapon( L, 1 );
+//     lua_CBaseCombatWeapon *pWeapon = lua_toweapon( L, 1 );
 //
 //     LUA_METATABLE_INDEX_CHECK_VALID( L, CBaseEntity_IsValid );
 //     LUA_METATABLE_INDEX_CHECK( L, pWeapon );
@@ -1235,7 +1235,7 @@ LUA_BINDING_END( "number", "Weapon state." )
 
 // static int CBaseCombatWeapon___newindex( lua_State *L )
 //{
-//     CBaseCombatWeapon *pWeapon = lua_toweapon( L, 1 );
+//     lua_CBaseCombatWeapon *pWeapon = lua_toweapon( L, 1 );
 //
 //     if ( pWeapon == NULL )
 //     { /* avoid extra test when d is not 0 */
@@ -1311,7 +1311,7 @@ LUA_BINDING_END( "number", "Weapon state." )
 // }
 
 // Experiment; We only let CBaseEntity determine equality, which should be fine since they're pointers to the same entity. Disabled:
-//LUA_BINDING_BEGIN( CBaseCombatWeapon, __eq, "class", "Equality comparison." )
+//LUA_BINDING_BEGIN( Weapon, __eq, "class", "Equality comparison." )
 //{
 //    lua_CBaseCombatWeapon *pWeapon = LUA_BINDING_ARGUMENT( lua_toweapon, 1, "entity" );
 //    lua_CBaseCombatWeapon *pOtherWeapon = LUA_BINDING_ARGUMENT( lua_toweapon, 2, "otherEntity" );
@@ -1320,13 +1320,13 @@ LUA_BINDING_END( "number", "Weapon state." )
 //}
 //LUA_BINDING_END( "boolean", "Whether the two entities are equal." )
 //
-//LUA_BINDING_BEGIN( CBaseCombatWeapon, __tostring, "class", "String representation." )
+//LUA_BINDING_BEGIN( Weapon, __tostring, "class", "String representation." )
 //{
 //    lua_CBaseCombatWeapon *pWeapon = LUA_BINDING_ARGUMENT( lua_toweapon, 1, "entity" );
 //    if ( pWeapon == NULL )
 //        lua_pushstring( L, "NULL" );
 //    else
-//        lua_pushfstring( L, "CBaseCombatWeapon: %d %s", pWeapon->entindex(), pWeapon->GetClassname() );
+//        lua_pushfstring( L, "Weapon: %d %s", pWeapon->entindex(), pWeapon->GetClassname() );
 //    return 1;
 //}
 //LUA_BINDING_END( "string", "String representation." )
@@ -1341,7 +1341,7 @@ LUALIB_API int luaopen_CBaseCombatWeapon( lua_State *L )
     lua_pushstring( L, "Entity" );
     lua_setfield( L, -2, "__type" ); /* metatable.__type = "Entity" */
 
-    LUA_REGISTRATION_COMMIT( CBaseCombatWeapon );
+    LUA_REGISTRATION_COMMIT( Weapon );
 
     return 1;
 }

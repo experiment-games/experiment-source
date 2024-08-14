@@ -22,7 +22,7 @@ lua:
         default: "MASK_BLOCKLOS"
     - arguments:
       - name: "target"
-        type: CBaseEntity
+        type: Entity
       - name: "mask"
         type: integer
         default: "MASK_BLOCKLOS"

@@ -17,9 +17,9 @@ lua:
     - name: "input"
       type: string
     - name: "activator"
-      type: CBaseEntity
+      type: Entity
     - name: "caller"
-      type: CBaseEntity
+      type: Entity
     - name: "outputID"
       type: number
   returns:

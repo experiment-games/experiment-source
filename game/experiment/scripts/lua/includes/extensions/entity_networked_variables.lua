@@ -15,7 +15,7 @@ if (GAMEUI) then
 	return
 end
 
-local ENTITY_META = _R.CBaseEntity
+local ENTITY_META = _R.Entity
 local Networks = require("networks")
 local Hooks = require("hooks")
 
@@ -66,7 +66,7 @@ end
 
 --- Sets up a callback for when a networked variable changes
 --- @param key string
---- @param callback fun(entity: CBaseEntity, key: string, oldValue: any, newValue: any)
+--- @param callback fun(entity: Entity, key: string, oldValue: any, newValue: any)
 function ENTITY_META:SetNetworkedVariableCallback(key, callback)
     if (not self.__networkedVarCallbacks) then
         self.__networkedVarCallbacks = {}

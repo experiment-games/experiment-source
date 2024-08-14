@@ -15,7 +15,7 @@ lua:
   
   arguments:
     - name: "entity"
-      type: CBaseEntity
+      type: Entity
     - name: "use type"
       type: number
   returns:

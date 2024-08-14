@@ -15,7 +15,7 @@ lua:
   
   
   returns:
-    - type: CBasePlayer
+    - type: Player
       description: "The local player."
 ---
 

@@ -258,13 +258,6 @@ LUA_BINDING_BEGIN( Engines, GetMainMenuBackgroundName, "library", "Get the main 
 }
 LUA_BINDING_END( "string", "The main menu background name." )
 
-LUA_BINDING_BEGIN( Engines, GetMaxClients, "library", "Get the maximum number of clients." )
-{
-    lua_pushnumber( L, engine->GetMaxClients() );
-    return 1;
-}
-LUA_BINDING_END( "number", "The maximum number of clients." )
-
 LUA_BINDING_BEGIN( Engines, GetMostRecentSaveGame, "library", "Get the most recent save game." )
 {
     lua_pushstring( L, engine->GetMostRecentSaveGame() );

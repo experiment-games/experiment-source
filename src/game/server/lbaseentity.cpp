@@ -10,9 +10,9 @@
 // memdbgon must be the last include file in a .cpp file!!!
 #include "tier0/memdbgon.h"
 
-LUA_REGISTRATION_INIT( CBaseEntity )
+LUA_REGISTRATION_INIT( Entity )
 
-LUA_BINDING_BEGIN( CBaseEntity, RecalcHasPlayerChildBit, "class", "Recalculate has player child bit (EFL_HAS_PLAYER_CHILD)." )
+LUA_BINDING_BEGIN( Entity, RecalcHasPlayerChildBit, "class", "Recalculate has player child bit (EFL_HAS_PLAYER_CHILD)." )
 {
     lua_CBaseEntity *pEntity = LUA_BINDING_ARGUMENT( luaL_checkentity, 1, "entity" );
     pEntity->RecalcHasPlayerChildBit();
@@ -20,7 +20,7 @@ LUA_BINDING_BEGIN( CBaseEntity, RecalcHasPlayerChildBit, "class", "Recalculate h
 }
 LUA_BINDING_END()
 
-LUA_BINDING_BEGIN( CBaseEntity, AddDeleteOnRemove, "class", "Add an entity to the list of entities being deleted when this entity is removed." )
+LUA_BINDING_BEGIN( Entity, AddDeleteOnRemove, "class", "Add an entity to the list of entities being deleted when this entity is removed." )
 {
     lua_CBaseEntity *pEntity = LUA_BINDING_ARGUMENT( luaL_checkentity, 1, "entity" );
     lua_CBaseEntity *pEntityToDelete = LUA_BINDING_ARGUMENT( luaL_checkentity, 2, "entityToDelete" );
@@ -29,7 +29,7 @@ LUA_BINDING_BEGIN( CBaseEntity, AddDeleteOnRemove, "class", "Add an entity to th
 }
 LUA_BINDING_END()
 
-LUA_BINDING_BEGIN( CBaseEntity, RemoveDeleteOnRemove, "class", "Remove an entity from the list of entities being deleted when this entity is removed." )
+LUA_BINDING_BEGIN( Entity, RemoveDeleteOnRemove, "class", "Remove an entity from the list of entities being deleted when this entity is removed." )
 {
     lua_CBaseEntity *pEntity = LUA_BINDING_ARGUMENT( luaL_checkentity, 1, "entity" );
     lua_CBaseEntity *pEntityToDelete = LUA_BINDING_ARGUMENT( luaL_checkentity, 2, "entityToDelete" );
@@ -38,7 +38,7 @@ LUA_BINDING_BEGIN( CBaseEntity, RemoveDeleteOnRemove, "class", "Remove an entity
 }
 LUA_BINDING_END()
 
-LUA_BINDING_BEGIN( CBaseEntity, DoesHavePlayerChild, "class", "Whether this entity has a player child somewhere in the hierarchy (checks EFL_HAS_PLAYER_CHILD)." )
+LUA_BINDING_BEGIN( Entity, DoesHavePlayerChild, "class", "Whether this entity has a player child somewhere in the hierarchy (checks EFL_HAS_PLAYER_CHILD)." )
 {
     lua_CBaseEntity *pEntity = LUA_BINDING_ARGUMENT( luaL_checkentity, 1, "entity" );
     lua_pushboolean( L, pEntity->DoesHavePlayerChild() );
@@ -46,7 +46,7 @@ LUA_BINDING_BEGIN( CBaseEntity, DoesHavePlayerChild, "class", "Whether this enti
 }
 LUA_BINDING_END( "boolean", "true if has player child, false otherwise." )
 
-LUA_BINDING_BEGIN( CBaseEntity, SetNavIgnore, "class", "Set nav ignore." )
+LUA_BINDING_BEGIN( Entity, SetNavIgnore, "class", "Set nav ignore." )
 {
     lua_CBaseEntity *pEntity = LUA_BINDING_ARGUMENT( luaL_checkentity, 1, "entity" );
     float flDuration = LUA_BINDING_ARGUMENT( luaL_checknumber, 2, "duration" );
@@ -55,7 +55,7 @@ LUA_BINDING_BEGIN( CBaseEntity, SetNavIgnore, "class", "Set nav ignore." )
 }
 LUA_BINDING_END()
 
-LUA_BINDING_BEGIN( CBaseEntity, ClearNavIgnore, "class", "Clear nav ignore." )
+LUA_BINDING_BEGIN( Entity, ClearNavIgnore, "class", "Clear nav ignore." )
 {
     lua_CBaseEntity *pEntity = LUA_BINDING_ARGUMENT( luaL_checkentity, 1, "entity" );
     pEntity->ClearNavIgnore();
@@ -63,7 +63,7 @@ LUA_BINDING_BEGIN( CBaseEntity, ClearNavIgnore, "class", "Clear nav ignore." )
 }
 LUA_BINDING_END()
 
-LUA_BINDING_BEGIN( CBaseEntity, IsNavIgnored, "class", "Is nav ignored." )
+LUA_BINDING_BEGIN( Entity, IsNavIgnored, "class", "Is nav ignored." )
 {
     lua_CBaseEntity *pEntity = LUA_BINDING_ARGUMENT( luaL_checkentity, 1, "entity" );
     lua_pushboolean( L, pEntity->IsNavIgnored() );
@@ -71,7 +71,7 @@ LUA_BINDING_BEGIN( CBaseEntity, IsNavIgnored, "class", "Is nav ignored." )
 }
 LUA_BINDING_END( "boolean", "true if nav ignored, false otherwise." )
 
-LUA_BINDING_BEGIN( CBaseEntity, SetTransmitState, "class", "Set transmit state." )
+LUA_BINDING_BEGIN( Entity, SetTransmitState, "class", "Set transmit state." )
 {
     lua_CBaseEntity *pEntity = LUA_BINDING_ARGUMENT( luaL_checkentity, 1, "entity" );
     int nState = LUA_BINDING_ARGUMENT( luaL_checkinteger, 2, "state" );
@@ -80,7 +80,7 @@ LUA_BINDING_BEGIN( CBaseEntity, SetTransmitState, "class", "Set transmit state."
 }
 LUA_BINDING_END( "number", "The transmit state" )
 
-LUA_BINDING_BEGIN( CBaseEntity, GetTransmitState, "class", "Get transmit state." )
+LUA_BINDING_BEGIN( Entity, GetTransmitState, "class", "Get transmit state." )
 {
     lua_CBaseEntity *pEntity = LUA_BINDING_ARGUMENT( luaL_checkentity, 1, "entity" );
     lua_pushinteger( L, pEntity->GetTransmitState() );
@@ -88,7 +88,7 @@ LUA_BINDING_BEGIN( CBaseEntity, GetTransmitState, "class", "Get transmit state."
 }
 LUA_BINDING_END( "number", "The transmit state" )
 
-LUA_BINDING_BEGIN( CBaseEntity, SetPreventTransmit, "class", "Set prevent transmit." )
+LUA_BINDING_BEGIN( Entity, SetPreventTransmit, "class", "Set prevent transmit." )
 {
     lua_CBaseEntity *pEntity = LUA_BINDING_ARGUMENT( luaL_checkentity, 1, "entity" );
     CRecipientFilter filter;
@@ -119,7 +119,7 @@ LUA_BINDING_BEGIN( CBaseEntity, SetPreventTransmit, "class", "Set prevent transm
 }
 LUA_BINDING_END()
 
-LUA_BINDING_BEGIN( CBaseEntity, IncrementTransmitStateOwnedCounter, "class", "Increment transmit state owned counter." )
+LUA_BINDING_BEGIN( Entity, IncrementTransmitStateOwnedCounter, "class", "Increment transmit state owned counter." )
 {
     lua_CBaseEntity *pEntity = LUA_BINDING_ARGUMENT( luaL_checkentity, 1, "entity" );
     pEntity->IncrementTransmitStateOwnedCounter();
@@ -127,7 +127,7 @@ LUA_BINDING_BEGIN( CBaseEntity, IncrementTransmitStateOwnedCounter, "class", "In
 }
 LUA_BINDING_END()
 
-LUA_BINDING_BEGIN( CBaseEntity, DecrementTransmitStateOwnedCounter, "class", "Decrement transmit state owned counter." )
+LUA_BINDING_BEGIN( Entity, DecrementTransmitStateOwnedCounter, "class", "Decrement transmit state owned counter." )
 {
     lua_CBaseEntity *pEntity = LUA_BINDING_ARGUMENT( luaL_checkentity, 1, "entity" );
     pEntity->DecrementTransmitStateOwnedCounter();
@@ -135,7 +135,7 @@ LUA_BINDING_BEGIN( CBaseEntity, DecrementTransmitStateOwnedCounter, "class", "De
 }
 LUA_BINDING_END()
 
-LUA_BINDING_BEGIN( CBaseEntity, DetectInSkybox, "class", "This function finds out if the entity is in the 3D skybox. If so, it sets the EFL_IN_SKYBOX flag so the entity gets transmitted to all the clients. Entities usually call this during their Activate(). Returns true if the entity is in the skybox (and EFL_IN_SKYBOX was set).." )
+LUA_BINDING_BEGIN( Entity, DetectInSkybox, "class", "This function finds out if the entity is in the 3D skybox. If so, it sets the EFL_IN_SKYBOX flag so the entity gets transmitted to all the clients. Entities usually call this during their Activate(). Returns true if the entity is in the skybox (and EFL_IN_SKYBOX was set).." )
 {
     lua_CBaseEntity *pEntity = LUA_BINDING_ARGUMENT( luaL_checkentity, 1, "entity" );
     lua_pushboolean( L, pEntity->DetectInSkybox() );
@@ -143,7 +143,7 @@ LUA_BINDING_BEGIN( CBaseEntity, DetectInSkybox, "class", "This function finds ou
 }
 LUA_BINDING_END( "boolean", "true if in skybox, false otherwise." )
 
-LUA_BINDING_BEGIN( CBaseEntity, GetEntitySkybox, "class", "Returns the sky camera of the skybox the entity is in." )
+LUA_BINDING_BEGIN( Entity, GetEntitySkybox, "class", "Returns the sky camera of the skybox the entity is in." )
 {
     lua_CBaseEntity *pEntity = LUA_BINDING_ARGUMENT( luaL_checkentity, 1, "entity" );
     CBaseEntity::PushLuaInstanceSafe( L, ( CBaseEntity * )pEntity->GetEntitySkybox() );
@@ -151,7 +151,7 @@ LUA_BINDING_BEGIN( CBaseEntity, GetEntitySkybox, "class", "Returns the sky camer
 }
 LUA_BINDING_END()
 
-LUA_BINDING_BEGIN( CBaseEntity, PostConstructor, "class", "Post constructor." )
+LUA_BINDING_BEGIN( Entity, PostConstructor, "class", "Post constructor." )
 {
     lua_CBaseEntity *pEntity = LUA_BINDING_ARGUMENT( luaL_checkentity, 1, "entity" );
     const char *pszClassname = LUA_BINDING_ARGUMENT( luaL_checkstring, 2, "className" );
@@ -160,7 +160,7 @@ LUA_BINDING_BEGIN( CBaseEntity, PostConstructor, "class", "Post constructor." )
 }
 LUA_BINDING_END()
 
-LUA_BINDING_BEGIN( CBaseEntity, PostClientActive, "class", "Post client active." )
+LUA_BINDING_BEGIN( Entity, PostClientActive, "class", "Post client active." )
 {
     lua_CBaseEntity *pEntity = LUA_BINDING_ARGUMENT( luaL_checkentity, 1, "entity" );
     pEntity->PostClientActive();
@@ -168,7 +168,7 @@ LUA_BINDING_BEGIN( CBaseEntity, PostClientActive, "class", "Post client active."
 }
 LUA_BINDING_END()
 
-LUA_BINDING_BEGIN( CBaseEntity, ValidateEntityConnections, "class", "Validate entity connections." )
+LUA_BINDING_BEGIN( Entity, ValidateEntityConnections, "class", "Validate entity connections." )
 {
     lua_CBaseEntity *pEntity = LUA_BINDING_ARGUMENT( luaL_checkentity, 1, "entity" );
     pEntity->ValidateEntityConnections();
@@ -176,7 +176,7 @@ LUA_BINDING_BEGIN( CBaseEntity, ValidateEntityConnections, "class", "Validate en
 }
 LUA_BINDING_END()
 
-LUA_BINDING_BEGIN( CBaseEntity, SetName, "class", "Set name of entity." )
+LUA_BINDING_BEGIN( Entity, SetName, "class", "Set name of entity." )
 {
     lua_CBaseEntity *pEntity = LUA_BINDING_ARGUMENT( luaL_checkentity, 1, "entity" );
     const char *pszName = LUA_BINDING_ARGUMENT( luaL_checkstring, 2, "name" );
@@ -185,7 +185,7 @@ LUA_BINDING_BEGIN( CBaseEntity, SetName, "class", "Set name of entity." )
 }
 LUA_BINDING_END()
 
-LUA_BINDING_BEGIN( CBaseEntity, GetEntityName, "class", "Get entity name." )
+LUA_BINDING_BEGIN( Entity, GetEntityName, "class", "Get entity name." )
 {
     lua_CBaseEntity *pEntity = LUA_BINDING_ARGUMENT( luaL_checkentity, 1, "entity" );
     lua_pushstring( L, STRING( pEntity->GetEntityName() ) );
@@ -193,7 +193,7 @@ LUA_BINDING_BEGIN( CBaseEntity, GetEntityName, "class", "Get entity name." )
 }
 LUA_BINDING_END( "string", "The entity name" )
 
-LUA_BINDING_BEGIN( CBaseEntity, NameMatches, "class", "Name matches." )
+LUA_BINDING_BEGIN( Entity, NameMatches, "class", "Name matches." )
 {
     lua_CBaseEntity *pEntity = LUA_BINDING_ARGUMENT( luaL_checkentity, 1, "entity" );
     const char *pszName = LUA_BINDING_ARGUMENT( luaL_checkstring, 2, "name" );
@@ -202,7 +202,7 @@ LUA_BINDING_BEGIN( CBaseEntity, NameMatches, "class", "Name matches." )
 }
 LUA_BINDING_END( "boolean", "true if matches, false otherwise." )
 
-LUA_BINDING_BEGIN( CBaseEntity, ClassMatches, "class", "Class matches." )
+LUA_BINDING_BEGIN( Entity, ClassMatches, "class", "Class matches." )
 {
     lua_CBaseEntity *pEntity = LUA_BINDING_ARGUMENT( luaL_checkentity, 1, "entity" );
     const char *pszClassname = LUA_BINDING_ARGUMENT( luaL_checkstring, 2, "classNameOrWildcard" );
@@ -211,7 +211,7 @@ LUA_BINDING_BEGIN( CBaseEntity, ClassMatches, "class", "Class matches." )
 }
 LUA_BINDING_END( "boolean", "true if matches, false otherwise." )
 
-LUA_BINDING_BEGIN( CBaseEntity, GetSpawnFlags, "class", "Get spawn flags." )
+LUA_BINDING_BEGIN( Entity, GetSpawnFlags, "class", "Get spawn flags." )
 {
     lua_CBaseEntity *pEntity = LUA_BINDING_ARGUMENT( luaL_checkentity, 1, "entity" );
     lua_pushinteger( L, pEntity->GetSpawnFlags() );
@@ -219,7 +219,7 @@ LUA_BINDING_BEGIN( CBaseEntity, GetSpawnFlags, "class", "Get spawn flags." )
 }
 LUA_BINDING_END( "number", "The spawn flags" )
 
-LUA_BINDING_BEGIN( CBaseEntity, AddSpawnFlags, "class", "Add spawn flags." )
+LUA_BINDING_BEGIN( Entity, AddSpawnFlags, "class", "Add spawn flags." )
 {
     lua_CBaseEntity *pEntity = LUA_BINDING_ARGUMENT( luaL_checkentity, 1, "entity" );
     int nFlags = LUA_BINDING_ARGUMENT( luaL_checkinteger, 2, "flags" );
@@ -228,7 +228,7 @@ LUA_BINDING_BEGIN( CBaseEntity, AddSpawnFlags, "class", "Add spawn flags." )
 }
 LUA_BINDING_END()
 
-LUA_BINDING_BEGIN( CBaseEntity, RemoveSpawnFlags, "class", "Remove spawn flags." )
+LUA_BINDING_BEGIN( Entity, RemoveSpawnFlags, "class", "Remove spawn flags." )
 {
     lua_CBaseEntity *pEntity = LUA_BINDING_ARGUMENT( luaL_checkentity, 1, "entity" );
     int nFlags = LUA_BINDING_ARGUMENT( luaL_checkinteger, 2, "flags" );
@@ -237,7 +237,7 @@ LUA_BINDING_BEGIN( CBaseEntity, RemoveSpawnFlags, "class", "Remove spawn flags."
 }
 LUA_BINDING_END()
 
-LUA_BINDING_BEGIN( CBaseEntity, ClearSpawnFlags, "class", "Clear spawn flags." )
+LUA_BINDING_BEGIN( Entity, ClearSpawnFlags, "class", "Clear spawn flags." )
 {
     lua_CBaseEntity *pEntity = LUA_BINDING_ARGUMENT( luaL_checkentity, 1, "entity" );
     pEntity->ClearSpawnFlags();
@@ -245,7 +245,7 @@ LUA_BINDING_BEGIN( CBaseEntity, ClearSpawnFlags, "class", "Clear spawn flags." )
 }
 LUA_BINDING_END()
 
-LUA_BINDING_BEGIN( CBaseEntity, HasSpawnFlags, "class", "Has spawn flags." )
+LUA_BINDING_BEGIN( Entity, HasSpawnFlags, "class", "Has spawn flags." )
 {
     lua_CBaseEntity *pEntity = LUA_BINDING_ARGUMENT( luaL_checkentity, 1, "entity" );
     int nFlags = LUA_BINDING_ARGUMENT( luaL_checkinteger, 2, "flags" );
@@ -254,7 +254,7 @@ LUA_BINDING_BEGIN( CBaseEntity, HasSpawnFlags, "class", "Has spawn flags." )
 }
 LUA_BINDING_END( "boolean", "true if has flags, false otherwise." )
 
-LUA_BINDING_BEGIN( CBaseEntity, MakeDormant, "class", "Makes the entity inactive." )
+LUA_BINDING_BEGIN( Entity, MakeDormant, "class", "Makes the entity inactive." )
 {
     lua_CBaseEntity *pEntity = LUA_BINDING_ARGUMENT( luaL_checkentity, 1, "entity" );
     pEntity->MakeDormant();
@@ -262,7 +262,7 @@ LUA_BINDING_BEGIN( CBaseEntity, MakeDormant, "class", "Makes the entity inactive
 }
 LUA_BINDING_END()
 
-LUA_BINDING_BEGIN( CBaseEntity, RemoveDeferred, "class", "Sets the entity invisible, and makes it remove itself on the next frame." )
+LUA_BINDING_BEGIN( Entity, RemoveDeferred, "class", "Sets the entity invisible, and makes it remove itself on the next frame." )
 {
     lua_CBaseEntity *pEntity = LUA_BINDING_ARGUMENT( luaL_checkentity, 1, "entity" );
     pEntity->RemoveDeferred();
@@ -270,7 +270,7 @@ LUA_BINDING_BEGIN( CBaseEntity, RemoveDeferred, "class", "Sets the entity invisi
 }
 LUA_BINDING_END()
 
-LUA_BINDING_BEGIN( CBaseEntity, OnAcceptInput, "class", "Called when the entity accepted input" )
+LUA_BINDING_BEGIN( Entity, OnAcceptInput, "class", "Called when the entity accepted input" )
 {
     lua_CBaseEntity *pEntity = LUA_BINDING_ARGUMENT( luaL_checkentity, 1, "entity" );
     variant_t emptyVariant;
@@ -283,7 +283,7 @@ LUA_BINDING_BEGIN( CBaseEntity, OnAcceptInput, "class", "Called when the entity 
 }
 LUA_BINDING_END( "boolean", "true if accepted, false otherwise." )
 
-LUA_BINDING_BEGIN( CBaseEntity, GetInputDispatchEffectPosition, "class", "Get input dispatch effect position." )
+LUA_BINDING_BEGIN( Entity, GetInputDispatchEffectPosition, "class", "Get input dispatch effect position." )
 {
     lua_CBaseEntity *pEntity = LUA_BINDING_ARGUMENT( luaL_checkentity, 1, "entity" );
     Vector vPosition;
@@ -296,7 +296,7 @@ LUA_BINDING_BEGIN( CBaseEntity, GetInputDispatchEffectPosition, "class", "Get in
 }
 LUA_BINDING_END( "vector, angle", "The position and angles" )
 
-LUA_BINDING_BEGIN( CBaseEntity, EntityText, "class", "Entity text." )
+LUA_BINDING_BEGIN( Entity, EntityText, "class", "Entity text." )
 {
     lua_CBaseEntity *pEntity = LUA_BINDING_ARGUMENT( luaL_checkentity, 1, "entity" );
     int textOffset = LUA_BINDING_ARGUMENT( luaL_checkinteger, 2, "textOffset" );
@@ -311,7 +311,7 @@ LUA_BINDING_BEGIN( CBaseEntity, EntityText, "class", "Entity text." )
 }
 LUA_BINDING_END()
 
-LUA_BINDING_BEGIN( CBaseEntity, DrawDebugGeometryOverlays, "class", "Draw debug geometry overlays." )
+LUA_BINDING_BEGIN( Entity, DrawDebugGeometryOverlays, "class", "Draw debug geometry overlays." )
 {
     lua_CBaseEntity *pEntity = LUA_BINDING_ARGUMENT( luaL_checkentity, 1, "entity" );
     pEntity->DrawDebugGeometryOverlays();
@@ -319,7 +319,7 @@ LUA_BINDING_BEGIN( CBaseEntity, DrawDebugGeometryOverlays, "class", "Draw debug 
 }
 LUA_BINDING_END()
 
-LUA_BINDING_BEGIN( CBaseEntity, DrawDebugTextOverlays, "class", "Draw debug text overlays." )
+LUA_BINDING_BEGIN( Entity, DrawDebugTextOverlays, "class", "Draw debug text overlays." )
 {
     lua_CBaseEntity *pEntity = LUA_BINDING_ARGUMENT( luaL_checkentity, 1, "entity" );
     lua_pushinteger( L, pEntity->DrawDebugTextOverlays() );
@@ -327,7 +327,7 @@ LUA_BINDING_BEGIN( CBaseEntity, DrawDebugTextOverlays, "class", "Draw debug text
 }
 LUA_BINDING_END( "number", "The number of overlays" )
 
-LUA_BINDING_BEGIN( CBaseEntity, DrawTimedOverlays, "class", "Draw timed overlays." )
+LUA_BINDING_BEGIN( Entity, DrawTimedOverlays, "class", "Draw timed overlays." )
 {
     lua_CBaseEntity *pEntity = LUA_BINDING_ARGUMENT( luaL_checkentity, 1, "entity" );
     pEntity->DrawTimedOverlays();
@@ -335,7 +335,7 @@ LUA_BINDING_BEGIN( CBaseEntity, DrawTimedOverlays, "class", "Draw timed overlays
 }
 LUA_BINDING_END()
 
-LUA_BINDING_BEGIN( CBaseEntity, DrawBBoxOverlay, "class", "Draw bounding box overlay." )
+LUA_BINDING_BEGIN( Entity, DrawBBoxOverlay, "class", "Draw bounding box overlay." )
 {
     lua_CBaseEntity *pEntity = LUA_BINDING_ARGUMENT( luaL_checkentity, 1, "entity" );
     float flDuration = LUA_BINDING_ARGUMENT( luaL_checknumber, 2, "duration" );
@@ -344,7 +344,7 @@ LUA_BINDING_BEGIN( CBaseEntity, DrawBBoxOverlay, "class", "Draw bounding box ove
 }
 LUA_BINDING_END()
 
-LUA_BINDING_BEGIN( CBaseEntity, DrawAbsBoxOverlay, "class", "Draw absolute box overlay." )
+LUA_BINDING_BEGIN( Entity, DrawAbsBoxOverlay, "class", "Draw absolute box overlay." )
 {
     lua_CBaseEntity *pEntity = LUA_BINDING_ARGUMENT( luaL_checkentity, 1, "entity" );
     pEntity->DrawAbsBoxOverlay();
@@ -352,7 +352,7 @@ LUA_BINDING_BEGIN( CBaseEntity, DrawAbsBoxOverlay, "class", "Draw absolute box o
 }
 LUA_BINDING_END()
 
-LUA_BINDING_BEGIN( CBaseEntity, DrawRBoxOverlay, "class", "Draw rotated box overlay." )
+LUA_BINDING_BEGIN( Entity, DrawRBoxOverlay, "class", "Draw rotated box overlay." )
 {
     lua_CBaseEntity *pEntity = LUA_BINDING_ARGUMENT( luaL_checkentity, 1, "entity" );
     pEntity->DrawRBoxOverlay();
@@ -360,7 +360,7 @@ LUA_BINDING_BEGIN( CBaseEntity, DrawRBoxOverlay, "class", "Draw rotated box over
 }
 LUA_BINDING_END()
 
-LUA_BINDING_BEGIN( CBaseEntity, SendDebugPivotOverlay, "class", "Send debug pivot overlay." )
+LUA_BINDING_BEGIN( Entity, SendDebugPivotOverlay, "class", "Send debug pivot overlay." )
 {
     lua_CBaseEntity *pEntity = LUA_BINDING_ARGUMENT( luaL_checkentity, 1, "entity" );
     pEntity->SendDebugPivotOverlay();
@@ -368,7 +368,7 @@ LUA_BINDING_BEGIN( CBaseEntity, SendDebugPivotOverlay, "class", "Send debug pivo
 }
 LUA_BINDING_END()
 
-LUA_BINDING_BEGIN( CBaseEntity, AddTimedOverlay, "class", "Add timed overlay." )
+LUA_BINDING_BEGIN( Entity, AddTimedOverlay, "class", "Add timed overlay." )
 {
     lua_CBaseEntity *pEntity = LUA_BINDING_ARGUMENT( luaL_checkentity, 1, "entity" );
     const char *pszText = LUA_BINDING_ARGUMENT( luaL_checkstring, 2, "text" );
@@ -378,7 +378,7 @@ LUA_BINDING_BEGIN( CBaseEntity, AddTimedOverlay, "class", "Add timed overlay." )
 }
 LUA_BINDING_END()
 
-LUA_BINDING_BEGIN( CBaseEntity, RequiredEdictIndex, "class", "Required edict index." )
+LUA_BINDING_BEGIN( Entity, RequiredEdictIndex, "class", "Required edict index." )
 {
     lua_CBaseEntity *pEntity = LUA_BINDING_ARGUMENT( luaL_checkentity, 1, "entity" );
     lua_pushinteger( L, pEntity->RequiredEdictIndex() );
@@ -386,7 +386,7 @@ LUA_BINDING_BEGIN( CBaseEntity, RequiredEdictIndex, "class", "Required edict ind
 }
 LUA_BINDING_END( "number", "The edict index" )
 
-LUA_BINDING_BEGIN( CBaseEntity, OnMoveDone, "class", "Called when an entity has finished moving." )
+LUA_BINDING_BEGIN( Entity, OnMoveDone, "class", "Called when an entity has finished moving." )
 {
     lua_CBaseEntity *pEntity = LUA_BINDING_ARGUMENT( luaL_checkentity, 1, "entity" );
     pEntity->MoveDone();
@@ -394,7 +394,7 @@ LUA_BINDING_BEGIN( CBaseEntity, OnMoveDone, "class", "Called when an entity has 
 }
 LUA_BINDING_END()
 
-LUA_BINDING_BEGIN( CBaseEntity, Instance, "class|static", "Get entity instance." )
+LUA_BINDING_BEGIN( Entity, Instance, "class|static", "Get entity instance." )
 {
     int nEdictIndex = LUA_BINDING_ARGUMENT( luaL_checkinteger, 1, "edictIndex" );
     CBaseEntity::PushLuaInstanceSafe( L, CBaseEntity::Instance( nEdictIndex ) );
@@ -402,7 +402,7 @@ LUA_BINDING_BEGIN( CBaseEntity, Instance, "class|static", "Get entity instance."
 }
 LUA_BINDING_END( "entity", "The entity instance" )
 
-LUA_BINDING_BEGIN( CBaseEntity, AddContext, "class", "Add context." )
+LUA_BINDING_BEGIN( Entity, AddContext, "class", "Add context." )
 {
     lua_CBaseEntity *pEntity = LUA_BINDING_ARGUMENT( luaL_checkentity, 1, "entity" );
     const char *pszContext = LUA_BINDING_ARGUMENT( luaL_checkstring, 2, "nameAndValue" );
@@ -411,7 +411,7 @@ LUA_BINDING_BEGIN( CBaseEntity, AddContext, "class", "Add context." )
 }
 LUA_BINDING_END()
 
-LUA_BINDING_BEGIN( CBaseEntity, DispatchResponse, "class", "Dispatch response." )
+LUA_BINDING_BEGIN( Entity, DispatchResponse, "class", "Dispatch response." )
 {
     lua_CBaseEntity *pEntity = LUA_BINDING_ARGUMENT( luaL_checkentity, 1, "entity" );
     const char *pszResponse = LUA_BINDING_ARGUMENT( luaL_checkstring, 2, "conceptName" );
@@ -420,7 +420,7 @@ LUA_BINDING_BEGIN( CBaseEntity, DispatchResponse, "class", "Dispatch response." 
 }
 LUA_BINDING_END()
 
-LUA_BINDING_BEGIN( CBaseEntity, Classify, "class", "Returns the type of group (i.e, 'houndeye', or 'human military' so that NPCs with different classnames still realize that they are teammates. (overridden for NPCs that form groups)." )
+LUA_BINDING_BEGIN( Entity, Classify, "class", "Returns the type of group (i.e, 'houndeye', or 'human military' so that NPCs with different classnames still realize that they are teammates. (overridden for NPCs that form groups)." )
 {
     lua_CBaseEntity *pEntity = LUA_BINDING_ARGUMENT( luaL_checkentity, 1, "entity" );
     lua_pushinteger( L, pEntity->Classify() );
@@ -428,7 +428,7 @@ LUA_BINDING_BEGIN( CBaseEntity, Classify, "class", "Returns the type of group (i
 }
 LUA_BINDING_END( "integer|Class_T", "The classification" )
 
-LUA_BINDING_BEGIN( CBaseEntity, DeathNotice, "class", "Death notice." )
+LUA_BINDING_BEGIN( Entity, DeathNotice, "class", "Death notice." )
 {
     lua_CBaseEntity *pEntity = LUA_BINDING_ARGUMENT( luaL_checkentity, 1, "entity" );
     CBaseEntity *pKiller = LUA_BINDING_ARGUMENT( luaL_checkentity, 2, "killer" );
@@ -437,7 +437,7 @@ LUA_BINDING_BEGIN( CBaseEntity, DeathNotice, "class", "Death notice." )
 }
 LUA_BINDING_END()
 
-LUA_BINDING_BEGIN( CBaseEntity, ShouldAttractAutoAim, "class", "Checks if the autoaim should be attracted towards the given entity." )
+LUA_BINDING_BEGIN( Entity, ShouldAttractAutoAim, "class", "Checks if the autoaim should be attracted towards the given entity." )
 {
     lua_CBaseEntity *pEntity = LUA_BINDING_ARGUMENT( luaL_checkentity, 1, "entity" );
     CBaseEntity *pAimingEntity = LUA_BINDING_ARGUMENT( luaL_checkentity, 2, "aimingEntity" );
@@ -446,7 +446,7 @@ LUA_BINDING_BEGIN( CBaseEntity, ShouldAttractAutoAim, "class", "Checks if the au
 }
 LUA_BINDING_END( "boolean", "true if should attract, false otherwise." )
 
-LUA_BINDING_BEGIN( CBaseEntity, GetAutoAimRadius, "class", "Get auto aim radius." )
+LUA_BINDING_BEGIN( Entity, GetAutoAimRadius, "class", "Get auto aim radius." )
 {
     lua_CBaseEntity *pEntity = LUA_BINDING_ARGUMENT( luaL_checkentity, 1, "entity" );
     lua_pushnumber( L, pEntity->GetAutoAimRadius() );
@@ -454,7 +454,7 @@ LUA_BINDING_BEGIN( CBaseEntity, GetAutoAimRadius, "class", "Get auto aim radius.
 }
 LUA_BINDING_END( "number", "The auto aim radius" )
 
-LUA_BINDING_BEGIN( CBaseEntity, GetAutoAimCenter, "class", "Get auto aim center." )
+LUA_BINDING_BEGIN( Entity, GetAutoAimCenter, "class", "Get auto aim center." )
 {
     lua_CBaseEntity *pEntity = LUA_BINDING_ARGUMENT( luaL_checkentity, 1, "entity" );
     lua_pushvector( L, pEntity->GetAutoAimCenter() );
@@ -462,7 +462,7 @@ LUA_BINDING_BEGIN( CBaseEntity, GetAutoAimCenter, "class", "Get auto aim center.
 }
 LUA_BINDING_END( "vector", "The auto aim center" )
 
-LUA_BINDING_BEGIN( CBaseEntity, PassesDamageFilter, "class", "Passes damage filter." )
+LUA_BINDING_BEGIN( Entity, PassesDamageFilter, "class", "Passes damage filter." )
 {
     lua_CBaseEntity *pEntity = LUA_BINDING_ARGUMENT( luaL_checkentity, 1, "entity" );
     CTakeDamageInfo info = LUA_BINDING_ARGUMENT( luaL_checkdamageinfo, 2, "damageInfo" );
@@ -471,7 +471,7 @@ LUA_BINDING_BEGIN( CBaseEntity, PassesDamageFilter, "class", "Passes damage filt
 }
 LUA_BINDING_END( "boolean", "true if passes, false otherwise." )
 
-LUA_BINDING_BEGIN( CBaseEntity, CanBeHitByMeleeAttack, "class", "Can be hit by melee attack." )
+LUA_BINDING_BEGIN( Entity, CanBeHitByMeleeAttack, "class", "Can be hit by melee attack." )
 {
     lua_CBaseEntity *pEntity = LUA_BINDING_ARGUMENT( luaL_checkentity, 1, "entity" );
     CBaseEntity *pAttacker = LUA_BINDING_ARGUMENT( luaL_checkentity, 2, "attacker" );
@@ -480,7 +480,7 @@ LUA_BINDING_BEGIN( CBaseEntity, CanBeHitByMeleeAttack, "class", "Can be hit by m
 }
 LUA_BINDING_END( "boolean", "true if can be hit, false otherwise." )
 
-LUA_BINDING_BEGIN( CBaseEntity, OnTakeDamage, "class", "On take damage." )
+LUA_BINDING_BEGIN( Entity, OnTakeDamage, "class", "On take damage." )
 {
     lua_CBaseEntity *pEntity = LUA_BINDING_ARGUMENT( luaL_checkentity, 1, "entity" );
     CTakeDamageInfo info = LUA_BINDING_ARGUMENT( luaL_checkdamageinfo, 2, "damageInfo" );
@@ -489,7 +489,7 @@ LUA_BINDING_BEGIN( CBaseEntity, OnTakeDamage, "class", "On take damage." )
 }
 LUA_BINDING_END( "number", "The damage taken" )
 
-LUA_BINDING_BEGIN( CBaseEntity, TakeDamage, "class", "Take damage." )
+LUA_BINDING_BEGIN( Entity, TakeDamage, "class", "Take damage." )
 {
     lua_CBaseEntity *pEntity = LUA_BINDING_ARGUMENT( luaL_checkentity, 1, "entity" );
     CTakeDamageInfo info = LUA_BINDING_ARGUMENT( luaL_checkdamageinfo, 2, "damageInfo" );
@@ -498,7 +498,7 @@ LUA_BINDING_BEGIN( CBaseEntity, TakeDamage, "class", "Take damage." )
 }
 LUA_BINDING_END()
 
-LUA_BINDING_BEGIN( CBaseEntity, TakeHealth, "class", "Take health." )
+LUA_BINDING_BEGIN( Entity, TakeHealth, "class", "Take health." )
 {
     lua_CBaseEntity *pEntity = LUA_BINDING_ARGUMENT( luaL_checkentity, 1, "entity" );
     float flHealth = LUA_BINDING_ARGUMENT( luaL_checkinteger, 2, "health" );
@@ -508,7 +508,7 @@ LUA_BINDING_BEGIN( CBaseEntity, TakeHealth, "class", "Take health." )
 }
 LUA_BINDING_END( "number", "The health taken" )
 
-LUA_BINDING_BEGIN( CBaseEntity, OnEventKilled, "class", "Called when the 'Killed' event happened." )
+LUA_BINDING_BEGIN( Entity, OnEventKilled, "class", "Called when the 'Killed' event happened." )
 {
     lua_CBaseEntity *pEntity = LUA_BINDING_ARGUMENT( luaL_checkentity, 1, "entity" );
     CTakeDamageInfo info = LUA_BINDING_ARGUMENT( luaL_checkdamageinfo, 2, "damageInfo" );
@@ -517,7 +517,7 @@ LUA_BINDING_BEGIN( CBaseEntity, OnEventKilled, "class", "Called when the 'Killed
 }
 LUA_BINDING_END()
 
-LUA_BINDING_BEGIN( CBaseEntity, OnEventKilledOther, "class", "Called when the 'KilledOther' event happened." )
+LUA_BINDING_BEGIN( Entity, OnEventKilledOther, "class", "Called when the 'KilledOther' event happened." )
 {
     lua_CBaseEntity *pEntity = LUA_BINDING_ARGUMENT( luaL_checkentity, 1, "entity" );
     CBaseEntity *pVictim = LUA_BINDING_ARGUMENT( luaL_checkentity, 2, "victim" );
@@ -527,7 +527,7 @@ LUA_BINDING_BEGIN( CBaseEntity, OnEventKilledOther, "class", "Called when the 'K
 }
 LUA_BINDING_END()
 
-LUA_BINDING_BEGIN( CBaseEntity, IsTriggered, "class", "Is triggered." )
+LUA_BINDING_BEGIN( Entity, IsTriggered, "class", "Is triggered." )
 {
     lua_CBaseEntity *pEntity = LUA_BINDING_ARGUMENT( luaL_checkentity, 1, "entity" );
     CBaseEntity *pActivator = LUA_BINDING_ARGUMENT( luaL_checkentity, 2, "activator" );
@@ -536,7 +536,7 @@ LUA_BINDING_BEGIN( CBaseEntity, IsTriggered, "class", "Is triggered." )
 }
 LUA_BINDING_END( "boolean", "true if triggered, false otherwise." )
 
-LUA_BINDING_BEGIN( CBaseEntity, GetDelay, "class", "Get the delay for the entity. Used mostly for trigger entities." )
+LUA_BINDING_BEGIN( Entity, GetDelay, "class", "Get the delay for the entity. Used mostly for trigger entities." )
 {
     lua_CBaseEntity *pEntity = LUA_BINDING_ARGUMENT( luaL_checkentity, 1, "entity" );
     lua_pushnumber( L, pEntity->GetDelay() );
@@ -544,7 +544,7 @@ LUA_BINDING_BEGIN( CBaseEntity, GetDelay, "class", "Get the delay for the entity
 }
 LUA_BINDING_END( "number", "The delay" )
 
-LUA_BINDING_BEGIN( CBaseEntity, IsMoving, "class", "Is moving." )
+LUA_BINDING_BEGIN( Entity, IsMoving, "class", "Is moving." )
 {
     lua_CBaseEntity *pEntity = LUA_BINDING_ARGUMENT( luaL_checkentity, 1, "entity" );
     lua_pushboolean( L, pEntity->IsMoving() );
@@ -552,7 +552,7 @@ LUA_BINDING_BEGIN( CBaseEntity, IsMoving, "class", "Is moving." )
 }
 LUA_BINDING_END( "boolean", "true if moving, false otherwise." )
 
-LUA_BINDING_BEGIN( CBaseEntity, IsWorld, "class", "Whether entity is world." )
+LUA_BINDING_BEGIN( Entity, IsWorld, "class", "Whether entity is world." )
 {
     lua_CBaseEntity *pEntity = LUA_BINDING_ARGUMENT( luaL_checkentity, 1, "entity" );
     lua_pushboolean( L, pEntity->IsWorld() );
@@ -560,7 +560,7 @@ LUA_BINDING_BEGIN( CBaseEntity, IsWorld, "class", "Whether entity is world." )
 }
 LUA_BINDING_END( "boolean", "true if world, false otherwise." )
 
-LUA_BINDING_BEGIN( CBaseEntity, AddPoints, "class", "Add points." )
+LUA_BINDING_BEGIN( Entity, AddPoints, "class", "Add points." )
 {
     lua_CBaseEntity *pEntity = LUA_BINDING_ARGUMENT( luaL_checkentity, 1, "entity" );
     int nPoints = LUA_BINDING_ARGUMENT( luaL_checkinteger, 2, "points" );
@@ -570,7 +570,7 @@ LUA_BINDING_BEGIN( CBaseEntity, AddPoints, "class", "Add points." )
 }
 LUA_BINDING_END()
 
-LUA_BINDING_BEGIN( CBaseEntity, AddPointsToTeam, "class", "Add points to team." )
+LUA_BINDING_BEGIN( Entity, AddPointsToTeam, "class", "Add points to team." )
 {
     lua_CBaseEntity *pEntity = LUA_BINDING_ARGUMENT( luaL_checkentity, 1, "entity" );
     int nPoints = LUA_BINDING_ARGUMENT( luaL_checkinteger, 2, "points" );
@@ -580,7 +580,7 @@ LUA_BINDING_BEGIN( CBaseEntity, AddPointsToTeam, "class", "Add points to team." 
 }
 LUA_BINDING_END()
 
-LUA_BINDING_BEGIN( CBaseEntity, IsControllingEntity, "class", "Whether we are controlling the given entity (train, tank, etc.) " )
+LUA_BINDING_BEGIN( Entity, IsControllingEntity, "class", "Whether we are controlling the given entity (train, tank, etc.) " )
 {
     lua_CBaseEntity *pEntity = LUA_BINDING_ARGUMENT( luaL_checkentity, 1, "entity" );
     CBaseEntity *pEntity2 = LUA_BINDING_ARGUMENT( luaL_checkentity, 2, "testEntityUnderControl" );
@@ -589,7 +589,7 @@ LUA_BINDING_BEGIN( CBaseEntity, IsControllingEntity, "class", "Whether we are co
 }
 LUA_BINDING_END( "boolean", "true if on controls, false otherwise." )
 
-LUA_BINDING_BEGIN( CBaseEntity, HasTarget, "class", "Has target." )
+LUA_BINDING_BEGIN( Entity, HasTarget, "class", "Has target." )
 {
     lua_CBaseEntity *pEntity = LUA_BINDING_ARGUMENT( luaL_checkentity, 1, "entity" );
     const char *pszTarget = LUA_BINDING_ARGUMENT( luaL_checkstring, 2, "target" );
@@ -598,7 +598,7 @@ LUA_BINDING_BEGIN( CBaseEntity, HasTarget, "class", "Has target." )
 }
 LUA_BINDING_END( "boolean", "true if has target, false otherwise." )
 
-LUA_BINDING_BEGIN( CBaseEntity, IsNetClient, "class", "Is net client." )
+LUA_BINDING_BEGIN( Entity, IsNetClient, "class", "Is net client." )
 {
     lua_CBaseEntity *pEntity = LUA_BINDING_ARGUMENT( luaL_checkentity, 1, "entity" );
     lua_pushboolean( L, pEntity->IsNetClient() );
@@ -606,7 +606,7 @@ LUA_BINDING_BEGIN( CBaseEntity, IsNetClient, "class", "Is net client." )
 }
 LUA_BINDING_END( "boolean", "true if net client, false otherwise." )
 
-LUA_BINDING_BEGIN( CBaseEntity, IsTemplate, "class", "Wheter this entity is a template. Template entities are marked as templates by the level designer. They do not spawn, but their keyvalues are saved for use by a template spawner." )
+LUA_BINDING_BEGIN( Entity, IsTemplate, "class", "Wheter this entity is a template. Template entities are marked as templates by the level designer. They do not spawn, but their keyvalues are saved for use by a template spawner." )
 {
     lua_CBaseEntity *pEntity = LUA_BINDING_ARGUMENT( luaL_checkentity, 1, "entity" );
     lua_pushboolean( L, pEntity->IsTemplate() );
@@ -614,7 +614,7 @@ LUA_BINDING_BEGIN( CBaseEntity, IsTemplate, "class", "Wheter this entity is a te
 }
 LUA_BINDING_END( "boolean", "true if template, false otherwise." )
 
-LUA_BINDING_BEGIN( CBaseEntity, IsViewable, "class", "Is this entity something that would be looked at (model, sprite, etc.)." )
+LUA_BINDING_BEGIN( Entity, IsViewable, "class", "Is this entity something that would be looked at (model, sprite, etc.)." )
 {
     lua_CBaseEntity *pEntity = LUA_BINDING_ARGUMENT( luaL_checkentity, 1, "entity" );
     lua_pushboolean( L, pEntity->IsViewable() );
@@ -622,7 +622,7 @@ LUA_BINDING_BEGIN( CBaseEntity, IsViewable, "class", "Is this entity something t
 }
 LUA_BINDING_END( "boolean", "true if viewable, false otherwise." )
 
-LUA_BINDING_BEGIN( CBaseEntity, IsInAnyTeam, "class", "Is in any team." )
+LUA_BINDING_BEGIN( Entity, IsInAnyTeam, "class", "Is in any team." )
 {
     lua_CBaseEntity *pEntity = LUA_BINDING_ARGUMENT( luaL_checkentity, 1, "entity" );
     lua_pushboolean( L, pEntity->IsInAnyTeam() );
@@ -630,7 +630,7 @@ LUA_BINDING_BEGIN( CBaseEntity, IsInAnyTeam, "class", "Is in any team." )
 }
 LUA_BINDING_END( "boolean", "true if in any team, false otherwise." )
 
-LUA_BINDING_BEGIN( CBaseEntity, GetTeamID, "class", "Team ID." )
+LUA_BINDING_BEGIN( Entity, GetTeamID, "class", "Team ID." )
 {
     lua_CBaseEntity *pEntity = LUA_BINDING_ARGUMENT( luaL_checkentity, 1, "entity" );
     lua_pushstring( L, pEntity->TeamID() );
@@ -638,7 +638,7 @@ LUA_BINDING_BEGIN( CBaseEntity, GetTeamID, "class", "Team ID." )
 }
 LUA_BINDING_END( "string", "The team ID" )
 
-LUA_BINDING_BEGIN( CBaseEntity, CanStandOn, "class", "Whether this entity can stand on the given surface entity." )
+LUA_BINDING_BEGIN( Entity, CanStandOn, "class", "Whether this entity can stand on the given surface entity." )
 {
     lua_CBaseEntity *pEntity = LUA_BINDING_ARGUMENT( luaL_checkentity, 1, "entity" );
     CBaseEntity *pGround = LUA_BINDING_ARGUMENT( luaL_checkentity, 2, "surfaceEntity" );
@@ -647,7 +647,7 @@ LUA_BINDING_BEGIN( CBaseEntity, CanStandOn, "class", "Whether this entity can st
 }
 LUA_BINDING_END( "boolean", "true if can stand on, false otherwise." )
 
-LUA_BINDING_BEGIN( CBaseEntity, GetEnemy, "class", "Get enemy. Probably for NPC's only to get their current enemy." )
+LUA_BINDING_BEGIN( Entity, GetEnemy, "class", "Get enemy. Probably for NPC's only to get their current enemy." )
 {
     lua_CBaseEntity *pEntity = LUA_BINDING_ARGUMENT( luaL_checkentity, 1, "entity" );
     CBaseEntity::PushLuaInstanceSafe( L, pEntity->GetEnemy() );
@@ -655,7 +655,7 @@ LUA_BINDING_BEGIN( CBaseEntity, GetEnemy, "class", "Get enemy. Probably for NPC'
 }
 LUA_BINDING_END( "entity", "The enemy" )
 
-LUA_BINDING_BEGIN( CBaseEntity, VelocityPunch, "class", "Velocity punch." )
+LUA_BINDING_BEGIN( Entity, VelocityPunch, "class", "Velocity punch." )
 {
     lua_CBaseEntity *pEntity = LUA_BINDING_ARGUMENT( luaL_checkentity, 1, "entity" );
     Vector vecForce = LUA_BINDING_ARGUMENT( luaL_checkvector, 2, "force" );
@@ -664,7 +664,7 @@ LUA_BINDING_BEGIN( CBaseEntity, VelocityPunch, "class", "Velocity punch." )
 }
 LUA_BINDING_END()
 
-LUA_BINDING_BEGIN( CBaseEntity, GetNextTarget, "class", "Get next target." )
+LUA_BINDING_BEGIN( Entity, GetNextTarget, "class", "Get next target." )
 {
     lua_CBaseEntity *pEntity = LUA_BINDING_ARGUMENT( luaL_checkentity, 1, "entity" );
     CBaseEntity::PushLuaInstanceSafe( L, pEntity->GetNextTarget() );
@@ -672,7 +672,7 @@ LUA_BINDING_BEGIN( CBaseEntity, GetNextTarget, "class", "Get next target." )
 }
 LUA_BINDING_END( "entity", "The next target" )
 
-LUA_BINDING_BEGIN( CBaseEntity, Use, "class", "Dispatches use events to this entity's use handler, set via SetUse." )
+LUA_BINDING_BEGIN( Entity, Use, "class", "Dispatches use events to this entity's use handler, set via SetUse." )
 {
     lua_CBaseEntity *pEntity = LUA_BINDING_ARGUMENT( luaL_checkentity, 1, "entity" );
     CBaseEntity *pActivator = LUA_BINDING_ARGUMENT( luaL_checkentity, 2, "activator" );
@@ -684,7 +684,7 @@ LUA_BINDING_BEGIN( CBaseEntity, Use, "class", "Dispatches use events to this ent
 }
 LUA_BINDING_END()
 
-LUA_BINDING_BEGIN( CBaseEntity, StartBlockedByEntity, "class", "Start blocked." )
+LUA_BINDING_BEGIN( Entity, StartBlockedByEntity, "class", "Start blocked." )
 {
     lua_CBaseEntity *pEntity = LUA_BINDING_ARGUMENT( luaL_checkentity, 1, "entity" );
     CBaseEntity *pOther = LUA_BINDING_ARGUMENT( luaL_checkentity, 2, "blockingEntity" );
@@ -693,7 +693,7 @@ LUA_BINDING_BEGIN( CBaseEntity, StartBlockedByEntity, "class", "Start blocked." 
 }
 LUA_BINDING_END()
 
-LUA_BINDING_BEGIN( CBaseEntity, RunBlockedByEntityEvent, "class", "Dispatches blocked events to this entity's blocked handler, set via SetBlocked." )
+LUA_BINDING_BEGIN( Entity, RunBlockedByEntityEvent, "class", "Dispatches blocked events to this entity's blocked handler, set via SetBlocked." )
 {
     lua_CBaseEntity *pEntity = LUA_BINDING_ARGUMENT( luaL_checkentity, 1, "entity" );
     CBaseEntity *pOther = LUA_BINDING_ARGUMENT( luaL_checkentity, 2, "blockingEntity" );
@@ -702,7 +702,7 @@ LUA_BINDING_BEGIN( CBaseEntity, RunBlockedByEntityEvent, "class", "Dispatches bl
 }
 LUA_BINDING_END()
 
-LUA_BINDING_BEGIN( CBaseEntity, EndBlockedByEntity, "class", "End blocked." )
+LUA_BINDING_BEGIN( Entity, EndBlockedByEntity, "class", "End blocked." )
 {
     lua_CBaseEntity *pEntity = LUA_BINDING_ARGUMENT( luaL_checkentity, 1, "entity" );
     pEntity->EndBlocked();
@@ -710,7 +710,7 @@ LUA_BINDING_BEGIN( CBaseEntity, EndBlockedByEntity, "class", "End blocked." )
 }
 LUA_BINDING_END()
 
-LUA_BINDING_BEGIN( CBaseEntity, PhysicsTouchTriggers, "class", "Physics touch triggers." )
+LUA_BINDING_BEGIN( Entity, PhysicsTouchTriggers, "class", "Physics touch triggers." )
 {
     lua_CBaseEntity *pEntity = LUA_BINDING_ARGUMENT( luaL_checkentity, 1, "entity" );
     pEntity->PhysicsTouchTriggers();
@@ -718,7 +718,7 @@ LUA_BINDING_BEGIN( CBaseEntity, PhysicsTouchTriggers, "class", "Physics touch tr
 }
 LUA_BINDING_END()
 
-LUA_BINDING_BEGIN( CBaseEntity, DoNothing, "class", "Described as 'Convenient way to explicitly do nothing (passed to functions that require a method)'" )
+LUA_BINDING_BEGIN( Entity, DoNothing, "class", "Described as 'Convenient way to explicitly do nothing (passed to functions that require a method)'" )
 {
     lua_CBaseEntity *pEntity = LUA_BINDING_ARGUMENT( luaL_checkentity, 1, "entity" );
     pEntity->SUB_DoNothing();
@@ -726,7 +726,7 @@ LUA_BINDING_BEGIN( CBaseEntity, DoNothing, "class", "Described as 'Convenient wa
 }
 LUA_BINDING_END()
 
-LUA_BINDING_BEGIN( CBaseEntity, StartFadeOut, "class", "Slowly fades a entity out, then removes it." )
+LUA_BINDING_BEGIN( Entity, StartFadeOut, "class", "Slowly fades a entity out, then removes it." )
 {
     lua_CBaseEntity *pEntity = LUA_BINDING_ARGUMENT( luaL_checkentity, 1, "entity" );
     float flDuration = LUA_BINDING_ARGUMENT_WITH_DEFAULT( luaL_optnumber, 2, 10.0f, "duration" );
@@ -736,7 +736,7 @@ LUA_BINDING_BEGIN( CBaseEntity, StartFadeOut, "class", "Slowly fades a entity ou
 }
 LUA_BINDING_END()
 
-LUA_BINDING_BEGIN( CBaseEntity, StartFadeOutInstant, "class", "Start fade out instant." )
+LUA_BINDING_BEGIN( Entity, StartFadeOutInstant, "class", "Start fade out instant." )
 {
     lua_CBaseEntity *pEntity = LUA_BINDING_ARGUMENT( luaL_checkentity, 1, "entity" );
     pEntity->SUB_StartFadeOutInstant();
@@ -744,7 +744,7 @@ LUA_BINDING_BEGIN( CBaseEntity, StartFadeOutInstant, "class", "Start fade out in
 }
 LUA_BINDING_END()
 
-LUA_BINDING_BEGIN( CBaseEntity, FadeOut, "class", "Fade out." )
+LUA_BINDING_BEGIN( Entity, FadeOut, "class", "Fade out." )
 {
     lua_CBaseEntity *pEntity = LUA_BINDING_ARGUMENT( luaL_checkentity, 1, "entity" );
     pEntity->SUB_FadeOut();
@@ -752,7 +752,7 @@ LUA_BINDING_BEGIN( CBaseEntity, FadeOut, "class", "Fade out." )
 }
 LUA_BINDING_END()
 
-LUA_BINDING_BEGIN( CBaseEntity, Vanish, "class", "Vanish." )
+LUA_BINDING_BEGIN( Entity, Vanish, "class", "Vanish." )
 {
     lua_CBaseEntity *pEntity = LUA_BINDING_ARGUMENT( luaL_checkentity, 1, "entity" );
     pEntity->SUB_Vanish();
@@ -760,7 +760,7 @@ LUA_BINDING_BEGIN( CBaseEntity, Vanish, "class", "Vanish." )
 }
 LUA_BINDING_END()
 
-LUA_BINDING_BEGIN( CBaseEntity, CallUseToggle, "class", "Call use toggle." )
+LUA_BINDING_BEGIN( Entity, CallUseToggle, "class", "Call use toggle." )
 {
     lua_CBaseEntity *pEntity = LUA_BINDING_ARGUMENT( luaL_checkentity, 1, "entity" );
     pEntity->SUB_CallUseToggle();
@@ -768,7 +768,7 @@ LUA_BINDING_BEGIN( CBaseEntity, CallUseToggle, "class", "Call use toggle." )
 }
 LUA_BINDING_END()
 \
-LUA_BINDING_BEGIN( CBaseEntity, PerformFadeOut, "class", "Perform fade out." )
+LUA_BINDING_BEGIN( Entity, PerformFadeOut, "class", "Perform fade out." )
 {
     lua_CBaseEntity *pEntity = LUA_BINDING_ARGUMENT( luaL_checkentity, 1, "entity" );
     pEntity->SUB_PerformFadeOut();
@@ -776,7 +776,7 @@ LUA_BINDING_BEGIN( CBaseEntity, PerformFadeOut, "class", "Perform fade out." )
 }
 LUA_BINDING_END()
 
-LUA_BINDING_BEGIN( CBaseEntity, IsAllowedToFade, "class", "Allowed to fade." )
+LUA_BINDING_BEGIN( Entity, IsAllowedToFade, "class", "Allowed to fade." )
 {
     lua_CBaseEntity *pEntity = LUA_BINDING_ARGUMENT( luaL_checkentity, 1, "entity" );
     lua_pushboolean( L, pEntity->SUB_AllowedToFade() );
@@ -784,7 +784,7 @@ LUA_BINDING_BEGIN( CBaseEntity, IsAllowedToFade, "class", "Allowed to fade." )
 }
 LUA_BINDING_END( "boolean", "true if allowed to fade, false otherwise." )
 
-LUA_BINDING_BEGIN( CBaseEntity, Teleport, "class", "Teleport." )
+LUA_BINDING_BEGIN( Entity, Teleport, "class", "Teleport." )
 {
     lua_CBaseEntity *pEntity = LUA_BINDING_ARGUMENT( luaL_checkentity, 1, "entity" );
     Vector vPosition = LUA_BINDING_ARGUMENT( luaL_checkvector, 2, "newPosition" );
@@ -795,7 +795,7 @@ LUA_BINDING_BEGIN( CBaseEntity, Teleport, "class", "Teleport." )
 }
 LUA_BINDING_END()
 
-LUA_BINDING_BEGIN( CBaseEntity, ShouldToggle, "class", "Should toggle." )
+LUA_BINDING_BEGIN( Entity, ShouldToggle, "class", "Should toggle." )
 {
     lua_CBaseEntity *pEntity = LUA_BINDING_ARGUMENT( luaL_checkentity, 1, "entity" );
     USE_TYPE useType = ( USE_TYPE )LUA_BINDING_ARGUMENT( luaL_checkinteger, 2, "useType" );
@@ -805,7 +805,7 @@ LUA_BINDING_BEGIN( CBaseEntity, ShouldToggle, "class", "Should toggle." )
 }
 LUA_BINDING_END( "number", "The toggle state" )
 
-LUA_BINDING_BEGIN( CBaseEntity, Respawn, "class", "Respawn." )
+LUA_BINDING_BEGIN( Entity, Respawn, "class", "Respawn." )
 {
     lua_CBaseEntity *pEntity = LUA_BINDING_ARGUMENT( luaL_checkentity, 1, "entity" );
     CBaseEntity::PushLuaInstanceSafe( L, pEntity->Respawn() );
@@ -813,7 +813,7 @@ LUA_BINDING_BEGIN( CBaseEntity, Respawn, "class", "Respawn." )
 }
 LUA_BINDING_END( "entity", "The respawned entity" )
 
-LUA_BINDING_BEGIN( CBaseEntity, TraceAttackToTriggers, "class", "Trace attack to triggers." )
+LUA_BINDING_BEGIN( Entity, TraceAttackToTriggers, "class", "Trace attack to triggers." )
 {
     lua_CBaseEntity *pEntity = LUA_BINDING_ARGUMENT( luaL_checkentity, 1, "entity" );
     CTakeDamageInfo info = LUA_BINDING_ARGUMENT( luaL_checkdamageinfo, 2, "damageInfo" );
@@ -825,7 +825,7 @@ LUA_BINDING_BEGIN( CBaseEntity, TraceAttackToTriggers, "class", "Trace attack to
 }
 LUA_BINDING_END()
 
-LUA_BINDING_BEGIN( CBaseEntity, Intersects, "class", "Determines if the bounding boxes of two entities intersect." )
+LUA_BINDING_BEGIN( Entity, Intersects, "class", "Determines if the bounding boxes of two entities intersect." )
 {
     lua_CBaseEntity *pEntity = LUA_BINDING_ARGUMENT( luaL_checkentity, 1, "entity" );
     CBaseEntity *pOther = LUA_BINDING_ARGUMENT( luaL_checkentity, 2, "other" );
@@ -834,7 +834,7 @@ LUA_BINDING_BEGIN( CBaseEntity, Intersects, "class", "Determines if the bounding
 }
 LUA_BINDING_END( "boolean", "true if intersects, false otherwise." )
 
-LUA_BINDING_BEGIN( CBaseEntity, IsLockedByMain, "class", "Whether this door is locked by the main door (described as 'master' door in keyvalues)." )
+LUA_BINDING_BEGIN( Entity, IsLockedByMain, "class", "Whether this door is locked by the main door (described as 'master' door in keyvalues)." )
 {
     lua_CBaseEntity *pEntity = LUA_BINDING_ARGUMENT( luaL_checkentity, 1, "entity" );
     lua_pushboolean( L, pEntity->IsLockedByMaster() );
@@ -842,7 +842,7 @@ LUA_BINDING_BEGIN( CBaseEntity, IsLockedByMain, "class", "Whether this door is l
 }
 LUA_BINDING_END( "boolean", "true if locked by main, false otherwise." )
 
-LUA_BINDING_BEGIN( CBaseEntity, SetMaxHealth, "class", "Set max health." )
+LUA_BINDING_BEGIN( Entity, SetMaxHealth, "class", "Set max health." )
 {
     lua_CBaseEntity *pEntity = LUA_BINDING_ARGUMENT( luaL_checkentity, 1, "entity" );
     int nMaxHealth = LUA_BINDING_ARGUMENT( luaL_checkinteger, 2, "maxHealth" );
@@ -851,7 +851,7 @@ LUA_BINDING_BEGIN( CBaseEntity, SetMaxHealth, "class", "Set max health." )
 }
 LUA_BINDING_END()
 
-LUA_BINDING_BEGIN( CBaseEntity, DumpResponseCriteria, "class", "Dump response criteria." )
+LUA_BINDING_BEGIN( Entity, DumpResponseCriteria, "class", "Dump response criteria." )
 {
     lua_CBaseEntity *pEntity = LUA_BINDING_ARGUMENT( luaL_checkentity, 1, "entity" );
     pEntity->DumpResponseCriteria();
@@ -860,7 +860,7 @@ LUA_BINDING_BEGIN( CBaseEntity, DumpResponseCriteria, "class", "Dump response cr
 LUA_BINDING_END()
 
 //// Experiment; Disabled in favor of CreateEntityByName which also calls DispatchSpawn (that installs the correct ENT table)
-//// LUA_BINDING_BEGIN( CBaseEntity, Create, "class", "Create entity." )
+//// LUA_BINDING_BEGIN( Entity, Create, "class", "Create entity." )
 //// {
 ////     const char *pszClassName = LUA_BINDING_ARGUMENT( luaL_checkstring, 1, "className" );
 ////     Vector vPosition = LUA_BINDING_ARGUMENT( luaL_checkvector, 2, "position" );
@@ -871,7 +871,7 @@ LUA_BINDING_END()
 //// }
 //// LUA_BINDING_END( "entity", "The created entity" )
 ////
-//// LUA_BINDING_BEGIN( CBaseEntity, CreateNoSpawn, "class", "Create entity without spawning it." )
+//// LUA_BINDING_BEGIN( Entity, CreateNoSpawn, "class", "Create entity without spawning it." )
 //// {
 ////     const char *pszClassName = LUA_BINDING_ARGUMENT( luaL_checkstring, 1, "className" );
 ////     Vector vPosition = LUA_BINDING_ARGUMENT( luaL_checkvector, 2, "position" );
@@ -882,7 +882,7 @@ LUA_BINDING_END()
 //// }
 //// LUA_BINDING_END( "entity", "The created entity" )
 
-LUA_BINDING_BEGIN( CBaseEntity, GetDamageType, "class", "Get damage type." )
+LUA_BINDING_BEGIN( Entity, GetDamageType, "class", "Get damage type." )
 {
     lua_CBaseEntity *pEntity = LUA_BINDING_ARGUMENT( luaL_checkentity, 1, "entity" );
     lua_pushinteger( L, pEntity->GetDamageType() );
@@ -890,7 +890,7 @@ LUA_BINDING_BEGIN( CBaseEntity, GetDamageType, "class", "Get damage type." )
 }
 LUA_BINDING_END( "number", "The damage type" )
 
-LUA_BINDING_BEGIN( CBaseEntity, GetDamage, "class", "Get damage." )
+LUA_BINDING_BEGIN( Entity, GetDamage, "class", "Get damage." )
 {
     lua_CBaseEntity *pEntity = LUA_BINDING_ARGUMENT( luaL_checkentity, 1, "entity" );
     lua_pushnumber( L, pEntity->GetDamage() );
@@ -898,7 +898,7 @@ LUA_BINDING_BEGIN( CBaseEntity, GetDamage, "class", "Get damage." )
 }
 LUA_BINDING_END( "number", "The damage" )
 
-LUA_BINDING_BEGIN( CBaseEntity, SetDamage, "class", "Set damage." )
+LUA_BINDING_BEGIN( Entity, SetDamage, "class", "Set damage." )
 {
     lua_CBaseEntity *pEntity = LUA_BINDING_ARGUMENT( luaL_checkentity, 1, "entity" );
     float flDamage = LUA_BINDING_ARGUMENT( luaL_checknumber, 2, "damage" );
@@ -907,7 +907,7 @@ LUA_BINDING_BEGIN( CBaseEntity, SetDamage, "class", "Set damage." )
 }
 LUA_BINDING_END()
 
-LUA_BINDING_BEGIN( CBaseEntity, BodyTarget, "class", "Body target." )
+LUA_BINDING_BEGIN( Entity, BodyTarget, "class", "Body target." )
 {
     lua_CBaseEntity *pEntity = LUA_BINDING_ARGUMENT( luaL_checkentity, 1, "entity" );
     Vector vPosition = LUA_BINDING_ARGUMENT( luaL_checkvector, 2, "position" );
@@ -917,7 +917,7 @@ LUA_BINDING_BEGIN( CBaseEntity, BodyTarget, "class", "Body target." )
 }
 LUA_BINDING_END( "vector", "The body target" )
 
-LUA_BINDING_BEGIN( CBaseEntity, HeadTarget, "class", "Head target." )
+LUA_BINDING_BEGIN( Entity, HeadTarget, "class", "Head target." )
 {
     lua_CBaseEntity *pEntity = LUA_BINDING_ARGUMENT( luaL_checkentity, 1, "entity" );
     Vector vPosition = LUA_BINDING_ARGUMENT( luaL_checkvector, 2, "position" );
@@ -926,7 +926,7 @@ LUA_BINDING_BEGIN( CBaseEntity, HeadTarget, "class", "Head target." )
 }
 LUA_BINDING_END( "vector", "The head target" )
 
-LUA_BINDING_BEGIN( CBaseEntity, GetSmoothedVelocity, "class", "Get smoothed velocity." )
+LUA_BINDING_BEGIN( Entity, GetSmoothedVelocity, "class", "Get smoothed velocity." )
 {
     lua_CBaseEntity *pEntity = LUA_BINDING_ARGUMENT( luaL_checkentity, 1, "entity" );
     lua_pushvector( L, pEntity->GetSmoothedVelocity() );
@@ -934,7 +934,7 @@ LUA_BINDING_BEGIN( CBaseEntity, GetSmoothedVelocity, "class", "Get smoothed velo
 }
 LUA_BINDING_END( "vector", "The smoothed velocity" )
 
-LUA_BINDING_BEGIN( CBaseEntity, GetFriction, "class", "Get friction." )
+LUA_BINDING_BEGIN( Entity, GetFriction, "class", "Get friction." )
 {
     lua_CBaseEntity *pEntity = LUA_BINDING_ARGUMENT( luaL_checkentity, 1, "entity" );
     lua_pushnumber( L, pEntity->GetFriction() );
@@ -942,7 +942,7 @@ LUA_BINDING_BEGIN( CBaseEntity, GetFriction, "class", "Get friction." )
 }
 LUA_BINDING_END( "number", "The friction" )
 
-LUA_BINDING_BEGIN( CBaseEntity, IsTargetVisible, "class", "Returns true if a line can be traced from the caller's eyes to the target" )
+LUA_BINDING_BEGIN( Entity, IsTargetVisible, "class", "Returns true if a line can be traced from the caller's eyes to the target" )
 {
     lua_CBaseEntity *pEntity = LUA_BINDING_ARGUMENT( luaL_checkentity, 1, "entity" );
 
@@ -963,7 +963,7 @@ LUA_BINDING_BEGIN( CBaseEntity, IsTargetVisible, "class", "Returns true if a lin
 }
 LUA_BINDING_END( "boolean", "true if visible, false otherwise." )
 
-LUA_BINDING_BEGIN( CBaseEntity, GetReceivedDamageScale, "class", "Returns a value that scales all damage done to this entity." )
+LUA_BINDING_BEGIN( Entity, GetReceivedDamageScale, "class", "Returns a value that scales all damage done to this entity." )
 {
     lua_CBaseEntity *pEntity = LUA_BINDING_ARGUMENT( luaL_checkentity, 1, "entity" );
     CBaseEntity *pInflictor = LUA_BINDING_ARGUMENT( luaL_checkentity, 2, "inflictor" );
@@ -972,7 +972,7 @@ LUA_BINDING_BEGIN( CBaseEntity, GetReceivedDamageScale, "class", "Returns a valu
 }
 LUA_BINDING_END( "number", "The received damage scale" )
 
-LUA_BINDING_BEGIN( CBaseEntity, GetGroundVelocityToApply, "class", "Gets the velocity we impart to a player standing on us." )
+LUA_BINDING_BEGIN( Entity, GetGroundVelocityToApply, "class", "Gets the velocity we impart to a player standing on us." )
 {
     lua_CBaseEntity *pEntity = LUA_BINDING_ARGUMENT( luaL_checkentity, 1, "entity" );
     Vector vecGroundVel;
@@ -982,7 +982,7 @@ LUA_BINDING_BEGIN( CBaseEntity, GetGroundVelocityToApply, "class", "Gets the vel
 }
 LUA_BINDING_END( "vector", "The ground velocity to apply" )
 
-LUA_BINDING_BEGIN( CBaseEntity, PhysicsSplash, "class", "Physics splash." )
+LUA_BINDING_BEGIN( Entity, PhysicsSplash, "class", "Physics splash." )
 {
     lua_CBaseEntity *pEntity = LUA_BINDING_ARGUMENT( luaL_checkentity, 1, "entity" );
     Vector vCenter = LUA_BINDING_ARGUMENT( luaL_checkvector, 2, "center" );
@@ -994,7 +994,7 @@ LUA_BINDING_BEGIN( CBaseEntity, PhysicsSplash, "class", "Physics splash." )
 }
 LUA_BINDING_END( "boolean", "true if splashed, false otherwise." )
 
-LUA_BINDING_BEGIN( CBaseEntity, Splash, "class", "Splash." )
+LUA_BINDING_BEGIN( Entity, Splash, "class", "Splash." )
 {
     lua_CBaseEntity *pEntity = LUA_BINDING_ARGUMENT( luaL_checkentity, 1, "entity" );
     pEntity->Splash();
@@ -1002,7 +1002,7 @@ LUA_BINDING_BEGIN( CBaseEntity, Splash, "class", "Splash." )
 }
 LUA_BINDING_END()
 
-LUA_BINDING_BEGIN( CBaseEntity, ClearSolidFlags, "class", "Clear solid flags." )
+LUA_BINDING_BEGIN( Entity, ClearSolidFlags, "class", "Clear solid flags." )
 {
     lua_CBaseEntity *pEntity = LUA_BINDING_ARGUMENT( luaL_checkentity, 1, "entity" );
     pEntity->ClearSolidFlags();
@@ -1010,7 +1010,7 @@ LUA_BINDING_BEGIN( CBaseEntity, ClearSolidFlags, "class", "Clear solid flags." )
 }
 LUA_BINDING_END()
 
-LUA_BINDING_BEGIN( CBaseEntity, SetElasticity, "class", "Set elasticity." )
+LUA_BINDING_BEGIN( Entity, SetElasticity, "class", "Set elasticity." )
 {
     lua_CBaseEntity *pEntity = LUA_BINDING_ARGUMENT( luaL_checkentity, 1, "entity" );
     float flElasticity = LUA_BINDING_ARGUMENT( luaL_checknumber, 2, "elasticity" );
@@ -1019,7 +1019,7 @@ LUA_BINDING_BEGIN( CBaseEntity, SetElasticity, "class", "Set elasticity." )
 }
 LUA_BINDING_END()
 
-LUA_BINDING_BEGIN( CBaseEntity, SetShadowCastDistance, "class", "Set shadow cast distance." )
+LUA_BINDING_BEGIN( Entity, SetShadowCastDistance, "class", "Set shadow cast distance." )
 {
     lua_CBaseEntity *pEntity = LUA_BINDING_ARGUMENT( luaL_checkentity, 1, "entity" );
     float flDistance = LUA_BINDING_ARGUMENT( luaL_checknumber, 2, "distance" );
@@ -1037,7 +1037,7 @@ LUA_BINDING_BEGIN( CBaseEntity, SetShadowCastDistance, "class", "Set shadow cast
 }
 LUA_BINDING_END()
 
-LUA_BINDING_BEGIN( CBaseEntity, GetLocalTime, "class", "Get local time." )
+LUA_BINDING_BEGIN( Entity, GetLocalTime, "class", "Get local time." )
 {
     lua_CBaseEntity *pEntity = LUA_BINDING_ARGUMENT( luaL_checkentity, 1, "entity" );
     lua_pushnumber( L, pEntity->GetLocalTime() );
@@ -1045,7 +1045,7 @@ LUA_BINDING_BEGIN( CBaseEntity, GetLocalTime, "class", "Get local time." )
 }
 LUA_BINDING_END( "number", "The local time" )
 
-LUA_BINDING_BEGIN( CBaseEntity, IncrementLocalTime, "class", "Increment local time." )
+LUA_BINDING_BEGIN( Entity, IncrementLocalTime, "class", "Increment local time." )
 {
     lua_CBaseEntity *pEntity = LUA_BINDING_ARGUMENT( luaL_checkentity, 1, "entity" );
     float flTime = LUA_BINDING_ARGUMENT( luaL_checknumber, 2, "time" );
@@ -1054,7 +1054,7 @@ LUA_BINDING_BEGIN( CBaseEntity, IncrementLocalTime, "class", "Increment local ti
 }
 LUA_BINDING_END()
 
-LUA_BINDING_BEGIN( CBaseEntity, GetMoveDoneTime, "class", "Get move done time." )
+LUA_BINDING_BEGIN( Entity, GetMoveDoneTime, "class", "Get move done time." )
 {
     lua_CBaseEntity *pEntity = LUA_BINDING_ARGUMENT( luaL_checkentity, 1, "entity" );
     lua_pushnumber( L, pEntity->GetMoveDoneTime() );
@@ -1062,7 +1062,7 @@ LUA_BINDING_BEGIN( CBaseEntity, GetMoveDoneTime, "class", "Get move done time." 
 }
 LUA_BINDING_END( "number", "The move done time" )
 
-LUA_BINDING_BEGIN( CBaseEntity, SetMoveDoneTime, "class", "Set move done time." )
+LUA_BINDING_BEGIN( Entity, SetMoveDoneTime, "class", "Set move done time." )
 {
     lua_CBaseEntity *pEntity = LUA_BINDING_ARGUMENT( luaL_checkentity, 1, "entity" );
     float flTime = LUA_BINDING_ARGUMENT( luaL_checknumber, 2, "time" );
@@ -1071,7 +1071,7 @@ LUA_BINDING_BEGIN( CBaseEntity, SetMoveDoneTime, "class", "Set move done time." 
 }
 LUA_BINDING_END()
 
-LUA_BINDING_BEGIN( CBaseEntity, GetSoundEmissionOrigin, "class", "From a source SDK comment 'Used by the PAS filters to ask the entity where in world space the sounds it emits come from. This is used right now because if you have something sitting on an incline, using our axis-aligned bounding boxes can return a position in solid space, so you won't hear sounds emitted by the object. For now, we're hacking around it by moving the sound emission origin up on certain objects like vehicles..'" )
+LUA_BINDING_BEGIN( Entity, GetSoundEmissionOrigin, "class", "From a source SDK comment 'Used by the PAS filters to ask the entity where in world space the sounds it emits come from. This is used right now because if you have something sitting on an incline, using our axis-aligned bounding boxes can return a position in solid space, so you won't hear sounds emitted by the object. For now, we're hacking around it by moving the sound emission origin up on certain objects like vehicles..'" )
 {
     lua_CBaseEntity *pEntity = LUA_BINDING_ARGUMENT( luaL_checkentity, 1, "entity" );
     lua_pushvector( L, pEntity->GetSoundEmissionOrigin() );
@@ -1079,7 +1079,7 @@ LUA_BINDING_BEGIN( CBaseEntity, GetSoundEmissionOrigin, "class", "From a source 
 }
 LUA_BINDING_END( "vector", "The sound emission origin" )
 
-LUA_BINDING_BEGIN( CBaseEntity, IsItem, "class", "Whether this entity is an item." )
+LUA_BINDING_BEGIN( Entity, IsItem, "class", "Whether this entity is an item." )
 {
     CItem *pItem = dynamic_cast< CItem * >( LUA_BINDING_ARGUMENT( luaL_checkentity, 1, "entity" ) );
 
@@ -1102,7 +1102,7 @@ LUALIB_API int luaopen_CBaseEntity( lua_State *L )
 {
     LUA_PUSH_METATABLE_TO_EXTEND( L, LUA_BASEENTITYMETANAME );
 
-    LUA_REGISTRATION_COMMIT( CBaseEntity );
+    LUA_REGISTRATION_COMMIT( Entity );
 
     return 1;
 }

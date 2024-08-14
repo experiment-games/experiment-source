@@ -161,7 +161,7 @@ if (not GAMEUI) then
 			end
 
 			for key, value in pairs(metatableToMergeFrom) do
-				-- Only CBaseEntity should have these keys.
+				-- Only the 'Entity' baseclass should have these keys.
                 if (key == "__tostring" or key == "__eq" or key == "__gc") then
 					error("Attempted to merge a metatable with a key that is not allowed.")
 					continue
@@ -183,18 +183,18 @@ if (not GAMEUI) then
 	-- Same goes for the entity metatables.
 	-- The __index of merged metatables will be the __index of the metatable
 	-- that is merged into.
-	setupMetatableMethods(_R.CBasePlayer, _R.CBaseEntity)
-	setupMetatableMethods(_R.CBaseCombatWeapon, _R.CBaseEntity)
+	setupMetatableMethods(_R.Player, _R.Entity)
+	setupMetatableMethods(_R.Weapon, _R.Entity)
 
-	collapseMetatables(_R.CBasePlayer, _R.CExperimentPlayer)
-	collapseMetatables(_R.CBaseEntity, _R.CBaseAnimating, _R.CBaseFlex)
+	collapseMetatables(_R.Player, _R.CExperimentPlayer)
+	collapseMetatables(_R.Entity, _R.CBaseAnimating, _R.CBaseFlex)
 
-	_R.CExperimentPlayer.__index = _R.CBasePlayer.__index
-	_R.CExperimentPlayer.__newindex = _R.CBaseEntity.__newindex
+	_R.CExperimentPlayer.__index = _R.Player.__index
+	_R.CExperimentPlayer.__newindex = _R.Entity.__newindex
 
-	_R.CBaseAnimating.__index = _R.CBaseEntity.__index
-	_R.CBaseAnimating.__newindex = _R.CBaseEntity.__newindex
+	_R.CBaseAnimating.__index = _R.Entity.__index
+	_R.CBaseAnimating.__newindex = _R.Entity.__newindex
 
-	_R.CBaseFlex.__index = _R.CBaseEntity.__index
-	_R.CBaseFlex.__newindex = _R.CBaseEntity.__newindex
+	_R.CBaseFlex.__index = _R.Entity.__index
+	_R.CBaseFlex.__newindex = _R.Entity.__newindex
 end

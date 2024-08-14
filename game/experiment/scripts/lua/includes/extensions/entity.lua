@@ -16,7 +16,7 @@ function ToBaseEntity(pEntity)
 		return NULL
 	end
 
-	local success, hEntity = xpcall(_R.CBaseEntity.GetBaseEntity, printError, pEntity)
+	local success, hEntity = xpcall(_R.Entity.GetBaseEntity, printError, pEntity)
 	if (not success) then
 		hEntity = NULL
 	end

@@ -42,7 +42,7 @@ function GM:IsTeamplay()
 end
 
 function GM:Precache()
-	_R.CBaseEntity.PrecacheScriptSound("AlyxEmp.Charge")
+	_R.Entity.PrecacheScriptSound("AlyxEmp.Charge")
 
 	self.BaseClass.Precache(self)
 end

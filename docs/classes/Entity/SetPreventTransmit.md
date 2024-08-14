@@ -22,7 +22,7 @@ lua:
         type: table
     - arguments:
       - name: "filter"
-        type: CBaseEntity
+        type: Entity
       - name: "shouldPreventTransmitting"
         type: boolean
   returns:

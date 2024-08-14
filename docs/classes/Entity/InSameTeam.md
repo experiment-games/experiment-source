@@ -15,7 +15,7 @@ lua:
   
   arguments:
     - name: "other"
-      type: CBaseEntity
+      type: Entity
   returns:
     - type: boolean
       description: "True if in same team, false otherwise."

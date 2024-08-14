@@ -63,7 +63,7 @@ function GM:PlayerPlayStepSound(client, vecOrigin, psurface, fvol, force)
 		local physprops = MoveHelper():GetSurfaceProperties()
 		local pSoundName = physprops:GetString(stepSoundName)
 		local b
-		b, params = _R.CBaseEntity.GetParametersForSound(pSoundName)
+		b, params = _R.Entity.GetParametersForSound(pSoundName)
 		if (not b) then
 			return false
 		end
@@ -94,7 +94,7 @@ function GM:PlayerPlayStepSound(client, vecOrigin, psurface, fvol, force)
 	ep.m_nPitch = params.pitch
 	ep.m_pOrigin = vecOrigin
 
-	_R.CBaseEntity.EmitSound(filter, client:GetEntityIndex(), ep)
+	_R.Entity.EmitSound(filter, client:GetEntityIndex(), ep)
 	return false
 end
 

@@ -15,7 +15,7 @@ lua:
   
   arguments:
     - name: "testEntityUnderControl"
-      type: CBaseEntity
+      type: Entity
   returns:
     - type: boolean
       description: "true if on controls, false otherwise."

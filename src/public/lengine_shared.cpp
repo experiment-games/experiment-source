@@ -70,7 +70,11 @@ LUA_BINDING_END( "boolean", "True if the game is running on the client, false ot
 
 LUA_BINDING_BEGIN( Engines, GetMaxClients, "library", "Get the maximum number of clients." )
 {
+#ifdef CLIENT_DLL
+    lua_pushinteger( L, engine->GetMaxClients() );
+#else
     lua_pushinteger( L, gpGlobals->maxClients );
+#endif
     return 1;
 }
 LUA_BINDING_END( "integer", "The maximum number of clients." )

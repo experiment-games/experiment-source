@@ -15,7 +15,7 @@ lua:
   
   arguments:
     - name: "effect"
-      type: CBaseEntity
+      type: Entity
   returns:
     
 ---

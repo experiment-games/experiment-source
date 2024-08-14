@@ -15,7 +15,7 @@ lua:
   
   arguments:
     - name: "target"
-      type: CBaseEntity
+      type: Entity
   returns:
     - type: boolean
       description: "Whether the observer target is valid."

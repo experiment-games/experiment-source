@@ -15,7 +15,7 @@ lua:
   
   arguments:
     - name: "hands"
-      type: CBaseAnimating
+      type: Entity
   returns:
     
 ---

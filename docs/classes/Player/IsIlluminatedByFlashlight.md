@@ -15,7 +15,7 @@ lua:
   
   arguments:
     - name: "entity"
-      type: CBaseEntity
+      type: Entity
   returns:
     - type: boolean
       description: "Whether the player is illuminated by the flashlight."

@@ -16,9 +16,9 @@ lua:
   static: true
   arguments:
     - name: "other"
-      type: CBaseEntity
+      type: Entity
     - name: "ground"
-      type: CBaseEntity
+      type: Entity
   returns:
     
 ---

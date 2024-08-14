@@ -18,7 +18,7 @@ Most information about functions are specified in a page's metadata. This metada
 is placed at the top of the markdown file and is used to generate the page into the
 specified template.
 
-Take the following example taken from [CBaseAnimating:GetAttachment](../classes/CBaseAnimating/GetAttachment.md):
+Take the following example taken from [Entity:GetAttachment](../classes/Entity/GetAttachment.md):
 
 ```yaml
 ---
@@ -31,7 +31,7 @@ tags:
   - needs-verification
   - needs-example
 lua:
-  library: CBaseAnimating
+  library: Entity
   function: GetAttachment
   realm: shared
   description: "Get the attachment table for the specified attachment (by bone id or attachment name)"

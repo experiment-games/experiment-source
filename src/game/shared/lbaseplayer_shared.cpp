@@ -38,18 +38,18 @@ LUALIB_API lua_CBasePlayer *luaL_checkplayer( lua_State *L, int narg )
 {
     lua_CBasePlayer *d = lua_toplayer( L, narg );
     if ( d == NULL ) /* avoid extra test when d is not 0 */
-        luaL_argerror( L, narg, "CBasePlayer expected, got NULL entity" );
+        luaL_argerror( L, narg, "Player expected, got NULL entity" );
     return d;
 }
 
-LUALIB_API lua_CBasePlayer *luaL_optplayer( lua_State *L, int narg, CBasePlayer *def )
+LUALIB_API lua_CBasePlayer *luaL_optplayer( lua_State *L, int narg, lua_CBasePlayer *def )
 {
     return luaL_opt( L, luaL_checkplayer, narg, def );
 }
 
-LUA_REGISTRATION_INIT( CBasePlayer )
+LUA_REGISTRATION_INIT( Player )
 
-LUA_BINDING_BEGIN( CBasePlayer, AbortReload, "class", "Abort the current reload." )
+LUA_BINDING_BEGIN( Player, AbortReload, "class", "Abort the current reload." )
 {
     lua_CBasePlayer *player = LUA_BINDING_ARGUMENT( luaL_checkplayer, 1, "player" );
     player->AbortReload();
@@ -57,7 +57,7 @@ LUA_BINDING_BEGIN( CBasePlayer, AbortReload, "class", "Abort the current reload.
 }
 LUA_BINDING_END()
 
-LUA_BINDING_BEGIN( CBasePlayer, AddToPlayerSimulationList, "class", "Add the player to the simulation list." )
+LUA_BINDING_BEGIN( Player, AddToPlayerSimulationList, "class", "Add the player to the simulation list." )
 {
     lua_CBasePlayer *player = LUA_BINDING_ARGUMENT( luaL_checkplayer, 1, "player" );
     lua_CBaseEntity *other = LUA_BINDING_ARGUMENT( luaL_checkentity, 2, "entity" );
@@ -66,7 +66,7 @@ LUA_BINDING_BEGIN( CBasePlayer, AddToPlayerSimulationList, "class", "Add the pla
 }
 LUA_BINDING_END()
 
-LUA_BINDING_BEGIN( CBasePlayer, CacheVehicleView, "class", "Cache the vehicle view." )
+LUA_BINDING_BEGIN( Player, CacheVehicleView, "class", "Cache the vehicle view." )
 {
     lua_CBasePlayer *player = LUA_BINDING_ARGUMENT( luaL_checkplayer, 1, "player" );
     player->CacheVehicleView();
@@ -74,7 +74,7 @@ LUA_BINDING_BEGIN( CBasePlayer, CacheVehicleView, "class", "Cache the vehicle vi
 }
 LUA_BINDING_END()
 
-LUA_BINDING_BEGIN( CBasePlayer, ClearPlayerSimulationList, "class", "Clear the player simulation list." )
+LUA_BINDING_BEGIN( Player, ClearPlayerSimulationList, "class", "Clear the player simulation list." )
 {
     lua_CBasePlayer *player = LUA_BINDING_ARGUMENT( luaL_checkplayer, 1, "player" );
     player->ClearPlayerSimulationList();
@@ -82,7 +82,7 @@ LUA_BINDING_BEGIN( CBasePlayer, ClearPlayerSimulationList, "class", "Clear the p
 }
 LUA_BINDING_END()
 
-LUA_BINDING_BEGIN( CBasePlayer, ClearZoomOwner, "class", "Clear the zoom owner." )
+LUA_BINDING_BEGIN( Player, ClearZoomOwner, "class", "Clear the zoom owner." )
 {
     lua_CBasePlayer *player = LUA_BINDING_ARGUMENT( luaL_checkplayer, 1, "player" );
     player->ClearZoomOwner();
@@ -90,7 +90,7 @@ LUA_BINDING_BEGIN( CBasePlayer, ClearZoomOwner, "class", "Clear the zoom owner."
 }
 LUA_BINDING_END()
 
-LUA_BINDING_BEGIN( CBasePlayer, CurrentCommandNumber, "class", "Get the current command number." )
+LUA_BINDING_BEGIN( Player, CurrentCommandNumber, "class", "Get the current command number." )
 {
     lua_CBasePlayer *player = LUA_BINDING_ARGUMENT( luaL_checkplayer, 1, "player" );
     lua_pushinteger( L, player->CurrentCommandNumber() );
@@ -98,7 +98,7 @@ LUA_BINDING_BEGIN( CBasePlayer, CurrentCommandNumber, "class", "Get the current 
 }
 LUA_BINDING_END()
 
-LUA_BINDING_BEGIN( CBasePlayer, ExitLadder, "class", "Exit the ladder." )
+LUA_BINDING_BEGIN( Player, ExitLadder, "class", "Exit the ladder." )
 {
     lua_CBasePlayer *player = LUA_BINDING_ARGUMENT( luaL_checkplayer, 1, "player" );
     player->ExitLadder();
@@ -106,7 +106,7 @@ LUA_BINDING_BEGIN( CBasePlayer, ExitLadder, "class", "Exit the ladder." )
 }
 LUA_BINDING_END()
 
-LUA_BINDING_BEGIN( CBasePlayer, GetEyePositionAndVectors, "class", "Get the player's eye position and vectors." )
+LUA_BINDING_BEGIN( Player, GetEyePositionAndVectors, "class", "Get the player's eye position and vectors." )
 {
     lua_CBasePlayer *player = LUA_BINDING_ARGUMENT( luaL_checkplayer, 1, "player" );
     Vector v1, v2, v3, v4;
@@ -119,7 +119,7 @@ LUA_BINDING_BEGIN( CBasePlayer, GetEyePositionAndVectors, "class", "Get the play
 }
 LUA_BINDING_END( "Vector", "The player's eye position.", "Vector", "The player's eye forward vector.", "Vector", "The player's eye right vector.", "Vector", "The player's eye up vector." )
 
-LUA_BINDING_BEGIN( CBasePlayer, GetEyeVectors, "class", "Get the player's eye vectors." )
+LUA_BINDING_BEGIN( Player, GetEyeVectors, "class", "Get the player's eye vectors." )
 {
     lua_CBasePlayer *player = LUA_BINDING_ARGUMENT( luaL_checkplayer, 1, "player" );
     Vector v1, v2, v3;
@@ -131,7 +131,7 @@ LUA_BINDING_BEGIN( CBasePlayer, GetEyeVectors, "class", "Get the player's eye ve
 }
 LUA_BINDING_END( "Vector", "The player's eye forward vector.", "Vector", "The player's eye right vector.", "Vector", "The player's eye up vector." )
 
-LUA_BINDING_BEGIN( CBasePlayer, FindUseEntity, "class", "Find the entity the player is using." )
+LUA_BINDING_BEGIN( Player, FindUseEntity, "class", "Find the entity the player is using." )
 {
     lua_CBasePlayer *player = LUA_BINDING_ARGUMENT( luaL_checkplayer, 1, "player" );
     CBaseEntity *pUseEntity = player->FindUseEntity();
@@ -140,7 +140,7 @@ LUA_BINDING_BEGIN( CBasePlayer, FindUseEntity, "class", "Find the entity the pla
 }
 LUA_BINDING_END( "entity", "The entity the player is using." )
 
-LUA_BINDING_BEGIN( CBasePlayer, GetActiveWeapon, "class", "Get the player's active weapon." )
+LUA_BINDING_BEGIN( Player, GetActiveWeapon, "class", "Get the player's active weapon." )
 {
     lua_CBasePlayer *player = LUA_BINDING_ARGUMENT( luaL_checkplayer, 1, "player" );
     CBaseCombatWeapon *pWeapon = player->GetActiveWeapon();
@@ -150,7 +150,7 @@ LUA_BINDING_BEGIN( CBasePlayer, GetActiveWeapon, "class", "Get the player's acti
 LUA_BINDING_END( "weapon", "The player's active weapon." )
 
 // FIXME: move to CBaseCombatCharacter
-LUA_BINDING_BEGIN( CBasePlayer, GetAmmoCount, "class", "Get the player's ammo count." )
+LUA_BINDING_BEGIN( Player, GetAmmoCount, "class", "Get the player's ammo count." )
 {
     lua_CBasePlayer *player = LUA_BINDING_ARGUMENT( luaL_checkplayer, 1, "player" );
 
@@ -170,7 +170,7 @@ LUA_BINDING_BEGIN( CBasePlayer, GetAmmoCount, "class", "Get the player's ammo co
 LUA_BINDING_END( "number", "The player's ammo count." )
 
 // TODO: Is this correct? Is AutoaimVector the same as AimVector in gmod?
-LUA_BINDING_BEGIN( CBasePlayer, GetAimVector, "class", "Get the player's autoaim vector." )
+LUA_BINDING_BEGIN( Player, GetAimVector, "class", "Get the player's autoaim vector." )
 {
     lua_CBasePlayer *player = LUA_BINDING_ARGUMENT( luaL_checkplayer, 1, "player" );
     Vector v = player->GetAutoaimVector( LUA_BINDING_ARGUMENT_WITH_DEFAULT( luaL_optnumber, 2, 1, "scale" ) );
@@ -179,7 +179,7 @@ LUA_BINDING_BEGIN( CBasePlayer, GetAimVector, "class", "Get the player's autoaim
 }
 LUA_BINDING_END( "Vector", "The player's autoaim vector." )
 
-LUA_BINDING_BEGIN( CBasePlayer, GetBonusChallenge, "class", "Get the player's bonus challenge." )
+LUA_BINDING_BEGIN( Player, GetBonusChallenge, "class", "Get the player's bonus challenge." )
 {
     lua_CBasePlayer *player = LUA_BINDING_ARGUMENT( luaL_checkplayer, 1, "player" );
     lua_pushinteger( L, player->GetBonusChallenge() );
@@ -187,7 +187,7 @@ LUA_BINDING_BEGIN( CBasePlayer, GetBonusChallenge, "class", "Get the player's bo
 }
 LUA_BINDING_END( "number", "The player's bonus challenge." )
 
-LUA_BINDING_BEGIN( CBasePlayer, GetBonusProgress, "class", "Get the player's bonus progress." )
+LUA_BINDING_BEGIN( Player, GetBonusProgress, "class", "Get the player's bonus progress." )
 {
     lua_CBasePlayer *player = LUA_BINDING_ARGUMENT( luaL_checkplayer, 1, "player" );
     lua_pushinteger( L, player->GetBonusProgress() );
@@ -195,7 +195,7 @@ LUA_BINDING_BEGIN( CBasePlayer, GetBonusProgress, "class", "Get the player's bon
 }
 LUA_BINDING_END( "number", "The player's bonus progress." )
 
-LUA_BINDING_BEGIN( CBasePlayer, GetDeathTime, "class", "Get the player's death time." )
+LUA_BINDING_BEGIN( Player, GetDeathTime, "class", "Get the player's death time." )
 {
     lua_CBasePlayer *player = LUA_BINDING_ARGUMENT( luaL_checkplayer, 1, "player" );
     lua_pushnumber( L, player->GetDeathTime() );
@@ -203,7 +203,7 @@ LUA_BINDING_BEGIN( CBasePlayer, GetDeathTime, "class", "Get the player's death t
 }
 LUA_BINDING_END( "number", "The player's death time." )
 
-LUA_BINDING_BEGIN( CBasePlayer, GetDefaultFov, "class", "Get the player's default FOV." )
+LUA_BINDING_BEGIN( Player, GetDefaultFov, "class", "Get the player's default FOV." )
 {
     lua_CBasePlayer *player = LUA_BINDING_ARGUMENT( luaL_checkplayer, 1, "player" );
     lua_pushinteger( L, player->GetDefaultFOV() );
@@ -217,7 +217,7 @@ LUA_BINDING_END( "number", "The player's default FOV." )
 //     return 1;
 // }
 
-LUA_BINDING_BEGIN( CBasePlayer, GetFov, "class", "Get the player's FOV." )
+LUA_BINDING_BEGIN( Player, GetFov, "class", "Get the player's FOV." )
 {
     lua_CBasePlayer *player = LUA_BINDING_ARGUMENT( luaL_checkplayer, 1, "player" );
     lua_pushnumber( L, player->GetFOV() );
@@ -225,7 +225,7 @@ LUA_BINDING_BEGIN( CBasePlayer, GetFov, "class", "Get the player's FOV." )
 }
 LUA_BINDING_END( "number", "The player's FOV." )
 
-LUA_BINDING_BEGIN( CBasePlayer, GetFovDistanceAdjustFactor, "class", "Get the player's FOV distance adjust factor." )
+LUA_BINDING_BEGIN( Player, GetFovDistanceAdjustFactor, "class", "Get the player's FOV distance adjust factor." )
 {
     lua_CBasePlayer *player = LUA_BINDING_ARGUMENT( luaL_checkplayer, 1, "player" );
     lua_pushnumber( L, player->GetFOVDistanceAdjustFactor() );
@@ -233,7 +233,7 @@ LUA_BINDING_BEGIN( CBasePlayer, GetFovDistanceAdjustFactor, "class", "Get the pl
 }
 LUA_BINDING_END( "number", "The player's FOV distance adjust factor." )
 
-LUA_BINDING_BEGIN( CBasePlayer, GetFovTime, "class", "Get the player's FOV time." )
+LUA_BINDING_BEGIN( Player, GetFovTime, "class", "Get the player's FOV time." )
 {
     lua_CBasePlayer *player = LUA_BINDING_ARGUMENT( luaL_checkplayer, 1, "player" );
     lua_pushnumber( L, player->GetFOVTime() );
@@ -241,7 +241,7 @@ LUA_BINDING_BEGIN( CBasePlayer, GetFovTime, "class", "Get the player's FOV time.
 }
 LUA_BINDING_END( "number", "The player's FOV time." )
 
-LUA_BINDING_BEGIN( CBasePlayer, GetHands, "class", "Get the player's hands." )
+LUA_BINDING_BEGIN( Player, GetHands, "class", "Get the player's hands." )
 {
     lua_CBasePlayer *player = LUA_BINDING_ARGUMENT( luaL_checkplayer, 1, "player" );
     CBaseEntity::PushLuaInstanceSafe( L, player->GetHands() );
@@ -249,7 +249,7 @@ LUA_BINDING_BEGIN( CBasePlayer, GetHands, "class", "Get the player's hands." )
 }
 LUA_BINDING_END( "entity", "The player's hands." )
 
-LUA_BINDING_BEGIN( CBasePlayer, SetHands, "class", "Set the player's hands." )
+LUA_BINDING_BEGIN( Player, SetHands, "class", "Set the player's hands." )
 {
     lua_CBasePlayer *player = LUA_BINDING_ARGUMENT( luaL_checkplayer, 1, "player" );
     player->SetHands( LUA_BINDING_ARGUMENT( luaL_checkanimating, 2, "hands" ) );
@@ -257,7 +257,7 @@ LUA_BINDING_BEGIN( CBasePlayer, SetHands, "class", "Set the player's hands." )
 }
 LUA_BINDING_END()
 
-LUA_BINDING_BEGIN( CBasePlayer, GetImpulse, "class", "Get the player's impulse." )
+LUA_BINDING_BEGIN( Player, GetImpulse, "class", "Get the player's impulse." )
 {
     lua_CBasePlayer *player = LUA_BINDING_ARGUMENT( luaL_checkplayer, 1, "player" );
     lua_pushinteger( L, player->GetImpulse() );
@@ -265,7 +265,7 @@ LUA_BINDING_BEGIN( CBasePlayer, GetImpulse, "class", "Get the player's impulse."
 }
 LUA_BINDING_END( "number", "The player's impulse." )
 
-LUA_BINDING_BEGIN( CBasePlayer, GetLaggedMovementValue, "class", "Get the player's lagged movement value." )
+LUA_BINDING_BEGIN( Player, GetLaggedMovementValue, "class", "Get the player's lagged movement value." )
 {
     lua_CBasePlayer *player = LUA_BINDING_ARGUMENT( luaL_checkplayer, 1, "player" );
     lua_pushnumber( L, player->GetLaggedMovementValue() );
@@ -273,7 +273,7 @@ LUA_BINDING_BEGIN( CBasePlayer, GetLaggedMovementValue, "class", "Get the player
 }
 LUA_BINDING_END( "number", "The player's lagged movement value." )
 
-LUA_BINDING_BEGIN( CBasePlayer, GetLastKnownPlaceName, "class", "Get the player's last known place name." )
+LUA_BINDING_BEGIN( Player, GetLastKnownPlaceName, "class", "Get the player's last known place name." )
 {
     lua_CBasePlayer *player = LUA_BINDING_ARGUMENT( luaL_checkplayer, 1, "player" );
     lua_pushstring( L, player->GetLastKnownPlaceName() );
@@ -281,7 +281,7 @@ LUA_BINDING_BEGIN( CBasePlayer, GetLastKnownPlaceName, "class", "Get the player'
 }
 LUA_BINDING_END( "string", "The player's last known place name." )
 
-LUA_BINDING_BEGIN( CBasePlayer, GetNextAttack, "class", "Get the player's next attack." )
+LUA_BINDING_BEGIN( Player, GetNextAttack, "class", "Get the player's next attack." )
 {
     lua_CBasePlayer *player = LUA_BINDING_ARGUMENT( luaL_checkplayer, 1, "player" );
     lua_pushnumber( L, player->GetNextAttack() );
@@ -289,7 +289,7 @@ LUA_BINDING_BEGIN( CBasePlayer, GetNextAttack, "class", "Get the player's next a
 }
 LUA_BINDING_END( "number", "The player's next attack." )
 
-LUA_BINDING_BEGIN( CBasePlayer, GetObserverMode, "class", "Get the player's observer mode." )
+LUA_BINDING_BEGIN( Player, GetObserverMode, "class", "Get the player's observer mode." )
 {
     lua_CBasePlayer *player = LUA_BINDING_ARGUMENT( luaL_checkplayer, 1, "player" );
     lua_pushinteger( L, player->GetObserverMode() );
@@ -297,7 +297,7 @@ LUA_BINDING_BEGIN( CBasePlayer, GetObserverMode, "class", "Get the player's obse
 }
 LUA_BINDING_END( "number", "The player's observer mode." )
 
-LUA_BINDING_BEGIN( CBasePlayer, GetObserverTarget, "class", "Get the player's observer target." )
+LUA_BINDING_BEGIN( Player, GetObserverTarget, "class", "Get the player's observer target." )
 {
     lua_CBasePlayer *player = LUA_BINDING_ARGUMENT( luaL_checkplayer, 1, "player" );
     CBaseEntity::PushLuaInstanceSafe( L, player->GetObserverTarget() );
@@ -306,14 +306,14 @@ LUA_BINDING_BEGIN( CBasePlayer, GetObserverTarget, "class", "Get the player's ob
 LUA_BINDING_END( "entity", "The player's observer target." )
 
 // Experiment; disabled since this is an internal function
-// LUA_BINDING_BEGIN( CBasePlayer, GetOffset_m_Local, "class", "Get the offset of m_Local." )
+// LUA_BINDING_BEGIN( Player, GetOffset_m_Local, "class", "Get the offset of m_Local." )
 //{
-//    lua_pushinteger( L, CBasePlayer::GetOffset_m_Local() );
+//    lua_pushinteger( L, lua_CBasePlayer::GetOffset_m_Local() );
 //    return 1;
 //}
 // LUA_BINDING_END( "number", "The offset of m_Local." )
 
-LUA_BINDING_BEGIN( CBasePlayer, GetPlayerLocalData, "class", "Get the player's local data." )
+LUA_BINDING_BEGIN( Player, GetPlayerLocalData, "class", "Get the player's local data." )
 {
     lua_CBasePlayer *player = LUA_BINDING_ARGUMENT( luaL_checkplayer, 1, "player" );
     lua_newtable( L );
@@ -377,7 +377,7 @@ LUA_BINDING_BEGIN( CBasePlayer, GetPlayerLocalData, "class", "Get the player's l
 }
 LUA_BINDING_END( "table", "The player's local data." )
 
-LUA_BINDING_BEGIN( CBasePlayer, GetPlayerMaxs, "class", "Get the player's maxs." )
+LUA_BINDING_BEGIN( Player, GetPlayerMaxs, "class", "Get the player's maxs." )
 {
     lua_CBasePlayer *player = LUA_BINDING_ARGUMENT( luaL_checkplayer, 1, "player" );
     Vector v = player->GetPlayerMaxs();
@@ -386,7 +386,7 @@ LUA_BINDING_BEGIN( CBasePlayer, GetPlayerMaxs, "class", "Get the player's maxs."
 }
 LUA_BINDING_END( "Vector", "The player's maxs." )
 
-LUA_BINDING_BEGIN( CBasePlayer, GetPlayerMins, "class", "Get the player's mins." )
+LUA_BINDING_BEGIN( Player, GetPlayerMins, "class", "Get the player's mins." )
 {
     lua_CBasePlayer *player = LUA_BINDING_ARGUMENT( luaL_checkplayer, 1, "player" );
     Vector v = player->GetPlayerMins();
@@ -395,7 +395,7 @@ LUA_BINDING_BEGIN( CBasePlayer, GetPlayerMins, "class", "Get the player's mins."
 }
 LUA_BINDING_END( "Vector", "The player's mins." )
 
-LUA_BINDING_BEGIN( CBasePlayer, GetPlayerName, "class", "Get the player's name." )
+LUA_BINDING_BEGIN( Player, GetPlayerName, "class", "Get the player's name." )
 {
     lua_CBasePlayer *player = LUA_BINDING_ARGUMENT( luaL_checkplayer, 1, "player" );
     lua_pushstring( L, player->GetPlayerName() );
@@ -403,7 +403,7 @@ LUA_BINDING_BEGIN( CBasePlayer, GetPlayerName, "class", "Get the player's name."
 }
 LUA_BINDING_END( "string", "The player's name." )
 
-LUA_BINDING_BEGIN( CBasePlayer, GetPreviouslyPredictedOrigin, "class", "Get the player's previously predicted origin." )
+LUA_BINDING_BEGIN( Player, GetPreviouslyPredictedOrigin, "class", "Get the player's previously predicted origin." )
 {
     lua_CBasePlayer *player = LUA_BINDING_ARGUMENT( luaL_checkplayer, 1, "player" );
     Vector v = player->GetPreviouslyPredictedOrigin();
@@ -412,7 +412,7 @@ LUA_BINDING_BEGIN( CBasePlayer, GetPreviouslyPredictedOrigin, "class", "Get the 
 }
 LUA_BINDING_END( "Vector", "The player's previously predicted origin." )
 
-LUA_BINDING_BEGIN( CBasePlayer, GetPunchAngle, "class", "Get the player's punch angle." )
+LUA_BINDING_BEGIN( Player, GetPunchAngle, "class", "Get the player's punch angle." )
 {
     lua_CBasePlayer *player = LUA_BINDING_ARGUMENT( luaL_checkplayer, 1, "player" );
     QAngle v = player->GetPunchAngle();
@@ -421,7 +421,7 @@ LUA_BINDING_BEGIN( CBasePlayer, GetPunchAngle, "class", "Get the player's punch 
 }
 LUA_BINDING_END( "Angle", "The player's punch angle." )
 
-LUA_BINDING_BEGIN( CBasePlayer, GetStepSoundCache, "class", "Get the player's step sound cache." )
+LUA_BINDING_BEGIN( Player, GetStepSoundCache, "class", "Get the player's step sound cache." )
 {
     lua_CBasePlayer *player = LUA_BINDING_ARGUMENT( luaL_checkplayer, 1, "player" );
     lua_newtable( L );
@@ -446,7 +446,7 @@ LUA_BINDING_BEGIN( CBasePlayer, GetStepSoundCache, "class", "Get the player's st
 }
 LUA_BINDING_END( "table", "The player's step sound cache." )
 
-LUA_BINDING_BEGIN( CBasePlayer, GetStepSoundVelocities, "class", "Get the player's step sound velocities." )
+LUA_BINDING_BEGIN( Player, GetStepSoundVelocities, "class", "Get the player's step sound velocities." )
 {
     lua_CBasePlayer *player = LUA_BINDING_ARGUMENT( luaL_checkplayer, 1, "player" );
     float velwalk, velrun;
@@ -457,7 +457,7 @@ LUA_BINDING_BEGIN( CBasePlayer, GetStepSoundVelocities, "class", "Get the player
 }
 LUA_BINDING_END( "number", "The player's step sound walk velocity.", "number", "The player's step sound run velocity." )
 
-LUA_BINDING_BEGIN( CBasePlayer, GetSwimSoundTime, "class", "Get the player's swim sound time." )
+LUA_BINDING_BEGIN( Player, GetSwimSoundTime, "class", "Get the player's swim sound time." )
 {
     lua_CBasePlayer *player = LUA_BINDING_ARGUMENT( luaL_checkplayer, 1, "player" );
     lua_pushnumber( L, player->GetSwimSoundTime() );
@@ -465,7 +465,7 @@ LUA_BINDING_BEGIN( CBasePlayer, GetSwimSoundTime, "class", "Get the player's swi
 }
 LUA_BINDING_END( "number", "The player's swim sound time." )
 
-LUA_BINDING_BEGIN( CBasePlayer, GetTimeBase, "class", "Get the player's time base." )
+LUA_BINDING_BEGIN( Player, GetTimeBase, "class", "Get the player's time base." )
 {
     lua_CBasePlayer *player = LUA_BINDING_ARGUMENT( luaL_checkplayer, 1, "player" );
     lua_pushnumber( L, player->GetTimeBase() );
@@ -473,7 +473,7 @@ LUA_BINDING_BEGIN( CBasePlayer, GetTimeBase, "class", "Get the player's time bas
 }
 LUA_BINDING_END( "number", "The player's time base." )
 
-LUA_BINDING_BEGIN( CBasePlayer, GetUseEntity, "class", "Get the player's use entity." )
+LUA_BINDING_BEGIN( Player, GetUseEntity, "class", "Get the player's use entity." )
 {
     lua_CBasePlayer *player = LUA_BINDING_ARGUMENT( luaL_checkplayer, 1, "player" );
     CBaseEntity::PushLuaInstanceSafe( L, player->GetUseEntity() );
@@ -481,7 +481,7 @@ LUA_BINDING_BEGIN( CBasePlayer, GetUseEntity, "class", "Get the player's use ent
 }
 LUA_BINDING_END( "entity", "The player's use entity." )
 
-LUA_BINDING_BEGIN( CBasePlayer, GetUserId, "class", "Get the player's user ID." )
+LUA_BINDING_BEGIN( Player, GetUserId, "class", "Get the player's user ID." )
 {
     lua_CBasePlayer *player = LUA_BINDING_ARGUMENT( luaL_checkplayer, 1, "player" );
     lua_pushinteger( L, player->GetUserID() );
@@ -489,7 +489,7 @@ LUA_BINDING_BEGIN( CBasePlayer, GetUserId, "class", "Get the player's user ID." 
 }
 LUA_BINDING_END( "number", "The player's user ID." )
 
-LUA_BINDING_BEGIN( CBasePlayer, GetVehicleEntity, "class", "Get the player's vehicle entity." )
+LUA_BINDING_BEGIN( Player, GetVehicleEntity, "class", "Get the player's vehicle entity." )
 {
     lua_CBasePlayer *player = LUA_BINDING_ARGUMENT( luaL_checkplayer, 1, "player" );
     CBaseEntity::PushLuaInstanceSafe( L, player->GetVehicleEntity() );
@@ -497,7 +497,7 @@ LUA_BINDING_BEGIN( CBasePlayer, GetVehicleEntity, "class", "Get the player's veh
 }
 LUA_BINDING_END( "entity", "The player's vehicle entity." )
 
-LUA_BINDING_BEGIN( CBasePlayer, GetViewEntity, "class", "Get the player's view entity." )
+LUA_BINDING_BEGIN( Player, GetViewEntity, "class", "Get the player's view entity." )
 {
     lua_CBasePlayer *player = LUA_BINDING_ARGUMENT( luaL_checkplayer, 1, "player" );
 
@@ -519,7 +519,7 @@ LUA_BINDING_BEGIN( CBasePlayer, GetViewEntity, "class", "Get the player's view e
 LUA_BINDING_END( "entity", "The player's view entity." )
 
 // FIXME: Push CBaseViewModel instead
-LUA_BINDING_BEGIN( CBasePlayer, GetViewModel, "class", "Get the player's view model." )
+LUA_BINDING_BEGIN( Player, GetViewModel, "class", "Get the player's view model." )
 {
     lua_CBasePlayer *player = LUA_BINDING_ARGUMENT( luaL_checkplayer, 1, "player" );
     CBaseEntity::PushLuaInstanceSafe( L, player->GetViewModel( ( int )LUA_BINDING_ARGUMENT_WITH_DEFAULT( luaL_optnumber, 2, 0, "number" ) ) );
@@ -527,7 +527,7 @@ LUA_BINDING_BEGIN( CBasePlayer, GetViewModel, "class", "Get the player's view mo
 }
 LUA_BINDING_END( "entity", "The player's view model." )
 
-LUA_BINDING_BEGIN( CBasePlayer, GetWaterJumpTime, "class", "Get the player's water jump time." )
+LUA_BINDING_BEGIN( Player, GetWaterJumpTime, "class", "Get the player's water jump time." )
 {
     lua_CBasePlayer *player = LUA_BINDING_ARGUMENT( luaL_checkplayer, 1, "player" );
     lua_pushnumber( L, player->GetWaterJumpTime() );
@@ -535,7 +535,7 @@ LUA_BINDING_BEGIN( CBasePlayer, GetWaterJumpTime, "class", "Get the player's wat
 }
 LUA_BINDING_END( "number", "The player's water jump time." )
 
-LUA_BINDING_BEGIN( CBasePlayer, GetWeapon, "class", "Get the player's weapon." )
+LUA_BINDING_BEGIN( Player, GetWeapon, "class", "Get the player's weapon." )
 {
     lua_CBasePlayer *player = LUA_BINDING_ARGUMENT( luaL_checkplayer, 1, "player" );
     CBaseEntity::PushLuaInstanceSafe( L, player->GetWeapon( LUA_BINDING_ARGUMENT( luaL_checknumber, 2, "index" ) ) );
@@ -543,7 +543,7 @@ LUA_BINDING_BEGIN( CBasePlayer, GetWeapon, "class", "Get the player's weapon." )
 }
 LUA_BINDING_END( "entity", "The player's weapon." )
 
-LUA_BINDING_BEGIN( CBasePlayer, HintMessage, "class", "Hint a message to the player." )
+LUA_BINDING_BEGIN( Player, HintMessage, "class", "Hint a message to the player." )
 {
     lua_CBasePlayer *player = LUA_BINDING_ARGUMENT( luaL_checkplayer, 1, "player" );
     player->HintMessage( LUA_BINDING_ARGUMENT( luaL_checkstring, 2, "message" ) );
@@ -551,7 +551,7 @@ LUA_BINDING_BEGIN( CBasePlayer, HintMessage, "class", "Hint a message to the pla
 }
 LUA_BINDING_END()
 
-// LUA_BINDING_BEGIN( CBasePlayer, IncrementEfNoInterpParity, "class", "Increment the player's EF no interp parity." )
+// LUA_BINDING_BEGIN( Player, IncrementEfNoInterpParity, "class", "Increment the player's EF no interp parity." )
 // {
 //     lua_CBasePlayer *player = LUA_BINDING_ARGUMENT( luaL_checkplayer, 1, "player" );
 //     player->IncrementEFNoInterpParity();
@@ -559,7 +559,7 @@ LUA_BINDING_END()
 // }
 // LUA_BINDING_END()
 
-LUA_BINDING_BEGIN( CBasePlayer, IsBot, "class", "Check if the player is a bot." )
+LUA_BINDING_BEGIN( Player, IsBot, "class", "Check if the player is a bot." )
 {
     lua_CBasePlayer *player = LUA_BINDING_ARGUMENT( luaL_checkplayer, 1, "player" );
     lua_pushboolean( L, player->IsBot() );
@@ -567,7 +567,7 @@ LUA_BINDING_BEGIN( CBasePlayer, IsBot, "class", "Check if the player is a bot." 
 }
 LUA_BINDING_END( "boolean", "Whether the player is a bot." )
 
-LUA_BINDING_BEGIN( CBasePlayer, IsHltv, "class", "Check if the player is HLTV." )
+LUA_BINDING_BEGIN( Player, IsHltv, "class", "Check if the player is HLTV." )
 {
     lua_CBasePlayer *player = LUA_BINDING_ARGUMENT( luaL_checkplayer, 1, "player" );
     lua_pushboolean( L, player->IsHLTV() );
@@ -575,7 +575,7 @@ LUA_BINDING_BEGIN( CBasePlayer, IsHltv, "class", "Check if the player is HLTV." 
 }
 LUA_BINDING_END( "boolean", "Whether the player is HLTV." )
 
-LUA_BINDING_BEGIN( CBasePlayer, IsInVehicle, "class", "Check if the player is in a vehicle." )
+LUA_BINDING_BEGIN( Player, IsInVehicle, "class", "Check if the player is in a vehicle." )
 {
     lua_CBasePlayer *player = LUA_BINDING_ARGUMENT( luaL_checkplayer, 1, "player" );
     lua_pushboolean( L, player->IsInAVehicle() );
@@ -583,7 +583,7 @@ LUA_BINDING_BEGIN( CBasePlayer, IsInVehicle, "class", "Check if the player is in
 }
 LUA_BINDING_END( "boolean", "Whether the player is in a vehicle." )
 
-LUA_BINDING_BEGIN( CBasePlayer, IsObserver, "class", "Check if the player is an observer." )
+LUA_BINDING_BEGIN( Player, IsObserver, "class", "Check if the player is an observer." )
 {
     lua_CBasePlayer *player = LUA_BINDING_ARGUMENT( luaL_checkplayer, 1, "player" );
     lua_pushboolean( L, player->IsObserver() );
@@ -591,7 +591,7 @@ LUA_BINDING_BEGIN( CBasePlayer, IsObserver, "class", "Check if the player is an 
 }
 LUA_BINDING_END( "boolean", "Whether the player is an observer." )
 
-LUA_BINDING_BEGIN( CBasePlayer, IsPlayerUnderwater, "class", "Check if the player is underwater." )
+LUA_BINDING_BEGIN( Player, IsPlayerUnderwater, "class", "Check if the player is underwater." )
 {
     lua_CBasePlayer *player = LUA_BINDING_ARGUMENT( luaL_checkplayer, 1, "player" );
     lua_pushboolean( L, player->IsPlayerUnderwater() );
@@ -599,7 +599,7 @@ LUA_BINDING_BEGIN( CBasePlayer, IsPlayerUnderwater, "class", "Check if the playe
 }
 LUA_BINDING_END( "boolean", "Whether the player is underwater." )
 
-LUA_BINDING_BEGIN( CBasePlayer, IsSpeaking, "class", "Check if the player is speaking." )
+LUA_BINDING_BEGIN( Player, IsSpeaking, "class", "Check if the player is speaking." )
 {
 #ifdef CLIENT_DLL
     lua_CBasePlayer *player = LUA_BINDING_ARGUMENT( luaL_checkplayer, 1, "player" );
@@ -610,7 +610,7 @@ LUA_BINDING_BEGIN( CBasePlayer, IsSpeaking, "class", "Check if the player is spe
         return 1;
     }
 #else
-    DevWarning( "CBasePlayer::IsSpeaking is not implemented on the server\n" );
+    DevWarning( "Player::IsSpeaking is not implemented on the server\n" );
 #endif
 
     lua_pushboolean( L, false );
@@ -618,7 +618,7 @@ LUA_BINDING_BEGIN( CBasePlayer, IsSpeaking, "class", "Check if the player is spe
 }
 LUA_BINDING_END( "boolean", "Whether the player is speaking." )
 
-LUA_BINDING_BEGIN( CBasePlayer, IsSuitEquipped, "class", "Check if the player has the HEV suit equipped." )
+LUA_BINDING_BEGIN( Player, IsSuitEquipped, "class", "Check if the player has the HEV suit equipped." )
 {
     lua_CBasePlayer *player = LUA_BINDING_ARGUMENT( luaL_checkplayer, 1, "player" );
     lua_pushboolean( L, player->IsSuitEquipped() );
@@ -626,7 +626,7 @@ LUA_BINDING_BEGIN( CBasePlayer, IsSuitEquipped, "class", "Check if the player ha
 }
 LUA_BINDING_END( "boolean", "Whether the player has the HEV suit equipped." )
 
-LUA_BINDING_BEGIN( CBasePlayer, IsUseableEntity, "class", "Check if the player can use an entity." )
+LUA_BINDING_BEGIN( Player, IsUseableEntity, "class", "Check if the player can use an entity." )
 {
     lua_CBasePlayer *player = LUA_BINDING_ARGUMENT( luaL_checkplayer, 1, "player" );
     lua_pushboolean( L,
@@ -637,7 +637,7 @@ LUA_BINDING_BEGIN( CBasePlayer, IsUseableEntity, "class", "Check if the player c
 }
 LUA_BINDING_END( "boolean", "Whether the player can use the entity." )
 
-LUA_BINDING_BEGIN( CBasePlayer, ItemPostFrame, "class", "Call the player's item post frame." )
+LUA_BINDING_BEGIN( Player, ItemPostFrame, "class", "Call the player's item post frame." )
 {
     lua_CBasePlayer *player = LUA_BINDING_ARGUMENT( luaL_checkplayer, 1, "player" );
     player->ItemPostFrame();
@@ -645,7 +645,7 @@ LUA_BINDING_BEGIN( CBasePlayer, ItemPostFrame, "class", "Call the player's item 
 }
 LUA_BINDING_END()
 
-LUA_BINDING_BEGIN( CBasePlayer, ItemPreFrame, "class", "Call the player's item pre frame." )
+LUA_BINDING_BEGIN( Player, ItemPreFrame, "class", "Call the player's item pre frame." )
 {
     lua_CBasePlayer *player = LUA_BINDING_ARGUMENT( luaL_checkplayer, 1, "player" );
     player->ItemPreFrame();
@@ -653,7 +653,7 @@ LUA_BINDING_BEGIN( CBasePlayer, ItemPreFrame, "class", "Call the player's item p
 }
 LUA_BINDING_END()
 
-LUA_BINDING_BEGIN( CBasePlayer, LeaveVehicle, "class", "Make the player leave their vehicle." )
+LUA_BINDING_BEGIN( Player, LeaveVehicle, "class", "Make the player leave their vehicle." )
 {
     lua_CBasePlayer *player = LUA_BINDING_ARGUMENT( luaL_checkplayer, 1, "player" );
     player->LeaveVehicle();
@@ -661,7 +661,7 @@ LUA_BINDING_BEGIN( CBasePlayer, LeaveVehicle, "class", "Make the player leave th
 }
 LUA_BINDING_END()
 
-LUA_BINDING_BEGIN( CBasePlayer, GetMaxSpeed, "class", "Get the player's max speed." )
+LUA_BINDING_BEGIN( Player, GetMaxSpeed, "class", "Get the player's max speed." )
 {
     lua_CBasePlayer *player = LUA_BINDING_ARGUMENT( luaL_checkplayer, 1, "player" );
     lua_pushnumber( L, player->MaxSpeed() );
@@ -670,7 +670,7 @@ LUA_BINDING_BEGIN( CBasePlayer, GetMaxSpeed, "class", "Get the player's max spee
 LUA_BINDING_END( "number", "The player's max speed." )
 
 // Experiment; not useful in Lua
-// LUA_BINDING_BEGIN( CBasePlayer, MyCombatCharacterPointer, "class", "Get the player's combat character pointer." )
+// LUA_BINDING_BEGIN( Player, MyCombatCharacterPointer, "class", "Get the player's combat character pointer." )
 //{
 //    lua_CBasePlayer *player = LUA_BINDING_ARGUMENT( luaL_checkplayer, 1, "player" );
 //    CBaseEntity::PushLuaInstanceSafe( L, player->MyCombatCharacterPointer() );
@@ -678,7 +678,7 @@ LUA_BINDING_END( "number", "The player's max speed." )
 //}
 // LUA_BINDING_END( "entity", "The player's combat character pointer." )
 
-LUA_BINDING_BEGIN( CBasePlayer, PlayerUse, "class", "Make the player use an entity." )
+LUA_BINDING_BEGIN( Player, PlayerUse, "class", "Make the player use an entity." )
 {
     lua_CBasePlayer *player = LUA_BINDING_ARGUMENT( luaL_checkplayer, 1, "player" );
     player->PlayerUse();
@@ -686,7 +686,7 @@ LUA_BINDING_BEGIN( CBasePlayer, PlayerUse, "class", "Make the player use an enti
 }
 LUA_BINDING_END()
 
-LUA_BINDING_BEGIN( CBasePlayer, PlayStepSound, "class", "Play a step sound for the player." )
+LUA_BINDING_BEGIN( Player, PlayStepSound, "class", "Play a step sound for the player." )
 {
     lua_CBasePlayer *player = LUA_BINDING_ARGUMENT( luaL_checkplayer, 1, "player" );
     player->PlayStepSound(
@@ -698,7 +698,7 @@ LUA_BINDING_BEGIN( CBasePlayer, PlayStepSound, "class", "Play a step sound for t
 }
 LUA_BINDING_END()
 
-LUA_BINDING_BEGIN( CBasePlayer, PostThink, "class", "Call the player's post think." )
+LUA_BINDING_BEGIN( Player, PostThink, "class", "Call the player's post think." )
 {
     lua_CBasePlayer *player = LUA_BINDING_ARGUMENT( luaL_checkplayer, 1, "player" );
     player->PostThink();
@@ -706,7 +706,7 @@ LUA_BINDING_BEGIN( CBasePlayer, PostThink, "class", "Call the player's post thin
 }
 LUA_BINDING_END()
 
-LUA_BINDING_BEGIN( CBasePlayer, PreThink, "class", "Call the player's pre think." )
+LUA_BINDING_BEGIN( Player, PreThink, "class", "Call the player's pre think." )
 {
     lua_CBasePlayer *player = LUA_BINDING_ARGUMENT( luaL_checkplayer, 1, "player" );
     player->PreThink();
@@ -714,7 +714,7 @@ LUA_BINDING_BEGIN( CBasePlayer, PreThink, "class", "Call the player's pre think.
 }
 LUA_BINDING_END()
 
-LUA_BINDING_BEGIN( CBasePlayer, RemoveAllAmmo, "class", "Remove all ammo from the player." )
+LUA_BINDING_BEGIN( Player, RemoveAllAmmo, "class", "Remove all ammo from the player." )
 {
     lua_CBasePlayer *player = LUA_BINDING_ARGUMENT( luaL_checkplayer, 1, "player" );
     player->RemoveAllAmmo();
@@ -722,7 +722,7 @@ LUA_BINDING_BEGIN( CBasePlayer, RemoveAllAmmo, "class", "Remove all ammo from th
 }
 LUA_BINDING_END()
 
-LUA_BINDING_BEGIN( CBasePlayer, RemoveAmmo, "class", "Remove ammo from the player." )
+LUA_BINDING_BEGIN( Player, RemoveAmmo, "class", "Remove ammo from the player." )
 {
     lua_CBasePlayer *player = LUA_BINDING_ARGUMENT( luaL_checkplayer, 1, "player" );
 
@@ -745,7 +745,7 @@ LUA_BINDING_BEGIN( CBasePlayer, RemoveAmmo, "class", "Remove ammo from the playe
 }
 LUA_BINDING_END()
 
-LUA_BINDING_BEGIN( CBasePlayer, RemoveFromPlayerSimulationList, "class", "Remove an entity from the player's simulation list." )
+LUA_BINDING_BEGIN( Player, RemoveFromPlayerSimulationList, "class", "Remove an entity from the player's simulation list." )
 {
     lua_CBasePlayer *player = LUA_BINDING_ARGUMENT( luaL_checkplayer, 1, "player" );
     player->RemoveFromPlayerSimulationList( LUA_BINDING_ARGUMENT( luaL_checkentity, 2, "entity" ) );
@@ -753,7 +753,7 @@ LUA_BINDING_BEGIN( CBasePlayer, RemoveFromPlayerSimulationList, "class", "Remove
 }
 LUA_BINDING_END()
 
-LUA_BINDING_BEGIN( CBasePlayer, ResetAutoAim, "class", "Reset the player's autoaim." )
+LUA_BINDING_BEGIN( Player, ResetAutoAim, "class", "Reset the player's autoaim." )
 {
     lua_CBasePlayer *player = LUA_BINDING_ARGUMENT( luaL_checkplayer, 1, "player" );
     player->ResetAutoaim();
@@ -761,7 +761,7 @@ LUA_BINDING_BEGIN( CBasePlayer, ResetAutoAim, "class", "Reset the player's autoa
 }
 LUA_BINDING_END()
 
-LUA_BINDING_BEGIN( CBasePlayer, ResetObserverMode, "class", "Reset the player's observer mode." )
+LUA_BINDING_BEGIN( Player, ResetObserverMode, "class", "Reset the player's observer mode." )
 {
     lua_CBasePlayer *player = LUA_BINDING_ARGUMENT( luaL_checkplayer, 1, "player" );
     player->ResetObserverMode();
@@ -769,7 +769,7 @@ LUA_BINDING_BEGIN( CBasePlayer, ResetObserverMode, "class", "Reset the player's 
 }
 LUA_BINDING_END()
 
-LUA_BINDING_BEGIN( CBasePlayer, SelectItem, "class", "Select an item for the player." )
+LUA_BINDING_BEGIN( Player, SelectItem, "class", "Select an item for the player." )
 {
     lua_CBasePlayer *player = LUA_BINDING_ARGUMENT( luaL_checkplayer, 1, "player" );
     player->SelectItem(
@@ -779,7 +779,7 @@ LUA_BINDING_BEGIN( CBasePlayer, SelectItem, "class", "Select an item for the pla
 }
 LUA_BINDING_END()
 
-LUA_BINDING_BEGIN( CBasePlayer, SelectLastItem, "class", "Select the player's last item." )
+LUA_BINDING_BEGIN( Player, SelectLastItem, "class", "Select the player's last item." )
 {
     lua_CBasePlayer *player = LUA_BINDING_ARGUMENT( luaL_checkplayer, 1, "player" );
     player->SelectLastItem();
@@ -787,7 +787,7 @@ LUA_BINDING_BEGIN( CBasePlayer, SelectLastItem, "class", "Select the player's la
 }
 LUA_BINDING_END()
 
-LUA_BINDING_BEGIN( CBasePlayer, SetAmmoCount, "class", "Set the player's ammo count." )
+LUA_BINDING_BEGIN( Player, SetAmmoCount, "class", "Set the player's ammo count." )
 {
     lua_CBasePlayer *player = LUA_BINDING_ARGUMENT( luaL_checkplayer, 1, "player" );
     player->SetAmmoCount(
@@ -797,7 +797,7 @@ LUA_BINDING_BEGIN( CBasePlayer, SetAmmoCount, "class", "Set the player's ammo co
 }
 LUA_BINDING_END()
 
-LUA_BINDING_BEGIN( CBasePlayer, SetAnimation, "class", "Set the player's animation." )
+LUA_BINDING_BEGIN( Player, SetAnimation, "class", "Set the player's animation." )
 {
     lua_CBasePlayer *player = LUA_BINDING_ARGUMENT( luaL_checkplayer, 1, "player" );
     player->SetAnimation( ( PLAYER_ANIM )( int )LUA_BINDING_ARGUMENT( luaL_checknumber, 2, "animation" ) );
@@ -805,7 +805,7 @@ LUA_BINDING_BEGIN( CBasePlayer, SetAnimation, "class", "Set the player's animati
 }
 LUA_BINDING_END()
 
-LUA_BINDING_BEGIN( CBasePlayer, SetAnimationExtension, "class", "Set the player's animation extension." )
+LUA_BINDING_BEGIN( Player, SetAnimationExtension, "class", "Set the player's animation extension." )
 {
     lua_CBasePlayer *player = LUA_BINDING_ARGUMENT( luaL_checkplayer, 1, "player" );
     player->SetAnimationExtension( LUA_BINDING_ARGUMENT( luaL_checkstring, 2, "extension" ) );
@@ -813,7 +813,7 @@ LUA_BINDING_BEGIN( CBasePlayer, SetAnimationExtension, "class", "Set the player'
 }
 LUA_BINDING_END()
 
-LUA_BINDING_BEGIN( CBasePlayer, SetBloodColor, "class", "Set the player's blood color." )
+LUA_BINDING_BEGIN( Player, SetBloodColor, "class", "Set the player's blood color." )
 {
     lua_CBasePlayer *player = LUA_BINDING_ARGUMENT( luaL_checkplayer, 1, "player" );
     player->SetBloodColor( LUA_BINDING_ARGUMENT( luaL_checknumber, 2, "color" ) );
@@ -821,7 +821,7 @@ LUA_BINDING_BEGIN( CBasePlayer, SetBloodColor, "class", "Set the player's blood 
 }
 LUA_BINDING_END()
 
-LUA_BINDING_BEGIN( CBasePlayer, SetFov, "class", "Set the player's field of view." )
+LUA_BINDING_BEGIN( Player, SetFov, "class", "Set the player's field of view." )
 {
     lua_CBasePlayer *player = LUA_BINDING_ARGUMENT( luaL_checkplayer, 1, "player" );
     lua_pushboolean( L,
@@ -834,7 +834,7 @@ LUA_BINDING_BEGIN( CBasePlayer, SetFov, "class", "Set the player's field of view
 }
 LUA_BINDING_END()
 
-LUA_BINDING_BEGIN( CBasePlayer, SetLadderNormal, "class", "Set the player's ladder normal." )
+LUA_BINDING_BEGIN( Player, SetLadderNormal, "class", "Set the player's ladder normal." )
 {
     lua_CBasePlayer *player = LUA_BINDING_ARGUMENT( luaL_checkplayer, 1, "player" );
     player->SetLadderNormal( LUA_BINDING_ARGUMENT( luaL_checkvector, 2, "normal" ) );
@@ -842,7 +842,7 @@ LUA_BINDING_BEGIN( CBasePlayer, SetLadderNormal, "class", "Set the player's ladd
 }
 LUA_BINDING_END()
 
-LUA_BINDING_BEGIN( CBasePlayer, SetMaxSpeed, "class", "Set the player's max speed." )
+LUA_BINDING_BEGIN( Player, SetMaxSpeed, "class", "Set the player's max speed." )
 {
     lua_CBasePlayer *player = LUA_BINDING_ARGUMENT( luaL_checkplayer, 1, "player" );
     player->SetMaxSpeed( LUA_BINDING_ARGUMENT( luaL_checknumber, 2, "speed" ) );
@@ -850,7 +850,7 @@ LUA_BINDING_BEGIN( CBasePlayer, SetMaxSpeed, "class", "Set the player's max spee
 }
 LUA_BINDING_END()
 
-LUA_BINDING_BEGIN( CBasePlayer, SetNextAttack, "class", "Set the player's next attack." )
+LUA_BINDING_BEGIN( Player, SetNextAttack, "class", "Set the player's next attack." )
 {
     lua_CBasePlayer *player = LUA_BINDING_ARGUMENT( luaL_checkplayer, 1, "player" );
     player->SetNextAttack( LUA_BINDING_ARGUMENT( luaL_checknumber, 2, "time" ) );
@@ -858,7 +858,7 @@ LUA_BINDING_BEGIN( CBasePlayer, SetNextAttack, "class", "Set the player's next a
 }
 LUA_BINDING_END()
 
-LUA_BINDING_BEGIN( CBasePlayer, SetPlayerLocalData, "class", "Set the player's local data." )
+LUA_BINDING_BEGIN( Player, SetPlayerLocalData, "class", "Set the player's local data." )
 {
     lua_CBasePlayer *player = LUA_BINDING_ARGUMENT( luaL_checkplayer, 1, "player" );
     const char *field = LUA_BINDING_ARGUMENT( luaL_checkstring, 2, "field" );
@@ -916,7 +916,7 @@ LUA_BINDING_BEGIN( CBasePlayer, SetPlayerLocalData, "class", "Set the player's l
 }
 LUA_BINDING_END()
 
-LUA_BINDING_BEGIN( CBasePlayer, SetPlayerUnderwater, "class", "Set whether the player is underwater." )
+LUA_BINDING_BEGIN( Player, SetPlayerUnderwater, "class", "Set whether the player is underwater." )
 {
     lua_CBasePlayer *player = LUA_BINDING_ARGUMENT( luaL_checkplayer, 1, "player" );
     player->SetPlayerUnderwater( LUA_BINDING_ARGUMENT( luaL_checkboolean, 2, "underwater" ) );
@@ -924,7 +924,7 @@ LUA_BINDING_BEGIN( CBasePlayer, SetPlayerUnderwater, "class", "Set whether the p
 }
 LUA_BINDING_END()
 
-LUA_BINDING_BEGIN( CBasePlayer, SetPreviouslyPredictedOrigin, "class", "Set the player's previously predicted origin." )
+LUA_BINDING_BEGIN( Player, SetPreviouslyPredictedOrigin, "class", "Set the player's previously predicted origin." )
 {
     lua_CBasePlayer *player = LUA_BINDING_ARGUMENT( luaL_checkplayer, 1, "player" );
     player->SetPreviouslyPredictedOrigin( LUA_BINDING_ARGUMENT( luaL_checkvector, 2, "origin" ) );
@@ -932,7 +932,7 @@ LUA_BINDING_BEGIN( CBasePlayer, SetPreviouslyPredictedOrigin, "class", "Set the 
 }
 LUA_BINDING_END()
 
-LUA_BINDING_BEGIN( CBasePlayer, SetPunchAngle, "class", "Set the player's punch angle." )
+LUA_BINDING_BEGIN( Player, SetPunchAngle, "class", "Set the player's punch angle." )
 {
     lua_CBasePlayer *player = LUA_BINDING_ARGUMENT( luaL_checkplayer, 1, "player" );
     player->SetPunchAngle( LUA_BINDING_ARGUMENT( luaL_checkangle, 2, "angle" ) );
@@ -940,7 +940,7 @@ LUA_BINDING_BEGIN( CBasePlayer, SetPunchAngle, "class", "Set the player's punch 
 }
 LUA_BINDING_END()
 
-LUA_BINDING_BEGIN( CBasePlayer, SetStepSoundCache, "class", "Set the player's step sound cache." )
+LUA_BINDING_BEGIN( Player, SetStepSoundCache, "class", "Set the player's step sound cache." )
 {
     lua_CBasePlayer *player = LUA_BINDING_ARGUMENT( luaL_checkplayer, 1, "player" );
     int index = LUA_BINDING_ARGUMENT( luaL_checknumber, 2, "index" );
@@ -964,7 +964,7 @@ LUA_BINDING_BEGIN( CBasePlayer, SetStepSoundCache, "class", "Set the player's st
 }
 LUA_BINDING_END()
 
-LUA_BINDING_BEGIN( CBasePlayer, SetSuitUpdate, "class", "Set the player's suit update." )
+LUA_BINDING_BEGIN( Player, SetSuitUpdate, "class", "Set the player's suit update." )
 {
     lua_CBasePlayer *player = LUA_BINDING_ARGUMENT( luaL_checkplayer, 1, "player" );
     player->SetSuitUpdate(
@@ -975,7 +975,7 @@ LUA_BINDING_BEGIN( CBasePlayer, SetSuitUpdate, "class", "Set the player's suit u
 }
 LUA_BINDING_END()
 
-LUA_BINDING_BEGIN( CBasePlayer, SetSwimSoundTime, "class", "Set the player's swim sound time." )
+LUA_BINDING_BEGIN( Player, SetSwimSoundTime, "class", "Set the player's swim sound time." )
 {
     lua_CBasePlayer *player = LUA_BINDING_ARGUMENT( luaL_checkplayer, 1, "player" );
     player->SetSwimSoundTime( LUA_BINDING_ARGUMENT( luaL_checknumber, 2, "time" ) );
@@ -983,7 +983,7 @@ LUA_BINDING_BEGIN( CBasePlayer, SetSwimSoundTime, "class", "Set the player's swi
 }
 LUA_BINDING_END()
 
-LUA_BINDING_BEGIN( CBasePlayer, SetWaterJumpTime, "class", "Set the player's water jump time." )
+LUA_BINDING_BEGIN( Player, SetWaterJumpTime, "class", "Set the player's water jump time." )
 {
     lua_CBasePlayer *player = LUA_BINDING_ARGUMENT( luaL_checkplayer, 1, "player" );
     player->SetWaterJumpTime( LUA_BINDING_ARGUMENT( luaL_checknumber, 2, "time" ) );
@@ -991,7 +991,7 @@ LUA_BINDING_BEGIN( CBasePlayer, SetWaterJumpTime, "class", "Set the player's wat
 }
 LUA_BINDING_END()
 
-LUA_BINDING_BEGIN( CBasePlayer, SharedSpawn, "class", "Shared spawn." )
+LUA_BINDING_BEGIN( Player, SharedSpawn, "class", "Shared spawn." )
 {
     lua_CBasePlayer *player = LUA_BINDING_ARGUMENT( luaL_checkplayer, 1, "player" );
     player->SharedSpawn();
@@ -999,14 +999,14 @@ LUA_BINDING_BEGIN( CBasePlayer, SharedSpawn, "class", "Shared spawn." )
 }
 LUA_BINDING_END()
 
-LUA_BINDING_BEGIN( CBasePlayer, ShouldShowHints, "class", "Should show hints." )
+LUA_BINDING_BEGIN( Player, ShouldShowHints, "class", "Should show hints." )
 {
     lua_pushboolean( L, LUA_BINDING_ARGUMENT( luaL_checkplayer, 1, "player" )->ShouldShowHints() );
     return 1;
 }
 LUA_BINDING_END()
 
-LUA_BINDING_BEGIN( CBasePlayer, SimulatePlayerSimulatedEntities, "class", "Simulate player simulated entities." )
+LUA_BINDING_BEGIN( Player, SimulatePlayerSimulatedEntities, "class", "Simulate player simulated entities." )
 {
     lua_CBasePlayer *player = LUA_BINDING_ARGUMENT( luaL_checkplayer, 1, "player" );
     player->SimulatePlayerSimulatedEntities();
@@ -1014,7 +1014,7 @@ LUA_BINDING_BEGIN( CBasePlayer, SimulatePlayerSimulatedEntities, "class", "Simul
 }
 LUA_BINDING_END()
 
-LUA_BINDING_BEGIN( CBasePlayer, SmoothViewOnStairs, "class", "Smooth view on stairs." )
+LUA_BINDING_BEGIN( Player, SmoothViewOnStairs, "class", "Smooth view on stairs." )
 {
     lua_CBasePlayer *player = LUA_BINDING_ARGUMENT( luaL_checkplayer, 1, "player" );
     player->SmoothViewOnStairs( LUA_BINDING_ARGUMENT( luaL_checkvector, 2, "normal" ) );
@@ -1022,7 +1022,7 @@ LUA_BINDING_BEGIN( CBasePlayer, SmoothViewOnStairs, "class", "Smooth view on sta
 }
 LUA_BINDING_END()
 
-LUA_BINDING_BEGIN( CBasePlayer, SwitchToNextBestWeapon, "class", "Switch to the player's next best weapon." )
+LUA_BINDING_BEGIN( Player, SwitchToNextBestWeapon, "class", "Switch to the player's next best weapon." )
 {
     lua_pushboolean( L,
                      LUA_BINDING_ARGUMENT( luaL_checkplayer, 1, "player" )->SwitchToNextBestWeapon( LUA_BINDING_ARGUMENT( luaL_checkweapon, 2, "weapon" ) ) );
@@ -1030,7 +1030,7 @@ LUA_BINDING_BEGIN( CBasePlayer, SwitchToNextBestWeapon, "class", "Switch to the 
 }
 LUA_BINDING_END()
 
-LUA_BINDING_BEGIN( CBasePlayer, UpdateClientData, "class", "Update the player's client data." )
+LUA_BINDING_BEGIN( Player, UpdateClientData, "class", "Update the player's client data." )
 {
     lua_CBasePlayer *player = LUA_BINDING_ARGUMENT( luaL_checkplayer, 1, "player" );
     player->UpdateClientData();
@@ -1038,7 +1038,7 @@ LUA_BINDING_BEGIN( CBasePlayer, UpdateClientData, "class", "Update the player's 
 }
 LUA_BINDING_END()
 
-LUA_BINDING_BEGIN( CBasePlayer, UpdateUnderwaterState, "class", "Update the player's underwater state." )
+LUA_BINDING_BEGIN( Player, UpdateUnderwaterState, "class", "Update the player's underwater state." )
 {
     lua_CBasePlayer *player = LUA_BINDING_ARGUMENT( luaL_checkplayer, 1, "player" );
     player->UpdateUnderwaterState();
@@ -1046,14 +1046,14 @@ LUA_BINDING_BEGIN( CBasePlayer, UpdateUnderwaterState, "class", "Update the play
 }
 LUA_BINDING_END()
 
-LUA_BINDING_BEGIN( CBasePlayer, UsingStandardWeaponsInVehicle, "class", "Check if the player is using standard weapons in a vehicle." )
+LUA_BINDING_BEGIN( Player, UsingStandardWeaponsInVehicle, "class", "Check if the player is using standard weapons in a vehicle." )
 {
     lua_pushboolean( L, LUA_BINDING_ARGUMENT( luaL_checkplayer, 1, "player" )->UsingStandardWeaponsInVehicle() );
     return 1;
 }
 LUA_BINDING_END()
 
-LUA_BINDING_BEGIN( CBasePlayer, ViewPunch, "class", "View punch." )
+LUA_BINDING_BEGIN( Player, ViewPunch, "class", "View punch." )
 {
     lua_CBasePlayer *player = LUA_BINDING_ARGUMENT( luaL_checkplayer, 1, "player" );
     player->ViewPunch( LUA_BINDING_ARGUMENT( luaL_checkangle, 2, "angle" ) );
@@ -1061,7 +1061,7 @@ LUA_BINDING_BEGIN( CBasePlayer, ViewPunch, "class", "View punch." )
 }
 LUA_BINDING_END()
 
-LUA_BINDING_BEGIN( CBasePlayer, ViewPunchReset, "class", "View punch reset." )
+LUA_BINDING_BEGIN( Player, ViewPunchReset, "class", "View punch reset." )
 {
     lua_CBasePlayer *player = LUA_BINDING_ARGUMENT( luaL_checkplayer, 1, "player" );
     player->ViewPunchReset( LUA_BINDING_ARGUMENT_WITH_DEFAULT( luaL_optnumber, 2, 0, "time" ) );
@@ -1069,7 +1069,7 @@ LUA_BINDING_BEGIN( CBasePlayer, ViewPunchReset, "class", "View punch reset." )
 }
 LUA_BINDING_END()
 
-LUA_BINDING_BEGIN( CBasePlayer, CanSwitchToWeapon, "class", "Check if the player can switch to a weapon." )
+LUA_BINDING_BEGIN( Player, CanSwitchToWeapon, "class", "Check if the player can switch to a weapon." )
 {
     lua_pushboolean(
         L, LUA_BINDING_ARGUMENT( luaL_checkplayer, 1, "player" )->Weapon_CanSwitchTo( LUA_BINDING_ARGUMENT( luaL_checkweapon, 2, "weapon" ) ) );
@@ -1077,14 +1077,14 @@ LUA_BINDING_BEGIN( CBasePlayer, CanSwitchToWeapon, "class", "Check if the player
 }
 LUA_BINDING_END( "boolean", "Whether the player can switch to the weapon." )
 
-LUA_BINDING_BEGIN( CBasePlayer, OwnsWeaponOfType, "class", "Check if the player owns a weapon of a certain type." )
+LUA_BINDING_BEGIN( Player, OwnsWeaponOfType, "class", "Check if the player owns a weapon of a certain type." )
 {
     CBaseEntity::PushLuaInstanceSafe( L, LUA_BINDING_ARGUMENT( luaL_checkplayer, 1, "player" )->Weapon_OwnsThisType( LUA_BINDING_ARGUMENT( luaL_checkstring, 2, "type" ), LUA_BINDING_ARGUMENT_WITH_DEFAULT( luaL_optnumber, 3, 0, "subtype" ) ) );
     return 1;
 }
-LUA_BINDING_END( "CBasePlayer", "The weapon the player owns of the specified type." )
+LUA_BINDING_END( "Player", "The weapon the player owns of the specified type." )
 
-LUA_BINDING_BEGIN( CBasePlayer, SetLastWeapon, "class", "Set the player's last weapon." )
+LUA_BINDING_BEGIN( Player, SetLastWeapon, "class", "Set the player's last weapon." )
 {
     lua_CBasePlayer *player = LUA_BINDING_ARGUMENT( luaL_checkplayer, 1, "player" );
     player->Weapon_SetLast( LUA_BINDING_ARGUMENT( luaL_checkweapon, 2, "weapon" ) );
@@ -1092,7 +1092,7 @@ LUA_BINDING_BEGIN( CBasePlayer, SetLastWeapon, "class", "Set the player's last w
 }
 LUA_BINDING_END()
 
-LUA_BINDING_BEGIN( CBasePlayer, WeaponShootPosition, "class", "Get the player's weapon shoot position." )
+LUA_BINDING_BEGIN( Player, WeaponShootPosition, "class", "Get the player's weapon shoot position." )
 {
     Vector v = LUA_BINDING_ARGUMENT( luaL_checkplayer, 1, "player" )->Weapon_ShootPosition();
     lua_pushvector( L, v );
@@ -1100,28 +1100,28 @@ LUA_BINDING_BEGIN( CBasePlayer, WeaponShootPosition, "class", "Get the player's 
 }
 LUA_BINDING_END( "Vector", "The player's weapon shoot position." )
 
-LUA_BINDING_BEGIN( CBasePlayer, ShouldSelectWeapon, "class", "Check if the player should select a weapon." )
+LUA_BINDING_BEGIN( Player, ShouldSelectWeapon, "class", "Check if the player should select a weapon." )
 {
     lua_pushboolean( L, LUA_BINDING_ARGUMENT( luaL_checkplayer, 1, "player" )->Weapon_ShouldSelectItem( LUA_BINDING_ARGUMENT( luaL_checkweapon, 2, "weapon" ) ) );
     return 1;
 }
 LUA_BINDING_END( "boolean", "Whether the player should select the weapon." )
 
-LUA_BINDING_BEGIN( CBasePlayer, ShouldSetLastWeapon, "class", "Check if the player should set the last weapon." )
+LUA_BINDING_BEGIN( Player, ShouldSetLastWeapon, "class", "Check if the player should set the last weapon." )
 {
     lua_pushboolean( L, LUA_BINDING_ARGUMENT( luaL_checkplayer, 1, "player" )->Weapon_ShouldSetLast( LUA_BINDING_ARGUMENT( luaL_checkweapon, 2, "weapon" ), LUA_BINDING_ARGUMENT( luaL_checkweapon, 3, "last" ) ) );
     return 1;
 }
 LUA_BINDING_END( "boolean", "Whether the player should set the last weapon." )
 
-LUA_BINDING_BEGIN( CBasePlayer, SwitchWeapon, "class", "Switch the player's weapon." )
+LUA_BINDING_BEGIN( Player, SwitchWeapon, "class", "Switch the player's weapon." )
 {
     lua_pushboolean( L, LUA_BINDING_ARGUMENT( luaL_checkplayer, 1, "player" )->Weapon_Switch( LUA_BINDING_ARGUMENT( luaL_checkweapon, 2, "weapon" ), LUA_BINDING_ARGUMENT_WITH_DEFAULT( luaL_optnumber, 3, 0, "subtype" ) ) );
     return 1;
 }
 LUA_BINDING_END( "boolean", "Whether the weapon was switched." )
 
-LUA_BINDING_BEGIN( CBasePlayer, TranslateWeaponActivity, "class", "Translate a weapon activity." )
+LUA_BINDING_BEGIN( Player, TranslateWeaponActivity, "class", "Translate a weapon activity." )
 {
     Activity activity = ( Activity )( int )LUA_BINDING_ARGUMENT( luaL_checknumber, 2, "activity" );
     lua_pushinteger( L, LUA_BINDING_ARGUMENT( luaL_checkplayer, 1, "player" )->Weapon_TranslateActivity( activity, NULL ) );
@@ -1129,14 +1129,14 @@ LUA_BINDING_BEGIN( CBasePlayer, TranslateWeaponActivity, "class", "Translate a w
 }
 LUA_BINDING_END( "number", "The translated activity." )
 
-LUA_BINDING_BEGIN( CBasePlayer, WeaponCount, "class", "Get the player's weapon count." )
+LUA_BINDING_BEGIN( Player, WeaponCount, "class", "Get the player's weapon count." )
 {
     lua_pushinteger( L, LUA_BINDING_ARGUMENT( luaL_checkplayer, 1, "player" )->WeaponCount() );
     return 1;
 }
 LUA_BINDING_END( "number", "The player's weapon count." )
 
-LUA_BINDING_BEGIN( CBasePlayer, GetAccountId, "class", "Get the player's account ID." )
+LUA_BINDING_BEGIN( Player, GetAccountId, "class", "Get the player's account ID." )
 {
     lua_CBasePlayer *player = LUA_BINDING_ARGUMENT( luaL_checkplayer, 1, "player" );
     CSteamID steamID = GetSteamIDForPlayerIndex( player->entindex() );
@@ -1145,7 +1145,7 @@ LUA_BINDING_BEGIN( CBasePlayer, GetAccountId, "class", "Get the player's account
 }
 LUA_BINDING_END( "number", "The player's account ID." )
 
-LUA_BINDING_BEGIN( CBasePlayer, GetSteamId, "class", "Get the player's Steam ID." )
+LUA_BINDING_BEGIN( Player, GetSteamId, "class", "Get the player's Steam ID." )
 {
     lua_CBasePlayer *player = LUA_BINDING_ARGUMENT( luaL_checkplayer, 1, "player" );
     CSteamID steamID = GetSteamIDForPlayerIndex( player->entindex() );
@@ -1154,7 +1154,7 @@ LUA_BINDING_BEGIN( CBasePlayer, GetSteamId, "class", "Get the player's Steam ID.
 }
 LUA_BINDING_END( "string", "The player's Steam ID." )
 
-LUA_BINDING_BEGIN( CBasePlayer, GetSteamId64, "class", "Get the player's Steam ID 64." )
+LUA_BINDING_BEGIN( Player, GetSteamId64, "class", "Get the player's Steam ID 64." )
 {
     lua_CBasePlayer *player = LUA_BINDING_ARGUMENT( luaL_checkplayer, 1, "player" );
     CSteamID steamID = GetSteamIDForPlayerIndex( player->entindex() );
@@ -1168,7 +1168,7 @@ LUA_BINDING_BEGIN( CBasePlayer, GetSteamId64, "class", "Get the player's Steam I
 }
 LUA_BINDING_END( "string", "The player's Steam ID 64." )
 
-LUA_BINDING_BEGIN( CBasePlayer, GetUniqueId, "class", "Get the player's unique ID." )
+LUA_BINDING_BEGIN( Player, GetUniqueId, "class", "Get the player's unique ID." )
 {
     lua_CBasePlayer *player = LUA_BINDING_ARGUMENT( luaL_checkplayer, 1, "player" );
     lua_pushinteger( L, ( lua_Integer )player->GetUniqueID() );
@@ -1176,21 +1176,21 @@ LUA_BINDING_BEGIN( CBasePlayer, GetUniqueId, "class", "Get the player's unique I
 }
 LUA_BINDING_END( "number", "The player's unique ID." )
 
-LUA_BINDING_BEGIN( CBasePlayer, __eq, "class", "Check if two players are equal." )
+LUA_BINDING_BEGIN( Player, __eq, "class", "Check if two players are equal." )
 {
     lua_pushboolean( L, LUA_BINDING_ARGUMENT( lua_toplayer, 1, "player" ) == LUA_BINDING_ARGUMENT( lua_toplayer, 2, "player" ) );
     return 1;
 }
 LUA_BINDING_END( "boolean", "Whether the players are equal." )
 
-LUA_BINDING_BEGIN( CBasePlayer, __tostring, "class", "Get the string representation of a player." )
+LUA_BINDING_BEGIN( Player, __tostring, "class", "Get the string representation of a player." )
 {
     lua_CBasePlayer *player = LUA_BINDING_ARGUMENT( lua_toplayer, 1, "player" );
 
     if ( player == NULL )
         lua_pushstring( L, "NULL" );
     else
-        lua_pushfstring( L, "CBasePlayer: %d \"%s\"", player->GetUserID(), player->GetPlayerName() );
+        lua_pushfstring( L, "Player: %d \"%s\"", player->GetUserID(), player->GetPlayerName() );
     return 1;
 }
 LUA_BINDING_END( "string", "The string representation of the player." )
@@ -1213,7 +1213,7 @@ LUALIB_API int luaopen_CBasePlayer_shared( lua_State *L )
 {
     LUA_PUSH_NEW_METATABLE( L, LUA_BASEPLAYERMETANAME );
 
-    LUA_REGISTRATION_COMMIT( CBasePlayer );
+    LUA_REGISTRATION_COMMIT( Player );
 
     lua_pushstring( L, "Entity" );
     lua_setfield( L, -2, "__type" ); /* metatable.__type = "Entity" */
@@ -1233,7 +1233,7 @@ LUA_BINDING_BEGIN( Players, GetLocalPlayer, "library", "Get the local player.", 
     CBaseEntity::PushLuaInstanceSafe( L, CBasePlayer::GetLocalPlayer() );
     return 1;
 }
-LUA_BINDING_END( "CBasePlayer", "The local player." )
+LUA_BINDING_END( "Player", "The local player." )
 #endif
 
 LUALIB_API int luaopen_Players( lua_State *L )
