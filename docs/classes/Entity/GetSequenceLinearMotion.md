@@ -17,7 +17,7 @@ lua:
     - name: "sequence"
       type: number
   returns:
-    - type: vector
+    - type: Vector
       description: "The sequence linear motion"
 ---
 

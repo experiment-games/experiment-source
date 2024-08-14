@@ -15,7 +15,7 @@ lua:
   
   
   returns:
-    - type: vector
+    - type: Vector
       description: "The ground velocity to apply"
 ---
 

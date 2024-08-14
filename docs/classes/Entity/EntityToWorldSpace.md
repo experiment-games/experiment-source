@@ -17,7 +17,7 @@ lua:
     - name: "local"
       type: Vector
   returns:
-    - type: vector
+    - type: Vector
       description: "The world space vector."
 ---
 

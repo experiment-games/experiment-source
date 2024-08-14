@@ -17,7 +17,7 @@ lua:
     - name: "target"
       type: Vector
   returns:
-    - type: vector
+    - type: Vector
       description: "The body target."
 ---
 

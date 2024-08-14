@@ -11,7 +11,7 @@ lua:
   library: Entity
   function: SetWaterLevel
   realm: shared
-  description: "Set water level."
+  description: "Set water level enum."
   
   arguments:
     - name: "level"
@@ -21,5 +21,5 @@ lua:
 ---
 
 <div class="lua__search__keywords">
-Entity:SetWaterLevel &#x2013; Set water level.
+Entity:SetWaterLevel &#x2013; Set water level enum.
 </div>

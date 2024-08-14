@@ -15,7 +15,7 @@ lua:
   
   
   returns:
-    - type: entity
+    - type: Entity
       description: "The player's view entity."
 ---
 

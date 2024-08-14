@@ -17,7 +17,7 @@ lua:
     - name: "className"
       type: string
   returns:
-    - type: entity
+    - type: Entity
       description: "The created entity"
 ---
 

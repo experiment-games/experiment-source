@@ -1,16 +1,16 @@
 ---
 template: lua-library-function.html
 title: WriteAngle
-icon: lua-shared
+icon: lua-server
 tags:
   - lua
-  - shared
+  - server
   - needs-verification
   - needs-example
 lua:
   library: UserMessages
   function: WriteAngle
-  realm: shared
+  realm: server
   description: "Writes an angle."
   
   arguments:

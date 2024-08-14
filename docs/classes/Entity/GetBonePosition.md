@@ -17,7 +17,7 @@ lua:
     - name: "bone"
       type: number
   returns:
-    - type: vector
+    - type: Vector
       description: "The origin"
     - type: angle
       description: "The angles"

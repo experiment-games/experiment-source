@@ -18,7 +18,7 @@ lua:
       type: number
       default: "0"
   returns:
-    - type: entity
+    - type: Entity
       description: "The player's view model."
 ---
 

@@ -17,7 +17,7 @@ lua:
     - name: "vectorB"
       type: Vector
   returns:
-    - type: vector
+    - type: Vector
       description: "The difference of the two vectors."
 ---
 

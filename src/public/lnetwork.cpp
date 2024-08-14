@@ -331,7 +331,7 @@ LUALIB_API bf_read *luaL_checkbf_read( lua_State *L, int narg )
     return bfRead;
 }
 
-LUA_BINDING_BEGIN( UserMessageReader, ReadBit, "library", "Reads a bit.", "client" )
+LUA_BINDING_BEGIN( UserMessageReader, ReadBit, "class", "Reads a bit.", "client" )
 {
     bf_read *bf = LUA_BINDING_ARGUMENT( luaL_checkbf_read, 1, "reader" );
     lua_pushinteger( L, bf->ReadOneBit() );
@@ -339,7 +339,7 @@ LUA_BINDING_BEGIN( UserMessageReader, ReadBit, "library", "Reads a bit.", "clien
 }
 LUA_BINDING_END( "integer", "The bit read." )
 
-LUA_BINDING_BEGIN( UserMessageReader, ReadByte, "library", "Reads a byte.", "client" )
+LUA_BINDING_BEGIN( UserMessageReader, ReadByte, "class", "Reads a byte.", "client" )
 {
     bf_read *bf = LUA_BINDING_ARGUMENT( luaL_checkbf_read, 1, "reader" );
     lua_pushinteger( L, bf->ReadByte() );
@@ -347,7 +347,7 @@ LUA_BINDING_BEGIN( UserMessageReader, ReadByte, "library", "Reads a byte.", "cli
 }
 LUA_BINDING_END( "integer", "The byte read." )
 
-LUA_BINDING_BEGIN( UserMessageReader, ReadChar, "library", "Reads a char.", "client" )
+LUA_BINDING_BEGIN( UserMessageReader, ReadChar, "class", "Reads a char.", "client" )
 {
     bf_read *bf = LUA_BINDING_ARGUMENT( luaL_checkbf_read, 1, "reader" );
     lua_pushinteger( L, bf->ReadChar() );
@@ -355,7 +355,7 @@ LUA_BINDING_BEGIN( UserMessageReader, ReadChar, "library", "Reads a char.", "cli
 }
 LUA_BINDING_END( "integer", "The char read." )
 
-LUA_BINDING_BEGIN( UserMessageReader, ReadShort, "library", "Reads a short integer.", "client" )
+LUA_BINDING_BEGIN( UserMessageReader, ReadShort, "class", "Reads a short integer.", "client" )
 {
     bf_read *bf = LUA_BINDING_ARGUMENT( luaL_checkbf_read, 1, "reader" );
     lua_pushinteger( L, bf->ReadShort() );
@@ -363,7 +363,7 @@ LUA_BINDING_BEGIN( UserMessageReader, ReadShort, "library", "Reads a short integ
 }
 LUA_BINDING_END( "integer", "The short read." )
 
-LUA_BINDING_BEGIN( UserMessageReader, ReadWord, "library", "Reads a word.", "client" )
+LUA_BINDING_BEGIN( UserMessageReader, ReadWord, "class", "Reads a word.", "client" )
 {
     bf_read *bf = LUA_BINDING_ARGUMENT( luaL_checkbf_read, 1, "reader" );
     lua_pushinteger( L, bf->ReadWord() );
@@ -371,7 +371,7 @@ LUA_BINDING_BEGIN( UserMessageReader, ReadWord, "library", "Reads a word.", "cli
 }
 LUA_BINDING_END( "integer", "The word read." )
 
-LUA_BINDING_BEGIN( UserMessageReader, ReadLong, "library", "Reads a long integer.", "client" )
+LUA_BINDING_BEGIN( UserMessageReader, ReadLong, "class", "Reads a long integer.", "client" )
 {
     bf_read *bf = LUA_BINDING_ARGUMENT( luaL_checkbf_read, 1, "reader" );
     lua_pushinteger( L, bf->ReadBitLong( luaL_checknumber( L, 2 ), lua_toboolean( L, 3 ) ) );
@@ -379,7 +379,7 @@ LUA_BINDING_BEGIN( UserMessageReader, ReadLong, "library", "Reads a long integer
 }
 LUA_BINDING_END( "integer", "The long read." )
 
-LUA_BINDING_BEGIN( UserMessageReader, ReadFloat, "library", "Reads a float.", "client" )
+LUA_BINDING_BEGIN( UserMessageReader, ReadFloat, "class", "Reads a float.", "client" )
 {
     bf_read *bf = LUA_BINDING_ARGUMENT( luaL_checkbf_read, 1, "reader" );
     lua_pushnumber( L, bf->ReadBitFloat() );
@@ -387,7 +387,7 @@ LUA_BINDING_BEGIN( UserMessageReader, ReadFloat, "library", "Reads a float.", "c
 }
 LUA_BINDING_END( "number", "The float read." )
 
-LUA_BINDING_BEGIN( UserMessageReader, ReadVector, "library", "Reads a vector.", "client" )
+LUA_BINDING_BEGIN( UserMessageReader, ReadVector, "class", "Reads a vector.", "client" )
 {
     bf_read *bf = LUA_BINDING_ARGUMENT( luaL_checkbf_read, 1, "reader" );
     Vector vec;
@@ -397,7 +397,7 @@ LUA_BINDING_BEGIN( UserMessageReader, ReadVector, "library", "Reads a vector.", 
 }
 LUA_BINDING_END( "Vector", "The vector read." )
 
-LUA_BINDING_BEGIN( UserMessageReader, ReadVectorNormal, "library", "Reads a normal vector.", "client" )
+LUA_BINDING_BEGIN( UserMessageReader, ReadVectorNormal, "class", "Reads a normal vector.", "client" )
 {
     bf_read *bf = LUA_BINDING_ARGUMENT( luaL_checkbf_read, 1, "reader" );
     Vector vec;
@@ -407,7 +407,7 @@ LUA_BINDING_BEGIN( UserMessageReader, ReadVectorNormal, "library", "Reads a norm
 }
 LUA_BINDING_END( "Vector", "The normal vector read." )
 
-LUA_BINDING_BEGIN( UserMessageReader, ReadAngle, "library", "Reads an angle.", "client" )
+LUA_BINDING_BEGIN( UserMessageReader, ReadAngle, "class", "Reads an angle.", "client" )
 {
     bf_read *bf = LUA_BINDING_ARGUMENT( luaL_checkbf_read, 1, "reader" );
     QAngle ang;
@@ -417,7 +417,7 @@ LUA_BINDING_BEGIN( UserMessageReader, ReadAngle, "library", "Reads an angle.", "
 }
 LUA_BINDING_END( "Angle", "The angle read." )
 
-LUA_BINDING_BEGIN( UserMessageReader, ReadString, "library", "Reads a string.", "client" )
+LUA_BINDING_BEGIN( UserMessageReader, ReadString, "class", "Reads a string.", "client" )
 {
     bf_read *bf = LUA_BINDING_ARGUMENT( luaL_checkbf_read, 1, "reader" );
     char str[2048];
@@ -427,7 +427,7 @@ LUA_BINDING_BEGIN( UserMessageReader, ReadString, "library", "Reads a string.", 
 }
 LUA_BINDING_END( "string", "The string read." )
 
-LUA_BINDING_BEGIN( UserMessageReader, ReadBytes, "library", "Reads a number of bytes.", "client" )
+LUA_BINDING_BEGIN( UserMessageReader, ReadBytes, "class", "Reads a number of bytes.", "client" )
 {
     bf_read *bf = LUA_BINDING_ARGUMENT( luaL_checkbf_read, 1, "reader" );
     int len = luaL_checknumber( L, 2 );
@@ -439,7 +439,7 @@ LUA_BINDING_BEGIN( UserMessageReader, ReadBytes, "library", "Reads a number of b
 }
 LUA_BINDING_END( "string", "The bytes read." )
 
-LUA_BINDING_BEGIN( UserMessageReader, ReadEntity, "library", "Reads an entity.", "client" )
+LUA_BINDING_BEGIN( UserMessageReader, ReadEntity, "class", "Reads an entity.", "client" )
 {
     bf_read *bf = LUA_BINDING_ARGUMENT( luaL_checkbf_read, 1, "reader" );
     unsigned int iEncodedEHandle = bf->ReadLong();

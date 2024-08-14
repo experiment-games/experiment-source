@@ -365,6 +365,7 @@ ANGLE_META.Div = ANGLE_META.Divide
 ANGLE_META.Mul = ANGLE_META.Scale
 
 local ENTITY_META = FindMetaTable("Entity")
+ENTITY_META.Health = ENTITY_META.GetHealth
 ENTITY_META.GetPos = ENTITY_META.GetPosition
 ENTITY_META.SetPos = ENTITY_META.SetPosition
 ENTITY_META.EyePos = ENTITY_META.GetEyePosition

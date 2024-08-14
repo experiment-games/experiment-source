@@ -1,16 +1,16 @@
 ---
 template: lua-library-function.html
 title: WriteBool
-icon: lua-shared
+icon: lua-server
 tags:
   - lua
-  - shared
+  - server
   - needs-verification
   - needs-example
 lua:
   library: UserMessages
   function: WriteBool
-  realm: shared
+  realm: server
   description: "Writes a boolean."
   
   arguments:

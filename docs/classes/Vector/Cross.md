@@ -17,7 +17,7 @@ lua:
     - name: "vector2"
       type: Vector
   returns:
-    - type: vector
+    - type: Vector
       description: "The cross product of the two vectors."
 ---
 

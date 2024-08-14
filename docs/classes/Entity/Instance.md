@@ -18,7 +18,7 @@ lua:
     - name: "edictIndex"
       type: integer
   returns:
-    - type: entity
+    - type: Entity
       description: "The entity instance"
 ---
 

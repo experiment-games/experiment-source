@@ -17,7 +17,7 @@ lua:
     - name: "attachedTo"
       type: Entity
   returns:
-    - type: vector
+    - type: Vector
       description: "The aim entity origin"
     - type: angle
       description: "The aim entity angles"

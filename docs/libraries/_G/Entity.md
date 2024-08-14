@@ -17,7 +17,7 @@ lua:
     - name: "entityIndex"
       type: number
   returns:
-    - type: entity
+    - type: Entity
       description: "The found entity or NULL entity"
 ---
 

@@ -15,7 +15,7 @@ lua:
   
   
   returns:
-    - type: angle
+    - type: Angle
       description: "The local angles."
 ---
 

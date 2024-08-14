@@ -17,7 +17,7 @@ lua:
     - name: "position"
       type: Vector
   returns:
-    - type: vector
+    - type: Vector
       description: "The head target"
 ---
 

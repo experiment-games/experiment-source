@@ -14,7 +14,7 @@
 
 LUA_API lua_Color &lua_tocolor( lua_State *L, int idx )
 {
-    lua_Color *clr = ( lua_Color * )luaL_checkudata( L, idx, "Color" );
+    lua_Color *clr = ( lua_Color * )luaL_checkudata( L, idx, LUA_COLORMETANAME );
     return *clr;
 }
 
@@ -26,21 +26,21 @@ LUA_API void lua_pushcolor( lua_State *L, lua_Color &clr )
 {
     lua_Color *pColor = ( lua_Color * )lua_newuserdata( L, sizeof( lua_Color ) );
     *pColor = clr;
-    LUA_SAFE_SET_METATABLE( L, "Color" );
+    LUA_SAFE_SET_METATABLE( L, LUA_COLORMETANAME );
 }
 
 LUA_API void lua_pushcolor( lua_State *L, Color &clr )
 {
     lua_Color *pColor = ( lua_Color * )lua_newuserdata( L, sizeof( lua_Color ) );
     *pColor = lua_Color( clr.r(), clr.g(), clr.b(), clr.a() );
-    LUA_SAFE_SET_METATABLE( L, "Color" );
+    LUA_SAFE_SET_METATABLE( L, LUA_COLORMETANAME );
 }
 
 LUALIB_API lua_Color &luaL_checkcolor( lua_State *L, int narg )
 {
     if ( lua_isuserdata(L, narg) )
     {
-        lua_Color *d = ( lua_Color * )luaL_checkudata( L, narg, "Color" );
+        lua_Color *d = ( lua_Color * )luaL_checkudata( L, narg, LUA_COLORMETANAME );
         return *d;
     }
 
@@ -52,7 +52,7 @@ LUALIB_API lua_Color &luaL_checkcolor( lua_State *L, int narg )
         lua_getmetatable( L, narg );
         lua_getfield( L, -1, "__type" );
 
-        if ( lua_isstring( L, -1 ) && !strcmp( lua_tostring( L, -1 ), "Color" ) )
+        if ( lua_isstring( L, -1 ) && !strcmp( lua_tostring( L, -1 ), LUA_COLORMETANAME ) )
         {
             lua_pop( L, 2 );
             lua_pushcolor( L, lua_Color( lua_tonumber( L, narg ), lua_tonumber( L, narg + 1 ), lua_tonumber( L, narg + 2 ), lua_tonumber( L, narg + 3 ) ) );
@@ -61,7 +61,7 @@ LUALIB_API lua_Color &luaL_checkcolor( lua_State *L, int narg )
         lua_pop( L, 2 );
     }
 
-    luaL_typerror( L, narg, "Color" );
+    luaL_typerror( L, narg, LUA_COLORMETANAME );
     return *static_cast< lua_Color * >( 0 );
 }
 
@@ -158,7 +158,7 @@ LUA_BINDING_END( "boolean", "Whether the colors are equal." )
 
 LUA_BINDING_BEGIN( Color, __index, "class", "Metamethod for when the index field doesn't exist. Returns values when indexing r, g, b, a or 1, 2, 3, 4." )
 {
-    lua_Color *color = &LUA_BINDING_ARGUMENT( lua_tocolor, 1, "color" );
+    lua_Color *color = &LUA_BINDING_ARGUMENT( luaL_checkcolor, 1, "color" );
     LUA_METATABLE_INDEX_CHECK( L, color );
 
     const char *field = LUA_BINDING_ARGUMENT( luaL_checkstring, 2, "field" );
@@ -173,9 +173,6 @@ LUA_BINDING_BEGIN( Color, __index, "class", "Metamethod for when the index field
         lua_pushinteger( L, color->a() );
     else
     {
-        LUA_GET_REF_TABLE( L, color );
-        LUA_METATABLE_INDEX_CHECK_REF_TABLE( L, color );
-
         if ( lua_getmetatable( L, 1 ) )
         {
             LUA_METATABLE_INDEX_CHECK_TABLE( L );
@@ -190,7 +187,7 @@ LUA_BINDING_END( "any", "The value of the field." )
 
 LUA_BINDING_BEGIN( Color, __newindex, "class", "Metamethod for when the newindex field doesn't exist. Sets values when indexing r, g, b, a or 1, 2, 3, 4." )
 {
-    lua_Color *color = &LUA_BINDING_ARGUMENT( lua_tocolor, 1, "color" );
+    lua_Color *color = &LUA_BINDING_ARGUMENT( luaL_checkcolor, 1, "color" );
     LUA_METATABLE_INDEX_CHECK( L, color );
 
     const char *field = LUA_BINDING_ARGUMENT( luaL_checkstring, 2, "field" );
@@ -205,10 +202,7 @@ LUA_BINDING_BEGIN( Color, __newindex, "class", "Metamethod for when the newindex
         color->SetColor( color->r(), color->g(), color->b(), LUA_BINDING_ARGUMENT( luaL_checknumber, 3, "alpha" ) );
     else
     {
-        LUA_GET_REF_TABLE( L, color );
-        lua_pushvalue( L, 3 );
-        lua_setfield( L, -2, field );
-        lua_pop( L, 1 );
+        luaL_error( L, "attempt to set a field in a read-only table" );
     }
 
     return 0;
@@ -373,11 +367,11 @@ LUA_BINDING_END( "color", "The converted color." )
 */
 LUALIB_API int luaopen_Color( lua_State *L )
 {
-    LUA_PUSH_NEW_METATABLE( L, LUA_COLORLIBNAME );
+    LUA_PUSH_NEW_METATABLE( L, LUA_COLORMETANAME );
 
     LUA_REGISTRATION_COMMIT( Color );
 
-    lua_pushstring( L, "Color" );
+    lua_pushstring( L, LUA_COLORMETANAME );
     lua_setfield( L, -2, "__type" ); /* metatable.__type = "Color" */
 
     LUA_REGISTRATION_COMMIT_LIBRARY( _G );

@@ -24,7 +24,7 @@ lua:
       - name: "vectorB"
         type: Vector
   returns:
-    - type: vector
+    - type: Vector
       description: "The product of the two vectors or the vector and the number."
 ---
 

@@ -24,7 +24,7 @@ lua:
       type: boolean
       default: "false"
   returns:
-    - type: entity
+    - type: Entity
       description: "The predicted entity."
 ---
 

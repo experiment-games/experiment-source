@@ -17,7 +17,7 @@ lua:
     - name: "varName"
       type: string
   returns:
-    - type: vector
+    - type: Vector
       description: "Vector value."
 ---
 

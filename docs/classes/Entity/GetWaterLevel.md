@@ -11,7 +11,7 @@ lua:
   library: Entity
   function: GetWaterLevel
   realm: shared
-  description: "Get water level."
+  description: "Get water level enum."
   
   
   returns:
@@ -20,5 +20,5 @@ lua:
 ---
 
 <div class="lua__search__keywords">
-Entity:GetWaterLevel &#x2013; Get water level.
+Entity:GetWaterLevel &#x2013; Get water level enum.
 </div>

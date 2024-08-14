@@ -19,7 +19,7 @@ lua:
     - name: "clamp"
       type: boolean
   returns:
-    - type: vector
+    - type: Vector
       description: "The light for the point."
 ---
 

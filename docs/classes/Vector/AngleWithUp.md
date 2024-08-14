@@ -17,7 +17,7 @@ lua:
     - name: "up"
       type: Vector
   returns:
-    - type: angle
+    - type: Angle
       description: "The converted angle."
 ---
 

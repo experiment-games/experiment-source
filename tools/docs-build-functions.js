@@ -81,7 +81,8 @@ function writeFunctionToFile(func) {
   if (functionsThisRun.has(filePath)) {
     const existingFunc = functionsThisRun.get(filePath);
 
-    if (existingFunc.realm !== func.realm) {
+    if (existingFunc.realm !== func.realm
+      && existingFunc.concept === func.concept ) {
       const newFileName = `${existingFunc.function}.${existingFunc.realm}.md`;
       const newFilePath = path.join(outputDir, directory, getLibrary(func), newFileName);
 
@@ -296,6 +297,12 @@ function fromTypeChecker(typeChecker) {
     case 'luaL_optbf_read':
     case 'lua_tobf_read':
       return 'UserMessageReader';
+    case 'lua_checktracestruct':
+      return 'Trace';
+    case 'luaL_checkfont':
+    case 'luaL_optfont':
+    case 'lua_tofont':
+      return 'FontHandle';
     default:
       return 'unknown';
   }

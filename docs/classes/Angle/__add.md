@@ -17,7 +17,7 @@ lua:
     - name: "angle2"
       type: Angle
   returns:
-    - type: angle
+    - type: Angle
       description: "The added angle."
 ---
 

@@ -15,7 +15,7 @@ lua:
   
   
   returns:
-    - type: vector
+    - type: Vector
       description: "The minimum vector."
     - type: vector
       description: "The maximum vector."

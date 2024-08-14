@@ -17,7 +17,7 @@ lua:
     - name: "number"
       type: number
   returns:
-    - type: vector
+    - type: Vector
       description: "The vector divided by the number."
 ---
 

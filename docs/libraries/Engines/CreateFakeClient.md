@@ -17,7 +17,7 @@ lua:
     - name: "name"
       type: string
   returns:
-    - type: entity
+    - type: Entity
       description: "The created fake client."
 ---
 

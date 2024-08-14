@@ -17,7 +17,7 @@ lua:
     - name: "vectorB"
       type: Vector
   returns:
-    - type: vector
+    - type: Vector
       description: "The sum of the two vectors."
 ---
 

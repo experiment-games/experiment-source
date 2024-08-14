@@ -1,16 +1,16 @@
 ---
 template: lua-library-function.html
 title: WriteNormal
-icon: lua-shared
+icon: lua-server
 tags:
   - lua
-  - shared
+  - server
   - needs-verification
   - needs-example
 lua:
   library: UserMessages
   function: WriteNormal
-  realm: shared
+  realm: server
   description: "Writes a normal vector."
   
   arguments:

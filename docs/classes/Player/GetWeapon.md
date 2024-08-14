@@ -17,7 +17,7 @@ lua:
     - name: "index"
       type: number
   returns:
-    - type: entity
+    - type: Entity
       description: "The player's weapon."
 ---
 

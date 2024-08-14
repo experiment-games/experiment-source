@@ -17,7 +17,7 @@ lua:
     - name: "point"
       type: Vector
   returns:
-    - type: vector
+    - type: Vector
       description: "The nearest point."
 ---
 

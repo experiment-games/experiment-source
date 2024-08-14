@@ -15,7 +15,7 @@ lua:
   
   
   returns:
-    - type: vector
+    - type: Vector
       description: "The auto aim center"
 ---
 

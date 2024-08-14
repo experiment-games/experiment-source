@@ -16,7 +16,7 @@ lua:
   static: true
   
   returns:
-    - type: entity
+    - type: Entity
       description: "The prediction player."
 ---
 

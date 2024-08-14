@@ -17,7 +17,7 @@ lua:
     - name: "vector"
       type: Vector
   returns:
-    - type: vector
+    - type: Vector
       description: "The rotated vector."
 ---
 

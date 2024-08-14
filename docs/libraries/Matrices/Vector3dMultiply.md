@@ -17,7 +17,7 @@ lua:
     - name: "Matrix"
       type: Matrix
   returns:
-    - type: vector
+    - type: Vector
       description: "The multiplied vector."
 ---
 

@@ -20,7 +20,7 @@ lua:
       type: boolean
       default: "true"
   returns:
-    - type: vector
+    - type: Vector
       description: "The body target"
 ---
 

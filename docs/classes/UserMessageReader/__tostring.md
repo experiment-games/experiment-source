@@ -1,16 +1,16 @@
 ---
 template: lua-class-function.html
 title: __tostring
-icon: lua-shared
+icon: lua-client
 tags:
   - lua
-  - shared
+  - client
   - needs-verification
   - needs-example
 lua:
   library: UserMessageReader
   function: __tostring
-  realm: shared
+  realm: client
   description: "Returns a string representation of the reader."
   
   

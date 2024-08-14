@@ -41,7 +41,7 @@ LUALIB_API int( luaopen_CGameTrace )( lua_State *L );
 #define LUA_EXPERIMENTPLAYERLIBNAME "CExperimentPlayer"
 LUALIB_API int( luaopen_CExperiment_Player_shared )( lua_State *L );
 
-#define LUA_COLORLIBNAME "Color"
+#define LUA_COLORMETANAME "Color"
 LUALIB_API int( luaopen_Color )( lua_State *L );
 
 #define LUA_CONCOMMANDLIBNAME "ConsoleCommands"

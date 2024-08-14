@@ -1,16 +1,16 @@
 ---
 template: lua-library-function.html
 title: WriteShort
-icon: lua-shared
+icon: lua-server
 tags:
   - lua
-  - shared
+  - server
   - needs-verification
   - needs-example
 lua:
   library: UserMessages
   function: WriteShort
-  realm: shared
+  realm: server
   description: "Writes a short integer."
   
   arguments:

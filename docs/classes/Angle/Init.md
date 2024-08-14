@@ -21,7 +21,7 @@ lua:
     - name: "z"
       type: number
   returns:
-    - type: angle
+    - type: Angle
       description: "The initialized angle."
 ---
 

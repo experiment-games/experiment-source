@@ -1,16 +1,16 @@
 ---
 template: lua-class-function.html
 title: __index
-icon: lua-shared
+icon: lua-client
 tags:
   - lua
-  - shared
+  - client
   - needs-verification
   - needs-example
 lua:
   library: UserMessageReader
   function: __index
-  realm: shared
+  realm: client
   description: "Returns nil."
   
   arguments:

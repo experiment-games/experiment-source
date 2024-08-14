@@ -17,7 +17,7 @@ lua:
     - name: "localPos"
       type: Vector
   returns:
-    - type: vector
+    - type: Vector
       description: "The absolute position."
 ---
 

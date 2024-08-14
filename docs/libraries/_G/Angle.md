@@ -31,7 +31,7 @@ lua:
         type: number
         default: "0.0f"
   returns:
-    - type: angle
+    - type: Angle
       description: "The created angle."
 ---
 

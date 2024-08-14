@@ -43,6 +43,6 @@ class CTraceLuaFilter : public CTraceFilterSimple
 };
 
 LUA_API void lua_checktracestruct( lua_State *L, int narg );
-LUA_API void lua_checktracestruct( lua_State *L, int narg, Vector &start, Vector &end, int &mask, int &collisionGroup, bool &bIgnoreWorld, bool &bFilterTableInverted, bool &bOutput, CTraceLuaFilter *filter );
+LUA_API void lua_checktracestruct( lua_State *L, int narg, Vector &start, Vector &end, int &mask, int &collisionGroup, bool &bIgnoreWorld, bool &bFilterTableInverted, bool &bOutput, CTraceLuaFilter **filter );
 
 #endif // LGAMETRACE_H

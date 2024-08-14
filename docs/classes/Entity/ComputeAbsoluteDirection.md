@@ -17,7 +17,7 @@ lua:
     - name: "localDir"
       type: Vector
   returns:
-    - type: vector
+    - type: Vector
       description: "The absolute direction."
 ---
 

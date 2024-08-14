@@ -17,7 +17,7 @@ lua:
     - name: "scaleBy"
       type: number
   returns:
-    - type: angle
+    - type: Angle
       description: "The scaled angle."
 ---
 

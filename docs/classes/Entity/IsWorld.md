@@ -1,16 +1,16 @@
 ---
 template: lua-class-function.html
 title: IsWorld
-icon: lua-server
+icon: lua-shared
 tags:
   - lua
-  - server
+  - shared
   - needs-verification
   - needs-example
 lua:
   library: Entity
   function: IsWorld
-  realm: server
+  realm: shared
   description: "Whether entity is world."
   
   

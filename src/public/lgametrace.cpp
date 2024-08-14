@@ -451,7 +451,7 @@ LUA_API void lua_checktracestruct( lua_State *L, int narg )
     luaL_checktype( L, 1, LUA_TTABLE );
 }
 
-LUA_API void lua_checktracestruct( lua_State *L, int narg, Vector &start, Vector &end, int &mask, int &collisionGroup, bool &bIgnoreWorld, bool &bFilterTableInverted, bool &bOutput, CTraceLuaFilter *filter )
+LUA_API void lua_checktracestruct( lua_State *L, int narg, Vector &start, Vector &end, int &mask, int &collisionGroup, bool &bIgnoreWorld, bool &bFilterTableInverted, bool &bOutput, CTraceLuaFilter **filter )
 {
     lua_checktracestruct( L, narg );
 
@@ -487,7 +487,7 @@ LUA_API void lua_checktracestruct( lua_State *L, int narg, Vector &start, Vector
     lua_pop( L, 1 );
 
     lua_getfield( L, narg, "filter" );
-    filter = new CTraceLuaFilter( L, -1, collisionGroup, bIgnoreWorld, bFilterTableInverted );
+    *filter = new CTraceLuaFilter( L, -1, collisionGroup, bIgnoreWorld, bFilterTableInverted );
     // lua_pop( L, 1 ); // Don't pop the filter. CTraceLuaFilter will handle it, leaving the filter on the stack if it's a function
 }
 
@@ -499,7 +499,7 @@ LUA_BINDING_BEGIN( Traces, TraceLine, "library", "Trace a line." )
     CTraceLuaFilter *filter = nullptr;
 
     LUA_BINDING_ARGUMENT( lua_checktracestruct, 1, "trace" );
-    lua_checktracestruct( L, 1, vecStart, vecEnd, mask, collisionGroup, bIgnoreWorld, bFilterTableInverted, bOutput, filter );
+    lua_checktracestruct( L, 1, vecStart, vecEnd, mask, collisionGroup, bIgnoreWorld, bFilterTableInverted, bOutput, &filter );
 
     trace_t gameTrace;
     Ray_t ray;
@@ -531,7 +531,7 @@ LUA_BINDING_BEGIN( Traces, TraceHull, "library", "Trace a hull." )
     CTraceLuaFilter *filter = nullptr;
 
     LUA_BINDING_ARGUMENT( lua_checktracestruct, 1, "trace" );
-    lua_checktracestruct( L, 1, vecStart, vecEnd, mask, collisionGroup, bIgnoreWorld, bFilterTableInverted, bOutput, filter );
+    lua_checktracestruct( L, 1, vecStart, vecEnd, mask, collisionGroup, bIgnoreWorld, bFilterTableInverted, bOutput, &filter );
 
     trace_t gameTrace;
     Ray_t ray;
@@ -562,7 +562,7 @@ LUA_BINDING_BEGIN( Traces, TraceEntity, "library", "Runs a trace using the entit
     CTraceLuaFilter *filter = nullptr;
 
     LUA_BINDING_ARGUMENT( lua_checktracestruct, 1, "trace" );
-    lua_checktracestruct( L, 1, vecStart, vecEnd, mask, collisionGroup, bIgnoreWorld, bFilterTableInverted, bOutput, filter );
+    lua_checktracestruct( L, 1, vecStart, vecEnd, mask, collisionGroup, bIgnoreWorld, bFilterTableInverted, bOutput, &filter );
 
     trace_t gameTrace;
     UTIL_TraceEntity( entity, vecStart, vecEnd, mask, filter, &gameTrace );
@@ -589,11 +589,6 @@ LUA_BINDING_BEGIN( Traces, PointContents, "library", "Returns the contents mask 
 }
 LUA_BINDING_END( "number", "The contents of the point." )
 
-// static int luasrc_Util_TraceModel( lua_State *L )
-//{
-//     UTIL_TraceModel( luaL_checkvector( L, 1 ), luaL_checkvector( L, 2 ), luaL_checkvector( L, 3 ), luaL_checkvector( L, 4 ), luaL_checkentity( L, 5 ), luaL_checknumber( L, 6 ), &luaL_checktrace( L, 7 ) );
-//     return 0;
-// }
 LUA_BINDING_BEGIN( Traces, TraceModel, "library", "Sweeps against a particular model, using collision rules." )
 {
     Vector vecStart, vecEnd, vecMins, vecMaxs;

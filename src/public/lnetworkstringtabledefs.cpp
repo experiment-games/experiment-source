@@ -262,7 +262,7 @@ extern INetworkStringTableContainer *networkstringtable;
 
 LUA_REGISTRATION_INIT( NetworkStringTables )
 
-LUA_BINDING_BEGIN( NetworkStringTables, CreateStringTable, "library", "Create a new string table." )
+LUA_BINDING_BEGIN( NetworkStringTables, Create, "library", "Create a new string table." )
 {
     const char *name = LUA_BINDING_ARGUMENT( luaL_checkstring, 1, "name" );
     int maxEntries = LUA_BINDING_ARGUMENT( luaL_checknumber, 2, "maxEntries" );
@@ -275,7 +275,7 @@ LUA_BINDING_BEGIN( NetworkStringTables, CreateStringTable, "library", "Create a 
 }
 LUA_BINDING_END( "NetworkStringTable", "The created string table." )
 
-LUA_BINDING_BEGIN( NetworkStringTables, CreateStringTableEx, "library", "Create a new string table." )
+LUA_BINDING_BEGIN( NetworkStringTables, CreateExtended, "library", "Create a new string table." )
 {
     const char *name = LUA_BINDING_ARGUMENT( luaL_checkstring, 1, "name" );
     int maxEntries = LUA_BINDING_ARGUMENT( luaL_checknumber, 2, "maxEntries" );

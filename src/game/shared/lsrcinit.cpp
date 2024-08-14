@@ -35,7 +35,7 @@ static const luaL_RegForState luasrclibs[] = {
     { LUA_BASEPLAYERMETANAME, luaopen_CBasePlayer, REALM_SHARED },                      // n/a   empty   ✔
     { LUA_PLAYERSLIBNAME, luaopen_Players, REALM_SHARED },                              // ✔    n/a     n/a
     { LUA_CBASEFLEXLIBNAME, luaopen_CBaseFlex_shared, REALM_SHARED },                   // ✔    n/a     n/a
-    { LUA_COLORLIBNAME, luaopen_Color, REALM_SHARED | REALM_GAMEUI },                   // ✔    n/a     n/a
+    { LUA_COLORMETANAME, luaopen_Color, REALM_SHARED | REALM_GAMEUI },                   // ✔    n/a     n/a
     { LUA_CONCOMMANDLIBNAME, luaopen_ConsoleCommandMeta, REALM_SHARED | REALM_GAMEUI }, // ✔    n/a     n/a
     { LUA_CONTENTSLIBNAME, luaopen_CONTENTS, REALM_SHARED | REALM_GAMEUI },
     { LUA_CONVARLIBNAME, luaopen_ConsoleVariableMeta, REALM_SHARED | REALM_GAMEUI },    // ✔    n/a     n/a

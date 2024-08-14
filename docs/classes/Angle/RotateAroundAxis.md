@@ -19,7 +19,7 @@ lua:
     - name: "degrees"
       type: number
   returns:
-    - type: angle
+    - type: Angle
       description: "The rotated angle."
 ---
 
