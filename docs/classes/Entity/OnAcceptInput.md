@@ -1,0 +1,32 @@
+---
+template: lua-class-function.html
+title: OnAcceptInput
+icon: lua-server
+tags:
+  - lua
+  - server
+  - needs-verification
+  - needs-example
+lua:
+  library: Entity
+  function: OnAcceptInput
+  realm: server
+  description: "Called when the entity accepted input"
+  
+  arguments:
+    - name: "input"
+      type: string
+    - name: "activator"
+      type: CBaseEntity
+    - name: "caller"
+      type: CBaseEntity
+    - name: "outputID"
+      type: number
+  returns:
+    - type: boolean
+      description: "true if accepted, false otherwise."
+---
+
+<div class="lua__search__keywords">
+Entity:OnAcceptInput &#x2013; Called when the entity accepted input
+</div>

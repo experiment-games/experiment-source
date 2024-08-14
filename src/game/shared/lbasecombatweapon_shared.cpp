@@ -263,7 +263,7 @@ LUA_BINDING_BEGIN( CBaseCombatWeapon, GetBulletType, "class", "Get bullet type."
 }
 LUA_BINDING_END( "integer", "Bullet type." )
 
-LUA_BINDING_BEGIN( CBaseCombatWeapon, GetDamage, "class", "Get damage." )
+LUA_BINDING_BEGIN( CBaseCombatWeapon, GetDamageAtLocation, "class", "Get damage." )
 {
     lua_CBaseCombatWeapon *pWeapon = LUA_BINDING_ARGUMENT( luaL_checkweapon, 1, "entity" );
     float flDamage = LUA_BINDING_ARGUMENT( luaL_checknumber, 2, "damage" );
@@ -1310,25 +1310,26 @@ LUA_BINDING_END( "number", "Weapon state." )
 //     return 0;
 // }
 
-LUA_BINDING_BEGIN( CBaseCombatWeapon, __eq, "class", "Equality comparison." )
-{
-    lua_CBaseCombatWeapon *pWeapon = LUA_BINDING_ARGUMENT( lua_toweapon, 1, "entity" );
-    lua_CBaseCombatWeapon *pOtherWeapon = LUA_BINDING_ARGUMENT( lua_toweapon, 2, "otherEntity" );
-    lua_pushboolean( L, pWeapon == pOtherWeapon );
-    return 1;
-}
-LUA_BINDING_END( "boolean", "Whether the two entities are equal." )
-
-LUA_BINDING_BEGIN( CBaseCombatWeapon, __tostring, "class", "String representation." )
-{
-    lua_CBaseCombatWeapon *pWeapon = LUA_BINDING_ARGUMENT( lua_toweapon, 1, "entity" );
-    if ( pWeapon == NULL )
-        lua_pushstring( L, "NULL" );
-    else
-        lua_pushfstring( L, "CBaseCombatWeapon: %d %s", pWeapon->entindex(), pWeapon->GetClassname() );
-    return 1;
-}
-LUA_BINDING_END( "string", "String representation." )
+// Experiment; We only let CBaseEntity determine equality, which should be fine since they're pointers to the same entity. Disabled:
+//LUA_BINDING_BEGIN( CBaseCombatWeapon, __eq, "class", "Equality comparison." )
+//{
+//    lua_CBaseCombatWeapon *pWeapon = LUA_BINDING_ARGUMENT( lua_toweapon, 1, "entity" );
+//    lua_CBaseCombatWeapon *pOtherWeapon = LUA_BINDING_ARGUMENT( lua_toweapon, 2, "otherEntity" );
+//    lua_pushboolean( L, pWeapon == pOtherWeapon );
+//    return 1;
+//}
+//LUA_BINDING_END( "boolean", "Whether the two entities are equal." )
+//
+//LUA_BINDING_BEGIN( CBaseCombatWeapon, __tostring, "class", "String representation." )
+//{
+//    lua_CBaseCombatWeapon *pWeapon = LUA_BINDING_ARGUMENT( lua_toweapon, 1, "entity" );
+//    if ( pWeapon == NULL )
+//        lua_pushstring( L, "NULL" );
+//    else
+//        lua_pushfstring( L, "CBaseCombatWeapon: %d %s", pWeapon->entindex(), pWeapon->GetClassname() );
+//    return 1;
+//}
+//LUA_BINDING_END( "string", "String representation." )
 
 /*
 ** Open CBaseCombatWeapon object

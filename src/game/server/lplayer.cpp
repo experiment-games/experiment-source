@@ -65,14 +65,6 @@ LUA_BINDING_BEGIN( CBasePlayer, DestroyViewModels, "class", "Destroy all view mo
 }
 LUA_BINDING_END()
 
-LUA_BINDING_BEGIN( CBasePlayer, RequiredEdictIndex, "class", "Get the required edict index for the player." )
-{
-    lua_CBasePlayer *player = LUA_BINDING_ARGUMENT( luaL_checkplayer, 1, "player" );
-    lua_pushinteger( L, player->RequiredEdictIndex() );
-    return 1;
-}
-LUA_BINDING_END( "integer", "The required edict index." )
-
 LUA_BINDING_BEGIN( CBasePlayer, LockPlayerInPlace, "class", "Lock the player in place." )
 {
     lua_CBasePlayer *player = LUA_BINDING_ARGUMENT( luaL_checkplayer, 1, "player" );
@@ -85,14 +77,6 @@ LUA_BINDING_BEGIN( CBasePlayer, UnlockPlayer, "class", "Unlock the player." )
 {
     lua_CBasePlayer *player = LUA_BINDING_ARGUMENT( luaL_checkplayer, 1, "player" );
     player->UnlockPlayer();
-    return 0;
-}
-LUA_BINDING_END()
-
-LUA_BINDING_BEGIN( CBasePlayer, DrawDebugGeometryOverlays, "class", "Draw debug geometry overlays for the player." )
-{
-    lua_CBasePlayer *player = LUA_BINDING_ARGUMENT( luaL_checkplayer, 1, "player" );
-    player->DrawDebugGeometryOverlays();
     return 0;
 }
 LUA_BINDING_END()
@@ -152,16 +136,6 @@ LUA_BINDING_BEGIN( CBasePlayer, ForceSimulation, "class", "Force the player to s
     return 0;
 }
 LUA_BINDING_END()
-
-LUA_BINDING_BEGIN( CBasePlayer, TakeHealth, "class", "Take health from the player." )
-{
-    lua_CBasePlayer *player = LUA_BINDING_ARGUMENT( luaL_checkplayer, 1, "player" );
-    float health = LUA_BINDING_ARGUMENT( luaL_checknumber, 2, "health" );
-    int damageType = LUA_BINDING_ARGUMENT( luaL_checkinteger, 3, "damageType" );
-    lua_pushinteger( L, player->TakeHealth( health, damageType ) );
-    return 1;
-}
-LUA_BINDING_END( "integer", "The amount of health actually taken." )
 
 LUA_BINDING_BEGIN( CBasePlayer, DamageEffect, "class", "Apply a damage effect to the player." )
 {
@@ -266,14 +240,6 @@ LUA_BINDING_BEGIN( CBasePlayer, OnEventDying, "class", "Call to handle dying for
     return 0;
 }
 LUA_BINDING_END()
-
-LUA_BINDING_BEGIN( CBasePlayer, IsNetClient, "class", "Check if the player is a net client." )
-{
-    lua_CBasePlayer *player = LUA_BINDING_ARGUMENT( luaL_checkplayer, 1, "player" );
-    lua_pushboolean( L, player->IsNetClient() );
-    return 1;
-}
-LUA_BINDING_END( "boolean", "Whether the player is a net client." )
 
 LUA_BINDING_BEGIN( CBasePlayer, IsFakeClient, "class", "Check if the player is a fake client." )
 {
@@ -482,14 +448,6 @@ LUA_BINDING_BEGIN( CBasePlayer, PlayDeathSound, "class", "Play the death sound f
     return 0;
 }
 LUA_BINDING_END()
-
-LUA_BINDING_BEGIN( CBasePlayer, Classify, "class", "Get the classification of the player (for AI to determine friends/foes)." )
-{
-    lua_CBasePlayer *player = LUA_BINDING_ARGUMENT( luaL_checkplayer, 1, "player" );
-    lua_pushinteger( L, player->Classify() );
-    return 1;
-}
-LUA_BINDING_END( "integer", "The classification." )
 
 // Experiment; SetWeaponAnimType has no existing implementation anywhere
 //LUA_BINDING_BEGIN( CBasePlayer, SetWeaponAnimationType, "class", "Set the weapon animation type for the player." )

@@ -149,17 +149,6 @@ LUA_BINDING_BEGIN( CBaseAnimating, DrawClientHitboxes, "class", "Draw the client
 }
 LUA_BINDING_END()
 
-LUA_BINDING_BEGIN( CBaseAnimating, DrawModel, "class", "Draw the model." )
-{
-    lua_CBaseAnimating *pAnimating = LUA_BINDING_ARGUMENT( luaL_checkanimating, 1, "entity" );
-    int nFlags = LUA_BINDING_ARGUMENT_WITH_DEFAULT( luaL_optnumber, 2, STUDIO_RENDER, "flags" );
-
-    lua_pushinteger( L, pAnimating->DrawModel( nFlags ) );
-
-    return 1;
-}
-LUA_BINDING_END( "number", "The result of the operation" )
-
 LUA_BINDING_BEGIN( CBaseAnimating, FindFollowedEntity, "class", "Find the followed entity." )
 {
     lua_CBaseAnimating *pAnimating = LUA_BINDING_ARGUMENT( luaL_checkanimating, 1, "entity" );
@@ -333,18 +322,6 @@ LUA_BINDING_BEGIN( CBaseAnimating, GetFlexControllerType, "class", "Get the flex
 }
 LUA_BINDING_END( "string", "The flex controller type" )
 
-LUA_BINDING_BEGIN( CBaseAnimating, GetRenderAngles, "class", "Get the render angles." )
-{
-    lua_CBaseAnimating *pAnimating = LUA_BINDING_ARGUMENT( luaL_checkanimating, 1, "entity" );
-
-    QAngle v = pAnimating->GetRenderAngles();
-
-    lua_pushangle( L, v );
-
-    return 1;
-}
-LUA_BINDING_END( "angle", "The render angles" )
-
 LUA_BINDING_BEGIN( CBaseAnimating, GetRenderBounds, "class", "Get the render bounds." )
 {
     lua_CBaseAnimating *pAnimating = LUA_BINDING_ARGUMENT( luaL_checkanimating, 1, "entity" );
@@ -358,18 +335,6 @@ LUA_BINDING_BEGIN( CBaseAnimating, GetRenderBounds, "class", "Get the render bou
     return 2;
 }
 LUA_BINDING_END( "vector", "The minimum bounds", "vector", "The maximum bounds" )
-
-LUA_BINDING_BEGIN( CBaseAnimating, GetRenderOrigin, "class", "Get the render origin." )
-{
-    lua_CBaseAnimating *pAnimating = LUA_BINDING_ARGUMENT( luaL_checkanimating, 1, "entity" );
-
-    Vector v = pAnimating->GetRenderOrigin();
-
-    lua_pushvector( L, v );
-
-    return 1;
-}
-LUA_BINDING_END( "vector", "The render origin" )
 
 LUA_BINDING_BEGIN( CBaseAnimating, GetServerIntendedCycle, "class", "Get the server intended cycle." )
 {
@@ -589,16 +554,6 @@ LUA_BINDING_BEGIN( CBaseAnimating, RagdollMoved, "class", "Call this when the ra
 }
 LUA_BINDING_END()
 
-LUA_BINDING_BEGIN( CBaseAnimating, Release, "class", "Release the entity. This clears the ragdoll and destroys the entity." )
-{
-    lua_CBaseAnimating *pAnimating = LUA_BINDING_ARGUMENT( luaL_checkanimating, 1, "entity" );
-
-    pAnimating->Release();
-
-    return 0;
-}
-LUA_BINDING_END()
-
 LUA_BINDING_BEGIN( CBaseAnimating, RemoveFromClientSideAnimationList, "class", "Remove from the client side animation list." )
 {
     lua_CBaseAnimating *pAnimating = LUA_BINDING_ARGUMENT( luaL_checkanimating, 1, "entity" );
@@ -645,27 +600,6 @@ LUA_BINDING_BEGIN( CBaseAnimating, SetPredictable, "class", "Set predictable." )
     bool bPredictable = LUA_BINDING_ARGUMENT( luaL_checkboolean, 2, "predictable" );
 
     pAnimating->SetPredictable( bPredictable );
-
-    return 0;
-}
-LUA_BINDING_END()
-
-LUA_BINDING_BEGIN( CBaseAnimating, SetPredictionEligible, "class", "Set prediction eligible." )
-{
-    lua_CBaseAnimating *pAnimating = LUA_BINDING_ARGUMENT( luaL_checkanimating, 1, "entity" );
-    bool bCanPredict = LUA_BINDING_ARGUMENT( luaL_checkboolean, 2, "canPredict" );
-
-    pAnimating->SetPredictionEligible( bCanPredict );
-
-    return 0;
-}
-LUA_BINDING_END()
-
-LUA_BINDING_BEGIN( CBaseAnimating, SetPredictionPlayer, "class|static", "Set prediction player locally." )
-{
-    C_BasePlayer *pPlayer = LUA_BINDING_ARGUMENT( luaL_checkplayer, 1, "player" );
-
-    lua_CBaseAnimating::SetPredictionPlayer( pPlayer );
 
     return 0;
 }
@@ -788,16 +722,6 @@ LUA_BINDING_BEGIN( CBaseAnimating, UpdateIKLocks, "class", "Update the IK locks.
     return 0;
 }
 LUA_BINDING_END()
-
-LUA_BINDING_BEGIN( CBaseAnimating, UsesPowerOfTwoFrameBufferTexture, "class", "Check if the entity uses a power of two frame buffer texture." )
-{
-    lua_CBaseAnimating *pAnimating = LUA_BINDING_ARGUMENT( luaL_checkanimating, 1, "entity" );
-
-    lua_pushboolean( L, pAnimating->UsesPowerOfTwoFrameBufferTexture() );
-
-    return 1;
-}
-LUA_BINDING_END( "boolean", "Whether the entity uses a power of two frame buffer texture" )
 
 /*
 ** Open CBaseAnimating object

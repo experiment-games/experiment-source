@@ -461,7 +461,6 @@ LUA_BINDING_END( "vector", "The world space vector." )
 LUA_BINDING_BEGIN( CBaseEntity, GetEyeAngles, "class", "Get eye angles." )
 {
     lua_CBaseEntity *pEntity = LUA_BINDING_ARGUMENT( luaL_checkentity, 1, "entity" );
-
     QAngle v = pEntity->EyeAngles();
     lua_pushangle( L, v );
     return 1;
@@ -2152,9 +2151,9 @@ LUA_BINDING_END()
 LUA_BINDING_BEGIN( CBaseEntity, SetPredictionEligible, "class", "Set prediction eligible." )
 {
     lua_CBaseEntity *pEntity = LUA_BINDING_ARGUMENT( luaL_checkentity, 1, "entity" );
-    bool bEligible = LUA_BINDING_ARGUMENT( luaL_checkboolean, 2, "eligible" );
+    bool canPredict = LUA_BINDING_ARGUMENT( luaL_checkboolean, 2, "canPredict" );
 
-    pEntity->SetPredictionEligible( bEligible );
+    pEntity->SetPredictionEligible( canPredict );
     return 0;
 }
 LUA_BINDING_END()

@@ -161,9 +161,9 @@ if (not GAMEUI) then
 			end
 
 			for key, value in pairs(metatableToMergeFrom) do
-				-- TODO: Find a better way to inherit without having to exclude these keys.
-				-- TODO: Because this feels hard to maintain.
-				if (key == "__tostring" or key == "__eq" or key == "__gc") then
+				-- Only CBaseEntity should have these keys.
+                if (key == "__tostring" or key == "__eq" or key == "__gc") then
+					error("Attempted to merge a metatable with a key that is not allowed.")
 					continue
 				end
 

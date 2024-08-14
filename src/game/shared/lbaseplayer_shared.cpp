@@ -98,14 +98,6 @@ LUA_BINDING_BEGIN( CBasePlayer, CurrentCommandNumber, "class", "Get the current 
 }
 LUA_BINDING_END()
 
-LUA_BINDING_BEGIN( CBasePlayer, DoMuzzleFlash, "class", "Do the muzzle flash." )
-{
-    lua_CBasePlayer *player = LUA_BINDING_ARGUMENT( luaL_checkplayer, 1, "player" );
-    player->DoMuzzleFlash();
-    return 0;
-}
-LUA_BINDING_END()
-
 LUA_BINDING_BEGIN( CBasePlayer, ExitLadder, "class", "Exit the ladder." )
 {
     lua_CBasePlayer *player = LUA_BINDING_ARGUMENT( luaL_checkplayer, 1, "player" );
@@ -113,15 +105,6 @@ LUA_BINDING_BEGIN( CBasePlayer, ExitLadder, "class", "Exit the ladder." )
     return 0;
 }
 LUA_BINDING_END()
-
-LUA_BINDING_BEGIN( CBasePlayer, GetEyeAngles, "class", "Get the player's eye angles." )
-{
-    lua_CBasePlayer *player = LUA_BINDING_ARGUMENT( luaL_checkplayer, 1, "player" );
-    QAngle v = player->EyeAngles();
-    lua_pushangle( L, v );
-    return 1;
-}
-LUA_BINDING_END( "Angle", "The player's eye angles." )
 
 LUA_BINDING_BEGIN( CBasePlayer, GetEyePositionAndVectors, "class", "Get the player's eye position and vectors." )
 {

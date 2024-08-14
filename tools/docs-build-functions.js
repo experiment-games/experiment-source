@@ -48,9 +48,29 @@ lua:
 </div>
 `;
 
+const mergeClassInto = {
+  CBaseEntity: 'Entity',
+  CBaseAnimating: 'Entity',
+  CBaseFlex: 'Entity',
+
+  CBasePlayer: 'Player',
+  CExperimentPlayer: 'Player',
+
+  // Just rename CBaseCombatWeapon:
+  CBaseCombatWeapon: 'Weapon',
+};
+
+function getLibrary(func) {
+  if (typeof mergeClassInto[func.library] !== 'undefined') {
+    return mergeClassInto[func.library];
+  }
+
+  return func.library;
+}
+
 function writeFunctionToFile(func) {
   const directory = func.concept.startsWith('class') ? 'classes' : 'libraries';
-  let filePath = path.join(outputDir, directory, func.library, `${func.function}.md`);
+  let filePath = path.join(outputDir, directory, getLibrary(func), `${func.function}.md`);
 
   // If the file already exists, don't overwrite it
   if (fs.existsSync(filePath) && !process.argv.includes('--force')) {
@@ -68,7 +88,7 @@ function writeFunctionToFile(func) {
 
     if (existingFunc.realm !== func.realm) {
       const newFileName = `${existingFunc.function}.${existingFunc.realm}.md`;
-      const newFilePath = path.join(outputDir, directory, func.library, newFileName);
+      const newFilePath = path.join(outputDir, directory, getLibrary(func), newFileName);
 
       fs.renameSync(existingFunc.filePath, newFilePath);
 
@@ -79,7 +99,7 @@ function writeFunctionToFile(func) {
 
       // have our file path also include the realm
       const newFuncFileName = `${func.function}.${func.realm}.md`;
-      filePath = path.join(outputDir, directory, func.library, newFuncFileName);
+      filePath = path.join(outputDir, directory, getLibrary(func), newFuncFileName);
       filesToUpdate.delete(filePath);
     }
   }
@@ -135,7 +155,7 @@ function writeFunctionToFile(func) {
     returnSection = `returns:\n${indentEachLine(func.returns.map(ret => `- type: ${ret.type}\n  description: ${wrapQuotes(ret.description)}`).join('\n'), 4)}`;
   }
 
-  let searchKeywords = func.library;
+  let searchKeywords = getLibrary(func);
 
   if (func.concept === 'class|static') {
     searchKeywords = `_R.${searchKeywords}`;
@@ -152,7 +172,7 @@ function writeFunctionToFile(func) {
 
   const content = markdownTemplate.replace(/%template%/g, templateFile)
     .replace(/%title%/g, func.function)
-    .replace(/%library%/g, func.library)
+    .replace(/%library%/g, getLibrary(func))
     .replace(/%function%/g, func.function)
     .replace(/%realm%/g, func.realm)
     .replace(/%description%/g, wrapQuotes(func.description))

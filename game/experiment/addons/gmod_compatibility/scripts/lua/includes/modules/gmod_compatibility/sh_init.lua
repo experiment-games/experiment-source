@@ -230,11 +230,11 @@ gmod = {
 
 language = {
 	GetPhrase = function(phrase)
-		return Localization.Find(phrase)
+		return Localizations.Find(phrase)
 	end,
 
 	Add = function(key, value)
-		Localization.AddString(key, value)
+		Localizations.AddString(key, value)
 	end,
 }
 

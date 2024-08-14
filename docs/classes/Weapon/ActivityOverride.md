@@ -1,0 +1,28 @@
+---
+template: lua-class-function.html
+title: ActivityOverride
+icon: lua-shared
+tags:
+  - lua
+  - shared
+  - needs-verification
+  - needs-example
+lua:
+  library: Weapon
+  function: ActivityOverride
+  realm: shared
+  description: "Asks which Activity override the weapon wants."
+  
+  arguments:
+    - name: "activity"
+      type: number
+  returns:
+    - type: integer
+      description: "Override activity ID."
+    - type: boolean
+      description: "Whether the activity is required."
+---
+
+<div class="lua__search__keywords">
+Weapon:ActivityOverride &#x2013; Asks which Activity override the weapon wants.
+</div>

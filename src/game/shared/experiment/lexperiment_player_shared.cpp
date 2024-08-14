@@ -65,14 +65,6 @@ LUA_BINDING_BEGIN( CExperimentPlayer, BecomeRagdollOnClient, "class", "Become ra
 LUA_BINDING_END( "boolean", "Whether the player can (and has) become a ragdoll" )
 #endif
 
-LUA_BINDING_BEGIN( CExperimentPlayer, CalculateIkLocks, "class", "Calculate IK locks." )
-{
-    CExperiment_Player *player = LUA_BINDING_ARGUMENT( luaL_checkexperimentplayer, 1, "entity" );
-    player->CalculateIKLocks( LUA_BINDING_ARGUMENT( luaL_checknumber, 2, "currentTime" ) );
-    return 0;
-}
-LUA_BINDING_END()
-
 LUA_BINDING_BEGIN( CExperimentPlayer, CanSprint, "class", "Check if the player can sprint." )
 {
     CExperiment_Player *player = LUA_BINDING_ARGUMENT( luaL_checkexperimentplayer, 1, "entity" );
@@ -156,32 +148,33 @@ LUA_BINDING_BEGIN( CExperimentPlayer, GetPlayerModelType, "class", "Get the play
 LUA_BINDING_END( "number", "The player model type" )
 #endif
 
-LUA_BINDING_BEGIN( CExperimentPlayer, __eq, "class", "Metamethod for comparing two entities." )
-{
-    CExperiment_Player *playerA = LUA_BINDING_ARGUMENT( luaL_toexperimentplayer, 1, "entityA" );
-    CExperiment_Player *playerB = LUA_BINDING_ARGUMENT( luaL_toexperimentplayer, 2, "entityB" );
-
-    lua_pushboolean( L, playerA == playerB );
-    return 1;
-}
-LUA_BINDING_END( "boolean", "Whether the entities are equal" )
-
-LUA_BINDING_BEGIN( CExperimentPlayer, __tostring, "class", "Metamethod for converting the entity to a string." )
-{
-    CExperiment_Player *player = LUA_BINDING_ARGUMENT( luaL_toexperimentplayer, 1, "entity" );
-
-    if ( player == NULL )
-    {
-        lua_pushstring( L, "NULL" );
-    }
-    else
-    {
-        lua_pushfstring( L, "CExperiment_Player: %d \"%s\"", player->GetUserID(), player->GetPlayerName() );
-    }
-
-    return 1;
-}
-LUA_BINDING_END( "string", "The string representation of the entity" )
+// Experiment; We only let CBasePlayer determine equality, which should be fine since they're pointers to the same entity. Disabled:
+//LUA_BINDING_BEGIN( CExperimentPlayer, __eq, "class", "Metamethod for comparing two entities." )
+//{
+//    CExperiment_Player *playerA = LUA_BINDING_ARGUMENT( luaL_toexperimentplayer, 1, "entityA" );
+//    CExperiment_Player *playerB = LUA_BINDING_ARGUMENT( luaL_toexperimentplayer, 2, "entityB" );
+//
+//    lua_pushboolean( L, playerA == playerB );
+//    return 1;
+//}
+//LUA_BINDING_END( "boolean", "Whether the entities are equal" )
+//
+//LUA_BINDING_BEGIN( CExperimentPlayer, __tostring, "class", "Metamethod for converting the entity to a string." )
+//{
+//    CExperiment_Player *player = LUA_BINDING_ARGUMENT( luaL_toexperimentplayer, 1, "entity" );
+//
+//    if ( player == NULL )
+//    {
+//        lua_pushstring( L, "NULL" );
+//    }
+//    else
+//    {
+//        lua_pushfstring( L, "CExperiment_Player: %d \"%s\"", player->GetUserID(), player->GetPlayerName() );
+//    }
+//
+//    return 1;
+//}
+//LUA_BINDING_END( "string", "The string representation of the entity" )
 
 // Experiment; Is this at all useful to Lua?
 // static int luasrc_ToExperimentPlayer( lua_State *L )

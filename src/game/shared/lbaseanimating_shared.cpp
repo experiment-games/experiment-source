@@ -38,7 +38,7 @@ LUALIB_API lua_CBaseAnimating *luaL_checkanimating( lua_State *L, int narg )
 
 LUA_REGISTRATION_INIT( CBaseAnimating )
 
-LUA_BINDING_BEGIN( CBaseAnimating, CalculateIKLocks, "class", "Calculate IK locks." )
+LUA_BINDING_BEGIN( CBaseAnimating, CalculateIkLocks, "class", "Calculate IK locks." )
 {
     lua_CBaseAnimating *pAnimating = LUA_BINDING_ARGUMENT( luaL_checkanimating, 1, "entity" );
     float flTime = LUA_BINDING_ARGUMENT( luaL_checknumber, 2, "currentTime" );
@@ -976,33 +976,34 @@ LUA_BINDING_END()
 //     return 0;
 // }
 
-LUA_BINDING_BEGIN( CBaseAnimating, __eq, "class", "Metamethod to check if the two entities are the same" )
-{
-    lua_CBaseAnimating *pAnimating1 = LUA_BINDING_ARGUMENT( lua_toanimating, 1, "entity1" );
-    lua_CBaseAnimating *pAnimating2 = LUA_BINDING_ARGUMENT( lua_toanimating, 2, "entity2" );
-
-    lua_pushboolean( L, pAnimating1 == pAnimating2 );
-
-    return 1;
-}
-LUA_BINDING_END( "boolean", "True if the entities are the same, false otherwise" )
-
-LUA_BINDING_BEGIN( CBaseAnimating, __tostring, "class", "Metamethod to get the string representation of the entity" )
-{
-    lua_CBaseAnimating *pAnimating = LUA_BINDING_ARGUMENT( lua_toanimating, 1, "entity" );
-
-    if ( pAnimating == NULL )
-    {
-        lua_pushstring( L, "NULL" );
-    }
-    else
-    {
-        lua_pushfstring( L, "CBaseAnimating: %d \"%s\"", pAnimating->entindex(), pAnimating->GetClassname() );
-    }
-
-    return 1;
-}
-LUA_BINDING_END( "string", "The string representation of the entity" )
+// Experiment; We only let CBaseEntity determine equality, which should be fine since they're pointers to the same entity. Disabled:
+//LUA_BINDING_BEGIN( CBaseAnimating, __eq, "class", "Metamethod to check if the two entities are the same" )
+//{
+//    lua_CBaseAnimating *pAnimating1 = LUA_BINDING_ARGUMENT( lua_toanimating, 1, "entity1" );
+//    lua_CBaseAnimating *pAnimating2 = LUA_BINDING_ARGUMENT( lua_toanimating, 2, "entity2" );
+//
+//    lua_pushboolean( L, pAnimating1 == pAnimating2 );
+//
+//    return 1;
+//}
+//LUA_BINDING_END( "boolean", "True if the entities are the same, false otherwise" )
+//
+//LUA_BINDING_BEGIN( CBaseAnimating, __tostring, "class", "Metamethod to get the string representation of the entity" )
+//{
+//    lua_CBaseAnimating *pAnimating = LUA_BINDING_ARGUMENT( lua_toanimating, 1, "entity" );
+//
+//    if ( pAnimating == NULL )
+//    {
+//        lua_pushstring( L, "NULL" );
+//    }
+//    else
+//    {
+//        lua_pushfstring( L, "CBaseAnimating: %d \"%s\"", pAnimating->entindex(), pAnimating->GetClassname() );
+//    }
+//
+//    return 1;
+//}
+//LUA_BINDING_END( "string", "The string representation of the entity" )
 
 /*
 ** Open CBaseAnimating object
