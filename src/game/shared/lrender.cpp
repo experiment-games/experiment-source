@@ -32,6 +32,26 @@ static Frustum renderFrustum2D;
 static CUtlStack< ShaderAPITextureHandle_t > filterTextureHandlesMinification;
 static CUtlStack< ShaderAPITextureHandle_t > filterTextureHandlesMagnification;
 
+LUA_BINDING_BEGIN( Renders, GetRenderTarget, "library", "Get the currently active render target.", "client" )
+{
+    CMatRenderContextPtr pRenderContext( materials );
+    ITexture *pTexture = pRenderContext->GetRenderTarget();
+    lua_pushitexture( L, pTexture );
+
+    return 1;
+}
+LUA_BINDING_END( "Texture", "The currently active render target texture." )
+
+LUA_BINDING_BEGIN( Renders, CopyRenderTargetToTexture, "library", "Copies the currently active Render Target to the specified texture.", "client" )
+{
+    CMatRenderContextPtr pRenderContext( materials );
+    ITexture *pTexture = LUA_BINDING_ARGUMENT( luaL_checkitexture, 1, "texture" );
+    pRenderContext->CopyRenderTargetToTexture( pTexture );
+
+    return 0;
+}
+LUA_BINDING_END()
+
 LUA_BINDING_BEGIN( Renders, CreateRenderTargetTextureEx, "library", "Create a new render target texture.", "client" )
 {
     const char *name = LUA_BINDING_ARGUMENT( luaL_checkstring, 1, "name" );

@@ -4,44 +4,39 @@
 #include "particle_parse.h"
 #include "particles/particles.h"
 
-#ifdef CLIENT_DLL
-#include "cdll_client_int.h"
-#else
-#include "gameinterface.h"
-#endif
-
 // memdbgon must be the last include file in a .cpp file!!!
 #include "tier0/memdbgon.h"
 
-static int ParticleSystem_Precache( lua_State *L )
+LUA_REGISTRATION_INIT( ParticleSystems )
+
+LUA_BINDING_BEGIN( ParticleSystems, Precache, "library", "Precache a particle system." )
 {
-    PrecacheParticleSystem( luaL_checkstring( L, 1 ) );
+    const char *systemName = LUA_BINDING_ARGUMENT( luaL_checkstring, 1, "systemName" );
+    PrecacheParticleSystem( systemName );
     return 0;
 }
+LUA_BINDING_END()
 
-static int ParticleSystem_ReadConfigFile( lua_State *L )
+LUA_BINDING_BEGIN( ParticleSystems, ReadConfigFile, "library", "Read a particle system config file, add it to the list of particle configs." )
 {
-    const char *filePath = luaL_checkstring( L, 1 );
+    const char *filePath = LUA_BINDING_ARGUMENT( luaL_checkstring, 1, "filePath" );
 
     if ( !g_pParticleSystemMgr->ReadParticleConfigFile( filePath, true, true ) )
     {
         // ReadParticleConfigFile already prints a warning message itself
-        // Warning( "Error reading particle config file: %s\n", filePath );
+        // Warning("Error reading particle config file: %s\n", filePath);
     }
 
     return 0;
 }
-
-static const luaL_Reg ParticleSystem_funcs[] = {
-    { "Precache", ParticleSystem_Precache },
-    { "ReadConfigFile", ParticleSystem_ReadConfigFile },
-    { NULL, NULL } };
+LUA_BINDING_END()
 
 /*
 ** Open ParticleSystem library
 */
 LUALIB_API int luaopen_ParticleSystem( lua_State *L )
 {
-    luaL_register( L, LUA_PARTICLESYSTEMLIBNAME, ParticleSystem_funcs );
+    LUA_REGISTRATION_COMMIT_LIBRARY( ParticleSystems );
+
     return 1;
 }

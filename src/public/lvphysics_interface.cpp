@@ -322,6 +322,7 @@ LUA_API lua_IPhysicsSurfaceProps *lua_tophysicssurfaceprops( lua_State *L, int i
 ** push functions (C -> stack)
 */
 
+// Experiment; TODO: Fix this:
 // FIXME?: So here's the deal folks; in the Source SDK storing physics objects
 // long-term is not done frequently. This is because physics objects are, for
 // the majority of the time, tied to plain physics props or other similar
@@ -341,7 +342,7 @@ LUA_API void lua_pushphysicsobject( lua_State *L, lua_IPhysicsObject *pPhysicsOb
 {
     lua_IPhysicsObject **ppPhysicsObject = ( lua_IPhysicsObject ** )lua_newuserdata( L, sizeof( pPhysicsObject ) );
     *ppPhysicsObject = pPhysicsObject;
-    LUA_SAFE_SET_METATABLE( L, LUA_PHYSICSOBJECTLIBNAME );
+    LUA_SAFE_SET_METATABLE( L, LUA_PHYSICSOBJECTMETANAME );
 }
 
 LUA_API void lua_pushsurfacephysicsparams( lua_State *L, lua_surfacephysicsparams_t *pphysics )
@@ -472,823 +473,932 @@ LUA_API void lua_pushphysicssurfaceprops( lua_State *L, lua_IPhysicsSurfaceProps
 {
     lua_IPhysicsSurfaceProps **ppProps = ( lua_IPhysicsSurfaceProps ** )lua_newuserdata( L, sizeof( pProps ) );
     *ppProps = pProps;
-    LUA_SAFE_SET_METATABLE( L, LUA_PHYSICSSURFACEPROPSLIBNAME );
+    LUA_SAFE_SET_METATABLE( L, LUA_PHYSICSSURFACEPROPSMETANAME );
 }
 
 LUALIB_API lua_IPhysicsObject *luaL_checkphysicsobject( lua_State *L, int narg )
 {
     lua_IPhysicsObject *d = lua_tophysicsobject( L, narg );
     if ( d == NULL ) /* avoid extra test when d is not 0 */
-        luaL_argerror( L, narg, "IPhysicsObject expected, got NULL physicsobject" );
+        luaL_argerror( L, narg, "PhysicsObject expected, got NULL physicsobject" );
     return d;
 }
 
 LUALIB_API lua_IPhysicsSurfaceProps *luaL_checkphysicssurfaceprops( lua_State *L, int narg )
 {
-    lua_IPhysicsSurfaceProps **d = ( lua_IPhysicsSurfaceProps ** )luaL_checkudata( L, narg, LUA_PHYSICSSURFACEPROPSLIBNAME );
+    lua_IPhysicsSurfaceProps **d = ( lua_IPhysicsSurfaceProps ** )luaL_checkudata( L, narg, LUA_PHYSICSSURFACEPROPSMETANAME );
 
     if ( *d == 0 ) /* avoid extra test when d is not 0 */
-        luaL_argerror( L, narg, "IPhysicsSurfaceProps expected, got NULL" );
+        luaL_argerror( L, narg, "PhysicsSurfaceProperties expected, got NULL" );
 
     return *d;
 }
 
-static int physenv_CleanupDeleteList( lua_State *L )
+/*
+** PhysicsEnvironments library
+*/
+
+LUA_REGISTRATION_INIT( PhysicsEnvironments )
+
+LUA_BINDING_BEGIN( PhysicsEnvironments, CleanupDeleteList, "library", "Cleanup delete list." )
 {
     physenv->CleanupDeleteList();
     return 0;
 }
+LUA_BINDING_END()
 
-static int physenv_ClearStats( lua_State *L )
+LUA_BINDING_BEGIN( PhysicsEnvironments, ClearStats, "library", "Clears the physics stats." )
 {
     physenv->ClearStats();
     return 0;
 }
+LUA_BINDING_END()
 
-static int physenv_DebugCheckContacts( lua_State *L )
+LUA_BINDING_BEGIN( PhysicsEnvironments, DebugCheckContacts, "library", "Debug check contacts." )
 {
     physenv->DebugCheckContacts();
     return 0;
 }
+LUA_BINDING_END()
 
-static int physenv_GetActiveObjectCount( lua_State *L )
+LUA_BINDING_BEGIN( PhysicsEnvironments, GetActiveObjectCount, "library", "Get active object count." )
 {
     lua_pushnumber( L, physenv->GetActiveObjectCount() );
     return 1;
 }
+LUA_BINDING_END( "integer", "The active object count." )
 
-static int physenv_GetAirDensity( lua_State *L )
+LUA_BINDING_BEGIN( PhysicsEnvironments, GetAirDensity, "library", "Get air density." )
 {
     lua_pushnumber( L, physenv->GetAirDensity() );
     return 1;
 }
+LUA_BINDING_END( "number", "The air density value." )
 
-static int physenv_GetGravity( lua_State *L )
+LUA_BINDING_BEGIN( PhysicsEnvironments, GetGravity, "library", "Get gravity vector." )
 {
     Vector pGravityVector;
     physenv->GetGravity( &pGravityVector );
     lua_pushvector( L, pGravityVector );
     return 1;
 }
+LUA_BINDING_END( "Vector", "The gravity vector." )
 
-static int physenv_GetNextFrameTime( lua_State *L )
+LUA_BINDING_BEGIN( PhysicsEnvironments, GetNextFrameTime, "library", "Get next frame time." )
 {
     lua_pushnumber( L, physenv->GetNextFrameTime() );
     return 1;
 }
+LUA_BINDING_END( "number", "The next frame time." )
 
-static int physenv_GetPerformanceSettings( lua_State *L )
+LUA_BINDING_BEGIN( PhysicsEnvironments, GetPerformanceSettings, "library", "Get performance settings." )
 {
     physics_performanceparams_t pOutput;
     physenv->GetPerformanceSettings( &pOutput );
     lua_pushperformanceparams( L, &pOutput );
     return 1;
 }
+LUA_BINDING_END( "physics_performanceparams_t", "The physics performance parameters." )
 
-static int physenv_GetSimulationTime( lua_State *L )
+LUA_BINDING_BEGIN( PhysicsEnvironments, GetSimulationTime, "library", "Get simulation time." )
 {
     lua_pushnumber( L, physenv->GetSimulationTime() );
     return 1;
 }
+LUA_BINDING_END( "number", "The simulation time." )
 
-static int physenv_GetSimulationTimestep( lua_State *L )
+LUA_BINDING_BEGIN( PhysicsEnvironments, GetSimulationTimestep, "library", "Get simulation timestep." )
 {
     lua_pushnumber( L, physenv->GetSimulationTimestep() );
     return 1;
 }
+LUA_BINDING_END( "number", "The simulation timestep." )
 
-static int physenv_IsInSimulation( lua_State *L )
+LUA_BINDING_BEGIN( PhysicsEnvironments, IsInSimulation, "library", "Check if in simulation." )
 {
     lua_pushboolean( L, physenv->IsInSimulation() );
     return 1;
 }
+LUA_BINDING_END( "boolean", "Whether in simulation or not." )
 
-static int physenv_PostRestore( lua_State *L )
+LUA_BINDING_BEGIN( PhysicsEnvironments, PostRestore, "library", "Post restore operations." )
 {
     physenv->PostRestore();
     return 0;
 }
+LUA_BINDING_END()
 
-static int physenv_ResetSimulationClock( lua_State *L )
+LUA_BINDING_BEGIN( PhysicsEnvironments, ResetSimulationClock, "library", "Reset the simulation clock." )
 {
     physenv->ResetSimulationClock();
     return 0;
 }
+LUA_BINDING_END()
 
-static int physenv_SetAirDensity( lua_State *L )
+LUA_BINDING_BEGIN( PhysicsEnvironments, SetAirDensity, "library", "Set air density." )
 {
-    physenv->SetAirDensity( luaL_checknumber( L, 1 ) );
+    float density = LUA_BINDING_ARGUMENT( luaL_checknumber, 1, "density" );
+    physenv->SetAirDensity( density );
     return 0;
 }
+LUA_BINDING_END()
 
-static int physenv_SetGravity( lua_State *L )
+LUA_BINDING_BEGIN( PhysicsEnvironments, SetGravity, "library", "Set gravity." )
 {
-    physenv->SetGravity( luaL_checkvector( L, 1 ) );
+    Vector gravity = LUA_BINDING_ARGUMENT( luaL_checkvector, 1, "gravity" );
+    physenv->SetGravity( gravity );
     return 0;
 }
+LUA_BINDING_END()
 
-static int physenv_SetPerformanceSettings( lua_State *L )
+LUA_BINDING_BEGIN( PhysicsEnvironments, SetPerformanceSettings, "library", "Set performance settings." )
 {
-    physenv->SetPerformanceSettings( &lua_toperformanceparams( L, 1 ) );
+    physics_performanceparams_t params = LUA_BINDING_ARGUMENT( lua_toperformanceparams, 1, "params" );
+    physenv->SetPerformanceSettings( &params );
     return 0;
 }
+LUA_BINDING_END()
 
-static int physenv_SetQuickDelete( lua_State *L )
+LUA_BINDING_BEGIN( PhysicsEnvironments, SetQuickDelete, "library", "Set quick delete." )
 {
-    physenv->SetQuickDelete( luaL_checkboolean( L, 1 ) );
+    bool quickDelete = LUA_BINDING_ARGUMENT( luaL_checkboolean, 1, "quickDelete" );
+    physenv->SetQuickDelete( quickDelete );
     return 0;
 }
+LUA_BINDING_END()
 
-static int physenv_SetSimulationTimestep( lua_State *L )
+LUA_BINDING_BEGIN( PhysicsEnvironments, SetSimulationTimestep, "library", "Set simulation timestep." )
 {
-    physenv->SetSimulationTimestep( luaL_checknumber( L, 1 ) );
+    float timestep = LUA_BINDING_ARGUMENT( luaL_checknumber, 1, "timestep" );
+    physenv->SetSimulationTimestep( timestep );
     return 0;
 }
+LUA_BINDING_END()
 
-static int physenv_Simulate( lua_State *L )
+LUA_BINDING_BEGIN( PhysicsEnvironments, Simulate, "library", "Simulate for specified time." )
 {
-    physenv->Simulate( luaL_checknumber( L, 1 ) );
+    float time = LUA_BINDING_ARGUMENT( luaL_checknumber, 1, "time" );
+    physenv->Simulate( time );
     return 0;
 }
-
-static const luaL_Reg physenvlib[] = {
-    { "CleanupDeleteList", physenv_CleanupDeleteList },
-    { "ClearStats", physenv_ClearStats },
-    { "DebugCheckContacts", physenv_DebugCheckContacts },
-    { "GetActiveObjectCount", physenv_GetActiveObjectCount },
-    { "GetAirDensity", physenv_GetAirDensity },
-    { "GetGravity", physenv_GetGravity },
-    { "GetNextFrameTime", physenv_GetNextFrameTime },
-    { "GetPerformanceSettings", physenv_GetPerformanceSettings },
-    { "GetSimulationTime", physenv_GetSimulationTime },
-    { "GetSimulationTimestep", physenv_GetSimulationTimestep },
-    { "IsInSimulation", physenv_IsInSimulation },
-    { "PostRestore", physenv_PostRestore },
-    { "ResetSimulationClock", physenv_ResetSimulationClock },
-    { "SetAirDensity", physenv_SetAirDensity },
-    { "SetGravity", physenv_SetGravity },
-    { "SetPerformanceSettings", physenv_SetPerformanceSettings },
-    { "SetQuickDelete", physenv_SetQuickDelete },
-    { "SetSimulationTimestep", physenv_SetSimulationTimestep },
-    { "Simulate", physenv_Simulate },
-    { NULL, NULL } };
+LUA_BINDING_END()
 
 /*
 ** Open physenv library
 */
-LUALIB_API int luaopen_physenv( lua_State *L )
+LUALIB_API int luaopen_PhysicsEnvironments( lua_State *L )
 {
-    luaL_register( L, LUA_PHYSENVLIBNAME, physenvlib );
+    LUA_REGISTRATION_COMMIT_LIBRARY( PhysicsEnvironments );
+
     return 1;
 }
 
-static int IPhysicsObject_AddAngleVelocity( lua_State *L )
+/*
+** IPhysicsObject Meta
+*/
+
+LUA_REGISTRATION_INIT( PhysicsObject );
+
+LUA_BINDING_BEGIN( PhysicsObject, AddAngleVelocity, "class", "Adds angular velocity" )
 {
-    AngularImpulse angularVelocity = luaL_checkvector( L, 2 );
+    AngularImpulse angularVelocity = LUA_BINDING_ARGUMENT( luaL_checkvector, 2, "angularVelocity" );
     Vector velocity( 0, 0, 0 );
-
-    luaL_checkphysicsobject( L, 1 )->AddVelocity( &velocity, &angularVelocity );
+    LUA_BINDING_ARGUMENT( luaL_checkphysicsobject, 1, "physicsObject" )->AddVelocity( &velocity, &angularVelocity );
     return 0;
 }
+LUA_BINDING_END()
 
-static int IPhysicsObject_AddVelocity( lua_State *L )
+LUA_BINDING_BEGIN( PhysicsObject, AddVelocity, "class", "Adds velocity and optionally angular velocity" )
 {
-    Vector velocity = luaL_checkvector( L, 2 );
+    Vector velocity = LUA_BINDING_ARGUMENT( luaL_checkvector, 2, "velocity" );
     AngularImpulse angularVelocity( 0, 0, 0 );
-    angularVelocity = luaL_optvector( L, 3, &angularVelocity );
-    luaL_checkphysicsobject( L, 1 )->AddVelocity( &velocity, &angularVelocity );
+    angularVelocity = LUA_BINDING_ARGUMENT_WITH_DEFAULT( luaL_optvector, 3, &angularVelocity, "angularVelocity" );
+    LUA_BINDING_ARGUMENT( luaL_checkphysicsobject, 1, "physicsObject" )->AddVelocity( &velocity, &angularVelocity );
     return 0;
 }
+LUA_BINDING_END()
 
-static int IPhysicsObject_ApplyForceCenter( lua_State *L )
+LUA_BINDING_BEGIN( PhysicsObject, ApplyForceCenter, "class", "Applies force at center" )
 {
-    luaL_checkphysicsobject( L, 1 )->ApplyForceCenter( luaL_checkvector( L, 2 ) );
+    LUA_BINDING_ARGUMENT( luaL_checkphysicsobject, 1, "physicsObject" )->ApplyForceCenter( LUA_BINDING_ARGUMENT( luaL_checkvector, 2, "force" ) );
     return 0;
 }
+LUA_BINDING_END()
 
-static int IPhysicsObject_ApplyForceOffset( lua_State *L )
+LUA_BINDING_BEGIN( PhysicsObject, ApplyForceOffset, "class", "Applies force at an offset" )
 {
-    luaL_checkphysicsobject( L, 1 )->ApplyForceOffset( luaL_checkvector( L, 2 ), luaL_checkvector( L, 3 ) );
+    LUA_BINDING_ARGUMENT( luaL_checkphysicsobject, 1, "physicsObject" )->ApplyForceOffset( LUA_BINDING_ARGUMENT( luaL_checkvector, 2, "force" ), LUA_BINDING_ARGUMENT( luaL_checkvector, 3, "offset" ) );
     return 0;
 }
+LUA_BINDING_END()
 
-static int IPhysicsObject_ApplyTorqueCenter( lua_State *L )
+LUA_BINDING_BEGIN( PhysicsObject, ApplyTorqueCenter, "class", "Applies torque at center" )
 {
-    luaL_checkphysicsobject( L, 1 )->ApplyTorqueCenter( luaL_checkvector( L, 2 ) );
+    LUA_BINDING_ARGUMENT( luaL_checkphysicsobject, 1, "physicsObject" )->ApplyTorqueCenter( LUA_BINDING_ARGUMENT( luaL_checkvector, 2, "torque" ) );
     return 0;
 }
+LUA_BINDING_END()
 
-static int IPhysicsObject_BecomeHinged( lua_State *L )
+LUA_BINDING_BEGIN( PhysicsObject, BecomeHinged, "class", "Becomes hinged at a specified point" )
 {
-    luaL_checkphysicsobject( L, 1 )->BecomeHinged( luaL_checknumber( L, 2 ) );
+    LUA_BINDING_ARGUMENT( luaL_checkphysicsobject, 1, "physicsObject" )->BecomeHinged( LUA_BINDING_ARGUMENT( luaL_checknumber, 2, "localAxis" ) );
     return 0;
 }
+LUA_BINDING_END()
 
-static int IPhysicsObject_BecomeTrigger( lua_State *L )
+LUA_BINDING_BEGIN( PhysicsObject, BecomeTrigger, "class", "Becomes a trigger" )
 {
-    luaL_checkphysicsobject( L, 1 )->BecomeTrigger();
+    LUA_BINDING_ARGUMENT( luaL_checkphysicsobject, 1, "physicsObject" )->BecomeTrigger();
     return 0;
 }
+LUA_BINDING_END()
 
-static int IPhysicsObject_CalculateAngularDrag( lua_State *L )
+LUA_BINDING_BEGIN( PhysicsObject, CalculateAngularDrag, "class", "Calculates angular drag" )
 {
-    lua_pushnumber( L, luaL_checkphysicsobject( L, 1 )->CalculateAngularDrag( luaL_checkvector( L, 2 ) ) );
+    lua_pushnumber( L, LUA_BINDING_ARGUMENT( luaL_checkphysicsobject, 1, "physicsObject" )->CalculateAngularDrag( LUA_BINDING_ARGUMENT( luaL_checkvector, 2, "objectSpaceRotationAxis" ) ) );
     return 1;
 }
+LUA_BINDING_END( "number", "The angular drag value." )
 
-static int IPhysicsObject_CalculateForceOffset( lua_State *L )
+LUA_BINDING_BEGIN( PhysicsObject, CalculateForceOffset, "class", "Calculates force and torque offset" )
 {
     Vector centerForce, centerTorque;
-    luaL_checkphysicsobject( L, 1 )->CalculateForceOffset( luaL_checkvector( L, 2 ), luaL_checkvector( L, 3 ), &centerForce, &centerTorque );
+    LUA_BINDING_ARGUMENT( luaL_checkphysicsobject, 1, "physicsObject" )->CalculateForceOffset( LUA_BINDING_ARGUMENT( luaL_checkvector, 2, "force" ), LUA_BINDING_ARGUMENT( luaL_checkvector, 3, "worldPosition" ), &centerForce, &centerTorque );
     lua_pushvector( L, centerForce );
     lua_pushvector( L, centerTorque );
     return 2;
 }
+LUA_BINDING_END( "Vector", "The center force.", "Vector", "The center torque." )
 
-static int IPhysicsObject_CalculateLinearDrag( lua_State *L )
+LUA_BINDING_BEGIN( PhysicsObject, CalculateLinearDrag, "class", "Calculates linear drag" )
 {
-    lua_pushnumber( L, luaL_checkphysicsobject( L, 1 )->CalculateLinearDrag( luaL_checkvector( L, 2 ) ) );
+    lua_pushnumber( L, LUA_BINDING_ARGUMENT( luaL_checkphysicsobject, 1, "physicsObject" )->CalculateLinearDrag( LUA_BINDING_ARGUMENT( luaL_checkvector, 2, "unitDirection" ) ) );
     return 1;
 }
+LUA_BINDING_END( "number", "The linear drag value." )
 
-static int IPhysicsObject_CalculateVelocityOffset( lua_State *L )
+LUA_BINDING_BEGIN( PhysicsObject, CalculateVelocityOffset, "class", "Calculates velocity and angular velocity offsets" )
 {
     Vector centerVelocity, centerAngularVelocity;
-    luaL_checkphysicsobject( L, 1 )->CalculateVelocityOffset( luaL_checkvector( L, 2 ), luaL_checkvector( L, 3 ), &centerVelocity, &centerAngularVelocity );
+    LUA_BINDING_ARGUMENT( luaL_checkphysicsobject, 1, "physicsObject" )->CalculateVelocityOffset( LUA_BINDING_ARGUMENT( luaL_checkvector, 2, "velocity" ), LUA_BINDING_ARGUMENT( luaL_checkvector, 3, "offset" ), &centerVelocity, &centerAngularVelocity );
     lua_pushvector( L, centerVelocity );
     lua_pushvector( L, centerAngularVelocity );
     return 2;
 }
+LUA_BINDING_END( "Vector", "The center velocity.", "Vector", "The center angular velocity." )
 
-static int IPhysicsObject_EnableCollisions( lua_State *L )
+LUA_BINDING_BEGIN( PhysicsObject, EnableCollisions, "class", "Enables or disables collisions" )
 {
-    luaL_checkphysicsobject( L, 1 )->EnableCollisions( luaL_checkboolean( L, 2 ) );
+    LUA_BINDING_ARGUMENT( luaL_checkphysicsobject, 1, "physicsObject" )->EnableCollisions( LUA_BINDING_ARGUMENT( luaL_checkboolean, 2, "enable" ) );
     return 0;
 }
+LUA_BINDING_END()
 
-static int IPhysicsObject_EnableDrag( lua_State *L )
+LUA_BINDING_BEGIN( PhysicsObject, EnableDrag, "class", "Enables or disables drag" )
 {
-    luaL_checkphysicsobject( L, 1 )->EnableDrag( luaL_checkboolean( L, 2 ) );
+    LUA_BINDING_ARGUMENT( luaL_checkphysicsobject, 1, "physicsObject" )->EnableDrag( LUA_BINDING_ARGUMENT( luaL_checkboolean, 2, "enable" ) );
     return 0;
 }
+LUA_BINDING_END()
 
-static int IPhysicsObject_EnableGravity( lua_State *L )
+LUA_BINDING_BEGIN( PhysicsObject, EnableGravity, "class", "Enables or disables gravity" )
 {
-    luaL_checkphysicsobject( L, 1 )->EnableGravity( luaL_checkboolean( L, 2 ) );
+    LUA_BINDING_ARGUMENT( luaL_checkphysicsobject, 1, "physicsObject" )->EnableGravity( LUA_BINDING_ARGUMENT( luaL_checkboolean, 2, "enable" ) );
     return 0;
 }
+LUA_BINDING_END()
 
-static int IPhysicsObject_EnableMotion( lua_State *L )
+LUA_BINDING_BEGIN( PhysicsObject, EnableMotion, "class", "Enables or disables motion" )
 {
-    luaL_checkphysicsobject( L, 1 )->EnableMotion( luaL_checkboolean( L, 2 ) );
+    LUA_BINDING_ARGUMENT( luaL_checkphysicsobject, 1, "physicsObject" )->EnableMotion( LUA_BINDING_ARGUMENT( luaL_checkboolean, 2, "enable" ) );
     return 0;
 }
+LUA_BINDING_END()
 
-static int IPhysicsObject_GetAABB( lua_State *L )
+LUA_BINDING_BEGIN( PhysicsObject, GetAabb, "class", "Gets the axis-aligned bounding box" )
 {
     Vector mins, maxs;
-    physcollision->CollideGetAABB( &mins, &maxs, luaL_checkphysicsobject( L, 1 )->GetCollide(), vec3_origin, vec3_angle );
+    physcollision->CollideGetAABB( &mins, &maxs, LUA_BINDING_ARGUMENT( luaL_checkphysicsobject, 1, "collide" )->GetCollide(), vec3_origin, vec3_angle );
     lua_pushvector( L, mins );
     lua_pushvector( L, maxs );
     return 2;
 }
+LUA_BINDING_END( "Vector", "The minimum vector.", "Vector", "The maximum vector." )
 
-static int IPhysicsObject_GetCallbackFlags( lua_State *L )
+LUA_BINDING_BEGIN( PhysicsObject, GetCallbackFlags, "class", "Gets callback flags" )
 {
-    lua_pushinteger( L, luaL_checkphysicsobject( L, 1 )->GetCallbackFlags() );
+    lua_pushinteger( L, LUA_BINDING_ARGUMENT( luaL_checkphysicsobject, 1, "physicsObject" )->GetCallbackFlags() );
     return 1;
 }
+LUA_BINDING_END( "integer", "The callback flags." )
 
-static int IPhysicsObject_GetContactPoint( lua_State *L )
+LUA_BINDING_BEGIN( PhysicsObject, GetContactPoint, "class", "Gets the contact point and contact object" )
 {
     Vector contactPoint;
     IPhysicsObject *contactObject;
-    lua_pushboolean( L, luaL_checkphysicsobject( L, 1 )->GetContactPoint( &contactPoint, &contactObject ) );
+    lua_pushboolean( L, LUA_BINDING_ARGUMENT( luaL_checkphysicsobject, 1, "physicsObject" )->GetContactPoint( &contactPoint, &contactObject ) );
     lua_pushvector( L, contactPoint );
     lua_pushphysicsobject( L, contactObject );
     return 3;
 }
+LUA_BINDING_END( "boolean", "Whether there is a contact point or not.", "Vector", "The contact point.", "physicsObject", "The contact object." )
 
-static int IPhysicsObject_GetContents( lua_State *L )
+LUA_BINDING_BEGIN( PhysicsObject, GetContents, "class", "Gets contents" )
 {
-    lua_pushinteger( L, luaL_checkphysicsobject( L, 1 )->GetContents() );
+    lua_pushinteger( L, LUA_BINDING_ARGUMENT( luaL_checkphysicsobject, 1, "physicsObject" )->GetContents() );
     return 1;
 }
+LUA_BINDING_END( "integer", "The contents." )
 
-static int IPhysicsObject_GetDamping( lua_State *L )
+LUA_BINDING_BEGIN( PhysicsObject, GetDamping, "class", "Gets damping rates" )
 {
     float speed, rot;
-    luaL_checkphysicsobject( L, 1 )->GetDamping( &speed, &rot );
+    LUA_BINDING_ARGUMENT( luaL_checkphysicsobject, 1, "physicsObject" )->GetDamping( &speed, &rot );
     lua_pushnumber( L, speed );
     lua_pushnumber( L, rot );
     return 2;
 }
+LUA_BINDING_END( "number", "The speed damping rate.", "number", "The rotation damping rate." )
 
-static int IPhysicsObject_GetEnergy( lua_State *L )
+LUA_BINDING_BEGIN( PhysicsObject, GetEnergy, "class", "Gets energy" )
 {
-    lua_pushnumber( L, luaL_checkphysicsobject( L, 1 )->GetEnergy() );
+    lua_pushnumber( L, LUA_BINDING_ARGUMENT( luaL_checkphysicsobject, 1, "physicsObject" )->GetEnergy() );
     return 1;
 }
+LUA_BINDING_END( "number", "The energy." )
 
-static int IPhysicsObject_GetGameFlags( lua_State *L )
+LUA_BINDING_BEGIN( PhysicsObject, GetGameFlags, "class", "Gets game flags" )
 {
-    lua_pushinteger( L, luaL_checkphysicsobject( L, 1 )->GetGameFlags() );
+    lua_pushinteger( L, LUA_BINDING_ARGUMENT( luaL_checkphysicsobject, 1, "physicsObject" )->GetGameFlags() );
     return 1;
 }
+LUA_BINDING_END( "integer", "The game flags." )
 
-static int IPhysicsObject_GetGameIndex( lua_State *L )
+LUA_BINDING_BEGIN( PhysicsObject, GetGameIndex, "class", "Gets game index" )
 {
-    lua_pushinteger( L, luaL_checkphysicsobject( L, 1 )->GetGameIndex() );
+    lua_pushinteger( L, LUA_BINDING_ARGUMENT( luaL_checkphysicsobject, 1, "physicsObject" )->GetGameIndex() );
     return 1;
 }
+LUA_BINDING_END( "integer", "The game index." )
 
-static int IPhysicsObject_GetImplicitVelocity( lua_State *L )
+LUA_BINDING_BEGIN( PhysicsObject, GetImplicitVelocity, "class", "Gets implicit velocity and angular velocity" )
 {
     Vector velocity, angularVelocity;
-    luaL_checkphysicsobject( L, 1 )->GetImplicitVelocity( &velocity, &angularVelocity );
+    LUA_BINDING_ARGUMENT( luaL_checkphysicsobject, 1, "physicsObject" )->GetImplicitVelocity( &velocity, &angularVelocity );
     lua_pushvector( L, velocity );
     lua_pushvector( L, angularVelocity );
     return 2;
 }
+LUA_BINDING_END( "Vector", "The implicit velocity.", "Vector", "The implicit angular velocity." )
 
-static int IPhysicsObject_GetInertia( lua_State *L )
+LUA_BINDING_BEGIN( PhysicsObject, GetInertia, "class", "Gets inertia" )
 {
-    lua_pushvector( L, luaL_checkphysicsobject( L, 1 )->GetInertia() );
+    lua_pushvector( L, LUA_BINDING_ARGUMENT( luaL_checkphysicsobject, 1, "physicsObject" )->GetInertia() );
     return 1;
 }
+LUA_BINDING_END( "Vector", "The inertia." )
 
-static int IPhysicsObject_GetInvInertia( lua_State *L )
+LUA_BINDING_BEGIN( PhysicsObject, GetInverseInertia, "class", "Gets inverse inertia" )
 {
-    lua_pushvector( L, luaL_checkphysicsobject( L, 1 )->GetInvInertia() );
+    lua_pushvector( L, LUA_BINDING_ARGUMENT( luaL_checkphysicsobject, 1, "physicsObject" )->GetInvInertia() );
     return 1;
 }
+LUA_BINDING_END( "Vector", "The inverse inertia." )
 
-static int IPhysicsObject_GetInvMass( lua_State *L )
+LUA_BINDING_BEGIN( PhysicsObject, GetInverseMass, "class", "Gets inverse mass" )
 {
-    lua_pushnumber( L, luaL_checkphysicsobject( L, 1 )->GetInvMass() );
+    lua_pushnumber( L, LUA_BINDING_ARGUMENT( luaL_checkphysicsobject, 1, "physicsObject" )->GetInvMass() );
     return 1;
 }
+LUA_BINDING_END( "number", "The inverse mass." )
 
-static int IPhysicsObject_GetMass( lua_State *L )
+LUA_BINDING_BEGIN( PhysicsObject, GetMass, "class", "Gets mass" )
 {
-    lua_pushnumber( L, luaL_checkphysicsobject( L, 1 )->GetMass() );
+    lua_pushnumber( L, LUA_BINDING_ARGUMENT( luaL_checkphysicsobject, 1, "physicsObject" )->GetMass() );
     return 1;
 }
+LUA_BINDING_END( "number", "The mass." )
 
-static int IPhysicsObject_GetMassCenterLocalSpace( lua_State *L )
+LUA_BINDING_BEGIN( PhysicsObject, GetMassCenterLocalSpace, "class", "Gets mass center in local space" )
 {
-    lua_pushvector( L, luaL_checkphysicsobject( L, 1 )->GetMassCenterLocalSpace() );
+    lua_pushvector( L, LUA_BINDING_ARGUMENT( luaL_checkphysicsobject, 1, "physicsObject" )->GetMassCenterLocalSpace() );
     return 1;
 }
+LUA_BINDING_END( "Vector", "The mass center in local space." )
 
-static int IPhysicsObject_GetMaterialIndex( lua_State *L )
+LUA_BINDING_BEGIN( PhysicsObject, GetMaterialIndex, "class", "Gets material index" )
 {
-    lua_pushinteger( L, luaL_checkphysicsobject( L, 1 )->GetMaterialIndex() );
+    lua_pushinteger( L, LUA_BINDING_ARGUMENT( luaL_checkphysicsobject, 1, "physicsObject" )->GetMaterialIndex() );
     return 1;
 }
+LUA_BINDING_END( "integer", "The material index." )
 
-static int IPhysicsObject_GetName( lua_State *L )
+LUA_BINDING_BEGIN( PhysicsObject, GetName, "class", "Gets name" )
 {
-    lua_pushstring( L, luaL_checkphysicsobject( L, 1 )->GetName() );
+    lua_pushstring( L, LUA_BINDING_ARGUMENT( luaL_checkphysicsobject, 1, "physicsObject" )->GetName() );
     return 1;
 }
+LUA_BINDING_END( "string", "The name." )
 
-static int IPhysicsObject_GetPosition( lua_State *L )
+LUA_BINDING_BEGIN( PhysicsObject, GetPosition, "class", "Gets the world position and angles" )
 {
+    lua_IPhysicsObject *physicsObject = LUA_BINDING_ARGUMENT( luaL_checkphysicsobject, 1, "physicsObject" );
     Vector worldPosition;
     QAngle angles;
-    luaL_checkphysicsobject( L, 1 )->GetPosition( &worldPosition, &angles );
+    physicsObject->GetPosition( &worldPosition, &angles );
     lua_pushvector( L, worldPosition );
     lua_pushangle( L, angles );
     return 2;
 }
+LUA_BINDING_END( "Vector", "The world position.", "QAngle", "The angles." )
 
-static int IPhysicsObject_GetShadowPosition( lua_State *L )
+LUA_BINDING_BEGIN( PhysicsObject, GetShadowPosition, "class", "Gets the shadow position and angles" )
 {
+    lua_IPhysicsObject *physicsObject = LUA_BINDING_ARGUMENT( luaL_checkphysicsobject, 1, "physicsObject" );
     Vector position;
     QAngle angles;
-    lua_pushinteger( L, luaL_checkphysicsobject( L, 1 )->GetShadowPosition( &position, &angles ) );
+    lua_pushinteger( L, physicsObject->GetShadowPosition( &position, &angles ) );
     lua_pushvector( L, position );
     lua_pushangle( L, angles );
     return 3;
 }
+LUA_BINDING_END( "boolean", "Whether there is a shadow position or not.", "Vector", "The shadow position.", "QAngle", "The angles." )
 
-static int IPhysicsObject_GetSphereRadius( lua_State *L )
+LUA_BINDING_BEGIN( PhysicsObject, GetSphereRadius, "class", "Gets the sphere radius" )
 {
-    lua_pushnumber( L, luaL_checkphysicsobject( L, 1 )->GetSphereRadius() );
+    lua_IPhysicsObject *physicsObject = LUA_BINDING_ARGUMENT( luaL_checkphysicsobject, 1, "physicsObject" );
+    lua_pushnumber( L, physicsObject->GetSphereRadius() );
     return 1;
 }
+LUA_BINDING_END( "number", "The sphere radius." )
 
-static int IPhysicsObject_GetVelocity( lua_State *L )
+LUA_BINDING_BEGIN( PhysicsObject, GetVelocity, "class", "Gets the linear and angular velocity" )
 {
+    lua_IPhysicsObject *physicsObject = LUA_BINDING_ARGUMENT( luaL_checkphysicsobject, 1, "physicsObject" );
     Vector velocity, angularVelocity;
-    luaL_checkphysicsobject( L, 1 )->GetVelocity( &velocity, &angularVelocity );
+    physicsObject->GetVelocity( &velocity, &angularVelocity );
     lua_pushvector( L, velocity );
     lua_pushvector( L, angularVelocity );
     return 2;
 }
+LUA_BINDING_END( "Vector", "The linear velocity.", "Vector", "The angular velocity." )
 
-static int IPhysicsObject_GetVelocityAtPoint( lua_State *L )
+LUA_BINDING_BEGIN( PhysicsObject, GetVelocityAtPoint, "class", "Gets velocity at a specified point" )
 {
+    lua_IPhysicsObject *physicsObject = LUA_BINDING_ARGUMENT( luaL_checkphysicsobject, 1, "physicsObject" );
     Vector pVelocity;
-    luaL_checkphysicsobject( L, 1 )->GetVelocityAtPoint( luaL_checkvector( L, 2 ), &pVelocity );
+    Vector point = LUA_BINDING_ARGUMENT( luaL_checkvector, 2, "worldPosition" );
+    physicsObject->GetVelocityAtPoint( point, &pVelocity );
     lua_pushvector( L, pVelocity );
     return 1;
 }
+LUA_BINDING_END( "Vector", "The velocity at the point." )
 
-static int IPhysicsObject_IsAsleep( lua_State *L )
+LUA_BINDING_BEGIN( PhysicsObject, IsAsleep, "class", "Checks if the object is asleep" )
 {
-    lua_pushboolean( L, luaL_checkphysicsobject( L, 1 )->IsAsleep() );
+    lua_IPhysicsObject *physicsObject = LUA_BINDING_ARGUMENT( luaL_checkphysicsobject, 1, "physicsObject" );
+    lua_pushboolean( L, physicsObject->IsAsleep() );
     return 1;
 }
+LUA_BINDING_END( "boolean", "Whether the object is asleep or not." )
 
-static int IPhysicsObject_IsAttachedToConstraint( lua_State *L )
+LUA_BINDING_BEGIN( PhysicsObject, IsAttachedToConstraint, "class", "Checks if the object is attached to a constraint" )
 {
-    lua_pushboolean( L, luaL_checkphysicsobject( L, 1 )->IsAttachedToConstraint( luaL_checkboolean( L, 2 ) ) );
+    lua_IPhysicsObject *physicsObject = LUA_BINDING_ARGUMENT( luaL_checkphysicsobject, 1, "physicsObject" );
+    bool externalOnly = LUA_BINDING_ARGUMENT( luaL_checkboolean, 2, "externalOnly" );
+    lua_pushboolean( L, physicsObject->IsAttachedToConstraint( externalOnly ) );
     return 1;
 }
+LUA_BINDING_END( "boolean", "Whether the object is attached to a constraint or not." )
 
-static int IPhysicsObject_IsCollisionEnabled( lua_State *L )
+LUA_BINDING_BEGIN( PhysicsObject, IsCollisionEnabled, "class", "Checks if collision is enabled" )
 {
-    lua_pushboolean( L, luaL_checkphysicsobject( L, 1 )->IsCollisionEnabled() );
+    lua_IPhysicsObject *physicsObject = LUA_BINDING_ARGUMENT( luaL_checkphysicsobject, 1, "physicsObject" );
+    lua_pushboolean( L, physicsObject->IsCollisionEnabled() );
     return 1;
 }
+LUA_BINDING_END( "boolean", "Whether collision is enabled or not." )
 
-static int IPhysicsObject_IsDragEnabled( lua_State *L )
+LUA_BINDING_BEGIN( PhysicsObject, IsDragEnabled, "class", "Checks if drag is enabled" )
 {
-    lua_pushboolean( L, luaL_checkphysicsobject( L, 1 )->IsDragEnabled() );
+    lua_IPhysicsObject *physicsObject = LUA_BINDING_ARGUMENT( luaL_checkphysicsobject, 1, "physicsObject" );
+    lua_pushboolean( L, physicsObject->IsDragEnabled() );
     return 1;
 }
+LUA_BINDING_END( "boolean", "Whether drag is enabled or not." )
 
-static int IPhysicsObject_IsFluid( lua_State *L )
+LUA_BINDING_BEGIN( PhysicsObject, IsFluid, "class", "Checks if the object is a fluid" )
 {
-    lua_pushboolean( L, luaL_checkphysicsobject( L, 1 )->IsFluid() );
+    lua_IPhysicsObject *physicsObject = LUA_BINDING_ARGUMENT( luaL_checkphysicsobject, 1, "physicsObject" );
+    lua_pushboolean( L, physicsObject->IsFluid() );
     return 1;
 }
+LUA_BINDING_END( "boolean", "Whether the object is a fluid or not." )
 
-static int IPhysicsObject_IsGravityEnabled( lua_State *L )
+LUA_BINDING_BEGIN( PhysicsObject, IsGravityEnabled, "class", "Checks if gravity is enabled" )
 {
-    lua_pushboolean( L, luaL_checkphysicsobject( L, 1 )->IsGravityEnabled() );
+    lua_IPhysicsObject *physicsObject = LUA_BINDING_ARGUMENT( luaL_checkphysicsobject, 1, "physicsObject" );
+    lua_pushboolean( L, physicsObject->IsGravityEnabled() );
     return 1;
 }
+LUA_BINDING_END( "boolean", "Whether gravity is enabled or not." )
 
-static int IPhysicsObject_IsHinged( lua_State *L )
+LUA_BINDING_BEGIN( PhysicsObject, IsHinged, "class", "Checks if the object is hinged" )
 {
-    lua_pushboolean( L, luaL_checkphysicsobject( L, 1 )->IsHinged() );
+    lua_IPhysicsObject *physicsObject = LUA_BINDING_ARGUMENT( luaL_checkphysicsobject, 1, "physicsObject" );
+    lua_pushboolean( L, physicsObject->IsHinged() );
     return 1;
 }
+LUA_BINDING_END( "boolean", "Whether the object is hinged or not." )
 
-static int IPhysicsObject_IsMotionEnabled( lua_State *L )
+LUA_BINDING_BEGIN( PhysicsObject, IsMotionEnabled, "class", "Checks if motion is enabled" )
 {
-    lua_pushboolean( L, luaL_checkphysicsobject( L, 1 )->IsMotionEnabled() );
+    lua_IPhysicsObject *physicsObject = LUA_BINDING_ARGUMENT( luaL_checkphysicsobject, 1, "physicsObject" );
+    lua_pushboolean( L, physicsObject->IsMotionEnabled() );
     return 1;
 }
+LUA_BINDING_END( "boolean", "Whether motion is enabled or not." )
 
-static int IPhysicsObject_IsMoveable( lua_State *L )
+LUA_BINDING_BEGIN( PhysicsObject, IsMoveable, "class", "Checks if the object is moveable" )
 {
-    lua_pushboolean( L, luaL_checkphysicsobject( L, 1 )->IsMoveable() );
+    lua_IPhysicsObject *physicsObject = LUA_BINDING_ARGUMENT( luaL_checkphysicsobject, 1, "physicsObject" );
+    lua_pushboolean( L, physicsObject->IsMoveable() );
     return 1;
 }
+LUA_BINDING_END( "boolean", "Whether the object is moveable or not." )
 
-static int IPhysicsObject_IsStatic( lua_State *L )
+LUA_BINDING_BEGIN( PhysicsObject, IsStatic, "class", "Checks if the object is static" )
 {
-    lua_pushboolean( L, luaL_checkphysicsobject( L, 1 )->IsStatic() );
+    lua_IPhysicsObject *physicsObject = LUA_BINDING_ARGUMENT( luaL_checkphysicsobject, 1, "physicsObject" );
+    lua_pushboolean( L, physicsObject->IsStatic() );
     return 1;
 }
+LUA_BINDING_END( "boolean", "Whether the object is static or not." )
 
-static int IPhysicsObject_IsTrigger( lua_State *L )
+LUA_BINDING_BEGIN( PhysicsObject, IsTrigger, "class", "Checks if the object is a trigger" )
 {
-    lua_pushboolean( L, luaL_checkphysicsobject( L, 1 )->IsTrigger() );
+    lua_IPhysicsObject *physicsObject = LUA_BINDING_ARGUMENT( luaL_checkphysicsobject, 1, "physicsObject" );
+    lua_pushboolean( L, physicsObject->IsTrigger() );
     return 1;
 }
+LUA_BINDING_END( "boolean", "Whether the object is a trigger or not." )
 
-static int IPhysicsObject_LocalToWorld( lua_State *L )
+LUA_BINDING_BEGIN( PhysicsObject, LocalToWorld, "class", "Converts local position to world position" )
 {
+    lua_IPhysicsObject *physicsObject = LUA_BINDING_ARGUMENT( luaL_checkphysicsobject, 1, "physicsObject" );
+    Vector localPosition = LUA_BINDING_ARGUMENT( luaL_checkvector, 2, "localPosition" );
     Vector worldPosition;
-    luaL_checkphysicsobject( L, 1 )->LocalToWorld( &worldPosition, luaL_checkvector( L, 2 ) );
+    physicsObject->LocalToWorld( &worldPosition, localPosition );
     lua_pushvector( L, worldPosition );
     return 1;
 }
+LUA_BINDING_END( "Vector", "The world position." )
 
-static int IPhysicsObject_LocalToWorldVector( lua_State *L )
+LUA_BINDING_BEGIN( PhysicsObject, LocalToWorldVector, "class", "Converts local vector to world vector" )
 {
+    lua_IPhysicsObject *physicsObject = LUA_BINDING_ARGUMENT( luaL_checkphysicsobject, 1, "physicsObject" );
+    Vector localVector = LUA_BINDING_ARGUMENT( luaL_checkvector, 2, "localVector" );
     Vector worldVector;
-    luaL_checkphysicsobject( L, 1 )->LocalToWorldVector( &worldVector, luaL_checkvector( L, 2 ) );
+    physicsObject->LocalToWorldVector( &worldVector, localVector );
     lua_pushvector( L, worldVector );
     return 1;
 }
+LUA_BINDING_END( "Vector", "The world vector." )
 
-static int IPhysicsObject_OutputDebugInfo( lua_State *L )
+LUA_BINDING_BEGIN( PhysicsObject, OutputDebugInfo, "class", "Outputs debug information" )
 {
-    luaL_checkphysicsobject( L, 1 )->OutputDebugInfo();
+    lua_IPhysicsObject *physicsObject = LUA_BINDING_ARGUMENT( luaL_checkphysicsobject, 1, "physicsObject" );
+    physicsObject->OutputDebugInfo();
     return 0;
 }
+LUA_BINDING_END()
 
-static int IPhysicsObject_RecheckCollisionFilter( lua_State *L )
+LUA_BINDING_BEGIN( PhysicsObject, RecheckCollisionFilter, "class", "Rechecks the collision filter" )
 {
-    luaL_checkphysicsobject( L, 1 )->RecheckCollisionFilter();
+    lua_IPhysicsObject *physicsObject = LUA_BINDING_ARGUMENT( luaL_checkphysicsobject, 1, "physicsObject" );
+    physicsObject->RecheckCollisionFilter();
     return 0;
 }
+LUA_BINDING_END()
 
-static int IPhysicsObject_RecheckContactPoints( lua_State *L )
+LUA_BINDING_BEGIN( PhysicsObject, RecheckContactPoints, "class", "Rechecks contact points" )
 {
-    luaL_checkphysicsobject( L, 1 )->RecheckContactPoints();
+    lua_IPhysicsObject *physicsObject = LUA_BINDING_ARGUMENT( luaL_checkphysicsobject, 1, "physicsObject" );
+    physicsObject->RecheckContactPoints();
     return 0;
 }
+LUA_BINDING_END()
 
-static int IPhysicsObject_RemoveHinged( lua_State *L )
+LUA_BINDING_BEGIN( PhysicsObject, RemoveHinged, "class", "Removes hinged state" )
 {
-    luaL_checkphysicsobject( L, 1 )->RemoveHinged();
+    lua_IPhysicsObject *physicsObject = LUA_BINDING_ARGUMENT( luaL_checkphysicsobject, 1, "physicsObject" );
+    physicsObject->RemoveHinged();
     return 0;
 }
+LUA_BINDING_END()
 
-static int IPhysicsObject_RemoveShadowController( lua_State *L )
+LUA_BINDING_BEGIN( PhysicsObject, RemoveShadowController, "class", "Removes shadow controller" )
 {
-    luaL_checkphysicsobject( L, 1 )->RemoveShadowController();
+    lua_IPhysicsObject *physicsObject = LUA_BINDING_ARGUMENT( luaL_checkphysicsobject, 1, "physicsObject" );
+    physicsObject->RemoveShadowController();
     return 0;
 }
+LUA_BINDING_END()
 
-static int IPhysicsObject_RemoveTrigger( lua_State *L )
+LUA_BINDING_BEGIN( PhysicsObject, RemoveTrigger, "class", "Removes trigger state" )
 {
-    luaL_checkphysicsobject( L, 1 )->RemoveTrigger();
+    lua_IPhysicsObject *physicsObject = LUA_BINDING_ARGUMENT( luaL_checkphysicsobject, 1, "physicsObject" );
+    physicsObject->RemoveTrigger();
     return 0;
 }
+LUA_BINDING_END()
 
-static int IPhysicsObject_SetBuoyancyRatio( lua_State *L )
+LUA_BINDING_BEGIN( PhysicsObject, SetBuoyancyRatio, "class", "Sets the buoyancy ratio" )
 {
-    luaL_checkphysicsobject( L, 1 )->SetBuoyancyRatio( luaL_checknumber( L, 2 ) );
+    lua_IPhysicsObject *physicsObject = LUA_BINDING_ARGUMENT( luaL_checkphysicsobject, 1, "physicsObject" );
+    float ratio = LUA_BINDING_ARGUMENT( luaL_checknumber, 2, "ratio" );
+    physicsObject->SetBuoyancyRatio( ratio );
     return 0;
 }
+LUA_BINDING_END()
 
-static int IPhysicsObject_SetCallbackFlags( lua_State *L )
+LUA_BINDING_BEGIN( PhysicsObject, SetCallbackFlags, "class", "Sets callback flags" )
 {
-    luaL_checkphysicsobject( L, 1 )->SetCallbackFlags( luaL_checknumber( L, 2 ) );
+    lua_IPhysicsObject *physicsObject = LUA_BINDING_ARGUMENT( luaL_checkphysicsobject, 1, "physicsObject" );
+    unsigned flags = LUA_BINDING_ARGUMENT( luaL_checknumber, 2, "flags" );
+    physicsObject->SetCallbackFlags( flags );
     return 0;
 }
+LUA_BINDING_END()
 
-static int IPhysicsObject_SetContents( lua_State *L )
+LUA_BINDING_BEGIN( PhysicsObject, SetContents, "class", "Sets the contents" )
 {
-    luaL_checkphysicsobject( L, 1 )->SetContents( luaL_checknumber( L, 2 ) );
+    lua_IPhysicsObject *physicsObject = LUA_BINDING_ARGUMENT( luaL_checkphysicsobject, 1, "physicsObject" );
+    unsigned int contents = ( unsigned int )LUA_BINDING_ARGUMENT( luaL_checknumber, 2, "contents" );
+    physicsObject->SetContents( contents );
     return 0;
 }
+LUA_BINDING_END()
 
-static int IPhysicsObject_SetDragCoefficient( lua_State *L )
+LUA_BINDING_BEGIN( PhysicsObject, SetDragCoefficient, "class", "Sets drag coefficients" )
 {
-    float pDrag = luaL_checknumber( L, 2 );
-    float pAngularDrag = luaL_checknumber( L, 3 );
-    luaL_checkphysicsobject( L, 1 )->SetDragCoefficient( &pDrag, &pAngularDrag );
+    lua_IPhysicsObject *physicsObject = LUA_BINDING_ARGUMENT( luaL_checkphysicsobject, 1, "physicsObject" );
+    float pDrag = LUA_BINDING_ARGUMENT( luaL_checknumber, 2, "pDrag" );
+    float pAngularDrag = LUA_BINDING_ARGUMENT( luaL_checknumber, 3, "pAngularDrag" );
+    physicsObject->SetDragCoefficient( &pDrag, &pAngularDrag );
     return 0;
 }
+LUA_BINDING_END()
 
-static int IPhysicsObject_SetGameFlags( lua_State *L )
+LUA_BINDING_BEGIN( PhysicsObject, SetGameFlags, "class", "Sets game-specific flags" )
 {
-    luaL_checkphysicsobject( L, 1 )->SetGameFlags( luaL_checknumber( L, 2 ) );
+    lua_IPhysicsObject *physicsObject = LUA_BINDING_ARGUMENT( luaL_checkphysicsobject, 1, "physicsObject" );
+    unsigned flags = LUA_BINDING_ARGUMENT( luaL_checknumber, 2, "flags" );
+    physicsObject->SetGameFlags( flags );
     return 0;
 }
+LUA_BINDING_END()
 
-static int IPhysicsObject_SetGameIndex( lua_State *L )
+LUA_BINDING_BEGIN( PhysicsObject, SetGameIndex, "class", "Sets the game index" )
 {
-    luaL_checkphysicsobject( L, 1 )->SetGameIndex( luaL_checknumber( L, 2 ) );
+    lua_IPhysicsObject *physicsObject = LUA_BINDING_ARGUMENT( luaL_checkphysicsobject, 1, "physicsObject" );
+    int index = LUA_BINDING_ARGUMENT( luaL_checknumber, 2, "index" );
+    physicsObject->SetGameIndex( index );
     return 0;
 }
+LUA_BINDING_END()
 
-static int IPhysicsObject_SetMass( lua_State *L )
+LUA_BINDING_BEGIN( PhysicsObject, SetMass, "class", "Sets the mass" )
 {
-    luaL_checkphysicsobject( L, 1 )->SetMass( luaL_checknumber( L, 2 ) );
+    lua_IPhysicsObject *physicsObject = LUA_BINDING_ARGUMENT( luaL_checkphysicsobject, 1, "physicsObject" );
+    float mass = LUA_BINDING_ARGUMENT( luaL_checknumber, 2, "mass" );
+    physicsObject->SetMass( mass );
     return 0;
 }
+LUA_BINDING_END()
 
-static int IPhysicsObject_SetMaterialIndex( lua_State *L )
+LUA_BINDING_BEGIN( PhysicsObject, SetMaterialIndex, "class", "Sets the material index" )
 {
-    luaL_checkphysicsobject( L, 1 )->SetMaterialIndex( luaL_checknumber( L, 2 ) );
+    lua_IPhysicsObject *physicsObject = LUA_BINDING_ARGUMENT( luaL_checkphysicsobject, 1, "physicsObject" );
+    int materialIndex = LUA_BINDING_ARGUMENT( luaL_checknumber, 2, "materialIndex" );
+    physicsObject->SetMaterialIndex( materialIndex );
     return 0;
 }
+LUA_BINDING_END()
 
-static int IPhysicsObject_SetShadow( lua_State *L )
+LUA_BINDING_BEGIN( PhysicsObject, SetShadow, "class", "Sets the shadow parameters" )
 {
-    luaL_checkphysicsobject( L, 1 )->SetShadow( luaL_checknumber( L, 2 ), luaL_checknumber( L, 3 ), luaL_checkboolean( L, 4 ), luaL_checkboolean( L, 5 ) );
+    lua_IPhysicsObject *physicsObject = LUA_BINDING_ARGUMENT( luaL_checkphysicsobject, 1, "physicsObject" );
+    float maxSpeed = LUA_BINDING_ARGUMENT( luaL_checknumber, 2, "maxSpeed" );
+    float maxAngularSpeed = LUA_BINDING_ARGUMENT( luaL_checknumber, 3, "maxAngularSpeed" );
+    bool allowTranslation = LUA_BINDING_ARGUMENT( luaL_checkboolean, 4, "allowTranslation" );
+    bool allowRotation = LUA_BINDING_ARGUMENT( luaL_checkboolean, 5, "allowRotation" );
+    physicsObject->SetShadow( maxSpeed, maxAngularSpeed, allowTranslation, allowRotation );
     return 0;
 }
+LUA_BINDING_END()
 
-static int IPhysicsObject_SetVelocity( lua_State *L )
+LUA_BINDING_BEGIN( PhysicsObject, SetVelocity, "class", "Sets the velocity" )
 {
-    luaL_checkphysicsobject( L, 1 )->SetVelocity( &luaL_checkvector( L, 2 ), &luaL_checkvector( L, 3 ) );
+    lua_IPhysicsObject *physicsObject = LUA_BINDING_ARGUMENT( luaL_checkphysicsobject, 1, "physicsObject" );
+    Vector linearVelocity = LUA_BINDING_ARGUMENT( luaL_checkvector, 2, "linearVelocity" );
+    Vector angularVelocity = LUA_BINDING_ARGUMENT( luaL_checkvector, 3, "angularVelocity" );
+    physicsObject->SetVelocity( &linearVelocity, &angularVelocity );
     return 0;
 }
+LUA_BINDING_END()
 
-static int IPhysicsObject_SetVelocityInstantaneous( lua_State *L )
+LUA_BINDING_BEGIN( PhysicsObject, SetVelocityInstantaneous, "class", "Sets the velocity instantaneously" )
 {
-    luaL_checkphysicsobject( L, 1 )->SetVelocityInstantaneous( &luaL_checkvector( L, 2 ), &luaL_checkvector( L, 3 ) );
+    lua_IPhysicsObject *physicsObject = LUA_BINDING_ARGUMENT( luaL_checkphysicsobject, 1, "physicsObject" );
+    Vector linearVelocity = LUA_BINDING_ARGUMENT( luaL_checkvector, 2, "linearVelocity" );
+    Vector angularVelocity = LUA_BINDING_ARGUMENT( luaL_checkvector, 3, "angularVelocity" );
+    physicsObject->SetVelocityInstantaneous( &linearVelocity, &angularVelocity );
     return 0;
 }
+LUA_BINDING_END()
 
-static int IPhysicsObject_Sleep( lua_State *L )
+LUA_BINDING_BEGIN( PhysicsObject, Sleep, "class", "Puts the object to sleep" )
 {
-    luaL_checkphysicsobject( L, 1 )->Sleep();
+    lua_IPhysicsObject *physicsObject = LUA_BINDING_ARGUMENT( luaL_checkphysicsobject, 1, "physicsObject" );
+    physicsObject->Sleep();
     return 0;
 }
+LUA_BINDING_END()
 
-static int IPhysicsObject_Wake( lua_State *L )
+LUA_BINDING_BEGIN( PhysicsObject, Wake, "class", "Wakes the object up" )
 {
-    luaL_checkphysicsobject( L, 1 )->Wake();
+    lua_IPhysicsObject *physicsObject = LUA_BINDING_ARGUMENT( luaL_checkphysicsobject, 1, "physicsObject" );
+    physicsObject->Wake();
     return 0;
 }
+LUA_BINDING_END()
 
-static int IPhysicsObject_WorldToLocal( lua_State *L )
+LUA_BINDING_BEGIN( PhysicsObject, WorldToLocal, "class", "Converts world position to local position" )
 {
+    lua_IPhysicsObject *physicsObject = LUA_BINDING_ARGUMENT( luaL_checkphysicsobject, 1, "physicsObject" );
     Vector localPosition;
-    luaL_checkphysicsobject( L, 1 )->WorldToLocal( &localPosition, luaL_checkvector( L, 2 ) );
+    Vector worldPosition = LUA_BINDING_ARGUMENT( luaL_checkvector, 2, "worldPosition" );
+    physicsObject->WorldToLocal( &localPosition, worldPosition );
     lua_pushvector( L, localPosition );
     return 1;
 }
+LUA_BINDING_END( "Vector", "The local position." )
 
-static int IPhysicsObject_WorldToLocalVector( lua_State *L )
+LUA_BINDING_BEGIN( PhysicsObject, WorldToLocalVector, "class", "Converts world vector to local vector" )
 {
+    lua_IPhysicsObject *physicsObject = LUA_BINDING_ARGUMENT( luaL_checkphysicsobject, 1, "physicsObject" );
     Vector localVector;
-    luaL_checkphysicsobject( L, 1 )->WorldToLocalVector( &localVector, luaL_checkvector( L, 2 ) );
+    Vector worldVector = LUA_BINDING_ARGUMENT( luaL_checkvector, 2, "worldVector" );
+    physicsObject->WorldToLocalVector( &localVector, worldVector );
     lua_pushvector( L, localVector );
     return 1;
 }
+LUA_BINDING_END( "Vector", "The local vector." )
 
-static int IPhysicsObject___tostring( lua_State *L )
+LUA_BINDING_BEGIN( PhysicsObject, __tostring, "class", "Provides a string representation of the object" )
 {
-    lua_pushfstring( L, "IPhysicsObject: %p", luaL_checkudata( L, 1, LUA_PHYSICSOBJECTLIBNAME ) );
+    lua_IPhysicsObject *physicsObject = LUA_BINDING_ARGUMENT( lua_tophysicsobject, 1, "physicsObject" );
+    lua_pushfstring( L, "PhysicsObject: %p", physicsObject );
     return 1;
 }
+LUA_BINDING_END( "string", "The string representation." )
 
-static const luaL_Reg IPhysicsObjectmeta[] = {
-    { "AddAngleVelocity", IPhysicsObject_AddAngleVelocity },
-    { "AddVelocity", IPhysicsObject_AddVelocity },
-    { "ApplyForceCenter", IPhysicsObject_ApplyForceCenter },
-    { "ApplyForceOffset", IPhysicsObject_ApplyForceOffset },
-    { "ApplyTorqueCenter", IPhysicsObject_ApplyTorqueCenter },
-    { "BecomeHinged", IPhysicsObject_BecomeHinged },
-    { "BecomeTrigger", IPhysicsObject_BecomeTrigger },
-    { "CalculateAngularDrag", IPhysicsObject_CalculateAngularDrag },
-    { "CalculateForceOffset", IPhysicsObject_CalculateForceOffset },
-    { "CalculateLinearDrag", IPhysicsObject_CalculateLinearDrag },
-    { "CalculateVelocityOffset", IPhysicsObject_CalculateVelocityOffset },
-    { "EnableCollisions", IPhysicsObject_EnableCollisions },
-    { "EnableDrag", IPhysicsObject_EnableDrag },
-    { "EnableGravity", IPhysicsObject_EnableGravity },
-    { "EnableMotion", IPhysicsObject_EnableMotion },
-    { "GetAABB", IPhysicsObject_GetAABB },
-    { "GetCallbackFlags", IPhysicsObject_GetCallbackFlags },
-    { "GetContactPoint", IPhysicsObject_GetContactPoint },
-    { "GetContents", IPhysicsObject_GetContents },
-    { "GetDamping", IPhysicsObject_GetDamping },
-    { "GetEnergy", IPhysicsObject_GetEnergy },
-    { "GetGameFlags", IPhysicsObject_GetGameFlags },
-    { "GetGameIndex", IPhysicsObject_GetGameIndex },
-    { "GetImplicitVelocity", IPhysicsObject_GetImplicitVelocity },
-    { "GetInertia", IPhysicsObject_GetInertia },
-    { "GetInvInertia", IPhysicsObject_GetInvInertia },
-    { "GetInvMass", IPhysicsObject_GetInvMass },
-    { "GetMass", IPhysicsObject_GetMass },
-    { "GetMassCenterLocalSpace", IPhysicsObject_GetMassCenterLocalSpace },
-    { "GetMaterialIndex", IPhysicsObject_GetMaterialIndex },
-    { "GetName", IPhysicsObject_GetName },
-    { "GetPosition", IPhysicsObject_GetPosition },
-    { "GetShadowPosition", IPhysicsObject_GetShadowPosition },
-    { "GetSphereRadius", IPhysicsObject_GetSphereRadius },
-    { "GetVelocity", IPhysicsObject_GetVelocity },
-    { "GetVelocityAtPoint", IPhysicsObject_GetVelocityAtPoint },
-    { "IsAsleep", IPhysicsObject_IsAsleep },
-    { "IsAttachedToConstraint", IPhysicsObject_IsAttachedToConstraint },
-    { "IsCollisionEnabled", IPhysicsObject_IsCollisionEnabled },
-    { "IsDragEnabled", IPhysicsObject_IsDragEnabled },
-    { "IsFluid", IPhysicsObject_IsFluid },
-    { "IsGravityEnabled", IPhysicsObject_IsGravityEnabled },
-    { "IsHinged", IPhysicsObject_IsHinged },
-    { "IsMotionEnabled", IPhysicsObject_IsMotionEnabled },
-    { "IsMoveable", IPhysicsObject_IsMoveable },
-    { "IsStatic", IPhysicsObject_IsStatic },
-    { "IsTrigger", IPhysicsObject_IsTrigger },
-    { "LocalToWorld", IPhysicsObject_LocalToWorld },
-    { "LocalToWorldVector", IPhysicsObject_LocalToWorldVector },
-    { "OutputDebugInfo", IPhysicsObject_OutputDebugInfo },
-    { "RecheckCollisionFilter", IPhysicsObject_RecheckCollisionFilter },
-    { "RecheckContactPoints", IPhysicsObject_RecheckContactPoints },
-    { "RemoveHinged", IPhysicsObject_RemoveHinged },
-    { "RemoveShadowController", IPhysicsObject_RemoveShadowController },
-    { "RemoveTrigger", IPhysicsObject_RemoveTrigger },
-    { "SetBuoyancyRatio", IPhysicsObject_SetBuoyancyRatio },
-    { "SetCallbackFlags", IPhysicsObject_SetCallbackFlags },
-    { "SetContents", IPhysicsObject_SetContents },
-    { "SetDragCoefficient", IPhysicsObject_SetDragCoefficient },
-    { "SetGameFlags", IPhysicsObject_SetGameFlags },
-    { "SetGameIndex", IPhysicsObject_SetGameIndex },
-    { "SetMass", IPhysicsObject_SetMass },
-    { "SetMaterialIndex", IPhysicsObject_SetMaterialIndex },
-    { "SetShadow", IPhysicsObject_SetShadow },
-    { "SetVelocity", IPhysicsObject_SetVelocity },
-    { "SetVelocityInstantaneous", IPhysicsObject_SetVelocityInstantaneous },
-    { "Sleep", IPhysicsObject_Sleep },
-    { "Wake", IPhysicsObject_Wake },
-    { "WorldToLocal", IPhysicsObject_WorldToLocal },
-    { "WorldToLocalVector", IPhysicsObject_WorldToLocalVector },
-    { "__tostring", IPhysicsObject___tostring },
-    { NULL, NULL } };
+LUA_BINDING_BEGIN( PhysicsObject, __eq, "class", "Checks if two objects are equal" )
+{
+    lua_IPhysicsObject *physicsObject1 = LUA_BINDING_ARGUMENT( lua_tophysicsobject, 1, "physicsObject1" );
+    lua_IPhysicsObject *physicsObject2 = LUA_BINDING_ARGUMENT( lua_tophysicsobject, 2, "physicsObject2" );
+    lua_pushboolean( L, physicsObject1 == physicsObject2 );
+    return 1;
+}
+LUA_BINDING_END( "boolean", "Whether the objects are equal or not." )
 
 /*
 ** Open IPhysicsObject object
 */
 LUALIB_API int luaopen_IPhysicsObject( lua_State *L )
 {
-    LUA_PUSH_NEW_METATABLE( L, LUA_PHYSICSOBJECTLIBNAME );
-    luaL_register( L, NULL, IPhysicsObjectmeta );
+    LUA_PUSH_NEW_METATABLE( L, LUA_PHYSICSOBJECTMETANAME );
+
+    LUA_REGISTRATION_COMMIT( PhysicsObject );
+
     lua_pushvalue( L, -1 );           /* push metatable */
     lua_setfield( L, -2, "__index" ); /* metatable.__index = metatable */
-    lua_pushstring( L, "PhysicsObject" );
+    lua_pushstring( L, LUA_PHYSICSOBJECTMETANAME );
     lua_setfield( L, -2, "__type" ); /* metatable.__type = "PhysicsObject" */
+
     return 1;
 }
 
-static int IPhysicsSurfaceProps_GetPhysicsParameters( lua_State *L )
+/*
+** IPhysicsSurfaceProps Meta
+*/
+
+LUA_REGISTRATION_INIT( PhysicsSurfacePropertiesHandle );
+
+LUA_BINDING_BEGIN( PhysicsSurfacePropertiesHandle, GetPhysicsParameters, "class", "Gets physics parameters" )
 {
     surfacephysicsparams_t pParamsOut;
-    luaL_checkphysicssurfaceprops( L, 1 )->GetPhysicsParameters( luaL_checknumber( L, 2 ), &pParamsOut );
+    physprops->GetPhysicsParameters( LUA_BINDING_ARGUMENT( luaL_checknumber, 1, "surfaceData" ), &pParamsOut );
     lua_pushsurfacephysicsparams( L, &pParamsOut );
     return 1;
 }
+LUA_BINDING_END( "SurfacePhysicsParams", "The physics parameters." )
 
-static int IPhysicsSurfaceProps_GetPhysicsProperties( lua_State *L )
+LUA_BINDING_BEGIN( PhysicsSurfacePropertiesHandle, GetPhysicsProperties, "class", "Gets physics properties" )
 {
     float density, thickness, friction, elasticity;
-    luaL_checkphysicssurfaceprops( L, 1 )->GetPhysicsProperties( luaL_checknumber( L, 2 ), &density, &thickness, &friction, &elasticity );
+    physprops->GetPhysicsProperties( LUA_BINDING_ARGUMENT( luaL_checknumber, 1, "surfaceData" ), &density, &thickness, &friction, &elasticity );
     lua_pushnumber( L, density );
     lua_pushnumber( L, thickness );
     lua_pushnumber( L, friction );
     lua_pushnumber( L, elasticity );
     return 4;
 }
+LUA_BINDING_END( "number", "The density.", "number", "The thickness.", "number", "The friction.", "number", "The elasticity." )
 
-static int IPhysicsSurfaceProps_GetPropName( lua_State *L )
+LUA_BINDING_BEGIN( PhysicsSurfacePropertiesHandle, GetPropName, "class", "Gets the property name" )
 {
-    lua_pushstring( L, luaL_checkphysicssurfaceprops( L, 1 )->GetPropName( luaL_checknumber( L, 2 ) ) );
+    lua_pushstring( L, physprops->GetPropName( LUA_BINDING_ARGUMENT( luaL_checknumber, 1, "surfaceData" ) ) );
     return 1;
 }
+LUA_BINDING_END( "string", "The property name." )
 
-static int IPhysicsSurfaceProps_GetString( lua_State *L )
+LUA_BINDING_BEGIN( PhysicsSurfacePropertiesHandle, GetString, "class", "Gets the string" )
 {
-    lua_pushstring( L, luaL_checkphysicssurfaceprops( L, 1 )->GetString( ( unsigned short )luaL_checkinteger( L, 2 ) ) );
+    lua_pushstring( L, physprops->GetString( ( unsigned short )LUA_BINDING_ARGUMENT( luaL_checkinteger, 1, "stringTableIndex" ) ) );
     return 1;
 }
+LUA_BINDING_END( "string", "The string." )
 
-static int IPhysicsSurfaceProps_GetSurfaceData( lua_State *L )
+LUA_BINDING_BEGIN( PhysicsSurfacePropertiesHandle, GetSurfaceData, "class", "Gets the surface data" )
 {
-    lua_pushsurfacedata( L, luaL_checkphysicssurfaceprops( L, 1 )->GetSurfaceData( luaL_checknumber( L, 2 ) ) );
+    lua_pushsurfacedata( L, physprops->GetSurfaceData( LUA_BINDING_ARGUMENT( luaL_checknumber, 1, "surfaceData" ) ) );
     return 1;
 }
+LUA_BINDING_END( "SurfaceData", "The surface data." )
 
-static int IPhysicsSurfaceProps_GetSurfaceIndex( lua_State *L )
+LUA_BINDING_BEGIN( PhysicsSurfacePropertiesHandle, GetSurfaceIndex, "class", "Gets the surface index" )
 {
-    lua_pushinteger( L, luaL_checkphysicssurfaceprops( L, 1 )->GetSurfaceIndex( luaL_checkstring( L, 2 ) ) );
+    lua_pushinteger( L, physprops->GetSurfaceIndex( LUA_BINDING_ARGUMENT( luaL_checkstring, 1, "surfacePropName" ) ) );
     return 1;
 }
+LUA_BINDING_END( "integer", "The surface index." )
 
-static int IPhysicsSurfaceProps_ParseSurfaceData( lua_State *L )
+LUA_BINDING_BEGIN( PhysicsSurfacePropertiesHandle, ParseSurfaceData, "class", "Parses surface data" )
 {
-    lua_pushinteger( L, luaL_checkphysicssurfaceprops( L, 1 )->ParseSurfaceData( luaL_checkstring( L, 2 ), luaL_checkstring( L, 3 ) ) );
+    lua_pushinteger( L, physprops->ParseSurfaceData( LUA_BINDING_ARGUMENT( luaL_checkstring, 1, "stringData" ), LUA_BINDING_ARGUMENT( luaL_checkstring, 2, "textFileName" ) ) );
     return 1;
 }
+LUA_BINDING_END( "integer", "The surface data." )
 
-static int IPhysicsSurfaceProps_SurfacePropCount( lua_State *L )
+LUA_BINDING_BEGIN( PhysicsSurfacePropertiesHandle, SurfacePropCount, "class", "Gets the surface property count" )
 {
-    lua_pushinteger( L, luaL_checkphysicssurfaceprops( L, 1 )->SurfacePropCount() );
+    lua_pushinteger( L, physprops->SurfacePropCount() );
     return 1;
 }
+LUA_BINDING_END( "integer", "The surface property count." )
 
-static int IPhysicsSurfaceProps___tostring( lua_State *L )
+LUA_BINDING_BEGIN( PhysicsSurfacePropertiesHandle, __tostring, "class", "Provides a string representation of the object" )
 {
-    lua_pushfstring( L, "IPhysicsSurfaceProps: %p", luaL_checkudata( L, 1, LUA_PHYSICSSURFACEPROPSLIBNAME ) );
+    lua_pushfstring( L, "PhysicsSurfacePropertiesHandle: %p", physprops );
     return 1;
 }
+LUA_BINDING_END( "string", "The string representation." )
 
-static const luaL_Reg IPhysicsSurfacePropsmeta[] = {
-    { "GetPhysicsParameters", IPhysicsSurfaceProps_GetPhysicsParameters },
-    { "GetPhysicsProperties", IPhysicsSurfaceProps_GetPhysicsProperties },
-    { "GetPropName", IPhysicsSurfaceProps_GetPropName },
-    { "GetString", IPhysicsSurfaceProps_GetString },
-    { "GetSurfaceData", IPhysicsSurfaceProps_GetSurfaceData },
-    { "GetSurfaceIndex", IPhysicsSurfaceProps_GetSurfaceIndex },
-    { "ParseSurfaceData", IPhysicsSurfaceProps_ParseSurfaceData },
-    { "SurfacePropCount", IPhysicsSurfaceProps_SurfacePropCount },
-    { "__tostring", IPhysicsSurfaceProps___tostring },
-    { NULL, NULL } };
+LUA_BINDING_BEGIN( PhysicsSurfacePropertiesHandle, __eq, "class", "Checks if two objects are equal" )
+{
+    IPhysicsSurfaceProps *physicsProps1 = LUA_BINDING_ARGUMENT( luaL_checkphysicssurfaceprops, 1, "physicsProps1" );
+    IPhysicsSurfaceProps *physicsProps2 = LUA_BINDING_ARGUMENT( luaL_checkphysicssurfaceprops, 1, "physicsProps2" );
+    lua_pushboolean( L, physicsProps1 == physicsProps2 );
+    return 1;
+}
+LUA_BINDING_END( "boolean", "Whether the objects are equal or not." )
+
+LUA_REGISTRATION_INIT( PhysicsSurfaceProperties );
+
+LUA_BINDING_BEGIN( PhysicsSurfaceProperties, GetGlobal, "library", "Gets the global surface properties" )
+{
+    lua_pushphysicssurfaceprops( L, physprops );
+    return 1;
+}
+LUA_BINDING_END( "PhysicsSurfacePropertiesHandle", "The global surface properties." )
 
 /*
 ** Open IPhysicsSurfaceProps object
 */
 LUALIB_API int luaopen_IPhysicsSurfaceProps( lua_State *L )
 {
-    LUA_PUSH_NEW_METATABLE( L, LUA_PHYSICSSURFACEPROPSLIBNAME );
-    luaL_register( L, NULL, IPhysicsSurfacePropsmeta );
+    LUA_PUSH_NEW_METATABLE( L, LUA_PHYSICSSURFACEPROPSMETANAME );
+
+    LUA_REGISTRATION_COMMIT( PhysicsSurfacePropertiesHandle );
+
     lua_pushvalue( L, -1 );           /* push metatable */
     lua_setfield( L, -2, "__index" ); /* metatable.__index = metatable */
-    lua_pushstring( L, "PhysicsSurfaceProps" );
-    lua_setfield( L, -2, "__type" ); /* metatable.__type = "PhysicsSurfaceProps" */
-    lua_pushphysicssurfaceprops( L, physprops );
-    lua_setglobal( L, "physprops" ); /* set global physprops */
+    lua_pushstring( L, LUA_PHYSICSSURFACEPROPSMETANAME );
+    lua_setfield( L, -2, "__type" ); /* metatable.__type = "PhysicsSurfacePropertiesHandle" */
+
+    LUA_REGISTRATION_COMMIT_LIBRARY( PhysicsSurfaceProperties );
+
     return 1;
 }

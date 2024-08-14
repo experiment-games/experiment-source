@@ -190,7 +190,7 @@ engine.TickInterval = Engines.GetIntervalPerTick
 SoundDuration = Engines.GetSoundDuration
 GetHostName = Engines.GetServerName
 
-PrecacheParticleSystem = ParticleSystem.Precache
+PrecacheParticleSystem = ParticleSystems.Precache
 
 system.AppTime = Systems.GetSecondsSinceAppActive
 system.IsOSX = Systems.IsOsx
@@ -342,7 +342,7 @@ game = {
 		-- Remove particles/ from the start of the file path
 		filePath = filePath:sub(11)
 
-		return ParticleSystem.ReadConfigFile("particles/" .. tostring(filePath))
+		return ParticleSystems.ReadConfigFile("particles/" .. tostring(filePath))
 	end,
 
 	GetMap = Engines.GetLevelName,
@@ -518,12 +518,20 @@ function PLAYER_META:GetClassID()
 end
 
 function PLAYER_META:IsListenServerHost()
-	if (CLIENT) then
-		ErrorNoHalt("IsListenServerHost has not yet been implemented on the client.")
-	end
+    if (CLIENT) then
+        ErrorNoHalt("IsListenServerHost has not yet been implemented on the client.")
+    end
 
-	return self == Util.GetListenServerHost()
+    return self == Util.GetListenServerHost()
 end
+
+local MOVE_DATA_META = FindMetaTable("MoveData")
+MOVE_DATA_META.KeyDown = MOVE_DATA_META.IsKeyDown
+MOVE_DATA_META.KeyPressed = MOVE_DATA_META.WasKeyPressed
+MOVE_DATA_META.KeyReleased = MOVE_DATA_META.WasKeyReleased
+MOVE_DATA_META.KeyWasDown = MOVE_DATA_META.WasKeyDown
+MOVE_DATA_META.GetAbsMoveAngles = MOVE_DATA_META.GetAbsoluteMoveAngles
+MOVE_DATA_META.SetAbsMoveAngles = MOVE_DATA_META.SetAbsoluteMoveAngles
 
 local TEXTURE_META = FindMetaTable("Texture")
 

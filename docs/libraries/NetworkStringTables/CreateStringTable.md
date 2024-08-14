@@ -25,7 +25,8 @@ lua:
       type: number
       default: "0"
   returns:
-    
+    - type: NetworkStringTable
+      description: "The created string table."
 ---
 
 <div class="lua__search__keywords">

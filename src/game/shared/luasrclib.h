@@ -31,7 +31,7 @@ LUALIB_API int( luaopen_CBasePlayer )( lua_State *L );
 LUALIB_API int( luaopen_CBasePlayer_shared )( lua_State *L );
 LUALIB_API int( luaopen_Players )( lua_State *L );
 
-#define LUA_EFFECTDATALIBNAME "CEffectData"
+#define LUA_EFFECTDATAMETANAME "EffectData"
 LUALIB_API int( luaopen_CEffectData )( lua_State *L );
 
 #define LUA_GAMETRACELIBNAME "Trace"
@@ -69,7 +69,7 @@ LUALIB_API int( luaopen_ConsoleVariablesLib )( lua_State *L );
 #define LUA_DBGLIBNAME "Debug"  // Unused, since we extend the default debug library
 LUALIB_API int( luaopen_dbg )( lua_State *L );
 
-#define LUA_DEBUGOVERLAYLIBNAME "DebugOverlay"
+#define LUA_DEBUGOVERLAYLIBNAME "DebugOverlays"
 LUALIB_API int( luaopen_debugoverlay )( lua_State *L );
 
 #define LUA_EFLIBNAME "EF"
@@ -117,7 +117,7 @@ LUALIB_API int( luaopen_HScheme )( lua_State *L );
 #define LUA_MATERIALMETANAME "Material"
 LUALIB_API int( luaopen_IMaterial )( lua_State *L );
 
-#define LUA_MOVEHELPERLIBNAME "IMoveHelper"
+#define LUA_MOVEHELPERMETANAME "MoveHelper"
 LUALIB_API int( luaopen_IMoveHelper )( lua_State *L );
 
 #define LUA_INLIBNAME "IN"
@@ -132,10 +132,11 @@ LUALIB_API int( luaopen_INetworkStringTable )( lua_State *L );
 #define LUA_INPUTLIBNAME "Input"
 LUALIB_API int( luaopen_input )( lua_State *L );
 
-#define LUA_PHYSICSOBJECTLIBNAME "IPhysicsObject"
+#define LUA_PHYSICSOBJECTMETANAME "PhysicsObject"
 LUALIB_API int( luaopen_IPhysicsObject )( lua_State *L );
 
-#define LUA_PHYSICSSURFACEPROPSLIBNAME "IPhysicsSurfaceProps"
+#define LUA_PHYSICSSURFACEPROPSMETANAME "PhysicsSurfacePropertiesHandle"
+#define LUA_PHYSICSSURFACEPROPSLIBNAME "PhysicsSurfaceProperties"
 LUALIB_API int( luaopen_IPhysicsSurfaceProps )( lua_State *L );
 
 #define LUA_PREDICTIONSYSTEMLIBNAME "IPredictionSystem"
@@ -161,7 +162,7 @@ LUALIB_API int( luaopen_MASK )( lua_State *L );
 LUALIB_API int( luaopen_mathlib )( lua_State *L );
 
 #define LUA_MATRIXLIBNAME "Matrix3x4"
-LUALIB_API int( luaopen_matrix3x4_t )( lua_State *L );
+LUALIB_API int( luaopen_Matrix3x4 )( lua_State *L );
 
 #define LUA_MOVECOLLIDELIBNAME "MOVECOLLIDE"
 LUALIB_API int( luaopen_MOVECOLLIDE )( lua_State *L );
@@ -175,11 +176,11 @@ LUALIB_API int( luaopen_NetworkStringTables )( lua_State *L );
 #define LUA_OBSMODELIBNAME "OBS_MODE"
 LUALIB_API int( luaopen_OBS_MODE )( lua_State *L );
 
-#define LUA_PARTICLESYSTEMLIBNAME "ParticleSystem"
+#define LUA_PARTICLESYSTEMLIBNAME "ParticleSystems"
 LUALIB_API int( luaopen_ParticleSystem )( lua_State *L );
 
-#define LUA_PHYSENVLIBNAME "PhysicsEnvironment"
-LUALIB_API int( luaopen_physenv )( lua_State *L );
+#define LUA_PHYSENVLIBNAME "PhysicsEnvironments"
+LUALIB_API int( luaopen_PhysicsEnvironments )( lua_State *L );
 
 #define LUA_PREDICTIONLIBNAME "Prediction"
 LUALIB_API int( luaopen_prediction )( lua_State *L );
@@ -241,10 +242,10 @@ LUALIB_API int( luaopen_Systems )( lua_State *L );
 LUALIB_API int( luaopen_render )( lua_State *L );
 LUALIB_API int( luaopen_ITexture )( lua_State *L );
 
-#define LUA_LOCALIZATIONLIBNAME "Localization"
+#define LUA_LOCALIZATIONLIBNAME "Localizations"
 LUALIB_API int luaopen_localization( lua_State *L );
 
-#define LUA_MOVEDATALIBNAME "CMoveData"
+#define LUA_MOVEDATAMETANAME "MoveData"
 LUALIB_API int( luaopen_CMoveData )( lua_State *L );
 
 #define LUA_USERCMDLIBNAME "CUserCmd"

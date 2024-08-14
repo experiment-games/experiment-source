@@ -31,19 +31,19 @@ LUA_API void lua_pusheffect( lua_State *L, lua_CEffectData &data )
 {
     lua_CEffectData *pData = ( lua_CEffectData * )lua_newuserdata( L, sizeof( lua_CEffectData ) );
     *pData = data;
-    LUA_SAFE_SET_METATABLE( L, "CEffectData" );
+    LUA_SAFE_SET_METATABLE( L, LUA_EFFECTDATAMETANAME );
 }
 
 LUALIB_API lua_CEffectData &luaL_checkeffect( lua_State *L, int narg )
 {
-    lua_CEffectData *d = ( lua_CEffectData * )luaL_checkudata( L, narg, "CEffectData" );
+    lua_CEffectData *d = ( lua_CEffectData * )luaL_checkudata( L, narg, LUA_EFFECTDATAMETANAME );
     return *d;
 }
 
-LUA_REGISTRATION_INIT( CEffectData )
+LUA_REGISTRATION_INIT( EffectData )
 
 #ifdef CLIENT_DLL
-LUA_BINDING_BEGIN( CEffectData, GetEntityIndex, "class", "Get the entity index.", "client" )
+LUA_BINDING_BEGIN( EffectData, GetEntityIndex, "class", "Get the entity index.", "client" )
 {
     lua_CEffectData &data = LUA_BINDING_ARGUMENT( luaL_checkeffect, 1, "effectData" );
     lua_pushinteger( L, data.entindex() );
@@ -52,7 +52,7 @@ LUA_BINDING_BEGIN( CEffectData, GetEntityIndex, "class", "Get the entity index."
 LUA_BINDING_END( "number", "Entity index." )
 #endif
 
-LUA_BINDING_BEGIN( CEffectData, GetEffectNameIndex, "class", "Get the effect name index." )
+LUA_BINDING_BEGIN( EffectData, GetEffectNameIndex, "class", "Get the effect name index." )
 {
     lua_CEffectData &data = LUA_BINDING_ARGUMENT( luaL_checkeffect, 1, "effectData" );
     lua_pushinteger( L, data.GetEffectNameIndex() );
@@ -61,7 +61,7 @@ LUA_BINDING_BEGIN( CEffectData, GetEffectNameIndex, "class", "Get the effect nam
 LUA_BINDING_END( "number", "Effect name index." )
 
 #ifdef CLIENT_DLL
-LUA_BINDING_BEGIN( CEffectData, GetEntity, "class", "Get the entity.", "client" )
+LUA_BINDING_BEGIN( EffectData, GetEntity, "class", "Get the entity.", "client" )
 {
     lua_CEffectData &data = LUA_BINDING_ARGUMENT( luaL_checkeffect, 1, "effectData" );
     CBaseEntity::PushLuaInstanceSafe( L, data.GetEntity() );
@@ -70,7 +70,7 @@ LUA_BINDING_BEGIN( CEffectData, GetEntity, "class", "Get the entity.", "client" 
 LUA_BINDING_END( "entity", "Entity." )
 #endif
 
-LUA_BINDING_BEGIN( CEffectData, __index, "class", "Get the entity." )
+LUA_BINDING_BEGIN( EffectData, __index, "class", "Get the entity." )
 {
     lua_CEffectData &data = LUA_BINDING_ARGUMENT( luaL_checkeffect, 1, "effectData" );
     const char *field = LUA_BINDING_ARGUMENT( luaL_checkstring, 2, "field" );
@@ -125,7 +125,7 @@ LUA_BINDING_BEGIN( CEffectData, __index, "class", "Get the entity." )
 }
 LUA_BINDING_END( "any", "Value" )
 
-LUA_BINDING_BEGIN( CEffectData, __newindex, "class", "Metamethod called when a non-existant field is added" )
+LUA_BINDING_BEGIN( EffectData, __newindex, "class", "Metamethod called when a non-existant field is added" )
 {
     lua_CEffectData &data = LUA_BINDING_ARGUMENT( luaL_checkeffect, 1, "effectData" );
     const char *field = LUA_BINDING_ARGUMENT( luaL_checkstring, 2, "field" );
@@ -168,19 +168,19 @@ LUA_BINDING_BEGIN( CEffectData, __newindex, "class", "Metamethod called when a n
 }
 LUA_BINDING_END()
 
-LUA_BINDING_BEGIN( CEffectData, __tostring, "class", "To string operator." )
+LUA_BINDING_BEGIN( EffectData, __tostring, "class", "To string operator." )
 {
     lua_CEffectData &data = LUA_BINDING_ARGUMENT( luaL_checkeffect, 1, "effectData" );
-    lua_pushfstring( L, "CEffectData: %p", &data );
+    lua_pushfstring( L, "EffectData: %p", &data );
     return 1;
 }
 LUA_BINDING_END( "string", "String representation of the effect data." )
 
 LUA_REGISTRATION_INIT( _G )
 
-LUA_BINDING_BEGIN( _G, CEffectData, "library", "Creates an effect." )
+LUA_BINDING_BEGIN( _G, EffectData, "library", "Creates an effect." )
 {
-    CEffectData data = CEffectData();
+    lua_CEffectData data = lua_CEffectData();
     lua_pusheffect( L, data );
     return 1;
 }
@@ -201,12 +201,12 @@ LUA_BINDING_END()
 */
 LUALIB_API int luaopen_CEffectData( lua_State *L )
 {
-    LUA_PUSH_NEW_METATABLE( L, LUA_EFFECTDATALIBNAME );
+    LUA_PUSH_NEW_METATABLE( L, LUA_EFFECTDATAMETANAME );
 
-    LUA_REGISTRATION_COMMIT( CEffectData );
+    LUA_REGISTRATION_COMMIT( EffectData );
 
-    lua_pushstring( L, "Effect" );
-    lua_setfield( L, -2, "__type" ); /* metatable.__type = "Effect" */
+    lua_pushstring( L, "EffectData" );
+    lua_setfield( L, -2, "__type" ); /* metatable.__type = "EffectData" */
 
     LUA_REGISTRATION_COMMIT_LIBRARY( _G );
     lua_pop( L, 1 ); /* pop metatable */

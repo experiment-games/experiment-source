@@ -28,12 +28,12 @@ LUA_API void lua_pushmovedata( lua_State *L, lua_CMoveData *pMoveData )
 {
     lua_CMoveData **pp = ( lua_CMoveData ** )lua_newuserdata( L, sizeof( pMoveData ) );
     *pp = pMoveData;
-    LUA_SAFE_SET_METATABLE( L, LUA_MOVEDATALIBNAME );
+    LUA_SAFE_SET_METATABLE( L, LUA_MOVEDATAMETANAME );
 }
 
 LUALIB_API lua_CMoveData *luaL_checkmovedata( lua_State *L, int narg )
 {
-    lua_CMoveData **ppData = ( lua_CMoveData ** )luaL_checkudata( L, narg, LUA_MOVEDATALIBNAME );
+    lua_CMoveData **ppData = ( lua_CMoveData ** )luaL_checkudata( L, narg, LUA_MOVEDATAMETANAME );
 
     if ( *ppData == 0 ) /* avoid extra test when d is not 0 */
         luaL_argerror( L, narg, "CMoveData expected, got NULL" );
@@ -41,379 +41,429 @@ LUALIB_API lua_CMoveData *luaL_checkmovedata( lua_State *L, int narg )
     return *ppData;
 }
 
-static int CMoveData_AddKey( lua_State *L )
+LUA_REGISTRATION_INIT( MoveData );
+
+LUA_BINDING_BEGIN( MoveData, AddKey, "class", "Adds a key to the buttons" )
 {
-    int key = luaL_checknumber( L, 2 );
-    luaL_checkmovedata( L, 1 )->m_nButtons |= key;
+    lua_CMoveData *moveData = LUA_BINDING_ARGUMENT( luaL_checkmovedata, 1, "moveData" );
+    int key = LUA_BINDING_ARGUMENT( luaL_checknumber, 2, "buttonCode" );
+    moveData->m_nButtons |= key;
     return 0;
 }
+LUA_BINDING_END()
 
-static int CMoveData_ClearButtons( lua_State *L )
+LUA_BINDING_BEGIN( MoveData, ClearButtons, "class", "Clears the buttons" )
 {
-    luaL_checkmovedata( L, 1 )->m_nButtons = 0;
+    lua_CMoveData *moveData = LUA_BINDING_ARGUMENT( luaL_checkmovedata, 1, "moveData" );
+    moveData->m_nButtons = 0;
     return 0;
 }
+LUA_BINDING_END()
 
-static int CMoveData_ClearMovement( lua_State *L )
+LUA_BINDING_BEGIN( MoveData, ClearMovement, "class", "Clears the movement" )
 {
-    CMoveData *cmd = luaL_checkmovedata( L, 1 );
-    cmd->m_flForwardMove = 0.0f;
-    cmd->m_flSideMove = 0.0f;
-    cmd->m_flUpMove = 0.0f;
+    lua_CMoveData *moveData = LUA_BINDING_ARGUMENT( luaL_checkmovedata, 1, "moveData" );
+    moveData->m_flForwardMove = 0.0f;
+    moveData->m_flSideMove = 0.0f;
+    moveData->m_flUpMove = 0.0f;
     return 0;
 }
+LUA_BINDING_END()
 
-static int CMoveData_GetAbsMoveAngles( lua_State *L )
+LUA_BINDING_BEGIN( MoveData, GetAbsoluteMoveAngles, "class", "Gets the absolute move angles" )
 {
-    lua_pushangle( L, luaL_checkmovedata( L, 1 )->m_vecAbsViewAngles );
+    lua_CMoveData *moveData = LUA_BINDING_ARGUMENT( luaL_checkmovedata, 1, "moveData" );
+    lua_pushangle( L, moveData->m_vecAbsViewAngles );
     return 1;
 }
+LUA_BINDING_END( "Angle", "The absolute move angles" )
 
-static int CMoveData_GetAngles( lua_State *L )
+LUA_BINDING_BEGIN( MoveData, GetAngles, "class", "Gets the angles (local space)" )
 {
-    lua_pushangle( L, luaL_checkmovedata( L, 1 )->m_vecViewAngles );
+    lua_CMoveData *moveData = LUA_BINDING_ARGUMENT( luaL_checkmovedata, 1, "moveData" );
+    lua_pushangle( L, moveData->m_vecViewAngles );
     return 1;
 }
+LUA_BINDING_END( "Angle", "The angles (local space)" )
 
-static int CMoveData_GetButtons( lua_State *L )
+LUA_BINDING_BEGIN( MoveData, GetButtons, "class", "Gets the buttons" )
 {
-    lua_pushnumber( L, luaL_checkmovedata( L, 1 )->m_nButtons );
+    lua_CMoveData *moveData = LUA_BINDING_ARGUMENT( luaL_checkmovedata, 1, "moveData" );
+    lua_pushnumber( L, moveData->m_nButtons );
     return 1;
 }
+LUA_BINDING_END( "number", "The buttons" )
 
-static int CMoveData_GetConstraintCenter( lua_State *L )
+LUA_BINDING_BEGIN( MoveData, GetConstraintCenter, "class", "Gets the constraint center" )
 {
-    lua_pushvector( L, luaL_checkmovedata( L, 1 )->m_vecConstraintCenter );
+    lua_CMoveData *moveData = LUA_BINDING_ARGUMENT( luaL_checkmovedata, 1, "moveData" );
+    lua_pushvector( L, moveData->m_vecConstraintCenter );
     return 1;
 }
+LUA_BINDING_END( "Vector", "The constraint center" )
 
-static int CMoveData_GetConstraintRadius( lua_State *L )
+LUA_BINDING_BEGIN( MoveData, GetConstraintRadius, "class", "Gets the constraint radius" )
 {
-    lua_pushnumber( L, luaL_checkmovedata( L, 1 )->m_flConstraintRadius );
+    lua_CMoveData *moveData = LUA_BINDING_ARGUMENT( luaL_checkmovedata, 1, "moveData" );
+    lua_pushnumber( L, moveData->m_flConstraintRadius );
     return 1;
 }
+LUA_BINDING_END( "number", "The constraint radius" )
 
-static int CMoveData_GetConstraintSpeedScale( lua_State *L )
+LUA_BINDING_BEGIN( MoveData, GetConstraintSpeedScale, "class", "Gets the constraint speed scale" )
 {
-    lua_pushnumber( L, luaL_checkmovedata( L, 1 )->m_flConstraintSpeedFactor );
+    lua_CMoveData *moveData = LUA_BINDING_ARGUMENT( luaL_checkmovedata, 1, "moveData" );
+    lua_pushnumber( L, moveData->m_flConstraintSpeedFactor );
     return 1;
 }
+LUA_BINDING_END( "number", "The constraint speed scale" )
 
-static int CMoveData_GetConstraintWidth( lua_State *L )
+LUA_BINDING_BEGIN( MoveData, GetConstraintWidth, "class", "Gets the constraint width" )
 {
-    lua_pushnumber( L, luaL_checkmovedata( L, 1 )->m_flConstraintWidth );
+    lua_CMoveData *moveData = LUA_BINDING_ARGUMENT( luaL_checkmovedata, 1, "moveData" );
+    lua_pushnumber( L, moveData->m_flConstraintWidth );
     return 1;
 }
+LUA_BINDING_END( "number", "The constraint width" )
 
-static int CMoveData_GetFinalIdealVelocity( lua_State *L )
+LUA_BINDING_BEGIN( MoveData, GetFinalIdealVelocity, "class", "Gets the final ideal velocity" )
 {
-    lua_pushvector( L, luaL_checkmovedata( L, 1 )->m_outWishVel );
+    lua_CMoveData *moveData = LUA_BINDING_ARGUMENT( luaL_checkmovedata, 1, "moveData" );
+    lua_pushvector( L, moveData->m_outWishVel );
     return 1;
 }
+LUA_BINDING_END( "Vector", "The final ideal velocity" )
 
-static int CMoveData_GetFinalJumpVelocity( lua_State *L )
+LUA_BINDING_BEGIN( MoveData, GetFinalJumpVelocity, "class", "Gets the final jump velocity" )
 {
-    lua_pushvector( L, luaL_checkmovedata( L, 1 )->m_outJumpVel );
+    lua_CMoveData *moveData = LUA_BINDING_ARGUMENT( luaL_checkmovedata, 1, "moveData" );
+    lua_pushvector( L, moveData->m_outJumpVel );
     return 1;
 }
+LUA_BINDING_END( "Vector", "The final jump velocity" )
 
-static int CMoveData_GetFinalStepHeight( lua_State *L )
+LUA_BINDING_BEGIN( MoveData, GetFinalStepHeight, "class", "Gets the final step height" )
 {
-    lua_pushnumber( L, luaL_checkmovedata( L, 1 )->m_outStepHeight );
+    lua_CMoveData *moveData = LUA_BINDING_ARGUMENT( luaL_checkmovedata, 1, "moveData" );
+    lua_pushnumber( L, moveData->m_outStepHeight );
     return 1;
 }
+LUA_BINDING_END( "number", "The final step height" )
 
-static int CMoveData_GetForwardSpeed( lua_State *L )
+LUA_BINDING_BEGIN( MoveData, GetForwardSpeed, "class", "Gets the forward speed" )
 {
-    lua_pushnumber( L, luaL_checkmovedata( L, 1 )->m_flForwardMove );
+    lua_CMoveData *moveData = LUA_BINDING_ARGUMENT( luaL_checkmovedata, 1, "moveData" );
+    lua_pushnumber( L, moveData->m_flForwardMove );
     return 1;
 }
+LUA_BINDING_END( "number", "The forward speed" )
 
-static int CMoveData_GetImpulseCommand( lua_State *L )
+LUA_BINDING_BEGIN( MoveData, GetImpulseCommand, "class", "Gets the impulse command" )
 {
-    lua_pushnumber( L, luaL_checkmovedata( L, 1 )->m_nImpulseCommand );
+    lua_CMoveData *moveData = LUA_BINDING_ARGUMENT( luaL_checkmovedata, 1, "moveData" );
+    lua_pushnumber( L, moveData->m_nImpulseCommand );
     return 1;
 }
+LUA_BINDING_END( "number", "The impulse command" )
 
-static int CMoveData_GetMaxClientSpeed( lua_State *L )
+LUA_BINDING_BEGIN( MoveData, GetMaxClientSpeed, "class", "Gets the max client speed" )
 {
-    lua_pushnumber( L, luaL_checkmovedata( L, 1 )->m_flClientMaxSpeed );
+    lua_CMoveData *moveData = LUA_BINDING_ARGUMENT( luaL_checkmovedata, 1, "moveData" );
+    lua_pushnumber( L, moveData->m_flClientMaxSpeed );
     return 1;
 }
+LUA_BINDING_END( "number", "The max client speed" )
 
-static int CMoveData_GetMaxSpeed( lua_State *L )
+LUA_BINDING_BEGIN( MoveData, GetMaxSpeed, "class", "Gets the max speed" )
 {
-    lua_pushnumber( L, luaL_checkmovedata( L, 1 )->m_flMaxSpeed );
+    lua_CMoveData *moveData = LUA_BINDING_ARGUMENT( luaL_checkmovedata, 1, "moveData" );
+    lua_pushnumber( L, moveData->m_flMaxSpeed );
     return 1;
 }
+LUA_BINDING_END( "number", "The max speed" )
 
-static int CMoveData_GetMoveAngles( lua_State *L )
+LUA_BINDING_BEGIN( MoveData, GetMoveAngles, "class", "Gets the move angles" )
 {
-    lua_pushangle( L, luaL_checkmovedata( L, 1 )->m_vecAngles );
+    lua_CMoveData *moveData = LUA_BINDING_ARGUMENT( luaL_checkmovedata, 1, "moveData" );
+    lua_pushangle( L, moveData->m_vecAngles );
     return 1;
 }
+LUA_BINDING_END( "Angle", "The move angles" )
 
-static int CMoveData_GetOldAngles( lua_State *L )
+LUA_BINDING_BEGIN( MoveData, GetOldAngles, "class", "Gets the old angles" )
 {
-    lua_pushangle( L, luaL_checkmovedata( L, 1 )->m_vecOldAngles );
+    lua_CMoveData *moveData = LUA_BINDING_ARGUMENT( luaL_checkmovedata, 1, "moveData" );
+    lua_pushangle( L, moveData->m_vecOldAngles );
     return 1;
 }
+LUA_BINDING_END( "Angle", "The old angles" )
 
-static int CMoveData_GetOldButtons( lua_State *L )
+LUA_BINDING_BEGIN( MoveData, GetOldButtons, "class", "Gets the old buttons" )
 {
-    lua_pushnumber( L, luaL_checkmovedata( L, 1 )->m_nOldButtons );
+    lua_CMoveData *moveData = LUA_BINDING_ARGUMENT( luaL_checkmovedata, 1, "moveData" );
+    lua_pushnumber( L, moveData->m_nOldButtons );
     return 1;
 }
+LUA_BINDING_END( "number", "The old buttons" )
 
-static int CMoveData_GetOrigin( lua_State *L )
+LUA_BINDING_BEGIN( MoveData, GetOrigin, "class", "Gets the origin" )
 {
-    Vector origin = luaL_checkmovedata( L, 1 )->GetAbsOrigin();
+    lua_CMoveData *moveData = LUA_BINDING_ARGUMENT( luaL_checkmovedata, 1, "moveData" );
+    Vector origin = moveData->GetAbsOrigin();
     lua_pushvector( L, origin );
     return 1;
 }
+LUA_BINDING_END( "Vector", "The origin" )
 
-static int CMoveData_GetSideSpeed( lua_State *L )
+LUA_BINDING_BEGIN( MoveData, GetSideSpeed, "class", "Gets the side speed" )
 {
-    lua_pushnumber( L, luaL_checkmovedata( L, 1 )->m_flSideMove );
+    lua_CMoveData *moveData = LUA_BINDING_ARGUMENT( luaL_checkmovedata, 1, "moveData" );
+    lua_pushnumber( L, moveData->m_flSideMove );
     return 1;
 }
+LUA_BINDING_END( "number", "The side speed" )
 
-static int CMoveData_GetUpSpeed( lua_State *L )
+LUA_BINDING_BEGIN( MoveData, GetUpSpeed, "class", "Gets the up speed" )
 {
-    lua_pushnumber( L, luaL_checkmovedata( L, 1 )->m_flUpMove );
+    lua_CMoveData *moveData = LUA_BINDING_ARGUMENT( luaL_checkmovedata, 1, "moveData" );
+    lua_pushnumber( L, moveData->m_flUpMove );
     return 1;
 }
+LUA_BINDING_END( "number", "The up speed" )
 
-static int CMoveData_GetVelocity( lua_State *L )
+LUA_BINDING_BEGIN( MoveData, GetVelocity, "class", "Gets the velocity" )
 {
-    lua_pushvector( L, luaL_checkmovedata( L, 1 )->m_vecVelocity );
+    lua_CMoveData *moveData = LUA_BINDING_ARGUMENT( luaL_checkmovedata, 1, "moveData" );
+    lua_pushvector( L, moveData->m_vecVelocity );
     return 1;
 }
+LUA_BINDING_END( "Vector", "The velocity" )
 
-static int CMoveData_KeyDown( lua_State *L )
+LUA_BINDING_BEGIN( MoveData, IsKeyDown, "class", "Checks if a key is down" )
 {
-    int key = luaL_checknumber( L, 2 );
-    lua_pushboolean( L, ( luaL_checkmovedata( L, 1 )->m_nButtons & key ) != 0 );
+    lua_CMoveData *moveData = LUA_BINDING_ARGUMENT( luaL_checkmovedata, 1, "moveData" );
+    int key = LUA_BINDING_ARGUMENT( luaL_checknumber, 2, "buttonCode" );
+    lua_pushboolean( L, ( moveData->m_nButtons & key ) != 0 );
     return 1;
 }
+LUA_BINDING_END( "boolean", "True if the key is down, false otherwise" )
 
-static int CMoveData_KeyPressed( lua_State *L )
+LUA_BINDING_BEGIN( MoveData, WasKeyPressed, "class", "Checks if a key was pressed, where before it wasn't." )
 {
-    int key = luaL_checknumber( L, 2 );
-    lua_pushboolean( L, ( luaL_checkmovedata( L, 1 )->m_nOldButtons & key ) == 0 && ( luaL_checkmovedata( L, 1 )->m_nButtons & key ) != 0 );
+    lua_CMoveData *moveData = LUA_BINDING_ARGUMENT( luaL_checkmovedata, 1, "moveData" );
+    int key = LUA_BINDING_ARGUMENT( luaL_checknumber, 2, "buttonCode" );
+    lua_pushboolean( L, ( moveData->m_nOldButtons & key ) == 0 && ( moveData->m_nButtons & key ) != 0 );
     return 1;
 }
+LUA_BINDING_END( "boolean", "True if the key was pressed, false otherwise" )
 
-static int CMoveData_KeyReleased( lua_State *L )
+LUA_BINDING_BEGIN( MoveData, WasKeyReleased, "class", "Checks if a key was released, where before it wasn't." )
 {
-    int key = luaL_checknumber( L, 2 );
-    lua_pushboolean( L, ( luaL_checkmovedata( L, 1 )->m_nOldButtons & key ) != 0 && ( luaL_checkmovedata( L, 1 )->m_nButtons & key ) == 0 );
+    lua_CMoveData *moveData = LUA_BINDING_ARGUMENT( luaL_checkmovedata, 1, "moveData" );
+    int key = LUA_BINDING_ARGUMENT( luaL_checknumber, 2, "buttonCode" );
+    lua_pushboolean( L, ( moveData->m_nOldButtons & key ) != 0 && ( moveData->m_nButtons & key ) == 0 );
     return 1;
 }
+LUA_BINDING_END( "boolean", "True if the key was released, false otherwise" )
 
-static int CMoveData_KeyWasDown( lua_State *L )
+LUA_BINDING_BEGIN( MoveData, WasKeyDown, "class", "Checks if a key was down before" )
 {
-    int key = luaL_checknumber( L, 2 );
-    lua_pushboolean( L, ( luaL_checkmovedata( L, 1 )->m_nOldButtons & key ) != 0 );
+    lua_CMoveData *moveData = LUA_BINDING_ARGUMENT( luaL_checkmovedata, 1, "moveData" );
+    int key = LUA_BINDING_ARGUMENT( luaL_checknumber, 2, "buttonCode" );
+    lua_pushboolean( L, ( moveData->m_nOldButtons & key ) != 0 );
     return 1;
 }
+LUA_BINDING_END( "boolean", "True if the key was down, false otherwise" )
 
-static int CMoveData_SetAbsMoveAngles( lua_State *L )
+LUA_BINDING_BEGIN( MoveData, SetAbsoluteMoveAngles, "class", "Sets the absolute move angles" )
 {
-    luaL_checkmovedata( L, 1 )->m_vecAbsViewAngles = luaL_checkangle( L, 2 );
+    lua_CMoveData *moveData = LUA_BINDING_ARGUMENT( luaL_checkmovedata, 1, "moveData" );
+    moveData->m_vecAbsViewAngles = LUA_BINDING_ARGUMENT( luaL_checkangle, 2, "angles" );
     return 0;
 }
+LUA_BINDING_END()
 
-static int CMoveData_SetAngles( lua_State *L )
+LUA_BINDING_BEGIN( MoveData, SetAngles, "class", "Sets the angles (local space)" )
 {
-    luaL_checkmovedata( L, 1 )->m_vecViewAngles = luaL_checkangle( L, 2 );
+    lua_CMoveData *moveData = LUA_BINDING_ARGUMENT( luaL_checkmovedata, 1, "moveData" );
+    moveData->m_vecViewAngles = LUA_BINDING_ARGUMENT( luaL_checkangle, 2, "angles" );
     return 0;
 }
+LUA_BINDING_END()
 
-static int CMoveData_SetButtons( lua_State *L )
+LUA_BINDING_BEGIN( MoveData, SetButtons, "class", "Sets the buttons" )
 {
-    luaL_checkmovedata( L, 1 )->m_nButtons = luaL_checknumber( L, 2 );
+    lua_CMoveData *moveData = LUA_BINDING_ARGUMENT( luaL_checkmovedata, 1, "moveData" );
+    moveData->m_nButtons = LUA_BINDING_ARGUMENT( luaL_checknumber, 2, "buttons" );
     return 0;
 }
+LUA_BINDING_END()
 
-static int CMoveData_SetConstraintCenter( lua_State *L )
+LUA_BINDING_BEGIN( MoveData, SetConstraintCenter, "class", "Sets the constraint center" )
 {
-    luaL_checkmovedata( L, 1 )->m_vecConstraintCenter = luaL_checkvector( L, 2 );
+    lua_CMoveData *moveData = LUA_BINDING_ARGUMENT( luaL_checkmovedata, 1, "moveData" );
+    moveData->m_vecConstraintCenter = LUA_BINDING_ARGUMENT( luaL_checkvector, 2, "center" );
     return 0;
 }
+LUA_BINDING_END()
 
-static int CMoveData_SetConstraintRadius( lua_State *L )
+LUA_BINDING_BEGIN( MoveData, SetConstraintRadius, "class", "Sets the constraint radius" )
 {
-    luaL_checkmovedata( L, 1 )->m_flConstraintRadius = luaL_checknumber( L, 2 );
+    lua_CMoveData *moveData = LUA_BINDING_ARGUMENT( luaL_checkmovedata, 1, "moveData" );
+    moveData->m_flConstraintRadius = LUA_BINDING_ARGUMENT( luaL_checknumber, 2, "radius" );
     return 0;
 }
+LUA_BINDING_END()
 
-static int CMoveData_SetConstraintSpeedScale( lua_State *L )
+LUA_BINDING_BEGIN( MoveData, SetConstraintSpeedScale, "class", "Sets the constraint speed scale" )
 {
-    luaL_checkmovedata( L, 1 )->m_flConstraintSpeedFactor = luaL_checknumber( L, 2 );
+    lua_CMoveData *moveData = LUA_BINDING_ARGUMENT( luaL_checkmovedata, 1, "moveData" );
+    moveData->m_flConstraintSpeedFactor = LUA_BINDING_ARGUMENT( luaL_checknumber, 2, "speedScale" );
     return 0;
 }
+LUA_BINDING_END()
 
-static int CMoveData_SetConstraintWidth( lua_State *L )
+LUA_BINDING_BEGIN( MoveData, SetConstraintWidth, "class", "Sets the constraint width" )
 {
-    luaL_checkmovedata( L, 1 )->m_flConstraintWidth = luaL_checknumber( L, 2 );
+    lua_CMoveData *moveData = LUA_BINDING_ARGUMENT( luaL_checkmovedata, 1, "moveData" );
+    moveData->m_flConstraintWidth = LUA_BINDING_ARGUMENT( luaL_checknumber, 2, "width" );
     return 0;
 }
+LUA_BINDING_END()
 
-static int CMoveData_SetFinalIdealVelocity( lua_State *L )
+LUA_BINDING_BEGIN( MoveData, SetFinalIdealVelocity, "class", "Sets the final ideal velocity" )
 {
-    luaL_checkmovedata( L, 1 )->SetAbsOrigin( luaL_checkvector( L, 2 ) );
+    lua_CMoveData *moveData = LUA_BINDING_ARGUMENT( luaL_checkmovedata, 1, "moveData" );
+    moveData->SetAbsOrigin( LUA_BINDING_ARGUMENT( luaL_checkvector, 2, "velocity" ) );
     return 0;
 }
+LUA_BINDING_END()
 
-static int CMoveData_SetFinalJumpVelocity( lua_State *L )
+LUA_BINDING_BEGIN( MoveData, SetFinalJumpVelocity, "class", "Sets the final jump velocity" )
 {
-    luaL_checkmovedata( L, 1 )->m_outJumpVel = luaL_checkvector( L, 2 );
+    lua_CMoveData *moveData = LUA_BINDING_ARGUMENT( luaL_checkmovedata, 1, "moveData" );
+    moveData->m_outJumpVel = LUA_BINDING_ARGUMENT( luaL_checkvector, 2, "velocity" );
     return 0;
 }
+LUA_BINDING_END()
 
-static int CMoveData_SetFinalStepHeight( lua_State *L )
+LUA_BINDING_BEGIN( MoveData, SetFinalStepHeight, "class", "Sets the final step height" )
 {
-    luaL_checkmovedata( L, 1 )->m_outJumpVel = luaL_checkvector( L, 2 );
+    lua_CMoveData *moveData = LUA_BINDING_ARGUMENT( luaL_checkmovedata, 1, "moveData" );
+    moveData->m_outJumpVel = LUA_BINDING_ARGUMENT( luaL_checkvector, 2, "height" );
     return 0;
 }
+LUA_BINDING_END()
 
-static int CMoveData_SetForwardSpeed( lua_State *L )
+LUA_BINDING_BEGIN( MoveData, SetForwardSpeed, "class", "Sets the forward speed" )
 {
-    luaL_checkmovedata( L, 1 )->m_flForwardMove = luaL_checknumber( L, 2 );
+    lua_CMoveData *moveData = LUA_BINDING_ARGUMENT( luaL_checkmovedata, 1, "moveData" );
+    moveData->m_flForwardMove = LUA_BINDING_ARGUMENT( luaL_checknumber, 2, "speed" );
     return 0;
 }
+LUA_BINDING_END()
 
-static int CMoveData_SetImpulseCommand( lua_State *L )
+LUA_BINDING_BEGIN( MoveData, SetImpulseCommand, "class", "Sets the impulse command" )
 {
-    luaL_checkmovedata( L, 1 )->m_nImpulseCommand = luaL_checknumber( L, 2 );
+    lua_CMoveData *moveData = LUA_BINDING_ARGUMENT( luaL_checkmovedata, 1, "moveData" );
+    moveData->m_nImpulseCommand = LUA_BINDING_ARGUMENT( luaL_checknumber, 2, "command" );
     return 0;
 }
+LUA_BINDING_END()
 
-static int CMoveData_SetMaxClientSpeed( lua_State *L )
+LUA_BINDING_BEGIN( MoveData, SetMaxClientSpeed, "class", "Sets the max client speed" )
 {
-    luaL_checkmovedata( L, 1 )->m_flClientMaxSpeed = luaL_checknumber( L, 2 );
+    lua_CMoveData *moveData = LUA_BINDING_ARGUMENT( luaL_checkmovedata, 1, "moveData" );
+    moveData->m_flClientMaxSpeed = LUA_BINDING_ARGUMENT( luaL_checknumber, 2, "speed" );
     return 0;
 }
+LUA_BINDING_END()
 
-static int CMoveData_SetMaxSpeed( lua_State *L )
+LUA_BINDING_BEGIN( MoveData, SetMaxSpeed, "class", "Sets the max speed" )
 {
-    luaL_checkmovedata( L, 1 )->m_flMaxSpeed = luaL_checknumber( L, 2 );
+    lua_CMoveData *moveData = LUA_BINDING_ARGUMENT( luaL_checkmovedata, 1, "moveData" );
+    moveData->m_flMaxSpeed = LUA_BINDING_ARGUMENT( luaL_checknumber, 2, "speed" );
     return 0;
 }
+LUA_BINDING_END()
 
-static int CMoveData_SetMoveAngles( lua_State *L )
+LUA_BINDING_BEGIN( MoveData, SetMoveAngles, "class", "Sets the move angles" )
 {
-    luaL_checkmovedata( L, 1 )->m_vecAngles = luaL_checkangle( L, 2 );
+    lua_CMoveData *moveData = LUA_BINDING_ARGUMENT( luaL_checkmovedata, 1, "moveData" );
+    moveData->m_vecAngles = LUA_BINDING_ARGUMENT( luaL_checkangle, 2, "angles" );
     return 0;
 }
+LUA_BINDING_END()
 
-static int CMoveData_SetOldAngles( lua_State *L )
+LUA_BINDING_BEGIN( MoveData, SetOldAngles, "class", "Sets the old angles" )
 {
-    luaL_checkmovedata( L, 1 )->m_vecOldAngles = luaL_checkangle( L, 2 );
+    lua_CMoveData *moveData = LUA_BINDING_ARGUMENT( luaL_checkmovedata, 1, "moveData" );
+    moveData->m_vecOldAngles = LUA_BINDING_ARGUMENT( luaL_checkangle, 2, "angles" );
     return 0;
 }
+LUA_BINDING_END()
 
-static int CMoveData_SetOldButtons( lua_State *L )
+LUA_BINDING_BEGIN( MoveData, SetOldButtons, "class", "Sets the old buttons" )
 {
-    luaL_checkmovedata( L, 1 )->m_nOldButtons = luaL_checknumber( L, 2 );
+    lua_CMoveData *moveData = LUA_BINDING_ARGUMENT( luaL_checkmovedata, 1, "moveData" );
+    moveData->m_nOldButtons = LUA_BINDING_ARGUMENT( luaL_checknumber, 2, "buttons" );
     return 0;
 }
+LUA_BINDING_END()
 
-static int CMoveData_SetOrigin( lua_State *L )
+LUA_BINDING_BEGIN( MoveData, SetOrigin, "class", "Sets the origin" )
 {
-    luaL_checkmovedata( L, 1 )->SetAbsOrigin( luaL_checkvector( L, 2 ) );
+    lua_CMoveData *moveData = LUA_BINDING_ARGUMENT( luaL_checkmovedata, 1, "moveData" );
+    moveData->SetAbsOrigin( LUA_BINDING_ARGUMENT( luaL_checkvector, 2, "origin" ) );
     return 0;
 }
+LUA_BINDING_END()
 
-static int CMoveData_SetSideSpeed( lua_State *L )
+LUA_BINDING_BEGIN( MoveData, SetSideSpeed, "class", "Sets the side speed" )
 {
-    luaL_checkmovedata( L, 1 )->m_flSideMove = luaL_checknumber( L, 2 );
+    lua_CMoveData *moveData = LUA_BINDING_ARGUMENT( luaL_checkmovedata, 1, "moveData" );
+    moveData->m_flSideMove = LUA_BINDING_ARGUMENT( luaL_checknumber, 2, "speed" );
     return 0;
 }
+LUA_BINDING_END()
 
-static int CMoveData_SetUpSpeed( lua_State *L )
+LUA_BINDING_BEGIN( MoveData, SetUpSpeed, "class", "Sets the up speed" )
 {
-    luaL_checkmovedata( L, 1 )->m_flUpMove = luaL_checknumber( L, 2 );
+    lua_CMoveData *moveData = LUA_BINDING_ARGUMENT( luaL_checkmovedata, 1, "moveData" );
+    moveData->m_flUpMove = LUA_BINDING_ARGUMENT( luaL_checknumber, 2, "speed" );
     return 0;
 }
+LUA_BINDING_END()
 
-static int CMoveData_SetVelocity( lua_State *L )
+LUA_BINDING_BEGIN( MoveData, SetVelocity, "class", "Sets the velocity" )
 {
-    luaL_checkmovedata( L, 1 )->m_vecVelocity = luaL_checkvector( L, 2 );
+    lua_CMoveData *moveData = LUA_BINDING_ARGUMENT( luaL_checkmovedata, 1, "moveData" );
+    moveData->m_vecVelocity = LUA_BINDING_ARGUMENT( luaL_checkvector, 2, "velocity" );
     return 0;
 }
+LUA_BINDING_END()
 
-static int CMoveData___tostring( lua_State *L )
+LUA_BINDING_BEGIN( MoveData, __tostring, "class", "Returns a string representation of the object" )
 {
-    lua_pushfstring( L, "CMoveData: %p", luaL_checkudata( L, 1, LUA_MOVEDATALIBNAME ) );
+    lua_pushfstring( L, "MoveData: %p", luaL_checkudata( L, 1, LUA_MOVEDATAMETANAME ) );
     return 1;
 }
-
-static const luaL_Reg CMoveDatameta[] = {
-    { "AddKey", CMoveData_AddKey },
-    { "ClearButtons", CMoveData_ClearButtons },
-    { "ClearMovement", CMoveData_ClearMovement },
-    { "GetAbsMoveAngles", CMoveData_GetAbsMoveAngles },
-    { "GetAngles", CMoveData_GetAngles },
-    { "GetButtons", CMoveData_GetButtons },
-    { "GetConstraintCenter", CMoveData_GetConstraintCenter },
-    { "GetConstraintRadius", CMoveData_GetConstraintRadius },
-    { "GetConstraintSpeedScale", CMoveData_GetConstraintSpeedScale },
-    { "GetConstraintWidth", CMoveData_GetConstraintWidth },
-    { "GetFinalIdealVelocity", CMoveData_GetFinalIdealVelocity },
-    { "GetFinalJumpVelocity", CMoveData_GetFinalJumpVelocity },
-    { "GetFinalStepHeight", CMoveData_GetFinalStepHeight },
-    { "GetForwardSpeed", CMoveData_GetForwardSpeed },
-    { "GetImpulseCommand", CMoveData_GetImpulseCommand },
-    { "GetMaxClientSpeed", CMoveData_GetMaxClientSpeed },
-    { "GetMaxSpeed", CMoveData_GetMaxSpeed },
-    { "GetMoveAngles", CMoveData_GetMoveAngles },
-    { "GetOldAngles", CMoveData_GetOldAngles },
-    { "GetOldButtons", CMoveData_GetOldButtons },
-    { "GetOrigin", CMoveData_GetOrigin },
-    { "GetSideSpeed", CMoveData_GetSideSpeed },
-    { "GetUpSpeed", CMoveData_GetUpSpeed },
-    { "GetVelocity", CMoveData_GetVelocity },
-    { "KeyDown", CMoveData_KeyDown },
-    { "KeyPressed", CMoveData_KeyPressed },
-    { "KeyReleased", CMoveData_KeyReleased },
-    { "KeyWasDown", CMoveData_KeyWasDown },
-    { "SetAbsMoveAngles", CMoveData_SetAbsMoveAngles },
-    { "SetAngles", CMoveData_SetAngles },
-    { "SetButtons", CMoveData_SetButtons },
-    { "SetConstraintCenter", CMoveData_SetConstraintCenter },
-    { "SetConstraintRadius", CMoveData_SetConstraintRadius },
-    { "SetConstraintSpeedScale", CMoveData_SetConstraintSpeedScale },
-    { "SetConstraintWidth", CMoveData_SetConstraintWidth },
-    { "SetFinalIdealVelocity", CMoveData_SetFinalIdealVelocity },
-    { "SetFinalJumpVelocity", CMoveData_SetFinalJumpVelocity },
-    { "SetFinalStepHeight", CMoveData_SetFinalStepHeight },
-    { "SetForwardSpeed", CMoveData_SetForwardSpeed },
-    { "SetImpulseCommand", CMoveData_SetImpulseCommand },
-    { "SetMaxClientSpeed", CMoveData_SetMaxClientSpeed },
-    { "SetMaxSpeed", CMoveData_SetMaxSpeed },
-    { "SetMoveAngles", CMoveData_SetMoveAngles },
-    { "SetOldAngles", CMoveData_SetOldAngles },
-    { "SetOldButtons", CMoveData_SetOldButtons },
-    { "SetOrigin", CMoveData_SetOrigin },
-    { "SetSideSpeed", CMoveData_SetSideSpeed },
-    { "SetUpSpeed", CMoveData_SetUpSpeed },
-    { "SetVelocity", CMoveData_SetVelocity },
-    { "__tostring", CMoveData___tostring },
-    { NULL, NULL } };
+LUA_BINDING_END()
 
 /*
 ** Open CMoveData object
 */
 LUALIB_API int luaopen_CMoveData( lua_State *L )
 {
-    LUA_PUSH_NEW_METATABLE( L, LUA_MOVEDATALIBNAME );
-    luaL_register( L, NULL, CMoveDatameta );
+    LUA_PUSH_NEW_METATABLE( L, LUA_MOVEDATAMETANAME );
+
+    LUA_REGISTRATION_COMMIT( MoveData );
+
     lua_pushvalue( L, -1 );           /* push metatable */
     lua_setfield( L, -2, "__index" ); /* metatable.__index = metatable */
-    lua_pushstring( L, "MoveData" );
+    lua_pushstring( L, LUA_MOVEDATAMETANAME );
     lua_setfield( L, -2, "__type" ); /* metatable.__type = "MoveData" */
+
     lua_pop( L, 1 );
     return 1;
 }

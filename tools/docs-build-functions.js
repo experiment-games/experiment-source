@@ -10,7 +10,7 @@ const fs = require('fs');
 const path = require('path');
 const { getRealmByFile } = require('./common/vpc');
 const { indentEachLine, wrapQuotes } = require('./common/string');
-const { getAllFilesInDirectoriesAsMap, traverseDirectory  } = require('./common/filesystem');
+const { getAllFilesInDirectoriesAsMap, traverseDirectory } = require('./common/filesystem');
 
 const srcDir = './src';
 const outputDir = './docs';
@@ -245,6 +245,34 @@ function fromTypeChecker(typeChecker) {
     case 'luaL_optkeyvalues':
     case 'lua_tokeyvalues':
       return 'KeyValuesHandle';
+    case 'luaL_checkvmatrix':
+    case 'luaL_optvmatrix':
+    case 'lua_tovmatrix':
+      return 'Matrix';
+    case 'luaL_checkmatrix':
+    case 'luaL_optmatrix':
+    case 'lua_tomatrix':
+      return 'Matrix3x4';
+    case 'luaL_checkmovedata':
+    case 'luaL_optmovedata':
+    case 'lua_tomovedata':
+      return 'MoveData';
+    case 'lua_tosurfacedata':
+      return 'SurfaceData';
+    case 'luaL_checkitexture':
+    case 'luaL_optitexture':
+    case 'lua_toitexture':
+      return 'Texture';
+    case 'luaL_checkmaterial':
+    case 'luaL_optmaterial':
+    case 'lua_tomaterial':
+      return 'Material';
+    case 'lua_toperformanceparams':
+      return 'PerformanceParameters';
+    case 'luaL_checkphysicsobject':
+    case 'luaL_optphysicsobject':
+    case 'lua_tophysicsobject':
+      return 'PhysicsObject';
     default:
       return 'unknown';
   }

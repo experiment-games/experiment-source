@@ -28,7 +28,8 @@ lua:
       type: boolean
       default: "false"
   returns:
-    
+    - type: NetworkStringTable
+      description: "The created string table."
 ---
 
 <div class="lua__search__keywords">

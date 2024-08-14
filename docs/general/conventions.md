@@ -56,6 +56,7 @@ See the `.editorconfig` file for the code style.
 - Variables and functions are not abbreviated, with the exception of these
   common abbreviations:
 
+    - `Config`
     - `Hud`
     - `Ui`
     - `Vgui`
@@ -65,12 +66,14 @@ See the `.editorconfig` file for the code style.
     - `Sqr` (short for square root)
     - `Ik` (short for inverse kinematics)
     - `Json`, `Xml`, `Html`, `Css` and other data format/language names
-    - `2D`, `3D`, `4D` and other dimensions
+    - `2d`, `3d`, `4d` and other dimensions
     - `Dev`
-    - `RGB`, `RGBA`, `HSV`, `HSL` and other color spaces
-    - `HLTV` (short for Half-Life TV)
+    - `Rgb`, `Rgba`, `Hsv`, `Hsl` and other color spaces
+    - `Hltv` (short for Half-Life TV)
     - `Dx` (DirectX), `HDR` and other graphic settings
     - `Demo`
+    - `Obb` (short for oriented bounding box)
+    - `Aabb` (short for axis-aligned bounding box)
 
 - Abbreviations should be treated as words when capitalizing:
 
@@ -322,6 +325,14 @@ For now let's set this as the standard going forward:
     }
 
     bool HasPlayerDied() {
+      return playerHealth <= 0;
+    }
+
+    bool WasKeyPressed(keyCode) {
+      return keyState[keyCode] == KEY_PRESSED;
+    }
+
+    bool CanPlayerRespawn() {
       return playerHealth <= 0;
     }
     ```

@@ -42,7 +42,7 @@ static const luaL_RegForState luasrclibs[] = {
     { LUA_CVARLIBNAME, luaopen_ConsoleVariablesLib, REALM_SHARED },                     // ✔    n/a     n/a
     { LUA_DBGLIBNAME, luaopen_dbg, REALM_SHARED | REALM_GAMEUI },                       // ✔    n/a     n/a
     { LUA_DEBUGOVERLAYLIBNAME, luaopen_debugoverlay, REALM_SHARED },                    // ✔    n/a     n/a
-    { LUA_EFFECTDATALIBNAME, luaopen_CEffectData, REALM_SHARED },                       // ✔    n/a     n/a
+    { LUA_EFFECTDATAMETANAME, luaopen_CEffectData, REALM_SHARED },                       // ✔    n/a     n/a
     { LUA_EFLIBNAME, luaopen_EF, REALM_SHARED | REALM_GAMEUI },
     { LUA_ENGINEFLAGSLIBNAME, luaopen_FL, REALM_SHARED | REALM_GAMEUI },
     { LUA_ENGINELIBNAME, luaopen_engine_shared, REALM_SHARED | REALM_GAMEUI },          // ✔    n/a     n/a
@@ -60,22 +60,22 @@ static const luaL_RegForState luasrclibs[] = {
     { LUA_ITEXTUREMETANAME, luaopen_ITexture, REALM_SHARED | REALM_GAMEUI },            // ✔    n/a     n/a
     { LUA_KEYVALUESLIBNAME, luaopen_KeyValues, REALM_SHARED | REALM_GAMEUI },           // ✔    n/a     n/a
     { LUA_LIFELIBNAME, luaopen_LIFE, REALM_SHARED | REALM_GAMEUI },
-    { LUA_LOCALIZATIONLIBNAME, luaopen_localization, REALM_SHARED | REALM_GAMEUI },
+    { LUA_LOCALIZATIONLIBNAME, luaopen_localization, REALM_SHARED | REALM_GAMEUI },     // ✔    n/a     n/a
     { LUA_MASKLIBNAME, luaopen_MASK, REALM_SHARED | REALM_GAMEUI },
     { LUA_MATERIALMETANAME, luaopen_IMaterial, REALM_SHARED | REALM_GAMEUI },           // ✔    n/a     n/a
-    { LUA_MATHLIBLIBNAME, luaopen_mathlib, REALM_SHARED | REALM_GAMEUI },
-    { LUA_MATRIXLIBNAME, luaopen_matrix3x4_t, REALM_SHARED | REALM_GAMEUI },
+    { LUA_MATHLIBLIBNAME, luaopen_mathlib, REALM_SHARED | REALM_GAMEUI },               // ✔    n/a     n/a
+    { LUA_MATRIXLIBNAME, luaopen_Matrix3x4, REALM_SHARED | REALM_GAMEUI },              // ✔    n/a     n/a
     { LUA_MOVECOLLIDELIBNAME, luaopen_MOVECOLLIDE, REALM_SHARED | REALM_GAMEUI },
-    { LUA_MOVEDATALIBNAME, luaopen_CMoveData, REALM_SHARED },
-    { LUA_MOVEHELPERLIBNAME, luaopen_IMoveHelper, REALM_SHARED },
+    { LUA_MOVEDATAMETANAME, luaopen_CMoveData, REALM_SHARED },                          // ✔    n/a     n/a
+    { LUA_MOVEHELPERMETANAME, luaopen_IMoveHelper, REALM_SHARED },                      // ✔    n/a     n/a
     { LUA_MOVETYPELIBNAME, luaopen_MOVETYPE, REALM_SHARED | REALM_GAMEUI },
     { LUA_NETWORKSTRINGTABLELIBNAME, luaopen_NetworkStringTables, REALM_SHARED | REALM_GAMEUI },    // ✔    n/a     n/a
     { LUA_OBSMODELIBNAME, luaopen_OBS_MODE, REALM_SHARED | REALM_GAMEUI },
-    { LUA_PARTICLESYSTEMLIBNAME, luaopen_ParticleSystem, REALM_SHARED },
+    { LUA_PARTICLESYSTEMLIBNAME, luaopen_ParticleSystem, REALM_SHARED },                // ✔    n/a     n/a
     { LUA_PASFILTERLIBNAME, luaopen_CPASFilter, REALM_SHARED },
-    { LUA_PHYSENVLIBNAME, luaopen_physenv, REALM_SHARED },
-    { LUA_PHYSICSOBJECTLIBNAME, luaopen_IPhysicsObject, REALM_SHARED },
-    { LUA_PHYSICSSURFACEPROPSLIBNAME, luaopen_IPhysicsSurfaceProps, REALM_SHARED },
+    { LUA_PHYSENVLIBNAME, luaopen_PhysicsEnvironments, REALM_SHARED },                  // ✔    n/a     n/a
+    { LUA_PHYSICSOBJECTMETANAME, luaopen_IPhysicsObject, REALM_SHARED },                // ✔    n/a     n/a
+    { LUA_PHYSICSSURFACEPROPSMETANAME, luaopen_IPhysicsSurfaceProps, REALM_SHARED },    // ✔    n/a     n/a
     { LUA_PREDICTIONSYSTEMLIBNAME, luaopen_IPredictionSystem, REALM_SHARED },
     { LUA_QANGLELIBNAME, luaopen_QAngle, REALM_SHARED | REALM_GAMEUI },             // ✔    n/a     n/a  
     { LUA_RANDOMLIBNAME, luaopen_random, REALM_SHARED | REALM_GAMEUI },             // ✔    n/a     n/a  
@@ -93,7 +93,7 @@ static const luaL_RegForState luasrclibs[] = {
     { LUA_UTILLIBNAME, luaopen_Util_shared, REALM_SHARED },
     { LUA_UTILLIBNAME, luaopen_Util, REALM_SHARED },
     { LUA_VECTORLIBNAME, luaopen_Vector, REALM_SHARED | REALM_GAMEUI },             // ✔    n/a     n/a  
-    { LUA_VMATRIXLIBNAME, luaopen_VMatrix, REALM_SHARED | REALM_GAMEUI },
+    { LUA_VMATRIXLIBNAME, luaopen_VMatrix, REALM_SHARED | REALM_GAMEUI },           // ✔    n/a     n/a  
 
 #ifndef CLIENT_DLL
     //

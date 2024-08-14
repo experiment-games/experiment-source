@@ -60,7 +60,7 @@ function GM:PlayerPlayStepSound(client, vecOrigin, psurface, fvol, force)
 	if (client:GetStepSoundCache()[nSide].m_usSoundNameIndex == stepSoundName) then
 		params = client:GetStepSoundCache()[nSide].m_SoundParameters
 	else
-		local physprops = MoveHelper():GetSurfaceProps()
+		local physprops = MoveHelper():GetSurfaceProperties()
 		local pSoundName = physprops:GetString(stepSoundName)
 		local b
 		b, params = _R.CBaseEntity.GetParametersForSound(pSoundName)

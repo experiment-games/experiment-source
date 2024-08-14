@@ -40,237 +40,361 @@ LUALIB_API lua_VMatrix &luaL_checkvmatrix( lua_State *L, int narg )
     return *d;
 }
 
-static int VMatrix_ApplyRotation( lua_State *L )
+LUA_REGISTRATION_INIT( Matrix )
+
+LUA_BINDING_BEGIN( Matrix, ApplyRotation, "class", "Applies a rotation to a vector." )
 {
-    lua_pushvector(
-        L, luaL_checkvmatrix( L, 1 ).ApplyRotation( luaL_checkvector( L, 2 ) ) );
+    lua_VMatrix matrix = LUA_BINDING_ARGUMENT( luaL_checkvmatrix, 1, "Matrix" );
+    lua_Vector vec = LUA_BINDING_ARGUMENT( luaL_checkvector, 2, "vector" );
+    lua_pushvector( L, matrix.ApplyRotation( vec ) );
+
     return 1;
 }
+LUA_BINDING_END( "vector", "The rotated vector." )
 
-static int VMatrix_As3x4( lua_State *L )
+LUA_BINDING_BEGIN( Matrix, As3x4, "class", "Converts a matrix to a 3x4 matrix." )
 {
-    lua_pushmatrix( L,
-                    const_cast< matrix3x4_t & >( luaL_checkvmatrix( L, 1 ).As3x4() ) );
+    lua_VMatrix matrix = LUA_BINDING_ARGUMENT( luaL_checkvmatrix, 1, "Matrix" );
+    lua_pushmatrix( L, const_cast< matrix3x4_t & >( matrix.As3x4() ) );
+
     return 1;
 }
+LUA_BINDING_END( "Matrix", "The converted 3x4 matrix." )
 
-static int VMatrix_Base( lua_State *L )
-{
-    lua_pushnumber( L, *luaL_checkvmatrix( L, 1 ).Base() );
-    return 1;
-}
+// Experiment; disabled since we don't want to deal with pointers in Lua.
+// LUA_BINDING_BEGIN( Matrix, Base, "class", "Gets a pointer to the matrix." )
+//{
+//    lua_VMatrix matrix = LUA_BINDING_ARGUMENT( luaL_checkvmatrix, 1, "Matrix" );
+//    lua_pushnumber( L, *matrix.Base() );
+//
+//    return 1;
+//}
+// LUA_BINDING_END( "number", "A pointer to the matrix." )
 
-static int VMatrix_CopyFrom3x4( lua_State *L )
+LUA_BINDING_BEGIN( Matrix, CopyFrom3x4, "class", "Copies a 3x4 matrix to a matrix." )
 {
-    luaL_checkvmatrix( L, 1 ).CopyFrom3x4( luaL_checkmatrix( L, 2 ) );
+    lua_VMatrix matrix = LUA_BINDING_ARGUMENT( luaL_checkvmatrix, 1, "Matrix" );
+    matrix.CopyFrom3x4( LUA_BINDING_ARGUMENT( luaL_checkmatrix, 2, "Matrix3x4" ) );
+
     return 0;
 }
+LUA_BINDING_END()
 
-static int VMatrix_GetBasisVectors( lua_State *L )
+LUA_BINDING_BEGIN( Matrix, GetBasisVectors, "class", "Gets the basis vectors of the matrix." )
 {
-    luaL_checkvmatrix( L, 1 ).GetBasisVectors(
-        luaL_checkvector( L, 2 ), luaL_checkvector( L, 3 ), luaL_checkvector( L, 4 ) );
+    lua_VMatrix matrix = LUA_BINDING_ARGUMENT( luaL_checkvmatrix, 1, "Matrix" );
+    lua_Vector forward, left, up;
+    matrix.GetBasisVectors( forward, left, up );
+    lua_pushvector( L, forward );
+    lua_pushvector( L, left );
+    lua_pushvector( L, up );
+
+    return 3;
+}
+LUA_BINDING_END( "vector", "The forward vector.", "vector", "The left vector.", "vector", "The up vector." )
+
+LUA_BINDING_BEGIN( Matrix, GetForward, "class", "Gets the forward vector of the matrix." )
+{
+    lua_VMatrix matrix = LUA_BINDING_ARGUMENT( luaL_checkvmatrix, 1, "Matrix" );
+    lua_pushvector( L, matrix.GetForward() );
+
+    return 1;
+}
+LUA_BINDING_END( "vector", "The forward vector." )
+
+LUA_BINDING_BEGIN( Matrix, GetLeft, "class", "Gets the left vector of the matrix." )
+{
+    lua_VMatrix matrix = LUA_BINDING_ARGUMENT( luaL_checkvmatrix, 1, "Matrix" );
+    lua_pushvector( L, matrix.GetLeft() );
+
+    return 1;
+}
+LUA_BINDING_END( "vector", "The left vector." )
+
+LUA_BINDING_BEGIN( Matrix, GetScale, "class", "Gets the scale of the matrix." )
+{
+    lua_VMatrix matrix = LUA_BINDING_ARGUMENT( luaL_checkvmatrix, 1, "Matrix" );
+    lua_pushvector( L, matrix.GetScale() );
+
+    return 1;
+}
+LUA_BINDING_END( "vector", "The scale." )
+
+LUA_BINDING_BEGIN( Matrix, GetTranslation, "class", "Gets the translation of the matrix." )
+{
+    lua_VMatrix matrix = LUA_BINDING_ARGUMENT( luaL_checkvmatrix, 1, "Matrix" );
+    lua_pushvector( L, matrix.GetTranslation() );
+
+    return 1;
+}
+LUA_BINDING_END( "vector", "The translation." )
+
+LUA_BINDING_BEGIN( Matrix, GetUp, "class", "Gets the up vector of the matrix." )
+{
+    lua_VMatrix matrix = LUA_BINDING_ARGUMENT( luaL_checkvmatrix, 1, "Matrix" );
+    lua_pushvector( L, matrix.GetUp() );
+
+    return 1;
+}
+LUA_BINDING_END( "vector", "The up vector." )
+
+LUA_BINDING_BEGIN( Matrix, Identity, "class", "Sets the matrix to the identity matrix." )
+{
+    lua_VMatrix matrix = LUA_BINDING_ARGUMENT( luaL_checkvmatrix, 1, "Matrix" );
+    matrix.Identity();
+
     return 0;
 }
+LUA_BINDING_END()
 
-static int VMatrix_GetForward( lua_State *L )
+LUA_BINDING_BEGIN( Matrix, Init, "class", "Initializes the matrix." )
 {
-    lua_pushvector( L, luaL_checkvmatrix( L, 1 ).GetForward() );
-    return 1;
-}
-
-static int VMatrix_GetLeft( lua_State *L )
-{
-    lua_pushvector( L, luaL_checkvmatrix( L, 1 ).GetLeft() );
-    return 1;
-}
-
-static int VMatrix_GetScale( lua_State *L )
-{
-    lua_pushvector( L, luaL_checkvmatrix( L, 1 ).GetScale() );
-    return 1;
-}
-
-static int VMatrix_GetTranslation( lua_State *L )
-{
-    lua_pushvector( L, luaL_checkvmatrix( L, 1 ).GetTranslation() );
-    return 1;
-}
-
-static int VMatrix_GetUp( lua_State *L )
-{
-    lua_pushvector( L, luaL_checkvmatrix( L, 1 ).GetUp() );
-    return 1;
-}
-
-static int VMatrix_Identity( lua_State *L )
-{
-    luaL_checkvmatrix( L, 1 ).Identity();
-    return 0;
-}
-
-static int VMatrix_Init( lua_State *L )
-{
-    if ( lua_gettop( L ) < 17 )
-        luaL_checkvmatrix( L, 1 ).Init( luaL_checkmatrix( L, 2 ) );
+    lua_VMatrix matrix = LUA_BINDING_ARGUMENT( luaL_checkvmatrix, 1, "Matrix" );
+    if ( lua_gettop( L ) <= 2 )
+        matrix.Init( LUA_BINDING_ARGUMENT( luaL_checkmatrix, 2, "Matrix3x4" ) );
     else
-        luaL_checkvmatrix( L, 1 ).Init(
-            luaL_checknumber( L, 2 ), luaL_checknumber( L, 3 ), luaL_checknumber( L, 4 ), luaL_checknumber( L, 5 ), luaL_checknumber( L, 6 ), luaL_checknumber( L, 7 ), luaL_checknumber( L, 8 ), luaL_checknumber( L, 9 ), luaL_checknumber( L, 10 ), luaL_checknumber( L, 11 ), luaL_checknumber( L, 12 ), luaL_checknumber( L, 13 ), luaL_checknumber( L, 14 ), luaL_checknumber( L, 15 ), luaL_checknumber( L, 16 ), luaL_checknumber( L, 17 ) );
+        matrix.Init( LUA_BINDING_ARGUMENT( luaL_checknumber, 2, "number" ),
+                     LUA_BINDING_ARGUMENT( luaL_checknumber, 3, "number" ),
+                     LUA_BINDING_ARGUMENT( luaL_checknumber, 4, "number" ),
+                     LUA_BINDING_ARGUMENT( luaL_checknumber, 5, "number" ),
+                     LUA_BINDING_ARGUMENT( luaL_checknumber, 6, "number" ),
+                     LUA_BINDING_ARGUMENT( luaL_checknumber, 7, "number" ),
+                     LUA_BINDING_ARGUMENT( luaL_checknumber, 8, "number" ),
+                     LUA_BINDING_ARGUMENT( luaL_checknumber, 9, "number" ),
+                     LUA_BINDING_ARGUMENT( luaL_checknumber, 10, "number" ),
+                     LUA_BINDING_ARGUMENT( luaL_checknumber, 11, "number" ),
+                     LUA_BINDING_ARGUMENT( luaL_checknumber, 12, "number" ),
+                     LUA_BINDING_ARGUMENT( luaL_checknumber, 13, "number" ),
+                     LUA_BINDING_ARGUMENT( luaL_checknumber, 14, "number" ),
+                     LUA_BINDING_ARGUMENT( luaL_checknumber, 15, "number" ),
+                     LUA_BINDING_ARGUMENT( luaL_checknumber, 16, "number" ),
+                     LUA_BINDING_ARGUMENT( luaL_checknumber, 17, "number" ) );
+
     return 0;
 }
+LUA_BINDING_END()
 
-static int VMatrix_InverseGeneral( lua_State *L )
+LUA_BINDING_BEGIN( Matrix, InverseGeneral, "class", "Inverts the matrix." )
 {
-    lua_pushboolean(
-        L, luaL_checkvmatrix( L, 1 ).InverseGeneral( luaL_checkvmatrix( L, 2 ) ) );
+    lua_VMatrix matrix = LUA_BINDING_ARGUMENT( luaL_checkvmatrix, 1, "Matrix" );
+    lua_pushboolean( L, matrix.InverseGeneral( LUA_BINDING_ARGUMENT( luaL_checkvmatrix, 2, "Matrix" ) ) );
+
     return 1;
 }
+LUA_BINDING_END( "boolean", "Whether the matrix was successfully inverted." )
 
-static int VMatrix_InverseTR( lua_State *L )
+LUA_BINDING_BEGIN( Matrix, InverseTranslation, "class", "Does a fast inverse, assuming the matrix only contains translation and rotation." )
 {
-    lua_pushvmatrix( L, luaL_checkvmatrix( L, 1 ).InverseTR() );
+    lua_VMatrix matrix = LUA_BINDING_ARGUMENT( luaL_checkvmatrix, 1, "Matrix" );
+    lua_pushvmatrix( L, matrix.InverseTR() );
+
     return 1;
 }
+LUA_BINDING_END( "Matrix", "The inverted matrix." )
 
-static int VMatrix_IsIdentity( lua_State *L )
+LUA_BINDING_BEGIN( Matrix, IsIdentity, "class", "Checks if the matrix is the identity matrix." )
 {
-    lua_pushboolean( L, luaL_checkvmatrix( L, 1 ).IsIdentity() );
+    lua_VMatrix matrix = LUA_BINDING_ARGUMENT( luaL_checkvmatrix, 1, "Matrix" );
+    lua_pushboolean( L, matrix.IsIdentity() );
+
     return 1;
 }
+LUA_BINDING_END( "boolean", "Whether the matrix is the identity matrix." )
 
-static int VMatrix_IsRotationMatrix( lua_State *L )
+LUA_BINDING_BEGIN( Matrix, IsRotationMatrix, "class", "Checks if the matrix is a rotation matrix." )
 {
-    lua_pushboolean( L, luaL_checkvmatrix( L, 1 ).IsRotationMatrix() );
+    lua_VMatrix matrix = LUA_BINDING_ARGUMENT( luaL_checkvmatrix, 1, "Matrix" );
+    lua_pushboolean( L, matrix.IsRotationMatrix() );
+
     return 1;
 }
+LUA_BINDING_END( "boolean", "Whether the matrix is a rotation matrix." )
 
-static int VMatrix_MatrixMul( lua_State *L )
+LUA_BINDING_BEGIN( Matrix, MatrixMul, "class", "Multiplies two matrices." )
 {
-    luaL_checkvmatrix( L, 1 ).MatrixMul( luaL_checkvmatrix( L, 2 ),
-                                         luaL_checkvmatrix( L, 3 ) );
+    lua_VMatrix matrix = LUA_BINDING_ARGUMENT( luaL_checkvmatrix, 1, "Matrix" );
+    matrix.MatrixMul( LUA_BINDING_ARGUMENT( luaL_checkvmatrix, 2, "Matrix" ),
+                      LUA_BINDING_ARGUMENT( luaL_checkvmatrix, 3, "Matrix" ) );
+
     return 0;
 }
+LUA_BINDING_END()
 
-static int VMatrix_NormalizeBasisVectors( lua_State *L )
+LUA_BINDING_BEGIN( Matrix, NormalizeBasisVectors, "class", "Normalizes the basis vectors of the matrix." )
 {
-    lua_pushvmatrix( L, luaL_checkvmatrix( L, 1 ).NormalizeBasisVectors() );
+    lua_VMatrix matrix = LUA_BINDING_ARGUMENT( luaL_checkvmatrix, 1, "Matrix" );
+    lua_pushvmatrix( L, matrix.NormalizeBasisVectors() );
+
     return 1;
 }
+LUA_BINDING_END( "Matrix", "The normalized matrix." )
 
-static int VMatrix_PostTranslate( lua_State *L )
+LUA_BINDING_BEGIN( Matrix, PostTranslate, "class", "Translates the matrix." )
 {
-    luaL_checkvmatrix( L, 1 ).PostTranslate( luaL_checkvector( L, 2 ) );
+    lua_VMatrix matrix = LUA_BINDING_ARGUMENT( luaL_checkvmatrix, 1, "Matrix" );
+    matrix.PostTranslate( LUA_BINDING_ARGUMENT( luaL_checkvector, 2, "vector" ) );
+
     return 0;
 }
+LUA_BINDING_END()
 
-static int VMatrix_PreTranslate( lua_State *L )
+LUA_BINDING_BEGIN( Matrix, PreTranslate, "class", "Translates the matrix." )
 {
-    luaL_checkvmatrix( L, 1 ).PreTranslate( luaL_checkvector( L, 2 ) );
+    lua_VMatrix matrix = LUA_BINDING_ARGUMENT( luaL_checkvmatrix, 1, "Matrix" );
+    matrix.PreTranslate( LUA_BINDING_ARGUMENT( luaL_checkvector, 2, "vector" ) );
+
     return 0;
 }
+LUA_BINDING_END()
 
-static int VMatrix_Scale( lua_State *L )
+LUA_BINDING_BEGIN( Matrix, Scale, "class", "Scales the matrix." )
 {
-    lua_pushvmatrix( L, luaL_checkvmatrix( L, 1 ).Scale( luaL_checkvector( L, 2 ) ) );
+    lua_VMatrix matrix = LUA_BINDING_ARGUMENT( luaL_checkvmatrix, 1, "Matrix" );
+    lua_pushvmatrix( L, matrix.Scale( LUA_BINDING_ARGUMENT( luaL_checkvector, 2, "vector" ) ) );
+
     return 1;
 }
+LUA_BINDING_END( "Matrix", "The scaled matrix." )
 
-static int VMatrix_Set3x4( lua_State *L )
+LUA_BINDING_BEGIN( Matrix, Set3x4, "class", "Sets the matrix to a 3x4 matrix." )
 {
-    luaL_checkvmatrix( L, 1 ).Set3x4( luaL_checkmatrix( L, 2 ) );
+    lua_VMatrix matrix = LUA_BINDING_ARGUMENT( luaL_checkvmatrix, 1, "Matrix" );
+    matrix.Set3x4( LUA_BINDING_ARGUMENT( luaL_checkmatrix, 2, "Matrix3x4" ) );
+
     return 0;
 }
+LUA_BINDING_END()
 
-static int VMatrix_SetBasisVectors( lua_State *L )
+LUA_BINDING_BEGIN( Matrix, SetBasisVectors, "class", "Sets the basis vectors of the matrix." )
 {
-    luaL_checkvmatrix( L, 1 ).SetBasisVectors(
-        luaL_checkvector( L, 2 ), luaL_checkvector( L, 3 ), luaL_checkvector( L, 4 ) );
+    lua_VMatrix matrix = LUA_BINDING_ARGUMENT( luaL_checkvmatrix, 1, "Matrix" );
+    matrix.SetBasisVectors( LUA_BINDING_ARGUMENT( luaL_checkvector, 2, "vector" ),
+                            LUA_BINDING_ARGUMENT( luaL_checkvector, 3, "vector" ),
+                            LUA_BINDING_ARGUMENT( luaL_checkvector, 4, "vector" ) );
+
     return 0;
 }
+LUA_BINDING_END()
 
-static int VMatrix_SetForward( lua_State *L )
+LUA_BINDING_BEGIN( Matrix, SetForward, "class", "Sets the forward vector of the matrix." )
 {
-    luaL_checkvmatrix( L, 1 ).SetForward( luaL_checkvector( L, 2 ) );
+    lua_VMatrix matrix = LUA_BINDING_ARGUMENT( luaL_checkvmatrix, 1, "Matrix" );
+    matrix.SetForward( LUA_BINDING_ARGUMENT( luaL_checkvector, 2, "vector" ) );
+
     return 0;
 }
+LUA_BINDING_END()
 
-static int VMatrix_SetLeft( lua_State *L )
+LUA_BINDING_BEGIN( Matrix, SetLeft, "class", "Sets the left vector of the matrix." )
 {
-    luaL_checkvmatrix( L, 1 ).SetLeft( luaL_checkvector( L, 2 ) );
+    lua_VMatrix matrix = LUA_BINDING_ARGUMENT( luaL_checkvmatrix, 1, "Matrix" );
+    matrix.SetLeft( LUA_BINDING_ARGUMENT( luaL_checkvector, 2, "vector" ) );
+
     return 0;
 }
+LUA_BINDING_END()
 
-static int VMatrix_SetTranslation( lua_State *L )
+LUA_BINDING_BEGIN( Matrix, SetTranslation, "class", "Sets the translation of the matrix." )
 {
-    luaL_checkvmatrix( L, 1 ).SetTranslation( luaL_checkvector( L, 2 ) );
+    lua_VMatrix matrix = LUA_BINDING_ARGUMENT( luaL_checkvmatrix, 1, "Matrix" );
+    matrix.SetTranslation( LUA_BINDING_ARGUMENT( luaL_checkvector, 2, "vector" ) );
+
     return 0;
 }
+LUA_BINDING_END()
 
-static int VMatrix_SetUp( lua_State *L )
+LUA_BINDING_BEGIN( Matrix, SetUp, "class", "Sets the up vector of the matrix." )
 {
-    luaL_checkvmatrix( L, 1 ).SetUp( luaL_checkvector( L, 2 ) );
+    lua_VMatrix matrix = LUA_BINDING_ARGUMENT( luaL_checkvmatrix, 1, "Matrix" );
+    matrix.SetUp( LUA_BINDING_ARGUMENT( luaL_checkvector, 2, "vector" ) );
+
     return 0;
 }
+LUA_BINDING_END()
 
-static int VMatrix_SetupMatrixOrgAngles( lua_State *L )
+LUA_BINDING_BEGIN( Matrix, SetupMatrixForOriginAndAngles, "class", "Sets the matrix to a matrix with the given origin and angles." )
 {
-    luaL_checkvmatrix( L, 1 ).SetupMatrixOrgAngles( luaL_checkvector( L, 2 ),
-                                                    luaL_checkangle( L, 3 ) );
+    lua_VMatrix matrix = LUA_BINDING_ARGUMENT( luaL_checkvmatrix, 1, "Matrix" );
+    matrix.SetupMatrixOrgAngles( LUA_BINDING_ARGUMENT( luaL_checkvector, 2, "vector" ),
+                                 LUA_BINDING_ARGUMENT( luaL_checkangle, 3, "angle" ) );
+
     return 0;
 }
+LUA_BINDING_END()
 
-static int VMatrix_Transpose( lua_State *L )
+LUA_BINDING_BEGIN( Matrix, Transpose, "class", "Transposes the matrix." )
 {
-    lua_pushvmatrix( L, luaL_checkvmatrix( L, 1 ).Transpose() );
+    lua_VMatrix matrix = LUA_BINDING_ARGUMENT( luaL_checkvmatrix, 1, "Matrix" );
+    lua_pushvmatrix( L, matrix.Transpose() );
+
     return 1;
 }
+LUA_BINDING_END( "Matrix", "The transposed matrix." )
 
-static int VMatrix_Transpose3x3( lua_State *L )
+LUA_BINDING_BEGIN( Matrix, Transpose3x3, "class", "Transpose upper-left 3x3." )
 {
-    lua_pushvmatrix( L, luaL_checkvmatrix( L, 1 ).Transpose3x3() );
+    lua_VMatrix matrix = LUA_BINDING_ARGUMENT( luaL_checkvmatrix, 1, "Matrix" );
+    lua_pushvmatrix( L, matrix.Transpose3x3() );
+
     return 1;
 }
+LUA_BINDING_END( "Matrix", "The transposed matrix." )
 
-static int VMatrix_V3Mul( lua_State *L )
+LUA_BINDING_BEGIN( Matrix, MultiplyByVector, "class", "Multiplies a vector by the matrix." )
 {
-    luaL_checkvmatrix( L, 1 ).V3Mul( luaL_checkvector( L, 2 ),
-                                     luaL_checkvector( L, 3 ) );
+    lua_VMatrix matrix = LUA_BINDING_ARGUMENT( luaL_checkvmatrix, 1, "Matrix" );
+    matrix.V3Mul( LUA_BINDING_ARGUMENT( luaL_checkvector, 2, "vector" ),
+                  LUA_BINDING_ARGUMENT( luaL_checkvector, 3, "vector" ) );
+
     return 0;
 }
+LUA_BINDING_END()
 
-static int VMatrix_VMul3x3( lua_State *L )
+LUA_BINDING_BEGIN( Matrix, MultiplyByVector3x3, "class", "Multiplies a vector by the matrix." )
 {
-    lua_pushvector( L, luaL_checkvmatrix( L, 1 ).VMul3x3( luaL_checkvector( L, 2 ) ) );
+    lua_VMatrix matrix = LUA_BINDING_ARGUMENT( luaL_checkvmatrix, 1, "Matrix" );
+    lua_pushvector( L, matrix.VMul3x3( LUA_BINDING_ARGUMENT( luaL_checkvector, 2, "vector" ) ) );
+
     return 1;
 }
+LUA_BINDING_END( "vector", "The multiplied vector." )
 
-static int VMatrix_VMul3x3Transpose( lua_State *L )
+LUA_BINDING_BEGIN( Matrix, MultiplyByVectorTranspose3x3, "class", "Apply the inverse (transposed) rotation (only works on pure rotation matrix)." )
 {
-    lua_pushvector(
-        L, luaL_checkvmatrix( L, 1 ).VMul3x3Transpose( luaL_checkvector( L, 2 ) ) );
+    lua_VMatrix matrix = LUA_BINDING_ARGUMENT( luaL_checkvmatrix, 1, "Matrix" );
+    lua_pushvector( L, matrix.VMul3x3Transpose( LUA_BINDING_ARGUMENT( luaL_checkvector, 2, "vector" ) ) );
+
     return 1;
 }
+LUA_BINDING_END( "vector", "The multiplied vector." )
 
-static int VMatrix_VMul4x3( lua_State *L )
+LUA_BINDING_BEGIN( Matrix, MultiplyByVector4x3, "class", "Multiplies a vector by the matrix." )
 {
-    lua_pushvector( L, luaL_checkvmatrix( L, 1 ).VMul4x3( luaL_checkvector( L, 2 ) ) );
+    lua_VMatrix matrix = LUA_BINDING_ARGUMENT( luaL_checkvmatrix, 1, "Matrix" );
+    lua_pushvector( L, matrix.VMul4x3( LUA_BINDING_ARGUMENT( luaL_checkvector, 2, "vector" ) ) );
+
     return 1;
 }
+LUA_BINDING_END( "vector", "The multiplied vector." )
 
-static int VMatrix_VMul4x3Transpose( lua_State *L )
+LUA_BINDING_BEGIN( Matrix, MultiplyByVectorTranspose4x3, "class", "Multiplies a vector by the matrix." )
 {
-    lua_pushvector(
-        L, luaL_checkvmatrix( L, 1 ).VMul4x3Transpose( luaL_checkvector( L, 2 ) ) );
+    lua_VMatrix matrix = LUA_BINDING_ARGUMENT( luaL_checkvmatrix, 1, "Matrix" );
+    lua_pushvector( L, matrix.VMul4x3Transpose( LUA_BINDING_ARGUMENT( luaL_checkvector, 2, "vector" ) ) );
+
     return 1;
 }
+LUA_BINDING_END( "vector", "The multiplied vector." )
 
-static int VMatrix___index( lua_State *L )
+LUA_BINDING_BEGIN( Matrix, __index, "class", "Metatable called when a non-existant field is index" )
 {
-    VMatrix matrix = luaL_checkvmatrix( L, 1 );
-    const char *field = luaL_checkstring( L, 2 );
+    lua_VMatrix matrix = LUA_BINDING_ARGUMENT( luaL_checkvmatrix, 1, "Matrix" );
+    const char *field = LUA_BINDING_ARGUMENT( luaL_checkstring, 2, "string" );
+
     if ( strcmp( field, "0" ) == 0 )
     {
         lua_newtable( L );
+
         for ( int j = 0; j < 4; j++ )
         {
             lua_pushinteger( L, j );
@@ -281,6 +405,7 @@ static int VMatrix___index( lua_State *L )
     else if ( strcmp( field, "1" ) == 0 )
     {
         lua_newtable( L );
+
         for ( int j = 0; j < 4; j++ )
         {
             lua_pushinteger( L, j );
@@ -291,6 +416,7 @@ static int VMatrix___index( lua_State *L )
     else if ( strcmp( field, "2" ) == 0 )
     {
         lua_newtable( L );
+
         for ( int j = 0; j < 4; j++ )
         {
             lua_pushinteger( L, j );
@@ -310,96 +436,69 @@ static int VMatrix___index( lua_State *L )
 
     return 1;
 }
+LUA_BINDING_END( "any", "The value of the field." )
 
-static int VMatrix___newindex( lua_State *L )
+LUA_BINDING_BEGIN( Matrix, __newindex, "class", "Metatable called when a non-existant field is set" )
 {
     // TODO
     return 0;
 }
+LUA_BINDING_END()
 
-static int VMatrix___tostring( lua_State *L )
+LUA_BINDING_BEGIN( Matrix, __tostring, "class", "Metatable called when the object is to be converted to a string" )
 {
-    lua_pushfstring( L, "VMatrix: %s", VMatToString( luaL_checkvmatrix( L, 1 ) ) );
+    lua_pushfstring( L, "VMatrix: %s", VMatToString( LUA_BINDING_ARGUMENT( luaL_checkvmatrix, 1, "Matrix" ) ) );
+
     return 1;
 }
+LUA_BINDING_END( "string", "The string representation of the object." )
 
-static int VMatrix___eq( lua_State *L )
+LUA_BINDING_BEGIN( Matrix, __eq, "class", "Metatable called when the object is to be compared" )
 {
-    lua_pushboolean( L, luaL_checkvmatrix( L, 1 ) == luaL_checkvmatrix( L, 2 ) );
+    lua_pushboolean( L, LUA_BINDING_ARGUMENT( luaL_checkvmatrix, 1, "Matrix" ) == LUA_BINDING_ARGUMENT( luaL_checkvmatrix, 2, "Matrix" ) );
+
     return 1;
 }
+LUA_BINDING_END( "boolean", "Whether the objects are equal." )
 
-static int VMatrix___add( lua_State *L )
+LUA_BINDING_BEGIN( Matrix, __add, "class", "Metatable called when the object is to be added" )
 {
-    lua_pushvmatrix( L, luaL_checkvmatrix( L, 1 ) + luaL_checkvmatrix( L, 2 ) );
+    lua_pushvmatrix( L, LUA_BINDING_ARGUMENT( luaL_checkvmatrix, 1, "Matrix" ) + LUA_BINDING_ARGUMENT( luaL_checkvmatrix, 2, "Matrix" ) );
+
     return 1;
 }
+LUA_BINDING_END( "Matrix", "The sum of the objects." )
 
-static int VMatrix___sub( lua_State *L )
+LUA_BINDING_BEGIN( Matrix, __sub, "class", "Metatable called when the object is to be subtracted" )
 {
-    lua_pushvmatrix( L, luaL_checkvmatrix( L, 1 ) - luaL_checkvmatrix( L, 2 ) );
+    lua_pushvmatrix( L, LUA_BINDING_ARGUMENT( luaL_checkvmatrix, 1, "Matrix" ) - LUA_BINDING_ARGUMENT( luaL_checkvmatrix, 2, "Matrix" ) );
+
     return 1;
 }
+LUA_BINDING_END( "Matrix", "The difference of the objects." )
 
-static int VMatrix___mul( lua_State *L )
+LUA_BINDING_BEGIN( Matrix, __mul, "class", "Metatable called when the object is to be multiplied" )
 {
-    lua_pushvmatrix( L, luaL_checkvmatrix( L, 1 ) * luaL_checkvmatrix( L, 2 ) );
+    lua_pushvmatrix( L, LUA_BINDING_ARGUMENT( luaL_checkvmatrix, 1, "Matrix" ) * LUA_BINDING_ARGUMENT( luaL_checkvmatrix, 2, "Matrix" ) );
+
     return 1;
 }
+LUA_BINDING_END( "Matrix", "The product of the objects." )
 
-static int VMatrix___unm( lua_State *L )
+LUA_BINDING_BEGIN( Matrix, __unm, "class", "Metatable called when the object is to be negated" )
 {
-    lua_pushvmatrix( L, -luaL_checkvmatrix( L, 1 ) );
+    lua_pushvmatrix( L, -LUA_BINDING_ARGUMENT( luaL_checkvmatrix, 1, "Matrix" ) );
+
     return 1;
 }
+LUA_BINDING_END( "Matrix", "The negated object." )
 
-static const luaL_Reg VMatrixmeta[] = {
-    { "ApplyRotation", VMatrix_ApplyRotation },
-    { "As3x4", VMatrix_As3x4 },
-    { "Base", VMatrix_Base },
-    { "CopyFrom3x4", VMatrix_CopyFrom3x4 },
-    { "GetBasisVectors", VMatrix_GetBasisVectors },
-    { "GetForward", VMatrix_GetForward },
-    { "GetLeft", VMatrix_GetLeft },
-    { "GetScale", VMatrix_GetScale },
-    { "GetTranslation", VMatrix_GetTranslation },
-    { "GetUp", VMatrix_GetUp },
-    { "Identity", VMatrix_Identity },
-    { "Init", VMatrix_Init },
-    { "InverseGeneral", VMatrix_InverseGeneral },
-    { "InverseTR", VMatrix_InverseTR },
-    { "IsIdentity", VMatrix_IsIdentity },
-    { "IsRotationMatrix", VMatrix_IsRotationMatrix },
-    { "MatrixMul", VMatrix_MatrixMul },
-    { "NormalizeBasisVectors", VMatrix_NormalizeBasisVectors },
-    { "PostTranslate", VMatrix_PostTranslate },
-    { "PreTranslate", VMatrix_PreTranslate },
-    { "Scale", VMatrix_Scale },
-    { "Set3x4", VMatrix_Set3x4 },
-    { "SetBasisVectors", VMatrix_SetBasisVectors },
-    { "SetForward", VMatrix_SetForward },
-    { "SetLeft", VMatrix_SetLeft },
-    { "SetTranslation", VMatrix_SetTranslation },
-    { "SetUp", VMatrix_SetUp },
-    { "SetupMatrixOrgAngles", VMatrix_SetupMatrixOrgAngles },
-    { "Transpose", VMatrix_Transpose },
-    { "Transpose3x3", VMatrix_Transpose3x3 },
-    { "V3Mul", VMatrix_V3Mul },
-    { "VMul3x3", VMatrix_VMul3x3 },
-    { "VMul3x3Transpose", VMatrix_VMul3x3Transpose },
-    { "VMul4x3", VMatrix_VMul4x3 },
-    { "VMul4x3Transpose", VMatrix_VMul4x3Transpose },
-    { "__index", VMatrix___index },
-    { "__newindex", VMatrix___newindex },
-    { "__tostring", VMatrix___tostring },
-    { "__eq", VMatrix___eq },
-    { "__add", VMatrix___add },
-    { "__sub", VMatrix___sub },
-    { "__mul", VMatrix___mul },
-    { "__unm", VMatrix___unm },
-    { NULL, NULL } };
+/*
+** Library functions
+*/
+LUA_REGISTRATION_INIT( Matrices );
 
-static int luasrc_VMatrix( lua_State *L )
+LUA_BINDING_BEGIN( Matrices, Create, "library", "Creates a new matrix." )
 {
     if ( lua_gettop( L ) < 1 )
     {
@@ -409,307 +508,419 @@ static int luasrc_VMatrix( lua_State *L )
     }
     else if ( lua_gettop( L ) < 3 )
     {
-        VMatrix matrix = VMatrix( luaL_checkmatrix( L, 1 ) );
+        VMatrix matrix = VMatrix( LUA_BINDING_ARGUMENT_NILLABLE( luaL_checkmatrix, 1, "Matrix3x4" ) );
         lua_pushvmatrix( L, matrix );
     }
     else if ( lua_gettop( L ) < 16 )
     {
-        VMatrix matrix = VMatrix( luaL_checkvector( L, 1 ), luaL_checkvector( L, 2 ), luaL_checkvector( L, 3 ) );
+        VMatrix matrix = VMatrix(
+            LUA_BINDING_ARGUMENT_NILLABLE( luaL_checkvector, 1, "vector" ),
+            LUA_BINDING_ARGUMENT_NILLABLE( luaL_checkvector, 2, "vector" ),
+            LUA_BINDING_ARGUMENT_NILLABLE( luaL_checkvector, 3, "vector" ) );
         lua_pushvmatrix( L, matrix );
     }
     else
     {
         VMatrix matrix =
-            VMatrix( luaL_checknumber( L, 1 ), luaL_checknumber( L, 2 ), luaL_checknumber( L, 3 ), luaL_checknumber( L, 4 ), luaL_checknumber( L, 5 ), luaL_checknumber( L, 6 ), luaL_checknumber( L, 7 ), luaL_checknumber( L, 8 ), luaL_checknumber( L, 9 ), luaL_checknumber( L, 10 ), luaL_checknumber( L, 11 ), luaL_checknumber( L, 12 ), luaL_checknumber( L, 13 ), luaL_checknumber( L, 14 ), luaL_checknumber( L, 15 ), luaL_checknumber( L, 16 ) );
+            VMatrix(
+                LUA_BINDING_ARGUMENT( luaL_checknumber, 1, "number" ),
+                LUA_BINDING_ARGUMENT( luaL_checknumber, 2, "number" ),
+                LUA_BINDING_ARGUMENT( luaL_checknumber, 3, "number" ),
+                LUA_BINDING_ARGUMENT( luaL_checknumber, 4, "number" ),
+                LUA_BINDING_ARGUMENT( luaL_checknumber, 5, "number" ),
+                LUA_BINDING_ARGUMENT( luaL_checknumber, 6, "number" ),
+                LUA_BINDING_ARGUMENT( luaL_checknumber, 7, "number" ),
+                LUA_BINDING_ARGUMENT( luaL_checknumber, 8, "number" ),
+                LUA_BINDING_ARGUMENT( luaL_checknumber, 9, "number" ),
+                LUA_BINDING_ARGUMENT( luaL_checknumber, 10, "number" ),
+                LUA_BINDING_ARGUMENT( luaL_checknumber, 11, "number" ),
+                LUA_BINDING_ARGUMENT( luaL_checknumber, 12, "number" ),
+                LUA_BINDING_ARGUMENT( luaL_checknumber, 13, "number" ),
+                LUA_BINDING_ARGUMENT( luaL_checknumber, 14, "number" ),
+                LUA_BINDING_ARGUMENT( luaL_checknumber, 15, "number" ),
+                LUA_BINDING_ARGUMENT( luaL_checknumber, 16, "number" ) );
         lua_pushvmatrix( L, matrix );
     }
+
     return 1;
 }
+LUA_BINDING_END( "Matrix", "The created matrix." )
 
-static const luaL_Reg _G_funcs[] = { { LUA_VMATRIXLIBNAME, luasrc_VMatrix }, { NULL, NULL } };
+LUA_BINDING_BEGIN( Matrices, Create3x4, "library", "Creates a new 3x4 matrix." )
+{
+    if ( lua_gettop( L ) < 4 )
+    {
+        matrix3x4_t matrix;
+        memset( &matrix, 0, sizeof( matrix3x4_t ) );
+        lua_pushmatrix( L, matrix );
+    }
+    else if ( lua_gettop( L ) < 12 )
+    {
+        matrix3x4_t matrix = matrix3x4_t(
+            LUA_BINDING_ARGUMENT_NILLABLE( luaL_checkvector, 1, "vector" ),
+            LUA_BINDING_ARGUMENT_NILLABLE( luaL_checkvector, 2, "vector" ),
+            LUA_BINDING_ARGUMENT_NILLABLE( luaL_checkvector, 3, "vector" ),
+            LUA_BINDING_ARGUMENT_NILLABLE( luaL_checkvector, 4, "vector" ) );
+        lua_pushmatrix( L, matrix );
+    }
+    else
+    {
+        matrix3x4_t matrix = matrix3x4_t(
+            LUA_BINDING_ARGUMENT( luaL_checknumber, 1, "number" ),
+            LUA_BINDING_ARGUMENT( luaL_checknumber, 2, "number" ),
+            LUA_BINDING_ARGUMENT( luaL_checknumber, 3, "number" ),
+            LUA_BINDING_ARGUMENT( luaL_checknumber, 4, "number" ),
+            LUA_BINDING_ARGUMENT( luaL_checknumber, 5, "number" ),
+            LUA_BINDING_ARGUMENT( luaL_checknumber, 6, "number" ),
+            LUA_BINDING_ARGUMENT( luaL_checknumber, 7, "number" ),
+            LUA_BINDING_ARGUMENT( luaL_checknumber, 8, "number" ),
+            LUA_BINDING_ARGUMENT( luaL_checknumber, 9, "number" ),
+            LUA_BINDING_ARGUMENT( luaL_checknumber, 10, "number" ),
+            LUA_BINDING_ARGUMENT( luaL_checknumber, 11, "number" ),
+            LUA_BINDING_ARGUMENT( luaL_checknumber, 12, "number" ) );
+        lua_pushmatrix( L, matrix );
+    }
 
-static int vmatrix_SetupMatrixIdentity( lua_State *L )
+    return 1;
+}
+LUA_BINDING_END( "Matrix3x4", "The created 3x4 matrix." )
+
+LUA_BINDING_BEGIN( Matrices, CreateIdentityMatrix, "library", "Sets the matrix to the identity matrix." )
 {
     lua_pushvmatrix( L, SetupMatrixIdentity() );
     return 1;
 }
+LUA_BINDING_END( "Matrix", "The created identity matrix." )
 
-static int vmatrix_SetupMatrixScale( lua_State *L )
+LUA_BINDING_BEGIN( Matrices, CreateScaleMatrix, "library", "Sets the matrix to a scale matrix." )
 {
-    lua_pushvmatrix( L, SetupMatrixScale( luaL_checkvector( L, 1 ) ) );
+    lua_pushvmatrix( L, SetupMatrixScale( LUA_BINDING_ARGUMENT( luaL_checkvector, 1, "vector" ) ) );
     return 1;
 }
+LUA_BINDING_END( "Matrix", "The created scaled matrix." )
 
-static int vmatrix_SetupMatrixTranslation( lua_State *L )
+LUA_BINDING_BEGIN( Matrices, CreateTranslationMatrix, "library", "Sets the matrix to a translation matrix." )
 {
-    lua_pushvmatrix( L, SetupMatrixTranslation( luaL_checkvector( L, 1 ) ) );
+    lua_pushvmatrix( L, SetupMatrixTranslation( LUA_BINDING_ARGUMENT( luaL_checkvector, 1, "vector" ) ) );
     return 1;
 }
+LUA_BINDING_END( "Matrix", "The translation matrix." )
 
-static int vmatrix_SetupMatrixAxisRot( lua_State *L )
+LUA_BINDING_BEGIN( Matrices, CreateMatrixWithAxisAndRotation, "library", "Sets the matrix to a rotation matrix." )
 {
     lua_pushvmatrix(
-        L, SetupMatrixAxisRot( luaL_checkvector( L, 1 ), luaL_checknumber( L, 2 ) ) );
+        L, SetupMatrixAxisRot( LUA_BINDING_ARGUMENT( luaL_checkvector, 1, "vector" ), LUA_BINDING_ARGUMENT( luaL_checknumber, 2, "number" ) ) );
     return 1;
 }
+LUA_BINDING_END( "Matrix", "The rotation matrix." )
 
-static int vmatrix_SetupMatrixAngles( lua_State *L )
+LUA_BINDING_BEGIN( Matrices, CreateMatrixWithAngles, "library", "Sets the matrix to a rotation matrix." )
 {
-    lua_pushvmatrix( L, SetupMatrixAngles( luaL_checkangle( L, 1 ) ) );
+    lua_pushvmatrix( L, SetupMatrixAngles( LUA_BINDING_ARGUMENT( luaL_checkangle, 1, "angle" ) ) );
     return 1;
 }
+LUA_BINDING_END( "Matrix", "The rotation matrix." )
 
-static int vmatrix_SetupMatrixOrgAngles( lua_State *L )
+LUA_BINDING_BEGIN( Matrices, CreateMatrixWithOriginAndAngles, "library", "Sets the matrix to a matrix with the given origin and angles." )
 {
     lua_pushvmatrix(
-        L, SetupMatrixOrgAngles( luaL_checkvector( L, 1 ), luaL_checkangle( L, 2 ) ) );
+        L, SetupMatrixOrgAngles( LUA_BINDING_ARGUMENT( luaL_checkvector, 1, "vector" ), LUA_BINDING_ARGUMENT( luaL_checkangle, 2, "angle" ) ) );
     return 1;
 }
+LUA_BINDING_END( "Matrix", "The matrix." )
 
-static int vmatrix_VMatToString( lua_State *L )
+// Experiment; Disabled in favor of __tostring
+// LUA_BINDING_BEGIN( Matrices, VMatrixToString, "library", "Converts the matrix to a string." )
+//{
+//    lua_pushstring( L, VMatToString( LUA_BINDING_ARGUMENT( luaL_checkvmatrix, 1, "Matrix" ) ) );
+//    return 1;
+//}
+// LUA_BINDING_END( "string", "The string representation of the matrix." )
+
+LUA_BINDING_BEGIN( Matrices, MatrixSetIdentity, "library", "Sets the matrix to the identity matrix." )
 {
-    lua_pushstring( L, VMatToString( luaL_checkvmatrix( L, 1 ) ) );
+    MatrixSetIdentity( LUA_BINDING_ARGUMENT( luaL_checkvmatrix, 1, "Matrix" ) );
+    return 0;
+}
+LUA_BINDING_END()
+
+// Experiment; Disabled in favor of :Transpose
+// LUA_BINDING_BEGIN( Matrices, MatrixTranspose, "library", "Transposes the matrix." )
+//{
+//    MatrixTranspose( LUA_BINDING_ARGUMENT( luaL_checkvmatrix, 1, "Matrix" ), LUA_BINDING_ARGUMENT( luaL_checkvmatrix, 2, "Matrix" ) );
+//    return 0;
+//}
+// LUA_BINDING_END()
+
+LUA_BINDING_BEGIN( Matrices, MatrixCopy, "library", "Copies the matrix." )
+{
+    VMatrix destination;
+    MatrixCopy( LUA_BINDING_ARGUMENT( luaL_checkvmatrix, 1, "Matrix" ), destination );
     return 1;
 }
+LUA_BINDING_END( "Matrix", "The copied matrix." )
 
-static int vmatrix_MatrixSetIdentity( lua_State *L )
+// Experiment; Disabled due to dest reference being possibly confusing in Lua
+// LUA_BINDING_BEGIN( Matrices, MatrixMultiply, "library", "Multiplies two matrices." )
+//{
+//    MatrixMultiply( LUA_BINDING_ARGUMENT( luaL_checkvmatrix, 1, "Matrix" ), LUA_BINDING_ARGUMENT( luaL_checkvmatrix, 2, "Matrix" ), LUA_BINDING_ARGUMENT( luaL_checkvmatrix, 3, "Matrix" ) );
+//    return 0;
+//}
+// LUA_BINDING_END()
+
+LUA_BINDING_BEGIN( Matrices, MatrixGetColumn, "library", "Gets a column of the matrix." )
 {
-    MatrixSetIdentity( luaL_checkvmatrix( L, 1 ) );
+    Vector vec;
+    MatrixGetColumn( LUA_BINDING_ARGUMENT( luaL_checkvmatrix, 1, "Matrix" ), LUA_BINDING_ARGUMENT( luaL_checknumber, 2, "column" ), &vec );
+    lua_pushvector( L, vec );
+    return 1;
+}
+LUA_BINDING_END( "vector", "The column vector." )
+
+LUA_BINDING_BEGIN( Matrices, MatrixSetColumn, "library", "Sets a column of the matrix." )
+{
+    MatrixSetColumn( LUA_BINDING_ARGUMENT( luaL_checkvmatrix, 1, "Matrix" ), LUA_BINDING_ARGUMENT( luaL_checknumber, 2, "column" ), LUA_BINDING_ARGUMENT( luaL_checkvector, 3, "vector" ) );
     return 0;
 }
+LUA_BINDING_END()
 
-static int vmatrix_MatrixTranspose( lua_State *L )
+LUA_BINDING_BEGIN( Matrices, MatrixGetRow, "library", "Gets a row of the matrix." )
 {
-    MatrixTranspose( luaL_checkvmatrix( L, 1 ), luaL_checkvmatrix( L, 2 ) );
+    Vector vec;
+    MatrixGetRow( LUA_BINDING_ARGUMENT( luaL_checkvmatrix, 1, "Matrix" ), LUA_BINDING_ARGUMENT( luaL_checknumber, 2, "row" ), &vec );
+    lua_pushvector( L, vec );
+    return 1;
+}
+LUA_BINDING_END( "vector", "The row vector." )
+
+LUA_BINDING_BEGIN( Matrices, MatrixSetRow, "library", "Sets a row of the matrix." )
+{
+    MatrixSetRow( LUA_BINDING_ARGUMENT( luaL_checkvmatrix, 1, "Matrix" ), LUA_BINDING_ARGUMENT( luaL_checknumber, 2, "row" ), LUA_BINDING_ARGUMENT( luaL_checkvector, 3, "vector" ) );
     return 0;
 }
+LUA_BINDING_END()
 
-static int vmatrix_MatrixCopy( lua_State *L )
+LUA_BINDING_BEGIN( Matrices, Vector3dMultiply, "library", "Multiplies a vector by the matrix." )
 {
-    MatrixCopy( luaL_checkvmatrix( L, 1 ), luaL_checkvmatrix( L, 2 ) );
-    return 0;
+    Vector vec;
+    Vector3DMultiply( LUA_BINDING_ARGUMENT( luaL_checkvmatrix, 1, "Matrix" ), LUA_BINDING_ARGUMENT( luaL_checkvector, 2, "vector" ), vec );
+    lua_pushvector( L, vec );
+    return 1;
 }
+LUA_BINDING_END( "vector", "The multiplied vector." )
 
-static int vmatrix_MatrixMultiply( lua_State *L )
+LUA_BINDING_BEGIN( Matrices, Vector3dMultiplyPositionProjective, "library", "Multiplies a vector by the matrix." )
 {
-    MatrixMultiply( luaL_checkvmatrix( L, 1 ), luaL_checkvmatrix( L, 2 ), luaL_checkvmatrix( L, 3 ) );
-    return 0;
+    Vector vec;
+    Vector3DMultiplyPositionProjective( LUA_BINDING_ARGUMENT( luaL_checkvmatrix, 1, "Matrix" ), LUA_BINDING_ARGUMENT( luaL_checkvector, 2, "vector" ), vec );
+    lua_pushvector( L, vec );
+    return 1;
 }
+LUA_BINDING_END( "vector", "The multiplied vector." )
 
-static int vmatrix_MatrixGetColumn( lua_State *L )
+LUA_BINDING_BEGIN( Matrices, Vector3dMultiplyProjective, "library", "Multiplies a vector by the matrix." )
 {
-    MatrixGetColumn( luaL_checkvmatrix( L, 1 ), luaL_checknumber( L, 2 ), &luaL_checkvector( L, 3 ) );
-    return 0;
+    Vector vec;
+    Vector3DMultiplyProjective( LUA_BINDING_ARGUMENT( luaL_checkvmatrix, 1, "Matrix" ), LUA_BINDING_ARGUMENT( luaL_checkvector, 2, "vector" ), vec );
+    lua_pushvector( L, vec );
+    return 1;
 }
+LUA_BINDING_END( "vector", "The multiplied vector." )
 
-static int vmatrix_MatrixSetColumn( lua_State *L )
+LUA_BINDING_BEGIN( Matrices, Vector3dMultiplyTranspose, "library", "Multiplies a vector by the matrix." )
 {
-    MatrixSetColumn( luaL_checkvmatrix( L, 1 ), luaL_checknumber( L, 2 ), luaL_checkvector( L, 3 ) );
-    return 0;
+    Vector vec;
+    Vector3DMultiplyTranspose( LUA_BINDING_ARGUMENT( luaL_checkvmatrix, 1, "Matrix" ), LUA_BINDING_ARGUMENT( luaL_checkvector, 2, "vector" ), vec );
+    lua_pushvector( L, vec );
+    return 1;
 }
+LUA_BINDING_END( "vector", "The multiplied vector." )
 
-static int vmatrix_MatrixGetRow( lua_State *L )
+LUA_BINDING_BEGIN( Matrices, MatrixBuildTranslation, "library", "Builds a translation matrix." )
 {
-    MatrixGetRow( luaL_checkvmatrix( L, 1 ), luaL_checknumber( L, 2 ), &luaL_checkvector( L, 3 ) );
-    return 0;
-}
+    VMatrix destination = LUA_BINDING_ARGUMENT( luaL_checkvmatrix, 1, "Matrix" );
 
-static int vmatrix_MatrixSetRow( lua_State *L )
-{
-    MatrixSetRow( luaL_checkvmatrix( L, 1 ), luaL_checknumber( L, 2 ), luaL_checkvector( L, 3 ) );
-    return 0;
-}
-
-static int vmatrix_Vector3DMultiply( lua_State *L )
-{
-    Vector3DMultiply( luaL_checkvmatrix( L, 1 ), luaL_checkvector( L, 2 ), luaL_checkvector( L, 3 ) );
-    return 0;
-}
-
-static int vmatrix_Vector3DMultiplyPositionProjective( lua_State *L )
-{
-    Vector3DMultiplyPositionProjective( luaL_checkvmatrix( L, 1 ),
-                                        luaL_checkvector( L, 2 ),
-                                        luaL_checkvector( L, 3 ) );
-    return 0;
-}
-
-static int vmatrix_Vector3DMultiplyProjective( lua_State *L )
-{
-    Vector3DMultiplyProjective( luaL_checkvmatrix( L, 1 ), luaL_checkvector( L, 2 ), luaL_checkvector( L, 3 ) );
-    return 0;
-}
-
-static int vmatrix_Vector3DMultiplyTranspose( lua_State *L )
-{
-    Vector3DMultiplyTranspose( luaL_checkvmatrix( L, 1 ), luaL_checkvector( L, 2 ), luaL_checkvector( L, 3 ) );
-    return 0;
-}
-
-static int vmatrix_MatrixBuildTranslation( lua_State *L )
-{
     switch ( lua_type( L, 2 ) )
     {
         case LUA_TNUMBER:
         default:
             MatrixBuildTranslation(
-                luaL_checkvmatrix( L, 1 ), luaL_checknumber( L, 2 ), luaL_checknumber( L, 3 ), luaL_checknumber( L, 4 ) );
+                destination,
+                LUA_BINDING_ARGUMENT( luaL_checknumber, 2, "number" ),
+                LUA_BINDING_ARGUMENT( luaL_checknumber, 3, "number" ),
+                LUA_BINDING_ARGUMENT( luaL_checknumber, 4, "number" ) );
             break;
         case LUA_TUSERDATA:
-            if ( luaL_checkudata( L, 2, LUA_VECTORLIBNAME ) )
-                MatrixBuildTranslation( luaL_checkvmatrix( L, 1 ),
-                                        luaL_checkvector( L, 2 ) );
-            else
-                luaL_typerror( L, 2, LUA_VECTORLIBNAME );
+            MatrixBuildTranslation(
+                destination,
+                LUA_BINDING_ARGUMENT( luaL_checkvector, 2, "vector" ) );
             break;
     }
+
     return 0;
 }
+LUA_BINDING_END()
 
-static int vmatrix_MatrixTranslate( lua_State *L )
+LUA_BINDING_BEGIN( Matrices, MatrixTranslate, "library", "Translates the matrix." )
 {
-    MatrixTranslate( luaL_checkvmatrix( L, 1 ), luaL_checkvector( L, 2 ) );
+    VMatrix destination = LUA_BINDING_ARGUMENT( luaL_checkvmatrix, 1, "Matrix" );
+    MatrixTranslate( destination, LUA_BINDING_ARGUMENT( luaL_checkvector, 2, "vector" ) );
     return 0;
 }
+LUA_BINDING_END()
 
-static int vmatrix_MatrixBuildRotationAboutAxis( lua_State *L )
+LUA_BINDING_BEGIN( Matrices, MatrixBuildRotationAboutAxis, "library", "Builds a rotation matrix." )
 {
-    MatrixBuildRotationAboutAxis( luaL_checkvmatrix( L, 1 ),
-                                  luaL_checkvector( L, 2 ),
-                                  luaL_checknumber( L, 3 ) );
+    VMatrix destination = LUA_BINDING_ARGUMENT( luaL_checkvmatrix, 1, "Matrix" );
+    MatrixBuildRotationAboutAxis(
+        destination,
+        LUA_BINDING_ARGUMENT( luaL_checkvector, 2, "vector" ),
+        LUA_BINDING_ARGUMENT( luaL_checknumber, 3, "number" ) );
     return 0;
 }
+LUA_BINDING_END()
 
-static int vmatrix_MatrixBuildRotateZ( lua_State *L )
+LUA_BINDING_BEGIN( Matrices, MatrixBuildRotateZ, "library", "Builds a rotation matrix." )
 {
-    MatrixBuildRotateZ( luaL_checkvmatrix( L, 1 ), luaL_checknumber( L, 2 ) );
+    VMatrix destination = LUA_BINDING_ARGUMENT( luaL_checkvmatrix, 1, "Matrix" );
+    MatrixBuildRotateZ(
+        destination,
+        LUA_BINDING_ARGUMENT( luaL_checknumber, 2, "number" ) );
     return 0;
 }
+LUA_BINDING_END()
 
-static int vmatrix_MatrixRotate( lua_State *L )
+LUA_BINDING_BEGIN( Matrices, MatrixRotate, "library", "Rotates the matrix." )
 {
-    MatrixRotate( luaL_checkvmatrix( L, 1 ), luaL_checkvector( L, 2 ), luaL_checknumber( L, 3 ) );
+    VMatrix destination = LUA_BINDING_ARGUMENT( luaL_checkvmatrix, 1, "Matrix" );
+    MatrixRotate(
+        destination,
+        LUA_BINDING_ARGUMENT( luaL_checkvector, 2, "vector" ),
+        LUA_BINDING_ARGUMENT( luaL_checknumber, 3, "number" ) );
     return 0;
 }
+LUA_BINDING_END()
 
-static int vmatrix_MatrixBuildRotation( lua_State *L )
+LUA_BINDING_BEGIN( Matrices, MatrixBuildRotation, "library", "Builds a rotation matrix." )
 {
-    MatrixBuildRotation( luaL_checkvmatrix( L, 1 ), luaL_checkvector( L, 2 ), luaL_checkvector( L, 3 ) );
+    VMatrix destination = LUA_BINDING_ARGUMENT( luaL_checkvmatrix, 1, "Matrix" );
+    MatrixBuildRotation(
+        destination,
+        LUA_BINDING_ARGUMENT( luaL_checkvector, 2, "vector" ),
+        LUA_BINDING_ARGUMENT( luaL_checkvector, 3, "vector" ) );
     return 0;
 }
+LUA_BINDING_END()
 
-static int vmatrix_MatrixBuildScale( lua_State *L )
+LUA_BINDING_BEGIN( Matrices, MatrixBuildScale, "library", "Builds a scale matrix." )
 {
+    VMatrix destination = LUA_BINDING_ARGUMENT( luaL_checkvmatrix, 1, "Matrix" );
+
     switch ( lua_type( L, 2 ) )
     {
         case LUA_TNUMBER:
         default:
-            MatrixBuildScale( luaL_checkvmatrix( L, 1 ), luaL_checknumber( L, 2 ), luaL_checknumber( L, 3 ), luaL_checknumber( L, 4 ) );
+            MatrixBuildScale(
+                destination,
+                LUA_BINDING_ARGUMENT( luaL_checknumber, 2, "number" ),
+                LUA_BINDING_ARGUMENT( luaL_checknumber, 3, "number" ),
+                LUA_BINDING_ARGUMENT( luaL_checknumber, 4, "number" ) );
             break;
         case LUA_TUSERDATA:
-            if ( luaL_checkudata( L, 2, LUA_VECTORLIBNAME ) )
-                MatrixBuildScale( luaL_checkvmatrix( L, 1 ),
-                                  luaL_checkvector( L, 2 ) );
-            else
-                luaL_typerror( L, 2, LUA_VECTORLIBNAME );
+            MatrixBuildScale(
+                destination,
+                LUA_BINDING_ARGUMENT( luaL_checkvector, 2, "vector" ) );
             break;
     }
+
     return 0;
 }
+LUA_BINDING_END()
 
-static int vmatrix_MatrixBuildPerspective( lua_State *L )
+LUA_BINDING_BEGIN( Matrices, MatrixBuildPerspective, "library", "Builds a perspective matrix." )
 {
-    MatrixBuildPerspective( luaL_checkvmatrix( L, 1 ), luaL_checknumber( L, 2 ), luaL_checknumber( L, 3 ), luaL_checknumber( L, 4 ), luaL_checknumber( L, 5 ) );
+    VMatrix destination = LUA_BINDING_ARGUMENT( luaL_checkvmatrix, 1, "Matrix" );
+    MatrixBuildPerspective(
+        destination,
+        LUA_BINDING_ARGUMENT( luaL_checknumber, 2, "number" ),
+        LUA_BINDING_ARGUMENT( luaL_checknumber, 3, "number" ),
+        LUA_BINDING_ARGUMENT( luaL_checknumber, 4, "number" ),
+        LUA_BINDING_ARGUMENT( luaL_checknumber, 5, "number" ) );
     return 0;
 }
+LUA_BINDING_END()
 
-static int vmatrix_CalculateAABBFromProjectionMatrix( lua_State *L )
+LUA_BINDING_BEGIN( Matrices, CalculateAabbFromProjectionMatrix, "library", "Calculates an AABB from a projection matrix." )
 {
-    CalculateAABBFromProjectionMatrix( luaL_checkvmatrix( L, 1 ),
-                                       &luaL_checkvector( L, 2 ),
-                                       &luaL_checkvector( L, 3 ) );
-    return 0;
+    Vector vecMin, vecMax;
+    CalculateAABBFromProjectionMatrix(
+        LUA_BINDING_ARGUMENT( luaL_checkvmatrix, 1, "Matrix" ),
+        &vecMin,
+        &vecMax );
+    lua_pushvector( L, vecMin );
+    lua_pushvector( L, vecMax );
+    return 2;
 }
+LUA_BINDING_END( "vector", "The minimum vector.", "vector", "The maximum vector." )
 
-static int vmatrix_CalculateSphereFromProjectionMatrix( lua_State *L )
+LUA_BINDING_BEGIN( Matrices, CalculateSphereFromProjectionMatrix, "library", "Calculates a sphere from a projection matrix." )
 {
-    float flRadius = 0;
-    CalculateSphereFromProjectionMatrix( luaL_checkvmatrix( L, 1 ),
-                                         &luaL_checkvector( L, 2 ),
-                                         &flRadius );
+    Vector vecCenter;
+    float flRadius;
+    CalculateSphereFromProjectionMatrix(
+        LUA_BINDING_ARGUMENT( luaL_checkvmatrix, 1, "Matrix" ),
+        &vecCenter,
+        &flRadius );
+    lua_pushvector( L, vecCenter );
     lua_pushnumber( L, flRadius );
-    return 1;
+    return 2;
 }
+LUA_BINDING_END( "vector", "The center vector.", "number", "The radius." )
 
-static int vmatrix_MatrixFromAngles( lua_State *L )
+LUA_BINDING_BEGIN( Matrices, MatrixFromAngles, "library", "Sets the matrix to a rotation matrix." )
 {
-    MatrixFromAngles( luaL_checkangle( L, 1 ), luaL_checkvmatrix( L, 2 ) );
+    MatrixFromAngles(
+        LUA_BINDING_ARGUMENT( luaL_checkangle, 1, "angle" ),
+        LUA_BINDING_ARGUMENT( luaL_checkvmatrix, 2, "Matrix" ) );
     return 0;
 }
+LUA_BINDING_END()
 
-static int vmatrix_MatrixToAngles( lua_State *L )
+LUA_BINDING_BEGIN( Matrices, MatrixToAngles, "library", "Sets the matrix to a rotation matrix." )
 {
-    MatrixToAngles( luaL_checkvmatrix( L, 1 ), luaL_checkangle( L, 2 ) );
+    MatrixToAngles(
+        LUA_BINDING_ARGUMENT( luaL_checkvmatrix, 1, "Matrix" ),
+        LUA_BINDING_ARGUMENT( luaL_checkangle, 2, "angle" ) );
     return 0;
 }
+LUA_BINDING_END()
 
-static int vmatrix_MatrixInverseTR( lua_State *L )
+LUA_BINDING_BEGIN( Matrices, MatrixInverseTranslation, "library", "Inverts the matrix." )
 {
-    MatrixInverseTR( luaL_checkvmatrix( L, 1 ), luaL_checkvmatrix( L, 2 ) );
+    MatrixInverseTR(
+        LUA_BINDING_ARGUMENT( luaL_checkvmatrix, 1, "Matrix" ),
+        LUA_BINDING_ARGUMENT( luaL_checkvmatrix, 2, "Matrix" ) );
     return 0;
 }
+LUA_BINDING_END()
 
-static int vmatrix_MatrixInverseGeneral( lua_State *L )
+LUA_BINDING_BEGIN( Matrices, MatrixInverseGeneral, "library", "Inverts the matrix." )
 {
-    MatrixInverseGeneral( luaL_checkvmatrix( L, 1 ), luaL_checkvmatrix( L, 2 ) );
+    MatrixInverseGeneral(
+        LUA_BINDING_ARGUMENT( luaL_checkvmatrix, 1, "Matrix" ),
+        LUA_BINDING_ARGUMENT( luaL_checkvmatrix, 2, "Matrix" ) );
     return 0;
 }
+LUA_BINDING_END()
 
-static int vmatrix_MatrixInverseTranspose( lua_State *L )
+LUA_BINDING_BEGIN( Matrices, MatrixInverseTranspose, "library", "Inverts the matrix." )
 {
-    MatrixInverseTranspose( luaL_checkvmatrix( L, 1 ), luaL_checkvmatrix( L, 2 ) );
+    MatrixInverseTranspose(
+        LUA_BINDING_ARGUMENT( luaL_checkvmatrix, 1, "Matrix" ),
+        LUA_BINDING_ARGUMENT( luaL_checkvmatrix, 2, "Matrix" ) );
     return 0;
 }
-
-static const luaL_Reg VMatrix_funcs[] = {
-    { "SetupMatrixIdentity", vmatrix_SetupMatrixIdentity },
-    { "SetupMatrixScale", vmatrix_SetupMatrixScale },
-    { "SetupMatrixTranslation", vmatrix_SetupMatrixTranslation },
-    { "SetupMatrixAxisRot", vmatrix_SetupMatrixAxisRot },
-    { "SetupMatrixAngles", vmatrix_SetupMatrixAngles },
-    { "SetupMatrixOrgAngles", vmatrix_SetupMatrixOrgAngles },
-    { "VMatToString", vmatrix_VMatToString },
-    { "MatrixSetIdentity", vmatrix_MatrixSetIdentity },
-    { "MatrixTranspose", vmatrix_MatrixTranspose },
-    { "MatrixCopy", vmatrix_MatrixCopy },
-    { "MatrixMultiply", vmatrix_MatrixMultiply },
-    { "MatrixGetColumn", vmatrix_MatrixGetColumn },
-    { "MatrixSetColumn", vmatrix_MatrixSetColumn },
-    { "MatrixGetRow", vmatrix_MatrixGetRow },
-    { "MatrixSetRow", vmatrix_MatrixSetRow },
-    { "Vector3DMultiply", vmatrix_Vector3DMultiply },
-    { "Vector3DMultiplyPositionProjective",
-      vmatrix_Vector3DMultiplyPositionProjective },
-    { "Vector3DMultiplyProjective", vmatrix_Vector3DMultiplyProjective },
-    { "Vector3DMultiplyTranspose", vmatrix_Vector3DMultiplyTranspose },
-    { "MatrixBuildTranslation", vmatrix_MatrixBuildTranslation },
-    { "MatrixTranslate", vmatrix_MatrixTranslate },
-    { "MatrixBuildRotationAboutAxis", vmatrix_MatrixBuildRotationAboutAxis },
-    { "MatrixBuildRotateZ", vmatrix_MatrixBuildRotateZ },
-    { "MatrixRotate", vmatrix_MatrixRotate },
-    { "MatrixBuildRotation", vmatrix_MatrixBuildRotation },
-    { "MatrixBuildScale", vmatrix_MatrixBuildScale },
-    { "MatrixBuildPerspective", vmatrix_MatrixBuildPerspective },
-    { "CalculateAABBFromProjectionMatrix",
-      vmatrix_CalculateAABBFromProjectionMatrix },
-    { "CalculateSphereFromProjectionMatrix",
-      vmatrix_CalculateSphereFromProjectionMatrix },
-    { "MatrixFromAngles", vmatrix_MatrixFromAngles },
-    { "MatrixToAngles", vmatrix_MatrixToAngles },
-    { "MatrixInverseTR", vmatrix_MatrixInverseTR },
-    { "MatrixInverseGeneral", vmatrix_MatrixInverseGeneral },
-    { "MatrixInverseTranspose", vmatrix_MatrixInverseTranspose },
-    { NULL, NULL } };
+LUA_BINDING_END()
 
 /*
 ** Open VMatrix object
@@ -717,11 +928,14 @@ static const luaL_Reg VMatrix_funcs[] = {
 LUALIB_API int luaopen_VMatrix( lua_State *L )
 {
     LUA_PUSH_NEW_METATABLE( L, LUA_VMATRIXLIBNAME );
-    luaL_register( L, NULL, VMatrixmeta );
+
+    LUA_REGISTRATION_COMMIT( Matrix );
+
     lua_pushstring( L, LUA_VMATRIXLIBNAME );
     lua_setfield( L, -2, "__type" ); /* metatable.__type = "Matrix" */
-    luaL_register( L, LUA_GNAME, _G_funcs );
     lua_pop( L, 2 );
-    luaL_register( L, LUA_VMATRIXLIBNAME, VMatrix_funcs );
+
+    LUA_REGISTRATION_COMMIT_LIBRARY( Matrices );
+
     return 1;
 }

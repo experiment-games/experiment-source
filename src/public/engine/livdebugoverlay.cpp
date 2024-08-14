@@ -8,9 +8,9 @@
 // memdbgon must be the last include file in a .cpp file!!!
 #include "tier0/memdbgon.h"
 
-LUA_REGISTRATION_INIT( DebugOverlay );
+LUA_REGISTRATION_INIT( DebugOverlays );
 
-LUA_BINDING_BEGIN( DebugOverlay, AddBoxOverlay, "library", "Add a box overlay to the screen." )
+LUA_BINDING_BEGIN( DebugOverlays, AddBoxOverlay, "library", "Add a box overlay to the screen." )
 {
     Vector start = LUA_BINDING_ARGUMENT( luaL_checkvector, 1, "start" );
     Vector mins = LUA_BINDING_ARGUMENT( luaL_checkvector, 2, "mins" );
@@ -27,7 +27,7 @@ LUA_BINDING_BEGIN( DebugOverlay, AddBoxOverlay, "library", "Add a box overlay to
 }
 LUA_BINDING_END()
 
-LUA_BINDING_BEGIN( DebugOverlay, AddBoxOverlay2, "library", "Add a box overlay to the screen with specific colors." )
+LUA_BINDING_BEGIN( DebugOverlays, AddBoxOverlay2, "library", "Add a box overlay to the screen with specific colors." )
 {
     Vector start = LUA_BINDING_ARGUMENT( luaL_checkvector, 1, "start" );
     Vector mins = LUA_BINDING_ARGUMENT( luaL_checkvector, 2, "mins" );
@@ -42,7 +42,7 @@ LUA_BINDING_BEGIN( DebugOverlay, AddBoxOverlay2, "library", "Add a box overlay t
 }
 LUA_BINDING_END()
 
-LUA_BINDING_BEGIN( DebugOverlay, AddGridOverlay, "library", "Add a grid overlay to the screen." )
+LUA_BINDING_BEGIN( DebugOverlays, AddGridOverlay, "library", "Add a grid overlay to the screen." )
 {
     Vector origin = LUA_BINDING_ARGUMENT( luaL_checkvector, 1, "origin" );
 
@@ -51,7 +51,7 @@ LUA_BINDING_BEGIN( DebugOverlay, AddGridOverlay, "library", "Add a grid overlay 
 }
 LUA_BINDING_END()
 
-LUA_BINDING_BEGIN( DebugOverlay, AddLineOverlay, "library", "Add a line overlay to the screen." )
+LUA_BINDING_BEGIN( DebugOverlays, AddLineOverlay, "library", "Add a line overlay to the screen." )
 {
     Vector start = LUA_BINDING_ARGUMENT( luaL_checkvector, 1, "start" );
     Vector end = LUA_BINDING_ARGUMENT( luaL_checkvector, 2, "end" );
@@ -66,7 +66,7 @@ LUA_BINDING_BEGIN( DebugOverlay, AddLineOverlay, "library", "Add a line overlay 
 }
 LUA_BINDING_END()
 
-LUA_BINDING_BEGIN( DebugOverlay, AddLineOverlayAlpha, "library", "Add a line overlay to the screen with alpha." )
+LUA_BINDING_BEGIN( DebugOverlays, AddLineOverlayAlpha, "library", "Add a line overlay to the screen with alpha." )
 {
     Vector start = LUA_BINDING_ARGUMENT( luaL_checkvector, 1, "start" );
     Vector end = LUA_BINDING_ARGUMENT( luaL_checkvector, 2, "end" );
@@ -82,7 +82,7 @@ LUA_BINDING_BEGIN( DebugOverlay, AddLineOverlayAlpha, "library", "Add a line ove
 }
 LUA_BINDING_END()
 
-LUA_BINDING_BEGIN( DebugOverlay, AddScreenTextOverlay, "library", "Add a screen text overlay." )
+LUA_BINDING_BEGIN( DebugOverlays, AddScreenTextOverlay, "library", "Add a screen text overlay." )
 {
     float x = LUA_BINDING_ARGUMENT( luaL_checknumber, 1, "x" );
     float y = LUA_BINDING_ARGUMENT( luaL_checknumber, 2, "y" );
@@ -98,7 +98,7 @@ LUA_BINDING_BEGIN( DebugOverlay, AddScreenTextOverlay, "library", "Add a screen 
 }
 LUA_BINDING_END()
 
-LUA_BINDING_BEGIN( DebugOverlay, AddSweptBoxOverlay, "library", "Add a swept box overlay to the screen." )
+LUA_BINDING_BEGIN( DebugOverlays, AddSweptBoxOverlay, "library", "Add a swept box overlay to the screen." )
 {
     Vector start = LUA_BINDING_ARGUMENT( luaL_checkvector, 1, "start" );
     Vector end = LUA_BINDING_ARGUMENT( luaL_checkvector, 2, "end" );
@@ -116,7 +116,7 @@ LUA_BINDING_BEGIN( DebugOverlay, AddSweptBoxOverlay, "library", "Add a swept box
 }
 LUA_BINDING_END()
 
-LUA_BINDING_BEGIN( DebugOverlay, AddTriangleOverlay, "library", "Add a triangle overlay to the screen." )
+LUA_BINDING_BEGIN( DebugOverlays, AddTriangleOverlay, "library", "Add a triangle overlay to the screen." )
 {
     Vector p1 = LUA_BINDING_ARGUMENT( luaL_checkvector, 1, "p1" );
     Vector p2 = LUA_BINDING_ARGUMENT( luaL_checkvector, 2, "p2" );
@@ -133,21 +133,21 @@ LUA_BINDING_BEGIN( DebugOverlay, AddTriangleOverlay, "library", "Add a triangle 
 }
 LUA_BINDING_END()
 
-LUA_BINDING_BEGIN( DebugOverlay, ClearAllOverlays, "library", "Clear all overlays." )
+LUA_BINDING_BEGIN( DebugOverlays, ClearAllOverlays, "library", "Clear all overlays." )
 {
     debugoverlay->ClearAllOverlays();
     return 0;
 }
 LUA_BINDING_END()
 
-LUA_BINDING_BEGIN( DebugOverlay, ClearDeadOverlays, "library", "Clear dead overlays." )
+LUA_BINDING_BEGIN( DebugOverlays, ClearDeadOverlays, "library", "Clear dead overlays." )
 {
     debugoverlay->ClearDeadOverlays();
     return 0;
 }
 LUA_BINDING_END()
 
-LUA_BINDING_BEGIN( DebugOverlay, ScreenPosition, "library", "Get the screen position of a vector." )
+LUA_BINDING_BEGIN( DebugOverlays, ScreenPosition, "library", "Get the screen position of a vector." )
 {
     Vector vec = LUA_BINDING_ARGUMENT( luaL_checkvector, 1, "vec" );
     Vector screen;
@@ -165,7 +165,7 @@ LUA_BINDING_BEGIN( DebugOverlay, ScreenPosition, "library", "Get the screen posi
 }
 LUA_BINDING_END( "Vector", "The screen position of the vector, or nil if the vector is not on the screen." )
 
-LUA_BINDING_BEGIN( DebugOverlay, AddTextOverlay, "library", "Add a text overlay to the screen." )
+LUA_BINDING_BEGIN( DebugOverlays, AddTextOverlay, "library", "Add a text overlay to the screen." )
 {
     Vector origin = LUA_BINDING_ARGUMENT( luaL_checkvector, 1, "origin" );
     int lineOffset = LUA_BINDING_ARGUMENT( luaL_checkinteger, 2, "lineOffset" );
@@ -177,7 +177,7 @@ LUA_BINDING_BEGIN( DebugOverlay, AddTextOverlay, "library", "Add a text overlay 
 }
 LUA_BINDING_END()
 
-LUA_BINDING_BEGIN( DebugOverlay, AddTextOverlayRGB, "library", "Add a text overlay to the screen with specific colors." )
+LUA_BINDING_BEGIN( DebugOverlays, AddTextOverlayRGB, "library", "Add a text overlay to the screen with specific colors." )
 {
     Vector origin = LUA_BINDING_ARGUMENT( luaL_checkvector, 1, "origin" );
     int lineOffset = LUA_BINDING_ARGUMENT( luaL_checkinteger, 2, "lineOffset" );
@@ -198,6 +198,6 @@ LUA_BINDING_END()
 */
 LUALIB_API int luaopen_debugoverlay( lua_State *L )
 {
-    LUA_REGISTRATION_COMMIT_LIBRARY( DebugOverlay );
+    LUA_REGISTRATION_COMMIT_LIBRARY( DebugOverlays );
     return 1;
 }

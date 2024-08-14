@@ -1,0 +1,26 @@
+---
+template: lua-class-function.html
+title: ApplyRotation
+icon: lua-shared
+tags:
+  - lua
+  - shared
+  - needs-verification
+  - needs-example
+lua:
+  library: Matrix
+  function: ApplyRotation
+  realm: shared
+  description: "Applies a rotation to a vector."
+  
+  arguments:
+    - name: "vector"
+      type: Vector
+  returns:
+    - type: vector
+      description: "The rotated vector."
+---
+
+<div class="lua__search__keywords">
+Matrix:ApplyRotation &#x2013; Applies a rotation to a vector.
+</div>

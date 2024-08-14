@@ -269,11 +269,11 @@ LUA_BINDING_BEGIN( NetworkStringTables, CreateStringTable, "library", "Create a 
     int userDataFixedSize = LUA_BINDING_ARGUMENT_WITH_DEFAULT( luaL_optnumber, 3, 0, "userDataFixedSize" );
     int userDataNetworkBits = LUA_BINDING_ARGUMENT_WITH_DEFAULT( luaL_optnumber, 4, 0, "userDataNetworkBits" );
 
-    networkstringtable->CreateStringTable( name, maxEntries, userDataFixedSize, userDataNetworkBits );
+    lua_pushstringtable( L, networkstringtable->CreateStringTable( name, maxEntries, userDataFixedSize, userDataNetworkBits ) );
 
-    return 0;
+    return 1;
 }
-LUA_BINDING_END()
+LUA_BINDING_END( "NetworkStringTable", "The created string table." )
 
 LUA_BINDING_BEGIN( NetworkStringTables, CreateStringTableEx, "library", "Create a new string table." )
 {
@@ -287,7 +287,7 @@ LUA_BINDING_BEGIN( NetworkStringTables, CreateStringTableEx, "library", "Create 
 
     return 1;
 }
-LUA_BINDING_END()
+LUA_BINDING_END( "NetworkStringTable", "The created string table." )
 
 LUA_BINDING_BEGIN( NetworkStringTables, FindTable, "library", "Find a string table by name." )
 {
@@ -297,7 +297,7 @@ LUA_BINDING_BEGIN( NetworkStringTables, FindTable, "library", "Find a string tab
 
     return 1;
 }
-LUA_BINDING_END()
+LUA_BINDING_END( "NetworkStringTable", "The found string table." )
 
 LUA_BINDING_BEGIN( NetworkStringTables, GetTablesAmount, "library", "Get the number of string tables." )
 {
@@ -305,7 +305,7 @@ LUA_BINDING_BEGIN( NetworkStringTables, GetTablesAmount, "library", "Get the num
 
     return 1;
 }
-LUA_BINDING_END()
+LUA_BINDING_END( "integer", "The amount of string tables." )
 
 LUA_BINDING_BEGIN( NetworkStringTables, GetTable, "library", "Get a string table by index." )
 {
@@ -315,7 +315,7 @@ LUA_BINDING_BEGIN( NetworkStringTables, GetTable, "library", "Get a string table
 
     return 1;
 }
-LUA_BINDING_END()
+LUA_BINDING_END( "NetworkStringTable", "The gotten string table." )
 
 LUA_BINDING_BEGIN( NetworkStringTables, RemoveAllTables, "library", "Remove all string tables." )
 {

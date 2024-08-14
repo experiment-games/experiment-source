@@ -9,7 +9,7 @@ Hooks.Add("PlayerTraceAttack", "PlayerTraceTeslaHitboxesAttack", function(client
 	local pEntity = ptr.m_pEnt
 	if (pEntity ~= NULL) then
 		-- This is taken straight out of CNPC_Hunter::TeslaThink()
-		local data = CEffectData()
+		local data = EffectData()
 		if (CLIENT) then
 			data.m_hEntity = pEntity
 		else

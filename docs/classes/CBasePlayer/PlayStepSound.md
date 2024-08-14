@@ -17,7 +17,7 @@ lua:
     - name: "origin"
       type: Vector
     - name: "surface data"
-      type: unknown
+      type: SurfaceData
     - name: "volume"
       type: number
     - name: "force"

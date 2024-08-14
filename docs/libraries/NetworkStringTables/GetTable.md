@@ -17,7 +17,8 @@ lua:
     - name: "index"
       type: number
   returns:
-    
+    - type: NetworkStringTable
+      description: "The gotten string table."
 ---
 
 <div class="lua__search__keywords">

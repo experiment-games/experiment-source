@@ -15,7 +15,8 @@ lua:
   
   
   returns:
-    
+    - type: integer
+      description: "The amount of string tables."
 ---
 
 <div class="lua__search__keywords">
