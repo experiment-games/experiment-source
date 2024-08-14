@@ -20,10 +20,13 @@
 /*
 ** umsg library
 */
+
+LUA_REGISTRATION_INIT( UserMessages );
+
 #ifdef CLIENT_DLL
 
 /// <summary>
-/// Calls umsg.OnMessageReceived( messageName, message )
+/// Calls UserMessages.OnMessageReceived( messageName, message )
 /// </summary>
 /// <param name="L"></param>
 /// <param name="messageName"></param>
@@ -34,12 +37,12 @@ static void umsg_CallOnMessageReceived( lua_State *L, const char *messageName, b
     lua_getfield( L, -1, "OnMessageReceived" );
     lua_pushstring( L, messageName );
     lua_pushbf_read( L, message );
-    lua_remove( L, -4 );  // Remove the umsg library
+    lua_remove( L, -4 );  // Remove the UserMessages library
     int result = lua_pcall( L, 2, 0, 0 );
 
     if ( result != 0 )
     {
-        Warning( "[Lua] umsg.umsg_CallOnMessageReceived: %s\n", lua_tostring( L, -1 ) );
+        Warning( "[Lua] UserMessages.CallOnMessageReceived: %s\n", lua_tostring( L, -1 ) );
         lua_pop( L, 1 );
     }
 }
@@ -59,28 +62,29 @@ static CRecipientFilter queuedRecipientFilter;
 static int luaMessageType = 0;
 byte byteBuffer[PAD_NUMBER( MAX_USER_MSG_DATA, 4 )];
 
-static int umsg_Start( lua_State *L )
+LUA_BINDING_BEGIN( UserMessages, Start, "library", "Starts a user message.", "server" )
 {
+    // Check if a message is already queued
     if ( isMessageQueued )
     {
-        Warning( "umsg.Start called with an active message! Resetting that message.\n" );
+        Warning( "UserMessages.Start called with an active message! Resetting that message.\n" );
     }
 
-    const char *messageName = luaL_checkstring( L, 1 );
+    const char *messageName = LUA_BINDING_ARGUMENT( luaL_checkstring, 1, "messageName" );
 
     isMessageQueued = true;
 
     queuedMessageBuffer.StartWriting( byteBuffer, sizeof( byteBuffer ) );
     queuedMessageBuffer.Reset();
 
-    // If the filter is nil or empty, create one with all players
+    // Check if the filter is nil or empty, then add all players
     if ( lua_isnoneornil( L, 2 ) )
     {
         queuedRecipientFilter.AddAllPlayers();
     }
     else
     {
-        queuedRecipientFilter = lua_torecipientfilter( L, 2 );
+        queuedRecipientFilter = LUA_BINDING_ARGUMENT_NILLABLE( lua_torecipientfilter, 2, "recipientFilter" );
     }
 
     queuedRecipientFilter.MakeReliable();
@@ -90,12 +94,13 @@ static int umsg_Start( lua_State *L )
 
     return 0;
 }
+LUA_BINDING_END()
 
-static int umsg_MessageEnd( lua_State *L )
+LUA_BINDING_BEGIN( UserMessages, MessageEnd, "library", "Ends a user message.", "server" )
 {
     if ( !isMessageQueued )
     {
-        Warning( "[Lua] umsg.MessageEnd called with no active message\n" );
+        Warning( "[Lua] UserMessages.MessageEnd called with no active message\n" );
         return 0;
     }
 
@@ -115,115 +120,118 @@ static int umsg_MessageEnd( lua_State *L )
 
     return 0;
 }
+LUA_BINDING_END()
 
-static int umsg_WriteByte( lua_State *L )
+LUA_BINDING_BEGIN( UserMessages, WriteByte, "library", "Writes a byte.", "server" )
 {
     if ( !isMessageQueued )
-        Warning( "[Lua] umsg.WriteByte called with no active message\n" );
+        Warning( "[Lua] UserMessages.WriteByte called with no active message\n" );
 
-    queuedMessageBuffer.WriteByte( luaL_checknumber( L, 1 ) );
+    queuedMessageBuffer.WriteByte( LUA_BINDING_ARGUMENT( luaL_checknumber, 1, "byte" ) );
     return 0;
 }
+LUA_BINDING_END()
 
-static int umsg_WriteChar( lua_State *L )
+LUA_BINDING_BEGIN( UserMessages, WriteChar, "library", "Writes a char.", "server" )
 {
     if ( !isMessageQueued )
-        Warning( "[Lua] umsg.WriteChar called with no active message\n" );
+        Warning( "[Lua] UserMessages.WriteChar called with no active message\n" );
 
-    queuedMessageBuffer.WriteChar( luaL_checknumber( L, 1 ) );
+    queuedMessageBuffer.WriteChar( LUA_BINDING_ARGUMENT( luaL_checknumber, 1, "char" ) );
     return 0;
 }
+LUA_BINDING_END()
 
-static int umsg_WriteShort( lua_State *L )
+LUA_BINDING_BEGIN( UserMessages, WriteShort, "library", "Writes a short integer.", "server" )
 {
     if ( !isMessageQueued )
-        Warning( "[Lua] umsg.WriteShort called with no active message\n" );
+        Warning( "[Lua] UserMessages.WriteShort called with no active message\n" );
 
-    queuedMessageBuffer.WriteShort( luaL_checknumber( L, 1 ) );
-
+    queuedMessageBuffer.WriteShort( LUA_BINDING_ARGUMENT( luaL_checknumber, 1, "short" ) );
     return 0;
 }
+LUA_BINDING_END()
 
-static int umsg_WriteWord( lua_State *L )
+LUA_BINDING_BEGIN( UserMessages, WriteWord, "library", "Writes a word.", "server" )
 {
     if ( !isMessageQueued )
-        Warning( "[Lua] umsg.WriteWord called with no active message\n" );
+        Warning( "[Lua] UserMessages.WriteWord called with no active message\n" );
 
-    queuedMessageBuffer.WriteWord( luaL_checknumber( L, 1 ) );
-
+    queuedMessageBuffer.WriteWord( LUA_BINDING_ARGUMENT( luaL_checknumber, 1, "word" ) );
     return 0;
 }
+LUA_BINDING_END()
 
-static int umsg_WriteLong( lua_State *L )
+LUA_BINDING_BEGIN( UserMessages, WriteLong, "library", "Writes a long integer.", "server" )
 {
     if ( !isMessageQueued )
-        Warning( "[Lua] umsg.WriteLong called with no active message\n" );
+        Warning( "[Lua] UserMessages.WriteLong called with no active message\n" );
 
-    queuedMessageBuffer.WriteLong( luaL_checknumber( L, 1 ) );
-
+    queuedMessageBuffer.WriteLong( LUA_BINDING_ARGUMENT( luaL_checknumber, 1, "long" ) );
     return 0;
 }
+LUA_BINDING_END()
 
-static int umsg_WriteFloat( lua_State *L )
+LUA_BINDING_BEGIN( UserMessages, WriteFloat, "library", "Writes a float.", "server" )
 {
     if ( !isMessageQueued )
-        Warning( "[Lua] umsg.WriteFloat called with no active message\n" );
+        Warning( "[Lua] UserMessages.WriteFloat called with no active message\n" );
 
-    queuedMessageBuffer.WriteFloat( luaL_checknumber( L, 1 ) );
-
+    queuedMessageBuffer.WriteFloat( LUA_BINDING_ARGUMENT( luaL_checknumber, 1, "float" ) );
     return 0;
 }
+LUA_BINDING_END()
 
-static int umsg_WriteVector( lua_State *L )
+LUA_BINDING_BEGIN( UserMessages, WriteVector, "library", "Writes a vector.", "server" )
 {
     if ( !isMessageQueued )
-        Warning( "[Lua] umsg.WriteVector called with no active message\n" );
+        Warning( "[Lua] UserMessages.WriteVector called with no active message\n" );
 
-    queuedMessageBuffer.WriteBitVec3Coord( luaL_checkvector( L, 1 ) );
-
+    queuedMessageBuffer.WriteBitVec3Coord( LUA_BINDING_ARGUMENT( luaL_checkvector, 1, "vector" ) );
     return 0;
 }
+LUA_BINDING_END()
 
-static int umsg_WriteNormal( lua_State *L )
+LUA_BINDING_BEGIN( UserMessages, WriteNormal, "library", "Writes a normal vector.", "server" )
 {
     if ( !isMessageQueued )
-        Warning( "[Lua] umsg.WriteNormal called with no active message\n" );
+        Warning( "[Lua] UserMessages.WriteNormal called with no active message\n" );
 
-    queuedMessageBuffer.WriteBitVec3Normal( luaL_checkvector( L, 1 ) );
-
+    queuedMessageBuffer.WriteBitVec3Normal( LUA_BINDING_ARGUMENT( luaL_checkvector, 1, "normal" ) );
     return 0;
 }
+LUA_BINDING_END()
 
-static int umsg_WriteAngle( lua_State *L )
+LUA_BINDING_BEGIN( UserMessages, WriteAngle, "library", "Writes an angle.", "server" )
 {
     if ( !isMessageQueued )
-        Warning( "[Lua] umsg.WriteAngle called with no active message\n" );
+        Warning( "[Lua] UserMessages.WriteAngle called with no active message\n" );
 
-    queuedMessageBuffer.WriteBitAngles( luaL_checkangle( L, 1 ) );
-
+    queuedMessageBuffer.WriteBitAngles( LUA_BINDING_ARGUMENT( luaL_checkangle, 1, "angle" ) );
     return 0;
 }
+LUA_BINDING_END()
 
-static int umsg_WriteString( lua_State *L )
+LUA_BINDING_BEGIN( UserMessages, WriteString, "library", "Writes a string.", "server" )
 {
     if ( !isMessageQueued )
-        Warning( "[Lua] umsg.WriteString called with no active message\n" );
+        Warning( "[Lua] UserMessages.WriteString called with no active message\n" );
 
-    queuedMessageBuffer.WriteString( luaL_checkstring( L, 1 ) );
-
+    queuedMessageBuffer.WriteString( LUA_BINDING_ARGUMENT( luaL_checkstring, 1, "string" ) );
     return 0;
 }
+LUA_BINDING_END()
 
-static int umsg_WriteEntity( lua_State *L )
+LUA_BINDING_BEGIN( UserMessages, WriteEntity, "library", "Writes an entity.", "server" )
 {
     if ( !isMessageQueued )
-        Warning( "[Lua] umsg.WriteEHandle called with no active message\n" );
+        Warning( "[Lua] UserMessages.WriteEntity called with no active message\n" );
 
     long iEncodedEHandle;
 
-    if ( luaL_checkentity( L, 1 ) )
+    if ( LUA_BINDING_ARGUMENT( luaL_checkentity, 1, "entity" ) )
     {
-        EHANDLE hEnt = lua_toentity( L, 1 );
+        EHANDLE hEnt = LUA_BINDING_ARGUMENT( lua_toentity, 1, "entity" );
 
         int iSerialNum = hEnt.GetSerialNumber() &
                          ( ( 1 << NUM_NETWORKED_EHANDLE_SERIAL_NUMBER_BITS ) - 1 );
@@ -238,60 +246,39 @@ static int umsg_WriteEntity( lua_State *L )
 
     return 0;
 }
+LUA_BINDING_END()
 
-static int umsg_WriteBool( lua_State *L )
+LUA_BINDING_BEGIN( UserMessages, WriteBool, "library", "Writes a boolean.", "server" )
 {
     if ( !isMessageQueued )
-        Warning( "[Lua] umsg.WriteBool called with no active message\n" );
+        Warning( "[Lua] UserMessages.WriteBool called with no active message\n" );
 
-    queuedMessageBuffer.WriteOneBit( lua_toboolean( L, 1 ) ? 1 : 0 );
-
+    queuedMessageBuffer.WriteOneBit( LUA_BINDING_ARGUMENT( lua_toboolean, 1, "bool" ) ? 1 : 0 );
     return 0;
 }
+LUA_BINDING_END()
 
-static int umsg_WriteUBitLong( lua_State *L )
+LUA_BINDING_BEGIN( UserMessages, WriteUBitLong, "library", "Writes an unsigned bit long.", "server" )
 {
     if ( !isMessageQueued )
-        Warning( "[Lua] umsg.WriteUBitLong called with no active message\n" );
+        Warning( "[Lua] UserMessages.WriteUBitLong called with no active message\n" );
 
-    queuedMessageBuffer.WriteUBitLong( luaL_checknumber( L, 1 ), luaL_checknumber( L, 2 ) );
-
+    queuedMessageBuffer.WriteUBitLong( LUA_BINDING_ARGUMENT( luaL_checknumber, 1, "value" ), LUA_BINDING_ARGUMENT( luaL_checknumber, 2, "numBits" ) );
     return 0;
 }
+LUA_BINDING_END()
 
-static int umsg_WriteSBitLong( lua_State *L )
+LUA_BINDING_BEGIN( UserMessages, WriteSBitLong, "library", "Writes a signed bit long.", "server" )
 {
     if ( !isMessageQueued )
-        Warning( "[Lua] umsg.WriteSBitLong called with no active message\n" );
+        Warning( "[Lua] UserMessages.WriteSBitLong called with no active message\n" );
 
-    queuedMessageBuffer.WriteSBitLong( luaL_checknumber( L, 1 ), luaL_checknumber( L, 2 ) );
-
+    queuedMessageBuffer.WriteSBitLong( LUA_BINDING_ARGUMENT( luaL_checknumber, 1, "value" ), LUA_BINDING_ARGUMENT( luaL_checknumber, 2, "numBits" ) );
     return 0;
 }
+LUA_BINDING_END()
 
 #endif
-
-static const luaL_Reg umsgLib[] = {
-#ifndef CLIENT_DLL
-    { "Start", umsg_Start },
-    { "MessageEnd", umsg_MessageEnd },
-    { "WriteAngle", umsg_WriteAngle },
-    { "WriteAngle", umsg_WriteAngle },
-    { "WriteBool", umsg_WriteBool },
-    { "WriteByte", umsg_WriteByte },
-    { "WriteChar", umsg_WriteChar },
-    { "WriteEntity", umsg_WriteEntity },
-    { "WriteFloat", umsg_WriteFloat },
-    { "WriteLong", umsg_WriteLong },
-    { "WriteNormal", umsg_WriteNormal },
-    { "WriteSBitLong", umsg_WriteSBitLong },
-    { "WriteShort", umsg_WriteShort },
-    { "WriteString", umsg_WriteString },
-    { "WriteUBitLong", umsg_WriteUBitLong },
-    { "WriteVector", umsg_WriteVector },
-    { "WriteWord", umsg_WriteWord },
-#endif
-    { NULL, NULL } };
 
 /// <summary>
 /// Called from RegisterUserMessages when the usermessages library is registered
@@ -316,15 +303,17 @@ void RegisterLuaUserMessages()
 }
 
 /*
-** net library
-*/
-static const luaL_Reg netLib[] = {
-    { NULL, NULL } };
-
-/*
 ** bf_read methods
 */
+LUA_REGISTRATION_INIT( UserMessageReader );
+
 #ifdef CLIENT_DLL
+LUA_API bf_read &lua_tobf_read( lua_State *L, int idx )
+{
+    bf_read *bfRead = ( bf_read * )lua_touserdata( L, idx );
+    return *bfRead;
+}
+
 LUA_API void lua_pushbf_read( lua_State *L, bf_read *message )
 {
     lua_pushlightuserdata( L, message );
@@ -342,94 +331,105 @@ LUALIB_API bf_read *luaL_checkbf_read( lua_State *L, int narg )
     return bfRead;
 }
 
-static int bfRead_ReadBit( lua_State *L )
+LUA_BINDING_BEGIN( UserMessageReader, ReadBit, "library", "Reads a bit.", "client" )
 {
-    bf_read *bf = luaL_checkbf_read( L, 1 );
+    bf_read *bf = LUA_BINDING_ARGUMENT( luaL_checkbf_read, 1, "reader" );
     lua_pushinteger( L, bf->ReadOneBit() );
     return 1;
 }
+LUA_BINDING_END( "integer", "The bit read." )
 
-static int bfRead_ReadByte( lua_State *L )
+LUA_BINDING_BEGIN( UserMessageReader, ReadByte, "library", "Reads a byte.", "client" )
 {
-    bf_read *bf = luaL_checkbf_read( L, 1 );
+    bf_read *bf = LUA_BINDING_ARGUMENT( luaL_checkbf_read, 1, "reader" );
     lua_pushinteger( L, bf->ReadByte() );
     return 1;
 }
+LUA_BINDING_END( "integer", "The byte read." )
 
-static int bfRead_ReadChar( lua_State *L )
+LUA_BINDING_BEGIN( UserMessageReader, ReadChar, "library", "Reads a char.", "client" )
 {
-    bf_read *bf = luaL_checkbf_read( L, 1 );
+    bf_read *bf = LUA_BINDING_ARGUMENT( luaL_checkbf_read, 1, "reader" );
     lua_pushinteger( L, bf->ReadChar() );
     return 1;
 }
+LUA_BINDING_END( "integer", "The char read." )
 
-static int bfRead_ReadShort( lua_State *L )
+LUA_BINDING_BEGIN( UserMessageReader, ReadShort, "library", "Reads a short integer.", "client" )
 {
-    bf_read *bf = luaL_checkbf_read( L, 1 );
+    bf_read *bf = LUA_BINDING_ARGUMENT( luaL_checkbf_read, 1, "reader" );
     lua_pushinteger( L, bf->ReadShort() );
     return 1;
 }
+LUA_BINDING_END( "integer", "The short read." )
 
-static int bfRead_ReadWord( lua_State *L )
+LUA_BINDING_BEGIN( UserMessageReader, ReadWord, "library", "Reads a word.", "client" )
 {
-    bf_read *bf = luaL_checkbf_read( L, 1 );
+    bf_read *bf = LUA_BINDING_ARGUMENT( luaL_checkbf_read, 1, "reader" );
     lua_pushinteger( L, bf->ReadWord() );
     return 1;
 }
+LUA_BINDING_END( "integer", "The word read." )
 
-static int bfRead_ReadLong( lua_State *L )
+LUA_BINDING_BEGIN( UserMessageReader, ReadLong, "library", "Reads a long integer.", "client" )
 {
-    bf_read *bf = luaL_checkbf_read( L, 1 );
+    bf_read *bf = LUA_BINDING_ARGUMENT( luaL_checkbf_read, 1, "reader" );
     lua_pushinteger( L, bf->ReadBitLong( luaL_checknumber( L, 2 ), lua_toboolean( L, 3 ) ) );
     return 1;
 }
+LUA_BINDING_END( "integer", "The long read." )
 
-static int bfRead_ReadFloat( lua_State *L )
+LUA_BINDING_BEGIN( UserMessageReader, ReadFloat, "library", "Reads a float.", "client" )
 {
-    bf_read *bf = luaL_checkbf_read( L, 1 );
+    bf_read *bf = LUA_BINDING_ARGUMENT( luaL_checkbf_read, 1, "reader" );
     lua_pushnumber( L, bf->ReadBitFloat() );
     return 1;
 }
+LUA_BINDING_END( "number", "The float read." )
 
-static int bfRead_ReadVector( lua_State *L )
+LUA_BINDING_BEGIN( UserMessageReader, ReadVector, "library", "Reads a vector.", "client" )
 {
-    bf_read *bf = luaL_checkbf_read( L, 1 );
+    bf_read *bf = LUA_BINDING_ARGUMENT( luaL_checkbf_read, 1, "reader" );
     Vector vec;
     bf->ReadBitVec3Coord( vec );
     lua_pushvector( L, vec );
     return 1;
 }
+LUA_BINDING_END( "Vector", "The vector read." )
 
-static int bfRead_ReadVectorNormal( lua_State *L )
+LUA_BINDING_BEGIN( UserMessageReader, ReadVectorNormal, "library", "Reads a normal vector.", "client" )
 {
-    bf_read *bf = luaL_checkbf_read( L, 1 );
+    bf_read *bf = LUA_BINDING_ARGUMENT( luaL_checkbf_read, 1, "reader" );
     Vector vec;
     bf->ReadBitVec3Normal( vec );
     lua_pushvector( L, vec );
     return 1;
 }
+LUA_BINDING_END( "Vector", "The normal vector read." )
 
-static int bfRead_ReadAngle( lua_State *L )
+LUA_BINDING_BEGIN( UserMessageReader, ReadAngle, "library", "Reads an angle.", "client" )
 {
-    bf_read *bf = luaL_checkbf_read( L, 1 );
+    bf_read *bf = LUA_BINDING_ARGUMENT( luaL_checkbf_read, 1, "reader" );
     QAngle ang;
     bf->ReadBitAngles( ang );
     lua_pushangle( L, ang );
     return 1;
 }
+LUA_BINDING_END( "Angle", "The angle read." )
 
-static int bfRead_ReadString( lua_State *L )
+LUA_BINDING_BEGIN( UserMessageReader, ReadString, "library", "Reads a string.", "client" )
 {
-    bf_read *bf = luaL_checkbf_read( L, 1 );
+    bf_read *bf = LUA_BINDING_ARGUMENT( luaL_checkbf_read, 1, "reader" );
     char str[2048];
     bf->ReadString( str, sizeof( str ) );
     lua_pushstring( L, str );
     return 1;
 }
+LUA_BINDING_END( "string", "The string read." )
 
-static int bfRead_ReadBytes( lua_State *L )
+LUA_BINDING_BEGIN( UserMessageReader, ReadBytes, "library", "Reads a number of bytes.", "client" )
 {
-    bf_read *bf = luaL_checkbf_read( L, 1 );
+    bf_read *bf = LUA_BINDING_ARGUMENT( luaL_checkbf_read, 1, "reader" );
     int len = luaL_checknumber( L, 2 );
     char *buf = new char[len];
     bf->ReadBytes( buf, len );
@@ -437,10 +437,11 @@ static int bfRead_ReadBytes( lua_State *L )
     delete[] buf;
     return 1;
 }
+LUA_BINDING_END( "string", "The bytes read." )
 
-static int bfRead_ReadEntity( lua_State *L )
+LUA_BINDING_BEGIN( UserMessageReader, ReadEntity, "library", "Reads an entity.", "client" )
 {
-    bf_read *bf = luaL_checkbf_read( L, 1 );
+    bf_read *bf = LUA_BINDING_ARGUMENT( luaL_checkbf_read, 1, "reader" );
     unsigned int iEncodedEHandle = bf->ReadLong();
 
     if ( iEncodedEHandle == INVALID_NETWORKED_EHANDLE_VALUE )
@@ -471,10 +472,12 @@ static int bfRead_ReadEntity( lua_State *L )
 
     return 1;
 }
+LUA_BINDING_END( "Entity", "The entity read." )
 
-static int bfRead___index( lua_State *L )
+LUA_BINDING_BEGIN( UserMessageReader, __index, "class", "Returns nil.", "client" )
 {
-    bf_read *bfRead = luaL_checkbf_read( L, 1 );
+    bf_read *UserMessageReader = LUA_BINDING_ARGUMENT( luaL_checkbf_read, 1, "reader" );
+    //const char *field = LUA_BINDING_ARGUMENT( luaL_checkstring, 2, "field" );
 
     if ( lua_getmetatable( L, 1 ) )
     {
@@ -484,38 +487,23 @@ static int bfRead___index( lua_State *L )
     lua_pushnil( L );
     return 1;
 }
+LUA_BINDING_END()
 
-static int bfRead___tostring( lua_State *L )
+LUA_BINDING_BEGIN( UserMessageReader, __tostring, "class", "Returns a string representation of the reader.", "client" )
 {
-    lua_pushfstring( L, "bf_read: %p", luaL_checkbf_read( L, 1 ) );
+    lua_pushfstring( L, "bf_read: %p", LUA_BINDING_ARGUMENT( lua_tobf_read, 1, "reader" ) );
     return 1;
 }
+LUA_BINDING_END()
 
-static const luaL_Reg bfReadLib[] = {
-    { "ReadBit", bfRead_ReadBit },
-    { "ReadByte", bfRead_ReadByte },
-    { "ReadChar", bfRead_ReadChar },
-    { "ReadShort", bfRead_ReadShort },
-    { "ReadWord", bfRead_ReadWord },
-    { "ReadLong", bfRead_ReadLong },
-    { "ReadFloat", bfRead_ReadFloat },
-    { "ReadVector", bfRead_ReadVector },
-    { "ReadVectorNormal", bfRead_ReadVectorNormal },
-    { "ReadAngle", bfRead_ReadAngle },
-    { "ReadString", bfRead_ReadString },
-    { "ReadBytes", bfRead_ReadBytes },
-    { "ReadEntity", bfRead_ReadEntity },
-    { "__index", bfRead___index },
-    { "__tostring", bfRead___tostring },
-    { NULL, NULL } };
 #endif
 
 /*
 ** Open networking libraries
 */
-LUALIB_API int luaopen_umsg( lua_State *L )
+LUALIB_API int luaopen_UserMessages( lua_State *L )
 {
-    luaL_register( L, LUA_UMSGLIBNAME, umsgLib );
+    LUA_REGISTRATION_COMMIT_LIBRARY( UserMessages );
     return 1;
 }
 
@@ -523,10 +511,13 @@ LUALIB_API int luaopen_umsg( lua_State *L )
 LUALIB_API int luaopen_bf_read( lua_State *L )
 {
     LUA_PUSH_NEW_METATABLE( L, LUA_BFREADLIBNAME );
-    luaL_register( L, NULL, bfReadLib );
-    lua_pushstring( L, "bf_read" );
-    lua_setfield( L, -2, "__type" ); /* metatable.__type = "bf_read" */
+
+    LUA_REGISTRATION_COMMIT( UserMessageReader );
+
+    lua_pushstring( L, LUA_BFREADLIBNAME );
+    lua_setfield( L, -2, "__type" ); /* metatable.__type = "UserMessageReader" */
     lua_pop( L, 1 );
+
     return 1;
 }
 #endif

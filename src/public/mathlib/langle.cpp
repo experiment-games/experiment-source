@@ -69,7 +69,7 @@ LUA_BINDING_BEGIN( Angle, Forward, "class", "Returns the forward vector of the a
 
     return 1;
 }
-LUA_BINDING_END( "vector", "The forward vector of the angle." )
+LUA_BINDING_END( "Vector", "The forward vector of the angle." )
 
 LUA_BINDING_BEGIN( Angle, Right, "class", "Returns the right vector of the angle." )
 {
@@ -80,7 +80,7 @@ LUA_BINDING_BEGIN( Angle, Right, "class", "Returns the right vector of the angle
 
     return 1;
 }
-LUA_BINDING_END( "vector", "The right vector of the angle." )
+LUA_BINDING_END( "Vector", "The right vector of the angle." )
 
 LUA_BINDING_BEGIN( Angle, Up, "class", "Returns the up vector of the angle." )
 {
@@ -91,7 +91,7 @@ LUA_BINDING_BEGIN( Angle, Up, "class", "Returns the up vector of the angle." )
 
     return 1;
 }
-LUA_BINDING_END( "vector", "The up vector of the angle." )
+LUA_BINDING_END( "Vector", "The up vector of the angle." )
 
 LUA_BINDING_BEGIN( Angle, IsEqualWithTolerance, "class", "Checks if the angle is equal to another angle within a tolerance." )
 {
@@ -115,7 +115,7 @@ LUA_BINDING_BEGIN( Angle, Init, "class", "Initializes the angle with the specifi
 
     return 1;
 }
-LUA_BINDING_END( "angle", "The initialized angle." )
+LUA_BINDING_END( "Angle", "The initialized angle." )
 
 LUA_BINDING_BEGIN( Angle, Invalidate, "class", "Invalidates the angle." )
 {
@@ -125,7 +125,7 @@ LUA_BINDING_BEGIN( Angle, Invalidate, "class", "Invalidates the angle." )
 
     return 1;
 }
-LUA_BINDING_END( "angle", "The invalidated angle." )
+LUA_BINDING_END( "Angle", "The invalidated angle." )
 
 LUA_BINDING_BEGIN( Angle, IsValid, "class", "Checks if the angle is valid." )
 {
@@ -175,7 +175,7 @@ LUA_BINDING_BEGIN( Angle, RotateAroundAxis, "class", "Rotates the angle around t
 
     return 1;
 }
-LUA_BINDING_END( "angle", "The rotated angle." )
+LUA_BINDING_END( "Angle", "The rotated angle." )
 
 //  Modifies the existing angle, adding another angle to it
 LUA_BINDING_BEGIN( Angle, Add, "class", "Modifies the existing angle, adding another angle to it." )
@@ -187,7 +187,7 @@ LUA_BINDING_BEGIN( Angle, Add, "class", "Modifies the existing angle, adding ano
 
     return 1;
 }
-LUA_BINDING_END( "angle", "The added angle." )
+LUA_BINDING_END( "Angle", "The added angle." )
 
 //  Modifies the existing angle, dividing it by a number
 LUA_BINDING_BEGIN( Angle, Divide, "class", "Modifies the existing angle, dividing it by a number." )
@@ -199,7 +199,7 @@ LUA_BINDING_BEGIN( Angle, Divide, "class", "Modifies the existing angle, dividin
 
     return 1;
 }
-LUA_BINDING_END( "angle", "The divided angle." )
+LUA_BINDING_END( "Angle", "The divided angle." )
 
 //  Modifies the existing angle, scaling it by a number
 LUA_BINDING_BEGIN( Angle, Scale, "class", "Modifies the existing angle, scaling it by a number." )
@@ -211,7 +211,7 @@ LUA_BINDING_BEGIN( Angle, Scale, "class", "Modifies the existing angle, scaling 
 
     return 1;
 }
-LUA_BINDING_END( "angle", "The scaled angle." )
+LUA_BINDING_END( "Angle", "The scaled angle." )
 
 LUA_BINDING_BEGIN( Angle, __index, "class", "Metatable that is called when a key is not found in the table." )
 {
@@ -278,7 +278,7 @@ LUA_BINDING_BEGIN( Angle, __add, "class", "Metatable that is called when the ang
     lua_pushangle( L, angle + angle2 );
     return 1;
 }
-LUA_BINDING_END( "angle", "The added angle." )
+LUA_BINDING_END( "Angle", "The added angle." )
 
 LUA_BINDING_BEGIN( Angle, __sub, "class", "Metatable that is called when the angle is to be subtracted from another angle." )
 {
@@ -287,7 +287,7 @@ LUA_BINDING_BEGIN( Angle, __sub, "class", "Metatable that is called when the ang
     lua_pushangle( L, angle - angle2 );
     return 1;
 }
-LUA_BINDING_END( "angle", "The subtracted angle." )
+LUA_BINDING_END( "Angle", "The subtracted angle." )
 
 LUA_BINDING_BEGIN( Angle, __mul, "class", "Metatable that is called when the angle is to be multiplied by a number." )
 {
@@ -296,7 +296,7 @@ LUA_BINDING_BEGIN( Angle, __mul, "class", "Metatable that is called when the ang
     lua_pushangle( L, angle * number );
     return 1;
 }
-LUA_BINDING_END( "angle", "The multiplied angle." )
+LUA_BINDING_END( "Angle", "The multiplied angle." )
 
 LUA_BINDING_BEGIN( Angle, __div, "class", "Metatable that is called when the angle is to be divided by a number." )
 {
@@ -305,7 +305,7 @@ LUA_BINDING_BEGIN( Angle, __div, "class", "Metatable that is called when the ang
     lua_pushangle( L, angle / number );
     return 1;
 }
-LUA_BINDING_END( "angle", "The divided angle." )
+LUA_BINDING_END( "Angle", "The divided angle." )
 
 LUA_BINDING_BEGIN( Angle, __unm, "class", "Metatable that is called when the angle is to be negated." )
 {
@@ -313,7 +313,7 @@ LUA_BINDING_BEGIN( Angle, __unm, "class", "Metatable that is called when the ang
     lua_pushangle( L, -angle );
     return 1;
 }
-LUA_BINDING_END( "angle", "The negated angle." )
+LUA_BINDING_END( "Angle", "The negated angle." )
 
 LUA_REGISTRATION_INIT( _G );
 
@@ -342,7 +342,7 @@ LUA_BINDING_BEGIN( _G, Angle, "library", "Creates a new angle." )
     lua_pushangle( L, lua_QAngle( x, y, z ) );
     return 1;
 }
-LUA_BINDING_END( "angle", "The created angle." )
+LUA_BINDING_END( "Angle", "The created angle." )
 
 /*
 ** Open QAngle object

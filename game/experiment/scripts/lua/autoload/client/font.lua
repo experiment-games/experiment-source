@@ -14,7 +14,7 @@ if (not CLIENT) then
 	return
 end
 
-local ComputeStringWidth = Util.ComputeStringWidth
+local ComputeStringWidth = Utilities.ComputeStringWidth
 local GetFontName = _R.IScheme.GetFontName
 local CreateFont = Surface.CreateFont
 local DrawSetTextFont = Surface.DrawSetTextFont
@@ -92,7 +92,7 @@ Hooks.Add("OnScreenSizeChanged", "HFontContainerManager", function()
 	end
 end)
 
-function Util.ComputeStringWidth(font, str)
+function Utilities.ComputeStringWidth(font, str)
 	local type = type(font)
 	if (type ~= "FontHandle" and type ~= "FontHandleContainer") then
 		error("bad argument #1 to 'ComputeStringWidth' (font or fontcontainer expected, got " .. type .. ")", 2)

@@ -8,7 +8,7 @@
 local MASK_SHOT = _E.MASK.SHOT
 local COLLISION_GROUP_NONE = 0
 
-local client = Util.PlayerByIndex(1)
+local client = Players.FindByIndex(1)
 
 if (client == NULL) then
 	return
@@ -21,7 +21,7 @@ local vecEye = client:EyePosition()
 
 -- For gmod compatibility, this no longer works:
 -- local tr = trace_t()
--- Util.TraceLine(vecEye, vecEye + vForward * 10000, MASK_SHOT, client, COLLISION_GROUP_NONE, tr)
+-- Traces.TraceLine(vecEye, vecEye + vForward * 10000, MASK_SHOT, client, COLLISION_GROUP_NONE, tr)
 -- MsgN(tostring(tr))
 -- local pEntity = tr.m_pEnt
 -- MsgN(tostring(pEntity) .. " (" .. (not CLIENT and pEntity:GetEntityName() or "") .. ")")
@@ -31,7 +31,7 @@ local vecEye = client:EyePosition()
 -- end
 -- This is how it should be done now:
 
-local traceResult = Util.TraceLine({
+local traceResult = Traces.TraceLine({
 	start = vecEye,
 	endpos = vecEye + (vForward * 10000),
 	mask = MASK_SHOT,

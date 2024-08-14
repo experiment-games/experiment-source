@@ -407,7 +407,7 @@ LUA_BINDING_BEGIN( Weapon, GetOwner, "class", "Get owner." )
     CBaseEntity::PushLuaInstanceSafe( L, ( CBasePlayer * )pWeapon->GetOwner() );
     return 1;
 }
-LUA_BINDING_END( "entity", "Owner entity." )
+LUA_BINDING_END( "Entity", "Owner entity." )
 
 LUA_BINDING_BEGIN( Weapon, GetSlotPosition, "class", "Get the weapon slot position in the selection screen." )
 {

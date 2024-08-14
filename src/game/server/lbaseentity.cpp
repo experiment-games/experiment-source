@@ -46,6 +46,16 @@ LUA_BINDING_BEGIN( Entity, DoesHavePlayerChild, "class", "Whether this entity ha
 }
 LUA_BINDING_END( "boolean", "true if has player child, false otherwise." )
 
+LUA_BINDING_BEGIN( Entity, DropToFloor, "class", "Drops the entity to the floor." )
+{
+    lua_CBaseEntity *pEntity = LUA_BINDING_ARGUMENT( luaL_checkentity, 1, "entity" );
+    int nMask = LUA_BINDING_ARGUMENT_WITH_DEFAULT( luaL_optinteger, 2, MASK_SOLID, "mask" );
+    CBaseEntity *pIgnore = LUA_BINDING_ARGUMENT_WITH_DEFAULT( luaL_optentity, 3, NULL, "ignore" );
+    lua_pushinteger( L, UTIL_DropToFloor( pEntity, nMask, pIgnore ) );
+    return 1;
+}
+LUA_BINDING_END( "number", "-1 if the floor to drop to isn't valid. 0 if nothing changed. 1 if the entity dropped to the floor" )
+
 LUA_BINDING_BEGIN( Entity, SetNavIgnore, "class", "Set nav ignore." )
 {
     lua_CBaseEntity *pEntity = LUA_BINDING_ARGUMENT( luaL_checkentity, 1, "entity" );
@@ -70,6 +80,76 @@ LUA_BINDING_BEGIN( Entity, IsNavIgnored, "class", "Is nav ignored." )
     return 1;
 }
 LUA_BINDING_END( "boolean", "true if nav ignored, false otherwise." )
+
+LUA_BINDING_BEGIN( Entity, GetPredictedPosition, "class", "Get the predicted postion of an entity of a certain number of seconds. Use this function with caution, it has great potential for annoying the player, especially if used for target firing predition" )
+{
+    lua_CBaseEntity *pEntity = LUA_BINDING_ARGUMENT( luaL_checkentity, 1, "entity" );
+    float timeDelta = LUA_BINDING_ARGUMENT( luaL_checknumber, 2, "timeDelta" );
+
+    Vector predictedPosition;
+    UTIL_PredictedPosition( pEntity, timeDelta, &predictedPosition );
+
+    lua_pushvector( L, predictedPosition );
+    return 1;
+}
+LUA_BINDING_END( "Vector", "The predicted position of the entity" )
+
+LUA_BINDING_BEGIN( Entity, PointAtEntity, "class", "Point at the specified entity" )
+{
+    lua_CBaseEntity *pEntity = LUA_BINDING_ARGUMENT( luaL_checkentity, 1, "entity" );
+    lua_CBaseEntity *pTarget = LUA_BINDING_ARGUMENT( luaL_checkentity, 2, "target" );
+
+    lua_pushboolean( L, UTIL_PointAtEntity( pEntity, pTarget ) );
+    return 1;
+}
+LUA_BINDING_END( "boolean", "true if pointed at, false if one of the entities was invalid." )
+
+LUA_BINDING_BEGIN( Entity, TransferPoseParameters, "class", "Transfer pose parameters from one entity to another" )
+{
+    lua_CBaseEntity *pEntity = LUA_BINDING_ARGUMENT( luaL_checkentity, 1, "entity" );
+    lua_CBaseEntity *pTarget = LUA_BINDING_ARGUMENT( luaL_checkentity, 2, "target" );
+
+    lua_pushboolean( L, UTIL_TransferPoseParameters( pEntity, pTarget ) );
+    return 1;
+}
+LUA_BINDING_END( "boolean", "true if transfered, false if one of the entities wasn't valid." )
+
+LUA_BINDING_BEGIN( Entity, IsInSolid, "class", "Is in solid." )
+{
+    lua_CBaseEntity *pEntity = LUA_BINDING_ARGUMENT( luaL_checkentity, 1, "entity" );
+    lua_pushboolean( L, UTIL_EntityInSolid( pEntity ) );
+    return 1;
+}
+LUA_BINDING_END( "boolean", "true if in solid, false otherwise." )
+
+/*
+* TODO: Expose enum:
+enum ShakeCommand_t
+{
+  SHAKE_START = 0,		// Starts the screen shake for all players within the radius.
+  SHAKE_STOP,				// Stops the screen shake for all players within the radius.
+  SHAKE_AMPLITUDE,		// Modifies the amplitude of an active screen shake for all players within the radius.
+  SHAKE_FREQUENCY,		// Modifies the frequency of an active screen shake for all players within the radius.
+  SHAKE_START_RUMBLEONLY,	// Starts a shake effect that only rumbles the controller, no screen effect.
+  SHAKE_START_NORUMBLE,	// Starts a shake that does NOT rumble the controller.
+};
+*/
+LUA_BINDING_BEGIN( Entity, ScreenShake, "class", "Shake an object and all players on or near it." )
+{
+    lua_CBaseEntity *pEntity = LUA_BINDING_ARGUMENT( luaL_checkentity, 1, "entity" );
+    Vector center = LUA_BINDING_ARGUMENT( luaL_checkvector, 2, "center" );
+    float amplitude = LUA_BINDING_ARGUMENT( luaL_checknumber, 3, "amplitude" );
+    float frequency = LUA_BINDING_ARGUMENT( luaL_checknumber, 4, "frequency" );
+    float duration = LUA_BINDING_ARGUMENT( luaL_checknumber, 5, "duration" );
+    float radius = LUA_BINDING_ARGUMENT( luaL_checknumber, 6, "radius" );
+
+    ShakeCommand_t eCommand = ( ShakeCommand_t )( int )LUA_BINDING_ARGUMENT_WITH_DEFAULT( luaL_optnumber, 7, SHAKE_START, "shakeCommand" );
+    bool shouldShakePlayersInAir = LUA_BINDING_ARGUMENT_WITH_DEFAULT( luaL_optboolean, 8, false, "shouldShakePlayersInAir" );
+
+    UTIL_ScreenShakeObject( pEntity, center, amplitude, frequency, duration, radius, eCommand, shouldShakePlayersInAir );
+    return 0;
+}
+LUA_BINDING_END()
 
 LUA_BINDING_BEGIN( Entity, SetTransmitState, "class", "Set transmit state." )
 {
@@ -296,6 +376,27 @@ LUA_BINDING_BEGIN( Entity, GetInputDispatchEffectPosition, "class", "Get input d
 }
 LUA_BINDING_END( "vector, angle", "The position and angles" )
 
+LUA_BINDING_BEGIN( Entity, EmitAmbientSound, "class", "Emits an ambient sound" )
+{
+    lua_CBaseEntity *pEntity = LUA_BINDING_ARGUMENT( luaL_checkentity, 1, "entity" );
+
+    float duration;
+    UTIL_EmitAmbientSound(
+        pEntity->entindex(),
+        LUA_BINDING_ARGUMENT( luaL_checkvector, 2, "origin" ),
+        LUA_BINDING_ARGUMENT( luaL_checkstring, 3, "sample" ),
+        LUA_BINDING_ARGUMENT( luaL_checknumber, 4, "volume" ),
+        ( soundlevel_t )LUA_BINDING_ARGUMENT( luaL_checkinteger, 5, "soundLevel" ),
+        LUA_BINDING_ARGUMENT( luaL_checkinteger, 6, "flags" ),
+        LUA_BINDING_ARGUMENT( luaL_checkinteger, 7, "pitch" ),
+        LUA_BINDING_ARGUMENT_WITH_DEFAULT( luaL_optnumber, 8, 0.0f, "soundTime" ),
+        &duration );
+
+    lua_pushnumber( L, duration );
+    return 1;
+}
+LUA_BINDING_END( "number", "The duration of the sound." )
+
 LUA_BINDING_BEGIN( Entity, EntityText, "class", "Entity text." )
 {
     lua_CBaseEntity *pEntity = LUA_BINDING_ARGUMENT( luaL_checkentity, 1, "entity" );
@@ -400,7 +501,7 @@ LUA_BINDING_BEGIN( Entity, Instance, "class|static", "Get entity instance." )
     CBaseEntity::PushLuaInstanceSafe( L, CBaseEntity::Instance( nEdictIndex ) );
     return 1;
 }
-LUA_BINDING_END( "entity", "The entity instance" )
+LUA_BINDING_END( "Entity", "The entity instance" )
 
 LUA_BINDING_BEGIN( Entity, AddContext, "class", "Add context." )
 {
@@ -460,7 +561,7 @@ LUA_BINDING_BEGIN( Entity, GetAutoAimCenter, "class", "Get auto aim center." )
     lua_pushvector( L, pEntity->GetAutoAimCenter() );
     return 1;
 }
-LUA_BINDING_END( "vector", "The auto aim center" )
+LUA_BINDING_END( "Vector", "The auto aim center" )
 
 LUA_BINDING_BEGIN( Entity, PassesDamageFilter, "class", "Passes damage filter." )
 {
@@ -551,14 +652,6 @@ LUA_BINDING_BEGIN( Entity, IsMoving, "class", "Is moving." )
     return 1;
 }
 LUA_BINDING_END( "boolean", "true if moving, false otherwise." )
-
-LUA_BINDING_BEGIN( Entity, IsWorld, "class", "Whether entity is world." )
-{
-    lua_CBaseEntity *pEntity = LUA_BINDING_ARGUMENT( luaL_checkentity, 1, "entity" );
-    lua_pushboolean( L, pEntity->IsWorld() );
-    return 1;
-}
-LUA_BINDING_END( "boolean", "true if world, false otherwise." )
 
 LUA_BINDING_BEGIN( Entity, AddPoints, "class", "Add points." )
 {
@@ -653,7 +746,7 @@ LUA_BINDING_BEGIN( Entity, GetEnemy, "class", "Get enemy. Probably for NPC's onl
     CBaseEntity::PushLuaInstanceSafe( L, pEntity->GetEnemy() );
     return 1;
 }
-LUA_BINDING_END( "entity", "The enemy" )
+LUA_BINDING_END( "Entity", "The enemy" )
 
 LUA_BINDING_BEGIN( Entity, VelocityPunch, "class", "Velocity punch." )
 {
@@ -670,7 +763,7 @@ LUA_BINDING_BEGIN( Entity, GetNextTarget, "class", "Get next target." )
     CBaseEntity::PushLuaInstanceSafe( L, pEntity->GetNextTarget() );
     return 1;
 }
-LUA_BINDING_END( "entity", "The next target" )
+LUA_BINDING_END( "Entity", "The next target" )
 
 LUA_BINDING_BEGIN( Entity, Use, "class", "Dispatches use events to this entity's use handler, set via SetUse." )
 {
@@ -767,7 +860,7 @@ LUA_BINDING_BEGIN( Entity, CallUseToggle, "class", "Call use toggle." )
     return 0;
 }
 LUA_BINDING_END()
-\
+
 LUA_BINDING_BEGIN( Entity, PerformFadeOut, "class", "Perform fade out." )
 {
     lua_CBaseEntity *pEntity = LUA_BINDING_ARGUMENT( luaL_checkentity, 1, "entity" );
@@ -811,7 +904,7 @@ LUA_BINDING_BEGIN( Entity, Respawn, "class", "Respawn." )
     CBaseEntity::PushLuaInstanceSafe( L, pEntity->Respawn() );
     return 1;
 }
-LUA_BINDING_END( "entity", "The respawned entity" )
+LUA_BINDING_END( "Entity", "The respawned entity" )
 
 LUA_BINDING_BEGIN( Entity, TraceAttackToTriggers, "class", "Trace attack to triggers." )
 {
@@ -869,7 +962,7 @@ LUA_BINDING_END()
 ////     CBaseEntity::PushLuaInstanceSafe( L, CBaseEntity::Create( pszClassName, vPosition, qAngles, pOwner ) );
 ////     return 1;
 //// }
-//// LUA_BINDING_END( "entity", "The created entity" )
+//// LUA_BINDING_END( "Entity", "The created entity" )
 ////
 //// LUA_BINDING_BEGIN( Entity, CreateNoSpawn, "class", "Create entity without spawning it." )
 //// {
@@ -880,7 +973,7 @@ LUA_BINDING_END()
 ////     CBaseEntity::PushLuaInstanceSafe( L, CBaseEntity::CreateNoSpawn( pszClassName, vPosition, qAngles, pOwner ) );
 ////     return 1;
 //// }
-//// LUA_BINDING_END( "entity", "The created entity" )
+//// LUA_BINDING_END( "Entity", "The created entity" )
 
 LUA_BINDING_BEGIN( Entity, GetDamageType, "class", "Get damage type." )
 {
@@ -915,7 +1008,7 @@ LUA_BINDING_BEGIN( Entity, BodyTarget, "class", "Body target." )
     lua_pushvector( L, pEntity->BodyTarget( vPosition, bNoisy ) );
     return 1;
 }
-LUA_BINDING_END( "vector", "The body target" )
+LUA_BINDING_END( "Vector", "The body target" )
 
 LUA_BINDING_BEGIN( Entity, HeadTarget, "class", "Head target." )
 {
@@ -924,7 +1017,7 @@ LUA_BINDING_BEGIN( Entity, HeadTarget, "class", "Head target." )
     lua_pushvector( L, pEntity->HeadTarget( vPosition ) );
     return 1;
 }
-LUA_BINDING_END( "vector", "The head target" )
+LUA_BINDING_END( "Vector", "The head target" )
 
 LUA_BINDING_BEGIN( Entity, GetSmoothedVelocity, "class", "Get smoothed velocity." )
 {
@@ -932,7 +1025,7 @@ LUA_BINDING_BEGIN( Entity, GetSmoothedVelocity, "class", "Get smoothed velocity.
     lua_pushvector( L, pEntity->GetSmoothedVelocity() );
     return 1;
 }
-LUA_BINDING_END( "vector", "The smoothed velocity" )
+LUA_BINDING_END( "Vector", "The smoothed velocity" )
 
 LUA_BINDING_BEGIN( Entity, GetFriction, "class", "Get friction." )
 {
@@ -980,7 +1073,7 @@ LUA_BINDING_BEGIN( Entity, GetGroundVelocityToApply, "class", "Gets the velocity
     lua_pushvector( L, vecGroundVel );
     return 1;
 }
-LUA_BINDING_END( "vector", "The ground velocity to apply" )
+LUA_BINDING_END( "Vector", "The ground velocity to apply" )
 
 LUA_BINDING_BEGIN( Entity, PhysicsSplash, "class", "Physics splash." )
 {
@@ -1077,7 +1170,7 @@ LUA_BINDING_BEGIN( Entity, GetSoundEmissionOrigin, "class", "From a source SDK c
     lua_pushvector( L, pEntity->GetSoundEmissionOrigin() );
     return 1;
 }
-LUA_BINDING_END( "vector", "The sound emission origin" )
+LUA_BINDING_END( "Vector", "The sound emission origin" )
 
 LUA_BINDING_BEGIN( Entity, IsItem, "class", "Whether this entity is an item." )
 {

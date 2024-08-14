@@ -50,7 +50,7 @@ LUA_BINDING_BEGIN( Matrix, ApplyRotation, "class", "Applies a rotation to a vect
 
     return 1;
 }
-LUA_BINDING_END( "vector", "The rotated vector." )
+LUA_BINDING_END( "Vector", "The rotated vector." )
 
 LUA_BINDING_BEGIN( Matrix, As3x4, "class", "Converts a matrix to a 3x4 matrix." )
 {
@@ -91,7 +91,7 @@ LUA_BINDING_BEGIN( Matrix, GetBasisVectors, "class", "Gets the basis vectors of 
 
     return 3;
 }
-LUA_BINDING_END( "vector", "The forward vector.", "vector", "The left vector.", "vector", "The up vector." )
+LUA_BINDING_END( "Vector", "The forward vector.", "vector", "The left vector.", "vector", "The up vector." )
 
 LUA_BINDING_BEGIN( Matrix, GetForward, "class", "Gets the forward vector of the matrix." )
 {
@@ -100,7 +100,7 @@ LUA_BINDING_BEGIN( Matrix, GetForward, "class", "Gets the forward vector of the 
 
     return 1;
 }
-LUA_BINDING_END( "vector", "The forward vector." )
+LUA_BINDING_END( "Vector", "The forward vector." )
 
 LUA_BINDING_BEGIN( Matrix, GetLeft, "class", "Gets the left vector of the matrix." )
 {
@@ -109,7 +109,7 @@ LUA_BINDING_BEGIN( Matrix, GetLeft, "class", "Gets the left vector of the matrix
 
     return 1;
 }
-LUA_BINDING_END( "vector", "The left vector." )
+LUA_BINDING_END( "Vector", "The left vector." )
 
 LUA_BINDING_BEGIN( Matrix, GetScale, "class", "Gets the scale of the matrix." )
 {
@@ -118,7 +118,7 @@ LUA_BINDING_BEGIN( Matrix, GetScale, "class", "Gets the scale of the matrix." )
 
     return 1;
 }
-LUA_BINDING_END( "vector", "The scale." )
+LUA_BINDING_END( "Vector", "The scale." )
 
 LUA_BINDING_BEGIN( Matrix, GetTranslation, "class", "Gets the translation of the matrix." )
 {
@@ -127,7 +127,7 @@ LUA_BINDING_BEGIN( Matrix, GetTranslation, "class", "Gets the translation of the
 
     return 1;
 }
-LUA_BINDING_END( "vector", "The translation." )
+LUA_BINDING_END( "Vector", "The translation." )
 
 LUA_BINDING_BEGIN( Matrix, GetUp, "class", "Gets the up vector of the matrix." )
 {
@@ -136,7 +136,7 @@ LUA_BINDING_BEGIN( Matrix, GetUp, "class", "Gets the up vector of the matrix." )
 
     return 1;
 }
-LUA_BINDING_END( "vector", "The up vector." )
+LUA_BINDING_END( "Vector", "The up vector." )
 
 LUA_BINDING_BEGIN( Matrix, Identity, "class", "Sets the matrix to the identity matrix." )
 {
@@ -357,7 +357,7 @@ LUA_BINDING_BEGIN( Matrix, MultiplyByVector3x3, "class", "Multiplies a vector by
 
     return 1;
 }
-LUA_BINDING_END( "vector", "The multiplied vector." )
+LUA_BINDING_END( "Vector", "The multiplied vector." )
 
 LUA_BINDING_BEGIN( Matrix, MultiplyByVectorTranspose3x3, "class", "Apply the inverse (transposed) rotation (only works on pure rotation matrix)." )
 {
@@ -366,7 +366,7 @@ LUA_BINDING_BEGIN( Matrix, MultiplyByVectorTranspose3x3, "class", "Apply the inv
 
     return 1;
 }
-LUA_BINDING_END( "vector", "The multiplied vector." )
+LUA_BINDING_END( "Vector", "The multiplied vector." )
 
 LUA_BINDING_BEGIN( Matrix, MultiplyByVector4x3, "class", "Multiplies a vector by the matrix." )
 {
@@ -375,7 +375,7 @@ LUA_BINDING_BEGIN( Matrix, MultiplyByVector4x3, "class", "Multiplies a vector by
 
     return 1;
 }
-LUA_BINDING_END( "vector", "The multiplied vector." )
+LUA_BINDING_END( "Vector", "The multiplied vector." )
 
 LUA_BINDING_BEGIN( Matrix, MultiplyByVectorTranspose4x3, "class", "Multiplies a vector by the matrix." )
 {
@@ -384,7 +384,7 @@ LUA_BINDING_BEGIN( Matrix, MultiplyByVectorTranspose4x3, "class", "Multiplies a 
 
     return 1;
 }
-LUA_BINDING_END( "vector", "The multiplied vector." )
+LUA_BINDING_END( "Vector", "The multiplied vector." )
 
 LUA_BINDING_BEGIN( Matrix, __index, "class", "Metatable called when a non-existant field is index" )
 {
@@ -675,7 +675,7 @@ LUA_BINDING_BEGIN( Matrices, MatrixGetColumn, "library", "Gets a column of the m
     lua_pushvector( L, vec );
     return 1;
 }
-LUA_BINDING_END( "vector", "The column vector." )
+LUA_BINDING_END( "Vector", "The column vector." )
 
 LUA_BINDING_BEGIN( Matrices, MatrixSetColumn, "library", "Sets a column of the matrix." )
 {
@@ -691,7 +691,7 @@ LUA_BINDING_BEGIN( Matrices, MatrixGetRow, "library", "Gets a row of the matrix.
     lua_pushvector( L, vec );
     return 1;
 }
-LUA_BINDING_END( "vector", "The row vector." )
+LUA_BINDING_END( "Vector", "The row vector." )
 
 LUA_BINDING_BEGIN( Matrices, MatrixSetRow, "library", "Sets a row of the matrix." )
 {
@@ -707,7 +707,7 @@ LUA_BINDING_BEGIN( Matrices, Vector3dMultiply, "library", "Multiplies a vector b
     lua_pushvector( L, vec );
     return 1;
 }
-LUA_BINDING_END( "vector", "The multiplied vector." )
+LUA_BINDING_END( "Vector", "The multiplied vector." )
 
 LUA_BINDING_BEGIN( Matrices, Vector3dMultiplyPositionProjective, "library", "Multiplies a vector by the matrix." )
 {
@@ -716,7 +716,7 @@ LUA_BINDING_BEGIN( Matrices, Vector3dMultiplyPositionProjective, "library", "Mul
     lua_pushvector( L, vec );
     return 1;
 }
-LUA_BINDING_END( "vector", "The multiplied vector." )
+LUA_BINDING_END( "Vector", "The multiplied vector." )
 
 LUA_BINDING_BEGIN( Matrices, Vector3dMultiplyProjective, "library", "Multiplies a vector by the matrix." )
 {
@@ -725,7 +725,7 @@ LUA_BINDING_BEGIN( Matrices, Vector3dMultiplyProjective, "library", "Multiplies 
     lua_pushvector( L, vec );
     return 1;
 }
-LUA_BINDING_END( "vector", "The multiplied vector." )
+LUA_BINDING_END( "Vector", "The multiplied vector." )
 
 LUA_BINDING_BEGIN( Matrices, Vector3dMultiplyTranspose, "library", "Multiplies a vector by the matrix." )
 {
@@ -734,7 +734,7 @@ LUA_BINDING_BEGIN( Matrices, Vector3dMultiplyTranspose, "library", "Multiplies a
     lua_pushvector( L, vec );
     return 1;
 }
-LUA_BINDING_END( "vector", "The multiplied vector." )
+LUA_BINDING_END( "Vector", "The multiplied vector." )
 
 LUA_BINDING_BEGIN( Matrices, MatrixBuildTranslation, "library", "Builds a translation matrix." )
 {
@@ -861,7 +861,7 @@ LUA_BINDING_BEGIN( Matrices, CalculateAabbFromProjectionMatrix, "library", "Calc
     lua_pushvector( L, vecMax );
     return 2;
 }
-LUA_BINDING_END( "vector", "The minimum vector.", "vector", "The maximum vector." )
+LUA_BINDING_END( "Vector", "The minimum vector.", "vector", "The maximum vector." )
 
 LUA_BINDING_BEGIN( Matrices, CalculateSphereFromProjectionMatrix, "library", "Calculates a sphere from a projection matrix." )
 {
@@ -875,7 +875,7 @@ LUA_BINDING_BEGIN( Matrices, CalculateSphereFromProjectionMatrix, "library", "Ca
     lua_pushnumber( L, flRadius );
     return 2;
 }
-LUA_BINDING_END( "vector", "The center vector.", "number", "The radius." )
+LUA_BINDING_END( "Vector", "The center vector.", "number", "The radius." )
 
 LUA_BINDING_BEGIN( Matrices, MatrixFromAngles, "library", "Sets the matrix to a rotation matrix." )
 {

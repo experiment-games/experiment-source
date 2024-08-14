@@ -6,6 +6,12 @@
 #include "lbaseentity_shared.h"
 #include "mathlib/lvector.h"
 
+#ifdef CLIENT_DLL
+#include "c_world.h"
+#else
+#include "world.h"
+#endif
+
 // memdbgon must be the last include file in a .cpp file!!!
 #include "tier0/memdbgon.h"
 
@@ -27,12 +33,12 @@ LUA_API void lua_pushtrace( lua_State *L, lua_CGameTrace &tr )
 {
     lua_CGameTrace *ptr = ( lua_CGameTrace * )lua_newuserdata( L, sizeof( lua_CGameTrace ) );
     *ptr = tr;
-    LUA_SAFE_SET_METATABLE( L, LUA_GAMETRACELIBNAME );
+    LUA_SAFE_SET_METATABLE( L, LUA_GAMETRACEMETANAME );
 }
 
 LUALIB_API lua_CGameTrace &luaL_checktrace( lua_State *L, int narg )
 {
-    lua_CGameTrace *d = ( lua_CGameTrace * )luaL_checkudata( L, narg, LUA_GAMETRACELIBNAME );
+    lua_CGameTrace *d = ( lua_CGameTrace * )luaL_checkudata( L, narg, LUA_GAMETRACEMETANAME );
     return *d;
 }
 
@@ -196,9 +202,13 @@ LUA_BINDING_BEGIN( Trace, __tostring, "class", "Get a string representation of t
 }
 LUA_BINDING_END( "string", "The string representation of the trace." )
 
-LUA_REGISTRATION_INIT( _G )
+/*
+** Traces Library functions
+*/
 
-LUA_BINDING_BEGIN( _G, CreateTrace, "library", "Create a new trace object." )
+LUA_REGISTRATION_INIT( Traces )
+
+LUA_BINDING_BEGIN( Traces, Create, "library", "Create a new trace object." )
 {
     lua_CGameTrace trace;
     lua_pushtrace( L, trace );
@@ -206,20 +216,430 @@ LUA_BINDING_BEGIN( _G, CreateTrace, "library", "Create a new trace object." )
 }
 LUA_BINDING_END( "Trace", "The new trace object." )
 
+CTraceLuaFilter::CTraceLuaFilter( lua_State *L, int filterArg, int collisionGroup, bool bIgnoreWorld, bool bFilterTableInverted /* = false */ )
+    : CTraceFilterSimple( NULL, collisionGroup ),
+      m_pLuaState( L ),
+      m_bIgnoreWorld( bIgnoreWorld ),
+      m_bFilterTableInverted( bFilterTableInverted )
+{
+    m_iFilterArgIndex = filterArg = lua_absindex( L, filterArg );
+    m_pPassEntity = nullptr;
+
+    if ( lua_isfunction( m_pLuaState, filterArg ) )
+    {
+        // Keep function arg on stack, ready to poll in ShouldHitEntity later
+        m_iFilterType = LUA_TFUNCTION;
+    }
+    else if ( lua_toentity( m_pLuaState, filterArg ) )
+    {
+        m_pPassEntity = lua_toentity( m_pLuaState, filterArg );
+        // No need to keep the entity on the stack
+        lua_remove( m_pLuaState, filterArg );
+    }
+    else if ( lua_istable( m_pLuaState, filterArg ) )
+    {
+        // Keep table on stack, ready to check in ShouldHitEntity later
+        // Might be a table of entities, or table of classnames
+        m_iFilterType = LUA_TTABLE;
+    }
+    else if ( !lua_isnil( m_pLuaState, filterArg ) )
+    {
+        luaL_typeerror( m_pLuaState, filterArg, "Entity, function, or table" );
+    }
+}
+
+bool CTraceLuaFilter::ShouldHitEntity( IHandleEntity *pHandleEntity, int contentsMask )
+{
+    if ( m_bIgnoreWorld && pHandleEntity == GetWorldEntity() )
+        return false;
+
+    // Do not hit entities returned by the function, or have the function return a
+    // boolean to determine if the entity should be hit
+    if ( m_iFilterType == LUA_TFUNCTION )
+    {
+        lua_pushvalue( m_pLuaState, m_iFilterArgIndex );
+        CBaseEntity::PushLuaInstanceSafe( m_pLuaState, EntityFromEntityHandle( pHandleEntity ) );
+        lua_call( m_pLuaState, 1, 1 );
+
+        if ( lua_isboolean( m_pLuaState, -1 ) )
+        {
+            bool bResult = lua_toboolean( m_pLuaState, -1 );
+            lua_pop( m_pLuaState, 1 );  // Pop the result
+            return bResult;
+        }
+        else if ( lua_toentity( m_pLuaState, -1 ) != NULL )
+        {
+            lua_CBaseEntity *pEntity = lua_toentity( m_pLuaState, -1 );
+            lua_pop( m_pLuaState, 1 );  // Pop the result
+
+            if ( pEntity == EntityFromEntityHandle( pHandleEntity ) )
+            {
+                return false;
+            }
+
+            return false;
+        }
+
+        luaL_error( m_pLuaState, "Filter function must return a boolean or valid entity" );
+    }
+    // Do not hit entities in the table, or entities that have one of the class names in the table
+    else if ( m_iFilterType == LUA_TTABLE )
+    {
+        lua_pushvalue( m_pLuaState, m_iFilterArgIndex );
+
+        lua_pushnil( m_pLuaState );  // Push a nil key to start iteration
+        while ( lua_next( m_pLuaState, -2 ) )
+        {
+            if ( lua_type( m_pLuaState, -1 ) == LUA_TSTRING )
+            {
+                CBaseEntity *pEntity = EntityFromEntityHandle( pHandleEntity );
+                if ( pEntity && FClassnameIs( pEntity, lua_tostring( m_pLuaState, -1 ) ) )
+                {
+                    lua_pop( m_pLuaState, 2 );  // Pop the value and the key
+                    return m_bFilterTableInverted;
+                }
+            }
+            else
+            {
+                lua_CBaseEntity *pEntity = lua_toentity( m_pLuaState, -1 );
+
+                if ( !pEntity )
+                {
+                    luaL_typeerror( m_pLuaState, -1, "Entity or string" );
+                }
+                else if ( pEntity == EntityFromEntityHandle( pHandleEntity ) )
+                {
+                    lua_pop( m_pLuaState, 2 );  // Pop the value and the key
+                    return m_bFilterTableInverted;
+                }
+            }
+
+            lua_pop( m_pLuaState, 1 );  // Pop the value, keep the key
+        }
+
+        lua_pop( m_pLuaState, 1 );  // Pop the table
+        return CTraceFilterSimple::ShouldHitEntity( pHandleEntity, contentsMask ) != m_bFilterTableInverted;
+    }
+    else if ( m_pPassEntity && m_pPassEntity == EntityFromEntityHandle( pHandleEntity ) )
+    {
+        return false;
+    }
+
+    return CTraceFilterSimple::ShouldHitEntity( pHandleEntity, contentsMask );
+}
+
+#ifdef CLIENT_DLL
+C_BaseEntity *CTraceLuaFilter::GetWorldEntity( void )
+{
+    return GetClientWorldEntity();
+}
+#endif
+
+// TODO: Actually push trace_t so it can be used by the likes of UTIL_BloodDecalTrace
+LUA_API void lua_pushtrace_t( lua_State *L, trace_t *trace, bool bNoNewTable /* = false*/ )
+{
+    if ( !bNoNewTable )
+        lua_newtable( L );
+
+    // For gmod compatibility we create a table with more values
+    const surfacedata_t *pSurfaceData = physprops->GetSurfaceData( trace->surface.surfaceProps );
+
+    lua_pushstring( L, "Entity" );
+    if ( trace->m_pEnt && trace->m_pEnt->IsWorld() )
+    {
+        CBaseEntity::PushLuaInstanceSafe( L, NULL );
+    }
+    else
+    {
+        CBaseEntity::PushLuaInstanceSafe( L, trace->m_pEnt );
+    }
+    lua_settable( L, -3 );
+
+    lua_pushstring( L, "Fraction" );
+    lua_pushnumber( L, trace->fraction );
+    lua_settable( L, -3 );
+
+    lua_pushstring( L, "FractionLeftSolid" );
+    lua_pushnumber( L, trace->fractionleftsolid );
+    lua_settable( L, -3 );
+
+    lua_pushstring( L, "Hit" );
+    lua_pushboolean( L, trace->DidHit() );
+    lua_settable( L, -3 );
+
+    lua_pushstring( L, "HitBox" );
+    lua_pushinteger( L, trace->hitbox );
+    lua_settable( L, -3 );
+
+    lua_pushstring( L, "HitGroup" );
+    lua_pushinteger( L, trace->hitgroup );
+    lua_settable( L, -3 );
+
+    lua_pushstring( L, "HitNoDraw" );
+    lua_pushboolean( L, trace->DidHitNonWorldEntity() );
+    lua_settable( L, -3 );
+
+    lua_pushstring( L, "HitNonWorld" );
+    lua_pushboolean( L, trace->DidHitNonWorldEntity() );
+    lua_settable( L, -3 );
+
+    lua_pushstring( L, "HitNormal" );
+    lua_pushvector( L, trace->plane.normal );
+    lua_settable( L, -3 );
+
+    lua_pushstring( L, "HitPos" );
+    lua_pushvector( L, trace->endpos );
+    lua_settable( L, -3 );
+
+    lua_pushstring( L, "HitSky" );
+    lua_pushboolean( L, trace->surface.flags & SURF_SKY );
+    lua_settable( L, -3 );
+
+    lua_pushstring( L, "HitTexture" );
+    lua_pushstring( L, trace->surface.name );
+    lua_settable( L, -3 );
+
+    lua_pushstring( L, "HitWorld" );
+    lua_pushboolean( L, trace->DidHitWorld() );
+    lua_settable( L, -3 );
+
+    lua_pushstring( L, "MatType" );
+    lua_pushinteger( L, pSurfaceData->game.material );
+    lua_settable( L, -3 );
+
+    Vector normal = trace->endpos - trace->startpos;
+    VectorNormalizeFast( normal );
+    lua_pushstring( L, "Normal" );
+    lua_pushvector( L, normal );
+    lua_settable( L, -3 );
+
+    lua_pushstring( L, "PhysicsBone" );
+    lua_pushinteger( L, trace->physicsbone );
+    lua_settable( L, -3 );
+
+    lua_pushstring( L, "StartPos" );
+    lua_pushvector( L, trace->startpos );
+    lua_settable( L, -3 );
+
+    lua_pushstring( L, "SurfaceProps" );
+    lua_pushinteger( L, trace->surface.surfaceProps );
+    lua_settable( L, -3 );
+
+    lua_pushstring( L, "StartSolid" );
+    lua_pushboolean( L, trace->startsolid );
+    lua_settable( L, -3 );
+
+    lua_pushstring( L, "AllSolid" );
+    lua_pushboolean( L, trace->allsolid );
+    lua_settable( L, -3 );
+
+    lua_pushstring( L, "SurfaceFlags" );
+    lua_pushinteger( L, trace->surface.flags );
+    lua_settable( L, -3 );
+
+    lua_pushstring( L, "DispFlags" );
+    lua_pushinteger( L, trace->dispFlags );
+    lua_settable( L, -3 );
+
+    lua_pushstring( L, "Contents" );
+    lua_pushinteger( L, trace->contents );
+    lua_settable( L, -3 );
+}
+
+LUA_API void lua_checktracestruct( lua_State *L, int narg )
+{
+    luaL_checktype( L, 1, LUA_TTABLE );
+}
+
+LUA_API void lua_checktracestruct( lua_State *L, int narg, Vector &start, Vector &end, int &mask, int &collisionGroup, bool &bIgnoreWorld, bool &bFilterTableInverted, bool &bOutput, CTraceLuaFilter *filter )
+{
+    lua_checktracestruct( L, narg );
+
+    // For quick compatibility with gmod we use its inconsistent naming in the trace table
+    lua_getfield( L, narg, "start" );
+    start = Vector( 0, 0, 0 );
+    start = luaL_optvector( L, -1, &start );
+    lua_pop( L, 1 );
+
+    lua_getfield( L, narg, "endpos" );
+    end = Vector( 0, 0, 0 );
+    end = luaL_optvector( L, -1, &end );
+    lua_pop( L, 1 );
+
+    lua_getfield( L, narg, "mask" );
+    mask = luaL_optnumber( L, -1, MASK_SOLID );
+    lua_pop( L, 1 );
+
+    lua_getfield( L, narg, "collisiongroup" );
+    collisionGroup = luaL_optnumber( L, -1, COLLISION_GROUP_NONE );
+    lua_pop( L, 1 );
+
+    lua_getfield( L, narg, "ignoreworld" );
+    bIgnoreWorld = luaL_optboolean( L, -1, false );
+    lua_pop( L, 1 );
+
+    lua_getfield( L, narg, "whitelist" );
+    bFilterTableInverted = luaL_optboolean( L, -1, false );
+    lua_pop( L, 1 );
+
+    lua_getfield( L, narg, "output" );
+    bOutput = !lua_isnil( L, -1 );
+    lua_pop( L, 1 );
+
+    lua_getfield( L, narg, "filter" );
+    filter = new CTraceLuaFilter( L, -1, collisionGroup, bIgnoreWorld, bFilterTableInverted );
+    // lua_pop( L, 1 ); // Don't pop the filter. CTraceLuaFilter will handle it, leaving the filter on the stack if it's a function
+}
+
+LUA_BINDING_BEGIN( Traces, TraceLine, "library", "Trace a line." )
+{
+    Vector vecStart, vecEnd;
+    int mask, collisionGroup;
+    bool bIgnoreWorld, bFilterTableInverted, bOutput;
+    CTraceLuaFilter *filter = nullptr;
+
+    LUA_BINDING_ARGUMENT( lua_checktracestruct, 1, "trace" );
+    lua_checktracestruct( L, 1, vecStart, vecEnd, mask, collisionGroup, bIgnoreWorld, bFilterTableInverted, bOutput, filter );
+
+    trace_t gameTrace;
+    Ray_t ray;
+    ray.Init( vecStart, vecEnd );
+    // enginetrace->TraceRay( ray, mask, filter, &gameTrace );
+    UTIL_TraceLine( vecStart, vecEnd, mask, filter, &gameTrace );
+
+    if ( bOutput )
+    {
+        // Let users pass a table to get the output placed in, instead of returning it
+        lua_getfield( L, 1, "output" );
+        lua_pushtrace_t( L, &gameTrace, true );
+        return 0;
+    }
+
+    lua_newtable( L );
+    lua_pushtrace_t( L, &gameTrace );
+
+    return 1;
+}
+LUA_BINDING_END( "TraceResult", "The trace result." )
+
+LUA_BINDING_BEGIN( Traces, TraceHull, "library", "Trace a hull." )
+{
+    Vector vecStart, vecEnd;
+    Vector vecMins, vecMaxs;
+    int mask, collisionGroup;
+    bool bIgnoreWorld, bFilterTableInverted, bOutput;
+    CTraceLuaFilter *filter = nullptr;
+
+    LUA_BINDING_ARGUMENT( lua_checktracestruct, 1, "trace" );
+    lua_checktracestruct( L, 1, vecStart, vecEnd, mask, collisionGroup, bIgnoreWorld, bFilterTableInverted, bOutput, filter );
+
+    trace_t gameTrace;
+    Ray_t ray;
+    ray.Init( vecStart, vecEnd, vecMins, vecMaxs );
+    UTIL_TraceHull( vecStart, vecEnd, vecMins, vecMaxs, mask, filter, &gameTrace );
+
+    if ( bOutput )
+    {
+        // Let users pass a table to get the output placed in, instead of returning it
+        lua_getfield( L, 1, "output" );
+        lua_pushtrace_t( L, &gameTrace, true );
+        return 0;
+    }
+
+    lua_newtable( L );
+    lua_pushtrace_t( L, &gameTrace );
+
+    return 1;
+}
+LUA_BINDING_END( "TraceResult", "The trace result." )
+
+LUA_BINDING_BEGIN( Traces, TraceEntity, "library", "Runs a trace using the entity's collisionmodel between two points. This does not take the entity's angles into account and will trace its unrotated collisionmodel." )
+{
+    lua_CBaseEntity *entity = LUA_BINDING_ARGUMENT( luaL_checkentity, 2, "entity" );
+    Vector vecStart, vecEnd;
+    int mask, collisionGroup;
+    bool bIgnoreWorld, bFilterTableInverted, bOutput;
+    CTraceLuaFilter *filter = nullptr;
+
+    LUA_BINDING_ARGUMENT( lua_checktracestruct, 1, "trace" );
+    lua_checktracestruct( L, 1, vecStart, vecEnd, mask, collisionGroup, bIgnoreWorld, bFilterTableInverted, bOutput, filter );
+
+    trace_t gameTrace;
+    UTIL_TraceEntity( entity, vecStart, vecEnd, mask, filter, &gameTrace );
+
+    if ( bOutput )
+    {
+        // Let users pass a table to get the output placed in, instead of returning it
+        lua_getfield( L, 2, "output" );
+        lua_pushtrace_t( L, &gameTrace, true );
+        return 0;
+    }
+
+    lua_newtable( L );
+    lua_pushtrace_t( L, &gameTrace );
+
+    return 1;
+}
+LUA_BINDING_END( "TraceResult", "The trace result." )
+
+LUA_BINDING_BEGIN( Traces, PointContents, "library", "Returns the contents mask + entity at a particular world-space position." )
+{
+    lua_pushinteger( L, UTIL_PointContents( LUA_BINDING_ARGUMENT( luaL_checkvector, 1, "point" ) ) );
+    return 1;
+}
+LUA_BINDING_END( "number", "The contents of the point." )
+
+// static int luasrc_Util_TraceModel( lua_State *L )
+//{
+//     UTIL_TraceModel( luaL_checkvector( L, 1 ), luaL_checkvector( L, 2 ), luaL_checkvector( L, 3 ), luaL_checkvector( L, 4 ), luaL_checkentity( L, 5 ), luaL_checknumber( L, 6 ), &luaL_checktrace( L, 7 ) );
+//     return 0;
+// }
+LUA_BINDING_BEGIN( Traces, TraceModel, "library", "Sweeps against a particular model, using collision rules." )
+{
+    Vector vecStart, vecEnd, vecMins, vecMaxs;
+    lua_CBaseEntity *entity = LUA_BINDING_ARGUMENT( luaL_checkentity, 5, "entity" );
+
+    vecStart = LUA_BINDING_ARGUMENT( luaL_checkvector, 1, "start" );
+    vecEnd = LUA_BINDING_ARGUMENT( luaL_checkvector, 2, "end" );
+    vecMins = LUA_BINDING_ARGUMENT( luaL_checkvector, 3, "hullMinimum" );
+    vecMaxs = LUA_BINDING_ARGUMENT( luaL_checkvector, 4, "hullMaximum" );
+    int collisionGroup = luaL_checknumber( L, 6 );
+
+    trace_t gameTrace;
+    UTIL_TraceModel( vecStart, vecEnd, vecMins, vecMaxs, entity, collisionGroup, &gameTrace );
+
+    lua_pushtrace_t( L, &gameTrace );
+
+    return 1;
+}
+LUA_BINDING_END( "TraceResult", "The trace result." )
+
+#ifdef GAME_DLL
+
+LUA_BINDING_BEGIN( Traces, ClearTrace, "library", "Clears the given trace object.", "server" )
+{
+    lua_CGameTrace &trace = LUA_BINDING_ARGUMENT( luaL_checktrace, 1, "trace" );
+    UTIL_ClearTrace( trace );
+    return 0;
+}
+LUA_BINDING_END()
+
+#endif // GAME_DLL
+
 /*
 ** Open CGameTrace object
 */
 LUALIB_API int luaopen_CGameTrace( lua_State *L )
 {
-    LUA_PUSH_NEW_METATABLE( L, LUA_GAMETRACELIBNAME );
+    LUA_PUSH_NEW_METATABLE( L, LUA_GAMETRACEMETANAME );
 
     LUA_REGISTRATION_COMMIT( Trace );
 
-    lua_pushstring( L, LUA_GAMETRACELIBNAME );
+    lua_pushstring( L, LUA_GAMETRACEMETANAME );
     lua_setfield( L, -2, "__type" ); /* metatable.__type = "Trace" */
     lua_pop( L, 1 );                 /* pop metatable */
 
-    LUA_REGISTRATION_COMMIT_LIBRARY( _G );
+    LUA_REGISTRATION_COMMIT_LIBRARY( Traces );
 
     return 1;
 }

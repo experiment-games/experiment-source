@@ -15,7 +15,7 @@
 
 LUA_API lua_Vector &lua_tovector( lua_State *L, int idx )
 {
-    lua_Vector *v = ( lua_Vector * )luaL_checkudata( L, idx, LUA_VECTORLIBNAME );
+    lua_Vector *v = ( lua_Vector * )luaL_checkudata( L, idx, LUA_VECTORMETANAME );
     return *v;
 }
 
@@ -25,7 +25,7 @@ LUA_API lua_Vector &lua_tovector( lua_State *L, int idx )
 
 LUA_API bool lua_isvector( lua_State *L, int idx )
 {
-    void *p = luaL_testudata( L, idx, LUA_VECTORLIBNAME );
+    void *p = luaL_testudata( L, idx, LUA_VECTORMETANAME );
     return p != NULL;
 }
 
@@ -37,19 +37,19 @@ LUA_API void lua_pushvector( lua_State *L, lua_Vector &v )
 {
     lua_Vector *pVec = ( lua_Vector * )lua_newuserdata( L, sizeof( lua_Vector ) );
     *pVec = v;
-    LUA_SAFE_SET_METATABLE( L, LUA_VECTORLIBNAME );
+    LUA_SAFE_SET_METATABLE( L, LUA_VECTORMETANAME );
 }
 
 LUA_API void lua_pushvector( lua_State *L, const lua_Vector &v )
 {
     lua_Vector *pVec = ( lua_Vector * )lua_newuserdata( L, sizeof( lua_Vector ) );
     *pVec = v;
-    LUA_SAFE_SET_METATABLE( L, LUA_VECTORLIBNAME );
+    LUA_SAFE_SET_METATABLE( L, LUA_VECTORMETANAME );
 }
 
 LUALIB_API lua_Vector &luaL_checkvector( lua_State *L, int narg )
 {
-    lua_Vector *d = ( lua_Vector * )luaL_checkudata( L, narg, LUA_VECTORLIBNAME );
+    lua_Vector *d = ( lua_Vector * )luaL_checkudata( L, narg, LUA_VECTORMETANAME );
     return *d;
 }
 
@@ -70,7 +70,7 @@ LUA_BINDING_BEGIN( Vector, Angle, "class", "Converts a vector to an angle." )
 
     return 1;
 }
-LUA_BINDING_END( "angle", "The converted angle." )
+LUA_BINDING_END( "Angle", "The converted angle." )
 
 LUA_BINDING_BEGIN( Vector, AngleWithUp, "class", "Converts a vector to an angle with a specified up vector." )
 {
@@ -82,7 +82,7 @@ LUA_BINDING_BEGIN( Vector, AngleWithUp, "class", "Converts a vector to an angle 
 
     return 1;
 }
-LUA_BINDING_END( "angle", "The converted angle." )
+LUA_BINDING_END( "Angle", "The converted angle." )
 
 LUA_BINDING_BEGIN( Vector, Cross, "class", "Calculates the cross product of two vectors." )
 {
@@ -92,7 +92,7 @@ LUA_BINDING_BEGIN( Vector, Cross, "class", "Calculates the cross product of two 
 
     return 1;
 }
-LUA_BINDING_END( "vector", "The cross product of the two vectors." )
+LUA_BINDING_END( "Vector", "The cross product of the two vectors." )
 
 LUA_BINDING_BEGIN( Vector, DistanceTo, "class", "Calculates the distance between two vectors." )
 {
@@ -246,7 +246,7 @@ LUA_BINDING_BEGIN( Vector, GetGreatest, "class", "Calculates the maximum values 
 
     return 1;
 }
-LUA_BINDING_END( "vector", "The maximum values of the two vectors." )
+LUA_BINDING_END( "Vector", "The maximum values of the two vectors." )
 
 LUA_BINDING_BEGIN( Vector, GetSmallest, "class", "Calculates the minimum values of two vectors." )
 {
@@ -256,7 +256,7 @@ LUA_BINDING_BEGIN( Vector, GetSmallest, "class", "Calculates the minimum values 
 
     return 1;
 }
-LUA_BINDING_END( "vector", "The minimum values of the two vectors." )
+LUA_BINDING_END( "Vector", "The minimum values of the two vectors." )
 
 LUA_BINDING_BEGIN( Vector, MultiplyThenAdd, "class", "Multiplies the first vector by the second vector and adds the third vector." )
 {
@@ -417,7 +417,7 @@ LUA_BINDING_BEGIN( Vector, __add, "class", "Adds two vectors." )
 
     return 1;
 }
-LUA_BINDING_END( "vector", "The sum of the two vectors." )
+LUA_BINDING_END( "Vector", "The sum of the two vectors." )
 
 LUA_BINDING_BEGIN( Vector, __sub, "class", "Subtracts two vectors." )
 {
@@ -426,7 +426,7 @@ LUA_BINDING_BEGIN( Vector, __sub, "class", "Subtracts two vectors." )
 
     return 1;
 }
-LUA_BINDING_END( "vector", "The difference of the two vectors." )
+LUA_BINDING_END( "Vector", "The difference of the two vectors." )
 
 LUA_BINDING_BEGIN( Vector, __mul, "class", "Multiplies two vectors or a vector by a number." )
 {
@@ -451,7 +451,7 @@ LUA_BINDING_BEGIN( Vector, __mul, "class", "Multiplies two vectors or a vector b
 
     return 1;
 }
-LUA_BINDING_END( "vector", "The product of the two vectors or the vector and the number." )
+LUA_BINDING_END( "Vector", "The product of the two vectors or the vector and the number." )
 
 LUA_BINDING_BEGIN( Vector, __div, "class", "Divides a vector by a number." )
 {
@@ -461,7 +461,7 @@ LUA_BINDING_BEGIN( Vector, __div, "class", "Divides a vector by a number." )
 
     return 1;
 }
-LUA_BINDING_END( "vector", "The vector divided by the number." )
+LUA_BINDING_END( "Vector", "The vector divided by the number." )
 
 LUA_BINDING_BEGIN( Vector, __unm, "class", "Negates the vector." )
 {
@@ -470,11 +470,15 @@ LUA_BINDING_BEGIN( Vector, __unm, "class", "Negates the vector." )
 
     return 1;
 }
-LUA_BINDING_END( "vector", "The negated vector." )
+LUA_BINDING_END( "Vector", "The negated vector." )
 
-LUA_REGISTRATION_INIT( _G );
+/*
+** Vectors Library
+*/
 
-LUA_BINDING_BEGIN( _G, Vector, "library", "Creates a new vector." )
+LUA_REGISTRATION_INIT( Vectors );
+
+LUA_BINDING_BEGIN( Vectors, Create, "library", "Creates a new vector." )
 {
     // If the argument is a vector, copy it
     if ( lua_isvector( L, 1 ) )
@@ -499,21 +503,125 @@ LUA_BINDING_BEGIN( _G, Vector, "library", "Creates a new vector." )
     lua_pushvector( L, Vector( x, y, z ) );
     return 1;
 }
-LUA_BINDING_END( "vector", "The created vector." )
+LUA_BINDING_END( "Vector", "The created vector." )
+
+LUA_BINDING_BEGIN( Vectors, VectorToYaw, "library", "Converts a vector to a yaw angle." )
+{
+    lua_Vector &vec = LUA_BINDING_ARGUMENT( luaL_checkvector, 1, "vector" );
+    lua_pushnumber( L, UTIL_VecToYaw( vec ) );
+
+    return 1;
+}
+LUA_BINDING_END( "number", "The converted yaw angle." )
+
+LUA_BINDING_BEGIN( Vectors, VectorToPitch, "library", "Converts a vector to a pitch angle." )
+{
+    lua_Vector &vec = LUA_BINDING_ARGUMENT( luaL_checkvector, 1, "vector" );
+    lua_pushnumber( L, UTIL_VecToPitch( vec ) );
+
+    return 1;
+}
+LUA_BINDING_END( "number", "The converted pitch angle." )
+
+LUA_BINDING_BEGIN( Vectors, YawToVector, "library", "Converts a yaw angle to a vector." )
+{
+    float yaw = LUA_BINDING_ARGUMENT( luaL_checknumber, 1, "yaw" );
+    lua_pushvector( L, UTIL_YawToVector( yaw ) );
+
+    return 1;
+}
+LUA_BINDING_END( "Vector", "The converted vector." )
+//
+// static int luasrc_Util_AxisStringToPointDir( lua_State *L )
+//{
+//    Vector start, dir;
+//    UTIL_AxisStringToPointDir( start, dir, luaL_checkstring( L, 1 ) );
+//    lua_pushvector( L, start );
+//    lua_pushvector( L, dir );
+//    return 2;
+//}
+//
+// static int luasrc_Util_AxisStringToPointPoint( lua_State *L )
+//{
+//    Vector start, end;
+//    UTIL_AxisStringToPointPoint( start, end, luaL_checkstring( L, 1 ) );
+//    lua_pushvector( L, start );
+//    lua_pushvector( L, end );
+//    return 2;
+//}
+//
+// static int luasrc_Util_AxisStringToUnitDir( lua_State *L )
+//{
+//    Vector dir;
+//    UTIL_AxisStringToUnitDir( dir, luaL_checkstring( L, 1 ) );
+//    lua_pushvector( L, dir );
+//    return 1;
+//}
+// static int luasrc_Util_SnapDirectionToAxis( lua_State *L )
+//{
+//    UTIL_SnapDirectionToAxis( luaL_checkvector( L, 1 ), luaL_optnumber( L, 2, 0.002f ) );
+//    return 0;
+//}
+
+#ifdef GAME_DLL
+
+LUA_BINDING_BEGIN( Vectors, AxisStringToPointDirection, "library", "Converts an axis string to a point direction." )
+{
+    Vector start, direction;
+    UTIL_AxisStringToPointDir( start, direction, LUA_BINDING_ARGUMENT( luaL_checkstring, 1, "axisString" ) );
+    lua_pushvector( L, start );
+    lua_pushvector( L, direction );
+
+    return 2;
+}
+LUA_BINDING_END( "Vector", "The converted start point.", "vector", "The converted direction." )
+
+LUA_BINDING_BEGIN( Vectors, AxisStringToPointPoint, "library", "Converts an axis string to a point point." )
+{
+    Vector start, end;
+    UTIL_AxisStringToPointPoint( start, end, LUA_BINDING_ARGUMENT( luaL_checkstring, 1, "axisString" ) );
+    lua_pushvector( L, start );
+    lua_pushvector( L, end );
+
+    return 2;
+}
+LUA_BINDING_END( "Vector", "The converted start point.", "vector", "The converted end point." )
+
+LUA_BINDING_BEGIN( Vectors, AxisStringToUnitDirection, "library", "Converts an axis string to a unit direction." )
+{
+    Vector direction;
+    UTIL_AxisStringToUnitDir( direction, LUA_BINDING_ARGUMENT( luaL_checkstring, 1, "axisString" ) );
+    lua_pushvector( L, direction );
+
+    return 1;
+}
+LUA_BINDING_END( "Vector", "The converted unit direction." )
+
+LUA_BINDING_BEGIN( Vectors, SnapDirectionToAxis, "library", "Modifies a vector so it snaps to the nearest axis vector (if within epsilon)." )
+{
+    UTIL_SnapDirectionToAxis(
+        LUA_BINDING_ARGUMENT( luaL_checkvector, 1, "direction" ),
+        LUA_BINDING_ARGUMENT_WITH_DEFAULT( luaL_optnumber, 2, 0.002f, "epsilon" ) );
+
+    return 0;
+}
+LUA_BINDING_END()
+
+#endif  // GAME_DLL
 
 /*
 ** Open Vector object
 */
 LUALIB_API int luaopen_Vector( lua_State *L )
 {
-    LUA_PUSH_NEW_METATABLE( L, LUA_VECTORLIBNAME );
+    LUA_PUSH_NEW_METATABLE( L, LUA_VECTORMETANAME );
 
     LUA_REGISTRATION_COMMIT( Vector );
 
-    lua_pushstring( L, "Vector" );
+    lua_pushstring( L, LUA_VECTORMETANAME );
     lua_setfield( L, -2, "__type" ); /* metatable.__type = "Vector" */
 
-    LUA_REGISTRATION_COMMIT_LIBRARY( _G );
+    LUA_REGISTRATION_COMMIT_LIBRARY( Vectors );
     lua_pop( L, 1 );  // pop metatable
 
     Vector origin = vec3_origin;

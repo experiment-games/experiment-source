@@ -749,9 +749,9 @@ if (SERVER) then
         end
 
 		local origin = entity:GetPosition()
-		local count, entitiesInPVS = Util.EntitiesInPVS(origin)
+		local entities = Entities.GetInPvs(origin)
 
-        for _, ent in ipairs(entitiesInPVS) do
+        for _, ent in ipairs(entities) do
             if (not ent:IsPlayer()) then
                 continue
             end

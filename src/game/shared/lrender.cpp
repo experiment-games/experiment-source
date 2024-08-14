@@ -32,6 +32,48 @@ static Frustum renderFrustum2D;
 static CUtlStack< ShaderAPITextureHandle_t > filterTextureHandlesMinification;
 static CUtlStack< ShaderAPITextureHandle_t > filterTextureHandlesMagnification;
 
+#ifdef GAME_DLL
+
+LUA_BINDING_BEGIN( Renders, SpawnBeam, "library", "Spawns a temporary beam entity to render a beam. The alpha of the color servers as the brightness of it.", "server" )
+{
+    Vector start = LUA_BINDING_ARGUMENT( luaL_checkvector, 1, "start" );
+    Vector end = LUA_BINDING_ARGUMENT( luaL_checkvector, 2, "end" );
+    int modelIndex = LUA_BINDING_ARGUMENT( luaL_checkinteger, 3, "modelIndex" );
+    int haloIndex = LUA_BINDING_ARGUMENT( luaL_checkinteger, 4, "haloIndex" );
+    unsigned char frameStart = LUA_BINDING_ARGUMENT( luaL_checkinteger, 5, "frameStart" );
+    unsigned char frameRate = LUA_BINDING_ARGUMENT( luaL_checkinteger, 6, "frameRate" );
+    float life = LUA_BINDING_ARGUMENT( luaL_checknumber, 7, "life" );
+    unsigned char width = LUA_BINDING_ARGUMENT( luaL_checkinteger, 8, "width" );
+    unsigned char endWidth = LUA_BINDING_ARGUMENT( luaL_checkinteger, 9, "endWidth" );
+    unsigned char fadeLength = LUA_BINDING_ARGUMENT( luaL_checkinteger, 10, "fadeLength" );
+    unsigned char noise = LUA_BINDING_ARGUMENT( luaL_checkinteger, 11, "noise" );
+    lua_Color colorAndBrightness = LUA_BINDING_ARGUMENT( luaL_checkcolor, 12, "colorAndBrightness" );
+    unsigned char speed = LUA_BINDING_ARGUMENT( luaL_checkinteger, 13, "speed" );
+
+    UTIL_Beam(
+        start,
+        end,
+        modelIndex,
+        haloIndex,
+        frameStart,
+        frameRate,
+        life,
+        width,
+        endWidth,
+        fadeLength,
+        noise,
+        colorAndBrightness.r(),
+        colorAndBrightness.g(),
+        colorAndBrightness.b(),
+        colorAndBrightness.a(),
+        speed );
+
+    return 0;
+}
+LUA_BINDING_END()
+
+#endif
+
 LUA_BINDING_BEGIN( Renders, GetRenderTarget, "library", "Get the currently active render target.", "client" )
 {
     CMatRenderContextPtr pRenderContext( materials );

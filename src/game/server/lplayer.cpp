@@ -156,6 +156,14 @@ LUA_BINDING_BEGIN( Player, PauseBonusProgress, "class", "Pause or unpause the bo
 }
 LUA_BINDING_END()
 
+LUA_BINDING_BEGIN( Player, ShowMessage, "class", "Show a message to the player." )
+{
+    lua_CBasePlayer *player = LUA_BINDING_ARGUMENT( luaL_checkplayer, 1, "player" );
+    UTIL_ShowMessage( LUA_BINDING_ARGUMENT( luaL_checkstring, 2, "message" ), player );
+    return 0;
+}
+LUA_BINDING_END()
+
 LUA_BINDING_BEGIN( Player, SetBonusProgress, "class", "Set the bonus progress for the player." )
 {
     lua_CBasePlayer *player = LUA_BINDING_ARGUMENT( luaL_checkplayer, 1, "player" );
@@ -189,7 +197,7 @@ LUA_BINDING_BEGIN( Player, GetBodyAngles, "class", "Get the body angles of the p
     lua_pushangle( L, player->BodyAngles() );
     return 1;
 }
-LUA_BINDING_END( "angle", "The body angles." )
+LUA_BINDING_END( "Angle", "The body angles." )
 
 LUA_BINDING_BEGIN( Player, GetBodyTarget, "class", "Get the body target of the player." )
 {
@@ -198,7 +206,7 @@ LUA_BINDING_BEGIN( Player, GetBodyTarget, "class", "Get the body target of the p
     lua_pushvector( L, target );
     return 1;
 }
-LUA_BINDING_END( "vector", "The body target." )
+LUA_BINDING_END( "Vector", "The body target." )
 
 LUA_BINDING_BEGIN( Player, ShouldFadeOnDeath, "class", "Check if the player should fade on death." )
 {
@@ -703,6 +711,16 @@ LUA_BINDING_BEGIN( Player, RemoveSuit, "class", "Remove the suit for the player.
 }
 LUA_BINDING_END()
 
+LUA_BINDING_BEGIN( Player, SayText, "library", "Say text to a player." )
+{
+    UTIL_SayText(
+        LUA_BINDING_ARGUMENT( luaL_checkstring, 2, "text" ),
+        LUA_BINDING_ARGUMENT( luaL_checkplayer, 1, "player" ) );
+
+    return 0;
+}
+LUA_BINDING_END()
+
 LUA_BINDING_BEGIN( Player, SetTeam, "class", "Change the team for the player." )
 {
     lua_CBasePlayer *player = LUA_BINDING_ARGUMENT( luaL_checkplayer, 1, "player" );
@@ -723,6 +741,45 @@ LUA_BINDING_BEGIN( Player, SetObserverTarget, "class", "Set the observer target 
 {
     lua_CBasePlayer *player = LUA_BINDING_ARGUMENT( luaL_checkplayer, 1, "player" );
     player->SetObserverTarget( LUA_BINDING_ARGUMENT( luaL_checkentity, 2, "target" ) );
+    return 0;
+}
+LUA_BINDING_END()
+//
+//static int luasrc_Util_PlayerDecalTrace( lua_State *L )
+//{
+//    UTIL_PlayerDecalTrace( &luaL_checktrace( L, 1 ), luaL_checkinteger( L, 2 ) );
+//    return 0;
+//}
+//
+//static int luasrc_Util_ClipPunchAngleOffset( lua_State *L )
+//{
+//    UTIL_ClipPunchAngleOffset( luaL_checkangle( L, 1 ), luaL_checkplayer( L, 2 )->m_Local.m_vecPunchAngle, luaL_checkangle( L, 3 ) );
+//    return 0;
+//}
+
+LUA_BINDING_BEGIN( Player, SprayDecal, "class", "Spray a decal for the player based on a trace with start and end." )
+{
+    lua_CBasePlayer *player = LUA_BINDING_ARGUMENT( luaL_checkplayer, 1, "player" );
+    lua_Vector traceStart = LUA_BINDING_ARGUMENT( luaL_checkvector, 2, "traceStart" );
+    lua_Vector traceEnd = LUA_BINDING_ARGUMENT( luaL_checkvector, 3, "traceEnd" );
+
+    trace_t trace;	
+    UTIL_TraceLine( traceStart, traceEnd, MASK_SOLID_BRUSHONLY, player, COLLISION_GROUP_NONE, &trace );
+
+    UTIL_PlayerDecalTrace( &trace, player->entindex() );
+
+    return 0;
+}
+LUA_BINDING_END()
+
+LUA_BINDING_BEGIN( Player, ClampPunchAngleOffset, "class", "Adds angleToClamp with the player's punch angle and clamps it between -clampTo and clampTo." )
+{
+    lua_CBasePlayer *player = LUA_BINDING_ARGUMENT( luaL_checkplayer, 1, "player" );
+    QAngle angleToClamp = LUA_BINDING_ARGUMENT( luaL_checkangle, 2, "start" );
+    QAngle clampTo = LUA_BINDING_ARGUMENT( luaL_checkangle, 3, "clampTo" );
+
+    UTIL_ClipPunchAngleOffset( angleToClamp, player->m_Local.m_vecPunchAngle, clampTo );
+
     return 0;
 }
 LUA_BINDING_END()

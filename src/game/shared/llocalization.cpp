@@ -37,7 +37,7 @@ LUA_BINDING_END()
 /*
 ** Open localization library
 */
-LUALIB_API int luaopen_localization( lua_State *L )
+LUALIB_API int luaopen_Localizations( lua_State *L )
 {
     LUA_REGISTRATION_COMMIT_LIBRARY( Localizations );
 

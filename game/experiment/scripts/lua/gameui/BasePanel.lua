@@ -8,9 +8,6 @@
 Include("../includes/extensions/panel.lua")
 
 local FCVAR_CLIENTDLL = _E.FCVAR.CLIENTDLL
-
-local ConsoleCommands = require("console_commands")
-
 local hContentDialog = INVALID_PANEL
 
 local function PositionDialog(dlg)

@@ -289,6 +289,13 @@ function fromTypeChecker(typeChecker) {
     case 'luaL_optphysicsobject':
     case 'lua_tophysicsobject':
       return 'PhysicsObject';
+    case 'luaL_checkrecipientfilter':
+    case 'lua_torecipientfilter':
+      return 'RecipientFilter';
+    case 'luaL_checkbf_read':
+    case 'luaL_optbf_read':
+    case 'lua_tobf_read':
+      return 'UserMessageReader';
     default:
       return 'unknown';
   }

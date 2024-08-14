@@ -11,29 +11,12 @@ Include("sh_file.lua")
 --]]
 
 bit = require("bitwise")
-concommand = require("console_commands")
 gamemode = require("gamemodes")
 hook = require("hooks")
 net = require("networks")
 timer = require("timers")
 weapons = require("scripted_weapons")
 -- scripted_ents = require("scripted_entities") -- Gmods scripted_ents is compatible with our ScriptedEntities
-
-local originalConCommandAdd = concommand.Add
-
-function concommand.Add(command, callback, autoCompleteHandler, helpText, flags)
-	if (istable(flags)) then
-		if (#flags == 0) then
-			flags = 0
-		elseif (#flags == 1) then
-			flags = flags[1]
-		else
-			flags = bit.bor(table.unpack(flags))
-		end
-	end
-
-	return originalConCommandAdd(command, callback, helpText, flags)
-end
 
 --[[
 	Renames and other polyfills
@@ -53,7 +36,7 @@ function GetConVar_Internal(name)
 	return consoleVariable
 end
 
-util = Util
+util = Utilities
 util.PrecacheModel = _R.Entity.PrecacheModel
 util.PrecacheSound = _R.Entity.PrecacheSound
 
@@ -62,6 +45,10 @@ util.PrecacheSound = _R.Entity.PrecacheSound
 util.AddNetworkString = function(name) end        -- Not needed for us.
 util.NetworkIDToString = function() return "" end -- Not needed for us.
 util.NetworkStringToID = function() return 0 end  -- Not needed for us.
+
+util.TraceLine = Traces.TraceLine
+util.TraceHull = Traces.TraceHull
+util.TraceEntity = Traces.TraceEntity
 
 util.JSONToTable = function(json)
 	return Json.Decode(json)
@@ -73,34 +60,18 @@ end
 
 util.IsValidProp = util.IsValidPhysicsProp
 util.CRC = function()
-	return tostring(util.CRC32)
+	return tostring(Serializers.Crc32)
 end
 
 ents = {
 	Create = CreateEntityByName,
-	GetAll = function()
-		return Entities.GetAll()
-	end,
 
-	GetCount = function()
-		return Entities.GetCount()
-	end,
-
-	GetEdictCount = function()
-		return Entities.GetEdictCount()
-	end,
-
-	FindAlongRay = function(...)
-		return select(2, Util.EntitiesAlongRay(...))
-	end,
-
-	FindInBox = function(...)
-		return select(2, Util.EntitiesInBox(...))
-	end,
-
-	FindInSphere = function(...)
-		return select(2, Util.EntitiesInSphere(...))
-	end,
+	GetAll = Entities.GetAll,
+	GetCount = Entities.GetCount,
+	GetEdictCount = Entities.GetEdictCount,
+	FindAlongRay = Entities.GetAlongRay,
+	FindInBox = Entities.GetInBox,
+	FindInSphere = Entities.GetInSphere,
 
 	FindInPVS = function(viewOrigin)
 		if (type(viewOrigin) == "Entity") then
@@ -115,18 +86,15 @@ ents = {
 			end
 		end
 
-		return select(2, Util.EntitiesInPVS(viewOrigin))
+		return Entities.GetInPvs(viewOrigin)
 	end,
 }
 
-player = {
-	GetAll = Util.GetAllPlayers,
-	GetByID = Util.PlayerByIndex,
-	GetBots = Util.GetAllBots,
-	GetHumans = Util.GetAllHumans,
-	GetBySteamID = Util.PlayerBySteamID,
-	GetBySteamID64 = Util.PlayerBySteamID64,
-}
+player = Players
+player.GetByID = Players.FindByUserId
+player.GetBySteamID = Players.FindBySteamId
+player.GetBySteamID64 = Players.FindBySteamId64
+player.GetByUniqueID = Players.FindByUniqueID
 
 -- We don't have LuaJIT
 jit = {
@@ -150,12 +118,14 @@ function FindMetaTable(name)
 		name = "EffectData"
 	elseif (name == "CMoveData") then
 		name = "MoveData"
-	-- elseif (name == "CRecipientFilter") then
-	-- name = "RecipientFilter"
-	-- elseif (name == "CTakeDamageInfo") then
-	-- 	name = "TakeDamageInfo"
-	-- elseif (name == "CUserCmd") then
-	-- 	name = "UserCommand"
+	elseif (name == "CRecipientFilter") then
+		name = "RecipientFilter"
+	elseif (name == "CTakeDamageInfo") then
+		name = "TakeDamageInfo"
+	elseif (name == "CUserCmd") then
+		name = "UserCommand"
+	elseif (name == "bf_read") then
+		name = "UserMessageReader"
 	-- elseif (name == "PhysObj") then
 	-- 	name = "PhysicsObject"
 	-- elseif (name == "PhysCollide") then
@@ -187,6 +157,9 @@ surface = Surface
 system = Systems
 vgui = Gui
 VMatrix = Matrix
+concommand = ConsoleCommands
+
+Vector = Vectors.Create
 
 RealFrameTime = Engines.GetAbsoluteFrameTime
 CurTime = Engines.GetCurrentTime
@@ -202,14 +175,33 @@ GetHostName = Engines.GetServerName
 
 PrecacheParticleSystem = ParticleSystems.Precache
 
+RecipientFilter = RecipientFilters.Create
+
 system.AppTime = Systems.GetSecondsSinceAppActive
 system.IsOSX = Systems.IsOsx
 system.SteamTime = Systems.GetSteamServerRealTime
 system.UpTime = Systems.GetSecondsSinceComputerActive
 
+local originalConCommandAdd = concommand.Add
+
+function concommand.Add(command, callback, autoCompleteHandler, helpText, flags)
+	if (istable(flags)) then
+		if (#flags == 0) then
+			flags = 0
+		elseif (#flags == 1) then
+			flags = flags[1]
+		else
+			flags = bit.bor(table.unpack(flags))
+		end
+	end
+
+	return originalConCommandAdd(command, callback, helpText, flags)
+end
+
 engine.ActiveGamemode = function()
 	return Gamemodes.GetActiveName()
 end
+
 engine.GetGames = function()
 	local games = Engines.GetMountableGames()
 	local result = {}
@@ -228,6 +220,7 @@ engine.GetGames = function()
 
 	return result
 end
+
 engine.GetAddons = function() return {} end    -- TODO: Implement with our addon system
 engine.GetGamemodes = function() return {} end -- TODO: Implement with our gamemode system
 engine.GetUserContent = function() return {} end
@@ -460,6 +453,9 @@ PLAYER_META.AnimRestartGesture = PLAYER_META.AnimationRestartGesture
 PLAYER_META.AnimRestartMainSequence = PLAYER_META.AnimationRestartMainSequence
 PLAYER_META.AnimSetGestureSequence = PLAYER_META.AnimationSetGestureSequence
 PLAYER_META.AnimSetGestureWeight = PLAYER_META.AnimationSetGestureWeight
+PLAYER_META.GetName = PLAYER_META.GetPlayerName
+PLAYER_META.Name = PLAYER_META.GetPlayerName
+PLAYER_META.Nick = PLAYER_META.GetPlayerName
 
 function PLAYER_META:GetInfo(consoleVariableName)
 	return engine.GetClientConsoleVariableValue(self, consoleVariableName)
@@ -532,7 +528,7 @@ function PLAYER_META:IsListenServerHost()
 		ErrorNoHalt("IsListenServerHost has not yet been implemented on the client.")
 	end
 
-	return self == Util.GetListenServerHost()
+	return self == Engines.GetListenServerHost()
 end
 
 local MOVE_DATA_META = FindMetaTable("MoveData")
@@ -634,6 +630,7 @@ else
 
 	vgui.GetKeyboardFocus = Input.GetFocus
 	vgui.GetHoveredPanel = Input.GetMouseOver
+	vgui.CursorVisible = Surface.IsCursorVisible
 
 	gui = {
 		MouseX = function()
@@ -938,10 +935,10 @@ else
 		self:_OriginalSetCursor(cursorCode)
 	end
 
-	ScrW = Util.ScreenWidth
-	ScrH = Util.ScreenHeight
+	ScrW = Utilities.GetScreenWidth
+	ScrH = Utilities.GetScreenHeight
 
-	Util.IsSkyboxVisibleFromPoint = engine.IsSkyboxVisibleFromPoint
+	Utilities.IsSkyboxVisibleFromPoint = Engines.IsSkyboxVisibleFromPoint
 
 	GetRenderTargetEx = render.CreateRenderTargetTextureEx
 	GetRenderTarget = render.CreateRenderTargetTextureEx

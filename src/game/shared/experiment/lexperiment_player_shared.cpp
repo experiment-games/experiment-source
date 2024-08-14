@@ -54,7 +54,7 @@ LUA_BINDING_BEGIN( CExperimentPlayer, BecomeRagdollOnClient, "class", "Become ra
     CBaseEntity::PushLuaInstanceSafe( L, player->BecomeRagdollOnClient() );
     return 1;
 }
-LUA_BINDING_END( "entity", "The ragdoll entity" )
+LUA_BINDING_END( "Entity", "The ragdoll entity" )
 #else
 LUA_BINDING_BEGIN( CExperimentPlayer, BecomeRagdollOnClient, "class", "Become ragdoll on client.", "server" )
 {

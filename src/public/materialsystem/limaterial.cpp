@@ -216,7 +216,7 @@ LUA_BINDING_BEGIN( Material, GetReflectivity, "class", "Get reflectivity." )
     lua_pushvector( L, vector );
     return 1;
 }
-LUA_BINDING_END( "vector", "Reflectivity." )
+LUA_BINDING_END( "Vector", "Reflectivity." )
 
 LUA_BINDING_BEGIN( Material, GetShaderName, "class", "Get shader name." )
 {
@@ -323,7 +323,7 @@ LUA_BINDING_BEGIN( Material, GetVector, "class", "Get vector." )
 
     return 1;
 }
-LUA_BINDING_END( "vector", "Vector value." )
+LUA_BINDING_END( "Vector", "Vector value." )
 
 LUA_BINDING_BEGIN( Material, GetVector4D, "class", "Get vector 4D." )
 {

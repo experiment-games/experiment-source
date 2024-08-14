@@ -240,7 +240,6 @@ float		UTIL_GetSimulationInterval();
 // NOTENOTE: Use UTIL_GetLocalPlayer instead of UTIL_PlayerByIndex IF you're in single player
 // and you want the player.
 CBasePlayer	*UTIL_PlayerByIndex( int playerIndex );
-CBasePlayer *UTIL_PlayerBySteamID( const CSteamID &steamID );
 
 // NOTENOTE: Use this instead of UTIL_PlayerByIndex IF you're in single player
 // and you want the player.
@@ -364,7 +363,6 @@ void		UTIL_ShowMessageAll		( const char *pString );
 void		UTIL_ScreenFadeAll		( const color32 &color, float fadeTime, float holdTime, int flags );
 void		UTIL_ScreenFade			( CBaseEntity *pEntity, const color32 &color, float fadeTime, float fadeHold, int flags );
 void		UTIL_MuzzleFlash		( const Vector &origin, const QAngle &angles, int scale, int type );
-Vector		UTIL_PointOnLineNearestPoint(const Vector& vStartPos, const Vector& vEndPos, const Vector& vPoint, bool clampEnds = false );
 
 int			UTIL_EntityInSolid( CBaseEntity *ent );
 

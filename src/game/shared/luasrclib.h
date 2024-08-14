@@ -34,7 +34,8 @@ LUALIB_API int( luaopen_Players )( lua_State *L );
 #define LUA_EFFECTDATAMETANAME "EffectData"
 LUALIB_API int( luaopen_CEffectData )( lua_State *L );
 
-#define LUA_GAMETRACELIBNAME "Trace"
+#define LUA_GAMETRACEMETANAME "Trace"
+#define LUA_GAMETRACESLIBNAME "Traces"
 LUALIB_API int( luaopen_CGameTrace )( lua_State *L );
 
 #define LUA_EXPERIMENTPLAYERLIBNAME "CExperimentPlayer"
@@ -54,13 +55,10 @@ LUALIB_API int( luaopen_CONTENTS )( lua_State *L );
 #define LUA_CONVARMETANAME "ConsoleVariable"
 LUALIB_API int( luaopen_ConsoleVariableMeta )( lua_State *L );
 
-#define LUA_PASFILTERLIBNAME "CPASFilter"
-LUALIB_API int( luaopen_CPASFilter )( lua_State *L );
-
-#define LUA_RECIPIENTFILTERLIBNAME "CRecipientFilter"
+#define LUA_RECIPIENTFILTERMETANAME "RecipientFilter"
 LUALIB_API int( luaopen_CRecipientFilter )( lua_State *L );
 
-#define LUA_TAKEDAMAGEINFOLIBNAME "CTakeDamageInfo"
+#define LUA_TAKEDAMAGEINFOMETANAME "TakeDamageInfo"
 LUALIB_API int( luaopen_CTakeDamageInfo )( lua_State *L );
 
 #define LUA_CVARLIBNAME "ConsoleVariables"
@@ -139,13 +137,13 @@ LUALIB_API int( luaopen_IPhysicsObject )( lua_State *L );
 #define LUA_PHYSICSSURFACEPROPSLIBNAME "PhysicsSurfaceProperties"
 LUALIB_API int( luaopen_IPhysicsSurfaceProps )( lua_State *L );
 
-#define LUA_PREDICTIONSYSTEMLIBNAME "IPredictionSystem"
-LUALIB_API int( luaopen_IPredictionSystem )( lua_State *L );
+#define LUA_PREDICTIONSYSTEMLIBNAME "PredictionSystems"
+LUALIB_API int( luaopen_PredictionSystems )( lua_State *L );
 
 #define LUA_ISCHEMELIBNAME "IScheme"
 LUALIB_API int( luaopen_IScheme )( lua_State *L );
 
-#define LUA_STEAMFRIENDSLIBNAME "SteamFriends"
+#define LUA_STEAMFRIENDSMETANAME "SteamFriendsHandle"
 LUALIB_API int( luaopen_ISteamFriends )( lua_State *L );
 
 #define LUA_KEYVALUESLIBNAME "KeyValues"
@@ -197,14 +195,17 @@ LUALIB_API int( luaopen_resources )( lua_State *L );
 #define LUA_SCHEMELIBNAME "Scheme"
 LUALIB_API int( luaopen_scheme )( lua_State *L );
 
+#define LUA_SERIALIZERSLIBNAME "Serializers"
+LUALIB_API int( luaopen_Serializers )( lua_State *L );
+
 #define LUA_SOLIDLIBNAME "SOLID"
 LUALIB_API int( luaopen_SOLID )( lua_State *L );
 
 #define LUA_SOLIDFLAGLIBNAME "FSOLID"
 LUALIB_API int( luaopen_SOLIDFLAG )( lua_State *L );
 
-#define LUA_STEAMAPICONTEXTLIBNAME "SteamApiContext"
-LUALIB_API int( luaopen_steamapicontext )( lua_State *L );
+#define LUA_STEAMAPICONTEXTLIBNAME "SteamApiContexts"
+LUALIB_API int( luaopen_SteamApiContexts )( lua_State *L );
 
 #define LUA_SURFLIBNAME "SURF"
 LUALIB_API int( luaopen_SURF )( lua_State *L );
@@ -212,11 +213,12 @@ LUALIB_API int( luaopen_SURF )( lua_State *L );
 #define LUA_SURFACELIBNAME "Surface"
 LUALIB_API int( luaopen_surface )( lua_State *L );
 
-#define LUA_UTILLIBNAME "Util"
+#define LUA_UTILLIBNAME "Utilities"
 LUALIB_API int( luaopen_Util )( lua_State *L );
 LUALIB_API int( luaopen_Util_shared )( lua_State *L );
 
-#define LUA_VECTORLIBNAME "Vector"
+#define LUA_VECTORMETANAME "Vector"
+#define LUA_VECTORSLIBNAME "Vectors"
 LUALIB_API int( luaopen_Vector )( lua_State *L );
 
 #define LUA_VGUILIBNAME "Gui"
@@ -227,12 +229,12 @@ LUALIB_API int( luaopen_vgui )( lua_State *L );
 LUALIB_API int( luaopen_VMatrix )( lua_State *L );
 
 #ifdef CLIENT_DLL
-#define LUA_BFREADLIBNAME "bf_read"
+#define LUA_BFREADLIBNAME "UserMessageReader"
 LUALIB_API int( luaopen_bf_read )( lua_State *L );
 #endif
 
 #define LUA_UMSGLIBNAME "UserMessages"
-LUALIB_API int( luaopen_umsg )( lua_State *L );
+LUALIB_API int( luaopen_UserMessages )( lua_State *L );
 
 #define LUA_SYSTEMSLIBNAME "Systems"
 LUALIB_API int( luaopen_Systems )( lua_State *L );
@@ -243,12 +245,12 @@ LUALIB_API int( luaopen_render )( lua_State *L );
 LUALIB_API int( luaopen_ITexture )( lua_State *L );
 
 #define LUA_LOCALIZATIONLIBNAME "Localizations"
-LUALIB_API int luaopen_localization( lua_State *L );
+LUALIB_API int luaopen_Localizations( lua_State *L );
 
 #define LUA_MOVEDATAMETANAME "MoveData"
 LUALIB_API int( luaopen_CMoveData )( lua_State *L );
 
-#define LUA_USERCMDLIBNAME "CUserCmd"
+#define LUA_USERCMDMETANAME "UserCommand"
 LUALIB_API int( luaopen_CUserCmd )( lua_State *L );
 
 /* open all Source Engine libraries */

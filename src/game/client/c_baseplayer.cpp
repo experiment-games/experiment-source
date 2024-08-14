@@ -1320,13 +1320,13 @@ void C_BasePlayer::UpdateFlashlight()
         lua_pushnumber( L, distance );
         LUA_CALL_HOOK_END( 6, 5 );
 
-        if ( lua_isuserdata( L, -5 ) && luaL_checkudata( L, -5, LUA_VECTORLIBNAME ) )
+        if ( lua_isuserdata( L, -5 ) && luaL_checkudata( L, -5, LUA_VECTORMETANAME ) )
             VectorCopy( luaL_checkvector( L, -5 ), position );
-        if ( lua_isuserdata( L, -4 ) && luaL_checkudata( L, -4, LUA_VECTORLIBNAME ) )
+        if ( lua_isuserdata( L, -4 ) && luaL_checkudata( L, -4, LUA_VECTORMETANAME ) )
             VectorCopy( luaL_checkvector( L, -4 ), vecForward );
-        if ( lua_isuserdata( L, -3 ) && luaL_checkudata( L, -3, LUA_VECTORLIBNAME ) )
+        if ( lua_isuserdata( L, -3 ) && luaL_checkudata( L, -3, LUA_VECTORMETANAME ) )
             VectorCopy( luaL_checkvector( L, -3 ), vecRight );
-        if ( lua_isuserdata( L, -2 ) && luaL_checkudata( L, -2, LUA_VECTORLIBNAME ) )
+        if ( lua_isuserdata( L, -2 ) && luaL_checkudata( L, -2, LUA_VECTORMETANAME ) )
             VectorCopy( luaL_checkvector( L, -2 ), vecUp );
         if ( lua_isnumber( L, -1 ) )
             distance = luaL_checknumber( L, -1 );

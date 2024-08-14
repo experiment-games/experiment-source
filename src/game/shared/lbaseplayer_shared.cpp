@@ -138,7 +138,7 @@ LUA_BINDING_BEGIN( Player, FindUseEntity, "class", "Find the entity the player i
     CBaseEntity::PushLuaInstanceSafe( L, pUseEntity );
     return 1;
 }
-LUA_BINDING_END( "entity", "The entity the player is using." )
+LUA_BINDING_END( "Entity", "The entity the player is using." )
 
 LUA_BINDING_BEGIN( Player, GetActiveWeapon, "class", "Get the player's active weapon." )
 {
@@ -247,7 +247,7 @@ LUA_BINDING_BEGIN( Player, GetHands, "class", "Get the player's hands." )
     CBaseEntity::PushLuaInstanceSafe( L, player->GetHands() );
     return 1;
 }
-LUA_BINDING_END( "entity", "The player's hands." )
+LUA_BINDING_END( "Entity", "The player's hands." )
 
 LUA_BINDING_BEGIN( Player, SetHands, "class", "Set the player's hands." )
 {
@@ -303,7 +303,7 @@ LUA_BINDING_BEGIN( Player, GetObserverTarget, "class", "Get the player's observe
     CBaseEntity::PushLuaInstanceSafe( L, player->GetObserverTarget() );
     return 1;
 }
-LUA_BINDING_END( "entity", "The player's observer target." )
+LUA_BINDING_END( "Entity", "The player's observer target." )
 
 // Experiment; disabled since this is an internal function
 // LUA_BINDING_BEGIN( Player, GetOffset_m_Local, "class", "Get the offset of m_Local." )
@@ -479,7 +479,7 @@ LUA_BINDING_BEGIN( Player, GetUseEntity, "class", "Get the player's use entity."
     CBaseEntity::PushLuaInstanceSafe( L, player->GetUseEntity() );
     return 1;
 }
-LUA_BINDING_END( "entity", "The player's use entity." )
+LUA_BINDING_END( "Entity", "The player's use entity." )
 
 LUA_BINDING_BEGIN( Player, GetUserId, "class", "Get the player's user ID." )
 {
@@ -495,7 +495,7 @@ LUA_BINDING_BEGIN( Player, GetVehicleEntity, "class", "Get the player's vehicle 
     CBaseEntity::PushLuaInstanceSafe( L, player->GetVehicleEntity() );
     return 1;
 }
-LUA_BINDING_END( "entity", "The player's vehicle entity." )
+LUA_BINDING_END( "Entity", "The player's vehicle entity." )
 
 LUA_BINDING_BEGIN( Player, GetViewEntity, "class", "Get the player's view entity." )
 {
@@ -516,7 +516,7 @@ LUA_BINDING_BEGIN( Player, GetViewEntity, "class", "Get the player's view entity
 
     return 1;
 }
-LUA_BINDING_END( "entity", "The player's view entity." )
+LUA_BINDING_END( "Entity", "The player's view entity." )
 
 // FIXME: Push CBaseViewModel instead
 LUA_BINDING_BEGIN( Player, GetViewModel, "class", "Get the player's view model." )
@@ -525,7 +525,7 @@ LUA_BINDING_BEGIN( Player, GetViewModel, "class", "Get the player's view model."
     CBaseEntity::PushLuaInstanceSafe( L, player->GetViewModel( ( int )LUA_BINDING_ARGUMENT_WITH_DEFAULT( luaL_optnumber, 2, 0, "number" ) ) );
     return 1;
 }
-LUA_BINDING_END( "entity", "The player's view model." )
+LUA_BINDING_END( "Entity", "The player's view model." )
 
 LUA_BINDING_BEGIN( Player, GetWaterJumpTime, "class", "Get the player's water jump time." )
 {
@@ -541,7 +541,7 @@ LUA_BINDING_BEGIN( Player, GetWeapon, "class", "Get the player's weapon." )
     CBaseEntity::PushLuaInstanceSafe( L, player->GetWeapon( LUA_BINDING_ARGUMENT( luaL_checknumber, 2, "index" ) ) );
     return 1;
 }
-LUA_BINDING_END( "entity", "The player's weapon." )
+LUA_BINDING_END( "Entity", "The player's weapon." )
 
 LUA_BINDING_BEGIN( Player, HintMessage, "class", "Hint a message to the player." )
 {
@@ -676,7 +676,7 @@ LUA_BINDING_END( "number", "The player's max speed." )
 //    CBaseEntity::PushLuaInstanceSafe( L, player->MyCombatCharacterPointer() );
 //    return 1;
 //}
-// LUA_BINDING_END( "entity", "The player's combat character pointer." )
+// LUA_BINDING_END( "Entity", "The player's combat character pointer." )
 
 LUA_BINDING_BEGIN( Player, PlayerUse, "class", "Make the player use an entity." )
 {
@@ -1234,7 +1234,263 @@ LUA_BINDING_BEGIN( Players, GetLocalPlayer, "library", "Get the local player.", 
     return 1;
 }
 LUA_BINDING_END( "Player", "The local player." )
+
+LUA_BINDING_BEGIN( Players, IsPlayerIndex, "library", "Check if index is a player index" )
+{
+    int index = LUA_BINDING_ARGUMENT( luaL_checknumber, 1, "index" );
+    lua_pushboolean( L, IsPlayerIndex( index ) );
+    return 1;
+}
+LUA_BINDING_END( "boolean", "True if player index, false otherwise." )
+
+LUA_BINDING_BEGIN( Players, GetLocalPlayerIndex, "library", "Get local player index" )
+{
+    lua_pushinteger( L, GetLocalPlayerIndex() );
+    return 1;
+}
+LUA_BINDING_END( "integer", "Local player index." )
+
+LUA_BINDING_BEGIN( Players, IsLocalPlayerSpectator, "library", "Check if local player is a spectator" )
+{
+    lua_pushboolean( L, IsLocalPlayerSpectator() );
+    return 1;
+}
+LUA_BINDING_END( "boolean", "True if local player is a spectator." )
+
+LUA_BINDING_BEGIN( Players, GetSpectatorMode, "library", "Get spectator mode of the local player" )
+{
+    lua_pushinteger( L, GetSpectatorMode() );
+    return 1;
+}
+LUA_BINDING_END( "integer", "Spectator mode of the local player." )
+
+LUA_BINDING_BEGIN( Players, GetSpectatorTarget, "library", "Get the spectator target of the local player" )
+{
+    lua_pushinteger( L, GetSpectatorTarget() );
+    return 1;
+}
+LUA_BINDING_END( "integer", "Spectator target of the local player." )
+
+LUA_BINDING_BEGIN( Players, GetLocalPlayerTeam, "library", "Get the team of the local player" )
+{
+    lua_pushinteger( L, GetLocalPlayerTeam() );
+    return 1;
+}
+LUA_BINDING_END( "integer", "Team of the local player." )
 #endif
+
+LUA_BINDING_BEGIN( Players, GetAllBots, "library", "Get all bots." )
+{
+    CUtlVector< CBasePlayer * > curPlayers;
+
+    for ( int i = 1; i <= gpGlobals->maxClients; i++ )
+    {
+        CBasePlayer *pPlayer = UTIL_PlayerByIndex( i );
+        if ( pPlayer && ( pPlayer->GetFlags() & FL_FAKECLIENT ) )
+        {
+            curPlayers.AddToTail( pPlayer );
+        }
+    }
+
+    lua_newtable( L );
+
+    for ( int i = 0; i < curPlayers.Count(); i++ )
+    {
+        CBaseEntity::PushLuaInstanceSafe( L, curPlayers[i] );
+        lua_rawseti( L, -2, i + 1 );
+    }
+
+    return 1;
+}
+LUA_BINDING_END( "table", "All bots." )
+
+LUA_BINDING_BEGIN( Players, GetAllHumans, "library", "Get all humans." )
+{
+    CUtlVector< CBasePlayer * > curPlayers;
+
+    for ( int i = 1; i <= gpGlobals->maxClients; i++ )
+    {
+        CBasePlayer *pPlayer = UTIL_PlayerByIndex( i );
+        if ( pPlayer && !( pPlayer->GetFlags() & FL_FAKECLIENT ) )
+        {
+            curPlayers.AddToTail( pPlayer );
+        }
+    }
+
+    lua_newtable( L );
+
+    for ( int i = 0; i < curPlayers.Count(); i++ )
+    {
+        CBaseEntity::PushLuaInstanceSafe( L, curPlayers[i] );
+        lua_rawseti( L, -2, i + 1 );
+    }
+
+    return 1;
+}
+LUA_BINDING_END( "table", "All humans." )
+
+LUA_BINDING_BEGIN( Players, GetAll, "library", "Get all players." )
+{
+    CUtlVector< CBasePlayer * > curPlayers;
+
+    for ( int i = 1; i <= gpGlobals->maxClients; i++ )
+    {
+        CBasePlayer *pPlayer = UTIL_PlayerByIndex( i );
+        if ( pPlayer )
+        {
+            curPlayers.AddToTail( pPlayer );
+        }
+    }
+
+    lua_newtable( L );
+
+    for ( int i = 0; i < curPlayers.Count(); i++ )
+    {
+        CBaseEntity::PushLuaInstanceSafe( L, curPlayers[i] );
+        lua_rawseti( L, -2, i + 1 );
+    }
+
+    return 1;
+}
+LUA_BINDING_END( "table", "All players." )
+
+LUA_BINDING_BEGIN( Players, FindByIndex, "library", "Get a player by index." )
+{
+    CBaseEntity::PushLuaInstanceSafe( L, UTIL_PlayerByIndex( LUA_BINDING_ARGUMENT( luaL_checknumber, 1, "index" ) ) );
+    return 1;
+}
+LUA_BINDING_END( "Player", "The player." )
+
+LUA_BINDING_BEGIN( Players, FindByUserId, "library", "Get a player by user ID." )
+{
+    CBaseEntity::PushLuaInstanceSafe( L, UTIL_PlayerByUserId( LUA_BINDING_ARGUMENT( luaL_checknumber, 1, "user ID" ) ) );
+    return 1;
+}
+LUA_BINDING_END( "Player", "The player." )
+
+LUA_BINDING_BEGIN( Players, FindByName, "library", "Get a player by name." )
+{
+    CBaseEntity::PushLuaInstanceSafe( L, UTIL_PlayerByName( LUA_BINDING_ARGUMENT( luaL_checkstring, 1, "name" ) ) );
+    return 1;
+}
+LUA_BINDING_END( "Player", "The player." )
+
+#define STEAM_BASELINE Q_atoui64( "76561197960265728" )
+
+LUA_BINDING_BEGIN( Players, FindBySteamId, "library", "Get a player by Steam ID." )
+{
+    const char *classicSteamID = LUA_BINDING_ARGUMENT( luaL_checkstring, 1, "Steam ID" );
+
+    // Converts STEAM_{eUniverse}:{eAccountType}:{unAccountID} to a 64-bit SteamID
+    int eUniverse, eAccountType;
+    uint64 unAccountID;
+    sscanf( classicSteamID, "STEAM_%d:%d:%llu", &eUniverse, &eAccountType, &unAccountID );
+    uint64 product = unAccountID * 2;
+    uint64 steamID = STEAM_BASELINE + product + eAccountType;
+
+    CBaseEntity::PushLuaInstanceSafe( L, UTIL_PlayerBySteamID( steamID ) );
+    return 1;
+}
+LUA_BINDING_END( "Player", "The player." )
+
+LUA_BINDING_BEGIN( Players, FindBySteamId64, "library", "Get a player by Steam ID 64." )
+{
+    uint64 id = Q_atoui64( LUA_BINDING_ARGUMENT( luaL_checkstring, 1, "Steam ID 64" ) );
+    CSteamID steamID( id );
+    CBaseEntity::PushLuaInstanceSafe( L, UTIL_PlayerBySteamID( steamID ) );
+    return 1;
+}
+LUA_BINDING_END( "Player", "The player." )
+
+LUA_BINDING_BEGIN( Players, FindByUniqueID, "library", "Get a player by unique ID." )
+{
+    uint uniqueID = Q_atoi( LUA_BINDING_ARGUMENT( luaL_checkstring, 1, "unique ID" ) );
+
+    CBasePlayer *player = NULL;
+
+    for ( int i = 1; i <= gpGlobals->maxClients; i++ )
+    {
+        player = UTIL_PlayerByIndex( i );
+        if ( player && player->GetUniqueID() == uniqueID )
+        {
+            player = UTIL_PlayerByIndex( i );
+            break;
+        }
+    }
+
+    CBaseEntity::PushLuaInstanceSafe( L, player );
+    return 1;
+}
+LUA_BINDING_END( "Player", "The player." )
+
+#ifdef GAME_DLL
+
+LUA_BINDING_BEGIN( Players, IsTeamEqual, "library", "Check if two teams are equal." )
+{
+    lua_pushboolean( L,
+                     UTIL_TeamsMatch(
+                         LUA_BINDING_ARGUMENT( luaL_checkstring, 1, "team 1" ),
+                         LUA_BINDING_ARGUMENT( luaL_checkstring, 2, "team 2" ) ) );
+
+    return 1;
+}
+LUA_BINDING_END( "boolean", "Whether the teams are equal." )
+
+LUA_BINDING_BEGIN( Players, SayTextToAll, "library", "Say text to all players." )
+{
+    UTIL_SayTextAll(
+        LUA_BINDING_ARGUMENT( luaL_checkstring, 1, "text" ),
+        LUA_BINDING_ARGUMENT_WITH_DEFAULT( luaL_optplayer, 2, 0, "speakingPlayer" ),
+        LUA_BINDING_ARGUMENT_WITH_DEFAULT( luaL_optboolean, 3, true, "withoutStringLookup" ) );
+
+    return 0;
+}
+LUA_BINDING_END()
+
+LUA_BINDING_BEGIN( Players, ClientPrintToAll, "library", "Print text to all clients, optionally substituting 4 strings. The type decides where to show it: HUD_PRINTCENTER (1), HUD_PRINTNOTIFY (2), HUD_PRINTTALK (3), HUD_PRINTCONSOLE (4) - Enums don't exist yet" ) // TODO: Expose these enums
+{
+    UTIL_ClientPrintAll(
+        LUA_BINDING_ARGUMENT( luaL_checkinteger, 1, "messageType" ),
+        LUA_BINDING_ARGUMENT( luaL_checkstring, 2, "message" ),
+        LUA_BINDING_ARGUMENT_WITH_DEFAULT( luaL_optstring, 3, NULL, "subsitution1" ),
+        LUA_BINDING_ARGUMENT_WITH_DEFAULT( luaL_optstring, 4, NULL, "subsitution2" ),
+        LUA_BINDING_ARGUMENT_WITH_DEFAULT( luaL_optstring, 5, NULL, "subsitution3" ),
+        LUA_BINDING_ARGUMENT_WITH_DEFAULT( luaL_optstring, 6, NULL, "subsitution4" ) );
+
+    return 0;
+}
+LUA_BINDING_END()
+
+LUA_BINDING_BEGIN( Players, ShowMessageToAll, "library", "Show a message to all players." )
+{
+    UTIL_ShowMessageAll( LUA_BINDING_ARGUMENT( luaL_checkstring, 1, "message" ) );
+    return 0;
+}
+LUA_BINDING_END()
+
+LUA_BINDING_BEGIN( Players, ViewPunchAll, "library", "Punches the view of all clients within radius. If radius is 0, punches all clients.." )
+{
+    UTIL_ViewPunch(
+        LUA_BINDING_ARGUMENT( luaL_checkvector, 1, "origin" ),
+        LUA_BINDING_ARGUMENT( luaL_checkangle, 2, "angle" ),
+        LUA_BINDING_ARGUMENT( luaL_checknumber, 3, "radius" ),
+        LUA_BINDING_ARGUMENT_WITH_DEFAULT( luaL_optboolean, 4, false, "shouldPunchPlayersInAir" ) );
+
+    return 0;
+}
+LUA_BINDING_END()
+
+LUA_BINDING_BEGIN( Players, GetPlayerConnectionInfo, "library", "Get the connection info of a player." )
+{
+    int ping, packetloss;
+    UTIL_GetPlayerConnectionInfo( LUA_BINDING_ARGUMENT( luaL_checkinteger, 1, "index" ), ping, packetloss );
+    lua_pushinteger( L, ping );
+    lua_pushinteger( L, packetloss );
+    return 2;
+}
+LUA_BINDING_END( "integer", "The player's ping.", "integer", "The player's packet loss." )
+
+#endif  // GAME_DLL
 
 LUALIB_API int luaopen_Players( lua_State *L )
 {

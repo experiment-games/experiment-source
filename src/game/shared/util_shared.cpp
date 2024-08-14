@@ -19,6 +19,9 @@
 #include "particle_parse.h"
 #include "KeyValues.h"
 #include "time.h"
+#ifdef CLIENT_DLL
+#include "clientsteamcontext.h"
+#endif
 
 #ifdef USES_ECON_ITEMS
 	#include "econ_item_constants.h"
@@ -127,6 +130,33 @@ Vector UTIL_YawToVector( float yaw )
 	SinCos( angle, &ret.y, &ret.x );
 
 	return ret;
+}
+
+//-----------------------------------------------------------------------------
+// Purpose:
+// Input  : vStartPos - start of the line
+//			vEndPos - end of the line
+//			vPoint - point to find nearest point to on specified line
+//			clampEnds - clamps returned points to being on the line segment specified
+// Output : Vector - nearest point on the specified line
+//-----------------------------------------------------------------------------
+Vector UTIL_PointOnLineNearestPoint( const Vector &vStartPos, const Vector &vEndPos, const Vector &vPoint, bool clampEnds )
+{
+    Vector vEndToStart = ( vEndPos - vStartPos );
+    Vector vOrgToStart = ( vPoint - vStartPos );
+    float fNumerator = DotProduct( vEndToStart, vOrgToStart );
+    float fDenominator = vEndToStart.Length() * vOrgToStart.Length();
+    float fIntersectDist = vOrgToStart.Length() * ( fNumerator / fDenominator );
+    float flLineLength = VectorNormalize( vEndToStart );
+
+    if ( clampEnds )
+    {
+        fIntersectDist = clamp( fIntersectDist, 0.0f, flLineLength );
+    }
+
+    Vector vIntersectPos = vStartPos + vEndToStart * fIntersectDist;
+
+    return vIntersectPos;
 }
 
 //-----------------------------------------------------------------------------
@@ -1028,6 +1058,23 @@ float CountdownTimer::Now( void ) const
 	return gpGlobals->curtime;
 }
 
+CBasePlayer *UTIL_PlayerBySteamID( const CSteamID &steamID )
+{
+    CSteamID steamIDPlayer;
+    for ( int i = 1; i <= gpGlobals->maxClients; i++ )
+    {
+        CBasePlayer *pPlayer = UTIL_PlayerByIndex( i );
+        if ( !pPlayer )
+            continue;
+
+        if ( !pPlayer->GetSteamID( &steamIDPlayer ) )
+            continue;
+
+        if ( steamIDPlayer == steamID )
+            return pPlayer;
+    }
+    return NULL;
+}
 
 #ifdef CLIENT_DLL
 	CBasePlayer *UTIL_PlayerByIndex( int entindex )

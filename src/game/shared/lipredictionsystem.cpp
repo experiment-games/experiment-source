@@ -7,28 +7,27 @@
 // memdbgon must be the last include file in a .cpp file!!!
 #include "tier0/memdbgon.h"
 
-static int IPredictionSystem_SuppressEvents (lua_State *L) {
-  IPredictionSystem::SuppressEvents(luaL_checkboolean(L, 1));
-  return 0;
+LUA_REGISTRATION_INIT( PredictionSystems )
+
+LUA_BINDING_BEGIN( PredictionSystems, SuppressEvents, "library", "Suppresses events." )
+{
+    IPredictionSystem::SuppressEvents( LUA_BINDING_ARGUMENT( lua_toboolean, 1, "shouldSuppress" ) );
+    return 0;
 }
+LUA_BINDING_END()
 
-static int IPredictionSystem_SuppressHostEvents (lua_State *L) {
-  IPredictionSystem::SuppressHostEvents(lua_toentity(L, 1));
-  return 0;
+LUA_BINDING_BEGIN( PredictionSystems, SuppressHostEvents, "library", "Suppresses host events." )
+{
+    IPredictionSystem::SuppressHostEvents( LUA_BINDING_ARGUMENT( lua_toentity, 1, "host" ) );
+    return 0;
 }
-
-
-static const luaL_Reg IPredictionSystemlib[] = {
-  {"SuppressEvents",   IPredictionSystem_SuppressEvents},
-  {"SuppressHostEvents", IPredictionSystem_SuppressHostEvents},
-  {NULL, NULL}
-};
-
+LUA_BINDING_END()
 
 /*
 ** Open IPredictionSystem library
 */
-LUALIB_API int luaopen_IPredictionSystem (lua_State *L) {
-  luaL_register(L, LUA_PREDICTIONSYSTEMLIBNAME, IPredictionSystemlib);
-  return 1;
+LUALIB_API int luaopen_PredictionSystems( lua_State *L )
+{
+    LUA_REGISTRATION_COMMIT_LIBRARY( PredictionSystems );
+    return 1;
 }

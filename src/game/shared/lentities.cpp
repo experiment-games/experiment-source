@@ -9,7 +9,146 @@
 
 LUA_REGISTRATION_INIT( Entities );
 
-#ifndef CLIENT_DLL
+#define MAX_ENTITYARRAY 1024
+
+LUA_BINDING_BEGIN( Entities, GetAlongRay, "library", "Finds all entities along the given ray." )
+{
+    CBaseEntity *pList[MAX_ENTITYARRAY];
+
+    Vector start = LUA_BINDING_ARGUMENT( luaL_checkvector, 1, "start" );
+    Vector end = LUA_BINDING_ARGUMENT( luaL_checkvector, 2, "end" );
+    Vector mins = LUA_BINDING_ARGUMENT( luaL_checkvector, 3, "mins" );
+    Vector maxs = LUA_BINDING_ARGUMENT( luaL_checkvector, 4, "maxs" );
+
+    Ray_t ray;
+    ray.Init( start, end, mins, maxs );
+
+    int count = UTIL_EntitiesAlongRay( pList, MAX_ENTITYARRAY, ray, UINT_MAX );
+
+    lua_newtable( L );
+
+    for ( int i = 0; i < count; i++ )
+    {
+        lua_pushinteger( L, i );
+        CBaseEntity::PushLuaInstanceSafe( L, pList[i] );
+        lua_settable( L, -3 );
+    }
+
+    lua_pushinteger( L, count );
+    return 2;
+}
+LUA_BINDING_END( "table", "A table of entities found.", "number", "The number of entities found." )
+
+LUA_BINDING_BEGIN( Entities, GetInBox, "library", "Finds all entities in the given box. Note that clientPartitionMask is only available on the client." )
+{
+    CBaseEntity *pList[MAX_ENTITYARRAY];
+
+    Vector mins = LUA_BINDING_ARGUMENT( luaL_checkvector, 1, "mins" );
+    Vector maxs = LUA_BINDING_ARGUMENT( luaL_checkvector, 2, "maxs" );
+    int flagMask = LUA_BINDING_ARGUMENT_WITH_DEFAULT( luaL_optinteger, 3, PARTITION_CLIENT_NON_STATIC_EDICTS, "flagMask" );
+
+#ifdef CLIENT_DLL
+    int partitionMask = LUA_BINDING_ARGUMENT_WITH_DEFAULT( luaL_optinteger, 4, PARTITION_CLIENT_NON_STATIC_EDICTS, "clientPartitionMask" );
+    int count = UTIL_EntitiesInBox( pList, MAX_ENTITYARRAY, mins, maxs, flagMask, partitionMask );
+#else
+    int count = UTIL_EntitiesInBox( pList, MAX_ENTITYARRAY, mins, maxs, flagMask );
+#endif
+
+    lua_newtable( L );
+
+    for ( int i = 0; i < count; i++ )
+    {
+        lua_pushinteger( L, i );
+        CBaseEntity::PushLuaInstanceSafe( L, pList[i] );
+        lua_settable( L, -3 );
+    }
+
+    lua_pushinteger( L, count );
+    return 2;
+}
+LUA_BINDING_END( "table", "A table of entities found.", "number", "The number of entities found." )
+
+LUA_BINDING_BEGIN( Entities, GetInSphere, "library", "Finds all entities in the given sphere. Note that clientPartitionMask is only available on the client." )
+{
+    CBaseEntity *pList[MAX_ENTITYARRAY];
+
+    Vector position = LUA_BINDING_ARGUMENT( luaL_checkvector, 1, "position" );
+    float radius = LUA_BINDING_ARGUMENT( luaL_checknumber, 2, "radius" );
+    int flagMask = LUA_BINDING_ARGUMENT_WITH_DEFAULT( luaL_optinteger, 3, PARTITION_CLIENT_NON_STATIC_EDICTS, "flagMask" );
+
+#ifdef CLIENT_DLL
+    int partitionMask = LUA_BINDING_ARGUMENT_WITH_DEFAULT( luaL_optinteger, 4, PARTITION_CLIENT_NON_STATIC_EDICTS, "partitionMask" );
+    int count = UTIL_EntitiesInSphere( pList, MAX_ENTITYARRAY, position, radius, flagMask, partitionMask );
+#else
+    int count = UTIL_EntitiesInSphere( pList, MAX_ENTITYARRAY, position, radius, flagMask );
+#endif
+
+    lua_newtable( L );
+
+    for ( int i = 0; i < count; i++ )
+    {
+        lua_pushinteger( L, i );
+        CBaseEntity::PushLuaInstanceSafe( L, pList[i] );
+        lua_settable( L, -3 );
+    }
+
+    lua_pushinteger( L, count );
+    return 2;
+}
+LUA_BINDING_END( "table", "A table of entities found.", "number", "The number of entities found." )
+
+#ifdef GAME_DLL
+
+LUA_BINDING_BEGIN( Entities, GetInPvs, "library", "Goes through the entities and find the ones that are in the PVS of the provided vector.", "server" )
+{
+    Vector vecViewOrigin = LUA_BINDING_ARGUMENT( luaL_checkvector, 1, "viewOrigin" );
+
+    static byte pvs[MAX_MAP_CLUSTERS / 8];
+    int clusterIndex = engine->GetClusterForOrigin( vecViewOrigin );
+
+    if ( clusterIndex < 0 )
+    {
+        lua_newtable( L );
+        lua_pushinteger( L, 0 );
+        return 2;
+    }
+
+    engine->GetPVSForCluster( clusterIndex, sizeof( pvs ), pvs );
+
+    int count = 0;
+
+    lua_newtable( L );
+
+    for ( CBaseEntity *pEntity = gEntList.NextEnt( NULL ); pEntity; pEntity = gEntList.NextEnt( pEntity ) )
+    {
+        // Only return attached ents.
+        if ( !pEntity->edict() )
+            continue;
+
+        CBaseEntity *pParent = pEntity->GetRootMoveParent();
+
+        Vector vecSurroundMins, vecSurroundMaxs;
+        pParent->CollisionProp()->WorldSpaceSurroundingBounds( &vecSurroundMins, &vecSurroundMaxs );
+        if ( !engine->CheckBoxInPVS( vecSurroundMins, vecSurroundMaxs, pvs, sizeof( pvs ) ) )
+            continue;
+
+        lua_pushinteger( L, count );
+        CBaseEntity::PushLuaInstanceSafe( L, pEntity );
+        lua_settable( L, -3 );
+        count++;
+
+        if ( count >= MAX_ENTITYARRAY )
+        {
+            DevWarning( "UTIL_EntitiesInPVS: Reached max (%d) entities in PVS (skipping the rest)\n", MAX_ENTITYARRAY );
+            break;
+        }
+    }
+
+    lua_pushinteger( L, count );
+
+    return 2;
+}
+LUA_BINDING_END( "table", "A table of entities found.", "number", "The number of entities found." )
 
 // LUA_BINDING_BEGIN( Entities, AddPostClientMessageEntity, "library", "Adds an entity to the post client message list.", "server" )
 //{
@@ -247,7 +386,88 @@ LUA_BINDING_BEGIN( Entities, ResetDeleteList, "library", "Resets the delete list
 }
 LUA_BINDING_END( "number", "The number of entities in the delete list." )
 
-#endif  // CLIENT_DLL
+LUA_BINDING_BEGIN( Entities, CanCreateEntityClass, "library", "Checks if an entity class can be created", "server" )
+{
+    lua_pushboolean( L, CanCreateEntityClass( LUA_BINDING_ARGUMENT( luaL_checkstring, 1, "className" ) ) );
+    return 1;
+}
+LUA_BINDING_END( "boolean", "True if the entity class can be created, false otherwise." )
+
+LUA_BINDING_BEGIN( Entities, FindByEdictNumber, "library", "Gets an entity by its edict number", "server" )
+{
+    CBaseEntity *pEntity = CBaseEntity::Instance( INDEXENT( LUA_BINDING_ARGUMENT( luaL_checkinteger, 1, "edictNumber" ) ) );
+    CBaseEntity::PushLuaInstanceSafe( L, pEntity );
+    return 1;
+}
+LUA_BINDING_END( "Entity", "The entity found, or NULL if not found." )
+
+LUA_BINDING_BEGIN( Entities, FNullEnt, "library", "Checks if an entity is NULL", "server" )
+{
+    lua_pushboolean( L, FNullEnt( LUA_BINDING_ARGUMENT( luaL_checkentity, 1, "entity" )->edict() ) );
+    return 1;
+}
+LUA_BINDING_END( "boolean", "True if the entity is NULL, false otherwise." )
+
+LUA_BINDING_BEGIN( Entities, FindByIndex, "library", "Gets an entity by its index. Might be the same as FindByEdictNumber?", "server" )
+{
+    CBaseEntity::PushLuaInstanceSafe( L, UTIL_EntityByIndex( LUA_BINDING_ARGUMENT( luaL_checkinteger, 1, "index" ) ) );
+    return 1;
+}
+LUA_BINDING_END( "Entity", "The entity found, or NULL if not found." )
+
+LUA_BINDING_BEGIN( Entities, GetClientPvsIsExpanded, "library", "Checks if the client PVS is expanded", "server" )
+{
+    lua_pushboolean( L, UTIL_ClientPVSIsExpanded() );
+    return 1;
+}
+LUA_BINDING_END( "boolean", "True if the client PVS is expanded, false otherwise." )
+
+LUA_BINDING_BEGIN( Entities, FindClientInPvs, "library", "Finds a client in the PVS", "server" )
+{
+    CBaseEntity::PushLuaInstanceSafe( L,
+                                      UTIL_FindClientInPVS(
+                                          LUA_BINDING_ARGUMENT( luaL_checkvector, 1, "minimumVector" ),
+                                          LUA_BINDING_ARGUMENT( luaL_checkvector, 2, "maximumVector" ) ) );
+    return 1;
+}
+LUA_BINDING_END( "Entity", "The entity found, or NULL if not found." )
+
+LUA_BINDING_BEGIN( Entities, Remove, "library", "Removes an entity", "server" )
+{
+    UTIL_Remove( LUA_BINDING_ARGUMENT( luaL_checkentity, 1, "entity" ) );
+    return 0;
+}
+LUA_BINDING_END()
+
+LUA_BINDING_BEGIN( Entities, DisableRemoveImmediate, "library", "Disables immediate removal of entities", "server" )
+{
+    UTIL_DisableRemoveImmediate();
+    return 0;
+}
+LUA_BINDING_END()
+
+LUA_BINDING_BEGIN( Entities, EnableRemoveImmediate, "library", "Enables immediate removal of entities", "server" )
+{
+    UTIL_EnableRemoveImmediate();
+    return 0;
+}
+LUA_BINDING_END()
+
+LUA_BINDING_BEGIN( Entities, RemoveImmediate, "library", "Removes an entity immediately", "server" )
+{
+    UTIL_RemoveImmediate( LUA_BINDING_ARGUMENT( luaL_checkentity, 1, "entity" ) );
+    return 0;
+}
+LUA_BINDING_END()
+
+LUA_BINDING_BEGIN( Entities, IsValidEdict, "library", "Checks if an entity is valid by checking if it's edict is valid and not free", "server" )
+{
+    lua_pushboolean( L, UTIL_IsValidEntity( LUA_BINDING_ARGUMENT( luaL_checkentity, 1, "entity" ) ) );
+    return 1;
+}
+LUA_BINDING_END( "boolean", "True if the entity is valid, false otherwise." )
+
+#endif  // GAME_DLL
 
 LUA_BINDING_BEGIN( Entities, FirstInList, "library", "Gets the first entity in the list" )
 {

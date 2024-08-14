@@ -11,20 +11,20 @@
 local vecOrigin
 local count
 local pList
-local Util_EntitiesInSphere = Util.EntitiesInSphere
+local GetInSphere = Entities.GetInSphere
 local MAX_ENTITYARRAY = 1024
 local SPHERE_RADIUS_OUTER = 128
 local SPHERE_RADIUS_INNER = 64
 
-Hooks.Add("PlayerThink", "Util.EntityIn*", function(client)
+Hooks.Add("PlayerThink", "Utilities.EntityIn*", function(client)
 	vecOrigin = client:GetPosition()
-	count, pList = Util_EntitiesInSphere(MAX_ENTITYARRAY, vecOrigin, SPHERE_RADIUS_OUTER, 0)
+	pList = GetInSphere(MAX_ENTITYARRAY, vecOrigin, SPHERE_RADIUS_OUTER, 0)
 	for _, pEntity in pairs(pList) do
 		if (pEntity ~= NULL) then
 			pEntity:SetRenderColor(255, 255, 255, 255)
 		end
 	end
-	count, pList = Util_EntitiesInSphere(MAX_ENTITYARRAY, vecOrigin, SPHERE_RADIUS_INNER, 0)
+	pList = GetInSphere(MAX_ENTITYARRAY, vecOrigin, SPHERE_RADIUS_INNER, 0)
 	for _, pEntity in pairs(pList) do
 		if (pEntity ~= NULL) then
 			pEntity:SetRenderColor(0, 255, 0, 255)

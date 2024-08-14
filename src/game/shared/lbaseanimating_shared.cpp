@@ -99,7 +99,7 @@ LUA_BINDING_BEGIN( CBaseAnimating, GetBonePosition, "class", "Get the bone posit
 
     return 2;
 }
-LUA_BINDING_END( "vector", "The origin", "angle", "The angles" )
+LUA_BINDING_END( "Vector", "The origin", "angle", "The angles" )
 
 LUA_BINDING_BEGIN( CBaseAnimating, GetCycle, "class", "Get the current cycle." )
 {
@@ -288,7 +288,7 @@ LUA_BINDING_END( "number", "The transition sequence", "number", "The direction" 
 //
 //    return 1;
 //}
-// LUA_BINDING_END( "entity", "The base animating entity" )
+// LUA_BINDING_END( "Entity", "The base animating entity" )
 
 LUA_BINDING_BEGIN( CBaseAnimating, GetBodyGroup, "class", "Get the bodygroup value by the bodygroup id" )
 {
@@ -356,7 +356,7 @@ LUA_BINDING_BEGIN( CBaseAnimating, GetSequenceLinearMotion, "class", "Get the se
 
     return 1;
 }
-LUA_BINDING_END( "vector", "The sequence linear motion" )
+LUA_BINDING_END( "Vector", "The sequence linear motion" )
 
 LUA_BINDING_BEGIN( CBaseAnimating, GetSequenceGroundSpeed, "class", "Get the sequence ground speed." )
 {

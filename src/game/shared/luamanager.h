@@ -372,7 +372,7 @@
 #define LUA_RETURN_VECTOR()                                                           \
     if ( lua_gettop( L ) == 1 )                                                       \
     {                                                                                 \
-        if ( lua_isuserdata( L, -1 ) && luaL_checkudata( L, -1, LUA_VECTORLIBNAME ) ) \
+        if ( lua_isuserdata( L, -1 ) && luaL_checkudata( L, -1, LUA_VECTORMETANAME ) ) \
         {                                                                             \
             Vector res = luaL_checkvector( L, -1 );                                   \
             lua_pop( L, 1 );                                                          \

@@ -588,24 +588,6 @@ CBasePlayer *UTIL_PlayerByIndex( int playerIndex )
     return pPlayer;
 }
 
-CBasePlayer *UTIL_PlayerBySteamID( const CSteamID &steamID )
-{
-    CSteamID steamIDPlayer;
-    for ( int i = 1; i <= gpGlobals->maxClients; i++ )
-    {
-        CBasePlayer *pPlayer = UTIL_PlayerByIndex( i );
-        if ( !pPlayer )
-            continue;
-
-        if ( !pPlayer->GetSteamID( &steamIDPlayer ) )
-            continue;
-
-        if ( steamIDPlayer == steamID )
-            return pPlayer;
-    }
-    return NULL;
-}
-
 CBasePlayer *UTIL_PlayerByName( const char *name )
 {
     if ( !name || !name[0] )
@@ -2503,33 +2485,6 @@ void UTIL_MuzzleFlash( const Vector &origin, const QAngle &angles, int scale, in
     CPASFilter filter( origin );
 
     te->MuzzleFlash( filter, 0.0f, origin, angles, scale, type );
-}
-
-//-----------------------------------------------------------------------------
-// Purpose:
-// Input  : vStartPos - start of the line
-//			vEndPos - end of the line
-//			vPoint - point to find nearest point to on specified line
-//			clampEnds - clamps returned points to being on the line segment specified
-// Output : Vector - nearest point on the specified line
-//-----------------------------------------------------------------------------
-Vector UTIL_PointOnLineNearestPoint( const Vector &vStartPos, const Vector &vEndPos, const Vector &vPoint, bool clampEnds )
-{
-    Vector vEndToStart = ( vEndPos - vStartPos );
-    Vector vOrgToStart = ( vPoint - vStartPos );
-    float fNumerator = DotProduct( vEndToStart, vOrgToStart );
-    float fDenominator = vEndToStart.Length() * vOrgToStart.Length();
-    float fIntersectDist = vOrgToStart.Length() * ( fNumerator / fDenominator );
-    float flLineLength = VectorNormalize( vEndToStart );
-
-    if ( clampEnds )
-    {
-        fIntersectDist = clamp( fIntersectDist, 0.0f, flLineLength );
-    }
-
-    Vector vIntersectPos = vStartPos + vEndToStart * fIntersectDist;
-
-    return vIntersectPos;
 }
 
 //-----------------------------------------------------------------------------

@@ -27,382 +27,444 @@ LUA_API void lua_pushdamageinfo( lua_State *L, lua_CTakeDamageInfo &info )
 {
     lua_CTakeDamageInfo *pInfo = ( lua_CTakeDamageInfo * )lua_newuserdata( L, sizeof( lua_CTakeDamageInfo ) );
     *pInfo = info;
-    LUA_SAFE_SET_METATABLE( L, "CTakeDamageInfo" );
+    LUA_SAFE_SET_METATABLE( L, LUA_TAKEDAMAGEINFOMETANAME );
 }
 
 LUALIB_API lua_CTakeDamageInfo &luaL_checkdamageinfo( lua_State *L, int narg )
 {
-    lua_CTakeDamageInfo *d = ( lua_CTakeDamageInfo * )luaL_checkudata( L, narg, "CTakeDamageInfo" );
+    lua_CTakeDamageInfo *d = ( lua_CTakeDamageInfo * )luaL_checkudata( L, narg, LUA_TAKEDAMAGEINFOMETANAME );
     return *d;
 }
 
-static int CTakeDamageInfo_AddDamage( lua_State *L )
+LUA_REGISTRATION_INIT( TakeDamageInfo );
+
+LUA_BINDING_BEGIN( TakeDamageInfo, AddDamage, "class", "Adds damage to the damage info" )
 {
-    luaL_checkdamageinfo( L, 1 ).AddDamage( luaL_checknumber( L, 2 ) );
+    LUA_BINDING_ARGUMENT( luaL_checkdamageinfo, 1, "damageInfo" ).AddDamage( LUA_BINDING_ARGUMENT( luaL_checknumber, 2, "damage" ) );
     return 0;
 }
+LUA_BINDING_END()
 
-static int CTakeDamageInfo_AddDamageType( lua_State *L )
+LUA_BINDING_BEGIN( TakeDamageInfo, AddDamageType, "class", "Adds a damage type" )
 {
-    luaL_checkdamageinfo( L, 1 ).AddDamageType( luaL_checknumber( L, 2 ) );
+    LUA_BINDING_ARGUMENT( luaL_checkdamageinfo, 1, "damageInfo" ).AddDamageType( LUA_BINDING_ARGUMENT( luaL_checknumber, 2, "damageType" ) );
     return 0;
 }
+LUA_BINDING_END()
 
-static int CTakeDamageInfo_AdjustPlayerDamageInflictedForSkillLevel( lua_State *L )
+LUA_BINDING_BEGIN( TakeDamageInfo, AdjustPlayerDamageInflictedForSkillLevel, "class", "Adjusts player-inflicted damage based on skill level" )
 {
-    luaL_checkdamageinfo( L, 1 ).AdjustPlayerDamageInflictedForSkillLevel();
+    LUA_BINDING_ARGUMENT( luaL_checkdamageinfo, 1, "damageInfo" ).AdjustPlayerDamageInflictedForSkillLevel();
     return 0;
 }
+LUA_BINDING_END()
 
-static int CTakeDamageInfo_AdjustPlayerDamageTakenForSkillLevel( lua_State *L )
+LUA_BINDING_BEGIN( TakeDamageInfo, AdjustPlayerDamageTakenForSkillLevel, "class", "Adjusts player-taken damage based on skill level" )
 {
-    luaL_checkdamageinfo( L, 1 ).AdjustPlayerDamageTakenForSkillLevel();
+    LUA_BINDING_ARGUMENT( luaL_checkdamageinfo, 1, "damageInfo" ).AdjustPlayerDamageTakenForSkillLevel();
     return 0;
 }
+LUA_BINDING_END()
 
-static int CTakeDamageInfo_BaseDamageIsValid( lua_State *L )
+LUA_BINDING_BEGIN( TakeDamageInfo, BaseDamageIsValid, "class", "Checks if base damage is valid" )
 {
-    lua_pushboolean( L, luaL_checkdamageinfo( L, 1 ).BaseDamageIsValid() );
+    lua_pushboolean( L, LUA_BINDING_ARGUMENT( luaL_checkdamageinfo, 1, "damageInfo" ).BaseDamageIsValid() );
     return 1;
 }
+LUA_BINDING_END( "boolean", "True if base damage is valid, false otherwise." )
 
-static int CTakeDamageInfo_CopyDamageToBaseDamage( lua_State *L )
+LUA_BINDING_BEGIN( TakeDamageInfo, CopyDamageToBaseDamage, "class", "Copies damage to base damage" )
 {
-    luaL_checkdamageinfo( L, 1 ).CopyDamageToBaseDamage();
+    LUA_BINDING_ARGUMENT( luaL_checkdamageinfo, 1, "damageInfo" ).CopyDamageToBaseDamage();
     return 0;
 }
+LUA_BINDING_END()
 
-static int CTakeDamageInfo_DebugGetDamageTypeString( lua_State *L )
+LUA_BINDING_BEGIN( TakeDamageInfo, DebugGetDamageTypeString, "class", "Gets a string describing the damage type" )
 {
     char outbuf[256];
     outbuf[0] = '\0';
-    luaL_checkdamageinfo( L, 1 ).DebugGetDamageTypeString( luaL_checknumber( L, 2 ), outbuf, sizeof( outbuf ) );
+    LUA_BINDING_ARGUMENT( luaL_checkdamageinfo, 1, "damageInfo" ).DebugGetDamageTypeString( LUA_BINDING_ARGUMENT( luaL_checknumber, 2, "bufferSize" ), outbuf, sizeof( outbuf ) );
     lua_pushstring( L, outbuf );
     return 1;
 }
+LUA_BINDING_END( "string", "The string describing the damage type." )
 
-static int CTakeDamageInfo_GetAmmoName( lua_State *L )
+LUA_BINDING_BEGIN( TakeDamageInfo, GetAmmoName, "class", "Gets the name of the ammo" )
 {
-    lua_pushstring( L, luaL_checkdamageinfo( L, 1 ).GetAmmoName() );
+    lua_pushstring( L, LUA_BINDING_ARGUMENT( luaL_checkdamageinfo, 1, "damageInfo" ).GetAmmoName() );
     return 1;
 }
+LUA_BINDING_END( "string", "The name of the ammo." )
 
-static int CTakeDamageInfo_GetAmmoType( lua_State *L )
+LUA_BINDING_BEGIN( TakeDamageInfo, GetAmmoType, "class", "Gets the ammo type" )
 {
-    lua_pushinteger( L, luaL_checkdamageinfo( L, 1 ).GetAmmoType() );
+    lua_pushinteger( L, LUA_BINDING_ARGUMENT( luaL_checkdamageinfo, 1, "damageInfo" ).GetAmmoType() );
     return 1;
 }
+LUA_BINDING_END( "number", "The ammo type." )
 
-static int CTakeDamageInfo_GetAttacker( lua_State *L )
+LUA_BINDING_BEGIN( TakeDamageInfo, GetAttacker, "class", "Gets the attacker entity" )
 {
-    CBaseEntity::PushLuaInstanceSafe( L, luaL_checkdamageinfo( L, 1 ).GetAttacker() );
+    CBaseEntity::PushLuaInstanceSafe( L, LUA_BINDING_ARGUMENT( luaL_checkdamageinfo, 1, "damageInfo" ).GetAttacker() );
     return 1;
 }
+LUA_BINDING_END( "Entity", "The attacker entity." )
 
-static int CTakeDamageInfo_GetBaseDamage( lua_State *L )
+LUA_BINDING_BEGIN( TakeDamageInfo, GetBaseDamage, "class", "Gets the base damage" )
 {
-    lua_pushnumber( L, luaL_checkdamageinfo( L, 1 ).GetBaseDamage() );
+    lua_pushnumber( L, LUA_BINDING_ARGUMENT( luaL_checkdamageinfo, 1, "damageInfo" ).GetBaseDamage() );
     return 1;
 }
+LUA_BINDING_END( "number", "The base damage." )
 
-static int CTakeDamageInfo_GetDamage( lua_State *L )
+LUA_BINDING_BEGIN( TakeDamageInfo, GetDamage, "class", "Gets the damage" )
 {
-    lua_pushnumber( L, luaL_checkdamageinfo( L, 1 ).GetDamage() );
+    lua_pushnumber( L, LUA_BINDING_ARGUMENT( luaL_checkdamageinfo, 1, "damageInfo" ).GetDamage() );
     return 1;
 }
+LUA_BINDING_END( "number", "The damage." )
 
-static int CTakeDamageInfo_GetDamageCustom( lua_State *L )
+LUA_BINDING_BEGIN( TakeDamageInfo, GetDamageCustom, "class", "Gets custom damage" )
 {
-    lua_pushinteger( L, luaL_checkdamageinfo( L, 1 ).GetDamageCustom() );
+    lua_pushinteger( L, LUA_BINDING_ARGUMENT( luaL_checkdamageinfo, 1, "damageInfo" ).GetDamageCustom() );
     return 1;
 }
+LUA_BINDING_END( "integer", "The custom damage." )
 
-static int CTakeDamageInfo_GetDamageForce( lua_State *L )
+LUA_BINDING_BEGIN( TakeDamageInfo, GetDamageForce, "class", "Gets the force of the damage" )
 {
-    lua_pushvector( L, luaL_checkdamageinfo( L, 1 ).GetDamageForce() );
+    lua_pushvector( L, LUA_BINDING_ARGUMENT( luaL_checkdamageinfo, 1, "damageInfo" ).GetDamageForce() );
     return 1;
 }
+LUA_BINDING_END( "Vector", "The force of the damage." )
 
-static int CTakeDamageInfo_GetDamagePosition( lua_State *L )
+LUA_BINDING_BEGIN( TakeDamageInfo, GetDamagePosition, "class", "Gets the position of the damage" )
 {
-    lua_pushvector( L, luaL_checkdamageinfo( L, 1 ).GetDamagePosition() );
+    lua_pushvector( L, LUA_BINDING_ARGUMENT( luaL_checkdamageinfo, 1, "damageInfo" ).GetDamagePosition() );
     return 1;
 }
+LUA_BINDING_END( "Vector", "The position of the damage." )
 
-static int CTakeDamageInfo_GetDamageStats( lua_State *L )
+LUA_BINDING_BEGIN( TakeDamageInfo, GetDamageStats, "class", "Gets damage stats" )
 {
-    lua_pushinteger( L, luaL_checkdamageinfo( L, 1 ).GetDamageStats() );
+    lua_pushinteger( L, LUA_BINDING_ARGUMENT( luaL_checkdamageinfo, 1, "damageInfo" ).GetDamageStats() );
     return 1;
 }
+LUA_BINDING_END( "integer", "The damage stats." )
 
-static int CTakeDamageInfo_GetDamageType( lua_State *L )
+LUA_BINDING_BEGIN( TakeDamageInfo, GetDamageType, "class", "Gets the type of damage" )
 {
-    lua_pushinteger( L, luaL_checkdamageinfo( L, 1 ).GetDamageType() );
+    lua_pushinteger( L, LUA_BINDING_ARGUMENT( luaL_checkdamageinfo, 1, "damageInfo" ).GetDamageType() );
     return 1;
 }
+LUA_BINDING_END( "integer", "The type of damage." )
 
-static int CTakeDamageInfo_GetInflictor( lua_State *L )
+LUA_BINDING_BEGIN( TakeDamageInfo, GetInflictor, "class", "Gets the inflictor entity" )
 {
-    CBaseEntity::PushLuaInstanceSafe( L, luaL_checkdamageinfo( L, 1 ).GetInflictor() );
+    CBaseEntity::PushLuaInstanceSafe( L, LUA_BINDING_ARGUMENT( luaL_checkdamageinfo, 1, "damageInfo" ).GetInflictor() );
     return 1;
 }
+LUA_BINDING_END( "Entity", "The inflictor entity." )
 
-static int CTakeDamageInfo_GetMaxDamage( lua_State *L )
+LUA_BINDING_BEGIN( TakeDamageInfo, GetMaxDamage, "class", "Gets the maximum damage" )
 {
-    lua_pushnumber( L, luaL_checkdamageinfo( L, 1 ).GetMaxDamage() );
+    lua_pushnumber( L, LUA_BINDING_ARGUMENT( luaL_checkdamageinfo, 1, "damageInfo" ).GetMaxDamage() );
     return 1;
 }
+LUA_BINDING_END( "number", "The maximum damage." )
 
-static int CTakeDamageInfo_GetReportedPosition( lua_State *L )
+LUA_BINDING_BEGIN( TakeDamageInfo, GetReportedPosition, "class", "Gets the reported position of the damage" )
 {
-    lua_pushvector( L, luaL_checkdamageinfo( L, 1 ).GetReportedPosition() );
+    lua_pushvector( L, LUA_BINDING_ARGUMENT( luaL_checkdamageinfo, 1, "damageInfo" ).GetReportedPosition() );
     return 1;
 }
+LUA_BINDING_END( "Vector", "The reported position of the damage." )
 
-static int CTakeDamageInfo_GetWeapon( lua_State *L )
+LUA_BINDING_BEGIN( TakeDamageInfo, GetWeapon, "class", "Gets the weapon entity" )
 {
-    CBaseEntity::PushLuaInstanceSafe( L, luaL_checkdamageinfo( L, 1 ).GetWeapon() );
+    CBaseEntity::PushLuaInstanceSafe( L, LUA_BINDING_ARGUMENT( luaL_checkdamageinfo, 1, "damageInfo" ).GetWeapon() );
     return 1;
 }
+LUA_BINDING_END( "Entity", "The weapon entity." )
 
-static int CTakeDamageInfo_ScaleDamage( lua_State *L )
+LUA_BINDING_BEGIN( TakeDamageInfo, ScaleDamage, "class", "Scales the damage" )
 {
-    luaL_checkdamageinfo( L, 1 ).ScaleDamage( luaL_checknumber( L, 2 ) );
+    LUA_BINDING_ARGUMENT( luaL_checkdamageinfo, 1, "damageInfo" ).ScaleDamage( LUA_BINDING_ARGUMENT( luaL_checknumber, 2, "scale" ) );
     return 0;
 }
+LUA_BINDING_END()
 
-static int CTakeDamageInfo_ScaleDamageForce( lua_State *L )
+LUA_BINDING_BEGIN( TakeDamageInfo, ScaleDamageForce, "class", "Scales the damage force" )
 {
-    luaL_checkdamageinfo( L, 1 ).ScaleDamageForce( luaL_checknumber( L, 2 ) );
+    LUA_BINDING_ARGUMENT( luaL_checkdamageinfo, 1, "damageInfo" ).ScaleDamageForce( LUA_BINDING_ARGUMENT( luaL_checknumber, 2, "scale" ) );
     return 0;
 }
+LUA_BINDING_END()
 
-static int CTakeDamageInfo_SetAmmoType( lua_State *L )
+LUA_BINDING_BEGIN( TakeDamageInfo, SetAmmoType, "class", "Sets the ammo type" )
 {
-    luaL_checkdamageinfo( L, 1 ).SetAmmoType( luaL_checknumber( L, 2 ) );
+    LUA_BINDING_ARGUMENT( luaL_checkdamageinfo, 1, "damageInfo" ).SetAmmoType( LUA_BINDING_ARGUMENT( luaL_checknumber, 2, "ammoType" ) );
     return 0;
 }
+LUA_BINDING_END()
 
-static int CTakeDamageInfo_SetAttacker( lua_State *L )
+LUA_BINDING_BEGIN( TakeDamageInfo, SetAttacker, "class", "Sets the attacker entity" )
 {
-    luaL_checkdamageinfo( L, 1 ).SetAttacker( luaL_checkentity( L, 2 ) );
+    LUA_BINDING_ARGUMENT( luaL_checkdamageinfo, 1, "damageInfo" ).SetAttacker( LUA_BINDING_ARGUMENT( luaL_checkentity, 2, "attacker" ) );
     return 0;
 }
+LUA_BINDING_END()
 
-static int CTakeDamageInfo_SetDamage( lua_State *L )
+LUA_BINDING_BEGIN( TakeDamageInfo, SetDamage, "class", "Sets the damage" )
 {
-    luaL_checkdamageinfo( L, 1 ).SetDamage( luaL_checknumber( L, 2 ) );
+    LUA_BINDING_ARGUMENT( luaL_checkdamageinfo, 1, "damageInfo" ).SetDamage( LUA_BINDING_ARGUMENT( luaL_checknumber, 2, "damage" ) );
     return 0;
 }
+LUA_BINDING_END()
 
-static int CTakeDamageInfo_SetDamageCustom( lua_State *L )
+LUA_BINDING_BEGIN( TakeDamageInfo, SetDamageCustom, "class", "Sets custom damage" )
 {
-    luaL_checkdamageinfo( L, 1 ).SetDamageCustom( luaL_checknumber( L, 2 ) );
+    LUA_BINDING_ARGUMENT( luaL_checkdamageinfo, 1, "damageInfo" ).SetDamageCustom( LUA_BINDING_ARGUMENT( luaL_checknumber, 2, "customDamage" ) );
     return 0;
 }
+LUA_BINDING_END()
 
-static int CTakeDamageInfo_SetDamageForce( lua_State *L )
+LUA_BINDING_BEGIN( TakeDamageInfo, SetDamageForce, "class", "Sets the force of the damage" )
 {
-    luaL_checkdamageinfo( L, 1 ).SetDamageForce( luaL_checkvector( L, 2 ) );
+    LUA_BINDING_ARGUMENT( luaL_checkdamageinfo, 1, "damageInfo" ).SetDamageForce( LUA_BINDING_ARGUMENT( luaL_checkvector, 2, "force" ) );
     return 0;
 }
+LUA_BINDING_END()
 
-static int CTakeDamageInfo_SetDamagePosition( lua_State *L )
+LUA_BINDING_BEGIN( TakeDamageInfo, SetDamagePosition, "class", "Sets the position of the damage" )
 {
-    luaL_checkdamageinfo( L, 1 ).SetDamagePosition( luaL_checkvector( L, 2 ) );
+    LUA_BINDING_ARGUMENT( luaL_checkdamageinfo, 1, "damageInfo" ).SetDamagePosition( LUA_BINDING_ARGUMENT( luaL_checkvector, 2, "position" ) );
     return 0;
 }
+LUA_BINDING_END()
 
-static int CTakeDamageInfo_SetDamageStats( lua_State *L )
+LUA_BINDING_BEGIN( TakeDamageInfo, SetDamageStats, "class", "Sets damage stats" )
 {
-    luaL_checkdamageinfo( L, 1 ).SetDamageStats( luaL_checknumber( L, 2 ) );
+    LUA_BINDING_ARGUMENT( luaL_checkdamageinfo, 1, "damageInfo" ).SetDamageStats( LUA_BINDING_ARGUMENT( luaL_checknumber, 2, "stats" ) );
     return 0;
 }
+LUA_BINDING_END()
 
-static int CTakeDamageInfo_SetDamageType( lua_State *L )
+LUA_BINDING_BEGIN( TakeDamageInfo, SetDamageType, "class", "Sets the type of damage" )
 {
-    luaL_checkdamageinfo( L, 1 ).SetDamageType( luaL_checknumber( L, 2 ) );
+    LUA_BINDING_ARGUMENT( luaL_checkdamageinfo, 1, "damageInfo" ).SetDamageType( LUA_BINDING_ARGUMENT( luaL_checknumber, 2, "damageType" ) );
     return 0;
 }
+LUA_BINDING_END()
 
-static int CTakeDamageInfo_SetInflictor( lua_State *L )
+LUA_BINDING_BEGIN( TakeDamageInfo, SetInflictor, "class", "Sets the inflictor entity" )
 {
-    luaL_checkdamageinfo( L, 1 ).SetInflictor( luaL_checkentity( L, 2 ) );
+    LUA_BINDING_ARGUMENT( luaL_checkdamageinfo, 1, "damageInfo" ).SetInflictor( LUA_BINDING_ARGUMENT( luaL_checkentity, 2, "inflictor" ) );
     return 0;
 }
+LUA_BINDING_END()
 
-static int CTakeDamageInfo_SetMaxDamage( lua_State *L )
+LUA_BINDING_BEGIN( TakeDamageInfo, SetMaxDamage, "class", "Sets the maximum damage" )
 {
-    luaL_checkdamageinfo( L, 1 ).SetMaxDamage( luaL_checknumber( L, 2 ) );
+    LUA_BINDING_ARGUMENT( luaL_checkdamageinfo, 1, "damageInfo" ).SetMaxDamage( LUA_BINDING_ARGUMENT( luaL_checknumber, 2, "maxDamage" ) );
     return 0;
 }
+LUA_BINDING_END()
 
-static int CTakeDamageInfo_SetReportedPosition( lua_State *L )
+LUA_BINDING_BEGIN( TakeDamageInfo, SetReportedPosition, "class", "Sets the reported position of the damage" )
 {
-    luaL_checkdamageinfo( L, 1 ).SetReportedPosition( luaL_checkvector( L, 2 ) );
+    LUA_BINDING_ARGUMENT( luaL_checkdamageinfo, 1, "damageInfo" ).SetReportedPosition( LUA_BINDING_ARGUMENT( luaL_checkvector, 2, "position" ) );
     return 0;
 }
+LUA_BINDING_END()
 
-static int CTakeDamageInfo_SetWeapon( lua_State *L )
+LUA_BINDING_BEGIN( TakeDamageInfo, SetWeapon, "class", "Sets the weapon entity" )
 {
-    luaL_checkdamageinfo( L, 1 ).SetWeapon( luaL_checkentity( L, 2 ) );
+    LUA_BINDING_ARGUMENT( luaL_checkdamageinfo, 1, "damageInfo" ).SetWeapon( LUA_BINDING_ARGUMENT( luaL_checkentity, 2, "weapon" ) );
     return 0;
 }
+LUA_BINDING_END()
 
-static int CTakeDamageInfo_SubtractDamage( lua_State *L )
+LUA_BINDING_BEGIN( TakeDamageInfo, SubtractDamage, "class", "Subtracts damage" )
 {
-    luaL_checkdamageinfo( L, 1 ).SubtractDamage( luaL_checknumber( L, 2 ) );
+    LUA_BINDING_ARGUMENT( luaL_checkdamageinfo, 1, "damageInfo" ).SubtractDamage( LUA_BINDING_ARGUMENT( luaL_checknumber, 2, "damage" ) );
     return 0;
 }
+LUA_BINDING_END()
 
-static int CTakeDamageInfo___tostring( lua_State *L )
+LUA_BINDING_BEGIN( TakeDamageInfo, __tostring, "class", "Returns a string representation of the TakeDamageInfo instance" )
 {
-    lua_pushfstring( L, "CTakeDamageInfo: %p", luaL_checkudata( L, 1, "CTakeDamageInfo" ) );
+    lua_pushfstring( L, "TakeDamageInfo: %p", luaL_checkudata( L, 1, LUA_TAKEDAMAGEINFOMETANAME ) );
     return 1;
 }
+LUA_BINDING_END( "string", "The string representation of the TakeDamageInfo instance." )
 
-static const luaL_Reg CTakeDamageInfometa[] = {
-    { "AddDamage", CTakeDamageInfo_AddDamage },
-    { "AddDamageType", CTakeDamageInfo_AddDamageType },
-    { "AdjustPlayerDamageInflictedForSkillLevel", CTakeDamageInfo_AdjustPlayerDamageInflictedForSkillLevel },
-    { "AdjustPlayerDamageTakenForSkillLevel", CTakeDamageInfo_AdjustPlayerDamageTakenForSkillLevel },
-    { "BaseDamageIsValid", CTakeDamageInfo_BaseDamageIsValid },
-    { "CopyDamageToBaseDamage", CTakeDamageInfo_CopyDamageToBaseDamage },
-    { "DebugGetDamageTypeString", CTakeDamageInfo_DebugGetDamageTypeString },
-    { "GetAmmoName", CTakeDamageInfo_GetAmmoName },
-    { "GetAmmoType", CTakeDamageInfo_GetAmmoType },
-    { "GetAttacker", CTakeDamageInfo_GetAttacker },
-    { "GetBaseDamage", CTakeDamageInfo_GetBaseDamage },
-    { "GetDamage", CTakeDamageInfo_GetDamage },
-    { "GetDamageCustom", CTakeDamageInfo_GetDamageCustom },
-    { "GetDamageForce", CTakeDamageInfo_GetDamageForce },
-    { "GetDamagePosition", CTakeDamageInfo_GetDamagePosition },
-    { "GetDamageStats", CTakeDamageInfo_GetDamageStats },
-    { "GetDamageType", CTakeDamageInfo_GetDamageType },
-    { "GetInflictor", CTakeDamageInfo_GetInflictor },
-    { "GetMaxDamage", CTakeDamageInfo_GetMaxDamage },
-    { "GetReportedPosition", CTakeDamageInfo_GetReportedPosition },
-    { "GetWeapon", CTakeDamageInfo_GetWeapon },
-    { "ScaleDamage", CTakeDamageInfo_ScaleDamage },
-    { "ScaleDamageForce", CTakeDamageInfo_ScaleDamageForce },
-    { "SetAmmoType", CTakeDamageInfo_SetAmmoType },
-    { "SetAttacker", CTakeDamageInfo_SetAttacker },
-    { "SetDamage", CTakeDamageInfo_SetDamage },
-    { "SetDamageCustom", CTakeDamageInfo_SetDamageCustom },
-    { "SetDamageForce", CTakeDamageInfo_SetDamageForce },
-    { "SetDamagePosition", CTakeDamageInfo_SetDamagePosition },
-    { "SetDamageStats", CTakeDamageInfo_SetDamageStats },
-    { "SetDamageType", CTakeDamageInfo_SetDamageType },
-    { "SetInflictor", CTakeDamageInfo_SetInflictor },
-    { "SetMaxDamage", CTakeDamageInfo_SetMaxDamage },
-    { "SetReportedPosition", CTakeDamageInfo_SetReportedPosition },
-    { "SetWeapon", CTakeDamageInfo_SetWeapon },
-    { "SubtractDamage", CTakeDamageInfo_SubtractDamage },
-    { "__tostring", CTakeDamageInfo___tostring },
-    { NULL, NULL } };
+/*
+** TakeDamageInfos library
+*/
 
-static int luasrc_CTakeDamageInfo( lua_State *L )
+LUA_REGISTRATION_INIT( TakeDamageInfos )
+
+LUA_BINDING_BEGIN( TakeDamageInfos, Create, "library", "Creates a new TakeDamageInfo object" )
 {
+    CTakeDamageInfo info;
+
     if ( lua_gettop( L ) < 4 )
     {
-        CTakeDamageInfo info = CTakeDamageInfo();
-        lua_pushdamageinfo( L, info );
+        info = CTakeDamageInfo();
     }
     else if ( lua_gettop( L ) <= 5 )
     {
-        CTakeDamageInfo info = CTakeDamageInfo( luaL_checkentity( L, 1 ), luaL_checkentity( L, 2 ), luaL_checknumber( L, 3 ), luaL_checknumber( L, 4 ), ( int )luaL_optnumber( L, 5, 0 ) );
-        lua_pushdamageinfo( L, info );
+        lua_CBaseEntity *inflictor = LUA_BINDING_ARGUMENT( luaL_checkentity, 1, "inflictor" );
+        lua_CBaseEntity *attacker = LUA_BINDING_ARGUMENT( luaL_checkentity, 2, "attacker" );
+        float damage = LUA_BINDING_ARGUMENT( luaL_checknumber, 3, "damage" );
+        int damageType = LUA_BINDING_ARGUMENT( luaL_checknumber, 4, "damageType" );
+        int killType = LUA_BINDING_ARGUMENT_WITH_DEFAULT( luaL_optnumber, 5, 0, "killType" );
+
+        info = CTakeDamageInfo( inflictor, attacker, damage, damageType, killType );
     }
     else if ( lua_gettop( L ) <= 6 )
     {
-        CTakeDamageInfo info = CTakeDamageInfo( luaL_checkentity( L, 1 ), luaL_checkentity( L, 2 ), luaL_checkentity( L, 3 ), luaL_checknumber( L, 4 ), luaL_checknumber( L, 5 ), ( int )luaL_optnumber( L, 6, 0 ) );
-        lua_pushdamageinfo( L, info );
+        lua_CBaseEntity *inflictor = LUA_BINDING_ARGUMENT( luaL_checkentity, 1, "inflictor" );
+        lua_CBaseEntity *attacker = LUA_BINDING_ARGUMENT( luaL_checkentity, 2, "attacker" );
+        lua_CBaseEntity *weapon = LUA_BINDING_ARGUMENT( luaL_checkentity, 3, "weapon" );
+        float damage = LUA_BINDING_ARGUMENT( luaL_checknumber, 4, "damage" );
+        int damageType = LUA_BINDING_ARGUMENT( luaL_checknumber, 5, "damageType" );
+        int killType = LUA_BINDING_ARGUMENT_WITH_DEFAULT( luaL_optnumber, 6, 0, "killType" );
+
+        info = CTakeDamageInfo( inflictor, attacker, weapon, damage, damageType, killType );
     }
     else if ( lua_gettop( L ) < 9 )
     {
-        CTakeDamageInfo info = CTakeDamageInfo( luaL_checkentity( L, 1 ), luaL_checkentity( L, 2 ), luaL_checkvector( L, 3 ), luaL_checkvector( L, 4 ), luaL_checknumber( L, 5 ), luaL_checknumber( L, 6 ), ( int )luaL_optnumber( L, 7, 0 ), &luaL_optvector( L, 8, NULL ) );
-        lua_pushdamageinfo( L, info );
+        lua_CBaseEntity *inflictor = LUA_BINDING_ARGUMENT( luaL_checkentity, 1, "inflictor" );
+        lua_CBaseEntity *attacker = LUA_BINDING_ARGUMENT( luaL_checkentity, 2, "attacker" );
+        Vector damageForce = LUA_BINDING_ARGUMENT( luaL_checkvector, 3, "damageForce" );
+        Vector damagePosition = LUA_BINDING_ARGUMENT( luaL_checkvector, 4, "damagePosition" );
+        float damage = LUA_BINDING_ARGUMENT( luaL_checknumber, 5, "damage" );
+        int damageType = LUA_BINDING_ARGUMENT( luaL_checknumber, 6, "damageType" );
+        int killType = LUA_BINDING_ARGUMENT_WITH_DEFAULT( luaL_optnumber, 7, 0, "killType" );
+        Vector *reportedPosition = &LUA_BINDING_ARGUMENT_WITH_DEFAULT( luaL_optvector, 8, NULL, "reportedPosition" );
+
+        info = CTakeDamageInfo( inflictor, attacker, damageForce, damagePosition, damage, damageType, killType, reportedPosition );
     }
     else
     {
-        CTakeDamageInfo info = CTakeDamageInfo( luaL_checkentity( L, 1 ), luaL_checkentity( L, 2 ), luaL_checkentity( L, 3 ), luaL_checkvector( L, 4 ), luaL_checkvector( L, 5 ), luaL_checknumber( L, 6 ), luaL_checknumber( L, 7 ), ( int )luaL_optnumber( L, 8, 0 ), &luaL_optvector( L, 9, NULL ) );
-        lua_pushdamageinfo( L, info );
+        lua_CBaseEntity *inflictor = LUA_BINDING_ARGUMENT( luaL_checkentity, 1, "inflictor" );
+        lua_CBaseEntity *attacker = LUA_BINDING_ARGUMENT( luaL_checkentity, 2, "attacker" );
+        lua_CBaseEntity *weapon = LUA_BINDING_ARGUMENT( luaL_checkentity, 3, "weapon" );
+        Vector damageForce = LUA_BINDING_ARGUMENT( luaL_checkvector, 4, "damageForce" );
+        Vector damagePosition = LUA_BINDING_ARGUMENT( luaL_checkvector, 5, "damagePosition" );
+        float damage = LUA_BINDING_ARGUMENT( luaL_checknumber, 6, "damage" );
+        int damageType = LUA_BINDING_ARGUMENT( luaL_checknumber, 7, "damageType" );
+        int killType = LUA_BINDING_ARGUMENT_WITH_DEFAULT( luaL_optnumber, 8, 0, "killType" );
+        Vector *reportedPosition = &LUA_BINDING_ARGUMENT_WITH_DEFAULT( luaL_optvector, 9, NULL, "reportedPosition" );
+
+        info = CTakeDamageInfo( inflictor, attacker, weapon, damageForce, damagePosition, damage, damageType, killType, reportedPosition );
     }
+
+    lua_pushdamageinfo( L, info );
     return 1;
 }
+LUA_BINDING_END( "TakeDamageInfo", "The new TakeDamageInfo object." )
 
-static int luasrc_ClearMultiDamage( lua_State *L )
+LUA_BINDING_BEGIN( TakeDamageInfos, ClearMultiDamage, "library", "Clears multi damage" )
 {
     ClearMultiDamage();
     return 0;
 }
+LUA_BINDING_END()
 
-static int luasrc_ApplyMultiDamage( lua_State *L )
+LUA_BINDING_BEGIN( TakeDamageInfos, ApplyMultiDamage, "library", "Applies multi damage" )
 {
     ApplyMultiDamage();
     return 0;
 }
+LUA_BINDING_END()
 
-static int luasrc_AddMultiDamage( lua_State *L )
+LUA_BINDING_BEGIN( TakeDamageInfos, AddMultiDamage, "library", "Adds multi damage" )
 {
-    AddMultiDamage( luaL_checkdamageinfo( L, 1 ), luaL_checkentity( L, 2 ) );
+    AddMultiDamage(
+        LUA_BINDING_ARGUMENT( luaL_checkdamageinfo, 1, "damageInfo" ),
+        LUA_BINDING_ARGUMENT( luaL_checkentity, 2, "entity" ) );
+
     return 0;
 }
+LUA_BINDING_END()
 
-static int luasrc_ImpulseScale( lua_State *L )
+LUA_BINDING_BEGIN( TakeDamageInfos, ImpulseScale, "library", "Scales the impulse" )
 {
-    lua_pushnumber( L, ImpulseScale( luaL_checknumber( L, 1 ), luaL_checknumber( L, 2 ) ) );
+    lua_pushnumber( L, ImpulseScale( LUA_BINDING_ARGUMENT( luaL_checknumber, 1, "targetMass" ), LUA_BINDING_ARGUMENT( luaL_checknumber, 2, "desiredSpeed" ) ) );
+
     return 1;
 }
+LUA_BINDING_END( "number", "The scaled impulse." )
 
-static int luasrc_CalculateExplosiveDamageForce( lua_State *L )
+LUA_BINDING_BEGIN( TakeDamageInfos, CalculateExplosiveDamageForce, "library", "Calculates the explosive damage force" )
 {
-    CalculateExplosiveDamageForce( &luaL_checkdamageinfo( L, 1 ), luaL_checkvector( L, 2 ), luaL_checkvector( L, 3 ), luaL_optnumber( L, 4, 1.0 ) );
+    CalculateExplosiveDamageForce(
+        &LUA_BINDING_ARGUMENT( luaL_checkdamageinfo, 1, "damageInfo" ),
+        LUA_BINDING_ARGUMENT( luaL_checkvector, 2, "damageDirection" ),
+        LUA_BINDING_ARGUMENT( luaL_checkvector, 3, "damagePosition" ),
+        LUA_BINDING_ARGUMENT_WITH_DEFAULT( luaL_optnumber, 4, 1.0, "scale" ) );
+
     return 0;
 }
+LUA_BINDING_END()
 
-static int luasrc_CalculateBulletDamageForce( lua_State *L )
+LUA_BINDING_BEGIN( TakeDamageInfos, CalculateBulletDamageForce, "library", "Calculates the bullet damage force" )
 {
-    CalculateBulletDamageForce( &luaL_checkdamageinfo( L, 1 ), luaL_checknumber( L, 2 ), luaL_checkvector( L, 3 ), luaL_checkvector( L, 4 ), luaL_optnumber( L, 5, 1.0 ) );
+    CalculateBulletDamageForce(
+        &LUA_BINDING_ARGUMENT( luaL_checkdamageinfo, 1, "damageInfo" ),
+        LUA_BINDING_ARGUMENT( luaL_checknumber, 2, "bulletType" ),
+        LUA_BINDING_ARGUMENT( luaL_checkvector, 3, "damageDirection" ),
+        LUA_BINDING_ARGUMENT( luaL_checkvector, 4, "damagePosition" ),
+        LUA_BINDING_ARGUMENT_WITH_DEFAULT( luaL_optnumber, 5, 1.0, "scale" ) );
+
     return 0;
 }
+LUA_BINDING_END()
 
-static int luasrc_CalculateMeleeDamageForce( lua_State *L )
+LUA_BINDING_BEGIN( TakeDamageInfos, CalculateMeleeDamageForce, "library", "Calculates the melee damage force" )
 {
-    CalculateMeleeDamageForce( &luaL_checkdamageinfo( L, 1 ), luaL_checkvector( L, 2 ), luaL_checkvector( L, 3 ), luaL_optnumber( L, 4, 1.0 ) );
+    CalculateMeleeDamageForce(
+        &LUA_BINDING_ARGUMENT( luaL_checkdamageinfo, 1, "damageInfo" ),
+        LUA_BINDING_ARGUMENT( luaL_checkvector, 2, "damageDirection" ),
+        LUA_BINDING_ARGUMENT( luaL_checkvector, 3, "damagePosition" ),
+        LUA_BINDING_ARGUMENT_WITH_DEFAULT( luaL_optnumber, 4, 1.0, "scale" ) );
+
     return 0;
 }
+LUA_BINDING_END()
 
-static int luasrc_GuessDamageForce( lua_State *L )
+LUA_BINDING_BEGIN( TakeDamageInfos, GuessDamageForce, "library", "Guesses the damage force" )
 {
-    GuessDamageForce( &luaL_checkdamageinfo( L, 1 ), luaL_checkvector( L, 2 ), luaL_checkvector( L, 3 ), luaL_optnumber( L, 4, 1.0 ) );
+    GuessDamageForce(
+        &LUA_BINDING_ARGUMENT( luaL_checkdamageinfo, 1, "damageInfo" ),
+        LUA_BINDING_ARGUMENT( luaL_checkvector, 2, "damageDirection" ),
+        LUA_BINDING_ARGUMENT( luaL_checkvector, 3, "damagePosition" ),
+        LUA_BINDING_ARGUMENT_WITH_DEFAULT( luaL_optnumber, 4, 1.0, "scale" ) );
+
     return 0;
 }
-
-static const luaL_Reg CTakeDamageInfo_funcs[] = {
-    { "CTakeDamageInfo", luasrc_CTakeDamageInfo },
-    { "ClearMultiDamage", luasrc_ClearMultiDamage },
-    { "ApplyMultiDamage", luasrc_ApplyMultiDamage },
-    { "AddMultiDamage", luasrc_AddMultiDamage },
-    { "ImpulseScale", luasrc_ImpulseScale },
-    { "CalculateExplosiveDamageForce", luasrc_CalculateExplosiveDamageForce },
-    { "CalculateBulletDamageForce", luasrc_CalculateBulletDamageForce },
-    { "CalculateMeleeDamageForce", luasrc_CalculateMeleeDamageForce },
-    { "GuessDamageForce", luasrc_GuessDamageForce },
-    { NULL, NULL } };
+LUA_BINDING_END()
 
 /*
 ** Open CTakeDamageInfo object
 */
 LUALIB_API int luaopen_CTakeDamageInfo( lua_State *L )
 {
-    LUA_PUSH_NEW_METATABLE( L, LUA_TAKEDAMAGEINFOLIBNAME );
-    luaL_register( L, NULL, CTakeDamageInfometa );
+    LUA_PUSH_NEW_METATABLE( L, LUA_TAKEDAMAGEINFOMETANAME );
+
+    LUA_REGISTRATION_COMMIT( TakeDamageInfo );
+
     lua_pushvalue( L, -1 );           /* push metatable */
     lua_setfield( L, -2, "__index" ); /* metatable.__index = metatable */
-    lua_pushstring( L, "DamageInfo" );
-    lua_setfield( L, -2, "__type" ); /* metatable.__type = "DamageInfo" */
-    luaL_register( L, LUA_GNAME, CTakeDamageInfo_funcs );
+    lua_pushstring( L, LUA_TAKEDAMAGEINFOMETANAME );
+    lua_setfield( L, -2, "__type" ); /* metatable.__type = "TakeDamageInfo" */
+
+    LUA_REGISTRATION_COMMIT_LIBRARY( TakeDamageInfos );
+
     lua_pop( L, 1 );
     return 1;
 }

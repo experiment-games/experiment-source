@@ -7,7 +7,7 @@
 
 LUA_REGISTRATION_INIT( Randoms );
 
-LUA_BINDING_BEGIN( Randoms, RandomFloat, "library", "Generate a random float.", "shared" )
+LUA_BINDING_BEGIN( Randoms, RandomFloat, "library", "Generate a random float." )
 {
     float min = LUA_BINDING_ARGUMENT_WITH_DEFAULT( luaL_optnumber, 1, 0.0f, "min" );
     float max = LUA_BINDING_ARGUMENT_WITH_DEFAULT( luaL_optnumber, 2, 0.0f, "max" );
@@ -18,7 +18,7 @@ LUA_BINDING_BEGIN( Randoms, RandomFloat, "library", "Generate a random float.", 
 }
 LUA_BINDING_END( "number", "The generated random float." )
 
-LUA_BINDING_BEGIN( Randoms, RandomFloatExponential, "library", "Generate a random float with an exponential distribution.", "shared" )
+LUA_BINDING_BEGIN( Randoms, RandomFloatExponential, "library", "Generate a random float with an exponential distribution." )
 {
     float min = LUA_BINDING_ARGUMENT_WITH_DEFAULT( luaL_optnumber, 1, 0.0f, "min" );
     float max = LUA_BINDING_ARGUMENT_WITH_DEFAULT( luaL_optnumber, 2, 0.0f, "max" );
@@ -30,7 +30,7 @@ LUA_BINDING_BEGIN( Randoms, RandomFloatExponential, "library", "Generate a rando
 }
 LUA_BINDING_END( "number", "The generated random float." )
 
-LUA_BINDING_BEGIN( Randoms, RandomInteger, "library", "Generate a random integer.", "shared" )
+LUA_BINDING_BEGIN( Randoms, RandomInteger, "library", "Generate a random integer." )
 {
     int min = LUA_BINDING_ARGUMENT( luaL_checknumber, 1, "min" );
     int max = LUA_BINDING_ARGUMENT( luaL_checknumber, 2, "max" );
@@ -41,7 +41,7 @@ LUA_BINDING_BEGIN( Randoms, RandomInteger, "library", "Generate a random integer
 }
 LUA_BINDING_END( "number", "The generated random integer." )
 
-LUA_BINDING_BEGIN( Randoms, SetSeed, "library", "Set the seed for the random number generator.", "shared" )
+LUA_BINDING_BEGIN( Randoms, SetSeed, "library", "Set the seed for the random number generator." )
 {
     int seed = LUA_BINDING_ARGUMENT( luaL_checknumber, 1, "seed" );
 
@@ -50,6 +50,69 @@ LUA_BINDING_BEGIN( Randoms, SetSeed, "library", "Set the seed for the random num
     return 0;
 }
 LUA_BINDING_END()
+
+LUA_BINDING_BEGIN( Randoms, SharedRandomFloat, "library", "Generate a shared random float. Whenever generating random numbers in shared/predicted code, these SharedRandom* functions have to be used. Each call should specify a unique 'sharedName' that seeds the random number generator. In loops make sure the additionalSeed is increased with the loop counter, otherwise it will always return the same random number" )
+{
+    const char *sharedName = LUA_BINDING_ARGUMENT( luaL_checkstring, 1, "sharedName" );
+    float min = LUA_BINDING_ARGUMENT( luaL_checknumber, 2, "min" );
+    float max = LUA_BINDING_ARGUMENT( luaL_checknumber, 3, "max" );
+    int additionalSeed = LUA_BINDING_ARGUMENT_WITH_DEFAULT( luaL_optnumber, 4, 0, "additionalSeed" );
+
+    lua_pushnumber( L, SharedRandomFloat( sharedName, min, max, additionalSeed ) );
+
+    return 1;
+}
+LUA_BINDING_END( "number", "The generated random float." )
+
+LUA_BINDING_BEGIN( Randoms, SharedRandomInt, "library", "Generate a shared random integer. Whenever generating random numbers in shared/predicted code, these SharedRandom* functions have to be used. Each call should specify a unique 'sharedName' that seeds the random number generator. In loops make sure the additionalSeed is increased with the loop counter, otherwise it will always return the same random number" )
+{
+    const char *sharedName = LUA_BINDING_ARGUMENT( luaL_checkstring, 1, "sharedName" );
+    int min = LUA_BINDING_ARGUMENT( luaL_checknumber, 2, "min" );
+    int max = LUA_BINDING_ARGUMENT( luaL_checknumber, 3, "max" );
+    int additionalSeed = LUA_BINDING_ARGUMENT_WITH_DEFAULT( luaL_optnumber, 4, 0, "additionalSeed" );
+
+    lua_pushinteger( L, SharedRandomInt( sharedName, min, max, additionalSeed ) );
+
+    return 1;
+}
+LUA_BINDING_END( "integer", "The generated random integer." )
+
+LUA_BINDING_BEGIN( Randoms, SharedRandomVector, "library", "Generate a shared random vector. Whenever generating random numbers in shared/predicted code, these SharedRandom* functions have to be used. Each call should specify a unique 'sharedName' that seeds the random number generator. In loops make sure the additionalSeed is increased with the loop counter, otherwise it will always return the same random number" )
+{
+    const char *sharedName = LUA_BINDING_ARGUMENT( luaL_checkstring, 1, "sharedName" );
+    float min = LUA_BINDING_ARGUMENT( luaL_checknumber, 2, "min" );
+    float max = LUA_BINDING_ARGUMENT( luaL_checknumber, 3, "max" );
+    int additionalSeed = LUA_BINDING_ARGUMENT_WITH_DEFAULT( luaL_optnumber, 4, 0, "additionalSeed" );
+
+    lua_pushvector( L, SharedRandomVector( sharedName, min, max, additionalSeed ) );
+
+    return 1;
+}
+LUA_BINDING_END( "Vector", "The generated random vector." )
+
+LUA_BINDING_BEGIN( Randoms, SharedRandomAngle, "library", "Generate a shared random angle. Whenever generating random numbers in shared/predicted code, these SharedRandom* functions have to be used. Each call should specify a unique 'sharedName' that seeds the random number generator. In loops make sure the additionalSeed is increased with the loop counter, otherwise it will always return the same random number" )
+{
+    const char *sharedName = LUA_BINDING_ARGUMENT( luaL_checkstring, 1, "sharedName" );
+    float min = LUA_BINDING_ARGUMENT( luaL_checknumber, 2, "min" );
+    float max = LUA_BINDING_ARGUMENT( luaL_checknumber, 3, "max" );
+    int additionalSeed = LUA_BINDING_ARGUMENT_WITH_DEFAULT( luaL_optnumber, 4, 0, "additionalSeed" );
+
+    lua_pushangle( L, SharedRandomAngle( sharedName, min, max, additionalSeed ) );
+
+    return 1;
+}
+LUA_BINDING_END( "Angle", "The generated random angle." )
+
+#ifdef GAME_DLL
+
+LUA_BINDING_BEGIN( Randoms, RandomBloodVector, "library", "Generate a random blood vector.", "server" )
+{
+    lua_pushvector( L, UTIL_RandomBloodVector() );
+    return 1;
+}
+LUA_BINDING_END( "Vector", "The generated random blood vector." )
+
+#endif // GAME_DLL
 
 /*
 ** Open random library

@@ -6,8 +6,8 @@
 --]]
 
 local CBuildSubMenu = Gui.CBuildSubMenu
-local ScreenWidth = Util.ScreenWidth
-local ScreenHeight = Util.ScreenHeight
+local ScreenWidth = Utilities.GetScreenWidth
+local ScreenHeight = Utilities.GetScreenHeight
 
 local CBuildMenu = {
 	m_hFonts = {},

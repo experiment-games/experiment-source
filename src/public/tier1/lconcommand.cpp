@@ -197,9 +197,9 @@ bool TryRunConsoleCommand( const char *pszCommandString )
     return true;
 }
 
-LUA_REGISTRATION_INIT( _G )
+LUA_REGISTRATION_INIT( ConsoleCommands )
 
-LUA_BINDING_BEGIN( _G, ConsoleCommand, "library", "Creates a console command or returns the existing one with the given name" )
+LUA_BINDING_BEGIN( ConsoleCommands, Create, "library", "Creates a console command or returns the existing one with the given name" )
 {
     const char *pName = LUA_BINDING_ARGUMENT( luaL_checkstring, 1, "name" );
     const char *pHelpString = LUA_BINDING_ARGUMENT_WITH_DEFAULT( luaL_optstring, 2, "", "helpString" );
@@ -272,6 +272,31 @@ LUA_BINDING_BEGIN( _G, ConsoleCommand, "library", "Creates a console command or 
 }
 LUA_BINDING_END( "ConsoleCommand", "Created console command (returns existing command if one with the same name exists)" )
 
+#ifdef GAME_DLL
+
+LUA_BINDING_BEGIN( ConsoleCommands, IsCommandIssuedByServerAdmin, "library", "Whether the command was issued by a server admin", "server" )
+{
+    lua_pushboolean( L, UTIL_IsCommandIssuedByServerAdmin() );
+    return 1;
+}
+LUA_BINDING_END( "boolean", "Whether the command was issued by a server admin" )
+
+LUA_BINDING_BEGIN( ConsoleCommands, GetCommandClientIndex, "library", "Get the index of the client that issued the command", "server" )
+{
+    lua_pushinteger( L, UTIL_GetCommandClientIndex() );
+    return 1;
+}
+LUA_BINDING_END( "integer", "The index of the client that issued the command" )
+
+LUA_BINDING_BEGIN( ConsoleCommands, GetCommandClient, "library", "Get the client that issued the command", "server" )
+{
+    CBaseEntity::PushLuaInstanceSafe( L, UTIL_GetCommandClient() );
+    return 1;
+}
+LUA_BINDING_END( "Player", "The client that issued the command" )
+
+#endif  // GAME_DLL
+
 #ifdef CLIENT_DLL
 void ResetGameUIConCommandDatabase( void )
 {
@@ -310,7 +335,7 @@ LUALIB_API int luaopen_ConsoleCommandMeta( lua_State *L )
     lua_pushstring( L, LUA_CONCOMMANDMETANAME );
     lua_setfield( L, -2, "__type" ); /* metatable.__type = "ConsoleCommand" */
 
-    LUA_REGISTRATION_COMMIT_LIBRARY( _G );
+    LUA_REGISTRATION_COMMIT_LIBRARY( ConsoleCommands );
 
     lua_pop( L, 1 );
     return 1;

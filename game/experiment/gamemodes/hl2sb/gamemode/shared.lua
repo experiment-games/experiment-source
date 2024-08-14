@@ -75,7 +75,7 @@ function GM:PlayerPlayStepSound(client, vecOrigin, psurface, fvol, force)
 		end
 	end
 
-	local filter = CRecipientFilter()
+	local filter = RecipientFilters.Create()
 	filter:AddRecipientsByPAS(vecOrigin)
 
 	if not CLIENT then

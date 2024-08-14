@@ -40,7 +40,7 @@ LUA_BINDING_BEGIN( CBaseAnimating, BecomeRagdollOnClient, "class", "Become a rag
 
     return 1;
 }
-LUA_BINDING_END( "entity", "The ragdoll entity" )
+LUA_BINDING_END( "Entity", "The ragdoll entity" )
 
 LUA_BINDING_BEGIN( CBaseAnimating, ClampCycle, "class", "Clamp the cycle." )
 {
@@ -102,7 +102,7 @@ LUA_BINDING_BEGIN( CBaseAnimating, CreateRagdollCopy, "class", "Create a ragdoll
 
     return 1;
 }
-LUA_BINDING_END( "entity", "The ragdoll entity" )
+LUA_BINDING_END( "Entity", "The ragdoll entity" )
 
 LUA_BINDING_BEGIN( CBaseAnimating, CreateUnragdollInfo, "class", "Creates unragdoll info for the given ragdoll, setting it on the entity internally." )
 {
@@ -157,7 +157,7 @@ LUA_BINDING_BEGIN( CBaseAnimating, FindFollowedEntity, "class", "Find the follow
 
     return 1;
 }
-LUA_BINDING_END( "entity", "The followed entity" )
+LUA_BINDING_END( "Entity", "The followed entity" )
 
 LUA_BINDING_BEGIN( CBaseAnimating, FireEvent, "class", "Fire an event." )
 {
@@ -222,7 +222,7 @@ LUA_BINDING_BEGIN( CBaseAnimating, GetAimEntOrigin, "class", "Get the aim entity
 
     return 2;
 }
-LUA_BINDING_END( "vector", "The aim entity origin", "angle", "The aim entity angles" )
+LUA_BINDING_END( "Vector", "The aim entity origin", "angle", "The aim entity angles" )
 
 LUA_BINDING_BEGIN( CBaseAnimating, GetAttachmentVelocity, "class", "Get the attachment velocity." )
 {
@@ -250,7 +250,7 @@ LUA_BINDING_BEGIN( CBaseAnimating, GetBlendedLinearVelocity, "class", "Get the b
 
     return 1;
 }
-LUA_BINDING_END( "vector", "The blended linear velocity" )
+LUA_BINDING_END( "Vector", "The blended linear velocity" )
 
 LUA_BINDING_BEGIN( CBaseAnimating, GetBody, "class", "Get the body (internally described as 'Object bodygroup'?)." )
 {
@@ -334,7 +334,7 @@ LUA_BINDING_BEGIN( CBaseAnimating, GetRenderBounds, "class", "Get the render bou
 
     return 2;
 }
-LUA_BINDING_END( "vector", "The minimum bounds", "vector", "The maximum bounds" )
+LUA_BINDING_END( "Vector", "The minimum bounds", "vector", "The maximum bounds" )
 
 LUA_BINDING_BEGIN( CBaseAnimating, GetServerIntendedCycle, "class", "Get the server intended cycle." )
 {
@@ -692,7 +692,7 @@ LUA_BINDING_BEGIN( CBaseAnimating, UncorrectViewModelAttachment, "class", "All v
 
     return 1;
 }
-LUA_BINDING_END( "vector", "The uncorrected view model attachment origin" )
+LUA_BINDING_END( "Vector", "The uncorrected view model attachment origin" )
 
 LUA_BINDING_BEGIN( CBaseAnimating, UpdateClientSideAnimation, "class", "Update the client side animation for the given entity." )
 {

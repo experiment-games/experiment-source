@@ -160,10 +160,10 @@ if (SERVER) then
 
 		nextForcedUpdate = curTime + playerForcedUpdateConvar:GetFloat()
 
-		local players = Util.GetAllPlayers()
+		local players = Players.GetAll()
 
 		for _, player in ipairs(players) do
-			local count, entities = Util.EntitiesInPVS(player:GetPosition())
+			local entities = Entities.GetInPvs(player:GetPosition())
 
 			for _, entity in ipairs(entities) do
 				if (not entity.__networkedVariables) then

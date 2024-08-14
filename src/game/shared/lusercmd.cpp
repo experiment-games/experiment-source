@@ -28,12 +28,12 @@ LUA_API void lua_pushusercmd( lua_State *L, lua_CUserCmd *pUserCmd )
 {
     lua_CUserCmd **pp = ( lua_CUserCmd ** )lua_newuserdata( L, sizeof( pUserCmd ) );
     *pp = pUserCmd;
-    LUA_SAFE_SET_METATABLE( L, LUA_USERCMDLIBNAME );
+    LUA_SAFE_SET_METATABLE( L, LUA_USERCMDMETANAME );
 }
 
 LUALIB_API lua_CUserCmd *luaL_checkusercmd( lua_State *L, int narg )
 {
-    lua_CUserCmd **ppData = ( lua_CUserCmd ** )luaL_checkudata( L, narg, LUA_USERCMDLIBNAME );
+    lua_CUserCmd **ppData = ( lua_CUserCmd ** )luaL_checkudata( L, narg, LUA_USERCMDMETANAME );
 
     if ( *ppData == 0 ) /* avoid extra test when d is not 0 */
         luaL_argerror( L, narg, "CUserCmd expected, got NULL" );
@@ -41,222 +41,222 @@ LUALIB_API lua_CUserCmd *luaL_checkusercmd( lua_State *L, int narg )
     return *ppData;
 }
 
-static int CUserCmd_AddKey( lua_State *L )
+LUA_REGISTRATION_INIT( UserCommand );
+
+LUA_BINDING_BEGIN( UserCommand, AddKey, "class", "Adds a key to the buttons" )
 {
-    int key = luaL_checknumber( L, 2 );
-    luaL_checkusercmd( L, 1 )->buttons |= key;
+    int key = LUA_BINDING_ARGUMENT( luaL_checknumber, 2, "buttonCode" );
+    LUA_BINDING_ARGUMENT( luaL_checkusercmd, 1, "userCmd" )->buttons |= key;
     return 0;
 }
+LUA_BINDING_END()
 
-static int CUserCmd_ClearButtons( lua_State *L )
+LUA_BINDING_BEGIN( UserCommand, ClearButtons, "class", "Clears the buttons" )
 {
-    luaL_checkusercmd( L, 1 )->buttons = 0;
+    LUA_BINDING_ARGUMENT( luaL_checkusercmd, 1, "userCmd" )->buttons = 0;
     return 0;
 }
+LUA_BINDING_END()
 
-static int CUserCmd_ClearMovement( lua_State *L )
+LUA_BINDING_BEGIN( UserCommand, ClearMovement, "class", "Clears the movement" )
 {
-    CUserCmd *cmd = luaL_checkusercmd( L, 1 );
+    lua_CUserCmd *cmd = LUA_BINDING_ARGUMENT( luaL_checkusercmd, 1, "userCmd" );
     cmd->forwardmove = 0.0f;
     cmd->sidemove = 0.0f;
     cmd->upmove = 0.0f;
     return 0;
 }
+LUA_BINDING_END()
 
-static int CUserCmd_CommandNumber( lua_State *L )
+LUA_BINDING_BEGIN( UserCommand, CommandNumber, "class", "Gets the command number" )
 {
-    lua_pushnumber( L, luaL_checkusercmd( L, 1 )->command_number );
+    lua_pushnumber( L, LUA_BINDING_ARGUMENT( luaL_checkusercmd, 1, "userCmd" )->command_number );
     return 1;
 }
+LUA_BINDING_END( "number", "The command number" )
 
-static int CUserCmd_GetButtons( lua_State *L )
+LUA_BINDING_BEGIN( UserCommand, GetButtons, "class", "Gets the button states" )
 {
-    lua_pushnumber( L, luaL_checkusercmd( L, 1 )->buttons );
+    lua_pushnumber( L, LUA_BINDING_ARGUMENT( luaL_checkusercmd, 1, "userCmd" )->buttons );
     return 1;
 }
+LUA_BINDING_END( "number", "The button states" )
 
-static int CUserCmd_GetForwardMove( lua_State *L )
+LUA_BINDING_BEGIN( UserCommand, GetForwardMove, "class", "Gets forward movement value" )
 {
-    lua_pushnumber( L, luaL_checkusercmd( L, 1 )->forwardmove );
+    lua_pushnumber( L, LUA_BINDING_ARGUMENT( luaL_checkusercmd, 1, "userCmd" )->forwardmove );
     return 1;
 }
+LUA_BINDING_END( "number", "The forward movement value" )
 
-static int CUserCmd_GetImpulse( lua_State *L )
+LUA_BINDING_BEGIN( UserCommand, GetImpulse, "class", "Gets the impulse value" )
 {
-    lua_pushnumber( L, luaL_checkusercmd( L, 1 )->impulse );
+    lua_pushnumber( L, LUA_BINDING_ARGUMENT( luaL_checkusercmd, 1, "userCmd" )->impulse );
     return 1;
 }
+LUA_BINDING_END( "number", "The impulse value" )
 
-static int CUserCmd_GetMouseWheel( lua_State *L )
+LUA_BINDING_BEGIN( UserCommand, GetMouseWheel, "class", "Gets the mouse wheel delta" )
 {
-    lua_pushnumber( L, luaL_checkusercmd( L, 1 )->mousedx );
+    lua_pushnumber( L, LUA_BINDING_ARGUMENT( luaL_checkusercmd, 1, "userCmd" )->mousedx );
     return 1;
 }
+LUA_BINDING_END( "number", "The mouse wheel delta" )
 
-static int CUserCmd_GetMouseX( lua_State *L )
+LUA_BINDING_BEGIN( UserCommand, GetMouseX, "class", "Gets mouse X movement" )
 {
-    lua_pushnumber( L, luaL_checkusercmd( L, 1 )->mousedx );
+    lua_pushnumber( L, LUA_BINDING_ARGUMENT( luaL_checkusercmd, 1, "userCmd" )->mousedx );
     return 1;
 }
+LUA_BINDING_END( "number", "The mouse X movement" )
 
-static int CUserCmd_GetMouseY( lua_State *L )
+LUA_BINDING_BEGIN( UserCommand, GetMouseY, "class", "Gets mouse Y movement" )
 {
-    lua_pushnumber( L, luaL_checkusercmd( L, 1 )->mousedy );
+    lua_pushnumber( L, LUA_BINDING_ARGUMENT( luaL_checkusercmd, 1, "userCmd" )->mousedy );
     return 1;
 }
+LUA_BINDING_END( "number", "The mouse Y movement" )
 
-static int CUserCmd_GetSideMove( lua_State *L )
+LUA_BINDING_BEGIN( UserCommand, GetSideMove, "class", "Gets side movement value" )
 {
-    lua_pushnumber( L, luaL_checkusercmd( L, 1 )->sidemove );
+    lua_pushnumber( L, LUA_BINDING_ARGUMENT( luaL_checkusercmd, 1, "userCmd" )->sidemove );
     return 1;
 }
+LUA_BINDING_END( "number", "The side movement value" )
 
-static int CUserCmd_GetUpMove( lua_State *L )
+LUA_BINDING_BEGIN( UserCommand, GetUpMove, "class", "Gets upward movement value" )
 {
-    lua_pushnumber( L, luaL_checkusercmd( L, 1 )->upmove );
+    lua_pushnumber( L, LUA_BINDING_ARGUMENT( luaL_checkusercmd, 1, "userCmd" )->upmove );
     return 1;
 }
+LUA_BINDING_END( "number", "The upward movement value" )
 
-static int CUserCmd_GetViewAngles( lua_State *L )
+LUA_BINDING_BEGIN( UserCommand, GetViewAngles, "class", "Gets the view angles" )
 {
-    lua_pushangle( L, luaL_checkusercmd( L, 1 )->viewangles );
+    lua_pushangle( L, LUA_BINDING_ARGUMENT( luaL_checkusercmd, 1, "userCmd" )->viewangles );
     return 1;
 }
+LUA_BINDING_END( "Angle", "The view angles" )
 
-//static int CUserCmd_IsForced( lua_State *L )
+// static int CUserCmd_IsForced( lua_State *L )
 //{
-//    lua_pushboolean( L, luaL_checkusercmd( L, 1 )->??? );
-//    return 1;
-//}
+//     lua_pushboolean( L, LUA_BINDING_ARGUMENT(luaL_checkusercmd, 1, "userCmd")->??? );
+//     return 1;
+// }
 
-static int CUserCmd_KeyDown( lua_State *L )
+LUA_BINDING_BEGIN( UserCommand, KeyDown, "class", "Checks if a key is down" )
 {
-    int key = luaL_checknumber( L, 2 );
-    lua_pushboolean( L, ( luaL_checkusercmd( L, 1 )->buttons & key ) != 0 );
+    int key = LUA_BINDING_ARGUMENT( luaL_checknumber, 2, "key" );
+    lua_pushboolean( L, ( LUA_BINDING_ARGUMENT( luaL_checkusercmd, 1, "userCmd" )->buttons & key ) != 0 );
     return 1;
 }
+LUA_BINDING_END( "boolean", "True if the key is down, false otherwise" )
 
-static int CUserCmd_RemoveKey( lua_State *L )
+LUA_BINDING_BEGIN( UserCommand, RemoveKey, "class", "Removes a key from the buttons" )
 {
-    int key = luaL_checknumber( L, 2 );
-    luaL_checkusercmd( L, 1 )->buttons &= ~key;
+    int key = LUA_BINDING_ARGUMENT( luaL_checknumber, 2, "key" );
+    LUA_BINDING_ARGUMENT( luaL_checkusercmd, 1, "userCmd" )->buttons &= ~key;
     return 0;
 }
+LUA_BINDING_END()
 
-static int CUserCmd_SelectWeapon( lua_State *L )
+LUA_BINDING_BEGIN( UserCommand, SelectWeapon, "class", "Selects a weapon" )
 {
-    luaL_checkusercmd( L, 1 )->weaponselect = luaL_checkentity( L, 2 )->entindex();
+    LUA_BINDING_ARGUMENT( luaL_checkusercmd, 1, "userCmd" )->weaponselect = LUA_BINDING_ARGUMENT( luaL_checkentity, 2, "entity" )->entindex();
     return 0;
 }
+LUA_BINDING_END()
 
-static int CUserCmd_SetButtons( lua_State *L )
+LUA_BINDING_BEGIN( UserCommand, SetButtons, "class", "Sets the button states" )
 {
-    luaL_checkusercmd( L, 1 )->buttons = luaL_checknumber( L, 2 );
+    LUA_BINDING_ARGUMENT( luaL_checkusercmd, 1, "userCmd" )->buttons = LUA_BINDING_ARGUMENT( luaL_checknumber, 2, "buttons" );
     return 0;
 }
+LUA_BINDING_END()
 
-static int CUserCmd_SetForwardMove( lua_State *L )
+LUA_BINDING_BEGIN( UserCommand, SetForwardMove, "class", "Sets forward movement" )
 {
-    luaL_checkusercmd( L, 1 )->forwardmove = luaL_checknumber( L, 2 );
+    LUA_BINDING_ARGUMENT( luaL_checkusercmd, 1, "userCmd" )->forwardmove = LUA_BINDING_ARGUMENT( luaL_checknumber, 2, "forwardMove" );
     return 0;
 }
+LUA_BINDING_END()
 
-static int CUserCmd_SetImpulse( lua_State *L )
+LUA_BINDING_BEGIN( UserCommand, SetImpulse, "class", "Sets the impulse value" )
 {
-    luaL_checkusercmd( L, 1 )->impulse = luaL_checknumber( L, 2 );
+    LUA_BINDING_ARGUMENT( luaL_checkusercmd, 1, "userCmd" )->impulse = LUA_BINDING_ARGUMENT( luaL_checknumber, 2, "impulse" );
     return 0;
 }
+LUA_BINDING_END()
 
-//static int CUserCmd_SetMouseWheel( lua_State *L )
+// static int CUserCmd_SetMouseWheel( lua_State *L )
 //{
-//    luaL_checkusercmd( L, 1 )->???
-//    return 0;
-//}
+//     LUA_BINDING_ARGUMENT(luaL_checkusercmd, 1, "userCmd")->??? = LUA_BINDING_ARGUMENT(luaL_checknumber, 2, "???");
+//     return 0;
+// }
 
-static int CUserCmd_SetMouseX( lua_State *L )
+LUA_BINDING_BEGIN( UserCommand, SetMouseX, "class", "Sets mouse X movement" )
 {
-    luaL_checkusercmd( L, 1 )->mousedx = luaL_checknumber( L, 2 );
+    LUA_BINDING_ARGUMENT( luaL_checkusercmd, 1, "userCmd" )->mousedx = LUA_BINDING_ARGUMENT( luaL_checknumber, 2, "mouseDx" );
     return 0;
 }
+LUA_BINDING_END()
 
-static int CUserCmd_SetMouseY( lua_State *L )
+LUA_BINDING_BEGIN( UserCommand, SetMouseY, "class", "Sets mouse Y movement" )
 {
-    luaL_checkusercmd( L, 1 )->mousedy = luaL_checknumber( L, 2 );
+    LUA_BINDING_ARGUMENT( luaL_checkusercmd, 1, "userCmd" )->mousedy = LUA_BINDING_ARGUMENT( luaL_checknumber, 2, "mouseDy" );
     return 0;
 }
+LUA_BINDING_END()
 
-static int CUserCmd_SetSideMove( lua_State *L )
+LUA_BINDING_BEGIN( UserCommand, SetSideMove, "class", "Sets side movement" )
 {
-    luaL_checkusercmd( L, 1 )->sidemove = luaL_checknumber( L, 2 );
+    LUA_BINDING_ARGUMENT( luaL_checkusercmd, 1, "userCmd" )->sidemove = LUA_BINDING_ARGUMENT( luaL_checknumber, 2, "sideMove" );
     return 0;
 }
+LUA_BINDING_END()
 
-static int CUserCmd_SetUpMove( lua_State *L )
+LUA_BINDING_BEGIN( UserCommand, SetUpMove, "class", "Sets upward movement" )
 {
-    luaL_checkusercmd( L, 1 )->upmove = luaL_checknumber( L, 2 );
+    LUA_BINDING_ARGUMENT( luaL_checkusercmd, 1, "userCmd" )->upmove = LUA_BINDING_ARGUMENT( luaL_checknumber, 2, "upMove" );
     return 0;
 }
+LUA_BINDING_END()
 
-static int CUserCmd_SetViewAngles( lua_State *L )
+LUA_BINDING_BEGIN( UserCommand, SetViewAngles, "class", "Sets the view angles" )
 {
-    luaL_checkusercmd( L, 1 )->viewangles = luaL_checkangle( L, 2 );
+    LUA_BINDING_ARGUMENT( luaL_checkusercmd, 1, "userCmd" )->viewangles = LUA_BINDING_ARGUMENT( luaL_checkangle, 2, "viewAngles" );
     return 0;
 }
+LUA_BINDING_END()
 
-static int CUserCmd_TickCount( lua_State *L )
+LUA_BINDING_BEGIN( UserCommand, TickCount, "class", "Gets the tick count" )
 {
-    lua_pushnumber( L, luaL_checkusercmd( L, 1 )->tick_count );
+    lua_pushnumber( L, LUA_BINDING_ARGUMENT( luaL_checkusercmd, 1, "userCmd" )->tick_count );
     return 1;
 }
+LUA_BINDING_END( "number", "The tick count" )
 
-static int CUserCmd___tostring( lua_State *L )
+LUA_BINDING_BEGIN( UserCommand, __tostring, "class", "__tostring method for UserCommand" )
 {
-    lua_pushfstring( L, "CUserCmd: %p", luaL_checkudata( L, 1, LUA_USERCMDLIBNAME ) );
+    lua_pushfstring( L, "UserCmd: %p", LUA_BINDING_ARGUMENT( lua_tousercmd, 1, LUA_USERCMDMETANAME ) );
     return 1;
 }
-
-static const luaL_Reg CUserCmdmeta[] = {
-    { "AddKey", CUserCmd_AddKey },
-    { "ClearButtons", CUserCmd_ClearButtons },
-    { "ClearMovement", CUserCmd_ClearMovement },
-    { "CommandNumber", CUserCmd_CommandNumber },
-    { "GetButtons", CUserCmd_GetButtons },
-    { "GetForwardMove", CUserCmd_GetForwardMove },
-    { "GetImpulse", CUserCmd_GetImpulse },
-    { "GetMouseWheel", CUserCmd_GetMouseWheel },
-    { "GetMouseX", CUserCmd_GetMouseX },
-    { "GetMouseY", CUserCmd_GetMouseY },
-    { "GetSideMove", CUserCmd_GetSideMove },
-    { "GetUpMove", CUserCmd_GetUpMove },
-    { "GetViewAngles", CUserCmd_GetViewAngles },
-    // { "IsForced", CUserCmd_IsForced },
-    { "KeyDown", CUserCmd_KeyDown },
-    { "RemoveKey", CUserCmd_RemoveKey },
-    { "SelectWeapon", CUserCmd_SelectWeapon },
-    { "SetButtons", CUserCmd_SetButtons },
-    { "SetForwardMove", CUserCmd_SetForwardMove },
-    { "SetImpulse", CUserCmd_SetImpulse },
-    // { "SetMouseWheel", CUserCmd_SetMouseWheel },
-    { "SetMouseX", CUserCmd_SetMouseX },
-    { "SetMouseY", CUserCmd_SetMouseY },
-    { "SetSideMove", CUserCmd_SetSideMove },
-    { "SetUpMove", CUserCmd_SetUpMove },
-    { "SetViewAngles", CUserCmd_SetViewAngles },
-    { "TickCount", CUserCmd_TickCount },
-    { "__tostring", CUserCmd___tostring },
-    { NULL, NULL } };
+LUA_BINDING_END( "string", "The string representation" )
 
 /*
 ** Open CUserCmd object
 */
 LUALIB_API int luaopen_CUserCmd( lua_State *L )
 {
-    LUA_PUSH_NEW_METATABLE( L, LUA_USERCMDLIBNAME );
-    luaL_register( L, NULL, CUserCmdmeta );
+    LUA_PUSH_NEW_METATABLE( L, LUA_USERCMDMETANAME );
+
+    LUA_REGISTRATION_COMMIT( UserCommand );
+
     lua_pushvalue( L, -1 );           /* push metatable */
     lua_setfield( L, -2, "__index" ); /* metatable.__index = metatable */
-    lua_pushstring( L, "UserCmd" );
-    lua_setfield( L, -2, "__type" ); /* metatable.__type = "UserCmd" */
+    lua_pushstring( L, LUA_USERCMDMETANAME );
+    lua_setfield( L, -2, "__type" ); /* metatable.__type = "UserCommand" */
+
     lua_pop( L, 1 );
     return 1;
 }

@@ -230,7 +230,7 @@ LUA_BINDING_BEGIN( Engines, GetLightForPoint, "library", "Get the light for a po
     lua_pushvector( L, light );
     return 1;
 }
-LUA_BINDING_END( "vector", "The light for the point." )
+LUA_BINDING_END( "Vector", "The light for the point." )
 
 LUA_BINDING_BEGIN( Engines, GetLightForPointFast, "library", "Get the light for a point quickly." )
 {
@@ -240,7 +240,7 @@ LUA_BINDING_BEGIN( Engines, GetLightForPointFast, "library", "Get the light for 
     lua_pushvector( L, light );
     return 1;
 }
-LUA_BINDING_END( "vector", "The light for the point." )
+LUA_BINDING_END( "Vector", "The light for the point." )
 
 LUA_BINDING_BEGIN( Engines, GetLocalPlayer, "library", "Get the local player." )
 {

@@ -7,23 +7,20 @@
 // memdbgon must be the last include file in a .cpp file!!!
 #include "tier0/memdbgon.h"
 
-static int steamapicontext_SteamFriends (lua_State *L) {
-  lua_pushsteamfriends(L, steamapicontext->SteamFriends());
-  return 1;
+LUA_REGISTRATION_INIT( SteamApiContexts )
+
+LUA_BINDING_BEGIN( SteamApiContexts, SteamFriends, "library", "Get Steam Friends." )
+{
+    lua_pushsteamfriends( L, steamapicontext->SteamFriends() );
+    return 1;
 }
-
-
-static const luaL_Reg steamapicontextlib[] = {
-  {"SteamFriends",   steamapicontext_SteamFriends},
-  {NULL, NULL}
-};
-
+LUA_BINDING_END( "SteamFriendsHandle", "The SteamFriends object." )
 
 /*
 ** Open steamapicontext library
 */
-LUALIB_API int luaopen_steamapicontext (lua_State *L) {
-  luaL_register(L, LUA_STEAMAPICONTEXTLIBNAME, steamapicontextlib);
-  return 1;
+LUALIB_API int luaopen_SteamApiContexts( lua_State *L )
+{
+    LUA_REGISTRATION_COMMIT_LIBRARY( SteamApiContexts );
+    return 1;
 }
-

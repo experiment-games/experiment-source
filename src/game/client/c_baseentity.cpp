@@ -1691,7 +1691,7 @@ const Vector &C_BaseEntity::GetRenderOrigin( void )
         lua_getfield( L, -1, "m_vecRenderOrigin" );
         lua_remove( L, -2 );
 
-        if ( lua_isuserdata( L, -1 ) && luaL_checkudata( L, -1, LUA_VECTORLIBNAME ) )
+        if ( lua_isuserdata( L, -1 ) && luaL_checkudata( L, -1, LUA_VECTORMETANAME ) )
         {
             const Vector &res = luaL_checkvector( L, -1 );
             lua_pop( L, 1 );

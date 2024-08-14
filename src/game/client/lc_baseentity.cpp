@@ -138,7 +138,7 @@ LUA_BINDING_BEGIN( Entity, GetRenderOrigin, "class", "Get render origin." )
     lua_pushvector( L, v );
     return 1;
 }
-LUA_BINDING_END( "vector", "Render origin." )
+LUA_BINDING_END( "Vector", "Render origin." )
 
 LUA_BINDING_BEGIN( Entity, GetRenderAngles, "class", "Get render angles." )
 {
@@ -147,7 +147,7 @@ LUA_BINDING_BEGIN( Entity, GetRenderAngles, "class", "Get render angles." )
     lua_pushangle( L, v );
     return 1;
 }
-LUA_BINDING_END( "angle", "Render angles." )
+LUA_BINDING_END( "Angle", "Render angles." )
 
 LUA_BINDING_BEGIN( Entity, GetObserverCameraOrigin, "class", "Get observer camera origin." )
 {
@@ -156,7 +156,7 @@ LUA_BINDING_BEGIN( Entity, GetObserverCameraOrigin, "class", "Get observer camer
     lua_pushvector( L, v );
     return 1;
 }
-LUA_BINDING_END( "vector", "Observer camera origin." )
+LUA_BINDING_END( "Vector", "Observer camera origin." )
 
 LUA_BINDING_BEGIN( Entity, IsTwoPass, "class", "Is two pass." )
 {

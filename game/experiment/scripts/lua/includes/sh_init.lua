@@ -68,6 +68,7 @@ Include("extensions/key_values.lua")
 Include("extensions/math.lua")
 Include("extensions/string.lua")
 Include("extensions/table.lua")
+Include("extensions/console_commands.lua")
 Include("extensions/console_variables.lua")
 Include("extensions/entity.lua")
 Include("extensions/weapon.lua")
@@ -87,7 +88,6 @@ if (CLIENT) then
 end
 
 Bitwise = require("bitwise")
-ConsoleCommands = require("console_commands")
 Gamemodes = require("gamemodes")
 Hooks = require("hooks")
 Timers = require("timers")

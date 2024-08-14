@@ -74,7 +74,7 @@ LUA_BINDING_BEGIN( Engines, CreateFakeClient, "library", "Create a fake client."
 
     return 1;
 }
-LUA_BINDING_END( "entity", "The created fake client." )
+LUA_BINDING_END( "Entity", "The created fake client." )
 
 LUA_BINDING_BEGIN( Engines, ForceExactFile, "library", "Force a file to be exact." )
 {
@@ -404,6 +404,20 @@ LUA_BINDING_BEGIN( Engines, SetDedicatedServerBenchmarkMode, "library", "Set the
     return 0;
 }
 LUA_BINDING_END()
+
+LUA_BINDING_BEGIN( Engines, GetSimulationInterval, "library", "Get the simulation interval." )
+{
+    lua_pushnumber( L, UTIL_GetSimulationInterval() );
+    return 1;
+}
+LUA_BINDING_END( "number", "The simulation interval." )
+
+LUA_BINDING_BEGIN( Engines, GetListenServerHost, "library", "Get the local player on a listen server - this is for multiplayer use only." )
+{
+    CBaseEntity::PushLuaInstanceSafe( L, UTIL_GetListenServerHost() );
+    return 1;
+}
+LUA_BINDING_END( "Entity", "The listen server host." )
 
 /*
 ** Open engine library

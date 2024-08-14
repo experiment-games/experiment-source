@@ -593,6 +593,7 @@ $Project
             $File "$SRCDIR\game\shared\lresources.cpp"
             $File "$SRCDIR\game\shared\lresources.h"
             $File "$SRCDIR\game\shared\lutil_shared.cpp"
+            $File "$SRCDIR\game\shared\lserializers.cpp"
             $File "$SRCDIR\game\shared\mountaddons.h"
             $File "$SRCDIR\game\shared\mountaddons.cpp"
             $File "$SRCDIR\game\shared\mountsteamcontent.h"
@@ -770,7 +771,6 @@ $Project
 			$File	"fx_envelope.cpp"
 			$File	"fx_line.cpp"
 			$File	"fx_sparks.cpp"
-			$File	"lc_recipientfilter.cpp"
 			$File	"particlesphererenderer.cpp"
 			$File	"smoke_fog_overlay.cpp"
 		}
@@ -1014,7 +1014,8 @@ $Project
 		$File   "vgui_video_player.h"
 
         // Lua
-        $File "lc_recipientfilter.h"
+        $File "$SRCDIR\game\shared\lrecipientfilter.cpp"
+        $File "$SRCDIR\game\shared\lrecipientfilter.h"
         $File "$SRCDIR\public\lvphysics_interface.h"
 	}
 

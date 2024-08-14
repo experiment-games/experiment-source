@@ -9,10 +9,8 @@
 #include "luamanager.h"
 #include "luasrclib.h"
 #include "lbaseentity_shared.h"
-#ifdef CLIENT_DLL
-#include "lc_recipientfilter.h"
-#else
 #include "lrecipientfilter.h"
+#ifndef CLIENT_DLL
 #include "basescripted.h"
 #endif
 #include "lbaseplayer_shared.h"
@@ -179,7 +177,7 @@ LUA_BINDING_BEGIN( Entity, CalculateNearestPoint, "class", "Computes the nearest
 
     return 1;
 }
-LUA_BINDING_END( "vector", "The nearest point." )
+LUA_BINDING_END( "Vector", "The nearest point." )
 
 LUA_BINDING_BEGIN( Entity, ChangeTeam, "class", "Change the team of the entity." )
 {
@@ -229,7 +227,7 @@ LUA_BINDING_BEGIN( Entity, ComputeAbsoluteDirection, "class", "Compute absolute 
 
     return 1;
 }
-LUA_BINDING_END( "vector", "The absolute direction." )
+LUA_BINDING_END( "Vector", "The absolute direction." )
 
 LUA_BINDING_BEGIN( Entity, ComputeAbsolutePosition, "class", "Compute absolute position." )
 {
@@ -242,7 +240,7 @@ LUA_BINDING_BEGIN( Entity, ComputeAbsolutePosition, "class", "Compute absolute p
 
     return 1;
 }
-LUA_BINDING_END( "vector", "The absolute position." )
+LUA_BINDING_END( "Vector", "The absolute position." )
 
 LUA_BINDING_BEGIN( Entity, ComputeWorldSpaceSurroundingBox, "class", "Compute world space surrounding box." )
 {
@@ -254,7 +252,7 @@ LUA_BINDING_BEGIN( Entity, ComputeWorldSpaceSurroundingBox, "class", "Compute wo
     lua_pushvector( L, vMax );
     return 2;
 }
-LUA_BINDING_END( "vector", "The minimum vector.", "vector", "The maximum vector." )
+LUA_BINDING_END( "Vector", "The minimum vector.", "vector", "The maximum vector." )
 
 LUA_BINDING_BEGIN( Entity, CreateDataObject, "class", "Create data object." )
 {
@@ -276,7 +274,7 @@ LUA_BINDING_BEGIN( Entity, CreatePredictedEntityByName, "class", "Create predict
     CBaseEntity::PushLuaInstanceSafe( L, CBaseEntity::CreatePredictedEntityByName( pszClassName, pszModule, nLine, bPersists ) );
     return 1;
 }
-LUA_BINDING_END( "entity", "The predicted entity." )
+LUA_BINDING_END( "Entity", "The predicted entity." )
 
 LUA_BINDING_BEGIN( Entity, CreateVPhysics, "class", "Create VPhysics." )
 {
@@ -358,7 +356,7 @@ LUA_BINDING_BEGIN( Entity, GetEarPosition, "class", "Get ear position." )
     lua_pushvector( L, pEntity->EarPosition() );
     return 1;
 }
-LUA_BINDING_END( "vector", "The ear position." )
+LUA_BINDING_END( "Vector", "The ear position." )
 
 LUA_BINDING_BEGIN( Entity, EmitAmbientSound, "class|static", "Emit ambient sound." )
 {
@@ -456,7 +454,7 @@ LUA_BINDING_BEGIN( Entity, EntityToWorldSpace, "class", "Entity to world space."
 
     return 1;
 }
-LUA_BINDING_END( "vector", "The world space vector." )
+LUA_BINDING_END( "Vector", "The world space vector." )
 
 LUA_BINDING_BEGIN( Entity, GetEyeAngles, "class", "Get eye angles." )
 {
@@ -465,7 +463,7 @@ LUA_BINDING_BEGIN( Entity, GetEyeAngles, "class", "Get eye angles." )
     lua_pushangle( L, v );
     return 1;
 }
-LUA_BINDING_END( "angle", "The eye angles." )
+LUA_BINDING_END( "Angle", "The eye angles." )
 
 LUA_BINDING_BEGIN( Entity, GetEyePosition, "class", "Get eye position." )
 {
@@ -474,7 +472,7 @@ LUA_BINDING_BEGIN( Entity, GetEyePosition, "class", "Get eye position." )
     lua_pushvector( L, pEntity->EyePosition() );
     return 1;
 }
-LUA_BINDING_END( "vector", "The eye position." )
+LUA_BINDING_END( "Vector", "The eye position." )
 
 LUA_BINDING_BEGIN( Entity, FireBullets, "class", "Fire bullets." )
 {
@@ -493,7 +491,7 @@ LUA_BINDING_BEGIN( Entity, GetFirstMoveChild, "class", "Get first move child." )
     CBaseEntity::PushLuaInstanceSafe( L, pEntity->FirstMoveChild() );
     return 1;
 }
-LUA_BINDING_END( "entity", "The first move child." )
+LUA_BINDING_END( "Entity", "The first move child." )
 
 LUA_BINDING_BEGIN( Entity, FollowEntity, "class", "Follow entity." )
 {
@@ -528,7 +526,7 @@ LUA_BINDING_BEGIN( Entity, GetAngles, "class", "Get absolute angles." )
     lua_pushangle( L, v );
     return 1;
 }
-LUA_BINDING_END( "angle", "The absolute angles." )
+LUA_BINDING_END( "Angle", "The absolute angles." )
 
 LUA_BINDING_BEGIN( Entity, GetPosition, "class", "Get absolute origin." )
 {
@@ -538,7 +536,7 @@ LUA_BINDING_BEGIN( Entity, GetPosition, "class", "Get absolute origin." )
     lua_pushvector( L, v );
     return 1;
 }
-LUA_BINDING_END( "vector", "The absolute origin." )
+LUA_BINDING_END( "Vector", "The absolute origin." )
 
 LUA_BINDING_BEGIN( Entity, GetVelocity, "class", "Get absolute velocity." )
 {
@@ -548,7 +546,7 @@ LUA_BINDING_BEGIN( Entity, GetVelocity, "class", "Get absolute velocity." )
     lua_pushvector( L, v );
     return 1;
 }
-LUA_BINDING_END( "vector", "The absolute velocity." )
+LUA_BINDING_END( "Vector", "The absolute velocity." )
 
 LUA_BINDING_BEGIN( Entity, GetAnimationTime, "class", "Get animation time." )
 {
@@ -567,7 +565,7 @@ LUA_BINDING_END( "number", "The animation time." )
 //    CBaseEntity::PushLuaInstanceSafe( L, pEntity->GetBaseAnimating() );
 //    return 1;
 //}
-//LUA_BINDING_END( "entity", "The base animating." )
+//LUA_BINDING_END( "Entity", "The base animating." )
 
 // Experiment; Not very useful in Lua, so disabled.
 //LUA_BINDING_BEGIN( Entity, GetBaseEntity, "class", "Get base entity." )
@@ -577,7 +575,7 @@ LUA_BINDING_END( "number", "The animation time." )
 //    CBaseEntity::PushLuaInstanceSafe( L, pEntity->GetBaseEntity() );
 //    return 1;
 //}
-//LUA_BINDING_END( "entity", "The base entity." )
+//LUA_BINDING_END( "Entity", "The base entity." )
 
 LUA_BINDING_BEGIN( Entity, GetBaseVelocity, "class", "Get base velocity." )
 {
@@ -587,7 +585,7 @@ LUA_BINDING_BEGIN( Entity, GetBaseVelocity, "class", "Get base velocity." )
     lua_pushvector( L, v );
     return 1;
 }
-LUA_BINDING_END( "vector", "The base velocity." )
+LUA_BINDING_END( "Vector", "The base velocity." )
 
 LUA_BINDING_BEGIN( Entity, GetCheckUntouch, "class", "Get check untouch." )
 {
@@ -649,7 +647,7 @@ LUA_BINDING_BEGIN( Entity, GetEffectEntity, "class", "Get effect entity." )
     CBaseEntity::PushLuaInstanceSafe( L, pEntity->GetEffectEntity() );
     return 1;
 }
-LUA_BINDING_END( "entity", "The effect entity." )
+LUA_BINDING_END( "Entity", "The effect entity." )
 
 LUA_BINDING_BEGIN( Entity, GetEffects, "class", "Get effects." )
 {
@@ -703,7 +701,7 @@ LUA_BINDING_BEGIN( Entity, GetFollowedEntity, "class", "Get followed entity." )
     CBaseEntity::PushLuaInstanceSafe( L, pEntity->GetFollowedEntity() );
     return 1;
 }
-LUA_BINDING_END( "entity", "The followed entity." )
+LUA_BINDING_END( "Entity", "The followed entity." )
 
 LUA_BINDING_BEGIN( Entity, GetGravity, "class", "Get gravity." )
 {
@@ -730,7 +728,7 @@ LUA_BINDING_BEGIN( Entity, GetGroundEntity, "class", "Get ground entity." )
     CBaseEntity::PushLuaInstanceSafe( L, pEntity->GetGroundEntity() );
     return 1;
 }
-LUA_BINDING_END( "entity", "The ground entity." )
+LUA_BINDING_END( "Entity", "The ground entity." )
 
 LUA_BINDING_BEGIN( Entity, GetHealth, "class", "Get health." )
 {
@@ -784,7 +782,7 @@ LUA_BINDING_BEGIN( Entity, GetLocalAngles, "class", "Get local angles." )
     lua_pushangle( L, dst );
     return 1;
 }
-LUA_BINDING_END( "angle", "The local angles." )
+LUA_BINDING_END( "Angle", "The local angles." )
 
 LUA_BINDING_BEGIN( Entity, GetLocalAngularVelocity, "class", "Get local angular velocity." )
 {
@@ -794,7 +792,7 @@ LUA_BINDING_BEGIN( Entity, GetLocalAngularVelocity, "class", "Get local angular 
     lua_pushangle( L, v );
     return 1;
 }
-LUA_BINDING_END( "angle", "The local angular velocity." )
+LUA_BINDING_END( "Angle", "The local angular velocity." )
 
 LUA_BINDING_BEGIN( Entity, GetLocalOrigin, "class", "Get local origin." )
 {
@@ -804,7 +802,7 @@ LUA_BINDING_BEGIN( Entity, GetLocalOrigin, "class", "Get local origin." )
     lua_pushvector( L, v );
     return 1;
 }
-LUA_BINDING_END( "vector", "The local origin." )
+LUA_BINDING_END( "Vector", "The local origin." )
 
 LUA_BINDING_BEGIN( Entity, GetLocalVelocity, "class", "Get local velocity." )
 {
@@ -814,7 +812,7 @@ LUA_BINDING_BEGIN( Entity, GetLocalVelocity, "class", "Get local velocity." )
     lua_pushvector( L, v );
     return 1;
 }
-LUA_BINDING_END( "vector", "The local velocity." )
+LUA_BINDING_END( "Vector", "The local velocity." )
 
 LUA_BINDING_BEGIN( Entity, GetMaxHealth, "class", "Get max health." )
 {
@@ -836,7 +834,7 @@ LUA_BINDING_BEGIN( Entity, GetModelBounds, "class", "Get model bounds." )
 
     return 2;
 }
-LUA_BINDING_END( "vector", "The minimum bounds.", "vector", "The maximum bounds." )
+LUA_BINDING_END( "Vector", "The minimum bounds.", "vector", "The maximum bounds." )
 
 LUA_BINDING_BEGIN( Entity, GetModelIndex, "class", "Get model index." )
 {
@@ -854,7 +852,7 @@ LUA_BINDING_BEGIN( Entity, GetMoveParent, "class", "Get move parent." )
     CBaseEntity::PushLuaInstanceSafe( L, pEntity->GetMoveParent() );
     return 1;
 }
-LUA_BINDING_END( "entity", "The move parent." )
+LUA_BINDING_END( "Entity", "The move parent." )
 
 LUA_BINDING_BEGIN( Entity, GetMoveType, "class", "Get move type." )
 {
@@ -881,7 +879,7 @@ LUA_BINDING_BEGIN( Entity, GetOBBCenter, "class", "Get OBB center." )
 
     return 1;
 }
-LUA_BINDING_END( "vector", "The OBB center." )
+LUA_BINDING_END( "Vector", "The OBB center." )
 
 LUA_BINDING_BEGIN( Entity, GetOBBMaxs, "class", "Get OBB maxs." )
 {
@@ -899,7 +897,7 @@ LUA_BINDING_BEGIN( Entity, GetOBBMaxs, "class", "Get OBB maxs." )
 
     return 1;
 }
-LUA_BINDING_END( "vector", "The OBB maxs." )
+LUA_BINDING_END( "Vector", "The OBB maxs." )
 
 LUA_BINDING_BEGIN( Entity, GetOBBMins, "class", "Get OBB mins." )
 {
@@ -917,7 +915,7 @@ LUA_BINDING_BEGIN( Entity, GetOBBMins, "class", "Get OBB mins." )
 
     return 1;
 }
-LUA_BINDING_END( "vector", "The OBB mins." )
+LUA_BINDING_END( "Vector", "The OBB mins." )
 
 LUA_BINDING_BEGIN( Entity, GetOwnerEntity, "class", "Get owner entity." )
 {
@@ -926,7 +924,7 @@ LUA_BINDING_BEGIN( Entity, GetOwnerEntity, "class", "Get owner entity." )
     CBaseEntity::PushLuaInstanceSafe( L, pEntity->GetOwnerEntity() );
     return 1;
 }
-LUA_BINDING_END( "entity", "The owner entity." )
+LUA_BINDING_END( "Entity", "The owner entity." )
 
 LUA_BINDING_BEGIN( Entity, GetParametersForSound, "class|static", "Get parameters for sound." )
 {
@@ -946,7 +944,7 @@ LUA_BINDING_BEGIN( Entity, GetPredictionPlayer, "class|static", "Get prediction 
     CBaseEntity::PushLuaInstanceSafe( L, CBaseEntity::GetPredictionPlayer() );
     return 1;
 }
-LUA_BINDING_END( "entity", "The prediction player." )
+LUA_BINDING_END( "Entity", "The prediction player." )
 
 LUA_BINDING_BEGIN( Entity, GetPredictionRandomSeed, "class|static", "Get prediction random seed." )
 {
@@ -971,7 +969,7 @@ LUA_BINDING_BEGIN( Entity, GetSimulatingPlayer, "class", "Get simulating player.
     CBaseEntity::PushLuaInstanceSafe( L, pEntity->GetSimulatingPlayer() );
     return 1;
 }
-LUA_BINDING_END( "entity", "The simulating player." )
+LUA_BINDING_END( "Entity", "The simulating player." )
 
 LUA_BINDING_BEGIN( Entity, GetSimulationTime, "class", "Get simulation time." )
 {
@@ -1094,7 +1092,7 @@ LUA_BINDING_BEGIN( Entity, GetVectors, "class", "Get vectors." )
 
     return 3;
 }
-LUA_BINDING_END( "vector", "The forward vector.", "vector", "The right vector.", "vector", "The up vector." )
+LUA_BINDING_END( "Vector", "The forward vector.", "vector", "The right vector.", "vector", "The up vector." )
 
 LUA_BINDING_BEGIN( Entity, GetViewOffset, "class", "Get view offset." )
 {
@@ -1104,9 +1102,10 @@ LUA_BINDING_BEGIN( Entity, GetViewOffset, "class", "Get view offset." )
     lua_pushvector( L, v );
     return 1;
 }
-LUA_BINDING_END( "vector", "The view offset." )
+LUA_BINDING_END( "Vector", "The view offset." )
 
-LUA_BINDING_BEGIN( Entity, GetWaterLevel, "class", "Get water level." )
+// TODO: Expose the WL_ enums
+LUA_BINDING_BEGIN( Entity, GetWaterLevel, "class", "Get water level enum." )
 {
     lua_CBaseEntity *pEntity = LUA_BINDING_ARGUMENT( luaL_checkentity, 1, "entity" );
 
@@ -1123,6 +1122,16 @@ LUA_BINDING_BEGIN( Entity, GetWaterType, "class", "Get water type." )
     return 1;
 }
 LUA_BINDING_END( "number", "The water type." )
+
+LUA_BINDING_BEGIN( Entity, HasMatchingRootParent, "class", "Checks if the given entity has a matching root parent." )
+{
+    lua_CBaseEntity *pEntity = LUA_BINDING_ARGUMENT( luaL_checkentity, 1, "entity" );
+    CBaseEntity *pOther = LUA_BINDING_ARGUMENT( luaL_checkentity, 2, "other" );
+
+    lua_pushboolean( L, UTIL_EntityHasMatchingRootParent( pEntity, pOther ) );
+    return 1;
+}
+LUA_BINDING_END( "boolean", "The given entity has a matching root parent with this entity." )
 
 LUA_BINDING_BEGIN( Entity, HasDataObjectType, "class", "Has data object type." )
 {
@@ -1437,6 +1446,14 @@ LUA_BINDING_BEGIN( Entity, IsWeapon, "class", "Is weapon." )
 }
 LUA_BINDING_END( "boolean", "True if weapon, false otherwise." )
 
+LUA_BINDING_BEGIN( Entity, IsWorld, "class", "Whether entity is world." )
+{
+    lua_CBaseEntity *pEntity = LUA_BINDING_ARGUMENT( luaL_checkentity, 1, "entity" );
+    lua_pushboolean( L, pEntity->IsWorld() );
+    return 1;
+}
+LUA_BINDING_END( "boolean", "true if world, false otherwise." )
+
 LUA_BINDING_BEGIN( Entity, KeyValue, "class", "Key value." )
 {
     lua_CBaseEntity *pEntity = LUA_BINDING_ARGUMENT( luaL_checkentity, 1, "entity" );
@@ -1459,14 +1476,14 @@ LUA_BINDING_BEGIN( Entity, KeyValue, "class", "Key value." )
         }
         case LUA_TUSERDATA:
         {
-            if ( luaL_checkudata( L, 3, LUA_VECTORLIBNAME ) )
+            if ( luaL_checkudata( L, 3, LUA_VECTORMETANAME ) )
             {
                 Vector v = LUA_BINDING_ARGUMENT( luaL_checkvector, 3, "value" );
                 lua_pushboolean( L, pEntity->KeyValue( pszKey, v ) );
             }
             else
             {
-                luaL_typerror( L, 3, LUA_VECTORLIBNAME );
+                luaL_typerror( L, 3, LUA_VECTORMETANAME );
             }
             break;
         }
@@ -1484,7 +1501,7 @@ LUA_BINDING_BEGIN( Entity, LocalEyeAngles, "class", "Local eye angles." )
     lua_pushangle( L, v );
     return 1;
 }
-LUA_BINDING_END( "angle", "The local eye angles." )
+LUA_BINDING_END( "Angle", "The local eye angles." )
 
 LUA_BINDING_BEGIN( Entity, NextMovePeer, "class", "Next move peer." )
 {
@@ -1493,7 +1510,7 @@ LUA_BINDING_BEGIN( Entity, NextMovePeer, "class", "Next move peer." )
     CBaseEntity::PushLuaInstanceSafe( L, pEntity->NextMovePeer() );
     return 1;
 }
-LUA_BINDING_END( "entity", "The next move peer." )
+LUA_BINDING_END( "Entity", "The next move peer." )
 
 LUA_BINDING_BEGIN( Entity, ObjectCapabilities, "class", "Object capabilities for save/restore." )
 {
@@ -2325,7 +2342,7 @@ LUA_BINDING_BEGIN( Entity, SetViewOffset, "class", "Set view offset." )
 }
 LUA_BINDING_END()
 
-LUA_BINDING_BEGIN( Entity, SetWaterLevel, "class", "Set water level." )
+LUA_BINDING_BEGIN( Entity, SetWaterLevel, "class", "Set water level enum." )
 {
     lua_CBaseEntity *pEntity = LUA_BINDING_ARGUMENT( luaL_checkentity, 1, "entity" );
     int nLevel = LUA_BINDING_ARGUMENT( luaL_checknumber, 2, "level" );
@@ -2814,7 +2831,7 @@ LUA_BINDING_BEGIN( _G, CreateEntityByName, "library", "Creates an entity by the 
     CBaseEntity::PushLuaInstanceSafe( L, pEntity );
     return 1;
 }
-LUA_BINDING_END( "entity", "The created entity" )
+LUA_BINDING_END( "Entity", "The created entity" )
 #endif
 
 LUA_BINDING_BEGIN( _G, Entity, "library", "Gets the entity by its entity index" )
@@ -2831,7 +2848,7 @@ LUA_BINDING_BEGIN( _G, Entity, "library", "Gets the entity by its entity index" 
     CBaseEntity::PushLuaInstanceSafe( L, ent );
     return 1;
 }
-LUA_BINDING_END( "entity", "The found entity or NULL entity" )
+LUA_BINDING_END( "Entity", "The found entity or NULL entity" )
 
 /*
 ** Open CBaseEntity object

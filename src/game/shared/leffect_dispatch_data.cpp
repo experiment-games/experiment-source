@@ -67,7 +67,7 @@ LUA_BINDING_BEGIN( EffectData, GetEntity, "class", "Get the entity.", "client" )
     CBaseEntity::PushLuaInstanceSafe( L, data.GetEntity() );
     return 1;
 }
-LUA_BINDING_END( "entity", "Entity." )
+LUA_BINDING_END( "Entity", "Entity." )
 #endif
 
 LUA_BINDING_BEGIN( EffectData, __index, "class", "Get the entity." )
@@ -176,9 +176,9 @@ LUA_BINDING_BEGIN( EffectData, __tostring, "class", "To string operator." )
 }
 LUA_BINDING_END( "string", "String representation of the effect data." )
 
-LUA_REGISTRATION_INIT( _G )
+LUA_REGISTRATION_INIT( Effects )
 
-LUA_BINDING_BEGIN( _G, EffectData, "library", "Creates an effect." )
+LUA_BINDING_BEGIN( Effects, Create, "library", "Creates an effect (EffectData)." )
 {
     lua_CEffectData data = lua_CEffectData();
     lua_pusheffect( L, data );
@@ -186,7 +186,7 @@ LUA_BINDING_BEGIN( _G, EffectData, "library", "Creates an effect." )
 }
 LUA_BINDING_END( "EffectData", "Effect data." )
 
-LUA_BINDING_BEGIN( _G, DispatchEffect, "library", "Dispatches an effect." )
+LUA_BINDING_BEGIN( Effects, Dispatch, "library", "Dispatches an effect." )
 {
     const char *effectName = LUA_BINDING_ARGUMENT( luaL_checkstring, 1, "effectName" );
     lua_CEffectData &data = LUA_BINDING_ARGUMENT( luaL_checkeffect, 2, "effectData" );
@@ -195,6 +195,166 @@ LUA_BINDING_BEGIN( _G, DispatchEffect, "library", "Dispatches an effect." )
     return 0;
 }
 LUA_BINDING_END()
+
+LUA_BINDING_BEGIN( Effects, SpawnParticleTracer, "library", "Spawns a tracer particle effect." )
+{
+    const char *effect = LUA_BINDING_ARGUMENT( luaL_checkstring, 1, "effect" );
+    Vector start = LUA_BINDING_ARGUMENT( luaL_checkvector, 2, "start" );
+    Vector end = LUA_BINDING_ARGUMENT( luaL_checkvector, 3, "end" );
+    bool bWhiz = LUA_BINDING_ARGUMENT_WITH_DEFAULT( luaL_optboolean, 4, false, "whiz" );
+    int entityIndex = LUA_BINDING_ARGUMENT_WITH_DEFAULT( luaL_optnumber, 5, 0, "entityIndex" );
+    int attachment = LUA_BINDING_ARGUMENT_WITH_DEFAULT( luaL_optnumber, 6, 0, "attachment" );
+
+    UTIL_ParticleTracer( effect, start, end, entityIndex, attachment, bWhiz );
+
+    return 0;
+}
+LUA_BINDING_END()
+
+LUA_BINDING_BEGIN( Effects, SpawnTracer, "library", "Creates a tracer effect." )
+{
+    Vector start = LUA_BINDING_ARGUMENT( luaL_checkvector, 1, "start" );
+    Vector end = LUA_BINDING_ARGUMENT( luaL_checkvector, 2, "end" );
+    int entindex = LUA_BINDING_ARGUMENT_WITH_DEFAULT( luaL_optnumber, 3, 0, "entityIndex" );
+    int attachment = LUA_BINDING_ARGUMENT_WITH_DEFAULT( luaL_optnumber, 4, 0, "attachment" );
+    float velocity = LUA_BINDING_ARGUMENT_WITH_DEFAULT( luaL_optnumber, 5, 0, "velocity" );
+    bool bWhiz = LUA_BINDING_ARGUMENT_WITH_DEFAULT( luaL_optboolean, 6, false, "shouldWhiz" );
+    const char *customTracerName = LUA_BINDING_ARGUMENT_WITH_DEFAULT( luaL_optstring, 7, NULL, "customTracerName" );
+    int particleId = LUA_BINDING_ARGUMENT_WITH_DEFAULT( luaL_optnumber, 8, 0, "particleId" );
+
+    UTIL_Tracer( start, end, entindex, attachment, velocity, bWhiz, customTracerName, particleId );
+
+    return 0;
+}
+LUA_BINDING_END()
+
+LUA_BINDING_BEGIN( Effects, SpawnBloodDrips, "library", "Creates a blood drip effect." )
+{
+    Vector origin = LUA_BINDING_ARGUMENT( luaL_checkvector, 1, "origin" );
+    Vector direction = LUA_BINDING_ARGUMENT( luaL_checkvector, 2, "direction" );
+    int color = LUA_BINDING_ARGUMENT( luaL_checknumber, 3, "color" );
+    int amount = LUA_BINDING_ARGUMENT( luaL_checknumber, 4, "amount" );
+
+    UTIL_BloodDrips( origin, direction, color, amount );
+
+    return 0;
+}
+LUA_BINDING_END()
+
+LUA_BINDING_BEGIN( Effects, SpawnBloodImpact, "library", "Creates a blood impact effect." )
+{
+    Vector origin = LUA_BINDING_ARGUMENT( luaL_checkvector, 1, "origin" );
+    Vector direction = LUA_BINDING_ARGUMENT( luaL_checkvector, 2, "direction" );
+    int color = LUA_BINDING_ARGUMENT( luaL_checknumber, 3, "color" );
+    int amount = LUA_BINDING_ARGUMENT( luaL_checknumber, 4, "amount" );
+
+    UTIL_BloodImpact( origin, direction, color, amount );
+
+    return 0;
+}
+LUA_BINDING_END()
+
+// Experiment; Disabled because we never push trace_t pointers, instead we push it as a table struct
+//LUA_BINDING_BEGIN( Effects, SpawnBloodDecalTrace, "library", "Creates a blood decal trace effect." )
+//{
+//    trace_t *trace = LUA_BINDING_ARGUMENT( luaL_checktrace, 1, "trace" );
+//    int color = LUA_BINDING_ARGUMENT( luaL_checknumber, 2, "color" );
+//
+//    UTIL_BloodDecalTrace( &trace, color );
+//
+//    return 0;
+//}
+//LUA_BINDING_END()
+
+// Experiment; Disabled because we never push trace_t pointers
+//LUA_BINDING_BEGIN( Effects, SpawnDecalTrace, "library", "Creates a decal trace effect." )
+//{
+//    trace_t *trace = LUA_BINDING_ARGUMENT( luaL_checktrace, 1, "trace" );
+//    const char *decalName = LUA_BINDING_ARGUMENT( luaL_checkstring, 2, "decalName" );
+//
+//    UTIL_DecalTrace( &trace, decalName );
+//
+//    return 0;
+//}
+//LUA_BINDING_END()
+
+#ifdef GAME_DLL
+
+/*
+* TODO: Expose the types
+#define MUZZLEFLASH_TYPE_DEFAULT	0x00000001
+#define MUZZLEFLASH_TYPE_GUNSHIP	0x00000002
+#define MUZZLEFLASH_TYPE_STRIDER	0x00000004
+*/
+LUA_BINDING_BEGIN( Effects, SpawnMuzzleFlash, "library", "Creates a muzzle flash effect. Types can be MUZZLEFLASH_TYPE_DEFAULT(1), MUZZLEFLASH_TYPE_GUNSHIP(2), MUZZLEFLASH_TYPE_STRIDER(4) - enums don't exist yet in Lua", "server" )
+{
+    Vector origin = LUA_BINDING_ARGUMENT( luaL_checkvector, 1, "origin" );
+    QAngle angles = LUA_BINDING_ARGUMENT( luaL_checkangle, 2, "angles" );
+    int scale = LUA_BINDING_ARGUMENT( luaL_checknumber, 3, "scale" );
+    int type = LUA_BINDING_ARGUMENT_WITH_DEFAULT( luaL_optnumber, 4, MUZZLEFLASH_TYPE_DEFAULT, "type" );
+
+    UTIL_MuzzleFlash( origin, angles, scale, type );
+
+    return 0;
+}
+LUA_BINDING_END()
+
+/*
+* TODO: Expose the types
+	DONT_BLEED = -1,
+
+	BLOOD_COLOR_RED = 0,
+	BLOOD_COLOR_YELLOW,
+	BLOOD_COLOR_GREEN,
+	BLOOD_COLOR_MECH,
+*/
+LUA_BINDING_BEGIN( Effects, SpawnBloodStream, "library", "Creates a blood stream effect. Color can be DONT_BLEED(-1), BLOOD_COLOR_RED(0), BLOOD_COLOR_YELLOW(1), BLOOD_COLOR_GREEN(2), BLOOD_COLOR_MECH(3) - enums don't exist yet in Lua", "server" )
+{
+    Vector origin = LUA_BINDING_ARGUMENT( luaL_checkvector, 1, "origin" );
+    Vector direction = LUA_BINDING_ARGUMENT( luaL_checkvector, 2, "direction" );
+    int color = LUA_BINDING_ARGUMENT( luaL_checknumber, 3, "color" );
+    int amount = LUA_BINDING_ARGUMENT( luaL_checknumber, 4, "amount" );
+
+    UTIL_BloodStream( origin, direction, color, amount );
+
+    return 0;
+}
+LUA_BINDING_END()
+
+/*
+* TODO: Expose the types
+const int FX_BLOODSPRAY_DROPS	= 0x01;
+const int FX_BLOODSPRAY_GORE	= 0x02;
+const int FX_BLOODSPRAY_CLOUD	= 0x04;
+const int FX_BLOODSPRAY_ALL		= 0xFF;
+*/
+LUA_BINDING_BEGIN( Effects, SpawnBloodSpray, "library", "Creates a blood spray effect.\nColor can be DONT_BLEED(-1), BLOOD_COLOR_RED(0), BLOOD_COLOR_YELLOW(1), BLOOD_COLOR_GREEN(2), BLOOD_COLOR_MECH(3) - enums don't exist yet in Lua\nFlags can be FX_BLOODSPRAY_DROPS(1), FX_BLOODSPRAY_GORE(2), FX_BLOODSPRAY_CLOUD(4), FX_BLOODSPRAY_ALL(255) - enums don't exist yet in Lua", "server" )
+{
+    Vector origin = LUA_BINDING_ARGUMENT( luaL_checkvector, 1, "origin" );
+    Vector direction = LUA_BINDING_ARGUMENT( luaL_checkvector, 2, "direction" );
+    int color = LUA_BINDING_ARGUMENT( luaL_checknumber, 3, "color" );
+    int amount = LUA_BINDING_ARGUMENT( luaL_checknumber, 4, "amount" );
+    int flags = LUA_BINDING_ARGUMENT( luaL_checknumber, 5, "flags" );
+
+    UTIL_BloodSpray( origin, direction, color, amount, flags );
+
+    return 0;
+}
+LUA_BINDING_END()
+
+LUA_BINDING_BEGIN( Effects, SpawnBubbleTrail, "library", "Creates a bubble trail effect.", "server" )
+{
+    Vector start = LUA_BINDING_ARGUMENT( luaL_checkvector, 1, "start" );
+    Vector end = LUA_BINDING_ARGUMENT( luaL_checkvector, 2, "end" );
+    int count = LUA_BINDING_ARGUMENT( luaL_checknumber, 3, "count" );
+
+    UTIL_BubbleTrail( start, end, count );
+
+    return 0;
+}
+LUA_BINDING_END()
+
+#endif // GAME_DLL
 
 /*
 ** Open CEffectData object
@@ -208,7 +368,7 @@ LUALIB_API int luaopen_CEffectData( lua_State *L )
     lua_pushstring( L, "EffectData" );
     lua_setfield( L, -2, "__type" ); /* metatable.__type = "EffectData" */
 
-    LUA_REGISTRATION_COMMIT_LIBRARY( _G );
+    LUA_REGISTRATION_COMMIT_LIBRARY( Effects );
     lua_pop( L, 1 ); /* pop metatable */
 
     return 1;
