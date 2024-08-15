@@ -1,6 +1,6 @@
 ---
 template: lua-library-function.html
-title: CreateEntityByName
+title: CreateByName
 icon: lua-server
 tags:
   - lua
@@ -8,8 +8,8 @@ tags:
   - needs-verification
   - needs-example
 lua:
-  library: _G
-  function: CreateEntityByName
+  library: Entities
+  function: CreateByName
   realm: server
   description: "Creates an entity by the given class name"
   
@@ -22,5 +22,5 @@ lua:
 ---
 
 <div class="lua__search__keywords">
-_G.CreateEntityByName &#x2013; Creates an entity by the given class name
+Entities.CreateByName &#x2013; Creates an entity by the given class name
 </div>

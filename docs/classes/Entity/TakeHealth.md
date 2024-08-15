@@ -19,8 +19,8 @@ lua:
     - name: "bitsDamageType"
       type: integer
   returns:
-    - type: number
-      description: "The health taken"
+    - type: integer
+      description: "The health actually taken"
 ---
 
 <div class="lua__search__keywords">

@@ -33,6 +33,16 @@ code.
 
 See the `.editorconfig` file for the code style.
 
+Additionally, we use the following conventions:
+
+- Use `--` for single line comments.
+
+- Use `--[[` and `]]` for multi-line comments.
+
+- Use `local` for all variables, unless they are intended to be global.
+
+- Use double quotes for strings, e.g. `"Hello, world!"`.
+
 ### Naming conventions
 
 - Lua files are always written in `snake_case`:

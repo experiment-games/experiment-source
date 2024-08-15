@@ -15,8 +15,8 @@ lua:
   
   
   returns:
-    - type: number
-      description: "The object caps."
+    - type: integer
+      description: "The object y flags."
 ---
 
 <div class="lua__search__keywords">

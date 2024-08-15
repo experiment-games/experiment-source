@@ -15,7 +15,7 @@ lua:
   
   
   returns:
-    - type: number
+    - type: enumeration/COLLISION_GROUP
       description: "The collision group."
 ---
 

@@ -19,7 +19,7 @@ lua:
     - name: "max"
       type: number
   returns:
-    - type: number
+    - type: integer
       description: "The generated random integer."
 ---
 

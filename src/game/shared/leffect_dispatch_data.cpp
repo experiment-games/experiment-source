@@ -49,7 +49,7 @@ LUA_BINDING_BEGIN( EffectData, GetEntityIndex, "class", "Get the entity index.",
     lua_pushinteger( L, data.entindex() );
     return 1;
 }
-LUA_BINDING_END( "number", "Entity index." )
+LUA_BINDING_END( "integer", "Entity index." )
 #endif
 
 LUA_BINDING_BEGIN( EffectData, GetEffectNameIndex, "class", "Get the effect name index." )
@@ -58,7 +58,7 @@ LUA_BINDING_BEGIN( EffectData, GetEffectNameIndex, "class", "Get the effect name
     lua_pushinteger( L, data.GetEffectNameIndex() );
     return 1;
 }
-LUA_BINDING_END( "number", "Effect name index." )
+LUA_BINDING_END( "integer", "Effect name index." )
 
 #ifdef CLIENT_DLL
 LUA_BINDING_BEGIN( EffectData, GetEntity, "class", "Get the entity.", "client" )

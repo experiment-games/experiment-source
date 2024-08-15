@@ -85,7 +85,7 @@ LUA_BINDING_BEGIN( ConsoleVariable, GetInt, "class", "Gets the value of the Cons
     lua_pushinteger( L, pConVar->GetInt() );
     return 1;
 }
-LUA_BINDING_END( "number", "Gets the value of the ConsoleVariable as an integer" )
+LUA_BINDING_END( "integer", "Gets the value of the ConsoleVariable as an integer" )
 
 LUA_BINDING_BEGIN( ConsoleVariable, GetMax, "class", "Gets the maximum value of the ConsoleVariable" )
 {
@@ -190,9 +190,9 @@ LUA_BINDING_END( "string", "Returns a string representation of the ConsoleVariab
 
 static CUtlDict< ConVar *, unsigned short > m_ConVarDatabase;
 
-LUA_REGISTRATION_INIT( _G )
+LUA_REGISTRATION_INIT( ConsoleVariables )
 
-LUA_BINDING_BEGIN( _G, CreateConsoleVariable, "library", "Creates a console variable or returns the existing one with the given name" )
+LUA_BINDING_BEGIN( ConsoleVariables, Create, "library", "Creates a console variable or returns the existing one with the given name" )
 {
     const char *pName = LUA_BINDING_ARGUMENT( luaL_checkstring, 1, "name" );
     const char *pValue = LUA_BINDING_ARGUMENT( luaL_checkstring, 2, "value" );
@@ -219,8 +219,7 @@ LUA_BINDING_BEGIN( _G, CreateConsoleVariable, "library", "Creates a console vari
 }
 LUA_BINDING_END( "ConsoleVariable", "The ConsoleVariable created or found" )
 
-//static int luasrc_GetConVar( lua_State *L )
-LUA_BINDING_BEGIN( _G, GetConsoleVariable, "library", "Gets a console variable" )
+LUA_BINDING_BEGIN( ConsoleVariables, Get, "library", "Gets a console variable" )
 {
     const char *pName = LUA_BINDING_ARGUMENT( luaL_checkstring, 1, "name" );
     lua_pushconvar( L, cvar->FindVar( pName ) );
@@ -253,7 +252,7 @@ LUALIB_API int luaopen_ConsoleVariableMeta( lua_State *L )
     lua_pushstring( L, LUA_CONVARMETANAME );
     lua_setfield( L, -2, "__type" ); /* metatable.__type = "ConsoleVariable" */
 
-    LUA_REGISTRATION_COMMIT_LIBRARY( _G );
+    LUA_REGISTRATION_COMMIT_LIBRARY( ConsoleVariables );
 
     lua_pop( L, 1 );
     return 1;

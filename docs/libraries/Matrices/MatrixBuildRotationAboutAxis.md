@@ -16,9 +16,9 @@ lua:
   arguments:
     - name: "Matrix"
       type: Matrix
-    - name: "vector"
+    - name: "axisOfRotation"
       type: Vector
-    - name: "number"
+    - name: "degrees"
       type: number
   returns:
     

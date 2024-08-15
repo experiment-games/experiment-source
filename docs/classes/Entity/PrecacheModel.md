@@ -18,7 +18,7 @@ lua:
     - name: "model"
       type: string
   returns:
-    - type: number
+    - type: integer
       description: "The precached model."
 ---
 

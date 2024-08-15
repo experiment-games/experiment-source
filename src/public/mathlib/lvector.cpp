@@ -574,7 +574,7 @@ LUA_BINDING_BEGIN( Vectors, AxisStringToPointDirection, "library", "Converts an 
 
     return 2;
 }
-LUA_BINDING_END( "Vector", "The converted start point.", "vector", "The converted direction." )
+LUA_BINDING_END( "Vector", "The converted start point.", "Vector", "The converted direction." )
 
 LUA_BINDING_BEGIN( Vectors, AxisStringToPointPoint, "library", "Converts an axis string to a point point." )
 {
@@ -585,7 +585,7 @@ LUA_BINDING_BEGIN( Vectors, AxisStringToPointPoint, "library", "Converts an axis
 
     return 2;
 }
-LUA_BINDING_END( "Vector", "The converted start point.", "vector", "The converted end point." )
+LUA_BINDING_END( "Vector", "The converted start point.", "Vector", "The converted end point." )
 
 LUA_BINDING_BEGIN( Vectors, AxisStringToUnitDirection, "library", "Converts an axis string to a unit direction." )
 {

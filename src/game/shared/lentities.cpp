@@ -2,6 +2,7 @@
 #include "luamanager.h"
 #include "luasrclib.h"
 #include "lbaseentity_shared.h"
+#include "basescripted.h"
 #include "mathlib/lVector.h"
 
 // memdbgon must be the last include file in a .cpp file!!!
@@ -10,6 +11,37 @@
 LUA_REGISTRATION_INIT( Entities );
 
 #define MAX_ENTITYARRAY 1024
+
+LUA_BINDING_BEGIN( Entities, Find, "library", "Finds the entity by its entity index" )
+{
+    int iEntity = LUA_BINDING_ARGUMENT( luaL_checknumber, 1, "entityIndex" );
+    CBaseEntity *ent = CBaseEntity::Instance( iEntity );
+
+    if ( !ent )
+    {
+        CBaseEntity::PushLuaInstanceSafe( L, NULL );
+        return 1;
+    }
+
+    CBaseEntity::PushLuaInstanceSafe( L, ent );
+    return 1;
+}
+LUA_BINDING_END( "Entity", "The found entity or NULL entity" )
+
+#ifndef CLIENT_DLL
+LUA_BINDING_BEGIN( Entities, CreateByName, "library", "Creates an entity by the given class name", "server" )
+{
+    const char *pszClassName = LUA_BINDING_ARGUMENT( luaL_checkstring, 1, "className" );
+    CBaseEntity *pEntity = CreateEntityByName( pszClassName );
+
+    if ( dynamic_cast< CBaseScripted * >( pEntity ) != NULL )
+        DispatchSpawn( pEntity );
+
+    CBaseEntity::PushLuaInstanceSafe( L, pEntity );
+    return 1;
+}
+LUA_BINDING_END( "Entity", "The created entity" )
+#endif
 
 LUA_BINDING_BEGIN( Entities, GetAlongRay, "library", "Finds all entities along the given ray." )
 {
@@ -37,7 +69,7 @@ LUA_BINDING_BEGIN( Entities, GetAlongRay, "library", "Finds all entities along t
     lua_pushinteger( L, count );
     return 2;
 }
-LUA_BINDING_END( "table", "A table of entities found.", "number", "The number of entities found." )
+LUA_BINDING_END( "table", "A table of entities found.", "integer", "The number of entities found." )
 
 LUA_BINDING_BEGIN( Entities, GetInBox, "library", "Finds all entities in the given box. Note that clientPartitionMask is only available on the client." )
 {
@@ -66,7 +98,7 @@ LUA_BINDING_BEGIN( Entities, GetInBox, "library", "Finds all entities in the giv
     lua_pushinteger( L, count );
     return 2;
 }
-LUA_BINDING_END( "table", "A table of entities found.", "number", "The number of entities found." )
+LUA_BINDING_END( "table", "A table of entities found.", "integer", "The number of entities found." )
 
 LUA_BINDING_BEGIN( Entities, GetInSphere, "library", "Finds all entities in the given sphere. Note that clientPartitionMask is only available on the client." )
 {
@@ -95,7 +127,7 @@ LUA_BINDING_BEGIN( Entities, GetInSphere, "library", "Finds all entities in the 
     lua_pushinteger( L, count );
     return 2;
 }
-LUA_BINDING_END( "table", "A table of entities found.", "number", "The number of entities found." )
+LUA_BINDING_END( "table", "A table of entities found.", "integer", "The number of entities found." )
 
 #ifdef GAME_DLL
 
@@ -148,7 +180,7 @@ LUA_BINDING_BEGIN( Entities, GetInPvs, "library", "Goes through the entities and
 
     return 2;
 }
-LUA_BINDING_END( "table", "A table of entities found.", "number", "The number of entities found." )
+LUA_BINDING_END( "table", "A table of entities found.", "integer", "The number of entities found." )
 
 // LUA_BINDING_BEGIN( Entities, AddPostClientMessageEntity, "library", "Adds an entity to the post client message list.", "server" )
 //{
@@ -366,7 +398,7 @@ LUA_BINDING_BEGIN( Entities, GetEdictCount, "library", "Gets the number of edict
     lua_pushinteger( L, gEntList.NumberOfEdicts() );
     return 1;
 }
-LUA_BINDING_END( "number", "The number of edicts." )
+LUA_BINDING_END( "integer", "The number of edicts." )
 
 LUA_BINDING_BEGIN( Entities, ReportFlagsChanged, "library", "Reports that an entity's flags have changed", "server" )
 {
@@ -384,7 +416,7 @@ LUA_BINDING_BEGIN( Entities, ResetDeleteList, "library", "Resets the delete list
     lua_pushinteger( L, gEntList.ResetDeleteList() );
     return 1;
 }
-LUA_BINDING_END( "number", "The number of entities in the delete list." )
+LUA_BINDING_END( "integer", "The number of entities in the delete list." )
 
 LUA_BINDING_BEGIN( Entities, CanCreateEntityClass, "library", "Checks if an entity class can be created", "server" )
 {
@@ -526,7 +558,7 @@ LUA_BINDING_BEGIN( Entities, GetCount, "library", "Gets the number of entities i
 
     return 1;
 }
-LUA_BINDING_END( "number", "The number of entities in the entity list." )
+LUA_BINDING_END( "integer", "The number of entities in the entity list." )
 
 /*
 ** Open gEntList library

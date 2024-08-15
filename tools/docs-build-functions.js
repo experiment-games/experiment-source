@@ -313,6 +313,8 @@ function fromTypeChecker(typeChecker) {
       return 'Panel';
 
     // Enumerations:
+    case 'Activity':
+      return 'enumeration/ACTIVITY';
     case 'ButtonCode_t':
     case 'KeyCode':
     case 'MouseCode':
@@ -327,12 +329,16 @@ function fromTypeChecker(typeChecker) {
       return 'enumeration/SOLID';
     case 'SolidFlags_t':
       return 'enumeration/SOLID_FLAG';
+    case 'SkyboxVisibility_t':
+      return 'enumeration/SKYBOX_VISIBILITY';
     case 'ENTITY_EFFECT':
       return 'enumeration/ENTITY_EFFECT';
+    case 'ENTITY_FLAG':
+      return 'enumeration/ENTITY_FLAG';
     case 'GESTURE_SLOT':
       return 'enumeration/GESTURE_SLOT';
-    case 'OBS_MODE':
-      return 'enumeration/OBS_MODE';
+    case 'OBSERVER_MODE':
+      return 'enumeration/OBSERVER_MODE';
     case 'RenderMode_t':
       return 'enumeration/RENDER_MODE';
     case 'RenderFx_t':
@@ -352,6 +358,14 @@ function fromTypeChecker(typeChecker) {
       return 'enumeration/FONT_DRAW_TYPE';
     case 'SurfaceFeature_e':
       return 'enumeration/SURFACE_FEATURE';
+    case 'CollideType_t':
+      return 'enumeration/COLLIDE_TYPE';
+    case 'ShadowType_t':
+      return 'enumeration/SHADOW_TYPE';
+    case 'Class_T':
+      return 'enumeration/AI_CLASS';
+    case 'BLOOD_COLOR':
+      return 'enumeration/BLOOD_COLOR';
 
     // Define enumerations:
     case 'LIFE':

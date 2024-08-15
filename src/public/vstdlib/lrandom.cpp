@@ -39,7 +39,7 @@ LUA_BINDING_BEGIN( Randoms, RandomInteger, "library", "Generate a random integer
 
     return 1;
 }
-LUA_BINDING_END( "number", "The generated random integer." )
+LUA_BINDING_END( "integer", "The generated random integer." )
 
 LUA_BINDING_BEGIN( Randoms, SetSeed, "library", "Set the seed for the random number generator." )
 {

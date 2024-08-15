@@ -15,7 +15,7 @@ lua:
   
   
   returns:
-    - type: integer
+    - type: enumeration/ACTIVITY
       description: "Draw activity ID."
 ---
 

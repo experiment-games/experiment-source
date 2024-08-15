@@ -73,7 +73,7 @@ LUA_BINDING_BEGIN( Color, GetAlpha, "class", "Gets the alpha value of the color.
     lua_pushinteger( L, color.a() );
     return 1;
 }
-LUA_BINDING_END( "number", "The alpha value." )
+LUA_BINDING_END( "integer", "The alpha value." )
 
 LUA_BINDING_BEGIN( Color, GetBlue, "class", "Gets the blue value of the color." )
 {
@@ -81,7 +81,7 @@ LUA_BINDING_BEGIN( Color, GetBlue, "class", "Gets the blue value of the color." 
     lua_pushinteger( L, color.b() );
     return 1;
 }
-LUA_BINDING_END( "number", "The blue value." )
+LUA_BINDING_END( "integer", "The blue value." )
 
 LUA_BINDING_BEGIN( Color, GetColor, "class", "Gets the color values." )
 {
@@ -92,7 +92,7 @@ LUA_BINDING_BEGIN( Color, GetColor, "class", "Gets the color values." )
     lua_pushinteger( L, color.a() );
     return 4;
 }
-LUA_BINDING_END( "number", "The red value.", "number", "The green value.", "number", "The blue value.", "number", "The alpha value." )
+LUA_BINDING_END( "integer", "The red value.", "integer", "The green value.", "integer", "The blue value.", "integer", "The alpha value." )
 
 LUA_BINDING_BEGIN( Color, GetGreen, "class", "Gets the green value of the color." )
 {
@@ -100,15 +100,16 @@ LUA_BINDING_BEGIN( Color, GetGreen, "class", "Gets the green value of the color.
     lua_pushinteger( L, color.g() );
     return 1;
 }
-LUA_BINDING_END( "number", "The green value." )
+LUA_BINDING_END( "integer", "The green value." )
 
-LUA_BINDING_BEGIN( Color, GetRawColor, "class", "Gets the raw color value." )
-{
-    lua_Color color = LUA_BINDING_ARGUMENT( luaL_checkcolor, 1, "color" );
-    lua_pushinteger( L, color.GetRawColor() );
-    return 1;
-}
-LUA_BINDING_END( "number", "The raw color value." )
+// Experiment; Returns the pointer? Not useful in Lua. Disabled:
+//LUA_BINDING_BEGIN( Color, GetRawColor, "class", "Gets the raw color value." )
+//{
+//    lua_Color color = LUA_BINDING_ARGUMENT( luaL_checkcolor, 1, "color" );
+//    lua_pushinteger( L, color.GetRawColor() );
+//    return 1;
+//}
+//LUA_BINDING_END( "integer", "The raw color value." )
 
 LUA_BINDING_BEGIN( Color, GetRed, "class", "Gets the red value of the color." )
 {
@@ -116,7 +117,7 @@ LUA_BINDING_BEGIN( Color, GetRed, "class", "Gets the red value of the color." )
     lua_pushinteger( L, color.r() );
     return 1;
 }
-LUA_BINDING_END( "number", "The red value." )
+LUA_BINDING_END( "integer", "The red value." )
 
 LUA_BINDING_BEGIN( Color, SetColor, "class", "Sets the color values." )
 {
@@ -209,7 +210,7 @@ LUA_BINDING_BEGIN( Color, __newindex, "class", "Metamethod for when the newindex
 }
 LUA_BINDING_END()
 
-LUA_REGISTRATION_INIT( _G );
+LUA_REGISTRATION_INIT( Colors );
 
 // These Hue & HSL functions are taken from the shadersdk @ src\materialsystem\stdshaders\common_ps_fxc.h
 float HueToRGB( float v1, float v2, float vH )
@@ -234,7 +235,7 @@ float HueToRGB( float v1, float v2, float vH )
     return fResult;
 }
 
-LUA_BINDING_BEGIN( _G, Color, "library", "Creates a new color." )
+LUA_BINDING_BEGIN( Colors, Create, "library", "Creates a new color." )
 {
     int red = LUA_BINDING_ARGUMENT( luaL_checknumber, 1, "red" );
     int green = LUA_BINDING_ARGUMENT( luaL_checknumber, 2, "green" );
@@ -244,9 +245,9 @@ LUA_BINDING_BEGIN( _G, Color, "library", "Creates a new color." )
     lua_pushcolor( L, color );
     return 1;
 }
-LUA_BINDING_END( "color", "The created color." )
+LUA_BINDING_END( "Color", "The created color." )
 
-LUA_BINDING_BEGIN( _G, HSVToColor, "library", "Converts HSV to RGB." )
+LUA_BINDING_BEGIN( Colors, HsvToColor, "library", "Converts HSV to RGB." )
 {
     float hue = LUA_BINDING_ARGUMENT( luaL_checknumber, 1, "hue" );
     float saturation = LUA_BINDING_ARGUMENT( luaL_checknumber, 2, "saturation" );
@@ -256,9 +257,9 @@ LUA_BINDING_BEGIN( _G, HSVToColor, "library", "Converts HSV to RGB." )
     lua_pushcolor( L, lua_Color( rgb.x, rgb.y, rgb.z, 255 ) );
     return 1;
 }
-LUA_BINDING_END( "color", "The converted color." )
+LUA_BINDING_END( "Color", "The converted color." )
 
-LUA_BINDING_BEGIN( _G, ColorToHSV, "library", "Converts RGB to HSV." )
+LUA_BINDING_BEGIN( Colors, ColorToHSV, "library", "Converts RGB to HSV." )
 {
     lua_Color clr = luaL_checkcolor( L, 1 );
     Vector hsv;
@@ -270,7 +271,7 @@ LUA_BINDING_BEGIN( _G, ColorToHSV, "library", "Converts RGB to HSV." )
 }
 LUA_BINDING_END( "number", "The hue.", "number", "The saturation.", "number", "The value." )
 
-LUA_BINDING_BEGIN( _G, ColorToHSL, "library", "Converts RGB to HSL." )
+LUA_BINDING_BEGIN( Colors, ColorToHsl, "library", "Converts RGB to HSL." )
 {
     lua_Color clr = luaL_checkcolor( L, 1 );
     float h, s;
@@ -329,7 +330,7 @@ LUA_BINDING_BEGIN( _G, ColorToHSL, "library", "Converts RGB to HSL." )
 }
 LUA_BINDING_END( "number", "The hue.", "number", "The saturation.", "number", "The lightness." )
 
-LUA_BINDING_BEGIN( _G, HSLToColor, "library", "Converts HSL to RGB." )
+LUA_BINDING_BEGIN( Colors, HslToColor, "library", "Converts HSL to RGB." )
 {
     float r, g, b;
     float h = luaL_checknumber( L, 1 );
@@ -360,7 +361,7 @@ LUA_BINDING_BEGIN( _G, HSLToColor, "library", "Converts HSL to RGB." )
 
     return 1;
 }
-LUA_BINDING_END( "color", "The converted color." )
+LUA_BINDING_END( "Color", "The converted color." )
 
 /*
 ** Open Color object
@@ -374,7 +375,7 @@ LUALIB_API int luaopen_Color( lua_State *L )
     lua_pushstring( L, LUA_COLORMETANAME );
     lua_setfield( L, -2, "__type" ); /* metatable.__type = "Color" */
 
-    LUA_REGISTRATION_COMMIT_LIBRARY( _G );
+    LUA_REGISTRATION_COMMIT_LIBRARY( Colors );
     lua_pop( L, 1 );  // pop metatable
 
     return 1;

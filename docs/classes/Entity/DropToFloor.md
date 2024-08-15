@@ -21,7 +21,7 @@ lua:
       type: Entity
       default: "NULL"
   returns:
-    - type: number
+    - type: integer
       description: "-1 if the floor to drop to isn't valid. 0 if nothing changed. 1 if the entity dropped to the floor"
 ---
 

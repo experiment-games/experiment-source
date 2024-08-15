@@ -106,38 +106,38 @@ LUA_BINDING_END( "string", "The name of the texture." )
 
 LUA_BINDING_BEGIN( Texture, GetActualWidth, "class", "Gets the actual width of the texture." )
 {
-    lua_pushnumber( L, luaL_checkitexture( L, 1 )->GetActualWidth() );
+    lua_pushinteger( L, luaL_checkitexture( L, 1 )->GetActualWidth() );
     return 1;
 }
-LUA_BINDING_END( "number", "The actual width of the texture." )
+LUA_BINDING_END( "integer", "The actual width of the texture." )
 
 LUA_BINDING_BEGIN( Texture, GetActualHeight, "class", "Gets the actual height of the texture." )
 {
-    lua_pushnumber( L, luaL_checkitexture( L, 1 )->GetActualHeight() );
+    lua_pushinteger( L, luaL_checkitexture( L, 1 )->GetActualHeight() );
     return 1;
 }
-LUA_BINDING_END( "number", "The actual height of the texture." )
+LUA_BINDING_END( "integer", "The actual height of the texture." )
 
 LUA_BINDING_BEGIN( Texture, GetMappingWidth, "class", "Gets the mapping width of the texture." )
 {
-    lua_pushnumber( L, luaL_checkitexture( L, 1 )->GetMappingWidth() );
+    lua_pushinteger( L, luaL_checkitexture( L, 1 )->GetMappingWidth() );
     return 1;
 }
-LUA_BINDING_END( "number", "The mapping width of the texture." )
+LUA_BINDING_END( "integer", "The mapping width of the texture." )
 
 LUA_BINDING_BEGIN( Texture, GetMappingHeight, "class", "Gets the mapping height of the texture." )
 {
-    lua_pushnumber( L, luaL_checkitexture( L, 1 )->GetMappingHeight() );
+    lua_pushinteger( L, luaL_checkitexture( L, 1 )->GetMappingHeight() );
     return 1;
 }
-LUA_BINDING_END( "number", "The mapping height of the texture." )
+LUA_BINDING_END( "integer", "The mapping height of the texture." )
 
 LUA_BINDING_BEGIN( Texture, GetNumAnimationFrames, "class", "Gets the number of animation frames of the texture." )
 {
     lua_pushinteger( L, luaL_checkitexture( L, 1 )->GetNumAnimationFrames() );
     return 1;
 }
-LUA_BINDING_END( "number", "The number of animation frames of the texture." )
+LUA_BINDING_END( "integer", "The number of animation frames of the texture." )
 
 LUA_BINDING_BEGIN( Texture, IsTranslucent, "class", "Checks if the texture is translucent." )
 {

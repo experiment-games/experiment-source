@@ -15,7 +15,7 @@ lua:
   
   
   returns:
-    - type: number
+    - type: enumeration/OBSERVER_MODE
       description: "The player's observer mode."
 ---
 

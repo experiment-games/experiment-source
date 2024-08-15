@@ -20,7 +20,7 @@ lua:
       type: number
   returns:
     - type: number
-      description: "The bone controller"
+      description: "The bone controller value, clamped between acceptable values"
 ---
 
 <div class="lua__search__keywords">

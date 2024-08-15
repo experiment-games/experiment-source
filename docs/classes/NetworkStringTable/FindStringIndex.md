@@ -17,7 +17,7 @@ lua:
     - name: "value"
       type: string
   returns:
-    - type: number
+    - type: integer
       description: "The index of the string."
 ---
 

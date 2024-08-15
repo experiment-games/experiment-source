@@ -17,8 +17,8 @@ lua:
     - name: "point"
       type: Vector
   returns:
-    - type: number
-      description: "The contents of the point."
+    - type: integer
+      description: "Bitwise contents mask."
 ---
 
 <div class="lua__search__keywords">

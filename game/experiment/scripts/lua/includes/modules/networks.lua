@@ -560,7 +560,7 @@ function READER:ReadAngle()
     local yaw = self:ReadFloat()
     local roll = self:ReadFloat()
 
-    return Angle(pitch, yaw, roll)
+    return Angles.Create(pitch, yaw, roll)
 end
 
 --- Reads a bit from the data
@@ -586,7 +586,7 @@ function READER:ReadColor(withAlpha)
     local b = self:ReadUInt(8)
     local a = withAlpha and self:ReadUInt(8) or 255
 
-    return Color(r, g, b, a)
+    return Colors.Create(r, g, b, a)
 end
 
 --- Reads an entity index from the data.
@@ -597,7 +597,7 @@ end
 function READER:ReadEntity()
     local index = self:ReadUInt(SIZE_ENTITY_INDEX)
     local entityGetter = function()
-        return Entity(index)
+        return Entities.Find(index)
     end
 
 	return entityGetter(), entityGetter

@@ -25,7 +25,7 @@ LUA_BINDING_BEGIN( Serializers, Crc32, "library", "Compute the CRC32 of a string
     lua_pushinteger( L, CRC32_ProcessSingleBuffer( pszString, Q_strlen( pszString ) ) );
     return 1;
 }
-LUA_BINDING_END( "number", "CRC32 of the string." )
+LUA_BINDING_END( "integer", "CRC32 of the string." )
 
 LUA_BINDING_BEGIN( Serializers, Base64Encode, "library", "Encode a string to base64" )
 {

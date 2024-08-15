@@ -15,8 +15,8 @@ lua:
   
   
   returns:
-    - type: number
-      description: "The old buttons"
+    - type: integer
+      description: "Bitmask of the old buttons"
 ---
 
 <div class="lua__search__keywords">

@@ -19,7 +19,7 @@ lua:
     - name: "currentState"
       type: integer
   returns:
-    - type: number
+    - type: integer
       description: "The toggle state"
 ---
 

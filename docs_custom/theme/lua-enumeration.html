@@ -1,28 +1,5 @@
 {% extends "main.html" %}
-<!-- ---
-template: lua-enumeration.html
-title: ACTIVATION_TYPE
-icon: lua-gmod_compatibility
-tags:
-  - lua
-  - gmod_compatibility
-  - needs-verification
-  - needs-example
-lua:
-  library: ACTIVATION_TYPE
-  realm: gmod_compatibility
-  description: ''
-  enumerations:
-    - 'ON_PRESSED_AND_RELEASED': 0
-    - 'ON_PRESSED': 1
-    - 'ON_RELEASED': 2
 
----
-
-<div class="lua__search__keywords">
-ACTIVATION_TYPE: ON_PRESSED_AND_RELEASED(0) ON_PRESSED(1) ON_RELEASED(2)
-</div>
- -->
 {% block content %}
 <div class="lua">
     <div class="lua__title">
@@ -45,6 +22,5 @@ ACTIVATION_TYPE: ON_PRESSED_AND_RELEASED(0) ON_PRESSED(1) ON_RELEASED(2)
     {% if page.content %}
     {{ page.content }}
     {% endif %}
-
 </div>
 {% endblock %}

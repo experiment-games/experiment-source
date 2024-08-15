@@ -15,7 +15,7 @@ lua:
   
   
   returns:
-    - type: number
+    - type: integer
       description: "The number of entities in the delete list."
 ---
 

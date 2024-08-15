@@ -19,7 +19,7 @@ lua:
   returns:
     - type: Vector
       description: "The origin"
-    - type: angle
+    - type: Angle
       description: "The angles"
 ---
 

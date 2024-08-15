@@ -63,10 +63,10 @@ LUA_REGISTRATION_INIT( Systems );
 
 LUA_BINDING_BEGIN( Systems, GetSecondsSinceAppActive, "library", "Get the number of seconds since the application was started." )
 {
-    lua_pushnumber( L, steamapicontext->SteamUtils()->GetSecondsSinceAppActive() );
+    lua_pushinteger( L, steamapicontext->SteamUtils()->GetSecondsSinceAppActive() );
     return 1;
 }
-LUA_BINDING_END( "number", "The number of seconds since the application was started." )
+LUA_BINDING_END( "integer", "The number of seconds since the application was started." )
 
 LUA_BINDING_BEGIN( Systems, GetCountry, "library", "Get the country code of the user." )
 {
@@ -146,17 +146,17 @@ LUA_BINDING_END( "boolean", "Whether the application is running in windowed mode
 
 LUA_BINDING_BEGIN( Systems, GetSteamServerRealTime, "library", "Get the server time." )
 {
-    lua_pushnumber( L, steamapicontext->SteamUtils()->GetServerRealTime() );
+    lua_pushinteger( L, steamapicontext->SteamUtils()->GetServerRealTime() );
     return 1;
 }
-LUA_BINDING_END( "number", "The server time." )
+LUA_BINDING_END( "integer", "The server time." )
 
 LUA_BINDING_BEGIN( Systems, GetSecondsSinceComputerActive, "library", "Get the number of seconds since the computer was started." )
 {
-    lua_pushnumber( L, steamapicontext->SteamUtils()->GetSecondsSinceComputerActive() );
+    lua_pushinteger( L, steamapicontext->SteamUtils()->GetSecondsSinceComputerActive() );
     return 1;
 }
-LUA_BINDING_END( "number", "The number of seconds since the computer was started." )
+LUA_BINDING_END( "integer", "The number of seconds since the computer was started." )
 
 LUALIB_API int( luaopen_Systems )( lua_State* L )
 {

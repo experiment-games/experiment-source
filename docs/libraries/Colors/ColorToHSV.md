@@ -8,7 +8,7 @@ tags:
   - needs-verification
   - needs-example
 lua:
-  library: _G
+  library: Colors
   function: ColorToHSV
   realm: shared
   description: "Converts RGB to HSV."
@@ -24,5 +24,5 @@ lua:
 ---
 
 <div class="lua__search__keywords">
-_G.ColorToHSV &#x2013; Converts RGB to HSV.
+Colors.ColorToHSV &#x2013; Converts RGB to HSV.
 </div>

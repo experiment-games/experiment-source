@@ -3,7 +3,9 @@
 <ul class="lua__variable_list">
     {% for return in page.meta.lua.returns %}
     <li>
-        <span class="lua__type">{{ return.type }}</span>
+        {% with type=return.type %}
+            {% include 'lua-partials/type.html' %}
+        {% endwith %}
         <span class="lua__variable_list__description">{{ return.description }}</span>
     </li>
     {% endfor %}

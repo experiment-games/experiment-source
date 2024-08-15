@@ -19,9 +19,9 @@ lua:
     - name: "goalSequence"
       type: number
   returns:
-    - type: number
+    - type: integer
       description: "The transition sequence"
-    - type: number
+    - type: integer
       description: "The direction"
 ---
 

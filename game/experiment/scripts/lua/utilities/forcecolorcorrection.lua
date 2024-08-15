@@ -8,5 +8,5 @@
 --]]
 
 -- Andrew; and that's it really.
-local hColorCorrection = CreateEntityByName("color_correction")
+local hColorCorrection = Entities.CreateByName("color_correction")
 hColorCorrection:Spawn()

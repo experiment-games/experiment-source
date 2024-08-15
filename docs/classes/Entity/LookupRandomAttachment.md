@@ -17,7 +17,7 @@ lua:
     - name: "attachmentNameSubstring"
       type: string
   returns:
-    - type: number
+    - type: integer
       description: "The random attachment"
 ---
 

@@ -15,8 +15,8 @@ lua:
   
   
   returns:
-    - type: number
-      description: "The solid flags."
+    - type: integer
+      description: "The SOLID_FLAG flags."
 ---
 
 <div class="lua__search__keywords">

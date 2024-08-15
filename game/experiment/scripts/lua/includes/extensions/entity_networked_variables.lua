@@ -142,7 +142,7 @@ ENTITY_META.SetNW2VarProxy = ENTITY_META.SetNetworkedVariableCallback
 
 if (SERVER) then
 	local bit = require("bitwise")
-	local playerForcedUpdateConvar = CreateConsoleVariable(
+	local playerForcedUpdateConvar = ConsoleVariables.Create(
 		"sv_playerforcedupdate",
 		10,
 		bit.bor(FCVAR_REPLICATED, FCVAR_ARCHIVE),

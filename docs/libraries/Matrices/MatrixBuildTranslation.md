@@ -17,14 +17,14 @@ lua:
     - arguments:
       - name: "Matrix"
         type: Matrix
-      - name: "number"
+      - name: "x"
         type: number
-      - name: "number"
+      - name: "y"
         type: number
-      - name: "number"
+      - name: "z"
         type: number
     - arguments:
-      - name: "vector"
+      - name: "translation"
         type: Vector
   returns:
     

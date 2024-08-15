@@ -1,6 +1,6 @@
 ---
 template: lua-library-function.html
-title: ClientsideModel
+title: CreateClientEntity
 icon: lua-client
 tags:
   - lua
@@ -8,10 +8,10 @@ tags:
   - needs-verification
   - needs-example
 lua:
-  library: _G
-  function: ClientsideModel
+  library: Entities
+  function: CreateClientEntity
   realm: client
-  description: "Create a clientside model."
+  description: "Create a clientside entity with the specified model."
   
   arguments:
     - name: "model"
@@ -25,5 +25,5 @@ lua:
 ---
 
 <div class="lua__search__keywords">
-_G.ClientsideModel &#x2013; Create a clientside model.
+Entities.CreateClientEntity &#x2013; Create a clientside entity with the specified model.
 </div>

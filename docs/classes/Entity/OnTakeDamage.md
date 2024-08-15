@@ -17,8 +17,8 @@ lua:
     - name: "damageInfo"
       type: DamageInfo
   returns:
-    - type: number
-      description: "The damage taken"
+    - type: integer
+      description: "0 if no damage is taken, or it was fatal. 1 Otherwise"
 ---
 
 <div class="lua__search__keywords">

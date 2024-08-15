@@ -26,7 +26,7 @@ DeriveGamemode = InheritGamemode
 include = Include
 
 function GetConVar_Internal(name)
-	local consoleVariable = GetConsoleVariable(name)
+	local consoleVariable = ConsoleVariables.Get(name)
 
 	if (not IsValid(consoleVariable)) then
 		debug.PrintError("GetConVar: Couldn't find convar '" .. name .. "'")
@@ -64,7 +64,7 @@ util.CRC = function()
 end
 
 ents = {
-	Create = CreateEntityByName,
+	Create = Entities.CreateByName,
 
 	GetAll = Entities.GetAll,
 	GetCount = Entities.GetCount,
@@ -159,7 +159,15 @@ vgui = Gui
 VMatrix = Matrix
 concommand = ConsoleCommands
 
+Angle = Angles.Create
+Color = Colors.Create
+ClientsideModel = Entities.CreateClientEntity
+Entity = Entities.Find
 Vector = Vectors.Create
+HSVToColor = Colors.HsvToColor
+ColorToHSV = Colors.ColorToHsv
+ColorToHSL = Colors.ColorToHsl
+HslToColor = Colors.HslToColor
 
 RealFrameTime = Engines.GetAbsoluteFrameTime
 CurTime = Engines.GetCurrentTime
@@ -310,7 +318,7 @@ CreateConVar = function(name, value, flags, helpText, min, max)
 		end
 	end
 
-	return CreateConsoleVariable(name, value, flags, helpText, min, max)
+	return ConsoleVariables.Create(name, value, flags, helpText, min, max)
 end
 
 AddCSLuaFile = SendFile or function() end
@@ -388,6 +396,7 @@ ENTITY_META.GetOwner = ENTITY_META.GetOwnerEntity
 ENTITY_META.DeleteOnRemove = ENTITY_META.AddDeleteOnRemove
 ENTITY_META.DontDeleteOnRemove = ENTITY_META.RemoveDeleteOnRemove
 ENTITY_META.GetFlexIDByName = ENTITY_META.GetFlexIdByName
+ENTITY_META.GetNumBodyGroups = ENTITY_META.GetBodyGroupsCount
 
 function ENTITY_META:SetSpawnEffect(effect)
 	-- TODO: Implement
@@ -783,7 +792,7 @@ else
 		if (istable(rOrColor)) then
 			self:SetBgColor(rOrColor)
 		else
-			self:SetBgColor(Color(rOrColor, g, b, a))
+			self:SetBgColor(Colors.Create(rOrColor, g, b, a))
 		end
 	end
 
@@ -792,7 +801,7 @@ else
 		if (istable(rOrColor)) then
 			self:SetFgColor(rOrColor)
 		else
-			self:SetFgColor(Color(rOrColor, g, b, a))
+			self:SetFgColor(Colors.Create(rOrColor, g, b, a))
 		end
 	end
 

@@ -17,7 +17,7 @@ lua:
     - name: "context"
       type: string
   returns:
-    - type: number
+    - type: integer
       description: "The registered think context."
 ---
 

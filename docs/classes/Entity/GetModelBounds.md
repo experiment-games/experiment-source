@@ -17,7 +17,7 @@ lua:
   returns:
     - type: Vector
       description: "The minimum bounds."
-    - type: vector
+    - type: Vector
       description: "The maximum bounds."
 ---
 

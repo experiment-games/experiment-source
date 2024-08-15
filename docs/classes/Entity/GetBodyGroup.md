@@ -17,7 +17,7 @@ lua:
     - name: "bodyGroupId"
       type: number
   returns:
-    - type: number
+    - type: integer
       description: "The bodygroup value"
 ---
 

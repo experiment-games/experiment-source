@@ -19,7 +19,7 @@ lua:
   returns:
     - type: Vector
       description: "The converted start point."
-    - type: vector
+    - type: Vector
       description: "The converted end point."
 ---
 

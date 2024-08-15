@@ -16,7 +16,7 @@ lua:
   static: true
   
   returns:
-    - type: number
+    - type: integer
       description: "The prediction random seed."
 ---
 

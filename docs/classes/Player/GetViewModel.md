@@ -14,7 +14,7 @@ lua:
   description: "Get the player's view model."
   
   arguments:
-    - name: "number"
+    - name: "viewModelIndex"
       type: number
       default: "0"
   returns:

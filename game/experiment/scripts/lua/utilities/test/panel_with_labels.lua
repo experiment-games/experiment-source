@@ -7,7 +7,7 @@ Include("includes/extensions/text_entry.lua")
 
 local parent = Gui.Create("Frame")
 local parentWide, parentTall = 256, 256
-parent:SetBgColor(Color(255, 0, 0, 255))
+parent:SetBgColor(Colors.Create(255, 0, 0, 255))
 parent:SetSize(parentWide, parentTall)
 parent:SetPosition(50, 50)
 parent:SetTitle("A panel with labels using fonts")

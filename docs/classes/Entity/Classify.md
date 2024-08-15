@@ -15,7 +15,7 @@ lua:
   
   
   returns:
-    - type: integer|Class_T
+    - type: enumeration/AI_CLASS
       description: "The classification"
 ---
 

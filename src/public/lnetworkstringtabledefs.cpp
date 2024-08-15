@@ -122,7 +122,7 @@ LUA_BINDING_BEGIN( NetworkStringTable, AddString, "class", "Add a string to the 
 
     return 1;
 }
-LUA_BINDING_END( "number", "The index of the string." )
+LUA_BINDING_END( "integer", "The index of the string." )
 
 LUA_BINDING_BEGIN( NetworkStringTable, ChangedSinceTick, "class", "Check if the table has changed since the given tick." )
 {
@@ -144,7 +144,7 @@ LUA_BINDING_BEGIN( NetworkStringTable, FindStringIndex, "class", "Find the index
 
     return 1;
 }
-LUA_BINDING_END( "number", "The index of the string." )
+LUA_BINDING_END( "integer", "The index of the string." )
 
 LUA_BINDING_BEGIN( NetworkStringTable, GetEntryBits, "class", "Get the number of bits used to store each string." )
 {
@@ -154,7 +154,7 @@ LUA_BINDING_BEGIN( NetworkStringTable, GetEntryBits, "class", "Get the number of
 
     return 1;
 }
-LUA_BINDING_END( "number", "The number of bits." )
+LUA_BINDING_END( "integer", "The number of bits." )
 
 LUA_BINDING_BEGIN( NetworkStringTable, GetMaxStrings, "class", "Get the maximum number of strings that can be stored in the table." )
 {
@@ -164,7 +164,7 @@ LUA_BINDING_BEGIN( NetworkStringTable, GetMaxStrings, "class", "Get the maximum 
 
     return 1;
 }
-LUA_BINDING_END( "number", "The maximum number of strings." )
+LUA_BINDING_END( "integer", "The maximum number of strings." )
 
 LUA_BINDING_BEGIN( NetworkStringTable, GetStringsAmount, "class", "Get the number of strings stored in the table." )
 {
@@ -174,7 +174,7 @@ LUA_BINDING_BEGIN( NetworkStringTable, GetStringsAmount, "class", "Get the numbe
 
     return 1;
 }
-LUA_BINDING_END( "number", "The number of strings." )
+LUA_BINDING_END( "integer", "The number of strings." )
 
 LUA_BINDING_BEGIN( NetworkStringTable, GetString, "class", "Get a string from the table." )
 {
@@ -195,7 +195,7 @@ LUA_BINDING_BEGIN( NetworkStringTable, GetTableId, "class", "Get the table's ID.
 
     return 1;
 }
-LUA_BINDING_END( "number", "The table's ID." )
+LUA_BINDING_END( "integer", "The table's ID." )
 
 LUA_BINDING_BEGIN( NetworkStringTable, GetTableName, "class", "Get the table's name." )
 {

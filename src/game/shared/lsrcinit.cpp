@@ -26,7 +26,7 @@ static const luaL_RegForState luasrclibs[] = {
     //
     // Shared
     //
-    { LUA_SHAREDENUMNAME, luaopen_SharedEnumerations, REALM_SHARED },                   // ✔    n/a     n/a
+    { LUA_SHAREDENUMNAME, luaopen_SharedEnumerations, REALM_SHARED },                    // ✔    n/a     n/a
     { LUA_BUTTONENUMNAME, luaopen_BUTTON, REALM_SHARED },                               // ✔    n/a     n/a
     { LUA_ACTIVITYENUMNAME, luaopen_ACTIVITY, REALM_SHARED },                           // ✔    n/a     n/a
     { LUA_BASEANIMATINGLIBNAME, luaopen_CBaseAnimating_shared, REALM_SHARED },          // ✔    n/a     n/a
@@ -79,7 +79,7 @@ static const luaL_RegForState luasrclibs[] = {
     { LUA_PHYSICSOBJECTMETANAME, luaopen_IPhysicsObject, REALM_SHARED },                // ✔    n/a     n/a
     { LUA_PHYSICSSURFACEPROPSMETANAME, luaopen_IPhysicsSurfaceProps, REALM_SHARED },    // ✔    n/a     n/a
     { LUA_PREDICTIONSYSTEMLIBNAME, luaopen_PredictionSystems, REALM_SHARED },           // ✔    n/a     n/a  
-    { LUA_QANGLELIBNAME, luaopen_QAngle, REALM_SHARED | REALM_GAMEUI },             // ✔    n/a     n/a  
+    { LUA_QANGLEMETANAME, luaopen_QAngle, REALM_SHARED | REALM_GAMEUI },             // ✔    n/a     n/a  
     { LUA_RANDOMLIBNAME, luaopen_random, REALM_SHARED | REALM_GAMEUI },             // ✔    n/a     n/a  
     { LUA_RECIPIENTFILTERMETANAME, luaopen_CRecipientFilter, REALM_SHARED },        // ✔    n/a     n/a 
     { LUA_RENDERLIBNAME, luaopen_render, REALM_SHARED | REALM_GAMEUI },             // ✔    n/a     n/a
@@ -102,6 +102,7 @@ static const luaL_RegForState luasrclibs[] = {
     //
     // Server only
     //
+    { LUA_SERVERENUMNAME, luaopen_ServerEnumerations, REALM_SERVER },               // n/a   n/a     ✔
     { LUA_NETCHANNELINFOLIBNAME, luaopen_INetChannelInfo, REALM_SERVER },
     { LUA_RESOURCESLIBNAME, luaopen_resources, REALM_SERVER },                      // n/a   n/a     ✔
 #endif
@@ -110,6 +111,7 @@ static const luaL_RegForState luasrclibs[] = {
     //
     // Client
     //
+    { LUA_CLIENTENUMNAME, luaopen_ClientEnumerations, REALM_CLIENT },               // n/a   ✔     n/a
     { LUA_BFREADLIBNAME, luaopen_bf_read, REALM_CLIENT },                           // n/a   ✔     n/a
     { LUA_CLIENTSHADOWMGRLIBNAME, luaopen_g_pClientShadowMgr, REALM_CLIENT },       // n/a   ✔     n/a
 

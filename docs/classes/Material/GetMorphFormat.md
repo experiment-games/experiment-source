@@ -15,7 +15,7 @@ lua:
   
   
   returns:
-    - type: number
+    - type: integer
       description: "Morph format."
 ---
 

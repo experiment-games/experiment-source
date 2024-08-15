@@ -17,7 +17,7 @@ lua:
     - name: "userId"
       type: number
   returns:
-    - type: number
+    - type: integer
       description: "The player entity number for the user ID."
 ---
 

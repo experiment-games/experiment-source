@@ -16,13 +16,13 @@ lua:
   arguments:
     - name: "Matrix"
       type: Matrix
-    - name: "number"
+    - name: "fovX"
       type: number
-    - name: "number"
+    - name: "fovY"
       type: number
-    - name: "number"
+    - name: "zNear"
       type: number
-    - name: "number"
+    - name: "zFar"
       type: number
   returns:
     

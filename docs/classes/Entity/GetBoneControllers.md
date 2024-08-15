@@ -15,8 +15,8 @@ lua:
   
   
   returns:
-    - type: number
-      description: "The bone controllers"
+    - type: table
+      description: "The bone controller values"
 ---
 
 <div class="lua__search__keywords">

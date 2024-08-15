@@ -54,7 +54,7 @@ LUA_BINDING_BEGIN( Entity, DropToFloor, "class", "Drops the entity to the floor.
     lua_pushinteger( L, UTIL_DropToFloor( pEntity, nMask, pIgnore ) );
     return 1;
 }
-LUA_BINDING_END( "number", "-1 if the floor to drop to isn't valid. 0 if nothing changed. 1 if the entity dropped to the floor" )
+LUA_BINDING_END( "integer", "-1 if the floor to drop to isn't valid. 0 if nothing changed. 1 if the entity dropped to the floor" )
 
 LUA_BINDING_BEGIN( Entity, SetNavIgnore, "class", "Set nav ignore." )
 {
@@ -158,7 +158,7 @@ LUA_BINDING_BEGIN( Entity, SetTransmitState, "class", "Set transmit state." )
     lua_pushinteger( L, pEntity->SetTransmitState( nState ) );
     return 1;
 }
-LUA_BINDING_END( "number", "The transmit state" )
+LUA_BINDING_END( "integer", "The transmit state" )
 
 LUA_BINDING_BEGIN( Entity, GetTransmitState, "class", "Get transmit state." )
 {
@@ -166,7 +166,7 @@ LUA_BINDING_BEGIN( Entity, GetTransmitState, "class", "Get transmit state." )
     lua_pushinteger( L, pEntity->GetTransmitState() );
     return 1;
 }
-LUA_BINDING_END( "number", "The transmit state" )
+LUA_BINDING_END( "integer", "The transmit state" )
 
 LUA_BINDING_BEGIN( Entity, SetPreventTransmit, "class", "Set prevent transmit." )
 {
@@ -297,7 +297,7 @@ LUA_BINDING_BEGIN( Entity, GetSpawnFlags, "class", "Get spawn flags." )
     lua_pushinteger( L, pEntity->GetSpawnFlags() );
     return 1;
 }
-LUA_BINDING_END( "number", "The spawn flags" )
+LUA_BINDING_END( "integer", "The spawn flags" )
 
 LUA_BINDING_BEGIN( Entity, AddSpawnFlags, "class", "Add spawn flags." )
 {
@@ -426,7 +426,7 @@ LUA_BINDING_BEGIN( Entity, DrawDebugTextOverlays, "class", "Draw debug text over
     lua_pushinteger( L, pEntity->DrawDebugTextOverlays() );
     return 1;
 }
-LUA_BINDING_END( "number", "The number of overlays" )
+LUA_BINDING_END( "integer", "The number of overlays" )
 
 LUA_BINDING_BEGIN( Entity, DrawTimedOverlays, "class", "Draw timed overlays." )
 {
@@ -485,7 +485,7 @@ LUA_BINDING_BEGIN( Entity, RequiredEdictIndex, "class", "Required edict index." 
     lua_pushinteger( L, pEntity->RequiredEdictIndex() );
     return 1;
 }
-LUA_BINDING_END( "number", "The edict index" )
+LUA_BINDING_END( "integer", "The edict index" )
 
 LUA_BINDING_BEGIN( Entity, OnMoveDone, "class", "Called when an entity has finished moving." )
 {
@@ -527,7 +527,7 @@ LUA_BINDING_BEGIN( Entity, Classify, "class", "Returns the type of group (i.e, '
     lua_pushinteger( L, pEntity->Classify() );
     return 1;
 }
-LUA_BINDING_END( "integer|Class_T", "The classification" )
+LUA_BINDING_END( "enumeration/AI_CLASS", "The classification" )
 
 LUA_BINDING_BEGIN( Entity, DeathNotice, "class", "Death notice." )
 {
@@ -588,7 +588,7 @@ LUA_BINDING_BEGIN( Entity, OnTakeDamage, "class", "On take damage." )
     lua_pushinteger( L, pEntity->OnTakeDamage( info ) );
     return 1;
 }
-LUA_BINDING_END( "number", "The damage taken" )
+LUA_BINDING_END( "integer", "0 if no damage is taken, or it was fatal. 1 Otherwise" )
 
 LUA_BINDING_BEGIN( Entity, TakeDamage, "class", "Take damage." )
 {
@@ -607,7 +607,7 @@ LUA_BINDING_BEGIN( Entity, TakeHealth, "class", "Take health." )
     lua_pushinteger( L, pEntity->TakeHealth( flHealth, nBitsDamageType ) );
     return 1;
 }
-LUA_BINDING_END( "number", "The health taken" )
+LUA_BINDING_END( "integer", "The health actually taken" )
 
 LUA_BINDING_BEGIN( Entity, OnEventKilled, "class", "Called when the 'Killed' event happened." )
 {
@@ -896,7 +896,7 @@ LUA_BINDING_BEGIN( Entity, ShouldToggle, "class", "Should toggle." )
     lua_pushinteger( L, pEntity->ShouldToggle( useType, iState ) );
     return 1;
 }
-LUA_BINDING_END( "number", "The toggle state" )
+LUA_BINDING_END( "integer", "The toggle state" )
 
 LUA_BINDING_BEGIN( Entity, Respawn, "class", "Respawn." )
 {
@@ -981,7 +981,7 @@ LUA_BINDING_BEGIN( Entity, GetDamageType, "class", "Get damage type." )
     lua_pushinteger( L, pEntity->GetDamageType() );
     return 1;
 }
-LUA_BINDING_END( "number", "The damage type" )
+LUA_BINDING_END( "integer", "The damage type" )
 
 LUA_BINDING_BEGIN( Entity, GetDamage, "class", "Get damage." )
 {

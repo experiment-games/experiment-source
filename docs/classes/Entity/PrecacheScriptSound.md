@@ -18,7 +18,7 @@ lua:
     - name: "sound"
       type: string
   returns:
-    - type: number
+    - type: integer
       description: "The precached script sound."
 ---
 

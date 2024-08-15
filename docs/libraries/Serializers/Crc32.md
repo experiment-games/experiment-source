@@ -17,7 +17,7 @@ lua:
     - name: "string"
       type: string
   returns:
-    - type: number
+    - type: integer
       description: "CRC32 of the string."
 ---
 

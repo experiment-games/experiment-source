@@ -17,7 +17,7 @@ lua:
     - name: "activity"
       type: number
   returns:
-    - type: number
+    - type: integer
       description: "The weighted sequence"
 ---
 

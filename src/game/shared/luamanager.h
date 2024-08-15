@@ -382,7 +382,7 @@
 #define LUA_RETURN_ANGLE()                                                            \
     if ( lua_gettop( L ) == 1 )                                                       \
     {                                                                                 \
-        if ( lua_isuserdata( L, -1 ) && luaL_checkudata( L, -1, LUA_QANGLELIBNAME ) ) \
+        if ( lua_isuserdata( L, -1 ) && luaL_checkudata( L, -1, LUA_QANGLEMETANAME ) ) \
         {                                                                             \
             QAngle res = luaL_checkangle( L, -1 );                                    \
             lua_pop( L, 1 );                                                          \

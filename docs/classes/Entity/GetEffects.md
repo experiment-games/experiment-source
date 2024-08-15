@@ -15,8 +15,8 @@ lua:
   
   
   returns:
-    - type: number
-      description: "The effects."
+    - type: integer
+      description: "The ENTITY_EFFECT flags."
 ---
 
 <div class="lua__search__keywords">

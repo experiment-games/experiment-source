@@ -15,7 +15,7 @@
 
 LUA_API lua_QAngle &lua_toangle( lua_State *L, int idx )
 {
-    lua_QAngle *v = ( lua_QAngle * )luaL_checkudata( L, idx, LUA_QANGLELIBNAME );
+    lua_QAngle *v = ( lua_QAngle * )luaL_checkudata( L, idx, LUA_QANGLEMETANAME );
     return *v;
 }
 
@@ -25,7 +25,7 @@ LUA_API lua_QAngle &lua_toangle( lua_State *L, int idx )
 
 LUA_API bool lua_isangle(lua_State* L, int idx)
 {
-    void *p = luaL_testudata( L, idx, LUA_QANGLELIBNAME );
+    void *p = luaL_testudata( L, idx, LUA_QANGLEMETANAME );
     return p != NULL;
 }
 
@@ -37,19 +37,19 @@ LUA_API void lua_pushangle( lua_State *L, lua_QAngle &v )
 {
     lua_QAngle *pVec = ( lua_QAngle * )lua_newuserdata( L, sizeof( lua_QAngle ) );
     *pVec = v;
-    LUA_SAFE_SET_METATABLE( L, LUA_QANGLELIBNAME );
+    LUA_SAFE_SET_METATABLE( L, LUA_QANGLEMETANAME );
 }
 
 LUA_API void lua_pushangle( lua_State *L, const lua_QAngle &v )
 {
     lua_QAngle *pVec = ( lua_QAngle * )lua_newuserdata( L, sizeof( lua_QAngle ) );
     *pVec = v;
-    LUA_SAFE_SET_METATABLE( L, LUA_QANGLELIBNAME );
+    LUA_SAFE_SET_METATABLE( L, LUA_QANGLEMETANAME );
 }
 
 LUALIB_API lua_QAngle &luaL_checkangle( lua_State *L, int narg )
 {
-    lua_QAngle *d = ( lua_QAngle * )luaL_checkudata( L, narg, LUA_QANGLELIBNAME );
+    lua_QAngle *d = ( lua_QAngle * )luaL_checkudata( L, narg, LUA_QANGLEMETANAME );
     return *d;
 }
 
@@ -315,9 +315,9 @@ LUA_BINDING_BEGIN( Angle, __unm, "class", "Metatable that is called when the ang
 }
 LUA_BINDING_END( "Angle", "The negated angle." )
 
-LUA_REGISTRATION_INIT( _G );
+LUA_REGISTRATION_INIT( Angles );
 
-LUA_BINDING_BEGIN( _G, Angle, "library", "Creates a new angle." )
+LUA_BINDING_BEGIN( Angles, Create, "library", "Creates a new angle." )
 {
     // If the argument is an angle, copy it
     if ( lua_isangle( L, 1 ) )
@@ -349,14 +349,14 @@ LUA_BINDING_END( "Angle", "The created angle." )
 */
 LUALIB_API int luaopen_QAngle( lua_State *L )
 {
-    LUA_PUSH_NEW_METATABLE( L, LUA_QANGLELIBNAME );
+    LUA_PUSH_NEW_METATABLE( L, LUA_QANGLEMETANAME );
 
     LUA_REGISTRATION_COMMIT( Angle );
 
     lua_pushstring( L, "Angle" );
     lua_setfield( L, -2, "__type" ); /* metatable.__type = "Angle" */
 
-    LUA_REGISTRATION_COMMIT_LIBRARY( _G );
+    LUA_REGISTRATION_COMMIT_LIBRARY( Angles );
     lua_pop( L, 1 );  // pop metatable
 
     lua_QAngle v = vec3_angle;

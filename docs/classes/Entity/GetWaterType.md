@@ -15,8 +15,8 @@ lua:
   
   
   returns:
-    - type: number
-      description: "The water type."
+    - type: integer
+      description: "The water type flags."
 ---
 
 <div class="lua__search__keywords">

@@ -60,7 +60,7 @@ LUA_BINDING_BEGIN( CBaseAnimating, ComputeHitboxSurroundingBox, "class", "Comput
 
     return 3;
 }
-LUA_BINDING_END( "boolean", "Whether the operation was successful", "vector", "The world mins", "vector", "The world maxs" )
+LUA_BINDING_END( "boolean", "Whether the operation was successful", "Vector", "The world mins", "Vector", "The world maxs" )
 
 LUA_BINDING_BEGIN( CBaseAnimating, ComputeEntitySpaceHitboxSurroundingBox, "class", "Compute the entity space hitbox surrounding box." )
 {
@@ -73,7 +73,7 @@ LUA_BINDING_BEGIN( CBaseAnimating, ComputeEntitySpaceHitboxSurroundingBox, "clas
 
     return 3;
 }
-LUA_BINDING_END( "boolean", "Whether the operation was successful", "vector", "The world mins", "vector", "The world maxs" )
+LUA_BINDING_END( "boolean", "Whether the operation was successful", "Vector", "The world mins", "Vector", "The world maxs" )
 
 LUA_BINDING_BEGIN( CBaseAnimating, DoMuzzleFlash, "class", "Sets up muzzle flash parity." )
 {
@@ -99,7 +99,7 @@ LUA_BINDING_BEGIN( CBaseAnimating, GetBonePosition, "class", "Get the bone posit
 
     return 2;
 }
-LUA_BINDING_END( "Vector", "The origin", "angle", "The angles" )
+LUA_BINDING_END( "Vector", "The origin", "Angle", "The angles" )
 
 LUA_BINDING_BEGIN( CBaseAnimating, GetCycle, "class", "Get the current cycle." )
 {
@@ -130,7 +130,7 @@ LUA_BINDING_BEGIN( CBaseAnimating, GetHitboxSet, "class", "Get the index of the 
 
     return 1;
 }
-LUA_BINDING_END( "number", "The hitbox set" )
+LUA_BINDING_END( "integer", "The hitbox set" )
 
 LUA_BINDING_BEGIN( CBaseAnimating, GetHitboxSetCount, "class", "Get the hitbox set count." )
 {
@@ -140,7 +140,7 @@ LUA_BINDING_BEGIN( CBaseAnimating, GetHitboxSetCount, "class", "Get the hitbox s
 
     return 1;
 }
-LUA_BINDING_END( "number", "The hitbox set count" )
+LUA_BINDING_END( "integer", "The hitbox set count" )
 
 LUA_BINDING_BEGIN( CBaseAnimating, GetHitboxSetName, "class", "Get the hitbox set name." )
 {
@@ -165,7 +165,7 @@ LUA_BINDING_BEGIN( CBaseAnimating, GetNumFlexControllers, "class", "Get the numb
 
     return 1;
 }
-LUA_BINDING_END( "number", "The number of flex controllers" )
+LUA_BINDING_END( "integer", "The number of flex controllers" )
 
 LUA_BINDING_BEGIN( CBaseAnimating, GetModelName, "class", "Get the model path of the entity" )
 {
@@ -252,7 +252,7 @@ LUA_BINDING_BEGIN( CBaseAnimating, GetAttachmentLocal, "class", "Get the local a
 
     return 3;
 }
-LUA_BINDING_END( "boolean", "Whether the operation was successful", "vector", "The origin", "angle", "The angles" )
+LUA_BINDING_END( "boolean", "Whether the operation was successful", "Vector", "The origin", "Angle", "The angles" )
 
 LUA_BINDING_BEGIN( CBaseAnimating, FindBodyGroupByName, "class", "Find the bodygroup id by the bodygroup name" )
 {
@@ -263,7 +263,7 @@ LUA_BINDING_BEGIN( CBaseAnimating, FindBodyGroupByName, "class", "Find the bodyg
 
     return 1;
 }
-LUA_BINDING_END( "number", "The bodygroup id" )
+LUA_BINDING_END( "integer", "The bodygroup id" )
 
 LUA_BINDING_BEGIN( CBaseAnimating, FindTransitionSequence, "class", "Find the transition sequence." )
 {
@@ -277,7 +277,7 @@ LUA_BINDING_BEGIN( CBaseAnimating, FindTransitionSequence, "class", "Find the tr
 
     return 2;
 }
-LUA_BINDING_END( "number", "The transition sequence", "number", "The direction" )
+LUA_BINDING_END( "integer", "The transition sequence", "integer", "The direction" )
 
 // Experiment; Returns 'this', so pretty useless in Lua I imagine. Disabled:
 // LUA_BINDING_BEGIN( CBaseAnimating, GetBaseAnimating, "class", "Get the base animating entity." )
@@ -299,7 +299,7 @@ LUA_BINDING_BEGIN( CBaseAnimating, GetBodyGroup, "class", "Get the bodygroup val
 
     return 1;
 }
-LUA_BINDING_END( "number", "The bodygroup value" )
+LUA_BINDING_END( "integer", "The bodygroup value" )
 
 LUA_BINDING_BEGIN( CBaseAnimating, GetBodyGroupCount, "class", "Get the number of bodygroups" )
 {
@@ -310,7 +310,7 @@ LUA_BINDING_BEGIN( CBaseAnimating, GetBodyGroupCount, "class", "Get the number o
 
     return 1;
 }
-LUA_BINDING_END( "number", "The number of bodygroups" )
+LUA_BINDING_END( "integer", "The number of bodygroups" )
 
 LUA_BINDING_BEGIN( CBaseAnimating, GetBodyGroupName, "class", "Get the bodygroup name by the bodygroup id" )
 {
@@ -323,7 +323,7 @@ LUA_BINDING_BEGIN( CBaseAnimating, GetBodyGroupName, "class", "Get the bodygroup
 }
 LUA_BINDING_END( "string", "The bodygroup name" )
 
-LUA_BINDING_BEGIN( CBaseAnimating, GetNumBodyGroups, "class", "Get the number of bodygroups" )
+LUA_BINDING_BEGIN( CBaseAnimating, GetBodyGroupsCount, "class", "Get the number of bodygroups" )
 {
     lua_CBaseAnimating *pAnimating = LUA_BINDING_ARGUMENT( luaL_checkanimating, 1, "entity" );
 
@@ -331,7 +331,7 @@ LUA_BINDING_BEGIN( CBaseAnimating, GetNumBodyGroups, "class", "Get the number of
 
     return 1;
 }
-LUA_BINDING_END( "number", "The number of bodygroups" )
+LUA_BINDING_END( "integer", "The number of bodygroups this model has" )
 
 LUA_BINDING_BEGIN( CBaseAnimating, GetSequenceName, "class", "Get the sequence name." )
 {
@@ -389,7 +389,7 @@ LUA_BINDING_BEGIN( CBaseAnimating, GetSequenceActivity, "class", "Get the sequen
 
     return 1;
 }
-LUA_BINDING_END( "number", "The sequence activity" )
+LUA_BINDING_END( "enumeration/ACTIVITY", "The sequence activity" )
 
 LUA_BINDING_BEGIN( CBaseAnimating, GetSequence, "class", "Get the sequence." )
 {
@@ -399,7 +399,7 @@ LUA_BINDING_BEGIN( CBaseAnimating, GetSequence, "class", "Get the sequence." )
 
     return 1;
 }
-LUA_BINDING_END( "number", "The sequence" )
+LUA_BINDING_END( "integer", "The sequence" )
 
 LUA_BINDING_BEGIN( CBaseAnimating, GetPoseParameter, "class", "Get the pose parameter." )
 {
@@ -516,7 +516,7 @@ LUA_BINDING_BEGIN( CBaseAnimating, LookupActivity, "class", "Looks up an activit
 
     return 1;
 }
-LUA_BINDING_END( "integer|ACT", "The activity" )
+LUA_BINDING_END( "enumeration/ACTIVITY", "The activity" )
 
 LUA_BINDING_BEGIN( CBaseAnimating, LookupAttachment, "class", "Lookup the attachment." )
 {
@@ -527,7 +527,7 @@ LUA_BINDING_BEGIN( CBaseAnimating, LookupAttachment, "class", "Lookup the attach
 
     return 1;
 }
-LUA_BINDING_END( "number", "The attachment" )
+LUA_BINDING_END( "integer", "The attachment" )
 
 LUA_BINDING_BEGIN( CBaseAnimating, LookupBone, "class", "Lookup the bone." )
 {
@@ -538,7 +538,7 @@ LUA_BINDING_BEGIN( CBaseAnimating, LookupBone, "class", "Lookup the bone." )
 
     return 1;
 }
-LUA_BINDING_END( "number", "The bone" )
+LUA_BINDING_END( "integer", "The bone" )
 
 LUA_BINDING_BEGIN( CBaseAnimating, LookupPoseParameter, "class", "Lookup the pose parameter." )
 {
@@ -549,7 +549,7 @@ LUA_BINDING_BEGIN( CBaseAnimating, LookupPoseParameter, "class", "Lookup the pos
 
     return 1;
 }
-LUA_BINDING_END( "number", "The pose parameter" )
+LUA_BINDING_END( "integer", "The pose parameter" )
 
 LUA_BINDING_BEGIN( CBaseAnimating, LookupSequence, "class", "Lookup the sequence." )
 {
@@ -560,7 +560,7 @@ LUA_BINDING_BEGIN( CBaseAnimating, LookupSequence, "class", "Lookup the sequence
 
     return 1;
 }
-LUA_BINDING_END( "number", "The sequence" )
+LUA_BINDING_END( "integer", "The sequence" )
 
 LUA_BINDING_BEGIN( CBaseAnimating, ResetSequence, "class", "Reset the sequence." )
 {
@@ -610,7 +610,7 @@ LUA_BINDING_BEGIN( CBaseAnimating, SelectWeightedSequence, "class", "Select the 
 
     return 1;
 }
-LUA_BINDING_END( "number", "The weighted sequence" )
+LUA_BINDING_END( "integer", "The weighted sequence" )
 
 LUA_BINDING_BEGIN( CBaseAnimating, SequenceDuration, "class", "Sequence duration." )
 {
@@ -652,7 +652,7 @@ LUA_BINDING_BEGIN( CBaseAnimating, SetBoneController, "class", "Set the value fo
 
     return 1;
 }
-LUA_BINDING_END( "number", "The bone controller" )
+LUA_BINDING_END( "number", "The bone controller value, clamped between acceptable values" )
 
 LUA_BINDING_BEGIN( CBaseAnimating, SetCycle, "class", "Set the cycle." )
 {
@@ -839,7 +839,7 @@ LUA_BINDING_BEGIN( CBaseAnimating, GetFlexCount, "class", "Get the number of fle
 
     return 1;
 }
-LUA_BINDING_END( "number", "The number of flex controllers" )
+LUA_BINDING_END( "integer", "The number of flex controllers" )
 
 LUA_BINDING_BEGIN( CBaseAnimating, GetFlexName, "class", "Get the flex controller name by the flex controller index" )
 {

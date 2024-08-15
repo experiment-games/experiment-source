@@ -19,9 +19,9 @@ lua:
   returns:
     - type: boolean
       description: "Whether the operation was successful"
-    - type: vector
+    - type: Vector
       description: "The origin"
-    - type: angle
+    - type: Angle
       description: "The angles"
 ---
 

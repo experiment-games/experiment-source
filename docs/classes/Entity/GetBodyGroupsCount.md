@@ -1,6 +1,6 @@
 ---
 template: lua-class-function.html
-title: GetNumBodyGroups
+title: GetBodyGroupsCount
 icon: lua-shared
 tags:
   - lua
@@ -9,16 +9,16 @@ tags:
   - needs-example
 lua:
   library: Entity
-  function: GetNumBodyGroups
+  function: GetBodyGroupsCount
   realm: shared
   description: "Get the number of bodygroups"
   
   
   returns:
-    - type: number
-      description: "The number of bodygroups"
+    - type: integer
+      description: "The number of bodygroups this model has"
 ---
 
 <div class="lua__search__keywords">
-Entity:GetNumBodyGroups &#x2013; Get the number of bodygroups
+Entity:GetBodyGroupsCount &#x2013; Get the number of bodygroups
 </div>

@@ -89,10 +89,10 @@ LUA_BINDING_END( "Angle", "The angles (local space)" )
 LUA_BINDING_BEGIN( MoveData, GetButtons, "class", "Gets the buttons" )
 {
     lua_CMoveData *moveData = LUA_BINDING_ARGUMENT( luaL_checkmovedata, 1, "moveData" );
-    lua_pushnumber( L, moveData->m_nButtons );
+    lua_pushinteger( L, moveData->m_nButtons );
     return 1;
 }
-LUA_BINDING_END( "number", "The buttons" )
+LUA_BINDING_END( "integer", "Bitmask of the buttons pressed" )
 
 LUA_BINDING_BEGIN( MoveData, GetConstraintCenter, "class", "Gets the constraint center" )
 {
@@ -161,10 +161,10 @@ LUA_BINDING_END( "number", "The forward speed" )
 LUA_BINDING_BEGIN( MoveData, GetImpulseCommand, "class", "Gets the impulse command" )
 {
     lua_CMoveData *moveData = LUA_BINDING_ARGUMENT( luaL_checkmovedata, 1, "moveData" );
-    lua_pushnumber( L, moveData->m_nImpulseCommand );
+    lua_pushinteger( L, moveData->m_nImpulseCommand );
     return 1;
 }
-LUA_BINDING_END( "number", "The impulse command" )
+LUA_BINDING_END( "integer", "The impulse command" )
 
 LUA_BINDING_BEGIN( MoveData, GetMaxClientSpeed, "class", "Gets the max client speed" )
 {
@@ -201,10 +201,10 @@ LUA_BINDING_END( "Angle", "The old angles" )
 LUA_BINDING_BEGIN( MoveData, GetOldButtons, "class", "Gets the old buttons" )
 {
     lua_CMoveData *moveData = LUA_BINDING_ARGUMENT( luaL_checkmovedata, 1, "moveData" );
-    lua_pushnumber( L, moveData->m_nOldButtons );
+    lua_pushinteger( L, moveData->m_nOldButtons );
     return 1;
 }
-LUA_BINDING_END( "number", "The old buttons" )
+LUA_BINDING_END( "integer", "Bitmask of the old buttons" )
 
 LUA_BINDING_BEGIN( MoveData, GetOrigin, "class", "Gets the origin" )
 {

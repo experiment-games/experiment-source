@@ -17,7 +17,7 @@ lua:
     - name: "point"
       type: Vector
   returns:
-    - type: number
+    - type: enumeration/SKYBOX_VISIBILITY
       description: "The skybox visibility."
 ---
 

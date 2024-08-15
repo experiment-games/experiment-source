@@ -167,7 +167,7 @@ LUA_BINDING_BEGIN( Player, GetAmmoCount, "class", "Get the player's ammo count."
 
     return 1;
 }
-LUA_BINDING_END( "number", "The player's ammo count." )
+LUA_BINDING_END( "integer", "The player's ammo count." )
 
 // TODO: Is this correct? Is AutoaimVector the same as AimVector in gmod?
 LUA_BINDING_BEGIN( Player, GetAimVector, "class", "Get the player's autoaim vector." )
@@ -185,7 +185,7 @@ LUA_BINDING_BEGIN( Player, GetBonusChallenge, "class", "Get the player's bonus c
     lua_pushinteger( L, player->GetBonusChallenge() );
     return 1;
 }
-LUA_BINDING_END( "number", "The player's bonus challenge." )
+LUA_BINDING_END( "integer", "The player's bonus challenge." )
 
 LUA_BINDING_BEGIN( Player, GetBonusProgress, "class", "Get the player's bonus progress." )
 {
@@ -193,7 +193,7 @@ LUA_BINDING_BEGIN( Player, GetBonusProgress, "class", "Get the player's bonus pr
     lua_pushinteger( L, player->GetBonusProgress() );
     return 1;
 }
-LUA_BINDING_END( "number", "The player's bonus progress." )
+LUA_BINDING_END( "integer", "The player's bonus progress." )
 
 LUA_BINDING_BEGIN( Player, GetDeathTime, "class", "Get the player's death time." )
 {
@@ -209,7 +209,7 @@ LUA_BINDING_BEGIN( Player, GetDefaultFov, "class", "Get the player's default FOV
     lua_pushinteger( L, player->GetDefaultFOV() );
     return 1;
 }
-LUA_BINDING_END( "number", "The player's default FOV." )
+LUA_BINDING_END( "integer", "The player's default FOV." )
 
 // static int CBasePlayer_GetEfNoInterpParity( lua_State *L )
 //{
@@ -263,7 +263,7 @@ LUA_BINDING_BEGIN( Player, GetImpulse, "class", "Get the player's impulse." )
     lua_pushinteger( L, player->GetImpulse() );
     return 1;
 }
-LUA_BINDING_END( "number", "The player's impulse." )
+LUA_BINDING_END( "integer", "The player's impulse." )
 
 LUA_BINDING_BEGIN( Player, GetLaggedMovementValue, "class", "Get the player's lagged movement value." )
 {
@@ -295,7 +295,7 @@ LUA_BINDING_BEGIN( Player, GetObserverMode, "class", "Get the player's observer 
     lua_pushinteger( L, player->GetObserverMode() );
     return 1;
 }
-LUA_BINDING_END( "number", "The player's observer mode." )
+LUA_BINDING_END( "enumeration/OBSERVER_MODE", "The player's observer mode." )
 
 LUA_BINDING_BEGIN( Player, GetObserverTarget, "class", "Get the player's observer target." )
 {
@@ -311,7 +311,7 @@ LUA_BINDING_END( "Entity", "The player's observer target." )
 //    lua_pushinteger( L, lua_CBasePlayer::GetOffset_m_Local() );
 //    return 1;
 //}
-// LUA_BINDING_END( "number", "The offset of m_Local." )
+// LUA_BINDING_END( "integer", "The offset of m_Local." )
 
 LUA_BINDING_BEGIN( Player, GetPlayerLocalData, "class", "Get the player's local data." )
 {
@@ -487,7 +487,7 @@ LUA_BINDING_BEGIN( Player, GetUserId, "class", "Get the player's user ID." )
     lua_pushinteger( L, player->GetUserID() );
     return 1;
 }
-LUA_BINDING_END( "number", "The player's user ID." )
+LUA_BINDING_END( "integer", "The player's user ID." )
 
 LUA_BINDING_BEGIN( Player, GetVehicleEntity, "class", "Get the player's vehicle entity." )
 {
@@ -522,7 +522,7 @@ LUA_BINDING_END( "Entity", "The player's view entity." )
 LUA_BINDING_BEGIN( Player, GetViewModel, "class", "Get the player's view model." )
 {
     lua_CBasePlayer *player = LUA_BINDING_ARGUMENT( luaL_checkplayer, 1, "player" );
-    CBaseEntity::PushLuaInstanceSafe( L, player->GetViewModel( ( int )LUA_BINDING_ARGUMENT_WITH_DEFAULT( luaL_optnumber, 2, 0, "number" ) ) );
+    CBaseEntity::PushLuaInstanceSafe( L, player->GetViewModel( ( int )LUA_BINDING_ARGUMENT_WITH_DEFAULT( luaL_optnumber, 2, 0, "viewModelIndex" ) ) );
     return 1;
 }
 LUA_BINDING_END( "Entity", "The player's view model." )
@@ -1127,14 +1127,14 @@ LUA_BINDING_BEGIN( Player, TranslateWeaponActivity, "class", "Translate a weapon
     lua_pushinteger( L, LUA_BINDING_ARGUMENT( luaL_checkplayer, 1, "player" )->Weapon_TranslateActivity( activity, NULL ) );
     return 1;
 }
-LUA_BINDING_END( "number", "The translated activity." )
+LUA_BINDING_END( "enumeration/ACTIVITY", "The translated activity." )
 
 LUA_BINDING_BEGIN( Player, WeaponCount, "class", "Get the player's weapon count." )
 {
     lua_pushinteger( L, LUA_BINDING_ARGUMENT( luaL_checkplayer, 1, "player" )->WeaponCount() );
     return 1;
 }
-LUA_BINDING_END( "number", "The player's weapon count." )
+LUA_BINDING_END( "integer", "The player's weapon count." )
 
 LUA_BINDING_BEGIN( Player, GetAccountId, "class", "Get the player's account ID." )
 {
@@ -1143,7 +1143,7 @@ LUA_BINDING_BEGIN( Player, GetAccountId, "class", "Get the player's account ID."
     lua_pushinteger( L, steamID.GetAccountID() );
     return 1;
 }
-LUA_BINDING_END( "number", "The player's account ID." )
+LUA_BINDING_END( "integer", "The player's account ID." )
 
 LUA_BINDING_BEGIN( Player, GetSteamId, "class", "Get the player's Steam ID." )
 {
@@ -1174,7 +1174,7 @@ LUA_BINDING_BEGIN( Player, GetUniqueId, "class", "Get the player's unique ID." )
     lua_pushinteger( L, ( lua_Integer )player->GetUniqueID() );
     return 1;
 }
-LUA_BINDING_END( "number", "The player's unique ID." )
+LUA_BINDING_END( "integer", "The player's unique ID." )
 
 LUA_BINDING_BEGIN( Player, __eq, "class", "Check if two players are equal." )
 {

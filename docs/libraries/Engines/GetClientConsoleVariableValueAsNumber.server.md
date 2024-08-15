@@ -23,7 +23,7 @@ lua:
       - name: "conVarName"
         type: string
   returns:
-    - type: number
+    - type: integer
       description: "The client's ConsoleVariable value as a number."
 ---
 

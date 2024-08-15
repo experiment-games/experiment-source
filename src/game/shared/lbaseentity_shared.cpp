@@ -148,14 +148,14 @@ LUA_BINDING_BEGIN( Entity, GetBlocksLineOfSight, "class", "Whether this entity b
 }
 LUA_BINDING_END( "boolean", "True if the entity blocks line of sight, false otherwise." )
 
-LUA_BINDING_BEGIN( Entity, GetBloodColorType, "class", "Blood type, e.g: DONT_BLEED = -1, BLOOD_COLOR_RED = 0, BLOOD_COLOR_YELLOW, BLOOD_COLOR_GREEN, BLOOD_COLOR_MECH (TODO: Expose these enums)." )
+LUA_BINDING_BEGIN( Entity, GetBloodColorType, "class", "Blood type." )
 {
     lua_CBaseEntity *pEntity = LUA_BINDING_ARGUMENT( luaL_checkentity, 1, "entity" );
 
     lua_pushinteger( L, pEntity->BloodColor() );
     return 1;
 }
-LUA_BINDING_END( "number", "The blood type." )
+LUA_BINDING_END( "enumeration/BLOOD_COLOR", "The blood type." )
 
 LUA_BINDING_BEGIN( Entity, GetBoundingRadius, "class", "Gets the bounding radius." )
 {
@@ -252,7 +252,7 @@ LUA_BINDING_BEGIN( Entity, ComputeWorldSpaceSurroundingBox, "class", "Compute wo
     lua_pushvector( L, vMax );
     return 2;
 }
-LUA_BINDING_END( "Vector", "The minimum vector.", "vector", "The maximum vector." )
+LUA_BINDING_END( "Vector", "The minimum vector.", "Vector", "The maximum vector." )
 
 LUA_BINDING_BEGIN( Entity, CreateDataObject, "class", "Create data object." )
 {
@@ -441,7 +441,7 @@ LUA_BINDING_BEGIN( Entity, GetEntityIndex, "class", "Get entity index." )
     lua_pushinteger( L, pEntity->entindex() );
     return 1;
 }
-LUA_BINDING_END( "number", "The entity index." )
+LUA_BINDING_END( "integer", "The entity index." )
 
 LUA_BINDING_BEGIN( Entity, EntityToWorldSpace, "class", "Entity to world space." )
 {
@@ -631,7 +631,7 @@ LUA_BINDING_BEGIN( Entity, GetCollisionGroup, "class", "Get collision group." )
     lua_pushinteger( L, pEntity->GetCollisionGroup() );
     return 1;
 }
-LUA_BINDING_END( "number", "The collision group." )
+LUA_BINDING_END( "enumeration/COLLISION_GROUP", "The collision group." )
 
 LUA_BINDING_BEGIN( Entity, GetDataObject, "class", "Get data object." )
 {
@@ -675,7 +675,7 @@ LUA_BINDING_BEGIN( Entity, GetEffects, "class", "Get effects." )
     lua_pushinteger( L, pEntity->GetEffects() );
     return 1;
 }
-LUA_BINDING_END( "number", "The effects." )
+LUA_BINDING_END( "integer", "The ENTITY_EFFECT flags." )
 
 LUA_BINDING_BEGIN( Entity, GetEntityFlags, "class", "Get Entity Flags." )
 {
@@ -684,7 +684,7 @@ LUA_BINDING_BEGIN( Entity, GetEntityFlags, "class", "Get Entity Flags." )
     lua_pushinteger( L, pEntity->GetEFlags() );
     return 1;
 }
-LUA_BINDING_END( "number", "The Entity Flags." )
+LUA_BINDING_END( "integer", "The ENTITY_FLAG flags." )
 
 LUA_BINDING_BEGIN( Entity, GetElasticity, "class", "Get elasticity." )
 {
@@ -702,7 +702,7 @@ LUA_BINDING_BEGIN( Entity, GetFirstThinkTick, "class", "Get first think tick." )
     lua_pushinteger( L, pEntity->GetFirstThinkTick() );
     return 1;
 }
-LUA_BINDING_END( "number", "The first think tick." )
+LUA_BINDING_END( "integer", "The first think tick." )
 
 LUA_BINDING_BEGIN( Entity, GetFlags, "class", "Get flags." )
 {
@@ -711,7 +711,7 @@ LUA_BINDING_BEGIN( Entity, GetFlags, "class", "Get flags." )
     lua_pushinteger( L, pEntity->GetFlags() );
     return 1;
 }
-LUA_BINDING_END( "number", "The flags." )
+LUA_BINDING_END( "integer", "The flags." )
 
 LUA_BINDING_BEGIN( Entity, GetFollowedEntity, "class", "Get followed entity." )
 {
@@ -756,7 +756,7 @@ LUA_BINDING_BEGIN( Entity, GetHealth, "class", "Get health." )
     lua_pushinteger( L, pEntity->GetHealth() );
     return 1;
 }
-LUA_BINDING_END( "number", "The health." )
+LUA_BINDING_END( "integer", "The health." )
 
 LUA_BINDING_BEGIN( Entity, GetKeyValue, "class", "Get key value (the value is limited to 256 bytes)." )
 {
@@ -790,7 +790,7 @@ LUA_BINDING_BEGIN( Entity, GetLastThinkTick, "class", "Get last think tick." )
     lua_pushinteger( L, pEntity->GetLastThinkTick( pszName ) );
     return 1;
 }
-LUA_BINDING_END( "number", "The last think tick." )
+LUA_BINDING_END( "integer", "The last think tick." )
 
 LUA_BINDING_BEGIN( Entity, GetLocalAngles, "class", "Get local angles." )
 {
@@ -840,7 +840,7 @@ LUA_BINDING_BEGIN( Entity, GetMaxHealth, "class", "Get max health." )
     lua_pushinteger( L, pEntity->GetMaxHealth() );
     return 1;
 }
-LUA_BINDING_END( "number", "The max health." )
+LUA_BINDING_END( "integer", "The max health." )
 
 LUA_BINDING_BEGIN( Entity, GetModelBounds, "class", "Get model bounds." )
 {
@@ -853,7 +853,7 @@ LUA_BINDING_BEGIN( Entity, GetModelBounds, "class", "Get model bounds." )
 
     return 2;
 }
-LUA_BINDING_END( "Vector", "The minimum bounds.", "vector", "The maximum bounds." )
+LUA_BINDING_END( "Vector", "The minimum bounds.", "Vector", "The maximum bounds." )
 
 LUA_BINDING_BEGIN( Entity, GetModelIndex, "class", "Get model index." )
 {
@@ -862,7 +862,7 @@ LUA_BINDING_BEGIN( Entity, GetModelIndex, "class", "Get model index." )
     lua_pushinteger( L, pEntity->GetModelIndex() );
     return 1;
 }
-LUA_BINDING_END( "number", "The model index." )
+LUA_BINDING_END( "integer", "The model index." )
 
 LUA_BINDING_BEGIN( Entity, GetMoveParent, "class", "Get move parent." )
 {
@@ -880,7 +880,7 @@ LUA_BINDING_BEGIN( Entity, GetMoveType, "class", "Get move type." )
     lua_pushinteger( L, ( MoveType_t )pEntity->GetMoveType() );
     return 1;
 }
-LUA_BINDING_END( "number", "The move type." )
+LUA_BINDING_END( "enumeration/MOVE_TYPE", "The move type." )
 
 LUA_BINDING_BEGIN( Entity, GetOBBCenter, "class", "Get OBB center." )
 {
@@ -970,7 +970,7 @@ LUA_BINDING_BEGIN( Entity, GetPredictionRandomSeed, "class|static", "Get predict
     lua_pushinteger( L, CBaseEntity::GetPredictionRandomSeed() );
     return 1;
 }
-LUA_BINDING_END( "number", "The prediction random seed." )
+LUA_BINDING_END( "integer", "The prediction random seed." )
 
 LUA_BINDING_BEGIN( Entity, GetRefTable, "class", "Get reference table." )
 {
@@ -1016,7 +1016,7 @@ LUA_BINDING_BEGIN( Entity, GetSkinCount, "class", "Get skin count." )
 
     return 1;
 }
-LUA_BINDING_END( "number", "The skin count." )
+LUA_BINDING_END( "integer", "The skin count." )
 
 LUA_BINDING_BEGIN( Entity, GetSolid, "class", "Get solid." )
 {
@@ -1025,7 +1025,7 @@ LUA_BINDING_BEGIN( Entity, GetSolid, "class", "Get solid." )
     lua_pushinteger( L, pEntity->GetSolid() );
     return 1;
 }
-LUA_BINDING_END( "number", "The solid." )
+LUA_BINDING_END( "integer", "The solid." )
 
 LUA_BINDING_BEGIN( Entity, GetSolidFlags, "class", "Get solid flags." )
 {
@@ -1034,7 +1034,7 @@ LUA_BINDING_BEGIN( Entity, GetSolidFlags, "class", "Get solid flags." )
     lua_pushinteger( L, pEntity->GetSolidFlags() );
     return 1;
 }
-LUA_BINDING_END( "number", "The solid flags." )
+LUA_BINDING_END( "integer", "The SOLID_FLAG flags." )
 
 LUA_BINDING_BEGIN( Entity, GetSoundDuration, "class|static", "Get sound duration." )
 {
@@ -1053,7 +1053,7 @@ LUA_BINDING_BEGIN( Entity, GetSoundSourceIndex, "class", "Get sound source index
     lua_pushinteger( L, pEntity->GetSoundSourceIndex() );
     return 1;
 }
-LUA_BINDING_END( "number", "The sound source index." )
+LUA_BINDING_END( "integer", "The sound source index." )
 
 LUA_BINDING_BEGIN( Entity, GetTeamNumber, "class", "Get team number." )
 {
@@ -1062,7 +1062,7 @@ LUA_BINDING_BEGIN( Entity, GetTeamNumber, "class", "Get team number." )
     lua_pushinteger( L, pEntity->GetTeamNumber() );
     return 1;
 }
-LUA_BINDING_END( "number", "The team number." )
+LUA_BINDING_END( "integer", "The team number." )
 
 LUA_BINDING_BEGIN( Entity, GetTextureFrameIndex, "class", "Get texture frame index." )
 {
@@ -1071,7 +1071,7 @@ LUA_BINDING_BEGIN( Entity, GetTextureFrameIndex, "class", "Get texture frame ind
     lua_pushinteger( L, pEntity->GetTextureFrameIndex() );
     return 1;
 }
-LUA_BINDING_END( "number", "The texture frame index." )
+LUA_BINDING_END( "integer", "The texture frame index." )
 
 LUA_BINDING_BEGIN( Entity, GetTouchTrace, "class|static", "Get touch trace most recently relevant." )
 {
@@ -1088,7 +1088,7 @@ LUA_BINDING_BEGIN( Entity, GetTracerAttachment, "class", "Get tracer attachment.
     lua_pushinteger( L, pEntity->GetTracerAttachment() );
     return 1;
 }
-LUA_BINDING_END( "number", "The tracer attachment." )
+LUA_BINDING_END( "integer", "The tracer attachment." )
 
 LUA_BINDING_BEGIN( Entity, GetTracerType, "class", "Get tracer type." )
 {
@@ -1111,7 +1111,7 @@ LUA_BINDING_BEGIN( Entity, GetVectors, "class", "Get vectors." )
 
     return 3;
 }
-LUA_BINDING_END( "Vector", "The forward vector.", "vector", "The right vector.", "vector", "The up vector." )
+LUA_BINDING_END( "Vector", "The forward vector.", "Vector", "The right vector.", "Vector", "The up vector." )
 
 LUA_BINDING_BEGIN( Entity, GetViewOffset, "class", "Get view offset." )
 {
@@ -1131,7 +1131,7 @@ LUA_BINDING_BEGIN( Entity, GetWaterLevel, "class", "Get water level enum." )
     lua_pushinteger( L, pEntity->GetWaterLevel() );
     return 1;
 }
-LUA_BINDING_END( "number", "The water level." )
+LUA_BINDING_END( "integer", "The water level." )
 
 LUA_BINDING_BEGIN( Entity, GetWaterType, "class", "Get water type." )
 {
@@ -1140,7 +1140,7 @@ LUA_BINDING_BEGIN( Entity, GetWaterType, "class", "Get water type." )
     lua_pushinteger( L, pEntity->GetWaterType() );
     return 1;
 }
-LUA_BINDING_END( "number", "The water type." )
+LUA_BINDING_END( "integer", "The water type flags." )
 
 LUA_BINDING_BEGIN( Entity, HasMatchingRootParent, "class", "Checks if the given entity has a matching root parent." )
 {
@@ -1538,7 +1538,7 @@ LUA_BINDING_BEGIN( Entity, ObjectCapabilities, "class", "Object capabilities for
     lua_pushinteger( L, pEntity->ObjectCaps() );
     return 1;
 }
-LUA_BINDING_END( "number", "The object caps." )
+LUA_BINDING_END( "integer", "The object y flags." )
 
 LUA_BINDING_BEGIN( Entity, OnRestore, "class", "On restore." )
 {
@@ -1652,7 +1652,7 @@ LUA_BINDING_BEGIN( Entity, PhysicsSolidMaskForEntity, "class", "Physics solid ma
     lua_pushinteger( L, pEntity->PhysicsSolidMaskForEntity() );
     return 1;
 }
-LUA_BINDING_END( "number", "The physics solid mask for entity." )
+LUA_BINDING_END( "integer", "The physics solid mask for entity." )
 
 LUA_BINDING_BEGIN( Entity, PhysicsStartGroundContact, "class", "Physics start ground contact." )
 {
@@ -1680,7 +1680,7 @@ LUA_BINDING_BEGIN( Entity, PrecacheModel, "class|static", "Precache model." )
     lua_pushinteger( L, CBaseEntity::PrecacheModel( pszModel ) );
     return 1;
 }
-LUA_BINDING_END( "number", "The precached model." )
+LUA_BINDING_END( "integer", "The precached model." )
 
 LUA_BINDING_BEGIN( Entity, PrecacheScriptSound, "class|static", "Precache script sound." )
 {
@@ -1689,7 +1689,7 @@ LUA_BINDING_BEGIN( Entity, PrecacheScriptSound, "class|static", "Precache script
     lua_pushinteger( L, CBaseEntity::PrecacheScriptSound( pszSound ) );
     return 1;
 }
-LUA_BINDING_END( "number", "The precached script sound." )
+LUA_BINDING_END( "integer", "The precached script sound." )
 
 LUA_BINDING_BEGIN( Entity, PrecacheSound, "class|static", "Precache sound." )
 {
@@ -1737,7 +1737,7 @@ LUA_BINDING_BEGIN( Entity, RegisterThinkContext, "class", "Register think contex
     lua_pushinteger( L, pEntity->RegisterThinkContext( pszContext ) );
     return 1;
 }
-LUA_BINDING_END( "number", "The registered think context." )
+LUA_BINDING_END( "integer", "The registered think context." )
 
 LUA_BINDING_BEGIN( Entity, Remove, "class", "Remove." )
 {
@@ -2836,39 +2836,6 @@ LUA_BINDING_BEGIN( Entity, __tostring, "class", "Metamethod that is called when 
 }
 LUA_BINDING_END()
 
-LUA_REGISTRATION_INIT( _G )
-
-#ifndef CLIENT_DLL
-LUA_BINDING_BEGIN( _G, CreateEntityByName, "library", "Creates an entity by the given class name", "server" )
-{
-    const char *pszClassName = LUA_BINDING_ARGUMENT( luaL_checkstring, 1, "className" );
-    CBaseEntity *pEntity = CreateEntityByName( pszClassName );
-
-    if ( dynamic_cast< CBaseScripted * >( pEntity ) != NULL )
-        DispatchSpawn( pEntity );
-
-    CBaseEntity::PushLuaInstanceSafe( L, pEntity );
-    return 1;
-}
-LUA_BINDING_END( "Entity", "The created entity" )
-#endif
-
-LUA_BINDING_BEGIN( _G, Entity, "library", "Gets the entity by its entity index" )
-{
-    int iEntity = LUA_BINDING_ARGUMENT( luaL_checknumber, 1, "entityIndex" );
-    CBaseEntity *ent = CBaseEntity::Instance( iEntity );
-
-    if ( !ent )
-    {
-        CBaseEntity::PushLuaInstanceSafe( L, NULL );
-        return 1;
-    }
-
-    CBaseEntity::PushLuaInstanceSafe( L, ent );
-    return 1;
-}
-LUA_BINDING_END( "Entity", "The found entity or NULL entity" )
-
 /*
 ** Open CBaseEntity object
 */
@@ -2880,8 +2847,6 @@ LUALIB_API int luaopen_CBaseEntity_shared( lua_State *L )
     lua_setfield( L, -2, "__type" ); /* metatable.__type = "Entity" */
 
     LUA_REGISTRATION_COMMIT( Entity );
-
-    LUA_REGISTRATION_COMMIT_LIBRARY( _G );
 
     lua_pop( L, 1 );
     CBaseEntity::PushLuaInstanceSafe( L, NULL );

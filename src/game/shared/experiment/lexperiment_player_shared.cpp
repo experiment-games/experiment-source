@@ -145,7 +145,7 @@ LUA_BINDING_BEGIN( CExperimentPlayer, GetPlayerModelType, "class", "Get the play
     lua_pushinteger( L, player->GetPlayerModelType() );
     return 1;
 }
-LUA_BINDING_END( "number", "The player model type" )
+LUA_BINDING_END( "integer", "The player model type" )
 #endif
 
 // Experiment; We only let CBasePlayer determine equality, which should be fine since they're pointers to the same entity. Disabled:

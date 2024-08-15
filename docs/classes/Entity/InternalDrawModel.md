@@ -17,7 +17,7 @@ lua:
     - name: "flags"
       type: number
   returns:
-    - type: number
+    - type: integer
       description: "The resulting draw flag"
 ---
 

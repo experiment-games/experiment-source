@@ -17,7 +17,7 @@ lua:
     - name: "sequence"
       type: number
   returns:
-    - type: number
+    - type: enumeration/ACTIVITY
       description: "The sequence activity"
 ---
 

@@ -102,7 +102,7 @@ LUA_BINDING_BEGIN( TakeDamageInfo, GetAmmoType, "class", "Gets the ammo type" )
     lua_pushinteger( L, LUA_BINDING_ARGUMENT( luaL_checkdamageinfo, 1, "damageInfo" ).GetAmmoType() );
     return 1;
 }
-LUA_BINDING_END( "number", "The ammo type." )
+LUA_BINDING_END( "integer", "The ammo type." )
 
 LUA_BINDING_BEGIN( TakeDamageInfo, GetAttacker, "class", "Gets the attacker entity" )
 {

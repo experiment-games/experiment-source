@@ -124,11 +124,11 @@ LUA_BINDING_BEGIN( Engines, GetClientConsoleVariableValueAsNumber, "library", "G
 
     const char *conVarName = LUA_BINDING_ARGUMENT( luaL_checkstring, 2, "conVarName" );
 
-    lua_pushnumber( L, Q_atoi( engine->GetClientConVarValue( playerIndex, conVarName ) ) );
+    lua_pushinteger( L, Q_atoi( engine->GetClientConVarValue( playerIndex, conVarName ) ) );
 
     return 1;
 }
-LUA_BINDING_END( "number", "The client's ConsoleVariable value as a number." )
+LUA_BINDING_END( "integer", "The client's ConsoleVariable value as a number." )
 
 LUA_BINDING_BEGIN( Engines, GetEntityCount, "library", "Get the entity count." )
 {

@@ -17,7 +17,7 @@ lua:
     - name: "sequenceName"
       type: string
   returns:
-    - type: number
+    - type: integer
       description: "The sequence"
 ---
 

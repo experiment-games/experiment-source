@@ -1,6 +1,6 @@
 ---
 template: lua-library-function.html
-title: HSVToColor
+title: HsvToColor
 icon: lua-shared
 tags:
   - lua
@@ -8,8 +8,8 @@ tags:
   - needs-verification
   - needs-example
 lua:
-  library: _G
-  function: HSVToColor
+  library: Colors
+  function: HsvToColor
   realm: shared
   description: "Converts HSV to RGB."
   
@@ -21,10 +21,10 @@ lua:
     - name: "value"
       type: number
   returns:
-    - type: color
+    - type: Color
       description: "The converted color."
 ---
 
 <div class="lua__search__keywords">
-_G.HSVToColor &#x2013; Converts HSV to RGB.
+Colors.HsvToColor &#x2013; Converts HSV to RGB.
 </div>

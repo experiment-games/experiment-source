@@ -6,7 +6,7 @@ Include("includes/extensions/panel.lua")
 -- Lets create a panel and dock it to the right of the parent.
 local parent = Gui.Create("Frame")
 local parentWide, parentTall = 256, 256
-parent:SetBgColor(Color(255, 0, 0, 255))
+parent:SetBgColor(Colors.Create(255, 0, 0, 255))
 parent:SetSize(parentWide, parentTall)
 parent:SetPosition(50, 50)
 parent:SetTitle("Parent panel")
@@ -48,7 +48,7 @@ local bottomChild = Gui.Create("Panel", parent)
 bottomChild:SetDock(_E.DOCK_TYPE.BOTTOM)
 bottomChild:SetTall(childTall)
 bottomChild:SetDockPadding(dockPadding, dockPadding, dockPadding, dockPadding)
-bottomChild:SetBgColor(Color(0, 255, 0, 255))
+bottomChild:SetBgColor(Colors.Create(0, 255, 0, 255))
 
 local bottomAncestor = Gui.Create("Button", bottomChild)
 bottomAncestor:SetText("bottom BOTTOM")

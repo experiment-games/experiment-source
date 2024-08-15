@@ -15,7 +15,7 @@ lua:
   
   
   returns:
-    - type: integer|ShadowType_t
+    - type: enumeration/SHADOW_TYPE
       description: "The shadow cast type"
 ---
 

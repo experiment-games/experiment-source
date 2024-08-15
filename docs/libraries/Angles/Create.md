@@ -1,6 +1,6 @@
 ---
 template: lua-library-function.html
-title: Angle
+title: Create
 icon: lua-shared
 tags:
   - lua
@@ -8,8 +8,8 @@ tags:
   - needs-verification
   - needs-example
 lua:
-  library: _G
-  function: Angle
+  library: Angles
+  function: Create
   realm: shared
   description: "Creates a new angle."
   
@@ -36,5 +36,5 @@ lua:
 ---
 
 <div class="lua__search__keywords">
-_G.Angle &#x2013; Creates a new angle.
+Angles.Create &#x2013; Creates a new angle.
 </div>

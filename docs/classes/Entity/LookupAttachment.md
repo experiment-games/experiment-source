@@ -17,7 +17,7 @@ lua:
     - name: "attachmentName"
       type: string
   returns:
-    - type: number
+    - type: integer
       description: "The attachment"
 ---
 

@@ -1,0 +1,7 @@
+<span class="lua__type">
+    {% if type.startswith('enumeration/') %}
+    <a href="{{ config.site_url }}{{ type | replace('enumeration/', 'enumerations/') }}" class="lua__type__enum">{{ type | replace('enumeration/', '') }}</a>
+    {% else %}
+    <a href="{{ config.site_url }}general/types/{{ type }}">{{ type }}</a>
+    {% endif %}
+</span>

@@ -142,21 +142,21 @@ LUA_BINDING_BEGIN( Material, GetEnumerationID, "class", "Get enumeration ID." )
     lua_pushinteger( L, LUA_BINDING_ARGUMENT( luaL_checkmaterial, 1, "material" )->GetEnumerationID() );
     return 1;
 }
-LUA_BINDING_END( "number", "Enumeration ID." )
+LUA_BINDING_END( "integer", "Enumeration ID." )
 
 LUA_BINDING_BEGIN( Material, GetMappingHeight, "class", "Get mapping height." )
 {
     lua_pushinteger( L, LUA_BINDING_ARGUMENT( luaL_checkmaterial, 1, "material" )->GetMappingHeight() );
     return 1;
 }
-LUA_BINDING_END( "number", "Mapping height." )
+LUA_BINDING_END( "integer", "Mapping height." )
 
 LUA_BINDING_BEGIN( Material, GetMappingWidth, "class", "Get mapping width." )
 {
     lua_pushinteger( L, LUA_BINDING_ARGUMENT( luaL_checkmaterial, 1, "material" )->GetMappingWidth() );
     return 1;
 }
-LUA_BINDING_END( "number", "Mapping width." )
+LUA_BINDING_END( "integer", "Mapping width." )
 
 LUA_BINDING_BEGIN( Material, GetMaterialPage, "class", "Get material page." )
 {
@@ -178,7 +178,7 @@ LUA_BINDING_BEGIN( Material, GetMorphFormat, "class", "Get morph format." )
     lua_pushinteger( L, LUA_BINDING_ARGUMENT( luaL_checkmaterial, 1, "material" )->GetMorphFormat() );
     return 1;
 }
-LUA_BINDING_END( "number", "Morph format." )
+LUA_BINDING_END( "integer", "Morph format." )
 
 LUA_BINDING_BEGIN( Material, GetName, "class", "Get name of material." )
 {
@@ -192,14 +192,14 @@ LUA_BINDING_BEGIN( Material, GetAnimationFrameAmount, "class", "Get number of an
     lua_pushinteger( L, LUA_BINDING_ARGUMENT( luaL_checkmaterial, 1, "material" )->GetNumAnimationFrames() );
     return 1;
 }
-LUA_BINDING_END( "number", "Number of animation frames." )
+LUA_BINDING_END( "integer", "Number of animation frames." )
 
 LUA_BINDING_BEGIN( Material, GetPassAmount, "class", "Get number of passes." )
 {
     lua_pushinteger( L, LUA_BINDING_ARGUMENT( luaL_checkmaterial, 1, "material" )->GetNumPasses() );
     return 1;
 }
-LUA_BINDING_END( "number", "Number of passes." )
+LUA_BINDING_END( "integer", "Number of passes." )
 
 LUA_BINDING_BEGIN( Material, GetPropertyFlag, "class", "Get property flag." )
 {
@@ -261,7 +261,7 @@ LUA_BINDING_BEGIN( Material, GetInt, "class", "Get integer." )
 
     return 1;
 }
-LUA_BINDING_END( "number", "Integer value." )
+LUA_BINDING_END( "integer", "Integer value." )
 
 LUA_BINDING_BEGIN( Material, GetString, "class", "Get string." )
 {
@@ -361,7 +361,7 @@ LUA_BINDING_BEGIN( Material, GetTextureMemoryBytes, "class", "Get texture memory
     lua_pushinteger( L, LUA_BINDING_ARGUMENT( luaL_checkmaterial, 1, "material" )->GetTextureMemoryBytes() );
     return 1;
 }
-LUA_BINDING_END( "number", "Texture memory bytes." )
+LUA_BINDING_END( "integer", "Texture memory bytes." )
 
 LUA_BINDING_BEGIN( Material, HasProxy, "class", "Has proxy." )
 {

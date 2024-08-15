@@ -15,8 +15,8 @@ lua:
   
   
   returns:
-    - type: number
-      description: "The buttons"
+    - type: integer
+      description: "Bitmask of the buttons pressed"
 ---
 
 <div class="lua__search__keywords">

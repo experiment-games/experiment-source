@@ -62,7 +62,7 @@ LUA_BINDING_BEGIN( Weapon, ActivityOverride, "class", "Asks which Activity overr
     lua_pushboolean( L, bRequired );
     return 2;
 }
-LUA_BINDING_END( "integer", "Override activity ID.", "boolean", "Whether the activity is required." )
+LUA_BINDING_END( "enumeration/ACTIVITY", "Override activity ID.", "boolean", "Whether the activity is required." )
 
 LUA_BINDING_BEGIN( Weapon, AddViewKick, "class", "Add view kick." )
 {
@@ -245,7 +245,7 @@ LUA_BINDING_BEGIN( Weapon, GetActivity, "class", "Get activity." )
     lua_pushinteger( L, pWeapon->GetActivity() );
     return 1;
 }
-LUA_BINDING_END( "integer", "Activity ID." )
+LUA_BINDING_END( "enumeration/ACTIVITY", "Activity ID." )
 
 LUA_BINDING_BEGIN( Weapon, GetAnimPrefix, "class", "Get animation prefix." )
 {
@@ -311,7 +311,7 @@ LUA_BINDING_BEGIN( Weapon, GetDrawActivity, "class", "Get draw activity." )
     lua_pushinteger( L, pWeapon->GetDrawActivity() );
     return 1;
 }
-LUA_BINDING_END( "integer", "Draw activity ID." )
+LUA_BINDING_END( "enumeration/ACTIVITY", "Draw activity ID." )
 
 LUA_BINDING_BEGIN( Weapon, GetFireRate, "class", "Get fire rate." )
 {
@@ -327,7 +327,7 @@ LUA_BINDING_BEGIN( Weapon, GetIdealActivity, "class", "Get ideal activity." )
     lua_pushinteger( L, pWeapon->GetIdealActivity() );
     return 1;
 }
-LUA_BINDING_END( "integer", "Ideal activity ID." )
+LUA_BINDING_END( "enumeration/ACTIVITY", "Ideal activity ID." )
 
 LUA_BINDING_BEGIN( Weapon, GetIdealSequence, "class", "Get ideal sequence." )
 {

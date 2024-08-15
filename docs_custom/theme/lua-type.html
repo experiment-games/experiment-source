@@ -1,0 +1,44 @@
+{% extends "main.html" %}
+<!-- ---
+template: lua-type.html
+title: number
+tags:
+  - lua
+  - needs-verification
+lua:
+  type: number
+  isDefault: true
+---
+
+# `number` Type
+
+---
+
+<div class="lua__search__keywords">
+ACTIVATION_TYPE: ON_PRESSED_AND_RELEASED(0) ON_PRESSED(1) ON_RELEASED(2)
+</div>
+ -->
+{% block content %}
+<div class="lua">
+    <div class="lua__title">
+        <h1>
+            <span class="lua__type">{{ page.meta.lua.type }}</span> type
+        </h1>
+    </div>
+
+    {% if page.meta.lua.isDefault %}
+    <div class="admonition note">
+        <p class="admonition-title">This is a default lua type.</p>
+        <p>
+            This type is a default type in the lua language.
+            You can read more about it in the <a href="https://www.lua.org/manual/5.4/manual.html"
+                target="_blank">official lua documentation</a>.
+        </p>
+    </div>
+    {% endif %}
+
+    {% if page.content %}
+    {{ page.content }}
+    {% endif %}
+</div>
+{% endblock %}

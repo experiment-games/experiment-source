@@ -15,13 +15,13 @@ lua:
   
   
   returns:
-    - type: number
+    - type: integer
       description: "The red value."
-    - type: number
+    - type: integer
       description: "The green value."
-    - type: number
+    - type: integer
       description: "The blue value."
-    - type: number
+    - type: integer
       description: "The alpha value."
 ---
 

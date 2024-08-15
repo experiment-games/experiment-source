@@ -19,7 +19,7 @@ lua:
   returns:
     - type: Vector
       description: "The aim entity origin"
-    - type: angle
+    - type: Angle
       description: "The aim entity angles"
 ---
 

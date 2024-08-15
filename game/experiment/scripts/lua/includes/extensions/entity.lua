@@ -37,4 +37,3 @@ ENTITY_META.GetBodygroupName = ENTITY_META.GetBodyGroupName
 ENTITY_META.GetBodygroups = ENTITY_META.GetBodyGroups
 ENTITY_META.SetBodygroup = ENTITY_META.SetBodyGroup
 ENTITY_META.SetBodygroups = ENTITY_META.SetBodyGroups
-ENTITY_META.GetNumBodygroups = ENTITY_META.GetNumBodyGroups

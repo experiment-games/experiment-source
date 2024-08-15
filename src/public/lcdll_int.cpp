@@ -37,7 +37,7 @@ LUA_BINDING_BEGIN( Engines, CheckKeyTrapping, "library", "Check which key was la
     lua_pushinteger( L, code );
     return 1;
 }
-LUA_BINDING_END( "integer", "The key code being trapped." )
+LUA_BINDING_END( "enumeration/BUTTON", "The key code being trapped." )
 
 LUA_BINDING_BEGIN( Engines, StartKeyTrapMode, "library", "Start trapping a key." )
 {
@@ -143,18 +143,18 @@ LUA_BINDING_END()
 LUA_BINDING_BEGIN( Engines, GameLumpSize, "library", "Get the size of a game lump." )
 {
     int lumpId = LUA_BINDING_ARGUMENT( luaL_checknumber, 1, "lumpId" );
-    lua_pushnumber( L, engine->GameLumpSize( lumpId ) );
+    lua_pushinteger( L, engine->GameLumpSize( lumpId ) );
     return 1;
 }
-LUA_BINDING_END( "number", "The size of the game lump." )
+LUA_BINDING_END( "integer", "The size of the game lump." )
 
 LUA_BINDING_BEGIN( Engines, GameLumpVersion, "library", "Get the version of a game lump." )
 {
     int lumpId = LUA_BINDING_ARGUMENT( luaL_checknumber, 1, "lumpId" );
-    lua_pushnumber( L, engine->GameLumpVersion( lumpId ) );
+    lua_pushinteger( L, engine->GameLumpVersion( lumpId ) );
     return 1;
 }
-LUA_BINDING_END( "number", "The version of the game lump." )
+LUA_BINDING_END( "integer", "The version of the game lump." )
 
 LUA_BINDING_BEGIN( Engines, GetClientConsoleVariableValue, "library", "Get the value of a client console variable." )
 {
@@ -196,17 +196,17 @@ LUA_BINDING_END( "number", "The value of the client console variable as a number
 
 LUA_BINDING_BEGIN( Engines, GetDxSupportLevel, "library", "Get the DirectX support level." )
 {
-    lua_pushnumber( L, engine->GetDXSupportLevel() );
+    lua_pushinteger( L, engine->GetDXSupportLevel() );
     return 1;
 }
-LUA_BINDING_END( "number", "The DirectX support level." )
+LUA_BINDING_END( "integer", "The DirectX support level." )
 
 LUA_BINDING_BEGIN( Engines, GetEngineBuildNumber, "library", "Get the engine build number." )
 {
-    lua_pushnumber( L, engine->GetEngineBuildNumber() );
+    lua_pushinteger( L, ( lua_Integer )engine->GetEngineBuildNumber() );
     return 1;
 }
-LUA_BINDING_END( "number", "The engine build number." )
+LUA_BINDING_END( "integer", "The engine build number." )
 
 LUA_BINDING_BEGIN( Engines, GetGameDirectory, "library", "Get the game directory." )
 {
@@ -242,12 +242,12 @@ LUA_BINDING_BEGIN( Engines, GetLightForPointFast, "library", "Get the light for 
 }
 LUA_BINDING_END( "Vector", "The light for the point." )
 
-LUA_BINDING_BEGIN( Engines, GetLocalPlayer, "library", "Get the local player." )
+LUA_BINDING_BEGIN( Engines, GetLocalPlayerEntityIndex, "library", "Get the local player entity index." )
 {
-    lua_pushnumber( L, engine->GetLocalPlayer() );
+    lua_pushinteger( L, engine->GetLocalPlayer() );
     return 1;
 }
-LUA_BINDING_END( "number", "The local player." )
+LUA_BINDING_END( "integer", "The local player entity index." )
 
 LUA_BINDING_BEGIN( Engines, GetMainMenuBackgroundName, "library", "Get the main menu background name." )
 {
@@ -268,10 +268,10 @@ LUA_BINDING_END( "string", "The most recent save game." )
 LUA_BINDING_BEGIN( Engines, GetPlayerEntityIndexForUserId, "library", "Get the player entity number for a user ID." )
 {
     int userId = LUA_BINDING_ARGUMENT( luaL_checknumber, 1, "userId" );
-    lua_pushnumber( L, engine->GetPlayerForUserID( userId ) );
+    lua_pushinteger( L, engine->GetPlayerForUserID( userId ) );
     return 1;
 }
-LUA_BINDING_END( "number", "The player entity number for the user ID." )
+LUA_BINDING_END( "integer", "The player entity number for the user ID." )
 
 LUA_BINDING_BEGIN( Engines, GetPlayerInfo, "library", "Get the player information." )
 {
@@ -326,7 +326,7 @@ LUA_BINDING_BEGIN( Engines, GetScreenSize, "library", "Get the screen size." )
     lua_pushinteger( L, height );
     return 2;
 }
-LUA_BINDING_END( "number", "The screen width.", "number", "The screen height." )
+LUA_BINDING_END( "integer", "The screen width.", "integer", "The screen height." )
 
 LUA_BINDING_BEGIN( Engines, GetUiLanguage, "library", "Get the UI language." )
 {
@@ -451,7 +451,7 @@ LUA_BINDING_BEGIN( Engines, IsSkyboxVisibleFromPoint, "library", "Check if the s
     lua_pushinteger( L, engine->IsSkyboxVisibleFromPoint( point ) );
     return 1;
 }
-LUA_BINDING_END( "number", "The skybox visibility." )
+LUA_BINDING_END( "enumeration/SKYBOX_VISIBILITY", "The skybox visibility." )
 
 LUA_BINDING_BEGIN( Engines, IsTakingScreenshot, "library", "Check if a screenshot is being taken." )
 {
@@ -465,7 +465,7 @@ LUA_BINDING_BEGIN( Engines, LevelLeafCount, "library", "Get the level leaf count
     lua_pushinteger( L, engine->LevelLeafCount() );
     return 1;
 }
-LUA_BINDING_END( "number", "The level leaf count." )
+LUA_BINDING_END( "integer", "The level leaf count." )
 
 LUA_BINDING_BEGIN( Engines, LightStyleValue, "library", "Get the light style value." )
 {

@@ -253,7 +253,7 @@ LUA_BINDING_BEGIN( UserMessages, WriteBool, "library", "Writes a boolean.", "ser
     if ( !isMessageQueued )
         Warning( "[Lua] UserMessages.WriteBool called with no active message\n" );
 
-    queuedMessageBuffer.WriteOneBit( LUA_BINDING_ARGUMENT( lua_toboolean, 1, "bool" ) ? 1 : 0 );
+    queuedMessageBuffer.WriteOneBit( LUA_BINDING_ARGUMENT( lua_toboolean, 1, "boolean" ) ? 1 : 0 );
     return 0;
 }
 LUA_BINDING_END()

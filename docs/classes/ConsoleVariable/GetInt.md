@@ -15,7 +15,7 @@ lua:
   
   
   returns:
-    - type: number
+    - type: integer
       description: "Gets the value of the ConsoleVariable as an integer"
 ---
 

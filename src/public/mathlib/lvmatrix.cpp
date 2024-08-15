@@ -65,11 +65,11 @@ LUA_BINDING_END( "Matrix", "The converted 3x4 matrix." )
 // LUA_BINDING_BEGIN( Matrix, Base, "class", "Gets a pointer to the matrix." )
 //{
 //    lua_VMatrix matrix = LUA_BINDING_ARGUMENT( luaL_checkvmatrix, 1, "Matrix" );
-//    lua_pushnumber( L, *matrix.Base() );
+//    lua_pushinteger( L, *matrix.Base() );
 //
 //    return 1;
 //}
-// LUA_BINDING_END( "number", "A pointer to the matrix." )
+// LUA_BINDING_END( "integer", "A pointer to the matrix." )
 
 LUA_BINDING_BEGIN( Matrix, CopyFrom3x4, "class", "Copies a 3x4 matrix to a matrix." )
 {
@@ -91,7 +91,7 @@ LUA_BINDING_BEGIN( Matrix, GetBasisVectors, "class", "Gets the basis vectors of 
 
     return 3;
 }
-LUA_BINDING_END( "Vector", "The forward vector.", "vector", "The left vector.", "vector", "The up vector." )
+LUA_BINDING_END( "Vector", "The forward vector.", "Vector", "The left vector.", "Vector", "The up vector." )
 
 LUA_BINDING_BEGIN( Matrix, GetForward, "class", "Gets the forward vector of the matrix." )
 {
@@ -153,22 +153,25 @@ LUA_BINDING_BEGIN( Matrix, Init, "class", "Initializes the matrix." )
     if ( lua_gettop( L ) <= 2 )
         matrix.Init( LUA_BINDING_ARGUMENT( luaL_checkmatrix, 2, "Matrix3x4" ) );
     else
-        matrix.Init( LUA_BINDING_ARGUMENT( luaL_checknumber, 2, "number" ),
-                     LUA_BINDING_ARGUMENT( luaL_checknumber, 3, "number" ),
-                     LUA_BINDING_ARGUMENT( luaL_checknumber, 4, "number" ),
-                     LUA_BINDING_ARGUMENT( luaL_checknumber, 5, "number" ),
-                     LUA_BINDING_ARGUMENT( luaL_checknumber, 6, "number" ),
-                     LUA_BINDING_ARGUMENT( luaL_checknumber, 7, "number" ),
-                     LUA_BINDING_ARGUMENT( luaL_checknumber, 8, "number" ),
-                     LUA_BINDING_ARGUMENT( luaL_checknumber, 9, "number" ),
-                     LUA_BINDING_ARGUMENT( luaL_checknumber, 10, "number" ),
-                     LUA_BINDING_ARGUMENT( luaL_checknumber, 11, "number" ),
-                     LUA_BINDING_ARGUMENT( luaL_checknumber, 12, "number" ),
-                     LUA_BINDING_ARGUMENT( luaL_checknumber, 13, "number" ),
-                     LUA_BINDING_ARGUMENT( luaL_checknumber, 14, "number" ),
-                     LUA_BINDING_ARGUMENT( luaL_checknumber, 15, "number" ),
-                     LUA_BINDING_ARGUMENT( luaL_checknumber, 16, "number" ),
-                     LUA_BINDING_ARGUMENT( luaL_checknumber, 17, "number" ) );
+        matrix.Init( LUA_BINDING_ARGUMENT( luaL_checknumber, 2, "m11" ),
+                     LUA_BINDING_ARGUMENT( luaL_checknumber, 3, "m12" ),
+                     LUA_BINDING_ARGUMENT( luaL_checknumber, 4, "m13" ),
+                     LUA_BINDING_ARGUMENT( luaL_checknumber, 5, "m14" ),
+
+                     LUA_BINDING_ARGUMENT( luaL_checknumber, 6, "m21" ),
+                     LUA_BINDING_ARGUMENT( luaL_checknumber, 7, "m22" ),
+                     LUA_BINDING_ARGUMENT( luaL_checknumber, 8, "m23" ),
+                     LUA_BINDING_ARGUMENT( luaL_checknumber, 9, "m24" ),
+
+                     LUA_BINDING_ARGUMENT( luaL_checknumber, 10, "m31" ),
+                     LUA_BINDING_ARGUMENT( luaL_checknumber, 11, "m32" ),
+                     LUA_BINDING_ARGUMENT( luaL_checknumber, 12, "m33" ),
+                     LUA_BINDING_ARGUMENT( luaL_checknumber, 13, "m34" ),
+
+                     LUA_BINDING_ARGUMENT( luaL_checknumber, 14, "m41" ),
+                     LUA_BINDING_ARGUMENT( luaL_checknumber, 15, "m42" ),
+                     LUA_BINDING_ARGUMENT( luaL_checknumber, 16, "m43" ),
+                     LUA_BINDING_ARGUMENT( luaL_checknumber, 17, "m44" ) );
 
     return 0;
 }
@@ -514,31 +517,35 @@ LUA_BINDING_BEGIN( Matrices, Create, "library", "Creates a new matrix." )
     else if ( lua_gettop( L ) < 16 )
     {
         VMatrix matrix = VMatrix(
-            LUA_BINDING_ARGUMENT_NILLABLE( luaL_checkvector, 1, "vector" ),
-            LUA_BINDING_ARGUMENT_NILLABLE( luaL_checkvector, 2, "vector" ),
-            LUA_BINDING_ARGUMENT_NILLABLE( luaL_checkvector, 3, "vector" ) );
+            LUA_BINDING_ARGUMENT_NILLABLE( luaL_checkvector, 1, "xAxis" ),
+            LUA_BINDING_ARGUMENT_NILLABLE( luaL_checkvector, 2, "yAxis" ),
+            LUA_BINDING_ARGUMENT_NILLABLE( luaL_checkvector, 3, "zAxis" ) );
         lua_pushvmatrix( L, matrix );
     }
     else
     {
         VMatrix matrix =
             VMatrix(
-                LUA_BINDING_ARGUMENT( luaL_checknumber, 1, "number" ),
-                LUA_BINDING_ARGUMENT( luaL_checknumber, 2, "number" ),
-                LUA_BINDING_ARGUMENT( luaL_checknumber, 3, "number" ),
-                LUA_BINDING_ARGUMENT( luaL_checknumber, 4, "number" ),
-                LUA_BINDING_ARGUMENT( luaL_checknumber, 5, "number" ),
-                LUA_BINDING_ARGUMENT( luaL_checknumber, 6, "number" ),
-                LUA_BINDING_ARGUMENT( luaL_checknumber, 7, "number" ),
-                LUA_BINDING_ARGUMENT( luaL_checknumber, 8, "number" ),
-                LUA_BINDING_ARGUMENT( luaL_checknumber, 9, "number" ),
-                LUA_BINDING_ARGUMENT( luaL_checknumber, 10, "number" ),
-                LUA_BINDING_ARGUMENT( luaL_checknumber, 11, "number" ),
-                LUA_BINDING_ARGUMENT( luaL_checknumber, 12, "number" ),
-                LUA_BINDING_ARGUMENT( luaL_checknumber, 13, "number" ),
-                LUA_BINDING_ARGUMENT( luaL_checknumber, 14, "number" ),
-                LUA_BINDING_ARGUMENT( luaL_checknumber, 15, "number" ),
-                LUA_BINDING_ARGUMENT( luaL_checknumber, 16, "number" ) );
+                LUA_BINDING_ARGUMENT( luaL_checknumber, 1, "m11" ),
+                LUA_BINDING_ARGUMENT( luaL_checknumber, 2, "m12" ),
+                LUA_BINDING_ARGUMENT( luaL_checknumber, 3, "m13" ),
+                LUA_BINDING_ARGUMENT( luaL_checknumber, 4, "m14" ),
+
+                LUA_BINDING_ARGUMENT( luaL_checknumber, 5, "m21" ),
+                LUA_BINDING_ARGUMENT( luaL_checknumber, 6, "m22" ),
+                LUA_BINDING_ARGUMENT( luaL_checknumber, 7, "m23" ),
+                LUA_BINDING_ARGUMENT( luaL_checknumber, 8, "m24" ),
+
+                LUA_BINDING_ARGUMENT( luaL_checknumber, 9, "m31" ),
+                LUA_BINDING_ARGUMENT( luaL_checknumber, 10, "m32" ),
+                LUA_BINDING_ARGUMENT( luaL_checknumber, 11, "m33" ),
+                LUA_BINDING_ARGUMENT( luaL_checknumber, 12, "m34" ),
+
+                LUA_BINDING_ARGUMENT( luaL_checknumber, 13, "m41" ),
+                LUA_BINDING_ARGUMENT( luaL_checknumber, 14, "m42" ),
+                LUA_BINDING_ARGUMENT( luaL_checknumber, 15, "m43" ),
+                LUA_BINDING_ARGUMENT( luaL_checknumber, 16, "m44" ) );
+
         lua_pushvmatrix( L, matrix );
     }
 
@@ -557,27 +564,31 @@ LUA_BINDING_BEGIN( Matrices, Create3x4, "library", "Creates a new 3x4 matrix." )
     else if ( lua_gettop( L ) < 12 )
     {
         matrix3x4_t matrix = matrix3x4_t(
-            LUA_BINDING_ARGUMENT_NILLABLE( luaL_checkvector, 1, "vector" ),
-            LUA_BINDING_ARGUMENT_NILLABLE( luaL_checkvector, 2, "vector" ),
-            LUA_BINDING_ARGUMENT_NILLABLE( luaL_checkvector, 3, "vector" ),
-            LUA_BINDING_ARGUMENT_NILLABLE( luaL_checkvector, 4, "vector" ) );
+            LUA_BINDING_ARGUMENT_NILLABLE( luaL_checkvector, 1, "xAxis" ),
+            LUA_BINDING_ARGUMENT_NILLABLE( luaL_checkvector, 2, "yAxis" ),
+            LUA_BINDING_ARGUMENT_NILLABLE( luaL_checkvector, 3, "zAxis" ),
+            LUA_BINDING_ARGUMENT_NILLABLE( luaL_checkvector, 4, "origin" ) );
         lua_pushmatrix( L, matrix );
     }
     else
     {
         matrix3x4_t matrix = matrix3x4_t(
-            LUA_BINDING_ARGUMENT( luaL_checknumber, 1, "number" ),
-            LUA_BINDING_ARGUMENT( luaL_checknumber, 2, "number" ),
-            LUA_BINDING_ARGUMENT( luaL_checknumber, 3, "number" ),
-            LUA_BINDING_ARGUMENT( luaL_checknumber, 4, "number" ),
-            LUA_BINDING_ARGUMENT( luaL_checknumber, 5, "number" ),
-            LUA_BINDING_ARGUMENT( luaL_checknumber, 6, "number" ),
-            LUA_BINDING_ARGUMENT( luaL_checknumber, 7, "number" ),
-            LUA_BINDING_ARGUMENT( luaL_checknumber, 8, "number" ),
-            LUA_BINDING_ARGUMENT( luaL_checknumber, 9, "number" ),
-            LUA_BINDING_ARGUMENT( luaL_checknumber, 10, "number" ),
-            LUA_BINDING_ARGUMENT( luaL_checknumber, 11, "number" ),
-            LUA_BINDING_ARGUMENT( luaL_checknumber, 12, "number" ) );
+            LUA_BINDING_ARGUMENT( luaL_checknumber, 1, "m11" ),
+            LUA_BINDING_ARGUMENT( luaL_checknumber, 2, "m12" ),
+            LUA_BINDING_ARGUMENT( luaL_checknumber, 3, "m13" ),
+            LUA_BINDING_ARGUMENT( luaL_checknumber, 4, "m14" ),
+
+            LUA_BINDING_ARGUMENT( luaL_checknumber, 5, "m21" ),
+            LUA_BINDING_ARGUMENT( luaL_checknumber, 6, "m22" ),
+            LUA_BINDING_ARGUMENT( luaL_checknumber, 7, "m23" ),
+            LUA_BINDING_ARGUMENT( luaL_checknumber, 8, "m24" ),
+
+            LUA_BINDING_ARGUMENT( luaL_checknumber, 9, "m31" ),
+            LUA_BINDING_ARGUMENT( luaL_checknumber, 10, "m32" ),
+            LUA_BINDING_ARGUMENT( luaL_checknumber, 11, "m33" ),
+            LUA_BINDING_ARGUMENT( luaL_checknumber, 12, "m34" ) );
+
+
         lua_pushmatrix( L, matrix );
     }
 
@@ -746,14 +757,14 @@ LUA_BINDING_BEGIN( Matrices, MatrixBuildTranslation, "library", "Builds a transl
         default:
             MatrixBuildTranslation(
                 destination,
-                LUA_BINDING_ARGUMENT( luaL_checknumber, 2, "number" ),
-                LUA_BINDING_ARGUMENT( luaL_checknumber, 3, "number" ),
-                LUA_BINDING_ARGUMENT( luaL_checknumber, 4, "number" ) );
+                LUA_BINDING_ARGUMENT( luaL_checknumber, 2, "x" ),
+                LUA_BINDING_ARGUMENT( luaL_checknumber, 3, "y" ),
+                LUA_BINDING_ARGUMENT( luaL_checknumber, 4, "z" ) );
             break;
         case LUA_TUSERDATA:
             MatrixBuildTranslation(
                 destination,
-                LUA_BINDING_ARGUMENT( luaL_checkvector, 2, "vector" ) );
+                LUA_BINDING_ARGUMENT( luaL_checkvector, 2, "translation" ) );
             break;
     }
 
@@ -774,8 +785,8 @@ LUA_BINDING_BEGIN( Matrices, MatrixBuildRotationAboutAxis, "library", "Builds a 
     VMatrix destination = LUA_BINDING_ARGUMENT( luaL_checkvmatrix, 1, "Matrix" );
     MatrixBuildRotationAboutAxis(
         destination,
-        LUA_BINDING_ARGUMENT( luaL_checkvector, 2, "vector" ),
-        LUA_BINDING_ARGUMENT( luaL_checknumber, 3, "number" ) );
+        LUA_BINDING_ARGUMENT( luaL_checkvector, 2, "axisOfRotation" ),
+        LUA_BINDING_ARGUMENT( luaL_checknumber, 3, "degrees" ) );
     return 0;
 }
 LUA_BINDING_END()
@@ -785,7 +796,7 @@ LUA_BINDING_BEGIN( Matrices, MatrixBuildRotateZ, "library", "Builds a rotation m
     VMatrix destination = LUA_BINDING_ARGUMENT( luaL_checkvmatrix, 1, "Matrix" );
     MatrixBuildRotateZ(
         destination,
-        LUA_BINDING_ARGUMENT( luaL_checknumber, 2, "number" ) );
+        LUA_BINDING_ARGUMENT( luaL_checknumber, 2, "degrees" ) );
     return 0;
 }
 LUA_BINDING_END()
@@ -795,8 +806,8 @@ LUA_BINDING_BEGIN( Matrices, MatrixRotate, "library", "Rotates the matrix." )
     VMatrix destination = LUA_BINDING_ARGUMENT( luaL_checkvmatrix, 1, "Matrix" );
     MatrixRotate(
         destination,
-        LUA_BINDING_ARGUMENT( luaL_checkvector, 2, "vector" ),
-        LUA_BINDING_ARGUMENT( luaL_checknumber, 3, "number" ) );
+        LUA_BINDING_ARGUMENT( luaL_checkvector, 2, "axisOfRotation" ),
+        LUA_BINDING_ARGUMENT( luaL_checknumber, 3, "degrees" ) );
     return 0;
 }
 LUA_BINDING_END()
@@ -822,14 +833,14 @@ LUA_BINDING_BEGIN( Matrices, MatrixBuildScale, "library", "Builds a scale matrix
         default:
             MatrixBuildScale(
                 destination,
-                LUA_BINDING_ARGUMENT( luaL_checknumber, 2, "number" ),
-                LUA_BINDING_ARGUMENT( luaL_checknumber, 3, "number" ),
-                LUA_BINDING_ARGUMENT( luaL_checknumber, 4, "number" ) );
+                LUA_BINDING_ARGUMENT( luaL_checknumber, 2, "x" ),
+                LUA_BINDING_ARGUMENT( luaL_checknumber, 3, "y" ),
+                LUA_BINDING_ARGUMENT( luaL_checknumber, 4, "z" ) );
             break;
         case LUA_TUSERDATA:
             MatrixBuildScale(
                 destination,
-                LUA_BINDING_ARGUMENT( luaL_checkvector, 2, "vector" ) );
+                LUA_BINDING_ARGUMENT( luaL_checkvector, 2, "scale" ) );
             break;
     }
 
@@ -842,10 +853,10 @@ LUA_BINDING_BEGIN( Matrices, MatrixBuildPerspective, "library", "Builds a perspe
     VMatrix destination = LUA_BINDING_ARGUMENT( luaL_checkvmatrix, 1, "Matrix" );
     MatrixBuildPerspective(
         destination,
-        LUA_BINDING_ARGUMENT( luaL_checknumber, 2, "number" ),
-        LUA_BINDING_ARGUMENT( luaL_checknumber, 3, "number" ),
-        LUA_BINDING_ARGUMENT( luaL_checknumber, 4, "number" ),
-        LUA_BINDING_ARGUMENT( luaL_checknumber, 5, "number" ) );
+        LUA_BINDING_ARGUMENT( luaL_checknumber, 2, "fovX" ),
+        LUA_BINDING_ARGUMENT( luaL_checknumber, 3, "fovY" ),
+        LUA_BINDING_ARGUMENT( luaL_checknumber, 4, "zNear" ),
+        LUA_BINDING_ARGUMENT( luaL_checknumber, 5, "zFar" ) );
     return 0;
 }
 LUA_BINDING_END()
@@ -861,7 +872,7 @@ LUA_BINDING_BEGIN( Matrices, CalculateAabbFromProjectionMatrix, "library", "Calc
     lua_pushvector( L, vecMax );
     return 2;
 }
-LUA_BINDING_END( "Vector", "The minimum vector.", "vector", "The maximum vector." )
+LUA_BINDING_END( "Vector", "The minimum vector.", "Vector", "The maximum vector." )
 
 LUA_BINDING_BEGIN( Matrices, CalculateSphereFromProjectionMatrix, "library", "Calculates a sphere from a projection matrix." )
 {

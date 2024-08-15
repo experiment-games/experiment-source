@@ -40,10 +40,10 @@ LUA_REGISTRATION_INIT( Matrix3x4 );
 // Experiment; disabled since we don't want to deal with pointers in Lua.
 // LUA_BINDING_BEGIN( Matrix3x4, Base, "class", "Returns the base address of the matrix." )
 //{
-//    lua_pushnumber( L, *LUA_BINDING_ARGUMENT( luaL_checkmatrix, 1, "Matrix3x4" ).Base() );
+//    lua_pushinteger( L, *LUA_BINDING_ARGUMENT( luaL_checkmatrix, 1, "Matrix3x4" ).Base() );
 //    return 1;
 //}
-// LUA_BINDING_END( "number", "The base address of the matrix." )
+// LUA_BINDING_END( "integer", "The base address of the matrix." )
 
 LUA_BINDING_BEGIN( Matrix3x4, Init, "class", "Initializes the matrix." )
 {

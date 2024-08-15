@@ -27,7 +27,7 @@ LUA_BINDING_BEGIN( Utilities, PrecacheDecal, "library", "Precaches a decal. If p
 
     return 1;
 }
-LUA_BINDING_END( "number", "The decal index." )
+LUA_BINDING_END( "integer", "The decal index." )
 
 LUA_BINDING_BEGIN( Utilities, FindWaterSurface, "library", "Finds the water surface at the given position." )
 {

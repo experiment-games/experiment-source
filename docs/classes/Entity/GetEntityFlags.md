@@ -15,8 +15,8 @@ lua:
   
   
   returns:
-    - type: number
-      description: "The Entity Flags."
+    - type: integer
+      description: "The ENTITY_FLAG flags."
 ---
 
 <div class="lua__search__keywords">

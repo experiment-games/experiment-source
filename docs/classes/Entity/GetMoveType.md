@@ -15,7 +15,7 @@ lua:
   
   
   returns:
-    - type: number
+    - type: enumeration/MOVE_TYPE
       description: "The move type."
 ---
 

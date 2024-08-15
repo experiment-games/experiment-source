@@ -15,7 +15,7 @@ lua:
   
   
   returns:
-    - type: integer|CollideType_t
+    - type: enumeration/COLLIDE_TYPE
       description: "The collide type"
 ---
 

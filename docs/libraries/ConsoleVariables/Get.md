@@ -1,6 +1,6 @@
 ---
 template: lua-library-function.html
-title: GetConsoleVariable
+title: Get
 icon: lua-shared
 tags:
   - lua
@@ -8,8 +8,8 @@ tags:
   - needs-verification
   - needs-example
 lua:
-  library: _G
-  function: GetConsoleVariable
+  library: ConsoleVariables
+  function: Get
   realm: shared
   description: "Gets a console variable"
   
@@ -22,5 +22,5 @@ lua:
 ---
 
 <div class="lua__search__keywords">
-_G.GetConsoleVariable &#x2013; Gets a console variable
+ConsoleVariables.Get &#x2013; Gets a console variable
 </div>

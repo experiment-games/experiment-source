@@ -70,17 +70,17 @@ LUA_BINDING_END()
 
 LUA_BINDING_BEGIN( UserCommand, CommandNumber, "class", "Gets the command number" )
 {
-    lua_pushnumber( L, LUA_BINDING_ARGUMENT( luaL_checkusercmd, 1, "userCmd" )->command_number );
+    lua_pushinteger( L, LUA_BINDING_ARGUMENT( luaL_checkusercmd, 1, "userCmd" )->command_number );
     return 1;
 }
-LUA_BINDING_END( "number", "The command number" )
+LUA_BINDING_END( "integer", "The command number" )
 
 LUA_BINDING_BEGIN( UserCommand, GetButtons, "class", "Gets the button states" )
 {
-    lua_pushnumber( L, LUA_BINDING_ARGUMENT( luaL_checkusercmd, 1, "userCmd" )->buttons );
+    lua_pushinteger( L, LUA_BINDING_ARGUMENT( luaL_checkusercmd, 1, "userCmd" )->buttons );
     return 1;
 }
-LUA_BINDING_END( "number", "The button states" )
+LUA_BINDING_END( "integer", "The button states" )
 
 LUA_BINDING_BEGIN( UserCommand, GetForwardMove, "class", "Gets forward movement value" )
 {
@@ -91,31 +91,31 @@ LUA_BINDING_END( "number", "The forward movement value" )
 
 LUA_BINDING_BEGIN( UserCommand, GetImpulse, "class", "Gets the impulse value" )
 {
-    lua_pushnumber( L, LUA_BINDING_ARGUMENT( luaL_checkusercmd, 1, "userCmd" )->impulse );
+    lua_pushinteger( L, LUA_BINDING_ARGUMENT( luaL_checkusercmd, 1, "userCmd" )->impulse );
     return 1;
 }
-LUA_BINDING_END( "number", "The impulse value" )
+LUA_BINDING_END( "integer", "The impulse value" )
 
 LUA_BINDING_BEGIN( UserCommand, GetMouseWheel, "class", "Gets the mouse wheel delta" )
 {
-    lua_pushnumber( L, LUA_BINDING_ARGUMENT( luaL_checkusercmd, 1, "userCmd" )->mousedx );
+    lua_pushinteger( L, LUA_BINDING_ARGUMENT( luaL_checkusercmd, 1, "userCmd" )->mousedx );
     return 1;
 }
-LUA_BINDING_END( "number", "The mouse wheel delta" )
+LUA_BINDING_END( "integer", "The mouse wheel delta" )
 
 LUA_BINDING_BEGIN( UserCommand, GetMouseX, "class", "Gets mouse X movement" )
 {
-    lua_pushnumber( L, LUA_BINDING_ARGUMENT( luaL_checkusercmd, 1, "userCmd" )->mousedx );
+    lua_pushinteger( L, LUA_BINDING_ARGUMENT( luaL_checkusercmd, 1, "userCmd" )->mousedx );
     return 1;
 }
-LUA_BINDING_END( "number", "The mouse X movement" )
+LUA_BINDING_END( "integer", "The mouse X movement" )
 
 LUA_BINDING_BEGIN( UserCommand, GetMouseY, "class", "Gets mouse Y movement" )
 {
-    lua_pushnumber( L, LUA_BINDING_ARGUMENT( luaL_checkusercmd, 1, "userCmd" )->mousedy );
+    lua_pushinteger( L, LUA_BINDING_ARGUMENT( luaL_checkusercmd, 1, "userCmd" )->mousedy );
     return 1;
 }
-LUA_BINDING_END( "number", "The mouse Y movement" )
+LUA_BINDING_END( "integer", "The mouse Y movement" )
 
 LUA_BINDING_BEGIN( UserCommand, GetSideMove, "class", "Gets side movement value" )
 {
@@ -231,10 +231,10 @@ LUA_BINDING_END()
 
 LUA_BINDING_BEGIN( UserCommand, TickCount, "class", "Gets the tick count" )
 {
-    lua_pushnumber( L, LUA_BINDING_ARGUMENT( luaL_checkusercmd, 1, "userCmd" )->tick_count );
+    lua_pushinteger( L, LUA_BINDING_ARGUMENT( luaL_checkusercmd, 1, "userCmd" )->tick_count );
     return 1;
 }
-LUA_BINDING_END( "number", "The tick count" )
+LUA_BINDING_END( "integer", "The tick count" )
 
 LUA_BINDING_BEGIN( UserCommand, __tostring, "class", "__tostring method for UserCommand" )
 {

@@ -30,6 +30,11 @@
     color: var(--md-code-fg-color);
 }
 
+.lua .lua__type .lua__type__enum::before {
+    content: "enumeration: ";
+    font-size: 0.8em;
+}
+
 .lua .lua__symbol {
     font-weight: bolder;
     background-color:  var(--md-code-bg-color);
@@ -41,6 +46,9 @@
 
 .lua .lua__type::after {
     content: ")";
+}
+.lua h1 .lua__type::before, .lua h1 .lua__type::after{
+    content: "";
 }
 
 .lua .lua__realm {

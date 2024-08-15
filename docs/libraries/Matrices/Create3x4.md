@@ -15,42 +15,42 @@ lua:
   
   argumentSets:
     - arguments:
-      - name: "vector"
+      - name: "xAxis"
         type: Vector
         nillable: true
-      - name: "vector"
+      - name: "yAxis"
         type: Vector
         nillable: true
-      - name: "vector"
+      - name: "zAxis"
         type: Vector
         nillable: true
-      - name: "vector"
+      - name: "origin"
         type: Vector
         nillable: true
     - arguments:
-      - name: "number"
+      - name: "m11"
         type: number
-      - name: "number"
+      - name: "m12"
         type: number
-      - name: "number"
+      - name: "m13"
         type: number
-      - name: "number"
+      - name: "m14"
         type: number
-      - name: "number"
+      - name: "m21"
         type: number
-      - name: "number"
+      - name: "m22"
         type: number
-      - name: "number"
+      - name: "m23"
         type: number
-      - name: "number"
+      - name: "m24"
         type: number
-      - name: "number"
+      - name: "m31"
         type: number
-      - name: "number"
+      - name: "m32"
         type: number
-      - name: "number"
+      - name: "m33"
         type: number
-      - name: "number"
+      - name: "m34"
         type: number
   returns:
     - type: Matrix3x4

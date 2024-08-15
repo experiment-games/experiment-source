@@ -5,7 +5,7 @@
 	Modified for Experiment.
 --]]
 
-local r_eyeset = CreateConsoleVariable("r_eyeset", "1", FCVAR_CLIENTDLL)
+local r_eyeset = ConsoleVariables.Create("r_eyeset", "1", FCVAR_CLIENTDLL)
 
 -- lua_openscript_cl utilities/eyeset.lua
 Hooks.Add("CalcView", "SetPlayerView", function(client, eyeOrigin, eyeAngles, fov, zNear, zFar)

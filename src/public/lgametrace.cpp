@@ -74,7 +74,7 @@ LUA_BINDING_BEGIN( Trace, GetEntityIndex, "class", "Get the index of the entity 
     lua_pushinteger( L, trace.GetEntityIndex() );
     return 1;
 }
-LUA_BINDING_END( "number", "The index of the entity that was hit." )
+LUA_BINDING_END( "integer", "The index of the entity that was hit." )
 
 LUA_BINDING_BEGIN( Trace, IsDisplacementSurface, "class", "Check if the trace hit a displacement surface." )
 {
@@ -587,7 +587,7 @@ LUA_BINDING_BEGIN( Traces, PointContents, "library", "Returns the contents mask 
     lua_pushinteger( L, UTIL_PointContents( LUA_BINDING_ARGUMENT( luaL_checkvector, 1, "point" ) ) );
     return 1;
 }
-LUA_BINDING_END( "number", "The contents of the point." )
+LUA_BINDING_END( "integer", "Bitwise contents mask." )
 
 LUA_BINDING_BEGIN( Traces, TraceModel, "library", "Sweeps against a particular model, using collision rules." )
 {

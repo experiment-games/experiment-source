@@ -113,10 +113,10 @@ LUA_BINDING_BEGIN( CBaseFlex, GetFlexIdByName, "class", "Get flex ID by name." )
 
     LocalFlexController_t iFlexController = pEntity->FindFlexController( szFlexName );
 
-    lua_pushnumber( L, iFlexController );
+    lua_pushinteger( L, iFlexController );
     return 1;
 }
-LUA_BINDING_END( "number", "Flex ID." )
+LUA_BINDING_END( "integer", "Flex ID." )
 
 LUA_BINDING_BEGIN( CBaseFlex, GetFlexWeight, "class", "Get flex weight." )
 {
@@ -181,10 +181,10 @@ LUA_BINDING_END( "boolean", "True if the entity has flex manipulator." )
 //}
 //LUA_BINDING_END( "string", "String representation of the entity." )
 
-LUA_REGISTRATION_INIT( _G )
+LUA_REGISTRATION_INIT( Entities )
 
 #ifdef CLIENT_DLL
-LUA_BINDING_BEGIN( _G, ClientsideModel, "library", "Create a clientside model.", "client" )
+LUA_BINDING_BEGIN( Entities, CreateClientEntity, "library", "Create a clientside entity with the specified model.", "client" )
 {
     const char *pszModelName = LUA_BINDING_ARGUMENT( luaL_checkstring, 1, "model" );
     int renderGroup = ( int )LUA_BINDING_ARGUMENT_WITH_DEFAULT( luaL_optnumber, 2, RENDER_GROUP_OTHER, "renderGroup" );
@@ -202,7 +202,6 @@ LUA_BINDING_BEGIN( _G, ClientsideModel, "library", "Create a clientside model.",
 }
 LUA_BINDING_END( "Entity", "Clientside model entity." )
 #endif
-
 /*
 ** Open CBaseFlex object
 */
@@ -212,7 +211,6 @@ LUALIB_API int luaopen_CBaseFlex_shared( lua_State *L )
 
     LUA_REGISTRATION_COMMIT( CBaseFlex );
 
-    LUA_REGISTRATION_COMMIT_LIBRARY( _G );
-
+    LUA_REGISTRATION_COMMIT_LIBRARY( Entities );
     return 1;
 }

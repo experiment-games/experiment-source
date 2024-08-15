@@ -16,7 +16,7 @@ lua:
   arguments:
     - name: "Matrix"
       type: Matrix
-    - name: "number"
+    - name: "degrees"
       type: number
   returns:
     

@@ -17,9 +17,9 @@ lua:
   returns:
     - type: Vector
       description: "The forward vector."
-    - type: vector
+    - type: Vector
       description: "The left vector."
-    - type: vector
+    - type: Vector
       description: "The up vector."
 ---
 

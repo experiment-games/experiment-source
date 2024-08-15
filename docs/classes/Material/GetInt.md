@@ -17,7 +17,7 @@ lua:
     - name: "varName"
       type: string
   returns:
-    - type: number
+    - type: integer
       description: "Integer value."
 ---
 

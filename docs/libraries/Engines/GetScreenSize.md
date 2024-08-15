@@ -15,9 +15,9 @@ lua:
   
   
   returns:
-    - type: number
+    - type: integer
       description: "The screen width."
-    - type: number
+    - type: integer
       description: "The screen height."
 ---
 

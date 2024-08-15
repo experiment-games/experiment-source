@@ -5,7 +5,7 @@ local COLOR = FindMetaTable("Color")
 --- @param alpha number
 --- @return unknown
 function ColorAlpha(color, alpha)
-	return Color(color.r, color.g, color.b, alpha)
+	return Colors.Create(color.r, color.g, color.b, alpha)
 end
 
 --- Check if the given object is a color
@@ -20,7 +20,7 @@ end
 --- @param fraction number
 --- @return Color
 function COLOR:Lerp(targetColor, fraction)
-	return Color(
+	return Colors.Create(
 		Lerp(fraction, self.r, targetColor.r),
 		Lerp(fraction, self.g, targetColor.g),
 		Lerp(fraction, self.b, targetColor.b),
@@ -31,19 +31,19 @@ end
 --- Convert the color to its components as 3 HSL values
 --- @return number, number, number
 function COLOR:ToHSL()
-	return ColorToHSL(self)
+	return Colors.ColorToHsl(self)
 end
 
 --- Convert the color to its components as 3 HSV values
 --- @return number, number, number
 function COLOR:ToHSV()
-	return ColorToHSV(self)
+	return Colors.ColorToHsv(self)
 end
 
 --- Converts the color to a vector (alpha is ignored)
 --- @return Vector
 function COLOR:ToVector()
-	return Vector(self.r / 255, self.g / 255, self.b / 255)
+	return Vectors.Create(self.r / 255, self.g / 255, self.b / 255)
 end
 
 --- Unpacks the color into 4 values (r, g, b, a)

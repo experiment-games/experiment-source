@@ -17,7 +17,7 @@ lua:
     - name: "lumpId"
       type: number
   returns:
-    - type: number
+    - type: integer
       description: "The version of the game lump."
 ---
 

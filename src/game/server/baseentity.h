@@ -978,7 +978,7 @@ class CBaseEntity : public IServerEntity
         return true;
     }
 
-    // returns the amount of damage inflicted
+    // returns the amount of damage inflicted (this is wrong, seems to return 0 if the damage is fatal or not taken, 1 otherwise)
     virtual int OnTakeDamage( const CTakeDamageInfo &info );
 
     // This is what you should call to apply damage to an entity.

@@ -19,7 +19,7 @@ lua:
   returns:
     - type: table
       description: "A table of entities found."
-    - type: number
+    - type: integer
       description: "The number of entities found."
 ---
 

@@ -1,6 +1,6 @@
 ---
 template: lua-library-function.html
-title: CreateConsoleVariable
+title: Create
 icon: lua-shared
 tags:
   - lua
@@ -8,8 +8,8 @@ tags:
   - needs-verification
   - needs-example
 lua:
-  library: _G
-  function: CreateConsoleVariable
+  library: ConsoleVariables
+  function: Create
   realm: shared
   description: "Creates a console variable or returns the existing one with the given name"
   
@@ -42,5 +42,5 @@ lua:
 ---
 
 <div class="lua__search__keywords">
-_G.CreateConsoleVariable &#x2013; Creates a console variable or returns the existing one with the given name
+ConsoleVariables.Create &#x2013; Creates a console variable or returns the existing one with the given name
 </div>

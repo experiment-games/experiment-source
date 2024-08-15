@@ -1,6 +1,6 @@
 ---
 template: lua-library-function.html
-title: Entity
+title: Find
 icon: lua-shared
 tags:
   - lua
@@ -8,10 +8,10 @@ tags:
   - needs-verification
   - needs-example
 lua:
-  library: _G
-  function: Entity
+  library: Entities
+  function: Find
   realm: shared
-  description: "Gets the entity by its entity index"
+  description: "Finds the entity by its entity index"
   
   arguments:
     - name: "entityIndex"
@@ -22,5 +22,5 @@ lua:
 ---
 
 <div class="lua__search__keywords">
-_G.Entity &#x2013; Gets the entity by its entity index
+Entities.Find &#x2013; Finds the entity by its entity index
 </div>

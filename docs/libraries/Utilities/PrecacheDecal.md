@@ -20,7 +20,7 @@ lua:
       type: boolean
       default: "false"
   returns:
-    - type: number
+    - type: integer
       description: "The decal index."
 ---
 

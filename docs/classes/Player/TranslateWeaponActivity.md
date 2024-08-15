@@ -17,7 +17,7 @@ lua:
     - name: "activity"
       type: number
   returns:
-    - type: number
+    - type: enumeration/ACTIVITY
       description: "The translated activity."
 ---
 

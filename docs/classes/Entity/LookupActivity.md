@@ -17,7 +17,7 @@ lua:
     - name: "activityName"
       type: string
   returns:
-    - type: integer|ACT
+    - type: enumeration/ACTIVITY
       description: "The activity"
 ---
 

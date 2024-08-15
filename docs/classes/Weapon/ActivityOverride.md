@@ -17,7 +17,7 @@ lua:
     - name: "activity"
       type: number
   returns:
-    - type: integer
+    - type: enumeration/ACTIVITY
       description: "Override activity ID."
     - type: boolean
       description: "Whether the activity is required."

@@ -17,7 +17,7 @@ lua:
     - name: "name"
       type: string
   returns:
-    - type: number
+    - type: integer
       description: "The last think tick."
 ---
 

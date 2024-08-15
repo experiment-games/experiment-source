@@ -24,7 +24,7 @@ lua:
       type: boolean
       default: "false"
   returns:
-    - type: vector
+    - type: Vector
       description: "The nearest point on the line."
 ---
 

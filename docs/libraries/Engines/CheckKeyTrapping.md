@@ -15,7 +15,7 @@ lua:
   
   
   returns:
-    - type: integer
+    - type: enumeration/BUTTON
       description: "The key code being trapped."
 ---
 

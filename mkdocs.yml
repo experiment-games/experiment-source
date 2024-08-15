@@ -42,6 +42,7 @@ plugins:
       enabled: true
       redirect_maps:
         'index.md': 'general/welcome.md'
+        'general/types/integer.md': 'general/types/number.md'
   - search:
       enabled: true
   - privacy:

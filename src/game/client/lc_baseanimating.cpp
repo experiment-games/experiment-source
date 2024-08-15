@@ -88,11 +88,11 @@ LUA_BINDING_BEGIN( CBaseAnimating, ComputeClientSideAnimationFlags, "class", "Co
 {
     lua_CBaseAnimating *pAnimating = LUA_BINDING_ARGUMENT( luaL_checkanimating, 1, "entity" );
 
-    lua_pushnumber( L, pAnimating->ComputeClientSideAnimationFlags() );
+    lua_pushinteger( L, pAnimating->ComputeClientSideAnimationFlags() );
 
     return 1;
 }
-LUA_BINDING_END( "number", "The client side animation flags" )
+LUA_BINDING_END( "integer", "The client side animation flags" )
 
 LUA_BINDING_BEGIN( CBaseAnimating, CreateRagdollCopy, "class", "Create a ragdoll copy of the entity." )
 {
@@ -222,7 +222,7 @@ LUA_BINDING_BEGIN( CBaseAnimating, GetAimEntOrigin, "class", "Get the aim entity
 
     return 2;
 }
-LUA_BINDING_END( "Vector", "The aim entity origin", "angle", "The aim entity angles" )
+LUA_BINDING_END( "Vector", "The aim entity origin", "Angle", "The aim entity angles" )
 
 LUA_BINDING_BEGIN( CBaseAnimating, GetAttachmentVelocity, "class", "Get the attachment velocity." )
 {
@@ -237,7 +237,7 @@ LUA_BINDING_BEGIN( CBaseAnimating, GetAttachmentVelocity, "class", "Get the atta
     // lua_pushquaternion(L, &angleVel);
     return 2;
 }
-LUA_BINDING_END( "boolean", "Whether the operation was successful", "vector", "The origin velocity" )
+LUA_BINDING_END( "boolean", "Whether the operation was successful", "Vector", "The origin velocity" )
 
 LUA_BINDING_BEGIN( CBaseAnimating, GetBlendedLinearVelocity, "class", "Get the blended linear velocity." )
 {
@@ -260,7 +260,7 @@ LUA_BINDING_BEGIN( CBaseAnimating, GetBody, "class", "Get the body (internally d
 
     return 1;
 }
-LUA_BINDING_END( "number", "The body" )
+LUA_BINDING_END( "integer", "The body" )
 
 LUA_BINDING_BEGIN( CBaseAnimating, GetBoneControllers, "class", "Get all bone controller values." )
 {
@@ -269,14 +269,17 @@ LUA_BINDING_BEGIN( CBaseAnimating, GetBoneControllers, "class", "Get all bone co
 
     pAnimating->GetBoneControllers( controllers );
 
+    lua_newtable( L );
+
     for ( int i = 0; i < MAXSTUDIOBONECTRLS; i++ )
     {
         lua_pushnumber( L, controllers[i] );
+        lua_rawseti( L, -2, i + 1 ); // 1-based index
     }
 
     return MAXSTUDIOBONECTRLS;
 }
-LUA_BINDING_END( "number", "The bone controllers" )
+LUA_BINDING_END( "table", "The bone controller values" )
 
 LUA_BINDING_BEGIN( CBaseAnimating, GetClientSideFade, "class", "Get the client side fade." )
 {
@@ -286,7 +289,7 @@ LUA_BINDING_BEGIN( CBaseAnimating, GetClientSideFade, "class", "Get the client s
 
     return 1;
 }
-LUA_BINDING_END( "number", "The client side fade" )
+LUA_BINDING_END( "integer", "The client side fade" )
 
 LUA_BINDING_BEGIN( CBaseAnimating, GetCollideType, "class", "Get the collide type." )
 {
@@ -296,7 +299,7 @@ LUA_BINDING_BEGIN( CBaseAnimating, GetCollideType, "class", "Get the collide typ
 
     return 1;
 }
-LUA_BINDING_END( "integer|CollideType_t", "The collide type" )
+LUA_BINDING_END( "enumeration/COLLIDE_TYPE", "The collide type" )
 
 LUA_BINDING_BEGIN( CBaseAnimating, GetFlexControllerName, "class", "Get the flex controller name." )
 {
@@ -334,7 +337,7 @@ LUA_BINDING_BEGIN( CBaseAnimating, GetRenderBounds, "class", "Get the render bou
 
     return 2;
 }
-LUA_BINDING_END( "Vector", "The minimum bounds", "vector", "The maximum bounds" )
+LUA_BINDING_END( "Vector", "The minimum bounds", "Vector", "The maximum bounds" )
 
 LUA_BINDING_BEGIN( CBaseAnimating, GetServerIntendedCycle, "class", "Get the server intended cycle." )
 {
@@ -354,7 +357,7 @@ LUA_BINDING_BEGIN( CBaseAnimating, GetSkin, "class", "Get the skin." )
 
     return 1;
 }
-LUA_BINDING_END( "number", "The skin" )
+LUA_BINDING_END( "integer", "The skin" )
 
 LUA_BINDING_BEGIN( CBaseAnimating, IgniteRagdoll, "class", "Ignite the ragdoll." )
 {
@@ -394,7 +397,7 @@ LUA_BINDING_BEGIN( CBaseAnimating, InternalDrawModel, "class", "Internal draw th
 
     return 1;
 }
-LUA_BINDING_END( "number", "The resulting draw flag" )
+LUA_BINDING_END( "integer", "The resulting draw flag" )
 
 LUA_BINDING_BEGIN( CBaseAnimating, Interpolate, "class", "Interpolate the entity." )
 {
@@ -454,7 +457,7 @@ LUA_BINDING_BEGIN( CBaseAnimating, LookupRandomAttachment, "class", "Get a rando
 
     return 1;
 }
-LUA_BINDING_END( "number", "The random attachment" )
+LUA_BINDING_END( "integer", "The random attachment" )
 
 LUA_BINDING_BEGIN( CBaseAnimating, NotifyShouldTransmit, "class", "Notify should transmit." )
 {
@@ -592,7 +595,7 @@ LUA_BINDING_BEGIN( CBaseAnimating, RetrieveRagdollInfo, "class", "Retrieve the r
 
     return 2;
 }
-LUA_BINDING_END( "boolean", "Whether the operation was successful", "vector", "The position" )
+LUA_BINDING_END( "boolean", "Whether the operation was successful", "Vector", "The position" )
 
 LUA_BINDING_BEGIN( CBaseAnimating, SetPredictable, "class", "Set predictable." )
 {
@@ -634,7 +637,7 @@ LUA_BINDING_BEGIN( CBaseAnimating, ShadowCastType, "class", "Should this object 
 
     return 1;
 }
-LUA_BINDING_END( "integer|ShadowType_t", "The shadow cast type" )
+LUA_BINDING_END( "enumeration/SHADOW_TYPE", "The shadow cast type" )
 
 LUA_BINDING_BEGIN( CBaseAnimating, ShouldMuzzleFlash, "class", "Is the muzzle flash event on?" )
 {

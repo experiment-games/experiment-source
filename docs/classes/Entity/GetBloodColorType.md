@@ -11,14 +11,14 @@ lua:
   library: Entity
   function: GetBloodColorType
   realm: shared
-  description: "Blood type, e.g: DONT_BLEED = -1, BLOOD_COLOR_RED = 0, BLOOD_COLOR_YELLOW, BLOOD_COLOR_GREEN, BLOOD_COLOR_MECH (TODO: Expose these enums)."
+  description: "Blood type."
   
   
   returns:
-    - type: number
+    - type: enumeration/BLOOD_COLOR
       description: "The blood type."
 ---
 
 <div class="lua__search__keywords">
-Entity:GetBloodColorType &#x2013; Blood type, e.g: DONT_BLEED = -1, BLOOD_COLOR_RED = 0, BLOOD_COLOR_YELLOW, BLOOD_COLOR_GREEN, BLOOD_COLOR_MECH (TODO: Expose these enums).
+Entity:GetBloodColorType &#x2013; Blood type.
 </div>

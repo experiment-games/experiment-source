@@ -271,7 +271,7 @@ LUA_BINDING_BEGIN( Utilities, PointOnLineNearestPoint, "library", "Returns the n
     lua_pushvector( L, UTIL_PointOnLineNearestPoint( point, lineStart, lineEnd, clamp ) );
     return 1;
 }
-LUA_BINDING_END( "vector", "The nearest point on the line." )
+LUA_BINDING_END( "Vector", "The nearest point on the line." )
 
 LUA_BINDING_BEGIN( Utilities, IsSpaceEmpty, "library", "Check if the space is empty" )
 {

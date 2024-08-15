@@ -533,7 +533,7 @@ typedef enum
 #define COLOR_BLACK		Color(0, 0, 0, 255)
 
 // All NPCs need this data
-enum
+enum BLOOD_COLOR
 {
 	DONT_BLEED = -1,
 

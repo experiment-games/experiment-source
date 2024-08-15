@@ -17,7 +17,7 @@ lua:
     - name: "boneName"
       type: string
   returns:
-    - type: number
+    - type: integer
       description: "The bone"
 ---
 

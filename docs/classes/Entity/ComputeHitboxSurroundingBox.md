@@ -17,9 +17,9 @@ lua:
   returns:
     - type: boolean
       description: "Whether the operation was successful"
-    - type: vector
+    - type: Vector
       description: "The world mins"
-    - type: vector
+    - type: Vector
       description: "The world maxs"
 ---
 

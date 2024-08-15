@@ -1,6 +1,6 @@
 ---
 template: lua-library-function.html
-title: HSLToColor
+title: HslToColor
 icon: lua-shared
 tags:
   - lua
@@ -8,17 +8,17 @@ tags:
   - needs-verification
   - needs-example
 lua:
-  library: _G
-  function: HSLToColor
+  library: Colors
+  function: HslToColor
   realm: shared
   description: "Converts HSL to RGB."
   
   
   returns:
-    - type: color
+    - type: Color
       description: "The converted color."
 ---
 
 <div class="lua__search__keywords">
-_G.HSLToColor &#x2013; Converts HSL to RGB.
+Colors.HslToColor &#x2013; Converts HSL to RGB.
 </div>

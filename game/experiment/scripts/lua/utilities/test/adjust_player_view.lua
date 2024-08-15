@@ -13,7 +13,7 @@ local currentTime = Engines.GetCurrentTime
 
 Hooks.Add("CalcView", "CalcView", function(client, eyeOrigin, eyeAngles, fov, zNear, zFar)
 	-- Give a subtle breathing effect.
-	eyeAngles = eyeAngles + Angle(math.sin(currentTime()) / 2, 0, 0)
+	eyeAngles = eyeAngles + Angles.Create(math.sin(currentTime()) / 2, 0, 0)
 
 	-- FIXME: Field of view is just plain broken here. Use client:SetFOV() to
 	-- get around this.

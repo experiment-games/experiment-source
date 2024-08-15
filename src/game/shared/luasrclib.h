@@ -11,8 +11,12 @@
 #pragma once
 #endif
 
+#define LUA_CLIENTENUMNAME ""
+LUALIB_API int luaopen_ClientEnumerations( lua_State *L );
 #define LUA_SHAREDENUMNAME ""
 LUALIB_API int( luaopen_SharedEnumerations )( lua_State *L );
+#define LUA_SERVERENUMNAME ""
+LUALIB_API int( luaopen_ServerEnumerations )( lua_State *L );
 
 #define LUA_ACTIVITYENUMNAME "ACTIVITY"
 LUALIB_API int( luaopen_ACTIVITY )( lua_State *L );
@@ -192,7 +196,7 @@ LUALIB_API int( luaopen_PhysicsEnvironments )( lua_State *L );
 #define LUA_PREDICTIONLIBNAME "Prediction"
 LUALIB_API int( luaopen_prediction )( lua_State *L );
 
-#define LUA_QANGLELIBNAME "Angle"
+#define LUA_QANGLEMETANAME "Angle"
 LUALIB_API int( luaopen_QAngle )( lua_State *L );
 
 #define LUA_RANDOMLIBNAME "Random"

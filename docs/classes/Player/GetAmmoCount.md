@@ -21,7 +21,7 @@ lua:
       - name: "name"
         type: string
   returns:
-    - type: number
+    - type: integer
       description: "The player's ammo count."
 ---
 
