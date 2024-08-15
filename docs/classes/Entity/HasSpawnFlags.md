@@ -15,7 +15,7 @@ lua:
   
   arguments:
     - name: "flags"
-      type: integer
+      type: number
   returns:
     - type: boolean
       description: "true if has flags, false otherwise."

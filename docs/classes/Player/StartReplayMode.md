@@ -16,10 +16,6 @@ lua:
   arguments:
     - name: "delay"
       type: number
-    - name: "duration"
-      type: number
-    - name: "entityIndex"
-      type: integer
   returns:
     - type: boolean
       description: "Whether the replay mode was started."

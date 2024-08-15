@@ -7,112 +7,134 @@
 // memdbgon must be the last include file in a .cpp file!!!
 #include "tier0/memdbgon.h"
 
-static int prediction_GetIdealPitch (lua_State *L) {
-  lua_pushnumber(L, prediction->GetIdealPitch());
-  return 1;
+LUA_REGISTRATION_INIT( Predictions )
+
+LUA_BINDING_BEGIN( Predictions, GetIdealPitch, "library", "Get the ideal pitch." )
+{
+    lua_pushnumber( L, prediction->GetIdealPitch() );
+    return 1;
 }
+LUA_BINDING_END( "number", "The ideal pitch." )
 
-static int prediction_GetIncomingPacketNumber (lua_State *L) {
-  lua_pushinteger(L, prediction->GetIncomingPacketNumber());
-  return 1;
+LUA_BINDING_BEGIN( Predictions, GetIncomingPacketNumber, "library", "Get the incoming packet number." )
+{
+    lua_pushinteger( L, prediction->GetIncomingPacketNumber() );
+    return 1;
 }
+LUA_BINDING_END( "integer", "The incoming packet number." )
 
-static int prediction_GetLocalViewAngles (lua_State *L) {
-  QAngle ang;
-  prediction->GetLocalViewAngles(ang);
-  lua_pushangle(L, ang);
-  return 1;
+LUA_BINDING_BEGIN( Predictions, GetLocalViewAngles, "library", "Get the local view angles." )
+{
+    QAngle ang;
+    prediction->GetLocalViewAngles( ang );
+    lua_pushangle( L, ang );
+    return 1;
 }
+LUA_BINDING_END( "Angle", "The local view angles." )
 
-static int prediction_GetViewAngles (lua_State *L) {
-  QAngle ang;
-  prediction->GetViewAngles(ang);
-  lua_pushangle(L, ang);
-  return 1;
+LUA_BINDING_BEGIN( Predictions, GetViewAngles, "library", "Get the view angles." )
+{
+    QAngle ang;
+    prediction->GetViewAngles( ang );
+    lua_pushangle( L, ang );
+    return 1;
 }
+LUA_BINDING_END( "Angle", "The view angles." )
 
-static int prediction_GetViewOrigin (lua_State *L) {
-  Vector org;
-  prediction->GetViewOrigin(org);
-  lua_pushvector(L, org);
-  return 1;
+LUA_BINDING_BEGIN( Predictions, GetViewOrigin, "library", "Get the view origin." )
+{
+    Vector org;
+    prediction->GetViewOrigin( org );
+    lua_pushvector( L, org );
+    return 1;
 }
+LUA_BINDING_END( "Vector", "The view origin." )
 
-static int prediction_InPrediction (lua_State *L) {
-  lua_pushboolean(L, prediction->InPrediction());
-  return 1;
+LUA_BINDING_BEGIN( Predictions, InPrediction, "library", "Check if the game is in prediction." )
+{
+    lua_pushboolean( L, prediction->InPrediction() );
+    return 1;
 }
+LUA_BINDING_END( "boolean", "Whether the game is in prediction." )
 
-static int prediction_IsFirstTimePredicted (lua_State *L) {
-  lua_pushboolean(L, prediction->IsFirstTimePredicted());
-  return 1;
+LUA_BINDING_BEGIN( Predictions, IsFirstTimePredicted, "library", "Check if the game is in the first time predicted." )
+{
+    lua_pushboolean( L, prediction->IsFirstTimePredicted() );
+    return 1;
 }
+LUA_BINDING_END( "boolean", "Whether the game is in the first time predicted." )
 
-static int prediction_OnReceivedUncompressedPacket (lua_State *L) {
-  prediction->OnReceivedUncompressedPacket();
-  return 0;
+LUA_BINDING_BEGIN( Predictions, OnReceivedUncompressedPacket, "library", "Call when the game receives an uncompressed packet." )
+{
+    prediction->OnReceivedUncompressedPacket();
+    return 0;
 }
+LUA_BINDING_END()
 
-static int prediction_PostEntityPacketReceived (lua_State *L) {
-  prediction->PostEntityPacketReceived();
-  return 0;
+LUA_BINDING_BEGIN( Predictions, PostEntityPacketReceived, "library", "Call after the game receives an entity packet." )
+{
+    prediction->PostEntityPacketReceived();
+    return 0;
 }
+LUA_BINDING_END()
 
-static int prediction_PostNetworkDataReceived (lua_State *L) {
-  prediction->PostNetworkDataReceived(luaL_checknumber(L, 1));
-  return 0;
+LUA_BINDING_BEGIN( Predictions, PostNetworkDataReceived, "library", "Call after the game receives network data." )
+{
+    int commandsAcknowledged = LUA_BINDING_ARGUMENT( luaL_checknumber, 1, "commandsAcknowledged" );
+    prediction->PostNetworkDataReceived( commandsAcknowledged );
+    return 0;
 }
+LUA_BINDING_END()
 
-static int prediction_PreEntityPacketReceived (lua_State *L) {
-  prediction->PreEntityPacketReceived(luaL_checknumber(L, 1), luaL_checknumber(L, 2));
-  return 0;
+LUA_BINDING_BEGIN( Predictions, PreEntityPacketReceived, "library", "Call before the game receives an entity packet." )
+{
+    int commandsAcknowledged = LUA_BINDING_ARGUMENT( luaL_checknumber, 1, "commandsAcknowledged" );
+    int currentWorldUpdate = LUA_BINDING_ARGUMENT( luaL_checknumber, 2, "currentWorldUpdate" );
+    prediction->PreEntityPacketReceived( commandsAcknowledged, currentWorldUpdate );
+    return 0;
 }
+LUA_BINDING_END()
 
-static int prediction_SetLocalViewAngles (lua_State *L) {
-  prediction->SetLocalViewAngles(luaL_checkangle(L, 1));
-  return 0;
+LUA_BINDING_BEGIN( Predictions, SetLocalViewAngles, "library", "Set the local view angles." )
+{
+    QAngle ang = LUA_BINDING_ARGUMENT( luaL_checkangle, 1, "angles" );
+    prediction->SetLocalViewAngles( ang );
+    return 0;
 }
+LUA_BINDING_END()
 
-static int prediction_SetViewAngles (lua_State *L) {
-  prediction->SetViewAngles(luaL_checkangle(L, 1));
-  return 0;
+LUA_BINDING_BEGIN( Predictions, SetViewAngles, "library", "Set the view angles." )
+{
+    QAngle ang = LUA_BINDING_ARGUMENT( luaL_checkangle, 1, "angles" );
+    prediction->SetViewAngles( ang );
+    return 0;
 }
+LUA_BINDING_END()
 
-static int prediction_SetViewOrigin (lua_State *L) {
-  prediction->SetViewOrigin(luaL_checkvector(L, 1));
-  return 0;
+LUA_BINDING_BEGIN( Predictions, SetViewOrigin, "library", "Set the view origin." )
+{
+    Vector org = LUA_BINDING_ARGUMENT( luaL_checkvector, 1, "origin" );
+    prediction->SetViewOrigin( org );
+    return 0;
 }
+LUA_BINDING_END()
 
-static int prediction_Update (lua_State *L) {
-  prediction->Update(luaL_checknumber(L, 1), luaL_checkboolean(L, 2), luaL_checknumber(L, 3), luaL_checknumber(L, 4));
-  return 0;
+LUA_BINDING_BEGIN( Predictions, Update, "library", "Update the prediction." )
+{
+    int startFrame = LUA_BINDING_ARGUMENT( luaL_checknumber, 1, "startFrame" );
+    bool validFrame = LUA_BINDING_ARGUMENT( luaL_checkboolean, 2, "validFrame" );
+    int incomingAcknowledged = LUA_BINDING_ARGUMENT( luaL_checknumber, 3, "incomingAcknowledged" );
+    int outgoingCommand = LUA_BINDING_ARGUMENT( luaL_checknumber, 4, "outgoingCommand" );
+    prediction->Update( startFrame, validFrame, incomingAcknowledged, outgoingCommand );
+    return 0;
 }
-
-
-static const luaL_Reg predictionlib[] = {
-  {"GetIdealPitch",   prediction_GetIdealPitch},
-  {"GetIncomingPacketNumber",   prediction_GetIncomingPacketNumber},
-  {"GetLocalViewAngles",   prediction_GetLocalViewAngles},
-  {"GetViewAngles",   prediction_GetViewAngles},
-  {"GetViewOrigin",   prediction_GetViewOrigin},
-  {"InPrediction",   prediction_InPrediction},
-  {"IsFirstTimePredicted",   prediction_IsFirstTimePredicted},
-  {"OnReceivedUncompressedPacket",   prediction_OnReceivedUncompressedPacket},
-  {"PostEntityPacketReceived",   prediction_PostEntityPacketReceived},
-  {"PostNetworkDataReceived",   prediction_PostNetworkDataReceived},
-  {"PreEntityPacketReceived",   prediction_PreEntityPacketReceived},
-  {"SetLocalViewAngles",   prediction_SetLocalViewAngles},
-  {"SetViewAngles",   prediction_SetViewAngles},
-  {"SetViewOrigin",   prediction_SetViewOrigin},
-  {"Update",   prediction_Update},
-  {NULL, NULL}
-};
-
+LUA_BINDING_END()
 
 /*
 ** Open prediction library
 */
-LUALIB_API int luaopen_prediction (lua_State *L) {
-  luaL_register(L, LUA_PREDICTIONLIBNAME, predictionlib);
-  return 1;
+LUALIB_API int luaopen_prediction( lua_State *L )
+{
+    LUA_REGISTRATION_COMMIT_LIBRARY( Predictions );
+    return 1;
 }

@@ -5,7 +5,7 @@
 	Modified for Experiment.
 --]]
 
-local CBuildSubMenu = Gui.CBuildSubMenu
+local CBuildSubMenu = Panels.CBuildSubMenu
 local ScreenWidth = Utilities.GetScreenWidth
 local ScreenHeight = Utilities.GetScreenHeight
 
@@ -26,7 +26,7 @@ function CBuildMenu:Init(pViewPort)
 
 	self.m_pViewPort = pViewPort
 
-	self.m_pImage = Gui.CImagePanel(self, "test_image")
+	self.m_pImage = Panels.CImagePanel(self, "test_image")
 	self.m_pImage:SetImage("silkicons/monkey.png")
 	self.m_pImage:SizeToContents()
 	self.m_pImage:SetPosition(
@@ -35,7 +35,7 @@ function CBuildMenu:Init(pViewPort)
 	)
 
 	if false then -- TODO: Implement this
-		self.m_pMainMenu = Gui.CBuildSubMenu(self, "mainmenu")
+		self.m_pMainMenu = Panels.CBuildSubMenu(self, "mainmenu")
 		self.m_pMainMenu:LoadControlSettings("Resource/UI/MainBuyMenu.res")
 		self.m_pMainMenu:SetVisible(false)
 	end
@@ -44,7 +44,7 @@ function CBuildMenu:Init(pViewPort)
 end
 
 function CBuildMenu:ApplySchemeSettings(scheme)
-	self:SetBgColor(Colors.Create(0, 0, 0, 80))
+	self:SetBackgroundColor(Colors.Create(0, 0, 0, 80))
 end
 
 -------------------------------------------------------------------------------
@@ -63,10 +63,10 @@ function CBuildMenu:ShowPanel(bShow)
 		self:MakePopup()
 
 		if (self.m_lastx and self.m_lasty) then
-			Inputs.SetCursorPos(self.m_lastx, self.m_lasty)
+			Inputs.SetCursorPosition(self.m_lastx, self.m_lasty)
 		end
 	else
-		self.m_lastx, self.m_lasty = Inputs.GetCursorPos()
+		self.m_lastx, self.m_lasty = Inputs.GetCursorPosition()
 
 		self:SetVisible(false)
 		self:SetMouseInputEnabled(false)
@@ -80,4 +80,4 @@ function CBuildMenu:OnClose()
 	self.BaseClass.OnClose(self)
 end
 
-Gui.Register(CBuildMenu, "CBuildMenu", "Panel")
+Panels.Register(CBuildMenu, "CBuildMenu", "Panel")

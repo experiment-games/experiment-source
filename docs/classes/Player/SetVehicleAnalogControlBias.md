@@ -15,7 +15,7 @@ lua:
   
   arguments:
     - name: "bias"
-      type: integer
+      type: number
   returns:
     
 ---

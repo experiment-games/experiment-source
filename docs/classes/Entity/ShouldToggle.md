@@ -15,9 +15,9 @@ lua:
   
   arguments:
     - name: "useType"
-      type: integer
+      type: enumeration/USE_TYPE
     - name: "currentState"
-      type: integer
+      type: number
   returns:
     - type: integer
       description: "The toggle state"

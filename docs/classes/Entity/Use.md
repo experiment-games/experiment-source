@@ -19,7 +19,7 @@ lua:
     - name: "caller"
       type: Entity
     - name: "useType"
-      type: integer
+      type: enumeration/USE_TYPE
     - name: "value"
       type: number
   returns:

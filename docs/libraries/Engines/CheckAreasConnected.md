@@ -15,9 +15,9 @@ lua:
   
   arguments:
     - name: "startArea"
-      type: integer
+      type: number
     - name: "endArea"
-      type: integer
+      type: number
   returns:
     - type: boolean
       description: "True if the areas are connected, false otherwise."

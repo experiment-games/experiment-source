@@ -15,7 +15,7 @@ lua:
   
   arguments:
     - name: "collide"
-      type: number
+      type: enumeration/MOVE_COLLIDE
   returns:
     
 ---

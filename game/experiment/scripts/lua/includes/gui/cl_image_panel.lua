@@ -14,10 +14,10 @@ function CImagePanel:SetImage(strImage)
 	self.ImageName = strImage
 
 	if (not self.TextureID) then
-		self.TextureID = Surface.CreateNewTextureID(true)
+		self.TextureID = Surfaces.CreateNewTextureID(true)
 	end
 
-	self.Material = Surface.FindMaterial(strImage)
+	self.Material = Surfaces.FindMaterial(strImage)
 
 	local texture = self.Material:GetTexture("$basetexture")
 
@@ -40,9 +40,9 @@ function CImagePanel:Paint()
 		return
 	end
 
-	Surface.DrawSetTextureMaterial(self.TextureID, self.Material)
-	Surface.DrawSetColor(255, 255, 255, 255)
-	Surface.DrawTexturedRect(0, 0, width, height)
+	Surfaces.DrawSetTextureMaterial(self.TextureID, self.Material)
+	Surfaces.DrawSetColor(255, 255, 255, 255)
+	Surfaces.DrawTexturedRectangle(0, 0, width, height)
 end
 
-Gui.Register(CImagePanel, "CImagePanel", "Panel")
+Panels.Register(CImagePanel, "CImagePanel", "Panel")

@@ -15,7 +15,7 @@ lua:
   
   arguments:
     - name: "edictNumber"
-      type: integer
+      type: number
   returns:
     - type: Entity
       description: "The entity found, or NULL if not found."

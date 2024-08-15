@@ -4,6 +4,7 @@
 
   In the root of the project, run:
   node tools/docs-build-indexes.js classes Methods
+  node tools/docs-build-indexes.js libraries Functions
 */
 
 const fs = require('fs');

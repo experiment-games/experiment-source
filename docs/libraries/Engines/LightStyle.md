@@ -15,7 +15,7 @@ lua:
   
   arguments:
     - name: "styleIndex"
-      type: integer
+      type: number
     - name: "styleValue"
       type: string
   returns:

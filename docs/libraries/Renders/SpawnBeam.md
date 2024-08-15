@@ -19,27 +19,27 @@ lua:
     - name: "end"
       type: Vector
     - name: "modelIndex"
-      type: integer
+      type: number
     - name: "haloIndex"
-      type: integer
+      type: number
     - name: "frameStart"
-      type: integer
+      type: number
     - name: "frameRate"
-      type: integer
+      type: number
     - name: "life"
       type: number
     - name: "width"
-      type: integer
+      type: number
     - name: "endWidth"
-      type: integer
+      type: number
     - name: "fadeLength"
-      type: integer
+      type: number
     - name: "noise"
-      type: integer
+      type: number
     - name: "colorAndBrightness"
       type: Color
     - name: "speed"
-      type: integer
+      type: number
   returns:
     
 ---

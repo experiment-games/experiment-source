@@ -46,7 +46,7 @@ LUA_BINDING_BEGIN( Utilities, ShakeScreen, "library", "Apply screen shake effect
     float frequency = LUA_BINDING_ARGUMENT( luaL_checknumber, 3, "frequency" );
     float duration = LUA_BINDING_ARGUMENT( luaL_checknumber, 4, "duration" );
     float radius = LUA_BINDING_ARGUMENT( luaL_checknumber, 5, "radius" );
-    ShakeCommand_t command = ( ShakeCommand_t )( int )LUA_BINDING_ARGUMENT( luaL_checknumber, 6, "command" );
+    ShakeCommand_t command = LUA_BINDING_ARGUMENT_ENUM( ShakeCommand_t, 6, "command" );
     bool localAmplitude = LUA_BINDING_ARGUMENT_WITH_DEFAULT( luaL_optboolean, 7, false, "localAmplitude" );
     UTIL_ScreenShake( center, amplitude, frequency, duration, radius, command, localAmplitude );
     return 0;

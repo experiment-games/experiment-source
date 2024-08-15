@@ -18,7 +18,7 @@ LUA_REGISTRATION_INIT( EngineVgui )
 
 LUA_BINDING_BEGIN( EngineVgui, GetPanel, "library", "Get a VGUI panel instance by panel type." )
 {
-    VGuiPanel_t panelType = ( VGuiPanel_t )( int )LUA_BINDING_ARGUMENT( luaL_checknumber, 1, "panelType" );
+    VGuiPanel_t panelType = LUA_BINDING_ARGUMENT_ENUM( VGuiPanel_t, 1, "panelType" );
     Panel::PushVPanelLuaInstance( L, enginevgui->GetPanel( panelType ) );
     return 1;
 }

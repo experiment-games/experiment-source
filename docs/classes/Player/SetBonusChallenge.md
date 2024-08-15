@@ -15,7 +15,7 @@ lua:
   
   arguments:
     - name: "challenge"
-      type: integer
+      type: number
   returns:
     
 ---

@@ -16,7 +16,7 @@ lua:
   static: true
   arguments:
     - name: "edictIndex"
-      type: integer
+      type: number
   returns:
     - type: Entity
       description: "The entity instance"

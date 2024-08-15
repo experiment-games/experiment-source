@@ -13,7 +13,7 @@
 
 LUA_API lua_INetChannelInfo *lua_tonetchannel( lua_State *L, int idx )
 {
-    lua_INetChannelInfo *pNetChannel = *( lua_INetChannelInfo ** )luaL_checkudata( L, idx, LUA_NETCHANNELINFOLIBNAME );
+    lua_INetChannelInfo *pNetChannel = *( lua_INetChannelInfo ** )luaL_checkudata( L, idx, LUA_NETCHANNELINFOMETANAME );
     return pNetChannel;
 }
 
@@ -25,228 +25,276 @@ LUA_API void lua_pushnetchannel( lua_State *L, INetChannelInfo *netchannel )
 {
     lua_INetChannelInfo **ppNetChannel = ( lua_INetChannelInfo ** )lua_newuserdata( L, sizeof( netchannel ) );
     *ppNetChannel = netchannel;
-    LUA_SAFE_SET_METATABLE( L, LUA_NETCHANNELINFOLIBNAME );
+    LUA_SAFE_SET_METATABLE( L, LUA_NETCHANNELINFOMETANAME );
 }
 
 LUALIB_API lua_INetChannelInfo *luaL_checknetchannel( lua_State *L, int narg )
 {
-    lua_INetChannelInfo *d = *( lua_INetChannelInfo ** )luaL_checkudata( L, narg, LUA_NETCHANNELINFOLIBNAME );
+    lua_INetChannelInfo *d = *( lua_INetChannelInfo ** )luaL_checkudata( L, narg, LUA_NETCHANNELINFOMETANAME );
     if ( d == NULL ) /* avoid extra test when d is not 0 */
         luaL_argerror( L, narg, "INetChannelInfo expected, got NULL" );
     return d;
 }
 
-static int INetChannelInfo_GetAddress( lua_State *L )
+LUA_REGISTRATION_INIT( NetChannelInfo );
+
+LUA_BINDING_BEGIN( NetChannelInfo, GetAddress, "class", "Returns the address of the remote connection." )
 {
-    lua_pushstring( L, luaL_checknetchannel( L, 1 )->GetAddress() );
+    INetChannelInfo *netChannel = LUA_BINDING_ARGUMENT( luaL_checknetchannel, 1, "netChannel" );
+    lua_pushstring( L, netChannel->GetAddress() );
     return 1;
 }
+LUA_BINDING_END( "string", "The address of the remote connection." )
 
-static int INetChannelInfo_GetAvgChoke( lua_State *L )
+LUA_BINDING_BEGIN( NetChannelInfo, GetAverageChoke, "class", "Returns the average choke for the specified number of packets." )
 {
-    lua_pushnumber( L, luaL_checknetchannel( L, 1 )->GetAvgChoke( luaL_checkinteger( L, 2 ) ) );
+    INetChannelInfo *netChannel = LUA_BINDING_ARGUMENT( luaL_checknetchannel, 1, "netChannel" );
+    int flow = LUA_BINDING_ARGUMENT( luaL_checknumber, 2, "flow" );
+    lua_pushnumber( L, netChannel->GetAvgChoke( flow ) );
     return 1;
 }
+LUA_BINDING_END( "number", "The average choke for the specified number of packets." )
 
-static int INetChannelInfo_GetAvgData( lua_State *L )
+LUA_BINDING_BEGIN( NetChannelInfo, GetAverageData, "class", "Returns the average data for the specified number of packets." )
 {
-    lua_pushnumber( L, luaL_checknetchannel( L, 1 )->GetAvgData( luaL_checkinteger( L, 2 ) ) );
+    INetChannelInfo *netChannel = LUA_BINDING_ARGUMENT( luaL_checknetchannel, 1, "netChannel" );
+    int flow = LUA_BINDING_ARGUMENT( luaL_checknumber, 2, "flow" );
+    lua_pushnumber( L, netChannel->GetAvgData( flow ) );
     return 1;
 }
+LUA_BINDING_END( "number", "The average data for the specified number of packets." )
 
-static int INetChannelInfo_GetAvgLatency( lua_State *L )
+LUA_BINDING_BEGIN( NetChannelInfo, GetAverageLatency, "class", "Returns the average latency for the specified number of packets." )
 {
-    lua_pushnumber( L, luaL_checknetchannel( L, 1 )->GetAvgLatency( luaL_checkinteger( L, 2 ) ) );
+    INetChannelInfo *netChannel = LUA_BINDING_ARGUMENT( luaL_checknetchannel, 1, "netChannel" );
+    int flow = LUA_BINDING_ARGUMENT( luaL_checknumber, 2, "flow" );
+    lua_pushnumber( L, netChannel->GetAvgLatency( flow ) );
     return 1;
 }
+LUA_BINDING_END( "number", "The average latency for the specified number of packets." )
 
-static int INetChannelInfo_GetAvgLoss( lua_State *L )
+LUA_BINDING_BEGIN( NetChannelInfo, GetAverageLoss, "class", "Returns the average loss for the specified number of packets." )
 {
-    lua_pushnumber( L, luaL_checknetchannel( L, 1 )->GetAvgLoss( luaL_checkinteger( L, 2 ) ) );
+    INetChannelInfo *netChannel = LUA_BINDING_ARGUMENT( luaL_checknetchannel, 1, "netChannel" );
+    int flow = LUA_BINDING_ARGUMENT( luaL_checknumber, 2, "flow" );
+    lua_pushnumber( L, netChannel->GetAvgLoss( flow ) );
     return 1;
 }
+LUA_BINDING_END( "number", "The average loss for the specified number of packets." )
 
-static int INetChannelInfo_GetAvgPackets( lua_State *L )
+LUA_BINDING_BEGIN( NetChannelInfo, GetAveragePackets, "class", "Returns the average packets for the specified number of packets." )
 {
-    lua_pushnumber( L, luaL_checknetchannel( L, 1 )->GetAvgPackets( luaL_checkinteger( L, 2 ) ) );
+    INetChannelInfo *netChannel = LUA_BINDING_ARGUMENT( luaL_checknetchannel, 1, "netChannel" );
+    int flow = LUA_BINDING_ARGUMENT( luaL_checknumber, 2, "flow" );
+    lua_pushnumber( L, netChannel->GetAvgPackets( flow ) );
     return 1;
 }
+LUA_BINDING_END( "number", "The average packets for the specified number of packets." )
 
-static int INetChannelInfo_GetBufferSize( lua_State *L )
+LUA_BINDING_BEGIN( NetChannelInfo, GetBufferSize, "class", "Returns the size of the buffer." )
 {
-    lua_pushinteger( L, luaL_checknetchannel( L, 1 )->GetBufferSize() );
+    INetChannelInfo *netChannel = LUA_BINDING_ARGUMENT( luaL_checknetchannel, 1, "netChannel" );
+    lua_pushinteger( L, netChannel->GetBufferSize() );
     return 1;
 }
+LUA_BINDING_END( "integer", "The size of the buffer." )
 
-static int INetChannelInfo_GetCommandInterpolationAmount( lua_State *L )
+LUA_BINDING_BEGIN( NetChannelInfo, GetCommandInterpolationAmount, "class", "Returns the command interpolation amount for the specified command number." )
 {
-    lua_pushnumber( L, luaL_checknetchannel( L, 1 )->GetCommandInterpolationAmount( luaL_checkinteger( L, 2 ), luaL_checkinteger( L, 3 ) ) );
+    INetChannelInfo *netChannel = LUA_BINDING_ARGUMENT( luaL_checknetchannel, 1, "netChannel" );
+    int commandNumber = LUA_BINDING_ARGUMENT( luaL_checknumber, 2, "commandNumber" );
+    int flow = LUA_BINDING_ARGUMENT( luaL_checknumber, 3, "flow" );
+    lua_pushnumber( L, netChannel->GetCommandInterpolationAmount( commandNumber, flow ) );
     return 1;
 }
+LUA_BINDING_END( "number", "The command interpolation amount for the specified command number." )
 
-static int INetChannelInfo_GetDataRate( lua_State *L )
+LUA_BINDING_BEGIN( NetChannelInfo, GetDataRate, "class", "Returns the data rate." )
 {
-    lua_pushinteger( L, luaL_checknetchannel( L, 1 )->GetDataRate() );
+    INetChannelInfo *netChannel = LUA_BINDING_ARGUMENT( luaL_checknetchannel, 1, "netChannel" );
+    lua_pushinteger( L, netChannel->GetDataRate() );
     return 1;
 }
+LUA_BINDING_END( "integer", "The data rate." )
 
-static int INetChannelInfo_GetLatency( lua_State *L )
+LUA_BINDING_BEGIN( NetChannelInfo, GetLatency, "class", "Returns the latency for the specified flow." )
 {
-    lua_pushnumber( L, luaL_checknetchannel( L, 1 )->GetLatency( luaL_checkinteger( L, 2 ) ) );
+    INetChannelInfo *netChannel = LUA_BINDING_ARGUMENT( luaL_checknetchannel, 1, "netChannel" );
+    int flow = LUA_BINDING_ARGUMENT( luaL_checknumber, 2, "flow" );
+    lua_pushnumber( L, netChannel->GetLatency( flow ) );
     return 1;
 }
+LUA_BINDING_END( "number", "The latency for the specified flow." )
 
-static int INetChannelInfo_GetName( lua_State *L )
+LUA_BINDING_BEGIN( NetChannelInfo, GetName, "class", "Returns the name of the remote connection." )
 {
-    lua_pushstring( L, luaL_checknetchannel( L, 1 )->GetName() );
+    INetChannelInfo *netChannel = LUA_BINDING_ARGUMENT( luaL_checknetchannel, 1, "netChannel" );
+    lua_pushstring( L, netChannel->GetName() );
     return 1;
 }
+LUA_BINDING_END( "string", "The name of the remote connection." )
 
-static int INetChannelInfo_GetPacketBytes( lua_State *L )
+LUA_BINDING_BEGIN( NetChannelInfo, GetPacketBytes, "class", "Returns the number of bytes in the specified packet." )
 {
-    lua_pushinteger( L, luaL_checknetchannel( L, 1 )->GetPacketBytes( luaL_checkinteger( L, 2 ), luaL_checkinteger( L, 3 ), luaL_checkinteger( L, 4 ) ) );
+    INetChannelInfo *netChannel = LUA_BINDING_ARGUMENT( luaL_checknetchannel, 1, "netChannel" );
+    int flow = LUA_BINDING_ARGUMENT( luaL_checknumber, 2, "flow" );
+    int frameNumber = LUA_BINDING_ARGUMENT( luaL_checknumber, 3, "frameNumber" );
+    int group = LUA_BINDING_ARGUMENT( luaL_checknumber, 4, "group" );
+    lua_pushinteger( L, netChannel->GetPacketBytes( flow, frameNumber, group ) );
     return 1;
 }
+LUA_BINDING_END( "integer", "The number of bytes in the specified packet." )
 
-static int INetChannelInfo_GetPacketResponseLatency( lua_State *L )
+LUA_BINDING_BEGIN( NetChannelInfo, GetPacketResponseLatency, "class", "Returns the packet response latency for the specified packet and flow." )
 {
-    int pnLatencyMsecs, pnChoke;
-    luaL_checknetchannel( L, 1 )->GetPacketResponseLatency( luaL_checkinteger( L, 2 ), luaL_checkinteger( L, 3 ), &pnLatencyMsecs, &pnChoke );
-    lua_pushinteger( L, pnLatencyMsecs );
-    lua_pushinteger( L, pnChoke );
+    INetChannelInfo *netChannel = LUA_BINDING_ARGUMENT( luaL_checknetchannel, 1, "netChannel" );
+    int flow = LUA_BINDING_ARGUMENT( luaL_checknumber, 2, "flow" );
+    int frameNumber = LUA_BINDING_ARGUMENT( luaL_checknumber, 3, "frameNumber" );
+    int latencyMsecs, choke;
+    netChannel->GetPacketResponseLatency( flow, frameNumber, &latencyMsecs, &choke );
+    lua_pushinteger( L, latencyMsecs );
+    lua_pushinteger( L, choke );
     return 2;
 }
+LUA_BINDING_END( "integer", "The packet response latency", "integer", "The choke." )
 
-static int INetChannelInfo_GetPacketTime( lua_State *L )
+LUA_BINDING_BEGIN( NetChannelInfo, GetPacketTime, "class", "Returns the time of the specified packet and flow." )
 {
-    lua_pushnumber( L, luaL_checknetchannel( L, 1 )->GetPacketTime( luaL_checkinteger( L, 2 ), luaL_checkinteger( L, 3 ) ) );
+    INetChannelInfo *netChannel = LUA_BINDING_ARGUMENT( luaL_checknetchannel, 1, "netChannel" );
+    int flow = LUA_BINDING_ARGUMENT( luaL_checknumber, 2, "flow" );
+    int frameNumber = LUA_BINDING_ARGUMENT( luaL_checknumber, 3, "frameNumber" );
+    lua_pushnumber( L, netChannel->GetPacketTime( flow, frameNumber ) );
     return 1;
 }
+LUA_BINDING_END( "number", "The time of the specified packet and flow." )
 
-static int INetChannelInfo_GetRemoteFramerate( lua_State *L )
+LUA_BINDING_BEGIN( NetChannelInfo, GetRemoteFramerate, "class", "Returns the remote frame rate." )
 {
-    float pflFrameTime, pflFrameTimeStdDeviation;
-    luaL_checknetchannel( L, 1 )->GetRemoteFramerate( &pflFrameTime, &pflFrameTimeStdDeviation );
-    lua_pushnumber( L, pflFrameTime );
-    lua_pushnumber( L, pflFrameTimeStdDeviation );
+    INetChannelInfo *netChannel = LUA_BINDING_ARGUMENT( luaL_checknetchannel, 1, "netChannel" );
+    float frameTime, frameTimeStdDeviation;
+    netChannel->GetRemoteFramerate( &frameTime, &frameTimeStdDeviation );
+    lua_pushnumber( L, frameTime );
+    lua_pushnumber( L, frameTimeStdDeviation );
     return 2;
 }
+LUA_BINDING_END( "number", "The remote frame rate.", "number", "The standard deviation of the remote frame rate." )
 
-static int INetChannelInfo_GetSequenceNr( lua_State *L )
+LUA_BINDING_BEGIN( NetChannelInfo, GetSequenceNumber, "class", "Returns the sequence number for the specified flow." )
 {
-    lua_pushinteger( L, luaL_checknetchannel( L, 1 )->GetSequenceNr( luaL_checkinteger( L, 2 ) ) );
+    INetChannelInfo *netChannel = LUA_BINDING_ARGUMENT( luaL_checknetchannel, 1, "netChannel" );
+    int flow = LUA_BINDING_ARGUMENT( luaL_checknumber, 2, "flow" );
+    lua_pushinteger( L, netChannel->GetSequenceNr( flow ) );
     return 1;
 }
+LUA_BINDING_END( "integer", "The sequence number for the specified flow." )
 
-static int INetChannelInfo_GetStreamProgress( lua_State *L )
+LUA_BINDING_BEGIN( NetChannelInfo, GetStreamProgress, "class", "Returns the stream progress for the specified flow." )
 {
+    INetChannelInfo *netChannel = LUA_BINDING_ARGUMENT( luaL_checknetchannel, 1, "netChannel" );
+    int flow = LUA_BINDING_ARGUMENT( luaL_checknumber, 2, "flow" );
     int received, total;
-    lua_pushboolean( L, luaL_checknetchannel( L, 1 )->GetStreamProgress( luaL_checkinteger( L, 2 ), &received, &total ) );
+    lua_pushboolean( L, netChannel->GetStreamProgress( flow, &received, &total ) );
     lua_pushinteger( L, received );
     lua_pushinteger( L, total );
     return 3;
 }
+LUA_BINDING_END( "boolean", "If the stream progress was retrieved.", "integer", "The number of bytes received.", "integer", "The total number of bytes." )
 
-static int INetChannelInfo_GetTime( lua_State *L )
+LUA_BINDING_BEGIN( NetChannelInfo, GetTime, "class", "Returns the time." )
 {
-    lua_pushnumber( L, luaL_checknetchannel( L, 1 )->GetTime() );
+    INetChannelInfo *netChannel = LUA_BINDING_ARGUMENT( luaL_checknetchannel, 1, "netChannel" );
+    lua_pushnumber( L, netChannel->GetTime() );
     return 1;
 }
+LUA_BINDING_END( "number", "The time." )
 
-static int INetChannelInfo_GetTimeConnected( lua_State *L )
+LUA_BINDING_BEGIN( NetChannelInfo, GetTimeConnected, "class", "Returns the time connected." )
 {
-    lua_pushnumber( L, luaL_checknetchannel( L, 1 )->GetTimeConnected() );
+    INetChannelInfo *netChannel = LUA_BINDING_ARGUMENT( luaL_checknetchannel, 1, "netChannel" );
+    lua_pushnumber( L, netChannel->GetTimeConnected() );
     return 1;
 }
+LUA_BINDING_END( "number", "The time connected." )
 
-static int INetChannelInfo_GetTimeoutSeconds( lua_State *L )
+LUA_BINDING_BEGIN( NetChannelInfo, GetTimeoutSeconds, "class", "Returns the timeout seconds." )
 {
-    lua_pushnumber( L, luaL_checknetchannel( L, 1 )->GetTimeoutSeconds() );
+    INetChannelInfo *netChannel = LUA_BINDING_ARGUMENT( luaL_checknetchannel, 1, "netChannel" );
+    lua_pushnumber( L, netChannel->GetTimeoutSeconds() );
     return 1;
 }
+LUA_BINDING_END( "number", "The timeout seconds." )
 
-static int INetChannelInfo_GetTimeSinceLastReceived( lua_State *L )
+LUA_BINDING_BEGIN( NetChannelInfo, GetTimeSinceLastReceived, "class", "Returns the time since the last received packet." )
 {
-    lua_pushnumber( L, luaL_checknetchannel( L, 1 )->GetTimeSinceLastReceived() );
+    INetChannelInfo *netChannel = LUA_BINDING_ARGUMENT( luaL_checknetchannel, 1, "netChannel" );
+    lua_pushnumber( L, netChannel->GetTimeSinceLastReceived() );
     return 1;
 }
+LUA_BINDING_END( "number", "The time since the last received packet." )
 
-static int INetChannelInfo_GetTotalData( lua_State *L )
+LUA_BINDING_BEGIN( NetChannelInfo, GetTotalData, "class", "Returns the total data for the specified flow." )
 {
-    lua_pushinteger( L, luaL_checknetchannel( L, 1 )->GetTotalData( luaL_checkinteger( L, 2 ) ) );
+    INetChannelInfo *netChannel = LUA_BINDING_ARGUMENT( luaL_checknetchannel, 1, "netChannel" );
+    int flow = LUA_BINDING_ARGUMENT( luaL_checknumber, 2, "flow" );
+    lua_pushinteger( L, netChannel->GetTotalData( flow ) );
     return 1;
 }
+LUA_BINDING_END( "integer", "The total data for the specified flow." )
 
-static int INetChannelInfo_IsLoopback( lua_State *L )
+LUA_BINDING_BEGIN( NetChannelInfo, IsLoopback, "class", "Returns if the connection is loopback." )
 {
-    lua_pushboolean( L, luaL_checknetchannel( L, 1 )->IsLoopback() );
+    INetChannelInfo *netChannel = LUA_BINDING_ARGUMENT( luaL_checknetchannel, 1, "netChannel" );
+    lua_pushboolean( L, netChannel->IsLoopback() );
     return 1;
 }
+LUA_BINDING_END( "boolean", "If the connection is loopback." )
 
-static int INetChannelInfo_IsPlayback( lua_State *L )
+LUA_BINDING_BEGIN( NetChannelInfo, IsPlayback, "class", "Returns if the connection is playback." )
 {
-    lua_pushboolean( L, luaL_checknetchannel( L, 1 )->IsPlayback() );
+    INetChannelInfo *netChannel = LUA_BINDING_ARGUMENT( luaL_checknetchannel, 1, "netChannel" );
+    lua_pushboolean( L, netChannel->IsPlayback() );
     return 1;
 }
+LUA_BINDING_END( "boolean", "If the connection is playback." )
 
-static int INetChannelInfo_IsTimingOut( lua_State *L )
+LUA_BINDING_BEGIN( NetChannelInfo, IsTimingOut, "class", "Returns if the connection is timing out." )
 {
-    lua_pushboolean( L, luaL_checknetchannel( L, 1 )->IsTimingOut() );
+    INetChannelInfo *netChannel = LUA_BINDING_ARGUMENT( luaL_checknetchannel, 1, "netChannel" );
+    lua_pushboolean( L, netChannel->IsTimingOut() );
     return 1;
 }
+LUA_BINDING_END( "boolean", "If the connection is timing out." )
 
-static int INetChannelInfo_IsValidPacket( lua_State *L )
+LUA_BINDING_BEGIN( NetChannelInfo, IsValidPacket, "class", "Returns if the packet is valid for the specified flow." )
 {
-    lua_pushboolean( L, luaL_checknetchannel( L, 1 )->IsValidPacket( luaL_checkinteger( L, 2 ), luaL_checkinteger( L, 3 ) ) );
+    INetChannelInfo *netChannel = LUA_BINDING_ARGUMENT( luaL_checknetchannel, 1, "netChannel" );
+    int flow = LUA_BINDING_ARGUMENT( luaL_checknumber, 2, "flow" );
+    int frameNumber = LUA_BINDING_ARGUMENT( luaL_checknumber, 3, "frameNumber" );
+    lua_pushboolean( L, netChannel->IsValidPacket( flow, frameNumber ) );
     return 1;
 }
+LUA_BINDING_END( "boolean", "If the packet is valid for the specified flow." )
 
-static int INetChannelInfo___tostring( lua_State *L )
+LUA_BINDING_BEGIN( NetChannelInfo, __tostring, "class", "Returns the string representation of the INetChannelInfo object." )
 {
-    lua_pushfstring( L, "INetChannelInfo: %p", luaL_checkudata( L, 1, "INetChannelInfo" ) );
+    INetChannelInfo *netChannel = LUA_BINDING_ARGUMENT( luaL_checknetchannel, 1, "netChannel" );
+    lua_pushfstring( L, "INetChannelInfo: %p", netChannel );
     return 1;
 }
-
-static const luaL_Reg INetChannelInfometa[] = {
-    { "GetAddress", INetChannelInfo_GetAddress },
-    { "GetAvgChoke", INetChannelInfo_GetAvgChoke },
-    { "GetAvgData", INetChannelInfo_GetAvgData },
-    { "GetAvgLatency", INetChannelInfo_GetAvgLatency },
-    { "GetAvgLoss", INetChannelInfo_GetAvgLoss },
-    { "GetAvgPackets", INetChannelInfo_GetAvgPackets },
-    { "GetBufferSize", INetChannelInfo_GetBufferSize },
-    { "GetCommandInterpolationAmount", INetChannelInfo_GetCommandInterpolationAmount },
-    { "GetDataRate", INetChannelInfo_GetDataRate },
-    { "GetLatency", INetChannelInfo_GetLatency },
-    { "GetName", INetChannelInfo_GetName },
-    { "GetPacketBytes", INetChannelInfo_GetPacketBytes },
-    { "GetPacketResponseLatency", INetChannelInfo_GetPacketResponseLatency },
-    { "GetPacketTime", INetChannelInfo_GetPacketTime },
-    { "GetRemoteFramerate", INetChannelInfo_GetRemoteFramerate },
-    { "GetSequenceNr", INetChannelInfo_GetSequenceNr },
-    { "GetStreamProgress", INetChannelInfo_GetStreamProgress },
-    { "GetTime", INetChannelInfo_GetTime },
-    { "GetTimeConnected", INetChannelInfo_GetTimeConnected },
-    { "GetTimeoutSeconds", INetChannelInfo_GetTimeoutSeconds },
-    { "GetTimeSinceLastReceived", INetChannelInfo_GetTimeSinceLastReceived },
-    { "GetTotalData", INetChannelInfo_GetTotalData },
-    { "IsLoopback", INetChannelInfo_IsLoopback },
-    { "IsPlayback", INetChannelInfo_IsPlayback },
-    { "IsTimingOut", INetChannelInfo_IsTimingOut },
-    { "IsValidPacket", INetChannelInfo_IsValidPacket },
-    { "__tostring", INetChannelInfo___tostring },
-    { NULL, NULL } };
+LUA_BINDING_END( "string", "The string representation of the INetChannelInfo object." )
 
 /*
 ** Open INetChannelInfo object
 */
 LUALIB_API int luaopen_INetChannelInfo( lua_State *L )
 {
-    LUA_PUSH_NEW_METATABLE( L, LUA_NETCHANNELINFOLIBNAME );
-    luaL_register( L, NULL, INetChannelInfometa );
+    LUA_PUSH_NEW_METATABLE( L, LUA_NETCHANNELINFOMETANAME );
+
+    LUA_REGISTRATION_COMMIT( NetChannelInfo );
+
     lua_pushvalue( L, -1 );           /* push metatable */
     lua_setfield( L, -2, "__index" ); /* metatable.__index = metatable */
-    lua_pushstring( L, "NetChannelInfo" );
+    lua_pushstring( L, LUA_NETCHANNELINFOMETANAME );
     lua_setfield( L, -2, "__type" ); /* metatable.__type = "NetChannelInfo" */
     return 1;
 }

@@ -15,7 +15,7 @@ lua:
   
   arguments:
     - name: "flag"
-      type: integer
+      type: number
   returns:
     
 ---

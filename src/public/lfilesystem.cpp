@@ -55,7 +55,7 @@ LUA_BINDING_BEGIN( Files, AddSearchPath, "library", "Add a search path to the fi
 {
     const char *filePath = LUA_BINDING_ARGUMENT( luaL_checkstring, 1, "path" );
     const char *pathId = LUA_BINDING_ARGUMENT( luaL_checkstring, 2, "pathId" );
-    SearchPathAdd_t addType = ( SearchPathAdd_t )( int )LUA_BINDING_ARGUMENT_WITH_DEFAULT( luaL_optnumber, 3, PATH_ADD_TO_TAIL, "addType" );
+    SearchPathAdd_t addType = LUA_BINDING_ARGUMENT_ENUM_WITH_DEFAULT( SearchPathAdd_t, 3, PATH_ADD_TO_TAIL, "addType" );
 
     char fullpath[512] = { 0 };
     bool bGetCurrentDirectory = V_GetCurrentDirectory( fullpath, sizeof( fullpath ) );
@@ -277,7 +277,7 @@ LUA_BINDING_END( "boolean", "true if Steam is running, false otherwise." )
 
 LUA_BINDING_BEGIN( Files, LoadCompiledKeyValues, "library", "Load compiled key values." )
 {
-    filesystem->LoadCompiledKeyValues( ( IFileSystem::KeyValuesPreloadType_t )( int )LUA_BINDING_ARGUMENT( luaL_checknumber, 1, "preloadType" ), LUA_BINDING_ARGUMENT( luaL_checkstring, 2, "filename" ) );
+    filesystem->LoadCompiledKeyValues( LUA_BINDING_ARGUMENT_ENUM( IFileSystem::KeyValuesPreloadType_t, 1, "preloadType" ), LUA_BINDING_ARGUMENT( luaL_checkstring, 2, "filename" ) );
 
     return 0;
 }
@@ -314,7 +314,7 @@ LUA_BINDING_BEGIN( Files, Open, "library", "Open a file." )
 {
     const char *filePath = LUA_BINDING_ARGUMENT( luaL_checkstring, 1, "filePath" );
     char const *readMode = LUA_BINDING_ARGUMENT( luaL_checkstring, 2, "readMode" );
-    const char *pathId = LUA_BINDING_ARGUMENT_WITH_DEFAULT( luaL_optstring, 3, 0, "pathId" );
+    const char *pathId = LUA_BINDING_ARGUMENT_WITH_DEFAULT( luaL_optstring, 3, "DATA", "pathId" );
 
     // Ensure that the read mode is valid
     while ( *readMode )
@@ -338,9 +338,9 @@ LUA_BINDING_BEGIN( Files, Open, "library", "Open a file." )
     }
     else if ( readMode[0] == 'r' )
     {
-        if ( !V_stristr( pathId, "game" ) && !V_stristr( pathId, "data" ) )
+        if ( !V_stristr( pathId, "game" ) && !V_stristr( pathId, "mod" ) && !V_stristr( pathId, "data" ) )
         {
-            luaL_argerror( L, 3, "Invalid pathId for reading (GAME or DATA expected)" );
+            luaL_argerror( L, 3, "Invalid pathId for reading (GAME/MOD or DATA expected)" );
         }
     }
 
@@ -486,7 +486,7 @@ LUA_BINDING_END()
 
 LUA_BINDING_BEGIN( Files, SetWarningLevel, "library", "Set the warning level." )
 {
-    filesystem->SetWarningLevel( ( FileWarningLevel_t )( int )LUA_BINDING_ARGUMENT( luaL_checknumber, 1, "level" ) );
+    filesystem->SetWarningLevel( LUA_BINDING_ARGUMENT_ENUM( FileWarningLevel_t, 1, "level" ) );
 
     return 0;
 }

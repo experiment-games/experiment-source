@@ -36,7 +36,7 @@ local function GenerateEnumerationMarkdown(enumerationName, enumerationTable)
     local searchKeywords = enumerationName .. ": "
     local enumerationValues = ""
 
-    local markdownDirectory = "docs/lua/enumerations"
+    local markdownDirectory = "docs/enumerations"
     local markdownPath = markdownDirectory .. "/" .. enumerationName .. ".md"
 
     print("Generating " .. markdownPath)

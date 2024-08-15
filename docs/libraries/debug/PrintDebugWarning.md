@@ -17,7 +17,7 @@ lua:
     - name: "message"
       type: string
     - name: "level"
-      type: integer
+      type: number
     - name: "groupName"
       type: string
   returns:

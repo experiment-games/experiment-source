@@ -15,7 +15,7 @@ class LHTML : public HTML
 {
     DECLARE_CLASS_SIMPLE( LHTML, HTML );
 
-    LUA_OVERRIDE_SINGLE_LUA_INSTANCE_METATABLE( "HTML" );
+    LUA_OVERRIDE_SINGLE_LUA_INSTANCE_METATABLE( "Html" );
 
    public:
     // You can optionally pass in the panel to send the click message to and the name of the command to send to that panel.

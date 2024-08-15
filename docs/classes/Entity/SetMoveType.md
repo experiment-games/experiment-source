@@ -15,9 +15,9 @@ lua:
   
   arguments:
     - name: "type"
-      type: number
+      type: enumeration/MOVE_TYPE
     - name: "collide"
-      type: number
+      type: enumeration/MOVE_COLLIDE
       default: "MOVECOLLIDE_DEFAULT"
   returns:
     

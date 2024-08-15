@@ -16,10 +16,10 @@ LUA_BINDING_BEGIN( DebugOverlays, AddBoxOverlay, "library", "Add a box overlay t
     Vector mins = LUA_BINDING_ARGUMENT( luaL_checkvector, 2, "mins" );
     Vector maxs = LUA_BINDING_ARGUMENT( luaL_checkvector, 3, "maxs" );
     QAngle angles = LUA_BINDING_ARGUMENT( luaL_checkangle, 4, "angles" );
-    int r = LUA_BINDING_ARGUMENT( luaL_checkinteger, 5, "r" );
-    int g = LUA_BINDING_ARGUMENT( luaL_checkinteger, 6, "g" );
-    int b = LUA_BINDING_ARGUMENT( luaL_checkinteger, 7, "b" );
-    int a = LUA_BINDING_ARGUMENT( luaL_checkinteger, 8, "a" );
+    int r = LUA_BINDING_ARGUMENT( luaL_checknumber, 5, "r" );
+    int g = LUA_BINDING_ARGUMENT( luaL_checknumber, 6, "g" );
+    int b = LUA_BINDING_ARGUMENT( luaL_checknumber, 7, "b" );
+    int a = LUA_BINDING_ARGUMENT( luaL_checknumber, 8, "a" );
     float duration = LUA_BINDING_ARGUMENT( luaL_checknumber, 9, "duration" );
 
     debugoverlay->AddBoxOverlay( start, mins, maxs, angles, r, g, b, a, duration );
@@ -55,9 +55,9 @@ LUA_BINDING_BEGIN( DebugOverlays, AddLineOverlay, "library", "Add a line overlay
 {
     Vector start = LUA_BINDING_ARGUMENT( luaL_checkvector, 1, "start" );
     Vector end = LUA_BINDING_ARGUMENT( luaL_checkvector, 2, "end" );
-    int r = LUA_BINDING_ARGUMENT( luaL_checkinteger, 3, "r" );
-    int g = LUA_BINDING_ARGUMENT( luaL_checkinteger, 4, "g" );
-    int b = LUA_BINDING_ARGUMENT( luaL_checkinteger, 5, "b" );
+    int r = LUA_BINDING_ARGUMENT( luaL_checknumber, 3, "r" );
+    int g = LUA_BINDING_ARGUMENT( luaL_checknumber, 4, "g" );
+    int b = LUA_BINDING_ARGUMENT( luaL_checknumber, 5, "b" );
     bool noDepthTest = LUA_BINDING_ARGUMENT( luaL_checkboolean, 6, "noDepthTest" );
     float duration = LUA_BINDING_ARGUMENT( luaL_checknumber, 7, "duration" );
 
@@ -70,10 +70,10 @@ LUA_BINDING_BEGIN( DebugOverlays, AddLineOverlayAlpha, "library", "Add a line ov
 {
     Vector start = LUA_BINDING_ARGUMENT( luaL_checkvector, 1, "start" );
     Vector end = LUA_BINDING_ARGUMENT( luaL_checkvector, 2, "end" );
-    int r = LUA_BINDING_ARGUMENT( luaL_checkinteger, 3, "r" );
-    int g = LUA_BINDING_ARGUMENT( luaL_checkinteger, 4, "g" );
-    int b = LUA_BINDING_ARGUMENT( luaL_checkinteger, 5, "b" );
-    int a = LUA_BINDING_ARGUMENT( luaL_checkinteger, 6, "a" );
+    int r = LUA_BINDING_ARGUMENT( luaL_checknumber, 3, "r" );
+    int g = LUA_BINDING_ARGUMENT( luaL_checknumber, 4, "g" );
+    int b = LUA_BINDING_ARGUMENT( luaL_checknumber, 5, "b" );
+    int a = LUA_BINDING_ARGUMENT( luaL_checknumber, 6, "a" );
     bool noDepthTest = LUA_BINDING_ARGUMENT( luaL_checkboolean, 7, "noDepthTest" );
     float duration = LUA_BINDING_ARGUMENT( luaL_checknumber, 8, "duration" );
 
@@ -87,10 +87,10 @@ LUA_BINDING_BEGIN( DebugOverlays, AddScreenTextOverlay, "library", "Add a screen
     float x = LUA_BINDING_ARGUMENT( luaL_checknumber, 1, "x" );
     float y = LUA_BINDING_ARGUMENT( luaL_checknumber, 2, "y" );
     float scale = LUA_BINDING_ARGUMENT( luaL_checknumber, 3, "scale" );
-    int r = LUA_BINDING_ARGUMENT( luaL_checkinteger, 4, "r" );
-    int g = LUA_BINDING_ARGUMENT( luaL_checkinteger, 5, "g" );
-    int b = LUA_BINDING_ARGUMENT( luaL_checkinteger, 6, "b" );
-    int a = LUA_BINDING_ARGUMENT( luaL_checkinteger, 7, "a" );
+    int r = LUA_BINDING_ARGUMENT( luaL_checknumber, 4, "r" );
+    int g = LUA_BINDING_ARGUMENT( luaL_checknumber, 5, "g" );
+    int b = LUA_BINDING_ARGUMENT( luaL_checknumber, 6, "b" );
+    int a = LUA_BINDING_ARGUMENT( luaL_checknumber, 7, "a" );
     const char *text = LUA_BINDING_ARGUMENT( luaL_checkstring, 8, "text" );
 
     debugoverlay->AddScreenTextOverlay( x, y, scale, r, g, b, a, text );
@@ -105,10 +105,10 @@ LUA_BINDING_BEGIN( DebugOverlays, AddSweptBoxOverlay, "library", "Add a swept bo
     Vector mins = LUA_BINDING_ARGUMENT( luaL_checkvector, 3, "mins" );
     Vector maxs = LUA_BINDING_ARGUMENT( luaL_checkvector, 4, "maxs" );
     QAngle angles = LUA_BINDING_ARGUMENT( luaL_checkangle, 5, "angles" );
-    int r = LUA_BINDING_ARGUMENT( luaL_checkinteger, 6, "r" );
-    int g = LUA_BINDING_ARGUMENT( luaL_checkinteger, 7, "g" );
-    int b = LUA_BINDING_ARGUMENT( luaL_checkinteger, 8, "b" );
-    int a = LUA_BINDING_ARGUMENT( luaL_checkinteger, 9, "a" );
+    int r = LUA_BINDING_ARGUMENT( luaL_checknumber, 6, "r" );
+    int g = LUA_BINDING_ARGUMENT( luaL_checknumber, 7, "g" );
+    int b = LUA_BINDING_ARGUMENT( luaL_checknumber, 8, "b" );
+    int a = LUA_BINDING_ARGUMENT( luaL_checknumber, 9, "a" );
     float duration = LUA_BINDING_ARGUMENT( luaL_checknumber, 10, "duration" );
 
     debugoverlay->AddSweptBoxOverlay( start, end, mins, maxs, angles, r, g, b, a, duration );
@@ -121,10 +121,10 @@ LUA_BINDING_BEGIN( DebugOverlays, AddTriangleOverlay, "library", "Add a triangle
     Vector p1 = LUA_BINDING_ARGUMENT( luaL_checkvector, 1, "p1" );
     Vector p2 = LUA_BINDING_ARGUMENT( luaL_checkvector, 2, "p2" );
     Vector p3 = LUA_BINDING_ARGUMENT( luaL_checkvector, 3, "p3" );
-    int r = LUA_BINDING_ARGUMENT( luaL_checkinteger, 4, "r" );
-    int g = LUA_BINDING_ARGUMENT( luaL_checkinteger, 5, "g" );
-    int b = LUA_BINDING_ARGUMENT( luaL_checkinteger, 6, "b" );
-    int a = LUA_BINDING_ARGUMENT( luaL_checkinteger, 7, "a" );
+    int r = LUA_BINDING_ARGUMENT( luaL_checknumber, 4, "r" );
+    int g = LUA_BINDING_ARGUMENT( luaL_checknumber, 5, "g" );
+    int b = LUA_BINDING_ARGUMENT( luaL_checknumber, 6, "b" );
+    int a = LUA_BINDING_ARGUMENT( luaL_checknumber, 7, "a" );
     bool noDepthTest = LUA_BINDING_ARGUMENT( luaL_checkboolean, 8, "noDepthTest" );
     float duration = LUA_BINDING_ARGUMENT( luaL_checknumber, 9, "duration" );
 
@@ -168,7 +168,7 @@ LUA_BINDING_END( "Vector", "The screen position of the vector, or nil if the vec
 LUA_BINDING_BEGIN( DebugOverlays, AddTextOverlay, "library", "Add a text overlay to the screen." )
 {
     Vector origin = LUA_BINDING_ARGUMENT( luaL_checkvector, 1, "origin" );
-    int lineOffset = LUA_BINDING_ARGUMENT( luaL_checkinteger, 2, "lineOffset" );
+    int lineOffset = LUA_BINDING_ARGUMENT( luaL_checknumber, 2, "lineOffset" );
     float duration = LUA_BINDING_ARGUMENT( luaL_checknumber, 3, "duration" );
     const char *text = LUA_BINDING_ARGUMENT( luaL_checkstring, 4, "text" );
 
@@ -180,12 +180,12 @@ LUA_BINDING_END()
 LUA_BINDING_BEGIN( DebugOverlays, AddTextOverlayRGB, "library", "Add a text overlay to the screen with specific colors." )
 {
     Vector origin = LUA_BINDING_ARGUMENT( luaL_checkvector, 1, "origin" );
-    int lineOffset = LUA_BINDING_ARGUMENT( luaL_checkinteger, 2, "lineOffset" );
+    int lineOffset = LUA_BINDING_ARGUMENT( luaL_checknumber, 2, "lineOffset" );
     float duration = LUA_BINDING_ARGUMENT( luaL_checknumber, 3, "duration" );
-    int r = LUA_BINDING_ARGUMENT( luaL_checkinteger, 4, "r" );
-    int g = LUA_BINDING_ARGUMENT( luaL_checkinteger, 5, "g" );
-    int b = LUA_BINDING_ARGUMENT( luaL_checkinteger, 6, "b" );
-    int a = LUA_BINDING_ARGUMENT( luaL_checkinteger, 7, "a" );
+    int r = LUA_BINDING_ARGUMENT( luaL_checknumber, 4, "r" );
+    int g = LUA_BINDING_ARGUMENT( luaL_checknumber, 5, "g" );
+    int b = LUA_BINDING_ARGUMENT( luaL_checknumber, 6, "b" );
+    int a = LUA_BINDING_ARGUMENT( luaL_checknumber, 7, "a" );
     const char *text = LUA_BINDING_ARGUMENT( luaL_checkstring, 8, "text" );
 
     debugoverlay->AddTextOverlayRGB( origin, lineOffset, duration, r, g, b, a, text );

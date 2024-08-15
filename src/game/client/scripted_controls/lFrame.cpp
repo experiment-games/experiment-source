@@ -53,287 +53,395 @@ LUALIB_API lua_Frame *luaL_checkframe( lua_State *L, int narg )
     return d;
 }
 
-static int Frame_Activate( lua_State *L )
-{
-    luaL_checkframe( L, 1 )->Activate();
-    return 0;
-}
+LUA_REGISTRATION_INIT( Frame )
 
-static int Frame_ActivateMinimized( lua_State *L )
+LUA_BINDING_BEGIN( Frame, GetPanelBaseClassName, "class|static", "Gets the base class name of the panel" )
 {
-    luaL_checkframe( L, 1 )->ActivateMinimized();
-    return 0;
-}
-
-static int Frame_CanChainKeysToParent( lua_State *L )
-{
-    lua_pushboolean( L, luaL_checkframe( L, 1 )->CanChainKeysToParent() );
+    lua_pushstring( L, lua_Frame::GetPanelBaseClassName() );
     return 1;
 }
+LUA_BINDING_END( "string", "The base class name of the panel" )
 
-static int Frame_CanStartDragging( lua_State *L )
+LUA_BINDING_BEGIN( Frame, GetPanelClassName, "class|static", "Gets the class name of the panel" )
 {
-    lua_pushboolean( L, luaL_checkframe( L, 1 )->CanStartDragging( luaL_checknumber( L, 2 ), luaL_checknumber( L, 3 ), luaL_checknumber( L, 4 ), luaL_checknumber( L, 5 ) ) );
+    lua_pushstring( L, lua_Frame::GetPanelClassName() );
     return 1;
 }
+LUA_BINDING_END( "string", "The class name of the panel" )
 
-static int Frame_ChainToAnimationMap( lua_State *L )
+LUA_BINDING_BEGIN( Frame, Activate, "class", "Activates the frame" )
 {
-    luaL_checkframe( L, 1 )->ChainToAnimationMap();
+    lua_Frame *frame = LUA_BINDING_ARGUMENT( luaL_checkframe, 1, "frame" );
+    frame->Activate();
     return 0;
 }
+LUA_BINDING_END()
 
-static int Frame_ChainToMap( lua_State *L )
+LUA_BINDING_BEGIN( Frame, ActivateMinimized, "class", "Activates the frame minimized" )
 {
-    luaL_checkframe( L, 1 )->ChainToMap();
+    lua_Frame *frame = LUA_BINDING_ARGUMENT( luaL_checkframe, 1, "frame" );
+    frame->ActivateMinimized();
     return 0;
 }
+LUA_BINDING_END()
 
-static int Frame_Close( lua_State *L )
+LUA_BINDING_BEGIN( Frame, CanChainKeysToParent, "class", "Returns whether keys can be chained to the parent" )
 {
-    luaL_checkframe( L, 1 )->Close();
-    return 0;
-}
-
-static int Frame_CloseModal( lua_State *L )
-{
-    luaL_checkframe( L, 1 )->CloseModal();
-    return 0;
-}
-
-static int Frame_DeletePanel( lua_State *L )
-{
-    luaL_checkframe( L, 1 )->DeletePanel();
-    return 0;
-}
-
-static int Frame_DisableFadeEffect( lua_State *L )
-{
-    luaL_checkframe( L, 1 )->DisableFadeEffect();
-    return 0;
-}
-
-static int Frame_DoModal( lua_State *L )
-{
-    luaL_checkframe( L, 1 )->DoModal();
-    return 0;
-}
-
-static int Frame_FlashWindow( lua_State *L )
-{
-    luaL_checkframe( L, 1 )->FlashWindow();
-    return 0;
-}
-
-static int Frame_FlashWindowStop( lua_State *L )
-{
-    luaL_checkframe( L, 1 )->FlashWindowStop();
-    return 0;
-}
-
-static int Frame_GetBottomRightSize( lua_State *L )
-{
-    lua_pushinteger( L, luaL_checkframe( L, 1 )->GetBottomRightSize() );
+    lua_Frame *frame = LUA_BINDING_ARGUMENT( luaL_checkframe, 1, "frame" );
+    lua_pushboolean( L, frame->CanChainKeysToParent() );
     return 1;
 }
+LUA_BINDING_END( "boolean", "Whether keys can be chained to the parent" )
 
-static int Frame_GetCaptionHeight( lua_State *L )
+LUA_BINDING_BEGIN( Frame, CanStartDragging, "class", "Returns whether dragging can start" )
 {
-    lua_pushinteger( L, luaL_checkframe( L, 1 )->GetCaptionHeight() );
+    lua_Frame *frame = LUA_BINDING_ARGUMENT( luaL_checkframe, 1, "frame" );
+    int startX = LUA_BINDING_ARGUMENT( luaL_checknumber, 2, "startX" );
+    int startY = LUA_BINDING_ARGUMENT( luaL_checknumber, 3, "startY" );
+    int cursorX = LUA_BINDING_ARGUMENT( luaL_checknumber, 4, "cursorX" );
+    int cursorY = LUA_BINDING_ARGUMENT( luaL_checknumber, 5, "cursorY" );
+    lua_pushboolean( L, frame->CanStartDragging( startX, startY, cursorX, cursorY ) );
     return 1;
 }
+LUA_BINDING_END( "boolean", "Whether dragging can start" )
 
-static int Frame_GetClipToParent( lua_State *L )
+//LUA_BINDING_BEGIN( Frame, ChainToAnimationMap, "class|static", "Chains the frame to an animation map" )
+//{
+//    lua_Frame::ChainToAnimationMap();
+//    return 0;
+//}
+//LUA_BINDING_END()
+
+//LUA_BINDING_BEGIN( Frame, ChainToMap, "class|static", "Chains the frame to a keyboard map" )
+//{
+//    lua_Frame::ChainToMap();
+//    return 0;
+//}
+
+LUA_BINDING_BEGIN( Frame, Close, "class", "Closes the frame" )
 {
-    lua_pushboolean( L, luaL_checkframe( L, 1 )->GetClipToParent() );
+    lua_Frame *frame = LUA_BINDING_ARGUMENT( luaL_checkframe, 1, "frame" );
+    frame->Close();
+    return 0;
+}
+LUA_BINDING_END()
+
+LUA_BINDING_BEGIN( Frame, CloseModal, "class", "Closes the frame modally" )
+{
+    lua_Frame *frame = LUA_BINDING_ARGUMENT( luaL_checkframe, 1, "frame" );
+    frame->CloseModal();
+    return 0;
+}
+LUA_BINDING_END()
+
+LUA_BINDING_BEGIN( Frame, DeletePanel, "class", "Deletes the frame" )
+{
+    lua_Frame *frame = LUA_BINDING_ARGUMENT( luaL_checkframe, 1, "frame" );
+    frame->DeletePanel();
+    return 0;
+}
+LUA_BINDING_END()
+
+LUA_BINDING_BEGIN( Frame, DisableFadeEffect, "class", "Disables the fade effect" )
+{
+    lua_Frame *frame = LUA_BINDING_ARGUMENT( luaL_checkframe, 1, "frame" );
+    frame->DisableFadeEffect();
+    return 0;
+}
+LUA_BINDING_END()
+
+LUA_BINDING_BEGIN( Frame, DoModal, "class", "Makes the frame modal" )
+{
+    lua_Frame *frame = LUA_BINDING_ARGUMENT( luaL_checkframe, 1, "frame" );
+    frame->DoModal();
+    return 0;
+}
+LUA_BINDING_END()
+
+LUA_BINDING_BEGIN( Frame, FlashWindow, "class", "Flashes the frame" )
+{
+    lua_Frame *frame = LUA_BINDING_ARGUMENT( luaL_checkframe, 1, "frame" );
+    frame->FlashWindow();
+    return 0;
+}
+LUA_BINDING_END()
+
+LUA_BINDING_BEGIN( Frame, FlashWindowStop, "class", "Stops flashing the frame" )
+{
+    lua_Frame *frame = LUA_BINDING_ARGUMENT( luaL_checkframe, 1, "frame" );
+    frame->FlashWindowStop();
+    return 0;
+}
+LUA_BINDING_END()
+
+LUA_BINDING_BEGIN( Frame, GetBottomRightSize, "class", "Gets the bottom right size" )
+{
+    lua_Frame *frame = LUA_BINDING_ARGUMENT( luaL_checkframe, 1, "frame" );
+    lua_pushinteger( L, frame->GetBottomRightSize() );
     return 1;
 }
+LUA_BINDING_END( "integer", "The bottom right size" )
 
-static int Frame_GetCornerSize( lua_State *L )
+LUA_BINDING_BEGIN( Frame, GetCaptionHeight, "class", "Gets the caption height" )
 {
-    lua_pushinteger( L, luaL_checkframe( L, 1 )->GetCornerSize() );
+    lua_Frame *frame = LUA_BINDING_ARGUMENT( luaL_checkframe, 1, "frame" );
+    lua_pushinteger( L, frame->GetCaptionHeight() );
     return 1;
 }
+LUA_BINDING_END( "integer", "The caption height" )
 
-static int Frame_GetDraggerSize( lua_State *L )
+LUA_BINDING_BEGIN( Frame, GetClipToParent, "class", "Returns whether the frame clips to the parent" )
 {
-    lua_pushinteger( L, luaL_checkframe( L, 1 )->GetDraggerSize() );
+    lua_Frame *frame = LUA_BINDING_ARGUMENT( luaL_checkframe, 1, "frame" );
+    lua_pushboolean( L, frame->GetClipToParent() );
     return 1;
 }
+LUA_BINDING_END( "boolean", "Whether the frame clips to the parent" )
 
-static int Frame_GetPanelBaseClassName( lua_State *L )
+LUA_BINDING_BEGIN( Frame, GetCornerSize, "class", "Gets the corner size" )
 {
-    lua_pushstring( L, luaL_checkframe( L, 1 )->GetPanelBaseClassName() );
+    lua_Frame *frame = LUA_BINDING_ARGUMENT( luaL_checkframe, 1, "frame" );
+    lua_pushinteger( L, frame->GetCornerSize() );
     return 1;
 }
+LUA_BINDING_END( "integer", "The corner size" )
 
-static int Frame_GetPanelClassName( lua_State *L )
+LUA_BINDING_BEGIN( Frame, GetDraggerSize, "class", "Gets the dragger size" )
 {
-    lua_pushstring( L, luaL_checkframe( L, 1 )->GetPanelClassName() );
+    lua_Frame *frame = LUA_BINDING_ARGUMENT( luaL_checkframe, 1, "frame" );
+    lua_pushinteger( L, frame->GetDraggerSize() );
     return 1;
 }
+LUA_BINDING_END( "integer", "The dragger size" )
 
-static int Frame_IsMinimized( lua_State *L )
+LUA_BINDING_BEGIN( Frame, IsMinimized, "class", "Returns whether the frame is minimized" )
 {
-    lua_pushboolean( L, luaL_checkframe( L, 1 )->IsMinimized() );
+    lua_Frame *frame = LUA_BINDING_ARGUMENT( luaL_checkframe, 1, "frame" );
+    lua_pushboolean( L, frame->IsMinimized() );
     return 1;
 }
+LUA_BINDING_END( "boolean", "Whether the frame is minimized" )
 
-static int Frame_IsMoveable( lua_State *L )
+LUA_BINDING_BEGIN( Frame, IsMoveable, "class", "Returns whether the frame is moveable" )
 {
-    lua_pushboolean( L, luaL_checkframe( L, 1 )->IsMoveable() );
+    lua_Frame *frame = LUA_BINDING_ARGUMENT( luaL_checkframe, 1, "frame" );
+    lua_pushboolean( L, frame->IsMoveable() );
     return 1;
 }
+LUA_BINDING_END( "boolean", "Whether the frame is moveable" )
 
-static int Frame_IsSizeable( lua_State *L )
+LUA_BINDING_BEGIN( Frame, IsSizeable, "class", "Returns whether the frame is sizeable" )
 {
-    lua_pushboolean( L, luaL_checkframe( L, 1 )->IsSizeable() );
+    lua_Frame *frame = LUA_BINDING_ARGUMENT( luaL_checkframe, 1, "frame" );
+    lua_pushboolean( L, frame->IsSizeable() );
     return 1;
 }
+LUA_BINDING_END( "boolean", "Whether the frame is sizeable" )
 
-static int Frame_IsSmallCaption( lua_State *L )
+LUA_BINDING_BEGIN( Frame, IsSmallCaption, "class", "Returns whether the frame has a small caption" )
 {
-    lua_pushboolean( L, luaL_checkframe( L, 1 )->IsSmallCaption() );
+    lua_Frame *frame = LUA_BINDING_ARGUMENT( luaL_checkframe, 1, "frame" );
+    lua_pushboolean( L, frame->IsSmallCaption() );
     return 1;
 }
+LUA_BINDING_END( "boolean", "Whether the frame has a small caption" )
 
-static int Frame_KB_AddBoundKey( lua_State *L )
+//LUA_BINDING_BEGIN( Frame, KB_AddBoundKey, "class|static", "Adds a bound key" )
+//{
+//    const char *keyName = LUA_BINDING_ARGUMENT( luaL_checkstring, 1, "keyName" );
+//    int keyCode = LUA_BINDING_ARGUMENT( luaL_checknumber, 2, "keyCode" );
+//    int modifiers = LUA_BINDING_ARGUMENT( luaL_checknumber, 3, "modifiers" );
+//    lua_Frame::KB_AddBoundKey( keyName, keyCode, modifiers );
+//    return 0;
+//}
+//LUA_BINDING_END()
+
+//LUA_BINDING_BEGIN( Frame, KB_ChainToMap, "class|static", "Chains the frame to a keyboard map" )
+//{
+//    lua_Frame::KB_ChainToMap();
+//    return 0;
+//}
+
+LUA_BINDING_BEGIN( Frame, LoadControlSettings, "class", "Loads control settings" )
 {
-    luaL_checkframe( L, 1 )->KB_AddBoundKey(
-        luaL_checkstring( L, 2 ), luaL_checknumber( L, 3 ), luaL_checknumber( L, 4 ) );
+    lua_Frame *frame = LUA_BINDING_ARGUMENT( luaL_checkframe, 1, "frame" );
+    const char *dialogResourceName = LUA_BINDING_ARGUMENT( luaL_checkstring, 2, "dialogResourceName" );
+    const char *pathID = LUA_BINDING_ARGUMENT_WITH_DEFAULT( luaL_optstring, 3, NULL, "pathID" );
+    KeyValues *pPreloadedKeyValues = LUA_BINDING_ARGUMENT_WITH_DEFAULT( luaL_optkeyvalues, 4, NULL, "pPreloadedKeyValues" );
+    frame->LoadControlSettings( dialogResourceName, pathID, pPreloadedKeyValues );
     return 0;
 }
+LUA_BINDING_END()
 
-static int Frame_KB_ChainToMap( lua_State *L )
+LUA_BINDING_BEGIN( Frame, MoveToCenterOfScreen, "class", "Moves the frame to the center of the screen" )
 {
-    luaL_checkframe( L, 1 )->KB_ChainToMap();
+    lua_Frame *frame = LUA_BINDING_ARGUMENT( luaL_checkframe, 1, "frame" );
+    frame->MoveToCenterOfScreen();
     return 0;
 }
+LUA_BINDING_END()
 
-static int Frame_LoadControlSettings( lua_State *L )
+LUA_BINDING_BEGIN( Frame, OnCommand, "class", "Executes a command" )
 {
-    luaL_checkframe( L, 1 )->LoadControlSettings( luaL_checkstring( L, 2 ),
-                                                  luaL_optstring( L, 3, NULL ),
-                                                  luaL_optkeyvalues( L, 4, NULL ) );
+    lua_Frame *frame = LUA_BINDING_ARGUMENT( luaL_checkframe, 1, "frame" );
+    const char *command = LUA_BINDING_ARGUMENT( luaL_checkstring, 2, "command" );
+    frame->OnCommand( command );
     return 0;
 }
+LUA_BINDING_END()
 
-static int Frame_MoveToCenterOfScreen( lua_State *L )
+LUA_BINDING_BEGIN( Frame, PlaceUnderCursor, "class", "Places the frame under the cursor" )
 {
-    luaL_checkframe( L, 1 )->MoveToCenterOfScreen();
+    lua_Frame *frame = LUA_BINDING_ARGUMENT( luaL_checkframe, 1, "frame" );
+    frame->PlaceUnderCursor();
     return 0;
 }
+LUA_BINDING_END()
 
-static int Frame_OnCommand( lua_State *L )
+LUA_BINDING_BEGIN( Frame, SetChainKeysToParent, "class", "Sets whether keys can be chained to the parent" )
 {
-    luaL_checkframe( L, 1 )->OnCommand( luaL_checkstring( L, 2 ) );
+    lua_Frame *frame = LUA_BINDING_ARGUMENT( luaL_checkframe, 1, "frame" );
+    bool state = LUA_BINDING_ARGUMENT( luaL_checkboolean, 2, "state" );
+    frame->SetChainKeysToParent( state );
     return 0;
 }
+LUA_BINDING_END()
 
-static int Frame_PlaceUnderCursor( lua_State *L )
+LUA_BINDING_BEGIN( Frame, SetClipToParent, "class", "Sets whether the frame clips to the parent" )
 {
-    luaL_checkframe( L, 1 )->PlaceUnderCursor();
+    lua_Frame *frame = LUA_BINDING_ARGUMENT( luaL_checkframe, 1, "frame" );
+    bool state = LUA_BINDING_ARGUMENT( luaL_checkboolean, 2, "state" );
+    frame->SetClipToParent( state );
     return 0;
 }
+LUA_BINDING_END()
 
-static int Frame_SetChainKeysToParent( lua_State *L )
+LUA_BINDING_BEGIN( Frame, SetCloseButtonVisible, "class", "Sets whether the close button is visible" )
 {
-    luaL_checkframe( L, 1 )->SetChainKeysToParent( luaL_checkboolean( L, 2 ) );
+    lua_Frame *frame = LUA_BINDING_ARGUMENT( luaL_checkframe, 1, "frame" );
+    bool state = LUA_BINDING_ARGUMENT( luaL_checkboolean, 2, "state" );
+    frame->SetCloseButtonVisible( state );
     return 0;
 }
+LUA_BINDING_END()
 
-static int Frame_SetClipToParent( lua_State *L )
+LUA_BINDING_BEGIN( Frame, SetDeleteSelfOnClose, "class", "Sets whether the frame deletes itself on close" )
 {
-    luaL_checkframe( L, 1 )->SetClipToParent( luaL_checkboolean( L, 2 ) );
+    lua_Frame *frame = LUA_BINDING_ARGUMENT( luaL_checkframe, 1, "frame" );
+    bool state = LUA_BINDING_ARGUMENT( luaL_checkboolean, 2, "state" );
+    frame->SetDeleteSelfOnClose( state );
     return 0;
 }
+LUA_BINDING_END()
 
-static int Frame_SetCloseButtonVisible( lua_State *L )
+LUA_BINDING_BEGIN( Frame, SetImages, "class", "Sets the images" )
 {
-    luaL_checkframe( L, 1 )->SetCloseButtonVisible( luaL_checkboolean( L, 2 ) );
+    lua_Frame *frame = LUA_BINDING_ARGUMENT( luaL_checkframe, 1, "frame" );
+    const char *imageName = LUA_BINDING_ARGUMENT( luaL_checkstring, 2, "imageName" );
+    const char *imageNameArmed = LUA_BINDING_ARGUMENT_WITH_DEFAULT( luaL_optstring, 3, NULL, "imageNameArmed" );
+    frame->SetImages( imageName, imageNameArmed );
     return 0;
 }
+LUA_BINDING_END()
 
-static int Frame_SetDeleteSelfOnClose( lua_State *L )
+LUA_BINDING_BEGIN( Frame, SetMaximizeButtonVisible, "class", "Sets whether the maximize button is visible" )
 {
-    luaL_checkframe( L, 1 )->SetDeleteSelfOnClose( luaL_checkboolean( L, 2 ) );
+    lua_Frame *frame = LUA_BINDING_ARGUMENT( luaL_checkframe, 1, "frame" );
+    bool state = LUA_BINDING_ARGUMENT( luaL_checkboolean, 2, "state" );
+    frame->SetMaximizeButtonVisible( state );
     return 0;
 }
+LUA_BINDING_END()
 
-static int Frame_SetImages( lua_State *L )
+LUA_BINDING_BEGIN( Frame, SetMenuButtonResponsive, "class", "Sets whether the menu button is responsive" )
 {
-    luaL_checkframe( L, 1 )->SetImages( luaL_checkstring( L, 2 ),
-                                        luaL_optstring( L, 3, 0 ) );
+    lua_Frame *frame = LUA_BINDING_ARGUMENT( luaL_checkframe, 1, "frame" );
+    bool state = LUA_BINDING_ARGUMENT( luaL_checkboolean, 2, "state" );
+    frame->SetMenuButtonResponsive( state );
     return 0;
 }
+LUA_BINDING_END()
 
-static int Frame_SetMaximizeButtonVisible( lua_State *L )
+LUA_BINDING_BEGIN( Frame, SetMenuButtonVisible, "class", "Sets whether the menu button is visible" )
 {
-    luaL_checkframe( L, 1 )->SetMaximizeButtonVisible( luaL_checkboolean( L, 2 ) );
+    lua_Frame *frame = LUA_BINDING_ARGUMENT( luaL_checkframe, 1, "frame" );
+    bool state = LUA_BINDING_ARGUMENT( luaL_checkboolean, 2, "state" );
+    frame->SetMenuButtonVisible( state );
     return 0;
 }
+LUA_BINDING_END()
 
-static int Frame_SetMenuButtonResponsive( lua_State *L )
+LUA_BINDING_BEGIN( Frame, SetMinimizeButtonVisible, "class", "Sets whether the minimize button is visible" )
 {
-    luaL_checkframe( L, 1 )->SetMenuButtonResponsive( luaL_checkboolean( L, 2 ) );
+    lua_Frame *frame = LUA_BINDING_ARGUMENT( luaL_checkframe, 1, "frame" );
+    bool state = LUA_BINDING_ARGUMENT( luaL_checkboolean, 2, "state" );
+    frame->SetMinimizeButtonVisible( state );
     return 0;
 }
+LUA_BINDING_END()
 
-static int Frame_SetMenuButtonVisible( lua_State *L )
+LUA_BINDING_BEGIN( Frame, SetMinimizeToSysTrayButtonVisible, "class", "Sets whether the minimize to system tray button is visible" )
 {
-    luaL_checkframe( L, 1 )->SetMenuButtonVisible( luaL_checkboolean( L, 2 ) );
+    lua_Frame *frame = LUA_BINDING_ARGUMENT( luaL_checkframe, 1, "frame" );
+    bool state = LUA_BINDING_ARGUMENT( luaL_checkboolean, 2, "state" );
+    frame->SetMinimizeToSysTrayButtonVisible( state );
     return 0;
 }
+LUA_BINDING_END()
 
-static int Frame_SetMinimizeButtonVisible( lua_State *L )
+LUA_BINDING_BEGIN( Frame, SetMoveable, "class", "Sets whether the frame is moveable" )
 {
-    luaL_checkframe( L, 1 )->SetMinimizeButtonVisible( luaL_checkboolean( L, 2 ) );
+    lua_Frame *frame = LUA_BINDING_ARGUMENT( luaL_checkframe, 1, "frame" );
+    bool state = LUA_BINDING_ARGUMENT( luaL_checkboolean, 2, "state" );
+    frame->SetMoveable( state );
     return 0;
 }
+LUA_BINDING_END()
 
-static int Frame_SetMinimizeToSysTrayButtonVisible( lua_State *L )
+LUA_BINDING_BEGIN( Frame, SetSizeable, "class", "Sets whether the frame is sizeable" )
 {
-    luaL_checkframe( L, 1 )->SetMinimizeToSysTrayButtonVisible(
-        luaL_checkboolean( L, 2 ) );
+    lua_Frame *frame = LUA_BINDING_ARGUMENT( luaL_checkframe, 1, "frame" );
+    bool state = LUA_BINDING_ARGUMENT( luaL_checkboolean, 2, "state" );
+    frame->SetSizeable( state );
     return 0;
 }
+LUA_BINDING_END()
 
-static int Frame_SetMoveable( lua_State *L )
+LUA_BINDING_BEGIN( Frame, SetSmallCaption, "class", "Sets whether the frame has a small caption" )
 {
-    luaL_checkframe( L, 1 )->SetMoveable( luaL_checkboolean( L, 2 ) );
+    lua_Frame *frame = LUA_BINDING_ARGUMENT( luaL_checkframe, 1, "frame" );
+    bool state = LUA_BINDING_ARGUMENT( luaL_checkboolean, 2, "state" );
+    frame->SetSmallCaption( state );
     return 0;
 }
+LUA_BINDING_END()
 
-static int Frame_SetSizeable( lua_State *L )
+LUA_BINDING_BEGIN( Frame, SetTitle, "class", "Sets the title" )
 {
-    luaL_checkframe( L, 1 )->SetSizeable( luaL_checkboolean( L, 2 ) );
+    lua_Frame *frame = LUA_BINDING_ARGUMENT( luaL_checkframe, 1, "frame" );
+    const char *title = LUA_BINDING_ARGUMENT( luaL_checkstring, 2, "title" );
+    bool showTaskbarIcon = LUA_BINDING_ARGUMENT_WITH_DEFAULT( luaL_optboolean, 3, true, "showTaskbarIcon" );
+    frame->SetTitle( title, showTaskbarIcon );
     return 0;
 }
+LUA_BINDING_END()
 
-static int Frame_SetSmallCaption( lua_State *L )
+LUA_BINDING_BEGIN( Frame, SetTitleBarVisible, "class", "Sets whether the title bar is visible" )
 {
-    luaL_checkframe( L, 1 )->SetSmallCaption( luaL_checkboolean( L, 2 ) );
+    lua_Frame *frame = LUA_BINDING_ARGUMENT( luaL_checkframe, 1, "frame" );
+    bool state = LUA_BINDING_ARGUMENT( luaL_checkboolean, 2, "state" );
+    frame->SetTitleBarVisible( state );
     return 0;
 }
+LUA_BINDING_END()
 
-static int Frame_SetTitle( lua_State *L )
+LUA_BINDING_BEGIN( Frame, __index, "class", "Metamethod called when a non-existent field is indexed" )
 {
-    luaL_checkframe( L, 1 )->SetTitle( luaL_checkstring( L, 2 ),
-                                       luaL_optboolean( L, 3, true ) );
-    return 0;
-}
-
-static int Frame_SetTitleBarVisible( lua_State *L )
-{
-    luaL_checkframe( L, 1 )->SetTitleBarVisible( luaL_checkboolean( L, 2 ) );
-    return 0;
-}
-
-static int Frame___index( lua_State *L )
-{
-    Frame *pFrame = lua_toframe( L, 1 );
-    LUA_METATABLE_INDEX_CHECK_VALID( L, Panel_IsValid );
+    Frame *pFrame = LUA_BINDING_ARGUMENT( lua_toframe, 1, "frame" );
+    LUA_METATABLE_INDEX_CHECK_VALID( L, PanelIsValid );
     LUA_METATABLE_INDEX_CHECK( L, pFrame );
+
+    // const char *field = LUA_BINDING_ARGUMENT( luaL_checkstring, 2, "field" );
 
     LFrame *plFrame = dynamic_cast< LFrame * >( pFrame );
     LUA_METATABLE_INDEX_CHECK_REF_TABLE( L, plFrame );
@@ -351,10 +459,12 @@ static int Frame___index( lua_State *L )
     lua_pushnil( L );
     return 1;
 }
+LUA_BINDING_END( "any", "The value of the field" )
 
-static int Frame___newindex( lua_State *L )
+LUA_BINDING_BEGIN( Frame, __newindex, "class", "Metamethod called when a new field is added" )
 {
-    Frame *pFrame = lua_toframe( L, 1 );
+    Frame *pFrame = LUA_BINDING_ARGUMENT( lua_toframe, 1, "frame" );
+
     if ( pFrame == NULL )
     { /* avoid extra test when d is not 0 */
         lua_Debug ar1;
@@ -371,21 +481,24 @@ static int Frame___newindex( lua_State *L )
 
     LUA_GET_REF_TABLE( L, plFrame );
     lua_pushvalue( L, 3 );
-    lua_setfield( L, -2, luaL_checkstring( L, 2 ) );
+    lua_setfield( L, -2, LUA_BINDING_ARGUMENT( luaL_checkstring, 2, "field" ) );
     lua_pop( L, 1 );
 
     return 0;
 }
+LUA_BINDING_END()
 
-static int Frame___eq( lua_State *L )
+LUA_BINDING_BEGIN( Frame, __eq, "class", "Metamethod called when two Frame objects are compared" )
 {
-    lua_pushboolean( L, lua_toframe( L, 1 ) == lua_toframe( L, 2 ) );
+    lua_pushboolean( L, LUA_BINDING_ARGUMENT( lua_toframe, 1, "frame" ) == LUA_BINDING_ARGUMENT( lua_toframe, 2, "other" ) );
     return 1;
 }
+LUA_BINDING_END( "boolean", "Whether the Frame objects are equal" )
 
-static int Frame___tostring( lua_State *L )
+LUA_BINDING_BEGIN( Frame, __tostring, "class", "Metamethod called when the Frame object is converted to a string" )
 {
-    Frame *pFrame = lua_toframe( L, 1 );
+    Frame *pFrame = LUA_BINDING_ARGUMENT( lua_toframe, 1, "frame" );
+
     if ( pFrame == NULL )
         lua_pushstring( L, "INVALID_PANEL" );
     else
@@ -397,73 +510,20 @@ static int Frame___tostring( lua_State *L )
     }
     return 1;
 }
+LUA_BINDING_END( "string", "The string representation of the Frame object" )
 
-static const luaL_Reg Framemeta[] = {
-    { "Activate", Frame_Activate },
-    { "ActivateMinimized", Frame_ActivateMinimized },
-    { "CanChainKeysToParent", Frame_CanChainKeysToParent },
-    { "CanStartDragging", Frame_CanStartDragging },
-    { "ChainToAnimationMap", Frame_ChainToAnimationMap },
-    { "ChainToMap", Frame_ChainToMap },
-    { "Close", Frame_Close },
-    { "CloseModal", Frame_CloseModal },
-    { "DeletePanel", Frame_DeletePanel },
-    { "DisableFadeEffect", Frame_DisableFadeEffect },
-    { "DoModal", Frame_DoModal },
-    { "FlashWindow", Frame_FlashWindow },
-    { "FlashWindowStop", Frame_FlashWindowStop },
-    { "GetBottomRightSize", Frame_GetBottomRightSize },
-    { "GetCaptionHeight", Frame_GetCaptionHeight },
-    { "GetClipToParent", Frame_GetClipToParent },
-    { "GetCornerSize", Frame_GetCornerSize },
-    { "GetDraggerSize", Frame_GetDraggerSize },
-    { "GetPanelBaseClassName", Frame_GetPanelBaseClassName },
-    { "GetPanelClassName", Frame_GetPanelClassName },
-    { "IsMinimized", Frame_IsMinimized },
-    { "IsMoveable", Frame_IsMoveable },
-    { "IsSizeable", Frame_IsSizeable },
-    { "IsSmallCaption", Frame_IsSmallCaption },
-    { "KB_AddBoundKey", Frame_KB_AddBoundKey },
-    { "KB_ChainToMap", Frame_KB_ChainToMap },
-    { "LoadControlSettings", Frame_LoadControlSettings },
-    { "MoveToCenterOfScreen", Frame_MoveToCenterOfScreen },
-    { "OnCommand", Frame_OnCommand },
-    { "PlaceUnderCursor", Frame_PlaceUnderCursor },
-    { "SetChainKeysToParent", Frame_SetChainKeysToParent },
-    { "SetClipToParent", Frame_SetClipToParent },
-    { "SetCloseButtonVisible", Frame_SetCloseButtonVisible },
-    { "SetDeleteSelfOnClose", Frame_SetDeleteSelfOnClose },
-    { "SetImages", Frame_SetImages },
-    { "SetMaximizeButtonVisible", Frame_SetMaximizeButtonVisible },
-    { "SetMenuButtonResponsive", Frame_SetMenuButtonResponsive },
-    { "SetMenuButtonVisible", Frame_SetMenuButtonVisible },
-    { "SetMinimizeButtonVisible", Frame_SetMinimizeButtonVisible },
-    { "SetMinimizeToSysTrayButtonVisible",
-      Frame_SetMinimizeToSysTrayButtonVisible },
-    { "SetMoveable", Frame_SetMoveable },
-    { "SetSizeable", Frame_SetSizeable },
-    { "SetSmallCaption", Frame_SetSmallCaption },
-    { "SetTitle", Frame_SetTitle },
-    { "SetTitleBarVisible", Frame_SetTitleBarVisible },
-    { "__index", Frame___index },
-    { "__newindex", Frame___newindex },
-    { "__eq", Frame___eq },
-    { "__tostring", Frame___tostring },
-    { "__gc", Panel___gc },
-    { NULL, NULL } };
+LUA_REGISTRATION_INIT( Panels )
 
-static int luasrc_Frame( lua_State *L )
+LUA_BINDING_BEGIN( Panels, Frame, "library", "Creates a new Frame panel" )
 {
-    lua_Frame *pPanel =
-        new lua_Frame( luaL_optpanel( L, 1, VGui_GetClientLuaRootPanel() ),
-                    luaL_optstring( L, 2, NULL ),
-                    luaL_optboolean( L, 3, true ),
-                    L );
+    Panel *parent = LUA_BINDING_ARGUMENT_WITH_DEFAULT( luaL_optpanel, 1, VGui_GetClientLuaRootPanel(), "parent" );
+    const char *name = LUA_BINDING_ARGUMENT_WITH_DEFAULT( luaL_optstring, 2, "Frame", "name" );
+
+    LFrame *pPanel = new LFrame( parent, name, L );
     pPanel->PushLuaInstance( L );
     return 1;
 }
-
-static const luaL_Reg Frame_funcs[] = { { "Frame", luasrc_Frame }, { NULL, NULL } };
+LUA_BINDING_END( "Frame", "The new Frame Panel" )
 
 /*
 ** Open Frame object
@@ -471,10 +531,14 @@ static const luaL_Reg Frame_funcs[] = { { "Frame", luasrc_Frame }, { NULL, NULL 
 LUALIB_API int luaopen_vgui_Frame( lua_State *L )
 {
     LUA_PUSH_NEW_METATABLE( L, "Frame" );
-    luaL_register( L, NULL, Framemeta );
-    lua_pushstring( L, LUA_PANELLIBNAME );
+
+    LUA_REGISTRATION_COMMIT( Frame );
+
+    lua_pushstring( L, LUA_PANELMETANAME );
     lua_setfield( L, -2, "__type" ); /* metatable.__type = "Panel" */
-    luaL_register( L, LUA_VGUILIBNAME, Frame_funcs );
+
+    LUA_REGISTRATION_COMMIT_LIBRARY( Panels );
+
     lua_pop( L, 2 );  // remove metatable and Frame_funcs
     return 0;
 }

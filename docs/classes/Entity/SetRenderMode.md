@@ -15,7 +15,7 @@ lua:
   
   arguments:
     - name: "mode"
-      type: number
+      type: enumeration/RENDER_MODE
   returns:
     
 ---

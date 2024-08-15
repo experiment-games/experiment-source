@@ -15,7 +15,7 @@ lua:
   
   arguments:
     - name: "maxHealth"
-      type: integer
+      type: number
   returns:
     
 ---

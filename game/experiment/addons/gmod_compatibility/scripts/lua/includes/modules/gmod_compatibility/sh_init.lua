@@ -153,9 +153,9 @@ engine = Engines
 input = Inputs
 render = Renders
 resource = Resources
-surface = Surface
+surface = Surfaces
 system = Systems
-vgui = Gui
+vgui = Panels
 VMatrix = Matrix
 concommand = ConsoleCommands
 
@@ -612,11 +612,11 @@ if (SERVER) then
 	Material = function(name) end
 else
 	Material = function(name)
-		if (not Surface.DoesMaterialExist(name)) then
+		if (not Surfaces.DoesMaterialExist(name)) then
 			name = "" .. name
 		end
 
-		return Surface.FindMaterial(name)
+		return Surfaces.FindMaterial(name)
 	end
 
 	-- Returns whether the currently focused panel is a child of the given one.
@@ -640,7 +640,7 @@ else
 
 	vgui.GetKeyboardFocus = Inputs.GetFocus
 	vgui.GetHoveredPanel = Inputs.GetMouseOver
-	vgui.CursorVisible = Surface.IsCursorVisible
+	vgui.CursorVisible = Surfaces.IsCursorVisible
 
 	gui = {
 		MouseX = function()
@@ -668,7 +668,9 @@ else
 	render.PushFilterMin = render.PushFilterMinification
 	render.PopFilterMin = render.PopFilterMinification
 	render.PushFilterMag = render.PushFilterMagnification
-	render.PopFilterMag = render.PopFilterMagnification
+    render.PopFilterMag = render.PopFilterMagnification
+    render.SetScissorRect = render.SetScissorRectangle
+	render.SetWriteDepthToDestAlpha = render.SetWriteDepthToDestinationAlpha
 
 	function render.Clear(r, g, b, a, clearDepth, clearStencil)
 		render.ClearBuffers(true, clearDepth or false, clearStencil or false)
@@ -698,8 +700,8 @@ else
 		return input.IsKeyDown(KEY_LCONTROL) or input.IsKeyDown(KEY_RCONTROL)
 	end
 
-	CreateMaterial = Surface.CreateMaterial
-	DisableClipping = Surface.DisableClipping
+	CreateMaterial = Surfaces.CreateMaterial
+	DisableClipping = Surfaces.DisableClipping
 
 	local MODEL_IMAGE_PANEL_META = FindMetaTable("ModelImagePanel")
 	MODEL_IMAGE_PANEL_META._OriginalRebuildSpawnIcon = MODEL_IMAGE_PANEL_META._OriginalRebuildSpawnIcon or
@@ -734,7 +736,10 @@ else
 
 	local PANEL_META = FindMetaTable("Panel")
 	PANEL_META.GetPos = PANEL_META.GetPosition
-	PANEL_META.SetPos = PANEL_META.SetPosition
+    PANEL_META.SetPos = PANEL_META.SetPosition
+    PANEL_META.GetZPos = PANEL_META.GetZIndex
+	PANEL_META.SetZPos = PANEL_META.SetZIndex
+	PANEL_META.ParentToHUD = PANEL_META.ParentToHud
 	PANEL_META._OriginalSetCursor = PANEL_META._OriginalSetCursor or PANEL_META.SetCursor
 	PANEL_META._OriginalGetParent = PANEL_META._OriginalGetParent or PANEL_META.GetParent
 
@@ -790,18 +795,18 @@ else
 	-- Change casing and add functionality to pass individual color components.
 	function PANEL_META:SetBGColor(rOrColor, g, b, a)
 		if (istable(rOrColor)) then
-			self:SetBgColor(rOrColor)
+			self:SetBackgroundColor(rOrColor)
 		else
-			self:SetBgColor(Colors.Create(rOrColor, g, b, a))
+			self:SetBackgroundColor(Colors.Create(rOrColor, g, b, a))
 		end
 	end
 
 	-- Change casing and add functionality to pass individual color components.
 	function PANEL_META:SetFGColor(rOrColor, g, b, a)
 		if (istable(rOrColor)) then
-			self:SetFgColor(rOrColor)
+			self:SetForegroundColor(rOrColor)
 		else
-			self:SetFgColor(Colors.Create(rOrColor, g, b, a))
+			self:SetForegroundColor(Colors.Create(rOrColor, g, b, a))
 		end
 	end
 
@@ -844,15 +849,18 @@ else
 		[2] = 7,
 		[3] = 8,
 	}
-	function LABEL_PANEL_META:SetContentAlignment(numpadAlignment)
-		local alignment = NUMPAD_TO_ALIGNMENT_MAP[numpadAlignment]
+    function LABEL_PANEL_META:SetContentAlignment(numpadAlignment)
+        local alignment = NUMPAD_TO_ALIGNMENT_MAP[numpadAlignment]
 
-		if (not alignment) then
-			error("attempt to set invalid content alignment \"" .. tostring(numpadAlignment) .. "\"", 2)
-		end
+        if (not alignment) then
+            error("attempt to set invalid content alignment \"" .. tostring(numpadAlignment) .. "\"", 2)
+        end
 
-		self:_OriginalSetContentAlignment(alignment)
-	end
+        self:_OriginalSetContentAlignment(alignment)
+    end
+
+    local HTML_PANEL_META = FindMetaTable("Html")
+	HTML_PANEL_META.OpenURL = HTML_PANEL_META.OpenUrl
 
 	local TEXT_ENTRY_PANEL_META = FindMetaTable("TextEntry")
 	TEXT_ENTRY_PANEL_META._OriginalSetFont = TEXT_ENTRY_PANEL_META._OriginalSetFont or TEXT_ENTRY_PANEL_META.SetFont
@@ -958,8 +966,8 @@ else
 
 	LocalPlayer = Players.GetLocalPlayer
 
-	surface.SetDrawColor = surface.DrawSetColor
-	surface.DrawRect = surface.DrawFilledRect
+	surface.SetDrawColor = Surfaces.DrawSetColor
+	surface.DrawRect = Surfaces.DrawFilledRectangle
 
 	local textureMap = {}
 
@@ -986,38 +994,41 @@ else
 
 	local function getAppropriateBaseParent()
 		if (GAMEUI) then
-			return Gui.GetGameUIPanel()
+			return Panels.GetGameUIPanel()
 		end
 
-		return Gui.GetClientLuaRootPanel()
+		return Panels.GetClientLuaRootPanel()
 	end
 
 	--[[
-		We disable our own Gui.Create and Gui.Register logic, in favor of the GMod one.
-		This Gui.Create will be used as vgui.CreateX by gmod to create internal panels.
+		We disable our own Panels.Create and Panels.Register logic, in favor of the GMod one.
+		This Panels.Create will be used as vgui.CreateX by gmod to create internal panels.
 	--]]
-	function Gui.Create(panelClassName, parentPanel, name)
+	function Panels.Create(panelClassName, parentPanel, name)
 		parentPanel = parentPanel or getAppropriateBaseParent()
 
 		if (panelClassName == "ModelImage") then
 			panelClassName = "ModelImagePanel"
 		end
 
-		if (not Gui[panelClassName]) then
+		if (not Panels[panelClassName]) then
 			error("attempt to create non-existing panel class \"" .. tostring(panelClassName) .. "\"", 2)
 		end
 
-		return Gui[panelClassName](parentPanel, name or panelClassName)
+		return Panels[panelClassName](parentPanel, name or panelClassName)
 	end
 
-	surface.SetDrawColor = surface.DrawSetColor
-	surface.DrawRect = surface.DrawFilledRect
-	surface.DrawTexturedRectUV = surface.DrawTexturedSubRect
-	surface.GetTextPos = surface.DrawGetTextPos
-	surface.SetTextPos = surface.DrawSetTextPos
-	surface.SetTextColor = surface.DrawSetTextColor
-	surface.DrawText = surface.DrawPrintText
-	surface.SetTexture = surface.DrawSetTexture
+	surface.SetDrawColor = Surfaces.DrawSetColor
+	surface.DrawRect = Surfaces.DrawFilledRectangle
+	surface.DrawOutlinedRect = Surfaces.DrawOutlinedRectangle
+	surface.DrawTexturedRect = Surfaces.DrawTexturedRectangle
+	-- TODO: surface.DrawTexturedRectRotated = Surfaces.DrawTexturedRotatedRectangle
+	surface.DrawTexturedRectUV = Surfaces.DrawTexturedSubRectangle
+	surface.GetTextPos = Surfaces.DrawGetTextPosition
+	surface.SetTextPos = Surfaces.DrawSetTextPosition
+	surface.SetTextColor = Surfaces.DrawSetTextColor
+	surface.DrawText = Surfaces.DrawPrintText
+    surface.SetTexture = Surfaces.DrawSetTexture
 
 	local currentFont
 	surface.SetFont = function(font)
@@ -1025,7 +1036,7 @@ else
 		surface.DrawSetTextFont(font)
 	end
 
-	local oldTextSize = Surface.GetTextSize
+	local oldTextSize = Surfaces.GetTextSize
 
 	surface.GetTextSize = function(text)
 		return oldTextSize(currentFont, text)
@@ -1035,11 +1046,11 @@ else
 		local name = material:GetString("$basetexture")
 
 		if (not textureMap[name]) then
-			textureMap[name] = Surface.CreateNewTextureID(true)
-			Surface.DrawSetTextureMaterial(textureMap[name], material)
+			textureMap[name] = Surfaces.CreateNewTextureID(true)
+			Surfaces.DrawSetTextureMaterial(textureMap[name], material)
 		end
 
-		Surface.DrawSetTexture(textureMap[name])
+		Surfaces.DrawSetTexture(textureMap[name])
 	end
 
 	-- TODO: Implement
@@ -1382,6 +1393,8 @@ include = originalInclude
 require = originalRequire
 
 if (CLIENT) then
+    Panels.HTML = Panels.Html
+
 	--[[
 		Load VGUI
 	--]]

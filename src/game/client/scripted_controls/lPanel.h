@@ -24,7 +24,7 @@ LUA_API lua_Panel *( lua_topanel )( lua_State *L, int idx );
 LUALIB_API lua_Panel *( luaL_checkpanel )( lua_State *L, int narg );
 LUALIB_API lua_Panel *( luaL_optpanel )( lua_State *L, int narg, lua_Panel *def );
 
-int Panel_IsValid( lua_State *L );
-int Panel___gc( lua_State *L );
+int PanelIsValid( lua_State *L );
+int PanelCollectGarbage( lua_State *L );
 
 #endif  // LPANEL_H

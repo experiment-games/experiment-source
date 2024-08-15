@@ -14,7 +14,7 @@ LUA_REGISTRATION_INIT( Player )
 LUA_BINDING_BEGIN( Player, GiveAmmo, "class", "Give ammo to the player." )
 {
     lua_CBasePlayer *player = LUA_BINDING_ARGUMENT( luaL_checkplayer, 1, "player" );
-    int ammoCount = LUA_BINDING_ARGUMENT( luaL_checkinteger, 2, "ammoCount" );
+    int ammoCount = LUA_BINDING_ARGUMENT( luaL_checknumber, 2, "ammoCount" );
 
     switch ( lua_type( L, 3 ) )
     {
@@ -141,7 +141,7 @@ LUA_BINDING_BEGIN( Player, DamageEffect, "class", "Apply a damage effect to the 
 {
     lua_CBasePlayer *player = LUA_BINDING_ARGUMENT( luaL_checkplayer, 1, "player" );
     float damage = LUA_BINDING_ARGUMENT( luaL_checknumber, 2, "damage" );
-    int damageType = LUA_BINDING_ARGUMENT( luaL_checkinteger, 3, "damageType" );
+    int damageType = LUA_BINDING_ARGUMENT( luaL_checknumber, 3, "damageType" );
     player->DamageEffect( damage, damageType );
     return 0;
 }
@@ -167,7 +167,7 @@ LUA_BINDING_END()
 LUA_BINDING_BEGIN( Player, SetBonusProgress, "class", "Set the bonus progress for the player." )
 {
     lua_CBasePlayer *player = LUA_BINDING_ARGUMENT( luaL_checkplayer, 1, "player" );
-    int progress = LUA_BINDING_ARGUMENT( luaL_checkinteger, 2, "progress" );
+    int progress = LUA_BINDING_ARGUMENT( luaL_checknumber, 2, "progress" );
     player->SetBonusProgress( progress );
     return 0;
 }
@@ -176,7 +176,7 @@ LUA_BINDING_END()
 LUA_BINDING_BEGIN( Player, SetBonusChallenge, "class", "Set the bonus challenge for the player." )
 {
     lua_CBasePlayer *player = LUA_BINDING_ARGUMENT( luaL_checkplayer, 1, "player" );
-    int challenge = LUA_BINDING_ARGUMENT( luaL_checkinteger, 2, "challenge" );
+    int challenge = LUA_BINDING_ARGUMENT( luaL_checknumber, 2, "challenge" );
     player->SetBonusChallenge( challenge );
     return 0;
 }
@@ -308,7 +308,7 @@ LUA_BINDING_END( "boolean", "Whether the player is dead." )
 LUA_BINDING_BEGIN( Player, HasPhysicsFlag, "class", "Check if the player has a physics flag." )
 {
     lua_CBasePlayer *player = LUA_BINDING_ARGUMENT( luaL_checkplayer, 1, "player" );
-    lua_pushboolean( L, player->HasPhysicsFlag( LUA_BINDING_ARGUMENT( luaL_checkinteger, 2, "flag" ) ) );
+    lua_pushboolean( L, player->HasPhysicsFlag( LUA_BINDING_ARGUMENT( luaL_checknumber, 2, "flag" ) ) );
     return 1;
 }
 LUA_BINDING_END( "boolean", "Whether the player has the physics flag." )
@@ -343,7 +343,7 @@ LUA_BINDING_END()
 LUA_BINDING_BEGIN( Player, DropWeaponInSlot, "class", "Drop the weapon in the specified slot." )
 {
     lua_CBasePlayer *player = LUA_BINDING_ARGUMENT( luaL_checkplayer, 1, "player" );
-    player->Weapon_DropSlot( LUA_BINDING_ARGUMENT( luaL_checkinteger, 2, "slot" ) );
+    player->Weapon_DropSlot( LUA_BINDING_ARGUMENT( luaL_checknumber, 2, "slot" ) );
     return 0;
 }
 LUA_BINDING_END()
@@ -359,7 +359,7 @@ LUA_BINDING_END()
 LUA_BINDING_BEGIN( Player, HasAnyAmmoOfType, "class", "Check if the player has any ammo of the specified type." )
 {
     lua_CBasePlayer *player = LUA_BINDING_ARGUMENT( luaL_checkplayer, 1, "player" );
-    lua_pushboolean( L, player->HasAnyAmmoOfType( LUA_BINDING_ARGUMENT( luaL_checkinteger, 2, "type" ) ) );
+    lua_pushboolean( L, player->HasAnyAmmoOfType( LUA_BINDING_ARGUMENT( luaL_checknumber, 2, "type" ) ) );
     return 1;
 }
 LUA_BINDING_END( "boolean", "Whether the player has any ammo of the specified type." )
@@ -368,9 +368,9 @@ LUA_BINDING_BEGIN( Player, RumbleEffect, "class", "Apply a rumble effect to the 
 {
     lua_CBasePlayer *player = LUA_BINDING_ARGUMENT( luaL_checkplayer, 1, "player" );
     player->RumbleEffect(
-        LUA_BINDING_ARGUMENT( luaL_checkinteger, 2, "index" ),
-        LUA_BINDING_ARGUMENT( luaL_checkinteger, 3, "duration" ),
-        LUA_BINDING_ARGUMENT( luaL_checkinteger, 4, "flags" ) );
+        LUA_BINDING_ARGUMENT( luaL_checknumber, 2, "index" ),
+        LUA_BINDING_ARGUMENT( luaL_checknumber, 3, "duration" ),
+        LUA_BINDING_ARGUMENT( luaL_checknumber, 4, "flags" ) );
     return 0;
 }
 LUA_BINDING_END()
@@ -442,13 +442,13 @@ LUA_BINDING_BEGIN( Player, PlayDeathSound, "class", "Play the death sound for th
 LUA_BINDING_END()
 
 // Experiment; SetWeaponAnimType has no existing implementation anywhere
-//LUA_BINDING_BEGIN( Player, SetWeaponAnimationType, "class", "Set the weapon animation type for the player." )
+// LUA_BINDING_BEGIN( Player, SetWeaponAnimationType, "class", "Set the weapon animation type for the player." )
 //{
 //    lua_CBasePlayer *player = LUA_BINDING_ARGUMENT( luaL_checkplayer, 1, "player" );
 //    player->SetWeaponAnimType( LUA_BINDING_ARGUMENT( luaL_checkstring, 2, "extension" ) );
 //    return 0;
 //}
-//LUA_BINDING_END()
+// LUA_BINDING_END()
 
 LUA_BINDING_BEGIN( Player, ImpulseCommands, "class", "Handle impulse commands for the player." )
 {
@@ -461,7 +461,7 @@ LUA_BINDING_END()
 LUA_BINDING_BEGIN( Player, CheatImpulseCommands, "class", "Handle cheat impulse commands for the player." )
 {
     lua_CBasePlayer *player = LUA_BINDING_ARGUMENT( luaL_checkplayer, 1, "player" );
-    player->CheatImpulseCommands( LUA_BINDING_ARGUMENT( luaL_checkinteger, 2, "impulse" ) );
+    player->CheatImpulseCommands( LUA_BINDING_ARGUMENT( luaL_checknumber, 2, "impulse" ) );
     return 0;
 }
 LUA_BINDING_END()
@@ -485,7 +485,7 @@ LUA_BINDING_END( "boolean", "Whether the single player game is ending." )
 LUA_BINDING_BEGIN( Player, StartObserverMode, "class", "Start the observer mode for the player." )
 {
     lua_CBasePlayer *player = LUA_BINDING_ARGUMENT( luaL_checkplayer, 1, "player" );
-    lua_pushboolean( L, player->StartObserverMode( LUA_BINDING_ARGUMENT( luaL_checkinteger, 2, "mode" ) ) );
+    lua_pushboolean( L, player->StartObserverMode( LUA_BINDING_ARGUMENT_ENUM( OBSERVER_MODE, 2, "mode " ) ) );
     return 1;
 }
 LUA_BINDING_END( "boolean", "Whether the observer mode was started." )
@@ -501,7 +501,7 @@ LUA_BINDING_END()
 LUA_BINDING_BEGIN( Player, ModeWantsSpectatorGui, "class", "Check if the observer mode wants the spectator GUI for the player." )
 {
     lua_CBasePlayer *player = LUA_BINDING_ARGUMENT( luaL_checkplayer, 1, "player" );
-    lua_pushboolean( L, player->ModeWantsSpectatorGUI( LUA_BINDING_ARGUMENT( luaL_checkinteger, 2, "mode" ) ) );
+    lua_pushboolean( L, player->ModeWantsSpectatorGUI( LUA_BINDING_ARGUMENT_ENUM( OBSERVER_MODE, 2, "mode " ) ) );
     return 1;
 }
 LUA_BINDING_END( "boolean", "Whether the observer mode wants the spectator GUI." )
@@ -551,7 +551,7 @@ LUA_BINDING_END()
 LUA_BINDING_BEGIN( Player, ForceObserverMode, "class", "Force the observer mode for the player." )
 {
     lua_CBasePlayer *player = LUA_BINDING_ARGUMENT( luaL_checkplayer, 1, "player" );
-    player->ForceObserverMode( LUA_BINDING_ARGUMENT( luaL_checkinteger, 2, "mode" ) );
+    player->ForceObserverMode( LUA_BINDING_ARGUMENT_ENUM( OBSERVER_MODE, 2, "mode " ) );
     return 0;
 }
 LUA_BINDING_END()
@@ -567,10 +567,7 @@ LUA_BINDING_END()
 LUA_BINDING_BEGIN( Player, StartReplayMode, "class", "Start the replay mode for the player." )
 {
     lua_CBasePlayer *player = LUA_BINDING_ARGUMENT( luaL_checkplayer, 1, "player" );
-    lua_pushboolean( L, player->StartReplayMode(
-                           LUA_BINDING_ARGUMENT( luaL_checknumber, 2, "delay" ),
-                           LUA_BINDING_ARGUMENT( luaL_checknumber, 3, "duration" ),
-                           LUA_BINDING_ARGUMENT( luaL_checkinteger, 4, "entityIndex" ) ) );
+    lua_pushboolean( L, player->StartReplayMode( LUA_BINDING_ARGUMENT( luaL_checknumber, 2, "delay" ), LUA_BINDING_ARGUMENT( luaL_checknumber, 3, "duration" ), LUA_BINDING_ARGUMENT( luaL_checknumber, 4, "entityIndex" ) ) );
     return 1;
 }
 LUA_BINDING_END( "boolean", "Whether the replay mode was started." )
@@ -626,7 +623,7 @@ LUA_BINDING_END( "integer", "The vehicle analog control bias." )
 LUA_BINDING_BEGIN( Player, SetVehicleAnalogControlBias, "class", "Set the vehicle analog control bias for the player." )
 {
     lua_CBasePlayer *player = LUA_BINDING_ARGUMENT( luaL_checkplayer, 1, "player" );
-    player->SetVehicleAnalogControlBias( LUA_BINDING_ARGUMENT( luaL_checkinteger, 2, "bias" ) );
+    player->SetVehicleAnalogControlBias( LUA_BINDING_ARGUMENT( luaL_checknumber, 2, "bias" ) );
     return 0;
 }
 LUA_BINDING_END()
@@ -724,7 +721,7 @@ LUA_BINDING_END()
 LUA_BINDING_BEGIN( Player, SetTeam, "class", "Change the team for the player." )
 {
     lua_CBasePlayer *player = LUA_BINDING_ARGUMENT( luaL_checkplayer, 1, "player" );
-    player->ChangeTeam( LUA_BINDING_ARGUMENT( luaL_checkinteger, 2, "team" ) );
+    player->ChangeTeam( LUA_BINDING_ARGUMENT( luaL_checknumber, 2, "team" ) );
     return 0;
 }
 LUA_BINDING_END()
@@ -732,7 +729,7 @@ LUA_BINDING_END()
 LUA_BINDING_BEGIN( Player, SetObserverMode, "class", "Set the observer mode for the player." )
 {
     lua_CBasePlayer *player = LUA_BINDING_ARGUMENT( luaL_checkplayer, 1, "player" );
-    player->ForceObserverMode( LUA_BINDING_ARGUMENT( luaL_checkinteger, 2, "mode" ) );
+    player->ForceObserverMode( LUA_BINDING_ARGUMENT_ENUM( OBSERVER_MODE, 2, "mode " ) );
     return 0;
 }
 LUA_BINDING_END()
@@ -745,13 +742,13 @@ LUA_BINDING_BEGIN( Player, SetObserverTarget, "class", "Set the observer target 
 }
 LUA_BINDING_END()
 //
-//static int luasrc_Util_PlayerDecalTrace( lua_State *L )
+// static int luasrc_Util_PlayerDecalTrace( lua_State *L )
 //{
-//    UTIL_PlayerDecalTrace( &luaL_checktrace( L, 1 ), luaL_checkinteger( L, 2 ) );
+//    UTIL_PlayerDecalTrace( &luaL_checktrace( L, 1 ), luaL_checknumber( L, 2 ) );
 //    return 0;
 //}
 //
-//static int luasrc_Util_ClipPunchAngleOffset( lua_State *L )
+// static int luasrc_Util_ClipPunchAngleOffset( lua_State *L )
 //{
 //    UTIL_ClipPunchAngleOffset( luaL_checkangle( L, 1 ), luaL_checkplayer( L, 2 )->m_Local.m_vecPunchAngle, luaL_checkangle( L, 3 ) );
 //    return 0;
@@ -763,7 +760,7 @@ LUA_BINDING_BEGIN( Player, SprayDecal, "class", "Spray a decal for the player ba
     lua_Vector traceStart = LUA_BINDING_ARGUMENT( luaL_checkvector, 2, "traceStart" );
     lua_Vector traceEnd = LUA_BINDING_ARGUMENT( luaL_checkvector, 3, "traceEnd" );
 
-    trace_t trace;	
+    trace_t trace;
     UTIL_TraceLine( traceStart, traceEnd, MASK_SOLID_BRUSHONLY, player, COLLISION_GROUP_NONE, &trace );
 
     UTIL_PlayerDecalTrace( &trace, player->entindex() );

@@ -17,7 +17,7 @@ lua:
     - name: "origin"
       type: Vector
     - name: "lineOffset"
-      type: integer
+      type: number
     - name: "duration"
       type: number
     - name: "text"

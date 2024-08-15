@@ -154,7 +154,7 @@ LUA_BINDING_END()
 LUA_BINDING_BEGIN( Entity, SetTransmitState, "class", "Set transmit state." )
 {
     lua_CBaseEntity *pEntity = LUA_BINDING_ARGUMENT( luaL_checkentity, 1, "entity" );
-    int nState = LUA_BINDING_ARGUMENT( luaL_checkinteger, 2, "state" );
+    int nState = LUA_BINDING_ARGUMENT( luaL_checknumber, 2, "state" );
     lua_pushinteger( L, pEntity->SetTransmitState( nState ) );
     return 1;
 }
@@ -302,7 +302,7 @@ LUA_BINDING_END( "integer", "The spawn flags" )
 LUA_BINDING_BEGIN( Entity, AddSpawnFlags, "class", "Add spawn flags." )
 {
     lua_CBaseEntity *pEntity = LUA_BINDING_ARGUMENT( luaL_checkentity, 1, "entity" );
-    int nFlags = LUA_BINDING_ARGUMENT( luaL_checkinteger, 2, "flags" );
+    int nFlags = LUA_BINDING_ARGUMENT( luaL_checknumber, 2, "flags" );
     pEntity->AddSpawnFlags( nFlags );
     return 0;
 }
@@ -311,7 +311,7 @@ LUA_BINDING_END()
 LUA_BINDING_BEGIN( Entity, RemoveSpawnFlags, "class", "Remove spawn flags." )
 {
     lua_CBaseEntity *pEntity = LUA_BINDING_ARGUMENT( luaL_checkentity, 1, "entity" );
-    int nFlags = LUA_BINDING_ARGUMENT( luaL_checkinteger, 2, "flags" );
+    int nFlags = LUA_BINDING_ARGUMENT( luaL_checknumber, 2, "flags" );
     pEntity->RemoveSpawnFlags( nFlags );
     return 0;
 }
@@ -328,7 +328,7 @@ LUA_BINDING_END()
 LUA_BINDING_BEGIN( Entity, HasSpawnFlags, "class", "Has spawn flags." )
 {
     lua_CBaseEntity *pEntity = LUA_BINDING_ARGUMENT( luaL_checkentity, 1, "entity" );
-    int nFlags = LUA_BINDING_ARGUMENT( luaL_checkinteger, 2, "flags" );
+    int nFlags = LUA_BINDING_ARGUMENT( luaL_checknumber, 2, "flags" );
     lua_pushboolean( L, pEntity->HasSpawnFlags( nFlags ) );
     return 1;
 }
@@ -385,11 +385,11 @@ LUA_BINDING_BEGIN( Entity, EmitAmbientSound, "class", "Emits an ambient sound" )
         pEntity->entindex(),
         LUA_BINDING_ARGUMENT( luaL_checkvector, 2, "origin" ),
         LUA_BINDING_ARGUMENT( luaL_checkstring, 3, "sample" ),
-        LUA_BINDING_ARGUMENT( luaL_checknumber, 4, "volume" ),
-        ( soundlevel_t )LUA_BINDING_ARGUMENT( luaL_checkinteger, 5, "soundLevel" ),
-        LUA_BINDING_ARGUMENT( luaL_checkinteger, 6, "flags" ),
-        LUA_BINDING_ARGUMENT( luaL_checkinteger, 7, "pitch" ),
-        LUA_BINDING_ARGUMENT_WITH_DEFAULT( luaL_optnumber, 8, 0.0f, "soundTime" ),
+        LUA_BINDING_ARGUMENT_WITH_DEFAULT( luaL_optnumber, 4, 1, "volume" ),
+        LUA_BINDING_ARGUMENT_ENUM_WITH_DEFAULT( soundlevel_t, 5, SNDLVL_NORM, "soundLevel" ),
+        LUA_BINDING_ARGUMENT_WITH_DEFAULT( luaL_optnumber, 6, CHAN_AUTO, "flags" ),
+        LUA_BINDING_ARGUMENT_WITH_DEFAULT( luaL_optnumber, 7, 100, "pitch" ),
+        LUA_BINDING_ARGUMENT_WITH_DEFAULT( luaL_optnumber, 8, 0.0f, "delay" ),
         &duration );
 
     lua_pushnumber( L, duration );
@@ -400,13 +400,13 @@ LUA_BINDING_END( "number", "The duration of the sound." )
 LUA_BINDING_BEGIN( Entity, EntityText, "class", "Entity text." )
 {
     lua_CBaseEntity *pEntity = LUA_BINDING_ARGUMENT( luaL_checkentity, 1, "entity" );
-    int textOffset = LUA_BINDING_ARGUMENT( luaL_checkinteger, 2, "textOffset" );
+    int textOffset = LUA_BINDING_ARGUMENT( luaL_checknumber, 2, "textOffset" );
     const char *pszText = LUA_BINDING_ARGUMENT( luaL_checkstring, 3, "text" );
     float flDuration = LUA_BINDING_ARGUMENT( luaL_checknumber, 4, "duration" );
-    int nR = LUA_BINDING_ARGUMENT( luaL_checkinteger, 5, "r" );
-    int nG = LUA_BINDING_ARGUMENT( luaL_checkinteger, 6, "g" );
-    int nB = LUA_BINDING_ARGUMENT( luaL_checkinteger, 7, "b" );
-    int nA = LUA_BINDING_ARGUMENT( luaL_checkinteger, 8, "a" );
+    int nR = LUA_BINDING_ARGUMENT( luaL_checknumber, 5, "r" );
+    int nG = LUA_BINDING_ARGUMENT( luaL_checknumber, 6, "g" );
+    int nB = LUA_BINDING_ARGUMENT( luaL_checknumber, 7, "b" );
+    int nA = LUA_BINDING_ARGUMENT( luaL_checknumber, 8, "a" );
     pEntity->EntityText( textOffset, pszText, flDuration, nR, nG, nB, nA );
     return 0;
 }
@@ -473,7 +473,7 @@ LUA_BINDING_BEGIN( Entity, AddTimedOverlay, "class", "Add timed overlay." )
 {
     lua_CBaseEntity *pEntity = LUA_BINDING_ARGUMENT( luaL_checkentity, 1, "entity" );
     const char *pszText = LUA_BINDING_ARGUMENT( luaL_checkstring, 2, "text" );
-    int nDuration = LUA_BINDING_ARGUMENT( luaL_checkinteger, 3, "durationInSeconds" );
+    int nDuration = LUA_BINDING_ARGUMENT( luaL_checknumber, 3, "durationInSeconds" );
     pEntity->AddTimedOverlay( pszText, nDuration );
     return 0;
 }
@@ -497,7 +497,7 @@ LUA_BINDING_END()
 
 LUA_BINDING_BEGIN( Entity, Instance, "class|static", "Get entity instance." )
 {
-    int nEdictIndex = LUA_BINDING_ARGUMENT( luaL_checkinteger, 1, "edictIndex" );
+    int nEdictIndex = LUA_BINDING_ARGUMENT( luaL_checknumber, 1, "edictIndex" );
     CBaseEntity::PushLuaInstanceSafe( L, CBaseEntity::Instance( nEdictIndex ) );
     return 1;
 }
@@ -602,8 +602,8 @@ LUA_BINDING_END()
 LUA_BINDING_BEGIN( Entity, TakeHealth, "class", "Take health." )
 {
     lua_CBaseEntity *pEntity = LUA_BINDING_ARGUMENT( luaL_checkentity, 1, "entity" );
-    float flHealth = LUA_BINDING_ARGUMENT( luaL_checkinteger, 2, "health" );
-    int nBitsDamageType = LUA_BINDING_ARGUMENT( luaL_checkinteger, 3, "bitsDamageType" );
+    float flHealth = LUA_BINDING_ARGUMENT( luaL_checknumber, 2, "health" );
+    int nBitsDamageType = LUA_BINDING_ARGUMENT( luaL_checknumber, 3, "bitsDamageType" );
     lua_pushinteger( L, pEntity->TakeHealth( flHealth, nBitsDamageType ) );
     return 1;
 }
@@ -656,7 +656,7 @@ LUA_BINDING_END( "boolean", "true if moving, false otherwise." )
 LUA_BINDING_BEGIN( Entity, AddPoints, "class", "Add points." )
 {
     lua_CBaseEntity *pEntity = LUA_BINDING_ARGUMENT( luaL_checkentity, 1, "entity" );
-    int nPoints = LUA_BINDING_ARGUMENT( luaL_checkinteger, 2, "points" );
+    int nPoints = LUA_BINDING_ARGUMENT( luaL_checknumber, 2, "points" );
     bool bAllowNegative = LUA_BINDING_ARGUMENT( luaL_checkboolean, 3, "allowNegative" );
     pEntity->AddPoints( nPoints, bAllowNegative );
     return 0;
@@ -666,7 +666,7 @@ LUA_BINDING_END()
 LUA_BINDING_BEGIN( Entity, AddPointsToTeam, "class", "Add points to team." )
 {
     lua_CBaseEntity *pEntity = LUA_BINDING_ARGUMENT( luaL_checkentity, 1, "entity" );
-    int nPoints = LUA_BINDING_ARGUMENT( luaL_checkinteger, 2, "points" );
+    int nPoints = LUA_BINDING_ARGUMENT( luaL_checknumber, 2, "points" );
     bool bAllowNegative = LUA_BINDING_ARGUMENT( luaL_checkboolean, 3, "allowNegative" );
     pEntity->AddPointsToTeam( nPoints, bAllowNegative );
     return 0;
@@ -770,7 +770,7 @@ LUA_BINDING_BEGIN( Entity, Use, "class", "Dispatches use events to this entity's
     lua_CBaseEntity *pEntity = LUA_BINDING_ARGUMENT( luaL_checkentity, 1, "entity" );
     CBaseEntity *pActivator = LUA_BINDING_ARGUMENT( luaL_checkentity, 2, "activator" );
     CBaseEntity *pCaller = LUA_BINDING_ARGUMENT( luaL_checkentity, 3, "caller" );
-    USE_TYPE useType = ( USE_TYPE )LUA_BINDING_ARGUMENT( luaL_checkinteger, 4, "useType" );
+    USE_TYPE useType = LUA_BINDING_ARGUMENT_ENUM( USE_TYPE, 4, "useType" );
     float value = LUA_BINDING_ARGUMENT( luaL_checknumber, 5, "value" );
     pEntity->Use( pActivator, pCaller, useType, value );
     return 0;
@@ -891,8 +891,8 @@ LUA_BINDING_END()
 LUA_BINDING_BEGIN( Entity, ShouldToggle, "class", "Should toggle." )
 {
     lua_CBaseEntity *pEntity = LUA_BINDING_ARGUMENT( luaL_checkentity, 1, "entity" );
-    USE_TYPE useType = ( USE_TYPE )LUA_BINDING_ARGUMENT( luaL_checkinteger, 2, "useType" );
-    int iState = LUA_BINDING_ARGUMENT( luaL_checkinteger, 3, "currentState" );
+    USE_TYPE useType = LUA_BINDING_ARGUMENT_ENUM( USE_TYPE, 2, "useType" );
+    int iState = LUA_BINDING_ARGUMENT( luaL_checknumber, 3, "currentState" );
     lua_pushinteger( L, pEntity->ShouldToggle( useType, iState ) );
     return 1;
 }
@@ -938,7 +938,7 @@ LUA_BINDING_END( "boolean", "true if locked by main, false otherwise." )
 LUA_BINDING_BEGIN( Entity, SetMaxHealth, "class", "Set max health." )
 {
     lua_CBaseEntity *pEntity = LUA_BINDING_ARGUMENT( luaL_checkentity, 1, "entity" );
-    int nMaxHealth = LUA_BINDING_ARGUMENT( luaL_checkinteger, 2, "maxHealth" );
+    int nMaxHealth = LUA_BINDING_ARGUMENT( luaL_checknumber, 2, "maxHealth" );
     pEntity->SetMaxHealth( nMaxHealth );
     return 0;
 }

@@ -19,7 +19,7 @@ lua:
         type: Player
     - arguments:
       - name: "playerOrIndex"
-        type: integer
+        type: number
       - name: "conVarName"
         type: string
   returns:

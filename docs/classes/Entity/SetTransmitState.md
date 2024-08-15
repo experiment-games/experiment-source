@@ -15,7 +15,7 @@ lua:
   
   arguments:
     - name: "state"
-      type: integer
+      type: number
   returns:
     - type: integer
       description: "The transmit state"

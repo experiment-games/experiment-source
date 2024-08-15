@@ -2125,7 +2125,7 @@ LUA_BINDING_END()
 LUA_BINDING_BEGIN( Entity, SetMoveCollide, "class", "Set move collide." )
 {
     lua_CBaseEntity *pEntity = LUA_BINDING_ARGUMENT( luaL_checkentity, 1, "entity" );
-    MoveCollide_t nCollide = ( MoveCollide_t )( int )LUA_BINDING_ARGUMENT( luaL_checknumber, 2, "collide" );
+    MoveCollide_t nCollide = LUA_BINDING_ARGUMENT_ENUM( MoveCollide_t, 2, "collide" );
 
     pEntity->SetMoveCollide( nCollide );
     return 0;
@@ -2135,8 +2135,8 @@ LUA_BINDING_END()
 LUA_BINDING_BEGIN( Entity, SetMoveType, "class", "Set move type." )
 {
     lua_CBaseEntity *pEntity = LUA_BINDING_ARGUMENT( luaL_checkentity, 1, "entity" );
-    MoveType_t nType = ( MoveType_t )( int )LUA_BINDING_ARGUMENT( luaL_checknumber, 2, "type" );
-    MoveCollide_t nCollide = ( MoveCollide_t )( int )LUA_BINDING_ARGUMENT_WITH_DEFAULT( luaL_optnumber, 3, MOVECOLLIDE_DEFAULT, "collide" );
+    MoveType_t nType = LUA_BINDING_ARGUMENT_ENUM( MoveType_t, 2, "type" );
+    MoveCollide_t nCollide = LUA_BINDING_ARGUMENT_ENUM_WITH_DEFAULT( MoveCollide_t, 3, MOVECOLLIDE_DEFAULT, "collide" );
 
     pEntity->SetMoveType( nType, nCollide );
     return 0;
@@ -2259,7 +2259,7 @@ LUA_BINDING_END()
 LUA_BINDING_BEGIN( Entity, SetRenderMode, "class", "Set render mode." )
 {
     lua_CBaseEntity *pEntity = LUA_BINDING_ARGUMENT( luaL_checkentity, 1, "entity" );
-    RenderMode_t nMode = ( RenderMode_t )( int )LUA_BINDING_ARGUMENT( luaL_checknumber, 2, "mode" );
+    RenderMode_t nMode = LUA_BINDING_ARGUMENT_ENUM( RenderMode_t, 2, "mode" );
 
 #ifdef CLIENT_DLL
     pEntity->SetRenderMode( nMode, true );
@@ -2305,7 +2305,7 @@ LUA_BINDING_END()
 LUA_BINDING_BEGIN( Entity, SetSolid, "class", "Set solid type." )
 {
     lua_CBaseEntity *pEntity = LUA_BINDING_ARGUMENT( luaL_checkentity, 1, "entity" );
-    SolidType_t nType = ( SolidType_t )( int )LUA_BINDING_ARGUMENT( luaL_checknumber, 2, "type" );
+    SolidType_t nType = LUA_BINDING_ARGUMENT_ENUM( SolidType_t, 2, "type" );
 
     pEntity->SetSolid( nType );
     return 0;

@@ -164,7 +164,7 @@ static void SetupViewForEntity_Ragdoll_Facemask( lua_CBaseFlex *pEntity, CViewSe
     AngleVectors( viewAngle, &forward, &right, &up );
 
     viewAngle = attachmentAngles;
-    
+
     matrix3x4_t matrix;
     MatrixBuildRotationAboutAxis( right, -10, matrix );
     MatrixBuildRotationAboutAxis( up, 160, matrix );
@@ -522,7 +522,6 @@ void LModelImagePanel::LoadIfExistsOrRebuild()
     }
 }
 
-
 /// <summary>
 /// Sets the PNG image to be displayed on the panel. This loads it into the material system
 /// and creates (or updates) a texture ID for the panel to use. Additionally this precaches
@@ -595,58 +594,88 @@ LUALIB_API lua_ModelImagePanel *luaL_checkmodelimagepanel( lua_State *L, int nar
     return d;
 }
 
-static int ModelImagePanel_SetModel( lua_State *L )
+LUA_REGISTRATION_INIT( ModelImagePanel )
+
+LUA_BINDING_BEGIN( ModelImagePanel, GetPanelBaseClassName, "class|static", "Gets the base class name of the panel" )
 {
-    lua_ModelImagePanel *pModelImagePanel = luaL_checkmodelimagepanel( L, 1 );
-    const char *modelPath = luaL_checkstring( L, 2 );
-    int skin = ( int )luaL_optnumber( L, 3, 0 );
-    const char *bodyGroups = luaL_optstring( L, 4, NULL );
+    lua_pushstring( L, lua_ModelImagePanel::GetPanelBaseClassName() );
+    return 1;
+}
+LUA_BINDING_END( "string", "The base class name of the panel" )
+
+LUA_BINDING_BEGIN( ModelImagePanel, GetPanelClassName, "class|static", "Gets the class name of the panel" )
+{
+    lua_pushstring( L, lua_ModelImagePanel::GetPanelClassName() );
+    return 1;
+}
+LUA_BINDING_END( "string", "The class name of the panel" )
+
+LUA_BINDING_BEGIN( ModelImagePanel, SetModel, "class", "Sets the model for the panel" )
+{
+    lua_ModelImagePanel *pModelImagePanel = LUA_BINDING_ARGUMENT( luaL_checkmodelimagepanel, 1, "modelImagePanel" );
+    const char *modelPath = LUA_BINDING_ARGUMENT( luaL_checkstring, 2, "modelPath" );
+    int skin = LUA_BINDING_ARGUMENT_WITH_DEFAULT( luaL_optnumber, 3, 0, "skin" );
+    const char *bodyGroups = LUA_BINDING_ARGUMENT_WITH_DEFAULT( luaL_optstring, 4, NULL, "bodyGroups" );
 
     pModelImagePanel->SetModel( modelPath, skin, bodyGroups );
 
     return 0;
 }
+LUA_BINDING_END()
 
-static int ModelImagePanel_GetModel( lua_State *L )
+LUA_BINDING_BEGIN( ModelImagePanel, GetModel, "class", "Gets the model path from the panel" )
 {
-    lua_ModelImagePanel *pModelImagePanel = luaL_checkmodelimagepanel( L, 1 );
+    lua_ModelImagePanel *pModelImagePanel = LUA_BINDING_ARGUMENT( luaL_checkmodelimagepanel, 1, "modelImagePanel" );
     lua_pushstring( L, pModelImagePanel->GetModel() );
     return 1;
 }
+LUA_BINDING_END( "string", "The model path" )
 
-static int ModelImagePanel_SetSkin( lua_State *L )
+LUA_BINDING_BEGIN( ModelImagePanel, SetSkin, "class", "Sets the skin for the model" )
 {
-    lua_ModelImagePanel *pModelImagePanel = luaL_checkmodelimagepanel( L, 1 );
-    pModelImagePanel->SetSkin( luaL_checknumber( L, 2 ) );
+    lua_ModelImagePanel *pModelImagePanel = LUA_BINDING_ARGUMENT( luaL_checkmodelimagepanel, 1, "modelImagePanel" );
+    int skin = LUA_BINDING_ARGUMENT( luaL_checknumber, 2, "skin" );
+    pModelImagePanel->SetSkin( skin );
     return 0;
 }
+LUA_BINDING_END()
 
-static int ModelImagePanel_GetSkin( lua_State *L )
+LUA_BINDING_BEGIN( ModelImagePanel, GetSkin, "class", "Gets the skin index from the model" )
 {
-    lua_ModelImagePanel *pModelImagePanel = luaL_checkmodelimagepanel( L, 1 );
+    lua_ModelImagePanel *pModelImagePanel = LUA_BINDING_ARGUMENT( luaL_checkmodelimagepanel, 1, "modelImagePanel" );
     lua_pushinteger( L, pModelImagePanel->GetSkin() );
     return 1;
 }
+LUA_BINDING_END( "integer", "The skin index" )
 
-static int ModelImagePanel_SetBodyGroups( lua_State *L )
+LUA_BINDING_BEGIN( ModelImagePanel, SetBodyGroups, "class", "Sets the body groups for the model" )
 {
-    lua_ModelImagePanel *pModelImagePanel = luaL_checkmodelimagepanel( L, 1 );
-    pModelImagePanel->SetBodyGroups( luaL_checkstring( L, 2 ) );
+    lua_ModelImagePanel *pModelImagePanel = LUA_BINDING_ARGUMENT( luaL_checkmodelimagepanel, 1, "modelImagePanel" );
+    const char *bodyGroups = LUA_BINDING_ARGUMENT( luaL_checkstring, 2, "bodyGroups" );
+    pModelImagePanel->SetBodyGroups( bodyGroups );
     return 0;
 }
+LUA_BINDING_END()
 
-static int ModelImagePanel_GetBodyGroups( lua_State *L )
+LUA_BINDING_BEGIN( ModelImagePanel, GetBodyGroups, "class", "Gets the body groups from the model" )
 {
-    lua_ModelImagePanel *pModelImagePanel = luaL_checkmodelimagepanel( L, 1 );
+    lua_ModelImagePanel *pModelImagePanel = LUA_BINDING_ARGUMENT( luaL_checkmodelimagepanel, 1, "modelImagePanel" );
     lua_pushstring( L, pModelImagePanel->GetBodyGroups() );
     return 1;
 }
+LUA_BINDING_END( "string", "The body groups" )
 
-static int ModelImagePanel_RebuildSpawnIcon( lua_State *L )
+LUA_BINDING_BEGIN( ModelImagePanel, RebuildSpawnIcon, "class", "Rebuilds the spawn icon with the specified camera settings" )
 {
-    lua_ModelImagePanel *pModelImagePanel = luaL_checkmodelimagepanel( L, 1 );
-    const char *pszSavePath = luaL_optstring( L, 3, NULL );
+    lua_ModelImagePanel *pModelImagePanel = LUA_BINDING_ARGUMENT( luaL_checkmodelimagepanel, 1, "modelImagePanel" );
+    const char *pszSavePath = LUA_BINDING_ARGUMENT_WITH_DEFAULT( luaL_optstring, 3, NULL, "savePath" );
     Camera_t camera;
+
+    if ( !LUA_BINDING_ARGUMENT( lua_istable, 2, "data" ) )
+    {
+        luaL_argerror( L, 2, "table expected" );
+        return 0;
+    }
 
     lua_getfield( L, 2, "origin" );
     Vector origin = lua_tovector( L, -1 );
@@ -677,19 +706,25 @@ static int ModelImagePanel_RebuildSpawnIcon( lua_State *L )
 
     return 0;
 }
+LUA_BINDING_END()
 
-static int ModelImagePanel_SetModelImage( lua_State *L )
+LUA_BINDING_BEGIN( ModelImagePanel, SetModelImage, "class", "Sets the image for the model" )
 {
-    lua_ModelImagePanel *pModelImagePanel = luaL_checkmodelimagepanel( L, 1 );
-    pModelImagePanel->SetModelImage( luaL_checkstring( L, 2 ) );
+    lua_ModelImagePanel *pModelImagePanel = LUA_BINDING_ARGUMENT( luaL_checkmodelimagepanel, 1, "modelImagePanel" );
+    const char *imagePath = LUA_BINDING_ARGUMENT( luaL_checkstring, 2, "imagePath" );
+    pModelImagePanel->SetModelImage( imagePath );
     return 0;
 }
+LUA_BINDING_END()
 
-static int ModelImagePanel___index( lua_State *L )
+LUA_BINDING_BEGIN( ModelImagePanel, __index, "class", "Metamethod called when a non-existent field is indexed" )
 {
-    lua_ModelImagePanel *pModelImagePanel = lua_tomodelimagepanel( L, 1 );
-    LUA_METATABLE_INDEX_CHECK_VALID( L, Panel_IsValid );
+    lua_ModelImagePanel *pModelImagePanel = LUA_BINDING_ARGUMENT( lua_tomodelimagepanel, 1, "modelImagePanel" );
+
+    LUA_METATABLE_INDEX_CHECK_VALID( L, PanelIsValid );
     LUA_METATABLE_INDEX_CHECK( L, pModelImagePanel );
+
+    // const char *field = LUA_BINDING_ARGUMENT( luaL_checkstring, 2, "field" );
 
     LUA_METATABLE_INDEX_CHECK_REF_TABLE( L, pModelImagePanel );
 
@@ -706,10 +741,11 @@ static int ModelImagePanel___index( lua_State *L )
     lua_pushnil( L );
     return 1;
 }
+LUA_BINDING_END( "any", "The value of the field" )
 
-static int ModelImagePanel___newindex( lua_State *L )
+LUA_BINDING_BEGIN( ModelImagePanel, __newindex, "class", "Metamethod called when a new field is added to the panel" )
 {
-    lua_ModelImagePanel *pModelImagePanel = lua_tomodelimagepanel( L, 1 );
+    lua_ModelImagePanel *pModelImagePanel = LUA_BINDING_ARGUMENT( lua_tomodelimagepanel, 1, "modelImagePanel" );
 
     if ( pModelImagePanel == NULL )
     { /* avoid extra test when d is not 0 */
@@ -724,21 +760,23 @@ static int ModelImagePanel___newindex( lua_State *L )
 
     LUA_GET_REF_TABLE( L, pModelImagePanel );
     lua_pushvalue( L, 3 );
-    lua_setfield( L, -2, luaL_checkstring( L, 2 ) );
+    lua_setfield( L, -2, LUA_BINDING_ARGUMENT( luaL_checkstring, 2, "field" ) );
     lua_pop( L, 1 );
 
     return 0;
 }
+LUA_BINDING_END()
 
-static int ModelImagePanel___eq( lua_State *L )
+LUA_BINDING_BEGIN( ModelImagePanel, __eq, "class", "Metamethod called when two panels are compared" )
 {
-    lua_pushboolean( L, lua_tomodelimagepanel( L, 1 ) == lua_tomodelimagepanel( L, 2 ) );
+    lua_pushboolean( L, LUA_BINDING_ARGUMENT( lua_tomodelimagepanel, 1, "modelImagePanelA" ) == LUA_BINDING_ARGUMENT( lua_tomodelimagepanel, 2, "modelImagePanelB" ) );
     return 1;
 }
+LUA_BINDING_END( "boolean", "Whether the panels are equal" )
 
-static int ModelImagePanel___tostring( lua_State *L )
+LUA_BINDING_BEGIN( ModelImagePanel, __tostring, "class", "Metamethod called when the panel is converted to a string" )
 {
-    lua_ModelImagePanel *pModelImagePanel = lua_tomodelimagepanel( L, 1 );
+    lua_ModelImagePanel *pModelImagePanel = LUA_BINDING_ARGUMENT( lua_tomodelimagepanel, 1, "modelImagePanel" );
 
     if ( pModelImagePanel == NULL )
         lua_pushstring( L, "INVALID_PANEL" );
@@ -752,36 +790,25 @@ static int ModelImagePanel___tostring( lua_State *L )
 
     return 1;
 }
+LUA_BINDING_END()
 
-static const luaL_Reg ModelImagePanelmeta[] = {
-    { "SetModel", ModelImagePanel_SetModel },
-    { "GetModel", ModelImagePanel_GetModel },
-    { "SetSkin", ModelImagePanel_SetSkin },
-    { "GetSkin", ModelImagePanel_GetSkin },
-    { "SetBodyGroups", ModelImagePanel_SetBodyGroups },
-    { "GetBodyGroups", ModelImagePanel_GetBodyGroups },
-    { "RebuildSpawnIcon", ModelImagePanel_RebuildSpawnIcon },
-    { "SetModelImage", ModelImagePanel_SetModelImage },
-    { "__index", ModelImagePanel___index },
-    { "__newindex", ModelImagePanel___newindex },
-    { "__eq", ModelImagePanel___eq },
-    { "__tostring", ModelImagePanel___tostring },
-    { "__gc", Panel___gc },
-    { NULL, NULL } };
-
-static int luasrc_ModelImagePanel( lua_State *L )
+LUA_BINDING_BEGIN( ModelImagePanel, __gc, "class", "Metamethod that is called when the panel is garbage collected" )
 {
-    lua_ModelImagePanel *pPanel =
-        new lua_ModelImagePanel(
-            luaL_optpanel( L, 1, VGui_GetClientLuaRootPanel() ),
-            luaL_checkstring( L, 2 ),
-            L );
+    return PanelCollectGarbage( L );
+}
+LUA_BINDING_END()
+
+LUA_REGISTRATION_INIT( Panels )
+
+LUA_BINDING_BEGIN( Panels, ModelImagePanel, "library", "Creates a new model image panel" )
+{
+    Panel *parent = LUA_BINDING_ARGUMENT_WITH_DEFAULT( luaL_optpanel, 1, VGui_GetClientLuaRootPanel(), "parent" );
+    const char *name = LUA_BINDING_ARGUMENT_WITH_DEFAULT( luaL_optstring, 2, "ModelImagePanel", "name" );
+    lua_ModelImagePanel *pPanel = new lua_ModelImagePanel( parent, name, L );
     pPanel->PushLuaInstance( L );
     return 1;
 }
-
-static const luaL_Reg ModelImagePanel_funcs[] = { { "ModelImagePanel", luasrc_ModelImagePanel },
-                                                  { NULL, NULL } };
+LUA_BINDING_END( "ModelImagePanel", "The new model image panel" )
 
 /*
 ** Open ModelImagePanel object
@@ -789,10 +816,14 @@ static const luaL_Reg ModelImagePanel_funcs[] = { { "ModelImagePanel", luasrc_Mo
 LUALIB_API int luaopen_vgui_ModelImagePanel( lua_State *L )
 {
     LUA_PUSH_NEW_METATABLE( L, "ModelImagePanel" );
-    luaL_register( L, NULL, ModelImagePanelmeta );
-    lua_pushstring( L, LUA_PANELLIBNAME );
+
+    LUA_REGISTRATION_COMMIT( ModelImagePanel );
+
+    lua_pushstring( L, LUA_PANELMETANAME );
     lua_setfield( L, -2, "__type" ); /* metatable.__type = "Panel" */
-    luaL_register( L, LUA_VGUILIBNAME, ModelImagePanel_funcs );
+
+    LUA_REGISTRATION_COMMIT_LIBRARY( Panels );
+
     lua_pop( L, 2 );
     return 0;
 }

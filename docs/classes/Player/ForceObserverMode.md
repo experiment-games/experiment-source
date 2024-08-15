@@ -15,7 +15,7 @@ lua:
   
   arguments:
     - name: "mode"
-      type: integer
+      type: enumeration/OBSERVER_MODE
   returns:
     
 ---

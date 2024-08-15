@@ -15,9 +15,9 @@ lua:
   
   arguments:
     - name: "portalIndex"
-      type: integer
+      type: number
     - name: "isOpen"
-      type: integer
+      type: number
   returns:
     
 ---

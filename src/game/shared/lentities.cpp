@@ -403,8 +403,8 @@ LUA_BINDING_END( "integer", "The number of edicts." )
 LUA_BINDING_BEGIN( Entities, ReportFlagsChanged, "library", "Reports that an entity's flags have changed", "server" )
 {
     CBaseEntity *entity = LUA_BINDING_ARGUMENT( luaL_checkentity, 1, "entity" );
-    unsigned int flagsOld = LUA_BINDING_ARGUMENT( luaL_checkinteger, 2, "flagsOld" );
-    unsigned int flagsNow = LUA_BINDING_ARGUMENT( luaL_checkinteger, 3, "flagsNow" );
+    unsigned int flagsOld = LUA_BINDING_ARGUMENT( luaL_checknumber, 2, "flagsOld" );
+    unsigned int flagsNow = LUA_BINDING_ARGUMENT( luaL_checknumber, 3, "flagsNow" );
 
     gEntList.ReportEntityFlagsChanged( entity, flagsOld, flagsNow );
     return 0;
@@ -427,7 +427,7 @@ LUA_BINDING_END( "boolean", "True if the entity class can be created, false othe
 
 LUA_BINDING_BEGIN( Entities, FindByEdictNumber, "library", "Gets an entity by its edict number", "server" )
 {
-    CBaseEntity *pEntity = CBaseEntity::Instance( INDEXENT( LUA_BINDING_ARGUMENT( luaL_checkinteger, 1, "edictNumber" ) ) );
+    CBaseEntity *pEntity = CBaseEntity::Instance( INDEXENT( LUA_BINDING_ARGUMENT( luaL_checknumber, 1, "edictNumber" ) ) );
     CBaseEntity::PushLuaInstanceSafe( L, pEntity );
     return 1;
 }
@@ -442,7 +442,7 @@ LUA_BINDING_END( "boolean", "True if the entity is NULL, false otherwise." )
 
 LUA_BINDING_BEGIN( Entities, FindByIndex, "library", "Gets an entity by its index. Might be the same as FindByEdictNumber?", "server" )
 {
-    CBaseEntity::PushLuaInstanceSafe( L, UTIL_EntityByIndex( LUA_BINDING_ARGUMENT( luaL_checkinteger, 1, "index" ) ) );
+    CBaseEntity::PushLuaInstanceSafe( L, UTIL_EntityByIndex( LUA_BINDING_ARGUMENT( luaL_checknumber, 1, "index" ) ) );
     return 1;
 }
 LUA_BINDING_END( "Entity", "The entity found, or NULL if not found." )

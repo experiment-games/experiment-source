@@ -158,7 +158,7 @@ LUA_BINDING_END( "scheme", "The default scheme." )
 
 LUA_BINDING_BEGIN( Schemes, GetProportionalNormalizedValue, "library", "Returns the proportional normalized value." )
 {
-    int scaledValue = LUA_BINDING_ARGUMENT( luaL_checkinteger, 1, "scaledValue" );
+    int scaledValue = LUA_BINDING_ARGUMENT( luaL_checknumber, 1, "scaledValue" );
     lua_pushinteger( L, scheme()->GetProportionalNormalizedValue( scaledValue ) );
     return 1;
 }
@@ -166,7 +166,7 @@ LUA_BINDING_END( "integer", "The proportional normalized value." )
 
 LUA_BINDING_BEGIN( Schemes, GetProportionalScaledValue, "library", "Returns the proportional scaled value." )
 {
-    int normalizedValue = LUA_BINDING_ARGUMENT( luaL_checkinteger, 1, "normalizedValue" );
+    int normalizedValue = LUA_BINDING_ARGUMENT( luaL_checknumber, 1, "normalizedValue" );
     lua_pushinteger( L, scheme()->GetProportionalScaledValue( normalizedValue ) );
     return 1;
 }
@@ -219,7 +219,7 @@ LUA_BINDING_END( NULL, NULL )
 /*
 ** Open scheme library
 */
-LUALIB_API int luaopen_scheme( lua_State *L )
+LUALIB_API int luaopen_Schemes( lua_State *L )
 {
     LUA_REGISTRATION_COMMIT_LIBRARY( Schemes );
 

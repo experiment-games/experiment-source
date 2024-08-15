@@ -106,6 +106,13 @@ LUALIB_API int luaopen_SharedEnumerations( lua_State *L )
     lua_pushenum( L, SearchPathAdd_t::PATH_ADD_TO_TAIL, "TAIL" );
     LUA_SET_ENUM_LIB_END( L );
 
+    LUA_SET_ENUM_LIB_BEGIN( L, "KEY_VALUES_PRELOAD_TYPE" );
+    lua_pushenum( L, IFileSystem::KeyValuesPreloadType_t::TYPE_VMT, "VMT" );
+    lua_pushenum( L, IFileSystem::KeyValuesPreloadType_t::TYPE_SOUNDEMITTER, "SOUND_EMITTER" );
+    lua_pushenum( L, IFileSystem::KeyValuesPreloadType_t::TYPE_SOUNDSCAPE, "SOUNDSCAPE" );
+    lua_pushenum( L, IFileSystem::KeyValuesPreloadType_t::NUM_PRELOAD_TYPES, "COUNT" );
+    LUA_SET_ENUM_LIB_END( L );
+
     LUA_SET_ENUM_LIB_BEGIN( L, "FILE_WARNING_LEVEL" );
     lua_pushenum( L, FileWarningLevel_t::FILESYSTEM_WARNING, "WARNING" );
     lua_pushenum( L, FileWarningLevel_t::FILESYSTEM_WARNING_QUIET, "QUIET" );
@@ -138,6 +145,65 @@ LUALIB_API int luaopen_SharedEnumerations( lua_State *L )
     lua_pushenum( L, BLOOD_COLOR::BLOOD_COLOR_ZOMBIE, "ZOMBIE" );
     lua_pushenum( L, BLOOD_COLOR::BLOOD_COLOR_ANTLION_WORKER, "ANTLION_WORKER" );
     #endif
+    LUA_SET_ENUM_LIB_END( L );
+
+    LUA_SET_ENUM_LIB_BEGIN( L, "SOUND_LEVEL" );
+    lua_pushenum( L, SNDLVL_NONE, "NONE" );
+    lua_pushenum( L, SNDLVL_20dB, "Db20" );
+    lua_pushenum( L, SNDLVL_20dB, "RUSTLING_LEAVES" );
+    lua_pushenum( L, SNDLVL_25dB, "Db25" );
+    lua_pushenum( L, SNDLVL_25dB, "WHISPERING" );
+    lua_pushenum( L, SNDLVL_30dB, "Db30" );
+    lua_pushenum( L, SNDLVL_30dB, "LIBRARY" );
+    lua_pushenum( L, SNDLVL_35dB, "Db35" );
+    lua_pushenum( L, SNDLVL_40dB, "Db40" );
+    lua_pushenum( L, SNDLVL_45dB, "Db45" );
+    lua_pushenum( L, SNDLVL_45dB, "REFRIGERATOR" );
+    lua_pushenum( L, SNDLVL_50dB, "Db50" );
+    lua_pushenum( L, SNDLVL_50dB, "AVERAGE_HOME" );
+    lua_pushenum( L, SNDLVL_55dB, "Db55" );
+    lua_pushenum( L, SNDLVL_55dB, "NORMAL_CONVERSATION" );
+    lua_pushenum( L, SNDLVL_IDLE, "IDLE" );
+    lua_pushenum( L, SNDLVL_60dB, "Db60" );
+    lua_pushenum( L, SNDLVL_60dB, "NORMAL_CONVERSATION" );
+    lua_pushenum( L, SNDLVL_65dB, "Db65" );
+    lua_pushenum( L, SNDLVL_65dB, "WASHING_MACHINE" );
+    lua_pushenum( L, SNDLVL_STATIC, "STATIC" );
+    lua_pushenum( L, SNDLVL_70dB, "Db70" );
+    lua_pushenum( L, SNDLVL_70dB, "CAR" );
+    lua_pushenum( L, SNDLVL_NORM, "NORMAL" );
+    lua_pushenum( L, SNDLVL_75dB, "Db75" );
+    lua_pushenum( L, SNDLVL_75dB, "BUSY_TRAFFIC" );
+    lua_pushenum( L, SNDLVL_80dB, "Db80" );
+    lua_pushenum( L, SNDLVL_80dB, "MINI_BIKE" );
+    lua_pushenum( L, SNDLVL_TALKING, "TALKING" );
+    lua_pushenum( L, SNDLVL_85dB, "Db85" );
+    lua_pushenum( L, SNDLVL_85dB, "AVERAGE_FACTORY" );
+    lua_pushenum( L, SNDLVL_90dB, "Db90" );
+    lua_pushenum( L, SNDLVL_90dB, "SCREAMING_CHILD" );
+    lua_pushenum( L, SNDLVL_95dB, "Db95" );
+    lua_pushenum( L, SNDLVL_100dB, "Db100" );
+    lua_pushenum( L, SNDLVL_100dB, "SUBWAY_TRAIN" );
+    lua_pushenum( L, SNDLVL_105dB, "Db105" );
+    lua_pushenum( L, SNDLVL_105dB, "HELICOPTER" );
+    lua_pushenum( L, SNDLVL_110dB, "Db110" );
+    lua_pushenum( L, SNDLVL_110dB, "SNOWMOBILE" );
+    lua_pushenum( L, SNDLVL_120dB, "Db120" );
+    lua_pushenum( L, SNDLVL_120dB, "AUTO_HORN" );
+    lua_pushenum( L, SNDLVL_130dB, "Db130" );
+    lua_pushenum( L, SNDLVL_130dB, "AIR_RAID_SIREN" );
+    lua_pushenum( L, SNDLVL_GUNFIRE, "GUNFIRE" );
+    lua_pushenum( L, SNDLVL_140dB, "Db140" );
+    lua_pushenum( L, SNDLVL_150dB, "Db150" );
+    lua_pushenum( L, SNDLVL_180dB, "Db180" );
+    lua_pushenum( L, SNDLVL_180dB, "ROCKET_LAUNCHING" );
+    LUA_SET_ENUM_LIB_END( L );
+
+    LUA_SET_ENUM_LIB_BEGIN( L, "USE_TYPE" );
+    lua_pushenum( L, USE_OFF, "OFF" );
+    lua_pushenum( L, USE_ON, "ON" );
+    lua_pushenum( L, USE_SET, "SET" );
+    lua_pushenum( L, USE_TOGGLE, "TOGGLE" );
     LUA_SET_ENUM_LIB_END( L );
 
     return 0;

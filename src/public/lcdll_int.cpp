@@ -163,7 +163,7 @@ LUA_BINDING_BEGIN( Engines, GetClientConsoleVariableValue, "library", "Get the v
     if ( lua_toplayer( L, 1 ) )
         playerIndex = LUA_BINDING_ARGUMENT( lua_toplayer, 1, "playerOrIndex" )->entindex();
     else
-        playerIndex = LUA_BINDING_ARGUMENT( luaL_checkinteger, 1, "playerOrIndex" );
+        playerIndex = LUA_BINDING_ARGUMENT( luaL_checknumber, 1, "playerOrIndex" );
 
     if ( playerIndex != ( *C_BasePlayer::GetLocalPlayer() ).entindex() )
         Warning( "Engines.GetClientConsoleVariableValue: Cannot get convars for other players. Returning own convar value.\n" );
@@ -182,7 +182,7 @@ LUA_BINDING_BEGIN( Engines, GetClientConsoleVariableValueAsNumber, "library", "G
     if ( lua_toplayer( L, 1 ) )
         playerIndex = LUA_BINDING_ARGUMENT( lua_toplayer, 1, "playerOrIndex" )->entindex();
     else
-        playerIndex = LUA_BINDING_ARGUMENT( luaL_checkinteger, 1, "playerOrIndex" );
+        playerIndex = LUA_BINDING_ARGUMENT( luaL_checknumber, 1, "playerOrIndex" );
 
     if ( playerIndex != ( *C_BasePlayer::GetLocalPlayer() ).entindex() )
         Warning( "Engines.GetClientConsoleVariableValueAsNumber: Cannot get convars for other players. Returning own convar value.\n" );

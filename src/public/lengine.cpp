@@ -37,8 +37,8 @@ LUA_BINDING_END()
 
 LUA_BINDING_BEGIN( Engines, CheckAreasConnected, "library", "Check if two areas are connected." )
 {
-    int startArea = LUA_BINDING_ARGUMENT( luaL_checkinteger, 1, "startArea" );
-    int endArea = LUA_BINDING_ARGUMENT( luaL_checkinteger, 2, "endArea" );
+    int startArea = LUA_BINDING_ARGUMENT( luaL_checknumber, 1, "startArea" );
+    int endArea = LUA_BINDING_ARGUMENT( luaL_checknumber, 2, "endArea" );
 
     lua_pushboolean( L, engine->CheckAreasConnected( startArea, endArea ) );
 
@@ -103,7 +103,7 @@ LUA_BINDING_BEGIN( Engines, GetClientConsoleVariableValue, "library", "Get a cli
     if ( lua_toplayer( L, 1 ) )
         playerIndex = LUA_BINDING_ARGUMENT( lua_toplayer, 1, "playerOrIndex" )->entindex();
     else
-        playerIndex = LUA_BINDING_ARGUMENT( luaL_checkinteger, 1, "playerOrIndex" );
+        playerIndex = LUA_BINDING_ARGUMENT( luaL_checknumber, 1, "playerOrIndex" );
 
     const char *conVarName = LUA_BINDING_ARGUMENT( luaL_checkstring, 2, "conVarName" );
 
@@ -120,7 +120,7 @@ LUA_BINDING_BEGIN( Engines, GetClientConsoleVariableValueAsNumber, "library", "G
     if ( lua_toplayer( L, 1 ) )
         playerIndex = LUA_BINDING_ARGUMENT( lua_toplayer, 1, "playerOrIndex" )->entindex();
     else
-        playerIndex = LUA_BINDING_ARGUMENT( luaL_checkinteger, 1, "playerOrIndex" );
+        playerIndex = LUA_BINDING_ARGUMENT( luaL_checknumber, 1, "playerOrIndex" );
 
     const char *conVarName = LUA_BINDING_ARGUMENT( luaL_checkstring, 2, "conVarName" );
 
@@ -148,7 +148,7 @@ LUA_BINDING_END( "string", "The most recently loaded file name." )
 
 LUA_BINDING_BEGIN( Engines, GetPlayerNetInfo, "library", "Get the player's net info." )
 {
-    int playerIndex = LUA_BINDING_ARGUMENT( luaL_checkinteger, 1, "playerIndex" );
+    int playerIndex = LUA_BINDING_ARGUMENT( luaL_checknumber, 1, "playerIndex" );
 
     lua_pushnetchannel( L, engine->GetPlayerNetInfo( playerIndex ) );
 
@@ -250,7 +250,7 @@ LUA_BINDING_END( "boolean", "True if the model is precached, false otherwise." )
 
 LUA_BINDING_BEGIN( Engines, LightStyle, "library", "Set a light style." )
 {
-    int styleIndex = LUA_BINDING_ARGUMENT( luaL_checkinteger, 1, "styleIndex" );
+    int styleIndex = LUA_BINDING_ARGUMENT( luaL_checknumber, 1, "styleIndex" );
     const char *styleValue = LUA_BINDING_ARGUMENT( luaL_checkstring, 2, "styleValue" );
 
     engine->LightStyle( styleIndex, styleValue );
@@ -311,7 +311,7 @@ LUA_BINDING_END()
 
 LUA_BINDING_BEGIN( Engines, NotifyEdictFlagsChange, "library", "Notify of an edict flags change." )
 {
-    int flags = LUA_BINDING_ARGUMENT( luaL_checkinteger, 1, "flags" );
+    int flags = LUA_BINDING_ARGUMENT( luaL_checknumber, 1, "flags" );
 
     engine->NotifyEdictFlagsChange( flags );
 
@@ -386,8 +386,8 @@ LUA_BINDING_END()
 
 LUA_BINDING_BEGIN( Engines, SetAreaPortalState, "library", "Set the area portal state." )
 {
-    int portalIndex = LUA_BINDING_ARGUMENT( luaL_checkinteger, 1, "portalIndex" );
-    int isOpen = LUA_BINDING_ARGUMENT( luaL_checkinteger, 2, "isOpen" );
+    int portalIndex = LUA_BINDING_ARGUMENT( luaL_checknumber, 1, "portalIndex" );
+    int isOpen = LUA_BINDING_ARGUMENT( luaL_checknumber, 2, "isOpen" );
 
     engine->SetAreaPortalState( portalIndex, isOpen );
 

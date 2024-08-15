@@ -15,7 +15,7 @@ lua:
   
   arguments:
     - name: "type"
-      type: number
+      type: enumeration/SOLID
   returns:
     
 ---

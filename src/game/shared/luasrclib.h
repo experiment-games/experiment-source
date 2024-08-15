@@ -131,7 +131,7 @@ LUALIB_API int( luaopen_IMoveHelper )( lua_State *L );
 #define LUA_INENUMLIBNAME "INPUT"
 LUALIB_API int( luaopen_IN )( lua_State *L );
 
-#define LUA_NETCHANNELINFOLIBNAME "INetChannelInfo"
+#define LUA_NETCHANNELINFOMETANAME "NetChannelInfo"
 LUALIB_API int( luaopen_INetChannelInfo )( lua_State *L );
 
 #define LUA_INETWORKSTRINGTABLELIBNAME "NetworkStringTable"
@@ -203,7 +203,7 @@ LUALIB_API int( luaopen_random )( lua_State *L );
 LUALIB_API int( luaopen_resources )( lua_State *L );
 
 #define LUA_SCHEMELIBNAME "Schemes"
-LUALIB_API int( luaopen_scheme )( lua_State *L );
+LUALIB_API int( luaopen_Schemes )( lua_State *L );
 
 #define LUA_SERIALIZERSLIBNAME "Serializers"
 LUALIB_API int( luaopen_Serializers )( lua_State *L );
@@ -220,8 +220,8 @@ LUALIB_API int( luaopen_SteamApiContexts )( lua_State *L );
 #define LUA_SURFENUMNAME "SURFACE"
 LUALIB_API int( luaopen_SURF )( lua_State *L );
 
-#define LUA_SURFACELIBNAME "Surface"
-LUALIB_API int( luaopen_surface )( lua_State *L );
+#define LUA_SURFACELIBNAME "Surfaces"
+LUALIB_API int( luaopen_Surfaces )( lua_State *L );
 
 #define LUA_UTILLIBNAME "Utilities"
 LUALIB_API int( luaopen_Util )( lua_State *L );
@@ -231,8 +231,8 @@ LUALIB_API int( luaopen_Util_shared )( lua_State *L );
 #define LUA_VECTORSLIBNAME "Vectors"
 LUALIB_API int( luaopen_Vector )( lua_State *L );
 
-#define LUA_VGUILIBNAME "Gui"
-#define LUA_PANELLIBNAME "Panel"
+#define LUA_PANELMETANAME "Panel"
+#define LUA_VGUILIBNAME "Panels"
 LUALIB_API int( luaopen_vgui )( lua_State *L );
 
 #define LUA_VMATRIXLIBNAME "Matrix"

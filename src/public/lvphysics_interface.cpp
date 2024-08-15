@@ -107,65 +107,65 @@ LUA_API lua_surfacesoundnames_t lua_tosurfacesoundnames( lua_State *L, int idx )
     surfacesoundnames_t sounds;
     lua_getfield( L, idx, "stepleft" );
     if ( !lua_isnil( L, -1 ) )
-        sounds.stepleft = ( unsigned short )luaL_checkinteger( L, -1 );
+        sounds.stepleft = ( unsigned short )luaL_checknumber( L, -1 );
     else
         sounds.stepleft = 0;
     lua_pop( L, 1 );
     lua_getfield( L, idx, "stepright" );
     if ( !lua_isnil( L, -1 ) )
-        sounds.stepright = ( unsigned short )luaL_checkinteger( L, -1 );
+        sounds.stepright = ( unsigned short )luaL_checknumber( L, -1 );
     else
         sounds.stepright = 0;
     lua_pop( L, 1 );
 
     lua_getfield( L, idx, "impactSoft" );
     if ( !lua_isnil( L, -1 ) )
-        sounds.impactSoft = ( unsigned short )luaL_checkinteger( L, -1 );
+        sounds.impactSoft = ( unsigned short )luaL_checknumber( L, -1 );
     else
         sounds.impactSoft = 0;
     lua_pop( L, 1 );
     lua_getfield( L, idx, "impactHard" );
     if ( !lua_isnil( L, -1 ) )
-        sounds.impactHard = ( unsigned short )luaL_checkinteger( L, -1 );
+        sounds.impactHard = ( unsigned short )luaL_checknumber( L, -1 );
     else
         sounds.impactHard = 0;
     lua_pop( L, 1 );
 
     lua_getfield( L, idx, "scrapeSmooth" );
     if ( !lua_isnil( L, -1 ) )
-        sounds.scrapeSmooth = ( unsigned short )luaL_checkinteger( L, -1 );
+        sounds.scrapeSmooth = ( unsigned short )luaL_checknumber( L, -1 );
     else
         sounds.scrapeSmooth = 0;
     lua_pop( L, 1 );
     lua_getfield( L, idx, "scrapeRough" );
     if ( !lua_isnil( L, -1 ) )
-        sounds.scrapeRough = ( unsigned short )luaL_checkinteger( L, -1 );
+        sounds.scrapeRough = ( unsigned short )luaL_checknumber( L, -1 );
     else
         sounds.scrapeRough = 0;
     lua_pop( L, 1 );
 
     lua_getfield( L, idx, "bulletImpact" );
     if ( !lua_isnil( L, -1 ) )
-        sounds.bulletImpact = ( unsigned short )luaL_checkinteger( L, -1 );
+        sounds.bulletImpact = ( unsigned short )luaL_checknumber( L, -1 );
     else
         sounds.bulletImpact = 0;
     lua_pop( L, 1 );
     lua_getfield( L, idx, "rolling" );
     if ( !lua_isnil( L, -1 ) )
-        sounds.rolling = ( unsigned short )luaL_checkinteger( L, -1 );
+        sounds.rolling = ( unsigned short )luaL_checknumber( L, -1 );
     else
         sounds.rolling = 0;
     lua_pop( L, 1 );
 
     lua_getfield( L, idx, "breakSound" );
     if ( !lua_isnil( L, -1 ) )
-        sounds.breakSound = ( unsigned short )luaL_checkinteger( L, -1 );
+        sounds.breakSound = ( unsigned short )luaL_checknumber( L, -1 );
     else
         sounds.breakSound = 0;
     lua_pop( L, 1 );
     lua_getfield( L, idx, "strainSound" );
     if ( !lua_isnil( L, -1 ) )
-        sounds.strainSound = ( unsigned short )luaL_checkinteger( L, -1 );
+        sounds.strainSound = ( unsigned short )luaL_checknumber( L, -1 );
     else
         sounds.strainSound = 0;
     lua_pop( L, 1 );
@@ -178,65 +178,65 @@ LUA_API lua_surfacesoundhandles_t lua_tosurfacesoundhandles( lua_State *L, int i
     surfacesoundhandles_t soundhandles;
     lua_getfield( L, idx, "stepleft" );
     if ( !lua_isnil( L, -1 ) )
-        soundhandles.stepleft = ( short )luaL_checkinteger( L, -1 );
+        soundhandles.stepleft = ( short )luaL_checknumber( L, -1 );
     else
         soundhandles.stepleft = 0;
     lua_pop( L, 1 );
     lua_getfield( L, idx, "stepright" );
     if ( !lua_isnil( L, -1 ) )
-        soundhandles.stepright = ( short )luaL_checkinteger( L, -1 );
+        soundhandles.stepright = ( short )luaL_checknumber( L, -1 );
     else
         soundhandles.stepright = 0;
     lua_pop( L, 1 );
 
     lua_getfield( L, idx, "impactSoft" );
     if ( !lua_isnil( L, -1 ) )
-        soundhandles.impactSoft = ( short )luaL_checkinteger( L, -1 );
+        soundhandles.impactSoft = ( short )luaL_checknumber( L, -1 );
     else
         soundhandles.impactSoft = 0;
     lua_pop( L, 1 );
     lua_getfield( L, idx, "impactHard" );
     if ( !lua_isnil( L, -1 ) )
-        soundhandles.impactHard = ( short )luaL_checkinteger( L, -1 );
+        soundhandles.impactHard = ( short )luaL_checknumber( L, -1 );
     else
         soundhandles.impactHard = 0;
     lua_pop( L, 1 );
 
     lua_getfield( L, idx, "scrapeSmooth" );
     if ( !lua_isnil( L, -1 ) )
-        soundhandles.scrapeSmooth = ( short )luaL_checkinteger( L, -1 );
+        soundhandles.scrapeSmooth = ( short )luaL_checknumber( L, -1 );
     else
         soundhandles.scrapeSmooth = 0;
     lua_pop( L, 1 );
     lua_getfield( L, idx, "scrapeRough" );
     if ( !lua_isnil( L, -1 ) )
-        soundhandles.scrapeRough = ( short )luaL_checkinteger( L, -1 );
+        soundhandles.scrapeRough = ( short )luaL_checknumber( L, -1 );
     else
         soundhandles.scrapeRough = 0;
     lua_pop( L, 1 );
 
     lua_getfield( L, idx, "bulletImpact" );
     if ( !lua_isnil( L, -1 ) )
-        soundhandles.bulletImpact = ( short )luaL_checkinteger( L, -1 );
+        soundhandles.bulletImpact = ( short )luaL_checknumber( L, -1 );
     else
         soundhandles.bulletImpact = 0;
     lua_pop( L, 1 );
     lua_getfield( L, idx, "rolling" );
     if ( !lua_isnil( L, -1 ) )
-        soundhandles.rolling = ( short )luaL_checkinteger( L, -1 );
+        soundhandles.rolling = ( short )luaL_checknumber( L, -1 );
     else
         soundhandles.rolling = 0;
     lua_pop( L, 1 );
 
     lua_getfield( L, idx, "breakSound" );
     if ( !lua_isnil( L, -1 ) )
-        soundhandles.breakSound = ( short )luaL_checkinteger( L, -1 );
+        soundhandles.breakSound = ( short )luaL_checknumber( L, -1 );
     else
         soundhandles.breakSound = 0;
     lua_pop( L, 1 );
     lua_getfield( L, idx, "strainSound" );
     if ( !lua_isnil( L, -1 ) )
-        soundhandles.strainSound = ( short )luaL_checkinteger( L, -1 );
+        soundhandles.strainSound = ( short )luaL_checknumber( L, -1 );
     else
         soundhandles.strainSound = 0;
     lua_pop( L, 1 );
@@ -262,20 +262,20 @@ LUA_API lua_surfacegameprops_t lua_tosurfacegameprops( lua_State *L, int idx )
 
     lua_getfield( L, idx, "material" );
     if ( !lua_isnil( L, -1 ) )
-        game.material = ( unsigned short )luaL_checkinteger( L, -1 );
+        game.material = ( unsigned short )luaL_checknumber( L, -1 );
     else
         game.material = 0;
     lua_pop( L, 1 );
 
     lua_getfield( L, idx, "climbable" );
     if ( !lua_isnil( L, -1 ) )
-        game.climbable = ( unsigned char )luaL_checkinteger( L, -1 );
+        game.climbable = ( unsigned char )luaL_checknumber( L, -1 );
     else
         game.climbable = 0;
     lua_pop( L, 1 );
     lua_getfield( L, idx, "pad" );
     if ( !lua_isnil( L, -1 ) )
-        game.pad = ( unsigned char )luaL_checkinteger( L, -1 );
+        game.pad = ( unsigned char )luaL_checknumber( L, -1 );
     else
         game.pad = 0;
     lua_pop( L, 1 );
@@ -1326,7 +1326,7 @@ LUA_BINDING_END( "string", "The property name." )
 
 LUA_BINDING_BEGIN( PhysicsSurfacePropertiesHandle, GetString, "class", "Gets the string" )
 {
-    lua_pushstring( L, physprops->GetString( ( unsigned short )LUA_BINDING_ARGUMENT( luaL_checkinteger, 1, "stringTableIndex" ) ) );
+    lua_pushstring( L, physprops->GetString( ( unsigned short )LUA_BINDING_ARGUMENT( luaL_checknumber, 1, "stringTableIndex" ) ) );
     return 1;
 }
 LUA_BINDING_END( "string", "The string." )

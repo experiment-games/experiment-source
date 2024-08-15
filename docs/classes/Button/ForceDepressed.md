@@ -1,0 +1,25 @@
+---
+template: lua-class-function.html
+title: ForceDepressed
+icon: lua-client
+tags:
+  - lua
+  - client
+  - needs-verification
+  - needs-example
+lua:
+  library: Button
+  function: ForceDepressed
+  realm: client
+  description: "Forces the button to be depressed"
+  
+  arguments:
+    - name: "depressed"
+      type: boolean
+  returns:
+    
+---
+
+<div class="lua__search__keywords">
+Button:ForceDepressed &#x2013; Forces the button to be depressed
+</div>

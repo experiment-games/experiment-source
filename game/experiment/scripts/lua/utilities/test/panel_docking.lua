@@ -4,9 +4,9 @@
 Include("includes/extensions/panel.lua")
 
 -- Lets create a panel and dock it to the right of the parent.
-local parent = Gui.Create("Frame")
+local parent = Panels.Create("Frame")
 local parentWide, parentTall = 256, 256
-parent:SetBgColor(Colors.Create(255, 0, 0, 255))
+parent:SetBackgroundColor(Colors.Create(255, 0, 0, 255))
 parent:SetSize(parentWide, parentTall)
 parent:SetPosition(50, 50)
 parent:SetTitle("Parent panel")
@@ -18,7 +18,7 @@ local dockPadding = 10
 local childWide, childTall = 64, 64
 
 -- Child for filling
-local fillChild = Gui.Create("Button", parent)
+local fillChild = Panels.Create("Button", parent)
 fillChild:SetText("FILL")
 fillChild:SetDock(_E.DOCK_TYPE.FILL)
 fillChild:SetDockPadding(dockPadding, dockPadding, dockPadding, dockPadding)
@@ -28,13 +28,13 @@ function fillChild:OnClick()
     parent:MarkForDeletion() -- safer
 end
 
-local topChild = Gui.Create("Label", parent)
+local topChild = Panels.Create("Label", parent)
 topChild:SetText("TOP")
 topChild:SetDock(_E.DOCK_TYPE.TOP)
 topChild:SetTall(childTall)
 topChild:SetDockPadding(dockPadding, dockPadding, dockPadding, dockPadding)
 
-local leftChild = Gui.Create("Button", parent)
+local leftChild = Panels.Create("Button", parent)
 leftChild:SetText("LEFT")
 leftChild:SetDock(_E.DOCK_TYPE.LEFT)
 leftChild:SetWide(childWide)
@@ -44,25 +44,25 @@ function leftChild:OnClick()
     parent:MarkForDeletion()
 end
 
-local bottomChild = Gui.Create("Panel", parent)
+local bottomChild = Panels.Create("Panel", parent)
 bottomChild:SetDock(_E.DOCK_TYPE.BOTTOM)
 bottomChild:SetTall(childTall)
 bottomChild:SetDockPadding(dockPadding, dockPadding, dockPadding, dockPadding)
-bottomChild:SetBgColor(Colors.Create(0, 255, 0, 255))
+bottomChild:SetBackgroundColor(Colors.Create(0, 255, 0, 255))
 
-local bottomAncestor = Gui.Create("Button", bottomChild)
+local bottomAncestor = Panels.Create("Button", bottomChild)
 bottomAncestor:SetText("bottom BOTTOM")
 bottomAncestor:SetDock(_E.DOCK_TYPE.BOTTOM)
 bottomAncestor:SetTall(childTall / 2)
 bottomAncestor:SetDockPadding(dockPadding, dockPadding, dockPadding, dockPadding)
 
-local bottomAncestor2 = Gui.Create("Button", bottomChild)
+local bottomAncestor2 = Panels.Create("Button", bottomChild)
 bottomAncestor2:SetText("bottom TOP")
 bottomAncestor2:SetDock(_E.DOCK_TYPE.TOP)
 bottomAncestor2:SetTall(childTall / 2)
 bottomAncestor2:SetDockPadding(dockPadding, dockPadding, dockPadding, dockPadding)
 
-local rightChild = Gui.Create("Button", parent)
+local rightChild = Panels.Create("Button", parent)
 rightChild:SetText("RIGHT")
 rightChild:SetDock(_E.DOCK_TYPE.RIGHT)
 rightChild:SetWide(childWide)

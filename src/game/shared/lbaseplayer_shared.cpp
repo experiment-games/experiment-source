@@ -800,7 +800,7 @@ LUA_BINDING_END()
 LUA_BINDING_BEGIN( Player, SetAnimation, "class", "Set the player's animation." )
 {
     lua_CBasePlayer *player = LUA_BINDING_ARGUMENT( luaL_checkplayer, 1, "player" );
-    player->SetAnimation( ( PLAYER_ANIM )( int )LUA_BINDING_ARGUMENT( luaL_checknumber, 2, "animation" ) );
+    player->SetAnimation( LUA_BINDING_ARGUMENT_ENUM( PLAYER_ANIM, 2, "animation" ) );
     return 0;
 }
 LUA_BINDING_END()
@@ -951,14 +951,14 @@ LUA_BINDING_BEGIN( Player, SetStepSoundCache, "class", "Set the player's step so
         if ( Q_strcmp( field, "m_SoundParameters" ) == 0 )
             player->m_StepSoundCache[0].m_SoundParameters = lua_tosoundparameters( L, 4 );
         else if ( Q_strcmp( field, "m_usSoundNameIndex" ) == 0 )
-            player->m_StepSoundCache[0].m_usSoundNameIndex = ( unsigned short )luaL_checkinteger( L, 4 );
+            player->m_StepSoundCache[0].m_usSoundNameIndex = ( unsigned short )luaL_checknumber( L, 4 );
     }
     else if ( index == 1 )
     {
         if ( Q_strcmp( field, "m_SoundParameters" ) == 0 )
             player->m_StepSoundCache[1].m_SoundParameters = lua_tosoundparameters( L, 4 );
         else if ( Q_strcmp( field, "m_usSoundNameIndex" ) == 0 )
-            player->m_StepSoundCache[1].m_usSoundNameIndex = ( unsigned short )luaL_checkinteger( L, 4 );
+            player->m_StepSoundCache[1].m_usSoundNameIndex = ( unsigned short )luaL_checknumber( L, 4 );
     }
     return 1;
 }
@@ -1123,7 +1123,7 @@ LUA_BINDING_END( "boolean", "Whether the weapon was switched." )
 
 LUA_BINDING_BEGIN( Player, TranslateWeaponActivity, "class", "Translate a weapon activity." )
 {
-    Activity activity = ( Activity )( int )LUA_BINDING_ARGUMENT( luaL_checknumber, 2, "activity" );
+    Activity activity = LUA_BINDING_ARGUMENT_ENUM( Activity, 2, "activity" );
     lua_pushinteger( L, LUA_BINDING_ARGUMENT( luaL_checkplayer, 1, "player" )->Weapon_TranslateActivity( activity, NULL ) );
     return 1;
 }
@@ -1450,7 +1450,7 @@ LUA_BINDING_END()
 LUA_BINDING_BEGIN( Players, ClientPrintToAll, "library", "Print text to all clients, optionally substituting 4 strings. The type decides where to show it: HUD_PRINTCENTER (1), HUD_PRINTNOTIFY (2), HUD_PRINTTALK (3), HUD_PRINTCONSOLE (4) - Enums don't exist yet" ) // TODO: Expose these enums
 {
     UTIL_ClientPrintAll(
-        LUA_BINDING_ARGUMENT( luaL_checkinteger, 1, "messageType" ),
+        LUA_BINDING_ARGUMENT( luaL_checknumber, 1, "messageType" ),
         LUA_BINDING_ARGUMENT( luaL_checkstring, 2, "message" ),
         LUA_BINDING_ARGUMENT_WITH_DEFAULT( luaL_optstring, 3, NULL, "subsitution1" ),
         LUA_BINDING_ARGUMENT_WITH_DEFAULT( luaL_optstring, 4, NULL, "subsitution2" ),
@@ -1483,7 +1483,7 @@ LUA_BINDING_END()
 LUA_BINDING_BEGIN( Players, GetPlayerConnectionInfo, "library", "Get the connection info of a player." )
 {
     int ping, packetloss;
-    UTIL_GetPlayerConnectionInfo( LUA_BINDING_ARGUMENT( luaL_checkinteger, 1, "index" ), ping, packetloss );
+    UTIL_GetPlayerConnectionInfo( LUA_BINDING_ARGUMENT( luaL_checknumber, 1, "index" ), ping, packetloss );
     lua_pushinteger( L, ping );
     lua_pushinteger( L, packetloss );
     return 2;

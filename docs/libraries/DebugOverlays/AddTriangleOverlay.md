@@ -21,13 +21,13 @@ lua:
     - name: "p3"
       type: Vector
     - name: "r"
-      type: integer
+      type: number
     - name: "g"
-      type: integer
+      type: number
     - name: "b"
-      type: integer
+      type: number
     - name: "a"
-      type: integer
+      type: number
     - name: "noDepthTest"
       type: boolean
     - name: "duration"

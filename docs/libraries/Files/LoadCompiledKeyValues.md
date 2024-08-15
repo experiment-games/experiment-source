@@ -14,8 +14,8 @@ lua:
   description: "Load compiled key values."
   
   arguments:
-    - name: "preloadType"
-      type: number
+    - name: "filename"
+      type: string
   returns:
     
 ---

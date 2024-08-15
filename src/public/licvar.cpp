@@ -64,7 +64,7 @@ LUA_BINDING_END( "string", "Value of the command line parameter." )
 
 LUA_BINDING_BEGIN( ConsoleVariables, RevertFlaggedConVars, "library", "Revert flagged console variables." )
 {
-    int iFlag = LUA_BINDING_ARGUMENT( luaL_checkinteger, 1, "flag" );
+    int iFlag = LUA_BINDING_ARGUMENT( luaL_checknumber, 1, "flag" );
 
     cvar->RevertFlaggedConVars( iFlag );
     return 0;

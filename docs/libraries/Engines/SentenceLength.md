@@ -15,7 +15,7 @@ lua:
   
   arguments:
     - name: "index"
-      type: integer
+      type: number
   returns:
     - type: number
       description: "The sentence length."

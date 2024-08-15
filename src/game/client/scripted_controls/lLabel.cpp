@@ -49,178 +49,233 @@ LUALIB_API lua_Label *luaL_checklabel( lua_State *L, int narg )
     return d;
 }
 
-static int Label_ChainToAnimationMap( lua_State *L )
-{
-    luaL_checklabel( L, 1 )->ChainToAnimationMap();
-    return 0;
-}
+LUA_REGISTRATION_INIT( Label )
 
-static int Label_ChainToMap( lua_State *L )
-{
-    luaL_checklabel( L, 1 )->ChainToMap();
-    return 0;
-}
+//LUA_BINDING_BEGIN( Label, ChainToAnimationMap, "class|static", "Chains the panel to an animation map" )
+//{
+//    lua_Label::ChainToAnimationMap();
+//    return 0;
+//}
+//LUA_BINDING_END()
 
-static int Label_GetContentSize( lua_State *L )
+//LUA_BINDING_BEGIN( Label, ChainToMap, "class|static", "Chains the panel to a map" )
+//{
+//    lua_Label::ChainToMap();
+//    return 0;
+//}
+//LUA_BINDING_END()
+
+LUA_BINDING_BEGIN( Label, GetContentSize, "class", "Gets the size of the content" )
 {
+    lua_Label *label = LUA_BINDING_ARGUMENT( luaL_checklabel, 1, "label" );
     int wide, tall;
-    luaL_checklabel( L, 1 )->GetContentSize( wide, tall );
+    label->GetContentSize( wide, tall );
     lua_pushinteger( L, wide );
     lua_pushinteger( L, tall );
     return 2;
 }
+LUA_BINDING_END( "integer", "The width of the content", "integer", "The height of the content" )
 
-static int Label_GetPanelBaseClassName( lua_State *L )
+LUA_BINDING_BEGIN( Label, GetPanelBaseClassName, "class|static", "Gets the base class name of the panel type" )
 {
-    lua_pushstring( L, luaL_checklabel( L, 1 )->GetPanelBaseClassName() );
+    lua_pushstring( L, lua_Label::GetPanelBaseClassName() );
     return 1;
 }
+LUA_BINDING_END( "string", "The base class name of the panel" )
 
-static int Label_GetPanelClassName( lua_State *L )
+LUA_BINDING_BEGIN( Label, GetPanelClassName, "class|static", "Gets the class name of the panel" )
 {
-    lua_pushstring( L, luaL_checklabel( L, 1 )->GetPanelClassName() );
+    lua_pushstring( L, lua_Label::GetPanelClassName() );
     return 1;
 }
+LUA_BINDING_END( "string", "The class name of the panel" )
 
-static int Label_GetValue( lua_State *L )
+LUA_BINDING_BEGIN( Label, GetValue, "class", "Gets the value of the label" )
 {
-    char buf[8092];
-    luaL_checklabel( L, 1 )->GetText( buf, sizeof( buf ) );
-    lua_pushstring( L, buf );
+    lua_Label *label = LUA_BINDING_ARGUMENT( luaL_checklabel, 1, "label" );
+    char buffer[8092];
+    label->GetText( buffer, sizeof( buffer ) );
+    lua_pushstring( L, buffer );
     return 1;
 }
+LUA_BINDING_END( "string", "The value of the label" )
 
-static int Label_KB_AddBoundKey( lua_State *L )
+//LUA_BINDING_BEGIN( Label, AddBoundKey, "class|static", "Adds a bound key to the label" )
+//{
+//    const char *bindingName = LUA_BINDING_ARGUMENT( luaL_checkstring, 1, "bindingName" );
+//    KeyCode keyCode = LUA_BINDING_ARGUMENT_ENUM( KeyCode, 2, "keyCode" );
+//    int modifiers = LUA_BINDING_ARGUMENT( luaL_checknumber, 3, "modifiers" );
+//    lua_Label::KB_AddBoundKey( bindingName, keyCode, modifiers );
+//    return 0;
+//}
+//LUA_BINDING_END()
+
+//LUA_BINDING_BEGIN( Label, ChainToKeyBindingMap, "class|static", "Chains the label to a map" )
+//{
+//    lua_Label::KB_ChainToMap();
+//    return 0;
+//}
+//LUA_BINDING_END()
+
+LUA_BINDING_BEGIN( Label, OnCursorEntered, "class", "Called when the cursor enters the label" )
 {
-    luaL_checklabel( L, 1 )->KB_AddBoundKey(
-        luaL_checkstring( L, 2 ), luaL_checknumber( L, 3 ), luaL_checknumber( L, 4 ) );
+    lua_Label *label = LUA_BINDING_ARGUMENT( luaL_checklabel, 1, "label" );
+    label->OnCursorEntered();
     return 0;
 }
+LUA_BINDING_END()
 
-static int Label_KB_ChainToMap( lua_State *L )
+LUA_BINDING_BEGIN( Label, OnCursorExited, "class", "Called when the cursor exits the label" )
 {
-    luaL_checklabel( L, 1 )->KB_ChainToMap();
+    lua_Label *label = LUA_BINDING_ARGUMENT( luaL_checklabel, 1, "label" );
+    label->OnCursorExited();
     return 0;
 }
+LUA_BINDING_END()
 
-static int Label_OnCursorEntered( lua_State *L )
+LUA_BINDING_BEGIN( Label, OnKillFocus, "class", "Called when the label loses focus" )
 {
-    luaL_checklabel( L, 1 )->OnCursorEntered();
+    lua_Label *label = LUA_BINDING_ARGUMENT( luaL_checklabel, 1, "label" );
+    label->OnKillFocus();
     return 0;
 }
+LUA_BINDING_END()
 
-static int Label_OnCursorExited( lua_State *L )
+LUA_BINDING_BEGIN( Label, OnSetFocus, "class", "Called when the label gains focus" )
 {
-    luaL_checklabel( L, 1 )->OnCursorExited();
+    lua_Label *label = LUA_BINDING_ARGUMENT( luaL_checklabel, 1, "label" );
+    label->OnSetFocus();
     return 0;
 }
+LUA_BINDING_END()
 
-static int Label_OnKillFocus( lua_State *L )
+LUA_BINDING_BEGIN( Label, PerformLayout, "class", "Performs layout on the label" )
 {
-    luaL_checklabel( L, 1 )->OnKillFocus();
+    lua_Label *label = LUA_BINDING_ARGUMENT( luaL_checklabel, 1, "label" );
+    label->PerformLayout();
     return 0;
 }
+LUA_BINDING_END()
 
-static int Label_OnSetFocus( lua_State *L )
+LUA_BINDING_BEGIN( Label, SizeToContents, "class", "Sizes the label to its contents" )
 {
-    luaL_checklabel( L, 1 )->OnSetFocus();
+    lua_Label *label = LUA_BINDING_ARGUMENT( luaL_checklabel, 1, "label" );
+    label->SizeToContents();
     return 0;
 }
+LUA_BINDING_END()
 
-static int Label_PerformLayout( lua_State *L )
+LUA_BINDING_BEGIN( Label, SetContentAlignment, "class", "Sets the content alignment of the label" )
 {
-    luaL_checklabel( L, 1 )->PerformLayout();
+    lua_Label *label = LUA_BINDING_ARGUMENT( luaL_checklabel, 1, "label" );
+    vgui::Label::Alignment alignment = LUA_BINDING_ARGUMENT_ENUM( vgui::Label::Alignment, 2, "alignment" );
+    label->SetContentAlignment( alignment );
     return 0;
 }
+LUA_BINDING_END()
 
-static int Label_SizeToContents( lua_State *L )
+LUA_BINDING_BEGIN( Label, SetFont, "class", "Sets the font of the label" )
 {
-    luaL_checklabel( L, 1 )->SizeToContents();
+    lua_Label *label = LUA_BINDING_ARGUMENT( luaL_checklabel, 1, "label" );
+    label->SetFont( LUA_BINDING_ARGUMENT( luaL_checkfont, 2, "font" ) );
     return 0;
 }
+LUA_BINDING_END()
 
-static int Label_SetContentAlignment( lua_State *L )
+LUA_BINDING_BEGIN( Label, GetFont, "class", "Gets the font of the label" )
 {
-    luaL_checklabel( L, 1 )->SetContentAlignment( ( vgui::Label::Alignment )( int )luaL_checknumber( L, 2 ) );
-    return 0;
-}
-
-static int Label_SetFont( lua_State *L )
-{
-    luaL_checklabel( L, 1 )->SetFont( luaL_checkfont( L, 2 ) );
-    return 0;
-}
-
-static int Label_GetFont( lua_State *L )
-{
-    lua_pushfont( L, luaL_checklabel( L, 1 )->GetFont() );
+    lua_Label *label = LUA_BINDING_ARGUMENT( luaL_checklabel, 1, "label" );
+    lua_pushfont( L, label->GetFont() );
     return 1;
 }
+LUA_BINDING_END( "font", "The font of the label" )
 
-static int Label_SetFgColor( lua_State *L )
+LUA_BINDING_BEGIN( Label, SetForegroundColor, "class", "Sets the foreground color of the label" )
 {
-    luaL_checklabel( L, 1 )->SetFgColor( luaL_checkcolor( L, 2 ) );
+    lua_Label *label = LUA_BINDING_ARGUMENT( luaL_checklabel, 1, "label" );
+    label->SetFgColor( LUA_BINDING_ARGUMENT( luaL_checkcolor, 2, "color" ) );
     return 0;
 }
+LUA_BINDING_END()
 
-static int Label_GetFgColor( lua_State *L )
+LUA_BINDING_BEGIN( Label, GetForegroundColor, "class", "Gets the foreground color of the label" )
 {
-    lua_pushcolor( L, luaL_checklabel( L, 1 )->GetFgColor() );
+    lua_Label *label = LUA_BINDING_ARGUMENT( luaL_checklabel, 1, "label" );
+    lua_pushcolor( L, label->GetFgColor() );
     return 1;
 }
+LUA_BINDING_END( "color", "The foreground color of the label" )
 
-static int Label_GetText( lua_State *L )
+LUA_BINDING_BEGIN( Label, GetText, "class", "Gets the text of the label" )
 {
-    char textBuffer[1024];
-    luaL_checklabel( L, 1 )->GetText( textBuffer, sizeof( textBuffer ) );
-    lua_pushstring( L, textBuffer );
+    lua_Label *label = LUA_BINDING_ARGUMENT( luaL_checklabel, 1, "label" );
+    char buffer[1024];
+    label->GetText( buffer, sizeof( buffer ) );
+    lua_pushstring( L, buffer );
     return 1;
 }
+LUA_BINDING_END( "string", "The text of the label" )
 
-static int Label_SetText( lua_State *L )
+LUA_BINDING_BEGIN( Label, SetText, "class", "Sets the text of the label" )
 {
-    luaL_checklabel( L, 1 )->SetText( luaL_checkstring( L, 2 ) );
+    lua_Label *label = LUA_BINDING_ARGUMENT( luaL_checklabel, 1, "label" );
+    label->SetText( LUA_BINDING_ARGUMENT( luaL_checkstring, 2, "text" ) );
     return 0;
 }
+LUA_BINDING_END()
 
-static int Label_GetTextInset( lua_State *L )
+LUA_BINDING_BEGIN( Label, GetTextInset, "class", "Gets the text inset of the label" )
 {
+    lua_Label *label = LUA_BINDING_ARGUMENT( luaL_checklabel, 1, "label" );
     int xInset, yInset;
-    luaL_checklabel( L, 1 )->GetTextInset( &xInset, &yInset );
+    label->GetTextInset( &xInset, &yInset );
     lua_pushinteger( L, xInset );
     lua_pushinteger( L, yInset );
     return 2;
 }
+LUA_BINDING_END( "integer", "The x inset of the label", "integer", "The y inset of the label" )
 
-static int Label_SetTextInset( lua_State *L )
+LUA_BINDING_BEGIN( Label, SetTextInset, "class", "Sets the text inset of the label" )
 {
-    luaL_checklabel( L, 1 )->SetTextInset( luaL_checknumber( L, 2 ), luaL_checknumber( L, 3 ) );
+    lua_Label *label = LUA_BINDING_ARGUMENT( luaL_checklabel, 1, "label" );
+    label->SetTextInset(
+        LUA_BINDING_ARGUMENT( luaL_checknumber, 2, "xInset" ),
+        LUA_BINDING_ARGUMENT( luaL_checknumber, 3, "yInset" ) );
     return 0;
 }
+LUA_BINDING_END()
 
-static int Label_GetHotKey( lua_State *L )
+LUA_BINDING_BEGIN( Label, GetHotKey, "class", "Gets the hotkey of the label" )
 {
-    lua_pushinteger( L, luaL_checklabel( L, 1 )->GetHotKey() );
+    lua_Label *label = LUA_BINDING_ARGUMENT( luaL_checklabel, 1, "label" );
+    lua_pushinteger( L, label->GetHotKey() );
     return 1;
 }
+LUA_BINDING_END( "integer", "The hotkey of the label" )
 
-static int Label_HasHotkey( lua_State *L )
+LUA_BINDING_BEGIN( Label, HasHotkey, "class", "Checks if the label has a hotkey" )
 {
-    luaL_checklabel( L, 1 )->HasHotkey( luaL_checknumber( L, 2 ) )->PushLuaInstance( L );
+    lua_Label *label = LUA_BINDING_ARGUMENT( luaL_checklabel, 1, "label" );
+    label->HasHotkey( LUA_BINDING_ARGUMENT( luaL_checknumber, 2, "key" ) )->PushLuaInstance( L );
     return 1;
 }
+LUA_BINDING_END( "label", "The label with the hotkey" )
 
-static int Label_SetHotkey( lua_State *L )
+LUA_BINDING_BEGIN( Label, SetHotkey, "class", "Sets the hotkey of the label" )
 {
-    luaL_checklabel( L, 1 )->SetHotkey( luaL_checknumber( L, 2 ) );
+    lua_Label *label = LUA_BINDING_ARGUMENT( luaL_checklabel, 1, "label" );
+    label->SetHotkey( LUA_BINDING_ARGUMENT( luaL_checknumber, 2, "key" ) );
     return 0;
 }
+LUA_BINDING_END()
 
-static int Label_SetAssociatedControl( lua_State *L )
+LUA_BINDING_BEGIN( Label, SetAssociatedControl, "class", "Sets the associated control of the label" )
 {
-    luaL_checklabel( L, 1 )->SetAssociatedControl( luaL_checkpanel( L, 2 ) );
+    lua_Label *label = LUA_BINDING_ARGUMENT( luaL_checklabel, 1, "label" );
+    label->SetAssociatedControl( LUA_BINDING_ARGUMENT( luaL_checkpanel, 2, "control" ) );
     return 0;
 }
+LUA_BINDING_END()
 
 // TODO: Implement luaL_checkimage etc. (low priority, used nowhere)
 // static int Label_AddImage( lua_State *L )
@@ -234,78 +289,101 @@ static int Label_SetAssociatedControl( lua_State *L )
 //    luaL_checklabel( L, 1 )->SetImageAtIndex( luaL_checknumber( L, 2 ), luaL_checkimage( L, 3 ), luaL_checknumber( L, 4 ) );
 //    return 0;
 //}
-
-static int Label_SetImagePreOffset( lua_State *L )
-{
-    luaL_checklabel( L, 1 )->SetImagePreOffset( luaL_checknumber( L, 2 ), luaL_checknumber( L, 3 ) );
-    return 0;
-}
-
 // static int Label_GetImageAtIndex( lua_State *L )
 //{
 //     lua_pushimage( L, luaL_checklabel( L, 1 )->GetImageAtIndex( luaL_checknumber( L, 2 ) ) );
 //     return 1;
 // }
-
-static int Label_GetImageCount( lua_State *L )
-{
-    lua_pushinteger( L, luaL_checklabel( L, 1 )->GetImageCount() );
-    return 1;
-}
-
-static int Label_ClearImages( lua_State *L )
-{
-    luaL_checklabel( L, 1 )->ClearImages();
-    return 0;
-}
-
-static int Label_ResetToSimpleTextImage( lua_State *L )
-{
-    luaL_checklabel( L, 1 )->ResetToSimpleTextImage();
-    return 0;
-}
-
-static int Label_SetImageBounds( lua_State *L )
-{
-    luaL_checklabel( L, 1 )->SetImageBounds( luaL_checknumber( L, 2 ), luaL_checknumber( L, 3 ), luaL_checknumber( L, 4 ) );
-    return 0;
-}
-
 // static int Label_GetTextImage( lua_State *L )
 //{
 //     lua_pushimage( L, luaL_checklabel( L, 1 )->GetTextImage() );
 //     return 1;
 // }
 
-static int Label_SetTextImageIndex( lua_State *L )
+LUA_BINDING_BEGIN( Label, SetImagePreOffset, "class", "Sets the image pre-offset of the label" )
 {
-    lua_pushinteger( L, luaL_checklabel( L, 1 )->SetTextImageIndex( luaL_checknumber( L, 2 ) ) );
-    return 1;
-}
-
-static int Label_SetWrap( lua_State *L )
-{
-    luaL_checklabel( L, 1 )->SetWrap( luaL_checkboolean( L, 2 ) );
+    lua_Label *label = LUA_BINDING_ARGUMENT( luaL_checklabel, 1, "label" );
+    label->SetImagePreOffset(
+        LUA_BINDING_ARGUMENT( luaL_checknumber, 2, "x" ),
+        LUA_BINDING_ARGUMENT( luaL_checknumber, 3, "y" ) );
     return 0;
 }
+LUA_BINDING_END()
 
-static int Label_SetCenterWrap( lua_State *L )
+LUA_BINDING_BEGIN( Label, GetImageCount, "class", "Gets the image count of the label" )
 {
-    luaL_checklabel( L, 1 )->SetCenterWrap( luaL_checkboolean( L, 2 ) );
-    return 0;
-}
-
-static int Label_RequestInfo( lua_State *L )
-{
-    lua_pushboolean( L, luaL_checklabel( L, 1 )->RequestInfo( luaL_checkkeyvalues( L, 2 ) ) );
+    lua_Label *label = LUA_BINDING_ARGUMENT( luaL_checklabel, 1, "label" );
+    lua_pushinteger( L, label->GetImageCount() );
     return 1;
 }
+LUA_BINDING_END( "integer", "The image count of the label" )
 
-static int Label___index( lua_State *L )
+LUA_BINDING_BEGIN( Label, ClearImages, "class", "Clears the images of the label" )
 {
-    Label *pLabel = lua_tolabel( L, 1 );
-    LUA_METATABLE_INDEX_CHECK_VALID( L, Panel_IsValid );
+    lua_Label *label = LUA_BINDING_ARGUMENT( luaL_checklabel, 1, "label" );
+    label->ClearImages();
+    return 0;
+}
+LUA_BINDING_END()
+
+LUA_BINDING_BEGIN( Label, ResetToSimpleTextImage, "class", "Resets the label to a simple text image" )
+{
+    lua_Label *label = LUA_BINDING_ARGUMENT( luaL_checklabel, 1, "label" );
+    label->ResetToSimpleTextImage();
+    return 0;
+}
+LUA_BINDING_END()
+
+LUA_BINDING_BEGIN( Label, SetImageBounds, "class", "Sets the image bounds of the label" )
+{
+    lua_Label *label = LUA_BINDING_ARGUMENT( luaL_checklabel, 1, "label" );
+    label->SetImageBounds(
+        LUA_BINDING_ARGUMENT( luaL_checknumber, 2, "index" ),
+        LUA_BINDING_ARGUMENT( luaL_checknumber, 3, "x" ),
+        LUA_BINDING_ARGUMENT( luaL_checknumber, 4, "width" ) );
+    return 0;
+}
+LUA_BINDING_END()
+
+LUA_BINDING_BEGIN( Label, SetTextImageIndex, "class", "Sets the text image index of the label" )
+{
+    lua_Label *label = LUA_BINDING_ARGUMENT( luaL_checklabel, 1, "label" );
+    lua_pushinteger( L, label->SetTextImageIndex( LUA_BINDING_ARGUMENT( luaL_checknumber, 2, "index" ) ) );
+    return 1;
+}
+LUA_BINDING_END( "integer", "The text image index of the label" )
+
+LUA_BINDING_BEGIN( Label, SetWrap, "class", "Sets the wrap of the label" )
+{
+    lua_Label *label = LUA_BINDING_ARGUMENT( luaL_checklabel, 1, "label" );
+    label->SetWrap( LUA_BINDING_ARGUMENT( luaL_checkboolean, 2, "shouldWrap" ) );
+    return 0;
+}
+LUA_BINDING_END()
+
+LUA_BINDING_BEGIN( Label, SetCenterWrap, "class", "Sets the center wrap of the label" )
+{
+    lua_Label *label = LUA_BINDING_ARGUMENT( luaL_checklabel, 1, "label" );
+    label->SetCenterWrap( LUA_BINDING_ARGUMENT( luaL_checkboolean, 2, "shouldCenterWrap" ) );
+    return 0;
+}
+LUA_BINDING_END()
+
+LUA_BINDING_BEGIN( Label, RequestInfo, "class", "OutputData - keyName is the name of the attribute requested. for Labels 'text' is an option that returns the default text image text returns true on success in finding the requested value. false on failure." )
+{
+    lua_Label *label = LUA_BINDING_ARGUMENT( luaL_checklabel, 1, "label" );
+    lua_pushboolean( L, label->RequestInfo( LUA_BINDING_ARGUMENT( luaL_checkkeyvalues, 2, "outputData" ) ) );
+    return 1;
+}
+LUA_BINDING_END( "boolean", "Whether the info was requested" )
+
+LUA_BINDING_BEGIN( Label, __index, "class", "Metamethod that is called when a non-existant field is indexed" )
+{
+    lua_Label *pLabel = LUA_BINDING_ARGUMENT( lua_tolabel, 1, "label" );
+    LUA_METATABLE_INDEX_CHECK_VALID( L, PanelIsValid );
     LUA_METATABLE_INDEX_CHECK( L, pLabel );
+
+    // const char *field = LUA_BINDING_ARGUMENT( luaL_checkstring, 2, "field" );
 
     LLabel *plLabel = dynamic_cast< LLabel * >( pLabel );
     LUA_METATABLE_INDEX_CHECK_REF_TABLE( L, plLabel );
@@ -323,10 +401,11 @@ static int Label___index( lua_State *L )
     lua_pushnil( L );
     return 1;
 }
+LUA_BINDING_END( "any", "The value of the field" )
 
-static int Label___newindex( lua_State *L )
+LUA_BINDING_BEGIN( Label, __newindex, "class", "Metamethod that is called when a new field is added to the panel" )
 {
-    Label *pLabel = lua_tolabel( L, 1 );
+    lua_Label *pLabel = LUA_BINDING_ARGUMENT( lua_tolabel, 1, "label" );
 
     if ( pLabel == NULL )
     { /* avoid extra test when d is not 0 */
@@ -351,6 +430,7 @@ static int Label___newindex( lua_State *L )
         return 0;
     }
 
+    // Experiment; TODO: Didn't we already fix this? I think we did. Test this.
     // Special case for LButtons
     // TODO: Somehow inherit instead, but multiple inheritance is tricky with our current setup
     // (LButton inherits from Button, which inherits from Panel, like LLabel -> Label -> Panel)
@@ -359,20 +439,22 @@ static int Label___newindex( lua_State *L )
 
     LUA_GET_REF_TABLE( L, plButton );
     lua_pushvalue( L, 3 );
-    lua_setfield( L, -2, luaL_checkstring( L, 2 ) );
+    lua_setfield( L, -2, LUA_BINDING_ARGUMENT( luaL_checkstring, 2, "field" ) );
     lua_pop( L, 1 );
     return 0;
 }
+LUA_BINDING_END()
 
-static int Label___eq( lua_State *L )
+LUA_BINDING_BEGIN( Label, __eq, "class", "Metamethod that is called when two labels are compared" )
 {
-    lua_pushboolean( L, lua_tolabel( L, 1 ) == lua_tolabel( L, 2 ) );
+    lua_pushboolean( L, LUA_BINDING_ARGUMENT( lua_tolabel, 1, "label" ) == LUA_BINDING_ARGUMENT( lua_tolabel, 2, "other" ) );
     return 1;
 }
+LUA_BINDING_END( "boolean", "Whether the labels are equal" )
 
-static int Label___tostring( lua_State *L )
+LUA_BINDING_BEGIN( Label, __tostring, "class", "Metamethod that is called when the label is to be treated as a string" )
 {
-    Label *pLabel = lua_tolabel( L, 1 );
+    LLabel *pLabel = LUA_BINDING_ARGUMENT( lua_tolabel, 1, "label" );
     if ( pLabel == NULL )
         lua_pushstring( L, "INVALID_PANEL" );
     else
@@ -384,69 +466,26 @@ static int Label___tostring( lua_State *L )
     }
     return 1;
 }
+LUA_BINDING_END( "string", "The string representation of the label" )
 
-static const luaL_Reg Labelmeta[] = {
-    { "ChainToAnimationMap", Label_ChainToAnimationMap },
-    { "ChainToMap", Label_ChainToMap },
-    { "GetContentSize", Label_GetContentSize },
-    { "GetPanelBaseClassName", Label_GetPanelBaseClassName },
-    { "GetPanelClassName", Label_GetPanelClassName },
-    { "GetValue", Label_GetValue },
-    { "KB_AddBoundKey", Label_KB_AddBoundKey },
-    { "KB_ChainToMap", Label_KB_ChainToMap },
-    { "OnCursorEntered", Label_OnCursorEntered },
-    { "OnCursorExited", Label_OnCursorExited },
-    { "OnKillFocus", Label_OnKillFocus },
-    { "OnSetFocus", Label_OnSetFocus },
-    { "PerformLayout", Label_PerformLayout },
-    { "SizeToContents", Label_SizeToContents },
-    { "SetContentAlignment", Label_SetContentAlignment },
-    { "GetText", Label_GetText },
-    { "SetText", Label_SetText },
-    { "SetFont", Label_SetFont },
-    { "GetFont", Label_GetFont },
-    { "SetFgColor", Label_SetFgColor },
-    { "GetFgColor", Label_GetFgColor },
-    { "GetTextInset", Label_GetTextInset },
-    { "SetTextInset", Label_SetTextInset },
-    { "GetHotKey", Label_GetHotKey },
-    { "HasHotkey", Label_HasHotkey },
-    { "SetHotkey", Label_SetHotkey },
-    { "SetAssociatedControl", Label_SetAssociatedControl },
-    //{ "AddImage", Label_AddImage },
-    //{ "SetImageAtIndex", Label_SetImageAtIndex },
-    { "SetImagePreOffset", Label_SetImagePreOffset },
-    //{ "GetImageAtIndex", Label_GetImageAtIndex },
-    { "GetImageCount", Label_GetImageCount },
-    { "ClearImages", Label_ClearImages },
-    { "ResetToSimpleTextImage", Label_ResetToSimpleTextImage },
-    { "SetImageBounds", Label_SetImageBounds },
-    //{ "GetTextImage", Label_GetTextImage },
-    { "SetTextImageIndex", Label_SetTextImageIndex },
-    { "SetWrap", Label_SetWrap },
-    { "SetCenterWrap", Label_SetCenterWrap },
-    { "RequestInfo", Label_RequestInfo },
-    { "__index", Label___index },
-    { "__newindex", Label___newindex },
-    { "__eq", Label___eq },
-    { "__tostring", Label___tostring },
-    { "__gc", Panel___gc },
-
-    { NULL, NULL } };
-
-static int luasrc_Label( lua_State *L )
+LUA_BINDING_BEGIN( Label, __gc, "class", "Metamethod that is called when the panel is garbage collected" )
 {
-    lua_Label *pPanel =
-        new lua_Label( luaL_optpanel( L, 1, VGui_GetClientLuaRootPanel() ),
-                    luaL_checkstring( L, 2 ),
-                    luaL_optstring( L, 3, "Label" ),
-                    L );
+    return PanelCollectGarbage( L );
+}
+LUA_BINDING_END()
+
+LUA_REGISTRATION_INIT( Panels )
+
+LUA_BINDING_BEGIN( Panels, Label, "library", "Creates a new label" )
+{
+    Panel *parent = LUA_BINDING_ARGUMENT_WITH_DEFAULT( luaL_optpanel, 1, VGui_GetClientLuaRootPanel(), "parent" );
+    const char *text = LUA_BINDING_ARGUMENT_WITH_DEFAULT( luaL_optstring, 2, "", "text" );
+    const char *name = LUA_BINDING_ARGUMENT_WITH_DEFAULT( luaL_optstring, 3, "Label", "name" );
+    lua_Label *pPanel = new lua_Label( parent, name, text, L );
     pPanel->PushLuaInstance( L );
     return 1;
 }
-
-static const luaL_Reg Label_funcs[] = { { "Label", luasrc_Label },
-                                        { NULL, NULL } };
+LUA_BINDING_END( "Label", "The new label" )
 
 /*
 ** Open Label object
@@ -454,10 +493,13 @@ static const luaL_Reg Label_funcs[] = { { "Label", luasrc_Label },
 LUALIB_API int luaopen_vgui_Label( lua_State *L )
 {
     LUA_PUSH_NEW_METATABLE( L, "Label" );
-    luaL_register( L, NULL, Labelmeta );
-    lua_pushstring( L, LUA_PANELLIBNAME );
+    LUA_REGISTRATION_COMMIT( Label );
+
+    lua_pushstring( L, LUA_PANELMETANAME );
     lua_setfield( L, -2, "__type" ); /* metatable.__type = "Panel" */
-    luaL_register( L, LUA_VGUILIBNAME, Label_funcs );
+
+    LUA_REGISTRATION_COMMIT_LIBRARY( Panels );
+
     lua_pop( L, 2 );
 
     LUA_SET_ENUM_LIB_BEGIN( L, "LABEL_ALIGNMENT" );

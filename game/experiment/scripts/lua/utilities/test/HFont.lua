@@ -12,12 +12,12 @@ if (not CLIENT) then
 end
 
 local bor = bit.bor
-local Frame = Gui.Frame
-local Panel = Gui.Panel
+local Frame = Panels.Frame
+local Panel = Panels.Panel
 
-Surface.AddCustomFontFile("DIN-Light", "gamemodes\\sandbox\\content\\resource\\DINLi.ttf")
-local hTestFont = Surface.CreateFont()
-Surface.SetFontGlyphSet(hTestFont,
+Surfaces.AddCustomFontFile("DIN-Light", "gamemodes\\sandbox\\content\\resource\\DINLi.ttf")
+local hTestFont = Surfaces.CreateFont()
+Surfaces.SetFontGlyphSet(hTestFont,
 	"DIN-Light",
 	32,
 	0,
@@ -36,13 +36,13 @@ g_hFontTestFrame:SetVisible(true)
 g_hFontTestFrame.m_hFontSamples = Panel(g_hFontTestFrame, "FontSamples")
 g_hFontTestFrame.m_hFontSamples:SetProportional(true)
 
-local iFontWide, iFontTall = Surface.GetTextSize(hTestFont, strTextSample)
+local iFontWide, iFontTall = Surfaces.GetTextSize(hTestFont, strTextSample)
 g_hFontTestFrame.m_hFontSamples:SetPosition(0, 120 / 2 - iFontTall / 2 + 4)
 g_hFontTestFrame.m_hFontSamples:SetSize(408, iFontTall + 8)
 
 function g_hFontTestFrame.m_hFontSamples:Paint()
-	Surface.DrawSetTextFont(hTestFont)
-	Surface.DrawPrintText(strTextSample)
+	Surfaces.DrawSetTextFont(hTestFont)
+	Surfaces.DrawPrintText(strTextSample)
 end
 
 -- move to the middle of the screen

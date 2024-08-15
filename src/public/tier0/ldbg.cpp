@@ -12,7 +12,7 @@ LUA_REGISTRATION_INIT( debug );
 LUA_BINDING_BEGIN( debug, SpewActivate, "library", "Activate spew output." )
 {
     const char *pGroupName = LUA_BINDING_ARGUMENT( luaL_checkstring, 1, "groupName" );
-    int iLevel = LUA_BINDING_ARGUMENT( luaL_checkinteger, 2, "level" );
+    int iLevel = LUA_BINDING_ARGUMENT( luaL_checknumber, 2, "level" );
 
     SpewActivate( pGroupName, iLevel );
     return 0;
@@ -22,7 +22,7 @@ LUA_BINDING_END()
 LUA_BINDING_BEGIN( debug, IsSpewActive, "library", "Check if spew output is active." )
 {
     const char *pGroupName = LUA_BINDING_ARGUMENT( luaL_checkstring, 1, "groupName" );
-    int iLevel = LUA_BINDING_ARGUMENT( luaL_checkinteger, 2, "level" );
+    int iLevel = LUA_BINDING_ARGUMENT( luaL_checknumber, 2, "level" );
 
     lua_pushboolean( L, IsSpewActive( pGroupName, iLevel ) );
     return 1;
@@ -41,7 +41,7 @@ LUA_BINDING_END()
 LUA_BINDING_BEGIN( debug, PrintDebugMessage, "library", "Print a debug message to the console." )
 {
     const char *pMessage = LUA_BINDING_ARGUMENT( luaL_checkstring, 1, "message" );
-    int iLevel = LUA_BINDING_ARGUMENT( luaL_checkinteger, 2, "level" );
+    int iLevel = LUA_BINDING_ARGUMENT( luaL_checknumber, 2, "level" );
     const char *pGroupName = LUA_BINDING_ARGUMENT( luaL_checkstring, 3, "groupName" );
 
     DMsg( pGroupName, iLevel, "%s", pMessage );
@@ -61,7 +61,7 @@ LUA_BINDING_END()
 LUA_BINDING_BEGIN( debug, PrintDebugWarning, "library", "Print a debug warning message to the console." )
 {
     const char *pMessage = LUA_BINDING_ARGUMENT( luaL_checkstring, 1, "message" );
-    int iLevel = LUA_BINDING_ARGUMENT( luaL_checkinteger, 2, "level" );
+    int iLevel = LUA_BINDING_ARGUMENT( luaL_checknumber, 2, "level" );
     const char *pGroupName = LUA_BINDING_ARGUMENT( luaL_checkstring, 3, "groupName" );
 
     DWarning( pGroupName, iLevel, "%s", pMessage );
@@ -81,7 +81,7 @@ LUA_BINDING_END()
 LUA_BINDING_BEGIN( debug, PrintDebugLog, "library", "Print a debug log message to the console." )
 {
     const char *pMessage = LUA_BINDING_ARGUMENT( luaL_checkstring, 1, "message" );
-    int iLevel = LUA_BINDING_ARGUMENT( luaL_checkinteger, 2, "level" );
+    int iLevel = LUA_BINDING_ARGUMENT( luaL_checknumber, 2, "level" );
     const char *pGroupName = LUA_BINDING_ARGUMENT( luaL_checkstring, 3, "groupName" );
 
     DLog( pGroupName, iLevel, "%s", pMessage );
@@ -147,7 +147,7 @@ LUA_BINDING_END()
 
 LUA_BINDING_BEGIN( debug, PrintNetworkMessage, "library", "Print a network message to the console." )
 {
-    int iLevel = LUA_BINDING_ARGUMENT( luaL_checkinteger, 1, "level" );
+    int iLevel = LUA_BINDING_ARGUMENT( luaL_checknumber, 1, "level" );
     const char *pMessage = LUA_BINDING_ARGUMENT( luaL_checkstring, 2, "message" );
 
     NetMsg( iLevel, "%s", pMessage );
@@ -157,7 +157,7 @@ LUA_BINDING_END()
 
 LUA_BINDING_BEGIN( debug, PrintNetworkWarning, "library", "Print a network warning message to the console." )
 {
-    int iLevel = LUA_BINDING_ARGUMENT( luaL_checkinteger, 1, "level" );
+    int iLevel = LUA_BINDING_ARGUMENT( luaL_checknumber, 1, "level" );
     const char *pMessage = LUA_BINDING_ARGUMENT( luaL_checkstring, 2, "message" );
 
     NetWarning( iLevel, "%s", pMessage );
@@ -167,7 +167,7 @@ LUA_BINDING_END()
 
 LUA_BINDING_BEGIN( debug, PrintNetworkLog, "library", "Print a network log message to the console." )
 {
-    int iLevel = LUA_BINDING_ARGUMENT( luaL_checkinteger, 1, "level" );
+    int iLevel = LUA_BINDING_ARGUMENT( luaL_checknumber, 1, "level" );
     const char *pMessage = LUA_BINDING_ARGUMENT( luaL_checkstring, 2, "message" );
 
     NetLog( iLevel, "%s", pMessage );

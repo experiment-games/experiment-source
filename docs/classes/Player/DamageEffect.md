@@ -17,7 +17,7 @@ lua:
     - name: "damage"
       type: number
     - name: "damageType"
-      type: integer
+      type: number
   returns:
     
 ---

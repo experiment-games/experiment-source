@@ -29,10 +29,10 @@ hook.Add("HUDPaint", "PutAUniqueHookNameHere", function()
   render.PushFilterMin(filter)
 
   -- Actually draw the rectangle with a magnification filter
-  surface.DrawTexturedRect(pos, pos, sizeBig, sizeBig)
+  surface.DrawTexturedRectangle(pos, pos, sizeBig, sizeBig)
 
   -- Actually draw the rectangle with a minification filter
-  surface.DrawTexturedRect(pos + sizeBig + 1, pos, sizeSmall, sizeSmall)
+  surface.DrawTexturedRectangle(pos + sizeBig + 1, pos, sizeSmall, sizeSmall)
 
   render.PopFilterMin()
   render.PopFilterMag()

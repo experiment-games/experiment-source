@@ -208,7 +208,7 @@ class Panel : public IClientPanel, virtual IForceVirtualInheritancePanel
     DECLARE_CLASS_SIMPLE_NOBASE( Panel );
 
 #ifdef LUA_SDK
-    LUA_DECLARE_SINGLE_LUA_INSTANCE( Panel, LUA_PANELLIBNAME );
+    LUA_DECLARE_SINGLE_LUA_INSTANCE( Panel, LUA_PANELMETANAME );
     static void PushVPanelLuaInstance( lua_State *L, VPANEL panel );
 #endif
 

@@ -267,7 +267,7 @@ LUA_BINDING_END( "integer", "The sentence group index." )
 
 LUA_BINDING_BEGIN( Engines, SentenceGroupNameFromIndex, "library", "Get the sentence group name from an index." )
 {
-    int index = LUA_BINDING_ARGUMENT( luaL_checkinteger, 1, "index" );
+    int index = LUA_BINDING_ARGUMENT( luaL_checknumber, 1, "index" );
 
     lua_pushstring( L, engine->SentenceGroupNameFromIndex( index ) );
     return 1;
@@ -285,7 +285,7 @@ LUA_BINDING_END( "integer", "The sentence index." )
 
 LUA_BINDING_BEGIN( Engines, SentenceLength, "library", "Get the sentence length." )
 {
-    int index = LUA_BINDING_ARGUMENT( luaL_checkinteger, 1, "index" );
+    int index = LUA_BINDING_ARGUMENT( luaL_checknumber, 1, "index" );
 
     lua_pushnumber( L, engine->SentenceLength( index ) );
     return 1;
@@ -294,7 +294,7 @@ LUA_BINDING_END( "number", "The sentence length." )
 
 LUA_BINDING_BEGIN( Engines, SentenceNameFromIndex, "library", "Get the sentence name from an index." )
 {
-    int index = LUA_BINDING_ARGUMENT( luaL_checkinteger, 1, "index" );
+    int index = LUA_BINDING_ARGUMENT( luaL_checknumber, 1, "index" );
 
     lua_pushstring( L, engine->SentenceNameFromIndex( index ) );
     return 1;

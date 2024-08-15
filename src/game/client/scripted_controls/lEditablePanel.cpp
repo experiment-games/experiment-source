@@ -144,242 +144,295 @@ LUALIB_API lua_EditablePanel *luaL_checkeditablepanel( lua_State *L, int narg )
     return d;
 }
 
-static int EditablePanel_ActivateBuildMode( lua_State *L )
+LUA_REGISTRATION_INIT( EditablePanel )
+
+LUA_BINDING_BEGIN( EditablePanel, ActivateBuildMode, "class", "Activates build mode for the panel" )
 {
-    luaL_checkeditablepanel( L, 1 )->ActivateBuildMode();
+    LUA_BINDING_ARGUMENT( luaL_checkeditablepanel, 1, "editablePanel" )->ActivateBuildMode();
     return 0;
 }
+LUA_BINDING_END()
 
-static int EditablePanel_ApplySettings( lua_State *L )
+LUA_BINDING_BEGIN( EditablePanel, ApplySettings, "class", "Applies settings from key-values" )
 {
-    luaL_checkeditablepanel( L, 1 )->ApplySettings( luaL_checkkeyvalues( L, 2 ) );
+    LUA_BINDING_ARGUMENT( luaL_checkeditablepanel, 1, "editablePanel" )->ApplySettings( LUA_BINDING_ARGUMENT( luaL_checkkeyvalues, 2, "keyValues" ) );
     return 0;
 }
+LUA_BINDING_END()
 
-static int EditablePanel_ChainToAnimationMap( lua_State *L )
+// LUA_BINDING_BEGIN( EditablePanel, ChainToAnimationMap, "class|static", "Chains to the animation map" )
+//{
+//     lua_EditablePanel::ChainToAnimationMap();
+//     return 0;
+// }
+// LUA_BINDING_END()
+//
+// LUA_BINDING_BEGIN( EditablePanel, ChainToMap, "class|static", "Chains to the map" )
+//{
+//     lua_EditablePanel::ChainToMap();
+//     return 0;
+// }
+// LUA_BINDING_END()
+
+LUA_BINDING_BEGIN( EditablePanel, CreateControlByName, "class", "Creates a control by name" )
 {
-    luaL_checkeditablepanel( L, 1 )->ChainToAnimationMap();
+    LUA_BINDING_ARGUMENT( luaL_checkeditablepanel, 1, "editablePanel" )
+        ->CreateControlByName( LUA_BINDING_ARGUMENT( luaL_checkstring, 2, "name" ) )
+        ->PushLuaInstance( L );
+    return 1;
+}
+LUA_BINDING_END( "Panel", "The created panel" )
+
+LUA_BINDING_BEGIN( EditablePanel, DoModal, "class", "Makes the panel modal" )
+{
+    LUA_BINDING_ARGUMENT( luaL_checkeditablepanel, 1, "editablePanel" )->DoModal();
     return 0;
 }
+LUA_BINDING_END()
 
-static int EditablePanel_ChainToMap( lua_State *L )
+LUA_BINDING_BEGIN( EditablePanel, IsModal, "class", "Checks if the panel is modal" )
 {
-    luaL_checkeditablepanel( L, 1 )->ChainToMap();
-    return 0;
-}
-
-static int EditablePanel_CreateControlByName( lua_State *L )
-{
-    luaL_checkeditablepanel( L, 1 )->CreateControlByName( luaL_checkstring( L, 2 ) )->PushLuaInstance( L );
+    lua_pushboolean( L, LUA_BINDING_ARGUMENT( luaL_checkeditablepanel, 1, "editablePanel" )->IsModal() );
     return 1;
 }
+LUA_BINDING_END( "boolean", "True if the panel is modal" )
 
-static int EditablePanel_DoModal( lua_State *L )
+LUA_BINDING_BEGIN( EditablePanel, GetControlInt, "class", "Gets an integer value from a control" )
 {
-    luaL_checkeditablepanel( L, 1 )->DoModal();
-    return 0;
-}
-
-static int EditablePanel_IsModal( lua_State *L )
-{
-    lua_pushboolean( L, luaL_checkeditablepanel( L, 1 )->IsModal() );
+    lua_pushinteger( L,
+                     LUA_BINDING_ARGUMENT( luaL_checkeditablepanel, 1, "editablePanel" )
+                         ->GetControlInt(
+                             LUA_BINDING_ARGUMENT( luaL_checkstring, 2, "control" ),
+                             LUA_BINDING_ARGUMENT( luaL_checknumber, 3, "default" ) ) );
     return 1;
 }
+LUA_BINDING_END( "integer", "The control integer value" )
 
-static int EditablePanel_GetControlInt( lua_State *L )
+LUA_BINDING_BEGIN( EditablePanel, GetControlString, "class", "Gets a string value from a control" )
 {
-    lua_pushinteger( L, luaL_checkeditablepanel( L, 1 )->GetControlInt( luaL_checkstring( L, 2 ), luaL_checknumber( L, 3 ) ) );
+    lua_pushstring( L,
+                    LUA_BINDING_ARGUMENT( luaL_checkeditablepanel, 1, "editablePanel" )
+                        ->GetControlString(
+                            LUA_BINDING_ARGUMENT( luaL_checkstring, 2, "control" ),
+                            LUA_BINDING_ARGUMENT_WITH_DEFAULT( luaL_optstring, 3, "", "default" ) ) );
     return 1;
 }
+LUA_BINDING_END( "string", "The control string value" )
 
-static int EditablePanel_GetControlString( lua_State *L )
+LUA_BINDING_BEGIN( EditablePanel, GetCurrentKeyFocus, "class", "Gets the current key focus" )
 {
-    lua_pushstring( L, luaL_checkeditablepanel( L, 1 )->GetControlString( luaL_checkstring( L, 2 ), luaL_optstring( L, 3, "" ) ) );
+    Panel::PushVPanelLuaInstance( L, LUA_BINDING_ARGUMENT( luaL_checkeditablepanel, 1, "editablePanel" )->GetCurrentKeyFocus() );
     return 1;
 }
+LUA_BINDING_END( "Panel", "The current key focus panel" )
 
-static int EditablePanel_GetCurrentKeyFocus( lua_State *L )
+LUA_BINDING_BEGIN( EditablePanel, GetDialogVariables, "class", "Gets the dialog variables" )
 {
-    Panel::PushVPanelLuaInstance( L, luaL_checkeditablepanel( L, 1 )->GetCurrentKeyFocus() );
+    lua_pushkeyvalues( L, LUA_BINDING_ARGUMENT( luaL_checkeditablepanel, 1, "editablePanel" )->GetDialogVariables() );
     return 1;
 }
+LUA_BINDING_END( "KeyValuesHandle", "The dialog variables" )
 
-static int EditablePanel_GetDialogVariables( lua_State *L )
+LUA_BINDING_BEGIN( EditablePanel, GetPanelBaseClassName, "class", "Gets the base class name of the panel" )
 {
-    lua_pushkeyvalues( L, luaL_checkeditablepanel( L, 1 )->GetDialogVariables() );
+    lua_pushstring( L, LUA_BINDING_ARGUMENT( luaL_checkeditablepanel, 1, "editablePanel" )->GetPanelBaseClassName() );
     return 1;
 }
+LUA_BINDING_END( "string", "The base class name" )
 
-static int EditablePanel_GetPanelBaseClassName( lua_State *L )
+LUA_BINDING_BEGIN( EditablePanel, GetPanelClassName, "class", "Gets the class name of the panel" )
 {
-    lua_pushstring( L, luaL_checkeditablepanel( L, 1 )->GetPanelBaseClassName() );
+    lua_pushstring( L, LUA_BINDING_ARGUMENT( luaL_checkeditablepanel, 1, "editablePanel" )->GetPanelClassName() );
     return 1;
 }
+LUA_BINDING_END( "string", "The class name" )
 
-static int EditablePanel_GetPanelClassName( lua_State *L )
-{
-    lua_pushstring( L, luaL_checkeditablepanel( L, 1 )->GetPanelClassName() );
-    return 1;
-}
-
-static int EditablePanel_HasHotkey( lua_State *L )
+LUA_BINDING_BEGIN( EditablePanel, HasHotkey, "class", "Checks if the panel has a hotkey" )
 {
     size_t l;
-    Panel *pPanel = luaL_checkeditablepanel( L, 1 )->HasHotkey( ( wchar_t )luaL_checklstring( L, 2, &l ) );
+    Panel *pPanel = LUA_BINDING_ARGUMENT( luaL_checkeditablepanel, 1, "editablePanel" )->HasHotkey( ( wchar_t )LUA_BINDING_ARGUMENT_WITH_EXTRA( luaL_checklstring, 2, &l, "hotkey" ) );
     pPanel->PushLuaInstance( L );
     return 1;
 }
+LUA_BINDING_END( "Panel", "The panel with the hotkey" )
 
-static int EditablePanel_KB_AddBoundKey( lua_State *L )
-{
-    luaL_checkeditablepanel( L, 1 )->KB_AddBoundKey( luaL_checkstring( L, 2 ), luaL_checknumber( L, 3 ), luaL_checknumber( L, 3 ) );
-    return 0;
-}
+// LUA_BINDING_BEGIN( EditablePanel, KB_AddBoundKey, "class|static", "Adds a bound key" )
+//{
+//     lua_EditablePanel::KB_AddBoundKey( LUA_BINDING_ARGUMENT( luaL_checkstring, 2, "key" ), LUA_BINDING_ARGUMENT( luaL_checknumber, 3, "cmd1" ), LUA_BINDING_ARGUMENT( luaL_checknumber, 4, "cmd2" ) );
+//     return 0;
+// }
+// LUA_BINDING_END()
+//
+// LUA_BINDING_BEGIN( EditablePanel, KB_ChainToMap, "class", "Chains to the keymap" )
+//{
+//     lua_EditablePanel::KB_ChainToMap();
+//     return 0;
+// }
+// LUA_BINDING_END()
 
-static int EditablePanel_KB_ChainToMap( lua_State *L )
+LUA_BINDING_BEGIN( EditablePanel, KeyCodeToString, "class", "Converts a KeyCode to string" )
 {
-    luaL_checkeditablepanel( L, 1 )->KB_ChainToMap();
-    return 0;
-}
-
-static int EditablePanel_KeyCodeToString( lua_State *L )
-{
-    lua_pushstring( L, luaL_checkeditablepanel( L, 1 )->KeyCodeToString( ( KeyCode )( int )luaL_checknumber( L, 2 ) ) );
+    lua_pushstring( L,
+                    LUA_BINDING_ARGUMENT( luaL_checkeditablepanel, 1, "editablePanel" )
+                        ->KeyCodeToString( LUA_BINDING_ARGUMENT_ENUM( KeyCode, 2, "keyCode" ) ) );
     return 1;
 }
+LUA_BINDING_END( "string", "The keycode as string" )
 
-static int EditablePanel_LoadControlSettings( lua_State *L )
+LUA_BINDING_BEGIN( EditablePanel, LoadControlSettings, "class", "Loads control settings" )
 {
-    luaL_checkeditablepanel( L, 1 )->LoadControlSettings( luaL_checkstring( L, 2 ), luaL_optstring( L, 3, NULL ), luaL_optkeyvalues( L, 4, NULL ) );
+    LUA_BINDING_ARGUMENT( luaL_checkeditablepanel, 1, "editablePanel" )->LoadControlSettings( LUA_BINDING_ARGUMENT( luaL_checkstring, 2, "dialogResourceName" ), LUA_BINDING_ARGUMENT_WITH_DEFAULT( luaL_optstring, 3, NULL, "pathId" ), LUA_BINDING_ARGUMENT_WITH_DEFAULT( luaL_optkeyvalues, 4, NULL, "keyValues" ) );
     return 0;
 }
+LUA_BINDING_END()
 
-static int EditablePanel_LoadControlSettingsAndUserConfig( lua_State *L )
+LUA_BINDING_BEGIN( EditablePanel, LoadControlSettingsAndUserConfig, "class", "Loads control settings and user config" )
 {
-    luaL_checkeditablepanel( L, 1 )->LoadControlSettingsAndUserConfig( luaL_checkstring( L, 2 ), ( int )luaL_optnumber( L, 3, 0 ) );
+    LUA_BINDING_ARGUMENT( luaL_checkeditablepanel, 1, "editablePanel" )->LoadControlSettingsAndUserConfig( LUA_BINDING_ARGUMENT( luaL_checkstring, 2, "dialogResourceName" ), ( int )LUA_BINDING_ARGUMENT_WITH_DEFAULT( luaL_optnumber, 3, 0, "dialogId" ) );
     return 0;
 }
+LUA_BINDING_END()
 
-static int EditablePanel_LoadUserConfig( lua_State *L )
+LUA_BINDING_BEGIN( EditablePanel, LoadUserConfig, "class", "Loads user configuration" )
 {
-    luaL_checkeditablepanel( L, 1 )->LoadUserConfig( luaL_checkstring( L, 2 ), ( int )luaL_optnumber( L, 3, 0 ) );
+    LUA_BINDING_ARGUMENT( luaL_checkeditablepanel, 1, "editablePanel" )->LoadUserConfig( LUA_BINDING_ARGUMENT( luaL_checkstring, 2, "configName" ), ( int )LUA_BINDING_ARGUMENT_WITH_DEFAULT( luaL_optnumber, 3, 0, "dialogId" ) );
     return 0;
 }
+LUA_BINDING_END()
 
-static int EditablePanel_OnKeyCodeTyped( lua_State *L )
+LUA_BINDING_BEGIN( EditablePanel, OnKeyCodeTyped, "class", "Handles keycode typed event" )
 {
-    luaL_checkeditablepanel( L, 1 )->OnKeyCodeTyped( ( KeyCode )( int )luaL_checknumber( L, 2 ) );
+    LUA_BINDING_ARGUMENT( luaL_checkeditablepanel, 1, "editablePanel" )->OnKeyCodeTyped( LUA_BINDING_ARGUMENT_ENUM( KeyCode, 2, "keyCode" ) );
     return 0;
 }
+LUA_BINDING_END()
 
-static int EditablePanel_OnRequestFocus( lua_State *L )
+LUA_BINDING_BEGIN( EditablePanel, OnRequestFocus, "class", "Handles request focus event" )
 {
-    Panel* subFocusPanel = luaL_checkpanel( L, 2 );
-    Panel* defaultPanel = luaL_checkpanel( L, 3 );
-    luaL_checkeditablepanel( L, 1 )->OnRequestFocus( subFocusPanel->GetVPanel(), defaultPanel->GetVPanel() );
+    Panel *subFocusPanel = LUA_BINDING_ARGUMENT( luaL_checkpanel, 2, "subFocusPanel" );
+    Panel *defaultPanel = LUA_BINDING_ARGUMENT( luaL_checkpanel, 3, "defaultPanel" );
+    LUA_BINDING_ARGUMENT( luaL_checkeditablepanel, 1, "editablePanel" )->OnRequestFocus( subFocusPanel->GetVPanel(), defaultPanel->GetVPanel() );
     return 0;
 }
+LUA_BINDING_END()
 
-static int EditablePanel_OnSetFocus( lua_State *L )
+LUA_BINDING_BEGIN( EditablePanel, OnSetFocus, "class", "Handles set focus event" )
 {
-    luaL_checkeditablepanel( L, 1 )->OnSetFocus();
+    LUA_BINDING_ARGUMENT( luaL_checkeditablepanel, 1, "editablePanel" )->OnSetFocus();
     return 0;
 }
+LUA_BINDING_END()
 
-static int EditablePanel_RegisterControlSettingsFile( lua_State *L )
+LUA_BINDING_BEGIN( EditablePanel, RegisterControlSettingsFile, "class", "Registers a control settings file" )
 {
-    luaL_checkeditablepanel( L, 1 )->RegisterControlSettingsFile( luaL_checkstring( L, 2 ), luaL_optstring( L, 3, NULL ) );
+    LUA_BINDING_ARGUMENT( luaL_checkeditablepanel, 1, "editablePanel" )->RegisterControlSettingsFile( LUA_BINDING_ARGUMENT( luaL_checkstring, 2, "dialogResourceName" ), LUA_BINDING_ARGUMENT_WITH_DEFAULT( luaL_optstring, 3, NULL, "pathId" ) );
     return 0;
 }
+LUA_BINDING_END()
 
-static int EditablePanel_RequestFocus( lua_State *L )
+LUA_BINDING_BEGIN( EditablePanel, RequestFocus, "class", "Requests focus for the panel" )
 {
-    luaL_checkeditablepanel( L, 1 )->RequestFocus( ( int )luaL_optnumber( L, 2, 0 ) );
+    LUA_BINDING_ARGUMENT( luaL_checkeditablepanel, 1, "editablePanel" )->RequestFocus( ( int )LUA_BINDING_ARGUMENT_WITH_DEFAULT( luaL_optnumber, 2, 0, "unknown" ) );
     return 0;
 }
+LUA_BINDING_END()
 
-static int EditablePanel_RequestFocusNext( lua_State *L )
+LUA_BINDING_BEGIN( EditablePanel, RequestFocusNext, "class", "Requests focus for the next panel" )
 {
-    Panel *panel = luaL_checkpanel( L, 2 );
-    lua_pushboolean( L, luaL_checkeditablepanel( L, 1 )->RequestFocusNext( panel->GetVPanel() ) );
+    Panel *panel = LUA_BINDING_ARGUMENT( luaL_checkpanel, 2, "panel" );
+    lua_pushboolean( L, LUA_BINDING_ARGUMENT( luaL_checkeditablepanel, 1, "editablePanel" )->RequestFocusNext( panel->GetVPanel() ) );
     return 1;
 }
+LUA_BINDING_END( "boolean", "True if the next panel received focus" )
 
-static int EditablePanel_RequestFocusPrev( lua_State *L )
+LUA_BINDING_BEGIN( EditablePanel, RequestFocusPrev, "class", "Requests focus for the previous panel" )
 {
-    Panel *panel = luaL_checkpanel( L, 2 );
-    lua_pushboolean( L, luaL_checkeditablepanel( L, 1 )->RequestFocusPrev( panel->GetVPanel() ) );
+    Panel *panel = LUA_BINDING_ARGUMENT( luaL_checkpanel, 2, "panel" );
+    lua_pushboolean( L, LUA_BINDING_ARGUMENT( luaL_checkeditablepanel, 1, "editablePanel" )->RequestFocusPrev( panel->GetVPanel() ) );
     return 1;
 }
+LUA_BINDING_END( "boolean", "True if the previous panel received focus" )
 
-static int EditablePanel_RequestInfo( lua_State *L )
+LUA_BINDING_BEGIN( EditablePanel, RequestInfo, "class", "Requests info from the panel" )
 {
-    lua_pushboolean( L, luaL_checkeditablepanel( L, 1 )->RequestInfo( luaL_checkkeyvalues( L, 2 ) ) );
+    lua_pushboolean( L, LUA_BINDING_ARGUMENT( luaL_checkeditablepanel, 1, "editablePanel" )->RequestInfo( LUA_BINDING_ARGUMENT( luaL_checkkeyvalues, 2, "keyValues" ) ) );
     return 1;
 }
+LUA_BINDING_END( "boolean", "True if the request was successful" )
 
-static int EditablePanel_RequestInfoFromChild( lua_State *L )
+LUA_BINDING_BEGIN( EditablePanel, RequestInfoFromChild, "class", "Requests info from a child panel" )
 {
-    lua_pushboolean( L, luaL_checkeditablepanel( L, 1 )->RequestInfoFromChild( luaL_checkstring( L, 2 ), luaL_checkkeyvalues( L, 3 ) ) );
+    lua_pushboolean( L,
+                     LUA_BINDING_ARGUMENT( luaL_checkeditablepanel, 1, "editablePanel" )->RequestInfoFromChild( LUA_BINDING_ARGUMENT( luaL_checkstring, 2, "childName" ), LUA_BINDING_ARGUMENT( luaL_checkkeyvalues, 3, "keyValues" ) ) );
     return 1;
 }
+LUA_BINDING_END( "boolean", "True if the request was successful" )
 
-static int EditablePanel_SaveUserConfig( lua_State *L )
+LUA_BINDING_BEGIN( EditablePanel, SaveUserConfig, "class", "Saves the user configuration" )
 {
-    luaL_checkeditablepanel( L, 1 )->SaveUserConfig();
+    LUA_BINDING_ARGUMENT( luaL_checkeditablepanel, 1, "editablePanel" )->SaveUserConfig();
     return 0;
 }
+LUA_BINDING_END()
 
-static int EditablePanel_SetControlEnabled( lua_State *L )
+LUA_BINDING_BEGIN( EditablePanel, SetControlEnabled, "class", "Enables or disables a control" )
 {
-    luaL_checkeditablepanel( L, 1 )->SetControlEnabled( luaL_checkstring( L, 2 ), luaL_checkboolean( L, 3 ) );
+    LUA_BINDING_ARGUMENT( luaL_checkeditablepanel, 1, "editablePanel" )->SetControlEnabled( LUA_BINDING_ARGUMENT( luaL_checkstring, 2, "control" ), LUA_BINDING_ARGUMENT( luaL_checkboolean, 3, "enabled" ) );
     return 0;
 }
+LUA_BINDING_END()
 
-static int EditablePanel_SetControlInt( lua_State *L )
+LUA_BINDING_BEGIN( EditablePanel, SetControlInt, "class", "Sets an integer value for a control" )
 {
-    luaL_checkeditablepanel( L, 1 )->SetControlInt( luaL_checkstring( L, 2 ), luaL_checknumber( L, 3 ) );
+    LUA_BINDING_ARGUMENT( luaL_checkeditablepanel, 1, "editablePanel" )->SetControlInt( LUA_BINDING_ARGUMENT( luaL_checkstring, 2, "control" ), LUA_BINDING_ARGUMENT( luaL_checknumber, 3, "value" ) );
     return 0;
 }
+LUA_BINDING_END()
 
-static int EditablePanel_SetControlString( lua_State *L )
+LUA_BINDING_BEGIN( EditablePanel, SetControlString, "class", "Sets a string value for a control" )
 {
-    luaL_checkeditablepanel( L, 1 )->SetControlString( luaL_checkstring( L, 2 ), luaL_checkstring( L, 3 ) );
+    LUA_BINDING_ARGUMENT( luaL_checkeditablepanel, 1, "editablePanel" )->SetControlString( LUA_BINDING_ARGUMENT( luaL_checkstring, 2, "control" ), LUA_BINDING_ARGUMENT( luaL_checkstring, 3, "value" ) );
     return 0;
 }
+LUA_BINDING_END()
 
-static int EditablePanel_SetControlVisible( lua_State *L )
+LUA_BINDING_BEGIN( EditablePanel, SetControlVisible, "class", "Sets a control's visibility" )
 {
-    luaL_checkeditablepanel( L, 1 )->SetControlVisible( luaL_checkstring( L, 2 ), luaL_checkboolean( L, 3 ) );
+    LUA_BINDING_ARGUMENT( luaL_checkeditablepanel, 1, "editablePanel" )->SetControlVisible( LUA_BINDING_ARGUMENT( luaL_checkstring, 2, "control" ), LUA_BINDING_ARGUMENT( luaL_checkboolean, 3, "visible" ) );
     return 0;
 }
+LUA_BINDING_END()
 
-static int EditablePanel_SetDialogVariable( lua_State *L )
+LUA_BINDING_BEGIN( EditablePanel, SetDialogVariable, "class", "Sets a dialog variable" )
 {
     switch ( lua_type( L, 3 ) )
     {
         case LUA_TNUMBER:
-            luaL_checkeditablepanel( L, 1 )->SetDialogVariable( luaL_checkstring( L, 2 ), ( float )luaL_checknumber( L, 3 ) );
+            LUA_BINDING_ARGUMENT( luaL_checkeditablepanel, 1, "editablePanel" )->SetDialogVariable( LUA_BINDING_ARGUMENT( luaL_checkstring, 2, "name" ), ( float )LUA_BINDING_ARGUMENT( luaL_checknumber, 3, "value" ) );
             break;
         case LUA_TSTRING:
         default:
-            luaL_checkeditablepanel( L, 1 )->SetDialogVariable( luaL_checkstring( L, 2 ), luaL_checkstring( L, 3 ) );
+            LUA_BINDING_ARGUMENT( luaL_checkeditablepanel, 1, "editablePanel" )->SetDialogVariable( LUA_BINDING_ARGUMENT( luaL_checkstring, 2, "name" ), LUA_BINDING_ARGUMENT( luaL_checkstring, 3, "value" ) );
             break;
     }
     return 0;
 }
+LUA_BINDING_END()
 
-static int EditablePanel_SetFocusTopLevel( lua_State *L )
+LUA_BINDING_BEGIN( EditablePanel, SetFocusTopLevel, "class", "Sets the focus to the top level" )
 {
-    luaL_checkeditablepanel( L, 1 )->SetFocusTopLevel( luaL_checkboolean( L, 2 ) );
+    LUA_BINDING_ARGUMENT( luaL_checkeditablepanel, 1, "editablePanel" )->SetFocusTopLevel( LUA_BINDING_ARGUMENT( luaL_checkboolean, 2, "topLevel" ) );
     return 0;
 }
+LUA_BINDING_END()
 
-static int EditablePanel___index( lua_State *L )
+LUA_BINDING_BEGIN( EditablePanel, __index, "class", "Metamethod that is called when a non-existent field is indexed" )
 {
-    EditablePanel *pEditablePanel = lua_toeditablepanel( L, 1 );
-    LUA_METATABLE_INDEX_CHECK_VALID( L, Panel_IsValid );
+    EditablePanel *pEditablePanel = LUA_BINDING_ARGUMENT( lua_toeditablepanel, 1, "editablePanel" );
+    LUA_METATABLE_INDEX_CHECK_VALID( L, PanelIsValid );
     LUA_METATABLE_INDEX_CHECK( L, pEditablePanel );
+
+    // const char *field = LUA_BINDING_ARGUMENT( luaL_checkstring, 2, "field" );
 
     LEditablePanel *plEditablePanel = dynamic_cast< LEditablePanel * >( pEditablePanel );
     LUA_METATABLE_INDEX_CHECK_REF_TABLE( L, plEditablePanel );
@@ -397,10 +450,12 @@ static int EditablePanel___index( lua_State *L )
     lua_pushnil( L );
     return 1;
 }
+LUA_BINDING_END( "any", "The value of the field" )
 
-static int EditablePanel___newindex( lua_State *L )
+LUA_BINDING_BEGIN( EditablePanel, __newindex, "class", "Metamethod that is called when a new field is added" )
 {
-    EditablePanel *pEditablePanel = lua_toeditablepanel( L, 1 );
+    EditablePanel *pEditablePanel = LUA_BINDING_ARGUMENT( lua_toeditablepanel, 1, "editablePanel" );
+
     if ( pEditablePanel == NULL )
     { /* avoid extra test when d is not 0 */
         lua_Debug ar1;
@@ -421,16 +476,19 @@ static int EditablePanel___newindex( lua_State *L )
 
     return 0;
 }
+LUA_BINDING_END()
 
-static int EditablePanel___eq( lua_State *L )
+LUA_BINDING_BEGIN( EditablePanel, __eq, "class", "Metamethod that is called when two panels are compared" )
 {
-    lua_pushboolean( L, lua_toeditablepanel( L, 1 ) == lua_toeditablepanel( L, 2 ) );
+    lua_pushboolean( L, LUA_BINDING_ARGUMENT( lua_toeditablepanel, 1, "editablePanel1" ) == LUA_BINDING_ARGUMENT( lua_toeditablepanel, 2, "editablePanel2" ) );
     return 1;
 }
+LUA_BINDING_END( "boolean", "Whether the panels are equal" )
 
-static int EditablePanel___tostring( lua_State *L )
+LUA_BINDING_BEGIN( EditablePanel, __tostring, "class", "Metamethod that is called when the panel is to be converted to a string" )
 {
-    EditablePanel *pEditablePanel = lua_toeditablepanel( L, 1 );
+    EditablePanel *pEditablePanel = LUA_BINDING_ARGUMENT( lua_toeditablepanel, 1, "editablePanel" );
+
     if ( pEditablePanel == NULL )
         lua_pushstring( L, "INVALID_PANEL" );
     else
@@ -442,64 +500,25 @@ static int EditablePanel___tostring( lua_State *L )
     }
     return 1;
 }
+LUA_BINDING_END( "string", "String representation of the panel" )
 
-static const luaL_Reg EditablePanelmeta[] = {
-    { "ActivateBuildMode", EditablePanel_ActivateBuildMode },
-    { "ApplySettings", EditablePanel_ApplySettings },
-    { "ChainToAnimationMap", EditablePanel_ChainToAnimationMap },
-    { "ChainToMap", EditablePanel_ChainToMap },
-    { "CreateControlByName", EditablePanel_CreateControlByName },
-    { "DoModal", EditablePanel_DoModal },
-    { "IsModal", EditablePanel_IsModal },
-    { "GetControlInt", EditablePanel_GetControlInt },
-    { "GetControlString", EditablePanel_GetControlString },
-    { "GetCurrentKeyFocus", EditablePanel_GetCurrentKeyFocus },
-    { "GetDialogVariables", EditablePanel_GetDialogVariables },
-    { "GetPanelBaseClassName", EditablePanel_GetPanelBaseClassName },
-    { "GetPanelClassName", EditablePanel_GetPanelClassName },
-    { "HasHotkey", EditablePanel_HasHotkey },
-    { "KB_AddBoundKey", EditablePanel_KB_AddBoundKey },
-    { "KB_ChainToMap", EditablePanel_KB_ChainToMap },
-    { "KeyCodeToString", EditablePanel_KeyCodeToString },
-    { "LoadControlSettings", EditablePanel_LoadControlSettings },
-    { "LoadControlSettingsAndUserConfig", EditablePanel_LoadControlSettingsAndUserConfig },
-    { "LoadUserConfig", EditablePanel_LoadUserConfig },
-    { "OnKeyCodeTyped", EditablePanel_OnKeyCodeTyped },
-    { "OnRequestFocus", EditablePanel_OnRequestFocus },
-    { "OnSetFocus", EditablePanel_OnSetFocus },
-    { "RegisterControlSettingsFile", EditablePanel_RegisterControlSettingsFile },
-    { "RequestFocus", EditablePanel_RequestFocus },
-    { "RequestFocusNext", EditablePanel_RequestFocusNext },
-    { "RequestFocusPrev", EditablePanel_RequestFocusPrev },
-    { "RequestInfo", EditablePanel_RequestInfo },
-    { "RequestInfoFromChild", EditablePanel_RequestInfoFromChild },
-    { "SaveUserConfig", EditablePanel_SaveUserConfig },
-    { "SetControlEnabled", EditablePanel_SetControlEnabled },
-    { "SetControlInt", EditablePanel_SetControlInt },
-    { "SetControlString", EditablePanel_SetControlString },
-    { "SetControlVisible", EditablePanel_SetControlVisible },
-    { "SetDialogVariable", EditablePanel_SetDialogVariable },
-    { "SetFocusTopLevel", EditablePanel_SetFocusTopLevel },
-    { "__index", EditablePanel___index },
-    { "__newindex", EditablePanel___newindex },
-    { "__eq", EditablePanel___eq },
-    { "__tostring", EditablePanel___tostring },
-    { "__gc", Panel___gc },
-    { NULL, NULL } };
-
-static int luasrc_EditablePanel( lua_State *L )
+LUA_BINDING_BEGIN( EditablePanel, __gc, "class", "Metamethod that is called when the panel is garbage collected" )
 {
-    lua_EditablePanel *pPanel =
-        new lua_EditablePanel(
-            luaL_optpanel( L, 1, VGui_GetClientLuaRootPanel() ),
-            luaL_checkstring( L, 2 ),
-            L );
+    return PanelCollectGarbage( L );
+}
+LUA_BINDING_END()
+
+LUA_REGISTRATION_INIT( Panels )
+
+LUA_BINDING_BEGIN( Panels, EditablePanel, "library", "Creates a new editable panel" )
+{
+    Panel *parent = LUA_BINDING_ARGUMENT_WITH_DEFAULT( luaL_optpanel, 1, VGui_GetClientLuaRootPanel(), "parent" );
+    const char *name = LUA_BINDING_ARGUMENT_WITH_DEFAULT( luaL_optstring, 2, "EditablePanel", "name" );
+    lua_EditablePanel *pPanel = new lua_EditablePanel( parent, name, L );
     pPanel->PushLuaInstance( L );
     return 1;
 }
-
-static const luaL_Reg EditablePanel_funcs[] = { { "EditablePanel", luasrc_EditablePanel },
-                                                { NULL, NULL } };
+LUA_BINDING_END( "EditablePanel", "The new editable panel" )
 
 /*
 ** Open EditablePanel object
@@ -507,10 +526,14 @@ static const luaL_Reg EditablePanel_funcs[] = { { "EditablePanel", luasrc_Editab
 LUALIB_API int luaopen_vgui_EditablePanel( lua_State *L )
 {
     LUA_PUSH_NEW_METATABLE( L, "EditablePanel" );
-    luaL_register( L, NULL, EditablePanelmeta );
-    lua_pushstring( L, LUA_PANELLIBNAME );
+
+    LUA_REGISTRATION_COMMIT( EditablePanel );
+
+    lua_pushstring( L, LUA_PANELMETANAME );
     lua_setfield( L, -2, "__type" ); /* metatable.__type = "Panel" */
-    luaL_register( L, LUA_VGUILIBNAME, EditablePanel_funcs );
+
+    LUA_REGISTRATION_COMMIT_LIBRARY( Panels );
+
     lua_pop( L, 2 );
     return 0;
 }

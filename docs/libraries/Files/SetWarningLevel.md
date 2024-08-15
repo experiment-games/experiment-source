@@ -15,7 +15,7 @@ lua:
   
   arguments:
     - name: "level"
-      type: number
+      type: enumeration/FILE_WARNING_LEVEL
   returns:
     
 ---

@@ -25,7 +25,7 @@ lua:
     - name: "radius"
       type: number
     - name: "command"
-      type: number
+      type: enumeration/SHAKE_COMMAND
     - name: "localAmplitude"
       type: boolean
       default: "false"

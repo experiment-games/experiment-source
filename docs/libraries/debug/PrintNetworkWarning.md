@@ -15,7 +15,7 @@ lua:
   
   arguments:
     - name: "level"
-      type: integer
+      type: number
     - name: "message"
       type: string
   returns:

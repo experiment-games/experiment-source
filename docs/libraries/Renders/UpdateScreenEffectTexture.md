@@ -15,7 +15,7 @@ lua:
   
   arguments:
     - name: "textureIndex"
-      type: integer
+      type: number
   returns:
     
 ---

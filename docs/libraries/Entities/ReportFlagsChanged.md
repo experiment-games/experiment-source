@@ -17,9 +17,9 @@ lua:
     - name: "entity"
       type: Entity
     - name: "flagsOld"
-      type: integer
+      type: number
     - name: "flagsNow"
-      type: integer
+      type: number
   returns:
     
 ---

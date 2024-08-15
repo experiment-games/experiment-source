@@ -19,7 +19,7 @@ lua:
     - name: "pathId"
       type: string
     - name: "addType"
-      type: number
+      type: enumeration/SEARCH_PATH_ADD_TO
       default: "PATH_ADD_TO_TAIL"
   returns:
     

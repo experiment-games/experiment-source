@@ -15,7 +15,7 @@ lua:
   
   arguments:
     - name: "normalizedValue"
-      type: integer
+      type: number
   returns:
     - type: integer
       description: "The proportional scaled value."

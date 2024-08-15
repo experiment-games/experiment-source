@@ -15,9 +15,9 @@ lua:
   
   arguments:
     - name: "health"
-      type: integer
+      type: number
     - name: "bitsDamageType"
-      type: integer
+      type: number
   returns:
     - type: integer
       description: "The health actually taken"

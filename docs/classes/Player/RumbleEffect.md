@@ -15,11 +15,11 @@ lua:
   
   arguments:
     - name: "index"
-      type: integer
+      type: number
     - name: "duration"
-      type: integer
+      type: number
     - name: "flags"
-      type: integer
+      type: number
   returns:
     
 ---

@@ -16,7 +16,7 @@ lua:
   argumentSets:
     - arguments:
       - name: "ammoCount"
-        type: integer
+        type: number
       - name: "ammoType"
         type: number
     - arguments:

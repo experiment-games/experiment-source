@@ -15,7 +15,7 @@ lua:
   
   arguments:
     - name: "progress"
-      type: integer
+      type: number
   returns:
     
 ---

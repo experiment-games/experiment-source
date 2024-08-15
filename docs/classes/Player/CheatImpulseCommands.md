@@ -15,7 +15,7 @@ lua:
   
   arguments:
     - name: "impulse"
-      type: integer
+      type: number
   returns:
     
 ---

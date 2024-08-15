@@ -48,8 +48,15 @@ LUALIB_API lua_Panel *luaL_optpanel( lua_State *L, int narg, lua_Panel *def )
     return luaL_opt( L, luaL_checkpanel, narg, def );
 }
 
+int PanelIsValid( lua_State *L )
+{
+    lua_Panel *d = lua_topanel( L, 1 );
+    lua_pushboolean( L, d != NULL );
+    return 1;
+}
+
 // Experiment; Disabled since we want to work with only vgui::Panel* objects in Lua.
-//LUALIB_API VPANEL luaL_checkvpanel( lua_State *L, int narg )
+// LUALIB_API VPANEL luaL_checkvpanel( lua_State *L, int narg )
 //{
 //    lua_Panel *d = lua_topanel( L, narg );
 //    if ( d == NULL ) /* avoid extra test when d is not 0 */
@@ -59,155 +66,270 @@ LUALIB_API lua_Panel *luaL_optpanel( lua_State *L, int narg, lua_Panel *def )
 //    return ivgui()->HandleToPanel( hPanel.m_iPanelID );
 //}
 //
-//LUALIB_API VPANEL luaL_optvpanel( lua_State *L, int narg, VPANEL def )
+// LUALIB_API VPANEL luaL_optvpanel( lua_State *L, int narg, VPANEL def )
 //{
 //    return luaL_opt( L, luaL_checkvpanel, narg, def );
 //}
 
-static int Panel_AddKeyBinding( lua_State *L )
-{
-    luaL_checkpanel( L, 1 )->AddKeyBinding(
-        luaL_checkstring( L, 2 ), luaL_checknumber( L, 3 ), luaL_checknumber( L, 4 ) );
-    return 0;
-}
+LUA_REGISTRATION_INIT( Panel )
 
-static int Panel_AddActionSignalTarget( lua_State *L )
-{
-    luaL_checkpanel( L, 1 )->AddActionSignalTarget( luaL_checkpanel( L, 2 ) );
-    return 0;
-}
+// LUA_BINDING_BEGIN( Panel, KB_AddBoundKey, "class|static", "Adds a bound key" )
+//{
+//     const char *keyName = LUA_BINDING_ARGUMENT( luaL_checkstring, 1, "keyName" );
+//     int keyCode = LUA_BINDING_ARGUMENT( luaL_checknumber, 2, "keyCode" );
+//     int modifiers = LUA_BINDING_ARGUMENT( luaL_checknumber, 3, "modifiers" );
+//     lua_Panel::KB_AddBoundKey( keyName, keyCode, modifiers );
+//     return 0;
+// }
+// LUA_BINDING_END()
 
-static int Panel_CanStartDragging( lua_State *L )
+// LUA_BINDING_BEGIN( Panel, KB_ChainToMap, "class|static", "Chains the Panel to a keyboard map" )
+//{
+//     lua_Panel::KB_ChainToMap();
+//     return 0;
+// }
+// LUA_BINDING_END()
+
+LUA_BINDING_BEGIN( Panel, GetPanelBaseClassName, "class|static", "Gets the base class name of the panel" )
 {
-    lua_pushboolean( L, luaL_checkpanel( L, 1 )->CanStartDragging( luaL_checknumber( L, 2 ), luaL_checknumber( L, 3 ), luaL_checknumber( L, 4 ), luaL_checknumber( L, 5 ) ) );
+    lua_pushstring( L, lua_Panel::GetPanelBaseClassName() );
     return 1;
 }
+LUA_BINDING_END( "string", "The base class name of the panel" )
 
-static int Panel_ChainToAnimationMap( lua_State *L )
+LUA_BINDING_BEGIN( Panel, GetPanelClassName, "class|static", "Gets the class name of the panel" )
 {
-    luaL_checkpanel( L, 1 )->ChainToAnimationMap();
-    return 0;
-}
-
-static int Panel_ChainToMap( lua_State *L )
-{
-    luaL_checkpanel( L, 1 )->ChainToMap();
-    return 0;
-}
-
-static int Panel_DeletePanel( lua_State *L )
-{
-    luaL_checkpanel( L, 1 )->DeletePanel();
-    return 0;
-}
-
-static int Panel_DisableMouseInputForThisPanel( lua_State *L )
-{
-    luaL_checkpanel( L, 1 )->DisableMouseInputForThisPanel(
-        luaL_checkboolean( L, 2 ) );
-    return 0;
-}
-
-static int Panel_DrawBox( lua_State *L )
-{
-    luaL_checkpanel( L, 1 )->DrawBox(
-        luaL_checknumber( L, 2 ), luaL_checknumber( L, 3 ), luaL_checknumber( L, 4 ), luaL_checknumber( L, 5 ), luaL_checkcolor( L, 6 ), luaL_checknumber( L, 7 ), luaL_optboolean( L, 8, 0 ) );
-    return 0;
-}
-
-static int Panel_DrawBoxFade( lua_State *L )
-{
-    luaL_checkpanel( L, 1 )->DrawBoxFade(
-        luaL_checknumber( L, 2 ), luaL_checknumber( L, 3 ), luaL_checknumber( L, 4 ), luaL_checknumber( L, 5 ), luaL_checkcolor( L, 6 ), luaL_checknumber( L, 7 ), luaL_checknumber( L, 8 ), luaL_checknumber( L, 9 ), luaL_checkboolean( L, 10 ), luaL_optboolean( L, 11, 0 ) );
-    return 0;
-}
-
-static int Panel_DrawHollowBox( lua_State *L )
-{
-    luaL_checkpanel( L, 1 )->DrawHollowBox(
-        luaL_checknumber( L, 2 ), luaL_checknumber( L, 3 ), luaL_checknumber( L, 4 ), luaL_checknumber( L, 5 ), luaL_checkcolor( L, 6 ), luaL_checknumber( L, 7 ) );
-    return 0;
-}
-
-static int Panel_DrawTexturedBox( lua_State *L )
-{
-    luaL_checkpanel( L, 1 )->DrawTexturedBox(
-        luaL_checknumber( L, 2 ), luaL_checknumber( L, 3 ), luaL_checknumber( L, 4 ), luaL_checknumber( L, 5 ), luaL_checkcolor( L, 6 ), luaL_checknumber( L, 7 ) );
-    return 0;
-}
-
-static int Panel_EditKeyBindings( lua_State *L )
-{
-    luaL_checkpanel( L, 1 )->EditKeyBindings();
-    return 0;
-}
-
-static int Panel_FillRectSkippingPanel( lua_State *L )
-{
-    luaL_checkpanel( L, 1 )->FillRectSkippingPanel(
-        luaL_checkcolor( L, 2 ), luaL_checknumber( L, 3 ), luaL_checknumber( L, 4 ), luaL_checknumber( L, 5 ), luaL_checknumber( L, 6 ), luaL_checkpanel( L, 7 ) );
-    return 0;
-}
-
-static int Panel_FindChildByName( lua_State *L )
-{
-    luaL_checkpanel( L, 1 )->FindChildByName( luaL_checkstring( L, 2 ), luaL_optboolean( L, 3, 0 ) )->PushLuaInstance( L );
+    lua_pushstring( L, lua_Panel::GetPanelClassName() );
     return 1;
 }
+LUA_BINDING_END( "string", "The class name of the panel" )
 
-static int Panel_FindChildIndexByName( lua_State *L )
+LUA_BINDING_BEGIN( Panel, AddKeyBinding, "class", "Adds a key binding to the panel" )
 {
-    lua_pushinteger(
-        L, luaL_checkpanel( L, 1 )->FindChildIndexByName( luaL_checkstring( L, 2 ) ) );
+    lua_Panel *panel = LUA_BINDING_ARGUMENT( luaL_checkpanel, 1, "panel" );
+    const char *key = LUA_BINDING_ARGUMENT( luaL_checkstring, 2, "key" );
+    int keyCode = LUA_BINDING_ARGUMENT_ENUM( KeyCode, 3, "keyCode" );
+    int modifiers = LUA_BINDING_ARGUMENT( luaL_checknumber, 4, "modifiers" );
+    panel->AddKeyBinding( key, keyCode, modifiers );
+    return 0;
+}
+LUA_BINDING_END()
+
+LUA_BINDING_BEGIN( Panel, AddActionSignalTarget, "class", "Adds an action signal target to the panel" )
+{
+    lua_Panel *panel = LUA_BINDING_ARGUMENT( luaL_checkpanel, 1, "panel" );
+    lua_Panel *target = LUA_BINDING_ARGUMENT( luaL_checkpanel, 2, "target" );
+    panel->AddActionSignalTarget( target );
+    return 0;
+}
+LUA_BINDING_END()
+
+LUA_BINDING_BEGIN( Panel, CanStartDragging, "class", "Checks if dragging can start from the panel" )
+{
+    lua_Panel *panel = LUA_BINDING_ARGUMENT( luaL_checkpanel, 1, "panel" );
+    int startX = LUA_BINDING_ARGUMENT( luaL_checknumber, 2, "startX" );
+    int startY = LUA_BINDING_ARGUMENT( luaL_checknumber, 3, "startY" );
+    int cursorX = LUA_BINDING_ARGUMENT( luaL_checknumber, 4, "cursorX" );
+    int cursorY = LUA_BINDING_ARGUMENT( luaL_checknumber, 5, "cursorY" );
+    lua_pushboolean( L, panel->CanStartDragging( startX, startY, cursorX, cursorY ) );
     return 1;
 }
+LUA_BINDING_END( "boolean", "Whether dragging can start" )
 
-static int Panel_FindSiblingByName( lua_State *L )
+// LUA_BINDING_BEGIN( Panel, ChainToAnimationMap, "class|static", "Chains the panel to the animation map" )
+//{
+//     lua_Panel::ChainToAnimationMap();
+//     return 0;
+// }
+// LUA_BINDING_END()
+
+// LUA_BINDING_BEGIN( Panel, ChainToMap, "class", "Chains the panel to the map" )
+//{
+//     lua_Panel::ChainToMap();
+//     return 0;
+// }
+// LUA_BINDING_END()
+
+LUA_BINDING_BEGIN( Panel, DeletePanel, "class", "Deletes the panel" )
 {
-    luaL_checkpanel( L, 1 )->FindSiblingByName( luaL_checkstring( L, 2 ) )->PushLuaInstance( L );
+    lua_Panel *panel = LUA_BINDING_ARGUMENT( luaL_checkpanel, 1, "panel" );
+    panel->DeletePanel();
+    return 0;
+}
+LUA_BINDING_END()
+
+LUA_BINDING_BEGIN( Panel, DisableMouseInputForThisPanel, "class", "Disables mouse input for the panel" )
+{
+    lua_Panel *panel = LUA_BINDING_ARGUMENT( luaL_checkpanel, 1, "panel" );
+    bool disable = LUA_BINDING_ARGUMENT( luaL_checkboolean, 2, "disable" );
+    panel->DisableMouseInputForThisPanel( disable );
+    return 0;
+}
+LUA_BINDING_END()
+
+LUA_BINDING_BEGIN( Panel, DrawBox, "class", "Draws a box on the panel" )
+{
+    lua_Panel *panel = LUA_BINDING_ARGUMENT( luaL_checkpanel, 1, "panel" );
+    int x = LUA_BINDING_ARGUMENT( luaL_checknumber, 2, "x" );
+    int y = LUA_BINDING_ARGUMENT( luaL_checknumber, 3, "y" );
+    int wide = LUA_BINDING_ARGUMENT( luaL_checknumber, 4, "wide" );
+    int tall = LUA_BINDING_ARGUMENT( luaL_checknumber, 5, "tall" );
+    lua_Color &col = LUA_BINDING_ARGUMENT( luaL_checkcolor, 6, "color" );
+    int normalizedAlpha = LUA_BINDING_ARGUMENT( luaL_checknumber, 7, "normalizedAlpha" );
+    bool isHollow = LUA_BINDING_ARGUMENT_WITH_DEFAULT( luaL_optboolean, 8, false, "isHollow" );
+    panel->DrawBox( x, y, wide, tall, col, normalizedAlpha, isHollow );
+    return 0;
+}
+LUA_BINDING_END()
+
+LUA_BINDING_BEGIN( Panel, DrawBoxFade, "class", "Draws a fading box on the panel" )
+{
+    lua_Panel *panel = LUA_BINDING_ARGUMENT( luaL_checkpanel, 1, "panel" );
+    int x = LUA_BINDING_ARGUMENT( luaL_checknumber, 2, "x" );
+    int y = LUA_BINDING_ARGUMENT( luaL_checknumber, 3, "y" );
+    int wide = LUA_BINDING_ARGUMENT( luaL_checknumber, 4, "wide" );
+    int tall = LUA_BINDING_ARGUMENT( luaL_checknumber, 5, "tall" );
+    lua_Color &col = LUA_BINDING_ARGUMENT( luaL_checkcolor, 6, "color" );
+    int normalizedAlpha = LUA_BINDING_ARGUMENT( luaL_checknumber, 7, "normalizedAlpha" );
+    int alpha0 = LUA_BINDING_ARGUMENT( luaL_checknumber, 8, "alpha0" );
+    int alpha1 = LUA_BINDING_ARGUMENT( luaL_checknumber, 9, "alpha1" );
+    bool isHorizontal = LUA_BINDING_ARGUMENT( luaL_checkboolean, 10, "isHorizontal" );
+    bool isHollow = LUA_BINDING_ARGUMENT_WITH_DEFAULT( luaL_optboolean, 11, false, "isHollow" );
+    panel->DrawBoxFade( x, y, wide, tall, col, normalizedAlpha, alpha0, alpha1, isHorizontal, isHollow );
+    return 0;
+}
+LUA_BINDING_END()
+
+LUA_BINDING_BEGIN( Panel, DrawHollowBox, "class", "Draws a hollow box on the panel" )
+{
+    lua_Panel *panel = LUA_BINDING_ARGUMENT( luaL_checkpanel, 1, "panel" );
+    int x = LUA_BINDING_ARGUMENT( luaL_checknumber, 2, "x" );
+    int y = LUA_BINDING_ARGUMENT( luaL_checknumber, 3, "y" );
+    int wide = LUA_BINDING_ARGUMENT( luaL_checknumber, 4, "wide" );
+    int tall = LUA_BINDING_ARGUMENT( luaL_checknumber, 5, "tall" );
+    lua_Color &col = LUA_BINDING_ARGUMENT( luaL_checkcolor, 6, "color" );
+    int normalizedAlpha = LUA_BINDING_ARGUMENT( luaL_checknumber, 7, "normalizedAlpha" );
+    panel->DrawHollowBox( x, y, wide, tall, col, normalizedAlpha );
+    return 0;
+}
+LUA_BINDING_END()
+
+LUA_BINDING_BEGIN( Panel, DrawTexturedBox, "class", "Draws a textured box on the panel" )
+{
+    lua_Panel *panel = LUA_BINDING_ARGUMENT( luaL_checkpanel, 1, "panel" );
+    int x = LUA_BINDING_ARGUMENT( luaL_checknumber, 2, "x" );
+    int y = LUA_BINDING_ARGUMENT( luaL_checknumber, 3, "y" );
+    int wide = LUA_BINDING_ARGUMENT( luaL_checknumber, 4, "wide" );
+    int tall = LUA_BINDING_ARGUMENT( luaL_checknumber, 5, "tall" );
+    lua_Color &col = LUA_BINDING_ARGUMENT( luaL_checkcolor, 6, "color" );
+    int normalizedAlpha = LUA_BINDING_ARGUMENT( luaL_checknumber, 7, "normalizedAlpha" );
+    panel->DrawTexturedBox( x, y, wide, tall, col, normalizedAlpha );
+    return 0;
+}
+LUA_BINDING_END()
+
+LUA_BINDING_BEGIN( Panel, EditKeyBindings, "class", "Opens the key bindings editor for the panel" )
+{
+    lua_Panel *panel = LUA_BINDING_ARGUMENT( luaL_checkpanel, 1, "panel" );
+    panel->EditKeyBindings();
+    return 0;
+}
+LUA_BINDING_END()
+
+LUA_BINDING_BEGIN( Panel, FillRectangleSkippingPanel, "class", "Fills a rectangle on the panel, skipping a panel" )
+{
+    lua_Panel *panel = LUA_BINDING_ARGUMENT( luaL_checkpanel, 1, "panel" );
+    lua_Color &col = LUA_BINDING_ARGUMENT( luaL_checkcolor, 2, "color" );
+    int x = LUA_BINDING_ARGUMENT( luaL_checknumber, 3, "x" );
+    int y = LUA_BINDING_ARGUMENT( luaL_checknumber, 4, "y" );
+    int width = LUA_BINDING_ARGUMENT( luaL_checknumber, 5, "width" );
+    int height = LUA_BINDING_ARGUMENT( luaL_checknumber, 6, "height" );
+    lua_Panel *skip = LUA_BINDING_ARGUMENT( luaL_checkpanel, 7, "panelToSkip" );
+    panel->FillRectSkippingPanel( col, x, y, width, height, skip );
+    return 0;
+}
+LUA_BINDING_END()
+
+LUA_BINDING_BEGIN( Panel, FindChildByName, "class", "Finds a child panel by its name" )
+{
+    lua_Panel *panel = LUA_BINDING_ARGUMENT( luaL_checkpanel, 1, "panel" );
+    const char *name = LUA_BINDING_ARGUMENT( luaL_checkstring, 2, "name" );
+    bool recursive = LUA_BINDING_ARGUMENT_WITH_DEFAULT( luaL_optboolean, 3, false, "shouldSearchRecursive" );
+    panel->FindChildByName( name, recursive )->PushLuaInstance( L );
     return 1;
 }
+LUA_BINDING_END( "Panel", "The child panel" )
 
-static int Panel_GetAlpha( lua_State *L )
+LUA_BINDING_BEGIN( Panel, FindChildIndexByName, "class", "Finds the index of a child panel by its name" )
 {
-    lua_pushinteger( L, luaL_checkpanel( L, 1 )->GetAlpha() );
+    lua_Panel *panel = LUA_BINDING_ARGUMENT( luaL_checkpanel, 1, "panel" );
+    const char *name = LUA_BINDING_ARGUMENT( luaL_checkstring, 2, "name" );
+    lua_pushinteger( L, panel->FindChildIndexByName( name ) );
     return 1;
 }
+LUA_BINDING_END( "integer", "The index of the child panel" )
 
-static int Panel_GetBgColor( lua_State *L )
+LUA_BINDING_BEGIN( Panel, FindSiblingByName, "class", "Finds a sibling panel by its name" )
 {
-    lua_pushcolor( L, luaL_checkpanel( L, 1 )->GetBgColor() );
+    lua_Panel *panel = LUA_BINDING_ARGUMENT( luaL_checkpanel, 1, "panel" );
+    const char *name = LUA_BINDING_ARGUMENT( luaL_checkstring, 2, "name" );
+    panel->FindSiblingByName( name )->PushLuaInstance( L );
     return 1;
 }
+LUA_BINDING_END( "Panel", "The sibling panel" )
 
-static int Panel_GetBounds( lua_State *L )
+LUA_BINDING_BEGIN( Panel, GetAlpha, "class", "Gets the alpha value of the panel" )
 {
+    lua_Panel *panel = LUA_BINDING_ARGUMENT( luaL_checkpanel, 1, "panel" );
+    lua_pushinteger( L, panel->GetAlpha() );
+    return 1;
+}
+LUA_BINDING_END( "integer", "The alpha value of the panel" )
+
+LUA_BINDING_BEGIN( Panel, GetBackgroundColor, "class", "Gets the background color of the panel" )
+{
+    lua_Panel *panel = LUA_BINDING_ARGUMENT( luaL_checkpanel, 1, "panel" );
+    lua_pushcolor( L, panel->GetBgColor() );
+    return 1;
+}
+LUA_BINDING_END( "Color", "The background color of the panel" )
+
+LUA_BINDING_BEGIN( Panel, GetBounds, "class", "Gets the bounds of the panel" )
+{
+    lua_Panel *panel = LUA_BINDING_ARGUMENT( luaL_checkpanel, 1, "panel" );
     int x, y, wide, tall;
-    luaL_checkpanel( L, 1 )->GetBounds( x, y, wide, tall );
+    panel->GetBounds( x, y, wide, tall );
     lua_pushinteger( L, x );
     lua_pushinteger( L, y );
     lua_pushinteger( L, wide );
     lua_pushinteger( L, tall );
     return 4;
 }
+LUA_BINDING_END( "integer", "The x position of the panel", "integer", "The y position of the panel", "integer", "The width of the panel", "integer", "The height of the panel" )
 
-static int Panel_GetChild( lua_State *L )
+LUA_BINDING_BEGIN( Panel, GetChild, "class", "Gets a child panel by its index (starting at 0)" )
 {
+    lua_Panel *panel = LUA_BINDING_ARGUMENT( luaL_checkpanel, 1, "panel" );
+    int index = LUA_BINDING_ARGUMENT( luaL_checknumber, 2, "zeroBasedIndex" );
     // ! Note: We are using 0-based indexing here
-    luaL_checkpanel( L, 1 )->GetChild( luaL_checknumber( L, 2 ) )->PushLuaInstance( L );
+    panel->GetChild( index )->PushLuaInstance( L );
     return 1;
 }
+LUA_BINDING_END( "Panel", "The child panel" )
 
-static int Panel_GetChildCount( lua_State *L )
+LUA_BINDING_BEGIN( Panel, GetChildCount, "class", "Gets the number of child panels" )
 {
-    lua_pushinteger( L, luaL_checkpanel( L, 1 )->GetChildCount() );
+    lua_Panel *panel = LUA_BINDING_ARGUMENT( luaL_checkpanel, 1, "panel" );
+    lua_pushinteger( L, panel->GetChildCount() );
     return 1;
 }
+LUA_BINDING_END( "integer", "The number of child panels" )
 
-static int Panel_GetChildren( lua_State *L )
+LUA_BINDING_BEGIN( Panel, GetChildren, "class", "Gets the child panels" )
 {
+    lua_Panel *panel = LUA_BINDING_ARGUMENT( luaL_checkpanel, 1, "panel" );
     lua_newtable( L );
-    CUtlVector< VPANEL > &children = luaL_checkpanel( L, 1 )->GetChildren();
+    CUtlVector< VPANEL > &children = panel->GetChildren();
 
     for ( int i = 0; i < children.Count(); i++ )
     {
@@ -215,312 +337,378 @@ static int Panel_GetChildren( lua_State *L )
         lua_rawseti( L, -2, i + 1 );
     }
 
-    return 1;
-}
-
-static int Panel_GetChildrenSize( lua_State *L )
-{
-    Panel *pPanel = luaL_checkpanel( L, 1 );
-
-    int wide, tall;
-    pPanel->GetChildrenSize( wide, tall );
-
-    lua_pushinteger( L, wide );
-    lua_pushinteger( L, tall );
+    lua_pushinteger( L, children.Count() );
 
     return 2;
 }
+LUA_BINDING_END( "table", "The child panels", "integer", "The number of child panels" )
 
-static int Panel_GetClassName( lua_State *L )
+LUA_BINDING_BEGIN( Panel, GetChildrenSize, "class", "Gets the size of the child panels" )
 {
-    lua_pushstring( L, luaL_checkpanel( L, 1 )->GetClassName() );
+    lua_Panel *panel = LUA_BINDING_ARGUMENT( luaL_checkpanel, 1, "panel" );
+    int wide, tall;
+    panel->GetChildrenSize( wide, tall );
+    lua_pushinteger( L, wide );
+    lua_pushinteger( L, tall );
+    return 2;
+}
+LUA_BINDING_END( "integer", "The width of the child panels", "integer", "The height of the child panels" )
+
+LUA_BINDING_BEGIN( Panel, GetClassName, "class", "Gets the class name of the panel" )
+{
+    lua_Panel *panel = LUA_BINDING_ARGUMENT( luaL_checkpanel, 1, "panel" );
+    lua_pushstring( L, panel->GetClassName() );
     return 1;
 }
+LUA_BINDING_END( "string", "The class name of the panel" )
 
-static int Panel_GetClipRect( lua_State *L )
+LUA_BINDING_BEGIN( Panel, GetClipRectangle, "class", "Gets the clipping rectangle of the panel" )
 {
+    lua_Panel *panel = LUA_BINDING_ARGUMENT( luaL_checkpanel, 1, "panel" );
     int x0, y0, x1, y1;
-    luaL_checkpanel( L, 1 )->GetClipRect( x0, y0, x1, y1 );
+    panel->GetClipRect( x0, y0, x1, y1 );
     lua_pushinteger( L, x0 );
     lua_pushinteger( L, y0 );
     lua_pushinteger( L, x1 );
     lua_pushinteger( L, y1 );
     return 4;
 }
+LUA_BINDING_END( "integer", "The x position of the clipping rectangle", "integer", "The y position of the clipping rectangle", "integer", "The width of the clipping rectangle", "integer", "The height of the clipping rectangle" )
 
-static int Panel_GetCornerTextureSize( lua_State *L )
+LUA_BINDING_BEGIN( Panel, GetCornerTextureSize, "class", "Gets the size of the corner texture of the panel" )
 {
+    lua_Panel *panel = LUA_BINDING_ARGUMENT( luaL_checkpanel, 1, "panel" );
     int w, h;
-    luaL_checkpanel( L, 1 )->GetCornerTextureSize( w, h );
+    panel->GetCornerTextureSize( w, h );
     lua_pushinteger( L, w );
     lua_pushinteger( L, h );
     return 2;
 }
+LUA_BINDING_END( "integer", "The width of the corner texture", "integer", "The height of the corner texture" )
 
-static int Panel_GetDescription( lua_State *L )
+LUA_BINDING_BEGIN( Panel, GetDescription, "class", "Gets the description of the panel" )
 {
-    lua_pushstring( L, luaL_checkpanel( L, 1 )->GetDescription() );
+    lua_Panel *panel = LUA_BINDING_ARGUMENT( luaL_checkpanel, 1, "panel" );
+    lua_pushstring( L, panel->GetDescription() );
     return 1;
 }
+LUA_BINDING_END( "string", "The description of the panel" )
 
-static int Panel_GetDragFrameColor( lua_State *L )
+LUA_BINDING_BEGIN( Panel, GetDragFrameColor, "class", "Gets the color of the drag frame of the panel" )
 {
-    lua_pushcolor( L, luaL_checkpanel( L, 1 )->GetDragFrameColor() );
+    lua_Panel *panel = LUA_BINDING_ARGUMENT( luaL_checkpanel, 1, "panel" );
+    lua_pushcolor( L, panel->GetDragFrameColor() );
     return 1;
 }
+LUA_BINDING_END( "Color", "The color of the drag frame of the panel" )
 
-static int Panel_GetDragPanel( lua_State *L )
+LUA_BINDING_BEGIN( Panel, GetDragPanel, "class", "Gets the drag panel of the panel" )
 {
-    luaL_checkpanel( L, 1 )->GetDragPanel()->PushLuaInstance( L );
+    lua_Panel *panel = LUA_BINDING_ARGUMENT( luaL_checkpanel, 1, "panel" );
+    panel->GetDragPanel()->PushLuaInstance( L );
     return 1;
 }
+LUA_BINDING_END( "Panel", "The drag panel of the panel" )
 
-static int Panel_GetDragStartTolerance( lua_State *L )
+LUA_BINDING_BEGIN( Panel, GetDragStartTolerance, "class", "Gets the drag start tolerance of the panel" )
 {
-    lua_pushinteger( L, luaL_checkpanel( L, 1 )->GetDragStartTolerance() );
+    lua_Panel *panel = LUA_BINDING_ARGUMENT( luaL_checkpanel, 1, "panel" );
+    lua_pushinteger( L, panel->GetDragStartTolerance() );
     return 1;
 }
+LUA_BINDING_END( "integer", "The drag start tolerance of the panel" )
 
-static int Panel_GetDropFrameColor( lua_State *L )
+LUA_BINDING_BEGIN( Panel, GetDropFrameColor, "class", "Gets the color of the drop frame of the panel" )
 {
-    lua_pushcolor( L, luaL_checkpanel( L, 1 )->GetDropFrameColor() );
+    lua_Panel *panel = LUA_BINDING_ARGUMENT( luaL_checkpanel, 1, "panel" );
+    lua_pushcolor( L, panel->GetDropFrameColor() );
     return 1;
 }
+LUA_BINDING_END( "Color", "The color of the drop frame of the panel" )
 
-static int Panel_GetDock( lua_State *L )
+LUA_BINDING_BEGIN( Panel, GetDock, "class", "Gets the dock of the panel" )
 {
-    lua_pushinteger( L, luaL_checkpanel( L, 1 )->GetDock() );
+    lua_Panel *panel = LUA_BINDING_ARGUMENT( luaL_checkpanel, 1, "panel" );
+    lua_pushinteger( L, panel->GetDock() );
     return 1;
 }
+LUA_BINDING_END( "integer", "The dock of the panel" )
 
-static int Panel_GetDockMargin( lua_State *L )
+LUA_BINDING_BEGIN( Panel, GetDockMargin, "class", "Gets the dock margin of the panel" )
 {
-    Thickness margin = luaL_checkpanel( L, 1 )->GetDockMargin();
+    lua_Panel *panel = LUA_BINDING_ARGUMENT( luaL_checkpanel, 1, "panel" );
+    Thickness margin = panel->GetDockMargin();
     lua_pushinteger( L, margin.left );
     lua_pushinteger( L, margin.top );
     lua_pushinteger( L, margin.right );
     lua_pushinteger( L, margin.bottom );
     return 4;
 }
+LUA_BINDING_END( "integer", "The left margin of the dock", "integer", "The top margin of the dock", "integer", "The right margin of the dock", "integer", "The bottom margin of the dock" )
 
-static int Panel_GetDockPadding( lua_State *L )
+LUA_BINDING_BEGIN( Panel, GetDockPadding, "class", "Gets the dock padding of the panel" )
 {
-    Thickness padding = luaL_checkpanel( L, 1 )->GetDockPadding();
+    lua_Panel *panel = LUA_BINDING_ARGUMENT( luaL_checkpanel, 1, "panel" );
+    Thickness padding = panel->GetDockPadding();
     lua_pushinteger( L, padding.left );
     lua_pushinteger( L, padding.top );
     lua_pushinteger( L, padding.right );
     lua_pushinteger( L, padding.bottom );
     return 4;
 }
+LUA_BINDING_END( "integer", "The left padding of the dock", "integer", "The top padding of the dock", "integer", "The right padding of the dock", "integer", "The bottom padding of the dock" )
 
-static int Panel_GetFgColor( lua_State *L )
+LUA_BINDING_BEGIN( Panel, GetForegroundColor, "class", "Gets the foreground color of the panel" )
 {
-    lua_pushcolor( L, luaL_checkpanel( L, 1 )->GetFgColor() );
+    lua_Panel *panel = LUA_BINDING_ARGUMENT( luaL_checkpanel, 1, "panel" );
+    lua_pushcolor( L, panel->GetFgColor() );
     return 1;
 }
+LUA_BINDING_END( "Color", "The foreground color of the panel" )
 
-static int Panel_GetInset( lua_State *L )
+LUA_BINDING_BEGIN( Panel, GetInset, "class", "Gets the inset of the panel" )
 {
+    lua_Panel *panel = LUA_BINDING_ARGUMENT( luaL_checkpanel, 1, "panel" );
     int left, top, right, bottom;
-    luaL_checkpanel( L, 1 )->GetInset( left, top, right, bottom );
+    panel->GetInset( left, top, right, bottom );
     lua_pushinteger( L, left );
     lua_pushinteger( L, top );
     lua_pushinteger( L, right );
     lua_pushinteger( L, bottom );
     return 4;
 }
+LUA_BINDING_END( "integer", "The left inset of the panel", "integer", "The top inset of the panel", "integer", "The right inset of the panel", "integer", "The bottom inset of the panel" )
 
-static int Panel_GetKeyBindingsFile( lua_State *L )
+LUA_BINDING_BEGIN( Panel, GetKeyBindingsFile, "class", "Gets the key bindings file of the panel" )
 {
-    lua_pushstring( L, luaL_checkpanel( L, 1 )->GetKeyBindingsFile() );
+    lua_Panel *panel = LUA_BINDING_ARGUMENT( luaL_checkpanel, 1, "panel" );
+    lua_pushstring( L, panel->GetKeyBindingsFile() );
     return 1;
 }
+LUA_BINDING_END( "string", "The key bindings file of the panel" )
 
-static int Panel_GetKeyBindingsFilePathID( lua_State *L )
+LUA_BINDING_BEGIN( Panel, GetKeyBindingsFilePathId, "class", "Gets the key bindings file path ID of the panel" )
 {
-    lua_pushstring( L, luaL_checkpanel( L, 1 )->GetKeyBindingsFilePathID() );
+    lua_Panel *panel = LUA_BINDING_ARGUMENT( luaL_checkpanel, 1, "panel" );
+    lua_pushstring( L, panel->GetKeyBindingsFilePathID() );
     return 1;
 }
+LUA_BINDING_END( "string", "The key bindings file path ID of the panel" )
 
-static int Panel_GetKeyMappingCount( lua_State *L )
+LUA_BINDING_BEGIN( Panel, GetKeyMappingCount, "class", "Gets the key mapping count of the panel" )
 {
-    lua_pushinteger( L, luaL_checkpanel( L, 1 )->GetKeyMappingCount() );
+    lua_Panel *panel = LUA_BINDING_ARGUMENT( luaL_checkpanel, 1, "panel" );
+    lua_pushinteger( L, panel->GetKeyMappingCount() );
     return 1;
 }
+LUA_BINDING_END( "integer", "The key mapping count of the panel" )
 
-static int Panel_GetLocalCursorPosition( lua_State *L )
+LUA_BINDING_BEGIN( Panel, GetLocalCursorPosition, "class", "Gets the local cursor position of the panel" )
 {
+    lua_Panel *panel = LUA_BINDING_ARGUMENT( luaL_checkpanel, 1, "panel" );
     int x, y;
-    luaL_checkpanel( L, 1 )->GetLocalCursorPosition( x, y );
+    panel->GetLocalCursorPosition( x, y );
     lua_pushinteger( L, x );
     lua_pushinteger( L, y );
     return 2;
 }
+LUA_BINDING_END( "integer", "The x position of the local cursor", "integer", "The y position of the local cursor" )
 
-static int Panel_GetMinimumSize( lua_State *L )
+LUA_BINDING_BEGIN( Panel, GetMinimumSize, "class", "Gets the minimum size of the panel" )
 {
+    lua_Panel *panel = LUA_BINDING_ARGUMENT( luaL_checkpanel, 1, "panel" );
     int wide, tall;
-    luaL_checkpanel( L, 1 )->GetMinimumSize( wide, tall );
+    panel->GetMinimumSize( wide, tall );
     lua_pushinteger( L, wide );
     lua_pushinteger( L, tall );
     return 2;
 }
+LUA_BINDING_END( "integer", "The minimum width of the panel", "integer", "The minimum height of the panel" )
 
-static int Panel_GetModuleName( lua_State *L )
+LUA_BINDING_BEGIN( Panel, GetModuleName, "class", "Gets the module name of the panel" )
 {
-    lua_pushstring( L, luaL_checkpanel( L, 1 )->GetModuleName() );
+    lua_Panel *panel = LUA_BINDING_ARGUMENT( luaL_checkpanel, 1, "panel" );
+    lua_pushstring( L, panel->GetModuleName() );
     return 1;
 }
+LUA_BINDING_END( "string", "The module name of the panel" )
 
-static int Panel_GetName( lua_State *L )
+LUA_BINDING_BEGIN( Panel, GetName, "class", "Gets the name of the panel" )
 {
-    lua_pushstring( L, luaL_checkpanel( L, 1 )->GetName() );
+    lua_Panel *panel = LUA_BINDING_ARGUMENT( luaL_checkpanel, 1, "panel" );
+    lua_pushstring( L, panel->GetName() );
     return 1;
 }
+LUA_BINDING_END( "string", "The name of the panel" )
 
-static int Panel_GetPaintBackgroundType( lua_State *L )
+LUA_BINDING_BEGIN( Panel, GetPaintBackgroundType, "class", "Gets the paint background type of the panel" )
 {
-    lua_pushinteger( L, luaL_checkpanel( L, 1 )->GetPaintBackgroundType() );
+    lua_Panel *panel = LUA_BINDING_ARGUMENT( luaL_checkpanel, 1, "panel" );
+    lua_pushinteger( L, panel->GetPaintBackgroundType() );
     return 1;
 }
+LUA_BINDING_END( "integer", "The paint background type of the panel" )
 
-static int Panel_GetPaintSize( lua_State *L )
+LUA_BINDING_BEGIN( Panel, GetPaintSize, "class", "Gets the paint size of the panel" )
 {
+    lua_Panel *panel = LUA_BINDING_ARGUMENT( luaL_checkpanel, 1, "panel" );
     int wide, tall;
-    luaL_checkpanel( L, 1 )->GetPaintSize( wide, tall );
+    panel->GetPaintSize( wide, tall );
     lua_pushinteger( L, wide );
     lua_pushinteger( L, tall );
     return 2;
 }
+LUA_BINDING_END( "integer", "The width of the panel", "integer", "The height of the panel" )
 
-static int Panel_GetPanelBaseClassName( lua_State *L )
+LUA_BINDING_BEGIN( Panel, GetParent, "class", "Gets the parent of the panel" )
 {
-    lua_pushstring( L, luaL_checkpanel( L, 1 )->GetPanelBaseClassName() );
+    lua_Panel *panel = LUA_BINDING_ARGUMENT( luaL_checkpanel, 1, "panel" );
+    lua_Panel *parent = panel->GetParent();
+    Panel::PushLuaInstanceSafe( L, parent );
     return 1;
 }
+LUA_BINDING_END( "Panel", "The parent of the panel" )
 
-static int Panel_GetPanelClassName( lua_State *L )
+LUA_BINDING_BEGIN( Panel, GetPinCorner, "class", "Gets the pin corner of the panel" )
 {
-    lua_pushstring( L, luaL_checkpanel( L, 1 )->GetPanelClassName() );
+    lua_Panel *panel = LUA_BINDING_ARGUMENT( luaL_checkpanel, 1, "panel" );
+    lua_pushinteger( L, panel->GetPinCorner() );
     return 1;
 }
+LUA_BINDING_END( "enumeration/PIN_CORNER", "The pin corner of the panel" )
 
-static int Panel_GetParent( lua_State *L )
+LUA_BINDING_BEGIN( Panel, GetPinOffset, "class", "Gets the pin offset of the panel" )
 {
-    lua_Panel *pPanel = luaL_checkpanel( L, 1 )->GetParent();
-    Panel::PushLuaInstanceSafe( L, pPanel );
-    return 1;
-}
-
-static int Panel_GetPinCorner( lua_State *L )
-{
-    lua_pushinteger( L, luaL_checkpanel( L, 1 )->GetPinCorner() );
-    return 1;
-}
-
-static int Panel_GetPinOffset( lua_State *L )
-{
+    lua_Panel *panel = LUA_BINDING_ARGUMENT( luaL_checkpanel, 1, "panel" );
     int dx, dy;
-    luaL_checkpanel( L, 1 )->GetPinOffset( dx, dy );
+    panel->GetPinOffset( dx, dy );
     lua_pushinteger( L, dx );
     lua_pushinteger( L, dy );
     return 2;
 }
+LUA_BINDING_END( "integer", "The x offset of the pin", "integer", "The y offset of the pin" )
 
-static int Panel_GetPos( lua_State *L )
+LUA_BINDING_BEGIN( Panel, GetPosition, "class", "Gets the position of the panel" )
 {
+    lua_Panel *panel = LUA_BINDING_ARGUMENT( luaL_checkpanel, 1, "panel" );
     int x, y;
-    luaL_checkpanel( L, 1 )->GetPos( x, y );
+    panel->GetPos( x, y );
     lua_pushinteger( L, x );
     lua_pushinteger( L, y );
     return 2;
 }
+LUA_BINDING_END( "integer", "The x position of the panel", "integer", "The y position of the panel" )
 
-static int Panel_GetRefTable( lua_State *L )
+LUA_BINDING_BEGIN( Panel, GetRefTable, "class", "Gets the reference table of the panel" )
 {
-    lua_Panel *plPanel = luaL_checkpanel( L, 1 );
-    LUA_GET_REF_TABLE( L, plPanel );
-
+    lua_Panel *panel = LUA_BINDING_ARGUMENT( luaL_checkpanel, 1, "panel" );
+    LUA_GET_REF_TABLE( L, panel );
     return 1;
 }
+LUA_BINDING_END( "table", "The reference table of the panel" )
 
-static int Panel_GetResizeOffset( lua_State *L )
+LUA_BINDING_BEGIN( Panel, GetResizeOffset, "class", "Gets the resize offset of the panel" )
 {
+    lua_Panel *panel = LUA_BINDING_ARGUMENT( luaL_checkpanel, 1, "panel" );
     int dx, dy;
-    luaL_checkpanel( L, 1 )->GetResizeOffset( dx, dy );
+    panel->GetResizeOffset( dx, dy );
     lua_pushinteger( L, dx );
     lua_pushinteger( L, dy );
     return 2;
 }
+LUA_BINDING_END( "integer", "The x offset of the resize", "integer", "The y offset of the resize" )
 
-static int Panel_GetScheme( lua_State *L )
+LUA_BINDING_BEGIN( Panel, GetScheme, "class", "Gets the scheme of the panel" )
 {
-    lua_pushischeme( L, scheme()->GetIScheme( luaL_checkpanel( L, 1 )->GetScheme() ) );
+    lua_Panel *panel = LUA_BINDING_ARGUMENT( luaL_checkpanel, 1, "panel" );
+    lua_pushischeme( L, scheme()->GetIScheme( panel->GetScheme() ) );
     return 1;
 }
+LUA_BINDING_END( "Scheme", "The scheme of the panel" )
 
-static int Panel_GetSize( lua_State *L )
+LUA_BINDING_BEGIN( Panel, GetSize, "class", "Gets the size of the panel" )
 {
+    lua_Panel *panel = LUA_BINDING_ARGUMENT( luaL_checkpanel, 1, "panel" );
     int wide, tall;
-    luaL_checkpanel( L, 1 )->GetSize( wide, tall );
+    panel->GetSize( wide, tall );
     lua_pushinteger( L, wide );
     lua_pushinteger( L, tall );
     return 2;
 }
+LUA_BINDING_END( "integer", "The width of the panel", "integer", "The height of the panel" )
 
-static int Panel_GetTabPosition( lua_State *L )
+LUA_BINDING_BEGIN( Panel, GetTabPosition, "class", "Gets the tab position of the panel" )
 {
-    lua_pushinteger( L, luaL_checkpanel( L, 1 )->GetTabPosition() );
+    lua_Panel *panel = LUA_BINDING_ARGUMENT( luaL_checkpanel, 1, "panel" );
+    lua_pushinteger( L, panel->GetTabPosition() );
     return 1;
 }
+LUA_BINDING_END( "integer", "The tab position of the panel" )
 
-static int Panel_GetTall( lua_State *L )
+LUA_BINDING_BEGIN( Panel, GetTall, "class", "Gets the height of the panel" )
 {
-    lua_pushinteger( L, luaL_checkpanel( L, 1 )->GetTall() );
+    lua_Panel *panel = LUA_BINDING_ARGUMENT( luaL_checkpanel, 1, "panel" );
+    lua_pushinteger( L, panel->GetTall() );
     return 1;
 }
+LUA_BINDING_END( "integer", "The height of the panel" )
 
-static int Panel_GetVPanel( lua_State *L )
+// Experiment; Disabled since we don't want to bother Lua users with VPanel pointers
+// LUA_BINDING_BEGIN( Panel, GetVPanel, "class", "Gets the VPanel of the panel" )
+//{
+//    lua_Panel *panel = LUA_BINDING_ARGUMENT( luaL_checkpanel, 1, "panel" );
+//    Panel::PushVPanelLuaInstance( L, panel->GetVPanel() );
+//    return 1;
+//}
+// LUA_BINDING_END( "VPanel", "The VPanel of the panel" )
+//
+// LUA_BINDING_BEGIN( Panel, GetVPanelAsInteger, "class", "Gets the VPanel of the panel as an integer" )
+//{
+//    lua_Panel *panel = LUA_BINDING_ARGUMENT( luaL_checkpanel, 1, "panel" );
+//    lua_pushinteger( L, panel->GetVPanel() );
+//    return 1;
+//}
+// LUA_BINDING_END( "integer", "The VPanel of the panel" )
+//
+// LUA_BINDING_BEGIN( Panel, GetVParent, "class", "Gets the VParent of the panel" )
+//{
+//    lua_Panel *panel = LUA_BINDING_ARGUMENT( luaL_checkpanel, 1, "panel" );
+//    Panel::PushVPanelLuaInstance( L, panel->GetVParent() );
+//    return 1;
+//}
+// LUA_BINDING_END( "VPanel", "The VParent of the panel" )
+
+LUA_BINDING_BEGIN( Panel, GetWide, "class", "Gets the width of the panel" )
 {
-    Panel::PushVPanelLuaInstance( L, luaL_checkpanel( L, 1 )->GetVPanel() );
+    lua_Panel *panel = LUA_BINDING_ARGUMENT( luaL_checkpanel, 1, "panel" );
+    lua_pushinteger( L, panel->GetWide() );
     return 1;
 }
+LUA_BINDING_END( "integer", "The width of the panel" )
 
-static int Panel_GetVPanelAsInteger( lua_State *L )
+LUA_BINDING_BEGIN( Panel, GetZIndex, "class", "Gets the Z position of the panel" )
 {
-    lua_pushinteger( L, luaL_checkpanel( L, 1 )->GetVPanel() );
+    lua_Panel *panel = LUA_BINDING_ARGUMENT( luaL_checkpanel, 1, "panel" );
+    lua_pushinteger( L, panel->GetZPos() );
     return 1;
 }
+LUA_BINDING_END( "integer", "The Z position of the panel" )
 
-static int Panel_GetVParent( lua_State *L )
+LUA_BINDING_BEGIN( Panel, HasChildren, "class", "Checks if the panel has children" )
 {
-    Panel::PushVPanelLuaInstance( L, luaL_checkpanel( L, 1 )->GetVParent() );
+    lua_Panel *panel = LUA_BINDING_ARGUMENT( luaL_checkpanel, 1, "panel" );
+    lua_pushboolean( L, panel->GetChildCount() > 0 );
     return 1;
 }
+LUA_BINDING_END( "boolean", "True if the panel has children, false otherwise" )
 
-static int Panel_GetWide( lua_State *L )
+LUA_BINDING_BEGIN( Panel, HasFocus, "class", "Checks if the panel has focus" )
 {
-    lua_pushinteger( L, luaL_checkpanel( L, 1 )->GetWide() );
+    lua_Panel *panel = LUA_BINDING_ARGUMENT( luaL_checkpanel, 1, "panel" );
+    lua_pushboolean( L, panel->HasFocus() );
     return 1;
 }
-
-static int Panel_GetZPos( lua_State *L )
-{
-    lua_pushinteger( L, luaL_checkpanel( L, 1 )->GetZPos() );
-    return 1;
-}
-
-static int Panel_HasChildren( lua_State *L )
-{
-    lua_pushboolean( L, luaL_checkpanel( L, 1 )->GetChildCount() > 0 );
-    return 1;
-}
-
-static int Panel_HasFocus( lua_State *L )
-{
-    lua_pushboolean( L, luaL_checkpanel( L, 1 )->HasFocus() );
-    return 1;
-}
+LUA_BINDING_END( "boolean", "True if the panel has focus, false otherwise" )
 
 static bool ChildHasFocus( Panel *pPanel )
 {
@@ -537,856 +725,1184 @@ static bool ChildHasFocus( Panel *pPanel )
     return false;
 }
 
-static int Panel_HasHierarchicalFocus( lua_State *L )
+LUA_BINDING_BEGIN( Panel, HasHierarchicalFocus, "class", "Checks if the panel has hierarchical focus" )
 {
-    lua_pushboolean( L, ChildHasFocus( luaL_checkpanel( L, 1 ) ) );
+    lua_Panel *panel = LUA_BINDING_ARGUMENT( luaL_checkpanel, 1, "panel" );
+    lua_pushboolean( L, ChildHasFocus( panel ) );
     return 1;
 }
+LUA_BINDING_END( "boolean", "True if the panel has hierarchical focus, false otherwise" )
 
-static int Panel_HasUserConfigSettings( lua_State *L )
+LUA_BINDING_BEGIN( Panel, HasUserConfigSettings, "class", "Checks if the panel has user config settings" )
 {
-    lua_pushboolean( L, luaL_checkpanel( L, 1 )->HasUserConfigSettings() );
+    lua_Panel *panel = LUA_BINDING_ARGUMENT( luaL_checkpanel, 1, "panel" );
+    lua_pushboolean( L, panel->HasUserConfigSettings() );
     return 1;
 }
+LUA_BINDING_END( "boolean", "True if the panel has user config settings, false otherwise" )
 
-static int Panel_InitPropertyConverters( lua_State *L )
+LUA_BINDING_BEGIN( Panel, InitPropertyConverters, "class|static", "Initializes the property converters" )
 {
-    luaL_checkpanel( L, 1 )->InitPropertyConverters();
+    lua_Panel::InitPropertyConverters();
     return 0;
 }
+LUA_BINDING_END()
 
-static int Panel_InvalidateLayout( lua_State *L )
+LUA_BINDING_BEGIN( Panel, InvalidateLayout, "class", "Invalidates the layout of the panel" )
 {
-    luaL_checkpanel( L, 1 )->InvalidateLayout( luaL_optboolean( L, 2, 0 ),
-                                               luaL_optboolean( L, 3, 0 ) );
+    lua_Panel *panel = LUA_BINDING_ARGUMENT( luaL_checkpanel, 1, "panel" );
+    bool shouldLayoutNow = LUA_BINDING_ARGUMENT_WITH_DEFAULT( luaL_optboolean, 2, false, "shouldLayoutNow" );
+    bool shouldReloadScheme = LUA_BINDING_ARGUMENT_WITH_DEFAULT( luaL_optboolean, 3, false, "shouldReloadScheme" );
+
+    panel->InvalidateLayout( shouldLayoutNow, shouldReloadScheme );
     return 0;
 }
+LUA_BINDING_END()
 
-static int Panel_IsAutoDeleteSet( lua_State *L )
+LUA_BINDING_BEGIN( Panel, IsAutoDeleteSet, "class", "Checks if the panel is set to auto delete" )
 {
-    lua_pushboolean( L, luaL_checkpanel( L, 1 )->IsAutoDeleteSet() );
+    lua_Panel *panel = LUA_BINDING_ARGUMENT( luaL_checkpanel, 1, "panel" );
+    lua_pushboolean( L, panel->IsAutoDeleteSet() );
     return 1;
 }
+LUA_BINDING_END( "boolean", "True if the panel is set to auto delete, false otherwise" )
 
-static int Panel_IsBeingDragged( lua_State *L )
+LUA_BINDING_BEGIN( Panel, IsBeingDragged, "class", "Checks if the panel is being dragged" )
 {
-    lua_pushboolean( L, luaL_checkpanel( L, 1 )->IsBeingDragged() );
+    lua_Panel *panel = LUA_BINDING_ARGUMENT( luaL_checkpanel, 1, "panel" );
+    lua_pushboolean( L, panel->IsBeingDragged() );
     return 1;
 }
+LUA_BINDING_END( "boolean", "True if the panel is being dragged, false otherwise" )
 
-static int Panel_IsBlockingDragChaining( lua_State *L )
+LUA_BINDING_BEGIN( Panel, IsBlockingDragChaining, "class", "Checks if the panel is blocking drag chaining" )
 {
-    lua_pushboolean( L, luaL_checkpanel( L, 1 )->IsBlockingDragChaining() );
+    lua_Panel *panel = LUA_BINDING_ARGUMENT( luaL_checkpanel, 1, "panel" );
+    lua_pushboolean( L, panel->IsBlockingDragChaining() );
     return 1;
 }
+LUA_BINDING_END( "boolean", "True if the panel is blocking drag chaining, false otherwise" )
 
-static int Panel_IsBottomAligned( lua_State *L )
+LUA_BINDING_BEGIN( Panel, IsBottomAligned, "class", "Checks if the panel is bottom aligned" )
 {
-    lua_pushboolean( L, luaL_checkpanel( L, 1 )->IsBottomAligned() );
+    lua_Panel *panel = LUA_BINDING_ARGUMENT( luaL_checkpanel, 1, "panel" );
+    lua_pushboolean( L, panel->IsBottomAligned() );
     return 1;
 }
+LUA_BINDING_END( "boolean", "True if the panel is bottom aligned, false otherwise" )
 
-static int Panel_IsBuildGroupEnabled( lua_State *L )
+LUA_BINDING_BEGIN( Panel, IsBuildGroupEnabled, "class", "Checks if the panel is build group enabled" )
 {
-    lua_pushboolean( L, luaL_checkpanel( L, 1 )->IsBuildGroupEnabled() );
+    lua_Panel *panel = LUA_BINDING_ARGUMENT( luaL_checkpanel, 1, "panel" );
+    lua_pushboolean( L, panel->IsBuildGroupEnabled() );
     return 1;
 }
+LUA_BINDING_END( "boolean", "True if the panel is build group enabled, false otherwise" )
 
-static int Panel_IsBuildModeActive( lua_State *L )
+LUA_BINDING_BEGIN( Panel, IsBuildModeActive, "class", "Checks if the panel is in build mode" )
 {
-    lua_pushboolean( L, luaL_checkpanel( L, 1 )->IsBuildModeActive() );
+    lua_Panel *panel = LUA_BINDING_ARGUMENT( luaL_checkpanel, 1, "panel" );
+    lua_pushboolean( L, panel->IsBuildModeActive() );
     return 1;
 }
+LUA_BINDING_END( "boolean", "True if the panel is in build mode, false otherwise" )
 
-static int Panel_IsBuildModeDeletable( lua_State *L )
+LUA_BINDING_BEGIN( Panel, IsBuildModeDeletable, "class", "Checks if the panel is build mode deletable" )
 {
-    lua_pushboolean( L, luaL_checkpanel( L, 1 )->IsBuildModeDeletable() );
+    lua_Panel *panel = LUA_BINDING_ARGUMENT( luaL_checkpanel, 1, "panel" );
+    lua_pushboolean( L, panel->IsBuildModeDeletable() );
     return 1;
 }
+LUA_BINDING_END( "boolean", "True if the panel is build mode deletable, false otherwise" )
 
-static int Panel_IsBuildModeEditable( lua_State *L )
+LUA_BINDING_BEGIN( Panel, IsBuildModeEditable, "class", "Checks if the panel is build mode editable" )
 {
-    lua_pushboolean( L, luaL_checkpanel( L, 1 )->IsBuildModeEditable() );
+    lua_Panel *panel = LUA_BINDING_ARGUMENT( luaL_checkpanel, 1, "panel" );
+    lua_pushboolean( L, panel->IsBuildModeEditable() );
     return 1;
 }
+LUA_BINDING_END( "boolean", "True if the panel is build mode editable, false otherwise" )
 
-static int Panel_IsChildOfModalSubTree( lua_State *L )
+LUA_BINDING_BEGIN( Panel, IsChildOfModalSubTree, "class", "Checks if the panel is a child of the modal sub tree" )
 {
-    lua_pushboolean( L, luaL_checkpanel( L, 1 )->IsChildOfModalSubTree() );
+    lua_Panel *panel = LUA_BINDING_ARGUMENT( luaL_checkpanel, 1, "panel" );
+    lua_pushboolean( L, panel->IsChildOfModalSubTree() );
     return 1;
 }
+LUA_BINDING_END( "boolean", "True if the panel is a child of the modal sub tree, false otherwise" )
 
-static int Panel_IsChildOfSurfaceModalPanel( lua_State *L )
+LUA_BINDING_BEGIN( Panel, IsChildOfSurfaceModalPanel, "class", "Checks if the panel is a child of the surface modal panel" )
 {
-    lua_pushboolean( L, luaL_checkpanel( L, 1 )->IsChildOfSurfaceModalPanel() );
+    lua_Panel *panel = LUA_BINDING_ARGUMENT( luaL_checkpanel, 1, "panel" );
+    lua_pushboolean( L, panel->IsChildOfSurfaceModalPanel() );
     return 1;
 }
+LUA_BINDING_END( "boolean", "True if the panel is a child of the surface modal panel, false otherwise" )
 
-static int Panel_IsCursorNone( lua_State *L )
+LUA_BINDING_BEGIN( Panel, IsCursorNone, "class", "Checks if the panel has no cursor" )
 {
-    lua_pushboolean( L, luaL_checkpanel( L, 1 )->IsCursorNone() );
+    lua_Panel *panel = LUA_BINDING_ARGUMENT( luaL_checkpanel, 1, "panel" );
+    lua_pushboolean( L, panel->IsCursorNone() );
     return 1;
 }
+LUA_BINDING_END( "boolean", "True if the panel has no cursor, false otherwise" )
 
-static int Panel_IsCursorOver( lua_State *L )
+LUA_BINDING_BEGIN( Panel, IsCursorOver, "class", "Checks if the cursor is over the panel" )
 {
-    lua_pushboolean( L, luaL_checkpanel( L, 1 )->IsCursorOver() );
+    lua_Panel *panel = LUA_BINDING_ARGUMENT( luaL_checkpanel, 1, "panel" );
+    lua_pushboolean( L, panel->IsCursorOver() );
     return 1;
 }
+LUA_BINDING_END( "boolean", "True if the cursor is over the panel, false otherwise" )
 
-static int Panel_IsDragEnabled( lua_State *L )
+LUA_BINDING_BEGIN( Panel, IsDragEnabled, "class", "Checks if the panel is drag enabled" )
 {
-    lua_pushboolean( L, luaL_checkpanel( L, 1 )->IsDragEnabled() );
+    lua_Panel *panel = LUA_BINDING_ARGUMENT( luaL_checkpanel, 1, "panel" );
+    lua_pushboolean( L, panel->IsDragEnabled() );
     return 1;
 }
+LUA_BINDING_END( "boolean", "True if the panel is drag enabled, false otherwise" )
 
-static int Panel_IsDropEnabled( lua_State *L )
+LUA_BINDING_BEGIN( Panel, IsDropEnabled, "class", "Checks if the panel is drop enabled" )
 {
-    lua_pushboolean( L, luaL_checkpanel( L, 1 )->IsDropEnabled() );
+    lua_Panel *panel = LUA_BINDING_ARGUMENT( luaL_checkpanel, 1, "panel" );
+    lua_pushboolean( L, panel->IsDropEnabled() );
     return 1;
 }
+LUA_BINDING_END( "boolean", "True if the panel is drop enabled, false otherwise" )
 
-static int Panel_IsEnabled( lua_State *L )
+LUA_BINDING_BEGIN( Panel, IsEnabled, "class", "Checks if the panel is enabled" )
 {
-    lua_pushboolean( L, luaL_checkpanel( L, 1 )->IsEnabled() );
+    lua_Panel *panel = LUA_BINDING_ARGUMENT( luaL_checkpanel, 1, "panel" );
+    lua_pushboolean( L, panel->IsEnabled() );
     return 1;
 }
+LUA_BINDING_END( "boolean", "True if the panel is enabled, false otherwise" )
 
-static int Panel_IsKeyBindingChainToParentAllowed( lua_State *L )
+LUA_BINDING_BEGIN( Panel, IsKeyBindingChainToParentAllowed, "class", "Checks if the key binding chain to parent is allowed" )
 {
-    lua_pushboolean( L,
-                     luaL_checkpanel( L, 1 )->IsKeyBindingChainToParentAllowed() );
+    lua_Panel *panel = LUA_BINDING_ARGUMENT( luaL_checkpanel, 1, "panel" );
+    lua_pushboolean( L, panel->IsKeyBindingChainToParentAllowed() );
     return 1;
 }
+LUA_BINDING_END( "boolean", "True if the key binding chain to parent is allowed, false otherwise" )
 
-static int Panel_IsKeyBoardInputEnabled( lua_State *L )
+LUA_BINDING_BEGIN( Panel, IsKeyBoardInputEnabled, "class", "Checks if the keyboard input is enabled" )
 {
-    lua_pushboolean( L, luaL_checkpanel( L, 1 )->IsKeyBoardInputEnabled() );
+    lua_Panel *panel = LUA_BINDING_ARGUMENT( luaL_checkpanel, 1, "panel" );
+    lua_pushboolean( L, panel->IsKeyBoardInputEnabled() );
     return 1;
 }
+LUA_BINDING_END( "boolean", "True if the keyboard input is enabled, false otherwise" )
 
-static int Panel_IsKeyOverridden( lua_State *L )
+LUA_BINDING_BEGIN( Panel, IsKeyOverridden, "class", "Checks if the key is overridden" )
 {
-    lua_pushboolean( L, luaL_checkpanel( L, 1 )->IsKeyOverridden( ( KeyCode )( int )luaL_checknumber( L, 2 ), luaL_checknumber( L, 3 ) ) );
+    lua_Panel *panel = LUA_BINDING_ARGUMENT( luaL_checkpanel, 1, "panel" );
+    KeyCode keyCode = LUA_BINDING_ARGUMENT_ENUM( KeyCode, 2, "keyCode" );
+    int modifiers = LUA_BINDING_ARGUMENT( luaL_checknumber, 3, "modifiers" );
+
+    lua_pushboolean( L, panel->IsKeyOverridden( keyCode, modifiers ) );
     return 1;
 }
+LUA_BINDING_END( "boolean", "True if the key is overridden, false otherwise" )
 
-static int Panel_IsKeyRebound( lua_State *L )
+LUA_BINDING_BEGIN( Panel, IsKeyRebound, "class", "Checks if the key is rebound" )
 {
-    lua_pushboolean( L, luaL_checkpanel( L, 1 )->IsKeyRebound( ( KeyCode )( int )luaL_checknumber( L, 2 ), luaL_checknumber( L, 3 ) ) );
+    lua_Panel *panel = LUA_BINDING_ARGUMENT( luaL_checkpanel, 1, "panel" );
+    KeyCode keyCode = LUA_BINDING_ARGUMENT_ENUM( KeyCode, 2, "keyCode" );
+    int modifiers = LUA_BINDING_ARGUMENT( luaL_checknumber, 3, "modifiers" );
+
+    lua_pushboolean( L, panel->IsKeyRebound( keyCode, modifiers ) );
     return 1;
 }
+LUA_BINDING_END( "boolean", "True if the key is rebound, false otherwise" )
 
-static int Panel_IsLayoutInvalid( lua_State *L )
+LUA_BINDING_BEGIN( Panel, IsLayoutInvalid, "class", "Checks if the layout is invalid" )
 {
-    lua_pushboolean( L, luaL_checkpanel( L, 1 )->IsLayoutInvalid() );
+    lua_Panel *panel = LUA_BINDING_ARGUMENT( luaL_checkpanel, 1, "panel" );
+    lua_pushboolean( L, panel->IsLayoutInvalid() );
     return 1;
 }
+LUA_BINDING_END( "boolean", "True if the layout is invalid, false otherwise" )
 
-static int Panel_IsMarkedForDeletion( lua_State *L )
+LUA_BINDING_BEGIN( Panel, IsMarkedForDeletion, "class", "Checks if the panel is marked for deletion" )
 {
-    lua_pushboolean( L, luaL_checkpanel( L, 1 )->IsMarkedForDeletion() );
+    lua_Panel *panel = LUA_BINDING_ARGUMENT( luaL_checkpanel, 1, "panel" );
+    lua_pushboolean( L, panel->IsMarkedForDeletion() );
     return 1;
 }
+LUA_BINDING_END( "boolean", "True if the panel is marked for deletion, false otherwise" )
 
-static int Panel_IsMouseInputDisabledForThisPanel( lua_State *L )
+LUA_BINDING_BEGIN( Panel, IsMouseInputDisabledForThisPanel, "class", "Checks if the mouse input is disabled for this panel" )
 {
-    lua_pushboolean( L,
-                     luaL_checkpanel( L, 1 )->IsMouseInputDisabledForThisPanel() );
+    lua_Panel *panel = LUA_BINDING_ARGUMENT( luaL_checkpanel, 1, "panel" );
+    lua_pushboolean( L, panel->IsMouseInputDisabledForThisPanel() );
     return 1;
 }
+LUA_BINDING_END( "boolean", "True if the mouse input is disabled for this panel, false otherwise" )
 
-static int Panel_IsMouseInputEnabled( lua_State *L )
+LUA_BINDING_BEGIN( Panel, IsMouseInputEnabled, "class", "Checks if the mouse input is enabled" )
 {
-    lua_pushboolean( L, luaL_checkpanel( L, 1 )->IsMouseInputEnabled() );
+    lua_Panel *panel = LUA_BINDING_ARGUMENT( luaL_checkpanel, 1, "panel" );
+    lua_pushboolean( L, panel->IsMouseInputEnabled() );
     return 1;
 }
+LUA_BINDING_END( "boolean", "True if the mouse input is enabled, false otherwise" )
 
-static int Panel_IsOpaque( lua_State *L )
+LUA_BINDING_BEGIN( Panel, IsOpaque, "class", "Checks if the panel is opaque" )
 {
-    lua_pushboolean( L, luaL_checkpanel( L, 1 )->IsOpaque() );
+    lua_Panel *panel = LUA_BINDING_ARGUMENT( luaL_checkpanel, 1, "panel" );
+    lua_pushboolean( L, panel->IsOpaque() );
     return 1;
 }
+LUA_BINDING_END( "boolean", "True if the panel is opaque, false otherwise" )
 
-static int Panel_IsPopup( lua_State *L )
+LUA_BINDING_BEGIN( Panel, IsPopup, "class", "Checks if the panel is a popup" )
 {
-    lua_pushboolean( L, luaL_checkpanel( L, 1 )->IsPopup() );
+    lua_Panel *panel = LUA_BINDING_ARGUMENT( luaL_checkpanel, 1, "panel" );
+    lua_pushboolean( L, panel->IsPopup() );
     return 1;
 }
+LUA_BINDING_END( "boolean", "True if the panel is a popup, false otherwise" )
 
-static int Panel_IsProportional( lua_State *L )
+LUA_BINDING_BEGIN( Panel, IsProportional, "class", "Checks if the panel is proportional" )
 {
-    lua_pushboolean( L, luaL_checkpanel( L, 1 )->IsProportional() );
+    lua_Panel *panel = LUA_BINDING_ARGUMENT( luaL_checkpanel, 1, "panel" );
+    lua_pushboolean( L, panel->IsProportional() );
     return 1;
 }
+LUA_BINDING_END( "boolean", "True if the panel is proportional, false otherwise" )
 
-static int Panel_IsRightAligned( lua_State *L )
+LUA_BINDING_BEGIN( Panel, IsRightAligned, "class", "Checks if the panel is right aligned" )
 {
-    lua_pushboolean( L, luaL_checkpanel( L, 1 )->IsRightAligned() );
+    lua_Panel *panel = LUA_BINDING_ARGUMENT( luaL_checkpanel, 1, "panel" );
+    lua_pushboolean( L, panel->IsRightAligned() );
     return 1;
 }
+LUA_BINDING_END( "boolean", "True if the panel is right aligned, false otherwise" )
 
-static int Panel_IsStartDragWhenMouseExitsPanel( lua_State *L )
+LUA_BINDING_BEGIN( Panel, IsStartDragWhenMouseExitsPanel, "class", "Checks if the panel starts dragging when the mouse exits the panel" )
 {
-    lua_pushboolean( L, luaL_checkpanel( L, 1 )->IsStartDragWhenMouseExitsPanel() );
+    lua_Panel *panel = LUA_BINDING_ARGUMENT( luaL_checkpanel, 1, "panel" );
+    lua_pushboolean( L, panel->IsStartDragWhenMouseExitsPanel() );
     return 1;
 }
+LUA_BINDING_END( "boolean", "True if the panel starts dragging when the mouse exits the panel, false otherwise" )
 
-static int Panel_IsTriplePressAllowed( lua_State *L )
+LUA_BINDING_BEGIN( Panel, IsTriplePressAllowed, "class", "Checks if the panel allows triple press" )
 {
-    lua_pushboolean( L, luaL_checkpanel( L, 1 )->IsTriplePressAllowed() );
+    lua_Panel *panel = LUA_BINDING_ARGUMENT( luaL_checkpanel, 1, "panel" );
+    lua_pushboolean( L, panel->IsTriplePressAllowed() );
     return 1;
 }
+LUA_BINDING_END( "boolean", "True if the panel allows triple press, false otherwise" )
 
-static int Panel_IsValidKeyBindingsContext( lua_State *L )
+LUA_BINDING_BEGIN( Panel, IsValidKeyBindingsContext, "class", "Checks if the panel is a valid key bindings context" )
 {
-    lua_pushboolean( L, luaL_checkpanel( L, 1 )->IsValidKeyBindingsContext() );
+    lua_Panel *panel = LUA_BINDING_ARGUMENT( luaL_checkpanel, 1, "panel" );
+    lua_pushboolean( L, panel->IsValidKeyBindingsContext() );
     return 1;
 }
+LUA_BINDING_END( "boolean", "True if the panel is a valid key bindings context, false otherwise" )
 
-int Panel_IsValid( lua_State *L )
+LUA_BINDING_BEGIN( Panel, IsValid, "class", "Checks if the panel is valid" )
 {
-    lua_Panel *d = lua_topanel( L, 1 );
-    lua_pushboolean( L, d != NULL );
+    return PanelIsValid( L );
+}
+LUA_BINDING_END( "boolean", "True if the panel is valid, false otherwise" )
+
+LUA_BINDING_BEGIN( Panel, IsVisible, "class", "Checks if the panel is visible" )
+{
+    lua_Panel *panel = LUA_BINDING_ARGUMENT( luaL_checkpanel, 1, "panel" );
+    lua_pushboolean( L, panel->IsVisible() );
     return 1;
 }
+LUA_BINDING_END( "boolean", "True if the panel is visible, false otherwise" )
 
-static int Panel_IsVisible( lua_State *L )
+LUA_BINDING_BEGIN( Panel, IsWithin, "class", "Checks if the panel is within the specified position" )
 {
-    lua_pushboolean( L, luaL_checkpanel( L, 1 )->IsVisible() );
+    lua_Panel *panel = LUA_BINDING_ARGUMENT( luaL_checkpanel, 1, "panel" );
+    int x = LUA_BINDING_ARGUMENT( luaL_checknumber, 2, "x" );
+    int y = LUA_BINDING_ARGUMENT( luaL_checknumber, 3, "y" );
+
+    lua_pushboolean( L, panel->IsWithin( x, y ) );
     return 1;
 }
+LUA_BINDING_END( "boolean", "True if the panel is within the specified position, false otherwise" )
 
-static int Panel_IsWithin( lua_State *L )
+LUA_BINDING_BEGIN( Panel, IsWithinTraverse, "class", "Checks if the panel is within the specified position" )
 {
-    lua_pushboolean( L, luaL_checkpanel( L, 1 )->IsWithin( luaL_checknumber( L, 2 ), luaL_checknumber( L, 3 ) ) );
+    lua_Panel *panel = LUA_BINDING_ARGUMENT( luaL_checkpanel, 1, "panel" );
+    int x = LUA_BINDING_ARGUMENT( luaL_checknumber, 2, "x" );
+    int y = LUA_BINDING_ARGUMENT( luaL_checknumber, 3, "y" );
+    bool traversePopups = LUA_BINDING_ARGUMENT( luaL_checkboolean, 4, "traversePopups" );
+
+    lua_pushboolean( L, panel->IsWithinTraverse( x, y, traversePopups ) );
     return 1;
 }
+LUA_BINDING_END( "boolean", "True if the panel is within the specified position, false otherwise" )
 
-static int Panel_IsWithinTraverse( lua_State *L )
+LUA_BINDING_BEGIN( Panel, IsWorldClicker, "class", "Checks if the panel is a world clicker" )
 {
-    lua_pushboolean( L, luaL_checkpanel( L, 1 )->IsWithinTraverse( luaL_checknumber( L, 2 ), luaL_checknumber( L, 3 ), luaL_checkboolean( L, 4 ) ) );
+    lua_Panel *panel = LUA_BINDING_ARGUMENT( luaL_checkpanel, 1, "panel" );
+    lua_pushboolean( L, panel->IsWorldClicker() );
     return 1;
 }
+LUA_BINDING_END( "boolean", "True if the panel is a world clicker, false otherwise" )
 
-static int Panel_IsWorldClicker( lua_State *L )
+LUA_BINDING_BEGIN( Panel, KeyCodeToString, "class|static", "Converts a key code to a string" )
 {
-    lua_pushboolean( L, luaL_checkpanel( L, 1 )->IsWorldClicker() );
+    KeyCode keyCode = LUA_BINDING_ARGUMENT_ENUM( KeyCode, 1, "keyCode" );
+    lua_pushstring( L, Panel::KeyCodeToString( keyCode ) );
     return 1;
 }
+LUA_BINDING_END( "string", "The string representation of the key code" )
 
-static int Panel_KB_AddBoundKey( lua_State *L )
+LUA_BINDING_BEGIN( Panel, LocalToScreen, "class", "Converts a local position to a screen position" )
 {
-    luaL_checkpanel( L, 1 )->KB_AddBoundKey(
-        luaL_checkstring( L, 2 ), luaL_checknumber( L, 3 ), luaL_checknumber( L, 4 ) );
-    return 0;
-}
+    lua_Panel *panel = LUA_BINDING_ARGUMENT( luaL_checkpanel, 1, "panel" );
+    int x = LUA_BINDING_ARGUMENT( luaL_checknumber, 2, "x" );
+    int y = LUA_BINDING_ARGUMENT( luaL_checknumber, 3, "y" );
 
-static int Panel_KB_ChainToMap( lua_State *L )
-{
-    luaL_checkpanel( L, 1 )->KB_ChainToMap();
-    return 0;
-}
-
-static int Panel_KeyCodeToString( lua_State *L )
-{
-    lua_pushstring( L, luaL_checkpanel( L, 1 )->KeyCodeToString( ( KeyCode )( int )luaL_checknumber( L, 2 ) ) );
-    return 1;
-}
-
-static int Panel_LocalToScreen( lua_State *L )
-{
-    int x = luaL_checknumber( L, 2 );
-    int y = luaL_checknumber( L, 3 );
-    luaL_checkpanel( L, 1 )->LocalToScreen( x, y );
+    panel->LocalToScreen( x, y );
     lua_pushinteger( L, x );
     lua_pushinteger( L, y );
     return 2;
 }
+LUA_BINDING_END( "integer", "The x position of the screen", "integer", "The y position of the screen" )
 
-static int Panel_MakePopup( lua_State *L )
+LUA_BINDING_BEGIN( Panel, MakePopup, "class", "Makes the panel a popup" )
 {
-    lua_Panel *pPanel = luaL_checkpanel( L, 1 );
-
-    pPanel->MakePopup( false, false );
-
+    lua_Panel *panel = LUA_BINDING_ARGUMENT( luaL_checkpanel, 1, "panel" );
+    panel->MakePopup( false, false );
     return 0;
 }
+LUA_BINDING_END()
 
-static int Panel_MakeReadyForUse( lua_State *L )
+LUA_BINDING_BEGIN( Panel, MakeReadyForUse, "class", "Makes the panel ready for use" )
 {
-    luaL_checkpanel( L, 1 )->MakeReadyForUse();
+    lua_Panel *panel = LUA_BINDING_ARGUMENT( luaL_checkpanel, 1, "panel" );
+    panel->MakeReadyForUse();
     return 0;
 }
+LUA_BINDING_END()
 
-static int Panel_MarkForDeletion( lua_State *L )
+LUA_BINDING_BEGIN( Panel, MarkForDeletion, "class", "Marks the panel for deletion" )
 {
-    luaL_checkpanel( L, 1 )->MarkForDeletion();
+    lua_Panel *panel = LUA_BINDING_ARGUMENT( luaL_checkpanel, 1, "panel" );
+    panel->MarkForDeletion();
     return 0;
 }
+LUA_BINDING_END()
 
-static int Panel_MoveToBack( lua_State *L )
+LUA_BINDING_BEGIN( Panel, MoveToBack, "class", "Moves the panel to the back" )
 {
-    luaL_checkpanel( L, 1 )->MoveToBack();
+    lua_Panel *panel = LUA_BINDING_ARGUMENT( luaL_checkpanel, 1, "panel" );
+    panel->MoveToBack();
     return 0;
 }
+LUA_BINDING_END()
 
-static int Panel_MoveToFront( lua_State *L )
+LUA_BINDING_BEGIN( Panel, MoveToFront, "class", "Moves the panel to the front" )
 {
-    luaL_checkpanel( L, 1 )->MoveToFront();
+    lua_Panel *panel = LUA_BINDING_ARGUMENT( luaL_checkpanel, 1, "panel" );
+    panel->MoveToFront();
     return 0;
 }
+LUA_BINDING_END()
 
-static int Panel_OnCommand( lua_State *L )
+LUA_BINDING_BEGIN( Panel, OnCommand, "class", "Handles a command" )
 {
-    luaL_checkpanel( L, 1 )->OnCommand( luaL_checkstring( L, 2 ) );
+    lua_Panel *panel = LUA_BINDING_ARGUMENT( luaL_checkpanel, 1, "panel" );
+    const char *command = LUA_BINDING_ARGUMENT( luaL_checkstring, 2, "command" );
+    panel->OnCommand( command );
     return 0;
 }
+LUA_BINDING_END()
 
-static int Panel_OnCursorEntered( lua_State *L )
+LUA_BINDING_BEGIN( Panel, OnCursorEntered, "class", "Handles the cursor entering the panel" )
 {
-    luaL_checkpanel( L, 1 )->OnCursorEntered();
+    lua_Panel *panel = LUA_BINDING_ARGUMENT( luaL_checkpanel, 1, "panel" );
+    panel->OnCursorEntered();
     return 0;
 }
+LUA_BINDING_END()
 
-static int Panel_OnCursorExited( lua_State *L )
+LUA_BINDING_BEGIN( Panel, OnCursorExited, "class", "Handles the cursor exiting the panel" )
 {
-    luaL_checkpanel( L, 1 )->OnCursorExited();
+    lua_Panel *panel = LUA_BINDING_ARGUMENT( luaL_checkpanel, 1, "panel" );
+    panel->OnCursorExited();
     return 0;
 }
+LUA_BINDING_END()
 
-static int Panel_OnCursorMoved( lua_State *L )
+LUA_BINDING_BEGIN( Panel, OnCursorMoved, "class", "Handles the cursor moving" )
 {
-    luaL_checkpanel( L, 1 )->OnCursorMoved( luaL_checknumber( L, 2 ),
-                                            luaL_checknumber( L, 3 ) );
+    lua_Panel *panel = LUA_BINDING_ARGUMENT( luaL_checkpanel, 1, "panel" );
+    int x = LUA_BINDING_ARGUMENT( luaL_checknumber, 2, "x" );
+    int y = LUA_BINDING_ARGUMENT( luaL_checknumber, 3, "y" );
+
+    panel->OnCursorMoved( x, y );
     return 0;
 }
+LUA_BINDING_END()
 
-static int Panel_OnDelete( lua_State *L )
+LUA_BINDING_BEGIN( Panel, OnDelete, "class", "Handles the panel being deleted" )
 {
-    luaL_checkpanel( L, 1 )->OnDelete();
+    lua_Panel *panel = LUA_BINDING_ARGUMENT( luaL_checkpanel, 1, "panel" );
+    panel->OnDelete();
     return 0;
 }
+LUA_BINDING_END()
 
-static int Panel_OnDraggablePanelPaint( lua_State *L )
+LUA_BINDING_BEGIN( Panel, OnDraggablePanelPaint, "class", "Handles the draggable panel being painted" )
 {
-    luaL_checkpanel( L, 1 )->OnDraggablePanelPaint();
+    lua_Panel *panel = LUA_BINDING_ARGUMENT( luaL_checkpanel, 1, "panel" );
+    panel->OnDraggablePanelPaint();
     return 0;
 }
+LUA_BINDING_END()
 
-static int Panel_OnKeyCodePressed( lua_State *L )
+LUA_BINDING_BEGIN( Panel, OnKeyCodePressed, "class", "Handles a key code being pressed" )
 {
-    luaL_checkpanel( L, 1 )->OnKeyCodePressed( ( KeyCode )( int )luaL_checknumber( L, 2 ) );
+    lua_Panel *panel = LUA_BINDING_ARGUMENT( luaL_checkpanel, 1, "panel" );
+    KeyCode keyCode = LUA_BINDING_ARGUMENT_ENUM( KeyCode, 2, "keyCode" );
+    panel->OnKeyCodePressed( keyCode );
     return 0;
 }
+LUA_BINDING_END()
 
-static int Panel_OnKeyCodeTyped( lua_State *L )
+LUA_BINDING_BEGIN( Panel, OnKeyCodeTyped, "class", "Handles a key code being typed" )
 {
-    luaL_checkpanel( L, 1 )->OnKeyCodeTyped( ( KeyCode )( int )luaL_checknumber( L, 2 ) );
+    lua_Panel *panel = LUA_BINDING_ARGUMENT( luaL_checkpanel, 1, "panel" );
+    KeyCode keyCode = LUA_BINDING_ARGUMENT_ENUM( KeyCode, 2, "keyCode" );
+    panel->OnKeyCodeTyped( keyCode );
     return 0;
 }
+LUA_BINDING_END()
 
-static int Panel_OnKeyFocusTicked( lua_State *L )
+LUA_BINDING_BEGIN( Panel, OnKeyFocusTicked, "class", "Handles the key focus being ticked" )
 {
-    luaL_checkpanel( L, 1 )->OnKeyFocusTicked();
+    lua_Panel *panel = LUA_BINDING_ARGUMENT( luaL_checkpanel, 1, "panel" );
+    panel->OnKeyFocusTicked();
     return 0;
 }
+LUA_BINDING_END()
 
-static int Panel_OnKillFocus( lua_State *L )
+LUA_BINDING_BEGIN( Panel, OnKillFocus, "class", "Handles the focus being killed" )
 {
-    luaL_checkpanel( L, 1 )->OnKillFocus();
+    lua_Panel *panel = LUA_BINDING_ARGUMENT( luaL_checkpanel, 1, "panel" );
+    panel->OnKillFocus();
     return 0;
 }
+LUA_BINDING_END()
 
-static int Panel_OnMouseCaptureLost( lua_State *L )
+LUA_BINDING_BEGIN( Panel, OnMouseCaptureLost, "class", "Handles the mouse capture being lost" )
 {
-    luaL_checkpanel( L, 1 )->OnMouseCaptureLost();
+    lua_Panel *panel = LUA_BINDING_ARGUMENT( luaL_checkpanel, 1, "panel" );
+    panel->OnMouseCaptureLost();
     return 0;
 }
+LUA_BINDING_END()
 
-static int Panel_OnMouseDoublePressed( lua_State *L )
+LUA_BINDING_BEGIN( Panel, OnMouseDoublePressed, "class", "Handles the mouse being double pressed" )
 {
-    luaL_checkpanel( L, 1 )->OnMouseDoublePressed( ( MouseCode )( int )luaL_checknumber( L, 2 ) );
+    lua_Panel *panel = LUA_BINDING_ARGUMENT( luaL_checkpanel, 1, "panel" );
+    MouseCode code = LUA_BINDING_ARGUMENT_ENUM( MouseCode, 2, "code" );
+    panel->OnMouseDoublePressed( code );
     return 0;
 }
+LUA_BINDING_END()
 
-static int Panel_OnMouseFocusTicked( lua_State *L )
+LUA_BINDING_BEGIN( Panel, OnMouseFocusTicked, "class", "Handles the mouse focus being ticked" )
 {
-    luaL_checkpanel( L, 1 )->OnMouseFocusTicked();
+    lua_Panel *panel = LUA_BINDING_ARGUMENT( luaL_checkpanel, 1, "panel" );
+    panel->OnMouseFocusTicked();
     return 0;
 }
+LUA_BINDING_END()
 
-static int Panel_OnMousePressed( lua_State *L )
+LUA_BINDING_BEGIN( Panel, OnMousePressed, "class", "Handles the mouse being pressed" )
 {
-    luaL_checkpanel( L, 1 )->OnMousePressed( ( MouseCode )( int )luaL_checknumber( L, 2 ) );
+    lua_Panel *panel = LUA_BINDING_ARGUMENT( luaL_checkpanel, 1, "panel" );
+    MouseCode code = LUA_BINDING_ARGUMENT_ENUM( MouseCode, 2, "code" );
+    panel->OnMousePressed( code );
     return 0;
 }
+LUA_BINDING_END()
 
-static int Panel_OnMouseReleased( lua_State *L )
+LUA_BINDING_BEGIN( Panel, OnMouseReleased, "class", "Handles the mouse being released" )
 {
-    luaL_checkpanel( L, 1 )->OnMouseReleased( ( MouseCode )( int )luaL_checknumber( L, 2 ) );
+    lua_Panel *panel = LUA_BINDING_ARGUMENT( luaL_checkpanel, 1, "panel" );
+    MouseCode code = LUA_BINDING_ARGUMENT_ENUM( MouseCode, 2, "code" );
+    panel->OnMouseReleased( code );
     return 0;
 }
+LUA_BINDING_END()
 
-static int Panel_OnMouseTriplePressed( lua_State *L )
+LUA_BINDING_BEGIN( Panel, OnMouseTriplePressed, "class", "Handles the mouse being triple pressed" )
 {
-    luaL_checkpanel( L, 1 )->OnMouseTriplePressed( ( MouseCode )( int )luaL_checknumber( L, 2 ) );
+    lua_Panel *panel = LUA_BINDING_ARGUMENT( luaL_checkpanel, 1, "panel" );
+    MouseCode code = LUA_BINDING_ARGUMENT_ENUM( MouseCode, 2, "code" );
+    panel->OnMouseTriplePressed( code );
     return 0;
 }
+LUA_BINDING_END()
 
-static int Panel_OnMouseWheeled( lua_State *L )
+LUA_BINDING_BEGIN( Panel, OnMouseWheeled, "class", "Handles the mouse being wheeled" )
 {
-    luaL_checkpanel( L, 1 )->OnMouseWheeled( luaL_checknumber( L, 2 ) );
+    lua_Panel *panel = LUA_BINDING_ARGUMENT( luaL_checkpanel, 1, "panel" );
+    int delta = LUA_BINDING_ARGUMENT( luaL_checknumber, 2, "delta" );
+    panel->OnMouseWheeled( delta );
     return 0;
 }
+LUA_BINDING_END()
 
-static int Panel_OnMove( lua_State *L )
+LUA_BINDING_BEGIN( Panel, OnMove, "class", "Handles the panel being moved" )
 {
-    luaL_checkpanel( L, 1 )->OnMove();
+    lua_Panel *panel = LUA_BINDING_ARGUMENT( luaL_checkpanel, 1, "panel" );
+    panel->OnMove();
     return 0;
 }
+LUA_BINDING_END()
 
-static int Panel_OnSetFocus( lua_State *L )
+LUA_BINDING_BEGIN( Panel, OnSetFocus, "class", "Handles the focus being set" )
 {
-    luaL_checkpanel( L, 1 )->OnSetFocus();
+    lua_Panel *panel = LUA_BINDING_ARGUMENT( luaL_checkpanel, 1, "panel" );
+    panel->OnSetFocus();
     return 0;
 }
+LUA_BINDING_END()
 
-static int Panel_OnSizeChanged( lua_State *L )
+LUA_BINDING_BEGIN( Panel, OnSizeChanged, "class", "Handles the size being changed" )
 {
-    luaL_checkpanel( L, 1 )->OnSizeChanged( luaL_checknumber( L, 2 ),
-                                            luaL_checknumber( L, 3 ) );
+    lua_Panel *panel = LUA_BINDING_ARGUMENT( luaL_checkpanel, 1, "panel" );
+    int width = LUA_BINDING_ARGUMENT( luaL_checknumber, 2, "width" );
+    int height = LUA_BINDING_ARGUMENT( luaL_checknumber, 3, "height" );
+
+    panel->OnSizeChanged( width, height );
     return 0;
 }
+LUA_BINDING_END()
 
-static int Panel_OnThink( lua_State *L )
+LUA_BINDING_BEGIN( Panel, OnThink, "class", "Handles the panel being thought" )
 {
-    luaL_checkpanel( L, 1 )->OnThink();
+    lua_Panel *panel = LUA_BINDING_ARGUMENT( luaL_checkpanel, 1, "panel" );
+    panel->OnThink();
     return 0;
 }
+LUA_BINDING_END()
 
-static int Panel_OnTick( lua_State *L )
+LUA_BINDING_BEGIN( Panel, OnTick, "class", "Handles the panel being ticked" )
 {
-    luaL_checkpanel( L, 1 )->OnTick();
+    lua_Panel *panel = LUA_BINDING_ARGUMENT( luaL_checkpanel, 1, "panel" );
+    panel->OnTick();
     return 0;
 }
+LUA_BINDING_END()
 
-static int Panel_Paint( lua_State *L )
+LUA_BINDING_BEGIN( Panel, Paint, "class", "Paints the panel" )
 {
-    luaL_checkpanel( L, 1 )->Paint();
+    lua_Panel *panel = LUA_BINDING_ARGUMENT( luaL_checkpanel, 1, "panel" );
+    panel->Paint();
     return 0;
 }
+LUA_BINDING_END()
 
-static int Panel_PaintBackground( lua_State *L )
+LUA_BINDING_BEGIN( Panel, PaintBackground, "class", "Paints the panel background" )
 {
-    luaL_checkpanel( L, 1 )->PaintBackground();
+    lua_Panel *panel = LUA_BINDING_ARGUMENT( luaL_checkpanel, 1, "panel" );
+    panel->PaintBackground();
     return 0;
 }
+LUA_BINDING_END()
 
-static int Panel_PaintBorder( lua_State *L )
+LUA_BINDING_BEGIN( Panel, PaintBorder, "class", "Paints the panel border" )
 {
-    luaL_checkpanel( L, 1 )->PaintBorder();
+    lua_Panel *panel = LUA_BINDING_ARGUMENT( luaL_checkpanel, 1, "panel" );
+    panel->PaintBorder();
     return 0;
 }
+LUA_BINDING_END()
 
-static int Panel_PaintBuildOverlay( lua_State *L )
+LUA_BINDING_BEGIN( Panel, PaintBuildOverlay, "class", "Paints the panel build overlay" )
 {
-    luaL_checkpanel( L, 1 )->PaintBuildOverlay();
+    lua_Panel *panel = LUA_BINDING_ARGUMENT( luaL_checkpanel, 1, "panel" );
+    panel->PaintBuildOverlay();
     return 0;
 }
+LUA_BINDING_END()
 
-static int Panel_ParentLocalToScreen( lua_State *L )
+LUA_BINDING_BEGIN( Panel, ParentLocalToScreen, "class", "Converts a parent local position to a screen position" )
 {
+    lua_Panel *panel = LUA_BINDING_ARGUMENT( luaL_checkpanel, 1, "panel" );
     int x, y;
-    luaL_checkpanel( L, 1 )->ParentLocalToScreen( x, y );
+    panel->ParentLocalToScreen( x, y );
     lua_pushinteger( L, x );
     lua_pushinteger( L, y );
     return 2;
 }
+LUA_BINDING_END( "integer", "The x position of the screen", "integer", "The y position of the screen" )
 
-static int Panel_ParentToHUD( lua_State *L )
+LUA_BINDING_BEGIN( Panel, ParentToHud, "class", "Sets the parent to the HUD" )
 {
-    luaL_checkpanel( L, 1 )->SetParent( VGui_GetClientLuaRootPanelHUD() );
+    lua_Panel *panel = LUA_BINDING_ARGUMENT( luaL_checkpanel, 1, "panel" );
+    panel->SetParent( VGui_GetClientLuaRootPanelHUD() );
     return 0;
 }
+LUA_BINDING_END()
 
-static int Panel_PerformLayout( lua_State *L )
+LUA_BINDING_BEGIN( Panel, PerformLayout, "class", "Performs the panel layout" )
 {
-    luaL_checkpanel( L, 1 )->PerformLayout();
+    lua_Panel *panel = LUA_BINDING_ARGUMENT( luaL_checkpanel, 1, "panel" );
+    panel->PerformLayout();
     return 0;
 }
+LUA_BINDING_END()
 
-static int Panel_Prepare( lua_State *L )
+LUA_BINDING_BEGIN( Panel, Prepare, "class", "Prepares the panel" )
 {
-    luaL_checkpanel( L, 1 )->Prepare();
+    lua_Panel *panel = LUA_BINDING_ARGUMENT( luaL_checkpanel, 1, "panel" );
+    panel->Prepare();
     return 0;
 }
+LUA_BINDING_END()
 
-static int Panel_PostChildPaint( lua_State *L )
+LUA_BINDING_BEGIN( Panel, PostChildPaint, "class", "Handles the post child paint" )
 {
-    luaL_checkpanel( L, 1 )->PostChildPaint();
+    lua_Panel *panel = LUA_BINDING_ARGUMENT( luaL_checkpanel, 1, "panel" );
+    panel->PostChildPaint();
     return 0;
 }
+LUA_BINDING_END()
 
-static int Panel_ReloadKeyBindings( lua_State *L )
+LUA_BINDING_BEGIN( Panel, ReloadKeyBindings, "class", "Reloads the key bindings" )
 {
-    luaL_checkpanel( L, 1 )->ReloadKeyBindings();
+    lua_Panel *panel = LUA_BINDING_ARGUMENT( luaL_checkpanel, 1, "panel" );
+    panel->ReloadKeyBindings();
     return 0;
 }
+LUA_BINDING_END()
 
-static int Panel_RemoveActionSignalTarget( lua_State *L )
+LUA_BINDING_BEGIN( Panel, RemoveActionSignalTarget, "class", "Removes an action signal target" )
 {
-    luaL_checkpanel( L, 1 )->RemoveActionSignalTarget( luaL_checkpanel( L, 2 ) );
+    lua_Panel *panel = LUA_BINDING_ARGUMENT( luaL_checkpanel, 1, "panel" );
+    lua_Panel *target = LUA_BINDING_ARGUMENT( luaL_checkpanel, 2, "target" );
+    panel->RemoveActionSignalTarget( target );
     return 0;
 }
+LUA_BINDING_END()
 
-static int Panel_RemoveAllKeyBindings( lua_State *L )
+LUA_BINDING_BEGIN( Panel, RemoveAllKeyBindings, "class", "Removes all key bindings" )
 {
-    luaL_checkpanel( L, 1 )->RemoveAllKeyBindings();
+    lua_Panel *panel = LUA_BINDING_ARGUMENT( luaL_checkpanel, 1, "panel" );
+    panel->RemoveAllKeyBindings();
     return 0;
 }
+LUA_BINDING_END()
 
-static int Panel_Repaint( lua_State *L )
+LUA_BINDING_BEGIN( Panel, Repaint, "class", "Repaints the panel" )
 {
-    luaL_checkpanel( L, 1 )->Repaint();
+    lua_Panel *panel = LUA_BINDING_ARGUMENT( luaL_checkpanel, 1, "panel" );
+    panel->Repaint();
     return 0;
 }
+LUA_BINDING_END()
 
-static int Panel_RequestFocus( lua_State *L )
+LUA_BINDING_BEGIN( Panel, RequestFocus, "class", "Requests the focus" )
 {
-    luaL_checkpanel( L, 1 )->RequestFocus( ( int )luaL_optnumber( L, 2, 0 ) );
+    lua_Panel *panel = LUA_BINDING_ARGUMENT( luaL_checkpanel, 1, "panel" );
+    int direction = LUA_BINDING_ARGUMENT_WITH_DEFAULT( luaL_optinteger, 2, 0, "direction" );
+    panel->RequestFocus( direction );
     return 0;
 }
+LUA_BINDING_END()
 
-static int Panel_RevertKeyBindingsToDefault( lua_State *L )
+LUA_BINDING_BEGIN( Panel, RevertKeyBindingsToDefault, "class", "Reverts the key bindings to default" )
 {
-    luaL_checkpanel( L, 1 )->RevertKeyBindingsToDefault();
+    lua_Panel *panel = LUA_BINDING_ARGUMENT( luaL_checkpanel, 1, "panel" );
+    panel->RevertKeyBindingsToDefault();
     return 0;
 }
+LUA_BINDING_END()
 
-static int Panel_ScreenToLocal( lua_State *L )
+LUA_BINDING_BEGIN( Panel, ScreenToLocal, "class", "Converts a screen position to a local position" )
 {
+    lua_Panel *panel = LUA_BINDING_ARGUMENT( luaL_checkpanel, 1, "panel" );
     int x, y;
-    luaL_checkpanel( L, 1 )->ScreenToLocal( x, y );
+    panel->ScreenToLocal( x, y );
     lua_pushinteger( L, x );
     lua_pushinteger( L, y );
     return 2;
 }
+LUA_BINDING_END( "integer", "The x position of the local", "integer", "The y position of the local" )
 
-static int Panel_SetAllowKeyBindingChainToParent( lua_State *L )
+LUA_BINDING_BEGIN( Panel, SetAllowKeyBindingChainToParent, "class", "Sets whether the key binding chain is allowed to go to the parent" )
 {
-    luaL_checkpanel( L, 1 )->SetAllowKeyBindingChainToParent(
-        luaL_checkboolean( L, 2 ) );
+    lua_Panel *panel = LUA_BINDING_ARGUMENT( luaL_checkpanel, 1, "panel" );
+    bool allow = LUA_BINDING_ARGUMENT( luaL_checkboolean, 2, "allow" );
+    panel->SetAllowKeyBindingChainToParent( allow );
     return 0;
 }
+LUA_BINDING_END()
 
-static int Panel_SetAlpha( lua_State *L )
+LUA_BINDING_BEGIN( Panel, SetAlpha, "class", "Sets the panel alpha" )
 {
-    luaL_checkpanel( L, 1 )->SetAlpha( luaL_checknumber( L, 2 ) );
+    lua_Panel *panel = LUA_BINDING_ARGUMENT( luaL_checkpanel, 1, "panel" );
+    float alpha = LUA_BINDING_ARGUMENT( luaL_checknumber, 2, "alpha" );
+    panel->SetAlpha( alpha );
     return 0;
 }
+LUA_BINDING_END()
 
-static int Panel_SetAutoDelete( lua_State *L )
+LUA_BINDING_BEGIN( Panel, SetAutoDelete, "class", "Sets whether the panel is auto deleted" )
 {
-    luaL_checkpanel( L, 1 )->SetAutoDelete( luaL_checkboolean( L, 2 ) );
+    lua_Panel *panel = LUA_BINDING_ARGUMENT( luaL_checkpanel, 1, "panel" );
+    bool autoDelete = LUA_BINDING_ARGUMENT( luaL_checkboolean, 2, "autoDelete" );
+    panel->SetAutoDelete( autoDelete );
     return 0;
 }
+LUA_BINDING_END()
 
-static int Panel_SetAutoResize( lua_State *L )
+LUA_BINDING_BEGIN( Panel, SetAutoResize, "class", "Sets the auto resize" )
 {
-    luaL_checkpanel( L, 1 )->SetAutoResize(
-        ( Panel::PinCorner_e )( int )luaL_checknumber( L, 2 ),
-        ( Panel::AutoResize_e )( int )luaL_checknumber( L, 3 ),
-        luaL_checknumber( L, 4 ),
-        luaL_checknumber( L, 5 ),
-        luaL_checknumber( L, 6 ),
-        luaL_checknumber( L, 7 ) );
+    lua_Panel *panel = LUA_BINDING_ARGUMENT( luaL_checkpanel, 1, "panel" );
+    Panel::PinCorner_e pinCorner = LUA_BINDING_ARGUMENT_ENUM( Panel::PinCorner_e, 2, "pinCorner" );
+    Panel::AutoResize_e autoResize = LUA_BINDING_ARGUMENT_ENUM( Panel::AutoResize_e, 3, "autoResize" );
+    int pinOffsetX = LUA_BINDING_ARGUMENT( luaL_checknumber, 4, "pinOffsetX" );
+    int pinOffsetY = LUA_BINDING_ARGUMENT( luaL_checknumber, 5, "pinOffsetY" );
+    int unpinnedCornerOffsetX = LUA_BINDING_ARGUMENT( luaL_checknumber, 6, "unpinnedCornerOffsetX" );
+    int unpinnedCornerOffsetY = LUA_BINDING_ARGUMENT( luaL_checknumber, 7, "unpinnedCornerOffsetY" );
+
+    panel->SetAutoResize( pinCorner, autoResize, pinOffsetX, pinOffsetY, unpinnedCornerOffsetX, unpinnedCornerOffsetY );
     return 0;
 }
+LUA_BINDING_END()
 
-static int Panel_SetBgColor( lua_State *L )
+LUA_BINDING_BEGIN( Panel, SetBackgroundColor, "class", "Sets the background color" )
 {
-    luaL_checkpanel( L, 1 )->SetBgColor( luaL_checkcolor( L, 2 ) );
+    lua_Panel *panel = LUA_BINDING_ARGUMENT( luaL_checkpanel, 1, "panel" );
+    lua_Color &color = LUA_BINDING_ARGUMENT( luaL_checkcolor, 2, "color" );
+    panel->SetBgColor( color );
     return 0;
 }
+LUA_BINDING_END()
 
-static int Panel_SetBlockDragChaining( lua_State *L )
+LUA_BINDING_BEGIN( Panel, SetBlockDragChaining, "class", "Sets whether the drag chaining is blocked" )
 {
-    luaL_checkpanel( L, 1 )->SetBlockDragChaining( luaL_checkboolean( L, 2 ) );
+    lua_Panel *panel = LUA_BINDING_ARGUMENT( luaL_checkpanel, 1, "panel" );
+    bool block = LUA_BINDING_ARGUMENT( luaL_checkboolean, 2, "block" );
+    panel->SetBlockDragChaining( block );
     return 0;
 }
+LUA_BINDING_END()
 
-static int Panel_SetBounds( lua_State *L )
+LUA_BINDING_BEGIN( Panel, SetBounds, "class", "Sets the bounds" )
 {
-    luaL_checkpanel( L, 1 )->SetBounds( luaL_checknumber( L, 2 ), luaL_checknumber( L, 3 ), luaL_checknumber( L, 4 ), luaL_checknumber( L, 5 ) );
+    lua_Panel *panel = LUA_BINDING_ARGUMENT( luaL_checkpanel, 1, "panel" );
+    int x = LUA_BINDING_ARGUMENT( luaL_checknumber, 2, "x" );
+    int y = LUA_BINDING_ARGUMENT( luaL_checknumber, 3, "y" );
+    int width = LUA_BINDING_ARGUMENT( luaL_checknumber, 4, "width" );
+    int height = LUA_BINDING_ARGUMENT( luaL_checknumber, 5, "height" );
+
+    panel->SetBounds( x, y, width, height );
     return 0;
 }
+LUA_BINDING_END()
 
-static int Panel_SetBuildModeDeletable( lua_State *L )
+LUA_BINDING_BEGIN( Panel, SetBuildModeDeletable, "class", "Sets whether the build mode is deletable" )
 {
-    luaL_checkpanel( L, 1 )->SetBuildModeDeletable( luaL_checkboolean( L, 2 ) );
+    lua_Panel *panel = LUA_BINDING_ARGUMENT( luaL_checkpanel, 1, "panel" );
+    bool deletable = LUA_BINDING_ARGUMENT( luaL_checkboolean, 2, "deletable" );
+    panel->SetBuildModeDeletable( deletable );
     return 0;
 }
+LUA_BINDING_END()
 
-static int Panel_SetBuildModeEditable( lua_State *L )
+LUA_BINDING_BEGIN( Panel, SetBuildModeEditable, "class", "Sets whether the build mode is editable" )
 {
-    luaL_checkpanel( L, 1 )->SetBuildModeEditable( luaL_checkboolean( L, 2 ) );
+    lua_Panel *panel = LUA_BINDING_ARGUMENT( luaL_checkpanel, 1, "panel" );
+    bool editable = LUA_BINDING_ARGUMENT( luaL_checkboolean, 2, "editable" );
+    panel->SetBuildModeEditable( editable );
     return 0;
 }
+LUA_BINDING_END()
 
-static int Panel_SetCursor( lua_State *L )
+LUA_BINDING_BEGIN( Panel, SetCursor, "class", "Sets the cursor" )
 {
-    luaL_checkpanel( L, 1 )->SetCursor( ( HCursor )luaL_checknumber( L, 2 ) );
+    lua_Panel *panel = LUA_BINDING_ARGUMENT( luaL_checkpanel, 1, "panel" );
+    HCursor cursor = LUA_BINDING_ARGUMENT_ENUM( CursorCode, 2, "cursorCode" );
+    panel->SetCursor( cursor );
     return 0;
 }
+LUA_BINDING_END()
 
-static int Panel_SetDock( lua_State *L )
+LUA_BINDING_BEGIN( Panel, SetDock, "class", "Sets the dock" )
 {
-    luaL_checkpanel( L, 1 )->SetDock( ( Dock::Type )( int )luaL_checknumber( L, 2 ) );
+    lua_Panel *panel = LUA_BINDING_ARGUMENT( luaL_checkpanel, 1, "panel" );
+    Dock::Type dock = LUA_BINDING_ARGUMENT_ENUM( Dock::Type, 2, "dock" );
+    panel->SetDock( dock );
     return 0;
 }
+LUA_BINDING_END()
 
-static int Panel_SetDockMargin( lua_State *L )
+LUA_BINDING_BEGIN( Panel, SetDockMargin, "class", "Sets the dock margin" )
 {
-    Thickness margin( luaL_checknumber( L, 2 ), luaL_checknumber( L, 3 ), luaL_checknumber( L, 4 ), luaL_checknumber( L, 5 ) );
-    luaL_checkpanel( L, 1 )->SetDockMargin( margin );
+    lua_Panel *panel = LUA_BINDING_ARGUMENT( luaL_checkpanel, 1, "panel" );
+    int left = LUA_BINDING_ARGUMENT( luaL_checknumber, 2, "left" );
+    int top = LUA_BINDING_ARGUMENT( luaL_checknumber, 3, "top" );
+    int right = LUA_BINDING_ARGUMENT( luaL_checknumber, 4, "right" );
+    int bottom = LUA_BINDING_ARGUMENT( luaL_checknumber, 5, "bottom" );
+
+    panel->SetDockMargin( Thickness( left, top, right, bottom ) );
     return 0;
 }
+LUA_BINDING_END()
 
-static int Panel_SetDockPadding( lua_State *L )
+LUA_BINDING_BEGIN( Panel, SetDockPadding, "class", "Sets the dock padding" )
 {
-    Thickness padding( luaL_checknumber( L, 2 ), luaL_checknumber( L, 3 ), luaL_checknumber( L, 4 ), luaL_checknumber( L, 5 ) );
-    luaL_checkpanel( L, 1 )->SetDockPadding( padding );
+    lua_Panel *panel = LUA_BINDING_ARGUMENT( luaL_checkpanel, 1, "panel" );
+    int left = LUA_BINDING_ARGUMENT( luaL_checknumber, 2, "left" );
+    int top = LUA_BINDING_ARGUMENT( luaL_checknumber, 3, "top" );
+    int right = LUA_BINDING_ARGUMENT( luaL_checknumber, 4, "right" );
+    int bottom = LUA_BINDING_ARGUMENT( luaL_checknumber, 5, "bottom" );
+
+    panel->SetDockPadding( Thickness( left, top, right, bottom ) );
     return 0;
 }
+LUA_BINDING_END()
 
-static int Panel_SetDragEnabled( lua_State *L )
+LUA_BINDING_BEGIN( Panel, SetDragEnabled, "class", "Sets whether the drag is enabled" )
 {
-    luaL_checkpanel( L, 1 )->SetDragEnabled( luaL_checkboolean( L, 2 ) );
+    lua_Panel *panel = LUA_BINDING_ARGUMENT( luaL_checkpanel, 1, "panel" );
+    bool enabled = LUA_BINDING_ARGUMENT( luaL_checkboolean, 2, "enabled" );
+    panel->SetDragEnabled( enabled );
     return 0;
 }
+LUA_BINDING_END()
 
-static int Panel_SetDragSTartTolerance( lua_State *L )
+LUA_BINDING_BEGIN( Panel, SetDragStartTolerance, "class", "Sets the drag start tolerance" )
 {
-    luaL_checkpanel( L, 1 )->SetDragSTartTolerance( luaL_checknumber( L, 2 ) );
+    lua_Panel *panel = LUA_BINDING_ARGUMENT( luaL_checkpanel, 1, "panel" );
+    int tolerance = LUA_BINDING_ARGUMENT( luaL_checknumber, 2, "tolerance" );
+    panel->SetDragSTartTolerance( tolerance );
     return 0;
 }
+LUA_BINDING_END()
 
-static int Panel_SetDropEnabled( lua_State *L )
+LUA_BINDING_BEGIN( Panel, SetDropEnabled, "class", "Sets whether the drop is enabled" )
 {
-    luaL_checkpanel( L, 1 )->SetDropEnabled( luaL_checkboolean( L, 2 ),
-                                             luaL_optnumber( L, 3, 0.0f ) );
+    lua_Panel *panel = LUA_BINDING_ARGUMENT( luaL_checkpanel, 1, "panel" );
+    bool enabled = LUA_BINDING_ARGUMENT( luaL_checkboolean, 2, "enabled" );
+    float radius = LUA_BINDING_ARGUMENT_WITH_DEFAULT( luaL_optnumber, 3, 0.0f, "radius" );
+
+    panel->SetDropEnabled( enabled, radius );
     return 0;
 }
+LUA_BINDING_END()
 
-static int Panel_SetEnabled( lua_State *L )
+LUA_BINDING_BEGIN( Panel, SetEnabled, "class", "Sets whether the panel is enabled" )
 {
-    luaL_checkpanel( L, 1 )->SetEnabled( luaL_checkboolean( L, 2 ) );
+    lua_Panel *panel = LUA_BINDING_ARGUMENT( luaL_checkpanel, 1, "panel" );
+    bool enabled = LUA_BINDING_ARGUMENT( luaL_checkboolean, 2, "enabled" );
+    panel->SetEnabled( enabled );
     return 0;
 }
+LUA_BINDING_END()
 
-static int Panel_SetFgColor( lua_State *L )
+LUA_BINDING_BEGIN( Panel, SetForegroundColor, "class", "Sets the foreground color" )
 {
-    luaL_checkpanel( L, 1 )->SetFgColor( luaL_checkcolor( L, 2 ) );
+    lua_Panel *panel = LUA_BINDING_ARGUMENT( luaL_checkpanel, 1, "panel" );
+    lua_Color &color = LUA_BINDING_ARGUMENT( luaL_checkcolor, 2, "color" );
+    panel->SetFgColor( color );
     return 0;
 }
+LUA_BINDING_END()
 
-static int Panel_SetKeyBoardInputEnabled( lua_State *L )
+LUA_BINDING_BEGIN( Panel, SetKeyboardInputEnabled, "class", "Sets whether the keyboard input is enabled" )
 {
-    luaL_checkpanel( L, 1 )->SetKeyBoardInputEnabled( luaL_checkboolean( L, 2 ) );
+    lua_Panel *panel = LUA_BINDING_ARGUMENT( luaL_checkpanel, 1, "panel" );
+    bool enabled = LUA_BINDING_ARGUMENT( luaL_checkboolean, 2, "enabled" );
+    panel->SetKeyBoardInputEnabled( enabled );
     return 0;
 }
+LUA_BINDING_END()
 
-static int Panel_SetMinimumSize( lua_State *L )
+LUA_BINDING_BEGIN( Panel, SetMinimumSize, "class", "Sets the minimum size" )
 {
-    luaL_checkpanel( L, 1 )->SetMinimumSize( luaL_checknumber( L, 2 ),
-                                             luaL_checknumber( L, 3 ) );
+    lua_Panel *panel = LUA_BINDING_ARGUMENT( luaL_checkpanel, 1, "panel" );
+    int width = LUA_BINDING_ARGUMENT( luaL_checknumber, 2, "width" );
+    int height = LUA_BINDING_ARGUMENT( luaL_checknumber, 3, "height" );
+
+    panel->SetMinimumSize( width, height );
     return 0;
 }
+LUA_BINDING_END()
 
-static int Panel_SetMouseInputEnabled( lua_State *L )
+LUA_BINDING_BEGIN( Panel, SetMouseInputEnabled, "class", "Sets whether the mouse input is enabled" )
 {
-    luaL_checkpanel( L, 1 )->SetMouseInputEnabled( luaL_checkboolean( L, 2 ) );
+    lua_Panel *panel = LUA_BINDING_ARGUMENT( luaL_checkpanel, 1, "panel" );
+    bool enabled = LUA_BINDING_ARGUMENT( luaL_checkboolean, 2, "enabled" );
+    panel->SetMouseInputEnabled( enabled );
     return 0;
 }
+LUA_BINDING_END()
 
-static int Panel_SetName( lua_State *L )
+LUA_BINDING_BEGIN( Panel, SetName, "class", "Sets the name" )
 {
-    luaL_checkpanel( L, 1 )->SetName( luaL_checkstring( L, 2 ) );
+    lua_Panel *panel = LUA_BINDING_ARGUMENT( luaL_checkpanel, 1, "panel" );
+    const char *name = LUA_BINDING_ARGUMENT( luaL_checkstring, 2, "name" );
+    panel->SetName( name );
     return 0;
 }
+LUA_BINDING_END()
 
-static int Panel_SetPaintBackgroundEnabled( lua_State *L )
+LUA_BINDING_BEGIN( Panel, SetPaintBackgroundEnabled, "class", "Sets whether the background is painted" )
 {
-    luaL_checkpanel( L, 1 )->SetPaintBackgroundEnabled( luaL_checkboolean( L, 2 ) );
+    lua_Panel *panel = LUA_BINDING_ARGUMENT( luaL_checkpanel, 1, "panel" );
+    bool enabled = LUA_BINDING_ARGUMENT( luaL_checkboolean, 2, "enabled" );
+    panel->SetPaintBackgroundEnabled( enabled );
     return 0;
 }
+LUA_BINDING_END()
 
-static int Panel_SetPaintBackgroundType( lua_State *L )
+LUA_BINDING_BEGIN( Panel, SetPaintBackgroundType, "class", "Sets the background type" )
 {
-    luaL_checkpanel( L, 1 )->SetPaintBackgroundType( luaL_checknumber( L, 2 ) );
+    lua_Panel *panel = LUA_BINDING_ARGUMENT( luaL_checkpanel, 1, "panel" );
+    int type = LUA_BINDING_ARGUMENT( luaL_checknumber, 2, "type" );
+    panel->SetPaintBackgroundType( type );
     return 0;
 }
+LUA_BINDING_END()
 
-static int Panel_SetPaintBorderEnabled( lua_State *L )
+LUA_BINDING_BEGIN( Panel, SetPaintBorderEnabled, "class", "Sets whether the border is painted" )
 {
-    luaL_checkpanel( L, 1 )->SetPaintBorderEnabled( luaL_checkboolean( L, 2 ) );
+    lua_Panel *panel = LUA_BINDING_ARGUMENT( luaL_checkpanel, 1, "panel" );
+    bool enabled = LUA_BINDING_ARGUMENT( luaL_checkboolean, 2, "enabled" );
+    panel->SetPaintBorderEnabled( enabled );
     return 0;
 }
+LUA_BINDING_END()
 
-static int Panel_SetPaintClippingEnabled( lua_State *L )
+LUA_BINDING_BEGIN( Panel, SetPaintClippingEnabled, "class", "Sets whether the clipping is painted" )
 {
-    luaL_checkpanel( L, 1 )->SetPaintClippingEnabled( luaL_checkboolean( L, 2 ) );
+    lua_Panel *panel = LUA_BINDING_ARGUMENT( luaL_checkpanel, 1, "panel" );
+    bool enabled = LUA_BINDING_ARGUMENT( luaL_checkboolean, 2, "enabled" );
+    panel->SetPaintClippingEnabled( enabled );
     return 0;
 }
+LUA_BINDING_END()
 
-static int Panel_SetPaintEnabled( lua_State *L )
+LUA_BINDING_BEGIN( Panel, SetPaintEnabled, "class", "Sets whether the panel is painted" )
 {
-    luaL_checkpanel( L, 1 )->SetPaintEnabled( luaL_checkboolean( L, 2 ) );
+    lua_Panel *panel = LUA_BINDING_ARGUMENT( luaL_checkpanel, 1, "panel" );
+    bool enabled = LUA_BINDING_ARGUMENT( luaL_checkboolean, 2, "enabled" );
+    panel->SetPaintEnabled( enabled );
     return 0;
 }
+LUA_BINDING_END()
 
-static int Panel_SetParent( lua_State *L )
+LUA_BINDING_BEGIN( Panel, SetParent, "class", "Sets the parent" )
 {
-    luaL_checkpanel( L, 1 )->SetParent( luaL_checkpanel( L, 2 ) );
+    lua_Panel *panel = LUA_BINDING_ARGUMENT( luaL_checkpanel, 1, "panel" );
+    lua_Panel *parent = LUA_BINDING_ARGUMENT( luaL_checkpanel, 2, "parent" );
+    panel->SetParent( parent );
     return 0;
 }
+LUA_BINDING_END()
 
-static int Panel_SetPinCorner( lua_State *L )
+LUA_BINDING_BEGIN( Panel, SetPinCorner, "class", "Sets the pin corner" )
 {
-    luaL_checkpanel( L, 1 )->SetPinCorner( ( Panel::PinCorner_e )( int )luaL_checknumber( L, 2 ),
-                                           luaL_checknumber( L, 3 ),
-                                           luaL_checknumber( L, 4 ) );
+    lua_Panel *panel = LUA_BINDING_ARGUMENT( luaL_checkpanel, 1, "panel" );
+    Panel::PinCorner_e corner = LUA_BINDING_ARGUMENT_ENUM( Panel::PinCorner_e, 2, "corner" );
+    int offsetX = LUA_BINDING_ARGUMENT( luaL_checknumber, 3, "offsetX" );
+    int offsetY = LUA_BINDING_ARGUMENT( luaL_checknumber, 4, "offsetY" );
+
+    panel->SetPinCorner( corner, offsetX, offsetY );
     return 0;
 }
+LUA_BINDING_END()
 
-static int Panel_SetPos( lua_State *L )
+LUA_BINDING_BEGIN( Panel, SetPosition, "class", "Sets the position" )
 {
-    Panel *pPanel = luaL_checkpanel( L, 1 );
-    pPanel->SetPos( luaL_checknumber( L, 2 ),
-                                     luaL_checknumber( L, 3 ) );
+    lua_Panel *panel = LUA_BINDING_ARGUMENT( luaL_checkpanel, 1, "panel" );
+    int x = LUA_BINDING_ARGUMENT( luaL_checknumber, 2, "x" );
+    int y = LUA_BINDING_ARGUMENT( luaL_checknumber, 3, "y" );
+
+    panel->SetPos( x, y );
     return 0;
 }
+LUA_BINDING_END()
 
-static int Panel_SetPostChildPaintEnabled( lua_State *L )
+LUA_BINDING_BEGIN( Panel, SetPostChildPaintEnabled, "class", "Sets whether the post child paint is enabled" )
 {
-    luaL_checkpanel( L, 1 )->SetPostChildPaintEnabled( luaL_checkboolean( L, 2 ) );
+    lua_Panel *panel = LUA_BINDING_ARGUMENT( luaL_checkpanel, 1, "panel" );
+    bool enabled = LUA_BINDING_ARGUMENT( luaL_checkboolean, 2, "enabled" );
+    panel->SetPostChildPaintEnabled( enabled );
     return 0;
 }
+LUA_BINDING_END()
 
-static int Panel_SetProportional( lua_State *L )
+LUA_BINDING_BEGIN( Panel, SetProportional, "class", "Sets whether the panel is proportional" )
 {
-    luaL_checkpanel( L, 1 )->SetProportional( luaL_checkboolean( L, 2 ) );
+    lua_Panel *panel = LUA_BINDING_ARGUMENT( luaL_checkpanel, 1, "panel" );
+    bool proportional = LUA_BINDING_ARGUMENT( luaL_checkboolean, 2, "proportional" );
+    panel->SetProportional( proportional );
     return 0;
 }
+LUA_BINDING_END()
 
-static int Panel_SetScheme( lua_State *L )
+LUA_BINDING_BEGIN( Panel, SetScheme, "class", "Sets the scheme" )
 {
-    luaL_checkpanel( L, 1 )->SetScheme( luaL_checkstring( L, 2 ) );
+    lua_Panel *panel = LUA_BINDING_ARGUMENT( luaL_checkpanel, 1, "panel" );
+    const char *scheme = LUA_BINDING_ARGUMENT( luaL_checkstring, 2, "scheme" );
+    panel->SetScheme( scheme );
     return 0;
 }
+LUA_BINDING_END()
 
-static int Panel_SetSilentMode( lua_State *L )
+LUA_BINDING_BEGIN( Panel, SetSilentMode, "class", "Sets whether the silent mode is enabled" )
 {
-    luaL_checkpanel( L, 1 )->SetSilentMode( luaL_checkboolean( L, 2 ) );
+    lua_Panel *panel = LUA_BINDING_ARGUMENT( luaL_checkpanel, 1, "panel" );
+    bool silent = LUA_BINDING_ARGUMENT( luaL_checkboolean, 2, "silent" );
+    panel->SetSilentMode( silent );
     return 0;
 }
+LUA_BINDING_END()
 
-static int Panel_SetSize( lua_State *L )
+LUA_BINDING_BEGIN( Panel, SetSize, "class", "Sets the size" )
 {
-    luaL_checkpanel( L, 1 )->SetSize( ( int )luaL_checknumber( L, 2 ), ( int )luaL_checknumber( L, 3 ) );
+    lua_Panel *panel = LUA_BINDING_ARGUMENT( luaL_checkpanel, 1, "panel" );
+    int width = LUA_BINDING_ARGUMENT( luaL_checknumber, 2, "width" );
+    int height = LUA_BINDING_ARGUMENT( luaL_checknumber, 3, "height" );
+
+    panel->SetSize( width, height );
     return 0;
 }
+LUA_BINDING_END()
 
-static int Panel_SetSkipChildDuringPainting( lua_State *L )
+LUA_BINDING_BEGIN( Panel, SetSkipChildDuringPainting, "class", "Sets the child to skip during painting" )
 {
-    luaL_checkpanel( L, 1 )->SetSkipChildDuringPainting( luaL_checkpanel( L, 2 ) );
+    lua_Panel *panel = LUA_BINDING_ARGUMENT( luaL_checkpanel, 1, "panel" );
+    lua_Panel *skip = LUA_BINDING_ARGUMENT( luaL_checkpanel, 2, "skip" );
+    panel->SetSkipChildDuringPainting( skip );
     return 0;
 }
+LUA_BINDING_END()
 
-static int Panel_SetStartDragWhenMouseExitsPanel( lua_State *L )
+LUA_BINDING_BEGIN( Panel, SetStartDragWhenMouseExitsPanel, "class", "Sets whether the drag starts when the mouse exits the panel" )
 {
-    luaL_checkpanel( L, 1 )->SetStartDragWhenMouseExitsPanel(
-        luaL_checkboolean( L, 2 ) );
+    lua_Panel *panel = LUA_BINDING_ARGUMENT( luaL_checkpanel, 1, "panel" );
+    bool start = LUA_BINDING_ARGUMENT( luaL_checkboolean, 2, "start" );
+    panel->SetStartDragWhenMouseExitsPanel( start );
     return 0;
 }
+LUA_BINDING_END()
 
-static int Panel_SetTabPosition( lua_State *L )
+LUA_BINDING_BEGIN( Panel, SetTabPosition, "class", "Sets the tab position" )
 {
-    luaL_checkpanel( L, 1 )->SetTabPosition( luaL_checknumber( L, 2 ) );
+    lua_Panel *panel = LUA_BINDING_ARGUMENT( luaL_checkpanel, 1, "panel" );
+    int position = LUA_BINDING_ARGUMENT( luaL_checknumber, 2, "position" );
+    panel->SetTabPosition( position );
     return 0;
 }
+LUA_BINDING_END()
 
-static int Panel_SetTall( lua_State *L )
+LUA_BINDING_BEGIN( Panel, SetTall, "class", "Sets the tall" )
 {
-    luaL_checkpanel( L, 1 )->SetTall( luaL_checknumber( L, 2 ) );
+    lua_Panel *panel = LUA_BINDING_ARGUMENT( luaL_checkpanel, 1, "panel" );
+    int tall = LUA_BINDING_ARGUMENT( luaL_checknumber, 2, "tall" );
+    panel->SetTall( tall );
     return 0;
 }
+LUA_BINDING_END()
 
-static int Panel_SetTriplePressAllowed( lua_State *L )
+LUA_BINDING_BEGIN( Panel, SetTriplePressAllowed, "class", "Sets whether the triple press is allowed" )
 {
-    luaL_checkpanel( L, 1 )->SetTriplePressAllowed( luaL_checkboolean( L, 2 ) );
+    lua_Panel *panel = LUA_BINDING_ARGUMENT( luaL_checkpanel, 1, "panel" );
+    bool allowed = LUA_BINDING_ARGUMENT( luaL_checkboolean, 2, "allowed" );
+    panel->SetTriplePressAllowed( allowed );
     return 0;
 }
+LUA_BINDING_END()
 
-static int Panel_SetVisible( lua_State *L )
+LUA_BINDING_BEGIN( Panel, SetVisible, "class", "Sets whether the panel is visible" )
 {
-    luaL_checkpanel( L, 1 )->SetVisible( luaL_optboolean( L, 2, 0 ) );
+    lua_Panel *panel = LUA_BINDING_ARGUMENT( luaL_checkpanel, 1, "panel" );
+    bool visible = LUA_BINDING_ARGUMENT_WITH_DEFAULT( luaL_optboolean, 2, false, "visible" );
+    panel->SetVisible( visible );
     return 0;
 }
+LUA_BINDING_END()
 
-static int Panel_SetWide( lua_State *L )
+LUA_BINDING_BEGIN( Panel, SetWide, "class", "Sets the wide" )
 {
-    luaL_checkpanel( L, 1 )->SetWide( luaL_checknumber( L, 2 ) );
+    lua_Panel *panel = LUA_BINDING_ARGUMENT( luaL_checkpanel, 1, "panel" );
+    int wide = LUA_BINDING_ARGUMENT( luaL_checknumber, 2, "wide" );
+    panel->SetWide( wide );
     return 0;
 }
+LUA_BINDING_END()
 
-static int Panel_SetWorldClicker( lua_State *L )
+LUA_BINDING_BEGIN( Panel, SetWorldClicker, "class", "Sets whether the world clicker is enabled" )
 {
-    luaL_checkpanel( L, 1 )->SetWorldClicker( luaL_checkboolean( L, 2 ) );
+    lua_Panel *panel = LUA_BINDING_ARGUMENT( luaL_checkpanel, 1, "panel" );
+    bool clicker = LUA_BINDING_ARGUMENT( luaL_checkboolean, 2, "clicker" );
+    panel->SetWorldClicker( clicker );
     return 0;
 }
+LUA_BINDING_END()
 
-static int Panel_SetZPos( lua_State *L )
+LUA_BINDING_BEGIN( Panel, SetZIndex, "class", "Sets the z position" )
 {
-    luaL_checkpanel( L, 1 )->SetZPos( luaL_checknumber( L, 2 ) );
+    lua_Panel *panel = LUA_BINDING_ARGUMENT( luaL_checkpanel, 1, "panel" );
+    int zPos = LUA_BINDING_ARGUMENT( luaL_checknumber, 2, "zPos" );
+    panel->SetZPos( zPos );
     return 0;
 }
+LUA_BINDING_END()
 
-static int Panel_SizeToChildren( lua_State *L )
+LUA_BINDING_BEGIN( Panel, SizeToChildren, "class", "Sizes to children" )
 {
-    // false, false defaults cause no-op by default. This is akin to gmod's SizeToChildren (reason: compatibility)
-    luaL_checkpanel( L, 1 )->SizeToChildren( luaL_optboolean( L, 2, false ), luaL_optboolean( L, 3, false ) );
+    lua_Panel *panel = LUA_BINDING_ARGUMENT( luaL_checkpanel, 1, "panel" );
+    bool width = LUA_BINDING_ARGUMENT_WITH_DEFAULT( luaL_optboolean, 2, false, "width" );
+    bool height = LUA_BINDING_ARGUMENT_WITH_DEFAULT( luaL_optboolean, 3, false, "height" );
+
+    panel->SizeToChildren( width, height );
     return 0;
 }
+LUA_BINDING_END()
 
-static int Panel_ShouldHandleInputMessage( lua_State *L )
+LUA_BINDING_BEGIN( Panel, ShouldHandleInputMessage, "class", "Checks if the input message should be handled" )
 {
-    lua_pushboolean( L, luaL_checkpanel( L, 1 )->ShouldHandleInputMessage() );
+    lua_Panel *panel = LUA_BINDING_ARGUMENT( luaL_checkpanel, 1, "panel" );
+    lua_pushboolean( L, panel->ShouldHandleInputMessage() );
     return 1;
 }
+LUA_BINDING_END( "boolean", "Whether the input message should be handled" )
 
-static int Panel_StringToKeyCode( lua_State *L )
+LUA_BINDING_BEGIN( Panel, StringToKeyCode, "class", "Converts the string to key code" )
 {
-    lua_pushinteger(
-        L, luaL_checkpanel( L, 1 )->StringToKeyCode( luaL_checkstring( L, 2 ) ) );
+    const char *str = LUA_BINDING_ARGUMENT( luaL_checkstring, 1, "str" );
+    lua_pushinteger( L, lua_Panel::StringToKeyCode( str ) );
     return 1;
 }
+LUA_BINDING_END( "enumeration/BUTTON", "The key code" )
 
-static int Panel___index( lua_State *L )
+LUA_BINDING_BEGIN( Panel, __index, "class", "Metamethod called when a non-existent field is indexed" )
 {
-    Panel *plPanel = lua_topanel( L, 1 );
+    Panel *plPanel = LUA_BINDING_ARGUMENT( lua_topanel, 1, "panel" );
 
-    LUA_METATABLE_INDEX_CHECK_VALID( L, Panel_IsValid );
+    LUA_METATABLE_INDEX_CHECK_VALID( L, PanelIsValid );
     LUA_METATABLE_INDEX_CHECK( L, plPanel );
 
-    const char *field = luaL_checkstring( L, 2 );
+    const char *field = LUA_BINDING_ARGUMENT( luaL_checkstring, 2, "field" );
 
     if ( Q_strcmp( field, "x" ) == 0 )
         lua_pushnumber( L, plPanel->GetXPos() );
     else if ( Q_strcmp( field, "y" ) == 0 )
         lua_pushnumber( L, plPanel->GetYPos() );
-    else if( Q_strcmp( field, "wide" ) == 0 )
+    else if ( Q_strcmp( field, "wide" ) == 0 )
         lua_pushnumber( L, plPanel->GetWide() );
     else if ( Q_strcmp( field, "tall" ) == 0 )
         lua_pushnumber( L, plPanel->GetTall() );
@@ -1407,10 +1923,11 @@ static int Panel___index( lua_State *L )
 
     return 1;
 }
+LUA_BINDING_END( "any", "The value of the field" )
 
-static int Panel___newindex( lua_State *L )
+LUA_BINDING_BEGIN( Panel, __newindex, "class", "Metamethod called when a new field is added" )
 {
-    Panel *plPanel = lua_topanel( L, 1 );
+    Panel *plPanel = LUA_BINDING_ARGUMENT( lua_topanel, 1, "panel" );
 
     if ( plPanel == NULL )
     { /* avoid extra test when d is not 0 */
@@ -1423,7 +1940,7 @@ static int Panel___newindex( lua_State *L )
         return lua_error( L );
     }
 
-    const char *field = luaL_checkstring( L, 2 );
+    const char *field = LUA_BINDING_ARGUMENT( luaL_checkstring, 2, "field" );
 
     if ( Q_strcmp( field, "x" ) == 0 )
     {
@@ -1455,11 +1972,12 @@ static int Panel___newindex( lua_State *L )
 
     return 0;
 }
+LUA_BINDING_END()
 
-int Panel___gc( lua_State *L )
+int PanelCollectGarbage( lua_State *L )
 {
-    // We've disabled this for now, or Lua would have to keep a reference to every panel
-    // TODO: Perhaps we should modify Gui.Create to keep references for the user.
+    // Experiment; We've disabled this for now, or Lua would have to keep a reference to every panel
+    // TODO: Perhaps we should modify Panels.Create to keep references for the user.
     // TODO: We should clean up the panels when their accompanying Lua state is destroyed.
     /*Panel *plPanel = dynamic_cast< Panel * >( lua_topanel( L, 1 ) );
 
@@ -1475,15 +1993,23 @@ int Panel___gc( lua_State *L )
     return 0;
 }
 
-static int Panel___eq( lua_State *L )
+LUA_BINDING_BEGIN( Panel, __gc, "class", "Metamethod called when the panel is garbage collected" )
 {
-    lua_pushboolean( L, lua_topanel( L, 1 ) == lua_topanel( L, 2 ) );
+    return PanelCollectGarbage( L );
+}
+LUA_BINDING_END()
+
+LUA_BINDING_BEGIN( Panel, __eq, "class", "Metamethod called when two Panel objects are compared" )
+{
+    lua_pushboolean( L, LUA_BINDING_ARGUMENT( lua_topanel, 1, "panel" ) == LUA_BINDING_ARGUMENT( lua_topanel, 2, "other" ) );
     return 1;
 }
+LUA_BINDING_END( "boolean", "Whether the Panel objects are equal" )
 
-static int Panel___tostring( lua_State *L )
+LUA_BINDING_BEGIN( Panel, __tostring, "class", "Metamethod called when the Panel object is converted to a string" )
 {
-    Panel *pPanel = lua_topanel( L, 1 );
+    Panel *pPanel = LUA_BINDING_ARGUMENT( lua_topanel, 1, "panel" );
+
     if ( pPanel == NULL )
         lua_pushstring( L, "INVALID_PANEL" );
     else
@@ -1495,255 +2021,53 @@ static int Panel___tostring( lua_State *L )
     }
     return 1;
 }
+LUA_BINDING_END( "string", "The string representation of the Panel object" )
 
-static const luaL_Reg Panelmeta[] = {
-    { "AddKeyBinding", Panel_AddKeyBinding },
-    { "AddActionSignalTarget", Panel_AddActionSignalTarget },
-    { "CanStartDragging", Panel_CanStartDragging },
-    { "ChainToAnimationMap", Panel_ChainToAnimationMap },
-    { "ChainToMap", Panel_ChainToMap },
-    { "DeletePanel", Panel_DeletePanel },
-    { "DisableMouseInputForThisPanel", Panel_DisableMouseInputForThisPanel },
-    { "DrawBox", Panel_DrawBox },
-    { "DrawBoxFade", Panel_DrawBoxFade },
-    { "DrawHollowBox", Panel_DrawHollowBox },
-    { "DrawTexturedBox", Panel_DrawTexturedBox },
-    { "EditKeyBindings", Panel_EditKeyBindings },
-    { "FillRectSkippingPanel", Panel_FillRectSkippingPanel },
-    { "FindChildByName", Panel_FindChildByName },
-    { "FindChildIndexByName", Panel_FindChildIndexByName },
-    { "FindSiblingByName", Panel_FindSiblingByName },
-    { "GetAlpha", Panel_GetAlpha },
-    { "GetBgColor", Panel_GetBgColor },
-    { "GetBounds", Panel_GetBounds },
-    { "GetChild", Panel_GetChild },
-    { "GetChildCount", Panel_GetChildCount },
-    { "GetChildren", Panel_GetChildren },
-    { "GetChildrenSize", Panel_GetChildrenSize },
-    { "GetClassName", Panel_GetClassName },
-    { "GetClipRect", Panel_GetClipRect },
-    { "GetCornerTextureSize", Panel_GetCornerTextureSize },
-    { "GetDescription", Panel_GetDescription },
-    { "GetDock", Panel_GetDock },
-    { "GetDockMargin", Panel_GetDockMargin },
-    { "GetDockPadding", Panel_GetDockPadding },
-    { "GetDragFrameColor", Panel_GetDragFrameColor },
-    { "GetDragPanel", Panel_GetDragPanel },
-    { "GetDragStartTolerance", Panel_GetDragStartTolerance },
-    { "GetDropFrameColor", Panel_GetDropFrameColor },
-    { "GetFgColor", Panel_GetFgColor },
-    { "GetInset", Panel_GetInset },
-    { "GetKeyBindingsFile", Panel_GetKeyBindingsFile },
-    { "GetKeyBindingsFilePathID", Panel_GetKeyBindingsFilePathID },
-    { "GetKeyMappingCount", Panel_GetKeyMappingCount },
-    { "GetLocalCursorPosition", Panel_GetLocalCursorPosition },
-    { "GetMinimumSize", Panel_GetMinimumSize },
-    { "GetModuleName", Panel_GetModuleName },
-    { "GetName", Panel_GetName },
-    { "GetPaintBackgroundType", Panel_GetPaintBackgroundType },
-    { "GetPaintSize", Panel_GetPaintSize },
-    { "GetPanelBaseClassName", Panel_GetPanelBaseClassName },
-    { "GetPanelClassName", Panel_GetPanelClassName },
-    { "GetParent", Panel_GetParent },
-    { "GetPinCorner", Panel_GetPinCorner },
-    { "GetPinOffset", Panel_GetPinOffset },
-    { "GetPosition", Panel_GetPos },
-    { "GetRefTable", Panel_GetRefTable },
-    { "GetResizeOffset", Panel_GetResizeOffset },
-    { "GetScheme", Panel_GetScheme },
-    { "GetSize", Panel_GetSize },
-    { "GetTabPosition", Panel_GetTabPosition },
-    { "GetTall", Panel_GetTall },
-    { "GetVPanel", Panel_GetVPanel },
-    { "GetVPanelAsInteger", Panel_GetVPanelAsInteger },
-    { "GetVParent", Panel_GetVParent },
-    { "GetWide", Panel_GetWide },
-    { "GetZPos", Panel_GetZPos },
-    { "HasChildren", Panel_HasChildren },
-    { "HasFocus", Panel_HasFocus },
-    { "HasHierarchicalFocus", Panel_HasHierarchicalFocus },
-    { "HasUserConfigSettings", Panel_HasUserConfigSettings },
-    { "InitPropertyConverters", Panel_InitPropertyConverters },
-    { "InvalidateLayout", Panel_InvalidateLayout },
-    { "IsAutoDeleteSet", Panel_IsAutoDeleteSet },
-    { "IsBeingDragged", Panel_IsBeingDragged },
-    { "IsBlockingDragChaining", Panel_IsBlockingDragChaining },
-    { "IsBottomAligned", Panel_IsBottomAligned },
-    { "IsBuildGroupEnabled", Panel_IsBuildGroupEnabled },
-    { "IsBuildModeActive", Panel_IsBuildModeActive },
-    { "IsBuildModeDeletable", Panel_IsBuildModeDeletable },
-    { "IsBuildModeEditable", Panel_IsBuildModeEditable },
-    { "IsChildOfModalSubTree", Panel_IsChildOfModalSubTree },
-    { "IsChildOfSurfaceModalPanel", Panel_IsChildOfSurfaceModalPanel },
-    { "IsCursorNone", Panel_IsCursorNone },
-    { "IsCursorOver", Panel_IsCursorOver },
-    { "IsDragEnabled", Panel_IsDragEnabled },
-    { "IsDropEnabled", Panel_IsDropEnabled },
-    { "IsEnabled", Panel_IsEnabled },
-    { "IsKeyBindingChainToParentAllowed",
-      Panel_IsKeyBindingChainToParentAllowed },
-    { "IsKeyBoardInputEnabled", Panel_IsKeyBoardInputEnabled },
-    { "IsKeyOverridden", Panel_IsKeyOverridden },
-    { "IsKeyRebound", Panel_IsKeyRebound },
-    { "IsMarkedForDeletion", Panel_IsMarkedForDeletion },
-    { "IsLayoutInvalid", Panel_IsLayoutInvalid },
-    { "IsMouseInputDisabledForThisPanel",
-      Panel_IsMouseInputDisabledForThisPanel },
-    { "IsMouseInputEnabled", Panel_IsMouseInputEnabled },
-    { "IsOpaque", Panel_IsOpaque },
-    { "IsPopup", Panel_IsPopup },
-    { "IsProportional", Panel_IsProportional },
-    { "IsRightAligned", Panel_IsRightAligned },
-    { "IsStartDragWhenMouseExitsPanel", Panel_IsStartDragWhenMouseExitsPanel },
-    { "IsTriplePressAllowed", Panel_IsTriplePressAllowed },
-    { "IsValidKeyBindingsContext", Panel_IsValidKeyBindingsContext },
-    { "IsValid", Panel_IsValid },
-    { "IsVisible", Panel_IsVisible },
-    { "IsWithin", Panel_IsWithin },
-    { "IsWithinTraverse", Panel_IsWithinTraverse },
-    { "IsWorldClicker", Panel_IsWorldClicker },
-    { "KB_AddBoundKey", Panel_KB_AddBoundKey },
-    { "KB_ChainToMap", Panel_KB_ChainToMap },
-    { "KeyCodeToString", Panel_KeyCodeToString },
-    { "LocalToScreen", Panel_LocalToScreen },
-    { "MakePopup", Panel_MakePopup },
-    { "MakeReadyForUse", Panel_MakeReadyForUse },
-    { "MarkForDeletion", Panel_MarkForDeletion },
-    { "MoveToBack", Panel_MoveToBack },
-    { "MoveToFront", Panel_MoveToFront },
-    { "OnCommand", Panel_OnCommand },
-    { "OnCursorEntered", Panel_OnCursorEntered },
-    { "OnCursorExited", Panel_OnCursorExited },
-    { "OnCursorMoved", Panel_OnCursorMoved },
-    { "OnDelete", Panel_OnDelete },
-    { "OnDraggablePanelPaint", Panel_OnDraggablePanelPaint },
-    { "OnKeyCodePressed", Panel_OnKeyCodePressed },
-    { "OnKeyCodeTyped", Panel_OnKeyCodeTyped },
-    { "OnKeyFocusTicked", Panel_OnKeyFocusTicked },
-    { "OnKillFocus", Panel_OnKillFocus },
-    { "OnMouseCaptureLost", Panel_OnMouseCaptureLost },
-    { "OnMouseDoublePressed", Panel_OnMouseDoublePressed },
-    { "OnMouseFocusTicked", Panel_OnMouseFocusTicked },
-    { "OnMousePressed", Panel_OnMousePressed },
-    { "OnMouseReleased", Panel_OnMouseReleased },
-    { "OnMouseTriplePressed", Panel_OnMouseTriplePressed },
-    { "OnMouseWheeled", Panel_OnMouseWheeled },
-    { "OnMove", Panel_OnMove },
-    { "OnSetFocus", Panel_OnSetFocus },
-    { "OnSizeChanged", Panel_OnSizeChanged },
-    { "OnThink", Panel_OnThink },
-    { "OnTick", Panel_OnTick },
-    { "Paint", Panel_Paint },
-    { "PaintBackground", Panel_PaintBackground },
-    { "PaintBorder", Panel_PaintBorder },
-    { "PaintBuildOverlay", Panel_PaintBuildOverlay },
-    { "ParentLocalToScreen", Panel_ParentLocalToScreen },
-    { "ParentToHUD", Panel_ParentToHUD },
-    { "PerformLayout", Panel_PerformLayout },
-    { "Prepare", Panel_Prepare },
-    { "PostChildPaint", Panel_PostChildPaint },
-    { "ReloadKeyBindings", Panel_ReloadKeyBindings },
-    { "RemoveActionSignalTarget", Panel_RemoveActionSignalTarget },
-    { "RemoveAllKeyBindings", Panel_RemoveAllKeyBindings },
-    { "Repaint", Panel_Repaint },
-    { "RequestFocus", Panel_RequestFocus },
-    { "RevertKeyBindingsToDefault", Panel_RevertKeyBindingsToDefault },
-    { "ScreenToLocal", Panel_ScreenToLocal },
-    { "SetAllowKeyBindingChainToParent", Panel_SetAllowKeyBindingChainToParent },
-    { "SetAlpha", Panel_SetAlpha },
-    { "SetAutoDelete", Panel_SetAutoDelete },
-    { "SetAutoResize", Panel_SetAutoResize },
-    { "SetBgColor", Panel_SetBgColor },
-    { "SetBlockDragChaining", Panel_SetBlockDragChaining },
-    { "SetBounds", Panel_SetBounds },
-    { "SetBuildModeDeletable", Panel_SetBuildModeDeletable },
-    { "SetBuildModeEditable", Panel_SetBuildModeEditable },
-    { "SetCursor", Panel_SetCursor },
-    { "SetDock", Panel_SetDock },
-    { "SetDockMargin", Panel_SetDockMargin },
-    { "SetDockPadding", Panel_SetDockPadding },
-    { "SetDragEnabled", Panel_SetDragEnabled },
-    { "SetDragSTartTolerance", Panel_SetDragSTartTolerance },
-    { "SetDropEnabled", Panel_SetDropEnabled },
-    { "SetEnabled", Panel_SetEnabled },
-    { "SetFgColor", Panel_SetFgColor },
-    { "SetKeyboardInputEnabled", Panel_SetKeyBoardInputEnabled },  // Note that we fixed capitalization, keyboard is one word
-    { "SetMinimumSize", Panel_SetMinimumSize },
-    { "SetMouseInputEnabled", Panel_SetMouseInputEnabled },
-    { "SetName", Panel_SetName },
-    { "SetPaintBackgroundEnabled", Panel_SetPaintBackgroundEnabled },
-    { "SetPaintBackgroundType", Panel_SetPaintBackgroundType },
-    { "SetPaintBorderEnabled", Panel_SetPaintBorderEnabled },
-    { "SetPaintClippingEnabled", Panel_SetPaintClippingEnabled },
-    { "SetPaintEnabled", Panel_SetPaintEnabled },
-    { "SetParent", Panel_SetParent },
-    { "SetPinCorner", Panel_SetPinCorner },
-    { "SetPosition", Panel_SetPos },
-    { "SetPostChildPaintEnabled", Panel_SetPostChildPaintEnabled },
-    { "SetProportional", Panel_SetProportional },
-    { "SetScheme", Panel_SetScheme },
-    { "SetSilentMode", Panel_SetSilentMode },
-    { "SetSize", Panel_SetSize },
-    { "SetSkipChildDuringPainting", Panel_SetSkipChildDuringPainting },
-    { "SetStartDragWhenMouseExitsPanel", Panel_SetStartDragWhenMouseExitsPanel },
-    { "SetTabPosition", Panel_SetTabPosition },
-    { "SetTall", Panel_SetTall },
-    { "SetTriplePressAllowed", Panel_SetTriplePressAllowed },
-    { "SetVisible", Panel_SetVisible },
-    { "SetWide", Panel_SetWide },
-    { "SetWorldClicker", Panel_SetWorldClicker },
-    { "SetZPos", Panel_SetZPos },
-    { "SizeToChildren", Panel_SizeToChildren },
-    { "ShouldHandleInputMessage", Panel_ShouldHandleInputMessage },
-    { "StringToKeyCode", Panel_StringToKeyCode },
-    { "__index", Panel___index },
-    { "__newindex", Panel___newindex },
-    { "__eq", Panel___eq },
-    { "__tostring", Panel___tostring },
-    //{ "__gc", Panel___gc },
-    { NULL, NULL } };
+LUA_REGISTRATION_INIT( Panels )
 
-static int luasrc_Panel( lua_State *L )
+LUA_BINDING_BEGIN( Panels, Panel, "library", "Creates a new Panel object" )
 {
+    Panel *parent = LUA_BINDING_ARGUMENT_WITH_DEFAULT( luaL_optpanel, 1, VGui_GetClientLuaRootPanel(), "parent" );
+    const char *name = LUA_BINDING_ARGUMENT_WITH_DEFAULT( luaL_optstring, 2, "Panel", "name" );
+
     lua_Panel *pPanel = new lua_Panel(
-        luaL_optpanel( L, 1, VGui_GetClientLuaRootPanel() ),
-        luaL_optstring( L, 2, NULL ),
+        parent,
+        name,
         L );
     pPanel->PushLuaInstance( L );
     return 1;
 }
+LUA_BINDING_END()
 
-static int luasrc_GetGameUIPanel( lua_State *L )
+LUA_BINDING_BEGIN( Panels, GetGameUiPanel, "library", "Gets the game UI panel" )
 {
     VGui_GetGameUIPanel()->PushLuaInstance( L );
     return 1;
 }
+LUA_BINDING_END()
 
-static int luasrc_GetClientLuaRootPanel( lua_State *L )
+LUA_BINDING_BEGIN( Panels, GetClientLuaRootPanel, "library", "Gets the client Lua root panel" )
 {
     VGui_GetClientLuaRootPanel()->PushLuaInstance( L );
     return 1;
 }
-
-static const luaL_Reg Panel_funcs[] = {
-    { "Panel", luasrc_Panel },
-    { "GetGameUIPanel", luasrc_GetGameUIPanel },
-    { "GetClientLuaRootPanel", luasrc_GetClientLuaRootPanel },
-    { NULL, NULL } };
+LUA_BINDING_END()
 
 /*
 ** Open Panel object
 */
 LUALIB_API int luaopen_vgui_Panel( lua_State *L )
 {
-    luaL_register( L, LUA_VGUILIBNAME, Panel_funcs );
-    lua_pop( L, 1 );
-
     LUA_PUSH_NEW_METATABLE( L, "Panel" );
-    luaL_register( L, NULL, Panelmeta );
-    lua_pushstring( L, LUA_PANELLIBNAME );
+
+    LUA_REGISTRATION_COMMIT( Panel );
+
+    lua_pushstring( L, LUA_PANELMETANAME );
     lua_setfield( L, -2, "__type" ); /* metatable.__type = "Panel" */
     lua_pop( L, 1 );                 // pop metatable
+
+    LUA_REGISTRATION_COMMIT_LIBRARY( Panels );
+
     // Andrew; Don't be mislead, INVALID_PANEL is not NULL internally, but we
     // need a name other than NULL, because NULL has already been assigned as an
     // entity.
@@ -1751,21 +2075,21 @@ LUALIB_API int luaopen_vgui_Panel( lua_State *L )
     lua_setglobal( L, "INVALID_PANEL" ); /* set global INVALID_PANEL */
 
     LUA_SET_ENUM_LIB_BEGIN( L, "PIN_CORNER" );
-    lua_pushenum( L, Panel::PIN_TOPLEFT, "TOP_LEFT" );
-    lua_pushenum( L, Panel::PIN_TOPRIGHT, "TOP_RIGHT" );
-    lua_pushenum( L, Panel::PIN_BOTTOMLEFT, "BOTTOM_LEFT" );
-    lua_pushenum( L, Panel::PIN_BOTTOMRIGHT, "BOTTOM_RIGHT" );
-    lua_pushenum( L, Panel::PIN_CENTER_TOP, "CENTER_TOP" );
-    lua_pushenum( L, Panel::PIN_CENTER_RIGHT, "CENTER_RIGHT" );
-    lua_pushenum( L, Panel::PIN_CENTER_BOTTOM, "CENTER_BOTTOM" );
-    lua_pushenum( L, Panel::PIN_CENTER_LEFT, "CENTER_LEFT" );
+    lua_pushenum( L, Panel::PinCorner_e::PIN_TOPLEFT, "TOP_LEFT" );
+    lua_pushenum( L, Panel::PinCorner_e::PIN_TOPRIGHT, "TOP_RIGHT" );
+    lua_pushenum( L, Panel::PinCorner_e::PIN_BOTTOMLEFT, "BOTTOM_LEFT" );
+    lua_pushenum( L, Panel::PinCorner_e::PIN_BOTTOMRIGHT, "BOTTOM_RIGHT" );
+    lua_pushenum( L, Panel::PinCorner_e::PIN_CENTER_TOP, "CENTER_TOP" );
+    lua_pushenum( L, Panel::PinCorner_e::PIN_CENTER_RIGHT, "CENTER_RIGHT" );
+    lua_pushenum( L, Panel::PinCorner_e::PIN_CENTER_BOTTOM, "CENTER_BOTTOM" );
+    lua_pushenum( L, Panel::PinCorner_e::PIN_CENTER_LEFT, "CENTER_LEFT" );
     LUA_SET_ENUM_LIB_END( L );
 
     LUA_SET_ENUM_LIB_BEGIN( L, "AUTO_RESIZE" );
-    lua_pushenum( L, Panel::AUTORESIZE_NO, "NO" );
-    lua_pushenum( L, Panel::AUTORESIZE_RIGHT, "RIGHT" );
-    lua_pushenum( L, Panel::AUTORESIZE_DOWN, "DOWN" );
-    lua_pushenum( L, Panel::AUTORESIZE_DOWNANDRIGHT, "DOWN_AND_RIGHT" );
+    lua_pushenum( L, Panel::AutoResize_e::AUTORESIZE_NO, "NO" );
+    lua_pushenum( L, Panel::AutoResize_e::AUTORESIZE_RIGHT, "RIGHT" );
+    lua_pushenum( L, Panel::AutoResize_e::AUTORESIZE_DOWN, "DOWN" );
+    lua_pushenum( L, Panel::AutoResize_e::AUTORESIZE_DOWNANDRIGHT, "DOWN_AND_RIGHT" );
     LUA_SET_ENUM_LIB_END( L );
 
     LUA_SET_ENUM_LIB_BEGIN( L, "DOCK_TYPE" );
@@ -1786,6 +2110,28 @@ LUALIB_API int luaopen_vgui_Panel( lua_State *L )
     lua_pushenum( L, Alignment::CenterVertical, "CENTER_VERTICAL" );
     lua_pushenum( L, Alignment::CenterHorizontal, "CENTER_HORIZONTAL" );
     lua_pushenum( L, Alignment::Center, "CENTER" );
+    LUA_SET_ENUM_LIB_END( L );
+
+    LUA_SET_ENUM_LIB_BEGIN( L, "CURSOR" );
+    lua_pushenum( L, CursorCode::dc_none, "NONE" );
+    lua_pushenum( L, CursorCode::dc_user, "USER" );
+    lua_pushenum( L, CursorCode::dc_arrow, "ARROW" );
+    lua_pushenum( L, CursorCode::dc_ibeam, "IBEAM" );
+    lua_pushenum( L, CursorCode::dc_hourglass, "HOURGLASS" );
+    lua_pushenum( L, CursorCode::dc_waitarrow, "WAIT_ARROW" );
+    lua_pushenum( L, CursorCode::dc_crosshair, "CROSSHAIR" );
+    lua_pushenum( L, CursorCode::dc_up, "UP" );
+    lua_pushenum( L, CursorCode::dc_sizenwse, "SIZE_NORTHWEST_SOUTHEAST" );
+    lua_pushenum( L, CursorCode::dc_sizenesw, "SIZE_NORTHEAST_SOUTHWEST" );
+    lua_pushenum( L, CursorCode::dc_sizewe, "SIZE_WEST_EAST" );
+    lua_pushenum( L, CursorCode::dc_sizens, "SIZE_NORTH_SOUTH" );
+    lua_pushenum( L, CursorCode::dc_sizeall, "SIZE_ALL" );
+    lua_pushenum( L, CursorCode::dc_no, "NO" );
+    lua_pushenum( L, CursorCode::dc_hand, "HAND" );
+    lua_pushenum( L, CursorCode::dc_blank, "BLANK" );
+    lua_pushenum( L, CursorCode::dc_last, "LAST" );
+    lua_pushenum( L, CursorCode::dc_alwaysvisible_push, "ALWAYS_VISIBLE_PUSH" );
+    lua_pushenum( L, CursorCode::dc_alwaysvisible_pop, "ALWAYS_VISIBLE_POP" );
     LUA_SET_ENUM_LIB_END( L );
 
     return 1;

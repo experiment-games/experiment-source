@@ -15,7 +15,7 @@ lua:
   
   arguments:
     - name: "team"
-      type: integer
+      type: number
   returns:
     
 ---

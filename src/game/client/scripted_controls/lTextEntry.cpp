@@ -48,355 +48,595 @@ LUALIB_API lua_TextEntry *luaL_checktextentry( lua_State *L, int narg )
     return d;
 }
 
-static int TextEntry_SetText( lua_State *L )
+LUA_REGISTRATION_INIT( TextEntry )
+
+LUA_BINDING_BEGIN( TextEntry, GetPanelBaseClassName, "class|static", "Gets the base class name of the panel" )
 {
-    luaL_checktextentry( L, 1 )->SetText( luaL_checkstring( L, 2 ) );
+    lua_pushstring( L, lua_TextEntry::GetPanelBaseClassName() );
+    return 1;
+}
+LUA_BINDING_END( "string", "The base class name of the panel" )
+
+LUA_BINDING_BEGIN( TextEntry, GetPanelClassName, "class|static", "Gets the class name of the panel" )
+{
+    lua_pushstring( L, lua_TextEntry::GetPanelClassName() );
+    return 1;
+}
+LUA_BINDING_END( "string", "The class name of the panel" )
+
+LUA_BINDING_BEGIN( TextEntry, SetText, "class", "Sets the text of the text entry" )
+{
+    lua_TextEntry *textEntry = LUA_BINDING_ARGUMENT( luaL_checktextentry, 1, "textEntry" );
+    const char *text = LUA_BINDING_ARGUMENT( luaL_checkstring, 2, "text" );
+    textEntry->SetText( text );
     return 0;
 }
+LUA_BINDING_END()
 
-static int TextEntry_GetCursorPos( lua_State *L )
+LUA_BINDING_BEGIN( TextEntry, GetCursorPosition, "class", "Gets the cursor position in the text entry" )
 {
-    int position = luaL_checktextentry( L, 1 )->GetCursorPos();
+    lua_TextEntry *textEntry = LUA_BINDING_ARGUMENT( luaL_checktextentry, 1, "textEntry" );
+    int position = textEntry->GetCursorPos();
     lua_pushinteger( L, position );
     return 1;
 }
+LUA_BINDING_END( "integer", "The cursor position" )
 
-static int TextEntry_SetCursorPos( lua_State *L )
+LUA_BINDING_BEGIN( TextEntry, SetCursorPosition, "class", "Sets the cursor position in the text entry" )
 {
-    luaL_checktextentry( L, 1 )->SetCursorPos( luaL_checkinteger( L, 2 ) );
+    lua_TextEntry *textEntry = LUA_BINDING_ARGUMENT( luaL_checktextentry, 1, "textEntry" );
+    int position = LUA_BINDING_ARGUMENT( luaL_checknumber, 2, "position" );
+    textEntry->SetCursorPos( position );
     return 0;
 }
+LUA_BINDING_END()
 
-static int TextEntry_GetText( lua_State *L )
+LUA_BINDING_BEGIN( TextEntry, GetText, "class", "Gets the text from the text entry" )
 {
-    char buf[1023];
-    luaL_checktextentry( L, 1 )->GetText( buf, sizeof( buf ) );
+    lua_TextEntry *textEntry = LUA_BINDING_ARGUMENT( luaL_checktextentry, 1, "textEntry" );
+    char buf[1024];
+    textEntry->GetText( buf, sizeof( buf ) );
     lua_pushstring( L, buf );
     return 1;
 }
+LUA_BINDING_END( "string", "The text from the text entry" )
 
-static int TextEntry_GetTextLength( lua_State *L )
+LUA_BINDING_BEGIN( TextEntry, GetTextLength, "class", "Gets the length of the text in the text entry" )
 {
-    lua_pushinteger( L, luaL_checktextentry( L, 1 )->GetTextLength() );
+    lua_TextEntry *textEntry = LUA_BINDING_ARGUMENT( luaL_checktextentry, 1, "textEntry" );
+    int length = textEntry->GetTextLength();
+    lua_pushinteger( L, length );
     return 1;
 }
+LUA_BINDING_END( "integer", "The length of the text" )
 
-static int TextEntry_GetValue( lua_State *L )
+LUA_BINDING_BEGIN( TextEntry, GetValue, "class", "Gets the value from the text entry" )
 {
+    lua_TextEntry *textEntry = LUA_BINDING_ARGUMENT( luaL_checktextentry, 1, "textEntry" );
     char buf[8092];
-    luaL_checktextentry( L, 1 )->GetText( buf, sizeof( buf ) );
+    textEntry->GetText( buf, sizeof( buf ) );
     lua_pushstring( L, buf );
     return 1;
 }
+LUA_BINDING_END( "string", "The value from the text entry" )
 
-static int TextEntry_GetValueAsFloat( lua_State *L )
+LUA_BINDING_BEGIN( TextEntry, GetValueAsFloat, "class", "Gets the value from the text entry as a float" )
 {
-    float value = luaL_checktextentry( L, 1 )->GetValueAsFloat();
+    lua_TextEntry *textEntry = LUA_BINDING_ARGUMENT( luaL_checktextentry, 1, "textEntry" );
+    float value = textEntry->GetValueAsFloat();
     lua_pushnumber( L, value );
     return 1;
 }
+LUA_BINDING_END( "number", "The value as a float" )
 
-static int TextEntry_GetValueAsInt( lua_State *L )
+LUA_BINDING_BEGIN( TextEntry, GetValueAsInteger, "class", "Gets the value from the text entry as an integer" )
 {
-    int value = luaL_checktextentry( L, 1 )->GetValueAsInt();
+    lua_TextEntry *textEntry = LUA_BINDING_ARGUMENT( luaL_checktextentry, 1, "textEntry" );
+    int value = textEntry->GetValueAsInt();
     lua_pushinteger( L, value );
     return 1;
 }
+LUA_BINDING_END( "integer", "The value as an integer" )
 
-static int TextEntry_IsTextFullySelected( lua_State *L )
+LUA_BINDING_BEGIN( TextEntry, IsTextFullySelected, "class", "Checks if the text is fully selected" )
 {
-    lua_pushboolean( L, luaL_checktextentry( L, 1 )->IsTextFullySelected() );
+    lua_TextEntry *textEntry = LUA_BINDING_ARGUMENT( luaL_checktextentry, 1, "textEntry" );
+    lua_pushboolean( L, textEntry->IsTextFullySelected() );
     return 1;
 }
+LUA_BINDING_END( "boolean", "Whether the text is fully selected" )
 
-static int TextEntry_GotoLeft( lua_State *L )
+LUA_BINDING_BEGIN( TextEntry, GotoLeft, "class", "Moves the cursor left" )
 {
-    luaL_checktextentry( L, 1 )->GotoLeft();
+    lua_TextEntry *textEntry = LUA_BINDING_ARGUMENT( luaL_checktextentry, 1, "textEntry" );
+    textEntry->GotoLeft();
     return 0;
 }
+LUA_BINDING_END()
 
-static int TextEntry_GotoRight( lua_State *L )
+LUA_BINDING_BEGIN( TextEntry, GotoRight, "class", "Moves the cursor right" )
 {
-    luaL_checktextentry( L, 1 )->GotoRight();
+    lua_TextEntry *textEntry = LUA_BINDING_ARGUMENT( luaL_checktextentry, 1, "textEntry" );
+    textEntry->GotoRight();
     return 0;
 }
+LUA_BINDING_END()
 
-static int TextEntry_GotoUp( lua_State *L )
+LUA_BINDING_BEGIN( TextEntry, GotoUp, "class", "Moves the cursor up" )
 {
-    luaL_checktextentry( L, 1 )->GotoUp();
+    lua_TextEntry *textEntry = LUA_BINDING_ARGUMENT( luaL_checktextentry, 1, "textEntry" );
+    textEntry->GotoUp();
     return 0;
 }
+LUA_BINDING_END()
 
-static int TextEntry_GotoDown( lua_State *L )
+LUA_BINDING_BEGIN( TextEntry, GotoDown, "class", "Moves the cursor down" )
 {
-    luaL_checktextentry( L, 1 )->GotoDown();
+    lua_TextEntry *textEntry = LUA_BINDING_ARGUMENT( luaL_checktextentry, 1, "textEntry" );
+    textEntry->GotoDown();
     return 0;
 }
+LUA_BINDING_END()
 
-static int TextEntry_GotoWordRight( lua_State *L )
+LUA_BINDING_BEGIN( TextEntry, GotoWordRight, "class", "Moves the cursor to the next word on the right" )
 {
-    luaL_checktextentry( L, 1 )->GotoWordRight();
+    lua_TextEntry *textEntry = LUA_BINDING_ARGUMENT( luaL_checktextentry, 1, "textEntry" );
+    textEntry->GotoWordRight();
     return 0;
 }
+LUA_BINDING_END()
 
-static int TextEntry_GotoWordLeft( lua_State *L )
+LUA_BINDING_BEGIN( TextEntry, GotoWordLeft, "class", "Moves the cursor to the previous word on the left" )
 {
-    luaL_checktextentry( L, 1 )->GotoWordLeft();
+    lua_TextEntry *textEntry = LUA_BINDING_ARGUMENT( luaL_checktextentry, 1, "textEntry" );
+    textEntry->GotoWordLeft();
     return 0;
 }
+LUA_BINDING_END()
 
-static int TextEntry_GotoFirstOfLine( lua_State *L )
+LUA_BINDING_BEGIN( TextEntry, GotoFirstOfLine, "class", "Moves the cursor to the beginning of the line" )
 {
-    luaL_checktextentry( L, 1 )->GotoFirstOfLine();
+    lua_TextEntry *textEntry = LUA_BINDING_ARGUMENT( luaL_checktextentry, 1, "textEntry" );
+    textEntry->GotoFirstOfLine();
     return 0;
 }
+LUA_BINDING_END()
 
-static int TextEntry_GotoEndOfLine( lua_State *L )
+LUA_BINDING_BEGIN( TextEntry, GotoEndOfLine, "class", "Moves the cursor to the end of the line" )
 {
-    luaL_checktextentry( L, 1 )->GotoEndOfLine();
+    lua_TextEntry *textEntry = LUA_BINDING_ARGUMENT( luaL_checktextentry, 1, "textEntry" );
+    textEntry->GotoEndOfLine();
     return 0;
 }
+LUA_BINDING_END()
 
-static int TextEntry_GotoTextStart( lua_State *L )
+LUA_BINDING_BEGIN( TextEntry, GotoTextStart, "class", "Moves the cursor to the start of the text" )
 {
-    luaL_checktextentry( L, 1 )->GotoTextStart();
+    lua_TextEntry *textEntry = LUA_BINDING_ARGUMENT( luaL_checktextentry, 1, "textEntry" );
+    textEntry->GotoTextStart();
     return 0;
 }
+LUA_BINDING_END()
 
-static int TextEntry_GotoTextEnd( lua_State *L )
+LUA_BINDING_BEGIN( TextEntry, GotoTextEnd, "class", "Moves the cursor to the end of the text" )
 {
-    luaL_checktextentry( L, 1 )->GotoTextEnd();
+    lua_TextEntry *textEntry = LUA_BINDING_ARGUMENT( luaL_checktextentry, 1, "textEntry" );
+    textEntry->GotoTextEnd();
     return 0;
 }
+LUA_BINDING_END()
 
-static int TextEntry_InsertString( lua_State *L )
+LUA_BINDING_BEGIN( TextEntry, InsertString, "class", "Inserts a string at the cursor position" )
 {
-    luaL_checktextentry( L, 1 )->InsertString( luaL_checkstring( L, 2 ) );
+    lua_TextEntry *textEntry = LUA_BINDING_ARGUMENT( luaL_checktextentry, 1, "textEntry" );
+    const char *str = LUA_BINDING_ARGUMENT( luaL_checkstring, 2, "str" );
+    textEntry->InsertString( str );
     return 0;
 }
+LUA_BINDING_END()
 
-static int TextEntry_Backspace( lua_State *L )
+LUA_BINDING_BEGIN( TextEntry, Backspace, "class", "Deletes the character before the cursor" )
 {
-    luaL_checktextentry( L, 1 )->Backspace();
+    lua_TextEntry *textEntry = LUA_BINDING_ARGUMENT( luaL_checktextentry, 1, "textEntry" );
+    textEntry->Backspace();
     return 0;
 }
+LUA_BINDING_END()
 
-static int TextEntry_Delete( lua_State *L )
+LUA_BINDING_BEGIN( TextEntry, Delete, "class", "Deletes the character after the cursor" )
 {
-    luaL_checktextentry( L, 1 )->Delete();
+    lua_TextEntry *textEntry = LUA_BINDING_ARGUMENT( luaL_checktextentry, 1, "textEntry" );
+    textEntry->Delete();
     return 0;
 }
+LUA_BINDING_END()
 
-static int TextEntry_SelectNone( lua_State *L )
+LUA_BINDING_BEGIN( TextEntry, SelectNone, "class", "Deselects any selected text" )
 {
-    luaL_checktextentry( L, 1 )->SelectNone();
+    lua_TextEntry *textEntry = LUA_BINDING_ARGUMENT( luaL_checktextentry, 1, "textEntry" );
+    textEntry->SelectNone();
     return 0;
 }
+LUA_BINDING_END()
 
-static int TextEntry_OpenEditMenu( lua_State *L )
+LUA_BINDING_BEGIN( TextEntry, OpenEditMenu, "class", "Opens the edit menu for the text entry" )
 {
-    luaL_checktextentry( L, 1 )->OpenEditMenu();
+    lua_TextEntry *textEntry = LUA_BINDING_ARGUMENT( luaL_checktextentry, 1, "textEntry" );
+    textEntry->OpenEditMenu();
     return 0;
 }
+LUA_BINDING_END()
 
-static int TextEntry_DeleteSelected( lua_State *L )
+LUA_BINDING_BEGIN( TextEntry, DeleteSelected, "class", "Deletes the selected text" )
 {
-    luaL_checktextentry( L, 1 )->DeleteSelected();
+    lua_TextEntry *textEntry = LUA_BINDING_ARGUMENT( luaL_checktextentry, 1, "textEntry" );
+    textEntry->DeleteSelected();
     return 0;
 }
+LUA_BINDING_END()
 
-static int TextEntry_Undo( lua_State *L )
+LUA_BINDING_BEGIN( TextEntry, Undo, "class", "Undoes the last action" )
 {
-    luaL_checktextentry( L, 1 )->Undo();
+    lua_TextEntry *textEntry = LUA_BINDING_ARGUMENT( luaL_checktextentry, 1, "textEntry" );
+    textEntry->Undo();
     return 0;
 }
+LUA_BINDING_END()
 
-static int TextEntry_SaveUndoState( lua_State *L )
+LUA_BINDING_BEGIN( TextEntry, SaveUndoState, "class", "Saves the current state for undo" )
 {
-    luaL_checktextentry( L, 1 )->SaveUndoState();
+    lua_TextEntry *textEntry = LUA_BINDING_ARGUMENT( luaL_checktextentry, 1, "textEntry" );
+    textEntry->SaveUndoState();
     return 0;
 }
+LUA_BINDING_END()
 
-static int TextEntry_SetFont( lua_State *L )
+LUA_BINDING_BEGIN( TextEntry, SetFont, "class", "Sets the font for the text entry" )
 {
-    luaL_checktextentry( L, 1 )->SetFont( luaL_checkfont( L, 2 ) );
+    lua_TextEntry *textEntry = LUA_BINDING_ARGUMENT( luaL_checktextentry, 1, "textEntry" );
+    lua_HFont font = LUA_BINDING_ARGUMENT( luaL_checkfont, 2, "font" );
+    textEntry->SetFont( font );
     return 0;
 }
+LUA_BINDING_END()
 
-static int TextEntry_SetTextHidden( lua_State *L )
+LUA_BINDING_BEGIN( TextEntry, SetTextHidden, "class", "Sets whether the text is hidden" )
 {
-    luaL_checktextentry( L, 1 )->SetTextHidden( lua_toboolean( L, 2 ) );
+    lua_TextEntry *textEntry = LUA_BINDING_ARGUMENT( luaL_checktextentry, 1, "textEntry" );
+    bool hidden = LUA_BINDING_ARGUMENT( lua_toboolean, 2, "hidden" );
+    textEntry->SetTextHidden( hidden );
     return 0;
 }
+LUA_BINDING_END()
 
-static int TextEntry_SetEditable( lua_State *L )
+LUA_BINDING_BEGIN( TextEntry, SetEditable, "class", "Sets whether the text entry is editable" )
 {
-    luaL_checktextentry( L, 1 )->SetEditable( lua_toboolean( L, 2 ) );
+    lua_TextEntry *textEntry = LUA_BINDING_ARGUMENT( luaL_checktextentry, 1, "textEntry" );
+    bool editable = LUA_BINDING_ARGUMENT( lua_toboolean, 2, "editable" );
+    textEntry->SetEditable( editable );
     return 0;
 }
+LUA_BINDING_END()
 
-static int TextEntry_IsEditable( lua_State *L )
+LUA_BINDING_BEGIN( TextEntry, IsEditable, "class", "Checks if the text entry is editable" )
 {
-    lua_pushboolean( L, luaL_checktextentry( L, 1 )->IsEditable() );
+    lua_TextEntry *textEntry = LUA_BINDING_ARGUMENT( luaL_checktextentry, 1, "textEntry" );
+    lua_pushboolean( L, textEntry->IsEditable() );
     return 1;
 }
+LUA_BINDING_END( "boolean", "Whether the text entry is editable" )
 
-static int TextEntry_SetEnabled( lua_State *L )
+LUA_BINDING_BEGIN( TextEntry, SetEnabled, "class", "Sets whether the text entry is enabled" )
 {
-    luaL_checktextentry( L, 1 )->SetEnabled( lua_toboolean( L, 2 ) );
+    lua_TextEntry *textEntry = LUA_BINDING_ARGUMENT( luaL_checktextentry, 1, "textEntry" );
+    bool enabled = LUA_BINDING_ARGUMENT( lua_toboolean, 2, "enabled" );
+    textEntry->SetEnabled( enabled );
     return 0;
 }
+LUA_BINDING_END()
 
-static int TextEntry_MoveCursor( lua_State *L )
+LUA_BINDING_BEGIN( TextEntry, MoveCursor, "class", "Moves the cursor by a given offset" )
 {
-    luaL_checktextentry( L, 1 )->MoveCursor( luaL_checknumber( L, 2 ), luaL_checknumber( L, 3 ) );
+    lua_TextEntry *textEntry = LUA_BINDING_ARGUMENT( luaL_checktextentry, 1, "textEntry" );
+    float offsetX = LUA_BINDING_ARGUMENT( luaL_checknumber, 2, "offsetX" );
+    float offsetY = LUA_BINDING_ARGUMENT( luaL_checknumber, 3, "offsetY" );
+    textEntry->MoveCursor( offsetX, offsetY );
     return 0;
 }
+LUA_BINDING_END()
 
-static int TextEntry_PaintText( lua_State *L )
+LUA_BINDING_BEGIN( TextEntry, PaintText, "class", "Paints the text with specified colors" )
 {
-    luaL_checktextentry( L, 1 )->PaintText( luaL_checkcolor( L, 2 ), luaL_checkcolor( L, 3 ), luaL_checkcolor( L, 4 ) );
+    lua_TextEntry *textEntry = LUA_BINDING_ARGUMENT( luaL_checktextentry, 1, "textEntry" );
+    lua_Color &color1 = LUA_BINDING_ARGUMENT( luaL_checkcolor, 2, "color1" );
+    lua_Color &color2 = LUA_BINDING_ARGUMENT( luaL_checkcolor, 3, "color2" );
+    lua_Color &color3 = LUA_BINDING_ARGUMENT( luaL_checkcolor, 4, "color3" );
+    textEntry->PaintText( color1, color2, color3 );
     return 0;
 }
+LUA_BINDING_END()
 
-static int TextEntry_SetDisabledBgColor( lua_State *L )
+LUA_BINDING_BEGIN( TextEntry, SetDisabledBgColor, "class", "Sets the background color when disabled" )
 {
-    luaL_checktextentry( L, 1 )->SetDisabledBgColor( luaL_checkcolor( L, 2 ) );
+    lua_TextEntry *textEntry = LUA_BINDING_ARGUMENT( luaL_checktextentry, 1, "textEntry" );
+    lua_Color &color = LUA_BINDING_ARGUMENT( luaL_checkcolor, 2, "color" );
+    textEntry->SetDisabledBgColor( color );
     return 0;
 }
+LUA_BINDING_END()
 
-static int TextEntry_SetMultiline( lua_State *L )
+LUA_BINDING_BEGIN( TextEntry, SetMultiline, "class", "Sets whether the text entry is multiline" )
 {
-    luaL_checktextentry( L, 1 )->SetMultiline( lua_toboolean( L, 2 ) );
+    lua_TextEntry *textEntry = LUA_BINDING_ARGUMENT( luaL_checktextentry, 1, "textEntry" );
+    bool multiline = LUA_BINDING_ARGUMENT( lua_toboolean, 2, "multiline" );
+    textEntry->SetMultiline( multiline );
     return 0;
 }
+LUA_BINDING_END()
 
-static int TextEntry_IsMultiline( lua_State *L )
+LUA_BINDING_BEGIN( TextEntry, IsMultiline, "class", "Checks if the text entry is multiline" )
 {
-    lua_pushboolean( L, luaL_checktextentry( L, 1 )->IsMultiline() );
+    lua_TextEntry *textEntry = LUA_BINDING_ARGUMENT( luaL_checktextentry, 1, "textEntry" );
+    lua_pushboolean( L, textEntry->IsMultiline() );
     return 1;
 }
+LUA_BINDING_END( "boolean", "Whether the text entry is multiline" )
 
-static int TextEntry_SetVerticalScrollbar( lua_State *L )
+LUA_BINDING_BEGIN( TextEntry, SetVerticalScrollbar, "class", "Sets whether the vertical scrollbar is enabled" )
 {
-    luaL_checktextentry( L, 1 )->SetVerticalScrollbar( lua_toboolean( L, 2 ) );
+    lua_TextEntry *textEntry = LUA_BINDING_ARGUMENT( luaL_checktextentry, 1, "textEntry" );
+    bool enable = LUA_BINDING_ARGUMENT( lua_toboolean, 2, "enable" );
+    textEntry->SetVerticalScrollbar( enable );
     return 0;
 }
+LUA_BINDING_END()
 
-static int TextEntry_SetCatchEnterKey( lua_State *L )
+LUA_BINDING_BEGIN( TextEntry, SetCatchEnterKey, "class", "Sets whether the enter key is caught by the text entry" )
 {
-    luaL_checktextentry( L, 1 )->SetCatchEnterKey( lua_toboolean( L, 2 ) );
+    lua_TextEntry *textEntry = LUA_BINDING_ARGUMENT( luaL_checktextentry, 1, "textEntry" );
+    bool catchEnter = LUA_BINDING_ARGUMENT( lua_toboolean, 2, "catchEnter" );
+    textEntry->SetCatchEnterKey( catchEnter );
     return 0;
 }
+LUA_BINDING_END()
 
-static int TextEntry_SendNewLine( lua_State *L )
+LUA_BINDING_BEGIN( TextEntry, SendNewLine, "class", "Sets whether a new line is sent when enter is pressed" )
 {
-    luaL_checktextentry( L, 1 )->SendNewLine( lua_toboolean( L, 2 ) );
+    lua_TextEntry *textEntry = LUA_BINDING_ARGUMENT( luaL_checktextentry, 1, "textEntry" );
+    bool sendNewLine = LUA_BINDING_ARGUMENT( lua_toboolean, 2, "sendNewLine" );
+    textEntry->SendNewLine( sendNewLine );
     return 0;
 }
+LUA_BINDING_END()
 
-static int TextEntry_SetMaximumCharCount( lua_State *L )
+LUA_BINDING_BEGIN( TextEntry, SetMaximumCharacterCount, "class", "Sets the maximum character count" )
 {
-    luaL_checktextentry( L, 1 )->SetMaximumCharCount( luaL_checkinteger( L, 2 ) );
+    lua_TextEntry *textEntry = LUA_BINDING_ARGUMENT( luaL_checktextentry, 1, "textEntry" );
+    int maxCount = LUA_BINDING_ARGUMENT( luaL_checknumber, 2, "maxCount" );
+    textEntry->SetMaximumCharCount( maxCount );
     return 0;
 }
+LUA_BINDING_END()
 
-static int TextEntry_GetMaximumCharCount( lua_State *L )
+LUA_BINDING_BEGIN( TextEntry, GetMaximumCharacterCount, "class", "Gets the maximum character count" )
 {
-    lua_pushinteger( L, luaL_checktextentry( L, 1 )->GetMaximumCharCount() );
+    lua_TextEntry *textEntry = LUA_BINDING_ARGUMENT( luaL_checktextentry, 1, "textEntry" );
+    lua_pushinteger( L, textEntry->GetMaximumCharCount() );
     return 1;
 }
+LUA_BINDING_END( "integer", "The maximum character count" )
 
-static int TextEntry_SetAutoProgressOnHittingCharLimit( lua_State *L )
+LUA_BINDING_BEGIN( TextEntry, SetAutoProgressOnHittingCharLimit, "class", "Sets auto-progress on hitting character limit" )
 {
-    luaL_checktextentry( L, 1 )->SetAutoProgressOnHittingCharLimit( lua_toboolean( L, 2 ) );
+    lua_TextEntry *textEntry = LUA_BINDING_ARGUMENT( luaL_checktextentry, 1, "textEntry" );
+    bool autoProgress = LUA_BINDING_ARGUMENT( lua_toboolean, 2, "autoProgress" );
+    textEntry->SetAutoProgressOnHittingCharLimit( autoProgress );
     return 0;
 }
+LUA_BINDING_END()
 
-static int TextEntry_SetWrap( lua_State *L )
+LUA_BINDING_BEGIN( TextEntry, SetWrap, "class", "Sets whether text wrapping is enabled" )
 {
-    luaL_checktextentry( L, 1 )->SetWrap( lua_toboolean( L, 2 ) );
+    lua_TextEntry *textEntry = LUA_BINDING_ARGUMENT( luaL_checktextentry, 1, "textEntry" );
+    bool wrap = LUA_BINDING_ARGUMENT( lua_toboolean, 2, "wrap" );
+    textEntry->SetWrap( wrap );
     return 0;
 }
+LUA_BINDING_END()
 
-static int TextEntry_RecalculateLineBreaks( lua_State *L )
+LUA_BINDING_BEGIN( TextEntry, RecalculateLineBreaks, "class", "Recalculates the line breaks in the text entry" )
 {
-    luaL_checktextentry( L, 1 )->RecalculateLineBreaks();
+    lua_TextEntry *textEntry = LUA_BINDING_ARGUMENT( luaL_checktextentry, 1, "textEntry" );
+    textEntry->RecalculateLineBreaks();
     return 0;
 }
+LUA_BINDING_END()
 
-static int TextEntry_LayoutVerticalScrollBarSlider( lua_State *L )
+LUA_BINDING_BEGIN( TextEntry, LayoutVerticalScrollBarSlider, "class", "Layouts the vertical scrollbar slider" )
 {
-    luaL_checktextentry( L, 1 )->LayoutVerticalScrollBarSlider();
+    lua_TextEntry *textEntry = LUA_BINDING_ARGUMENT( luaL_checktextentry, 1, "textEntry" );
+    textEntry->LayoutVerticalScrollBarSlider();
     return 0;
 }
+LUA_BINDING_END()
 
-static int TextEntry_RequestInfo( lua_State *L )
+LUA_BINDING_BEGIN( TextEntry, RequestInfo, "class", "Requests info from the text entry" )
 {
-    KeyValues *outputData = luaL_checkkeyvalues( L, 2 );
-    lua_pushboolean( L, luaL_checktextentry( L, 1 )->RequestInfo( outputData ) );
+    lua_TextEntry *textEntry = LUA_BINDING_ARGUMENT( luaL_checktextentry, 1, "textEntry" );
+    KeyValues *outputData = LUA_BINDING_ARGUMENT( luaL_checkkeyvalues, 2, "outputData" );
+    lua_pushboolean( L, textEntry->RequestInfo( outputData ) );
     return 1;
 }
+LUA_BINDING_END( "boolean", "Whether info was successfully requested" )
 
-static int TextEntry_SetToFullHeight( lua_State *L )
+LUA_BINDING_BEGIN( TextEntry, SetToFullHeight, "class", "Sets the text entry to full height" )
 {
-    luaL_checktextentry( L, 1 )->SetToFullHeight();
+    lua_TextEntry *textEntry = LUA_BINDING_ARGUMENT( luaL_checktextentry, 1, "textEntry" );
+    textEntry->SetToFullHeight();
     return 0;
 }
+LUA_BINDING_END()
 
-static int TextEntry_SetToFullWidth( lua_State *L )
+LUA_BINDING_BEGIN( TextEntry, SetToFullWidth, "class", "Sets the text entry to full width" )
 {
-    luaL_checktextentry( L, 1 )->SetToFullWidth();
+    lua_TextEntry *textEntry = LUA_BINDING_ARGUMENT( luaL_checktextentry, 1, "textEntry" );
+    textEntry->SetToFullWidth();
     return 0;
 }
+LUA_BINDING_END()
 
-static int TextEntry_GetNumLines( lua_State *L )
+LUA_BINDING_BEGIN( TextEntry, GetNumberOfLines, "class", "Gets the number of lines in the text entry" )
 {
-    lua_pushinteger( L, luaL_checktextentry( L, 1 )->GetNumLines() );
+    lua_TextEntry *textEntry = LUA_BINDING_ARGUMENT( luaL_checktextentry, 1, "textEntry" );
+    lua_pushinteger( L, textEntry->GetNumLines() );
     return 1;
 }
+LUA_BINDING_END( "integer", "The number of lines in the text entry" )
 
-static int TextEntry_SelectAllText( lua_State *L )
+LUA_BINDING_BEGIN( TextEntry, SelectAllText, "class", "Selects all text in the text entry" )
 {
-    luaL_checktextentry( L, 1 )->SelectAllText( lua_toboolean( L, 2 ) );
+    lua_TextEntry *textEntry = LUA_BINDING_ARGUMENT( luaL_checktextentry, 1, "textEntry" );
+    bool selectAll = LUA_BINDING_ARGUMENT( lua_toboolean, 2, "selectAll" );
+    textEntry->SelectAllText( selectAll );
     return 0;
 }
+LUA_BINDING_END()
 
-static int TextEntry_SetDrawWidth( lua_State *L )
+LUA_BINDING_BEGIN( TextEntry, SetDrawWidth, "class", "Sets the draw width of the text entry" )
 {
-    luaL_checktextentry( L, 1 )->SetDrawWidth( luaL_checknumber( L, 2 ) );
+    lua_TextEntry *textEntry = LUA_BINDING_ARGUMENT( luaL_checktextentry, 1, "textEntry" );
+    float width = LUA_BINDING_ARGUMENT( luaL_checknumber, 2, "width" );
+    textEntry->SetDrawWidth( width );
     return 0;
 }
+LUA_BINDING_END()
 
-static int TextEntry_GetDrawWidth( lua_State *L )
+LUA_BINDING_BEGIN( TextEntry, GetDrawWidth, "class", "Gets the draw width of the text entry" )
 {
-    lua_pushinteger( L, luaL_checktextentry( L, 1 )->GetDrawWidth() );
+    lua_TextEntry *textEntry = LUA_BINDING_ARGUMENT( luaL_checktextentry, 1, "textEntry" );
+    lua_pushinteger( L, textEntry->GetDrawWidth() );
     return 1;
 }
+LUA_BINDING_END( "integer", "The draw width of the text entry" )
 
-static int TextEntry_SetHorizontalScrolling( lua_State *L )
+LUA_BINDING_BEGIN( TextEntry, SetHorizontalScrolling, "class", "Sets whether horizontal scrolling is enabled" )
 {
-    luaL_checktextentry( L, 1 )->SetHorizontalScrolling( lua_toboolean( L, 2 ) );
+    lua_TextEntry *textEntry = LUA_BINDING_ARGUMENT( luaL_checktextentry, 1, "textEntry" );
+    bool enable = LUA_BINDING_ARGUMENT( lua_toboolean, 2, "enable" );
+    textEntry->SetHorizontalScrolling( enable );
     return 0;
 }
+LUA_BINDING_END()
 
-static int TextEntry_SetAllowNonAsciiCharacters( lua_State *L )
+LUA_BINDING_BEGIN( TextEntry, SetAllowNonAsciiCharacters, "class", "Sets whether non-ASCII characters are allowed" )
 {
-    luaL_checktextentry( L, 1 )->SetAllowNonAsciiCharacters( lua_toboolean( L, 2 ) );
+    lua_TextEntry *textEntry = LUA_BINDING_ARGUMENT( luaL_checktextentry, 1, "textEntry" );
+    bool allow = LUA_BINDING_ARGUMENT( lua_toboolean, 2, "allow" );
+    textEntry->SetAllowNonAsciiCharacters( allow );
     return 0;
 }
+LUA_BINDING_END()
 
-static int TextEntry_SetAllowNumericInputOnly( lua_State *L )
+LUA_BINDING_BEGIN( TextEntry, SetAllowNumericInputOnly, "class", "Sets whether only numeric input is allowed" )
 {
-    luaL_checktextentry( L, 1 )->SetAllowNumericInputOnly( lua_toboolean( L, 2 ) );
+    lua_TextEntry *textEntry = LUA_BINDING_ARGUMENT( luaL_checktextentry, 1, "textEntry" );
+    bool allow = LUA_BINDING_ARGUMENT( lua_toboolean, 2, "allow" );
+    textEntry->SetAllowNumericInputOnly( allow );
     return 0;
 }
+LUA_BINDING_END()
 
-static int TextEntry_SetDrawLanguageIDAtLeft( lua_State *L )
+LUA_BINDING_BEGIN( TextEntry, SetDrawLanguageIdAtLeft, "class", "Sets whether the language ID is drawn on the left" )
 {
-    luaL_checktextentry( L, 1 )->SetDrawLanguageIDAtLeft( lua_toboolean( L, 2 ) );
+    lua_TextEntry *textEntry = LUA_BINDING_ARGUMENT( luaL_checktextentry, 1, "textEntry" );
+    bool draw = LUA_BINDING_ARGUMENT( lua_toboolean, 2, "draw" );
+    textEntry->SetDrawLanguageIDAtLeft( draw );
     return 0;
 }
+LUA_BINDING_END()
+
+LUA_BINDING_BEGIN( TextEntry, IsDroppable, "class", "Checks if the text entry is droppable" )
+{
+    lua_TextEntry *textEntry = LUA_BINDING_ARGUMENT( luaL_checktextentry, 1, "textEntry" );
+    CUtlVector< KeyValues * > data;
+    textEntry->IsDroppable( data );
+    lua_pushboolean( L, data.Count() > 0 );
+    return 1;
+}
+LUA_BINDING_END( "boolean", "Whether the text entry is droppable" )
+
+LUA_BINDING_BEGIN( TextEntry, OnPanelDropped, "class", "Handles the event when a panel is dropped" )
+{
+    lua_TextEntry *textEntry = LUA_BINDING_ARGUMENT( luaL_checktextentry, 1, "textEntry" );
+    CUtlVector< KeyValues * > data;
+    textEntry->OnPanelDropped( data );
+    return 0;
+}
+LUA_BINDING_END()
+
+LUA_BINDING_BEGIN( TextEntry, GetDragPanel, "class", "Gets the drag panel" )
+{
+    lua_TextEntry *textEntry = LUA_BINDING_ARGUMENT( luaL_checktextentry, 1, "textEntry" );
+    Panel *dragPanel = textEntry->GetDragPanel();
+    dragPanel->PushLuaInstance( L );
+    return 1;
+}
+LUA_BINDING_END( "DragPanel", "The drag panel instance" )
+
+LUA_BINDING_BEGIN( TextEntry, OnCreateDragData, "class", "Creates drag data for the text entry" )
+{
+    lua_TextEntry *textEntry = LUA_BINDING_ARGUMENT( luaL_checktextentry, 1, "textEntry" );
+    KeyValues *dragData = LUA_BINDING_ARGUMENT( luaL_checkkeyvalues, 2, "dragData" );
+    textEntry->OnCreateDragData( dragData );
+    return 0;
+}
+LUA_BINDING_END()
+
+LUA_BINDING_BEGIN( TextEntry, SelectAllOnFocusAlways, "class", "Sets whether to always select all text on focus" )
+{
+    lua_TextEntry *textEntry = LUA_BINDING_ARGUMENT( luaL_checktextentry, 1, "textEntry" );
+    bool selectAll = LUA_BINDING_ARGUMENT( lua_toboolean, 2, "selectAll" );
+    textEntry->SelectAllOnFocusAlways( selectAll );
+    return 0;
+}
+LUA_BINDING_END()
+
+LUA_BINDING_BEGIN( TextEntry, SetSelectionTextColor, "class", "Sets the text color for selected text" )
+{
+    lua_TextEntry *textEntry = LUA_BINDING_ARGUMENT( luaL_checktextentry, 1, "textEntry" );
+    lua_Color &color = LUA_BINDING_ARGUMENT( luaL_checkcolor, 2, "color" );
+    textEntry->SetSelectionTextColor( color );
+    return 0;
+}
+LUA_BINDING_END()
+
+LUA_BINDING_BEGIN( TextEntry, SetSelectionBackgroundColor, "class", "Sets the background color for selected text" )
+{
+    lua_TextEntry *textEntry = LUA_BINDING_ARGUMENT( luaL_checktextentry, 1, "textEntry" );
+    lua_Color &color = LUA_BINDING_ARGUMENT( luaL_checkcolor, 2, "color" );
+    textEntry->SetSelectionBgColor( color );
+    return 0;
+}
+LUA_BINDING_END()
+
+LUA_BINDING_BEGIN( TextEntry, SetSelectionUnfocusedBackgroundColor, "class", "Sets the background color for unfocused selected text" )
+{
+    lua_TextEntry *textEntry = LUA_BINDING_ARGUMENT( luaL_checktextentry, 1, "textEntry" );
+    lua_Color &color = LUA_BINDING_ARGUMENT( luaL_checkcolor, 2, "color" );
+    textEntry->SetSelectionUnfocusedBgColor( color );
+    return 0;
+}
+LUA_BINDING_END()
+
+LUA_BINDING_BEGIN( TextEntry, SetUseFallbackFont, "class", "Sets the fallback font for the text entry" )
+{
+    lua_TextEntry *textEntry = LUA_BINDING_ARGUMENT( luaL_checktextentry, 1, "textEntry" );
+    bool useFallback = LUA_BINDING_ARGUMENT( lua_toboolean, 2, "useFallback" );
+    lua_HFont fallbackFont = LUA_BINDING_ARGUMENT( luaL_checkfont, 3, "fallbackFont" );
+    textEntry->SetUseFallbackFont( useFallback, fallbackFont );
+    return 0;
+}
+LUA_BINDING_END()
 
 // static int TextEntry_GetDropContextMenu( lua_State *L )
 //{
@@ -407,68 +647,13 @@ static int TextEntry_SetDrawLanguageIDAtLeft( lua_State *L )
 //     return 1;
 // }
 
-static int TextEntry_IsDroppable( lua_State *L )
+LUA_BINDING_BEGIN( TextEntry, __index, "class", "Metamethod called when a non-existent field is indexed" )
 {
-    CUtlVector< KeyValues * > data;
-    luaL_checktextentry( L, 1 )->IsDroppable( data );
-    lua_pushboolean( L, data.Count() > 0 );
-    return 1;
-}
-
-static int TextEntry_OnPanelDropped( lua_State *L )
-{
-    CUtlVector< KeyValues * > data;
-    luaL_checktextentry( L, 1 )->OnPanelDropped( data );
-    return 0;
-}
-
-static int TextEntry_GetDragPanel( lua_State *L )
-{
-    luaL_checktextentry( L, 1 )->GetDragPanel()->PushLuaInstance( L );
-    return 1;
-}
-
-static int TextEntry_OnCreateDragData( lua_State *L )
-{
-    luaL_checktextentry( L, 1 )->OnCreateDragData( luaL_checkkeyvalues( L, 2 ) );
-    return 0;
-}
-
-static int TextEntry_SelectAllOnFocusAlways( lua_State *L )
-{
-    luaL_checktextentry( L, 1 )->SelectAllOnFocusAlways( lua_toboolean( L, 2 ) );
-    return 0;
-}
-
-static int TextEntry_SetSelectionTextColor( lua_State *L )
-{
-    luaL_checktextentry( L, 1 )->SetSelectionTextColor( luaL_checkcolor( L, 2 ) );
-    return 0;
-}
-
-static int TextEntry_SetSelectionBgColor( lua_State *L )
-{
-    luaL_checktextentry( L, 1 )->SetSelectionBgColor( luaL_checkcolor( L, 2 ) );
-    return 0;
-}
-
-static int TextEntry_SetSelectionUnfocusedBgColor( lua_State *L )
-{
-    luaL_checktextentry( L, 1 )->SetSelectionUnfocusedBgColor( luaL_checkcolor( L, 2 ) );
-    return 0;
-}
-
-static int TextEntry_SetUseFallbackFont( lua_State *L )
-{
-    luaL_checktextentry( L, 1 )->SetUseFallbackFont( lua_toboolean( L, 2 ), luaL_checkfont( L, 3 ) );
-    return 0;
-}
-
-static int TextEntry___index( lua_State *L )
-{
-    TextEntry *pTextEntry = lua_totextentry( L, 1 );
-    LUA_METATABLE_INDEX_CHECK_VALID( L, Panel_IsValid );
+    TextEntry *pTextEntry = LUA_BINDING_ARGUMENT( lua_totextentry, 1, "textEntry" );
+    LUA_METATABLE_INDEX_CHECK_VALID( L, PanelIsValid );
     LUA_METATABLE_INDEX_CHECK( L, pTextEntry );
+
+    // const char *field = LUA_BINDING_ARGUMENT( luaL_checkstring, 2, "field" );
 
     LTextEntry *plTextEntry = dynamic_cast< LTextEntry * >( pTextEntry );
     LUA_METATABLE_INDEX_CHECK_REF_TABLE( L, plTextEntry );
@@ -486,10 +671,11 @@ static int TextEntry___index( lua_State *L )
     lua_pushnil( L );
     return 1;
 }
+LUA_BINDING_END( "any", "The value of the field" )
 
-static int TextEntry___newindex( lua_State *L )
+LUA_BINDING_BEGIN( TextEntry, __newindex, "class", "Metamethod called when a new field is added" )
 {
-    TextEntry *pTextEntry = lua_totextentry( L, 1 );
+    TextEntry *pTextEntry = LUA_BINDING_ARGUMENT( lua_totextentry, 1, "textEntry" );
 
     if ( pTextEntry == NULL )
     { /* avoid extra test when d is not 0 */
@@ -506,20 +692,22 @@ static int TextEntry___newindex( lua_State *L )
 
     LUA_GET_REF_TABLE( L, plTextEntry );
     lua_pushvalue( L, 3 );
-    lua_setfield( L, -2, luaL_checkstring( L, 2 ) );
+    lua_setfield( L, -2, LUA_BINDING_ARGUMENT( luaL_checkstring, 2, "field" ) );
     lua_pop( L, 1 );
     return 0;
 }
+LUA_BINDING_END()
 
-static int TextEntry___eq( lua_State *L )
+LUA_BINDING_BEGIN( TextEntry, __eq, "class", "Metamethod called when two TextEntry objects are compared" )
 {
-    lua_pushboolean( L, lua_totextentry( L, 1 ) == lua_totextentry( L, 2 ) );
+    lua_pushboolean( L, LUA_BINDING_ARGUMENT( lua_totextentry, 1, "textEntry" ) == LUA_BINDING_ARGUMENT( lua_totextentry, 2, "other" ) );
     return 1;
 }
+LUA_BINDING_END( "boolean", "Whether the TextEntry objects are equal" )
 
-static int TextEntry___tostring( lua_State *L )
+LUA_BINDING_BEGIN( TextEntry, __tostring, "class", "Metamethod called when the TextEntry object is converted to a string" )
 {
-    TextEntry *pTextEntry = lua_totextentry( L, 1 );
+    TextEntry *pTextEntry = LUA_BINDING_ARGUMENT( lua_totextentry, 1, "textEntry" );
     if ( pTextEntry == NULL )
         lua_pushstring( L, "INVALID_PANEL" );
     else
@@ -531,94 +719,20 @@ static int TextEntry___tostring( lua_State *L )
     }
     return 1;
 }
+LUA_BINDING_END( "string", "The string representation of the TextEntry object" )
 
-static const luaL_Reg TextEntrymeta[] = {
-    { "SetText", TextEntry_SetText },
-    { "GetText", TextEntry_GetText },
-    { "GetCaretPos", TextEntry_GetCursorPos },
-    { "SetCaretPos", TextEntry_SetCursorPos },
-    { "GetTextLength", TextEntry_GetTextLength },
-    { "GetValue", TextEntry_GetValue },
-    { "GetValueAsFloat", TextEntry_GetValueAsFloat },
-    { "GetValueAsInt", TextEntry_GetValueAsInt },
-    { "IsTextFullySelected", TextEntry_IsTextFullySelected },
-    { "GotoLeft", TextEntry_GotoLeft },
-    { "GotoRight", TextEntry_GotoRight },
-    { "GotoUp", TextEntry_GotoUp },
-    { "GotoDown", TextEntry_GotoDown },
-    { "GotoWordRight", TextEntry_GotoWordRight },
-    { "GotoWordLeft", TextEntry_GotoWordLeft },
-    { "GotoFirstOfLine", TextEntry_GotoFirstOfLine },
-    { "GotoEndOfLine", TextEntry_GotoEndOfLine },
-    { "GotoTextStart", TextEntry_GotoTextStart },
-    { "GotoTextEnd", TextEntry_GotoTextEnd },
-    { "InsertString", TextEntry_InsertString },
-    { "Backspace", TextEntry_Backspace },
-    { "Delete", TextEntry_Delete },
-    { "SelectNone", TextEntry_SelectNone },
-    { "OpenEditMenu", TextEntry_OpenEditMenu },
-    { "DeleteSelected", TextEntry_DeleteSelected },
-    { "Undo", TextEntry_Undo },
-    { "SaveUndoState", TextEntry_SaveUndoState },
-    { "SetFont", TextEntry_SetFont },
-    { "SetTextHidden", TextEntry_SetTextHidden },
-    { "SetEditable", TextEntry_SetEditable },
-    { "IsEditable", TextEntry_IsEditable },
-    { "SetEnabled", TextEntry_SetEnabled },
-    { "MoveCursor", TextEntry_MoveCursor },
-    { "PaintText", TextEntry_PaintText },
-    { "SetDisabledBgColor", TextEntry_SetDisabledBgColor },
-    { "SetMultiline", TextEntry_SetMultiline },
-    { "IsMultiline", TextEntry_IsMultiline },
-    { "SetVerticalScrollbar", TextEntry_SetVerticalScrollbar },
-    { "SetCatchEnterKey", TextEntry_SetCatchEnterKey },
-    { "SendNewLine", TextEntry_SendNewLine },
-    { "SetMaximumCharCount", TextEntry_SetMaximumCharCount },
-    { "GetMaximumCharCount", TextEntry_GetMaximumCharCount },
-    { "SetAutoProgressOnHittingCharLimit", TextEntry_SetAutoProgressOnHittingCharLimit },
-    { "SetWrap", TextEntry_SetWrap },
-    { "RecalculateLineBreaks", TextEntry_RecalculateLineBreaks },
-    { "LayoutVerticalScrollBarSlider", TextEntry_LayoutVerticalScrollBarSlider },
-    { "RequestInfo", TextEntry_RequestInfo },
-    { "SetToFullHeight", TextEntry_SetToFullHeight },
-    { "SetToFullWidth", TextEntry_SetToFullWidth },
-    { "GetNumLines", TextEntry_GetNumLines },
-    { "SelectAllText", TextEntry_SelectAllText },
-    { "SetDrawWidth", TextEntry_SetDrawWidth },
-    { "GetDrawWidth", TextEntry_GetDrawWidth },
-    { "SetHorizontalScrolling", TextEntry_SetHorizontalScrolling },
-    { "SetAllowNonAsciiCharacters", TextEntry_SetAllowNonAsciiCharacters },
-    { "SetAllowNumericInputOnly", TextEntry_SetAllowNumericInputOnly },
-    { "SetDrawLanguageIDAtLeft", TextEntry_SetDrawLanguageIDAtLeft },
-    // { "GetDropContextMenu", TextEntry_GetDropContextMenu },
-    { "IsDroppable", TextEntry_IsDroppable },
-    { "OnPanelDropped", TextEntry_OnPanelDropped },
-    { "GetDragPanel", TextEntry_GetDragPanel },
-    { "OnCreateDragData", TextEntry_OnCreateDragData },
-    { "SelectAllOnFocusAlways", TextEntry_SelectAllOnFocusAlways },
-    { "SetSelectionTextColor", TextEntry_SetSelectionTextColor },
-    { "SetSelectionBgColor", TextEntry_SetSelectionBgColor },
-    { "SetSelectionUnfocusedBgColor", TextEntry_SetSelectionUnfocusedBgColor },
-    { "SetUseFallbackFont", TextEntry_SetUseFallbackFont },
-    { "__index", TextEntry___index },
-    { "__newindex", TextEntry___newindex },
-    { "__eq", TextEntry___eq },
-    { "__tostring", TextEntry___tostring },
-    { "__gc", Panel___gc },
-    { NULL, NULL } };
+LUA_REGISTRATION_INIT( Panels )
 
-static int luasrc_TextEntry( lua_State *L )
+LUA_BINDING_BEGIN( Panels, TextEntry, "library", "Creates a new TextEntry panel" )
 {
-    lua_TextEntry *pPanel =
-        new lua_TextEntry( luaL_optpanel( L, 1, VGui_GetClientLuaRootPanel() ),
-                        luaL_optstring( L, 2, "TextEntry" ),
-                        L );
+    Panel *parent = LUA_BINDING_ARGUMENT_WITH_DEFAULT( luaL_optpanel, 1, VGui_GetClientLuaRootPanel(), "parent" );
+    const char *name = LUA_BINDING_ARGUMENT_WITH_DEFAULT( luaL_optstring, 2, "TextEntry", "name" );
+
+    LTextEntry *pPanel = new LTextEntry( parent, name, L );
     pPanel->PushLuaInstance( L );
     return 1;
 }
-
-static const luaL_Reg TextEntry_funcs[] = { { "TextEntry", luasrc_TextEntry },
-                                            { NULL, NULL } };
+LUA_BINDING_END( "TextEntry", "The new TextEntry Panel" )
 
 /*
 ** Open TextEntry object
@@ -626,10 +740,13 @@ static const luaL_Reg TextEntry_funcs[] = { { "TextEntry", luasrc_TextEntry },
 LUALIB_API int luaopen_vgui_TextEntry( lua_State *L )
 {
     LUA_PUSH_NEW_METATABLE( L, "TextEntry" );
-    luaL_register( L, NULL, TextEntrymeta );
-    lua_pushstring( L, LUA_PANELLIBNAME );
+
+    LUA_REGISTRATION_COMMIT( TextEntry );
+
+    lua_pushstring( L, LUA_PANELMETANAME );
     lua_setfield( L, -2, "__type" ); /* metatable.__type = "Panel" */
-    luaL_register( L, LUA_VGUILIBNAME, TextEntry_funcs );
+
+    LUA_REGISTRATION_COMMIT_LIBRARY( Panels );
 
     lua_pop( L, 1 );  // Pop the panel library off the stack
     lua_pop( L, 1 );  // Pop the TextEntry metatable

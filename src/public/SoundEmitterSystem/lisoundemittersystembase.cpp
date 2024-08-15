@@ -35,7 +35,7 @@ LUA_API lua_CSoundParameters lua_tosoundparameters( lua_State *L, int idx )
     lua_pop( L, 1 );
     lua_getfield( L, idx, "soundlevel" );
     if ( !lua_isnil( L, -1 ) )
-        SoundParameters.soundlevel = ( soundlevel_t )luaL_checkinteger( L, -1 );
+        SoundParameters.soundlevel = ( soundlevel_t )( int )luaL_checknumber( L, -1 );
     lua_pop( L, 1 );
     lua_getfield( L, idx, "play_to_owner_only" );
     if ( !lua_isnil( L, -1 ) )

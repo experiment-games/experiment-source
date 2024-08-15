@@ -75,7 +75,7 @@ Include("extensions/weapon.lua")
 Include("extensions/networked_variables.lua")
 Include("extensions/entity_networked_variables.lua")
 Include("extensions/user_messages.lua")
-Include("extensions/gui.lua")
+Include("extensions/panels.lua")
 Include("extensions/color.lua")
 
 if (CLIENT) then
@@ -83,7 +83,7 @@ if (CLIENT) then
 	Include("extensions/label.lua")
 	Include("extensions/text_entry.lua")
 
-	-- Gui elements
+	-- GUI elements
 	Include("gui/cl_image_panel.lua")
 end
 

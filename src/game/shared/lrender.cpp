@@ -38,17 +38,17 @@ LUA_BINDING_BEGIN( Renders, SpawnBeam, "library", "Spawns a temporary beam entit
 {
     Vector start = LUA_BINDING_ARGUMENT( luaL_checkvector, 1, "start" );
     Vector end = LUA_BINDING_ARGUMENT( luaL_checkvector, 2, "end" );
-    int modelIndex = LUA_BINDING_ARGUMENT( luaL_checkinteger, 3, "modelIndex" );
-    int haloIndex = LUA_BINDING_ARGUMENT( luaL_checkinteger, 4, "haloIndex" );
-    unsigned char frameStart = LUA_BINDING_ARGUMENT( luaL_checkinteger, 5, "frameStart" );
-    unsigned char frameRate = LUA_BINDING_ARGUMENT( luaL_checkinteger, 6, "frameRate" );
+    int modelIndex = LUA_BINDING_ARGUMENT( luaL_checknumber, 3, "modelIndex" );
+    int haloIndex = LUA_BINDING_ARGUMENT( luaL_checknumber, 4, "haloIndex" );
+    unsigned char frameStart = LUA_BINDING_ARGUMENT( luaL_checknumber, 5, "frameStart" );
+    unsigned char frameRate = LUA_BINDING_ARGUMENT( luaL_checknumber, 6, "frameRate" );
     float life = LUA_BINDING_ARGUMENT( luaL_checknumber, 7, "life" );
-    unsigned char width = LUA_BINDING_ARGUMENT( luaL_checkinteger, 8, "width" );
-    unsigned char endWidth = LUA_BINDING_ARGUMENT( luaL_checkinteger, 9, "endWidth" );
-    unsigned char fadeLength = LUA_BINDING_ARGUMENT( luaL_checkinteger, 10, "fadeLength" );
-    unsigned char noise = LUA_BINDING_ARGUMENT( luaL_checkinteger, 11, "noise" );
+    unsigned char width = LUA_BINDING_ARGUMENT( luaL_checknumber, 8, "width" );
+    unsigned char endWidth = LUA_BINDING_ARGUMENT( luaL_checknumber, 9, "endWidth" );
+    unsigned char fadeLength = LUA_BINDING_ARGUMENT( luaL_checknumber, 10, "fadeLength" );
+    unsigned char noise = LUA_BINDING_ARGUMENT( luaL_checknumber, 11, "noise" );
     lua_Color colorAndBrightness = LUA_BINDING_ARGUMENT( luaL_checkcolor, 12, "colorAndBrightness" );
-    unsigned char speed = LUA_BINDING_ARGUMENT( luaL_checkinteger, 13, "speed" );
+    unsigned char speed = LUA_BINDING_ARGUMENT( luaL_checknumber, 13, "speed" );
 
     UTIL_Beam(
         start,
@@ -134,7 +134,7 @@ LUA_BINDING_END( "Texture", "The screen effect texture." )
 LUA_BINDING_BEGIN( Renders, UpdateScreenEffectTexture, "library", "Update the screen effect texture.", "client" )
 {
     const CViewSetup *pViewSetup = view->GetViewSetup();
-    UpdateScreenEffectTexture( LUA_BINDING_ARGUMENT( luaL_checkinteger, 1, "textureIndex" ), pViewSetup->x, pViewSetup->y, pViewSetup->width, pViewSetup->height );
+    UpdateScreenEffectTexture( LUA_BINDING_ARGUMENT( luaL_checknumber, 1, "textureIndex" ), pViewSetup->x, pViewSetup->y, pViewSetup->width, pViewSetup->height );
     return 0;
 }
 LUA_BINDING_END()
@@ -333,7 +333,7 @@ LUA_BINDING_BEGIN( Renders, ClearColor, "library", "Clear the color.", "client" 
 }
 LUA_BINDING_END()
 
-LUA_BINDING_BEGIN( Renders, SetScissorRect, "library", "Set the scissor rectangle.", "client" )
+LUA_BINDING_BEGIN( Renders, SetScissorRectangle, "library", "Set the scissor rectangle.", "client" )
 {
     int nLeft = LUA_BINDING_ARGUMENT( luaL_checknumber, 1, "left" );
     int nTop = LUA_BINDING_ARGUMENT( luaL_checknumber, 2, "top" );
@@ -347,7 +347,7 @@ LUA_BINDING_BEGIN( Renders, SetScissorRect, "library", "Set the scissor rectangl
 }
 LUA_BINDING_END()
 
-LUA_BINDING_BEGIN( Renders, SetWriteDepthToDestAlpha, "library", "Set the write depth to destination alpha.", "client" )
+LUA_BINDING_BEGIN( Renders, SetWriteDepthToDestinationAlpha, "library", "Set the write depth to destination alpha.", "client" )
 {
     bool bEnable = LUA_BINDING_ARGUMENT( lua_toboolean, 1, "enable" );
     g_pMaterialSystem->GetRenderContext()->SetIntRenderingParameter( INT_RENDERPARM_WRITE_DEPTH_TO_DESTALPHA, bEnable );

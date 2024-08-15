@@ -15,7 +15,7 @@ lua:
   
   arguments:
     - name: "animation"
-      type: number
+      type: enumeration/PLAYER_ANIMATION
   returns:
     
 ---

@@ -15,7 +15,7 @@ lua:
   
   arguments:
     - name: "activity"
-      type: number
+      type: enumeration/ACTIVITY
   returns:
     - type: enumeration/ACTIVITY
       description: "The translated activity."

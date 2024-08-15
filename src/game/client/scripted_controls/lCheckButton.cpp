@@ -63,79 +63,102 @@ LUALIB_API lua_CheckButton *luaL_checkcheckbutton( lua_State *L, int narg )
     return d;
 }
 
-static int CheckButton_ChainToAnimationMap( lua_State *L )
-{
-    luaL_checkcheckbutton( L, 1 )->ChainToAnimationMap();
-    return 0;
-}
+LUA_REGISTRATION_INIT( CheckButton )
 
-static int CheckButton_ChainToMap( lua_State *L )
-{
-    luaL_checkcheckbutton( L, 1 )->ChainToMap();
-    return 0;
-}
+//LUA_BINDING_BEGIN( CheckButton, ChainToAnimationMap, "class|static", "Chains the button to an animation map" )
+//{
+//    lua_CheckButton::ChainToAnimationMap();
+//    return 0;
+//}
+//LUA_BINDING_END()
+//
+//LUA_BINDING_BEGIN( CheckButton, ChainToMap, "class|static", "Chains the button to a map" )
+//{
+//    lua_CheckButton::ChainToMap();
+//    return 0;
+//}
+//LUA_BINDING_END()
+//
+//LUA_BINDING_BEGIN( CheckButton, KB_AddBoundKey, "class|static", "Adds a bound key to the button" )
+//{
+//    const char *key = LUA_BINDING_ARGUMENT( luaL_checkstring, 1, "key" );
+//    int unknownA = LUA_BINDING_ARGUMENT( luaL_checknumber, 2, "unknownA" );
+//    int unknownB = LUA_BINDING_ARGUMENT( luaL_checknumber, 3, "unknownB" );
+//    lua_CheckButton::KB_AddBoundKey( key, unknownA, unknownB );
+//    return 0;
+//}
+//LUA_BINDING_END()
+//
+//LUA_BINDING_BEGIN( CheckButton, KB_ChainToMap, "class|static", "Chains the button to a keyboard map" )
+//{
+//    lua_CheckButton::KB_ChainToMap();
+//    return 0;
+//}
+//LUA_BINDING_END()
 
-static int CheckButton_GetDisabledBgColor( lua_State *L )
+LUA_BINDING_BEGIN( CheckButton, GetPanelBaseClassName, "class|static", "Gets the base class name of the panel" )
 {
-    lua_pushcolor( L, luaL_checkcheckbutton( L, 1 )->GetDisabledBgColor() );
+    lua_pushstring( L, lua_CheckButton::GetPanelBaseClassName() );
     return 1;
 }
+LUA_BINDING_END( "string", "The base class name of the panel" )
 
-static int CheckButton_GetDisabledFgColor( lua_State *L )
+LUA_BINDING_BEGIN( CheckButton, GetPanelClassName, "class|static", "Gets the class name of the panel" )
 {
-    lua_pushcolor( L, luaL_checkcheckbutton( L, 1 )->GetDisabledFgColor() );
+    lua_pushstring( L, lua_CheckButton::GetPanelClassName() );
     return 1;
 }
+LUA_BINDING_END( "string", "The class name of the panel" )
 
-static int CheckButton_GetPanelBaseClassName( lua_State *L )
+LUA_BINDING_BEGIN( CheckButton, GetDisabledBackgroundColor, "class", "Gets the disabled background color" )
 {
-    lua_pushstring( L, luaL_checkcheckbutton( L, 1 )->GetPanelBaseClassName() );
+    lua_CheckButton *checkButton = LUA_BINDING_ARGUMENT( luaL_checkcheckbutton, 1, "checkButton" );
+    lua_pushcolor( L, checkButton->GetDisabledBgColor() );
     return 1;
 }
+LUA_BINDING_END( "Color", "The disabled background color" )
 
-static int CheckButton_GetPanelClassName( lua_State *L )
+LUA_BINDING_BEGIN( CheckButton, GetDisabledForegroundColor, "class", "Gets the disabled foreground color" )
 {
-    lua_pushstring( L, luaL_checkcheckbutton( L, 1 )->GetPanelClassName() );
+    lua_CheckButton *checkButton = LUA_BINDING_ARGUMENT( luaL_checkcheckbutton, 1, "checkButton" );
+    lua_pushcolor( L, checkButton->GetDisabledFgColor() );
     return 1;
 }
+LUA_BINDING_END( "Color", "The disabled foreground color" )
 
-static int CheckButton_IsSelected( lua_State *L )
+LUA_BINDING_BEGIN( CheckButton, IsSelected, "class", "Returns whether the button is selected" )
 {
-    lua_pushboolean( L, luaL_checkcheckbutton( L, 1 )->IsSelected() );
+    lua_CheckButton *checkButton = LUA_BINDING_ARGUMENT( luaL_checkcheckbutton, 1, "checkButton" );
+    lua_pushboolean( L, checkButton->IsSelected() );
     return 1;
 }
+LUA_BINDING_END( "boolean", "Whether the button is selected" )
 
-static int CheckButton_KB_AddBoundKey( lua_State *L )
+LUA_BINDING_BEGIN( CheckButton, SetCheckButtonCheckable, "class", "Sets whether the button is checkable" )
 {
-    luaL_checkcheckbutton( L, 1 )->KB_AddBoundKey(
-        luaL_checkstring( L, 2 ), luaL_checknumber( L, 3 ), luaL_checknumber( L, 4 ) );
+    lua_CheckButton *checkButton = LUA_BINDING_ARGUMENT( luaL_checkcheckbutton, 1, "checkButton" );
+    bool checkable = LUA_BINDING_ARGUMENT( luaL_checkboolean, 2, "checkable" );
+    checkButton->SetCheckButtonCheckable( checkable );
     return 0;
 }
+LUA_BINDING_END()
 
-static int CheckButton_KB_ChainToMap( lua_State *L )
+LUA_BINDING_BEGIN( CheckButton, SetSelected, "class", "Sets whether the button is selected" )
 {
-    luaL_checkcheckbutton( L, 1 )->KB_ChainToMap();
+    lua_CheckButton *checkButton = LUA_BINDING_ARGUMENT( luaL_checkcheckbutton, 1, "checkButton" );
+    bool selected = LUA_BINDING_ARGUMENT( luaL_checkboolean, 2, "selected" );
+    checkButton->SetSelected( selected );
     return 0;
 }
+LUA_BINDING_END()
 
-static int CheckButton_SetCheckButtonCheckable( lua_State *L )
+LUA_BINDING_BEGIN( CheckButton, __index, "class", "Metamethod that is called when a non-existent field is indexed" )
 {
-    luaL_checkcheckbutton( L, 1 )->SetCheckButtonCheckable(
-        luaL_checkboolean( L, 2 ) );
-    return 0;
-}
-
-static int CheckButton_SetSelected( lua_State *L )
-{
-    luaL_checkcheckbutton( L, 1 )->SetSelected( luaL_checkboolean( L, 2 ) );
-    return 0;
-}
-
-static int CheckButton___index( lua_State *L )
-{
-    CheckButton *pCheckButton = lua_tocheckbutton( L, 1 );
-    LUA_METATABLE_INDEX_CHECK_VALID( L, Panel_IsValid );
+    CheckButton *pCheckButton = LUA_BINDING_ARGUMENT( lua_tocheckbutton, 1, "checkButton" );
+    LUA_METATABLE_INDEX_CHECK_VALID( L, PanelIsValid );
     LUA_METATABLE_INDEX_CHECK( L, pCheckButton );
+
+    // const char *field = LUA_BINDING_ARGUMENT( luaL_checkstring, 2, "field" );
 
     LCheckButton *plCheckButton = dynamic_cast< LCheckButton * >( pCheckButton );
     LUA_METATABLE_INDEX_CHECK_REF_TABLE( L, plCheckButton );
@@ -148,17 +171,16 @@ static int CheckButton___index( lua_State *L )
     luaL_getmetatable( L, "CheckButton" );
     LUA_METATABLE_INDEX_CHECK_TABLE( L );
 
-    // LUA_METATABLE_INDEX_DERIVE_INDEX( L, "ToggleButton" ); // This doesnt have a Lua panel yet
-    
     LUA_METATABLE_INDEX_DERIVE_INDEX( L, "Button" );
 
     lua_pushnil( L );
     return 1;
 }
+LUA_BINDING_END( "any", "The value of the field" )
 
-static int CheckButton___newindex( lua_State *L )
+LUA_BINDING_BEGIN( CheckButton, __newindex, "class", "Metamethod that is called when a new field is added to the panel" )
 {
-    CheckButton *pCheckButton = lua_tocheckbutton( L, 1 );
+    CheckButton *pCheckButton = LUA_BINDING_ARGUMENT( lua_tocheckbutton, 1, "checkButton" );
 
     if ( pCheckButton == NULL )
     { /* avoid extra test when d is not 0 */
@@ -175,20 +197,22 @@ static int CheckButton___newindex( lua_State *L )
 
     LUA_GET_REF_TABLE( L, plCheckButton );
     lua_pushvalue( L, 3 );
-    lua_setfield( L, -2, luaL_checkstring( L, 2 ) );
+    lua_setfield( L, -2, LUA_BINDING_ARGUMENT( luaL_checkstring, 2, "field" ) );
     lua_pop( L, 1 );
     return 0;
 }
+LUA_BINDING_END()
 
-static int CheckButton___eq( lua_State *L )
+LUA_BINDING_BEGIN( CheckButton, __eq, "class", "Metamethod that is called when two buttons are compared" )
 {
-    lua_pushboolean( L, lua_tocheckbutton( L, 1 ) == lua_tocheckbutton( L, 2 ) );
+    lua_pushboolean( L, LUA_BINDING_ARGUMENT( lua_tocheckbutton, 1, "checkButton" ) == LUA_BINDING_ARGUMENT( lua_tocheckbutton, 2, "otherCheckButton" ) );
     return 1;
 }
+LUA_BINDING_END( "boolean", "Whether the buttons are equal" )
 
-static int CheckButton___tostring( lua_State *L )
+LUA_BINDING_BEGIN( CheckButton, __tostring, "class", "Metamethod that is called when the button is to be converted to a string" )
 {
-    CheckButton *pCheckButton = lua_tocheckbutton( L, 1 );
+    CheckButton *pCheckButton = LUA_BINDING_ARGUMENT( lua_tocheckbutton, 1, "checkButton" );
     if ( pCheckButton == NULL )
         lua_pushstring( L, "INVALID_PANEL" );
     else
@@ -200,40 +224,21 @@ static int CheckButton___tostring( lua_State *L )
     }
     return 1;
 }
+LUA_BINDING_END( "string", "The string representation of the button" )
 
-static const luaL_Reg CheckButtonmeta[] = {
-    { "ChainToAnimationMap", CheckButton_ChainToAnimationMap },
-    { "ChainToMap", CheckButton_ChainToMap },
-    { "GetDisabledBgColor", CheckButton_GetDisabledBgColor },
-    { "GetDisabledFgColor", CheckButton_GetDisabledFgColor },
-    { "GetPanelBaseClassName", CheckButton_GetPanelBaseClassName },
-    { "GetPanelClassName", CheckButton_GetPanelClassName },
-    { "IsSelected", CheckButton_IsSelected },
-    { "KB_AddBoundKey", CheckButton_KB_AddBoundKey },
-    { "KB_ChainToMap", CheckButton_KB_ChainToMap },
-    { "SetCheckButtonCheckable", CheckButton_SetCheckButtonCheckable },
-    { "SetSelected", CheckButton_SetSelected },
-    { "__index", CheckButton___index },
-    { "__newindex", CheckButton___newindex },
-    { "__eq", CheckButton___eq },
-    { "__tostring", CheckButton___tostring },
-    { "__gc", Panel___gc },
-    { NULL, NULL } };
+LUA_REGISTRATION_INIT( Panels )
 
-static int luasrc_CheckButton( lua_State *L )
+LUA_BINDING_BEGIN( Panels, CheckButton, "library", "Creates a new CheckButton panel" )
 {
-    lua_CheckButton *pPanel = new lua_CheckButton(
-        luaL_optpanel( L, 1, VGui_GetClientLuaRootPanel() ),
-        luaL_optstring( L, 2, NULL ),
-        luaL_optstring( L, 3, NULL ),
-        L );
+    Panel *parent = LUA_BINDING_ARGUMENT_WITH_DEFAULT( luaL_optpanel, 1, VGui_GetClientLuaRootPanel(), "parent" );
+    const char *name = LUA_BINDING_ARGUMENT_WITH_DEFAULT( luaL_optstring, 2, "CheckButton", "name" );
+    const char *text = LUA_BINDING_ARGUMENT_WITH_DEFAULT( luaL_optstring, 3, "", "text" );
+
+    LCheckButton *pPanel = new LCheckButton( parent, name, text, L );
     pPanel->PushLuaInstance( L );
     return 1;
 }
-
-static const luaL_Reg CheckButton_funcs[] = {
-    { "CheckButton", luasrc_CheckButton },
-    { NULL, NULL } };
+LUA_BINDING_END( "CheckButton", "The new CheckButton Panel" )
 
 /*
 ** Open CheckButton object
@@ -241,10 +246,14 @@ static const luaL_Reg CheckButton_funcs[] = {
 LUALIB_API int luaopen_vgui_CheckButton( lua_State *L )
 {
     LUA_PUSH_NEW_METATABLE( L, "CheckButton" );
-    luaL_register( L, NULL, CheckButtonmeta );
-    lua_pushstring( L, LUA_PANELLIBNAME );
+
+    LUA_REGISTRATION_COMMIT( CheckButton );
+
+    lua_pushstring( L, LUA_PANELMETANAME );
     lua_setfield( L, -2, "__type" ); /* metatable.__type = "Panel" */
-    luaL_register( L, LUA_VGUILIBNAME, CheckButton_funcs );
+
+    LUA_REGISTRATION_COMMIT_LIBRARY( Panels );
+
     lua_pop( L, 2 );
     return 0;
 }

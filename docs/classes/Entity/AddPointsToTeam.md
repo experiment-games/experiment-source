@@ -15,7 +15,7 @@ lua:
   
   arguments:
     - name: "points"
-      type: integer
+      type: number
     - name: "allowNegative"
       type: boolean
   returns:

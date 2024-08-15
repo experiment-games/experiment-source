@@ -315,10 +315,25 @@ function fromTypeChecker(typeChecker) {
     // Enumerations:
     case 'Activity':
       return 'enumeration/ACTIVITY';
+    case 'ActivationType_t':
+    case 'Button::ActivationType_t':
+      return 'enumeration/ACTIVATION_TYPE';
+    case 'Alignment':
+    case 'vgui::Alignment':
+      return 'enumeration/PANEL_ALIGNMENT';
+    case 'AutoResize_e':
+    case 'Panel::AutoResize_e':
+      return 'enumeration/AUTO_RESIZE';
     case 'ButtonCode_t':
     case 'KeyCode':
     case 'MouseCode':
       return 'enumeration/BUTTON';
+    case 'CursorCode':
+      return 'enumeration/CURSOR';
+    case 'DOCK_TYPE':
+    case 'Dock':
+    case 'Dock::Type':
+      return 'enumeration/DOCK_TYPE';
     case 'ShakeCommand_t':
       return 'enumeration/SHAKE_COMMAND';
     case 'MoveCollide_t':
@@ -337,6 +352,9 @@ function fromTypeChecker(typeChecker) {
       return 'enumeration/ENTITY_FLAG';
     case 'GESTURE_SLOT':
       return 'enumeration/GESTURE_SLOT';
+    case 'IFileSystem::KeyValuesPreloadType_t':
+    case 'KeyValuesPreloadType_t':
+      return 'enumeration/KEY_VALUES_PRELOAD_TYPE';
     case 'OBSERVER_MODE':
       return 'enumeration/OBSERVER_MODE';
     case 'RenderMode_t':
@@ -346,6 +364,9 @@ function fromTypeChecker(typeChecker) {
     case 'COLLISION_GROUP':
     case 'Collision_Group_t':
       return 'enumeration/COLLISION_GROUP';
+    case 'PinCorner_e':
+    case 'Panel::PinCorner_e':
+      return 'enumeration/PIN_CORNER';
     case 'PLAYER_ANIM':
       return 'enumeration/PLAYER_ANIMATION';
     case 'SearchPathAdd_t':
@@ -357,15 +378,20 @@ function fromTypeChecker(typeChecker) {
     case 'FontDrawType_t':
       return 'enumeration/FONT_DRAW_TYPE';
     case 'SurfaceFeature_e':
+    case 'ISurface::SurfaceFeature_e':
       return 'enumeration/SURFACE_FEATURE';
     case 'CollideType_t':
       return 'enumeration/COLLIDE_TYPE';
     case 'ShadowType_t':
       return 'enumeration/SHADOW_TYPE';
+    case 'soundlevel_t':
+      return 'enumeration/SOUND_LEVEL';
     case 'Class_T':
       return 'enumeration/AI_CLASS';
     case 'BLOOD_COLOR':
       return 'enumeration/BLOOD_COLOR';
+    case 'USE_TYPE':
+      return 'enumeration/USE_TYPE';
 
     // Define enumerations:
     case 'LIFE':

@@ -90,7 +90,7 @@ LUA_BINDING_END( "boolean", "Returns true if the player survived the fall, false
 LUA_BINDING_BEGIN( MoveHelper, PlayerSetAnimation, "class", "Sets player animation" )
 {
     lua_IMoveHelper *moveHelper = LUA_BINDING_ARGUMENT( luaL_checkmovehelper, 1, "moveHelper" );
-    PLAYER_ANIM animation = ( PLAYER_ANIM )( int )LUA_BINDING_ARGUMENT( luaL_checknumber, 2, "animation" );
+    PLAYER_ANIM animation = LUA_BINDING_ARGUMENT_ENUM( PLAYER_ANIM, 2, "animation" );
     moveHelper->PlayerSetAnimation( animation );
     return 0;
 }

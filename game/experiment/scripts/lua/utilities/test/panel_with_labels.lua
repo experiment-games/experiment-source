@@ -5,9 +5,9 @@ Include("includes/extensions/panel.lua")
 Include("includes/extensions/label.lua")
 Include("includes/extensions/text_entry.lua")
 
-local parent = Gui.Create("Frame")
+local parent = Panels.Create("Frame")
 local parentWide, parentTall = 256, 256
-parent:SetBgColor(Colors.Create(255, 0, 0, 255))
+parent:SetBackgroundColor(Colors.Create(255, 0, 0, 255))
 parent:SetSize(parentWide, parentTall)
 parent:SetPosition(50, 50)
 parent:SetTitle("A panel with labels using fonts")
@@ -38,7 +38,7 @@ local labels = {
 firstSpacing = 22
 
 for i, label in ipairs(labels) do
-    local topChild = Gui.Create("Label", parent)
+    local topChild = Panels.Create("Label", parent)
     topChild:SetText(label.text)
     topChild:SetDock(_E.DOCK_TYPE.TOP)
     topChild:SetDockPadding(dockPadding, firstSpacing + dockPadding, dockPadding, dockPadding)
@@ -50,14 +50,14 @@ for i, label in ipairs(labels) do
 end
 
 -- Add a text entry
-local textEntry = Gui.Create("TextEntry", parent)
+local textEntry = Panels.Create("TextEntry", parent)
 textEntry:SetDock(_E.DOCK_TYPE.FILL)
 textEntry:SetDockPadding(dockPadding, dockPadding, dockPadding, dockPadding)
 textEntry:SetFontByName("Default")
 textEntry:SetMultiline(true)
 textEntry:SetEditable(false)
 
-local closeButton = Gui.Create("Button", parent)
+local closeButton = Panels.Create("Button", parent)
 closeButton:SetText("Close")
 closeButton:SetDock(_E.DOCK_TYPE.BOTTOM)
 closeButton:SetTall(32)
@@ -66,7 +66,7 @@ function closeButton:OnClick()
 	parent:MarkForDeletion()
 end
 
-local enableButton = Gui.Create("Button", parent)
+local enableButton = Panels.Create("Button", parent)
 enableButton:SetText("Toggle TextEntry IsEditable")
 enableButton:SetDock(_E.DOCK_TYPE.BOTTOM)
 enableButton:SetTall(32)

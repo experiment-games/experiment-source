@@ -20,7 +20,7 @@ lua:
       type: string
     - name: "pathId"
       type: string
-      default: "0"
+      default: "\"DATA\""
   returns:
     - type: FileHandle
       description: "The file handle."

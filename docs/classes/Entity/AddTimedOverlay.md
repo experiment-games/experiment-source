@@ -17,7 +17,7 @@ lua:
     - name: "text"
       type: string
     - name: "durationInSeconds"
-      type: integer
+      type: number
   returns:
     
 ---

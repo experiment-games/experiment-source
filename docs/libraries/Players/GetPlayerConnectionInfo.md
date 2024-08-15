@@ -15,7 +15,7 @@ lua:
   
   arguments:
     - name: "index"
-      type: integer
+      type: number
   returns:
     - type: integer
       description: "The player's ping."

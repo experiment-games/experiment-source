@@ -23,13 +23,13 @@ lua:
     - name: "angles"
       type: Angle
     - name: "r"
-      type: integer
+      type: number
     - name: "g"
-      type: integer
+      type: number
     - name: "b"
-      type: integer
+      type: number
     - name: "a"
-      type: integer
+      type: number
     - name: "duration"
       type: number
   returns:

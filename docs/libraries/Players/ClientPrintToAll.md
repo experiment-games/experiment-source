@@ -15,7 +15,7 @@ lua:
   
   arguments:
     - name: "messageType"
-      type: integer
+      type: number
     - name: "message"
       type: string
     - name: "subsitution1"

@@ -16,15 +16,15 @@ end
 
 local ComputeStringWidth = Utilities.ComputeStringWidth
 local GetFontName = _R.Scheme.GetFontName
-local CreateFont = Surface.CreateFont
-local DrawSetTextFont = Surface.DrawSetTextFont
-local GetCharABCwide = Surface.GetCharABCwide
-local GetCharacterWidth = Surface.GetCharacterWidth
-local GetFontAscent = Surface.GetFontAscent
-local GetFontTall = Surface.GetFontTall
-local GetTextSize = Surface.GetTextSize
-local IsFontAdditive = Surface.IsFontAdditive
-local SetFontGlyphSet = Surface.SetFontGlyphSet
+local CreateFont = Surfaces.CreateFont
+local DrawSetTextFont = Surfaces.DrawSetTextFont
+local GetCharABCwide = Surfaces.GetCharABCwide
+local GetCharacterWidth = Surfaces.GetCharacterWidth
+local GetFontAscent = Surfaces.GetFontAscent
+local GetFontTall = Surfaces.GetFontTall
+local GetTextSize = Surfaces.GetTextSize
+local IsFontAdditive = Surfaces.IsFontAdditive
+local SetFontGlyphSet = Surfaces.SetFontGlyphSet
 
 -------------------------------------------------------------------------------
 -- _R.FontHandleContainer
@@ -105,12 +105,12 @@ function Utilities.ComputeStringWidth(font, str)
 end
 
 function _R.Scheme.GetFontName(scheme, font)
-    local resolvedFont = Surface.ResolveFont(font, scheme)
+    local resolvedFont = Surfaces.ResolveFont(font, scheme)
 
 	return GetFontName(scheme, resolvedFont)
 end
 
-function Surface.CreateFont()
+function Surfaces.CreateFont()
 	local fontcontainer = FontHandleContainer()
 	fontcontainer.index = FontHandleContainerIndex
 	fontcontainer.font = CreateFont()
@@ -119,7 +119,7 @@ function Surface.CreateFont()
 	return fontcontainer
 end
 
-function Surface.ResolveFont(font, scheme)
+function Surfaces.ResolveFont(font, scheme)
 	local type = type(font)
 
     if (type ~= "string" and type ~= "FontHandle" and type ~= "FontHandleContainer") then
@@ -137,49 +137,49 @@ function Surface.ResolveFont(font, scheme)
 	end
 end
 
-function Surface.DrawSetTextFont(font)
-    local resolvedFont = Surface.ResolveFont(font)
+function Surfaces.DrawSetTextFont(font)
+    local resolvedFont = Surfaces.ResolveFont(font)
 
     return DrawSetTextFont(resolvedFont)
 end
 
-function Surface.GetCharABCwide(font, ch)
-    local resolvedFont = Surface.ResolveFont(font)
+function Surfaces.GetCharABCwide(font, ch)
+    local resolvedFont = Surfaces.ResolveFont(font)
 
 	return GetCharABCwide(resolvedFont, ch)
 end
 
-function Surface.GetCharacterWidth(font, ch)
-    local resolvedFont = Surface.ResolveFont(font)
+function Surfaces.GetCharacterWidth(font, ch)
+    local resolvedFont = Surfaces.ResolveFont(font)
 
 	return GetCharacterWidth(resolvedFont, ch)
 end
 
-function Surface.GetFontAscent(font, ch)
-    local resolvedFont = Surface.ResolveFont(font)
+function Surfaces.GetFontAscent(font, ch)
+    local resolvedFont = Surfaces.ResolveFont(font)
 
 	return GetFontAscent(resolvedFont, ch)
 end
 
-function Surface.GetFontTall(font)
-    local resolvedFont = Surface.ResolveFont(font)
+function Surfaces.GetFontTall(font)
+    local resolvedFont = Surfaces.ResolveFont(font)
 
 	return GetFontTall(resolvedFont)
 end
 
-function Surface.GetTextSize(font, text)
-    local resolvedFont = Surface.ResolveFont(font)
+function Surfaces.GetTextSize(font, text)
+    local resolvedFont = Surfaces.ResolveFont(font)
 
 	return GetTextSize(resolvedFont, text)
 end
 
-function Surface.IsFontAdditive(font)
-    local resolvedFont = Surface.ResolveFont(font)
+function Surfaces.IsFontAdditive(font)
+    local resolvedFont = Surfaces.ResolveFont(font)
 
 	return IsFontAdditive(resolvedFont)
 end
 
-function Surface.SetFontGlyphSet(font, windowsFontName, tall, weight, blur, scanlines, flags, nRangeMin, nRangeMax)
+function Surfaces.SetFontGlyphSet(font, windowsFontName, tall, weight, blur, scanlines, flags, nRangeMin, nRangeMax)
     local type = type(font)
 
     if (type ~= "FontHandle" and type ~= "FontHandleContainer") then

@@ -28,6 +28,5 @@ LUALIB_API int luaopen_ClientEnumerations( lua_State *L )
     lua_pushenum( L, SKYBOX_2DSKYBOX_VISIBLE, "2D_VISIBLE" );
     LUA_SET_ENUM_LIB_END( L );
 
-
     return 0;
 }

@@ -15,7 +15,7 @@ lua:
   
   arguments:
     - name: "type"
-      type: integer
+      type: number
   returns:
     - type: boolean
       description: "Whether the player has any ammo of the specified type."
