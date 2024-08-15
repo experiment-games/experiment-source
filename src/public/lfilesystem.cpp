@@ -328,6 +328,22 @@ LUA_BINDING_BEGIN( Files, Open, "library", "Open a file." )
 
     readMode = luaL_checkstring( L, 2 );
 
+    // For now We will support writing only to DATA, we will allow reading only in GAME, and DATA
+    if ( readMode[0] == 'w' )
+    {
+        if ( !V_stristr( pathId, "data" ) )
+        {
+            luaL_argerror( L, 3, "Invalid pathId for writing (DATA expected)" );
+        }
+    }
+    else if ( readMode[0] == 'r' )
+    {
+        if ( !V_stristr( pathId, "game" ) && !V_stristr( pathId, "data" ) )
+        {
+            luaL_argerror( L, 3, "Invalid pathId for reading (GAME or DATA expected)" );
+        }
+    }
+
     lua_pushfilehandle( L, filesystem->Open( filePath, readMode, pathId ) );
     return 1;
 }

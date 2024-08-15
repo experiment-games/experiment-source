@@ -80,8 +80,8 @@ end
 
 local function GenerateAllEnumerationsMarkdown()
 	if (CLIENT) then
-		for _, file in ipairs(Files.Find("docs/lua/enumerations/*", "DATA")) do
-			Files.RemoveFile("docs/lua/enumerations/" .. file, "DATA")
+		for _, file in ipairs(Files.Find("docs/enumerations/*", "DATA")) do
+			Files.RemoveFile("docs/enumerations/" .. file, "DATA")
 		end
 	end
 

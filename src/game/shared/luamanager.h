@@ -48,6 +48,8 @@
 #define LUA_PATH_GAMEUI LUA_ROOT "\\gameui"
 #define LUA_PATH_WEAPONS LUA_ROOT "\\weapons"
 
+#define LUA_PATH_DATA "data"
+
 #define LUA_BASE_ENTITY_CLASS "prop_scripted"
 #define LUA_BASE_ENTITY_FACTORY "CBaseAnimating"
 #define LUA_BASE_WEAPON "weapon_experimentbase_scriptedweapon"
