@@ -3,11 +3,9 @@ template: lua-index.html
 childrenTitle: Enumeration Types
 include:
   startsWith: enumerations/
-  isIndex: true
 exclude:
-  exact: enumerations/
+  isIndex: true
 format:
-  label: '%parentTitle%'
   hideParent: true
 ---
 

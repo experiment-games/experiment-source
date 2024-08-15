@@ -85,7 +85,7 @@ local enumsToMergeWithKey = {
 	MASK = "MASK",
 	MOVE_COLLIDE = "MOVECOLLIDE",
 	MOVE_TYPE = "MOVETYPE",
-	OBS_MODE = "OBS_MODE",
+	OBSERVER_MODE = "OBS_MODE",
 	SOLID = "SOLID",
 	SURFACE = "SURF",
 }

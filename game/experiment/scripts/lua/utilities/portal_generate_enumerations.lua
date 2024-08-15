@@ -1,7 +1,7 @@
 --[[
 	Generates the markdown files for all Lua enumerations.
 
-	lua_openscript_cl utilities/portal_generate_enumerations.lua
+	lua_openscript_cl utilities/portal_generate_enumerations.lua; lua_openscript utilities/portal_generate_enumerations.lua
 --]]
 
 require("Files")
@@ -19,7 +19,8 @@ lua:
   library: %library%
   realm: %realm%
   description: ''
-  %enumerations%
+  enumerations:
+%enumerations%
 ---
 
 <div class="lua__search__keywords">
@@ -29,34 +30,55 @@ lua:
 
 local allEnumerationsParent = _E
 
-local function GenerateEnumerationMarkdown(enumerationName, enumerationTable, realm)
+local function GenerateEnumerationMarkdown(enumerationName, enumerationTable)
     local enumerationMarkdown = ""
-    local searchKeywords = ""
+    local searchKeywords = enumerationName .. ": "
     local enumerationValues = ""
 
+    local markdownDirectory = "docs/lua/enumerations"
+    local markdownPath = markdownDirectory .. "/" .. enumerationName .. ".md"
+
+    print("Generating " .. markdownPath)
+
+    local realm = CLIENT and "client" or "server"
+
+    -- If the file already exists, then the other realm also has it. Meaning this is a shared enumeration.
+	if (Files.FileExists(markdownPath, "DATA")) then
+		realm = "shared"
+	end
+
+    -- Let's sort by values
+    local sortedKeys = {}
     for key, value in pairs(enumerationTable) do
-        enumerationValues = enumerationValues .. "- `" .. key .. "`: " .. tostring(value) .. "\n"
-        searchKeywords = searchKeywords .. key .. " "
+        table.insert(sortedKeys, key)
     end
+	table.sort(sortedKeys, function(a, b)
+		return enumerationTable[a] < enumerationTable[b]
+    end)
+
+	for _, key in ipairs(sortedKeys) do
+		local value = enumerationTable[key]
+		enumerationValues = enumerationValues .. "    " .. key .. ": " .. tostring(value) .. "\n"
+		searchKeywords = searchKeywords .. key .. "(" .. value .. ") "
+	end
 
     enumerationMarkdown = string.gsub(markdownTemplate, "%%title%%", enumerationName)
     enumerationMarkdown = string.gsub(enumerationMarkdown, "%%realm%%", realm)
-    enumerationMarkdown = string.gsub(enumerationMarkdown, "%%library%%", "GMod Compatibility")
+    enumerationMarkdown = string.gsub(enumerationMarkdown, "%%library%%", enumerationName)
     enumerationMarkdown = string.gsub(enumerationMarkdown, "%%enumerations%%", enumerationValues)
-    enumerationMarkdown = string.gsub(enumerationMarkdown, "%%searchKeywords%%", searchKeywords)
+    enumerationMarkdown = string.gsub(enumerationMarkdown, "%%searchKeywords%%", searchKeywords:TrimEnd())
 
-    local markdownDirectory = "docs/lua/enumerations/"
-	Files.CreateDirectoryHierarchy(markdownDirectory)
-    local markdownPath = markdownDirectory .. "/" .. enumerationName .. ".md"
-    local hFile = Files.Open(markdownPath, "w")
+    local hFile = Files.Open(markdownPath, "w", "DATA")
     Files.Write(enumerationMarkdown, hFile)
     Files.Close(hFile)
 end
 
 local function GenerateAllEnumerationsMarkdown()
+    Files.RemoveFile("docs/lua/enumerations", "DATA")
+
     for enumerationName, enumerationTable in pairs(allEnumerationsParent) do
         if (type(enumerationTable) == "table") then
-            GenerateEnumerationMarkdown(enumerationName, enumerationTable, "gmod_compatibility")
+            GenerateEnumerationMarkdown(enumerationName, enumerationTable)
         end
     end
 end

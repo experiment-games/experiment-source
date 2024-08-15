@@ -450,7 +450,7 @@ enum PLAYER_ANIM
 #define	DAMAGE_AIM				3
 
 // Spectator Movement modes
-enum OBS_MODE
+enum OBSERVER_MODE
 {
 	OBS_MODE_NONE = 0,	// not in spectator mode
 	OBS_MODE_DEATHCAM,	// special mode for death cam animation

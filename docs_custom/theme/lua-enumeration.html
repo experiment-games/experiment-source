@@ -1,0 +1,50 @@
+{% extends "main.html" %}
+<!-- ---
+template: lua-enumeration.html
+title: ACTIVATION_TYPE
+icon: lua-gmod_compatibility
+tags:
+  - lua
+  - gmod_compatibility
+  - needs-verification
+  - needs-example
+lua:
+  library: ACTIVATION_TYPE
+  realm: gmod_compatibility
+  description: ''
+  enumerations:
+    - 'ON_PRESSED_AND_RELEASED': 0
+    - 'ON_PRESSED': 1
+    - 'ON_RELEASED': 2
+
+---
+
+<div class="lua__search__keywords">
+ACTIVATION_TYPE: ON_PRESSED_AND_RELEASED(0) ON_PRESSED(1) ON_RELEASED(2)
+</div>
+ -->
+{% block content %}
+<div class="lua">
+    <div class="lua__title">
+        <h1>
+            {{ page.meta.lua.library }}
+        </h1>
+    </div>
+
+    {{ page.meta.lua.description }}
+
+    <ul class="lua__variable_list">
+        {% for key, value in page.meta.lua.enumerations.items() %}
+        <li class="lua__variable_list__enum">
+            <span class="lua__variable_list__enum__key">{{ key }}</span>
+            <span class="lua__variable_list__enum__value">{{ value }}</span>
+        </li>
+        {% endfor %}
+    </ul>
+
+    {% if page.content %}
+    {{ page.content }}
+    {% endif %}
+
+</div>
+{% endblock %}

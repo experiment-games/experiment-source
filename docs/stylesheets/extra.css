@@ -106,6 +106,33 @@
     font-size: 0.8em;
 }
 
+.lua .lua__variable_list .lua__variable_list__enum {
+    font-family: monospace;
+    color: var(--md-code-fg-color);
+    background: var(--md-code-bg-color);
+    padding: 0.1em 1em;
+    border-radius: 0.2em;
+    width: fit-content;
+}
+
+.lua .lua__variable_list .lua__variable_list__enum::before {
+    content: "";
+}
+
+.lua .lua__variable_list .lua__variable_list__enum .lua__variable_list__enum__key {
+    display: inline-block;
+    font-weight: bolder;
+    min-width: 200px;
+}
+
+.lua .lua__variable_list .lua__variable_list__enum .lua__variable_list__enum__value {
+    font-weight: normal;
+}
+
+.lua .lua__variable_list .lua__variable_list__enum .lua__variable_list__enum__value::before {
+    content: " = ";
+}
+
 .lua .lua__variable_list__default::before {
     content: "[defaults to: ";
     font-weight: normal;

@@ -106,7 +106,7 @@ LUALIB_API int( luaopen_FCVAR )( lua_State *L );
 LUALIB_API int( luaopen_Files )( lua_State *L );
 LUALIB_API int( luaopen_FileHandle )( lua_State *L );
 
-#define LUA_FONTFLAGLIBNAME "FONTFLAG"
+#define LUA_FONTFLAGLIBNAME "FONT_FLAG"
 LUALIB_API int( luaopen_FONTFLAG )( lua_State *L );
 
 #define LUA_GESTURESLOTLIBNAME "GESTURE_SLOT"
@@ -180,7 +180,7 @@ LUALIB_API int( luaopen_MOVETYPE )( lua_State *L );
 #define LUA_NETWORKSTRINGTABLELIBNAME "NetworkStringTable"
 LUALIB_API int( luaopen_NetworkStringTables )( lua_State *L );
 
-#define LUA_OBSMODELIBNAME "OBS_MODE"
+#define LUA_OBSMODELIBNAME "OBSERVER_MODE"
 LUALIB_API int( luaopen_OBS_MODE )( lua_State *L );
 
 #define LUA_PARTICLESYSTEMLIBNAME "ParticleSystems"

@@ -18,26 +18,26 @@ end
 --- @param target string The string to trim
 --- @param characters? string The characters to trim
 --- @return string # The trimmed string
-function string.TrimLeft(target, characters)
+function string.TrimStart(target, characters)
     if (characters) then
 		characters = string.PatternSafe(characters)
-        return target:match("^[" .. characters .. "]+(.+)$") or target
+        return target:match("^[" .. characters .. "]*(.+)$") or target
     end
 
-    return target:match("^%s*(.+)$") or target
+    return target:match("^%s*(.-)$") or target
 end
 
 --- Trims the end of a string.
 --- @param target string The string to trim
 --- @param characters? string The characters to trim
 --- @return string # The trimmed string
-function string.TrimRight(target, characters)
+function string.TrimEnd(target, characters)
 	if (characters) then
 		characters = string.PatternSafe(characters)
-		return target:match("^(.-)[" .. characters .. "]+$") or target
+		return target:match("^(.-)[" .. characters .. "]*$") or target
 	end
 
-	return target:match("^(.+)%s*$") or target
+	return target:match("^(.-)%s*$") or target
 end
 
 --- Trims the beginning and end of a string.
@@ -45,7 +45,7 @@ end
 --- @param characters? string The characters to trim
 --- @return string # The trimmed string
 function string.Trim(target, characters)
-	return string.TrimRight(string.TrimLeft(target, characters), characters)
+	return string.TrimEnd(string.TrimStart(target, characters), characters)
 end
 
 --- Checks if a string starts with a given string.

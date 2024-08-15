@@ -413,14 +413,14 @@ LUALIB_API int luaopen_FL( lua_State *L )
 LUALIB_API int luaopen_OBS_MODE( lua_State *L )
 {
     LUA_SET_ENUM_LIB_BEGIN( L, LUA_OBSMODELIBNAME );
-    lua_pushenum( L, OBS_MODE::OBS_MODE_NONE, "NONE" );
-    lua_pushenum( L, OBS_MODE::OBS_MODE_DEATHCAM, "DEATHCAM" );
-    lua_pushenum( L, OBS_MODE::OBS_MODE_FREEZECAM, "FREEZECAM" );
-    lua_pushenum( L, OBS_MODE::OBS_MODE_FIXED, "FIXED" );
-    lua_pushenum( L, OBS_MODE::OBS_MODE_IN_EYE, "IN_EYE" );
-    lua_pushenum( L, OBS_MODE::OBS_MODE_CHASE, "CHASE" );
-    lua_pushenum( L, OBS_MODE::OBS_MODE_POI, "POI" );
-    lua_pushenum( L, OBS_MODE::OBS_MODE_ROAMING, "ROAMING" );
+    lua_pushenum( L, OBSERVER_MODE::OBS_MODE_NONE, "NONE" );
+    lua_pushenum( L, OBSERVER_MODE::OBS_MODE_DEATHCAM, "DEATHCAM" );
+    lua_pushenum( L, OBSERVER_MODE::OBS_MODE_FREEZECAM, "FREEZECAM" );
+    lua_pushenum( L, OBSERVER_MODE::OBS_MODE_FIXED, "FIXED" );
+    lua_pushenum( L, OBSERVER_MODE::OBS_MODE_IN_EYE, "IN_EYE" );
+    lua_pushenum( L, OBSERVER_MODE::OBS_MODE_CHASE, "CHASE" );
+    lua_pushenum( L, OBSERVER_MODE::OBS_MODE_POI, "POI" );
+    lua_pushenum( L, OBSERVER_MODE::OBS_MODE_ROAMING, "ROAMING" );
     LUA_SET_ENUM_LIB_END( L );
     return 0;
 }
