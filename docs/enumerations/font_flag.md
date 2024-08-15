@@ -1,15 +1,15 @@
 ---
 template: lua-enumeration.html
 title: FONT_FLAG
-icon: lua-shared
+icon: lua-client
 tags:
   - lua
-  - shared
+  - client
   - needs-verification
   - needs-example
 lua:
   library: FONT_FLAG
-  realm: shared
+  realm: client
   description: ''
   enumerations:
     NONE: 0

@@ -22,6 +22,6 @@ print(color.blue == color[3] and color.blue == 100) -- true
 print(color.alpha == color[4] and color.alpha == 55) -- true
 ```
 
-Colors can be created using the [`Colors.Create`](libraries/Colors/Create.md)
-function. The [`Colors` library](libraries/Colors/index.md) provides functions to
-help create colors to and from different formats.
+Colors can be created using the [`Colors.Create`](../../libraries/Colors/Create.md)
+function. The [`Colors` library](../../libraries/Colors/index.md) provides
+functions to help create colors to and from different formats.

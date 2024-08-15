@@ -1,15 +1,15 @@
 ---
 template: lua-enumeration.html
 title: ACTIVATION_TYPE
-icon: lua-shared
+icon: lua-client
 tags:
   - lua
-  - shared
+  - client
   - needs-verification
   - needs-example
 lua:
   library: ACTIVATION_TYPE
-  realm: shared
+  realm: client
   description: ''
   enumerations:
     ON_PRESSED_AND_RELEASED: 0

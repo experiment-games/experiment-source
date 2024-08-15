@@ -1,6 +1,6 @@
 ---
 template: lua-enumeration.html
-title: AUTO_RESIZE
+title: COLLIDE_TYPE
 icon: lua-client
 tags:
   - lua
@@ -8,17 +8,16 @@ tags:
   - needs-verification
   - needs-example
 lua:
-  library: AUTO_RESIZE
+  library: COLLIDE_TYPE
   realm: client
   description: ''
   enumerations:
-    NO: 0
-    RIGHT: 1
-    DOWN: 2
-    DOWN_AND_RIGHT: 3
+    SHOULD_NOT_COLLIDE: 0
+    SHOULD_COLLIDE: 1
+    SHOULD_RESPOND: 2
 
 ---
 
 <div class="lua__search__keywords">
-AUTO_RESIZE: NO(0) RIGHT(1) DOWN(2) DOWN_AND_RIGHT(3)
+COLLIDE_TYPE: SHOULD_NOT_COLLIDE(0) SHOULD_COLLIDE(1) SHOULD_RESPOND(2)
 </div>

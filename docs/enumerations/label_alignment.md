@@ -1,15 +1,15 @@
 ---
 template: lua-enumeration.html
 title: LABEL_ALIGNMENT
-icon: lua-shared
+icon: lua-client
 tags:
   - lua
-  - shared
+  - client
   - needs-verification
   - needs-example
 lua:
   library: LABEL_ALIGNMENT
-  realm: shared
+  realm: client
   description: ''
   enumerations:
     NORTH_WEST: 0

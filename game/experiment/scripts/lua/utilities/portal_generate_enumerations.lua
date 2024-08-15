@@ -1,6 +1,7 @@
 --[[
 	Generates the markdown files for all Lua enumerations.
 
+	Run in this order (since client wipes the files, which is needed to determine if it's shared):
 	lua_openscript_cl utilities/portal_generate_enumerations.lua; lua_openscript utilities/portal_generate_enumerations.lua
 --]]
 
@@ -47,12 +48,16 @@ local function GenerateEnumerationMarkdown(enumerationName, enumerationTable)
 		realm = "shared"
 	end
 
-    -- Let's sort by values
+    -- Let's sort by values and if they are the same, by keys
     local sortedKeys = {}
     for key, value in pairs(enumerationTable) do
         table.insert(sortedKeys, key)
     end
 	table.sort(sortedKeys, function(a, b)
+        if (enumerationTable[a] == enumerationTable[b]) then
+            return a < b
+        end
+
 		return enumerationTable[a] < enumerationTable[b]
     end)
 
@@ -74,7 +79,11 @@ local function GenerateEnumerationMarkdown(enumerationName, enumerationTable)
 end
 
 local function GenerateAllEnumerationsMarkdown()
-    Files.RemoveFile("docs/lua/enumerations", "DATA")
+	if (CLIENT) then
+		for _, file in ipairs(Files.Find("docs/lua/enumerations/*", "DATA")) do
+			Files.RemoveFile("docs/lua/enumerations/" .. file, "DATA")
+		end
+	end
 
     for enumerationName, enumerationTable in pairs(allEnumerationsParent) do
         if (type(enumerationTable) == "table") then

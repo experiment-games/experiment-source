@@ -1,15 +1,15 @@
 ---
 template: lua-enumeration.html
 title: PANEL_ALIGNMENT
-icon: lua-shared
+icon: lua-client
 tags:
   - lua
-  - shared
+  - client
   - needs-verification
   - needs-example
 lua:
   library: PANEL_ALIGNMENT
-  realm: shared
+  realm: client
   description: ''
   enumerations:
     NONE: 0

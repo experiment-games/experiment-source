@@ -14,5 +14,5 @@ Tables are used to store multiple values in a single variable.
 
 Tables can be created using curly braces `{}` and can contain key-value pairs.
 
-The [table library](libraries/table/index.md) provides functions to help
+The [table library](../../libraries/table/index.md) provides functions to help
 manipulate tables.

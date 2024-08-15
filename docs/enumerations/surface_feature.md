@@ -1,15 +1,15 @@
 ---
 template: lua-enumeration.html
 title: SURFACE_FEATURE
-icon: lua-shared
+icon: lua-client
 tags:
   - lua
-  - shared
+  - client
   - needs-verification
   - needs-example
 lua:
   library: SURFACE_FEATURE
-  realm: shared
+  realm: client
   description: ''
   enumerations:
     ANTIALIASED_FONTS: 1

@@ -1,15 +1,15 @@
 ---
 template: lua-enumeration.html
 title: DOCK_TYPE
-icon: lua-shared
+icon: lua-client
 tags:
   - lua
-  - shared
+  - client
   - needs-verification
   - needs-example
 lua:
   library: DOCK_TYPE
-  realm: shared
+  realm: client
   description: ''
   enumerations:
     NONE: 0

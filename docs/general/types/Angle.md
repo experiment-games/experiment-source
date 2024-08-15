@@ -32,5 +32,5 @@ print(orientation[2]) -- 90
 print(orientation[3]) -- 45
 ```
 
-Angles can be created using the [`Angles.Create`](libraries/Angles/Create.md)
+Angles can be created using the [`Angles.Create`](../../libraries/Angles/Create.md)
 function.

@@ -11,6 +11,6 @@ lua:
 
 ## Redirecting to `number`
 
-You are being redirected to [number](general/types/number.md)...
+You are being redirected to [number](./number.md)...
 
-[Click here if you are not redirected](general/types/number.md){ .md-button .md-button--primary }
+[Click here if you are not redirected](./number.md){ .md-button .md-button--primary }

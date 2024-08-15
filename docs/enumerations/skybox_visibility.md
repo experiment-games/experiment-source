@@ -1,6 +1,6 @@
 ---
 template: lua-enumeration.html
-title: AUTO_RESIZE
+title: SKYBOX_VISIBILITY
 icon: lua-client
 tags:
   - lua
@@ -8,17 +8,16 @@ tags:
   - needs-verification
   - needs-example
 lua:
-  library: AUTO_RESIZE
+  library: SKYBOX_VISIBILITY
   realm: client
   description: ''
   enumerations:
-    NO: 0
-    RIGHT: 1
-    DOWN: 2
-    DOWN_AND_RIGHT: 3
+    NOT_VISIBLE: 0
+    3D_VISIBLE: 1
+    2D_VISIBLE: 2
 
 ---
 
 <div class="lua__search__keywords">
-AUTO_RESIZE: NO(0) RIGHT(1) DOWN(2) DOWN_AND_RIGHT(3)
+SKYBOX_VISIBILITY: NOT_VISIBLE(0) 3D_VISIBLE(1) 2D_VISIBLE(2)
 </div>

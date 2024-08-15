@@ -31,5 +31,5 @@ print(position[2]) -- 2
 print(position[3]) -- 3
 ```
 
-Vectors can be created using the [`Vectors.Create`](libraries/Vectors/Create.md)
+Vectors can be created using the [`Vectors.Create`](../../libraries/Vectors/Create.md)
 function.
