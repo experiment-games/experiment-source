@@ -35,6 +35,11 @@
     font-size: 0.8em;
 }
 
+.lua .lua__type .lua__type__class::before {
+    content: "class: ";
+    font-size: 0.8em;
+}
+
 .lua .lua__symbol {
     font-weight: bolder;
     background-color:  var(--md-code-bg-color);
