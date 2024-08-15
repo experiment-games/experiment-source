@@ -5,7 +5,7 @@
   Due to how source engine writes, the path is forced lowercase.
 
   After running the Lua script, run this script to copy the files to the final
-  destination, fixing the casing to be SCREAMING_SNAKE_CASE.
+  destination, fixing the casing to be SCREAMING_SNAKE_CASE.md
 
   node ./tools/docs-build-enumerations.js
 */
@@ -20,7 +20,10 @@ const files = fs.readdirSync(srcDir);
 
 for (const file of files) {
   const srcPath = path.join(srcDir, file);
-  const outputPath = path.join(outputDir, file.toUpperCase());
+  let outputPath = path.join(outputDir, file.toUpperCase());
+
+  // trim .MD for .md
+  outputPath = outputPath.slice(0, -2) + 'md';
 
   fs.copyFileSync(srcPath, outputPath);
 }
