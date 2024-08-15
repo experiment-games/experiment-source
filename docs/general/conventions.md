@@ -56,24 +56,31 @@ See the `.editorconfig` file for the code style.
 - Variables and functions are not abbreviated, with the exception of these
   common abbreviations:
 
-    - `Config`
-    - `Hud`
-    - `Ui`
-    - `Vgui`
-    - `Api`
-    - `Id` (short for identifier)
-    - `Url`
-    - `Sqr` (short for square root)
-    - `Ik` (short for inverse kinematics)
-    - `Json`, `Xml`, `Html`, `Css` and other data format/language names
     - `2d`, `3d`, `4d` and other dimensions
-    - `Dev`
-    - `Rgb`, `Rgba`, `Hsv`, `Hsl` and other color spaces
-    - `Hltv` (short for Half-Life TV)
-    - `Dx` (DirectX), `HDR` and other graphic settings
-    - `Demo`
-    - `Obb` (short for oriented bounding box)
     - `Aabb` (short for axis-aligned bounding box)
+    - `Api`
+    - `App` (short for application)
+    - `Config`
+    - `Demo`
+    - `Dev`
+    - `Dx` (DirectX), `HDR` and other graphic settings
+    - `Fcvar` (short for flag convar, kept this way due to the source engine
+        using this abbreviation when explaining convars)
+    - `Hltv` (short for Half-Life TV)
+    - `Hud`
+    - `Hwnd` (short for window handle)
+    - `Id` (short for identifier)
+    - `Ik` (short for inverse kinematics)
+    - `Ime` (short for input method editor)
+    - `Json`, `Xml`, `Html`, `Css` and other data format/language names
+    - `Obb` (short for oriented bounding box)
+    - `Rgb`, `Rgba`, `Hsv`, `Hsl` and other color spaces
+    - `Sqr` (short for square root)
+    - `Ui`
+    - `Url`
+    - `Vcd` (short for Valve Choreography Data) and other valve formats (e.g.
+      `Vmt`, `Vtf`, `Vpk`, `Mdl`, etc.)
+    - `Vgui`
 
 - Abbreviations should be treated as words when capitalizing:
 
@@ -81,6 +88,14 @@ See the `.editorconfig` file for the code style.
     - `tableToJson`
     - `htmlToText`
     - `textToHtml`
+    - `JSON_FOR_HUD`
+
+- Note that the following combinations of words are a single word:
+
+    - `Noclip` (not `NoClip`)
+    - `Hitbox`
+    - `Skybox`
+    - `Physcannon` (and other made up names for weapons)
 
 - Variables and functions are preferred to be descriptive over being short.
 

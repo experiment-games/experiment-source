@@ -450,7 +450,8 @@ enum PLAYER_ANIM
 #define	DAMAGE_AIM				3
 
 // Spectator Movement modes
-enum {
+enum OBS_MODE
+{
 	OBS_MODE_NONE = 0,	// not in spectator mode
 	OBS_MODE_DEATHCAM,	// special mode for death cam animation
 	OBS_MODE_FREEZECAM,	// zooms to a target, and freeze-frames on them
@@ -575,7 +576,7 @@ enum
 #define NO_THINK_CONTEXT	-1
 
 // entity flags, CBaseEntity::m_iEFlags
-enum
+enum ENTITY_FLAG
 {
 	EFL_KILLME	=				(1<<0),	// This entity is marked for death -- This allows the game to actually delete ents at a safe time
 	EFL_DORMANT	=				(1<<1),	// Entity is dormant, no updates to client

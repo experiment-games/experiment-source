@@ -143,7 +143,7 @@ LUA_BINDING_BEGIN( Entity, ScreenShake, "class", "Shake an object and all player
     float duration = LUA_BINDING_ARGUMENT( luaL_checknumber, 5, "duration" );
     float radius = LUA_BINDING_ARGUMENT( luaL_checknumber, 6, "radius" );
 
-    ShakeCommand_t eCommand = ( ShakeCommand_t )( int )LUA_BINDING_ARGUMENT_WITH_DEFAULT( luaL_optnumber, 7, SHAKE_START, "shakeCommand" );
+    ShakeCommand_t eCommand = LUA_BINDING_ARGUMENT_ENUM_WITH_DEFAULT( ShakeCommand_t, 7, SHAKE_START, "shakeCommand" );
     bool shouldShakePlayersInAir = LUA_BINDING_ARGUMENT_WITH_DEFAULT( luaL_optboolean, 8, false, "shouldShakePlayersInAir" );
 
     UTIL_ScreenShakeObject( pEntity, center, amplitude, frequency, duration, radius, eCommand, shouldShakePlayersInAir );

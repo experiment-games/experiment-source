@@ -40,7 +40,7 @@ firstSpacing = 22
 for i, label in ipairs(labels) do
     local topChild = Gui.Create("Label", parent)
     topChild:SetText(label.text)
-    topChild:SetDock(DOCK_TYPE.TOP)
+    topChild:SetDock(_E.DOCK_TYPE.TOP)
     topChild:SetDockPadding(dockPadding, firstSpacing + dockPadding, dockPadding, dockPadding)
     topChild:SetFontByName(label.font)
 
@@ -51,7 +51,7 @@ end
 
 -- Add a text entry
 local textEntry = Gui.Create("TextEntry", parent)
-textEntry:SetDock(DOCK_TYPE.FILL)
+textEntry:SetDock(_E.DOCK_TYPE.FILL)
 textEntry:SetDockPadding(dockPadding, dockPadding, dockPadding, dockPadding)
 textEntry:SetFontByName("Default")
 textEntry:SetMultiline(true)
@@ -59,7 +59,7 @@ textEntry:SetEditable(false)
 
 local closeButton = Gui.Create("Button", parent)
 closeButton:SetText("Close")
-closeButton:SetDock(DOCK_TYPE.BOTTOM)
+closeButton:SetDock(_E.DOCK_TYPE.BOTTOM)
 closeButton:SetTall(32)
 
 function closeButton:OnClick()
@@ -68,7 +68,7 @@ end
 
 local enableButton = Gui.Create("Button", parent)
 enableButton:SetText("Toggle TextEntry IsEditable")
-enableButton:SetDock(DOCK_TYPE.BOTTOM)
+enableButton:SetDock(_E.DOCK_TYPE.BOTTOM)
 enableButton:SetTall(32)
 
 function enableButton:OnClick()

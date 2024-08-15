@@ -276,7 +276,7 @@ inline bool IsSolid( SolidType_t solidType, int nSolidFlags )
 #define LIFE_DISCARDBODY 4
 
 // entity effects
-enum
+enum ENTITY_EFFECT
 {
     EF_BONEMERGE = 0x001,           // Performs bone merge on client side
     EF_BRIGHTLIGHT = 0x002,         // DLIGHT centered at entity origin

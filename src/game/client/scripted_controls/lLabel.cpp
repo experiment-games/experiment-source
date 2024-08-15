@@ -459,5 +459,18 @@ LUALIB_API int luaopen_vgui_Label( lua_State *L )
     lua_setfield( L, -2, "__type" ); /* metatable.__type = "Panel" */
     luaL_register( L, LUA_VGUILIBNAME, Label_funcs );
     lua_pop( L, 2 );
+
+    LUA_SET_ENUM_LIB_BEGIN( L, "LABEL_ALIGNMENT" );
+    lua_pushenum( L, vgui::Label::Alignment::a_northwest, "NORTH_WEST" );
+    lua_pushenum( L, vgui::Label::Alignment::a_north, "NORTH" );
+    lua_pushenum( L, vgui::Label::Alignment::a_northeast, "NORTH_EAST" );
+    lua_pushenum( L, vgui::Label::Alignment::a_west, "WEST" );
+    lua_pushenum( L, vgui::Label::Alignment::a_center, "CENTER" );
+    lua_pushenum( L, vgui::Label::Alignment::a_east, "EAST" );
+    lua_pushenum( L, vgui::Label::Alignment::a_southwest, "SOUTH_WEST" );
+    lua_pushenum( L, vgui::Label::Alignment::a_south, "SOUTH" );
+    lua_pushenum( L, vgui::Label::Alignment::a_southeast, "SOUTH_EAST" );
+    LUA_SET_ENUM_LIB_END( L );
+
     return 0;
 }

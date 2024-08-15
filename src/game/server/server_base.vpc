@@ -704,6 +704,7 @@ $Project
             $File "$SRCDIR\game\shared\lusercmd.h"
             $File "$SRCDIR\public\lbspflags.cpp"
             $File "$SRCDIR\public\lenumerations.cpp"
+            $File "$SRCDIR\public\lenumerations_shared.cpp"
             $File "lbaseentity.cpp"
             $File "lbaseentity.h"
             $File "lbaseanimating.cpp"

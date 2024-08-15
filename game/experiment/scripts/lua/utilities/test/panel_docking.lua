@@ -20,7 +20,7 @@ local childWide, childTall = 64, 64
 -- Child for filling
 local fillChild = Gui.Create("Button", parent)
 fillChild:SetText("FILL")
-fillChild:SetDock(DOCK_TYPE.FILL)
+fillChild:SetDock(_E.DOCK_TYPE.FILL)
 fillChild:SetDockPadding(dockPadding, dockPadding, dockPadding, dockPadding)
 
 function fillChild:OnClick()
@@ -30,13 +30,13 @@ end
 
 local topChild = Gui.Create("Label", parent)
 topChild:SetText("TOP")
-topChild:SetDock(DOCK_TYPE.TOP)
+topChild:SetDock(_E.DOCK_TYPE.TOP)
 topChild:SetTall(childTall)
 topChild:SetDockPadding(dockPadding, dockPadding, dockPadding, dockPadding)
 
 local leftChild = Gui.Create("Button", parent)
 leftChild:SetText("LEFT")
-leftChild:SetDock(DOCK_TYPE.LEFT)
+leftChild:SetDock(_E.DOCK_TYPE.LEFT)
 leftChild:SetWide(childWide)
 leftChild:SetDockPadding(dockPadding, dockPadding, dockPadding, dockPadding)
 
@@ -45,26 +45,26 @@ function leftChild:OnClick()
 end
 
 local bottomChild = Gui.Create("Panel", parent)
-bottomChild:SetDock(DOCK_TYPE.BOTTOM)
+bottomChild:SetDock(_E.DOCK_TYPE.BOTTOM)
 bottomChild:SetTall(childTall)
 bottomChild:SetDockPadding(dockPadding, dockPadding, dockPadding, dockPadding)
 bottomChild:SetBgColor(Color(0, 255, 0, 255))
 
 local bottomAncestor = Gui.Create("Button", bottomChild)
 bottomAncestor:SetText("bottom BOTTOM")
-bottomAncestor:SetDock(DOCK_TYPE.BOTTOM)
+bottomAncestor:SetDock(_E.DOCK_TYPE.BOTTOM)
 bottomAncestor:SetTall(childTall / 2)
 bottomAncestor:SetDockPadding(dockPadding, dockPadding, dockPadding, dockPadding)
 
 local bottomAncestor2 = Gui.Create("Button", bottomChild)
 bottomAncestor2:SetText("bottom TOP")
-bottomAncestor2:SetDock(DOCK_TYPE.TOP)
+bottomAncestor2:SetDock(_E.DOCK_TYPE.TOP)
 bottomAncestor2:SetTall(childTall / 2)
 bottomAncestor2:SetDockPadding(dockPadding, dockPadding, dockPadding, dockPadding)
 
 local rightChild = Gui.Create("Button", parent)
 rightChild:SetText("RIGHT")
-rightChild:SetDock(DOCK_TYPE.RIGHT)
+rightChild:SetDock(_E.DOCK_TYPE.RIGHT)
 rightChild:SetWide(childWide)
 rightChild:SetDockPadding(dockPadding, dockPadding, dockPadding, dockPadding)
 

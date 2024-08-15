@@ -26,6 +26,9 @@ static const luaL_RegForState luasrclibs[] = {
     //
     // Shared
     //
+    { LUA_SHAREDENUMNAME, luaopen_SharedEnumerations, REALM_SHARED },                   // ✔    n/a     n/a
+    { LUA_BUTTONENUMNAME, luaopen_BUTTON, REALM_SHARED },                               // ✔    n/a     n/a
+    { LUA_ACTIVITYENUMNAME, luaopen_ACTIVITY, REALM_SHARED },                           // ✔    n/a     n/a
     { LUA_BASEANIMATINGLIBNAME, luaopen_CBaseAnimating_shared, REALM_SHARED },          // ✔    n/a     n/a
     { LUA_BASEANIMATINGLIBNAME, luaopen_CBaseAnimating, REALM_SHARED },                 // n/a   ✔      ✔
     { LUA_BASECOMBATWEAPONLIBNAME, luaopen_CBaseCombatWeapon, REALM_SHARED },           // ✔    n/a     n/a
@@ -35,7 +38,7 @@ static const luaL_RegForState luasrclibs[] = {
     { LUA_BASEPLAYERMETANAME, luaopen_CBasePlayer, REALM_SHARED },                      // n/a   empty   ✔
     { LUA_PLAYERSLIBNAME, luaopen_Players, REALM_SHARED },                              // ✔    n/a     n/a
     { LUA_CBASEFLEXLIBNAME, luaopen_CBaseFlex_shared, REALM_SHARED },                   // ✔    n/a     n/a
-    { LUA_COLORMETANAME, luaopen_Color, REALM_SHARED | REALM_GAMEUI },                   // ✔    n/a     n/a
+    { LUA_COLORMETANAME, luaopen_Color, REALM_SHARED | REALM_GAMEUI },                  // ✔    n/a     n/a
     { LUA_CONCOMMANDLIBNAME, luaopen_ConsoleCommandMeta, REALM_SHARED | REALM_GAMEUI }, // ✔    n/a     n/a
     { LUA_CONTENTSLIBNAME, luaopen_CONTENTS, REALM_SHARED | REALM_GAMEUI },
     { LUA_CONVARLIBNAME, luaopen_ConsoleVariableMeta, REALM_SHARED | REALM_GAMEUI },    // ✔    n/a     n/a
@@ -44,19 +47,19 @@ static const luaL_RegForState luasrclibs[] = {
     { LUA_DEBUGOVERLAYLIBNAME, luaopen_debugoverlay, REALM_SHARED },                    // ✔    n/a     n/a
     { LUA_EFFECTDATAMETANAME, luaopen_CEffectData, REALM_SHARED },                      // ✔    n/a     n/a
     { LUA_EFLIBNAME, luaopen_EF, REALM_SHARED | REALM_GAMEUI },
-    { LUA_ENGINEFLAGSLIBNAME, luaopen_FL, REALM_SHARED | REALM_GAMEUI },
+    { LUA_ENGINEFLAGSENUMLIBNAME, luaopen_FL, REALM_SHARED | REALM_GAMEUI },            // ✔    n/a     n/a
     { LUA_ENGINELIBNAME, luaopen_engine_shared, REALM_SHARED | REALM_GAMEUI },          // ✔    n/a     n/a
     { LUA_ENGINELIBNAME, luaopen_engine, REALM_SHARED | REALM_GAMEUI },                 // n/a   ✔      ✔
     { LUA_ENTITIESLIBNAME, luaopen_Entities, REALM_SHARED },                            // ✔    n/a     n/a
     { LUA_EXPERIMENTPLAYERLIBNAME, luaopen_CExperiment_Player_shared, REALM_SHARED },   // ✔    n/a     n/a
-    { LUA_FCVARLIBNAME, luaopen_FCVAR, REALM_SHARED | REALM_GAMEUI },
+    { LUA_FCVARENUMLIBNAME, luaopen_FCVAR, REALM_SHARED | REALM_GAMEUI },
     { LUA_FILEHANDLEMETANAME, luaopen_FileHandle, REALM_SHARED | REALM_GAMEUI },        // ✔    n/a     n/a
     { LUA_FILESYSTEMLIBNAME, luaopen_Files, REALM_SHARED | REALM_GAMEUI },              // ✔    n/a     n/a
     { LUA_FLEDICTLIBNAME, luaopen_FL_EDICT, REALM_SHARED | REALM_GAMEUI },
     { LUA_GAMETRACEMETANAME, luaopen_CGameTrace, REALM_SHARED },                         // ✔    n/a     n/a
     { LUA_GESTURESLOTLIBNAME, luaopen_GESTURE_SLOT, REALM_SHARED | REALM_GAMEUI },
     { LUA_INETWORKSTRINGTABLELIBNAME, luaopen_INetworkStringTable, REALM_SHARED },      // ✔    n/a     n/a
-    { LUA_INLIBNAME, luaopen_IN, REALM_SHARED | REALM_GAMEUI },
+    { LUA_INENUMLIBNAME, luaopen_IN, REALM_SHARED | REALM_GAMEUI },
     { LUA_ITEXTUREMETANAME, luaopen_ITexture, REALM_SHARED | REALM_GAMEUI },            // ✔    n/a     n/a
     { LUA_KEYVALUESLIBNAME, luaopen_KeyValues, REALM_SHARED | REALM_GAMEUI },           // ✔    n/a     n/a
     { LUA_LIFELIBNAME, luaopen_LIFE, REALM_SHARED | REALM_GAMEUI },
@@ -85,7 +88,7 @@ static const luaL_RegForState luasrclibs[] = {
     { LUA_SOLIDLIBNAME, luaopen_SOLID, REALM_SHARED | REALM_GAMEUI },
     { LUA_STEAMAPICONTEXTLIBNAME, luaopen_SteamApiContexts, REALM_SHARED | REALM_GAMEUI },  // ✔    n/a     n/a  
     { LUA_STEAMFRIENDSMETANAME, luaopen_ISteamFriends, REALM_SHARED | REALM_GAMEUI },       // ✔    n/a     n/a  
-    { LUA_SURFLIBNAME, luaopen_SURF, REALM_SHARED | REALM_GAMEUI },
+    { LUA_SURFENUMNAME, luaopen_SURF, REALM_SHARED | REALM_GAMEUI },
     { LUA_SYSTEMSLIBNAME, luaopen_Systems, REALM_SHARED | REALM_GAMEUI },           // ✔    n/a     n/a  
     { LUA_TAKEDAMAGEINFOMETANAME, luaopen_CTakeDamageInfo, REALM_SHARED },          // ✔    n/a     n/a  
     { LUA_UMSGLIBNAME, luaopen_UserMessages, REALM_SHARED },                        // ✔    n/a     n/a  
@@ -107,17 +110,17 @@ static const luaL_RegForState luasrclibs[] = {
     //
     // Client
     //
-    { LUA_BFREADLIBNAME, luaopen_bf_read, REALM_CLIENT },
-    { LUA_CLIENTSHADOWMGRLIBNAME, luaopen_g_pClientShadowMgr, REALM_CLIENT },
+    { LUA_BFREADLIBNAME, luaopen_bf_read, REALM_CLIENT },                           // n/a   ✔     n/a
+    { LUA_CLIENTSHADOWMGRLIBNAME, luaopen_g_pClientShadowMgr, REALM_CLIENT },       // n/a   ✔     n/a
 
     // HL2SB; FIXME: obsolete? should be passing VPANELs, but passes Panel instead,
     // which always ends up being invalid (we can't access them by pointer)
-    { LUA_ENGINEVGUILIBNAME, luaopen_enginevgui, REALM_CLIENT | REALM_GAMEUI },
+    { LUA_ENGINEVGUILIBNAME, luaopen_enginevgui, REALM_CLIENT | REALM_GAMEUI },     // n/a   ✔     n/a
 
     { LUA_FONTFLAGLIBNAME, luaopen_FONTFLAG, REALM_CLIENT },
     { LUA_FONTLIBNAME, luaopen_HFont, REALM_CLIENT },
     { LUA_HSCHEMELIBNAME, luaopen_HScheme, REALM_CLIENT },
-    { LUA_INPUTLIBNAME, luaopen_input, REALM_CLIENT | REALM_GAMEUI },
+    { LUA_INPUTLIBNAME, luaopen_input, REALM_CLIENT | REALM_GAMEUI },               // n/a   ✔     n/a
     { LUA_ISCHEMELIBNAME, luaopen_IScheme, REALM_CLIENT | REALM_GAMEUI },
     { LUA_PREDICTIONLIBNAME, luaopen_prediction, REALM_CLIENT },
     { LUA_SCHEMELIBNAME, luaopen_scheme, REALM_CLIENT | REALM_GAMEUI },

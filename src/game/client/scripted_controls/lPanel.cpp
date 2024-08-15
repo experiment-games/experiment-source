@@ -1747,5 +1747,44 @@ LUALIB_API int luaopen_vgui_Panel( lua_State *L )
     // entity.
     Panel::PushVPanelLuaInstance( L, NULL );
     lua_setglobal( L, "INVALID_PANEL" ); /* set global INVALID_PANEL */
+
+    LUA_SET_ENUM_LIB_BEGIN( L, "PIN_CORNER" );
+    lua_pushenum( L, Panel::PIN_TOPLEFT, "TOP_LEFT" );
+    lua_pushenum( L, Panel::PIN_TOPRIGHT, "TOP_RIGHT" );
+    lua_pushenum( L, Panel::PIN_BOTTOMLEFT, "BOTTOM_LEFT" );
+    lua_pushenum( L, Panel::PIN_BOTTOMRIGHT, "BOTTOM_RIGHT" );
+    lua_pushenum( L, Panel::PIN_CENTER_TOP, "CENTER_TOP" );
+    lua_pushenum( L, Panel::PIN_CENTER_RIGHT, "CENTER_RIGHT" );
+    lua_pushenum( L, Panel::PIN_CENTER_BOTTOM, "CENTER_BOTTOM" );
+    lua_pushenum( L, Panel::PIN_CENTER_LEFT, "CENTER_LEFT" );
+    LUA_SET_ENUM_LIB_END( L );
+
+    LUA_SET_ENUM_LIB_BEGIN( L, "AUTO_RESIZE" );
+    lua_pushenum( L, Panel::AUTORESIZE_NO, "NO" );
+    lua_pushenum( L, Panel::AUTORESIZE_RIGHT, "RIGHT" );
+    lua_pushenum( L, Panel::AUTORESIZE_DOWN, "DOWN" );
+    lua_pushenum( L, Panel::AUTORESIZE_DOWNANDRIGHT, "DOWN_AND_RIGHT" );
+    LUA_SET_ENUM_LIB_END( L );
+
+    LUA_SET_ENUM_LIB_BEGIN( L, "DOCK_TYPE" );
+    lua_pushenum( L, Dock::None, "NONE" );
+    lua_pushenum( L, Dock::Fill, "FILL" );
+    lua_pushenum( L, Dock::Left, "LEFT" );
+    lua_pushenum( L, Dock::Right, "RIGHT" );
+    lua_pushenum( L, Dock::Top, "TOP" );
+    lua_pushenum( L, Dock::Bottom, "BOTTOM" );
+    LUA_SET_ENUM_LIB_END( L );
+
+    LUA_SET_ENUM_LIB_BEGIN( L, "PANEL_ALIGNMENT" );
+    lua_pushenum( L, Alignment::None, "NONE" );
+    lua_pushenum( L, Alignment::Left, "LEFT" );
+    lua_pushenum( L, Alignment::Right, "RIGHT" );
+    lua_pushenum( L, Alignment::Top, "TOP" );
+    lua_pushenum( L, Alignment::Bottom, "BOTTOM" );
+    lua_pushenum( L, Alignment::CenterVertical, "CENTER_VERTICAL" );
+    lua_pushenum( L, Alignment::CenterHorizontal, "CENTER_HORIZONTAL" );
+    lua_pushenum( L, Alignment::Center, "CENTER" );
+    LUA_SET_ENUM_LIB_END( L );
+
     return 1;
 }

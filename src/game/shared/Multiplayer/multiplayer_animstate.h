@@ -74,9 +74,11 @@ enum PlayerAnimEvent_t
 };
 
 // Gesture Slots.
-enum
+enum GESTURE_SLOT
 {
-    GESTURE_SLOT_ATTACK_AND_RELOAD,
+    GESTURE_SLOT_INVALID = -1,
+
+    GESTURE_SLOT_ATTACK_AND_RELOAD = 0,
     GESTURE_SLOT_GRENADE,
     GESTURE_SLOT_JUMP,
     GESTURE_SLOT_SWIM,
@@ -86,8 +88,6 @@ enum
 
     GESTURE_SLOT_COUNT,
 };
-
-#define GESTURE_SLOT_INVALID -1
 
 struct GestureSlot_t
 {

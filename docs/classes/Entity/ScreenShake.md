@@ -25,7 +25,7 @@ lua:
     - name: "radius"
       type: number
     - name: "shakeCommand"
-      type: number
+      type: enumeration/SHAKE_COMMAND
       default: "SHAKE_START"
     - name: "shouldShakePlayersInAir"
       type: boolean

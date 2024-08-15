@@ -939,6 +939,24 @@ static const luaL_Reg surfacelib[] = {
 LUALIB_API int luaopen_surface( lua_State *L )
 {
     luaL_register( L, LUA_SURFACELIBNAME, surfacelib );
+
+    LUA_SET_ENUM_LIB_BEGIN( L, "FONT_DRAW_TYPE" );
+    lua_pushenum( L, FontDrawType_t::FONT_DRAW_DEFAULT, "DEFAULT" );
+    lua_pushenum( L, FontDrawType_t::FONT_DRAW_NONADDITIVE, "NON_ADDITIVE" );
+    lua_pushenum( L, FontDrawType_t::FONT_DRAW_ADDITIVE, "ADDITIVE" );
+    lua_pushenum( L, FontDrawType_t::FONT_DRAW_TYPE_COUNT, "TYPE_COUNT" );
+    LUA_SET_ENUM_LIB_END( L );
+
+    LUA_SET_ENUM_LIB_BEGIN( L, "SURFACE_FEATURE" );
+    lua_pushenum( L, ISurface::SurfaceFeature_e::ANTIALIASED_FONTS, "ANTIALIASED_FONTS" );
+    lua_pushenum( L, ISurface::SurfaceFeature_e::DROPSHADOW_FONTS, "DROP_SHADOW_FONTS" );
+    lua_pushenum( L, ISurface::SurfaceFeature_e::ESCAPE_KEY, "ESCAPE_KEY" );
+    lua_pushenum( L, ISurface::SurfaceFeature_e::OPENING_NEW_HTML_WINDOWS, "OPENING_NEW_HTML_WINDOWS" );
+    lua_pushenum( L, ISurface::SurfaceFeature_e::FRAME_MINIMIZE_MAXIMIZE, "FRAME_MINIMIZE_MAXIMIZE" );
+    lua_pushenum( L, ISurface::SurfaceFeature_e::OUTLINE_FONTS, "OUTLINE_FONTS" );
+    lua_pushenum( L, ISurface::SurfaceFeature_e::DIRECT_HWND_RENDER, "DIRECT_HWND_RENDER" );
+    LUA_SET_ENUM_LIB_END( L );
+
     return 1;
 }
 

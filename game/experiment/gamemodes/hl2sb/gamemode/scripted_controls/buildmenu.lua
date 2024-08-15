@@ -21,7 +21,7 @@ local CBuildMenu = {
 function CBuildMenu:Init(pViewPort)
 	self:SetProportional(true)
 
-	self:SetDock( DOCK_TYPE.FILL )
+	self:SetDock( _E.DOCK_TYPE.FILL )
 	self:SetAutoDelete(false)
 
 	self.m_pViewPort = pViewPort
@@ -63,10 +63,10 @@ function CBuildMenu:ShowPanel(bShow)
 		self:MakePopup()
 
 		if (self.m_lastx and self.m_lasty) then
-			Input.SetCursorPos(self.m_lastx, self.m_lasty)
+			Inputs.SetCursorPos(self.m_lastx, self.m_lasty)
 		end
 	else
-		self.m_lastx, self.m_lasty = Input.GetCursorPos()
+		self.m_lastx, self.m_lasty = Inputs.GetCursorPos()
 
 		self:SetVisible(false)
 		self:SetMouseInputEnabled(false)

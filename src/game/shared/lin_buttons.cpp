@@ -8,7 +8,7 @@
 ** Open IN library
 */
 LUALIB_API int luaopen_IN (lua_State *L) {
-  LUA_SET_ENUM_LIB_BEGIN(L, LUA_INLIBNAME);
+  LUA_SET_ENUM_LIB_BEGIN(L, LUA_INENUMLIBNAME);
     lua_pushenum(L, IN_ATTACK, "ATTACK");
     lua_pushenum(L, IN_JUMP, "JUMP");
     lua_pushenum(L, IN_DUCK, "DUCK");

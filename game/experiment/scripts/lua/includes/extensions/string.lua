@@ -47,3 +47,19 @@ end
 function string.Trim(target, characters)
 	return string.TrimRight(string.TrimLeft(target, characters), characters)
 end
+
+--- Checks if a string starts with a given string.
+--- @param target string The string to check
+--- @param start string The string to check for
+--- @return boolean # Whether the string starts with the given string
+function string.StartsWith(target, start)
+    return target:sub(1, start:len()) == start
+end
+
+--- Checks if a string ends with a given string.
+--- @param target string The string to check
+--- @param ending string The string to check for
+--- @return boolean # Whether the string ends with the given string
+function string.EndsWith(target, ending)
+    return target:sub(-ending:len()) == ending
+end

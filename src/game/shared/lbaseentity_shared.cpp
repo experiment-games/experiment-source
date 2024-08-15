@@ -474,6 +474,25 @@ LUA_BINDING_BEGIN( Entity, GetEyePosition, "class", "Get eye position." )
 }
 LUA_BINDING_END( "Vector", "The eye position." )
 
+LUA_BINDING_BEGIN( Entity, GetLifeState, "class", "Get the life state." )
+{
+    lua_CBaseEntity *pEntity = LUA_BINDING_ARGUMENT( luaL_checkentity, 1, "entity" );
+
+    lua_pushinteger( L, pEntity->m_lifeState );
+    return 1;
+}
+LUA_BINDING_END( "enumeration/LIFE", "The life state." )
+
+LUA_BINDING_BEGIN( Entity, SetLifeState, "class", "Set the life state." )
+{
+    lua_CBaseEntity *pEntity = LUA_BINDING_ARGUMENT( luaL_checkentity, 1, "entity" );
+    int nLifeState = LUA_BINDING_ARGUMENT_ENUM_DEFINE( LIFE, 2, "lifeState" );
+
+    pEntity->m_lifeState = nLifeState;
+    return 0;
+}
+LUA_BINDING_END()
+
 LUA_BINDING_BEGIN( Entity, FireBullets, "class", "Fire bullets." )
 {
     lua_CBaseEntity *pEntity = LUA_BINDING_ARGUMENT( luaL_checkentity, 1, "entity" );

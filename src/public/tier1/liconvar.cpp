@@ -7,7 +7,7 @@
 ** Open FCVAR library
 */
 LUALIB_API int luaopen_FCVAR (lua_State *L) {
-  LUA_SET_ENUM_LIB_BEGIN(L, LUA_FCVARLIBNAME);
+  LUA_SET_ENUM_LIB_BEGIN(L, LUA_FCVARENUMLIBNAME);
     lua_pushenum(L, FCVAR_NONE, "NONE");
 
     lua_pushenum(L, FCVAR_UNREGISTERED, "UNREGISTERED");

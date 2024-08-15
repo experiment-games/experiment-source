@@ -65,22 +65,19 @@
                                    // (performance warning)
 
 #define LUA_SET_ENUM_LIB_BEGIN( L, libraryName ) \
-    const char *lib = libraryName;               \
-    lua_getglobal( L, LUA_ENAME );               \
-    lua_newtable( L );
-
-#define LUA_SET_ENUM_LIB_BEGIN_CONTINUED( L, libraryName ) \
-    lib = libraryName;                                     \
-    lua_getglobal( L, LUA_ENAME );                         \
-    lua_newtable( L );
+    {                                            \
+        const char *__enumLibrary = libraryName; \
+        lua_getglobal( L, LUA_ENAME );           \
+        lua_newtable( L );
 
 #define lua_pushenum( L, enum, shortname ) \
     lua_pushinteger( L, enum );            \
     lua_setfield( L, -2, shortname );
 
-#define LUA_SET_ENUM_LIB_END( L ) \
-    lua_setfield( L, -2, lib );   \
-    lua_pop( L, 1 );
+#define LUA_SET_ENUM_LIB_END( L )         \
+    lua_setfield( L, -2, __enumLibrary ); \
+    lua_pop( L, 1 );                      \
+    }
 
 #define LUA_CALL_HOOK_FOR_STATE_BEGIN( L, functionName ) \
     lua_getglobal( L, LUA_HOOKSLIBNAME );                \
@@ -343,17 +340,17 @@
             lua_pop( L, 1 );                                         \
     }
 
-#define LUA_RETURN_ENTITY()                                                               \
-    if ( lua_gettop( L ) == 1 )                                                           \
-    {                                                                                     \
+#define LUA_RETURN_ENTITY()                                                                \
+    if ( lua_gettop( L ) == 1 )                                                            \
+    {                                                                                      \
         if ( lua_isuserdata( L, -1 ) && luaL_checkudata( L, -1, LUA_BASEENTITYMETANAME ) ) \
-        {                                                                                 \
-            CBaseEntity *res = luaL_checkentity( L, -1 );                                 \
-            lua_pop( L, 1 );                                                              \
-            return res;                                                                   \
-        }                                                                                 \
-        else                                                                              \
-            lua_pop( L, 1 );                                                              \
+        {                                                                                  \
+            CBaseEntity *res = luaL_checkentity( L, -1 );                                  \
+            lua_pop( L, 1 );                                                               \
+            return res;                                                                    \
+        }                                                                                  \
+        else                                                                               \
+            lua_pop( L, 1 );                                                               \
     }
 
 #define LUA_RETURN_PLAYER()                                                                \
@@ -369,17 +366,17 @@
             lua_pop( L, 1 );                                                               \
     }
 
-#define LUA_RETURN_VECTOR()                                                           \
-    if ( lua_gettop( L ) == 1 )                                                       \
-    {                                                                                 \
+#define LUA_RETURN_VECTOR()                                                            \
+    if ( lua_gettop( L ) == 1 )                                                        \
+    {                                                                                  \
         if ( lua_isuserdata( L, -1 ) && luaL_checkudata( L, -1, LUA_VECTORMETANAME ) ) \
-        {                                                                             \
-            Vector res = luaL_checkvector( L, -1 );                                   \
-            lua_pop( L, 1 );                                                          \
-            return res;                                                               \
-        }                                                                             \
-        else                                                                          \
-            lua_pop( L, 1 );                                                          \
+        {                                                                              \
+            Vector res = luaL_checkvector( L, -1 );                                    \
+            lua_pop( L, 1 );                                                           \
+            return res;                                                                \
+        }                                                                              \
+        else                                                                           \
+            lua_pop( L, 1 );                                                           \
     }
 
 #define LUA_RETURN_ANGLE()                                                            \

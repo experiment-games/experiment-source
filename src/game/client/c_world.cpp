@@ -129,7 +129,7 @@ void C_World::OnDataChanged( DataUpdateType_t updateType )
 
 void C_World::RegisterSharedActivities( void ) {
 #ifndef LUA_SDK
-    ActivityList_RegisterSharedActivities();
+    //ActivityList_RegisterSharedActivities();
 #endif
 
 	EventList_RegisterSharedEvents();

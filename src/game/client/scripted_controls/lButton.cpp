@@ -408,5 +408,11 @@ LUALIB_API int luaopen_vgui_Button( lua_State *L )
     lua_pop( L, 1 );
     lua_pop( L, 1 );  // Pop the Button metatable
 
+    LUA_SET_ENUM_LIB_BEGIN( L, "ACTIVATION_TYPE" );
+    lua_pushenum( L, Button::ACTIVATE_ONPRESSEDANDRELEASED, "ON_PRESSED_AND_RELEASED" );
+    lua_pushenum( L, Button::ACTIVATE_ONPRESSED, "ON_PRESSED" );
+    lua_pushenum( L, Button::ACTIVATE_ONRELEASED, "ON_RELEASED" );
+    LUA_SET_ENUM_LIB_END( L );
+
     return 0;
 }

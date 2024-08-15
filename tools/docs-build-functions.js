@@ -19,9 +19,9 @@ const filesToUpdate = getAllFilesInDirectoriesAsMap(`${outputDir}/libraries`, `$
 const functionsThisRun = new Map();
 
 const luaBindingBeginPattern = /^LUA_BINDING_BEGIN\(\s*(\w+)\s*,\s*(\w+)\s*,\s*"([^"]+)"\s*,\s*"([^"]+)"\s*(?:,\s*"([^"]+)")?\s*\)/;
-const luaBindingArgumentPattern = /LUA_BINDING_ARGUMENT(?:_WITH_EXTRA)?\(\s*(\w+)\s*,\s*(\d+)\s*,\s*(?:[^,]+,\s*)?"([^"]+)"\s*\)/;
+const luaBindingArgumentPattern = /LUA_BINDING_ARGUMENT(?:_WITH_EXTRA|_ENUM|_ENUM_DEFINE)?\(\s*(\w+)\s*,\s*(\d+)\s*,\s*(?:[^,]+,\s*)?"([^"]+)"\s*\)/;
 const luaBindingArgumentNillablePattern = /LUA_BINDING_ARGUMENT_NILLABLE\(\s*(\w+)\s*,\s*(\d+)\s*,\s*"([^"]+)"\s*\)/;
-const luaBindingArgumentWithDefaultPattern = /LUA_BINDING_ARGUMENT_WITH_DEFAULT\(\s*(\w+)\s*,\s*(\d+)\s*,\s*([^,]+)\s*,\s*"([^"]+)"\s*\)/;
+const luaBindingArgumentWithDefaultPattern = /LUA_BINDING_ARGUMENT(?:_ENUM)?_WITH_DEFAULT\(\s*(\w+)\s*,\s*(\d+)\s*,\s*([^,]+)\s*,\s*"([^"]+)"\s*\)/;
 const luaBindingEndPattern = /^LUA_BINDING_END\((.*)\)$/m;
 
 const markdownTemplate = `---
@@ -82,7 +82,7 @@ function writeFunctionToFile(func) {
     const existingFunc = functionsThisRun.get(filePath);
 
     if (existingFunc.realm !== func.realm
-      && existingFunc.concept === func.concept ) {
+      && existingFunc.concept === func.concept) {
       const newFileName = `${existingFunc.function}.${existingFunc.realm}.md`;
       const newFilePath = path.join(outputDir, directory, getLibrary(func), newFileName);
 
@@ -303,6 +303,66 @@ function fromTypeChecker(typeChecker) {
     case 'luaL_optfont':
     case 'lua_tofont':
       return 'FontHandle';
+    case 'luaL_checkvpanel':
+    case 'luaL_optvpanel':
+    case 'lua_tovpanel':
+      return 'PanelHandle';
+    case 'luaL_checkpanel':
+    case 'luaL_optpanel':
+    case 'lua_topanel':
+      return 'Panel';
+
+    // Enumerations:
+    case 'ButtonCode_t':
+    case 'KeyCode':
+    case 'MouseCode':
+      return 'enumeration/BUTTON';
+    case 'ShakeCommand_t':
+      return 'enumeration/SHAKE_COMMAND';
+    case 'MoveCollide_t':
+      return 'enumeration/MOVE_COLLIDE';
+    case 'MoveType_t':
+      return 'enumeration/MOVE_TYPE';
+    case 'SolidType_t':
+      return 'enumeration/SOLID';
+    case 'SolidFlags_t':
+      return 'enumeration/SOLID_FLAG';
+    case 'ENTITY_EFFECT':
+      return 'enumeration/ENTITY_EFFECT';
+    case 'GESTURE_SLOT':
+      return 'enumeration/GESTURE_SLOT';
+    case 'OBS_MODE':
+      return 'enumeration/OBS_MODE';
+    case 'RenderMode_t':
+      return 'enumeration/RENDER_MODE';
+    case 'RenderFx_t':
+      return 'enumeration/RENDER_EFFECTS';
+    case 'COLLISION_GROUP':
+    case 'Collision_Group_t':
+      return 'enumeration/COLLISION_GROUP';
+    case 'PLAYER_ANIM':
+      return 'enumeration/PLAYER_ANIMATION';
+    case 'SearchPathAdd_t':
+      return 'enumeration/SEARCH_PATH_ADD_TO';
+    case 'FileWarningLevel_t':
+      return 'enumeration/FILE_WARNING_LEVEL';
+    case 'VGuiPanel_t':
+      return 'enumeration/VGUI_PANEL';
+    case 'FontDrawType_t':
+      return 'enumeration/FONT_DRAW_TYPE';
+    case 'SurfaceFeature_e':
+      return 'enumeration/SURFACE_FEATURE';
+
+    // Define enumerations:
+    case 'LIFE':
+      return 'enumeration/LIFE';
+    case 'EDICT_FLAG':
+      return 'enumeration/EDICT_FLAG';
+    case 'ENGINE_FLAG':
+      return 'enumeration/ENGINE_FLAG';
+    case 'SURFACE':
+      return 'enumeration/SURFACE';
+
     default:
       return 'unknown';
   }
@@ -423,8 +483,13 @@ function processBindingsInFile(file) {
         newFunctionArgumentSet();
       }
 
+      const type = fromTypeChecker(typeChecker);
+
+      if (type === 'unknown')
+        console.warn(`Unknown type checker ${typeChecker} in ${file}:${i}`);
+
       currentFunctionArgumentSet.arguments.push({
-        type: fromTypeChecker(typeChecker),
+        type: type,
         position,
         name,
         defaultValue,

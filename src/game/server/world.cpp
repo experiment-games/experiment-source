@@ -618,7 +618,7 @@ void CWorld::Precache( void )
 	//	Activities
 	// =================================================
 #ifndef LUA_SDK
-    ActivityList_RegisterSharedActivities();
+    //ActivityList_RegisterSharedActivities();
 #endif
 	RegisterSharedActivities();
 

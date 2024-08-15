@@ -6,77 +6,86 @@
 // memdbgon must be the last include file in a .cpp file!!!
 #include "tier0/memdbgon.h"
 
-static int g_pClientShadowMgr_AdvanceFrame( lua_State *L )
+LUA_REGISTRATION_INIT( ClientShadows )
+
+LUA_BINDING_BEGIN( ClientShadows, AdvanceFrame, "library", "Advance shadow frame processing." )
 {
     g_pClientShadowMgr->AdvanceFrame();
     return 0;
 }
+LUA_BINDING_END()
 
-static int g_pClientShadowMgr_GetShadowDirection( lua_State *L )
+LUA_BINDING_BEGIN( ClientShadows, GetShadowDirection, "library", "Get the current shadow direction as a vector." )
 {
     Vector v = g_pClientShadowMgr->GetShadowDirection();
     lua_pushvector( L, v );
     return 1;
 }
+LUA_BINDING_END( "Vector", "Current shadow direction." )
 
-static int g_pClientShadowMgr_RenderShadowTexture( lua_State *L )
+LUA_BINDING_BEGIN( ClientShadows, RenderShadowTexture, "library", "Render shadow texture using provided width and height." )
 {
-    g_pClientShadowMgr->RenderShadowTexture( luaL_checknumber( L, 1 ), luaL_checknumber( L, 2 ) );
+    int width = LUA_BINDING_ARGUMENT( luaL_checknumber, 1, "width" );
+    int height = LUA_BINDING_ARGUMENT( luaL_checknumber, 2, "height" );
+    g_pClientShadowMgr->RenderShadowTexture( width, height );
     return 0;
 }
+LUA_BINDING_END()
 
-static int g_pClientShadowMgr_SetShadowBlobbyCutoffArea( lua_State *L )
+LUA_BINDING_BEGIN( ClientShadows, SetShadowBlobbyCutoffArea, "library", "Set the blobby cutoff area for shadows." )
 {
-    g_pClientShadowMgr->SetShadowBlobbyCutoffArea( luaL_checknumber( L, 1 ) );
+    double area = LUA_BINDING_ARGUMENT( luaL_checknumber, 1, "area" );
+    g_pClientShadowMgr->SetShadowBlobbyCutoffArea( area );
     return 0;
 }
+LUA_BINDING_END()
 
-static int g_pClientShadowMgr_SetShadowColor( lua_State *L )
+LUA_BINDING_BEGIN( ClientShadows, SetShadowColor, "library", "Set shadow color using RGB values." )
 {
-    g_pClientShadowMgr->SetShadowColor( luaL_checknumber( L, 1 ), luaL_checknumber( L, 2 ), luaL_checknumber( L, 3 ) );
+    int r = LUA_BINDING_ARGUMENT( luaL_checknumber, 1, "r" );
+    int g = LUA_BINDING_ARGUMENT( luaL_checknumber, 2, "g" );
+    int b = LUA_BINDING_ARGUMENT( luaL_checknumber, 3, "b" );
+    g_pClientShadowMgr->SetShadowColor( r, g, b );
     return 0;
 }
+LUA_BINDING_END()
 
-static int g_pClientShadowMgr_SetShadowDirection( lua_State *L )
+LUA_BINDING_BEGIN( ClientShadows, SetShadowDirection, "library", "Set the direction of shadows as a vector." )
 {
-    g_pClientShadowMgr->SetShadowDirection( luaL_checkvector( L, 1 ) );
+    Vector dir = LUA_BINDING_ARGUMENT( luaL_checkvector, 1, "direction" );
+    g_pClientShadowMgr->SetShadowDirection( dir );
     return 0;
 }
+LUA_BINDING_END()
 
-static int g_pClientShadowMgr_SetShadowDistance( lua_State *L )
+LUA_BINDING_BEGIN( ClientShadows, SetShadowDistance, "library", "Set the distance for shadow rendering." )
 {
-    g_pClientShadowMgr->SetShadowDistance( luaL_checknumber( L, 1 ) );
+    double distance = LUA_BINDING_ARGUMENT( luaL_checknumber, 1, "distance" );
+    g_pClientShadowMgr->SetShadowDistance( distance );
     return 0;
 }
+LUA_BINDING_END()
 
-static int g_pClientShadowMgr_SetShadowsDisabled( lua_State *L )
+LUA_BINDING_BEGIN( ClientShadows, SetShadowsDisabled, "library", "Enable or disable shadow rendering." )
 {
-    g_pClientShadowMgr->SetShadowsDisabled( luaL_checkboolean( L, 1 ) );
+    bool disabled = LUA_BINDING_ARGUMENT( luaL_checkboolean, 1, "disabled" );
+    g_pClientShadowMgr->SetShadowsDisabled( disabled );
     return 0;
 }
+LUA_BINDING_END()
 
-static int g_pClientShadowMgr_UnlockAllShadowDepthTextures( lua_State *L )
+LUA_BINDING_BEGIN( ClientShadows, UnlockAllShadowDepthTextures, "library", "Unlock all shadow depth textures." )
 {
     g_pClientShadowMgr->UnlockAllShadowDepthTextures();
     return 0;
 }
-
-static const luaL_Reg g_pClientShadowMgrlib[] = {
-    { "AdvanceFrame", g_pClientShadowMgr_AdvanceFrame },
-    { "GetShadowDirection", g_pClientShadowMgr_GetShadowDirection },
-    { "RenderShadowTexture", g_pClientShadowMgr_RenderShadowTexture },
-    { "SetShadowBlobbyCutoffArea", g_pClientShadowMgr_SetShadowBlobbyCutoffArea },
-    { "SetShadowColor", g_pClientShadowMgr_SetShadowColor },
-    { "SetShadowDirection", g_pClientShadowMgr_SetShadowDirection },
-    { "SetShadowDistance", g_pClientShadowMgr_SetShadowDistance },
-    { "UnlockAllShadowDepthTextures", g_pClientShadowMgr_UnlockAllShadowDepthTextures },
-    { NULL, NULL } };
+LUA_BINDING_END()
 
 /*
 ** Open g_pClientShadowMgr library
 */
 LUALIB_API int luaopen_g_pClientShadowMgr( lua_State *L )
 {
-    luaL_register( L, LUA_CLIENTSHADOWMGRLIBNAME, g_pClientShadowMgrlib );
+    LUA_REGISTRATION_COMMIT_LIBRARY( ClientShadows );
     return 1;
 }

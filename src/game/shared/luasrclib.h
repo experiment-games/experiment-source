@@ -11,6 +11,15 @@
 #pragma once
 #endif
 
+#define LUA_SHAREDENUMNAME ""
+LUALIB_API int( luaopen_SharedEnumerations )( lua_State *L );
+
+#define LUA_ACTIVITYENUMNAME "ACTIVITY"
+LUALIB_API int( luaopen_ACTIVITY )( lua_State *L );
+
+#define LUA_BUTTONENUMNAME "BUTTON"
+LUALIB_API int( luaopen_BUTTON )( lua_State *L );
+
 #define LUA_BASEANIMATINGLIBNAME "CBaseAnimating"
 LUALIB_API int( luaopen_CBaseAnimating )( lua_State *L );
 LUALIB_API int( luaopen_CBaseAnimating_shared )( lua_State *L );
@@ -70,7 +79,7 @@ LUALIB_API int( luaopen_dbg )( lua_State *L );
 #define LUA_DEBUGOVERLAYLIBNAME "DebugOverlays"
 LUALIB_API int( luaopen_debugoverlay )( lua_State *L );
 
-#define LUA_EFLIBNAME "EF"
+#define LUA_EFLIBNAME "ENTITY_EFFECT"
 LUALIB_API int( luaopen_EF )( lua_State *L );
 
 #define LUA_ENGINELIBNAME "Engines"
@@ -80,16 +89,16 @@ LUALIB_API int( luaopen_engine )( lua_State *L );
 #define LUA_ENTITIESLIBNAME "Entities"
 LUALIB_API int( luaopen_Entities )( lua_State *L );
 
-#define LUA_ENGINEFLAGSLIBNAME "FL"
+#define LUA_ENGINEFLAGSENUMLIBNAME "ENGINE_FLAG"
 LUALIB_API int( luaopen_FL )( lua_State *L );
 
-#define LUA_FLEDICTLIBNAME "FL_EDICT"
+#define LUA_FLEDICTLIBNAME "EDICT_FLAG"
 LUALIB_API int( luaopen_FL_EDICT )( lua_State *L );
 
 #define LUA_ENGINEVGUILIBNAME "EngineGui"
 LUALIB_API int( luaopen_enginevgui )( lua_State *L );
 
-#define LUA_FCVARLIBNAME "FCVAR"
+#define LUA_FCVARENUMLIBNAME "FCVAR"
 LUALIB_API int( luaopen_FCVAR )( lua_State *L );
 
 #define LUA_FILESYSTEMLIBNAME "Files"
@@ -118,7 +127,7 @@ LUALIB_API int( luaopen_IMaterial )( lua_State *L );
 #define LUA_MOVEHELPERMETANAME "MoveHelper"
 LUALIB_API int( luaopen_IMoveHelper )( lua_State *L );
 
-#define LUA_INLIBNAME "IN"
+#define LUA_INENUMLIBNAME "INPUT"
 LUALIB_API int( luaopen_IN )( lua_State *L );
 
 #define LUA_NETCHANNELINFOLIBNAME "INetChannelInfo"
@@ -162,10 +171,10 @@ LUALIB_API int( luaopen_mathlib )( lua_State *L );
 #define LUA_MATRIXLIBNAME "Matrix3x4"
 LUALIB_API int( luaopen_Matrix3x4 )( lua_State *L );
 
-#define LUA_MOVECOLLIDELIBNAME "MOVECOLLIDE"
+#define LUA_MOVECOLLIDELIBNAME "MOVE_COLLIDE"
 LUALIB_API int( luaopen_MOVECOLLIDE )( lua_State *L );
 
-#define LUA_MOVETYPELIBNAME "MOVETYPE"
+#define LUA_MOVETYPELIBNAME "MOVE_TYPE"
 LUALIB_API int( luaopen_MOVETYPE )( lua_State *L );
 
 #define LUA_NETWORKSTRINGTABLELIBNAME "NetworkStringTable"
@@ -201,13 +210,13 @@ LUALIB_API int( luaopen_Serializers )( lua_State *L );
 #define LUA_SOLIDLIBNAME "SOLID"
 LUALIB_API int( luaopen_SOLID )( lua_State *L );
 
-#define LUA_SOLIDFLAGLIBNAME "FSOLID"
+#define LUA_SOLIDFLAGLIBNAME "SOLID_FLAG"
 LUALIB_API int( luaopen_SOLIDFLAG )( lua_State *L );
 
 #define LUA_STEAMAPICONTEXTLIBNAME "SteamApiContexts"
 LUALIB_API int( luaopen_SteamApiContexts )( lua_State *L );
 
-#define LUA_SURFLIBNAME "SURF"
+#define LUA_SURFENUMNAME "SURFACE"
 LUALIB_API int( luaopen_SURF )( lua_State *L );
 
 #define LUA_SURFACELIBNAME "Surface"
@@ -277,21 +286,20 @@ struct LuaRegEntry
 #define LUA_REGISTRATION_COMMIT_LIBRARY( ClassName ) \
     luaL_register( L, #ClassName, ClassName##_luaRegistry );
 
-#define LUA_REGISTER_METHOD( Registry, name, func )            \
-    static struct RegHelper_##func                   \
-    {                                                \
-        RegHelper_##func()                           \
-        {                                            \
-            Registry.AddToTail( { name, func } ); \
-        }                                            \
+#define LUA_REGISTER_METHOD( Registry, name, func ) \
+    static struct RegHelper_##func                  \
+    {                                               \
+        RegHelper_##func()                          \
+        {                                           \
+            Registry.AddToTail( { name, func } );   \
+        }                                           \
     } regHelper_##func;
 
-#define LUA_BINDING_BEGIN( ClassName, FunctionName, Concept, DocumentationDescription, ... ) \
-    static int ClassName##_##FunctionName( lua_State *L );                              \
-    LUA_REGISTER_METHOD( ClassName##_luaRegistry, #FunctionName, ClassName##_##FunctionName )                    \
-    static int ClassName##_##FunctionName( lua_State *L )                               \
+#define LUA_BINDING_BEGIN( ClassName, FunctionName, Concept, DocumentationDescription, ... )  \
+    static int ClassName##_##FunctionName( lua_State *L );                                    \
+    LUA_REGISTER_METHOD( ClassName##_luaRegistry, #FunctionName, ClassName##_##FunctionName ) \
+    static int ClassName##_##FunctionName( lua_State *L )                                     \
     {
-
 #define LUA_BINDING_ARGUMENT( CheckFunction, ArgIndex, DocumentationName ) \
     CheckFunction( L, ArgIndex )
 
@@ -306,6 +314,28 @@ struct LuaRegEntry
 
 #define LUA_BINDING_END( ... ) \
     }
+
+// We use checknumber for enums, so users can safely do maths to get their enum values
+// since they are then cut down to integers
+#define LUA_BINDING_ARGUMENT_ENUM( EnumType, ArgIndex, DocumentationName ) \
+    ( EnumType )( int ) luaL_checknumber( L, ArgIndex )
+
+#define LUA_BINDING_ARGUMENT_ENUM_WITH_DEFAULT( EnumType, ArgIndex, Default, DocumentationName ) \
+    ( EnumType )( int ) luaL_optnumber( L, ArgIndex, Default )
+
+// For enumerations that are really just #defines
+#define LUA_BINDING_ARGUMENT_ENUM_DEFINE( EnumType, ArgIndex, DocumentationName ) \
+    ( int ) luaL_checknumber( L, ArgIndex )
+
+// TODO
+//#define LUA_BINDING_ENUM_CHECK( LuaState, ArgIndex, EnumType ) \
+//    ( EnumType )( int ) luaL_checknumber( LuaState, ArgIndex )
+//
+//#define LUA_BINDING_ENUM_WITH_DEFAULT( LuaState, ArgIndex, EnumType, Default ) \
+//    ( EnumType )( int ) luaL_optnumber( LuaState, ArgIndex, Default )
+//
+//#define LUA_BINDING_ENUM_PUSH( LuaState, EnumValue, EnumType ) \
+//    ( EnumType ) lua_pushinteger( LuaState, EnumValue );
 
 void luaL_register( lua_State *L, const char *libname, CUtlVector< LuaRegEntry > &luaRegistry );
 

@@ -150,7 +150,7 @@ sql = {
 
 cvars = ConsoleVariables
 engine = Engines
-input = Input
+input = Inputs
 render = Renders
 resource = Resources
 surface = Surface
@@ -400,9 +400,9 @@ end
 
 function ENTITY_META:SetNoDraw(bBool)
 	if (bBool) then
-		self:AddEffects(EF_NODRAW)
+		self:AddEffects(_E.ENTITY_EFFECT.NO_DRAW)
 	else
-		self:RemoveEffects(EF_NODRAW)
+		self:RemoveEffects(_E.ENTITY_EFFECT.NO_DRAW)
 	end
 end
 
@@ -411,7 +411,7 @@ function ENTITY_META:IsFlagSet(flag)
 end
 
 function ENTITY_META:IsOnGround()
-	return self:IsFlagSet(FL_ONGROUND)
+	return self:IsFlagSet(_E.ENGINE_FLAG.ON_GROUND)
 end
 
 --[[
@@ -431,9 +431,9 @@ end
 
 function ENTITY_META:DrawShadow(bBool)
 	if (bBool) then
-		self:RemoveEffects(EF_NOSHADOW)
+		self:RemoveEffects(_E.ENTITY_EFFECT.NO_SHADOW)
 	else
-		self:AddEffects(EF_NOSHADOW)
+		self:AddEffects(_E.ENTITY_EFFECT.NO_SHADOW)
 	end
 end
 
@@ -612,7 +612,7 @@ else
 
 	-- Returns whether the currently focused panel is a child of the given one.
 	function vgui.FocusedHasParent(panel)
-		local focusedPanel = Input.GetFocus()
+		local focusedPanel = Inputs.GetFocus()
 
 		if (not IsValid(focusedPanel)) then
 			return false
@@ -629,13 +629,13 @@ else
 		return false
 	end
 
-	vgui.GetKeyboardFocus = Input.GetFocus
-	vgui.GetHoveredPanel = Input.GetMouseOver
+	vgui.GetKeyboardFocus = Inputs.GetFocus
+	vgui.GetHoveredPanel = Inputs.GetMouseOver
 	vgui.CursorVisible = Surface.IsCursorVisible
 
 	gui = {
 		MouseX = function()
-			local x, y = input.GetCursorPosition()
+			local x, y = Inputs.GetCursorPosition()
 			return x
 		end,
 		MouseY = function()

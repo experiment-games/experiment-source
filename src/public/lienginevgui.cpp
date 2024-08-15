@@ -14,28 +14,28 @@ namespace vgui
 class Panel;
 };
 
-static int enginevgui_GetPanel( lua_State *L )
+LUA_REGISTRATION_INIT( EngineVgui )
+
+LUA_BINDING_BEGIN( EngineVgui, GetPanel, "library", "Get a VGUI panel instance by panel type." )
 {
-    Panel::PushVPanelLuaInstance( L, enginevgui->GetPanel( ( VGuiPanel_t )( int )luaL_checknumber( L, 1 ) ) );
+    VGuiPanel_t panelType = ( VGuiPanel_t )( int )LUA_BINDING_ARGUMENT( luaL_checknumber, 1, "panelType" );
+    Panel::PushVPanelLuaInstance( L, enginevgui->GetPanel( panelType ) );
     return 1;
 }
+LUA_BINDING_END( "VPanel", "The VGUI panel instance." )
 
-static int enginevgui_IsGameUIVisible( lua_State *L )
+LUA_BINDING_BEGIN( EngineVgui, IsGameUIVisible, "library", "Check if the game UI is currently visible." )
 {
     lua_pushboolean( L, enginevgui->IsGameUIVisible() );
     return 1;
 }
-
-static const luaL_Reg enginevguilib[] = {
-    { "GetPanel", enginevgui_GetPanel },
-    { "IsGameUIVisible", enginevgui_IsGameUIVisible },
-    { NULL, NULL } };
+LUA_BINDING_END( "boolean", "True if the game UI is visible, otherwise false." )
 
 /*
 ** Open enginevgui library
 */
 LUALIB_API int luaopen_enginevgui( lua_State *L )
 {
-    luaL_register( L, LUA_ENGINEVGUILIBNAME, enginevguilib );
+    LUA_REGISTRATION_COMMIT_LIBRARY( EngineVgui );
     return 1;
 }
