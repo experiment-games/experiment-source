@@ -15,7 +15,7 @@ if (not CLIENT) then
 end
 
 local ComputeStringWidth = Utilities.ComputeStringWidth
-local GetFontName = _R.IScheme.GetFontName
+local GetFontName = _R.Scheme.GetFontName
 local CreateFont = Surface.CreateFont
 local DrawSetTextFont = Surface.DrawSetTextFont
 local GetCharABCwide = Surface.GetCharABCwide
@@ -104,7 +104,7 @@ function Utilities.ComputeStringWidth(font, str)
 	end
 end
 
-function _R.IScheme.GetFontName(scheme, font)
+function _R.Scheme.GetFontName(scheme, font)
     local resolvedFont = Surface.ResolveFont(font, scheme)
 
 	return GetFontName(scheme, resolvedFont)
@@ -127,8 +127,7 @@ function Surface.ResolveFont(font, scheme)
     end
 
 	if (type == "string") then
-		local hScheme = not scheme and Scheme.GetScheme("ClientScheme") or nil
-		scheme = scheme or Scheme.GetIScheme(hScheme)
+		scheme = scheme or Schemes.GetScheme("ClientScheme")
 
 		return scheme:GetFont(font)
 	elseif (type == "FontHandle") then

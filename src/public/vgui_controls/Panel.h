@@ -31,6 +31,7 @@
 
 #ifdef LUA_SDK
 #include "lua.hpp"
+#include "luasrclib.h"
 #include "utldict.h"
 #include "lsingleluainstance.h"
 #endif
@@ -207,7 +208,7 @@ class Panel : public IClientPanel, virtual IForceVirtualInheritancePanel
     DECLARE_CLASS_SIMPLE_NOBASE( Panel );
 
 #ifdef LUA_SDK
-    LUA_DECLARE_SINGLE_LUA_INSTANCE( Panel, "Panel" );
+    LUA_DECLARE_SINGLE_LUA_INSTANCE( Panel, LUA_PANELLIBNAME );
     static void PushVPanelLuaInstance( lua_State *L, VPANEL panel );
 #endif
 

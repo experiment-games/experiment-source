@@ -41,7 +41,8 @@ static int surface_AddCustomFontFile( lua_State *L )
 
 static int surface_AddPanel( lua_State *L )
 {
-    surface()->AddPanel( luaL_checkvpanel( L, 1 ) );
+    Panel *panel = LUA_BINDING_ARGUMENT( luaL_checkpanel, 1, "panel" );
+    surface()->AddPanel( panel->GetVPanel() );
     return 0;
 }
 
@@ -53,7 +54,8 @@ static int surface_ApplyChanges( lua_State *L )
 
 static int surface_BringToFront( lua_State *L )
 {
-    surface()->BringToFront( luaL_checkvpanel( L, 1 ) );
+    Panel *panel = LUA_BINDING_ARGUMENT( luaL_checkpanel, 1, "panel" );
+    surface()->BringToFront( panel->GetVPanel() );
     return 0;
 }
 
@@ -83,7 +85,14 @@ static int surface_CreateNewTextureID( lua_State *L )
 
 static int surface_CreatePopup( lua_State *L )
 {
-    surface()->CreatePopup( luaL_checkvpanel( L, 1 ), luaL_checkboolean( L, 2 ), luaL_optboolean( L, 3, true ), luaL_optboolean( L, 4, false ), luaL_optboolean( L, 5, true ), luaL_optboolean( L, 6, true ) );
+    Panel *panel = LUA_BINDING_ARGUMENT( luaL_checkpanel, 1, "panel" );
+    surface()->CreatePopup(
+        panel->GetVPanel(),
+        luaL_checkboolean( L, 2 ),
+        luaL_optboolean( L, 3, true ),
+        luaL_optboolean( L, 4, false ),
+        luaL_optboolean( L, 5, true ),
+        luaL_optboolean( L, 6, true ) );
     return 0;
 }
 
@@ -322,13 +331,19 @@ static int surface_DrawTexturedSubRect( lua_State *L )
 
 static int surface_EnableMouseCapture( lua_State *L )
 {
-    surface()->EnableMouseCapture( luaL_checkvpanel( L, 1 ), luaL_checkboolean( L, 2 ) );
+    Panel *panel = LUA_BINDING_ARGUMENT( luaL_checkpanel, 1, "panel" );
+    surface()->EnableMouseCapture(
+        panel->GetVPanel(),
+        luaL_checkboolean( L, 2 ) );
     return 0;
 }
 
 static int surface_FlashWindow( lua_State *L )
 {
-    surface()->FlashWindow( luaL_checkvpanel( L, 1 ), luaL_checkboolean( L, 2 ) );
+    Panel *panel = LUA_BINDING_ARGUMENT( luaL_checkpanel, 1, "panel" );
+    surface()->FlashWindow(
+        panel->GetVPanel(),
+        luaL_checkboolean( L, 2 ) );
     return 0;
 }
 
@@ -451,8 +466,9 @@ static int surface_GetTextSize( lua_State *L )
 
 static int surface_GetTitle( lua_State *L )
 {
+    Panel *panel = LUA_BINDING_ARGUMENT( luaL_checkpanel, 1, "panel" );
     char szTitle[256];
-    const wchar_t *wszTitle = surface()->GetTitle( luaL_checkvpanel( L, 1 ) );
+    const wchar_t *wszTitle = surface()->GetTitle( panel->GetVPanel() );
     g_pVGuiLocalize->ConvertUnicodeToANSI( wszTitle, szTitle, sizeof( szTitle ) );
     lua_pushstring( L, szTitle );
     return 1;
@@ -495,7 +511,8 @@ static int surface_HasFocus( lua_State *L )
 
 static int surface_Invalidate( lua_State *L )
 {
-    surface()->Invalidate( luaL_checkvpanel( L, 1 ) );
+    Panel *panel = LUA_BINDING_ARGUMENT( luaL_checkpanel, 1, "panel" );
+    surface()->Invalidate( panel->GetVPanel() );
     return 0;
 }
 
@@ -519,7 +536,8 @@ static int surface_IsFontAdditive( lua_State *L )
 
 static int surface_IsMinimized( lua_State *L )
 {
-    lua_pushboolean( L, surface()->IsMinimized( luaL_checkvpanel( L, 1 ) ) );
+    Panel *panel = LUA_BINDING_ARGUMENT( luaL_checkpanel, 1, "panel" );
+    lua_pushboolean( L, surface()->IsMinimized( panel->GetVPanel() ) );
     return 1;
 }
 
@@ -543,13 +561,15 @@ static int surface_LockCursor( lua_State *L )
 
 static int surface_MovePopupToBack( lua_State *L )
 {
-    surface()->MovePopupToBack( luaL_checkvpanel( L, 1 ) );
+    Panel *panel = LUA_BINDING_ARGUMENT( luaL_checkpanel, 1, "panel" );
+    surface()->MovePopupToBack( panel->GetVPanel() );
     return 0;
 }
 
 static int surface_MovePopupToFront( lua_State *L )
 {
-    surface()->MovePopupToFront( luaL_checkvpanel( L, 1 ) );
+    Panel *panel = LUA_BINDING_ARGUMENT( luaL_checkpanel, 1, "panel" );
+    surface()->MovePopupToFront( panel->GetVPanel() );
     return 0;
 }
 
@@ -567,13 +587,17 @@ static int surface_OnScreenSizeChanged( lua_State *L )
 
 static int surface_PaintTraverse( lua_State *L )
 {
-    surface()->PaintTraverse( luaL_checkvpanel( L, 1 ) );
+    Panel *panel = LUA_BINDING_ARGUMENT( luaL_checkpanel, 1, "panel" );
+    surface()->PaintTraverse( panel->GetVPanel() );
     return 0;
 }
 
 static int surface_PaintTraverseEx( lua_State *L )
 {
-    surface()->PaintTraverseEx( luaL_checkvpanel( L, 1 ), luaL_optboolean( L, 2, false ) );
+    Panel *panel = LUA_BINDING_ARGUMENT( luaL_checkpanel, 1, "panel" );
+    surface()->PaintTraverseEx(
+        panel->GetVPanel(),
+        luaL_optboolean( L, 2, false ) );
     return 0;
 }
 
@@ -585,7 +609,8 @@ static int surface_PlaySound( lua_State *L )
 
 static int surface_PopMakeCurrent( lua_State *L )
 {
-    surface()->PopMakeCurrent( luaL_checkvpanel( L, 1 ) );
+    Panel *panel = LUA_BINDING_ARGUMENT( luaL_checkpanel, 1, "panel" );
+    surface()->PopMakeCurrent( panel->GetVPanel() );
     return 0;
 }
 
@@ -609,7 +634,8 @@ static int surface_SetBitmapFontName( lua_State *L )
 
 static int surface_SetEmbeddedPanel( lua_State *L )
 {
-    surface()->SetEmbeddedPanel( luaL_checkvpanel( L, 1 ) );
+    Panel *panel = LUA_BINDING_ARGUMENT( luaL_checkpanel, 1, "panel" );
+    surface()->SetEmbeddedPanel( panel->GetVPanel() );
     return 0;
 }
 

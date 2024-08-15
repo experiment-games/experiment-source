@@ -15,9 +15,9 @@ lua:
   
   arguments:
     - name: "modalSubTree"
-      type: PanelHandle
+      type: Panel
     - name: "scopePanel"
-      type: PanelHandle
+      type: Panel
     - name: "receiveMessages"
       type: boolean
       default: "true"

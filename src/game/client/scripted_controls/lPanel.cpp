@@ -13,6 +13,7 @@
 #include <scripted_controls/lPanel.h>
 #include "lColor.h"
 #include "vgui/LVGUI.h"
+#include <vgui/LIScheme.h>
 
 using namespace vgui;
 
@@ -42,25 +43,26 @@ LUALIB_API lua_Panel *luaL_checkpanel( lua_State *L, int narg )
     return d;
 }
 
-LUALIB_API VPANEL luaL_checkvpanel( lua_State *L, int narg )
-{
-    lua_Panel *d = lua_topanel( L, narg );
-    if ( d == NULL ) /* avoid extra test when d is not 0 */
-        luaL_argerror( L, narg, "VPanel expected, got INVALID_PANEL" );
-    PHandle hPanel;
-    hPanel.Set( d );
-    return ivgui()->HandleToPanel( hPanel.m_iPanelID );
-}
-
 LUALIB_API lua_Panel *luaL_optpanel( lua_State *L, int narg, lua_Panel *def )
 {
     return luaL_opt( L, luaL_checkpanel, narg, def );
 }
 
-LUALIB_API VPANEL luaL_optvpanel( lua_State *L, int narg, VPANEL def )
-{
-    return luaL_opt( L, luaL_checkvpanel, narg, def );
-}
+// Experiment; Disabled since we want to work with only vgui::Panel* objects in Lua.
+//LUALIB_API VPANEL luaL_checkvpanel( lua_State *L, int narg )
+//{
+//    lua_Panel *d = lua_topanel( L, narg );
+//    if ( d == NULL ) /* avoid extra test when d is not 0 */
+//        luaL_argerror( L, narg, "VPanel expected, got INVALID_PANEL" );
+//    PHandle hPanel;
+//    hPanel.Set( d );
+//    return ivgui()->HandleToPanel( hPanel.m_iPanelID );
+//}
+//
+//LUALIB_API VPANEL luaL_optvpanel( lua_State *L, int narg, VPANEL def )
+//{
+//    return luaL_opt( L, luaL_checkvpanel, narg, def );
+//}
 
 static int Panel_AddKeyBinding( lua_State *L )
 {
@@ -453,7 +455,7 @@ static int Panel_GetResizeOffset( lua_State *L )
 
 static int Panel_GetScheme( lua_State *L )
 {
-    lua_pushscheme( L, luaL_checkpanel( L, 1 )->GetScheme() );
+    lua_pushischeme( L, scheme()->GetIScheme( luaL_checkpanel( L, 1 )->GetScheme() ) );
     return 1;
 }
 

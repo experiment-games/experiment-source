@@ -41,47 +41,95 @@ LUALIB_API lua_IScheme *luaL_checkischeme( lua_State *L, int narg )
     return *d;
 }
 
-static int IScheme_GetColor( lua_State *L )
+// Experiment; Disabled so we don't have to deal with SchemeHandle (HScheme) objects from lua, but only IScheme objects.
+//LUA_REGISTRATION_INIT( SchemeHandle );
+//
+//LUA_BINDING_BEGIN( SchemeHandle, __tostring, "class", "Metamethod to get the string representation of the scheme handle." )
+//{
+//    HScheme hScheme = LUA_BINDING_ARGUMENT( luaL_checkscheme, 1, "scheme" );
+//    lua_pushfstring( L, "SchemeHandle: %d", hScheme );
+//    return 1;
+//}
+//LUA_BINDING_END( "string", "The string representation of the scheme handle." )
+//
+//LUALIB_API int luaopen_HScheme( lua_State *L )
+//{
+//    LUA_PUSH_NEW_METATABLE( L, LUA_HSCHEMELIBNAME );
+//
+//    LUA_REGISTRATION_COMMIT( SchemeHandle );
+//
+//    lua_pushvalue( L, -1 ); 
+//    lua_setfield( L, -2, "__index" ); 
+//    lua_pushstring( L, LUA_HSCHEMELIBNAME );
+//    lua_setfield( L, -2, "__type" );
+//    return 1;
+//}
+// static int scheme_GetIScheme( lua_State *L )
+//{
+//    lua_pushischeme( L, scheme()->GetIScheme( luaL_checkscheme( L, 1 ) ) );
+//    return 1;
+//}
+// static int scheme_GetProportionalNormalizedValueEx( lua_State *L )
+//{
+//     lua_pushinteger( L, scheme()->GetProportionalNormalizedValueEx( luaL_checkscheme( L, 1 ), luaL_checknumber( L, 2 ) ) );
+//     return 1;
+// }
+// static int scheme_GetProportionalScaledValueEx( lua_State *L )
+//{
+//     lua_pushinteger( L, scheme()->GetProportionalScaledValueEx( luaL_checkscheme( L, 1 ), luaL_checknumber( L, 2 ) ) );
+//     return 1;
+// }
+
+LUA_REGISTRATION_INIT( Scheme );
+
+LUA_BINDING_BEGIN( Scheme, GetColor, "class", "Returns the color for the specified color name." )
 {
-    lua_pushcolor( L, luaL_checkischeme( L, 1 )->GetColor( luaL_checkstring( L, 2 ), luaL_checkcolor( L, 3 ) ) );
+    lua_IScheme *scheme = LUA_BINDING_ARGUMENT( luaL_checkischeme, 1, "scheme" );
+    const char *colorName = LUA_BINDING_ARGUMENT( luaL_checkstring, 2, "colorName" );
+    Color &defaultColor = LUA_BINDING_ARGUMENT( luaL_checkcolor, 3, "defaultColor" );
+    Color &color = scheme->GetColor( colorName, defaultColor );
+    lua_pushcolor( L, color );
     return 1;
 }
+LUA_BINDING_END( "color", "The color for the specified color name." )
 
-static int IScheme_GetFont( lua_State *L )
+LUA_BINDING_BEGIN( Scheme, GetFont, "class", "Returns the font for the specified font name." )
 {
-    const char *fontName = luaL_checkstring( L, 2 );
-    bool proportional = luaL_optboolean( L, 3, false );
-    IScheme *scheme = luaL_checkischeme( L, 1 );
-    vgui::HFont font = scheme->GetFont( fontName, proportional );
+    lua_IScheme *scheme = LUA_BINDING_ARGUMENT( luaL_checkischeme, 1, "scheme" );
+    const char *fontName = LUA_BINDING_ARGUMENT( luaL_checkstring, 2, "fontName" );
+    bool proportional = LUA_BINDING_ARGUMENT_WITH_DEFAULT( luaL_optboolean, 3, false, "proportional" );
+    HFont font = scheme->GetFont( fontName, proportional );
     lua_pushfont( L, font );
     return 1;
 }
+LUA_BINDING_END( "font", "The font for the specified font name." )
 
-static int IScheme_GetFontName( lua_State *L )
+LUA_BINDING_BEGIN( Scheme, GetFontName, "class", "Returns the font name for the specified font handle." )
 {
-    lua_pushstring( L, luaL_checkischeme( L, 1 )->GetFontName( luaL_checkfont( L, 2 ) ) );
+    lua_IScheme *scheme = LUA_BINDING_ARGUMENT( luaL_checkischeme, 1, "scheme" );
+    HFont font = LUA_BINDING_ARGUMENT( luaL_checkfont, 2, "font" );
+    const char *fontName = scheme->GetFontName( font );
+    lua_pushstring( L, fontName );
     return 1;
 }
+LUA_BINDING_END( "string", "The font name for the specified font handle." )
 
-static int IScheme_GetResourceString( lua_State *L )
+LUA_BINDING_BEGIN( Scheme, GetResourceString, "class", "Returns the resource string for the specified resource name." )
 {
-    lua_pushstring( L, luaL_checkischeme( L, 1 )->GetResourceString( luaL_checkstring( L, 2 ) ) );
+    lua_IScheme *scheme = LUA_BINDING_ARGUMENT( luaL_checkischeme, 1, "scheme" );
+    const char *resourceName = LUA_BINDING_ARGUMENT( luaL_checkstring, 2, "resourceName" );
+    const char *resourceString = scheme->GetResourceString( resourceName );
+    lua_pushstring( L, resourceString );
     return 1;
 }
+LUA_BINDING_END( "string", "The resource string for the specified resource name." )
 
-static int IScheme___tostring( lua_State *L )
+LUA_BINDING_BEGIN( Scheme, __tostring, "class", "Metamethod to get the string representation of the IScheme object." )
 {
-    lua_pushfstring( L, "IScheme: %p", luaL_checkudata( L, 1, LUA_ISCHEMELIBNAME ) );
+    lua_pushfstring( L, "Scheme: %p", luaL_checkudata( L, 1, LUA_ISCHEMELIBNAME ) );
     return 1;
 }
-
-static const luaL_Reg ISchememeta[] = {
-    { "GetColor", IScheme_GetColor },
-    { "GetFont", IScheme_GetFont },
-    { "GetFontName", IScheme_GetFontName },
-    { "GetResourceString", IScheme_GetResourceString },
-    { "__tostring", IScheme___tostring },
-    { NULL, NULL } };
+LUA_BINDING_END( "string", "The string representation of the IScheme object." )
 
 /*
 ** Open IScheme object
@@ -89,99 +137,91 @@ static const luaL_Reg ISchememeta[] = {
 LUALIB_API int luaopen_IScheme( lua_State *L )
 {
     LUA_PUSH_NEW_METATABLE( L, LUA_ISCHEMELIBNAME );
-    luaL_register( L, NULL, ISchememeta );
+
+    LUA_REGISTRATION_COMMIT( Scheme );
+
     lua_pushvalue( L, -1 );           /* push metatable */
     lua_setfield( L, -2, "__index" ); /* metatable.__index = metatable */
     lua_pushstring( L, LUA_ISCHEMELIBNAME );
-    lua_setfield( L, -2, "__type" ); /* metatable.__type = "IScheme" */
+    lua_setfield( L, -2, "__type" ); /* metatable.__type = "Scheme" */
     return 1;
 }
 
-static int scheme_GetDefaultScheme( lua_State *L )
+LUA_REGISTRATION_INIT( Schemes );
+
+LUA_BINDING_BEGIN( Schemes, GetDefaultScheme, "library", "Returns the default scheme." )
 {
-    lua_pushscheme( L, scheme()->GetDefaultScheme() );
+    lua_pushischeme( L, scheme()->GetIScheme( scheme()->GetDefaultScheme() ) );
     return 1;
 }
+LUA_BINDING_END( "scheme", "The default scheme." )
 
-static int scheme_GetIScheme( lua_State *L )
+LUA_BINDING_BEGIN( Schemes, GetProportionalNormalizedValue, "library", "Returns the proportional normalized value." )
 {
-    lua_pushischeme( L, scheme()->GetIScheme( luaL_checkscheme( L, 1 ) ) );
+    int scaledValue = LUA_BINDING_ARGUMENT( luaL_checkinteger, 1, "scaledValue" );
+    lua_pushinteger( L, scheme()->GetProportionalNormalizedValue( scaledValue ) );
     return 1;
 }
+LUA_BINDING_END( "integer", "The proportional normalized value." )
 
-static int scheme_GetProportionalNormalizedValue( lua_State *L )
+LUA_BINDING_BEGIN( Schemes, GetProportionalScaledValue, "library", "Returns the proportional scaled value." )
 {
-    lua_pushinteger( L, scheme()->GetProportionalNormalizedValue( luaL_checknumber( L, 1 ) ) );
+    int normalizedValue = LUA_BINDING_ARGUMENT( luaL_checkinteger, 1, "normalizedValue" );
+    lua_pushinteger( L, scheme()->GetProportionalScaledValue( normalizedValue ) );
     return 1;
 }
+LUA_BINDING_END( "integer", "The proportional scaled value." )
 
-static int scheme_GetProportionalNormalizedValueEx( lua_State *L )
+LUA_BINDING_BEGIN( Schemes, GetScheme, "library", "Returns the scheme for the specified scheme name." )
 {
-    lua_pushinteger( L, scheme()->GetProportionalNormalizedValueEx( luaL_checkscheme( L, 1 ), luaL_checknumber( L, 2 ) ) );
+    const char *schemeName = LUA_BINDING_ARGUMENT( luaL_checkstring, 1, "schemeName" );
+    HScheme hScheme = scheme()->GetScheme( schemeName );
+    lua_pushischeme( L, scheme()->GetIScheme( hScheme ) );
     return 1;
 }
+LUA_BINDING_END( "scheme", "The scheme for the specified scheme name." )
 
-static int scheme_GetProportionalScaledValue( lua_State *L )
+LUA_BINDING_BEGIN( Schemes, LoadSchemeFromFile, "library", "Loads the scheme from the specified file." )
 {
-    lua_pushinteger( L, scheme()->GetProportionalScaledValue( luaL_checknumber( L, 1 ) ) );
+    const char *fileName = LUA_BINDING_ARGUMENT( luaL_checkstring, 1, "fileName" );
+    const char *tag = LUA_BINDING_ARGUMENT( luaL_checkstring, 2, "tag" );
+    HScheme hScheme = scheme()->LoadSchemeFromFile( fileName, tag );
+    lua_pushischeme( L, scheme()->GetIScheme( hScheme ) );
     return 1;
 }
+LUA_BINDING_END( "scheme", "The scheme loaded from the specified file." )
 
-static int scheme_GetProportionalScaledValueEx( lua_State *L )
+LUA_BINDING_BEGIN( Schemes, LoadSchemeFromFileEx, "library", "Loads the scheme from the specified file." )
 {
-    lua_pushinteger( L, scheme()->GetProportionalScaledValueEx( luaL_checkscheme( L, 1 ), luaL_checknumber( L, 2 ) ) );
+    vgui::Panel *panel = LUA_BINDING_ARGUMENT( luaL_checkpanel, 1, "sizingPanel" );
+    const char *fileName = LUA_BINDING_ARGUMENT( luaL_checkstring, 2, "fileName" );
+    const char *tag = LUA_BINDING_ARGUMENT( luaL_checkstring, 3, "tag" );
+    HScheme hScheme = scheme()->LoadSchemeFromFileEx( panel->GetVPanel(), fileName, tag );
+    lua_pushischeme( L, scheme()->GetIScheme( hScheme ) );
     return 1;
 }
+LUA_BINDING_END( "scheme", "The scheme loaded from the specified file." )
 
-static int scheme_GetScheme( lua_State *L )
-{
-    lua_pushscheme( L, scheme()->GetScheme( luaL_checkstring( L, 1 ) ) );
-    return 1;
-}
-
-static int scheme_LoadSchemeFromFile( lua_State *L )
-{
-    lua_pushscheme( L, scheme()->LoadSchemeFromFile( luaL_checkstring( L, 1 ), luaL_checkstring( L, 2 ) ) );
-    return 1;
-}
-
-static int scheme_LoadSchemeFromFileEx( lua_State *L )
-{
-    lua_pushscheme( L, scheme()->LoadSchemeFromFileEx( luaL_checkvpanel( L, 1 ), luaL_checkstring( L, 2 ), luaL_checkstring( L, 3 ) ) );
-    return 1;
-}
-
-static int scheme_ReloadFonts( lua_State *L )
+LUA_BINDING_BEGIN( Schemes, ReloadFonts, "library", "Reloads the fonts." )
 {
     scheme()->ReloadFonts();
     return 0;
 }
+LUA_BINDING_END( NULL, NULL )
 
-static int scheme_ReloadSchemes( lua_State *L )
+LUA_BINDING_BEGIN( Schemes, ReloadSchemes, "library", "Reloads the schemes." )
 {
     scheme()->ReloadSchemes();
     return 0;
 }
-
-static const luaL_Reg schemelib[] = {
-    { "GetDefaultScheme", scheme_GetDefaultScheme },
-    { "GetIScheme", scheme_GetIScheme },
-    { "GetProportionalNormalizedValue", scheme_GetProportionalNormalizedValue },
-    { "GetProportionalNormalizedValueEx", scheme_GetProportionalNormalizedValueEx },
-    { "GetProportionalScaledValue", scheme_GetProportionalScaledValue },
-    { "GetProportionalScaledValueEx", scheme_GetProportionalScaledValueEx },
-    { "GetScheme", scheme_GetScheme },
-    { "LoadSchemeFromFile", scheme_LoadSchemeFromFile },
-    { "LoadSchemeFromFileEx", scheme_LoadSchemeFromFileEx },
-    { "ReloadFonts", scheme_ReloadFonts },
-    { "ReloadSchemes", scheme_ReloadSchemes },
-    { NULL, NULL } };
+LUA_BINDING_END( NULL, NULL )
 
 /*
 ** Open scheme library
 */
 LUALIB_API int luaopen_scheme( lua_State *L )
 {
-    luaL_register( L, LUA_SCHEMELIBNAME, schemelib );
+    LUA_REGISTRATION_COMMIT_LIBRARY( Schemes );
+
     return 1;
 }

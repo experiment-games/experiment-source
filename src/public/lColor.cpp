@@ -65,6 +65,11 @@ LUALIB_API lua_Color &luaL_checkcolor( lua_State *L, int narg )
     return *static_cast< lua_Color * >( 0 );
 }
 
+LUALIB_API lua_Color &( luaL_optcolor )( lua_State *L, int narg, lua_Color def )
+{
+    return luaL_opt( L, luaL_checkcolor, narg, def );
+}
+
 LUA_REGISTRATION_INIT( Color )
 
 LUA_BINDING_BEGIN( Color, GetAlpha, "class", "Gets the alpha value of the color." )

@@ -13,12 +13,6 @@ using namespace vgui;
 ** access functions (stack -> C)
 */
 
-LUA_API lua_HScheme lua_toscheme( lua_State *L, int idx )
-{
-    lua_HScheme hScheme = *( lua_HScheme * )lua_touserdata( L, idx );
-    return hScheme;
-}
-
 LUA_API lua_HFont lua_tofont( lua_State *L, int idx )
 {
     lua_HFont hFont = *( lua_HFont * )lua_touserdata( L, idx );
@@ -29,24 +23,11 @@ LUA_API lua_HFont lua_tofont( lua_State *L, int idx )
 ** push functions (C -> stack)
 */
 
-LUA_API void lua_pushscheme( lua_State *L, lua_HScheme hScheme )
-{
-    lua_HScheme *phScheme = ( lua_HScheme * )lua_newuserdata( L, sizeof( lua_HScheme ) );
-    *phScheme = hScheme;
-    LUA_SAFE_SET_METATABLE( L, LUA_HSCHEMELIBNAME );
-}
-
 LUA_API void lua_pushfont( lua_State *L, lua_HFont hFont )
 {
     lua_HFont *phFont = ( lua_HFont * )lua_newuserdata( L, sizeof( lua_HFont ) );
     *phFont = hFont;
     LUA_SAFE_SET_METATABLE( L, LUA_FONTLIBNAME );
-}
-
-LUALIB_API lua_HScheme luaL_checkscheme( lua_State *L, int narg )
-{
-    lua_HScheme *d = ( lua_HScheme * )luaL_checkudata( L, narg, LUA_HSCHEMELIBNAME );
-    return *d;
 }
 
 LUALIB_API lua_HFont luaL_checkfont( lua_State *L, int narg )
@@ -55,44 +36,48 @@ LUALIB_API lua_HFont luaL_checkfont( lua_State *L, int narg )
     return *d;
 }
 
-static int HScheme___tostring( lua_State *L )
-{
-    HScheme hScheme = luaL_checkscheme( L, 1 );
-    lua_pushfstring( L, "HScheme: %d", hScheme );
-    return 1;
-}
+// Experiment;  Disabled so we can focus on pushing Scheme (IScheme) objects
+//              which are more useful.
+//LUA_REGISTRATION_INIT( SchemeHandle );
+//
+//LUA_BINDING_BEGIN( SchemeHandle, __tostring, "class", "Metamethod to get the string representation of the scheme handle." )
+//{
+//    HScheme hScheme = LUA_BINDING_ARGUMENT( luaL_checkscheme, 1, "scheme" );
+//    lua_pushfstring( L, "SchemeHandle: %d", hScheme );
+//    return 1;
+//}
+//LUA_BINDING_END( "string", "The string representation of the scheme handle." )
+//
+///*
+//** Open HScheme object
+//*/
+//LUALIB_API int luaopen_HScheme( lua_State *L )
+//{
+//    LUA_PUSH_NEW_METATABLE( L, LUA_HSCHEMELIBNAME );
+//
+//    LUA_REGISTRATION_COMMIT( SchemeHandle );
+//
+//    lua_pushvalue( L, -1 );           /* push metatable */
+//    lua_setfield( L, -2, "__index" ); /* metatable.__index = metatable */
+//    lua_pushstring( L, LUA_HSCHEMELIBNAME );
+//    lua_setfield( L, -2, "__type" ); /* metatable.__type = "SchemeHandle" */
+//    return 1;
+//}
 
-static const luaL_Reg HSchememeta[] = {
-    { "__tostring", HScheme___tostring },
-    { NULL, NULL } };
+LUA_REGISTRATION_INIT( FontHandle );
 
-/*
-** Open HScheme object
-*/
-LUALIB_API int luaopen_HScheme( lua_State *L )
+LUA_BINDING_BEGIN( FontHandle, __tostring, "class", "Metamethod to get the string representation of the font handle." )
 {
-    LUA_PUSH_NEW_METATABLE( L, LUA_HSCHEMELIBNAME );
-    luaL_register( L, NULL, HSchememeta );
-    lua_pushvalue( L, -1 );           /* push metatable */
-    lua_setfield( L, -2, "__index" ); /* metatable.__index = metatable */
-    lua_pushstring( L, LUA_HSCHEMELIBNAME );
-    lua_setfield( L, -2, "__type" ); /* metatable.__type = "SchemeHandle" */
-    return 1;
-}
+    HFont hFont = LUA_BINDING_ARGUMENT( luaL_checkfont, 1, "font" );
 
-static int HFont___tostring( lua_State *L )
-{
-    HFont hFont = luaL_checkfont( L, 1 );
     if ( hFont == INVALID_FONT )
         lua_pushstring( L, "INVALID_FONT" );
     else
-        lua_pushfstring( L, "HFont: %d", hFont );
+        lua_pushfstring( L, "FontHandle: %d", hFont );
+
     return 1;
 }
-
-static const luaL_Reg HFontmeta[] = {
-    { "__tostring", HFont___tostring },
-    { NULL, NULL } };
+LUA_BINDING_END( "string", "The string representation of the font handle." )
 
 /*
 ** Open HFont object
@@ -100,12 +85,16 @@ static const luaL_Reg HFontmeta[] = {
 LUALIB_API int luaopen_HFont( lua_State *L )
 {
     LUA_PUSH_NEW_METATABLE( L, LUA_FONTLIBNAME );
-    luaL_register( L, NULL, HFontmeta );
+
+    LUA_REGISTRATION_COMMIT( FontHandle );
+
     lua_pushvalue( L, -1 );           /* push metatable */
     lua_setfield( L, -2, "__index" ); /* metatable.__index = metatable */
     lua_pushstring( L, LUA_FONTLIBNAME );
     lua_setfield( L, -2, "__type" ); /* metatable.__type = "FontHandle" */
+
     lua_pushfont( L, INVALID_FONT );
     lua_setglobal( L, "INVALID_FONT" ); /* set global INVALID_FONT */
+
     return 1;
 }

@@ -43,7 +43,7 @@ function CBuildMenu:Init(pViewPort)
 	self:SetVisible(false)
 end
 
-function CBuildMenu:ApplySchemeSettings(pScheme)
+function CBuildMenu:ApplySchemeSettings(scheme)
 	self:SetBgColor(Colors.Create(0, 0, 0, 80))
 end
 

@@ -9,8 +9,7 @@ LABEL_PANEL_META._OriginalGetFont = LABEL_PANEL_META._OriginalGetFont or LABEL_P
 --- @param fontName string
 function LABEL_PANEL_META:SetFontByName(fontName)
     local scheme = self:GetScheme()
-	local iScheme = Scheme.GetIScheme(scheme)
-	local font = iScheme:GetFont(fontName)
+	local font = scheme:GetFont(fontName)
 
 	self._OriginalSetFont(self, font)
 end
@@ -19,8 +18,7 @@ end
 --- @return string
 function LABEL_PANEL_META:GetFontName()
     local scheme = self:GetScheme()
-    local iScheme = Scheme.GetIScheme(scheme)
-    local font = self._OriginalGetFont(self, iScheme)
+    local font = self._OriginalGetFont(self, scheme)
 
-	return iScheme:GetFontName(font)
+	return scheme:GetFontName(font)
 end

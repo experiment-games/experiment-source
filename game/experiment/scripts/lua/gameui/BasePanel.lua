@@ -23,13 +23,3 @@ local function PositionDialog(dlg)
 	dlg:SetPosition(x + ((ww - wide) / 2), y + ((wt - tall) / 2))
 end
 
--- Experiment; Broken:
--- local function OnOpenContentDialog()
--- 	if (ToPanel(hContentDialog) == INVALID_PANEL) then
--- 		hContentDialog = Gui.CContentDialog(Gui.GetGameUIPanel(), "ContentDialog")
--- 		PositionDialog(hContentDialog)
--- 	end
--- 	hContentDialog:Activate()
--- end
-
--- ConsoleCommands.Add("OpenContentDialog", OnOpenContentDialog, "Open content dialog.", FCVAR_CLIENTDLL)

@@ -95,31 +95,10 @@ function PANEL:Init()
 		img:SetSize(16, 16)
         img:SetPosition(0, 16 * #panel1:GetChildren())
 	end
-
-	-- forAllChildren({sheet, panel1, panel2}, function(child)
-	-- 	if (child.ClassName == "DTab") then
-	-- 		print("INIT child", child, child:GetVPanelAsInteger(), child.GetText and child:GetText() or "", "parent:", child:GetParent(), child:GetVParent(), self:IsPopup(), child:IsPopup())
-	-- 	end
-	-- end, true)
 end
 
 function PANEL:PerformLayout(w, h)
 	BaseClass.PerformLayout(self, w, h)
-    -- -- Print all children
-	-- print(self, self:GetVPanelAsInteger())
-	-- forAllChildren(self, function(child)
-	-- 	if (child.ClassName == "DTab") then
-	-- 		-- child:SetKeyboardInputEnabled(true)
-    --         -- child:SetMouseInputEnabled(true)
-    --         -- child:MoveToFront()
-	-- 		-- timer.Simple(0, function()
-	-- 		-- child:SetParent(self)
-	-- 		-- end)
-	-- 		print(child, child:GetVPanelAsInteger(), child.GetText and child:GetText() or "", "parent:", child:GetParent(), child:GetVParent(), self:IsPopup(), child:IsPopup())
-	-- 	end
-	-- 	-- print(child.ClassName)
-	-- 	-- child:SetEnabled(true)
-    -- end, true)
 end
 
 local PANEL2 = table.Copy(PANEL)

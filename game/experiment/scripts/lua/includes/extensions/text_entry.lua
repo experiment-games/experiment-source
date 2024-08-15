@@ -9,8 +9,7 @@ TEXT_ENTRY_PANEL_META._OriginalGetFont = TEXT_ENTRY_PANEL_META._OriginalGetFont 
 --- @param fontName string
 function TEXT_ENTRY_PANEL_META:SetFontByName(fontName)
     local scheme = self:GetScheme()
-	local iScheme = Scheme.GetIScheme(scheme)
-	local font = iScheme:GetFont(fontName)
+	local font = scheme:GetFont(fontName)
 
 	if (font) then
         -- self:SetFont(font)
@@ -22,9 +21,8 @@ end
 --- @return string
 function TEXT_ENTRY_PANEL_META:GetFontName()
     local scheme = self:GetScheme()
-    local iScheme = Scheme.GetIScheme(scheme)
 
-    -- return iScheme:GetFontName(self:GetFont())
+    -- return scheme:GetFontName(self:GetFont())
     local font = self._OriginalGetFont(self)
-	return iScheme:GetFontName(font)
+	return scheme:GetFontName(font)
 end

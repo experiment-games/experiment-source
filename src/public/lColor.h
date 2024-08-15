@@ -40,5 +40,7 @@ LUA_API void( lua_pushcolor )( lua_State *L, lua_Color &clr );
 LUA_API void( lua_pushcolor )( lua_State *L, Color &clr );
 
 LUALIB_API lua_Color &( luaL_checkcolor )( lua_State *L, int narg );
+LUALIB_API lua_Color &( luaL_optcolor )( lua_State *L, int narg, lua_Color def );
+
 
 #endif  // LCOLOR_H

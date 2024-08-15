@@ -274,7 +274,9 @@ static int EditablePanel_OnKeyCodeTyped( lua_State *L )
 
 static int EditablePanel_OnRequestFocus( lua_State *L )
 {
-    luaL_checkeditablepanel( L, 1 )->OnRequestFocus( luaL_checkvpanel( L, 2 ), luaL_checkvpanel( L, 3 ) );
+    Panel* subFocusPanel = luaL_checkpanel( L, 2 );
+    Panel* defaultPanel = luaL_checkpanel( L, 3 );
+    luaL_checkeditablepanel( L, 1 )->OnRequestFocus( subFocusPanel->GetVPanel(), defaultPanel->GetVPanel() );
     return 0;
 }
 
@@ -298,13 +300,15 @@ static int EditablePanel_RequestFocus( lua_State *L )
 
 static int EditablePanel_RequestFocusNext( lua_State *L )
 {
-    lua_pushboolean( L, luaL_checkeditablepanel( L, 1 )->RequestFocusNext( luaL_checkvpanel( L, 2 ) ) );
+    Panel *panel = luaL_checkpanel( L, 2 );
+    lua_pushboolean( L, luaL_checkeditablepanel( L, 1 )->RequestFocusNext( panel->GetVPanel() ) );
     return 1;
 }
 
 static int EditablePanel_RequestFocusPrev( lua_State *L )
 {
-    lua_pushboolean( L, luaL_checkeditablepanel( L, 1 )->RequestFocusPrev( luaL_checkvpanel( L, 2 ) ) );
+    Panel *panel = luaL_checkpanel( L, 2 );
+    lua_pushboolean( L, luaL_checkeditablepanel( L, 1 )->RequestFocusPrev( panel->GetVPanel() ) );
     return 1;
 }
 

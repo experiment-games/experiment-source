@@ -15,7 +15,7 @@ lua:
   
   arguments:
     - name: "panel"
-      type: PanelHandle
+      type: Panel
     - name: "mouseCode"
       type: enumeration/BUTTON
   returns:

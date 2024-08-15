@@ -15,7 +15,7 @@ lua:
   
   arguments:
     - name: "panel"
-      type: PanelHandle
+      type: Panel
       default: "NULL"
   returns:
     

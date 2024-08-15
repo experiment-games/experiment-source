@@ -122,9 +122,6 @@ LUALIB_API int( luaopen_g_pClientShadowMgr )( lua_State *L );
 #define LUA_FONTLIBNAME "FontHandle"
 LUALIB_API int( luaopen_HFont )( lua_State *L );
 
-#define LUA_HSCHEMELIBNAME "SchemeHandle"
-LUALIB_API int( luaopen_HScheme )( lua_State *L );
-
 #define LUA_MATERIALMETANAME "Material"
 LUALIB_API int( luaopen_IMaterial )( lua_State *L );
 
@@ -153,7 +150,7 @@ LUALIB_API int( luaopen_IPhysicsSurfaceProps )( lua_State *L );
 #define LUA_PREDICTIONSYSTEMLIBNAME "PredictionSystems"
 LUALIB_API int( luaopen_PredictionSystems )( lua_State *L );
 
-#define LUA_ISCHEMELIBNAME "IScheme"
+#define LUA_ISCHEMELIBNAME "Scheme"
 LUALIB_API int( luaopen_IScheme )( lua_State *L );
 
 #define LUA_STEAMFRIENDSMETANAME "SteamFriendsHandle"
@@ -205,7 +202,7 @@ LUALIB_API int( luaopen_random )( lua_State *L );
 #define LUA_RESOURCESLIBNAME "Resources"
 LUALIB_API int( luaopen_resources )( lua_State *L );
 
-#define LUA_SCHEMELIBNAME "Scheme"
+#define LUA_SCHEMELIBNAME "Schemes"
 LUALIB_API int( luaopen_scheme )( lua_State *L );
 
 #define LUA_SERIALIZERSLIBNAME "Serializers"

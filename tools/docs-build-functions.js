@@ -274,6 +274,10 @@ function fromTypeChecker(typeChecker) {
     case 'luaL_optmovedata':
     case 'lua_tomovedata':
       return 'MoveData';
+    case 'luaL_checkischeme':
+    case 'luaL_optischeme':
+    case 'lua_toischeme':
+      return 'Scheme';
     case 'lua_tosurfacedata':
       return 'SurfaceData';
     case 'luaL_checkitexture':
@@ -303,10 +307,6 @@ function fromTypeChecker(typeChecker) {
     case 'luaL_optfont':
     case 'lua_tofont':
       return 'FontHandle';
-    case 'luaL_checkvpanel':
-    case 'luaL_optvpanel':
-    case 'lua_tovpanel':
-      return 'PanelHandle';
     case 'luaL_checkpanel':
     case 'luaL_optpanel':
     case 'lua_topanel':

@@ -264,8 +264,8 @@ LUA_BINDING_END()
 
 LUA_BINDING_BEGIN( Inputs, RegisterKeyCodeUnhandledListener, "library", "Register a listener for unhandled key codes." )
 {
-    VPANEL panel = LUA_BINDING_ARGUMENT( luaL_checkvpanel, 1, "panel" );
-    input()->RegisterKeyCodeUnhandledListener( panel );
+    Panel *panel = LUA_BINDING_ARGUMENT( luaL_checkpanel, 1, "panel" );
+    input()->RegisterKeyCodeUnhandledListener( panel->GetVPanel() );
     return 0;
 }
 LUA_BINDING_END()
@@ -311,8 +311,8 @@ LUA_BINDING_END( "Vector", "Aim vector in world coordinates." )
 
 LUA_BINDING_BEGIN( Inputs, SetAppModalSurface, "library", "Set the application modal surface." )
 {
-    VPANEL panel = LUA_BINDING_ARGUMENT( luaL_checkvpanel, 1, "panel" );
-    input()->SetAppModalSurface( panel );
+    Panel *panel = LUA_BINDING_ARGUMENT( luaL_checkpanel, 1, "panel" );
+    input()->SetAppModalSurface( panel->GetVPanel() );
     return 0;
 }
 LUA_BINDING_END()
@@ -345,10 +345,10 @@ LUA_BINDING_END()
 
 LUA_BINDING_BEGIN( Inputs, SetModalSubTree, "library", "Set the modal sub-tree." )
 {
-    VPANEL panel = LUA_BINDING_ARGUMENT( luaL_checkvpanel, 1, "modalSubTree" );
-    VPANEL scope = LUA_BINDING_ARGUMENT( luaL_checkvpanel, 2, "scopePanel" );
+    Panel *panel = LUA_BINDING_ARGUMENT( luaL_checkpanel, 1, "modalSubTree" );
+    Panel *scope = LUA_BINDING_ARGUMENT( luaL_checkpanel, 2, "scopePanel" );
     bool receiveMessages = LUA_BINDING_ARGUMENT_WITH_DEFAULT( luaL_optboolean, 3, true, "receiveMessages" );
-    input()->SetModalSubTree( panel, scope, receiveMessages );
+    input()->SetModalSubTree( panel->GetVPanel(), scope->GetVPanel(), receiveMessages );
     return 0;
 }
 LUA_BINDING_END()
@@ -363,25 +363,25 @@ LUA_BINDING_END()
 
 LUA_BINDING_BEGIN( Inputs, SetMouseCapture, "library", "Set the panel that captures the mouse input." )
 {
-    VPANEL panel = LUA_BINDING_ARGUMENT_WITH_DEFAULT( luaL_optvpanel, 1, NULL, "panel" );
-    input()->SetMouseCapture( panel );
+    Panel *panel = LUA_BINDING_ARGUMENT_WITH_DEFAULT( luaL_optpanel, 1, NULL, "panel" );
+    input()->SetMouseCapture( panel ? panel->GetVPanel() : NULL );
     return 0;
 }
 LUA_BINDING_END()
 
 LUA_BINDING_BEGIN( Inputs, SetMouseCaptureExtended, "library", "Set the mouse capture with specific mouse code." )
 {
-    VPANEL panel = LUA_BINDING_ARGUMENT( luaL_checkvpanel, 1, "panel" );
+    Panel *panel = LUA_BINDING_ARGUMENT( luaL_checkpanel, 1, "panel" );
     MouseCode code = LUA_BINDING_ARGUMENT_ENUM( MouseCode, 2, "mouseCode" );
-    input()->SetMouseCaptureEx( panel, code );
+    input()->SetMouseCaptureEx( panel->GetVPanel(), code );
     return 0;
 }
 LUA_BINDING_END()
 
 LUA_BINDING_BEGIN( Inputs, SetMouseFocus, "library", "Set the mouse focus to a panel." )
 {
-    VPANEL panel = LUA_BINDING_ARGUMENT( luaL_checkvpanel, 1, "panel" );
-    input()->SetMouseFocus( panel );
+    Panel *panel = LUA_BINDING_ARGUMENT( luaL_checkpanel, 1, "panel" );
+    input()->SetMouseFocus( panel->GetVPanel() );
     return 0;
 }
 LUA_BINDING_END()
@@ -395,8 +395,8 @@ LUA_BINDING_END( "boolean", "Whether the modal sub-tree should receive messages.
 
 LUA_BINDING_BEGIN( Inputs, UnregisterKeyCodeUnhandledListener, "library", "Unregister a listener for unhandled key codes." )
 {
-    VPANEL panel = LUA_BINDING_ARGUMENT( luaL_checkvpanel, 1, "panel" );
-    input()->UnregisterKeyCodeUnhandledListener( panel );
+    Panel *panel = LUA_BINDING_ARGUMENT( luaL_checkpanel, 1, "panel" );
+    input()->UnregisterKeyCodeUnhandledListener( panel->GetVPanel() );
     return 0;
 }
 LUA_BINDING_END()

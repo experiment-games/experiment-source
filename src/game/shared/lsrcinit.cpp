@@ -119,11 +119,10 @@ static const luaL_RegForState luasrclibs[] = {
     // which always ends up being invalid (we can't access them by pointer)
     { LUA_ENGINEVGUILIBNAME, luaopen_enginevgui, REALM_CLIENT | REALM_GAMEUI },     // n/a   ✔     n/a
 
-    { LUA_FONTFLAGLIBNAME, luaopen_FONTFLAG, REALM_CLIENT },
-    { LUA_FONTLIBNAME, luaopen_HFont, REALM_CLIENT },
-    { LUA_HSCHEMELIBNAME, luaopen_HScheme, REALM_CLIENT },
+    { LUA_FONTFLAGLIBNAME, luaopen_FONTFLAG, REALM_CLIENT },                        // n/a   ✔     n/a
+    { LUA_FONTLIBNAME, luaopen_HFont, REALM_CLIENT },                               // n/a   ✔     n/a
     { LUA_INPUTLIBNAME, luaopen_input, REALM_CLIENT | REALM_GAMEUI },               // n/a   ✔     n/a
-    { LUA_ISCHEMELIBNAME, luaopen_IScheme, REALM_CLIENT | REALM_GAMEUI },
+    { LUA_ISCHEMELIBNAME, luaopen_IScheme, REALM_CLIENT | REALM_GAMEUI },           // n/a   ✔     n/a
     { LUA_PREDICTIONLIBNAME, luaopen_prediction, REALM_CLIENT },
     { LUA_SCHEMELIBNAME, luaopen_scheme, REALM_CLIENT | REALM_GAMEUI },
     { LUA_SURFACELIBNAME, luaopen_surface, REALM_CLIENT | REALM_GAMEUI },
