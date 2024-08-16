@@ -723,9 +723,9 @@ void CNPC_MetroPolice::Spawn( void )
 //-----------------------------------------------------------------------------
 // Update weapon ranges
 //-----------------------------------------------------------------------------
-void CNPC_MetroPolice::Weapon_Equip( CBaseCombatWeapon *pWeapon )
+void CNPC_MetroPolice::Weapon_Equip( CBaseCombatWeapon *pWeapon, bool bGiveAmmo /*= true*/ )
 {
-    BaseClass::Weapon_Equip( pWeapon );
+    BaseClass::Weapon_Equip( pWeapon, bGiveAmmo );
 
     if ( HasSpawnFlags( SF_METROPOLICE_MID_RANGE_ATTACK ) && GetActiveWeapon() )
     {

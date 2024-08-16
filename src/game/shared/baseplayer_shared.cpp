@@ -879,6 +879,25 @@ void CBasePlayer::SetAnimationExtension( const char *pExtension )
     Q_strncpy( m_szAnimExtension, pExtension, sizeof( m_szAnimExtension ) );
 }
 
+//=========================================================
+// HasNamedPlayerItem Does the player already have this item?
+//=========================================================
+CBaseEntity *CBasePlayer::HasNamedPlayerItem( const char *pszItemName )
+{
+    for ( int i = 0; i < WeaponCount(); i++ )
+    {
+        if ( !GetWeapon( i ) )
+            continue;
+
+        if ( FStrEq( pszItemName, GetWeapon( i )->GetClassname() ) )
+        {
+            return GetWeapon( i );
+        }
+    }
+
+    return NULL;
+}
+
 //-----------------------------------------------------------------------------
 // Purpose: Set the weapon to switch to when the player uses the 'lastinv'
 // command

@@ -456,6 +456,23 @@ LUA_BINDING_BEGIN( Entity, EntityToWorldSpace, "class", "Entity to world space."
 }
 LUA_BINDING_END( "Vector", "The world space vector." )
 
+LUA_BINDING_BEGIN( Entity, GetChildren, "class", "Get the moveparent children." )
+{
+    lua_CBaseEntity *pEntity = LUA_BINDING_ARGUMENT( luaL_checkentity, 1, "entity" );
+
+    lua_newtable( L );
+
+    int i = 1; // Lua tables are 1-based.
+    for ( CBaseEntity *pChild = pEntity->FirstMoveChild(); pChild; pChild = pChild->NextMovePeer() )
+    {
+        CBaseEntity::PushLuaInstanceSafe( L, pChild );
+        lua_rawseti( L, -2, i++ );
+    }
+
+    return 1;
+}
+LUA_BINDING_END( "table", "The moveparent children." )
+
 LUA_BINDING_BEGIN( Entity, GetEyeAngles, "class", "Get eye angles." )
 {
     lua_CBaseEntity *pEntity = LUA_BINDING_ARGUMENT( luaL_checkentity, 1, "entity" );
@@ -2764,7 +2781,7 @@ LUA_BINDING_BEGIN( Entity, __index, "class", "Metamethod that is called when a n
 
     return 1;
 }
-LUA_BINDING_END( "any", "value" )
+LUA_BINDING_END( "any", "The value of the field" )
 
 LUA_BINDING_BEGIN( Entity, __newindex, "class", "Metamethod that is called a new field is added" )
 {
@@ -2821,7 +2838,7 @@ LUA_BINDING_BEGIN( Entity, __eq, "class", "Metamethod that is called when compar
     lua_pushboolean( L, pEntity1 == pEntity2 );
     return 1;
 }
-LUA_BINDING_END()
+LUA_BINDING_END( "boolean", "True if entities are equal." )
 
 LUA_BINDING_BEGIN( Entity, __tostring, "class", "Metamethod that is called when converting entity to string" )
 {
@@ -2834,7 +2851,7 @@ LUA_BINDING_BEGIN( Entity, __tostring, "class", "Metamethod that is called when 
 
     return 1;
 }
-LUA_BINDING_END()
+LUA_BINDING_END( "string", "String representation of entity" )
 
 /*
 ** Open CBaseEntity object

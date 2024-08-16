@@ -249,6 +249,11 @@ language = {
 	end,
 }
 
+function MsgAll(...)
+	local message = table.concat({ ... }, " ")
+	Players.ShowMessageToAll(message)
+end
+
 local basePath = "resource/localization/en/"
 local languageFiles = file.Find(basePath .. "*.properties", "GAME")
 
@@ -505,6 +510,10 @@ function PLAYER_META:GetPressedWidget()
 end
 
 if (SERVER) then
+    function PLAYER_META:SelectWeapon(weaponClass)
+		self:SwitchWeapon(self:GetWeapon(weaponClass))
+	end
+
 	function PLAYER_META:SendLua(lua)
 		net.Start("__PlayerLuaRun")
 		net.WriteString(lua)

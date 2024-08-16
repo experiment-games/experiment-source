@@ -162,7 +162,27 @@ if (not GAMEUI) then
 
 			for key, value in pairs(metatableToMergeFrom) do
 				-- Only the 'Entity' baseclass should have these keys.
-                if (key == "__tostring" or key == "__eq" or key == "__gc") then
+				if (key == "__tostring"
+						or key == "__eq"
+						or key == "__gc"
+						or key == "__mode"
+						or key == "__metatable"
+						or key == "__index"
+						or key == "__newindex"
+						or key == "__call"
+						or key == "__len"
+						or key == "__pairs"
+						or key == "__ipairs"
+						or key == "__unm"
+						or key == "__add"
+						or key == "__sub"
+						or key == "__mul"
+						or key == "__div"
+						or key == "__mod"
+						or key == "__pow"
+						or key == "__concat"
+						or key == "__lt"
+						or key == "__le") then
 					error("Attempted to merge a metatable with a key that is not allowed.")
 					continue
 				end

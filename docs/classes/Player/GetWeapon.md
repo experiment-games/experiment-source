@@ -14,8 +14,8 @@ lua:
   description: "Get the player's weapon."
   
   arguments:
-    - name: "index"
-      type: number
+    - name: "className"
+      type: string
   returns:
     - type: Entity
       description: "The player's weapon."

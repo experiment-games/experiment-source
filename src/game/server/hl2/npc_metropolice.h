@@ -69,7 +69,7 @@ public:
 	virtual Vector GetActualShootTrajectory( const Vector &shootOrigin );
 	virtual void FireBullets( const FireBulletsInfo_t &info );
 	virtual bool HandleInteraction(int interactionType, void *data, CBaseCombatCharacter* sourceEnt);
-	virtual void Weapon_Equip( CBaseCombatWeapon *pWeapon );
+    virtual void Weapon_Equip( CBaseCombatWeapon *pWeapon, bool bGiveAmmo = true );
 
 	//virtual bool OverrideMoveFacing( const AILocalMoveGoal_t &move, float flInterval );
 	bool		OnObstructionPreSteer( AILocalMoveGoal_t *pMoveGoal, float distClear, AIMoveResult_t *pResult );

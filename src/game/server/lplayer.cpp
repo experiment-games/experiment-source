@@ -652,14 +652,6 @@ LUA_BINDING_BEGIN( Player, RemoveWeapon, "class", "Remove the weapon for the pla
 }
 LUA_BINDING_END( "boolean", "Whether the weapon was removed." )
 
-LUA_BINDING_BEGIN( Player, HasNamedWeapon, "class", "Check if the player has the named weapon." )
-{
-    lua_CBasePlayer *player = LUA_BINDING_ARGUMENT( luaL_checkplayer, 1, "player" );
-    CBaseEntity::PushLuaInstanceSafe( L, player->HasNamedPlayerItem( LUA_BINDING_ARGUMENT( luaL_checkstring, 2, "name" ) ) );
-    return 1;
-}
-LUA_BINDING_END()
-
 LUA_BINDING_BEGIN( Player, HasWeapons, "class", "Check if the player has weapons." )
 {
     lua_CBasePlayer *player = LUA_BINDING_ARGUMENT( luaL_checkplayer, 1, "player" );
@@ -668,13 +660,47 @@ LUA_BINDING_BEGIN( Player, HasWeapons, "class", "Check if the player has weapons
 }
 LUA_BINDING_END( "boolean", "Whether the player has weapons." )
 
-LUA_BINDING_BEGIN( Player, GiveNamedItem, "class", "Give the named weapon to the player." )
+LUA_BINDING_BEGIN( Player, GiveItem, "class", "Give the named weapon to the player." )
 {
     lua_CBasePlayer *player = LUA_BINDING_ARGUMENT( luaL_checkplayer, 1, "player" );
-    CBaseEntity::PushLuaInstanceSafe( L, player->GiveNamedItem( LUA_BINDING_ARGUMENT( luaL_checkstring, 2, "name" ), LUA_BINDING_ARGUMENT_WITH_DEFAULT( luaL_optinteger, 3, 0, "amount" ) ) );
+    CBaseEntity::PushLuaInstanceSafe( L,
+                                      player->GiveNamedItem(
+                                          LUA_BINDING_ARGUMENT( luaL_checkstring, 2, "name" ),
+                                          LUA_BINDING_ARGUMENT_WITH_DEFAULT( luaL_optinteger, 3, 0, "amount" ) ) );
     return 1;
 }
-LUA_BINDING_END()
+LUA_BINDING_END( "Entity", "The item given to the player." )
+
+LUA_BINDING_BEGIN( Player, Give, "class", "Give the weapon to the player." )
+{
+    lua_CBasePlayer *player = LUA_BINDING_ARGUMENT( luaL_checkplayer, 1, "player" );
+    const char *className = LUA_BINDING_ARGUMENT( luaL_checkstring, 2, "className" );
+    bool shouldGiveNoAmmo = LUA_BINDING_ARGUMENT_WITH_DEFAULT( luaL_optboolean, 3, false, "shouldGiveNoAmmo" );
+
+    CBaseEntity *entity = player->GiveNamedItem( className, 0 );
+
+    if ( !entity )
+    {
+        luaL_argerror( L, 2, "Invalid weapon name." );
+        return 0;
+    }
+
+    CBaseCombatWeapon *weapon = dynamic_cast<CBaseCombatWeapon *>( entity );
+
+    if ( !weapon )
+    {
+        // To match the behavior in Garry's Mod, we allow giving any type of entity
+        // But we only continue if it's a weapon
+        CBaseEntity::PushLuaInstanceSafe( L, entity );
+        return 1;
+    }
+
+    player->Weapon_Equip( weapon, !shouldGiveNoAmmo );
+
+    CBaseEntity::PushLuaInstanceSafe( L, weapon );
+    return 1;
+}
+LUA_BINDING_END( "Weapon", "The weapon given to the player." )
 
 LUA_BINDING_BEGIN( Player, EnableControl, "class", "Enable or disable control for the player." )
 {

@@ -733,6 +733,15 @@ LUA_BINDING_BEGIN( Panel, HasHierarchicalFocus, "class", "Checks if the panel ha
 }
 LUA_BINDING_END( "boolean", "True if the panel has hierarchical focus, false otherwise" )
 
+LUA_BINDING_BEGIN( Panel, HasParent, "class", "Checks if the panel is a descendant of another panel" )
+{
+    lua_Panel *panel = LUA_BINDING_ARGUMENT( luaL_checkpanel, 1, "panel" );
+    lua_Panel *potentialParent = LUA_BINDING_ARGUMENT( luaL_checkpanel, 2, "potentialParent" );
+    lua_pushboolean( L, panel->HasParent( potentialParent->GetVParent() ) );
+    return 1;
+}
+LUA_BINDING_END( "boolean", "True if the panel is a descendant of the parent, false otherwise" )
+
 LUA_BINDING_BEGIN( Panel, HasUserConfigSettings, "class", "Checks if the panel has user config settings" )
 {
     lua_Panel *panel = LUA_BINDING_ARGUMENT( luaL_checkpanel, 1, "panel" );

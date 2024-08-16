@@ -538,7 +538,25 @@ LUA_BINDING_END( "number", "The player's water jump time." )
 LUA_BINDING_BEGIN( Player, GetWeapon, "class", "Get the player's weapon." )
 {
     lua_CBasePlayer *player = LUA_BINDING_ARGUMENT( luaL_checkplayer, 1, "player" );
-    CBaseEntity::PushLuaInstanceSafe( L, player->GetWeapon( LUA_BINDING_ARGUMENT( luaL_checknumber, 2, "index" ) ) );
+    const char *className = LUA_BINDING_ARGUMENT( luaL_checkstring, 2, "className" );
+    CBaseCombatWeapon *foundWeapon = nullptr;
+
+    for ( int i = 0; i < player->WeaponCount(); i++ )
+    {
+        CBaseCombatWeapon *weapon = player->GetWeapon( i );
+
+        // Stop as soon as we've reached the end of valid weapons
+        if ( !weapon )
+            break;
+
+        if ( FStrEq( weapon->GetClassname(), className ) )
+        {
+            foundWeapon = weapon;
+            break;
+        }
+    }
+
+    CBaseEntity::PushLuaInstanceSafe( L, foundWeapon );
     return 1;
 }
 LUA_BINDING_END( "Entity", "The player's weapon." )
@@ -1077,9 +1095,23 @@ LUA_BINDING_BEGIN( Player, CanSwitchToWeapon, "class", "Check if the player can 
 }
 LUA_BINDING_END( "boolean", "Whether the player can switch to the weapon." )
 
+LUA_BINDING_BEGIN( Player, HasWeapon, "class", "Check if the player has the named weapon." )
+{
+    lua_CBasePlayer *player = LUA_BINDING_ARGUMENT( luaL_checkplayer, 1, "player" );
+    const char *className = LUA_BINDING_ARGUMENT( luaL_checkstring, 2, "name" );
+
+    lua_pushboolean( L, player->HasNamedPlayerItem( className ) != nullptr );
+    return 1;
+}
+LUA_BINDING_END( "boolean", "Whether the player has the weapon." )
+
 LUA_BINDING_BEGIN( Player, OwnsWeaponOfType, "class", "Check if the player owns a weapon of a certain type." )
 {
-    CBaseEntity::PushLuaInstanceSafe( L, LUA_BINDING_ARGUMENT( luaL_checkplayer, 1, "player" )->Weapon_OwnsThisType( LUA_BINDING_ARGUMENT( luaL_checkstring, 2, "type" ), LUA_BINDING_ARGUMENT_WITH_DEFAULT( luaL_optnumber, 3, 0, "subtype" ) ) );
+    CBaseEntity::PushLuaInstanceSafe( L,
+                                      LUA_BINDING_ARGUMENT( luaL_checkplayer, 1, "player" )
+                                          ->Weapon_OwnsThisType(
+                                              LUA_BINDING_ARGUMENT( luaL_checkstring, 2, "type" ),
+                                              LUA_BINDING_ARGUMENT_WITH_DEFAULT( luaL_optnumber, 3, 0, "subType" ) ) );
     return 1;
 }
 LUA_BINDING_END( "Player", "The weapon the player owns of the specified type." )
@@ -1109,14 +1141,22 @@ LUA_BINDING_END( "boolean", "Whether the player should select the weapon." )
 
 LUA_BINDING_BEGIN( Player, ShouldSetLastWeapon, "class", "Check if the player should set the last weapon." )
 {
-    lua_pushboolean( L, LUA_BINDING_ARGUMENT( luaL_checkplayer, 1, "player" )->Weapon_ShouldSetLast( LUA_BINDING_ARGUMENT( luaL_checkweapon, 2, "weapon" ), LUA_BINDING_ARGUMENT( luaL_checkweapon, 3, "last" ) ) );
+    lua_pushboolean( L,
+                     LUA_BINDING_ARGUMENT( luaL_checkplayer, 1, "player" )
+                         ->Weapon_ShouldSetLast(
+                             LUA_BINDING_ARGUMENT( luaL_checkweapon, 2, "weapon" ),
+                             LUA_BINDING_ARGUMENT( luaL_checkweapon, 3, "last" ) ) );
     return 1;
 }
 LUA_BINDING_END( "boolean", "Whether the player should set the last weapon." )
 
 LUA_BINDING_BEGIN( Player, SwitchWeapon, "class", "Switch the player's weapon." )
 {
-    lua_pushboolean( L, LUA_BINDING_ARGUMENT( luaL_checkplayer, 1, "player" )->Weapon_Switch( LUA_BINDING_ARGUMENT( luaL_checkweapon, 2, "weapon" ), LUA_BINDING_ARGUMENT_WITH_DEFAULT( luaL_optnumber, 3, 0, "subtype" ) ) );
+    lua_pushboolean( L,
+                     LUA_BINDING_ARGUMENT( luaL_checkplayer, 1, "player" )
+                         ->Weapon_Switch(
+                             LUA_BINDING_ARGUMENT( luaL_checkweapon, 2, "weapon" ),
+                             LUA_BINDING_ARGUMENT_WITH_DEFAULT( luaL_optnumber, 3, 0, "subType" ) ) );
     return 1;
 }
 LUA_BINDING_END( "boolean", "Whether the weapon was switched." )
@@ -1447,7 +1487,7 @@ LUA_BINDING_BEGIN( Players, SayTextToAll, "library", "Say text to all players." 
 }
 LUA_BINDING_END()
 
-LUA_BINDING_BEGIN( Players, ClientPrintToAll, "library", "Print text to all clients, optionally substituting 4 strings. The type decides where to show it: HUD_PRINTCENTER (1), HUD_PRINTNOTIFY (2), HUD_PRINTTALK (3), HUD_PRINTCONSOLE (4) - Enums don't exist yet" ) // TODO: Expose these enums
+LUA_BINDING_BEGIN( Players, ClientPrintToAll, "library", "Print text to all clients, optionally substituting 4 strings. The type decides where to show it: HUD_PRINTCENTER (1), HUD_PRINTNOTIFY (2), HUD_PRINTTALK (3), HUD_PRINTCONSOLE (4) - Enums don't exist yet" )  // TODO: Expose these enums
 {
     UTIL_ClientPrintAll(
         LUA_BINDING_ARGUMENT( luaL_checknumber, 1, "messageType" ),

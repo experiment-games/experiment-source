@@ -15,7 +15,8 @@ lua:
   
   
   returns:
-    
+    - type: string
+      description: "String representation of entity"
 ---
 
 <div class="lua__search__keywords">

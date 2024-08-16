@@ -220,6 +220,7 @@ class C_BasePlayer : public C_BaseCombatCharacter, public CGameEventListener
         return !IsObserver();
     }
     virtual C_BaseCombatWeapon *GetActiveWeaponForSelection( void );
+    CBaseEntity *HasNamedPlayerItem( const char *pszItemName );
 
     // Returns the view model if this is the local player. If you're in third person or
     // this is a remote player, it returns the active weapon

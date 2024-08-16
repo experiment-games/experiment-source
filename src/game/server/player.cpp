@@ -7360,9 +7360,9 @@ void CBasePlayer::Weapon_DropSlot( int weaponSlot )
 //-----------------------------------------------------------------------------
 // Purpose: Override to add weapon to the hud
 //-----------------------------------------------------------------------------
-void CBasePlayer::Weapon_Equip( CBaseCombatWeapon *pWeapon )
+void CBasePlayer::Weapon_Equip( CBaseCombatWeapon *pWeapon, bool bGiveAmmo /*= true*/ )
 {
-    BaseClass::Weapon_Equip( pWeapon );
+    BaseClass::Weapon_Equip( pWeapon, bGiveAmmo );
 
     bool bShouldSwitch = g_pGameRules->FShouldSwitchWeapon( this, pWeapon );
 
@@ -7379,25 +7379,6 @@ void CBasePlayer::Weapon_Equip( CBaseCombatWeapon *pWeapon )
     {
         Weapon_Switch( pWeapon );
     }
-}
-
-//=========================================================
-// HasNamedPlayerItem Does the player already have this item?
-//=========================================================
-CBaseEntity *CBasePlayer::HasNamedPlayerItem( const char *pszItemName )
-{
-    for ( int i = 0; i < WeaponCount(); i++ )
-    {
-        if ( !GetWeapon( i ) )
-            continue;
-
-        if ( FStrEq( pszItemName, GetWeapon( i )->GetClassname() ) )
-        {
-            return GetWeapon( i );
-        }
-    }
-
-    return NULL;
 }
 
 #if defined USES_ECON_ITEMS

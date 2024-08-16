@@ -2620,7 +2620,7 @@ bool CHL2_Player::Weapon_CanUse( CBaseCombatWeapon *pWeapon )
 // Purpose:
 // Input  : *pWeapon -
 //-----------------------------------------------------------------------------
-void CHL2_Player::Weapon_Equip( CBaseCombatWeapon *pWeapon )
+void CHL2_Player::Weapon_Equip( CBaseCombatWeapon *pWeapon, bool bGiveAmmo /*= true*/ )
 {
 #if LUA_SDK
     LUA_CALL_HOOK_BEGIN( "Weapon_Equip" );
@@ -2643,7 +2643,7 @@ void CHL2_Player::Weapon_Equip( CBaseCombatWeapon *pWeapon )
         m_HL2Local.m_bWeaponLowered = false;
     }
 
-    BaseClass::Weapon_Equip( pWeapon );
+    BaseClass::Weapon_Equip( pWeapon, bGiveAmmo );
 }
 
 //-----------------------------------------------------------------------------

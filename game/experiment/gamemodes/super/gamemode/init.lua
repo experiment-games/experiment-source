@@ -49,7 +49,7 @@ function GM:FShouldSwitchWeapon(client, targetWeapon)
 end
 
 function GM:GiveDefaultItems(client)
-	client:GiveNamedItem("weapon_physcannon")
+	client:GiveItem("weapon_physcannon")
 
 	local defaultWeaponName = Engines.GetClientConsoleVariableValue(Engines.IndexOfEdict(client), "cl_defaultweapon")
 	local defaultWeapon = client:OwnsWeaponOfType(defaultWeaponName)

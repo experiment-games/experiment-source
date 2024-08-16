@@ -67,7 +67,7 @@ public:
 	void	Spawn( void );
 	void	SelectModel();
 	Class_T Classify( void );
-	void	Weapon_Equip( CBaseCombatWeapon *pWeapon );
+    void Weapon_Equip( CBaseCombatWeapon *pWeapon, bool bGiveAmmo = true );
 
 	bool CreateBehaviors( void );
 
@@ -147,9 +147,9 @@ Class_T	CNPC_Barney::Classify( void )
 
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
-void CNPC_Barney::Weapon_Equip( CBaseCombatWeapon *pWeapon )
+void CNPC_Barney::Weapon_Equip( CBaseCombatWeapon *pWeapon, bool bGiveAmmo /*= true*/ )
 {
-	BaseClass::Weapon_Equip( pWeapon );
+	BaseClass::Weapon_Equip( pWeapon, bGiveAmmo );
 
 	if( hl2_episodic.GetBool() && FClassnameIs( pWeapon, "weapon_ar2" ) )
 	{

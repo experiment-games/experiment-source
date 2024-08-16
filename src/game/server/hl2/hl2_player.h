@@ -269,7 +269,7 @@ class CHL2_Player : public BASEPLAYERCLASS
     virtual bool BumpWeapon( CBaseCombatWeapon *pWeapon );
 
     virtual bool Weapon_CanUse( CBaseCombatWeapon *pWeapon );
-    virtual void Weapon_Equip( CBaseCombatWeapon *pWeapon );
+    virtual void Weapon_Equip( CBaseCombatWeapon *pWeapon, bool bGiveAmmo = true );
     virtual bool Weapon_Lower( void );
     virtual bool Weapon_Ready( void );
     virtual bool Weapon_Switch( CBaseCombatWeapon *pWeapon,

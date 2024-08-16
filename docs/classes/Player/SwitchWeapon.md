@@ -13,7 +13,12 @@ lua:
   realm: shared
   description: "Switch the player's weapon."
   
-  
+  arguments:
+    - name: "weapon"
+      type: Weapon
+    - name: "subType"
+      type: number
+      default: "0"
   returns:
     - type: boolean
       description: "Whether the weapon was switched."

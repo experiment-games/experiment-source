@@ -18,7 +18,7 @@ lua:
       type: string
   returns:
     - type: any
-      description: "value"
+      description: "The value of the field"
 ---
 
 <div class="lua__search__keywords">

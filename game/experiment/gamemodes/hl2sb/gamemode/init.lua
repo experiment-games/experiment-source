@@ -31,7 +31,7 @@ end
 function GM:GiveDefaultItems(client)
 	self.BaseClass.GiveDefaultItems(self, client)
 
-	-- client:GiveNamedItem("weapon_test")
+	-- client:GiveItem("weapon_test")
 	-- client:SwitchWeapon(client:OwnsWeaponOfType("weapon_test"))
 end
 

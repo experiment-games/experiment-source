@@ -13,7 +13,11 @@ lua:
   realm: shared
   description: "Check if the player should set the last weapon."
   
-  
+  arguments:
+    - name: "weapon"
+      type: Weapon
+    - name: "last"
+      type: Weapon
   returns:
     - type: boolean
       description: "Whether the player should set the last weapon."

@@ -36,15 +36,15 @@ function GM:GiveDefaultItems(client)
 	_R.Player.GiveAmmo(client, 6, "357")
 
 	if (client:GetPlayerModelType() == PLAYER_SOUNDS_METROPOLICE or client:GetPlayerModelType() == PLAYER_SOUNDS_COMBINESOLDIER) then
-		client:GiveNamedItem("weapon_stunstick")
+		client:GiveItem("weapon_stunstick")
 	elseif (client:GetPlayerModelType() == PLAYER_SOUNDS_CITIZEN) then
-		client:GiveNamedItem("weapon_crowbar")
+		client:GiveItem("weapon_crowbar")
 	end
 
-	client:GiveNamedItem("weapon_pistol")
-	client:GiveNamedItem("weapon_smg1")
-	client:GiveNamedItem("weapon_frag")
-	client:GiveNamedItem("weapon_physcannon")
+	client:GiveItem("weapon_pistol")
+	client:GiveItem("weapon_smg1")
+	client:GiveItem("weapon_frag")
+	client:GiveItem("weapon_physcannon")
 
 	local defaultWeaponName = Engines.GetClientConsoleVariableValue(Engines.IndexOfEdict(client), "cl_defaultweapon")
 	local defaultWeapon = client:OwnsWeaponOfType(defaultWeaponName)

@@ -2371,9 +2371,9 @@ bool CNPC_PlayerCompanion::ShouldLookForBetterWeapon()
 
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
-void CNPC_PlayerCompanion::Weapon_Equip( CBaseCombatWeapon *pWeapon )
+void CNPC_PlayerCompanion::Weapon_Equip( CBaseCombatWeapon *pWeapon, bool bGiveAmmo /*= true*/ )
 {
-	BaseClass::Weapon_Equip( pWeapon );
+	BaseClass::Weapon_Equip( pWeapon, bGiveAmmo );
 	m_bReadinessCapable = IsReadinessCapable();
 }
 

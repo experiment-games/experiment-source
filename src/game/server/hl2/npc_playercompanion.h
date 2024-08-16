@@ -254,7 +254,7 @@ public:
 	WeaponProficiency_t CalcWeaponProficiency( CBaseCombatWeapon *pWeapon );
 	bool			ShouldLookForBetterWeapon();
 	bool			Weapon_CanUse( CBaseCombatWeapon *pWeapon );
-	void			Weapon_Equip( CBaseCombatWeapon *pWeapon );
+    void Weapon_Equip( CBaseCombatWeapon *pWeapon, bool bGiveAmmo = true );
 	void			PickupWeapon( CBaseCombatWeapon *pWeapon );
 	
 	bool 			FindCoverPos( CBaseEntity *pEntity, Vector *pResult);

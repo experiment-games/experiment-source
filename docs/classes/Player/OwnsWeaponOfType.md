@@ -13,7 +13,12 @@ lua:
   realm: shared
   description: "Check if the player owns a weapon of a certain type."
   
-  
+  arguments:
+    - name: "type"
+      type: string
+    - name: "subType"
+      type: number
+      default: "0"
   returns:
     - type: Player
       description: "The weapon the player owns of the specified type."

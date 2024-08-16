@@ -1,25 +1,26 @@
 ---
 template: lua-class-function.html
-title: HasNamedWeapon
-icon: lua-server
+title: HasWeapon
+icon: lua-shared
 tags:
   - lua
-  - server
+  - shared
   - needs-verification
   - needs-example
 lua:
   library: Player
-  function: HasNamedWeapon
-  realm: server
+  function: HasWeapon
+  realm: shared
   description: "Check if the player has the named weapon."
   
   arguments:
     - name: "name"
       type: string
   returns:
-    
+    - type: boolean
+      description: "Whether the player has the weapon."
 ---
 
 <div class="lua__search__keywords">
-Player:HasNamedWeapon &#x2013; Check if the player has the named weapon.
+Player:HasWeapon &#x2013; Check if the player has the named weapon.
 </div>

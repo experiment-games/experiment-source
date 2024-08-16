@@ -1,6 +1,6 @@
 ---
 template: lua-class-function.html
-title: GiveNamedItem
+title: GiveItem
 icon: lua-server
 tags:
   - lua
@@ -9,17 +9,21 @@ tags:
   - needs-example
 lua:
   library: Player
-  function: GiveNamedItem
+  function: GiveItem
   realm: server
   description: "Give the named weapon to the player."
   
   arguments:
     - name: "name"
       type: string
+    - name: "amount"
+      type: integer
+      default: "0"
   returns:
-    
+    - type: Entity
+      description: "The item given to the player."
 ---
 
 <div class="lua__search__keywords">
-Player:GiveNamedItem &#x2013; Give the named weapon to the player.
+Player:GiveItem &#x2013; Give the named weapon to the player.
 </div>

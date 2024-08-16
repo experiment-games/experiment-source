@@ -17,7 +17,8 @@ lua:
     - name: "entity"
       type: Entity
   returns:
-    
+    - type: boolean
+      description: "True if entities are equal."
 ---
 
 <div class="lua__search__keywords">
