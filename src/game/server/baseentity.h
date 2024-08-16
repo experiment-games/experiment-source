@@ -890,6 +890,11 @@ class CBaseEntity : public IServerEntity
     {
         return false;
     }
+
+    virtual bool IsScripted( void ) const
+    {
+        return false;
+    }
 #endif
 
    protected:

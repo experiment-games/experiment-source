@@ -148,6 +148,30 @@ if (not GAMEUI) then
 		end
 	end
 
+	local metaMethods = {
+		["__tostring"] = true,
+		["__eq"] = true,
+		["__gc"] = true,
+		["__mode"] = true,
+		["__metatable"] = true,
+		["__index"] = true,
+		["__newindex"] = true,
+		["__call"] = true,
+		["__len"] = true,
+		["__pairs"] = true,
+		["__ipairs"] = true,
+		["__unm"] = true,
+		["__add"] = true,
+		["__sub"] = true,
+		["__mul"] = true,
+		["__div"] = true,
+		["__mod"] = true,
+		["__pow"] = true,
+		["__concat"] = true,
+		["__lt"] = true,
+		["__le"] = true,
+	}
+
 	--- Merges the provided metatables into base and returns it.
 	--- @param base any
 	--- @param ... unknown
@@ -161,28 +185,8 @@ if (not GAMEUI) then
 			end
 
 			for key, value in pairs(metatableToMergeFrom) do
-				-- Only the 'Entity' baseclass should have these keys.
-				if (key == "__tostring"
-						or key == "__eq"
-						or key == "__gc"
-						or key == "__mode"
-						or key == "__metatable"
-						or key == "__index"
-						or key == "__newindex"
-						or key == "__call"
-						or key == "__len"
-						or key == "__pairs"
-						or key == "__ipairs"
-						or key == "__unm"
-						or key == "__add"
-						or key == "__sub"
-						or key == "__mul"
-						or key == "__div"
-						or key == "__mod"
-						or key == "__pow"
-						or key == "__concat"
-						or key == "__lt"
-						or key == "__le") then
+				-- Only the 'Entity' baseclass should have metamethods.
+				if (metaMethods[key]) then
 					error("Attempted to merge a metatable with a key that is not allowed.")
 					continue
 				end
@@ -209,12 +213,11 @@ if (not GAMEUI) then
 	collapseMetatables(_R.Player, _R.CExperimentPlayer)
 	collapseMetatables(_R.Entity, _R.CBaseAnimating, _R.CBaseFlex)
 
-	_R.CExperimentPlayer.__index = _R.Player.__index
-	_R.CExperimentPlayer.__newindex = _R.Entity.__newindex
-
-	_R.CBaseAnimating.__index = _R.Entity.__index
-	_R.CBaseAnimating.__newindex = _R.Entity.__newindex
-
-	_R.CBaseFlex.__index = _R.Entity.__index
-	_R.CBaseFlex.__newindex = _R.Entity.__newindex
+	-- Have all these classes take the metamethods of the base classes.
+	for key, value in pairs(metaMethods) do
+		_R.CExperimentPlayer[key] = _R.CExperimentPlayer[key] or _R.Player[key] or _R.Entity[key]
+		_R.CBaseAnimating[key] = _R.CBaseAnimating[key] or _R.Entity[key]
+		_R.CBaseFlex[key] = _R.CBaseFlex[key] or _R.Entity[key]
+		_R.Weapon[key] = _R.Weapon[key] or _R.Entity[key]
+	end
 end

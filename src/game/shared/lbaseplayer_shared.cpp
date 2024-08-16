@@ -1240,7 +1240,7 @@ LUA_BINDING_BEGIN( Player, __tostring, "class", "Get the string representation o
     if ( player == NULL )
         lua_pushstring( L, "NULL" );
     else
-        lua_pushfstring( L, "Player: %d \"%s\"", player->GetUserID(), player->GetPlayerName() );
+        lua_pushfstring( L, "Player: %d \"%s\" (%d)", player->GetUserID(), player->GetPlayerName(), player->entindex() );
     return 1;
 }
 LUA_BINDING_END( "string", "The string representation of the player." )

@@ -1843,6 +1843,11 @@ class C_BaseEntity : public IClientEntity
     {
         return false;
     }
+
+    virtual bool IsScripted( void ) const
+    {
+        return false;
+    }
 #endif
 
    protected:

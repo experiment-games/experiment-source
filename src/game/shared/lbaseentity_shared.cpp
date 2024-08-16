@@ -24,6 +24,7 @@
 #include <lbasecombatweapon_shared.h>
 #include "vcollide_parse.h"
 #include <gamestringpool.h>
+#include <basescripted.h>
 
 // memdbgon must be the last include file in a .cpp file!!!
 #include "tier0/memdbgon.h"
@@ -462,7 +463,7 @@ LUA_BINDING_BEGIN( Entity, GetChildren, "class", "Get the moveparent children." 
 
     lua_newtable( L );
 
-    int i = 1; // Lua tables are 1-based.
+    int i = 1;  // Lua tables are 1-based.
     for ( CBaseEntity *pChild = pEntity->FirstMoveChild(); pChild; pChild = pChild->NextMovePeer() )
     {
         CBaseEntity::PushLuaInstanceSafe( L, pChild );
@@ -603,24 +604,24 @@ LUA_BINDING_BEGIN( Entity, GetAnimationTime, "class", "Get animation time." )
 LUA_BINDING_END( "number", "The animation time." )
 
 // Experiment; Not very useful in Lua, so disabled.
-//LUA_BINDING_BEGIN( Entity, GetBaseAnimating, "class", "Get base animating." )
+// LUA_BINDING_BEGIN( Entity, GetBaseAnimating, "class", "Get base animating." )
 //{
 //    lua_CBaseEntity *pEntity = LUA_BINDING_ARGUMENT( luaL_checkentity, 1, "entity" );
 //
 //    CBaseEntity::PushLuaInstanceSafe( L, pEntity->GetBaseAnimating() );
 //    return 1;
 //}
-//LUA_BINDING_END( "Entity", "The base animating." )
+// LUA_BINDING_END( "Entity", "The base animating." )
 
 // Experiment; Not very useful in Lua, so disabled.
-//LUA_BINDING_BEGIN( Entity, GetBaseEntity, "class", "Get base entity." )
+// LUA_BINDING_BEGIN( Entity, GetBaseEntity, "class", "Get base entity." )
 //{
 //    lua_CBaseEntity *pEntity = LUA_BINDING_ARGUMENT( luaL_checkentity, 1, "entity" );
 //
 //    CBaseEntity::PushLuaInstanceSafe( L, pEntity->GetBaseEntity() );
 //    return 1;
 //}
-//LUA_BINDING_END( "Entity", "The base entity." )
+// LUA_BINDING_END( "Entity", "The base entity." )
 
 LUA_BINDING_BEGIN( Entity, GetBaseVelocity, "class", "Get base velocity." )
 {
@@ -645,7 +646,16 @@ LUA_BINDING_BEGIN( Entity, GetClass, "class", "Get class name." )
 {
     lua_CBaseEntity *pEntity = LUA_BINDING_ARGUMENT( luaL_checkentity, 1, "entity" );
 
-    lua_pushstring( L, pEntity->GetClassname() );
+#ifdef CLIENT_DLL
+    if ( pEntity->IsScripted() )
+    {
+        CBaseScripted *pScripted = dynamic_cast< CBaseScripted * >( pEntity );
+        lua_pushfstring( L, pScripted->GetScriptedClassname() );
+    }
+    else
+#endif
+        lua_pushstring( L, pEntity->GetClassname() );
+
     return 1;
 }
 LUA_BINDING_END( "string", "The class name." )
@@ -2465,14 +2475,14 @@ LUA_BINDING_BEGIN( Entity, StopFollowingEntity, "class", "Stop following entity.
 }
 LUA_BINDING_END()
 
-//LUA_BINDING_BEGIN( Entity, SUB_Remove, "class", "Remove entity." )
+// LUA_BINDING_BEGIN( Entity, SUB_Remove, "class", "Remove entity." )
 //{
-//    lua_CBaseEntity *pEntity = LUA_BINDING_ARGUMENT( luaL_checkentity, 1, "entity" );
+//     lua_CBaseEntity *pEntity = LUA_BINDING_ARGUMENT( luaL_checkentity, 1, "entity" );
 //
-//    pEntity->SUB_Remove();
-//    return 0;
-//}
-//LUA_BINDING_END()
+//     pEntity->SUB_Remove();
+//     return 0;
+// }
+// LUA_BINDING_END()
 
 LUA_BINDING_BEGIN( Entity, Think, "class", "Think." )
 {
@@ -2856,7 +2866,17 @@ LUA_BINDING_BEGIN( Entity, __tostring, "class", "Metamethod that is called when 
     if ( pEntity == NULL )
         lua_pushstring( L, "NULL" );
     else
-        lua_pushfstring( L, "Entity: %s (%d)", pEntity->GetClassname(), pEntity->entindex() );
+    {
+#ifdef CLIENT_DLL
+        if ( pEntity->IsScripted() )
+        {
+            CBaseScripted *pScripted = dynamic_cast< CBaseScripted * >( pEntity );
+            lua_pushfstring( L, "Entity: %s (%d)", pScripted->GetScriptedClassname(), pEntity->entindex() );
+        }
+        else
+#endif
+            lua_pushfstring( L, "Entity: %s (%d)", pEntity->GetClassname(), pEntity->entindex() );
+    }
 
     return 1;
 }

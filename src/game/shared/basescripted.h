@@ -28,7 +28,7 @@ class CBaseScripted : /* public CBaseEntity */ public CBaseAnimating
     CBaseScripted();
     ~CBaseScripted();
 
-    bool IsScripted( void ) const
+    virtual bool IsScripted( void ) const OVERRIDE
     {
         return true;
     }

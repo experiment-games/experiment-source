@@ -4,7 +4,7 @@ WeaponData
 {
 	// Weapon data is loaded by both the Game and Client DLLs.
 	"printname"	"#HL2_GravityGun"
-	"viewmodel"			"models/weapons/v_physcannon.mdl"
+	"viewmodel"			"models/weapons/c_physcannon.mdl"
 	"playermodel"		"models/weapons/w_Physics.mdl"
 	"anim_prefix"		"gauss"
 	"bucket"			"0"
@@ -49,7 +49,7 @@ WeaponData
 				"character"	"m"
 		}
 		"weapon_s"
-		{	
+		{
 				"font"		"WeaponIconsSelected"
 				"character"	"m"
 		}
@@ -76,3 +76,4 @@ WeaponData
 		}
 	}
 }
+
