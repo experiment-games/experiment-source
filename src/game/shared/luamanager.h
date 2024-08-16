@@ -208,218 +208,226 @@
     }                                                      \
     }
 
-#define LUA_RETURN_NONE_IF_FALSE()                         \
-    if ( lua_gettop( L ) == 1 )                            \
-    {                                                      \
-        if ( lua_isboolean( L, -1 ) )                      \
-        {                                                  \
-            bool res = ( bool )luaL_checkboolean( L, -1 ); \
-            lua_pop( L, 1 );                               \
-            if ( !res )                                    \
-                return;                                    \
-        }                                                  \
-        else                                               \
-            lua_pop( L, 1 );                               \
+#define LUA_RETURN_NONE_IF_FALSE()                     \
+    if ( lua_gettop( L ) == 1 )                        \
+    {                                                  \
+        if ( lua_isboolean( L, -1 ) )                  \
+        {                                              \
+            bool res = ( bool )lua_toboolean( L, -1 ); \
+            lua_pop( L, 1 );                           \
+            if ( !res )                                \
+                return;                                \
+        }                                              \
+        else                                           \
+            lua_pop( L, 1 );                           \
     }
 
-#define LUA_RETURN_NONE_IF_TRUE()                          \
-    if ( lua_gettop( L ) == 1 )                            \
-    {                                                      \
-        if ( lua_isboolean( L, -1 ) )                      \
-        {                                                  \
-            bool res = ( bool )luaL_checkboolean( L, -1 ); \
-            lua_pop( L, 1 );                               \
-            if ( res )                                     \
-                return;                                    \
-        }                                                  \
-        else                                               \
-            lua_pop( L, 1 );                               \
+#define LUA_RETURN_NONE_IF_TRUE()                      \
+    if ( lua_gettop( L ) == 1 )                        \
+    {                                                  \
+        if ( lua_isboolean( L, -1 ) )                  \
+        {                                              \
+            bool res = ( bool )lua_toboolean( L, -1 ); \
+            lua_pop( L, 1 );                           \
+            if ( res )                                 \
+                return;                                \
+        }                                              \
+        else                                           \
+            lua_pop( L, 1 );                           \
     }
 
-#define LUA_RETURN_PANEL_NONE()                                      \
-    if ( m_lua_State && lua_gettop( m_lua_State ) == 1 )             \
-    {                                                                \
-        if ( lua_isboolean( m_lua_State, -1 ) )                      \
-        {                                                            \
-            bool res = ( bool )luaL_checkboolean( m_lua_State, -1 ); \
-            lua_pop( m_lua_State, 1 );                               \
-            if ( !res )                                              \
-                return;                                              \
-        }                                                            \
-        else                                                         \
-            lua_pop( m_lua_State, 1 );                               \
+#define LUA_RETURN_PANEL_NONE()                                  \
+    if ( m_lua_State && lua_gettop( m_lua_State ) == 1 )         \
+    {                                                            \
+        if ( lua_isboolean( m_lua_State, -1 ) )                  \
+        {                                                        \
+            bool res = ( bool )lua_toboolean( m_lua_State, -1 ); \
+            lua_pop( m_lua_State, 1 );                           \
+            if ( !res )                                          \
+                return;                                          \
+        }                                                        \
+        else                                                     \
+            lua_pop( m_lua_State, 1 );                           \
     }
 
-#define LUA_RETURN_BOOLEAN()                               \
-    if ( lua_gettop( L ) == 1 )                            \
-    {                                                      \
-        if ( lua_isboolean( L, -1 ) )                      \
-        {                                                  \
-            bool res = ( bool )luaL_checkboolean( L, -1 ); \
-            lua_pop( L, 1 );                               \
-            return res;                                    \
-        }                                                  \
-        else                                               \
-            lua_pop( L, 1 );                               \
+#define LUA_RETURN_BOOLEAN()                           \
+    if ( lua_gettop( L ) == 1 )                        \
+    {                                                  \
+        if ( lua_isboolean( L, -1 ) )                  \
+        {                                              \
+            bool res = ( bool )lua_toboolean( L, -1 ); \
+            lua_pop( L, 1 );                           \
+            return res;                                \
+        }                                              \
+        else                                           \
+            lua_pop( L, 1 );                           \
     }
 
-#define LUA_RETURN_PANEL_BOOLEAN()                                   \
-    if ( m_lua_State && lua_gettop( m_lua_State ) == 1 )             \
-    {                                                                \
-        if ( lua_isboolean( m_lua_State, -1 ) )                      \
-        {                                                            \
-            bool res = ( bool )luaL_checkboolean( m_lua_State, -1 ); \
-            lua_pop( m_lua_State, 1 );                               \
-            return res;                                              \
-        }                                                            \
-        else                                                         \
-            lua_pop( m_lua_State, 1 );                               \
+#define LUA_RETURN_PANEL_BOOLEAN()                               \
+    if ( m_lua_State && lua_gettop( m_lua_State ) == 1 )         \
+    {                                                            \
+        if ( lua_isboolean( m_lua_State, -1 ) )                  \
+        {                                                        \
+            bool res = ( bool )lua_toboolean( m_lua_State, -1 ); \
+            lua_pop( m_lua_State, 1 );                           \
+            return res;                                          \
+        }                                                        \
+        else                                                     \
+            lua_pop( m_lua_State, 1 );                           \
     }
 
-#define LUA_RETURN_NUMBER()                        \
-    if ( lua_gettop( L ) == 1 )                    \
-    {                                              \
-        if ( lua_isnumber( L, -1 ) )               \
-        {                                          \
-            float res = luaL_checknumber( L, -1 ); \
-            lua_pop( L, 1 );                       \
-            return res;                            \
-        }                                          \
-        else                                       \
-            lua_pop( L, 1 );                       \
+#define LUA_RETURN_NUMBER()                    \
+    if ( lua_gettop( L ) == 1 )                \
+    {                                          \
+        if ( lua_isnumber( L, -1 ) )           \
+        {                                      \
+            float res = lua_tonumber( L, -1 ); \
+            lua_pop( L, 1 );                   \
+            return res;                        \
+        }                                      \
+        else                                   \
+            lua_pop( L, 1 );                   \
     }
 
-#define LUA_RETURN_INTEGER()                     \
-    if ( lua_gettop( L ) == 1 )                  \
-    {                                            \
-        if ( lua_isnumber( L, -1 ) )             \
-        {                                        \
-            int res = luaL_checknumber( L, -1 ); \
-            lua_pop( L, 1 );                     \
-            return res;                          \
-        }                                        \
-        else                                     \
-            lua_pop( L, 1 );                     \
+#define LUA_RETURN_INTEGER()                        \
+    if ( lua_gettop( L ) == 1 )                     \
+    {                                               \
+        if ( lua_isnumber( L, -1 ) )                \
+        {                                           \
+            int res = ( int )lua_tonumber( L, -1 ); \
+            lua_pop( L, 1 );                        \
+            return res;                             \
+        }                                           \
+        else                                        \
+            lua_pop( L, 1 );                        \
     }
 
-#define LUA_RETURN_ACTIVITY()                    \
-    if ( lua_gettop( L ) == 1 )                  \
-    {                                            \
-        if ( lua_isnumber( L, -1 ) )             \
-        {                                        \
-            int res = luaL_checknumber( L, -1 ); \
-            lua_pop( L, 1 );                     \
-            return ( Activity )res;              \
-        }                                        \
-        else                                     \
-            lua_pop( L, 1 );                     \
+#define LUA_RETURN_ACTIVITY()                \
+    if ( lua_gettop( L ) == 1 )              \
+    {                                        \
+        if ( lua_isnumber( L, -1 ) )         \
+        {                                    \
+            int res = lua_tonumber( L, -1 ); \
+            lua_pop( L, 1 );                 \
+            return ( Activity )res;          \
+        }                                    \
+        else                                 \
+            lua_pop( L, 1 );                 \
     }
 
-#define LUA_RETURN_STRING()                              \
-    if ( lua_gettop( L ) == 1 )                          \
-    {                                                    \
-        if ( lua_isstring( L, -1 ) )                     \
-        {                                                \
-            const char *res = luaL_checkstring( L, -1 ); \
-            lua_pop( L, 1 );                             \
-            return res;                                  \
-        }                                                \
-        else                                             \
-            lua_pop( L, 1 );                             \
+#define LUA_RETURN_STRING()                          \
+    if ( lua_gettop( L ) == 1 )                      \
+    {                                                \
+        if ( lua_isstring( L, -1 ) )                 \
+        {                                            \
+            const char *res = lua_tostring( L, -1 ); \
+            lua_pop( L, 1 );                         \
+            return res;                              \
+        }                                            \
+        else                                         \
+            lua_pop( L, 1 );                         \
     }
 
-#define LUA_RETURN_WEAPON()                                          \
-    if ( lua_gettop( L ) == 1 )                                      \
-    {                                                                \
-        if ( lua_isuserdata( L, -1 ) &&                              \
-             luaL_checkudata( L, -1, LUA_BASECOMBATWEAPONLIBNAME ) ) \
-        {                                                            \
-            CBaseCombatWeapon *res = luaL_checkweapon( L, -1 );      \
-            lua_pop( L, 1 );                                         \
-            return res;                                              \
-        }                                                            \
-        else                                                         \
-            lua_pop( L, 1 );                                         \
+#define LUA_RETURN_WEAPON()                                         \
+    if ( lua_gettop( L ) == 1 )                                     \
+    {                                                               \
+        if ( lua_isuserdata( L, -1 ) &&                             \
+             luaL_testudata( L, -1, LUA_BASECOMBATWEAPONLIBNAME ) ) \
+        {                                                           \
+            CBaseCombatWeapon *res = lua_toweapon( L, -1 );         \
+            lua_pop( L, 1 );                                        \
+            return res;                                             \
+        }                                                           \
+        else                                                        \
+            lua_pop( L, 1 );                                        \
     }
 
-#define LUA_RETURN_ENTITY()                                                                \
-    if ( lua_gettop( L ) == 1 )                                                            \
-    {                                                                                      \
-        if ( lua_isuserdata( L, -1 ) && luaL_checkudata( L, -1, LUA_BASEENTITYMETANAME ) ) \
-        {                                                                                  \
-            CBaseEntity *res = luaL_checkentity( L, -1 );                                  \
-            lua_pop( L, 1 );                                                               \
-            return res;                                                                    \
-        }                                                                                  \
-        else                                                                               \
-            lua_pop( L, 1 );                                                               \
+#define LUA_IS_ENTITY( L, Index ) \
+    lua_isuserdata( L, Index ) && \
+        ( luaL_testudata( L, Index, LUA_BASEENTITYMETANAME ) || luaL_testudata( L, Index, LUA_BASEANIMATINGLIBNAME ) || luaL_testudata( L, Index, LUA_CBASEFLEXLIBNAME ) || luaL_testudata( L, Index, LUA_BASECOMBATWEAPONLIBNAME ) || luaL_testudata( L, -1, LUA_BASEPLAYERMETANAME ) || luaL_testudata( L, Index, LUA_EXPERIMENTPLAYERLIBNAME ) )
+
+#define LUA_RETURN_ENTITY()                           \
+    if ( lua_gettop( L ) == 1 )                       \
+    {                                                 \
+        if ( LUA_IS_ENTITY( L, -1 ) )                 \
+        {                                             \
+            CBaseEntity *res = lua_toentity( L, -1 ); \
+            lua_pop( L, 1 );                          \
+            return res;                               \
+        }                                             \
+        else                                          \
+            lua_pop( L, 1 );                          \
     }
 
-#define LUA_RETURN_PLAYER()                                                                \
-    if ( lua_gettop( L ) == 1 )                                                            \
-    {                                                                                      \
-        if ( lua_isuserdata( L, -1 ) && luaL_checkudata( L, -1, LUA_BASEPLAYERMETANAME ) ) \
-        {                                                                                  \
-            CBasePlayer *res = luaL_checkplayer( L, -1 );                                  \
-            lua_pop( L, 1 );                                                               \
-            return res;                                                                    \
-        }                                                                                  \
-        else                                                                               \
-            lua_pop( L, 1 );                                                               \
+#define LUA_IS_PLAYER( L, Index ) \
+    lua_isuserdata( L, Index ) && \
+        ( luaL_testudata( L, Index, LUA_BASEPLAYERMETANAME ) || luaL_testudata( L, Index, LUA_EXPERIMENTPLAYERLIBNAME ) )
+
+#define LUA_RETURN_PLAYER()                           \
+    if ( lua_gettop( L ) == 1 )                       \
+    {                                                 \
+        if ( LUA_IS_PLAYER( L, -1 ) )                 \
+        {                                             \
+            CBasePlayer *res = lua_toplayer( L, -1 ); \
+            lua_pop( L, 1 );                          \
+            return res;                               \
+        }                                             \
+        else                                          \
+            lua_pop( L, 1 );                          \
     }
 
-#define LUA_RETURN_VECTOR()                                                            \
-    if ( lua_gettop( L ) == 1 )                                                        \
-    {                                                                                  \
-        if ( lua_isuserdata( L, -1 ) && luaL_checkudata( L, -1, LUA_VECTORMETANAME ) ) \
-        {                                                                              \
-            Vector res = luaL_checkvector( L, -1 );                                    \
-            lua_pop( L, 1 );                                                           \
-            return res;                                                                \
-        }                                                                              \
-        else                                                                           \
-            lua_pop( L, 1 );                                                           \
+#define LUA_RETURN_VECTOR()                     \
+    if ( lua_gettop( L ) == 1 )                 \
+    {                                           \
+        if ( lua_isvector( L, -1 ) )            \
+        {                                       \
+            Vector res = lua_tovector( L, -1 ); \
+            lua_pop( L, 1 );                    \
+            return res;                         \
+        }                                       \
+        else                                    \
+            lua_pop( L, 1 );                    \
     }
 
-#define LUA_RETURN_ANGLE()                                                             \
-    if ( lua_gettop( L ) == 1 )                                                        \
-    {                                                                                  \
-        if ( lua_isuserdata( L, -1 ) && luaL_checkudata( L, -1, LUA_QANGLEMETANAME ) ) \
-        {                                                                              \
-            QAngle res = luaL_checkangle( L, -1 );                                     \
-            lua_pop( L, 1 );                                                           \
-            return res;                                                                \
-        }                                                                              \
-        else                                                                           \
-            lua_pop( L, 1 );                                                           \
+#define LUA_RETURN_ANGLE()                     \
+    if ( lua_gettop( L ) == 1 )                \
+    {                                          \
+        if ( lua_isangle( L, -1 ) )            \
+        {                                      \
+            QAngle res = lua_toangle( L, -1 ); \
+            lua_pop( L, 1 );                   \
+            return res;                        \
+        }                                      \
+        else                                   \
+            lua_pop( L, 1 );                   \
     }
 
-#define LUA_RETURN_VALUE_IF_TRUE( value )          \
-    if ( lua_gettop( L ) == 1 )                    \
-    {                                              \
-        if ( lua_isboolean( L, -1 ) )              \
-        {                                          \
-            bool res = luaL_checkboolean( L, -1 ); \
-            lua_pop( L, 1 );                       \
-            if ( res )                             \
-                return value;                      \
-        }                                          \
-        else                                       \
-            lua_pop( L, 1 );                       \
+#define LUA_RETURN_VALUE_IF_TRUE( value )      \
+    if ( lua_gettop( L ) == 1 )                \
+    {                                          \
+        if ( lua_isboolean( L, -1 ) )          \
+        {                                      \
+            bool res = lua_toboolean( L, -1 ); \
+            lua_pop( L, 1 );                   \
+            if ( res )                         \
+                return value;                  \
+        }                                      \
+        else                                   \
+            lua_pop( L, 1 );                   \
     }
 
-#define LUA_RETURN_VALUE_IF_FALSE( value )         \
-    if ( lua_gettop( L ) == 1 )                    \
-    {                                              \
-        if ( lua_isboolean( L, -1 ) )              \
-        {                                          \
-            bool res = luaL_checkboolean( L, -1 ); \
-            lua_pop( L, 1 );                       \
-            if ( !res )                            \
-                return value;                      \
-        }                                          \
-        else                                       \
-            lua_pop( L, 1 );                       \
+#define LUA_RETURN_VALUE_IF_FALSE( value )     \
+    if ( lua_gettop( L ) == 1 )                \
+    {                                          \
+        if ( lua_isboolean( L, -1 ) )          \
+        {                                      \
+            bool res = lua_toboolean( L, -1 ); \
+            lua_pop( L, 1 );                   \
+            if ( !res )                        \
+                return value;                  \
+        }                                      \
+        else                                   \
+            lua_pop( L, 1 );                   \
     }
 
 #define LUA_RETURN_VALUE_IF_BOOLEAN( ValueTrue, ValueFalse ) \
@@ -427,7 +435,7 @@
     {                                                        \
         if ( lua_isboolean( L, -1 ) )                        \
         {                                                    \
-            bool res = luaL_checkboolean( L, -1 );           \
+            bool res = lua_toboolean( L, -1 );               \
             lua_pop( L, 1 );                                 \
             if ( res )                                       \
                 return ValueTrue;                            \

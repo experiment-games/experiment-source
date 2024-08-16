@@ -192,8 +192,7 @@ void CExperiment_Player::OnValidateAuthTicketResponse( ValidateAuthTicketRespons
     const char *pszSteamID = pResponse->m_SteamID.Render();
 
     // GetUniqueID() relies on engine->GetClientSteamID getting the correct SteamID
-    const CSteamID *pClientID = engine->GetClientSteamID( edict() );
-    Assert( Q_strcmp( pClientID->Render(), pszSteamID ) == 0 );
+    Assert( Q_strcmp( engine->GetClientSteamID( edict() )->Render(), pszSteamID ) == 0 );
 
     LUA_CALL_HOOK_BEGIN( "PlayerAuthed" );
     CBaseEntity::PushLuaInstanceSafe( L, this );
