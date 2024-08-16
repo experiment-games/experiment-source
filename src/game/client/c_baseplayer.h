@@ -112,7 +112,7 @@ class C_BasePlayer : public C_BaseCombatCharacter, public CGameEventListener
     void SetHands( C_BaseAnimating *pHandsEntity );
 
    protected:
-    C_BaseAnimating *m_pHandsEntity;
+    EHANDLE m_hHandsEntity;
 
    public:
     C_BaseCombatWeapon *GetActiveWeapon( void ) const;

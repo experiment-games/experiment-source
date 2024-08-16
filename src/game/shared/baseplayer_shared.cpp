@@ -938,16 +938,12 @@ bool CBasePlayer::Weapon_Switch( CBaseCombatWeapon *pWeapon,
 
 CBaseAnimating *CBasePlayer::GetHands()
 {
-    return m_pHandsEntity;
+    return dynamic_cast< CBaseAnimating * >( m_hHandsEntity.Get() );
 }
 
 void CBasePlayer::SetHands( CBaseAnimating *pHandsEntity )
 {
-    // Experiment; Commented since This is done in ViewModelChanged of gmod_hands:
-    // pHandsEntity->SetAbsOrigin( GetAbsOrigin() );
-    // pHandsEntity->SetOwnerEntity( this );
-    // pHandsEntity->FollowEntity( GetViewModel( 0 ), true );
-    m_pHandsEntity = pHandsEntity;
+    m_hHandsEntity = pHandsEntity;
 }
 
 void CBasePlayer::SelectLastItem( void )

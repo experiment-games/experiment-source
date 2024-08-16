@@ -393,6 +393,8 @@ function fromTypeChecker(typeChecker) {
       return 'enumeration/BLOOD_COLOR';
     case 'USE_TYPE':
       return 'enumeration/USE_TYPE';
+    case 'MaterialCullMode_t':
+      return 'enumeration/CULL_MODE';
 
     // Define enumerations:
     case 'LIFE':

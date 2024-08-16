@@ -123,6 +123,16 @@ LUA_BINDING_BEGIN( Renders, CreateRenderTargetTextureEx, "library", "Create a ne
 }
 LUA_BINDING_END( "Texture", "The created render target texture." )
 
+LUA_BINDING_BEGIN( Renders, CullMode, "library", "Sets the cull mode that decides how back faces are culled when rendering geometry.", "client" )
+{
+    CMatRenderContextPtr pRenderContext( materials );
+    MaterialCullMode_t cullMode = LUA_BINDING_ARGUMENT_ENUM( MaterialCullMode_t, 1, "cullMode" );
+    pRenderContext->CullMode( cullMode );
+
+    return 0;
+}
+LUA_BINDING_END()
+
 LUA_BINDING_BEGIN( Renders, GetScreenEffectTexture, "library", "Get the screen effect texture.", "client" )
 {
     lua_ITexture *pTexture = GetFullFrameFrameBufferTexture( LUA_BINDING_ARGUMENT( luaL_checknumber, 1, "textureIndex" ) );
@@ -472,5 +482,13 @@ LUA_BINDING_END()
 LUALIB_API int luaopen_render( lua_State *L )
 {
     LUA_REGISTRATION_COMMIT_LIBRARY( Renders );
+
+#ifdef CLIENT_DLL
+    LUA_SET_ENUM_LIB_BEGIN( L, "CULL_MODE" );
+    lua_pushenum( L, MaterialCullMode_t::MATERIAL_CULLMODE_CCW, "COUNTER_CLOCKWISE" );
+    lua_pushenum( L, MaterialCullMode_t::MATERIAL_CULLMODE_CW, "CLOCKWISE" );
+    LUA_SET_ENUM_LIB_END( L );
+#endif
+
     return 1;
 }

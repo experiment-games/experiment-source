@@ -473,6 +473,15 @@ LUA_BINDING_BEGIN( Entity, GetChildren, "class", "Get the moveparent children." 
 }
 LUA_BINDING_END( "table", "The moveparent children." )
 
+LUA_BINDING_BEGIN( Entity, GetParent, "class", "Get the moveparent." )
+{
+    lua_CBaseEntity *pEntity = LUA_BINDING_ARGUMENT( luaL_checkentity, 1, "entity" );
+
+    CBaseEntity::PushLuaInstanceSafe( L, pEntity->GetMoveParent() );
+    return 1;
+}
+LUA_BINDING_END( "Entity", "The moveparent." )
+
 LUA_BINDING_BEGIN( Entity, GetEyeAngles, "class", "Get eye angles." )
 {
     lua_CBaseEntity *pEntity = LUA_BINDING_ARGUMENT( luaL_checkentity, 1, "entity" );

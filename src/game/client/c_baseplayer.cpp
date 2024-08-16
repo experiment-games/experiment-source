@@ -362,6 +362,8 @@ RecvPropDataTable( "localdata", 0, 0, &REFERENCE_RECV_TABLE( DT_LocalPlayerExclu
                        RecvPropEHandle( NULL, 0, 0 ) ),
 #endif
 
+    RecvPropEHandle( RECVINFO( m_hHandsEntity ) ),
+
     END_RECV_TABLE()
 
         BEGIN_PREDICTION_DATA_NO_BASE( CPlayerState )

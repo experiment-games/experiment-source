@@ -282,9 +282,6 @@ class CBasePlayer : public CBaseCombatCharacter
     CBaseAnimating *GetHands();
     void SetHands( CBaseAnimating *pHandsModel );
 
-   protected:
-    CBaseAnimating *m_pHandsEntity;
-
    public:
     void HideViewModels( void );
     void DestroyViewModels( void );
@@ -1209,6 +1206,8 @@ class CBasePlayer : public CBaseCombatCharacter
     Vector m_vecCameraPVSOrigin;
 
     CNetworkHandle( CBaseEntity, m_hUseEntity );  // the player is currently controlling this entity because of +USE latched, NULL if no entity
+
+    CNetworkHandle( CBaseEntity, m_hHandsEntity );
 
     int m_iTrain;  // Train control position
 

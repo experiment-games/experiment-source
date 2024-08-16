@@ -101,6 +101,11 @@ for enumKey, enumTargetKey in pairs(enumsToMergeWithKey) do
 	end
 end
 
+if (CLIENT) then
+	MATERIAL_CULLMODE_CCW = _E.CULL_MODE.COUNTER_CLOCKWISE
+	MATERIAL_CULLMODE_CW = _E.CULL_MODE.CLOCKWISE
+end
+
 --[[
 	We don't have the Kinect SDK
 --]]

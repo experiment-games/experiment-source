@@ -334,6 +334,7 @@ DEFINE_FIELD( v_angle, FIELD_VECTOR ),
     DEFINE_FIELD( m_flStepSoundTime, FIELD_FLOAT ),
     DEFINE_ARRAY( m_szNetname, FIELD_CHARACTER, MAX_PLAYER_NAME_LENGTH ),
 
+    DEFINE_FIELD( m_hHandsEntity, FIELD_EHANDLE ),
     // DEFINE_FIELD( m_flgeigerRange, FIELD_FLOAT ),	// Don't restore, reset in Precache()
     // DEFINE_FIELD( m_flgeigerDelay, FIELD_FLOAT ),	// Don't restore, reset in Precache()
     // DEFINE_FIELD( m_igeigerRangePrev, FIELD_FLOAT ),	// Don't restore, reset in Precache()
@@ -8029,6 +8030,8 @@ SendPropDataTable( SENDINFO_DT( m_AttributeList ), &REFERENCE_SEND_TABLE( DT_Att
 #if defined USES_ECON_ITEMS
     SendPropUtlVector( SENDINFO_UTLVECTOR( m_hMyWearables ), MAX_WEARABLES_SENT_FROM_SERVER, SendPropEHandle( NULL, 0 ) ),
 #endif  // USES_ECON_ITEMS
+
+    SendPropEHandle( SENDINFO( m_hHandsEntity ) ),
 
     // Data that only gets sent to the local player.
     SendPropDataTable( "localdata", 0, &REFERENCE_SEND_TABLE( DT_LocalPlayerExclusive ), SendProxy_SendLocalDataTable ),
