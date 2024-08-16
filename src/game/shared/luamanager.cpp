@@ -188,6 +188,8 @@ LUA_API int luasrc_print( lua_State *L )
     int n = lua_gettop( L ); /* number of arguments */
     int i;
     lua_getglobal( L, "tostring" );
+    CUtlString stringToPrint = "";
+
     for ( i = 1; i <= n; i++ )
     {
         const char *s;
@@ -200,11 +202,12 @@ LUA_API int luasrc_print( lua_State *L )
                 L,
                 LUA_QL( "tostring" ) " must return a string to " LUA_QL( "print" ) );
         if ( i > 1 )
-            Msg( "\t" );
-        Msg( "%s", s );  // By providing the string as second parameter, we prevent formatting from user input
+            stringToPrint += "\t";
+        stringToPrint += s;
         lua_pop( L, 1 ); /* pop result */
     }
-    Msg( "\n" );
+
+    Msg( "%s\n", stringToPrint.Get() );
     return 0;
 }
 
@@ -285,13 +288,14 @@ static int luasrc_RunString( lua_State *L )
     return 0;
 }
 
-// Prints blue text on the server, yellow text on the client
-static int luasrc_Msg( lua_State *L )
+static int PrintLuaMessage( lua_State *L, const char *append = nullptr )
 {
     int n = lua_gettop( L );  // number of arguments
     int i;
 
     lua_getglobal( L, "tostring" );
+
+    CUtlString stringToPrint = "";
 
     for ( i = 1; i <= n; i++ )
     {
@@ -303,22 +307,30 @@ static int luasrc_Msg( lua_State *L )
         if ( s == NULL )
             return luaL_error( L, LUA_QL( "tostring" ) " must return a string to " LUA_QL( "print" ) );
         if ( i > 1 )
-            ConColorMsg( REALM_COLOR, "\t" );
-
-        ConColorMsg( REALM_COLOR, "%s", s );
+            stringToPrint += "\t";
+        stringToPrint += s;
         lua_pop( L, 1 );  // pop result
     }
+
+    if (append)
+    {
+        stringToPrint += append;
+    }
+
+    ConColorMsg( REALM_COLOR, "%s", stringToPrint.Get() );
 
     return 0;
 }
 
-static int luasrc_MsgN( lua_State *L )
+// Prints blue text on the server, yellow text on the client
+static int luasrc_PrintMessage( lua_State *L )
 {
-    luasrc_Msg( L );
+    return PrintLuaMessage( L );
+}
 
-    ConColorMsg( REALM_COLOR, "\n" );
-
-    return 0;
+static int luasrc_PrintMessageLine( lua_State *L )
+{
+    return PrintLuaMessage( L, "\n" );
 }
 
 static int luasrc_LuaLogToFile( lua_State *L )
@@ -370,8 +382,8 @@ static int luasrc_InheritGamemode( lua_State *L )
 
 static const luaL_Reg base_funcs[] = {
     { "print", luasrc_print },
-    { "Msg", luasrc_Msg },
-    { "MsgN", luasrc_MsgN },
+    { "PrintMessage", luasrc_PrintMessage },
+    { "PrintMessageLine", luasrc_PrintMessageLine },
     { "type", luasrc_type },
     { "Include", luasrc_include },
     { "RunString", luasrc_RunString },
@@ -1280,6 +1292,8 @@ LUA_API void luasrc_dumpstack( lua_State *L )
     int i;
     lua_getglobal( L, "tostring" );
 
+    CUtlString dumpStack = "";
+
     for ( i = 1; i <= n; i++ )
     {
         const char *s;
@@ -1287,10 +1301,16 @@ LUA_API void luasrc_dumpstack( lua_State *L )
         lua_pushvalue( L, i );  /* value to print */
         lua_call( L, 1, 1 );
         s = lua_tostring( L, -1 ); /* get result */
-        Msg( " %d:\t%s\n", i, s );
+
+        dumpStack += i;
+        dumpStack += ": ";
+        dumpStack += s;
+
         lua_pop( L, 1 ); /* pop result */
     }
     lua_pop( L, 1 ); /* pop function */
+
+    Msg( "%s", dumpStack.Get() );
 }
 
 static int luasrc_LoadEntities( lua_State *L )
@@ -2202,8 +2222,7 @@ static int DoFileCompletion( const char *partial,
             Q_snprintf( fileName, sizeof( fileName ), LUA_ROOT "\\%s\\%s", searchFileDirectory, fn );
             Q_FixSlashes( fileName );
 
-            if ( filesystem->FileExists( fileName, CONTENT_SEARCH_PATH )
-                || filesystem->IsDirectory( fileName, CONTENT_SEARCH_PATH ) )
+            if ( filesystem->FileExists( fileName, CONTENT_SEARCH_PATH ) || filesystem->IsDirectory( fileName, CONTENT_SEARCH_PATH ) )
             {
                 Q_snprintf( commands[current], sizeof( commands[current] ), "%s %s%s", cmdname, searchFileDirectory, fn );
                 current++;
@@ -2267,6 +2286,8 @@ static void DumpLuaStack( lua_State *L )
     int n = lua_gettop( L ); /* number of objects */
     int i;
 
+    CUtlString dumpStack = "Lua Stack:\n";
+
     for ( i = 1; i <= n; i++ )
     {
         if ( lua_istable( L, -1 ) )
@@ -2286,13 +2307,22 @@ static void DumpLuaStack( lua_State *L )
             lua_call( L, 1, 1 );
 
             s = lua_tostring( L, -1 ); /* get result */
-            Warning( " %d:\t%s\n", i, s );
+            dumpStack += " ";
+            dumpStack += i;
+            dumpStack += ": ";
+            dumpStack += s;
             lua_pop( L, 1 ); /* pop result */
         }
     }
 
     if ( n > 0 )
-        Warning( "Warning: %d object(s) left on the stack!\n", n );
+    {
+        dumpStack += "\nWarning: ";
+        dumpStack += n;
+        dumpStack += " object(s) left on the stack!\n";
+    }
+
+    Warning( "%s", dumpStack.Get() );
 }
 
 #ifdef CLIENT_DLL
@@ -2409,10 +2439,10 @@ class GmodCompatDownloader
             GetZipItem( hZipFile, i, &zipEntry );
 
             if ( ( zipEntry.attr & FILE_ATTRIBUTE_DIRECTORY ) == FILE_ATTRIBUTE_DIRECTORY )
-                continue; // skip directories
+                continue;  // skip directories
 
             if ( Q_strnicmp( zipEntry.name, desiredFolder, Q_strlen( desiredFolder ) ) != 0 )
-                continue; // skip files not in the desired folder
+                continue;  // skip files not in the desired folder
 
             char pathWithoutDesiredFolder[MAX_PATH];
             Q_strncpy( pathWithoutDesiredFolder, zipEntry.name + Q_strlen( desiredFolder ) + 1, sizeof( pathWithoutDesiredFolder ) );

@@ -681,7 +681,7 @@ LUA_BINDING_BEGIN( Player, Give, "class", "Give the weapon to the player." )
 
     if ( !entity )
     {
-        luaL_argerror( L, 2, "Invalid weapon name." );
+        // Happens when the player already has the weapon, or the weapon is invalid
         return 0;
     }
 
@@ -695,7 +695,10 @@ LUA_BINDING_BEGIN( Player, Give, "class", "Give the weapon to the player." )
         return 1;
     }
 
-    player->Weapon_Equip( weapon, !shouldGiveNoAmmo );
+    if ( shouldGiveNoAmmo )
+    {
+        DevWarning( "Player:Give - shouldGiveNoAmmo is not implemented yet" );
+    }
 
     CBaseEntity::PushLuaInstanceSafe( L, weapon );
     return 1;

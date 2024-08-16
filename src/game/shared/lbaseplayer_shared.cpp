@@ -561,6 +561,16 @@ LUA_BINDING_BEGIN( Player, GetWeapon, "class", "Get the player's weapon." )
 }
 LUA_BINDING_END( "Entity", "The player's weapon." )
 
+LUA_BINDING_BEGIN( Player, GetWeaponInSlot, "class", "Get the player's weapon in a slot." )
+{
+    lua_CBasePlayer *player = LUA_BINDING_ARGUMENT( luaL_checkplayer, 1, "player" );
+    int slot = LUA_BINDING_ARGUMENT( luaL_checknumber, 2, "slot" );
+    CBaseCombatWeapon *weapon = player->GetWeapon( slot );
+    CBaseEntity::PushLuaInstanceSafe( L, weapon );
+    return 1;
+}
+LUA_BINDING_END( "Entity", "The player's weapon in the slot." )
+
 LUA_BINDING_BEGIN( Player, HintMessage, "class", "Hint a message to the player." )
 {
     lua_CBasePlayer *player = LUA_BINDING_ARGUMENT( luaL_checkplayer, 1, "player" );

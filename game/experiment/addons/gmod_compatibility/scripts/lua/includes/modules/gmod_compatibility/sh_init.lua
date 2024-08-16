@@ -24,6 +24,8 @@ weapons = require("scripted_weapons")
 DeriveGamemode = InheritGamemode
 
 include = Include
+Msg = PrintMessage
+MsgN = PrintMessageLine
 
 function GetConVar_Internal(name)
 	local consoleVariable = ConsoleVariables.Get(name)
