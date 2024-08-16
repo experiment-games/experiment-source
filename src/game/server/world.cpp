@@ -583,6 +583,8 @@ const char *GetDefaultLightstyleString( int styleIndex )
 
 void CWorld::Precache( void )
 {
+    CBaseEntity::PrecacheModel( "models/error.mdl", true );
+
 	g_WorldEntity = this;
 	g_fGameOver = false;
 	g_pLastSpawn = NULL;

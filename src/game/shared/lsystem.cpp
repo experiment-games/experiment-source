@@ -9,6 +9,7 @@
 #include <thread>
 #include <vgui_controls/Controls.h>
 #include <steam/steam_api.h>
+#include <vgui/ISystem.h>
 
 #ifdef INVALID_HANDLE_VALUE
 #undef INVALID_HANDLE_VALUE
@@ -157,6 +158,14 @@ LUA_BINDING_BEGIN( Systems, GetSecondsSinceComputerActive, "library", "Get the n
     return 1;
 }
 LUA_BINDING_END( "integer", "The number of seconds since the computer was started." )
+
+LUA_BINDING_BEGIN( Systems, SetClipboardText, "library", "Set the text in the clipboard." )
+{
+    const char* text = LUA_BINDING_ARGUMENT( luaL_checkstring, 1, "text" );
+    vgui::system()->SetClipboardText( text, strlen( text ) );
+    return 0;
+}
+LUA_BINDING_END()
 
 LUALIB_API int( luaopen_Systems )( lua_State* L )
 {

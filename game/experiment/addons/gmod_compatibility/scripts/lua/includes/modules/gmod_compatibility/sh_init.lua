@@ -171,6 +171,8 @@ ColorToHSV = Colors.ColorToHsv
 ColorToHSL = Colors.ColorToHsl
 HslToColor = Colors.HslToColor
 
+SetClipboardText = Systems.SetClipboardText
+
 RealFrameTime = Engines.GetAbsoluteFrameTime
 CurTime = Engines.GetCurrentTime
 SysTime = Engines.GetSystemTime

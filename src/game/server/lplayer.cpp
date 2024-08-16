@@ -685,6 +685,15 @@ LUA_BINDING_BEGIN( Player, Give, "class", "Give the weapon to the player." )
         return 0;
     }
 
+    CBaseAnimating *animating = dynamic_cast<CBaseAnimating *>( entity );
+
+    // Let's make sure the weapon has a valid model, if not, set it to the error model
+    if ( !animating->GetModelPtr() )
+    {
+        // Set the weapon to the error model
+        animating->SetModel( "models/error.mdl" );
+    }
+
     CBaseCombatWeapon *weapon = dynamic_cast<CBaseCombatWeapon *>( entity );
 
     if ( !weapon )
