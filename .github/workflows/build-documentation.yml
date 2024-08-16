@@ -3,6 +3,10 @@ on:
   push:
     branches:
       - experiment-main
+    paths:
+      - 'docs/**'
+      - 'docs_custom/**'
+      - 'mkdocs.yml'
 permissions:
   contents: write
 jobs:
