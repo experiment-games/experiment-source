@@ -10,7 +10,7 @@ tags:
 lua:
   function: LevelInitPostEntity
   realm: client
-  description: ""
+  description: "After loading entities."
   arguments:
   
   returns:
@@ -18,5 +18,5 @@ lua:
 ---
 
 <div class="lua__search__keywords">
-hook LevelInitPostEntity &#x2013; ""
+hook LevelInitPostEntity &#x2013; "After loading entities."
 </div>

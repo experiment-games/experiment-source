@@ -205,32 +205,6 @@ void Host_Say( edict_t *pEdict, const CCommand &args, bool teamonly )
         pPlayer = ( ( CBasePlayer * )CBaseEntity::Instance( pEdict ) );
         Assert( pPlayer );
 
-#ifdef LUA_SDK
-        LUA_CALL_HOOK_BEGIN( "PlayerSay" );
-        CBaseEntity::PushLuaInstanceSafe( L, pPlayer );
-        lua_pushstring( L, p );
-        lua_pushboolean( L, teamonly );
-        LUA_CALL_HOOK_END( 3, 1 );
-
-        // Andrew; this is just a continuation of LUA_RETURN_NONE().
-        if ( lua_isboolean( L, -1 ) )
-        {
-            bool res = ( bool )luaL_checkboolean( L, -1 );
-            lua_pop( L, 1 );
-            if ( !res )
-                return;
-        }
-        else if ( lua_isstring( L, -1 ) )
-        {
-            p = ( char * )luaL_checkstring( L, -1 );
-            lua_pop( L, 1 );
-        }
-        else
-        {
-            lua_pop( L, 1 );
-        }
-#endif
-
         // make sure the text has valid content
         p = CheckChatText( pPlayer, p );
     }
@@ -250,6 +224,35 @@ void Host_Say( edict_t *pEdict, const CCommand &args, bool teamonly )
         Assert( strlen( pPlayer->GetPlayerName() ) > 0 );
 
         bSenderDead = ( pPlayer->m_lifeState != LIFE_ALIVE );
+
+#ifdef LUA_SDK
+        LUA_CALL_HOOK_BEGIN( "PlayerSay" );
+        CBaseEntity::PushLuaInstanceSafe( L, pPlayer ); // doc: speaker (The player who is speaking)
+        lua_pushstring( L, p ); // doc: chatMessage
+        lua_pushboolean( L, teamonly ); // doc: isTeamOnly
+        LUA_CALL_HOOK_END( 3, 1 ); // doc: string (return a replacement string or an empty string to block the message)
+
+        if ( lua_isboolean( L, -1 ) )
+        {
+            bool res = ( bool )luaL_checkboolean( L, -1 );
+            lua_pop( L, 1 );  // pop the result
+
+            if ( !res )
+                return;
+        }
+        else if ( lua_isstring( L, -1 ) )
+        {
+            p = ( char * )luaL_checkstring( L, -1 );
+            lua_pop( L, 1 );  // pop the result
+
+            if ( !p )
+                return;
+        }
+        else
+        {
+            lua_pop( L, 1 );  // pop the result
+        }
+#endif
     }
     else
     {

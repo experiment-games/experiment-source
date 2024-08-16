@@ -13,8 +13,10 @@ lua:
   description: ""
   arguments:
     - name: "collisionGroup0"
+      description: ""
       type: number
     - name: "collisionGroup1"
+      description: ""
       type: number
   returns:
     - type: unknown

@@ -18,6 +18,30 @@ LUA_API lua_Color &lua_tocolor( lua_State *L, int idx )
     return *clr;
 }
 
+LUALIB_API bool lua_iscolor( lua_State *L, int narg )
+{
+    if ( lua_isuserdata( L, narg ) )
+    {
+        return luaL_testudata( L, narg, LUA_COLORMETANAME ) != NULL;
+    }
+
+    // HACK:    For some reason some code is copying colors as a table, messing up at luaL_checkudata
+    //          As a temporary fix we will first check if the metatable has a __type field and if it is "Color"
+    //          If it is we will assume it is a color and return it
+    if ( lua_getmetatable( L, narg ) )
+    {
+        lua_getfield( L, -1, "__type" );
+        if ( lua_isstring( L, -1 ) && !strcmp( lua_tostring( L, -1 ), LUA_COLORMETANAME ) )
+        {
+            lua_pop( L, 2 ); // Pop the string and the metatable
+            return true;
+        }
+        lua_pop( L, 2 ); // Pop the string and the metatable
+    }
+
+    return false;
+}
+
 /*
 ** push functions (C -> stack)
 */

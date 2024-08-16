@@ -23,6 +23,7 @@ const luaBindingArgumentPattern = /LUA_BINDING_ARGUMENT(?:_WITH_EXTRA|_ENUM|_ENU
 const luaBindingArgumentNillablePattern = /LUA_BINDING_ARGUMENT_NILLABLE\(\s*(\w+)\s*,\s*(\d+)\s*,\s*"([^"]+)"\s*\)/;
 const luaBindingArgumentWithDefaultPattern = /LUA_BINDING_ARGUMENT(?:_ENUM)?_WITH_DEFAULT\(\s*(\w+)\s*,\s*(\d+)\s*,\s*([^,]+)\s*,\s*"([^"]+)"\s*\)/;
 const luaBindingEndPattern = /^LUA_BINDING_END\((.*)\)$/m;
+const luaBindingReturnPattern = /"([^"]+)", "([^"]+)"/g;
 
 const markdownTemplate = `---
 template: %template%
@@ -413,11 +414,10 @@ function fromTypeChecker(typeChecker) {
 // Where the first part is the type, and the second part is the description
 // This can repeat multiple times
 function parseReturns(returns) {
-  const returnPattern = /"([^"]+)", "([^"]+)"/g;
   const returnValues = [];
 
   let match;
-  while ((match = returnPattern.exec(returns)) !== null) {
+  while ((match = luaBindingReturnPattern.exec(returns)) !== null) {
     returnValues.push({
       type: match[1],
       description: match[2],

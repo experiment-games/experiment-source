@@ -8,9 +8,9 @@ tags:
   - needs-verification
 lua:
   redirects:
-    - label: 'server/SetupMove'
-      url: 'server/SetupMove'
-    - label: 'client/SetupMove'
-      url: 'client/SetupMove'
+    - label: "server/SetupMove"
+      url "server/SetupMove"
+    - label: "client/SetupMove"
+      url: "client/SetupMove"
 ---
 

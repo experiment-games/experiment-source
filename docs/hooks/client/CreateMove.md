@@ -13,6 +13,7 @@ lua:
   description: ""
   arguments:
     - name: "cmd"
+      description: ""
       type: UserCmd
   returns:
     - type: unknown

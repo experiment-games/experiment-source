@@ -13,6 +13,7 @@ lua:
   description: ""
   arguments:
     - name: "flMouseSensitivity"
+      description: ""
       type: number
   returns:
     - type: unknown

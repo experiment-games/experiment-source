@@ -10,7 +10,7 @@ tags:
 lua:
   function: PreRender
   realm: client
-  description: ""
+  description: "Called before rendering the scene"
   arguments:
   
   returns:
@@ -18,5 +18,5 @@ lua:
 ---
 
 <div class="lua__search__keywords">
-hook PreRender &#x2013; ""
+hook PreRender &#x2013; "Called before rendering the scene"
 </div>

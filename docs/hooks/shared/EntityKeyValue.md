@@ -13,10 +13,13 @@ lua:
   description: ""
   arguments:
     - name: "this"
-      type: entity
+      description: ""
+      type: Entity
     - name: "szKeyName"
+      description: ""
       type: string
     - name: "szValue"
+      description: ""
       type: string
   returns:
     - type: unknown

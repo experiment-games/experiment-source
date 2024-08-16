@@ -12,7 +12,9 @@ lua:
   realm: server
   description: ""
   arguments:
-  
+    - name: "entity"
+      description: ""
+      type: Entity
   returns:
     
 ---

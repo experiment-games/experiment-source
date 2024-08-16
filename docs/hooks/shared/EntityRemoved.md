@@ -8,9 +8,9 @@ tags:
   - needs-verification
 lua:
   redirects:
-    - label: 'server/EntityRemoved'
-      url: 'server/EntityRemoved'
-    - label: 'client/EntityRemoved'
-      url: 'client/EntityRemoved'
+    - label: "server/EntityRemoved"
+      url "server/EntityRemoved"
+    - label: "client/EntityRemoved"
+      url: "client/EntityRemoved"
 ---
 

@@ -1,6 +1,6 @@
 ---
 template: lua-hook.html
-title: PostRenderVGUI
+title: PostRenderVgui
 icon: lua-client
 tags:
   - lua
@@ -8,9 +8,9 @@ tags:
   - needs-verification
   - needs-example
 lua:
-  function: PostRenderVGUI
+  function: PostRenderVgui
   realm: client
-  description: ""
+  description: "Called after rendering the VGUI"
   arguments:
   
   returns:
@@ -18,5 +18,5 @@ lua:
 ---
 
 <div class="lua__search__keywords">
-hook PostRenderVGUI &#x2013; ""
+hook PostRenderVgui &#x2013; "Called after rendering the VGUI"
 </div>

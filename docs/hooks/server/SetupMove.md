@@ -13,10 +13,13 @@ lua:
   description: ""
   arguments:
     - name: "player"
-      type: entity
+      description: ""
+      type: Entity
     - name: "move"
+      description: ""
       type: MoveData
     - name: "ucmd"
+      description: ""
       type: UserCmd
   returns:
     

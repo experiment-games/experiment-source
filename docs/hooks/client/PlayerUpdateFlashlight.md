@@ -13,16 +13,22 @@ lua:
   description: ""
   arguments:
     - name: "this"
-      type: entity
+      description: ""
+      type: Entity
     - name: "position"
+      description: ""
       type: Vector
     - name: "vecForward"
+      description: ""
       type: Vector
     - name: "vecRight"
+      description: ""
       type: Vector
     - name: "vecUp"
+      description: ""
       type: Vector
     - name: "distance"
+      description: ""
       type: number
   returns:
     - type: unknown

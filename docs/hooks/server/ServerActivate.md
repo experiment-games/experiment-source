@@ -13,8 +13,10 @@ lua:
   description: ""
   arguments:
     - name: "edictCount"
+      description: ""
       type: number
     - name: "clientMax"
+      description: ""
       type: number
   returns:
     

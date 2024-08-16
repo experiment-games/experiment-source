@@ -13,6 +13,7 @@ lua:
   description: ""
   arguments:
     - name: "scale"
+      description: ""
       type: number
   returns:
     - type: unknown

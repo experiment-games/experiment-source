@@ -13,9 +13,11 @@ lua:
   description: ""
   arguments:
     - name: "pPlayer"
-      type: entity
+      description: ""
+      type: Entity
     - name: "pWeapon"
-      type: entity
+      description: ""
+      type: Entity
   returns:
     - type: unknown
       description: ""

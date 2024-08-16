@@ -10,7 +10,7 @@ tags:
 lua:
   function: LevelShutdown
   realm: client
-  description: ""
+  description: "Right before shutting down the level."
   arguments:
   
   returns:
@@ -18,5 +18,5 @@ lua:
 ---
 
 <div class="lua__search__keywords">
-hook LevelShutdown &#x2013; ""
+hook LevelShutdown &#x2013; "Right before shutting down the level."
 </div>

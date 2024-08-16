@@ -546,8 +546,8 @@ void ClientModeShared::OverrideView( CViewSetup *pSetup )
 bool ClientModeShared::ShouldDrawEntity( C_BaseEntity *pEnt )
 {
 #ifdef LUA_SDK
-    LUA_CALL_HOOK_BEGIN( "ShouldDrawEntity" );
-    CBaseEntity::PushLuaInstanceSafe( L, pEnt );
+    LUA_CALL_HOOK_BEGIN( "ShouldDrawEntity", "Whether the given entity should be drawn" );
+    CBaseEntity::PushLuaInstanceSafe( L, pEnt ); // doc: entity
     LUA_CALL_HOOK_END( 1, 1 );
 
     LUA_RETURN_BOOLEAN();
@@ -562,8 +562,8 @@ bool ClientModeShared::ShouldDrawEntity( C_BaseEntity *pEnt )
 bool ClientModeShared::ShouldDrawParticles()
 {
 #ifdef LUA_SDK
-    LUA_CALL_HOOK_BEGIN( "ShouldDrawParticles" );
-    LUA_CALL_HOOK_END( 0, 1 );
+    LUA_CALL_HOOK_BEGIN( "ShouldDrawParticles", "Whether particles should be drawn" );
+    LUA_CALL_HOOK_END( 0, 1 ); // doc: boolean (return false to prevent particles from being drawn)
 
     LUA_RETURN_BOOLEAN();
 #endif
@@ -615,8 +615,8 @@ void ClientModeShared::OverrideMouseInput( float *x, float *y )
 bool ClientModeShared::ShouldDrawViewModel()
 {
 #ifdef LUA_SDK
-    LUA_CALL_HOOK_BEGIN( "ShouldDrawViewModel" );
-    LUA_CALL_HOOK_END( 0, 1 );
+    LUA_CALL_HOOK_BEGIN( "ShouldDrawViewModels", "Whether viewmodels should be drawn" );
+    LUA_CALL_HOOK_END( 0, 1 ); // doc: boolean (return false to prevent viewmodels from being drawn)
 
     LUA_RETURN_BOOLEAN();
 #endif
@@ -627,8 +627,8 @@ bool ClientModeShared::ShouldDrawViewModel()
 bool ClientModeShared::ShouldDrawDetailObjects()
 {
 #ifdef LUA_SDK
-    LUA_CALL_HOOK_BEGIN( "ShouldDrawDetailObjects" );
-    LUA_CALL_HOOK_END( 0, 1 );
+    LUA_CALL_HOOK_BEGIN( "ShouldDrawDetailObjects", "Whether detail objects should be drawn" );
+    LUA_CALL_HOOK_END( 0, 1 ); // doc: boolean (return false to prevent detail objects from being drawn)
 
     LUA_RETURN_BOOLEAN();
 #endif
@@ -690,8 +690,8 @@ bool ClientModeShared::ShouldDrawLocalPlayer( C_BasePlayer *pPlayer )
 bool ClientModeShared::ShouldDrawFog( void )
 {
 #ifdef LUA_SDK
-    LUA_CALL_HOOK_BEGIN( "ShouldDrawFog" );
-    LUA_CALL_HOOK_END( 0, 1 );
+    LUA_CALL_HOOK_BEGIN( "ShouldDrawFog", "Whether fog should be drawn" );
+    LUA_CALL_HOOK_END( 0, 1 ); // doc: boolean (return false to prevent fog from being drawn)
 
     LUA_RETURN_BOOLEAN();
 #endif
@@ -705,12 +705,12 @@ bool ClientModeShared::ShouldDrawFog( void )
 void ClientModeShared::AdjustEngineViewport( int &x, int &y, int &width, int &height )
 {
 #ifdef LUA_SDK
-    LUA_CALL_HOOK_BEGIN( "AdjustEngineViewport" );
+    LUA_CALL_HOOK_BEGIN( "AdjustEngineViewport", "Allows adjusting the engine viewport bounds" );
     lua_pushinteger( L, x );
     lua_pushinteger( L, y );
     lua_pushinteger( L, width );
     lua_pushinteger( L, height );
-    LUA_CALL_HOOK_END( 4, 4 );
+    LUA_CALL_HOOK_END( 4, 4 ); // doc: number (x override), number (y override), number (width override), number (height override)
 
     if ( lua_isnumber( L, -4 ) )
         x = luaL_checknumber( L, -4 );
@@ -731,7 +731,7 @@ void ClientModeShared::AdjustEngineViewport( int &x, int &y, int &width, int &he
 void ClientModeShared::PreRender( CViewSetup *pSetup )
 {
 #ifdef LUA_SDK
-    LUA_CALL_HOOK_BEGIN( "PreRender" );
+    LUA_CALL_HOOK_BEGIN( "PreRender", "Called before rendering the scene" );
     LUA_CALL_HOOK_END( 0, 0 );
 #endif
 }
@@ -745,7 +745,7 @@ void ClientModeShared::PostRender()
     ParticleMgr()->PostRender();
 
 #ifdef LUA_SDK
-    LUA_CALL_HOOK_BEGIN( "PostRender" );
+    LUA_CALL_HOOK_BEGIN( "PostRender", "Called after rendering the scene" );
     LUA_CALL_HOOK_END( 0, 0 );
 #endif
 }
@@ -753,7 +753,7 @@ void ClientModeShared::PostRender()
 void ClientModeShared::PostRenderVGui()
 {
 #ifdef LUA_SDK
-    LUA_CALL_HOOK_BEGIN( "PostRenderVGUI" );
+    LUA_CALL_HOOK_BEGIN( "PostRenderVgui", "Called after rendering the VGUI" );
     LUA_CALL_HOOK_END( 0, 0 );
 #endif
 }
@@ -831,13 +831,13 @@ int ClientModeShared::KeyInput( int down, ButtonCode_t keynum, const char *pszCu
     // Let the Console always dominate key input, only then let Lua handle it
     if ( g_bLuaInitialized )
     {
-        LUA_CALL_HOOK_BEGIN( "KeyInput" );
-        lua_pushinteger( L, down );
-        lua_pushinteger( L, keynum );
-        lua_pushstring( L, pszCurrentBinding );
-        LUA_CALL_HOOK_END( 3, 1 );
+        LUA_CALL_HOOK_BEGIN( "KeyInput", "Called when a key is pressed" );
+        lua_pushinteger( L, down ); // doc: isDown
+        lua_pushinteger( L, keynum ); // doc: keyCode
+        lua_pushstring( L, pszCurrentBinding ); // doc: binding (the binding related to the key)
+        LUA_CALL_HOOK_END( 3, 1 ); // doc: boolean (return false to prevent the engine from handling the key, true to allow and override default behavior)
 
-        LUA_RETURN_INTEGER();
+        LUA_RETURN_VALUE_IF_BOOLEAN( 1, 0 );
     }
 #endif
 

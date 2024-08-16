@@ -13,9 +13,11 @@ lua:
   description: ""
   arguments:
     - name: "this"
-      type: entity
+      description: ""
+      type: Entity
     - name: "pNearest"
-      type: entity
+      description: ""
+      type: Entity
   returns:
     - type: unknown
       description: ""

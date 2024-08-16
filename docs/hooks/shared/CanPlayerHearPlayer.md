@@ -13,10 +13,13 @@ lua:
   description: ""
   arguments:
     - name: "pListener"
-      type: entity
+      description: ""
+      type: Entity
     - name: "pTalker"
-      type: entity
+      description: ""
+      type: Entity
     - name: "bProximity"
+      description: ""
       type: boolean
   returns:
     - type: unknown

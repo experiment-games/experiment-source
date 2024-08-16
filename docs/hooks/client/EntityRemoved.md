@@ -13,6 +13,7 @@ lua:
   description: ""
   arguments:
     - name: "true"
+      description: ""
       type: boolean
   returns:
     

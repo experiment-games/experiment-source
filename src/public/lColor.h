@@ -33,6 +33,8 @@ typedef LColor lua_Color;
 
 LUA_API lua_Color &( lua_tocolor )( lua_State *L, int idx );
 
+LUALIB_API bool lua_iscolor( lua_State *L, int narg );
+
 /*
 ** push functions (C -> stack)
 */
@@ -41,6 +43,5 @@ LUA_API void( lua_pushcolor )( lua_State *L, Color &clr );
 
 LUALIB_API lua_Color &( luaL_checkcolor )( lua_State *L, int narg );
 LUALIB_API lua_Color &( luaL_optcolor )( lua_State *L, int narg, lua_Color def );
-
 
 #endif  // LCOLOR_H

@@ -13,10 +13,13 @@ lua:
   description: ""
   arguments:
     - name: "bIsDepthDraw"
+      description: ""
       type: boolean
     - name: "bInSkybox"
+      description: ""
       type: boolean
     - name: "bSkyboxIs3D"
+      description: ""
       type: boolean
   returns:
     - type: unknown

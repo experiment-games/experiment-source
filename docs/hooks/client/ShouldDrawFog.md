@@ -10,14 +10,14 @@ tags:
 lua:
   function: ShouldDrawFog
   realm: client
-  description: ""
+  description: "Whether fog should be drawn"
   arguments:
   
   returns:
-    - type: unknown
-      description: ""
+    - type: boolean
+      description: "return false to prevent fog from being drawn"
 ---
 
 <div class="lua__search__keywords">
-hook ShouldDrawFog &#x2013; ""
+hook ShouldDrawFog &#x2013; "Whether fog should be drawn"
 </div>

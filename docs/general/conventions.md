@@ -82,6 +82,7 @@ Additionally, we use the following conventions:
     - `Id` (short for identifier)
     - `Ik` (short for inverse kinematics)
     - `Ime` (short for input method editor)
+    - `Init` (short for initialize)
     - `Json`, `Xml`, `Html`, `Css` and other data format/language names
     - `Obb` (short for oriented bounding box)
     - `Rgb`, `Rgba`, `Hsv`, `Hsl` and other color spaces

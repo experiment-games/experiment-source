@@ -13,8 +13,10 @@ lua:
   description: ""
   arguments:
     - name: "pVictim"
-      type: entity
+      description: ""
+      type: Entity
     - name: "linfo"
+      description: ""
       type: CTakeDamageInfo
   returns:
     

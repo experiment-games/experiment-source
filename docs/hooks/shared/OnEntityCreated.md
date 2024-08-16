@@ -8,9 +8,9 @@ tags:
   - needs-verification
 lua:
   redirects:
-    - label: 'server/OnEntityCreated'
-      url: 'server/OnEntityCreated'
-    - label: 'client/OnEntityCreated'
-      url: 'client/OnEntityCreated'
+    - label: "server/OnEntityCreated"
+      url "server/OnEntityCreated"
+    - label: "client/OnEntityCreated"
+      url: "client/OnEntityCreated"
 ---
 

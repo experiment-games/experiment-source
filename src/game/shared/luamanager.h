@@ -381,17 +381,17 @@
             lua_pop( L, 1 );                                                           \
     }
 
-#define LUA_RETURN_ANGLE()                                                            \
-    if ( lua_gettop( L ) == 1 )                                                       \
-    {                                                                                 \
+#define LUA_RETURN_ANGLE()                                                             \
+    if ( lua_gettop( L ) == 1 )                                                        \
+    {                                                                                  \
         if ( lua_isuserdata( L, -1 ) && luaL_checkudata( L, -1, LUA_QANGLEMETANAME ) ) \
-        {                                                                             \
-            QAngle res = luaL_checkangle( L, -1 );                                    \
-            lua_pop( L, 1 );                                                          \
-            return res;                                                               \
-        }                                                                             \
-        else                                                                          \
-            lua_pop( L, 1 );                                                          \
+        {                                                                              \
+            QAngle res = luaL_checkangle( L, -1 );                                     \
+            lua_pop( L, 1 );                                                           \
+            return res;                                                                \
+        }                                                                              \
+        else                                                                           \
+            lua_pop( L, 1 );                                                           \
     }
 
 #define LUA_RETURN_VALUE_IF_TRUE( value )          \
@@ -406,6 +406,36 @@
         }                                          \
         else                                       \
             lua_pop( L, 1 );                       \
+    }
+
+#define LUA_RETURN_VALUE_IF_FALSE( value )         \
+    if ( lua_gettop( L ) == 1 )                    \
+    {                                              \
+        if ( lua_isboolean( L, -1 ) )              \
+        {                                          \
+            bool res = luaL_checkboolean( L, -1 ); \
+            lua_pop( L, 1 );                       \
+            if ( !res )                            \
+                return value;                      \
+        }                                          \
+        else                                       \
+            lua_pop( L, 1 );                       \
+    }
+
+#define LUA_RETURN_VALUE_IF_BOOLEAN( ValueTrue, ValueFalse ) \
+    if ( lua_gettop( L ) == 1 )                              \
+    {                                                        \
+        if ( lua_isboolean( L, -1 ) )                        \
+        {                                                    \
+            bool res = luaL_checkboolean( L, -1 );           \
+            lua_pop( L, 1 );                                 \
+            if ( res )                                       \
+                return ValueTrue;                            \
+            else                                             \
+                return ValueFalse;                           \
+        }                                                    \
+        else                                                 \
+            lua_pop( L, 1 );                                 \
     }
 
 // Merge any methods from the metatable with the given name into the metatable at the top of the stack.

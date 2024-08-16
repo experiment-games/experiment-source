@@ -10,7 +10,7 @@ tags:
 lua:
   function: Tick
   realm: client
-  description: ""
+  description: "Called right before simulating entities, every frame."
   arguments:
   
   returns:
@@ -18,5 +18,5 @@ lua:
 ---
 
 <div class="lua__search__keywords">
-hook Tick &#x2013; ""
+hook Tick &#x2013; "Called right before simulating entities, every frame."
 </div>

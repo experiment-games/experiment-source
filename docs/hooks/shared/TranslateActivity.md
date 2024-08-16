@@ -13,8 +13,10 @@ lua:
   description: ""
   arguments:
     - name: "pPlayer"
-      type: entity
+      description: ""
+      type: Entity
     - name: "actDesired"
+      description: ""
       type: number
   returns:
     - type: unknown

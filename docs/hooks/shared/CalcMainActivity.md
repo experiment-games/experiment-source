@@ -13,8 +13,10 @@ lua:
   description: ""
   arguments:
     - name: "pPlayer"
-      type: entity
+      description: ""
+      type: Entity
     - name: "vecVelocity"
+      description: ""
       type: Vector
   returns:
     - type: unknown

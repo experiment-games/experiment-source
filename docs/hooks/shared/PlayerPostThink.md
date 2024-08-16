@@ -8,9 +8,9 @@ tags:
   - needs-verification
 lua:
   redirects:
-    - label: 'server/PlayerPostThink'
-      url: 'server/PlayerPostThink'
-    - label: 'client/PlayerPostThink'
-      url: 'client/PlayerPostThink'
+    - label: "server/PlayerPostThink"
+      url "server/PlayerPostThink"
+    - label: "client/PlayerPostThink"
+      url: "client/PlayerPostThink"
 ---
 

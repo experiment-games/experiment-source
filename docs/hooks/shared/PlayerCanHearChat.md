@@ -13,9 +13,11 @@ lua:
   description: ""
   arguments:
     - name: "pListener"
-      type: entity
+      description: ""
+      type: Entity
     - name: "pSpeaker"
-      type: entity
+      description: ""
+      type: Entity
   returns:
     - type: unknown
       description: ""

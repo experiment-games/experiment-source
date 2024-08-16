@@ -13,12 +13,16 @@ lua:
   description: ""
   arguments:
     - name: "vMotionBlurValues0"
+      description: ""
       type: number
     - name: "vMotionBlurValues1"
+      description: ""
       type: number
     - name: "vMotionBlurValues2"
+      description: ""
       type: number
     - name: "vMotionBlurValues3"
+      description: ""
       type: number
   returns:
     - type: unknown

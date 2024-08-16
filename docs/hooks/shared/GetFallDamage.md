@@ -12,9 +12,11 @@ lua:
   realm: shared
   description: "Called when a player falls and fall damage is calculated."
   arguments:
-    - name: "pPlayer"
-      type: entity
+    - name: "player"
+      description: ""
+      type: Entity
     - name: "flFallVelocity"
+      description: ""
       type: number
   returns:
     - type: number

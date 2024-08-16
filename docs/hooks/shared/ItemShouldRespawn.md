@@ -13,7 +13,8 @@ lua:
   description: ""
   arguments:
     - name: "pItem"
-      type: entity
+      description: ""
+      type: Entity
   returns:
     - type: unknown
       description: ""

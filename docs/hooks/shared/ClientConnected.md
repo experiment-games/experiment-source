@@ -13,12 +13,16 @@ lua:
   description: ""
   arguments:
     - name: "pszName"
+      description: ""
       type: string
     - name: "pszAddress"
+      description: ""
       type: string
     - name: "reject"
+      description: ""
       type: string
     - name: "maxrejectlen"
+      description: ""
       type: number
   returns:
     - type: unknown

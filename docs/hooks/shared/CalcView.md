@@ -13,16 +13,22 @@ lua:
   description: ""
   arguments:
     - name: "this"
-      type: entity
+      description: ""
+      type: Entity
     - name: "origin"
+      description: ""
       type: Vector
     - name: "angles"
+      description: ""
       type: Angle
     - name: "fov"
+      description: ""
       type: number
     - name: "zNear"
+      description: ""
       type: number
     - name: "zFar"
+      description: ""
       type: number
   returns:
     - type: unknown

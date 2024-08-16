@@ -13,14 +13,19 @@ lua:
   description: ""
   arguments:
     - name: "this"
-      type: entity
+      description: ""
+      type: Entity
     - name: "vecOrigin"
+      description: ""
       type: Vector
     - name: "psurface"
+      description: ""
       type: surfacedata_t
     - name: "fvol"
+      description: ""
       type: number
     - name: "force"
+      description: ""
       type: boolean
   returns:
     - type: unknown

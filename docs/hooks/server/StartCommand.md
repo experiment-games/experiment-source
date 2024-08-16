@@ -13,8 +13,10 @@ lua:
   description: ""
   arguments:
     - name: "player"
-      type: entity
+      description: ""
+      type: Entity
     - name: "cmd"
+      description: ""
       type: UserCmd
   returns:
     

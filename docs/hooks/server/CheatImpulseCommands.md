@@ -13,8 +13,10 @@ lua:
   description: ""
   arguments:
     - name: "this"
-      type: entity
+      description: ""
+      type: Entity
     - name: "iImpulse"
+      description: ""
       type: number
   returns:
     - type: unknown

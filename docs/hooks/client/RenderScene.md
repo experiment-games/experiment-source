@@ -13,10 +13,13 @@ lua:
   description: ""
   arguments:
     - name: "origin"
+      description: ""
       type: Vector
     - name: "angles"
+      description: ""
       type: Angle
     - name: "fov"
+      description: ""
       type: number
   returns:
     - type: unknown

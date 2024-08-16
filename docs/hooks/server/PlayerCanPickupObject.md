@@ -13,10 +13,13 @@ lua:
   description: ""
   arguments:
     - name: "pObject"
-      type: entity
+      description: ""
+      type: Entity
     - name: "massLimit"
+      description: ""
       type: number
     - name: "sizeLimit"
+      description: ""
       type: number
   returns:
     - type: unknown

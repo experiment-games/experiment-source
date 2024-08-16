@@ -12,15 +12,18 @@ lua:
   realm: server
   description: ""
   arguments:
-    - name: "pPlayer"
-      type: entity
-    - name: "p"
+    - name: "speaker"
+      description: "The player who is speaking"
+      type: Entity
+    - name: "chatMessage"
+      description: ""
       type: string
-    - name: "teamonly"
+    - name: "isTeamOnly"
+      description: ""
       type: boolean
   returns:
-    - type: unknown
-      description: ""
+    - type: string
+      description: "return a replacement string or an empty string to block the message"
 ---
 
 <div class="lua__search__keywords">

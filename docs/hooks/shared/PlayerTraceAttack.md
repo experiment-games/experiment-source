@@ -8,9 +8,9 @@ tags:
   - needs-verification
 lua:
   redirects:
-    - label: 'server/PlayerTraceAttack'
-      url: 'server/PlayerTraceAttack'
-    - label: 'client/PlayerTraceAttack'
-      url: 'client/PlayerTraceAttack'
+    - label: "server/PlayerTraceAttack"
+      url "server/PlayerTraceAttack"
+    - label: "client/PlayerTraceAttack"
+      url: "client/PlayerTraceAttack"
 ---
 

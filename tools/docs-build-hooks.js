@@ -23,8 +23,9 @@ const luaHookBeginPattern = /LUA_CALL_HOOK_BEGIN\(\s*"([^"]+)"\s*(?:,\s*"([^"]+)
 // luaL_ or lua_, // doc: is optional
 const luaPushPattern = /lua_?(\w+)\(\s*L,\s*([^)]+)\s*\);(?: \/\/ doc: (.+))?/;
 // special case for pushing with CBaseEntity::PushLuaInstanceSafe(L, pEntity)
-const luaPushInstancePattern = /::PushLuaInstanceSafe\(\s*L,\s*([^)]+)\s*\);(?:\s*\/\/\s*doc:\s*(.+))?/;
+const luaPushInstancePattern = /([^\s]*)(?:::|->)PushLuaInstance(?:Safe)?\(\s*L(?:,\s*([^)]+))?\s*\);(?:\s*\/\/\s*doc:\s*(.+))?/;
 const luaHookEndPattern = /LUA_CALL_HOOK_END\(\s*(\d+)\s*,\s*(\d+)\s*\);(?:\s*\/\/\s*doc:\s*(.+))?/;
+const luaBindingReturnPattern = /(\w+)(?:\s*\(([^)]+)\))?/;
 
 function fromPushFunction(functionName) {
   switch (functionName) {
@@ -60,34 +61,58 @@ function fromPushFunction(functionName) {
       return 'CGameTrace';
     case 'pushsurfacedata':
       return 'surfacedata_t';
+
+    // For the PushLuaInstanceSafe function
+    case 'CBaseEntity':
+      return 'Entity';
+    case 'CBasePlayer':
+      return 'Player';
+
     default:
       return 'unknown';
   }
 }
 
 function fromPushLine(line) {
-  const match = line.match(luaPushPattern);
+  let match = line.match(luaPushPattern);
+  let type;
 
-  if (!match) {
-    const instanceMatch = line.match(luaPushInstancePattern);
+  if (match) {
+    type = fromPushFunction(match[1]);
+  } else {
+    match = line.match(luaPushInstancePattern);
 
-    if (instanceMatch) {
-      return {
-        type: 'entity',
-        argument: instanceMatch[1].trim(),
-        description: instanceMatch[2] || '',
-      };
+    if (match) {
+      type = fromPushFunction(match[1]);
+
+      // Fallback for the ent->PushLuaInstance( L ) function
+      if (type === 'unknown') {
+        type = 'Entity';
+        if (!match[2])
+          match[2] = 'entity';
+      }
+    } else {
+      return null;
     }
-
-    return null;
   }
 
-  const type = fromPushFunction(match[1]);
+  let description = match[3];
+  let argument = description || match[2];
+  let argumentDescriptionMatch;
+
+  if (description) {
+    argumentDescriptionMatch = description.match(luaBindingReturnPattern);
+
+    if (argumentDescriptionMatch) {
+      argument = argumentDescriptionMatch[1];
+      description = argumentDescriptionMatch[2];
+    }
+  }
 
   return {
     type: type,
-    argument: match[2],
-    description: match[3],
+    argument: argument.trim(),
+    description: (description || ''.trim()),
   };
 }
 
@@ -198,8 +223,8 @@ function writeHookToFile(hook) {
   // will add a file that simply redirects to the client- and server-specific hooks.
   if (hooksTouchedThisRun.has(hook.name)) {
     const otherHook = hooksTouchedThisRun.get(hook.name);
-    let redirects = `- label: '${hook.realm}/${hook.name}'\n      url: '${hook.realm}/${hook.name}'`;
-    redirects += `\n    - label: '${otherHook.realm}/${otherHook.name}'\n      url: '${otherHook.realm}/${otherHook.name}'`;
+    let redirects = `- label: ${wrapQuotes(hook.realm + '/' + hook.name)}\n      url ${wrapQuotes(hook.realm + '/' + hook.name)}`;
+    redirects += `\n    - label: ${wrapQuotes(otherHook.realm + '/' + otherHook.name)}\n      url: ${wrapQuotes(otherHook.realm + '/' + otherHook.name)}`;
 
     const redirectFilePath = path.join(outputDir, 'shared', `${hook.name}.md`);
     const redirectContent = markdownTemplateRedirect.replace(/%title%/g, hook.name)
@@ -237,7 +262,7 @@ function writeHookToFile(hook) {
       arg.name = arg.name.replace(']', '');
       arg.name = arg.name.trim();
 
-      return indentEachLine(`- name: ${wrapQuotes(arg.name)}\n  type: ${arg.type}${defaults}`, 2);
+      return indentEachLine(`- name: ${wrapQuotes(arg.name)}\n  description: ${wrapQuotes(arg.description)}\n  type: ${arg.type}${defaults}`, 2);
     }).join('\n');
   };
 
@@ -280,6 +305,7 @@ function processHooksInFile(file) {
       currentArguments.push({
         name: 'table',
         type: 'table',
+        description: '',
       });
       continue;
     } else if (currentHook && (luaPushPattern.test(line) || luaPushInstancePattern.test(line))) {
@@ -309,6 +335,7 @@ function processHooksInFile(file) {
         currentArguments.push({
           name: push.argument,
           type: push.type,
+          description: push.description,
         });
       }
     } else if (luaHookEndPattern.test(line)) {
@@ -337,6 +364,9 @@ if (filesToUpdate.size > 0) {
   console.warn('The following files were not updated (maybe they\'re no longer relevant?):');
 
   for (const file of filesToUpdate.keys()) {
+    if (!process.argv.includes('--list-unchanged-indexes') && file.includes('index.md'))
+      continue;
+
     console.warn(file);
   }
 }

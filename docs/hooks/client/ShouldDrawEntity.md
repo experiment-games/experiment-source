@@ -10,15 +10,16 @@ tags:
 lua:
   function: ShouldDrawEntity
   realm: client
-  description: ""
+  description: "Whether the given entity should be drawn"
   arguments:
-    - name: "pEnt"
-      type: entity
+    - name: "entity"
+      description: ""
+      type: Entity
   returns:
     - type: unknown
       description: ""
 ---
 
 <div class="lua__search__keywords">
-hook ShouldDrawEntity &#x2013; ""
+hook ShouldDrawEntity &#x2013; "Whether the given entity should be drawn"
 </div>

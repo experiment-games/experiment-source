@@ -1,6 +1,6 @@
 ---
 template: lua-hook.html
-title: ShouldDrawViewModel
+title: CreateClientSideRagdoll
 icon: lua-client
 tags:
   - lua
@@ -8,16 +8,20 @@ tags:
   - needs-verification
   - needs-example
 lua:
-  function: ShouldDrawViewModel
+  function: CreateClientSideRagdoll
   realm: client
   description: ""
   arguments:
-  
-  returns:
-    - type: unknown
+    - name: "entity"
       description: ""
+      type: Entity
+    - name: "ragdollEntity"
+      description: ""
+      type: Entity
+  returns:
+    
 ---
 
 <div class="lua__search__keywords">
-hook ShouldDrawViewModel &#x2013; ""
+hook CreateClientSideRagdoll &#x2013; ""
 </div>

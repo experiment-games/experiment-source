@@ -13,7 +13,8 @@ lua:
   description: ""
   arguments:
     - name: "pEntity"
-      type: entity
+      description: ""
+      type: Entity
   returns:
     
 ---

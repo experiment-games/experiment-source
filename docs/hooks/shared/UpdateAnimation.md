@@ -13,10 +13,13 @@ lua:
   description: ""
   arguments:
     - name: "pExperimentPlayer"
-      type: entity
+      description: ""
+      type: Entity
     - name: "vecVelocity"
+      description: ""
       type: Vector
     - name: "flMaxGroundSpeed"
+      description: ""
       type: number
   returns:
     

@@ -10,14 +10,15 @@ tags:
 lua:
   function: LevelInitPreEntity
   realm: client
-  description: ""
+  description: "Before loading entities, making the level name known."
   arguments:
-    - name: "pMapName"
+    - name: "levelName"
+      description: ""
       type: string
   returns:
     
 ---
 
 <div class="lua__search__keywords">
-hook LevelInitPreEntity &#x2013; ""
+hook LevelInitPreEntity &#x2013; "Before loading entities, making the level name known."
 </div>

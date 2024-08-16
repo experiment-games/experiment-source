@@ -8,9 +8,9 @@ tags:
   - needs-verification
 lua:
   redirects:
-    - label: 'server/LevelShutdown'
-      url: 'server/LevelShutdown'
-    - label: 'client/LevelShutdown'
-      url: 'client/LevelShutdown'
+    - label: "server/LevelShutdown"
+      url "server/LevelShutdown"
+    - label: "client/LevelShutdown"
+      url: "client/LevelShutdown"
 ---
 

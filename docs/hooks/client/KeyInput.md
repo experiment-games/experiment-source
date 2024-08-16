@@ -10,19 +10,24 @@ tags:
 lua:
   function: KeyInput
   realm: client
-  description: ""
+  description: "Called when a key is pressed"
   arguments:
-    - name: "down"
+    - name: "isDown"
+      description: ""
       type: number
-    - name: "keynum"
+    - name: "keyCode"
+      description: ""
       type: number
-    - name: "pszCurrentBinding"
+    - name: "binding"
+      description: "the binding related to the key"
       type: string
   returns:
     - type: unknown
-      description: ""
+      description: "boolean (return false to prevent the engine from handling the key"
+    - type: unknown
+      description: "true to allow and override default behavior)"
 ---
 
 <div class="lua__search__keywords">
-hook KeyInput &#x2013; ""
+hook KeyInput &#x2013; "Called when a key is pressed"
 </div>

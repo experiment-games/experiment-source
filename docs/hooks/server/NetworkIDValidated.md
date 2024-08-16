@@ -13,8 +13,10 @@ lua:
   description: ""
   arguments:
     - name: "pszUserName"
+      description: ""
       type: string
     - name: "pszNetworkID"
+      description: ""
       type: string
   returns:
     

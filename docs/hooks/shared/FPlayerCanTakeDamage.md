@@ -13,10 +13,13 @@ lua:
   description: ""
   arguments:
     - name: "pPlayer"
-      type: entity
+      description: ""
+      type: Entity
     - name: "pAttacker"
-      type: entity
+      description: ""
+      type: Entity
     - name: "info"
+      description: ""
       type: CTakeDamageInfo
   returns:
     - type: unknown

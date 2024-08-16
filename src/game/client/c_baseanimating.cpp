@@ -4626,9 +4626,9 @@ C_BaseAnimating *C_BaseAnimating::CreateRagdollCopy()
 
     if ( L )
     {
-        LUA_CALL_HOOK_BEGIN( "CreateClientsideRagdoll" );
-        this->PushLuaInstance( L );
-        pRagdoll->PushLuaInstance( L );
+        LUA_CALL_HOOK_BEGIN( "CreateClientSideRagdoll" );
+        this->PushLuaInstance( L ); // doc: entity
+        pRagdoll->PushLuaInstance( L ); // doc: ragdollEntity
         LUA_CALL_HOOK_END( 2, 0 );
     }
 

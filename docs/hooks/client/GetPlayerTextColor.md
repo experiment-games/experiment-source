@@ -12,21 +12,15 @@ lua:
   realm: client
   description: "Allows overriding the color of the player's name in the scoreboard."
   arguments:
-    - name: "entindex"
-      type: number
-    - name: "color0"
-      type: number
-    - name: "color1"
-      type: number
-    - name: "color2"
-      type: number
+    - name: "player"
+      description: ""
+      type: Player
+    - name: "color"
+      description: "the color of the player's name in the scoreboard"
+      type: Color
   returns:
-    - type: number
-      description: "red component of the color"
-    - type: number
-      description: "green component"
-    - type: number
-      description: "blue component"
+    - type: color
+      description: "return a replacement color to override the default color"
 ---
 
 <div class="lua__search__keywords">

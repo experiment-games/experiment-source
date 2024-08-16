@@ -172,6 +172,7 @@ extern vgui::IInputInternal *g_InputInternal;
 #include "mountsteamcontent.h"
 #include <litexture.h>
 #include <cpng.h>
+#include <lColor.h>
 #endif
 
 #ifdef PORTAL
@@ -504,26 +505,28 @@ EXPOSE_SINGLE_INTERFACE( CClientDLLSharedAppSystems, IClientDLLSharedAppSystems,
 class CHLVoiceStatusHelper : public IVoiceStatusHelper
 {
    public:
-    virtual void GetPlayerTextColor( int entindex, int color[3] )
+    virtual void GetPlayerTextColor( int entityIndex, int rawColor[3] )
     {
-        color[0] = color[1] = color[2] = 128;
+        rawColor[0] = rawColor[1] = rawColor[2] = 128;
 
 #ifdef LUA_SDK
+        C_BaseEntity *entity = ClientEntityList().GetBaseEntity( entityIndex );
+        Color color( rawColor[0], rawColor[1], rawColor[2] );
+
         LUA_CALL_HOOK_BEGIN( "GetPlayerTextColor", "Allows overriding the color of the player's name in the scoreboard." );
-        lua_pushinteger( L, entindex ); // doc: playerEntityIndex
-        lua_pushinteger( L, color[0] ); // doc: red
-        lua_pushinteger( L, color[1] ); // doc: green
-        lua_pushinteger( L, color[2] ); // doc: blue
-        LUA_CALL_HOOK_END( 4, 3 ); // doc: number (red component of the color), number (green component), number (blue component)
+        CBasePlayer::PushLuaInstanceSafe( L, entity );  // doc: player
+        lua_pushcolor( L, color ); // doc: color (the color of the player's name in the scoreboard)
+        LUA_CALL_HOOK_END( 1, 1 );  // doc: color (return a replacement color to override the default color)
 
-        if ( lua_isnumber( L, -3 ) )
-            color[2] = ( int )lua_tointeger( L, -3 );
-        if ( lua_isnumber( L, -2 ) )
-            color[1] = ( int )lua_tointeger( L, -2 );
-        if ( lua_isnumber( L, -1 ) )
-            color[0] = ( int )lua_tointeger( L, -1 );
+        if ( lua_iscolor( L, -1 ) )
+        {
+            lua_Color &clr = luaL_checkcolor( L, -1 );
+            rawColor[0] = clr.r();
+            rawColor[1] = clr.g();
+            rawColor[2] = clr.b();
+        }
 
-        lua_pop( L, 3 );
+        lua_pop( L, 1 ); // pop the return value
 #endif
     }
 
@@ -535,7 +538,7 @@ class CHLVoiceStatusHelper : public IVoiceStatusHelper
     {
 #ifdef LUA_SDK
         LUA_CALL_HOOK_BEGIN( "CanShowSpeakerLabels" );
-        LUA_CALL_HOOK_END( 0, 1 ); // doc: boolean (whether the speaker labels should be shown)
+        LUA_CALL_HOOK_END( 0, 1 );  // doc: boolean (whether the speaker labels should be shown)
 
         LUA_RETURN_BOOLEAN();
 #endif
@@ -1759,8 +1762,8 @@ void CHLClient::LevelInitPreEntity( char const *pMapName )
     luasrc_LoadGamemode( gamemode.GetString() );
     luasrc_SetGamemode( gamemode.GetString() );
 
-    LUA_CALL_HOOK_BEGIN( "LevelInitPreEntity" );
-    lua_pushstring( L, pMapName );
+    LUA_CALL_HOOK_BEGIN( "LevelInitPreEntity", "Before loading entities, making the level name known." );
+    lua_pushstring( L, pMapName ); // doc: levelName
     LUA_CALL_HOOK_END( 1, 0 );
 #endif
 
@@ -1834,7 +1837,7 @@ void CHLClient::LevelInitPreEntity( char const *pMapName )
 void CHLClient::LevelInitPostEntity()
 {
 #ifdef LUA_SDK
-    LUA_CALL_HOOK_BEGIN( "LevelInitPostEntity" );
+    LUA_CALL_HOOK_BEGIN( "LevelInitPostEntity", "After loading entities." );
     LUA_CALL_HOOK_END( 0, 0 );
 #endif
 
@@ -1876,7 +1879,7 @@ void CHLClient::LevelShutdown( void )
 #ifdef LUA_SDK
     if ( g_bLuaInitialized )
     {
-        LUA_CALL_HOOK_BEGIN( "LevelShutdown" );
+        LUA_CALL_HOOK_BEGIN( "LevelShutdown", "Right before shutting down the level." );
         LUA_CALL_HOOK_END( 0, 0 );
     }
 #endif
@@ -2192,7 +2195,7 @@ void SimulateEntities()
 #ifdef LUA_SDK
     if ( L )
     {
-        LUA_CALL_HOOK_BEGIN( "Tick" );
+        LUA_CALL_HOOK_BEGIN( "Tick", "Called right before simulating entities, every frame." );
         LUA_CALL_HOOK_END( 0, 0 );
     }
 #endif

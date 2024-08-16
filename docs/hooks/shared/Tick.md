@@ -8,9 +8,9 @@ tags:
   - needs-verification
 lua:
   redirects:
-    - label: 'server/Tick'
-      url: 'server/Tick'
-    - label: 'client/Tick'
-      url: 'client/Tick'
+    - label: "server/Tick"
+      url "server/Tick"
+    - label: "client/Tick"
+      url: "client/Tick"
 ---
 

@@ -13,10 +13,13 @@ lua:
   description: ""
   arguments:
     - name: "this"
-      type: entity
+      description: ""
+      type: Entity
     - name: "pObject"
-      type: entity
+      description: ""
+      type: Entity
     - name: "bLimitMassAndSize"
+      description: ""
       type: boolean
   returns:
     - type: unknown

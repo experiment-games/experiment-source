@@ -13,8 +13,10 @@ lua:
   description: ""
   arguments:
     - name: "iOldWide"
+      description: ""
       type: number
     - name: "iOldTall"
+      description: ""
       type: number
   returns:
     
