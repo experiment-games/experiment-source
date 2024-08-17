@@ -330,22 +330,6 @@ void CBaseEntity::ParseMapData( CEntityMapData *mapData )
 //-----------------------------------------------------------------------------
 bool CBaseEntity::KeyValue( const char *szKeyName, const char *szValue )
 {
-#ifdef LUA_SDK
-    LUA_CALL_HOOK_BEGIN( "EntityKeyValue" );
-    CBaseEntity::PushLuaInstanceSafe( L, this );
-    lua_pushstring( L, szKeyName );
-    lua_pushstring( L, szValue );
-    LUA_CALL_HOOK_END( 3, 1 );
-
-    // If the hook returns a string, set that as the value
-    if ( lua_isstring( L, -1 ) )
-    {
-        szValue = lua_tostring( L, -1 );
-    }
-
-    lua_pop( L, 1 );
-#endif
-
     //!! temp hack, until worldcraft is fixed
     // strip the # tokens from (duplicate) key names
     char *s = ( char * )strchr( szKeyName, '#' );

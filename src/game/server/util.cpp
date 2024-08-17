@@ -2634,7 +2634,25 @@ void LoadAndSpawnEntities_ParseEntKVBlockHelper( CBaseEntity *pNode, KeyValues *
         }
         else
         {
-            pNode->KeyValue( pkvNodeData->GetName(), pkvNodeData->GetString() );
+            const char *szKeyName = pkvNodeData->GetName();
+            const char *szValue = pkvNodeData->GetString();
+#ifdef LUA_SDK
+            LUA_CALL_HOOK_BEGIN( "EntityKeyValue" );
+            CBaseEntity::PushLuaInstanceSafe( L, pNode );
+            lua_pushstring( L, szKeyName );
+            lua_pushstring( L, szValue );
+            LUA_CALL_HOOK_END( 3, 1 );
+
+            // If the hook returns a string, set that as the value
+            if ( lua_isstring( L, -1 ) )
+            {
+                szValue = lua_tostring( L, -1 );
+            }
+
+            lua_pop( L, 1 );
+#endif
+
+            pNode->KeyValue( szKeyName, szValue );
         }
 
         pkvNodeData = pkvNodeData->GetNextKey();

@@ -510,6 +510,17 @@ LUA_BINDING_BEGIN( Entity, GetLifeState, "class", "Get the life state." )
 }
 LUA_BINDING_END( "enumeration/LIFE", "The life state." )
 
+LUA_BINDING_BEGIN( Entity, SetKeyValue, "class", "Set key value." )
+{
+    lua_CBaseEntity *pEntity = LUA_BINDING_ARGUMENT( luaL_checkentity, 1, "entity" );
+    const char *pszKey = LUA_BINDING_ARGUMENT( luaL_checkstring, 2, "key" );
+    const char *pszValue = LUA_BINDING_ARGUMENT( luaL_checkstring, 3, "value" );
+
+    pEntity->KeyValue( pszKey, pszValue );
+    return 0;
+}
+LUA_BINDING_END()
+
 LUA_BINDING_BEGIN( Entity, SetLifeState, "class", "Set the life state." )
 {
     lua_CBaseEntity *pEntity = LUA_BINDING_ARGUMENT( luaL_checkentity, 1, "entity" );

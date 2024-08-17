@@ -28,14 +28,25 @@ Msg = PrintMessage
 MsgN = PrintMessageLine
 
 function GetConVar_Internal(name)
-	local consoleVariable = ConsoleVariables.Get(name)
+    local consoleVariable = ConsoleVariables.Get(name)
 
-	if (not IsValid(consoleVariable)) then
-		debug.PrintError("GetConVar: Couldn't find convar '" .. name .. "'")
-		return nil
+    if (not IsValid(consoleVariable)) then
+        debug.PrintError("GetConVar: Couldn't find convar '" .. name .. "'")
+        return nil
+    end
+
+    return consoleVariable
+end
+
+-- Before Lua 5.3 math.random(1, #emptyTable) would return 1, but it errors now
+local originalMathRandom = math.random
+
+function math.random(min, max)
+	if (max < min) then
+		return originalMathRandom(max, min)
 	end
 
-	return consoleVariable
+	return originalMathRandom(min, max)
 end
 
 util = Utilities

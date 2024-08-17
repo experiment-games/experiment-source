@@ -4,5 +4,6 @@
 	{
 		"garrysmod"		"4000"
 		"cstrike"		"240"
+		"hl2"		"220"
 	}
 }
