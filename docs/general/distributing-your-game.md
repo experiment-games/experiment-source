@@ -39,7 +39,11 @@ The following scripts will be available:
 
 - `Start <your_game>.bat`:
     This script will ensure your game is started with the correct parameters.
-    It will call the `hl2.exe` with `-steam -game <your_game_directory>`.
+    It will call the `hl2.exe` with `-steam -game experiment -config game.json`.
+
+    *Note: we eventually hope to create a generic `Start <your_game>.exe` that
+    is signed (so it doesn't trigger Windows Defender) and can be customized
+    with your game's icon.*
 
 - `game.json`:
     This file contains metadata about your game, like what the path is to the
@@ -58,9 +62,14 @@ The following scripts will be available:
 
 ## Compressing your game
 
-To distribute your game, you will need to compress it into a zip file. The zip
-file should contain the game's directory, including the configuration scripts
-you downloaded in the previous step.
+Seeing how you've developed your game with Lua, all the game files are already
+inside the script and asset directories, like: `experiment/gamemodes`, 
+`experiment/addons`, `experiment/materials`, etc.
+
+To distribute your game, you will need to compress the folder above `experiment`
+into a zip file. Meaning the zip file directly contains `hl2.exe`,
+`Start <your_game>.bat` and `game.json`, with the `experiment` folder next to
+them.
 
 ## Uploading your game
 

@@ -983,6 +983,7 @@ int CHLClient::Init( CreateInterfaceFn appSystemFactory,
     if ( ( enginevgui = ( IEngineVGui * )appSystemFactory( VENGINE_VGUI_VERSION,
                                                            NULL ) ) == NULL )
         return false;
+
     if ( ( networkstringtable = ( INetworkStringTableContainer * )appSystemFactory(
                INTERFACENAME_NETWORKSTRINGTABLECLIENT, NULL ) ) == NULL )
         return false;
@@ -1072,6 +1073,17 @@ int CHLClient::Init( CreateInterfaceFn appSystemFactory,
     }
 
 #if defined( EXPERIMENT_SOURCE )
+    // NOTE: This is the earliest useful point we can start showing a loading indicator in the game.
+    // however, shortly after the menu is already available. So we should probably let HTML handle
+    // the loading and updating screens.
+    //vgui::VPANEL parent = enginevgui->GetPanel( PANEL_ROOT );
+    //vgui::Label *label = new vgui::Label( NULL, "HelloWorldLabel", "Loading..." );
+    //label->SetBounds( 0, 0, 1600, 900 );
+    //label->SetContentAlignment( vgui::Label::a_center );
+    //label->SetVisible( true );
+    //label->SetParent( parent );
+    //label->SetZPos( 10000 );
+
     // Andrew; then mount everything the user wants to use.
     InitializeGameContentMounting();
 
