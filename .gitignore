@@ -76,6 +76,7 @@ game/experiment/bin/*
 game/experiment/scripts/lua/bin/*
 src/lib/public/lua54.lib
 src/lib/public/luasocket.lib
+src/lib/public/libpng.lib
 src/lib/public/mathlib.lib
 src/lib/public/raytrace.lib
 src/lib/public/tier1.lib
