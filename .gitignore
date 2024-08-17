@@ -71,6 +71,16 @@ game/experiment/materials/spawnicons/*
 game/experiment/screenshots/*
 game/experiment/data/*
 
+# Build products that building the solution will create
+game/experiment/bin/*
+game/experiment/scripts/lua/bin/*
+src/lib/public/lua54.lib
+src/lib/public/luasocket.lib
+src/lib/public/mathlib.lib
+src/lib/public/raytrace.lib
+src/lib/public/tier1.lib
+src/lib/public/vgui_controls.lib
+
 # shader files
 *.tmp
 src/materialsystem/stdshaders/filestocopy.txt
