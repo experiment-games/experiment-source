@@ -1209,7 +1209,7 @@ void CC_Player_NoClip( void )
     }
 }
 
-static ConCommand noclip( "noclip", CC_Player_NoClip, "Toggle. Player becomes non-solid and flies.", FCVAR_CHEAT );
+static ConCommand noclip( "noclip", CC_Player_NoClip, "Toggle. Player becomes non-solid and flies." );
 
 //------------------------------------------------------------------------------
 // Sets client to godmode
