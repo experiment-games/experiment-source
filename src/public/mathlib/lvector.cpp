@@ -531,6 +531,18 @@ LUA_BINDING_BEGIN( Vectors, YawToVector, "library", "Converts a yaw angle to a v
     return 1;
 }
 LUA_BINDING_END( "Vector", "The converted vector." )
+
+LUA_BINDING_BEGIN( Vectors, Lerp, "library", "Linearly interpolates between two vectors." )
+{
+    float fraction = LUA_BINDING_ARGUMENT( luaL_checknumber, 1, "fraction" );
+    lua_Vector &vec1 = LUA_BINDING_ARGUMENT( luaL_checkvector, 2, "from" );
+    lua_Vector &vec2 = LUA_BINDING_ARGUMENT( luaL_checkvector, 3, "to" );
+    lua_pushvector( L, VectorLerp( vec1, vec2, fraction ) );
+
+    return 1;
+}
+LUA_BINDING_END( "Vector", "The interpolated vector." )
+
 //
 // static int luasrc_Util_AxisStringToPointDir( lua_State *L )
 //{

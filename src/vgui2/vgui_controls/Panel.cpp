@@ -1248,6 +1248,9 @@ void Panel::Think()
 #ifdef LUA_SDK
         LUA_CALL_PANEL_METHOD_BEGIN( "Think" );
         LUA_CALL_PANEL_METHOD_END( 0, 0 );
+
+        LUA_CALL_PANEL_METHOD_BEGIN( "AnimationThink" );
+        LUA_CALL_PANEL_METHOD_END( 0, 0 );
 #endif
     }
 
@@ -3895,15 +3898,15 @@ Thickness Panel::GetDockPadding()
     return m_DockPadding;
 }
 
-void Panel::SetDockMargin( Thickness padding )
+void Panel::SetDockMargin( Thickness margin )
 {
-    if ( m_DockMargin.left == padding.left &&
-         m_DockMargin.top == padding.top &&
-         m_DockMargin.right == padding.right &&
-         m_DockMargin.bottom == padding.bottom )
+    if ( m_DockMargin.left == margin.left &&
+         m_DockMargin.top == margin.top &&
+         m_DockMargin.right == margin.right &&
+         m_DockMargin.bottom == margin.bottom )
         return;
 
-    m_DockMargin = padding;
+    m_DockMargin = margin;
 
     InvalidateLayout();
     InvalidateParentLayout();
@@ -3968,7 +3971,7 @@ void Panel::RecurseLayout()
         {
             const Thickness margin = pChild->GetDockMargin();
             pChild->SetBounds( renderBounds.x + margin.left, renderBounds.y + margin.top, renderBounds.wide - margin.left - margin.right, pChild->GetTall() );
-            int iHeight = margin.top + margin.bottom + pChild->GetTall();
+            int iHeight = margin.top + pChild->GetTall() + margin.bottom;
             renderBounds.y += iHeight;
             renderBounds.tall -= iHeight;
         }

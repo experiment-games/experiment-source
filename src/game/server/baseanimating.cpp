@@ -810,9 +810,24 @@ bool CBaseAnimating::BecomeRagdollOnClient( const Vector &force )
     // If this character has a ragdoll animation, turn it over to the physics system
     if ( CanBecomeRagdoll() )
     {
+        // Experiment; become a real ragdoll instead of a client-side ragdoll
+        if ( ai_serverragdolls.GetBool() )
+        {
+            CTakeDamageInfo info;
+            CreateServerRagdoll( this, m_nForceBone, info, COLLISION_GROUP_PLAYER, true );
+
+            m_nRenderFX = kRenderFxNone;
+            AddEffects( EF_NODRAW );
+            RemoveFlag( FL_DISSOLVING | FL_ONFIRE );
+        }
+        else
+        {
+            m_nRenderFX = kRenderFxRagdoll;
+            AddFlag( FL_TRANSRAGDOLL );
+        }
+
         VPhysicsDestroyObject();
         AddSolidFlags( FSOLID_NOT_SOLID );
-        m_nRenderFX = kRenderFxRagdoll;
 
         // Have to do this dance because m_vecForce is a network vector
         // and can't be sent to ClampRagdollForce as a Vector *
@@ -821,18 +836,6 @@ bool CBaseAnimating::BecomeRagdollOnClient( const Vector &force )
         m_vecForce = vecClampedForce;
 
         SetParent( NULL );
-
-        // Experiment; become a real ragdoll instead of a client-side ragdoll
-        if ( ai_serverragdolls.GetBool() )
-        {
-            // Create a server-side ragdoll
-            CTakeDamageInfo info;
-            CreateServerRagdoll( this, m_nForceBone, info, COLLISION_GROUP_PLAYER, true );
-        }
-        else
-        {
-            AddFlag( FL_TRANSRAGDOLL );
-        }
 
         SetMoveType( MOVETYPE_NONE );
         // UTIL_SetSize( this, vec3_origin, vec3_origin );

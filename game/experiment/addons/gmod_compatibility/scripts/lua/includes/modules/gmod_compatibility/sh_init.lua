@@ -198,6 +198,7 @@ GetHostName = Engines.GetServerName
 
 PrecacheParticleSystem = ParticleSystems.Precache
 GetPredictionPlayer = Predictions.GetPredictionPlayer
+LerpVector = Vectors.Lerp
 
 RecipientFilter = RecipientFilters.Create
 
