@@ -1844,6 +1844,8 @@ class C_BaseEntity : public IClientEntity
         return false;
     }
 
+    virtual bool IsVehicle( void );
+
     virtual bool IsScripted( void ) const
     {
         return false;

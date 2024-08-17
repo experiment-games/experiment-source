@@ -740,6 +740,7 @@ $Project
             $File "$SRCDIR\public\lnetworkstringtabledefs.h"
             $File "$SRCDIR\public\vphysics\lperformance.cpp"
             $File "$SRCDIR\public\vphysics\lperformance.h"
+            $File "lprediction.cpp"
             $File "lplayer.cpp"
             $File "$SRCDIR\game\shared\lrecipientfilter.cpp"
             $File "$SRCDIR\game\shared\lrecipientfilter.h"

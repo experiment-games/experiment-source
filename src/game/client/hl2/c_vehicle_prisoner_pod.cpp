@@ -202,14 +202,17 @@ int C_PropVehiclePrisonerPod::GetPassengerRole( C_BaseCombatCharacter *pPassenge
 //-----------------------------------------------------------------------------
 void C_PropVehiclePrisonerPod::GetVehicleViewPosition( int nRole, Vector *pAbsOrigin, QAngle *pAbsAngles, float *pFOV /*=NULL*/ )
 {
-    SharedVehicleViewSmoothing( m_hPlayer,
-                                pAbsOrigin,
-                                pAbsAngles,
-                                m_bEnterAnimOn,
-                                m_bExitAnimOn,
-                                m_vecEyeExitEndpoint,
-                                &m_ViewSmoothingData,
-                                pFOV );
+    if ( m_hPlayer->IsLocalPlayer() )
+    {
+        SharedVehicleViewSmoothing( m_hPlayer,
+                                    pAbsOrigin,
+                                    pAbsAngles,
+                                    m_bEnterAnimOn,
+                                    m_bExitAnimOn,
+                                    m_vecEyeExitEndpoint,
+                                    &m_ViewSmoothingData,
+                                    pFOV );
+    }
 }
 
 //-----------------------------------------------------------------------------

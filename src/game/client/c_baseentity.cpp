@@ -1901,6 +1901,11 @@ bool C_BaseEntity::IsTwoPass( void )
     return modelinfo->IsTranslucentTwoPass( GetModel() );
 }
 
+bool C_BaseEntity::IsVehicle( void )
+{
+    return GetClientVehicle() != nullptr;
+}
+
 bool C_BaseEntity::UsesPowerOfTwoFrameBufferTexture()
 {
     return false;

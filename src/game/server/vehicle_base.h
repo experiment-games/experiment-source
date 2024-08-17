@@ -38,11 +38,11 @@ class CFourWheelServerVehicle : public CBaseServerVehicle
 
     // IServerVehicle
    public:
+    CFourWheelServerVehicle( void );
     virtual ~CFourWheelServerVehicle( void )
     {
     }
 
-    CFourWheelServerVehicle( void );
     virtual bool IsVehicleUpright( void );
     virtual bool IsVehicleBodyInWater( void );
     virtual void GetVehicleViewPosition( int nRole, Vector *pOrigin, QAngle *pAngles, float *pFOV = NULL );

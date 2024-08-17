@@ -197,6 +197,7 @@ SoundDuration = Engines.GetSoundDuration
 GetHostName = Engines.GetServerName
 
 PrecacheParticleSystem = ParticleSystems.Precache
+GetPredictionPlayer = Predictions.GetPredictionPlayer
 
 RecipientFilter = RecipientFilters.Create
 

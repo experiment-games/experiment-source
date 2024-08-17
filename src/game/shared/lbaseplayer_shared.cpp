@@ -14,6 +14,7 @@
 #include "SoundEmitterSystem/lisoundemittersystembase.h"
 #include "mathlib/lvector.h"
 #include "lvphysics_interface.h"
+#include <lusercmd.h>
 
 // memdbgon must be the last include file in a .cpp file!!!
 #include "tier0/memdbgon.h"
@@ -256,6 +257,18 @@ LUA_BINDING_BEGIN( Player, SetHands, "class", "Set the player's hands." )
     return 0;
 }
 LUA_BINDING_END()
+
+LUA_BINDING_BEGIN( Player, GetCurrentCommand, "class", "Returns the last command which was sent by the current prediction player." )
+{
+    lua_CBasePlayer *player = LUA_BINDING_ARGUMENT( luaL_checkplayer, 1, "player" );
+#ifdef CLIENT_DLL
+    lua_pushusercmd( L, player->m_pCurrentCommand );
+#else
+    lua_pushusercmd( L, player->GetCurrentCommand() );
+#endif
+    return 1;
+}
+LUA_BINDING_END( "UserCommand", "The last user command." )
 
 LUA_BINDING_BEGIN( Player, GetImpulse, "class", "Get the player's impulse." )
 {

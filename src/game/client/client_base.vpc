@@ -578,7 +578,7 @@ $Project
             $File "$SRCDIR\public\lnetwork.h"
             $File "$SRCDIR\public\lnetworkstringtabledefs.cpp"
             $File "$SRCDIR\public\vphysics\lperformance.cpp"
-            $File "lprediction.cpp"
+            $File "lc_prediction.cpp"
             $File "$SRCDIR\public\vstdlib\lrandom.cpp"
             $File "$SRCDIR\game\shared\lshareddefs.cpp"
             $File "$SRCDIR\game\shared\lsrcinit.cpp"

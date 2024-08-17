@@ -9,6 +9,21 @@
 
 LUA_REGISTRATION_INIT( Predictions )
 
+// TODO: These two functions also exist in lprediction. Make a shared place for them.
+LUA_BINDING_BEGIN( Predictions, GetPredictionPlayer, "library", "Get prediction player." )
+{
+    CBaseEntity::PushLuaInstanceSafe( L, CBaseEntity::GetPredictionPlayer() );
+    return 1;
+}
+LUA_BINDING_END( "Entity", "The prediction player." )
+
+LUA_BINDING_BEGIN( Predictions, GetPredictionRandomSeed, "library", "Get prediction random seed." )
+{
+    lua_pushinteger( L, CBaseEntity::GetPredictionRandomSeed() );
+    return 1;
+}
+LUA_BINDING_END( "integer", "The prediction random seed." )
+
 LUA_BINDING_BEGIN( Predictions, GetIdealPitch, "library", "Get the ideal pitch." )
 {
     lua_pushnumber( L, prediction->GetIdealPitch() );

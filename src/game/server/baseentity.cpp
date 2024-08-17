@@ -660,6 +660,11 @@ bool CBaseEntity::IsFollowingEntity()
     return IsEffectActive( EF_BONEMERGE ) && ( GetMoveType() == MOVETYPE_NONE ) && GetMoveParent();
 }
 
+bool CBaseEntity::IsVehicle( void )
+{
+    return GetServerVehicle() != nullptr;
+}
+
 CBaseEntity *CBaseEntity::GetFollowedEntity()
 {
     if ( !IsFollowingEntity() )

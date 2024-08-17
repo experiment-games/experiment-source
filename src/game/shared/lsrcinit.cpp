@@ -103,6 +103,7 @@ static const luaL_RegForState luasrclibs[] = {
     { LUA_SERVERENUMNAME, luaopen_ServerEnumerations, REALM_SERVER },
     { LUA_NETCHANNELINFOMETANAME, luaopen_INetChannelInfo, REALM_SERVER },
     { LUA_RESOURCESLIBNAME, luaopen_resources, REALM_SERVER },
+    { LUA_PREDICTIONLIBNAME, luaopen_prediction, REALM_SERVER },
 #endif
 
 #ifdef CLIENT_DLL

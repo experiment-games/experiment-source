@@ -86,7 +86,7 @@ class C_PropVehicleDriveable : public C_BaseAnimating, public IClientVehicle
 
     virtual bool IsPredicted() const
     {
-        return false;
+        return true;
     }
     virtual int GetJoystickResponseCurve() const;
 

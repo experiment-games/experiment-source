@@ -77,34 +77,7 @@ function writeFunctionToFile(func) {
   // Remove this file so we know it's up to date
   filesToUpdate.delete(filePath);
 
-  // If this function was already processed in this run, it's a shared function that has different realms
-  // Rename the files so their realms are included in the name
-  if (functionsThisRun.has(filePath)) {
-    const existingFunc = functionsThisRun.get(filePath);
-
-    if (existingFunc.realm !== func.realm
-      && existingFunc.concept === func.concept) {
-      const newFileName = `${existingFunc.function}.${existingFunc.realm}.md`;
-      const newFilePath = path.join(outputDir, directory, getLibrary(func), newFileName);
-
-      fs.renameSync(existingFunc.filePath, newFilePath);
-
-      console.warn(`Renamed ${existingFunc.filePath} to ${newFilePath} to include realm ${existingFunc.realm}`);
-
-      existingFunc.filePath = newFilePath;
-      filesToUpdate.delete(existingFunc.filePath);
-
-      // have our file path also include the realm
-      const newFuncFileName = `${func.function}.${func.realm}.md`;
-      filePath = path.join(outputDir, directory, getLibrary(func), newFuncFileName);
-      filesToUpdate.delete(filePath);
-    }
-  }
-
-  func.filePath = filePath;
-
-  functionsThisRun.set(func.filePath, func);
-
+  // Build the file contents
   let templateFile;
   let staticSection = '';
 
@@ -171,15 +144,49 @@ function writeFunctionToFile(func) {
     .replace(/%title%/g, func.function)
     .replace(/%library%/g, getLibrary(func))
     .replace(/%function%/g, func.function)
-    .replace(/%realm%/g, func.realm)
     .replace(/%description%/g, wrapQuotes(func.description))
     .replace(/%arguments%/g, argumentSection)
     .replace(/%returns%/g, returnSection)
     .replace(/%static%/g, staticSection)
     .replace(/%searchKeywords%/g, searchKeywords);
 
+  const otherRealm = func.realm === 'client' ? 'server' : 'client';
+
+  // If this function was already processed in this run, it's a shared function that has different realms
+  // If the file contents differ, rename the files so their realms are included in the name
+  if (functionsThisRun.has(filePath)) {
+    if (fs.readFileSync(filePath, 'utf8') !== content.replace(/%realm%/g, otherRealm)) {
+      const existingFunc = functionsThisRun.get(filePath);
+
+      if (existingFunc.realm !== func.realm
+        && existingFunc.concept === func.concept) {
+        const newFileName = `${existingFunc.function}.${existingFunc.realm}.md`;
+        const newFilePath = path.join(outputDir, directory, getLibrary(func), newFileName);
+
+        fs.renameSync(existingFunc.filePath, newFilePath);
+
+        console.warn(`Renamed ${existingFunc.filePath} to ${newFilePath} to include realm ${existingFunc.realm}`);
+
+        existingFunc.filePath = newFilePath;
+        filesToUpdate.delete(existingFunc.filePath);
+
+        // have our file path also include the realm
+        const newFuncFileName = `${func.function}.${func.realm}.md`;
+        filePath = path.join(outputDir, directory, getLibrary(func), newFuncFileName);
+        filesToUpdate.delete(filePath);
+      }
+    } else {
+      // If the contents are the same, just change the realm to shared
+      func.realm = 'shared';
+    }
+  }
+
+  func.filePath = filePath;
+
+  functionsThisRun.set(func.filePath, func);
+
   fs.mkdirSync(path.dirname(filePath), { recursive: true });
-  fs.writeFileSync(filePath, content);
+  fs.writeFileSync(filePath, content.replace(/%realm%/g, func.realm));
 }
 
 function fromTypeChecker(typeChecker) {

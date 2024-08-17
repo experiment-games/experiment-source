@@ -10,8 +10,9 @@
 #include "luasrclib.h"
 #include "lbaseentity_shared.h"
 #include "lrecipientfilter.h"
-#ifndef CLIENT_DLL
+#ifdef GAME_DLL
 #include "basescripted.h"
+#include "iservervehicle.h"
 #endif
 #include "lbaseplayer_shared.h"
 #include "lgametrace.h"
@@ -1005,20 +1006,6 @@ LUA_BINDING_BEGIN( Entity, GetParametersForSound, "class|static", "Get parameter
 }
 LUA_BINDING_END( "boolean", "True if parameters for sound exist, false otherwise.", "soundparameters", "The sound parameters." )
 
-LUA_BINDING_BEGIN( Entity, GetPredictionPlayer, "class|static", "Get prediction player." )
-{
-    CBaseEntity::PushLuaInstanceSafe( L, CBaseEntity::GetPredictionPlayer() );
-    return 1;
-}
-LUA_BINDING_END( "Entity", "The prediction player." )
-
-LUA_BINDING_BEGIN( Entity, GetPredictionRandomSeed, "class|static", "Get prediction random seed." )
-{
-    lua_pushinteger( L, CBaseEntity::GetPredictionRandomSeed() );
-    return 1;
-}
-LUA_BINDING_END( "integer", "The prediction random seed." )
-
 LUA_BINDING_BEGIN( Entity, GetRefTable, "class", "Get reference table." )
 {
     lua_CBaseEntity *pEntity = LUA_BINDING_ARGUMENT( luaL_checkentity, 1, "entity" );
@@ -1747,8 +1734,6 @@ LUA_BINDING_BEGIN( Entity, PrecacheSound, "class|static", "Precache sound." )
     {
         if ( !enginesound->IsSoundPrecached( pszSound ) )
         {
-            Assert( !"Entity::PrecacheSound:  too late" );
-
             Warning( "Late precache of %s\n", pszSound );
         }
     }
@@ -1789,6 +1774,29 @@ LUA_BINDING_END( "integer", "The registered think context." )
 LUA_BINDING_BEGIN( Entity, Remove, "class", "Remove." )
 {
     lua_CBaseEntity *pEntity = LUA_BINDING_ARGUMENT( luaL_checkentity, 1, "entity" );
+
+    #ifdef GAME_DLL
+    // On the server we need to kick out passengers or removing the parent will also take the passenger with it
+    if ( pEntity->IsVehicle() )
+    {
+        IServerVehicle *pServerVehicle = pEntity->GetServerVehicle();
+        CBaseCombatCharacter *pPassenger = pServerVehicle->GetPassenger();
+
+        if ( pPassenger )
+        {
+            CBasePlayer *pPlayer = ToBasePlayer( pPassenger );
+
+            if ( pPlayer )
+            {
+                pPlayer->LeaveVehicle();
+            }
+            else
+            {
+                pPassenger->ExitVehicle();
+            }
+        }
+    }
+    #endif
 
     pEntity->Remove();
     return 0;
