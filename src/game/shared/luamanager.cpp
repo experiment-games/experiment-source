@@ -139,16 +139,19 @@ static void GetGamemodePath( const char *gamemodeName, char *gamemodePath, int g
     Q_snprintf( gamemodePath, gamemodePathLength, "gamemodes\\%s", gamemodeName );
 }
 
-static bool TryFindGamemode( const char *gamemodeName, char *initialFileName, int initialFileNameLength )
+#define LUA_GAMEMODE_INIT_FILE_SV "gamemode\\init.lua"
+#define LUA_GAMEMODE_INIT_FILE_CL "gamemode\\cl_init.lua"
+
+static bool TryFindGamemode( const char *gamemodeName, char *initialFileName, int initialFileNameLength, char *gamemodeRootPath = nullptr, int gamemodeRootPathLength = 0 )
 {
     char gamemodePath[MAX_PATH];
     GetGamemodePath( gamemodeName, gamemodePath, sizeof( gamemodePath ) );
 
     // Load the cl_init.lua file client-side and init.lua server-side
 #ifdef CLIENT_DLL
-    Q_snprintf( initialFileName, initialFileNameLength, "%s\\gamemode\\cl_init.lua", gamemodePath );
+    Q_snprintf( initialFileName, initialFileNameLength, "%s\\" LUA_GAMEMODE_INIT_FILE_CL, gamemodePath );
 #else
-    Q_snprintf( initialFileName, initialFileNameLength, "%s\\gamemode\\init.lua", gamemodePath );
+    Q_snprintf( initialFileName, initialFileNameLength, "%s\\" LUA_GAMEMODE_INIT_FILE_SV, gamemodePath );
 #endif
 
     filesystem->RelativePathToFullPath( initialFileName, CONTENT_SEARCH_PATH, initialFileName, initialFileNameLength );
@@ -156,6 +159,19 @@ static bool TryFindGamemode( const char *gamemodeName, char *initialFileName, in
     if ( !filesystem->FileExists( initialFileName, CONTENT_SEARCH_PATH ) )
     {
         return false;
+    }
+
+    // Strips \\gamemode\\(cl_)init.lua from the initialFileName (we may have found it in a mounted game)
+    if ( gamemodeRootPath )
+    {
+#ifdef CLIENT_DLL
+        int partToStrip = Q_strlen( LUA_GAMEMODE_INIT_FILE_CL );
+#else
+        int partToStrip = Q_strlen( LUA_GAMEMODE_INIT_FILE_SV );
+#endif
+
+        Q_strncpy( gamemodeRootPath, initialFileName, gamemodeRootPathLength );
+        gamemodeRootPath[Q_strlen( gamemodeRootPath ) - partToStrip] = '\0';
     }
 
     return true;
@@ -312,7 +328,7 @@ static int PrintLuaMessage( lua_State *L, const char *append = nullptr )
         lua_pop( L, 1 );  // pop result
     }
 
-    if (append)
+    if ( append )
     {
         stringToPrint += append;
     }
@@ -620,6 +636,13 @@ void luasrc_setmodulepaths( lua_State *L )
                      LUA_PATH_BINARY_MODULES,
                      currentCPath );
     lua_setfield( L, -2, "cpath" );
+
+
+
+
+    // TODO: Repeat the above for all mounted games (replacing gamePath)
+
+
 
     // Experiment; we also abuse the package table to set a 'include' path
     // for the 'include' function. These paths will be attempted to be prefixed
@@ -1915,27 +1938,26 @@ bool luasrc_LoadGamemode( const char *gamemodeName )
         luasrc_InitCustomLoader( gamemodeName );
     }
 
-#ifdef CLIENT_DLL
-    const char *gamePath = engine->GetGameDirectory();
-#else
-    char gamePath[MAX_PATH];
-    engine->GetGameDir( gamePath, MAX_PATH );
-#endif
-
+    char initialFileName[MAX_PATH];
     char gamemodePath[MAX_PATH];
-    GetGamemodePath( gamemodeName, gamemodePath, sizeof( gamemodePath ) );
+
+    if ( !TryFindGamemode( gamemodeName, initialFileName, sizeof( initialFileName ), gamemodePath, sizeof( gamemodePath ) ) )
+    {
+        lua_pop( L, 1 );  // Pop the GM table
+        cleanUpGamemodeLoading( true );
+
+        SHOW_LUA_ERROR( "Failed to load invalid gamemode %s! Required initial file '%s' does not exist.\n", gamemodeName, initialFileName );
+
+        return false;
+    }
 
     // Make sure lua files can find lua files inside the gamemode folder
-    char gamemodeSearchPath[MAX_PATH];
-    Q_snprintf(
-        gamemodeSearchPath,
-        sizeof( gamemodeSearchPath ),
-        "%s\\%s\\?.lua;%s\\%s\\gamemode\\?.lua",
-        gamePath,
-        gamemodePath,
-        gamePath,
-        gamemodePath );
-    luasrc_add_to_package_path( L, gamemodeSearchPath );
+    CUtlString gamemodeSearchPath;
+    gamemodeSearchPath.Format( "%s?.lua;%sgamemode\\?.lua",
+                               gamemodePath,
+                               gamemodePath );
+    const char *gamemodeSearchPathC = gamemodeSearchPath.String();
+    luasrc_add_to_package_path( L, gamemodeSearchPathC );
 
     // Set the GM table as a global variable
     lua_newtable( L );
@@ -1947,19 +1969,7 @@ bool luasrc_LoadGamemode( const char *gamemodeName )
     lua_pushstring( L, gamemodePath );
     lua_settable( L, -3 );
 
-    // lua_pop( L, 1 );  // Pop the GM table, the stack should be empty now
-
-    char initialFileName[MAX_PATH];
-
-    if ( !TryFindGamemode( gamemodeName, initialFileName, sizeof( initialFileName ) ) )
-    {
-        lua_pop( L, 1 );  // Pop the GM table
-        cleanUpGamemodeLoading( true );
-
-        SHOW_LUA_ERROR( "Failed to load invalid gamemode %s! Required initial file '%s' does not exist.\n", gamemodeName, initialFileName );
-
-        return false;
-    }
+    // lua_pop( L, 1 );  // We leave the GM table on the stack for now
 
     // Load the initial file, letting it print errors if it fails
     luasrc_dofile( L, initialFileName );

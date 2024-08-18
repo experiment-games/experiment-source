@@ -31,6 +31,48 @@ static CUtlVector< mountableGame_t > g_GamePaths;
 
 #define HL1MP_APPID 360
 
+static void SetupRootSearchPaths( const char *gamePath )
+{
+    char contentSearchPath[MAX_PATH];
+
+    // GAME - Add the game root as a search path
+    filesystem->AddSearchPath( gamePath, "GAME", PATH_ADD_TO_TAIL );
+
+    // LUA - gamemodes directory
+    Q_strncpy( contentSearchPath, gamePath, sizeof( contentSearchPath ) );
+    Q_strncat( contentSearchPath, LUA_PATH_GAMEMODES "\\", sizeof( contentSearchPath ) );
+
+    filesystem->AddSearchPath( contentSearchPath, CONTENT_SEARCH_PATH_LUA, PATH_ADD_TO_TAIL );
+
+    // LUA - addons directory
+    Q_strncpy( contentSearchPath, gamePath, sizeof( contentSearchPath ) );
+    Q_strncat( contentSearchPath, "\\" LUA_PATH_ADDONS "\\", sizeof( contentSearchPath ) );
+
+    filesystem->AddSearchPath( contentSearchPath, CONTENT_SEARCH_PATH_LUA, PATH_ADD_TO_TAIL );
+}
+
+// RemoveRootSearchPaths (inverse of SetupRootSearchPaths)
+
+static void RemoveRootSearchPaths( const char *gamePath )
+{
+    char contentSearchPath[MAX_PATH];
+
+    // GAME - Add the game root as a search path
+    filesystem->RemoveSearchPath( gamePath );
+
+    // LUA - gamemodes directory
+    Q_strncpy( contentSearchPath, gamePath, sizeof( contentSearchPath ) );
+    Q_strncat( contentSearchPath, LUA_PATH_GAMEMODES "\\", sizeof( contentSearchPath ) );
+
+    filesystem->RemoveSearchPath( contentSearchPath );
+
+    // LUA - addons directory
+    Q_strncpy( contentSearchPath, gamePath, sizeof( contentSearchPath ) );
+    Q_strncat( contentSearchPath, "\\" LUA_PATH_ADDONS "\\", sizeof( contentSearchPath ) );
+
+    filesystem->RemoveSearchPath( contentSearchPath );
+}
+
 void AddSearchPathByAppId( int nAppId )
 {
     ISteamApps *pSteamApps = steamapicontext->SteamApps();
@@ -59,15 +101,18 @@ void AddSearchPathByAppId( int nAppId )
         if ( g_GamePaths[i].appId != nAppId )
             continue;
 
+        // GAME - Add the game root as a search path
         Q_snprintf( fullPath, sizeof( fullPath ), "%s/%s", appInstallPath, g_GamePaths[i].directoryName );
-        filesystem->AddSearchPath( fullPath, "GAME", PATH_ADD_TO_TAIL );
 
+        SetupRootSearchPaths( fullPath );
+
+        // GAME - Add the VPKs as search paths
         auto &vpkPaths = g_GamePaths[i].vpks;
 
         for ( int j = 0; j < vpkPaths.Count(); j++ )
         {
             Q_snprintf( fullPath, sizeof( fullPath ), "%s/%s", appInstallPath, vpkPaths[j] );
-            filesystem->AddSearchPath( fullPath, "GAME", PATH_ADD_TO_TAIL );
+            SetupRootSearchPaths( fullPath );
         }
 
         g_GamePaths[i].isMounted = true;
@@ -102,14 +147,14 @@ void RemoveSearchPathByAppId( int nAppId )
             continue;
 
         Q_snprintf( fullPath, sizeof( fullPath ), "%s/%s", appInstallPath, g_GamePaths[i].directoryName );
-        filesystem->RemoveSearchPath( fullPath );
+        RemoveRootSearchPaths( fullPath );
 
         auto &vpkPaths = g_GamePaths[i].vpks;
 
         for ( int j = 0; j < vpkPaths.Count(); j++ )
         {
             Q_snprintf( fullPath, sizeof( fullPath ), "%s/%s", appInstallPath, vpkPaths[j] );
-            filesystem->RemoveSearchPath( fullPath );
+            RemoveRootSearchPaths( fullPath );
         }
 
         g_GamePaths[i].isMounted = false;
@@ -137,6 +182,17 @@ CUtlVector< mountableGame_t > &GetMountableGames()
 
 void InitializeGameContentMounting()
 {
+#ifdef CLIENT_DLL
+    const char *gamePath = engine->GetGameDirectory();
+#else
+    char gamePath[256];
+    engine->GetGameDir( gamePath, 256 );
+    Q_StripTrailingSlash( gamePath );
+#endif
+
+    SetupRootSearchPaths( gamePath );
+
+    // Now mount the game content
     ISteamApps *pSteamApps = steamapicontext->SteamApps();
 
     if ( !pSteamApps )
@@ -160,13 +216,6 @@ void InitializeGameContentMounting()
     REGISTER_GAME_WITH_VPK( pSteamApps, "Garry's Mod", "garrysmod", 4000, "garrysmod/fallback_dir.vpk", "garrysmod/garrysmod_dir.vpk" );
 
     KeyValues *pMainFile, *pFileSystemInfo;
-#ifdef CLIENT_DLL
-    const char *gamePath = engine->GetGameDirectory();
-#else
-    char gamePath[256];
-    engine->GetGameDir( gamePath, 256 );
-    Q_StripTrailingSlash( gamePath );
-#endif
 
     pMainFile = new KeyValues( "gamecontent.txt" );
 

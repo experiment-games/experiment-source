@@ -7,6 +7,7 @@
 #include "ienginevgui.h"
 #include "inputsystem/ButtonCode.h"
 #include <activitylist.h>
+#include "hl2_shareddefs.h"
 
 // Quick and easy place to register some enums
 LUALIB_API int luaopen_SharedEnumerations( lua_State *L )
@@ -204,6 +205,44 @@ LUALIB_API int luaopen_SharedEnumerations( lua_State *L )
     lua_pushenum( L, USE_ON, "ON" );
     lua_pushenum( L, USE_SET, "SET" );
     lua_pushenum( L, USE_TOGGLE, "TOGGLE" );
+    LUA_SET_ENUM_LIB_END( L );
+
+    LUA_SET_ENUM_LIB_BEGIN( L, "DAMAGE_TYPE" );
+    lua_pushenum( L, DMG_GENERIC, "GENERIC" );
+    lua_pushenum( L, DMG_CRUSH, "CRUSH" );
+    lua_pushenum( L, DMG_BULLET, "BULLET" );
+    lua_pushenum( L, DMG_SLASH, "SLASH" );
+    lua_pushenum( L, DMG_BURN, "BURN" );
+    lua_pushenum( L, DMG_VEHICLE, "VEHICLE" );
+    lua_pushenum( L, DMG_FALL, "FALL" );
+    lua_pushenum( L, DMG_BLAST, "BLAST" );
+    lua_pushenum( L, DMG_CLUB, "CLUB" );
+    lua_pushenum( L, DMG_SHOCK, "SHOCK" );
+    lua_pushenum( L, DMG_SONIC, "SONIC" );
+    lua_pushenum( L, DMG_ENERGYBEAM, "ENERGY_BEAM" );
+    lua_pushenum( L, DMG_PREVENT_PHYSICS_FORCE, "PREVENT_PHYSICS_FORCE" );
+    lua_pushenum( L, DMG_NEVERGIB, "NEVER_GIB" );
+    lua_pushenum( L, DMG_ALWAYSGIB, "ALWAYS_GIB" );
+    lua_pushenum( L, DMG_DROWN, "DROWN" );
+    lua_pushenum( L, DMG_PARALYZE, "PARALYZE" );
+    lua_pushenum( L, DMG_NERVEGAS, "NERVE_GAS" );
+    lua_pushenum( L, DMG_POISON, "POISON" );
+    lua_pushenum( L, DMG_RADIATION, "RADIATION" );
+    lua_pushenum( L, DMG_DROWNRECOVER, "DROWN_RECOVER" );
+    lua_pushenum( L, DMG_ACID, "ACID" );
+    lua_pushenum( L, DMG_SLOWBURN, "SLOW_BURN" );
+    lua_pushenum( L, DMG_REMOVENORAGDOLL, "REMOVE_NO_RAGDOLL" );
+    lua_pushenum( L, DMG_PHYSGUN, "PHYSGUN" );
+    lua_pushenum( L, DMG_PLASMA, "PLASMA" );
+    lua_pushenum( L, DMG_AIRBOAT, "AIRBOAT" );
+    lua_pushenum( L, DMG_DISSOLVE, "DISSOLVE" );
+    lua_pushenum( L, DMG_BLAST_SURFACE, "BLAST_SURFACE" );
+    lua_pushenum( L, DMG_DIRECT, "DIRECT" );
+    lua_pushenum( L, DMG_BUCKSHOT, "BUCKSHOT" );
+    lua_pushenum( L, DMG_LASTGENERICFLAG, "LAST_GENERIC_FLAG" );
+    // HL2 SPECIFIC (hl2_shareddefs.h)
+    lua_pushenum( L, DMG_SNIPER, "SNIPER" );
+    lua_pushenum( L, DMG_MISSILEDEFENSE, "MISSILE_DEFENSE" );
     LUA_SET_ENUM_LIB_END( L );
 
     return 0;

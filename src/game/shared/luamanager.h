@@ -587,6 +587,7 @@ extern ConVar gamemode;
 
 #define DEFAULT_GAMEMODE "hl2sb"
 #define CONTENT_SEARCH_PATH "GAME"
+#define CONTENT_SEARCH_PATH_LUA "LUA"
 
 LUALIB_API int luaL_checkboolean( lua_State *L, int narg );
 LUALIB_API int luaL_optboolean( lua_State *L, int narg, int def );

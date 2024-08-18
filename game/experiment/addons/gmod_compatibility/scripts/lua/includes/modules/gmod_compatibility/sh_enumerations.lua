@@ -406,3 +406,71 @@ FL_DISSOLVING = 536870912
 FL_TRANSRAGDOLL = 1073741824
 --- This moving door can't be blocked by the player
 FL_UNBLOCKABLE_BY_PLAYER = -2147483648
+
+---@enum DMG
+--- Generic damage (used by weapon_fists)
+DMG_GENERIC = 0
+--- Caused by physics interaction and ignored by airboat drivers. This is used by the Rollermine and an unused animation attack called 'Fireattack' by the Antlion Guard [ACT_RANGE_ATTACK1](https://wiki.facepunch.com/gmod/Enums/ACT)
+DMG_CRUSH = 1
+--- Bullet damage from Ceiling Turrets, the Strider, Turrets and most guns.
+DMG_BULLET = 2
+--- Used by the Stunstick, Manhacks, Antlions, Antlion Guards, Headcrabs, Fast Headcrabs, all Zombies types, Hunter, and potentially other NPCs attacks
+DMG_SLASH = 4
+--- Damage from fire
+DMG_BURN = 8
+--- Hit by a vehicle (This will need to be set for passengers of some vehicle to receive damage)
+DMG_VEHICLE = 16
+--- Fall damage
+DMG_FALL = 32
+--- Explosion damage like grenades, helicopter bombs, combine mines, Will be ignored by most vehicle passengers.
+DMG_BLAST = 64
+--- Blunt attacks such as from the Crowbar, Antlion Guard & Hunter
+DMG_CLUB = 128
+--- Electrical damage, shows smoke at the damage position and its used by Stalkers & Vortigaunts
+DMG_SHOCK = 256
+--- Sonic damage, used by the Gargantua and Houndeye NPCs
+DMG_SONIC = 512
+--- Laser damage
+DMG_ENERGYBEAM = 1024
+--- Prevent a physics force.
+DMG_PREVENT_PHYSICS_FORCE = 2048
+--- Crossbow damage, never creates gibs.
+DMG_NEVERGIB = 4096
+--- Always create gibs
+DMG_ALWAYSGIB = 8192
+--- Drown damage
+DMG_DROWN = 16384
+--- Same as DMG_POISON
+DMG_PARALYZE = 32768
+--- Neurotoxin damage
+DMG_NERVEGAS = 65536
+--- Poison damage used by Antlion Workers & Poison Headcrabs.
+DMG_POISON = 131072
+--- Radiation damage & it will be ignored by most vehicle passengers
+DMG_RADIATION = 262144
+--- Damage applied to the player to restore health after drowning
+DMG_DROWNRECOVER = 524288
+--- Toxic chemical or acid burn damage used by the Antlion Workers
+DMG_ACID = 1048576
+--- In an oven
+DMG_SLOWBURN = 2097152
+--- Don't create a ragdoll on death
+DMG_REMOVENORAGDOLL = 4194304
+--- Damage done by the gravity gun.
+DMG_PHYSGUN = 8388608
+--- Plasma damage
+DMG_PLASMA = 16777216
+--- Airboat gun damage
+DMG_AIRBOAT = 33554432
+--- Forces the entity to dissolve on death. This is what the combine ball uses when it hits a target.
+DMG_DISSOLVE = 67108864
+--- This won't hurt the player underwater
+DMG_BLAST_SURFACE = 134217728
+--- Direct damage to the entity that does not go through any damage value modifications
+DMG_DIRECT = 268435456
+--- The pellets fired from a shotgun
+DMG_BUCKSHOT = 536870912
+--- Damage from SniperRound/SniperPenetratedRound ammo types
+DMG_SNIPER = 1073741824
+--- Damage from npc_missiledefense, npc_combinegunship, or monster_mortar
+DMG_MISSILEDEFENSE = 2147483648

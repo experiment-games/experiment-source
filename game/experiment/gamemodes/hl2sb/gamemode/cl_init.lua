@@ -9,9 +9,9 @@ Include("shared.lua")
 Include("in_main.lua")
 Include("scripted_controls/buildmenu.lua")
 
-local FONTFLAG_ANTIALIAS = _E.FONTFLAG.ANTIALIAS
-local FONTFLAG_ADDITIVE = _E.FONTFLAG.ADDITIVE
-local FONTFLAG_CUSTOM = _E.FONTFLAG.CUSTOM
+local FONT_FLAG_ANTIALIAS = _E.FONT_FLAG.ANTIALIAS
+local FONT_FLAG_ADDITIVE = _E.FONT_FLAG.ADDITIVE
+local FONT_FLAG_CUSTOM = _E.FONT_FLAG.CUSTOM
 
 function GM:CreateDefaultPanels()
 	gBuildMenuInterface = Panels.CBuildMenu(Panels.GetClientLuaRootPanel(), "build")
@@ -26,7 +26,7 @@ function GM:CreateDefaultPanels()
 		0,
 		0,
 		0,
-		FONTFLAG_ANTIALIAS | FONTFLAG_ADDITIVE | FONTFLAG_CUSTOM
+		FONT_FLAG_ANTIALIAS | FONT_FLAG_ADDITIVE | FONT_FLAG_CUSTOM
 	)
 	gBuildMenuInterface.m_hFonts["BuildMenuTextLargeSelected"] = Surfaces.CreateFont()
 	Surfaces.SetFontGlyphSet(
@@ -36,7 +36,7 @@ function GM:CreateDefaultPanels()
 		0,
 		5,
 		2,
-		FONTFLAG_ANTIALIAS | FONTFLAG_ADDITIVE | FONTFLAG_CUSTOM
+		FONT_FLAG_ANTIALIAS | FONT_FLAG_ADDITIVE | FONT_FLAG_CUSTOM
 	)
 end
 
