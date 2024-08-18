@@ -7,25 +7,18 @@
 
 LUA_REGISTRATION_INIT( Predictions )
 
-// TODO: These two functions also exist in lc_prediction. Make a shared place for them.
-LUA_BINDING_BEGIN( Predictions, GetPredictionPlayer, "library", "Get prediction player." )
+LUA_BINDING_BEGIN( Predictions, IsFirstTimePredicted, "library", "Always returns true on the server. TODO: what should it do?" )
 {
-    CBaseEntity::PushLuaInstanceSafe( L, CBaseEntity::GetPredictionPlayer() );
+    // TODO: What should this return on the server?
+    lua_pushboolean( L, true );
     return 1;
 }
-LUA_BINDING_END( "Entity", "The prediction player." )
-
-LUA_BINDING_BEGIN( Predictions, GetPredictionRandomSeed, "library", "Get prediction random seed." )
-{
-    lua_pushinteger( L, CBaseEntity::GetPredictionRandomSeed() );
-    return 1;
-}
-LUA_BINDING_END( "integer", "The prediction random seed." )
+LUA_BINDING_END( "boolean", "Always true on the server." )
 
 /*
 ** Open prediction library
 */
-LUALIB_API int luaopen_prediction( lua_State *L )
+LUALIB_API int luaopen_Predictions( lua_State *L )
 {
     LUA_REGISTRATION_COMMIT_LIBRARY( Predictions );
     return 1;

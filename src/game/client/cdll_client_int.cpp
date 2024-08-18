@@ -1848,14 +1848,14 @@ void CHLClient::LevelInitPreEntity( char const *pMapName )
 //-----------------------------------------------------------------------------
 void CHLClient::LevelInitPostEntity()
 {
+    IGameSystem::LevelInitPostEntityAllSystems();
+    C_PhysPropClientside::RecreateAll();
+    internalCenterPrint->Clear();
+
 #ifdef LUA_SDK
     LUA_CALL_HOOK_BEGIN( "LevelInitPostEntity", "After loading entities." );
     LUA_CALL_HOOK_END( 0, 0 );
 #endif
-
-    IGameSystem::LevelInitPostEntityAllSystems();
-    C_PhysPropClientside::RecreateAll();
-    internalCenterPrint->Clear();
 }
 
 //-----------------------------------------------------------------------------

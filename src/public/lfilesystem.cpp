@@ -564,9 +564,6 @@ LUA_BINDING_BEGIN( Files, Find, "library", "Find files." )
 
     char const *fn = filesystem->FindFirstEx( path, pathId, &fh );
 
-    char allSearchPaths[MAX_PATH * 50];
-    filesystem->GetSearchPath( pathId, false, allSearchPaths, sizeof( allSearchPaths ) );
-
     lua_createtable( L, 0, 0 );  // files
     lua_createtable( L, 0, 0 );  // directories
 

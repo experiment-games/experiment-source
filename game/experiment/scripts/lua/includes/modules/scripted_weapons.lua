@@ -42,6 +42,28 @@ function MODULE.GetList()
 	return table.Copy(MODULE.registeredWeapons)
 end
 
+--- Checks if the entity class is based on another entity class
+--- @param className string Name of the entity
+--- @param potentialBaseClassName string Name of the potential base entity
+--- @return boolean
+function MODULE.IsBasedOn(className, potentialBaseClassName)
+	local entityTable = MODULE.Get(className)
+
+	if (not entityTable) then
+		return false
+	end
+
+	if (entityTable.Base == potentialBaseClassName) then
+		return true
+	end
+
+	if (entityTable.Base ~= className) then
+		return MODULE.IsBasedOn(entityTable.Base, potentialBaseClassName)
+	end
+
+	return false
+end
+
 --- Registers a weapon.
 --- @param weaponTable table
 --- @param className string

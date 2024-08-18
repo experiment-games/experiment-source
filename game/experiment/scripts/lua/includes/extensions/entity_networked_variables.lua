@@ -20,9 +20,9 @@ local Networks = require("networks")
 local Hooks = require("hooks")
 
 local debugPrint = function(...)
-    if (not EntityNetworkedVariablesDebug) then
-        return
-    end
+	if (not EntityNetworkedVariablesDebug) then
+		return
+	end
 
 	local prefix = CLIENT and "Client]" or "Server]"
 	print("[EntityNetworking ", prefix, ...)
@@ -32,49 +32,54 @@ end
 --- @param key string
 --- @param value any
 function ENTITY_META:SetNetworkedVariable(key, value)
-    if (not self.__networkedVariables) then
-        self.__networkedVariables = {}
-    end
+	if (not self.__networkedVariables) then
+		self.__networkedVariables = {}
+	end
 
-    self.__networkedVariables[key] = value
+	self.__networkedVariables[key] = value
 
-    if (not SERVER) then
-        -- TODO: Okay so the server should be updating the client sometimes,
+	if (not SERVER) then
+		-- TODO: Okay so the server should be updating the client sometimes,
 		-- otherwise clientside SetNetworkedVariables will differ from the server for too long.
-        return
-    end
+		return
+	end
 
 	debugPrint("Setting networked variable", self, key, value)
 
-    Networks.Start("EntityNetworkedVariable")
-    Networks.WriteEntity(self)
-    Networks.WriteString(key)
-    Networks.WriteType(value)
-    Networks.BroadcastPVS(self)
+	Networks.Start("EntityNetworkedVariable")
+	Networks.WriteEntity(self)
+	Networks.WriteString(key)
+	Networks.WriteType(value)
+	Networks.BroadcastPVS(self)
 end
 
 --- Gets a networked variable from the entity
 --- @param key string
+--- @param defaultValue any
 --- @return any
-function ENTITY_META:GetNetworkedVariable(key)
-    if (not self.__networkedVariables) then
-        return nil
-    end
+function ENTITY_META:GetNetworkedVariable(key, defaultValue)
+	if (not self.__networkedVariables) then
+		return defaultValue
+	end
 
-    return self.__networkedVariables[key]
+	if (self.__networkedVariables[key] == nil) then
+		return defaultValue
+	end
+
+	return self.__networkedVariables[key]
 end
 
 --- Sets up a callback for when a networked variable changes
 --- @param key string
 --- @param callback fun(entity: Entity, key: string, oldValue: any, newValue: any)
 function ENTITY_META:SetNetworkedVariableCallback(key, callback)
-    if (not self.__networkedVarCallbacks) then
-        self.__networkedVarCallbacks = {}
-    end
+	if (not self.__networkedVarCallbacks) then
+		self.__networkedVarCallbacks = {}
+	end
 
 	debugPrint("Setting networked variable callback", key)
 
-    self.__networkedVarCallbacks[key] = callback
+	self.__networkedVarCallbacks[key] = callback
 end
 
 --- Calls all callbacks for the provided key on the entity
@@ -82,15 +87,15 @@ end
 --- @param oldValue any
 --- @param newValue any
 function ENTITY_META:CallNetworkedVariableCallbacks(key, oldValue, newValue)
-    if (not self.__networkedVarCallbacks) then
-        return
-    end
+	if (not self.__networkedVarCallbacks) then
+		return
+	end
 
-    debugPrint("Calling networked variable callbacks", key)
+	debugPrint("Calling networked variable callbacks", key)
 
-    for _, callback in pairs(self.__networkedVarCallbacks) do
-        callback(self, key, oldValue, newValue)
-    end
+	for _, callback in pairs(self.__networkedVarCallbacks) do
+		callback(self, key, oldValue, newValue)
+	end
 end
 
 if (SERVER) then
@@ -124,15 +129,15 @@ local dataTypes = {
 }
 
 for _, dataType in ipairs(dataTypes) do
-    ENTITY_META["SetNetworked" .. dataType] = ENTITY_META.SetNetworkedVariable
-    ENTITY_META["SetNetworked2" .. dataType] = ENTITY_META.SetNetworkedVariable
-    ENTITY_META["SetNW" .. dataType] = ENTITY_META.SetNetworkedVariable
-    ENTITY_META["SetNW2" .. dataType] = ENTITY_META.SetNetworkedVariable
+	ENTITY_META["SetNetworked" .. dataType] = ENTITY_META.SetNetworkedVariable
+	ENTITY_META["SetNetworked2" .. dataType] = ENTITY_META.SetNetworkedVariable
+	ENTITY_META["SetNW" .. dataType] = ENTITY_META.SetNetworkedVariable
+	ENTITY_META["SetNW2" .. dataType] = ENTITY_META.SetNetworkedVariable
 
-    ENTITY_META["GetNetworked" .. dataType] = ENTITY_META.GetNetworkedVariable
-    ENTITY_META["GetNetworked2" .. dataType] = ENTITY_META.GetNetworkedVariable
-    ENTITY_META["GetNW" .. dataType] = ENTITY_META.GetNetworkedVariable
-    ENTITY_META["GetNW2" .. dataType] = ENTITY_META.GetNetworkedVariable
+	ENTITY_META["GetNetworked" .. dataType] = ENTITY_META.GetNetworkedVariable
+	ENTITY_META["GetNetworked2" .. dataType] = ENTITY_META.GetNetworkedVariable
+	ENTITY_META["GetNW" .. dataType] = ENTITY_META.GetNetworkedVariable
+	ENTITY_META["GetNW2" .. dataType] = ENTITY_META.GetNetworkedVariable
 end
 
 ENTITY_META.SetNetworkedVarProxy = ENTITY_META.SetNetworkedVariableCallback

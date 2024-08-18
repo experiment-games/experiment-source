@@ -22,6 +22,20 @@ LUALIB_API int luaopen_SharedEnumerations( lua_State *L )
     lua_pushenum( L, ShakeCommand_t::SHAKE_START_NORUMBLE, "START_NO_RUMBLE" );
     LUA_SET_ENUM_LIB_END( L );
 
+    LUA_SET_ENUM_LIB_BEGIN( L, "SOUND_CHANNEL" );
+    lua_pushenum( L, SOUND_CHANNEL::CHAN_REPLACE, "REPLACE" );
+    lua_pushenum( L, SOUND_CHANNEL::CHAN_AUTO, "AUTO" );
+    lua_pushenum( L, SOUND_CHANNEL::CHAN_WEAPON, "WEAPON" );
+    lua_pushenum( L, SOUND_CHANNEL::CHAN_VOICE, "VOICE" );
+    lua_pushenum( L, SOUND_CHANNEL::CHAN_ITEM, "ITEM" );
+    lua_pushenum( L, SOUND_CHANNEL::CHAN_BODY, "BODY" );
+    lua_pushenum( L, SOUND_CHANNEL::CHAN_STREAM, "STREAM" );
+    lua_pushenum( L, SOUND_CHANNEL::CHAN_STATIC, "STATIC" );
+    lua_pushenum( L, SOUND_CHANNEL::CHAN_VOICE2, "VOICE2" );
+    lua_pushenum( L, SOUND_CHANNEL::CHAN_VOICE_BASE, "VOICE_BASE" );
+    lua_pushenum( L, SOUND_CHANNEL::CHAN_USER_BASE, "USER_BASE" );
+    LUA_SET_ENUM_LIB_END( L );
+
     LUA_SET_ENUM_LIB_BEGIN( L, "RENDER_MODE" );
     lua_pushenum( L, RenderMode_t::kRenderNormal, "NORMAL" );
     lua_pushenum( L, RenderMode_t::kRenderTransColor, "TRANSPARENT_COLOR" );

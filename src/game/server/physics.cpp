@@ -470,6 +470,15 @@ int CCollisionEvent::ShouldCollide_2( IPhysicsObject *pObj0, IPhysicsObject *pOb
 	if ( !pEntity0 || !pEntity1 )
 		return 1;
 
+#if defined( LUA_SDK )
+  LUA_CALL_HOOK_BEGIN( "ShouldCollide", "Called when two entities are about to collide. Return false to prevent the collision." );
+  CBaseEntity::PushLuaInstanceSafe( L, pEntity0 ); // doc: entity1 (The entity colliding)
+  CBaseEntity::PushLuaInstanceSafe( L, pEntity1 ); // doc: entity2 (The entity colliding with entity1)
+  LUA_CALL_HOOK_END( 2, 1 );
+
+  LUA_RETURN_BOOLEAN();
+#endif
+
 	unsigned short gameFlags0 = pObj0->GetGameFlags();
 	unsigned short gameFlags1 = pObj1->GetGameFlags();
 

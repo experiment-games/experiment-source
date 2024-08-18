@@ -92,6 +92,7 @@ Additionally, we use the following conventions:
     - `Vcd` (short for Valve Choreography Data) and other valve formats (e.g.
       `Vmt`, `Vtf`, `Vpk`, `Mdl`, etc.)
     - `Vgui`
+    - `Vs` for versus
 
 - Abbreviations should be treated as words when capitalizing:
 

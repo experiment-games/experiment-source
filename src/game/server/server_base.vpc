@@ -741,6 +741,7 @@ $Project
             $File "$SRCDIR\public\vphysics\lperformance.cpp"
             $File "$SRCDIR\public\vphysics\lperformance.h"
             $File "lprediction.cpp"
+            $File "$SRCDIR\game\shared\lprediction_shared.cpp"
             $File "lplayer.cpp"
             $File "$SRCDIR\game\shared\lrecipientfilter.cpp"
             $File "$SRCDIR\game\shared\lrecipientfilter.h"
@@ -773,6 +774,10 @@ $Project
             $File "$SRCDIR\public\mathlib\lvmatrix.cpp"
             $File "$SRCDIR\public\mathlib\lvmatrix.h"
             $File "$SRCDIR\public\lvphysics_interface.cpp"
+            $File "$SRCDIR\public\lgameevents.cpp"
+            $File "$SRCDIR\public\lgameevents.h"
+            $File "$SRCDIR\public\lsounds.cpp"
+            $File "$SRCDIR\public\lsounds.h"
             $File "$SRCDIR\public\XUnzip.cpp"
             $File "$SRCDIR\public\zip_utils.cpp"
         }

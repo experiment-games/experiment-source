@@ -57,20 +57,36 @@ LUA_API lua_Physics_performanceparams_t lua_toperformanceparams( lua_State *L, i
 LUA_API void lua_pushperformanceparams( lua_State *L, lua_Physics_performanceparams_t *pOutput )
 {
     lua_newtable( L );
-    lua_pushinteger( L, pOutput->maxCollisionChecksPerTimestep );
-    lua_setfield( L, -2, "maxCollisionsPerObjectPerTimestep" );
-    lua_pushinteger( L, pOutput->maxCollisionChecksPerTimestep );
-    lua_setfield( L, -2, "maxCollisionChecksPerTimestep" );
-    lua_pushnumber( L, pOutput->maxVelocity );
-    lua_setfield( L, -2, "maxVelocity" );
-    lua_pushnumber( L, pOutput->maxAngularVelocity );
-    lua_setfield( L, -2, "maxAngularVelocity" );
+
     lua_pushnumber( L, pOutput->lookAheadTimeObjectsVsWorld );
-    lua_setfield( L, -2, "lookAheadTimeObjectsVsWorld" );
+    lua_setfield( L, -2, "LookAheadTimeObjectsVsWorld" );
     lua_pushnumber( L, pOutput->lookAheadTimeObjectsVsObject );
-    lua_setfield( L, -2, "lookAheadTimeObjectsVsObject" );
+    lua_setfield( L, -2, "LookAheadTimeObjectsVsObject" );
+
+    lua_pushinteger( L, pOutput->maxCollisionChecksPerTimestep );
+    lua_setfield( L, -2, "MaximumCollisionsPerObjectPerTimestep" );
+    lua_pushinteger( L, pOutput->maxCollisionChecksPerTimestep );
+    lua_setfield( L, -2, "MaximumCollisionChecksPerTimestep" );
+    lua_pushnumber( L, pOutput->maxAngularVelocity );
+    lua_setfield( L, -2, "MaximumAngularVelocity" );
+    lua_pushnumber( L, pOutput->maxVelocity );
+    lua_setfield( L, -2, "MaximumVelocity" );
     lua_pushnumber( L, pOutput->minFrictionMass );
-    lua_setfield( L, -2, "minFrictionMass" );
+    lua_setfield( L, -2, "MinimumFrictionMass" );
     lua_pushnumber( L, pOutput->maxFrictionMass );
-    lua_setfield( L, -2, "maxFrictionMass" );
+    lua_setfield( L, -2, "MaximumFrictionMass" );
+
+    // GMOD compatibility naming:
+    lua_pushinteger( L, pOutput->maxCollisionChecksPerTimestep );
+    lua_setfield( L, -2, "MaxCollisionsPerObjectPerTimestep" );
+    lua_pushinteger( L, pOutput->maxCollisionChecksPerTimestep );
+    lua_setfield( L, -2, "MaxCollisionChecksPerTimestep" );
+    lua_pushnumber( L, pOutput->maxAngularVelocity );
+    lua_setfield( L, -2, "MaxAngularVelocity" );
+    lua_pushnumber( L, pOutput->maxVelocity );
+    lua_setfield( L, -2, "MaxVelocity" );
+    lua_pushnumber( L, pOutput->minFrictionMass );
+    lua_setfield( L, -2, "MinFrictionMass" );
+    lua_pushnumber( L, pOutput->maxFrictionMass );
+    lua_setfield( L, -2, "MaxFrictionMass" );
 }

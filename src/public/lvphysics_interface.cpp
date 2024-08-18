@@ -1345,13 +1345,6 @@ LUA_BINDING_BEGIN( PhysicsSurfacePropertiesHandle, GetSurfaceIndex, "class", "Ge
 }
 LUA_BINDING_END( "integer", "The surface index." )
 
-LUA_BINDING_BEGIN( PhysicsSurfacePropertiesHandle, ParseSurfaceData, "class", "Parses surface data" )
-{
-    lua_pushinteger( L, physprops->ParseSurfaceData( LUA_BINDING_ARGUMENT( luaL_checkstring, 1, "stringData" ), LUA_BINDING_ARGUMENT( luaL_checkstring, 2, "textFileName" ) ) );
-    return 1;
-}
-LUA_BINDING_END( "integer", "The surface data." )
-
 LUA_BINDING_BEGIN( PhysicsSurfacePropertiesHandle, SurfacePropCount, "class", "Gets the surface property count" )
 {
     lua_pushinteger( L, physprops->SurfacePropCount() );
@@ -1383,6 +1376,13 @@ LUA_BINDING_BEGIN( PhysicsSurfaceProperties, GetGlobal, "library", "Gets the glo
     return 1;
 }
 LUA_BINDING_END( "PhysicsSurfacePropertiesHandle", "The global surface properties." )
+
+LUA_BINDING_BEGIN( PhysicsSurfaceProperties, ParseSurfaceData, "class", "Parses surface data" )
+{
+    lua_pushinteger( L, physprops->ParseSurfaceData( LUA_BINDING_ARGUMENT( luaL_checkstring, 1, "stringData" ), LUA_BINDING_ARGUMENT( luaL_checkstring, 2, "textFileName" ) ) );
+    return 1;
+}
+LUA_BINDING_END( "integer", "The surface data." )
 
 /*
 ** Open IPhysicsSurfaceProps object

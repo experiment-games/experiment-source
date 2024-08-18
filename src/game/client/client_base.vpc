@@ -579,6 +579,7 @@ $Project
             $File "$SRCDIR\public\lnetworkstringtabledefs.cpp"
             $File "$SRCDIR\public\vphysics\lperformance.cpp"
             $File "lc_prediction.cpp"
+            $File "$SRCDIR\game\shared\lprediction_shared.cpp"
             $File "$SRCDIR\public\vstdlib\lrandom.cpp"
             $File "$SRCDIR\game\shared\lshareddefs.cpp"
             $File "$SRCDIR\game\shared\lsrcinit.cpp"
@@ -606,6 +607,10 @@ $Project
             $File "$SRCDIR\public\vgui\LVGUI.cpp"
             $File "$SRCDIR\public\mathlib\lvmatrix.cpp"
             $File "$SRCDIR\public\lvphysics_interface.cpp"
+            $File "$SRCDIR\public\lgameevents.cpp"
+            $File "$SRCDIR\public\lgameevents.h"
+            $File "$SRCDIR\public\lsounds.cpp"
+            $File "$SRCDIR\public\lsounds.h"
             $File "$SRCDIR\public\XUnzip.cpp"
             $File "$SRCDIR\public\zip_utils.cpp"
         }

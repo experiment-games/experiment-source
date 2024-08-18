@@ -94,8 +94,9 @@ local enumsToMergeWithKey = {
 	MOVE_TYPE = "MOVETYPE",
 	OBSERVER_MODE = "OBS_MODE",
 	SOLID = "SOLID",
+  SOUND_CHANNEL = "CHAN",
   SURFACE = "SURF",
-  
+
   DAMAGE_TYPE = {"DMG", stripUnderscores},
   HIT_GROUP = {"HITGROUP", stripUnderscores},
   MATERIAL_TYPE = {"MAT", stripUnderscores},

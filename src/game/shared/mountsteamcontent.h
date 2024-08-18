@@ -60,6 +60,8 @@ struct mountableGame_t
     }
 };
 
+void SetupRootSearchPaths( const char *gamePath, lua_State *L );
+void RemoveRootSearchPaths( const char *gamePath, lua_State *L );
 void InitializeGameContentMounting();
 bool MountGameContentByAppId( int nAppId );
 bool UnmountGameContentByAppId( int nAppId );

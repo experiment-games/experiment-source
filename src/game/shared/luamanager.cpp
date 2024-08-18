@@ -28,6 +28,7 @@
 #include <cpng.h>
 #include <mountaddons.h>
 #include <steam/isteamhttp.h>
+#include <lgameevents.h>
 
 #ifdef _WIN32
 #include <winlite.h>
@@ -42,6 +43,7 @@ extern "C"
 
 // memdbgon must be the last include file in a .cpp file!!!
 #include "tier0/memdbgon.h"
+#include <mountsteamcontent.h>
 
 static FileHandle_t g_LuaLogFileHandle = FILESYSTEM_INVALID_HANDLE;
 
@@ -84,8 +86,6 @@ static void LuaLogToFile( const char *format, ... )
 
 #define SHOW_LUA_MESSAGE( format, ... ) \
     Msg( "\n[Lua] " format "\n", ##__VA_ARGS__ );
-
-static char contentSearchPath[MAX_PATH];
 
 static void tag_error( lua_State *L, int narg, int tag )
 {
@@ -794,6 +794,8 @@ void luasrc_init( void )
 
     RegisterLuaUserMessages();
 
+    InitializeLuaGameEventHandler( L );
+
     Msg( "Lua initialized (" LUA_VERSION ")\n" );
 
     SetupMountedAddons( L );
@@ -849,15 +851,11 @@ void luasrc_ui_disable( void )
 void luasrc_shutdown( void )
 {
 #ifdef CLIENT_DLL
-    Msg( "Lua shutdown - Client\n" );
-
     delete g_pClientLuaPanel;
     g_pClientLuaPanel = NULL;
 
     delete g_pClientLuaPanelHUD;
     g_pClientLuaPanelHUD = NULL;
-#else
-    Msg( "Lua shutdown - Server\n" );
 #endif
 
     if ( g_LuaLogFileHandle != FILESYSTEM_INVALID_HANDLE )
@@ -872,11 +870,35 @@ void luasrc_shutdown( void )
     LUA_CALL_HOOK_BEGIN( "ShutDown" );
     LUA_CALL_HOOK_END( 0, 0 );
 
+#ifdef CLIENT_DLL
+    Msg( "Lua shutdown - Client\n" );
+#else
+    Msg( "Lua shutdown - Server\n" );
+#endif
+
+    ShutdownLuaGameEventHandler( L );
+
     luasrc_UnloadLoadedModules( L );
 
     g_bLuaInitialized = false;
 
-    filesystem->RemoveSearchPath( contentSearchPath, CONTENT_SEARCH_PATH );
+    // Remove the content searchpath for any load gamemode
+    lua_getglobal( L, "GAMEMODE" );
+
+    if ( lua_istable( L, -1 ) )
+    {
+        lua_getfield( L, -1, "Folder" );
+        const char *gamemodeFolder = lua_tostring( L, -1 );
+        lua_pop( L, 1 );  // Remove the folder name
+
+        char contentSearchPath[MAX_PATH];
+        Q_strcpy( contentSearchPath, gamemodeFolder );
+        Q_strncat( contentSearchPath, "\\content", sizeof( contentSearchPath ) );
+
+        RemoveRootSearchPaths( contentSearchPath, L );
+    }
+
+    lua_pop( L, 1 );  // Remove the GAMEMODE/non-table value
 
     ResetConCommandDatabase();
 
@@ -2057,18 +2079,17 @@ bool luasrc_SetGamemode( const char *gamemodeName )
     lua_pushstring( L, gamemodeName );  // Push gamemode name
     luasrc_pcall( L, 1, 0 );            // Call gamemodes.InternalSetActiveName(gamemode)
 
-#ifdef CLIENT_DLL
-    const char *gamePath = engine->GetGameDirectory();
-#else
-    char gamePath[MAX_PATH];
-    engine->GetGameDir( gamePath, MAX_PATH );
-#endif
-    Q_strncpy( contentSearchPath, gamePath, sizeof( contentSearchPath ) );
-    Q_strncat( contentSearchPath, LUA_PATH_GAMEMODES "\\", sizeof( contentSearchPath ) );
-    Q_strncat( contentSearchPath, gamemodeName, sizeof( contentSearchPath ) );
-    Q_strncat( contentSearchPath, "\\content", sizeof( contentSearchPath ) );
+    // Get the folder name of the gamemode
+    lua_getglobal( L, "GAMEMODE" );
+    lua_getfield( L, -1, "Folder" );
+    const char *gamemodeFolder = lua_tostring( L, -1 );
+    lua_pop( L, 2 );  // Remove the folder name and GAMEMODE table
 
-    filesystem->AddSearchPath( contentSearchPath, "GAME" );
+    char contentSearchPath[MAX_PATH];
+    Q_strcpy( contentSearchPath, gamemodeFolder );
+    Q_strncat( contentSearchPath, "content", sizeof( contentSearchPath ) );
+
+    SetupRootSearchPaths( contentSearchPath, L );
 
     char loadPath[MAX_PATH];
     Q_snprintf( loadPath, sizeof( loadPath ), "%s\\", contentSearchPath );
@@ -2359,173 +2380,173 @@ CON_COMMAND( lua_dumpstack, "Prints the Lua stack" )
 #endif
 #endif
 
-#ifdef CLIENT_DLL
-#define LUA_GMOD_REPOSITORY_DOWNLOAD "https://github.com/Facepunch/garrysmod/archive/%s.zip"
-#define LUA_GMOD_REPOSITORY_HASH "430fc8a2cf4c25873766b1d1a0df1cb94c68d5b7"
-
-class GmodCompatDownloader
-{
-   public:
-    void OnCompleted( HTTPRequestCompleted_t *arg, bool bFailed )
-    {
-        ISteamHTTP *pHTTP = steamapicontext->SteamHTTP();
-
-        if ( arg->m_eStatusCode != k_EHTTPStatusCode200OK )
-        {
-            Warning( "Failed to download the GMod repository! Status code: %d\n", arg->m_eStatusCode );
-            pHTTP->ReleaseHTTPRequest( arg->m_hRequest );
-            delete this;
-            return;
-        }
-
-        if ( !arg->m_bRequestSuccessful )
-        {
-            Warning( "Failed to download the GMod repository! Request unsuccessful\n" );
-            pHTTP->ReleaseHTTPRequest( arg->m_hRequest );
-            delete this;
-            return;
-        }
-
-        if ( bFailed )
-        {
-            Warning( "Failed to download the GMod repository! Request failed\n" );
-            pHTTP->ReleaseHTTPRequest( arg->m_hRequest );
-            delete this;
-            return;
-        }
-
-        uint32 bodySize;
-        if ( !pHTTP->GetHTTPResponseBodySize( arg->m_hRequest, &bodySize ) )
-        {
-            Assert( 0 );
-            delete this;
-            return;
-        }
-
-        // Save the downloaded file to the addons folder
-        CUtlBuffer bodyBuffer;
-        bodyBuffer.EnsureCapacity( bodySize );
-
-        if ( !pHTTP->GetHTTPResponseBodyData( arg->m_hRequest, ( uint8 * )bodyBuffer.Base(), bodySize ) )
-        {
-            Assert( 0 );
-            bodyBuffer.Purge();
-            delete this;
-            return;
-        }
-
-        pHTTP->ReleaseHTTPRequest( arg->m_hRequest );
-
-        // Store the zip file to disk so we can then extract it
-        const char *zipPath = "addons/garrysmod.zip";
-
-        bodyBuffer.SeekPut( CUtlBuffer::SEEK_HEAD, bodySize );
-        filesystem->WriteFile( zipPath, CONTENT_SEARCH_PATH, bodyBuffer );
-
-        // This is the name of the folder from the zip that we actually want to extract to 'addons/garrysmod'
-        char desiredFolder[MAX_PATH];
-        Q_snprintf( desiredFolder, sizeof( desiredFolder ), "garrysmod-%s/garrysmod", LUA_GMOD_REPOSITORY_HASH );
-
-        // Extract the downloaded zip file, but only the files in the desired folder
-        char fullZipPath[MAX_PATH];
-        filesystem->RelativePathToFullPath( zipPath, CONTENT_SEARCH_PATH, fullZipPath, sizeof( fullZipPath ) );
-
-#ifdef CLIENT_DLL
-        const char *gamePath = engine->GetGameDirectory();
-#else
-        char gamePath[MAX_PATH];
-        engine->GetGameDir( gamePath, MAX_PATH );
-#endif
-
-        HZIP hZipFile = OpenZip( fullZipPath, 0, ZIP_FILENAME );
-        ZIPENTRY zipEntry;
-
-        GetZipItem( hZipFile, -1, &zipEntry );
-
-        int numItems = zipEntry.index;
-
-        for ( int i = 0; i < numItems; i++ )
-        {
-            GetZipItem( hZipFile, i, &zipEntry );
-
-            if ( ( zipEntry.attr & FILE_ATTRIBUTE_DIRECTORY ) == FILE_ATTRIBUTE_DIRECTORY )
-                continue;  // skip directories
-
-            if ( Q_strnicmp( zipEntry.name, desiredFolder, Q_strlen( desiredFolder ) ) != 0 )
-                continue;  // skip files not in the desired folder
-
-            char pathWithoutDesiredFolder[MAX_PATH];
-            Q_strncpy( pathWithoutDesiredFolder, zipEntry.name + Q_strlen( desiredFolder ) + 1, sizeof( pathWithoutDesiredFolder ) );
-
-            char pathWithoutFileName[MAX_PATH];
-            Q_snprintf( pathWithoutFileName, sizeof( pathWithoutFileName ), "addons\\garrysmod\\%s", pathWithoutDesiredFolder );
-            Q_StripFilename( pathWithoutFileName );
-
-            filesystem->CreateDirHierarchy( pathWithoutFileName, CONTENT_SEARCH_PATH );
-
-            char fullPath[MAX_PATH];
-            Q_snprintf( fullPath, sizeof( fullPath ), "%s\\addons\\garrysmod\\%s", gamePath, pathWithoutDesiredFolder );
-
-            UnzipItem( hZipFile, i, fullPath, 0, ZIP_FILENAME );
-        }
-
-        CloseZip( hZipFile );
-
-        // Remove the downloaded zip file
-        filesystem->RemoveFile( zipPath, CONTENT_SEARCH_PATH );
-
-        Msg( "Successfully downloaded the GMod repository to 'garrysmod' in the 'addons' folder\n" );
-
-        MountAddon( "garrysmod" );
-
-        delete this;
-    }
-};
-
-CCallResult< GmodCompatDownloader, HTTPRequestCompleted_t > callback;
-
-// Used in GameUI to download the GMod repository to the addons folder
-CON_COMMAND( lua_download_gmod_repository, "Downloads the GMod repository to 'garrysmod' in your addons folder" )
-{
-    ISteamHTTP *pHTTP = steamapicontext->SteamHTTP();
-
-    if ( !pHTTP )
-    {
-        Warning( "Steam HTTP interface not available\n" );
-        return;
-    }
-
-    if ( filesystem->IsDirectory( "addons/garrysmod", CONTENT_SEARCH_PATH ) )
-    {
-        Warning( "The 'garrysmod' folder already exists in the 'addons' folder. Remove it manually if you want to download the garrysmod repo from github again.\n" );
-        return;
-    }
-
-    char downloadUrl[MAX_PATH];
-    Q_snprintf( downloadUrl, sizeof( downloadUrl ), LUA_GMOD_REPOSITORY_DOWNLOAD, LUA_GMOD_REPOSITORY_HASH );
-
-    HTTPRequestHandle hRequest = pHTTP->CreateHTTPRequest( k_EHTTPMethodGET, downloadUrl );
-
-    if ( !hRequest )
-    {
-        Warning( "Failed to create HTTP request to %s\n", downloadUrl );
-        return;
-    }
-
-    pHTTP->SetHTTPRequestGetOrPostParameter( hRequest, "Accept-Encoding", "gzip, deflate" );
-    pHTTP->SetHTTPRequestGetOrPostParameter( hRequest, "User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36" );
-
-    SteamAPICall_t hCall;
-
-    if ( !pHTTP->SendHTTPRequest( hRequest, &hCall ) )
-    {
-        Warning( "Failed to send HTTP request to %s\n", downloadUrl );
-        pHTTP->ReleaseHTTPRequest( hRequest );
-        return;
-    }
-
-    Warning( "Downloading the GMod repository from %s\n", downloadUrl );
-
-    callback.Set( hCall, new GmodCompatDownloader(), &GmodCompatDownloader::OnCompleted );
-}
-#endif
+//#ifdef CLIENT_DLL
+//#define LUA_GMOD_REPOSITORY_DOWNLOAD "https://github.com/Facepunch/garrysmod/archive/%s.zip"
+//#define LUA_GMOD_REPOSITORY_HASH "430fc8a2cf4c25873766b1d1a0df1cb94c68d5b7"
+//
+//class GmodCompatDownloader
+//{
+//   public:
+//    void OnCompleted( HTTPRequestCompleted_t *arg, bool bFailed )
+//    {
+//        ISteamHTTP *pHTTP = steamapicontext->SteamHTTP();
+//
+//        if ( arg->m_eStatusCode != k_EHTTPStatusCode200OK )
+//        {
+//            Warning( "Failed to download the GMod repository! Status code: %d\n", arg->m_eStatusCode );
+//            pHTTP->ReleaseHTTPRequest( arg->m_hRequest );
+//            delete this;
+//            return;
+//        }
+//
+//        if ( !arg->m_bRequestSuccessful )
+//        {
+//            Warning( "Failed to download the GMod repository! Request unsuccessful\n" );
+//            pHTTP->ReleaseHTTPRequest( arg->m_hRequest );
+//            delete this;
+//            return;
+//        }
+//
+//        if ( bFailed )
+//        {
+//            Warning( "Failed to download the GMod repository! Request failed\n" );
+//            pHTTP->ReleaseHTTPRequest( arg->m_hRequest );
+//            delete this;
+//            return;
+//        }
+//
+//        uint32 bodySize;
+//        if ( !pHTTP->GetHTTPResponseBodySize( arg->m_hRequest, &bodySize ) )
+//        {
+//            Assert( 0 );
+//            delete this;
+//            return;
+//        }
+//
+//        // Save the downloaded file to the addons folder
+//        CUtlBuffer bodyBuffer;
+//        bodyBuffer.EnsureCapacity( bodySize );
+//
+//        if ( !pHTTP->GetHTTPResponseBodyData( arg->m_hRequest, ( uint8 * )bodyBuffer.Base(), bodySize ) )
+//        {
+//            Assert( 0 );
+//            bodyBuffer.Purge();
+//            delete this;
+//            return;
+//        }
+//
+//        pHTTP->ReleaseHTTPRequest( arg->m_hRequest );
+//
+//        // Store the zip file to disk so we can then extract it
+//        const char *zipPath = "addons/garrysmod.zip";
+//
+//        bodyBuffer.SeekPut( CUtlBuffer::SEEK_HEAD, bodySize );
+//        filesystem->WriteFile( zipPath, CONTENT_SEARCH_PATH, bodyBuffer );
+//
+//        // This is the name of the folder from the zip that we actually want to extract to 'addons/garrysmod'
+//        char desiredFolder[MAX_PATH];
+//        Q_snprintf( desiredFolder, sizeof( desiredFolder ), "garrysmod-%s/garrysmod", LUA_GMOD_REPOSITORY_HASH );
+//
+//        // Extract the downloaded zip file, but only the files in the desired folder
+//        char fullZipPath[MAX_PATH];
+//        filesystem->RelativePathToFullPath( zipPath, CONTENT_SEARCH_PATH, fullZipPath, sizeof( fullZipPath ) );
+//
+//#ifdef CLIENT_DLL
+//        const char *gamePath = engine->GetGameDirectory();
+//#else
+//        char gamePath[MAX_PATH];
+//        engine->GetGameDir( gamePath, MAX_PATH );
+//#endif
+//
+//        HZIP hZipFile = OpenZip( fullZipPath, 0, ZIP_FILENAME );
+//        ZIPENTRY zipEntry;
+//
+//        GetZipItem( hZipFile, -1, &zipEntry );
+//
+//        int numItems = zipEntry.index;
+//
+//        for ( int i = 0; i < numItems; i++ )
+//        {
+//            GetZipItem( hZipFile, i, &zipEntry );
+//
+//            if ( ( zipEntry.attr & FILE_ATTRIBUTE_DIRECTORY ) == FILE_ATTRIBUTE_DIRECTORY )
+//                continue;  // skip directories
+//
+//            if ( Q_strnicmp( zipEntry.name, desiredFolder, Q_strlen( desiredFolder ) ) != 0 )
+//                continue;  // skip files not in the desired folder
+//
+//            char pathWithoutDesiredFolder[MAX_PATH];
+//            Q_strncpy( pathWithoutDesiredFolder, zipEntry.name + Q_strlen( desiredFolder ) + 1, sizeof( pathWithoutDesiredFolder ) );
+//
+//            char pathWithoutFileName[MAX_PATH];
+//            Q_snprintf( pathWithoutFileName, sizeof( pathWithoutFileName ), "addons\\garrysmod\\%s", pathWithoutDesiredFolder );
+//            Q_StripFilename( pathWithoutFileName );
+//
+//            filesystem->CreateDirHierarchy( pathWithoutFileName, CONTENT_SEARCH_PATH );
+//
+//            char fullPath[MAX_PATH];
+//            Q_snprintf( fullPath, sizeof( fullPath ), "%s\\addons\\garrysmod\\%s", gamePath, pathWithoutDesiredFolder );
+//
+//            UnzipItem( hZipFile, i, fullPath, 0, ZIP_FILENAME );
+//        }
+//
+//        CloseZip( hZipFile );
+//
+//        // Remove the downloaded zip file
+//        filesystem->RemoveFile( zipPath, CONTENT_SEARCH_PATH );
+//
+//        Msg( "Successfully downloaded the GMod repository to 'garrysmod' in the 'addons' folder\n" );
+//
+//        MountAddon( "garrysmod" );
+//
+//        delete this;
+//    }
+//};
+//
+//CCallResult< GmodCompatDownloader, HTTPRequestCompleted_t > callback;
+//
+//// Used in GameUI to download the GMod repository to the addons folder
+//CON_COMMAND( lua_download_gmod_repository, "Downloads the GMod repository to 'garrysmod' in your addons folder" )
+//{
+//    ISteamHTTP *pHTTP = steamapicontext->SteamHTTP();
+//
+//    if ( !pHTTP )
+//    {
+//        Warning( "Steam HTTP interface not available\n" );
+//        return;
+//    }
+//
+//    if ( filesystem->IsDirectory( "addons/garrysmod", CONTENT_SEARCH_PATH ) )
+//    {
+//        Warning( "The 'garrysmod' folder already exists in the 'addons' folder. Remove it manually if you want to download the garrysmod repo from github again.\n" );
+//        return;
+//    }
+//
+//    char downloadUrl[MAX_PATH];
+//    Q_snprintf( downloadUrl, sizeof( downloadUrl ), LUA_GMOD_REPOSITORY_DOWNLOAD, LUA_GMOD_REPOSITORY_HASH );
+//
+//    HTTPRequestHandle hRequest = pHTTP->CreateHTTPRequest( k_EHTTPMethodGET, downloadUrl );
+//
+//    if ( !hRequest )
+//    {
+//        Warning( "Failed to create HTTP request to %s\n", downloadUrl );
+//        return;
+//    }
+//
+//    pHTTP->SetHTTPRequestGetOrPostParameter( hRequest, "Accept-Encoding", "gzip, deflate" );
+//    pHTTP->SetHTTPRequestGetOrPostParameter( hRequest, "User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36" );
+//
+//    SteamAPICall_t hCall;
+//
+//    if ( !pHTTP->SendHTTPRequest( hRequest, &hCall ) )
+//    {
+//        Warning( "Failed to send HTTP request to %s\n", downloadUrl );
+//        pHTTP->ReleaseHTTPRequest( hRequest );
+//        return;
+//    }
+//
+//    Warning( "Downloading the GMod repository from %s\n", downloadUrl );
+//
+//    callback.Set( hCall, new GmodCompatDownloader(), &GmodCompatDownloader::OnCompleted );
+//}
+//#endif

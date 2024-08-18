@@ -7,68 +7,84 @@
 #include "cbase.h"
 #include "filesystem.h"
 #include "luamanager.h"
+#include <mountsteamcontent.h>
 
 // memdbgon must be the last include file in a .cpp file!!!
 #include "tier0/memdbgon.h"
 
 static CUtlVector< CUtlString > g_MountedAddons;
 
-void MountAddon( const char *addonName )
+void MountAddon( const char *addonDirectoryName, const char *addonPath )
 {
-    char relativeAddonPath[MAX_PATH];
-    Q_snprintf( relativeAddonPath, sizeof( relativeAddonPath ), LUA_PATH_ADDONS "\\%s", addonName );
-
-    char currentDirectoryPath[MAX_PATH];
-    bool bGetCurrentDirectory = V_GetCurrentDirectory( currentDirectoryPath, sizeof( currentDirectoryPath ) );
-
-    if ( bGetCurrentDirectory )
-    {
-#ifdef CLIENT_DLL
-        const char *gamePath = engine->GetGameDirectory();
-#else
-        char gamePath[MAX_PATH];
-        engine->GetGameDir( gamePath, sizeof( gamePath ) );
-#endif
-
-        V_SetCurrentDirectory( gamePath );
-    }
+    char addonFullPath[MAX_PATH];
+    Q_snprintf( addonFullPath, sizeof( addonFullPath ), "%s\\%s", addonPath, addonDirectoryName );
 
     // Ensure the engine can find content in the addon
-    filesystem->AddSearchPath( relativeAddonPath, CONTENT_SEARCH_PATH, PATH_ADD_TO_TAIL );
-
-    if ( bGetCurrentDirectory )
-        V_SetCurrentDirectory( currentDirectoryPath );
+    filesystem->AddSearchPath( addonDirectoryName, CONTENT_SEARCH_PATH, PATH_ADD_TO_TAIL );
 
 #ifdef GAME_DLL // Prevent the message from printing twice in clients
-    ConColorMsg( Color( 200, 255, 0, 255 ), "Mounting addon \"%s\"...\n", addonName );
+    ConColorMsg( Color( 200, 255, 0, 255 ), "Mounting addon \"%s\"...\n", addonDirectoryName );
 #endif
 
-    g_MountedAddons.AddToTail( CUtlString( addonName ) );
+    g_MountedAddons.AddToTail( CUtlString( addonFullPath ) );
 }
 
 void MountAddons()
 {
-    FileFindHandle_t fh;
-    char addonName[255];
-    char const *fn = g_pFullFileSystem->FindFirstEx( LUA_PATH_ADDONS "\\*", CONTENT_SEARCH_PATH, &fh );
+    // We want the absolute paths so we can use them to set them as mount roots
+    // and find their gamemodes, lua paths, etc get added to the search paths
+    // We'll split the search at each ; and loop through each path, adding LUA_PATH_ADDONS "\\*"
+    // and finding the addons in each path
+    char mountPaths[MAX_PATH * 50]; // TODO: Make this dynamic
+    filesystem->GetSearchPath( "GAME", false, mountPaths, sizeof( mountPaths ) );
 
-    g_MountedAddons.Purge();
+    char *pPath = mountPaths;
+    char *pEnd = pPath + strlen( pPath );
 
-    while ( fn )
+    while ( pPath < pEnd )
     {
-        Q_strcpy( addonName, fn );
-        if ( fn[0] != '.' )
+        char *pSemiColon = strchr( pPath, ';' );
+
+        if ( pSemiColon )
         {
-            if ( g_pFullFileSystem->FindIsDirectory( fh ) )
-            {
-                MountAddon( addonName );
-            }
+            *pSemiColon = '\0';
         }
 
-        fn = g_pFullFileSystem->FindNext( fh );
-    }
+        char addonPath[MAX_PATH];
+        Q_snprintf( addonPath, sizeof( addonPath ), "%s" LUA_PATH_ADDONS, pPath );
 
-    g_pFullFileSystem->FindClose( fh );
+        char addonSearchPath[MAX_PATH];
+        Q_snprintf( addonSearchPath, sizeof( addonSearchPath ), "%s\\*", addonPath );
+
+        FileFindHandle_t fh;
+        char addonName[255];
+        const char *fn = filesystem->FindFirstEx( addonSearchPath, CONTENT_SEARCH_PATH, &fh );
+
+        while ( fn )
+        {
+            Q_strcpy( addonName, fn );
+            if ( fn[0] != '.' )
+            {
+                if ( filesystem->FindIsDirectory( fh ) )
+                {
+                    MountAddon( addonName, addonPath );
+                }
+            }
+
+            fn = filesystem->FindNext( fh );
+        }
+
+        filesystem->FindClose( fh );
+
+        if ( pSemiColon )
+        {
+            pPath = pSemiColon + 1;
+        }
+        else
+        {
+            break;
+        }
+    }
 }
 
 int GetMountedAddons( CUtlVector< CUtlString > &addons )
@@ -91,52 +107,9 @@ void SetupMountedAddons( lua_State *L )
 {
     int nAddonCount = g_MountedAddons.Count();
 
-#ifdef CLIENT_DLL
-    const char *gamePath = engine->GetGameDirectory();
-#else
-    char gamePath[MAX_PATH];
-    engine->GetGameDir( gamePath, MAX_PATH );
-#endif
-
     for ( int i = 0; i < nAddonCount; i++ )
     {
-        const char *addonName = g_MountedAddons[i].Get();
-
-        char fullAddonPath[MAX_PATH];
-        Q_snprintf( fullAddonPath, sizeof( fullAddonPath ), "%s\\" LUA_PATH_ADDONS "\\%s", gamePath, addonName );
-
-        // <full game dir>/addons/<addon name>/scripts/lua/?.lua
-        char addonLuaRootPath[MAX_PATH];
-        Q_snprintf( addonLuaRootPath, sizeof( addonLuaRootPath ), "%s\\%s\\?.lua", fullAddonPath, LUA_ROOT );
-
-        luasrc_add_to_package_path( L, addonLuaRootPath );
-
-        // <full game dir>/addons/<addon name>/scripts/lua/modules/?.lua
-        char addonLuaModulesPath[MAX_PATH];
-        Q_snprintf( addonLuaModulesPath, sizeof( addonLuaModulesPath ), "%s\\%s\\?.lua", fullAddonPath, LUA_PATH_MODULES );
-
-        luasrc_add_to_package_path( L, addonLuaModulesPath );
-
-        // <full game dir>/addons/<addon name>/scripts/lua/bin/?.[dll|so] (cpath)
-        char addonLuaBinaryModulesPath[MAX_PATH];
-
-        Q_snprintf(
-            addonLuaBinaryModulesPath,
-            sizeof( addonLuaBinaryModulesPath ),
-#ifdef _WIN32
-            "%s\\%s\\?.dll",
-#elif _LINUX
-            "%s\\%s\\?.so",
-#endif
-            fullAddonPath,
-            LUA_PATH_BINARY_MODULES );
-
-        luasrc_add_to_package_path( L, addonLuaBinaryModulesPath, /* isPathC = */ true );
-
-        // <full game dir>/addons/<addon name>/gamemodes/?.lua
-        char addonLuaGamemodesPath[MAX_PATH];
-        Q_snprintf( addonLuaGamemodesPath, sizeof( addonLuaGamemodesPath ), "%s%s\\?.lua", fullAddonPath, LUA_PATH_GAMEMODES );
-
-        luasrc_add_to_package_path( L, addonLuaGamemodesPath );
+        const char *addonFullPath = g_MountedAddons[i].Get();
+        SetupRootSearchPaths( addonFullPath, L );
     }
 }

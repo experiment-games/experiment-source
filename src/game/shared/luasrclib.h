@@ -122,6 +122,9 @@ LUALIB_API int( luaopen_g_pClientShadowMgr )( lua_State *L );
 #define LUA_FONTLIBNAME "FontHandle"
 LUALIB_API int( luaopen_HFont )( lua_State *L );
 
+#define LUA_GAMEEVENTSLIBNAME "GameEvents"
+LUALIB_API int( luaopen_GameEvents )( lua_State *L );
+
 #define LUA_MATERIALMETANAME "Material"
 LUALIB_API int( luaopen_IMaterial )( lua_State *L );
 
@@ -190,8 +193,9 @@ LUALIB_API int( luaopen_ParticleSystem )( lua_State *L );
 #define LUA_PHYSENVLIBNAME "PhysicsEnvironments"
 LUALIB_API int( luaopen_PhysicsEnvironments )( lua_State *L );
 
-#define LUA_PREDICTIONLIBNAME "Prediction"
-LUALIB_API int( luaopen_prediction )( lua_State *L );
+#define LUA_PREDICTIONSLIBNAME "Predictions"
+LUALIB_API int( luaopen_Predictions )( lua_State *L );
+LUALIB_API int( luaopen_PredictionShared )( lua_State *L );
 
 #define LUA_QANGLEMETANAME "Angle"
 LUALIB_API int( luaopen_QAngle )( lua_State *L );
@@ -213,6 +217,9 @@ LUALIB_API int( luaopen_SOLID )( lua_State *L );
 
 #define LUA_SOLIDFLAGLIBNAME "SOLID_FLAG"
 LUALIB_API int( luaopen_SOLIDFLAG )( lua_State *L );
+
+#define LUA_SOUNDSLIBNAME "Sounds"
+LUALIB_API int( luaopen_Sounds )( lua_State *L );
 
 #define LUA_STEAMAPICONTEXTLIBNAME "SteamApiContexts"
 LUALIB_API int( luaopen_SteamApiContexts )( lua_State *L );

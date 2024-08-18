@@ -18,59 +18,145 @@ static CUtlVector< mountableGame_t > g_GamePaths;
 #define REGISTER_GAME( pSteamApps, GameName, GameDirectory, GameAppId ) \
     g_GamePaths.AddToTail( mountableGame_t( GameName, GameDirectory, GameAppId, pSteamApps->BIsAppInstalled( GameAppId ), pSteamApps->BIsSubscribedApp( GameAppId ) ) );
 
-#define REGISTER_GAME_WITH_VPK( pSteamApps, GameName, GameDirectory, GameAppId, ... ) \
-    {                                                     \
-        mountableGame_t game( GameName, GameDirectory, GameAppId, pSteamApps->BIsAppInstalled( GameAppId ), pSteamApps->BIsSubscribedApp( GameAppId ) );       \
-        const char *vpkPaths[] = { __VA_ARGS__ };         \
-        for ( int i = 0; i < ARRAYSIZE( vpkPaths ); i++ ) \
-        {                                                 \
-            game.AddVPK( vpkPaths[i] );                   \
-        }                                                 \
-        g_GamePaths.AddToTail( game );                    \
+#define REGISTER_GAME_WITH_VPK( pSteamApps, GameName, GameDirectory, GameAppId, ... )                                                                    \
+    {                                                                                                                                                    \
+        mountableGame_t game( GameName, GameDirectory, GameAppId, pSteamApps->BIsAppInstalled( GameAppId ), pSteamApps->BIsSubscribedApp( GameAppId ) ); \
+        const char *vpkPaths[] = { __VA_ARGS__ };                                                                                                        \
+        for ( int i = 0; i < ARRAYSIZE( vpkPaths ); i++ )                                                                                                \
+        {                                                                                                                                                \
+            game.AddVPK( vpkPaths[i] );                                                                                                                  \
+        }                                                                                                                                                \
+        g_GamePaths.AddToTail( game );                                                                                                                   \
     }
 
 #define HL1MP_APPID 360
 
-static void SetupRootSearchPaths( const char *gamePath )
+void SetupRootSearchPaths( const char *rootPath, lua_State *L )
 {
     char contentSearchPath[MAX_PATH];
 
     // GAME - Add the game root as a search path
-    filesystem->AddSearchPath( gamePath, "GAME", PATH_ADD_TO_TAIL );
+    filesystem->AddSearchPath( rootPath, "GAME", PATH_ADD_TO_TAIL );
+
+    // LUA - Lua root directory
+    Q_strncpy( contentSearchPath, rootPath, sizeof( contentSearchPath ) );
+    Q_strncat( contentSearchPath, "\\" LUA_ROOT "\\", sizeof( contentSearchPath ) );
+
+    filesystem->AddSearchPath( contentSearchPath, CONTENT_SEARCH_PATH_LUA, PATH_ADD_TO_TAIL );
+
+    // LUA - Lua gmod root directory (for gmod compatibility)
+    Q_strncpy( contentSearchPath, rootPath, sizeof( contentSearchPath ) );
+    Q_strncat( contentSearchPath, "\\lua\\", sizeof( contentSearchPath ) );
+
+    filesystem->AddSearchPath( contentSearchPath, CONTENT_SEARCH_PATH_LUA, PATH_ADD_TO_TAIL );
 
     // LUA - gamemodes directory
-    Q_strncpy( contentSearchPath, gamePath, sizeof( contentSearchPath ) );
+    Q_strncpy( contentSearchPath, rootPath, sizeof( contentSearchPath ) );
     Q_strncat( contentSearchPath, LUA_PATH_GAMEMODES "\\", sizeof( contentSearchPath ) );
 
     filesystem->AddSearchPath( contentSearchPath, CONTENT_SEARCH_PATH_LUA, PATH_ADD_TO_TAIL );
 
-    // LUA - addons directory
-    Q_strncpy( contentSearchPath, gamePath, sizeof( contentSearchPath ) );
-    Q_strncat( contentSearchPath, "\\" LUA_PATH_ADDONS "\\", sizeof( contentSearchPath ) );
+    // If Lua is available, add the package paths
+    if ( !L )
+        return;
 
-    filesystem->AddSearchPath( contentSearchPath, CONTENT_SEARCH_PATH_LUA, PATH_ADD_TO_TAIL );
+    // <mount dir>/scripts/lua/?.lua
+    char luaRootPath[MAX_PATH];
+    Q_snprintf( luaRootPath, sizeof( luaRootPath ), "%s\\%s\\?.lua", rootPath, LUA_ROOT );
+
+    luasrc_add_to_package_path( L, luaRootPath );
+
+    // <mount dir>/scripts/lua/modules/?.lua
+    char luaModulesPath[MAX_PATH];
+    Q_snprintf( luaModulesPath, sizeof( luaModulesPath ), "%s\\%s\\?.lua", rootPath, LUA_PATH_MODULES );
+
+    luasrc_add_to_package_path( L, luaModulesPath );
+
+    // <mount dir>/scripts/lua/bin/?.[dll|so] (cpath)
+    char luaBinaryModulesPath[MAX_PATH];
+
+    Q_snprintf(
+        luaBinaryModulesPath,
+        sizeof( luaBinaryModulesPath ),
+#ifdef _WIN32
+        "%s\\%s\\?.dll",
+#elif _LINUX
+        "%s\\%s\\?.so",
+#endif
+        rootPath,
+        LUA_PATH_BINARY_MODULES );
+
+    luasrc_add_to_package_path( L, luaBinaryModulesPath, /* isPathC = */ true );
+
+    // <mount dir>/gamemodes/?.lua
+    char luaGamemodesPath[MAX_PATH];
+    Q_snprintf( luaGamemodesPath, sizeof( luaGamemodesPath ), "%s%s\\?.lua", rootPath, LUA_PATH_GAMEMODES );
+
+    luasrc_add_to_package_path( L, luaGamemodesPath );
 }
 
-// RemoveRootSearchPaths (inverse of SetupRootSearchPaths)
-
-static void RemoveRootSearchPaths( const char *gamePath )
+void RemoveRootSearchPaths( const char *gamePath, lua_State *L )
 {
     char contentSearchPath[MAX_PATH];
 
     // GAME - Add the game root as a search path
     filesystem->RemoveSearchPath( gamePath );
 
+    // LUA - Lua root directory
+    Q_strncpy( contentSearchPath, gamePath, sizeof( contentSearchPath ) );
+    Q_strncat( contentSearchPath, "\\" LUA_ROOT "\\", sizeof( contentSearchPath ) );
+
+    filesystem->RemoveSearchPath( contentSearchPath );
+
+    // LUA - Lua gmod root directory (for gmod compatibility)
+    Q_strncpy( contentSearchPath, gamePath, sizeof( contentSearchPath ) );
+    Q_strncat( contentSearchPath, "\\lua\\", sizeof( contentSearchPath ) );
+
+    filesystem->RemoveSearchPath( contentSearchPath );
+
     // LUA - gamemodes directory
     Q_strncpy( contentSearchPath, gamePath, sizeof( contentSearchPath ) );
     Q_strncat( contentSearchPath, LUA_PATH_GAMEMODES "\\", sizeof( contentSearchPath ) );
 
     filesystem->RemoveSearchPath( contentSearchPath );
 
-    // LUA - addons directory
-    Q_strncpy( contentSearchPath, gamePath, sizeof( contentSearchPath ) );
-    Q_strncat( contentSearchPath, "\\" LUA_PATH_ADDONS "\\", sizeof( contentSearchPath ) );
+    // If Lua is available, remove the package paths
+    if ( !L )
+        return;
 
-    filesystem->RemoveSearchPath( contentSearchPath );
+    // <mount dir>/scripts/lua/?.lua
+    char luaRootPath[MAX_PATH];
+    Q_snprintf( luaRootPath, sizeof( luaRootPath ), "%s\\%s\\?.lua", gamePath, LUA_ROOT );
+
+    luasrc_remove_from_package_path( L, luaRootPath );
+
+    // <mount dir>/scripts/lua/modules/?.lua
+    char luaModulesPath[MAX_PATH];
+    Q_snprintf( luaModulesPath, sizeof( luaModulesPath ), "%s\\%s\\?.lua", gamePath, LUA_PATH_MODULES );
+
+    luasrc_remove_from_package_path( L, luaModulesPath );
+
+    // <mount dir>/scripts/lua/bin/?.[dll|so] (cpath)
+    char luaBinaryModulesPath[MAX_PATH];
+
+    Q_snprintf(
+        luaBinaryModulesPath,
+        sizeof( luaBinaryModulesPath ),
+#ifdef _WIN32
+        "%s\\%s\\?.dll",
+#elif _LINUX
+        "%s\\%s\\?.so",
+#endif
+        gamePath,
+        LUA_PATH_BINARY_MODULES );
+
+    luasrc_remove_from_package_path( L, luaBinaryModulesPath, /* isPathC = */ true );
+
+    // <mount dir>/gamemodes/?.lua
+    char luaGamemodesPath[MAX_PATH];
+    Q_snprintf( luaGamemodesPath, sizeof( luaGamemodesPath ), "%s%s\\?.lua", gamePath, LUA_PATH_GAMEMODES );
+
+    luasrc_remove_from_package_path( L, luaGamemodesPath );
 }
 
 void AddSearchPathByAppId( int nAppId )
@@ -104,7 +190,7 @@ void AddSearchPathByAppId( int nAppId )
         // GAME - Add the game root as a search path
         Q_snprintf( fullPath, sizeof( fullPath ), "%s/%s", appInstallPath, g_GamePaths[i].directoryName );
 
-        SetupRootSearchPaths( fullPath );
+        SetupRootSearchPaths( fullPath, L );
 
         // GAME - Add the VPKs as search paths
         auto &vpkPaths = g_GamePaths[i].vpks;
@@ -112,7 +198,7 @@ void AddSearchPathByAppId( int nAppId )
         for ( int j = 0; j < vpkPaths.Count(); j++ )
         {
             Q_snprintf( fullPath, sizeof( fullPath ), "%s/%s", appInstallPath, vpkPaths[j] );
-            SetupRootSearchPaths( fullPath );
+            SetupRootSearchPaths( fullPath, L );
         }
 
         g_GamePaths[i].isMounted = true;
@@ -147,14 +233,14 @@ void RemoveSearchPathByAppId( int nAppId )
             continue;
 
         Q_snprintf( fullPath, sizeof( fullPath ), "%s/%s", appInstallPath, g_GamePaths[i].directoryName );
-        RemoveRootSearchPaths( fullPath );
+        RemoveRootSearchPaths( fullPath, L );
 
         auto &vpkPaths = g_GamePaths[i].vpks;
 
         for ( int j = 0; j < vpkPaths.Count(); j++ )
         {
             Q_snprintf( fullPath, sizeof( fullPath ), "%s/%s", appInstallPath, vpkPaths[j] );
-            RemoveRootSearchPaths( fullPath );
+            RemoveRootSearchPaths( fullPath, L );
         }
 
         g_GamePaths[i].isMounted = false;
@@ -190,20 +276,20 @@ void InitializeGameContentMounting()
     Q_StripTrailingSlash( gamePath );
 #endif
 
-    SetupRootSearchPaths( gamePath );
+    SetupRootSearchPaths( gamePath, nullptr );
 
     // Now mount the game content
     ISteamApps *pSteamApps = steamapicontext->SteamApps();
 
     if ( !pSteamApps )
     {
-        Error("Failed to mount game content (are you not signed into Steam?)\n");
+        Error( "Failed to mount game content (are you not signed into Steam?)\n" );
         return;
     }
 
     REGISTER_GAME( pSteamApps, "Half-Life 2", "hl2", 220 );
     REGISTER_GAME( pSteamApps, "Half-Life", "hl1", 280 );
-    
+
     REGISTER_GAME( pSteamApps, "Day of Defeat: Source", "dod", 300 );
     REGISTER_GAME( pSteamApps, "Half-Life 2: Lost Coast", "lostcoast", 340 );
     REGISTER_GAME( pSteamApps, "Half-Life Deathmatch: Source", "hl1mp", HL1MP_APPID );
@@ -352,19 +438,19 @@ bool UnmountGameContentByAppId( int nAppId )
     KeyValues *pMainFile, *pFileSystemInfo;
     pMainFile = new KeyValues( "gamecontent.txt" );
 
-    #ifdef CLIENT_DLL
+#ifdef CLIENT_DLL
     const char *gamePath = engine->GetGameDirectory();
-    #else
+#else
     char gamePath[256];
     engine->GetGameDir( gamePath, 256 );
     Q_StripTrailingSlash( gamePath );
-    #endif
+#endif
 
     // On linux because of case sensitiviy we need to check for both.
     const char *paths[] = {
-        #ifdef _LINUX
+#ifdef _LINUX
         "%s/GameContent.txt",
-        #endif
+#endif
         "%s/gamecontent.txt" };
 
     bool bFound = false;

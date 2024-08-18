@@ -3,6 +3,8 @@ _BASE_ENTITY_CLASS = "prop_scripted"
 local MODULE = {}
 MODULE.registeredEntities = MODULE.registeredEntities or {}
 
+-- TODO: This file has a lot of similar code to scripted_weapons.lua, reduce duplication
+
 --- Returns an entity table
 --- @param className string Name of the entity
 --- @return table
@@ -28,10 +30,39 @@ function MODULE.Get(className)
 	return foundEntity
 end
 
---- Returns all registered entities
+--- Returns all registered entities.
+--- Be careful, this returns a reference to the actual table.
+--- @return table
+function MODULE.GetStored()
+	return MODULE.registeredEntities
+end
+
+--- Returns a list of all registered entities.
 --- @return table
 function MODULE.GetList()
-	return MODULE.registeredEntities
+	return table.Copy(MODULE.registeredEntities)
+end
+
+--- Checks if the entity class is based on another entity class
+--- @param className string Name of the entity
+--- @param potentialBaseClassName string Name of the potential base entity
+--- @return boolean
+function MODULE.IsBasedOn(className, potentialBaseClassName)
+	local entityTable = MODULE.Get(className)
+
+	if (not entityTable) then
+		return false
+	end
+
+	if (entityTable.Base == potentialBaseClassName) then
+		return true
+	end
+
+	if (entityTable.Base ~= className) then
+		return MODULE.IsBasedOn(entityTable.Base, potentialBaseClassName)
+	end
+
+	return false
 end
 
 --- Registers an entity

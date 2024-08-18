@@ -172,6 +172,9 @@ system = Systems
 vgui = Panels
 VMatrix = Matrix
 concommand = ConsoleCommands
+physenv = PhysicsEnvironments
+gameevent = GameEvents
+sound = Sounds
 
 Angle = Angles.Create
 Color = Colors.Create
@@ -199,6 +202,7 @@ GetHostName = Engines.GetServerName
 
 PrecacheParticleSystem = ParticleSystems.Precache
 GetPredictionPlayer = Predictions.GetPredictionPlayer
+IsFirstTimePredicted = Predictions.IsFirstTimePredicted
 LerpVector = Vectors.Lerp
 
 RecipientFilter = RecipientFilters.Create
@@ -293,6 +297,13 @@ for _, languageFile in ipairs(languageFiles) do
 
     language.Add(key, value)
   end
+end
+
+function physenv.AddSurfaceData(surfaceDataKeyValuesString)
+  -- ParseSurfaceData expects a unique file name, so we generate one
+  local fakeFileName = "physenv.AddSurfaceData" .. tostring(os.time()) .. ".txt"
+
+  return PhysicsSurfaceProperties.ParseSurfaceData(fakeFileName, surfaceDataKeyValuesString)
 end
 
 umsg = require("UserMessages")

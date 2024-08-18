@@ -11,7 +11,7 @@
 #pragma once
 #endif
 
-void MountAddon( const char *addonName );
+void MountAddon( const char *addonDirectoryName, const char *addonPath );
 void MountAddons();
 int GetMountedAddons( CUtlVector< CUtlString > &addons );
 void SetupMountedAddons( lua_State *L );

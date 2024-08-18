@@ -8,7 +8,7 @@ tags:
   - needs-verification
   - needs-example
 lua:
-  library: PhysicsSurfacePropertiesHandle
+  library: PhysicsSurfaceProperties
   function: ParseSurfaceData
   realm: shared
   description: "Parses surface data"
@@ -20,5 +20,5 @@ lua:
 ---
 
 <div class="lua__search__keywords">
-PhysicsSurfacePropertiesHandle:ParseSurfaceData &#x2013; Parses surface data
+PhysicsSurfaceProperties:ParseSurfaceData &#x2013; Parses surface data
 </div>

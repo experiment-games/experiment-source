@@ -1386,15 +1386,6 @@ void CExperimentRules::Precache( void )
 
 bool CExperimentRules::ShouldCollide( int collisionGroup0, int collisionGroup1 )
 {
-#if defined( LUA_SDK )
-    LUA_CALL_HOOK_BEGIN( "ShouldCollide" );
-    lua_pushinteger( L, collisionGroup0 );
-    lua_pushinteger( L, collisionGroup1 );
-    LUA_CALL_HOOK_END( 2, 1 );
-
-    LUA_RETURN_BOOLEAN();
-#endif
-
     if ( collisionGroup0 > collisionGroup1 )
     {
         // swap so that lowest is always first

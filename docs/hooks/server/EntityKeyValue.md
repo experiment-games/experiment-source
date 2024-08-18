@@ -1,18 +1,18 @@
 ---
 template: lua-hook.html
 title: EntityKeyValue
-icon: lua-shared
+icon: lua-server
 tags:
   - lua
-  - shared
+  - server
   - needs-verification
   - needs-example
 lua:
   function: EntityKeyValue
-  realm: shared
+  realm: server
   description: ""
   arguments:
-    - name: "this"
+    - name: "pNode"
       description: ""
       type: Entity
     - name: "szKeyName"

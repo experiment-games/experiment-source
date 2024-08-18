@@ -1,0 +1,4 @@
+game_sounds_manifest
+{
+	"precache_file"		"scripts/sounds/lua_procedural.txt"
+}
