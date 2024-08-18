@@ -2647,7 +2647,8 @@ void PhysCollisionDust( gamevcollisionevent_t *pEvent, surfacedata_t *phit )
 	switch ( phit->game.material )
 	{
 	case CHAR_TEX_SAND:
-	case CHAR_TEX_DIRT:
+    case CHAR_TEX_DIRT:
+    case CHAR_TEX_SNOW: // Experiment; added this for Gmod compatibility and made sense to work like sand.
 
 		if ( pEvent->collisionSpeed < 200.0f )
 			return;

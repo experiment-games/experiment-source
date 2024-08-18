@@ -1,16 +1,16 @@
 ---
 template: lua-library-function.html
-title: DoesMaterialExist
-icon: lua-client
+title: Exists
+icon: lua-shared
 tags:
   - lua
-  - client
+  - shared
   - needs-verification
   - needs-example
 lua:
-  library: Surfaces
-  function: DoesMaterialExist
-  realm: client
+  library: Materials
+  function: Exists
+  realm: shared
   description: "Checks if a material exists"
   
   arguments:
@@ -22,5 +22,5 @@ lua:
 ---
 
 <div class="lua__search__keywords">
-Surfaces.DoesMaterialExist &#x2013; Checks if a material exists
+Materials.Exists &#x2013; Checks if a material exists
 </div>

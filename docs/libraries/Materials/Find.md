@@ -1,16 +1,16 @@
 ---
 template: lua-library-function.html
-title: FindMaterial
-icon: lua-client
+title: Find
+icon: lua-shared
 tags:
   - lua
-  - client
+  - shared
   - needs-verification
   - needs-example
 lua:
-  library: Surfaces
-  function: FindMaterial
-  realm: client
+  library: Materials
+  function: Find
+  realm: shared
   description: "Finds a material"
   
   arguments:
@@ -25,5 +25,5 @@ lua:
 ---
 
 <div class="lua__search__keywords">
-Surfaces.FindMaterial &#x2013; Finds a material
+Materials.Find &#x2013; Finds a material
 </div>

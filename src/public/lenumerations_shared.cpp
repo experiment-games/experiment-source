@@ -8,6 +8,7 @@
 #include "inputsystem/ButtonCode.h"
 #include <activitylist.h>
 #include "hl2_shareddefs.h"
+#include "decals.h"
 
 // Quick and easy place to register some enums
 LUALIB_API int luaopen_SharedEnumerations( lua_State *L )
@@ -243,6 +244,44 @@ LUALIB_API int luaopen_SharedEnumerations( lua_State *L )
     // HL2 SPECIFIC (hl2_shareddefs.h)
     lua_pushenum( L, DMG_SNIPER, "SNIPER" );
     lua_pushenum( L, DMG_MISSILEDEFENSE, "MISSILE_DEFENSE" );
+    LUA_SET_ENUM_LIB_END( L );
+
+    LUA_SET_ENUM_LIB_BEGIN( L, "HIT_GROUP" );
+    lua_pushenum( L, HITGROUP_GENERIC, "GENERIC" );
+    lua_pushenum( L, HITGROUP_HEAD, "HEAD" );
+    lua_pushenum( L, HITGROUP_CHEST, "CHEST" );
+    lua_pushenum( L, HITGROUP_STOMACH, "STOMACH" );
+    lua_pushenum( L, HITGROUP_LEFTARM, "LEFT_ARM" );
+    lua_pushenum( L, HITGROUP_RIGHTARM, "RIGHT_ARM" );
+    lua_pushenum( L, HITGROUP_LEFTLEG, "LEFT_LEG" );
+    lua_pushenum( L, HITGROUP_RIGHTLEG, "RIGHT_LEG" );
+    lua_pushenum( L, HITGROUP_GEAR, "GEAR" );
+    LUA_SET_ENUM_LIB_END( L );
+
+    LUA_SET_ENUM_LIB_BEGIN( L, "MATERIAL_TYPE" );
+    lua_pushenum( L, CHAR_TEX_ANTLION, "ANTLION" );
+    lua_pushenum( L, CHAR_TEX_BLOODYFLESH, "BLOODY_FLESH" );
+    lua_pushenum( L, CHAR_TEX_CONCRETE, "CONCRETE" );
+    lua_pushenum( L, CHAR_TEX_DIRT, "DIRT" );
+    lua_pushenum( L, CHAR_TEX_EGGSHELL, "EGGSHELL" );
+    lua_pushenum( L, CHAR_TEX_FLESH, "FLESH" );
+    lua_pushenum( L, CHAR_TEX_GRATE, "GRATE" );
+    lua_pushenum( L, CHAR_TEX_ALIENFLESH, "ALIEN_FLESH" );
+    lua_pushenum( L, CHAR_TEX_CLIP, "CLIP" );
+    lua_pushenum( L, CHAR_TEX_SNOW, "SNOW" );
+    lua_pushenum( L, CHAR_TEX_PLASTIC, "PLASTIC" );
+    lua_pushenum( L, CHAR_TEX_METAL, "METAL" );
+    lua_pushenum( L, CHAR_TEX_SAND, "SAND" );
+    lua_pushenum( L, CHAR_TEX_FOLIAGE, "FOLIAGE" );
+    lua_pushenum( L, CHAR_TEX_COMPUTER, "COMPUTER" );
+    lua_pushenum( L, CHAR_TEX_SLOSH, "SLOSH" );
+    lua_pushenum( L, CHAR_TEX_TILE, "TILE" );
+    lua_pushenum( L, CHAR_TEX_GRASS, "GRASS" );
+    lua_pushenum( L, CHAR_TEX_VENT, "VENT" );
+    lua_pushenum( L, CHAR_TEX_WOOD, "WOOD" );
+    lua_pushenum( L, CHAR_TEX_DEFAULT, "DEFAULT" );
+    lua_pushenum( L, CHAR_TEX_GLASS, "GLASS" );
+    lua_pushenum( L, CHAR_TEX_WARPSHIELD, "WARP_SHIELD" );
     LUA_SET_ENUM_LIB_END( L );
 
     return 0;

@@ -534,6 +534,32 @@ LUA_BINDING_BEGIN( Entities, GetAll, "library", "Gets all entities in the list" 
 }
 LUA_BINDING_END( "table", "A table of all entities in the entity list." )
 
+LUA_BINDING_BEGIN( Entities, GetByClass, "library", "Gets all entities in the list by their class name" )
+{
+    const char *className = LUA_BINDING_ARGUMENT( luaL_checkstring, 1, "className" );
+
+    lua_newtable( L );
+
+    CBaseEntity *pEnt = NULL;
+    int i = 0;
+#ifdef CLIENT_DLL
+    while ( ( pEnt = ClientEntityList().NextBaseEntity( pEnt ) ) != NULL )
+#else
+    while ( ( pEnt = gEntList.NextEnt( pEnt ) ) != NULL )
+#endif
+    {
+        if ( !Q_strcmp( pEnt->GetClassname(), className ) )
+        {
+            lua_pushinteger( L, ++i );  // 1-based index for Lua
+            CBaseEntity::PushLuaInstanceSafe( L, pEnt );
+            lua_settable( L, -3 );
+        }
+    }
+
+    return 1;
+}
+LUA_BINDING_END( "table", "A table of all entities in the entity list with the given class name." )
+
 LUA_BINDING_BEGIN( Entities, NextInList, "library", "Gets the next entity in the list" )
 {
     CBaseEntity *pCurrent = LUA_BINDING_ARGUMENT_WITH_DEFAULT( luaL_optentity, 1, NULL, "startingEntity" );

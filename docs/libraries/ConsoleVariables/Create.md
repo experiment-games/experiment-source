@@ -24,15 +24,9 @@ lua:
     - name: "helpText"
       type: string
       default: "\"\""
-    - name: "hasMinimum"
-      type: boolean
-      default: "false"
     - name: "minimum"
       type: number
       default: "0.0"
-    - name: "hasMaximum"
-      type: boolean
-      default: "false"
     - name: "maximum"
       type: number
       default: "0"

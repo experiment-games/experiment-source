@@ -1442,6 +1442,6 @@ $Project
 
 		$Lib	"lua54"
 		$Lib	"luasocket"
-        $Lib    "libpng"
+    $Lib  "libpng"
  	}
 }

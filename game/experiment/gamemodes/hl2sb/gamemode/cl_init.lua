@@ -63,9 +63,9 @@ Surfaces.SetMaterial = function(material)
 	Surfaces.DrawSetTexture(textureMap[name])
 end
 
-testMat = Surfaces.FindMaterial("silkicons/accept.png")
-testMatX = Surfaces.FindMaterial("silkicons/monkey.png") -- Unused materials caused a crash on exit earlier
-testMatY = Surfaces.FindMaterial("silkicons/___non___existant_mat.png") -- Testing that non-existant materials don't crash
+testMat = Materials.Find("silkicons/accept.png")
+testMatX = Materials.Find("silkicons/monkey.png") -- Unused materials caused a crash on exit earlier
+testMatY = Materials.Find("silkicons/___non___existant_mat.png") -- Testing that non-existant materials don't crash
 testTexture = Surfaces.GetTextureID("vgui/gfx/vgui/crosshair")
 
 -- Having the ESC menu opened whilst finding a material seemed to cause a crash on exit
@@ -74,10 +74,10 @@ testTexture = Surfaces.GetTextureID("vgui/gfx/vgui/crosshair")
 -- This is now fixed, because we set the texture regenerator to null on shutdown
 function test()
 	print("testingTempMat test")
-    local testingTempMat1 = Surfaces.FindMaterial("icon16/folder.png")
-    local testingTempMat2 = Surfaces.FindMaterial("icon16/folder.png")
-    local testingTempMat3 = Surfaces.FindMaterial("icon16/folder.png") -- With this line, we crashed on exit because we incorrectly re-loaded textures, even if the material and texture were found. That is now fixed using g_pMaterialSystem->IsTextureLoaded (cpng.cpp)
-    -- local testingTempMat4 = Surfaces.FindMaterial("icon16/folder.png")
+    local testingTempMat1 = Materials.Find("icon16/folder.png")
+    local testingTempMat2 = Materials.Find("icon16/folder.png")
+    local testingTempMat3 = Materials.Find("icon16/folder.png") -- With this line, we crashed on exit because we incorrectly re-loaded textures, even if the material and texture were found. That is now fixed using g_pMaterialSystem->IsTextureLoaded (cpng.cpp)
+    -- local testingTempMat4 = Materials.Find("icon16/folder.png")
 	-- Despite being fixed here, the problem still occurs in the gmod sandbox gamemode...
 end
 Timers.Simple(2, test)

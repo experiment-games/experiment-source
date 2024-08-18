@@ -72,11 +72,12 @@ function addDependenciesToProject {
     fi
 }
 
-addDependenciesToProject "Client (Experiment)" "950C58AA-39F0-9CA2-8BB5-1AD6B8011443"
-addDependenciesToProject "Client (Experiment)" "11C4CA93-C3BB-5EF6-0C85-700D6B69A2F6"
-addDependenciesToProject "Client (Experiment)" "378EBA0C-3BA5-1CB2-6A4B-13E100D0686B"
+addDependenciesToProject "Client (Experiment)" "950C58AA-39F0-9CA2-8BB5-1AD6B8011443" # luasocket
+addDependenciesToProject "Client (Experiment)" "11C4CA93-C3BB-5EF6-0C85-700D6B69A2F6" # lua
+addDependenciesToProject "Client (Experiment)" "378EBA0C-3BA5-1CB2-6A4B-13E100D0686B" # libpng
 
-addDependenciesToProject "Server (Experiment)" "950C58AA-39F0-9CA2-8BB5-1AD6B8011443"
-addDependenciesToProject "Server (Experiment)" "11C4CA93-C3BB-5EF6-0C85-700D6B69A2F6"
+addDependenciesToProject "Server (Experiment)" "950C58AA-39F0-9CA2-8BB5-1AD6B8011443" # luasocket
+addDependenciesToProject "Server (Experiment)" "11C4CA93-C3BB-5EF6-0C85-700D6B69A2F6" # lua
+addDependenciesToProject "Server (Experiment)" "378EBA0C-3BA5-1CB2-6A4B-13E100D0686B" # libpng
 
-addDependenciesToProject "luasocket" "11C4CA93-C3BB-5EF6-0C85-700D6B69A2F6"
+addDependenciesToProject "luasocket" "11C4CA93-C3BB-5EF6-0C85-700D6B69A2F6" # lua

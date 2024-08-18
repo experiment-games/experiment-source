@@ -17,7 +17,7 @@ function CImagePanel:SetImage(strImage)
 		self.TextureID = Surfaces.CreateNewTextureID(true)
 	end
 
-	self.Material = Surfaces.FindMaterial(strImage)
+	self.Material = Materials.Find(strImage)
 
 	local texture = self.Material:GetTexture("$basetexture")
 

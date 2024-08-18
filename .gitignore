@@ -70,6 +70,7 @@ game/experiment/lua_cache/*
 game/experiment/materials/spawnicons/*
 game/experiment/screenshots/*
 game/experiment/data/*
+game/experiment/downloadlists/*
 
 # Build products that building the solution will create
 game/experiment/bin/*

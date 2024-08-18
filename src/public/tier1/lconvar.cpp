@@ -198,10 +198,10 @@ LUA_BINDING_BEGIN( ConsoleVariables, Create, "library", "Creates a console varia
     const char *pValue = LUA_BINDING_ARGUMENT( luaL_checkstring, 2, "value" );
     int flags = LUA_BINDING_ARGUMENT_WITH_DEFAULT( luaL_optnumber, 3, 0, "flags" );
     const char *pHelpText = LUA_BINDING_ARGUMENT_WITH_DEFAULT( luaL_optstring, 4, "", "helpText" );
-    bool bMin = LUA_BINDING_ARGUMENT_WITH_DEFAULT( luaL_optboolean, 5, false, "hasMinimum" );
-    float min = LUA_BINDING_ARGUMENT_WITH_DEFAULT( luaL_optnumber, 6, 0.0, "minimum" );
-    bool bMax = LUA_BINDING_ARGUMENT_WITH_DEFAULT( luaL_optboolean, 7, false, "hasMaximum" );
-    float max = LUA_BINDING_ARGUMENT_WITH_DEFAULT( luaL_optnumber, 8, 0, "maximum" );
+    bool bMin = lua_isnumber( L, 5 );
+    float min = LUA_BINDING_ARGUMENT_WITH_DEFAULT( luaL_optnumber, 5, 0.0, "minimum" );
+    bool bMax = lua_isnumber( L, 6 );
+    float max = LUA_BINDING_ARGUMENT_WITH_DEFAULT( luaL_optnumber, 6, 0, "maximum" );
 
     unsigned short lookup = m_ConVarDatabase.Find( pName );
     if ( lookup != m_ConVarDatabase.InvalidIndex() || cvar->FindVar( pName ) )

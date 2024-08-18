@@ -1,6 +1,6 @@
 ---
 template: lua-library-function.html
-title: CreateMaterial
+title: Create
 icon: lua-client
 tags:
   - lua
@@ -8,8 +8,8 @@ tags:
   - needs-verification
   - needs-example
 lua:
-  library: Surfaces
-  function: CreateMaterial
+  library: Materials
+  function: Create
   realm: client
   description: "Creates a material"
   
@@ -27,5 +27,5 @@ lua:
 ---
 
 <div class="lua__search__keywords">
-Surfaces.CreateMaterial &#x2013; Creates a material
+Materials.Create &#x2013; Creates a material
 </div>
