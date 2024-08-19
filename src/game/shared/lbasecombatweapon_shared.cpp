@@ -965,6 +965,25 @@ LUA_BINDING_BEGIN( Weapon, SetIdealActivity, "class", "Set ideal activity." )
 }
 LUA_BINDING_END()
 
+// SetNextSecondaryFire and primary first:
+LUA_BINDING_BEGIN( Weapon, SetNextPrimaryFire, "class", "Set next time before the player can fire the primary attack. E.g: `Engines.GetCurrentTime() + 2` for two seconds from now." )
+{
+    lua_CBaseCombatWeapon *pWeapon = LUA_BINDING_ARGUMENT( luaL_checkweapon, 1, "entity" );
+    float flTime = LUA_BINDING_ARGUMENT( luaL_checknumber, 2, "absoluteCurTime" );
+    pWeapon->m_flNextPrimaryAttack = flTime;
+    return 0;
+}
+LUA_BINDING_END()
+
+LUA_BINDING_BEGIN( Weapon, SetNextSecondaryFire, "class", "Set next time before the player can fire the secondary attack. E.g: `Engines.GetCurrentTime() + 2` for two seconds from now." )
+{
+    lua_CBaseCombatWeapon *pWeapon = LUA_BINDING_ARGUMENT( luaL_checkweapon, 1, "entity" );
+    float flTime = LUA_BINDING_ARGUMENT( luaL_checknumber, 2, "absoluteCurTime" );
+    pWeapon->m_flNextSecondaryAttack = flTime;
+    return 0;
+}
+LUA_BINDING_END()
+
 LUA_BINDING_BEGIN( Weapon, SetPickupTouch, "class", "Set pickup touch." )
 {
     lua_CBaseCombatWeapon *pWeapon = LUA_BINDING_ARGUMENT( luaL_checkweapon, 1, "entity" );

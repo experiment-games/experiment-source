@@ -515,6 +515,12 @@ PLAYER_META.AnimSetGestureWeight = PLAYER_META.AnimationSetGestureWeight
 PLAYER_META.GetName = PLAYER_META.GetPlayerName
 PLAYER_META.Name = PLAYER_META.GetPlayerName
 PLAYER_META.Nick = PLAYER_META.GetPlayerName
+PLAYER_META.SetSlowWalkSpeed = PLAYER_META.SetWalkSpeed
+PLAYER_META.GetSlowWalkSpeed = PLAYER_META.GetWalkSpeed
+PLAYER_META.SetWalkSpeed = PLAYER_META.SetNormalSpeed
+PLAYER_META.GetWalkSpeed = PLAYER_META.GetNormalSpeed
+PLAYER_META.GetCrouchedWalkSpeed = PLAYER_META.GetCrouchWalkFraction
+PLAYER_META.SetCrouchedWalkSpeed = PLAYER_META.SetCrouchWalkFraction
 
 function PLAYER_META:GetInfo(consoleVariableName)
 	return engine.GetClientConsoleVariableValue(self, consoleVariableName)

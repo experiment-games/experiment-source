@@ -256,7 +256,7 @@ float CBaseExperimentCombatWeapon::CalcViewmodelBob( void )
     float speed = player->GetLocalVelocity().Length2D();
 
     // FIXME: This maximum speed value must come from the server.
-    //		 MaxSpeed() is not sufficient for dealing with sprinting - jdw
+    //		 GetMaxSpeed() is not sufficient for dealing with sprinting - jdw
 
     speed = clamp( speed, -320, 320 );
 

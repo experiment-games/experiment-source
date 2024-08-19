@@ -64,11 +64,6 @@ ConVar physcannon_cone( "physcannon_cone", "0.97", FCVAR_REPLICATED | FCVAR_CHEA
 ConVar physcannon_ball_cone( "physcannon_ball_cone", "0.997", FCVAR_REPLICATED | FCVAR_CHEAT );
 ConVar player_throwforce( "player_throwforce", "1000", FCVAR_REPLICATED | FCVAR_CHEAT );
 
-#ifndef CLIENT_DLL
-extern ConVar hl2_normspeed;
-extern ConVar hl2_walkspeed;
-#endif
-
 #define PHYSCANNON_BEAM_SPRITE "sprites/orangelight1.vmt"
 #define PHYSCANNON_BEAM_SPRITE_NOZ "sprites/orangelight1_noz.vmt"
 #define PHYSCANNON_GLOW_SPRITE "sprites/glow04_noz"
@@ -631,7 +626,13 @@ void CGrabController::DetachEntity( bool bClearVelocity )
             else
             {
 #ifndef CLIENT_DLL
+#if defined( EXPERIMENT_SOURCE)
+                ClampPhysicsVelocity( pPhys, EXPERIMENT_NORMAL_SPEED * 1.5f, 2.0f * 360.0f );
+#elif defined( HL2MP )
+                ClampPhysicsVelocity( pPhys, HL2_NORM_SPEED * 1.5f, 2.0f * 360.0f );
+#else
                 ClampPhysicsVelocity( pPhys, hl2_normspeed.GetFloat() * 1.5f, 2.0f * 360.0f );
+#endif
 #endif
             }
         }
@@ -2410,7 +2411,14 @@ void CWeaponPhysCannon::DetachObject( bool playSound, bool wasLaunched )
     if ( pOwner != NULL )
     {
         pOwner->EnableSprint( true );
+
+#if defined( EXPERIMENT_SOURCE )
+        pOwner->SetMaxSpeed( pOwner->GetNormalSpeed() );
+#elif defined( HL2MP )
+        pOwner->SetMaxSpeed( HL2_NORM_SPEED );
+#else
         pOwner->SetMaxSpeed( hl2_normspeed.GetFloat() );
+#endif
     }
 
     CBaseEntity *pObject = m_grabController.GetAttached();

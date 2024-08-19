@@ -19,13 +19,6 @@
 #include "experiment_player.h"
 #endif
 
-#define Experiment_RUN_SPEED 320.0f
-#define Experiment_WALK_SPEED 75.0f
-#define Experiment_CROUCHWALK_SPEED 110.0f
-
-// When moving this fast, he plays run anim.
-#define ARBITRARY_RUN_SPEED 175.0f
-
 // Experiment; somehow get which type of leganim we're using
 // e.g: m_AnimConfig.m_LegAnimType == LEGANIM_9WAY;
 ConVar cl_leganimtype(
@@ -41,9 +34,9 @@ CExperimentPlayerAnimState *CreateExperimentPlayerAnimState( CExperiment_Player 
     // Setup the movement data.
     MultiPlayerMovementData_t movementData;
     movementData.m_flBodyYawRate = 720.0f;
-    movementData.m_flRunSpeed = Experiment_RUN_SPEED;
-    movementData.m_flWalkSpeed = Experiment_WALK_SPEED;
-    movementData.m_flSprintSpeed = -1.0f;
+    movementData.m_flRunSpeed = pPlayer ? pPlayer->GetRunSpeed() : EXPERIMENT_RUN_SPEED;
+    movementData.m_flWalkSpeed = pPlayer ? pPlayer->GetWalkSpeed() : EXPERIMENT_WALK_SPEED;
+    movementData.m_flSprintSpeed = -1.0f; // TODO: ? This is running and m_flRunSpeed above is normal speed? Where is this struct used?
 
     // Create animation state for this player.
     CExperimentPlayerAnimState *pRet =

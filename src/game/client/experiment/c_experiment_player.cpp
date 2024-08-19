@@ -74,10 +74,6 @@ RecvPropVector( RECVINFO_NAME( m_vecNetworkOrigin, m_vecOrigin ) ),
     DEFINE_PRED_FIELD( m_nNewSequenceParity, FIELD_INTEGER, FTYPEDESC_OVERRIDE | FTYPEDESC_PRIVATE | FTYPEDESC_NOERRORCHECK ),
     END_PREDICTION_DATA()
 
-#define HL2_WALK_SPEED 150
-#define HL2_NORM_SPEED 190
-#define HL2_SPRINT_SPEED 320
-
         static ConVar
     cl_playermodel( "cl_playermodel", "none", FCVAR_USERINFO | FCVAR_ARCHIVE | FCVAR_SERVER_CAN_EXECUTE, "Default Player Model" );
 static ConVar cl_defaultweapon( "cl_defaultweapon", "weapon_physcannon", FCVAR_USERINFO | FCVAR_ARCHIVE, "Default Spawn Weapon" );
@@ -662,7 +658,13 @@ void C_Experiment_Player::StartSprinting( void )
     filter.UsePredictionRules();
     EmitSound( filter, entindex(), "HL2Player.SprintStart" );
 
+#if defined( EXPERIMENT_SOURCE )
+    SetMaxSpeed( GetRunSpeed() );
+#elif defined( HL2MP )
     SetMaxSpeed( HL2_SPRINT_SPEED );
+#else
+    SetMaxSpeed( hl2_sprintspeed.GetFloat() );
+#endif
     m_fIsSprinting = true;
 }
 
@@ -670,7 +672,13 @@ void C_Experiment_Player::StartSprinting( void )
 //-----------------------------------------------------------------------------
 void C_Experiment_Player::StopSprinting( void )
 {
+#if defined( EXPERIMENT_SOURCE )
+    SetMaxSpeed( GetNormalSpeed() );
+#elif defined( HL2MP )
     SetMaxSpeed( HL2_NORM_SPEED );
+#else
+    SetMaxSpeed( hl2_normspeed.GetFloat() );
+#endif
     m_fIsSprinting = false;
 }
 
@@ -728,7 +736,13 @@ void C_Experiment_Player::HandleSpeedChanges( void )
 //-----------------------------------------------------------------------------
 void C_Experiment_Player::StartWalking( void )
 {
+#if defined( EXPERIMENT_SOURCE )
+    SetMaxSpeed( GetWalkSpeed() );
+#elif defined( HL2MP )
     SetMaxSpeed( HL2_WALK_SPEED );
+#else
+    SetMaxSpeed( hl2_walkspeed.GetFloat() );
+#endif
     m_fIsWalking = true;
 }
 
@@ -736,7 +750,13 @@ void C_Experiment_Player::StartWalking( void )
 //-----------------------------------------------------------------------------
 void C_Experiment_Player::StopWalking( void )
 {
-    SetMaxSpeed( HL2_NORM_SPEED );
+#if defined( EXPERIMENT_SOURCE )
+    SetMaxSpeed( GetRunSpeed() );
+#elif defined( HL2MP )
+    SetMaxSpeed( HL2_SPRINT_SPEED );
+#else
+    SetMaxSpeed( hl2_sprintspeed.GetFloat() );
+#endif
     m_fIsWalking = false;
 }
 

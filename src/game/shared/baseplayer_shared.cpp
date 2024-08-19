@@ -180,8 +180,8 @@ float CBasePlayer::GetPlayerMaxSpeed()
 {
     // player max speed is the lower limit of m_flMaxSpeed and sv_maxspeed
     float fMaxSpeed = sv_maxspeed.GetFloat();
-    if ( MaxSpeed() > 0.0f && MaxSpeed() < fMaxSpeed )
-        fMaxSpeed = MaxSpeed();
+    if ( GetMaxSpeed() > 0.0f && GetMaxSpeed() < fMaxSpeed )
+        fMaxSpeed = GetMaxSpeed();
 
     return fMaxSpeed;
 }
@@ -2058,6 +2058,23 @@ void CBasePlayer::SharedSpawn()
     m_nRenderFX = kRenderFxNone;
     m_flNextAttack = gpGlobals->curtime;
     m_flMaxspeed = 0.0f;
+
+#if defined( EXPERIMENT_SOURCE )
+    SetWalkSpeed( EXPERIMENT_WALK_SPEED );
+    SetNormalSpeed( EXPERIMENT_NORMAL_SPEED );
+    SetRunSpeed( EXPERIMENT_RUN_SPEED );
+    SetCrouchWalkFraction( EXPERIMENT_CROUCH_WALK_FRACTION );
+#elif defined( HL2MP )
+    SetWalkSpeed( HL2_WALK_SPEED );
+    SetNormalSpeed( HL2_NORM_SPEED );
+    SetRunSpeed( HL2_SPRINT_SPEED );
+    SetCrouchWalkFraction( HL2_WALK_SPEED );
+#else
+    SetWalkSpeed( hl2_walkspeed.GetFloat() );
+    SetNormalSpeed( hl2_normspeed.GetFloat() );
+    SetRunSpeed( hl2_sprintspeed.GetFloat() );
+    SetCrouchWalkFraction( hl2_walkspeed.GetFloat() );
+#endif
 
     MDLCACHE_CRITICAL_SECTION();
     SetSequence( SelectWeightedSequence( ACT_IDLE ) );

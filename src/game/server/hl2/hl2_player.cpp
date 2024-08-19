@@ -91,16 +91,6 @@ ConVar hl2_sprintspeed( "hl2_sprintspeed", "320" );
 
 ConVar hl2_darkness_flashlight_factor( "hl2_darkness_flashlight_factor", "1" );
 
-#if defined( HL2MP ) || defined( EXPERIMENT_SOURCE )
-#define HL2_WALK_SPEED 150
-#define HL2_NORM_SPEED 190
-#define HL2_SPRINT_SPEED 320
-#else
-#define HL2_WALK_SPEED hl2_walkspeed.GetFloat()
-#define HL2_NORM_SPEED hl2_normspeed.GetFloat()
-#define HL2_SPRINT_SPEED hl2_sprintspeed.GetFloat()
-#endif
-
 ConVar player_showpredictedposition( "player_showpredictedposition", "0" );
 ConVar player_showpredictedposition_timestep( "player_showpredictedposition_timestep", "1.0" );
 
@@ -1207,7 +1197,14 @@ void CHL2_Player::StartSprinting( void )
     filter.UsePredictionRules();
     EmitSound( filter, entindex(), "HL2Player.SprintStart" );
 
+#if defined( EXPERIMENT_SOURCE )
+    SetMaxSpeed( GetRunSpeed() );
+#elif defined( HL2MP )
     SetMaxSpeed( HL2_SPRINT_SPEED );
+#else
+    SetMaxSpeed( hl2_sprintspeed.GetFloat() );
+#endif
+
     m_fIsSprinting = true;
 }
 
@@ -1222,11 +1219,23 @@ void CHL2_Player::StopSprinting( void )
 
     if ( IsSuitEquipped() )
     {
+#if defined( EXPERIMENT_SOURCE )
+        SetMaxSpeed( GetNormalSpeed() );
+#elif defined( HL2MP )
         SetMaxSpeed( HL2_NORM_SPEED );
+#else
+        SetMaxSpeed( hl2_normspeed.GetFloat() );
+#endif
     }
     else
     {
+#if defined( EXPERIMENT_SOURCE )
+        SetMaxSpeed( GetWalkSpeed() );
+#elif defined( HL2MP )
         SetMaxSpeed( HL2_WALK_SPEED );
+#else
+        SetMaxSpeed( hl2_walkspeed.GetFloat() );
+#endif
     }
 
     m_fIsSprinting = false;
@@ -1256,7 +1265,13 @@ void CHL2_Player::EnableSprint( bool bEnable )
 //-----------------------------------------------------------------------------
 void CHL2_Player::StartWalking( void )
 {
+#if defined( EXPERIMENT_SOURCE )
+    SetMaxSpeed( GetWalkSpeed() );
+#elif defined( HL2MP )
     SetMaxSpeed( HL2_WALK_SPEED );
+#else
+    SetMaxSpeed( hl2_walkspeed.GetFloat() );
+#endif
     m_fIsWalking = true;
 }
 
@@ -1264,7 +1279,13 @@ void CHL2_Player::StartWalking( void )
 //-----------------------------------------------------------------------------
 void CHL2_Player::StopWalking( void )
 {
+#if defined( EXPERIMENT_SOURCE )
+    SetMaxSpeed( GetNormalSpeed() );
+#elif defined( HL2MP )
     SetMaxSpeed( HL2_NORM_SPEED );
+#else
+    SetMaxSpeed( hl2_normspeed.GetFloat() );
+#endif
     m_fIsWalking = false;
 }
 

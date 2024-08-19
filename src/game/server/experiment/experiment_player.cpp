@@ -749,7 +749,7 @@ bool CExperiment_Player::WantsLagCompensationOnEntity(
     // get max distance player could have moved within max lag compensation
     // time, multiply by 1.5 to to avoid "dead zones"  (sqrt(2) would be the
     // exact value)
-    float maxDistance = 1.5 * pPlayer->MaxSpeed() * sv_maxunlag.GetFloat();
+    float maxDistance = 1.5 * pPlayer->GetMaxSpeed() * sv_maxunlag.GetFloat();
 
     // If the player is within this distance, lag compensate them in case
     // they're running past us.
@@ -787,8 +787,6 @@ Activity CExperiment_Player::TranslateTeamActivity( Activity ActToTranslate )
 
     return ActToTranslate;
 }
-
-extern ConVar hl2_normspeed;
 
 extern int gEvilImpulse101;
 //-----------------------------------------------------------------------------

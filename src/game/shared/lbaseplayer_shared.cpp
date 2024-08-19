@@ -726,7 +726,7 @@ LUA_BINDING_END()
 LUA_BINDING_BEGIN( Player, GetMaxSpeed, "class", "Get the player's max speed." )
 {
     lua_CBasePlayer *player = LUA_BINDING_ARGUMENT( luaL_checkplayer, 1, "player" );
-    lua_pushnumber( L, player->MaxSpeed() );
+    lua_pushnumber( L, player->GetMaxSpeed() );
     return 1;
 }
 LUA_BINDING_END( "number", "The player's max speed." )
@@ -904,13 +904,77 @@ LUA_BINDING_BEGIN( Player, SetLadderNormal, "class", "Set the player's ladder no
 }
 LUA_BINDING_END()
 
-LUA_BINDING_BEGIN( Player, SetMaxSpeed, "class", "Set the player's max speed." )
+LUA_BINDING_BEGIN( Player, SetMaxSpeed, "class", "Set the player's current max speed." )
 {
     lua_CBasePlayer *player = LUA_BINDING_ARGUMENT( luaL_checkplayer, 1, "player" );
     player->SetMaxSpeed( LUA_BINDING_ARGUMENT( luaL_checknumber, 2, "speed" ) );
     return 0;
 }
 LUA_BINDING_END()
+
+LUA_BINDING_BEGIN( Player, SetWalkSpeed, "class", "Set the player's walking speed (for when they press ALT)." )
+{
+    lua_CBasePlayer *player = LUA_BINDING_ARGUMENT( luaL_checkplayer, 1, "player" );
+    player->SetWalkSpeed( LUA_BINDING_ARGUMENT( luaL_checknumber, 2, "speed" ) );
+    return 0;
+}
+LUA_BINDING_END()
+
+LUA_BINDING_BEGIN( Player, GetWalkSpeed, "class", "Get the player's walking speed (for when they press ALT)." )
+{
+    lua_CBasePlayer *player = LUA_BINDING_ARGUMENT( luaL_checkplayer, 1, "player" );
+    lua_pushnumber( L, player->GetWalkSpeed() );
+    return 1;
+}
+LUA_BINDING_END( "number", "The player's walking speed." )
+
+LUA_BINDING_BEGIN( Player, SetNormalSpeed, "class", "Set the player's normal speed (for when neither sprinting, walking nor crouching)" )
+{
+    lua_CBasePlayer *player = LUA_BINDING_ARGUMENT( luaL_checkplayer, 1, "player" );
+    player->SetNormalSpeed( LUA_BINDING_ARGUMENT( luaL_checknumber, 2, "speed" ) );
+    return 0;
+}
+LUA_BINDING_END()
+
+LUA_BINDING_BEGIN( Player, GetNormalSpeed, "class", "Get the player's normal speed (for when neither sprinting, walking nor crouching)" )
+{
+    lua_CBasePlayer *player = LUA_BINDING_ARGUMENT( luaL_checkplayer, 1, "player" );
+    lua_pushnumber( L, player->GetNormalSpeed() );
+    return 1;
+}
+LUA_BINDING_END( "number", "The player's normal speed." )
+
+LUA_BINDING_BEGIN( Player, SetRunSpeed, "class", "Set the player's sprint speed." )
+{
+    lua_CBasePlayer *player = LUA_BINDING_ARGUMENT( luaL_checkplayer, 1, "player" );
+    player->SetRunSpeed( LUA_BINDING_ARGUMENT( luaL_checknumber, 2, "speed" ) );
+    return 0;
+}
+LUA_BINDING_END()
+
+LUA_BINDING_BEGIN( Player, GetRunSpeed, "class", "Get the player's sprint speed." )
+{
+    lua_CBasePlayer *player = LUA_BINDING_ARGUMENT( luaL_checkplayer, 1, "player" );
+    lua_pushnumber( L, player->GetRunSpeed() );
+    return 1;
+}
+LUA_BINDING_END( "number", "The player's sprint speed." )
+
+LUA_BINDING_BEGIN( Player, SetCrouchWalkFraction, "class", "Set the fraction by which player's walk speed will be multiplied when crouched." )
+{
+    lua_CBasePlayer *player = LUA_BINDING_ARGUMENT( luaL_checkplayer, 1, "player" );
+    player->SetCrouchWalkFraction( LUA_BINDING_ARGUMENT( luaL_checknumber, 2, "speed" ) );
+    return 0;
+}
+LUA_BINDING_END()
+
+LUA_BINDING_BEGIN( Player, GetCrouchWalkFraction, "class", "Get the fraction by which player's walk speed will be multiplied when crouched." )
+{
+    lua_CBasePlayer *player = LUA_BINDING_ARGUMENT( luaL_checkplayer, 1, "player" );
+    lua_pushnumber( L, player->GetCrouchWalkFraction() );
+    return 1;
+}
+LUA_BINDING_END( "number", "The player's crouched walk speed fraction." )
 
 LUA_BINDING_BEGIN( Player, SetNextAttack, "class", "Set the player's next attack." )
 {

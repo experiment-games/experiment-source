@@ -845,10 +845,6 @@ class CBasePlayer : public CBaseCombatCharacter
     {
         return m_fInitHUD;
     }
-    float MaxSpeed() const
-    {
-        return m_flMaxspeed;
-    }
     Activity GetActivity() const
     {
         return m_Activity;
@@ -929,9 +925,46 @@ class CBasePlayer : public CBaseCombatCharacter
     }
     virtual void EquipSuit( bool bPlayEffects = true );
     virtual void RemoveSuit( void );
+
     void SetMaxSpeed( float flMaxSpeed )
     {
         m_flMaxspeed = flMaxSpeed;
+    }
+    float GetMaxSpeed() const
+    {
+        return m_flMaxspeed;
+    }
+    void SetWalkSpeed( float flSpeed )
+    {
+        m_flWalkSpeed = flSpeed;
+    }
+    float GetWalkSpeed( void )
+    {
+        return m_flWalkSpeed;
+    }
+    void SetNormalSpeed( float flSpeed )
+    {
+        m_flNormalSpeed = flSpeed;
+    }
+    float GetNormalSpeed( void )
+    {
+        return m_flNormalSpeed;
+    }
+    void SetRunSpeed( float flSpeed )
+    {
+        m_flRunSpeed = flSpeed;
+    }
+    float GetRunSpeed( void )
+    {
+        return m_flRunSpeed;
+    }
+    void SetCrouchWalkFraction( float flSpeed )
+    {
+        m_flCrouchWalkFraction = flSpeed;
+    }
+    float GetCrouchWalkFraction( void )
+    {
+        return m_flCrouchWalkFraction;
     }
 
     void NotifyNearbyRadiationSource( float flRange );
@@ -1364,7 +1397,13 @@ class CBasePlayer : public CBaseCombatCharacter
 
    private:
     // Replicated to all clients
-    CNetworkVar( float, m_flMaxspeed );
+    CNetworkVar( float, m_flMaxspeed ); // Current maximum speed
+
+    // Values to set m_flMaxspeed to when walking slowly, normally, and running.
+    CNetworkVar( float, m_flWalkSpeed );
+    CNetworkVar( float, m_flNormalSpeed );
+    CNetworkVar( float, m_flRunSpeed );
+    CNetworkVar( float, m_flCrouchWalkFraction );
 
     // Not transmitted
     float m_flWaterJumpTime;  // used to be called teleport_time

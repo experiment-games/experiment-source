@@ -245,9 +245,42 @@ class C_BasePlayer : public C_BaseCombatCharacter, public CGameEventListener
     {
         m_flMaxspeed = flMaxSpeed;
     }
-    float MaxSpeed() const
+    float GetMaxSpeed() const
     {
         return m_flMaxspeed;
+    }
+
+    void SetWalkSpeed( float flSpeed )
+    {
+        m_flWalkSpeed = flSpeed;
+    }
+    float GetWalkSpeed( void )
+    {
+        return m_flWalkSpeed;
+    }
+    void SetNormalSpeed( float flSpeed )
+    {
+        m_flNormalSpeed = flSpeed;
+    }
+    float GetNormalSpeed( void )
+    {
+        return m_flNormalSpeed;
+    }
+    void SetRunSpeed( float flSpeed )
+    {
+        m_flRunSpeed = flSpeed;
+    }
+    float GetRunSpeed( void )
+    {
+        return m_flRunSpeed;
+    }
+    void SetCrouchWalkFraction( float flSpeed )
+    {
+        m_flCrouchWalkFraction = flSpeed;
+    }
+    float GetCrouchWalkFraction( void )
+    {
+        return m_flCrouchWalkFraction;
     }
 
     // Should this object cast shadows?
@@ -623,7 +656,13 @@ class C_BasePlayer : public C_BaseCombatCharacter, public CGameEventListener
     EHANDLE m_hOldVehicle;
     EHANDLE m_hUseEntity;
 
-    float m_flMaxspeed;
+    float m_flMaxspeed; // Current maximum speed
+
+    // Values to set m_flMaxspeed to when walking slowly, normally, and running.
+    float m_flWalkSpeed;
+    float m_flNormalSpeed;
+    float m_flRunSpeed;
+    float m_flCrouchWalkFraction;
 
     int m_iBonusProgress;
     int m_iBonusChallenge;

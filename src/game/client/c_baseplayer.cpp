@@ -348,7 +348,13 @@ RecvPropDataTable( "localdata", 0, 0, &REFERENCE_RECV_TABLE( DT_LocalPlayerExclu
     RecvPropInt( RECVINFO( m_iBonusProgress ) ),
     RecvPropInt( RECVINFO( m_iBonusChallenge ) ),
 
-    RecvPropFloat( RECVINFO( m_flMaxspeed ) ), RecvPropInt( RECVINFO( m_fFlags ) ),
+    RecvPropFloat( RECVINFO( m_flMaxspeed ) ),
+    RecvPropFloat( RECVINFO( m_flWalkSpeed ) ),
+    RecvPropFloat( RECVINFO( m_flNormalSpeed ) ),
+    RecvPropFloat( RECVINFO( m_flRunSpeed ) ),
+    RecvPropFloat( RECVINFO( m_flCrouchWalkFraction ) ),
+
+    RecvPropInt( RECVINFO( m_fFlags ) ),
 
     RecvPropInt( RECVINFO( m_iObserverMode ), 0, RecvProxy_ObserverMode ),
     RecvPropEHandle( RECVINFO( m_hObserverTarget ), RecvProxy_ObserverTarget ),
@@ -411,9 +417,9 @@ RecvPropDataTable( "localdata", 0, 0, &REFERENCE_RECV_TABLE( DT_LocalPlayerExclu
 
     END_PREDICTION_DATA()
 
-        BEGIN_PREDICTION_DATA( C_BasePlayer )
+    BEGIN_PREDICTION_DATA( C_BasePlayer )
 
-            DEFINE_PRED_TYPEDESCRIPTION( m_Local, CPlayerLocalData ),
+    DEFINE_PRED_TYPEDESCRIPTION( m_Local, CPlayerLocalData ),
     DEFINE_PRED_TYPEDESCRIPTION( pl, CPlayerState ),
 
     DEFINE_PRED_FIELD( m_iFOV, FIELD_INTEGER, FTYPEDESC_INSENDTABLE ),
@@ -423,6 +429,10 @@ RecvPropDataTable( "localdata", 0, 0, &REFERENCE_RECV_TABLE( DT_LocalPlayerExclu
 
     DEFINE_PRED_FIELD( m_hVehicle, FIELD_EHANDLE, FTYPEDESC_INSENDTABLE ),
     DEFINE_PRED_FIELD_TOL( m_flMaxspeed, FIELD_FLOAT, FTYPEDESC_INSENDTABLE, 0.5f ),
+    DEFINE_PRED_FIELD_TOL( m_flWalkSpeed, FIELD_FLOAT, FTYPEDESC_INSENDTABLE, 0.5f ),
+    DEFINE_PRED_FIELD_TOL( m_flNormalSpeed, FIELD_FLOAT, FTYPEDESC_INSENDTABLE, 0.5f ),
+    DEFINE_PRED_FIELD_TOL( m_flRunSpeed, FIELD_FLOAT, FTYPEDESC_INSENDTABLE, 0.5f ),
+    DEFINE_PRED_FIELD_TOL( m_flCrouchWalkFraction, FIELD_FLOAT, FTYPEDESC_INSENDTABLE, 0.5f ),
     DEFINE_PRED_FIELD( m_iHealth, FIELD_INTEGER, FTYPEDESC_INSENDTABLE ),
     DEFINE_PRED_FIELD( m_iBonusProgress, FIELD_INTEGER, FTYPEDESC_INSENDTABLE ),
     DEFINE_PRED_FIELD( m_iBonusChallenge, FIELD_INTEGER, FTYPEDESC_INSENDTABLE ),

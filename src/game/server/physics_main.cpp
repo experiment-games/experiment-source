@@ -1734,7 +1734,7 @@ void CBaseEntity::PhysicsStep()
 		{
 			float maxAngular;
 			VPhysicsGetObject()->GetShadowController()->GetMaxSpeed( NULL, &maxAngular );
-			VPhysicsGetObject()->GetShadowController()->MaxSpeed( pUpdate->savedShadowControllerMaxSpeed, maxAngular );
+            VPhysicsGetObject()->GetShadowController()->MaxSpeed( pUpdate->savedShadowControllerMaxSpeed, maxAngular );
 			DestroyDataObject(VPHYSICSUPDATEAI);
 		}
 	}

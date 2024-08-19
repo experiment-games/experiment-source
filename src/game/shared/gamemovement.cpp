@@ -4287,10 +4287,14 @@ void CGameMovement::HandleDuckingSpeedCrop( void )
 {
     if ( !( m_iSpeedCropped & SPEED_CROPPED_DUCK ) && ( player->GetFlags() & FL_DUCKING ) && ( player->GetGroundEntity() != NULL ) )
     {
-        float frac = 0.33333333f;
-        mv->m_flForwardMove *= frac;
-        mv->m_flSideMove *= frac;
-        mv->m_flUpMove *= frac;
+        #ifdef EXPERIMENT_SOURCE
+        float fraction = player->GetCrouchWalkFraction();
+        #else
+        float fraction = 0.33333333f;
+        #endif
+        mv->m_flForwardMove *= fraction;
+        mv->m_flSideMove *= fraction;
+        mv->m_flUpMove *= fraction;
         m_iSpeedCropped |= SPEED_CROPPED_DUCK;
     }
 }
