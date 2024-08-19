@@ -404,7 +404,8 @@ LUA_BINDING_END( "string", "Class name." )
 LUA_BINDING_BEGIN( Weapon, GetOwner, "class", "Get owner." )
 {
     lua_CBaseCombatWeapon *pWeapon = LUA_BINDING_ARGUMENT( luaL_checkweapon, 1, "entity" );
-    CBaseEntity::PushLuaInstanceSafe( L, ( CBasePlayer * )pWeapon->GetOwner() );
+    CBaseEntity *pOwner = pWeapon->GetOwnerEntity();
+    CBaseEntity::PushLuaInstanceSafe( L, pOwner );
     return 1;
 }
 LUA_BINDING_END( "Entity", "Owner entity." )

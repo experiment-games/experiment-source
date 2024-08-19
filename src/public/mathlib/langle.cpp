@@ -23,7 +23,7 @@ LUA_API lua_QAngle &lua_toangle( lua_State *L, int idx )
 ** checker functions (without type error)
 */
 
-LUA_API bool lua_isangle(lua_State* L, int idx)
+LUA_API bool lua_isangle( lua_State *L, int idx )
 {
     void *p = luaL_testudata( L, idx, LUA_QANGLEMETANAME );
     return p != NULL;
@@ -106,7 +106,7 @@ LUA_BINDING_END( "boolean", "True if the angles are equal within the tolerance, 
 
 LUA_BINDING_BEGIN( Angle, Init, "class", "Initializes the angle with the specified values." )
 {
-    lua_QAngle angle = LUA_BINDING_ARGUMENT( luaL_checkangle, 1, "angle" );
+    lua_QAngle &angle = LUA_BINDING_ARGUMENT( luaL_checkangle, 1, "angle" );
     vec_t x = ( vec_t )LUA_BINDING_ARGUMENT( luaL_checknumber, 2, "x" );
     vec_t y = ( vec_t )LUA_BINDING_ARGUMENT( luaL_checknumber, 3, "y" );
     vec_t z = ( vec_t )LUA_BINDING_ARGUMENT( luaL_checknumber, 4, "z" );
@@ -117,9 +117,9 @@ LUA_BINDING_BEGIN( Angle, Init, "class", "Initializes the angle with the specifi
 }
 LUA_BINDING_END( "Angle", "The initialized angle." )
 
-LUA_BINDING_BEGIN( Angle, Invalidate, "class", "Invalidates the angle." )
+LUA_BINDING_BEGIN( Angle, Invalidate, "class", "Makes the angle invalid." )
 {
-    lua_QAngle angle = LUA_BINDING_ARGUMENT( luaL_checkangle, 1, "angle" );
+    lua_QAngle &angle = LUA_BINDING_ARGUMENT( luaL_checkangle, 1, "angle" );
     angle.Invalidate();
     lua_pushangle( L, angle );
 
@@ -157,7 +157,7 @@ LUA_BINDING_END( "number", "The squared length of the angle." )
 //  Rotates the angle around the specified axis by the specified degrees. (doesnt return a new angle)
 LUA_BINDING_BEGIN( Angle, RotateAroundAxis, "class", "Rotates the angle around the specified axis by the specified degrees." )
 {
-    lua_QAngle angle = LUA_BINDING_ARGUMENT( luaL_checkangle, 1, "angle" );
+    lua_QAngle &angle = LUA_BINDING_ARGUMENT( luaL_checkangle, 1, "angle" );
     lua_Vector axis = LUA_BINDING_ARGUMENT( luaL_checkvector, 2, "axis" );
     float degrees = LUA_BINDING_ARGUMENT( luaL_checknumber, 3, "degrees" );
 
@@ -180,7 +180,7 @@ LUA_BINDING_END( "Angle", "The rotated angle." )
 //  Modifies the existing angle, adding another angle to it
 LUA_BINDING_BEGIN( Angle, Add, "class", "Modifies the existing angle, adding another angle to it." )
 {
-    lua_QAngle angle = LUA_BINDING_ARGUMENT( luaL_checkangle, 1, "angle" );
+    lua_QAngle &angle = LUA_BINDING_ARGUMENT( luaL_checkangle, 1, "angle" );
     lua_QAngle angleToAdd = LUA_BINDING_ARGUMENT( luaL_checkangle, 2, "angle2" );
 
     lua_pushangle( L, angle + angleToAdd );
@@ -189,10 +189,9 @@ LUA_BINDING_BEGIN( Angle, Add, "class", "Modifies the existing angle, adding ano
 }
 LUA_BINDING_END( "Angle", "The added angle." )
 
-//  Modifies the existing angle, dividing it by a number
 LUA_BINDING_BEGIN( Angle, Divide, "class", "Modifies the existing angle, dividing it by a number." )
 {
-    lua_QAngle angle = LUA_BINDING_ARGUMENT( luaL_checkangle, 1, "angle" );
+    lua_QAngle &angle = LUA_BINDING_ARGUMENT( luaL_checkangle, 1, "angle" );
     float divideBy = LUA_BINDING_ARGUMENT( luaL_checknumber, 2, "divideBy" );
 
     lua_pushangle( L, angle / divideBy );
@@ -201,17 +200,28 @@ LUA_BINDING_BEGIN( Angle, Divide, "class", "Modifies the existing angle, dividin
 }
 LUA_BINDING_END( "Angle", "The divided angle." )
 
-//  Modifies the existing angle, scaling it by a number
 LUA_BINDING_BEGIN( Angle, Scale, "class", "Modifies the existing angle, scaling it by a number." )
 {
-    lua_QAngle angle = LUA_BINDING_ARGUMENT( luaL_checkangle, 1, "angle" );
+    lua_QAngle &angle = LUA_BINDING_ARGUMENT( luaL_checkangle, 1, "angle" );
     float scaleBy = LUA_BINDING_ARGUMENT( luaL_checknumber, 2, "scaleBy" );
 
     lua_pushangle( L, angle * scaleBy );
 
     return 1;
 }
-LUA_BINDING_END( "Angle", "The scaled angle." )
+LUA_BINDING_END( "Angle", "The same angle, now scaled." )
+
+LUA_BINDING_BEGIN( Angle, Normalize, "class", "Modifies the existing angle, normalizing it between -180 to 180 degrees pitch, yaw and roll." )
+{
+    lua_QAngle &angle = LUA_BINDING_ARGUMENT( luaL_checkangle, 1, "angle" );
+    angle.x = AngleNormalize( angle.x );
+    angle.y = AngleNormalize( angle.y );
+    angle.z = AngleNormalize( angle.z );
+    lua_pushangle( L, angle );
+
+    return 1;
+}
+LUA_BINDING_END( "Angle", "The same angle, now normalized." )
 
 LUA_BINDING_BEGIN( Angle, __index, "class", "Metatable that is called when a key is not found in the table." )
 {

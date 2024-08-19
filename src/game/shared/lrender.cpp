@@ -474,6 +474,28 @@ LUA_BINDING_BEGIN( Renders, PopFilterMagnification, "library", "Pop a magnificat
 }
 LUA_BINDING_END()
 
+LUA_BINDING_BEGIN( Renders, DepthRange, "library", "Set's the depth range of the upcoming render.", "client" )
+{
+    float depthMin = LUA_BINDING_ARGUMENT( luaL_checknumber, 1, "depthMin" );
+    float depthMax = LUA_BINDING_ARGUMENT( luaL_checknumber, 2, "depthMax" );
+
+    CMatRenderContextPtr pRenderContext( materials );
+    pRenderContext->DepthRange( depthMin, depthMax );
+
+    return 0;
+}
+LUA_BINDING_END()
+
+LUA_BINDING_BEGIN( Renders, GetViewEntity, "library", "Returns the entity the client is using to see (mostly the player itself)", "client" )
+{
+    int viewEntityId = render->GetViewEntity();
+    C_BaseEntity *pCameraObject = cl_entitylist->GetEnt( viewEntityId );
+    CBaseEntity::PushLuaInstanceSafe( L, pCameraObject );
+
+    return 1;
+}
+LUA_BINDING_END( "Entity", "The view entity." )
+
 #endif  // CLIENT_DLL
 
 /*

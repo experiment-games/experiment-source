@@ -676,38 +676,33 @@ LUA_BINDING_BEGIN( Player, Give, "class", "Give the weapon to the player." )
     lua_CBasePlayer *player = LUA_BINDING_ARGUMENT( luaL_checkplayer, 1, "player" );
     const char *className = LUA_BINDING_ARGUMENT( luaL_checkstring, 2, "className" );
     bool shouldGiveNoAmmo = LUA_BINDING_ARGUMENT_WITH_DEFAULT( luaL_optboolean, 3, false, "shouldGiveNoAmmo" );
+    CBaseCombatWeapon *weapon = player->Weapon_Create( className );
 
-    CBaseEntity *entity = player->GiveNamedItem( className, 0 );
+    //CBaseEntity *entity = player->GiveNamedItem( className, 0 );
 
-    if ( !entity )
-    {
-        // Happens when the player already has the weapon, or the weapon is invalid
-        return 0;
-    }
+    //if ( !entity )
+    //{
+    //    // Happens when the player already has the weapon, or the weapon is invalid
+    //    return 0;
+    //}
 
-    CBaseAnimating *animating = dynamic_cast<CBaseAnimating *>( entity );
+    //CBaseAnimating *animating = dynamic_cast<CBaseAnimating *>( entity );
 
     // Let's make sure the weapon has a valid model, if not, set it to the error model
-    if ( !animating->GetModelPtr() )
+    if ( !weapon->GetModelPtr() )
     {
-        // Set the weapon to the error model
-        animating->SetModel( "models/error.mdl" );
+        weapon->SetModel( "models/error.mdl" );
     }
 
-    CBaseCombatWeapon *weapon = dynamic_cast<CBaseCombatWeapon *>( entity );
+    player->Weapon_Equip( weapon, !shouldGiveNoAmmo );
 
-    if ( !weapon )
-    {
-        // To match the behavior in Garry's Mod, we allow giving any type of entity
-        // But we only continue if it's a weapon
-        CBaseEntity::PushLuaInstanceSafe( L, entity );
-        return 1;
-    }
-
-    if ( shouldGiveNoAmmo )
-    {
-        DevWarning( "Player:Give - shouldGiveNoAmmo is not implemented yet" );
-    }
+    //if ( !weapon )
+    //{
+    //    // To match the behavior in Garry's Mod, we allow giving any type of entity
+    //    // But we only continue if it's a weapon
+    //    CBaseEntity::PushLuaInstanceSafe( L, entity );
+    //    return 1;
+    //}
 
     CBaseEntity::PushLuaInstanceSafe( L, weapon );
     return 1;

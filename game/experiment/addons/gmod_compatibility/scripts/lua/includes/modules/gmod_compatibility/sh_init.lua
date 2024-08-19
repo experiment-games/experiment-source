@@ -405,6 +405,13 @@ VECTOR_META.Distance2D = VECTOR_META.DistanceTo2D
 VECTOR_META.Distance2DSqr = VECTOR_META.DistanceToAsSqr2D
 VECTOR_META.Div = VECTOR_META.Divide
 VECTOR_META.Mul = VECTOR_META.Scale
+VECTOR_META.Normalize = VECTOR_META.NormalizeInPlace
+
+function VECTOR_META:GetNormalized()
+	local copy = Vector(self)
+	copy:NormalizeInPlace()
+	return copy
+end
 
 local ANGLE_META = FindMetaTable("Angle")
 ANGLE_META.Div = ANGLE_META.Divide
@@ -435,6 +442,10 @@ ENTITY_META.DeleteOnRemove = ENTITY_META.AddDeleteOnRemove
 ENTITY_META.DontDeleteOnRemove = ENTITY_META.RemoveDeleteOnRemove
 ENTITY_META.GetFlexIDByName = ENTITY_META.GetFlexIdByName
 ENTITY_META.GetNumBodyGroups = ENTITY_META.GetBodyGroupsCount
+
+function ENTITY_META:IsNextBot()
+	return false -- TODO: Implement (low priority)
+end
 
 function ENTITY_META:SetSpawnEffect(effect)
 	-- TODO: Implement
@@ -693,32 +704,40 @@ else
 	}
 
 	cam = {
-		Start3D = render.PushView3D,
-		Start2D = render.PushView2D,
-		End3D = render.PopView3D,
-		End2D = render.PopView2D,
+		Start3D = Renders.PushView3D,
+		Start2D = Renders.PushView2D,
+		End3D = Renders.PopView3D,
+		End2D = Renders.PopView2D,
+
+		IgnoreZ = function(bBool)
+			if (bBool) then
+				Renders.DepthRange(0, 0.01)
+			else
+				Renders.DepthRange(0, 1)
+			end
+		end,
 	}
 
-	render.SetModelLighting = render.SetAmbientLightCube
-	render.ResetModelLighting = render.ResetAmbientLightCube
-	render.PushFilterMin = render.PushFilterMinification
-	render.PopFilterMin = render.PopFilterMinification
-	render.PushFilterMag = render.PushFilterMagnification
-	render.PopFilterMag = render.PopFilterMagnification
-	render.SetScissorRect = render.SetScissorRectangle
-	render.SetWriteDepthToDestAlpha = render.SetWriteDepthToDestinationAlpha
+	render.SetModelLighting = Renders.SetAmbientLightCube
+	render.ResetModelLighting = Renders.ResetAmbientLightCube
+	render.PushFilterMin = Renders.PushFilterMinification
+	render.PopFilterMin = Renders.PopFilterMinification
+	render.PushFilterMag = Renders.PushFilterMagnification
+	render.PopFilterMag = Renders.PopFilterMagnification
+	render.SetScissorRect = Renders.SetScissorRectangle
+	render.SetWriteDepthToDestAlpha = Renders.SetWriteDepthToDestinationAlpha
 
 	function render.Clear(r, g, b, a, clearDepth, clearStencil)
-		render.ClearBuffers(true, clearDepth or false, clearStencil or false)
-		render.ClearColor(r, g, b, a)
+		Renders.ClearBuffers(true, clearDepth or false, clearStencil or false)
+		Renders.ClearColor(r, g, b, a)
 	end
 
 	function render.ClearDepth(clearStencil)
-		render.ClearBuffers(false, true, clearStencil or false)
+		Renders.ClearBuffers(false, true, clearStencil or false)
 	end
 
 	function render.ClearStencil()
-		render.ClearBuffers(false, false, true)
+		Renders.ClearBuffers(false, false, true)
 	end
 
 	input.SetCursorPos = input.SetCursorPosition
@@ -738,6 +757,7 @@ else
 
 	CreateMaterial = Materials.Create
 	DisableClipping = Surfaces.DisableClipping
+	GetViewEntity = Renders.GetViewEntity
 
 	local MODEL_IMAGE_PANEL_META = FindMetaTable("ModelImagePanel")
 	MODEL_IMAGE_PANEL_META._OriginalRebuildSpawnIcon = MODEL_IMAGE_PANEL_META._OriginalRebuildSpawnIcon or

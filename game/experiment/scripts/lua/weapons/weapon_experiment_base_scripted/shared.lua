@@ -145,7 +145,7 @@ function SWEP:Deploy()
 end
 
 function SWEP:GetDrawActivity()
-	return ACTIVITY.ACT_VM_DRAW
+	return _E.ACTIVITY.ACT_VM_DRAW
 end
 
 function SWEP:Holster(pSwitchingTo)
