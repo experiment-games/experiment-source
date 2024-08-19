@@ -86,18 +86,6 @@ LUA_BINDING_BEGIN( Material, DeleteIfUnreferenced, "class", "Delete if unreferen
 }
 LUA_BINDING_END()
 
-lua_Color ColorAtPosition( unsigned char *imageData, int width, int height, int x, int y )
-{
-    if ( x < 0 || x >= width || y < 0 || y >= height )
-    {
-        return lua_Color();
-    }
-
-    int i = ( y * width + x ) * 4;
-
-    return lua_Color( imageData[i], imageData[i + 1], imageData[i + 2], imageData[i + 3] );
-}
-
 LUA_BINDING_BEGIN( Material, GetColor, "class", "Get color." )
 {
     int x = LUA_BINDING_ARGUMENT(luaL_checknumber, 2, "x");
@@ -106,22 +94,8 @@ LUA_BINDING_BEGIN( Material, GetColor, "class", "Get color." )
     bool bFound = false;
     IMaterialVar *pVar = LUA_BINDING_ARGUMENT( luaL_checkmaterial, 1, "material" )->FindVar( "$basetexture", &bFound );
     ITexture *pTexture = pVar->GetTextureValue();
-    CPngMaterialProxy *pMaterialProxy = CPngTextureRegen::GetProceduralMaterialProxy( pTexture->GetName() );
-    unsigned char *pTextureData = pMaterialProxy->GetTexturePointer();
+    lua_Color color = CPngTextureRegen::GetProceduralMaterialProxyColorAtPosition( pTexture->GetName(), x, y );
 
-    if ( !pTextureData )
-    {
-        lua_pushcolor( L, lua_Color() );
-        return 1;
-    }
-
-    int width = pTexture->GetActualWidth();
-    int height = pTexture->GetActualHeight();
-
-    Assert( x >= 0 && x < width );
-    Assert( y >= 0 && y < height );
-
-    lua_Color color = ColorAtPosition( pTextureData, width, height, x, y );
     lua_pushcolor( L, color );
     return 1;
 }
@@ -745,11 +719,24 @@ LUA_BINDING_BEGIN( Materials, Find, "library", "Finds a material" )
             char nameWithoutExtension[MAX_PATH];
             Q_StripExtension( name, nameWithoutExtension, sizeof( nameWithoutExtension ) );
             char materialName[MAX_PATH];
-            Q_snprintf( materialName, sizeof( materialName ), "!%s", nameWithoutExtension );
+            char fileName[MAX_PATH];
+
+            if (nameWithoutExtension[0] == '!')
+            {
+                Q_strncpy( materialName, nameWithoutExtension, sizeof( materialName ) );
+
+                Q_strncpy( fileName, name + 1, sizeof( fileName ) );
+            }
+            else
+            {
+                Q_snprintf( materialName, sizeof( materialName ), "!%s", nameWithoutExtension );
+
+                Q_strncpy( fileName, name, sizeof( fileName ) );
+            }
 
             bool isSmooth;
             KeyValues *keyValues = ParseParameters( parameters, isSmooth );
-            pMaterial = CPngTextureRegen::GetOrCreateProceduralMaterial( materialName, name, keyValues, isSmooth );
+            pMaterial = CPngTextureRegen::GetOrCreateProceduralMaterial( materialName, fileName, keyValues, isSmooth );
 
             // Experiment; Commented @ 5-8-2024 since this no longer seems to be the case.
             //// We need to assign a TextureID to the material, or else the game will crash in MaterialSystem.pdb
@@ -768,7 +755,7 @@ LUA_BINDING_BEGIN( Materials, Find, "library", "Finds a material" )
 }
 LUA_BINDING_END( "Material", "The material" )
 
-LUA_BINDING_BEGIN( Materials, Exists, "library", "Checks if a material exists" )
+LUA_BINDING_BEGIN( Materials, Exists, "library", "Checks if a material exists. TODO: This is likely not working correctly" )
 {
     const char *name = LUA_BINDING_ARGUMENT( luaL_checkstring, 1, "name" );
 
@@ -777,6 +764,8 @@ LUA_BINDING_BEGIN( Materials, Exists, "library", "Checks if a material exists" )
         lua_pushboolean( L, 1 );
         return 1;
     }
+
+    // TODO: This is likely not working correctly
 
     char ext[4];
 

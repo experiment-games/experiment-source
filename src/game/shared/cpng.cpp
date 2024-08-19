@@ -14,6 +14,7 @@
 #include "materialsystem/imaterialsystem.h"
 #include "datacache/idatacache.h"
 #include "libpng/png.h"
+#include <pixelwriter.h>
 
 // memdbgon must be the last include file in a .cpp file!!!
 #include "tier0/memdbgon.h"
@@ -22,7 +23,7 @@ CUtlMap< const char *, CPngMaterialProxy * > CPngTextureRegen::m_mapProceduralMa
 
 void CPngTextureRegen::RegenerateTextureBits( ITexture *pTexture, IVTFTexture *pVTFTexture, Rect_t *pSubRect )
 {
-    m_pProxy->LoadTexture( pTexture, pVTFTexture );
+    m_pProxy->LoadTexture( pTexture, pVTFTexture, pSubRect );
 }
 
 static void PNG_ReadData( png_structp readPointer, png_bytep outBytes, png_size_t byteCountToRead )
@@ -88,7 +89,7 @@ unsigned char *PNG_ReadFromBuffer( CUtlBuffer &buffer, const char *pFilePath, in
     int rowBytes = png_get_rowbytes( readPointer, infoPointer );
     sizeInBytes = rowBytes * height;
 
-    unsigned char *imageData = new unsigned char[sizeInBytes]{ 0 };
+    unsigned char *imageData = ( unsigned char * )malloc( sizeInBytes );
 
     if ( !imageData )
     {
@@ -96,14 +97,15 @@ unsigned char *PNG_ReadFromBuffer( CUtlBuffer &buffer, const char *pFilePath, in
         return NULL;
     }
 
-    png_bytepp rowPointers = new png_bytep[height] { 0 };
+    png_bytepp rowPointers = ( png_bytepp )malloc( sizeof( png_bytep ) * height );
 
-     if ( !rowPointers )
+    if ( !rowPointers )
     {
-         png_destroy_read_struct( &readPointer, &infoPointer, NULL );
-         DevWarning( "Failed loading PNG as Material! Memory allocation for row pointers failed \"%s\"\n", pFilePath );
-         return NULL;
-     }
+        free( imageData );
+        png_destroy_read_struct( &readPointer, &infoPointer, NULL );
+        DevWarning( "Failed loading PNG as Material! Memory allocation for row pointers failed \"%s\"\n", pFilePath );
+        return NULL;
+    }
 
     for ( int y = 0; y < height; y++ )
     {
@@ -115,7 +117,16 @@ unsigned char *PNG_ReadFromBuffer( CUtlBuffer &buffer, const char *pFilePath, in
 
     png_destroy_read_struct( &readPointer, &infoPointer, NULL );
 
+//#ifdef CLIENT_DLL
+//    ImageFormat targetImageFormat = IMAGE_FORMAT_RGBA8888;
+//    int memRequired = ImageLoader::GetMemRequired( width, height, bitDepth, targetImageFormat, false );
+//    unsigned char *convertedImageData = ( unsigned char * )malloc( memRequired );
+//    ImageLoader::ConvertImageFormat( imageData, IMAGE_FORMAT_UNKNOWN, convertedImageData, targetImageFormat, width, height, 0, 0 );
+//    free( imageData );
+//    return convertedImageData;
+//#else
     return imageData;
+//#endif
 }
 
 bool PNG_ReadInfoFromBuffer( CUtlBuffer &buffer, const char *pFilePath, int &width, int &height, int &colorType, int &bitDepth )
@@ -301,6 +312,7 @@ IMaterial *CPngTextureRegen::GetOrCreateProceduralMaterial(
             height,
             imageFormat,
             nFlags );
+        //pTexture->IncrementReferenceCount();
     }
 
     if ( pVMTKeyValues == nullptr )
@@ -330,12 +342,13 @@ IMaterial *CPngTextureRegen::GetOrCreateProceduralMaterial(
     {
         // DevWarning( "CPngTextureRegen::GetOrCreateProceduralMaterial: %s not precached\n", cleanMaterialName );
         pMaterial->Refresh();
+        //pMaterial->IncrementReferenceCount();
     }
 
     return pMaterial;
 }
 
-CPngMaterialProxy *CPngTextureRegen::GetProceduralMaterialProxy( const char *pMaterialName )
+lua_Color CPngTextureRegen::GetProceduralMaterialProxyColorAtPosition( const char *pMaterialName, int x, int y )
 {
     char cleanMaterialName[MAX_PATH];
     CleanMaterialName( pMaterialName, cleanMaterialName, sizeof( cleanMaterialName ) );
@@ -344,12 +357,19 @@ CPngMaterialProxy *CPngTextureRegen::GetProceduralMaterialProxy( const char *pMa
 
     if ( index == m_mapProceduralMaterials.InvalidIndex() )
     {
-        return nullptr;
+        DevWarning( "Failed getting PNG as Material! Couldn't find material \"%s\"!\n", cleanMaterialName );
+        return lua_Color();
     }
 
     CPngMaterialProxy *pMaterialProxy = m_mapProceduralMaterials.Element( index );
 
-    return pMaterialProxy;
+    if ( !pMaterialProxy )
+    {
+        DevWarning( "Failed getting PNG as Material! Material \"%s\" no longer valid!\n", cleanMaterialName );
+        return lua_Color();
+    }
+
+    return pMaterialProxy->GetColorAtPosition( x, y );
 }
 
 void CPngTextureRegen::ReleaseAllTextureData()
@@ -384,6 +404,9 @@ CPngMaterialProxy::~CPngMaterialProxy()
     {
         m_pTexture->SetTextureRegenerator( NULL );
     }
+
+    free( m_pTexturePointer );  // We don't need this anymore
+    m_pTexturePointer = NULL;
 }
 
 bool CPngMaterialProxy::Init( IMaterial *pMaterial, KeyValues *pKeyValues )
@@ -408,33 +431,44 @@ bool CPngMaterialProxy::Init( IMaterial *pMaterial, KeyValues *pKeyValues )
     }
 
     m_pTexture = m_pTextureVar->GetTextureValue();
-    // DevWarning( "CPngMaterialProxy::Init: %s\n", m_pTexture->GetName() );
+    //DevWarning( "CPngMaterialProxy::Init: %s\n", m_pTexture->GetName() );
 
     m_pTexture->SetTextureRegenerator( &m_TextureRegen );
-    m_pTexture->Download();
+    // m_pTexture->Download(); // This will load it into memory, which will have us run out of memory quickly
 
     CPngTextureRegen::m_mapProceduralMaterials.Insert( m_pTexture->GetName(), this );
+
+    LoadTextureFromDisk();
 
     return true;
 }
 
+/// <summary>
+/// This is called everytime a DrawTexturedRect is called.
+/// Also pBind will be NULL since it is not bounnd to an entity?
+/// </summary>
+/// <param name="pBind"></param>
 void CPngMaterialProxy::OnBind( void *pBind )
 {
-    // This is called everytime a DrawTexturedRect is called, so we shouldnt Download here.
-    // Also pBind will be NULL since it is not bounnd to an entity?
-    if ( pBind == NULL )
+    // Keep track of our dirty state, so we don't call download every frame (which is expensive)
+    if ( !m_bIsDirty )
         return;
 
-    Assert( m_pTextureVar );
-    Assert( m_pTextureVar->IsTexture() );
+    m_bIsDirty = false;
 
-    DevWarning( "CPngMaterialProxy::OnBind: %s\n", m_pFullPathVar->GetStringValue() );
+    Assert( m_pTexture );
+    Assert( &m_TextureRegen );
 
-    ITexture *pTexture = m_pTextureVar->GetTextureValue();
-    pTexture->Download();
+    // Although the texture regenerator should be set (see Init), for some reason
+    // we need to re-set it, or else calling 'Download' will not call the RegenerateTextureBits :/
+    m_pTexture->SetTextureRegenerator( &m_TextureRegen );
+
+    m_bAllowRegenerating = true;
+    m_pTexture->Download();
+    m_bAllowRegenerating = false;
 }
 
-void CPngMaterialProxy::PreLoadTexture()
+void CPngMaterialProxy::LoadTextureFromDisk()
 {
 #ifdef CLIENT_DLL
     const char *fileName = m_pFullPathVar->GetStringValue();
@@ -449,6 +483,8 @@ void CPngMaterialProxy::PreLoadTexture()
     int width, height, colorType, bitDepth, sizeInBytes;
 
     m_pTexturePointer = PNG_ReadFromBuffer( buffer, fileName, width, height, colorType, bitDepth, sizeInBytes );
+    m_nWidth = width;
+    m_nHeight = height;
 
     if ( !m_pTexturePointer )
     {
@@ -457,27 +493,82 @@ void CPngMaterialProxy::PreLoadTexture()
     }
 
     m_iSizeInBytes = sizeInBytes;
+    m_bIsDirty = true;
 #endif
 }
 
-void CPngMaterialProxy::LoadTexture( ITexture *pTexture, IVTFTexture *pVTFTexture )
+void CPngMaterialProxy::LoadTexture( ITexture *pTexture, IVTFTexture *pVTFTexture, Rect_t *pSubRect )
 {
-#ifdef CLIENT_DLL
-    PreLoadTexture();
-
-    unsigned char *vtfImageData = pVTFTexture->ImageData( 0, 0, 0 );
-
-    // Ensure the texture we are copying to is the same format as the texture we are copying from
-    pVTFTexture->ConvertImageFormat( pTexture->GetImageFormat(), false );
-
-    if ( pTexture->IsMipmapped() )
-    {
-        DevWarning( "Failed regenerating PNG as Texture! Mipmapped textures are not supported \"%s\"\n", pTexture->GetName() );
+    if ( !m_bAllowRegenerating )
         return;
+
+#ifdef CLIENT_DLL
+    Assert( m_pTexturePointer );
+
+    // Not supported at the moment:
+    Assert( !pTexture->IsMipmapped() );
+    Assert( pVTFTexture->FaceCount() == 1 );
+    Assert( pVTFTexture->FrameCount() == 1 );
+
+    int width, height, depth;
+    pVTFTexture->ComputeMipLevelDimensions( 0, &width, &height, &depth );
+
+    Assert( width == m_nWidth && height == m_nHeight );
+    Assert( depth == 1 );
+
+    // Point the pixel writer to the vtf texture memory
+    CPixelWriter pixelWriter;
+    pixelWriter.SetPixelMemory(
+        pVTFTexture->Format(),
+        pVTFTexture->ImageData( 0, 0, 0 ),
+        pVTFTexture->RowSizeInBytes( 0 ) );
+
+    int bytesForFormat = 4; // IMAGE_FORMAT_RGBA8888
+    int xMax = pSubRect->x + pSubRect->width;
+    int yMax = pSubRect->y + pSubRect->height;
+    int x, y;
+
+    // Update the subrect that needs to be updated
+    for ( y = pSubRect->y; y < yMax; ++y )
+    {
+        pixelWriter.Seek( pSubRect->x, y );
+        unsigned char *rgba = &m_pTexturePointer[( y * m_nWidth + pSubRect->x ) * bytesForFormat];
+
+        for ( x = pSubRect->x; x < xMax; ++x )
+        {
+            pixelWriter.WritePixel( rgba[0], rgba[1], rgba[2], rgba[3] );
+            rgba += bytesForFormat;
+        }
+    }
+#endif
+}
+
+lua_Color ColorAtPosition( unsigned char *imageData, int width, int height, int x, int y )
+{
+    if ( x < 0 || x >= width || y < 0 || y >= height )
+    {
+        return lua_Color();
     }
 
-    Q_memcpy( vtfImageData, m_pTexturePointer, m_iSizeInBytes );
-#endif
+    int i = ( y * width + x ) * 4;
+
+    return lua_Color( imageData[i], imageData[i + 1], imageData[i + 2], imageData[i + 3] );
+}
+
+lua_Color CPngMaterialProxy::GetColorAtPosition( int x, int y )
+{
+    if ( m_pTexturePointer == NULL )
+    {
+        Assert( 0 );  // Call LoadTextureFromDisk first
+        return lua_Color();
+    }
+
+    Assert( m_pTexture );
+
+    int width = m_pTexture->GetActualWidth();
+    int height = m_pTexture->GetActualHeight();
+
+    return ColorAtPosition( m_pTexturePointer, width, height, x, y );
 }
 
 EXPOSE_INTERFACE( CPngMaterialProxy, IMaterialProxy, "ProceduralPng" IMATERIAL_PROXY_INTERFACE_VERSION );

@@ -649,10 +649,6 @@ achievements = {
 }
 
 Material = function(name)
-	if (not Materials.Exists(name)) then
-		name = "" .. name
-	end
-
 	return Materials.Find(name)
 end
 

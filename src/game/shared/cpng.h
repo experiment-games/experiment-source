@@ -19,6 +19,7 @@
 #include <materialsystem/imaterialsystem.h>
 #include "materialsystem/imaterialvar.h"
 #include "materialsystem/imaterialproxy.h"
+#include <lColor.h>
 
 class CPngMaterialProxy;
 
@@ -29,7 +30,8 @@ class CPngTextureRegen : public ITextureRegenerator
         : m_pProxy( pProxy ) {}
 
     virtual void RegenerateTextureBits( ITexture *pTexture, IVTFTexture *pVTFTexture, Rect_t *pSubRect );
-    virtual void Release() {}
+    virtual void Release()
+    { }
 
    private:
     CPngMaterialProxy *m_pProxy;
@@ -42,7 +44,7 @@ class CPngTextureRegen : public ITextureRegenerator
         const char *pFilePath,
         KeyValues *pVMTKeyValues = nullptr,
         bool bSmooth = false );
-    static CPngMaterialProxy *GetProceduralMaterialProxy( const char *pMaterialName );
+    static lua_Color GetProceduralMaterialProxyColorAtPosition( const char *pMaterialName, int x, int y );
     static void ReleaseAllTextureData();
 };
 
@@ -62,26 +64,29 @@ class CPngMaterialProxy : public IMaterialProxy
     {
         return m_pTextureVar->GetOwningMaterial();
     }
-    virtual unsigned char *GetTexturePointer() const
-    {
-        return m_pTexturePointer;
-    }
+
     virtual int GetSizeInBytes() const
     {
         return m_iSizeInBytes;
     }
 
-    void LoadTexture( ITexture *pTexture, IVTFTexture *pVTFTexture );
+    void LoadTexture( ITexture *pTexture, IVTFTexture *pVTFTexture, Rect_t *pSubRect );
+
+    lua_Color GetColorAtPosition( int x, int y );
 
    private:
-    void PreLoadTexture();
+    void LoadTextureFromDisk();
     CPngTextureRegen m_TextureRegen;
     ITexture *m_pTexture;
     IMaterialVar *m_pTextureVar;
     IMaterialVar *m_pFullPathVar;
+    bool m_bAllowRegenerating;
 
     unsigned char *m_pTexturePointer;
+    bool m_bIsDirty;
     int m_iSizeInBytes;
+    int m_nWidth;
+    int m_nHeight;
 };
 
 unsigned char *PNG_ReadFromBuffer( CUtlBuffer &buffer, const char *filePath, int &width, int &height, int &colorType, int &bitDepth, int &sizeInBytes );
