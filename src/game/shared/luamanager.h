@@ -302,6 +302,19 @@
             lua_pop( L, 1 );                        \
     }
 
+#define LUA_RETURN_BOOLEAN_FROM_INTEGER()    \
+    if ( lua_gettop( L ) == 1 )              \
+    {                                        \
+        if ( lua_isnumber( L, -1 ) )         \
+        {                                    \
+            int res = lua_tonumber( L, -1 ); \
+            lua_pop( L, 1 );                 \
+            return res != 0;                 \
+        }                                    \
+        else                                 \
+            lua_pop( L, 1 );                 \
+    }
+
 #define LUA_RETURN_ACTIVITY()                \
     if ( lua_gettop( L ) == 1 )              \
     {                                        \

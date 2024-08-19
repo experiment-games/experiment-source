@@ -7,29 +7,50 @@
 
 require("table")
 
-function table.Copy(target, shouldCopyRecursively)
-    if (target == nil) then
-        return nil
-    end
+--- Recursively copies the table.
+--- @param target table
+--- @param lookupTable? table
+--- @return table|nil
+function table.Copy(target, lookupTable)
+	if (target == nil) then
+		return nil
+	end
 
-    local __copy = {}
-    setmetatable(__copy, getmetatable(target))
+	local __copy = {}
+	setmetatable(__copy, getmetatable(target))
 
-    for key, value in pairs(target) do
-        if (type(value) ~= "table") then
-            __copy[key] = value
-        else
-            shouldCopyRecursively = shouldCopyRecursively or {}
-            shouldCopyRecursively[target] = __copy
-            if (shouldCopyRecursively[value]) then
-                __copy[key] = shouldCopyRecursively[value]
-            else
-                __copy[key] = table.Copy(value, shouldCopyRecursively)
-            end
-        end
-    end
+	for key, value in pairs(target) do
+		if (type(value) ~= "table") then
+			__copy[key] = value
+		else
+			lookupTable = lookupTable or {}
+			lookupTable[target] = __copy
+			if (lookupTable[value]) then
+				__copy[key] = lookupTable[value]
+			else
+				__copy[key] = table.Copy(value, lookupTable)
+			end
+		end
+	end
 
-    return __copy
+	return __copy
+end
+
+--- Recursively copies a source table into a target table.
+--- @param target table
+--- @param source table
+function table.CopyMerge(target, source)
+	for key, value in pairs(source) do
+		if (type(value) == "table") then
+			if (type(target[key]) ~= "table") then
+				target[key] = {}
+			end
+
+			table.CopyMerge(target[key], value)
+		else
+			target[key] = value
+		end
+	end
 end
 
 --- Counts the items in a table by iterating over the keys.

@@ -584,6 +584,27 @@ LUA_BINDING_BEGIN( Player, GetWeaponInSlot, "class", "Get the player's weapon in
 }
 LUA_BINDING_END( "Entity", "The player's weapon in the slot." )
 
+LUA_BINDING_BEGIN( Player, GetWeapons, "class", "Get the player's weapons." )
+{
+    lua_CBasePlayer *player = LUA_BINDING_ARGUMENT( luaL_checkplayer, 1, "player" );
+    lua_newtable( L );
+
+    for ( int i = 0; i < player->WeaponCount(); i++ )
+    {
+        CBaseCombatWeapon *weapon = player->GetWeapon( i );
+
+        // Stop as soon as we've reached the end of valid weapons
+        if ( !weapon )
+            break;
+
+        CBaseEntity::PushLuaInstanceSafe( L, weapon );
+        lua_rawseti( L, -2, i + 1 );
+    }
+
+    return 1;
+}
+LUA_BINDING_END( "table", "The player's weapons." )
+
 LUA_BINDING_BEGIN( Player, HintMessage, "class", "Hint a message to the player." )
 {
     lua_CBasePlayer *player = LUA_BINDING_ARGUMENT( luaL_checkplayer, 1, "player" );

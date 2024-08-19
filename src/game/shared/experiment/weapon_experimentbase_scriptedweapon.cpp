@@ -208,6 +208,47 @@ CExperimentScriptedWeapon::~CExperimentScriptedWeapon( void )
 #endif
 }
 
+#ifdef LUA_SDK
+//-----------------------------------------------------------------------------
+// Purpose: Initialize any variables in the reference table
+//-----------------------------------------------------------------------------
+void CExperimentScriptedWeapon::SetupRefTable( lua_State *L )
+{
+    lua_newtable( L );
+    m_nTableReference = luaL_ref( L, LUA_REGISTRYINDEX );
+
+    // We need the classname, so we can initialize the weapon based on the
+    // values given when registering with ScriptedWeapons.Register.
+    Assert( m_iScriptedClassname != nullptr );
+    Assert( Q_strlen( m_iScriptedClassname ) > 0 );
+
+    lua_getglobal( L, LUA_SCRIPTEDWEAPONSLIBNAME );
+
+    if ( lua_istable( L, -1 ) )
+    {
+        lua_getfield( L, -1, "InitializeRefTable" );
+        if ( lua_isfunction( L, -1 ) )
+        {
+            // Initialize the ref table with copies of the registered values for this weapon.
+            lua_remove( L, -2 );  // Remove the library table
+            lua_getref( L, m_nTableReference );
+            lua_pushstring( L, m_iScriptedClassname );
+            luasrc_pcall( L, 2, 0 );
+        }
+        else
+        {
+            lua_pop( L, 2 );  // Remove the library table and the function
+            Error( "ScriptedWeapons library does not have InitializeRefTable function!\n" );
+        }
+    }
+    else
+    {
+        lua_pop( L, 1 );
+        Error( "ScriptedWeapons library not found!\n" );
+    }
+}
+#endif
+
 extern const char *pWeaponSoundCategories[NUM_SHOOT_SOUND_TYPES];
 
 #ifdef CLIENT_DLL
@@ -217,56 +258,46 @@ extern ConVar hud_fastswitch;
 void CExperimentScriptedWeapon::InitScriptedWeapon( void )
 {
 #ifdef LUA_SDK
-#ifndef CLIENT_DLL
-    // Let the instance reinitialize itself for the client.
-    if ( lua_isrefvalid( L, m_nTableReference ) )
-        return;
-#endif
+    // #ifndef CLIENT_DLL
+    //     // Let the instance reinitialize itself for the client. <- Experiment; TODO: Is this correct?
+    //     if ( lua_isrefvalid( L, m_nTableReference ) )
+    //         return;
+    // #endif
 
     char className[MAX_WEAPON_STRING];
 #if defined( CLIENT_DLL )
-    if ( strlen( GetScriptedClassname() ) > 0 )
-        Q_strncpy( className, GetScriptedClassname(), sizeof( className ) );
-    else
-        Q_strncpy( className, GetClassname(), sizeof( className ) );
+    if ( strlen( GetScriptedClassname() ) == 0 )
+    {
+        // Experiment;
+        // Wait for the client to receive the actual classname from the server.
+        // The entity will arrive before the networked data.
+        // TODO: Can we wait before spawning locally? Because those checks like
+        // `if ( lua_isrefvalid( L, m_nTableReference ) )` below may cause
+        // unexpected behavior (e.g: baseclass methods deciding differently
+        // from the scripted methods).
+        // To fix the above I tried to override ::Spawn (see below)
+        return;
+    }
+
+    Q_strncpy( className, GetScriptedClassname(), sizeof( className ) );
 #else
     Q_strncpy( m_iScriptedClassname.GetForModify(), GetClassname(), sizeof( className ) );
     Q_strncpy( className, GetClassname(), sizeof( className ) );
 #endif
+
     Q_strlower( className );
     // Andrew; This redundancy is pretty annoying.
     // Classname
     Q_strncpy( m_pLuaWeaponInfo->szClassName, className, MAX_WEAPON_STRING );
     SetClassname( className );
 
-    lua_getglobal( L, LUA_SCRIPTEDWEAPONSLIBNAME );
-    if ( lua_istable( L, -1 ) )
-    {
-        lua_getfield( L, -1, "Get" );
-        if ( lua_isfunction( L, -1 ) )
-        {
-            lua_remove( L, -2 );
-            lua_pushstring( L, className );
-            luasrc_pcall( L, 1, 1 );
-        }
-        else
-        {
-            lua_pop( L, 2 );
-        }
-    }
-    else
-    {
-        lua_pop( L, 1 );
-    }
-
-#ifndef CLIENT_DLL
     m_pLuaWeaponInfo->bParsedScript = true;
-#endif
 
+    // Get (or init) the ref table
     LUA_GET_REF_TABLE( L, this );
+
     // Printable name
     lua_getfield( L, -1, "PrintName" );
-    lua_remove( L, -2 );
     if ( lua_isstring( L, -1 ) )
     {
         Q_strncpy( m_pLuaWeaponInfo->szPrintName, lua_tostring( L, -1 ), MAX_WEAPON_STRING );
@@ -275,35 +306,34 @@ void CExperimentScriptedWeapon::InitScriptedWeapon( void )
     {
         Q_strncpy( m_pLuaWeaponInfo->szPrintName, WEAPON_PRINTNAME_MISSING, MAX_WEAPON_STRING );
     }
-    lua_pop( L, 1 );
-    // View model & world model
-    lua_getref( L, m_nTableReference );
+    lua_pop( L, 1 );  // Pop the PrintName field
+
+    // ViewModel
     lua_getfield( L, -1, "ViewModel" );
-    lua_remove( L, -2 );
     if ( lua_isstring( L, -1 ) )
     {
         Q_strncpy( m_pLuaWeaponInfo->szViewModel, lua_tostring( L, -1 ), MAX_WEAPON_STRING );
     }
-    lua_pop( L, 1 );
-    lua_getref( L, m_nTableReference );
+    lua_pop( L, 1 );  // Pop the ViewModel field
+
+    // WorldModel
     lua_getfield( L, -1, "WorldModel" );
-    lua_remove( L, -2 );
     if ( lua_isstring( L, -1 ) )
     {
         Q_strncpy( m_pLuaWeaponInfo->szWorldModel, lua_tostring( L, -1 ), MAX_WEAPON_STRING );
     }
-    lua_pop( L, 1 );
-    lua_getref( L, m_nTableReference );
+    lua_pop( L, 1 );  // Pop the WorldModel field
+
+    // AnimationPrefix
     lua_getfield( L, -1, "AnimationPrefix" );
-    lua_remove( L, -2 );
     if ( lua_isstring( L, -1 ) )
     {
         Q_strncpy( m_pLuaWeaponInfo->szAnimationPrefix, lua_tostring( L, -1 ), MAX_WEAPON_PREFIX );
     }
-    lua_pop( L, 1 );
-    lua_getref( L, m_nTableReference );
+    lua_pop( L, 1 );  // Pop the AnimationPrefix field
+
+    // InventorySlot
     lua_getfield( L, -1, "InventorySlot" );
-    lua_remove( L, -2 );
     if ( lua_isnumber( L, -1 ) )
     {
         m_pLuaWeaponInfo->iSlot = lua_tonumber( L, -1 );
@@ -312,10 +342,10 @@ void CExperimentScriptedWeapon::InitScriptedWeapon( void )
     {
         m_pLuaWeaponInfo->iSlot = 0;
     }
-    lua_pop( L, 1 );
-    lua_getref( L, m_nTableReference );
+    lua_pop( L, 1 );  // Pop the InventorySlot field
+
+    // InventorySlotPosition
     lua_getfield( L, -1, "InventorySlotPosition" );
-    lua_remove( L, -2 );
     if ( lua_isnumber( L, -1 ) )
     {
         m_pLuaWeaponInfo->iPosition = lua_tonumber( L, -1 );
@@ -324,7 +354,7 @@ void CExperimentScriptedWeapon::InitScriptedWeapon( void )
     {
         m_pLuaWeaponInfo->iPosition = 0;
     }
-    lua_pop( L, 1 );
+    lua_pop( L, 1 );  // Pop the InventorySlotPosition field
 
     // Use the console (X360) buckets if hud_fastswitch is set to 2.
 #ifdef CLIENT_DLL
@@ -333,26 +363,25 @@ void CExperimentScriptedWeapon::InitScriptedWeapon( void )
     if ( IsX360() )
 #endif
     {
-        lua_getref( L, m_nTableReference );
+        // InventorySlotX360
         lua_getfield( L, -1, "InventorySlotX360" );
-        lua_remove( L, -2 );
         if ( lua_isnumber( L, -1 ) )
         {
             m_pLuaWeaponInfo->iSlot = lua_tonumber( L, -1 );
         }
-        lua_pop( L, 1 );
-        lua_getref( L, m_nTableReference );
+        lua_pop( L, 1 );  // Pop the InventorySlotX360 field
+
+        // InventorySlotPositionX360
         lua_getfield( L, -1, "InventorySlotPositionX360" );
-        lua_remove( L, -2 );
         if ( lua_isnumber( L, -1 ) )
         {
             m_pLuaWeaponInfo->iPosition = lua_tonumber( L, -1 );
         }
-        lua_pop( L, 1 );
+        lua_pop( L, 1 );  // Pop the InventorySlotPositionX360 field
     }
-    lua_getref( L, m_nTableReference );
+
+    // MaxClip
     lua_getfield( L, -1, "MaxClip" );
-    lua_remove( L, -2 );
     if ( lua_isnumber( L, -1 ) )
     {
         m_pLuaWeaponInfo->iMaxClip1 =
@@ -363,10 +392,10 @@ void CExperimentScriptedWeapon::InitScriptedWeapon( void )
     {
         m_pLuaWeaponInfo->iMaxClip1 = WEAPON_NOCLIP;
     }
-    lua_pop( L, 1 );
-    lua_getref( L, m_nTableReference );
+    lua_pop( L, 1 );  // Pop the MaxClip field
+
+    // MaxClip2
     lua_getfield( L, -1, "MaxClip2" );
-    lua_remove( L, -2 );
     if ( lua_isnumber( L, -1 ) )
     {
         m_pLuaWeaponInfo->iMaxClip2 =
@@ -377,10 +406,10 @@ void CExperimentScriptedWeapon::InitScriptedWeapon( void )
     {
         m_pLuaWeaponInfo->iMaxClip2 = WEAPON_NOCLIP;
     }
-    lua_pop( L, 1 );
-    lua_getref( L, m_nTableReference );
+    lua_pop( L, 1 );  // Pop the MaxClip2 field
+
+    // DefaultClip
     lua_getfield( L, -1, "DefaultClip" );
-    lua_remove( L, -2 );
     if ( lua_isnumber( L, -1 ) )
     {
         m_pLuaWeaponInfo->iDefaultClip1 =
@@ -391,10 +420,10 @@ void CExperimentScriptedWeapon::InitScriptedWeapon( void )
     {
         m_pLuaWeaponInfo->iDefaultClip1 = m_pLuaWeaponInfo->iMaxClip1;
     }
-    lua_pop( L, 1 );
-    lua_getref( L, m_nTableReference );
+    lua_pop( L, 1 );  // Pop the DefaultClip field
+
+    // DefaultClip2
     lua_getfield( L, -1, "DefaultClip2" );
-    lua_remove( L, -2 );
     if ( lua_isnumber( L, -1 ) )
     {
         m_pLuaWeaponInfo->iDefaultClip2 =
@@ -405,10 +434,10 @@ void CExperimentScriptedWeapon::InitScriptedWeapon( void )
     {
         m_pLuaWeaponInfo->iDefaultClip2 = m_pLuaWeaponInfo->iMaxClip2;
     }
-    lua_pop( L, 1 );
-    lua_getref( L, m_nTableReference );
+    lua_pop( L, 1 );  // Pop the DefaultClip2 field
+
+    // Weight
     lua_getfield( L, -1, "Weight" );
-    lua_remove( L, -2 );
     if ( lua_isnumber( L, -1 ) )
     {
         m_pLuaWeaponInfo->iWeight = lua_tonumber( L, -1 );
@@ -419,9 +448,8 @@ void CExperimentScriptedWeapon::InitScriptedWeapon( void )
     }
     lua_pop( L, 1 );
 
-    lua_getref( L, m_nTableReference );
+    // RumbleEffectX360
     lua_getfield( L, -1, "RumbleEffectX360" );
-    lua_remove( L, -2 );
     if ( lua_isnumber( L, -1 ) )
     {
         m_pLuaWeaponInfo->iRumbleEffect = lua_tonumber( L, -1 );
@@ -433,9 +461,9 @@ void CExperimentScriptedWeapon::InitScriptedWeapon( void )
     lua_pop( L, 1 );
 
     // TODO: Create a helper function to read these as int / bool to boolean
-    lua_getref( L, m_nTableReference );
+
+    // ShowUsageHint
     lua_getfield( L, -1, "ShowUsageHint" );
-    lua_remove( L, -2 );
     if ( lua_isnumber( L, -1 ) )
     {
         m_pLuaWeaponInfo->bShowUsageHint =
@@ -445,10 +473,10 @@ void CExperimentScriptedWeapon::InitScriptedWeapon( void )
     {
         m_pLuaWeaponInfo->bShowUsageHint = false;
     }
-    lua_pop( L, 1 );
-    lua_getref( L, m_nTableReference );
+    lua_pop( L, 1 );  // Pop the ShowUsageHint field
+
+    // AutoSwitchTo
     lua_getfield( L, -1, "AutoSwitchTo" );
-    lua_remove( L, -2 );
     if ( lua_isnumber( L, -1 ) )
     {
         m_pLuaWeaponInfo->bAutoSwitchTo =
@@ -458,10 +486,10 @@ void CExperimentScriptedWeapon::InitScriptedWeapon( void )
     {
         m_pLuaWeaponInfo->bAutoSwitchTo = true;
     }
-    lua_pop( L, 1 );
-    lua_getref( L, m_nTableReference );
+    lua_pop( L, 1 );  // Pop the AutoSwitchTo field
+
+    // AutoSwitchFrom
     lua_getfield( L, -1, "AutoSwitchFrom" );
-    lua_remove( L, -2 );
     if ( lua_isnumber( L, -1 ) )
     {
         m_pLuaWeaponInfo->bAutoSwitchFrom =
@@ -471,10 +499,10 @@ void CExperimentScriptedWeapon::InitScriptedWeapon( void )
     {
         m_pLuaWeaponInfo->bAutoSwitchFrom = true;
     }
-    lua_pop( L, 1 );
-    lua_getref( L, m_nTableReference );
+    lua_pop( L, 1 );  // Pop the AutoSwitchFrom field
+
+    // BuiltRightHanded
     lua_getfield( L, -1, "BuiltRightHanded" );
-    lua_remove( L, -2 );
     if ( lua_isnumber( L, -1 ) )
     {
         m_pLuaWeaponInfo->m_bBuiltRightHanded =
@@ -484,10 +512,10 @@ void CExperimentScriptedWeapon::InitScriptedWeapon( void )
     {
         m_pLuaWeaponInfo->m_bBuiltRightHanded = true;
     }
-    lua_pop( L, 1 );
-    lua_getref( L, m_nTableReference );
+    lua_pop( L, 1 );  // Pop the BuiltRightHanded field
+
+    // AllowFlipping
     lua_getfield( L, -1, "AllowFlipping" );
-    lua_remove( L, -2 );
     if ( lua_isnumber( L, -1 ) )
     {
         m_pLuaWeaponInfo->m_bAllowFlipping =
@@ -497,10 +525,10 @@ void CExperimentScriptedWeapon::InitScriptedWeapon( void )
     {
         m_pLuaWeaponInfo->m_bAllowFlipping = true;
     }
-    lua_pop( L, 1 );
-    lua_getref( L, m_nTableReference );
+    lua_pop( L, 1 );  // Pop the AllowFlipping field
+
+    // MeleeWeapon
     lua_getfield( L, -1, "MeleeWeapon" );
-    lua_remove( L, -2 );
     if ( lua_isnumber( L, -1 ) )
     {
         m_pLuaWeaponInfo->m_bMeleeWeapon =
@@ -510,12 +538,10 @@ void CExperimentScriptedWeapon::InitScriptedWeapon( void )
     {
         m_pLuaWeaponInfo->m_bMeleeWeapon = false;
     }
-    lua_pop( L, 1 );
+    lua_pop( L, 1 );  // Pop the MeleeWeapon field
 
     // Primary ammo used
-    lua_getref( L, m_nTableReference );
     lua_getfield( L, -1, "PrimaryAmmo" );
-    lua_remove( L, -2 );
     if ( lua_isstring( L, -1 ) )
     {
         const char *pAmmo = lua_tostring( L, -1 );
@@ -526,12 +552,10 @@ void CExperimentScriptedWeapon::InitScriptedWeapon( void )
         m_pLuaWeaponInfo->iAmmoType =
             GetAmmoDef()->Index( m_pLuaWeaponInfo->szAmmo1 );
     }
-    lua_pop( L, 1 );
+    lua_pop( L, 1 );  // Pop the PrimaryAmmo field
 
     // Secondary ammo used
-    lua_getref( L, m_nTableReference );
     lua_getfield( L, -1, "SecondaryAmmo" );
-    lua_remove( L, -2 );
     if ( lua_isstring( L, -1 ) )
     {
         const char *pAmmo = lua_tostring( L, -1 );
@@ -542,13 +566,11 @@ void CExperimentScriptedWeapon::InitScriptedWeapon( void )
         m_pLuaWeaponInfo->iAmmo2Type =
             GetAmmoDef()->Index( m_pLuaWeaponInfo->szAmmo2 );
     }
-    lua_pop( L, 1 );
+    lua_pop( L, 1 );  // Pop the SecondaryAmmo field
 
     // Now read the weapon sounds
     memset( m_pLuaWeaponInfo->aShootSounds, 0, sizeof( m_pLuaWeaponInfo->aShootSounds ) );
-    lua_getref( L, m_nTableReference );
     lua_getfield( L, -1, "SoundData" );
-    lua_remove( L, -2 );
     if ( lua_istable( L, -1 ) )
     {
         for ( int i = EMPTY; i < NUM_SHOOT_SOUND_TYPES; i++ )
@@ -565,16 +587,15 @@ void CExperimentScriptedWeapon::InitScriptedWeapon( void )
             lua_pop( L, 1 );
         }
     }
-    lua_pop( L, 1 );
+    lua_pop( L, 1 );  // Pop the SoundData table
 
-    lua_getref( L, m_nTableReference );
+    // Damage
     lua_getfield( L, -1, "Damage" );
-    lua_remove( L, -2 );
     if ( lua_isnumber( L, -1 ) )
     {
         m_pLuaWeaponInfo->m_iPlayerDamage = ( int )lua_tointeger( L, -1 );
     }
-    lua_pop( L, 1 );
+    lua_pop( L, 1 );  // Pop the Damage field
 
     LUA_CALL_WEAPON_METHOD_BEGIN( "Initialize" );
     LUA_CALL_WEAPON_METHOD_END( 0, 0 );
@@ -582,6 +603,12 @@ void CExperimentScriptedWeapon::InitScriptedWeapon( void )
 }
 
 #ifdef CLIENT_DLL
+void CExperimentScriptedWeapon::Spawn( void )
+{
+    // Experiment; Prevent spawning, until the client has
+    // received the classname from the server.
+}
+
 void CExperimentScriptedWeapon::OnDataChanged( DataUpdateType_t updateType )
 {
     BaseClass::OnDataChanged( updateType );
@@ -590,7 +617,6 @@ void CExperimentScriptedWeapon::OnDataChanged( DataUpdateType_t updateType )
     {
         if ( m_iScriptedClassname.Get() && !m_pLuaWeaponInfo->bParsedScript )
         {
-            m_pLuaWeaponInfo->bParsedScript = true;
             SetClassname( m_iScriptedClassname.Get() );
             InitScriptedWeapon();
 
@@ -598,6 +624,10 @@ void CExperimentScriptedWeapon::OnDataChanged( DataUpdateType_t updateType )
             LUA_CALL_WEAPON_METHOD_BEGIN( "Precache" );
             LUA_CALL_WEAPON_METHOD_END( 0, 0 );
 #endif
+
+            // Only now do we call the base class's spawn method, after we're
+            // sure to have the scripted classname.
+            BaseClass::Spawn();
         }
     }
 }
@@ -677,11 +707,14 @@ const FileWeaponInfo_t &CExperimentScriptedWeapon::GetWpnData( void ) const
 const char *CExperimentScriptedWeapon::GetViewModel( int ) const
 {
 #ifdef LUA_SDK
-    lua_getref( L, m_nTableReference );
-    lua_getfield( L, -1, "ViewModel" );
-    lua_remove( L, -2 );
+    if ( lua_isrefvalid( L, m_nTableReference ) )
+    {
+        lua_getref( L, m_nTableReference );
+        lua_getfield( L, -1, "ViewModel" );
+        lua_remove( L, -2 );
 
-    LUA_RETURN_STRING();
+        LUA_RETURN_STRING();
+    }
 #endif
 
     return BaseClass::GetViewModel();
@@ -690,11 +723,14 @@ const char *CExperimentScriptedWeapon::GetViewModel( int ) const
 const char *CExperimentScriptedWeapon::GetWorldModel( void ) const
 {
 #ifdef LUA_SDK
-    lua_getref( L, m_nTableReference );
-    lua_getfield( L, -1, "WorldModel" );
-    lua_remove( L, -2 );
+    if ( lua_isrefvalid( L, m_nTableReference ) )
+    {
+        lua_getref( L, m_nTableReference );
+        lua_getfield( L, -1, "WorldModel" );
+        lua_remove( L, -2 );
 
-    LUA_RETURN_STRING();
+        LUA_RETURN_STRING();
+    }
 #endif
 
     return BaseClass::GetWorldModel();
@@ -703,11 +739,14 @@ const char *CExperimentScriptedWeapon::GetWorldModel( void ) const
 const char *CExperimentScriptedWeapon::GetAnimPrefix( void ) const
 {
 #ifdef LUA_SDK
-    lua_getref( L, m_nTableReference );
-    lua_getfield( L, -1, "AnimationPrefix" );
-    lua_remove( L, -2 );
+    if ( lua_isrefvalid( L, m_nTableReference ) )
+    {
+        lua_getref( L, m_nTableReference );
+        lua_getfield( L, -1, "AnimationPrefix" );
+        lua_remove( L, -2 );
 
-    LUA_RETURN_STRING();
+        LUA_RETURN_STRING();
+    }
 #endif
 
     return BaseClass::GetAnimPrefix();
@@ -716,11 +755,14 @@ const char *CExperimentScriptedWeapon::GetAnimPrefix( void ) const
 const char *CExperimentScriptedWeapon::GetPrintName( void ) const
 {
 #ifdef LUA_SDK
-    lua_getref( L, m_nTableReference );
-    lua_getfield( L, -1, "PrintName" );
-    lua_remove( L, -2 );
+    if ( lua_isrefvalid( L, m_nTableReference ) )
+    {
+        lua_getref( L, m_nTableReference );
+        lua_getfield( L, -1, "PrintName" );
+        lua_remove( L, -2 );
 
-    LUA_RETURN_STRING();
+        LUA_RETURN_STRING();
+    }
 #endif
 
     return BaseClass::GetPrintName();
@@ -729,11 +771,14 @@ const char *CExperimentScriptedWeapon::GetPrintName( void ) const
 int CExperimentScriptedWeapon::GetMaxClip1( void ) const
 {
 #ifdef LUA_SDK
-    lua_getref( L, m_nTableReference );
-    lua_getfield( L, -1, "MaxClip" );
-    lua_remove( L, -2 );
+    if ( lua_isrefvalid( L, m_nTableReference ) )
+    {
+        lua_getref( L, m_nTableReference );
+        lua_getfield( L, -1, "MaxClip" );
+        lua_remove( L, -2 );
 
-    LUA_RETURN_INTEGER();
+        LUA_RETURN_INTEGER();
+    }
 #endif
 
     return BaseClass::GetMaxClip1();
@@ -742,11 +787,14 @@ int CExperimentScriptedWeapon::GetMaxClip1( void ) const
 int CExperimentScriptedWeapon::GetMaxClip2( void ) const
 {
 #ifdef LUA_SDK
-    lua_getref( L, m_nTableReference );
-    lua_getfield( L, -1, "MaxClip2" );
-    lua_remove( L, -2 );
+    if ( lua_isrefvalid( L, m_nTableReference ) )
+    {
+        lua_getref( L, m_nTableReference );
+        lua_getfield( L, -1, "MaxClip2" );
+        lua_remove( L, -2 );
 
-    LUA_RETURN_INTEGER();
+        LUA_RETURN_INTEGER();
+    }
 #endif
 
     return BaseClass::GetMaxClip2();
@@ -755,11 +803,14 @@ int CExperimentScriptedWeapon::GetMaxClip2( void ) const
 int CExperimentScriptedWeapon::GetDefaultClip1( void ) const
 {
 #ifdef LUA_SDK
-    lua_getref( L, m_nTableReference );
-    lua_getfield( L, -1, "DefaultClip" );
-    lua_remove( L, -2 );
+    if ( lua_isrefvalid( L, m_nTableReference ) )
+    {
+        lua_getref( L, m_nTableReference );
+        lua_getfield( L, -1, "DefaultClip" );
+        lua_remove( L, -2 );
 
-    LUA_RETURN_INTEGER();
+        LUA_RETURN_INTEGER();
+    }
 #endif
 
     return BaseClass::GetDefaultClip1();
@@ -768,11 +819,14 @@ int CExperimentScriptedWeapon::GetDefaultClip1( void ) const
 int CExperimentScriptedWeapon::GetDefaultClip2( void ) const
 {
 #ifdef LUA_SDK
-    lua_getref( L, m_nTableReference );
-    lua_getfield( L, -1, "DefaultClip2" );
-    lua_remove( L, -2 );
+    if ( lua_isrefvalid( L, m_nTableReference ) )
+    {
+        lua_getref( L, m_nTableReference );
+        lua_getfield( L, -1, "DefaultClip2" );
+        lua_remove( L, -2 );
 
-    LUA_RETURN_INTEGER();
+        LUA_RETURN_INTEGER();
+    }
 #endif
 
     return BaseClass::GetDefaultClip2();
@@ -781,20 +835,13 @@ int CExperimentScriptedWeapon::GetDefaultClip2( void ) const
 bool CExperimentScriptedWeapon::IsMeleeWeapon() const
 {
 #ifdef LUA_SDK
-    lua_getref( L, m_nTableReference );
-    lua_getfield( L, -1, "MeleeWeapon" );
-    lua_remove( L, -2 );
-
-    if ( lua_gettop( L ) == 1 )
+    if ( lua_isrefvalid( L, m_nTableReference ) )
     {
-        if ( lua_isnumber( L, -1 ) )
-        {
-            int res = ( ( int )lua_tointeger( L, -1 ) != 0 ) ? true : false;
-            lua_pop( L, 1 );
-            return res;
-        }
-        else
-            lua_pop( L, 1 );
+        lua_getref( L, m_nTableReference );
+        lua_getfield( L, -1, "MeleeWeapon" );
+        lua_remove( L, -2 );
+
+        LUA_RETURN_BOOLEAN_FROM_INTEGER();
     }
 #endif
 
@@ -804,11 +851,14 @@ bool CExperimentScriptedWeapon::IsMeleeWeapon() const
 int CExperimentScriptedWeapon::GetWeight( void ) const
 {
 #ifdef LUA_SDK
-    lua_getref( L, m_nTableReference );
-    lua_getfield( L, -1, "Weight" );
-    lua_remove( L, -2 );
+    if ( lua_isrefvalid( L, m_nTableReference ) )
+    {
+        lua_getref( L, m_nTableReference );
+        lua_getfield( L, -1, "Weight" );
+        lua_remove( L, -2 );
 
-    LUA_RETURN_INTEGER();
+        LUA_RETURN_INTEGER();
+    }
 #endif
 
     return BaseClass::GetWeight();
@@ -817,20 +867,13 @@ int CExperimentScriptedWeapon::GetWeight( void ) const
 bool CExperimentScriptedWeapon::AllowsAutoSwitchTo( void ) const
 {
 #ifdef LUA_SDK
-    lua_getref( L, m_nTableReference );
-    lua_getfield( L, -1, "AutoSwitchTo" );
-    lua_remove( L, -2 );
-
-    if ( lua_gettop( L ) == 1 )
+    if ( lua_isrefvalid( L, m_nTableReference ) )
     {
-        if ( lua_isnumber( L, -1 ) )
-        {
-            int res = ( ( int )lua_tointeger( L, -1 ) != 0 ) ? true : false;
-            lua_pop( L, 1 );
-            return res;
-        }
-        else
-            lua_pop( L, 1 );
+        lua_getref( L, m_nTableReference );
+        lua_getfield( L, -1, "AutoSwitchTo" );
+        lua_remove( L, -2 );
+
+        LUA_RETURN_BOOLEAN_FROM_INTEGER();
     }
 #endif
 
@@ -840,20 +883,13 @@ bool CExperimentScriptedWeapon::AllowsAutoSwitchTo( void ) const
 bool CExperimentScriptedWeapon::AllowsAutoSwitchFrom( void ) const
 {
 #ifdef LUA_SDK
-    lua_getref( L, m_nTableReference );
-    lua_getfield( L, -1, "AutoSwitchFrom" );
-    lua_remove( L, -2 );
-
-    if ( lua_gettop( L ) == 1 )
+    if ( lua_isrefvalid( L, m_nTableReference ) )
     {
-        if ( lua_isnumber( L, -1 ) )
-        {
-            int res = ( ( int )lua_tointeger( L, -1 ) != 0 ) ? true : false;
-            lua_pop( L, 1 );
-            return res;
-        }
-        else
-            lua_pop( L, 1 );
+        lua_getref( L, m_nTableReference );
+        lua_getfield( L, -1, "AutoSwitchFrom" );
+        lua_remove( L, -2 );
+
+        LUA_RETURN_BOOLEAN_FROM_INTEGER();
     }
 #endif
 
@@ -863,11 +899,14 @@ bool CExperimentScriptedWeapon::AllowsAutoSwitchFrom( void ) const
 int CExperimentScriptedWeapon::GetWeaponFlags( void ) const
 {
 #ifdef LUA_SDK
-    lua_getref( L, m_nTableReference );
-    lua_getfield( L, -1, "WeaponFlags" );
-    lua_remove( L, -2 );
+    if ( lua_isrefvalid( L, m_nTableReference ) )
+    {
+        lua_getref( L, m_nTableReference );
+        lua_getfield( L, -1, "WeaponFlags" );
+        lua_remove( L, -2 );
 
-    LUA_RETURN_INTEGER();
+        LUA_RETURN_INTEGER();
+    }
 #endif
 
     return BaseClass::GetWeaponFlags();
@@ -876,11 +915,14 @@ int CExperimentScriptedWeapon::GetWeaponFlags( void ) const
 int CExperimentScriptedWeapon::GetSlot( void ) const
 {
 #ifdef LUA_SDK
-    lua_getref( L, m_nTableReference );
-    lua_getfield( L, -1, "InventorySlot" );
-    lua_remove( L, -2 );
+    if ( lua_isrefvalid( L, m_nTableReference ) )
+    {
+        lua_getref( L, m_nTableReference );
+        lua_getfield( L, -1, "InventorySlot" );
+        lua_remove( L, -2 );
 
-    LUA_RETURN_INTEGER();
+        LUA_RETURN_INTEGER();
+    }
 #endif
 
     return BaseClass::GetSlot();
@@ -889,11 +931,14 @@ int CExperimentScriptedWeapon::GetSlot( void ) const
 int CExperimentScriptedWeapon::GetPosition( void ) const
 {
 #ifdef LUA_SDK
-    lua_getref( L, m_nTableReference );
-    lua_getfield( L, -1, "InventorySlotPosition" );
-    lua_remove( L, -2 );
+    if ( lua_isrefvalid( L, m_nTableReference ) )
+    {
+        lua_getref( L, m_nTableReference );
+        lua_getfield( L, -1, "InventorySlotPosition" );
+        lua_remove( L, -2 );
 
-    LUA_RETURN_INTEGER();
+        LUA_RETURN_INTEGER();
+    }
 #endif
 
     return BaseClass::GetPosition();

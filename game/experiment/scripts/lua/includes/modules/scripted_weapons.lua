@@ -76,4 +76,19 @@ function MODULE.Register(weaponTable, className, isReloading)
 	MODULE.registeredWeapons[className] = weaponTable
 end
 
+--- Initializes the given reference table for a weapon.
+--- @param weaponRefTable table
+--- @param weaponClassName string
+function MODULE.InitializeRefTable(weaponRefTable, weaponClassName)
+	local weaponTable = MODULE.Get(weaponClassName)
+
+	if (not weaponTable) then
+		debug.PrintWarning("WARNING: Attempted to initialize weapon \"" ..
+			weaponClassName .. "\" with non-existing class!\n")
+		return
+	end
+
+	table.CopyMerge(weaponRefTable, weaponTable)
+end
+
 return MODULE

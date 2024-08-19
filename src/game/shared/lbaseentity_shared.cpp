@@ -10,7 +10,9 @@
 #include "luasrclib.h"
 #include "lbaseentity_shared.h"
 #include "lrecipientfilter.h"
-#ifdef GAME_DLL
+#ifdef CLIENT_DLL
+#include "weapon_experimentbase_scriptedweapon.h"
+#else
 #include "basescripted.h"
 #include "iservervehicle.h"
 #endif
@@ -662,7 +664,17 @@ LUA_BINDING_BEGIN( Entity, GetClass, "class", "Get class name." )
     if ( pEntity->IsScripted() )
     {
         CBaseScripted *pScripted = dynamic_cast< CBaseScripted * >( pEntity );
-        lua_pushfstring( L, pScripted->GetScriptedClassname() );
+
+        if ( pScripted)
+            lua_pushstring( L, pScripted->GetScriptedClassname() );
+        else
+        {
+            CExperimentScriptedWeapon *pWeapon = dynamic_cast< CExperimentScriptedWeapon * >( pEntity );
+
+            AssertMsg( pWeapon, "Entity is not a scripted entity, nor weapon." ); // which other scripted entity is there?
+
+            lua_pushstring( L, pWeapon->GetScriptedClassname() );
+        }
     }
     else
 #endif
