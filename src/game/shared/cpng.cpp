@@ -267,7 +267,15 @@ IMaterial *CPngTextureRegen::GetOrCreateProceduralMaterial(
 )
 {
     char fullFilePath[MAX_PATH];
-    Q_snprintf( fullFilePath, sizeof( fullFilePath ), "materials/%s", pFilePath );
+    // If it already starts with materials/, don't add it again
+    if ( Q_strnicmp( pFilePath, "materials/", 9 ) == 0 )
+    {
+        Q_strncpy( fullFilePath, pFilePath, sizeof( fullFilePath ) );
+    }
+    else
+    {
+        Q_snprintf( fullFilePath, sizeof( fullFilePath ), "materials/%s", pFilePath );
+    }
     Q_FixSlashes( fullFilePath );
 
     CUtlBuffer buffer;

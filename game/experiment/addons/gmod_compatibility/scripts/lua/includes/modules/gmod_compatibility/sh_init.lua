@@ -15,7 +15,7 @@ gamemode = require("gamemodes")
 hook = require("hooks")
 net = require("networks")
 timer = require("timers")
-weapons = require("scripted_weapons")
+-- weapons = require("scripted_weapons")
 -- scripted_ents = require("scripted_entities") -- Gmods scripted_ents is compatible with our ScriptedEntities
 
 --[[
@@ -1353,6 +1353,12 @@ hook.Add("Initialize", "GModCompatibility.CallInitializeHooks", function()
 	end
 	scripted_ents.OnLoaded()
 
+	local ScriptedWeapons = ScriptedWeapons.GetList()
+	for className, scriptedWeapon in pairs(ScriptedWeapons) do
+		weapons.Register(scriptedWeapon, className)
+	end
+	weapons.OnLoaded()
+
 	hook.Run("CreateTeams")
 	hook.Run("PreGamemodeLoaded")
 	hook.Run("OnGamemodeLoaded")
@@ -1411,7 +1417,8 @@ local filter = {
 		["concommand"] = true,
 		["hook"] = true,
 		["gamemode"] = true,
-		["weapons"] = true,
+		-- ["weapons"] = true,
+		-- ["scripted_ents"] = true,
 		["usermessage"] = true,
 	},
 	include = {

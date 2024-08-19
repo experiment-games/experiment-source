@@ -517,7 +517,7 @@ static void LoadEntitiesFromPath( const char *path = 0 )
 /// us. Copied for compatibility reasons.
 /// TODO: Match with what CExperimentScriptedWeapon::InitScriptedWeapon expects
 /// </summary>
-static void luasrc_SetupDefaultWeapon()
+static void luasrc_SetupDefaultWeapon( const char *className )
 {
     lua_pushstring( L, "Other" );
     lua_setfield( L, -2, "Category" );
@@ -649,7 +649,7 @@ static void luasrc_SetupDefaultWeapon()
     lua_pushboolean( L, true );
     lua_setfield( L, -2, "m_bPlayPickupSound" );
 
-    lua_pushstring( L, "materials/entities/<ClassName>.png" );
+    lua_pushfstring( L, "materials/entities/%s.png", className );
     lua_setfield( L, -2, "IconOverride" );
 }
 
@@ -665,7 +665,7 @@ static void luasrc_LoadWeaponFromFile( char *fullPath, char *className )
     lua_setfield( L, -2, "Folder" );
     lua_pushstring( L, className );
     lua_setfield( L, -2, "ClassName" );
-    luasrc_SetupDefaultWeapon();
+    luasrc_SetupDefaultWeapon( className );
     lua_setglobal( L, "SWEP" );
 
     if ( luasrc_dofile( L, fullPath ) == 0 )
@@ -1648,7 +1648,7 @@ LUA_API int luasrc_dofile_with_loader( lua_State *L, const char *filePath )
     }
 
     const char *preprocessedFileContents = lua_tostring( loaderLuaState, -1 );
-    CUtlBuffer buffer( 0, strlen( preprocessedFileContents ) * sizeof(char), CUtlBuffer::TEXT_BUFFER );
+    CUtlBuffer buffer( 0, strlen( preprocessedFileContents ) * sizeof( char ), CUtlBuffer::TEXT_BUFFER );
     lua_pop( loaderLuaState, 1 );  // Pop the preprocessed file contents now that we have them
 
     if ( lua_log_loader.GetBool() )
@@ -1673,10 +1673,10 @@ LUA_API int luasrc_dofile_with_loader( lua_State *L, const char *filePath )
             token = strtok_s( NULL, ";", &searchContext );
         }
 
-        if ( relativePath[0] == '\0')
+        if ( relativePath[0] == '\0' )
         {
             DevWarning( "Failed to find include anywhere in mounted paths. Alert a dev!" );
-            Q_strncmp( relativePath, fullPath, Q_strlen("?:/") ); // trim any drive letter
+            Q_strncmp( relativePath, fullPath, Q_strlen( "?:/" ) );  // trim any drive letter
         }
 
         char fileLogPath[MAX_PATH];
