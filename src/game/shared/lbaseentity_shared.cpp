@@ -2767,6 +2767,111 @@ LUA_BINDING_BEGIN( Entity, WorldToEntitySpace, "class", "Convert world to entity
 }
 LUA_BINDING_END()
 
+// Experiments around NetworkVars
+#include <networkvar.h>
+enum NetworkVarTypes
+{
+    NETWORKVAR_TYPE_BOOL,
+    NETWORKVAR_TYPE_INT,
+    NETWORKVAR_TYPE_FLOAT,
+    NETWORKVAR_TYPE_VECTOR,
+    NETWORKVAR_TYPE_STRING,
+    NETWORKVAR_TYPE_EHANDLE,
+};
+#pragma warning( disable : 4189 )
+LUA_BINDING_BEGIN( Entity, SetupNetworkVariable, "class", "Creates a network variable on the entity and adds Set/Get methods for it to the entity." )
+{
+    lua_CBaseEntity *entity = LUA_BINDING_ARGUMENT( luaL_checkentity, 1, "entity" );
+    NetworkVarTypes networkVarType = LUA_BINDING_ARGUMENT_ENUM( NetworkVarTypes, 2, "type" );
+    int slot = LUA_BINDING_ARGUMENT( luaL_checknumber, 3, "slot" );
+    const char *variableName = LUA_BINDING_ARGUMENT( luaL_checkstring, 4, "variableName" );
+
+    // lua_run player.GetByID(2):SetupNetworkVariable(2, "Test")
+
+    // That should've added:
+    // lua_run player.GetByID(2):SetTest(1337)
+    // lua_run print(player.GetByID(2):GetTest()) -- 1337
+
+    // TODO:    Use SendPropVirtualArray with a max size of 32 to send the network variable
+    //          Have a SendPropVirtualArray for each type of network variable, except string
+    //          which will have 4 SendPropString
+    //
+    // https://developer.valvesoftware.com/wiki/Networking_Entities
+    // 
+    //////////////////////////////////////////////////////////////////
+    //          On the server we will have something like this:
+    // 
+    //void SendProxy_LuaVarFloatElement( const SendProp *pProp, const void *pStruct, const void *pVarData, DVariant *pOut, int iElement, int objectID )
+    //{
+    //    CBaseEntity *entity = ( CBaseEntity * )pStruct;
+    //    Assert( entity );
+
+    //    pOut->m_Float = // entity->GetLuaVarFloat( iElement ); // Somehow get the float that is in the iElement slot
+    //}
+
+    //int SendProxy_LuaVarFloatCount( const void *pStruct, int objectID )
+    //{
+    //    CBaseEntity *entity = ( CBaseEntity * )pStruct;
+    //    Assert( entity );
+
+    //    // return entity->GetLuaVarFloatCount(); // Somehow get the count of floats
+    //}
+
+    //IMPLEMENT_SERVERCLASS_ST( CBaseEntity, DT_BaseEntityLuaVariables )
+    //SendPropVirtualArray( 
+    //        SendProxy_LuaVarFloatCount,
+    //        32, // max elements (ever)
+    //    SendPropFloat( "lua_var_float", 0, 0, 0, SendProxy_LuaVarFloatElement ),
+    //    "lua_var_floats" )
+    //END_SEND_TABLE()
+
+    //////////////////////////////////////////////////////////////////
+    //          On the client we will receive it like this:
+    //
+    //void RecvProxy_LuaVarFloatElement( const CRecvProxyData *pData, void *pStruct, void *pOut )
+    //{
+    //    C_BaseEntity *entity = ( C_BaseEntity * )pStruct;
+    //    Assert( entity );
+
+    //    // entity->m_LuaVarFloats[ pData->m_iElement ] = pData->m_Value.m_Float; // Somehow set the float that is in the iElement slot
+    //}
+
+    //void RecvProxy_LuaVarFloatCount( void *pStruct, int objectID, int currentArrayLength )
+    //{
+    //    C_BaseEntity *entity = ( C_BaseEntity * )pStruct;
+    //    Assert( entity );
+
+    //    if ( entity->m_LuaVarFloats.Count() != currentArrayLength )
+    //        pPanel->m_LuaVarFloats.SetSize( currentArrayLength );
+    //}
+
+    //IMPLEMENT_CLIENTCLASS_DT( C_BaseEntity, DT_BaseEntityLuaVariables, CBaseEntity )
+    //    RecvPropVirtualArray(
+    //    RecvProxy_LuaVarFloatCount,
+    //    32, // max elements (ever)
+    //    RecvPropFloat( "lua_var_float", 0, 0, RecvProxy_LuaVarFloatElement ),
+    //    "lua_var_floats" )
+    //END_RECV_TABLE()
+
+    // TODO: Using macros the above would be repeated for the other types of network variables too.
+    // TODO: The SetLuaVarFloat method (and similar) would call callbacks set by NetworkVarNotify (or a hook and we implement that in Lua)
+
+    switch ( networkVarType )
+    {
+        case NETWORKVAR_TYPE_FLOAT:
+            
+            // TODO: entity->RegisterLuaVarFloat( variableName, slot ); // TODO: auto increment slot
+
+        break;
+    }
+
+    return 0;
+}
+LUA_BINDING_END()
+#pragma warning(default: 4189)
+
+// End of NetworkVars experiments
+
 LUA_BINDING_BEGIN( Entity, IsValid, "class", "Check if entity is valid." )
 {
     lua_CBaseEntity *pEntity = LUA_BINDING_ARGUMENT( lua_toentity, 1, "entity" );
