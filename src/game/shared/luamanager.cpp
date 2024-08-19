@@ -6,6 +6,7 @@
 #ifndef CLIENT_DLL
 #include "gameinterface.h"
 #include "basescriptedtrigger.h"
+#include "networkstringtable_gamedll.h"
 #endif
 #include "steam/isteamfriends.h"
 #include "networkstringtabledefs.h"
@@ -44,6 +45,7 @@ extern "C"
 // memdbgon must be the last include file in a .cpp file!!!
 #include "tier0/memdbgon.h"
 #include <mountsteamcontent.h>
+#include <lresources.h>
 
 static FileHandle_t g_LuaLogFileHandle = FILESYSTEM_INVALID_HANDLE;
 
@@ -372,6 +374,416 @@ static int luasrc_LuaLogToFile( lua_State *L )
     return 0;
 }
 
+static void luasrc_LoadEntityFromFile( char *fullPath, char *className )
+{
+    Q_strlower( className );
+
+    lua_newtable( L );
+    char entDir[MAX_PATH];
+    Q_snprintf( entDir, sizeof( entDir ), "entities\\%s", className );
+    lua_pushstring( L, entDir );
+    lua_setfield( L, -2, "/*Folder*/" );
+    lua_pushstring( L, LUA_BASE_ENTITY_CLASS );
+    lua_setfield( L, -2, "Base" );
+    lua_pushstring( L, LUA_BASE_ENTITY_FACTORY );
+    lua_setfield( L, -2, "Factory" );
+    lua_setglobal( L, "ENT" );
+
+    if ( luasrc_dofile( L, fullPath ) == 0 )
+    {
+        lua_getglobal( L, LUA_SCRIPTEDENTITIESLIBNAME );
+        if ( lua_istable( L, -1 ) )
+        {
+            lua_getfield( L, -1, "Register" );
+            if ( lua_isfunction( L, -1 ) )
+            {
+                lua_remove( L, -2 );
+                lua_getglobal( L, "ENT" );
+                lua_pushstring( L, className );
+                luasrc_pcall( L, 2, 0 );
+                lua_getglobal( L, "ENT" );
+                if ( lua_istable( L, -1 ) )
+                {
+                    lua_getfield( L, -1, "Factory" );
+                    if ( lua_isstring( L, -1 ) )
+                    {
+                        const char *pszClassname =
+                            lua_tostring( L, -1 );
+                        if ( Q_strcmp( pszClassname,
+                                       "CBaseAnimating" ) == 0 )
+                            RegisterScriptedEntity( className );
+#ifndef CLIENT_DLL
+                        else if ( Q_strcmp( pszClassname,
+                                            "CBaseTrigger" ) == 0 )
+                            RegisterScriptedTrigger( className );
+#endif
+                    }
+                    lua_pop( L, 2 );
+                }
+                else
+                {
+                    lua_pop( L, 1 );
+                }
+            }
+            else
+            {
+                lua_pop( L, 2 );
+            }
+        }
+        else
+        {
+            lua_pop( L, 1 );
+        }
+    }
+    lua_pushnil( L );
+    lua_setglobal( L, "ENT" );
+}
+
+static void LoadEntitiesFromPath( const char *path = 0 )
+{
+    FileFindHandle_t fh;
+
+    char searchPath[MAX_PATH] = { 0 };
+
+    if ( !path )
+    {
+        path = LUA_PATH_ENTITIES;
+    }
+
+    Q_snprintf( searchPath, sizeof( searchPath ), "%s\\*", path );
+
+    char fileName[MAX_PATH] = { 0 };
+    char fullPath[MAX_PATH] = { 0 };
+    char className[255] = { 0 };
+
+    char const *fn = g_pFullFileSystem->FindFirstEx( searchPath, CONTENT_SEARCH_PATH, &fh );
+
+    while ( fn )
+    {
+        if ( fn[0] == '.' )
+        {
+            fn = g_pFullFileSystem->FindNext( fh );
+            continue;
+        }
+
+        if ( g_pFullFileSystem->FindIsDirectory( fh ) )
+        {
+            Q_strcpy( className, fn );
+
+#ifdef CLIENT_DLL
+            Q_snprintf( fileName, sizeof( fileName ), "%s\\%s\\cl_init.lua", path, className );
+#else
+            Q_snprintf( fileName, sizeof( fileName ), "%s\\%s\\init.lua", path, className );
+#endif
+            if ( !filesystem->FileExists( fileName, CONTENT_SEARCH_PATH ) )
+            {
+                // TODO: Move this to the gmod compatibility module
+                // GMOD compatibility: Fallback to shared.lua if (cl_)init.lua doesn't exist
+                Q_snprintf( fileName, sizeof( fileName ), "%s\\%s\\shared.lua", path, className );
+
+                if ( !filesystem->FileExists( fileName, CONTENT_SEARCH_PATH ) )
+                {
+                    fn = g_pFullFileSystem->FindNext( fh );
+                    continue;
+                }
+            }
+
+            filesystem->RelativePathToFullPath(
+                fileName, CONTENT_SEARCH_PATH, fullPath, sizeof( fullPath ) );
+
+            luasrc_LoadEntityFromFile( fullPath, className );
+        }
+        else
+        {
+            Q_StripExtension( fn, className, sizeof( className ) );
+
+            Q_snprintf( fileName, sizeof( fileName ), "%s\\%s", path, fn );
+
+            filesystem->RelativePathToFullPath(
+                fileName, CONTENT_SEARCH_PATH, fullPath, sizeof( fullPath ) );
+
+            luasrc_LoadEntityFromFile( fullPath, className );
+        }
+
+        fn = g_pFullFileSystem->FindNext( fh );
+    }
+    g_pFullFileSystem->FindClose( fh );
+}
+
+/// <summary>
+/// Sets up the default values for the SWEP that is on the stack of L.
+///
+/// TODO: Copied from Garry's Mod Wiki, whilst not all values are used by
+/// us. Copied for compatibility reasons.
+/// TODO: Match with what CExperimentScriptedWeapon::InitScriptedWeapon expects
+/// </summary>
+static void luasrc_SetupDefaultWeapon()
+{
+    lua_pushstring( L, "Other" );
+    lua_setfield( L, -2, "Category" );
+
+    lua_pushboolean( L, false );
+    lua_setfield( L, -2, "Spawnable" );
+
+    lua_pushboolean( L, false );
+    lua_setfield( L, -2, "AdminOnly" );
+
+    lua_pushstring( L, "Scripted Weapon" );
+    lua_setfield( L, -2, "PrintName" );
+
+    lua_pushstring( L, LUA_BASE_WEAPON );
+    lua_setfield( L, -2, "Base" );
+
+    lua_pushnumber( L, 1 );
+    lua_setfield( L, -2, "m_WeaponDeploySpeed" );
+
+    lua_pushstring( L, "" );
+    lua_setfield( L, -2, "Author" );
+
+    lua_pushstring( L, "" );
+    lua_setfield( L, -2, "Contact" );
+
+    lua_pushstring( L, "" );
+    lua_setfield( L, -2, "Purpose" );
+
+    lua_pushstring( L, "" );
+    lua_setfield( L, -2, "Instructions" );
+
+    lua_pushstring( L, "models/weapons/v_pistol.mdl" );
+    lua_setfield( L, -2, "ViewModel" );
+
+    lua_pushboolean( L, false );
+    lua_setfield( L, -2, "ViewModelFlip" );
+
+    lua_pushboolean( L, false );
+    lua_setfield( L, -2, "ViewModelFlip1" );
+
+    lua_pushboolean( L, false );
+    lua_setfield( L, -2, "ViewModelFlip2" );
+
+    lua_pushnumber( L, 62 );
+    lua_setfield( L, -2, "ViewModelFOV" );
+
+    lua_pushstring( L, "models/weapons/w_357.mdl" );
+    lua_setfield( L, -2, "WorldModel" );
+
+    lua_pushboolean( L, true );
+    lua_setfield( L, -2, "AutoSwitchFrom" );
+
+    lua_pushboolean( L, true );
+    lua_setfield( L, -2, "AutoSwitchTo" );
+
+    lua_pushnumber( L, 5 );
+    lua_setfield( L, -2, "Weight" );
+
+    lua_pushnumber( L, 1 );
+    lua_setfield( L, -2, "BobScale" );
+
+    lua_pushnumber( L, 1 );
+    lua_setfield( L, -2, "SwayScale" );
+
+    lua_pushboolean( L, true );
+    lua_setfield( L, -2, "BounceWeaponIcon" );
+
+    lua_pushboolean( L, true );
+    lua_setfield( L, -2, "DrawWeaponInfoBox" );
+
+    lua_pushboolean( L, true );
+    lua_setfield( L, -2, "DrawAmmo" );
+
+    lua_pushboolean( L, true );
+    lua_setfield( L, -2, "DrawCrosshair" );
+
+    lua_pushnumber( L, 0 );
+    lua_setfield( L, -2, "Slot" );
+
+    lua_pushnumber( L, 10 );
+    lua_setfield( L, -2, "SlotPos" );
+
+    lua_pushnumber( L, 0 );
+    lua_setfield( L, -2, "SpeechBubbleLid" );
+
+    lua_pushnumber( L, 0 );
+    lua_setfield( L, -2, "WepSelectIcon" );
+
+    lua_pushboolean( L, false );
+    lua_setfield( L, -2, "CSMuzzleFlashes" );
+
+    lua_pushboolean( L, false );
+    lua_setfield( L, -2, "CSMuzzleX" );
+
+    lua_newtable( L );
+    lua_pushstring( L, "Pistol" );
+    lua_setfield( L, -2, "Ammo" );
+    lua_pushnumber( L, 0 );
+    lua_setfield( L, -2, "ClipSize" );
+    lua_pushnumber( L, 0 );
+    lua_setfield( L, -2, "DefaultClip" );
+    lua_pushboolean( L, false );
+    lua_setfield( L, -2, "Automatic" );
+    lua_setfield( L, -2, "Primary" );
+
+    lua_newtable( L );
+    lua_pushstring( L, "Pistol" );
+    lua_setfield( L, -2, "Ammo" );
+    lua_pushnumber( L, 0 );
+    lua_setfield( L, -2, "ClipSize" );
+    lua_pushnumber( L, 0 );
+    lua_setfield( L, -2, "DefaultClip" );
+    lua_pushboolean( L, false );
+    lua_setfield( L, -2, "Automatic" );
+    lua_setfield( L, -2, "Secondary" );
+
+    lua_pushboolean( L, false );
+    lua_setfield( L, -2, "UseHands" );
+
+    lua_pushboolean( L, false );
+    lua_setfield( L, -2, "AccurateCrosshair" );
+
+    lua_pushboolean( L, true );
+    lua_setfield( L, -2, "DisableDuplicator" );
+
+    lua_pushstring( L, "weapon" );
+    lua_setfield( L, -2, "ScriptedEntityType" );
+
+    lua_pushboolean( L, true );
+    lua_setfield( L, -2, "m_bPlayPickupSound" );
+
+    lua_pushstring( L, "materials/entities/<ClassName>.png" );
+    lua_setfield( L, -2, "IconOverride" );
+}
+
+static void luasrc_LoadWeaponFromFile( char *fullPath, char *className )
+{
+    Q_strlower( className );
+
+    lua_newtable( L );
+    char entDir[MAX_PATH];
+    Q_snprintf( entDir, sizeof( entDir ), "weapons\\%s", className );
+
+    lua_pushstring( L, entDir );
+    lua_setfield( L, -2, "Folder" );
+    lua_pushstring( L, className );
+    lua_setfield( L, -2, "ClassName" );
+    luasrc_SetupDefaultWeapon();
+    lua_setglobal( L, "SWEP" );
+
+    if ( luasrc_dofile( L, fullPath ) == 0 )
+    {
+        lua_getglobal( L, LUA_SCRIPTEDWEAPONSLIBNAME );
+
+        if ( lua_istable( L, -1 ) )
+        {
+            lua_getfield( L, -1, "Register" );
+
+            if ( lua_isfunction( L, -1 ) )
+            {
+                lua_remove( L, -2 );
+                lua_getglobal( L, "SWEP" );
+                lua_pushstring( L, className );
+                luasrc_pcall( L, 2, 0 );
+                RegisterScriptedWeapon( className );
+            }
+            else
+            {
+                lua_pop( L, 2 );
+            }
+        }
+        else
+        {
+            lua_pop( L, 1 );
+        }
+    }
+
+    lua_pushnil( L );
+    lua_setglobal( L, "SWEP" );
+}
+
+static void LoadWeaponsFromPath( const char *path = 0 )
+{
+    FileFindHandle_t fh;
+
+    char searchPath[MAX_PATH] = { 0 };
+
+    if ( !path )
+    {
+        path = LUA_PATH_WEAPONS;
+    }
+
+    Q_snprintf( searchPath, sizeof( searchPath ), "%s\\*", path );
+
+    char fileName[MAX_PATH] = { 0 };
+    char fullPath[MAX_PATH] = { 0 };
+    char className[255] = { 0 };
+
+    char const *fn = g_pFullFileSystem->FindFirstEx( searchPath, CONTENT_SEARCH_PATH, &fh );
+
+    while ( fn )
+    {
+        if ( fn[0] == '.' )
+        {
+            fn = g_pFullFileSystem->FindNext( fh );
+            continue;
+        }
+
+        if ( g_pFullFileSystem->FindIsDirectory( fh ) )
+        {
+            Q_strcpy( className, fn );
+
+#ifdef CLIENT_DLL
+            Q_snprintf( fileName, sizeof( fileName ), "%s\\%s\\cl_init.lua", path, className );
+#else
+            Q_snprintf( fileName, sizeof( fileName ), "%s\\%s\\init.lua", path, className );
+#endif
+
+            if ( !filesystem->FileExists( fileName, CONTENT_SEARCH_PATH ) )
+            {
+                // TODO: Move this to the gmod compatibility module
+                // GMOD compatibility: Fallback to shared.lua if (cl_)init.lua doesn't exist
+                Q_snprintf( fileName, sizeof( fileName ), "%s\\%s\\shared.lua", path, className );
+
+                if ( !filesystem->FileExists( fileName, CONTENT_SEARCH_PATH ) )
+                {
+                    fn = g_pFullFileSystem->FindNext( fh );
+                    continue;
+                }
+            }
+
+            filesystem->RelativePathToFullPath(
+                fileName, CONTENT_SEARCH_PATH, fullPath, sizeof( fullPath ) );
+
+            luasrc_LoadWeaponFromFile( fullPath, className );
+        }
+        else
+        {
+            Q_StripExtension( fn, className, sizeof( className ) );
+
+            Q_snprintf( fileName, sizeof( fileName ), "%s\\%s", path, fn );
+
+            filesystem->RelativePathToFullPath(
+                fileName, CONTENT_SEARCH_PATH, fullPath, sizeof( fullPath ) );
+
+            luasrc_LoadWeaponFromFile( fullPath, className );
+        }
+
+        fn = g_pFullFileSystem->FindNext( fh );
+    }
+
+    g_pFullFileSystem->FindClose( fh );
+}
+
+static int luasrc_LoadEntities( lua_State *L )
+{
+    LoadEntitiesFromPath( luaL_checkstring( L, -1 ) );
+    return 0;
+}
+
+static int luasrc_LoadWeapons( lua_State *L )
+{
+    LoadWeaponsFromPath( luaL_checkstring( L, -1 ) );
+    return 0;
+}
+
 /// <summary>
 /// Sets the InheritsFrom field in the GM table. After the gamemode is loaded,
 /// it will be read and the base gamemode will be loaded.
@@ -637,12 +1049,7 @@ void luasrc_setmodulepaths( lua_State *L )
                      currentCPath );
     lua_setfield( L, -2, "cpath" );
 
-
-
-
     // TODO: Repeat the above for all mounted games (replacing gamePath)
-
-
 
     // Experiment; we also abuse the package table to set a 'include' path
     // for the 'include' function. These paths will be attempted to be prefixed
@@ -754,6 +1161,25 @@ void luasrc_shutdown_gameui( void )
 }
 #endif
 
+/// <summary>
+/// Called after the sh_init.lua has loaded all base modules and extensions into
+/// the Lua environment.
+/// This will setup further functions into those libraries.
+/// </summary>
+/// <param name="L"></param>
+static void luasrc_init_post_includes( lua_State *L )
+{
+    lua_getglobal( L, LUA_SCRIPTEDENTITIESLIBNAME );
+    lua_pushcfunction( L, luasrc_LoadEntities );
+    lua_setfield( L, -2, "LoadFromDirectory" );
+    lua_pop( L, 1 );  // Pop the entities library
+
+    lua_getglobal( L, LUA_SCRIPTEDWEAPONSLIBNAME );
+    lua_pushcfunction( L, luasrc_LoadWeapons );
+    lua_setfield( L, -2, "LoadFromDirectory" );
+    lua_pop( L, 1 );  // Pop the weapons library
+}
+
 void luasrc_init( void )
 {
     if ( g_LuaLogFileHandle == FILESYSTEM_INVALID_HANDLE )
@@ -799,6 +1225,69 @@ void luasrc_init( void )
     Msg( "Lua initialized (" LUA_VERSION ")\n" );
 
     SetupMountedAddons( L );
+
+#ifdef CLIENT_DLL
+    if ( gpGlobals->maxClients > 1 )
+    {
+        luasrc_dofolder( L, LUA_PATH_CACHE LUA_PATH_AUTO_LOAD_SHARED );
+        luasrc_dofolder( L, LUA_PATH_CACHE LUA_PATH_AUTO_LOAD_CLIENT );
+    }
+
+    luasrc_dofile( L, LUA_PATH_INCLUDES_INIT_FILE );
+
+    luasrc_init_post_includes( L );
+
+    luasrc_dofolder( L, LUA_PATH_AUTO_LOAD_SHARED );
+    luasrc_dofolder( L, LUA_PATH_AUTO_LOAD_CLIENT );
+
+    LoadWeaponsFromPath();
+    LoadEntitiesFromPath();
+    // LoadEffectsFromPath();
+
+    luasrc_LoadGamemode( LUA_BASE_GAMEMODE );
+    luasrc_LoadGamemode( gamemode.GetString() );
+    luasrc_SetGamemode( gamemode.GetString() );
+
+#else   // CLIENT_DLL
+    luasrc_dofile( L, LUA_PATH_INCLUDES_INIT_FILE );
+
+    luasrc_init_post_includes( L );
+
+    luasrc_dofolder( L, LUA_PATH_AUTO_LOAD_SHARED );
+    luasrc_dofolder( L, LUA_PATH_AUTO_LOAD_SERVER );
+
+    LoadWeaponsFromPath();
+    LoadEntitiesFromPath();
+    // LoadEffectsFromPath();
+
+    luasrc_LoadGamemode( LUA_BASE_GAMEMODE );
+    if ( !luasrc_LoadGamemode( gamemode.GetString() ) )
+    {
+        Assert( 0 );  // Should've been prevented by gamemode command
+    }
+
+    luasrc_SetGamemode( gamemode.GetString() );
+
+    if ( gpGlobals->maxClients > 1 )
+    {
+        // Adds files (like models, materials, sounds, etc) to the downloadables table
+        // to be sent to clients when they connect.
+        INetworkStringTable *downloadables =
+            networkstringtable->FindTable( "downloadables" );
+        int resourceFileCount = ResourcesGetFilesCount();
+
+        for ( int i = 0; i < resourceFileCount; i++ )
+        {
+            const char *resourceFile = ResourcesGetFile( i );
+            downloadables->AddString( true, resourceFile, -1 );
+        }
+
+        ResourcesFreeFiles();
+
+        // Load the Lua cache files (zipped) into the downloadables table
+        lcf_preparecachefile();
+    }
+#endif  // else CLIENT_DLL
 }
 
 #ifdef CLIENT_DLL
@@ -1159,33 +1648,48 @@ LUA_API int luasrc_dofile_with_loader( lua_State *L, const char *filePath )
     }
 
     const char *preprocessedFileContents = lua_tostring( loaderLuaState, -1 );
+    CUtlBuffer buffer( 0, strlen( preprocessedFileContents ) * sizeof(char), CUtlBuffer::TEXT_BUFFER );
+    lua_pop( loaderLuaState, 1 );  // Pop the preprocessed file contents now that we have them
 
     if ( lua_log_loader.GetBool() )
     {
         // Write the file to the logs folder
-#ifdef CLIENT_DLL
-        const char *gamePath = engine->GetGameDirectory();
-#else
-        char gamePath[MAX_PATH];
-        engine->GetGameDir( gamePath, MAX_PATH );
-#endif
         char relativePath[MAX_PATH];
-        Q_StrRight( fullPath, Q_strlen( fullPath ) - Q_strlen( gamePath ), relativePath, sizeof( relativePath ) );
-        char fileLogPath[MAX_PATH];
-        Q_snprintf( fileLogPath, sizeof( fileLogPath ), "logs\\_loader%s", relativePath );
-        V_RemoveDotSlashes( fileLogPath );
 
-        CUtlBuffer buffer( 0, 0, CUtlBuffer::TEXT_BUFFER );
-        buffer.PutString( preprocessedFileContents );
+        // Go through all search paths and find one that this file is in. Then trim that path from the file name.
+        char searchPath[MAX_PATH * 25];  // TODO: How do we know how many paths there are? This is a guess.
+        filesystem->GetSearchPath_safe( "GAME", true, searchPath );
+
+        char *searchContext;
+        char *token = strtok_s( searchPath, ";", &searchContext );
+        while ( token != NULL )
+        {
+            if ( Q_strncmp( fullPath, token, Q_strlen( token ) ) == 0 )
+            {
+                Q_strncpy( relativePath, fullPath + Q_strlen( token ), sizeof( relativePath ) );
+                break;
+            }
+
+            token = strtok_s( NULL, ";", &searchContext );
+        }
+
+        if ( relativePath[0] == '\0')
+        {
+            DevWarning( "Failed to find include anywhere in mounted paths. Alert a dev!" );
+            Q_strncmp( relativePath, fullPath, Q_strlen("?:/") ); // trim any drive letter
+        }
+
+        char fileLogPath[MAX_PATH];
+        Q_snprintf( fileLogPath, sizeof( fileLogPath ), "logs\\_loader\\%s", relativePath );
+        V_RemoveDotSlashes( fileLogPath );
 
         char fileLogPathDirectory[MAX_PATH];
         Q_ExtractFilePath( fileLogPath, fileLogPathDirectory, sizeof( fileLogPathDirectory ) );
         filesystem->CreateDirHierarchy( fileLogPathDirectory, "GAME" );
 
+        buffer.PutString( preprocessedFileContents );
         filesystem->WriteFile( fileLogPath, "GAME", buffer );
     }
-
-    lua_pop( loaderLuaState, 1 );  // Pop the preprocessed file contents now that we have them
 
     lua_pushcfunction( L, luasrc_traceback );
     int traceBackPosition = lua_gettop( L );
@@ -1356,413 +1860,6 @@ LUA_API void luasrc_dumpstack( lua_State *L )
     lua_pop( L, 1 ); /* pop function */
 
     Msg( "%s", dumpStack.Get() );
-}
-
-static int luasrc_LoadEntities( lua_State *L )
-{
-    luasrc_LoadEntities( luaL_checkstring( L, -1 ) );
-    return 0;
-}
-
-static void luasrc_LoadEntityFromFile( char *fullPath, char *className )
-{
-    Q_strlower( className );
-
-    lua_newtable( L );
-    char entDir[MAX_PATH];
-    Q_snprintf( entDir, sizeof( entDir ), "entities\\%s", className );
-    lua_pushstring( L, entDir );
-    lua_setfield( L, -2, "/*Folder*/" );
-    lua_pushstring( L, LUA_BASE_ENTITY_CLASS );
-    lua_setfield( L, -2, "Base" );
-    lua_pushstring( L, LUA_BASE_ENTITY_FACTORY );
-    lua_setfield( L, -2, "Factory" );
-    lua_setglobal( L, "ENT" );
-
-    if ( luasrc_dofile( L, fullPath ) == 0 )
-    {
-        lua_getglobal( L, LUA_SCRIPTEDENTITIESLIBNAME );
-        if ( lua_istable( L, -1 ) )
-        {
-            lua_getfield( L, -1, "Register" );
-            if ( lua_isfunction( L, -1 ) )
-            {
-                lua_remove( L, -2 );
-                lua_getglobal( L, "ENT" );
-                lua_pushstring( L, className );
-                luasrc_pcall( L, 2, 0 );
-                lua_getglobal( L, "ENT" );
-                if ( lua_istable( L, -1 ) )
-                {
-                    lua_getfield( L, -1, "Factory" );
-                    if ( lua_isstring( L, -1 ) )
-                    {
-                        const char *pszClassname =
-                            lua_tostring( L, -1 );
-                        if ( Q_strcmp( pszClassname,
-                                       "CBaseAnimating" ) == 0 )
-                            RegisterScriptedEntity( className );
-#ifndef CLIENT_DLL
-                        else if ( Q_strcmp( pszClassname,
-                                            "CBaseTrigger" ) == 0 )
-                            RegisterScriptedTrigger( className );
-#endif
-                    }
-                    lua_pop( L, 2 );
-                }
-                else
-                {
-                    lua_pop( L, 1 );
-                }
-            }
-            else
-            {
-                lua_pop( L, 2 );
-            }
-        }
-        else
-        {
-            lua_pop( L, 1 );
-        }
-    }
-    lua_pushnil( L );
-    lua_setglobal( L, "ENT" );
-}
-
-void luasrc_LoadEntities( const char *path )
-{
-    // First register this function so other directories can be loaded from Lua
-    lua_getglobal( L, LUA_SCRIPTEDENTITIESLIBNAME );
-    lua_pushcfunction( L, luasrc_LoadEntities );
-    lua_setfield( L, -2, "LoadFromDirectory" );
-    lua_pop( L, 1 );  // Pop the entities library
-
-    FileFindHandle_t fh;
-
-    char searchPath[MAX_PATH] = { 0 };
-
-    if ( !path )
-    {
-        path = LUA_PATH_ENTITIES;
-    }
-
-    Q_snprintf( searchPath, sizeof( searchPath ), "%s\\*", path );
-
-    char fileName[MAX_PATH] = { 0 };
-    char fullPath[MAX_PATH] = { 0 };
-    char className[255] = { 0 };
-
-    char const *fn = g_pFullFileSystem->FindFirstEx( searchPath, CONTENT_SEARCH_PATH, &fh );
-
-    while ( fn )
-    {
-        if ( fn[0] == '.' )
-        {
-            fn = g_pFullFileSystem->FindNext( fh );
-            continue;
-        }
-
-        if ( g_pFullFileSystem->FindIsDirectory( fh ) )
-        {
-            Q_strcpy( className, fn );
-
-#ifdef CLIENT_DLL
-            Q_snprintf( fileName, sizeof( fileName ), "%s\\%s\\cl_init.lua", path, className );
-#else
-            Q_snprintf( fileName, sizeof( fileName ), "%s\\%s\\init.lua", path, className );
-#endif
-            if ( !filesystem->FileExists( fileName, CONTENT_SEARCH_PATH ) )
-            {
-                fn = g_pFullFileSystem->FindNext( fh );
-                continue;
-            }
-
-            filesystem->RelativePathToFullPath(
-                fileName, CONTENT_SEARCH_PATH, fullPath, sizeof( fullPath ) );
-
-            luasrc_LoadEntityFromFile( fullPath, className );
-        }
-        else
-        {
-            Q_StripExtension( fn, className, sizeof( className ) );
-
-            Q_snprintf( fileName, sizeof( fileName ), "%s\\%s", path, fn );
-
-            filesystem->RelativePathToFullPath(
-                fileName, CONTENT_SEARCH_PATH, fullPath, sizeof( fullPath ) );
-
-            luasrc_LoadEntityFromFile( fullPath, className );
-        }
-
-        fn = g_pFullFileSystem->FindNext( fh );
-    }
-    g_pFullFileSystem->FindClose( fh );
-}
-
-static int luasrc_LoadWeapons( lua_State *L )
-{
-    luasrc_LoadWeapons( luaL_checkstring( L, -1 ) );
-    return 0;
-}
-
-/// <summary>
-/// Sets up the default values for the SWEP that is on the stack of L.
-///
-/// TODO: Copied from Garry's Mod Wiki, whilst not all values are used by
-/// us. Copied for compatibility reasons.
-/// </summary>
-static void luasrc_SetupDefaultWeapon()
-{
-    lua_pushstring( L, "Other" );
-    lua_setfield( L, -2, "Category" );
-
-    lua_pushboolean( L, false );
-    lua_setfield( L, -2, "Spawnable" );
-
-    lua_pushboolean( L, false );
-    lua_setfield( L, -2, "AdminOnly" );
-
-    lua_pushstring( L, "Scripted Weapon" );
-    lua_setfield( L, -2, "PrintName" );
-
-    lua_pushstring( L, LUA_BASE_WEAPON );
-    lua_setfield( L, -2, "Base" );
-
-    lua_pushnumber( L, 1 );
-    lua_setfield( L, -2, "m_WeaponDeploySpeed" );
-
-    lua_pushstring( L, "" );
-    lua_setfield( L, -2, "Author" );
-
-    lua_pushstring( L, "" );
-    lua_setfield( L, -2, "Contact" );
-
-    lua_pushstring( L, "" );
-    lua_setfield( L, -2, "Purpose" );
-
-    lua_pushstring( L, "" );
-    lua_setfield( L, -2, "Instructions" );
-
-    lua_pushstring( L, "models/weapons/v_pistol.mdl" );
-    lua_setfield( L, -2, "ViewModel" );
-
-    lua_pushboolean( L, false );
-    lua_setfield( L, -2, "ViewModelFlip" );
-
-    lua_pushboolean( L, false );
-    lua_setfield( L, -2, "ViewModelFlip1" );
-
-    lua_pushboolean( L, false );
-    lua_setfield( L, -2, "ViewModelFlip2" );
-
-    lua_pushnumber( L, 62 );
-    lua_setfield( L, -2, "ViewModelFOV" );
-
-    lua_pushstring( L, "models/weapons/w_357.mdl" );
-    lua_setfield( L, -2, "WorldModel" );
-
-    lua_pushboolean( L, true );
-    lua_setfield( L, -2, "AutoSwitchFrom" );
-
-    lua_pushboolean( L, true );
-    lua_setfield( L, -2, "AutoSwitchTo" );
-
-    lua_pushnumber( L, 5 );
-    lua_setfield( L, -2, "Weight" );
-
-    lua_pushnumber( L, 1 );
-    lua_setfield( L, -2, "BobScale" );
-
-    lua_pushnumber( L, 1 );
-    lua_setfield( L, -2, "SwayScale" );
-
-    lua_pushboolean( L, true );
-    lua_setfield( L, -2, "BounceWeaponIcon" );
-
-    lua_pushboolean( L, true );
-    lua_setfield( L, -2, "DrawWeaponInfoBox" );
-
-    lua_pushboolean( L, true );
-    lua_setfield( L, -2, "DrawAmmo" );
-
-    lua_pushboolean( L, true );
-    lua_setfield( L, -2, "DrawCrosshair" );
-
-    lua_pushnumber( L, 0 );
-    lua_setfield( L, -2, "Slot" );
-
-    lua_pushnumber( L, 10 );
-    lua_setfield( L, -2, "SlotPos" );
-
-    lua_pushnumber( L, 0 );
-    lua_setfield( L, -2, "SpeechBubbleLid" );
-
-    lua_pushnumber( L, 0 );
-    lua_setfield( L, -2, "WepSelectIcon" );
-
-    lua_pushboolean( L, false );
-    lua_setfield( L, -2, "CSMuzzleFlashes" );
-
-    lua_pushboolean( L, false );
-    lua_setfield( L, -2, "CSMuzzleX" );
-
-    lua_newtable( L );
-    lua_pushstring( L, "Pistol" );
-    lua_setfield( L, -2, "Ammo" );
-    lua_pushnumber( L, 0 );
-    lua_setfield( L, -2, "ClipSize" );
-    lua_pushnumber( L, 0 );
-    lua_setfield( L, -2, "DefaultClip" );
-    lua_pushboolean( L, false );
-    lua_setfield( L, -2, "Automatic" );
-    lua_setfield( L, -2, "Primary" );
-
-    lua_newtable( L );
-    lua_pushstring( L, "Pistol" );
-    lua_setfield( L, -2, "Ammo" );
-    lua_pushnumber( L, 0 );
-    lua_setfield( L, -2, "ClipSize" );
-    lua_pushnumber( L, 0 );
-    lua_setfield( L, -2, "DefaultClip" );
-    lua_pushboolean( L, false );
-    lua_setfield( L, -2, "Automatic" );
-    lua_setfield( L, -2, "Secondary" );
-
-    lua_pushboolean( L, false );
-    lua_setfield( L, -2, "UseHands" );
-
-    lua_pushboolean( L, false );
-    lua_setfield( L, -2, "AccurateCrosshair" );
-
-    lua_pushboolean( L, true );
-    lua_setfield( L, -2, "DisableDuplicator" );
-
-    lua_pushstring( L, "weapon" );
-    lua_setfield( L, -2, "ScriptedEntityType" );
-
-    lua_pushboolean( L, true );
-    lua_setfield( L, -2, "m_bPlayPickupSound" );
-
-    lua_pushstring( L, "materials/entities/<ClassName>.png" );
-    lua_setfield( L, -2, "IconOverride" );
-}
-
-static void luasrc_LoadWeaponFromFile( char *fullPath, char *className )
-{
-    Q_strlower( className );
-
-    lua_newtable( L );
-    char entDir[MAX_PATH];
-    Q_snprintf( entDir, sizeof( entDir ), "weapons\\%s", className );
-
-    lua_pushstring( L, entDir );
-    lua_setfield( L, -2, "Folder" );
-    lua_pushstring( L, className );
-    lua_setfield( L, -2, "ClassName" );
-    luasrc_SetupDefaultWeapon();
-    lua_setglobal( L, "SWEP" );
-
-    if ( luasrc_dofile( L, fullPath ) == 0 )
-    {
-        lua_getglobal( L, LUA_SCRIPTEDWEAPONSLIBNAME );
-
-        if ( lua_istable( L, -1 ) )
-        {
-            lua_getfield( L, -1, "Register" );
-
-            if ( lua_isfunction( L, -1 ) )
-            {
-                lua_remove( L, -2 );
-                lua_getglobal( L, "SWEP" );
-                lua_pushstring( L, className );
-                luasrc_pcall( L, 2, 0 );
-                RegisterScriptedWeapon( className );
-            }
-            else
-            {
-                lua_pop( L, 2 );
-            }
-        }
-        else
-        {
-            lua_pop( L, 1 );
-        }
-    }
-
-    lua_pushnil( L );
-    lua_setglobal( L, "SWEP" );
-}
-
-void luasrc_LoadWeapons( const char *path )
-{
-    // First register this function so other directories can be loaded from Lua
-    lua_getglobal( L, LUA_SCRIPTEDWEAPONSLIBNAME );
-    lua_pushcfunction( L, luasrc_LoadWeapons );
-    lua_setfield( L, -2, "LoadFromDirectory" );
-    lua_pop( L, 1 );  // Pop the weapons library
-
-    FileFindHandle_t fh;
-
-    char searchPath[MAX_PATH] = { 0 };
-
-    if ( !path )
-    {
-        path = LUA_PATH_WEAPONS;
-    }
-
-    Q_snprintf( searchPath, sizeof( searchPath ), "%s\\*", path );
-
-    char fileName[MAX_PATH] = { 0 };
-    char fullPath[MAX_PATH] = { 0 };
-    char className[255] = { 0 };
-
-    char const *fn = g_pFullFileSystem->FindFirstEx( searchPath, CONTENT_SEARCH_PATH, &fh );
-
-    while ( fn )
-    {
-        if ( fn[0] == '.' )
-        {
-            fn = g_pFullFileSystem->FindNext( fh );
-            continue;
-        }
-
-        if ( g_pFullFileSystem->FindIsDirectory( fh ) )
-        {
-            Q_strcpy( className, fn );
-
-#ifdef CLIENT_DLL
-            Q_snprintf( fileName, sizeof( fileName ), "%s\\%s\\cl_init.lua", path, className );
-#else
-            Q_snprintf( fileName, sizeof( fileName ), "%s\\%s\\init.lua", path, className );
-#endif
-
-            if ( !filesystem->FileExists( fileName, CONTENT_SEARCH_PATH ) )
-            {
-                fn = g_pFullFileSystem->FindNext( fh );
-                continue;
-            }
-
-            filesystem->RelativePathToFullPath(
-                fileName, CONTENT_SEARCH_PATH, fullPath, sizeof( fullPath ) );
-
-            luasrc_LoadWeaponFromFile( fullPath, className );
-        }
-        else
-        {
-            Q_StripExtension( fn, className, sizeof( className ) );
-
-            Q_snprintf( fileName, sizeof( fileName ), "%s\\%s", path, fn );
-
-            filesystem->RelativePathToFullPath(
-                fileName, CONTENT_SEARCH_PATH, fullPath, sizeof( fullPath ) );
-
-            luasrc_LoadWeaponFromFile( fullPath, className );
-        }
-
-        fn = g_pFullFileSystem->FindNext( fh );
-    }
-
-    g_pFullFileSystem->FindClose( fh );
 }
 
 /// <summary>
@@ -1981,6 +2078,13 @@ bool luasrc_LoadGamemode( const char *gamemodeName )
     const char *gamemodeSearchPathC = gamemodeSearchPath.String();
     luasrc_add_to_package_path( L, gamemodeSearchPathC );
 
+    // Add the gamemode content folder to the search path
+    char contentSearchPath[MAX_PATH];
+    Q_strcpy( contentSearchPath, gamemodePath );
+    Q_strncat( contentSearchPath, "content", sizeof( contentSearchPath ) );
+
+    SetupRootSearchPaths( contentSearchPath, L );
+
     // Set the GM table as a global variable
     lua_newtable( L );
     lua_setglobal( L, "GM" );
@@ -2089,14 +2193,12 @@ bool luasrc_SetGamemode( const char *gamemodeName )
     Q_strcpy( contentSearchPath, gamemodeFolder );
     Q_strncat( contentSearchPath, "content", sizeof( contentSearchPath ) );
 
-    SetupRootSearchPaths( contentSearchPath, L );
-
     char loadPath[MAX_PATH];
     Q_snprintf( loadPath, sizeof( loadPath ), "%s\\", contentSearchPath );
 
-    luasrc_LoadWeapons( loadPath );
-    luasrc_LoadEntities( loadPath );
-    // luasrc_LoadEffects( loadPath );
+    LoadWeaponsFromPath( loadPath );
+    LoadEntitiesFromPath( loadPath );
+    // LoadEffectsFromPath( loadPath );
 
     LUA_CALL_HOOK_BEGIN( "Initialize" );
     LUA_CALL_HOOK_END( 0, 0 );
@@ -2380,173 +2482,173 @@ CON_COMMAND( lua_dumpstack, "Prints the Lua stack" )
 #endif
 #endif
 
-//#ifdef CLIENT_DLL
-//#define LUA_GMOD_REPOSITORY_DOWNLOAD "https://github.com/Facepunch/garrysmod/archive/%s.zip"
-//#define LUA_GMOD_REPOSITORY_HASH "430fc8a2cf4c25873766b1d1a0df1cb94c68d5b7"
+// #ifdef CLIENT_DLL
+// #define LUA_GMOD_REPOSITORY_DOWNLOAD "https://github.com/Facepunch/garrysmod/archive/%s.zip"
+// #define LUA_GMOD_REPOSITORY_HASH "430fc8a2cf4c25873766b1d1a0df1cb94c68d5b7"
 //
-//class GmodCompatDownloader
+// class GmodCompatDownloader
 //{
-//   public:
-//    void OnCompleted( HTTPRequestCompleted_t *arg, bool bFailed )
-//    {
-//        ISteamHTTP *pHTTP = steamapicontext->SteamHTTP();
+//    public:
+//     void OnCompleted( HTTPRequestCompleted_t *arg, bool bFailed )
+//     {
+//         ISteamHTTP *pHTTP = steamapicontext->SteamHTTP();
 //
-//        if ( arg->m_eStatusCode != k_EHTTPStatusCode200OK )
-//        {
-//            Warning( "Failed to download the GMod repository! Status code: %d\n", arg->m_eStatusCode );
-//            pHTTP->ReleaseHTTPRequest( arg->m_hRequest );
-//            delete this;
-//            return;
-//        }
+//         if ( arg->m_eStatusCode != k_EHTTPStatusCode200OK )
+//         {
+//             Warning( "Failed to download the GMod repository! Status code: %d\n", arg->m_eStatusCode );
+//             pHTTP->ReleaseHTTPRequest( arg->m_hRequest );
+//             delete this;
+//             return;
+//         }
 //
-//        if ( !arg->m_bRequestSuccessful )
-//        {
-//            Warning( "Failed to download the GMod repository! Request unsuccessful\n" );
-//            pHTTP->ReleaseHTTPRequest( arg->m_hRequest );
-//            delete this;
-//            return;
-//        }
+//         if ( !arg->m_bRequestSuccessful )
+//         {
+//             Warning( "Failed to download the GMod repository! Request unsuccessful\n" );
+//             pHTTP->ReleaseHTTPRequest( arg->m_hRequest );
+//             delete this;
+//             return;
+//         }
 //
-//        if ( bFailed )
-//        {
-//            Warning( "Failed to download the GMod repository! Request failed\n" );
-//            pHTTP->ReleaseHTTPRequest( arg->m_hRequest );
-//            delete this;
-//            return;
-//        }
+//         if ( bFailed )
+//         {
+//             Warning( "Failed to download the GMod repository! Request failed\n" );
+//             pHTTP->ReleaseHTTPRequest( arg->m_hRequest );
+//             delete this;
+//             return;
+//         }
 //
-//        uint32 bodySize;
-//        if ( !pHTTP->GetHTTPResponseBodySize( arg->m_hRequest, &bodySize ) )
-//        {
-//            Assert( 0 );
-//            delete this;
-//            return;
-//        }
+//         uint32 bodySize;
+//         if ( !pHTTP->GetHTTPResponseBodySize( arg->m_hRequest, &bodySize ) )
+//         {
+//             Assert( 0 );
+//             delete this;
+//             return;
+//         }
 //
-//        // Save the downloaded file to the addons folder
-//        CUtlBuffer bodyBuffer;
-//        bodyBuffer.EnsureCapacity( bodySize );
+//         // Save the downloaded file to the addons folder
+//         CUtlBuffer bodyBuffer;
+//         bodyBuffer.EnsureCapacity( bodySize );
 //
-//        if ( !pHTTP->GetHTTPResponseBodyData( arg->m_hRequest, ( uint8 * )bodyBuffer.Base(), bodySize ) )
-//        {
-//            Assert( 0 );
-//            bodyBuffer.Purge();
-//            delete this;
-//            return;
-//        }
+//         if ( !pHTTP->GetHTTPResponseBodyData( arg->m_hRequest, ( uint8 * )bodyBuffer.Base(), bodySize ) )
+//         {
+//             Assert( 0 );
+//             bodyBuffer.Purge();
+//             delete this;
+//             return;
+//         }
 //
-//        pHTTP->ReleaseHTTPRequest( arg->m_hRequest );
+//         pHTTP->ReleaseHTTPRequest( arg->m_hRequest );
 //
-//        // Store the zip file to disk so we can then extract it
-//        const char *zipPath = "addons/garrysmod.zip";
+//         // Store the zip file to disk so we can then extract it
+//         const char *zipPath = "addons/garrysmod.zip";
 //
-//        bodyBuffer.SeekPut( CUtlBuffer::SEEK_HEAD, bodySize );
-//        filesystem->WriteFile( zipPath, CONTENT_SEARCH_PATH, bodyBuffer );
+//         bodyBuffer.SeekPut( CUtlBuffer::SEEK_HEAD, bodySize );
+//         filesystem->WriteFile( zipPath, CONTENT_SEARCH_PATH, bodyBuffer );
 //
-//        // This is the name of the folder from the zip that we actually want to extract to 'addons/garrysmod'
-//        char desiredFolder[MAX_PATH];
-//        Q_snprintf( desiredFolder, sizeof( desiredFolder ), "garrysmod-%s/garrysmod", LUA_GMOD_REPOSITORY_HASH );
+//         // This is the name of the folder from the zip that we actually want to extract to 'addons/garrysmod'
+//         char desiredFolder[MAX_PATH];
+//         Q_snprintf( desiredFolder, sizeof( desiredFolder ), "garrysmod-%s/garrysmod", LUA_GMOD_REPOSITORY_HASH );
 //
-//        // Extract the downloaded zip file, but only the files in the desired folder
-//        char fullZipPath[MAX_PATH];
-//        filesystem->RelativePathToFullPath( zipPath, CONTENT_SEARCH_PATH, fullZipPath, sizeof( fullZipPath ) );
+//         // Extract the downloaded zip file, but only the files in the desired folder
+//         char fullZipPath[MAX_PATH];
+//         filesystem->RelativePathToFullPath( zipPath, CONTENT_SEARCH_PATH, fullZipPath, sizeof( fullZipPath ) );
 //
-//#ifdef CLIENT_DLL
-//        const char *gamePath = engine->GetGameDirectory();
-//#else
-//        char gamePath[MAX_PATH];
-//        engine->GetGameDir( gamePath, MAX_PATH );
-//#endif
+// #ifdef CLIENT_DLL
+//         const char *gamePath = engine->GetGameDirectory();
+// #else
+//         char gamePath[MAX_PATH];
+//         engine->GetGameDir( gamePath, MAX_PATH );
+// #endif
 //
-//        HZIP hZipFile = OpenZip( fullZipPath, 0, ZIP_FILENAME );
-//        ZIPENTRY zipEntry;
+//         HZIP hZipFile = OpenZip( fullZipPath, 0, ZIP_FILENAME );
+//         ZIPENTRY zipEntry;
 //
-//        GetZipItem( hZipFile, -1, &zipEntry );
+//         GetZipItem( hZipFile, -1, &zipEntry );
 //
-//        int numItems = zipEntry.index;
+//         int numItems = zipEntry.index;
 //
-//        for ( int i = 0; i < numItems; i++ )
-//        {
-//            GetZipItem( hZipFile, i, &zipEntry );
+//         for ( int i = 0; i < numItems; i++ )
+//         {
+//             GetZipItem( hZipFile, i, &zipEntry );
 //
-//            if ( ( zipEntry.attr & FILE_ATTRIBUTE_DIRECTORY ) == FILE_ATTRIBUTE_DIRECTORY )
-//                continue;  // skip directories
+//             if ( ( zipEntry.attr & FILE_ATTRIBUTE_DIRECTORY ) == FILE_ATTRIBUTE_DIRECTORY )
+//                 continue;  // skip directories
 //
-//            if ( Q_strnicmp( zipEntry.name, desiredFolder, Q_strlen( desiredFolder ) ) != 0 )
-//                continue;  // skip files not in the desired folder
+//             if ( Q_strnicmp( zipEntry.name, desiredFolder, Q_strlen( desiredFolder ) ) != 0 )
+//                 continue;  // skip files not in the desired folder
 //
-//            char pathWithoutDesiredFolder[MAX_PATH];
-//            Q_strncpy( pathWithoutDesiredFolder, zipEntry.name + Q_strlen( desiredFolder ) + 1, sizeof( pathWithoutDesiredFolder ) );
+//             char pathWithoutDesiredFolder[MAX_PATH];
+//             Q_strncpy( pathWithoutDesiredFolder, zipEntry.name + Q_strlen( desiredFolder ) + 1, sizeof( pathWithoutDesiredFolder ) );
 //
-//            char pathWithoutFileName[MAX_PATH];
-//            Q_snprintf( pathWithoutFileName, sizeof( pathWithoutFileName ), "addons\\garrysmod\\%s", pathWithoutDesiredFolder );
-//            Q_StripFilename( pathWithoutFileName );
+//             char pathWithoutFileName[MAX_PATH];
+//             Q_snprintf( pathWithoutFileName, sizeof( pathWithoutFileName ), "addons\\garrysmod\\%s", pathWithoutDesiredFolder );
+//             Q_StripFilename( pathWithoutFileName );
 //
-//            filesystem->CreateDirHierarchy( pathWithoutFileName, CONTENT_SEARCH_PATH );
+//             filesystem->CreateDirHierarchy( pathWithoutFileName, CONTENT_SEARCH_PATH );
 //
-//            char fullPath[MAX_PATH];
-//            Q_snprintf( fullPath, sizeof( fullPath ), "%s\\addons\\garrysmod\\%s", gamePath, pathWithoutDesiredFolder );
+//             char fullPath[MAX_PATH];
+//             Q_snprintf( fullPath, sizeof( fullPath ), "%s\\addons\\garrysmod\\%s", gamePath, pathWithoutDesiredFolder );
 //
-//            UnzipItem( hZipFile, i, fullPath, 0, ZIP_FILENAME );
-//        }
+//             UnzipItem( hZipFile, i, fullPath, 0, ZIP_FILENAME );
+//         }
 //
-//        CloseZip( hZipFile );
+//         CloseZip( hZipFile );
 //
-//        // Remove the downloaded zip file
-//        filesystem->RemoveFile( zipPath, CONTENT_SEARCH_PATH );
+//         // Remove the downloaded zip file
+//         filesystem->RemoveFile( zipPath, CONTENT_SEARCH_PATH );
 //
-//        Msg( "Successfully downloaded the GMod repository to 'garrysmod' in the 'addons' folder\n" );
+//         Msg( "Successfully downloaded the GMod repository to 'garrysmod' in the 'addons' folder\n" );
 //
-//        MountAddon( "garrysmod" );
+//         MountAddon( "garrysmod" );
 //
-//        delete this;
-//    }
-//};
+//         delete this;
+//     }
+// };
 //
-//CCallResult< GmodCompatDownloader, HTTPRequestCompleted_t > callback;
+// CCallResult< GmodCompatDownloader, HTTPRequestCompleted_t > callback;
 //
 //// Used in GameUI to download the GMod repository to the addons folder
-//CON_COMMAND( lua_download_gmod_repository, "Downloads the GMod repository to 'garrysmod' in your addons folder" )
+// CON_COMMAND( lua_download_gmod_repository, "Downloads the GMod repository to 'garrysmod' in your addons folder" )
 //{
-//    ISteamHTTP *pHTTP = steamapicontext->SteamHTTP();
+//     ISteamHTTP *pHTTP = steamapicontext->SteamHTTP();
 //
-//    if ( !pHTTP )
-//    {
-//        Warning( "Steam HTTP interface not available\n" );
-//        return;
-//    }
+//     if ( !pHTTP )
+//     {
+//         Warning( "Steam HTTP interface not available\n" );
+//         return;
+//     }
 //
-//    if ( filesystem->IsDirectory( "addons/garrysmod", CONTENT_SEARCH_PATH ) )
-//    {
-//        Warning( "The 'garrysmod' folder already exists in the 'addons' folder. Remove it manually if you want to download the garrysmod repo from github again.\n" );
-//        return;
-//    }
+//     if ( filesystem->IsDirectory( "addons/garrysmod", CONTENT_SEARCH_PATH ) )
+//     {
+//         Warning( "The 'garrysmod' folder already exists in the 'addons' folder. Remove it manually if you want to download the garrysmod repo from github again.\n" );
+//         return;
+//     }
 //
-//    char downloadUrl[MAX_PATH];
-//    Q_snprintf( downloadUrl, sizeof( downloadUrl ), LUA_GMOD_REPOSITORY_DOWNLOAD, LUA_GMOD_REPOSITORY_HASH );
+//     char downloadUrl[MAX_PATH];
+//     Q_snprintf( downloadUrl, sizeof( downloadUrl ), LUA_GMOD_REPOSITORY_DOWNLOAD, LUA_GMOD_REPOSITORY_HASH );
 //
-//    HTTPRequestHandle hRequest = pHTTP->CreateHTTPRequest( k_EHTTPMethodGET, downloadUrl );
+//     HTTPRequestHandle hRequest = pHTTP->CreateHTTPRequest( k_EHTTPMethodGET, downloadUrl );
 //
-//    if ( !hRequest )
-//    {
-//        Warning( "Failed to create HTTP request to %s\n", downloadUrl );
-//        return;
-//    }
+//     if ( !hRequest )
+//     {
+//         Warning( "Failed to create HTTP request to %s\n", downloadUrl );
+//         return;
+//     }
 //
-//    pHTTP->SetHTTPRequestGetOrPostParameter( hRequest, "Accept-Encoding", "gzip, deflate" );
-//    pHTTP->SetHTTPRequestGetOrPostParameter( hRequest, "User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36" );
+//     pHTTP->SetHTTPRequestGetOrPostParameter( hRequest, "Accept-Encoding", "gzip, deflate" );
+//     pHTTP->SetHTTPRequestGetOrPostParameter( hRequest, "User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36" );
 //
-//    SteamAPICall_t hCall;
+//     SteamAPICall_t hCall;
 //
-//    if ( !pHTTP->SendHTTPRequest( hRequest, &hCall ) )
-//    {
-//        Warning( "Failed to send HTTP request to %s\n", downloadUrl );
-//        pHTTP->ReleaseHTTPRequest( hRequest );
-//        return;
-//    }
+//     if ( !pHTTP->SendHTTPRequest( hRequest, &hCall ) )
+//     {
+//         Warning( "Failed to send HTTP request to %s\n", downloadUrl );
+//         pHTTP->ReleaseHTTPRequest( hRequest );
+//         return;
+//     }
 //
-//    Warning( "Downloading the GMod repository from %s\n", downloadUrl );
+//     Warning( "Downloading the GMod repository from %s\n", downloadUrl );
 //
-//    callback.Set( hCall, new GmodCompatDownloader(), &GmodCompatDownloader::OnCompleted );
-//}
-//#endif
+//     callback.Set( hCall, new GmodCompatDownloader(), &GmodCompatDownloader::OnCompleted );
+// }
+// #endif

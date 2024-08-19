@@ -1,4 +1,4 @@
-_BASE_WEAPON = "weapon_experimentbase_scriptedweapon"
+_BASE_WEAPON = "weapon_experiment_base_scripted"
 
 local MODULE = {}
 MODULE.registeredWeapons = MODULE.registeredWeapons or {}
@@ -20,7 +20,7 @@ function MODULE.Get(weaponClassName)
 
 		if (not baseWeaponTable) then
 			debug.PrintWarning("WARNING: Attempted to initialize weapon \"" ..
-			weaponClassName .. "\" with non-existing base class!\n")
+			weaponClassName .. "\" with non-existing base class \"" .. tostring(weaponTable.Base) .. "\"!\n")
 		else
 			return table.Inherit(weaponTable, baseWeaponTable)
 		end

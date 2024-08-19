@@ -1065,42 +1065,6 @@ bool CServerGameDLL::LevelInit( const char *pMapName, char const *pMapEntities, 
 
     // Add Lua environment
     luasrc_init();
-
-    luasrc_dofile( L, LUA_PATH_INCLUDES_INIT_FILE );
-    luasrc_dofolder( L, LUA_PATH_AUTOLOAD_SHARED );
-    luasrc_dofolder( L, LUA_PATH_AUTOLOAD_SERVER );
-
-    luasrc_LoadWeapons();
-    luasrc_LoadEntities();
-    // luasrc_LoadEffects();
-
-    luasrc_LoadGamemode( LUA_BASE_GAMEMODE );
-    if ( !luasrc_LoadGamemode( gamemode.GetString() ) )
-    {
-        Assert( 0 ); // Should've been prevented by gamemode command
-    }
-
-    luasrc_SetGamemode( gamemode.GetString() );
-
-    if ( gpGlobals->maxClients > 1 )
-    {
-        // Adds files (like models, materials, sounds, etc) to the downloadables table
-        // to be sent to clients when they connect.
-        INetworkStringTable *downloadables =
-            networkstringtable->FindTable( "downloadables" );
-        int resourceFileCount = ResourcesGetFilesCount();
-
-        for ( int i = 0; i < resourceFileCount; i++ )
-        {
-            const char *resourceFile = ResourcesGetFile( i );
-            downloadables->AddString( true, resourceFile, -1 );
-        }
-
-        ResourcesFreeFiles();
-
-        // Load the Lua cache files (zipped) into the downloadables table
-        lcf_preparecachefile();
-    }
 #endif
 
     ResetWindspeed();

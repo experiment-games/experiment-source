@@ -1756,24 +1756,6 @@ void CHLClient::LevelInitPreEntity( char const *pMapName )
 
     luasrc_init();
 
-    if ( gpGlobals->maxClients > 1 )
-    {
-        luasrc_dofolder( L, LUA_PATH_CACHE LUA_PATH_AUTOLOAD_SHARED );
-        luasrc_dofolder( L, LUA_PATH_CACHE LUA_PATH_AUTOLOAD_CLIENT );
-    }
-
-    luasrc_dofile( L, LUA_PATH_INCLUDES_INIT_FILE );
-    luasrc_dofolder( L, LUA_PATH_AUTOLOAD_SHARED );
-    luasrc_dofolder( L, LUA_PATH_AUTOLOAD_CLIENT );
-
-    luasrc_LoadWeapons();
-    luasrc_LoadEntities();
-    // luasrc_LoadEffects();
-
-    luasrc_LoadGamemode( LUA_BASE_GAMEMODE );
-    luasrc_LoadGamemode( gamemode.GetString() );
-    luasrc_SetGamemode( gamemode.GetString() );
-
     LUA_CALL_HOOK_BEGIN( "LevelInitPreEntity", "Before loading entities, making the level name known." );
     lua_pushstring( L, pMapName ); // doc: levelName
     LUA_CALL_HOOK_END( 1, 0 );

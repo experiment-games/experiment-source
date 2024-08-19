@@ -163,16 +163,18 @@ LUA_BINDING_BEGIN( Files, EndOfFile, "library", "Check if the end of a file has 
 }
 LUA_BINDING_END( "boolean", "true if the end of the file has been reached, false otherwise." )
 
-LUA_BINDING_BEGIN( Files, FileExists, "library", "Check if a file exists." )
+LUA_BINDING_BEGIN( Files, FileExists, "library", "Check if the file or directory exists." )
 {
     const char *filePath = LUA_BINDING_ARGUMENT( luaL_checkstring, 1, "path" );
     const char *pathId = LUA_BINDING_ARGUMENT_WITH_DEFAULT( luaL_optstring, 2, 0, "pathId" );
 
-    lua_pushboolean( L, filesystem->FileExists( filePath, pathId ) );
+    lua_pushboolean( L,
+        filesystem->FileExists( filePath, pathId )
+        || filesystem->IsDirectory( filePath, pathId ) );
 
     return 1;
 }
-LUA_BINDING_END( "boolean", "true if the file exists, false otherwise." )
+LUA_BINDING_END( "boolean", "true if the file or directory exists, false otherwise." )
 
 LUA_BINDING_BEGIN( Files, Flush, "library", "Flush a file." )
 {

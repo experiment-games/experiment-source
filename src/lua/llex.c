@@ -317,6 +317,39 @@ static void read_long_string (LexState *ls, SemInfo *seminfo, size_t sep) {
                                      luaZ_bufflen(ls->buff) - 2 * sep);
 }
 
+// Experiment; C-style multi-line comment: /* long */
+static void read_long_c_comment(LexState *ls) {
+    int line = ls->linenumber;  /* initial line (for error message) */
+    save_and_next(ls);  /* skip '*' */
+    for (;;) {
+        switch (ls->current) {
+        case EOZ: {  /* error */
+            const char *msg = luaO_pushfstring(ls->L,
+                "unfinished long comment (starting at line %d)", line);
+            lexerror(ls, msg, TK_EOS);
+            break;  /* to avoid warnings */
+        }
+        case '*': {
+            save_and_next(ls);  /* skip '*' */
+            if (ls->current == '/') {
+                save_and_next(ls);  /* skip '/' */
+                goto endloop;
+            }
+            break;
+        }
+        case '\n': case '\r': {
+            save(ls, '\n');
+            inclinenumber(ls);
+            break;
+        }
+        default: {
+            save_and_next(ls);
+        }
+        }
+    } endloop:
+    return;
+    //luaZ_buffremove(ls->buff, 2);  /* remove saved chars from buffer */
+}
 
 static void esccheck (LexState *ls, int c, const char *msg) {
   if (!c) {
@@ -564,25 +597,11 @@ static int llex (LexState *ls, SemInfo *seminfo) {
           break;
         }
         else if (check_next1(ls, '*')) {  /* multi-line comment */
-          int level = 1;
-          next(ls);  /* skip '*' */
-          while (level > 0) {
-            if (ls->current == EOZ)
-              lexerror(ls, "unfinished long comment", TK_EOS);
-            else if (ls->current == '\n' || ls->current == '\r')
-              inclinenumber(ls);
-            else if (ls->current == '/' && check_next1(ls, '*')) {
-              next(ls);  /* skip '*' */
-              level++;
-            }
-            else if (ls->current == '*' && check_next1(ls, '/')) {
-              next(ls);  /* skip '/' */
-              level--;
-            }
-            else
-              next(ls);
-          }
-          break;
+            //next(ls);  /* skip '*' */
+            //luaZ_resetbuffer( ls->buff );
+            read_long_c_comment( ls ); /* skip long comment */
+            luaZ_resetbuffer( ls->buff ); /* previous call may dirty the buff. */
+            break;
         }
         else
           return '/';

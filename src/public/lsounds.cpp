@@ -147,7 +147,7 @@ LUA_BINDING_BEGIN( Sounds, Add, "library", "Creates a sound script." )
     else
         parameters.SetSoundLevel( SNDLVL_NORM );
     lua_pop( L, 1 );  // pop the level value
-    
+
     GET_FIELD_WITH_COMPATIBILITY( L, 1, "Volume", "volume" );
     if ( lua_isnumber( L, -1 ) )
         parameters.SetVolume( luaL_checknumber( L, -1 ) );
@@ -184,11 +184,46 @@ LUA_BINDING_BEGIN( Sounds, Add, "library", "Creates a sound script." )
     else if ( lua_isnumber( L, -1 ) )
     {
         parameters.SetPitch( luaL_checknumber( L, -1 ), 0 );
-    } 
-    else 	{
-		parameters.SetPitch( 100, 0 );
-	}
+    }
+    else
+    {
+        parameters.SetPitch( 100, 0 );
+    }
     lua_pop( L, 1 );  // pop the pitch value
+
+    GET_FIELD_WITH_COMPATIBILITY( L, 1, "Sound", "sound" );
+    if ( lua_istable( L, -1 ) )
+    {
+        // Loop through the table and add each sound file
+        lua_pushnil( L );
+
+        while ( lua_next( L, -2 ) != 0 )
+        {
+            if ( lua_isstring( L, -1 ) )
+            {
+                CUtlSymbol soundSymbol = soundemitterbase->AddWaveName( luaL_checkstring( L, -1 ) );
+                SoundFile soundFile;
+                soundFile.symbol = soundSymbol;
+                soundFile.gender = GENDER_NONE;
+                parameters.AddSoundName( soundFile );
+            }
+            lua_pop( L, 1 );
+        }
+    }
+    else if ( lua_isstring( L, -1 ) )
+    {
+        CUtlSymbol soundSymbol = soundemitterbase->AddWaveName( luaL_checkstring( L, -1 ) );
+        SoundFile soundFile;
+        soundFile.symbol = soundSymbol;
+        soundFile.gender = GENDER_NONE;
+        parameters.AddSoundName( soundFile );
+    }
+    else
+    {
+        luaL_argerror( L, 1, "expected field 'sound' to be a string or table of strings" );
+        return 0;
+    }
+    lua_pop( L, 1 );  // pop the sound value
 
     // TODO: Check if the file needs to exist, or if we can just create a sound script without a file
     soundemitterbase->AddSound( name, "scripts/sounds/lua_procedural.txt", parameters );

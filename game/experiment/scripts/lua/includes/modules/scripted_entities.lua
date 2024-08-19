@@ -21,7 +21,7 @@ function MODULE.Get(className)
 		local baseEntityTable = MODULE.Get(foundEntity.Base)
 
 		if (not baseEntityTable) then
-			debug.PrintWarning("WARNING: Attempted to initialize entity \"" .. className .. "\" with non-existing base class!\n")
+			debug.PrintWarning("WARNING: Attempted to initialize entity \"" .. className .. "\" with non-existing base class \"" .. tostring(foundEntity.Base) .. "\"!\n")
 		else
 			return table.Inherit(foundEntity, baseEntityTable)
 		end

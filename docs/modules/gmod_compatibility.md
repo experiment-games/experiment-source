@@ -19,7 +19,7 @@ with Garry's Mod is implemented in the following ways:
 - This module renames and reimplements some Garry's Mod functions
 - Where Garry's Mod has a `lua` folder Experiment places lua scripts in
   `scripts/lua`.
-- Instead of `lua/autorun` we use `scripts/lua/autorun` for scripts that should
+- Instead of `lua/autorun` we use `scripts/lua/auto_load` for scripts that should
   run automatically.
 - This module loads scripts in the Garry's Mod addons `lua/` folder after it has
   setup compatibility with Garry's Mod.

@@ -40,9 +40,9 @@
 
 #define LUA_PATH_INCLUDES LUA_ROOT "\\includes"
 #define LUA_PATH_INCLUDES_INIT_FILE LUA_PATH_INCLUDES "\\sh_init.lua"
-#define LUA_PATH_AUTOLOAD_CLIENT LUA_ROOT "\\autoload\\client"
-#define LUA_PATH_AUTOLOAD_SERVER LUA_ROOT "\\autoload\\server"
-#define LUA_PATH_AUTOLOAD_SHARED LUA_ROOT "\\autoload\\shared"
+#define LUA_PATH_AUTO_LOAD_CLIENT LUA_ROOT "\\auto_load\\client"
+#define LUA_PATH_AUTO_LOAD_SERVER LUA_ROOT "\\auto_load\\server"
+#define LUA_PATH_AUTO_LOAD_SHARED LUA_ROOT "\\auto_load\\shared"
 #define LUA_PATH_EFFECTS LUA_ROOT "\\effects"
 #define LUA_PATH_ENTITIES LUA_ROOT "\\entities"
 #define LUA_PATH_GAMEUI LUA_ROOT "\\gameui"
@@ -52,7 +52,7 @@
 
 #define LUA_BASE_ENTITY_CLASS "prop_scripted"
 #define LUA_BASE_ENTITY_FACTORY "CBaseAnimating"
-#define LUA_BASE_WEAPON "weapon_experimentbase_scriptedweapon"
+#define LUA_BASE_WEAPON "weapon_experiment_base_scripted"
 #define LUA_BASE_GAMEMODE "super"
 
 #define LUA_MAX_WEAPON_ACTIVITIES 32
@@ -629,10 +629,6 @@ LUA_API void( luasrc_dumpstack )( lua_State *L );
 
 void luasrc_add_to_package_path( lua_State *L, const char *searchPath, bool isPathC = false );
 void luasrc_remove_from_package_path( lua_State *L, const char *searchPath, bool isPathC = false );
-
-// void    luasrc_LoadEffects (const char *path = 0);
-void luasrc_LoadEntities( const char *path = 0 );
-void luasrc_LoadWeapons( const char *path = 0 );
 
 bool luasrc_LoadGamemode( const char *gamemode );
 bool luasrc_SetGamemode( const char *gamemode );

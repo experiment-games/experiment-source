@@ -70,6 +70,7 @@ Additionally, we use the following conventions:
     - `Aabb` (short for axis-aligned bounding box)
     - `Api`
     - `App` (short for application)
+    - `Auto` (short for automatic)
     - `Config`
     - `Demo`
     - `Dev`

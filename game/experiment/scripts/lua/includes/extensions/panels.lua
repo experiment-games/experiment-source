@@ -64,7 +64,7 @@ function Panels.Register(panelTable, panelName, baseClassName)
     if (Panels[baseClassName] == nil) then
         error(
         "attempt to register panel class \"" ..
-        tostring(panelName) .. "\" with non-existing base class \"" .. tostring(baseClassName) .. "\"", 2)
+        tostring(panelName) .. "\" with non-existing base class \"" .. tostring(baseClassName) .. "\"!", 2)
     end
 
 	panelTable.ClassName = panelName
@@ -97,7 +97,7 @@ function Panels.RegisterWithMetatable(panelTable, panelName, baseClassName)
                 if (Panels[baseClassName] == nil) then
                     error(
                         "attempt to register panel class \"" ..
-                        tostring(panelName) .. "\" with non-existing base class \"" .. tostring(baseClassName) .. "\"", 2)
+                        tostring(panelName) .. "\" with non-existing base class \"" .. tostring(baseClassName) .. "\"!", 2)
                 end
 
                 return Panels[baseClassName]
