@@ -439,19 +439,21 @@ void RecvProxy_EffectFlags( const CRecvProxyData *pData, void *pStruct, void *pO
     ( ( C_BaseEntity * )pStruct )->SetEffects( pData->m_Value.m_Int );
 }
 
+// clang-format off
+
 BEGIN_RECV_TABLE_NOBASE( C_BaseEntity, DT_AnimTimeMustBeFirst )
-RecvPropInt( RECVINFO( m_flAnimTime ), 0, RecvProxy_AnimTime ),
-    END_RECV_TABLE()
+    RecvPropInt( RECVINFO( m_flAnimTime ), 0, RecvProxy_AnimTime ),
+END_RECV_TABLE()
 
 #ifndef NO_ENTITY_PREDICTION
-        BEGIN_RECV_TABLE_NOBASE( C_BaseEntity, DT_PredictableId )
-            RecvPropPredictableId( RECVINFO( m_PredictableID ) ),
+BEGIN_RECV_TABLE_NOBASE( C_BaseEntity, DT_PredictableId )
+    RecvPropPredictableId( RECVINFO( m_PredictableID ) ),
     RecvPropInt( RECVINFO( m_bIsPlayerSimulated ) ),
-    END_RECV_TABLE()
+END_RECV_TABLE()
 #endif
 
-        BEGIN_RECV_TABLE_NOBASE( C_BaseEntity, DT_BaseEntity )
-            RecvPropDataTable( "AnimTimeMustBeFirst", 0, 0, &REFERENCE_RECV_TABLE( DT_AnimTimeMustBeFirst ) ),
+BEGIN_RECV_TABLE_NOBASE( C_BaseEntity, DT_BaseEntity )
+    RecvPropDataTable( "AnimTimeMustBeFirst", 0, 0, &REFERENCE_RECV_TABLE( DT_AnimTimeMustBeFirst ) ),
     RecvPropInt( RECVINFO( m_flSimulationTime ), 0, RecvProxy_SimulationTime ),
     RecvPropInt( RECVINFO( m_ubInterpolationFrame ) ),
 
@@ -487,24 +489,23 @@ RecvPropInt( RECVINFO( m_flAnimTime ), 0, RecvProxy_AnimTime ),
 #if !defined( NO_ENTITY_PREDICTION )
     RecvPropDataTable( "predictable_id", 0, 0, &REFERENCE_RECV_TABLE( DT_PredictableId ) ),
 #endif
-
+    
     RecvPropInt( RECVINFO( m_bSimulatedEveryTick ), 0, RecvProxy_InterpolationAmountChanged ),
     RecvPropInt( RECVINFO( m_bAnimatedEveryTick ), 0, RecvProxy_InterpolationAmountChanged ),
     RecvPropBool( RECVINFO( m_bAlternateSorting ) ),
 
 #ifdef TF_CLIENT_DLL
     RecvPropArray3( RECVINFO_ARRAY( m_nModelIndexOverrides ),
-                    RecvPropInt( RECVINFO( m_nModelIndexOverrides[0] ) ) ),
+    RecvPropInt( RECVINFO( m_nModelIndexOverrides[0] ) ) ),
 #endif
+END_RECV_TABLE()
 
-    END_RECV_TABLE()
-
-        const float coordTolerance = 2.0f / ( float )( 1 << COORD_FRACTIONAL_BITS );
+const float coordTolerance = 2.0f / ( float )( 1 << COORD_FRACTIONAL_BITS );
 
 BEGIN_PREDICTION_DATA_NO_BASE( C_BaseEntity )
 
-// These have a special proxy to handle send/receive
-DEFINE_PRED_TYPEDESCRIPTION( m_Collision, CCollisionProperty ),
+    // These have a special proxy to handle send/receive
+    DEFINE_PRED_TYPEDESCRIPTION( m_Collision, CCollisionProperty ),
 
     DEFINE_PRED_FIELD( m_MoveType, FIELD_CHARACTER, FTYPEDESC_INSENDTABLE ),
     DEFINE_PRED_FIELD( m_MoveCollide, FIELD_CHARACTER, FTYPEDESC_INSENDTABLE ),
@@ -558,35 +559,36 @@ DEFINE_PRED_TYPEDESCRIPTION( m_Collision, CCollisionProperty ),
     DEFINE_FIELD( m_flGravity, FIELD_FLOAT ),
     //	DEFINE_FIELD( m_ModelInstance, FIELD_SHORT ),
     DEFINE_FIELD( m_flProxyRandomValue, FIELD_FLOAT ),
-//	DEFINE_FIELD( m_PredictableID, FIELD_INTEGER ),
-//	DEFINE_FIELD( m_pPredictionContext, FIELD_POINTER ),
-// Stuff specific to rendering and therefore not to be copied back and forth
-// DEFINE_PRED_FIELD( m_clrRender, color32, FTYPEDESC_INSENDTABLE  ),
-// DEFINE_FIELD( m_bReadyToDraw, FIELD_BOOLEAN ),
-// DEFINE_FIELD( anim, CLatchedAnim ),
-// DEFINE_FIELD( mouth, CMouthInfo ),
-// DEFINE_FIELD( GetAbsOrigin(), FIELD_VECTOR ),
-// DEFINE_FIELD( GetAbsAngles(), FIELD_VECTOR ),
-// DEFINE_FIELD( m_nNumAttachments, FIELD_SHORT ),
-// DEFINE_FIELD( m_pAttachmentAngles, FIELD_VECTOR ),
-// DEFINE_FIELD( m_pAttachmentOrigin, FIELD_VECTOR ),
-// DEFINE_FIELD( m_listentry, CSerialEntity ),
-// DEFINE_FIELD( m_ShadowHandle, ClientShadowHandle_t ),
-// DEFINE_FIELD( m_hThink, ClientThinkHandle_t ),
-// Definitely private and not copied around
-// DEFINE_FIELD( m_bPredictable, FIELD_BOOLEAN ),
-// DEFINE_FIELD( m_CollisionGroup, FIELD_INTEGER ),
-// DEFINE_FIELD( m_DataChangeEventRef, FIELD_INTEGER ),
+    //	DEFINE_FIELD( m_PredictableID, FIELD_INTEGER ),
+    //	DEFINE_FIELD( m_pPredictionContext, FIELD_POINTER ),
+    // Stuff specific to rendering and therefore not to be copied back and forth
+    // DEFINE_PRED_FIELD( m_clrRender, color32, FTYPEDESC_INSENDTABLE  ),
+    // DEFINE_FIELD( m_bReadyToDraw, FIELD_BOOLEAN ),
+    // DEFINE_FIELD( anim, CLatchedAnim ),
+    // DEFINE_FIELD( mouth, CMouthInfo ),
+    // DEFINE_FIELD( GetAbsOrigin(), FIELD_VECTOR ),
+    // DEFINE_FIELD( GetAbsAngles(), FIELD_VECTOR ),
+    // DEFINE_FIELD( m_nNumAttachments, FIELD_SHORT ),
+    // DEFINE_FIELD( m_pAttachmentAngles, FIELD_VECTOR ),
+    // DEFINE_FIELD( m_pAttachmentOrigin, FIELD_VECTOR ),
+    // DEFINE_FIELD( m_listentry, CSerialEntity ),
+    // DEFINE_FIELD( m_ShadowHandle, ClientShadowHandle_t ),
+    // DEFINE_FIELD( m_hThink, ClientThinkHandle_t ),
+    // Definitely private and not copied around
+    // DEFINE_FIELD( m_bPredictable, FIELD_BOOLEAN ),
+    // DEFINE_FIELD( m_CollisionGroup, FIELD_INTEGER ),
+    // DEFINE_FIELD( m_DataChangeEventRef, FIELD_INTEGER ),
 #if !defined( CLIENT_DLL )
-// DEFINE_FIELD( m_bPredictionEligible, FIELD_BOOLEAN ),
+    // DEFINE_FIELD( m_bPredictionEligible, FIELD_BOOLEAN ),
 #endif
-    END_PREDICTION_DATA()
+END_PREDICTION_DATA()
 
-    //-----------------------------------------------------------------------------
-    // Helper functions.
-    //-----------------------------------------------------------------------------
+static void* WORKAROUND_NASTY_FORMATTING_BUG;  // clang-format on
 
-    void SpewInterpolatedVar( CInterpolatedVar< Vector > *pVar )
+//-----------------------------------------------------------------------------
+// Helper functions.
+//-----------------------------------------------------------------------------
+void SpewInterpolatedVar( CInterpolatedVar< Vector > *pVar )
 {
     Msg( "--------------------------------------------------\n" );
     int i = pVar->GetHead();
@@ -1015,7 +1017,7 @@ C_BaseEntity::~C_BaseEntity()
     RemoveFromTeleportList();
 
 #ifdef LUA_SDK
-    if( L )
+    if ( L )
         lua_unref( L, m_nTableReference );
 #endif
 }

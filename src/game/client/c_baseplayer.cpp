@@ -196,17 +196,18 @@ void RecvProxy_ObserverMode( const CRecvProxyData *pData, void *pStruct, void *p
 // --------------------------------------------------------------------------------
 // // RecvTable for CPlayerState.
 // --------------------------------------------------------------------------------
-// //
+
+// clang-format off
 
 BEGIN_RECV_TABLE_NOBASE( CPlayerState, DT_PlayerState )
-RecvPropInt( RECVINFO( deadflag ) ),
-    END_RECV_TABLE()
+    RecvPropInt( RECVINFO( deadflag ) ),
+END_RECV_TABLE()
 
-        BEGIN_RECV_TABLE_NOBASE( CPlayerLocalData, DT_Local )
-            RecvPropArray3( RECVINFO_ARRAY( m_chAreaBits ),
-                            RecvPropInt( RECVINFO( m_chAreaBits[0] ) ) ),
+BEGIN_RECV_TABLE_NOBASE( CPlayerLocalData, DT_Local )
+    RecvPropArray3( RECVINFO_ARRAY( m_chAreaBits ),
+    RecvPropInt( RECVINFO( m_chAreaBits[0] ) ) ),
     RecvPropArray3( RECVINFO_ARRAY( m_chAreaPortalBits ),
-                    RecvPropInt( RECVINFO( m_chAreaPortalBits[0] ) ) ),
+    RecvPropInt( RECVINFO( m_chAreaPortalBits[0] ) ) ),
     RecvPropInt( RECVINFO( m_iHideHUD ) ),
 
     // View
@@ -221,17 +222,17 @@ RecvPropInt( RECVINFO( deadflag ) ),
 
 #if PREDICTION_ERROR_CHECK_LEVEL > 1
     RecvPropFloat( RECVINFO_NAME( m_vecPunchAngle.m_Value[0],
-                                  m_vecPunchAngle[0] ) ),
+    m_vecPunchAngle[0] ) ),
     RecvPropFloat( RECVINFO_NAME( m_vecPunchAngle.m_Value[1],
-                                  m_vecPunchAngle[1] ) ),
+    m_vecPunchAngle[1] ) ),
     RecvPropFloat( RECVINFO_NAME( m_vecPunchAngle.m_Value[2],
-                                  m_vecPunchAngle[2] ) ),
+    m_vecPunchAngle[2] ) ),
     RecvPropFloat( RECVINFO_NAME( m_vecPunchAngleVel.m_Value[0],
-                                  m_vecPunchAngleVel[0] ) ),
+    m_vecPunchAngleVel[0] ) ),
     RecvPropFloat( RECVINFO_NAME( m_vecPunchAngleVel.m_Value[1],
-                                  m_vecPunchAngleVel[1] ) ),
+    m_vecPunchAngleVel[1] ) ),
     RecvPropFloat( RECVINFO_NAME( m_vecPunchAngleVel.m_Value[2],
-                                  m_vecPunchAngleVel[2] ) ),
+    m_vecPunchAngleVel[2] ) ),
 #else
     RecvPropVector( RECVINFO( m_vecPunchAngle ) ),
     RecvPropVector( RECVINFO( m_vecPunchAngleVel ) ),
@@ -272,16 +273,16 @@ RecvPropInt( RECVINFO( deadflag ) ),
     RecvPropInt( RECVINFO( m_audio.soundscapeIndex ) ),
     RecvPropInt( RECVINFO( m_audio.localBits ) ),
     RecvPropEHandle( RECVINFO( m_audio.ent ) ),
-    END_RECV_TABLE()
+END_RECV_TABLE()
 
-    // --------------------------------------------------------------------------------
-    // // This data only gets sent to clients that ARE this player entity.
-    // --------------------------------------------------------------------------------
-    // //
+// --------------------------------------------------------------------------------
+// // This data only gets sent to clients that ARE this player entity.
+// --------------------------------------------------------------------------------
+// //
 
-    BEGIN_RECV_TABLE_NOBASE( C_BasePlayer, DT_LocalPlayerExclusive )
+BEGIN_RECV_TABLE_NOBASE( C_BasePlayer, DT_LocalPlayerExclusive )
 
-        RecvPropDataTable( RECVINFO_DT( m_Local ), 0, &REFERENCE_RECV_TABLE( DT_Local ) ),
+    RecvPropDataTable( RECVINFO_DT( m_Local ), 0, &REFERENCE_RECV_TABLE( DT_Local ) ),
 
     RecvPropFloat( RECVINFO( m_vecViewOffset[0] ) ),
     RecvPropFloat( RECVINFO( m_vecViewOffset[1] ) ),
@@ -314,7 +315,7 @@ RecvPropInt( RECVINFO( deadflag ) ),
     RecvPropInt( RECVINFO( m_nWaterLevel ) ),
     RecvPropFloat( RECVINFO( m_flLaggedMovementValue ) ),
 
-    END_RECV_TABLE()
+END_RECV_TABLE()
 
 // --------------------------------------------------------------------------------
 // // DT_BasePlayer datatable.
@@ -322,13 +323,13 @@ RecvPropInt( RECVINFO( deadflag ) ),
 // //
 
 #if defined USES_ECON_ITEMS
-        EXTERN_RECV_TABLE( DT_AttributeList );
+EXTERN_RECV_TABLE( DT_AttributeList );
 #endif
 
 IMPLEMENT_CLIENTCLASS_DT( C_BasePlayer, DT_BasePlayer, CBasePlayer )
-// We have both the local and nonlocal data in here, but the server proxies
-// only send one.
-RecvPropDataTable( "localdata", 0, 0, &REFERENCE_RECV_TABLE( DT_LocalPlayerExclusive ) ),
+    // We have both the local and nonlocal data in here, but the server proxies
+    // only send one.
+    RecvPropDataTable( "localdata", 0, 0, &REFERENCE_RECV_TABLE( DT_LocalPlayerExclusive ) ),
 
 #if defined USES_ECON_ITEMS
     RecvPropDataTable( RECVINFO_DT( m_AttributeList ), 0, &REFERENCE_RECV_TABLE( DT_AttributeList ) ),
@@ -364,25 +365,25 @@ RecvPropDataTable( "localdata", 0, 0, &REFERENCE_RECV_TABLE( DT_LocalPlayerExclu
 
 #if defined USES_ECON_ITEMS
     RecvPropUtlVector( RECVINFO_UTLVECTOR( m_hMyWearables ),
-                       MAX_WEARABLES_SENT_FROM_SERVER,
-                       RecvPropEHandle( NULL, 0, 0 ) ),
+    MAX_WEARABLES_SENT_FROM_SERVER,
+    RecvPropEHandle( NULL, 0, 0 ) ),
 #endif
 
     RecvPropEHandle( RECVINFO( m_hHandsEntity ) ),
 
-    END_RECV_TABLE()
+END_RECV_TABLE()
 
-        BEGIN_PREDICTION_DATA_NO_BASE( CPlayerState )
+BEGIN_PREDICTION_DATA_NO_BASE( CPlayerState )
 
-            DEFINE_PRED_FIELD( deadflag, FIELD_BOOLEAN, FTYPEDESC_INSENDTABLE ),
+    DEFINE_PRED_FIELD( deadflag, FIELD_BOOLEAN, FTYPEDESC_INSENDTABLE ),
     // DEFINE_FIELD( netname, string_t ),
     // DEFINE_FIELD( fixangle, FIELD_INTEGER ),
     // DEFINE_FIELD( anglechange, FIELD_FLOAT ),
     // DEFINE_FIELD( v_angle, FIELD_VECTOR ),
 
-    END_PREDICTION_DATA()
+END_PREDICTION_DATA()
 
-        BEGIN_PREDICTION_DATA_NO_BASE( CPlayerLocalData )
+BEGIN_PREDICTION_DATA_NO_BASE( CPlayerLocalData )
 
     // DEFINE_PRED_TYPEDESCRIPTION( m_skybox3d, sky3dparams_t ),
     // DEFINE_PRED_TYPEDESCRIPTION( m_fog, fogparams_t ),
@@ -415,9 +416,9 @@ RecvPropDataTable( "localdata", 0, 0, &REFERENCE_RECV_TABLE( DT_LocalPlayerExclu
     DEFINE_PRED_FIELD( m_flStepSize, FIELD_FLOAT, FTYPEDESC_INSENDTABLE ),
     DEFINE_FIELD( m_flFOVRate, FIELD_FLOAT ),
 
-    END_PREDICTION_DATA()
+END_PREDICTION_DATA()
 
-    BEGIN_PREDICTION_DATA( C_BasePlayer )
+BEGIN_PREDICTION_DATA( C_BasePlayer )
 
     DEFINE_PRED_TYPEDESCRIPTION( m_Local, CPlayerLocalData ),
     DEFINE_PRED_TYPEDESCRIPTION( pl, CPlayerState ),
@@ -472,9 +473,11 @@ RecvPropDataTable( "localdata", 0, 0, &REFERENCE_RECV_TABLE( DT_LocalPlayerExclu
 
     DEFINE_FIELD( m_surfaceFriction, FIELD_FLOAT ),
 
-    END_PREDICTION_DATA()
+END_PREDICTION_DATA()
 
-        LINK_ENTITY_TO_CLASS( player, C_BasePlayer );
+LINK_ENTITY_TO_CLASS( player, C_BasePlayer );
+
+// clang-format on
 
 // --------------------------------------------------------------------------------
 // // Functions.

@@ -157,23 +157,26 @@ void *SendProxy_ClientSideAnimation( const SendProp *pProp, const void *pStruct,
     else
         return NULL;  // Don't send animtime unless the client needs it.
 }
+
+// clang-format off
+
 REGISTER_SEND_PROXY_NON_MODIFIED_POINTER( SendProxy_ClientSideAnimation );
 
 BEGIN_SEND_TABLE_NOBASE( CBaseEntity, DT_AnimTimeMustBeFirst )
-// NOTE:  Animtime must be sent before origin and angles ( from pev ) because it has a
-//  proxy on the client that stores off the old values before writing in the new values and
-//  if it is sent after the new values, then it will only have the new origin and studio model, etc.
-//  interpolation will be busted
-SendPropInt( SENDINFO( m_flAnimTime ), 8, SPROP_UNSIGNED | SPROP_CHANGES_OFTEN | SPROP_ENCODED_AGAINST_TICKCOUNT, SendProxy_AnimTime ),
-    END_SEND_TABLE()
+    // NOTE:  Animtime must be sent before origin and angles ( from pev ) because it has a
+    //  proxy on the client that stores off the old values before writing in the new values and
+    //  if it is sent after the new values, then it will only have the new origin and studio model, etc.
+    //  interpolation will be busted
+    SendPropInt( SENDINFO( m_flAnimTime ), 8, SPROP_UNSIGNED | SPROP_CHANGES_OFTEN | SPROP_ENCODED_AGAINST_TICKCOUNT, SendProxy_AnimTime ),
+END_SEND_TABLE()
 
 #if !defined( NO_ENTITY_PREDICTION )
-        BEGIN_SEND_TABLE_NOBASE( CBaseEntity, DT_PredictableId )
-            SendPropPredictableId( SENDINFO( m_PredictableID ) ),
+BEGIN_SEND_TABLE_NOBASE( CBaseEntity, DT_PredictableId )
+    SendPropPredictableId( SENDINFO( m_PredictableID ) ),
     SendPropInt( SENDINFO( m_bIsPlayerSimulated ), 1, SPROP_UNSIGNED ),
-    END_SEND_TABLE()
+END_SEND_TABLE()
 
-        static void *SendProxy_SendPredictableId( const SendProp *pProp, const void *pStruct, const void *pVarData, CSendProxyRecipients *pRecipients, int objectID )
+static void *SendProxy_SendPredictableId( const SendProp *pProp, const void *pStruct, const void *pVarData, CSendProxyRecipients *pRecipients, int objectID )
 {
     CBaseEntity *pEntity = ( CBaseEntity * )pStruct;
     if ( !pEntity || !pEntity->m_PredictableID->IsActive() )
@@ -186,6 +189,8 @@ SendPropInt( SENDINFO( m_flAnimTime ), 8, SPROP_UNSIGNED | SPROP_CHANGES_OFTEN |
 }
 REGISTER_SEND_PROXY_NON_MODIFIED_POINTER( SendProxy_SendPredictableId );
 #endif
+
+static void* WORKAROUND_NASTY_FORMATTING_BUG;  // clang-format on
 
 void SendProxy_Origin( const SendProp *pProp, const void *pStruct, const void *pData, DVariant *pOut, int iElement, int objectID )
 {
@@ -258,9 +263,11 @@ void SendProxy_Angles( const SendProp *pProp, const void *pStruct, const void *p
     pOut->m_Vector[2] = anglemod( a->z );
 }
 
+// clang-format off
+
 // This table encodes the CBaseEntity data.
 IMPLEMENT_SERVERCLASS_ST_NOBASE( CBaseEntity, DT_BaseEntity )
-SendPropDataTable( "AnimTimeMustBeFirst", 0, &REFERENCE_SEND_TABLE( DT_AnimTimeMustBeFirst ), SendProxy_ClientSideAnimation ),
+    SendPropDataTable( "AnimTimeMustBeFirst", 0, &REFERENCE_SEND_TABLE( DT_AnimTimeMustBeFirst ), SendProxy_ClientSideAnimation ),
     SendPropInt( SENDINFO( m_flSimulationTime ), SIMULATION_TIME_WINDOW_BITS, SPROP_UNSIGNED | SPROP_CHANGES_OFTEN | SPROP_ENCODED_AGAINST_TICKCOUNT, SendProxy_SimulationTime ),
 
 #if PREDICTION_ERROR_CHECK_LEVEL > 1
@@ -308,10 +315,12 @@ SendPropDataTable( "AnimTimeMustBeFirst", 0, &REFERENCE_SEND_TABLE( DT_AnimTimeM
     SendPropArray3( SENDINFO_ARRAY3( m_nModelIndexOverrides ), SendPropInt( SENDINFO_ARRAY( m_nModelIndexOverrides ), SP_MODEL_INDEX_BITS, 0 ) ),
 #endif
 
-    END_SEND_TABLE()
+END_SEND_TABLE()
 
-    // dynamic models
-    class CBaseEntityModelLoadProxy
+static void* WORKAROUND_NASTY_FORMATTING_BUG2;  // clang-format on
+
+// dynamic models
+class CBaseEntityModelLoadProxy
 {
    protected:
     class Handler : public IModelLoadCallback
@@ -1817,26 +1826,28 @@ class CThinkContextsSaveDataOps : public CDefSaveRestoreOps
 CThinkContextsSaveDataOps g_ThinkContextsSaveDataOps;
 ISaveRestoreOps *thinkcontextFuncs = &g_ThinkContextsSaveDataOps;
 
+// clang-format off
+
 BEGIN_SIMPLE_DATADESC( thinkfunc_t )
 
-DEFINE_FIELD( m_iszContext, FIELD_STRING ),
+    DEFINE_FIELD( m_iszContext, FIELD_STRING ),
     // DEFINE_FIELD( m_pfnThink,		FIELD_FUNCTION ),		// Manually written
     DEFINE_FIELD( m_nNextThinkTick, FIELD_TICK ),
     DEFINE_FIELD( m_nLastThinkTick, FIELD_TICK ),
 
-    END_DATADESC()
+END_DATADESC()
 
-        BEGIN_SIMPLE_DATADESC( ResponseContext_t )
+BEGIN_SIMPLE_DATADESC( ResponseContext_t )
 
-            DEFINE_FIELD( m_iszName, FIELD_STRING ),
+    DEFINE_FIELD( m_iszName, FIELD_STRING ),
     DEFINE_FIELD( m_iszValue, FIELD_STRING ),
     DEFINE_FIELD( m_fExpirationTime, FIELD_TIME ),
 
-    END_DATADESC()
+END_DATADESC()
 
-        BEGIN_DATADESC_NO_BASE( CBaseEntity )
+BEGIN_DATADESC_NO_BASE( CBaseEntity )
 
-            DEFINE_KEYFIELD( m_iClassname, FIELD_STRING, "classname" ),
+    DEFINE_KEYFIELD( m_iClassname, FIELD_STRING, "classname" ),
     DEFINE_GLOBAL_KEYFIELD( m_iGlobalname, FIELD_STRING, "globalname" ),
     DEFINE_KEYFIELD( m_iParent, FIELD_STRING, "parentname" ),
 
@@ -1857,8 +1868,9 @@ DEFINE_FIELD( m_iszContext, FIELD_STRING ),
     DEFINE_KEYFIELD( m_clrRender, FIELD_COLOR32, "rendercolor" ),
     DEFINE_GLOBAL_KEYFIELD( m_nModelIndex, FIELD_SHORT, "modelindex" ),
 #if !defined( NO_ENTITY_PREDICTION )
-// DEFINE_FIELD( m_PredictableID, CPredictableId ),
+    // DEFINE_FIELD( m_PredictableID, CPredictableId ),
 #endif
+
     DEFINE_FIELD( touchStamp, FIELD_INTEGER ),
     DEFINE_CUSTOM_FIELD( m_aThinkFunctions, thinkcontextFuncs ),
     //								m_iCurrentThinkContext (not saved, debug field only, and think transient to boot)
@@ -1951,8 +1963,8 @@ DEFINE_FIELD( m_iszContext, FIELD_STRING ),
 
     DEFINE_FIELD( m_fFlags, FIELD_INTEGER ),
 #if !defined( NO_ENTITY_PREDICTION )
-//	DEFINE_FIELD( m_bIsPlayerSimulated, FIELD_INTEGER ),
-//	DEFINE_FIELD( m_hPlayerSimulationOwner, FIELD_EHANDLE ),
+    //	DEFINE_FIELD( m_bIsPlayerSimulated, FIELD_INTEGER ),
+    //	DEFINE_FIELD( m_hPlayerSimulationOwner, FIELD_EHANDLE ),
 #endif
     // DEFINE_FIELD( m_pTimedOverlay, TimedOverlay_t* ),
     DEFINE_FIELD( m_nSimulationTick, FIELD_TICK ),
@@ -2021,17 +2033,19 @@ DEFINE_FIELD( m_iszContext, FIELD_STRING ),
 
     DEFINE_FIELD( m_hEffectEntity, FIELD_EHANDLE ),
 
-// DEFINE_FIELD( m_DamageModifiers, FIELD_?? ), // can't save?
-//  DEFINE_FIELD( m_fDataObjectTypes, FIELD_INTEGER ),
+    // DEFINE_FIELD( m_DamageModifiers, FIELD_?? ), // can't save?
+    //  DEFINE_FIELD( m_fDataObjectTypes, FIELD_INTEGER ),
 
 #ifdef TF_DLL
     DEFINE_ARRAY( m_nModelIndexOverrides, FIELD_INTEGER, MAX_VISION_MODES ),
 #endif
 
-    END_DATADESC()
+END_DATADESC()
 
-    // For code error checking
-    extern bool g_bReceivedChainedUpdateOnRemove;
+static void *WORKAROUND_NASTY_FORMATTING_BUG3;  // clang-format on
+
+// For code error checking
+extern bool g_bReceivedChainedUpdateOnRemove;
 
 //-----------------------------------------------------------------------------
 // Purpose: Called just prior to object destruction
