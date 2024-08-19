@@ -44,6 +44,7 @@ void SetupRootSearchPaths( const char *rootPath, lua_State *L )
 
     filesystem->AddSearchPath( contentSearchPath, CONTENT_SEARCH_PATH_LUA, PATH_ADD_TO_TAIL );
 
+    // TODO: We should move this to the lua compatibility module
     // LUA - Lua gmod root directory (for gmod compatibility)
     Q_strncpy( contentSearchPath, rootPath, sizeof( contentSearchPath ) );
     Q_strncat( contentSearchPath, "\\lua\\", sizeof( contentSearchPath ) );
@@ -108,6 +109,7 @@ void RemoveRootSearchPaths( const char *gamePath, lua_State *L )
 
     filesystem->RemoveSearchPath( contentSearchPath );
 
+    // TODO: We should move this to the lua compatibility module
     // LUA - Lua gmod root directory (for gmod compatibility)
     Q_strncpy( contentSearchPath, gamePath, sizeof( contentSearchPath ) );
     Q_strncat( contentSearchPath, "\\lua\\", sizeof( contentSearchPath ) );
