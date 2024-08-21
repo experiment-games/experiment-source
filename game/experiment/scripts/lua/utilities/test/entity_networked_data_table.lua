@@ -32,6 +32,9 @@ if (SERVER) then
 
     client:SetDataTableValue(_E.NETWORK_VARIABLE_TYPE.ANGLE, 0, Angle(1, 2, 3))
     client:SetDataTableValue(_E.NETWORK_VARIABLE_TYPE.ANGLE, 31, Angle(456, 789, 101112))
+
+    client:SetDataTableValue(_E.NETWORK_VARIABLE_TYPE.ENTITY, 0, Entity(0))
+	client:SetDataTableValue(_E.NETWORK_VARIABLE_TYPE.ENTITY, 31, Entity(42))
 end
 
 -- Let's assert that the values are correct.
@@ -53,5 +56,8 @@ assert(client:GetDataTableValue(_E.NETWORK_VARIABLE_TYPE.VECTOR, 31) == Vector(4
 
 assert(client:GetDataTableValue(_E.NETWORK_VARIABLE_TYPE.ANGLE, 0) == Angle(1, 2, 3))
 assert(client:GetDataTableValue(_E.NETWORK_VARIABLE_TYPE.ANGLE, 31) == Angle(456, 789, 101112))
+
+assert(client:GetDataTableValue(_E.NETWORK_VARIABLE_TYPE.ENTITY, 0) == Entity(0))
+assert(client:GetDataTableValue(_E.NETWORK_VARIABLE_TYPE.ENTITY, 31) == Entity(42))
 
 print("All tests passed!")

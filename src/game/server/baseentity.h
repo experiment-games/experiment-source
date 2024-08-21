@@ -413,6 +413,7 @@ class CBaseEntity : public IServerEntity
     CNetworkArray( Vector, m_LuaVariables_Vector, LUA_MAX_NETWORK_VARIABLES );
     CNetworkArray( QAngle, m_LuaVariables_QAngle, LUA_MAX_NETWORK_VARIABLES );
     CNetworkArray( string_t, m_LuaVariables_String, LUA_MAX_NETWORK_VARIABLES_STRING );
+    CNetworkArray( EHANDLE, m_LuaVariables_Entity, LUA_MAX_NETWORK_VARIABLES );
 #endif
 
     // memory handling

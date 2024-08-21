@@ -199,7 +199,7 @@ class C_BaseEntity : public IClientEntity
     Vector m_LuaVariables_Vector[LUA_MAX_NETWORK_VARIABLES];
     QAngle m_LuaVariables_QAngle[LUA_MAX_NETWORK_VARIABLES];
     char m_LuaVariables_String[LUA_MAX_NETWORK_VARIABLES_STRING][DT_MAX_STRING_BUFFERSIZE];
-
+    EHANDLE m_LuaVariables_Entity[LUA_MAX_NETWORK_VARIABLES];
 #endif
 
     static C_BaseEntity *CreatePredictedEntityByName( const char *classname, const char *module, int line, bool persist = false );

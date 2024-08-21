@@ -305,7 +305,7 @@ LUALIB_API int luaopen_SharedEnumerations( lua_State *L )
     lua_pushenum( L, TYPE_VECTOR, "VECTOR" );
     lua_pushenum( L, TYPE_ANGLE, "ANGLE" );
     lua_pushenum( L, TYPE_STRING, "STRING" );
-    // lua_pushenum( L, TYPE_ENTITY, "ENTITY" ); // TODO
+    lua_pushenum( L, TYPE_ENTITY, "ENTITY" );
     LUA_SET_ENUM_LIB_END( L );
 
     return 0;

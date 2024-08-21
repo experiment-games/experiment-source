@@ -608,32 +608,8 @@ enum NETWORK_VARIABLE
     TYPE_VECTOR,
     TYPE_ANGLE,
     TYPE_STRING,
-    // TYPE_ENTITY, //TODO
+    TYPE_ENTITY,
 };
-
-//#define LUA_IMPLEMENT_NETWORK_VARIABLE_EXTENDED( Type, Name, Maximum ) \
-//   protected:                                                          \
-//    Type m_LuaVariables_##Name##[Maximum];                             \
-//                                                                       \
-//   public:                                                             \
-//    void SetLuaNetworkVariable_##Name##( int iIndex, Type value )      \
-//    {                                                                  \
-//        m_LuaVariables_##Name##[iIndex] = value;                       \
-//    }                                                                  \
-//                                                                       \
-//    Type GetLuaNetworkVariable_##Name##( int iIndex )                  \
-//    {                                                                  \
-//        return m_LuaVariables_##Name##[iIndex];                        \
-//    }
-//
-//#define LUA_IMPLEMENT_NETWORK_VARIABLE( Type ) \
-//    LUA_IMPLEMENT_NETWORK_VARIABLE_EXTENDED( Type, Type, LUA_MAX_NETWORK_VARIABLES )
-//
-//#define LUA_NETWORK_VARIABLE_RECV_ARRAY( Name, RecvPropElementType ) \
-//    RecvPropArray( RecvPropElementType( RECVINFO( m_LuaVariables_##Name##[0] ) ), m_LuaVariables_##Name## )
-//
-//#define LUA_NETWORK_VARIABLE_SEND_ARRAY( Name, SendPropElementType ) \
-//    SendPropArray( SendPropElementType( SENDINFO_ARRAY( m_LuaVariables_##Name##), 0, NULL ), m_LuaVariables_##Name##)
 
 extern ConVar gamemode;
 

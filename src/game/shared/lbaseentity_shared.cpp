@@ -2858,8 +2858,19 @@ LUA_BINDING_BEGIN( Entity, SetDataTableValue, "class", "Sets a data table variab
 #endif
             break;
         }
-        // case TYPE_ENTITY: //TODO
-        //    break;
+        case TYPE_ENTITY:
+        {
+            CBaseEntity *newValueEntity = LUA_BINDING_ARGUMENT( luaL_checkentity, 4, "value" );
+            CBaseEntity::PushLuaInstanceSafe( L, CBaseEntity::Instance( entity->m_LuaVariables_Entity[slot] ) );
+            CBaseEntity::PushLuaInstanceSafe( L, newValueEntity );
+#ifdef CLIENT_DLL
+            entity->m_LuaVariables_Entity[slot] = newValueEntity;
+#else
+            entity->m_LuaVariables_Entity.GetForModify( slot ) = newValueEntity;
+#endif
+
+            break;
+        }
         default:
             luaL_argerror( L, 2, "Invalid type" );
             return 0;
@@ -2914,8 +2925,9 @@ LUA_BINDING_BEGIN( Entity, GetDataTableValue, "class", "Gets a data table variab
             lua_pushstring( L, STRING( entity->m_LuaVariables_String[slot] ) );
 #endif
             break;
-        // case TYPE_ENTITY: //TODO
-        //    break;
+        case TYPE_ENTITY:
+            CBaseEntity::PushLuaInstanceSafe( L, CBaseEntity::Instance( entity->m_LuaVariables_Entity[slot] ) );
+            break;
         default:
             luaL_argerror( L, 2, "Invalid type" );
             return 0;

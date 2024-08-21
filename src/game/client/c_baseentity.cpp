@@ -442,6 +442,7 @@ void RecvProxy_EffectFlags( const CRecvProxyData *pData, void *pStruct, void *pO
 
 #ifdef LUA_SDK // NetworkVariables
 
+// TODO: Find where to call this
 #define LUA_CALL_NETWORK_VARIABLE_CHANGING_HOOK( Entity, Slot, PushFunction, NewValue, OldValue )               \
     LUA_CALL_HOOK_BEGIN( "EntityNetworkVariableChanging", "Called just before a network variable is changed" ); \
     CBaseEntity::PushLuaInstanceSafe( L, Entity );                                                              \
@@ -450,113 +451,108 @@ void RecvProxy_EffectFlags( const CRecvProxyData *pData, void *pStruct, void *pO
     PushFunction( L, OldValue ); /* doc: newValue */                                                            \
     LUA_CALL_HOOK_END( 4, 0 );
 
-//void RecvProxy_LuaVariableElement_bool( const CRecvProxyData *pData, void *pStruct, void *pOut )
-//{
-//    C_BaseEntity *entity = ( C_BaseEntity * )pStruct;
-//    Assert( entity );
-//
-//    bool oldValue = entity->GetLuaNetworkVariable_bool( pData->m_iElement );
-//    LUA_CALL_NETWORK_VARIABLE_CHANGING_HOOK( entity, pData->m_iElement, lua_pushboolean, pData->m_Value.m_Int != 0, oldValue );
-//
-//    entity->SetLuaNetworkVariable_bool( pData->m_iElement, pData->m_Value.m_Int != 0 );
-//}
-//
-//void RecvProxy_LuaVariableElement_int( const CRecvProxyData *pData, void *pStruct, void *pOut )
-//{
-//    C_BaseEntity *entity = ( C_BaseEntity * )pStruct;
-//    Assert( entity );
-//
-//    int oldValue = entity->GetLuaNetworkVariable_int( pData->m_iElement );
-//    LUA_CALL_NETWORK_VARIABLE_CHANGING_HOOK( entity, pData->m_iElement, lua_pushinteger, pData->m_Value.m_Int, oldValue );
-//
-//    entity->SetLuaNetworkVariable_int( pData->m_iElement, pData->m_Value.m_Int );
-//}
-//
-//void RecvProxy_LuaVariableElement_float( const CRecvProxyData *pData, void *pStruct, void *pOut )
-//{
-//    C_BaseEntity *entity = ( C_BaseEntity * )pStruct;
-//    Assert( entity );
-//
-//    float oldValue = entity->GetLuaNetworkVariable_float( pData->m_iElement );
-//    LUA_CALL_NETWORK_VARIABLE_CHANGING_HOOK( entity, pData->m_iElement, lua_pushnumber, pData->m_Value.m_Float, oldValue );
-//
-//    entity->SetLuaNetworkVariable_float( pData->m_iElement, pData->m_Value.m_Float);
-//}
-//
-//void RecvProxy_LuaVariableElement_Vector( const CRecvProxyData *pData, void *pStruct, void *pOut )
-//{
-//    C_BaseEntity *entity = ( C_BaseEntity * )pStruct;
-//    Assert( entity );
-//
-//    Vector oldValue = entity->GetLuaNetworkVariable_Vector( pData->m_iElement );
-//    Vector newValue;
-//    newValue.x = pData->m_Value.m_Vector[0];
-//    newValue.y = pData->m_Value.m_Vector[1];
-//    newValue.z = pData->m_Value.m_Vector[2];
-//    LUA_CALL_NETWORK_VARIABLE_CHANGING_HOOK( entity, pData->m_iElement, lua_pushvector, newValue, oldValue );
-//
-//    entity->SetLuaNetworkVariable_Vector( pData->m_iElement, newValue );
-//}
-//
-//void RecvProxy_LuaVariableElement_QAngle( const CRecvProxyData *pData, void *pStruct, void *pOut )
-//{
-//    C_BaseEntity *entity = ( C_BaseEntity * )pStruct;
-//    Assert( entity );
-//
-//    QAngle oldValue = entity->GetLuaNetworkVariable_QAngle( pData->m_iElement );
-//    QAngle newValue;
-//    newValue.x = pData->m_Value.m_Vector[0];
-//    newValue.y = pData->m_Value.m_Vector[1];
-//    newValue.z = pData->m_Value.m_Vector[2];
-//    LUA_CALL_NETWORK_VARIABLE_CHANGING_HOOK( entity, pData->m_iElement, lua_pushangle, newValue, oldValue );
-//
-//    entity->SetLuaNetworkVariable_QAngle( pData->m_iElement, newValue );
-//}
-//
-//void RecvProxy_LuaVariableElement_String( const CRecvProxyData *pData, void *pStruct, void *pOut )
-//{
-//    C_BaseEntity *entity = ( C_BaseEntity * )pStruct;
-//    Assert( entity );
-//
-//    const char *oldValue = entity->GetLuaNetworkVariable_String( pData->m_iElement );
-//    const char *newValue = strdup(pData->m_Value.m_pString);
-//    LUA_CALL_NETWORK_VARIABLE_CHANGING_HOOK( entity, pData->m_iElement, lua_pushstring, newValue, oldValue );
-//
-//    entity->SetLuaNetworkVariable_String( pData->m_iElement, newValue );
-//}
+void RecvProxy_LuaVariableElement_bool( const CRecvProxyData *pData, void *pStruct, void *pOut )
+{
+    C_BaseEntity *entity = ( C_BaseEntity * )pStruct;
+    Assert( entity );
+
+    bool oldValue = entity->m_LuaVariables_bool[pData->m_iElement];
+    LUA_CALL_NETWORK_VARIABLE_CHANGING_HOOK( entity, pData->m_iElement, lua_pushboolean, pData->m_Value.m_Int != 0, oldValue );
+
+    entity->m_LuaVariables_bool[pData->m_iElement] = pData->m_Value.m_Int != 0;
+}
+
+void RecvProxy_LuaVariableElement_int( const CRecvProxyData *pData, void *pStruct, void *pOut )
+{
+    C_BaseEntity *entity = ( C_BaseEntity * )pStruct;
+    Assert( entity );
+
+    int oldValue = entity->m_LuaVariables_int[pData->m_iElement];
+    LUA_CALL_NETWORK_VARIABLE_CHANGING_HOOK( entity, pData->m_iElement, lua_pushinteger, pData->m_Value.m_Int, oldValue );
+
+    entity->m_LuaVariables_int[pData->m_iElement] = pData->m_Value.m_Int;
+    }
+
+void RecvProxy_LuaVariableElement_float( const CRecvProxyData *pData, void *pStruct, void *pOut )
+{
+    C_BaseEntity *entity = ( C_BaseEntity * )pStruct;
+    Assert( entity );
+
+    float oldValue = entity->m_LuaVariables_float[pData->m_iElement];
+    LUA_CALL_NETWORK_VARIABLE_CHANGING_HOOK( entity, pData->m_iElement, lua_pushnumber, pData->m_Value.m_Float, oldValue );
+
+    entity->m_LuaVariables_float[pData->m_iElement] = pData->m_Value.m_Float;
+}
+
+void RecvProxy_LuaVariableElement_Vector( const CRecvProxyData *pData, void *pStruct, void *pOut )
+{
+    C_BaseEntity *entity = ( C_BaseEntity * )pStruct;
+    Assert( entity );
+
+    Vector oldValue = entity->m_LuaVariables_Vector[pData->m_iElement];
+    Vector newValue;
+    newValue.x = pData->m_Value.m_Vector[0];
+    newValue.y = pData->m_Value.m_Vector[1];
+    newValue.z = pData->m_Value.m_Vector[2];
+    LUA_CALL_NETWORK_VARIABLE_CHANGING_HOOK( entity, pData->m_iElement, lua_pushvector, newValue, oldValue );
+
+    entity->m_LuaVariables_Vector[pData->m_iElement] = newValue;
+}
+
+void RecvProxy_LuaVariableElement_QAngle( const CRecvProxyData *pData, void *pStruct, void *pOut )
+{
+    C_BaseEntity *entity = ( C_BaseEntity * )pStruct;
+    Assert( entity );
+
+    QAngle oldValue = entity->m_LuaVariables_QAngle[pData->m_iElement];
+    QAngle newValue;
+    newValue.x = pData->m_Value.m_Vector[0];
+    newValue.y = pData->m_Value.m_Vector[1];
+    newValue.z = pData->m_Value.m_Vector[2];
+    LUA_CALL_NETWORK_VARIABLE_CHANGING_HOOK( entity, pData->m_iElement, lua_pushangle, newValue, oldValue );
+
+    entity->m_LuaVariables_QAngle[pData->m_iElement] = newValue;
+}
+
+void RecvProxy_LuaVariableElement_String( const CRecvProxyData *pData, void *pStruct, void *pOut )
+{
+    C_BaseEntity *entity = ( C_BaseEntity * )pStruct;
+    Assert( entity );
+
+    const char *oldValue = entity->m_LuaVariables_String[pData->m_iElement];
+    LUA_CALL_NETWORK_VARIABLE_CHANGING_HOOK( entity, pData->m_iElement, lua_pushstring, pData->m_Value.m_pString, oldValue );
+
+    Q_strncpy( entity->m_LuaVariables_String[pData->m_iElement], pData->m_Value.m_pString, sizeof( entity->m_LuaVariables_String[pData->m_iElement] ) );
+}
+
+void RecvProxy_LuaVariableElement_Entity( const CRecvProxyData *pData, void *pStruct, void *pOut )
+{
+    C_BaseEntity *entity = ( C_BaseEntity * )pStruct;
+    Assert( entity );
+    
+    C_BaseEntity * oldValue = (C_BaseEntity *) entity->m_LuaVariables_Entity[pData->m_iElement];
+
+    CBaseHandle handle;
+	RecvProxy_IntToEHandle( pData, pStruct, &handle );
+
+    LUA_CALL_NETWORK_VARIABLE_CHANGING_HOOK(
+        entity,
+        pData->m_iElement,
+        CBaseEntity::PushLuaInstanceSafe,
+        C_BaseEntity::Instance(handle),
+        oldValue );
+
+    entity->m_LuaVariables_Entity[pData->m_iElement] = handle;
+}
 
 BEGIN_RECV_TABLE_NOBASE( C_BaseEntity, DT_BaseEntityLuaVariables )
-    //RecvPropVirtualArray(
-    //    NULL,
-    //    LUA_MAX_NETWORK_VARIABLES,
-    //    RecvPropInt( "lua_variable_bool", 0, SIZEOF_IGNORE, SPROP_UNSIGNED, RecvProxy_LuaVariableElement_bool ),
-    //    "lua_variable_bools" ),
-    //RecvPropVirtualArray(
-    //    NULL,
-    //    LUA_MAX_NETWORK_VARIABLES,
-    //    RecvPropInt( "lua_variable_int", 0, SIZEOF_IGNORE, 0, RecvProxy_LuaVariableElement_int ),
-    //    "lua_variable_ints" ),
-    //RecvPropVirtualArray(
-    //    NULL,
-    //    LUA_MAX_NETWORK_VARIABLES,
-    //    RecvPropFloat( "lua_variable_float", 0, SIZEOF_IGNORE, SPROP_NOSCALE, RecvProxy_LuaVariableElement_float ),
-    //    "lua_variable_floats" ),
-    //RecvPropVirtualArray(
-    //    NULL,
-    //    LUA_MAX_NETWORK_VARIABLES,
-    //    RecvPropVector( "lua_variable_vector", 0, SIZEOF_IGNORE, SPROP_NOSCALE, RecvProxy_LuaVariableElement_Vector ),
-    //    "lua_variable_vectors" ),
-    //RecvPropVirtualArray(
-    //    NULL,
-    //    LUA_MAX_NETWORK_VARIABLES,
-    //    RecvPropVector( "lua_variable_qangle", 0, SIZEOF_IGNORE, SPROP_NOSCALE, RecvProxy_LuaVariableElement_QAngle ),
-    //    "lua_variable_qangles" ),
-    RecvPropArray( RecvPropBool( RECVINFO( m_LuaVariables_bool[0] ) ), m_LuaVariables_bool ),
-    RecvPropArray( RecvPropInt( RECVINFO( m_LuaVariables_int[0] ) ), m_LuaVariables_int ),
-    RecvPropArray( RecvPropFloat( RECVINFO( m_LuaVariables_float[0] ) ), m_LuaVariables_float ),
-    RecvPropArray( RecvPropVector( RECVINFO( m_LuaVariables_Vector[0] ) ), m_LuaVariables_Vector ),
-    RecvPropArray( RecvPropVector( RECVINFO( m_LuaVariables_QAngle[0] ) ), m_LuaVariables_QAngle ),
-	RecvPropArray( RecvPropString( RECVINFO( m_LuaVariables_String[0]) ), m_LuaVariables_String ),
+    RecvPropArray( RecvPropInt( RECVINFO( m_LuaVariables_bool[0] ), 0, RecvProxy_LuaVariableElement_bool ), m_LuaVariables_bool ),
+    RecvPropArray( RecvPropInt( RECVINFO( m_LuaVariables_int[0] ), 0, RecvProxy_LuaVariableElement_int ), m_LuaVariables_int ),
+    RecvPropArray( RecvPropFloat( RECVINFO( m_LuaVariables_float[0] ), 0, RecvProxy_LuaVariableElement_float ), m_LuaVariables_float ),
+    RecvPropArray( RecvPropVector( RECVINFO( m_LuaVariables_Vector[0] ), 0, RecvProxy_LuaVariableElement_Vector ), m_LuaVariables_Vector ),
+    RecvPropArray( RecvPropVector( RECVINFO( m_LuaVariables_QAngle[0] ), 0, RecvProxy_LuaVariableElement_QAngle ), m_LuaVariables_QAngle ),
+	RecvPropArray( RecvPropString( RECVINFO( m_LuaVariables_String[0]), 0, RecvProxy_LuaVariableElement_String ), m_LuaVariables_String ),
+    RecvPropArray( RecvPropEHandle( RECVINFO( m_LuaVariables_Entity[0]) , RecvProxy_LuaVariableElement_Entity ), m_LuaVariables_Entity ),
 END_RECV_TABLE()
 
 #endif // LUA_SDK NetworkVariables
