@@ -1854,6 +1854,7 @@ LUA_API void luasrc_dumpstack( lua_State *L )
         dumpStack += i;
         dumpStack += ": ";
         dumpStack += s;
+        dumpStack += "\n";
 
         lua_pop( L, 1 ); /* pop result */
     }

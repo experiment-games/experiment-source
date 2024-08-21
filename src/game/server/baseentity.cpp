@@ -265,6 +265,93 @@ void SendProxy_Angles( const SendProp *pProp, const void *pStruct, const void *p
 
 // clang-format off
 
+#ifdef LUA_SDK // NetworkVariables
+
+//void SendProxy_LuaVariableElement_bool( const SendProp *pProp, const void *pStruct, const void *pVarData, DVariant *pOut, int iElement, int objectID )
+//{
+//    CBaseEntity *entity = ( CBaseEntity * )pStruct;
+//    Assert( entity );
+//
+//    pOut->m_Int = entity->GetLuaNetworkVariable_bool( iElement );
+//}
+//
+//void SendProxy_LuaVariableElement_int( const SendProp *pProp, const void *pStruct, const void *pVarData, DVariant *pOut, int iElement, int objectID )
+//{
+//    CBaseEntity *entity = ( CBaseEntity * )pStruct;
+//    Assert( entity );
+//
+//    pOut->m_Int = entity->GetLuaNetworkVariable_int( iElement );
+//}
+//
+//void SendProxy_LuaVariableElement_float( const SendProp *pProp, const void *pStruct, const void *pVarData, DVariant *pOut, int iElement, int objectID )
+//{
+//    CBaseEntity *entity = ( CBaseEntity * )pStruct;
+//    Assert( entity );
+//
+//    pOut->m_Float = entity->GetLuaNetworkVariable_float( iElement );
+//}
+//
+//void SendProxy_LuaVariableElement_Vector( const SendProp *pProp, const void *pStruct, const void *pVarData, DVariant *pOut, int iElement, int objectID )
+//{
+//    CBaseEntity *entity = ( CBaseEntity * )pStruct;
+//    Assert( entity );
+//
+//    entity->GetLuaNetworkVariable_Vector( iElement ).CopyToArray(pOut->m_Vector);
+//}
+//
+//void SendProxy_LuaVariableElement_QAngle( const SendProp *pProp, const void *pStruct, const void *pVarData, DVariant *pOut, int iElement, int objectID )
+//{
+//    CBaseEntity *entity = ( CBaseEntity * )pStruct;
+//    Assert( entity );
+//
+//    entity->GetLuaNetworkVariable_QAngle( iElement ).CopyToArray(pOut->m_Vector);
+//}
+
+void SendProxy_LuaVariableElement_String( const SendProp *pProp, const void *pStruct, const void *pVarData, DVariant *pOut, int iElement, int objectID )
+{
+    CBaseEntity *entity = ( CBaseEntity * )pStruct;
+    Assert( entity );
+    
+	string_t *pString = (string_t*)pVarData;
+	pOut->m_pString = (char*)STRING( *pString );
+}
+
+BEGIN_SEND_TABLE_NOBASE( CBaseEntity, DT_BaseEntityLuaVariables )
+    //SendPropVirtualArray(
+    //    NULL,
+    //    LUA_MAX_NETWORK_VARIABLES,
+    //    SendPropInt( "lua_variable_bool", 0, SIZEOF_IGNORE, 1, SPROP_UNSIGNED, SendProxy_LuaVariableElement_bool ),
+    //    "lua_variable_bools" ),
+    //SendPropVirtualArray(
+    //    NULL,
+    //    LUA_MAX_NETWORK_VARIABLES,
+    //    SendPropInt( "lua_variable_int", 0, SIZEOF_IGNORE, 32, 0, SendProxy_LuaVariableElement_int ),
+    //    "lua_variable_ints" ),
+    //SendPropVirtualArray(
+    //    NULL,
+    //    LUA_MAX_NETWORK_VARIABLES,
+    //    SendPropFloat( "lua_variable_float", 0, SIZEOF_IGNORE, 32, SPROP_NOSCALE, 0.0f, HIGH_DEFAULT, SendProxy_LuaVariableElement_float ),
+    //    "lua_variable_floats" ),
+    //SendPropVirtualArray(
+    //    NULL,
+    //    LUA_MAX_NETWORK_VARIABLES,
+    //    SendPropVector( "lua_variable_vector", 0, SIZEOF_IGNORE, 32, SPROP_NOSCALE, 0.0f, HIGH_DEFAULT, SendProxy_LuaVariableElement_Vector ),
+    //    "lua_variable_vectors" ),
+    //SendPropVirtualArray(
+    //    NULL,
+    //    LUA_MAX_NETWORK_VARIABLES,
+    //    SendPropVector( "lua_variable_qangle", 0, SIZEOF_IGNORE, 32, SPROP_NOSCALE, 0.0f, HIGH_DEFAULT, SendProxy_LuaVariableElement_QAngle ),
+    //    "lua_variable_qangles" ),
+    SendPropArray( SendPropBool( SENDINFO_ARRAY( m_LuaVariables_bool ) ), m_LuaVariables_bool ),
+    SendPropArray( SendPropInt( SENDINFO_ARRAY( m_LuaVariables_int ) ), m_LuaVariables_int ),
+    SendPropArray( SendPropFloat( SENDINFO_ARRAY( m_LuaVariables_float ) ), m_LuaVariables_float ),
+    SendPropArray( SendPropVector( SENDINFO_ARRAY( m_LuaVariables_Vector ) ), m_LuaVariables_Vector ),
+    SendPropArray( SendPropVector( SENDINFO_ARRAY( m_LuaVariables_QAngle ) ), m_LuaVariables_QAngle ),
+    SendPropArray( SendPropString( SENDINFO_ARRAY( m_LuaVariables_String ), 0, SendProxy_LuaVariableElement_String ), m_LuaVariables_String ),
+END_SEND_TABLE()
+
+#endif // LUA_SDK NetworkVariables
+
 // This table encodes the CBaseEntity data.
 IMPLEMENT_SERVERCLASS_ST_NOBASE( CBaseEntity, DT_BaseEntity )
     SendPropDataTable( "AnimTimeMustBeFirst", 0, &REFERENCE_SEND_TABLE( DT_AnimTimeMustBeFirst ), SendProxy_ClientSideAnimation ),
@@ -314,6 +401,10 @@ IMPLEMENT_SERVERCLASS_ST_NOBASE( CBaseEntity, DT_BaseEntity )
 #ifdef TF_DLL
     SendPropArray3( SENDINFO_ARRAY3( m_nModelIndexOverrides ), SendPropInt( SENDINFO_ARRAY( m_nModelIndexOverrides ), SP_MODEL_INDEX_BITS, 0 ) ),
 #endif
+    
+#ifdef LUA_SDK // NetworkVariables
+    SendPropDataTable( "BaseEntityLuaVariables", 0, &REFERENCE_SEND_TABLE( DT_BaseEntityLuaVariables ) ),
+#endif // LUA_SDK NetworkVariables
 
 END_SEND_TABLE()
 

@@ -174,6 +174,7 @@ class C_BaseEntity : public IClientEntity
     LUA_DECLARE_SINGLE_LUA_INSTANCE( C_BaseEntity, LUA_BASEENTITYMETANAME );
 #endif
 
+   public:
     // Construction
     DECLARE_CLASS_NOBASE( C_BaseEntity );
 
@@ -190,6 +191,15 @@ class C_BaseEntity : public IClientEntity
 
 #ifdef LUA_SDK
     virtual void SetupRefTable( lua_State *L );
+
+    // These match CNetworkArray in baseentity.h serverside:
+    bool m_LuaVariables_bool[LUA_MAX_NETWORK_VARIABLES];
+    int m_LuaVariables_int[LUA_MAX_NETWORK_VARIABLES];
+    float m_LuaVariables_float[LUA_MAX_NETWORK_VARIABLES];
+    Vector m_LuaVariables_Vector[LUA_MAX_NETWORK_VARIABLES];
+    QAngle m_LuaVariables_QAngle[LUA_MAX_NETWORK_VARIABLES];
+    char m_LuaVariables_String[LUA_MAX_NETWORK_VARIABLES_STRING][DT_MAX_STRING_BUFFERSIZE];
+
 #endif
 
     static C_BaseEntity *CreatePredictedEntityByName( const char *classname, const char *module, int line, bool persist = false );

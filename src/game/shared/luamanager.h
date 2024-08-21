@@ -596,6 +596,45 @@
     AssertMsg( lua_istable( L, -1 ), "Metatable doesn't exist!" ); \
     lua_setmetatable( L, -2 );
 
+// Network variable macros and enum
+#define LUA_MAX_NETWORK_VARIABLES 32
+#define LUA_MAX_NETWORK_VARIABLES_STRING 4
+
+enum NETWORK_VARIABLE
+{
+    TYPE_BOOLEAN,
+    TYPE_INTEGER,
+    TYPE_FLOAT,
+    TYPE_VECTOR,
+    TYPE_ANGLE,
+    TYPE_STRING,
+    // TYPE_ENTITY, //TODO
+};
+
+//#define LUA_IMPLEMENT_NETWORK_VARIABLE_EXTENDED( Type, Name, Maximum ) \
+//   protected:                                                          \
+//    Type m_LuaVariables_##Name##[Maximum];                             \
+//                                                                       \
+//   public:                                                             \
+//    void SetLuaNetworkVariable_##Name##( int iIndex, Type value )      \
+//    {                                                                  \
+//        m_LuaVariables_##Name##[iIndex] = value;                       \
+//    }                                                                  \
+//                                                                       \
+//    Type GetLuaNetworkVariable_##Name##( int iIndex )                  \
+//    {                                                                  \
+//        return m_LuaVariables_##Name##[iIndex];                        \
+//    }
+//
+//#define LUA_IMPLEMENT_NETWORK_VARIABLE( Type ) \
+//    LUA_IMPLEMENT_NETWORK_VARIABLE_EXTENDED( Type, Type, LUA_MAX_NETWORK_VARIABLES )
+//
+//#define LUA_NETWORK_VARIABLE_RECV_ARRAY( Name, RecvPropElementType ) \
+//    RecvPropArray( RecvPropElementType( RECVINFO( m_LuaVariables_##Name##[0] ) ), m_LuaVariables_##Name## )
+//
+//#define LUA_NETWORK_VARIABLE_SEND_ARRAY( Name, SendPropElementType ) \
+//    SendPropArray( SendPropElementType( SENDINFO_ARRAY( m_LuaVariables_##Name##), 0, NULL ), m_LuaVariables_##Name##)
+
 extern ConVar gamemode;
 
 #define DEFAULT_GAMEMODE "hl2sb"

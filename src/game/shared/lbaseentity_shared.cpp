@@ -665,13 +665,13 @@ LUA_BINDING_BEGIN( Entity, GetClass, "class", "Get class name." )
     {
         CBaseScripted *pScripted = dynamic_cast< CBaseScripted * >( pEntity );
 
-        if ( pScripted)
+        if ( pScripted )
             lua_pushstring( L, pScripted->GetScriptedClassname() );
         else
         {
             CExperimentScriptedWeapon *pWeapon = dynamic_cast< CExperimentScriptedWeapon * >( pEntity );
 
-            AssertMsg( pWeapon, "Entity is not a scripted entity, nor weapon." ); // which other scripted entity is there?
+            AssertMsg( pWeapon, "Entity is not a scripted entity, nor weapon." );  // which other scripted entity is there?
 
             lua_pushstring( L, pWeapon->GetScriptedClassname() );
         }
@@ -1787,7 +1787,7 @@ LUA_BINDING_BEGIN( Entity, Remove, "class", "Remove." )
 {
     lua_CBaseEntity *pEntity = LUA_BINDING_ARGUMENT( luaL_checkentity, 1, "entity" );
 
-    #ifdef GAME_DLL
+#ifdef GAME_DLL
     // On the server we need to kick out passengers or removing the parent will also take the passenger with it
     if ( pEntity->IsVehicle() )
     {
@@ -1808,7 +1808,7 @@ LUA_BINDING_BEGIN( Entity, Remove, "class", "Remove." )
             }
         }
     }
-    #endif
+#endif
 
     pEntity->Remove();
     return 0;
@@ -2767,110 +2767,163 @@ LUA_BINDING_BEGIN( Entity, WorldToEntitySpace, "class", "Convert world to entity
 }
 LUA_BINDING_END()
 
-// Experiments around NetworkVars
-#include <networkvar.h>
-enum NetworkVarTypes
-{
-    NETWORKVAR_TYPE_BOOL,
-    NETWORKVAR_TYPE_INT,
-    NETWORKVAR_TYPE_FLOAT,
-    NETWORKVAR_TYPE_VECTOR,
-    NETWORKVAR_TYPE_STRING,
-    NETWORKVAR_TYPE_EHANDLE,
-};
-#pragma warning( disable : 4189 )
-LUA_BINDING_BEGIN( Entity, SetupNetworkVariable, "class", "Creates a network variable on the entity and adds Set/Get methods for it to the entity." )
+LUA_BINDING_BEGIN( Entity, SetDataTableValue, "class", "Sets a data table variable of the given type, in the given slot, to the given value. Slots start at 0 and there's 32 slots per type (except for strings, which have 4 slots and a limit of 512 characters per string)." )
 {
     lua_CBaseEntity *entity = LUA_BINDING_ARGUMENT( luaL_checkentity, 1, "entity" );
-    NetworkVarTypes networkVarType = LUA_BINDING_ARGUMENT_ENUM( NetworkVarTypes, 2, "type" );
+    NETWORK_VARIABLE networkVarType = LUA_BINDING_ARGUMENT_ENUM( NETWORK_VARIABLE, 2, "type" );
     int slot = LUA_BINDING_ARGUMENT( luaL_checknumber, 3, "slot" );
-    const char *variableName = LUA_BINDING_ARGUMENT( luaL_checkstring, 4, "variableName" );
 
-    // lua_run player.GetByID(2):SetupNetworkVariable(2, "Test")
+    if ( slot < 0 || ( networkVarType == TYPE_STRING && slot >= LUA_MAX_NETWORK_VARIABLES_STRING ) ||
+         ( networkVarType != TYPE_STRING && slot >= LUA_MAX_NETWORK_VARIABLES ) )
+    {
+        luaL_argerror( L, 3, "Invalid slot index" );
+        return 0;
+    }
 
-    // That should've added:
-    // lua_run player.GetByID(2):SetTest(1337)
-    // lua_run print(player.GetByID(2):GetTest()) -- 1337
-
-    // TODO:    Use SendPropVirtualArray with a max size of 32 to send the network variable
-    //          Have a SendPropVirtualArray for each type of network variable, except string
-    //          which will have 4 SendPropString
-    //
-    // https://developer.valvesoftware.com/wiki/Networking_Entities
-    // 
-    //////////////////////////////////////////////////////////////////
-    //          On the server we will have something like this:
-    // 
-    //void SendProxy_LuaVarFloatElement( const SendProp *pProp, const void *pStruct, const void *pVarData, DVariant *pOut, int iElement, int objectID )
-    //{
-    //    CBaseEntity *entity = ( CBaseEntity * )pStruct;
-    //    Assert( entity );
-
-    //    pOut->m_Float = // entity->GetLuaVarFloat( iElement ); // Somehow get the float that is in the iElement slot
-    //}
-
-    //int SendProxy_LuaVarFloatCount( const void *pStruct, int objectID )
-    //{
-    //    CBaseEntity *entity = ( CBaseEntity * )pStruct;
-    //    Assert( entity );
-
-    //    // return entity->GetLuaVarFloatCount(); // Somehow get the count of floats
-    //}
-
-    //IMPLEMENT_SERVERCLASS_ST( CBaseEntity, DT_BaseEntityLuaVariables )
-    //SendPropVirtualArray( 
-    //        SendProxy_LuaVarFloatCount,
-    //        32, // max elements (ever)
-    //    SendPropFloat( "lua_var_float", 0, 0, 0, SendProxy_LuaVarFloatElement ),
-    //    "lua_var_floats" )
-    //END_SEND_TABLE()
-
-    //////////////////////////////////////////////////////////////////
-    //          On the client we will receive it like this:
-    //
-    //void RecvProxy_LuaVarFloatElement( const CRecvProxyData *pData, void *pStruct, void *pOut )
-    //{
-    //    C_BaseEntity *entity = ( C_BaseEntity * )pStruct;
-    //    Assert( entity );
-
-    //    // entity->m_LuaVarFloats[ pData->m_iElement ] = pData->m_Value.m_Float; // Somehow set the float that is in the iElement slot
-    //}
-
-    //void RecvProxy_LuaVarFloatCount( void *pStruct, int objectID, int currentArrayLength )
-    //{
-    //    C_BaseEntity *entity = ( C_BaseEntity * )pStruct;
-    //    Assert( entity );
-
-    //    if ( entity->m_LuaVarFloats.Count() != currentArrayLength )
-    //        pPanel->m_LuaVarFloats.SetSize( currentArrayLength );
-    //}
-
-    //IMPLEMENT_CLIENTCLASS_DT( C_BaseEntity, DT_BaseEntityLuaVariables, CBaseEntity )
-    //    RecvPropVirtualArray(
-    //    RecvProxy_LuaVarFloatCount,
-    //    32, // max elements (ever)
-    //    RecvPropFloat( "lua_var_float", 0, 0, RecvProxy_LuaVarFloatElement ),
-    //    "lua_var_floats" )
-    //END_RECV_TABLE()
-
-    // TODO: Using macros the above would be repeated for the other types of network variables too.
-    // TODO: The SetLuaVarFloat method (and similar) would call callbacks set by NetworkVarNotify (or a hook and we implement that in Lua)
+    int oldValueIndex = lua_gettop( L );
 
     switch ( networkVarType )
     {
-        case NETWORKVAR_TYPE_FLOAT:
-            
-            // TODO: entity->RegisterLuaVarFloat( variableName, slot ); // TODO: auto increment slot
-
-        break;
+        case TYPE_BOOLEAN:
+        {
+            bool newValueBool = LUA_BINDING_ARGUMENT( luaL_checkboolean, 4, "value" );
+            lua_pushboolean( L, entity->m_LuaVariables_bool[slot] );
+            lua_pushboolean( L, newValueBool );
+#ifdef CLIENT_DLL
+            entity->m_LuaVariables_bool[slot] = newValueBool;
+#else
+            entity->m_LuaVariables_bool.GetForModify( slot ) = newValueBool;
+#endif
+            break;
+        }
+        case TYPE_INTEGER:
+        {
+            int newValueInt = LUA_BINDING_ARGUMENT( luaL_checknumber, 4, "value" );
+            lua_pushinteger( L, entity->m_LuaVariables_int[slot] );
+            lua_pushnumber( L, newValueInt );
+#ifdef CLIENT_DLL
+            entity->m_LuaVariables_int[slot] = newValueInt;
+#else
+            entity->m_LuaVariables_int.GetForModify( slot ) = newValueInt;
+#endif
+            break;
+        }
+        case TYPE_FLOAT:
+        {
+            float newValueFloat = LUA_BINDING_ARGUMENT( luaL_checknumber, 4, "value" );
+            lua_pushnumber( L, entity->m_LuaVariables_float[slot] );
+            lua_pushnumber( L, newValueFloat );
+#ifdef CLIENT_DLL
+            entity->m_LuaVariables_float[slot] = newValueFloat;
+#else
+            entity->m_LuaVariables_float.GetForModify( slot ) = newValueFloat;
+#endif
+            break;
+        }
+        case TYPE_VECTOR:
+        {
+            Vector &newValueVector = LUA_BINDING_ARGUMENT( luaL_checkvector, 4, "value" );
+            lua_pushvector( L, entity->m_LuaVariables_Vector[slot] );
+            lua_pushvector( L, newValueVector );
+#ifdef CLIENT_DLL
+            entity->m_LuaVariables_Vector[slot] = newValueVector;
+#else
+            entity->m_LuaVariables_Vector.GetForModify( slot ) = newValueVector;
+#endif
+            break;
+        }
+        case TYPE_ANGLE:
+        {
+            QAngle &newValueAngle = LUA_BINDING_ARGUMENT( luaL_checkangle, 4, "value" );
+            lua_pushangle( L, entity->m_LuaVariables_QAngle[slot] );
+            lua_pushangle( L, newValueAngle );
+#ifdef CLIENT_DLL
+            entity->m_LuaVariables_QAngle[slot] = newValueAngle;
+#else
+            entity->m_LuaVariables_QAngle.GetForModify( slot ) = newValueAngle;
+#endif
+            break;
+        }
+        case TYPE_STRING:
+        {
+            const char *newValueString = strdup( LUA_BINDING_ARGUMENT( luaL_checkstring, 4, "value" ) );
+#ifdef CLIENT_DLL
+            lua_pushstring( L, entity->m_LuaVariables_String[slot] );
+            lua_pushstring( L, newValueString );
+            Q_strncpy( entity->m_LuaVariables_String[slot], newValueString, sizeof( entity->m_LuaVariables_String[slot] ) );
+#else
+            lua_pushstring( L, STRING( entity->m_LuaVariables_String[slot] ) );
+            lua_pushstring( L, newValueString );
+            entity->m_LuaVariables_String.GetForModify( slot ) = MAKE_STRING( newValueString );
+#endif
+            break;
+        }
+        // case TYPE_ENTITY: //TODO
+        //    break;
+        default:
+            luaL_argerror( L, 2, "Invalid type" );
+            return 0;
     }
+
+    // This hook is called by LUA_CALL_NETWORK_VARIABLE_CHANGING_HOOK clientside
+    LUA_CALL_HOOK_BEGIN( "EntityNetworkVariableChanging", "Called just before a network variable is changed" );
+    CBaseEntity::PushLuaInstanceSafe( L, entity );
+    lua_pushinteger( L, slot );
+    lua_pushvalue( L, oldValueIndex + 1 );  // Push the new value first
+    lua_pushvalue( L, oldValueIndex );      // Now push the old value
+    LUA_CALL_HOOK_END( 4, 0 );
 
     return 0;
 }
 LUA_BINDING_END()
-#pragma warning(default: 4189)
 
-// End of NetworkVars experiments
+LUA_BINDING_BEGIN( Entity, GetDataTableValue, "class", "Gets a data table variable of the given type, in the given slot." )
+{
+    lua_CBaseEntity *entity = LUA_BINDING_ARGUMENT( luaL_checkentity, 1, "entity" );
+    NETWORK_VARIABLE networkVarType = LUA_BINDING_ARGUMENT_ENUM( NETWORK_VARIABLE, 2, "type" );
+    int slot = LUA_BINDING_ARGUMENT( luaL_checknumber, 3, "slot" );
+
+    if ( slot < 0 || ( networkVarType == TYPE_STRING && slot >= LUA_MAX_NETWORK_VARIABLES_STRING ) ||
+         ( networkVarType != TYPE_STRING && slot >= LUA_MAX_NETWORK_VARIABLES ) )
+    {
+        luaL_argerror( L, 3, "Invalid slot index" );
+        return 0;
+    }
+
+    switch ( networkVarType )
+    {
+        case TYPE_BOOLEAN:
+            lua_pushboolean( L, entity->m_LuaVariables_bool[slot] );
+            break;
+        case TYPE_INTEGER:
+            lua_pushinteger( L, entity->m_LuaVariables_int[slot] );
+            break;
+        case TYPE_FLOAT:
+            lua_pushnumber( L, entity->m_LuaVariables_float[slot] );
+            break;
+        case TYPE_VECTOR:
+            lua_pushvector( L, entity->m_LuaVariables_Vector[slot] );
+            break;
+        case TYPE_ANGLE:
+            lua_pushangle( L, entity->m_LuaVariables_QAngle[slot] );
+            break;
+        case TYPE_STRING:
+#ifdef CLIENT_DLL
+            lua_pushstring( L, entity->m_LuaVariables_String[slot] );
+#else
+            lua_pushstring( L, STRING( entity->m_LuaVariables_String[slot] ) );
+#endif
+            break;
+        // case TYPE_ENTITY: //TODO
+        //    break;
+        default:
+            luaL_argerror( L, 2, "Invalid type" );
+            return 0;
+    }
+
+    return 1;
+}
+LUA_BINDING_END( "any", "The value of the network variable" )
 
 LUA_BINDING_BEGIN( Entity, IsValid, "class", "Check if entity is valid." )
 {

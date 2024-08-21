@@ -406,6 +406,15 @@ class CBaseEntity : public IServerEntity
     // data description
     DECLARE_DATADESC();
 
+#ifdef LUA_SDK
+    CNetworkArray( bool, m_LuaVariables_bool, LUA_MAX_NETWORK_VARIABLES );
+    CNetworkArray( int, m_LuaVariables_int, LUA_MAX_NETWORK_VARIABLES );
+    CNetworkArray( float, m_LuaVariables_float, LUA_MAX_NETWORK_VARIABLES );
+    CNetworkArray( Vector, m_LuaVariables_Vector, LUA_MAX_NETWORK_VARIABLES );
+    CNetworkArray( QAngle, m_LuaVariables_QAngle, LUA_MAX_NETWORK_VARIABLES );
+    CNetworkArray( string_t, m_LuaVariables_String, LUA_MAX_NETWORK_VARIABLES_STRING );
+#endif
+
     // memory handling
     void *operator new( size_t stAllocateBlock );
     void *operator new( size_t stAllocateBlock, int nBlockUse, const char *pFileName, int nLine );
@@ -2020,6 +2029,10 @@ class CBaseEntity : public IServerEntity
 // Send tables exposed in this module.
 EXTERN_SEND_TABLE( DT_Edict );
 EXTERN_SEND_TABLE( DT_BaseEntity );
+
+#ifdef LUA_SDK  // NetworkVariables
+EXTERN_SEND_TABLE( DT_BaseEntityLuaVariables );
+#endif
 
 // Ugly technique to override base member functions
 // Normally it's illegal to cast a pointer to a member function of a derived class to a pointer to a
