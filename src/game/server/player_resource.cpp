@@ -128,3 +128,24 @@ void CPlayerResource::UpdatePlayerData( void )
 		}
 	}
 }
+
+bool CPlayerResource::IsConnected( int iIndex )
+{
+    if ( iIndex < 1 || iIndex > MAX_PLAYERS )
+        return false;
+    else
+        return m_bConnected[iIndex];
+}
+
+bool CPlayerResource::IsAlive( int iIndex )
+{
+    return m_bAlive[iIndex];
+}
+
+int CPlayerResource::GetPing( int index )
+{
+    if ( !IsConnected( index ) )
+        return 0;
+
+    return m_iPing[index];
+}

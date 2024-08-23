@@ -6,8 +6,10 @@
 #ifdef CLIENT_DLL
 #include "lc_baseanimating.h"
 #include <voice_status.h>
+#include "c_playerresource.h"
 #else
 #include "lbaseanimating.h"
+#include "player_resource.h"
 #endif
 #include "lbasecombatweapon_shared.h"
 #include "lbaseentity_shared.h"
@@ -18,6 +20,7 @@
 
 // memdbgon must be the last include file in a .cpp file!!!
 #include "tier0/memdbgon.h"
+#include <weapon_experimentbase_scriptedweapon.h>
 
 /*
 ** access functions (stack -> C)
@@ -145,6 +148,13 @@ LUA_BINDING_BEGIN( Player, GetActiveWeapon, "class", "Get the player's active we
 {
     lua_CBasePlayer *player = LUA_BINDING_ARGUMENT( luaL_checkplayer, 1, "player" );
     CBaseCombatWeapon *pWeapon = player->GetActiveWeapon();
+
+    if ( !CExperimentScriptedWeapon::IsValidWeapon( pWeapon ) )
+    {
+        CBaseEntity::PushLuaInstanceSafe( L, nullptr );
+        return 1;
+    }
+
     CBaseEntity::PushLuaInstanceSafe( L, pWeapon );
     return 1;
 }
@@ -325,6 +335,19 @@ LUA_BINDING_END( "Entity", "The player's observer target." )
 //    return 1;
 //}
 // LUA_BINDING_END( "integer", "The offset of m_Local." )
+
+LUA_BINDING_BEGIN( Player, GetPing, "class", "Get the player's ping." )
+{
+    lua_CBasePlayer *player = LUA_BINDING_ARGUMENT( luaL_checkplayer, 1, "player" );
+
+#ifdef CLIENT_DLL
+    lua_pushinteger( L, g_PR->GetPing( player->entindex() ) );
+#else
+    lua_pushinteger( L, g_pPlayerResource->GetPing( player->entindex() ) );
+#endif
+    return 1;
+}
+LUA_BINDING_END( "integer", "The player's ping." )
 
 LUA_BINDING_BEGIN( Player, GetPlayerLocalData, "class", "Get the player's local data." )
 {
@@ -559,7 +582,7 @@ LUA_BINDING_BEGIN( Player, GetWeapon, "class", "Get the player's weapon." )
         CBaseCombatWeapon *weapon = player->GetWeapon( i );
 
         // Stop as soon as we've reached the end of valid weapons
-        if ( !weapon )
+        if ( !weapon || !CExperimentScriptedWeapon::IsValidWeapon( weapon ) )
             break;
 
         if ( FStrEq( weapon->GetClassname(), className ) )
@@ -579,6 +602,13 @@ LUA_BINDING_BEGIN( Player, GetWeaponInSlot, "class", "Get the player's weapon in
     lua_CBasePlayer *player = LUA_BINDING_ARGUMENT( luaL_checkplayer, 1, "player" );
     int slot = LUA_BINDING_ARGUMENT( luaL_checknumber, 2, "slot" );
     CBaseCombatWeapon *weapon = player->GetWeapon( slot );
+
+    if ( !CExperimentScriptedWeapon::IsValidWeapon( weapon ) )
+    {
+        CBaseEntity::PushLuaInstanceSafe( L, nullptr );
+        return 1;
+    }
+
     CBaseEntity::PushLuaInstanceSafe( L, weapon );
     return 1;
 }
@@ -594,7 +624,7 @@ LUA_BINDING_BEGIN( Player, GetWeapons, "class", "Get the player's weapons." )
         CBaseCombatWeapon *weapon = player->GetWeapon( i );
 
         // Stop as soon as we've reached the end of valid weapons
-        if ( !weapon )
+        if ( !weapon || !CExperimentScriptedWeapon::IsValidWeapon( weapon ) )
             break;
 
         CBaseEntity::PushLuaInstanceSafe( L, weapon );
@@ -1194,6 +1224,14 @@ LUA_BINDING_BEGIN( Player, ViewPunchReset, "class", "View punch reset." )
     return 0;
 }
 LUA_BINDING_END()
+
+LUA_BINDING_BEGIN( Player, GetViewPunchAngles, "class", "Get the player's view punch angle." )
+{
+    lua_CBasePlayer *player = LUA_BINDING_ARGUMENT( luaL_checkplayer, 1, "player" );
+    lua_pushangle( L, player->m_Local.m_vecPunchAngle );
+    return 1;
+}
+LUA_BINDING_END( "Angle", "The player's view punch angle." )
 
 LUA_BINDING_BEGIN( Player, CanSwitchToWeapon, "class", "Check if the player can switch to a weapon." )
 {

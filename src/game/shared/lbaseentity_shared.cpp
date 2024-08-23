@@ -10,9 +10,8 @@
 #include "luasrclib.h"
 #include "lbaseentity_shared.h"
 #include "lrecipientfilter.h"
-#ifdef CLIENT_DLL
 #include "weapon_experimentbase_scriptedweapon.h"
-#else
+#ifndef CLIENT_DLL
 #include "basescripted.h"
 #include "iservervehicle.h"
 #endif
@@ -2767,7 +2766,7 @@ LUA_BINDING_BEGIN( Entity, WorldToEntitySpace, "class", "Convert world to entity
 }
 LUA_BINDING_END()
 
-LUA_BINDING_BEGIN( Entity, SetDataTableValue, "class", "Sets a data table variable of the given type, in the given slot, to the given value. Slots start at 0 and there's 32 slots per type (except for strings, which have 4 slots and a limit of 512 characters per string)." )
+LUA_BINDING_BEGIN( Entity, SetNetworkDataValue, "class", "Sets a data table variable of the given type, in the given slot, to the given value. Slots start at 0 and there's 32 slots per type (except for strings, which have 4 slots and a limit of 512 characters per string)." )
 {
     lua_CBaseEntity *entity = LUA_BINDING_ARGUMENT( luaL_checkentity, 1, "entity" );
     NETWORK_VARIABLE networkVarType = LUA_BINDING_ARGUMENT_ENUM( NETWORK_VARIABLE, 2, "type" );
@@ -2888,7 +2887,7 @@ LUA_BINDING_BEGIN( Entity, SetDataTableValue, "class", "Sets a data table variab
 }
 LUA_BINDING_END()
 
-LUA_BINDING_BEGIN( Entity, GetDataTableValue, "class", "Gets a data table variable of the given type, in the given slot." )
+LUA_BINDING_BEGIN( Entity, GetNetworkDataValue, "class", "Gets a data table variable of the given type, in the given slot." )
 {
     lua_CBaseEntity *entity = LUA_BINDING_ARGUMENT( luaL_checkentity, 1, "entity" );
     NETWORK_VARIABLE networkVarType = LUA_BINDING_ARGUMENT_ENUM( NETWORK_VARIABLE, 2, "type" );
@@ -2937,6 +2936,24 @@ LUA_BINDING_BEGIN( Entity, GetDataTableValue, "class", "Gets a data table variab
 }
 LUA_BINDING_END( "any", "The value of the network variable" )
 
+// TODO: This is only for viewmodels, move it to a separate file for viewmodel bindings
+LUA_BINDING_BEGIN( Entity, SendViewModelMatchingSequence, "class", "Send view model matching sequence. Only works on viewmodels." )
+{
+    lua_CBaseEntity *pEntity = LUA_BINDING_ARGUMENT( luaL_checkentity, 1, "entity" );
+    CBaseViewModel *pViewModel = dynamic_cast< CBaseViewModel * >( pEntity );
+    int nSequence = LUA_BINDING_ARGUMENT( luaL_checknumber, 2, "sequence" );
+
+    if ( !pViewModel )
+    {
+        luaL_argerror( L, 1, "Entity is not a view model" );
+        return 0;
+    }
+
+    pViewModel->SendViewModelMatchingSequence( nSequence );
+    return 0;
+}
+LUA_BINDING_END()
+
 LUA_BINDING_BEGIN( Entity, IsValid, "class", "Check if entity is valid." )
 {
     lua_CBaseEntity *pEntity = LUA_BINDING_ARGUMENT( lua_toentity, 1, "entity" );
@@ -2944,6 +2961,14 @@ LUA_BINDING_BEGIN( Entity, IsValid, "class", "Check if entity is valid." )
     if ( pEntity == NULL )
     {
         lua_pushboolean( L, false );
+        return 1;
+    }
+
+    CExperimentScriptedWeapon *pWeapon = dynamic_cast< CExperimentScriptedWeapon * >( pEntity );
+
+    if ( pWeapon )
+    {
+        lua_pushboolean( L, pWeapon->IsValid() );
         return 1;
     }
 
@@ -3072,7 +3097,17 @@ LUA_BINDING_BEGIN( Entity, __tostring, "class", "Metamethod that is called when 
         if ( pEntity->IsScripted() )
         {
             CBaseScripted *pScripted = dynamic_cast< CBaseScripted * >( pEntity );
-            lua_pushfstring( L, "Entity: %s (%d)", pScripted->GetScriptedClassname(), pEntity->entindex() );
+
+            if ( pScripted )
+                lua_pushfstring( L, "Entity: %s (%d)", pScripted->GetScriptedClassname(), pEntity->entindex() );
+            else
+            {
+                CExperimentScriptedWeapon *pWeapon = dynamic_cast< CExperimentScriptedWeapon * >( pEntity );
+
+                AssertMsg( pWeapon, "Entity is not a scripted entity, nor weapon." );  // which other scripted entity is there?
+
+                lua_pushstring( L, pWeapon->GetScriptedClassname() );
+            }
         }
         else
 #endif

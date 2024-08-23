@@ -33,6 +33,13 @@ LUA_BINDING_BEGIN( Engines, GetCurrentTime, "library", "Get the current time." )
 }
 LUA_BINDING_END( "number", "The current time." )
 
+//LUA_BINDING_BEGIN( Engines, GetUnpredictedCurrentTime, "library", "Get the current time, which is not influenced by prediction." )
+//{
+//    lua_pushnumber( L, gpGlobals->unpredictedCurrentTime );
+//    return 1;
+//}
+//LUA_BINDING_END( "number", "The current time." )
+
 LUA_BINDING_BEGIN( Engines, GetSystemTime, "library", "Get the system time." )
 {
     lua_pushnumber( L, Plat_FloatTime() );

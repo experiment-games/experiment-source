@@ -154,7 +154,7 @@ LUA_BINDING_BEGIN( Vector, Dot, "class", "Calculates the dot product of two vect
 }
 LUA_BINDING_END( "number", "The dot product of the two vectors." )
 
-LUA_BINDING_BEGIN( Vector, Init, "class", "Initializes the vector with the specified values." )
+LUA_BINDING_BEGIN( Vector, Initialize, "class", "Initializes the vector with the specified values." )
 {
     lua_Vector vec = LUA_BINDING_ARGUMENT( luaL_checkvector, 1, "vector" );
     vec_t x = ( vec_t )LUA_BINDING_ARGUMENT( luaL_checknumber, 2, "x" );

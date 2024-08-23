@@ -15,31 +15,40 @@
 
 class CPlayerResource : public CBaseEntity
 {
-	DECLARE_CLASS( CPlayerResource, CBaseEntity );
-public:
-	DECLARE_SERVERCLASS();
-	DECLARE_DATADESC();
+    DECLARE_CLASS( CPlayerResource, CBaseEntity );
 
-	virtual void Spawn( void );
-	virtual	int	 ObjectCaps( void ) { return BaseClass::ObjectCaps() | FCAP_DONT_SAVE; }
-	virtual void ResourceThink( void );
-	virtual void UpdatePlayerData( void );
-	virtual int  UpdateTransmitState(void);
+   public:
+    DECLARE_SERVERCLASS();
+    DECLARE_DATADESC();
 
-protected:
-	// Data for each player that's propagated to all clients
-	// Stored in individual arrays so they can be sent down via datatables
-	CNetworkArray( int, m_iPing, MAX_PLAYERS+1 );
-	CNetworkArray( int, m_iScore, MAX_PLAYERS+1 );
-	CNetworkArray( int, m_iDeaths, MAX_PLAYERS+1 );
-	CNetworkArray( int, m_bConnected, MAX_PLAYERS+1 );
-	CNetworkArray( int, m_iTeam, MAX_PLAYERS+1 );
-	CNetworkArray( int, m_bAlive, MAX_PLAYERS+1 );
-	CNetworkArray( int, m_iHealth, MAX_PLAYERS+1 );
-		
-	int	m_nUpdateCounter;
+    virtual void Spawn( void );
+    virtual int ObjectCaps( void )
+    {
+        return BaseClass::ObjectCaps() | FCAP_DONT_SAVE;
+    }
+    virtual void ResourceThink( void );
+    virtual void UpdatePlayerData( void );
+    virtual int UpdateTransmitState( void );
+
+    virtual bool IsConnected( int index );
+    virtual bool IsAlive( int index );
+
+    virtual int GetPing( int index );
+
+   protected:
+    // Data for each player that's propagated to all clients
+    // Stored in individual arrays so they can be sent down via datatables
+    CNetworkArray( int, m_iPing, MAX_PLAYERS + 1 );
+    CNetworkArray( int, m_iScore, MAX_PLAYERS + 1 );
+    CNetworkArray( int, m_iDeaths, MAX_PLAYERS + 1 );
+    CNetworkArray( int, m_bConnected, MAX_PLAYERS + 1 );
+    CNetworkArray( int, m_iTeam, MAX_PLAYERS + 1 );
+    CNetworkArray( int, m_bAlive, MAX_PLAYERS + 1 );
+    CNetworkArray( int, m_iHealth, MAX_PLAYERS + 1 );
+
+    int m_nUpdateCounter;
 };
 
 extern CPlayerResource *g_pPlayerResource;
 
-#endif // PLAYER_RESOURCE_H
+#endif  // PLAYER_RESOURCE_H

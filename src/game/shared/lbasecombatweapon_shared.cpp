@@ -965,7 +965,6 @@ LUA_BINDING_BEGIN( Weapon, SetIdealActivity, "class", "Set ideal activity." )
 }
 LUA_BINDING_END()
 
-// SetNextSecondaryFire and primary first:
 LUA_BINDING_BEGIN( Weapon, SetNextPrimaryFire, "class", "Set next time before the player can fire the primary attack. E.g: `Engines.GetCurrentTime() + 2` for two seconds from now." )
 {
     lua_CBaseCombatWeapon *pWeapon = LUA_BINDING_ARGUMENT( luaL_checkweapon, 1, "entity" );
@@ -983,6 +982,22 @@ LUA_BINDING_BEGIN( Weapon, SetNextSecondaryFire, "class", "Set next time before 
     return 0;
 }
 LUA_BINDING_END()
+
+LUA_BINDING_BEGIN( Weapon, GetNextPrimaryFire, "class", "Get the time before the player can fire the primary attack." )
+{
+    lua_CBaseCombatWeapon *pWeapon = LUA_BINDING_ARGUMENT( luaL_checkweapon, 1, "entity" );
+    lua_pushnumber( L, pWeapon->m_flNextPrimaryAttack );
+    return 1;
+}
+LUA_BINDING_END( "number", "Time before the player can fire the primary attack." )
+
+LUA_BINDING_BEGIN( Weapon, GetNextSecondaryFire, "class", "Get the time before the player can fire the secondary attack." )
+{
+    lua_CBaseCombatWeapon *pWeapon = LUA_BINDING_ARGUMENT( luaL_checkweapon, 1, "entity" );
+    lua_pushnumber( L, pWeapon->m_flNextSecondaryAttack );
+    return 1;
+}
+LUA_BINDING_END( "number", "Time before the player can fire the secondary attack." )
 
 LUA_BINDING_BEGIN( Weapon, SetPickupTouch, "class", "Set pickup touch." )
 {
@@ -1176,6 +1191,25 @@ LUA_BINDING_BEGIN( Weapon, WeaponState, "class", "Weapon state." )
     return 1;
 }
 LUA_BINDING_END( "number", "Weapon state." )
+
+LUA_BINDING_BEGIN( Weapon, SetAnimationPrefix, "class", "Set animation prefix." )
+{
+    lua_CBaseCombatWeapon *weapon = LUA_BINDING_ARGUMENT( luaL_checkweapon, 1, "entity" );
+    const char *prefix = LUA_BINDING_ARGUMENT( luaL_checkstring, 2, "prefix" );
+    FileWeaponInfo_t weaponData = weapon->GetWpnData();
+    Q_strncpy( ( weaponData.szAnimationPrefix ), prefix, MAX_WEAPON_PREFIX );
+    return 0;
+}
+LUA_BINDING_END()
+
+LUA_BINDING_BEGIN( Weapon, GetAnimationPrefix, "class", "Get animation prefix." )
+{
+    lua_CBaseCombatWeapon *weapon = LUA_BINDING_ARGUMENT( luaL_checkweapon, 1, "entity" );
+    FileWeaponInfo_t weaponData = weapon->GetWpnData();
+    lua_pushstring( L, weaponData.szAnimationPrefix );
+    return 1;
+}
+LUA_BINDING_END( "string", "Animation prefix." )
 
 // static int CBaseCombatWeapon___index( lua_State *L )
 //{

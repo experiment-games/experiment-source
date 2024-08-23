@@ -194,6 +194,7 @@ SetClipboardText = Systems.SetClipboardText
 
 RealFrameTime = Engines.GetAbsoluteFrameTime
 CurTime = Engines.GetCurrentTime
+UnPredictedCurTime = Engines.GetCurrentTime -- TODO: Use actually un-predicted time
 SysTime = Engines.GetSystemTime
 VGUIFrameTime = Engines.GetSystemTime
 RealTime = Engines.GetRealTime
@@ -406,6 +407,11 @@ VECTOR_META.Distance2DSqr = VECTOR_META.DistanceToAsSqr2D
 VECTOR_META.Div = VECTOR_META.Divide
 VECTOR_META.Mul = VECTOR_META.Scale
 VECTOR_META.Normalize = VECTOR_META.NormalizeInPlace
+VECTOR_META.SetUnpacked = VECTOR_META.Initialize
+
+function VECTOR_META:Set(vectorToCopy)
+	return Vector(vectorToCopy)
+end
 
 function VECTOR_META:GetNormalized()
 	local copy = Vector(self)
@@ -416,6 +422,11 @@ end
 local ANGLE_META = FindMetaTable("Angle")
 ANGLE_META.Div = ANGLE_META.Divide
 ANGLE_META.Mul = ANGLE_META.Scale
+ANGLE_META.SetUnpacked = ANGLE_META.Initialize
+
+function ANGLE_META:Set(angleToCopy)
+	return Angle(angleToCopy)
+end
 
 local ENTITY_META = FindMetaTable("Entity")
 ENTITY_META.Health = ENTITY_META.GetHealth
@@ -442,6 +453,63 @@ ENTITY_META.DeleteOnRemove = ENTITY_META.AddDeleteOnRemove
 ENTITY_META.DontDeleteOnRemove = ENTITY_META.RemoveDeleteOnRemove
 ENTITY_META.GetFlexIDByName = ENTITY_META.GetFlexIdByName
 ENTITY_META.GetNumBodyGroups = ENTITY_META.GetBodyGroupsCount
+ENTITY_META.WaterLevel = ENTITY_META.GetWaterLevel
+
+function ENTITY_META:GetDTAngle(index)
+    return self:GetNetworkDataValue(_E.NETWORK_VARIABLE_TYPE.ANGLE, index)
+end
+
+function ENTITY_META:GetDTBool(index)
+    return self:GetNetworkDataValue(_E.NETWORK_VARIABLE_TYPE.BOOLEAN, index)
+end
+
+function ENTITY_META:GetDTEntity(index)
+    return self:GetNetworkDataValue(_E.NETWORK_VARIABLE_TYPE.ENTITY, index)
+end
+
+function ENTITY_META:GetDTFloat(index)
+    return self:GetNetworkDataValue(_E.NETWORK_VARIABLE_TYPE.FLOAT, index)
+end
+
+function ENTITY_META:GetDTInt(index)
+    return self:GetNetworkDataValue(_E.NETWORK_VARIABLE_TYPE.INTEGER, index)
+end
+
+function ENTITY_META:GetDTString(index)
+    return self:GetNetworkDataValue(_E.NETWORK_VARIABLE_TYPE.STRING, index)
+end
+
+function ENTITY_META:GetDTVector(index)
+    return self:GetNetworkDataValue(_E.NETWORK_VARIABLE_TYPE.VECTOR, index)
+end
+
+function ENTITY_META:SetDTAngle(index, value)
+    self:SetNetworkDataValue(_E.NETWORK_VARIABLE_TYPE.ANGLE, index, value)
+end
+
+function ENTITY_META:SetDTBool(index, value)
+	self:SetNetworkDataValue(_E.NETWORK_VARIABLE_TYPE.BOOLEAN, index, value)
+end
+
+function ENTITY_META:SetDTEntity(index, value)
+    self:SetNetworkDataValue(_E.NETWORK_VARIABLE_TYPE.ENTITY, index, value)
+end
+
+function ENTITY_META:SetDTFloat(index, value)
+    self:SetNetworkDataValue(_E.NETWORK_VARIABLE_TYPE.FLOAT, index, value)
+end
+
+function ENTITY_META:SetDTInt(index, value)
+	self:SetNetworkDataValue(_E.NETWORK_VARIABLE_TYPE.INTEGER, index, value)
+end
+
+function ENTITY_META:SetDTString(index, value)
+    self:SetNetworkDataValue(_E.NETWORK_VARIABLE_TYPE.STRING, index, value)
+end
+
+function ENTITY_META:SetDTVector(index, value)
+	self:SetNetworkDataValue(_E.NETWORK_VARIABLE_TYPE.VECTOR, index, value)
+end
 
 function ENTITY_META:IsNextBot()
 	return false -- TODO: Implement (low priority)
@@ -471,6 +539,7 @@ end
 function ENTITY_META:IsOnGround()
 	return self:IsFlagSet(_E.ENGINE_FLAG.ON_GROUND)
 end
+ENTITY_META.OnGround = ENTITY_META.IsOnGround
 
 --[[
 	We implement SetNotSolid and DrawShadow using engine flags/effects, but I'm not sure
@@ -495,8 +564,44 @@ function ENTITY_META:DrawShadow(bBool)
 	end
 end
 
-ENTITY_META.OnGround = ENTITY_META.IsOnGround
-ENTITY_META.WaterLevel = ENTITY_META.GetWaterLevel
+-- TODO: Actually implement these bone manipulation functions
+-- TODO: We should probably override SetupBones, call the baseclass, and then apply our manipulations?
+-- TODO: Or we need to use a function from bone_setup.h. I'm not sure which one.
+function ENTITY_META:GetManipulateBoneAngles()
+    return Angle()
+end
+
+function ENTITY_META:GetManipulateBoneJiggle()
+    return 0
+end
+
+function ENTITY_META:GetManipulateBonePosition()
+    return Vector()
+end
+
+function ENTITY_META:GetManipulateBoneScale()
+    return Vector(1, 1, 1)
+end
+
+function ENTITY_META:ManipulateBoneAngles(boneID, angle, isNetworked)
+end
+
+function ENTITY_META:ManipulateBoneJiggle(boneID, jiggle)
+end
+
+function ENTITY_META:ManipulateBonePosition(boneID, position, isNetworked)
+end
+
+function ENTITY_META:ManipulateBoneScale(boneID, scale, isNetworked)
+end
+
+function ENTITY_META:HasBoneManipulations()
+	return false
+end
+
+local WEAPON_META = FindMetaTable("Weapon")
+WEAPON_META.GetHoldType = WEAPON_META.GetAnimationPrefix
+WEAPON_META.SetHoldType = WEAPON_META.SetAnimationPrefix
 
 local PLAYER_META = FindMetaTable("Player")
 PLAYER_META.GetShootPos = ENTITY_META.GetEyePosition
@@ -521,6 +626,11 @@ PLAYER_META.SetWalkSpeed = PLAYER_META.SetNormalSpeed
 PLAYER_META.GetWalkSpeed = PLAYER_META.GetNormalSpeed
 PLAYER_META.GetCrouchedWalkSpeed = PLAYER_META.GetCrouchWalkFraction
 PLAYER_META.SetCrouchedWalkSpeed = PLAYER_META.SetCrouchWalkFraction
+PLAYER_META.Ping = PLAYER_META.GetPing
+
+function PLAYER_META:Crouching()
+	return self:IsFlagSet(_E.ENGINE_FLAG.DUCKING)
+end
 
 function PLAYER_META:GetInfo(consoleVariableName)
 	return engine.GetClientConsoleVariableValue(self, consoleVariableName)
@@ -540,6 +650,14 @@ end
 
 function PLAYER_META:IsTyping()
 	return false -- TODO: implement this
+end
+
+function PLAYER_META:GetCanZoom()
+	return self.__canZoom or false
+end
+
+function PLAYER_META:SetCanZoom(canZoom)
+	self.__canZoom = canZoom
 end
 
 -- TODO: Implement these correctly (I'm not sure what they do atm)
@@ -1389,6 +1507,22 @@ hook.Add("Initialize", "GModCompatibility.CallInitializeHooks", function()
 	hook.Run("PreGamemodeLoaded")
 	hook.Run("OnGamemodeLoaded")
 	hook.Run("PostGamemodeLoaded")
+end)
+
+hook.Add("PreEntityInitialize", "GModCompatibility.CallSetupDataTables", function(entity)
+    if (entity.InstallDataTable) then
+		print("Installing data table for " .. tostring(entity))
+        entity:InstallDataTable()
+    else
+		print("No data table to install for " .. tostring(entity))
+    end
+
+    if (entity.SetupDataTables) then
+		print("Setting up data tables for " .. tostring(entity))
+		entity:SetupDataTables()
+    else
+		print("No data tables to setup for " .. tostring(entity))
+	end
 end)
 
 -- Setup the Garry's Mod lua include path so Include can find scripts

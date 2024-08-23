@@ -104,7 +104,7 @@ LUA_BINDING_BEGIN( Angle, IsEqualWithTolerance, "class", "Checks if the angle is
 }
 LUA_BINDING_END( "boolean", "True if the angles are equal within the tolerance, false otherwise." )
 
-LUA_BINDING_BEGIN( Angle, Init, "class", "Initializes the angle with the specified values." )
+LUA_BINDING_BEGIN( Angle, Initialize, "class", "Initializes the angle with the specified values." )
 {
     lua_QAngle &angle = LUA_BINDING_ARGUMENT( luaL_checkangle, 1, "angle" );
     vec_t x = ( vec_t )LUA_BINDING_ARGUMENT( luaL_checknumber, 2, "x" );

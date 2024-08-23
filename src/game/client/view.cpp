@@ -549,29 +549,7 @@ void CViewRender::OnRenderStart()
 #ifdef LUA_SDK
         LUA_CALL_HOOK_BEGIN( "AdjustMouseSensitivity" );
         lua_pushnumber( L, gHUD.m_flMouseSensitivity );
-        LUA_CALL_HOOK_END( 1, 1 );
-
-        bool bCallWeaponAdjustMouseSensitivityHook = true;
-
-        if ( lua_isnumber( L, -1 ) )
-        {
-            lua_Number flSensitivity = lua_tonumber( L, -1 );
-
-            if ( flSensitivity == -1 )
-            {
-                bCallWeaponAdjustMouseSensitivityHook = false;
-            }
-            else
-            {
-                gHUD.m_flMouseSensitivity = flSensitivity;
-            }
-        }
-        lua_pop( L, 1 );  // pop the return value
-
-        if ( bCallWeaponAdjustMouseSensitivityHook )
-        {
-            // TODO: Call WEAPON:AdjustMouseSensitivity hook
-        }
+        LUA_CALL_HOOK_END( 1, 0 );
 #endif
     }
 }

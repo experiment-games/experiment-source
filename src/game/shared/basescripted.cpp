@@ -192,6 +192,10 @@ void CBaseScripted::InitScriptedEntity( void )
         }
     }
 
+    LUA_CALL_HOOK_BEGIN( "PreEntityInitialize" );
+    CBaseEntity::PushLuaInstanceSafe( L, this );
+    LUA_CALL_HOOK_END( 1, 0 );
+
     LUA_CALL_ENTITY_METHOD_BEGIN( "Initialize" );
     LUA_CALL_ENTITY_METHOD_END( 0, 0 );
 #endif

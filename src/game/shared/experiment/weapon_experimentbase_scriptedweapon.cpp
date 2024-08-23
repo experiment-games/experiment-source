@@ -597,6 +597,12 @@ void CExperimentScriptedWeapon::InitScriptedWeapon( void )
     }
     lua_pop( L, 1 );  // Pop the Damage field
 
+    LUA_CALL_HOOK_BEGIN( "PreEntityInitialize" );
+    CBaseEntity::PushLuaInstanceSafe( L, this );
+    LUA_CALL_HOOK_END( 1, 0 );
+
+    m_bInitialized = true;
+
     LUA_CALL_WEAPON_METHOD_BEGIN( "Initialize" );
     LUA_CALL_WEAPON_METHOD_END( 0, 0 );
 #endif

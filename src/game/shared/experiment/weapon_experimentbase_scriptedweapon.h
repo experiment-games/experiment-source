@@ -31,6 +31,30 @@ class CExperimentScriptedWeapon : public CBaseExperimentCombatWeapon
 
 #ifdef LUA_SDK
     virtual void SetupRefTable( lua_State *L );
+    bool m_bInitialized;
+
+    bool IsValid( void ) const
+    {
+        return m_bInitialized;
+    }
+
+    /// <summary>
+    /// We usually want the scripted weapon to be fully initialized before we can call any of its methods.
+    /// Especially NetworkVar methods need to have been installed before they're used.
+    /// </summary>
+    /// <param name="pWeapon"></param>
+    /// <returns></returns>
+    static bool IsValidWeapon( CBaseCombatWeapon *pWeapon )
+    {
+        CExperimentScriptedWeapon *pScriptedWeapon = dynamic_cast< CExperimentScriptedWeapon * >( pWeapon );
+
+        if ( pScriptedWeapon )
+        {
+            return pScriptedWeapon->IsValid();
+        }
+
+        return pWeapon != NULL;
+    }
 #endif
 
     bool IsScripted( void ) const
