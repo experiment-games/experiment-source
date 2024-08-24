@@ -516,7 +516,7 @@ class CHLVoiceStatusHelper : public IVoiceStatusHelper
         LUA_CALL_HOOK_BEGIN( "GetPlayerTextColor", "Allows overriding the color of the player's name in the scoreboard." );
         CBasePlayer::PushLuaInstanceSafe( L, entity );  // doc: player
         lua_pushcolor( L, color ); // doc: color (the color of the player's name in the scoreboard)
-        LUA_CALL_HOOK_END( 1, 1 );  // doc: color (return a replacement color to override the default color)
+        LUA_CALL_HOOK_END( 2, 1 );  // doc: color (return a replacement color to override the default color)
 
         if ( lua_iscolor( L, -1 ) )
         {

@@ -77,10 +77,6 @@
 // Projective textures
 #include "C_Env_Projected_Texture.h"
 
-#ifdef LUA_SDK
-#include <mathlib/lvector.h>
-#endif
-
 // memdbgon must be the last include file in a .cpp file!!!
 #include "tier0/memdbgon.h"
 
@@ -2362,6 +2358,11 @@ void CViewRender::RenderView( const CViewSetup &view, int nClearFlags, int whatT
 
     Render2DEffectsPostHUD( view );
 
+#ifdef LUA_SDK
+    LUA_CALL_HOOK_BEGIN( "DrawOverlay" );
+    LUA_CALL_HOOK_END( 0, 0 );
+#endif
+
     g_bRenderingView = false;
 
     // We can no longer use the 'current view' stuff set up in ViewDrawScene
@@ -2371,11 +2372,6 @@ void CViewRender::RenderView( const CViewSetup &view, int nClearFlags, int whatT
     {
         CDebugViewRender::GenerateOverdrawForTesting();
     }
-
-#ifdef LUA_SDK
-    LUA_CALL_HOOK_BEGIN( "DrawOverlay" );
-    LUA_CALL_HOOK_END( 0, 0 );
-#endif
 
     render->PopView( GetFrustum() );
     g_WorldListCache.Flush();

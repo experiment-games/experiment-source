@@ -27,9 +27,6 @@
 LUA_REGISTRATION_INIT( Renders );
 
 #ifdef CLIENT_DLL
-// Frustrums for PushView2D and -3D functions
-static Frustum renderFrustum3D;
-static Frustum renderFrustum2D;
 
 // Minifaction and magnification filter stacks
 static CUtlStack< ShaderAPITextureHandle_t > filterTextureHandlesMinification;
@@ -177,7 +174,7 @@ LUA_BINDING_BEGIN( Renders, PushView3D, "library", "Push a 3D view.", "client" )
     viewSetup.zNear = zNear;
     viewSetup.zFar = zFar;
 
-    render->Push3DView( viewSetup, 0, NULL, renderFrustum3D );
+    render->Push3DView( viewSetup, 0, NULL, view->GetFrustum() );
 
     return 0;
 }
@@ -185,7 +182,7 @@ LUA_BINDING_END()
 
 LUA_BINDING_BEGIN( Renders, PopView3D, "library", "Pop a 3D view.", "client" )
 {
-    render->PopView( renderFrustum3D );
+    render->PopView( view->GetFrustum() );
     return 0;
 }
 LUA_BINDING_END()
@@ -193,14 +190,14 @@ LUA_BINDING_END()
 LUA_BINDING_BEGIN( Renders, PushView2D, "library", "Push a 2D view.", "client" )
 {
     CViewSetup viewSetup = *view->GetPlayerViewSetup();
-    render->Push2DView( viewSetup, 0, NULL, renderFrustum2D );
+    render->Push2DView( viewSetup, 0, NULL, view->GetFrustum() );
     return 0;
 }
 LUA_BINDING_END()
 
 LUA_BINDING_BEGIN( Renders, PopView2D, "library", "Pop a 2D view.", "client" )
 {
-    render->PopView( renderFrustum2D );
+    render->PopView( view->GetFrustum() );
     return 0;
 }
 LUA_BINDING_END()
