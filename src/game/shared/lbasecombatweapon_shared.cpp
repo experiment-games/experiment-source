@@ -160,6 +160,24 @@ LUA_BINDING_BEGIN( Weapon, Clip2, "class", "The amount of ammo in the secondary 
 }
 LUA_BINDING_END( "integer", "The amount of ammo in the secondary clip." )
 
+LUA_BINDING_BEGIN( Weapon, SetClip1, "class", "Set the amount of ammo in the primary clip." )
+{
+    lua_CBaseCombatWeapon *pWeapon = LUA_BINDING_ARGUMENT( luaL_checkweapon, 1, "entity" );
+    int iClip = LUA_BINDING_ARGUMENT( luaL_checknumber, 2, "clip" );
+    pWeapon->m_iClip1 = iClip;
+    return 0;
+}
+LUA_BINDING_END()
+
+LUA_BINDING_BEGIN( Weapon, SetClip2, "class", "Set the amount of ammo in the secondary clip." )
+{
+    lua_CBaseCombatWeapon *pWeapon = LUA_BINDING_ARGUMENT( luaL_checkweapon, 1, "entity" );
+    int iClip = LUA_BINDING_ARGUMENT( luaL_checknumber, 2, "clip" );
+    pWeapon->m_iClip2 = iClip;
+    return 0;
+}
+LUA_BINDING_END()
+
 LUA_BINDING_BEGIN( Weapon, DefaultDeploy, "class", "Default deploy." )
 {
     lua_CBaseCombatWeapon *pWeapon = LUA_BINDING_ARGUMENT( luaL_checkweapon, 1, "entity" );
@@ -929,7 +947,7 @@ LUA_BINDING_BEGIN( Weapon, SecondaryAttack, "class", "Secondary attack." )
 }
 LUA_BINDING_END()
 
-LUA_BINDING_BEGIN( Weapon, SendViewModelAnim, "class", "Send view model animation." )
+LUA_BINDING_BEGIN( Weapon, SendViewModelAnimation, "class", "Send view model animation." )
 {
     lua_CBaseCombatWeapon *pWeapon = LUA_BINDING_ARGUMENT( luaL_checkweapon, 1, "entity" );
     int iSequence = LUA_BINDING_ARGUMENT( luaL_checknumber, 2, "sequence" );
@@ -938,7 +956,7 @@ LUA_BINDING_BEGIN( Weapon, SendViewModelAnim, "class", "Send view model animatio
 }
 LUA_BINDING_END()
 
-LUA_BINDING_BEGIN( Weapon, SendWeaponAnim, "class", "Send weapon animation." )
+LUA_BINDING_BEGIN( Weapon, SendWeaponAnimation, "class", "Send weapon animation." )
 {
     lua_CBaseCombatWeapon *pWeapon = LUA_BINDING_ARGUMENT( luaL_checkweapon, 1, "entity" );
     int iActivity = LUA_BINDING_ARGUMENT( luaL_checknumber, 2, "activity" );
@@ -1174,7 +1192,7 @@ LUA_BINDING_BEGIN( Weapon, WeaponIdle, "class", "Weapon idle." )
 }
 LUA_BINDING_END()
 
-LUA_BINDING_BEGIN( Weapon, WeaponSound, "class", "Weapon sound." )
+LUA_BINDING_BEGIN( Weapon, EmitWeaponSound, "class", "Weapon sound." )
 {
     lua_CBaseCombatWeapon *pWeapon = LUA_BINDING_ARGUMENT( luaL_checkweapon, 1, "entity" );
     int iSound = LUA_BINDING_ARGUMENT( luaL_checknumber, 2, "soundType" );

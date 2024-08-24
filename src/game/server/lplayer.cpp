@@ -49,6 +49,15 @@ LUA_BINDING_BEGIN( Player, CreateViewModel, "class", "Create a view model for th
 }
 LUA_BINDING_END()
 
+// TODO: This should be part of CBaseEntity, but currently only players are checked for m_bLagCompensation
+LUA_BINDING_BEGIN( Player, SetLagCompensated, "class", "Set the player's lag compensation." )
+{
+    lua_CBasePlayer *player = LUA_BINDING_ARGUMENT( luaL_checkplayer, 1, "player" );
+    player->m_bLagCompensation = LUA_BINDING_ARGUMENT( luaL_checkboolean, 2, "lagCompensation" );
+    return 0;
+}
+LUA_BINDING_END()
+
 LUA_BINDING_BEGIN( Player, HideViewModels, "class", "Hide all view models for the player." )
 {
     lua_CBasePlayer *player = LUA_BINDING_ARGUMENT( luaL_checkplayer, 1, "player" );

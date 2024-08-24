@@ -380,7 +380,7 @@ LUA_BINDING_BEGIN( Entity, EmitSound, "class", "Emit sound." )
     lua_CBaseEntity *pEntity = LUA_BINDING_ARGUMENT( luaL_checkentity, 1, "entity" );
 
     const char *pszSoundName = LUA_BINDING_ARGUMENT( luaL_checkstring, 2, "soundName" );
-    int flSoundLevel = LUA_BINDING_ARGUMENT_WITH_DEFAULT( luaL_optnumber, 3, 75, "soundLevel" );
+    soundlevel_t soundLevel = LUA_BINDING_ARGUMENT_ENUM_WITH_DEFAULT( soundlevel_t, 3, SNDLVL_NORM, "soundLevel" );
     float flPitchPercent = LUA_BINDING_ARGUMENT_WITH_DEFAULT( luaL_optnumber, 4, 100, "pitchPercent" );
     float flVolume = LUA_BINDING_ARGUMENT_WITH_DEFAULT( luaL_optnumber, 5, 1, "volume" );
     int nChannel = LUA_BINDING_ARGUMENT_WITH_DEFAULT( luaL_optnumber, 6, pEntity->IsWeapon() ? CHAN_WEAPON : CHAN_AUTO, "channel" );
@@ -390,7 +390,11 @@ LUA_BINDING_BEGIN( Entity, EmitSound, "class", "Emit sound." )
     CRecipientFilter *filter = nullptr;
 
     if ( lua_isrecipientfilter( L, 9 ) )
-        filter = &LUA_BINDING_ARGUMENT( luaL_checkrecipientfilter, 9, "filter" );
+        filter = &LUA_BINDING_ARGUMENT_NILLABLE( luaL_checkrecipientfilter, 9, "filter" );
+    else
+    {
+        filter = new CPASAttenuationFilter( pEntity, soundLevel );
+    }
 
     float duration = 0;
     int iEntIndex = pEntity->entindex();
@@ -399,7 +403,7 @@ LUA_BINDING_BEGIN( Entity, EmitSound, "class", "Emit sound." )
     params.m_pSoundName = pszSoundName;
     params.m_nChannel = nChannel;
     params.m_flVolume = flVolume;
-    params.m_SoundLevel = ( soundlevel_t )flSoundLevel;
+    params.m_SoundLevel = soundLevel;
     params.m_nFlags = nSoundFlags;
     params.m_nPitch = flPitchPercent;
     params.m_pOrigin = &pEntity->GetAbsOrigin();
@@ -412,6 +416,8 @@ LUA_BINDING_BEGIN( Entity, EmitSound, "class", "Emit sound." )
     pEntity->EmitSound( *filter, iEntIndex, params );
 
     lua_pushnumber( L, duration );
+
+    delete[] filter;
 
     return 1;
 }

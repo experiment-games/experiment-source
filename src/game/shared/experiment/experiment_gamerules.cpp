@@ -485,11 +485,6 @@ float CExperimentRules::FlPlayerSpawnTime( CBasePlayer *pPlayer )
 
 void CExperimentRules::Think( void )
 {
-#ifdef LUA_SDK
-    LUA_CALL_HOOK_BEGIN( "Think" );
-    LUA_CALL_HOOK_END( 0, 0 );
-#endif
-
 #ifndef CLIENT_DLL
     CGameRules::Think();
 
@@ -574,7 +569,6 @@ void CExperimentRules::Think( void )
     }
 
     ManageObjectRelocation();
-
 #endif
 }
 

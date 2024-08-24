@@ -35,6 +35,7 @@ void CGameInfoStore::FireGameEvent( IGameEvent *event )
 
         Q_strncpy( m_pszServerAddress, pszServerAddress, sizeof( m_pszServerAddress ) );
         Q_strncpy( m_pszServerName, pszServerName, sizeof( m_pszServerName ) );
+        m_bIsDedicatedServer = event->GetBool( "dedicated" );
     }
     else if ( Q_strcmp( eventType, "game_newmap" ) == 0 )
     {

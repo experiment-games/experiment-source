@@ -10,6 +10,7 @@
 #else
 #include "lbaseanimating.h"
 #include "player_resource.h"
+#include "ilagcompensationmanager.h"
 #endif
 #include "lbasecombatweapon_shared.h"
 #include "lbaseentity_shared.h"
@@ -17,10 +18,10 @@
 #include "mathlib/lvector.h"
 #include "lvphysics_interface.h"
 #include <lusercmd.h>
+#include <weapon_experimentbase_scriptedweapon.h>
 
 // memdbgon must be the last include file in a .cpp file!!!
 #include "tier0/memdbgon.h"
-#include <weapon_experimentbase_scriptedweapon.h>
 
 /*
 ** access functions (stack -> C)
@@ -935,6 +936,42 @@ LUA_BINDING_BEGIN( Player, SetLadderNormal, "class", "Set the player's ladder no
 }
 LUA_BINDING_END()
 
+LUA_BINDING_BEGIN( Player, StartLagCompensation, "class", "Set the player's lag compensation. On the client this does nothing." )
+{
+#ifndef CLIENT_DLL
+    lua_CBasePlayer *player = LUA_BINDING_ARGUMENT( luaL_checkplayer, 1, "player" );
+
+    if ( lagcompensation->IsCurrentlyDoingLagCompensation() )
+    {
+        DevWarning( "Cannot start lag compensation while already having started it!\n" );
+        return 0;
+    }
+
+    // Move other players back to history positions based on local player's lag
+    lagcompensation->StartLagCompensation( player,
+                                           player->GetCurrentCommand() );
+#endif
+    return 0;
+}
+LUA_BINDING_END()
+
+LUA_BINDING_BEGIN( Player, FinishLagCompensation, "class", "Set the player's lag compensation. On the client this does nothing." )
+{
+#ifndef CLIENT_DLL
+    lua_CBasePlayer *player = LUA_BINDING_ARGUMENT( luaL_checkplayer, 1, "player" );
+
+    if ( !lagcompensation->IsCurrentlyDoingLagCompensation() )
+    {
+        DevWarning( "Cannot finish lag compensation when not having started it!\n" );
+        return 0;
+    }
+
+    lagcompensation->FinishLagCompensation( player );
+#endif
+    return 0;
+}
+LUA_BINDING_END()
+
 LUA_BINDING_BEGIN( Player, SetMaxSpeed, "class", "Set the player's current max speed." )
 {
     lua_CBasePlayer *player = LUA_BINDING_ARGUMENT( luaL_checkplayer, 1, "player" );
@@ -1234,6 +1271,14 @@ LUA_BINDING_BEGIN( Player, GetViewPunchAngles, "class", "Get the player's view p
 }
 LUA_BINDING_END( "Angle", "The player's view punch angle." )
 
+LUA_BINDING_BEGIN( Player, SetViewPunchAngles, "class", "Set the player's view punch angle." )
+{
+    lua_CBasePlayer *player = LUA_BINDING_ARGUMENT( luaL_checkplayer, 1, "player" );
+    player->m_Local.m_vecPunchAngle = LUA_BINDING_ARGUMENT( luaL_checkangle, 2, "angle" );
+    return 0;
+}
+LUA_BINDING_END()
+
 LUA_BINDING_BEGIN( Player, CanSwitchToWeapon, "class", "Check if the player can switch to a weapon." )
 {
     lua_pushboolean(
@@ -1307,7 +1352,7 @@ LUA_BINDING_BEGIN( Player, WasKeyReleased, "class", "Check if a key was released
 }
 LUA_BINDING_END( "boolean", "Whether the key was released." )
 
-LUA_BINDING_BEGIN( Player, WeaponShootPosition, "class", "Get the player's weapon shoot position." )
+LUA_BINDING_BEGIN( Player, GetWeaponShootPosition, "class", "Get the player's weapon shoot position." )
 {
     Vector v = LUA_BINDING_ARGUMENT( luaL_checkplayer, 1, "player" )->Weapon_ShootPosition();
     lua_pushvector( L, v );

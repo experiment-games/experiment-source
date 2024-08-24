@@ -20,19 +20,19 @@ LUA_API lua_FireBulletsInfo_t lua_tofirebulletsinfo( lua_State *L, int idx )
     if ( !lua_isnil( L, -1 ) )
         info.m_bPrimaryAttack = luaL_checkboolean( L, -1 );
     lua_pop( L, 1 );
-    lua_getfield( L, idx, "m_flDamageForceScale" );
+    lua_getfield( L, idx, "Force" );
     if ( !lua_isnil( L, -1 ) )
         info.m_flDamageForceScale = luaL_checknumber( L, -1 );
     lua_pop( L, 1 );
-    lua_getfield( L, idx, "m_flDistance" );
+    lua_getfield( L, idx, "Distance" );
     if ( !lua_isnil( L, -1 ) )
         info.m_flDistance = luaL_checknumber( L, -1 );
     lua_pop( L, 1 );
-    lua_getfield( L, idx, "m_iAmmoType" );
+    lua_getfield( L, idx, "AmmoType" );
     if ( !lua_isnil( L, -1 ) )
         info.m_iAmmoType = luaL_checknumber( L, -1 );
     lua_pop( L, 1 );
-    lua_getfield( L, idx, "m_iDamage" );
+    lua_getfield( L, idx, "Damage" );
     if ( !lua_isnil( L, -1 ) )
         info.m_flDamage = luaL_checknumber( L, -1 );
     lua_pop( L, 1 );
@@ -40,35 +40,39 @@ LUA_API lua_FireBulletsInfo_t lua_tofirebulletsinfo( lua_State *L, int idx )
     if ( !lua_isnil( L, -1 ) )
         info.m_iPlayerDamage = luaL_checknumber( L, -1 );
     lua_pop( L, 1 );
-    lua_getfield( L, idx, "m_iShots" );
+    lua_getfield( L, idx, "Num" );  // TODO: adhere to our own conventions (this is for easy gmod compat atm)
     if ( !lua_isnil( L, -1 ) )
         info.m_iShots = luaL_checknumber( L, -1 );
     lua_pop( L, 1 );
-    lua_getfield( L, idx, "m_iTracerFreq" );
+    lua_getfield( L, idx, "Tracer" );
     if ( !lua_isnil( L, -1 ) )
         info.m_iTracerFreq = luaL_checknumber( L, -1 );
+    lua_pop( L, 1 );
+    lua_getfield( L, idx, "TracerName" );
+    if ( !lua_isnil( L, -1 ) )
+        info.m_pszTracerType = strdup( luaL_checkstring( L, -1 ) );
     lua_pop( L, 1 );
     lua_getfield( L, idx, "m_nFlags" );
     if ( !lua_isnil( L, -1 ) )
         info.m_nFlags = luaL_checknumber( L, -1 );
     lua_pop( L, 1 );
-    lua_getfield( L, idx, "m_pAdditionalIgnoreEnt" );
+    lua_getfield( L, idx, "IgnoreEntity" );
     if ( !lua_isnil( L, -1 ) )
         info.m_pAdditionalIgnoreEnt = lua_toentity( L, -1 );
     lua_pop( L, 1 );
-    lua_getfield( L, idx, "m_pAttacker" );
+    lua_getfield( L, idx, "Attacker" );
     if ( !lua_isnil( L, -1 ) )
         info.m_pAttacker = lua_toentity( L, -1 );
     lua_pop( L, 1 );
-    lua_getfield( L, idx, "m_vecDirShooting" );
+    lua_getfield( L, idx, "Dir" );  // TODO: adhere to our own conventions (this is for easy gmod compat atm)
     if ( !lua_isnil( L, -1 ) )
         info.m_vecDirShooting = luaL_checkvector( L, -1 );
     lua_pop( L, 1 );
-    lua_getfield( L, idx, "m_vecSpread" );
+    lua_getfield( L, idx, "Spread" );
     if ( !lua_isnil( L, -1 ) )
         info.m_vecSpread = luaL_checkvector( L, -1 );
     lua_pop( L, 1 );
-    lua_getfield( L, idx, "m_vecSrc" );
+    lua_getfield( L, idx, "Source" );
     if ( !lua_isnil( L, -1 ) )
         info.m_vecSrc = luaL_checkvector( L, -1 );
     lua_pop( L, 1 );

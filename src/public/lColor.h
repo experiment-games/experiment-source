@@ -22,6 +22,11 @@ class LColor : public Color
         lua_newtable( L );
         m_nTableReference = luaL_ref( L, LUA_REGISTRYINDEX );
     }
+
+    Vector &ToVector() const
+    {
+        return Vector( r(), g(), b() );
+    }
 };
 
 /* type for Color functions */

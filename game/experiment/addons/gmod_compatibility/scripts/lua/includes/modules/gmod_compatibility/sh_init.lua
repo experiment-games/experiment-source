@@ -56,6 +56,17 @@ function math.random(min, max)
 	return originalMathRandom(min, max)
 end
 
+function math.pow(base, exponent)
+	return base ^ exponent
+end
+
+-- Since Lua 5.3 non-integers give an error
+local originalRandomSeed = math.randomseed
+
+function math.randomseed(seed)
+	originalRandomSeed(math.floor(seed))
+end
+
 util = Utilities
 util.PrecacheModel = _R.Entity.PrecacheModel
 util.PrecacheSound = _R.Entity.PrecacheSound
@@ -69,6 +80,7 @@ util.NetworkStringToID = function() return 0 end  -- Not needed for us.
 util.TraceLine = Traces.TraceLine
 util.TraceHull = Traces.TraceHull
 util.TraceEntity = Traces.TraceEntity
+util.PointContents = Traces.PointContents
 
 util.JSONToTable = function(json)
 	return Json.Decode(json)
@@ -82,6 +94,8 @@ util.IsValidProp = util.IsValidPhysicsProp
 util.CRC = function(unencoded)
 	return tostring(Serializers.Crc32(unencoded))
 end
+
+util.SharedRandom = Randoms.SharedRandomFloat
 
 ents = {
 	Create = Entities.CreateByName,
@@ -214,6 +228,8 @@ IsFirstTimePredicted = Predictions.IsFirstTimePredicted
 LerpVector = Vectors.Lerp
 
 RecipientFilter = RecipientFilters.Create
+EffectData = Effects.Create
+util.Effect = Effects.Dispatch
 
 system.AppTime = Systems.GetSecondsSinceAppActive
 system.IsOSX = Systems.IsOsx
@@ -401,6 +417,12 @@ game = {
 	GetMap = Engines.GetLevelName,
 }
 
+local EFFECT_DATA_META = FindMetaTable("EffectData")
+EFFECT_DATA_META.GetEntIndex = EFFECT_DATA_META.GetEntityIndex
+EFFECT_DATA_META.SetEntIndex = EFFECT_DATA_META.SetEntityIndex
+EFFECT_DATA_META.GetAttachment = EFFECT_DATA_META.GetAttachmentIndex
+EFFECT_DATA_META.SetAttachment = EFFECT_DATA_META.SetAttachmentIndex
+
 local VECTOR_META = FindMetaTable("Vector")
 VECTOR_META.AngleEx = VECTOR_META.AngleWithUp
 VECTOR_META.Distance = VECTOR_META.DistanceTo
@@ -432,6 +454,7 @@ function ANGLE_META:Set(angleToCopy)
 end
 
 local ENTITY_META = FindMetaTable("Entity")
+ENTITY_META.EntIndex = ENTITY_META.GetEntityIndex
 ENTITY_META.Health = ENTITY_META.GetHealth
 ENTITY_META.GetPos = ENTITY_META.GetPosition
 ENTITY_META.SetPos = ENTITY_META.SetPosition
@@ -459,6 +482,8 @@ ENTITY_META.GetNumBodyGroups = ENTITY_META.GetBodyGroupsCount
 ENTITY_META.WaterLevel = ENTITY_META.GetWaterLevel
 ENTITY_META.SetMaterial = ENTITY_META.SetMaterialOverride
 ENTITY_META.GetMaterial = ENTITY_META.GetMaterialOverride
+ENTITY_META.GetAbsVelocity = ENTITY_META.GetLocalVelocity
+ENTITY_META.SetAbsVelocity = ENTITY_META.SetLocalVelocity
 
 function ENTITY_META:GetDTAngle(index)
     return self:GetNetworkDataValue(_E.NETWORK_VARIABLE_TYPE.ANGLE, index)
@@ -611,7 +636,7 @@ WEAPON_META.Ammo1 = WEAPON_META.GetPrimaryAmmoCount
 WEAPON_META.Ammo2 = WEAPON_META.GetSecondaryAmmoCount
 
 local PLAYER_META = FindMetaTable("Player")
-PLAYER_META.GetShootPos = ENTITY_META.GetEyePosition
+PLAYER_META.GetShootPos = ENTITY_META.GetWeaponShootPosition
 PLAYER_META.UserID = PLAYER_META.GetUserId
 PLAYER_META.AccountID = PLAYER_META.GetAccountId
 PLAYER_META.SteamID = PLAYER_META.GetSteamId
@@ -640,6 +665,14 @@ PLAYER_META.KeyPressed = PLAYER_META.WasKeyPressed
 PLAYER_META.KeyReleased = PLAYER_META.WasKeyReleased
 PLAYER_META.GetFOV = PLAYER_META.GetFov
 PLAYER_META.SetFOV = PLAYER_META.SetFov
+
+function PLAYER_META:LagCompensation(shouldStart)
+	if (shouldStart) then
+		self:StartLagCompensation()
+	else
+		self:FinishLagCompensation()
+	end
+end
 
 function PLAYER_META:Crouching()
 	return self:IsFlagSet(_E.ENGINE_FLAG.DUCKING)

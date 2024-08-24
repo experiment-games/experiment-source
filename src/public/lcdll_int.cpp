@@ -380,6 +380,14 @@ LUA_BINDING_BEGIN( Engines, IsDrawingLoadingImage, "library", "Check if the clie
 }
 LUA_BINDING_END( "boolean", "True if the client is drawing a loading image, false otherwise." )
 
+LUA_BINDING_BEGIN( Engines, IsDedicatedServer, "library", "Check if the server is dedicated. Internally this is getting this information from the server_spawn event." )
+{
+    lua_pushboolean( L, g_pGameInfoStore->IsDedicatedServer() );
+
+    return 1;
+}
+LUA_BINDING_END( "boolean", "True if the server is dedicated, false otherwise." )
+
 LUA_BINDING_BEGIN( Engines, IsHammerRunning, "library", "Check if Hammer is running." )
 {
     lua_pushboolean( L, engine->IsHammerRunning() );

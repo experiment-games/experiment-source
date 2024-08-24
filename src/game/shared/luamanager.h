@@ -209,7 +209,7 @@
     }
 
 #define LUA_RETURN_NONE_IF_FALSE()                     \
-    if ( lua_gettop( L ) == 1 )                        \
+    if ( lua_gettop( L ) >= 1 )                        \
     {                                                  \
         if ( lua_isboolean( L, -1 ) )                  \
         {                                              \
@@ -223,7 +223,7 @@
     }
 
 #define LUA_RETURN_NONE_IF_TRUE()                      \
-    if ( lua_gettop( L ) == 1 )                        \
+    if ( lua_gettop( L ) >= 1 )                        \
     {                                                  \
         if ( lua_isboolean( L, -1 ) )                  \
         {                                              \
@@ -251,7 +251,7 @@
     }
 
 #define LUA_RETURN_BOOLEAN()                           \
-    if ( lua_gettop( L ) == 1 )                        \
+    if ( lua_gettop( L ) >= 1 )                        \
     {                                                  \
         if ( lua_isboolean( L, -1 ) )                  \
         {                                              \
@@ -277,7 +277,7 @@
     }
 
 #define LUA_RETURN_NUMBER()                    \
-    if ( lua_gettop( L ) == 1 )                \
+    if ( lua_gettop( L ) >= 1 )                \
     {                                          \
         if ( lua_isnumber( L, -1 ) )           \
         {                                      \
@@ -290,7 +290,7 @@
     }
 
 #define LUA_RETURN_INTEGER()                        \
-    if ( lua_gettop( L ) == 1 )                     \
+    if ( lua_gettop( L ) >= 1 )                     \
     {                                               \
         if ( lua_isnumber( L, -1 ) )                \
         {                                           \
@@ -303,7 +303,7 @@
     }
 
 #define LUA_RETURN_BOOLEAN_FROM_INTEGER()    \
-    if ( lua_gettop( L ) == 1 )              \
+    if ( lua_gettop( L ) >= 1 )              \
     {                                        \
         if ( lua_isnumber( L, -1 ) )         \
         {                                    \
@@ -316,7 +316,7 @@
     }
 
 #define LUA_RETURN_ACTIVITY()                \
-    if ( lua_gettop( L ) == 1 )              \
+    if ( lua_gettop( L ) >= 1 )              \
     {                                        \
         if ( lua_isnumber( L, -1 ) )         \
         {                                    \
@@ -329,7 +329,7 @@
     }
 
 #define LUA_RETURN_STRING()                          \
-    if ( lua_gettop( L ) == 1 )                      \
+    if ( lua_gettop( L ) >= 1 )                      \
     {                                                \
         if ( lua_isstring( L, -1 ) )                 \
         {                                            \
@@ -342,7 +342,7 @@
     }
 
 #define LUA_RETURN_WEAPON()                                         \
-    if ( lua_gettop( L ) == 1 )                                     \
+    if ( lua_gettop( L ) >= 1 )                                     \
     {                                                               \
         if ( lua_isuserdata( L, -1 ) &&                             \
              luaL_testudata( L, -1, LUA_BASECOMBATWEAPONLIBNAME ) ) \
@@ -360,7 +360,7 @@
         ( luaL_testudata( L, Index, LUA_BASEENTITYMETANAME ) || luaL_testudata( L, Index, LUA_BASEANIMATINGLIBNAME ) || luaL_testudata( L, Index, LUA_CBASEFLEXLIBNAME ) || luaL_testudata( L, Index, LUA_BASECOMBATWEAPONLIBNAME ) || luaL_testudata( L, -1, LUA_BASEPLAYERMETANAME ) || luaL_testudata( L, Index, LUA_EXPERIMENTPLAYERLIBNAME ) )
 
 #define LUA_RETURN_ENTITY()                           \
-    if ( lua_gettop( L ) == 1 )                       \
+    if ( lua_gettop( L ) >= 1 )                       \
     {                                                 \
         if ( LUA_IS_ENTITY( L, -1 ) )                 \
         {                                             \
@@ -377,7 +377,7 @@
         ( luaL_testudata( L, Index, LUA_BASEPLAYERMETANAME ) || luaL_testudata( L, Index, LUA_EXPERIMENTPLAYERLIBNAME ) )
 
 #define LUA_RETURN_PLAYER()                           \
-    if ( lua_gettop( L ) == 1 )                       \
+    if ( lua_gettop( L ) >= 1 )                       \
     {                                                 \
         if ( LUA_IS_PLAYER( L, -1 ) )                 \
         {                                             \
@@ -390,7 +390,7 @@
     }
 
 #define LUA_RETURN_VECTOR()                     \
-    if ( lua_gettop( L ) == 1 )                 \
+    if ( lua_gettop( L ) >= 1 )                 \
     {                                           \
         if ( lua_isvector( L, -1 ) )            \
         {                                       \
@@ -403,7 +403,7 @@
     }
 
 #define LUA_RETURN_ANGLE()                     \
-    if ( lua_gettop( L ) == 1 )                \
+    if ( lua_gettop( L ) >= 1 )                \
     {                                          \
         if ( lua_isangle( L, -1 ) )            \
         {                                      \
@@ -416,7 +416,7 @@
     }
 
 #define LUA_RETURN_VALUE_IF_TRUE( value )      \
-    if ( lua_gettop( L ) == 1 )                \
+    if ( lua_gettop( L ) >= 1 )                \
     {                                          \
         if ( lua_isboolean( L, -1 ) )          \
         {                                      \
@@ -430,7 +430,7 @@
     }
 
 #define LUA_RETURN_VALUE_IF_FALSE( value )     \
-    if ( lua_gettop( L ) == 1 )                \
+    if ( lua_gettop( L ) >= 1 )                \
     {                                          \
         if ( lua_isboolean( L, -1 ) )          \
         {                                      \
@@ -444,7 +444,7 @@
     }
 
 #define LUA_RETURN_VALUE_IF_BOOLEAN( ValueTrue, ValueFalse ) \
-    if ( lua_gettop( L ) == 1 )                              \
+    if ( lua_gettop( L ) >= 1 )                              \
     {                                                        \
         if ( lua_isboolean( L, -1 ) )                        \
         {                                                    \

@@ -727,6 +727,7 @@ struct FireBulletsInfo_t
 	CBaseEntity *m_pAdditionalIgnoreEnt;
 	bool m_bPrimaryAttack;
 	bool m_bUseServerRandomSeed;
+    const char *m_pszTracerType;
 };
 
 //-----------------------------------------------------------------------------

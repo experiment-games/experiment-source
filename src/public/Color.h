@@ -68,7 +68,7 @@ public:
 	inline int g() const	{ return _color[1]; }
 	inline int b() const	{ return _color[2]; }
 	inline int a() const	{ return _color[3]; }
-	
+
 	unsigned char &operator[](int index)
 	{
 		return _color[index];

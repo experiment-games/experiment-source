@@ -711,16 +711,16 @@ end
 
 if (SERVER) then
 	function MODULE.Send(client)
-        if (not currentOutgoingMessage) then
-            error("Networks.Send was called without calling Networks.Start.")
-        end
+		if (not currentOutgoingMessage) then
+			error("Networks.Send was called without calling Networks.Start.")
+		end
 
-        local socketClient = MODULE.ClientToSocketClient(client)
+		local socketClient = MODULE.ClientToSocketClient(client)
 
-        local data = currentOutgoingMessage:GetPackedData()
-        currentOutgoingMessage = nil
+		local data = currentOutgoingMessage:GetPackedData()
+		currentOutgoingMessage = nil
 
-        if (not socketClient) then
+		if (not socketClient) then
 			debug("Client is not connected yet, queueing message...", client)
 			MODULE.QueueMessage(client, data)
 			return
@@ -729,17 +729,37 @@ if (SERVER) then
 		socketClient:send(data)
 	end
 
-    function MODULE.Broadcast()
-        if (not currentOutgoingMessage) then
-            error("Networks.Broadcast was called without calling Networks.Start.")
-        end
+	function MODULE.Broadcast()
+		if (not currentOutgoingMessage) then
+			error("Networks.Broadcast was called without calling Networks.Start.")
+		end
 
-        for _, socketClient in ipairs(socketClients) do
-            MODULE.Send(socketClient.client)
-        end
+		for _, socketClient in ipairs(socketClients) do
+			MODULE.Send(socketClient.client)
+		end
 
-        currentOutgoingMessage = nil
-    end
+		currentOutgoingMessage = nil
+	end
+
+	function MODULE.SendOmit(clientOrClientsToExclude)
+		if (not currentOutgoingMessage) then
+			error("Networks.SendOmit was called without calling Networks.Start.")
+		end
+
+		local clientsToExclude = type(clientOrClientsToExclude) == "table" and clientOrClientsToExclude or {clientOrClientsToExclude}
+
+		for _, socketClient in ipairs(socketClients) do
+			local client = socketClient.client
+
+			if (table.HasValue(clientsToExclude, client)) then
+				continue
+			end
+
+			MODULE.Send(client)
+		end
+
+		currentOutgoingMessage = nil
+	end
 
 	--- Sends the message to all players that have the entity in their PVS
 	--- @param entity any

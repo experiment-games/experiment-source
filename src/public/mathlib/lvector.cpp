@@ -104,7 +104,7 @@ LUA_BINDING_BEGIN( Vector, DistanceTo, "class", "Calculates the distance between
 }
 LUA_BINDING_END( "number", "The distance between the two vectors." )
 
-LUA_BINDING_BEGIN( Vector, DistanceToSqr, "class", "Calculates the squared distance between two vectors." )
+LUA_BINDING_BEGIN( Vector, DistanceToAsSqr, "class", "Calculates the squared distance between two vectors." )
 {
     lua_Vector vec1 = LUA_BINDING_ARGUMENT( luaL_checkvector, 1, "vector1" );
     lua_Vector vec2 = LUA_BINDING_ARGUMENT( luaL_checkvector, 2, "vector2" );

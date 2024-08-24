@@ -315,6 +315,49 @@ LUALIB_API int luaopen_SharedEnumerations( lua_State *L )
     lua_pushenum( L, HUD_PRINTCENTER, "CENTER" );
     LUA_SET_ENUM_LIB_END( L );
 
+    LUA_SET_ENUM_LIB_BEGIN( L, "PLAYER_ANIMATION_EVENT" );
+    lua_pushenum( L, PlayerAnimEvent_t::PLAYERANIMEVENT_ATTACK_PRIMARY, "ATTACK_PRIMARY" );
+    lua_pushenum( L, PlayerAnimEvent_t::PLAYERANIMEVENT_ATTACK_SECONDARY, "ATTACK_SECONDARY" );
+    lua_pushenum( L, PlayerAnimEvent_t::PLAYERANIMEVENT_ATTACK_GRENADE, "ATTACK_GRENADE" );
+    lua_pushenum( L, PlayerAnimEvent_t::PLAYERANIMEVENT_RELOAD, "RELOAD" );
+    lua_pushenum( L, PlayerAnimEvent_t::PLAYERANIMEVENT_RELOAD_LOOP, "RELOAD_LOOP" );
+    lua_pushenum( L, PlayerAnimEvent_t::PLAYERANIMEVENT_RELOAD_END, "RELOAD_END" );
+    lua_pushenum( L, PlayerAnimEvent_t::PLAYERANIMEVENT_JUMP, "JUMP" );
+    lua_pushenum( L, PlayerAnimEvent_t::PLAYERANIMEVENT_SWIM, "SWIM" );
+    lua_pushenum( L, PlayerAnimEvent_t::PLAYERANIMEVENT_DIE, "DIE" );
+    lua_pushenum( L, PlayerAnimEvent_t::PLAYERANIMEVENT_FLINCH_CHEST, "FLINCH_CHEST" );
+    lua_pushenum( L, PlayerAnimEvent_t::PLAYERANIMEVENT_FLINCH_HEAD, "FLINCH_HEAD" );
+    lua_pushenum( L, PlayerAnimEvent_t::PLAYERANIMEVENT_FLINCH_LEFTARM, "FLINCH_LEFT_ARM" );
+    lua_pushenum( L, PlayerAnimEvent_t::PLAYERANIMEVENT_FLINCH_RIGHTARM, "FLINCH_RIGHT_ARM" );
+    lua_pushenum( L, PlayerAnimEvent_t::PLAYERANIMEVENT_FLINCH_LEFTLEG, "FLINCH_LEFT_LEG" );
+    lua_pushenum( L, PlayerAnimEvent_t::PLAYERANIMEVENT_FLINCH_RIGHTLEG, "FLINCH_RIGHT_LEG" );
+    lua_pushenum( L, PlayerAnimEvent_t::PLAYERANIMEVENT_DOUBLEJUMP, "DOUBLE_JUMP" );
+    lua_pushenum( L, PlayerAnimEvent_t::PLAYERANIMEVENT_CANCEL, "CANCEL" );
+    lua_pushenum( L, PlayerAnimEvent_t::PLAYERANIMEVENT_SPAWN, "SPAWN" );
+    lua_pushenum( L, PlayerAnimEvent_t::PLAYERANIMEVENT_SNAP_YAW, "SNAP_YAW" );
+    lua_pushenum( L, PlayerAnimEvent_t::PLAYERANIMEVENT_CUSTOM, "CUSTOM" );
+    lua_pushenum( L, PlayerAnimEvent_t::PLAYERANIMEVENT_CUSTOM_GESTURE, "CUSTOM_GESTURE" );
+    lua_pushenum( L, PlayerAnimEvent_t::PLAYERANIMEVENT_CUSTOM_SEQUENCE, "CUSTOM_SEQUENCE" );
+    lua_pushenum( L, PlayerAnimEvent_t::PLAYERANIMEVENT_CUSTOM_GESTURE_SEQUENCE, "CUSTOM_GESTURE_SEQUENCE" );
+    lua_pushenum( L, PlayerAnimEvent_t::PLAYERANIMEVENT_ATTACK_PRE, "ATTACK_PRE" );
+    lua_pushenum( L, PlayerAnimEvent_t::PLAYERANIMEVENT_ATTACK_POST, "ATTACK_POST" );
+    lua_pushenum( L, PlayerAnimEvent_t::PLAYERANIMEVENT_GRENADE1_DRAW, "GRENADE1_DRAW" );
+    lua_pushenum( L, PlayerAnimEvent_t::PLAYERANIMEVENT_GRENADE2_DRAW, "GRENADE2_DRAW" );
+    lua_pushenum( L, PlayerAnimEvent_t::PLAYERANIMEVENT_GRENADE1_THROW, "GRENADE1_THROW" );
+    lua_pushenum( L, PlayerAnimEvent_t::PLAYERANIMEVENT_GRENADE2_THROW, "GRENADE2_THROW" );
+    lua_pushenum( L, PlayerAnimEvent_t::PLAYERANIMEVENT_VOICE_COMMAND_GESTURE, "VOICE_COMMAND_GESTURE" );
+    lua_pushenum( L, PlayerAnimEvent_t::PLAYERANIMEVENT_DOUBLEJUMP_CROUCH, "DOUBLE_JUMP_CROUCH" );
+    lua_pushenum( L, PlayerAnimEvent_t::PLAYERANIMEVENT_STUN_BEGIN, "STUN_BEGIN" );
+    lua_pushenum( L, PlayerAnimEvent_t::PLAYERANIMEVENT_STUN_MIDDLE, "STUN_MIDDLE" );
+    lua_pushenum( L, PlayerAnimEvent_t::PLAYERANIMEVENT_STUN_END, "STUN_END" );
+    lua_pushenum( L, PlayerAnimEvent_t::PLAYERANIMEVENT_PASSTIME_THROW_BEGIN, "PASSTIME_THROW_BEGIN" );
+    lua_pushenum( L, PlayerAnimEvent_t::PLAYERANIMEVENT_PASSTIME_THROW_MIDDLE, "PASSTIME_THROW_MIDDLE" );
+    lua_pushenum( L, PlayerAnimEvent_t::PLAYERANIMEVENT_PASSTIME_THROW_END, "PASSTIME_THROW_END" );
+    lua_pushenum( L, PlayerAnimEvent_t::PLAYERANIMEVENT_PASSTIME_THROW_CANCEL, "PASSTIME_THROW_CANCEL" );
+    lua_pushenum( L, PlayerAnimEvent_t::PLAYERANIMEVENT_ATTACK_PRIMARY_SUPER, "ATTACK_PRIMARY_SUPER" );
+    lua_pushenum( L, PlayerAnimEvent_t::PLAYERANIMEVENT_COUNT, "COUNT" );
+    LUA_SET_ENUM_LIB_END( L );
+
     return 0;
 }
 

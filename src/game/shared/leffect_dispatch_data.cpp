@@ -42,15 +42,37 @@ LUALIB_API lua_CEffectData &luaL_checkeffect( lua_State *L, int narg )
 
 LUA_REGISTRATION_INIT( EffectData )
 
-#ifdef CLIENT_DLL
-LUA_BINDING_BEGIN( EffectData, GetEntityIndex, "class", "Get the entity index.", "client" )
+LUA_BINDING_BEGIN( EffectData, GetAngles, "class", "Get the angles of the effect." )
 {
     lua_CEffectData &data = LUA_BINDING_ARGUMENT( luaL_checkeffect, 1, "effectData" );
-    lua_pushinteger( L, data.entindex() );
+    lua_pushangle( L, data.m_vAngles );
     return 1;
 }
-LUA_BINDING_END( "integer", "Entity index." )
-#endif
+LUA_BINDING_END( "Angle", "Angles" )
+
+LUA_BINDING_BEGIN( EffectData, GetAttachmentIndex, "class", "Get the attachment ID for the effect." )
+{
+    lua_CEffectData &data = LUA_BINDING_ARGUMENT( luaL_checkeffect, 1, "effectData" );
+    lua_pushinteger( L, data.m_nAttachmentIndex );
+    return 1;
+}
+LUA_BINDING_END( "integer", "Attachment ID" )
+
+LUA_BINDING_BEGIN( EffectData, GetColor, "class", "Get the byte described as the color of the effect." )
+{
+    lua_CEffectData &data = LUA_BINDING_ARGUMENT( luaL_checkeffect, 1, "effectData" );
+    lua_pushinteger( L, data.m_nColor );
+    return 1;
+}
+LUA_BINDING_END( "integer", "Color" )
+
+LUA_BINDING_BEGIN( EffectData, GetDamageType, "class", "Get the damage type of the effect." )
+{
+    lua_CEffectData &data = LUA_BINDING_ARGUMENT( luaL_checkeffect, 1, "effectData" );
+    lua_pushinteger( L, data.m_nDamageType );
+    return 1;
+}
+LUA_BINDING_END( "integer", "Damage type" )
 
 LUA_BINDING_BEGIN( EffectData, GetEffectNameIndex, "class", "Get the effect name index." )
 {
@@ -60,15 +82,241 @@ LUA_BINDING_BEGIN( EffectData, GetEffectNameIndex, "class", "Get the effect name
 }
 LUA_BINDING_END( "integer", "Effect name index." )
 
-#ifdef CLIENT_DLL
-LUA_BINDING_BEGIN( EffectData, GetEntity, "class", "Get the entity.", "client" )
+#ifndef CLIENT_DLL
+LUA_BINDING_BEGIN( EffectData, GetEntityIndex, "class", "Get the entity index of the entity the effect is assigned to.", "server" )
 {
     lua_CEffectData &data = LUA_BINDING_ARGUMENT( luaL_checkeffect, 1, "effectData" );
-    CBaseEntity::PushLuaInstanceSafe( L, data.GetEntity() );
+    lua_pushinteger( L, data.m_nEntIndex );
     return 1;
 }
-LUA_BINDING_END( "Entity", "Entity." )
+LUA_BINDING_END( "integer", "Entity index." )
 #endif
+
+LUA_BINDING_BEGIN( EffectData, GetEntity, "class", "Get the entity the effect is assigned to." )
+{
+    lua_CEffectData &data = LUA_BINDING_ARGUMENT( luaL_checkeffect, 1, "effectData" );
+#ifdef CLIENT_DLL
+    CBaseEntity::PushLuaInstanceSafe( L, data.GetEntity() );
+#else
+    CBaseEntity::PushLuaInstanceSafe( L, CBaseEntity::Instance( data.m_nEntIndex ) );
+#endif
+    return 1;
+}
+LUA_BINDING_END( "Entity", "The entity the effect is assigned to." )
+
+LUA_BINDING_BEGIN( EffectData, GetFlags, "class", "Get the flags of the effect." )
+{
+    lua_CEffectData &data = LUA_BINDING_ARGUMENT( luaL_checkeffect, 1, "effectData" );
+    lua_pushinteger( L, data.m_fFlags );
+    return 1;
+}
+LUA_BINDING_END( "integer", "The flags of the effect." )
+
+LUA_BINDING_BEGIN( EffectData, GetHitBox, "class", "Get the hit box ID of the effect." )
+{
+    lua_CEffectData &data = LUA_BINDING_ARGUMENT( luaL_checkeffect, 1, "effectData" );
+    lua_pushinteger( L, data.m_nHitBox );
+    return 1;
+}
+LUA_BINDING_END( "integer", "Hit box ID" )
+
+LUA_BINDING_BEGIN( EffectData, GetMagnitude, "class", "Get the magnitude of the effect." )
+{
+    lua_CEffectData &data = LUA_BINDING_ARGUMENT( luaL_checkeffect, 1, "effectData" );
+    lua_pushnumber( L, data.m_flMagnitude );
+    return 1;
+}
+LUA_BINDING_END( "number", "Magnitude" )
+
+LUA_BINDING_BEGIN( EffectData, GetMaterialIndex, "class", "Get the material index of the effect." )
+{
+    lua_CEffectData &data = LUA_BINDING_ARGUMENT( luaL_checkeffect, 1, "effectData" );
+    lua_pushinteger( L, data.m_nMaterial );
+    return 1;
+}
+LUA_BINDING_END( "integer", "Material index" )
+
+LUA_BINDING_BEGIN( EffectData, GetNormal, "class", "Get the normalized direction vector of the effect." )
+{
+    lua_CEffectData &data = LUA_BINDING_ARGUMENT( luaL_checkeffect, 1, "effectData" );
+    lua_pushvector( L, data.m_vNormal );
+    return 1;
+}
+LUA_BINDING_END( "Vector", "Normal" )
+
+LUA_BINDING_BEGIN( EffectData, GetOrigin, "class", "Get the origin position of the effect." )
+{
+    lua_CEffectData &data = LUA_BINDING_ARGUMENT( luaL_checkeffect, 1, "effectData" );
+    lua_pushvector( L, data.m_vOrigin );
+    return 1;
+}
+LUA_BINDING_END( "Vector", "Origin" )
+
+LUA_BINDING_BEGIN( EffectData, GetRadius, "class", "Get the radius of the effect." )
+{
+    lua_CEffectData &data = LUA_BINDING_ARGUMENT( luaL_checkeffect, 1, "effectData" );
+    lua_pushnumber( L, data.m_flRadius );
+    return 1;
+}
+LUA_BINDING_END( "number", "Radius" )
+
+LUA_BINDING_BEGIN( EffectData, GetScale, "class", "Get the scale of the effect." )
+{
+    lua_CEffectData &data = LUA_BINDING_ARGUMENT( luaL_checkeffect, 1, "effectData" );
+    lua_pushnumber( L, data.m_flScale );
+    return 1;
+}
+LUA_BINDING_END( "number", "Scale" )
+
+LUA_BINDING_BEGIN( EffectData, GetStart, "class", "Get the start position of the effect." )
+{
+    lua_CEffectData &data = LUA_BINDING_ARGUMENT( luaL_checkeffect, 1, "effectData" );
+    lua_pushvector( L, data.m_vStart );
+    return 1;
+}
+LUA_BINDING_END( "Vector", "Start" )
+
+LUA_BINDING_BEGIN( EffectData, GetSurfacePropertyIndex, "class", "Get the surface property index of the effect." )
+{
+    lua_CEffectData &data = LUA_BINDING_ARGUMENT( luaL_checkeffect, 1, "effectData" );
+    lua_pushinteger( L, data.m_nSurfaceProp );
+    return 1;
+}
+LUA_BINDING_END( "integer", "Surface property index" )
+
+LUA_BINDING_BEGIN( EffectData, SetAngles, "class", "Set the angles of the effect." )
+{
+    lua_CEffectData &data = LUA_BINDING_ARGUMENT( luaL_checkeffect, 1, "effectData" );
+    data.m_vAngles = LUA_BINDING_ARGUMENT( luaL_checkangle, 2, "angles" );
+    return 0;
+}
+LUA_BINDING_END()
+
+LUA_BINDING_BEGIN( EffectData, SetAttachmentIndex, "class", "Set the attachment ID for the effect." )
+{
+    lua_CEffectData &data = LUA_BINDING_ARGUMENT( luaL_checkeffect, 1, "effectData" );
+    data.m_nAttachmentIndex = LUA_BINDING_ARGUMENT( luaL_checknumber, 2, "attachment" );
+    return 0;
+}
+LUA_BINDING_END()
+
+LUA_BINDING_BEGIN( EffectData, SetColor, "class", "Set the byte described as the color of the effect. What this does differs per effect." )
+{
+    lua_CEffectData &data = LUA_BINDING_ARGUMENT( luaL_checkeffect, 1, "effectData" );
+    data.m_nColor = LUA_BINDING_ARGUMENT( luaL_checknumber, 2, "color" );
+    return 0;
+}
+LUA_BINDING_END()
+
+LUA_BINDING_BEGIN( EffectData, SetDamageType, "class", "Set the damage type of the effect." )
+{
+    lua_CEffectData &data = LUA_BINDING_ARGUMENT( luaL_checkeffect, 1, "effectData" );
+    data.m_nDamageType = LUA_BINDING_ARGUMENT( luaL_checknumber, 2, "damageType" );
+    return 0;
+}
+LUA_BINDING_END()
+
+#ifndef CLIENT_DLL
+LUA_BINDING_BEGIN( EffectData, SetEntityIndex, "class", "Set the entity index of the entity the effect is assigned to.", "server" )
+{
+    lua_CEffectData &data = LUA_BINDING_ARGUMENT( luaL_checkeffect, 1, "effectData" );
+    data.m_nEntIndex = LUA_BINDING_ARGUMENT( luaL_checknumber, 2, "entityIndex" );
+    return 0;
+}
+LUA_BINDING_END()
+#endif
+
+LUA_BINDING_BEGIN( EffectData, SetEntity, "class", "Set the entity the effect is assigned to." )
+{
+    lua_CEffectData &data = LUA_BINDING_ARGUMENT( luaL_checkeffect, 1, "effectData" );
+#ifdef CLIENT_DLL
+    data.m_hEntity = LUA_BINDING_ARGUMENT( luaL_checkentity, 2, "entity" );
+#else
+    data.m_nEntIndex = LUA_BINDING_ARGUMENT( luaL_checkentity, 2, "entity" )->entindex();
+#endif
+    return 0;
+}
+LUA_BINDING_END()
+
+LUA_BINDING_BEGIN( EffectData, SetFlags, "class", "Set the flags of the effect." )
+{
+    lua_CEffectData &data = LUA_BINDING_ARGUMENT( luaL_checkeffect, 1, "effectData" );
+    data.m_fFlags = LUA_BINDING_ARGUMENT( luaL_checknumber, 2, "flags" );
+    return 0;
+}
+LUA_BINDING_END()
+
+LUA_BINDING_BEGIN( EffectData, SetHitBox, "class", "Set the hit box ID of the effect." )
+{
+    lua_CEffectData &data = LUA_BINDING_ARGUMENT( luaL_checkeffect, 1, "effectData" );
+    data.m_nHitBox = LUA_BINDING_ARGUMENT( luaL_checknumber, 2, "hitBoxIndex" );
+    return 0;
+}
+LUA_BINDING_END()
+
+LUA_BINDING_BEGIN( EffectData, SetMagnitude, "class", "Set the magnitude of the effect." )
+{
+    lua_CEffectData &data = LUA_BINDING_ARGUMENT( luaL_checkeffect, 1, "effectData" );
+    data.m_flMagnitude = LUA_BINDING_ARGUMENT( luaL_checknumber, 2, "magnitude" );
+    return 0;
+}
+LUA_BINDING_END()
+
+LUA_BINDING_BEGIN( EffectData, SetMaterialIndex, "class", "Set the material index of the effect." )
+{
+    lua_CEffectData &data = LUA_BINDING_ARGUMENT( luaL_checkeffect, 1, "effectData" );
+    data.m_nMaterial = LUA_BINDING_ARGUMENT( luaL_checknumber, 2, "materialIndex" );
+    return 0;
+}
+LUA_BINDING_END()
+
+LUA_BINDING_BEGIN( EffectData, SetNormal, "class", "Set the normalized direction vector of the effect." )
+{
+    lua_CEffectData &data = LUA_BINDING_ARGUMENT( luaL_checkeffect, 1, "effectData" );
+    data.m_vNormal = LUA_BINDING_ARGUMENT( luaL_checkvector, 2, "normal" );
+    return 0;
+}
+LUA_BINDING_END()
+
+LUA_BINDING_BEGIN( EffectData, SetOrigin, "class", "Set the origin position of the effect." )
+{
+    lua_CEffectData &data = LUA_BINDING_ARGUMENT( luaL_checkeffect, 1, "effectData" );
+    data.m_vOrigin = LUA_BINDING_ARGUMENT( luaL_checkvector, 2, "origin" );
+    return 0;
+}
+LUA_BINDING_END()
+
+LUA_BINDING_BEGIN( EffectData, SetRadius, "class", "Set the radius of the effect." )
+{
+    lua_CEffectData &data = LUA_BINDING_ARGUMENT( luaL_checkeffect, 1, "effectData" );
+    data.m_flRadius = LUA_BINDING_ARGUMENT( luaL_checknumber, 2, "radius" );
+    return 0;
+}
+LUA_BINDING_END()
+
+LUA_BINDING_BEGIN( EffectData, SetScale, "class", "Set the scale of the effect." )
+{
+    lua_CEffectData &data = LUA_BINDING_ARGUMENT( luaL_checkeffect, 1, "effectData" );
+    data.m_flScale = LUA_BINDING_ARGUMENT( luaL_checknumber, 2, "scale" );
+    return 0;
+}
+LUA_BINDING_END()
+
+LUA_BINDING_BEGIN( EffectData, SetStart, "class", "Set the start position of the effect." )
+{
+    lua_CEffectData &data = LUA_BINDING_ARGUMENT( luaL_checkeffect, 1, "effectData" );
+    data.m_vStart = LUA_BINDING_ARGUMENT( luaL_checkvector, 2, "start" );
+    return 0;
+}
+LUA_BINDING_END()
+
+LUA_BINDING_BEGIN( EffectData, SetSurfacePropertyIndex, "class", "Set the surface property index of the effect." )
+{
+    lua_CEffectData &data = LUA_BINDING_ARGUMENT( luaL_checkeffect, 1, "effectData" );
+    data.m_nSurfaceProp = LUA_BINDING_ARGUMENT( luaL_checknumber, 2, "surfaceProperties" );
+    return 0;
+}
+LUA_BINDING_END()
 
 LUA_BINDING_BEGIN( EffectData, __index, "class", "Get the entity." )
 {
@@ -255,7 +503,7 @@ LUA_BINDING_BEGIN( Effects, SpawnBloodImpact, "library", "Creates a blood impact
 LUA_BINDING_END()
 
 // Experiment; Disabled because we never push trace_t pointers, instead we push it as a table struct
-//LUA_BINDING_BEGIN( Effects, SpawnBloodDecalTrace, "library", "Creates a blood decal trace effect." )
+// LUA_BINDING_BEGIN( Effects, SpawnBloodDecalTrace, "library", "Creates a blood decal trace effect." )
 //{
 //    trace_t *trace = LUA_BINDING_ARGUMENT( luaL_checktrace, 1, "trace" );
 //    int color = LUA_BINDING_ARGUMENT( luaL_checknumber, 2, "color" );
@@ -264,10 +512,10 @@ LUA_BINDING_END()
 //
 //    return 0;
 //}
-//LUA_BINDING_END()
+// LUA_BINDING_END()
 
 // Experiment; Disabled because we never push trace_t pointers
-//LUA_BINDING_BEGIN( Effects, SpawnDecalTrace, "library", "Creates a decal trace effect." )
+// LUA_BINDING_BEGIN( Effects, SpawnDecalTrace, "library", "Creates a decal trace effect." )
 //{
 //    trace_t *trace = LUA_BINDING_ARGUMENT( luaL_checktrace, 1, "trace" );
 //    const char *decalName = LUA_BINDING_ARGUMENT( luaL_checkstring, 2, "decalName" );
@@ -276,7 +524,7 @@ LUA_BINDING_END()
 //
 //    return 0;
 //}
-//LUA_BINDING_END()
+// LUA_BINDING_END()
 
 #ifdef GAME_DLL
 
@@ -301,12 +549,12 @@ LUA_BINDING_END()
 
 /*
 * TODO: Expose the types
-	DONT_BLEED = -1,
+  DONT_BLEED = -1,
 
-	BLOOD_COLOR_RED = 0,
-	BLOOD_COLOR_YELLOW,
-	BLOOD_COLOR_GREEN,
-	BLOOD_COLOR_MECH,
+  BLOOD_COLOR_RED = 0,
+  BLOOD_COLOR_YELLOW,
+  BLOOD_COLOR_GREEN,
+  BLOOD_COLOR_MECH,
 */
 LUA_BINDING_BEGIN( Effects, SpawnBloodStream, "library", "Creates a blood stream effect. Color can be DONT_BLEED(-1), BLOOD_COLOR_RED(0), BLOOD_COLOR_YELLOW(1), BLOOD_COLOR_GREEN(2), BLOOD_COLOR_MECH(3) - enums don't exist yet in Lua", "server" )
 {
@@ -354,7 +602,7 @@ LUA_BINDING_BEGIN( Effects, SpawnBubbleTrail, "library", "Creates a bubble trail
 }
 LUA_BINDING_END()
 
-#endif // GAME_DLL
+#endif  // GAME_DLL
 
 /*
 ** Open CEffectData object

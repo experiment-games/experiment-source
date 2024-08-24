@@ -27,7 +27,7 @@ function _R.Weapon.WeaponSound( self, sound_type, soundtime )
   --   WeaponSound( self, sound_type, soundtime )
   -- else
     local shootsound = self:GetShootSound( sound_type )
-    if ( ToBaseEntity( client ) ~= NULL ) then
+    if ( client ~= NULL ) then
       client:EmitSound( shootsound )
     else
       self:EmitSound( shootsound )

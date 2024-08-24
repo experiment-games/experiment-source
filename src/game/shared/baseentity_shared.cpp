@@ -1980,8 +1980,17 @@ void CBaseEntity::FireBullets( const FireBulletsInfo_t &info )
                 }
 #endif  // #ifdef PORTAL
 
-                MakeTracer( vecTracerSrc, Tracer, pAmmoDef->TracerType( info.m_iAmmoType ) );
-
+                // Experiment; added m_pszTracerType
+                if ( info.m_pszTracerType && info.m_pszTracerType[0] != 0 )
+                {
+                    Vector vNewSrc = vecTracerSrc;
+                    int iAttachment = GetTracerAttachment();
+                    UTIL_Tracer( vNewSrc, Tracer.endpos, entindex(), iAttachment, 0.0f, false, info.m_pszTracerType );
+                }
+                else
+                {
+                    MakeTracer( vecTracerSrc, Tracer, pAmmoDef->TracerType( info.m_iAmmoType ) );
+                }
 #ifdef PORTAL
                 if ( pShootThroughPortal )
                 {

@@ -1989,6 +1989,14 @@ void Physics_RunThinkFunctions( bool simulating )
 
     if ( !simulating )
     {
+#ifdef LUA_SDK
+        if ( L )
+        {
+            LUA_CALL_HOOK_BEGIN( "Think" );
+            LUA_CALL_HOOK_END( 0, 0 );
+        }
+#endif
+
         // only simulate players
         for ( int i = 1; i <= gpGlobals->maxClients; i++ )
         {

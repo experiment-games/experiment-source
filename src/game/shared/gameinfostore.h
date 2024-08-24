@@ -29,6 +29,11 @@ class CGameInfoStore : public CGameEventListener
         return m_pszMapName;
     }
 
+    bool IsDedicatedServer()
+    {
+        return m_bIsDedicatedServer;
+    }
+
     virtual CBasePlayer* GetPlayerByAddress(const char* pszAddress)
     {
         int mapIndex = m_mapPlayerIndexToAddress.Find(pszAddress);
@@ -45,6 +50,7 @@ class CGameInfoStore : public CGameEventListener
     char m_pszServerAddress[46];  // 39 (ipv6) + 6 (port) + 1 (null terminator) = 46
     char m_pszServerName[512];
     char m_pszMapName[512];
+    bool m_bIsDedicatedServer;
 
     CUtlStringMap< int > m_mapPlayerIndexToAddress;
 };

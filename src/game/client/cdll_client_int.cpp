@@ -2209,6 +2209,14 @@ void SimulateEntities()
             pEnt->Simulate();
         }
     }
+
+#ifdef LUA_SDK
+    if ( L )
+    {
+        LUA_CALL_HOOK_BEGIN( "Think" );
+        LUA_CALL_HOOK_END( 0, 0 );
+    }
+#endif
 }
 
 bool AddDataChangeEvent( IClientNetworkable *ent, DataUpdateType_t updateType, int *pStoredEvent )
@@ -2219,11 +2227,13 @@ bool AddDataChangeEvent( IClientNetworkable *ent, DataUpdateType_t updateType, i
     // Make sure we don't already have an event queued for this guy.
     if ( *pStoredEvent >= 0 )
     {
-        Assert( g_DataChangedEvents[*pStoredEvent].m_pEntity == ent );
+        CDataChangedEvent &pEvent = g_DataChangedEvents[*pStoredEvent];
+
+        Assert( pEvent.m_pEntity == ent );
 
         // DATA_UPDATE_CREATED always overrides DATA_UPDATE_CHANGED.
         if ( updateType == DATA_UPDATE_CREATED )
-            g_DataChangedEvents[*pStoredEvent].m_UpdateType = updateType;
+            pEvent.m_UpdateType = updateType;
 
         return false;
     }

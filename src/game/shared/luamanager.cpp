@@ -2415,6 +2415,7 @@ CON_COMMAND_F_COMPLETION( lua_openscript, "Load and run a Lua file", 0, DoFileCo
 #endif
 
 #if DEBUG
+#define MAX_STACK_DUMP 100
 static void DumpLuaStack( lua_State *L )
 {
     int n = lua_gettop( L ); /* number of objects */
@@ -2422,7 +2423,7 @@ static void DumpLuaStack( lua_State *L )
 
     CUtlString dumpStack = "Lua Stack:\n";
 
-    for ( i = 1; i <= n; i++ )
+    for ( i = 1; i <= min( n, MAX_STACK_DUMP ); i++ )
     {
         if ( lua_istable( L, -1 ) )
         {
@@ -2453,10 +2454,21 @@ static void DumpLuaStack( lua_State *L )
     {
         dumpStack += "\nWarning: ";
         dumpStack += n;
-        dumpStack += " object(s) left on the stack!\n";
+        dumpStack += " object(s) left on the stack!";
+
+        if ( n > MAX_STACK_DUMP )
+        {
+            dumpStack += " (only the first ";
+            dumpStack += MAX_STACK_DUMP;
+            dumpStack += " objects are shown)";
+        }
+    }
+    else
+    {
+        dumpStack += "Stack is empty, that's great!";
     }
 
-    Warning( "%s", dumpStack.Get() );
+    Warning( "%s\n", dumpStack.Get() );
 }
 
 #ifdef CLIENT_DLL

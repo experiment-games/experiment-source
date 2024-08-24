@@ -143,7 +143,8 @@ acttable_t *CExperimentScriptedWeapon::ActivityList( void )
 #ifdef LUA_SDK
     lua_getref( L, m_nTableReference );
     lua_getfield( L, -1, "m_acttable" );
-    lua_remove( L, -2 );
+    lua_remove( L, -2 );  // Remove the reference table
+
     if ( lua_istable( L, -1 ) )
     {
         for ( int i = 0; i < LUA_MAX_WEAPON_ACTIVITIES; i++ )
@@ -293,11 +294,11 @@ void CExperimentScriptedWeapon::InitScriptedWeapon( void )
     // Andrew; This redundancy is pretty annoying.
     // Classname
     Q_strncpy( m_pLuaWeaponInfo->szClassName, className, MAX_WEAPON_STRING );
-    SetClassname( className );
+    SetClassname( m_pLuaWeaponInfo->szClassName );
 
     m_pLuaWeaponInfo->bParsedScript = true;
 
-    // Get (or init) the ref table
+    // Get (or init) the ref table (popped near the end of this function)
     LUA_GET_REF_TABLE( L, this );
 
     // Printable name
@@ -601,6 +602,9 @@ void CExperimentScriptedWeapon::InitScriptedWeapon( void )
     }
     lua_pop( L, 1 );  // Pop the Damage field
 
+    // Pop the LUA_GET_REF_TABLE
+    lua_pop( L, 1 );
+
     LUA_CALL_HOOK_BEGIN( "PreEntityInitialize" );
     CBaseEntity::PushLuaInstanceSafe( L, this );
     LUA_CALL_HOOK_END( 1, 0 );
@@ -681,10 +685,12 @@ void CExperimentScriptedWeapon::Precache( void )
     // Precache models (preload to avoid hitch)
     m_iViewModelIndex = 0;
     m_iWorldModelIndex = 0;
+
     if ( GetViewModel() && GetViewModel()[0] )
     {
         m_iViewModelIndex = CBaseEntity::PrecacheModel( GetViewModel() );
     }
+
     if ( GetWorldModel() && GetWorldModel()[0] )
     {
         m_iWorldModelIndex = CBaseEntity::PrecacheModel( GetWorldModel() );
@@ -721,7 +727,7 @@ const char *CExperimentScriptedWeapon::GetViewModel( int ) const
     {
         lua_getref( L, m_nTableReference );
         lua_getfield( L, -1, "ViewModel" );
-        lua_remove( L, -2 );
+        lua_remove( L, -2 ); // Remove the reference table
 
         LUA_RETURN_STRING();
     }
@@ -737,7 +743,7 @@ const char *CExperimentScriptedWeapon::GetWorldModel( void ) const
     {
         lua_getref( L, m_nTableReference );
         lua_getfield( L, -1, "WorldModel" );
-        lua_remove( L, -2 );
+        lua_remove( L, -2 );  // Remove the reference table
 
         LUA_RETURN_STRING();
     }
@@ -753,7 +759,7 @@ const char *CExperimentScriptedWeapon::GetAnimPrefix( void ) const
     {
         lua_getref( L, m_nTableReference );
         lua_getfield( L, -1, "AnimationPrefix" );
-        lua_remove( L, -2 );
+        lua_remove( L, -2 );  // Remove the reference table
 
         LUA_RETURN_STRING();
     }
@@ -769,7 +775,7 @@ const char *CExperimentScriptedWeapon::GetPrintName( void ) const
     {
         lua_getref( L, m_nTableReference );
         lua_getfield( L, -1, "PrintName" );
-        lua_remove( L, -2 );
+        lua_remove( L, -2 );  // Remove the reference table
 
         LUA_RETURN_STRING();
     }
@@ -785,7 +791,7 @@ int CExperimentScriptedWeapon::GetMaxClip1( void ) const
     {
         lua_getref( L, m_nTableReference );
         lua_getfield( L, -1, "MaxClip" );
-        lua_remove( L, -2 );
+        lua_remove( L, -2 );  // Remove the reference table
 
         LUA_RETURN_INTEGER();
     }
@@ -801,7 +807,7 @@ int CExperimentScriptedWeapon::GetMaxClip2( void ) const
     {
         lua_getref( L, m_nTableReference );
         lua_getfield( L, -1, "MaxClip2" );
-        lua_remove( L, -2 );
+        lua_remove( L, -2 );  // Remove the reference table
 
         LUA_RETURN_INTEGER();
     }
@@ -817,7 +823,7 @@ int CExperimentScriptedWeapon::GetDefaultClip1( void ) const
     {
         lua_getref( L, m_nTableReference );
         lua_getfield( L, -1, "DefaultClip" );
-        lua_remove( L, -2 );
+        lua_remove( L, -2 );  // Remove the reference table
 
         LUA_RETURN_INTEGER();
     }
@@ -833,7 +839,7 @@ int CExperimentScriptedWeapon::GetDefaultClip2( void ) const
     {
         lua_getref( L, m_nTableReference );
         lua_getfield( L, -1, "DefaultClip2" );
-        lua_remove( L, -2 );
+        lua_remove( L, -2 );  // Remove the reference table
 
         LUA_RETURN_INTEGER();
     }
@@ -849,7 +855,7 @@ bool CExperimentScriptedWeapon::IsMeleeWeapon() const
     {
         lua_getref( L, m_nTableReference );
         lua_getfield( L, -1, "MeleeWeapon" );
-        lua_remove( L, -2 );
+        lua_remove( L, -2 );  // Remove the reference table
 
         LUA_RETURN_BOOLEAN_FROM_INTEGER();
     }
@@ -865,7 +871,7 @@ int CExperimentScriptedWeapon::GetWeight( void ) const
     {
         lua_getref( L, m_nTableReference );
         lua_getfield( L, -1, "Weight" );
-        lua_remove( L, -2 );
+        lua_remove( L, -2 );  // Remove the reference table
 
         LUA_RETURN_INTEGER();
     }
@@ -881,7 +887,7 @@ bool CExperimentScriptedWeapon::AllowsAutoSwitchTo( void ) const
     {
         lua_getref( L, m_nTableReference );
         lua_getfield( L, -1, "AutoSwitchTo" );
-        lua_remove( L, -2 );
+        lua_remove( L, -2 );  // Remove the reference table
 
         LUA_RETURN_BOOLEAN_FROM_INTEGER();
     }
@@ -897,7 +903,7 @@ bool CExperimentScriptedWeapon::AllowsAutoSwitchFrom( void ) const
     {
         lua_getref( L, m_nTableReference );
         lua_getfield( L, -1, "AutoSwitchFrom" );
-        lua_remove( L, -2 );
+        lua_remove( L, -2 );  // Remove the reference table
 
         LUA_RETURN_BOOLEAN_FROM_INTEGER();
     }
@@ -913,7 +919,7 @@ int CExperimentScriptedWeapon::GetWeaponFlags( void ) const
     {
         lua_getref( L, m_nTableReference );
         lua_getfield( L, -1, "WeaponFlags" );
-        lua_remove( L, -2 );
+        lua_remove( L, -2 );  // Remove the reference table
 
         LUA_RETURN_INTEGER();
     }
@@ -929,7 +935,7 @@ int CExperimentScriptedWeapon::GetSlot( void ) const
     {
         lua_getref( L, m_nTableReference );
         lua_getfield( L, -1, "InventorySlot" );
-        lua_remove( L, -2 );
+        lua_remove( L, -2 );  // Remove the reference table
 
         LUA_RETURN_INTEGER();
     }
@@ -945,7 +951,7 @@ int CExperimentScriptedWeapon::GetPosition( void ) const
     {
         lua_getref( L, m_nTableReference );
         lua_getfield( L, -1, "InventorySlotPosition" );
-        lua_remove( L, -2 );
+        lua_remove( L, -2 );  // Remove the reference table
 
         LUA_RETURN_INTEGER();
     }

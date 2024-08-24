@@ -16,6 +16,9 @@
 #include <litexture.h>
 #include <shaderapi/ishaderapi.h>
 #include <utlstack.h>
+#include "beamdraw.h"
+#include "materialsystem/limaterial.h"
+#include "iviewrender_beams.h"
 #endif
 
 // memdbgon must be the last include file in a .cpp file!!!
@@ -211,7 +214,8 @@ LUA_BINDING_END()
 
 LUA_BINDING_BEGIN( Renders, SetLightingOrigin, "library", "Set the lighting origin.", "client" )
 {
-    g_pMaterialSystem->GetRenderContext()->SetLightingOrigin( LUA_BINDING_ARGUMENT( luaL_checkvector, 1, "lightingOrigin" ) );
+    CMatRenderContextPtr pRenderContext( materials );
+    pRenderContext->SetLightingOrigin( LUA_BINDING_ARGUMENT( luaL_checkvector, 1, "lightingOrigin" ) );
     return 0;
 }
 LUA_BINDING_END()
@@ -247,7 +251,8 @@ LUA_BINDING_BEGIN( Renders, SetAmbientLightCube, "library", "Set the ambient lig
         }
     }
 
-    g_pMaterialSystem->GetRenderContext()->SetAmbientLightCube( cubeFaces );
+    CMatRenderContextPtr pRenderContext( materials );
+    pRenderContext->SetAmbientLightCube( cubeFaces );
 
     return 0;
 }
@@ -267,7 +272,8 @@ LUA_BINDING_BEGIN( Renders, ResetAmbientLightCube, "library", "Reset the ambient
         cubeFaces[i].Init( r, g, b, 1.0f );
     }
 
-    g_pMaterialSystem->GetRenderContext()->SetAmbientLightCube( cubeFaces );
+    CMatRenderContextPtr pRenderContext( materials );
+    pRenderContext->SetAmbientLightCube( cubeFaces );
 
     return 0;
 }
@@ -297,7 +303,8 @@ LUA_BINDING_BEGIN( Renders, SetLight, "library", "Set a light.", "client" )
     desc.m_Phi = 0.0f;
     desc.m_Falloff = 1.0f;
 
-    g_pMaterialSystem->GetRenderContext()->SetLight( LUA_BINDING_ARGUMENT( luaL_checknumber, 6, "lightIndex" ), desc );
+    CMatRenderContextPtr pRenderContext( materials );
+    pRenderContext->SetLight( LUA_BINDING_ARGUMENT( luaL_checknumber, 6, "lightIndex" ), desc );
 
     return 0;
 }
@@ -329,7 +336,8 @@ LUA_BINDING_BEGIN( Renders, ClearBuffers, "library", "Clear the buffers.", "clie
     bool bClearDepth = LUA_BINDING_ARGUMENT( lua_toboolean, 2, "clearDepth" );
     bool bClearStencil = LUA_BINDING_ARGUMENT( lua_toboolean, 3, "clearStencil" );
 
-    g_pMaterialSystem->GetRenderContext()->ClearBuffers( bClearColor, bClearDepth, bClearStencil );
+    CMatRenderContextPtr pRenderContext( materials );
+    pRenderContext->ClearBuffers( bClearColor, bClearDepth, bClearStencil );
 
     return 0;
 }
@@ -338,7 +346,9 @@ LUA_BINDING_END()
 LUA_BINDING_BEGIN( Renders, ClearColor, "library", "Clear the color.", "client" )
 {
     lua_Color clr = LUA_BINDING_ARGUMENT( luaL_checkcolor, 1, "color" );
-    g_pMaterialSystem->GetRenderContext()->ClearColor4ub( clr.r(), clr.g(), clr.b(), clr.a() );
+
+    CMatRenderContextPtr pRenderContext( materials );
+    pRenderContext->ClearColor4ub( clr.r(), clr.g(), clr.b(), clr.a() );
     return 0;
 }
 LUA_BINDING_END()
@@ -350,8 +360,9 @@ LUA_BINDING_BEGIN( Renders, SetScissorRectangle, "library", "Set the scissor rec
     int nRight = LUA_BINDING_ARGUMENT( luaL_checknumber, 3, "right" );
     int nBottom = LUA_BINDING_ARGUMENT( luaL_checknumber, 4, "bottom" );
     bool bEnableScissor = LUA_BINDING_ARGUMENT( lua_toboolean, 5, "enableScissor" );
-
-    g_pMaterialSystem->GetRenderContext()->SetScissorRect( nLeft, nTop, nRight, nBottom, bEnableScissor );
+    
+    CMatRenderContextPtr pRenderContext( materials );
+    pRenderContext->SetScissorRect( nLeft, nTop, nRight, nBottom, bEnableScissor );
 
     return 0;
 }
@@ -360,7 +371,9 @@ LUA_BINDING_END()
 LUA_BINDING_BEGIN( Renders, SetWriteDepthToDestinationAlpha, "library", "Set the write depth to destination alpha.", "client" )
 {
     bool bEnable = LUA_BINDING_ARGUMENT( lua_toboolean, 1, "enable" );
-    g_pMaterialSystem->GetRenderContext()->SetIntRenderingParameter( INT_RENDERPARM_WRITE_DEPTH_TO_DESTALPHA, bEnable );
+
+    CMatRenderContextPtr pRenderContext( materials );
+    pRenderContext->SetIntRenderingParameter( INT_RENDERPARM_WRITE_DEPTH_TO_DESTALPHA, bEnable );
     return 0;
 }
 LUA_BINDING_END()
@@ -496,6 +509,63 @@ LUA_BINDING_BEGIN( Renders, GetViewEntity, "library", "Returns the entity the cl
 }
 LUA_BINDING_END( "Entity", "The view entity." )
 
+LUA_BINDING_BEGIN( Renders, SetMaterial, "library", "Binds a material for use in the next render operations", "client" )
+{
+    IMaterial *pMaterial = LUA_BINDING_ARGUMENT( luaL_checkmaterial, 1, "material" );
+
+    CMatRenderContextPtr pRenderContext( materials );
+    pRenderContext->Bind( pMaterial );
+
+    return 0;
+}
+LUA_BINDING_END()
+
+LUA_BINDING_BEGIN( Renders, DrawSprite, "library", "Draws a sprite", "client" )
+{
+    Vector position = LUA_BINDING_ARGUMENT( luaL_checkvector, 1, "position" );
+    float width = LUA_BINDING_ARGUMENT( luaL_checknumber, 2, "width" );
+    float height = LUA_BINDING_ARGUMENT( luaL_checknumber, 3, "height" );
+    lua_Color color = LUA_BINDING_ARGUMENT_WITH_DEFAULT( luaL_optcolor, 4, lua_Color( 255, 255, 255, 255 ), "color" );
+
+    color32 rawColor = { color.r(), color.g(), color.b(), color.a() };
+    DrawSprite( position, width, height, rawColor );
+
+    return 0;
+}
+LUA_BINDING_END()
+
+LUA_BINDING_BEGIN( Renders, DrawBeam, "library", "Draws a beam", "client" )
+{
+     Vector &start = LUA_BINDING_ARGUMENT( luaL_checkvector, 1, "start" );
+     Vector &end = LUA_BINDING_ARGUMENT( luaL_checkvector, 2, "end" );
+     float width = LUA_BINDING_ARGUMENT( luaL_checknumber, 3, "width" );
+     float textureStart = LUA_BINDING_ARGUMENT( luaL_checknumber, 4, "textureStart" );
+     float textureEnd = LUA_BINDING_ARGUMENT( luaL_checknumber, 5, "textureEnd" );
+     lua_Color color = LUA_BINDING_ARGUMENT_WITH_DEFAULT( luaL_optcolor, 6, lua_Color( 255, 255, 255, 255 ), "color" );
+
+     CMatRenderContextPtr pRenderContext( materials );
+     CBeamSegDraw beamDraw;
+     beamDraw.Start( pRenderContext, 2, NULL );
+
+     BeamSeg_t seg;
+     seg.m_flAlpha = 1.0;
+     seg.m_flWidth = width;
+
+     seg.m_vPos = start;
+     seg.m_flTexCoord = textureStart;
+     seg.m_vColor = color.ToVector();
+     beamDraw.NextSeg( &seg );
+
+     seg.m_vPos = end;
+     seg.m_flTexCoord = textureEnd;
+     seg.m_vColor = color.ToVector();
+     beamDraw.NextSeg( &seg );
+
+     beamDraw.End();
+
+     return 0;
+ }
+ LUA_BINDING_END()
 #endif  // CLIENT_DLL
 
 /*

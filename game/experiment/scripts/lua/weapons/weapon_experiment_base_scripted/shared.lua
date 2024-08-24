@@ -1,5 +1,5 @@
 SWEP.PrintName             = "#HL2_357Handgun"
-SWEP.ViewModel             = "models/weapons/v_357.mdl"
+SWEP.ViewModel             = "models/weapons/v_pistol.mdl"
 SWEP.WorldModel            = "models/weapons/w_357.mdl"
 SWEP.AnimationPrefix       = "python"
 SWEP.InventorySlot         = 1
@@ -9,7 +9,7 @@ SWEP.MaxClip               = 6
 SWEP.MaxClip2              = -1
 SWEP.DefaultClip           = 6
 SWEP.DefaultClip2          = -1
-SWEP.PrimaryAmmo           = "357"
+SWEP.PrimaryAmmo           = "Pistol"
 SWEP.SecondaryAmmo         = "None"
 
 SWEP.Weight                = 7
@@ -46,93 +46,158 @@ SWEP.m_acttable            =
 	{ 1093, 982, false },
 
 	{ 1064, 983, false },
-};
+}
 
 function SWEP:Initialize()
-	self.m_bReloadsSingly = false;
-	self.m_bFiresUnderwater = false;
+	-- TODO: implement these
+	-- self.m_bReloadsSingly = false
+	-- self.m_bFiresUnderwater = false
 end
 
 function SWEP:Precache()
 end
 
+--[[
+	Here for Gmod compatibility
+--]]
+function SWEP:ShootEffects()
+	local owner = self:GetOwner()
+
+	self:SendWeaponAnimation(_E.ACTIVITY.ACT_VM_PRIMARYATTACK)
+	owner:DoMuzzleFlash()
+	owner:SetAnimation(_E.PLAYER_ANIMATION.ATTACK1)
+end
+
+function SWEP:ShootBullet(damage, amountOfBullets, spread, ammoType, force, tracer)
+	local owner = self:GetOwner()
+	local bulletInfo = {
+		Src = owner:GetWeaponShootPosition(),
+		Dir = owner:GetAimVector(0.08715574274766),
+		Spread = Vector(spread.x, spread.y, 0),
+
+		Num = amountOfBullets,
+		AmmoType = ammoType or self.Primary.Ammo,
+		Tracer = tracer or 5,
+
+		Damage = damage,
+		Force = force or 1,
+	}
+
+	owner:FireBullets(bulletInfo)
+
+	self:ShootEffects()
+end
+
+function SWEP:OnRemove()
+end
+
+function SWEP:OwnerChanged()
+end
+
+function SWEP:Ammo1()
+	return self:GetOwner():GetAmmoCount(self:GetPrimaryAmmoType())
+end
+
+function SWEP:Ammo2()
+	return self:GetOwner():GetAmmoCount(self:GetSecondaryAmmoType())
+end
+
+function SWEP:DoImpactEffect(trace, damageType)
+	return false
+end
+
+function SWEP:CanPrimaryAttack()
+	if (self:Clip1() <= 0) then -- TODO: implement: and not self.m_bFireOnEmpty) then
+		return false
+	end
+
+	return true
+end
+
 function SWEP:PrimaryAttack()
-	-- Only the player fires this way so we can cast
-	local pPlayer = self:GetOwner();
+	if (not self:CanPrimaryAttack()) then
+		self:EmitSound("Weapon_Pistol.Empty")
+		self:SetNextPrimaryFire(Engines.GetCurrentTime() + 0.2)
+		self:Reload()
 
-	if (ToBaseEntity(pPlayer) == NULL) then
-		return;
+		return
 	end
 
-	if (self.m_iClip1 <= 0) then
-		if (not self.m_bFireOnEmpty) then
-			self:Reload();
-		else
-			self:WeaponSound(0);
-			self.m_flNextPrimaryAttack = 0.15;
-		end
+	local owner = self:GetOwner()
 
-		return;
+	if (owner == NULL) then
+		return
 	end
 
-	self:WeaponSound(1);
-	pPlayer:DoMuzzleFlash();
+	self:EmitWeaponSound(1)
 
-	self:SendWeaponAnim(180);
-	pPlayer:SetAnimation(5);
-	ToHL2MPPlayer(pPlayer):DoAnimationEvent(0);
+	owner:DoAnimationEvent(_E.PLAYER_ANIMATION_EVENT.PLAYERANIMEVENT_ATTACK_PRIMARY)
 
-	self.m_flNextPrimaryAttack   = gpGlobals.curtime() + 0.75;
-	self.m_flNextSecondaryAttack = gpGlobals.curtime() + 0.75;
+	self:SetNextPrimaryFire(Engines.GetCurrentTime() + 0.75)
+	self:SetNextSecondaryFire(Engines.GetCurrentTime() + 0.75)
 
-	self.m_iClip1                = self.m_iClip1 - 1;
+	self:TakePrimaryAmmo(1)
 
-	local vecSrc                 = pPlayer:Weapon_ShootPosition();
-	local vecAiming              = pPlayer:GetAutoaimVector(0.08715574274766);
+	self:ShootBullet(self.Damage, 1, 0.01, self.Primary.Ammo)
 
-	local info                   = {
-		m_iShots = 1,
-		m_vecSrc = vecSrc,
-		m_vecDirShooting = vecAiming,
-		m_vecSpread =
-			vec3_origin,
-		m_flDistance = MAX_TRACE_LENGTH,
-		m_iAmmoType = self.m_iPrimaryAmmoType
-	};
-	info.m_pAttacker             = pPlayer;
+	-- Disorient the player
+	local angles = owner:GetLocalAngles()
 
-	-- Fire the bullets, and force the first shot to be perfectly accuracy
-	pPlayer:FireBullets(info);
+	angles.x = angles.x + Randoms.RandomInt(-1, 1)
+	angles.y = angles.y + Randoms.RandomInt(-1, 1)
+	angles.z = 0
 
-	--Disorient the player
-	local angles = pPlayer:GetLocalAngles();
-
-	angles.x = angles.x + random.RandomInt(-1, 1);
-	angles.y = angles.y + random.RandomInt(-1, 1);
-	angles.z = 0;
-
-	if not _CLIENT then
-		pPlayer:SnapEyeAngles(angles);
+	if (not CLIENT) then
+		owner:SnapEyeAngles(angles)
 	end
 
-	pPlayer:ViewPunch(QAngle(-8, random.RandomFloat(-2, 2), 0));
+	owner:ViewPunch(Angles.Create(-8, Randoms.RandomFloat(-2, 2), 0))
 
-	if (self.m_iClip1 == 0 and pPlayer:GetAmmoCount(self.m_iPrimaryAmmoType) <= 0) then
+	if (self:Clip1() == 0 and owner:GetAmmoCount(self:GetPrimaryAmmoType()) <= 0) then
 		-- HEV suit - indicate out of ammo condition
-		pPlayer:SetSuitUpdate("!HEV_AMO0", 0, 0);
+		owner:SetSuitUpdate("!HEV_AMO0", 0, 0)
 	end
 end
 
 function SWEP:SecondaryAttack()
 end
 
-function SWEP:Reload()
-	local fRet = self:DefaultReload(self:GetMaxClip1(), self:GetMaxClip2(), 182);
-	if (fRet) then
-		--		self:WeaponSound( 6 );
-		ToHL2MPPlayer(self:GetOwner()):DoAnimationEvent(3);
+function SWEP:TakePrimaryAmmo(num)
+	if (self:Clip1() <= 0) then
+		if (self:Ammo1() <= 0) then
+			return
+		end
+		self:GetOwner():RemoveAmmo(num, self:GetPrimaryAmmoType())
+
+		return
 	end
-	return fRet;
+
+	self:SetClip1(self:Clip1() - num)
+end
+
+function SWEP:TakeSecondaryAmmo(num)
+	if (self:Clip2() <= 0) then
+		if (self:Ammo2() <= 0) then
+			return
+		end
+
+		self:GetOwner():RemoveAmmo(num, self:GetSecondaryAmmoType())
+
+		return
+	end
+
+	self:SetClip2(self:Clip2() - num)
+end
+
+function SWEP:Reload()
+	local fRet = self:DefaultReload(self:GetMaxClip1(), self:GetMaxClip2(), _E.ACTIVITY.ACT_VM_RELOAD)
+
+	if (fRet) then
+		--		self:WeaponSound( 6 )
+		self:GetOwner():DoAnimationEvent(_E.PLAYER_ANIMATION_EVENT.PLAYERANIMEVENT_RELOAD)
+	end
+
+	return fRet
 end
 
 function SWEP:Think()
@@ -142,6 +207,7 @@ function SWEP:CanHolster()
 end
 
 function SWEP:Deploy()
+	return true
 end
 
 function SWEP:GetDrawActivity()
@@ -149,6 +215,7 @@ function SWEP:GetDrawActivity()
 end
 
 function SWEP:Holster(pSwitchingTo)
+	return true
 end
 
 function SWEP:ItemPostFrame()
