@@ -469,6 +469,7 @@ ENTITY_META.OBBMins = ENTITY_META.GetOBBMins
 ENTITY_META.LocalToWorld = ENTITY_META.EntityToWorldSpace
 ENTITY_META.SkinCount = ENTITY_META.GetSkinCount
 ENTITY_META.Alive = ENTITY_META.IsAlive
+ENTITY_META.IsNPC = ENTITY_META.IsNpc
 ENTITY_META.Widget = false
 ENTITY_META.AddFlags = ENTITY_META.AddFlag
 ENTITY_META.RemoveFlags = ENTITY_META.RemoveFlag
@@ -636,7 +637,7 @@ WEAPON_META.Ammo1 = WEAPON_META.GetPrimaryAmmoCount
 WEAPON_META.Ammo2 = WEAPON_META.GetSecondaryAmmoCount
 
 local PLAYER_META = FindMetaTable("Player")
-PLAYER_META.GetShootPos = ENTITY_META.GetWeaponShootPosition
+PLAYER_META.GetShootPos = PLAYER_META.GetWeaponShootPosition
 PLAYER_META.UserID = PLAYER_META.GetUserId
 PLAYER_META.AccountID = PLAYER_META.GetAccountId
 PLAYER_META.SteamID = PLAYER_META.GetSteamId

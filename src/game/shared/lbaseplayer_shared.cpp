@@ -1549,22 +1549,12 @@ LUA_BINDING_END( "integer", "Team of the local player." )
 
 LUA_BINDING_BEGIN( Players, GetAllBots, "library", "Get all bots." )
 {
-    CUtlVector< CBasePlayer * > curPlayers;
+    lua_newtable( L );
 
     for ( int i = 1; i <= gpGlobals->maxClients; i++ )
     {
         CBasePlayer *pPlayer = UTIL_PlayerByIndex( i );
-        if ( pPlayer && ( pPlayer->GetFlags() & FL_FAKECLIENT ) )
-        {
-            curPlayers.AddToTail( pPlayer );
-        }
-    }
-
-    lua_newtable( L );
-
-    for ( int i = 0; i < curPlayers.Count(); i++ )
-    {
-        CBaseEntity::PushLuaInstanceSafe( L, curPlayers[i] );
+        CBaseEntity::PushLuaInstanceSafe( L, pPlayer );
         lua_rawseti( L, -2, i + 1 );
     }
 
@@ -1574,23 +1564,17 @@ LUA_BINDING_END( "table", "All bots." )
 
 LUA_BINDING_BEGIN( Players, GetAllHumans, "library", "Get all humans." )
 {
-    CUtlVector< CBasePlayer * > curPlayers;
+    lua_newtable( L );
 
     for ( int i = 1; i <= gpGlobals->maxClients; i++ )
     {
         CBasePlayer *pPlayer = UTIL_PlayerByIndex( i );
+
         if ( pPlayer && !( pPlayer->GetFlags() & FL_FAKECLIENT ) )
         {
-            curPlayers.AddToTail( pPlayer );
+            CBaseEntity::PushLuaInstanceSafe( L, pPlayer );
+            lua_rawseti( L, -2, i + 1 );
         }
-    }
-
-    lua_newtable( L );
-
-    for ( int i = 0; i < curPlayers.Count(); i++ )
-    {
-        CBaseEntity::PushLuaInstanceSafe( L, curPlayers[i] );
-        lua_rawseti( L, -2, i + 1 );
     }
 
     return 1;
@@ -1599,23 +1583,16 @@ LUA_BINDING_END( "table", "All humans." )
 
 LUA_BINDING_BEGIN( Players, GetAll, "library", "Get all players." )
 {
-    CUtlVector< CBasePlayer * > curPlayers;
+    lua_newtable( L );
 
     for ( int i = 1; i <= gpGlobals->maxClients; i++ )
     {
         CBasePlayer *pPlayer = UTIL_PlayerByIndex( i );
         if ( pPlayer )
         {
-            curPlayers.AddToTail( pPlayer );
+            CBaseEntity::PushLuaInstanceSafe( L, pPlayer );
+            lua_rawseti( L, -2, i + 1 );
         }
-    }
-
-    lua_newtable( L );
-
-    for ( int i = 0; i < curPlayers.Count(); i++ )
-    {
-        CBaseEntity::PushLuaInstanceSafe( L, curPlayers[i] );
-        lua_rawseti( L, -2, i + 1 );
     }
 
     return 1;

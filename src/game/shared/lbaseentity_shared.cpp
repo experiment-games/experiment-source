@@ -387,13 +387,13 @@ LUA_BINDING_BEGIN( Entity, EmitSound, "class", "Emit sound." )
     int nSoundFlags = LUA_BINDING_ARGUMENT_WITH_DEFAULT( luaL_optnumber, 7, 0, "soundFlags" );
     int nDSP = LUA_BINDING_ARGUMENT_WITH_DEFAULT( luaL_optnumber, 8, 0, "dsp" );
 
-    CRecipientFilter *filter = nullptr;
+    CRecipientFilter filter;
 
     if ( lua_isrecipientfilter( L, 9 ) )
-        filter = &LUA_BINDING_ARGUMENT_NILLABLE( luaL_checkrecipientfilter, 9, "filter" );
+        filter = LUA_BINDING_ARGUMENT_NILLABLE( luaL_checkrecipientfilter, 9, "filter" );
     else
     {
-        filter = new CPASAttenuationFilter( pEntity, soundLevel );
+        filter = CPASAttenuationFilter( pEntity, soundLevel );
     }
 
     float duration = 0;
@@ -411,13 +411,11 @@ LUA_BINDING_BEGIN( Entity, EmitSound, "class", "Emit sound." )
     params.m_flSoundTime = 0;
     params.m_nSpeakerEntity = iEntIndex;
     params.m_pflSoundDuration = &duration;
-    params.m_bWarnOnDirectWaveReference = true;
+    params.m_bWarnOnDirectWaveReference = false;
 
-    pEntity->EmitSound( *filter, iEntIndex, params );
+    pEntity->EmitSound( filter, iEntIndex, params );
 
     lua_pushnumber( L, duration );
-
-    delete[] filter;
 
     return 1;
 }
@@ -1029,7 +1027,7 @@ LUA_BINDING_BEGIN( Entity, GetRefTable, "class", "Get reference table." )
     //          have a nil reference table returned.
     lua_CBaseEntity *pEntity = LUA_BINDING_ARGUMENT( lua_toentity, 1, "entity" );
 
-    if (pEntity == NULL)
+    if ( pEntity == NULL )
     {
         lua_pushnil( L );
     }
@@ -1396,9 +1394,15 @@ LUA_BINDING_BEGIN( Entity, IsMarkedForDeletion, "class", "Is marked for deletion
 }
 LUA_BINDING_END( "boolean", "True if marked for deletion, false otherwise." )
 
-LUA_BINDING_BEGIN( Entity, IsNPC, "class", "Is NPC." )
+LUA_BINDING_BEGIN( Entity, IsNpc, "class", "Is NPC." )
 {
-    lua_CBaseEntity *pEntity = LUA_BINDING_ARGUMENT( luaL_checkentity, 1, "entity" );
+    lua_CBaseEntity *pEntity = LUA_BINDING_ARGUMENT( lua_toentity, 1, "entity" );
+
+    if ( !pEntity )
+    {
+        lua_pushboolean( L, false );
+        return 1;
+    }
 
     lua_pushboolean( L, pEntity->IsNPC() );
     return 1;
@@ -1407,7 +1411,13 @@ LUA_BINDING_END( "boolean", "True if NPC, false otherwise." )
 
 LUA_BINDING_BEGIN( Entity, IsPlayer, "class", "Is player." )
 {
-    lua_CBaseEntity *pEntity = LUA_BINDING_ARGUMENT( luaL_checkentity, 1, "entity" );
+    lua_CBaseEntity *pEntity = LUA_BINDING_ARGUMENT( lua_toentity, 1, "entity" );
+
+    if ( !pEntity )
+    {
+        lua_pushboolean( L, false );
+        return 1;
+    }
 
     lua_pushboolean( L, pEntity->IsPlayer() );
     return 1;
@@ -2815,7 +2825,7 @@ LUA_BINDING_BEGIN( Entity, SetNetworkDataValue, "class", "Sets a data table vari
         {
             int newValueInt = LUA_BINDING_ARGUMENT( luaL_checknumber, 4, "value" );
             lua_pushinteger( L, entity->m_LuaVariables_int[slot] );
-            lua_pushnumber( L, newValueInt );
+            lua_pushinteger( L, newValueInt );
 #ifdef CLIENT_DLL
             entity->m_LuaVariables_int[slot] = newValueInt;
 #else
@@ -2828,6 +2838,11 @@ LUA_BINDING_BEGIN( Entity, SetNetworkDataValue, "class", "Sets a data table vari
             float newValueFloat = LUA_BINDING_ARGUMENT( luaL_checknumber, 4, "value" );
             lua_pushnumber( L, entity->m_LuaVariables_float[slot] );
             lua_pushnumber( L, newValueFloat );
+            if ( !IsFinite( newValueFloat ) )
+            {
+                newValueFloat = FLT_MAX;
+                Assert( IsFinite( newValueFloat ) );
+            }
 #ifdef CLIENT_DLL
             entity->m_LuaVariables_float[slot] = newValueFloat;
 #else
