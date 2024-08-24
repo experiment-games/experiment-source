@@ -151,7 +151,7 @@ LUA_BINDING_BEGIN( Player, GetActiveWeapon, "class", "Get the player's active we
 
     if ( !CExperimentScriptedWeapon::IsValidWeapon( pWeapon ) )
     {
-        CBaseEntity::PushLuaInstanceSafe( L, nullptr );
+        CBaseEntity::PushLuaInstanceSafe( L, NULL );
         return 1;
     }
 
@@ -913,15 +913,16 @@ LUA_BINDING_BEGIN( Player, SetBloodColor, "class", "Set the player's blood color
 }
 LUA_BINDING_END()
 
+#define PLAYER_THEMSELVES nullptr
 LUA_BINDING_BEGIN( Player, SetFov, "class", "Set the player's field of view." )
 {
     lua_CBasePlayer *player = LUA_BINDING_ARGUMENT( luaL_checkplayer, 1, "player" );
+    lua_CBaseEntity *requester = LUA_BINDING_ARGUMENT_WITH_DEFAULT( luaL_optentity, 4, PLAYER_THEMSELVES, "requester" );
     lua_pushboolean( L,
                      player->SetFOV(
-                         LUA_BINDING_ARGUMENT( luaL_checkentity, 2, "entity" ),
-                         LUA_BINDING_ARGUMENT( luaL_checknumber, 3, "fov" ),
-                         LUA_BINDING_ARGUMENT( luaL_checknumber, 4, "zoom rate" ),
-                         LUA_BINDING_ARGUMENT_WITH_DEFAULT( luaL_optnumber, 5, 0, "zoom time" ) ) );
+                         requester ? requester : player,
+                         LUA_BINDING_ARGUMENT( luaL_checknumber, 2, "fov" ),
+                         LUA_BINDING_ARGUMENT_WITH_DEFAULT( luaL_optnumber, 3, 0, "transitionTime" ) ) );
     return 1;
 }
 LUA_BINDING_END()
@@ -1270,6 +1271,42 @@ LUA_BINDING_BEGIN( Player, SetLastWeapon, "class", "Set the player's last weapon
 }
 LUA_BINDING_END()
 
+LUA_BINDING_BEGIN( Player, IsKeyDown, "class", "Check if a key is down." )
+{
+    lua_CBasePlayer *player = LUA_BINDING_ARGUMENT( luaL_checkplayer, 1, "player" );
+    int keys = ( int )LUA_BINDING_ARGUMENT( luaL_checknumber, 2, "keys" );
+    lua_pushboolean( L, player->m_nButtons & keys );
+    return 1;
+}
+LUA_BINDING_END( "boolean", "Whether the key is down." )
+
+LUA_BINDING_BEGIN( Player, WasKeyDown, "class", "Get if the specified key was down one tick before the current." )
+{
+    lua_CBasePlayer *player = LUA_BINDING_ARGUMENT( luaL_checkplayer, 1, "player" );
+    int keys = ( int )LUA_BINDING_ARGUMENT( luaL_checknumber, 2, "keys" );
+    lua_pushboolean( L, player->m_afButtonLast & keys );
+    return 1;
+}
+LUA_BINDING_END( "boolean", "Whether the key was down." )
+
+LUA_BINDING_BEGIN( Player, WasKeyPressed, "class", "Check if a key was pressed." )
+{
+    lua_CBasePlayer *player = LUA_BINDING_ARGUMENT( luaL_checkplayer, 1, "player" );
+    int keys = ( int )LUA_BINDING_ARGUMENT( luaL_checknumber, 2, "keys" );
+    lua_pushboolean( L, player->m_afButtonPressed & keys );
+    return 1;
+}
+LUA_BINDING_END( "boolean", "Whether the key was pressed." )
+
+LUA_BINDING_BEGIN( Player, WasKeyReleased, "class", "Check if a key was released." )
+{
+    lua_CBasePlayer *player = LUA_BINDING_ARGUMENT( luaL_checkplayer, 1, "player" );
+    int keys = ( int )LUA_BINDING_ARGUMENT( luaL_checknumber, 2, "keys" );
+    lua_pushboolean( L, player->m_afButtonReleased & keys );
+    return 1;
+}
+LUA_BINDING_END( "boolean", "Whether the key was released." )
+
 LUA_BINDING_BEGIN( Player, WeaponShootPosition, "class", "Get the player's weapon shoot position." )
 {
     Vector v = LUA_BINDING_ARGUMENT( luaL_checkplayer, 1, "player" )->Weapon_ShootPosition();
@@ -1608,6 +1645,20 @@ LUA_BINDING_BEGIN( Players, FindByUniqueID, "library", "Get a player by unique I
     return 1;
 }
 LUA_BINDING_END( "Player", "The player." )
+
+LUA_BINDING_BEGIN( Players, ClientPrint, "library", "Print message to client" )
+{
+    CBasePlayer *player = LUA_BINDING_ARGUMENT( luaL_checkplayer, 1, "player" );
+    int msgDest = LUA_BINDING_ARGUMENT( luaL_checknumber, 2, "msgDest" );
+    const char *message = LUA_BINDING_ARGUMENT( luaL_checkstring, 3, "message" );
+    const char *param1 = LUA_BINDING_ARGUMENT_WITH_DEFAULT( luaL_optstring, 4, 0, "param1" );
+    const char *param2 = LUA_BINDING_ARGUMENT_WITH_DEFAULT( luaL_optstring, 5, 0, "param2" );
+    const char *param3 = LUA_BINDING_ARGUMENT_WITH_DEFAULT( luaL_optstring, 6, 0, "param3" );
+    const char *param4 = LUA_BINDING_ARGUMENT_WITH_DEFAULT( luaL_optstring, 7, 0, "param4" );
+    ClientPrint( player, msgDest, message, param1, param2, param3, param4 );
+    return 0;
+}
+LUA_BINDING_END()
 
 #ifdef GAME_DLL
 

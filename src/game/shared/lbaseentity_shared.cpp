@@ -1019,8 +1019,18 @@ LUA_BINDING_END( "boolean", "True if parameters for sound exist, false otherwise
 
 LUA_BINDING_BEGIN( Entity, GetRefTable, "class", "Get reference table." )
 {
-    lua_CBaseEntity *pEntity = LUA_BINDING_ARGUMENT( luaL_checkentity, 1, "entity" );
-    LUA_GET_REF_TABLE( L, pEntity );
+    // Note:    instead of luaL_checkentity, we soft-check here so NULL values can
+    //          have a nil reference table returned.
+    lua_CBaseEntity *pEntity = LUA_BINDING_ARGUMENT( lua_toentity, 1, "entity" );
+
+    if (pEntity == NULL)
+    {
+        lua_pushnil( L );
+    }
+    else
+    {
+        LUA_GET_REF_TABLE( L, pEntity );
+    }
 
     return 1;
 }
@@ -2859,7 +2869,7 @@ LUA_BINDING_BEGIN( Entity, SetNetworkDataValue, "class", "Sets a data table vari
         }
         case TYPE_ENTITY:
         {
-            CBaseEntity *newValueEntity = LUA_BINDING_ARGUMENT( luaL_checkentity, 4, "value" );
+            CBaseEntity *newValueEntity = LUA_BINDING_ARGUMENT( lua_toentity, 4, "value" );
             CBaseEntity::PushLuaInstanceSafe( L, CBaseEntity::Instance( entity->m_LuaVariables_Entity[slot] ) );
             CBaseEntity::PushLuaInstanceSafe( L, newValueEntity );
 #ifdef CLIENT_DLL
@@ -2982,6 +2992,8 @@ LUA_BINDING_BEGIN( Entity, IsValid, "class", "Check if entity is valid." )
 }
 LUA_BINDING_END()
 
+// TODO:    This is overwritten by Garry's Mod in lua/includes/extensions/entity.lua
+//          It is mentioned there that implementing it in Lua is faster, so perhaps we should do that too.
 LUA_BINDING_BEGIN( Entity, __index, "class", "Metamethod that is called when a non existing field is indexed" )
 {
     lua_CBaseEntity *pEntity = LUA_BINDING_ARGUMENT( lua_toentity, 1, "entity" );

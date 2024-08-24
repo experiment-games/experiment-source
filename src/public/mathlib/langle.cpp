@@ -228,11 +228,11 @@ LUA_BINDING_BEGIN( Angle, __index, "class", "Metatable that is called when a key
     lua_QAngle angle = LUA_BINDING_ARGUMENT( luaL_checkangle, 1, "angle" );
     const char *field = LUA_BINDING_ARGUMENT( luaL_checkstring, 2, "field" );
 
-    if ( strcmp( field, "x" ) == 0 || strcmp( field, "p" ) == 0 || strcmp( field, "pitch" ) == 0 )
+    if ( strcmp( field, "x" ) == 0 || strcmp( field, "p" ) == 0 || strcmp( field, "pitch" ) == 0 || strcmp( field, "1" ) == 0 )
         lua_pushnumber( L, angle.x );
-    else if ( strcmp( field, "y" ) == 0 || strcmp( field, "y" ) == 0 || strcmp( field, "yaw" ) == 0 )
+    else if ( strcmp( field, "y" ) == 0 || strcmp( field, "y" ) == 0 || strcmp( field, "yaw" ) == 0 || strcmp( field, "2" ) == 0 )
         lua_pushnumber( L, angle.y );
-    else if ( strcmp( field, "z" ) == 0 || strcmp( field, "r" ) == 0 || strcmp( field, "roll" ) == 0 )
+    else if ( strcmp( field, "z" ) == 0 || strcmp( field, "r" ) == 0 || strcmp( field, "roll" ) == 0 || strcmp( field, "3" ) == 0 )
         lua_pushnumber( L, angle.z );
     else
     {
@@ -267,7 +267,7 @@ LUA_BINDING_END()
 LUA_BINDING_BEGIN( Angle, __tostring, "class", "Metatable that is called when the angle is to be converted to a string." )
 {
     lua_QAngle angle = LUA_BINDING_ARGUMENT( luaL_checkangle, 1, "angle" );
-    lua_pushfstring( L, VecToString( angle ) );
+    lua_pushfstring( L, "Angle: %s", VecToString( angle ) );
     return 1;
 }
 LUA_BINDING_END( "string", "The string representation of the angle." )

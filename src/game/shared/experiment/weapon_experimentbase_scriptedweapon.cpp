@@ -22,30 +22,34 @@
 // memdbgon must be the last include file in a .cpp file!!!
 #include "tier0/memdbgon.h"
 
+// clang-format off
+
 IMPLEMENT_NETWORKCLASS_ALIASED( ExperimentScriptedWeapon, DT_ExperimentScriptedWeapon )
 
 BEGIN_NETWORK_TABLE( CExperimentScriptedWeapon, DT_ExperimentScriptedWeapon )
 #ifdef CLIENT_DLL
-RecvPropString( RECVINFO( m_iScriptedClassname ) ),
+    RecvPropString( RECVINFO( m_iScriptedClassname ) ),
 #else
-SendPropString( SENDINFO( m_iScriptedClassname ) ),
+    SendPropString( SENDINFO( m_iScriptedClassname ) ),
 #endif
-    END_NETWORK_TABLE()
+END_NETWORK_TABLE()
 
-        BEGIN_PREDICTION_DATA( CExperimentScriptedWeapon ) END_PREDICTION_DATA()
+BEGIN_PREDICTION_DATA( CExperimentScriptedWeapon )
+END_PREDICTION_DATA()
 
-    //=========================================================
-    //	>> CHLSelectFireScriptedWeapon
-    //=========================================================
-    BEGIN_DATADESC( CExperimentScriptedWeapon ) END_DATADESC()
+//=========================================================
+//	>> CHLSelectFireScriptedWeapon
+//=========================================================
+BEGIN_DATADESC( CExperimentScriptedWeapon ) END_DATADESC()
 
-// LINK_ENTITY_TO_CLASS( weapon_experimentbase_scriptedweapon, CExperimentScriptedWeapon
-// ); PRECACHE_WEAPON_REGISTER( weapon_experimentbase_scriptedweapon );
+// LINK_ENTITY_TO_CLASS( weapon_experimentbase_scriptedweapon, CExperimentScriptedWeapon ); PRECACHE_WEAPON_REGISTER( weapon_experimentbase_scriptedweapon );
+
+static void* WORKAROUND_NASTY_FORMATTING_BUG;  // clang-format on
 
 // These functions replace the macros above for runtime registration of
 // scripted weapons.
 #ifdef CLIENT_DLL
-        static C_BaseEntity *CCExperimentScriptedWeaponFactory( void )
+static C_BaseEntity *CCExperimentScriptedWeaponFactory( void )
 {
     return static_cast< C_BaseEntity * >( new CExperimentScriptedWeapon );
 };

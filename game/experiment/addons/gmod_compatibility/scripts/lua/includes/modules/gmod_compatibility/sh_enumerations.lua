@@ -94,12 +94,12 @@ local enumsToMergeWithKey = {
 	MOVE_TYPE = "MOVETYPE",
 	OBSERVER_MODE = "OBS_MODE",
 	SOLID = "SOLID",
-  SOUND_CHANNEL = "CHAN",
-  SURFACE = "SURF",
+	SOUND_CHANNEL = "CHAN",
+	SURFACE = "SURF",
 
-  DAMAGE_TYPE = {"DMG", stripUnderscores},
-  HIT_GROUP = {"HITGROUP", stripUnderscores},
-  MATERIAL_TYPE = {"MAT", stripUnderscores},
+	DAMAGE_TYPE = {"DMG", stripUnderscores},
+	HIT_GROUP = {"HITGROUP", stripUnderscores},
+	MATERIAL_TYPE = {"MAT", stripUnderscores},
 }
 
 for enumKey, enumTargetKey in pairs(enumsToMergeWithKey) do
@@ -107,7 +107,7 @@ for enumKey, enumTargetKey in pairs(enumsToMergeWithKey) do
     error("Missing enumeration table for key: " .. enumKey)
     continue
   end
-  
+
   local modifier
 
   if (istable(enumTargetKey)) then
@@ -167,6 +167,11 @@ end
 TRANSMIT_ALWAYS = _E.EDICT_FLAG.ALWAYS
 TRANSMIT_NEVER = _E.EDICT_FLAG.DONTSEND
 TRANSMIT_PVS = _E.EDICT_FLAG.PVSCHECK
+
+HUD_PRINTNOTIFY = 1
+HUD_PRINTCONSOLE = 2
+HUD_PRINTTALK = 3
+HUD_PRINTCENTER = 4
 
 TYPE_NONE = -1
 TYPE_NIL = 0

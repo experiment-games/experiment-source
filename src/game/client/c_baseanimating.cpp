@@ -153,11 +153,13 @@ const unsigned int FCLIENTANIM_SEQUENCE_CYCLE = 0x00000001;
 
 static CUtlVector< clientanimating_t > g_ClientSideAnimationList;
 
-BEGIN_RECV_TABLE_NOBASE( C_BaseAnimating, DT_ServerAnimationData )
-RecvPropFloat( RECVINFO( m_flCycle ) ),
-    END_RECV_TABLE()
+// clang-format off
 
-        void RecvProxy_Sequence( const CRecvProxyData *pData, void *pStruct, void *pOut )
+BEGIN_RECV_TABLE_NOBASE( C_BaseAnimating, DT_ServerAnimationData )
+    RecvPropFloat( RECVINFO( m_flCycle ) ),
+END_RECV_TABLE()
+
+void RecvProxy_Sequence( const CRecvProxyData *pData, void *pStruct, void *pOut )
 {
     // Have the regular proxy store the data.
     RecvProxy_Int32ToInt32( pData, pStruct, pOut );
@@ -174,7 +176,7 @@ RecvPropFloat( RECVINFO( m_flCycle ) ),
 }
 
 IMPLEMENT_CLIENTCLASS_DT( C_BaseAnimating, DT_BaseAnimating, CBaseAnimating )
-RecvPropInt( RECVINFO( m_nSequence ), 0, RecvProxy_Sequence ),
+    RecvPropInt( RECVINFO( m_nSequence ), 0, RecvProxy_Sequence ),
     RecvPropInt( RECVINFO( m_nForceBone ) ),
     RecvPropVector( RECVINFO( m_vecForce ) ),
     RecvPropInt( RECVINFO( m_nSkin ) ),
@@ -207,11 +209,14 @@ RecvPropInt( RECVINFO( m_nSequence ), 0, RecvProxy_Sequence ),
     RecvPropFloat( RECVINFO( m_fadeMaxDist ) ),
     RecvPropFloat( RECVINFO( m_flFadeScale ) ),
 
-    END_RECV_TABLE()
+    // Experiment; Material override
+	RecvPropString( RECVINFO(m_MaterialOverride) ),
 
-        BEGIN_PREDICTION_DATA( C_BaseAnimating )
+END_RECV_TABLE()
 
-            DEFINE_PRED_FIELD( m_nSkin, FIELD_INTEGER, FTYPEDESC_INSENDTABLE ),
+BEGIN_PREDICTION_DATA( C_BaseAnimating )
+
+    DEFINE_PRED_FIELD( m_nSkin, FIELD_INTEGER, FTYPEDESC_INSENDTABLE ),
     DEFINE_PRED_FIELD( m_nBody, FIELD_INTEGER, FTYPEDESC_INSENDTABLE ),
     //	DEFINE_PRED_FIELD( m_nHitboxSet, FIELD_INTEGER, FTYPEDESC_INSENDTABLE ),
     //	DEFINE_PRED_FIELD( m_flModelScale, FIELD_FLOAT, FTYPEDESC_INSENDTABLE ),
@@ -255,12 +260,12 @@ RecvPropInt( RECVINFO( m_nSequence ), 0, RecvProxy_Sequence ),
 
     // DEFINE_FIELD( C_BaseFlex, m_iEyeAttachment, FIELD_INTEGER ),
 
-    END_PREDICTION_DATA()
+END_PREDICTION_DATA()
 
-        LINK_ENTITY_TO_CLASS( client_ragdoll, C_ClientRagdoll );
+LINK_ENTITY_TO_CLASS( client_ragdoll, C_ClientRagdoll );
 
 BEGIN_DATADESC( C_ClientRagdoll )
-DEFINE_FIELD( m_bFadeOut, FIELD_BOOLEAN ),
+    DEFINE_FIELD( m_bFadeOut, FIELD_BOOLEAN ),
     DEFINE_FIELD( m_bImportant, FIELD_BOOLEAN ),
     DEFINE_FIELD( m_iCurrentFriction, FIELD_INTEGER ),
     DEFINE_FIELD( m_iMinFriction, FIELD_INTEGER ),
@@ -282,9 +287,11 @@ DEFINE_FIELD( m_bFadeOut, FIELD_BOOLEAN ),
     DEFINE_AUTO_ARRAY( m_flScaleTimeEnd, FIELD_FLOAT ),
     DEFINE_EMBEDDEDBYREF( m_pRagdoll ),
 
-    END_DATADESC()
+END_DATADESC()
 
-        C_ClientRagdoll::C_ClientRagdoll( bool bRestoring )
+static void* WORKAROUND_NASTY_FORMATTING_BUG;  // clang-format on
+
+C_ClientRagdoll::C_ClientRagdoll( bool bRestoring )
 {
     m_iCurrentFriction = 0;
     m_iFrictionAnimState = RAGDOLL_FRICTION_NONE;
@@ -3132,6 +3139,11 @@ int C_BaseAnimating::DrawModel( int flags )
         // Necessary for lighting blending
         CreateModelInstance();
 
+        if ( m_MaterialOverrideReference.IsValid() )
+        {
+            modelrender->ForcedMaterialOverride( m_MaterialOverrideReference );
+        }
+
         if ( !IsFollowingEntity() )
         {
             drawn = InternalDrawModel( flags | extraFlags );
@@ -3153,6 +3165,11 @@ int C_BaseAnimating::DrawModel( int flags )
                     drawn = InternalDrawModel( STUDIO_RENDER | extraFlags );
                 }
             }
+        }
+
+        if ( m_MaterialOverrideReference.IsValid() )
+        {
+            modelrender->ForcedMaterialOverride( NULL );
         }
     }
 
@@ -4627,8 +4644,8 @@ C_BaseAnimating *C_BaseAnimating::CreateRagdollCopy()
     if ( L )
     {
         LUA_CALL_HOOK_BEGIN( "CreateClientSideRagdoll" );
-        this->PushLuaInstance( L ); // doc: entity
-        pRagdoll->PushLuaInstance( L ); // doc: ragdollEntity
+        this->PushLuaInstance( L );      // doc: entity
+        pRagdoll->PushLuaInstance( L );  // doc: ragdollEntity
         LUA_CALL_HOOK_END( 2, 0 );
     }
 
@@ -4827,6 +4844,15 @@ void C_BaseAnimating::OnDataChanged( DataUpdateType_t updateType )
         // Remove ragdoll info
         delete m_pRagdollInfo;
         m_pRagdollInfo = NULL;
+    }
+
+    if ( m_MaterialOverride[0] != 0 )
+    {
+        m_MaterialOverrideReference.Init( m_MaterialOverride, TEXTURE_GROUP_MODEL );
+    }
+    else if ( m_MaterialOverrideReference.IsValid() )
+    {
+        m_MaterialOverrideReference.Shutdown();
     }
 }
 

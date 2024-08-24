@@ -410,6 +410,14 @@ class CBaseAnimating : public CBaseEntity
     }
 
     bool PrefetchSequence( int iSequence );
+    void SetMaterialOverride(const char* pMaterialName)
+    {
+        Q_strncpy( m_MaterialOverride.GetForModify(), pMaterialName, MAX_PATH );
+    }
+    void GetMaterialOverride( char *pOut, int nLength )
+    {
+        Q_strncpy( pOut, m_MaterialOverride.Get(), nLength );
+    }
 
    private:
     void LockStudioHdr();
@@ -492,6 +500,9 @@ class CBaseAnimating : public CBaseEntity
     CNetworkVar( float, m_fadeMinDist );  // Point at which fading is absolute
     CNetworkVar( float, m_fadeMaxDist );  // Point at which fading is inactive
     CNetworkVar( float, m_flFadeScale );  // Scale applied to min / max
+
+    // Experiment; Material overrides
+    CNetworkString( m_MaterialOverride, MAX_PATH );
 
    public:
     COutputEvent m_OnIgnite;

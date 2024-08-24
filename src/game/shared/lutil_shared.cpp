@@ -104,20 +104,6 @@ LUA_BINDING_BEGIN( Utilities, PrecacheOther, "library", "Precache an entity by c
 }
 LUA_BINDING_END()
 
-LUA_BINDING_BEGIN( Utilities, ClientPrint, "library", "Print message to client" )
-{
-    CBasePlayer *player = LUA_BINDING_ARGUMENT( luaL_checkplayer, 1, "player" );
-    int msgDest = LUA_BINDING_ARGUMENT( luaL_checknumber, 2, "msgDest" );
-    const char *message = LUA_BINDING_ARGUMENT( luaL_checkstring, 3, "message" );
-    const char *param1 = LUA_BINDING_ARGUMENT_WITH_DEFAULT( luaL_optstring, 4, 0, "param1" );
-    const char *param2 = LUA_BINDING_ARGUMENT_WITH_DEFAULT( luaL_optstring, 5, 0, "param2" );
-    const char *param3 = LUA_BINDING_ARGUMENT_WITH_DEFAULT( luaL_optstring, 6, 0, "param3" );
-    const char *param4 = LUA_BINDING_ARGUMENT_WITH_DEFAULT( luaL_optstring, 7, 0, "param4" );
-    ClientPrint( player, msgDest, message, param1, param2, param3, param4 );
-    return 0;
-}
-LUA_BINDING_END()
-
 LUA_BINDING_BEGIN( Utilities, BoundToWorldSize, "library", "Bound the vector to the world size" )
 {
     Vector *vec = &LUA_BINDING_ARGUMENT( luaL_checkvector, 1, "vec" );

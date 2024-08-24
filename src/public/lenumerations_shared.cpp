@@ -308,6 +308,13 @@ LUALIB_API int luaopen_SharedEnumerations( lua_State *L )
     lua_pushenum( L, TYPE_ENTITY, "ENTITY" );
     LUA_SET_ENUM_LIB_END( L );
 
+    LUA_SET_ENUM_LIB_BEGIN( L, "HUD_PRINT" );
+    lua_pushenum( L, HUD_PRINTNOTIFY, "NOTIFY" );
+    lua_pushenum( L, HUD_PRINTCONSOLE, "CONSOLE" );
+    lua_pushenum( L, HUD_PRINTTALK, "TALK" );
+    lua_pushenum( L, HUD_PRINTCENTER, "CENTER" );
+    LUA_SET_ENUM_LIB_END( L );
+
     return 0;
 }
 

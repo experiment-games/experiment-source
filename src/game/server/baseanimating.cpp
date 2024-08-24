@@ -151,6 +151,8 @@ int CInfoLightingRelative::UpdateTransmitState( void )
 
 static CIKSaveRestoreOps s_IKSaveRestoreOp;
 
+// clang-format off
+
 BEGIN_DATADESC( CBaseAnimating )
 
 DEFINE_FIELD( m_flGroundSpeed, FIELD_FLOAT ),
@@ -215,19 +217,19 @@ DEFINE_FIELD( m_flGroundSpeed, FIELD_FLOAT ),
 
     DEFINE_FIELD( m_fBoneCacheFlags, FIELD_SHORT ),
 
-    END_DATADESC()
+END_DATADESC()
 
-    // Sendtable for fields we don't want to send to clientside animating entities
-    BEGIN_SEND_TABLE_NOBASE( CBaseAnimating, DT_ServerAnimationData )
+// Sendtable for fields we don't want to send to clientside animating entities
+BEGIN_SEND_TABLE_NOBASE( CBaseAnimating, DT_ServerAnimationData )
     // ANIMATION_CYCLE_BITS is defined in shareddefs.h
     SendPropFloat( SENDINFO( m_flCycle ), ANIMATION_CYCLE_BITS, SPROP_CHANGES_OFTEN | SPROP_ROUNDDOWN, 0.0f, 1.0f )
-        END_SEND_TABLE()
+END_SEND_TABLE()
 
-            void *SendProxy_ClientSideAnimation( const SendProp *pProp, const void *pStruct, const void *pVarData, CSendProxyRecipients *pRecipients, int objectID );
+void *SendProxy_ClientSideAnimation( const SendProp *pProp, const void *pStruct, const void *pVarData, CSendProxyRecipients *pRecipients, int objectID );
 
 // SendTable stuff.
 IMPLEMENT_SERVERCLASS_ST( CBaseAnimating, DT_BaseAnimating )
-SendPropInt( SENDINFO( m_nForceBone ), 8, 0 ),
+    SendPropInt( SENDINFO( m_nForceBone ), 8, 0 ),
     SendPropVector( SENDINFO( m_vecForce ), -1, SPROP_NOSCALE ),
 
     SendPropInt( SENDINFO( m_nSkin ), ANIMATION_SKIN_BITS ),
@@ -261,9 +263,14 @@ SendPropInt( SENDINFO( m_nForceBone ), 8, 0 ),
     SendPropFloat( SENDINFO( m_fadeMaxDist ), 0, SPROP_NOSCALE ),
     SendPropFloat( SENDINFO( m_flFadeScale ), 0, SPROP_NOSCALE ),
 
-    END_SEND_TABLE()
+    // Experiment; material override
+    SendPropString( SENDINFO( m_MaterialOverride ) ),
 
-        CBaseAnimating::CBaseAnimating()
+END_SEND_TABLE()
+    
+static void* WORKAROUND_NASTY_FORMATTING_BUG;  // clang-format on
+
+CBaseAnimating::CBaseAnimating()
 {
     m_vecForce.GetForModify().Init();
     m_nForceBone = 0;

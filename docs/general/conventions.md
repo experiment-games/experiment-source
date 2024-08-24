@@ -77,6 +77,7 @@ Additionally, we use the following conventions:
     - `Dx` (DirectX), `HDR` and other graphic settings
     - `Fcvar` (short for flag convar, kept this way due to the source engine
         using this abbreviation when explaining convars)
+    - `Fov` (short for field of view)
     - `Hltv` (short for Half-Life TV)
     - `Hud`
     - `Hwnd` (short for window handle)

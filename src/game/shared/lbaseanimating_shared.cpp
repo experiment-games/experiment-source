@@ -8,6 +8,8 @@
 #else
 #include "lbaseanimating.h"
 #endif
+#include <istudiorender.h>
+#include <materialsystem/limaterial.h>
 
 // memdbgon must be the last include file in a .cpp file!!!
 #include "tier0/memdbgon.h"
@@ -853,6 +855,66 @@ LUA_BINDING_BEGIN( CBaseAnimating, GetFlexName, "class", "Get the flex controlle
 }
 LUA_BINDING_END( "string", "The flex controller name" )
 
+LUA_BINDING_BEGIN( CBaseAnimating, SetMaterialOverride, "class", "Set the material override" )
+{
+    lua_CBaseAnimating *pAnimating = LUA_BINDING_ARGUMENT( luaL_checkanimating, 1, "entity" );
+    const char *pszMaterialName = LUA_BINDING_ARGUMENT( luaL_checkstring, 2, "materialName" );
+
+    pAnimating->SetMaterialOverride( pszMaterialName );
+
+    return 0;
+}
+LUA_BINDING_END()
+
+LUA_BINDING_BEGIN( CBaseAnimating, GetMaterialOverride, "class", "Get the material override" )
+{
+    lua_CBaseAnimating *pAnimating = LUA_BINDING_ARGUMENT( luaL_checkanimating, 1, "entity" );
+    char pszMaterialName[MAX_PATH];
+
+    pAnimating->GetMaterialOverride( pszMaterialName, sizeof( pszMaterialName ) );
+
+    lua_pushstring( L, pszMaterialName );
+
+    return 1;
+}
+LUA_BINDING_END( "string", "The material override" )
+
+LUA_BINDING_BEGIN( CBaseAnimating, GetMaterials, "class", "Get the materials" )
+{
+    lua_CBaseAnimating *pAnimating = LUA_BINDING_ARGUMENT( luaL_checkanimating, 1, "entity" );
+
+    CStudioHdr *pStudioHdr = pAnimating->GetModelPtr();
+
+    if ( !pStudioHdr )
+    {
+        lua_pushnil( L );
+        return 1;
+    }
+
+    const studiohdr_t *pRenderHdr = pStudioHdr->GetRenderHdr();
+
+    IMaterial *pMaterials[128];
+    int iMaterialCount = g_pStudioRender->GetMaterialList( ( studiohdr_t * )pRenderHdr, ARRAYSIZE( pMaterials ), pMaterials );
+
+    lua_newtable( L );
+
+    for ( int i = 0; i < iMaterialCount; i++ )
+    {
+        IMaterial *pMaterial = pMaterials[i];
+
+        if ( !pMaterial )
+            continue;
+
+        lua_pushnumber( L, i + 1 );
+        lua_pushmaterial( L, pMaterial );
+        lua_settable( L, -3 );
+    }
+
+    lua_pushinteger( L, iMaterialCount );
+    return 2;
+}
+LUA_BINDING_END( "table", "The materials", "integer", "The number of materials" )
+
 LUA_BINDING_BEGIN( CBaseAnimating, SetSequence, "class", "Set the sequence." )
 {
     lua_CBaseAnimating *pAnimating = LUA_BINDING_ARGUMENT( luaL_checkanimating, 1, "entity" );
@@ -977,7 +1039,7 @@ LUA_BINDING_END()
 // }
 
 // Experiment; We only let CBaseEntity determine equality, which should be fine since they're pointers to the same entity. Disabled:
-//LUA_BINDING_BEGIN( CBaseAnimating, __eq, "class", "Metamethod to check if the two entities are the same" )
+// LUA_BINDING_BEGIN( CBaseAnimating, __eq, "class", "Metamethod to check if the two entities are the same" )
 //{
 //    lua_CBaseAnimating *pAnimating1 = LUA_BINDING_ARGUMENT( lua_toanimating, 1, "entity1" );
 //    lua_CBaseAnimating *pAnimating2 = LUA_BINDING_ARGUMENT( lua_toanimating, 2, "entity2" );
@@ -986,9 +1048,9 @@ LUA_BINDING_END()
 //
 //    return 1;
 //}
-//LUA_BINDING_END( "boolean", "True if the entities are the same, false otherwise" )
+// LUA_BINDING_END( "boolean", "True if the entities are the same, false otherwise" )
 //
-//LUA_BINDING_BEGIN( CBaseAnimating, __tostring, "class", "Metamethod to get the string representation of the entity" )
+// LUA_BINDING_BEGIN( CBaseAnimating, __tostring, "class", "Metamethod to get the string representation of the entity" )
 //{
 //    lua_CBaseAnimating *pAnimating = LUA_BINDING_ARGUMENT( lua_toanimating, 1, "entity" );
 //
@@ -1003,7 +1065,7 @@ LUA_BINDING_END()
 //
 //    return 1;
 //}
-//LUA_BINDING_END( "string", "The string representation of the entity" )
+// LUA_BINDING_END( "string", "The string representation of the entity" )
 
 /*
 ** Open CBaseAnimating object

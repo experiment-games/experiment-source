@@ -27,6 +27,9 @@ include = Include
 Msg = PrintMessage
 MsgN = PrintMessageLine
 
+OriginalPrintMessage = PrintMessage
+PrintMessage = Players.ClientPrintToAll
+
 function GetConVar_Internal(name)
 	local consoleVariable = ConsoleVariables.Get(name)
 
@@ -454,6 +457,8 @@ ENTITY_META.DontDeleteOnRemove = ENTITY_META.RemoveDeleteOnRemove
 ENTITY_META.GetFlexIDByName = ENTITY_META.GetFlexIdByName
 ENTITY_META.GetNumBodyGroups = ENTITY_META.GetBodyGroupsCount
 ENTITY_META.WaterLevel = ENTITY_META.GetWaterLevel
+ENTITY_META.SetMaterial = ENTITY_META.SetMaterialOverride
+ENTITY_META.GetMaterial = ENTITY_META.GetMaterialOverride
 
 function ENTITY_META:GetDTAngle(index)
     return self:GetNetworkDataValue(_E.NETWORK_VARIABLE_TYPE.ANGLE, index)
@@ -602,6 +607,8 @@ end
 local WEAPON_META = FindMetaTable("Weapon")
 WEAPON_META.GetHoldType = WEAPON_META.GetAnimationPrefix
 WEAPON_META.SetHoldType = WEAPON_META.SetAnimationPrefix
+WEAPON_META.Ammo1 = WEAPON_META.GetPrimaryAmmoCount
+WEAPON_META.Ammo2 = WEAPON_META.GetSecondaryAmmoCount
 
 local PLAYER_META = FindMetaTable("Player")
 PLAYER_META.GetShootPos = ENTITY_META.GetEyePosition
@@ -627,6 +634,12 @@ PLAYER_META.GetWalkSpeed = PLAYER_META.GetNormalSpeed
 PLAYER_META.GetCrouchedWalkSpeed = PLAYER_META.GetCrouchWalkFraction
 PLAYER_META.SetCrouchedWalkSpeed = PLAYER_META.SetCrouchWalkFraction
 PLAYER_META.Ping = PLAYER_META.GetPing
+PLAYER_META.KeyDown = PLAYER_META.IsKeyDown
+PLAYER_META.KeyDownLast = PLAYER_META.WasKeyDown
+PLAYER_META.KeyPressed = PLAYER_META.WasKeyPressed
+PLAYER_META.KeyReleased = PLAYER_META.WasKeyReleased
+PLAYER_META.GetFOV = PLAYER_META.GetFov
+PLAYER_META.SetFOV = PLAYER_META.SetFov
 
 function PLAYER_META:Crouching()
 	return self:IsFlagSet(_E.ENGINE_FLAG.DUCKING)
@@ -638,6 +651,10 @@ end
 
 function PLAYER_META:GetInfoNum(consoleVariableName, default)
 	return engine.GetClientConsoleVariableValueAsNumber(self, consoleVariableName) or default
+end
+
+function PLAYER_META:PrintMessage(type, message)
+	Players.ClientPrint(self, type, message)
 end
 
 function PLAYER_META:IsDrivingEntity()
@@ -1511,17 +1528,11 @@ end)
 
 hook.Add("PreEntityInitialize", "GModCompatibility.CallSetupDataTables", function(entity)
     if (entity.InstallDataTable) then
-		print("Installing data table for " .. tostring(entity))
         entity:InstallDataTable()
-    else
-		print("No data table to install for " .. tostring(entity))
     end
 
     if (entity.SetupDataTables) then
-		print("Setting up data tables for " .. tostring(entity))
 		entity:SetupDataTables()
-    else
-		print("No data tables to setup for " .. tostring(entity))
 	end
 end)
 

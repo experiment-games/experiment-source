@@ -501,6 +501,14 @@ class C_BaseAnimating : public C_BaseEntity, private IModelLoadCallback
 
     virtual bool IsViewModel() const;
     virtual void UpdateOnRemove( void );
+    void SetMaterialOverride( const char *pMaterialName )
+    {
+        Q_strncpy( m_MaterialOverride, pMaterialName, sizeof( m_MaterialOverride ) );
+    }
+    void GetMaterialOverride( char *pOut, int nLength )
+    {
+        Q_strncpy( pOut, m_MaterialOverride, nLength );
+    }
 
    protected:
     // View models scale their attachment positions to account for FOV. To get the unmodified
@@ -596,6 +604,10 @@ class C_BaseAnimating : public C_BaseEntity, private IModelLoadCallback
     float m_fadeMinDist;
     float m_fadeMaxDist;
     float m_flFadeScale;
+
+    // Experiment; Material override
+    char m_MaterialOverride[MAX_PATH];
+    CMaterialReference m_MaterialOverrideReference;
 
    private:
     float m_flGroundSpeed;     // computed linear movement rate for current sequence
