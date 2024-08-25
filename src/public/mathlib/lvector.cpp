@@ -62,7 +62,7 @@ LUA_REGISTRATION_INIT( Vector )
 
 LUA_BINDING_BEGIN( Vector, Angle, "class", "Converts a vector to an angle." )
 {
-    lua_Vector vec = LUA_BINDING_ARGUMENT( luaL_checkvector, 1, "vector" );
+    lua_Vector &vec = LUA_BINDING_ARGUMENT( luaL_checkvector, 1, "vector" );
     lua_Vector up( 0.0f, 0.0f, 1.0f );
     QAngle angle;
     VectorAngles( vec, up, angle );
@@ -74,7 +74,7 @@ LUA_BINDING_END( "Angle", "The converted angle." )
 
 LUA_BINDING_BEGIN( Vector, AngleWithUp, "class", "Converts a vector to an angle with a specified up vector." )
 {
-    lua_Vector vec = LUA_BINDING_ARGUMENT( luaL_checkvector, 1, "vector" );
+    lua_Vector &vec = LUA_BINDING_ARGUMENT( luaL_checkvector, 1, "vector" );
     lua_Vector up = LUA_BINDING_ARGUMENT( luaL_checkvector, 2, "up" );
     QAngle angle;
     VectorAngles( vec, up, angle );
@@ -156,19 +156,21 @@ LUA_BINDING_END( "number", "The dot product of the two vectors." )
 
 LUA_BINDING_BEGIN( Vector, Initialize, "class", "Initializes the vector with the specified values." )
 {
-    lua_Vector vec = LUA_BINDING_ARGUMENT( luaL_checkvector, 1, "vector" );
+    lua_Vector &vec = LUA_BINDING_ARGUMENT( luaL_checkvector, 1, "vector" );
     vec_t x = ( vec_t )LUA_BINDING_ARGUMENT( luaL_checknumber, 2, "x" );
     vec_t y = ( vec_t )LUA_BINDING_ARGUMENT( luaL_checknumber, 3, "y" );
     vec_t z = ( vec_t )LUA_BINDING_ARGUMENT( luaL_checknumber, 4, "z" );
     vec.Init( x, y, z );
 
-    return 0;
+    lua_pushvector( L, vec );
+
+    return 1;
 }
 LUA_BINDING_END()
 
 LUA_BINDING_BEGIN( Vector, Invalidate, "class", "Invalidates the vector." )
 {
-    lua_Vector vec = LUA_BINDING_ARGUMENT( luaL_checkvector, 1, "vector" );
+    lua_Vector &vec = LUA_BINDING_ARGUMENT( luaL_checkvector, 1, "vector" );
     vec.Invalidate();
 
     return 0;
@@ -177,7 +179,7 @@ LUA_BINDING_END()
 
 LUA_BINDING_BEGIN( Vector, IsLengthGreaterThan, "class", "Checks if the length of the vector is greater than the specified value." )
 {
-    lua_Vector vec = LUA_BINDING_ARGUMENT( luaL_checkvector, 1, "vector" );
+    lua_Vector &vec = LUA_BINDING_ARGUMENT( luaL_checkvector, 1, "vector" );
     lua_pushboolean( L, vec.IsLengthGreaterThan( luaL_checknumber( L, 2 ) ) );
 
     return 1;
@@ -186,7 +188,7 @@ LUA_BINDING_END( "boolean", "True if the length of the vector is greater than th
 
 LUA_BINDING_BEGIN( Vector, IsLengthLessThan, "class", "Checks if the length of the vector is less than the specified value." )
 {
-    lua_Vector vec = LUA_BINDING_ARGUMENT( luaL_checkvector, 1, "vector" );
+    lua_Vector &vec = LUA_BINDING_ARGUMENT( luaL_checkvector, 1, "vector" );
     lua_pushboolean( L, vec.IsLengthLessThan( luaL_checknumber( L, 2 ) ) );
 
     return 1;
@@ -195,7 +197,7 @@ LUA_BINDING_END( "boolean", "True if the length of the vector is less than the s
 
 LUA_BINDING_BEGIN( Vector, IsValid, "class", "Checks if the vector is valid." )
 {
-    lua_Vector vec = LUA_BINDING_ARGUMENT( luaL_checkvector, 1, "vector" );
+    lua_Vector &vec = LUA_BINDING_ARGUMENT( luaL_checkvector, 1, "vector" );
     lua_pushboolean( L, vec.IsValid() );
 
     return 1;
@@ -204,7 +206,7 @@ LUA_BINDING_END( "boolean", "True if the vector is valid, false otherwise." )
 
 LUA_BINDING_BEGIN( Vector, Length, "class", "Calculates the length of the vector." )
 {
-    lua_Vector vec = LUA_BINDING_ARGUMENT( luaL_checkvector, 1, "vector" );
+    lua_Vector &vec = LUA_BINDING_ARGUMENT( luaL_checkvector, 1, "vector" );
     lua_pushnumber( L, vec.Length() );
 
     return 1;
@@ -213,7 +215,7 @@ LUA_BINDING_END( "number", "The length of the vector." )
 
 LUA_BINDING_BEGIN( Vector, Length2D, "class", "Calculates the 2D length of the vector." )
 {
-    lua_Vector vec = LUA_BINDING_ARGUMENT( luaL_checkvector, 1, "vector" );
+    lua_Vector &vec = LUA_BINDING_ARGUMENT( luaL_checkvector, 1, "vector" );
     lua_pushnumber( L, vec.Length2D() );
 
     return 1;
@@ -222,7 +224,7 @@ LUA_BINDING_END( "number", "The 2D length of the vector." )
 
 LUA_BINDING_BEGIN( Vector, Length2DSqr, "class", "Calculates the squared 2D length of the vector." )
 {
-    lua_Vector vec = LUA_BINDING_ARGUMENT( luaL_checkvector, 1, "vector" );
+    lua_Vector &vec = LUA_BINDING_ARGUMENT( luaL_checkvector, 1, "vector" );
     lua_pushnumber( L, vec.Length2DSqr() );
 
     return 1;
@@ -231,7 +233,7 @@ LUA_BINDING_END( "number", "The squared 2D length of the vector." )
 
 LUA_BINDING_BEGIN( Vector, LengthSqr, "class", "Calculates the squared length of the vector." )
 {
-    lua_Vector vec = LUA_BINDING_ARGUMENT( luaL_checkvector, 1, "vector" );
+    lua_Vector &vec = LUA_BINDING_ARGUMENT( luaL_checkvector, 1, "vector" );
     lua_pushnumber( L, vec.LengthSqr() );
 
     return 1;
@@ -271,7 +273,7 @@ LUA_BINDING_END()
 
 LUA_BINDING_BEGIN( Vector, Negate, "class", "Negates the vector." )
 {
-    lua_Vector vec = LUA_BINDING_ARGUMENT( luaL_checkvector, 1, "vector" );
+    lua_Vector &vec = LUA_BINDING_ARGUMENT( luaL_checkvector, 1, "vector" );
     vec.Negate();
 
     return 0;
@@ -280,7 +282,7 @@ LUA_BINDING_END()
 
 LUA_BINDING_BEGIN( Vector, NormalizeInPlace, "class", "Normalizes the vector in place." )
 {
-    lua_Vector vec = LUA_BINDING_ARGUMENT( luaL_checkvector, 1, "vector" );
+    lua_Vector &vec = LUA_BINDING_ARGUMENT( luaL_checkvector, 1, "vector" );
     lua_pushnumber( L, vec.NormalizeInPlace() );
 
     return 1;
@@ -289,7 +291,7 @@ LUA_BINDING_END( "number", "The length of the vector before normalization." )
 
 LUA_BINDING_BEGIN( Vector, Random, "class", "Generates a random vector." )
 {
-    lua_Vector vec = LUA_BINDING_ARGUMENT( luaL_checkvector, 1, "vector" );
+    lua_Vector &vec = LUA_BINDING_ARGUMENT( luaL_checkvector, 1, "vector" );
     vec.Random( luaL_checknumber( L, 2 ), luaL_checknumber( L, 3 ) );
 
     return 0;
@@ -298,7 +300,7 @@ LUA_BINDING_END()
 
 LUA_BINDING_BEGIN( Vector, WithinAABox, "class", "Checks if the vector is within an axis-aligned box." )
 {
-    lua_Vector vec = LUA_BINDING_ARGUMENT( luaL_checkvector, 1, "vector" );
+    lua_Vector &vec = LUA_BINDING_ARGUMENT( luaL_checkvector, 1, "vector" );
     lua_Vector boxMin = LUA_BINDING_ARGUMENT( luaL_checkvector, 2, "boxMin" );
     lua_Vector boxMax = LUA_BINDING_ARGUMENT( luaL_checkvector, 3, "boxMax" );
     lua_pushboolean( L, vec.WithinAABox( boxMin, boxMax ) );
@@ -309,7 +311,7 @@ LUA_BINDING_END( "boolean", "True if the vector is within the axis-aligned box, 
 
 LUA_BINDING_BEGIN( Vector, Zero, "class", "Zeroes the vector." )
 {
-    lua_Vector vec = LUA_BINDING_ARGUMENT( luaL_checkvector, 1, "vector" );
+    lua_Vector &vec = LUA_BINDING_ARGUMENT( luaL_checkvector, 1, "vector" );
     vec.Zero();
 
     return 0;
@@ -319,7 +321,7 @@ LUA_BINDING_END()
 // Modify the existing vector, adding another vector to it.
 LUA_BINDING_BEGIN( Vector, Add, "class", "Adds another vector to the vector." )
 {
-    lua_Vector vec = LUA_BINDING_ARGUMENT( luaL_checkvector, 1, "vector" );
+    lua_Vector &vec = LUA_BINDING_ARGUMENT( luaL_checkvector, 1, "vector" );
     lua_Vector vecToAdd = LUA_BINDING_ARGUMENT( luaL_checkvector, 2, "vectorToAdd" );
     vec += vecToAdd;
 
@@ -330,7 +332,7 @@ LUA_BINDING_END()
 // Modify the existing vector, dividing it by a number.
 LUA_BINDING_BEGIN( Vector, Divide, "class", "Divides the vector by a number." )
 {
-    lua_Vector vec = LUA_BINDING_ARGUMENT( luaL_checkvector, 1, "vector" );
+    lua_Vector &vec = LUA_BINDING_ARGUMENT( luaL_checkvector, 1, "vector" );
     float divideBy = LUA_BINDING_ARGUMENT( luaL_checknumber, 2, "divideBy" );
     vec /= divideBy;
 
@@ -341,7 +343,7 @@ LUA_BINDING_END()
 // Modify the existing vector, scaling it by a number.
 LUA_BINDING_BEGIN( Vector, Scale, "class", "Scales the vector by a number." )
 {
-    lua_Vector vec = LUA_BINDING_ARGUMENT( luaL_checkvector, 1, "vector" );
+    lua_Vector &vec = LUA_BINDING_ARGUMENT( luaL_checkvector, 1, "vector" );
     float scaleBy = LUA_BINDING_ARGUMENT( luaL_checknumber, 2, "scaleBy" );
     vec *= scaleBy;
 
@@ -351,7 +353,7 @@ LUA_BINDING_END()
 
 LUA_BINDING_BEGIN( Vector, __index, "class", "Gets the value of a vector field." )
 {
-    lua_Vector vec = LUA_BINDING_ARGUMENT( luaL_checkvector, 1, "vector" );
+    lua_Vector &vec = LUA_BINDING_ARGUMENT( luaL_checkvector, 1, "vector" );
     const char *field = LUA_BINDING_ARGUMENT( luaL_checkstring, 2, "field" );
 
     if ( strcmp( field, "x" ) == 0 || strcmp( field, "r" ) == 0 || strcmp( field, "1" ) == 0 )
@@ -376,7 +378,7 @@ LUA_BINDING_END( "number", "The value of the vector field." )
 
 LUA_BINDING_BEGIN( Vector, __newindex, "class", "Sets the value of a vector field." )
 {
-    lua_Vector vec = LUA_BINDING_ARGUMENT( luaL_checkvector, 1, "vector" );
+    lua_Vector &vec = LUA_BINDING_ARGUMENT( luaL_checkvector, 1, "vector" );
     const char *field = LUA_BINDING_ARGUMENT( luaL_checkstring, 2, "field" );
 
     if ( strcmp( field, "x" ) == 0 || strcmp( field, "r" ) == 0 || strcmp( field, "1" ) == 0 )
@@ -392,7 +394,7 @@ LUA_BINDING_END()
 
 LUA_BINDING_BEGIN( Vector, __tostring, "class", "Converts the vector to a string." )
 {
-    lua_Vector vec = LUA_BINDING_ARGUMENT( luaL_checkvector, 1, "vector" );
+    lua_Vector &vec = LUA_BINDING_ARGUMENT( luaL_checkvector, 1, "vector" );
     lua_pushfstring( L, "Vector: %s", VecToString( vec ) );
 
     return 1;

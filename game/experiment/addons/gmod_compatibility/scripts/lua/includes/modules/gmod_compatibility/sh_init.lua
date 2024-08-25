@@ -196,6 +196,7 @@ concommand = ConsoleCommands
 physenv = PhysicsEnvironments
 gameevent = GameEvents
 sound = Sounds
+debugoverlay = DebugOverlays
 
 Angle = Angles.Create
 Color = Colors.Create
@@ -435,7 +436,7 @@ VECTOR_META.Normalize = VECTOR_META.NormalizeInPlace
 VECTOR_META.SetUnpacked = VECTOR_META.Initialize
 
 function VECTOR_META:Set(vectorToCopy)
-	return Vector(vectorToCopy)
+	self:Initialize(vectorToCopy.x, vectorToCopy.y, vectorToCopy.z)
 end
 
 function VECTOR_META:GetNormalized()
@@ -450,7 +451,7 @@ ANGLE_META.Mul = ANGLE_META.Scale
 ANGLE_META.SetUnpacked = ANGLE_META.Initialize
 
 function ANGLE_META:Set(angleToCopy)
-	return Angle(angleToCopy)
+	self:Initialize(angleToCopy.p, angleToCopy.y, angleToCopy.r)
 end
 
 local ENTITY_META = FindMetaTable("Entity")
