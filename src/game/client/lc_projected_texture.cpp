@@ -10,6 +10,8 @@
 // memdbgon must be the last include file in a .cpp file!!!
 #include "tier0/memdbgon.h"
 
+static ConVar r_projectedtexture_filter( "r_projectedtexture_filter", "0", FCVAR_ARCHIVE );
+
 /*
 ** access functions (stack -> C)
 */
@@ -54,11 +56,30 @@ LProjectedTexture::LProjectedTexture( void )
 {
     m_LightHandle = CLIENTSHADOW_INVALID_HANDLE;
     m_nTableReference = LUA_NOREF;
+    m_bLightWorld = true;
 
     m_angRotation.Init();
     m_vecOrigin.Init();
 
     m_FlashlightState = FlashlightState_t();
+    m_FlashlightState.m_fHorizontalFOVDegrees = 45.0f;
+    m_FlashlightState.m_fVerticalFOVDegrees = 45.0f;
+    m_FlashlightState.m_fQuadraticAtten = 0.0f;
+    m_FlashlightState.m_fLinearAtten = 100.0f;
+    m_FlashlightState.m_fConstantAtten = 0.0f;
+    m_FlashlightState.m_Color[0] = 1.0f;
+    m_FlashlightState.m_Color[1] = 1.0f;
+    m_FlashlightState.m_Color[2] = 1.0f;
+    m_FlashlightState.m_Color[3] = 1.0f;
+    m_FlashlightState.m_NearZ = 4.0f;
+    m_FlashlightState.m_FarZ = 750.0f;
+    m_FlashlightState.m_fBrightnessScale = 1.0f;
+    m_FlashlightState.m_bEnableShadows = true;
+    m_FlashlightState.m_flShadowDepthBias = 0.0001f;
+    m_FlashlightState.m_flShadowFilterSize = r_projectedtexture_filter.GetFloat();
+    m_FlashlightState.m_flShadowSlopeScaleDepthBias = 2.0f;
+    m_FlashlightState.m_pSpotlightTexture = NULL;
+    m_FlashlightState.m_nSpotlightTextureFrame = 0;
 }
 
 LProjectedTexture::~LProjectedTexture( void )
@@ -399,10 +420,10 @@ LUA_BINDING_BEGIN( ProjectedTexture, SetColor, "class", "Set the color of the pr
 {
     lua_ProjectedTexture *projectedTexture = LUA_BINDING_ARGUMENT( luaL_checkprojectedtexture, 1, "projectedTexture" );
     const lua_Color &color = LUA_BINDING_ARGUMENT( luaL_checkcolor, 2, "color" );
-    projectedTexture->m_FlashlightState.m_Color[0] = color.r();
-    projectedTexture->m_FlashlightState.m_Color[1] = color.g();
-    projectedTexture->m_FlashlightState.m_Color[2] = color.b();
-    projectedTexture->m_FlashlightState.m_Color[3] = color.a();
+    projectedTexture->m_FlashlightState.m_Color[0] = color.r() / 255;
+    projectedTexture->m_FlashlightState.m_Color[1] = color.g() / 255;
+    projectedTexture->m_FlashlightState.m_Color[2] = color.b() / 255;
+    projectedTexture->m_FlashlightState.m_Color[3] = color.a() / 255;
 
     return 0;
 }

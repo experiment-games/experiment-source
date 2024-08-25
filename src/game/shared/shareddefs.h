@@ -683,6 +683,7 @@ struct FireBulletsInfo_t
 		m_nFlags = 0;
 		m_pAdditionalIgnoreEnt = NULL;
 		m_flDamageForceScale = 1.0f;
+        m_pszTracerType = NULL;
 
 #ifdef _DEBUG
 		m_iAmmoType = -1;
