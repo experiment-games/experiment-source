@@ -704,6 +704,26 @@ function PLAYER_META:Crouching()
 	return self:IsFlagSet(_E.ENGINE_FLAG.DUCKING)
 end
 
+--[[
+	TODO: Challenge: 	FCVAR_USERINFO convars are sent to the server so it knows about them.
+	TODO:				However, only those sent before the player is fully connected are stored.
+	TODO:				- Can we somehow have the server store them after the player has connected?
+	TODO:				- Do we need to rewrite these engine functions to support this?
+
+	Test code:
+
+	lua_run print(player.GetByID(1):GetInfo("supertest"))
+
+	-- lua_run_cl CreateClientConVar("supertest", "0", false, true)
+
+	lua_run_cl ConsoleVariables.Create("supertest", "0", _E.FCVAR.USERINFO)
+
+	lua_run_cl print(ConsoleVariables.Get("supertest"))
+
+	lua_run_cl print(ConsoleVariables.Get("supertest"):IsFlagSet(_E.FCVAR.USERINFO))
+
+	lua_run_cl print(ConsoleVariables.Get("supertest"):SetValue(124))
+--]]
 function PLAYER_META:GetInfo(consoleVariableName)
 	return engine.GetClientConsoleVariableValue(self, consoleVariableName)
 end
