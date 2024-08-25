@@ -14,6 +14,8 @@ class LColor : public Color
         : Color( _r, _g, _b ) {}
     LColor( int _r, int _g, int _b, int _a )
         : Color( _r, _g, _b, _a ) {}
+    LColor( float* rawColor )
+        : Color( rawColor[0], rawColor[1], rawColor[2], rawColor[3] ) {}
 
     int m_nTableReference = LUA_NOREF;
 

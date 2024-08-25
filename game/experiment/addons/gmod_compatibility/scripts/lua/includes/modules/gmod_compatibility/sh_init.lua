@@ -1385,6 +1385,18 @@ function baseclassGetCompatibility(name)
 end
 
 if (CLIENT) then
+    ProjectedTexture = ProjectedTextures.Create
+
+	local PROJECTED_TEXTURE_META = FindMetaTable("ProjectedTexture")
+	PROJECTED_TEXTURE_META.GetPos = PROJECTED_TEXTURE_META.GetPosition
+	PROJECTED_TEXTURE_META.SetPos = PROJECTED_TEXTURE_META.SetPosition
+	PROJECTED_TEXTURE_META.GetFOV = PROJECTED_TEXTURE_META.GetFov
+	PROJECTED_TEXTURE_META.SetFOV = PROJECTED_TEXTURE_META.SetFov
+    PROJECTED_TEXTURE_META.GetHorizontalFOV = PROJECTED_TEXTURE_META.GetHorizontalFov
+    PROJECTED_TEXTURE_META.SetHorizontalFOV = PROJECTED_TEXTURE_META.SetHorizontalFov
+    PROJECTED_TEXTURE_META.GetVerticalFOV = PROJECTED_TEXTURE_META.GetVerticalFov
+	PROJECTED_TEXTURE_META.SetVerticalFOV = PROJECTED_TEXTURE_META.SetVerticalFov
+
 	matproxy = {
 		Add = function(name, data) end -- TODO: Implement
 	}

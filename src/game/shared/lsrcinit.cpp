@@ -127,6 +127,7 @@ static const luaL_RegForState luasrclibs[] = {
     { LUA_INPUTLIBNAME, luaopen_input, REALM_CLIENT | REALM_GAMEUI },
     { LUA_ISCHEMELIBNAME, luaopen_IScheme, REALM_CLIENT | REALM_GAMEUI },
     { LUA_PREDICTIONSLIBNAME, luaopen_Predictions, REALM_CLIENT },
+    { LUA_PROJECTEDTEXTUREMETANAME, luaopen_ProjectedTexture, REALM_CLIENT },
     { LUA_SCHEMELIBNAME, luaopen_Schemes, REALM_CLIENT | REALM_GAMEUI },
     { LUA_SURFACELIBNAME, luaopen_Surfaces, REALM_CLIENT | REALM_GAMEUI },
     { LUA_VGUILIBNAME, luaopen_vgui, REALM_CLIENT | REALM_GAMEUI },

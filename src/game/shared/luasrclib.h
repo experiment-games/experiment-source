@@ -242,6 +242,9 @@ LUALIB_API int( luaopen_Vector )( lua_State *L );
 #define LUA_VGUILIBNAME "Panels"
 LUALIB_API int( luaopen_vgui )( lua_State *L );
 
+#define LUA_PROJECTEDTEXTUREMETANAME "ProjectedTexture"
+LUALIB_API int( luaopen_ProjectedTexture )( lua_State *L );
+
 #define LUA_VMATRIXLIBNAME "Matrix"
 LUALIB_API int( luaopen_VMatrix )( lua_State *L );
 

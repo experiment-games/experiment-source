@@ -8,6 +8,14 @@ $Macro SRCDIR		"..\.."
 $Macro GAMENAME "experiment"
 $Include "$SRCDIR\materialsystem\stdshaders\game_shader_dx9_base.vpc"
 
+$Configuration
+{
+	$Compiler
+	{
+		$PreprocessorDefinitions		"$BASE;ASW_PROJECTED_TEXTURES"
+	}
+}
+
 $Project "Shaders (Experiment)"
 {
 	$Folder	"Source Files"
