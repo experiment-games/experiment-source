@@ -126,7 +126,7 @@ ents = {
 }
 
 player = Players
-player.GetByID = Players.FindByUserId
+player.GetByID = Players.FindByIndex
 player.GetBySteamID = Players.FindBySteamId
 player.GetBySteamID64 = Players.FindBySteamId64
 player.GetByUniqueID = Players.FindByUniqueID
