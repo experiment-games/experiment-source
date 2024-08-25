@@ -302,7 +302,7 @@ LUA_BINDING_END( "Angle", "The subtracted angle." )
 LUA_BINDING_BEGIN( Angle, __mul, "class", "Metatable that is called when the angle is to be multiplied by a number." )
 {
     lua_QAngle angle = LUA_BINDING_ARGUMENT( luaL_checkangle, 1, "angle" );
-    float number = luaL_checknumber( L, 2 );
+    float number = LUA_BINDING_ARGUMENT( luaL_checknumber, 2, "number" );
     lua_pushangle( L, angle * number );
     return 1;
 }

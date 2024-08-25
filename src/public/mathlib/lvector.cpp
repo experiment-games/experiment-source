@@ -423,6 +423,7 @@ LUA_BINDING_BEGIN( Vector, __sub, "class", "Subtracts two vectors." )
 {
     lua_Vector vectorA = LUA_BINDING_ARGUMENT( luaL_checkvector, 1, "vectorA" );
     lua_Vector vectorB = LUA_BINDING_ARGUMENT( luaL_checkvector, 2, "vectorB" );
+    lua_pushvector( L, vectorA - vectorB );
 
     return 1;
 }
@@ -543,41 +544,9 @@ LUA_BINDING_BEGIN( Vectors, Lerp, "library", "Linearly interpolates between two 
 }
 LUA_BINDING_END( "Vector", "The interpolated vector." )
 
-//
-// static int luasrc_Util_AxisStringToPointDir( lua_State *L )
-//{
-//    Vector start, dir;
-//    UTIL_AxisStringToPointDir( start, dir, luaL_checkstring( L, 1 ) );
-//    lua_pushvector( L, start );
-//    lua_pushvector( L, dir );
-//    return 2;
-//}
-//
-// static int luasrc_Util_AxisStringToPointPoint( lua_State *L )
-//{
-//    Vector start, end;
-//    UTIL_AxisStringToPointPoint( start, end, luaL_checkstring( L, 1 ) );
-//    lua_pushvector( L, start );
-//    lua_pushvector( L, end );
-//    return 2;
-//}
-//
-// static int luasrc_Util_AxisStringToUnitDir( lua_State *L )
-//{
-//    Vector dir;
-//    UTIL_AxisStringToUnitDir( dir, luaL_checkstring( L, 1 ) );
-//    lua_pushvector( L, dir );
-//    return 1;
-//}
-// static int luasrc_Util_SnapDirectionToAxis( lua_State *L )
-//{
-//    UTIL_SnapDirectionToAxis( luaL_checkvector( L, 1 ), luaL_optnumber( L, 2, 0.002f ) );
-//    return 0;
-//}
-
 #ifdef GAME_DLL
 
-LUA_BINDING_BEGIN( Vectors, AxisStringToPointDirection, "library", "Converts an axis string to a point direction." )
+LUA_BINDING_BEGIN( Vectors, AxisStringToPointDirection, "library", "Converts an axis string to a point direction.", "server" )
 {
     Vector start, direction;
     UTIL_AxisStringToPointDir( start, direction, LUA_BINDING_ARGUMENT( luaL_checkstring, 1, "axisString" ) );
@@ -588,7 +557,7 @@ LUA_BINDING_BEGIN( Vectors, AxisStringToPointDirection, "library", "Converts an 
 }
 LUA_BINDING_END( "Vector", "The converted start point.", "Vector", "The converted direction." )
 
-LUA_BINDING_BEGIN( Vectors, AxisStringToPointPoint, "library", "Converts an axis string to a point point." )
+LUA_BINDING_BEGIN( Vectors, AxisStringToPointPoint, "library", "Converts an axis string to a point point.", "server" )
 {
     Vector start, end;
     UTIL_AxisStringToPointPoint( start, end, LUA_BINDING_ARGUMENT( luaL_checkstring, 1, "axisString" ) );
@@ -599,7 +568,7 @@ LUA_BINDING_BEGIN( Vectors, AxisStringToPointPoint, "library", "Converts an axis
 }
 LUA_BINDING_END( "Vector", "The converted start point.", "Vector", "The converted end point." )
 
-LUA_BINDING_BEGIN( Vectors, AxisStringToUnitDirection, "library", "Converts an axis string to a unit direction." )
+LUA_BINDING_BEGIN( Vectors, AxisStringToUnitDirection, "library", "Converts an axis string to a unit direction.", "server" )
 {
     Vector direction;
     UTIL_AxisStringToUnitDir( direction, LUA_BINDING_ARGUMENT( luaL_checkstring, 1, "axisString" ) );
@@ -609,7 +578,7 @@ LUA_BINDING_BEGIN( Vectors, AxisStringToUnitDirection, "library", "Converts an a
 }
 LUA_BINDING_END( "Vector", "The converted unit direction." )
 
-LUA_BINDING_BEGIN( Vectors, SnapDirectionToAxis, "library", "Modifies a vector so it snaps to the nearest axis vector (if within epsilon)." )
+LUA_BINDING_BEGIN( Vectors, SnapDirectionToAxis, "library", "Modifies a vector so it snaps to the nearest axis vector (if within epsilon).", "server" )
 {
     UTIL_SnapDirectionToAxis(
         LUA_BINDING_ARGUMENT( luaL_checkvector, 1, "direction" ),
