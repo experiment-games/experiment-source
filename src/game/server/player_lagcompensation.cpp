@@ -327,7 +327,12 @@ void CLagCompensationManager::FrameUpdatePostEntityThink()
 // Called during player movement to set up/restore after lag compensation
 void CLagCompensationManager::StartLagCompensation( CBasePlayer *player, CUserCmd *cmd )
 {
-	Assert( !m_isCurrentlyDoingCompensation );
+    // Experiment; since multiple devs can start lag compensation in the same frame, we gracefully fail if we're already doing it.
+    // Assert( !m_isCurrentlyDoingCompensation );
+    if ( m_isCurrentlyDoingCompensation )
+    {
+        return;
+    }
 
 	//DONT LAG COMP AGAIN THIS FRAME IF THERES ALREADY ONE IN PROGRESS
 	//IF YOU'RE HITTING THIS THEN IT MEANS THERES A CODE BUG
@@ -738,7 +743,14 @@ void CLagCompensationManager::BacktrackPlayer( CBasePlayer *pPlayer, float flTar
 
 void CLagCompensationManager::FinishLagCompensation( CBasePlayer *player )
 {
-	VPROF_BUDGET_FLAGS( "FinishLagCompensation", VPROF_BUDGETGROUP_OTHER_NETWORKING, BUDGETFLAG_CLIENT|BUDGETFLAG_SERVER );
+    VPROF_BUDGET_FLAGS( "FinishLagCompensation", VPROF_BUDGETGROUP_OTHER_NETWORKING, BUDGETFLAG_CLIENT | BUDGETFLAG_SERVER );
+
+    // Experiment; since multiple devs can start lag compensation in the same frame, we gracefully fail if we're already doing it.
+    // Assert( m_isCurrentlyDoingCompensation );
+    if ( !m_isCurrentlyDoingCompensation )
+    {
+        return;
+    }
 
 	m_pCurrentPlayer = NULL;
 

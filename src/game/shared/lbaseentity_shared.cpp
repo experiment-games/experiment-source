@@ -540,7 +540,7 @@ LUA_BINDING_END()
 LUA_BINDING_BEGIN( Entity, FireBullets, "class", "Fire bullets." )
 {
     lua_CBaseEntity *pEntity = LUA_BINDING_ARGUMENT( luaL_checkentity, 1, "entity" );
-    FireBulletsInfo_t info = LUA_BINDING_ARGUMENT( lua_tofirebulletsinfo, 2, "info" );
+    FireBulletsInfo_t info = LUA_BINDING_ARGUMENT_WITH_EXTRA( lua_tofirebulletsinfo, 2, pEntity, "info" );
 
     pEntity->FireBullets( info );
     return 0;

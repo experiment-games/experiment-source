@@ -941,12 +941,6 @@ LUA_BINDING_BEGIN( Player, StartLagCompensation, "class", "Set the player's lag 
 #ifndef CLIENT_DLL
     lua_CBasePlayer *player = LUA_BINDING_ARGUMENT( luaL_checkplayer, 1, "player" );
 
-    if ( lagcompensation->IsCurrentlyDoingLagCompensation() )
-    {
-        DevWarning( "Cannot start lag compensation while already having started it!\n" );
-        return 0;
-    }
-
     // Move other players back to history positions based on local player's lag
     lagcompensation->StartLagCompensation( player,
                                            player->GetCurrentCommand() );
@@ -959,12 +953,6 @@ LUA_BINDING_BEGIN( Player, FinishLagCompensation, "class", "Set the player's lag
 {
 #ifndef CLIENT_DLL
     lua_CBasePlayer *player = LUA_BINDING_ARGUMENT( luaL_checkplayer, 1, "player" );
-
-    if ( !lagcompensation->IsCurrentlyDoingLagCompensation() )
-    {
-        DevWarning( "Cannot finish lag compensation when not having started it!\n" );
-        return 0;
-    }
 
     lagcompensation->FinishLagCompensation( player );
 #endif

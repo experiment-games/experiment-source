@@ -11,6 +11,7 @@
 #else
 #include "world.h"
 #endif
+#include "lbaseflex_shared.h"
 
 // memdbgon must be the last include file in a .cpp file!!!
 #include "tier0/memdbgon.h"
@@ -36,9 +37,9 @@ LUA_API void lua_pushtrace( lua_State *L, lua_CGameTrace &tr )
     LUA_SAFE_SET_METATABLE( L, LUA_GAMETRACEMETANAME );
 }
 
-LUALIB_API lua_CGameTrace &luaL_checktrace( lua_State *L, int narg )
+LUALIB_API lua_CGameTrace &luaL_checktrace( lua_State *L, int argIndex )
 {
-    lua_CGameTrace *d = ( lua_CGameTrace * )luaL_checkudata( L, narg, LUA_GAMETRACEMETANAME );
+    lua_CGameTrace *d = ( lua_CGameTrace * )luaL_checkudata( L, argIndex, LUA_GAMETRACEMETANAME );
     return *d;
 }
 
@@ -303,11 +304,12 @@ bool CTraceLuaFilter::ShouldHitEntity( IHandleEntity *pHandleEntity, int content
             {
                 lua_CBaseEntity *pEntity = lua_toentity( m_pLuaState, -1 );
 
-                if ( !pEntity )
+                // Disabled for now, since NULL may cause this error
+               /* if ( !pEntity )
                 {
                     luaL_typeerror( m_pLuaState, -1, "Entity or string" );
                 }
-                else if ( pEntity == EntityFromEntityHandle( pHandleEntity ) )
+                else*/ if ( pEntity == EntityFromEntityHandle( pHandleEntity ) )
                 {
                     lua_pop( m_pLuaState, 2 );  // Pop the value and the key
                     return m_bFilterTableInverted;
@@ -446,47 +448,126 @@ LUA_API void lua_pushtrace_t( lua_State *L, trace_t *trace, bool bNoNewTable /* 
     lua_settable( L, -3 );
 }
 
-LUA_API void lua_checktracestruct( lua_State *L, int narg )
+LUA_API void lua_checktracestruct( lua_State *L, int argIndex )
 {
     luaL_checktype( L, 1, LUA_TTABLE );
 }
 
-LUA_API void lua_checktracestruct( lua_State *L, int narg, Vector &start, Vector &end, int &mask, int &collisionGroup, bool &bIgnoreWorld, bool &bFilterTableInverted, bool &bOutput, CTraceLuaFilter **filter )
+/*
+LUA_API lua_FireBulletsInfo_t lua_tofirebulletsinfo( lua_State *L, int argIndex, lua_CBaseEntity *self )
 {
-    lua_checktracestruct( L, narg );
+    // Let's ensure that the bullet info is a table
+    luaL_checktype( L, argIndex, LUA_TTABLE );
 
-    // For quick compatibility with gmod we use its inconsistent naming in the trace table
-    lua_getfield( L, narg, "start" );
+    FireBulletsInfo_t info;
+
+    // Internally this field seems to be used for game stats
+    GET_FIELD_WITH_COMPATIBILITY( L, argIndex, "IsPrimaryAttack", "m_bPrimaryAttack" );
+    info.m_bPrimaryAttack = lua_isnil( L, -1 ) ? true : luaL_checkboolean( L, -1 );
+    lua_pop( L, 1 );  // pop the IsPrimaryAttack value
+
+    GET_FIELD_WITH_COMPATIBILITY( L, argIndex, "Force", "m_flDamageForceScale" );
+    info.m_flDamageForceScale = lua_isnil( L, -1 ) ? 1.0f : luaL_checknumber( L, -1 );
+    lua_pop( L, 1 );  // pop the Force value
+
+    GET_FIELD_WITH_COMPATIBILITY( L, argIndex, "Distance", "m_flDistance" );
+    info.m_flDistance = lua_isnil( L, -1 ) ? 56756.0f : luaL_checknumber( L, -1 );
+    lua_pop( L, 1 );  // pop the Distance value
+
+    GET_FIELD_WITH_COMPATIBILITY( L, argIndex, "AmmoType", "m_iAmmoType" );
+    if ( lua_isnumber( L, -1 ) )
+        info.m_iAmmoType = luaL_checknumber( L, -1 );
+    else if ( lua_isstring( L, -1 ) )
+    {
+        const char *ammoName = luaL_checkstring( L, -1 );
+        info.m_iAmmoType = GetAmmoDef()->Index( ammoName );
+    }
+    else
+        info.m_iAmmoType = 0;
+    lua_pop( L, 1 );  // pop the AmmoType value
+
+    GET_FIELD_WITH_COMPATIBILITY( L, argIndex, "Damage", "m_flDamage" );
+    info.m_flDamage = lua_isnil( L, -1 ) ? 1.0f : luaL_checknumber( L, -1 );
+    lua_pop( L, 1 );  // pop the Damage value
+
+    GET_FIELD_WITH_COMPATIBILITY( L, argIndex, "PlayerDamage", "m_iPlayerDamage" );
+    info.m_iPlayerDamage = lua_isnil( L, -1 ) ? info.m_flDamage : luaL_checknumber( L, -1 );
+    lua_pop( L, 1 );  // pop the PlayerDamage value
+
+    GET_FIELD_WITH_COMPATIBILITY( L, argIndex, "AmountOfBullets", "Num" );
+    info.m_iShots = lua_isnil( L, -1 ) ? 1 : luaL_checknumber( L, -1 );
+    lua_pop( L, 1 );  // pop the AmountOfBullets value
+
+    GET_FIELD_WITH_COMPATIBILITY( L, argIndex, "TracerFrequency", "Tracer" );
+    info.m_iTracerFreq = lua_isnil( L, -1 ) ? 1 : luaL_checknumber( L, -1 );
+    lua_pop( L, 1 );  // pop the Tracer value
+
+    GET_FIELD_WITH_COMPATIBILITY( L, argIndex, "TracerName", "m_pszTracerType" );
+    info.m_pszTracerType = lua_isnil( L, -1 ) ? NULL : strdup( luaL_checkstring( L, -1 ) );
+    lua_pop( L, 1 );  // pop the TracerName value
+
+    GET_FIELD_WITH_COMPATIBILITY( L, argIndex, "Flags", "m_nFlags" );
+    info.m_nFlags = lua_isnil( L, -1 ) ? 0 : luaL_checknumber( L, -1 );
+    lua_pop( L, 1 );  // pop the Flags value
+
+    GET_FIELD_WITH_COMPATIBILITY( L, argIndex, "IgnoreEntity", "m_pAdditionalIgnoreEnt" );
+    info.m_pAdditionalIgnoreEnt = lua_isnil( L, -1 ) ? NULL : lua_toentity( L, -1 );
+    lua_pop( L, 1 );  // pop the IgnoreEntity value
+
+    GET_FIELD_WITH_COMPATIBILITY( L, argIndex, "Attacker", "m_pAttacker" );
+    info.m_pAttacker = lua_isnil( L, -1 ) ? self : lua_toentity( L, -1 );
+    lua_pop( L, 1 );  // pop the Attacker value
+
+    GET_FIELD_WITH_COMPATIBILITY( L, argIndex, "Direction", "Dir" );
+    info.m_vecDirShooting = lua_isnil( L, -1 ) ? vec3_origin : luaL_checkvector( L, -1 );
+    lua_pop( L, 1 );  // pop the Direction value
+
+    GET_FIELD_WITH_COMPATIBILITY( L, argIndex, "Spread", "m_vecSpread" );
+    info.m_vecSpread = lua_isnil( L, -1 ) ? vec3_origin : luaL_checkvector( L, -1 );
+    lua_pop( L, 1 );  // pop the Spread value
+
+    GET_FIELD_WITH_COMPATIBILITY( L, argIndex, "Origin", "Src" );
+    info.m_vecSrc = lua_isnil( L, -1 ) ? vec3_origin : luaL_checkvector( L, -1 );
+    lua_pop( L, 1 );  // pop the Origin value
+
+    return info;
+}*/
+
+LUA_API void lua_checktracestruct( lua_State *L, int argIndex, Vector &start, Vector &end, int &mask, int &collisionGroup, bool &bIgnoreWorld, bool &bFilterTableInverted, bool &bOutput, CTraceLuaFilter **filter )
+{
+    lua_checktracestruct( L, argIndex );
+
+    GET_FIELD_WITH_COMPATIBILITY( L, argIndex, "StartPosition", "start" );
     start = Vector( 0, 0, 0 );
     start = luaL_optvector( L, -1, &start );
-    lua_pop( L, 1 );
+    lua_pop( L, 1 );  // pop the StartPosition value
 
-    lua_getfield( L, narg, "endpos" );
+    GET_FIELD_WITH_COMPATIBILITY( L, argIndex, "EndPosition", "endpos" );
     end = Vector( 0, 0, 0 );
     end = luaL_optvector( L, -1, &end );
-    lua_pop( L, 1 );
+    lua_pop( L, 1 );  // pop the EndPosition value
 
-    lua_getfield( L, narg, "mask" );
+    GET_FIELD_WITH_COMPATIBILITY( L, argIndex, "Mask", "mask" );
     mask = luaL_optnumber( L, -1, MASK_SOLID );
-    lua_pop( L, 1 );
+    lua_pop( L, 1 );  // pop the Mask value
 
-    lua_getfield( L, narg, "collisiongroup" );
+    GET_FIELD_WITH_COMPATIBILITY( L, argIndex, "CollisionGroup", "collisiongroup" );
     collisionGroup = luaL_optnumber( L, -1, COLLISION_GROUP_NONE );
-    lua_pop( L, 1 );
+    lua_pop( L, 1 );  // pop the CollisionGroup value
 
-    lua_getfield( L, narg, "ignoreworld" );
+    GET_FIELD_WITH_COMPATIBILITY( L, argIndex, "ShouldIgnoreWorld", "ignoreworld" );
     bIgnoreWorld = luaL_optboolean( L, -1, false );
-    lua_pop( L, 1 );
+    lua_pop( L, 1 );  // pop the ShouldIgnoreWorld value
 
-    lua_getfield( L, narg, "whitelist" );
+    GET_FIELD_WITH_COMPATIBILITY( L, argIndex, "IsFilterAllowList", "whitelist" );
     bFilterTableInverted = luaL_optboolean( L, -1, false );
-    lua_pop( L, 1 );
+    lua_pop( L, 1 );  // pop the IsFilterAllowList value
 
-    lua_getfield( L, narg, "output" );
+    GET_FIELD_WITH_COMPATIBILITY( L, argIndex, "Output", "output" );
     bOutput = !lua_isnil( L, -1 );
-    lua_pop( L, 1 );
+    lua_pop( L, 1 );  // pop the Output value
 
-    lua_getfield( L, narg, "filter" );
+    GET_FIELD_WITH_COMPATIBILITY( L, argIndex, "Filter", "filter" );
     *filter = new CTraceLuaFilter( L, -1, collisionGroup, bIgnoreWorld, bFilterTableInverted );
     // lua_pop( L, 1 ); // Don't pop the filter. CTraceLuaFilter will handle it, leaving the filter on the stack if it's a function
 }
@@ -619,7 +700,7 @@ LUA_BINDING_BEGIN( Traces, ClearTrace, "library", "Clears the given trace object
 }
 LUA_BINDING_END()
 
-#endif // GAME_DLL
+#endif  // GAME_DLL
 
 /*
 ** Open CGameTrace object

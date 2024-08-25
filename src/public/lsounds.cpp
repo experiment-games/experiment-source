@@ -88,40 +88,6 @@ public:
 };
 */
 
-#define GET_FIELD_WITH_COMPATIBILITY( L, ArgumentIndex, FieldName, FallbackFieldName ) \
-    lua_getfield( L, ArgumentIndex, FieldName );                                       \
-    if ( lua_isnil( L, -1 ) )                                                          \
-    {                                                                                  \
-        lua_pop( L, 1 ); /* pop the nil value */                                       \
-        lua_getfield( L, ArgumentIndex, FallbackFieldName );                           \
-    }
-
-#define CHECK_FIELD_OR_ERROR( L, ArgumentIndex, FieldName, CheckFunction )   \
-    if ( !CheckFunction( L, -1 ) )                                           \
-    {                                                                        \
-        luaL_argerror( L, ArgumentIndex, "expected field '" FieldName "'" ); \
-        return 0;                                                            \
-    }
-
-#define GET_FIELD_WITH_COMPATIBILITY_OR_ERROR( L, ArgumentIndex, FieldName, FallbackFieldName, CheckFunction ) \
-    lua_getfield( L, ArgumentIndex, FieldName );                                                               \
-    if ( lua_isnil( L, -1 ) )                                                                                  \
-    {                                                                                                          \
-        lua_pop( L, 1 ); /* pop the nil value */                                                               \
-        lua_getfield( L, ArgumentIndex, FallbackFieldName );                                                   \
-    }                                                                                                          \
-    CHECK_FIELD_OR_ERROR( L, ArgumentIndex, FieldName, CheckFunction )
-
-/*
-    Sounds.Add({
-        name = "big_explosion",
-        channel = CHAN_STATIC,
-        volume = 1.0,
-        level = 80,
-        pitch = {95, 110},
-        sound = "phx/explode03.wav"
-    })
-*/
 LUA_BINDING_BEGIN( Sounds, Add, "library", "Creates a sound script." )
 {
     if ( !LUA_BINDING_ARGUMENT( lua_istable, 1, "soundData" ) )

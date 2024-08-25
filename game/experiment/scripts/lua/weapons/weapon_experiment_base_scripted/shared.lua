@@ -71,11 +71,11 @@ end
 function SWEP:ShootBullet(damage, amountOfBullets, spread, ammoType, force, tracer)
 	local owner = self:GetOwner()
 	local bulletInfo = {
-		Src = owner:GetWeaponShootPosition(),
-		Dir = owner:GetAimVector(0.08715574274766),
+		Origin = owner:GetWeaponShootPosition(),
+		Direction = owner:GetAimVector(0.08715574274766),
 		Spread = Vector(spread.x, spread.y, 0),
 
-		Num = amountOfBullets,
+		AmountOfBullets = amountOfBullets,
 		AmmoType = ammoType or self.Primary.Ammo,
 		Tracer = tracer or 5,
 

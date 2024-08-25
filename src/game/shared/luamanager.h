@@ -596,6 +596,30 @@
     AssertMsg( lua_istable( L, -1 ), "Metatable doesn't exist!" ); \
     lua_setmetatable( L, -2 );
 
+#define GET_FIELD_WITH_COMPATIBILITY( L, ArgumentIndex, FieldName, FallbackFieldName ) \
+    lua_getfield( L, ArgumentIndex, FieldName );                                       \
+    if ( lua_isnil( L, -1 ) )                                                          \
+    {                                                                                  \
+        lua_pop( L, 1 ); /* pop the nil value */                                       \
+        lua_getfield( L, ArgumentIndex, FallbackFieldName );                           \
+    }
+
+#define CHECK_FIELD_OR_ERROR( L, ArgumentIndex, FieldName, CheckFunction )   \
+    if ( !CheckFunction( L, -1 ) )                                           \
+    {                                                                        \
+        luaL_argerror( L, ArgumentIndex, "expected field '" FieldName "'" ); \
+        return 0;                                                            \
+    }
+
+#define GET_FIELD_WITH_COMPATIBILITY_OR_ERROR( L, ArgumentIndex, FieldName, FallbackFieldName, CheckFunction ) \
+    lua_getfield( L, ArgumentIndex, FieldName );                                                               \
+    if ( lua_isnil( L, -1 ) )                                                                                  \
+    {                                                                                                          \
+        lua_pop( L, 1 ); /* pop the nil value */                                                               \
+        lua_getfield( L, ArgumentIndex, FallbackFieldName );                                                   \
+    }                                                                                                          \
+    CHECK_FIELD_OR_ERROR( L, ArgumentIndex, FieldName, CheckFunction )
+
 // Network variable macros and enum
 #define LUA_MAX_NETWORK_VARIABLES 32
 #define LUA_MAX_NETWORK_VARIABLES_STRING 4
