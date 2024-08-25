@@ -130,13 +130,17 @@
         lua_getref( L, pWeapon->m_nTableReference );        \
         lua_getfield( L, -1, functionName );                \
         lua_remove( L, -2 );                                \
-        int args = 0;                                       \
-        CBaseEntity::PushLuaInstanceSafe( L, pWeapon );     \
-        ++args;
+        if ( lua_isfunction( L, -1 ) )                      \
+        {                                                   \
+            int args = 0;                                   \
+            CBaseEntity::PushLuaInstanceSafe( L, pWeapon ); \
+            ++args;
 
 #define LUA_CALL_WEAPON_HOOK_END( nArgs, nresults ) \
     args += nArgs;                                  \
     luasrc_pcall( L, args, nresults );              \
+    }                                               \
+    else lua_pop( L, 1 );                           \
     }
 
 #define LUA_CALL_ENTITY_METHOD_BEGIN( functionName ) \

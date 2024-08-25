@@ -6,6 +6,12 @@
 #include "lvector.h"
 #include "langle.h"
 
+#ifdef CLIENT_DLL
+#include <vgui/ISurface.h>
+#include <view_scene.h>
+#include <sourcevr/isourcevirtualreality.h>
+#endif
+
 // memdbgon must be the last include file in a .cpp file!!!
 #include "tier0/memdbgon.h"
 
@@ -318,8 +324,7 @@ LUA_BINDING_BEGIN( Vector, Zero, "class", "Zeroes the vector." )
 }
 LUA_BINDING_END()
 
-// Modify the existing vector, adding another vector to it.
-LUA_BINDING_BEGIN( Vector, Add, "class", "Adds another vector to the vector." )
+LUA_BINDING_BEGIN( Vector, Add, "class", "Modify the existing vector, adding another vector to it." )
 {
     lua_Vector &vec = LUA_BINDING_ARGUMENT( luaL_checkvector, 1, "vector" );
     lua_Vector vecToAdd = LUA_BINDING_ARGUMENT( luaL_checkvector, 2, "vectorToAdd" );
@@ -329,8 +334,7 @@ LUA_BINDING_BEGIN( Vector, Add, "class", "Adds another vector to the vector." )
 }
 LUA_BINDING_END()
 
-// Modify the existing vector, dividing it by a number.
-LUA_BINDING_BEGIN( Vector, Divide, "class", "Divides the vector by a number." )
+LUA_BINDING_BEGIN( Vector, Divide, "class", "Modify the existing vector, dividing it by a number." )
 {
     lua_Vector &vec = LUA_BINDING_ARGUMENT( luaL_checkvector, 1, "vector" );
     float divideBy = LUA_BINDING_ARGUMENT( luaL_checknumber, 2, "divideBy" );
@@ -340,8 +344,7 @@ LUA_BINDING_BEGIN( Vector, Divide, "class", "Divides the vector by a number." )
 }
 LUA_BINDING_END()
 
-// Modify the existing vector, scaling it by a number.
-LUA_BINDING_BEGIN( Vector, Scale, "class", "Scales the vector by a number." )
+LUA_BINDING_BEGIN( Vector, Scale, "class", "Modify the existing vector, scaling it by a number." )
 {
     lua_Vector &vec = LUA_BINDING_ARGUMENT( luaL_checkvector, 1, "vector" );
     float scaleBy = LUA_BINDING_ARGUMENT( luaL_checknumber, 2, "scaleBy" );
@@ -350,6 +353,64 @@ LUA_BINDING_BEGIN( Vector, Scale, "class", "Scales the vector by a number." )
     return 0;
 }
 LUA_BINDING_END()
+
+#ifdef CLIENT_DLL
+LUA_BINDING_BEGIN( Vector, ToScreen, "class", "Converts the vector to screen coordinates.", "client" )
+{
+    lua_Vector &vec = LUA_BINDING_ARGUMENT( luaL_checkvector, 1, "vector" );
+    bool isVisible;
+    float x, y;
+
+    Vector screen;
+    screen.Init();
+
+    if ( UseVR() )
+    {
+        isVisible = ScreenTransform( vec, screen ) != 0;
+
+        int vx, vy, vw, vh;
+        vgui::surface()->GetFullscreenViewport( vx, vy, vw, vh );
+
+        float screenWidth = vw;
+        float screenHeight = vh;
+
+        x = 0.5f * ( 1.0f + screen[0] ) * screenWidth + 0.5f;
+        y = 0.5f * ( 1.0f - screen[1] ) * screenHeight + 0.5f;
+    }
+    else
+    {
+        x = ScreenWidth() / 2;
+        y = ScreenHeight() / 2;
+
+        isVisible = ScreenTransform( vec, screen );
+        x += 0.5 * screen[0] * ScreenWidth() + 0.5;
+        y -= 0.5 * screen[1] * ScreenHeight() + 0.5;
+    }
+
+    lua_newtable( L );
+
+    lua_pushnumber( L, x );
+    lua_setfield( L, -2, "x" ); // GMod compatibility
+
+    lua_pushnumber( L, x );
+    lua_setfield( L, -2, "X" );
+
+    lua_pushnumber( L, y );
+    lua_setfield( L, -2, "y" ); // GMod compatibility
+
+    lua_pushnumber( L, y );
+    lua_setfield( L, -2, "Y" );
+
+    lua_pushboolean( L, isVisible );
+    lua_setfield( L, -2, "visible" ); // GMod compatibility
+
+    lua_pushboolean( L, isVisible );
+    lua_setfield( L, -2, "IsVisible" );
+
+    return 1;
+}
+LUA_BINDING_END( "table", "A table containing the screen coordinates and whether it is visible." )
+#endif
 
 LUA_BINDING_BEGIN( Vector, __index, "class", "Gets the value of a vector field." )
 {

@@ -710,7 +710,8 @@ struct FireBulletsInfo_t
 		m_pAdditionalIgnoreEnt = NULL;
 		m_flDamageForceScale = 1.0f;
 		m_bPrimaryAttack = bPrimaryAttack;
-		m_bUseServerRandomSeed = false;
+        m_bUseServerRandomSeed = false;
+        m_pszTracerType = NULL;
 	}
 
 	int m_iShots;

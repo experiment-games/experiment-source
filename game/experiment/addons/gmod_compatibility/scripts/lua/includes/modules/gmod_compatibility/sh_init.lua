@@ -34,7 +34,7 @@ function GetConVar_Internal(name)
 	local consoleVariable = ConsoleVariables.Get(name)
 
 	if (not IsValid(consoleVariable)) then
-		debug.PrintError("GetConVar: Couldn't find convar '" .. name .. "'")
+		-- debug.PrintError("GetConVar: Couldn't find convar '" .. name .. "'")
 		return nil
 	end
 
@@ -419,8 +419,8 @@ game = {
 }
 
 debugoverlay.Axis = function(origin, angle, size, lifetime, ignoreZ)
-    DebugOverlays.AddLine(origin, origin + angle:Forward() * size, lifetime, Color(0, 255, 0), ignoreZ)
-    DebugOverlays.AddLine(origin, origin + angle:Right() * size, lifetime, Color(255, 0, 0), ignoreZ)
+	DebugOverlays.AddLine(origin, origin + angle:Forward() * size, lifetime, Color(0, 255, 0), ignoreZ)
+	DebugOverlays.AddLine(origin, origin + angle:Right() * size, lifetime, Color(255, 0, 0), ignoreZ)
 	DebugOverlays.AddLine(origin, origin + angle:Up() * size, lifetime, Color(0, 0, 255), ignoreZ)
 end
 debugoverlay.Box = function(origin, mins, maxs, lifetime, color)
@@ -428,9 +428,9 @@ debugoverlay.Box = function(origin, mins, maxs, lifetime, color)
 end
 debugoverlay.BoxAngles = DebugOverlays.AddBox
 debugoverlay.Cross = function(origin, size, lifetime, color, ignoreZ)
-    DebugOverlays.AddLine(origin + Vector(size, 0, 0), origin - Vector(size, 0, 0), lifetime, color, ignoreZ)
-    DebugOverlays.AddLine(origin + Vector(0, size, 0), origin - Vector(0, size, 0), lifetime, color, ignoreZ)
-    DebugOverlays.AddLine(origin + Vector(0, 0, size), origin - Vector(0, 0, size), lifetime, color, ignoreZ)
+	DebugOverlays.AddLine(origin + Vector(size, 0, 0), origin - Vector(size, 0, 0), lifetime, color, ignoreZ)
+	DebugOverlays.AddLine(origin + Vector(0, size, 0), origin - Vector(0, size, 0), lifetime, color, ignoreZ)
+	DebugOverlays.AddLine(origin + Vector(0, 0, size), origin - Vector(0, 0, size), lifetime, color, ignoreZ)
 end
 debugoverlay.EntityTextAtPosition = DebugOverlays.AddEntityTextOverlay
 debugoverlay.Grid = DebugOverlays.AddGrid
@@ -511,35 +511,35 @@ ENTITY_META.GetAbsVelocity = ENTITY_META.GetLocalVelocity
 ENTITY_META.SetAbsVelocity = ENTITY_META.SetLocalVelocity
 
 function ENTITY_META:GetDTAngle(index)
-    return self:GetNetworkDataValue(_E.NETWORK_VARIABLE_TYPE.ANGLE, index)
+	return self:GetNetworkDataValue(_E.NETWORK_VARIABLE_TYPE.ANGLE, index)
 end
 
 function ENTITY_META:GetDTBool(index)
-    return self:GetNetworkDataValue(_E.NETWORK_VARIABLE_TYPE.BOOLEAN, index)
+	return self:GetNetworkDataValue(_E.NETWORK_VARIABLE_TYPE.BOOLEAN, index)
 end
 
 function ENTITY_META:GetDTEntity(index)
-    return self:GetNetworkDataValue(_E.NETWORK_VARIABLE_TYPE.ENTITY, index)
+	return self:GetNetworkDataValue(_E.NETWORK_VARIABLE_TYPE.ENTITY, index)
 end
 
 function ENTITY_META:GetDTFloat(index)
-    return self:GetNetworkDataValue(_E.NETWORK_VARIABLE_TYPE.FLOAT, index)
+	return self:GetNetworkDataValue(_E.NETWORK_VARIABLE_TYPE.FLOAT, index)
 end
 
 function ENTITY_META:GetDTInt(index)
-    return self:GetNetworkDataValue(_E.NETWORK_VARIABLE_TYPE.INTEGER, index)
+	return self:GetNetworkDataValue(_E.NETWORK_VARIABLE_TYPE.INTEGER, index)
 end
 
 function ENTITY_META:GetDTString(index)
-    return self:GetNetworkDataValue(_E.NETWORK_VARIABLE_TYPE.STRING, index)
+	return self:GetNetworkDataValue(_E.NETWORK_VARIABLE_TYPE.STRING, index)
 end
 
 function ENTITY_META:GetDTVector(index)
-    return self:GetNetworkDataValue(_E.NETWORK_VARIABLE_TYPE.VECTOR, index)
+	return self:GetNetworkDataValue(_E.NETWORK_VARIABLE_TYPE.VECTOR, index)
 end
 
 function ENTITY_META:SetDTAngle(index, value)
-    self:SetNetworkDataValue(_E.NETWORK_VARIABLE_TYPE.ANGLE, index, value)
+	self:SetNetworkDataValue(_E.NETWORK_VARIABLE_TYPE.ANGLE, index, value)
 end
 
 function ENTITY_META:SetDTBool(index, value)
@@ -547,11 +547,11 @@ function ENTITY_META:SetDTBool(index, value)
 end
 
 function ENTITY_META:SetDTEntity(index, value)
-    self:SetNetworkDataValue(_E.NETWORK_VARIABLE_TYPE.ENTITY, index, value)
+	self:SetNetworkDataValue(_E.NETWORK_VARIABLE_TYPE.ENTITY, index, value)
 end
 
 function ENTITY_META:SetDTFloat(index, value)
-    self:SetNetworkDataValue(_E.NETWORK_VARIABLE_TYPE.FLOAT, index, value)
+	self:SetNetworkDataValue(_E.NETWORK_VARIABLE_TYPE.FLOAT, index, value)
 end
 
 function ENTITY_META:SetDTInt(index, value)
@@ -559,7 +559,7 @@ function ENTITY_META:SetDTInt(index, value)
 end
 
 function ENTITY_META:SetDTString(index, value)
-    self:SetNetworkDataValue(_E.NETWORK_VARIABLE_TYPE.STRING, index, value)
+	self:SetNetworkDataValue(_E.NETWORK_VARIABLE_TYPE.STRING, index, value)
 end
 
 function ENTITY_META:SetDTVector(index, value)
@@ -594,6 +594,7 @@ end
 function ENTITY_META:IsOnGround()
 	return self:IsFlagSet(_E.ENGINE_FLAG.ON_GROUND)
 end
+
 ENTITY_META.OnGround = ENTITY_META.IsOnGround
 
 --[[
@@ -623,19 +624,19 @@ end
 -- TODO: We should probably override SetupBones, call the baseclass, and then apply our manipulations?
 -- TODO: Or we need to use a function from bone_setup.h. I'm not sure which one.
 function ENTITY_META:GetManipulateBoneAngles()
-    return Angle()
+	return Angle()
 end
 
 function ENTITY_META:GetManipulateBoneJiggle()
-    return 0
+	return 0
 end
 
 function ENTITY_META:GetManipulateBonePosition()
-    return Vector()
+	return Vector()
 end
 
 function ENTITY_META:GetManipulateBoneScale()
-    return Vector(1, 1, 1)
+	return Vector(1, 1, 1)
 end
 
 function ENTITY_META:ManipulateBoneAngles(boneID, angle, isNetworked)
@@ -769,6 +770,14 @@ if (SERVER) then
 	function PLAYER_META:UnSpectate()
 		self:SetObserverMode(OBS_MODE_NONE)
 	end
+
+	function PLAYER_META:CrosshairDisable()
+		self:ShowCrosshair(false)
+	end
+
+	function PLAYER_META:CrosshairEnable()
+		self:ShowCrosshair(true)
+	end
 else
 	net.Receive("__PlayerLuaRun", function()
 		local lua = net.ReadString()
@@ -787,7 +796,12 @@ end
 
 function PLAYER_META:IsListenServerHost()
 	if (CLIENT) then
-		ErrorNoHalt("IsListenServerHost has not yet been implemented on the client.")
+		if (Engines.GetMaxClients() == 1) then
+			-- Singleplayer always returns true
+			return true
+		else
+			return self == Players.FindByIndex(1)
+		end
 	end
 
 	return self == Engines.GetListenServerHost()
@@ -1121,6 +1135,8 @@ else
 	TEXT_ENTRY_PANEL_META._OriginalSetFont = TEXT_ENTRY_PANEL_META._OriginalSetFont or TEXT_ENTRY_PANEL_META.SetFont
 	TEXT_ENTRY_PANEL_META._OriginalGetFont = TEXT_ENTRY_PANEL_META._OriginalGetFont or TEXT_ENTRY_PANEL_META.GetFont
 	TEXT_ENTRY_PANEL_META.DrawTextEntryText = TEXT_ENTRY_PANEL_META.PaintText
+	TEXT_ENTRY_PANEL_META.GetCaretPos = TEXT_ENTRY_PANEL_META.GetCursorPosition
+	TEXT_ENTRY_PANEL_META.SetCaretPos = TEXT_ENTRY_PANEL_META.SetCursorPosition
 
 	function TEXT_ENTRY_PANEL_META:SetFontInternal(font)
 		self:SetFontByName(font)
@@ -1385,16 +1401,16 @@ function baseclassGetCompatibility(name)
 end
 
 if (CLIENT) then
-    ProjectedTexture = ProjectedTextures.Create
+	ProjectedTexture = ProjectedTextures.Create
 
 	local PROJECTED_TEXTURE_META = FindMetaTable("ProjectedTexture")
 	PROJECTED_TEXTURE_META.GetPos = PROJECTED_TEXTURE_META.GetPosition
 	PROJECTED_TEXTURE_META.SetPos = PROJECTED_TEXTURE_META.SetPosition
 	PROJECTED_TEXTURE_META.GetFOV = PROJECTED_TEXTURE_META.GetFov
 	PROJECTED_TEXTURE_META.SetFOV = PROJECTED_TEXTURE_META.SetFov
-    PROJECTED_TEXTURE_META.GetHorizontalFOV = PROJECTED_TEXTURE_META.GetHorizontalFov
-    PROJECTED_TEXTURE_META.SetHorizontalFOV = PROJECTED_TEXTURE_META.SetHorizontalFov
-    PROJECTED_TEXTURE_META.GetVerticalFOV = PROJECTED_TEXTURE_META.GetVerticalFov
+	PROJECTED_TEXTURE_META.GetHorizontalFOV = PROJECTED_TEXTURE_META.GetHorizontalFov
+	PROJECTED_TEXTURE_META.SetHorizontalFOV = PROJECTED_TEXTURE_META.SetHorizontalFov
+	PROJECTED_TEXTURE_META.GetVerticalFOV = PROJECTED_TEXTURE_META.GetVerticalFov
 	PROJECTED_TEXTURE_META.SetVerticalFOV = PROJECTED_TEXTURE_META.SetVerticalFov
 
 	matproxy = {
@@ -1597,11 +1613,11 @@ hook.Add("Initialize", "GModCompatibility.CallInitializeHooks", function()
 end)
 
 hook.Add("PreEntityInitialize", "GModCompatibility.CallSetupDataTables", function(entity)
-    if (entity.InstallDataTable) then
-        entity:InstallDataTable()
-    end
+	if (entity.InstallDataTable) then
+		entity:InstallDataTable()
+	end
 
-    if (entity.SetupDataTables) then
+	if (entity.SetupDataTables) then
 		entity:SetupDataTables()
 	end
 end)
@@ -1665,7 +1681,7 @@ local filter = {
 	include = {
 		["extensions/net.lua"] = true, -- We implement networking using luasocket
 		["extensions/file.lua"] = true, -- Our filesystem works slightly different
-		["util/color.lua"] = true,  -- In contrast with gmod, we should properly get metatables everywhere (so don't need this hack util)
+		["util/color.lua"] = true, -- In contrast with gmod, we should properly get metatables everywhere (so don't need this hack util)
 	},
 }
 

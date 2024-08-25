@@ -170,10 +170,10 @@ void LProjectedTexture::ForceUpdateLight()
 
     g_pClientShadowMgr->SetFlashlightLightWorld( m_LightHandle, m_bLightWorld );
 
-    //if ( bForceUpdate == false )
+    // if ( bForceUpdate == false )
     //{
-    //    g_pClientShadowMgr->UpdateProjectedTexture( m_LightHandle, true );
-    //}
+    //     g_pClientShadowMgr->UpdateProjectedTexture( m_LightHandle, true );
+    // }
 
     m_bIsValid = true;
 }
@@ -420,10 +420,10 @@ LUA_BINDING_BEGIN( ProjectedTexture, SetColor, "class", "Set the color of the pr
 {
     lua_ProjectedTexture *projectedTexture = LUA_BINDING_ARGUMENT( luaL_checkprojectedtexture, 1, "projectedTexture" );
     const lua_Color &color = LUA_BINDING_ARGUMENT( luaL_checkcolor, 2, "color" );
-    projectedTexture->m_FlashlightState.m_Color[0] = color.r() / 255;
-    projectedTexture->m_FlashlightState.m_Color[1] = color.g() / 255;
-    projectedTexture->m_FlashlightState.m_Color[2] = color.b() / 255;
-    projectedTexture->m_FlashlightState.m_Color[3] = color.a() / 255;
+    projectedTexture->m_FlashlightState.m_Color[0] = ( float )color.r() / 255;
+    projectedTexture->m_FlashlightState.m_Color[1] = ( float )color.g() / 255;
+    projectedTexture->m_FlashlightState.m_Color[2] = ( float )color.b() / 255;
+    projectedTexture->m_FlashlightState.m_Color[3] = ( float )color.a() / 255;
 
     return 0;
 }
@@ -601,7 +601,7 @@ LUA_BINDING_END()
 LUA_BINDING_BEGIN( ProjectedTexture, SetTargetEntity, "class", "Set the target entity for this projected texture." )
 {
     lua_ProjectedTexture *projectedTexture = LUA_BINDING_ARGUMENT( luaL_checkprojectedtexture, 1, "projectedTexture" );
-    CBaseEntity *target = LUA_BINDING_ARGUMENT( lua_toentity, 2, "entity" ); // toentity to allow NULL
+    CBaseEntity *target = LUA_BINDING_ARGUMENT( lua_toentity, 2, "entity" );  // toentity to allow NULL
     projectedTexture->m_hTargetEntity = target;
 
     return 0;
@@ -654,7 +654,7 @@ LUA_BINDING_BEGIN( ProjectedTexture, __index, "class", "Metamethod that is calle
     LUA_METATABLE_INDEX_CHECK_VALID( L, ProjectedTexture_IsValid );
     LUA_METATABLE_INDEX_CHECK( L, pProjectedTexture );
 
-    //const char *field = LUA_BINDING_ARGUMENT( luaL_checkstring, 2, "field" );
+    // const char *field = LUA_BINDING_ARGUMENT( luaL_checkstring, 2, "field" );
 
     LUA_METATABLE_INDEX_CHECK_REF_TABLE( L, pProjectedTexture );
 

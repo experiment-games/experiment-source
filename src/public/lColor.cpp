@@ -288,7 +288,7 @@ LUA_BINDING_BEGIN( Colors, HsvToColor, "library", "Converts HSV to RGB." )
 }
 LUA_BINDING_END( "Color", "The converted color." )
 
-LUA_BINDING_BEGIN( Colors, ColorToHSV, "library", "Converts RGB to HSV." )
+LUA_BINDING_BEGIN( Colors, ColorToHsv, "library", "Converts RGB to HSV." )
 {
     lua_Color clr = luaL_checkcolor( L, 1 );
     Vector hsv;
