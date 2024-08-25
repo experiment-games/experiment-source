@@ -418,6 +418,29 @@ game = {
 	GetMap = Engines.GetLevelName,
 }
 
+debugoverlay.Axis = function(origin, angle, size, lifetime, ignoreZ)
+    DebugOverlays.AddLine(origin, origin + angle:Forward() * size, lifetime, Color(0, 255, 0), ignoreZ)
+    DebugOverlays.AddLine(origin, origin + angle:Right() * size, lifetime, Color(255, 0, 0), ignoreZ)
+	DebugOverlays.AddLine(origin, origin + angle:Up() * size, lifetime, Color(0, 0, 255), ignoreZ)
+end
+debugoverlay.Box = function(origin, mins, maxs, lifetime, color)
+	DebugOverlays.AddBox(origin, mins, maxs, Angle(), color, lifetime)
+end
+debugoverlay.BoxAngles = DebugOverlays.AddBox
+debugoverlay.Cross = function(origin, size, lifetime, color, ignoreZ)
+    DebugOverlays.AddLine(origin + Vector(size, 0, 0), origin - Vector(size, 0, 0), lifetime, color, ignoreZ)
+    DebugOverlays.AddLine(origin + Vector(0, size, 0), origin - Vector(0, size, 0), lifetime, color, ignoreZ)
+    DebugOverlays.AddLine(origin + Vector(0, 0, size), origin - Vector(0, 0, size), lifetime, color, ignoreZ)
+end
+debugoverlay.EntityTextAtPosition = DebugOverlays.AddEntityTextOverlay
+debugoverlay.Grid = DebugOverlays.AddGrid
+debugoverlay.Line = DebugOverlays.AddLine
+debugoverlay.ScreenText = DebugOverlays.AddScreenText
+-- debugoverlay.Sphere = DebugOverlays.AddSphere -- not yet implemented
+debugoverlay.SweptBox = DebugOverlays.AddSweptBox
+debugoverlay.Text = DebugOverlays.AddText
+debugoverlay.Triangle = DebugOverlays.AddTriangle
+
 local EFFECT_DATA_META = FindMetaTable("EffectData")
 EFFECT_DATA_META.GetEntIndex = EFFECT_DATA_META.GetEntityIndex
 EFFECT_DATA_META.SetEntIndex = EFFECT_DATA_META.SetEntityIndex

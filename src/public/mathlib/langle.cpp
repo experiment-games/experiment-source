@@ -161,15 +161,12 @@ LUA_BINDING_BEGIN( Angle, RotateAroundAxis, "class", "Rotates the angle around t
     lua_Vector axis = LUA_BINDING_ARGUMENT( luaL_checkvector, 2, "axis" );
     float degrees = LUA_BINDING_ARGUMENT( luaL_checknumber, 3, "degrees" );
 
-    matrix3x4_t matrix;
-    MatrixBuildRotationAboutAxis( axis, degrees, matrix );
-    lua_QAngle newAngle;
-    MatrixToAngles( matrix, newAngle );
-
-    // Copy the new angle to the old angle
-    angle.x = newAngle.x;
-    angle.y = newAngle.y;
-    angle.z = newAngle.z;
+    VMatrix rotationMatrix, angleAsMatrix, resultMatrix;
+    MatrixFromAngles( angle, angleAsMatrix );
+    MatrixBuildRotationAboutAxis( rotationMatrix, axis, degrees );
+    MatrixMultiply( angleAsMatrix, rotationMatrix, resultMatrix );
+    // Sets the result into the existing angle
+    MatrixToAngles( resultMatrix, angle );
 
     lua_pushangle( L, angle );
 
