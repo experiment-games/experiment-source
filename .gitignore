@@ -92,6 +92,7 @@ src/materialsystem/stdshaders/vcslist.txt
 src/materialsystem/stdshaders/makefile.stdshader_dx9_*
 src/materialsystem/stdshaders/fxctmp9_tmp/*
 src/materialsystem/stdshaders/shaders/*
+src/materialsystem/stdshaders/Release_*
 
 # config file different for each user
 .env

@@ -269,8 +269,10 @@ void SendProxy_Angles( const SendProp *pProp, const void *pStruct, const void *p
 
 void SendProxy_LuaVariableElement_String( const SendProp *pProp, const void *pStruct, const void *pVarData, DVariant *pOut, int iElement, int objectID )
 {
+#ifdef _DEBUG
     CBaseEntity *entity = ( CBaseEntity * )pStruct;
     Assert( entity );
+#endif
     
 	string_t *pString = (string_t*)pVarData;
 	pOut->m_pString = (char*)STRING( *pString );

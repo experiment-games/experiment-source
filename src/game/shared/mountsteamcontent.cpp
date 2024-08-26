@@ -285,7 +285,7 @@ void InitializeGameContentMounting()
 
     if ( !pSteamApps )
     {
-        Error( "Failed to mount game content (are you not signed into Steam?)\n" );
+        DevWarning( "Failed to mount game content (are you not signed into Steam?)\n" );
         return;
     }
 

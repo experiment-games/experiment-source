@@ -608,6 +608,11 @@ EXPOSE_SINGLE_INTERFACE_GLOBALVAR( CServerGameDLL, IServerGameDLL, INTERFACEVERS
 // still valid and expose the older version in the same way
 COMPILE_TIME_ASSERT( INTERFACEVERSION_SERVERGAMEDLL_INT == 10 );
 
+// Experiment; TODO: Move these experiments to a separate subfolder and files
+// These detours are experimental and give us access to engine features we
+// wouldn't have access to otherwise. It's a shame that we have to be this
+// hacky, but it's the only way to get access to things like CheckPassword and
+// ClientConnect.
 #ifdef WITH_DETOURS
 
 DWORD_PTR GetModuleBaseAddress( const char *moduleName )
@@ -615,39 +620,55 @@ DWORD_PTR GetModuleBaseAddress( const char *moduleName )
     return reinterpret_cast< DWORD_PTR >( GetModuleHandle( moduleName ) );
 }
 
-// Not working, probably because the CheckPassword function is protected. We should try hooking through the vtable instead.
-// const DWORD_PTR OFFSET_OF_BASE_SERVER_CHECK_PASSWORD = 0x251E90;  // found in IDA searching for 'password failed' string and getting sub routine that is called before showing that message (setting image base offset to 0)
-// typedef bool( __thiscall *Function_BaseServer_CheckPassword_t )( void *, netadr_t &adr, const char *password, const char *name );
-// static Function_BaseServer_CheckPassword_t OriginalServerCheckPassword = nullptr;
-//
-// bool __fastcall DetourCheckPassword( void *pThis, DWORD edx, netadr_t &adr, const char *password, const char *name )
-//{
-//    DevWarning( "Detour: Custom logic before CheckPassword\n" );
-//
-//    bool result = OriginalServerCheckPassword( pThis, adr, password, name );
-//
-//    DevWarning( "Detour: Custom logic after CheckPassword\n" );
-//
-//    return result;
-//}
-//
-// void ApplyCheckPasswordDetour()
-//{
-//    DWORD_PTR baseAddress = GetModuleBaseAddress( "engine.dll" );
-//    DWORD_PTR functionAddress = baseAddress + OFFSET_OF_BASE_SERVER_CHECK_PASSWORD;
-//
-//    if ( MH_CreateHook( ( LPVOID )functionAddress, &DetourCheckPassword, reinterpret_cast< LPVOID * >( &OriginalServerCheckPassword ) ) != MH_OK )
-//    {
-//        DevWarning( "Failed to hook CheckPassword.\n" );
-//    }
-//    else
-//    {
-//        MH_EnableHook( ( LPVOID )functionAddress );
-//    }
-//}
+// Found 0E8h as CheckPassword (vtable offset) in IDA deducing the offset of the function by looking for the parameters being pushed before the call to the function, e.g:
+//  .text : 0015BC5D loc_15BC5D:       ; CODE XREF : sub_15BB80 + C3↑j
+//  .text : 0015BC5D push[ebp + arg_name]
+//  .text : 0015BC60 mov eax, [eax + 0E8h]
+//  .text : 0015BC66 push[ebp + arg_password]
+const DWORD_PTR OFFSET_OF_BASE_SERVER_CHECK_PASSWORD_VTABLE = 0x0E8;
+typedef bool( __thiscall *Function_BaseServer_CheckPassword_t )( void *thisPointer, netadr_t &adr, const char *password, const char *name );
+static Function_BaseServer_CheckPassword_t OriginalServerCheckPassword = nullptr;
+
+bool __fastcall DetourCheckPassword( void *thisPointer, DWORD edx, netadr_t &adr, const char *password, const char *name )
+{
+    DevWarning( "Detour: Custom logic before CheckPassword\n" );
+
+    bool result = OriginalServerCheckPassword( thisPointer, adr, password, name );
+
+    DevWarning( "Detour: Custom logic after CheckPassword\n" );
+
+    return result;
+}
+
+// TODO: Reset this to false when the server is restarted
+static bool HasAlreadyDetouredCheckPassword = false;
+
+void ApplyCheckPasswordDetour( void *thisPointer )
+{
+    if ( HasAlreadyDetouredCheckPassword )
+    {
+        DevWarning( "CheckPassword already detoured.\n" );
+        return;
+    }
+
+    HasAlreadyDetouredCheckPassword = true;
+
+    // The first 4 bytes of the 'this' pointer is the vtable pointer
+    DWORD_PTR *vtable = *reinterpret_cast< DWORD_PTR ** >( thisPointer );
+    DWORD_PTR functionAddress = vtable[OFFSET_OF_BASE_SERVER_CHECK_PASSWORD_VTABLE / sizeof( DWORD_PTR )];
+
+    if ( MH_CreateHook( ( LPVOID )functionAddress, &DetourCheckPassword, reinterpret_cast< LPVOID * >( &OriginalServerCheckPassword ) ) != MH_OK )
+    {
+        DevWarning( "Failed to hook CheckPassword.\n" );
+    }
+    else
+    {
+        MH_EnableHook( ( LPVOID )functionAddress );
+    }
+}
 
 const DWORD_PTR OFFSET_OF_BASE_CLIENT_CONNECT = 0x9A380;
-typedef void( __thiscall *Function_BaseClient_Connect_t )( void *, const char *, int, INetChannel *, bool, int );
+typedef void( __thiscall *Function_BaseClient_Connect_t )( void *thisPointer, const char *, int, INetChannel *, bool, int );
 static Function_BaseClient_Connect_t OriginalClientConnect = nullptr;
 
 // Static map of connected clients to their user id so we can fetch em later
@@ -656,27 +677,40 @@ static CUtlMap< int, void * > connectedClients;
 // __fastcall workaround because you cant declare a __thiscall function without a class
 // This behaves similar to __thiscall, but safely getting the ECX and EDX registriy as its first parameters.
 // ECX holds the address of 'this' for the detoured method.
-void __fastcall DetourClientConnect( void *pThis, DWORD edx, const char *szName, int nUserID, INetChannel *pNetChannel, bool bFakePlayer, int clientChallenge )
+void __fastcall DetourClientConnect( void *thisPointer, DWORD edx, const char *szName, int nUserID, INetChannel *pNetChannel, bool bFakePlayer, int clientChallenge )
 {
-    int version = pNetChannel->GetProtocolVersion();
-    DevWarning( "Detour: Client connecting with name %s (#%i) (protocol version: %i)\n", szName, nUserID, version );
+    if ( !bFakePlayer )
+    {
+        int version = pNetChannel->GetProtocolVersion();
+        DevWarning( "Detour: Client connecting with name %s (#%i) (protocol version: %i)\n", szName, nUserID, version );
+    }
+    else
+    {
+        DevWarning( "Detour: Fake player connecting with name %s (#%i)\n", szName, nUserID );
+    }
 
-    OriginalClientConnect( pThis, szName, nUserID, pNetChannel, bFakePlayer, clientChallenge );
+    OriginalClientConnect( thisPointer, szName, nUserID, pNetChannel, bFakePlayer, clientChallenge );
 
     DevWarning( "Detour: ClientConnect detour complete.\n" );
 
-    //// This client's ConVars KeyValues are offset by 0x84 from the 'this' pointer
-    //KeyValues *oldConVars = *( KeyValues ** )( ( uintptr_t )pThis + 0x84 );
-    //if ( oldConVars )
-    //{
-    //    // oldConVars->SetString( "sv_cheats", "1" ); // just testing
-    //}
+    // The offsets below were deduced by looking at the disassembly of any easy to find function of the CBaseClient object.
+    // Then looking for a place where 'this' has an offset applied to it, e.g:
+    //  .text : 00###### mov eax, [eax + 8Ch] // 8Ch is the offset of the CBaseServer object
 
     //// The bool that allows re-setting the ConVars is at offset 0x89 from the 'this' pointer
-    //bool *bInitialConVarsSet = ( bool * )( ( uintptr_t )pThis + 0x89 );
-    //DevWarning( "%i\n", bInitialConVarsSet );
+    // bool *bInitialConVarsSet = ( bool * )( ( uintptr_t )thisPointer + 0x89 );
+    // DevWarning( "InitialConVarsSet %i\n", *bInitialConVarsSet );
 
-    connectedClients.Insert( nUserID, pThis );
+    //// Then comes another bool for m_bSendServerInfo
+    // bool *bSendServerInfo = ( bool * )( ( uintptr_t )thisPointer + 0x8A );
+    // DevWarning( "SendServerInfo: %i\n", *bSendServerInfo );
+
+    // Then comes a pointer to the CBaseServer object:
+    void *serverObject = *( void ** )( ( uintptr_t )thisPointer + 0x8C );
+
+    ApplyCheckPasswordDetour( serverObject );
+
+    connectedClients.Insert( nUserID, thisPointer );
 }
 
 CON_COMMAND_F( hack_reset_cvars, "Reset the initial convars to allow setting em again", FCVAR_GAMEDLL )
@@ -1033,6 +1067,10 @@ void CServerGameDLL::DLLShutdown( void )
     DisconnectTier2Libraries();
     ConVar_Unregister();
     DisconnectTier1Libraries();
+
+#ifdef WITH_DETOURS
+    HasAlreadyDetouredCheckPassword = false;
+#endif
 }
 
 bool CServerGameDLL::ReplayInit( CreateInterfaceFn fnReplayFactory )
