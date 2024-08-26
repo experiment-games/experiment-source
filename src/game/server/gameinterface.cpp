@@ -616,11 +616,11 @@ DWORD_PTR GetModuleBaseAddress( const char *moduleName )
 }
 
 // Not working, probably because the CheckPassword function is protected. We should try hooking through the vtable instead.
-//const DWORD_PTR OFFSET_OF_BASE_SERVER_CHECK_PASSWORD = 0x251E90;  // found in IDA searching for 'password failed' string and getting sub routine that is called before showing that message (setting image base offset to 0)
-//typedef bool( __thiscall *Function_BaseServer_CheckPassword_t )( void *, netadr_t &adr, const char *password, const char *name );
-//static Function_BaseServer_CheckPassword_t OriginalServerCheckPassword = nullptr;
+// const DWORD_PTR OFFSET_OF_BASE_SERVER_CHECK_PASSWORD = 0x251E90;  // found in IDA searching for 'password failed' string and getting sub routine that is called before showing that message (setting image base offset to 0)
+// typedef bool( __thiscall *Function_BaseServer_CheckPassword_t )( void *, netadr_t &adr, const char *password, const char *name );
+// static Function_BaseServer_CheckPassword_t OriginalServerCheckPassword = nullptr;
 //
-//bool __fastcall DetourCheckPassword( void *pThis, DWORD edx, netadr_t &adr, const char *password, const char *name )
+// bool __fastcall DetourCheckPassword( void *pThis, DWORD edx, netadr_t &adr, const char *password, const char *name )
 //{
 //    DevWarning( "Detour: Custom logic before CheckPassword\n" );
 //
@@ -631,7 +631,7 @@ DWORD_PTR GetModuleBaseAddress( const char *moduleName )
 //    return result;
 //}
 //
-//void ApplyCheckPasswordDetour()
+// void ApplyCheckPasswordDetour()
 //{
 //    DWORD_PTR baseAddress = GetModuleBaseAddress( "engine.dll" );
 //    DWORD_PTR functionAddress = baseAddress + OFFSET_OF_BASE_SERVER_CHECK_PASSWORD;
@@ -647,46 +647,90 @@ DWORD_PTR GetModuleBaseAddress( const char *moduleName )
 //}
 
 const DWORD_PTR OFFSET_OF_BASE_CLIENT_CONNECT = 0x9A380;
- typedef void( __thiscall *Function_BaseClient_Connect_t )( void *, const char *, int, INetChannel *, bool, int );
- static Function_BaseClient_Connect_t OriginalClientConnect = nullptr;
+typedef void( __thiscall *Function_BaseClient_Connect_t )( void *, const char *, int, INetChannel *, bool, int );
+static Function_BaseClient_Connect_t OriginalClientConnect = nullptr;
 
- // __fastcall workaround because you cant declare a __thiscall function without a class
- // This behaves similar to __thiscall, but safely getting the ECX and EDX registriy as its first parameters.
- // ECX holds the address of 'this' for the detoured method.
- void __fastcall DetourClientConnect( void *pThis, DWORD edx, const char *szName, int nUserID, INetChannel *pNetChannel, bool bFakePlayer, int clientChallenge )
- {
-     int version = pNetChannel->GetProtocolVersion();
-     DevWarning( "Detour: Client connecting with name %s (#%i) (protocol version: %i)\n", szName, nUserID, version );
+// Static map of connected clients to their user id so we can fetch em later
+static CUtlMap< int, void * > connectedClients;
 
-     OriginalClientConnect( pThis, szName, nUserID, pNetChannel, bFakePlayer, clientChallenge );
-
-     DevWarning( "Detour: ClientConnect detour complete.\n" );
- }
-
- void ApplyClientConnectDetour()
+// __fastcall workaround because you cant declare a __thiscall function without a class
+// This behaves similar to __thiscall, but safely getting the ECX and EDX registriy as its first parameters.
+// ECX holds the address of 'this' for the detoured method.
+void __fastcall DetourClientConnect( void *pThis, DWORD edx, const char *szName, int nUserID, INetChannel *pNetChannel, bool bFakePlayer, int clientChallenge )
 {
-     DWORD_PTR baseAddress = GetModuleBaseAddress( "engine.dll" );
-     DWORD_PTR functionAddress = baseAddress + OFFSET_OF_BASE_CLIENT_CONNECT;
+    int version = pNetChannel->GetProtocolVersion();
+    DevWarning( "Detour: Client connecting with name %s (#%i) (protocol version: %i)\n", szName, nUserID, version );
 
-     if ( MH_CreateHook( ( LPVOID )functionAddress, &DetourClientConnect, reinterpret_cast< LPVOID * >( &OriginalClientConnect ) ) != MH_OK )
-     {
-         DevWarning( "Failed to hook ClientConnect.\n" );
-     }
-     else
-     {
-         MH_EnableHook( ( LPVOID )functionAddress );
-     }
- }
+    OriginalClientConnect( pThis, szName, nUserID, pNetChannel, bFakePlayer, clientChallenge );
+
+    DevWarning( "Detour: ClientConnect detour complete.\n" );
+
+    //// This client's ConVars KeyValues are offset by 0x84 from the 'this' pointer
+    //KeyValues *oldConVars = *( KeyValues ** )( ( uintptr_t )pThis + 0x84 );
+    //if ( oldConVars )
+    //{
+    //    // oldConVars->SetString( "sv_cheats", "1" ); // just testing
+    //}
+
+    //// The bool that allows re-setting the ConVars is at offset 0x89 from the 'this' pointer
+    //bool *bInitialConVarsSet = ( bool * )( ( uintptr_t )pThis + 0x89 );
+    //DevWarning( "%i\n", bInitialConVarsSet );
+
+    connectedClients.Insert( nUserID, pThis );
+}
+
+CON_COMMAND_F( hack_reset_cvars, "Reset the initial convars to allow setting em again", FCVAR_GAMEDLL )
+{
+    CBasePlayer *pPlayer = UTIL_GetCommandClient();
+
+    if ( !pPlayer )
+    {
+        DevWarning( "No player found.\n" );
+        return;
+    }
+
+    unsigned short index = connectedClients.Find( pPlayer->GetUserID() );
+
+    if ( index == connectedClients.InvalidIndex() )
+    {
+        DevWarning( "No client connect object found for player.\n" );
+        return;
+    }
+
+    void *connectedClient = connectedClients.Element( index );
+
+    // The bool that allows re-setting the ConVars is at offset 0x89 from the 'this' pointer
+    bool *bInitialConVarsSet = ( bool * )( ( uintptr_t )connectedClient + 0x89 );
+    *bInitialConVarsSet = false;
+    DevWarning( "Initial ConVars reset.\n" );
+}
+
+void ApplyClientConnectDetour()
+{
+    DWORD_PTR baseAddress = GetModuleBaseAddress( "engine.dll" );
+    DWORD_PTR functionAddress = baseAddress + OFFSET_OF_BASE_CLIENT_CONNECT;
+
+    if ( MH_CreateHook( ( LPVOID )functionAddress, &DetourClientConnect, reinterpret_cast< LPVOID * >( &OriginalClientConnect ) ) != MH_OK )
+    {
+        DevWarning( "Failed to hook ClientConnect.\n" );
+    }
+    else
+    {
+        MH_EnableHook( ( LPVOID )functionAddress );
+    }
+}
 
 void ApplyDetours()
 {
+    SetDefLessFunc( connectedClients );
+
     if ( MH_Initialize() != MH_OK )
     {
         DevWarning( "Failed to initialize MinHook.\n" );
         return;
     }
 
-    //ApplyCheckPasswordDetour();
+    // ApplyCheckPasswordDetour();
     ApplyClientConnectDetour();
 }
 
