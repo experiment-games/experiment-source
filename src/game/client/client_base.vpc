@@ -52,7 +52,7 @@ $Configuration
 	$Compiler
 	{
 		$AdditionalIncludeDirectories	".\;$BASE;$SRCDIR;$SRCDIR\vgui2\include;$SRCDIR\vgui2\controls;$SRCDIR\game\shared;.\game_controls;$SRCDIR\thirdparty\sixensesdk\include;.\scripted_controls;.\hl2;.\hl2\elements;$SRCDIR\game\shared\hl2;$SRCDIR\game\shared\episodic;$SRCDIR\lua;$SRCDIR\luasocket\src"
-		$PreprocessorDefinitions		"$BASE;NO_STRING_T;CLIENT_DLL;VECTOR;VERSION_SAFE_STEAM_API_INTERFACES;PROTECTED_THINGS_ENABLE;strncpy=use_Q_strncpy_instead;_snprintf=use_Q_snprintf_instead;EXPERIMENT_SOURCE;LUA_SDK;ASW_PROJECTED_TEXTURES"
+		$PreprocessorDefinitions		"$BASE;NO_STRING_T;CLIENT_DLL;VECTOR;VERSION_SAFE_STEAM_API_INTERFACES;PROTECTED_THINGS_ENABLE;strncpy=use_Q_strncpy_instead;_snprintf=use_Q_snprintf_instead;EXPERIMENT_SOURCE;LUA_SDK;ASW_PROJECTED_TEXTURES;WITH_DETOURS"
 		$PreprocessorDefinitions		"$BASE;fopen=dont_use_fopen" [$WIN32]
 		$PreprocessorDefinitions		"$BASE;USE_WEBM_FOR_REPLAY;" [$LINUXALL]
 		$PreprocessorDefinitions		"$BASE;CURL_STATICLIB" [$WIN32 && $BUILD_REPLAY]
@@ -1434,13 +1434,13 @@ $Project
         $Implib	    "$SRCDIR\public\steam\redistributable_bin\linux32\libsteam_api" [$LINUX32]
         $Implib	    "$SRCDIR\public\steam\redistributable_bin\linux64\libsteam_api" [$LINUX64]
 
-		$Libexternal $LIBCOMMON/libcrypto [$OSXALL]
+		$Libexternal "$LIBCOMMON/libcrypto" [$OSXALL]
 		$Libexternal "$SRCDIR\lib\common\$(CRYPTOPPDIR)\libcrypto" [$LINUXALL]
 
 		$ImpLib	"$LIBCOMMON\curl"	  [$OSXALL]
 
 		$Lib	"$LIBCOMMON\libcurl" [$WIN32]
-		$Lib   "libz" [$WIN32]
+		$Lib    "libz" [$WIN32]
 
 		$Libexternal	libz [$LINUXALL]
 		$Libexternal "$LIBCOMMON/libcurl" [$LINUXALL]
@@ -1449,6 +1449,7 @@ $Project
 
 		$Lib	"lua54"
 		$Lib	"luasocket"
-    $Lib  "libpng"
+        $Lib    "libpng"
+        $Lib    "minhook.x32"
  	}
 }

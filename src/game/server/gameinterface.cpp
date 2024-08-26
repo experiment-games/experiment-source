@@ -134,6 +134,12 @@ extern ConVar tf_mm_servermode;
 #include <mountsteamcontent.h>
 #endif
 
+#ifdef WITH_DETOURS
+#include <inetchannel.h>
+#include "MinHook.h"
+#undef CreateEvent  // WinBase.h defines this, but it messes with out gameeventmanager->CreateEvent
+#endif
+
 #if defined( REPLAY_ENABLED )
 #include "replay/ireplaysystem.h"
 #endif
@@ -602,6 +608,90 @@ EXPOSE_SINGLE_INTERFACE_GLOBALVAR( CServerGameDLL, IServerGameDLL, INTERFACEVERS
 // still valid and expose the older version in the same way
 COMPILE_TIME_ASSERT( INTERFACEVERSION_SERVERGAMEDLL_INT == 10 );
 
+#ifdef WITH_DETOURS
+
+DWORD_PTR GetModuleBaseAddress( const char *moduleName )
+{
+    return reinterpret_cast< DWORD_PTR >( GetModuleHandle( moduleName ) );
+}
+
+// Not working, probably because the CheckPassword function is protected. We should try hooking through the vtable instead.
+//const DWORD_PTR OFFSET_OF_BASE_SERVER_CHECK_PASSWORD = 0x251E90;  // found in IDA searching for 'password failed' string and getting sub routine that is called before showing that message (setting image base offset to 0)
+//typedef bool( __thiscall *Function_BaseServer_CheckPassword_t )( void *, netadr_t &adr, const char *password, const char *name );
+//static Function_BaseServer_CheckPassword_t OriginalServerCheckPassword = nullptr;
+//
+//bool __fastcall DetourCheckPassword( void *pThis, DWORD edx, netadr_t &adr, const char *password, const char *name )
+//{
+//    DevWarning( "Detour: Custom logic before CheckPassword\n" );
+//
+//    bool result = OriginalServerCheckPassword( pThis, adr, password, name );
+//
+//    DevWarning( "Detour: Custom logic after CheckPassword\n" );
+//
+//    return result;
+//}
+//
+//void ApplyCheckPasswordDetour()
+//{
+//    DWORD_PTR baseAddress = GetModuleBaseAddress( "engine.dll" );
+//    DWORD_PTR functionAddress = baseAddress + OFFSET_OF_BASE_SERVER_CHECK_PASSWORD;
+//
+//    if ( MH_CreateHook( ( LPVOID )functionAddress, &DetourCheckPassword, reinterpret_cast< LPVOID * >( &OriginalServerCheckPassword ) ) != MH_OK )
+//    {
+//        DevWarning( "Failed to hook CheckPassword.\n" );
+//    }
+//    else
+//    {
+//        MH_EnableHook( ( LPVOID )functionAddress );
+//    }
+//}
+
+const DWORD_PTR OFFSET_OF_BASE_CLIENT_CONNECT = 0x9A380;
+ typedef void( __thiscall *Function_BaseClient_Connect_t )( void *, const char *, int, INetChannel *, bool, int );
+ static Function_BaseClient_Connect_t OriginalClientConnect = nullptr;
+
+ // __fastcall workaround because you cant declare a __thiscall function without a class
+ // This behaves similar to __thiscall, but safely getting the ECX and EDX registriy as its first parameters.
+ // ECX holds the address of 'this' for the detoured method.
+ void __fastcall DetourClientConnect( void *pThis, DWORD edx, const char *szName, int nUserID, INetChannel *pNetChannel, bool bFakePlayer, int clientChallenge )
+ {
+     int version = pNetChannel->GetProtocolVersion();
+     DevWarning( "Detour: Client connecting with name %s (#%i) (protocol version: %i)\n", szName, nUserID, version );
+
+     OriginalClientConnect( pThis, szName, nUserID, pNetChannel, bFakePlayer, clientChallenge );
+
+     DevWarning( "Detour: ClientConnect detour complete.\n" );
+ }
+
+ void ApplyClientConnectDetour()
+{
+     DWORD_PTR baseAddress = GetModuleBaseAddress( "engine.dll" );
+     DWORD_PTR functionAddress = baseAddress + OFFSET_OF_BASE_CLIENT_CONNECT;
+
+     if ( MH_CreateHook( ( LPVOID )functionAddress, &DetourClientConnect, reinterpret_cast< LPVOID * >( &OriginalClientConnect ) ) != MH_OK )
+     {
+         DevWarning( "Failed to hook ClientConnect.\n" );
+     }
+     else
+     {
+         MH_EnableHook( ( LPVOID )functionAddress );
+     }
+ }
+
+void ApplyDetours()
+{
+    if ( MH_Initialize() != MH_OK )
+    {
+        DevWarning( "Failed to initialize MinHook.\n" );
+        return;
+    }
+
+    //ApplyCheckPasswordDetour();
+    ApplyClientConnectDetour();
+}
+
+#endif
+
 bool CServerGameDLL::DLLInit( CreateInterfaceFn appSystemFactory,
                               CreateInterfaceFn physicsFactory,
                               CreateInterfaceFn fileSystemFactory,
@@ -823,6 +913,10 @@ bool CServerGameDLL::DLLInit( CreateInterfaceFn appSystemFactory,
 
     // init the gamestatsupload connection
     gamestatsuploader->InitConnection();
+#endif
+
+#ifdef WITH_DETOURS
+    ApplyDetours();
 #endif
 
     return true;
