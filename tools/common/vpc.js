@@ -5,10 +5,12 @@ const path = require('path');
 const projectFilesClient = [
   './src/game/client/client_base.vpc',
   './src/game/client/client_experiment.vpc',
+  './src/engine/engine_patches_client.vpc',
 ];
 const projectFilesServer = [
   './src/game/server/server_base.vpc',
   './src/game/server/server_experiment.vpc',
+  './src/engine/engine_patches_server.vpc',
 ];
 
 let projectFileClientContents = '';

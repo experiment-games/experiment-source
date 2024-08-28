@@ -18,42 +18,47 @@ static const char *CurrentlyConnectingSteamId = nullptr;
 bool __fastcall DetourCheckPassword( void *thisPointer, DWORD edx, netadr_t &adr, const char *password, const char *name )
 {
 #ifdef LUA_SDK
-    ConVarRef sv_password( "sv_password" );
-    const char *steamId64 = CurrentlyConnectingSteamId;
-    const char *ipAddress = adr.ToString();
-    const char *actualPassword = sv_password.GetString();
-    LUA_CALL_HOOK_BEGIN( "CheckPassword" );
-    lua_pushstring( L, steamId64 );
-    lua_pushstring( L, ipAddress );
-    lua_pushstring( L, actualPassword );
-    lua_pushstring( L, password );
-    lua_pushstring( L, name );
-    LUA_CALL_HOOK_END( 5, 2 );
-
-    if ( !lua_isnil( L, -2 ) )
+    if ( !adr.IsLocalhost() && !adr.IsLoopback() )
     {
-        bool isAllowedToJoin = lua_isboolean( L, -2 ) && lua_toboolean( L, -2 );
+        ConVarRef sv_password( "sv_password" );
+        const char *steamId64 = CurrentlyConnectingSteamId;
+        const char *ipAddress = adr.ToString();
+        const char *actualPassword = sv_password.GetString();
+        LUA_CALL_HOOK_BEGIN( "CheckPassword", "Called to check if the password the user provides is correct." );
+        lua_pushstring( L, steamId64 );
+        lua_pushstring( L, ipAddress );
+        lua_pushstring( L, actualPassword );
+        lua_pushstring( L, password );
+        lua_pushstring( L, name );
+        LUA_CALL_HOOK_END( 5, 2 );
 
-        if ( !isAllowedToJoin )
+        if ( !lua_isnil( L, -2 ) )
         {
-            if ( lua_isstring( L, -1 ) )
-            {
-                // E.g: #GameUI_ConnectionFailed, #GameUI_ServerRejectLANRestrict or #GameUI_ServerRejectBadPassword (default)
-                const char *reason = lua_tostring( L, -1 );
-                // TODO: Implement setting reason as kick message (not possible with current detour)
-                DevWarning( "Player %s (%s) was denied access to the server: %s\n", name, steamId64, reason );
-            }
-            else
-            {
-                DevWarning( "Player %s (%s) was denied access to the server.\n", name, steamId64 );
-            }
+            bool isAllowedToJoin = lua_isboolean( L, -2 ) && lua_toboolean( L, -2 );
 
-            lua_pop( L, 2 );  // Pop the boolean and the string
-            return false;
+            if ( !isAllowedToJoin )
+            {
+                if ( lua_isstring( L, -1 ) )
+                {
+                    // E.g: #GameUI_ConnectionFailed, #GameUI_ServerRejectLANRestrict or #GameUI_ServerRejectBadPassword (default)
+                    const char *reason = lua_tostring( L, -1 );
+                    // TODO: Implement setting reason as kick message (not possible with current detour)
+                    // We could do this by specifying a disconnect reason somewhere and then in
+                    // CServerGameClients::ClientConnect we could deny the player access with that reason.
+                    DevWarning( "Player %s (%s) was denied access to the server: %s\n", name, steamId64, reason );
+                }
+                else
+                {
+                    DevWarning( "Player %s (%s) was denied access to the server.\n", name, steamId64 );
+                }
+
+                lua_pop( L, 2 );  // Pop the boolean and the string
+                return false;
+            }
         }
-    }
 
-    lua_pop( L, 2 );  // Pop the boolean and the string
+        lua_pop( L, 2 );  // Pop the boolean and the string
+    }
 #endif
 
     bool result = OriginalServerCheckPassword( thisPointer, adr, password, name );

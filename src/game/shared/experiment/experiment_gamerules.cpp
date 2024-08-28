@@ -1296,11 +1296,11 @@ bool CExperimentRules::PlayerCanHearChat( CBasePlayer *pListener,
 
 bool CExperimentRules::ClientConnected( edict_t *pEntity, const char *pszName, const char *pszAddress, char *reject, int maxrejectlen )
 {
-    LUA_CALL_HOOK_BEGIN( "ClientConnected" );
+    LUA_CALL_HOOK_BEGIN( "ClientConnected", "Called every time a client connects to the server. Return false to reject the connection (with an optional reject message)." );
     CBaseEntity::PushLuaInstanceSafe( L, ( CBasePlayer * )CBaseEntity::Instance( pEntity ) );
     lua_pushstring( L, pszName );
     lua_pushstring( L, pszAddress );
-    LUA_CALL_HOOK_END( 3, 2 );
+    LUA_CALL_HOOK_END( 3, 2 ); // doc: boolean (should accept connection), string (reject message)
 
     if ( !lua_isnil( L, -2 ) )
     {
