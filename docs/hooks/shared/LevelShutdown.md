@@ -9,7 +9,7 @@ tags:
 lua:
   redirects:
     - label: "server/LevelShutdown"
-      url "server/LevelShutdown"
+      url: "server/LevelShutdown"
     - label: "client/LevelShutdown"
       url: "client/LevelShutdown"
 ---

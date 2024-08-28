@@ -9,7 +9,7 @@ tags:
 lua:
   redirects:
     - label: "server/OnEntityCreated"
-      url "server/OnEntityCreated"
+      url: "server/OnEntityCreated"
     - label: "client/OnEntityCreated"
       url: "client/OnEntityCreated"
 ---

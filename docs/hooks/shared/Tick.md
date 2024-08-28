@@ -9,7 +9,7 @@ tags:
 lua:
   redirects:
     - label: "server/Tick"
-      url "server/Tick"
+      url: "server/Tick"
     - label: "client/Tick"
       url: "client/Tick"
 ---

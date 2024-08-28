@@ -260,7 +260,7 @@ function writeHookToFile(hook) {
   // will add a file that simply redirects to the client- and server-specific hooks.
   if (hooksTouchedThisRun.has(hook.name)) {
     const otherHook = hooksTouchedThisRun.get(hook.name);
-    let redirects = `- label: ${wrapQuotes(hook.realm + '/' + hook.name)}\n      url ${wrapQuotes(hook.realm + '/' + hook.name)}`;
+    let redirects = `- label: ${wrapQuotes(hook.realm + '/' + hook.name)}\n      url: ${wrapQuotes(hook.realm + '/' + hook.name)}`;
     redirects += `\n    - label: ${wrapQuotes(otherHook.realm + '/' + otherHook.name)}\n      url: ${wrapQuotes(otherHook.realm + '/' + otherHook.name)}`;
 
     const redirectFilePath = path.join(outputDir, 'shared', `${hook.name}.md`);

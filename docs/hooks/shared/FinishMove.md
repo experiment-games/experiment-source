@@ -9,7 +9,7 @@ tags:
 lua:
   redirects:
     - label: "server/FinishMove"
-      url "server/FinishMove"
+      url: "server/FinishMove"
     - label: "client/FinishMove"
       url: "client/FinishMove"
 ---

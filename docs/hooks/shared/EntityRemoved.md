@@ -9,7 +9,7 @@ tags:
 lua:
   redirects:
     - label: "server/EntityRemoved"
-      url "server/EntityRemoved"
+      url: "server/EntityRemoved"
     - label: "client/EntityRemoved"
       url: "client/EntityRemoved"
 ---

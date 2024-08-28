@@ -9,7 +9,7 @@ tags:
 lua:
   redirects:
     - label: "server/StartCommand"
-      url "server/StartCommand"
+      url: "server/StartCommand"
     - label: "client/StartCommand"
       url: "client/StartCommand"
 ---
