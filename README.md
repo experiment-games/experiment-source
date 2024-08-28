@@ -48,7 +48,7 @@ support and other features that are not present in the original SDK.
 4. Next run the `setupprojects.sh` script to modify the Visual Studio project files and solution.
 
     ```bash
-    ./setupprojects.sh
+    ./setupprojects.sh --init
     ```
 
     _This sets up debugging and enforces the correct dependencies of the client & server projects._

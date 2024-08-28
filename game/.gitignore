@@ -1,6 +1,6 @@
 /bin
-/hl2
-/hl2mp
+/engine
 /platform
 /hl2.exe
 /thirdpartylegalnotices.txt
+*sound.cache

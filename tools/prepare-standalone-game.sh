@@ -38,11 +38,9 @@ if [ ! -d "$target_dir" ]; then
     exit 1
 fi
 
-# List of files and directories to copy
+# List of files and directories to copy as is
 files=(
     "bin"
-    "hl2"
-    "hl2mp"
     "platform"
     "thirdpartylegalnotices.txt"
     "hl2.exe"
@@ -61,5 +59,39 @@ for file in "${files[@]}"; do
         cp -r "$STEAM_SDK_DIR/$file" "$target_dir"
     else
         echo "The file $file does not exist in $STEAM_SDK_DIR"
+    fi
+done
+
+# List of directories to merge into one 'engine' directory (overwriting existing files)
+dirs=(
+    "hl2mp"
+    "hl2"
+)
+
+# Blocklist for files/directories in hl2(mp) not to include from the hl2 and hl2mp directories
+blocklist=(
+    "media" # No need for the valve intro
+    "sound" # No need for the sound.cache
+    "gameinfo.txt"
+    "cfg"
+    "custom"
+    "download"
+    "serverconfig.vdf"
+    "steam.inf"
+)
+
+for dir in "${dirs[@]}"; do
+    if [ -d "$STEAM_SDK_DIR/$dir" ]; then
+        echo "Merging $dir to $target_dir/engine"
+        mkdir -p "$target_dir/engine"
+        cp -r "$STEAM_SDK_DIR/$dir"/* "$target_dir/engine"
+        for block in "${blocklist[@]}"; do
+            if [ -e "$target_dir/engine/$block" ]; then
+                echo "Removing $target_dir/engine/$block"
+                rm -r "$target_dir/engine/$block"
+            fi
+        done
+    else
+        echo "The directory $dir does not exist in $STEAM_SDK_DIR"
     fi
 done

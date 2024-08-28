@@ -22,21 +22,29 @@ gameinfo
 		steamappid	"243750"
 		searchpaths
 		{
+			game+mod		"experiment/addons/*"
+
+			game			"experiment"
+
 			game+mod+mod_write+default_write_path	"|gameinfo_path|."
 			gamebin	"|gameinfo_path|bin"
-			game+mod	"hl2mp/hl2mp_pak.vpk"
-			game	"|all_source_engine_paths|hl2/hl2_textures.vpk"
-			game	"|all_source_engine_paths|hl2/hl2_sound_vo_english.vpk"
-			game	"|all_source_engine_paths|hl2/hl2_sound_misc.vpk"
-			game	"|all_source_engine_paths|hl2/hl2_misc.vpk"
-			game	"experiment"
+
+			game+mod	"|all_source_engine_paths|engine/hl2mp_pak.vpk"
+			game	"|all_source_engine_paths|engine/hl2_textures.vpk"
+			game	"|all_source_engine_paths|engine/hl2_sound_vo_english.vpk"
+			game	"|all_source_engine_paths|engine/hl2_sound_misc.vpk"
+			game	"|all_source_engine_paths|engine/hl2_misc.vpk"
+
 			game_write	"|gameinfo_path|"
 			gamebin	"|gameinfo_path|bin"
-			game	"|all_source_engine_paths|hl2"
+			game	"|all_source_engine_paths|engine"
+
 			data	"|gameinfo_path|data"
 			lua	"|gameinfo_path|scripts/lua"
 			lua	"|gameinfo_path|gamemodes"
+
 			game+mod+download	"|gameinfo_path|download"
+
 			platform	"|all_source_engine_paths|platform/platform_misc.vpk"
 			platform	"|all_source_engine_paths|platform"
 		}

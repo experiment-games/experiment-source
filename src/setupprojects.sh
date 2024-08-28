@@ -1,5 +1,15 @@
 #!/bin/bash
 
+# Force to be relative to the script
+cd "$(dirname "$0")"
+
+IS_INITIAL_SETUP=false
+
+if [[ $* == *--init* ]]
+then
+    IS_INITIAL_SETUP=true
+fi
+
 if [ -f ../.env ]; then
     while IFS= read -r line; do
         if [[ $line == *"="* && $line != "#"* ]]; then
@@ -32,7 +42,7 @@ cat <<EOL > $PROJECT_FILE
 <?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="Current" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
     <PropertyGroup Condition="'\$(Configuration)|\$(Platform)'=='Debug|Win32'">
-        <LocalDebuggerCommand>$STEAM_SDK_DIR\\hl2.exe</LocalDebuggerCommand>
+        <LocalDebuggerCommand>\$(SolutionDir)..\\game\\hl2.exe</LocalDebuggerCommand>
         <LocalDebuggerCommandArguments>-allowdebug -dev -sw -game "$STEAM_MOD_DIR"</LocalDebuggerCommandArguments>
         <LocalDebuggerWorkingDirectory>$STEAM_SDK_DIR</LocalDebuggerWorkingDirectory>
         <DebuggerFlavor>WindowsLocalDebugger</DebuggerFlavor>
@@ -81,3 +91,9 @@ addDependenciesToProject "Server (Experiment)" "11C4CA93-C3BB-5EF6-0C85-700D6B69
 addDependenciesToProject "Server (Experiment)" "378EBA0C-3BA5-1CB2-6A4B-13E100D0686B" # libpng
 
 addDependenciesToProject "luasocket" "11C4CA93-C3BB-5EF6-0C85-700D6B69A2F6" # lua
+
+if [ "$IS_INITIAL_SETUP" = true ]; then
+    echo "Initial setup detected, copying the source SDK files..."
+    # Copy the source SDK files over to the game directory
+    ./../tools/prepare-standalone-game.sh
+fi

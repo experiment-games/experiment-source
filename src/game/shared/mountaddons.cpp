@@ -12,25 +12,40 @@
 // memdbgon must be the last include file in a .cpp file!!!
 #include "tier0/memdbgon.h"
 
-static CUtlVector< CUtlString > g_MountedAddons;
+static CUtlMap< CUtlString, CUtlString > g_MountedAddons;
 
 void MountAddon( const char *addonDirectoryName, const char *addonPath )
 {
     char addonFullPath[MAX_PATH];
     Q_snprintf( addonFullPath, sizeof( addonFullPath ), "%s\\%s", addonPath, addonDirectoryName );
+    CUtlString addonFullPathString( addonFullPath );
+
+    // Check if the addon is already mounted by their name
+    FOR_EACH_MAP( g_MountedAddons, i )
+    {
+        const char *mountedAddonName = g_MountedAddons.Key(i).Get();
+
+        if ( Q_strcmp( mountedAddonName, addonDirectoryName ) == 0 )
+        {
+            return;
+        }
+    }
 
     // Ensure the engine can find content in the addon
-    filesystem->AddSearchPath( addonDirectoryName, CONTENT_SEARCH_PATH, PATH_ADD_TO_TAIL );
+    filesystem->AddSearchPath( addonFullPath, CONTENT_SEARCH_PATH, PATH_ADD_TO_TAIL );
+    filesystem->AddSearchPath( addonFullPath, "thirdparty", PATH_ADD_TO_TAIL );
 
 #ifdef GAME_DLL // Prevent the message from printing twice in clients
     ConColorMsg( Color( 200, 255, 0, 255 ), "Mounting addon \"%s\"...\n", addonDirectoryName );
 #endif
 
-    g_MountedAddons.AddToTail( CUtlString( addonFullPath ) );
+    g_MountedAddons.Insert( addonDirectoryName, addonFullPathString );
 }
 
 void MountAddons()
 {
+    g_MountedAddons.SetLessFunc( DefLessFunc( CUtlString ) );
+
     // We want the absolute paths so we can use them to set them as mount roots
     // and find their gamemodes, lua paths, etc get added to the search paths
     // We'll split the search at each ; and loop through each path, adding LUA_PATH_ADDONS "\\*"
@@ -89,11 +104,12 @@ void MountAddons()
 
 int GetMountedAddons( CUtlVector< CUtlString > &addons )
 {
-    int nAddonCount = g_MountedAddons.Count();
+    FOR_EACH_MAP( g_MountedAddons, i )
+    {
+        addons.AddToTail( g_MountedAddons[i] );
+    }
 
-    addons.CopyArray( g_MountedAddons.Base(), nAddonCount );
-
-    return nAddonCount;
+    return g_MountedAddons.Count();
 }
 
 /// <summary>
@@ -105,9 +121,7 @@ int GetMountedAddons( CUtlVector< CUtlString > &addons )
 /// <param name="L"></param>
 void SetupMountedAddons( lua_State *L )
 {
-    int nAddonCount = g_MountedAddons.Count();
-
-    for ( int i = 0; i < nAddonCount; i++ )
+    FOR_EACH_MAP( g_MountedAddons, i )
     {
         const char *addonFullPath = g_MountedAddons[i].Get();
         SetupRootSearchPaths( addonFullPath, L );
