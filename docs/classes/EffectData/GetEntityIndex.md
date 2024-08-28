@@ -1,17 +1,17 @@
 ---
 template: lua-class-function.html
 title: GetEntityIndex
-icon: lua-client
+icon: lua-server
 tags:
   - lua
-  - client
+  - server
   - needs-verification
   - needs-example
 lua:
   library: EffectData
   function: GetEntityIndex
-  realm: client
-  description: "Get the entity index."
+  realm: server
+  description: "Get the entity index of the entity the effect is assigned to."
   
   
   returns:
@@ -20,5 +20,5 @@ lua:
 ---
 
 <div class="lua__search__keywords">
-EffectData:GetEntityIndex &#x2013; Get the entity index.
+EffectData:GetEntityIndex &#x2013; Get the entity index of the entity the effect is assigned to.
 </div>

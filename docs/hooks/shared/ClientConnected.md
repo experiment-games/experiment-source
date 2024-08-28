@@ -10,25 +10,21 @@ tags:
 lua:
   function: ClientConnected
   realm: shared
-  description: ""
+  description: "Called every time a client connects to the server. Return false to reject the connection (with an optional reject message)."
   arguments:
-    - name: "pszName"
+    - name: "name"
       description: ""
       type: string
-    - name: "pszAddress"
+    - name: "ipAddress"
       description: ""
       type: string
-    - name: "reject"
-      description: ""
-      type: string
-    - name: "maxrejectlen"
-      description: ""
-      type: number
   returns:
-    - type: unknown
-      description: ""
+    - type: boolean
+      description: "should accept connection"
+    - type: string
+      description: "reject message"
 ---
 
 <div class="lua__search__keywords">
-hook ClientConnected &#x2013; ""
+hook ClientConnected &#x2013; "Called every time a client connects to the server. Return false to reject the connection (with an optional reject message)."
 </div>

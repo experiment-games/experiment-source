@@ -11,7 +11,7 @@ lua:
   library: Files
   function: FileExists
   realm: shared
-  description: "Check if a file exists."
+  description: "Check if the file or directory exists."
   
   arguments:
     - name: "path"
@@ -21,9 +21,9 @@ lua:
       default: "0"
   returns:
     - type: boolean
-      description: "true if the file exists, false otherwise."
+      description: "true if the file or directory exists, false otherwise."
 ---
 
 <div class="lua__search__keywords">
-Files.FileExists &#x2013; Check if a file exists.
+Files.FileExists &#x2013; Check if the file or directory exists.
 </div>

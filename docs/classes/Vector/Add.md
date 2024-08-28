@@ -11,7 +11,7 @@ lua:
   library: Vector
   function: Add
   realm: shared
-  description: "Adds another vector to the vector."
+  description: "Modify the existing vector, adding another vector to it."
   
   arguments:
     - name: "vectorToAdd"
@@ -21,5 +21,5 @@ lua:
 ---
 
 <div class="lua__search__keywords">
-Vector:Add &#x2013; Adds another vector to the vector.
+Vector:Add &#x2013; Modify the existing vector, adding another vector to it.
 </div>

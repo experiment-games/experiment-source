@@ -11,7 +11,7 @@ lua:
   library: Materials
   function: Exists
   realm: shared
-  description: "Checks if a material exists"
+  description: "Checks if a material exists. TODO: This is likely not working correctly"
   
   arguments:
     - name: "name"
@@ -22,5 +22,5 @@ lua:
 ---
 
 <div class="lua__search__keywords">
-Materials.Exists &#x2013; Checks if a material exists
+Materials.Exists &#x2013; Checks if a material exists. TODO: This is likely not working correctly
 </div>

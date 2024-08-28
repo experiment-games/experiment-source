@@ -18,7 +18,7 @@ lua:
       type: number
   returns:
     - type: Angle
-      description: "The scaled angle."
+      description: "The same angle, now scaled."
 ---
 
 <div class="lua__search__keywords">

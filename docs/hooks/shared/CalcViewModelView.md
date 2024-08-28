@@ -24,10 +24,10 @@ lua:
     - name: "eyeAngles"
       description: ""
       type: Angle
-    - name: "vmorigin"
+    - name: "viewModelOrigin"
       description: ""
       type: Vector
-    - name: "vmangles"
+    - name: "viewModelAngles"
       description: ""
       type: Angle
   returns:

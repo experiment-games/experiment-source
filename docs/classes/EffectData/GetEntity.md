@@ -1,24 +1,24 @@
 ---
 template: lua-class-function.html
 title: GetEntity
-icon: lua-client
+icon: lua-shared
 tags:
   - lua
-  - client
+  - shared
   - needs-verification
   - needs-example
 lua:
   library: EffectData
   function: GetEntity
-  realm: client
-  description: "Get the entity."
+  realm: shared
+  description: "Get the entity the effect is assigned to."
   
   
   returns:
     - type: Entity
-      description: "Entity."
+      description: "The entity the effect is assigned to."
 ---
 
 <div class="lua__search__keywords">
-EffectData:GetEntity &#x2013; Get the entity.
+EffectData:GetEntity &#x2013; Get the entity the effect is assigned to.
 </div>

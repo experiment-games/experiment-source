@@ -624,6 +624,14 @@
     }                                                                                                          \
     CHECK_FIELD_OR_ERROR( L, ArgumentIndex, FieldName, CheckFunction )
 
+#define LUA_CALL_NETWORK_VARIABLE_CHANGING_HOOK( Entity, Slot, PushFunction, NewValue, OldValue )               \
+    LUA_CALL_HOOK_BEGIN( "EntityNetworkVariableChanging", "Called just before a network variable is changed" ); \
+    CBaseEntity::PushLuaInstanceSafe( L, Entity ); /* doc: entity */                                            \
+    lua_pushinteger( L, Slot );                    /* doc: slot (which network variable) */                     \
+    PushFunction( L, NewValue );                   /* doc: newValue */                                          \
+    PushFunction( L, OldValue );                   /* doc: oldValue */                                          \
+    LUA_CALL_HOOK_END( 4, 0 );
+
 // Network variable macros and enum
 #define LUA_MAX_NETWORK_VARIABLES 32
 #define LUA_MAX_NETWORK_VARIABLES_STRING 4

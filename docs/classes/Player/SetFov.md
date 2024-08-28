@@ -14,13 +14,12 @@ lua:
   description: "Set the player's field of view."
   
   arguments:
-    - name: "entity"
+    - name: "requester"
       type: Entity
+      default: "PLAYER_THEMSELVES"
     - name: "fov"
       type: number
-    - name: "zoom rate"
-      type: number
-    - name: "zoom time"
+    - name: "transitionTime"
       type: number
       default: "0"
   returns:

@@ -1,22 +1,16 @@
 ---
-template: lua-hook.html
+template: lua-redirect.html
 title: Think
 icon: lua-shared
 tags:
   - lua
   - shared
   - needs-verification
-  - needs-example
 lua:
-  function: Think
-  realm: shared
-  description: ""
-  arguments:
-  
-  returns:
-    
+  redirects:
+    - label: "server/Think"
+      url "server/Think"
+    - label: "client/Think"
+      url: "client/Think"
 ---
 
-<div class="lua__search__keywords">
-hook Think &#x2013; ""
-</div>

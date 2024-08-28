@@ -11,7 +11,7 @@ lua:
   library: Vector
   function: Scale
   realm: shared
-  description: "Scales the vector by a number."
+  description: "Modify the existing vector, scaling it by a number."
   
   arguments:
     - name: "scaleBy"
@@ -21,5 +21,5 @@ lua:
 ---
 
 <div class="lua__search__keywords">
-Vector:Scale &#x2013; Scales the vector by a number.
+Vector:Scale &#x2013; Modify the existing vector, scaling it by a number.
 </div>

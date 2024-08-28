@@ -11,7 +11,7 @@ lua:
   library: Vector
   function: Divide
   realm: shared
-  description: "Divides the vector by a number."
+  description: "Modify the existing vector, dividing it by a number."
   
   arguments:
     - name: "divideBy"
@@ -21,5 +21,5 @@ lua:
 ---
 
 <div class="lua__search__keywords">
-Vector:Divide &#x2013; Divides the vector by a number.
+Vector:Divide &#x2013; Modify the existing vector, dividing it by a number.
 </div>

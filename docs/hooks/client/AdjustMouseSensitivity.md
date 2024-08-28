@@ -16,8 +16,7 @@ lua:
       description: ""
       type: number
   returns:
-    - type: unknown
-      description: ""
+    
 ---
 
 <div class="lua__search__keywords">

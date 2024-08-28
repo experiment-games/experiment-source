@@ -1,16 +1,16 @@
 ---
 template: lua-library-function.html
 title: SnapDirectionToAxis
-icon: lua-shared
+icon: lua-server
 tags:
   - lua
-  - shared
+  - server
   - needs-verification
   - needs-example
 lua:
   library: Vectors
   function: SnapDirectionToAxis
-  realm: shared
+  realm: server
   description: "Modifies a vector so it snaps to the nearest axis vector (if within epsilon)."
   
   arguments:

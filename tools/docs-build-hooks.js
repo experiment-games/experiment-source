@@ -19,15 +19,47 @@ const outputDir = path.join(docsDir, 'hooks');
 const filesToUpdate = getAllFilesInDirectoriesAsMap(outputDir);
 const hooksTouchedThisRun = new Map();
 
+// TODO: Indent and comment these regexes for better readability
+
+// Pattern that looks for LUA_CALL_HOOK_BEGIN("hookName", "hook description which is a sentence, and optional ")
 const luaHookBeginPattern = /LUA_CALL_HOOK_BEGIN\(\s*"([^"]+)"\s*(?:,\s*"([^"]+)")?\s*\)/;
-// luaL_ or lua_, // doc: is optional
-const luaPushPattern = /lua_?(\w+)\(\s*L,\s*([^)]+)\s*\);(?: \/\/ doc: (.+))?/;
-// special case for pushing with CBaseEntity::PushLuaInstanceSafe(L, pEntity)
-const luaPushInstancePattern = /([^\s]*)(?:::|->)PushLuaInstance(?:Safe)?\(\s*L(?:,\s*([^)]+))?\s*\);(?:\s*\/\/\s*doc:\s*(.+))?/;
+
+// Pattern that looks for:
+//
+// - either: lua_(pushfunctionname) or PushFunction
+//   This is used to deduce the type of arguments
+//
+// - then: (L, argument)
+//   This is used to deduce the name of the argument
+//
+// - then optionally:
+//      either: // doc: description
+//      or: /* doc: description */
+//   This is used to deduce the description of the argument
+const luaPushPattern = /(?:lua_(\w+)|(?:PushFunction))\(\s*L,\s*([^)]+)\s*\);\s*(?:(?:\/\/|\/\*)\s*doc:\s*(.+)(?:\*\/)?)?/;
+
+// This pattern is a special case for pushing with CBaseEntity::PushLuaInstanceSafe(L, pEntity)
+// otherwise it should be handled the same as luaPushPattern
+const luaPushInstancePattern = /([^\s]*)(?:::|->)PushLuaInstance(?:Safe)?\(\s*L(?:,\s*([^)]+))?\s*\);\s*(?:(?:\/\/|\/\*)\s*doc:\s*(.+)(?:\*\/)?)?/;
+
+// This patterns tries to find the end of a hook, starting with LUA_CALL_HOOK_END and then:
+// - (numArgs, numReturnValues)
+//   These are ignored
+// - then optionally:
+//      either: // doc: description
+//      or: /* doc: description */
+//  This is used to deduce the types of return values and their descriptions (comma separated)
 const luaHookEndPattern = /LUA_CALL_HOOK_END\(\s*(\d+)\s*,\s*(\d+)\s*\);(?:\s*\/\/\s*doc:\s*(.+))?/;
+
+// This is the pattern for splitting the return values (and their descriptions) in luaHookEndPattern
 const luaBindingReturnPattern = /(\w+)(?:\s*\(([^)]+)\))?/;
 
-function fromPushFunction(functionName) {
+function fromPushFunction(functionName, line) {
+  // If there's no functionName then this is a macro with 'PushFunction' as the argument name
+  if (!functionName) {
+    return 'any';
+  }
+
   switch (functionName) {
     case 'pushinteger':
       return 'number';
@@ -68,6 +100,10 @@ function fromPushFunction(functionName) {
     case 'CBasePlayer':
       return 'Player';
 
+    // Special case where we use lua_pushvalue since we don't know the type
+    case 'pushvalue':
+      return 'any';
+
     default:
       return 'unknown';
   }
@@ -78,12 +114,12 @@ function fromPushLine(line) {
   let type;
 
   if (match) {
-    type = fromPushFunction(match[1]);
+    type = fromPushFunction(match[1], line);
   } else {
     match = line.match(luaPushInstancePattern);
 
     if (match) {
-      type = fromPushFunction(match[1]);
+      type = fromPushFunction(match[1], line);
 
       // Fallback for the ent->PushLuaInstance( L ) function
       if (type === 'unknown') {
@@ -112,7 +148,8 @@ function fromPushLine(line) {
   return {
     type: type,
     argument: argument.trim(),
-    description: (description || ''.trim()),
+    // Remove any trailing \ for macros, then trim spaces
+    description: (description || '').replace(/\\$/, '').trim(),
   };
 }
 

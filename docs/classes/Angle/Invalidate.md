@@ -11,7 +11,7 @@ lua:
   library: Angle
   function: Invalidate
   realm: shared
-  description: "Invalidates the angle."
+  description: "Makes the angle invalid."
   
   
   returns:
@@ -20,5 +20,5 @@ lua:
 ---
 
 <div class="lua__search__keywords">
-Angle:Invalidate &#x2013; Invalidates the angle.
+Angle:Invalidate &#x2013; Makes the angle invalid.
 </div>

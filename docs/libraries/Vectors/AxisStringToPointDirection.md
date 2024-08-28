@@ -1,16 +1,16 @@
 ---
 template: lua-library-function.html
 title: AxisStringToPointDirection
-icon: lua-shared
+icon: lua-server
 tags:
   - lua
-  - shared
+  - server
   - needs-verification
   - needs-example
 lua:
   library: Vectors
   function: AxisStringToPointDirection
-  realm: shared
+  realm: server
   description: "Converts an axis string to a point direction."
   
   arguments:

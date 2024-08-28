@@ -15,7 +15,7 @@ lua:
     - name: "player"
       description: ""
       type: Entity
-    - name: "flFallVelocity"
+    - name: "fallVelocity"
       description: ""
       type: number
   returns:

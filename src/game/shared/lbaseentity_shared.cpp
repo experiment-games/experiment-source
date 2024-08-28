@@ -2906,14 +2906,15 @@ LUA_BINDING_BEGIN( Entity, SetNetworkDataValue, "class", "Sets a data table vari
             return 0;
     }
 
-    // This hook is called by LUA_CALL_NETWORK_VARIABLE_CHANGING_HOOK clientside
-    LUA_CALL_HOOK_BEGIN( "EntityNetworkVariableChanging", "Called just before a network variable is changed" );
-    CBaseEntity::PushLuaInstanceSafe( L, entity );
-    lua_pushinteger( L, slot );
-    lua_pushvalue( L, oldValueIndex + 1 );  // Push the new value first
-    lua_pushvalue( L, oldValueIndex );      // Now push the old value
-    LUA_CALL_HOOK_END( 4, 0 );
-
+    // Commented, lets use the macro we have for this (also because it'll show the hook as shared then instead
+    // of client AND shared in the docs.
+    //LUA_CALL_HOOK_BEGIN( "EntityNetworkVariableChanging", "Called just before a network variable is changed" );
+    //CBaseEntity::PushLuaInstanceSafe( L, entity ); // doc: entity
+    //lua_pushinteger( L, slot ); // doc: slot (which network variable)
+    //lua_pushvalue( L, oldValueIndex + 1 ); // doc: newValue
+    //lua_pushvalue( L, oldValueIndex ); // doc: oldValue
+    //LUA_CALL_HOOK_END( 4, 0 );
+    LUA_CALL_NETWORK_VARIABLE_CHANGING_HOOK( entity, slot, lua_pushvalue, oldValueIndex + 1, oldValueIndex );
     return 0;
 }
 LUA_BINDING_END()

@@ -442,15 +442,6 @@ void RecvProxy_EffectFlags( const CRecvProxyData *pData, void *pStruct, void *pO
 
 #ifdef LUA_SDK // NetworkVariables
 
-// TODO: Find where to call this
-#define LUA_CALL_NETWORK_VARIABLE_CHANGING_HOOK( Entity, Slot, PushFunction, NewValue, OldValue )               \
-    LUA_CALL_HOOK_BEGIN( "EntityNetworkVariableChanging", "Called just before a network variable is changed" ); \
-    CBaseEntity::PushLuaInstanceSafe( L, Entity );                                                              \
-    lua_pushinteger( L, Slot );                                                                                 \
-    PushFunction( L, NewValue ); /* doc: slot (which network variable) */                                       \
-    PushFunction( L, OldValue ); /* doc: newValue */                                                            \
-    LUA_CALL_HOOK_END( 4, 0 );
-
 void RecvProxy_LuaVariableElement_bool( const CRecvProxyData *pData, void *pStruct, void *pOut )
 {
     C_BaseEntity *entity = ( C_BaseEntity * )pStruct;

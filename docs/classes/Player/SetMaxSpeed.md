@@ -11,7 +11,7 @@ lua:
   library: Player
   function: SetMaxSpeed
   realm: shared
-  description: "Set the player's max speed."
+  description: "Set the player's current max speed."
   
   arguments:
     - name: "speed"
@@ -21,5 +21,5 @@ lua:
 ---
 
 <div class="lua__search__keywords">
-Player:SetMaxSpeed &#x2013; Set the player's max speed.
+Player:SetMaxSpeed &#x2013; Set the player's current max speed.
 </div>

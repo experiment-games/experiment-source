@@ -17,8 +17,8 @@ lua:
     - name: "soundName"
       type: string
     - name: "soundLevel"
-      type: number
-      default: "75"
+      type: enumeration/SOUND_LEVEL
+      default: "SNDLVL_NORM"
     - name: "pitchPercent"
       type: number
       default: "100"
@@ -36,6 +36,7 @@ lua:
       default: "0"
     - name: "filter"
       type: RecipientFilter
+      nillable: true
   returns:
     - type: number
       description: "The sound duration."

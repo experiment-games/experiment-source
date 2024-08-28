@@ -198,6 +198,7 @@ function fromTypeChecker(typeChecker) {
     case 'luaL_checkinteger':
     case 'luaL_optinteger':
     case 'lua_tointeger':
+    case 'luaL_checkint':
       return 'integer';
     case 'lua_istable':
       return 'table';
@@ -282,6 +283,9 @@ function fromTypeChecker(typeChecker) {
     case 'luaL_optmovedata':
     case 'lua_tomovedata':
       return 'MoveData';
+    case 'luaL_checkprojectedtexture':
+    case 'lua_toprojectedtexture':
+      return 'ProjectedTexture';
     case 'luaL_checkischeme':
     case 'luaL_optischeme':
     case 'lua_toischeme':
@@ -412,6 +416,8 @@ function fromTypeChecker(typeChecker) {
       return 'enumeration/ENGINE_FLAG';
     case 'SURFACE':
       return 'enumeration/SURFACE';
+    case 'NETWORK_VARIABLE':
+      return 'enumeration/NETWORK_VARIABLE_TYPE';
 
     default:
       return 'unknown';

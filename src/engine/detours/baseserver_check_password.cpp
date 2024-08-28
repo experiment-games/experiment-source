@@ -30,7 +30,7 @@ bool __fastcall DetourCheckPassword( void *thisPointer, DWORD edx, netadr_t &adr
         lua_pushstring( L, actualPassword );
         lua_pushstring( L, password );
         lua_pushstring( L, name );
-        LUA_CALL_HOOK_END( 5, 2 );
+        LUA_CALL_HOOK_END( 5, 2 );  // doc: boolean (is the client allowed to join), string (reason why the client is not allowed to join)
 
         if ( !lua_isnil( L, -2 ) )
         {
