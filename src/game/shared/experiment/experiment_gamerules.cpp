@@ -980,9 +980,9 @@ void CExperimentRules::ClientDisconnected( edict_t *pClient )
 float CExperimentRules::FlPlayerFallDamage( CBasePlayer *pPlayer )
 {
     LUA_CALL_HOOK_BEGIN( "GetFallDamage", "Called when a player falls and fall damage is calculated." );
-    CBaseEntity::PushLuaInstanceSafe( L, pPlayer );// doc: player
-    lua_pushnumber( L, pPlayer->m_Local.m_flFallVelocity );// doc: fallVelocity
-    LUA_CALL_HOOK_END( 1, 1 ); // doc: number (override fall damage amount)
+    CBaseEntity::PushLuaInstanceSafe( L, pPlayer );          // doc: player
+    lua_pushnumber( L, pPlayer->m_Local.m_flFallVelocity );  // doc: fallVelocity
+    LUA_CALL_HOOK_END( 1, 1 );                               // doc: number (override fall damage amount)
 
     LUA_RETURN_NUMBER();
 
@@ -1300,11 +1300,20 @@ bool CExperimentRules::ClientConnected( edict_t *pEntity, const char *pszName, c
     CBaseEntity::PushLuaInstanceSafe( L, ( CBasePlayer * )CBaseEntity::Instance( pEntity ) );
     lua_pushstring( L, pszName );
     lua_pushstring( L, pszAddress );
-    lua_pushstring( L, reject );
-    lua_pushinteger( L, maxrejectlen );
-    LUA_CALL_HOOK_END( 5, 1 );
+    LUA_CALL_HOOK_END( 3, 2 );
 
-    LUA_RETURN_BOOLEAN();
+    if ( !lua_isnil( L, -2 ) )
+    {
+        const char *pszReject = lua_isstring( L, -2 ) ? lua_tostring( L, -2 ) : "Connection rejected by server";
+
+        Q_strncpy( reject, pszReject, maxrejectlen );
+
+        lua_pop( L, 2 );  // pop the reject and the return value
+
+        return false;
+    }
+
+    lua_pop( L, 2 );  // pop the reject and the return value
 
     return BaseClass::ClientConnected( pEntity, pszName, pszAddress, reject, maxrejectlen );
 }

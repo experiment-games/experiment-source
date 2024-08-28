@@ -1,0 +1,32 @@
+//-----------------------------------------------------------------------------
+//	ENGINE_PATCHES.VPC
+//
+//	Project Script
+//-----------------------------------------------------------------------------
+
+$MacroRequired "PLATFORM"
+
+$Configuration
+{
+	$Compiler
+	{
+		$PreprocessorDefinitions		"$BASE;WITH_ENGINE_PATCHES"
+	}
+}
+
+$Project
+{
+	$Folder "Engine Patches"
+	{
+		$File "$SRCDIR\engine\engine_patches.cpp"
+		$File "$SRCDIR\engine\engine_patches.h"
+
+		$File "$SRCDIR\engine\detours\baseclient_connect.cpp" [$IS_GAME_DLL]
+		$File "$SRCDIR\engine\detours\baseserver_check_password.cpp" [$IS_GAME_DLL]
+    }
+
+	$Folder	"Link Libraries"
+	{
+        $Lib    "minhook.x32"
+ 	}
+}

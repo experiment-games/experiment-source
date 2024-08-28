@@ -1596,16 +1596,32 @@ local sv_defaultdeployspeed = CreateConVar("sv_defaultdeployspeed", "4",
 	Now that the compatibility libraries have been loaded, we can start changing hooks
 --]]
 if (CLIENT) then
-	Include("cl_hooks.lua")
+	ConsoleCommands.Add("+menu", function(client, pCmd, args)
+		hook.Run("OnSpawnMenuOpen")
+	end)
+
+	ConsoleCommands.Add("-menu", function(client, pCmd, args)
+		hook.Run("OnSpawnMenuClose")
+	end)
+
+	ConsoleCommands.Add("+menu_context", function(client, pCmd, args)
+		hook.Run("OnContextMenuOpen")
+	end)
+
+	ConsoleCommands.Add("-menu_context", function(client, pCmd, args)
+		hook.Run("OnContextMenuClose")
+	end)
 
 	hook.Add("LevelInitPostEntity", "GModCompatibility.CallInitPostEntityHooks", function()
 		hook.Run("InitPostEntity")
 	end)
 else
-	-- Include("sv_hooks.lua")
-
 	hook.Add("ServerActivate", "GModCompatibility.CallInitPostEntityHooks", function()
 		hook.Run("InitPostEntity")
+	end)
+
+	hook.Add("ClientConnected", "GModCompatibility.CallPlayerConnectHook", function(name, ip)
+		hook.Run("PlayerConnect", name, ip)
 	end)
 end
 
