@@ -79,7 +79,7 @@ LUA_BINDING_BEGIN( ConsoleVariable, GetHelpText, "class", "Gets the help text of
 }
 LUA_BINDING_END( "string", "Gets the help text of the ConsoleVariable" )
 
-LUA_BINDING_BEGIN( ConsoleVariable, GetInt, "class", "Gets the value of the ConsoleVariable as an integer" )
+LUA_BINDING_BEGIN( ConsoleVariable, GetInteger, "class", "Gets the value of the ConsoleVariable as an integer" )
 {
     lua_ConVar *pConVar = LUA_BINDING_ARGUMENT( luaL_checkconvar, 1, "consoleVariable" );
     lua_pushinteger( L, pConVar->GetInt() );
@@ -170,6 +170,9 @@ LUA_BINDING_BEGIN( ConsoleVariable, SetValue, "class", "Sets the value of the Co
     {
         case LUA_TNUMBER:
             pConVar->SetValue( ( float )luaL_checknumber( L, 2 ) );
+            break;
+        case LUA_TBOOLEAN:
+            pConVar->SetValue( lua_toboolean( L, 2 ) ? 1 : 0 );
             break;
         case LUA_TSTRING:
         default:

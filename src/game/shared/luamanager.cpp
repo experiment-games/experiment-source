@@ -87,7 +87,7 @@ static void LuaLogToFile( const char *format, ... )
     LuaLogToFile( format, ##__VA_ARGS__ );
 
 #define SHOW_LUA_MESSAGE( format, ... ) \
-    Msg( "\n[Lua] " format "\n", ##__VA_ARGS__ );
+    Msg( "\n[" REALM_PREFIX "] " format "\n", ##__VA_ARGS__ );
 
 static void tag_error( lua_State *L, int narg, int tag )
 {
@@ -2176,10 +2176,11 @@ bool luasrc_SetGamemode( const char *gamemodeName )
     Q_strncat( contentSearchPath, "content", sizeof( contentSearchPath ) );
 
     char loadPath[MAX_PATH];
-    Q_snprintf( loadPath, sizeof( loadPath ), "%s\\", contentSearchPath );
-
+    Q_snprintf( loadPath, sizeof( loadPath ), "%s\\" LUA_PATH_WEAPONS, contentSearchPath );
     LoadWeaponsFromPath( loadPath );
+    Q_snprintf( loadPath, sizeof( loadPath ), "%s\\" LUA_PATH_ENTITIES, contentSearchPath );
     LoadEntitiesFromPath( loadPath );
+    // Q_snprintf( loadPath, sizeof( loadPath ), "%s\\" LUA_PATH_EFFECTS, contentSearchPath );
     // LoadEffectsFromPath( loadPath );
 
     LUA_CALL_HOOK_BEGIN( "Initialize" );

@@ -59,8 +59,10 @@
 
 #ifdef CLIENT_DLL
 #define REALM_COLOR Color( 255, 202, 58, 255 )
+#define REALM_PREFIX "CLIENT"
 #else
 #define REALM_COLOR Color( 120, 205, 215, 255 )
+#define REALM_PREFIX "SERVER"
 #endif
 
 #pragma warning( disable : 4800 )  // forcing value to bool 'true' or 'false'

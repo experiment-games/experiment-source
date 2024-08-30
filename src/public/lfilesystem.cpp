@@ -330,19 +330,15 @@ LUA_BINDING_BEGIN( Files, Open, "library", "Open a file." )
 
     readMode = luaL_checkstring( L, 2 );
 
-    // For now We will support writing only to DATA, we will allow reading only in GAME, and DATA
+    // For now We will support writing only to DATA, we will allow reading in any search path for now
+    // Experiment; TODO: Is it risky to allow reading from any search path?
     if ( readMode[0] == 'w' )
     {
         if ( !V_stristr( pathId, "data" ) )
         {
-            luaL_argerror( L, 3, "Invalid pathId for writing (DATA expected)" );
-        }
-    }
-    else if ( readMode[0] == 'r' )
-    {
-        if ( !V_stristr( pathId, "game" ) && !V_stristr( pathId, "mod" ) && !V_stristr( pathId, "data" ) )
-        {
-            luaL_argerror( L, 3, "Invalid pathId for reading (GAME/MOD or DATA expected)" );
+            char message[256];
+            V_snprintf( message, sizeof( message ), "Invalid pathId for writing (DATA expected, got %s)", pathId );
+            luaL_argerror( L, 3, message );
         }
     }
 

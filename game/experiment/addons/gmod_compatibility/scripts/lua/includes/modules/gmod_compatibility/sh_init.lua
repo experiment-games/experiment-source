@@ -832,6 +832,13 @@ MOVE_DATA_META.KeyWasDown = MOVE_DATA_META.WasKeyDown
 MOVE_DATA_META.GetAbsMoveAngles = MOVE_DATA_META.GetAbsoluteMoveAngles
 MOVE_DATA_META.SetAbsMoveAngles = MOVE_DATA_META.SetAbsoluteMoveAngles
 
+local CONSOLE_VARIABLE_META = FindMetaTable("ConsoleVariable")
+CONSOLE_VARIABLE_META.GetInt = CONSOLE_VARIABLE_META.GetInteger
+CONSOLE_VARIABLE_META.SetInt = CONSOLE_VARIABLE_META.SetValue
+CONSOLE_VARIABLE_META.SetFloat = CONSOLE_VARIABLE_META.SetValue
+CONSOLE_VARIABLE_META.SetBool = CONSOLE_VARIABLE_META.SetValue
+CONSOLE_VARIABLE_META.SetString = CONSOLE_VARIABLE_META.SetValue
+
 local TEXTURE_META = FindMetaTable("Texture")
 
 function TEXTURE_META:Width()
@@ -846,6 +853,8 @@ local MATERIAL_META = FindMetaTable("Material")
 MATERIAL_META.GetShader = MATERIAL_META.GetShaderName
 MATERIAL_META.IsError = MATERIAL_META.IsErrorMaterial
 MATERIAL_META.Recompute = MATERIAL_META.RecomputeStateSnapshots
+MATERIAL_META.SetInt = MATERIAL_META.SetInteger
+MATERIAL_META.GetInt = MATERIAL_META.GetInteger
 
 function MATERIAL_META:Width()
 	local baseTexture = self:GetTexture("$basetexture")
@@ -1594,21 +1603,25 @@ local sv_defaultdeployspeed = CreateConVar("sv_defaultdeployspeed", "4",
 
 --[[
 	Now that the compatibility libraries have been loaded, we can start changing hooks
+	and adding commands
 --]]
+-- TODO: implement (low priority)
+local r_eyeset = ConsoleVariables.Create("sbox_persist", "", FCVAR_REPLICATED | FCVAR_ARCHIVE | FCVAR_NOTIFY)
+
 if (CLIENT) then
-	ConsoleCommands.Add("+menu", function(client, pCmd, args)
+	ConsoleCommands.Add("+menu", function(client, command, arguments)
 		hook.Run("OnSpawnMenuOpen")
 	end)
 
-	ConsoleCommands.Add("-menu", function(client, pCmd, args)
+	ConsoleCommands.Add("-menu", function(client, command, arguments)
 		hook.Run("OnSpawnMenuClose")
 	end)
 
-	ConsoleCommands.Add("+menu_context", function(client, pCmd, args)
+	ConsoleCommands.Add("+menu_context", function(client, command, arguments)
 		hook.Run("OnContextMenuOpen")
 	end)
 
-	ConsoleCommands.Add("-menu_context", function(client, pCmd, args)
+	ConsoleCommands.Add("-menu_context", function(client, command, arguments)
 		hook.Run("OnContextMenuClose")
 	end)
 

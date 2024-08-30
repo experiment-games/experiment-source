@@ -219,7 +219,7 @@ LUA_BINDING_BEGIN( Material, GetFloat, "class", "Get float." )
 }
 LUA_BINDING_END( "number", "Float value." )
 
-LUA_BINDING_BEGIN( Material, GetInt, "class", "Get integer." )
+LUA_BINDING_BEGIN( Material, GetInteger, "class", "Get integer." )
 {
     bool foundVar;
     const char *varName = LUA_BINDING_ARGUMENT( luaL_checkstring, 2, "varName" );
@@ -508,7 +508,7 @@ LUA_BINDING_BEGIN( Material, SetFloat, "class", "Set float." )
 }
 LUA_BINDING_END()
 
-LUA_BINDING_BEGIN( Material, SetInt, "class", "Set integer." )
+LUA_BINDING_BEGIN( Material, SetInteger, "class", "Set integer." )
 {
     bool foundVar;
     const char *varName = LUA_BINDING_ARGUMENT( luaL_checkstring, 2, "varName" );
