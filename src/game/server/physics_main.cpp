@@ -1987,16 +1987,16 @@ void Physics_RunThinkFunctions( bool simulating )
     // clear all entites freed outside of this loop
     gEntList.CleanupDeleteList();
 
-    if ( !simulating )
-    {
 #ifdef LUA_SDK
-        if ( L )
-        {
-            LUA_CALL_HOOK_BEGIN( "Think" );
-            LUA_CALL_HOOK_END( 0, 0 );
-        }
+    if ( L )
+    {
+        LUA_CALL_HOOK_BEGIN( "Think" );
+        LUA_CALL_HOOK_END( 0, 0 );
+    }
 #endif
 
+    if ( !simulating )
+    {
         // only simulate players
         for ( int i = 1; i <= gpGlobals->maxClients; i++ )
         {

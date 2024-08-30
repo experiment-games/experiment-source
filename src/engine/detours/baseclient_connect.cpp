@@ -53,8 +53,6 @@ void __fastcall DetourClientConnect( void *thisClient, DWORD edx, const char *sz
 
     OriginalClientConnect( thisClient, szName, nUserID, pNetChannel, bFakePlayer, clientChallenge );
 
-    DevWarning( "Detour: ClientConnect detour complete.\n" );
-
     // Offset of m_nUserID from CBaseClient
     int userID = *( int * )( ( uintptr_t )thisClient + 0x10 );
 
@@ -123,6 +121,7 @@ void ApplyClientConnectDetour()
     if ( MH_CreateHook( ( LPVOID )functionAddress, &DetourClientConnect, reinterpret_cast< LPVOID * >( &OriginalClientConnect ) ) != MH_OK )
     {
         DevWarning( "Failed to hook ClientConnect.\n" );
+        Assert( 0 );
     }
     else
     {

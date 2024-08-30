@@ -12,7 +12,7 @@ const DWORD_PTR OFFSET_OF_BASE_SERVER_CHECK_PASSWORD_VTABLE = 0x0E8;
 typedef bool( __thiscall *Function_BaseServer_CheckPassword_t )( void *thisPointer, netadr_t &adr, const char *password, const char *name );
 static Function_BaseServer_CheckPassword_t OriginalServerCheckPassword = nullptr;
 
-static bool HasAlreadyDetouredCheckPassword = false;
+static LPVOID ExistingDetouredCheckPassword = nullptr;
 static const char *CurrentlyConnectingSteamId = nullptr;
 
 bool __fastcall DetourCheckPassword( void *thisPointer, DWORD edx, netadr_t &adr, const char *password, const char *name )
@@ -70,21 +70,22 @@ void HandleCheckPasswordDetour( void *serverObject, const char *steamIdAsString 
 {
     CurrentlyConnectingSteamId = steamIdAsString;
 
-    if ( HasAlreadyDetouredCheckPassword )
+    if ( ExistingDetouredCheckPassword )
     {
         DevWarning( "CheckPassword already detoured.\n" );
         return;
     }
 
-    HasAlreadyDetouredCheckPassword = true;
-
     // The first 4 bytes of the 'this' pointer is the vtable pointer
     DWORD_PTR *vtable = *reinterpret_cast< DWORD_PTR ** >( serverObject );
     DWORD_PTR functionAddress = vtable[OFFSET_OF_BASE_SERVER_CHECK_PASSWORD_VTABLE / sizeof( DWORD_PTR )];
 
+    ExistingDetouredCheckPassword = ( LPVOID )functionAddress;
+
     if ( MH_CreateHook( ( LPVOID )functionAddress, &DetourCheckPassword, reinterpret_cast< LPVOID * >( &OriginalServerCheckPassword ) ) != MH_OK )
     {
         DevWarning( "Failed to hook CheckPassword.\n" );
+        Assert( 0 ); // fails when rejoining the server
     }
     else
     {
@@ -94,5 +95,9 @@ void HandleCheckPasswordDetour( void *serverObject, const char *steamIdAsString 
 
 void UpdateCheckPasswordDetourOnLevelShutdown()
 {
-    HasAlreadyDetouredCheckPassword = false;
+    if ( ExistingDetouredCheckPassword )
+    {
+        MH_RemoveHook( ( LPVOID )ExistingDetouredCheckPassword );
+        ExistingDetouredCheckPassword = nullptr;
+    }
 }
