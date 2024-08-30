@@ -99,9 +99,67 @@ if (not GAMEUI) then
 end
 
 local json = require("json")
+
+-- Turn Color, Vector, and Angle into tables with a special type identifier
+local encodeTableSpecialTypes
+encodeTableSpecialTypes = function(table)
+	for key, value in pairs(table) do
+		if (type(value) == "Color") then
+			table[key] = {
+				__type = NET_TYPE_COLOR,
+				r = value.r,
+				g = value.g,
+				b = value.b,
+				a = value.a,
+			}
+		elseif (type(value) == "Vector") then
+			table[key] = {
+				__type = NET_TYPE_VECTOR,
+				x = value.x,
+				y = value.y,
+				z = value.z,
+			}
+		elseif (type(value) == "Angle") then
+			table[key] = {
+				__type = NET_TYPE_ANGLE,
+				pitch = value.pitch,
+				yaw = value.yaw,
+				roll = value.roll,
+			}
+		elseif (type(value) == "table") then
+			encodeTableSpecialTypes(value)
+		end
+	end
+end
+
+local decodeTableSpecialTypes
+decodeTableSpecialTypes = function(table)
+	for key, value in pairs(table) do
+		if (type(value) == "table") then
+			if (value.__type == NET_TYPE_COLOR) then
+				table[key] = Colors.Create(value.r, value.g, value.b, value.a)
+			elseif (value.__type == NET_TYPE_VECTOR) then
+				table[key] = Vectors.Create(value.x, value.y, value.z)
+			elseif (value.__type == NET_TYPE_ANGLE) then
+				table[key] = Angles.Create(value.pitch, value.yaw, value.roll)
+			else
+				decodeTableSpecialTypes(value)
+			end
+		end
+	end
+end
+
 Json = {
-	Encode = json.encode,
-	Decode = json.decode,
+    Encode = function(value)
+        local copy = table.Copy(value)
+        encodeTableSpecialTypes(copy)
+		return json.encode(copy)
+    end,
+	Decode = function(value)
+		local decoded = json.decode(value)
+		decodeTableSpecialTypes(decoded)
+		return decoded
+	end
 }
 
 function RunConsoleCommand(command, ...)

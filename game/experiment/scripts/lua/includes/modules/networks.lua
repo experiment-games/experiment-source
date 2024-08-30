@@ -303,6 +303,10 @@ NET_TYPE_BOOL = 4
 NET_TYPE_FUNCTION = 5
 NET_TYPE_USERDATA = 7
 
+NET_TYPE_COLOR = 101
+NET_TYPE_VECTOR = 102
+NET_TYPE_ANGLE = 103
+
 -- Maps the result of type() to a unique identifier
 local typeIdMap = {
 	["nil"] = NET_TYPE_NIL,
@@ -311,11 +315,21 @@ local typeIdMap = {
 	["table"] = NET_TYPE_TABLE,
 	["boolean"] = NET_TYPE_BOOL,
 	["function"] = NET_TYPE_FUNCTION,
-	["userdata"] = NET_TYPE_USERDATA
+    ["userdata"] = NET_TYPE_USERDATA,
+
+    ["Color"] = NET_TYPE_COLOR,
+	["Vector"] = NET_TYPE_VECTOR,
+	["Angle"] = NET_TYPE_ANGLE,
 }
 
 local function toTypeId(data)
-	return typeIdMap[type(data)]
+    local typeId = typeIdMap[type(data)]
+
+    if (not typeId) then
+        error("Unsupported data type: " .. type(data))
+    end
+
+	return typeId
 end
 
 --[[
@@ -437,14 +451,24 @@ function WRITER:WriteString(stringValue)
     self:WriteUInt(length, SIZE_STRING_BYTES * BYTE_SIZE_IN_BITS)
 
     local textBytesAsString = string.pack("c" .. length, stringValue)
-	self:WriteRaw(textBytesAsString, length * BYTE_SIZE_IN_BITS)
+    self:WriteRaw(textBytesAsString, length * BYTE_SIZE_IN_BITS)
 end
 
 local writeFunctions = {
 	[NET_TYPE_NUMBER] = WRITER.WriteFloat,
 	[NET_TYPE_STRING] = WRITER.WriteString,
-	[NET_TYPE_BOOL] = WRITER.WriteBool,
-	-- TODO: The rest of the types
+    [NET_TYPE_BOOL] = WRITER.WriteBool,
+    [NET_TYPE_NIL] = function(writer, value)
+		print("Warning: Writing nil value") -- Should we do this?
+	end,
+    [NET_TYPE_BOOL] = WRITER.WriteBool,
+    [NET_TYPE_TABLE] = function(writer, value)
+		writer:WriteString(Json.Encode(value))
+    end,
+
+    [NET_TYPE_COLOR] = WRITER.WriteColor,
+    [NET_TYPE_VECTOR] = WRITER.WriteVector,
+    [NET_TYPE_ANGLE] = WRITER.WriteAngle,
 }
 
 --- Writes any type of data, with a type identifier
@@ -652,8 +676,17 @@ end
 local readFunctions = {
 	[NET_TYPE_NUMBER] = READER.ReadFloat,
 	[NET_TYPE_STRING] = READER.ReadString,
-	[NET_TYPE_BOOL] = READER.ReadBool,
-	-- TODO: The rest of the types
+    [NET_TYPE_BOOL] = READER.ReadBool,
+	[NET_TYPE_NIL] = function(reader)
+		print("Warning: Reading nil value") -- Should we do this?
+	end,
+	[NET_TYPE_TABLE] = function(reader)
+		return Json.Decode(reader:ReadString())
+	end,
+
+	[NET_TYPE_COLOR] = READER.ReadColor,
+	[NET_TYPE_VECTOR] = READER.ReadVector,
+	[NET_TYPE_ANGLE] = READER.ReadAngle,
 }
 
 --- Reads any type of data, by reading the type identifier first

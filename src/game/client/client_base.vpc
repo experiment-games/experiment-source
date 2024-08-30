@@ -519,7 +519,7 @@ $Project
             $File "$SRCDIR\game\shared\lsingleluainstance.cpp"
 
             $File "$SRCDIR\public\lua_compat.cpp"
-            $File "$SRCDIR\game\client\testui.cpp"
+            $File "$SRCDIR\game\client\lc_chat.cpp"
             $File "$SRCDIR\game\shared\basescripted.cpp"
             $File "$SRCDIR\game\shared\basescripted.h"
 		    $File "$SRCDIR\game\shared\lbasecombatweapon_shared.cpp"

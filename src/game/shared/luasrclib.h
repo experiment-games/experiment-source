@@ -31,6 +31,12 @@ LUALIB_API int( luaopen_CBaseAnimating_shared )( lua_State *L );
 #define LUA_CBASEFLEXLIBNAME "CBaseFlex"
 LUALIB_API int( luaopen_CBaseFlex_shared )( lua_State *L );
 
+#define LUA_CLIENTSHADOWMGRLIBNAME "ClientShadowManager"
+LUALIB_API int( luaopen_g_pClientShadowMgr )( lua_State *L );
+
+#define LUA_CHATSLIBNAME "Chats"
+LUALIB_API int( luaopen_Chats )( lua_State *L );
+
 #define LUA_BASECOMBATWEAPONLIBNAME "Weapon"
 LUALIB_API int( luaopen_CBaseCombatWeapon )( lua_State *L );
 
@@ -115,9 +121,6 @@ LUALIB_API int( luaopen_FONTFLAG )( lua_State *L );
 
 #define LUA_GESTURESLOTLIBNAME "GESTURE_SLOT"
 LUALIB_API int( luaopen_GESTURE_SLOT )( lua_State *L );
-
-#define LUA_CLIENTSHADOWMGRLIBNAME "ClientShadowManager"
-LUALIB_API int( luaopen_g_pClientShadowMgr )( lua_State *L );
 
 #define LUA_FONTLIBNAME "FontHandle"
 LUALIB_API int( luaopen_HFont )( lua_State *L );

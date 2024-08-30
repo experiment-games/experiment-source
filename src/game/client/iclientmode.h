@@ -24,7 +24,7 @@ namespace vgui
 }
 
 // Message mode types
-enum
+enum CHAT_MESSAGE_MODE
 {
 	MM_NONE = 0,
 	MM_SAY,

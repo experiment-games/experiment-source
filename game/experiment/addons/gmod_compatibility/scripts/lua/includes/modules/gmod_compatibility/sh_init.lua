@@ -903,8 +903,14 @@ Material = function(name)
 end
 
 if (SERVER) then
-	resource.AddWorkshop = function() end
+	resource.AddWorkshop = function() end -- TODO: Implement (low priority)
 else
+	-- Empty functions so we can easily add resource files without errors in shared code
+	resource = {}
+    resource.AddFile = function() end
+    resource.AddWorkshop = function() end
+    resource.AddSingleFile = function() end
+
 	-- Returns whether the currently focused panel is a child of the given one.
 	function vgui.FocusedHasParent(panel)
 		local focusedPanel = Inputs.GetFocus()
@@ -1427,6 +1433,12 @@ function baseclassGetCompatibility(name)
 end
 
 if (CLIENT) then
+	chat = Chats
+
+	chat.GetChatBoxPos = Chats.GetChatBoxPosition
+	chat.Open = Chats.StartMessageMode
+	chat.Close = Chats.StopMessageMode
+
 	ProjectedTexture = ProjectedTextures.Create
 
 	local PROJECTED_TEXTURE_META = FindMetaTable("ProjectedTexture")

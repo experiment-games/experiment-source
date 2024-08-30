@@ -115,6 +115,7 @@ static const luaL_RegForState luasrclibs[] = {
     //
     { LUA_CLIENTENUMNAME, luaopen_ClientEnumerations, REALM_CLIENT },
     { LUA_BFREADLIBNAME, luaopen_bf_read, REALM_CLIENT },
+    { LUA_CHATSLIBNAME, luaopen_Chats, REALM_CLIENT },
     { LUA_CLIENTSHADOWMGRLIBNAME, luaopen_g_pClientShadowMgr, REALM_CLIENT },
 
     // Experiment; TODO: Is this comment correct, test:
