@@ -666,6 +666,7 @@ extern lua_State *L;
 
 // Set to true between LevelInit and LevelShutdown.
 extern bool g_bLuaInitialized;
+extern bool g_bGamemodeLoaded;
 
 #ifdef CLIENT_DLL
 void luasrc_init_gameui( void );

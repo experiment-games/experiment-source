@@ -1071,7 +1071,6 @@ bool CServerGameDLL::LevelInit( const char *pMapName, char const *pMapEntities, 
 #ifdef LUA_SDK
     lcf_recursivedeletefile( LUA_PATH_CACHE );
 
-    // Add Lua environment
     luasrc_init();
 #endif
 
@@ -2937,7 +2936,19 @@ EXPOSE_SINGLE_INTERFACE_GLOBALVAR( CServerGameClients, IServerGameClients, INTER
 bool CServerGameClients::ClientConnect( edict_t *pEdict, const char *pszName, const char *pszAddress, char *reject, int maxrejectlen )
 {
     if ( !g_pGameRules )
+    {
+        Q_strncpy( reject, "Missing game rules", maxrejectlen );
         return false;
+    }
+
+#ifdef LUA_SDK
+    // If an invalid gamemode was selected, don't allow the host player to connect
+    if ( !g_bGamemodeLoaded )
+    {
+        Q_strncpy( reject, "Invalid gamemode selected", maxrejectlen );
+        return false;
+    }
+#endif
 
     return g_pGameRules->ClientConnected( pEdict, pszName, pszAddress, reject, maxrejectlen );
 }

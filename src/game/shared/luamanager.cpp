@@ -51,7 +51,7 @@ static FileHandle_t g_LuaLogFileHandle = FILESYSTEM_INVALID_HANDLE;
 
 void Gamemode_ChangeCallback( IConVar *pConVar, char const *pOldString, float flOldValue );
 
-ConVar gamemode( "gamemode", DEFAULT_GAMEMODE, FCVAR_ARCHIVE | FCVAR_REPLICATED, "The Lua gamemode to run", Gamemode_ChangeCallback );
+ConVar gamemode( "gamemode", DEFAULT_GAMEMODE, FCVAR_ARCHIVE | FCVAR_REPLICATED, "The Lua gamemode to run" );
 
 ConVar lua_log_cl( "lua_log_cl", "1", FCVAR_ARCHIVE );
 ConVar lua_log_sv( "lua_log_sv", "1", FCVAR_ARCHIVE );
@@ -135,6 +135,7 @@ std::stack< std::string > fileIncludingStack;
 
 // Lua system initialized for client or server
 bool g_bLuaInitialized;
+bool g_bGamemodeLoaded;
 
 static void GetGamemodePath( const char *gamemodeName, char *gamemodePath, int gamemodePathLength )
 {
@@ -177,28 +178,6 @@ static bool TryFindGamemode( const char *gamemodeName, char *initialFileName, in
     }
 
     return true;
-}
-
-static bool bDidBoot = false;
-void Gamemode_ChangeCallback( IConVar *pConVar, char const *pOldString, float flOldValue )
-{
-    const char *newGamemode = gamemode.GetString();
-    char initialFileName[MAX_PATH];
-
-    if ( !TryFindGamemode( newGamemode, initialFileName, sizeof( initialFileName ) ) )
-    {
-        if ( !bDidBoot )
-        {
-            // Don't warn when the game first boots up
-            bDidBoot = true;
-        }
-        else
-        {
-            Warning( "Failed to set gamemode %s: %s does not exist (defaulting to %s)\n", newGamemode, initialFileName, DEFAULT_GAMEMODE );
-        }
-        pConVar->SetValue( DEFAULT_GAMEMODE );
-        return;
-    }
 }
 
 LUA_API int luasrc_print( lua_State *L )
@@ -1261,9 +1240,12 @@ void luasrc_init( void )
     // LoadEffectsFromPath();
 
     luasrc_LoadGamemode( LUA_BASE_GAMEMODE );
-    if ( !luasrc_LoadGamemode( gamemode.GetString() ) )
+    g_bGamemodeLoaded = luasrc_LoadGamemode( gamemode.GetString() );
+
+    if ( !g_bGamemodeLoaded )
     {
-        Assert( 0 );  // Should've been prevented by gamemode command
+        // Don't waste time setting up further, we will kick the host client in ClientConnect
+        return;
     }
 
     luasrc_SetGamemode( gamemode.GetString() );
@@ -2063,7 +2045,6 @@ bool luasrc_LoadGamemode( const char *gamemodeName )
 
     if ( !TryFindGamemode( gamemodeName, initialFileName, sizeof( initialFileName ), gamemodePath, sizeof( gamemodePath ) ) )
     {
-        lua_pop( L, 1 );  // Pop the GM table
         cleanUpGamemodeLoading( true );
 
         SHOW_LUA_ERROR( "Failed to load invalid gamemode %s! Required initial file '%s' does not exist.\n", gamemodeName, initialFileName );
