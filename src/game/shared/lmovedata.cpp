@@ -445,7 +445,8 @@ LUA_BINDING_END()
 
 LUA_BINDING_BEGIN( MoveData, __tostring, "class", "Returns a string representation of the object" )
 {
-    lua_pushfstring( L, "MoveData: %p", luaL_checkudata( L, 1, LUA_MOVEDATAMETANAME ) );
+    lua_CMoveData *moveData = LUA_BINDING_ARGUMENT( lua_tomovedata, 1, "moveData" );
+    lua_pushfstring( L, "MoveData: %p", moveData );
     return 1;
 }
 LUA_BINDING_END()

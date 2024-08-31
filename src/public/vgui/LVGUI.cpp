@@ -68,7 +68,7 @@ LUA_REGISTRATION_INIT( FontHandle );
 
 LUA_BINDING_BEGIN( FontHandle, __tostring, "class", "Metamethod to get the string representation of the font handle." )
 {
-    HFont hFont = LUA_BINDING_ARGUMENT( luaL_checkfont, 1, "font" );
+    HFont hFont = LUA_BINDING_ARGUMENT( lua_tofont, 1, "font" );
 
     if ( hFont == INVALID_FONT )
         lua_pushstring( L, "INVALID_FONT" );

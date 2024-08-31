@@ -205,7 +205,7 @@ LUA_BINDING_END()
 
 LUA_BINDING_BEGIN( CheckButton, __eq, "class", "Metamethod that is called when two buttons are compared" )
 {
-    lua_pushboolean( L, LUA_BINDING_ARGUMENT( lua_tocheckbutton, 1, "checkButton" ) == LUA_BINDING_ARGUMENT( lua_tocheckbutton, 2, "otherCheckButton" ) );
+    lua_pushboolean( L, LUA_BINDING_ARGUMENT( lua_tocheckbutton, 1, "checkButton" ) == LUA_BINDING_ARGUMENT( lua_tocheckbutton, 2, "other" ) );
     return 1;
 }
 LUA_BINDING_END( "boolean", "Whether the buttons are equal" )

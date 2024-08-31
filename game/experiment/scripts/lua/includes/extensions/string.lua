@@ -63,3 +63,21 @@ end
 function string.EndsWith(target, ending)
     return target:sub(-ending:len()) == ending
 end
+
+--- Splits a string into a table of strings.
+--- @param target string The string to split
+--- @param separator string The separator to split the string by
+--- @return table # The table of strings
+function string.Split(target, separator)
+	local result = {}
+	local index = 1
+
+	separator = string.PatternSafe(separator)
+
+	for part in target:gmatch("([^" .. separator .. "]+)") do
+		result[index] = part
+		index = index + 1
+	end
+
+	return result
+end

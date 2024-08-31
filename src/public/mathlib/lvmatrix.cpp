@@ -450,7 +450,7 @@ LUA_BINDING_END()
 
 LUA_BINDING_BEGIN( Matrix, __tostring, "class", "Metatable called when the object is to be converted to a string" )
 {
-    lua_pushfstring( L, "VMatrix: %s", VMatToString( LUA_BINDING_ARGUMENT( luaL_checkvmatrix, 1, "Matrix" ) ) );
+    lua_pushfstring( L, "VMatrix: %s", VMatToString( LUA_BINDING_ARGUMENT( lua_tovmatrix, 1, "Matrix" ) ) );
 
     return 1;
 }
@@ -458,7 +458,7 @@ LUA_BINDING_END( "string", "The string representation of the object." )
 
 LUA_BINDING_BEGIN( Matrix, __eq, "class", "Metatable called when the object is to be compared" )
 {
-    lua_pushboolean( L, LUA_BINDING_ARGUMENT( luaL_checkvmatrix, 1, "Matrix" ) == LUA_BINDING_ARGUMENT( luaL_checkvmatrix, 2, "Matrix" ) );
+    lua_pushboolean( L, LUA_BINDING_ARGUMENT( luaL_checkvmatrix, 1, "matrix" ) == LUA_BINDING_ARGUMENT( luaL_checkvmatrix, 2, "other" ) );
 
     return 1;
 }

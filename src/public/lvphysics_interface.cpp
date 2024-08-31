@@ -1266,8 +1266,8 @@ LUA_BINDING_END( "string", "The string representation." )
 
 LUA_BINDING_BEGIN( PhysicsObject, __eq, "class", "Checks if two objects are equal" )
 {
-    lua_IPhysicsObject *physicsObject1 = LUA_BINDING_ARGUMENT( lua_tophysicsobject, 1, "physicsObject1" );
-    lua_IPhysicsObject *physicsObject2 = LUA_BINDING_ARGUMENT( lua_tophysicsobject, 2, "physicsObject2" );
+    lua_IPhysicsObject *physicsObject1 = LUA_BINDING_ARGUMENT( lua_tophysicsobject, 1, "physicsObject" );
+    lua_IPhysicsObject *physicsObject2 = LUA_BINDING_ARGUMENT( lua_tophysicsobject, 2, "other" );
     lua_pushboolean( L, physicsObject1 == physicsObject2 );
     return 1;
 }
@@ -1361,8 +1361,8 @@ LUA_BINDING_END( "string", "The string representation." )
 
 LUA_BINDING_BEGIN( PhysicsSurfacePropertiesHandle, __eq, "class", "Checks if two objects are equal" )
 {
-    IPhysicsSurfaceProps *physicsProps1 = LUA_BINDING_ARGUMENT( luaL_checkphysicssurfaceprops, 1, "physicsProps1" );
-    IPhysicsSurfaceProps *physicsProps2 = LUA_BINDING_ARGUMENT( luaL_checkphysicssurfaceprops, 1, "physicsProps2" );
+    IPhysicsSurfaceProps *physicsProps1 = LUA_BINDING_ARGUMENT( lua_tophysicssurfaceprops, 1, "physicsProps1" );
+    IPhysicsSurfaceProps *physicsProps2 = LUA_BINDING_ARGUMENT( lua_tophysicssurfaceprops, 2, "physicsProps2" );
     lua_pushboolean( L, physicsProps1 == physicsProps2 );
     return 1;
 }

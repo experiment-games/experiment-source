@@ -277,7 +277,7 @@ LUA_BINDING_END( "boolean", "If the packet is valid for the specified flow." )
 
 LUA_BINDING_BEGIN( NetChannelInfo, __tostring, "class", "Returns the string representation of the INetChannelInfo object." )
 {
-    INetChannelInfo *netChannel = LUA_BINDING_ARGUMENT( luaL_checknetchannel, 1, "netChannel" );
+    INetChannelInfo *netChannel = LUA_BINDING_ARGUMENT( lua_tonetchannel, 1, "netChannel" );
     lua_pushfstring( L, "INetChannelInfo: %p", netChannel );
     return 1;
 }

@@ -1386,7 +1386,7 @@ LUA_BINDING_END( "string", "Animation prefix." )
 //LUA_BINDING_BEGIN( Weapon, __eq, "class", "Equality comparison." )
 //{
 //    lua_CBaseCombatWeapon *pWeapon = LUA_BINDING_ARGUMENT( lua_toweapon, 1, "entity" );
-//    lua_CBaseCombatWeapon *pOtherWeapon = LUA_BINDING_ARGUMENT( lua_toweapon, 2, "otherEntity" );
+//    lua_CBaseCombatWeapon *pOtherWeapon = LUA_BINDING_ARGUMENT( lua_toweapon, 2, "other" );
 //    lua_pushboolean( L, pWeapon == pOtherWeapon );
 //    return 1;
 //}

@@ -142,7 +142,7 @@ LUA_BINDING_END( "integer", "The green value." )
 
 LUA_BINDING_BEGIN( Color, GetRed, "class", "Gets the red value of the color." )
 {
-    lua_Color color = LUA_BINDING_ARGUMENT( luaL_checkcolor, 1, "color" );
+    lua_Color &color = LUA_BINDING_ARGUMENT( luaL_checkcolor, 1, "color" );
     lua_pushinteger( L, color.r() );
     return 1;
 }
@@ -150,7 +150,7 @@ LUA_BINDING_END( "integer", "The red value." )
 
 LUA_BINDING_BEGIN( Color, SetColor, "class", "Sets the color values." )
 {
-    lua_Color &color = luaL_checkcolor( L, 1 );
+    lua_Color &color = LUA_BINDING_ARGUMENT( luaL_checkcolor, 1, "color" );
     int red = LUA_BINDING_ARGUMENT( luaL_checknumber, 2, "red" );
     int green = LUA_BINDING_ARGUMENT( luaL_checknumber, 3, "green" );
     int blue = LUA_BINDING_ARGUMENT( luaL_checknumber, 4, "blue" );
@@ -162,7 +162,7 @@ LUA_BINDING_END()
 
 LUA_BINDING_BEGIN( Color, SetRawColor, "class", "Sets the raw color value." )
 {
-    lua_Color &color = luaL_checkcolor( L, 1 );
+    lua_Color &color = LUA_BINDING_ARGUMENT( luaL_checkcolor, 1, "color" );
     int rawColor = LUA_BINDING_ARGUMENT( luaL_checknumber, 2, "rawColor" );
     color.SetRawColor( rawColor );
     return 0;
@@ -171,7 +171,7 @@ LUA_BINDING_END()
 
 LUA_BINDING_BEGIN( Color, __tostring, "class", "Returns a string representation of the color." )
 {
-    lua_Color color = luaL_checkcolor( L, 1 );
+    lua_Color &color = LUA_BINDING_ARGUMENT( lua_tocolor, 1, "color" );
     lua_pushfstring( L, "Color: %s", static_cast< const char * >( CFmtStr( "(%i, %i, %i, %i)", color.r(), color.g(), color.b(), color.a() ) ) );
     return 1;
 }
@@ -179,8 +179,8 @@ LUA_BINDING_END( "string", "The string representation of the color." )
 
 LUA_BINDING_BEGIN( Color, __eq, "class", "Compares two colors." )
 {
-    lua_Color colorA = LUA_BINDING_ARGUMENT( lua_tocolor, 1, "colorA" );
-    lua_Color colorB = LUA_BINDING_ARGUMENT( lua_tocolor, 2, "colorB" );
+    lua_Color colorA = LUA_BINDING_ARGUMENT( lua_tocolor, 1, "color" );
+    lua_Color colorB = LUA_BINDING_ARGUMENT( lua_tocolor, 2, "other" );
     lua_pushboolean( L, colorA == colorB );
     return 1;
 }

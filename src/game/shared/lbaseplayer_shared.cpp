@@ -1435,7 +1435,7 @@ LUA_BINDING_END( "integer", "The player's unique ID." )
 // Experiment; We only let CBaseEntity determine equality, which should be fine since they're pointers to the same entity. Disabled:
 //LUA_BINDING_BEGIN( Player, __eq, "class", "Check if two players are equal." )
 //{
-//    lua_pushboolean( L, LUA_BINDING_ARGUMENT( lua_toplayer, 1, "player" ) == LUA_BINDING_ARGUMENT( lua_toplayer, 2, "player" ) );
+//    lua_pushboolean( L, LUA_BINDING_ARGUMENT( lua_toplayer, 1, "player" ) == LUA_BINDING_ARGUMENT( lua_toplayer, 2, "other" ) );
 //    return 1;
 //}
 //LUA_BINDING_END( "boolean", "Whether the players are equal." )

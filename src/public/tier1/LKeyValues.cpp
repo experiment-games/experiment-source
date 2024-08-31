@@ -444,7 +444,7 @@ LUA_BINDING_BEGIN( KeyValuesHandle, __eq, "class", "Check if two keyvalues are e
 {
     lua_pushboolean( L,
                      LUA_BINDING_ARGUMENT( lua_tokeyvalues, 1, "keyValues" ) ==
-                         LUA_BINDING_ARGUMENT( lua_tokeyvalues, 2, "keyValues" ) );
+                         LUA_BINDING_ARGUMENT( lua_tokeyvalues, 2, "other" ) );
     return 1;
 }
 LUA_BINDING_END( "boolean", "true if the keyvalues are equal, false otherwise." )

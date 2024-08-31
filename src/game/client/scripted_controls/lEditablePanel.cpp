@@ -483,7 +483,7 @@ LUA_BINDING_END()
 
 LUA_BINDING_BEGIN( EditablePanel, __eq, "class", "Metamethod that is called when two panels are compared" )
 {
-    lua_pushboolean( L, LUA_BINDING_ARGUMENT( lua_toeditablepanel, 1, "editablePanel1" ) == LUA_BINDING_ARGUMENT( lua_toeditablepanel, 2, "editablePanel2" ) );
+    lua_pushboolean( L, LUA_BINDING_ARGUMENT( lua_toeditablepanel, 1, "editablePanel" ) == LUA_BINDING_ARGUMENT( lua_toeditablepanel, 2, "other" ) );
     return 1;
 }
 LUA_BINDING_END( "boolean", "Whether the panels are equal" )

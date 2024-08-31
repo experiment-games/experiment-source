@@ -198,7 +198,7 @@ LUA_BINDING_END()
 
 LUA_BINDING_BEGIN( Trace, __tostring, "class", "Get a string representation of the trace." )
 {
-    lua_pushfstring( L, "CGameTrace: %p", LUA_BINDING_ARGUMENT( luaL_checktrace, 1, "trace" ) );
+    lua_pushfstring( L, "CGameTrace: %p", LUA_BINDING_ARGUMENT( lua_totrace, 1, "trace" ) );
     return 1;
 }
 LUA_BINDING_END( "string", "The string representation of the trace." )

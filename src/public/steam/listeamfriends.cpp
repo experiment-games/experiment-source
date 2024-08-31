@@ -60,21 +60,21 @@ LUA_BINDING_END( "integer", "The number of clans the current user is a member of
 * TODO: Expose enum and check for it
 * enum EFriendFlags
 {
-	k_EFriendFlagNone			= 0x00,
-	k_EFriendFlagBlocked		= 0x01,
-	k_EFriendFlagFriendshipRequested	= 0x02,
-	k_EFriendFlagImmediate		= 0x04,			// "regular" friend
-	k_EFriendFlagClanMember		= 0x08,
-	k_EFriendFlagOnGameServer	= 0x10,	
-	// k_EFriendFlagHasPlayedWith	= 0x20,	// not currently used
-	// k_EFriendFlagFriendOfFriend	= 0x40, // not currently used
-	k_EFriendFlagRequestingFriendship = 0x80,
-	k_EFriendFlagRequestingInfo = 0x100,
-	k_EFriendFlagIgnored		= 0x200,
-	k_EFriendFlagIgnoredFriend	= 0x400,
-	// k_EFriendFlagSuggested		= 0x800,	// not used
-	k_EFriendFlagChatMember		= 0x1000,
-	k_EFriendFlagAll			= 0xFFFF,
+  k_EFriendFlagNone			= 0x00,
+  k_EFriendFlagBlocked		= 0x01,
+  k_EFriendFlagFriendshipRequested	= 0x02,
+  k_EFriendFlagImmediate		= 0x04,			// "regular" friend
+  k_EFriendFlagClanMember		= 0x08,
+  k_EFriendFlagOnGameServer	= 0x10,
+  // k_EFriendFlagHasPlayedWith	= 0x20,	// not currently used
+  // k_EFriendFlagFriendOfFriend	= 0x40, // not currently used
+  k_EFriendFlagRequestingFriendship = 0x80,
+  k_EFriendFlagRequestingInfo = 0x100,
+  k_EFriendFlagIgnored		= 0x200,
+  k_EFriendFlagIgnoredFriend	= 0x400,
+  // k_EFriendFlagSuggested		= 0x800,	// not used
+  k_EFriendFlagChatMember		= 0x1000,
+  k_EFriendFlagAll			= 0xFFFF,
 };
 */
 LUA_BINDING_BEGIN( SteamFriendsHandle, GetFriendCount, "class", "Get the number of friends the current user has of the specified flag types." )
@@ -114,7 +114,12 @@ LUA_BINDING_END()
 LUA_BINDING_BEGIN( SteamFriendsHandle, __tostring, "class", "Get the persona name of the current user." )
 {
     lua_ISteamFriends *steamFriends = LUA_BINDING_ARGUMENT( lua_tosteamfriends, 1, "steamFriends" );
-    lua_pushfstring( L, "SteamFriendsHandle: %s", steamFriends->GetPersonaName() );
+
+    if ( steamFriends )
+        lua_pushfstring( L, "SteamFriendsHandle: %s", steamFriends->GetPersonaName() );
+    else
+        lua_pushstring( L, "SteamFriendsHandle: NULL" );
+
     return 1;
 }
 LUA_BINDING_END( "string", "The persona name of the current user." )

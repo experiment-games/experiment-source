@@ -164,7 +164,22 @@ Json = {
 }
 
 function RunConsoleCommand(command, ...)
-	local commandString = command .. " " .. table.concat({ ... }, " ")
+	local commandSplit = command:Split(" ")
+	local arguments = { ... }
+
+	if (#commandSplit > 1) then
+		command = commandSplit[1]
+		arguments = table.Merge(commandSplit, arguments)
+	end
+
+	local consoleVariable = ConsoleVariables.Get(command)
+
+	if (IsValid(consoleVariable)) then
+		consoleVariable:SetValue(table.unpack(arguments))
+		return
+	end
+
+	local commandString = command .. " " .. table.concat(arguments, " ")
 	commandString = commandString:Trim()
 
 	if (CLIENT) then

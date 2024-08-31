@@ -67,8 +67,13 @@ LUA_BINDING_END( "boolean", "Whether the command is valid" )
 
 LUA_BINDING_BEGIN( ConsoleCommand, __tostring, "class", "Returns a string representation of the command" )
 {
-    lua_ConCommand *pConCommand = LUA_BINDING_ARGUMENT( luaL_checkconcommand, 1, "consoleCommand" );
-    lua_pushfstring( L, "ConsoleCommand: \"%s\"", pConCommand->GetName() );
+    lua_ConCommand *pConCommand = LUA_BINDING_ARGUMENT( lua_toconcommand, 1, "consoleCommand" );
+
+    if ( pConCommand )
+        lua_pushfstring( L, "ConsoleCommand: \"%s\"", pConCommand->GetName() );
+    else
+        lua_pushstring( L, "ConsoleCommand: NULL" );
+
     return 1;
 }
 LUA_BINDING_END( "string", "Returns a string representation of the command" )

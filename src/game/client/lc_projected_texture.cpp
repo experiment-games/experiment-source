@@ -701,7 +701,7 @@ LUA_BINDING_END()
 LUA_BINDING_BEGIN( ProjectedTexture, __eq, "class", "Metamethod that is called when comparing two entities" )
 {
     lua_ProjectedTexture *pProjectedTexture1 = LUA_BINDING_ARGUMENT( lua_toprojectedtexture, 1, "projectedTexture" );
-    lua_ProjectedTexture *pProjectedTexture2 = LUA_BINDING_ARGUMENT( lua_toprojectedtexture, 2, "otherProjectedTexture" );
+    lua_ProjectedTexture *pProjectedTexture2 = LUA_BINDING_ARGUMENT( lua_toprojectedtexture, 2, "other" );
 
     lua_pushboolean( L, pProjectedTexture1 == pProjectedTexture2 );
     return 1;
@@ -710,7 +710,7 @@ LUA_BINDING_END( "boolean", "True if entities are equal." )
 
 LUA_BINDING_BEGIN( ProjectedTexture, __tostring, "class", "Converts the projected texture to a string." )
 {
-    lua_ProjectedTexture *projectedTexture = LUA_BINDING_ARGUMENT( luaL_checkprojectedtexture, 1, "projectedTexture" );
+    lua_ProjectedTexture *projectedTexture = LUA_BINDING_ARGUMENT( lua_toprojectedtexture, 1, "projectedTexture" );
     lua_pushfstring( L, "ProjectedTexture: %p", projectedTexture );
 
     return 1;

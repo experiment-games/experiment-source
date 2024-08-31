@@ -141,8 +141,8 @@ LUA_BINDING_END( "integer", "The player model type" )
 // Experiment; We only let CBasePlayer determine equality, which should be fine since they're pointers to the same entity. Disabled:
 //LUA_BINDING_BEGIN( CExperimentPlayer, __eq, "class", "Metamethod for comparing two entities." )
 //{
-//    CExperiment_Player *playerA = LUA_BINDING_ARGUMENT( luaL_toexperimentplayer, 1, "entityA" );
-//    CExperiment_Player *playerB = LUA_BINDING_ARGUMENT( luaL_toexperimentplayer, 2, "entityB" );
+//    CExperiment_Player *playerA = LUA_BINDING_ARGUMENT( luaL_toexperimentplayer, 1, "entity" );
+//    CExperiment_Player *playerB = LUA_BINDING_ARGUMENT( luaL_toexperimentplayer, 2, "other" );
 //
 //    lua_pushboolean( L, playerA == playerB );
 //    return 1;

@@ -62,7 +62,7 @@ if (getmetatable(MODULE) == nil) then
 end
 
 local prefix = CLIENT and "[NetModuleTest Client]" or "[NetModuleTest Server]"
-local debug = function(...)
+local printDebug = function(...)
     print(prefix, ...)
 end
 
@@ -91,7 +91,7 @@ local debugData = function(data)
         table.insert(bytes, byte)
     end
 
-	debug("Data: " .. table.concat(bytes, " "))
+	printDebug("Data: " .. table.concat(bytes, " "))
 end
 
 --[[
@@ -100,22 +100,24 @@ end
 --]]
 
 if (CLIENT) then
-    localClient = assert(socket.tcp())
+	localClient = assert(socket.tcp(), "Failed to create client socket")
     localClient:settimeout(0)
 	local connected = false
 
 	local function clientUpdate()
-        if (not connected) then
-            localClient:connect(IP, PORT)
-            connected = true
-        end
+		if (not connected) then
+			localClient:connect(IP, PORT)
+			connected = true
+		end
+
+		printDebug("Connected to server")
 
 		-- Receive any incoming data from the server
 		local bytes, err = localClient:receive(SIZE_INT_BYTES)
 
 		-- On failure, lets close and remove the think hook so we don't spam errors
 		if (err and err ~= "timeout") then
-			debug("Error receiving response: " .. err)
+			printDebug("Error receiving response: " .. err)
 
 			-- localClient:close()
 			-- Hooks.Remove("Think", "__NetModuleTestClientUpdate")
@@ -132,30 +134,30 @@ if (CLIENT) then
         bytes, err = localClient:receive(length)
 
 		if (err and err ~= "timeout") then
-			debug("Error receiving response: " .. err)
+			printDebug("Error receiving response: " .. err)
 
 			-- localClient:close()
-			-- Hooks.Remove("Think", "__NetModuleTestClientUpdate")
+			-- Hooks.Remove("Tick", "__NetModuleTestClientUpdate")
 			return
 		end
 
 		MODULE.HandleIncomingMessage(bytes, nil)
 	end
 
-	Hooks.Add("Think", "__NetModuleClientUpdate", clientUpdate)
+	Hooks.Add("Tick", "__NetModuleClientUpdate", clientUpdate)
 elseif (SERVER) then
 	localServer = socket.tcp()
     local success, err = localServer:bind("*", PORT)
 
 	if (not success) then
-		debug("Error binding server:", err)
+		printDebug("Error binding server:", err)
 		return
 	end
 
 	success, err = localServer:listen()
 
 	if (not success) then
-		debug("Error listening on server:", err)
+		printDebug("Error listening on server:", err)
 		return
 	end
 
@@ -176,7 +178,7 @@ elseif (SERVER) then
 			local socketClient = MODULE.ClientToSocketClient(client)
 			socketClient:send(packedData)
 
-			debug("Sent queued message to client", client, packedData, socketClient)
+			printDebug("Sent queued message to client", client, packedData, socketClient)
 		end
 
 		clientPackedDataQueue[client] = nil
@@ -216,7 +218,7 @@ elseif (SERVER) then
 			end
 
 			socketClient:close()
-			debug("Client disconnected", err)
+			printDebug("Client disconnected", err)
 
             return
 		end
@@ -239,7 +241,7 @@ elseif (SERVER) then
 			end
 
 			socketClient:close()
-			debug("Client disconnected", err)
+			printDebug("Client disconnected", err)
 
 			return
 		end
@@ -289,7 +291,7 @@ elseif (SERVER) then
 		end
 	end
 
-	Hooks.Add("Think", "__NetModuleServerUpdate", serverUpdate)
+	Hooks.Add("Tick", "__NetModuleServerUpdate", serverUpdate)
 end
 
 --[[
@@ -458,8 +460,7 @@ local writeFunctions = {
 	[NET_TYPE_NUMBER] = WRITER.WriteFloat,
 	[NET_TYPE_STRING] = WRITER.WriteString,
     [NET_TYPE_BOOL] = WRITER.WriteBool,
-    [NET_TYPE_NIL] = function(writer, value)
-		print("Warning: Writing nil value") -- Should we do this?
+	[NET_TYPE_NIL] = function(writer, value)
 	end,
     [NET_TYPE_BOOL] = WRITER.WriteBool,
     [NET_TYPE_TABLE] = function(writer, value)
@@ -678,7 +679,7 @@ local readFunctions = {
 	[NET_TYPE_STRING] = READER.ReadString,
     [NET_TYPE_BOOL] = READER.ReadBool,
 	[NET_TYPE_NIL] = function(reader)
-		print("Warning: Reading nil value") -- Should we do this?
+		return nil
 	end,
 	[NET_TYPE_TABLE] = function(reader)
 		return Json.Decode(reader:ReadString())
@@ -754,7 +755,7 @@ if (SERVER) then
 		currentOutgoingMessage = nil
 
 		if (not socketClient) then
-			debug("Client is not connected yet, queueing message...", client)
+			printDebug("Client is not connected yet, queueing message...", client)
 			MODULE.QueueMessage(client, data)
 			return
 		end
@@ -824,7 +825,7 @@ elseif (CLIENT) then
 		local success, err = localClient:send(data)
 
 		if (not success) then
-			debug("Error sending data to server:", err)
+			printDebug("Error sending data to server:", err)
 			return
 		end
 
@@ -834,7 +835,7 @@ end
 
 function MODULE.HandleIncomingMessage(bytes, socketClient)
 	if (currentIncomingMessage) then
-        debug("Networks.HandleIncomingMessage was called twice without handling the previous message. Resetting...")
+        printDebug("Networks.HandleIncomingMessage was called twice without handling the previous message. Resetting...")
 	end
 
     currentIncomingMessage = READER.new(bytes)
@@ -861,7 +862,7 @@ function MODULE.Incoming(length, socketClient)
     local callback = MODULE.registeredCallbacks[messageName]
 
     if (not callback) then
-        debug("Warning: Unhandled message '" .. messageName .. "'")
+        printDebug("Warning: Unhandled message '" .. messageName .. "'")
         return
     end
 

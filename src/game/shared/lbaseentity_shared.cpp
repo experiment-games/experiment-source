@@ -3112,7 +3112,7 @@ LUA_BINDING_END()
 LUA_BINDING_BEGIN( Entity, __eq, "class", "Metamethod that is called when comparing two entities" )
 {
     lua_CBaseEntity *pEntity1 = LUA_BINDING_ARGUMENT( lua_toentity, 1, "entity" );
-    lua_CBaseEntity *pEntity2 = LUA_BINDING_ARGUMENT( lua_toentity, 2, "entity" );
+    lua_CBaseEntity *pEntity2 = LUA_BINDING_ARGUMENT( lua_toentity, 2, "other" );
 
     lua_pushboolean( L, pEntity1 == pEntity2 );
     return 1;

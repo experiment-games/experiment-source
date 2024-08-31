@@ -160,8 +160,8 @@ LUA_BINDING_END( "boolean", "True if the entity has flex manipulator." )
 // Experiment; We only let CBaseEntity determine equality, which should be fine since they're pointers to the same entity. Disabled:
 //LUA_BINDING_BEGIN( CBaseFlex, __eq, "class", "Equality operator." )
 //{
-//    lua_CBaseFlex *pEntityA = LUA_BINDING_ARGUMENT( luaL_checkbaseflex, 1, "entityA" );
-//    lua_CBaseFlex *pEntityB = LUA_BINDING_ARGUMENT( luaL_checkbaseflex, 2, "entityB" );
+//    lua_CBaseFlex *pEntityA = LUA_BINDING_ARGUMENT( luaL_checkbaseflex, 1, "entity" );
+//    lua_CBaseFlex *pEntityB = LUA_BINDING_ARGUMENT( luaL_checkbaseflex, 2, "other" );
 //
 //    lua_pushboolean( L, pEntityA == pEntityB );
 //    return 1;
@@ -170,7 +170,7 @@ LUA_BINDING_END( "boolean", "True if the entity has flex manipulator." )
 //
 //LUA_BINDING_BEGIN( CBaseFlex, __tostring, "class", "To string operator." )
 //{
-//    lua_CBaseFlex *pEntity = LUA_BINDING_ARGUMENT( luaL_checkbaseflex, 1, "entity" );
+//    lua_CBaseFlex *pEntity = LUA_BINDING_ARGUMENT( lua_tobaseflex, 1, "entity" );
 //
 //    if ( pEntity == NULL )
 //        lua_pushstring( L, "NULL" );

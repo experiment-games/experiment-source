@@ -56,17 +56,17 @@ LUA_BINDING_END()
 
 LUA_BINDING_BEGIN( Material, AlphaModulate, "class", "Alpha modulate." )
 {
-    LUA_BINDING_ARGUMENT( luaL_checkmaterial, 1, "material" )->AlphaModulate( LUA_BINDING_ARGUMENT(luaL_checknumber, 2, "alpha") );
+    LUA_BINDING_ARGUMENT( luaL_checkmaterial, 1, "material" )->AlphaModulate( LUA_BINDING_ARGUMENT( luaL_checknumber, 2, "alpha" ) );
     return 0;
 }
 LUA_BINDING_END()
 
 LUA_BINDING_BEGIN( Material, ColorModulate, "class", "Color modulate." )
 {
-    //LUA_BINDING_ARGUMENT( luaL_checkmaterial, 1, "material" )->ColorModulate( luaL_checknumber( L, 2 ), luaL_checknumber( L, 3 ), luaL_checknumber( L, 4 ) );
-    float red = LUA_BINDING_ARGUMENT(luaL_checknumber, 2, "red");
-    float green = LUA_BINDING_ARGUMENT(luaL_checknumber, 3, "green");
-    float blue = LUA_BINDING_ARGUMENT(luaL_checknumber, 4, "blue");
+    // LUA_BINDING_ARGUMENT( luaL_checkmaterial, 1, "material" )->ColorModulate( luaL_checknumber( L, 2 ), luaL_checknumber( L, 3 ), luaL_checknumber( L, 4 ) );
+    float red = LUA_BINDING_ARGUMENT( luaL_checknumber, 2, "red" );
+    float green = LUA_BINDING_ARGUMENT( luaL_checknumber, 3, "green" );
+    float blue = LUA_BINDING_ARGUMENT( luaL_checknumber, 4, "blue" );
     LUA_BINDING_ARGUMENT( luaL_checkmaterial, 1, "material" )->ColorModulate( red, green, blue );
     return 0;
 }
@@ -88,8 +88,8 @@ LUA_BINDING_END()
 
 LUA_BINDING_BEGIN( Material, GetColor, "class", "Get color." )
 {
-    int x = LUA_BINDING_ARGUMENT(luaL_checknumber, 2, "x");
-    int y = LUA_BINDING_ARGUMENT(luaL_checknumber, 3, "y");
+    int x = LUA_BINDING_ARGUMENT( luaL_checknumber, 2, "x" );
+    int y = LUA_BINDING_ARGUMENT( luaL_checknumber, 3, "y" );
 
     bool bFound = false;
     IMaterialVar *pVar = LUA_BINDING_ARGUMENT( luaL_checkmaterial, 1, "material" )->FindVar( "$basetexture", &bFound );
@@ -142,7 +142,7 @@ LUA_BINDING_END( "Material", "Material page." )
 
 LUA_BINDING_BEGIN( Material, GetMaterialVariableFlag, "class", "Get material variable flag." )
 {
-    int flag = LUA_BINDING_ARGUMENT(luaL_checknumber, 2, "flag");
+    int flag = LUA_BINDING_ARGUMENT( luaL_checknumber, 2, "flag" );
     lua_pushboolean( L, LUA_BINDING_ARGUMENT( luaL_checkmaterial, 1, "material" )->GetMaterialVarFlag( ( MaterialVarFlags_t )flag ) );
     return 1;
 }
@@ -178,7 +178,7 @@ LUA_BINDING_END( "integer", "Number of passes." )
 
 LUA_BINDING_BEGIN( Material, GetPropertyFlag, "class", "Get property flag." )
 {
-    int flag = LUA_BINDING_ARGUMENT(luaL_checknumber, 2, "flag");
+    int flag = LUA_BINDING_ARGUMENT( luaL_checknumber, 2, "flag" );
     lua_pushboolean( L, LUA_BINDING_ARGUMENT( luaL_checkmaterial, 1, "material" )->GetPropertyFlag( ( MaterialPropertyTypes_t )flag ) );
     return 1;
 }
@@ -475,8 +475,8 @@ LUA_BINDING_END()
 
 LUA_BINDING_BEGIN( Material, SetMaterialVariableFlag, "class", "Set material variable flag." )
 {
-    int flag = LUA_BINDING_ARGUMENT(luaL_checknumber, 1, "flag");
-    bool on = LUA_BINDING_ARGUMENT(luaL_checkboolean, 2, "on");
+    int flag = LUA_BINDING_ARGUMENT( luaL_checknumber, 1, "flag" );
+    bool on = LUA_BINDING_ARGUMENT( luaL_checkboolean, 2, "on" );
     LUA_BINDING_ARGUMENT( luaL_checkmaterial, 1, "material" )->SetMaterialVarFlag( ( MaterialVarFlags_t )flag, on );
     return 0;
 }
@@ -594,10 +594,10 @@ LUA_BINDING_BEGIN( Material, SetVector4D, "class", "Set vector 4D." )
         return 0;
     }
 
-    float x = LUA_BINDING_ARGUMENT(luaL_checknumber, 3, "x");
-    float y = LUA_BINDING_ARGUMENT(luaL_checknumber, 4, "y");
-    float z = LUA_BINDING_ARGUMENT(luaL_checknumber, 5, "z");
-    float w = LUA_BINDING_ARGUMENT(luaL_checknumber, 6, "w");
+    float x = LUA_BINDING_ARGUMENT( luaL_checknumber, 3, "x" );
+    float y = LUA_BINDING_ARGUMENT( luaL_checknumber, 4, "y" );
+    float z = LUA_BINDING_ARGUMENT( luaL_checknumber, 5, "z" );
+    float w = LUA_BINDING_ARGUMENT( luaL_checknumber, 6, "w" );
     materialVar->SetVecValue( x, y, z, w );
 
     return 0;
@@ -606,7 +606,7 @@ LUA_BINDING_END()
 
 LUA_BINDING_BEGIN( Material, SetUseFixedFunctionBakedLighting, "class", "Set use fixed function baked lighting." )
 {
-    bool useFixedFunctionBakedLighting = LUA_BINDING_ARGUMENT(luaL_checkboolean, 1, "useFixedFunctionBakedLighting");
+    bool useFixedFunctionBakedLighting = LUA_BINDING_ARGUMENT( luaL_checkboolean, 1, "useFixedFunctionBakedLighting" );
     LUA_BINDING_ARGUMENT( luaL_checkmaterial, 1, "material" )->SetUseFixedFunctionBakedLighting( useFixedFunctionBakedLighting );
     return 0;
 }
@@ -636,7 +636,13 @@ LUA_BINDING_END()
 
 LUA_BINDING_BEGIN( Material, __tostring, "class", "__tostring." )
 {
-    lua_pushfstring( L, "IMaterial: %s", LUA_BINDING_ARGUMENT( luaL_checkmaterial, 1, "material" )->GetName() );
+    lua_IMaterial *pMaterial = LUA_BINDING_ARGUMENT( lua_tomaterial, 1, "material" );
+
+    if ( pMaterial )
+        lua_pushfstring( L, "IMaterial: %s", pMaterial->GetName() );
+    else
+        lua_pushstring( L, "IMaterial: NULL" );
+
     return 1;
 }
 LUA_BINDING_END()
@@ -721,7 +727,7 @@ LUA_BINDING_BEGIN( Materials, Find, "library", "Finds a material" )
             char materialName[MAX_PATH];
             char fileName[MAX_PATH];
 
-            if (nameWithoutExtension[0] == '!')
+            if ( nameWithoutExtension[0] == '!' )
             {
                 Q_strncpy( materialName, nameWithoutExtension, sizeof( materialName ) );
 

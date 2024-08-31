@@ -298,7 +298,8 @@ LUA_BINDING_END()
 
 LUA_BINDING_BEGIN( TakeDamageInfo, __tostring, "class", "Returns a string representation of the TakeDamageInfo instance" )
 {
-    lua_pushfstring( L, "TakeDamageInfo: %p", luaL_checkudata( L, 1, LUA_TAKEDAMAGEINFOMETANAME ) );
+    lua_CTakeDamageInfo &damageInfo = LUA_BINDING_ARGUMENT( lua_todamageinfo, 1, "damageInfo" );
+    lua_pushfstring( L, "TakeDamageInfo: %p", damageInfo );
     return 1;
 }
 LUA_BINDING_END( "string", "The string representation of the TakeDamageInfo instance." )

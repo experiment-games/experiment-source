@@ -185,8 +185,13 @@ LUA_BINDING_END()
 
 LUA_BINDING_BEGIN( ConsoleVariable, __tostring, "class", "Returns a string representation of the ConsoleVariable" )
 {
-    lua_ConVar *pConVar = LUA_BINDING_ARGUMENT( luaL_checkconvar, 1, "consoleVariable" );
-    lua_pushfstring( L, "ConsoleVariable: \"%s\" = \"%s\"", pConVar->GetName(), pConVar->GetString() );
+    lua_ConVar *pConVar = LUA_BINDING_ARGUMENT( lua_toconvar, 1, "consoleVariable" );
+
+    if ( pConVar )
+        lua_pushfstring( L, "ConsoleVariable: \"%s\" = \"%s\"", pConVar->GetName(), pConVar->GetString() );
+    else
+        lua_pushstring( L, "ConsoleVariable: NULL" );
+
     return 1;
 }
 LUA_BINDING_END( "string", "Returns a string representation of the ConsoleVariable" )

@@ -769,7 +769,7 @@ LUA_BINDING_END()
 
 LUA_BINDING_BEGIN( ModelImagePanel, __eq, "class", "Metamethod called when two panels are compared" )
 {
-    lua_pushboolean( L, LUA_BINDING_ARGUMENT( lua_tomodelimagepanel, 1, "modelImagePanelA" ) == LUA_BINDING_ARGUMENT( lua_tomodelimagepanel, 2, "modelImagePanelB" ) );
+    lua_pushboolean( L, LUA_BINDING_ARGUMENT( lua_tomodelimagepanel, 1, "modelImagePanel" ) == LUA_BINDING_ARGUMENT( lua_tomodelimagepanel, 2, "other" ) );
     return 1;
 }
 LUA_BINDING_END( "boolean", "Whether the panels are equal" )

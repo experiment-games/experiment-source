@@ -129,7 +129,7 @@ LUA_BINDING_END()
 
 LUA_BINDING_BEGIN( Matrix3x4, __tostring, "class", "Metatable called when the object is converted to a string" )
 {
-    lua_matrix3x4_t matrix = LUA_BINDING_ARGUMENT( luaL_checkmatrix, 1, "Matrix3x4" );
+    lua_matrix3x4_t matrix = LUA_BINDING_ARGUMENT( lua_tomatrix, 1, "Matrix3x4" );
     lua_pushfstring( L,
                      "Matrix3x4:\n\t%f, %f, %f, %f\n\t%f, %f, %f, %f\n\t%f, %f, %f, %f",
                      matrix[0][0],

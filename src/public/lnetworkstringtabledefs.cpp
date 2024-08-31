@@ -232,7 +232,7 @@ LUA_BINDING_END()
 
 LUA_BINDING_BEGIN( NetworkStringTable, __tostring, "class", "Get a string representation of the table." )
 {
-    lua_INetworkStringTable *networkStringTable = LUA_BINDING_ARGUMENT( luaL_checkstringtable, 1, "networkStringTable" );
+    lua_INetworkStringTable *networkStringTable = LUA_BINDING_ARGUMENT( lua_tostringtable, 1, "networkStringTable" );
 
     lua_pushfstring( L, "INetworkStringTable: %s", networkStringTable->GetTableName() );
 

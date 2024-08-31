@@ -106,7 +106,7 @@ LUA_BINDING_END( "PhysicsSurfaceProps", "Physics surface properties" )
 
 LUA_BINDING_BEGIN( MoveHelper, __tostring, "class", "Converts MoveHelper to a string" )
 {
-    lua_IMoveHelper *moveHelper = LUA_BINDING_ARGUMENT( luaL_checkmovehelper, 1, "moveHelper" );
+    lua_IMoveHelper *moveHelper = LUA_BINDING_ARGUMENT( lua_tomovehelper, 1, "moveHelper" );
     lua_pushfstring( L, "MoveHelper: %p", moveHelper );
     return 1;
 }

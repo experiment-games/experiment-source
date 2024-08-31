@@ -1065,8 +1065,8 @@ LUA_BINDING_END()
 // Experiment; We only let CBaseEntity determine equality, which should be fine since they're pointers to the same entity. Disabled:
 // LUA_BINDING_BEGIN( CBaseAnimating, __eq, "class", "Metamethod to check if the two entities are the same" )
 //{
-//    lua_CBaseAnimating *pAnimating1 = LUA_BINDING_ARGUMENT( lua_toanimating, 1, "entity1" );
-//    lua_CBaseAnimating *pAnimating2 = LUA_BINDING_ARGUMENT( lua_toanimating, 2, "entity2" );
+//    lua_CBaseAnimating *pAnimating1 = LUA_BINDING_ARGUMENT( lua_toanimating, 1, "entity" );
+//    lua_CBaseAnimating *pAnimating2 = LUA_BINDING_ARGUMENT( lua_toanimating, 2, "other" );
 //
 //    lua_pushboolean( L, pAnimating1 == pAnimating2 );
 //

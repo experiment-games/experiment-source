@@ -455,7 +455,7 @@ LUA_BINDING_END()
 
 LUA_BINDING_BEGIN( Vector, __tostring, "class", "Converts the vector to a string." )
 {
-    lua_Vector &vec = LUA_BINDING_ARGUMENT( luaL_checkvector, 1, "vector" );
+    lua_Vector &vec = LUA_BINDING_ARGUMENT( lua_tovector, 1, "vector" );
     lua_pushfstring( L, "Vector: %s", VecToString( vec ) );
 
     return 1;
@@ -464,8 +464,8 @@ LUA_BINDING_END( "string", "The string representation of the vector." )
 
 LUA_BINDING_BEGIN( Vector, __eq, "class", "Checks if two vectors are equal." )
 {
-    lua_Vector vectorA = LUA_BINDING_ARGUMENT( lua_tovector, 1, "vectorA" );
-    lua_Vector vectorB = LUA_BINDING_ARGUMENT( lua_tovector, 2, "vectorB" );
+    lua_Vector vectorA = LUA_BINDING_ARGUMENT( lua_tovector, 1, "vector" );
+    lua_Vector vectorB = LUA_BINDING_ARGUMENT( lua_tovector, 2, "other" );
     lua_pushboolean( L, vectorA == vectorB );
 
     return 1;

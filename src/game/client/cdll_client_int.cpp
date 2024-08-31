@@ -2209,14 +2209,6 @@ void SimulateEntities()
             pEnt->Simulate();
         }
     }
-
-#ifdef LUA_SDK
-    if ( L )
-    {
-        LUA_CALL_HOOK_BEGIN( "Think" );
-        LUA_CALL_HOOK_END( 0, 0 );
-    }
-#endif
 }
 
 bool AddDataChangeEvent( IClientNetworkable *ent, DataUpdateType_t updateType, int *pStoredEvent )

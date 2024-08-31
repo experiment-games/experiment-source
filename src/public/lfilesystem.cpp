@@ -675,6 +675,7 @@ LUA_BINDING_END()
 LUA_BINDING_BEGIN( FileHandle, __tostring, "class", "Get the string representation of a file handle." )
 {
     FileHandle_t hFile = LUA_BINDING_ARGUMENT( lua_tofilehandle, 1, "file" );
+
     if ( hFile == FILESYSTEM_INVALID_HANDLE )
         lua_pushstring( L, "FILESYSTEM_INVALID_HANDLE" );
     else
@@ -686,8 +687,8 @@ LUA_BINDING_END( "string", "The string representation of the file handle." )
 
 LUA_BINDING_BEGIN( FileHandle, __eq, "class", "Check if two file handles are equal." )
 {
-    FileHandle_t hFile1 = LUA_BINDING_ARGUMENT( lua_tofilehandle, 1, "file1" );
-    FileHandle_t hFile2 = LUA_BINDING_ARGUMENT( lua_tofilehandle, 2, "file2" );
+    FileHandle_t hFile1 = LUA_BINDING_ARGUMENT( lua_tofilehandle, 1, "file" );
+    FileHandle_t hFile2 = LUA_BINDING_ARGUMENT( lua_tofilehandle, 2, "other" );
     lua_pushboolean( L, hFile1 == hFile2 );
 
     return 1;

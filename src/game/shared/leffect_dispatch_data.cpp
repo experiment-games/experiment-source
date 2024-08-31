@@ -418,7 +418,7 @@ LUA_BINDING_END()
 
 LUA_BINDING_BEGIN( EffectData, __tostring, "class", "To string operator." )
 {
-    lua_CEffectData &data = LUA_BINDING_ARGUMENT( luaL_checkeffect, 1, "effectData" );
+    lua_CEffectData &data = LUA_BINDING_ARGUMENT( lua_toeffect, 1, "effectData" );
     lua_pushfstring( L, "EffectData: %p", &data );
     return 1;
 }

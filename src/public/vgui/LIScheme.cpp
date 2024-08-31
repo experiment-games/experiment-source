@@ -126,7 +126,8 @@ LUA_BINDING_END( "string", "The resource string for the specified resource name.
 
 LUA_BINDING_BEGIN( Scheme, __tostring, "class", "Metamethod to get the string representation of the IScheme object." )
 {
-    lua_pushfstring( L, "Scheme: %p", luaL_checkudata( L, 1, LUA_ISCHEMELIBNAME ) );
+    lua_IScheme *scheme = LUA_BINDING_ARGUMENT( lua_toischeme, 1, "scheme" );
+    lua_pushfstring( L, "Scheme: %p", scheme );
     return 1;
 }
 LUA_BINDING_END( "string", "The string representation of the IScheme object." )

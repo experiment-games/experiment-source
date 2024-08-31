@@ -92,91 +92,104 @@ LUA_REGISTRATION_INIT( ITexture )
 
 LUA_BINDING_BEGIN( Texture, Download, "class", "Downloads the texture into the material system." )
 {
-    luaL_checkitexture( L, 1 )->Download();
+    lua_ITexture *pTexture = LUA_BINDING_ARGUMENT( luaL_checkitexture, 1, "texture" );
+    pTexture->Download();
     return 0;
 }
 LUA_BINDING_END()
 
 LUA_BINDING_BEGIN( Texture, GetName, "class", "Gets the name of the texture." )
 {
-    lua_pushstring( L, luaL_checkitexture( L, 1 )->GetName() );
+    lua_ITexture *pTexture = LUA_BINDING_ARGUMENT( luaL_checkitexture, 1, "texture" );
+    lua_pushstring( L, pTexture->GetName() );
     return 1;
 }
 LUA_BINDING_END( "string", "The name of the texture." )
 
 LUA_BINDING_BEGIN( Texture, GetActualWidth, "class", "Gets the actual width of the texture." )
 {
-    lua_pushinteger( L, luaL_checkitexture( L, 1 )->GetActualWidth() );
+    lua_ITexture *pTexture = LUA_BINDING_ARGUMENT( luaL_checkitexture, 1, "texture" );
+    lua_pushinteger( L, pTexture->GetActualWidth() );
     return 1;
 }
 LUA_BINDING_END( "integer", "The actual width of the texture." )
 
 LUA_BINDING_BEGIN( Texture, GetActualHeight, "class", "Gets the actual height of the texture." )
 {
-    lua_pushinteger( L, luaL_checkitexture( L, 1 )->GetActualHeight() );
+    lua_ITexture *pTexture = LUA_BINDING_ARGUMENT( luaL_checkitexture, 1, "texture" );
+    lua_pushinteger( L, pTexture->GetActualHeight() );
     return 1;
 }
 LUA_BINDING_END( "integer", "The actual height of the texture." )
 
 LUA_BINDING_BEGIN( Texture, GetMappingWidth, "class", "Gets the mapping width of the texture." )
 {
-    lua_pushinteger( L, luaL_checkitexture( L, 1 )->GetMappingWidth() );
+    lua_ITexture *pTexture = LUA_BINDING_ARGUMENT( luaL_checkitexture, 1, "texture" );
+    lua_pushinteger( L, pTexture->GetMappingWidth() );
     return 1;
 }
 LUA_BINDING_END( "integer", "The mapping width of the texture." )
 
 LUA_BINDING_BEGIN( Texture, GetMappingHeight, "class", "Gets the mapping height of the texture." )
 {
-    lua_pushinteger( L, luaL_checkitexture( L, 1 )->GetMappingHeight() );
+    lua_ITexture *pTexture = LUA_BINDING_ARGUMENT( luaL_checkitexture, 1, "texture" );
+    lua_pushinteger( L, pTexture->GetMappingHeight() );
     return 1;
 }
 LUA_BINDING_END( "integer", "The mapping height of the texture." )
 
 LUA_BINDING_BEGIN( Texture, GetNumAnimationFrames, "class", "Gets the number of animation frames of the texture." )
 {
-    lua_pushinteger( L, luaL_checkitexture( L, 1 )->GetNumAnimationFrames() );
+    lua_ITexture *pTexture = LUA_BINDING_ARGUMENT( luaL_checkitexture, 1, "texture" );
+    lua_pushinteger( L, pTexture->GetNumAnimationFrames() );
     return 1;
 }
 LUA_BINDING_END( "integer", "The number of animation frames of the texture." )
 
 LUA_BINDING_BEGIN( Texture, IsTranslucent, "class", "Checks if the texture is translucent." )
 {
-    lua_pushboolean( L, luaL_checkitexture( L, 1 )->IsTranslucent() );
+    lua_ITexture *pTexture = LUA_BINDING_ARGUMENT( luaL_checkitexture, 1, "texture" );
+    lua_pushboolean( L, pTexture->IsTranslucent() );
     return 1;
 }
 LUA_BINDING_END( "boolean", "true if the texture is translucent, false otherwise." )
 
 LUA_BINDING_BEGIN( Texture, IsMipmapped, "class", "Checks if the texture is mipmapped." )
 {
-    lua_pushboolean( L, luaL_checkitexture( L, 1 )->IsMipmapped() );
+    lua_ITexture *pTexture = LUA_BINDING_ARGUMENT( luaL_checkitexture, 1, "texture" );
+    lua_pushboolean( L, pTexture->IsMipmapped() );
     return 1;
 }
 LUA_BINDING_END( "boolean", "true if the texture is mipmapped, false otherwise." )
 
 LUA_BINDING_BEGIN( Texture, IsError, "class", "Checks if the texture is in an error state." )
 {
-    lua_pushboolean( L, luaL_checkitexture( L, 1 )->IsError() );
+    lua_ITexture *pTexture = LUA_BINDING_ARGUMENT( luaL_checkitexture, 1, "texture" );
+    lua_pushboolean( L, pTexture->IsError() );
     return 1;
 }
 LUA_BINDING_END( "boolean", "true if the texture is in an error state, false otherwise." )
 
 LUA_BINDING_BEGIN( Texture, IsErrorTexture, "class", "Checks if the texture is an error texture." )
 {
-    lua_pushboolean( L, IsErrorTexture( luaL_checkitexture( L, 1 ) ) );
+    lua_ITexture *pTexture = LUA_BINDING_ARGUMENT( luaL_checkitexture, 1, "texture" );
+    lua_pushboolean( L, IsErrorTexture( pTexture ) );
     return 1;
 }
 LUA_BINDING_END( "boolean", "true if the texture is an error texture, false otherwise." )
 
 LUA_BINDING_BEGIN( Texture, Release, "class", "Release the texture." )
 {
-    luaL_checkitexture( L, 1 )->Release();
+    lua_ITexture *pTexture = LUA_BINDING_ARGUMENT( luaL_checkitexture, 1, "texture" );
+    pTexture->Release();
     return 0;
 }
 LUA_BINDING_END()
 
 LUA_BINDING_BEGIN( Texture, __tostring, "class", "Returns a string representation of the texture." )
 {
-    lua_pushfstring( L, "ITexture: %s", luaL_checkitexture( L, 1 )->GetName() );
+    lua_ITexture *pTexture = LUA_BINDING_ARGUMENT( lua_toitexture, 1, "texture" );
+    lua_pushfstring( L, "ITexture: %s", pTexture ? pTexture->GetName() : "NULL" );
     return 1;
 }
 LUA_BINDING_END()

@@ -1649,9 +1649,6 @@ local sv_defaultdeployspeed = CreateConVar("sv_defaultdeployspeed", "4",
 	Now that the compatibility libraries have been loaded, we can start changing hooks
 	and adding commands
 --]]
--- TODO: implement (low priority)
-local r_eyeset = ConsoleVariables.Create("sbox_persist", "", FCVAR_REPLICATED | FCVAR_ARCHIVE | FCVAR_NOTIFY)
-
 if (CLIENT) then
 	ConsoleCommands.Add("+menu", function(client, command, arguments)
 		hook.Run("OnSpawnMenuOpen")

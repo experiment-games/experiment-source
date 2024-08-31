@@ -263,7 +263,7 @@ LUA_BINDING_END()
 
 LUA_BINDING_BEGIN( Angle, __tostring, "class", "Metatable that is called when the angle is to be converted to a string." )
 {
-    lua_QAngle &angle = LUA_BINDING_ARGUMENT( luaL_checkangle, 1, "angle" );
+    lua_QAngle &angle = LUA_BINDING_ARGUMENT( lua_toangle, 1, "angle" );
     lua_pushfstring( L, "Angle: %s", VecToString( angle ) );
     return 1;
 }
@@ -271,8 +271,8 @@ LUA_BINDING_END( "string", "The string representation of the angle." )
 
 LUA_BINDING_BEGIN( Angle, __eq, "class", "Metatable that is called when the angle is to be compared with another angle." )
 {
-    lua_QAngle &angle = LUA_BINDING_ARGUMENT( luaL_checkangle, 1, "angle" );
-    lua_QAngle angle2 = LUA_BINDING_ARGUMENT( luaL_checkangle, 2, "angle2" );
+    lua_QAngle &angle = LUA_BINDING_ARGUMENT( lua_toangle, 1, "angle" );
+    lua_QAngle angle2 = LUA_BINDING_ARGUMENT( lua_toangle, 2, "other" );
     lua_pushboolean( L, angle == angle2 );
     return 1;
 }
