@@ -13,6 +13,7 @@
 #include "GameUI/IGameConsole.h"
 #include "vgui/IInput.h"
 #include <mountsteamcontent.h>
+#include <createmultiplayergamedialog.h>
 
 using namespace vgui;
 
@@ -36,6 +37,18 @@ bool GameUIUtil::IsInBackgroundLevel()
 bool GameUIUtil::IsInMenu()
 {
     return !engine->IsInGame();
+}
+
+void GameUIUtil::PositionDialog( vgui::PHandle dialog )
+{
+    if ( !dialog.Get() )
+        return;
+
+    int x, y, workspaceWidth, workspaceHeight, width, height;
+    vgui::surface()->GetWorkspaceBounds( x, y, workspaceWidth, workspaceHeight );
+    dialog->GetSize( width, height );
+
+    dialog->SetPos( x + ( ( workspaceWidth - width ) * .5 ), y + ( ( workspaceHeight - height ) * .5 ) );
 }
 
 CBaseMenuPanel::CBaseMenuPanel()
@@ -255,7 +268,7 @@ CMainMenu::CMainMenu( Panel *pParent )
     : BaseClass( pParent, "MainMenuPanel" )
 {
     MakePopup( false );
-    SetProportional( true );
+    SetProportional( false );
     SetMouseInputEnabled( true );
     SetKeyBoardInputEnabled( true );
     SetPaintBorderEnabled( false );
@@ -340,7 +353,11 @@ void CMainMenu::OnCustomURLHandler( const char *pszUrl )
     if ( Q_strncmp( pszUrl, pszGameMenuCommand, Q_strlen( pszGameMenuCommand ) ) == 0 )
     {
         char szCommand[256];
-        Q_snprintf( szCommand, sizeof( szCommand ), "gamemenucommand %s", pszUrl + Q_strlen( pszGameMenuCommand ) );
+        const char *pszCommand = pszUrl + Q_strlen( pszGameMenuCommand );
+        Q_snprintf( szCommand, sizeof( szCommand ), "gamemenucommand %s", pszCommand );
+
+        if ( OnKnownCommand( pszCommand ) )
+            return;
 
         engine->ClientCmd( szCommand );
     }
@@ -348,6 +365,28 @@ void CMainMenu::OnCustomURLHandler( const char *pszUrl )
     {
         DevWarning( "TODO: Main menu action: %s\n", pszUrl );
     }
+}
+
+bool CMainMenu::OnKnownCommand( const char *command )
+{
+    if ( !Q_stricmp( command, "OpenCreateMultiplayerGameDialog" ) )
+    {
+        OnOpenCreateMultiplayerGameDialog();
+        return true;
+    }
+
+    return false;
+}
+
+void CMainMenu::OnOpenCreateMultiplayerGameDialog()
+{
+    if ( !m_hCreateMultiplayerGameDialog.Get() )
+    {
+        m_hCreateMultiplayerGameDialog = new CCreateMultiplayerGameDialog( this );
+        GameUIUtil::PositionDialog( m_hCreateMultiplayerGameDialog );
+    }
+
+    m_hCreateMultiplayerGameDialog->Activate();
 }
 
 void CMainMenu::OnKeyCodeUnhandled( int code )

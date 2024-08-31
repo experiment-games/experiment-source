@@ -175,6 +175,15 @@ $Project "Client (Experiment)"
 				$File	"experiment\ui\experimentclientscoreboard.h"
 				$File	"experiment\ui\experimenttextwindow.cpp"
 				$File	"experiment\ui\experimenttextwindow.h"
+
+				$File	"experiment\ui\createmultiplayergamedialog.cpp"
+				$File	"experiment\ui\createmultiplayergamedialog.h"
+				$File	"experiment\ui\createmultiplayergamegameplaypage.cpp"
+				$File	"experiment\ui\createmultiplayergamegameplaypage.h"
+				$File	"experiment\ui\createmultiplayergameserverpage.cpp"
+				$File	"experiment\ui\createmultiplayergameserverpage.h"
+				$File	"experiment\ui\createmultiplayergamebotpage.cpp"
+				$File	"experiment\ui\createmultiplayergamebotpage.h"
 			}
 
             $Folder "Util"

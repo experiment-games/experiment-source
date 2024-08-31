@@ -27,7 +27,7 @@ class PropertyPage : public EditablePanel
 
    public:
 #ifdef LUA_SDK
-    PropertyPage( Panel *parent, const char *panelName, lua_State *L /* = nullptr */ );
+    PropertyPage( Panel *parent, const char *panelName, lua_State *L = nullptr );
 #else
     PropertyPage( Panel *parent, const char *panelName );
 #endif

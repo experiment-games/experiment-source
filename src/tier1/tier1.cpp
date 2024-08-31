@@ -9,7 +9,6 @@
 #include "vstdlib/iprocessutils.h"
 #include "icvar.h"
 
-
 //-----------------------------------------------------------------------------
 // These tier1 libraries must be set by any users of this library.
 // They can be set by calling ConnectTier1Libraries or InitDefaultFileSystem.

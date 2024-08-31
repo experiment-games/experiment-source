@@ -21,6 +21,7 @@ namespace GameUIUtil
 bool IsInLevel();
 bool IsInBackgroundLevel();
 bool IsInMenu();
+void PositionDialog( vgui::PHandle dialog );
 }  // namespace GameUIUtil
 
 class CMainMenu;  // Forward declaration
@@ -68,6 +69,7 @@ class CMainMenu : public Panel
     virtual ~CMainMenu();
 
     void SetBackgroundRenderState( EBackgroundState state );
+    virtual bool OnKnownCommand( const char* command );
 
     MESSAGE_FUNC_CHARPTR( OnCustomURLHandler, "CustomURL", url );
     MESSAGE_FUNC_INT( OnKeyCodeUnhandled, "KeyCodeUnhandled", code );
@@ -76,6 +78,9 @@ class CMainMenu : public Panel
     void OnThink() OVERRIDE;
 
     virtual void PerformLayout() OVERRIDE;
+
+    void OnOpenCreateMultiplayerGameDialog();
+    vgui::DHANDLE< vgui::Frame > m_hCreateMultiplayerGameDialog;
 
    private:
     HTML* m_pHTML;
