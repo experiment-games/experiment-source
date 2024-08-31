@@ -117,7 +117,7 @@ static void LuaRunConCommand( lua_State *L, const CCommand &args )
         lua_pushnil( L );
     else
 #endif
-        CBaseEntity::PushLuaInstanceSafe( L, pPlayer );
+        CBasePlayer::PushLuaInstanceSafe( L, pPlayer );
     lua_pushstring( L, pCmd );
     lua_newtable( L );
     for ( int i = 1; i < args.ArgC(); i++ )
@@ -290,7 +290,7 @@ LUA_BINDING_END( "integer", "The index of the client that issued the command" )
 
 LUA_BINDING_BEGIN( ConsoleCommands, GetCommandClient, "library", "Get the client that issued the command", "server" )
 {
-    CBaseEntity::PushLuaInstanceSafe( L, UTIL_GetCommandClient() );
+    CBasePlayer::PushLuaInstanceSafe( L, UTIL_GetCommandClient() );
     return 1;
 }
 LUA_BINDING_END( "Player", "The client that issued the command" )

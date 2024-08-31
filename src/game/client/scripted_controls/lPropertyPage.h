@@ -17,7 +17,7 @@
 //{
 //    DECLARE_CLASS_SIMPLE( LPropertyPage, PropertyPage );
 //
-//    LUA_OVERRIDE_SINGLE_LUA_INSTANCE_METATABLE( "PropertyPage" );
+//    LUA_OVERRIDE_SINGLE_LUA_INSTANCE_METATABLE( LPropertyPage, "PropertyPage" );
 //
 //   public:
 //    LPropertyPage( Panel *parent, const char *panelName, lua_State *L );

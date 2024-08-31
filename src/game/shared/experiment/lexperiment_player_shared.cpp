@@ -47,23 +47,13 @@ LUALIB_API lua_CExperiment_Player *luaL_optexperimentplayer( lua_State *L, int n
 
 LUA_REGISTRATION_INIT( CExperimentPlayer );
 
-#ifdef CLIENT_DLL
-LUA_BINDING_BEGIN( CExperimentPlayer, BecomeRagdollOnClient, "class", "Become ragdoll on client.", "client" )
+LUA_BINDING_BEGIN( CExperimentPlayer, GetRagdollEntity, "class", "Get the ragdoll belonging to the player." )
 {
     CExperiment_Player *player = LUA_BINDING_ARGUMENT( luaL_checkexperimentplayer, 1, "entity" );
-    CBaseEntity::PushLuaInstanceSafe( L, player->BecomeRagdollOnClient() );
+    CBaseEntity::PushLuaInstanceSafe( L, player->GetRagdollEntity() );
     return 1;
 }
 LUA_BINDING_END( "Entity", "The ragdoll entity" )
-#else
-LUA_BINDING_BEGIN( CExperimentPlayer, BecomeRagdollOnClient, "class", "Become ragdoll on client.", "server" )
-{
-    CExperiment_Player *player = LUA_BINDING_ARGUMENT( luaL_checkexperimentplayer, 1, "entity" );
-    lua_pushboolean( L, player->BecomeRagdollOnClient( LUA_BINDING_ARGUMENT( luaL_checkvector, 2, "force" ) ) );
-    return 1;
-}
-LUA_BINDING_END( "boolean", "Whether the player can (and has) become a ragdoll" )
-#endif
 
 LUA_BINDING_BEGIN( CExperimentPlayer, CanSprint, "class", "Check if the player can sprint." )
 {
@@ -179,7 +169,7 @@ LUA_BINDING_END( "integer", "The player model type" )
 // Experiment; Is this at all useful to Lua?
 // static int luasrc_ToExperimentPlayer( lua_State *L )
 //{
-//    CBaseEntity::PushLuaInstanceSafe( L, ToExperimentPlayer( lua_toentity( L, 1 ) ) );
+//    CExperiment_Player::PushLuaInstanceSafe( L, ToExperimentPlayer( lua_toentity( L, 1 ) ) );
 //    return 1;
 //}
 //

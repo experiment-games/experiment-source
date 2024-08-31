@@ -91,7 +91,7 @@ typedef unsigned int ClientSideAnimationListHandle_t;
 class C_BaseAnimating : public C_BaseEntity, private IModelLoadCallback
 {
 #ifdef LUA_SDK
-    LUA_OVERRIDE_SINGLE_LUA_INSTANCE_METATABLE( LUA_BASEANIMATINGLIBNAME )
+    LUA_OVERRIDE_SINGLE_LUA_INSTANCE_METATABLE( C_BaseAnimating, LUA_BASEANIMATINGLIBNAME )
 #endif
 
    public:

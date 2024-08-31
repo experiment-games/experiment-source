@@ -195,7 +195,7 @@ void CExperiment_Player::OnValidateAuthTicketResponse( ValidateAuthTicketRespons
     Assert( Q_strcmp( engine->GetClientSteamID( edict() )->Render(), pszSteamID ) == 0 );
 
     LUA_CALL_HOOK_BEGIN( "PlayerAuthed" );
-    CBaseEntity::PushLuaInstanceSafe( L, this );
+    CExperiment_Player::PushLuaInstanceSafe( L, this );
     lua_pushstring( L, pszSteamID );
     lua_pushinteger( L, ( lua_Integer )GetUniqueID() );
     LUA_CALL_HOOK_END( 3, 0 );
@@ -285,7 +285,7 @@ void CExperiment_Player::GiveDefaultItems( void )
 {
 #ifdef LUA_SDK
     LUA_CALL_HOOK_BEGIN( "GiveDefaultItems" );
-    CBaseEntity::PushLuaInstanceSafe( L, this );
+    CExperiment_Player::PushLuaInstanceSafe( L, this );
     LUA_CALL_HOOK_END( 1, 0 );
 #else
     EquipSuit();
@@ -391,7 +391,7 @@ void CExperiment_Player::Spawn( void )
     PickDefaultSpawnTeam();
 
     BaseClass::Spawn();
-    //GetHands()->SetModel( "models/weapons/c_arms_citizen.mdl" ); // implemented lua-side
+    // GetHands()->SetModel( "models/weapons/c_arms_citizen.mdl" ); // implemented lua-side
 
     if ( !IsObserver() )
     {
@@ -439,7 +439,7 @@ void CExperiment_Player::PickupObject( CBaseEntity *pObject, bool bLimitMassAndS
 {
 #ifdef LUA_SDK
     LUA_CALL_HOOK_BEGIN( "AllowPlayerPickup" );
-    CBaseEntity::PushLuaInstanceSafe( L, this );
+    CExperiment_Player::PushLuaInstanceSafe( L, this );
     CBaseEntity::PushLuaInstanceSafe( L, pObject );
     lua_pushboolean( L, bLimitMassAndSize );
     LUA_CALL_HOOK_END( 3, 1 );
@@ -682,7 +682,7 @@ void CExperiment_Player::PlayerDeathThink()
 {
 #ifdef LUA_SDK
     LUA_CALL_HOOK_BEGIN( "PlayerDeathThink" );
-    CBaseEntity::PushLuaInstanceSafe( L, this );
+    CExperiment_Player::PushLuaInstanceSafe( L, this );
     LUA_CALL_HOOK_END( 1, 0 );
 #endif
 
@@ -981,7 +981,7 @@ void CExperiment_Player::CheatImpulseCommands( int iImpulse )
 {
 #ifdef LUA_SDK
     LUA_CALL_HOOK_BEGIN( "CheatImpulseCommands" );
-    CBaseEntity::PushLuaInstanceSafe( L, this );
+    CExperiment_Player::PushLuaInstanceSafe( L, this );
     lua_pushinteger( L, iImpulse );
     LUA_CALL_HOOK_END( 2, 1 );
 
@@ -1054,39 +1054,22 @@ bool CExperiment_Player::BecomeRagdollOnClient( const Vector &force )
 // Ragdoll entities.
 // --------------------------------------------------------------------------------
 
-class CExperimentRagdoll : public CBaseAnimatingOverlay
-{
-   public:
-    DECLARE_CLASS( CExperimentRagdoll, CBaseAnimatingOverlay );
-    DECLARE_SERVERCLASS();
-
-    // Transmit ragdolls to everyone.
-    virtual int UpdateTransmitState()
-    {
-        return SetTransmitState( FL_EDICT_ALWAYS );
-    }
-
-   public:
-    // In case the client has the player entity, we transmit the player index.
-    // In case the client doesn't have it, we transmit the player's model index,
-    // origin, and angles so they can create a ragdoll in the right place.
-    CNetworkHandle( CBaseEntity, m_hPlayer );  // networked entity handle
-    CNetworkVector( m_vecRagdollVelocity );
-    CNetworkVector( m_vecRagdollOrigin );
-};
+// clang-format off
 
 LINK_ENTITY_TO_CLASS( experiment_ragdoll, CExperimentRagdoll );
 
 IMPLEMENT_SERVERCLASS_ST_NOBASE( CExperimentRagdoll, DT_ExperimentRagdoll )
-SendPropVector( SENDINFO( m_vecRagdollOrigin ), -1, SPROP_COORD ),
+    SendPropVector( SENDINFO( m_vecRagdollOrigin ), -1, SPROP_COORD ),
     SendPropEHandle( SENDINFO( m_hPlayer ) ),
     SendPropModelIndex( SENDINFO( m_nModelIndex ) ),
     SendPropInt( SENDINFO( m_nForceBone ), 8, 0 ),
     SendPropVector( SENDINFO( m_vecForce ), -1, SPROP_NOSCALE ),
     SendPropVector( SENDINFO( m_vecRagdollVelocity ) )
-        END_SEND_TABLE()
+END_SEND_TABLE()
 
-            void CExperiment_Player::CreateRagdollEntity( void )
+static bool WORKAROUND_NASTY_FORMATTING_BUG;  // clang-format on
+
+void CExperiment_Player::CreateRagdollEntity( void )
 {
     if ( m_hRagdoll )
     {
@@ -1121,15 +1104,15 @@ SendPropVector( SENDINFO( m_vecRagdollOrigin ), -1, SPROP_COORD ),
     if ( L )
     {
         LUA_CALL_HOOK_BEGIN( "CreateEntityRagdoll" );
-        this->PushLuaInstance( L );
-        pRagdoll->PushLuaInstance( L );
+        CExperiment_Player::PushLuaInstanceSafe( L, this );
+        CBaseEntity::PushLuaInstanceSafe( L, pRagdoll );
         LUA_CALL_HOOK_END( 2, 0 );
     }
 }
 
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
-int CExperiment_Player::FlashlightIsOn( void )
+bool CExperiment_Player::FlashlightIsOn( void )
 {
     return IsEffectActive( EF_DIMLIGHT );
 }
@@ -1264,7 +1247,7 @@ void CExperiment_Player::DeathSound( const CTakeDamageInfo &info )
     CTakeDamageInfo lInfo = info;
 
     LUA_CALL_HOOK_BEGIN( "PlayerDeathSound" );
-    CBaseEntity::PushLuaInstanceSafe( L, this );
+    CExperiment_Player::PushLuaInstanceSafe( L, this );
     lua_pushdamageinfo( L, lInfo );
     LUA_CALL_HOOK_END( 2, 1 );
 
@@ -1305,7 +1288,7 @@ CBaseEntity *CExperiment_Player::EntSelectSpawnPoint( void )
 {
 #ifdef LUA_SDK
     LUA_CALL_HOOK_BEGIN( "PlayerEntSelectSpawnPoint" );
-    CBaseEntity::PushLuaInstanceSafe( L, this );
+    CExperiment_Player::PushLuaInstanceSafe( L, this );
     LUA_CALL_HOOK_END( 1, 1 );
 
     LUA_RETURN_ENTITY();

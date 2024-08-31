@@ -196,7 +196,7 @@ LUA_BINDING_BEGIN( Entities, CreateClientEntity, "library", "Create a clientside
     }
 
     lua_CBaseFlex *pEntity = g_pClientSideEntityManager->CreateClientSideEntity( pszModelName, ( RenderGroup_t )renderGroup );
-    CBaseEntity::PushLuaInstanceSafe( L, pEntity );
+    CBaseFlex::PushLuaInstanceSafe( L, pEntity );
 
     return 1;
 }

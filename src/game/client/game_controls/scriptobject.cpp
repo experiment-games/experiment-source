@@ -287,7 +287,8 @@ void CScriptObject::WriteToScriptFile( FileHandle_t fp )
         case O_AUTO_LIST:
             g_pFullFileSystem->FPrintf( fp, "\t\t\"%s\"\r\n", prompt );
             g_pFullFileSystem->FPrintf( fp, "\t\t{ AUTO_LIST \"%s\" }\r\n", filler );
-            g_pFullFileSystem->FPrintf( fp, "\t\t{ \"%s\" }\r\n", CleanFloat( fcurValue ) );
+            FixupString( curValue, sizeof( curValue ) );
+            g_pFullFileSystem->FPrintf( fp, "\t\t{ \"%s\" }\r\n", curValue );
             break;
     }
 

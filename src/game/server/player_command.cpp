@@ -75,7 +75,7 @@ void CPlayerMove::StartCommand( CBasePlayer *player, CUserCmd *cmd )
 
 #ifdef LUA_SDK
     LUA_CALL_HOOK_BEGIN( "StartCommand" );
-    CBaseEntity::PushLuaInstanceSafe( L, player );
+    CBasePlayer::PushLuaInstanceSafe( L, player );
     lua_pushusercmd( L, cmd );
     LUA_CALL_HOOK_END( 2, 0 );
 #endif
@@ -314,7 +314,7 @@ void CPlayerMove::RunPostThink( CBasePlayer *player )
 
 #ifdef LUA_SDK
     LUA_CALL_HOOK_BEGIN( "PlayerPostThink" );
-    CBaseEntity::PushLuaInstanceSafe( L, player );
+    CBasePlayer::PushLuaInstanceSafe( L, player );
     LUA_CALL_HOOK_END( 1, 0 );
 #endif
 }

@@ -174,14 +174,16 @@ LUA_BINDING_END()
 // }
 // LUA_BINDING_END()
 
-LUA_BINDING_BEGIN( EditablePanel, CreateControlByName, "class", "Creates a control by name" )
-{
-    LUA_BINDING_ARGUMENT( luaL_checkeditablepanel, 1, "editablePanel" )
-        ->CreateControlByName( LUA_BINDING_ARGUMENT( luaL_checkstring, 2, "name" ) )
-        ->PushLuaInstance( L );
-    return 1;
-}
-LUA_BINDING_END( "Panel", "The created panel" )
+// Experiment; Disabled because this is not the way we want devs to create panels
+//LUA_BINDING_BEGIN( EditablePanel, CreateControlByName, "class", "Creates a control by name" )
+//{
+//    vgui::Panel *pPanel = LUA_BINDING_ARGUMENT( luaL_checkeditablepanel, 1, "editablePanel" )
+//        ->CreateControlByName( LUA_BINDING_ARGUMENT( luaL_checkstring, 2, "name" ) );
+//
+//    LPanel::PushLuaInstanceSafe( L, pPanel );
+//    return 1;
+//}
+//LUA_BINDING_END( "Panel", "The created panel" )
 
 LUA_BINDING_BEGIN( EditablePanel, DoModal, "class", "Makes the panel modal" )
 {
@@ -247,14 +249,15 @@ LUA_BINDING_BEGIN( EditablePanel, GetPanelClassName, "class", "Gets the class na
 }
 LUA_BINDING_END( "string", "The class name" )
 
-LUA_BINDING_BEGIN( EditablePanel, HasHotkey, "class", "Checks if the panel has a hotkey" )
-{
-    size_t l;
-    Panel *pPanel = LUA_BINDING_ARGUMENT( luaL_checkeditablepanel, 1, "editablePanel" )->HasHotkey( ( wchar_t )LUA_BINDING_ARGUMENT_WITH_EXTRA( luaL_checklstring, 2, &l, "hotkey" ) );
-    pPanel->PushLuaInstance( L );
-    return 1;
-}
-LUA_BINDING_END( "Panel", "The panel with the hotkey" )
+// Experiment; Disabled since this might return a non-Lua panel
+//LUA_BINDING_BEGIN( EditablePanel, HasHotkey, "class", "Checks if the panel has a hotkey" )
+//{
+//    size_t l;
+//    Panel *pPanel = LUA_BINDING_ARGUMENT( luaL_checkeditablepanel, 1, "editablePanel" )->HasHotkey( ( wchar_t )LUA_BINDING_ARGUMENT_WITH_EXTRA( luaL_checklstring, 2, &l, "hotkey" ) );
+//    pPanel->PushLuaInstance( L ); // TODO: Push correctly
+//    return 1;
+//}
+//LUA_BINDING_END( "Panel", "The panel with the hotkey" )
 
 // LUA_BINDING_BEGIN( EditablePanel, KB_AddBoundKey, "class|static", "Adds a bound key" )
 //{
@@ -515,7 +518,7 @@ LUA_BINDING_BEGIN( Panels, EditablePanel, "library", "Creates a new editable pan
     Panel *parent = LUA_BINDING_ARGUMENT_WITH_DEFAULT( luaL_optpanel, 1, VGui_GetClientLuaRootPanel(), "parent" );
     const char *name = LUA_BINDING_ARGUMENT_WITH_DEFAULT( luaL_optstring, 2, "EditablePanel", "name" );
     lua_EditablePanel *pPanel = new lua_EditablePanel( parent, name, L );
-    pPanel->PushLuaInstance( L );
+    LEditablePanel::PushLuaInstanceSafe( L, pPanel );
     return 1;
 }
 LUA_BINDING_END( "EditablePanel", "The new editable panel" )

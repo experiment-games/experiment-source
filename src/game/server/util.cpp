@@ -513,7 +513,7 @@ void UTIL_Remove( CBaseEntity *oldObj )
     if ( L )
     {
         LUA_CALL_HOOK_BEGIN( "EntityRemoved" );
-        oldObj->PushLuaInstance( L );
+        CBaseEntity::PushLuaInstanceSafe( L, oldObj );
         LUA_CALL_HOOK_END( 1, 0 );
     }
 #endif

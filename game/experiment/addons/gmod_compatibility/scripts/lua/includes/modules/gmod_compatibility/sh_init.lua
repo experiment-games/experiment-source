@@ -45,8 +45,13 @@ end
 local originalMathRandom = math.random
 
 function math.random(min, max)
-	if (not min and not max) then
-		return originalMathRandom()
+    if (not min and not max) then
+        return originalMathRandom()
+    end
+
+	if (not max) then
+		max = min
+		min = 1
 	end
 
 	if (max < min) then
@@ -130,6 +135,8 @@ player.GetByID = Players.FindByIndex
 player.GetBySteamID = Players.FindBySteamId
 player.GetBySteamID64 = Players.FindBySteamId64
 player.GetByUniqueID = Players.FindByUniqueID
+player.GetHumans = Players.GetAllHumans
+player.GetBots = Players.GetAllBots
 
 -- We don't have LuaJIT
 jit = {
@@ -161,6 +168,8 @@ function FindMetaTable(name)
 		name = "UserCommand"
 	elseif (name == "bf_read") then
 		name = "UserMessageReader"
+	elseif (name == "VMatrix") then
+		name = "Matrix"
 		-- elseif (name == "PhysObj") then
 		-- 	name = "PhysicsObject"
 		-- elseif (name == "PhysCollide") then
@@ -191,7 +200,6 @@ resource = Resources
 surface = Surfaces
 system = Systems
 vgui = Panels
-VMatrix = Matrix
 concommand = ConsoleCommands
 physenv = PhysicsEnvironments
 gameevent = GameEvents
@@ -203,6 +211,7 @@ Color = Colors.Create
 ClientsideModel = Entities.CreateClientEntity
 Entity = Entities.Find
 Vector = Vectors.Create
+Matrix = Matrixes.Create
 HSVToColor = Colors.HsvToColor
 ColorToHSV = Colors.ColorToHsv
 ColorToHSL = Colors.ColorToHsl
@@ -446,6 +455,12 @@ EFFECT_DATA_META.GetEntIndex = EFFECT_DATA_META.GetEntityIndex
 EFFECT_DATA_META.SetEntIndex = EFFECT_DATA_META.SetEntityIndex
 EFFECT_DATA_META.GetAttachment = EFFECT_DATA_META.GetAttachmentIndex
 EFFECT_DATA_META.SetAttachment = EFFECT_DATA_META.SetAttachmentIndex
+
+local USER_COMMAND_META = FindMetaTable("UserCommand")
+
+function USER_COMMAND_META:IsForced()
+	return not self:IsNew()
+end
 
 local VECTOR_META = FindMetaTable("Vector")
 VECTOR_META.AngleEx = VECTOR_META.AngleWithUp
@@ -770,6 +785,10 @@ function PLAYER_META:GetPressedWidget()
 	return self.__pressedWidget
 end
 
+function PLAYER_META:FlashlightIsOn()
+	return self:IsFlashlightOn()
+end
+
 if (SERVER) then
 	function PLAYER_META:SelectWeapon(weaponClass)
 		self:SwitchWeapon(self:GetWeapon(weaponClass))
@@ -792,8 +811,16 @@ if (SERVER) then
 		self:ShowCrosshair(false)
 	end
 
-	function PLAYER_META:CrosshairEnable()
-		self:ShowCrosshair(true)
+    function PLAYER_META:CrosshairEnable()
+        self:ShowCrosshair(true)
+    end
+
+    function PLAYER_META:Flashlight(isOn)
+		if (isOn) then
+			self:TurnFlashlightOn()
+		else
+			self:TurnFlashlightOff()
+		end
 	end
 else
 	net.Receive("__PlayerLuaRun", function()
@@ -930,6 +957,9 @@ else
 		return false
 	end
 
+	vgui.GetWorldPanel = Panels.GetClientLuaRootPanel
+	GetHUDPanel = Panels.GetClientLuaRootHudPanel
+
 	vgui.GetKeyboardFocus = Inputs.GetFocus
 	vgui.GetHoveredPanel = Inputs.GetMouseOver
 	vgui.CursorVisible = Surfaces.IsCursorVisible
@@ -946,6 +976,7 @@ else
 		SetMousePos = input.SetCursorPosition,
 		ScreenToVector = input.ScreenToWorld,
 		AimToVector = input.AimToVector,
+		IsConsoleVisible = Engines.IsConsoleVisible,
 	}
 
 	cam = {
@@ -1162,6 +1193,7 @@ else
 
 	local HTML_PANEL_META = FindMetaTable("Html")
 	HTML_PANEL_META.OpenURL = HTML_PANEL_META.OpenUrl
+	HTML_PANEL_META.SetHTML = HTML_PANEL_META.SetHtml
 
 	local TEXT_ENTRY_PANEL_META = FindMetaTable("TextEntry")
 	TEXT_ENTRY_PANEL_META._OriginalSetFont = TEXT_ENTRY_PANEL_META._OriginalSetFont or TEXT_ENTRY_PANEL_META.SetFont
@@ -1781,6 +1813,18 @@ if (CLIENT) then
 	include("skins/default.lua")
 
 	require("notification")
+end
+
+if (SERVER) then
+	-- AllowFlashlight and CanUseFlashlight override default gmod implementations, which is why its placed after include("includes/init.lua")
+	-- https://github.com/Facepunch/garrysmod/blob/1ce3b6fec3417e4798ade0862540da74ce612483/garrysmod/lua/includes/extensions/player.lua#L182C70-L183C71
+	function PLAYER_META:AllowFlashlight(canFlashlight)
+		self:SetFlashlightEnabled(canFlashlight)
+	end
+
+	function PLAYER_META:CanUseFlashlight()
+		return self:IsFlashlightEnabled()
+	end
 end
 
 --[[

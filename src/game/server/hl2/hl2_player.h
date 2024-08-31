@@ -171,6 +171,7 @@ class CHL2_Player : public BASEPLAYERCLASS
     }
 
     void SetFlashlightEnabled( bool bState );
+    bool GetFlashlightEnabled();
 
     // Apply a battery
     bool ApplyBattery( float powerMultiplier = 1.0 );
@@ -282,7 +283,7 @@ class CHL2_Player : public BASEPLAYERCLASS
 
     // Flashlight Device
     void CheckFlashlight( void );
-    int FlashlightIsOn( void );
+    bool FlashlightIsOn( void );
     void FlashlightTurnOn( void );
     void FlashlightTurnOff( void );
     bool IsIlluminatedByFlashlight( CBaseEntity *pEntity, float *flReturnDot );

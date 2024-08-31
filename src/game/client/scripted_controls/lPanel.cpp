@@ -250,15 +250,19 @@ LUA_BINDING_BEGIN( Panel, FillRectangleSkippingPanel, "class", "Fills a rectangl
 }
 LUA_BINDING_END()
 
-LUA_BINDING_BEGIN( Panel, FindChildByName, "class", "Finds a child panel by its name" )
-{
-    lua_Panel *panel = LUA_BINDING_ARGUMENT( luaL_checkpanel, 1, "panel" );
-    const char *name = LUA_BINDING_ARGUMENT( luaL_checkstring, 2, "name" );
-    bool recursive = LUA_BINDING_ARGUMENT_WITH_DEFAULT( luaL_optboolean, 3, false, "shouldSearchRecursive" );
-    panel->FindChildByName( name, recursive )->PushLuaInstance( L );
-    return 1;
-}
-LUA_BINDING_END( "Panel", "The child panel" )
+// Experiment; Disabled since this might return a non-Lua panel
+// LUA_BINDING_BEGIN( Panel, FindChildByName, "class", "Finds a child panel by its name" )
+//{
+//    lua_Panel *panel = LUA_BINDING_ARGUMENT( luaL_checkpanel, 1, "panel" );
+//    const char *name = LUA_BINDING_ARGUMENT( luaL_checkstring, 2, "name" );
+//    bool recursive = LUA_BINDING_ARGUMENT_WITH_DEFAULT( luaL_optboolean, 3, false, "shouldSearchRecursive" );
+//    vgui::Panel *pPanel = panel->FindChildByName( name, recursive );
+//
+//    LPanel::PushLuaInstance( L, pPanel );
+//
+//    return 1;
+//}
+// LUA_BINDING_END( "Panel", "The child panel" )
 
 LUA_BINDING_BEGIN( Panel, FindChildIndexByName, "class", "Finds the index of a child panel by its name" )
 {
@@ -269,14 +273,16 @@ LUA_BINDING_BEGIN( Panel, FindChildIndexByName, "class", "Finds the index of a c
 }
 LUA_BINDING_END( "integer", "The index of the child panel" )
 
-LUA_BINDING_BEGIN( Panel, FindSiblingByName, "class", "Finds a sibling panel by its name" )
-{
-    lua_Panel *panel = LUA_BINDING_ARGUMENT( luaL_checkpanel, 1, "panel" );
-    const char *name = LUA_BINDING_ARGUMENT( luaL_checkstring, 2, "name" );
-    panel->FindSiblingByName( name )->PushLuaInstance( L );
-    return 1;
-}
-LUA_BINDING_END( "Panel", "The sibling panel" )
+// Experiment; Disabled since this might return a non-Lua panel
+// LUA_BINDING_BEGIN( Panel, FindSiblingByName, "class", "Finds a sibling panel by its name" )
+//{
+//    lua_Panel *panel = LUA_BINDING_ARGUMENT( luaL_checkpanel, 1, "panel" );
+//    const char *name = LUA_BINDING_ARGUMENT( luaL_checkstring, 2, "name" );
+//    panel->FindSiblingByName( name );
+//    LPanel::PushLuaInst
+//    return 1;
+//}
+// LUA_BINDING_END( "Panel", "The sibling panel" )
 
 LUA_BINDING_BEGIN( Panel, GetAlpha, "class", "Gets the alpha value of the panel" )
 {
@@ -311,8 +317,9 @@ LUA_BINDING_BEGIN( Panel, GetChild, "class", "Gets a child panel by its index (s
 {
     lua_Panel *panel = LUA_BINDING_ARGUMENT( luaL_checkpanel, 1, "panel" );
     int index = LUA_BINDING_ARGUMENT( luaL_checknumber, 2, "zeroBasedIndex" );
+
     // ! Note: We are using 0-based indexing here
-    panel->GetChild( index )->PushLuaInstance( L );
+    Panel::PushLuaInstanceSafe( L, panel->GetChild( index ) );
     return 1;
 }
 LUA_BINDING_END( "Panel", "The child panel" )
@@ -405,7 +412,7 @@ LUA_BINDING_END( "Color", "The color of the drag frame of the panel" )
 LUA_BINDING_BEGIN( Panel, GetDragPanel, "class", "Gets the drag panel of the panel" )
 {
     lua_Panel *panel = LUA_BINDING_ARGUMENT( luaL_checkpanel, 1, "panel" );
-    panel->GetDragPanel()->PushLuaInstance( L );
+    Panel::PushLuaInstanceSafe( L, panel->GetDragPanel() );
     return 1;
 }
 LUA_BINDING_END( "Panel", "The drag panel of the panel" )
@@ -2043,21 +2050,28 @@ LUA_BINDING_BEGIN( Panels, Panel, "library", "Creates a new Panel object" )
         parent,
         name,
         L );
-    pPanel->PushLuaInstance( L );
+    Panel::PushLuaInstanceSafe( L, pPanel );
     return 1;
 }
 LUA_BINDING_END()
 
 LUA_BINDING_BEGIN( Panels, GetGameUiPanel, "library", "Gets the game UI panel" )
 {
-    VGui_GetGameUIPanel()->PushLuaInstance( L );
+    Panel::PushLuaInstanceSafe( L, VGui_GetGameUIPanel() );
     return 1;
 }
 LUA_BINDING_END()
 
 LUA_BINDING_BEGIN( Panels, GetClientLuaRootPanel, "library", "Gets the client Lua root panel" )
 {
-    VGui_GetClientLuaRootPanel()->PushLuaInstance( L );
+    Panel::PushLuaInstanceSafe( L, VGui_GetClientLuaRootPanel() );
+    return 1;
+}
+LUA_BINDING_END()
+
+LUA_BINDING_BEGIN( Panels, GetClientLuaRootHudPanel, "library", "Gets the client Lua root panel for the HUD" )
+{
+    Panel::PushLuaInstanceSafe( L, VGui_GetClientLuaRootPanelHUD() );
     return 1;
 }
 LUA_BINDING_END()

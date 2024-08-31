@@ -13,7 +13,7 @@ class LModelImagePanel : public EditablePanel
 {
     DECLARE_CLASS_SIMPLE( LModelImagePanel, EditablePanel );
 
-    LUA_OVERRIDE_SINGLE_LUA_INSTANCE_METATABLE( "ModelImagePanel" );
+    LUA_OVERRIDE_SINGLE_LUA_INSTANCE_METATABLE( LModelImagePanel, "ModelImagePanel" );
 
    public:
     LModelImagePanel( Panel *parent, const char *panelName, lua_State *L = nullptr );

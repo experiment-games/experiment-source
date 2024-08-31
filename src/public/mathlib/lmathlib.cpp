@@ -22,6 +22,10 @@ LUA_API lua_matrix3x4_t &lua_tomatrix( lua_State *L, int idx )
 ** push functions (C -> stack)
 */
 
+// Experiment; TODO:    Possibly merge this with the VMatrix user data and just ignoring the last row.
+//                      This would have it work similar to what Garry's Mod does, preventing issues where
+//                      we return the wrong type of matrix for gmod code
+
 LUA_API void lua_pushmatrix( lua_State *L, lua_matrix3x4_t &matrix )
 {
     lua_matrix3x4_t *pMat = ( lua_matrix3x4_t * )lua_newuserdata( L, sizeof( lua_matrix3x4_t ) );

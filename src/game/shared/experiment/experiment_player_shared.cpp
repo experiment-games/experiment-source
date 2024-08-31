@@ -109,7 +109,7 @@ void CExperiment_Player::PlayStepSound( Vector &vecOrigin, surfacedata_t *psurfa
 {
 #if defined( LUA_SDK )
     LUA_CALL_HOOK_BEGIN( "PlayerPlayStepSound" );
-    CBaseEntity::PushLuaInstanceSafe( L, this );
+    CExperiment_Player::PushLuaInstanceSafe( L, this );
     lua_pushvector( L, vecOrigin );
     lua_pushsurfacedata( L, psurface );
     lua_pushnumber( L, fvol );

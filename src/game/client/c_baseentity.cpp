@@ -695,7 +695,7 @@ BEGIN_PREDICTION_DATA_NO_BASE( C_BaseEntity )
 #endif
 END_PREDICTION_DATA()
 
-static void* WORKAROUND_NASTY_FORMATTING_BUG;  // clang-format on
+static bool WORKAROUND_NASTY_FORMATTING_BUG;  // clang-format on
 
 //-----------------------------------------------------------------------------
 // Helper functions.

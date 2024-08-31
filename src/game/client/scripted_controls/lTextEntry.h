@@ -15,7 +15,7 @@ class LTextEntry : public TextEntry
 {
     DECLARE_CLASS_SIMPLE( LTextEntry, TextEntry );
 
-    LUA_OVERRIDE_SINGLE_LUA_INSTANCE_METATABLE( "TextEntry" );
+    LUA_OVERRIDE_SINGLE_LUA_INSTANCE_METATABLE( LTextEntry, "TextEntry" );
 
    public:
     LTextEntry(Panel *parent, const char *panelName, lua_State *L = NULL );

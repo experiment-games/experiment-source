@@ -292,8 +292,10 @@ PRECACHE_REGISTER( player );
 
 CBaseEntity *FindEntityForward( CBasePlayer *pMe, bool fHull );
 
+// clang-format off
+
 BEGIN_SIMPLE_DATADESC( LadderMove_t )
-DEFINE_FIELD( m_bForceLadderMove, FIELD_BOOLEAN ),
+    DEFINE_FIELD( m_bForceLadderMove, FIELD_BOOLEAN ),
     DEFINE_FIELD( m_bForceMount, FIELD_BOOLEAN ),
     DEFINE_FIELD( m_flStartTime, FIELD_TIME ),
     DEFINE_FIELD( m_flArrivalTime, FIELD_TIME ),
@@ -301,12 +303,11 @@ DEFINE_FIELD( m_bForceLadderMove, FIELD_BOOLEAN ),
     DEFINE_FIELD( m_vecStartPosition, FIELD_POSITION_VECTOR ),
     DEFINE_FIELD( m_hForceLadder, FIELD_EHANDLE ),
     DEFINE_FIELD( m_hReservedSpot, FIELD_EHANDLE ),
-    END_DATADESC()
+END_DATADESC()
 
-    // Global Savedata for HL2 player
-    BEGIN_DATADESC( CHL2_Player )
-
-        DEFINE_FIELD( m_nControlClass, FIELD_INTEGER ),
+// Global Savedata for HL2 player
+BEGIN_DATADESC( CHL2_Player )
+    DEFINE_FIELD( m_nControlClass, FIELD_INTEGER ),
     DEFINE_EMBEDDED( m_HL2Local ),
 
     DEFINE_FIELD( m_bSprintEnabled, FIELD_BOOLEAN ),
@@ -375,10 +376,11 @@ DEFINE_FIELD( m_bForceLadderMove, FIELD_BOOLEAN ),
     DEFINE_FIELD( m_flTimeNextLadderHint, FIELD_TIME ),
 
     // DEFINE_FIELD( m_hPlayerProxy, FIELD_EHANDLE ), //Shut up class check!
+END_DATADESC()
 
-    END_DATADESC()
+static bool WORKAROUND_NASTY_FORMATTING_BUG;  // clang-format on
 
-        CHL2_Player::CHL2_Player()
+CHL2_Player::CHL2_Player()
 {
     m_nNumMissPositions = 0;
     m_pPlayerAISquad = 0;
@@ -2017,7 +2019,7 @@ bool CHL2_Player::ApplyBattery( float powerMultiplier )
 
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
-int CHL2_Player::FlashlightIsOn( void )
+bool CHL2_Player::FlashlightIsOn( void )
 {
     return IsEffectActive( EF_DIMLIGHT );
 }
@@ -2188,6 +2190,11 @@ bool CHL2_Player::PassesDamageFilter( const CTakeDamageInfo &info )
 void CHL2_Player::SetFlashlightEnabled( bool bState )
 {
     m_bFlashlightDisabled = !bState;
+}
+
+bool CHL2_Player::GetFlashlightEnabled()
+{
+    return m_bFlashlightDisabled;
 }
 
 //-----------------------------------------------------------------------------
@@ -2645,8 +2652,8 @@ void CHL2_Player::Weapon_Equip( CBaseCombatWeapon *pWeapon, bool bGiveAmmo /*= t
 {
 #if LUA_SDK
     LUA_CALL_HOOK_BEGIN( "Weapon_Equip" );
-    CBaseEntity::PushLuaInstanceSafe( L, this );
-    CBaseEntity::PushLuaInstanceSafe( L, pWeapon );
+    CBasePlayer::PushLuaInstanceSafe( L, this );
+    CBaseCombatWeapon::PushLuaInstanceSafe( L, pWeapon );
     LUA_CALL_HOOK_END( 2, 0 );
 #endif
 

@@ -227,7 +227,7 @@ void Host_Say( edict_t *pEdict, const CCommand &args, bool teamonly )
 
 #ifdef LUA_SDK
         LUA_CALL_HOOK_BEGIN( "PlayerSay" );
-        CBaseEntity::PushLuaInstanceSafe( L, pPlayer ); // doc: speaker (The player who is speaking)
+        CBasePlayer::PushLuaInstanceSafe( L, pPlayer );  // doc: speaker (The player who is speaking)
         lua_pushstring( L, p ); // doc: chatMessage
         lua_pushboolean( L, teamonly ); // doc: isTeamOnly
         LUA_CALL_HOOK_END( 3, 1 ); // doc: string (return a replacement string or an empty string to block the message)
@@ -1157,9 +1157,6 @@ void EnableNoClip( CBasePlayer *pPlayer )
 
 void CC_Player_NoClip( void )
 {
-    if ( !sv_cheats->GetBool() )
-        return;
-
     CBasePlayer *pPlayer = ToBasePlayer( UTIL_GetCommandClient() );
     if ( !pPlayer )
         return;

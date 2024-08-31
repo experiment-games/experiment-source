@@ -183,8 +183,8 @@ class CVoiceGameMgrHelper : public IVoiceGameMgrHelper
     {
 #if defined( LUA_SDK )
         LUA_CALL_HOOK_BEGIN( "CanPlayerHearPlayer" );
-        CBaseEntity::PushLuaInstanceSafe( L, pListener );
-        CBaseEntity::PushLuaInstanceSafe( L, pTalker );
+        CBasePlayer::PushLuaInstanceSafe( L, pListener );
+        CBasePlayer::PushLuaInstanceSafe( L, pTalker );
         lua_pushboolean( L, bProximity );
         LUA_CALL_HOOK_END( 3, 2 );
 
@@ -288,7 +288,7 @@ float CExperimentRules::FlWeaponRespawnTime( CBaseCombatWeapon *pWeapon )
 {
 #if defined( LUA_SDK )
     LUA_CALL_HOOK_BEGIN( "FlWeaponRespawnTime" );
-    CBaseEntity::PushLuaInstanceSafe( L, pWeapon );
+    CBaseCombatWeapon::PushLuaInstanceSafe( L, pWeapon );
     LUA_CALL_HOOK_END( 1, 1 );
 
     LUA_RETURN_NUMBER();
@@ -333,7 +333,7 @@ void CExperimentRules::PlayerKilled( CBasePlayer *pVictim,
     CTakeDamageInfo linfo = info;
 
     LUA_CALL_HOOK_BEGIN( "PlayerKilled" );
-    CBaseEntity::PushLuaInstanceSafe( L, pVictim );
+    CBasePlayer::PushLuaInstanceSafe( L, pVictim );
     lua_pushdamageinfo( L, linfo );
     LUA_CALL_HOOK_END( 2, 0 );
 #endif
@@ -352,7 +352,7 @@ bool CExperimentRules::FPlayerCanTakeDamage( CBasePlayer *pPlayer,
 {
     CTakeDamageInfo info;
     LUA_CALL_HOOK_BEGIN( "FPlayerCanTakeDamage" );
-    CBaseEntity::PushLuaInstanceSafe( L, pPlayer );
+    CBasePlayer::PushLuaInstanceSafe( L, pPlayer );
     CBaseEntity::PushLuaInstanceSafe( L, pAttacker );
     lua_pushdamageinfo( L, info );
     LUA_CALL_HOOK_END( 2, 1 );
@@ -442,7 +442,7 @@ void CExperimentRules::PlayerThink( CBasePlayer *pPlayer )
 {
     // Many Gmod gamemodes implement this themselves
     // LUA_CALL_HOOK_BEGIN( "PlayerThink" );
-    // CBaseEntity::PushLuaInstanceSafe( L, pPlayer );
+    // CBasePlayer::PushLuaInstanceSafe( L, pPlayer );
     // LUA_CALL_HOOK_END( 1, 0 );
 
     BaseClass::PlayerThink( pPlayer );
@@ -451,7 +451,7 @@ void CExperimentRules::PlayerThink( CBasePlayer *pPlayer )
 void CExperimentRules::PlayerSpawn( CBasePlayer *pPlayer )
 {
     LUA_CALL_HOOK_BEGIN( "PlayerSpawn" );
-    CBaseEntity::PushLuaInstanceSafe( L, pPlayer );
+    CBasePlayer::PushLuaInstanceSafe( L, pPlayer );
     LUA_CALL_HOOK_END( 1, 1 );
 
     LUA_RETURN_NONE_IF_FALSE();
@@ -462,7 +462,7 @@ void CExperimentRules::PlayerSpawn( CBasePlayer *pPlayer )
 bool CExperimentRules::FPlayerCanRespawn( CBasePlayer *pPlayer )
 {
     LUA_CALL_HOOK_BEGIN( "FPlayerCanRespawn" );
-    CBaseEntity::PushLuaInstanceSafe( L, pPlayer );
+    CBasePlayer::PushLuaInstanceSafe( L, pPlayer );
     LUA_CALL_HOOK_END( 1, 1 );
 
     LUA_RETURN_BOOLEAN();
@@ -473,7 +473,7 @@ bool CExperimentRules::FPlayerCanRespawn( CBasePlayer *pPlayer )
 float CExperimentRules::FlPlayerSpawnTime( CBasePlayer *pPlayer )
 {
     LUA_CALL_HOOK_BEGIN( "FlPlayerSpawnTime" );
-    CBaseEntity::PushLuaInstanceSafe( L, pPlayer );
+    CBasePlayer::PushLuaInstanceSafe( L, pPlayer );
     LUA_CALL_HOOK_END( 1, 1 );
 
     LUA_RETURN_NUMBER();
@@ -638,7 +638,7 @@ float CExperimentRules::FlWeaponTryRespawn( CBaseCombatWeapon *pWeapon )
 {
 #if defined( LUA_SDK )
     LUA_CALL_HOOK_BEGIN( "FlWeaponTryRespawn" );
-    CBaseEntity::PushLuaInstanceSafe( L, pWeapon );
+    CBaseCombatWeapon::PushLuaInstanceSafe( L, pWeapon );
     LUA_CALL_HOOK_END( 1, 1 );
 
     LUA_RETURN_NUMBER();
@@ -666,7 +666,7 @@ Vector CExperimentRules::VecWeaponRespawnSpot( CBaseCombatWeapon *pWeapon )
 {
 #if defined( LUA_SDK )
     LUA_CALL_HOOK_BEGIN( "VecWeaponRespawnSpot" );
-    CBaseEntity::PushLuaInstanceSafe( L, pWeapon );
+    CBaseCombatWeapon::PushLuaInstanceSafe( L, pWeapon );
     LUA_CALL_HOOK_END( 1, 1 );
 
     LUA_RETURN_VECTOR();
@@ -875,7 +875,7 @@ float CExperimentRules::FlItemRespawnTime( CItem *pItem )
 void CExperimentRules::PlayerGotItem( CBasePlayer *pPlayer, CItem *pItem )
 {
     LUA_CALL_HOOK_BEGIN( "PlayerGotItem" );
-    CBaseEntity::PushLuaInstanceSafe( L, pPlayer );
+    CBasePlayer::PushLuaInstanceSafe( L, pPlayer );
     CBaseEntity::PushLuaInstanceSafe( L, pItem );
     LUA_CALL_HOOK_END( 2, 0 );
 }
@@ -910,7 +910,7 @@ bool CExperimentRules::CanHavePlayerItem( CBasePlayer *pPlayer,
     }
 #else
     LUA_CALL_HOOK_BEGIN( "CanHavePlayerItem" );
-    CBaseEntity::PushLuaInstanceSafe( L, pPlayer );
+    CBasePlayer::PushLuaInstanceSafe( L, pPlayer );
     CBaseEntity::PushLuaInstanceSafe( L, pItem );
     LUA_CALL_HOOK_END( 2, 1 );
 
@@ -930,7 +930,7 @@ int CExperimentRules::WeaponShouldRespawn( CBaseCombatWeapon *pWeapon )
 {
 #if defined( LUA_SDK )
     LUA_CALL_HOOK_BEGIN( "WeaponShouldRespawn" );
-    CBaseEntity::PushLuaInstanceSafe( L, pWeapon );
+    CBaseCombatWeapon::PushLuaInstanceSafe( L, pWeapon );
     LUA_CALL_HOOK_END( 1, 1 );
 
     LUA_RETURN_INTEGER();
@@ -954,7 +954,7 @@ void CExperimentRules::ClientDisconnected( edict_t *pClient )
 #ifndef CLIENT_DLL
 #if defined( LUA_SDK )
     LUA_CALL_HOOK_BEGIN( "ClientDisconnected" );
-    CBaseEntity::PushLuaInstanceSafe( L, ( CBasePlayer * )CBaseEntity::Instance( pClient ) );
+    CBasePlayer::PushLuaInstanceSafe( L, ( CBasePlayer * )CBaseEntity::Instance( pClient ) );
     LUA_CALL_HOOK_END( 1, 0 );
 #endif
 
@@ -980,7 +980,7 @@ void CExperimentRules::ClientDisconnected( edict_t *pClient )
 float CExperimentRules::FlPlayerFallDamage( CBasePlayer *pPlayer )
 {
     LUA_CALL_HOOK_BEGIN( "GetFallDamage", "Called when a player falls and fall damage is calculated." );
-    CBaseEntity::PushLuaInstanceSafe( L, pPlayer );          // doc: player
+    CBasePlayer::PushLuaInstanceSafe( L, pPlayer );          // doc: player
     lua_pushnumber( L, pPlayer->m_Local.m_flFallVelocity );  // doc: fallVelocity
     LUA_CALL_HOOK_END( 1, 1 );                               // doc: number (override fall damage amount)
 
@@ -1001,7 +1001,7 @@ void CExperimentRules::DeathNotice( CBasePlayer *pVictim,
     CTakeDamageInfo lInfo = info;
 
     LUA_CALL_HOOK_BEGIN( "DeathNotice" );
-    CBaseEntity::PushLuaInstanceSafe( L, pVictim );
+    CBasePlayer::PushLuaInstanceSafe( L, pVictim );
     lua_pushdamageinfo( L, lInfo );
     LUA_CALL_HOOK_END( 2, 0 );
 #endif
@@ -1162,7 +1162,7 @@ void CExperimentRules::ClientSettingsChanged( CBasePlayer *pPlayer )
 {
 #if defined( LUA_SDK )
     LUA_CALL_HOOK_BEGIN( "ClientSettingsChanged" );
-    CBaseEntity::PushLuaInstanceSafe( L, pPlayer );
+    CBasePlayer::PushLuaInstanceSafe( L, pPlayer );
     LUA_CALL_HOOK_END( 1, 0 );
 #endif
 
@@ -1285,8 +1285,8 @@ bool CExperimentRules::PlayerCanHearChat( CBasePlayer *pListener,
                                           CBasePlayer *pSpeaker )
 {
     LUA_CALL_HOOK_BEGIN( "PlayerCanHearChat" );
-    CBaseEntity::PushLuaInstanceSafe( L, pListener );
-    CBaseEntity::PushLuaInstanceSafe( L, pSpeaker );
+    CBasePlayer::PushLuaInstanceSafe( L, pListener );
+    CBasePlayer::PushLuaInstanceSafe( L, pSpeaker );
     LUA_CALL_HOOK_END( 2, 1 );
 
     LUA_RETURN_BOOLEAN();
@@ -1297,7 +1297,7 @@ bool CExperimentRules::PlayerCanHearChat( CBasePlayer *pListener,
 bool CExperimentRules::ClientConnected( edict_t *pEntity, const char *pszName, const char *pszAddress, char *reject, int maxrejectlen )
 {
     LUA_CALL_HOOK_BEGIN( "ClientConnected", "Called every time a client connects to the server. Return false to reject the connection (with an optional reject message)." );
-    CBaseEntity::PushLuaInstanceSafe( L, ( CBasePlayer * )CBaseEntity::Instance( pEntity ) ); // doc: entity
+    CBasePlayer::PushLuaInstanceSafe( L, ( CBasePlayer * )CBaseEntity::Instance( pEntity ) );  // doc: entity
     lua_pushstring( L, pszName ); // doc: name
     lua_pushstring( L, pszAddress ); // doc: ipAddress
     LUA_CALL_HOOK_END( 3, 2 ); // doc: boolean (should accept connection), string (reject message)
@@ -1321,7 +1321,7 @@ bool CExperimentRules::ClientConnected( edict_t *pEntity, const char *pszName, c
 void CExperimentRules::InitHUD( CBasePlayer *pPlayer )
 {
     LUA_CALL_HOOK_BEGIN( "InitHUD" );
-    CBaseEntity::PushLuaInstanceSafe( L, pPlayer );
+    CBasePlayer::PushLuaInstanceSafe( L, pPlayer );
     LUA_CALL_HOOK_END( 1, 0 );
 
     BaseClass::InitHUD( pPlayer );
@@ -1515,8 +1515,8 @@ bool CExperimentRules::FShouldSwitchWeapon( CBasePlayer *pPlayer,
 {
 #if defined( LUA_SDK )
     LUA_CALL_HOOK_BEGIN( "FShouldSwitchWeapon" );
-    CBaseEntity::PushLuaInstanceSafe( L, pPlayer );
-    CBaseEntity::PushLuaInstanceSafe( L, pWeapon );
+    CBasePlayer::PushLuaInstanceSafe( L, pPlayer );
+    CBaseCombatWeapon::PushLuaInstanceSafe( L, pWeapon );
     LUA_CALL_HOOK_END( 2, 1 );
 
     LUA_RETURN_BOOLEAN();
@@ -1723,7 +1723,7 @@ void CExperimentRules::CheckChatForReadySignal( CExperiment_Player *pPlayer,
 {
 #if defined( LUA_SDK )
     LUA_CALL_HOOK_BEGIN( "CheckChatForReadySignal" );
-    CBaseEntity::PushLuaInstanceSafe( L, pPlayer );
+    CExperiment_Player::PushLuaInstanceSafe( L, pPlayer );
     lua_pushstring( L, chatmsg );
     LUA_CALL_HOOK_END( 2, 0 );
 #endif

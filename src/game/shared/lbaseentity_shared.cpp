@@ -625,7 +625,7 @@ LUA_BINDING_END( "number", "The animation time." )
 //{
 //    lua_CBaseEntity *pEntity = LUA_BINDING_ARGUMENT( luaL_checkentity, 1, "entity" );
 //
-//    CBaseEntity::PushLuaInstanceSafe( L, pEntity->GetBaseAnimating() );
+//    CBaseAnimating::PushLuaInstanceSafe( L, pEntity->GetBaseAnimating() );
 //    return 1;
 //}
 // LUA_BINDING_END( "Entity", "The base animating." )
@@ -1044,10 +1044,10 @@ LUA_BINDING_BEGIN( Entity, GetSimulatingPlayer, "class", "Get simulating player.
 {
     lua_CBaseEntity *pEntity = LUA_BINDING_ARGUMENT( luaL_checkentity, 1, "entity" );
 
-    CBaseEntity::PushLuaInstanceSafe( L, pEntity->GetSimulatingPlayer() );
+    CBasePlayer::PushLuaInstanceSafe( L, pEntity->GetSimulatingPlayer() );
     return 1;
 }
-LUA_BINDING_END( "Entity", "The simulating player." )
+LUA_BINDING_END( "Player", "The simulating player." )
 
 LUA_BINDING_BEGIN( Entity, GetSimulationTime, "class", "Get simulation time." )
 {

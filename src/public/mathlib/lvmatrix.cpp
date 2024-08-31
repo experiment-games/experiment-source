@@ -499,9 +499,9 @@ LUA_BINDING_END( "Matrix", "The negated object." )
 /*
 ** Library functions
 */
-LUA_REGISTRATION_INIT( Matrices );
+LUA_REGISTRATION_INIT( Matrixes );
 
-LUA_BINDING_BEGIN( Matrices, Create, "library", "Creates a new matrix." )
+LUA_BINDING_BEGIN( Matrixes, Create, "library", "Creates a new matrix." )
 {
     if ( lua_gettop( L ) < 1 )
     {
@@ -553,7 +553,7 @@ LUA_BINDING_BEGIN( Matrices, Create, "library", "Creates a new matrix." )
 }
 LUA_BINDING_END( "Matrix", "The created matrix." )
 
-LUA_BINDING_BEGIN( Matrices, Create3x4, "library", "Creates a new 3x4 matrix." )
+LUA_BINDING_BEGIN( Matrixes, Create3x4, "library", "Creates a new 3x4 matrix." )
 {
     if ( lua_gettop( L ) < 4 )
     {
@@ -596,28 +596,28 @@ LUA_BINDING_BEGIN( Matrices, Create3x4, "library", "Creates a new 3x4 matrix." )
 }
 LUA_BINDING_END( "Matrix3x4", "The created 3x4 matrix." )
 
-LUA_BINDING_BEGIN( Matrices, CreateIdentityMatrix, "library", "Sets the matrix to the identity matrix." )
+LUA_BINDING_BEGIN( Matrixes, CreateIdentityMatrix, "library", "Sets the matrix to the identity matrix." )
 {
     lua_pushvmatrix( L, SetupMatrixIdentity() );
     return 1;
 }
 LUA_BINDING_END( "Matrix", "The created identity matrix." )
 
-LUA_BINDING_BEGIN( Matrices, CreateScaleMatrix, "library", "Sets the matrix to a scale matrix." )
+LUA_BINDING_BEGIN( Matrixes, CreateScaleMatrix, "library", "Sets the matrix to a scale matrix." )
 {
     lua_pushvmatrix( L, SetupMatrixScale( LUA_BINDING_ARGUMENT( luaL_checkvector, 1, "vector" ) ) );
     return 1;
 }
 LUA_BINDING_END( "Matrix", "The created scaled matrix." )
 
-LUA_BINDING_BEGIN( Matrices, CreateTranslationMatrix, "library", "Sets the matrix to a translation matrix." )
+LUA_BINDING_BEGIN( Matrixes, CreateTranslationMatrix, "library", "Sets the matrix to a translation matrix." )
 {
     lua_pushvmatrix( L, SetupMatrixTranslation( LUA_BINDING_ARGUMENT( luaL_checkvector, 1, "vector" ) ) );
     return 1;
 }
 LUA_BINDING_END( "Matrix", "The translation matrix." )
 
-LUA_BINDING_BEGIN( Matrices, CreateMatrixWithAxisAndRotation, "library", "Sets the matrix to a rotation matrix." )
+LUA_BINDING_BEGIN( Matrixes, CreateMatrixWithAxisAndRotation, "library", "Sets the matrix to a rotation matrix." )
 {
     lua_pushvmatrix(
         L, SetupMatrixAxisRot( LUA_BINDING_ARGUMENT( luaL_checkvector, 1, "vector" ), LUA_BINDING_ARGUMENT( luaL_checknumber, 2, "number" ) ) );
@@ -625,14 +625,14 @@ LUA_BINDING_BEGIN( Matrices, CreateMatrixWithAxisAndRotation, "library", "Sets t
 }
 LUA_BINDING_END( "Matrix", "The rotation matrix." )
 
-LUA_BINDING_BEGIN( Matrices, CreateMatrixWithAngles, "library", "Sets the matrix to a rotation matrix." )
+LUA_BINDING_BEGIN( Matrixes, CreateMatrixWithAngles, "library", "Sets the matrix to a rotation matrix." )
 {
     lua_pushvmatrix( L, SetupMatrixAngles( LUA_BINDING_ARGUMENT( luaL_checkangle, 1, "angle" ) ) );
     return 1;
 }
 LUA_BINDING_END( "Matrix", "The rotation matrix." )
 
-LUA_BINDING_BEGIN( Matrices, CreateMatrixWithOriginAndAngles, "library", "Sets the matrix to a matrix with the given origin and angles." )
+LUA_BINDING_BEGIN( Matrixes, CreateMatrixWithOriginAndAngles, "library", "Sets the matrix to a matrix with the given origin and angles." )
 {
     lua_pushvmatrix(
         L, SetupMatrixOrgAngles( LUA_BINDING_ARGUMENT( luaL_checkvector, 1, "vector" ), LUA_BINDING_ARGUMENT( luaL_checkangle, 2, "angle" ) ) );
@@ -641,14 +641,14 @@ LUA_BINDING_BEGIN( Matrices, CreateMatrixWithOriginAndAngles, "library", "Sets t
 LUA_BINDING_END( "Matrix", "The matrix." )
 
 // Experiment; Disabled in favor of __tostring
-// LUA_BINDING_BEGIN( Matrices, VMatrixToString, "library", "Converts the matrix to a string." )
+// LUA_BINDING_BEGIN( Matrixes, VMatrixToString, "library", "Converts the matrix to a string." )
 //{
 //    lua_pushstring( L, VMatToString( LUA_BINDING_ARGUMENT( luaL_checkvmatrix, 1, "Matrix" ) ) );
 //    return 1;
 //}
 // LUA_BINDING_END( "string", "The string representation of the matrix." )
 
-LUA_BINDING_BEGIN( Matrices, MatrixSetIdentity, "library", "Sets the matrix to the identity matrix." )
+LUA_BINDING_BEGIN( Matrixes, MatrixSetIdentity, "library", "Sets the matrix to the identity matrix." )
 {
     MatrixSetIdentity( LUA_BINDING_ARGUMENT( luaL_checkvmatrix, 1, "Matrix" ) );
     return 0;
@@ -656,14 +656,14 @@ LUA_BINDING_BEGIN( Matrices, MatrixSetIdentity, "library", "Sets the matrix to t
 LUA_BINDING_END()
 
 // Experiment; Disabled in favor of :Transpose
-// LUA_BINDING_BEGIN( Matrices, MatrixTranspose, "library", "Transposes the matrix." )
+// LUA_BINDING_BEGIN( Matrixes, MatrixTranspose, "library", "Transposes the matrix." )
 //{
 //    MatrixTranspose( LUA_BINDING_ARGUMENT( luaL_checkvmatrix, 1, "Matrix" ), LUA_BINDING_ARGUMENT( luaL_checkvmatrix, 2, "Matrix" ) );
 //    return 0;
 //}
 // LUA_BINDING_END()
 
-LUA_BINDING_BEGIN( Matrices, MatrixCopy, "library", "Copies the matrix." )
+LUA_BINDING_BEGIN( Matrixes, MatrixCopy, "library", "Copies the matrix." )
 {
     VMatrix destination;
     MatrixCopy( LUA_BINDING_ARGUMENT( luaL_checkvmatrix, 1, "Matrix" ), destination );
@@ -672,14 +672,14 @@ LUA_BINDING_BEGIN( Matrices, MatrixCopy, "library", "Copies the matrix." )
 LUA_BINDING_END( "Matrix", "The copied matrix." )
 
 // Experiment; Disabled due to dest reference being possibly confusing in Lua
-// LUA_BINDING_BEGIN( Matrices, MatrixMultiply, "library", "Multiplies two matrices." )
+// LUA_BINDING_BEGIN( Matrixes, MatrixMultiply, "library", "Multiplies two matrices." )
 //{
 //    MatrixMultiply( LUA_BINDING_ARGUMENT( luaL_checkvmatrix, 1, "Matrix" ), LUA_BINDING_ARGUMENT( luaL_checkvmatrix, 2, "Matrix" ), LUA_BINDING_ARGUMENT( luaL_checkvmatrix, 3, "Matrix" ) );
 //    return 0;
 //}
 // LUA_BINDING_END()
 
-LUA_BINDING_BEGIN( Matrices, MatrixGetColumn, "library", "Gets a column of the matrix." )
+LUA_BINDING_BEGIN( Matrixes, MatrixGetColumn, "library", "Gets a column of the matrix." )
 {
     Vector vec;
     MatrixGetColumn( LUA_BINDING_ARGUMENT( luaL_checkvmatrix, 1, "Matrix" ), LUA_BINDING_ARGUMENT( luaL_checknumber, 2, "column" ), &vec );
@@ -688,14 +688,14 @@ LUA_BINDING_BEGIN( Matrices, MatrixGetColumn, "library", "Gets a column of the m
 }
 LUA_BINDING_END( "Vector", "The column vector." )
 
-LUA_BINDING_BEGIN( Matrices, MatrixSetColumn, "library", "Sets a column of the matrix." )
+LUA_BINDING_BEGIN( Matrixes, MatrixSetColumn, "library", "Sets a column of the matrix." )
 {
     MatrixSetColumn( LUA_BINDING_ARGUMENT( luaL_checkvmatrix, 1, "Matrix" ), LUA_BINDING_ARGUMENT( luaL_checknumber, 2, "column" ), LUA_BINDING_ARGUMENT( luaL_checkvector, 3, "vector" ) );
     return 0;
 }
 LUA_BINDING_END()
 
-LUA_BINDING_BEGIN( Matrices, MatrixGetRow, "library", "Gets a row of the matrix." )
+LUA_BINDING_BEGIN( Matrixes, MatrixGetRow, "library", "Gets a row of the matrix." )
 {
     Vector vec;
     MatrixGetRow( LUA_BINDING_ARGUMENT( luaL_checkvmatrix, 1, "Matrix" ), LUA_BINDING_ARGUMENT( luaL_checknumber, 2, "row" ), &vec );
@@ -704,14 +704,14 @@ LUA_BINDING_BEGIN( Matrices, MatrixGetRow, "library", "Gets a row of the matrix.
 }
 LUA_BINDING_END( "Vector", "The row vector." )
 
-LUA_BINDING_BEGIN( Matrices, MatrixSetRow, "library", "Sets a row of the matrix." )
+LUA_BINDING_BEGIN( Matrixes, MatrixSetRow, "library", "Sets a row of the matrix." )
 {
     MatrixSetRow( LUA_BINDING_ARGUMENT( luaL_checkvmatrix, 1, "Matrix" ), LUA_BINDING_ARGUMENT( luaL_checknumber, 2, "row" ), LUA_BINDING_ARGUMENT( luaL_checkvector, 3, "vector" ) );
     return 0;
 }
 LUA_BINDING_END()
 
-LUA_BINDING_BEGIN( Matrices, Vector3dMultiply, "library", "Multiplies a vector by the matrix." )
+LUA_BINDING_BEGIN( Matrixes, Vector3dMultiply, "library", "Multiplies a vector by the matrix." )
 {
     Vector vec;
     Vector3DMultiply( LUA_BINDING_ARGUMENT( luaL_checkvmatrix, 1, "Matrix" ), LUA_BINDING_ARGUMENT( luaL_checkvector, 2, "vector" ), vec );
@@ -720,7 +720,7 @@ LUA_BINDING_BEGIN( Matrices, Vector3dMultiply, "library", "Multiplies a vector b
 }
 LUA_BINDING_END( "Vector", "The multiplied vector." )
 
-LUA_BINDING_BEGIN( Matrices, Vector3dMultiplyPositionProjective, "library", "Multiplies a vector by the matrix." )
+LUA_BINDING_BEGIN( Matrixes, Vector3dMultiplyPositionProjective, "library", "Multiplies a vector by the matrix." )
 {
     Vector vec;
     Vector3DMultiplyPositionProjective( LUA_BINDING_ARGUMENT( luaL_checkvmatrix, 1, "Matrix" ), LUA_BINDING_ARGUMENT( luaL_checkvector, 2, "vector" ), vec );
@@ -729,7 +729,7 @@ LUA_BINDING_BEGIN( Matrices, Vector3dMultiplyPositionProjective, "library", "Mul
 }
 LUA_BINDING_END( "Vector", "The multiplied vector." )
 
-LUA_BINDING_BEGIN( Matrices, Vector3dMultiplyProjective, "library", "Multiplies a vector by the matrix." )
+LUA_BINDING_BEGIN( Matrixes, Vector3dMultiplyProjective, "library", "Multiplies a vector by the matrix." )
 {
     Vector vec;
     Vector3DMultiplyProjective( LUA_BINDING_ARGUMENT( luaL_checkvmatrix, 1, "Matrix" ), LUA_BINDING_ARGUMENT( luaL_checkvector, 2, "vector" ), vec );
@@ -738,7 +738,7 @@ LUA_BINDING_BEGIN( Matrices, Vector3dMultiplyProjective, "library", "Multiplies 
 }
 LUA_BINDING_END( "Vector", "The multiplied vector." )
 
-LUA_BINDING_BEGIN( Matrices, Vector3dMultiplyTranspose, "library", "Multiplies a vector by the matrix." )
+LUA_BINDING_BEGIN( Matrixes, Vector3dMultiplyTranspose, "library", "Multiplies a vector by the matrix." )
 {
     Vector vec;
     Vector3DMultiplyTranspose( LUA_BINDING_ARGUMENT( luaL_checkvmatrix, 1, "Matrix" ), LUA_BINDING_ARGUMENT( luaL_checkvector, 2, "vector" ), vec );
@@ -747,7 +747,7 @@ LUA_BINDING_BEGIN( Matrices, Vector3dMultiplyTranspose, "library", "Multiplies a
 }
 LUA_BINDING_END( "Vector", "The multiplied vector." )
 
-LUA_BINDING_BEGIN( Matrices, MatrixBuildTranslation, "library", "Builds a translation matrix." )
+LUA_BINDING_BEGIN( Matrixes, MatrixBuildTranslation, "library", "Builds a translation matrix." )
 {
     VMatrix destination = LUA_BINDING_ARGUMENT( luaL_checkvmatrix, 1, "Matrix" );
 
@@ -772,7 +772,7 @@ LUA_BINDING_BEGIN( Matrices, MatrixBuildTranslation, "library", "Builds a transl
 }
 LUA_BINDING_END()
 
-LUA_BINDING_BEGIN( Matrices, MatrixTranslate, "library", "Translates the matrix." )
+LUA_BINDING_BEGIN( Matrixes, MatrixTranslate, "library", "Translates the matrix." )
 {
     VMatrix destination = LUA_BINDING_ARGUMENT( luaL_checkvmatrix, 1, "Matrix" );
     MatrixTranslate( destination, LUA_BINDING_ARGUMENT( luaL_checkvector, 2, "vector" ) );
@@ -780,7 +780,7 @@ LUA_BINDING_BEGIN( Matrices, MatrixTranslate, "library", "Translates the matrix.
 }
 LUA_BINDING_END()
 
-LUA_BINDING_BEGIN( Matrices, MatrixBuildRotationAboutAxis, "library", "Builds a rotation matrix." )
+LUA_BINDING_BEGIN( Matrixes, MatrixBuildRotationAboutAxis, "library", "Builds a rotation matrix." )
 {
     VMatrix destination = LUA_BINDING_ARGUMENT( luaL_checkvmatrix, 1, "Matrix" );
     MatrixBuildRotationAboutAxis(
@@ -791,7 +791,7 @@ LUA_BINDING_BEGIN( Matrices, MatrixBuildRotationAboutAxis, "library", "Builds a 
 }
 LUA_BINDING_END()
 
-LUA_BINDING_BEGIN( Matrices, MatrixBuildRotateZ, "library", "Builds a rotation matrix." )
+LUA_BINDING_BEGIN( Matrixes, MatrixBuildRotateZ, "library", "Builds a rotation matrix." )
 {
     VMatrix destination = LUA_BINDING_ARGUMENT( luaL_checkvmatrix, 1, "Matrix" );
     MatrixBuildRotateZ(
@@ -801,7 +801,7 @@ LUA_BINDING_BEGIN( Matrices, MatrixBuildRotateZ, "library", "Builds a rotation m
 }
 LUA_BINDING_END()
 
-LUA_BINDING_BEGIN( Matrices, MatrixRotate, "library", "Rotates the matrix." )
+LUA_BINDING_BEGIN( Matrixes, MatrixRotate, "library", "Rotates the matrix." )
 {
     VMatrix destination = LUA_BINDING_ARGUMENT( luaL_checkvmatrix, 1, "Matrix" );
     MatrixRotate(
@@ -812,7 +812,7 @@ LUA_BINDING_BEGIN( Matrices, MatrixRotate, "library", "Rotates the matrix." )
 }
 LUA_BINDING_END()
 
-LUA_BINDING_BEGIN( Matrices, MatrixBuildRotation, "library", "Builds a rotation matrix." )
+LUA_BINDING_BEGIN( Matrixes, MatrixBuildRotation, "library", "Builds a rotation matrix." )
 {
     VMatrix destination = LUA_BINDING_ARGUMENT( luaL_checkvmatrix, 1, "Matrix" );
     MatrixBuildRotation(
@@ -823,7 +823,7 @@ LUA_BINDING_BEGIN( Matrices, MatrixBuildRotation, "library", "Builds a rotation 
 }
 LUA_BINDING_END()
 
-LUA_BINDING_BEGIN( Matrices, MatrixBuildScale, "library", "Builds a scale matrix." )
+LUA_BINDING_BEGIN( Matrixes, MatrixBuildScale, "library", "Builds a scale matrix." )
 {
     VMatrix destination = LUA_BINDING_ARGUMENT( luaL_checkvmatrix, 1, "Matrix" );
 
@@ -848,7 +848,7 @@ LUA_BINDING_BEGIN( Matrices, MatrixBuildScale, "library", "Builds a scale matrix
 }
 LUA_BINDING_END()
 
-LUA_BINDING_BEGIN( Matrices, MatrixBuildPerspective, "library", "Builds a perspective matrix." )
+LUA_BINDING_BEGIN( Matrixes, MatrixBuildPerspective, "library", "Builds a perspective matrix." )
 {
     VMatrix destination = LUA_BINDING_ARGUMENT( luaL_checkvmatrix, 1, "Matrix" );
     MatrixBuildPerspective(
@@ -861,7 +861,7 @@ LUA_BINDING_BEGIN( Matrices, MatrixBuildPerspective, "library", "Builds a perspe
 }
 LUA_BINDING_END()
 
-LUA_BINDING_BEGIN( Matrices, CalculateAabbFromProjectionMatrix, "library", "Calculates an AABB from a projection matrix." )
+LUA_BINDING_BEGIN( Matrixes, CalculateAabbFromProjectionMatrix, "library", "Calculates an AABB from a projection matrix." )
 {
     Vector vecMin, vecMax;
     CalculateAABBFromProjectionMatrix(
@@ -874,7 +874,7 @@ LUA_BINDING_BEGIN( Matrices, CalculateAabbFromProjectionMatrix, "library", "Calc
 }
 LUA_BINDING_END( "Vector", "The minimum vector.", "Vector", "The maximum vector." )
 
-LUA_BINDING_BEGIN( Matrices, CalculateSphereFromProjectionMatrix, "library", "Calculates a sphere from a projection matrix." )
+LUA_BINDING_BEGIN( Matrixes, CalculateSphereFromProjectionMatrix, "library", "Calculates a sphere from a projection matrix." )
 {
     Vector vecCenter;
     float flRadius;
@@ -888,7 +888,7 @@ LUA_BINDING_BEGIN( Matrices, CalculateSphereFromProjectionMatrix, "library", "Ca
 }
 LUA_BINDING_END( "Vector", "The center vector.", "number", "The radius." )
 
-LUA_BINDING_BEGIN( Matrices, MatrixFromAngles, "library", "Sets the matrix to a rotation matrix." )
+LUA_BINDING_BEGIN( Matrixes, MatrixFromAngles, "library", "Sets the matrix to a rotation matrix." )
 {
     MatrixFromAngles(
         LUA_BINDING_ARGUMENT( luaL_checkangle, 1, "angle" ),
@@ -897,7 +897,7 @@ LUA_BINDING_BEGIN( Matrices, MatrixFromAngles, "library", "Sets the matrix to a 
 }
 LUA_BINDING_END()
 
-LUA_BINDING_BEGIN( Matrices, MatrixToAngles, "library", "Sets the matrix to a rotation matrix." )
+LUA_BINDING_BEGIN( Matrixes, MatrixToAngles, "library", "Sets the matrix to a rotation matrix." )
 {
     MatrixToAngles(
         LUA_BINDING_ARGUMENT( luaL_checkvmatrix, 1, "Matrix" ),
@@ -906,7 +906,7 @@ LUA_BINDING_BEGIN( Matrices, MatrixToAngles, "library", "Sets the matrix to a ro
 }
 LUA_BINDING_END()
 
-LUA_BINDING_BEGIN( Matrices, MatrixInverseTranslation, "library", "Inverts the matrix." )
+LUA_BINDING_BEGIN( Matrixes, MatrixInverseTranslation, "library", "Inverts the matrix." )
 {
     MatrixInverseTR(
         LUA_BINDING_ARGUMENT( luaL_checkvmatrix, 1, "Matrix" ),
@@ -915,7 +915,7 @@ LUA_BINDING_BEGIN( Matrices, MatrixInverseTranslation, "library", "Inverts the m
 }
 LUA_BINDING_END()
 
-LUA_BINDING_BEGIN( Matrices, MatrixInverseGeneral, "library", "Inverts the matrix." )
+LUA_BINDING_BEGIN( Matrixes, MatrixInverseGeneral, "library", "Inverts the matrix." )
 {
     MatrixInverseGeneral(
         LUA_BINDING_ARGUMENT( luaL_checkvmatrix, 1, "Matrix" ),
@@ -924,7 +924,7 @@ LUA_BINDING_BEGIN( Matrices, MatrixInverseGeneral, "library", "Inverts the matri
 }
 LUA_BINDING_END()
 
-LUA_BINDING_BEGIN( Matrices, MatrixInverseTranspose, "library", "Inverts the matrix." )
+LUA_BINDING_BEGIN( Matrixes, MatrixInverseTranspose, "library", "Inverts the matrix." )
 {
     MatrixInverseTranspose(
         LUA_BINDING_ARGUMENT( luaL_checkvmatrix, 1, "Matrix" ),
@@ -946,7 +946,7 @@ LUALIB_API int luaopen_VMatrix( lua_State *L )
     lua_setfield( L, -2, "__type" ); /* metatable.__type = "Matrix" */
     lua_pop( L, 2 );
 
-    LUA_REGISTRATION_COMMIT_LIBRARY( Matrices );
+    LUA_REGISTRATION_COMMIT_LIBRARY( Matrixes );
 
     return 1;
 }

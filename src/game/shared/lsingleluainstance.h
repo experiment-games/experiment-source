@@ -61,46 +61,8 @@ void lua_destroyuserdatainstance( lua_State *L, void *p );
         lua_pushuserdata_associateinstance( L, lua_touserdata( L, idx ) ); \
     }
 
-// Apply this to a class to mark it as having a single Lua instance that will
-// have the specified metatable applied to its userdata.
-#define LUA_DECLARE_SINGLE_LUA_INSTANCE( ClassName, BaseMetatableName )                                                    \
+#define LUA_DECLARE_SINGLE_LUA_INSTANCE_INSTALL_STATIC( ClassName, MetatableName )                                         \
    public:                                                                                                                 \
-    virtual const char *GetMetatableName() const                                                                           \
-    {                                                                                                                      \
-        return BaseMetatableName;                                                                                          \
-    }                                                                                                                      \
-                                                                                                                           \
-   protected:                                                                                                              \
-    void *m_pLuaInstance = nullptr;                                                                                        \
-                                                                                                                           \
-    /* Creates a new pointer to the instance for this class and pushes it                                                  \
-     to the stack. The pointer will be stored with the instance so the                                                     \
-     same userdata instance can be pushed again later.                                                                     \
-     This should not apply any metatable to the instance, as that will be                                                  \
-     done by PushLuaInstance. */                                                                                           \
-    static void *CreateLuaInstance( lua_State *L, ClassName *pInstance );                                                  \
-                                                                                                                           \
-   public:                                                                                                                 \
-    /*  Pushes the instance to the Lua stack. It will check if there's already an                                          \
-     instance in the registry, and if there is, it will push that instead.                                                 \
-     If no instance is found, it will create a new one and store it in the                                                 \
-     registry. It will set the metatable for the instance based on the metatable                                           \
-     name returned by GetMetatableName(). */                                                                               \
-    void PushLuaInstance( lua_State *L )                                                                                   \
-    {                                                                                                                      \
-        if ( m_pLuaInstance != nullptr )                                                                                   \
-        {                                                                                                                  \
-            lua_pushuserdatainstance( L, m_pLuaInstance );                                                                 \
-            return;                                                                                                        \
-        }                                                                                                                  \
-                                                                                                                           \
-        m_pLuaInstance = CreateLuaInstance( L, this );                                                                     \
-        lua_pushuserdata_associateinstance( L, m_pLuaInstance );                                                           \
-        luaL_getmetatable( L, GetMetatableName() );                                                                        \
-        AssertMsg( !lua_isnil( L, -1 ), "Invalid MetatableName! Must return a valid metatable on client and server" );     \
-        lua_setmetatable( L, -2 );                                                                                         \
-    }                                                                                                                      \
-                                                                                                                           \
     /* Safely pushes the lua instance, checking if it exists or pushing a NULL instead */                                  \
     static void PushLuaInstanceSafe( lua_State *L, ClassName *pInstance )                                                  \
     {                                                                                                                      \
@@ -108,7 +70,7 @@ void lua_destroyuserdatainstance( lua_State *L, void *p );
         {                                                                                                                  \
             void *pLuaInstance = CreateLuaInstance( L, pInstance );                                                        \
             lua_pushuserdata_associateinstance( L, pLuaInstance );                                                         \
-            luaL_getmetatable( L, BaseMetatableName ); /* We fall back to the MetatableName we know from the baseclass*/   \
+            luaL_getmetatable( L, MetatableName ); /* We fall back to the MetatableName we know from the baseclass*/       \
             AssertMsg( !lua_isnil( L, -1 ), "Invalid MetatableName! Must return a valid metatable on client and server" ); \
             lua_setmetatable( L, -2 );                                                                                     \
             return;                                                                                                        \
@@ -117,13 +79,58 @@ void lua_destroyuserdatainstance( lua_State *L, void *p );
         pInstance->PushLuaInstance( L );                                                                                   \
     }
 
+// Apply this to a class to mark it as having a single Lua instance that will
+// have the specified metatable applied to its userdata.
+#define LUA_DECLARE_SINGLE_LUA_INSTANCE( ClassName, BaseMetatableName )                                                \
+   public:                                                                                                             \
+    virtual const char *GetMetatableName()                                                                             \
+    {                                                                                                                  \
+        return BaseMetatableName;                                                                                      \
+    }                                                                                                                  \
+                                                                                                                       \
+   protected:                                                                                                          \
+    void *m_pLuaInstance = nullptr;                                                                                    \
+                                                                                                                       \
+    /* Creates a new pointer to the instance for this class and pushes it                                              \
+     to the stack. The pointer will be stored with the instance so the                                                 \
+     same userdata instance can be pushed again later.                                                                 \
+     This should not apply any metatable to the instance, as that will be                                              \
+     done by PushLuaInstance. */                                                                                       \
+    static void *CreateLuaInstance( lua_State *L, ClassName *pInstance );                                              \
+                                                                                                                       \
+    /*  Pushes the instance to the Lua stack. It will check if there's already an                                      \
+     instance in the registry, and if there is, it will push that instead.                                             \
+     If no instance is found, it will create a new one and store it in the                                             \
+     registry. It will set the metatable for the instance based on the metatable                                       \
+     name returned by GetMetatableName(). */                                                                           \
+    void PushLuaInstance( lua_State *L )                                                                               \
+    {                                                                                                                  \
+        if ( m_pLuaInstance != nullptr )                                                                               \
+        {                                                                                                              \
+            lua_pushuserdatainstance( L, m_pLuaInstance );                                                             \
+            return;                                                                                                    \
+        }                                                                                                              \
+                                                                                                                       \
+        m_pLuaInstance = CreateLuaInstance( L, this );                                                                 \
+        lua_pushuserdata_associateinstance( L, m_pLuaInstance );                                                       \
+        luaL_getmetatable( L, GetMetatableName() );                                                                    \
+        AssertMsg( !lua_isnil( L, -1 ), "Invalid MetatableName! Must return a valid metatable on client and server" ); \
+        lua_setmetatable( L, -2 );                                                                                     \
+    }                                                                                                                  \
+                                                                                                                       \
+    LUA_DECLARE_SINGLE_LUA_INSTANCE_INSTALL_STATIC( ClassName, BaseMetatableName )
+
 // After applying LUA_DECLARE_SINGLE_LUA_INSTANCE to a baseclass, use this to
 // specify that this subclass overrides the name of the metatable with the specified
 // metatable name.
-#define LUA_OVERRIDE_SINGLE_LUA_INSTANCE_METATABLE( MetaTableName ) \
-    const char *GetMetatableName() const override                   \
-    {                                                               \
-        return MetaTableName;                                       \
-    }
+#define LUA_OVERRIDE_SINGLE_LUA_INSTANCE_METATABLE( ClassName, MetaTableName )          \
+   public:                                                                              \
+    virtual const char *GetMetatableName() override                                     \
+    {                                                                                   \
+        return MetaTableName;                                                           \
+    }                                                                                   \
+                                                                                        \
+    /* override the static method, so even NULL is pushed with the correct metatable */ \
+    LUA_DECLARE_SINGLE_LUA_INSTANCE_INSTALL_STATIC( ClassName, MetaTableName )
 
 #endif

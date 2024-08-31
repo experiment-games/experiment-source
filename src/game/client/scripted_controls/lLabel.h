@@ -15,7 +15,7 @@ class LLabel : public Label
 {
     DECLARE_CLASS_SIMPLE( LLabel, Label );
 
-    LUA_OVERRIDE_SINGLE_LUA_INSTANCE_METATABLE( "Label" );
+    LUA_OVERRIDE_SINGLE_LUA_INSTANCE_METATABLE( LLabel, "Label" );
 
    public:
     LLabel( Panel *parent, const char *panelName, const char *text, lua_State *L = nullptr );

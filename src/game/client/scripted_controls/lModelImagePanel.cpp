@@ -805,7 +805,7 @@ LUA_BINDING_BEGIN( Panels, ModelImagePanel, "library", "Creates a new model imag
     Panel *parent = LUA_BINDING_ARGUMENT_WITH_DEFAULT( luaL_optpanel, 1, VGui_GetClientLuaRootPanel(), "parent" );
     const char *name = LUA_BINDING_ARGUMENT_WITH_DEFAULT( luaL_optstring, 2, "ModelImagePanel", "name" );
     lua_ModelImagePanel *pPanel = new lua_ModelImagePanel( parent, name, L );
-    pPanel->PushLuaInstance( L );
+    LModelImagePanel::PushLuaInstanceSafe( L, pPanel );
     return 1;
 }
 LUA_BINDING_END( "ModelImagePanel", "The new model image panel" )

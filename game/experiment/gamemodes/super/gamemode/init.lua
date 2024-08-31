@@ -79,7 +79,7 @@ end
 function GM:PlayerCanHearChat(listener, speaker)
 end
 
-function GM:PlayerCanPickupObject(object, massLimit, sizeLimit)
+function GM:PlayersCanPickupObject(object, massLimit, sizeLimit)
 end
 
 function GM:PlayerDeathSound(info)

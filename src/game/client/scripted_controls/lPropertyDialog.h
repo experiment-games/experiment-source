@@ -17,7 +17,7 @@
 //{
 //    DECLARE_CLASS_SIMPLE( LPropertyDialog, PropertyDialog );
 //
-//    LUA_OVERRIDE_SINGLE_LUA_INSTANCE_METATABLE( "PropertyDialog" );
+//    LUA_OVERRIDE_SINGLE_LUA_INSTANCE_METATABLE( LPropertyDialog, "PropertyDialog" );
 //
 //   public:
 //    LPropertyDialog( Panel *parent, const char *panelName, lua_State *L );

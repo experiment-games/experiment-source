@@ -8,6 +8,8 @@
 #include <scripted_controls/lHTML.h>
 #include "scripted_controls/lPanel.h"
 
+#include "base64.h"
+
 // memdbgon must be the last include file in a .cpp file!!!
 #include <tier0/memdbgon.h>
 
@@ -140,6 +142,23 @@ LUA_BINDING_BEGIN( HTML, RunJavascript, "class", "Executes JavaScript in the HTM
     lua_HTML *html = LUA_BINDING_ARGUMENT( luaL_checkhtml, 1, "html" );
     const char *jsCode = LUA_BINDING_ARGUMENT( luaL_checkstring, 2, "jsCode" );
     html->RunJavascript( jsCode );
+    return 0;
+}
+LUA_BINDING_END()
+
+LUA_BINDING_BEGIN( HTML, SetHtml, "class", "Sets the HTML content of the object" )
+{
+    lua_HTML *html = LUA_BINDING_ARGUMENT( luaL_checkhtml, 1, "html" );
+    const char *htmlContent = LUA_BINDING_ARGUMENT( luaL_checkstring, 2, "htmlContent" );
+    CUtlString script;
+
+    // Encode it, so we don't have to worry about special characters
+    std::string encodedString = base64_encode( htmlContent, false );
+
+    script.Format( "document.write( atob( '%s' ) );", encodedString.c_str() );
+
+    html->RunJavascript( script.Get() );
+
     return 0;
 }
 LUA_BINDING_END()
@@ -444,7 +463,7 @@ LUA_BINDING_BEGIN( Panels, Html, "library", "Creates a new HTML panel" )
                       shouldAllowJavaScript,
                       popupWindow,
                       L );
-    pPanel->PushLuaInstance( L );
+    LHTML::PushLuaInstanceSafe( L, pPanel );
     return 1;
 }
 LUA_BINDING_END( "Html", "The new HTML Panel" )

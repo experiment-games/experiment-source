@@ -242,7 +242,7 @@ class CPlayerInfo : public IBotController, public IPlayerInfo
 class CBasePlayer : public CBaseCombatCharacter
 {
 #ifdef LUA_SDK
-    LUA_OVERRIDE_SINGLE_LUA_INSTANCE_METATABLE( LUA_BASEPLAYERMETANAME )
+    LUA_OVERRIDE_SINGLE_LUA_INSTANCE_METATABLE( CBasePlayer, LUA_BASEPLAYERMETANAME )
 #endif
 
    public:
@@ -506,7 +506,12 @@ class CBasePlayer : public CBaseCombatCharacter
     virtual surfacedata_t *GetLadderSurface( const Vector &origin );
 
     virtual void SetFlashlightEnabled( bool bState ){};
-    virtual int FlashlightIsOn( void )
+    virtual bool GetFlashlightEnabled() const
+    {
+        return false;
+    }
+
+    virtual bool FlashlightIsOn( void )
     {
         return false;
     }
@@ -1003,6 +1008,7 @@ class CBasePlayer : public CBaseCombatCharacter
 
     bool IsPredictingWeapons( void ) const;
     int CurrentCommandNumber() const;
+    int LastUserCommandNumber() const;
     const CUserCmd *GetCurrentUserCommand() const;
     int GetLockViewanglesTickNumber() const
     {
@@ -1666,6 +1672,11 @@ inline const CUserCmd *CBasePlayer::GetCurrentUserCommand() const
 {
     Assert( m_pCurrentCommand );
     return m_pCurrentCommand;
+}
+
+inline int CBasePlayer::LastUserCommandNumber() const
+{
+    return m_LastCmd.command_number;
 }
 
 inline IServerVehicle *CBasePlayer::GetVehicle()

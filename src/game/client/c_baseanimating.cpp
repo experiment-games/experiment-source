@@ -289,7 +289,7 @@ BEGIN_DATADESC( C_ClientRagdoll )
 
 END_DATADESC()
 
-static void* WORKAROUND_NASTY_FORMATTING_BUG;  // clang-format on
+static bool WORKAROUND_NASTY_FORMATTING_BUG;  // clang-format on
 
 C_ClientRagdoll::C_ClientRagdoll( bool bRestoring )
 {

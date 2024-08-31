@@ -578,7 +578,7 @@ LUA_BINDING_BEGIN( TextEntry, GetDragPanel, "class", "Gets the drag panel" )
 {
     lua_TextEntry *textEntry = LUA_BINDING_ARGUMENT( luaL_checktextentry, 1, "textEntry" );
     Panel *dragPanel = textEntry->GetDragPanel();
-    dragPanel->PushLuaInstance( L );
+    Panel::PushLuaInstanceSafe( L, dragPanel );
     return 1;
 }
 LUA_BINDING_END( "DragPanel", "The drag panel instance" )
@@ -729,7 +729,7 @@ LUA_BINDING_BEGIN( Panels, TextEntry, "library", "Creates a new TextEntry panel"
     const char *name = LUA_BINDING_ARGUMENT_WITH_DEFAULT( luaL_optstring, 2, "TextEntry", "name" );
 
     LTextEntry *pPanel = new LTextEntry( parent, name, L );
-    pPanel->PushLuaInstance( L );
+    LTextEntry::PushLuaInstanceSafe( L, pPanel );
     return 1;
 }
 LUA_BINDING_END( "TextEntry", "The new TextEntry Panel" )

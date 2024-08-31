@@ -40,7 +40,7 @@ class CExperimentPlayerStateInfo
 class CExperiment_Player : public CHL2_Player
 {
 #ifdef LUA_SDK
-    LUA_OVERRIDE_SINGLE_LUA_INSTANCE_METATABLE( LUA_EXPERIMENTPLAYERLIBNAME )
+    LUA_OVERRIDE_SINGLE_LUA_INSTANCE_METATABLE( CExperiment_Player, LUA_EXPERIMENTPLAYERLIBNAME )
 #endif
 
    public:
@@ -93,7 +93,7 @@ class CExperiment_Player : public CHL2_Player
     virtual void DeathSound( const CTakeDamageInfo &info );
     virtual CBaseEntity *EntSelectSpawnPoint( void );
 
-    int FlashlightIsOn( void );
+    bool FlashlightIsOn( void );
     void FlashlightTurnOn( void );
     void FlashlightTurnOff( void );
     void PrecacheFootStepSounds( void );
@@ -172,6 +172,11 @@ class CExperiment_Player : public CHL2_Player
         return m_PlayerAnimState;
     }
 
+    CBaseEntity *GetRagdollEntity() const
+    {
+        return m_hRagdoll;
+    }
+
    private:
     CExperimentPlayerAnimState *m_PlayerAnimState;
 
@@ -205,6 +210,32 @@ class CExperiment_Player : public CHL2_Player
 #ifndef NO_STEAM
     STEAM_GAMESERVER_CALLBACK( CExperiment_Player, OnValidateAuthTicketResponse, ValidateAuthTicketResponse_t, m_CallbackValidateAuthTicketResponse );
 #endif
+};
+
+class CExperimentRagdoll : public CBaseAnimatingOverlay
+{
+   public:
+    DECLARE_CLASS( CExperimentRagdoll, CBaseAnimatingOverlay );
+    DECLARE_SERVERCLASS();
+
+    // Transmit ragdolls to everyone.
+    virtual int UpdateTransmitState()
+    {
+        return SetTransmitState( FL_EDICT_ALWAYS );
+    }
+
+   public:
+    // In case the client has the player entity, we transmit the player index.
+    // In case the client doesn't have it, we transmit the player's model index,
+    // origin, and angles so they can create a ragdoll in the right place.
+    CNetworkHandle( CBaseEntity, m_hPlayer );  // networked entity handle
+    CNetworkVector( m_vecRagdollVelocity );
+    CNetworkVector( m_vecRagdollOrigin );
+
+    CBasePlayer *GetRagdollPlayer() const
+    {
+        return dynamic_cast< CBasePlayer * >( m_hPlayer.Get() );
+    }
 };
 
 inline CExperiment_Player *ToExperimentPlayer( CBaseEntity *pEntity )

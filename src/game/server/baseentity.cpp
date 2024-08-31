@@ -190,7 +190,7 @@ static void *SendProxy_SendPredictableId( const SendProp *pProp, const void *pSt
 REGISTER_SEND_PROXY_NON_MODIFIED_POINTER( SendProxy_SendPredictableId );
 #endif
 
-static void* WORKAROUND_NASTY_FORMATTING_BUG;  // clang-format on
+static bool WORKAROUND_NASTY_FORMATTING_BUG;  // clang-format on
 
 void SendProxy_Origin( const SendProp *pProp, const void *pStruct, const void *pData, DVariant *pOut, int iElement, int objectID )
 {
@@ -346,7 +346,7 @@ IMPLEMENT_SERVERCLASS_ST_NOBASE( CBaseEntity, DT_BaseEntity )
 
 END_SEND_TABLE()
 
-static void* WORKAROUND_NASTY_FORMATTING_BUG2;  // clang-format on
+static bool WORKAROUND_NASTY_FORMATTING_BUG2;  // clang-format on
 
 // dynamic models
 class CBaseEntityModelLoadProxy

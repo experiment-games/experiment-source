@@ -125,7 +125,7 @@ struct Emphasized_Phoneme
 class C_BaseFlex : public C_BaseAnimatingOverlay, public IHasLocalToGlobalFlexSettings
 {
 #ifdef LUA_SDK
-    LUA_OVERRIDE_SINGLE_LUA_INSTANCE_METATABLE( LUA_CBASEFLEXLIBNAME )
+    LUA_OVERRIDE_SINGLE_LUA_INSTANCE_METATABLE( C_BaseFlex, LUA_CBASEFLEXLIBNAME )
 #endif
 
     DECLARE_CLASS( C_BaseFlex, C_BaseAnimatingOverlay );

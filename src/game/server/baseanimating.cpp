@@ -268,7 +268,7 @@ IMPLEMENT_SERVERCLASS_ST( CBaseAnimating, DT_BaseAnimating )
 
 END_SEND_TABLE()
     
-static void* WORKAROUND_NASTY_FORMATTING_BUG;  // clang-format on
+static bool WORKAROUND_NASTY_FORMATTING_BUG;  // clang-format on
 
 CBaseAnimating::CBaseAnimating()
 {

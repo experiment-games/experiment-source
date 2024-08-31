@@ -253,13 +253,14 @@ LUA_BINDING_BEGIN( Label, GetHotKey, "class", "Gets the hotkey of the label" )
 }
 LUA_BINDING_END( "integer", "The hotkey of the label" )
 
-LUA_BINDING_BEGIN( Label, HasHotkey, "class", "Checks if the label has a hotkey" )
-{
-    lua_Label *label = LUA_BINDING_ARGUMENT( luaL_checklabel, 1, "label" );
-    label->HasHotkey( LUA_BINDING_ARGUMENT( luaL_checknumber, 2, "key" ) )->PushLuaInstance( L );
-    return 1;
-}
-LUA_BINDING_END( "label", "The label with the hotkey" )
+// Experiment; Disabled since this might return a non-Lua panel
+//LUA_BINDING_BEGIN( Label, HasHotkey, "class", "Checks if the label has a hotkey" )
+//{
+//    lua_Label *label = LUA_BINDING_ARGUMENT( luaL_checklabel, 1, "label" );
+//    label->HasHotkey( LUA_BINDING_ARGUMENT( luaL_checknumber, 2, "key" ) )->PushLuaInstance( L );
+//    return 1;
+//}
+//LUA_BINDING_END( "label", "The label with the hotkey" )
 
 LUA_BINDING_BEGIN( Label, SetHotkey, "class", "Sets the hotkey of the label" )
 {
@@ -482,7 +483,7 @@ LUA_BINDING_BEGIN( Panels, Label, "library", "Creates a new label" )
     const char *text = LUA_BINDING_ARGUMENT_WITH_DEFAULT( luaL_optstring, 2, "", "text" );
     const char *name = LUA_BINDING_ARGUMENT_WITH_DEFAULT( luaL_optstring, 3, "Label", "name" );
     lua_Label *pPanel = new lua_Label( parent, name, text, L );
-    pPanel->PushLuaInstance( L );
+    LLabel::PushLuaInstanceSafe( L, pPanel );
     return 1;
 }
 LUA_BINDING_END( "Label", "The new label" )

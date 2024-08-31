@@ -533,7 +533,7 @@ LUA_BINDING_BEGIN( Weapon, GetSubType, "class", "Get the sub type." )
 }
 LUA_BINDING_END( "integer", "Sub type." )
 
-LUA_BINDING_BEGIN( Weapon, GetViewModel, "class", "Get the view model." )
+LUA_BINDING_BEGIN( Weapon, GetWeaponViewModel, "class", "Get the view model." )
 {
     lua_CBaseCombatWeapon *pWeapon = LUA_BINDING_ARGUMENT( luaL_checkweapon, 1, "entity" );
     int iViewModelIndex = LUA_BINDING_ARGUMENT_WITH_DEFAULT( luaL_optnumber, 2, 0, "index" );
@@ -840,7 +840,7 @@ LUA_BINDING_BEGIN( Weapon, ItemHolsterFrame, "class", "Item holster frame." )
 }
 LUA_BINDING_END()
 
-LUA_BINDING_BEGIN( Weapon, ItemPostFrame, "class", "Item post frame." )
+LUA_BINDING_BEGIN( Weapon, WeaponItemPostFrame, "class", "Item post frame." )
 {
     lua_CBaseCombatWeapon *pWeapon = LUA_BINDING_ARGUMENT( luaL_checkweapon, 1, "entity" );
     pWeapon->ItemPostFrame();
@@ -848,7 +848,7 @@ LUA_BINDING_BEGIN( Weapon, ItemPostFrame, "class", "Item post frame." )
 }
 LUA_BINDING_END()
 
-LUA_BINDING_BEGIN( Weapon, ItemPreFrame, "class", "Item pre frame." )
+LUA_BINDING_BEGIN( Weapon, WeaponItemPreFrame, "class", "Item pre frame." )
 {
     lua_CBaseCombatWeapon *pWeapon = LUA_BINDING_ARGUMENT( luaL_checkweapon, 1, "entity" );
     pWeapon->ItemPreFrame();

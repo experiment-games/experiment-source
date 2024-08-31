@@ -1373,7 +1373,7 @@ CBaseEntity *CBasePlayer::FindUseEntity()
 
 #ifdef LUA_SDK
     LUA_CALL_HOOK_BEGIN( "FindUseEntity" );
-    CBaseEntity::PushLuaInstanceSafe( L, this );
+    CBasePlayer::PushLuaInstanceSafe( L, this );
     CBaseEntity::PushLuaInstanceSafe( L, pNearest );
     LUA_CALL_HOOK_END( 2, 1 );
 
@@ -1480,7 +1480,7 @@ void CBasePlayer::PlayerUse( void )
     {
 #ifdef LUA_SDK
         LUA_CALL_HOOK_BEGIN( "PlayerUse" );
-        CBaseEntity::PushLuaInstanceSafe( L, this );
+        CBasePlayer::PushLuaInstanceSafe( L, this );
         CBaseEntity::PushLuaInstanceSafe( L, pUseEntity );
         LUA_CALL_HOOK_END( 2, 1 );
 
@@ -1862,7 +1862,7 @@ void CBasePlayer::CalcPlayerView( CViewSetup &viewSetup, bool &bForceDrawLocalPl
 
 #ifdef LUA_SDK
     LUA_CALL_HOOK_BEGIN( "CalcView" );
-    CBaseEntity::PushLuaInstanceSafe( L, this );
+    CBasePlayer::PushLuaInstanceSafe( L, this );
     lua_pushvector( L, viewSetup.origin );
     lua_pushangle( L, viewSetup.angles );
     lua_pushnumber( L, viewSetup.fov );
@@ -1921,7 +1921,7 @@ void CBasePlayer::CalcVehicleView(
 #ifdef LUA_SDK
     LUA_CALL_HOOK_BEGIN( "CalcVehicleView" );
     CBaseEntity::PushLuaInstanceSafe( L, pVehicle->GetVehicleEnt() );
-    CBaseEntity::PushLuaInstanceSafe( L, this );
+    CBasePlayer::PushLuaInstanceSafe( L, this );
 
     // In contrast to CalcView, CalcVehicleView provides the viewSetup as a table instead of individual arguments.
     lua_newtable( L );

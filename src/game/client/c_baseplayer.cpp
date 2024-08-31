@@ -1327,7 +1327,7 @@ void C_BasePlayer::UpdateFlashlight()
 
 #if defined( LUA_SDK )
         LUA_CALL_HOOK_BEGIN( "PlayerUpdateFlashlight" )
-        CBaseEntity::PushLuaInstanceSafe( L, this );
+        C_BasePlayer::PushLuaInstanceSafe( L, this );
         lua_pushvector( L, position );
         lua_pushvector( L, vecForward );
         lua_pushvector( L, vecRight );

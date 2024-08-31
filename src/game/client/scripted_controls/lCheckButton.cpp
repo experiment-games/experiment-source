@@ -235,7 +235,7 @@ LUA_BINDING_BEGIN( Panels, CheckButton, "library", "Creates a new CheckButton pa
     const char *text = LUA_BINDING_ARGUMENT_WITH_DEFAULT( luaL_optstring, 3, "", "text" );
 
     LCheckButton *pPanel = new LCheckButton( parent, name, text, L );
-    pPanel->PushLuaInstance( L );
+    LCheckButton::PushLuaInstanceSafe( L, pPanel );
     return 1;
 }
 LUA_BINDING_END( "CheckButton", "The new CheckButton Panel" )

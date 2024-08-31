@@ -17,7 +17,7 @@ class LFrame : public Frame
 {
     DECLARE_CLASS_SIMPLE( LFrame, Frame );
 
-    LUA_OVERRIDE_SINGLE_LUA_INSTANCE_METATABLE( "Frame" );
+    LUA_OVERRIDE_SINGLE_LUA_INSTANCE_METATABLE( LFrame, "Frame" );
 
    public:
     LFrame( Panel *parent, const char *panelName, bool showTaskbarIcon = true, lua_State *L = NULL );

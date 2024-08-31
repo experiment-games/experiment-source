@@ -34,15 +34,16 @@ function ispanel(variable)
 end
 
 function isentity(variable)
-	return type(variable) == "Entity"
+    return type(variable) == "Entity"
 end
+IsEntity = isentity
 
 function isfunction(variable)
 	return type(variable) == "function"
 end
 
 function ismatrix(variable)
-	return type(variable) == "Matrix"
+	return type(variable) == "Matrix" or type(variable) == "Matrix3x4"
 end
 
 function isnumber(variable)
@@ -231,6 +232,9 @@ if (not GAMEUI) then
 	}
 
 	--- Merges the provided metatables into base and returns it.
+	--- This will ensure that you can call subclass methods on the base class.
+	--- This can be useful for NULL players for example, since you will be able
+	--- to call Player methods on them.
 	--- @param base any
 	--- @param ... unknown
 	--- @return table # The metatable merged into.
@@ -245,12 +249,21 @@ if (not GAMEUI) then
 			for key, value in pairs(metatableToMergeFrom) do
 				-- Only the 'Entity' baseclass should have metamethods.
 				if (metaMethods[key]) then
-					error("Attempted to merge a metatable with a key that is not allowed.")
+					debug.PrintError("Attempted to merge a metatable with a key (" .. key .. ") that is a metamethod.")
+					continue
+				end
+
+				-- Skip __name and __type so we don't overwrite the name of the metatable.
+				if (key == "__name" or key == "__type") then
 					continue
 				end
 
 				if (type(target[key]) == "table" and type(value) == "table") then
 					table.Merge(target[key], value)
+				elseif (target[key] ~= nil) then
+					-- Catch mistakes where we double defined methods
+					debug.PrintError("Attempted to merge a metatable (" .. tostring(target) .. ") with a key (" .. key .. ") that already exists.")
+					continue
 				else
 					target[key] = value
 				end

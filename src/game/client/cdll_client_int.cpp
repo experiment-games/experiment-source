@@ -514,9 +514,9 @@ class CHLVoiceStatusHelper : public IVoiceStatusHelper
         Color color( rawColor[0], rawColor[1], rawColor[2] );
 
         LUA_CALL_HOOK_BEGIN( "GetPlayerTextColor", "Allows overriding the color of the player's name in the scoreboard." );
-        CBasePlayer::PushLuaInstanceSafe( L, entity );  // doc: player
-        lua_pushcolor( L, color ); // doc: color (the color of the player's name in the scoreboard)
-        LUA_CALL_HOOK_END( 2, 1 );  // doc: color (return a replacement color to override the default color)
+        CBaseEntity::PushLuaInstanceSafe( L, entity );  // doc: player
+        lua_pushcolor( L, color );                      // doc: color (the color of the player's name in the scoreboard)
+        LUA_CALL_HOOK_END( 2, 1 );                      // doc: color (return a replacement color to override the default color)
 
         if ( lua_iscolor( L, -1 ) )
         {
@@ -526,7 +526,7 @@ class CHLVoiceStatusHelper : public IVoiceStatusHelper
             rawColor[2] = clr.b();
         }
 
-        lua_pop( L, 1 ); // pop the return value
+        lua_pop( L, 1 );  // pop the return value
 #endif
     }
 
@@ -696,7 +696,7 @@ class CHLClient : public IBaseClientDLL
     // Create movement command
     virtual void CreateMove( int sequence_number, float input_sample_frametime, bool active );
     virtual void ExtraMouseSample( float frametime, bool active );
-    virtual bool WriteUsercmdDeltaToBuffer( bf_write *buf, int from, int to, bool isnewcommand );
+    virtual bool WriteUsercmdDeltaToBuffer( bf_write *buf, int from, int to, bool isNewCommand );
     virtual void EncodeUserCmdToBuffer( bf_write &buf, int slot );
     virtual void DecodeUserCmdFromBuffer( bf_read &buf, int slot );
 
@@ -1076,13 +1076,13 @@ int CHLClient::Init( CreateInterfaceFn appSystemFactory,
     // NOTE: This is the earliest useful point we can start showing a loading indicator in the game.
     // however, shortly after the menu is already available. So we should probably let HTML handle
     // the loading and updating screens.
-    //vgui::VPANEL parent = enginevgui->GetPanel( PANEL_ROOT );
-    //vgui::Label *label = new vgui::Label( NULL, "HelloWorldLabel", "Loading..." );
-    //label->SetBounds( 0, 0, 1600, 900 );
-    //label->SetContentAlignment( vgui::Label::a_center );
-    //label->SetVisible( true );
-    //label->SetParent( parent );
-    //label->SetZPos( 10000 );
+    // vgui::VPANEL parent = enginevgui->GetPanel( PANEL_ROOT );
+    // vgui::Label *label = new vgui::Label( NULL, "HelloWorldLabel", "Loading..." );
+    // label->SetBounds( 0, 0, 1600, 900 );
+    // label->SetContentAlignment( vgui::Label::a_center );
+    // label->SetVisible( true );
+    // label->SetParent( parent );
+    // label->SetZPos( 10000 );
 
     // Andrew; then mount everything the user wants to use.
     InitializeGameContentMounting();
@@ -1626,9 +1626,9 @@ void CHLClient::CreateMove( int sequence_number, float input_sample_frametime, b
 //			from -
 //			to -
 //-----------------------------------------------------------------------------
-bool CHLClient::WriteUsercmdDeltaToBuffer( bf_write *buf, int from, int to, bool isnewcommand )
+bool CHLClient::WriteUsercmdDeltaToBuffer( bf_write *buf, int from, int to, bool isNewCommand )
 {
-    return input->WriteUsercmdDeltaToBuffer( buf, from, to, isnewcommand );
+    return input->WriteUsercmdDeltaToBuffer( buf, from, to, isNewCommand );
 }
 
 //-----------------------------------------------------------------------------
@@ -1757,7 +1757,7 @@ void CHLClient::LevelInitPreEntity( char const *pMapName )
     luasrc_init();
 
     LUA_CALL_HOOK_BEGIN( "LevelInitPreEntity", "Before loading entities, making the level name known." );
-    lua_pushstring( L, pMapName ); // doc: levelName
+    lua_pushstring( L, pMapName );  // doc: levelName
     LUA_CALL_HOOK_END( 1, 0 );
 #endif
 

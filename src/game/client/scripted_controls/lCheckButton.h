@@ -17,7 +17,7 @@ class LCheckButton : public CheckButton
 {
     DECLARE_CLASS_SIMPLE( LCheckButton, CheckButton );
 
-    LUA_OVERRIDE_SINGLE_LUA_INSTANCE_METATABLE( "CheckButton" );
+    LUA_OVERRIDE_SINGLE_LUA_INSTANCE_METATABLE( LCheckButton, "CheckButton" );
 
    public:
     LCheckButton( Panel *parent, const char *panelName, const char *text, lua_State *L );

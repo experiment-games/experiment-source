@@ -138,11 +138,31 @@ LUA_BINDING_BEGIN( UserCommand, GetViewAngles, "class", "Gets the view angles" )
 }
 LUA_BINDING_END( "Angle", "The view angles" )
 
-// static int CUserCmd_IsForced( lua_State *L )
-//{
-//     lua_pushboolean( L, LUA_BINDING_ARGUMENT(luaL_checkusercmd, 1, "userCmd")->??? );
-//     return 1;
-// }
+LUA_BINDING_BEGIN( UserCommand, IsNew, "class", "Whether this command is repeated (likely due to lag) and it isn't new." )
+{
+    // Experiment; TODO: This doesn't work as expected lastcommand is set too early
+//    lua_CUserCmd *cmd = LUA_BINDING_ARGUMENT( luaL_checkusercmd, 1, "userCmd" );
+//    CBasePlayer *player = CBaseEntity::GetPredictionPlayer();
+//    Assert( player );
+//
+//#ifdef CLIENT_DLL
+//    // Here to mimic gmod behavior, the client always forms new commands.
+//    int lastPlayerCommandNumber = player->CurrentCommandNumber() - 1;
+//#else
+//    int lastPlayerCommandNumber = player->LastUserCommandNumber();
+//#endif
+//
+//    if ( cmd->command_number == lastPlayerCommandNumber )
+//    {
+//        // Experiment; Let's see if this happens often.
+//        DevMsg( "[Experiment debug] UserCommand number mismatch: %i == %i (IsNew = false)\n", cmd->command_number, lastPlayerCommandNumber );
+//    }
+//
+//    lua_pushboolean( L, cmd->command_number != lastPlayerCommandNumber );
+    lua_pushboolean( L, true ); // TODO: Implement
+    return 1;
+}
+LUA_BINDING_END( "boolean", "True if the command is new, false otherwise" )
 
 LUA_BINDING_BEGIN( UserCommand, KeyDown, "class", "Checks if a key is down" )
 {

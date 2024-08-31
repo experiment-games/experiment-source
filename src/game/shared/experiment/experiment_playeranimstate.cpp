@@ -95,7 +95,7 @@ Activity CExperimentPlayerAnimState::TranslateActivity( Activity actDesired )
 
 #ifdef LUA_SDK
     LUA_CALL_HOOK_BEGIN( "TranslateActivity" );
-    CBaseEntity::PushLuaInstanceSafe( L, pPlayer );
+    CExperiment_Player::PushLuaInstanceSafe( L, pPlayer );
     lua_pushinteger( L, actDesired );
     LUA_CALL_HOOK_END( 2, 1 );
 
@@ -176,7 +176,7 @@ void CExperimentPlayerAnimState::Update( float eyeYaw, float eyePitch )
     GetOuterAbsVelocity( vecVelocity );
 
     LUA_CALL_HOOK_BEGIN( "UpdateAnimation" );
-    CBaseEntity::PushLuaInstanceSafe( L, pExperimentPlayer );
+    CExperiment_Player::PushLuaInstanceSafe( L, pExperimentPlayer );
     lua_pushvector( L, vecVelocity );
     lua_pushnumber( L, m_flMaxGroundSpeed );
     LUA_CALL_HOOK_END( 3, 0 );
@@ -298,7 +298,7 @@ void CExperimentPlayerAnimState::DoAnimationEvent( PlayerAnimEvent_t event,
 
 #ifdef LUA_SDK
     LUA_CALL_HOOK_BEGIN( "DoAnimationEvent" );
-    CBaseEntity::PushLuaInstanceSafe( L, pPlayer );
+    CExperiment_Player::PushLuaInstanceSafe( L, pPlayer );
     lua_pushinteger( L, ( int )event );
     lua_pushinteger( L, nData );
     LUA_CALL_HOOK_END( 3, 1 );
@@ -407,7 +407,7 @@ Activity CExperimentPlayerAnimState::CalcMainActivity()
     GetOuterAbsVelocity( vecVelocity );
 
     LUA_CALL_HOOK_BEGIN( "CalcMainActivity" );
-    CBaseEntity::PushLuaInstanceSafe( L, pPlayer );
+    CExperiment_Player::PushLuaInstanceSafe( L, pPlayer );
     lua_pushvector( L, vecVelocity );
     LUA_CALL_HOOK_END( 2, 2 );
 

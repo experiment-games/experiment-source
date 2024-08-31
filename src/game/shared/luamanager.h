@@ -110,14 +110,14 @@
 #define LUA_CALL_HOOK_END( nArgs, nresults ) \
     LUA_CALL_HOOK_FOR_STATE_END( L, nArgs, nresults )
 
-#define LUA_CALL_WEAPON_METHOD_BEGIN( functionName ) \
-    lua_getref( L, m_nTableReference );              \
-    lua_getfield( L, -1, functionName );             \
-    lua_remove( L, -2 );                             \
-    if ( lua_isfunction( L, -1 ) )                   \
-    {                                                \
-        int args = 0;                                \
-        CBaseEntity::PushLuaInstanceSafe( L, this ); \
+#define LUA_CALL_WEAPON_METHOD_BEGIN( functionName )       \
+    lua_getref( L, m_nTableReference );                    \
+    lua_getfield( L, -1, functionName );                   \
+    lua_remove( L, -2 );                                   \
+    if ( lua_isfunction( L, -1 ) )                         \
+    {                                                      \
+        int args = 0;                                      \
+        CBaseCombatWeapon::PushLuaInstanceSafe( L, this ); \
         ++args;
 
 #define LUA_CALL_WEAPON_METHOD_END( nArgs, nresults ) \
@@ -126,16 +126,16 @@
     }                                                 \
     else lua_pop( L, 1 );
 
-#define LUA_CALL_WEAPON_HOOK_BEGIN( functionName, pWeapon ) \
-    if ( pWeapon->IsScripted() )                            \
-    {                                                       \
-        lua_getref( L, pWeapon->m_nTableReference );        \
-        lua_getfield( L, -1, functionName );                \
-        lua_remove( L, -2 );                                \
-        if ( lua_isfunction( L, -1 ) )                      \
-        {                                                   \
-            int args = 0;                                   \
-            CBaseEntity::PushLuaInstanceSafe( L, pWeapon ); \
+#define LUA_CALL_WEAPON_HOOK_BEGIN( functionName, pWeapon )       \
+    if ( pWeapon->IsScripted() )                                  \
+    {                                                             \
+        lua_getref( L, pWeapon->m_nTableReference );              \
+        lua_getfield( L, -1, functionName );                      \
+        lua_remove( L, -2 );                                      \
+        if ( lua_isfunction( L, -1 ) )                            \
+        {                                                         \
+            int args = 0;                                         \
+            CBaseCombatWeapon::PushLuaInstanceSafe( L, pWeapon ); \
             ++args;
 
 #define LUA_CALL_WEAPON_HOOK_END( nArgs, nresults ) \

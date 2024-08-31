@@ -54,14 +54,6 @@ LUALIB_API lua_CBasePlayer *luaL_optplayer( lua_State *L, int narg, lua_CBasePla
 
 LUA_REGISTRATION_INIT( Player )
 
-LUA_BINDING_BEGIN( Player, AbortReload, "class", "Abort the current reload." )
-{
-    lua_CBasePlayer *player = LUA_BINDING_ARGUMENT( luaL_checkplayer, 1, "player" );
-    player->AbortReload();
-    return 0;
-}
-LUA_BINDING_END()
-
 LUA_BINDING_BEGIN( Player, AddToPlayerSimulationList, "class", "Add the player to the simulation list." )
 {
     lua_CBasePlayer *player = LUA_BINDING_ARGUMENT( luaL_checkplayer, 1, "player" );
@@ -152,14 +144,14 @@ LUA_BINDING_BEGIN( Player, GetActiveWeapon, "class", "Get the player's active we
 
     if ( !CExperimentScriptedWeapon::IsValidWeapon( pWeapon ) )
     {
-        CBaseEntity::PushLuaInstanceSafe( L, NULL );
+        CBaseCombatWeapon::PushLuaInstanceSafe( L, NULL );
         return 1;
     }
 
-    CBaseEntity::PushLuaInstanceSafe( L, pWeapon );
+    CBaseCombatWeapon::PushLuaInstanceSafe( L, pWeapon );
     return 1;
 }
-LUA_BINDING_END( "weapon", "The player's active weapon." )
+LUA_BINDING_END( "Weapon", "The player's active weapon." )
 
 // FIXME: move to CBaseCombatCharacter
 LUA_BINDING_BEGIN( Player, GetAmmoCount, "class", "Get the player's ammo count." )
@@ -593,7 +585,7 @@ LUA_BINDING_BEGIN( Player, GetWeapon, "class", "Get the player's weapon." )
         }
     }
 
-    CBaseEntity::PushLuaInstanceSafe( L, foundWeapon );
+    CBaseCombatWeapon::PushLuaInstanceSafe( L, foundWeapon );
     return 1;
 }
 LUA_BINDING_END( "Entity", "The player's weapon." )
@@ -606,11 +598,11 @@ LUA_BINDING_BEGIN( Player, GetWeaponInSlot, "class", "Get the player's weapon in
 
     if ( !CExperimentScriptedWeapon::IsValidWeapon( weapon ) )
     {
-        CBaseEntity::PushLuaInstanceSafe( L, nullptr );
+        CBaseCombatWeapon::PushLuaInstanceSafe( L, nullptr );
         return 1;
     }
 
-    CBaseEntity::PushLuaInstanceSafe( L, weapon );
+    CBaseCombatWeapon::PushLuaInstanceSafe( L, weapon );
     return 1;
 }
 LUA_BINDING_END( "Entity", "The player's weapon in the slot." )
@@ -628,7 +620,7 @@ LUA_BINDING_BEGIN( Player, GetWeapons, "class", "Get the player's weapons." )
         if ( !weapon || !CExperimentScriptedWeapon::IsValidWeapon( weapon ) )
             break;
 
-        CBaseEntity::PushLuaInstanceSafe( L, weapon );
+        CBaseCombatWeapon::PushLuaInstanceSafe( L, weapon );
         lua_rawseti( L, -2, i + 1 );
     }
 
@@ -643,6 +635,14 @@ LUA_BINDING_BEGIN( Player, HintMessage, "class", "Hint a message to the player."
     return 0;
 }
 LUA_BINDING_END()
+
+LUA_BINDING_BEGIN( Player, IsFlashlightOn, "class", "Check if the flashlight is on for the player." )
+{
+    lua_CExperiment_Player *player = LUA_BINDING_ARGUMENT( luaL_checkexperimentplayer, 1, "player" );
+    lua_pushboolean( L, player->FlashlightIsOn() );
+    return 1;
+}
+LUA_BINDING_END( "boolean", "True if the flashlight is on, false otherwise." )
 
 // LUA_BINDING_BEGIN( Player, IncrementEfNoInterpParity, "class", "Increment the player's EF no interp parity." )
 // {
@@ -1287,14 +1287,14 @@ LUA_BINDING_END( "boolean", "Whether the player has the weapon." )
 
 LUA_BINDING_BEGIN( Player, OwnsWeaponOfType, "class", "Check if the player owns a weapon of a certain type." )
 {
-    CBaseEntity::PushLuaInstanceSafe( L,
+    CBaseCombatWeapon::PushLuaInstanceSafe( L,
                                       LUA_BINDING_ARGUMENT( luaL_checkplayer, 1, "player" )
                                           ->Weapon_OwnsThisType(
                                               LUA_BINDING_ARGUMENT( luaL_checkstring, 2, "type" ),
                                               LUA_BINDING_ARGUMENT_WITH_DEFAULT( luaL_optnumber, 3, 0, "subType" ) ) );
     return 1;
 }
-LUA_BINDING_END( "Player", "The weapon the player owns of the specified type." )
+LUA_BINDING_END( "Weapon", "The weapon the player owns of the specified type." )
 
 LUA_BINDING_BEGIN( Player, SetLastWeapon, "class", "Set the player's last weapon." )
 {
@@ -1432,35 +1432,32 @@ LUA_BINDING_BEGIN( Player, GetUniqueId, "class", "Get the player's unique ID." )
 }
 LUA_BINDING_END( "integer", "The player's unique ID." )
 
-LUA_BINDING_BEGIN( Player, __eq, "class", "Check if two players are equal." )
-{
-    lua_pushboolean( L, LUA_BINDING_ARGUMENT( lua_toplayer, 1, "player" ) == LUA_BINDING_ARGUMENT( lua_toplayer, 2, "player" ) );
-    return 1;
-}
-LUA_BINDING_END( "boolean", "Whether the players are equal." )
-
-LUA_BINDING_BEGIN( Player, __tostring, "class", "Get the string representation of a player." )
-{
-    lua_CBasePlayer *player = LUA_BINDING_ARGUMENT( lua_toplayer, 1, "player" );
-
-    if ( player == NULL )
-        lua_pushstring( L, "NULL" );
-    else
-        lua_pushfstring( L, "Player: %d \"%s\" (%d)", player->GetUserID(), player->GetPlayerName(), player->entindex() );
-    return 1;
-}
-LUA_BINDING_END( "string", "The string representation of the player." )
+// Experiment; We only let CBaseEntity determine equality, which should be fine since they're pointers to the same entity. Disabled:
+//LUA_BINDING_BEGIN( Player, __eq, "class", "Check if two players are equal." )
+//{
+//    lua_pushboolean( L, LUA_BINDING_ARGUMENT( lua_toplayer, 1, "player" ) == LUA_BINDING_ARGUMENT( lua_toplayer, 2, "player" ) );
+//    return 1;
+//}
+//LUA_BINDING_END( "boolean", "Whether the players are equal." )
+//
+//LUA_BINDING_BEGIN( Player, __tostring, "class", "Get the string representation of a player." )
+//{
+//    lua_CBasePlayer *player = LUA_BINDING_ARGUMENT( lua_toplayer, 1, "player" );
+//
+//    if ( player == NULL )
+//        lua_pushstring( L, "NULL" );
+//    else
+//        lua_pushfstring( L, "Player: %d \"%s\" (%d)", player->GetUserID(), player->GetPlayerName(), player->entindex() );
+//    return 1;
+//}
+//LUA_BINDING_END( "string", "The string representation of the player." )
 
 // Experiment; Not really useful in Lua, so disabled
 // static int luasrc_ToBasePlayer( lua_State *L )
 //{
-//    CBaseEntity::PushLuaInstanceSafe( L, ToBasePlayer( luaL_checkentity( L, 1 ) ) );
+//    CBasePlayer::PushLuaInstanceSafe( L, ToBasePlayer( luaL_checkentity( L, 1 ) ) );
 //    return 1;
 //}
-//
-// static const luaL_Reg CBasePlayer_funcs[] = {
-//    { "ToBasePlayer", luasrc_ToBasePlayer },
-//    { NULL, NULL } };
 
 /*
 ** Open CBasePlayer object
@@ -1486,7 +1483,7 @@ LUA_REGISTRATION_INIT( Players );
 #ifdef CLIENT_DLL
 LUA_BINDING_BEGIN( Players, GetLocalPlayer, "library", "Get the local player.", "client" )
 {
-    CBaseEntity::PushLuaInstanceSafe( L, CBasePlayer::GetLocalPlayer() );
+    CBasePlayer::PushLuaInstanceSafe( L, CBasePlayer::GetLocalPlayer() );
     return 1;
 }
 LUA_BINDING_END( "Player", "The local player." )
@@ -1542,7 +1539,7 @@ LUA_BINDING_BEGIN( Players, GetAllBots, "library", "Get all bots." )
     for ( int i = 1; i <= gpGlobals->maxClients; i++ )
     {
         CBasePlayer *pPlayer = UTIL_PlayerByIndex( i );
-        CBaseEntity::PushLuaInstanceSafe( L, pPlayer );
+        CBasePlayer::PushLuaInstanceSafe( L, pPlayer );
         lua_rawseti( L, -2, i + 1 );
     }
 
@@ -1560,7 +1557,7 @@ LUA_BINDING_BEGIN( Players, GetAllHumans, "library", "Get all humans." )
 
         if ( pPlayer && !( pPlayer->GetFlags() & FL_FAKECLIENT ) )
         {
-            CBaseEntity::PushLuaInstanceSafe( L, pPlayer );
+            CBasePlayer::PushLuaInstanceSafe( L, pPlayer );
             lua_rawseti( L, -2, i + 1 );
         }
     }
@@ -1578,7 +1575,7 @@ LUA_BINDING_BEGIN( Players, GetAll, "library", "Get all players." )
         CBasePlayer *pPlayer = UTIL_PlayerByIndex( i );
         if ( pPlayer )
         {
-            CBaseEntity::PushLuaInstanceSafe( L, pPlayer );
+            CBasePlayer::PushLuaInstanceSafe( L, pPlayer );
             lua_rawseti( L, -2, i + 1 );
         }
     }
@@ -1587,23 +1584,37 @@ LUA_BINDING_BEGIN( Players, GetAll, "library", "Get all players." )
 }
 LUA_BINDING_END( "table", "All players." )
 
+LUA_BINDING_BEGIN( Players, GetCount, "library", "Get the number of players." )
+{
+    int count = 0;
+    for ( int i = 1; i <= gpGlobals->maxClients; i++ )
+    {
+        if ( UTIL_PlayerByIndex( i ) )
+            count++;
+    }
+
+    lua_pushinteger( L, count );
+    return 1;
+}
+LUA_BINDING_END( "integer", "The number of players." )
+
 LUA_BINDING_BEGIN( Players, FindByIndex, "library", "Get a player by index." )
 {
-    CBaseEntity::PushLuaInstanceSafe( L, UTIL_PlayerByIndex( LUA_BINDING_ARGUMENT( luaL_checknumber, 1, "index" ) ) );
+    CBasePlayer::PushLuaInstanceSafe( L, UTIL_PlayerByIndex( LUA_BINDING_ARGUMENT( luaL_checknumber, 1, "index" ) ) );
     return 1;
 }
 LUA_BINDING_END( "Player", "The player." )
 
 LUA_BINDING_BEGIN( Players, FindByUserId, "library", "Get a player by user ID." )
 {
-    CBaseEntity::PushLuaInstanceSafe( L, UTIL_PlayerByUserId( LUA_BINDING_ARGUMENT( luaL_checknumber, 1, "user ID" ) ) );
+    CBasePlayer::PushLuaInstanceSafe( L, UTIL_PlayerByUserId( LUA_BINDING_ARGUMENT( luaL_checknumber, 1, "user ID" ) ) );
     return 1;
 }
 LUA_BINDING_END( "Player", "The player." )
 
 LUA_BINDING_BEGIN( Players, FindByName, "library", "Get a player by name." )
 {
-    CBaseEntity::PushLuaInstanceSafe( L, UTIL_PlayerByName( LUA_BINDING_ARGUMENT( luaL_checkstring, 1, "name" ) ) );
+    CBasePlayer::PushLuaInstanceSafe( L, UTIL_PlayerByName( LUA_BINDING_ARGUMENT( luaL_checkstring, 1, "name" ) ) );
     return 1;
 }
 LUA_BINDING_END( "Player", "The player." )
@@ -1621,7 +1632,7 @@ LUA_BINDING_BEGIN( Players, FindBySteamId, "library", "Get a player by Steam ID.
     uint64 product = unAccountID * 2;
     uint64 steamID = STEAM_BASELINE + product + eAccountType;
 
-    CBaseEntity::PushLuaInstanceSafe( L, UTIL_PlayerBySteamID( steamID ) );
+    CBasePlayer::PushLuaInstanceSafe( L, UTIL_PlayerBySteamID( steamID ) );
     return 1;
 }
 LUA_BINDING_END( "Player", "The player." )
@@ -1630,7 +1641,7 @@ LUA_BINDING_BEGIN( Players, FindBySteamId64, "library", "Get a player by Steam I
 {
     uint64 id = Q_atoui64( LUA_BINDING_ARGUMENT( luaL_checkstring, 1, "Steam ID 64" ) );
     CSteamID steamID( id );
-    CBaseEntity::PushLuaInstanceSafe( L, UTIL_PlayerBySteamID( steamID ) );
+    CBasePlayer::PushLuaInstanceSafe( L, UTIL_PlayerBySteamID( steamID ) );
     return 1;
 }
 LUA_BINDING_END( "Player", "The player." )
@@ -1651,7 +1662,7 @@ LUA_BINDING_BEGIN( Players, FindByUniqueID, "library", "Get a player by unique I
         }
     }
 
-    CBaseEntity::PushLuaInstanceSafe( L, player );
+    CBasePlayer::PushLuaInstanceSafe( L, player );
     return 1;
 }
 LUA_BINDING_END( "Player", "The player." )

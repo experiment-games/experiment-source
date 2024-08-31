@@ -668,7 +668,7 @@ void CPrediction::SetupMove( C_BasePlayer *player, CUserCmd *ucmd, IMoveHelper *
 
 #ifdef LUA_SDK
     LUA_CALL_HOOK_BEGIN( "SetupMove" );
-    CBaseEntity::PushLuaInstanceSafe( L, player );
+    CBasePlayer::PushLuaInstanceSafe( L, player );
     lua_pushmovedata( L, move );
     lua_pushusercmd( L, ucmd );
     LUA_CALL_HOOK_END( 3, 0 );
@@ -684,7 +684,7 @@ void CPrediction::FinishMove( C_BasePlayer *player, CUserCmd *ucmd, CMoveData *m
 {
 #ifdef LUA_SDK
     LUA_CALL_HOOK_BEGIN( "FinishMove" );
-    CBaseEntity::PushLuaInstanceSafe( L, player );
+    CBasePlayer::PushLuaInstanceSafe( L, player );
     lua_pushmovedata( L, move );
     LUA_CALL_HOOK_END( 2, 1 );
 
@@ -745,7 +745,7 @@ void CPrediction::StartCommand( C_BasePlayer *player, CUserCmd *cmd )
 
 #ifdef LUA_SDK
     LUA_CALL_HOOK_BEGIN( "StartCommand" );
-    CBaseEntity::PushLuaInstanceSafe( L, player );
+    CBasePlayer::PushLuaInstanceSafe( L, player );
     lua_pushusercmd( L, cmd );
     LUA_CALL_HOOK_END( 2, 0 );
 #endif
@@ -868,7 +868,7 @@ void CPrediction::RunPostThink( C_BasePlayer *player )
 
 #ifdef LUA_SDK
     LUA_CALL_HOOK_BEGIN( "PlayerPostThink" );
-    CBaseEntity::PushLuaInstanceSafe( L, player );
+    CBasePlayer::PushLuaInstanceSafe( L, player );
     LUA_CALL_HOOK_END( 1, 0 );
 #endif
 }

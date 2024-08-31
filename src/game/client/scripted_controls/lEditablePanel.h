@@ -14,7 +14,7 @@ class LEditablePanel : public EditablePanel
 {
     DECLARE_CLASS_SIMPLE( LEditablePanel, EditablePanel );
 
-    LUA_OVERRIDE_SINGLE_LUA_INSTANCE_METATABLE( "EditablePanel" );
+    LUA_OVERRIDE_SINGLE_LUA_INSTANCE_METATABLE( LEditablePanel, "EditablePanel" );
 
    public:
     LEditablePanel( Panel *parent, const char *panelName, lua_State *L );

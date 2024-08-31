@@ -1434,7 +1434,7 @@ void CInput::CreateMove( int sequence_number, float input_sample_frametime, bool
         }
 
 #ifdef LUA_SDK
-    } // if ( !bLuaOverride )
+    }  // if ( !bLuaOverride )
 #endif
 
     m_flLastForwardMove = cmd->forwardmove;
@@ -1504,7 +1504,7 @@ void CInput::ValidateUserCmd( CUserCmd *usercmd, int sequence_number )
 //			from -
 //			to -
 //-----------------------------------------------------------------------------
-bool CInput::WriteUsercmdDeltaToBuffer( bf_write *buf, int from, int to, bool isnewcommand )
+bool CInput::WriteUsercmdDeltaToBuffer( bf_write *buf, int from, int to, bool isNewCommand )
 {
     Assert( m_pCommands );
 

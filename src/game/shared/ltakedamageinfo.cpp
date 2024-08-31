@@ -183,7 +183,10 @@ LUA_BINDING_END( "Vector", "The reported position of the damage." )
 
 LUA_BINDING_BEGIN( TakeDamageInfo, GetWeapon, "class", "Gets the weapon entity" )
 {
-    CBaseEntity::PushLuaInstanceSafe( L, LUA_BINDING_ARGUMENT( luaL_checkdamageinfo, 1, "damageInfo" ).GetWeapon() );
+    lua_CTakeDamageInfo damageInfo = LUA_BINDING_ARGUMENT( luaL_checkdamageinfo, 1, "damageInfo" );
+    CBaseEntity *entity = damageInfo.GetWeapon();
+
+    CBaseCombatWeapon::PushLuaInstanceSafe( L, dynamic_cast< CBaseCombatWeapon * >( entity ) );
     return 1;
 }
 LUA_BINDING_END( "Entity", "The weapon entity." )

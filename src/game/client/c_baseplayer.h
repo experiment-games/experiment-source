@@ -71,6 +71,11 @@ class C_BasePlayer : public C_BaseCombatCharacter, public CGameEventListener
 {
    public:
     DECLARE_CLASS( C_BasePlayer, C_BaseCombatCharacter );
+
+#ifdef LUA_SDK
+    LUA_OVERRIDE_SINGLE_LUA_INSTANCE_METATABLE( C_BasePlayer, LUA_BASEPLAYERMETANAME )
+#endif
+
     DECLARE_CLIENTCLASS();
     DECLARE_PREDICTABLE();
     DECLARE_INTERPOLATION();
@@ -656,7 +661,7 @@ class C_BasePlayer : public C_BaseCombatCharacter, public CGameEventListener
     EHANDLE m_hOldVehicle;
     EHANDLE m_hUseEntity;
 
-    float m_flMaxspeed; // Current maximum speed
+    float m_flMaxspeed;  // Current maximum speed
 
     // Values to set m_flMaxspeed to when walking slowly, normally, and running.
     float m_flWalkSpeed;

@@ -571,12 +571,6 @@ void CClientTools::OnEntityDeleted( CBaseEntity *pEntity )
 }
 
 void CClientTools::OnEntityCreated( CBaseEntity *pEntity ) {
-#if defined(LUA_SDK)
-    LUA_CALL_HOOK_BEGIN("OnEntityCreated");
-    CBaseEntity::PushLuaInstanceSafe(L, pEntity);
-    LUA_CALL_HOOK_END(1, 0);
-#endif
-
 	if ( !m_bInRecordingMode )
 		return;
 
@@ -586,6 +580,12 @@ void CClientTools::OnEntityCreated( CBaseEntity *pEntity ) {
 	KeyValues *kv = new KeyValues( "created" );
 	ToolFramework_PostToolMessage( h, kv );
 	kv->deleteThis();
+
+#if defined( LUA_SDK )
+  LUA_CALL_HOOK_BEGIN( "OnEntityCreated" );
+  CBaseEntity::PushLuaInstanceSafe( L, pEntity );
+  LUA_CALL_HOOK_END( 1, 0 );
+#endif
 }
 
 HTOOLHANDLE CClientTools::GetToolHandleForEntityByIndex( int entindex )

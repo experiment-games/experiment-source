@@ -36,7 +36,7 @@ LUA_BINDING_BEGIN( CBaseAnimating, BecomeRagdollOnClient, "class", "Become a rag
 {
     lua_CBaseAnimating *pAnimating = LUA_BINDING_ARGUMENT( luaL_checkanimating, 1, "entity" );
 
-    CBaseEntity::PushLuaInstanceSafe( L, pAnimating->BecomeRagdollOnClient() );
+    CBaseAnimating::PushLuaInstanceSafe( L, pAnimating->BecomeRagdollOnClient() );
 
     return 1;
 }
@@ -98,7 +98,7 @@ LUA_BINDING_BEGIN( CBaseAnimating, CreateRagdollCopy, "class", "Create a ragdoll
 {
     lua_CBaseAnimating *pAnimating = LUA_BINDING_ARGUMENT( luaL_checkanimating, 1, "entity" );
 
-    CBaseEntity::PushLuaInstanceSafe( L, pAnimating->CreateRagdollCopy() );
+    CBaseAnimating::PushLuaInstanceSafe( L, pAnimating->CreateRagdollCopy() );
 
     return 1;
 }
@@ -153,7 +153,7 @@ LUA_BINDING_BEGIN( CBaseAnimating, FindFollowedEntity, "class", "Find the follow
 {
     lua_CBaseAnimating *pAnimating = LUA_BINDING_ARGUMENT( luaL_checkanimating, 1, "entity" );
 
-    CBaseEntity::PushLuaInstanceSafe( L, pAnimating->FindFollowedEntity() );
+    CBaseAnimating::PushLuaInstanceSafe( L, pAnimating->FindFollowedEntity() );
 
     return 1;
 }

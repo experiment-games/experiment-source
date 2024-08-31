@@ -5,8 +5,10 @@
 #include "lbaseentity_shared.h"
 #ifdef CLIENT_DLL
 #include "lc_baseanimating.h"
+#include <c_experiment_player.h>
 #else
 #include "lbaseanimating.h"
+#include "experiment_player.h"
 #endif
 #include <istudiorender.h>
 #include <materialsystem/limaterial.h>
@@ -286,7 +288,7 @@ LUA_BINDING_END( "integer", "The transition sequence", "integer", "The direction
 //{
 //    lua_CBaseAnimating *pAnimating = LUA_BINDING_ARGUMENT( luaL_checkanimating, 1, "entity" );
 //
-//    CBaseEntity::PushLuaInstanceSafe( L, pAnimating->GetBaseAnimating() );
+//    CBaseAnimating::PushLuaInstanceSafe( L, pAnimating->GetBaseAnimating() );
 //
 //    return 1;
 //}
@@ -563,6 +565,28 @@ LUA_BINDING_BEGIN( CBaseAnimating, LookupSequence, "class", "Lookup the sequence
     return 1;
 }
 LUA_BINDING_END( "integer", "The sequence" )
+
+LUA_BINDING_BEGIN( CBaseAnimating, GetRagdollOwner, "class", "Returns the player this ragdoll came from. NULL if this is not a player ragdoll (will warn)" )
+{
+    lua_CBaseAnimating *pAnimating = LUA_BINDING_ARGUMENT( luaL_checkanimating, 1, "entity" );
+
+#ifdef CLIENT_DLL
+    C_ExperimentRagdoll *pRagdoll = dynamic_cast< C_ExperimentRagdoll * >( pAnimating );
+#else
+    CExperimentRagdoll *pRagdoll = dynamic_cast< CExperimentRagdoll * >( pAnimating );
+#endif
+
+    if ( !pRagdoll )
+    {
+        DevWarning( "Entity.GetRagdollOwner failed: not a ragdoll\n" );
+        CBasePlayer::PushLuaInstanceSafe( L, NULL );
+        return 1;
+    }
+
+    CBasePlayer::PushLuaInstanceSafe( L, pRagdoll->GetRagdollPlayer() );
+    return 1;
+}
+LUA_BINDING_END( "Player", "The player this ragdoll came from" )
 
 LUA_BINDING_BEGIN( CBaseAnimating, ResetSequence, "class", "Reset the sequence." )
 {

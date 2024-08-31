@@ -520,7 +520,7 @@ LUA_BINDING_BEGIN( Panels, Frame, "library", "Creates a new Frame panel" )
     const char *name = LUA_BINDING_ARGUMENT_WITH_DEFAULT( luaL_optstring, 2, "Frame", "name" );
 
     LFrame *pPanel = new LFrame( parent, name, L );
-    pPanel->PushLuaInstance( L );
+    LFrame::PushLuaInstanceSafe( L, pPanel );
     return 1;
 }
 LUA_BINDING_END( "Frame", "The new Frame Panel" )

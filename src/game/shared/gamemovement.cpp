@@ -1163,7 +1163,7 @@ void CGameMovement::ProcessMovement( CBasePlayer *pPlayer, CMoveData *pMove )
 
 #ifdef LUA_SDK
     LUA_CALL_HOOK_BEGIN( "PlayerTick" );
-    CBaseEntity::PushLuaInstanceSafe( L, player );
+    CBasePlayer::PushLuaInstanceSafe( L, player );
     lua_pushmovedata( L, mv );
     LUA_CALL_HOOK_END( 2, 0 );
 #endif
@@ -4551,7 +4551,7 @@ void CGameMovement::PlayerMove( void )
 
 #ifdef LUA_SDK
     LUA_CALL_HOOK_BEGIN( "Move" );
-    CBaseEntity::PushLuaInstanceSafe( L, player );
+    CBasePlayer::PushLuaInstanceSafe( L, player );
     lua_pushmovedata( L, mv );
     LUA_CALL_HOOK_END( 2, 1 );
 
@@ -4660,7 +4660,7 @@ void CGameMovement::PlayerMove( void )
         {
             bool bNoClipDesired = newMoveType == MOVETYPE_NOCLIP;
             LUA_CALL_HOOK_BEGIN( "PlayerNoClip" );
-            CBaseEntity::PushLuaInstanceSafe( L, player );
+            CBasePlayer::PushLuaInstanceSafe( L, player );
             lua_pushboolean( L, bNoClipDesired );
             LUA_CALL_HOOK_END( 2, 1 );
 

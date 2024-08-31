@@ -922,7 +922,7 @@ void CBasePlayer::TraceAttack( const CTakeDamageInfo &inputInfo, const Vector &v
     Vector lvecDir = vecDir;
 
     LUA_CALL_HOOK_BEGIN( "PlayerTraceAttack" );
-    CBaseEntity::PushLuaInstanceSafe( L, this );
+    CBasePlayer::PushLuaInstanceSafe( L, this );
     lua_pushdamageinfo( L, linputInfo );
     lua_pushvector( L, lvecDir );
     lua_pushtrace( L, *ptr );
@@ -2824,11 +2824,11 @@ bool CBasePlayer::IsUseableEntity( CBaseEntity *pEntity, unsigned int requiredCa
 bool CBasePlayer::CanPickupObject( CBaseEntity *pObject, float massLimit, float sizeLimit )
 {
 #ifdef LUA_SDK
-    LUA_CALL_HOOK_BEGIN( "PlayerCanPickupObject" );
-    CBaseEntity::PushLuaInstanceSafe( L, pObject );
-    lua_pushnumber( L, massLimit );
-    lua_pushnumber( L, sizeLimit );
-    LUA_CALL_HOOK_END( 3, 1 );
+    LUA_CALL_HOOK_BEGIN( "PlayersCanPickupObject", "Checks if any player can pickup this type of object." );
+    CBaseEntity::PushLuaInstanceSafe( L, pObject ); // doc: entity (The entity that is being checked.)
+    lua_pushnumber( L, massLimit ); // doc: massLimit (The mass limit of the object.)
+    lua_pushnumber( L, sizeLimit ); // doc: sizeLimit (The size limit of the object.)
+    LUA_CALL_HOOK_END( 3, 1 ); // doc: boolean (Whether or not the object can be picked up.)
 
     LUA_RETURN_BOOLEAN();
 #endif
@@ -4909,7 +4909,7 @@ void CBasePlayer::InitialSpawn( void )
 {
 #ifdef LUA_SDK
     LUA_CALL_HOOK_BEGIN( "PlayerInitialSpawn" );
-    CBaseEntity::PushLuaInstanceSafe( L, this );
+    CBasePlayer::PushLuaInstanceSafe( L, this );
     LUA_CALL_HOOK_END( 1, 0 );
 #endif
 
@@ -5405,7 +5405,7 @@ bool CBasePlayer::CanEnterVehicle( IServerVehicle *pVehicle, int nRole )
 {
 #ifdef LUA_SDK
     LUA_CALL_HOOK_BEGIN( "CanEnterVehicle" );
-    CBaseEntity::PushLuaInstanceSafe( L, this );
+    CBasePlayer::PushLuaInstanceSafe( L, this );
     // FIXME: implement lua_pushvehicle()!
     CBaseEntity::PushLuaInstanceSafe( L, pVehicle->GetVehicleEnt() );
     lua_pushinteger( L, nRole );

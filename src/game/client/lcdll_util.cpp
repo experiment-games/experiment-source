@@ -65,9 +65,9 @@ LUA_BINDING_END( "integer", "Width of the string." )
 LUA_BINDING_BEGIN( Utilities, GetLocalPlayer, "library", "Get the local player entity" )
 {
 #ifdef CLIENT_DLL
-    CBaseEntity::PushLuaInstanceSafe( L, C_BasePlayer::GetLocalPlayer() );
+    CBasePlayer::PushLuaInstanceSafe( L, C_BasePlayer::GetLocalPlayer() );
 #else
-    CBaseEntity::PushLuaInstanceSafe( L, UTIL_GetLocalPlayer() );
+    CBasePlayer::PushLuaInstanceSafe( L, UTIL_GetLocalPlayer() );
 #endif
 
     return 1;

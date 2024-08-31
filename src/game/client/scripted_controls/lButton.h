@@ -15,7 +15,7 @@ class LButton : public Button
 {
     DECLARE_CLASS_SIMPLE( LButton, Button );
 
-    LUA_OVERRIDE_SINGLE_LUA_INSTANCE_METATABLE( "Button" );
+    LUA_OVERRIDE_SINGLE_LUA_INSTANCE_METATABLE( LButton, "Button" );
 
    public:
     // You can optionally pass in the panel to send the click message to and the name of the command to send to that panel.

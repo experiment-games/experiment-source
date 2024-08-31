@@ -20,7 +20,7 @@
 class C_Experiment_Player : public C_BaseHLPlayer
 {
 #ifdef LUA_SDK
-    LUA_OVERRIDE_SINGLE_LUA_INSTANCE_METATABLE( LUA_EXPERIMENTPLAYERLIBNAME )
+    LUA_OVERRIDE_SINGLE_LUA_INSTANCE_METATABLE( C_Experiment_Player, LUA_EXPERIMENTPLAYERLIBNAME )
 #endif
 
    public:
@@ -120,6 +120,16 @@ class C_Experiment_Player : public C_BaseHLPlayer
         return m_PlayerAnimState;
     }
 
+    EHANDLE GetRagdollEntity() const
+    {
+        return m_hRagdoll;
+    }
+
+    bool FlashlightIsOn() const
+    {
+        return IsEffectActive( EF_DIMLIGHT );
+    }
+
    private:
     C_Experiment_Player( const C_Experiment_Player & );
 
@@ -192,6 +202,11 @@ class C_ExperimentRagdoll : public C_BaseAnimatingOverlay
                                int nFlexWeightCount,
                                float *pFlexWeights,
                                float *pFlexDelayedWeights );
+
+    C_BasePlayer *GetRagdollPlayer() const
+    {
+        return dynamic_cast< C_BasePlayer * >( m_hPlayer.Get() );
+    }
 
    private:
     C_ExperimentRagdoll( const C_ExperimentRagdoll & )

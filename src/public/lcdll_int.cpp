@@ -70,7 +70,7 @@ LUA_BINDING_BEGIN( Engines, ClientCommandUnrestricted, "library", "Send a comman
 }
 LUA_BINDING_END()
 
-LUA_BINDING_BEGIN( Engines, ConIsVisible, "library", "Check if the console is visible." )
+LUA_BINDING_BEGIN( Engines, IsConsoleVisible, "library", "Check if the console is visible." )
 {
     lua_pushboolean( L, engine->Con_IsVisible() );
     return 1;

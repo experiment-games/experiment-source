@@ -671,7 +671,7 @@ bool ClientModeShared::ShouldDrawLocalPlayer( C_BasePlayer *pPlayer )
 {
 #ifdef LUA_SDK
     LUA_CALL_HOOK_BEGIN( "ShouldDrawLocalPlayer" );
-    CBaseEntity::PushLuaInstanceSafe( L, pPlayer );
+    CBasePlayer::PushLuaInstanceSafe( L, pPlayer );
     LUA_CALL_HOOK_END( 1, 1 );
 
     LUA_RETURN_BOOLEAN();

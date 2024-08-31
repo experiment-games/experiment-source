@@ -154,7 +154,7 @@ void C_Experiment_Player::TraceAttack( const CTakeDamageInfo &info,
     Vector lvecDir = vecDir;
 
     LUA_CALL_HOOK_BEGIN( "PlayerTraceAttack" );
-    CBaseEntity::PushLuaInstanceSafe( L, this );
+    C_Experiment_Player::PushLuaInstanceSafe( L, this );
     lua_pushdamageinfo( L, lInfo );
     lua_pushvector( L, lvecDir );
     lua_pushtrace( L, *ptr );

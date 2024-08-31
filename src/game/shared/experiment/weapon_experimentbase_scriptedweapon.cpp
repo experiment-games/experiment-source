@@ -44,7 +44,7 @@ BEGIN_DATADESC( CExperimentScriptedWeapon ) END_DATADESC()
 
 // LINK_ENTITY_TO_CLASS( weapon_experimentbase_scriptedweapon, CExperimentScriptedWeapon ); PRECACHE_WEAPON_REGISTER( weapon_experimentbase_scriptedweapon );
 
-static void* WORKAROUND_NASTY_FORMATTING_BUG;  // clang-format on
+static bool WORKAROUND_NASTY_FORMATTING_BUG;  // clang-format on
 
 // These functions replace the macros above for runtime registration of
 // scripted weapons.
@@ -606,7 +606,7 @@ void CExperimentScriptedWeapon::InitScriptedWeapon( void )
     lua_pop( L, 1 );
 
     LUA_CALL_HOOK_BEGIN( "PreEntityInitialize" );
-    CBaseEntity::PushLuaInstanceSafe( L, this );
+    CBaseCombatWeapon::PushLuaInstanceSafe( L, this );
     LUA_CALL_HOOK_END( 1, 0 );
 
     m_bInitialized = true;
@@ -1047,7 +1047,7 @@ bool CExperimentScriptedWeapon::Holster( CBaseCombatWeapon *pSwitchingTo )
 {
 #ifdef LUA_SDK
     LUA_CALL_WEAPON_METHOD_BEGIN( "Holster" );
-    CBaseEntity::PushLuaInstanceSafe( L, pSwitchingTo );
+    CBaseCombatWeapon::PushLuaInstanceSafe( L, pSwitchingTo );
     LUA_CALL_WEAPON_METHOD_END( 1, 1 );
 
     LUA_RETURN_BOOLEAN();

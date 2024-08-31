@@ -442,7 +442,7 @@ LUA_BINDING_BEGIN( Panels, Button, "library", "Creates a new button" )
     Panel *pActionSignalTarget = LUA_BINDING_ARGUMENT_WITH_DEFAULT( luaL_optpanel, 4, 0, "actionSignalTarget" );
     const char *pCmd = LUA_BINDING_ARGUMENT_WITH_DEFAULT( luaL_optstring, 5, 0, "cmd" );
     lua_Button *pPanel = new lua_Button( parent, name, text, pActionSignalTarget, pCmd, L );
-    pPanel->PushLuaInstance( L );
+    LButton::PushLuaInstanceSafe( L, pPanel );
     return 1;
 }
 LUA_BINDING_END( "Button", "The new button" )

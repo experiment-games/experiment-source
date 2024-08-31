@@ -360,7 +360,7 @@ LUA_BINDING_END()
 LUA_BINDING_BEGIN( Player, GetLastWeapon, "class", "Get the previous weapon of the player." )
 {
     lua_CBasePlayer *player = LUA_BINDING_ARGUMENT( luaL_checkplayer, 1, "player" );
-    CBaseEntity::PushLuaInstanceSafe( L, player->GetLastWeapon() );
+    CBaseCombatWeapon::PushLuaInstanceSafe( L, player->GetLastWeapon() );
     return 1;
 }
 LUA_BINDING_END()
@@ -400,13 +400,13 @@ LUA_BINDING_BEGIN( Player, SetFlashlightEnabled, "class", "Enable or disable the
 }
 LUA_BINDING_END()
 
-LUA_BINDING_BEGIN( Player, IsFlashlightOn, "class", "Check if the flashlight is on for the player." )
+LUA_BINDING_BEGIN( Player, IsFlashlightEnabled, "class", "Check if the flashlight is enabled for the player." )
 {
-    lua_CBasePlayer *player = LUA_BINDING_ARGUMENT( luaL_checkplayer, 1, "player" );
-    lua_pushinteger( L, player->FlashlightIsOn() );
+    lua_CExperiment_Player *player = LUA_BINDING_ARGUMENT( luaL_checkexperimentplayer, 1, "player" );
+    lua_pushboolean( L, player->GetFlashlightEnabled() );
     return 1;
 }
-LUA_BINDING_END( "integer", "The flashlight state." )
+LUA_BINDING_END( "boolean", "True if the flashlight is enabled, false otherwise." )
 
 LUA_BINDING_BEGIN( Player, TurnFlashlightOn, "class", "Turn the flashlight on for the player." )
 {
@@ -713,7 +713,7 @@ LUA_BINDING_BEGIN( Player, Give, "class", "Give the weapon to the player." )
     //    return 1;
     //}
 
-    CBaseEntity::PushLuaInstanceSafe( L, weapon );
+    CBaseCombatWeapon::PushLuaInstanceSafe( L, weapon );
     return 1;
 }
 LUA_BINDING_END( "Weapon", "The weapon given to the player." )

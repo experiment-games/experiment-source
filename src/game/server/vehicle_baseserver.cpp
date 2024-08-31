@@ -1550,7 +1550,7 @@ void CBaseServerVehicle::ProcessMovement( CBasePlayer *pPlayer, CMoveData *pMove
 {
 #ifdef LUA_SDK
     LUA_CALL_HOOK_BEGIN( "VehicleMove" );
-    CBaseEntity::PushLuaInstanceSafe( L, pPlayer );
+    CBasePlayer::PushLuaInstanceSafe( L, pPlayer );
     CBaseEntity::PushLuaInstanceSafe( L, this->GetVehicleEnt() );
     lua_pushmovedata( L, pMoveData );
     LUA_CALL_HOOK_END( 3, 1 );

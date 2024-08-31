@@ -70,7 +70,7 @@ LUA_BINDING_BEGIN( Engines, CreateFakeClient, "library", "Create a fake client."
     }
 
     CBasePlayer *player = ( ( CBasePlayer * )CBaseEntity::Instance( edict ) );
-    CBaseEntity::PushLuaInstanceSafe( L, player );
+    CBasePlayer::PushLuaInstanceSafe( L, player );
 
     return 1;
 }
@@ -414,7 +414,7 @@ LUA_BINDING_END( "number", "The simulation interval." )
 
 LUA_BINDING_BEGIN( Engines, GetListenServerHost, "library", "Get the local player on a listen server - this is for multiplayer use only." )
 {
-    CBaseEntity::PushLuaInstanceSafe( L, UTIL_GetListenServerHost() );
+    CBasePlayer::PushLuaInstanceSafe( L, UTIL_GetListenServerHost() );
     return 1;
 }
 LUA_BINDING_END( "Entity", "The listen server host." )

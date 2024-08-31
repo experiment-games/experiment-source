@@ -33,12 +33,12 @@ LUA_BINDING_BEGIN( Engines, GetCurrentTime, "library", "Get the current time." )
 }
 LUA_BINDING_END( "number", "The current time." )
 
-//LUA_BINDING_BEGIN( Engines, GetUnpredictedCurrentTime, "library", "Get the current time, which is not influenced by prediction." )
+// LUA_BINDING_BEGIN( Engines, GetUnpredictedCurrentTime, "library", "Get the current time, which is not influenced by prediction." )
 //{
-//    lua_pushnumber( L, gpGlobals->unpredictedCurrentTime );
-//    return 1;
-//}
-//LUA_BINDING_END( "number", "The current time." )
+//     lua_pushnumber( L, gpGlobals->unpredictedCurrentTime );
+//     return 1;
+// }
+// LUA_BINDING_END( "number", "The current time." )
 
 LUA_BINDING_BEGIN( Engines, GetSystemTime, "library", "Get the system time." )
 {
@@ -167,13 +167,13 @@ LUA_BINDING_BEGIN( Engines, GetPlayerByAddress, "library", "Get a player by thei
     const char *address = LUA_BINDING_ARGUMENT( luaL_checkstring, 1, "address" );
     CBasePlayer *pPlayer = g_pGameInfoStore->GetPlayerByAddress( address );
 
-    if ( pPlayer )
+    if ( !pPlayer )
     {
-        CBaseEntity::PushLuaInstanceSafe( L, pPlayer );
+        CBasePlayer::PushLuaInstanceSafe( L, NULL );
         return 1;
     }
 
-    CBaseEntity::PushLuaInstanceSafe( L, NULL );
+    CBasePlayer::PushLuaInstanceSafe( L, pPlayer );
     return 1;
 }
 LUA_BINDING_END( "Player", "The player entity." )

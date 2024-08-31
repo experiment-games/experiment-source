@@ -286,9 +286,9 @@ int C_BaseViewModel::DrawModel(int flags) {
     
 #ifdef LUA_SDK
     LUA_CALL_HOOK_BEGIN( "PreDrawViewModel" );
-    CBaseEntity::PushLuaInstanceSafe( L, this );
-    CBaseEntity::PushLuaInstanceSafe( L, pPlayer );
-    CBaseEntity::PushLuaInstanceSafe( L, pWeapon );
+    CBaseViewModel::PushLuaInstanceSafe( L, this );
+    CBasePlayer::PushLuaInstanceSafe( L, pPlayer );
+    CBaseCombatWeapon::PushLuaInstanceSafe( L, pWeapon );
     LUA_CALL_HOOK_END( 3, 1 );
 
     LUA_RETURN_VALUE_IF_TRUE( 0 );
@@ -328,9 +328,9 @@ int C_BaseViewModel::DrawModel(int flags) {
 
 #ifdef LUA_SDK
     LUA_CALL_HOOK_BEGIN( "PostDrawViewModel" );
-    CBaseEntity::PushLuaInstanceSafe( L, this );
-    CBaseEntity::PushLuaInstanceSafe( L, pPlayer );
-    CBaseEntity::PushLuaInstanceSafe( L, pWeapon );
+    CBaseViewModel::PushLuaInstanceSafe( L, this );
+    CBasePlayer::PushLuaInstanceSafe( L, pPlayer );
+    CBaseCombatWeapon::PushLuaInstanceSafe( L, pWeapon );
     LUA_CALL_HOOK_END( 3, 0 );
 #endif
 
