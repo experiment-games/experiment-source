@@ -45,9 +45,9 @@ end
 local originalMathRandom = math.random
 
 function math.random(min, max)
-    if (not min and not max) then
-        return originalMathRandom()
-    end
+	if (not min and not max) then
+		return originalMathRandom()
+	end
 
 	if (not max) then
 		max = min
@@ -76,11 +76,19 @@ util = Utilities
 util.PrecacheModel = _R.Entity.PrecacheModel
 util.PrecacheSound = _R.Entity.PrecacheSound
 
--- TODO: 	Things like the player manager and drive system depend on these three functions
---			returning sensible data. Find a way to implement it:
-util.AddNetworkString = function(name) end        -- Not needed for us.
-util.NetworkIDToString = function() return "" end -- Not needed for us.
-util.NetworkStringToID = function() return 0 end  -- Not needed for us.
+local networkStrings = NetworkStringTables.FindTable("LuaNetworkStrings")
+
+util.AddNetworkString = function(name)
+	if (SERVER) then
+		networkStrings:AddString(true, name)
+	end
+end
+util.NetworkIDToString = function(id)
+	return networkStrings:GetString(id)
+end
+util.NetworkStringToID = function(name)
+	return networkStrings:FindStringIndex(name)
+end
 
 util.TraceLine = Traces.TraceLine
 util.TraceHull = Traces.TraceHull
@@ -811,11 +819,11 @@ if (SERVER) then
 		self:ShowCrosshair(false)
 	end
 
-    function PLAYER_META:CrosshairEnable()
-        self:ShowCrosshair(true)
-    end
+	function PLAYER_META:CrosshairEnable()
+		self:ShowCrosshair(true)
+	end
 
-    function PLAYER_META:Flashlight(isOn)
+	function PLAYER_META:Flashlight(isOn)
 		if (isOn) then
 			self:TurnFlashlightOn()
 		else
@@ -830,12 +838,11 @@ else
 end
 
 function PLAYER_META:SetClassID(id)
-	-- We don't use this function, so we just store the class ID in the player.
-	self.__classId = id
+	self:SetNWInt("__classId", id)
 end
 
 function PLAYER_META:GetClassID()
-	return self.__classId
+	return self:GetNWInt("__classId", 0)
 end
 
 function PLAYER_META:IsListenServerHost()
@@ -934,9 +941,9 @@ if (SERVER) then
 else
 	-- Empty functions so we can easily add resource files without errors in shared code
 	resource = {}
-    resource.AddFile = function() end
-    resource.AddWorkshop = function() end
-    resource.AddSingleFile = function() end
+	resource.AddFile = function() end
+	resource.AddWorkshop = function() end
+	resource.AddSingleFile = function() end
 
 	-- Returns whether the currently focused panel is a child of the given one.
 	function vgui.FocusedHasParent(panel)

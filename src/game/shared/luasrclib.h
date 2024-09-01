@@ -251,10 +251,8 @@ LUALIB_API int( luaopen_ProjectedTexture )( lua_State *L );
 #define LUA_VMATRIXLIBNAME "Matrix"
 LUALIB_API int( luaopen_VMatrix )( lua_State *L );
 
-#ifdef CLIENT_DLL
 #define LUA_BFREADLIBNAME "UserMessageReader"
 LUALIB_API int( luaopen_bf_read )( lua_State *L );
-#endif
 
 #define LUA_UMSGLIBNAME "UserMessages"
 LUALIB_API int( luaopen_UserMessages )( lua_State *L );

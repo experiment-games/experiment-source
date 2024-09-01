@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Most of this code from the Alien Swarm SDK, modified for Experiment
 //
 //=============================================================================//
 

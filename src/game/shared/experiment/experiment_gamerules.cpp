@@ -450,18 +450,16 @@ void CExperimentRules::PlayerThink( CBasePlayer *pPlayer )
 
 void CExperimentRules::PlayerSpawn( CBasePlayer *pPlayer )
 {
+    BaseClass::PlayerSpawn( pPlayer );
+
     LUA_CALL_HOOK_BEGIN( "PlayerSpawn" );
     CBasePlayer::PushLuaInstanceSafe( L, pPlayer );
-    LUA_CALL_HOOK_END( 1, 1 );
-
-    LUA_RETURN_NONE_IF_FALSE();
-
-    BaseClass::PlayerSpawn( pPlayer );
+    LUA_CALL_HOOK_END( 1, 0 );
 }
 
 bool CExperimentRules::FPlayerCanRespawn( CBasePlayer *pPlayer )
 {
-    LUA_CALL_HOOK_BEGIN( "FPlayerCanRespawn" );
+    LUA_CALL_HOOK_BEGIN( "PlayerCanRespawn" );
     CBasePlayer::PushLuaInstanceSafe( L, pPlayer );
     LUA_CALL_HOOK_END( 1, 1 );
 

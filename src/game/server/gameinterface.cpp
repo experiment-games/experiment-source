@@ -134,6 +134,8 @@ extern ConVar tf_mm_servermode;
 #include <mountsteamcontent.h>
 #endif
 
+#include <util/networkmanager.h>
+
 #ifdef WITH_ENGINE_PATCHES
 #include <engine/engine_patches.h>
 #endif
@@ -164,6 +166,8 @@ IUploadGameStats *gamestatsuploader = NULL;
 
 #include "ai_network.h"
 #include <lresources.h>
+
+#include <networksystem/networksystem.h>
 
 // memdbgon must be the last include file in a .cpp file!!!
 #include "tier0/memdbgon.h"
@@ -243,6 +247,10 @@ INetworkStringTable *g_pStringTableMaterials = NULL;
 INetworkStringTable *g_pStringTableInfoPanel = NULL;
 INetworkStringTable *g_pStringTableClientSideChoreoScenes = NULL;
 INetworkStringTable *g_pStringTableServerMapCycle = NULL;
+
+#ifdef LUA_SDK
+INetworkStringTable *g_pStringTableLuaNetworkStrings = NULL;
+#endif
 
 #ifdef TF_DLL
 INetworkStringTable *g_pStringTableServerPopFiles = NULL;
@@ -695,6 +703,9 @@ bool CServerGameDLL::DLLInit( CreateInterfaceFn appSystemFactory,
 #endif
     }
 
+    if ( ( g_pNetworkSystem = LoadNetworkSystem( appSystemFactory ) ) == NULL )
+        return false;
+
     // Yes, both the client and game .dlls will try to Connect, the
     // soundemittersystem.dll will handle this gracefully
     if ( !soundemitterbase->Connect( appSystemFactory ) )
@@ -775,13 +786,14 @@ bool CServerGameDLL::DLLInit( CreateInterfaceFn appSystemFactory,
     // Used to service deferred navigation queries for NPCs
     IGameSystem::Add( ( IGameSystem * )PostFrameNavigationSystem() );
 
-    // Add game log system
     IGameSystem::Add( GameLogSystem() );
+
 #ifndef _XBOX
-    // Add HLTV director
     IGameSystem::Add( HLTVDirectorSystem() );
 #endif
-    // Add sound emitter
+
+    IGameSystem::Add( g_pNetworkManager );
+
     IGameSystem::Add( SoundEmitterSystem() );
 
     // load Mod specific game events ( MUST be before InitAllSystems() so it can
@@ -899,6 +911,8 @@ void CServerGameDLL::DLLShutdown( void )
 
     gameeventmanager = NULL;
 
+    UnloadNetworkSystem( g_pNetworkSystem );
+
     DisconnectTier3Libraries();
     DisconnectTier2Libraries();
     ConVar_Unregister();
@@ -965,6 +979,12 @@ bool CServerGameDLL::GameInit( void )
         gameeventmanager->FireEvent( event );
     }
 
+    if ( !g_pNetworkManager->StartServer() )
+    {
+        Assert( 0 );  // Does this ever happen?
+        return false;
+    }
+
     return true;
 }
 
@@ -973,6 +993,8 @@ bool CServerGameDLL::GameInit( void )
 void CServerGameDLL::GameShutdown( void )
 {
     ResetGlobalState();
+
+    g_pNetworkManager->ShutdownServer();
 }
 
 static bool g_OneWayTransition = false;
@@ -1656,6 +1678,11 @@ void CServerGameDLL::CreateNetworkStringTables( void )
     Assert( GetParticleSystemIndex( "error" ) == 0 );
 
     CreateNetworkStringTables_GameRules();
+
+#ifdef LUA_SDK
+    g_pStringTableLuaNetworkStrings =
+        networkstringtable->CreateStringTable( "LuaNetworkStrings", 4096 );
+#endif
 
     // Set up save/load utilities for string tables
     g_VguiScreenStringOps.Init( g_pStringTableVguiScreen );

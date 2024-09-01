@@ -183,6 +183,9 @@ extern vgui::IInputInternal *g_InputInternal;
 #include "sixense/in_sixense.h"
 #endif
 
+#include <util/networkmanager.h>
+#include <networksystem/networksystem.h>
+
 // memdbgon must be the last include file in a .cpp file!!!
 #include "tier0/memdbgon.h"
 
@@ -288,6 +291,10 @@ INetworkStringTable *g_pStringTableMaterials = NULL;
 INetworkStringTable *g_pStringTableInfoPanel = NULL;
 INetworkStringTable *g_pStringTableClientSideChoreoScenes = NULL;
 INetworkStringTable *g_pStringTableServerMapCycle = NULL;
+
+#ifdef LUA_SDK
+INetworkStringTable *g_pStringTableLuaNetworkStrings = NULL;
+#endif
 
 #ifdef TF_CLIENT_DLL
 INetworkStringTable *g_pStringTableServerPopFiles = NULL;
@@ -1065,6 +1072,9 @@ int CHLClient::Init( CreateInterfaceFn appSystemFactory,
     factories.physicsFactory = physicsFactory;
     FactoryList_Store( factories );
 
+    if ( (g_pNetworkSystem = LoadNetworkSystem( appSystemFactory ) ) == NULL )
+        return false;
+
     // Yes, both the client and game .dlls will try to Connect, the
     // soundemittersystem.dll will handle this gracefully
     if ( !soundemitterbase->Connect( appSystemFactory ) )
@@ -1153,6 +1163,8 @@ int CHLClient::Init( CreateInterfaceFn appSystemFactory,
     IGameSystem::Add( ClientSoundscapeSystem() );
     IGameSystem::Add( PerfVisualBenchmark() );
     IGameSystem::Add( MumbleSystem() );
+
+    IGameSystem::Add( g_pNetworkManager );
 
 #if defined( TF_CLIENT_DLL )
     IGameSystem::Add( CustomTextureToolCacheGameSystem() );
@@ -1378,6 +1390,8 @@ void CHLClient::Shutdown( void )
     DisconnectDataModel();
     ShutdownFbx();
 #endif
+
+    UnloadNetworkSystem( g_pNetworkSystem );
 
     // This call disconnects the VGui libraries which we rely on later in the
     // shutdown path, so don't do it
@@ -1761,6 +1775,18 @@ void CHLClient::LevelInitPreEntity( char const *pMapName )
     LUA_CALL_HOOK_END( 1, 0 );
 #endif
 
+    // If we're not running singleplayer, connect to the network
+    if ( g_pGameRules->IsMultiplayer() )
+    {
+        if ( !g_pNetworkManager->StartClient() )
+            Assert( 0 ); // Let's hope this never happens
+
+        const char *ip = g_pGameInfoStore->GetServerAddress();
+
+        if ( !g_pNetworkManager->ConnectClientToServer( ip ) )
+            Assert( 0 ); // Let's hope this never happens
+    }
+
     input->LevelInit();
 
     vieweffects->LevelInit();
@@ -1853,6 +1879,10 @@ void CHLClient::ResetStringTablePointers()
     g_pStringTableClientSideChoreoScenes = NULL;
     g_pStringTableServerMapCycle = NULL;
 
+#ifdef LUA_SDK
+    g_pStringTableLuaNetworkStrings = NULL;
+#endif
+
 #ifdef TF_CLIENT_DLL
     g_pStringTableServerPopFiles = NULL;
     g_pStringTableServerMapCycleMvM = NULL;
@@ -1877,6 +1907,8 @@ void CHLClient::LevelShutdown( void )
         LUA_CALL_HOOK_END( 0, 0 );
     }
 #endif
+
+    g_pNetworkManager->ShutdownClient();
 
     // Disable abs recomputations when everything is shutting down
     CBaseEntity::EnableAbsRecomputations( false );
@@ -2123,6 +2155,14 @@ void CHLClient::InstallStringTableCallback( const char *tableName )
             networkstringtable->FindTable( tableName );
     }
 #endif
+#ifdef LUA_SDK
+    else if ( !Q_strcasecmp( tableName, "LuaNetworkStrings" ) )
+    {
+        g_pStringTableLuaNetworkStrings =
+            networkstringtable->FindTable( tableName );
+    }
+#endif
+
 
     InstallStringTableCallback_GameRules();
 }

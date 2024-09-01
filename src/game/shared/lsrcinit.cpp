@@ -25,6 +25,7 @@ static const luaL_RegForState luasrclibs[] = {
     // Shared
     //
     { LUA_SHAREDENUMNAME, luaopen_SharedEnumerations, REALM_SHARED },
+    { LUA_BFREADLIBNAME, luaopen_bf_read, REALM_SHARED },
     { LUA_BUTTONENUMNAME, luaopen_BUTTON, REALM_SHARED },
     { LUA_ACTIVITYENUMNAME, luaopen_ACTIVITY, REALM_SHARED },
     { LUA_BASEANIMATINGLIBNAME, luaopen_CBaseAnimating_shared, REALM_SHARED },
@@ -114,7 +115,6 @@ static const luaL_RegForState luasrclibs[] = {
     // Client
     //
     { LUA_CLIENTENUMNAME, luaopen_ClientEnumerations, REALM_CLIENT },
-    { LUA_BFREADLIBNAME, luaopen_bf_read, REALM_CLIENT },
     { LUA_CHATSLIBNAME, luaopen_Chats, REALM_CLIENT },
     { LUA_CLIENTSHADOWMGRLIBNAME, luaopen_g_pClientShadowMgr, REALM_CLIENT },
 

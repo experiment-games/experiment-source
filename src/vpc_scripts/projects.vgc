@@ -54,6 +54,11 @@ $Project "motionmapper"
 	"utils\motionmapper\motionmapper.vpc" [$WIN32]
 }
 
+$Project "networksystem"
+{
+	"networksystem\networksystem.vpc" [$WINDOWS]
+}
+
 $Project "phonemeextractor"
 {
 	"utils\phonemeextractor\phonemeextractor.vpc" [$WIN32]

@@ -307,7 +307,6 @@ void RegisterLuaUserMessages()
 */
 LUA_REGISTRATION_INIT( UserMessageReader );
 
-#ifdef CLIENT_DLL
 LUA_API bf_read &lua_tobf_read( lua_State *L, int idx )
 {
     bf_read *bfRead = ( bf_read * )lua_touserdata( L, idx );
@@ -331,6 +330,7 @@ LUALIB_API bf_read *luaL_checkbf_read( lua_State *L, int narg )
     return bfRead;
 }
 
+#ifdef CLIENT_DLL
 LUA_BINDING_BEGIN( UserMessageReader, ReadBit, "class", "Reads a bit.", "client" )
 {
     bf_read *bf = LUA_BINDING_ARGUMENT( luaL_checkbf_read, 1, "reader" );
@@ -507,7 +507,6 @@ LUALIB_API int luaopen_UserMessages( lua_State *L )
     return 1;
 }
 
-#ifdef CLIENT_DLL
 LUALIB_API int luaopen_bf_read( lua_State *L )
 {
     LUA_PUSH_NEW_METATABLE( L, LUA_BFREADLIBNAME );
@@ -520,4 +519,3 @@ LUALIB_API int luaopen_bf_read( lua_State *L )
 
     return 1;
 }
-#endif

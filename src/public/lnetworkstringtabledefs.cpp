@@ -40,78 +40,6 @@ LUALIB_API lua_INetworkStringTable *luaL_checkstringtable( lua_State *L, int nar
 
 LUA_REGISTRATION_INIT( NetworkStringTable )
 
-//static int INetworkStringTable_AddString( lua_State *L )
-//{
-//    lua_pushinteger( L, luaL_checkstringtable( L, 1 )->AddString( luaL_checkboolean( L, 2 ), luaL_checkstring( L, 3 ) ) );
-//    return 1;
-//}
-//
-//static int INetworkStringTable_ChangedSinceTick( lua_State *L )
-//{
-//    lua_pushboolean( L, luaL_checkstringtable( L, 1 )->ChangedSinceTick( luaL_checknumber( L, 2 ) ) );
-//    return 1;
-//}
-//
-//static int INetworkStringTable_FindStringIndex( lua_State *L )
-//{
-//    lua_pushinteger( L, luaL_checkstringtable( L, 1 )->FindStringIndex( luaL_checkstring( L, 2 ) ) );
-//    return 1;
-//}
-//
-//static int INetworkStringTable_GetEntryBits( lua_State *L )
-//{
-//    lua_pushinteger( L, luaL_checkstringtable( L, 1 )->GetEntryBits() );
-//    return 1;
-//}
-//
-//static int INetworkStringTable_GetMaxStrings( lua_State *L )
-//{
-//    lua_pushinteger( L, luaL_checkstringtable( L, 1 )->GetMaxStrings() );
-//    return 1;
-//}
-//
-//static int INetworkStringTable_GetNumStrings( lua_State *L )
-//{
-//    lua_pushinteger( L, luaL_checkstringtable( L, 1 )->GetNumStrings() );
-//    return 1;
-//}
-//
-//static int INetworkStringTable_GetString( lua_State *L )
-//{
-//    lua_pushstring( L, luaL_checkstringtable( L, 1 )->GetString( luaL_checknumber( L, 2 ) ) );
-//    return 1;
-//}
-//
-//static int INetworkStringTable_GetTableId( lua_State *L )
-//{
-//    lua_pushinteger( L, luaL_checkstringtable( L, 1 )->GetTableId() );
-//    return 1;
-//}
-//
-//static int INetworkStringTable_GetTableName( lua_State *L )
-//{
-//    lua_pushstring( L, luaL_checkstringtable( L, 1 )->GetTableName() );
-//    return 1;
-//}
-//
-//static int INetworkStringTable_SetStringUserData( lua_State *L )
-//{
-//    luaL_checkstringtable( L, 1 )->SetStringUserData( luaL_checknumber( L, 2 ), strlen( luaL_checkstring( L, 3 ) ) + 1, luaL_checkstring( L, 3 ) );
-//    return 0;
-//}
-//
-//static int INetworkStringTable_SetTick( lua_State *L )
-//{
-//    luaL_checkstringtable( L, 1 )->SetTick( luaL_checknumber( L, 2 ) );
-//    return 0;
-//}
-//
-//static int INetworkStringTable___tostring( lua_State *L )
-//{
-//    INetworkStringTable *pNetworkStringTable = luaL_checkstringtable( L, 1 );
-//    lua_pushfstring( L, "INetworkStringTable: %s", pNetworkStringTable->GetTableName() );
-//    return 1;
-//}
 LUA_BINDING_BEGIN( NetworkStringTable, AddString, "class", "Add a string to the table." )
 {
     lua_INetworkStringTable *networkStringTable = LUA_BINDING_ARGUMENT( luaL_checkstringtable, 1, "networkStringTable" );
@@ -234,7 +162,10 @@ LUA_BINDING_BEGIN( NetworkStringTable, __tostring, "class", "Get a string repres
 {
     lua_INetworkStringTable *networkStringTable = LUA_BINDING_ARGUMENT( lua_tostringtable, 1, "networkStringTable" );
 
-    lua_pushfstring( L, "INetworkStringTable: %s", networkStringTable->GetTableName() );
+    if ( networkStringTable )
+        lua_pushfstring( L, "INetworkStringTable: %s", networkStringTable->GetTableName() );
+    else
+        lua_pushstring( L, "INetworkStringTable: NULL" );
 
     return 1;
 }
@@ -262,32 +193,34 @@ extern INetworkStringTableContainer *networkstringtable;
 
 LUA_REGISTRATION_INIT( NetworkStringTables )
 
-LUA_BINDING_BEGIN( NetworkStringTables, Create, "library", "Create a new string table." )
-{
-    const char *name = LUA_BINDING_ARGUMENT( luaL_checkstring, 1, "name" );
-    int maxEntries = LUA_BINDING_ARGUMENT( luaL_checknumber, 2, "maxEntries" );
-    int userDataFixedSize = LUA_BINDING_ARGUMENT_WITH_DEFAULT( luaL_optnumber, 3, 0, "userDataFixedSize" );
-    int userDataNetworkBits = LUA_BINDING_ARGUMENT_WITH_DEFAULT( luaL_optnumber, 4, 0, "userDataNetworkBits" );
-
-    lua_pushstringtable( L, networkstringtable->CreateStringTable( name, maxEntries, userDataFixedSize, userDataNetworkBits ) );
-
-    return 1;
-}
-LUA_BINDING_END( "NetworkStringTable", "The created string table." )
-
-LUA_BINDING_BEGIN( NetworkStringTables, CreateExtended, "library", "Create a new string table." )
-{
-    const char *name = LUA_BINDING_ARGUMENT( luaL_checkstring, 1, "name" );
-    int maxEntries = LUA_BINDING_ARGUMENT( luaL_checknumber, 2, "maxEntries" );
-    int userDataFixedSize = LUA_BINDING_ARGUMENT_WITH_DEFAULT( luaL_optnumber, 3, 0, "userDataFixedSize" );
-    int userDataNetworkBits = LUA_BINDING_ARGUMENT_WITH_DEFAULT( luaL_optnumber, 4, 0, "userDataNetworkBits" );
-    bool isFilenames = LUA_BINDING_ARGUMENT_WITH_DEFAULT( luaL_optboolean, 5, false, "isFilenames" );
-
-    lua_pushstringtable( L, networkstringtable->CreateStringTableEx( name, maxEntries, userDataFixedSize, userDataNetworkBits, isFilenames ) );
-
-    return 1;
-}
-LUA_BINDING_END( "NetworkStringTable", "The created string table." )
+// Experiment;  Disabled since the only time we can create these is CServerGameDLL::CreateNetworkStringTables
+//              and the Lua state isn't available there yet.
+// LUA_BINDING_BEGIN( NetworkStringTables, Create, "library", "Create a new string table." )
+//{
+//    const char *name = LUA_BINDING_ARGUMENT( luaL_checkstring, 1, "name" );
+//    int maxEntries = LUA_BINDING_ARGUMENT( luaL_checknumber, 2, "maxEntries" );
+//    int userDataFixedSize = LUA_BINDING_ARGUMENT_WITH_DEFAULT( luaL_optnumber, 3, 0, "userDataFixedSize" );
+//    int userDataNetworkBits = LUA_BINDING_ARGUMENT_WITH_DEFAULT( luaL_optnumber, 4, 0, "userDataNetworkBits" );
+//
+//    lua_pushstringtable( L, networkstringtable->CreateStringTable( name, maxEntries, userDataFixedSize, userDataNetworkBits ) );
+//
+//    return 1;
+//}
+// LUA_BINDING_END( "NetworkStringTable", "The created string table." )
+//
+// LUA_BINDING_BEGIN( NetworkStringTables, CreateExtended, "library", "Create a new string table." )
+//{
+//    const char *name = LUA_BINDING_ARGUMENT( luaL_checkstring, 1, "name" );
+//    int maxEntries = LUA_BINDING_ARGUMENT( luaL_checknumber, 2, "maxEntries" );
+//    int userDataFixedSize = LUA_BINDING_ARGUMENT_WITH_DEFAULT( luaL_optnumber, 3, 0, "userDataFixedSize" );
+//    int userDataNetworkBits = LUA_BINDING_ARGUMENT_WITH_DEFAULT( luaL_optnumber, 4, 0, "userDataNetworkBits" );
+//    bool isFilenames = LUA_BINDING_ARGUMENT_WITH_DEFAULT( luaL_optboolean, 5, false, "isFilenames" );
+//
+//    lua_pushstringtable( L, networkstringtable->CreateStringTableEx( name, maxEntries, userDataFixedSize, userDataNetworkBits, isFilenames ) );
+//
+//    return 1;
+//}
+// LUA_BINDING_END( "NetworkStringTable", "The created string table." )
 
 LUA_BINDING_BEGIN( NetworkStringTables, FindTable, "library", "Find a string table by name." )
 {

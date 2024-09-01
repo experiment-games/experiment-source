@@ -298,6 +298,15 @@ $Project "Server (Experiment)"
 				$File	"$SRCDIR\game\shared\experiment\weapon_smg1.cpp"
 				$File	"$SRCDIR\game\shared\experiment\weapon_stunstick.cpp"
 			}
+
+            $Folder "Util"
+            {
+                $File "$SRCDIR\game\shared\experiment\util\jsontokv.h"
+                $File "$SRCDIR\game\shared\experiment\util\jsontokv.cpp"
+
+                $File "$SRCDIR\game\shared\experiment\util\networkmanager.h"
+                $File "$SRCDIR\game\shared\experiment\util\networkmanager.cpp"
+            }
 		}
 	}
 }
