@@ -8,10 +8,10 @@
 #include <gameinfostore.h>
 #include <lconvar.h>
 #include <lconcommand.h>
+#include <mountsteamcontent.h>
 
 // memdbgon must be the last include file in a .cpp file!!!
 #include "tier0/memdbgon.h"
-#include <mountsteamcontent.h>
 
 LUA_REGISTRATION_INIT( Engines );
 

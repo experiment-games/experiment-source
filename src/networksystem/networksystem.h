@@ -39,6 +39,8 @@ class CNetworkSystem : public CTier2AppSystem< INetworkSystem >
 
     // Inherited from INetworkSystem
     virtual void RegisterGroupHandler( NETWORK_MESSAGE_GROUP::TYPE group, INetworkGroupHandler *pHandler );
+    virtual void UnregisterNetworkHandler( NETWORK_MESSAGE_GROUP::TYPE group, INetworkGroupHandler *pHandler );
+    virtual void UnregisterAllNetworkHandlers();
 
     virtual bool StartServer( unsigned short serverPort );
     virtual void ShutdownServer();
@@ -49,20 +51,21 @@ class CNetworkSystem : public CTier2AppSystem< INetworkSystem >
     virtual void Tick( void );
     virtual bool ProcessMessage( IConnectedClient *client, CNetPacket *packet );
     virtual bool ProcessControlMessage( int messageCommand, bf_read &buffer );
+    static bool SendSocketMessage( ISendData *socket, INetworkMessage *message );
 
     virtual INetworkPeerBase *ConnectClientToServer( const char *serverIp, int serverPort );
-    virtual void DisconnectClientFromServer( INetworkPeerBase *peer );
+    virtual void DisconnectClientFromServer();
     virtual INetworkPeerBase *GetServerPeer( void );
 
-    virtual void PostClientToServerMessage( INetworkMessage *message );
+    virtual void SendClientToServerMessage( INetworkMessage *message );
     virtual void BroadcastServerToClientMessage( INetworkMessage *message );
+    virtual void SendServerToClientMessage( INetworkMessage *pMessage, const char *clientRemoteAddress );
 
     INetworkGroupHandler *FindNetworkGroupHandler( NETWORK_MESSAGE_GROUP::TYPE group );
 
     static bool StringToSockaddr( const char *s, struct sockaddr *sadr );
 
    private:
-    void CleanupNetworkHandlers();
 
     bool m_bWinSockInitialized : 1;
 

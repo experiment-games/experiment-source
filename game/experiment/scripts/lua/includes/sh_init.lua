@@ -73,6 +73,7 @@ Include("extensions/console_commands.lua")
 Include("extensions/console_variables.lua")
 Include("extensions/entity.lua")
 Include("extensions/weapon.lua")
+Include("extensions/networks.lua")
 Include("extensions/networked_variables.lua")
 Include("extensions/entity_networked_variables.lua")
 Include("extensions/user_messages.lua")
@@ -95,7 +96,6 @@ Timers = require("timers")
 
 if (not GAMEUI) then
 	ScriptedEntities = require("scripted_entities")
-	Networks = require("networks")
 	ScriptedWeapons = require("scripted_weapons")
 end
 

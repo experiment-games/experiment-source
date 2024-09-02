@@ -86,12 +86,12 @@ void CNetworkClient::Update()
     }
 }
 
-void CNetworkClient::SendPacket( INetworkMessage *packet )
+void CNetworkClient::DispatchSocketMessage( INetworkMessage *message )
 {
-    //DEBUG_MESSAGE_DATA( "sending", ( unsigned char * )packet->GetData(), packet->GetSize() );
+    // DEBUG_MESSAGE_DATA( "sending", ( unsigned char * )message->GetData(), message->GetSize() );
 
-    if ( !GetStreamSocket()->Send( packet->GetData(), packet->GetSize() ) )
+    if ( !CNetworkSystem::SendSocketMessage( GetStreamSocket(), message ) )
     {
-        Warning( "CNetworkClient::SendPacket:  Unable to send packet\n" );
+        Warning( "CNetworkClient::DispatchSocketMessage:  Unable to send message\n" );
     }
 }

@@ -7,6 +7,7 @@
 #include "mathlib/lvector.h"
 #include "usermessages.h"
 #include "lnetwork.h"
+#include "networksystem/isockets.h"
 #include <thread>
 #include <chrono>
 
@@ -258,10 +259,10 @@ LUA_BINDING_BEGIN( UserMessages, WriteBool, "library", "Writes a boolean.", "ser
 }
 LUA_BINDING_END()
 
-LUA_BINDING_BEGIN( UserMessages, WriteUBitLong, "library", "Writes an unsigned bit long.", "server" )
+LUA_BINDING_BEGIN( UserMessages, WriteUInt, "library", "Writes an unsigned bit long.", "server" )
 {
     if ( !isMessageQueued )
-        Warning( "[Lua] UserMessages.WriteUBitLong called with no active message\n" );
+        Warning( "[Lua] UserMessages.WriteUInt called with no active message\n" );
 
     queuedMessageBuffer.WriteUBitLong( LUA_BINDING_ARGUMENT( luaL_checknumber, 1, "value" ), LUA_BINDING_ARGUMENT( luaL_checknumber, 2, "numBits" ) );
     return 0;
@@ -305,7 +306,7 @@ void RegisterLuaUserMessages()
 /*
 ** bf_read methods
 */
-LUA_REGISTRATION_INIT( UserMessageReader );
+LUA_REGISTRATION_INIT( MessageReader );
 
 LUA_API bf_read &lua_tobf_read( lua_State *L, int idx )
 {
@@ -316,22 +317,21 @@ LUA_API bf_read &lua_tobf_read( lua_State *L, int idx )
 LUA_API void lua_pushbf_read( lua_State *L, bf_read *message )
 {
     lua_pushlightuserdata( L, message );
-    LUA_SAFE_SET_METATABLE( L, LUA_BFREADLIBNAME );
+    LUA_SAFE_SET_METATABLE( L, LUA_MESSAGEREADERMETANAME );
 }
 
 LUALIB_API bf_read *luaL_checkbf_read( lua_State *L, int narg )
 {
-    bf_read *bfRead = ( bf_read * )luaL_checkudata( L, narg, LUA_BFREADLIBNAME );
+    bf_read *bfRead = ( bf_read * )luaL_checkudata( L, narg, LUA_MESSAGEREADERMETANAME );
     if ( !bfRead )
     {
-        luaL_typerror( L, narg, LUA_BFREADLIBNAME );
+        luaL_typerror( L, narg, LUA_MESSAGEREADERMETANAME );
     }
 
     return bfRead;
 }
 
-#ifdef CLIENT_DLL
-LUA_BINDING_BEGIN( UserMessageReader, ReadBit, "class", "Reads a bit.", "client" )
+LUA_BINDING_BEGIN( MessageReader, ReadBit, "class", "Reads a bit." )
 {
     bf_read *bf = LUA_BINDING_ARGUMENT( luaL_checkbf_read, 1, "reader" );
     lua_pushinteger( L, bf->ReadOneBit() );
@@ -339,7 +339,7 @@ LUA_BINDING_BEGIN( UserMessageReader, ReadBit, "class", "Reads a bit.", "client"
 }
 LUA_BINDING_END( "integer", "The bit read." )
 
-LUA_BINDING_BEGIN( UserMessageReader, ReadByte, "class", "Reads a byte.", "client" )
+LUA_BINDING_BEGIN( MessageReader, ReadByte, "class", "Reads a byte." )
 {
     bf_read *bf = LUA_BINDING_ARGUMENT( luaL_checkbf_read, 1, "reader" );
     lua_pushinteger( L, bf->ReadByte() );
@@ -347,7 +347,7 @@ LUA_BINDING_BEGIN( UserMessageReader, ReadByte, "class", "Reads a byte.", "clien
 }
 LUA_BINDING_END( "integer", "The byte read." )
 
-LUA_BINDING_BEGIN( UserMessageReader, ReadChar, "class", "Reads a char.", "client" )
+LUA_BINDING_BEGIN( MessageReader, ReadChar, "class", "Reads a char." )
 {
     bf_read *bf = LUA_BINDING_ARGUMENT( luaL_checkbf_read, 1, "reader" );
     lua_pushinteger( L, bf->ReadChar() );
@@ -355,7 +355,7 @@ LUA_BINDING_BEGIN( UserMessageReader, ReadChar, "class", "Reads a char.", "clien
 }
 LUA_BINDING_END( "integer", "The char read." )
 
-LUA_BINDING_BEGIN( UserMessageReader, ReadShort, "class", "Reads a short integer.", "client" )
+LUA_BINDING_BEGIN( MessageReader, ReadShort, "class", "Reads a short integer." )
 {
     bf_read *bf = LUA_BINDING_ARGUMENT( luaL_checkbf_read, 1, "reader" );
     lua_pushinteger( L, bf->ReadShort() );
@@ -363,7 +363,7 @@ LUA_BINDING_BEGIN( UserMessageReader, ReadShort, "class", "Reads a short integer
 }
 LUA_BINDING_END( "integer", "The short read." )
 
-LUA_BINDING_BEGIN( UserMessageReader, ReadWord, "class", "Reads a word.", "client" )
+LUA_BINDING_BEGIN( MessageReader, ReadWord, "class", "Reads a word." )
 {
     bf_read *bf = LUA_BINDING_ARGUMENT( luaL_checkbf_read, 1, "reader" );
     lua_pushinteger( L, bf->ReadWord() );
@@ -371,15 +371,18 @@ LUA_BINDING_BEGIN( UserMessageReader, ReadWord, "class", "Reads a word.", "clien
 }
 LUA_BINDING_END( "integer", "The word read." )
 
-LUA_BINDING_BEGIN( UserMessageReader, ReadLong, "class", "Reads a long integer.", "client" )
+LUA_BINDING_BEGIN( MessageReader, ReadLong, "class", "Reads a long integer." )
 {
     bf_read *bf = LUA_BINDING_ARGUMENT( luaL_checkbf_read, 1, "reader" );
-    lua_pushinteger( L, bf->ReadBitLong( luaL_checknumber( L, 2 ), lua_toboolean( L, 3 ) ) );
+    lua_pushinteger( L,
+                     bf->ReadBitLong(
+                         LUA_BINDING_ARGUMENT( luaL_checknumber, 2, "numBits" ),
+                         LUA_BINDING_ARGUMENT_WITH_DEFAULT( luaL_optboolean, 3, true, "isSigned" ) ) );
     return 1;
 }
 LUA_BINDING_END( "integer", "The long read." )
 
-LUA_BINDING_BEGIN( UserMessageReader, ReadFloat, "class", "Reads a float.", "client" )
+LUA_BINDING_BEGIN( MessageReader, ReadFloat, "class", "Reads a float." )
 {
     bf_read *bf = LUA_BINDING_ARGUMENT( luaL_checkbf_read, 1, "reader" );
     lua_pushnumber( L, bf->ReadBitFloat() );
@@ -387,7 +390,7 @@ LUA_BINDING_BEGIN( UserMessageReader, ReadFloat, "class", "Reads a float.", "cli
 }
 LUA_BINDING_END( "number", "The float read." )
 
-LUA_BINDING_BEGIN( UserMessageReader, ReadVector, "class", "Reads a vector.", "client" )
+LUA_BINDING_BEGIN( MessageReader, ReadVector, "class", "Reads a vector." )
 {
     bf_read *bf = LUA_BINDING_ARGUMENT( luaL_checkbf_read, 1, "reader" );
     Vector vec;
@@ -397,7 +400,7 @@ LUA_BINDING_BEGIN( UserMessageReader, ReadVector, "class", "Reads a vector.", "c
 }
 LUA_BINDING_END( "Vector", "The vector read." )
 
-LUA_BINDING_BEGIN( UserMessageReader, ReadVectorNormal, "class", "Reads a normal vector.", "client" )
+LUA_BINDING_BEGIN( MessageReader, ReadVectorNormal, "class", "Reads a normal vector." )
 {
     bf_read *bf = LUA_BINDING_ARGUMENT( luaL_checkbf_read, 1, "reader" );
     Vector vec;
@@ -407,7 +410,7 @@ LUA_BINDING_BEGIN( UserMessageReader, ReadVectorNormal, "class", "Reads a normal
 }
 LUA_BINDING_END( "Vector", "The normal vector read." )
 
-LUA_BINDING_BEGIN( UserMessageReader, ReadAngle, "class", "Reads an angle.", "client" )
+LUA_BINDING_BEGIN( MessageReader, ReadAngle, "class", "Reads an angle." )
 {
     bf_read *bf = LUA_BINDING_ARGUMENT( luaL_checkbf_read, 1, "reader" );
     QAngle ang;
@@ -417,7 +420,17 @@ LUA_BINDING_BEGIN( UserMessageReader, ReadAngle, "class", "Reads an angle.", "cl
 }
 LUA_BINDING_END( "Angle", "The angle read." )
 
-LUA_BINDING_BEGIN( UserMessageReader, ReadString, "class", "Reads a string.", "client" )
+LUA_BINDING_BEGIN( MessageReader, ReadUInt, "class", "Reads an unsigned integer" )
+{
+    bf_read *bf = LUA_BINDING_ARGUMENT( luaL_checkbf_read, 1, "reader" );
+    QAngle ang;
+    bf->ReadBitAngles( ang );
+    lua_pushangle( L, ang );
+    return 1;
+}
+LUA_BINDING_END( "integer", "The integer read." )
+
+LUA_BINDING_BEGIN( MessageReader, ReadString, "class", "Reads a string." )
 {
     bf_read *bf = LUA_BINDING_ARGUMENT( luaL_checkbf_read, 1, "reader" );
     char str[2048];
@@ -427,10 +440,10 @@ LUA_BINDING_BEGIN( UserMessageReader, ReadString, "class", "Reads a string.", "c
 }
 LUA_BINDING_END( "string", "The string read." )
 
-LUA_BINDING_BEGIN( UserMessageReader, ReadBytes, "class", "Reads a number of bytes.", "client" )
+LUA_BINDING_BEGIN( MessageReader, ReadBytes, "class", "Reads a number of bytes." )
 {
     bf_read *bf = LUA_BINDING_ARGUMENT( luaL_checkbf_read, 1, "reader" );
-    int len = luaL_checknumber( L, 2 );
+    int len = LUA_BINDING_ARGUMENT( luaL_checknumber, 2, "length" );
     char *buf = new char[len];
     bf->ReadBytes( buf, len );
     lua_pushlstring( L, buf, len );
@@ -439,7 +452,7 @@ LUA_BINDING_BEGIN( UserMessageReader, ReadBytes, "class", "Reads a number of byt
 }
 LUA_BINDING_END( "string", "The bytes read." )
 
-LUA_BINDING_BEGIN( UserMessageReader, ReadEntity, "class", "Reads an entity.", "client" )
+LUA_BINDING_BEGIN( MessageReader, ReadEntity, "class", "Reads an entity." )
 {
     bf_read *bf = LUA_BINDING_ARGUMENT( luaL_checkbf_read, 1, "reader" );
     unsigned int iEncodedEHandle = bf->ReadLong();
@@ -474,10 +487,28 @@ LUA_BINDING_BEGIN( UserMessageReader, ReadEntity, "class", "Reads an entity.", "
 }
 LUA_BINDING_END( "Entity", "The entity read." )
 
-LUA_BINDING_BEGIN( UserMessageReader, __index, "class", "Returns nil.", "client" )
+LUA_BINDING_BEGIN( MessageReader, ReadBitLong, "class", "Reads an signed/unsigned number of the specified bits long." )
 {
-    bf_read *UserMessageReader = LUA_BINDING_ARGUMENT( luaL_checkbf_read, 1, "reader" );
-    //const char *field = LUA_BINDING_ARGUMENT( luaL_checkstring, 2, "field" );
+    bf_read *bf = LUA_BINDING_ARGUMENT( luaL_checkbf_read, 1, "reader" );
+    bool isSigned = LUA_BINDING_ARGUMENT_WITH_DEFAULT( luaL_optboolean, 3, true, "isSigned" );
+
+    if ( isSigned )
+    {
+        lua_pushinteger( L, bf->ReadUBitLong( LUA_BINDING_ARGUMENT( luaL_checknumber, 2, "numBits" ) ) );
+    }
+    else
+    {
+        lua_pushinteger( L, bf->ReadSBitLong( LUA_BINDING_ARGUMENT( luaL_checknumber, 2, "numBits" ) ) );
+    }
+
+    return 1;
+}
+LUA_BINDING_END( "integer", "The number read." )
+
+LUA_BINDING_BEGIN( MessageReader, __index, "class", "Returns nil." )
+{
+    bf_read *MessageReader = LUA_BINDING_ARGUMENT( luaL_checkbf_read, 1, "reader" );
+    // const char *field = LUA_BINDING_ARGUMENT( luaL_checkstring, 2, "field" );
 
     if ( lua_getmetatable( L, 1 ) )
     {
@@ -489,14 +520,222 @@ LUA_BINDING_BEGIN( UserMessageReader, __index, "class", "Returns nil.", "client"
 }
 LUA_BINDING_END()
 
-LUA_BINDING_BEGIN( UserMessageReader, __tostring, "class", "Returns a string representation of the reader.", "client" )
+LUA_BINDING_BEGIN( MessageReader, __tostring, "class", "Returns a string representation of the reader." )
 {
-    lua_pushfstring( L, "bf_read: %p", LUA_BINDING_ARGUMENT( lua_tobf_read, 1, "reader" ) );
+    lua_pushfstring( L, "MessageReader: %p", LUA_BINDING_ARGUMENT( lua_tobf_read, 1, "reader" ) );
     return 1;
 }
 LUA_BINDING_END()
 
-#endif
+/*
+** bf_write methods
+*/
+LUA_REGISTRATION_INIT( MessageWriter );
+
+LUA_API bf_write &lua_tobf_write( lua_State *L, int idx )
+{
+    bf_write *bfWrite = ( bf_write * )lua_touserdata( L, idx );
+    return *bfWrite;
+}
+
+LUA_API void lua_pushbf_write( lua_State *L, bf_write *message )
+{
+    lua_pushlightuserdata( L, message );
+    LUA_SAFE_SET_METATABLE( L, LUA_MESSAGEWRITERMETANAME );
+}
+
+LUALIB_API bf_write *luaL_checkbf_write( lua_State *L, int narg )
+{
+    bf_write *bfWrite = ( bf_write * )luaL_checkudata( L, narg, LUA_MESSAGEWRITERMETANAME );
+    if ( !bfWrite )
+    {
+        luaL_typerror( L, narg, LUA_MESSAGEWRITERMETANAME );
+    }
+
+    return bfWrite;
+}
+
+LUA_BINDING_BEGIN( MessageWriter, WriteBit, "class", "Writes a bit." )
+{
+    bf_write *bf = LUA_BINDING_ARGUMENT( luaL_checkbf_write, 1, "writer" );
+    bf->WriteOneBit( LUA_BINDING_ARGUMENT( luaL_checknumber, 2, "bit" ) );
+    return 0;
+}
+LUA_BINDING_END()
+
+LUA_BINDING_BEGIN( MessageWriter, WriteByte, "class", "Writes a byte." )
+{
+    bf_write *bf = LUA_BINDING_ARGUMENT( luaL_checkbf_write, 1, "writer" );
+    bf->WriteByte( LUA_BINDING_ARGUMENT( luaL_checknumber, 2, "byte" ) );
+    return 0;
+}
+LUA_BINDING_END()
+
+LUA_BINDING_BEGIN( MessageWriter, WriteChar, "class", "Writes a char." )
+{
+    bf_write *bf = LUA_BINDING_ARGUMENT( luaL_checkbf_write, 1, "writer" );
+    bf->WriteChar( LUA_BINDING_ARGUMENT( luaL_checknumber, 2, "char" ) );
+    return 0;
+}
+LUA_BINDING_END()
+
+LUA_BINDING_BEGIN( MessageWriter, WriteShort, "class", "Writes a short integer." )
+{
+    bf_write *bf = LUA_BINDING_ARGUMENT( luaL_checkbf_write, 1, "writer" );
+    bf->WriteShort( LUA_BINDING_ARGUMENT( luaL_checknumber, 2, "short" ) );
+    return 0;
+}
+LUA_BINDING_END()
+
+LUA_BINDING_BEGIN( MessageWriter, WriteWord, "class", "Writes a word." )
+{
+    bf_write *bf = LUA_BINDING_ARGUMENT( luaL_checkbf_write, 1, "writer" );
+    bf->WriteWord( LUA_BINDING_ARGUMENT( luaL_checknumber, 2, "word" ) );
+    return 0;
+}
+LUA_BINDING_END()
+
+LUA_BINDING_BEGIN( MessageWriter, WriteLong, "class", "Writes a long integer." )
+{
+    bf_write *bf = LUA_BINDING_ARGUMENT( luaL_checkbf_write, 1, "writer" );
+    bf->WriteBitLong(
+        LUA_BINDING_ARGUMENT( luaL_checknumber, 2, "long" ),
+        LUA_BINDING_ARGUMENT( luaL_checknumber, 3, "numBits" ),
+        LUA_BINDING_ARGUMENT_WITH_DEFAULT( luaL_optboolean, 4, true, "isSigned" ) );
+    return 0;
+}
+LUA_BINDING_END()
+
+LUA_BINDING_BEGIN( MessageWriter, WriteFloat, "class", "Writes a float." )
+{
+    bf_write *bf = LUA_BINDING_ARGUMENT( luaL_checkbf_write, 1, "writer" );
+    bf->WriteBitFloat( LUA_BINDING_ARGUMENT( luaL_checknumber, 2, "float" ) );
+    return 0;
+}
+LUA_BINDING_END()
+
+LUA_BINDING_BEGIN( MessageWriter, WriteVector, "class", "Writes a vector." )
+{
+    bf_write *bf = LUA_BINDING_ARGUMENT( luaL_checkbf_write, 1, "writer" );
+    bf->WriteBitVec3Coord( LUA_BINDING_ARGUMENT( luaL_checkvector, 2, "vector" ) );
+    return 0;
+}
+LUA_BINDING_END()
+
+LUA_BINDING_BEGIN( MessageWriter, WriteVectorNormal, "class", "Writes a normal vector." )
+{
+    bf_write *bf = LUA_BINDING_ARGUMENT( luaL_checkbf_write, 1, "writer" );
+    bf->WriteBitVec3Normal( LUA_BINDING_ARGUMENT( luaL_checkvector, 2, "normal" ) );
+    return 0;
+}
+LUA_BINDING_END()
+
+LUA_BINDING_BEGIN( MessageWriter, WriteAngle, "class", "Writes an angle." )
+{
+    bf_write *bf = LUA_BINDING_ARGUMENT( luaL_checkbf_write, 1, "writer" );
+    bf->WriteBitAngles( LUA_BINDING_ARGUMENT( luaL_checkangle, 2, "angle" ) );
+    return 0;
+}
+LUA_BINDING_END()
+
+LUA_BINDING_BEGIN( MessageWriter, WriteString, "class", "Writes a string." )
+{
+    bf_write *bf = LUA_BINDING_ARGUMENT( luaL_checkbf_write, 1, "writer" );
+    bf->WriteString( LUA_BINDING_ARGUMENT( luaL_checkstring, 2, "string" ) );
+    return 0;
+}
+LUA_BINDING_END()
+
+LUA_BINDING_BEGIN( MessageWriter, WriteEntity, "class", "Writes an entity." )
+{
+    bf_write *bf = LUA_BINDING_ARGUMENT( luaL_checkbf_write, 1, "writer" );
+
+    CBaseEntity *pEntity = LUA_BINDING_ARGUMENT( luaL_checkentity, 2, "entity" );
+
+    if ( pEntity )
+    {
+        bf->WriteLong( pEntity->GetRefEHandle().ToInt() );
+    }
+    else
+    {
+        bf->WriteLong( INVALID_NETWORKED_EHANDLE_VALUE );
+    }
+
+    return 0;
+}
+LUA_BINDING_END()
+
+LUA_BINDING_BEGIN( MessageWriter, WriteBool, "class", "Writes a boolean." )
+{
+    bf_write *bf = LUA_BINDING_ARGUMENT( luaL_checkbf_write, 1, "writer" );
+    bf->WriteOneBit( LUA_BINDING_ARGUMENT( lua_toboolean, 2, "boolean" ) ? 1 : 0 );
+    return 0;
+}
+LUA_BINDING_END()
+
+LUA_BINDING_BEGIN( MessageWriter, WriteBitLong, "class", "Writes an signed/unsigned number of the specified bits long." )
+{
+    bf_write *bf = LUA_BINDING_ARGUMENT( luaL_checkbf_write, 1, "writer" );
+    bool isSigned = LUA_BINDING_ARGUMENT_WITH_DEFAULT( luaL_optboolean, 4, true, "isSigned" );
+
+    if ( isSigned )
+    {
+        bf->WriteUBitLong(
+            LUA_BINDING_ARGUMENT( luaL_checknumber, 2, "value" ),
+            LUA_BINDING_ARGUMENT( luaL_checknumber, 3, "numBits" ) );
+    }
+    else
+    {
+        bf->WriteSBitLong(
+            LUA_BINDING_ARGUMENT( luaL_checknumber, 2, "value" ),
+            LUA_BINDING_ARGUMENT( luaL_checknumber, 3, "numBits" ) );
+    }
+
+    return 0;
+}
+LUA_BINDING_END()
+
+LUA_BINDING_BEGIN( MessageWriter, __index, "class", "Returns nil." )
+{
+    bf_write *MessageWriter = LUA_BINDING_ARGUMENT( luaL_checkbf_write, 1, "writer" );
+    // const char *field = LUA_BINDING_ARGUMENT( luaL_checkstring, 2, "field" );
+
+    if ( lua_getmetatable( L, 1 ) )
+    {
+        LUA_METATABLE_INDEX_CHECK_TABLE( L );
+    }
+
+    lua_pushnil( L );
+    return 1;
+}
+LUA_BINDING_END()
+
+LUA_BINDING_BEGIN( MessageWriter, __gc, "class", "Cleans up the buffer belonging to this writer" )
+{
+    bf_write *bf = LUA_BINDING_ARGUMENT( luaL_checkbf_write, 1, "writer" );
+    free( bf->GetBasePointer() );
+    free( bf );
+    return 0;
+}
+LUA_BINDING_END()
+
+LUA_BINDING_BEGIN( MessageWriter, __tostring, "class", "Returns a string representation of the writer." )
+{
+    lua_pushfstring( L, "MessageWriter: %p", LUA_BINDING_ARGUMENT( lua_tobf_write, 1, "writer" ) );
+    return 1;
+}
+LUA_BINDING_END()
+
+LUA_REGISTRATION_INIT( MessageWriters )
+
+LUA_BINDING_BEGIN( MessageWriters, Create, "library", "Creates a new MessageWriter for writing network messages" )
+{
+    void *buffer = malloc( NET_MAX_MESSAGE );
+    bf_write *writer = new bf_write( buffer, NET_MAX_MESSAGE );
+    lua_pushbf_write( L, writer );
+    return 1;
+}
+LUA_BINDING_END( "MessageWriter", "The new MessageWriter" )
 
 /*
 ** Open networking libraries
@@ -509,13 +748,28 @@ LUALIB_API int luaopen_UserMessages( lua_State *L )
 
 LUALIB_API int luaopen_bf_read( lua_State *L )
 {
-    LUA_PUSH_NEW_METATABLE( L, LUA_BFREADLIBNAME );
+    LUA_PUSH_NEW_METATABLE( L, LUA_MESSAGEREADERMETANAME );
 
-    LUA_REGISTRATION_COMMIT( UserMessageReader );
+    LUA_REGISTRATION_COMMIT( MessageReader );
 
-    lua_pushstring( L, LUA_BFREADLIBNAME );
-    lua_setfield( L, -2, "__type" ); /* metatable.__type = "UserMessageReader" */
+    lua_pushstring( L, LUA_MESSAGEREADERMETANAME );
+    lua_setfield( L, -2, "__type" ); /* metatable.__type = "MessageReader" */
     lua_pop( L, 1 );
+
+    return 1;
+}
+
+LUALIB_API int luaopen_bf_write( lua_State *L )
+{
+    LUA_PUSH_NEW_METATABLE( L, LUA_MESSAGEWRITERMETANAME );
+
+    LUA_REGISTRATION_COMMIT( MessageWriter );
+
+    lua_pushstring( L, LUA_MESSAGEWRITERMETANAME );
+    lua_setfield( L, -2, "__type" ); /* metatable.__type = "MessageWriter" */
+    lua_pop( L, 1 );
+
+    LUA_REGISTRATION_COMMIT_LIBRARY( MessageWriters );
 
     return 1;
 }

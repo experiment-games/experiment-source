@@ -45,6 +45,12 @@ abstract_class ISocket
     bool IsValid() const;
 };
 
+abstract_class ISendData
+{
+   public:
+    virtual bool Send( const char *data, size_t dataLength ) = 0;
+};
+
 abstract_class ITcpSocket : public ISocket
 {
    public:

@@ -13,7 +13,7 @@
 class CUtlBuffer;
 class CNetPacket;
 
-class CTcpClientSocket : public ITcpSocket
+class CTcpClientSocket : public ITcpSocket, public ISendData
 {
    public:
     CTcpClientSocket();
@@ -51,7 +51,6 @@ class CTcpServerSocket : public ITcpSocket
 
     bool AcceptClients( CUtlVector< CTcpClientSocket * > &newClients );
     bool ReadPackets( CUtlVector< CNetPacket * > &newPackets );
-    bool Send( const char *data, size_t dataLength );
 
     bool IsServer() const
     {

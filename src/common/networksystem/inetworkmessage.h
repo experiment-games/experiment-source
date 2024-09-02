@@ -9,6 +9,7 @@
 #include "tier0/dbg.h"
 #include "tier1/bitbuf.h"
 #include "tier1/utlstring.h"
+#include "tier1/netadr.h"
 
 // Forward declarations
 class INetMessage;
@@ -16,17 +17,6 @@ class INetMessage;
 abstract_class INetworkMessage
 {
    public:
-    static uint GetHeaderBytes()
-    {
-        Assert( ( NETWORK_MESSAGE_HEADER_BITS % 8 ) == 0 );
-
-        // Pad with zeros to byte align the header
-        int headerBytes = ( NETWORK_MESSAGE_HEADER_BITS / 8 );
-        headerBytes += ( ( headerBytes % 4 ) == 0 ) ? 0 : 4 - ( headerBytes % 4 );
-
-        return headerBytes;
-    }
-
     virtual void SetReliable( bool state ) = 0;
     virtual bool IsReliable( void ) const = 0;
 
@@ -106,20 +96,9 @@ class CDynamicWriteNetworkMessage : public CNetworkMessage
 
     virtual void SetBuffer( const char *buffer, int bufferLength )
     {
-        int headerBytes = GetHeaderBytes();
-
-        m_nBufferLength = bufferLength + headerBytes;
-        m_pBuffer = ( const char * )malloc( m_nBufferLength );
-
-        char *headerBuffer = ( char * )malloc( headerBytes );
-        bf_write header( "CDynamicWriteNetworkMessage::WriteHeader", headerBuffer, headerBytes );
-        header.WriteUBitLong( GetGroup(), NETWORK_MESSAGE_GROUP_BITS );
-        header.WriteUBitLong( GetMessageTypeId(), NETWORK_MESSAGE_INDEX_BITS );
-
-        memcpy( ( void * )m_pBuffer, headerBuffer, headerBytes );
-        memcpy( ( void * )( m_pBuffer + headerBytes ), buffer, bufferLength );
-
-        free( headerBuffer );
+        m_nBufferLength = bufferLength;
+        m_pBuffer = ( const char * )malloc( bufferLength );
+        Q_memcpy( ( void * )m_pBuffer, buffer, bufferLength );
     }
 
     virtual const char *GetData()
@@ -148,6 +127,10 @@ abstract_class IConnectedClient
 {
    public:
     virtual void SendNetMessage( INetworkMessage * pMessage ) = 0;
+    const char *GetRemoteAddress() const
+    {
+        return m_RemoteAddress.ToString();
+    }
 
     netadr_t m_RemoteAddress;
 };

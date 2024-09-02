@@ -13,8 +13,9 @@ Include("sh_file.lua")
 bit = require("bitwise")
 gamemode = require("gamemodes")
 hook = require("hooks")
-net = require("networks")
 timer = require("timers")
+net = Networks
+
 -- weapons = require("scripted_weapons")
 -- scripted_ents = require("scripted_entities") -- Gmods scripted_ents is compatible with our ScriptedEntities
 
@@ -76,19 +77,9 @@ util = Utilities
 util.PrecacheModel = _R.Entity.PrecacheModel
 util.PrecacheSound = _R.Entity.PrecacheSound
 
-local networkStrings = NetworkStringTables.FindTable("LuaNetworkStrings")
-
-util.AddNetworkString = function(name)
-	if (SERVER) then
-		networkStrings:AddString(true, name)
-	end
-end
-util.NetworkIDToString = function(id)
-	return networkStrings:GetString(id)
-end
-util.NetworkStringToID = function(name)
-	return networkStrings:FindStringIndex(name)
-end
+util.AddNetworkString = Networks.AddNetworkString
+util.NetworkIDToString = Networks.NetworkIdToString
+util.NetworkStringToID = Networks.NetworkStringToId
 
 util.TraceLine = Traces.TraceLine
 util.TraceHull = Traces.TraceHull
@@ -346,6 +337,26 @@ function physenv.AddSurfaceData(surfaceDataKeyValuesString)
 	local fakeFileName = "physenv.AddSurfaceData" .. tostring(os.time()) .. ".txt"
 
 	return PhysicsSurfaceProperties.ParseSurfaceData(fakeFileName, surfaceDataKeyValuesString)
+end
+
+local MESSAGE_READER_META = FindMetaTable("MessageReader")
+
+function MESSAGE_READER_META:ReadInt(bitCount)
+	return self:ReadBitLong(bitCount, true)
+end
+
+function MESSAGE_READER_META:ReadUInt(bitCount)
+	return self:ReadBitLong(bitCount, false)
+end
+
+local MESSAGE_WRITER_META = FindMetaTable("MessageWriter")
+
+function MESSAGE_WRITER_META:WriteInt(value, bitCount)
+	return self:WriteBitLong(value, bitCount, true)
+end
+
+function MESSAGE_WRITER_META:WriteUInt(value, bitCount)
+	return self:WriteBitLong(value, bitCount, false)
 end
 
 umsg = require("UserMessages")

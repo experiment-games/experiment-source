@@ -1391,6 +1391,7 @@ void CHLClient::Shutdown( void )
     ShutdownFbx();
 #endif
 
+    g_pNetworkManager->Shutdown();
     UnloadNetworkSystem( g_pNetworkSystem );
 
     // This call disconnects the VGui libraries which we rely on later in the

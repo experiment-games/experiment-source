@@ -52,6 +52,34 @@ void CGameInfoStore::FireGameEvent( IGameEvent *event )
         char *pszPlayerAddressCopy = new char[strlen( pszPlayerAddress ) + 1];
         Q_strncpy( pszPlayerAddressCopy, pszPlayerAddress, strlen( pszPlayerAddress ) + 1 );
 
-        m_mapPlayerIndexToAddress[ pszPlayerAddressCopy ] = playerIndex;
+        m_mapPlayerIndexToAddress[pszPlayerAddressCopy] = playerIndex;
     }
+}
+
+CBasePlayer *CGameInfoStore::GetPlayerByAddress( const char *pszAddress )
+{
+    int mapIndex = m_mapPlayerIndexToAddress.Find( pszAddress );
+
+    if ( mapIndex == m_mapPlayerIndexToAddress.InvalidIndex() )
+    {
+        return NULL;
+    }
+
+    return UTIL_PlayerByUserId( m_mapPlayerIndexToAddress[mapIndex] );
+}
+
+bool CGameInfoStore::GetPlayerAddress( CBasePlayer *pPlayer, char *pszAddress, int nMaxLen )
+{
+    int nCount = m_mapPlayerIndexToAddress.GetNumStrings();
+
+    for ( int i = 0; i < nCount; ++i )
+    {
+        if ( m_mapPlayerIndexToAddress[i] == pPlayer->GetUserID() )
+        {
+            Q_strncpy( pszAddress, m_mapPlayerIndexToAddress.String( i ), nMaxLen );
+            return true;
+        }
+    }
+
+    return false;
 }

@@ -49,8 +49,9 @@ class CNetworkManager : public CBaseGameSystemPerFrame
     bool ConnectClientToServer( const char *serverIp, int serverPort = NETWORKSYSTEM_DEFAULT_SERVER_PORT );
     void DisconnectClientFromServer();
 
-    void PostClientToServerMessage( INetworkMessage *pMessage );
+    void SendClientToServerMessage( INetworkMessage *pMessage );
     void BroadcastServerToClientMessage( INetworkMessage *pMessage );
+    void SendServerToClientMessage( INetworkMessage *pMessage, const char *clientRemoteAddress );
 
    private:
     bool m_bIsClient;

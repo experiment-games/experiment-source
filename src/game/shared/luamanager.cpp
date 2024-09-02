@@ -30,6 +30,13 @@
 #include <mountaddons.h>
 #include <steam/isteamhttp.h>
 #include <lgameevents.h>
+#include <mountsteamcontent.h>
+#include <lresources.h>
+
+#include <gameinfostore.h>
+#include <networksystem/inetworkgrouphandler.h>
+#include <networksystem/networkserver.h>
+#include "tier2/tier2.h"
 
 #ifdef _WIN32
 #include <winlite.h>
@@ -44,10 +51,8 @@ extern "C"
 
 // memdbgon must be the last include file in a .cpp file!!!
 #include "tier0/memdbgon.h"
-#include <mountsteamcontent.h>
-#include <lresources.h>
 
-static FileHandle_t g_LuaLogFileHandle = FILESYSTEM_INVALID_HANDLE;
+static FileHandle_t s_LuaLogFileHandle = FILESYSTEM_INVALID_HANDLE;
 
 void Gamemode_ChangeCallback( IConVar *pConVar, char const *pOldString, float flOldValue );
 
@@ -72,13 +77,13 @@ static void LuaLogToFile( const char *format, ... )
     if ( lua_log_sv.GetBool() )
 #endif
     {
-        if ( g_LuaLogFileHandle == FILESYSTEM_INVALID_HANDLE )
+        if ( s_LuaLogFileHandle == FILESYSTEM_INVALID_HANDLE )
         {
             return;
         }
 
-        filesystem->Write( msg, Q_strlen( msg ), g_LuaLogFileHandle );
-        filesystem->Flush( g_LuaLogFileHandle );
+        filesystem->Write( msg, Q_strlen( msg ), s_LuaLogFileHandle );
+        filesystem->Flush( s_LuaLogFileHandle );
     }
 }
 
@@ -107,6 +112,82 @@ LUALIB_API int luaL_optboolean( lua_State *L, int narg, int def )
 {
     return luaL_opt( L, luaL_checkboolean, narg, def );
 }
+
+/// <summary>
+/// Lua Network Message Handler
+///
+/// This will pass the message to Lua for it to read the buffer.
+/// </summary>
+class CLuaNetworkGroupHandler : public INetworkGroupHandler
+{
+   public:
+    CLuaNetworkGroupHandler( lua_State *L )
+    {
+        Assert( L );
+        m_L = L;
+    }
+
+    void HandleReadingMessage( unsigned int messageTypeId, bf_read &buffer, IConnectedClient *client );
+
+   private:
+    lua_State *m_L;
+};
+
+void CLuaNetworkGroupHandler::HandleReadingMessage( unsigned int messageTypeId, bf_read &buffer, IConnectedClient *client )
+{
+    // Upon reading we don't use INetworkMessage, we just pass the buffer to Lua
+    //    CDynamicWriteNetworkMessage *message = new CDynamicWriteNetworkMessage( NETWORK_MESSAGE_GROUP::SCRIPT, messageTypeId );
+    //    message->SetBuffer( ( const char * )buffer.GetBasePointer(), buffer.GetNumBytesLeft() );
+    //
+    //    float fValue = buffer.ReadFloat();
+    //
+    //    long lStringLength = buffer.ReadLong();
+    //    char *pszValue = new char[lStringLength + 1];
+    //    buffer.ReadString( pszValue, lStringLength + 1 );
+    //
+    //    long lValue = buffer.ReadLong();
+    //
+    // #ifdef CLIENT_DLL
+    //    const char *prefix = "Client";
+    // #else
+    //    const char *prefix = "Server";
+    // #endif
+    //
+    //    DevMsg( "[%s] Received message: %f, %s, %d\n", prefix, fValue, pszValue, lValue );
+    // delete[] pszValue;
+
+    // Let's try get the player from the client info
+    CBasePlayer *player = nullptr;
+
+    if ( client )
+    {
+        // TODO: Since TCP might open on a different port, and the local player will be loopback, this will fail
+        // TODO: Find a way to reliable open a socket, and know which player it was opened for
+        player = g_pGameInfoStore->GetPlayerByAddress( client->GetRemoteAddress() );
+    }
+
+    lua_getglobal( m_L, LUA_NETWORKSLIBNAME );
+    lua_getfield( m_L, -1, "HandleIncomingMessage" );
+
+    lua_remove( m_L, -2 );  // Remove the Networks table
+    Assert( lua_isfunction( L, -1 ) );
+
+    lua_pushnumber( m_L, messageTypeId );
+    lua_pushbf_read( m_L, &buffer );
+
+    if ( player != nullptr )
+    {
+        CBasePlayer::PushLuaInstanceSafe( m_L, player );
+    }
+    else
+    {
+        lua_pushnil( m_L );
+    }
+
+    luasrc_pcall( m_L, 3, 0 );  // Call HandleIncomingMessage and pop it with 3 arguments
+}
+
+static CLuaNetworkGroupHandler *s_pLuaNetworkGroupHandler = nullptr;
 
 #ifdef CLIENT_DLL
 lua_State *LGameUI;
@@ -1161,14 +1242,14 @@ static void luasrc_init_post_includes( lua_State *L )
 
 void luasrc_init( void )
 {
-    if ( g_LuaLogFileHandle == FILESYSTEM_INVALID_HANDLE )
+    if ( s_LuaLogFileHandle == FILESYSTEM_INVALID_HANDLE )
     {
 #ifdef CLIENT_DLL
         const char *logFilePath = "lua_log_cl.log";
 #else
         const char *logFilePath = "lua_log_sv.log";
 #endif
-        g_LuaLogFileHandle = filesystem->Open( logFilePath, "a", "GAME" );
+        s_LuaLogFileHandle = filesystem->Open( logFilePath, "a", "GAME" );
     }
 
     if ( g_bLuaInitialized )
@@ -1177,6 +1258,8 @@ void luasrc_init( void )
     g_bLuaInitialized = true;
 
     L = lua_open();
+    s_pLuaNetworkGroupHandler = new CLuaNetworkGroupHandler( L );
+    g_pNetworkSystem->RegisterGroupHandler( NETWORK_MESSAGE_GROUP::SCRIPT, s_pLuaNetworkGroupHandler );
 
 #ifdef CLIENT_DLL
     g_pClientLuaPanel = new CScriptedClientLuaPanel( L );
@@ -1329,10 +1412,10 @@ void luasrc_shutdown( void )
     g_pClientLuaPanelHUD = NULL;
 #endif
 
-    if ( g_LuaLogFileHandle != FILESYSTEM_INVALID_HANDLE )
+    if ( s_LuaLogFileHandle != FILESYSTEM_INVALID_HANDLE )
     {
-        filesystem->Close( g_LuaLogFileHandle );
-        g_LuaLogFileHandle = FILESYSTEM_INVALID_HANDLE;
+        filesystem->Close( s_LuaLogFileHandle );
+        s_LuaLogFileHandle = FILESYSTEM_INVALID_HANDLE;
     }
 
     if ( !g_bLuaInitialized )
@@ -1350,6 +1433,9 @@ void luasrc_shutdown( void )
     ShutdownLuaGameEventHandler( L );
 
     luasrc_UnloadLoadedModules( L );
+
+    g_pNetworkSystem->UnregisterNetworkHandler( NETWORK_MESSAGE_GROUP::SCRIPT, s_pLuaNetworkGroupHandler );
+    delete s_pLuaNetworkGroupHandler;
 
     g_bLuaInitialized = false;
 

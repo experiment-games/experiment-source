@@ -8,7 +8,6 @@ if (GAMEUI) then
 	return
 end
 
-local Networks = require("networks")
 local Hooks = require("hooks")
 
 local debugPrint = function(...)
@@ -82,7 +81,7 @@ if (SERVER) then
 	--- @param networkedVariables table
 	function SendGlobalVariables(player, networkedVariables)
 		Networks.Start("GlobalNetworkedVariablesSet")
-		Networks.WriteUInt(table.Count(networkedVariables), 16)
+		Networks.WriteBitLong(table.Count(networkedVariables), 16, false)
 
 		for key, value in pairs(networkedVariables) do
 			Networks.WriteString(key)
@@ -114,7 +113,7 @@ else
 	end)
 
 	Networks.Receive("GlobalNetworkedVariablesSet", function(length, socketClient)
-		local count = Networks.ReadUInt(16)
+		local count = Networks.ReadBitLong(16, false)
 		local networkedVariables = {}
 
 		for i = 1, count do

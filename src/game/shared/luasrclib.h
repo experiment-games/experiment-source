@@ -184,6 +184,9 @@ LUALIB_API int( luaopen_MOVECOLLIDE )( lua_State *L );
 #define LUA_MOVETYPELIBNAME "MOVE_TYPE"
 LUALIB_API int( luaopen_MOVETYPE )( lua_State *L );
 
+#define LUA_NETWORKSLIBNAME "Networks"
+LUALIB_API int( luaopen_Networks )( lua_State *L );
+
 #define LUA_NETWORKSTRINGTABLELIBNAME "NetworkStringTable"
 LUALIB_API int( luaopen_NetworkStringTables )( lua_State *L );
 
@@ -251,8 +254,13 @@ LUALIB_API int( luaopen_ProjectedTexture )( lua_State *L );
 #define LUA_VMATRIXLIBNAME "Matrix"
 LUALIB_API int( luaopen_VMatrix )( lua_State *L );
 
-#define LUA_BFREADLIBNAME "UserMessageReader"
+#define LUA_MESSAGEREADERMETANAME "MessageReader"
+#define LUA_MESSAGEREADERSLIBNAME "MessageReaders"
 LUALIB_API int( luaopen_bf_read )( lua_State *L );
+
+#define LUA_MESSAGEWRITERMETANAME "MessageWriter"
+#define LUA_MESSAGEWRITERSLIBNAME "MessageWriters"
+LUALIB_API int( luaopen_bf_write )( lua_State *L );
 
 #define LUA_UMSGLIBNAME "UserMessages"
 LUALIB_API int( luaopen_UserMessages )( lua_State *L );

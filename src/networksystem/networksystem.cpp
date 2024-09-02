@@ -98,7 +98,6 @@ void CNetworkSystem::Shutdown()
         WSACleanup();
     }
 
-    CleanupNetworkHandlers();
     BaseClass::Shutdown();
 }
 
@@ -112,12 +111,6 @@ bool CNetworkSystem::Connect( CreateInterfaceFn factory )
 
 void CNetworkSystem::RegisterGroupHandler( NETWORK_MESSAGE_GROUP::TYPE group, INetworkGroupHandler *pHandler )
 {
-    if ( m_pServer || m_pClient )
-    {
-        Warning( "Cannot register messages after connection has started.\n" );
-        return;
-    }
-
     if ( group == NETWORK_MESSAGE_GROUP::INTERNAL )
     {
         Warning( "Network message group %d is reserved by the network system.\n", group );
@@ -135,7 +128,32 @@ void CNetworkSystem::RegisterGroupHandler( NETWORK_MESSAGE_GROUP::TYPE group, IN
     m_MessageHandlers.Insert( group, pHandler );
 }
 
-void CNetworkSystem::CleanupNetworkHandlers()
+void CNetworkSystem::UnregisterNetworkHandler( NETWORK_MESSAGE_GROUP::TYPE group, INetworkGroupHandler *pHandler )
+{
+    if ( group == NETWORK_MESSAGE_GROUP::INTERNAL )
+    {
+        Warning( "Network message group %d is reserved by the network system.\n", group );
+        return;
+    }
+
+    unsigned short key = m_MessageHandlers.Find( group );
+
+    if ( key == m_MessageHandlers.InvalidIndex() )
+    {
+        Warning( "Network message group %d has no handler registered.\n", group );
+        return;
+    }
+
+    if ( m_MessageHandlers[key] != pHandler )
+    {
+        Warning( "Network message group %d has a different handler registered.\n", group );
+        return;
+    }
+
+    m_MessageHandlers.RemoveAt( key );
+}
+
+void CNetworkSystem::UnregisterAllNetworkHandlers()
 {
     m_MessageHandlers.PurgeAndDeleteElements();
 }
@@ -218,6 +236,7 @@ void CNetworkSystem::ShutdownClient()
 {
     if ( m_pClient )
     {
+        DisconnectClientFromServer();
         m_pClient->Shutdown();
         delete m_pClient;
         m_pClient = NULL;
@@ -235,9 +254,9 @@ INetworkPeerBase *CNetworkSystem::ConnectClientToServer( const char *serverIp, i
     return NULL;
 }
 
-void CNetworkSystem::DisconnectClientFromServer( INetworkPeerBase *client )
+void CNetworkSystem::DisconnectClientFromServer()
 {
-    if ( m_pClient && m_pClient == client )
+    if ( m_pClient )
     {
         m_pClient->Disconnect();
     }
@@ -248,16 +267,43 @@ INetworkPeerBase *CNetworkSystem::GetServerPeer()
     return m_pServer;
 }
 
-void CNetworkSystem::PostClientToServerMessage( INetworkMessage *pMessage )
+void CNetworkSystem::SendClientToServerMessage( INetworkMessage *message )
 {
     Assert( m_pClient );
-    m_pClient->SendPacket( pMessage );
+    m_pClient->DispatchSocketMessage( message );
 }
 
-void CNetworkSystem::BroadcastServerToClientMessage( INetworkMessage *pMessage )
+void CNetworkSystem::BroadcastServerToClientMessage( INetworkMessage *message )
 {
     Assert( m_pServer );
-    m_pServer->SendPacket( pMessage );
+    m_pServer->DispatchSocketMessage( message );
+}
+
+void CNetworkSystem::SendServerToClientMessage( INetworkMessage *message, const char *clientRemoteAddress )
+{
+    Assert( m_pServer );
+
+    netadr_t address;
+
+    if ( Q_strcmp( clientRemoteAddress, "loopback" ) == 0 )
+    {
+        address.SetType( NA_LOOPBACK );
+    }
+    else
+    {
+        address.SetFromString( clientRemoteAddress );
+    }
+
+    IConnectedClient *client = m_pServer->FindClientByAddress( address );
+
+    if ( !client )
+    {
+        Warning( "Failed to find client with address %s.\n", clientRemoteAddress );
+        Assert( 0 );
+        return;
+    }
+
+    client->SendNetMessage( message );
 }
 
 bool CNetworkSystem::ProcessControlMessage( int messageCommand, bf_read &buffer )
@@ -277,6 +323,12 @@ bool CNetworkSystem::ProcessControlMessage( int messageCommand, bf_read &buffer 
     }
 }
 
+/// <summary>
+/// Reads the packet, extracts the group and message type id, and forwards the message to the appropriate handler
+/// </summary>
+/// <param name="client">The client that sent the message (nullptr if its from the server)</param>
+/// <param name="packet"></param>
+/// <returns></returns>
 bool CNetworkSystem::ProcessMessage( IConnectedClient *client, CNetPacket *packet )
 {
     // DEBUG_MESSAGE_DATA( "receiving", packet->m_pData, packet->m_nSizeInBytes );
@@ -292,8 +344,8 @@ bool CNetworkSystem::ProcessMessage( IConnectedClient *client, CNetPacket *packe
     unsigned int group = buffer.ReadUBitLong( NETWORK_MESSAGE_GROUP_BITS );
     unsigned int messageTypeId = buffer.ReadUBitLong( NETWORK_MESSAGE_INDEX_BITS );
 
-    // Skip the rest of the header
-    int headerBytes = INetworkMessage::GetHeaderBytes();
+    // Skip the rest of the header which is padding
+    int headerBytes = INetworkSystem::GetHeaderBytes();
     buffer.SeekRelative( ( headerBytes * 8 ) - NETWORK_MESSAGE_HEADER_BITS );
 
     // Create a payload buffer existing only of the message data
@@ -322,25 +374,46 @@ bool CNetworkSystem::ProcessMessage( IConnectedClient *client, CNetPacket *packe
     {
         free( payloadBuffer );
 
-        Msg( "unknown net message group %i  \n", group );
+        Msg( "unknown net message group handler %i  \n", group );
         Assert( 0 );
         return false;
     }
 
-    INetworkMessage *pNetMessage = pHandler->ReadMessage( messageTypeId, payload );
-
-    if ( !pNetMessage )
-    {
-        free( payloadBuffer );
-
-        Msg( "unknown net message (%i:%i) \n", group, messageTypeId );
-        Assert( 0 );
-        return false;
-    }
+    pHandler->HandleReadingMessage( messageTypeId, payload, client );
 
     free( payloadBuffer );
 
     return true;
+}
+
+/// <summary>
+/// Sends the message, prefix the group and type id to the message
+/// </summary>
+/// <param name="socket"></param>
+/// <param name="message"></param>
+/// <returns></returns>
+bool CNetworkSystem::SendSocketMessage( ISendData *socket, INetworkMessage *message )
+{
+    Assert( socket );
+
+    const char *payload = message->GetData();
+    int payloadBufferLength = message->GetSize();
+
+    int headerBytes = INetworkSystem::GetHeaderBytes();
+    int fullBufferLength = payloadBufferLength + headerBytes;
+
+    const char *fullBuffer = ( const char * )malloc( fullBufferLength );
+
+    char *headerBuffer = ( char * )malloc( headerBytes );
+    bf_write header( "CDynamicWriteNetworkMessage::WriteHeader", headerBuffer, headerBytes );
+    header.WriteUBitLong( message->GetGroup(), NETWORK_MESSAGE_GROUP_BITS );
+    header.WriteUBitLong( message->GetMessageTypeId(), NETWORK_MESSAGE_INDEX_BITS );
+
+    memcpy( ( void * )fullBuffer, headerBuffer, headerBytes );
+    memcpy( ( void * )( fullBuffer + headerBytes ), payload, payloadBufferLength );
+    free( headerBuffer );
+
+    return socket->Send( fullBuffer, fullBufferLength );
 }
 
 void CNetworkSystem::Tick( void )

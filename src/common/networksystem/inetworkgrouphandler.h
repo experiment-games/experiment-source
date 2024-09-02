@@ -8,6 +8,8 @@
 #include "tier0/platform.h"
 #include "tier0/dbg.h"
 
+#include "inetworkmessage.h"
+
 // Forward declarations
 class bf_read;
 class bf_write;
@@ -16,7 +18,7 @@ class INetMessage;
 abstract_class INetworkGroupHandler
 {
    public:
-    virtual INetworkMessage *ReadMessage( unsigned int messageTypeId, bf_read &buffer ) = 0;
+    virtual void HandleReadingMessage( unsigned int messageTypeId, bf_read &buffer, IConnectedClient *client ) = 0;
 };
 
 #endif  // INETWORKGROUPHANDLER_H

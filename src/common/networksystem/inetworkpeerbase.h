@@ -9,7 +9,7 @@ abstract_class INetworkPeerBase
     virtual void Shutdown() = 0;
 
     virtual void Update() = 0;
-    virtual void SendPacket( INetworkMessage * packet ) = 0;
+    virtual void DispatchSocketMessage( INetworkMessage * message ) = 0;
 
     NETWORK_CONNECTION_STATE::TYPE ConnectionState;
 
@@ -21,7 +21,7 @@ abstract_class INetworkPeerBase
     void Shutdown() override;                                               \
                                                                             \
     void Update() override;                                                 \
-    void SendPacket( INetworkMessage *packet ) override;                    \
+    void DispatchSocketMessage( INetworkMessage *packet ) override;                    \
                                                                             \
     TcpImplementationClass *GetStreamSocket() const                         \
     {                                                                       \

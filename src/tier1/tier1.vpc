@@ -5,7 +5,7 @@
 //-----------------------------------------------------------------------------
 
 $macro SRCDIR		".."
- 
+
 $include "$SRCDIR\vpc_scripts\source_lib_base.vpc"
 
 $Configuration
@@ -17,7 +17,7 @@ $Configuration
 
 	$Librarian [$WINDOWS]
 	{
-		$AdditionalDependencies			"$BASE Rpcrt4.lib"
+		$AdditionalDependencies			"$BASE Rpcrt4.lib Ws2_32.lib"
 	}
 }
 
@@ -57,7 +57,7 @@ $Project "tier1"
 				}
 			}
 		}
-		
+
 		$File	"processor_detect_linux.cpp"	[$POSIX]
 		$File	"qsort_s.cpp"	[$LINUXALL||$PS3]
 		$File	"rangecheckedvar.cpp"

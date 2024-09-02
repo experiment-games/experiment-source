@@ -75,7 +75,7 @@ void CNetworkServer::Update( void )
 /// Sends a packet to all clients
 /// </summary>
 /// <param name="pMessage"></param>
-void CNetworkServer::SendPacket( INetworkMessage *pMessage )
+void CNetworkServer::DispatchSocketMessage( INetworkMessage *pMessage )
 {
     int c = m_Clients.Count();
 
@@ -92,6 +92,10 @@ IConnectedClient *CNetworkServer::FindClientByAddress( const netadr_t &adr )
     for ( int i = 0; i < c; ++i )
     {
         IConnectedClient *player = m_Clients[i];
+
+        // In case of loopback return the host player (index 0)
+        if ( i == 0 && adr.GetType() == NA_LOOPBACK )
+            return player;
 
         if ( player->m_RemoteAddress.CompareAdr( adr ) )
             return player;
@@ -112,8 +116,7 @@ void CConnectedClient::Shutdown()
     m_bMarkedForDeletion = true;
 }
 
-void CConnectedClient::SendNetMessage( INetworkMessage *pMessage )
+void CConnectedClient::SendNetMessage( INetworkMessage *message )
 {
-    Assert( m_pStreamSocket );
-    m_pStreamSocket->Send( pMessage->GetData(), pMessage->GetSize() );
+    CNetworkSystem::SendSocketMessage( m_pStreamSocket, message );
 }

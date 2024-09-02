@@ -11,53 +11,6 @@
 static CNetworkManager s_NetworkManager;
 extern CNetworkManager *g_pNetworkManager = &s_NetworkManager;
 
-/// <summary>
-/// Lua Network Message Handler
-///
-/// This will pass the message to Lua for it to read the buffer.
-/// </summary>
-class CLuaNetworkGroupHandler : public INetworkGroupHandler
-{
-   public:
-    CLuaNetworkGroupHandler( lua_State *L )
-    {
-        m_L = L;
-    }
-
-    INetworkMessage *ReadMessage( unsigned int messageTypeId, bf_read &buffer );
-
-   private:
-    lua_State *m_L;
-};
-
-INetworkMessage *CLuaNetworkGroupHandler::ReadMessage( unsigned int messageTypeId, bf_read &buffer )
-{
-    CDynamicWriteNetworkMessage *pMessage = new CDynamicWriteNetworkMessage( NETWORK_MESSAGE_GROUP::SCRIPT, messageTypeId );
-    pMessage->SetBuffer( ( const char * )buffer.GetBasePointer(), buffer.GetNumBytesLeft() );
-
-    float fValue = buffer.ReadFloat();
-
-    long lStringLength = buffer.ReadLong();
-    char *pszValue = new char[lStringLength + 1];
-    buffer.ReadString( pszValue, lStringLength + 1 );
-
-    long lValue = buffer.ReadLong();
-
-#ifdef CLIENT_DLL
-    const char *prefix = "Client";
-#else
-    const char *prefix = "Server";
-#endif
-
-    DevMsg( "[%s] Received message: %f, %s, %d\n", prefix, fValue, pszValue, lValue );
-
-    // TODO: Give the message buffer to Lua to read instead
-
-    delete[] pszValue;
-
-    return pMessage;
-}
-
 /*
 ** Network Manager
 */
@@ -65,15 +18,19 @@ bool CNetworkManager::Init()
 {
     m_bIsClient = m_bIsServer = false;
 
-    g_pNetworkSystem->RegisterGroupHandler( NETWORK_MESSAGE_GROUP::SCRIPT, new CLuaNetworkGroupHandler( L ) );
-
     return true;
 }
 
+/// <summary>
+/// Completely shuts down the network manager.
+/// Should only be called when the game is shutting down.
+/// </summary>
 void CNetworkManager::Shutdown()
 {
     ShutdownClient();
     ShutdownServer();
+
+    g_pNetworkSystem->Shutdown();
 }
 
 bool CNetworkManager::StartServer( unsigned short serverListenPort )
@@ -142,7 +99,7 @@ void CNetworkManager::DisconnectClientFromServer()
 {
     if ( m_pClientPeer )
     {
-        g_pNetworkSystem->DisconnectClientFromServer( m_pClientPeer );
+        g_pNetworkSystem->DisconnectClientFromServer();
         m_pClientPeer = NULL;
     }
 }
@@ -162,16 +119,22 @@ bool CNetworkManager::IsClientConnected()
     return m_bIsClient && ( m_pClientPeer != NULL ) && ( m_pClientPeer->ConnectionState == NETWORK_CONNECTION_STATE::CONNECTED );
 }
 
-void CNetworkManager::PostClientToServerMessage( INetworkMessage *pMessage )
+void CNetworkManager::SendClientToServerMessage( INetworkMessage *message )
 {
     Assert( IsClientConnected() );
-    m_pClientPeer->SendPacket( pMessage );
+    g_pNetworkSystem->SendClientToServerMessage( message );
 }
 
-void CNetworkManager::BroadcastServerToClientMessage( INetworkMessage *pMessage )
+void CNetworkManager::BroadcastServerToClientMessage( INetworkMessage *message )
 {
     Assert( IsServer() );
-    m_pServerPeer->SendPacket( pMessage );
+    g_pNetworkSystem->BroadcastServerToClientMessage( message );
+}
+
+void CNetworkManager::SendServerToClientMessage( INetworkMessage *message, const char *clientRemoteAddress )
+{
+    Assert( IsServer() );
+    g_pNetworkSystem->SendServerToClientMessage( message, clientRemoteAddress );
 }
 
 void CNetworkManager::PerformUpdate()
@@ -194,7 +157,7 @@ void CNetworkManager::FrameUpdatePreEntityThink()
 #ifdef CLIENT_DLL
 CON_COMMAND( test_net_cl_send, "Tests sending a net message ad-hoc on the client" )
 {
-    CDynamicWriteNetworkMessage *pMessage = new CDynamicWriteNetworkMessage( NETWORK_MESSAGE_GROUP::SCRIPT, 0 );
+    CDynamicWriteNetworkMessage *message = new CDynamicWriteNetworkMessage( NETWORK_MESSAGE_GROUP::SCRIPT, 0 );
     // Let's write some test data to the message
     byte sendBuffer[NET_MAX_MESSAGE];
     bf_write buffer( "test_net_cl_send", sendBuffer, sizeof( sendBuffer ) );
@@ -207,19 +170,19 @@ CON_COMMAND( test_net_cl_send, "Tests sending a net message ad-hoc on the client
 
     buffer.WriteLong( 42 );
 
-    pMessage->SetBuffer( ( const char * )buffer.GetBasePointer(), buffer.GetNumBytesWritten() );
+    message->SetBuffer( ( const char * )buffer.GetBasePointer(), buffer.GetNumBytesWritten() );
 
-    if ( !pMessage )
+    if ( !message )
         return;
 
-    s_NetworkManager.PostClientToServerMessage( pMessage );
+    s_NetworkManager.SendClientToServerMessage( message );
 
-    delete pMessage;
+    delete message;
 }
 #else
 CON_COMMAND( test_net_sv_send, "Test sending a net message ad-hoc on the server" )
 {
-    CDynamicWriteNetworkMessage *pMessage = new CDynamicWriteNetworkMessage( NETWORK_MESSAGE_GROUP::SCRIPT, 0 );
+    CDynamicWriteNetworkMessage *message = new CDynamicWriteNetworkMessage( NETWORK_MESSAGE_GROUP::SCRIPT, 0 );
     // Let's write some test data to the message
     byte sendBuffer[NET_MAX_MESSAGE];
     bf_write buffer( "test_net_sv_send", sendBuffer, sizeof( sendBuffer ) );
@@ -232,13 +195,13 @@ CON_COMMAND( test_net_sv_send, "Test sending a net message ad-hoc on the server"
 
     buffer.WriteLong( 42 );
 
-    pMessage->SetBuffer( ( const char * )buffer.GetBasePointer(), buffer.GetNumBytesWritten() );
+    message->SetBuffer( ( const char * )buffer.GetBasePointer(), buffer.GetNumBytesWritten() );
 
-    if ( !pMessage )
+    if ( !message )
         return;
 
-    s_NetworkManager.BroadcastServerToClientMessage( pMessage );
+    s_NetworkManager.BroadcastServerToClientMessage( message );
 
-    delete pMessage;
+    delete message;
 }
 #endif

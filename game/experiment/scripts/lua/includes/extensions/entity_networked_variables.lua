@@ -16,7 +16,6 @@ if (GAMEUI) then
 end
 
 local ENTITY_META = _R.Entity
-local Networks = require("networks")
 local Hooks = require("hooks")
 
 local debugPrint = function(...)
@@ -106,7 +105,7 @@ if (SERVER) then
 		Networks.Start("EntityNetworkedVariablesSet")
 		Networks.WriteEntity(self)
 
-		Networks.WriteUInt(table.Count(networkedVariables), 16)
+		Networks.WriteBitLong(table.Count(networkedVariables), 16, false)
 
 		for key, value in pairs(networkedVariables) do
 			Networks.WriteString(key)
@@ -212,7 +211,7 @@ else
 
 	Networks.Receive("EntityNetworkedVariablesSet", function(length, socketClient)
 		local entity = Networks.ReadEntity()
-		local count = Networks.ReadUInt(16)
+		local count = Networks.ReadBitLong(16, false)
 		local networkedVariables = {}
 
 		for i = 1, count do

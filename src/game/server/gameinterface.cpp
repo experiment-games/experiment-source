@@ -911,6 +911,7 @@ void CServerGameDLL::DLLShutdown( void )
 
     gameeventmanager = NULL;
 
+    g_pNetworkManager->Shutdown();
     UnloadNetworkSystem( g_pNetworkSystem );
 
     DisconnectTier3Libraries();
@@ -993,7 +994,6 @@ bool CServerGameDLL::GameInit( void )
 void CServerGameDLL::GameShutdown( void )
 {
     ResetGlobalState();
-
     g_pNetworkManager->ShutdownServer();
 }
 
@@ -1369,11 +1369,6 @@ void CServerGameDLL::GameFrame( bool simulating )
 {
     VPROF( "CServerGameDLL::GameFrame" );
 
-#ifdef LUA_SDK
-    LUA_CALL_HOOK_BEGIN( "Tick" );
-    LUA_CALL_HOOK_END( 0, 0 );
-#endif
-
     // Don't run frames until fully restored
     if ( g_InRestore )
         return;
@@ -1465,6 +1460,11 @@ void CServerGameDLL::GameFrame( bool simulating )
     g_NetworkPropertyEventMgr.FireEvents();
 
     gpGlobals->frametime = oldframetime;
+
+#ifdef LUA_SDK
+    LUA_CALL_HOOK_BEGIN( "Tick" );
+    LUA_CALL_HOOK_END( 0, 0 );
+#endif
 }
 
 //-----------------------------------------------------------------------------

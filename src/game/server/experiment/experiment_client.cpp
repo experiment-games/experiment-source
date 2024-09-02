@@ -25,6 +25,7 @@
 #include "engine/IEngineSound.h"
 #include "team.h"
 #include "viewport_panel_names.h"
+#include "util/networkmanager.h"
 
 #include "tier0/vprof.h"
 
@@ -97,6 +98,9 @@ void ClientActive( edict_t *pEdict, bool bLoadGame )
 {
     // Can't load games in CS!
     Assert( !bLoadGame );
+
+    // Experiment; Ensure that the socket connection is established
+    g_pNetworkManager->PerformUpdate();
 
     CExperiment_Player *pPlayer = ToExperimentPlayer( CBaseEntity::Instance( pEdict ) );
     FinishClientPutInServer( pPlayer );

@@ -2,6 +2,7 @@
 #include <inetchannel.h>
 #include "../engine_patches.h"
 #include <util.h>
+#include <netadr.h>
 
 const DWORD_PTR OFFSET_OF_BASE_CLIENT_CONNECT = 0x9A380;
 typedef void( __thiscall *Function_BaseClient_Connect_t )( void *thisClient, const char *, int, INetChannel *, bool, int );
@@ -44,7 +45,9 @@ void __fastcall DetourClientConnect( void *thisClient, DWORD edx, const char *sz
     if ( !bFakePlayer )
     {
         int version = pNetChannel->GetProtocolVersion();
-        DevWarning( "Detour: Client connecting with name %s (#%i) (protocol version: %i)\n", szName, nUserID, version );
+        const char* address = pNetChannel->GetAddress();
+        netadr_t remote = pNetChannel->GetRemoteAddress();
+        DevWarning( "Detour: Client connecting with name %s (#%i) (protocol version: %i, address: %s, port: %i)\n", szName, nUserID, version, address, remote.GetPort() );
     }
     else
     {

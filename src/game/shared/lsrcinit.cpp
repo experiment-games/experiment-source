@@ -25,7 +25,8 @@ static const luaL_RegForState luasrclibs[] = {
     // Shared
     //
     { LUA_SHAREDENUMNAME, luaopen_SharedEnumerations, REALM_SHARED },
-    { LUA_BFREADLIBNAME, luaopen_bf_read, REALM_SHARED },
+    { LUA_MESSAGEREADERMETANAME, luaopen_bf_read, REALM_SHARED },
+    { LUA_MESSAGEWRITERMETANAME, luaopen_bf_write , REALM_SHARED },
     { LUA_BUTTONENUMNAME, luaopen_BUTTON, REALM_SHARED },
     { LUA_ACTIVITYENUMNAME, luaopen_ACTIVITY, REALM_SHARED },
     { LUA_BASEANIMATINGLIBNAME, luaopen_CBaseAnimating_shared, REALM_SHARED },
@@ -72,6 +73,7 @@ static const luaL_RegForState luasrclibs[] = {
     { LUA_MOVEDATAMETANAME, luaopen_CMoveData, REALM_SHARED },
     { LUA_MOVEHELPERMETANAME, luaopen_IMoveHelper, REALM_SHARED },
     { LUA_MOVETYPELIBNAME, luaopen_MOVETYPE, REALM_SHARED | REALM_GAMEUI },
+    { LUA_NETWORKSLIBNAME, luaopen_Networks, REALM_SHARED },
     { LUA_NETWORKSTRINGTABLELIBNAME, luaopen_NetworkStringTables, REALM_SHARED | REALM_GAMEUI },
     { LUA_OBSMODELIBNAME, luaopen_OBS_MODE, REALM_SHARED | REALM_GAMEUI },
     { LUA_PARTICLESYSTEMLIBNAME, luaopen_ParticleSystem, REALM_SHARED },

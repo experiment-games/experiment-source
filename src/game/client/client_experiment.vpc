@@ -191,6 +191,8 @@ $Project "Client (Experiment)"
                 $File "$SRCDIR\game\shared\experiment\util\jsontokv.h"
                 $File "$SRCDIR\game\shared\experiment\util\jsontokv.cpp"
 
+                $File "$SRCDIR\game\shared\experiment\util\lnetworks.h"
+                $File "$SRCDIR\game\shared\experiment\util\lnetworks.cpp"
                 $File "$SRCDIR\game\shared\experiment\util\networkmanager.h"
                 $File "$SRCDIR\game\shared\experiment\util\networkmanager.cpp"
             }

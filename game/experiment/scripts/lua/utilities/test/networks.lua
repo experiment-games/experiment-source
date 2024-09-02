@@ -2,7 +2,16 @@
 
 local countReceived = 0
 
+-- After registering the network strings we must wait a bit
+local DELAY_BEFORE_START = 2
+local DELAY_BEFORE_DONE = 2
+
 if (SERVER) then
+	Networks.AddNetworkString("TestMessage")
+	Networks.AddNetworkString("CTestMessage")
+	Networks.AddNetworkString("TestMessage2")
+	Networks.AddNetworkString("CTestMessage2")
+
     Networks.Receive("TestMessage", function(length, client)
         local message = Networks.ReadString()
 		local num = Networks.ReadFloat()
@@ -27,7 +36,7 @@ if (SERVER) then
 		countReceived = countReceived + 1
     end)
 
-	Timers.Simple(1, function()
+	Timers.Simple(DELAY_BEFORE_START + DELAY_BEFORE_DONE, function()
 		assert(countReceived == 2, "Did not receive all messages from client!")
 
 		print("net module server tests passed!")
@@ -55,15 +64,17 @@ if (CLIENT) then
 		countReceived = countReceived + 1
 	end)
 
-	Networks.Start("TestMessage")
-	Networks.WriteString("Hello, server!")
-	Networks.WriteFloat(3.14)
-	Networks.SendToServer()
+	timer.Simple(DELAY_BEFORE_START, function()
+		Networks.Start("TestMessage")
+		Networks.WriteString("Hello, server!")
+		Networks.WriteFloat(3.14)
+		Networks.SendToServer()
 
-	Networks.Start("TestMessage2")
-    Networks.SendToServer()
+		Networks.Start("TestMessage2")
+		Networks.SendToServer()
+	end)
 
-	Timers.Simple(1, function()
+	Timers.Simple(DELAY_BEFORE_START + DELAY_BEFORE_DONE, function()
         assert(countReceived == 2, "Did not receive all messages from server!")
 
 		print("net module client tests passed!")
