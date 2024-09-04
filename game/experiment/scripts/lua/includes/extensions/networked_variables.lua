@@ -8,6 +8,11 @@ if (GAMEUI) then
 	return
 end
 
+if (SERVER) then
+	Networks.AddNetworkString("GlobalNetworkedVariable")
+	Networks.AddNetworkString("GlobalNetworkedVariableSet")
+end
+
 local Hooks = require("hooks")
 
 local debugPrint = function(...)

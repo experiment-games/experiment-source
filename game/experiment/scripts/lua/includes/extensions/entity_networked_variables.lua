@@ -15,6 +15,11 @@ if (GAMEUI) then
 	return
 end
 
+if (SERVER) then
+	Networks.AddNetworkString("EntityNetworkedVariable")
+	Networks.AddNetworkString("EntityNetworkedVariableSet")
+end
+
 local ENTITY_META = _R.Entity
 local Hooks = require("hooks")
 
@@ -196,7 +201,7 @@ else
 		if (not IsValid(entity)) then
 			-- TODO: Should this happen? We should only be sending to players that are in the PVS of the entity
 			-- Erroring for debug, but perhaps we should just ignore it
-			error("Received networked variable for invalid entity")
+			debugPrint("Received networked variable for invalid entity")
 			return
 		end
 

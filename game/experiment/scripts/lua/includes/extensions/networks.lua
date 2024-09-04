@@ -137,7 +137,9 @@ local networkStrings = NetworkStringTables.FindTable("LuaNetworkStrings")
 
 function Networks.AddNetworkString(name)
 	if (SERVER) then
-		networkStrings:AddString(true, name)
+        local networkId = networkStrings:AddString(true, name)
+
+		printDebug("Added network string: " .. name .. " with id " .. networkId)
 	end
 end
 

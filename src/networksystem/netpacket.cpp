@@ -4,7 +4,7 @@
 #include "netpacket.h"
 #include "networksystem.h"
 
-static CUtlMemoryPool s_PacketBufferAlloc( NET_MAX_MESSAGE, 8, CUtlMemoryPool::GROW_SLOW );
+static CUtlMemoryPool s_PacketBufferAlloc( NETWORK_MAX_MESSAGE_LENGTH, 8, CUtlMemoryPool::GROW_SLOW );
 DEFINE_FIXEDSIZE_ALLOCATOR( CNetPacket, 32, CUtlMemoryPool::GROW_SLOW );
 
 CNetPacket::CNetPacket()

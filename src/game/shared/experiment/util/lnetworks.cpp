@@ -22,7 +22,7 @@ LUA_BINDING_BEGIN( Networks, InternalSendToClients, "library", "Send a message t
     message->SetBuffer( ( const char * )messageWriter.GetBasePointer(), messageWriter.GetNumBytesWritten() );
 
     // If no clients are probided, broadcast the message
-    if ( lua_isnil( L, 3 ) )
+    if ( lua_isnoneornil( L, 3 ) )
     {
         g_pNetworkManager->BroadcastServerToClientMessage( message );
     }

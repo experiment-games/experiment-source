@@ -762,8 +762,8 @@ LUA_REGISTRATION_INIT( MessageWriters )
 
 LUA_BINDING_BEGIN( MessageWriters, Create, "library", "Creates a new MessageWriter for writing network messages" )
 {
-    void *buffer = malloc( NET_MAX_MESSAGE );
-    bf_write *writer = new bf_write( buffer, NET_MAX_MESSAGE );
+    void *buffer = malloc( NETWORK_MAX_MESSAGE_LENGTH );
+    bf_write *writer = new bf_write( buffer, NETWORK_MAX_MESSAGE_LENGTH );
     lua_pushbf_write( L, writer );
     return 1;
 }

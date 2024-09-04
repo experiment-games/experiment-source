@@ -70,7 +70,9 @@ int CTcpClientSocket::ReceiveMessageLength()
         return -1;
     }
 
-    return LittleLong( *( NETWORK_MESSAGE_LENGTH_DATATYPE * )buffer );
+    NETWORK_MESSAGE_LENGTH_DATATYPE length;
+    memcpy( &length, buffer, sizeof( length ) );
+    return LittleLong( length );
 }
 
 bool CTcpClientSocket::Receive( CUtlBuffer &data )
@@ -122,7 +124,8 @@ bool CTcpClientSocket::Send( const char *data, size_t dataLength )
 {
     // Send the length of the message first
     char lengthBuffer[sizeof( NETWORK_MESSAGE_LENGTH_DATATYPE )];
-    *( NETWORK_MESSAGE_LENGTH_DATATYPE * )lengthBuffer = LittleLong( ( int )dataLength );
+    NETWORK_MESSAGE_LENGTH_DATATYPE length = LittleLong( ( int )dataLength );
+    memcpy( lengthBuffer, &length, sizeof( length ) );
 
     int bytesSent = send( m_Socket, lengthBuffer, sizeof( lengthBuffer ), 0 );
 

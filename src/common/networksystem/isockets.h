@@ -18,9 +18,8 @@ class CNetPacket;
 #define NETWORK_MESSAGE_HEADER_BITS ( NETWORK_MESSAGE_GROUP_BITS + NETWORK_MESSAGE_INDEX_BITS )
 
 // The size of messages is sent first, so we know when a 'packet' is complete
-#define NETWORK_MESSAGE_LENGTH_DATATYPE short  // Max 64KB
-#define NET_MAX_PAYLOAD 4000
-#define NET_MAX_MESSAGE 4096
+#define NETWORK_MESSAGE_LENGTH_DATATYPE uint16 // Max 64KB
+#define NETWORK_MAX_MESSAGE_LENGTH ( 1 << ( sizeof( NETWORK_MESSAGE_LENGTH_DATATYPE ) * 8 ) )
 
 enum
 {
