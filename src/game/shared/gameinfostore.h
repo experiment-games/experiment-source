@@ -19,6 +19,21 @@ class CGameInfoStore : public CGameEventListener
         return m_pszServerAddress;
     }
 
+    virtual char *GetServerIpAsString()
+    {
+        return m_pszServerIpAsString;
+    }
+
+    virtual int GetServerIp()
+    {
+        return m_iServerIp;
+    }
+
+    virtual int GetServerPort()
+    {
+        return m_iServerPort;
+    }
+
     virtual char *GetServerName()
     {
         return m_pszServerName;
@@ -39,6 +54,9 @@ class CGameInfoStore : public CGameEventListener
 
    private:
     char m_pszServerAddress[46];  // 39 (ipv6) + 6 (port) + 1 (null terminator) = 46
+    char m_pszServerIpAsString[39];
+    int m_iServerIp;
+    int m_iServerPort;
     char m_pszServerName[512];
     char m_pszMapName[512];
     bool m_bIsDedicatedServer;

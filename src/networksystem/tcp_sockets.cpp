@@ -9,6 +9,7 @@
 CTcpClientSocket::CTcpClientSocket()
 {
     m_Socket = INVALID_SOCKET;
+    m_CurrentMessageReceiving = nullptr;
     Q_memset( &m_SocketIP, 0, sizeof( m_SocketIP ) );
 }
 
@@ -42,7 +43,37 @@ void CTcpClientSocket::Disconnect()
     }
 }
 
-bool CTcpClientSocket::ReceiveFrom( netadr_t &remote, CUtlBuffer &data )
+int CTcpClientSocket::ReceiveMessageLength()
+{
+    char buffer[sizeof( NETWORK_MESSAGE_LENGTH_DATATYPE )];
+    int bytesRead = recv( m_Socket, buffer, sizeof( buffer ), 0 );
+
+    if ( bytesRead == SOCKET_ERROR )
+    {
+        int nError = WSAGetLastError();
+
+        if ( nError != WSAEWOULDBLOCK )
+        {
+            Warning( "Socket error '%i'\n", nError );
+        }
+
+        return -1;
+    }
+
+    if ( bytesRead == 0 )
+    {
+        return 0;
+    }
+
+    if ( bytesRead != sizeof( NETWORK_MESSAGE_LENGTH_DATATYPE ) )
+    {
+        return -1;
+    }
+
+    return LittleLong( *( NETWORK_MESSAGE_LENGTH_DATATYPE * )buffer );
+}
+
+bool CTcpClientSocket::Receive( CUtlBuffer &data )
 {
     int maxBytesToRead = data.Size() - data.TellPut();
     char *buffer = ( char * )data.PeekPut();
@@ -61,18 +92,51 @@ bool CTcpClientSocket::ReceiveFrom( netadr_t &remote, CUtlBuffer &data )
         return false;
     }
 
-    remote.SetFromSocket( m_Socket );
     data.SeekPut( CUtlBuffer::SEEK_CURRENT, bytesRead );
 
     return true;
 }
 
+bool CTcpClientSocket::HasDataInSocket()
+{
+    fd_set readSet;
+    FD_ZERO( &readSet );
+    FD_SET( m_Socket, &readSet );
+
+    timeval timeout;
+    timeout.tv_sec = 0;
+    timeout.tv_usec = 0;
+
+    int nRet = select( 0, &readSet, NULL, NULL, &timeout );
+
+    if ( nRet == SOCKET_ERROR )
+    {
+        DevWarning( "CTcpClientSocket::HasDataInSocket:  Invalid socket on read\n" );
+        return false;
+    }
+
+    return FD_ISSET( m_Socket, &readSet ) == 1;
+}
+
 bool CTcpClientSocket::Send( const char *data, size_t dataLength )
 {
-    int bytesSent = send( m_Socket, data, ( int )dataLength, 0 );
+    // Send the length of the message first
+    char lengthBuffer[sizeof( NETWORK_MESSAGE_LENGTH_DATATYPE )];
+    *( NETWORK_MESSAGE_LENGTH_DATATYPE * )lengthBuffer = LittleLong( ( int )dataLength );
+
+    int bytesSent = send( m_Socket, lengthBuffer, sizeof( lengthBuffer ), 0 );
 
     if ( SOCKET_ERROR == bytesSent )
     {
+        Assert( 0 );
+        return false;
+    }
+
+    bytesSent = send( m_Socket, data, ( int )dataLength, 0 );
+
+    if ( SOCKET_ERROR == bytesSent )
+    {
+        Assert( 0 );
         return false;
     }
 
@@ -104,14 +168,7 @@ bool CTcpClientSocket::ReadPackets( CUtlVector< CNetPacket * > &newPackets )
 
     if ( FD_ISSET( m_Socket, &readSet ) )
     {
-        CNetPacket *pPacket = TcpGetPacket( this );
-
-        if ( pPacket )
-        {
-            pPacket->m_From = m_SocketIP;
-            newPackets.AddToTail( pPacket );
-            return true; // TODO: Can there be more than one packet in a single read?
-        }
+        return TcpGetOrContinuePackets( this, newPackets );
     }
 
     return false;
@@ -166,7 +223,9 @@ bool CTcpServerSocket::AcceptClients( CUtlVector< CTcpClientSocket * > &newClien
         return false;
     }
 
-    SOCKET newSocket = accept( m_Socket, NULL, NULL );
+    struct sockaddr clientAddress;
+    int len = sizeof( clientAddress );
+    SOCKET newSocket = accept( m_Socket, &clientAddress, &len );
 
     if ( newSocket == INVALID_SOCKET )
     {
@@ -175,7 +234,7 @@ bool CTcpServerSocket::AcceptClients( CUtlVector< CTcpClientSocket * > &newClien
 
     CTcpClientSocket *client = new CTcpClientSocket;
     client->m_Socket = newSocket;
-    client->m_SocketIP.SetFromSocket( newSocket );
+    client->m_SocketIP.SetFromSockadr( &clientAddress );
     m_Clients.AddToTail( client );
     newClients.AddToTail( client );
     return true;
@@ -201,7 +260,7 @@ bool CTcpServerSocket::ReadPackets( CUtlVector< CNetPacket * > &newPackets )
             // TODO:Inform the NetworkServer of the disconnect
             delete m_Clients[i];
             m_Clients.Remove( i );
-            i--; // Decrement to avoid skipping the next client
+            i--;  // Decrement to avoid skipping the next client
             continue;
         }
 
@@ -223,14 +282,7 @@ bool CTcpServerSocket::ReadPackets( CUtlVector< CNetPacket * > &newPackets )
 
         if ( FD_ISSET( client->m_Socket, &readSet ) )
         {
-            CNetPacket *pPacket = TcpGetPacket( client );
-
-            if ( pPacket )
-            {
-                pPacket->m_From = client->m_SocketIP;
-                newPackets.AddToTail( pPacket );
-                anyPackets = true;
-            }
+            return TcpGetOrContinuePackets( client, newPackets );
         }
     }
 

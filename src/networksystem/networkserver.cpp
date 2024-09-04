@@ -39,34 +39,50 @@ void CNetworkServer::Shutdown()
     GetStreamSocket()->Shutdown();
 }
 
-void CNetworkServer::Update( void )
+bool CNetworkServer::AcceptClients( CUtlVector< IConnectedClient * > &newClients )
 {
-    CUtlVector< CTcpClientSocket * > newClients;
-    if ( GetStreamSocket()->AcceptClients( newClients ) )
+    CUtlVector< CTcpClientSocket * > clients;
+    bool anyNewClients = false;
+
+    if ( GetStreamSocket()->AcceptClients( clients ) )
     {
-        for ( int i = 0; i < newClients.Count(); ++i )
+        for ( int i = 0; i < clients.Count(); ++i )
         {
-            CTcpClientSocket *pClient = newClients[i];
+            CTcpClientSocket *pClient = clients[i];
             CConnectedClient *client = new CConnectedClient( this, pClient->m_SocketIP, pClient );
+
             m_Clients.AddToTail( client );
+            newClients.AddToHead( client );
+
+            anyNewClients = true;
         }
     }
 
+    return anyNewClients;
+}
+
+/// <summary>
+/// Reads packages from the socket and processes them
+/// </summary>
+/// <param name=""></param>
+void CNetworkServer::Update( void )
+{
     CUtlVector< CNetPacket * > newPackets;
-    GetStreamSocket()->ReadPackets( newPackets );
-
-    for ( int i = 0; i < newPackets.Count(); ++i )
+    if ( GetStreamSocket()->ReadPackets( newPackets ) )
     {
-        CNetPacket *pPacket = newPackets[i];
-        IConnectedClient *client = FindClientByAddress( pPacket->m_From );
+        for ( int i = 0; i < newPackets.Count(); ++i )
+        {
+            CNetPacket *pPacket = newPackets[i];
+            IConnectedClient *client = FindClientByAddress( pPacket->m_From );
 
-        if ( client )
-        {
-            m_pNetworkSystem->ProcessMessage( client, pPacket );
-        }
-        else
-        {
-            Warning( "Received packet from unknown player %s\n", pPacket->m_From.ToString() );
+            if ( client )
+            {
+                m_pNetworkSystem->ProcessMessage( client, pPacket );
+            }
+            else
+            {
+                Warning( "Received packet from unknown player %s\n", pPacket->m_From.ToString() );
+            }
         }
     }
 }

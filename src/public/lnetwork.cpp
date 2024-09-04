@@ -331,6 +331,38 @@ LUALIB_API bf_read *luaL_checkbf_read( lua_State *L, int narg )
     return bfRead;
 }
 
+LUA_BINDING_BEGIN( MessageReader, GetNumBytesLeft, "class", "The bytes left to read." )
+{
+    bf_read *bf = LUA_BINDING_ARGUMENT( luaL_checkbf_read, 1, "reader" );
+    lua_pushinteger( L, bf->GetNumBytesLeft() );
+    return 1;
+}
+LUA_BINDING_END( "integer", "The bytes left to read." )
+
+LUA_BINDING_BEGIN( MessageReader, GetNumBitsLeft, "class", "The bits left to read." )
+{
+    bf_read *bf = LUA_BINDING_ARGUMENT( luaL_checkbf_read, 1, "reader" );
+    lua_pushinteger( L, bf->GetNumBitsLeft() );
+    return 1;
+}
+LUA_BINDING_END( "integer", "The bits left to read." )
+
+LUA_BINDING_BEGIN( MessageReader, GetNumBytesRead, "class", "The bytes read." )
+{
+    bf_read *bf = LUA_BINDING_ARGUMENT( luaL_checkbf_read, 1, "reader" );
+    lua_pushinteger( L, bf->GetNumBytesRead() );
+    return 1;
+}
+LUA_BINDING_END( "integer", "The bytes read." )
+
+LUA_BINDING_BEGIN( MessageReader, GetNumBitsRead, "class", "The bits read." )
+{
+    bf_read *bf = LUA_BINDING_ARGUMENT( luaL_checkbf_read, 1, "reader" );
+    lua_pushinteger( L, bf->GetNumBitsRead() );
+    return 1;
+}
+LUA_BINDING_END( "integer", "The bits read." )
+
 LUA_BINDING_BEGIN( MessageReader, ReadBit, "class", "Reads a bit." )
 {
     bf_read *bf = LUA_BINDING_ARGUMENT( luaL_checkbf_read, 1, "reader" );

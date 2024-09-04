@@ -45,9 +45,10 @@ class CNetworkSystem : public CTier2AppSystem< INetworkSystem >
     virtual bool StartServer( unsigned short serverPort );
     virtual void ShutdownServer();
 
-    virtual bool StartClient( unsigned short nClientListenPort );
+    virtual bool StartClient();
     virtual void ShutdownClient();
 
+    virtual bool AcceptClients( CUtlVector< IConnectedClient * > &newClients );
     virtual void Tick( void );
     virtual bool ProcessMessage( IConnectedClient *client, CNetPacket *packet );
     virtual bool ProcessControlMessage( int messageCommand, bf_read &buffer );
@@ -59,7 +60,7 @@ class CNetworkSystem : public CTier2AppSystem< INetworkSystem >
 
     virtual void SendClientToServerMessage( INetworkMessage *message );
     virtual void BroadcastServerToClientMessage( INetworkMessage *message );
-    virtual void SendServerToClientMessage( INetworkMessage *pMessage, const char *clientRemoteAddress );
+    virtual void SendServerToClientMessage( INetworkMessage *pMessage, IConnectedClient *client );
 
     INetworkGroupHandler *FindNetworkGroupHandler( NETWORK_MESSAGE_GROUP::TYPE group );
 

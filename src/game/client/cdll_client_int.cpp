@@ -1782,9 +1782,7 @@ void CHLClient::LevelInitPreEntity( char const *pMapName )
         if ( !g_pNetworkManager->StartClient() )
             Assert( 0 ); // Let's hope this never happens
 
-        const char *ip = g_pGameInfoStore->GetServerAddress();
-
-        if ( !g_pNetworkManager->ConnectClientToServer( ip ) )
+        if ( !g_pNetworkManager->ConnectClientToServer(  ) )
             Assert( 0 ); // Let's hope this never happens
     }
 

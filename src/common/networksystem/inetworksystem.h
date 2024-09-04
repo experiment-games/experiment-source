@@ -44,9 +44,10 @@ abstract_class INetworkSystem : public IAppSystem
     virtual bool StartServer( unsigned short serverPort = NETWORKSYSTEM_DEFAULT_SERVER_PORT ) = 0;
     virtual void ShutdownServer() = 0;
 
-    virtual bool StartClient( unsigned short nClientListenPort = NETWORKSYSTEM_DEFAULT_CLIENT_PORT ) = 0;
+    virtual bool StartClient() = 0;
     virtual void ShutdownClient() = 0;
 
+    virtual bool AcceptClients( CUtlVector< IConnectedClient* > & newClients ) = 0;
     virtual void Tick( void ) = 0;
     virtual bool ProcessMessage( IConnectedClient * client, CNetPacket * packet ) = 0;
     virtual bool ProcessControlMessage( int messageCommand, bf_read& buffer ) = 0;
@@ -57,7 +58,7 @@ abstract_class INetworkSystem : public IAppSystem
 
     virtual void SendClientToServerMessage( INetworkMessage * pMessage ) = 0;
     virtual void BroadcastServerToClientMessage( INetworkMessage * pMessage ) = 0;
-    virtual void SendServerToClientMessage( INetworkMessage * pMessage, const char* clientRemoteAddress ) = 0;
+    virtual void SendServerToClientMessage( INetworkMessage * pMessage, IConnectedClient * client ) = 0;
 
     virtual INetworkGroupHandler* FindNetworkGroupHandler( NETWORK_MESSAGE_GROUP::TYPE group ) = 0;
 };

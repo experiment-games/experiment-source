@@ -33,7 +33,7 @@
 #include <mountsteamcontent.h>
 #include <lresources.h>
 
-#include <gameinfostore.h>
+#include <util/networkmanager.h>
 #include <networksystem/inetworkgrouphandler.h>
 #include <networksystem/networkserver.h>
 #include "tier2/tier2.h"
@@ -135,35 +135,12 @@ class CLuaNetworkGroupHandler : public INetworkGroupHandler
 
 void CLuaNetworkGroupHandler::HandleReadingMessage( unsigned int messageTypeId, bf_read &buffer, IConnectedClient *client )
 {
-    // Upon reading we don't use INetworkMessage, we just pass the buffer to Lua
-    //    CDynamicWriteNetworkMessage *message = new CDynamicWriteNetworkMessage( NETWORK_MESSAGE_GROUP::SCRIPT, messageTypeId );
-    //    message->SetBuffer( ( const char * )buffer.GetBasePointer(), buffer.GetNumBytesLeft() );
-    //
-    //    float fValue = buffer.ReadFloat();
-    //
-    //    long lStringLength = buffer.ReadLong();
-    //    char *pszValue = new char[lStringLength + 1];
-    //    buffer.ReadString( pszValue, lStringLength + 1 );
-    //
-    //    long lValue = buffer.ReadLong();
-    //
-    // #ifdef CLIENT_DLL
-    //    const char *prefix = "Client";
-    // #else
-    //    const char *prefix = "Server";
-    // #endif
-    //
-    //    DevMsg( "[%s] Received message: %f, %s, %d\n", prefix, fValue, pszValue, lValue );
-    // delete[] pszValue;
-
-    // Let's try get the player from the client info
     CBasePlayer *player = nullptr;
 
     if ( client )
     {
-        // TODO: Since TCP might open on a different port, and the local player will be loopback, this will fail
-        // TODO: Find a way to reliable open a socket, and know which player it was opened for
-        player = g_pGameInfoStore->GetPlayerByAddress( client->GetRemoteAddress() );
+        player = g_pNetworkManager->FindConnectedPlayer( client );
+        Assert( player != nullptr ); // TODO: What if there's no player for this client? How do we handle it?
     }
 
     lua_getglobal( m_L, LUA_NETWORKSLIBNAME );

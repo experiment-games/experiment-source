@@ -3,7 +3,7 @@
 local countReceived = 0
 
 -- After registering the network strings we must wait a bit
-local DELAY_BEFORE_START = 2
+local DELAY_BEFORE_START = 1
 local DELAY_BEFORE_DONE = 2
 
 if (SERVER) then
@@ -13,6 +13,7 @@ if (SERVER) then
 	Networks.AddNetworkString("CTestMessage2")
 
     Networks.Receive("TestMessage", function(length, client)
+		print("TestMessage", length, client)
         local message = Networks.ReadString()
 		local num = Networks.ReadFloat()
 
@@ -29,6 +30,7 @@ if (SERVER) then
     end)
 
     Networks.Receive("TestMessage2", function(length, client)
+		print("TestMessage2", length, client)
         Networks.Start("CTestMessage2")
         Networks.WriteString("Hello again, client!")
         Networks.Send(client)
@@ -44,19 +46,21 @@ if (SERVER) then
 end
 
 if (CLIENT) then
-	Networks.Receive("CTestMessage", function(length, client)
+	Networks.Receive("CTestMessage", function(length)
+		print("CTestMessage", length)
         local num = Networks.ReadFloat()
         local message = Networks.ReadString()
-		local position = Networks.ReadVector()
+        local position = Networks.ReadVector()
 
         assert(math.AlmostEquals(num, 1234.5677490234), "Received incorrect number from server!")
         assert(message == "Hello, client!", "Received incorrect message from server!")
-		assert(type(position) == "vector", "Received incorrect position from server!")
+		assert(type(position) == "Vector", "Received incorrect position from server!")
 
 		countReceived = countReceived + 1
 	end)
 
-	Networks.Receive("CTestMessage2", function(length, client)
+	Networks.Receive("CTestMessage2", function(length)
+		print("CTestMessage2", length)
         local message = Networks.ReadString()
 
         assert(message == "Hello again, client!", "Received incorrect message from server!")

@@ -329,8 +329,6 @@ function Networks.HandleIncomingMessage(messageTypeId, bufferReader, sender)
 		printDebug("Networks.HandleIncomingMessage was called twice without handling the previous message. Resetting...")
 	end
 
-	currentIncomingMessageReader = bufferReader
-
 	local messageName = Networks.NetworkIdToString(messageTypeId)
 
 	if (not messageName) then
@@ -345,7 +343,9 @@ function Networks.HandleIncomingMessage(messageTypeId, bufferReader, sender)
 		return
 	end
 
-	callback(length, sender)
+	currentIncomingMessageReader = bufferReader
+
+	callback(bufferReader:GetNumBytesLeft(), sender)
 
 	currentIncomingMessageReader = nil
 end

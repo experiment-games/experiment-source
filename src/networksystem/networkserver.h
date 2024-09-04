@@ -18,11 +18,11 @@ class CNetworkServer : public INetworkPeerBase
 
     NETWORK_PEER_DECLARATION( CTcpServerSocket );
 
+    bool AcceptClients( CUtlVector< IConnectedClient * > &newClients );
     IConnectedClient *FindClientByAddress( const netadr_t &adr );
 
     CUtlVector< CConnectedClient * > m_Clients;
     INetworkSystem *m_pNetworkSystem;
-
 };
 
 class CConnectedClient : public IConnectedClient

@@ -14,20 +14,32 @@
 #endif
 
 #include "networksystem/inetworksystem.h"
+#include "GameEventListener.h"
 
-class CNetworkManager : public CBaseGameSystemPerFrame
+struct ConnectedPlayer_t
+{
+    IConnectedClient *client;
+    CBasePlayer *player;
+};
+
+class CNetworkManager : public CBaseGameSystemPerFrame, public CGameEventListener
 {
    public:
     virtual char const *Name()
     {
         return "CNetworkManager";
     }
+    
+    // IGameEventListener interface:
+    virtual void FireGameEvent( IGameEvent *event );
 
     virtual bool Init();
     virtual void Shutdown();
 
+    bool AcceptClient( CBasePlayer *player );
+
     // Update functions
-    virtual void PerformUpdate();
+    virtual void Tick();
 #ifdef CLIENT_DLL
     virtual void Update( float frametime );
 #else
@@ -40,18 +52,20 @@ class CNetworkManager : public CBaseGameSystemPerFrame
 
     bool IsClientConnected();
 
-    bool StartServer( unsigned short nServerListenPort = NETWORKSYSTEM_DEFAULT_SERVER_PORT );
+    bool StartServer( unsigned short serverPort );
     void ShutdownServer();
 
-    bool StartClient( unsigned short nClientListenPort = NETWORKSYSTEM_DEFAULT_CLIENT_PORT );
+    bool StartClient();
     void ShutdownClient();
 
-    bool ConnectClientToServer( const char *serverIp, int serverPort = NETWORKSYSTEM_DEFAULT_SERVER_PORT );
+    bool ConnectClientToServer();
     void DisconnectClientFromServer();
 
     void SendClientToServerMessage( INetworkMessage *pMessage );
     void BroadcastServerToClientMessage( INetworkMessage *pMessage );
-    void SendServerToClientMessage( INetworkMessage *pMessage, const char *clientRemoteAddress );
+    void SendServerToClientMessage( INetworkMessage *pMessage, CBasePlayer *client );
+    IConnectedClient *FindConnectedClient( CBasePlayer *client );
+    CBasePlayer *FindConnectedPlayer( IConnectedClient *client );
 
    private:
     bool m_bIsClient;
@@ -59,6 +73,8 @@ class CNetworkManager : public CBaseGameSystemPerFrame
 
     INetworkPeerBase *m_pClientPeer;
     INetworkPeerBase *m_pServerPeer;
+
+    CUtlVector< ConnectedPlayer_t > m_ConnectedPlayers;
 };
 
 extern CNetworkManager *g_pNetworkManager;

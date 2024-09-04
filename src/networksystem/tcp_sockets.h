@@ -22,7 +22,9 @@ class CTcpClientSocket : public ITcpSocket, public ISendData
     bool Connect( netadr_t remote );
     void Disconnect();
 
-    bool ReceiveFrom( netadr_t &remote, CUtlBuffer &data );
+    int ReceiveMessageLength();
+    bool Receive( CUtlBuffer &data );
+    bool HasDataInSocket();
     virtual bool Send( const char *data, size_t dataLength );
     bool ReadPackets( CUtlVector< CNetPacket * > &newPackets );
 
@@ -37,6 +39,7 @@ class CTcpClientSocket : public ITcpSocket, public ISendData
     }
 
     unsigned int m_Socket;
+    CNetPacket *m_CurrentMessageReceiving;
     netadr_t m_SocketIP;
 };
 

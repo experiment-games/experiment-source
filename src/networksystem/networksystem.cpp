@@ -11,52 +11,6 @@
 
 EXPOSE_INTERFACE( CNetworkSystem, INetworkSystem, NETWORKSYSTEM_INTERFACE_VERSION );
 
-#if _DEBUG
-void DEBUG_MESSAGE_DATA( const char *prefix, unsigned char *data, int size )
-{
-    bf_read buffer( data, size );
-    buffer.Seek( 0 );
-
-    CUtlString debugString;
-
-    debugString.Format( "%s packet: \t%i bytes\n", prefix, size );
-    debugString.Append( "Packet header: \n" );
-    debugString.Append( "group: " );
-    unsigned int group = buffer.ReadUBitLong( NETWORK_MESSAGE_GROUP_BITS );
-    char groupString[256];
-    sprintf( groupString, "%d", group );
-    debugString.Append( groupString );
-    debugString.Append( "\n" );
-    debugString.Append( "type: " );
-    unsigned int type = buffer.ReadUBitLong( NETWORK_MESSAGE_INDEX_BITS );
-    char typeString[256];
-    sprintf( typeString, "%d", type );
-    debugString.Append( typeString );
-    debugString.Append( "\n" );
-
-    int headerBytes = ( NETWORK_MESSAGE_HEADER_BITS / 8 );
-    // Pad with zeros to byte align the header
-    headerBytes += ( ( headerBytes % 4 ) == 0 ) ? 0 : 4 - ( headerBytes % 4 );
-
-    debugString.Append( "Packet data: \t" );
-
-    for ( int i = 0; i < size - headerBytes; ++i )
-    {
-        debugString.Append( "\t" );
-        int byte = buffer.ReadByte();
-        char byteString[256];
-        sprintf( byteString, "%d", byte );
-        debugString.Append( byteString );
-        debugString.Append( "(" );
-        debugString.Append( byte );
-        debugString.Append( ")" );
-    }
-
-    debugString.Append( "\n" );
-    Msg( debugString.Get() );
-}
-#endif
-
 CNetworkSystem::CNetworkSystem()
 {
     m_bWinSockInitialized = false;
@@ -222,7 +176,7 @@ void CNetworkSystem::ShutdownServer()
     }
 }
 
-bool CNetworkSystem::StartClient( unsigned short nClientListenPort )
+bool CNetworkSystem::StartClient()
 {
     if ( !m_bWinSockInitialized )
         return false;
@@ -279,29 +233,10 @@ void CNetworkSystem::BroadcastServerToClientMessage( INetworkMessage *message )
     m_pServer->DispatchSocketMessage( message );
 }
 
-void CNetworkSystem::SendServerToClientMessage( INetworkMessage *message, const char *clientRemoteAddress )
+void CNetworkSystem::SendServerToClientMessage( INetworkMessage *message, IConnectedClient *client )
 {
     Assert( m_pServer );
-
-    netadr_t address;
-
-    if ( Q_strcmp( clientRemoteAddress, "loopback" ) == 0 )
-    {
-        address.SetType( NA_LOOPBACK );
-    }
-    else
-    {
-        address.SetFromString( clientRemoteAddress );
-    }
-
-    IConnectedClient *client = m_pServer->FindClientByAddress( address );
-
-    if ( !client )
-    {
-        Warning( "Failed to find client with address %s.\n", clientRemoteAddress );
-        Assert( 0 );
-        return;
-    }
+    Assert( client );
 
     client->SendNetMessage( message );
 }
@@ -414,6 +349,13 @@ bool CNetworkSystem::SendSocketMessage( ISendData *socket, INetworkMessage *mess
     free( headerBuffer );
 
     return socket->Send( fullBuffer, fullBufferLength );
+}
+
+bool CNetworkSystem::AcceptClients( CUtlVector< IConnectedClient * > &newClients )
+{
+    Assert( m_pServer );
+
+    return m_pServer->AcceptClients( newClients );
 }
 
 void CNetworkSystem::Tick( void )

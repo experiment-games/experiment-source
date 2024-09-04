@@ -21,7 +21,7 @@ abstract_class INetworkPeerBase
     void Shutdown() override;                                               \
                                                                             \
     void Update() override;                                                 \
-    void DispatchSocketMessage( INetworkMessage *packet ) override;                    \
+    void DispatchSocketMessage( INetworkMessage *packet ) override;         \
                                                                             \
     TcpImplementationClass *GetStreamSocket() const                         \
     {                                                                       \

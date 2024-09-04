@@ -99,10 +99,21 @@ void ClientActive( edict_t *pEdict, bool bLoadGame )
     // Can't load games in CS!
     Assert( !bLoadGame );
 
-    // Experiment; Ensure that the socket connection is established
-    g_pNetworkManager->PerformUpdate();
-
     CExperiment_Player *pPlayer = ToExperimentPlayer( CBaseEntity::Instance( pEdict ) );
+
+    // Experiment; Ensure that the socket connection is established
+    if ( !g_pNetworkManager->AcceptClient( pPlayer ) )
+    {
+        // We didn't manage to connect the player to a socket
+        // TODO:    I feel like a race condition could happen here if the player
+        //          is activated before the socket is ready. We should probably
+        //          queue the player and activate them when the socket is ready.
+        // #ifdef WITH_ENGINE_PATCHES
+        // pPlayer->Disconnect()// This isn't exposed (but we could use detours to expose it)
+        // #endif
+        return;
+    }
+
     FinishClientPutInServer( pPlayer );
 }
 

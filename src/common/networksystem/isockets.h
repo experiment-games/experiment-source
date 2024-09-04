@@ -17,13 +17,14 @@ class CNetPacket;
 // Ensure the header bits are divisible by 8
 #define NETWORK_MESSAGE_HEADER_BITS ( NETWORK_MESSAGE_GROUP_BITS + NETWORK_MESSAGE_INDEX_BITS )
 
+// The size of messages is sent first, so we know when a 'packet' is complete
+#define NETWORK_MESSAGE_LENGTH_DATATYPE short  // Max 64KB
 #define NET_MAX_PAYLOAD 4000
 #define NET_MAX_MESSAGE 4096
 
 enum
 {
     NETWORKSYSTEM_DEFAULT_SERVER_PORT = 27001,
-    NETWORKSYSTEM_DEFAULT_CLIENT_PORT = 27002
 };
 
 typedef int ConnectionHandle_t;

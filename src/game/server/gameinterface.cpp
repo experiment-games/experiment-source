@@ -980,12 +980,6 @@ bool CServerGameDLL::GameInit( void )
         gameeventmanager->FireEvent( event );
     }
 
-    if ( !g_pNetworkManager->StartServer() )
-    {
-        Assert( 0 );  // Does this ever happen?
-        return false;
-    }
-
     return true;
 }
 

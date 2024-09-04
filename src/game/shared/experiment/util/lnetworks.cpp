@@ -4,7 +4,6 @@
 #include "lnetwork.h"
 #include "networkmanager.h"
 #include "lbaseplayer_shared.h"
-#include "gameinfostore.h"
 
 // memdbgon must be the last include file in a .cpp file!!!
 #include "tier0/memdbgon.h"
@@ -37,16 +36,7 @@ LUA_BINDING_BEGIN( Networks, InternalSendToClients, "library", "Send a message t
 
             if ( client )
             {
-                char pszAddress[32];
-
-                if ( g_pGameInfoStore->GetPlayerAddress( client, pszAddress, sizeof( pszAddress ) ) )
-                {
-                    g_pNetworkManager->SendServerToClientMessage( message, pszAddress );
-                }
-                else
-                {
-                    Assert( 0 );  // TODO: warn? should this be allowed to happen?
-                }
+                g_pNetworkManager->SendServerToClientMessage( message, client );
             }
             else
             {
@@ -62,16 +52,7 @@ LUA_BINDING_BEGIN( Networks, InternalSendToClients, "library", "Send a message t
 
         if ( client )
         {
-            char pszAddress[32];
-
-            if ( g_pGameInfoStore->GetPlayerAddress( client, pszAddress, sizeof( pszAddress ) ) )
-            {
-                g_pNetworkManager->SendServerToClientMessage( message, pszAddress );
-            }
-            else
-            {
-                Assert( 0 );  // TODO: warn? should this be allowed to happen?
-            }
+            g_pNetworkManager->SendServerToClientMessage( message, client );
         }
         else
         {

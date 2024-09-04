@@ -11,6 +11,9 @@ CNetPacket::CNetPacket()
 {
     m_pData = reinterpret_cast< byte* >( s_PacketBufferAlloc.Alloc() );
     m_nRefCount = 1;
+
+    m_nCurrentSizeInBytes = 0;
+    m_nSizeInBytes = 0;
 }
 
 CNetPacket::~CNetPacket()

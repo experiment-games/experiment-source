@@ -6,7 +6,8 @@
 
 class CNetPacket;
 
-bool TcpReceive( CTcpClientSocket *pSocket, CNetPacket *pPacket );
-CNetPacket *TcpGetPacket( CTcpClientSocket *pSocket );
+bool TcpReceiveNew( CTcpClientSocket *pSocket, CNetPacket *pPacket );
+bool TcpReceiveContinue( CTcpClientSocket *pSocket, CNetPacket *pPacket );
+bool TcpGetOrContinuePackets( CTcpClientSocket *pSocket, CUtlVector< CNetPacket * > &newPackets );
 
 #endif  // TCP_PROCESS_H

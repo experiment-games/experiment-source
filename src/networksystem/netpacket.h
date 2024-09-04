@@ -32,7 +32,9 @@ class CNetPacket
     float m_flReceivedTime;
     unsigned char *m_pData;
     bf_read m_Message;
+
     int m_nSizeInBytes;
+    int m_nCurrentSizeInBytes;
 
    private:
     int m_nRefCount;

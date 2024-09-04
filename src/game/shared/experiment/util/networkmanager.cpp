@@ -6,7 +6,8 @@
 #include "networksystem/isockets.h"
 #include "networkmanager.h"
 #include "networksystem/inetworkmessage.h"
-#include <lnetwork.h>
+#include "gameinfostore.h"
+#include "lnetwork.h"
 
 static CNetworkManager s_NetworkManager;
 extern CNetworkManager *g_pNetworkManager = &s_NetworkManager;
@@ -18,7 +19,28 @@ bool CNetworkManager::Init()
 {
     m_bIsClient = m_bIsServer = false;
 
+#ifdef GAME_DLL
+    ListenForGameEvent( "server_spawn" );
+#endif
+
     return true;
+}
+
+void CNetworkManager::FireGameEvent( IGameEvent *event )
+{
+#ifdef GAME_DLL
+    const char *eventType = event->GetName();
+    if ( Q_strcmp( eventType, "server_spawn" ) == 0 )
+    {
+        int serverPort = event->GetInt( "port" );
+
+        if ( !g_pNetworkManager->StartServer( serverPort ) )
+        {
+            Assert( 0 );  // Does this ever happen?
+            return;
+        }
+    }
+#endif
 }
 
 /// <summary>
@@ -33,16 +55,11 @@ void CNetworkManager::Shutdown()
     g_pNetworkSystem->Shutdown();
 }
 
-bool CNetworkManager::StartServer( unsigned short serverListenPort )
+bool CNetworkManager::StartServer( unsigned short serverPort )
 {
     ShutdownServer();
 
-    if ( serverListenPort == NETWORKSYSTEM_DEFAULT_SERVER_PORT )
-    {
-        serverListenPort = CommandLine()->ParmValue( "-serverport", NETWORKSYSTEM_DEFAULT_SERVER_PORT );
-    }
-
-    m_bIsServer = g_pNetworkSystem->StartServer( serverListenPort );
+    m_bIsServer = g_pNetworkSystem->StartServer( serverPort );
     m_pServerPeer = g_pNetworkSystem->GetServerPeer();
     return m_bIsServer;
 }
@@ -56,16 +73,11 @@ void CNetworkManager::ShutdownServer()
     }
 }
 
-bool CNetworkManager::StartClient( unsigned short nClientListenPort )
+bool CNetworkManager::StartClient()
 {
     ShutdownClient();
 
-    if ( nClientListenPort == NETWORKSYSTEM_DEFAULT_CLIENT_PORT )
-    {
-        nClientListenPort = CommandLine()->ParmValue( "-clientport", NETWORKSYSTEM_DEFAULT_CLIENT_PORT );
-    }
-
-    m_bIsClient = g_pNetworkSystem->StartClient( nClientListenPort );
+    m_bIsClient = g_pNetworkSystem->StartClient();
     return m_bIsClient;
 }
 
@@ -79,17 +91,15 @@ void CNetworkManager::ShutdownClient()
     }
 }
 
-bool CNetworkManager::ConnectClientToServer( const char *serverIp, int serverPort )
+bool CNetworkManager::ConnectClientToServer()
 {
     DisconnectClientFromServer();
 
     if ( !IsClient() )
         return false;
 
-    if ( serverPort == NETWORKSYSTEM_DEFAULT_SERVER_PORT )
-    {
-        serverPort = CommandLine()->ParmValue( "-serverport", NETWORKSYSTEM_DEFAULT_SERVER_PORT );
-    }
+    const char *serverIp = g_pGameInfoStore->GetServerIpAsString();
+    unsigned short serverPort = g_pGameInfoStore->GetServerPort();
 
     m_pClientPeer = g_pNetworkSystem->ConnectClientToServer( serverIp, serverPort );
     return ( m_pClientPeer != NULL );
@@ -131,13 +141,143 @@ void CNetworkManager::BroadcastServerToClientMessage( INetworkMessage *message )
     g_pNetworkSystem->BroadcastServerToClientMessage( message );
 }
 
-void CNetworkManager::SendServerToClientMessage( INetworkMessage *message, const char *clientRemoteAddress )
+void CNetworkManager::SendServerToClientMessage( INetworkMessage *message, CBasePlayer *player )
 {
     Assert( IsServer() );
-    g_pNetworkSystem->SendServerToClientMessage( message, clientRemoteAddress );
+
+    IConnectedClient *connectedClient = FindConnectedClient( player );
+
+    if ( !connectedClient )
+    {
+        Assert( 0 );  // TODO: what should we do if we can't find the player? Message? Error?
+        return;
+    }
+
+    g_pNetworkSystem->SendServerToClientMessage( message, connectedClient );
 }
 
-void CNetworkManager::PerformUpdate()
+IConnectedClient *CNetworkManager::FindConnectedClient( CBasePlayer *player )
+{
+    Assert( IsServer() );
+
+    for ( int i = 0; i < m_ConnectedPlayers.Count(); ++i )
+    {
+        ConnectedPlayer_t &connectedPlayer = m_ConnectedPlayers[i];
+
+        if ( connectedPlayer.player == player )
+        {
+            return connectedPlayer.client;
+        }
+    }
+
+    return nullptr;
+}
+
+CBasePlayer *CNetworkManager::FindConnectedPlayer( IConnectedClient *client )
+{
+    Assert( IsServer() );
+
+    for ( int i = 0; i < m_ConnectedPlayers.Count(); ++i )
+    {
+        ConnectedPlayer_t &connectedPlayer = m_ConnectedPlayers[i];
+
+        if ( connectedPlayer.client == client )
+        {
+            return connectedPlayer.player;
+        }
+    }
+
+    return nullptr;
+}
+
+/// <summary>
+/// Tries to find a connected socket and tie it to the player.
+/// If it fails, the player will not be able to communicate with the server so
+/// we return false to have the player kicked.
+/// </summary>
+/// <param name="client"></param>
+/// <returns></returns>
+bool CNetworkManager::AcceptClient( CBasePlayer *client )
+{
+    Assert( IsServer() );
+
+    CUtlVector< IConnectedClient * > newClients;
+
+    if ( !g_pNetworkSystem->AcceptClients( newClients ) )
+    {
+        // No new clients, we can't tie this player to a socket
+        return false;
+    }
+
+    char clientAddress[32];
+
+    if ( !g_pGameInfoStore->GetPlayerAddress( client, clientAddress, sizeof( clientAddress ) ) )
+    {
+        // We couldn't determine the player's address, so it's impossible to tie them to a socket
+        return false;
+    }
+
+    int numMatches = 0;
+    IConnectedClient *matchingClient = NULL;
+
+    for ( int i = 0; i < newClients.Count(); ++i )
+    {
+        IConnectedClient *newClient = newClients[i];
+        const char *newClientAddress = newClient->GetRemoteAddress();
+
+        // First check if the remoteAddress is already in the list of connected players
+        for ( int j = 0; j < m_ConnectedPlayers.Count(); ++j )
+        {
+            ConnectedPlayer_t &connectedPlayer = m_ConnectedPlayers[j];
+
+            if ( connectedPlayer.client == newClient )
+            {
+                // This player is already connected. Don't allow anyone to
+                // hijack their connection.
+                return false;
+            }
+        }
+
+        // If the remoteAddress doesn't contain a : then we are likely connecting as localhost
+        // In that situation we only compare the IP. Later we check if multiple ip matches
+        // happened and fail by kicking all those matching players.
+        char *found = Q_strstr( clientAddress, ":" );
+
+        if ( !found )
+        {
+            int positionOfColonInNew = Q_strstr( newClientAddress, ":" ) - newClientAddress;
+
+            if ( Q_strncmp( newClientAddress, clientAddress, positionOfColonInNew ) == 0 )
+            {
+                numMatches++;
+                matchingClient = newClient;
+            }
+        }
+        else if ( Q_strcmp( newClientAddress, clientAddress ) == 0 )
+        {
+            numMatches++;
+            matchingClient = newClient;
+        }
+    }
+
+    // Only allow 1 match, so that if multiple players connect at the same time
+    // from the same IP, we don't confuse their sockets.
+    // TODO: Find a way to get their connecting port, so we don't have to be this
+    // janky.
+    if ( numMatches != 1 )
+    {
+        return false;
+    }
+
+    ConnectedPlayer_t connectedPlayer;
+    connectedPlayer.client = matchingClient;
+    connectedPlayer.player = client;
+    m_ConnectedPlayers.AddToTail( connectedPlayer );
+
+    return true;
+}
+
+void CNetworkManager::Tick()
 {
     g_pNetworkSystem->Tick();
 }
@@ -145,63 +285,11 @@ void CNetworkManager::PerformUpdate()
 #ifdef CLIENT_DLL
 void CNetworkManager::Update( float frametime )
 {
-    PerformUpdate();
+    Tick();
 }
 #else
 void CNetworkManager::FrameUpdatePreEntityThink()
 {
-    PerformUpdate();
-}
-#endif
-
-#ifdef CLIENT_DLL
-CON_COMMAND( test_net_cl_send, "Tests sending a net message ad-hoc on the client" )
-{
-    CDynamicWriteNetworkMessage *message = new CDynamicWriteNetworkMessage( NETWORK_MESSAGE_GROUP::SCRIPT, 0 );
-    // Let's write some test data to the message
-    byte sendBuffer[NET_MAX_MESSAGE];
-    bf_write buffer( "test_net_cl_send", sendBuffer, sizeof( sendBuffer ) );
-
-    buffer.WriteFloat( 3.14f );
-
-    const char *pszString = "Hello, world!";
-    buffer.WriteLong( Q_strlen( pszString ) );
-    buffer.WriteString( pszString );
-
-    buffer.WriteLong( 42 );
-
-    message->SetBuffer( ( const char * )buffer.GetBasePointer(), buffer.GetNumBytesWritten() );
-
-    if ( !message )
-        return;
-
-    s_NetworkManager.SendClientToServerMessage( message );
-
-    delete message;
-}
-#else
-CON_COMMAND( test_net_sv_send, "Test sending a net message ad-hoc on the server" )
-{
-    CDynamicWriteNetworkMessage *message = new CDynamicWriteNetworkMessage( NETWORK_MESSAGE_GROUP::SCRIPT, 0 );
-    // Let's write some test data to the message
-    byte sendBuffer[NET_MAX_MESSAGE];
-    bf_write buffer( "test_net_sv_send", sendBuffer, sizeof( sendBuffer ) );
-
-    buffer.WriteFloat( 3.14f );
-
-    const char *pszString = "Hello, world!";
-    buffer.WriteLong( Q_strlen( pszString ) );
-    buffer.WriteString( pszString );
-
-    buffer.WriteLong( 42 );
-
-    message->SetBuffer( ( const char * )buffer.GetBasePointer(), buffer.GetNumBytesWritten() );
-
-    if ( !message )
-        return;
-
-    s_NetworkManager.BroadcastServerToClientMessage( message );
-
-    delete message;
+    Tick();
 }
 #endif

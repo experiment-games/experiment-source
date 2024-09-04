@@ -35,8 +35,6 @@ bool CNetworkClient::Connect( char const *server, int port /*=SM_SERVER_PORT*/ )
     remote.port = htons( ( unsigned short )port );
 
     // Resolve remote name
-    sockaddr sa;
-
     if ( Q_stricmp( server, "localhost" ) == 0 || Q_stricmp( server, "loopback" ) == 0 )
     {
         remote.ip[0] = 127;
@@ -46,6 +44,8 @@ bool CNetworkClient::Connect( char const *server, int port /*=SM_SERVER_PORT*/ )
     }
     else
     {
+        sockaddr sa;
+
         if ( !CNetworkSystem::StringToSockaddr( server, &sa ) )
         {
             Msg( "Unable to resolve '%s'\n", server );
