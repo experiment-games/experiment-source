@@ -1317,10 +1317,27 @@ LUA_BINDING_BEGIN( Panel, OnTick, "class", "Handles the panel being ticked" )
 }
 LUA_BINDING_END()
 
-LUA_BINDING_BEGIN( Panel, Paint, "class", "Paints the panel" )
+LUA_BINDING_BEGIN( Panel, PaintManual, "class", "Paints the panel" )
 {
     lua_Panel *panel = LUA_BINDING_ARGUMENT( luaL_checkpanel, 1, "panel" );
-    panel->Paint();
+    bool shouldUnclamp = LUA_BINDING_ARGUMENT_WITH_DEFAULT( luaL_optboolean, 2, false, "shouldUnclamp" );
+
+    if ( shouldUnclamp )
+    {
+        luaL_argerror( L, 2, "Unclamping is not supported" );
+        return 0;
+    }
+
+    panel->PaintManual();
+    return 0;
+}
+LUA_BINDING_END()
+
+LUA_BINDING_BEGIN( Panel, SetPaintedManually, "class", "Sets whether the panel is painted manually" )
+{
+    lua_Panel *panel = LUA_BINDING_ARGUMENT( luaL_checkpanel, 1, "panel" );
+    bool isPaintedManually = LUA_BINDING_ARGUMENT( luaL_checkboolean, 2, "isPaintedManually" );
+    panel->SetPaintEnabled( !isPaintedManually );
     return 0;
 }
 LUA_BINDING_END()

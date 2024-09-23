@@ -705,6 +705,7 @@ class Panel : public IClientPanel, virtual IForceVirtualInheritancePanel
     // message handlers that don't go through the message pump
     virtual void PaintBackground();
     virtual void Paint();
+    virtual void PaintManual();
     virtual void PaintBorder();
     virtual void PaintBuildOverlay();  // the extra drawing for when in build mode
     virtual void PostChildPaint();

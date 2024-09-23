@@ -852,6 +852,8 @@ LUA_BINDING_BEGIN( CBaseAnimating, GetBodyGroups, "class", "Get the bodygroup va
         }
 
         lua_setfield( L, -2, "submodels" );
+
+        lua_rawseti( L, -2, iGroup );
     }
 
     return 1;

@@ -1347,29 +1347,7 @@ void Panel::PaintTraverse( bool repaint, bool allowForce )
         // draw the front of the panel with the inset
         if ( _flags.IsFlagSet( PAINT_ENABLED ) )
         {
-            surface()->PushMakeCurrent( vpanel, true );
-#ifdef LUA_SDK
-            LUA_CALL_PANEL_METHOD_BEGIN( "Paint" );
-            lua_pushinteger( m_lua_State, GetWide() );
-            lua_pushinteger( m_lua_State, GetTall() );
-            LUA_CALL_PANEL_METHOD_END( 2, 1 );
-
-            bool paintOverride = false;
-
-            if ( m_lua_State && m_nTableReference >= 0 )
-            {
-                paintOverride = lua_isboolean( m_lua_State, -1 ) && lua_toboolean( m_lua_State, -1 );
-                lua_pop( m_lua_State, 1 );
-            }
-
-            if ( !paintOverride )
-            {
-#endif
-                Paint();
-#ifdef LUA_SDK
-            }
-#endif
-            surface()->PopMakeCurrent( vpanel );
+            PaintManual();
         }
     }
 
@@ -1547,6 +1525,41 @@ void Panel::Paint()
 {
     // empty on purpose
     // PaintBackground is painted and default behavior is for Paint to do nothing
+}
+
+//-----------------------------------------------------------------------------
+// Purpose: Called only if PAINT_ENABLED is set
+//-----------------------------------------------------------------------------
+void Panel::PaintManual()
+{
+    VPANEL vpanel = GetVPanel();
+    surface()->PushMakeCurrent( vpanel, true );
+
+#ifdef LUA_SDK
+    LUA_CALL_PANEL_METHOD_BEGIN( "Paint" );
+    lua_pushinteger( m_lua_State, GetWide() );
+    lua_pushinteger( m_lua_State, GetTall() );
+    LUA_CALL_PANEL_METHOD_END( 2, 1 );
+
+    bool paintOverride = false;
+
+    if ( m_lua_State && m_nTableReference >= 0 )
+    {
+        paintOverride = lua_isboolean( m_lua_State, -1 ) && lua_toboolean( m_lua_State, -1 );
+        lua_pop( m_lua_State, 1 );
+    }
+
+    if ( !paintOverride )
+    {
+#endif
+
+        Paint();
+
+#ifdef LUA_SDK
+    }
+#endif
+
+    surface()->PopMakeCurrent( vpanel );
 }
 
 //-----------------------------------------------------------------------------
