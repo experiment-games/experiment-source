@@ -1072,7 +1072,7 @@ int CHLClient::Init( CreateInterfaceFn appSystemFactory,
     factories.physicsFactory = physicsFactory;
     FactoryList_Store( factories );
 
-    if ( (g_pNetworkSystem = LoadNetworkSystem( appSystemFactory ) ) == NULL )
+    if ( ( g_pNetworkSystem = LoadNetworkSystem( appSystemFactory ) ) == NULL )
         return false;
 
     // Yes, both the client and game .dlls will try to Connect, the
@@ -1759,6 +1759,16 @@ void CHLClient::LevelInitPreEntity( char const *pMapName )
         return;
     g_bLevelInitialized = true;
 
+    // If we're not running singleplayer, connect to the network
+    if ( g_pGameRules->IsMultiplayer() )
+    {
+        if ( !g_pNetworkManager->StartClient() )
+            Assert( 0 );  // Let's hope this never happens
+
+        if ( !g_pNetworkManager->ConnectClientToServer() )
+            Assert( 0 );  // Let's hope this never happens
+    }
+
 #ifdef LUA_SDK
     lcf_recursivedeletefile( LUA_PATH_CACHE );
 
@@ -1770,21 +1780,7 @@ void CHLClient::LevelInitPreEntity( char const *pMapName )
     }
 
     luasrc_init();
-
-    LUA_CALL_HOOK_BEGIN( "LevelInitPreEntity", "Before loading entities, making the level name known." );
-    lua_pushstring( L, pMapName );  // doc: levelName
-    LUA_CALL_HOOK_END( 1, 0 );
 #endif
-
-    // If we're not running singleplayer, connect to the network
-    if ( g_pGameRules->IsMultiplayer() )
-    {
-        if ( !g_pNetworkManager->StartClient() )
-            Assert( 0 ); // Let's hope this never happens
-
-        if ( !g_pNetworkManager->ConnectClientToServer(  ) )
-            Assert( 0 ); // Let's hope this never happens
-    }
 
     input->LevelInit();
 
@@ -1847,6 +1843,12 @@ void CHLClient::LevelInitPreEntity( char const *pMapName )
     {
         CReplayRagdollRecorder::Instance().Init();
     }
+#endif
+
+#ifdef LUA_SDK
+    LUA_CALL_HOOK_BEGIN( "LevelInitPreEntity", "Before loading entities, making the level name known." );
+    lua_pushstring( L, pMapName );  // doc: levelName
+    LUA_CALL_HOOK_END( 1, 0 );
 #endif
 }
 
@@ -2161,7 +2163,6 @@ void CHLClient::InstallStringTableCallback( const char *tableName )
             networkstringtable->FindTable( tableName );
     }
 #endif
-
 
     InstallStringTableCallback_GameRules();
 }

@@ -157,6 +157,22 @@ end
 
 local MESSAGE_WRITER_META = _R.MessageWriter
 
+-- Writes a color, optionally without alpha
+function MESSAGE_WRITER_META:WriteColor(color, sendAlpha)
+    if (sendAlpha == nil) then
+        sendAlpha = true
+    end
+
+	self:WriteBitLong(color.r, 8, false)
+	self:WriteBitLong(color.g, 8, false)
+	self:WriteBitLong(color.b, 8, false)
+
+	-- Save space by not sending alpha if it's not needed
+	if (sendAlpha) then
+		self:WriteBitLong(color.a, 8, false)
+	end
+end
+
 local writeFunctions = {
 	[NET_TYPE_NUMBER] = MESSAGE_WRITER_META.WriteFloat,
 	[NET_TYPE_STRING] = MESSAGE_WRITER_META.WriteString,
@@ -193,6 +209,27 @@ end
 --]]
 
 local MESSAGE_READER_META = _R.MessageReader
+
+-- Reads a color, optionally without alpha
+function MESSAGE_READER_META:ReadColor(withSentAlpha)
+	if (withSentAlpha == nil) then
+		withSentAlpha = true
+	end
+
+	local r = self:ReadBitLong(8, false)
+	local g = self:ReadBitLong(8, false)
+	local b = self:ReadBitLong(8, false)
+	local a = 255
+
+    if (withSentAlpha) then
+        a = self:ReadBitLong(8, false)
+    end
+
+    local color = Colors.Create()
+	color:Initialize(r, g, b, a)
+
+	return color
+end
 
 local readFunctions = {
 	[NET_TYPE_NUMBER] = MESSAGE_READER_META.ReadFloat,

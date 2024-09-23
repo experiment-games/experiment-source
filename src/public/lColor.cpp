@@ -169,6 +169,18 @@ LUA_BINDING_BEGIN( Color, SetRawColor, "class", "Sets the raw color value." )
 }
 LUA_BINDING_END()
 
+LUA_BINDING_BEGIN( Color, Initialize, "class", "Initializes the color with the given values." )
+{
+    lua_Color &color = LUA_BINDING_ARGUMENT( luaL_checkcolor, 1, "color" );
+    int red = LUA_BINDING_ARGUMENT( luaL_checknumber, 2, "red" );
+    int green = LUA_BINDING_ARGUMENT( luaL_checknumber, 3, "green" );
+    int blue = LUA_BINDING_ARGUMENT( luaL_checknumber, 4, "blue" );
+    int alpha = LUA_BINDING_ARGUMENT_WITH_DEFAULT( luaL_optnumber, 5, 255, "alpha" );
+    color = lua_Color( red, green, blue, alpha );
+    return 0;
+}
+LUA_BINDING_END()
+
 LUA_BINDING_BEGIN( Color, __tostring, "class", "Returns a string representation of the color." )
 {
     lua_Color &color = LUA_BINDING_ARGUMENT( lua_tocolor, 1, "color" );
