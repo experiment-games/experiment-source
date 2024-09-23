@@ -12,7 +12,7 @@ local PLAYER_SOUNDS_COMBINESOLDIER = 1
 local PLAYER_SOUNDS_METROPOLICE = 2
 
 function GM:CanHavePlayerItem(client, item)
-	if (ConsoleVariables.FindVar("mp_weaponstay"):GetInt() > 0) then
+	if (ConsoleVariables.FindVariable("mp_weaponstay"):GetInt() > 0) then
 		if (client:OwnsWeaponOfType(item:GetClass(), item:GetSubType())) then
 			return false
 		end
@@ -22,7 +22,7 @@ function GM:CanHavePlayerItem(client, item)
 end
 
 function GM:FlItemRespawnTime(pItem)
-	return ConsoleVariables.FindVar("sv_experiment_item_respawn_time"):GetFloat()
+	return ConsoleVariables.FindVariable("sv_experiment_item_respawn_time"):GetFloat()
 end
 
 function GM:GiveDefaultItems(client)

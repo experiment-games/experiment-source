@@ -29,13 +29,13 @@ function GM:FlWeaponTryRespawn(targetWeapon)
 end
 
 function GM:PlayerPlayStepSound(client, vecOrigin, psurface, fvol, force)
-	if (Engines.GetMaxClients() > 1 and ConsoleVariables.FindVar("sv_footsteps"):GetFloat() == 0) then
+	if (Engines.GetMaxClients() > 1 and ConsoleVariables.FindVariable("sv_footsteps"):GetFloat() == 0) then
 		return false
 	end
 
 	if (CLIENT) then
 		-- during prediction play footstep sounds only once
-		if (Prediction.InPrediction() and not Prediction.IsFirstTimePredicted()) then
+		if (Predictions.InPrediction() and not Predictions.IsFirstTimePredicted()) then
 			return false
 		end
 	end
@@ -60,7 +60,7 @@ function GM:PlayerPlayStepSound(client, vecOrigin, psurface, fvol, force)
 	if (client:GetStepSoundCache()[nSide].m_usSoundNameIndex == stepSoundName) then
 		params = client:GetStepSoundCache()[nSide].m_SoundParameters
 	else
-		local physprops = MoveHelper():GetSurfaceProperties()
+		local physprops = MoveHelpers.Create():GetSurfaceProperties()
 		local pSoundName = physprops:GetString(stepSoundName)
 		local b
 		b, params = _R.Entity.GetParametersForSound(pSoundName)

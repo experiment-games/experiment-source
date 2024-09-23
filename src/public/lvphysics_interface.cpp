@@ -1299,7 +1299,8 @@ LUA_REGISTRATION_INIT( PhysicsSurfacePropertiesHandle );
 LUA_BINDING_BEGIN( PhysicsSurfacePropertiesHandle, GetPhysicsParameters, "class", "Gets physics parameters" )
 {
     surfacephysicsparams_t pParamsOut;
-    physprops->GetPhysicsParameters( LUA_BINDING_ARGUMENT( luaL_checknumber, 1, "surfaceData" ), &pParamsOut );
+    IPhysicsSurfaceProps *physicsProps = LUA_BINDING_ARGUMENT( luaL_checkphysicssurfaceprops, 1, "physprops" );
+    physicsProps->GetPhysicsParameters( LUA_BINDING_ARGUMENT( luaL_checknumber, 2, "surfaceDataIndex" ), &pParamsOut );
     lua_pushsurfacephysicsparams( L, &pParamsOut );
     return 1;
 }
@@ -1308,7 +1309,8 @@ LUA_BINDING_END( "SurfacePhysicsParams", "The physics parameters." )
 LUA_BINDING_BEGIN( PhysicsSurfacePropertiesHandle, GetPhysicsProperties, "class", "Gets physics properties" )
 {
     float density, thickness, friction, elasticity;
-    physprops->GetPhysicsProperties( LUA_BINDING_ARGUMENT( luaL_checknumber, 1, "surfaceData" ), &density, &thickness, &friction, &elasticity );
+    IPhysicsSurfaceProps *physicsProps = LUA_BINDING_ARGUMENT( luaL_checkphysicssurfaceprops, 1, "physprops" );
+    physicsProps->GetPhysicsProperties( LUA_BINDING_ARGUMENT( luaL_checknumber, 2, "surfaceDataIndex" ), &density, &thickness, &friction, &elasticity );
     lua_pushnumber( L, density );
     lua_pushnumber( L, thickness );
     lua_pushnumber( L, friction );
@@ -1319,42 +1321,55 @@ LUA_BINDING_END( "number", "The density.", "number", "The thickness.", "number",
 
 LUA_BINDING_BEGIN( PhysicsSurfacePropertiesHandle, GetPropName, "class", "Gets the property name" )
 {
-    lua_pushstring( L, physprops->GetPropName( LUA_BINDING_ARGUMENT( luaL_checknumber, 1, "surfaceData" ) ) );
+    IPhysicsSurfaceProps *physicsProps = LUA_BINDING_ARGUMENT( luaL_checkphysicssurfaceprops, 1, "physprops" );
+    lua_pushstring( L, physicsProps->GetPropName( LUA_BINDING_ARGUMENT( luaL_checknumber, 2, "surfaceDataIndex" ) ) );
     return 1;
 }
 LUA_BINDING_END( "string", "The property name." )
 
 LUA_BINDING_BEGIN( PhysicsSurfacePropertiesHandle, GetString, "class", "Gets the string" )
 {
-    lua_pushstring( L, physprops->GetString( ( unsigned short )LUA_BINDING_ARGUMENT( luaL_checknumber, 1, "stringTableIndex" ) ) );
+    IPhysicsSurfaceProps *physicsProps = LUA_BINDING_ARGUMENT( luaL_checkphysicssurfaceprops, 1, "physprops" );
+    lua_pushstring( L, physicsProps->GetString( ( unsigned short )LUA_BINDING_ARGUMENT( luaL_checknumber, 2, "stringTableIndex" ) ) );
     return 1;
 }
 LUA_BINDING_END( "string", "The string." )
 
 LUA_BINDING_BEGIN( PhysicsSurfacePropertiesHandle, GetSurfaceData, "class", "Gets the surface data" )
 {
-    lua_pushsurfacedata( L, physprops->GetSurfaceData( LUA_BINDING_ARGUMENT( luaL_checknumber, 1, "surfaceData" ) ) );
+    IPhysicsSurfaceProps *physicsProps = LUA_BINDING_ARGUMENT( luaL_checkphysicssurfaceprops, 1, "physprops" );
+    lua_pushsurfacedata( L, physicsProps->GetSurfaceData( LUA_BINDING_ARGUMENT( luaL_checknumber, 2, "surfaceDataIndex" ) ) );
     return 1;
 }
 LUA_BINDING_END( "SurfaceData", "The surface data." )
 
 LUA_BINDING_BEGIN( PhysicsSurfacePropertiesHandle, GetSurfaceIndex, "class", "Gets the surface index" )
 {
-    lua_pushinteger( L, physprops->GetSurfaceIndex( LUA_BINDING_ARGUMENT( luaL_checkstring, 1, "surfacePropName" ) ) );
+    IPhysicsSurfaceProps *physicsProps = LUA_BINDING_ARGUMENT( luaL_checkphysicssurfaceprops, 1, "physprops" );
+    lua_pushinteger( L, physicsProps->GetSurfaceIndex( LUA_BINDING_ARGUMENT( luaL_checkstring, 2, "surfacePropName" ) ) );
     return 1;
 }
 LUA_BINDING_END( "integer", "The surface index." )
 
 LUA_BINDING_BEGIN( PhysicsSurfacePropertiesHandle, SurfacePropCount, "class", "Gets the surface property count" )
 {
-    lua_pushinteger( L, physprops->SurfacePropCount() );
+    IPhysicsSurfaceProps *physicsProps = LUA_BINDING_ARGUMENT( luaL_checkphysicssurfaceprops, 1, "physprops" );
+    lua_pushinteger( L, physicsProps->SurfacePropCount() );
     return 1;
 }
 LUA_BINDING_END( "integer", "The surface property count." )
 
 LUA_BINDING_BEGIN( PhysicsSurfacePropertiesHandle, __tostring, "class", "Provides a string representation of the object" )
 {
-    lua_pushfstring( L, "PhysicsSurfacePropertiesHandle: %p", physprops );
+    IPhysicsSurfaceProps *physicsProps = LUA_BINDING_ARGUMENT( lua_tophysicssurfaceprops, 1, "physprops" );
+
+    if ( !physicsProps )
+    {
+        lua_pushstring( L, "PhysicsSurfacePropertiesHandle: NULL" );
+        return 1;
+    }
+
+    lua_pushfstring( L, "PhysicsSurfacePropertiesHandle: %p", physicsProps );
     return 1;
 }
 LUA_BINDING_END( "string", "The string representation." )
@@ -1379,7 +1394,10 @@ LUA_BINDING_END( "PhysicsSurfacePropertiesHandle", "The global surface propertie
 
 LUA_BINDING_BEGIN( PhysicsSurfaceProperties, ParseSurfaceData, "class", "Parses surface data" )
 {
-    lua_pushinteger( L, physprops->ParseSurfaceData( LUA_BINDING_ARGUMENT( luaL_checkstring, 1, "stringData" ), LUA_BINDING_ARGUMENT( luaL_checkstring, 2, "textFileName" ) ) );
+    lua_pushinteger( L,
+                     physprops->ParseSurfaceData(
+                         LUA_BINDING_ARGUMENT( luaL_checkstring, 1, "stringData" ),
+                         LUA_BINDING_ARGUMENT( luaL_checkstring, 2, "textFileName" ) ) );
     return 1;
 }
 LUA_BINDING_END( "integer", "The surface data." )
