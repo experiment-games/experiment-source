@@ -145,6 +145,12 @@ void CNetworkManager::SendServerToClientMessage( INetworkMessage *message, CBase
 {
     Assert( IsServer() );
 
+    if ( player->IsBot() )
+    {
+        // Bots don't have a network connection
+        return;
+    }
+
     IConnectedClient *connectedClient = FindConnectedClient( player );
 
     if ( !connectedClient )
@@ -206,6 +212,7 @@ bool CNetworkManager::AcceptClient( CBasePlayer *client )
     if ( !g_pNetworkSystem->AcceptClients( newClients ) )
     {
         // No new clients, we can't tie this player to a socket
+        // This happens for bots.
         return false;
     }
 
@@ -223,6 +230,7 @@ bool CNetworkManager::AcceptClient( CBasePlayer *client )
     for ( int i = 0; i < newClients.Count(); ++i )
     {
         IConnectedClient *newClient = newClients[i];
+        // TODO: bool isLoopback = newClient->IsLoopback();
         const char *newClientAddress = newClient->GetRemoteAddress();
 
         // First check if the remoteAddress is already in the list of connected players
@@ -243,7 +251,7 @@ bool CNetworkManager::AcceptClient( CBasePlayer *client )
         // happened and fail by kicking all those matching players.
         char *found = Q_strstr( clientAddress, ":" );
 
-        if ( !found )
+        if ( !found && Q_strcmp( clientAddress, "loopback" ) != 0 )
         {
             int positionOfColonInNew = Q_strstr( newClientAddress, ":" ) - newClientAddress;
 

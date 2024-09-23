@@ -235,11 +235,38 @@ bool CTcpServerSocket::AcceptClients( CUtlVector< CTcpClientSocket * > &newClien
         return false;
     }
 
+    struct sockaddr_in localAddress, remoteAddress;
+    int localAddressSize = sizeof( localAddress );
+
+    if ( getsockname( newSocket, ( struct sockaddr * )&localAddress, &localAddressSize ) == SOCKET_ERROR )
+    {
+        closesocket( newSocket );
+        return false;
+    }
+
+    if ( getpeername( newSocket, ( struct sockaddr * )&remoteAddress, &len ) == SOCKET_ERROR )
+    {
+        closesocket( newSocket );
+        return false;
+    }
+
+    // Store the new client
     CTcpClientSocket *client = new CTcpClientSocket;
     client->m_Socket = newSocket;
     client->m_SocketIP.SetFromSockadr( &clientAddress );
+
+    // Check if the connection is a loopback connection so we can store it as such
+    if ( ( localAddress.sin_addr.s_addr == htonl( INADDR_LOOPBACK ) ) &&
+         ( remoteAddress.sin_addr.s_addr == htonl( INADDR_LOOPBACK ) ) )
+    {
+        DevWarning( "CTcpServerSocket::AcceptClients:  Loopback connection\n" );
+
+        client->m_SocketIP.SetType( NA_LOOPBACK );
+    }
+
     m_Clients.AddToTail( client );
     newClients.AddToTail( client );
+
     return true;
 }
 

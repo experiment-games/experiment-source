@@ -28,6 +28,7 @@
 #include "util/networkmanager.h"
 
 #include "tier0/vprof.h"
+#include <experiment_bot_temp.h>
 
 // memdbgon must be the last include file in a .cpp file!!!
 #include "tier0/memdbgon.h"
@@ -41,8 +42,16 @@ extern bool g_fGameOver;
 
 void FinishClientPutInServer( CExperiment_Player *pPlayer )
 {
-    pPlayer->InitialSpawn();
-    pPlayer->Spawn();
+#ifdef EXPERIMENT_SOURCE
+    // We don't call this until BotPutInServer has set the flag that it's a fake client
+    if ( !IsPuttingBotInServer() )
+    {
+#endif
+        pPlayer->InitialSpawn();
+        pPlayer->Spawn();
+#ifdef EXPERIMENT_SOURCE
+    }
+#endif
 
     char sName[128];
     Q_strncpy( sName, pPlayer->GetPlayerName(), sizeof( sName ) );
@@ -94,6 +103,7 @@ void ClientPutInServer( edict_t *pEdict, const char *playername )
     pPlayer->SetPlayerName( playername );
 }
 
+// Note that this is also called for bots
 void ClientActive( edict_t *pEdict, bool bLoadGame )
 {
     // Can't load games in CS!
@@ -111,7 +121,11 @@ void ClientActive( edict_t *pEdict, bool bLoadGame )
         // #ifdef WITH_ENGINE_PATCHES
         // pPlayer->Disconnect()// This isn't exposed (but we could use detours to expose it)
         // #endif
-        return;
+
+        // This also happens for bots, but since the bot flag is added after activation, we can't check for it here
+        // So we must let the player spawn, even if a race condition happens
+        // return;
+        DevWarning( "ClientActive: Failed to accept client - If this is a bot, this is expected\n" );
     }
 
     FinishClientPutInServer( pPlayer );

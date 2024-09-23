@@ -346,7 +346,11 @@ LUA_BINDING_BEGIN( Files, Open, "library", "Open a file." )
     if ( handle == FILESYSTEM_INVALID_HANDLE && ( readMode[0] == 'w' || readMode[0] == 'a' ) )
     {
         // If it failed to open, then the directory probably doesn't exist, so create it and try again
-        filesystem->CreateDirHierarchy( filePath, pathId );
+        // First trim the filename from the path
+        char filePathWithoutFilename[MAX_PATH];
+        V_ExtractFilePath( filePath, filePathWithoutFilename, sizeof( filePathWithoutFilename ) );
+
+        filesystem->CreateDirHierarchy( filePathWithoutFilename, pathId );
 
         handle = filesystem->Open( filePath, readMode, pathId );
     }

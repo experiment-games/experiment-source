@@ -97,11 +97,6 @@ void CGameInfoStore::FireGameEvent( IGameEvent *event )
         char *pszPlayerAddressCopy = new char[strlen( pszPlayerAddress ) + 1];
         Q_strncpy( pszPlayerAddressCopy, pszPlayerAddress, strlen( pszPlayerAddress ) + 1 );
 
-        if ( Q_stricmp( pszPlayerAddress, "localhost" ) == 0 || Q_stricmp( pszPlayerAddress, "loopback" ) == 0 )
-        {
-            pszPlayerAddressCopy = "127.0.0.1";
-        }
-
         // TODO: Clean this up on disconnect
         m_mapPlayerIndexToAddress[pszPlayerAddressCopy] = playerIndex;
 

@@ -157,20 +157,29 @@ end
 
 local MESSAGE_WRITER_META = _R.MessageWriter
 
--- Writes a color, optionally without alpha
+--- Writes a color, optionally without alpha
+--- @param color Color
+--- @param sendAlpha? boolean # Defaults to true
 function MESSAGE_WRITER_META:WriteColor(color, sendAlpha)
     if (sendAlpha == nil) then
         sendAlpha = true
     end
 
-	self:WriteBitLong(color.r, 8, false)
-	self:WriteBitLong(color.g, 8, false)
-	self:WriteBitLong(color.b, 8, false)
+    self:WriteBitLong(color.r, 8, false)
+    self:WriteBitLong(color.g, 8, false)
+    self:WriteBitLong(color.b, 8, false)
 
-	-- Save space by not sending alpha if it's not needed
-	if (sendAlpha) then
-		self:WriteBitLong(color.a, 8, false)
-	end
+    -- Save space by not sending alpha if it's not needed
+    if (sendAlpha) then
+        self:WriteBitLong(color.a, 8, false)
+    end
+end
+
+--- Writes a table, simply encoding it as a JSON string
+--- You should really just send individual values inside the table instead
+--- @param tableData table
+function MESSAGE_WRITER_META:WriteTable(tableData)
+	self:WriteString(Json.Encode(tableData))
 end
 
 local writeFunctions = {
@@ -180,9 +189,7 @@ local writeFunctions = {
 	[NET_TYPE_NIL] = function(writer, value)
 	end,
     [NET_TYPE_BOOL] = MESSAGE_WRITER_META.WriteBool,
-    [NET_TYPE_TABLE] = function(writer, value)
-		writer:WriteString(Json.Encode(value))
-    end,
+    [NET_TYPE_TABLE] = MESSAGE_WRITER_META.WriteTable,
 
     [NET_TYPE_COLOR] = MESSAGE_WRITER_META.WriteColor,
     [NET_TYPE_VECTOR] = MESSAGE_WRITER_META.WriteVector,
@@ -210,7 +217,8 @@ end
 
 local MESSAGE_READER_META = _R.MessageReader
 
--- Reads a color, optionally without alpha
+--- Reads a color, optionally without alpha
+--- @param withSentAlpha? boolean # Defaults to true
 function MESSAGE_READER_META:ReadColor(withSentAlpha)
 	if (withSentAlpha == nil) then
 		withSentAlpha = true
@@ -231,6 +239,13 @@ function MESSAGE_READER_META:ReadColor(withSentAlpha)
 	return color
 end
 
+--- Reads a table, simply decoding it from a JSON string
+--- You should really just send individual values inside the table instead
+--- @return table
+function MESSAGE_READER_META:ReadTable()
+	return Json.Decode(self:ReadString())
+end
+
 local readFunctions = {
 	[NET_TYPE_NUMBER] = MESSAGE_READER_META.ReadFloat,
 	[NET_TYPE_STRING] = MESSAGE_READER_META.ReadString,
@@ -238,9 +253,7 @@ local readFunctions = {
 	[NET_TYPE_NIL] = function(reader)
 		return nil
 	end,
-	[NET_TYPE_TABLE] = function(reader)
-		return Json.Decode(reader:ReadString())
-	end,
+	[NET_TYPE_TABLE] = MESSAGE_READER_META.ReadTable,
 
 	[NET_TYPE_COLOR] = MESSAGE_READER_META.ReadColor,
 	[NET_TYPE_VECTOR] = MESSAGE_READER_META.ReadVector,

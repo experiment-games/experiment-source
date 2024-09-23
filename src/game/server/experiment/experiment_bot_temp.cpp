@@ -44,6 +44,7 @@ ConVar bot_mimic( "bot_mimic", "0", 0, "Bot uses usercmd of player by index." );
 #endif
 
 static int BotNumber = 1;
+static bool g_bPuttingBotInServer = false;
 static int g_iNextBotTeam = -1;
 static int g_iNextBotClass = -1;
 
@@ -67,24 +68,29 @@ typedef struct
 
 static botdata_t g_BotData[MAX_PLAYERS];
 
+bool IsPuttingBotInServer()
+{
+    return g_bPuttingBotInServer;
+}
+
 //-----------------------------------------------------------------------------
 // Purpose: Create a new Bot and put it in the game.
 // Output : Pointer to the new Bot, or NULL if there's no free clients.
 //-----------------------------------------------------------------------------
 CBasePlayer *BotPutInServer( bool bFrozen, int iTeam )
 {
+    g_bPuttingBotInServer = true;
     g_iNextBotTeam = iTeam;
 
     char botname[64];
     Q_snprintf( botname, sizeof( botname ), "Bot%02i", BotNumber );
-
-    // This is an evil hack, but we use it to prevent sv_autojointeam from kicking in.
 
     edict_t *pEdict = engine->CreateFakeClient( botname );
 
     if ( !pEdict )
     {
         Msg( "Failed to create Bot.\n" );
+        g_bPuttingBotInServer = false;
         return NULL;
     }
 
@@ -102,6 +108,13 @@ CBasePlayer *BotPutInServer( bool bFrozen, int iTeam )
     g_BotData[pPlayer->entindex() - 1].m_WantedTeam = iTeam;
     g_BotData[pPlayer->entindex() - 1].m_flJoinTeamTime = gpGlobals->curtime + 0.3;
 
+#ifdef EXPERIMENT_SOURCE
+    // Only now do we call this, after the bot has been flagged as a fake client
+    pPlayer->InitialSpawn();
+    pPlayer->Spawn();
+#endif
+
+    g_bPuttingBotInServer = false;
     return pPlayer;
 }
 

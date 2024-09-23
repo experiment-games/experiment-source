@@ -4,6 +4,7 @@
 #include "lbaseentity_shared.h"
 #include "lbaseplayer_shared.h"
 #include "ltakedamageinfo.h"
+#include "gameinfostore.h"
 #include "mathlib/lvector.h"
 
 // memdbgon must be the last include file in a .cpp file!!!
@@ -257,6 +258,31 @@ LUA_BINDING_BEGIN( Player, GetClientIndex, "class", "Get the client index of the
     return 1;
 }
 LUA_BINDING_END( "integer", "The client index." )
+
+LUA_BINDING_BEGIN( Player, GetIpAddress, "class", "Get the IP address of the player." )
+{
+    lua_CBasePlayer *player = LUA_BINDING_ARGUMENT( luaL_checkplayer, 1, "player" );
+    char clientAddress[32];
+
+    if ( player->IsBot() )
+    {
+        // Bot's have "none" as their address, so only the last bot that connected will be in
+        // the address map.
+        // For compatibility with Garry's Mod, we'll return "Error!" as the address for bots
+        lua_pushstring( L, "Error!" );
+    }
+    else if ( g_pGameInfoStore->GetPlayerAddress( player, clientAddress, sizeof( clientAddress ) ) )
+    {
+        lua_pushstring( L, clientAddress );
+    }
+    else
+    {
+        Assert( 0 );  // TODO: This shouldn't happen, ensure that it doesn't
+    }
+
+    return 1;
+}
+LUA_BINDING_END( "string", "The IP address." )
 
 LUA_BINDING_BEGIN( Player, SetPlayerName, "class", "Set the name of the player." )
 {
@@ -687,15 +713,15 @@ LUA_BINDING_BEGIN( Player, Give, "class", "Give the weapon to the player." )
     bool shouldGiveNoAmmo = LUA_BINDING_ARGUMENT_WITH_DEFAULT( luaL_optboolean, 3, false, "shouldGiveNoAmmo" );
     CBaseCombatWeapon *weapon = player->Weapon_Create( className );
 
-    //CBaseEntity *entity = player->GiveNamedItem( className, 0 );
+    // CBaseEntity *entity = player->GiveNamedItem( className, 0 );
 
-    //if ( !entity )
+    // if ( !entity )
     //{
-    //    // Happens when the player already has the weapon, or the weapon is invalid
-    //    return 0;
-    //}
+    //     // Happens when the player already has the weapon, or the weapon is invalid
+    //     return 0;
+    // }
 
-    //CBaseAnimating *animating = dynamic_cast<CBaseAnimating *>( entity );
+    // CBaseAnimating *animating = dynamic_cast<CBaseAnimating *>( entity );
 
     // Let's make sure the weapon has a valid model, if not, set it to the error model
     if ( !weapon->GetModelPtr() )
@@ -705,13 +731,13 @@ LUA_BINDING_BEGIN( Player, Give, "class", "Give the weapon to the player." )
 
     player->Weapon_Equip( weapon, !shouldGiveNoAmmo );
 
-    //if ( !weapon )
+    // if ( !weapon )
     //{
-    //    // To match the behavior in Garry's Mod, we allow giving any type of entity
-    //    // But we only continue if it's a weapon
-    //    CBaseEntity::PushLuaInstanceSafe( L, entity );
-    //    return 1;
-    //}
+    //     // To match the behavior in Garry's Mod, we allow giving any type of entity
+    //     // But we only continue if it's a weapon
+    //     CBaseEntity::PushLuaInstanceSafe( L, entity );
+    //     return 1;
+    // }
 
     CBaseCombatWeapon::PushLuaInstanceSafe( L, weapon );
     return 1;

@@ -363,6 +363,18 @@ LUA_BINDING_BEGIN( MessageReader, GetNumBitsRead, "class", "The bits read." )
 }
 LUA_BINDING_END( "integer", "The bits read." )
 
+LUA_BINDING_BEGIN( MessageReader, ReadData, "class", "Reads binary data, represented in Lua as a string" )
+{
+    bf_read *bf = LUA_BINDING_ARGUMENT( luaL_checkbf_read, 1, "reader" );
+    int len = LUA_BINDING_ARGUMENT( luaL_checknumber, 2, "length" );
+    char *buf = new char[len];
+    bf->ReadBytes( buf, len );
+    lua_pushlstring( L, buf, len );
+    delete[] buf;
+    return 1;
+}
+LUA_BINDING_END( "string", "The data read." )
+
 LUA_BINDING_BEGIN( MessageReader, ReadBit, "class", "Reads a bit." )
 {
     bf_read *bf = LUA_BINDING_ARGUMENT( luaL_checkbf_read, 1, "reader" );
@@ -693,6 +705,16 @@ LUA_BINDING_BEGIN( MessageWriter, WriteEntity, "class", "Writes an entity." )
         bf->WriteLong( INVALID_NETWORKED_EHANDLE_VALUE );
     }
 
+    return 0;
+}
+LUA_BINDING_END()
+
+LUA_BINDING_BEGIN( MessageWriter, WriteData, "class", "Writes binary data, represented in Lua as a string" )
+{
+    bf_write *bf = LUA_BINDING_ARGUMENT( luaL_checkbf_write, 1, "writer" );
+    size_t len;
+    const char *data = luaL_checklstring( L, 2, &len );
+    bf->WriteBytes( data, len );
     return 0;
 }
 LUA_BINDING_END()

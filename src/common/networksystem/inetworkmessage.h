@@ -127,9 +127,15 @@ abstract_class IConnectedClient
 {
    public:
     virtual void SendNetMessage( INetworkMessage * pMessage ) = 0;
+
     const char *GetRemoteAddress() const
     {
         return m_RemoteAddress.ToString();
+    }
+
+    bool IsLoopback() const
+    {
+        return m_RemoteAddress.IsLoopback();
     }
 
     netadr_t m_RemoteAddress;
