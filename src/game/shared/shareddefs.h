@@ -102,15 +102,18 @@ public:
 
 #define MAX_CLIMB_SPEED		200
 
-#if defined(TF_DLL) || defined(TF_CLIENT_DLL)
-	#define TIME_TO_DUCK		0.2
-	#define TIME_TO_DUCK_MS		200.0f
-#else
-	#define TIME_TO_DUCK		0.4
-	#define TIME_TO_DUCK_MS		400.0f
-#endif 
-#define TIME_TO_UNDUCK		0.2
-#define TIME_TO_UNDUCK_MS	200.0f
+// Experiment;  These have been moved to CBasePlayer::[GS]etDuckTime and ::[GS]etUnDuckFraction
+//              Why did they differ from GAMEMOVEMENT_DUCK_TIME and GAMEMOVEMENT_UNDUCK_TIME?
+//#if defined(TF_DLL) || defined(TF_CLIENT_DLL)
+//	#define TIME_TO_DUCK		0.2
+//	#define TIME_TO_DUCK_MS		200.0f
+//#else
+//	#define TIME_TO_DUCK		0.4
+//	#define TIME_TO_DUCK_MS		400.0f
+//#endif
+
+//#define TIME_TO_UNDUCK		0.2
+//#define TIME_TO_UNDUCK_MS	200.0f
 
 #define MAX_WEAPON_SLOTS		6	// hud item selection slots
 #define MAX_WEAPON_POSITIONS	20	// max number of items within a slot

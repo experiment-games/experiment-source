@@ -390,6 +390,11 @@ DEFINE_FIELD( v_angle, FIELD_VECTOR ),
     DEFINE_FIELD( m_flRunSpeed, FIELD_FLOAT ),
     DEFINE_FIELD( m_flCrouchWalkFraction, FIELD_FLOAT ),
 
+    // Time in milliseconds to go from standing to fully ducked
+    DEFINE_FIELD( m_flDuckSpeed, FIELD_FLOAT ),
+    // Fraction of the duck speed to use when unducking
+    DEFINE_FIELD( m_flUnDuckFraction, FIELD_FLOAT ),
+
     DEFINE_FIELD( m_flWaterJumpTime, FIELD_TIME ),
     DEFINE_FIELD( m_vecWaterJumpVel, FIELD_VECTOR ),
     DEFINE_FIELD( m_nImpulse, FIELD_INTEGER ),
@@ -8020,11 +8025,14 @@ SendPropDataTable( SENDINFO_DT( m_AttributeList ), &REFERENCE_SEND_TABLE( DT_Att
     SendPropInt( SENDINFO( m_lifeState ), 3, SPROP_UNSIGNED ),
     SendPropInt( SENDINFO( m_iBonusProgress ), 15 ),
     SendPropInt( SENDINFO( m_iBonusChallenge ), 4 ),
-    SendPropFloat( SENDINFO( m_flMaxspeed ), 12, SPROP_ROUNDDOWN, 0.0f, 2048.0f ),  // CL
-    SendPropFloat( SENDINFO( m_flWalkSpeed ), 12, SPROP_ROUNDDOWN, 0.0f, 2048.0f ),  // CL
-    SendPropFloat( SENDINFO( m_flNormalSpeed ), 12, SPROP_ROUNDDOWN, 0.0f, 2048.0f ),  // CL
-    SendPropFloat( SENDINFO( m_flRunSpeed ), 12, SPROP_ROUNDDOWN, 0.0f, 2048.0f ),  // CL
-    SendPropFloat( SENDINFO( m_flCrouchWalkFraction ), 12, SPROP_ROUNDDOWN, 0.0f, 2048.0f ),  // CL
+
+    SendPropFloat( SENDINFO( m_flMaxspeed ), 12, SPROP_ROUNDDOWN, 0.0f, 2048.0f ), // CL
+    SendPropFloat( SENDINFO( m_flWalkSpeed ), 12, SPROP_ROUNDDOWN, 0.0f, 2048.0f ), // CL
+    SendPropFloat( SENDINFO( m_flNormalSpeed ), 12, SPROP_ROUNDDOWN, 0.0f, 2048.0f ), // CL
+    SendPropFloat( SENDINFO( m_flRunSpeed ), 12, SPROP_ROUNDDOWN, 0.0f, 2048.0f ), // CL
+    SendPropFloat( SENDINFO( m_flCrouchWalkFraction ), 12, SPROP_ROUNDDOWN, 0.0f, 2048.0f ), // CL
+    SendPropFloat( SENDINFO( m_flDuckSpeed ), 12, SPROP_ROUNDDOWN, 0.0f, 2048.0f ), // CL
+    SendPropFloat( SENDINFO( m_flUnDuckFraction ), 12, SPROP_ROUNDDOWN, 0.0f, 10.0f ), // CL
 
     SendPropInt( SENDINFO( m_fFlags ), PLAYER_FLAG_BITS, SPROP_UNSIGNED | SPROP_CHANGES_OFTEN, SendProxy_CropFlagsToPlayerFlagBitsLength ),
     SendPropInt( SENDINFO( m_iObserverMode ), 3, SPROP_UNSIGNED ),

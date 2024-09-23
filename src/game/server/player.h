@@ -972,6 +972,28 @@ class CBasePlayer : public CBaseCombatCharacter
         return m_flCrouchWalkFraction;
     }
 
+    // Experiment; Note that this issue should be fixed in our implementation: https://github.com/Facepunch/garrysmod-issues/issues/2722
+    void SetDuckSpeedInMilliseconds( float flSpeed )
+    {
+        Assert( flSpeed >= 0.0f );
+
+        m_flDuckSpeed = flSpeed;
+    }
+    float GetDuckSpeedInMilliseconds( void )
+    {
+        return m_flDuckSpeed;
+    }
+    void SetUnDuckFraction( float flSpeed )
+    {
+        Assert( flSpeed >= 0.0f && flSpeed <= 1.0f );
+
+        m_flUnDuckFraction = flSpeed;
+    }
+    float GetUnDuckFraction( void )
+    {
+        return m_flUnDuckFraction;
+    }
+
     void NotifyNearbyRadiationSource( float flRange );
 
     void SetAnimationExtension( const char *pExtension );
@@ -1410,6 +1432,8 @@ class CBasePlayer : public CBaseCombatCharacter
     CNetworkVar( float, m_flNormalSpeed );
     CNetworkVar( float, m_flRunSpeed );
     CNetworkVar( float, m_flCrouchWalkFraction );
+    CNetworkVar( float, m_flDuckSpeed );
+    CNetworkVar( float, m_flUnDuckFraction );
 
     // Not transmitted
     float m_flWaterJumpTime;  // used to be called teleport_time

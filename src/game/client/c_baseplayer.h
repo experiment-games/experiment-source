@@ -288,6 +288,26 @@ class C_BasePlayer : public C_BaseCombatCharacter, public CGameEventListener
         return m_flCrouchWalkFraction;
     }
 
+    // Experiment; Note that this issue should be fixed in our implementation: https://github.com/Facepunch/garrysmod-issues/issues/2722
+    void SetDuckSpeedInMilliseconds( float flSpeed )
+    {
+        m_flDuckSpeed = flSpeed;
+    }
+    float GetDuckSpeedInMilliseconds( void )
+    {
+        return m_flDuckSpeed;
+    }
+    // Fraction of the duck speed to use when unducking
+    void SetUnDuckFraction( float flSpeed )
+    {
+        m_flUnDuckFraction = flSpeed;
+    }
+    float GetUnDuckFraction( void )
+    {
+        return m_flUnDuckFraction;
+    }
+    
+
     // Should this object cast shadows?
     virtual ShadowType_t ShadowCastType()
     {
@@ -668,6 +688,10 @@ class C_BasePlayer : public C_BaseCombatCharacter, public CGameEventListener
     float m_flNormalSpeed;
     float m_flRunSpeed;
     float m_flCrouchWalkFraction;
+    // Time in milliseconds to go from standing to fully ducked
+    float m_flDuckSpeed;
+    // Fraction of the duck speed to use when unducking
+    float m_flUnDuckFraction;
 
     int m_iBonusProgress;
     int m_iBonusChallenge;

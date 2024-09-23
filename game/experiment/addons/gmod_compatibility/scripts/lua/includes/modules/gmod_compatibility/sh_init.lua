@@ -725,6 +725,8 @@ PLAYER_META.KeyPressed = PLAYER_META.WasKeyPressed
 PLAYER_META.KeyReleased = PLAYER_META.WasKeyReleased
 PLAYER_META.GetFOV = PLAYER_META.GetFov
 PLAYER_META.SetFOV = PLAYER_META.SetFov
+PLAYER_META.SetUnDuckSpeed = PLAYER_META.SetUnDuckFraction
+PLAYER_META.GetUnDuckSpeed = PLAYER_META.GetUnDuckFraction
 
 function PLAYER_META:LagCompensation(shouldStart)
 	if (shouldStart) then

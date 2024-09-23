@@ -342,6 +342,7 @@ LUA_BINDING_BEGIN( Player, GetPing, "class", "Get the player's ping." )
 }
 LUA_BINDING_END( "integer", "The player's ping." )
 
+// TODO: We should really have accessors for these
 LUA_BINDING_BEGIN( Player, GetPlayerLocalData, "class", "Get the player's local data." )
 {
     lua_CBasePlayer *player = LUA_BINDING_ARGUMENT( luaL_checkplayer, 1, "player" );
@@ -1032,6 +1033,38 @@ LUA_BINDING_BEGIN( Player, GetCrouchWalkFraction, "class", "Get the fraction by 
 }
 LUA_BINDING_END( "number", "The player's crouched walk speed fraction." )
 
+LUA_BINDING_BEGIN( Player, SetDuckSpeed, "class", "Set the player's duck speed. This **should not** suffer from this bug that Garry's Mod has: https://github.com/Facepunch/garrysmod-issues/issues/2722" )
+{
+    lua_CBasePlayer *player = LUA_BINDING_ARGUMENT( luaL_checkplayer, 1, "player" );
+    player->SetDuckSpeedInMilliseconds( LUA_BINDING_ARGUMENT( luaL_checknumber, 2, "speedInMilliseconds" ) );
+    return 0;
+}
+LUA_BINDING_END()
+
+LUA_BINDING_BEGIN( Player, GetDuckSpeed, "class", "Get the player's duck speed." )
+{
+    lua_CBasePlayer *player = LUA_BINDING_ARGUMENT( luaL_checkplayer, 1, "player" );
+    lua_pushnumber( L, player->GetDuckSpeedInMilliseconds() );
+    return 1;
+}
+LUA_BINDING_END( "number", "The player's duck speed." )
+
+LUA_BINDING_BEGIN( Player, SetUnDuckFraction, "class", "Set the player's unduck fraction. If it's 0.5 then unducking will take half the time it takes to duck." )
+{
+    lua_CBasePlayer *player = LUA_BINDING_ARGUMENT( luaL_checkplayer, 1, "player" );
+    player->SetUnDuckFraction( LUA_BINDING_ARGUMENT( luaL_checknumber, 2, "fraction" ) );
+    return 0;
+}
+LUA_BINDING_END()
+
+LUA_BINDING_BEGIN( Player, GetUnDuckFraction, "class", "Get the player's unduck fraction." )
+{
+    lua_CBasePlayer *player = LUA_BINDING_ARGUMENT( luaL_checkplayer, 1, "player" );
+    lua_pushnumber( L, player->GetUnDuckFraction() );
+    return 1;
+}
+LUA_BINDING_END( "number", "The player's unduck fraction." )
+
 LUA_BINDING_BEGIN( Player, SetNextAttack, "class", "Set the player's next attack." )
 {
     lua_CBasePlayer *player = LUA_BINDING_ARGUMENT( luaL_checkplayer, 1, "player" );
@@ -1040,6 +1073,7 @@ LUA_BINDING_BEGIN( Player, SetNextAttack, "class", "Set the player's next attack
 }
 LUA_BINDING_END()
 
+// TODO: We should really have accessor methods for each of these
 LUA_BINDING_BEGIN( Player, SetPlayerLocalData, "class", "Set the player's local data." )
 {
     lua_CBasePlayer *player = LUA_BINDING_ARGUMENT( luaL_checkplayer, 1, "player" );

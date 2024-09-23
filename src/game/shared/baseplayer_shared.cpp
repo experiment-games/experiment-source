@@ -2075,6 +2075,8 @@ void CBasePlayer::SharedSpawn()
     SetRunSpeed( hl2_sprintspeed.GetFloat() );
     SetCrouchWalkFraction( hl2_walkspeed.GetFloat() );
 #endif
+    SetDuckSpeedInMilliseconds( 300 );
+    SetUnDuckFraction( 0.3f ); // It takes 1/3rd the time to unduck as it does to duck
 
     MDLCACHE_CRITICAL_SECTION();
     SetSequence( SelectWeightedSequence( ACT_IDLE ) );
