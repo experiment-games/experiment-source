@@ -830,8 +830,12 @@ function PLAYER_META:GetWeaponColor()
 end
 
 if (SERVER) then
-	function PLAYER_META:SelectWeapon(weaponClass)
-		self:SwitchWeapon(self:GetWeapon(weaponClass))
+    function PLAYER_META:SelectWeapon(weaponClass)
+        self:SwitchWeapon(self:GetWeapon(weaponClass))
+    end
+
+	function PLAYER_META:StripAmmo()
+		self:RemoveAllAmmo()
 	end
 
 	function PLAYER_META:StripWeapon(weaponClass)

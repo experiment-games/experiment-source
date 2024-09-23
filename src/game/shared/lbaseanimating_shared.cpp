@@ -783,7 +783,7 @@ LUA_BINDING_BEGIN( CBaseAnimating, SetBodyGroups, "class", "Set the bodygroup va
 }
 LUA_BINDING_END()
 
-LUA_BINDING_BEGIN( CBaseAnimating, GetBodyGroups, "class", "Get the bodygroup values as a string of hexadecimal values. Each hexadecimal character represents the bodygroup at its index, e.g: 0a00001 means bodygroup 1 is 10(a) and bodygroup 6 is 1, the rest are 0" )
+LUA_BINDING_BEGIN( CBaseAnimating, GetBodyGroupsAsString, "class", "Get the bodygroup values as a string of hexadecimal values. Each hexadecimal character represents the bodygroup at its index, e.g: 0a00001 means bodygroup 1 is 10(a) and bodygroup 6 is 1, the rest are 0" )
 {
     lua_CBaseAnimating *pAnimating = LUA_BINDING_ARGUMENT( luaL_checkanimating, 1, "entity" );
     int nMaxGroups = pAnimating->GetNumBodyGroups();
@@ -814,6 +814,49 @@ LUA_BINDING_BEGIN( CBaseAnimating, GetBodyGroups, "class", "Get the bodygroup va
     return 1;
 }
 LUA_BINDING_END( "string", "The bodygroup values as a string of hexadecimal values" )
+
+LUA_BINDING_BEGIN( CBaseAnimating, GetBodyGroups, "class", "Get the bodygroup values as a table" )
+{
+    lua_CBaseAnimating *pAnimating = LUA_BINDING_ARGUMENT( luaL_checkanimating, 1, "entity" );
+
+    int nMaxGroups = pAnimating->GetNumBodyGroups();
+    CStudioHdr *pstudiohdr = pAnimating->GetModelPtr();
+
+    lua_newtable( L );
+
+    for ( int iGroup = 0; iGroup < nMaxGroups; ++iGroup )
+    {
+        // TODO: Make a nice push struct function for this
+        lua_newtable( L );
+
+        lua_pushinteger( L, iGroup );
+        lua_setfield( L, -2, "id" );
+
+        lua_pushstring( L, pAnimating->GetBodygroupName( iGroup ) );
+        lua_setfield( L, -2, "name" );
+
+        int subGroupCount = pAnimating->GetBodygroupCount( iGroup );
+        lua_pushinteger( L, subGroupCount );
+        lua_setfield( L, -2, "num" );
+
+        // zero indexed table of names in the smd mesh file indicating what valid subgroup values are
+        lua_newtable( L );
+
+		mstudiobodyparts_t *pbodypart = pstudiohdr->pBodypart( iGroup );
+
+        for ( int iSubGroup = 0; iSubGroup < subGroupCount; ++iSubGroup )
+        {
+            mstudiomodel_t *submodel = pbodypart->pModel( iSubGroup );
+            lua_pushstring( L, submodel->pszName() );
+            lua_rawseti( L, -2, iSubGroup );
+        }
+
+        lua_setfield( L, -2, "submodels" );
+    }
+
+    return 1;
+}
+LUA_BINDING_END( "table", "The bodygroup values" )
 
 LUA_BINDING_BEGIN( CBaseAnimating, SetPlaybackRate, "class", "Set the playback rate of the animation" )
 {
