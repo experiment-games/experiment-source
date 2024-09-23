@@ -263,6 +263,7 @@ class C_BasePlayer : public C_BaseCombatCharacter, public CGameEventListener
     {
         return m_flWalkSpeed;
     }
+
     void SetNormalSpeed( float flSpeed )
     {
         m_flNormalSpeed = flSpeed;
@@ -271,6 +272,7 @@ class C_BasePlayer : public C_BaseCombatCharacter, public CGameEventListener
     {
         return m_flNormalSpeed;
     }
+
     void SetRunSpeed( float flSpeed )
     {
         m_flRunSpeed = flSpeed;
@@ -279,6 +281,7 @@ class C_BasePlayer : public C_BaseCombatCharacter, public CGameEventListener
     {
         return m_flRunSpeed;
     }
+
     void SetCrouchWalkFraction( float flSpeed )
     {
         m_flCrouchWalkFraction = flSpeed;
@@ -286,6 +289,15 @@ class C_BasePlayer : public C_BaseCombatCharacter, public CGameEventListener
     float GetCrouchWalkFraction( void )
     {
         return m_flCrouchWalkFraction;
+    }
+
+    void SetJumpPower( float flPower )
+    {
+        m_flJumpPower = flPower;
+    }
+    float GetJumpPower( void )
+    {
+        return m_flJumpPower;
     }
 
     // Experiment; Note that this issue should be fixed in our implementation: https://github.com/Facepunch/garrysmod-issues/issues/2722
@@ -297,6 +309,7 @@ class C_BasePlayer : public C_BaseCombatCharacter, public CGameEventListener
     {
         return m_flDuckSpeed;
     }
+
     // Fraction of the duck speed to use when unducking
     void SetUnDuckFraction( float flSpeed )
     {
@@ -306,7 +319,6 @@ class C_BasePlayer : public C_BaseCombatCharacter, public CGameEventListener
     {
         return m_flUnDuckFraction;
     }
-    
 
     // Should this object cast shadows?
     virtual ShadowType_t ShadowCastType()
@@ -688,6 +700,7 @@ class C_BasePlayer : public C_BaseCombatCharacter, public CGameEventListener
     float m_flNormalSpeed;
     float m_flRunSpeed;
     float m_flCrouchWalkFraction;
+    float m_flJumpPower; // In units
     // Time in milliseconds to go from standing to fully ducked
     float m_flDuckSpeed;
     // Fraction of the duck speed to use when unducking

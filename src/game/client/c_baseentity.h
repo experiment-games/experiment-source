@@ -639,6 +639,8 @@ class C_BaseEntity : public IClientEntity
     virtual int GetRenderTeamNumber( void );
     virtual bool InSameTeam( C_BaseEntity *pEntity );  // Returns true if the specified entity is on the same team as this one
     virtual bool InLocalTeam( void );
+    void SetNoCollidingWithTeammates( bool );
+    bool GetNoCollidingWithTeammates( void );
 
     // ID Target handling
     virtual bool IsValidIDTarget( void )
@@ -1502,6 +1504,7 @@ class C_BaseEntity : public IClientEntity
 
     // Team Handling
     int m_iTeamNum;
+    bool m_bNoCollidingWithTeammates;
 
 #if !defined( NO_ENTITY_PREDICTION )
     // Certain entities (projectiles) can be created on the client

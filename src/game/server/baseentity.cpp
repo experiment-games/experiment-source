@@ -309,6 +309,7 @@ IMPLEMENT_SERVERCLASS_ST_NOBASE( CBaseEntity, DT_BaseEntity )
     SendPropInt( SENDINFO( m_fEffects ), EF_MAX_BITS, SPROP_UNSIGNED ),
     SendPropInt( SENDINFO( m_clrRender ), 32, SPROP_UNSIGNED ),
     SendPropInt( SENDINFO( m_iTeamNum ), TEAMNUM_NUM_BITS, 0 ),
+    SendPropBool( SENDINFO( m_bNoCollidingWithTeammates ) ),
     SendPropInt( SENDINFO( m_CollisionGroup ), 5, SPROP_UNSIGNED ),
     SendPropFloat( SENDINFO( m_flElasticity ), 0, SPROP_COORD ),
     SendPropFloat( SENDINFO( m_flShadowCastDistance ), 12, SPROP_UNSIGNED ),
@@ -425,6 +426,7 @@ CBaseEntity::CBaseEntity( bool bServerOnly )
     m_flShadowCastDistance = m_flDesiredShadowCastDistance = 0;
     SetRenderColor( 255, 255, 255, 255 );
     m_iTeamNum = m_iInitialTeamNum = TEAM_UNASSIGNED;
+    m_bNoCollidingWithTeammates = false;
     m_nLastThinkTick = gpGlobals->tickcount;
     m_nSimulationTick = -1;
     SetIdentityMatrix( m_rgflCoordinateFrame );
@@ -1948,6 +1950,7 @@ BEGIN_DATADESC_NO_BASE( CBaseEntity )
 
     DEFINE_INPUT( m_iInitialTeamNum, FIELD_INTEGER, "TeamNum" ),
     DEFINE_FIELD( m_iTeamNum, FIELD_INTEGER ),
+    DEFINE_FIELD( m_bNoCollidingWithTeammates, FIELD_BOOLEAN ),
 
     //	DEFINE_FIELD( m_bSentLastFrame, FIELD_INTEGER ),
 

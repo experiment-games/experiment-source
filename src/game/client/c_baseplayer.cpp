@@ -354,6 +354,7 @@ IMPLEMENT_CLIENTCLASS_DT( C_BasePlayer, DT_BasePlayer, CBasePlayer )
     RecvPropFloat( RECVINFO( m_flNormalSpeed ) ),
     RecvPropFloat( RECVINFO( m_flRunSpeed ) ),
     RecvPropFloat( RECVINFO( m_flCrouchWalkFraction ) ),
+    RecvPropFloat( RECVINFO( m_flJumpPower ) ),
     RecvPropFloat( RECVINFO( m_flDuckSpeed ) ),
     RecvPropFloat( RECVINFO( m_flUnDuckFraction ) ),
     
@@ -362,7 +363,7 @@ IMPLEMENT_CLIENTCLASS_DT( C_BasePlayer, DT_BasePlayer, CBasePlayer )
     RecvPropInt( RECVINFO( m_iObserverMode ), 0, RecvProxy_ObserverMode ),
     RecvPropEHandle( RECVINFO( m_hObserverTarget ), RecvProxy_ObserverTarget ),
     RecvPropArray( RecvPropEHandle( RECVINFO( m_hViewModel[0] ) ), m_hViewModel ),
-
+    
     RecvPropString( RECVINFO( m_szLastPlaceName ) ),
 
 #if defined USES_ECON_ITEMS
@@ -436,9 +437,10 @@ BEGIN_PREDICTION_DATA( C_BasePlayer )
     DEFINE_PRED_FIELD_TOL( m_flNormalSpeed, FIELD_FLOAT, FTYPEDESC_INSENDTABLE, 0.5f ),
     DEFINE_PRED_FIELD_TOL( m_flRunSpeed, FIELD_FLOAT, FTYPEDESC_INSENDTABLE, 0.5f ),
     DEFINE_PRED_FIELD_TOL( m_flCrouchWalkFraction, FIELD_FLOAT, FTYPEDESC_INSENDTABLE, 0.5f ),
+    DEFINE_PRED_FIELD_TOL( m_flJumpPower, FIELD_FLOAT, FTYPEDESC_INSENDTABLE, 0.5f ),
     DEFINE_PRED_FIELD_TOL( m_flDuckSpeed, FIELD_FLOAT, FTYPEDESC_INSENDTABLE, 0.5f ),
     DEFINE_PRED_FIELD( m_flUnDuckFraction, FIELD_FLOAT, FTYPEDESC_INSENDTABLE ),
-
+        
     DEFINE_PRED_FIELD( m_iHealth, FIELD_INTEGER, FTYPEDESC_INSENDTABLE ),
     DEFINE_PRED_FIELD( m_iBonusProgress, FIELD_INTEGER, FTYPEDESC_INSENDTABLE ),
     DEFINE_PRED_FIELD( m_iBonusChallenge, FIELD_INTEGER, FTYPEDESC_INSENDTABLE ),

@@ -1,9 +1,3 @@
-//========= Copyright Valve Corporation, All rights reserved. ============//
-//
-// Purpose:		Player for HL2.
-//
-//=============================================================================//
-
 #include "cbase.h"
 #include "weapon_experimentbasehlmpcombatweapon.h"
 #include "experiment_player.h"
@@ -177,7 +171,7 @@ CExperiment_Player::CExperiment_Player()
     m_cycleLatch = 0;
     m_cycleLatchTimer.Invalidate();
 
-    BaseClass::ChangeTeam( 0 );
+    BaseClass::ChangeTeam( TEAM_UNASSIGNED );
 }
 
 CExperiment_Player::~CExperiment_Player( void )
@@ -846,45 +840,35 @@ bool CExperiment_Player::BumpWeapon( CBaseCombatWeapon *pWeapon )
 
 void CExperiment_Player::ChangeTeam( int iTeam )
 {
-    /*	if ( GetNextTeamChangeTime() >= gpGlobals->curtime )
-            {
-                    char szReturnString[128];
-                    Q_snprintf( szReturnString, sizeof( szReturnString ),
-       "Please wait %d more seconds before trying to switch teams again.\n",
-       (int)(GetNextTeamChangeTime() - gpGlobals->curtime) );
+    // Experiment: Disabled since we just want this to change the team number
+    //bool bKill = false;
 
-                    ClientPrint( this, HUD_PRINTTALK, szReturnString );
-                    return;
-            }*/
+    //if ( ExperimentRules()->IsTeamplay() != true && iTeam != TEAM_SPECTATOR )
+    //{
+    //    // don't let them try to join combine or rebels during deathmatch.
+    //    iTeam = TEAM_UNASSIGNED;
+    //}
 
-    bool bKill = false;
-
-    if ( ExperimentRules()->IsTeamplay() != true && iTeam != TEAM_SPECTATOR )
-    {
-        // don't let them try to join combine or rebels during deathmatch.
-        iTeam = TEAM_UNASSIGNED;
-    }
-
-    if ( ExperimentRules()->IsTeamplay() == true )
-    {
-        if ( iTeam != GetTeamNumber() && GetTeamNumber() != TEAM_UNASSIGNED )
-        {
-            bKill = true;
-        }
-    }
+    //if ( ExperimentRules()->IsTeamplay() == true )
+    //{
+    //    if ( iTeam != GetTeamNumber() && GetTeamNumber() != TEAM_UNASSIGNED )
+    //    {
+    //        bKill = true;
+    //    }
+    //}
 
     BaseClass::ChangeTeam( iTeam );
 
-    m_flNextTeamChangeTime = gpGlobals->curtime + TEAM_CHANGE_INTERVAL;
+    //m_flNextTeamChangeTime = gpGlobals->curtime + TEAM_CHANGE_INTERVAL;
 
-    if ( ExperimentRules()->IsTeamplay() == true )
-    {
-        SetPlayerTeamModel();
-    }
-    else
-    {
+    //if ( ExperimentRules()->IsTeamplay() == true )
+    //{
+    //    SetPlayerTeamModel();
+    //}
+    //else
+    //{
         SetPlayerModel();
-    }
+    //}
 
     if ( iTeam == TEAM_SPECTATOR )
     {
@@ -893,10 +877,10 @@ void CExperiment_Player::ChangeTeam( int iTeam )
         State_Transition( STATE_OBSERVER_MODE );
     }
 
-    if ( bKill == true )
-    {
-        CommitSuicide();
-    }
+    //if ( bKill == true )
+    //{
+    //    CommitSuicide();
+    //}
 }
 
 bool CExperiment_Player::HandleCommand_JoinTeam( int team )

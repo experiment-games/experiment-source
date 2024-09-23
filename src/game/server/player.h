@@ -939,6 +939,7 @@ class CBasePlayer : public CBaseCombatCharacter
     {
         return m_flMaxspeed;
     }
+
     void SetWalkSpeed( float flSpeed )
     {
         m_flWalkSpeed = flSpeed;
@@ -947,6 +948,7 @@ class CBasePlayer : public CBaseCombatCharacter
     {
         return m_flWalkSpeed;
     }
+
     void SetNormalSpeed( float flSpeed )
     {
         m_flNormalSpeed = flSpeed;
@@ -955,6 +957,7 @@ class CBasePlayer : public CBaseCombatCharacter
     {
         return m_flNormalSpeed;
     }
+
     void SetRunSpeed( float flSpeed )
     {
         m_flRunSpeed = flSpeed;
@@ -963,6 +966,7 @@ class CBasePlayer : public CBaseCombatCharacter
     {
         return m_flRunSpeed;
     }
+
     void SetCrouchWalkFraction( float flSpeed )
     {
         m_flCrouchWalkFraction = flSpeed;
@@ -970,6 +974,15 @@ class CBasePlayer : public CBaseCombatCharacter
     float GetCrouchWalkFraction( void )
     {
         return m_flCrouchWalkFraction;
+    }
+
+    void SetJumpPower( float flPower )
+    {
+        m_flJumpPower = flPower;
+    }
+    float GetJumpPower( void )
+    {
+        return m_flJumpPower;
     }
 
     // Experiment; Note that this issue should be fixed in our implementation: https://github.com/Facepunch/garrysmod-issues/issues/2722
@@ -1432,6 +1445,7 @@ class CBasePlayer : public CBaseCombatCharacter
     CNetworkVar( float, m_flNormalSpeed );
     CNetworkVar( float, m_flRunSpeed );
     CNetworkVar( float, m_flCrouchWalkFraction );
+    CNetworkVar( float, m_flJumpPower );
     CNetworkVar( float, m_flDuckSpeed );
     CNetworkVar( float, m_flUnDuckFraction );
 

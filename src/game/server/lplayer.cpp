@@ -50,6 +50,14 @@ LUA_BINDING_BEGIN( Player, CreateViewModel, "class", "Create a view model for th
 }
 LUA_BINDING_END()
 
+LUA_BINDING_BEGIN( Player, SetDropActiveWeaponOnDeath, "class", "Specify if the player should drop their active weapon when they die." )
+{
+    lua_CBasePlayer *player = LUA_BINDING_ARGUMENT( luaL_checkplayer, 1, "player" );
+    player->m_bDropActiveWeaponOnDeath = LUA_BINDING_ARGUMENT( luaL_checkboolean, 2, "dropActiveWeaponOnDeath" );
+    return 0;
+}
+LUA_BINDING_END()
+
 // TODO: This should be part of CBaseEntity, but currently only players are checked for m_bLagCompensation
 LUA_BINDING_BEGIN( Player, SetLagCompensated, "class", "Set the player's lag compensation." )
 {
@@ -792,7 +800,7 @@ LUA_BINDING_END()
 LUA_BINDING_BEGIN( Player, SetTeam, "class", "Change the team for the player." )
 {
     lua_CBasePlayer *player = LUA_BINDING_ARGUMENT( luaL_checkplayer, 1, "player" );
-    player->ChangeTeam( LUA_BINDING_ARGUMENT( luaL_checknumber, 2, "team" ) );
+    player->ChangeTeam( LUA_BINDING_ARGUMENT( luaL_checknumber, 2, "team" ), false, true );
     return 0;
 }
 LUA_BINDING_END()

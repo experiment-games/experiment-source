@@ -1133,6 +1133,25 @@ LUA_BINDING_BEGIN( Entity, GetTeamNumber, "class", "Get team number." )
 }
 LUA_BINDING_END( "integer", "The team number." )
 
+LUA_BINDING_BEGIN( Entity, GetNoCollidingWithTeammates, "class", "Get no colliding with teammates." )
+{
+    lua_CBaseEntity *pEntity = LUA_BINDING_ARGUMENT( luaL_checkentity, 1, "entity" );
+
+    lua_pushboolean( L, pEntity->GetNoCollidingWithTeammates() );
+    return 1;
+}
+LUA_BINDING_END( "boolean", "True if no colliding with teammates, false otherwise." )
+
+LUA_BINDING_BEGIN( Entity, SetNoCollidingWithTeammates, "class", "Set no colliding with teammates." )
+{
+    lua_CBaseEntity *pEntity = LUA_BINDING_ARGUMENT( luaL_checkentity, 1, "entity" );
+    bool bNoCollide = LUA_BINDING_ARGUMENT( luaL_checkboolean, 2, "noCollide" );
+
+    pEntity->SetNoCollidingWithTeammates( bNoCollide );
+    return 0;
+}
+LUA_BINDING_END()
+
 LUA_BINDING_BEGIN( Entity, GetTextureFrameIndex, "class", "Get texture frame index." )
 {
     lua_CBaseEntity *pEntity = LUA_BINDING_ARGUMENT( luaL_checkentity, 1, "entity" );

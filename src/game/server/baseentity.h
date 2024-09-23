@@ -1121,6 +1121,8 @@ class CBaseEntity : public IServerEntity
     bool InSameTeam( CBaseEntity *pEntity ) const;  // Returns true if the specified entity is on the same team as this one
     bool IsInAnyTeam( void ) const;                 // Returns true if this entity is in any team
     const char *TeamID( void ) const;               // Returns the name of the team this entity is on.
+    void SetNoCollidingWithTeammates( bool );
+    bool GetNoCollidingWithTeammates( void );
 
     // Entity events... these are events targetted to a particular entity
     // Each event defines its own well-defined event data structure
@@ -1851,6 +1853,7 @@ class CBaseEntity : public IServerEntity
     // Team handling
     int m_iInitialTeamNum;           // Team number of this entity's team read from file
     CNetworkVar( int, m_iTeamNum );  // Team number of this entity's team.
+    CNetworkVar( bool, m_bNoCollidingWithTeammates );
 
     // Sets water type + level for physics objects
     unsigned char m_nWaterTouch;

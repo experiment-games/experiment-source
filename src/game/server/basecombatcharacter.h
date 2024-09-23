@@ -469,6 +469,7 @@ class CBaseCombatCharacter : public CBaseFlex
     }
 
     bool m_bForceServerRagdoll;
+    bool m_bDropActiveWeaponOnDeath;
 
     // Pickup prevention
     bool IsAllowedToPickupWeapons( void )

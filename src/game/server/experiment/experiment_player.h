@@ -1,12 +1,5 @@
-//========= Copyright Valve Corporation, All rights reserved. ============//
-//
-// Purpose:
-//
-// $NoKeywords: $
-//
-//=============================================================================//
-#ifndef Experiment_PLAYER_H
-#define Experiment_PLAYER_H
+#ifndef EXPERIMENT_PLAYER_H
+#define EXPERIMENT_PLAYER_H
 #pragma once
 
 class CExperiment_Player;
@@ -246,4 +239,4 @@ inline CExperiment_Player *ToExperimentPlayer( CBaseEntity *pEntity )
     return dynamic_cast< CExperiment_Player * >( pEntity );
 }
 
-#endif  // Experiment_PLAYER_H
+#endif  // EXPERIMENT_PLAYER_H

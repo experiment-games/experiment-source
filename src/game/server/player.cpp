@@ -389,6 +389,7 @@ DEFINE_FIELD( v_angle, FIELD_VECTOR ),
     DEFINE_FIELD( m_flNormalSpeed, FIELD_FLOAT ),
     DEFINE_FIELD( m_flRunSpeed, FIELD_FLOAT ),
     DEFINE_FIELD( m_flCrouchWalkFraction, FIELD_FLOAT ),
+    DEFINE_FIELD( m_flJumpPower, FIELD_FLOAT ),
 
     // Time in milliseconds to go from standing to fully ducked
     DEFINE_FIELD( m_flDuckSpeed, FIELD_FLOAT ),
@@ -2830,10 +2831,10 @@ bool CBasePlayer::CanPickupObject( CBaseEntity *pObject, float massLimit, float 
 {
 #ifdef LUA_SDK
     LUA_CALL_HOOK_BEGIN( "PlayersCanPickupObject", "Checks if any player can pickup this type of object." );
-    CBaseEntity::PushLuaInstanceSafe( L, pObject ); // doc: entity (The entity that is being checked.)
-    lua_pushnumber( L, massLimit ); // doc: massLimit (The mass limit of the object.)
-    lua_pushnumber( L, sizeLimit ); // doc: sizeLimit (The size limit of the object.)
-    LUA_CALL_HOOK_END( 3, 1 ); // doc: boolean (Whether or not the object can be picked up.)
+    CBaseEntity::PushLuaInstanceSafe( L, pObject );  // doc: entity (The entity that is being checked.)
+    lua_pushnumber( L, massLimit );                  // doc: massLimit (The mass limit of the object.)
+    lua_pushnumber( L, sizeLimit );                  // doc: sizeLimit (The size limit of the object.)
+    LUA_CALL_HOOK_END( 3, 1 );                       // doc: boolean (Whether or not the object can be picked up.)
 
     LUA_RETURN_BOOLEAN();
 #endif
@@ -7508,7 +7509,7 @@ void CBasePlayer::ChangeTeam( int iTeamNum, bool bAutoTeam, bool bSilent )
         gameeventmanager->FireEvent( event );
     }
 
-    // Remove him from his current team
+    // Remove them from their current team
     if ( GetTeam() )
     {
         GetTeam()->RemovePlayer( this );
@@ -8026,13 +8027,14 @@ SendPropDataTable( SENDINFO_DT( m_AttributeList ), &REFERENCE_SEND_TABLE( DT_Att
     SendPropInt( SENDINFO( m_iBonusProgress ), 15 ),
     SendPropInt( SENDINFO( m_iBonusChallenge ), 4 ),
 
-    SendPropFloat( SENDINFO( m_flMaxspeed ), 12, SPROP_ROUNDDOWN, 0.0f, 2048.0f ), // CL
-    SendPropFloat( SENDINFO( m_flWalkSpeed ), 12, SPROP_ROUNDDOWN, 0.0f, 2048.0f ), // CL
-    SendPropFloat( SENDINFO( m_flNormalSpeed ), 12, SPROP_ROUNDDOWN, 0.0f, 2048.0f ), // CL
-    SendPropFloat( SENDINFO( m_flRunSpeed ), 12, SPROP_ROUNDDOWN, 0.0f, 2048.0f ), // CL
-    SendPropFloat( SENDINFO( m_flCrouchWalkFraction ), 12, SPROP_ROUNDDOWN, 0.0f, 2048.0f ), // CL
-    SendPropFloat( SENDINFO( m_flDuckSpeed ), 12, SPROP_ROUNDDOWN, 0.0f, 2048.0f ), // CL
-    SendPropFloat( SENDINFO( m_flUnDuckFraction ), 12, SPROP_ROUNDDOWN, 0.0f, 10.0f ), // CL
+    SendPropFloat( SENDINFO( m_flMaxspeed ), 12, SPROP_ROUNDDOWN, 0.0f, 2048.0f ),            // CL
+    SendPropFloat( SENDINFO( m_flWalkSpeed ), 12, SPROP_ROUNDDOWN, 0.0f, 2048.0f ),           // CL
+    SendPropFloat( SENDINFO( m_flNormalSpeed ), 12, SPROP_ROUNDDOWN, 0.0f, 2048.0f ),         // CL
+    SendPropFloat( SENDINFO( m_flRunSpeed ), 12, SPROP_ROUNDDOWN, 0.0f, 2048.0f ),            // CL
+    SendPropFloat( SENDINFO( m_flCrouchWalkFraction ), 12, SPROP_ROUNDDOWN, 0.0f, 2048.0f ),  // CL
+    SendPropFloat( SENDINFO( m_flJumpPower ), 12, SPROP_ROUNDDOWN, 0.0f, 2048.0f ),           // CL
+    SendPropFloat( SENDINFO( m_flDuckSpeed ), 12, SPROP_ROUNDDOWN, 0.0f, 2048.0f ),           // CL
+    SendPropFloat( SENDINFO( m_flUnDuckFraction ), 12, SPROP_ROUNDDOWN, 0.0f, 10.0f ),        // CL
 
     SendPropInt( SENDINFO( m_fFlags ), PLAYER_FLAG_BITS, SPROP_UNSIGNED | SPROP_CHANGES_OFTEN, SendProxy_CropFlagsToPlayerFlagBitsLength ),
     SendPropInt( SENDINFO( m_iObserverMode ), 3, SPROP_UNSIGNED ),

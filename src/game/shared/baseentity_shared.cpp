@@ -137,6 +137,16 @@ void CBaseEntity::UnsetPlayerSimulated( void )
 }
 #endif
 
+bool CBaseEntity::GetNoCollidingWithTeammates( void )
+{
+    return m_bNoCollidingWithTeammates;
+}
+
+void CBaseEntity::SetNoCollidingWithTeammates( bool bNoCollide )
+{
+    m_bNoCollidingWithTeammates = bNoCollide;
+}
+
 // position of eyes
 Vector CBaseEntity::EyePosition( void )
 {

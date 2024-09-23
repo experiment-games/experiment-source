@@ -1047,6 +1047,22 @@ LUA_BINDING_BEGIN( Player, GetCrouchWalkFraction, "class", "Get the fraction by 
 }
 LUA_BINDING_END( "number", "The player's crouched walk speed fraction." )
 
+LUA_BINDING_BEGIN( Player, SetJumpPower, "class", "Set the player's jump power. Is multiplied by jumpFactor of the surface the player is standing on. Supposedly (according to a Valve comment inside the SDK) 160 power equals about 21 units jump height." )
+{
+    lua_CBasePlayer *player = LUA_BINDING_ARGUMENT( luaL_checkplayer, 1, "player" );
+    player->SetJumpPower( LUA_BINDING_ARGUMENT( luaL_checknumber, 2, "power" ) );
+    return 0;
+}
+LUA_BINDING_END()
+
+LUA_BINDING_BEGIN( Player, GetJumpPower, "class", "Get the player's jump power." )
+{
+    lua_CBasePlayer *player = LUA_BINDING_ARGUMENT( luaL_checkplayer, 1, "player" );
+    lua_pushnumber( L, player->GetJumpPower() );
+    return 1;
+}
+LUA_BINDING_END( "number", "The player's jump power." )
+
 LUA_BINDING_BEGIN( Player, SetDuckSpeed, "class", "Set the player's duck speed. This **should not** suffer from this bug that Garry's Mod has: https://github.com/Facepunch/garrysmod-issues/issues/2722" )
 {
     lua_CBasePlayer *player = LUA_BINDING_ARGUMENT( luaL_checkplayer, 1, "player" );
@@ -1584,11 +1600,17 @@ LUA_BINDING_BEGIN( Players, GetAllBots, "library", "Get all bots." )
 {
     lua_newtable( L );
 
+    int index = 1;
     for ( int i = 1; i <= gpGlobals->maxClients; i++ )
     {
         CBasePlayer *pPlayer = UTIL_PlayerByIndex( i );
-        CBasePlayer::PushLuaInstanceSafe( L, pPlayer );
-        lua_rawseti( L, -2, i + 1 );
+
+        if ( pPlayer->IsBot() )
+        {
+            CBasePlayer::PushLuaInstanceSafe( L, pPlayer );
+            lua_rawseti( L, -2, index );
+            index++;
+        }
     }
 
     return 1;
@@ -1599,14 +1621,16 @@ LUA_BINDING_BEGIN( Players, GetAllHumans, "library", "Get all humans." )
 {
     lua_newtable( L );
 
+    int index = 1;
     for ( int i = 1; i <= gpGlobals->maxClients; i++ )
     {
         CBasePlayer *pPlayer = UTIL_PlayerByIndex( i );
 
-        if ( pPlayer && !( pPlayer->GetFlags() & FL_FAKECLIENT ) )
+        if ( pPlayer && !pPlayer->IsBot() )
         {
             CBasePlayer::PushLuaInstanceSafe( L, pPlayer );
-            lua_rawseti( L, -2, i + 1 );
+            lua_rawseti( L, -2, index );
+            index++;
         }
     }
 
@@ -1618,13 +1642,15 @@ LUA_BINDING_BEGIN( Players, GetAll, "library", "Get all players." )
 {
     lua_newtable( L );
 
+    int index = 1;
     for ( int i = 1; i <= gpGlobals->maxClients; i++ )
     {
         CBasePlayer *pPlayer = UTIL_PlayerByIndex( i );
         if ( pPlayer )
         {
             CBasePlayer::PushLuaInstanceSafe( L, pPlayer );
-            lua_rawseti( L, -2, i + 1 );
+            lua_rawseti( L, -2, index );
+            index++;
         }
     }
 

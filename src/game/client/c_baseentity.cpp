@@ -579,7 +579,9 @@ BEGIN_RECV_TABLE_NOBASE( C_BaseEntity, DT_BaseEntity )
 
     RecvPropInt( RECVINFO( m_fEffects ), 0, RecvProxy_EffectFlags ),
     RecvPropInt( RECVINFO( m_nRenderMode ) ), RecvPropInt( RECVINFO( m_nRenderFX ) ),
-    RecvPropInt( RECVINFO( m_clrRender ) ), RecvPropInt( RECVINFO( m_iTeamNum ) ),
+    RecvPropInt( RECVINFO( m_clrRender ) ),
+    RecvPropInt( RECVINFO( m_iTeamNum ) ),
+    RecvPropBool( RECVINFO ( m_bNoCollidingWithTeammates ) ),
     RecvPropInt( RECVINFO( m_CollisionGroup ) ),
     RecvPropFloat( RECVINFO( m_flElasticity ) ),
     RecvPropFloat( RECVINFO( m_flShadowCastDistance ) ),
@@ -635,6 +637,7 @@ BEGIN_PREDICTION_DATA_NO_BASE( C_BaseEntity )
     DEFINE_PRED_FIELD( m_nModelIndex, FIELD_SHORT, FTYPEDESC_INSENDTABLE | FTYPEDESC_MODELINDEX ),
     DEFINE_PRED_FIELD( m_flFriction, FIELD_FLOAT, FTYPEDESC_INSENDTABLE ),
     DEFINE_PRED_FIELD( m_iTeamNum, FIELD_INTEGER, FTYPEDESC_INSENDTABLE ),
+    DEFINE_PRED_FIELD( m_bNoCollidingWithTeammates, FIELD_BOOLEAN, FTYPEDESC_INSENDTABLE ),
     DEFINE_PRED_FIELD( m_hOwnerEntity, FIELD_EHANDLE, FTYPEDESC_INSENDTABLE ),
 
     //	DEFINE_FIELD( m_nSimulationTick, FIELD_INTEGER ),
@@ -1085,6 +1088,8 @@ C_BaseEntity::C_BaseEntity()
 #if !defined( NO_ENTITY_PREDICTION )
     m_pPredictionContext = NULL;
 #endif
+
+    m_bNoCollidingWithTeammates = false;
 
     // NOTE: not virtual! we are in the constructor!
     C_BaseEntity::Clear();

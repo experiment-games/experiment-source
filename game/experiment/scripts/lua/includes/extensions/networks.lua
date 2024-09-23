@@ -337,7 +337,8 @@ if (SERVER) then
 				continue
 			end
 
-			Networks.Send(client)
+			-- Call the engine function to send the message
+			Networks.InternalSendToClients(currentOutgoingMessageTypeId, currentOutgoingMessageWriter, client)
 		end
 
 		Networks.Cancel()
@@ -345,18 +346,19 @@ if (SERVER) then
 
 	--- Sends the message to all players that have the entity in their PVS
 	--- @param entity any
-	function Networks.BroadcastPVS(entity)
-		guardIsWriting("BroadcastPVS")
+	function Networks.BroadcastPvs(entity)
+		guardIsWriting("BroadcastPvs")
 
 		local origin = entity:GetPosition()
 		local entities = Entities.GetInPvs(origin)
 
 		for _, entity in ipairs(entities) do
-			if (not entity:IsPlayer()) then
+			if (not entity:IsPlayer() or entity:IsBot()) then
 				continue
 			end
 
-			Networks.Send(entity)
+			-- Call the engine function to send the message
+			Networks.InternalSendToClients(currentOutgoingMessageTypeId, currentOutgoingMessageWriter, entity)
 		end
 
 		Networks.Cancel()

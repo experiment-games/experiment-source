@@ -739,6 +739,7 @@ CBaseCombatCharacter::CBaseCombatCharacter( void )
     m_impactEnergyScale = 1.0f;
 
     m_bForceServerRagdoll = ai_force_serverside_ragdoll.GetBool();
+    m_bDropActiveWeaponOnDeath = true;
 
 #ifdef GLOWS_ENABLE
     m_bGlowEnabled.Set( false );
@@ -1569,17 +1570,22 @@ void CBaseCombatCharacter::Event_Killed( const CTakeDamageInfo &info )
         forceVector += pMagnet->GetForceVector( this );
     }
 
-    CBaseCombatWeapon *pDroppedWeapon = m_hActiveWeapon.Get();
+    CBaseCombatWeapon *pDroppedWeapon = nullptr;
 
-    // Drop any weapon that I own
-    if ( VPhysicsGetObject() )
+    if ( m_bDropActiveWeaponOnDeath )
     {
-        Vector weaponForce = forceVector * VPhysicsGetObject()->GetInvMass();
-        Weapon_Drop( m_hActiveWeapon, NULL, &weaponForce );
-    }
-    else
-    {
-        Weapon_Drop( m_hActiveWeapon );
+        pDroppedWeapon = m_hActiveWeapon.Get();
+
+        // Drop the active weapon that I own
+        if ( VPhysicsGetObject() )
+        {
+            Vector weaponForce = forceVector * VPhysicsGetObject()->GetInvMass();
+            Weapon_Drop( m_hActiveWeapon, NULL, &weaponForce );
+        }
+        else
+        {
+            Weapon_Drop( m_hActiveWeapon );
+        }
     }
 
     // if flagged to drop a health kit

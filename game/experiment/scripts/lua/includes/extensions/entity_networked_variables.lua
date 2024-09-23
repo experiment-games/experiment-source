@@ -54,7 +54,7 @@ function ENTITY_META:SetNetworkedVariable(key, value)
 	Networks.WriteEntity(self)
 	Networks.WriteString(key)
 	Networks.WriteType(value)
-	Networks.BroadcastPVS(self)
+	Networks.BroadcastPvs(self)
 end
 
 --- Gets a networked variable from the entity

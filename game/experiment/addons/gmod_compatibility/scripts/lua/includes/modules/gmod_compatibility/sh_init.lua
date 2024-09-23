@@ -553,6 +553,9 @@ ENTITY_META.SetMaterial = ENTITY_META.SetMaterialOverride
 ENTITY_META.GetMaterial = ENTITY_META.GetMaterialOverride
 ENTITY_META.GetAbsVelocity = ENTITY_META.GetLocalVelocity
 ENTITY_META.SetAbsVelocity = ENTITY_META.SetLocalVelocity
+ENTITY_META.Team = ENTITY_META.GetTeamNumber
+ENTITY_META.GetNoCollideWithTeammates = ENTITY_META.GetNoCollidingWithTeammates
+ENTITY_META.SetNoCollideWithTeammates = ENTITY_META.SetNoCollidingWithTeammates
 
 function ENTITY_META:GetDTAngle(index)
 	return self:GetNetworkDataValue(_E.NETWORK_VARIABLE_TYPE.ANGLE, index)
@@ -738,6 +741,7 @@ PLAYER_META.SetFOV = PLAYER_META.SetFov
 PLAYER_META.SetUnDuckSpeed = PLAYER_META.SetUnDuckFraction
 PLAYER_META.GetUnDuckSpeed = PLAYER_META.GetUnDuckFraction
 PLAYER_META.SetDSP = PLAYER_META.SetDsp
+PLAYER_META.ShouldDropWeapon = PLAYER_META.SetDropActiveWeaponOnDeath
 
 function PLAYER_META:LagCompensation(shouldStart)
 	if (shouldStart) then
