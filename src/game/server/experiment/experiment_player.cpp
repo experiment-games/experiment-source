@@ -107,6 +107,7 @@ SendPropVector( SENDINFO( m_vecOrigin ), -1, SPROP_NOSCALE | SPROP_CHANGES_OFTEN
     SendPropEHandle( SENDINFO( m_hRagdoll ) ),
     SendPropInt( SENDINFO( m_iSpawnInterpCounter ), 4 ),
     SendPropInt( SENDINFO( m_iPlayerSoundType ), 3 ),
+    SendPropInt( SENDINFO( m_ArmorValue ), 8 ),
 
     END_SEND_TABLE()
 

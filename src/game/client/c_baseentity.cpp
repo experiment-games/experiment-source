@@ -2297,8 +2297,18 @@ void C_BaseEntity::NotifyShouldTransmit( ShouldTransmitState_t state )
 #ifdef LUA_SDK
             if ( L && m_pLuaInstance )
             {
+                // Experiment;  TODO: However confusing these two hooks doing the same may look,
+                //              this setup worked for me and any other place I tried OnEntityCreated
+                //              didn't work (notify lists, CreateEntityByName)
+                {
+                    // Experiment; In mapentities.cpp is the other half of this hook
+                    LUA_CALL_HOOK_BEGIN( "OnEntityCreated" );
+                    CBaseEntity::PushLuaInstanceSafe( L, this );
+                    LUA_CALL_HOOK_END( 1, 0 );
+                }
+
                 LUA_CALL_HOOK_BEGIN( "NetworkEntityCreated" );
-                PushLuaInstance( L );
+                CBaseEntity::PushLuaInstanceSafe( L, this );
                 LUA_CALL_HOOK_END( 1, 0 );
             }
 #endif

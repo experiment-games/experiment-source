@@ -638,6 +638,12 @@ class C_BasePlayer : public C_BaseCombatCharacter, public CGameEventListener
     float m_flConstraintRadius;
     float m_flConstraintWidth;
     float m_flConstraintSpeedFactor;
+    int m_ArmorValue;
+
+    int ArmorValue() const
+    {
+        return m_ArmorValue;
+    }
 
    protected:
     void CalcPlayerView( CViewSetup &viewSetup, bool &bForceDrawLocalPlayer );

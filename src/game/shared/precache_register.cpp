@@ -25,7 +25,7 @@ CPrecacheRegister::CPrecacheRegister(PrecacheFn fn, const void *pUser)
 void CPrecacheRegister::Precache()
 {
 	for(CPrecacheRegister *pCur=g_pPrecacheRegisters; pCur; pCur=pCur->m_pNext)
-	{
+    {
 		pCur->m_Fn(pCur->m_pUser);
 	}
 }

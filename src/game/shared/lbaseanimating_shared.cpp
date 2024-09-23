@@ -568,7 +568,16 @@ LUA_BINDING_END( "integer", "The sequence" )
 
 LUA_BINDING_BEGIN( CBaseAnimating, GetRagdollOwner, "class", "Returns the player this ragdoll came from. NULL if this is not a player ragdoll (will warn)" )
 {
-    lua_CBaseAnimating *pAnimating = LUA_BINDING_ARGUMENT( luaL_checkanimating, 1, "entity" );
+    // TODO: We should probably do this soft-check (toanimating) for every baseanimating function?
+    // In this case we do it because pac3 would error for non-animating entities, e.g:
+    // [CLIENT] ...periment\addons\pac3\lua\pac3\core\client\parts\bone.lua:308: calling 'GetRagdollOwner' on bad self (CBaseAnimating expected, got NULL entity)
+    lua_CBaseAnimating *pAnimating = LUA_BINDING_ARGUMENT( lua_toanimating, 1, "entity" );
+
+    if (!pAnimating)
+    {
+        CBasePlayer::PushLuaInstanceSafe( L, NULL );
+        return 1;
+    }
 
 #ifdef CLIENT_DLL
     C_ExperimentRagdoll *pRagdoll = dynamic_cast< C_ExperimentRagdoll * >( pAnimating );
@@ -578,7 +587,6 @@ LUA_BINDING_BEGIN( CBaseAnimating, GetRagdollOwner, "class", "Returns the player
 
     if ( !pRagdoll )
     {
-        DevWarning( "Entity.GetRagdollOwner failed: not a ragdoll\n" );
         CBasePlayer::PushLuaInstanceSafe( L, NULL );
         return 1;
     }

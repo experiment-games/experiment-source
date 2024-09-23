@@ -1751,7 +1751,9 @@ void UTIL_PrecacheOther( const char *szClassname, const char *modelName )
     }
 
     if ( pEntity )
+    {
         pEntity->Precache();
+    }
 
     UTIL_RemoveImmediate( pEntity );
 }
@@ -1857,6 +1859,7 @@ int DispatchSpawn( CBaseEntity *pEntity )
             MemAlloc_PushAllocDbgInfo( pszClassname, __LINE__ );
         }
 #endif
+
         bool bAsyncAnims = mdlcache->SetAsyncLoad( MDLCACHE_ANIMBLOCK, false );
         CBaseAnimating *pAnimating = pEntity->GetBaseAnimating();
         if ( !pAnimating )

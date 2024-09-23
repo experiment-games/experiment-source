@@ -556,6 +556,8 @@ ENTITY_META.SetAbsVelocity = ENTITY_META.SetLocalVelocity
 ENTITY_META.Team = ENTITY_META.GetTeamNumber
 ENTITY_META.GetNoCollideWithTeammates = ENTITY_META.GetNoCollidingWithTeammates
 ENTITY_META.SetNoCollideWithTeammates = ENTITY_META.SetNoCollidingWithTeammates
+ENTITY_META.SetColor = ENTITY_META.SetRenderColor
+ENTITY_META.GetColor = ENTITY_META.GetRenderColor
 
 function ENTITY_META:GetDTAngle(index)
 	return self:GetNetworkDataValue(_E.NETWORK_VARIABLE_TYPE.ANGLE, index)
@@ -627,11 +629,15 @@ function ENTITY_META:GetSpawnEffect()
 end
 
 function ENTITY_META:SetNoDraw(bBool)
-	if (bBool) then
-		self:AddEffects(_E.ENTITY_EFFECT.NO_DRAW)
-	else
-		self:RemoveEffects(_E.ENTITY_EFFECT.NO_DRAW)
-	end
+    if (bBool) then
+        self:AddEffects(_E.ENTITY_EFFECT.NO_DRAW)
+    else
+        self:RemoveEffects(_E.ENTITY_EFFECT.NO_DRAW)
+    end
+end
+
+function ENTITY_META:GetNoDraw()
+	return self:IsEffectActive(_E.ENTITY_EFFECT.NO_DRAW)
 end
 
 function ENTITY_META:IsFlagSet(flag)
@@ -742,6 +748,7 @@ PLAYER_META.SetUnDuckSpeed = PLAYER_META.SetUnDuckFraction
 PLAYER_META.GetUnDuckSpeed = PLAYER_META.GetUnDuckFraction
 PLAYER_META.SetDSP = PLAYER_META.SetDsp
 PLAYER_META.ShouldDropWeapon = PLAYER_META.SetDropActiveWeaponOnDeath
+PLAYER_META.Armor = PLAYER_META.GetArmor
 
 function PLAYER_META:LagCompensation(shouldStart)
 	if (shouldStart) then
@@ -1368,7 +1375,8 @@ else
 	LocalPlayer = Players.GetLocalPlayer
 
 	surface.SetDrawColor = Surfaces.DrawSetColor
-	surface.DrawRect = Surfaces.DrawFilledRectangle
+    surface.DrawRect = Surfaces.DrawFilledRectangle
+	surface.SetAlphaMultiplier = Surfaces.DrawSetAlphaMultiplier
 
 	local textureMap = {}
 

@@ -144,7 +144,13 @@ LUA_BINDING_END( "Texture", "The screen effect texture." )
 LUA_BINDING_BEGIN( Renders, UpdateScreenEffectTexture, "library", "Update the screen effect texture.", "client" )
 {
     const CViewSetup *pViewSetup = view->GetViewSetup();
-    UpdateScreenEffectTexture( LUA_BINDING_ARGUMENT( luaL_checknumber, 1, "textureIndex" ), pViewSetup->x, pViewSetup->y, pViewSetup->width, pViewSetup->height );
+    UpdateScreenEffectTexture(
+        LUA_BINDING_ARGUMENT_WITH_DEFAULT(
+            luaL_optnumber, 1, 0, "textureIndex" ),
+        pViewSetup->x,
+        pViewSetup->y,
+        pViewSetup->width,
+        pViewSetup->height );
     return 0;
 }
 LUA_BINDING_END()
@@ -357,7 +363,7 @@ LUA_BINDING_BEGIN( Renders, SetScissorRectangle, "library", "Set the scissor rec
     int nRight = LUA_BINDING_ARGUMENT( luaL_checknumber, 3, "right" );
     int nBottom = LUA_BINDING_ARGUMENT( luaL_checknumber, 4, "bottom" );
     bool bEnableScissor = LUA_BINDING_ARGUMENT( lua_toboolean, 5, "enableScissor" );
-    
+
     CMatRenderContextPtr pRenderContext( materials );
     pRenderContext->SetScissorRect( nLeft, nTop, nRight, nBottom, bEnableScissor );
 
@@ -533,36 +539,36 @@ LUA_BINDING_END()
 
 LUA_BINDING_BEGIN( Renders, DrawBeam, "library", "Draws a beam", "client" )
 {
-     Vector &start = LUA_BINDING_ARGUMENT( luaL_checkvector, 1, "start" );
-     Vector &end = LUA_BINDING_ARGUMENT( luaL_checkvector, 2, "end" );
-     float width = LUA_BINDING_ARGUMENT( luaL_checknumber, 3, "width" );
-     float textureStart = LUA_BINDING_ARGUMENT( luaL_checknumber, 4, "textureStart" );
-     float textureEnd = LUA_BINDING_ARGUMENT( luaL_checknumber, 5, "textureEnd" );
-     lua_Color color = LUA_BINDING_ARGUMENT_WITH_DEFAULT( luaL_optcolor, 6, lua_Color( 255, 255, 255, 255 ), "color" );
+    Vector &start = LUA_BINDING_ARGUMENT( luaL_checkvector, 1, "start" );
+    Vector &end = LUA_BINDING_ARGUMENT( luaL_checkvector, 2, "end" );
+    float width = LUA_BINDING_ARGUMENT( luaL_checknumber, 3, "width" );
+    float textureStart = LUA_BINDING_ARGUMENT( luaL_checknumber, 4, "textureStart" );
+    float textureEnd = LUA_BINDING_ARGUMENT( luaL_checknumber, 5, "textureEnd" );
+    lua_Color color = LUA_BINDING_ARGUMENT_WITH_DEFAULT( luaL_optcolor, 6, lua_Color( 255, 255, 255, 255 ), "color" );
 
-     CMatRenderContextPtr pRenderContext( materials );
-     CBeamSegDraw beamDraw;
-     beamDraw.Start( pRenderContext, 2, NULL );
+    CMatRenderContextPtr pRenderContext( materials );
+    CBeamSegDraw beamDraw;
+    beamDraw.Start( pRenderContext, 2, NULL );
 
-     BeamSeg_t seg;
-     seg.m_flAlpha = 1.0;
-     seg.m_flWidth = width;
+    BeamSeg_t seg;
+    seg.m_flAlpha = 1.0;
+    seg.m_flWidth = width;
 
-     seg.m_vPos = start;
-     seg.m_flTexCoord = textureStart;
-     seg.m_vColor = color.ToVector();
-     beamDraw.NextSeg( &seg );
+    seg.m_vPos = start;
+    seg.m_flTexCoord = textureStart;
+    seg.m_vColor = color.ToVector();
+    beamDraw.NextSeg( &seg );
 
-     seg.m_vPos = end;
-     seg.m_flTexCoord = textureEnd;
-     seg.m_vColor = color.ToVector();
-     beamDraw.NextSeg( &seg );
+    seg.m_vPos = end;
+    seg.m_flTexCoord = textureEnd;
+    seg.m_vColor = color.ToVector();
+    beamDraw.NextSeg( &seg );
 
-     beamDraw.End();
+    beamDraw.End();
 
-     return 0;
- }
- LUA_BINDING_END()
+    return 0;
+}
+LUA_BINDING_END()
 #endif  // CLIENT_DLL
 
 /*

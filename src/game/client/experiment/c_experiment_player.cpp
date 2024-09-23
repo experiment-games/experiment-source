@@ -61,6 +61,7 @@ RecvPropVector( RECVINFO_NAME( m_vecNetworkOrigin, m_vecOrigin ) ),
     RecvPropEHandle( RECVINFO( m_hRagdoll ) ),
     RecvPropInt( RECVINFO( m_iSpawnInterpCounter ) ),
     RecvPropInt( RECVINFO( m_iPlayerSoundType ) ),
+    RecvPropInt( RECVINFO( m_ArmorValue ) ),
 
     RecvPropBool( RECVINFO( m_fIsWalking ) ),
     END_RECV_TABLE()

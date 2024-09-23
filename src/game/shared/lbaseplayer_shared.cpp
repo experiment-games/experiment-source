@@ -154,6 +154,14 @@ LUA_BINDING_BEGIN( Player, GetActiveWeapon, "class", "Get the player's active we
 }
 LUA_BINDING_END( "Weapon", "The player's active weapon." )
 
+LUA_BINDING_BEGIN( Player, GetArmor, "class", "Get the player's armor value." )
+{
+    lua_CBasePlayer *player = LUA_BINDING_ARGUMENT( luaL_checkplayer, 1, "player" );
+    lua_pushinteger( L, player->ArmorValue() );
+    return 1;
+}
+LUA_BINDING_END( "integer", "The player's armor value." )
+
 // FIXME: move to CBaseCombatCharacter
 LUA_BINDING_BEGIN( Player, GetAmmoCount, "class", "Get the player's ammo count." )
 {

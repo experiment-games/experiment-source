@@ -27,6 +27,7 @@
 #include "vcollide_parse.h"
 #include <gamestringpool.h>
 #include <basescripted.h>
+#include <lColor.h>
 
 // memdbgon must be the last include file in a .cpp file!!!
 #include "tier0/memdbgon.h"
@@ -2324,13 +2325,25 @@ LUA_BINDING_BEGIN( Entity, SetPredictionPlayer, "class|static", "Set prediction 
 }
 LUA_BINDING_END()
 
-LUA_BINDING_BEGIN( Entity, SetRenderColor, "class", "Set render color." )
+LUA_BINDING_BEGIN( Entity, GetRenderColor, "class", "Get the entity render color." )
 {
     lua_CBaseEntity *pEntity = LUA_BINDING_ARGUMENT( luaL_checkentity, 1, "entity" );
-    int r = LUA_BINDING_ARGUMENT( luaL_checknumber, 2, "red" );
-    int g = LUA_BINDING_ARGUMENT( luaL_checknumber, 3, "green" );
-    int b = LUA_BINDING_ARGUMENT( luaL_checknumber, 4, "blue" );
-    int a = LUA_BINDING_ARGUMENT_WITH_DEFAULT( luaL_optnumber, 5, 255, "alpha" );
+
+    color32 rawColor = pEntity->GetRenderColor();
+    lua_Color color( rawColor.r, rawColor.g, rawColor.b, rawColor.a );
+    lua_pushcolor( L, color );
+    return 1;
+}
+LUA_BINDING_END( "Color", "The entity render color." )
+
+LUA_BINDING_BEGIN( Entity, SetRenderColor, "class", "Set the entity render color." )
+{
+    lua_CBaseEntity *pEntity = LUA_BINDING_ARGUMENT( luaL_checkentity, 1, "entity" );
+    lua_Color &color = LUA_BINDING_ARGUMENT( luaL_checkcolor, 2, "color" );
+    int r = color.r();
+    int g = color.g();
+    int b = color.b();
+    int a = color.a();
 
     pEntity->SetRenderColor( r, g, b, a );
     return 0;
@@ -3030,6 +3043,13 @@ LUA_BINDING_BEGIN( Entity, IsValid, "class", "Check if entity is valid." )
     if ( pWeapon )
     {
         lua_pushboolean( L, pWeapon->IsValid() );
+        return 1;
+    }
+
+    // Just like in Garry's Mod, we'll return false for the Worldspawn (0) entity
+    if ( pEntity->entindex() == 0 )
+    {
+        lua_pushboolean( L, false );
         return 1;
     }
 

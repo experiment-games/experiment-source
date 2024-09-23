@@ -68,6 +68,7 @@ END_RECV_TABLE()
 
 C_World::C_World( void )
 {
+    SetClassname( "worldspawn" );
 }
 
 C_World::~C_World( void )
