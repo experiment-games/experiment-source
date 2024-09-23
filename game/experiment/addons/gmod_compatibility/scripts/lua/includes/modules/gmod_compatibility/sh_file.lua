@@ -6,10 +6,8 @@ file = {}
 function file.Append(fileName, content)
     local file = Files.Open(fileName, "a", "DATA")
 
-    if (file) then
-        Files.Write(content, file)
-        Files.Close(file)
-    end
+	Files.Write(content, file)
+	Files.Close(file)
 end
 
 -- Reads the content of a file asynchronously
@@ -85,11 +83,6 @@ end
 -- Writes content to a file, erasing previous data
 function file.Write(fileName, content)
     local file = Files.Open(fileName, "w", "DATA")
-
-    if (not file) then
-		error("file.Write: Couldn't open file '" .. fileName .. "' for writing!")
-        return
-    end
 
 	Files.Write(content, file)
 	Files.Close(file)
