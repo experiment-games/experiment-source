@@ -1446,6 +1446,7 @@ $Project
 
 		$Lib	"$LIBCOMMON\libcurl" [$WIN32]
 		$Lib    "libz" [$WIN32]
+		$Lib    "$LIBCOMMON/lzma"
 
 		$Libexternal	libz [$LINUXALL]
 		$Libexternal "$LIBCOMMON/libcurl" [$LINUXALL]

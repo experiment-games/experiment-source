@@ -86,6 +86,9 @@ util.TraceHull = Traces.TraceHull
 util.TraceEntity = Traces.TraceEntity
 util.PointContents = Traces.PointContents
 
+util.Compress = Serializers.LzmaCompress
+util.Decompress = Serializers.LzmaDecompress
+
 util.JSONToTable = function(json)
 	return Json.Decode(json)
 end

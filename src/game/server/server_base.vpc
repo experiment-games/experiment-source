@@ -1159,6 +1159,7 @@ $Project
         $Implib	    "$SRCDIR\public\steam\redistributable_bin\osx32\libsteam_api" [$OSXALL]
         $Implib	    "$SRCDIR\public\steam\redistributable_bin\linux32\libsteam_api" [$LINUX32]
         $Implib	    "$SRCDIR\public\steam\redistributable_bin\linux64\libsteam_api" [$LINUX64]
+		$Lib    "$LIBCOMMON/lzma"
 
 		$Lib	"lua54"
 		$Lib	"luasocket"
