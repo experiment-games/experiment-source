@@ -19,6 +19,7 @@
 #include "lvphysics_interface.h"
 #include <lusercmd.h>
 #include <weapon_experimentbase_scriptedweapon.h>
+#include "engine/IEngineSound.h"
 
 // memdbgon must be the last include file in a .cpp file!!!
 #include "tier0/memdbgon.h"
@@ -244,6 +245,19 @@ LUA_BINDING_BEGIN( Player, GetFovTime, "class", "Get the player's FOV time." )
     return 1;
 }
 LUA_BINDING_END( "number", "The player's FOV time." )
+
+LUA_BINDING_BEGIN( Player, SetDsp, "class", "Set the player's DSP." )
+{
+    lua_CBasePlayer *player = LUA_BINDING_ARGUMENT( luaL_checkplayer, 1, "player" );
+    int dspEffectId = LUA_BINDING_ARGUMENT( luaL_checkinteger, 2, "dspEffectId" );
+    bool fastReset = LUA_BINDING_ARGUMENT_WITH_DEFAULT( luaL_optboolean, 3, false, "fastReset" );
+
+    CSingleUserRecipientFilter user( player );
+    enginesound->SetPlayerDSP( user, dspEffectId, fastReset );
+
+    return 0;
+}
+LUA_BINDING_END()
 
 LUA_BINDING_BEGIN( Player, GetHands, "class", "Get the player's hands." )
 {
@@ -1322,10 +1336,10 @@ LUA_BINDING_END( "boolean", "Whether the player has the weapon." )
 LUA_BINDING_BEGIN( Player, OwnsWeaponOfType, "class", "Check if the player owns a weapon of a certain type." )
 {
     CBaseCombatWeapon::PushLuaInstanceSafe( L,
-                                      LUA_BINDING_ARGUMENT( luaL_checkplayer, 1, "player" )
-                                          ->Weapon_OwnsThisType(
-                                              LUA_BINDING_ARGUMENT( luaL_checkstring, 2, "type" ),
-                                              LUA_BINDING_ARGUMENT_WITH_DEFAULT( luaL_optnumber, 3, 0, "subType" ) ) );
+                                            LUA_BINDING_ARGUMENT( luaL_checkplayer, 1, "player" )
+                                                ->Weapon_OwnsThisType(
+                                                    LUA_BINDING_ARGUMENT( luaL_checkstring, 2, "type" ),
+                                                    LUA_BINDING_ARGUMENT_WITH_DEFAULT( luaL_optnumber, 3, 0, "subType" ) ) );
     return 1;
 }
 LUA_BINDING_END( "Weapon", "The weapon the player owns of the specified type." )
@@ -1467,14 +1481,14 @@ LUA_BINDING_BEGIN( Player, GetUniqueId, "class", "Get the player's unique ID." )
 LUA_BINDING_END( "integer", "The player's unique ID." )
 
 // Experiment; We only let CBaseEntity determine equality, which should be fine since they're pointers to the same entity. Disabled:
-//LUA_BINDING_BEGIN( Player, __eq, "class", "Check if two players are equal." )
+// LUA_BINDING_BEGIN( Player, __eq, "class", "Check if two players are equal." )
 //{
 //    lua_pushboolean( L, LUA_BINDING_ARGUMENT( lua_toplayer, 1, "player" ) == LUA_BINDING_ARGUMENT( lua_toplayer, 2, "other" ) );
 //    return 1;
 //}
-//LUA_BINDING_END( "boolean", "Whether the players are equal." )
+// LUA_BINDING_END( "boolean", "Whether the players are equal." )
 //
-//LUA_BINDING_BEGIN( Player, __tostring, "class", "Get the string representation of a player." )
+// LUA_BINDING_BEGIN( Player, __tostring, "class", "Get the string representation of a player." )
 //{
 //    lua_CBasePlayer *player = LUA_BINDING_ARGUMENT( lua_toplayer, 1, "player" );
 //
@@ -1484,7 +1498,7 @@ LUA_BINDING_END( "integer", "The player's unique ID." )
 //        lua_pushfstring( L, "Player: %d \"%s\" (%d)", player->GetUserID(), player->GetPlayerName(), player->entindex() );
 //    return 1;
 //}
-//LUA_BINDING_END( "string", "The string representation of the player." )
+// LUA_BINDING_END( "string", "The string representation of the player." )
 
 // Experiment; Not really useful in Lua, so disabled
 // static int luasrc_ToBasePlayer( lua_State *L )
@@ -1522,7 +1536,7 @@ LUA_BINDING_BEGIN( Players, GetLocalPlayer, "library", "Get the local player.", 
 }
 LUA_BINDING_END( "Player", "The local player." )
 
-LUA_BINDING_BEGIN( Players, IsPlayerIndex, "library", "Check if index is a player index" )
+LUA_BINDING_BEGIN( Players, IsPlayerIndex, "library", "Check if index is a player index", "client" )
 {
     int index = LUA_BINDING_ARGUMENT( luaL_checknumber, 1, "index" );
     lua_pushboolean( L, IsPlayerIndex( index ) );
@@ -1530,35 +1544,35 @@ LUA_BINDING_BEGIN( Players, IsPlayerIndex, "library", "Check if index is a playe
 }
 LUA_BINDING_END( "boolean", "True if player index, false otherwise." )
 
-LUA_BINDING_BEGIN( Players, GetLocalPlayerIndex, "library", "Get local player index" )
+LUA_BINDING_BEGIN( Players, GetLocalPlayerIndex, "library", "Get local player index", "client" )
 {
     lua_pushinteger( L, GetLocalPlayerIndex() );
     return 1;
 }
 LUA_BINDING_END( "integer", "Local player index." )
 
-LUA_BINDING_BEGIN( Players, IsLocalPlayerSpectator, "library", "Check if local player is a spectator" )
+LUA_BINDING_BEGIN( Players, IsLocalPlayerSpectator, "library", "Check if local player is a spectator", "client" )
 {
     lua_pushboolean( L, IsLocalPlayerSpectator() );
     return 1;
 }
 LUA_BINDING_END( "boolean", "True if local player is a spectator." )
 
-LUA_BINDING_BEGIN( Players, GetSpectatorMode, "library", "Get spectator mode of the local player" )
+LUA_BINDING_BEGIN( Players, GetSpectatorMode, "library", "Get spectator mode of the local player", "client" )
 {
     lua_pushinteger( L, GetSpectatorMode() );
     return 1;
 }
 LUA_BINDING_END( "integer", "Spectator mode of the local player." )
 
-LUA_BINDING_BEGIN( Players, GetSpectatorTarget, "library", "Get the spectator target of the local player" )
+LUA_BINDING_BEGIN( Players, GetSpectatorTarget, "library", "Get the spectator target of the local player", "client" )
 {
     lua_pushinteger( L, GetSpectatorTarget() );
     return 1;
 }
 LUA_BINDING_END( "integer", "Spectator target of the local player." )
 
-LUA_BINDING_BEGIN( Players, GetLocalPlayerTeam, "library", "Get the team of the local player" )
+LUA_BINDING_BEGIN( Players, GetLocalPlayerTeam, "library", "Get the team of the local player", "client" )
 {
     lua_pushinteger( L, GetLocalPlayerTeam() );
     return 1;

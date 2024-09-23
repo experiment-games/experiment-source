@@ -441,11 +441,21 @@ LUA_BINDING_BEGIN( Entity, EndTouch, "class", "End touch." )
 }
 LUA_BINDING_END()
 
-LUA_BINDING_BEGIN( Entity, GetEntityIndex, "class", "Get entity index." )
+LUA_BINDING_BEGIN( Entity, GetEntityIndex, "class", "Get entity index. Returns 0 for NULL entities." )
 {
-    lua_CBaseEntity *pEntity = LUA_BINDING_ARGUMENT( luaL_checkentity, 1, "entity" );
+    // Note:    instead of luaL_checkentity, we soft-check here so NULL values can
+    //          have a 0 returned as their index
+    lua_CBaseEntity *pEntity = LUA_BINDING_ARGUMENT( lua_toentity, 1, "entity" );
 
-    lua_pushinteger( L, pEntity->entindex() );
+    if ( pEntity == NULL )
+    {
+        lua_pushinteger( L, 0 );
+    }
+    else
+    {
+        lua_pushinteger( L, pEntity->entindex() );
+    }
+
     return 1;
 }
 LUA_BINDING_END( "integer", "The entity index." )
@@ -2908,12 +2918,12 @@ LUA_BINDING_BEGIN( Entity, SetNetworkDataValue, "class", "Sets a data table vari
 
     // Commented, lets use the macro we have for this (also because it'll show the hook as shared then instead
     // of client AND shared in the docs.
-    //LUA_CALL_HOOK_BEGIN( "EntityNetworkVariableChanging", "Called just before a network variable is changed" );
-    //CBaseEntity::PushLuaInstanceSafe( L, entity ); // doc: entity
-    //lua_pushinteger( L, slot ); // doc: slot (which network variable)
-    //lua_pushvalue( L, oldValueIndex + 1 ); // doc: newValue
-    //lua_pushvalue( L, oldValueIndex ); // doc: oldValue
-    //LUA_CALL_HOOK_END( 4, 0 );
+    // LUA_CALL_HOOK_BEGIN( "EntityNetworkVariableChanging", "Called just before a network variable is changed" );
+    // CBaseEntity::PushLuaInstanceSafe( L, entity ); // doc: entity
+    // lua_pushinteger( L, slot ); // doc: slot (which network variable)
+    // lua_pushvalue( L, oldValueIndex + 1 ); // doc: newValue
+    // lua_pushvalue( L, oldValueIndex ); // doc: oldValue
+    // LUA_CALL_HOOK_END( 4, 0 );
     LUA_CALL_NETWORK_VARIABLE_CHANGING_HOOK( entity, slot, lua_pushvalue, oldValueIndex + 1, oldValueIndex );
     return 0;
 }

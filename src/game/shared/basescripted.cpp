@@ -1,11 +1,3 @@
-//===== Copyright © 1996-2005, Valve Corporation, All rights reserved. ======//
-//
-// Purpose:
-//
-// $NoKeywords: $
-//
-//===========================================================================//
-
 #include "cbase.h"
 #include "basescripted.h"
 #include "luamanager.h"
@@ -251,6 +243,17 @@ void CBaseScripted::Precache( void )
     BaseClass::Precache();
 
     // InitScriptedEntity();
+}
+
+// Override the base class, so we call OnRemove on the Lua scripted weapon.
+void CBaseScripted::Remove()
+{
+    bool fullUpdate = false;  // TODO: implement this argument https://wiki.facepunch.com/gmod/Entity:OnRemove
+    LUA_CALL_ENTITY_METHOD_BEGIN( "OnRemove" );
+    lua_pushboolean( L, fullUpdate );  // doc: fullUpdate (always false, unimplemented currently)
+    LUA_CALL_ENTITY_METHOD_END( 1, 0 );
+
+    BaseClass::Remove();
 }
 
 #ifdef CLIENT_DLL

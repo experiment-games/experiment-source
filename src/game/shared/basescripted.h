@@ -1,11 +1,3 @@
-//========= Copyright © 1996-2005, Valve Corporation, All rights reserved. ============//
-//
-// Purpose:
-//
-// $NoKeywords: $
-//
-//=============================================================================//
-
 #ifndef BASESCRIPTED_H
 #define BASESCRIPTED_H
 
@@ -39,6 +31,7 @@ class CBaseScripted : /* public CBaseEntity */ public CBaseAnimating
 
     void Spawn( void );
     void Precache( void );
+    virtual void Remove( void ) OVERRIDE;
     void LoadScriptedEntity( void );
     void InitScriptedEntity( void );
 

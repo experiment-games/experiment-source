@@ -895,6 +895,7 @@ class CBaseEntity : public IServerEntity
     // that to each bounded function, plus it'll save some perf for massive
     // executions, like Think funcs.
     int m_nTableReference;
+
     // Henry; There's an IsPlayer and IsWorld and such, why not an IsWeapon?
     virtual bool IsWeapon( void ) const
     {
@@ -1962,7 +1963,7 @@ class CBaseEntity : public IServerEntity
     static int PrecacheModel( const char *name, bool bPreload = true );
     static bool PrecacheSound( const char *name );
     static void PrefetchSound( const char *name );
-    void Remove();  // UTIL_Remove( this );
+    virtual void Remove();  // UTIL_Remove( this );
 
    private:
     // This is a random seed used by the networking code to allow client - side prediction code

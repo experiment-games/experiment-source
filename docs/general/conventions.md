@@ -74,6 +74,7 @@ Additionally, we use the following conventions:
     - `Config`
     - `Demo`
     - `Dev`
+    - `Dsp` (short for digital signal processing)
     - `Dx` (DirectX), `HDR` and other graphic settings
     - `Fcvar` (short for flag convar, kept this way due to the source engine
         using this abbreviation when explaining convars)

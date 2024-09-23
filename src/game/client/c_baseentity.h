@@ -953,7 +953,7 @@ class C_BaseEntity : public IClientEntity
     static int PrecacheModel( const char *name );
     static bool PrecacheSound( const char *name );
     static void PrefetchSound( const char *name );
-    void Remove();  // UTIL_Remove( this );
+    virtual void Remove();  // UTIL_Remove( this );
 
    public:
     // Returns the attachment point index on our parent that our transform is relative to.

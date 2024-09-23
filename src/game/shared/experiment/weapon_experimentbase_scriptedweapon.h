@@ -55,6 +55,8 @@ class CExperimentScriptedWeapon : public CBaseExperimentCombatWeapon
 
         return pWeapon != NULL;
     }
+
+    virtual void Remove() OVERRIDE;
 #endif
 
     bool IsScripted( void ) const

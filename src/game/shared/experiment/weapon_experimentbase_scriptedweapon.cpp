@@ -252,6 +252,17 @@ void CExperimentScriptedWeapon::SetupRefTable( lua_State *L )
         Error( "ScriptedWeapons library not found!\n" );
     }
 }
+
+// Override the base class, so we call OnRemove on the Lua scripted weapon.
+void CExperimentScriptedWeapon::Remove()
+{
+    bool fullUpdate = false; // TODO: implement this argument https://wiki.facepunch.com/gmod/Entity:OnRemove
+    LUA_CALL_WEAPON_METHOD_BEGIN( "OnRemove" );
+    lua_pushboolean( L, fullUpdate ); // doc: fullUpdate (always false, unimplemented currently)
+    LUA_CALL_WEAPON_METHOD_END( 1, 0 );
+
+    BaseClass::Remove();
+}
 #endif
 
 extern const char *pWeaponSoundCategories[NUM_SHOOT_SOUND_TYPES];

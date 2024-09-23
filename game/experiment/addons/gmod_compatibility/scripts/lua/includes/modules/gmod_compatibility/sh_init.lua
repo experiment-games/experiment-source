@@ -90,7 +90,14 @@ util.Compress = Serializers.LzmaCompress
 util.Decompress = Serializers.LzmaDecompress
 
 util.JSONToTable = function(json)
-	return Json.Decode(json)
+	-- wraped in a pcall, because gmod returns nothing on failure (without error)
+	local success, result = pcall(Json.Decode, json)
+
+	if (not success) then
+		return
+	end
+
+	return result
 end
 
 util.TableToJSON = function(table)
@@ -730,6 +737,7 @@ PLAYER_META.GetFOV = PLAYER_META.GetFov
 PLAYER_META.SetFOV = PLAYER_META.SetFov
 PLAYER_META.SetUnDuckSpeed = PLAYER_META.SetUnDuckFraction
 PLAYER_META.GetUnDuckSpeed = PLAYER_META.GetUnDuckFraction
+PLAYER_META.SetDSP = PLAYER_META.SetDsp
 
 function PLAYER_META:LagCompensation(shouldStart)
 	if (shouldStart) then
@@ -813,9 +821,28 @@ function PLAYER_META:FlashlightIsOn()
 	return self:IsFlashlightOn()
 end
 
+function PLAYER_META:SetWeaponColor(color)
+	-- Not implemented
+end
+
+function PLAYER_META:GetWeaponColor()
+	return Color(255, 255, 255)
+end
+
 if (SERVER) then
 	function PLAYER_META:SelectWeapon(weaponClass)
 		self:SwitchWeapon(self:GetWeapon(weaponClass))
+	end
+
+	function PLAYER_META:StripWeapon(weaponClass)
+		self:RemoveWeapon(self:GetWeapon(weaponClass))
+	end
+
+	function PLAYER_META:StripWeapons()
+		local shouldRemoveSuit = false
+		-- shouldRemoveSuit is false by default, but here for clarity.
+		-- TODO: What does Garry's Mod do with this?
+		self:RemoveAllItems(shouldRemoveSuit)
 	end
 
 	function PLAYER_META:SendLua(lua)
@@ -992,10 +1019,16 @@ else
 			local x, y = Inputs.GetCursorPosition()
 			return x
 		end,
+
 		MouseY = function()
 			local x, y = input.GetCursorPosition()
 			return y
 		end,
+
+		EnableScreenClicker = function(visible)
+			Surfaces.SetCursorAlwaysVisible(visible)
+		end,
+
 		SetMousePos = input.SetCursorPosition,
 		ScreenToVector = input.ScreenToWorld,
 		AimToVector = input.AimToVector,
@@ -1837,6 +1870,7 @@ end
 
 if (SERVER) then
 	PLAYER_META.IPAddress = PLAYER_META.GetIpAddress
+	PLAYER_META.UnLock = PLAYER_META.Unlock
 
 	-- AllowFlashlight and CanUseFlashlight override default gmod implementations, which is why its placed after include("includes/init.lua")
 	-- https://github.com/Facepunch/garrysmod/blob/1ce3b6fec3417e4798ade0862540da74ce612483/garrysmod/lua/includes/extensions/player.lua#L182C70-L183C71
@@ -1850,7 +1884,7 @@ if (SERVER) then
 end
 
 --[[
-	Load the autorun scripts.
+	Load the autorun scripts for Garry's Mod addons/etc.
 --]]
 includeFolder("lua/autorun")
 

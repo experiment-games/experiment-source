@@ -75,7 +75,7 @@ LUA_BINDING_BEGIN( Player, DestroyViewModels, "class", "Destroy all view models 
 }
 LUA_BINDING_END()
 
-LUA_BINDING_BEGIN( Player, LockPlayerInPlace, "class", "Lock the player in place." )
+LUA_BINDING_BEGIN( Player, Lock, "class", "Lock the player in place." )
 {
     lua_CBasePlayer *player = LUA_BINDING_ARGUMENT( luaL_checkplayer, 1, "player" );
     player->LockPlayerInPlace();
@@ -83,7 +83,7 @@ LUA_BINDING_BEGIN( Player, LockPlayerInPlace, "class", "Lock the player in place
 }
 LUA_BINDING_END()
 
-LUA_BINDING_BEGIN( Player, UnlockPlayer, "class", "Unlock the player." )
+LUA_BINDING_BEGIN( Player, Unlock, "class", "Unlock the player from their place." )
 {
     lua_CBasePlayer *player = LUA_BINDING_ARGUMENT( luaL_checkplayer, 1, "player" );
     player->UnlockPlayer();
@@ -682,7 +682,10 @@ LUA_BINDING_END( "boolean", "Whether the weapon was bumped." )
 LUA_BINDING_BEGIN( Player, RemoveWeapon, "class", "Remove the weapon for the player." )
 {
     lua_CBasePlayer *player = LUA_BINDING_ARGUMENT( luaL_checkplayer, 1, "player" );
-    lua_pushboolean( L, player->RemovePlayerItem( LUA_BINDING_ARGUMENT( luaL_checkweapon, 2, "weapon" ) ) );
+    CBaseCombatWeapon *weapon = LUA_BINDING_ARGUMENT( luaL_checkweapon, 2, "weapon" );
+    bool isRemoved = player->RemovePlayerItem( weapon );
+    weapon->Remove();
+    lua_pushboolean( L, isRemoved );
     return 1;
 }
 LUA_BINDING_END( "boolean", "Whether the weapon was removed." )

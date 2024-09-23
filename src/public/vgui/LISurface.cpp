@@ -758,6 +758,13 @@ LUA_BINDING_BEGIN( Surfaces, SetBitmapFontName, "library", "Sets the bitmap font
 }
 LUA_BINDING_END()
 
+LUA_BINDING_BEGIN( Surfaces, SetCursorAlwaysVisible, "library", "Sets whether the cursor is always visible" )
+{
+    surface()->SetCursorAlwaysVisible( LUA_BINDING_ARGUMENT( luaL_checkboolean, 1, "visible" ) );
+    return 0;
+}
+LUA_BINDING_END()
+
 LUA_BINDING_BEGIN( Surfaces, SetEmbeddedPanel, "library", "Sets the embedded panel" )
 {
     Panel *panel = LUA_BINDING_ARGUMENT( luaL_checkpanel, 1, "panel" );
