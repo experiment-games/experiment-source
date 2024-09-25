@@ -3,10 +3,6 @@
 #include "luasrclib.h"
 #include <lsounds.h>
 
-#ifdef CLIENT_DLL
-#include <util/bassmanager.h>
-#endif
-
 // memdbgon must be the last include file in a .cpp file!!!
 #include "tier0/memdbgon.h"
 
@@ -128,15 +124,14 @@ LUA_BINDING_END()
 
 #define PLAY_SOUND_FLAG BassManagerFlags
 
-struct PlayUrlCallbackData
+void CPlayUrlCallbackData::Release()
 {
-    lua_State *L;
-    int callbackRef;
-};
+    lua_unref( L, callbackRef );
+}
 
 void CALLBACK CallLuaCallback( const void *buffer, DWORD length, void *user )
 {
-    PlayUrlCallbackData *callbackData = ( PlayUrlCallbackData * )user;
+    CPlayUrlCallbackData *callbackData = ( CPlayUrlCallbackData * )user;
     lua_State *L = callbackData->L;
     int callbackRef = callbackData->callbackRef;
 
@@ -159,7 +154,9 @@ LUA_BINDING_BEGIN( Sounds, PlayUrl, "library", "Plays a sound from a URL.", "cli
     }
 
     // If a callback is provided, we call the callback when the sound is ready to be played
-    // lua_run_menu Sounds.PlayUrl( "https://www2.cs.uic.edu/~i101/SoundFiles/StarWars3.wav", _E.PLAY_SOUND_FLAG.SAMPLE_3D, function( a, b, c ) print( a, b, c ) end )
+    // lua_run_menu Sounds.PlayUrl( "https://www2.cs.uic.edu/~i101/SoundFiles/StarWars3.wav", _E.PLAY_SOUND_FLAG.SAMPLE_3D, function( buffer) print( buffer ) end )
+    // long file:
+    // lua_run_menu Sounds.PlayUrl( "https://www2.cs.uic.edu/~i101/SoundFiles/StarWars60.wav", _E.PLAY_SOUND_FLAG.SAMPLE_3D, function( buffer) print( buffer ) end )
 
     luaL_argcheck( L, lua_isfunction( L, 3 ), 3, "expected function" );
 
@@ -167,11 +164,13 @@ LUA_BINDING_BEGIN( Sounds, PlayUrl, "library", "Plays a sound from a URL.", "cli
     lua_pushvalue( L, 3 );
     int callbackRef = luaL_ref( L, LUA_REGISTRYINDEX );
 
-    PlayUrlCallbackData *callbackData = new PlayUrlCallbackData;
+    // TODO:    Currently the callback is called each block of data. However in GMod it is only
+    //          called onc with a IGModAudioChannel object to control the sound.
+    // TODO: Create a handle which has methods to: https://wiki.facepunch.com/gmod/IGModAudioChannel
+    CPlayUrlCallbackData *callbackData = new CPlayUrlCallbackData;
     callbackData->L = L;
     callbackData->callbackRef = callbackRef;
     g_pBassManager->PlayUrlEx( url, flags, CallLuaCallback, callbackData );
-    delete callbackData;
 
     return 0;
 }

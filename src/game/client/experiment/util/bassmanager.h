@@ -4,6 +4,8 @@
 
 #include "GameEventListener.h"
 #include "bass.h"
+#include <queue>
+#include <functional>
 
 // since bass.h includes winlite we need to undef this
 #ifdef CreateEvent
@@ -25,6 +27,12 @@ enum Type
 };
 }
 
+abstract_class IBassManagerCallbackData
+{
+   public:
+    virtual void Release() = 0;
+};
+
 class CBassManager : public CBaseGameSystemPerFrame
 {
    public:
@@ -39,13 +47,19 @@ class CBassManager : public CBaseGameSystemPerFrame
         return m_bInitialized;
     }
     void PlayUrl( const char *url, int flags = 0 );
-    void PlayUrlEx( const char *url, int flags, CBassManagerCallback callback, void *callbackData );
+    void PlayUrlEx( const char *url, int flags, CBassManagerCallback callback, IBassManagerCallbackData *callbackData );
+
+    void EnqueueCallbackTask( std::function< void() > task );
 
    protected:
     int ToBassFlags( int flags );
 
     bool m_bInitialized;
-    CUtlVector<HSTREAM> m_Streams;
+    CUtlVector< HSTREAM > m_Streams;
+
+    // Task queue for processing callbacks on the main thread
+    std::queue< std::function< void() > > m_TaskQueue;
+    CThreadFastMutex m_TaskQueueMutex;
 };
 
 extern CBassManager *g_pBassManager;

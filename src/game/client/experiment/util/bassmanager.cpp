@@ -74,10 +74,51 @@ void CBassManager::PlayUrl( const char *url, int flags /* = 0 */ )
     m_Streams.AddToTail( stream );
 }
 
-void CBassManager::PlayUrlEx( const char *url, int flags, CBassManagerCallback callback, void *callbackData )
+struct PlayUrlCallbackDataWrapper
+{
+    CBassManagerCallback *callback;
+    IBassManagerCallbackData *callbackData;
+    CBassManager *manager;
+};
+
+void CALLBACK EnqueueCallback( const void *buffer, DWORD length, void *user )
+{
+    PlayUrlCallbackDataWrapper *wrapper = ( PlayUrlCallbackDataWrapper * )user;
+
+    wrapper->manager->EnqueueCallbackTask(
+        [wrapper, buffer, length]()
+        {
+            if ( wrapper->callback )
+            {
+                wrapper->callback( buffer, length, wrapper->callbackData );
+            }
+
+            // Done downloading the sound, clean up the callback data
+            if ( !buffer )
+            {
+                wrapper->callbackData->Release();
+                delete wrapper;
+            }
+        } );
+}
+
+/// <summary>
+/// Plays a sound from a URL, calling the provided callback (on the main thread) for each buffer of data received.
+/// </summary>
+/// <param name="url"></param>
+/// <param name="flags"></param>
+/// <param name="callback"></param>
+/// <param name="callbackData"></param>
+void CBassManager::PlayUrlEx( const char *url, int flags, CBassManagerCallback callback, IBassManagerCallbackData *callbackData )
 {
     int bassFlags = ToBassFlags( flags );
-    HSTREAM stream = BASS_StreamCreateURL( url, 0, bassFlags, callback, callbackData );
+
+    PlayUrlCallbackDataWrapper *wrapper = new PlayUrlCallbackDataWrapper;
+    wrapper->callback = callback;
+    wrapper->callbackData = callbackData;
+    wrapper->manager = this;
+
+    HSTREAM stream = BASS_StreamCreateURL( url, 0, bassFlags, EnqueueCallback, wrapper );
 
     if ( !stream )
     {
@@ -108,4 +149,18 @@ void CBassManager::Update( float frametime )
             m_Streams.Remove( i );
         }
     }
+
+    AUTO_LOCK( m_TaskQueueMutex );
+    while ( !m_TaskQueue.empty() )
+    {
+        // Execute the callback task on the main thread
+        m_TaskQueue.front()();
+        m_TaskQueue.pop();
+    }
+}
+
+void CBassManager::EnqueueCallbackTask( std::function< void() > task )
+{
+    AUTO_LOCK( m_TaskQueueMutex );
+    m_TaskQueue.push( task );
 }
