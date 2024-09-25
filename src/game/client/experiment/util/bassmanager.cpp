@@ -74,16 +74,24 @@ void CBassManager::PlayUrl( const char *url, int flags /* = 0 */ )
     m_Streams.AddToTail( stream );
 }
 
+// struct PlayUrlCallbackDataWrapper
+//{
+//     CBassManagerBlockDownloadedCallback *callback;
+//     IBassManagerCallbackData *callbackData;
+//     CBassManager *manager;
+// };
+//  generic struct so we can change CBassManagerBlockDownloadedCallback
+template < class T >
 struct PlayUrlCallbackDataWrapper
 {
-    CBassManagerCallback *callback;
+    T *callback;
     IBassManagerCallbackData *callbackData;
     CBassManager *manager;
 };
 
-void CALLBACK EnqueueCallback( const void *buffer, DWORD length, void *user )
+void CALLBACK EnqueueBlockDownloadedCallback( const void *buffer, DWORD length, void *user )
 {
-    PlayUrlCallbackDataWrapper *wrapper = ( PlayUrlCallbackDataWrapper * )user;
+    auto *wrapper = ( PlayUrlCallbackDataWrapper< CBassManagerBlockDownloadedCallback > * )user;
 
     wrapper->manager->EnqueueCallbackTask(
         [wrapper, buffer, length]()
@@ -102,23 +110,87 @@ void CALLBACK EnqueueCallback( const void *buffer, DWORD length, void *user )
         } );
 }
 
+void CALLBACK EnqueueReadyCallback( HSYNC handle, DWORD channel, DWORD data, void *user )
+{
+    auto *wrapper = ( PlayUrlCallbackDataWrapper< CBassManagerReadyCallback > * )user;
+
+    wrapper->manager->EnqueueCallbackTask(
+        [wrapper, handle, channel, data]()
+        {
+            if ( wrapper->callback )
+            {
+                wrapper->callback( handle, channel, data, wrapper->callbackData );
+            }
+
+            // Done downloading the sound, clean up the callback data
+            if ( !handle )
+            {
+                wrapper->callbackData->Release();
+                delete wrapper;
+            }
+        } );
+}
+
+/// <summary>
+/// Plays a sound from a URL, calling the provided callback (on the main thread) when the sound is ready to play.
+/// </summary>
+/// <param name="url"></param>
+/// <param name="flags"></param>
+/// <param name="readyCallback"></param>
+/// <param name="callbackData"></param>
+void CBassManager::PlayUrlWithReadyCallback(
+    const char *url,
+    int flags,
+    CBassManagerReadyCallback readyCallback,
+    IBassManagerCallbackData *callbackData )
+{
+    int bassFlags = ToBassFlags( flags );
+
+    auto *wrapper = new PlayUrlCallbackDataWrapper< CBassManagerReadyCallback >;
+    wrapper->callback = readyCallback;
+    wrapper->callbackData = callbackData;
+    wrapper->manager = this;
+
+    HSTREAM stream = BASS_StreamCreateURL( url, 0, bassFlags, NULL, NULL );
+    BASS_ChannelSetSync( stream, BASS_SYNC_DOWNLOAD, 0, EnqueueReadyCallback, wrapper );
+
+    if ( !stream )
+    {
+        DevWarning( "Failed to create stream from URL: %s\n", url );
+        return;
+    }
+
+    if ( ( flags & BassManagerFlags::DONT_PLAY ) == 0 && !BASS_ChannelPlay( stream, TRUE ) )
+    {
+        DevWarning( "Failed to play stream from URL: %s\n", url );
+        BASS_StreamFree( stream );
+        return;
+    }
+
+    m_Streams.AddToTail( stream );
+}
+
 /// <summary>
 /// Plays a sound from a URL, calling the provided callback (on the main thread) for each buffer of data received.
 /// </summary>
 /// <param name="url"></param>
 /// <param name="flags"></param>
-/// <param name="callback"></param>
+/// <param name="blockDownloadedCallback"></param>
 /// <param name="callbackData"></param>
-void CBassManager::PlayUrlEx( const char *url, int flags, CBassManagerCallback callback, IBassManagerCallbackData *callbackData )
+void CBassManager::PlayUrlWithBlockCallback(
+    const char *url,
+    int flags,
+    CBassManagerBlockDownloadedCallback blockDownloadedCallback,
+    IBassManagerCallbackData *callbackData )
 {
     int bassFlags = ToBassFlags( flags );
 
-    PlayUrlCallbackDataWrapper *wrapper = new PlayUrlCallbackDataWrapper;
-    wrapper->callback = callback;
+    auto *wrapper = new PlayUrlCallbackDataWrapper< CBassManagerBlockDownloadedCallback >;
+    wrapper->callback = blockDownloadedCallback;
     wrapper->callbackData = callbackData;
     wrapper->manager = this;
 
-    HSTREAM stream = BASS_StreamCreateURL( url, 0, bassFlags, EnqueueCallback, wrapper );
+    HSTREAM stream = BASS_StreamCreateURL( url, 0, bassFlags, EnqueueBlockDownloadedCallback, wrapper );
 
     if ( !stream )
     {

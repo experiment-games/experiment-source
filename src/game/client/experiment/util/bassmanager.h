@@ -12,7 +12,9 @@
 #undef CreateEvent
 #endif
 
-typedef void( CALLBACK CBassManagerCallback )( const void *buffer, DWORD length, void *user );
+typedef void( CALLBACK CBassManagerBlockDownloadedCallback )( const void *buffer, DWORD length, void *user );
+
+typedef void( CALLBACK CBassManagerReadyCallback )( HSYNC handle, DWORD channel, DWORD data, void *user );
 
 namespace BassManagerFlags
 {
@@ -47,7 +49,18 @@ class CBassManager : public CBaseGameSystemPerFrame
         return m_bInitialized;
     }
     void PlayUrl( const char *url, int flags = 0 );
-    void PlayUrlEx( const char *url, int flags, CBassManagerCallback callback, IBassManagerCallbackData *callbackData );
+
+    void PlayUrlWithReadyCallback(
+        const char *url,
+        int flags,
+        CBassManagerReadyCallback readyCallback,
+        IBassManagerCallbackData *callbackData );
+
+    void PlayUrlWithBlockCallback(
+        const char *url,
+        int flags,
+        CBassManagerBlockDownloadedCallback blockDownloadedCallback,
+        IBassManagerCallbackData *callbackData );
 
     void EnqueueCallbackTask( std::function< void() > task );
 

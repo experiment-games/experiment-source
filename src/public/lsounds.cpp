@@ -129,7 +129,7 @@ void CPlayUrlCallbackData::Release()
     lua_unref( L, callbackRef );
 }
 
-void CALLBACK CallLuaCallback( const void *buffer, DWORD length, void *user )
+void CALLBACK CallLuaBlockDownloadedCallback( const void *buffer, DWORD length, void *user )
 {
     CPlayUrlCallbackData *callbackData = ( CPlayUrlCallbackData * )user;
     lua_State *L = callbackData->L;
@@ -138,6 +138,20 @@ void CALLBACK CallLuaCallback( const void *buffer, DWORD length, void *user )
     lua_rawgeti( L, LUA_REGISTRYINDEX, callbackRef );
     lua_pushlstring( L, ( const char * )buffer, length );
     lua_call( L, 1, 0 );
+}
+
+void CALLBACK CallLuaReadyCallback( HSYNC handle, DWORD channel, DWORD data, void *user )
+{
+    // TODO: Create a wrapper for handle which has methods to: https://wiki.facepunch.com/gmod/IGModAudioChannel
+    CPlayUrlCallbackData *callbackData = ( CPlayUrlCallbackData * )user;
+    lua_State *L = callbackData->L;
+    int callbackRef = callbackData->callbackRef;
+
+    lua_rawgeti( L, LUA_REGISTRYINDEX, callbackRef );
+    lua_pushinteger( L, handle );
+    lua_pushinteger( L, channel );
+    lua_pushinteger( L, data );
+    lua_call( L, 3, 0 );
 }
 
 // E.g: lua_run_menu Sounds.PlayUrl("https://www2.cs.uic.edu/~i101/SoundFiles/StarWars3.wav")
@@ -154,23 +168,43 @@ LUA_BINDING_BEGIN( Sounds, PlayUrl, "library", "Plays a sound from a URL.", "cli
     }
 
     // If a callback is provided, we call the callback when the sound is ready to be played
-    // lua_run_menu Sounds.PlayUrl( "https://www2.cs.uic.edu/~i101/SoundFiles/StarWars3.wav", _E.PLAY_SOUND_FLAG.SAMPLE_3D, function( buffer) print( buffer ) end )
+    // lua_run_menu Sounds.PlayUrl( "https://www2.cs.uic.edu/~i101/SoundFiles/StarWars3.wav", _E.PLAY_SOUND_FLAG.SAMPLE_3D, function( handle, channel, data ) print( handle, channel, data ) end )
     // long file:
-    // lua_run_menu Sounds.PlayUrl( "https://www2.cs.uic.edu/~i101/SoundFiles/StarWars60.wav", _E.PLAY_SOUND_FLAG.SAMPLE_3D, function( buffer) print( buffer ) end )
-
+    // lua_run_menu Sounds.PlayUrl( "https://www2.cs.uic.edu/~i101/SoundFiles/StarWars60.wav", _E.PLAY_SOUND_FLAG.SAMPLE_3D, function( handle, channel, data ) print( handle, channel, data ) end )
     luaL_argcheck( L, lua_isfunction( L, 3 ), 3, "expected function" );
 
     // Create a reference to the callback function
     lua_pushvalue( L, 3 );
     int callbackRef = luaL_ref( L, LUA_REGISTRYINDEX );
 
-    // TODO:    Currently the callback is called each block of data. However in GMod it is only
-    //          called onc with a IGModAudioChannel object to control the sound.
-    // TODO: Create a handle which has methods to: https://wiki.facepunch.com/gmod/IGModAudioChannel
     CPlayUrlCallbackData *callbackData = new CPlayUrlCallbackData;
     callbackData->L = L;
     callbackData->callbackRef = callbackRef;
-    g_pBassManager->PlayUrlEx( url, flags, CallLuaCallback, callbackData );
+    g_pBassManager->PlayUrlWithReadyCallback( url, flags, CallLuaReadyCallback, callbackData );
+
+    return 0;
+}
+LUA_BINDING_END()
+
+LUA_BINDING_BEGIN( Sounds, PlayUrlWithBlockCallback, "library", "Plays a sound from a URL with a callback for each chunk downloaded", "client" )
+{
+    const char *url = LUA_BINDING_ARGUMENT( luaL_checkstring, 1, "url" );
+    int flags = LUA_BINDING_ARGUMENT_WITH_DEFAULT( luaL_optinteger, 2, PLAY_SOUND_FLAG::STREAM_BLOCK, "flags" );
+
+    // If a callback is provided, we call the callback when the sound is ready to be played
+    // lua_run_menu Sounds.PlayUrlWithBlockCallback( "https://www2.cs.uic.edu/~i101/SoundFiles/StarWars3.wav", _E.PLAY_SOUND_FLAG.SAMPLE_3D, function( buffer ) print( buffer ) end )
+    // long file:
+    // lua_run_menu Sounds.PlayUrlWithBlockCallback( "https://www2.cs.uic.edu/~i101/SoundFiles/StarWars60.wav", _E.PLAY_SOUND_FLAG.SAMPLE_3D, function( buffer ) print( buffer ) end )
+    luaL_argcheck( L, lua_isfunction( L, 3 ), 3, "expected function" );
+
+    // Create a reference to the callback function
+    lua_pushvalue( L, 3 );
+    int callbackRef = luaL_ref( L, LUA_REGISTRYINDEX );
+
+    CPlayUrlCallbackData *callbackData = new CPlayUrlCallbackData;
+    callbackData->L = L;
+    callbackData->callbackRef = callbackRef;
+    g_pBassManager->PlayUrlWithBlockCallback( url, flags, CallLuaBlockDownloadedCallback, callbackData );
 
     return 0;
 }
