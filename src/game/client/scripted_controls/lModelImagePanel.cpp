@@ -596,20 +596,6 @@ LUALIB_API lua_ModelImagePanel *luaL_checkmodelimagepanel( lua_State *L, int nar
 
 LUA_REGISTRATION_INIT( ModelImagePanel )
 
-LUA_BINDING_BEGIN( ModelImagePanel, GetPanelBaseClassName, "class|static", "Gets the base class name of the panel" )
-{
-    lua_pushstring( L, lua_ModelImagePanel::GetPanelBaseClassName() );
-    return 1;
-}
-LUA_BINDING_END( "string", "The base class name of the panel" )
-
-LUA_BINDING_BEGIN( ModelImagePanel, GetPanelClassName, "class|static", "Gets the class name of the panel" )
-{
-    lua_pushstring( L, lua_ModelImagePanel::GetPanelClassName() );
-    return 1;
-}
-LUA_BINDING_END( "string", "The class name of the panel" )
-
 LUA_BINDING_BEGIN( ModelImagePanel, SetModel, "class", "Sets the model for the panel" )
 {
     lua_ModelImagePanel *pModelImagePanel = LUA_BINDING_ARGUMENT( luaL_checkmodelimagepanel, 1, "modelImagePanel" );

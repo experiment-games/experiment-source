@@ -1,3 +1,4 @@
+AddCSLuaFile("cl_test_vgui.lua")
 AddCSLuaFile("cl_init.lua")
 include("shared.lua")
 

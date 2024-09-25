@@ -80,19 +80,89 @@ Include("extensions/user_messages.lua")
 Include("extensions/panels.lua")
 Include("extensions/color.lua")
 
+Metatables = require("metatables")
+Bitwise = require("bitwise")
+Gamemodes = require("gamemodes")
+Hooks = require("hooks")
+Timers = require("timers")
+
 if (CLIENT) then
 	Include("extensions/panel.lua")
 	Include("extensions/label.lua")
 	Include("extensions/text_entry.lua")
 
 	-- GUI elements
-	Include("gui/cl_image_panel.lua")
-end
+    Include("gui/cl_image_panel.lua")
 
-Bitwise = require("bitwise")
-Gamemodes = require("gamemodes")
-Hooks = require("hooks")
-Timers = require("timers")
+	-- Annoyingly, Garry's Mod doesn't really have Label nor EditablePanel metatables.
+	-- That messes with the expectation of things like vgui.Register, which for example depend on SetText
+	-- existing in Panel, whilst for us it exists in Label.
+    -- So we merge those metatables here into Panel for compatibility.
+    -- For reference, in gmod the GetValue is the same function for TextEntry and Label. So perhaps it does some type
+    -- checking internally. We'll resort to hacking about it in Lua for now.
+    -- TODO: clean this. Rework inheritance completely. This is a mess that I keep adding more mess to.
+	-- These duplicates are neccessary because TextEntry doesn't inherit from Label and we need to merge them into Panel.
+	local collapsedMethods = {}
+
+	local function addCollapsedMethod(methodName, metatable)
+		if (not collapsedMethods[methodName]) then
+			collapsedMethods[methodName] = {}
+		end
+
+        collapsedMethods[methodName][metatable] = metatable[methodName]
+		metatable[methodName] = nil -- Clear it so we don't have duplicates.
+	end
+
+    addCollapsedMethod("GetText", _R.Label)
+    addCollapsedMethod("GetText", _R.TextEntry)
+    addCollapsedMethod("SetText", _R.Label)
+    addCollapsedMethod("SetText", _R.TextEntry)
+    addCollapsedMethod("GetValue", _R.Label)
+    addCollapsedMethod("GetValue", _R.TextEntry)
+    addCollapsedMethod("SetValue", _R.Label)
+    addCollapsedMethod("SetValue", _R.TextEntry)
+    addCollapsedMethod("SetFont", _R.Label)
+    addCollapsedMethod("SetFont", _R.TextEntry)
+    addCollapsedMethod("SetWrap", _R.Label)
+    addCollapsedMethod("SetWrap", _R.TextEntry)
+    addCollapsedMethod("SetFontByName", _R.Label)
+    addCollapsedMethod("SetFontByName", _R.TextEntry)
+    addCollapsedMethod("GetFontName", _R.Label)
+    addCollapsedMethod("GetFontName", _R.TextEntry)
+
+	for methodName, metatables in pairs(collapsedMethods) do
+		_R.Panel[methodName] = function(self, ...)
+			local metatable = getmetatable(self)
+
+			if (metatables[metatable]) then
+				return metatables[metatable](self, ...)
+			end
+		end
+	end
+
+	Metatables.CollapseSkipMetamethods(_R.Panel, _R.EditablePanel, _R.Label, _R.Button, _R.Frame, _R.Html, _R.CheckButton, _R.ModelImagePanel, _R.TextEntry)
+
+    -- TODO: AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAH
+    -- TODO: THINK ABOUT HOW WE WANT TO DO INHERITANCE IN A WAY THAT IS FUCKING MAINTAINABLE >.<"
+	-- TODO: This doesnt work!
+	-- -- Setup our inheritance structures so the __index metamethods exist.
+	-- -- Then we merge the vgui element metatables into a single panel metatable.
+	-- -- The __index of merged metatables will be the __index of the metatable
+	-- -- that is merged into.
+	-- Metatables.SetupSpecialInheritance(_R.EditablePanel, _R.Panel)
+    -- Metatables.SetupSpecialInheritance(_R.Frame, _R.EditablePanel)
+
+    -- Metatables.SetupSpecialInheritance(_R.TextEntry, _R.Panel)
+    -- Metatables.SetupSpecialInheritance(_R.Label, _R.Panel)
+    -- Metatables.SetupSpecialInheritance(_R.Button, _R.Label)
+
+    -- -- Metatables.SetupSpecialInheritance(_R.CheckButton, _R.ToggleButton)
+    -- -- Metatables.SetupSpecialInheritance(_R.ToggleButton, _R.Button)
+    -- Metatables.SetupSpecialInheritance(_R.CheckButton, _R.Button)
+
+	-- Metatables.SetupSpecialInheritance(_R.Html, _R.Panel)
+    -- Metatables.SetupSpecialInheritance(_R.ModelImagePanel, _R.EditablePanel)
+end
 
 if (not GAMEUI) then
 	ScriptedEntities = require("scripted_entities")
@@ -190,117 +260,19 @@ function RunConsoleCommand(command, ...)
 end
 
 if (not GAMEUI) then
-	local function setupMetatableMethods(meta, metaToInherit)
-		-- The newindex will be the same as the base metatable.
-		meta.__newindex = metaToInherit.__newindex
-		meta.__index = function(self, key)
-			-- Search the metatable first.
-			local value = meta[key]
-			if (value ~= nil) then
-				return value
-			end
-
-			-- Search the metatable to inherit.
-			local valueToInherit = metaToInherit[key]
-
-			if (valueToInherit ~= nil) then
-				return valueToInherit
-			end
-
-			-- If there's a GetRefTable function, use it and see if it has the key.
-			local refTableFunction = meta.GetRefTable or metaToInherit.GetRefTable
-
-			if (refTableFunction) then
-				local refTable = refTableFunction(self)
-
-				if (refTable) then
-					return refTable[key]
-				end
-			end
-
-			return nil
-		end
-	end
-
-	local metaMethods = {
-		["__tostring"] = true,
-		["__eq"] = true,
-		["__gc"] = true,
-		["__mode"] = true,
-		["__metatable"] = true,
-		["__index"] = true,
-		["__newindex"] = true,
-		["__call"] = true,
-		["__len"] = true,
-		["__pairs"] = true,
-		["__ipairs"] = true,
-		["__unm"] = true,
-		["__add"] = true,
-		["__sub"] = true,
-		["__mul"] = true,
-		["__div"] = true,
-		["__mod"] = true,
-		["__pow"] = true,
-		["__concat"] = true,
-		["__lt"] = true,
-		["__le"] = true,
-	}
-
-	--- Merges the provided metatables into base and returns it.
-	--- This will ensure that you can call subclass methods on the base class.
-	--- This can be useful for NULL players for example, since you will be able
-	--- to call Player methods on them.
-	--- @param base any
-	--- @param ... unknown
-	--- @return table # The metatable merged into.
-	local function collapseMetatables(base, ...)
-		local target = base
-
-		for _, metatableToMergeFrom in ipairs({ ... }) do
-			if (not metatableToMergeFrom) then
-				continue
-			end
-
-			for key, value in pairs(metatableToMergeFrom) do
-				-- Only the 'Entity' baseclass should have metamethods.
-				if (metaMethods[key]) then
-					debug.PrintError("Attempted to merge a metatable with a key (" .. key .. ") that is a metamethod.")
-					continue
-				end
-
-				-- Skip __name and __type so we don't overwrite the name of the metatable.
-				if (key == "__name" or key == "__type") then
-					continue
-				end
-
-				if (type(target[key]) == "table" and type(value) == "table") then
-					table.Merge(target[key], value)
-				elseif (target[key] ~= nil) then
-					-- Catch mistakes where we double defined methods
-					debug.PrintError("Attempted to merge a metatable (" .. tostring(target) .. ") with a key (" .. key .. ") that already exists.")
-					continue
-				else
-					target[key] = value
-				end
-			end
-		end
-
-		return target
-	end
-
 	-- Setup our inheritance structures so the __index metamethods exist.
 	-- Then we merge the player metatables into a single metatable.
 	-- Same goes for the entity metatables.
 	-- The __index of merged metatables will be the __index of the metatable
 	-- that is merged into.
-	setupMetatableMethods(_R.Player, _R.Entity)
-	setupMetatableMethods(_R.Weapon, _R.Entity)
+	Metatables.SetupSpecialInheritance(_R.Player, _R.Entity)
+	Metatables.SetupSpecialInheritance(_R.Weapon, _R.Entity)
 
-	collapseMetatables(_R.Player, _R.CExperimentPlayer)
-	collapseMetatables(_R.Entity, _R.CBaseAnimating, _R.CBaseFlex)
+	Metatables.Collapse(_R.Player, _R.CExperimentPlayer)
+	Metatables.Collapse(_R.Entity, _R.CBaseAnimating, _R.CBaseFlex)
 
 	-- Have all these classes take the metamethods of the base classes.
-	for key, value in pairs(metaMethods) do
+	for key, value in pairs(Metatables.METAMETHODS) do
 		_R.CExperimentPlayer[key] = _R.CExperimentPlayer[key] or _R.Player[key] or _R.Entity[key]
 		_R.CBaseAnimating[key] = _R.CBaseAnimating[key] or _R.Entity[key]
 		_R.CBaseFlex[key] = _R.CBaseFlex[key] or _R.Entity[key]

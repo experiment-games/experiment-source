@@ -55,20 +55,6 @@ LUALIB_API lua_Frame *luaL_checkframe( lua_State *L, int narg )
 
 LUA_REGISTRATION_INIT( Frame )
 
-LUA_BINDING_BEGIN( Frame, GetPanelBaseClassName, "class|static", "Gets the base class name of the panel" )
-{
-    lua_pushstring( L, lua_Frame::GetPanelBaseClassName() );
-    return 1;
-}
-LUA_BINDING_END( "string", "The base class name of the panel" )
-
-LUA_BINDING_BEGIN( Frame, GetPanelClassName, "class|static", "Gets the class name of the panel" )
-{
-    lua_pushstring( L, lua_Frame::GetPanelClassName() );
-    return 1;
-}
-LUA_BINDING_END( "string", "The class name of the panel" )
-
 LUA_BINDING_BEGIN( Frame, Activate, "class", "Activates the frame" )
 {
     lua_Frame *frame = LUA_BINDING_ARGUMENT( luaL_checkframe, 1, "frame" );
@@ -92,18 +78,6 @@ LUA_BINDING_BEGIN( Frame, CanChainKeysToParent, "class", "Returns whether keys c
     return 1;
 }
 LUA_BINDING_END( "boolean", "Whether keys can be chained to the parent" )
-
-LUA_BINDING_BEGIN( Frame, CanStartDragging, "class", "Returns whether dragging can start" )
-{
-    lua_Frame *frame = LUA_BINDING_ARGUMENT( luaL_checkframe, 1, "frame" );
-    int startX = LUA_BINDING_ARGUMENT( luaL_checknumber, 2, "startX" );
-    int startY = LUA_BINDING_ARGUMENT( luaL_checknumber, 3, "startY" );
-    int cursorX = LUA_BINDING_ARGUMENT( luaL_checknumber, 4, "cursorX" );
-    int cursorY = LUA_BINDING_ARGUMENT( luaL_checknumber, 5, "cursorY" );
-    lua_pushboolean( L, frame->CanStartDragging( startX, startY, cursorX, cursorY ) );
-    return 1;
-}
-LUA_BINDING_END( "boolean", "Whether dragging can start" )
 
 //LUA_BINDING_BEGIN( Frame, ChainToAnimationMap, "class|static", "Chains the frame to an animation map" )
 //{
@@ -134,26 +108,10 @@ LUA_BINDING_BEGIN( Frame, CloseModal, "class", "Closes the frame modally" )
 }
 LUA_BINDING_END()
 
-LUA_BINDING_BEGIN( Frame, DeletePanel, "class", "Deletes the frame" )
-{
-    lua_Frame *frame = LUA_BINDING_ARGUMENT( luaL_checkframe, 1, "frame" );
-    frame->DeletePanel();
-    return 0;
-}
-LUA_BINDING_END()
-
 LUA_BINDING_BEGIN( Frame, DisableFadeEffect, "class", "Disables the fade effect" )
 {
     lua_Frame *frame = LUA_BINDING_ARGUMENT( luaL_checkframe, 1, "frame" );
     frame->DisableFadeEffect();
-    return 0;
-}
-LUA_BINDING_END()
-
-LUA_BINDING_BEGIN( Frame, DoModal, "class", "Makes the frame modal" )
-{
-    lua_Frame *frame = LUA_BINDING_ARGUMENT( luaL_checkframe, 1, "frame" );
-    frame->DoModal();
     return 0;
 }
 LUA_BINDING_END()
@@ -262,30 +220,10 @@ LUA_BINDING_END( "boolean", "Whether the frame has a small caption" )
 //    return 0;
 //}
 
-LUA_BINDING_BEGIN( Frame, LoadControlSettings, "class", "Loads control settings" )
-{
-    lua_Frame *frame = LUA_BINDING_ARGUMENT( luaL_checkframe, 1, "frame" );
-    const char *dialogResourceName = LUA_BINDING_ARGUMENT( luaL_checkstring, 2, "dialogResourceName" );
-    const char *pathID = LUA_BINDING_ARGUMENT_WITH_DEFAULT( luaL_optstring, 3, NULL, "pathID" );
-    KeyValues *pPreloadedKeyValues = LUA_BINDING_ARGUMENT_WITH_DEFAULT( luaL_optkeyvalues, 4, NULL, "pPreloadedKeyValues" );
-    frame->LoadControlSettings( dialogResourceName, pathID, pPreloadedKeyValues );
-    return 0;
-}
-LUA_BINDING_END()
-
 LUA_BINDING_BEGIN( Frame, MoveToCenterOfScreen, "class", "Moves the frame to the center of the screen" )
 {
     lua_Frame *frame = LUA_BINDING_ARGUMENT( luaL_checkframe, 1, "frame" );
     frame->MoveToCenterOfScreen();
-    return 0;
-}
-LUA_BINDING_END()
-
-LUA_BINDING_BEGIN( Frame, OnCommand, "class", "Executes a command" )
-{
-    lua_Frame *frame = LUA_BINDING_ARGUMENT( luaL_checkframe, 1, "frame" );
-    const char *command = LUA_BINDING_ARGUMENT( luaL_checkstring, 2, "command" );
-    frame->OnCommand( command );
     return 0;
 }
 LUA_BINDING_END()

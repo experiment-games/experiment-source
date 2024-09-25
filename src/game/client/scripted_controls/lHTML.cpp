@@ -88,20 +88,6 @@ LUALIB_API lua_HTML *luaL_checkhtml( lua_State *L, int narg )
 
 LUA_REGISTRATION_INIT( HTML )
 
-LUA_BINDING_BEGIN( HTML, GetPanelBaseClassName, "class|static", "Gets the base class name of the panel" )
-{
-    lua_pushstring( L, lua_HTML::GetPanelBaseClassName() );
-    return 1;
-}
-LUA_BINDING_END( "string", "The base class name of the panel" )
-
-LUA_BINDING_BEGIN( HTML, GetPanelClassName, "class|static", "Gets the class name of the panel" )
-{
-    lua_pushstring( L, lua_HTML::GetPanelClassName() );
-    return 1;
-}
-LUA_BINDING_END( "string", "The class name of the panel" )
-
 LUA_BINDING_BEGIN( HTML, OpenUrl, "class", "Opens a URL in the HTML object" )
 {
     lua_HTML *html = LUA_BINDING_ARGUMENT( luaL_checkhtml, 1, "html" );
@@ -125,14 +111,6 @@ LUA_BINDING_BEGIN( HTML, Refresh, "class", "Refreshes the current page" )
 {
     lua_HTML *html = LUA_BINDING_ARGUMENT( luaL_checkhtml, 1, "html" );
     html->Refresh();
-    return 0;
-}
-LUA_BINDING_END()
-
-LUA_BINDING_BEGIN( HTML, OnMove, "class", "Handles the move event" )
-{
-    lua_HTML *html = LUA_BINDING_ARGUMENT( luaL_checkhtml, 1, "html" );
-    html->OnMove();
     return 0;
 }
 LUA_BINDING_END()

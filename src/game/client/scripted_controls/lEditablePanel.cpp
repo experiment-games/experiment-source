@@ -235,20 +235,6 @@ LUA_BINDING_BEGIN( EditablePanel, GetDialogVariables, "class", "Gets the dialog 
 }
 LUA_BINDING_END( "KeyValuesHandle", "The dialog variables" )
 
-LUA_BINDING_BEGIN( EditablePanel, GetPanelBaseClassName, "class", "Gets the base class name of the panel" )
-{
-    lua_pushstring( L, LUA_BINDING_ARGUMENT( luaL_checkeditablepanel, 1, "editablePanel" )->GetPanelBaseClassName() );
-    return 1;
-}
-LUA_BINDING_END( "string", "The base class name" )
-
-LUA_BINDING_BEGIN( EditablePanel, GetPanelClassName, "class", "Gets the class name of the panel" )
-{
-    lua_pushstring( L, LUA_BINDING_ARGUMENT( luaL_checkeditablepanel, 1, "editablePanel" )->GetPanelClassName() );
-    return 1;
-}
-LUA_BINDING_END( "string", "The class name" )
-
 // Experiment; Disabled since this might return a non-Lua panel
 //LUA_BINDING_BEGIN( EditablePanel, HasHotkey, "class", "Checks if the panel has a hotkey" )
 //{
@@ -273,15 +259,6 @@ LUA_BINDING_END( "string", "The class name" )
 // }
 // LUA_BINDING_END()
 
-LUA_BINDING_BEGIN( EditablePanel, KeyCodeToString, "class", "Converts a KeyCode to string" )
-{
-    lua_pushstring( L,
-                    LUA_BINDING_ARGUMENT( luaL_checkeditablepanel, 1, "editablePanel" )
-                        ->KeyCodeToString( LUA_BINDING_ARGUMENT_ENUM( KeyCode, 2, "keyCode" ) ) );
-    return 1;
-}
-LUA_BINDING_END( "string", "The keycode as string" )
-
 LUA_BINDING_BEGIN( EditablePanel, LoadControlSettings, "class", "Loads control settings" )
 {
     LUA_BINDING_ARGUMENT( luaL_checkeditablepanel, 1, "editablePanel" )->LoadControlSettings( LUA_BINDING_ARGUMENT( luaL_checkstring, 2, "dialogResourceName" ), LUA_BINDING_ARGUMENT_WITH_DEFAULT( luaL_optstring, 3, NULL, "pathId" ), LUA_BINDING_ARGUMENT_WITH_DEFAULT( luaL_optkeyvalues, 4, NULL, "keyValues" ) );
@@ -303,13 +280,6 @@ LUA_BINDING_BEGIN( EditablePanel, LoadUserConfig, "class", "Loads user configura
 }
 LUA_BINDING_END()
 
-LUA_BINDING_BEGIN( EditablePanel, OnKeyCodeTyped, "class", "Handles keycode typed event" )
-{
-    LUA_BINDING_ARGUMENT( luaL_checkeditablepanel, 1, "editablePanel" )->OnKeyCodeTyped( LUA_BINDING_ARGUMENT_ENUM( KeyCode, 2, "keyCode" ) );
-    return 0;
-}
-LUA_BINDING_END()
-
 LUA_BINDING_BEGIN( EditablePanel, OnRequestFocus, "class", "Handles request focus event" )
 {
     Panel *subFocusPanel = LUA_BINDING_ARGUMENT( luaL_checkpanel, 2, "subFocusPanel" );
@@ -319,23 +289,9 @@ LUA_BINDING_BEGIN( EditablePanel, OnRequestFocus, "class", "Handles request focu
 }
 LUA_BINDING_END()
 
-LUA_BINDING_BEGIN( EditablePanel, OnSetFocus, "class", "Handles set focus event" )
-{
-    LUA_BINDING_ARGUMENT( luaL_checkeditablepanel, 1, "editablePanel" )->OnSetFocus();
-    return 0;
-}
-LUA_BINDING_END()
-
 LUA_BINDING_BEGIN( EditablePanel, RegisterControlSettingsFile, "class", "Registers a control settings file" )
 {
     LUA_BINDING_ARGUMENT( luaL_checkeditablepanel, 1, "editablePanel" )->RegisterControlSettingsFile( LUA_BINDING_ARGUMENT( luaL_checkstring, 2, "dialogResourceName" ), LUA_BINDING_ARGUMENT_WITH_DEFAULT( luaL_optstring, 3, NULL, "pathId" ) );
-    return 0;
-}
-LUA_BINDING_END()
-
-LUA_BINDING_BEGIN( EditablePanel, RequestFocus, "class", "Requests focus for the panel" )
-{
-    LUA_BINDING_ARGUMENT( luaL_checkeditablepanel, 1, "editablePanel" )->RequestFocus( ( int )LUA_BINDING_ARGUMENT_WITH_DEFAULT( luaL_optnumber, 2, 0, "unknown" ) );
     return 0;
 }
 LUA_BINDING_END()
@@ -355,13 +311,6 @@ LUA_BINDING_BEGIN( EditablePanel, RequestFocusPrev, "class", "Requests focus for
     return 1;
 }
 LUA_BINDING_END( "boolean", "True if the previous panel received focus" )
-
-LUA_BINDING_BEGIN( EditablePanel, RequestInfo, "class", "Requests info from the panel" )
-{
-    lua_pushboolean( L, LUA_BINDING_ARGUMENT( luaL_checkeditablepanel, 1, "editablePanel" )->RequestInfo( LUA_BINDING_ARGUMENT( luaL_checkkeyvalues, 2, "keyValues" ) ) );
-    return 1;
-}
-LUA_BINDING_END( "boolean", "True if the request was successful" )
 
 LUA_BINDING_BEGIN( EditablePanel, RequestInfoFromChild, "class", "Requests info from a child panel" )
 {

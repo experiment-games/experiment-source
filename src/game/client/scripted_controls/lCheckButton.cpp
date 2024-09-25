@@ -96,20 +96,6 @@ LUA_REGISTRATION_INIT( CheckButton )
 //}
 //LUA_BINDING_END()
 
-LUA_BINDING_BEGIN( CheckButton, GetPanelBaseClassName, "class|static", "Gets the base class name of the panel" )
-{
-    lua_pushstring( L, lua_CheckButton::GetPanelBaseClassName() );
-    return 1;
-}
-LUA_BINDING_END( "string", "The base class name of the panel" )
-
-LUA_BINDING_BEGIN( CheckButton, GetPanelClassName, "class|static", "Gets the class name of the panel" )
-{
-    lua_pushstring( L, lua_CheckButton::GetPanelClassName() );
-    return 1;
-}
-LUA_BINDING_END( "string", "The class name of the panel" )
-
 LUA_BINDING_BEGIN( CheckButton, GetDisabledBackgroundColor, "class", "Gets the disabled background color" )
 {
     lua_CheckButton *checkButton = LUA_BINDING_ARGUMENT( luaL_checkcheckbutton, 1, "checkButton" );
@@ -126,28 +112,11 @@ LUA_BINDING_BEGIN( CheckButton, GetDisabledForegroundColor, "class", "Gets the d
 }
 LUA_BINDING_END( "Color", "The disabled foreground color" )
 
-LUA_BINDING_BEGIN( CheckButton, IsSelected, "class", "Returns whether the button is selected" )
-{
-    lua_CheckButton *checkButton = LUA_BINDING_ARGUMENT( luaL_checkcheckbutton, 1, "checkButton" );
-    lua_pushboolean( L, checkButton->IsSelected() );
-    return 1;
-}
-LUA_BINDING_END( "boolean", "Whether the button is selected" )
-
 LUA_BINDING_BEGIN( CheckButton, SetCheckButtonCheckable, "class", "Sets whether the button is checkable" )
 {
     lua_CheckButton *checkButton = LUA_BINDING_ARGUMENT( luaL_checkcheckbutton, 1, "checkButton" );
     bool checkable = LUA_BINDING_ARGUMENT( luaL_checkboolean, 2, "checkable" );
     checkButton->SetCheckButtonCheckable( checkable );
-    return 0;
-}
-LUA_BINDING_END()
-
-LUA_BINDING_BEGIN( CheckButton, SetSelected, "class", "Sets whether the button is selected" )
-{
-    lua_CheckButton *checkButton = LUA_BINDING_ARGUMENT( luaL_checkcheckbutton, 1, "checkButton" );
-    bool selected = LUA_BINDING_ARGUMENT( luaL_checkboolean, 2, "selected" );
-    checkButton->SetSelected( selected );
     return 0;
 }
 LUA_BINDING_END()

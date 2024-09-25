@@ -860,6 +860,24 @@ LUA_BINDING_BEGIN( Player, ClampPunchAngleOffset, "class", "Adds angleToClamp wi
 }
 LUA_BINDING_END()
 
+LUA_BINDING_BEGIN( Player, Kill, "class", "Force the player character to die, optionally with an explosion." )
+{
+    lua_CBasePlayer *player = LUA_BINDING_ARGUMENT( luaL_checkplayer, 1, "player" );
+    bool bExplode = LUA_BINDING_ARGUMENT_WITH_DEFAULT( luaL_optboolean, 2, false, "shouldExplode" );
+    player->CommitSuicide( bExplode, true );
+    return 0;
+}
+LUA_BINDING_END()
+
+LUA_BINDING_BEGIN( Player, KillSilent, "class", "Force the player character to die silently." )
+{
+    lua_CBasePlayer *player = LUA_BINDING_ARGUMENT( luaL_checkplayer, 1, "player" );
+    // TODO: Figure out how to make this silent without duplicating the code inside CommitSuicide
+    player->CommitSuicide( false, false );
+    return 0;
+}
+LUA_BINDING_END()
+
 /*
 ** Open CBasePlayer object
 */

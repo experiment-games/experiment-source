@@ -2146,7 +2146,10 @@ void CBasePlayer::PlayerDeathThink( void )
 
     StopAnimation();
 
-    GetHands()->SetModel( "" );  // FIX: Removes hand model when the player is dead
+    if ( GetHands() )
+    {
+        GetHands()->SetModel( "" );  // FIX: Removes hand model when the player is dead
+    }
 
     IncrementInterpolationFrame();
     m_flPlaybackRate = 0.0;

@@ -1889,7 +1889,7 @@ end
 
 if (SERVER) then
 	PLAYER_META.IPAddress = PLAYER_META.GetIpAddress
-	PLAYER_META.UnLock = PLAYER_META.Unlock
+    PLAYER_META.UnLock = PLAYER_META.Unlock
 
 	-- AllowFlashlight and CanUseFlashlight override default gmod implementations, which is why its placed after include("includes/init.lua")
 	-- https://github.com/Facepunch/garrysmod/blob/1ce3b6fec3417e4798ade0862540da74ce612483/garrysmod/lua/includes/extensions/player.lua#L182C70-L183C71

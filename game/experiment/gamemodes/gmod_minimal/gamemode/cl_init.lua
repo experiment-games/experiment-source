@@ -1,4 +1,5 @@
 include("shared.lua")
+include("cl_test_vgui.lua")
 
 GM.TestAsd2 = Material("gwenskin/gmoddefault.png")
 

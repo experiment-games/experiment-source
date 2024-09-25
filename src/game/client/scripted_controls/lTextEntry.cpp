@@ -50,20 +50,6 @@ LUALIB_API lua_TextEntry *luaL_checktextentry( lua_State *L, int narg )
 
 LUA_REGISTRATION_INIT( TextEntry )
 
-LUA_BINDING_BEGIN( TextEntry, GetPanelBaseClassName, "class|static", "Gets the base class name of the panel" )
-{
-    lua_pushstring( L, lua_TextEntry::GetPanelBaseClassName() );
-    return 1;
-}
-LUA_BINDING_END( "string", "The base class name of the panel" )
-
-LUA_BINDING_BEGIN( TextEntry, GetPanelClassName, "class|static", "Gets the class name of the panel" )
-{
-    lua_pushstring( L, lua_TextEntry::GetPanelClassName() );
-    return 1;
-}
-LUA_BINDING_END( "string", "The class name of the panel" )
-
 LUA_BINDING_BEGIN( TextEntry, SetText, "class", "Sets the text of the text entry" )
 {
     lua_TextEntry *textEntry = LUA_BINDING_ARGUMENT( luaL_checktextentry, 1, "textEntry" );
@@ -326,15 +312,6 @@ LUA_BINDING_BEGIN( TextEntry, IsEditable, "class", "Checks if the text entry is 
 }
 LUA_BINDING_END( "boolean", "Whether the text entry is editable" )
 
-LUA_BINDING_BEGIN( TextEntry, SetEnabled, "class", "Sets whether the text entry is enabled" )
-{
-    lua_TextEntry *textEntry = LUA_BINDING_ARGUMENT( luaL_checktextentry, 1, "textEntry" );
-    bool enabled = LUA_BINDING_ARGUMENT( lua_toboolean, 2, "enabled" );
-    textEntry->SetEnabled( enabled );
-    return 0;
-}
-LUA_BINDING_END()
-
 LUA_BINDING_BEGIN( TextEntry, MoveCursor, "class", "Moves the cursor by a given offset" )
 {
     lua_TextEntry *textEntry = LUA_BINDING_ARGUMENT( luaL_checktextentry, 1, "textEntry" );
@@ -460,15 +437,6 @@ LUA_BINDING_BEGIN( TextEntry, LayoutVerticalScrollBarSlider, "class", "Layouts t
 }
 LUA_BINDING_END()
 
-LUA_BINDING_BEGIN( TextEntry, RequestInfo, "class", "Requests info from the text entry" )
-{
-    lua_TextEntry *textEntry = LUA_BINDING_ARGUMENT( luaL_checktextentry, 1, "textEntry" );
-    KeyValues *outputData = LUA_BINDING_ARGUMENT( luaL_checkkeyvalues, 2, "outputData" );
-    lua_pushboolean( L, textEntry->RequestInfo( outputData ) );
-    return 1;
-}
-LUA_BINDING_END( "boolean", "Whether info was successfully requested" )
-
 LUA_BINDING_BEGIN( TextEntry, SetToFullHeight, "class", "Sets the text entry to full height" )
 {
     lua_TextEntry *textEntry = LUA_BINDING_ARGUMENT( luaL_checktextentry, 1, "textEntry" );
@@ -573,15 +541,6 @@ LUA_BINDING_BEGIN( TextEntry, OnPanelDropped, "class", "Handles the event when a
     return 0;
 }
 LUA_BINDING_END()
-
-LUA_BINDING_BEGIN( TextEntry, GetDragPanel, "class", "Gets the drag panel" )
-{
-    lua_TextEntry *textEntry = LUA_BINDING_ARGUMENT( luaL_checktextentry, 1, "textEntry" );
-    Panel *dragPanel = textEntry->GetDragPanel();
-    Panel::PushLuaInstanceSafe( L, dragPanel );
-    return 1;
-}
-LUA_BINDING_END( "DragPanel", "The drag panel instance" )
 
 LUA_BINDING_BEGIN( TextEntry, OnCreateDragData, "class", "Creates drag data for the text entry" )
 {

@@ -14,6 +14,7 @@
 #include "lColor.h"
 #include "vgui/LVGUI.h"
 #include <vgui/LIScheme.h>
+#include <LKeyValues.h>
 
 using namespace vgui;
 
@@ -89,20 +90,6 @@ LUA_REGISTRATION_INIT( Panel )
 //     return 0;
 // }
 // LUA_BINDING_END()
-
-LUA_BINDING_BEGIN( Panel, GetPanelBaseClassName, "class|static", "Gets the base class name of the panel" )
-{
-    lua_pushstring( L, lua_Panel::GetPanelBaseClassName() );
-    return 1;
-}
-LUA_BINDING_END( "string", "The base class name of the panel" )
-
-LUA_BINDING_BEGIN( Panel, GetPanelClassName, "class|static", "Gets the class name of the panel" )
-{
-    lua_pushstring( L, lua_Panel::GetPanelClassName() );
-    return 1;
-}
-LUA_BINDING_END( "string", "The class name of the panel" )
 
 LUA_BINDING_BEGIN( Panel, AddKeyBinding, "class", "Adds a key binding to the panel" )
 {
@@ -1187,6 +1174,14 @@ LUA_BINDING_BEGIN( Panel, OnKeyCodePressed, "class", "Handles a key code being p
     return 0;
 }
 LUA_BINDING_END()
+
+LUA_BINDING_BEGIN( Panel, RequestInfo, "class", "OutputData - keyName is the name of the attribute requested. for Labels 'text' is an option that returns the default text image text returns true on success in finding the requested value. false on failure." )
+{
+    lua_Panel *panel = LUA_BINDING_ARGUMENT( luaL_checkpanel, 1, "panel" );
+    lua_pushboolean( L, panel->RequestInfo( LUA_BINDING_ARGUMENT( luaL_checkkeyvalues, 2, "outputData" ) ) );
+    return 1;
+}
+LUA_BINDING_END( "boolean", "Whether the info was requested" )
 
 LUA_BINDING_BEGIN( Panel, OnKeyCodeTyped, "class", "Handles a key code being typed" )
 {

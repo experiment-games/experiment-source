@@ -76,20 +76,6 @@ LUA_BINDING_BEGIN( Label, GetContentSize, "class", "Gets the size of the content
 }
 LUA_BINDING_END( "integer", "The width of the content", "integer", "The height of the content" )
 
-LUA_BINDING_BEGIN( Label, GetPanelBaseClassName, "class|static", "Gets the base class name of the panel type" )
-{
-    lua_pushstring( L, lua_Label::GetPanelBaseClassName() );
-    return 1;
-}
-LUA_BINDING_END( "string", "The base class name of the panel" )
-
-LUA_BINDING_BEGIN( Label, GetPanelClassName, "class|static", "Gets the class name of the panel" )
-{
-    lua_pushstring( L, lua_Label::GetPanelClassName() );
-    return 1;
-}
-LUA_BINDING_END( "string", "The class name of the panel" )
-
 LUA_BINDING_BEGIN( Label, GetValue, "class", "Gets the value of the label" )
 {
     lua_Label *label = LUA_BINDING_ARGUMENT( luaL_checklabel, 1, "label" );
@@ -116,46 +102,6 @@ LUA_BINDING_END( "string", "The value of the label" )
 //    return 0;
 //}
 //LUA_BINDING_END()
-
-LUA_BINDING_BEGIN( Label, OnCursorEntered, "class", "Called when the cursor enters the label" )
-{
-    lua_Label *label = LUA_BINDING_ARGUMENT( luaL_checklabel, 1, "label" );
-    label->OnCursorEntered();
-    return 0;
-}
-LUA_BINDING_END()
-
-LUA_BINDING_BEGIN( Label, OnCursorExited, "class", "Called when the cursor exits the label" )
-{
-    lua_Label *label = LUA_BINDING_ARGUMENT( luaL_checklabel, 1, "label" );
-    label->OnCursorExited();
-    return 0;
-}
-LUA_BINDING_END()
-
-LUA_BINDING_BEGIN( Label, OnKillFocus, "class", "Called when the label loses focus" )
-{
-    lua_Label *label = LUA_BINDING_ARGUMENT( luaL_checklabel, 1, "label" );
-    label->OnKillFocus();
-    return 0;
-}
-LUA_BINDING_END()
-
-LUA_BINDING_BEGIN( Label, OnSetFocus, "class", "Called when the label gains focus" )
-{
-    lua_Label *label = LUA_BINDING_ARGUMENT( luaL_checklabel, 1, "label" );
-    label->OnSetFocus();
-    return 0;
-}
-LUA_BINDING_END()
-
-LUA_BINDING_BEGIN( Label, PerformLayout, "class", "Performs layout on the label" )
-{
-    lua_Label *label = LUA_BINDING_ARGUMENT( luaL_checklabel, 1, "label" );
-    label->PerformLayout();
-    return 0;
-}
-LUA_BINDING_END()
 
 LUA_BINDING_BEGIN( Label, SizeToContents, "class", "Sizes the label to its contents" )
 {
@@ -189,22 +135,6 @@ LUA_BINDING_BEGIN( Label, GetFont, "class", "Gets the font of the label" )
     return 1;
 }
 LUA_BINDING_END( "font", "The font of the label" )
-
-LUA_BINDING_BEGIN( Label, SetForegroundColor, "class", "Sets the foreground color of the label" )
-{
-    lua_Label *label = LUA_BINDING_ARGUMENT( luaL_checklabel, 1, "label" );
-    label->SetFgColor( LUA_BINDING_ARGUMENT( luaL_checkcolor, 2, "color" ) );
-    return 0;
-}
-LUA_BINDING_END()
-
-LUA_BINDING_BEGIN( Label, GetForegroundColor, "class", "Gets the foreground color of the label" )
-{
-    lua_Label *label = LUA_BINDING_ARGUMENT( luaL_checklabel, 1, "label" );
-    lua_pushcolor( L, label->GetFgColor() );
-    return 1;
-}
-LUA_BINDING_END( "color", "The foreground color of the label" )
 
 LUA_BINDING_BEGIN( Label, GetText, "class", "Gets the text of the label" )
 {
@@ -369,14 +299,6 @@ LUA_BINDING_BEGIN( Label, SetCenterWrap, "class", "Sets the center wrap of the l
     return 0;
 }
 LUA_BINDING_END()
-
-LUA_BINDING_BEGIN( Label, RequestInfo, "class", "OutputData - keyName is the name of the attribute requested. for Labels 'text' is an option that returns the default text image text returns true on success in finding the requested value. false on failure." )
-{
-    lua_Label *label = LUA_BINDING_ARGUMENT( luaL_checklabel, 1, "label" );
-    lua_pushboolean( L, label->RequestInfo( LUA_BINDING_ARGUMENT( luaL_checkkeyvalues, 2, "outputData" ) ) );
-    return 1;
-}
-LUA_BINDING_END( "boolean", "Whether the info was requested" )
 
 LUA_BINDING_BEGIN( Label, __index, "class", "Metamethod that is called when a non-existant field is indexed" )
 {

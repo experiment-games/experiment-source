@@ -57,20 +57,6 @@ LUALIB_API lua_Button *luaL_checkbutton( lua_State *L, int narg )
 
 LUA_REGISTRATION_INIT( Button )
 
-LUA_BINDING_BEGIN( Button, GetPanelBaseClassName, "class|static", "Gets the base class name of the panel" )
-{
-    lua_pushstring( L, lua_Button::GetPanelBaseClassName() );
-    return 1;
-}
-LUA_BINDING_END( "string", "The base class name of the panel" )
-
-LUA_BINDING_BEGIN( Button, GetPanelClassName, "class|static", "Gets the class name of the panel" )
-{
-    lua_pushstring( L, lua_Button::GetPanelClassName() );
-    return 1;
-}
-LUA_BINDING_END( "string", "The class name of the panel" )
-
 LUA_BINDING_BEGIN( Button, CanBeDefaultButton, "class", "Returns whether the button can be the default button" )
 {
     lua_Button *button = LUA_BINDING_ARGUMENT( luaL_checkbutton, 1, "button" );
