@@ -255,6 +255,8 @@ system.IsOSX = Systems.IsOsx
 system.SteamTime = Systems.GetSteamServerRealTime
 system.UpTime = Systems.GetSecondsSinceComputerActive
 
+sound.PlayURL = Sounds.PlayUrl
+
 local originalConCommandAdd = concommand.Add
 
 function concommand.Add(command, callback, autoCompleteHandler, helpText, flags)

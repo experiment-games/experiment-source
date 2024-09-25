@@ -3,90 +3,16 @@
 #include "luasrclib.h"
 #include <lsounds.h>
 
+#ifdef CLIENT_DLL
+#include <util/bassmanager.h>
+#endif
+
 // memdbgon must be the last include file in a .cpp file!!!
 #include "tier0/memdbgon.h"
 
 extern ISoundEmitterSystemBase *soundemitterbase;
 
 LUA_REGISTRATION_INIT( Sounds )
-
-// LUA_BINDING_BEGIN( GameEvents, Listen, "library", "Call a hook for this game event name, when the event occurs." )
-//{
-//     luaGameEventListener->AddListener( LUA_BINDING_ARGUMENT( luaL_checkstring, 1, "eventName" ) );
-//     return 0;
-// }
-// LUA_BINDING_END()
-
-/*abstract_class ISoundEmitterSystemBase : public IAppSystem
-{
-public:
-  // Init, shutdown called after we know what mod is running
-  virtual bool			ModInit() = 0;
-  virtual void			ModShutdown() = 0;
-
-  virtual int				GetSoundIndex( const char *pName ) const = 0;
-  virtual bool			IsValidIndex( int index ) = 0;
-  virtual int				GetSoundCount( void ) = 0;
-
-  virtual const char		*GetSoundName( int index ) = 0;
-  virtual bool			GetParametersForSound( const char *soundname, CSoundParameters& params, gender_t gender, bool isbeingemitted = false ) = 0;
-
-  virtual const char		*GetWaveName( CUtlSymbol& sym ) = 0;
-  virtual CUtlSymbol		AddWaveName( const char *name ) = 0;
-
-  virtual soundlevel_t	LookupSoundLevel( const char *soundname ) = 0;
-  virtual const char		*GetWavFileForSound( const char *soundname, char const *actormodel ) = 0;
-  virtual const char		*GetWavFileForSound( const char *soundname, gender_t gender ) = 0;
-  virtual int				CheckForMissingWavFiles( bool verbose ) = 0;
-  virtual const char		*GetSourceFileForSound( int index ) const = 0;
-
-  // Iteration methods
-  virtual int				First() const = 0;
-  virtual int				Next( int i ) const = 0;
-  virtual int				InvalidIndex() const = 0;
-
-  virtual CSoundParametersInternal *InternalGetParametersForSound( int index ) = 0;
-
-  // The host application is responsible for dealing with dirty sound scripts, etc.
-  virtual bool			AddSound( const char *soundname, const char *scriptfile, const CSoundParametersInternal& params ) = 0;
-  virtual void			RemoveSound( const char *soundname ) = 0;
-  virtual void			MoveSound( const char *soundname, const char *newscript ) = 0;
-  virtual void			RenameSound( const char *soundname, const char *newname ) = 0;
-
-  virtual void			UpdateSoundParameters( const char *soundname, const CSoundParametersInternal& params ) = 0;
-
-  virtual int				GetNumSoundScripts() const = 0;
-  virtual char const		*GetSoundScriptName( int index ) const = 0;
-  virtual bool			IsSoundScriptDirty( int index ) const = 0;
-  virtual int				FindSoundScript( const char *name ) const = 0;
-  virtual void			SaveChangesToSoundScript( int scriptindex ) = 0;
-
-  virtual void			ExpandSoundNameMacros( CSoundParametersInternal& params, char const *wavename ) = 0;
-  virtual gender_t		GetActorGender( char const *actormodel ) = 0;
-  virtual void			GenderExpandString( char const *actormodel, char const *in, char *out, int maxlen ) = 0;
-  virtual void			GenderExpandString( gender_t gender, char const *in, char *out, int maxlen ) = 0;
-  virtual bool			IsUsingGenderToken( char const *soundname ) = 0;
-
-  // For blowing away caches based on filetimstamps of the manifest, or of any of the
-  //  .txt files that are read into the sound emitter system
-  virtual unsigned int	GetManifestFileTimeChecksum() = 0;
-
-  // Called from both client and server (single player) or just one (server only in dedicated server and client only if connected to a remote server)
-  // Called by LevelInitPreEntity to override sound scripts for the mod with level specific overrides based on custom mapnames, etc.
-  virtual void			AddSoundOverrides( char const *scriptfile, bool bPreload = false ) = 0;
-
-  // Called by either client or server in LevelShutdown to clear out custom overrides
-  virtual void			ClearSoundOverrides() = 0;
-
-  virtual bool			GetParametersForSoundEx( const char *soundname, HSOUNDSCRIPTHANDLE& handle, CSoundParameters& params, gender_t gender, bool isbeingemitted = false ) = 0;
-  virtual soundlevel_t	LookupSoundLevelByHandle( char const *soundname, HSOUNDSCRIPTHANDLE& handle ) = 0;
-
-  virtual void			ReloadSoundEntriesInList( IFileList *pFilesToReload ) = 0;
-
-  // Called by either client or server to force ModShutdown and ModInit
-  virtual void			Flush() = 0;
-};
-*/
 
 LUA_BINDING_BEGIN( Sounds, Add, "library", "Creates a sound script." )
 {
@@ -198,12 +124,76 @@ LUA_BINDING_BEGIN( Sounds, Add, "library", "Creates a sound script." )
 }
 LUA_BINDING_END()
 
+#ifdef CLIENT_DLL
+
+#define PLAY_SOUND_FLAG BassManagerFlags
+
+struct PlayUrlCallbackData
+{
+    lua_State *L;
+    int callbackRef;
+};
+
+void CALLBACK CallLuaCallback( const void *buffer, DWORD length, void *user )
+{
+    PlayUrlCallbackData *callbackData = ( PlayUrlCallbackData * )user;
+    lua_State *L = callbackData->L;
+    int callbackRef = callbackData->callbackRef;
+
+    lua_rawgeti( L, LUA_REGISTRYINDEX, callbackRef );
+    lua_pushlstring( L, ( const char * )buffer, length );
+    lua_call( L, 1, 0 );
+}
+
+// E.g: lua_run_menu Sounds.PlayUrl("https://www2.cs.uic.edu/~i101/SoundFiles/StarWars3.wav")
+LUA_BINDING_BEGIN( Sounds, PlayUrl, "library", "Plays a sound from a URL.", "client" )
+{
+    const char *url = LUA_BINDING_ARGUMENT( luaL_checkstring, 1, "url" );
+    int flags = LUA_BINDING_ARGUMENT_WITH_DEFAULT( luaL_optinteger, 2, PLAY_SOUND_FLAG::STREAM_BLOCK, "flags" );
+
+    // If no callback is provided, we just play the sound
+    if ( lua_isnoneornil( L, 3 ) )
+    {
+        g_pBassManager->PlayUrl( url, flags );
+        return 0;
+    }
+
+    // If a callback is provided, we call the callback when the sound is ready to be played
+    // lua_run_menu Sounds.PlayUrl( "https://www2.cs.uic.edu/~i101/SoundFiles/StarWars3.wav", _E.PLAY_SOUND_FLAG.SAMPLE_3D, function( a, b, c ) print( a, b, c ) end )
+
+    luaL_argcheck( L, lua_isfunction( L, 3 ), 3, "expected function" );
+
+    // Create a reference to the callback function
+    lua_pushvalue( L, 3 );
+    int callbackRef = luaL_ref( L, LUA_REGISTRYINDEX );
+
+    PlayUrlCallbackData *callbackData = new PlayUrlCallbackData;
+    callbackData->L = L;
+    callbackData->callbackRef = callbackRef;
+    g_pBassManager->PlayUrlEx( url, flags, CallLuaCallback, callbackData );
+    delete callbackData;
+
+    return 0;
+}
+LUA_BINDING_END()
+#endif
+
 /*
 ** Open Sounds library
 */
 LUALIB_API int luaopen_Sounds( lua_State *L )
 {
     LUA_REGISTRATION_COMMIT_LIBRARY( Sounds );
+
+#ifdef CLIENT_DLL
+    LUA_SET_ENUM_LIB_BEGIN( L, "PLAY_SOUND_FLAG" );
+    lua_pushenum( L, BassManagerFlags::SAMPLE_3D, "SAMPLE_3D" );
+    lua_pushenum( L, BassManagerFlags::SAMPLE_MONO, "SAMPLE_MONO" );
+    lua_pushenum( L, BassManagerFlags::SAMPLE_LOOP, "SAMPLE_LOOP" );
+    lua_pushenum( L, BassManagerFlags::DONT_PLAY, "DONT_PLAY" );
+    lua_pushenum( L, BassManagerFlags::STREAM_BLOCK, "STREAM_BLOCK" );
+    LUA_SET_ENUM_LIB_END( L );
+#endif
 
     return 1;
 }

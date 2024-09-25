@@ -1037,6 +1037,7 @@ $Project
 		$File	"$SRCDIR\public\basehandle.h"
 		$File	"$SRCDIR\public\tier0\basetypes.h"
 		$File	"$SRCDIR\public\tier1\bitbuf.h"
+		$File	"$SRCDIR\public\bass.h"
 		$File	"$SRCDIR\public\bitvec.h"
 		$File	"$SRCDIR\public\bone_accessor.h"
 		$File	"$SRCDIR\public\bone_setup.h"
@@ -1456,5 +1457,6 @@ $Project
 		$Lib	"lua54"
 		$Lib	"luasocket"
         $Lib    "libpng"
+        $Lib    "bass"
  	}
 }

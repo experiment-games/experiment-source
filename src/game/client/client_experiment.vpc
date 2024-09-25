@@ -195,6 +195,9 @@ $Project "Client (Experiment)"
                 $File "$SRCDIR\game\shared\experiment\util\lnetworks.cpp"
                 $File "$SRCDIR\game\shared\experiment\util\networkmanager.h"
                 $File "$SRCDIR\game\shared\experiment\util\networkmanager.cpp"
+
+                $File "$SRCDIR\game\client\experiment\util\bassmanager.h"
+                $File "$SRCDIR\game\client\experiment\util\bassmanager.cpp"
             }
 		}
 	}

@@ -128,6 +128,7 @@
 #include "client_virtualreality.h"
 #include "mumble.h"
 #include "lbaseflex_shared.h"
+#include "util/bassmanager.h"
 
 // NVNT includes
 #include "hud_macros.h"
@@ -1165,6 +1166,7 @@ int CHLClient::Init( CreateInterfaceFn appSystemFactory,
     IGameSystem::Add( MumbleSystem() );
 
     IGameSystem::Add( g_pNetworkManager );
+    IGameSystem::Add( g_pBassManager );
 
 #if defined( TF_CLIENT_DLL )
     IGameSystem::Add( CustomTextureToolCacheGameSystem() );
