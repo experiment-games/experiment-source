@@ -159,6 +159,9 @@ LUALIB_API int( luaopen_PredictionSystems )( lua_State *L );
 #define LUA_ISCHEMELIBNAME "Scheme"
 LUALIB_API int( luaopen_IScheme )( lua_State *L );
 
+#define LUA_AUDIOCHANNELMETANAME "AudioChannel"
+LUALIB_API int( luaopen_AudioChannel )( lua_State *L );
+
 #define LUA_STEAMFRIENDSMETANAME "SteamFriendsHandle"
 LUALIB_API int( luaopen_ISteamFriends )( lua_State *L );
 

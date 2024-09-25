@@ -165,6 +165,8 @@ function FindMetaTable(name)
 		name = "Material"
 	elseif (name == "ITexture") then
 		name = "Texture"
+    elseif (name == "IGModAudioChannel") then
+		name = "AudioChannel"
 	elseif (name == "CEffectData") then
 		name = "EffectData"
 	elseif (name == "CMoveData") then
@@ -1560,6 +1562,23 @@ if (CLIENT) then
 	PROJECTED_TEXTURE_META.SetHorizontalFOV = PROJECTED_TEXTURE_META.SetHorizontalFov
 	PROJECTED_TEXTURE_META.GetVerticalFOV = PROJECTED_TEXTURE_META.GetVerticalFov
 	PROJECTED_TEXTURE_META.SetVerticalFOV = PROJECTED_TEXTURE_META.SetVerticalFov
+
+	local AUDIO_CHANNEL_META = FindMetaTable("AudioChannel")
+	AUDIO_CHANNEL_META.FFT = AUDIO_CHANNEL_META.GetFft
+	AUDIO_CHANNEL_META.Is3D = AUDIO_CHANNEL_META.Is3d
+	AUDIO_CHANNEL_META.Set3DCone = AUDIO_CHANNEL_META.Set3dCone
+	AUDIO_CHANNEL_META.Get3DCone = AUDIO_CHANNEL_META.Get3dCone
+	AUDIO_CHANNEL_META.Set3DEnabled = AUDIO_CHANNEL_META.Set3dEnabled
+	AUDIO_CHANNEL_META.Get3DEnabled = AUDIO_CHANNEL_META.Get3dEnabled
+	AUDIO_CHANNEL_META.Set3DFadeDistance = AUDIO_CHANNEL_META.Set3dFadeDistance
+	AUDIO_CHANNEL_META.Get3DFadeDistance = AUDIO_CHANNEL_META.Get3dFadeDistance
+	AUDIO_CHANNEL_META.GetPos = AUDIO_CHANNEL_META.GetPosition
+	AUDIO_CHANNEL_META.SetPos = AUDIO_CHANNEL_META.SetPosition
+	AUDIO_CHANNEL_META.GetTagsHTTP = AUDIO_CHANNEL_META.GetTagsOfHttp
+	AUDIO_CHANNEL_META.GetTagsID3 = AUDIO_CHANNEL_META.GetTagsOfId3
+	AUDIO_CHANNEL_META.GetTagsMeta = AUDIO_CHANNEL_META.GetTagsOfMeta
+	AUDIO_CHANNEL_META.GetTagsOGG = AUDIO_CHANNEL_META.GetTagsOfOgg
+	AUDIO_CHANNEL_META.GetTagsVendor = AUDIO_CHANNEL_META.GetTagsOfVendor
 
 	matproxy = {
 		Add = function(name, data) end -- TODO: Implement

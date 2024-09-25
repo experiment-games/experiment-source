@@ -84,7 +84,12 @@ Metatables = require("metatables")
 Bitwise = require("bitwise")
 Gamemodes = require("gamemodes")
 Hooks = require("hooks")
-Timers = require("timers")
+
+if (not GAMEUI) then
+	ScriptedEntities = require("scripted_entities")
+	ScriptedWeapons = require("scripted_weapons")
+	Timers = require("timers")
+end
 
 if (CLIENT) then
 	Include("extensions/panel.lua")
@@ -162,11 +167,6 @@ if (CLIENT) then
 
 	-- Metatables.SetupSpecialInheritance(_R.Html, _R.Panel)
     -- Metatables.SetupSpecialInheritance(_R.ModelImagePanel, _R.EditablePanel)
-end
-
-if (not GAMEUI) then
-	ScriptedEntities = require("scripted_entities")
-	ScriptedWeapons = require("scripted_weapons")
 end
 
 local json = require("json")
