@@ -383,6 +383,14 @@ LUA_BINDING_BEGIN( MessageReader, ReadBit, "class", "Reads a bit." )
 }
 LUA_BINDING_END( "integer", "The bit read." )
 
+LUA_BINDING_BEGIN( MessageReader, ReadBool, "class", "Reads a boolean." )
+{
+    bf_read *bf = LUA_BINDING_ARGUMENT( luaL_checkbf_read, 1, "reader" );
+    lua_pushboolean( L, bf->ReadOneBit() == 1 );
+    return 1;
+}
+LUA_BINDING_END( "boolean", "The boolean read." )
+
 LUA_BINDING_BEGIN( MessageReader, ReadByte, "class", "Reads a byte." )
 {
     bf_read *bf = LUA_BINDING_ARGUMENT( luaL_checkbf_read, 1, "reader" );

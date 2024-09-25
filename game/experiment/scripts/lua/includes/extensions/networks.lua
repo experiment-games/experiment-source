@@ -188,7 +188,6 @@ local writeFunctions = {
     [NET_TYPE_BOOL] = MESSAGE_WRITER_META.WriteBool,
 	[NET_TYPE_NIL] = function(writer, value)
 	end,
-    [NET_TYPE_BOOL] = MESSAGE_WRITER_META.WriteBool,
     [NET_TYPE_TABLE] = MESSAGE_WRITER_META.WriteTable,
 
     [NET_TYPE_COLOR] = MESSAGE_WRITER_META.WriteColor,

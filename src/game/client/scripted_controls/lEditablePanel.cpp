@@ -420,10 +420,11 @@ LUA_BINDING_BEGIN( EditablePanel, __newindex, "class", "Metamethod that is calle
     }
 
     LEditablePanel *plEditablePanel = dynamic_cast< LEditablePanel * >( pEditablePanel );
+    const char *field = LUA_BINDING_ARGUMENT( luaL_checkstring, 2, "field" );
 
     LUA_GET_REF_TABLE( L, plEditablePanel );
     lua_pushvalue( L, 3 );
-    lua_setfield( L, -2, luaL_checkstring( L, 2 ) );
+    lua_setfield( L, -2, field );
     lua_pop( L, 1 );
 
     return 0;

@@ -175,7 +175,15 @@ LUA_BINDING_BEGIN( CBaseAnimating, GetModelName, "class", "Get the model path of
 {
     lua_CBaseAnimating *pAnimating = LUA_BINDING_ARGUMENT( luaL_checkanimating, 1, "entity" );
 
-    lua_pushstring( L, pAnimating->GetModelPtr()->pszName() );
+    CStudioHdr *pstudiohdr = pAnimating->GetModelPtr();
+
+    if ( !pstudiohdr )
+    {
+        Warning( "CBaseAnimating::GetModelName failed: no model\n" );
+        return 0;
+    }
+
+    lua_pushstring( L, pstudiohdr->pszName() );
 
     return 1;
 }
@@ -611,7 +619,21 @@ LUA_BINDING_END( "Player", "The player this ragdoll came from" )
 LUA_BINDING_BEGIN( CBaseAnimating, ResetSequence, "class", "Reset the sequence." )
 {
     lua_CBaseAnimating *pAnimating = LUA_BINDING_ARGUMENT( luaL_checkanimating, 1, "entity" );
-    int iSequence = LUA_BINDING_ARGUMENT( luaL_checknumber, 2, "sequence" );
+    int iSequence = -1;
+
+    if ( lua_type( L, 2 ) == LUA_TNUMBER )
+    {
+        iSequence = LUA_BINDING_ARGUMENT( luaL_checknumber, 2, "sequence" );
+    }
+    else if ( lua_type( L, 2 ) == LUA_TSTRING )
+    {
+        iSequence = pAnimating->LookupSequence(
+            LUA_BINDING_ARGUMENT( luaL_checkstring, 2, "sequence" ) );
+    }
+    else
+    {
+        luaL_typeerror( L, 2, "number or string" );
+    }
 
     auto model = pAnimating->GetModelPtr();
 
@@ -842,6 +864,12 @@ LUA_BINDING_BEGIN( CBaseAnimating, GetBodyGroups, "class", "Get the bodygroup va
     int nMaxGroups = pAnimating->GetNumBodyGroups();
     CStudioHdr *pstudiohdr = pAnimating->GetModelPtr();
 
+    if ( !pstudiohdr )
+    {
+        Warning( "CBaseAnimating::GetBodyGroups failed: no model\n" );
+        return 0;
+    }
+
     lua_newtable( L );
 
     for ( int iGroup = 0; iGroup < nMaxGroups; ++iGroup )
@@ -1070,6 +1098,34 @@ LUA_BINDING_BEGIN( CBaseAnimating, GetSubModels, "class", "Get the submodels" )
     return 1;
 }
 LUA_BINDING_END( "table", "The submodels" )
+
+LUA_BINDING_BEGIN( CBaseAnimating, GetSequences, "class", "Get all sequences the model has." )
+{
+    lua_CBaseAnimating *pAnimating = LUA_BINDING_ARGUMENT( luaL_checkanimating, 1, "entity" );
+
+    CStudioHdr *pStudioHdr = pAnimating->GetModelPtr();
+
+    if ( !pStudioHdr )
+    {
+        DevWarning( "CBaseAnimating::GetSequences failed: no model\n" );
+        lua_newtable( L );
+        return 1;
+    }
+
+    lua_newtable( L );
+
+    for ( int i = 0; i < pStudioHdr->GetNumSeq(); i++ )
+    {
+        mstudioseqdesc_t &seqdesc = pStudioHdr->pSeqdesc( i );
+
+        lua_pushnumber( L, i + 1 );  // 1 indexed
+        lua_pushstring( L, seqdesc.pszLabel() );
+        lua_settable( L, -3 );
+    }
+
+    return 1;
+}
+LUA_BINDING_END( "table", "The sequences" )
 
 LUA_BINDING_BEGIN( CBaseAnimating, SetSequence, "class", "Set the sequence." )
 {

@@ -560,6 +560,7 @@ ENTITY_META.GetNoCollideWithTeammates = ENTITY_META.GetNoCollidingWithTeammates
 ENTITY_META.SetNoCollideWithTeammates = ENTITY_META.SetNoCollidingWithTeammates
 ENTITY_META.SetColor = ENTITY_META.SetRenderColor
 ENTITY_META.GetColor = ENTITY_META.GetRenderColor
+ENTITY_META.GetSequenceList = ENTITY_META.GetSequences
 
 function ENTITY_META:GetDTAngle(index)
 	return self:GetNetworkDataValue(_E.NETWORK_VARIABLE_TYPE.ANGLE, index)
