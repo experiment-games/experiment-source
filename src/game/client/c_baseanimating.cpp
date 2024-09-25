@@ -209,8 +209,9 @@ IMPLEMENT_CLIENTCLASS_DT( C_BaseAnimating, DT_BaseAnimating, CBaseAnimating )
     RecvPropFloat( RECVINFO( m_fadeMaxDist ) ),
     RecvPropFloat( RECVINFO( m_flFadeScale ) ),
 
-    // Experiment; Material override
-	RecvPropString( RECVINFO(m_MaterialOverride) ),
+    // Experiment; Material override and submaterial override
+	RecvPropString( RECVINFO( m_MaterialOverride ) ),
+    RecvPropArray( RecvPropString( RECVINFO(m_SubMaterialOverrides[0]) ), m_SubMaterialOverrides ),
 
 END_RECV_TABLE()
 
@@ -3332,6 +3333,23 @@ int C_BaseAnimating::InternalDrawModel( int flags )
     matrix3x4_t *pBoneToWorld = NULL;
     bool bMarkAsDrawn = modelrender->DrawModelSetup( *pInfo, &state, NULL, &pBoneToWorld );
 
+    // Experiment; TODO: Should the material override that is global also be moved here for consistency?
+    // Experiment; After DrawModelSetup 'g_pMDLCache->GetHardwareData' sets the m_pStudioHWData, we can override it to set custom materials
+    for ( int i = 0; i < MAX_SUB_MATERIAL_OVERRIDES; i++ )
+    {
+        if ( m_SubMaterialOverridesReferences[i].IsValid() )
+        {
+            // Experiment; We set material overrides for all LODs so they're always visible no matter the distance
+            for ( int lod = 0; lod < state.m_pStudioHWData->m_NumLODs; lod++ )
+            {
+                if ( i < state.m_pStudioHWData->m_pLODs[lod].numMaterials )
+                {
+                    state.m_pStudioHWData->m_pLODs[lod].ppMaterials[i] = m_SubMaterialOverridesReferences[i];
+                }
+            }
+        }
+    }
+
     // Scale the base transform if we don't have a bone hierarchy
     if ( IsModelScaled() )
     {
@@ -4846,13 +4864,27 @@ void C_BaseAnimating::OnDataChanged( DataUpdateType_t updateType )
         m_pRagdollInfo = NULL;
     }
 
+    if ( m_MaterialOverrideReference.IsValid() )
+    {
+        m_MaterialOverrideReference.Shutdown();
+    }
+
     if ( m_MaterialOverride[0] != 0 )
     {
         m_MaterialOverrideReference.Init( m_MaterialOverride, TEXTURE_GROUP_MODEL );
     }
-    else if ( m_MaterialOverrideReference.IsValid() )
+
+    for ( int i = 0; i < MAX_SUB_MATERIAL_OVERRIDES; i++ )
     {
-        m_MaterialOverrideReference.Shutdown();
+        if ( m_SubMaterialOverridesReferences[i].IsValid() )
+        {
+            m_SubMaterialOverridesReferences[i].Shutdown();
+        }
+
+        if ( m_SubMaterialOverrides[i][0] != 0 )
+        {
+            m_SubMaterialOverridesReferences[i].Init( m_SubMaterialOverrides[i], TEXTURE_GROUP_MODEL );
+        }
     }
 }
 

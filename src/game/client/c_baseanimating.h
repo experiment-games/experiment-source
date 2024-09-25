@@ -501,13 +501,42 @@ class C_BaseAnimating : public C_BaseEntity, private IModelLoadCallback
 
     virtual bool IsViewModel() const;
     virtual void UpdateOnRemove( void );
+
     void SetMaterialOverride( const char *pMaterialName )
     {
         Q_strncpy( m_MaterialOverride, pMaterialName, sizeof( m_MaterialOverride ) );
     }
+
     void GetMaterialOverride( char *pOut, int nLength )
     {
         Q_strncpy( pOut, m_MaterialOverride, nLength );
+    }
+
+    void SetSubMaterialOverride( int iIndex, const char *pMaterialName )
+    {
+        if ( iIndex < 0 || iIndex >= MAX_SUB_MATERIAL_OVERRIDES )
+            return;
+
+        Q_strncpy( m_SubMaterialOverrides[iIndex], pMaterialName, sizeof( m_SubMaterialOverrides[iIndex] ) );
+    }
+
+    void ClearSubMaterialOverrides()
+    {
+        for ( int i = 0; i < MAX_SUB_MATERIAL_OVERRIDES; i++ )
+        {
+            m_SubMaterialOverrides[i][0] = 0;
+        }
+    }
+
+    void GetSubMaterialOverride( int iIndex, char *pOut, int nLength )
+    {
+        if ( iIndex < 0 || iIndex >= MAX_SUB_MATERIAL_OVERRIDES )
+        {
+            pOut[0] = 0;
+            return;
+        }
+
+        Q_strncpy( pOut, m_SubMaterialOverrides[iIndex], nLength );
     }
 
    protected:
@@ -608,6 +637,8 @@ class C_BaseAnimating : public C_BaseEntity, private IModelLoadCallback
     // Experiment; Material override
     char m_MaterialOverride[MAX_PATH];
     CMaterialReference m_MaterialOverrideReference;
+    char m_SubMaterialOverrides[MAX_SUB_MATERIAL_OVERRIDES][MAX_PATH];
+    CMaterialReference m_SubMaterialOverridesReferences[MAX_SUB_MATERIAL_OVERRIDES];
 
    private:
     float m_flGroundSpeed;     // computed linear movement rate for current sequence

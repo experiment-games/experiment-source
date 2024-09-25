@@ -227,6 +227,10 @@ END_SEND_TABLE()
 
 void *SendProxy_ClientSideAnimation( const SendProp *pProp, const void *pStruct, const void *pVarData, CSendProxyRecipients *pRecipients, int objectID );
 
+// env_screenoverlay.cpp
+// Experiment; TODO; This can be commonly used, move it somewhere accessible
+extern void SendProxy_String_tToString( const SendProp *pProp, const void *pStruct, const void *pData, DVariant *pOut, int iElement, int objectID );
+
 // SendTable stuff.
 IMPLEMENT_SERVERCLASS_ST( CBaseAnimating, DT_BaseAnimating )
     SendPropInt( SENDINFO( m_nForceBone ), 8, 0 ),
@@ -265,6 +269,7 @@ IMPLEMENT_SERVERCLASS_ST( CBaseAnimating, DT_BaseAnimating )
 
     // Experiment; material override
     SendPropString( SENDINFO( m_MaterialOverride ) ),
+	SendPropArray( SendPropString( SENDINFO_ARRAY( m_SubMaterialOverrides ), 0, SendProxy_String_tToString ), m_SubMaterialOverrides ),
 
 END_SEND_TABLE()
     

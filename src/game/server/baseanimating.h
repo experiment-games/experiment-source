@@ -410,13 +410,43 @@ class CBaseAnimating : public CBaseEntity
     }
 
     bool PrefetchSequence( int iSequence );
+
     void SetMaterialOverride(const char* pMaterialName)
     {
         Q_strncpy( m_MaterialOverride.GetForModify(), pMaterialName, MAX_PATH );
     }
+
     void GetMaterialOverride( char *pOut, int nLength )
     {
         Q_strncpy( pOut, m_MaterialOverride.Get(), nLength );
+    }
+
+    void SetSubMaterialOverride( int iIndex, const char* pMaterialName )
+    {
+        if ( iIndex < 0 || iIndex >= MAX_SUB_MATERIAL_OVERRIDES )
+            return;
+
+        // Experiment; TODO: Won't this cause a memory leak?
+        m_SubMaterialOverrides.Set( iIndex, AllocPooledString( pMaterialName ) );
+    }
+
+    void ClearSubMaterialOverrides()
+    {
+        for ( int i = 0; i < MAX_SUB_MATERIAL_OVERRIDES; i++ )
+        {
+            m_SubMaterialOverrides.Set( i, NULL_STRING );
+        }
+    }
+
+    void GetSubMaterialOverride( int iIndex, char *pOut, int nLength )
+    {
+        if ( iIndex < 0 || iIndex >= MAX_SUB_MATERIAL_OVERRIDES )
+        {
+            pOut[0] = 0;
+            return;
+        }
+
+        Q_strncpy( pOut, STRING( m_SubMaterialOverrides[iIndex] ), nLength );
     }
 
    private:
@@ -503,6 +533,7 @@ class CBaseAnimating : public CBaseEntity
 
     // Experiment; Material overrides
     CNetworkString( m_MaterialOverride, MAX_PATH );
+    CNetworkArray( string_t, m_SubMaterialOverrides, MAX_SUB_MATERIAL_OVERRIDES );
 
    public:
     COutputEvent m_OnIgnite;

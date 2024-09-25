@@ -956,6 +956,39 @@ LUA_BINDING_BEGIN( CBaseAnimating, GetMaterialOverride, "class", "Get the materi
 }
 LUA_BINDING_END( "string", "The material override" )
 
+LUA_BINDING_BEGIN( CBaseAnimating, SetSubMaterialOverride, "class", "Set the sub material override by it's index (which starts at 0 and runs until at most 31). If called without arguments, it will reset all submaterials." )
+{
+    lua_CBaseAnimating *pAnimating = LUA_BINDING_ARGUMENT( luaL_checkanimating, 1, "entity" );
+
+    if ( lua_gettop( L ) == 1 )
+    {
+        pAnimating->ClearSubMaterialOverrides();
+        return 0;
+    }
+
+    int iSubMaterial = LUA_BINDING_ARGUMENT_NILLABLE( luaL_checknumber, 2, "subMaterialIndex" );
+    const char *pszMaterialName = LUA_BINDING_ARGUMENT_NILLABLE( luaL_checkstring, 3, "materialName" );
+
+    pAnimating->SetSubMaterialOverride( iSubMaterial, pszMaterialName );
+
+    return 0;
+}
+LUA_BINDING_END()
+
+LUA_BINDING_BEGIN( CBaseAnimating, GetSubMaterialOverride, "class", "Get the sub material override by it's index (which starts at 0 and runs until at most 31)" )
+{
+    lua_CBaseAnimating *pAnimating = LUA_BINDING_ARGUMENT( luaL_checkanimating, 1, "entity" );
+    int iSubMaterial = LUA_BINDING_ARGUMENT( luaL_checknumber, 2, "subMaterialIndex" );
+    char pszMaterialName[MAX_PATH];
+
+    pAnimating->GetSubMaterialOverride( iSubMaterial, pszMaterialName, sizeof( pszMaterialName ) );
+
+    lua_pushstring( L, pszMaterialName );
+
+    return 1;
+}
+LUA_BINDING_END( "string", "The sub material override" )
+
 LUA_BINDING_BEGIN( CBaseAnimating, GetMaterials, "class", "Get the materials" )
 {
     lua_CBaseAnimating *pAnimating = LUA_BINDING_ARGUMENT( luaL_checkanimating, 1, "entity" );
@@ -982,7 +1015,7 @@ LUA_BINDING_BEGIN( CBaseAnimating, GetMaterials, "class", "Get the materials" )
         if ( !pMaterial )
             continue;
 
-        lua_pushnumber( L, i + 1 );
+        lua_pushnumber( L, i + 1 ); // 1 indexed
         lua_pushmaterial( L, pMaterial );
         lua_settable( L, -3 );
     }
@@ -991,6 +1024,40 @@ LUA_BINDING_BEGIN( CBaseAnimating, GetMaterials, "class", "Get the materials" )
     return 2;
 }
 LUA_BINDING_END( "table", "The materials", "integer", "The number of materials" )
+
+LUA_BINDING_BEGIN( CBaseAnimating, GetSubModels, "class", "Get the submodels" )
+{
+    lua_CBaseAnimating *pAnimating = LUA_BINDING_ARGUMENT( luaL_checkanimating, 1, "entity" );
+
+    CStudioHdr *pStudioHdr = pAnimating->GetModelPtr();
+
+    if ( !pStudioHdr )
+    {
+        lua_pushnil( L );
+        return 1;
+    }
+
+    lua_newtable( L );
+
+    for ( int i = 0; i < pStudioHdr->numbodyparts(); i++ )
+    {
+        mstudiobodyparts_t *pBodyPart = pStudioHdr->pBodypart( i );
+
+        // TODO: Make a nice struct push function for this
+        lua_newtable( L );
+
+        lua_pushstring( L, pBodyPart->pszName() );
+        lua_setfield( L, -2, "name" );
+
+        lua_pushinteger( L, pBodyPart->modelindex );
+        lua_setfield( L, -2, "id" );
+
+        lua_rawseti( L, -2, i + 1 ); // 1 indexed
+    }
+
+    return 1;
+}
+LUA_BINDING_END( "table", "The submodels" )
 
 LUA_BINDING_BEGIN( CBaseAnimating, SetSequence, "class", "Set the sequence." )
 {
