@@ -1074,7 +1074,8 @@ else
 	render.PushFilterMag = Renders.PushFilterMagnification
 	render.PopFilterMag = Renders.PopFilterMagnification
 	render.SetScissorRect = Renders.SetScissorRectangle
-	render.SetWriteDepthToDestAlpha = Renders.SetWriteDepthToDestinationAlpha
+    render.SetWriteDepthToDestAlpha = Renders.SetWriteDepthToDestinationAlpha
+	render.EnableClipping = Renders.SetClippingEnabled
 
 	function render.Clear(r, g, b, a, clearDepth, clearStencil)
 		Renders.ClearBuffers(true, clearDepth or false, clearStencil or false)

@@ -29,13 +29,14 @@ class CConnectedClient : public IConnectedClient
 {
    public:
     CConnectedClient( CNetworkServer *server, netadr_t &remote, CTcpClientSocket *pSocket );
+    virtual ~CConnectedClient();
 
     char const *GetName()
     {
         return "Unknown";
     }
 
-    virtual void SendNetMessage( INetworkMessage *pMessage ) override;
+    virtual bool SendNetMessage( INetworkMessage *pMessage ) override;
     void Shutdown();
 
     bool m_bMarkedForDeletion;

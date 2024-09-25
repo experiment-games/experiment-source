@@ -629,6 +629,16 @@ LUA_BINDING_BEGIN( CBaseAnimating, SetServerIntendedCycle, "class", "Set the ser
 }
 LUA_BINDING_END()
 
+LUA_BINDING_BEGIN( CBaseAnimating, SetupBones, "class", "Force the bones to be recalculated." )
+{
+    lua_CBaseAnimating *pAnimating = LUA_BINDING_ARGUMENT( luaL_checkanimating, 1, "entity" );
+
+    pAnimating->SetupBones( NULL, -1, BONE_USED_BY_ANYTHING, gpGlobals->curtime );
+
+    return 0;
+}
+LUA_BINDING_END()
+
 LUA_BINDING_BEGIN( CBaseAnimating, ShadowCastType, "class", "Should this object cast render-to-texture shadows?." )
 {
     lua_CBaseAnimating *pAnimating = LUA_BINDING_ARGUMENT( luaL_checkanimating, 1, "entity" );

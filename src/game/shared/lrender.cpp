@@ -141,6 +141,14 @@ LUA_BINDING_BEGIN( Renders, GetScreenEffectTexture, "library", "Get the screen e
 }
 LUA_BINDING_END( "Texture", "The screen effect texture." )
 
+LUA_BINDING_BEGIN( Renders, SetClippingEnabled, "library", "Set the clipping enabled.", "client" )
+{
+    CMatRenderContextPtr pRenderContext( materials );
+    pRenderContext->EnableClipping( LUA_BINDING_ARGUMENT( lua_toboolean, 1, "isEnabled" ) );
+    return 0;
+}
+LUA_BINDING_END()
+
 LUA_BINDING_BEGIN( Renders, UpdateScreenEffectTexture, "library", "Update the screen effect texture.", "client" )
 {
     const CViewSetup *pViewSetup = view->GetViewSetup();
@@ -204,6 +212,31 @@ LUA_BINDING_END()
 LUA_BINDING_BEGIN( Renders, PopView2D, "library", "Pop a 2D view.", "client" )
 {
     render->PopView( view->GetFrustum() );
+    return 0;
+}
+LUA_BINDING_END()
+
+LUA_BINDING_BEGIN( Renders, PushCustomClipPlane, "library", "Push a custom clip plane.", "client" )
+{
+    Vector normal = LUA_BINDING_ARGUMENT( luaL_checkvector, 1, "normal" );
+    float distance = LUA_BINDING_ARGUMENT( luaL_checknumber, 2, "distance" );
+
+    Vector4D plane;
+    VectorCopy( normal, plane.AsVector3D() );
+    plane.w = distance + 0.1f;
+
+    CMatRenderContextPtr pRenderContext( materials );
+    pRenderContext->PushCustomClipPlane( plane.Base() );
+
+    return 0;
+}
+LUA_BINDING_END()
+
+LUA_BINDING_BEGIN( Renders, PopCustomClipPlane, "library", "Pop a custom clip plane.", "client" )
+{
+    CMatRenderContextPtr pRenderContext( materials );
+    pRenderContext->PopCustomClipPlane();
+
     return 0;
 }
 LUA_BINDING_END()
@@ -277,6 +310,23 @@ LUA_BINDING_BEGIN( Renders, ResetAmbientLightCube, "library", "Reset the ambient
 
     CMatRenderContextPtr pRenderContext( materials );
     pRenderContext->SetAmbientLightCube( cubeFaces );
+
+    return 0;
+}
+LUA_BINDING_END()
+
+LUA_BINDING_BEGIN( Renders, RenderFlashlights, "library", "Render flashlights.", "client" )
+{
+    // Check that a function is provided
+    luaL_checktype( L, 1, LUA_TFUNCTION );
+
+    CMatRenderContextPtr pRenderContext( materials );
+    pRenderContext->SetFlashlightMode( true );
+
+    // Execute the function
+    lua_call( L, 1, 0 );
+
+    pRenderContext->SetFlashlightMode( false );
 
     return 0;
 }

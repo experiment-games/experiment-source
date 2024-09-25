@@ -126,7 +126,7 @@ class CDynamicWriteNetworkMessage : public CNetworkMessage
 abstract_class IConnectedClient
 {
    public:
-    virtual void SendNetMessage( INetworkMessage * pMessage ) = 0;
+    virtual bool SendNetMessage( INetworkMessage * pMessage ) = 0;
 
     const char *GetRemoteAddress() const
     {

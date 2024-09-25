@@ -97,7 +97,20 @@ void CNetworkServer::DispatchSocketMessage( INetworkMessage *pMessage )
 
     for ( int i = 0; i < c; ++i )
     {
-        m_Clients[i]->SendNetMessage( pMessage );
+        // If the message fails, we need to remove the client
+        if ( !m_Clients[i]->SendNetMessage( pMessage ) )
+        {
+            m_Clients[i]->Shutdown();
+        }
+    }
+
+    // Remove any clients that are marked for deletion
+    for ( int i = c - 1; i >= 0; --i )
+    {
+        if ( m_Clients[i]->m_bMarkedForDeletion )
+        {
+            m_Clients.Remove( i );
+        }
     }
 }
 
@@ -127,12 +140,22 @@ CConnectedClient::CConnectedClient( CNetworkServer *server, netadr_t &remote, CT
     m_RemoteAddress = remote;
 }
 
+CConnectedClient::~CConnectedClient()
+{
+    Destruct( m_pStreamSocket );
+    delete m_pStreamSocket;
+    delete this;
+}
+
 void CConnectedClient::Shutdown()
 {
     m_bMarkedForDeletion = true;
 }
 
-void CConnectedClient::SendNetMessage( INetworkMessage *message )
+bool CConnectedClient::SendNetMessage( INetworkMessage *message )
 {
-    CNetworkSystem::SendSocketMessage( m_pStreamSocket, message );
+    if ( m_bMarkedForDeletion )
+        return false;
+
+    return CNetworkSystem::SendSocketMessage( m_pStreamSocket, message );
 }

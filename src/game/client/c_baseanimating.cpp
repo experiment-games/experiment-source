@@ -1367,6 +1367,11 @@ void C_BaseAnimating::GetBoneControllers( float controllers[MAXSTUDIOBONECTRLS] 
     }
 }
 
+float C_BaseAnimating::GetPoseParameter( const char *szName )
+{
+    return GetPoseParameter( LookupPoseParameter( szName ) );
+}
+
 float C_BaseAnimating::GetPoseParameter( int iPoseParameter )
 {
     CStudioHdr *pStudioHdr = GetModelPtr();

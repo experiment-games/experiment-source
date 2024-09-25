@@ -131,7 +131,7 @@ bool CTcpClientSocket::Send( const char *data, size_t dataLength )
 
     if ( SOCKET_ERROR == bytesSent )
     {
-        Assert( 0 );
+        // Happens when the client has disconnected
         return false;
     }
 
@@ -139,7 +139,7 @@ bool CTcpClientSocket::Send( const char *data, size_t dataLength )
 
     if ( SOCKET_ERROR == bytesSent )
     {
-        Assert( 0 );
+        // Happens when the client has disconnected
         return false;
     }
 

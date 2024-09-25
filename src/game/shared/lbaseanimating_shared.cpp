@@ -408,9 +408,21 @@ LUA_BINDING_END( "integer", "The sequence" )
 LUA_BINDING_BEGIN( CBaseAnimating, GetPoseParameter, "class", "Get the pose parameter." )
 {
     lua_CBaseAnimating *pAnimating = LUA_BINDING_ARGUMENT( luaL_checkanimating, 1, "entity" );
-    int iPoseParameter = LUA_BINDING_ARGUMENT( luaL_checknumber, 2, "poseParameter" );
 
-    lua_pushnumber( L, pAnimating->GetPoseParameter( iPoseParameter ) );
+    if ( lua_type( L, 2 ) == LUA_TNUMBER )
+    {
+        int iPoseParameter = LUA_BINDING_ARGUMENT( luaL_checknumber, 2, "poseParameter" );
+        lua_pushnumber( L, pAnimating->GetPoseParameter( iPoseParameter ) );
+    }
+    else if ( lua_type( L, 2 ) == LUA_TSTRING )
+    {
+        const char *pszPoseParameterName = LUA_BINDING_ARGUMENT( luaL_checkstring, 2, "poseParameterName" );
+        lua_pushnumber( L, pAnimating->GetPoseParameter( pszPoseParameterName ) );
+    }
+    else
+    {
+        luaL_typeerror( L, 2, "number or string" );
+    }
 
     return 1;
 }

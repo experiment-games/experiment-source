@@ -218,6 +218,7 @@ class C_BaseAnimating : public C_BaseEntity, private IModelLoadCallback
         return SetPoseParameter( GetModelPtr(), iParameter, flValue );
     }
 
+    float GetPoseParameter( const char *szName );
     float GetPoseParameter( int iPoseParameter );
 
     bool GetPoseParameterRange( int iPoseParameter, float &minValue, float &maxValue );
