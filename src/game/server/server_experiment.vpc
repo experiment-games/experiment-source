@@ -308,6 +308,9 @@ $Project "Server (Experiment)"
                 $File "$SRCDIR\game\shared\experiment\util\lnetworks.cpp"
                 $File "$SRCDIR\game\shared\experiment\util\networkmanager.h"
                 $File "$SRCDIR\game\shared\experiment\util\networkmanager.cpp"
+
+                $File "$SRCDIR\game\shared\experiment\util\lwebconnections.h"
+                $File "$SRCDIR\game\shared\experiment\util\lwebconnections.cpp"
             }
 		}
 	}

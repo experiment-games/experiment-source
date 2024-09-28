@@ -285,6 +285,9 @@ LUALIB_API int( luaopen_CMoveData )( lua_State *L );
 #define LUA_USERCMDMETANAME "UserCommand"
 LUALIB_API int( luaopen_CUserCmd )( lua_State *L );
 
+#define LUA_WEBCONNECTIONSLIBNAME "WebConnections"
+LUALIB_API int( luaopen_WebConnections )( lua_State *L );
+
 /* open all Source Engine libraries */
 LUALIB_API void( luasrc_openlibs )( lua_State *L, bool isStateGameUI = false );
 

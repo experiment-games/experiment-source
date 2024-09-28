@@ -101,6 +101,7 @@ static const luaL_RegForState luasrclibs[] = {
     { LUA_UTILLIBNAME, luaopen_Util, REALM_SHARED },
     { LUA_VECTORMETANAME, luaopen_Vector, REALM_SHARED | REALM_GAMEUI },
     { LUA_VMATRIXLIBNAME, luaopen_VMatrix, REALM_SHARED | REALM_GAMEUI },
+    { LUA_WEBCONNECTIONSLIBNAME, luaopen_WebConnections, REALM_SHARED | REALM_GAMEUI },
 
 #ifndef CLIENT_DLL
     //

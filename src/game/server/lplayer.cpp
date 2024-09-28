@@ -724,6 +724,12 @@ LUA_BINDING_BEGIN( Player, Give, "class", "Give the weapon to the player." )
     bool shouldGiveNoAmmo = LUA_BINDING_ARGUMENT_WITH_DEFAULT( luaL_optboolean, 3, false, "shouldGiveNoAmmo" );
     CBaseCombatWeapon *weapon = player->Weapon_Create( className );
 
+    if (!weapon)
+    {
+        luaL_error( L, "Invalid weapon class '%s'", className );
+        return 0;
+    }
+
     // CBaseEntity *entity = player->GiveNamedItem( className, 0 );
 
     // if ( !entity )

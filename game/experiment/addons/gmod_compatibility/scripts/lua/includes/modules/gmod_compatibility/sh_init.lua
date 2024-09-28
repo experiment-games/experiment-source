@@ -165,7 +165,7 @@ function FindMetaTable(name)
 		name = "Material"
 	elseif (name == "ITexture") then
 		name = "Texture"
-    elseif (name == "IGModAudioChannel") then
+	elseif (name == "IGModAudioChannel") then
 		name = "AudioChannel"
 	elseif (name == "CEffectData") then
 		name = "EffectData"
@@ -258,7 +258,7 @@ system.SteamTime = Systems.GetSteamServerRealTime
 system.UpTime = Systems.GetSecondsSinceComputerActive
 
 local function convertPlaySoundFlags(flagsAsString)
-    local flags = _E.PLAY_SOUND_FLAG.STREAM_BLOCK
+	local flags = _E.PLAY_SOUND_FLAG.STREAM_BLOCK
 
 	if (not flagsAsString or type(flagsAsString) ~= "string") then
 		return flags
@@ -272,14 +272,14 @@ local function convertPlaySoundFlags(flagsAsString)
 		elseif (flag == "noplay") then
 			flags = bit.bor(flags, _E.PLAY_SOUND_FLAG.DONT_PLAY)
 		elseif (flag == "noblock") then
-            -- Remove the STREAM_BLOCK flag
+			-- Remove the STREAM_BLOCK flag
 			flags = bit.band(flags, bit.bnot(_E.PLAY_SOUND_FLAG.STREAM_BLOCK))
 		end
 	end
 end
 
 sound.PlayURL = function(path, flagsAsString, callback)
-    return Sounds.PlayUrl(path, convertPlaySoundFlags(flagsAsString), callback)
+	return Sounds.PlayUrl(path, convertPlaySoundFlags(flagsAsString), callback)
 end
 local oldPlayFile = Sounds.PlayFile
 sound.PlayFile = function(path, flagsAsString, callback)
@@ -462,6 +462,37 @@ end
 -- We don't use the workshop
 WorkshopFileBase = function(namespace, requiredTags)
 	return {}
+end
+
+HTTP = function(httpRequest)
+	local method = httpRequest.method:upper()
+	local body = httpRequest.body
+	local parameters = httpRequest.parameters
+	local headers = httpRequest.headers
+	local contentType = httpRequest.contentType
+	local timeout = httpRequest.timeout
+
+	local successCallback = httpRequest.success
+	local failureCallback = httpRequest.failed
+
+	if (parameters) then
+		parameters = KeyValues.CreateFromTable("parameters", parameters)
+	end
+
+	if (headers) then
+		headers = KeyValues.CreateFromTable("headers", headers)
+	end
+
+	return WebConnections.RequestHttpMethod(
+		httpRequest.url,
+		method,
+		body,
+		parameters,
+		headers,
+		contentType,
+		timeout,
+		successCallback,
+		failureCallback)
 end
 
 game = {
@@ -666,11 +697,11 @@ function ENTITY_META:GetSpawnEffect()
 end
 
 function ENTITY_META:SetNoDraw(bBool)
-    if (bBool) then
-        self:AddEffects(_E.ENTITY_EFFECT.NO_DRAW)
-    else
-        self:RemoveEffects(_E.ENTITY_EFFECT.NO_DRAW)
-    end
+	if (bBool) then
+		self:AddEffects(_E.ENTITY_EFFECT.NO_DRAW)
+	else
+		self:RemoveEffects(_E.ENTITY_EFFECT.NO_DRAW)
+	end
 end
 
 function ENTITY_META:GetNoDraw()
@@ -878,9 +909,9 @@ function PLAYER_META:GetWeaponColor()
 end
 
 if (SERVER) then
-    function PLAYER_META:SelectWeapon(weaponClass)
-        self:SwitchWeapon(self:GetWeapon(weaponClass))
-    end
+	function PLAYER_META:SelectWeapon(weaponClass)
+		self:SwitchWeapon(self:GetWeapon(weaponClass))
+	end
 
 	function PLAYER_META:StripAmmo()
 		self:RemoveAllAmmo()
@@ -1102,7 +1133,7 @@ else
 		end,
 
 		GetModelMatrix = Renders.GetModelMatrix,
-        PushModelMatrix = Renders.PushModelMatrix,
+		PushModelMatrix = Renders.PushModelMatrix,
 		PopModelMatrix = Renders.PopModelMatrix,
 	}
 
@@ -1113,7 +1144,7 @@ else
 	render.PushFilterMag = Renders.PushFilterMagnification
 	render.PopFilterMag = Renders.PopFilterMagnification
 	render.SetScissorRect = Renders.SetScissorRectangle
-    render.SetWriteDepthToDestAlpha = Renders.SetWriteDepthToDestinationAlpha
+	render.SetWriteDepthToDestAlpha = Renders.SetWriteDepthToDestinationAlpha
 	render.EnableClipping = Renders.SetClippingEnabled
 
 	function render.Clear(r, g, b, a, clearDepth, clearStencil)
@@ -1417,7 +1448,7 @@ else
 	LocalPlayer = Players.GetLocalPlayer
 
 	surface.SetDrawColor = Surfaces.DrawSetColor
-    surface.DrawRect = Surfaces.DrawFilledRectangle
+	surface.DrawRect = Surfaces.DrawFilledRectangle
 	surface.SetAlphaMultiplier = Surfaces.DrawSetAlphaMultiplier
 
 	local textureMap = {}
@@ -1945,7 +1976,7 @@ end
 
 if (SERVER) then
 	PLAYER_META.IPAddress = PLAYER_META.GetIpAddress
-    PLAYER_META.UnLock = PLAYER_META.Unlock
+	PLAYER_META.UnLock = PLAYER_META.Unlock
 
 	-- AllowFlashlight and CanUseFlashlight override default gmod implementations, which is why its placed after include("includes/init.lua")
 	-- https://github.com/Facepunch/garrysmod/blob/1ce3b6fec3417e4798ade0862540da74ce612483/garrysmod/lua/includes/extensions/player.lua#L182C70-L183C71

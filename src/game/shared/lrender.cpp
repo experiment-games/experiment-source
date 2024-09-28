@@ -370,7 +370,7 @@ LUA_BINDING_BEGIN( Renders, RenderFlashlights, "library", "Render flashlights.",
     pRenderContext->SetFlashlightMode( true );
 
     // Execute the function
-    lua_call( L, 1, 0 );
+    luasrc_pcall( L, 1, 0 );
 
     pRenderContext->SetFlashlightMode( false );
 

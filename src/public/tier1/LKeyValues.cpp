@@ -528,6 +528,41 @@ LUA_BINDING_BEGIN( KeyValues, Create, "library", "Create a new keyvalues object.
 }
 LUA_BINDING_END( "KeyValuesHandle", "The new keyvalues object." )
 
+LUA_BINDING_BEGIN( KeyValues, CreateFromTable, "library", "Create a new keyvalues object from a table." )
+{
+    const char *name = LUA_BINDING_ARGUMENT( luaL_checkstring, 1, "name" );
+    KeyValues *pKV = new KeyValues( name );
+
+    if ( !LUA_BINDING_ARGUMENT( lua_istable, 2, "table" ) )
+        luaL_typerror( L, 2, "table" );
+
+    lua_pushnil( L );  // first key
+
+    while ( lua_next( L, 2 ) != 0 )
+    {
+        switch ( lua_type( L, -2 ) )
+        {
+            case LUA_TNUMBER:
+                pKV->SetFloat( lua_tostring( L, -2 ), lua_tonumber( L, -1 ) );
+                break;
+            case LUA_TSTRING:
+                pKV->SetString( lua_tostring( L, -2 ), lua_tostring( L, -1 ) );
+                break;
+            case LUA_TBOOLEAN:
+                pKV->SetBool( lua_tostring( L, -2 ), lua_toboolean( L, -1 ) );
+                break;
+            default:
+                luaL_typerror( L, -2, "number, string or boolean" );
+                break;
+        }
+        lua_pop( L, 1 );
+    }
+
+    lua_pushkeyvalues( L, pKV );
+    return 1;
+}
+LUA_BINDING_END( "KeyValuesHandle", "The new keyvalues object." )
+
 /*
 ** Open KeyValues object
 */
