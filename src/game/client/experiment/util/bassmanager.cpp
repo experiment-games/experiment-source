@@ -1,5 +1,6 @@
 #include "cbase.h"
 #include "bassmanager.h"
+#include "filesystem.h"
 
 static CBassManager s_BassManager;
 extern CBassManager *g_pBassManager = &s_BassManager;
@@ -74,62 +75,55 @@ void CBassManager::PlayUrl( const char *url, int flags /* = 0 */ )
     m_Streams.AddToTail( stream );
 }
 
-// struct PlayUrlCallbackDataWrapper
+//template < class T >
+//struct PlayUrlCallbackDataWrapper
 //{
-//     CBassManagerBlockDownloadedCallback *callback;
-//     IBassManagerCallbackData *callbackData;
-//     CBassManager *manager;
-// };
-//  generic struct so we can change CBassManagerBlockDownloadedCallback
-template < class T >
-struct PlayUrlCallbackDataWrapper
-{
-    T *callback;
-    IBassManagerCallbackData *callbackData;
-    CBassManager *manager;
-};
+//    T *callback;
+//    IBassManagerCallbackData *callbackData;
+//    CBassManager *manager;
+//};
+//
+//void CALLBACK EnqueueBlockDownloadedCallback( const void *buffer, DWORD length, void *user )
+//{
+//    auto *wrapper = ( PlayUrlCallbackDataWrapper< CBassManagerBlockDownloadedCallback > * )user;
+//
+//    wrapper->manager->EnqueueCallbackTask(
+//        [wrapper, buffer, length]()
+//        {
+//            if ( wrapper->callback )
+//            {
+//                wrapper->callback( buffer, length, wrapper->callbackData );
+//            }
+//
+//            // Done downloading the sound, clean up the callback data
+//            if ( !buffer )
+//            {
+//                wrapper->callbackData->Release();
+//                delete wrapper;
+//            }
+//        } );
+//}
 
-void CALLBACK EnqueueBlockDownloadedCallback( const void *buffer, DWORD length, void *user )
-{
-    auto *wrapper = ( PlayUrlCallbackDataWrapper< CBassManagerBlockDownloadedCallback > * )user;
-
-    wrapper->manager->EnqueueCallbackTask(
-        [wrapper, buffer, length]()
-        {
-            if ( wrapper->callback )
-            {
-                wrapper->callback( buffer, length, wrapper->callbackData );
-            }
-
-            // Done downloading the sound, clean up the callback data
-            if ( !buffer )
-            {
-                wrapper->callbackData->Release();
-                delete wrapper;
-            }
-        } );
-}
-
-void CALLBACK EnqueueReadyCallback( HSYNC handle, DWORD channel, DWORD data, void *user )
-{
-    auto *wrapper = ( PlayUrlCallbackDataWrapper< CBassManagerReadyCallback > * )user;
-
-    wrapper->manager->EnqueueCallbackTask(
-        [wrapper, handle, channel, data]()
-        {
-            if ( wrapper->callback )
-            {
-                wrapper->callback( handle, channel, data, wrapper->callbackData );
-            }
-
-            // Done downloading the sound, clean up the callback data
-            if ( !handle )
-            {
-                wrapper->callbackData->Release();
-                delete wrapper;
-            }
-        } );
-}
+//void CALLBACK EnqueueReadyCallback( HSYNC handle, DWORD channel, DWORD data, void *user )
+//{
+//    auto *wrapper = ( PlayUrlCallbackDataWrapper< CBassManagerReadyCallback > * )user;
+//
+//    wrapper->manager->EnqueueCallbackTask(
+//        [wrapper, handle, channel, data]()
+//        {
+//            if ( wrapper->callback )
+//            {
+//                wrapper->callback( handle, channel, data, wrapper->callbackData );
+//            }
+//
+//            // Done downloading the sound, clean up the callback data
+//            if ( !handle )
+//            {
+//                wrapper->callbackData->Release();
+//                delete wrapper;
+//            }
+//        } );
+//}
 
 /// <summary>
 /// Plays a sound from a URL, calling the provided callback (on the main thread) when the sound is ready to play.
@@ -164,43 +158,167 @@ IAudioChannel *CBassManager::PlayUrlGetAudioChannel(
     // m_Streams.AddToTail( stream ); // hence this is commented out
 }
 
-/// <summary>
-/// Plays a sound from a URL, calling the provided callback (on the main thread) for each buffer of data received.
-/// </summary>
-/// <param name="url"></param>
-/// <param name="flags"></param>
-/// <param name="blockDownloadedCallback"></param>
-/// <param name="callbackData"></param>
-void CBassManager::PlayUrlWithBlockCallback(
-    const char *url,
-    int flags,
-    CBassManagerBlockDownloadedCallback blockDownloadedCallback,
-    IBassManagerCallbackData *callbackData )
+///// <summary>
+///// Plays a sound from a URL, calling the provided callback (on the main thread) for each buffer of data received.
+///// </summary>
+///// <param name="url"></param>
+///// <param name="flags"></param>
+///// <param name="blockDownloadedCallback"></param>
+///// <param name="callbackData"></param>
+//void CBassManager::PlayUrlWithBlockCallback(
+//    const char *url,
+//    int flags,
+//    CBassManagerBlockDownloadedCallback blockDownloadedCallback,
+//    IBassManagerCallbackData *callbackData )
+//{
+//    int bassFlags = ToBassFlags( flags );
+//
+//    auto *wrapper = new PlayUrlCallbackDataWrapper< CBassManagerBlockDownloadedCallback >;
+//    wrapper->callback = blockDownloadedCallback;
+//    wrapper->callbackData = callbackData;
+//    wrapper->manager = this;
+//
+//    HSTREAM stream = BASS_StreamCreateURL( url, 0, bassFlags, EnqueueBlockDownloadedCallback, wrapper );
+//
+//    if ( !stream )
+//    {
+//        DevWarning( "Failed to create stream from URL: %s\n", url );
+//        return;
+//    }
+//
+//    if ( ( flags & BassManagerFlags::DONT_PLAY ) == 0 && !BASS_ChannelPlay( stream, TRUE ) )
+//    {
+//        DevWarning( "Failed to play stream from URL: %s\n", url );
+//        BASS_StreamFree( stream );
+//        return;
+//    }
+//
+//    // We don't have the stream cleaned up, since the callback might use it to replay the sound:
+//    // m_Streams.AddToTail( stream ); // hence this is commented out
+//}
+
+void CBassManager::PlayFile( const char *filename, int flags /* = 0 */ )
 {
-    int bassFlags = ToBassFlags( flags );
-
-    auto *wrapper = new PlayUrlCallbackDataWrapper< CBassManagerBlockDownloadedCallback >;
-    wrapper->callback = blockDownloadedCallback;
-    wrapper->callbackData = callbackData;
-    wrapper->manager = this;
-
-    HSTREAM stream = BASS_StreamCreateURL( url, 0, bassFlags, EnqueueBlockDownloadedCallback, wrapper );
-
-    if ( !stream )
+    if ( flags & BassManagerFlags::DONT_PLAY )
     {
-        DevWarning( "Failed to create stream from URL: %s\n", url );
+        DevWarning( "Cannot play stream with DONT_PLAY flag, unless callback is provided\n" );
         return;
     }
 
-    if ( ( flags & BassManagerFlags::DONT_PLAY ) == 0 && !BASS_ChannelPlay( stream, TRUE ) )
+    int bassFlags = ToBassFlags( flags );
+    char resolvedPath[MAX_PATH];
+
+    if ( !filesystem->RelativePathToFullPath( filename, CONTENT_SEARCH_PATH, resolvedPath, sizeof( resolvedPath ) ) )
     {
-        DevWarning( "Failed to play stream from URL: %s\n", url );
+        DevWarning( "Failed to resolve path for file: %s\n", filename );
+        return;
+    }
+
+    HSTREAM stream = BASS_StreamCreateFile( FALSE, resolvedPath, 0, 0, bassFlags );
+
+    if ( !stream )
+    {
+        DevWarning( "Failed to create stream from file: %s\n", filename );
+        return;
+    }
+
+    if ( !BASS_ChannelPlay( stream, TRUE ) )
+    {
+        DevWarning( "Failed to play stream from file: %s\n", filename );
         BASS_StreamFree( stream );
         return;
     }
 
-    // We don't have the stream cleaned up, since the callback might use it to replay the sound:
-    // m_Streams.AddToTail( stream ); // hence this is commented out
+    m_Streams.AddToTail( stream );
+}
+
+/// <summary>
+/// Uses the Source Engine's file system to close the file.
+/// </summary>
+/// <param name="user"></param>
+void CALLBACK SourceFileCloseProc( void *user )
+{
+    FileHandle_t fileHandle = ( FileHandle_t )user;
+    filesystem->Close( fileHandle );
+}
+
+/// <summary>
+/// Uses the Source Engine's file system to get the file length.
+/// </summary>
+/// <param name="user"></param>
+/// <returns></returns>
+QWORD CALLBACK SourceFileLenProc( void *user )
+{
+    FileHandle_t fileHandle = ( FileHandle_t )user;
+    return filesystem->Size( fileHandle );
+}
+
+/// <summary>
+/// Uses the Source Engine's file system to read from the file.
+/// </summary>
+/// <param name="buffer"></param>
+/// <param name="length"></param>
+/// <param name="user"></param>
+/// <returns></returns>
+DWORD CALLBACK SourceFileReadProc( void *buffer, DWORD length, void *user )
+{
+    FileHandle_t fileHandle = ( FileHandle_t )user;
+    return filesystem->Read( buffer, length, fileHandle );
+}
+
+/// <summary>
+/// Uses the Source Engine's file system to seek to the offset.
+/// </summary>
+/// <param name="offset"></param>
+/// <param name="user"></param>
+/// <returns></returns>
+BOOL CALLBACK SourceFileSeekProc( QWORD offset, void *user )
+{
+    FileHandle_t fileHandle = ( FileHandle_t )user;
+
+    if (!fileHandle)
+    {
+        return false;
+    }
+
+    filesystem->Seek( fileHandle, offset, FILESYSTEM_SEEK_HEAD );
+
+    return true;
+}
+
+BASS_FILEPROCS BASSMANAGER_SDK_FILES = { SourceFileCloseProc, SourceFileLenProc, SourceFileReadProc, SourceFileSeekProc };
+
+IAudioChannel *CBassManager::PlayFileGetAudioChannel(
+    const char *filename,
+    int flags )
+{
+    int bassFlags = ToBassFlags( flags );
+
+    // Since sound files may exist in a VPK, we need to use the Source Engine's file system to open the file
+    FileHandle_t fileHandle = filesystem->Open( filename, "rb" );
+
+    if ( !fileHandle )
+    {
+        DevWarning( "Failed to open file: %s\n", filename );
+        return nullptr;
+    }
+
+    HSTREAM stream = BASS_StreamCreateFileUser( STREAMFILE_NOBUFFER, bassFlags, &BASSMANAGER_SDK_FILES, fileHandle );
+
+    if ( !stream )
+    {
+        DevWarning( "Failed to create stream from file: %s\n", filename );
+        return nullptr;
+    }
+
+    if ( ( flags & BassManagerFlags::DONT_PLAY ) == 0 && !BASS_ChannelPlay( stream, TRUE ) )
+    {
+        DevWarning( "Failed to play stream from file: %s\n", filename );
+        BASS_StreamFree( stream );
+        return nullptr;
+    }
+
+    return new CAudioChannel( stream );
 }
 
 void CBassManager::Update( float frametime )
@@ -217,20 +335,20 @@ void CBassManager::Update( float frametime )
         }
     }
 
-    AUTO_LOCK( m_TaskQueueMutex );
-    while ( !m_TaskQueue.empty() )
-    {
-        // Execute the callback task on the main thread
-        m_TaskQueue.front()();
-        m_TaskQueue.pop();
-    }
+    //AUTO_LOCK( m_TaskQueueMutex );
+    //while ( !m_TaskQueue.empty() )
+    //{
+    //    // Execute the callback task on the main thread
+    //    m_TaskQueue.front()();
+    //    m_TaskQueue.pop();
+    //}
 }
 
-void CBassManager::EnqueueCallbackTask( std::function< void() > task )
-{
-    AUTO_LOCK( m_TaskQueueMutex );
-    m_TaskQueue.push( task );
-}
+//void CBassManager::EnqueueCallbackTask( std::function< void() > task )
+//{
+//    AUTO_LOCK( m_TaskQueueMutex );
+//    m_TaskQueue.push( task );
+//}
 
 /*
  * Wrapper around a BASS handle

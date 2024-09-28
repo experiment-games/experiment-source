@@ -50,19 +50,24 @@ class CBassManager : public CBaseGameSystemPerFrame
     {
         return m_bInitialized;
     }
-    void PlayUrl( const char *url, int flags = 0 );
 
+    void PlayUrl( const char *url, int flags = 0 );
     IAudioChannel *PlayUrlGetAudioChannel(
         const char *url,
         int flags );
 
-    void PlayUrlWithBlockCallback(
-        const char *url,
-        int flags,
-        CBassManagerBlockDownloadedCallback blockDownloadedCallback,
-        IBassManagerCallbackData *callbackData );
+    void PlayFile( const char *filename, int flags = 0 );
+    IAudioChannel *PlayFileGetAudioChannel(
+        const char *filename,
+        int flags );
 
-    void EnqueueCallbackTask( std::function< void() > task );
+    //void PlayUrlWithBlockCallback(
+    //    const char *url,
+    //    int flags,
+    //    CBassManagerBlockDownloadedCallback blockDownloadedCallback,
+    //    IBassManagerCallbackData *callbackData );
+
+    //void EnqueueCallbackTask( std::function< void() > task );
 
    protected:
     int ToBassFlags( int flags );
@@ -70,9 +75,9 @@ class CBassManager : public CBaseGameSystemPerFrame
     bool m_bInitialized;
     CUtlVector< HSTREAM > m_Streams;
 
-    // Task queue for processing callbacks on the main thread
-    std::queue< std::function< void() > > m_TaskQueue;
-    CThreadFastMutex m_TaskQueueMutex;
+    //// Task queue for processing callbacks on the main thread
+    //std::queue< std::function< void() > > m_TaskQueue;
+    //CThreadFastMutex m_TaskQueueMutex;
 };
 
 extern CBassManager *g_pBassManager;
@@ -207,5 +212,25 @@ class CAudioChannel : public IAudioChannel
    private:
     HSTREAM m_Handle;
 };
+
+/*
+    Help to read Source Engine files into a BASS stream
+
+    For example:
+        FileHandle_t fileHandle = filesystem->Open( filename, "rb" );
+
+        if ( !fileHandle )
+        {
+            DevWarning( "Failed to open file: %s\n", filename );
+            return nullptr;
+        }
+
+        HSTREAM stream = BASS_StreamCreateFileUser( STREAMFILE_NOBUFFER, bassFlags, &BASSMANAGER_SDK_FILES, fileHandle );
+*/
+void CALLBACK SourceFileCloseProc( void *user );
+QWORD CALLBACK SourceFileLenProc( void *user );
+DWORD CALLBACK SourceFileReadProc( void *buffer, DWORD length, void *user );
+BOOL CALLBACK SourceFileSeekProc( QWORD offset, void *user );
+extern BASS_FILEPROCS BASSMANAGER_SDK_FILES;
 
 #endif  // BASSMANAGER_H

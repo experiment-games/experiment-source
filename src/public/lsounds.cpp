@@ -2,6 +2,7 @@
 #include "luamanager.h"
 #include "luasrclib.h"
 #include <lsounds.h>
+#include <engine/IEngineSound.h>
 
 // memdbgon must be the last include file in a .cpp file!!!
 #include "tier0/memdbgon.h"
@@ -545,6 +546,39 @@ LUA_BINDING_BEGIN( Sounds, Add, "library", "Creates a sound script." )
 }
 LUA_BINDING_END()
 
+// lua_run_cl Sounds.Play("ambient/levels/labs/teleport_alarm_loop1.wav", Vectors.Create(0, 0, 0))
+LUA_BINDING_BEGIN( Sounds, Play, "library", "Plays a sound emitting from a place in the world. Not properly tested for sound script names (didn't work when I tried it)" )
+{
+    const char *pszSoundName = LUA_BINDING_ARGUMENT( luaL_checkstring, 1, "soundName" ); // doc: sound script name or sound file name relative to sound/ folder
+    const Vector vecOrigin = LUA_BINDING_ARGUMENT( luaL_checkvector, 2, "origin" );      // doc: position of the sound
+    soundlevel_t soundLevel = LUA_BINDING_ARGUMENT_ENUM_WITH_DEFAULT( soundlevel_t, 3, SNDLVL_NORM, "soundLevel" );
+    float flPitchPercent = LUA_BINDING_ARGUMENT_WITH_DEFAULT( luaL_optnumber, 4, 100, "pitchPercent" );
+    float flVolume = LUA_BINDING_ARGUMENT_WITH_DEFAULT( luaL_optnumber, 5, 1, "volume" );
+    int nDSP = LUA_BINDING_ARGUMENT_WITH_DEFAULT( luaL_optnumber, 6, 0, "dsp" );
+
+    float duration = 0;
+
+    EmitSound_t params;
+    params.m_pSoundName = pszSoundName;
+    params.m_pOrigin = &vecOrigin;
+    params.m_flVolume = flVolume;
+    params.m_SoundLevel = soundLevel;
+    params.m_nPitch = flPitchPercent;
+    params.m_nSpecialDSP = nDSP;
+    params.m_flSoundTime = 0;
+    params.m_pflSoundDuration = &duration;
+    params.m_bWarnOnDirectWaveReference = false;
+
+    CPVSFilter filter( vecOrigin );
+
+    CBaseEntity::EmitSound( filter, SOUND_FROM_WORLD, params );
+
+    lua_pushnumber( L, duration );
+
+    return 0;
+}
+LUA_BINDING_END()
+
 #ifdef CLIENT_DLL
 
 #define PLAY_SOUND_FLAG BassManagerFlags
@@ -583,13 +617,73 @@ LUA_BINDING_BEGIN( Sounds, PlayUrl, "library", "Plays a sound from a URL.", "cli
     // long file:
     // lua_run_menu Sounds.PlayUrl( "https://www2.cs.uic.edu/~i101/SoundFiles/StarWars60.wav", _E.PLAY_SOUND_FLAG.SAMPLE_3D, function( channel, errorId, errorName ) print( channel, errorId, errorName ) end )
     
-    // not autoplaying and playing and stopping from callback:
+    // not autoplaying and playing and stopping from callback: (timers dont work in the menu because there is no tick/think there)
     // lua_run_cl Sounds.PlayUrl("https://www2.cs.uic.edu/~i101/SoundFiles/StarWars60.wav", _E.PLAY_SOUND_FLAG.SAMPLE_3D|_E.PLAY_SOUND_FLAG.DONT_PLAY, function( channel, errorId, errorName ) channel:Play() Timers.Simple(5,function() channel:Stop() end)end)
     luaL_argcheck( L, lua_isfunction( L, 3 ), 3, "expected function" );
 
-    // lua_pushvalue( L, 3 ); // The callbakc is already on the stack at index 3
-
     IAudioChannel *audioChannel = g_pBassManager->PlayUrlGetAudioChannel( url, flags );
+
+    if ( !audioChannel )
+    {
+        lua_pushaudiochannel( L, audioChannel );
+        lua_pushnil( L );  // TODO: implement errorId
+        lua_pushnil( L );  // TODO: implement errorString
+        lua_call( L, 3, 0 );  // Call the callback that is on the stack
+
+        return 0;
+    }
+
+    lua_pushaudiochannel( L, audioChannel );
+    lua_pushnil( L );  // TODO: implement errorId
+    lua_pushnil( L );  // TODO: implement errorString
+    lua_call( L, 3, 0 );  // Call the callback that is on the stack
+
+    return 0;
+}
+LUA_BINDING_END()
+
+// Experiment; TODO: This and related code is commented to reduce complexity and focus on the core features for now.
+//LUA_BINDING_BEGIN( Sounds, PlayUrlWithBlockCallback, "library", "Plays a sound from a URL with a callback for each chunk downloaded", "client" )
+//{
+//    const char *url = LUA_BINDING_ARGUMENT( luaL_checkstring, 1, "url" );
+//    int flags = LUA_BINDING_ARGUMENT_WITH_DEFAULT( luaL_optinteger, 2, PLAY_SOUND_FLAG::STREAM_BLOCK, "flags" );
+//
+//    // If a callback is provided, we call the callback when the sound is ready to be played
+//    // lua_run_menu Sounds.PlayUrlWithBlockCallback( "https://www2.cs.uic.edu/~i101/SoundFiles/StarWars3.wav", _E.PLAY_SOUND_FLAG.SAMPLE_3D, function( buffer ) print( buffer ) end )
+//    // long file:
+//    // lua_run_menu Sounds.PlayUrlWithBlockCallback( "https://www2.cs.uic.edu/~i101/SoundFiles/StarWars60.wav", _E.PLAY_SOUND_FLAG.SAMPLE_3D, function( buffer ) print( buffer ) end )
+//    luaL_argcheck( L, lua_isfunction( L, 3 ), 3, "expected function" );
+//
+//    // Create a reference to the callback function
+//    lua_pushvalue( L, 3 );
+//    int callbackRef = luaL_ref( L, LUA_REGISTRYINDEX );
+//
+//    CPlayUrlCallbackData *callbackData = new CPlayUrlCallbackData;
+//    callbackData->L = L;
+//    callbackData->callbackRef = callbackRef;
+//    g_pBassManager->PlayUrlWithBlockCallback( url, flags, CallLuaBlockDownloadedCallback, callbackData );
+//
+//    return 0;
+//}
+//LUA_BINDING_END()
+
+LUA_BINDING_BEGIN( Sounds, PlayFile, "library", "Plays a sound from a file.", "client" )
+{
+    const char *file = LUA_BINDING_ARGUMENT( luaL_checkstring, 1, "file" );
+    int flags = LUA_BINDING_ARGUMENT_WITH_DEFAULT( luaL_optinteger, 2, PLAY_SOUND_FLAG::STREAM_BLOCK, "flags" );
+
+    // If no callback is provided, we just play the sound
+    if ( lua_isnoneornil( L, 3 ) )
+    {
+        g_pBassManager->PlayFile( file, flags );
+        return 0;
+    }
+
+    // If a callback is provided, we call the callback when the sound is ready to be played
+    // lua_run_menu Sounds.PlayFile( "sound/ambient/levels/labs/teleport_alarm_loop1.wav", _E.PLAY_SOUND_FLAG.SAMPLE_3D, function( channel, errorId, errorName ) print( channel, errorId, errorName ) end )
+    luaL_argcheck( L, lua_isfunction( L, 3 ), 3, "expected function" );
+
+    IAudioChannel *audioChannel = g_pBassManager->PlayFileGetAudioChannel( file, flags );
 
     if ( !audioChannel )
     {
@@ -604,35 +698,12 @@ LUA_BINDING_BEGIN( Sounds, PlayUrl, "library", "Plays a sound from a URL.", "cli
     lua_pushaudiochannel( L, audioChannel );
     lua_pushnil( L );  // TODO: implement errorId
     lua_pushnil( L );  // TODO: implement errorString
-    lua_call( L, 3, 0 );
+    lua_call( L, 3, 0 ); // Call the callback that is on the stack
 
     return 0;
 }
 LUA_BINDING_END()
 
-LUA_BINDING_BEGIN( Sounds, PlayUrlWithBlockCallback, "library", "Plays a sound from a URL with a callback for each chunk downloaded", "client" )
-{
-    const char *url = LUA_BINDING_ARGUMENT( luaL_checkstring, 1, "url" );
-    int flags = LUA_BINDING_ARGUMENT_WITH_DEFAULT( luaL_optinteger, 2, PLAY_SOUND_FLAG::STREAM_BLOCK, "flags" );
-
-    // If a callback is provided, we call the callback when the sound is ready to be played
-    // lua_run_menu Sounds.PlayUrlWithBlockCallback( "https://www2.cs.uic.edu/~i101/SoundFiles/StarWars3.wav", _E.PLAY_SOUND_FLAG.SAMPLE_3D, function( buffer ) print( buffer ) end )
-    // long file:
-    // lua_run_menu Sounds.PlayUrlWithBlockCallback( "https://www2.cs.uic.edu/~i101/SoundFiles/StarWars60.wav", _E.PLAY_SOUND_FLAG.SAMPLE_3D, function( buffer ) print( buffer ) end )
-    luaL_argcheck( L, lua_isfunction( L, 3 ), 3, "expected function" );
-
-    // Create a reference to the callback function
-    lua_pushvalue( L, 3 );
-    int callbackRef = luaL_ref( L, LUA_REGISTRYINDEX );
-
-    CPlayUrlCallbackData *callbackData = new CPlayUrlCallbackData;
-    callbackData->L = L;
-    callbackData->callbackRef = callbackRef;
-    g_pBassManager->PlayUrlWithBlockCallback( url, flags, CallLuaBlockDownloadedCallback, callbackData );
-
-    return 0;
-}
-LUA_BINDING_END()
 #endif
 
 /*
