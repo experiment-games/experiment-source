@@ -19,6 +19,7 @@
 #include "beamdraw.h"
 #include "materialsystem/limaterial.h"
 #include "iviewrender_beams.h"
+#include <mathlib/lvmatrix.h>
 #endif
 
 // memdbgon must be the last include file in a .cpp file!!!
@@ -236,6 +237,51 @@ LUA_BINDING_BEGIN( Renders, PopCustomClipPlane, "library", "Pop a custom clip pl
 {
     CMatRenderContextPtr pRenderContext( materials );
     pRenderContext->PopCustomClipPlane();
+
+    return 0;
+}
+LUA_BINDING_END()
+
+LUA_BINDING_BEGIN( Renders, GetModelMatrix, "library", "Get the model matrix.", "client" )
+{
+    VMatrix matrix;
+    CMatRenderContextPtr pRenderContext( materials );
+    pRenderContext->GetMatrix( MATERIAL_MODEL, &matrix );
+    lua_pushvmatrix( L, matrix );
+
+    return 1;
+}
+LUA_BINDING_END( "VMatrix", "The model matrix." )
+
+LUA_BINDING_BEGIN( Renders, PushModelMatrix, "library", "Push a model matrix.", "client" )
+{
+    VMatrix matrix = LUA_BINDING_ARGUMENT( luaL_checkvmatrix, 1, "matrix" );
+    bool shouldMultiply = LUA_BINDING_ARGUMENT_WITH_DEFAULT( luaL_optboolean, 2, false, "shouldMultiply" );
+
+    CMatRenderContextPtr pRenderContext( materials );
+    pRenderContext->MatrixMode( MATERIAL_MODEL );
+    pRenderContext->PushMatrix();
+
+    // TODO: Is this the correct implementation, the same as how GMod does it?
+    if ( shouldMultiply )
+    {
+        pRenderContext->LoadMatrix( matrix );
+    }
+    else
+    {
+        pRenderContext->LoadIdentity();
+        pRenderContext->LoadMatrix( matrix );
+    }
+
+    return 0;
+}
+LUA_BINDING_END()
+
+LUA_BINDING_BEGIN( Renders, PopModelMatrix, "library", "Pop a model matrix.", "client" )
+{
+    CMatRenderContextPtr pRenderContext( materials );
+    pRenderContext->MatrixMode( MATERIAL_MODEL );
+    pRenderContext->PopMatrix();
 
     return 0;
 }
@@ -619,6 +665,89 @@ LUA_BINDING_BEGIN( Renders, DrawBeam, "library", "Draws a beam", "client" )
     return 0;
 }
 LUA_BINDING_END()
+
+#define STENCIL_COMPARISON_FUNCTION StencilComparisonFunction_t
+#define STENCIL_OPERATION StencilOperation_t
+
+LUA_BINDING_BEGIN( Renders, SetStencilCompareFunction, "library", "Set the stencil compare function.", "client" )
+{
+    CMatRenderContextPtr pRenderContext( materials );
+    pRenderContext->SetStencilCompareFunction( LUA_BINDING_ARGUMENT_ENUM( STENCIL_COMPARISON_FUNCTION, 1, "compareFunction" ) );
+    return 0;
+}
+LUA_BINDING_END()
+
+LUA_BINDING_BEGIN( Renders, SetStencilEnable, "library", "Set the stencil enable.", "client" )
+{
+    CMatRenderContextPtr pRenderContext( materials );
+    pRenderContext->SetStencilEnable( LUA_BINDING_ARGUMENT( lua_toboolean, 1, "enable" ) );
+    return 0;
+}
+LUA_BINDING_END()
+
+LUA_BINDING_BEGIN( Renders, SetStencilFailOperation, "library", "Set the stencil fail operation.", "client" )
+{
+    CMatRenderContextPtr pRenderContext( materials );
+    pRenderContext->SetStencilFailOperation( LUA_BINDING_ARGUMENT_ENUM( STENCIL_OPERATION, 1, "failOperation" ) );
+    return 0;
+}
+LUA_BINDING_END()
+
+LUA_BINDING_BEGIN( Renders, SetStencilPassOperation, "library", "Set the stencil pass operation.", "client" )
+{
+    CMatRenderContextPtr pRenderContext( materials );
+    pRenderContext->SetStencilPassOperation( LUA_BINDING_ARGUMENT_ENUM( STENCIL_OPERATION, 1, "passOperation" ) );
+    return 0;
+}
+LUA_BINDING_END()
+
+LUA_BINDING_BEGIN( Renders, SetStencilReferenceValue, "library", "Set the stencil reference value.", "client" )
+{
+    CMatRenderContextPtr pRenderContext( materials );
+    pRenderContext->SetStencilReferenceValue( LUA_BINDING_ARGUMENT( luaL_checknumber, 1, "referenceValue" ) );
+    return 0;
+}
+LUA_BINDING_END()
+
+LUA_BINDING_BEGIN( Renders, SetStencilTestMask, "library", "Set the stencil test mask.", "client" )
+{
+    CMatRenderContextPtr pRenderContext( materials );
+    pRenderContext->SetStencilTestMask( LUA_BINDING_ARGUMENT( luaL_checknumber, 1, "testMask" ) );
+    return 0;
+}
+LUA_BINDING_END()
+
+LUA_BINDING_BEGIN( Renders, SetStencilWriteMask, "library", "Set the stencil write mask.", "client" )
+{
+    CMatRenderContextPtr pRenderContext( materials );
+    pRenderContext->SetStencilWriteMask( LUA_BINDING_ARGUMENT( luaL_checknumber, 1, "writeMask" ) );
+    return 0;
+}
+LUA_BINDING_END()
+
+LUA_BINDING_BEGIN( Renders, SetStencilZFailOperation, "library", "Set the stencil z fail operation.", "client" )
+{
+    CMatRenderContextPtr pRenderContext( materials );
+    pRenderContext->SetStencilZFailOperation( LUA_BINDING_ARGUMENT_ENUM( STENCIL_OPERATION, 1, "zFailOperation" ) );
+    return 0;
+}
+LUA_BINDING_END()
+
+LUA_BINDING_BEGIN( Renders, ClearStencilBufferRectangle, "library", "Clear the stencil buffer rectangle.", "client" )
+{
+    int startX = LUA_BINDING_ARGUMENT( luaL_checknumber, 1, "startX" );
+    int startY = LUA_BINDING_ARGUMENT( luaL_checknumber, 2, "startY" );
+    int endX = LUA_BINDING_ARGUMENT( luaL_checknumber, 3, "endX" );
+    int endY = LUA_BINDING_ARGUMENT( luaL_checknumber, 4, "endY" );
+    int value = LUA_BINDING_ARGUMENT( luaL_checknumber, 5, "value" );
+
+    CMatRenderContextPtr pRenderContext( materials );
+    pRenderContext->ClearStencilBufferRectangle( startX, startY, endX, endY, value );
+
+    return 0;
+}
+LUA_BINDING_END()
+
 #endif  // CLIENT_DLL
 
 /*
@@ -632,6 +761,28 @@ LUALIB_API int luaopen_render( lua_State *L )
     LUA_SET_ENUM_LIB_BEGIN( L, "CULL_MODE" );
     lua_pushenum( L, MaterialCullMode_t::MATERIAL_CULLMODE_CCW, "COUNTER_CLOCKWISE" );
     lua_pushenum( L, MaterialCullMode_t::MATERIAL_CULLMODE_CW, "CLOCKWISE" );
+    LUA_SET_ENUM_LIB_END( L );
+
+    LUA_SET_ENUM_LIB_BEGIN( L, "STENCIL_COMPARISON_FUNCTION" );
+    lua_pushenum( L, StencilComparisonFunction_t::STENCILCOMPARISONFUNCTION_NEVER, "NEVER" );
+    lua_pushenum( L, StencilComparisonFunction_t::STENCILCOMPARISONFUNCTION_LESS, "LESS" );
+    lua_pushenum( L, StencilComparisonFunction_t::STENCILCOMPARISONFUNCTION_EQUAL, "EQUAL" );
+    lua_pushenum( L, StencilComparisonFunction_t::STENCILCOMPARISONFUNCTION_LESSEQUAL, "LESS_OR_EQUAL" );
+    lua_pushenum( L, StencilComparisonFunction_t::STENCILCOMPARISONFUNCTION_GREATER, "GREATER" );
+    lua_pushenum( L, StencilComparisonFunction_t::STENCILCOMPARISONFUNCTION_NOTEQUAL, "NOT_EQUAL" );
+    lua_pushenum( L, StencilComparisonFunction_t::STENCILCOMPARISONFUNCTION_GREATEREQUAL, "GREATER_OR_EQUAL" );
+    lua_pushenum( L, StencilComparisonFunction_t::STENCILCOMPARISONFUNCTION_ALWAYS, "ALWAYS" );
+    LUA_SET_ENUM_LIB_END( L );
+
+    LUA_SET_ENUM_LIB_BEGIN( L, "STENCIL_OPERATION" );
+    lua_pushenum( L, StencilOperation_t::STENCILOPERATION_KEEP, "KEEP" );
+    lua_pushenum( L, StencilOperation_t::STENCILOPERATION_ZERO, "ZERO" );
+    lua_pushenum( L, StencilOperation_t::STENCILOPERATION_REPLACE, "REPLACE" );
+    lua_pushenum( L, StencilOperation_t::STENCILOPERATION_INCRSAT, "INCREMENT_CLAMP" );
+    lua_pushenum( L, StencilOperation_t::STENCILOPERATION_DECRSAT, "DECREMENT_CLAMP" );
+    lua_pushenum( L, StencilOperation_t::STENCILOPERATION_INVERT, "INVERT" );
+    lua_pushenum( L, StencilOperation_t::STENCILOPERATION_INCR, "INCREMENT_WRAP" );
+    lua_pushenum( L, StencilOperation_t::STENCILOPERATION_DECR, "DECREMENT_WRAP" );
     LUA_SET_ENUM_LIB_END( L );
 #endif
 

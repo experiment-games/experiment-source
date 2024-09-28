@@ -257,7 +257,34 @@ system.IsOSX = Systems.IsOsx
 system.SteamTime = Systems.GetSteamServerRealTime
 system.UpTime = Systems.GetSecondsSinceComputerActive
 
-sound.PlayURL = Sounds.PlayUrl
+local function convertPlaySoundFlags(flagsAsString)
+    local flags = _E.PLAY_SOUND_FLAG.STREAM_BLOCK
+
+	if (not flagsAsString or type(flagsAsString) ~= "string") then
+		return flags
+	end
+
+	for flag in flagsAsString:gmatch("%S+") do
+		if (flag == "3d") then
+			flags = bit.bor(flags, _E.PLAY_SOUND_FLAG.SAMPLE_3D)
+		elseif (flag == "mono") then
+			flags = bit.bor(flags, _E.PLAY_SOUND_FLAG.SAMPLE_MONO)
+		elseif (flag == "noplay") then
+			flags = bit.bor(flags, _E.PLAY_SOUND_FLAG.DONT_PLAY)
+		elseif (flag == "noblock") then
+            -- Remove the STREAM_BLOCK flag
+			flags = bit.band(flags, bit.bnot(_E.PLAY_SOUND_FLAG.STREAM_BLOCK))
+		end
+	end
+end
+
+sound.PlayURL = function(path, flagsAsString, callback)
+    return Sounds.PlayUrl(path, convertPlaySoundFlags(flagsAsString), callback)
+end
+local oldPlayFile = Sounds.PlayFile
+sound.PlayFile = function(path, flagsAsString, callback)
+	return oldPlayFile(path, convertPlaySoundFlags(flagsAsString), callback)
+end
 
 local originalConCommandAdd = concommand.Add
 
@@ -482,6 +509,9 @@ debugoverlay.ScreenText = DebugOverlays.AddScreenText
 debugoverlay.SweptBox = DebugOverlays.AddSweptBox
 debugoverlay.Text = DebugOverlays.AddText
 debugoverlay.Triangle = DebugOverlays.AddTriangle
+
+local MATRIX_META = FindMetaTable("Matrix")
+MATRIX_META.Translate = MATRIX_META.PostTranslate
 
 local EFFECT_DATA_META = FindMetaTable("EffectData")
 EFFECT_DATA_META.GetEntIndex = EFFECT_DATA_META.GetEntityIndex
@@ -1070,6 +1100,10 @@ else
 				Renders.DepthRange(0, 1)
 			end
 		end,
+
+		GetModelMatrix = Renders.GetModelMatrix,
+        PushModelMatrix = Renders.PushModelMatrix,
+		PopModelMatrix = Renders.PopModelMatrix,
 	}
 
 	render.SetModelLighting = Renders.SetAmbientLightCube
