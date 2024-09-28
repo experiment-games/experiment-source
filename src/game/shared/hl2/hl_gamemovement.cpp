@@ -603,7 +603,7 @@ void CHL2GameMovement::FullLadderMove()
 
     float dist = MIN( dist1sqr, dist2sqr );
     bool neardismountnode = ( dist < 16.0f * 16.0f ) ? true : false;
-    float ladderUnitsPerTick = ( MAX_CLIMB_SPEED * gpGlobals->interval_per_tick );
+    float ladderUnitsPerTick = ( ClimbSpeed() * gpGlobals->interval_per_tick );
     bool neardismountnode2 = ( dist < ladderUnitsPerTick * ladderUnitsPerTick ) ? true : false;
 
     // Really close to node, cvar is set, and pressing a key, then simulate a +USE
@@ -1018,7 +1018,7 @@ bool CHL2GameMovement::LadderMove( void )
 
         VectorNormalize( jumpDir );
 
-        VectorScale( jumpDir, MAX_CLIMB_SPEED, mv->m_vecVelocity );
+        VectorScale( jumpDir, ClimbSpeed(), mv->m_vecVelocity );
         // Tracker 13558:  Don't add any extra z velocity if facing downward at all
         if ( m_vecForward.z >= 0.0f )
         {
@@ -1097,7 +1097,7 @@ bool CHL2GameMovement::LadderMove( void )
         }
 #endif  //_XBOX
 
-        mv->m_vecVelocity = MAX_CLIMB_SPEED * factor * ladderUp;
+        mv->m_vecVelocity = ClimbSpeed() * factor * ladderUp;
     }
     else
     {

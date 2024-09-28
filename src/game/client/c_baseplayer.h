@@ -282,6 +282,15 @@ class C_BasePlayer : public C_BaseCombatCharacter, public CGameEventListener
         return m_flRunSpeed;
     }
 
+    void SetLadderClimbSpeed( float flSpeed )
+    {
+        m_flLadderClimbSpeed = flSpeed;
+    }
+    float GetLadderClimbSpeed( void )
+    {
+        return m_flLadderClimbSpeed;
+    }
+
     void SetCrouchWalkFraction( float flSpeed )
     {
         m_flCrouchWalkFraction = flSpeed;
@@ -705,6 +714,7 @@ class C_BasePlayer : public C_BaseCombatCharacter, public CGameEventListener
     float m_flWalkSpeed;
     float m_flNormalSpeed;
     float m_flRunSpeed;
+    float m_flLadderClimbSpeed;
     float m_flCrouchWalkFraction;
     float m_flJumpPower; // In units
     // Time in milliseconds to go from standing to fully ducked

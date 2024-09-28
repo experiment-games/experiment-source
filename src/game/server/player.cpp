@@ -388,6 +388,7 @@ DEFINE_FIELD( v_angle, FIELD_VECTOR ),
     DEFINE_FIELD( m_flWalkSpeed, FIELD_FLOAT ),
     DEFINE_FIELD( m_flNormalSpeed, FIELD_FLOAT ),
     DEFINE_FIELD( m_flRunSpeed, FIELD_FLOAT ),
+    DEFINE_FIELD( m_flLadderClimbSpeed, FIELD_FLOAT ),
     DEFINE_FIELD( m_flCrouchWalkFraction, FIELD_FLOAT ),
     DEFINE_FIELD( m_flJumpPower, FIELD_FLOAT ),
 
@@ -8034,6 +8035,7 @@ SendPropDataTable( SENDINFO_DT( m_AttributeList ), &REFERENCE_SEND_TABLE( DT_Att
     SendPropFloat( SENDINFO( m_flWalkSpeed ), 12, SPROP_ROUNDDOWN, 0.0f, 2048.0f ),           // CL
     SendPropFloat( SENDINFO( m_flNormalSpeed ), 12, SPROP_ROUNDDOWN, 0.0f, 2048.0f ),         // CL
     SendPropFloat( SENDINFO( m_flRunSpeed ), 12, SPROP_ROUNDDOWN, 0.0f, 2048.0f ),            // CL
+    SendPropFloat( SENDINFO( m_flLadderClimbSpeed ), 12, SPROP_ROUNDDOWN, 0.0f, 2048.0f ),    // CL
     SendPropFloat( SENDINFO( m_flCrouchWalkFraction ), 12, SPROP_ROUNDDOWN, 0.0f, 2048.0f ),  // CL
     SendPropFloat( SENDINFO( m_flJumpPower ), 12, SPROP_ROUNDDOWN, 0.0f, 2048.0f ),           // CL
     SendPropFloat( SENDINFO( m_flDuckSpeed ), 12, SPROP_ROUNDDOWN, 0.0f, 2048.0f ),           // CL

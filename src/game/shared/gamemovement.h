@@ -185,7 +185,7 @@ class CGameMovement : public IGameMovement
     }
     virtual float ClimbSpeed( void ) const
     {
-        return MAX_CLIMB_SPEED;
+        return player->GetLadderClimbSpeed();
     }
     virtual float LadderLateralMultiplier( void ) const
     {

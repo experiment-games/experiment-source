@@ -1039,6 +1039,22 @@ LUA_BINDING_BEGIN( Player, GetRunSpeed, "class", "Get the player's sprint speed.
 }
 LUA_BINDING_END( "number", "The player's sprint speed." )
 
+LUA_BINDING_BEGIN( Player, SetLadderClimbSpeed, "class", "Set the player's ladder climb speed." )
+{
+    lua_CBasePlayer *player = LUA_BINDING_ARGUMENT( luaL_checkplayer, 1, "player" );
+    player->SetLadderClimbSpeed( LUA_BINDING_ARGUMENT( luaL_checknumber, 2, "speed" ) );
+    return 0;
+}
+LUA_BINDING_END()
+
+LUA_BINDING_BEGIN( Player, GetLadderClimbSpeed, "class", "Get the player's ladder climb speed." )
+{
+    lua_CBasePlayer *player = LUA_BINDING_ARGUMENT( luaL_checkplayer, 1, "player" );
+    lua_pushnumber( L, player->GetLadderClimbSpeed() );
+    return 1;
+}
+LUA_BINDING_END( "number", "The player's ladder climb speed." )
+
 LUA_BINDING_BEGIN( Player, SetCrouchWalkFraction, "class", "Set the fraction by which player's walk speed will be multiplied when crouched." )
 {
     lua_CBasePlayer *player = LUA_BINDING_ARGUMENT( luaL_checkplayer, 1, "player" );

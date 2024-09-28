@@ -967,6 +967,15 @@ class CBasePlayer : public CBaseCombatCharacter
         return m_flRunSpeed;
     }
 
+    void SetLadderClimbSpeed( float flSpeed )
+    {
+        m_flLadderClimbSpeed = flSpeed;
+    }
+    float GetLadderClimbSpeed( void )
+    {
+        return m_flLadderClimbSpeed;
+    }
+
     void SetCrouchWalkFraction( float flSpeed )
     {
         m_flCrouchWalkFraction = flSpeed;
@@ -1444,6 +1453,7 @@ class CBasePlayer : public CBaseCombatCharacter
     CNetworkVar( float, m_flWalkSpeed );
     CNetworkVar( float, m_flNormalSpeed );
     CNetworkVar( float, m_flRunSpeed );
+    CNetworkVar( float, m_flLadderClimbSpeed );
     CNetworkVar( float, m_flCrouchWalkFraction );
     CNetworkVar( float, m_flJumpPower );
     CNetworkVar( float, m_flDuckSpeed );

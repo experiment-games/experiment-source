@@ -3006,7 +3006,7 @@ bool CGameMovement::LadderMove( void )
 
             if ( onFloor && normal > 0 )  // On ground moving away from the ladder
             {
-                VectorMA( mv->m_vecVelocity, MAX_CLIMB_SPEED, pm.plane.normal, mv->m_vecVelocity );
+                VectorMA( mv->m_vecVelocity, ClimbSpeed(), pm.plane.normal, mv->m_vecVelocity );
             }
             // pev->velocity = lateral - (CrossProduct( trace.vecPlaneNormal, perp ) * normal);
         }
