@@ -79,6 +79,18 @@ class CLuaWebConnectionManager
         }
     }
 
+    LuaWebConnectionHandle *GetRequest( HTTPRequestHandle handle )
+    {
+        int index = m_WebConnectionsMap.Find( handle );
+
+        if ( index != m_WebConnectionsMap.InvalidIndex() )
+        {
+            return m_WebConnectionsMap[ index ];
+        }
+
+        return nullptr;
+    }
+
     STEAM_CALLBACK( CLuaWebConnectionManager, OnHTTPHeader, HTTPRequestHeadersReceived_t );
     STEAM_CALLBACK( CLuaWebConnectionManager, OnHTTPData, HTTPRequestDataReceived_t );
     void OnHTTPComplete( HTTPRequestCompleted_t *pParam, bool bIO );

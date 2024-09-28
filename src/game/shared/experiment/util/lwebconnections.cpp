@@ -8,6 +8,53 @@
 static CLuaWebConnectionManager s_LuaWebConnectionManager;
 extern CLuaWebConnectionManager *g_pLuaWebConnectionManager = &s_LuaWebConnectionManager;
 
+#define WEBCONNECTIONSHEADERSMETANAME "WebConnectionHeadersHandle"
+
+LUA_REGISTRATION_INIT( WebConnectionHeadersHandle )
+
+LUA_BINDING_BEGIN( WebConnectionHeadersHandle, __index, "class", "Get the headers of the HTTP request", "client" )
+{
+    // Check if the first argument is a WebConnectionHeadersHandle
+    luaL_getmetatable( L, WEBCONNECTIONSHEADERSMETANAME );
+    lua_getmetatable( L, 1 );
+
+    if (!lua_istable( L, 1 ) || !lua_rawequal( L, -1, -2 ))
+    {
+        luaL_typeerror( L, 1, WEBCONNECTIONSHEADERSMETANAME );
+        return 0;
+    }
+
+    lua_getfield( L, 1, "__handle" );
+    HTTPRequestHandle handle = ( uint32 )luaL_checknumber( L, -1 );
+
+    const char *headerName = LUA_BINDING_ARGUMENT( luaL_checkstring, 2, "headerName" );
+
+    uint32 size;
+    if ( !SteamHTTP()->GetHTTPResponseHeaderSize( handle, headerName, &size ) )
+    {
+        lua_pushnil( L );
+        return 1;
+    }
+
+    uint8 *pData = new uint8[size + 1];
+
+    if ( !SteamHTTP()->GetHTTPResponseHeaderValue( handle, headerName, pData, size ) )
+    {
+        delete[] pData;
+        lua_pushnil( L );
+        return 1;
+    }
+
+    // Null-terminate
+    pData[size] = 0;
+
+    lua_pushstring( L, reinterpret_cast< const char * >( pData ) );
+
+    delete[] pData;
+    return 1;
+}
+LUA_BINDING_END()
+
 LuaWebConnectionHandle::~LuaWebConnectionHandle()
 {
     if ( m_CompleteResult )
@@ -36,8 +83,15 @@ void LuaWebConnectionHandle::CallSuccessCallback( EHTTPStatusCode statusCode, co
     lua_rawgeti( m_L, LUA_REGISTRYINDEX, m_SuccessCallback );
     lua_pushinteger( m_L, statusCode );
     lua_pushlstring( m_L, body, bodySize );
-    lua_newtable( m_L );  // TODO: Find a way to get all headers in the Steamworks API (if possible)
-    // Otherwise create a __index metamethod to get the headers with GetHTTPResponseHeaderValue
+    // lua_newtable( m_L );
+    //  The Steamworks API doesn't provide a way to get all the headers, so we push a table with a __index metamethod that will forward to GetHTTPResponseHeaderValue
+    lua_newtable( m_L );
+    lua_pushnumber( m_L, ( uint32 )m_Handle );
+    lua_setfield( m_L, -2, "__handle" );
+
+    luaL_getmetatable( m_L, WEBCONNECTIONSHEADERSMETANAME );
+    lua_setmetatable( m_L, -2 );
+
     luasrc_pcall( m_L, 3, 0 );
 }
 
@@ -186,9 +240,7 @@ LUA_REGISTRATION_INIT( WebConnections )
 // GET with parameters:
 // lua_run_menu PARAMETERS = KeyValues.Create("parameters") PARAMETERS:SetString("name", "value")
 // lua_run_menu WebConnections.RequestHttpMethod( "https://www.postb.in/1727536026647-4169531788211", "GET", nil, PARAMETERS, nil, nil, nil, function( code, body, headers ) print( "body", code, body, headers ) end, function( error ) print( "err", error ) end )
-// GET with headers:
-// lua_run_menu HEADERS = KeyValues.Create("headers") HEADERS:SetString("User-Agent", "Mozilla/5.0")
-// lua_run_menu WebConnections.RequestHttpMethod( "https://www.postb.in/1727536026647-4169531788211", "GET", nil, nil, HEADERS, nil, nil, function( code, body, headers ) print( "body", code, body, headers ) end, function( error ) print( "err", error ) end )
+// lua_run_menu WebConnections.RequestHttpMethod( "https://www.postb.in/1727537932498-3552409373223", "GET", nil, nil, nil, nil, nil, function( code, body, headers ) print( "body", code, body, headers, type(headers), headers["Content-Length"] ) end )
 LUA_BINDING_BEGIN( WebConnections, RequestHttpMethod, "library", "Performs an HTTP request of the specified method", "client" )
 {
     const char *url = LUA_BINDING_ARGUMENT( luaL_checkstring, 1, "url" );
@@ -336,5 +388,13 @@ LUA_BINDING_END()
 LUALIB_API int luaopen_WebConnections( lua_State *L )
 {
     LUA_REGISTRATION_COMMIT_LIBRARY( WebConnections );
+
+    LUA_PUSH_NEW_METATABLE( L, WEBCONNECTIONSHEADERSMETANAME );
+
+    LUA_REGISTRATION_COMMIT( WebConnectionHeadersHandle );
+
+    lua_pushstring( L, WEBCONNECTIONSHEADERSMETANAME );
+    lua_setfield( L, -2, "__type" ); /* metatable.__type = "WebConnectionHeadersHandle" */
+
     return 1;
 }
