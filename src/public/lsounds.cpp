@@ -588,16 +588,16 @@ void CPlayUrlCallbackData::Release()
     lua_unref( L, callbackRef );
 }
 
-void CALLBACK CallLuaBlockDownloadedCallback( const void *buffer, DWORD length, void *user )
-{
-    CPlayUrlCallbackData *callbackData = ( CPlayUrlCallbackData * )user;
-    lua_State *L = callbackData->L;
-    int callbackRef = callbackData->callbackRef;
-
-    lua_rawgeti( L, LUA_REGISTRYINDEX, callbackRef );
-    lua_pushlstring( L, ( const char * )buffer, length );
-    lua_call( L, 1, 0 );
-}
+//void CALLBACK CallLuaBlockDownloadedCallback( const void *buffer, DWORD length, void *user )
+//{
+//    CPlayUrlCallbackData *callbackData = ( CPlayUrlCallbackData * )user;
+//    lua_State *L = callbackData->L;
+//    int callbackRef = callbackData->callbackRef;
+//
+//    lua_rawgeti( L, LUA_REGISTRYINDEX, callbackRef );
+//    lua_pushlstring( L, ( const char * )buffer, length );
+//    luasrc_pcall( L, 1, 0 );
+//}
 
 // E.g: lua_run_menu Sounds.PlayUrl("https://www2.cs.uic.edu/~i101/SoundFiles/StarWars3.wav")
 LUA_BINDING_BEGIN( Sounds, PlayUrl, "library", "Plays a sound from a URL.", "client" )
@@ -628,7 +628,7 @@ LUA_BINDING_BEGIN( Sounds, PlayUrl, "library", "Plays a sound from a URL.", "cli
         lua_pushaudiochannel( L, audioChannel );
         lua_pushnil( L );  // TODO: implement errorId
         lua_pushnil( L );  // TODO: implement errorString
-        lua_call( L, 3, 0 );  // Call the callback that is on the stack
+        luasrc_pcall( L, 3, 0 );  // Call the callback that is on the stack
 
         return 0;
     }
@@ -636,7 +636,7 @@ LUA_BINDING_BEGIN( Sounds, PlayUrl, "library", "Plays a sound from a URL.", "cli
     lua_pushaudiochannel( L, audioChannel );
     lua_pushnil( L );  // TODO: implement errorId
     lua_pushnil( L );  // TODO: implement errorString
-    lua_call( L, 3, 0 );  // Call the callback that is on the stack
+    luasrc_pcall( L, 3, 0 );  // Call the callback that is on the stack
 
     return 0;
 }
@@ -690,7 +690,7 @@ LUA_BINDING_BEGIN( Sounds, PlayFile, "library", "Plays a sound from a file.", "c
         lua_pushaudiochannel( L, audioChannel );
         lua_pushnil( L );  // TODO: implement errorId
         lua_pushnil( L );  // TODO: implement errorString
-        lua_call( L, 3, 0 );
+        luasrc_pcall( L, 3, 0 );
 
         return 0;
     }
@@ -698,7 +698,7 @@ LUA_BINDING_BEGIN( Sounds, PlayFile, "library", "Plays a sound from a file.", "c
     lua_pushaudiochannel( L, audioChannel );
     lua_pushnil( L );  // TODO: implement errorId
     lua_pushnil( L );  // TODO: implement errorString
-    lua_call( L, 3, 0 ); // Call the callback that is on the stack
+    luasrc_pcall( L, 3, 0 );  // Call the callback that is on the stack
 
     return 0;
 }

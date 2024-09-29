@@ -87,6 +87,7 @@ Additionally, we use the following conventions:
     - `Ime` (short for input method editor)
     - `Init` (short for initialize)
     - `Json`, `Xml`, `Html`, `Css` and other data format/language names
+    - `Lerp` (short for linear interpolation)
     - `Obb` (short for oriented bounding box)
     - `Rgb`, `Rgba`, `Hsv`, `Hsl` and other color spaces
     - `Sqr` (short for square root)

@@ -1062,7 +1062,8 @@ int Panel::GetYPos()
 //-----------------------------------------------------------------------------
 void Panel::SetSize( int wide, int tall )
 {
-    Assert( abs( wide ) < 32768 && abs( tall ) < 32768 );
+    // Experiment; Commented out this assert, because scrollable panels may be way larger than 32768
+    //Assert( abs( wide ) < 32768 && abs( tall ) < 32768 );
     ipanel()->SetSize( GetVPanel(), wide, tall );
 }
 

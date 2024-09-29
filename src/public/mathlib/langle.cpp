@@ -351,6 +351,16 @@ LUA_BINDING_BEGIN( Angles, Create, "library", "Creates a new angle." )
 }
 LUA_BINDING_END( "Angle", "The created angle." )
 
+LUA_BINDING_BEGIN( Angles, Lerp, "library", "Linearly interpolates between two angles." )
+{
+    float fraction = LUA_BINDING_ARGUMENT( luaL_checknumber, 1, "fraction" );
+    lua_QAngle angleStart = LUA_BINDING_ARGUMENT( luaL_checkangle, 2, "angleStart" );
+    lua_QAngle angleEnd = LUA_BINDING_ARGUMENT( luaL_checkangle, 3, "angleEnd" );
+    lua_pushangle( L, Lerp< QAngle >( fraction, angleStart, angleEnd ) );
+    return 1;
+}
+LUA_BINDING_END( "Angle", "The interpolated angle." )
+
 /*
 ** Open QAngle object
 */

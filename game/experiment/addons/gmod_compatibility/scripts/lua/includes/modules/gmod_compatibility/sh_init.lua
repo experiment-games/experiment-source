@@ -249,6 +249,7 @@ Player = Players.FindByUserId
 PrecacheParticleSystem = ParticleSystems.Precache
 GetPredictionPlayer = Predictions.GetPredictionPlayer
 IsFirstTimePredicted = Predictions.IsFirstTimePredicted
+LerpAngle = Angles.Lerp
 LerpVector = Vectors.Lerp
 
 RecipientFilter = RecipientFilters.Create
@@ -629,6 +630,21 @@ ENTITY_META.SetNoCollideWithTeammates = ENTITY_META.SetNoCollidingWithTeammates
 ENTITY_META.SetColor = ENTITY_META.SetRenderColor
 ENTITY_META.GetColor = ENTITY_META.GetRenderColor
 ENTITY_META.GetSequenceList = ENTITY_META.GetSequences
+
+function ENTITY_META:GetForward()
+    local forward, _, _ = self:GetVectors()
+	return forward
+end
+
+function ENTITY_META:GetRight()
+    local _, right, _ = self:GetVectors()
+    return right
+end
+
+function ENTITY_META:GetUp()
+	local _, _, up = self:GetVectors()
+	return up
+end
 
 function ENTITY_META:GetDTAngle(index)
 	return self:GetNetworkDataValue(_E.NETWORK_VARIABLE_TYPE.ANGLE, index)
@@ -1118,7 +1134,8 @@ else
 		SetMousePos = input.SetCursorPosition,
 		ScreenToVector = input.ScreenToWorld,
 		AimToVector = input.AimToVector,
-		IsConsoleVisible = Engines.IsConsoleVisible,
+        IsConsoleVisible = Engines.IsConsoleVisible,
+		IsGameUIVisible = EngineVgui.IsGameUiVisible,
 	}
 
 	cam = {
@@ -1291,7 +1308,9 @@ else
 
 	local LABEL_PANEL_META = FindMetaTable("Label")
 	LABEL_PANEL_META._OriginalSetFont = LABEL_PANEL_META._OriginalSetFont or LABEL_PANEL_META.SetFont
-	LABEL_PANEL_META._OriginalGetFont = LABEL_PANEL_META._OriginalGetFont or LABEL_PANEL_META.GetFont
+    LABEL_PANEL_META._OriginalGetFont = LABEL_PANEL_META._OriginalGetFont or LABEL_PANEL_META.GetFont
+    LABEL_PANEL_META.SetTextColor = LABEL_PANEL_META.SetForegroundColor
+	LABEL_PANEL_META.GetTextColor = LABEL_PANEL_META.GetForegroundColor
 	LABEL_PANEL_META._OriginalSetContentAlignment = LABEL_PANEL_META._OriginalSetContentAlignment or
 		LABEL_PANEL_META.SetContentAlignment
 

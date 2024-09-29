@@ -24,7 +24,7 @@ LUA_BINDING_BEGIN( EngineVgui, GetPanel, "library", "Get a VGUI panel instance b
 }
 LUA_BINDING_END( "VPanel", "The VGUI panel instance." )
 
-LUA_BINDING_BEGIN( EngineVgui, IsGameUIVisible, "library", "Check if the game UI is currently visible." )
+LUA_BINDING_BEGIN( EngineVgui, IsGameUiVisible, "library", "Check if the game UI is currently visible." )
 {
     lua_pushboolean( L, enginevgui->IsGameUIVisible() );
     return 1;

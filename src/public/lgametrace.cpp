@@ -260,7 +260,7 @@ bool CTraceLuaFilter::ShouldHitEntity( IHandleEntity *pHandleEntity, int content
     {
         lua_pushvalue( m_pLuaState, m_iFilterArgIndex );
         CBaseEntity::PushLuaInstanceSafe( m_pLuaState, EntityFromEntityHandle( pHandleEntity ) );
-        lua_call( m_pLuaState, 1, 1 );
+        luasrc_pcall( m_pLuaState, 1, 1 );
 
         if ( lua_isboolean( m_pLuaState, -1 ) )
         {
