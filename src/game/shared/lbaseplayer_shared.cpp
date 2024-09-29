@@ -186,7 +186,9 @@ LUA_BINDING_END( "integer", "The player's ammo count." )
 LUA_BINDING_BEGIN( Player, GetAimVector, "class", "Get the player's autoaim vector." )
 {
     lua_CBasePlayer *player = LUA_BINDING_ARGUMENT( luaL_checkplayer, 1, "player" );
-    Vector v = player->GetAutoaimVector( LUA_BINDING_ARGUMENT_WITH_DEFAULT( luaL_optnumber, 2, 1, "scale" ) );
+    // Commented to prevent errors with the Helix gamemode which has a type in cl_hooks.lua: `lastTrace.endpos = lastTrace.start + client:GetAimVector(client) * 160`
+    //Vector v = player->GetAutoaimVector( LUA_BINDING_ARGUMENT_WITH_DEFAULT( luaL_optnumber, 2, 1, "scale" ) );
+    Vector v = player->GetAutoaimVector( 1 );
     lua_pushvector( L, v );
     return 1;
 }

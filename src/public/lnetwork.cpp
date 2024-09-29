@@ -475,9 +475,7 @@ LUA_BINDING_END( "Angle", "The angle read." )
 LUA_BINDING_BEGIN( MessageReader, ReadUInt, "class", "Reads an unsigned integer" )
 {
     bf_read *bf = LUA_BINDING_ARGUMENT( luaL_checkbf_read, 1, "reader" );
-    QAngle ang;
-    bf->ReadBitAngles( ang );
-    lua_pushangle( L, ang );
+    lua_pushinteger( L, bf->ReadUBitLong( LUA_BINDING_ARGUMENT( luaL_checknumber, 2, "numBits" ) ) );
     return 1;
 }
 LUA_BINDING_END( "integer", "The integer read." )
@@ -538,11 +536,11 @@ LUA_BINDING_BEGIN( MessageReader, ReadBitLong, "class", "Reads an signed/unsigne
 
     if ( isSigned )
     {
-        lua_pushinteger( L, bf->ReadUBitLong( LUA_BINDING_ARGUMENT( luaL_checknumber, 2, "numBits" ) ) );
+        lua_pushinteger( L, bf->ReadSBitLong( LUA_BINDING_ARGUMENT( luaL_checknumber, 2, "numBits" ) ) );
     }
     else
     {
-        lua_pushinteger( L, bf->ReadSBitLong( LUA_BINDING_ARGUMENT( luaL_checknumber, 2, "numBits" ) ) );
+        lua_pushinteger( L, bf->ReadUBitLong( LUA_BINDING_ARGUMENT( luaL_checknumber, 2, "numBits" ) ) );
     }
 
     return 1;
@@ -734,13 +732,13 @@ LUA_BINDING_BEGIN( MessageWriter, WriteBitLong, "class", "Writes an signed/unsig
 
     if ( isSigned )
     {
-        bf->WriteUBitLong(
+        bf->WriteSBitLong(
             LUA_BINDING_ARGUMENT( luaL_checknumber, 2, "value" ),
             LUA_BINDING_ARGUMENT( luaL_checknumber, 3, "numBits" ) );
     }
     else
     {
-        bf->WriteSBitLong(
+        bf->WriteUBitLong(
             LUA_BINDING_ARGUMENT( luaL_checknumber, 2, "value" ),
             LUA_BINDING_ARGUMENT( luaL_checknumber, 3, "numBits" ) );
     }

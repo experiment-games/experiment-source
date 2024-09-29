@@ -171,6 +171,24 @@ LUA_BINDING_BEGIN( CBaseAnimating, GetNumFlexControllers, "class", "Get the numb
 }
 LUA_BINDING_END( "integer", "The number of flex controllers" )
 
+LUA_BINDING_BEGIN( CBaseAnimating, GetBoneCount, "class", "Get the amount of bones this entity has in its model." )
+{
+    lua_CBaseAnimating *pAnimating = LUA_BINDING_ARGUMENT( luaL_checkanimating, 1, "entity" );
+
+    CStudioHdr *pstudiohdr = pAnimating->GetModelPtr();
+
+    if ( !pstudiohdr )
+    {
+        Warning( "CBaseAnimating::GetBoneCount failed: no model\n" );
+        return 0;
+    }
+
+    lua_pushinteger( L, pstudiohdr->numbones() );
+
+    return 1;
+}
+LUA_BINDING_END( "integer", "The amount of bones" )
+
 LUA_BINDING_BEGIN( CBaseAnimating, GetModelName, "class", "Get the model path of the entity" )
 {
     lua_CBaseAnimating *pAnimating = LUA_BINDING_ARGUMENT( luaL_checkanimating, 1, "entity" );
