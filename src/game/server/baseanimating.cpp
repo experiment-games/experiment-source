@@ -1222,8 +1222,8 @@ void CBaseAnimating::HandleAnimEvent( animevent_t *pEvent )
 float CBaseAnimating::SetPoseParameter( CStudioHdr *pStudioHdr, const char *szName, float flValue )
 {
     int poseParam = LookupPoseParameter( pStudioHdr, szName );
-    // Experiment; TODO: Note that the model we are currently using doesn't have a move_yaw parameter. Hence we're getting this assert (ignore it for now). The same assert is also spammed in gmod for this model I believe.
-    AssertMsg2( poseParam >= 0, "SetPoseParameter called with invalid argument %s by %s", szName, GetDebugName() );
+    // Experiment; TODO: Note that the model we are currently using doesn't have a move_yaw parameter. Hence we're getting this assert. For gmod compat we just commented this, since gmod doesnt complain either and does nothing
+    // AssertMsg2( poseParam >= 0, "SetPoseParameter called with invalid argument %s by %s", szName, GetDebugName() );
     return SetPoseParameter( pStudioHdr, poseParam, flValue );
 }
 

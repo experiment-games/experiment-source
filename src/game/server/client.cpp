@@ -1111,6 +1111,69 @@ void CC_Player_Use( const CCommand &args )
 }
 static ConCommand use( "use", CC_Player_Use, "Use a particular weapon\t\nArguments: <weapon_name>" );
 
+// For Garry's Mod compatibility we implement gm_showhelp (F1), gm_showteam (F2), gm_showspare1 (F3), gm_showspare2 (F4)
+#ifdef EXPERIMENT_SOURCE
+void CC_ShowHelp( const CCommand &args )
+{
+    CBasePlayer *pPlayer = ToBasePlayer( UTIL_GetCommandClient() );
+
+    if ( !pPlayer || !L )
+    {
+        return;
+    }
+
+    LUA_CALL_HOOK_BEGIN( "ShowHelp" );
+    CBasePlayer::PushLuaInstanceSafe( L, pPlayer );
+    LUA_CALL_HOOK_END( 1, 0 );
+}
+static ConCommand gm_showhelp( "gm_showhelp", CC_ShowHelp );
+
+void CC_ShowTeam( const CCommand &args )
+{
+    CBasePlayer *pPlayer = ToBasePlayer( UTIL_GetCommandClient() );
+
+    if ( !pPlayer || !L )
+    {
+        return;
+    }
+
+    LUA_CALL_HOOK_BEGIN( "ShowTeam" );
+    CBasePlayer::PushLuaInstanceSafe( L, pPlayer );
+    LUA_CALL_HOOK_END( 1, 0 );
+}
+static ConCommand gm_showteam( "gm_showteam", CC_ShowTeam );
+
+void CC_ShowSpare1( const CCommand &args )
+{
+    CBasePlayer *pPlayer = ToBasePlayer( UTIL_GetCommandClient() );
+
+    if ( !pPlayer || !L )
+    {
+        return;
+    }
+
+    LUA_CALL_HOOK_BEGIN( "ShowSpare1" );
+    CBasePlayer::PushLuaInstanceSafe( L, pPlayer );
+    LUA_CALL_HOOK_END( 1, 0 );
+}
+static ConCommand gm_showspare1( "gm_showspare1", CC_ShowSpare1 );
+
+void CC_ShowSpare2( const CCommand &args )
+{
+    CBasePlayer *pPlayer = ToBasePlayer( UTIL_GetCommandClient() );
+
+    if ( !pPlayer || !L )
+    {
+        return;
+    }
+
+    LUA_CALL_HOOK_BEGIN( "ShowSpare2" );
+    CBasePlayer::PushLuaInstanceSafe( L, pPlayer );
+    LUA_CALL_HOOK_END( 1, 0 );
+}
+static ConCommand gm_showspare2( "gm_showspare2", CC_ShowSpare2 );
+#endif
+
 //------------------------------------------------------------------------------
 // A small wrapper around SV_Move that never clips against the supplied entity.
 //------------------------------------------------------------------------------

@@ -707,6 +707,14 @@ void IN_ScoreDown( const CCommand &args )
     KeyDown( &in_score, args[1] );
     if ( gViewPortInterface )
     {
+        if ( L )
+        {
+            LUA_CALL_HOOK_BEGIN( "ScoreboardShow" );
+            LUA_CALL_HOOK_END( 0, 1 );
+
+            LUA_RETURN_NONE_IF_TRUE();
+        }
+
         gViewPortInterface->ShowPanel( PANEL_SCOREBOARD, true );
     }
 }
@@ -716,6 +724,12 @@ void IN_ScoreUp( const CCommand &args )
     KeyUp( &in_score, args[1] );
     if ( gViewPortInterface )
     {
+        if ( L )
+        {
+            LUA_CALL_HOOK_BEGIN( "ScoreboardHide" );
+            LUA_CALL_HOOK_END( 0, 0 );
+        }
+
         gViewPortInterface->ShowPanel( PANEL_SCOREBOARD, false );
         GetClientVoiceMgr()->StopSquelchMode();
     }
