@@ -39,6 +39,12 @@ void CLuaBase::SetState( lua_StateWithCompat *LCompat )
 /// <returns></returns>
 int CompatFunctionWrapper( lua_State *L )
 {
+    if ( !g_bLuaInitialized )
+    {
+        // Prevent issues where this function is called during/after lua_close
+        return 0;
+    }
+
     GarrysMod::Lua::CFunc originalFunc = *static_cast< GarrysMod::Lua::CFunc * >( lua_touserdata( L, lua_upvalueindex( 1 ) ) );
     lua_StateWithCompat *compatState = CreateLuaStateWithCompat( L );
 
