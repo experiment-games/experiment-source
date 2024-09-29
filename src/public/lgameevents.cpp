@@ -4,6 +4,7 @@
 #include <lgameevents.h>
 #include <igameevents.h>
 #include <lcolor.h>
+#include <LKeyValues.h>
 
 // memdbgon must be the last include file in a .cpp file!!!
 #include "tier0/memdbgon.h"
@@ -31,20 +32,8 @@ class CLuaGameEventListener : public IGameEventListener2
         const char *eventName = event->GetName();
 
         LUA_CALL_HOOK_FOR_STATE_BEGIN( this->L, eventName );
-        int amountOfArguments = 0;
-
-        // TODO: Other game events
-        if (Q_strcmp(eventName, "player_spawn") == 0)
-        {
-            lua_pushinteger(this->L, event->GetInt("userid"));
-            amountOfArguments++;
-        }
-        else
-        {
-			DevMsg("Unimplemented game event called: %s\n", eventName);
-		}
-
-        LUA_CALL_HOOK_FOR_STATE_END( this->L, amountOfArguments, 0 );
+        lua_pushkeyvalues_as_table( this->L, event->m_pDataKeys );
+        LUA_CALL_HOOK_FOR_STATE_END( this->L, 1, 0 );
     }
 };
 

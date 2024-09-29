@@ -70,8 +70,10 @@ end
 local originalRandomSeed = math.randomseed
 
 function math.randomseed(seed)
-	originalRandomSeed(math.floor(seed))
+    originalRandomSeed(math.floor(seed))
 end
+
+timer.RepsLeft = Timers.RepetitionsLeft
 
 util = Utilities
 util.PrecacheModel = _R.Entity.PrecacheModel
@@ -242,6 +244,7 @@ engine.TickCount = Engines.GetTickCount
 engine.TickInterval = Engines.GetIntervalPerTick
 SoundDuration = Engines.GetSoundDuration
 GetHostName = Engines.GetServerName
+Player = Players.FindByUserId
 
 PrecacheParticleSystem = ParticleSystems.Precache
 GetPredictionPlayer = Predictions.GetPredictionPlayer

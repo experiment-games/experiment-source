@@ -45,6 +45,46 @@ LUALIB_API lua_KeyValues *luaL_optkeyvalues( lua_State *L, int narg, KeyValues *
     return luaL_opt( L, luaL_checkkeyvalues, narg, def );
 }
 
+/// <summary>
+/// Pushes a KeyValues object as a table onto the stack.
+/// </summary>
+/// <param name="L">The Lua state.</param>
+/// <param name="pKV">The KeyValues object.</param>
+LUA_API void lua_pushkeyvalues_as_table( lua_State *L, lua_KeyValues *pKV )
+{
+    lua_newtable( L );
+
+    for ( KeyValues *subKey = pKV->GetFirstSubKey(); subKey != NULL; subKey = subKey->GetNextKey() )
+    {
+        const char *keyName = subKey->GetName();
+
+        lua_pushstring( L, keyName );
+
+        switch ( subKey->GetDataType() )
+        {
+            case KeyValues::TYPE_STRING:
+                lua_pushstring( L, subKey->GetString() );
+                break;
+            case KeyValues::TYPE_INT:
+                lua_pushinteger( L, subKey->GetInt() );
+                break;
+            case KeyValues::TYPE_FLOAT:
+                lua_pushnumber( L, subKey->GetFloat() );
+                break;
+            case KeyValues::TYPE_COLOR:
+                lua_pushcolor( L, subKey->GetColor() );
+                break;
+            default:
+                lua_pushnil( L );
+                // Experiment; TODO: Shouldn't we handle sub-keyvalues?
+                break;
+        }
+
+        lua_settable( L, -3 );
+    }
+}
+
+
 LUA_REGISTRATION_INIT( KeyValuesHandle )
 
 LUA_BINDING_BEGIN( KeyValuesHandle, AddSubKey, "class", "Add a subkey to the keyvalues." )

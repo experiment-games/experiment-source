@@ -525,14 +525,6 @@ LUA_BINDING_BEGIN( MessageReader, ReadEntity, "class", "Reads an entity." )
         return 1;
     }
 
-    CBaseHandle handle = pEntity->GetRefEHandle();
-
-    if ( handle.GetSerialNumber() != iSerialNum )
-    {
-        lua_pushnil( L );
-        return 1;
-    }
-
     CBaseEntity::PushLuaInstanceSafe( L, pEntity );
 
     return 1;
