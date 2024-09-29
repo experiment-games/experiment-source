@@ -13,7 +13,10 @@ lua:
   realm: shared
   description: "Get the player's weapon count."
   
-  
+  arguments:
+  - position: 1
+    name: "player"
+    type: Player
   returns:
     - type: integer
       description: "The player's weapon count."

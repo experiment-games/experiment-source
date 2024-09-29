@@ -13,7 +13,10 @@ lua:
   realm: client
   description: "Sets the parent to the HUD"
   
-  
+  arguments:
+  - position: 1
+    name: "panel"
+    type: Panel
   returns:
     
 ---

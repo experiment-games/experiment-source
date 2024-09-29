@@ -13,7 +13,10 @@ lua:
   realm: shared
   description: "Uses env cubemap."
   
-  
+  arguments:
+  - position: 1
+    name: "material"
+    type: Material
   returns:
     
 ---

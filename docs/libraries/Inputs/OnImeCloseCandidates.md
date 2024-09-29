@@ -13,6 +13,7 @@ lua:
   realm: client
   description: "Close the IME candidates."
   
+  arguments:
   
   returns:
     

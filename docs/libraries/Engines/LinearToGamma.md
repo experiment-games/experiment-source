@@ -14,8 +14,9 @@ lua:
   description: "Convert a linear value to a gamma value."
   
   arguments:
-    - name: "linear"
-      type: number
+  - position: 1
+    name: "linear"
+    type: number
   returns:
     - type: number
       description: "The gamma value."

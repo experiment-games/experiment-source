@@ -14,10 +14,12 @@ lua:
   description: "Sets the bitmap font name"
   
   arguments:
-    - name: "fontName"
-      type: string
-    - name: "fontFilename"
-      type: string
+  - position: 1
+    name: "fontName"
+    type: string
+  - position: 2
+    name: "fontFilename"
+    type: string
   returns:
     
 ---

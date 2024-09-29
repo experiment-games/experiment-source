@@ -13,6 +13,7 @@ lua:
   realm: client
   description: "Get the topmost modal sub-tree panel."
   
+  arguments:
   
   returns:
     - type: PanelHandle

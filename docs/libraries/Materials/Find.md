@@ -14,11 +14,13 @@ lua:
   description: "Finds a material"
   
   arguments:
-    - name: "name"
-      type: string
-    - name: "parameters"
-      type: string
-      default: "\"\""
+  - position: 1
+    name: "name"
+    type: string
+  - position: 2
+    name: "parameters"
+    type: string
+    default: "\"\""
   returns:
     - type: Material
       description: "The material"

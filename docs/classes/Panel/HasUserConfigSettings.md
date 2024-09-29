@@ -13,7 +13,10 @@ lua:
   realm: client
   description: "Checks if the panel has user config settings"
   
-  
+  arguments:
+  - position: 1
+    name: "panel"
+    type: Panel
   returns:
     - type: boolean
       description: "True if the panel has user config settings, false otherwise"

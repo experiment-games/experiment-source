@@ -13,7 +13,10 @@ lua:
   realm: shared
   description: "Get the animation time interval."
   
-  
+  arguments:
+  - position: 1
+    name: "entity"
+    type: Entity
   returns:
     - type: number
       description: "The animation time interval"

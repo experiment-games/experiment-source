@@ -14,8 +14,12 @@ lua:
   description: "Metamethod that is called when comparing two entities"
   
   arguments:
-    - name: "entity"
-      type: Entity
+  - position: 1
+    name: "entity"
+    type: Entity
+  - position: 2
+    name: "other"
+    type: Entity
   returns:
     - type: boolean
       description: "True if entities are equal."

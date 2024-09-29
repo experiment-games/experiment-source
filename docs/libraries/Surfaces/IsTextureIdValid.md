@@ -14,8 +14,9 @@ lua:
   description: "Checks if the texture ID is valid"
   
   arguments:
-    - name: "textureId"
-      type: number
+  - position: 1
+    name: "textureId"
+    type: number
   returns:
     - type: boolean
       description: "True if the texture ID is valid, false otherwise."

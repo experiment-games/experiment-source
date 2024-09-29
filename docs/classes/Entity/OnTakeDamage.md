@@ -14,8 +14,12 @@ lua:
   description: "On take damage."
   
   arguments:
-    - name: "damageInfo"
-      type: DamageInfo
+  - position: 1
+    name: "entity"
+    type: Entity
+  - position: 2
+    name: "damageInfo"
+    type: DamageInfo
   returns:
     - type: integer
       description: "0 if no damage is taken, or it was fatal. 1 Otherwise"

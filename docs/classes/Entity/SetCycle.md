@@ -14,8 +14,12 @@ lua:
   description: "Set the cycle."
   
   arguments:
-    - name: "cycle"
-      type: number
+  - position: 1
+    name: "entity"
+    type: Entity
+  - position: 2
+    name: "cycle"
+    type: number
   returns:
     
 ---

@@ -14,10 +14,15 @@ lua:
   description: "Jump to the specified position for the player."
   
   arguments:
-    - name: "position"
-      type: Vector
-    - name: "angle"
-      type: Angle
+  - position: 1
+    name: "player"
+    type: Player
+  - position: 2
+    name: "position"
+    type: Vector
+  - position: 3
+    name: "angle"
+    type: Angle
   returns:
     
 ---

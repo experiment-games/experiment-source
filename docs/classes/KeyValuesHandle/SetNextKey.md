@@ -14,8 +14,12 @@ lua:
   description: "Set the next key of the keyvalues."
   
   arguments:
-    - name: "nextKey"
-      type: KeyValuesHandle
+  - position: 1
+    name: "keyValues"
+    type: KeyValuesHandle
+  - position: 2
+    name: "nextKey"
+    type: KeyValuesHandle
   returns:
     
 ---

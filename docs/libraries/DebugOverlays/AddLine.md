@@ -14,16 +14,24 @@ lua:
   description: "Add a line overlay to the screen with alpha."
   
   arguments:
-    - name: "start"
-      type: Vector
-    - name: "end"
-      type: Vector
-    - name: "duration"
-      type: number
-      default: "1"
-    - name: "noDepthTest"
-      type: boolean
-      default: "false"
+  - position: 1
+    name: "start"
+    type: Vector
+  - position: 2
+    name: "end"
+    type: Vector
+  - position: 3
+    name: "duration"
+    type: number
+    default: "1"
+  - position: 4
+    name: "color"
+    type: Color
+    default: "color_white"
+  - position: 5
+    name: "noDepthTest"
+    type: boolean
+    default: "false"
   returns:
     
 ---

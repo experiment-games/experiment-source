@@ -13,7 +13,10 @@ lua:
   realm: shared
   description: "Increment reference count."
   
-  
+  arguments:
+  - position: 1
+    name: "material"
+    type: Material
   returns:
     
 ---

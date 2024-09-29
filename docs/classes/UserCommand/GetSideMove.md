@@ -13,7 +13,10 @@ lua:
   realm: shared
   description: "Gets side movement value"
   
-  
+  arguments:
+  - position: 1
+    name: "userCmd"
+    type: UserCommand
   returns:
     - type: number
       description: "The side movement value"

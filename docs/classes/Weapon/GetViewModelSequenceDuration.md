@@ -13,7 +13,10 @@ lua:
   realm: shared
   description: "Get the view model sequence duration."
   
-  
+  arguments:
+  - position: 1
+    name: "entity"
+    type: Weapon
   returns:
     - type: number
       description: "View model sequence duration."

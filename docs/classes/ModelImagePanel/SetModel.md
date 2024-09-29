@@ -14,14 +14,20 @@ lua:
   description: "Sets the model for the panel"
   
   arguments:
-    - name: "modelPath"
-      type: string
-    - name: "skin"
-      type: number
-      default: "0"
-    - name: "bodyGroups"
-      type: string
-      default: "NULL"
+  - position: 1
+    name: "modelImagePanel"
+    type: ModelImagePanel
+  - position: 2
+    name: "modelPath"
+    type: string
+  - position: 3
+    name: "skin"
+    type: number
+    default: "0"
+  - position: 4
+    name: "bodyGroups"
+    type: string
+    default: "NULL"
   returns:
     
 ---

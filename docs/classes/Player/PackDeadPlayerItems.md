@@ -13,7 +13,10 @@ lua:
   realm: server
   description: "Pack the dead player items."
   
-  
+  arguments:
+  - position: 1
+    name: "player"
+    type: Player
   returns:
     
 ---

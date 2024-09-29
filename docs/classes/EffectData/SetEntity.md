@@ -13,11 +13,14 @@ lua:
   realm: shared
   description: "Set the entity the effect is assigned to."
   
-  argumentSets:
-    - arguments:
+  arguments:
+  - position: 1
+    name: "effectData"
+    type: EffectData
+  - position: 2
+    types:
       - name: "entity"
         type: Entity
-    - arguments:
       - name: "entity"
         type: Entity
   returns:

@@ -13,7 +13,13 @@ lua:
   realm: shared
   description: "Calculates linear drag"
   
-  
+  arguments:
+  - position: 1
+    name: "physicsObject"
+    type: PhysicsObject
+  - position: 2
+    name: "unitDirection"
+    type: Vector
   returns:
     - type: number
       description: "The linear drag value."

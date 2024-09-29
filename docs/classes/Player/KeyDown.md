@@ -14,8 +14,12 @@ lua:
   description: "Key down."
   
   arguments:
-    - name: "key"
-      type: number
+  - position: 1
+    name: "entity"
+    type: Player
+  - position: 2
+    name: "key"
+    type: number
   returns:
     
 ---

@@ -13,7 +13,10 @@ lua:
   realm: shared
   description: "Destroy physics object."
   
-  
+  arguments:
+  - position: 1
+    name: "entity"
+    type: Entity
   returns:
     
 ---

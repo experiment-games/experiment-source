@@ -14,10 +14,15 @@ lua:
   description: "Damage decal."
   
   arguments:
-    - name: "damageType"
-      type: number
-    - name: "damage"
-      type: number
+  - position: 1
+    name: "entity"
+    type: Entity
+  - position: 2
+    name: "damageType"
+    type: number
+  - position: 3
+    name: "damage"
+    type: number
   returns:
     - type: string
       description: "The decal name."

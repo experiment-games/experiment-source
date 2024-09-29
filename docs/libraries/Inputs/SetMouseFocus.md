@@ -14,8 +14,9 @@ lua:
   description: "Set the mouse focus to a panel."
   
   arguments:
-    - name: "panel"
-      type: Panel
+  - position: 1
+    name: "panel"
+    type: Panel
   returns:
     
 ---

@@ -14,8 +14,9 @@ lua:
   description: "Writes a word."
   
   arguments:
-    - name: "word"
-      type: number
+  - position: 1
+    name: "word"
+    type: number
   returns:
     
 ---

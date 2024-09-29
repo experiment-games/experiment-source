@@ -14,8 +14,12 @@ lua:
   description: "Creates unragdoll info for the given ragdoll, setting it on the entity internally."
   
   arguments:
-    - name: "ragdoll"
-      type: Entity
+  - position: 1
+    name: "entity"
+    type: Entity
+  - position: 2
+    name: "ragdoll"
+    type: Entity
   returns:
     
 ---

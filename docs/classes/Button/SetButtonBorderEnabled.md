@@ -14,8 +14,12 @@ lua:
   description: "Sets whether the button border is enabled"
   
   arguments:
-    - name: "enabled"
-      type: boolean
+  - position: 1
+    name: "button"
+    type: Button
+  - position: 2
+    name: "enabled"
+    type: boolean
   returns:
     
 ---

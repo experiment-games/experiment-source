@@ -14,10 +14,15 @@ lua:
   description: "Get color."
   
   arguments:
-    - name: "x"
-      type: number
-    - name: "y"
-      type: number
+  - position: 1
+    name: "material"
+    type: Material
+  - position: 2
+    name: "x"
+    type: number
+  - position: 3
+    name: "y"
+    type: number
   returns:
     - type: Color
       description: "Color at position."

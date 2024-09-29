@@ -14,8 +14,12 @@ lua:
   description: "Metatable that is called when the angle is to be divided by a number."
   
   arguments:
-    - name: "number"
-      type: number
+  - position: 1
+    name: "angle"
+    type: Angle
+  - position: 2
+    name: "number"
+    type: number
   returns:
     - type: Angle
       description: "The divided angle."

@@ -14,8 +14,12 @@ lua:
   description: "Draws the focus box"
   
   arguments:
-    - name: "shouldDraw"
-      type: boolean
+  - position: 1
+    name: "button"
+    type: Button
+  - position: 2
+    name: "shouldDraw"
+    type: boolean
   returns:
     
 ---

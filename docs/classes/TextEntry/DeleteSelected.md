@@ -13,7 +13,10 @@ lua:
   realm: client
   description: "Deletes the selected text"
   
-  
+  arguments:
+  - position: 1
+    name: "textEntry"
+    type: TextEntry
   returns:
     
 ---

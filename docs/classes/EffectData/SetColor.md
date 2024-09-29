@@ -14,8 +14,12 @@ lua:
   description: "Set the byte described as the color of the effect. What this does differs per effect."
   
   arguments:
-    - name: "color"
-      type: number
+  - position: 1
+    name: "effectData"
+    type: EffectData
+  - position: 2
+    name: "color"
+    type: number
   returns:
     
 ---

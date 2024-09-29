@@ -14,8 +14,12 @@ lua:
   description: "Adds an action signal target to the panel"
   
   arguments:
-    - name: "target"
-      type: Panel
+  - position: 1
+    name: "panel"
+    type: Panel
+  - position: 2
+    name: "target"
+    type: Panel
   returns:
     
 ---

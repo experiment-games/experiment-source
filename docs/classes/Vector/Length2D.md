@@ -13,7 +13,10 @@ lua:
   realm: shared
   description: "Calculates the 2D length of the vector."
   
-  
+  arguments:
+  - position: 1
+    name: "vector"
+    type: Vector
   returns:
     - type: number
       description: "The 2D length of the vector."

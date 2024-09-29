@@ -13,7 +13,13 @@ lua:
   realm: shared
   description: "Adds a damage type"
   
-  
+  arguments:
+  - position: 1
+    name: "damageInfo"
+    type: DamageInfo
+  - position: 2
+    name: "damageType"
+    type: number
   returns:
     
 ---

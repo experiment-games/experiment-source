@@ -14,14 +14,18 @@ lua:
   description: "Intersect a ray with a plane"
   
   arguments:
-    - name: "vecRayOrigin"
-      type: Vector
-    - name: "vecRayDirection"
-      type: Vector
-    - name: "vecPlaneOrigin"
-      type: Vector
-    - name: "vecPlaneNormal"
-      type: Vector
+  - position: 1
+    name: "vecRayOrigin"
+    type: Vector
+  - position: 2
+    name: "vecRayDirection"
+    type: Vector
+  - position: 3
+    name: "vecPlaneOrigin"
+    type: Vector
+  - position: 4
+    name: "vecPlaneNormal"
+    type: Vector
   returns:
     - type: Vector
       description: "Intersection position"

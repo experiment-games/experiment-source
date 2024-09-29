@@ -13,7 +13,10 @@ lua:
   realm: client
   description: "Called when the client side animation changes."
   
-  
+  arguments:
+  - position: 1
+    name: "entity"
+    type: Entity
   returns:
     
 ---

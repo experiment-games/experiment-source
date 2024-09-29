@@ -14,8 +14,12 @@ lua:
   description: "Sets the blink color"
   
   arguments:
-    - name: "color"
-      type: Color
+  - position: 1
+    name: "button"
+    type: Button
+  - position: 2
+    name: "color"
+    type: Color
   returns:
     
 ---

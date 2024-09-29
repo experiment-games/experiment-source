@@ -14,8 +14,12 @@ lua:
   description: "On active state changed."
   
   arguments:
-    - name: "oldState"
-      type: number
+  - position: 1
+    name: "entity"
+    type: Weapon
+  - position: 2
+    name: "oldState"
+    type: number
   returns:
     
 ---

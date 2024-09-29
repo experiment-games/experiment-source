@@ -13,7 +13,10 @@ lua:
   realm: shared
   description: "Negates the vector."
   
-  
+  arguments:
+  - position: 1
+    name: "vector"
+    type: Vector
   returns:
     
 ---

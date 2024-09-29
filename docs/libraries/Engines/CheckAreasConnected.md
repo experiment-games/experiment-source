@@ -14,10 +14,12 @@ lua:
   description: "Check if two areas are connected."
   
   arguments:
-    - name: "startArea"
-      type: number
-    - name: "endArea"
-      type: number
+  - position: 1
+    name: "startArea"
+    type: number
+  - position: 2
+    name: "endArea"
+    type: number
   returns:
     - type: boolean
       description: "True if the areas are connected, false otherwise."

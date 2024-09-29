@@ -13,7 +13,10 @@ lua:
   realm: client
   description: "Initialize the model effects."
   
-  
+  arguments:
+  - position: 1
+    name: "entity"
+    type: Entity
   returns:
     
 ---

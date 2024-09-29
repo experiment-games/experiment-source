@@ -14,6 +14,7 @@ lua:
   description: "Get DLL type, either client or server depending on where its called."
   
   static: true
+  arguments:
   
   returns:
     - type: string

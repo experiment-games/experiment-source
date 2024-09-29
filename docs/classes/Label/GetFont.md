@@ -13,7 +13,10 @@ lua:
   realm: client
   description: "Gets the font of the label"
   
-  
+  arguments:
+  - position: 1
+    name: "label"
+    type: Label
   returns:
     - type: font
       description: "The font of the label"

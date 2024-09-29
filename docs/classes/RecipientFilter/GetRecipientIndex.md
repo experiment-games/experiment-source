@@ -13,7 +13,13 @@ lua:
   realm: shared
   description: "Gets recipient index"
   
-  
+  arguments:
+  - position: 1
+    name: "filter"
+    type: RecipientFilter
+  - position: 2
+    name: "index"
+    type: number
   returns:
     
 ---

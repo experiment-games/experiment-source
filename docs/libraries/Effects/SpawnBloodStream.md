@@ -14,14 +14,18 @@ lua:
   description: "Creates a blood stream effect. Color can be DONT_BLEED(-1), BLOOD_COLOR_RED(0), BLOOD_COLOR_YELLOW(1), BLOOD_COLOR_GREEN(2), BLOOD_COLOR_MECH(3) - enums don't exist yet in Lua"
   
   arguments:
-    - name: "origin"
-      type: Vector
-    - name: "direction"
-      type: Vector
-    - name: "color"
-      type: number
-    - name: "amount"
-      type: number
+  - position: 1
+    name: "origin"
+    type: Vector
+  - position: 2
+    name: "direction"
+    type: Vector
+  - position: 3
+    name: "color"
+    type: number
+  - position: 4
+    name: "amount"
+    type: number
   returns:
     
 ---

@@ -14,10 +14,12 @@ lua:
   description: "Set a light style."
   
   arguments:
-    - name: "styleIndex"
-      type: number
-    - name: "styleValue"
-      type: string
+  - position: 1
+    name: "styleIndex"
+    type: number
+  - position: 2
+    name: "styleValue"
+    type: string
   returns:
     
 ---

@@ -13,7 +13,10 @@ lua:
   realm: client
   description: "Is the muzzle flash event on?"
   
-  
+  arguments:
+  - position: 1
+    name: "entity"
+    type: Entity
   returns:
     - type: boolean
       description: "Whether the entity should muzzle flash"

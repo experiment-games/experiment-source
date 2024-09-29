@@ -13,7 +13,10 @@ lua:
   realm: shared
   description: "Gets the old buttons"
   
-  
+  arguments:
+  - position: 1
+    name: "moveData"
+    type: MoveData
   returns:
     - type: integer
       description: "Bitmask of the old buttons"

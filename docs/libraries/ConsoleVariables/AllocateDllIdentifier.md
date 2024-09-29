@@ -13,6 +13,7 @@ lua:
   realm: shared
   description: "Allocate a DLL identifier."
   
+  arguments:
   
   returns:
     - type: integer

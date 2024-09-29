@@ -13,6 +13,7 @@ lua:
   realm: server
   description: "Get the client that issued the command"
   
+  arguments:
   
   returns:
     - type: Player

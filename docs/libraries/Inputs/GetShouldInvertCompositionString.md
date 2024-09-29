@@ -13,6 +13,7 @@ lua:
   realm: client
   description: "Check if the composition string should be inverted."
   
+  arguments:
   
   returns:
     - type: boolean

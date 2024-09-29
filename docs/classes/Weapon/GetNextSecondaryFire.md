@@ -13,7 +13,10 @@ lua:
   realm: shared
   description: "Get the time before the player can fire the secondary attack."
   
-  
+  arguments:
+  - position: 1
+    name: "entity"
+    type: Weapon
   returns:
     - type: number
       description: "Time before the player can fire the secondary attack."

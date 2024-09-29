@@ -14,14 +14,18 @@ lua:
   description: "Intersect a ray with a sphere"
   
   arguments:
-    - name: "vecRayOrigin"
-      type: Vector
-    - name: "vecRayDelta"
-      type: Vector
-    - name: "vecSphereCenter"
-      type: Vector
-    - name: "flRadius"
-      type: number
+  - position: 1
+    name: "vecRayOrigin"
+    type: Vector
+  - position: 2
+    name: "vecRayDelta"
+    type: Vector
+  - position: 3
+    name: "vecSphereCenter"
+    type: Vector
+  - position: 4
+    name: "flRadius"
+    type: number
   returns:
     - type: number
       description: "First intersection point"

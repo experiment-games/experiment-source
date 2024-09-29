@@ -14,8 +14,12 @@ lua:
   description: "Sets the old angles"
   
   arguments:
-    - name: "angles"
-      type: Angle
+  - position: 1
+    name: "moveData"
+    type: MoveData
+  - position: 2
+    name: "angles"
+    type: Angle
   returns:
     
 ---

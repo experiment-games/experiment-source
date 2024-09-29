@@ -13,7 +13,10 @@ lua:
   realm: shared
   description: "Get the string representation of the keyvalues."
   
-  
+  arguments:
+  - position: 1
+    name: "keyValues"
+    type: KeyValuesHandle
   returns:
     - type: string
       description: "The string representation."

@@ -14,7 +14,7 @@ lua:
   arguments:
     - name: "player"
       description: ""
-      type: Player
+      type: Entity
     - name: "color"
       description: "the color of the player's name in the scoreboard"
       type: Color

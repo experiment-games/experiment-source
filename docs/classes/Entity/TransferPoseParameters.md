@@ -14,8 +14,12 @@ lua:
   description: "Transfer pose parameters from one entity to another"
   
   arguments:
-    - name: "target"
-      type: Entity
+  - position: 1
+    name: "entity"
+    type: Entity
+  - position: 2
+    name: "target"
+    type: Entity
   returns:
     - type: boolean
       description: "true if transfered, false if one of the entities wasn't valid."

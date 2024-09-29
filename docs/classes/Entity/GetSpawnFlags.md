@@ -13,7 +13,10 @@ lua:
   realm: server
   description: "Get spawn flags."
   
-  
+  arguments:
+  - position: 1
+    name: "entity"
+    type: Entity
   returns:
     - type: integer
       description: "The spawn flags"

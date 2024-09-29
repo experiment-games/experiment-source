@@ -13,6 +13,7 @@ lua:
   realm: client
   description: "Get the application modal surface panel."
   
+  arguments:
   
   returns:
     - type: PanelHandle

@@ -14,8 +14,9 @@ lua:
   description: "Get a string table by index."
   
   arguments:
-    - name: "index"
-      type: number
+  - position: 1
+    name: "index"
+    type: number
   returns:
     - type: NetworkStringTable
       description: "The gotten string table."

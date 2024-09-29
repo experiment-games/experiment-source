@@ -13,6 +13,7 @@ lua:
   realm: server
   description: "Get the entity count."
   
+  arguments:
   
   returns:
     - type: integer

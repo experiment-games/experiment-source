@@ -14,8 +14,12 @@ lua:
   description: "Calculates the cross product of two vectors."
   
   arguments:
-    - name: "vector2"
-      type: Vector
+  - position: 1
+    name: "vector1"
+    type: Vector
+  - position: 2
+    name: "vector2"
+    type: Vector
   returns:
     - type: Vector
       description: "The cross product of the two vectors."

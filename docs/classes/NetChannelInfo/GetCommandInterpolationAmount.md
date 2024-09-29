@@ -14,10 +14,15 @@ lua:
   description: "Returns the command interpolation amount for the specified command number."
   
   arguments:
-    - name: "commandNumber"
-      type: number
-    - name: "flow"
-      type: number
+  - position: 1
+    name: "netChannel"
+    type: NetChannelInfo
+  - position: 2
+    name: "commandNumber"
+    type: number
+  - position: 3
+    name: "flow"
+    type: number
   returns:
     - type: number
       description: "The command interpolation amount for the specified command number."

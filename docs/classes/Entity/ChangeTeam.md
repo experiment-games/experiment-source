@@ -14,8 +14,12 @@ lua:
   description: "Change the team of the entity."
   
   arguments:
-    - name: "team"
-      type: number
+  - position: 1
+    name: "entity"
+    type: Entity
+  - position: 2
+    name: "team"
+    type: number
   returns:
     
 ---

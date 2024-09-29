@@ -13,7 +13,10 @@ lua:
   realm: server
   description: "Get smoothed velocity."
   
-  
+  arguments:
+  - position: 1
+    name: "entity"
+    type: Entity
   returns:
     - type: Vector
       description: "The smoothed velocity"

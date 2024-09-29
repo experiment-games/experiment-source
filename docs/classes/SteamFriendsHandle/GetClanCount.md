@@ -13,7 +13,10 @@ lua:
   realm: shared
   description: "Get the number of clans the current user is a member of."
   
-  
+  arguments:
+  - position: 1
+    name: "steamFriends"
+    type: SteamFriendsHandle
   returns:
     - type: integer
       description: "The number of clans the current user is a member of."

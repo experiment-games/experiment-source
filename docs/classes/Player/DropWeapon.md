@@ -14,14 +14,20 @@ lua:
   description: "Drop a weapon for the player."
   
   arguments:
-    - name: "weapon"
-      type: Weapon
-    - name: "position"
-      type: Vector
-      default: "NULL"
-    - name: "velocity"
-      type: Vector
-      default: "NULL"
+  - position: 1
+    name: "player"
+    type: Player
+  - position: 2
+    name: "weapon"
+    type: Weapon
+  - position: 3
+    name: "position"
+    type: Vector
+    default: "NULL"
+  - position: 4
+    name: "velocity"
+    type: Vector
+    default: "NULL"
   returns:
     
 ---

@@ -14,8 +14,9 @@ lua:
   description: "Handle unhandled key codes."
   
   arguments:
-    - name: "keyCode"
-      type: enumeration/BUTTON
+  - position: 1
+    name: "keyCode"
+    type: enumeration/BUTTON
   returns:
     
 ---

@@ -14,8 +14,9 @@ lua:
   description: "Wait for resources."
   
   arguments:
-    - name: "path"
-      type: string
+  - position: 1
+    name: "path"
+    type: string
   returns:
     - type: integer
       description: "The wait for resources."

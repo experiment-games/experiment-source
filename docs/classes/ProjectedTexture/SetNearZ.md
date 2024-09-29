@@ -14,8 +14,12 @@ lua:
   description: "Set the distance at which the projected texture begins its projection."
   
   arguments:
-    - name: "nearZ"
-      type: number
+  - position: 1
+    name: "projectedTexture"
+    type: ProjectedTexture
+  - position: 2
+    name: "nearZ"
+    type: number
   returns:
     
 ---

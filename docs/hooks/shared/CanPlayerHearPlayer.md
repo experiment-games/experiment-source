@@ -14,10 +14,10 @@ lua:
   arguments:
     - name: "pListener"
       description: ""
-      type: Entity
+      type: Player
     - name: "pTalker"
       description: ""
-      type: Entity
+      type: Player
     - name: "bProximity"
       description: ""
       type: boolean

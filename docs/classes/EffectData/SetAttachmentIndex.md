@@ -14,8 +14,12 @@ lua:
   description: "Set the attachment ID for the effect."
   
   arguments:
-    - name: "attachment"
-      type: number
+  - position: 1
+    name: "effectData"
+    type: EffectData
+  - position: 2
+    name: "attachment"
+    type: number
   returns:
     
 ---

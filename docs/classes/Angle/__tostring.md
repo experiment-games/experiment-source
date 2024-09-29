@@ -13,7 +13,10 @@ lua:
   realm: shared
   description: "Metatable that is called when the angle is to be converted to a string."
   
-  
+  arguments:
+  - position: 1
+    name: "angle"
+    type: Angle
   returns:
     - type: string
       description: "The string representation of the angle."

@@ -13,6 +13,7 @@ lua:
   realm: client
   description: "Get the view origin."
   
+  arguments:
   
   returns:
     - type: Vector

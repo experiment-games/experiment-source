@@ -14,9 +14,10 @@ lua:
   description: "Creates a new texture ID."
   
   arguments:
-    - name: "procedural"
-      type: boolean
-      default: "false"
+  - position: 1
+    name: "procedural"
+    type: boolean
+    default: "false"
   returns:
     - type: integer
       description: "The new texture ID."

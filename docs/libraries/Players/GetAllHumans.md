@@ -13,6 +13,7 @@ lua:
   realm: shared
   description: "Get all humans."
   
+  arguments:
   
   returns:
     - type: table

@@ -13,7 +13,10 @@ lua:
   realm: client
   description: "Called in the destructor to shutdown everything."
   
-  
+  arguments:
+  - position: 1
+    name: "entity"
+    type: Entity
   returns:
     
 ---

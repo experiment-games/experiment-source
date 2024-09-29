@@ -14,10 +14,15 @@ lua:
   description: "Clamp the cycle."
   
   arguments:
-    - name: "cycle"
-      type: number
-    - name: "isLooping"
-      type: boolean
+  - position: 1
+    name: "entity"
+    type: Entity
+  - position: 2
+    name: "cycle"
+    type: number
+  - position: 3
+    name: "isLooping"
+    type: boolean
   returns:
     - type: number
       description: "The clamped cycle"

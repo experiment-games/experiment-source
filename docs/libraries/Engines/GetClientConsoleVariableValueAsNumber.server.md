@@ -13,15 +13,16 @@ lua:
   realm: server
   description: "Get a client's ConsoleVariable value as a number."
   
-  argumentSets:
-    - arguments:
+  arguments:
+  - position: 1
+    types:
       - name: "playerOrIndex"
         type: Player
-    - arguments:
       - name: "playerOrIndex"
         type: number
-      - name: "conVarName"
-        type: string
+  - position: 2
+    name: "conVarName"
+    type: string
   returns:
     - type: integer
       description: "The client's ConsoleVariable value as a number."

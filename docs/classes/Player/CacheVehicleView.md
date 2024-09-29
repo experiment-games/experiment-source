@@ -13,7 +13,10 @@ lua:
   realm: shared
   description: "Cache the vehicle view."
   
-  
+  arguments:
+  - position: 1
+    name: "player"
+    type: Player
   returns:
     
 ---

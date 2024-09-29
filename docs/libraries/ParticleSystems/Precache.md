@@ -14,8 +14,9 @@ lua:
   description: "Precache a particle system."
   
   arguments:
-    - name: "systemName"
-      type: string
+  - position: 1
+    name: "systemName"
+    type: string
   returns:
     
 ---

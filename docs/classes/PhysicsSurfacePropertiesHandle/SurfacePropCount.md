@@ -13,7 +13,10 @@ lua:
   realm: shared
   description: "Gets the surface property count"
   
-  
+  arguments:
+  - position: 1
+    name: "physprops"
+    type: PhysicsSurfacePropertiesHandle
   returns:
     - type: integer
       description: "The surface property count."

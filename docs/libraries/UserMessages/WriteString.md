@@ -14,8 +14,9 @@ lua:
   description: "Writes a string."
   
   arguments:
-    - name: "string"
-      type: string
+  - position: 1
+    name: "string"
+    type: string
   returns:
     
 ---

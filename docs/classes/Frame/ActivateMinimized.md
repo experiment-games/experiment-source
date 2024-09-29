@@ -13,7 +13,10 @@ lua:
   realm: client
   description: "Activates the frame minimized"
   
-  
+  arguments:
+  - position: 1
+    name: "frame"
+    type: Frame
   returns:
     
 ---

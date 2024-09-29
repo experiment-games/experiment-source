@@ -13,7 +13,10 @@ lua:
   realm: server
   description: "Force the player to respawn."
   
-  
+  arguments:
+  - position: 1
+    name: "player"
+    type: Player
   returns:
     
 ---

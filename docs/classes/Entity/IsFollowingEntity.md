@@ -13,7 +13,10 @@ lua:
   realm: shared
   description: "Is following entity."
   
-  
+  arguments:
+  - position: 1
+    name: "entity"
+    type: Entity
   returns:
     - type: boolean
       description: "True if following entity, false otherwise."

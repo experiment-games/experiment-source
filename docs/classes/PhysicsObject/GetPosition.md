@@ -13,7 +13,10 @@ lua:
   realm: shared
   description: "Gets the world position and angles"
   
-  
+  arguments:
+  - position: 1
+    name: "physicsObject"
+    type: PhysicsObject
   returns:
     - type: Vector
       description: "The world position."

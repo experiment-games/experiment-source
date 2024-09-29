@@ -13,7 +13,10 @@ lua:
   realm: shared
   description: "Checks if collision is enabled"
   
-  
+  arguments:
+  - position: 1
+    name: "physicsObject"
+    type: PhysicsObject
   returns:
     - type: boolean
       description: "Whether collision is enabled or not."

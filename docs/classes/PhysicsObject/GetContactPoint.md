@@ -13,7 +13,10 @@ lua:
   realm: shared
   description: "Gets the contact point and contact object"
   
-  
+  arguments:
+  - position: 1
+    name: "physicsObject"
+    type: PhysicsObject
   returns:
     - type: boolean
       description: "Whether there is a contact point or not."

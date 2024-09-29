@@ -13,7 +13,10 @@ lua:
   realm: server
   description: "Clear solid flags."
   
-  
+  arguments:
+  - position: 1
+    name: "entity"
+    type: Entity
   returns:
     
 ---

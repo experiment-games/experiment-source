@@ -14,12 +14,15 @@ lua:
   description: "Print a debug warning message to the console."
   
   arguments:
-    - name: "message"
-      type: string
-    - name: "level"
-      type: number
-    - name: "groupName"
-      type: string
+  - position: 1
+    name: "message"
+    type: string
+  - position: 2
+    name: "level"
+    type: number
+  - position: 3
+    name: "groupName"
+    type: string
   returns:
     
 ---

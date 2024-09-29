@@ -13,7 +13,10 @@ lua:
   realm: client
   description: "Metamethod to get the string representation of the IScheme object."
   
-  
+  arguments:
+  - position: 1
+    name: "scheme"
+    type: Scheme
   returns:
     - type: string
       description: "The string representation of the IScheme object."

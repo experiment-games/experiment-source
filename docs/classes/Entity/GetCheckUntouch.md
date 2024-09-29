@@ -13,7 +13,10 @@ lua:
   realm: shared
   description: "Get check untouch."
   
-  
+  arguments:
+  - position: 1
+    name: "entity"
+    type: Entity
   returns:
     - type: boolean
       description: "True if check untouch, false otherwise."

@@ -14,8 +14,12 @@ lua:
   description: "Sets the background type"
   
   arguments:
-    - name: "type"
-      type: number
+  - position: 1
+    name: "panel"
+    type: Panel
+  - position: 2
+    name: "type"
+    type: number
   returns:
     
 ---

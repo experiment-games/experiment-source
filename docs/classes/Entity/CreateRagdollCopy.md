@@ -13,7 +13,10 @@ lua:
   realm: client
   description: "Create a ragdoll copy of the entity."
   
-  
+  arguments:
+  - position: 1
+    name: "entity"
+    type: Entity
   returns:
     - type: Entity
       description: "The ragdoll entity"

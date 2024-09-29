@@ -14,8 +14,12 @@ lua:
   description: "Sets whether the text entry is editable"
   
   arguments:
-    - name: "editable"
-      type: boolean
+  - position: 1
+    name: "textEntry"
+    type: TextEntry
+  - position: 2
+    name: "editable"
+    type: boolean
   returns:
     
 ---

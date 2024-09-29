@@ -13,7 +13,10 @@ lua:
   realm: client
   description: "Check if the sequence should reset on a new model."
   
-  
+  arguments:
+  - position: 1
+    name: "entity"
+    type: Entity
   returns:
     - type: boolean
       description: "Whether the sequence should reset on a new model"

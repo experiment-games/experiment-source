@@ -268,18 +268,6 @@ LUA_BINDING_BEGIN( Entity, CreateDataObject, "class", "Create data object." )
 }
 LUA_BINDING_END()
 
-LUA_BINDING_BEGIN( Entity, CreatePredictedEntityByName, "class", "Create predicted entity by name." )
-{
-    const char *pszClassName = LUA_BINDING_ARGUMENT( luaL_checkstring, 2, "className" );
-    const char *pszModule = LUA_BINDING_ARGUMENT( luaL_checkstring, 3, "module" );
-    int nLine = LUA_BINDING_ARGUMENT( luaL_checknumber, 4, "line" );
-    bool bPersists = LUA_BINDING_ARGUMENT_WITH_DEFAULT( luaL_optboolean, 5, false, "shouldPersist" );
-
-    CBaseEntity::PushLuaInstanceSafe( L, CBaseEntity::CreatePredictedEntityByName( pszClassName, pszModule, nLine, bPersists ) );
-    return 1;
-}
-LUA_BINDING_END( "Entity", "The predicted entity." )
-
 LUA_BINDING_BEGIN( Entity, CreateVPhysics, "class", "Create VPhysics." )
 {
     lua_CBaseEntity *pEntity = LUA_BINDING_ARGUMENT( luaL_checkentity, 1, "entity" );

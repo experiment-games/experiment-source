@@ -13,7 +13,13 @@ lua:
   realm: client
   description: "Sets the content alignment of the label"
   
-  
+  arguments:
+  - position: 1
+    name: "label"
+    type: Label
+  - position: 2
+    name: "alignment"
+    type: enumeration/PANEL_ALIGNMENT
   returns:
     
 ---

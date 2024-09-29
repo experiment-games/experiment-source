@@ -14,8 +14,9 @@ lua:
   description: "Returns the contents mask + entity at a particular world-space position."
   
   arguments:
-    - name: "point"
-      type: Vector
+  - position: 1
+    name: "point"
+    type: Vector
   returns:
     - type: integer
       description: "Bitwise contents mask."

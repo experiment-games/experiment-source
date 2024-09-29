@@ -13,7 +13,13 @@ lua:
   realm: shared
   description: "Gets the string"
   
-  
+  arguments:
+  - position: 1
+    name: "physprops"
+    type: PhysicsSurfacePropertiesHandle
+  - position: 2
+    name: "stringTableIndex"
+    type: number
   returns:
     - type: string
       description: "The string."

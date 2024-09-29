@@ -13,7 +13,10 @@ lua:
   realm: shared
   description: "Get max burst."
   
-  
+  arguments:
+  - position: 1
+    name: "entity"
+    type: Weapon
   returns:
     - type: integer
       description: "Max burst."

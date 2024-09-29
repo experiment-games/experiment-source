@@ -14,8 +14,12 @@ lua:
   description: "Returns whether mouse clicks are enabled"
   
   arguments:
-    - name: "mouseCode"
-      type: enumeration/BUTTON
+  - position: 1
+    name: "button"
+    type: Button
+  - position: 2
+    name: "mouseCode"
+    type: enumeration/BUTTON
   returns:
     - type: boolean
       description: "Returns whether mouse clicks are enabled"

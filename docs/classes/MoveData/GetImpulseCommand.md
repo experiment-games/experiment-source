@@ -13,7 +13,10 @@ lua:
   realm: shared
   description: "Gets the impulse command"
   
-  
+  arguments:
+  - position: 1
+    name: "moveData"
+    type: MoveData
   returns:
     - type: integer
       description: "The impulse command"

@@ -13,6 +13,7 @@ lua:
   realm: client
   description: "Check if a screenshot is being taken."
   
+  arguments:
   
   returns:
     - type: boolean

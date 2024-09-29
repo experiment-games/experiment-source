@@ -13,6 +13,7 @@ lua:
   realm: shared
   description: "Gets the first entity in the list"
   
+  arguments:
   
   returns:
     - type: Entity

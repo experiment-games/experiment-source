@@ -13,7 +13,10 @@ lua:
   realm: shared
   description: "Returns a string representation of the texture."
   
-  
+  arguments:
+  - position: 1
+    name: "texture"
+    type: Texture
   returns:
     
 ---

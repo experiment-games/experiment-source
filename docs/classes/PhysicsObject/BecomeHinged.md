@@ -13,7 +13,13 @@ lua:
   realm: shared
   description: "Becomes hinged at a specified point"
   
-  
+  arguments:
+  - position: 1
+    name: "physicsObject"
+    type: PhysicsObject
+  - position: 2
+    name: "localAxis"
+    type: number
   returns:
     
 ---

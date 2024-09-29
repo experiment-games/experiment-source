@@ -1,21 +1,22 @@
 ---
 template: lua-library-function.html
 title: IsPlayerIndex
-icon: lua-shared
+icon: lua-client
 tags:
   - lua
-  - shared
+  - client
   - needs-verification
   - needs-example
 lua:
   library: Players
   function: IsPlayerIndex
-  realm: shared
+  realm: client
   description: "Check if index is a player index"
   
   arguments:
-    - name: "index"
-      type: number
+  - position: 1
+    name: "index"
+    type: number
   returns:
     - type: boolean
       description: "True if player index, false otherwise."

@@ -13,7 +13,10 @@ lua:
   realm: shared
   description: "Check if the trace hit a displacement surface."
   
-  
+  arguments:
+  - position: 1
+    name: "trace"
+    type: Trace
   returns:
     - type: boolean
       description: "true if the trace hit a displacement surface, false otherwise."

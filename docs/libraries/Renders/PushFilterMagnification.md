@@ -14,8 +14,9 @@ lua:
   description: "Push a magnification filter."
   
   arguments:
-    - name: "filter"
-      type: number
+  - position: 1
+    name: "filter"
+    type: number
   returns:
     
 ---

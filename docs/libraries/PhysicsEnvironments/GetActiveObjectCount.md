@@ -13,6 +13,7 @@ lua:
   realm: shared
   description: "Get active object count."
   
+  arguments:
   
   returns:
     - type: integer

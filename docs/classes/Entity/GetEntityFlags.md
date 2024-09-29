@@ -13,7 +13,10 @@ lua:
   realm: shared
   description: "Get Entity Flags."
   
-  
+  arguments:
+  - position: 1
+    name: "entity"
+    type: Entity
   returns:
     - type: integer
       description: "The ENTITY_FLAG flags."

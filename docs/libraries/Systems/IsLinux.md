@@ -13,6 +13,7 @@ lua:
   realm: shared
   description: "Check if the application is running on Linux."
   
+  arguments:
   
   returns:
     - type: boolean

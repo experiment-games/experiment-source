@@ -14,10 +14,15 @@ lua:
   description: "Returns the packet response latency for the specified packet and flow."
   
   arguments:
-    - name: "flow"
-      type: number
-    - name: "frameNumber"
-      type: number
+  - position: 1
+    name: "netChannel"
+    type: NetChannelInfo
+  - position: 2
+    name: "flow"
+    type: number
+  - position: 3
+    name: "frameNumber"
+    type: number
   returns:
     - type: integer
       description: "The packet response latency"

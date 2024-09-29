@@ -13,7 +13,10 @@ lua:
   realm: shared
   description: "Get effect entity."
   
-  
+  arguments:
+  - position: 1
+    name: "entity"
+    type: Entity
   returns:
     - type: Entity
       description: "The effect entity."

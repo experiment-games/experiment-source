@@ -14,21 +14,28 @@ lua:
   description: "Apply screen shake effect"
   
   arguments:
-    - name: "center"
-      type: Vector
-    - name: "amplitude"
-      type: number
-    - name: "frequency"
-      type: number
-    - name: "duration"
-      type: number
-    - name: "radius"
-      type: number
-    - name: "command"
-      type: enumeration/SHAKE_COMMAND
-    - name: "localAmplitude"
-      type: boolean
-      default: "false"
+  - position: 1
+    name: "center"
+    type: Vector
+  - position: 2
+    name: "amplitude"
+    type: number
+  - position: 3
+    name: "frequency"
+    type: number
+  - position: 4
+    name: "duration"
+    type: number
+  - position: 5
+    name: "radius"
+    type: number
+  - position: 6
+    name: "command"
+    type: enumeration/SHAKE_COMMAND
+  - position: 7
+    name: "localAmplitude"
+    type: boolean
+    default: "false"
   returns:
     
 ---

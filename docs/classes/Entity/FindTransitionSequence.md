@@ -14,10 +14,15 @@ lua:
   description: "Find the transition sequence."
   
   arguments:
-    - name: "sequence"
-      type: number
-    - name: "goalSequence"
-      type: number
+  - position: 1
+    name: "entity"
+    type: Entity
+  - position: 2
+    name: "sequence"
+    type: number
+  - position: 3
+    name: "goalSequence"
+    type: number
   returns:
     - type: integer
       description: "The transition sequence"

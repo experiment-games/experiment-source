@@ -13,7 +13,10 @@ lua:
   realm: client
   description: "Check if the entity is a view model."
   
-  
+  arguments:
+  - position: 1
+    name: "entity"
+    type: Entity
   returns:
     - type: boolean
       description: "Whether the entity is a view model"

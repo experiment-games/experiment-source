@@ -13,9 +13,12 @@ lua:
   realm: shared
   description: "Get simulating player."
   
-  
+  arguments:
+  - position: 1
+    name: "entity"
+    type: Entity
   returns:
-    - type: Entity
+    - type: Player
       description: "The simulating player."
 ---
 

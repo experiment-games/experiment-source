@@ -14,20 +14,30 @@ lua:
   description: "Entity text."
   
   arguments:
-    - name: "textOffset"
-      type: number
-    - name: "text"
-      type: string
-    - name: "duration"
-      type: number
-    - name: "r"
-      type: number
-    - name: "g"
-      type: number
-    - name: "b"
-      type: number
-    - name: "a"
-      type: number
+  - position: 1
+    name: "entity"
+    type: Entity
+  - position: 2
+    name: "textOffset"
+    type: number
+  - position: 3
+    name: "text"
+    type: string
+  - position: 4
+    name: "duration"
+    type: number
+  - position: 5
+    name: "r"
+    type: number
+  - position: 6
+    name: "g"
+    type: number
+  - position: 7
+    name: "b"
+    type: number
+  - position: 8
+    name: "a"
+    type: number
   returns:
     
 ---

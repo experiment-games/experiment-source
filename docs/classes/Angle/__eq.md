@@ -14,8 +14,12 @@ lua:
   description: "Metatable that is called when the angle is to be compared with another angle."
   
   arguments:
-    - name: "angle2"
-      type: Angle
+  - position: 1
+    name: "angle"
+    type: Angle
+  - position: 2
+    name: "other"
+    type: Angle
   returns:
     - type: boolean
       description: "True if the angles are equal, false otherwise."

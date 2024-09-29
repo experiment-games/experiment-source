@@ -13,6 +13,7 @@ lua:
   realm: client
   description: "Get the currently active render target."
   
+  arguments:
   
   returns:
     - type: Texture

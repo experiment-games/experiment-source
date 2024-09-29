@@ -13,7 +13,10 @@ lua:
   realm: client
   description: "Metamethod called when the Frame object is converted to a string"
   
-  
+  arguments:
+  - position: 1
+    name: "frame"
+    type: Frame
   returns:
     - type: string
       description: "The string representation of the Frame object"

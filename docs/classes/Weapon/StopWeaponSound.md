@@ -14,8 +14,12 @@ lua:
   description: "Stop weapon sound."
   
   arguments:
-    - name: "soundType"
-      type: number
+  - position: 1
+    name: "entity"
+    type: Weapon
+  - position: 2
+    name: "soundType"
+    type: number
   returns:
     
 ---

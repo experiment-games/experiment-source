@@ -13,7 +13,10 @@ lua:
   realm: client
   description: "Converts the string to key code"
   
-  
+  arguments:
+  - position: 1
+    name: "str"
+    type: string
   returns:
     - type: enumeration/BUTTON
       description: "The key code"

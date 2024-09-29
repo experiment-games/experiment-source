@@ -13,6 +13,7 @@ lua:
   realm: client
   description: "Check if Hammer is running."
   
+  arguments:
   
   returns:
     - type: boolean

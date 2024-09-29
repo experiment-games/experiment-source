@@ -13,7 +13,10 @@ lua:
   realm: shared
   description: "Clear flags."
   
-  
+  arguments:
+  - position: 1
+    name: "entity"
+    type: Entity
   returns:
     
 ---

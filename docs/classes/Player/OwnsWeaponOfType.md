@@ -14,13 +14,18 @@ lua:
   description: "Check if the player owns a weapon of a certain type."
   
   arguments:
-    - name: "type"
-      type: string
-    - name: "subType"
-      type: number
-      default: "0"
+  - position: 1
+    name: "player"
+    type: Player
+  - position: 2
+    name: "type"
+    type: string
+  - position: 3
+    name: "subType"
+    type: number
+    default: "0"
   returns:
-    - type: Player
+    - type: Weapon
       description: "The weapon the player owns of the specified type."
 ---
 

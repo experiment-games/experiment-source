@@ -13,13 +13,22 @@ lua:
   realm: shared
   description: "Set the pose parameter."
   
-  argumentSets:
-    - arguments:
+  arguments:
+  - position: 1
+    name: "entity"
+    type: Entity
+  - position: 2
+    types:
       - name: "poseParameter"
         type: number
-    - arguments:
       - name: "poseParameter"
         type: string
+  - position: 3
+    types:
+      - name: "value"
+        type: number
+      - name: "value"
+        type: number
   returns:
     - type: number
       description: "The pose parameter"

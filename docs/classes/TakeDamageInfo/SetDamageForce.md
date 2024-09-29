@@ -13,7 +13,13 @@ lua:
   realm: shared
   description: "Sets the force of the damage"
   
-  
+  arguments:
+  - position: 1
+    name: "damageInfo"
+    type: DamageInfo
+  - position: 2
+    name: "force"
+    type: Vector
   returns:
     
 ---

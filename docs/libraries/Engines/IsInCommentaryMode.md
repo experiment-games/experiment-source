@@ -13,6 +13,7 @@ lua:
   realm: server
   description: "Check if the game is in commentary mode."
   
+  arguments:
   
   returns:
     - type: boolean

@@ -13,7 +13,10 @@ lua:
   realm: shared
   description: "Calculate viewmodel bob."
   
-  
+  arguments:
+  - position: 1
+    name: "entity"
+    type: Weapon
   returns:
     - type: number
       description: "Viewmodel bob."

@@ -13,6 +13,7 @@ lua:
   realm: client
   description: "Checks if the surface has focus"
   
+  arguments:
   
   returns:
     - type: boolean

@@ -14,11 +14,13 @@ lua:
   description: "Send a command to the server."
   
   arguments:
-    - name: "command"
-      type: string
-    - name: "reliable"
-      type: boolean
-      default: "true"
+  - position: 1
+    name: "command"
+    type: string
+  - position: 2
+    name: "reliable"
+    type: boolean
+    default: "true"
   returns:
     
 ---

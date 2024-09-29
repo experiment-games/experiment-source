@@ -13,6 +13,7 @@ lua:
   realm: shared
   description: "Get Steam Friends."
   
+  arguments:
   
   returns:
     - type: SteamFriendsHandle

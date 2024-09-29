@@ -14,10 +14,15 @@ lua:
   description: "Adds angleToClamp with the player's punch angle and clamps it between -clampTo and clampTo."
   
   arguments:
-    - name: "start"
-      type: Angle
-    - name: "clampTo"
-      type: Angle
+  - position: 1
+    name: "player"
+    type: Player
+  - position: 2
+    name: "start"
+    type: Angle
+  - position: 3
+    name: "clampTo"
+    type: Angle
   returns:
     
 ---

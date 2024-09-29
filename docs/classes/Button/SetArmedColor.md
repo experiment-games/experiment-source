@@ -14,10 +14,15 @@ lua:
   description: "Sets the armed color"
   
   arguments:
-    - name: "armedForegroundColor"
-      type: Color
-    - name: "armedBackgroundColor"
-      type: Color
+  - position: 1
+    name: "button"
+    type: Button
+  - position: 2
+    name: "armedForegroundColor"
+    type: Color
+  - position: 3
+    name: "armedBackgroundColor"
+    type: Color
   returns:
     
 ---

@@ -14,8 +14,9 @@ lua:
   description: "Checks if the font is additive"
   
   arguments:
-    - name: "font"
-      type: FontHandle
+  - position: 1
+    name: "font"
+    type: FontHandle
   returns:
     - type: boolean
       description: "True if the font is additive, false otherwise."

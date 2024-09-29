@@ -13,6 +13,7 @@ lua:
   realm: client
   description: "Gets the game UI panel"
   
+  arguments:
   
   returns:
     

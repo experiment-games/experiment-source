@@ -13,7 +13,13 @@ lua:
   realm: shared
   description: "Check if the player can switch to a weapon."
   
-  
+  arguments:
+  - position: 1
+    name: "player"
+    type: Player
+  - position: 2
+    name: "weapon"
+    type: Weapon
   returns:
     - type: boolean
       description: "Whether the player can switch to the weapon."

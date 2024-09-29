@@ -13,7 +13,10 @@ lua:
   realm: shared
   description: "Returns the forward vector of the angle."
   
-  
+  arguments:
+  - position: 1
+    name: "angle"
+    type: Angle
   returns:
     - type: Vector
       description: "The forward vector of the angle."

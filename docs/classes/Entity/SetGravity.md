@@ -14,8 +14,12 @@ lua:
   description: "Set gravity."
   
   arguments:
-    - name: "gravity"
-      type: number
+  - position: 1
+    name: "entity"
+    type: Entity
+  - position: 2
+    name: "gravity"
+    type: number
   returns:
     
 ---

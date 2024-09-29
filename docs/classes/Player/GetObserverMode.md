@@ -13,7 +13,10 @@ lua:
   realm: shared
   description: "Get the player's observer mode."
   
-  
+  arguments:
+  - position: 1
+    name: "player"
+    type: Player
   returns:
     - type: enumeration/OBSERVER_MODE
       description: "The player's observer mode."

@@ -14,8 +14,9 @@ lua:
   description: "Add a file to the list of resources so it's downloaded when players connect to the server."
   
   arguments:
-    - name: "filePath"
-      type: string
+  - position: 1
+    name: "filePath"
+    type: string
   returns:
     
 ---

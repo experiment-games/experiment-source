@@ -14,8 +14,12 @@ lua:
   description: "Checks if the autoaim should be attracted towards the given entity."
   
   arguments:
-    - name: "aimingEntity"
-      type: Entity
+  - position: 1
+    name: "entity"
+    type: Entity
+  - position: 2
+    name: "aimingEntity"
+    type: Entity
   returns:
     - type: boolean
       description: "true if should attract, false otherwise."

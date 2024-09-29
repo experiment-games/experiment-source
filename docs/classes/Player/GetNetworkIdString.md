@@ -13,7 +13,10 @@ lua:
   realm: server
   description: "Get the network ID string of the player."
   
-  
+  arguments:
+  - position: 1
+    name: "player"
+    type: Player
   returns:
     - type: string
       description: "The network ID string."

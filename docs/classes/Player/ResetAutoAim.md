@@ -13,7 +13,10 @@ lua:
   realm: shared
   description: "Reset the player's autoaim."
   
-  
+  arguments:
+  - position: 1
+    name: "player"
+    type: Player
   returns:
     
 ---

@@ -13,7 +13,10 @@ lua:
   realm: shared
   description: "Returns a string representation of the command"
   
-  
+  arguments:
+  - position: 1
+    name: "consoleCommand"
+    type: ConsoleCommand
   returns:
     - type: string
       description: "Returns a string representation of the command"

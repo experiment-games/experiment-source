@@ -14,15 +14,23 @@ lua:
   description: "Add a screen text overlay."
   
   arguments:
-    - name: "x"
-      type: number
-    - name: "y"
-      type: number
-    - name: "text"
-      type: string
-    - name: "duration"
-      type: number
-      default: "1"
+  - position: 1
+    name: "x"
+    type: number
+  - position: 2
+    name: "y"
+    type: number
+  - position: 3
+    name: "text"
+    type: string
+  - position: 4
+    name: "duration"
+    type: number
+    default: "1"
+  - position: 5
+    name: "color"
+    type: Color
+    default: "color_white"
   returns:
     
 ---

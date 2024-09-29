@@ -13,6 +13,7 @@ lua:
   realm: client
   description: "Checks if the cursor is locked"
   
+  arguments:
   
   returns:
     - type: boolean

@@ -14,14 +14,18 @@ lua:
   description: "Check if a box is intersecting a sphere"
   
   arguments:
-    - name: "boxMin"
-      type: Vector
-    - name: "boxMax"
-      type: Vector
-    - name: "spherePosition"
-      type: Vector
-    - name: "sphereRadius"
-      type: number
+  - position: 1
+    name: "boxMin"
+    type: Vector
+  - position: 2
+    name: "boxMax"
+    type: Vector
+  - position: 3
+    name: "spherePosition"
+    type: Vector
+  - position: 4
+    name: "sphereRadius"
+    type: number
   returns:
     - type: boolean
       description: "True if the box is intersecting the sphere"

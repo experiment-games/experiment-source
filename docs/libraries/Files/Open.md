@@ -14,13 +14,16 @@ lua:
   description: "Open a file."
   
   arguments:
-    - name: "filePath"
-      type: string
-    - name: "readMode"
-      type: string
-    - name: "pathId"
-      type: string
-      default: "\"DATA\""
+  - position: 1
+    name: "filePath"
+    type: string
+  - position: 2
+    name: "readMode"
+    type: string
+  - position: 3
+    name: "pathId"
+    type: string
+    default: "\"DATA\""
   returns:
     - type: FileHandle
       description: "The file handle."

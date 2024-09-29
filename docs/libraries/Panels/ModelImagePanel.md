@@ -14,12 +14,14 @@ lua:
   description: "Creates a new model image panel"
   
   arguments:
-    - name: "parent"
-      type: Panel
-      default: "VGui_GetClientLuaRootPanel()"
-    - name: "name"
-      type: string
-      default: "\"ModelImagePanel\""
+  - position: 1
+    name: "parent"
+    type: Panel
+    default: "VGui_GetClientLuaRootPanel()"
+  - position: 2
+    name: "name"
+    type: string
+    default: "\"ModelImagePanel\""
   returns:
     - type: ModelImagePanel
       description: "The new model image panel"

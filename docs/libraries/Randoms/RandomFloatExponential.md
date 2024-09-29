@@ -14,15 +14,18 @@ lua:
   description: "Generate a random float with an exponential distribution."
   
   arguments:
-    - name: "min"
-      type: number
-      default: "0.0f"
-    - name: "max"
-      type: number
-      default: "0.0f"
-    - name: "exponent"
-      type: number
-      default: "1.0f"
+  - position: 1
+    name: "min"
+    type: number
+    default: "0.0f"
+  - position: 2
+    name: "max"
+    type: number
+    default: "0.0f"
+  - position: 3
+    name: "exponent"
+    type: number
+    default: "1.0f"
   returns:
     - type: number
       description: "The generated random float."

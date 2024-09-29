@@ -13,7 +13,10 @@ lua:
   realm: shared
   description: "Becomes a trigger"
   
-  
+  arguments:
+  - position: 1
+    name: "physicsObject"
+    type: PhysicsObject
   returns:
     
 ---

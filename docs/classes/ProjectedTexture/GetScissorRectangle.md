@@ -13,7 +13,10 @@ lua:
   realm: client
   description: "Get the scissor settings of the projected texture."
   
-  
+  arguments:
+  - position: 1
+    name: "projectedTexture"
+    type: ProjectedTexture
   returns:
     - type: boolean
       description: "Whether the projected texture is cut off."

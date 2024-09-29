@@ -14,8 +14,12 @@ lua:
   description: "Returns the average latency for the specified number of packets."
   
   arguments:
-    - name: "flow"
-      type: number
+  - position: 1
+    name: "netChannel"
+    type: NetChannelInfo
+  - position: 2
+    name: "flow"
+    type: number
   returns:
     - type: number
       description: "The average latency for the specified number of packets."

@@ -13,7 +13,10 @@ lua:
   realm: shared
   description: "Call the player's post think."
   
-  
+  arguments:
+  - position: 1
+    name: "player"
+    type: Player
   returns:
     
 ---

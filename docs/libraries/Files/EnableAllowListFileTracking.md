@@ -14,12 +14,15 @@ lua:
   description: "Enable allowlist file tracking."
   
   arguments:
-    - name: "enable"
-      type: boolean
-    - name: "cacheAllVPKHashes"
-      type: boolean
-    - name: "recalculateAndCheckHashes"
-      type: boolean
+  - position: 1
+    name: "enable"
+    type: boolean
+  - position: 2
+    name: "cacheAllVPKHashes"
+    type: boolean
+  - position: 3
+    name: "recalculateAndCheckHashes"
+    type: boolean
   returns:
     
 ---

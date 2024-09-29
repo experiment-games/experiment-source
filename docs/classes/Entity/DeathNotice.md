@@ -14,8 +14,12 @@ lua:
   description: "Death notice."
   
   arguments:
-    - name: "killer"
-      type: Entity
+  - position: 1
+    name: "entity"
+    type: Entity
+  - position: 2
+    name: "killer"
+    type: Entity
   returns:
     
 ---

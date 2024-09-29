@@ -14,8 +14,9 @@ lua:
   description: "Creates an entity by the given class name"
   
   arguments:
-    - name: "className"
-      type: string
+  - position: 1
+    name: "className"
+    type: string
   returns:
     - type: Entity
       description: "The created entity"

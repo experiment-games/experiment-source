@@ -13,7 +13,10 @@ lua:
   realm: server
   description: "Get the body angles of the player."
   
-  
+  arguments:
+  - position: 1
+    name: "player"
+    type: Player
   returns:
     - type: Angle
       description: "The body angles."

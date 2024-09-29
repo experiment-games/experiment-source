@@ -13,11 +13,11 @@ lua:
   realm: server
   description: "Writes an entity."
   
-  argumentSets:
-    - arguments:
+  arguments:
+  - position: 1
+    types:
       - name: "entity"
         type: Entity
-    - arguments:
       - name: "entity"
         type: Entity
   returns:

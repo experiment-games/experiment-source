@@ -13,7 +13,10 @@ lua:
   realm: shared
   description: "Get the persona name of the current user."
   
-  
+  arguments:
+  - position: 1
+    name: "steamFriends"
+    type: SteamFriendsHandle
   returns:
     - type: string
       description: "The persona name of the current user."

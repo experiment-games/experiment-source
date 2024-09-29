@@ -14,8 +14,12 @@ lua:
   description: "Apply absolute velocity impulse."
   
   arguments:
-    - name: "impulse"
-      type: Vector
+  - position: 1
+    name: "entity"
+    type: Entity
+  - position: 2
+    name: "impulse"
+    type: Vector
   returns:
     
 ---

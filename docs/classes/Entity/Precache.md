@@ -13,7 +13,10 @@ lua:
   realm: shared
   description: "Precache."
   
-  
+  arguments:
+  - position: 1
+    name: "entity"
+    type: Entity
   returns:
     
 ---

@@ -13,6 +13,7 @@ lua:
   realm: shared
   description: "__tostring method for UserCommand"
   
+  arguments:
   
   returns:
     - type: string

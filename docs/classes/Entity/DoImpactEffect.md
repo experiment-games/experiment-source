@@ -14,10 +14,15 @@ lua:
   description: "Do impact effect."
   
   arguments:
-    - name: "trace"
-      type: Trace
-    - name: "damageType"
-      type: number
+  - position: 1
+    name: "entity"
+    type: Entity
+  - position: 2
+    name: "trace"
+    type: Trace
+  - position: 3
+    name: "damageType"
+    type: number
   returns:
     
 ---

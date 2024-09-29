@@ -13,7 +13,10 @@ lua:
   realm: shared
   description: "Get the index of the hitbox set in use."
   
-  
+  arguments:
+  - position: 1
+    name: "entity"
+    type: Entity
   returns:
     - type: integer
       description: "The hitbox set"

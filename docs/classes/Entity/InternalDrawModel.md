@@ -14,8 +14,12 @@ lua:
   description: "Internal draw the model."
   
   arguments:
-    - name: "flags"
-      type: number
+  - position: 1
+    name: "entity"
+    type: Entity
+  - position: 2
+    name: "flags"
+    type: number
   returns:
     - type: integer
       description: "The resulting draw flag"

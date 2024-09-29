@@ -14,11 +14,16 @@ lua:
   description: "Switch the player's weapon."
   
   arguments:
-    - name: "weapon"
-      type: Weapon
-    - name: "subType"
-      type: number
-      default: "0"
+  - position: 1
+    name: "player"
+    type: Player
+  - position: 2
+    name: "weapon"
+    type: Weapon
+  - position: 3
+    name: "subType"
+    type: number
+    default: "0"
   returns:
     - type: boolean
       description: "Whether the weapon was switched."

@@ -14,14 +14,21 @@ lua:
   description: "Sets the dock margin"
   
   arguments:
-    - name: "left"
-      type: number
-    - name: "top"
-      type: number
-    - name: "right"
-      type: number
-    - name: "bottom"
-      type: number
+  - position: 1
+    name: "panel"
+    type: Panel
+  - position: 2
+    name: "left"
+    type: number
+  - position: 3
+    name: "top"
+    type: number
+  - position: 4
+    name: "right"
+    type: number
+  - position: 5
+    name: "bottom"
+    type: number
   returns:
     
 ---

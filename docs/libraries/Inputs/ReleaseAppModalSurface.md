@@ -13,6 +13,7 @@ lua:
   realm: client
   description: "Release the application modal surface."
   
+  arguments:
   
   returns:
     

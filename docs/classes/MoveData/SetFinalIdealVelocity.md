@@ -14,8 +14,12 @@ lua:
   description: "Sets the final ideal velocity"
   
   arguments:
-    - name: "velocity"
-      type: Vector
+  - position: 1
+    name: "moveData"
+    type: MoveData
+  - position: 2
+    name: "velocity"
+    type: Vector
   returns:
     
 ---

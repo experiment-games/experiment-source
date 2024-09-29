@@ -13,40 +13,44 @@ lua:
   realm: shared
   description: "Create a new keyvalues object."
   
-  argumentSets:
-    - arguments:
-      - name: "name"
-        type: string
-      - name: "firstKey"
-        type: string
-        nillable: true
+  arguments:
+  - position: 1
+    name: "name"
+    type: string
+  - position: 2
+    name: "firstKey"
+    type: string
+    nillable: true
+  - position: 3
+    types:
       - name: "firstValue"
         type: number
-        nillable: true
-    - arguments:
+    nillable: true
       - name: "firstValue"
         type: string
-        nillable: true
-    - arguments:
+    nillable: true
       - name: "firstValue"
         type: number
-        nillable: true
+    nillable: true
+      - name: "firstValue"
+        type: string
+    nillable: true
+  - position: 4
+    types:
       - name: "secondKey"
         type: string
-        nillable: true
-      - name: "secondValue"
-        type: number
-        nillable: true
-    - arguments:
-      - name: "firstValue"
-        type: string
-        nillable: true
+    nillable: true
       - name: "secondKey"
         type: string
-        nillable: true
+    nillable: true
+  - position: 5
+    types:
+      - name: "secondValue"
+        type: number
+    nillable: true
       - name: "secondValue"
         type: string
-        nillable: true
+    nillable: true
   returns:
     - type: KeyValuesHandle
       description: "The new keyvalues object."

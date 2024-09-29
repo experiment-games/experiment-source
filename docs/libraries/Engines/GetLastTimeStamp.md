@@ -13,6 +13,7 @@ lua:
   realm: client
   description: "Get the last time stamp."
   
+  arguments:
   
   returns:
     - type: number

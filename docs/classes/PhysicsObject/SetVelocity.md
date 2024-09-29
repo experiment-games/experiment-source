@@ -14,10 +14,15 @@ lua:
   description: "Sets the velocity"
   
   arguments:
-    - name: "linearVelocity"
-      type: Vector
-    - name: "angularVelocity"
-      type: Vector
+  - position: 1
+    name: "physicsObject"
+    type: PhysicsObject
+  - position: 2
+    name: "linearVelocity"
+    type: Vector
+  - position: 3
+    name: "angularVelocity"
+    type: Vector
   returns:
     
 ---

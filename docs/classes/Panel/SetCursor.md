@@ -14,8 +14,12 @@ lua:
   description: "Sets the cursor"
   
   arguments:
-    - name: "cursorCode"
-      type: enumeration/CURSOR
+  - position: 1
+    name: "panel"
+    type: Panel
+  - position: 2
+    name: "cursorCode"
+    type: enumeration/CURSOR
   returns:
     
 ---

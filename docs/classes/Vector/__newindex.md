@@ -14,8 +14,12 @@ lua:
   description: "Sets the value of a vector field."
   
   arguments:
-    - name: "field"
-      type: string
+  - position: 1
+    name: "vector"
+    type: Vector
+  - position: 2
+    name: "field"
+    type: string
   returns:
     
 ---

@@ -14,8 +14,12 @@ lua:
   description: "Set the player's swim sound time."
   
   arguments:
-    - name: "time"
-      type: number
+  - position: 1
+    name: "player"
+    type: Player
+  - position: 2
+    name: "time"
+    type: number
   returns:
     
 ---

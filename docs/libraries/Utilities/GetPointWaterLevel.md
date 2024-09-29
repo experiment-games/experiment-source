@@ -14,12 +14,15 @@ lua:
   description: "Get the water level at the specified position"
   
   arguments:
-    - name: "point"
-      type: Vector
-    - name: "minz"
-      type: number
-    - name: "maxz"
-      type: number
+  - position: 1
+    name: "point"
+    type: Vector
+  - position: 2
+    name: "minz"
+    type: number
+  - position: 3
+    name: "maxz"
+    type: number
   returns:
     - type: number
       description: "Water level at the specified position"

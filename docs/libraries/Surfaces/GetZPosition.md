@@ -13,6 +13,7 @@ lua:
   realm: client
   description: "Gets the Z position"
   
+  arguments:
   
   returns:
     - type: number

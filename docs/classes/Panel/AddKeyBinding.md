@@ -14,12 +14,18 @@ lua:
   description: "Adds a key binding to the panel"
   
   arguments:
-    - name: "key"
-      type: string
-    - name: "keyCode"
-      type: enumeration/BUTTON
-    - name: "modifiers"
-      type: number
+  - position: 1
+    name: "panel"
+    type: Panel
+  - position: 2
+    name: "key"
+    type: string
+  - position: 3
+    name: "keyCode"
+    type: enumeration/BUTTON
+  - position: 4
+    name: "modifiers"
+    type: number
   returns:
     
 ---

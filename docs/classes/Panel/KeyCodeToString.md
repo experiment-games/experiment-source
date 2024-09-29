@@ -15,8 +15,9 @@ lua:
   
   static: true
   arguments:
-    - name: "keyCode"
-      type: enumeration/BUTTON
+  - position: 1
+    name: "keyCode"
+    type: enumeration/BUTTON
   returns:
     - type: string
       description: "The string representation of the key code"

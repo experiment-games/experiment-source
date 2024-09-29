@@ -14,8 +14,12 @@ lua:
   description: "Set the class name."
   
   arguments:
-    - name: "classname"
-      type: string
+  - position: 1
+    name: "entity"
+    type: Entity
+  - position: 2
+    name: "classname"
+    type: string
   returns:
     
 ---

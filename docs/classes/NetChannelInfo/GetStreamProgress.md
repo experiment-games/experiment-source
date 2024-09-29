@@ -14,8 +14,12 @@ lua:
   description: "Returns the stream progress for the specified flow."
   
   arguments:
-    - name: "flow"
-      type: number
+  - position: 1
+    name: "netChannel"
+    type: NetChannelInfo
+  - position: 2
+    name: "flow"
+    type: number
   returns:
     - type: boolean
       description: "If the stream progress was retrieved."

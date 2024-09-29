@@ -13,7 +13,16 @@ lua:
   realm: shared
   description: "Calculates velocity and angular velocity offsets"
   
-  
+  arguments:
+  - position: 1
+    name: "physicsObject"
+    type: PhysicsObject
+  - position: 2
+    name: "velocity"
+    type: Vector
+  - position: 3
+    name: "offset"
+    type: Vector
   returns:
     - type: Vector
       description: "The center velocity."

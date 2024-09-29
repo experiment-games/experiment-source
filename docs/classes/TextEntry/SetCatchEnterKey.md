@@ -14,8 +14,12 @@ lua:
   description: "Sets whether the enter key is caught by the text entry"
   
   arguments:
-    - name: "catchEnter"
-      type: boolean
+  - position: 1
+    name: "textEntry"
+    type: TextEntry
+  - position: 2
+    name: "catchEnter"
+    type: boolean
   returns:
     
 ---

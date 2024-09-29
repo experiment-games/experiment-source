@@ -14,10 +14,15 @@ lua:
   description: "Add timed overlay."
   
   arguments:
-    - name: "text"
-      type: string
-    - name: "durationInSeconds"
-      type: number
+  - position: 1
+    name: "entity"
+    type: Entity
+  - position: 2
+    name: "text"
+    type: string
+  - position: 3
+    name: "durationInSeconds"
+    type: number
   returns:
     
 ---

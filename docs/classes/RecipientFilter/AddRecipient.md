@@ -13,7 +13,13 @@ lua:
   realm: shared
   description: "Adds a single recipient"
   
-  
+  arguments:
+  - position: 1
+    name: "filter"
+    type: RecipientFilter
+  - position: 2
+    name: "player"
+    type: Player
   returns:
     
 ---

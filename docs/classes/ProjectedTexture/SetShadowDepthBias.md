@@ -14,8 +14,12 @@ lua:
   description: "Set the shadow depth bias of the projected texture."
   
   arguments:
-    - name: "bias"
-      type: number
+  - position: 1
+    name: "projectedTexture"
+    type: ProjectedTexture
+  - position: 2
+    name: "bias"
+    type: number
   returns:
     
 ---

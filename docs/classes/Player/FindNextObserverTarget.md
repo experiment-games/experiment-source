@@ -14,8 +14,12 @@ lua:
   description: "Find the next observer target for the player."
   
   arguments:
-    - name: "reverse"
-      type: boolean
+  - position: 1
+    name: "player"
+    type: Player
+  - position: 2
+    name: "reverse"
+    type: boolean
   returns:
     
 ---

@@ -14,13 +14,16 @@ lua:
   description: "Add a search path to the filesystem."
   
   arguments:
-    - name: "path"
-      type: string
-    - name: "pathId"
-      type: string
-    - name: "addType"
-      type: enumeration/SEARCH_PATH_ADD_TO
-      default: "PATH_ADD_TO_TAIL"
+  - position: 1
+    name: "path"
+    type: string
+  - position: 2
+    name: "pathId"
+    type: string
+  - position: 3
+    name: "addType"
+    type: enumeration/SEARCH_PATH_ADD_TO
+    default: "PATH_ADD_TO_TAIL"
   returns:
     
 ---

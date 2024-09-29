@@ -13,7 +13,10 @@ lua:
   realm: client
   description: "Release."
   
-  
+  arguments:
+  - position: 1
+    name: "entity"
+    type: Entity
   returns:
     
 ---

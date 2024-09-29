@@ -13,7 +13,10 @@ lua:
   realm: shared
   description: "Can be selected."
   
-  
+  arguments:
+  - position: 1
+    name: "entity"
+    type: Weapon
   returns:
     - type: boolean
       description: "Whether the weapon can be selected."

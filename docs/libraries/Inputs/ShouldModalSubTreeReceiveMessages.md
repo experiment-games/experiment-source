@@ -13,6 +13,7 @@ lua:
   realm: client
   description: "Check if the modal sub-tree should receive messages."
   
+  arguments:
   
   returns:
     - type: boolean

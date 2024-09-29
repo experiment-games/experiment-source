@@ -13,7 +13,10 @@ lua:
   realm: shared
   description: "Whether this entity blocks line of sight."
   
-  
+  arguments:
+  - position: 1
+    name: "entity"
+    type: Entity
   returns:
     - type: boolean
       description: "True if the entity blocks line of sight, false otherwise."

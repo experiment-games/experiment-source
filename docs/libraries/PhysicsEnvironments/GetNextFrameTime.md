@@ -13,6 +13,7 @@ lua:
   realm: shared
   description: "Get next frame time."
   
+  arguments:
   
   returns:
     - type: number

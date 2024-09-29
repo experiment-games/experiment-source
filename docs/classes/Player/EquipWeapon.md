@@ -14,8 +14,12 @@ lua:
   description: "Equip a weapon for the player."
   
   arguments:
-    - name: "weapon"
-      type: Weapon
+  - position: 1
+    name: "player"
+    type: Player
+  - position: 2
+    name: "weapon"
+    type: Weapon
   returns:
     
 ---

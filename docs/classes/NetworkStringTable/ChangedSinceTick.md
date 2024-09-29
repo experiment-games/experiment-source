@@ -14,8 +14,12 @@ lua:
   description: "Check if the table has changed since the given tick."
   
   arguments:
-    - name: "tick"
-      type: number
+  - position: 1
+    name: "networkStringTable"
+    type: NetworkStringTable
+  - position: 2
+    name: "tick"
+    type: number
   returns:
     - type: boolean
       description: "True if the table has changed, false otherwise."

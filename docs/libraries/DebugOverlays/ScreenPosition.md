@@ -14,8 +14,9 @@ lua:
   description: "Get the screen position of a vector."
   
   arguments:
-    - name: "vec"
-      type: Vector
+  - position: 1
+    name: "vec"
+    type: Vector
   returns:
     - type: Vector
       description: "The screen position of the vector, or nil if the vector is not on the screen."

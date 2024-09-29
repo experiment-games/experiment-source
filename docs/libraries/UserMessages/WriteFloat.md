@@ -14,8 +14,9 @@ lua:
   description: "Writes a float."
   
   arguments:
-    - name: "float"
-      type: number
+  - position: 1
+    name: "float"
+    type: number
   returns:
     
 ---

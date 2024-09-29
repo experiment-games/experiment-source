@@ -14,10 +14,15 @@ lua:
   description: "Returns if the packet is valid for the specified flow."
   
   arguments:
-    - name: "flow"
-      type: number
-    - name: "frameNumber"
-      type: number
+  - position: 1
+    name: "netChannel"
+    type: NetChannelInfo
+  - position: 2
+    name: "flow"
+    type: number
+  - position: 3
+    name: "frameNumber"
+    type: number
   returns:
     - type: boolean
       description: "If the packet is valid for the specified flow."

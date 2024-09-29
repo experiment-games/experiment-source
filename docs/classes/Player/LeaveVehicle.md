@@ -13,7 +13,10 @@ lua:
   realm: shared
   description: "Make the player leave their vehicle."
   
-  
+  arguments:
+  - position: 1
+    name: "player"
+    type: Player
   returns:
     
 ---

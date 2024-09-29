@@ -14,8 +14,12 @@ lua:
   description: "Is effect active."
   
   arguments:
-    - name: "effect"
-      type: number
+  - position: 1
+    name: "entity"
+    type: Entity
+  - position: 2
+    name: "effect"
+    type: number
   returns:
     - type: boolean
       description: "True if effect active, false otherwise."

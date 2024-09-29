@@ -14,8 +14,9 @@ lua:
   description: "Gets the popup"
   
   arguments:
-    - name: "index"
-      type: number
+  - position: 1
+    name: "index"
+    type: number
   returns:
     
 ---

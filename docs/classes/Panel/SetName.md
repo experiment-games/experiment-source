@@ -14,8 +14,12 @@ lua:
   description: "Sets the name"
   
   arguments:
-    - name: "name"
-      type: string
+  - position: 1
+    name: "panel"
+    type: Panel
+  - position: 2
+    name: "name"
+    type: string
   returns:
     
 ---

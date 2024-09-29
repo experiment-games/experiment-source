@@ -14,18 +14,24 @@ lua:
   description: "Convert aiming angles and screen coordinates to a vector."
   
   arguments:
-    - name: "angles"
-      type: Angle
-    - name: "fov"
-      type: number
-    - name: "x"
-      type: number
-    - name: "y"
-      type: number
-    - name: "screenWidth"
-      type: number
-    - name: "screenHeight"
-      type: number
+  - position: 1
+    name: "angles"
+    type: Angle
+  - position: 2
+    name: "fov"
+    type: number
+  - position: 3
+    name: "x"
+    type: number
+  - position: 4
+    name: "y"
+    type: number
+  - position: 5
+    name: "screenWidth"
+    type: number
+  - position: 6
+    name: "screenHeight"
+    type: number
   returns:
     - type: Vector
       description: "Aim vector in world coordinates."

@@ -13,7 +13,13 @@ lua:
   realm: client
   description: "Metamethod called when two Frame objects are compared"
   
-  
+  arguments:
+  - position: 1
+    name: "frame"
+    type: Frame
+  - position: 2
+    name: "other"
+    type: Frame
   returns:
     - type: boolean
       description: "Whether the Frame objects are equal"

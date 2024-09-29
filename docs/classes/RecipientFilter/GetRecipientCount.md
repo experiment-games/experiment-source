@@ -13,7 +13,10 @@ lua:
   realm: shared
   description: "Gets the count of recipients"
   
-  
+  arguments:
+  - position: 1
+    name: "filter"
+    type: RecipientFilter
   returns:
     
 ---

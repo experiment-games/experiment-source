@@ -13,7 +13,10 @@ lua:
   realm: shared
   description: "Has NPCs on it."
   
-  
+  arguments:
+  - position: 1
+    name: "entity"
+    type: Entity
   returns:
     - type: boolean
       description: "True if has NPCs on it, false otherwise."

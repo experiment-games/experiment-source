@@ -14,22 +14,32 @@ lua:
   description: "Shake an object and all players on or near it."
   
   arguments:
-    - name: "center"
-      type: Vector
-    - name: "amplitude"
-      type: number
-    - name: "frequency"
-      type: number
-    - name: "duration"
-      type: number
-    - name: "radius"
-      type: number
-    - name: "shakeCommand"
-      type: enumeration/SHAKE_COMMAND
-      default: "SHAKE_START"
-    - name: "shouldShakePlayersInAir"
-      type: boolean
-      default: "false"
+  - position: 1
+    name: "entity"
+    type: Entity
+  - position: 2
+    name: "center"
+    type: Vector
+  - position: 3
+    name: "amplitude"
+    type: number
+  - position: 4
+    name: "frequency"
+    type: number
+  - position: 5
+    name: "duration"
+    type: number
+  - position: 6
+    name: "radius"
+    type: number
+  - position: 7
+    name: "shakeCommand"
+    type: enumeration/SHAKE_COMMAND
+    default: "SHAKE_START"
+  - position: 8
+    name: "shouldShakePlayersInAir"
+    type: boolean
+    default: "false"
   returns:
     
 ---

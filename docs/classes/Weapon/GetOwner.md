@@ -13,7 +13,10 @@ lua:
   realm: shared
   description: "Get owner."
   
-  
+  arguments:
+  - position: 1
+    name: "entity"
+    type: Weapon
   returns:
     - type: Entity
       description: "Owner entity."

@@ -14,8 +14,9 @@ lua:
   description: "Simulate for specified time."
   
   arguments:
-    - name: "time"
-      type: number
+  - position: 1
+    name: "time"
+    type: number
   returns:
     
 ---

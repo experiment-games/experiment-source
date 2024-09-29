@@ -13,6 +13,7 @@ lua:
   realm: client
   description: "Get the most recent save game."
   
+  arguments:
   
   returns:
     - type: string

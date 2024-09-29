@@ -14,8 +14,12 @@ lua:
   description: "Set the texture to be projected."
   
   arguments:
-    - name: "texture"
-      type: string
+  - position: 1
+    name: "projectedTexture"
+    type: ProjectedTexture
+  - position: 2
+    name: "texture"
+    type: string
   returns:
     
 ---

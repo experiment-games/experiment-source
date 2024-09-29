@@ -14,8 +14,12 @@ lua:
   description: "Set friction."
   
   arguments:
-    - name: "friction"
-      type: number
+  - position: 1
+    name: "entity"
+    type: Entity
+  - position: 2
+    name: "friction"
+    type: number
   returns:
     
 ---

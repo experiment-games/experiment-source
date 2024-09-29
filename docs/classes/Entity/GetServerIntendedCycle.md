@@ -13,7 +13,10 @@ lua:
   realm: client
   description: "Get the server intended cycle."
   
-  
+  arguments:
+  - position: 1
+    name: "entity"
+    type: Entity
   returns:
     - type: number
       description: "The server intended cycle"

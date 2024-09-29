@@ -13,7 +13,10 @@ lua:
   realm: shared
   description: "Copies damage to base damage"
   
-  
+  arguments:
+  - position: 1
+    name: "damageInfo"
+    type: DamageInfo
   returns:
     
 ---

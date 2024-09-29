@@ -13,6 +13,7 @@ lua:
   realm: client
   description: "Reloads the schemes."
   
+  arguments:
   
   returns:
     

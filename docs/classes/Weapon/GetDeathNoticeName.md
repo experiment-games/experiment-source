@@ -13,7 +13,10 @@ lua:
   realm: shared
   description: "Get death notice name."
   
-  
+  arguments:
+  - position: 1
+    name: "entity"
+    type: Weapon
   returns:
     - type: string
       description: "Death notice name."

@@ -14,13 +14,16 @@ lua:
   description: "Creates a material"
   
   arguments:
-    - name: "name"
-      type: string
-    - name: "shaderName"
-      type: string
-    - name: "materialData"
-      type: table
-      nillable: true
+  - position: 1
+    name: "name"
+    type: string
+  - position: 2
+    name: "shaderName"
+    type: string
+  - position: 3
+    name: "materialData"
+    type: table
+    nillable: true
   returns:
     - type: Material
       description: "The material (or nil if it could not be created)"

@@ -14,8 +14,12 @@ lua:
   description: "Sets the text of the label"
   
   arguments:
-    - name: "text"
-      type: string
+  - position: 1
+    name: "label"
+    type: Label
+  - position: 2
+    name: "text"
+    type: string
   returns:
     
 ---

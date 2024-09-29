@@ -13,7 +13,10 @@ lua:
   realm: shared
   description: "Gets inverse inertia"
   
-  
+  arguments:
+  - position: 1
+    name: "physicsObject"
+    type: PhysicsObject
   returns:
     - type: Vector
       description: "The inverse inertia."

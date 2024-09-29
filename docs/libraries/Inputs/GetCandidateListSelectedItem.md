@@ -13,6 +13,7 @@ lua:
   realm: client
   description: "Get the selected item's index in the candidate list."
   
+  arguments:
   
   returns:
     - type: integer

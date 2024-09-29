@@ -17,7 +17,7 @@ lua:
       type: Entity
     - name: "pPlayer"
       description: ""
-      type: Entity
+      type: Player
     - name: "pWeapon"
       description: ""
       type: Entity

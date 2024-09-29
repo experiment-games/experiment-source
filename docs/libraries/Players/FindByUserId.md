@@ -14,8 +14,9 @@ lua:
   description: "Get a player by user ID."
   
   arguments:
-    - name: "user ID"
-      type: number
+  - position: 1
+    name: "user ID"
+    type: number
   returns:
     - type: Player
       description: "The player."

@@ -13,7 +13,10 @@ lua:
   realm: shared
   description: "Gets the actual height of the texture."
   
-  
+  arguments:
+  - position: 1
+    name: "texture"
+    type: Texture
   returns:
     - type: integer
       description: "The actual height of the texture."

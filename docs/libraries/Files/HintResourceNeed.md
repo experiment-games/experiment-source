@@ -14,10 +14,12 @@ lua:
   description: "Hint that a resource is needed."
   
   arguments:
-    - name: "filename"
-      type: string
-    - name: "characterCount"
-      type: number
+  - position: 1
+    name: "filename"
+    type: string
+  - position: 2
+    name: "characterCount"
+    type: number
   returns:
     - type: integer
       description: "The hint resource need."

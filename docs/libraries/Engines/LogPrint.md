@@ -14,8 +14,9 @@ lua:
   description: "Print a message to the log."
   
   arguments:
-    - name: "message"
-      type: string
+  - position: 1
+    name: "message"
+    type: string
   returns:
     
 ---

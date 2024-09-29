@@ -13,7 +13,10 @@ lua:
   realm: shared
   description: "Uses clips for ammo 1."
   
-  
+  arguments:
+  - position: 1
+    name: "entity"
+    type: Weapon
   returns:
     - type: boolean
       description: "Whether clips are used for ammo 1."

@@ -14,8 +14,12 @@ lua:
   description: "Set the material override"
   
   arguments:
-    - name: "materialName"
-      type: string
+  - position: 1
+    name: "entity"
+    type: Entity
+  - position: 2
+    name: "materialName"
+    type: string
   returns:
     
 ---

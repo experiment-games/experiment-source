@@ -14,10 +14,15 @@ lua:
   description: "Follow entity."
   
   arguments:
-    - name: "target"
-      type: Entity
-    - name: "boneMerge"
-      type: boolean
+  - position: 1
+    name: "entity"
+    type: Entity
+  - position: 2
+    name: "target"
+    type: Entity
+  - position: 3
+    name: "boneMerge"
+    type: boolean
   returns:
     
 ---

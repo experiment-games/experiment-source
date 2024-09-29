@@ -14,10 +14,15 @@ lua:
   description: "Lock the weapon."
   
   arguments:
-    - name: "lockTime"
-      type: number
-    - name: "locker"
-      type: Entity
+  - position: 1
+    name: "entity"
+    type: Weapon
+  - position: 2
+    name: "lockTime"
+    type: number
+  - position: 3
+    name: "locker"
+    type: Entity
   returns:
     
 ---

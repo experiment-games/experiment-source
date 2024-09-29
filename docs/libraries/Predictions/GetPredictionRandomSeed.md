@@ -13,6 +13,7 @@ lua:
   realm: shared
   description: "Get prediction random seed."
   
+  arguments:
   
   returns:
     - type: integer

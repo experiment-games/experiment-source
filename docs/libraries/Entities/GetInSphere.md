@@ -14,16 +14,20 @@ lua:
   description: "Finds all entities in the given sphere. Note that clientPartitionMask is only available on the client."
   
   arguments:
-    - name: "position"
-      type: Vector
-    - name: "radius"
-      type: number
-    - name: "flagMask"
-      type: integer
-      default: "PARTITION_CLIENT_NON_STATIC_EDICTS"
-    - name: "partitionMask"
-      type: integer
-      default: "PARTITION_CLIENT_NON_STATIC_EDICTS"
+  - position: 1
+    name: "position"
+    type: Vector
+  - position: 2
+    name: "radius"
+    type: number
+  - position: 3
+    name: "flagMask"
+    type: integer
+    default: "PARTITION_CLIENT_NON_STATIC_EDICTS"
+  - position: 4
+    name: "partitionMask"
+    type: integer
+    default: "PARTITION_CLIENT_NON_STATIC_EDICTS"
   returns:
     - type: table
       description: "A table of entities found."

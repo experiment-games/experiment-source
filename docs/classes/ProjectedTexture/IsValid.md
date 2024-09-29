@@ -13,7 +13,10 @@ lua:
   realm: client
   description: "Check if the projected texture is valid."
   
-  
+  arguments:
+  - position: 1
+    name: "projectedTexture"
+    type: ProjectedTexture
   returns:
     - type: boolean
       description: "Whether the projected texture is valid."

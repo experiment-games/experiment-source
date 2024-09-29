@@ -13,6 +13,7 @@ lua:
   realm: server
   description: "Cleans up the delete list."
   
+  arguments:
   
   returns:
     

@@ -13,7 +13,10 @@ lua:
   realm: shared
   description: "Checks if using prediction rules"
   
-  
+  arguments:
+  - position: 1
+    name: "filter"
+    type: RecipientFilter
   returns:
     
 ---

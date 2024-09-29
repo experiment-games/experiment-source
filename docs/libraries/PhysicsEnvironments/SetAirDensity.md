@@ -14,8 +14,9 @@ lua:
   description: "Set air density."
   
   arguments:
-    - name: "density"
-      type: number
+  - position: 1
+    name: "density"
+    type: number
   returns:
     
 ---

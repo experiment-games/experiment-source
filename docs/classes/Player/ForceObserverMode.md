@@ -14,8 +14,12 @@ lua:
   description: "Force the observer mode for the player."
   
   arguments:
-    - name: "mode"
-      type: enumeration/OBSERVER_MODE
+  - position: 1
+    name: "player"
+    type: Player
+  - position: 2
+    name: "mode"
+    type: enumeration/OBSERVER_MODE
   returns:
     
 ---

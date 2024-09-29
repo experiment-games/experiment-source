@@ -14,8 +14,9 @@ lua:
   description: "Finds the entity by its entity index"
   
   arguments:
-    - name: "entityIndex"
-      type: number
+  - position: 1
+    name: "entityIndex"
+    type: number
   returns:
     - type: Entity
       description: "The found entity or NULL entity"

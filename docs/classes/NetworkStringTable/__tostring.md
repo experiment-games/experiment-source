@@ -13,7 +13,10 @@ lua:
   realm: shared
   description: "Get a string representation of the table."
   
-  
+  arguments:
+  - position: 1
+    name: "networkStringTable"
+    type: NetworkStringTable
   returns:
     
 ---

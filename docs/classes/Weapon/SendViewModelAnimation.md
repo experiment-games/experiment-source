@@ -14,8 +14,12 @@ lua:
   description: "Send view model animation."
   
   arguments:
-    - name: "sequence"
-      type: number
+  - position: 1
+    name: "entity"
+    type: Weapon
+  - position: 2
+    name: "sequence"
+    type: number
   returns:
     
 ---

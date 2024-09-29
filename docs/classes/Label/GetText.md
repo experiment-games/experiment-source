@@ -13,7 +13,10 @@ lua:
   realm: client
   description: "Gets the text of the label"
   
-  
+  arguments:
+  - position: 1
+    name: "label"
+    type: Label
   returns:
     - type: string
       description: "The text of the label"

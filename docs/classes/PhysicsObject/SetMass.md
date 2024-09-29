@@ -14,8 +14,12 @@ lua:
   description: "Sets the mass"
   
   arguments:
-    - name: "mass"
-      type: number
+  - position: 1
+    name: "physicsObject"
+    type: PhysicsObject
+  - position: 2
+    name: "mass"
+    type: number
   returns:
     
 ---

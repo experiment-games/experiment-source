@@ -13,7 +13,13 @@ lua:
   realm: shared
   description: "Gets physics parameters"
   
-  
+  arguments:
+  - position: 1
+    name: "physprops"
+    type: PhysicsSurfacePropertiesHandle
+  - position: 2
+    name: "surfaceDataIndex"
+    type: number
   returns:
     - type: SurfacePhysicsParams
       description: "The physics parameters."

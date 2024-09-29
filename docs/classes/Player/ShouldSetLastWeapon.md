@@ -14,10 +14,15 @@ lua:
   description: "Check if the player should set the last weapon."
   
   arguments:
-    - name: "weapon"
-      type: Weapon
-    - name: "last"
-      type: Weapon
+  - position: 1
+    name: "player"
+    type: Player
+  - position: 2
+    name: "weapon"
+    type: Weapon
+  - position: 3
+    name: "last"
+    type: Weapon
   returns:
     - type: boolean
       description: "Whether the player should set the last weapon."

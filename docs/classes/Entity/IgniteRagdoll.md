@@ -14,8 +14,12 @@ lua:
   description: "Ignite the ragdoll."
   
   arguments:
-    - name: "igniter"
-      type: Entity
+  - position: 1
+    name: "entity"
+    type: Entity
+  - position: 2
+    name: "igniter"
+    type: Entity
   returns:
     
 ---

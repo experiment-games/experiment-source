@@ -14,8 +14,12 @@ lua:
   description: "Sets whether a new line is sent when enter is pressed"
   
   arguments:
-    - name: "sendNewLine"
-      type: boolean
+  - position: 1
+    name: "textEntry"
+    type: TextEntry
+  - position: 2
+    name: "sendNewLine"
+    type: boolean
   returns:
     
 ---

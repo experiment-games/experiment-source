@@ -13,6 +13,7 @@ lua:
   realm: client
   description: "Get the cursor position using VCR mode."
   
+  arguments:
   
   returns:
     - type: integer, integer

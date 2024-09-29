@@ -14,8 +14,12 @@ lua:
   description: "Sets whether the button should paint"
   
   arguments:
-    - name: "shouldPaint"
-      type: boolean
+  - position: 1
+    name: "button"
+    type: Button
+  - position: 2
+    name: "shouldPaint"
+    type: boolean
   returns:
     
 ---

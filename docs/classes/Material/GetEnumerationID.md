@@ -13,7 +13,10 @@ lua:
   realm: shared
   description: "Get enumeration ID."
   
-  
+  arguments:
+  - position: 1
+    name: "material"
+    type: Material
   returns:
     - type: integer
       description: "Enumeration ID."

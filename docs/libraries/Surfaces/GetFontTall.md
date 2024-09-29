@@ -14,8 +14,9 @@ lua:
   description: "Gets the font tall"
   
   arguments:
-    - name: "font"
-      type: FontHandle
+  - position: 1
+    name: "font"
+    type: FontHandle
   returns:
     - type: integer
       description: "The font tall"

@@ -13,7 +13,10 @@ lua:
   realm: client
   description: "Checks if the panel is marked for deletion"
   
-  
+  arguments:
+  - position: 1
+    name: "panel"
+    type: Panel
   returns:
     - type: boolean
       description: "True if the panel is marked for deletion, false otherwise"

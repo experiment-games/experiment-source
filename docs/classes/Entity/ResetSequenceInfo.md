@@ -13,7 +13,10 @@ lua:
   realm: shared
   description: "Reset the sequence info."
   
-  
+  arguments:
+  - position: 1
+    name: "entity"
+    type: Entity
   returns:
     
 ---

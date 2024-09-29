@@ -14,12 +14,21 @@ lua:
   description: "Color modulate."
   
   arguments:
-    - name: "red"
-      type: number
-    - name: "green"
-      type: number
-    - name: "blue"
-      type: number
+  - position: 1
+    types:
+      - name: "material"
+        type: Material
+      - name: "material"
+        type: Material
+  - position: 2
+    name: "red"
+    type: number
+  - position: 3
+    name: "green"
+    type: number
+  - position: 4
+    name: "blue"
+    type: number
   returns:
     
 ---

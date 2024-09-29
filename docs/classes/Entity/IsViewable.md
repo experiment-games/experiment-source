@@ -13,7 +13,10 @@ lua:
   realm: server
   description: "Is this entity something that would be looked at (model, sprite, etc.)."
   
-  
+  arguments:
+  - position: 1
+    name: "entity"
+    type: Entity
   returns:
     - type: boolean
       description: "true if viewable, false otherwise."

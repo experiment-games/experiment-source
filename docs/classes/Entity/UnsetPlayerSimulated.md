@@ -13,7 +13,10 @@ lua:
   realm: shared
   description: "Unset player simulated."
   
-  
+  arguments:
+  - position: 1
+    name: "entity"
+    type: Entity
   returns:
     
 ---

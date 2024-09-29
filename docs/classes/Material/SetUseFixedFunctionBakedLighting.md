@@ -13,7 +13,13 @@ lua:
   realm: shared
   description: "Set use fixed function baked lighting."
   
-  
+  arguments:
+  - position: 1
+    types:
+      - name: "useFixedFunctionBakedLighting"
+        type: boolean
+      - name: "material"
+        type: Material
   returns:
     
 ---

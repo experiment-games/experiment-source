@@ -13,7 +13,10 @@ lua:
   realm: shared
   description: "Get a string representation of the trace."
   
-  
+  arguments:
+  - position: 1
+    name: "trace"
+    type: Trace
   returns:
     - type: string
       description: "The string representation of the trace."

@@ -13,7 +13,10 @@ lua:
   realm: shared
   description: "Is player simulated."
   
-  
+  arguments:
+  - position: 1
+    name: "entity"
+    type: Entity
   returns:
     - type: boolean
       description: "True if player simulated, false otherwise."

@@ -13,7 +13,10 @@ lua:
   realm: shared
   description: "Get eye position."
   
-  
+  arguments:
+  - position: 1
+    name: "entity"
+    type: Entity
   returns:
     - type: Vector
       description: "The eye position."

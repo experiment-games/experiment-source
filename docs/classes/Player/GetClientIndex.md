@@ -13,7 +13,10 @@ lua:
   realm: server
   description: "Get the client index of the player."
   
-  
+  arguments:
+  - position: 1
+    name: "player"
+    type: Player
   returns:
     - type: integer
       description: "The client index."

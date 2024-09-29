@@ -14,12 +14,17 @@ lua:
   description: "Slowly fades a entity out, then removes it."
   
   arguments:
-    - name: "duration"
-      type: number
-      default: "10.0f"
-    - name: "instant"
-      type: boolean
-      default: "true"
+  - position: 1
+    name: "entity"
+    type: Entity
+  - position: 2
+    name: "duration"
+    type: number
+    default: "10.0f"
+  - position: 3
+    name: "instant"
+    type: boolean
+    default: "true"
   returns:
     
 ---

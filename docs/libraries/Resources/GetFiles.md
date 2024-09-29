@@ -13,6 +13,7 @@ lua:
   realm: server
   description: "Get the list of files added with Resources.AddFile."
   
+  arguments:
   
   returns:
     - type: table

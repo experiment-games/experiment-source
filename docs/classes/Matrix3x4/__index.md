@@ -14,8 +14,12 @@ lua:
   description: "Metatable called when a non-existant field is index"
   
   arguments:
-    - name: "string"
-      type: string
+  - position: 1
+    name: "Matrix3x4"
+    type: Matrix3x4
+  - position: 2
+    name: "string"
+    type: string
   returns:
     - type: any
       description: "The value of the field."

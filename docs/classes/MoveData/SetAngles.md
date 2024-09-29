@@ -14,8 +14,12 @@ lua:
   description: "Sets the angles (local space)"
   
   arguments:
-    - name: "angles"
-      type: Angle
+  - position: 1
+    name: "moveData"
+    type: MoveData
+  - position: 2
+    name: "angles"
+    type: Angle
   returns:
     
 ---

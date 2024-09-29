@@ -14,8 +14,12 @@ lua:
   description: "Sets the image for the model"
   
   arguments:
-    - name: "imagePath"
-      type: string
+  - position: 1
+    name: "modelImagePanel"
+    type: ModelImagePanel
+  - position: 2
+    name: "imagePath"
+    type: string
   returns:
     
 ---

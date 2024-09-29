@@ -14,8 +14,12 @@ lua:
   description: "Sets whether the drag starts when the mouse exits the panel"
   
   arguments:
-    - name: "start"
-      type: boolean
+  - position: 1
+    name: "panel"
+    type: Panel
+  - position: 2
+    name: "start"
+    type: boolean
   returns:
     
 ---

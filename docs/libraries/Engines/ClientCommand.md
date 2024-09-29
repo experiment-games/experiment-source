@@ -14,8 +14,9 @@ lua:
   description: "Send a command to the client."
   
   arguments:
-    - name: "command"
-      type: string
+  - position: 1
+    name: "command"
+    type: string
   returns:
     
 ---

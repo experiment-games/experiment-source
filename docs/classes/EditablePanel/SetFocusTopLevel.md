@@ -13,7 +13,13 @@ lua:
   realm: client
   description: "Sets the focus to the top level"
   
-  
+  arguments:
+  - position: 1
+    name: "editablePanel"
+    type: EditablePanel
+  - position: 2
+    name: "topLevel"
+    type: boolean
   returns:
     
 ---

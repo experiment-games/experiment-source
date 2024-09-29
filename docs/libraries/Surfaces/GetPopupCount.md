@@ -13,6 +13,7 @@ lua:
   realm: client
   description: "Gets the popup count"
   
+  arguments:
   
   returns:
     - type: integer

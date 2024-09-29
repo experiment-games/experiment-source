@@ -14,8 +14,12 @@ lua:
   description: "Activate the Steam overlay to a specific place. Valid dialog options include: 'Friends', 'Community', 'Players', 'Settings', 'OfficialGameGroup', 'Stats', 'Achievements', 'chatroomgroup/nnnn'."
   
   arguments:
-    - name: "dialogOption"
-      type: string
+  - position: 1
+    name: "steamFriends"
+    type: SteamFriendsHandle
+  - position: 2
+    name: "dialogOption"
+    type: string
   returns:
     
 ---

@@ -14,10 +14,15 @@ lua:
   description: "Convert world to entity space."
   
   arguments:
-    - name: "world"
-      type: Vector
-    - name: "entity"
-      type: Vector
+  - position: 1
+    name: "entity"
+    type: Entity
+  - position: 2
+    name: "world"
+    type: Vector
+  - position: 3
+    name: "entity"
+    type: Vector
   returns:
     
 ---

@@ -14,8 +14,12 @@ lua:
   description: "Sets the hotkey of the label"
   
   arguments:
-    - name: "key"
-      type: number
+  - position: 1
+    name: "label"
+    type: Label
+  - position: 2
+    name: "key"
+    type: number
   returns:
     
 ---

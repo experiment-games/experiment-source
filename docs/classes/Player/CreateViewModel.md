@@ -14,9 +14,13 @@ lua:
   description: "Create a view model for the player."
   
   arguments:
-    - name: "viewModelIndex"
-      type: integer
-      default: "0"
+  - position: 1
+    name: "player"
+    type: Player
+  - position: 2
+    name: "viewModelIndex"
+    type: integer
+    default: "0"
   returns:
     
 ---

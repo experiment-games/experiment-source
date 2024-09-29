@@ -13,6 +13,7 @@ lua:
   realm: client
   description: "Pop a magnification filter. (Non-functional; help wanted)"
   
+  arguments:
   
   returns:
     

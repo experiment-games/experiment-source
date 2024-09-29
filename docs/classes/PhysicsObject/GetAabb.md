@@ -13,7 +13,10 @@ lua:
   realm: shared
   description: "Gets the axis-aligned bounding box"
   
-  
+  arguments:
+  - position: 1
+    name: "collide"
+    type: PhysicsObject
   returns:
     - type: Vector
       description: "The minimum vector."

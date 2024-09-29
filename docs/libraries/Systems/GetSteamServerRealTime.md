@@ -13,6 +13,7 @@ lua:
   realm: shared
   description: "Get the server time."
   
+  arguments:
   
   returns:
     - type: integer

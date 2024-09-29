@@ -13,7 +13,10 @@ lua:
   realm: shared
   description: "Check if the player is an observer."
   
-  
+  arguments:
+  - position: 1
+    name: "player"
+    type: Player
   returns:
     - type: boolean
       description: "Whether the player is an observer."

@@ -14,8 +14,9 @@ lua:
   description: "Get the player's net info."
   
   arguments:
-    - name: "playerIndex"
-      type: number
+  - position: 1
+    name: "playerIndex"
+    type: number
   returns:
     - type: netchannel
       description: "The player's net info."

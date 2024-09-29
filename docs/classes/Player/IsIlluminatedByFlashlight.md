@@ -14,8 +14,12 @@ lua:
   description: "Check if the player is illuminated by the flashlight."
   
   arguments:
-    - name: "entity"
-      type: Entity
+  - position: 1
+    name: "player"
+    type: Player
+  - position: 2
+    name: "entity"
+    type: Entity
   returns:
     - type: boolean
       description: "Whether the player is illuminated by the flashlight."

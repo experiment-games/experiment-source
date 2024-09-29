@@ -13,6 +13,7 @@ lua:
   realm: shared
   description: "Get performance settings."
   
+  arguments:
   
   returns:
     - type: physics_performanceparams_t

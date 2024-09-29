@@ -14,8 +14,12 @@ lua:
   description: "Set the angles (direction) of the projected texture."
   
   arguments:
-    - name: "angle"
-      type: Angle
+  - position: 1
+    name: "projectedTexture"
+    type: ProjectedTexture
+  - position: 2
+    name: "angle"
+    type: Angle
   returns:
     
 ---

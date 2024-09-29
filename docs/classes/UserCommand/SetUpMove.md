@@ -13,7 +13,13 @@ lua:
   realm: shared
   description: "Sets upward movement"
   
-  
+  arguments:
+  - position: 1
+    name: "userCmd"
+    type: UserCommand
+  - position: 2
+    name: "upMove"
+    type: number
   returns:
     
 ---

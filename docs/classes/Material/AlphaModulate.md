@@ -13,7 +13,13 @@ lua:
   realm: shared
   description: "Alpha modulate."
   
-  
+  arguments:
+  - position: 1
+    name: "material"
+    type: Material
+  - position: 2
+    name: "alpha"
+    type: number
   returns:
     
 ---

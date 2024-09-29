@@ -14,8 +14,12 @@ lua:
   description: "Selects all text in the text entry"
   
   arguments:
-    - name: "selectAll"
-      type: boolean
+  - position: 1
+    name: "textEntry"
+    type: TextEntry
+  - position: 2
+    name: "selectAll"
+    type: boolean
   returns:
     
 ---

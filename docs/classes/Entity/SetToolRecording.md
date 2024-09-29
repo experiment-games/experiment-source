@@ -14,8 +14,12 @@ lua:
   description: "Set tool recording."
   
   arguments:
-    - name: "recording"
-      type: boolean
+  - position: 1
+    name: "entity"
+    type: Entity
+  - position: 2
+    name: "recording"
+    type: boolean
   returns:
     
 ---

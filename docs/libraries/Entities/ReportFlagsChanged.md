@@ -14,12 +14,15 @@ lua:
   description: "Reports that an entity's flags have changed"
   
   arguments:
-    - name: "entity"
-      type: Entity
-    - name: "flagsOld"
-      type: number
-    - name: "flagsNow"
-      type: number
+  - position: 1
+    name: "entity"
+    type: Entity
+  - position: 2
+    name: "flagsOld"
+    type: number
+  - position: 3
+    name: "flagsNow"
+    type: number
   returns:
     
 ---

@@ -14,8 +14,12 @@ lua:
   description: "Toggle flag."
   
   arguments:
-    - name: "flag"
-      type: number
+  - position: 1
+    name: "entity"
+    type: Entity
+  - position: 2
+    name: "flag"
+    type: number
   returns:
     
 ---

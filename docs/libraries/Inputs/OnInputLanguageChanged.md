@@ -13,6 +13,7 @@ lua:
   realm: client
   description: "Handle input language change."
   
+  arguments:
   
   returns:
     

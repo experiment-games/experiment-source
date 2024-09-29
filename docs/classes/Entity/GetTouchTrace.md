@@ -14,6 +14,7 @@ lua:
   description: "Get touch trace most recently relevant."
   
   static: true
+  arguments:
   
   returns:
     - type: trace

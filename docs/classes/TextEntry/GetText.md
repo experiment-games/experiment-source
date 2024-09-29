@@ -13,7 +13,10 @@ lua:
   realm: client
   description: "Gets the text from the text entry"
   
-  
+  arguments:
+  - position: 1
+    name: "textEntry"
+    type: TextEntry
   returns:
     - type: string
       description: "The text from the text entry"

@@ -13,7 +13,13 @@ lua:
   realm: shared
   description: "Applies force at center"
   
-  
+  arguments:
+  - position: 1
+    name: "physicsObject"
+    type: PhysicsObject
+  - position: 2
+    name: "force"
+    type: Vector
   returns:
     
 ---

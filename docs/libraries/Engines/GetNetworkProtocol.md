@@ -13,6 +13,7 @@ lua:
   realm: shared
   description: "Get the network protocol."
   
+  arguments:
   
   returns:
     - type: integer

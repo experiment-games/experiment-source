@@ -14,8 +14,9 @@ lua:
   description: "Converts an axis string to a point point."
   
   arguments:
-    - name: "axisString"
-      type: string
+  - position: 1
+    name: "axisString"
+    type: string
   returns:
     - type: Vector
       description: "The converted start point."

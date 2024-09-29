@@ -13,7 +13,10 @@ lua:
   realm: shared
   description: "Checks if motion is enabled"
   
-  
+  arguments:
+  - position: 1
+    name: "physicsObject"
+    type: PhysicsObject
   returns:
     - type: boolean
       description: "Whether motion is enabled or not."

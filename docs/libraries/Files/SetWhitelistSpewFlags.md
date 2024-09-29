@@ -14,8 +14,9 @@ lua:
   description: "Set the whitelist spew flags."
   
   arguments:
-    - name: "flags"
-      type: number
+  - position: 1
+    name: "flags"
+    type: number
   returns:
     
 ---

@@ -14,8 +14,12 @@ lua:
   description: "Sets the skin for the model"
   
   arguments:
-    - name: "skin"
-      type: number
+  - position: 1
+    name: "modelImagePanel"
+    type: ModelImagePanel
+  - position: 2
+    name: "skin"
+    type: number
   returns:
     
 ---

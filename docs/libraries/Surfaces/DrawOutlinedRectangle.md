@@ -14,14 +14,18 @@ lua:
   description: "Draws an outlined rectangle"
   
   arguments:
-    - name: "x"
-      type: number
-    - name: "y"
-      type: number
-    - name: "width"
-      type: number
-    - name: "height"
-      type: number
+  - position: 1
+    name: "x"
+    type: number
+  - position: 2
+    name: "y"
+    type: number
+  - position: 3
+    name: "width"
+    type: number
+  - position: 4
+    name: "height"
+    type: number
   returns:
     
 ---

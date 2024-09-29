@@ -15,8 +15,9 @@ lua:
   
   static: true
   arguments:
-    - name: "sound"
-      type: string
+  - position: 1
+    name: "sound"
+    type: string
   returns:
     - type: boolean
       description: "True if precached sound, false otherwise."

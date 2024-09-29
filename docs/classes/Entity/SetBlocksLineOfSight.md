@@ -14,8 +14,12 @@ lua:
   description: "Set blocks Lin eOf Sight."
   
   arguments:
-    - name: "blocksLOS"
-      type: boolean
+  - position: 1
+    name: "entity"
+    type: Entity
+  - position: 2
+    name: "blocksLOS"
+    type: boolean
   returns:
     
 ---

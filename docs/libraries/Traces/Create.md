@@ -13,6 +13,7 @@ lua:
   realm: shared
   description: "Create a new trace object."
   
+  arguments:
   
   returns:
     - type: Trace

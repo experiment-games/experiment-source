@@ -14,8 +14,12 @@ lua:
   description: "Sets the constraint speed scale"
   
   arguments:
-    - name: "speedScale"
-      type: number
+  - position: 1
+    name: "moveData"
+    type: MoveData
+  - position: 2
+    name: "speedScale"
+    type: number
   returns:
     
 ---

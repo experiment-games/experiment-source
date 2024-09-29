@@ -13,7 +13,10 @@ lua:
   realm: server
   description: "Returns the remote frame rate."
   
-  
+  arguments:
+  - position: 1
+    name: "netChannel"
+    type: NetChannelInfo
   returns:
     - type: number
       description: "The remote frame rate."

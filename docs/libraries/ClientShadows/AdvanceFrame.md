@@ -13,6 +13,7 @@ lua:
   realm: client
   description: "Advance shadow frame processing."
   
+  arguments:
   
   returns:
     

@@ -13,7 +13,10 @@ lua:
   realm: server
   description: "Increment transmit state owned counter."
   
-  
+  arguments:
+  - position: 1
+    name: "entity"
+    type: Entity
   returns:
     
 ---

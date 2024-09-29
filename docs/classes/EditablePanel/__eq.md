@@ -13,7 +13,13 @@ lua:
   realm: client
   description: "Metamethod that is called when two panels are compared"
   
-  
+  arguments:
+  - position: 1
+    name: "editablePanel"
+    type: EditablePanel
+  - position: 2
+    name: "other"
+    type: EditablePanel
   returns:
     - type: boolean
       description: "Whether the panels are equal"

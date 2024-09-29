@@ -13,7 +13,10 @@ lua:
   realm: server
   description: "Check if the player should fade on death."
   
-  
+  arguments:
+  - position: 1
+    name: "player"
+    type: Player
   returns:
     - type: boolean
       description: "Whether the player should fade on death."

@@ -13,6 +13,7 @@ lua:
   realm: shared
   description: "Converts RGB to HSL."
   
+  arguments:
   
   returns:
     - type: number

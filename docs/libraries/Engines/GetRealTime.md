@@ -13,6 +13,7 @@ lua:
   realm: shared
   description: "Get the real time."
   
+  arguments:
   
   returns:
     - type: number

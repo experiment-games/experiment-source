@@ -13,7 +13,10 @@ lua:
   realm: client
   description: "Has recorded this frame."
   
-  
+  arguments:
+  - position: 1
+    name: "entity"
+    type: Entity
   returns:
     - type: boolean
       description: "true if recorded, false otherwise."

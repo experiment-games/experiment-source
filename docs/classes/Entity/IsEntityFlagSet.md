@@ -14,8 +14,12 @@ lua:
   description: "Is Entity Flag set."
   
   arguments:
-    - name: "flag"
-      type: number
+  - position: 1
+    name: "entity"
+    type: Entity
+  - position: 2
+    name: "flag"
+    type: number
   returns:
     - type: boolean
       description: "True if Entity Flag set, false otherwise."

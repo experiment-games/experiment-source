@@ -13,7 +13,10 @@ lua:
   realm: client
   description: "Saves the user configuration"
   
-  
+  arguments:
+  - position: 1
+    name: "editablePanel"
+    type: EditablePanel
   returns:
     
 ---

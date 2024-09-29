@@ -14,8 +14,12 @@ lua:
   description: "In same team."
   
   arguments:
-    - name: "other"
-      type: Entity
+  - position: 1
+    name: "entity"
+    type: Entity
+  - position: 2
+    name: "other"
+    type: Entity
   returns:
     - type: boolean
       description: "True if in same team, false otherwise."

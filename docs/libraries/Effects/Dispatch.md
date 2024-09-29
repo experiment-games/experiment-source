@@ -14,10 +14,12 @@ lua:
   description: "Dispatches an effect."
   
   arguments:
-    - name: "effectName"
-      type: string
-    - name: "effectData"
-      type: EffectData
+  - position: 1
+    name: "effectName"
+    type: string
+  - position: 2
+    name: "effectData"
+    type: EffectData
   returns:
     
 ---

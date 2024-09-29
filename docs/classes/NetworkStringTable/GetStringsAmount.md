@@ -13,7 +13,10 @@ lua:
   realm: shared
   description: "Get the number of strings stored in the table."
   
-  
+  arguments:
+  - position: 1
+    name: "networkStringTable"
+    type: NetworkStringTable
   returns:
     - type: integer
       description: "The number of strings."

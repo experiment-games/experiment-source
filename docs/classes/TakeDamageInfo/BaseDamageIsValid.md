@@ -13,7 +13,10 @@ lua:
   realm: shared
   description: "Checks if base damage is valid"
   
-  
+  arguments:
+  - position: 1
+    name: "damageInfo"
+    type: DamageInfo
   returns:
     - type: boolean
       description: "True if base damage is valid, false otherwise."

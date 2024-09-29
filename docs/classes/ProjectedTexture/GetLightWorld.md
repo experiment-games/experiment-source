@@ -13,7 +13,10 @@ lua:
   realm: client
   description: "Get whenever or not the Texture should light up world geometry."
   
-  
+  arguments:
+  - position: 1
+    name: "projectedTexture"
+    type: ProjectedTexture
   returns:
     - type: boolean
       description: "Whether the texture should light up world geometry."

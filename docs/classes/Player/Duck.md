@@ -13,7 +13,10 @@ lua:
   realm: server
   description: "Make the player duck."
   
-  
+  arguments:
+  - position: 1
+    name: "player"
+    type: Player
   returns:
     
 ---

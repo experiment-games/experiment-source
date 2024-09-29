@@ -13,6 +13,7 @@ lua:
   realm: server
   description: "Execute the server."
   
+  arguments:
   
   returns:
     

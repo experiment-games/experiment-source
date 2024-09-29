@@ -14,11 +14,16 @@ lua:
   description: "Give the named weapon to the player."
   
   arguments:
-    - name: "name"
-      type: string
-    - name: "amount"
-      type: integer
-      default: "0"
+  - position: 1
+    name: "player"
+    type: Player
+  - position: 2
+    name: "name"
+    type: string
+  - position: 3
+    name: "amount"
+    type: integer
+    default: "0"
   returns:
     - type: Entity
       description: "The item given to the player."

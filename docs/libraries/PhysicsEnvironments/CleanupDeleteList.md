@@ -13,6 +13,7 @@ lua:
   realm: shared
   description: "Cleanup delete list."
   
+  arguments:
   
   returns:
     

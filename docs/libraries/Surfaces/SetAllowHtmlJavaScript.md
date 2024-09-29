@@ -14,8 +14,9 @@ lua:
   description: "Sets whether HTML JavaScript is allowed"
   
   arguments:
-    - name: "allow"
-      type: boolean
+  - position: 1
+    name: "allow"
+    type: boolean
   returns:
     
 ---

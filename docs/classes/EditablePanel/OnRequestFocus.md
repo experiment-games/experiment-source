@@ -14,10 +14,15 @@ lua:
   description: "Handles request focus event"
   
   arguments:
-    - name: "subFocusPanel"
-      type: Panel
-    - name: "defaultPanel"
-      type: Panel
+  - position: 1
+    name: "editablePanel"
+    type: EditablePanel
+  - position: 2
+    name: "subFocusPanel"
+    type: Panel
+  - position: 3
+    name: "defaultPanel"
+    type: Panel
   returns:
     
 ---

@@ -13,6 +13,7 @@ lua:
   realm: client
   description: "Handle a storage device detachment."
   
+  arguments:
   
   returns:
     

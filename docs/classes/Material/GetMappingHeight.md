@@ -13,7 +13,10 @@ lua:
   realm: shared
   description: "Get mapping height."
   
-  
+  arguments:
+  - position: 1
+    name: "material"
+    type: Material
   returns:
     - type: integer
       description: "Mapping height."

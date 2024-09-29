@@ -14,8 +14,12 @@ lua:
   description: "Sets the raw color value."
   
   arguments:
-    - name: "rawColor"
-      type: number
+  - position: 1
+    name: "color"
+    type: Color
+  - position: 2
+    name: "rawColor"
+    type: number
   returns:
     
 ---

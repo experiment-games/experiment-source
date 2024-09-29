@@ -14,8 +14,12 @@ lua:
   description: "Set player simulated."
   
   arguments:
-    - name: "player"
-      type: Player
+  - position: 1
+    name: "entity"
+    type: Entity
+  - position: 2
+    name: "player"
+    type: Player
   returns:
     
 ---

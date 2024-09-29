@@ -13,7 +13,10 @@ lua:
   realm: shared
   description: "Get morph format."
   
-  
+  arguments:
+  - position: 1
+    name: "material"
+    type: Material
   returns:
     - type: integer
       description: "Morph format."

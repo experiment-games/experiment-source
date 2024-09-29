@@ -13,6 +13,7 @@ lua:
   realm: client
   description: "Get the screen size."
   
+  arguments:
   
   returns:
     - type: integer

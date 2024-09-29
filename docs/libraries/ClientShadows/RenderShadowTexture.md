@@ -14,10 +14,12 @@ lua:
   description: "Render shadow texture using provided width and height."
   
   arguments:
-    - name: "width"
-      type: number
-    - name: "height"
-      type: number
+  - position: 1
+    name: "width"
+    type: number
+  - position: 2
+    name: "height"
+    type: number
   returns:
     
 ---

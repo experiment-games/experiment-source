@@ -13,6 +13,7 @@ lua:
   realm: client
   description: "Check if the map has HDR lighting."
   
+  arguments:
   
   returns:
     - type: boolean

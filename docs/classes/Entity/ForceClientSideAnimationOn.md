@@ -13,7 +13,10 @@ lua:
   realm: client
   description: "This can be used to force client side animation to be on. Only use if you know what you're doing! Normally, the server entity should set this."
   
-  
+  arguments:
+  - position: 1
+    name: "entity"
+    type: Entity
   returns:
     
 ---

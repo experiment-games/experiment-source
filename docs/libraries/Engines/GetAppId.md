@@ -13,6 +13,7 @@ lua:
   realm: shared
   description: "Get the AppID of the game."
   
+  arguments:
   
   returns:
     - type: integer

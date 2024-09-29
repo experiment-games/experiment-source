@@ -13,7 +13,10 @@ lua:
   realm: shared
   description: "Close a file."
   
-  
+  arguments:
+  - position: 1
+    name: "file"
+    type: FileHandle
   returns:
     
 ---

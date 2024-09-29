@@ -13,6 +13,7 @@ lua:
   realm: client
   description: "Fire events."
   
+  arguments:
   
   returns:
     

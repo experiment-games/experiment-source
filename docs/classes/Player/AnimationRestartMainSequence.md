@@ -13,7 +13,10 @@ lua:
   realm: shared
   description: "Restart the main sequence."
   
-  
+  arguments:
+  - position: 1
+    name: "entity"
+    type: Player
   returns:
     
 ---

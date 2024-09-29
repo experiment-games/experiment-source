@@ -13,7 +13,10 @@ lua:
   realm: shared
   description: "Abort reload."
   
-  
+  arguments:
+  - position: 1
+    name: "entity"
+    type: Weapon
   returns:
     
 ---

@@ -14,8 +14,12 @@ lua:
   description: "Copies a 3x4 matrix to a matrix."
   
   arguments:
-    - name: "Matrix3x4"
-      type: Matrix3x4
+  - position: 1
+    name: "Matrix"
+    type: Matrix
+  - position: 2
+    name: "Matrix3x4"
+    type: Matrix3x4
   returns:
     
 ---

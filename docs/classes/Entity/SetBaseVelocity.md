@@ -14,8 +14,12 @@ lua:
   description: "Set base velocity."
   
   arguments:
-    - name: "velocity"
-      type: Vector
+  - position: 1
+    name: "entity"
+    type: Entity
+  - position: 2
+    name: "velocity"
+    type: Vector
   returns:
     
 ---

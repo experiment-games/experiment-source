@@ -13,7 +13,10 @@ lua:
   realm: client
   description: "Activates build mode for the panel"
   
-  
+  arguments:
+  - position: 1
+    name: "editablePanel"
+    type: EditablePanel
   returns:
     
 ---

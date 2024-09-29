@@ -14,11 +14,16 @@ lua:
   description: "Set shadow cast distance."
   
   arguments:
-    - name: "distance"
-      type: number
-    - name: "maxDistance"
-      type: number
-      nillable: true
+  - position: 1
+    name: "entity"
+    type: Entity
+  - position: 2
+    name: "distance"
+    type: number
+  - position: 3
+    name: "maxDistance"
+    type: number
+    nillable: true
   returns:
     
 ---

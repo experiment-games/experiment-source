@@ -13,7 +13,10 @@ lua:
   realm: client
   description: "Is enabled in tool view."
   
-  
+  arguments:
+  - position: 1
+    name: "entity"
+    type: Entity
   returns:
     - type: boolean
       description: "true if enabled, false otherwise."

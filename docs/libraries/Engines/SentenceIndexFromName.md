@@ -14,8 +14,9 @@ lua:
   description: "Get the sentence index from a name."
   
   arguments:
-    - name: "sentenceName"
-      type: string
+  - position: 1
+    name: "sentenceName"
+    type: string
   returns:
     - type: integer
       description: "The sentence index."

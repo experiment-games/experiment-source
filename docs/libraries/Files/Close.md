@@ -14,8 +14,9 @@ lua:
   description: "Close a file."
   
   arguments:
-    - name: "file"
-      type: FileHandle
+  - position: 1
+    name: "file"
+    type: FileHandle
   returns:
     
 ---

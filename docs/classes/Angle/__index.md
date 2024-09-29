@@ -14,8 +14,12 @@ lua:
   description: "Metatable that is called when a key is not found in the table."
   
   arguments:
-    - name: "field"
-      type: string
+  - position: 1
+    name: "angle"
+    type: Angle
+  - position: 2
+    name: "field"
+    type: string
   returns:
     - type: any
       description: "The value of the key."

@@ -14,8 +14,12 @@ lua:
   description: "Checks if the point is within the surface"
   
   arguments:
-    - name: "x"
-      type: number
+  - position: 1
+    name: "x"
+    type: number
+  - position: 2
+    name: "y"
+    type: number
   returns:
     - type: boolean
       description: "True if the point is within the surface, false otherwise."

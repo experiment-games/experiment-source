@@ -14,18 +14,27 @@ lua:
   description: "Add a triangle overlay to the screen."
   
   arguments:
-    - name: "p1"
-      type: Vector
-    - name: "p2"
-      type: Vector
-    - name: "p3"
-      type: Vector
-    - name: "duration"
-      type: number
-      default: "1"
-    - name: "noDepthTest"
-      type: boolean
-      default: "false"
+  - position: 1
+    name: "p1"
+    type: Vector
+  - position: 2
+    name: "p2"
+    type: Vector
+  - position: 3
+    name: "p3"
+    type: Vector
+  - position: 4
+    name: "duration"
+    type: number
+    default: "1"
+  - position: 5
+    name: "color"
+    type: Color
+    default: "color_white"
+  - position: 6
+    name: "noDepthTest"
+    type: boolean
+    default: "false"
   returns:
     
 ---

@@ -14,9 +14,13 @@ lua:
   description: "Pause or unpause the bonus progress for the player."
   
   arguments:
-    - name: "shouldPause"
-      type: boolean
-      default: "true"
+  - position: 1
+    name: "player"
+    type: Player
+  - position: 2
+    name: "shouldPause"
+    type: boolean
+    default: "true"
   returns:
     
 ---

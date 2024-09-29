@@ -14,8 +14,12 @@ lua:
   description: "Set the skin of the entity"
   
   arguments:
-    - name: "skin"
-      type: number
+  - position: 1
+    name: "entity"
+    type: Entity
+  - position: 2
+    name: "skin"
+    type: number
   returns:
     
 ---

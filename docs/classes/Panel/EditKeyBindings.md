@@ -13,7 +13,10 @@ lua:
   realm: client
   description: "Opens the key bindings editor for the panel"
   
-  
+  arguments:
+  - position: 1
+    name: "panel"
+    type: Panel
   returns:
     
 ---

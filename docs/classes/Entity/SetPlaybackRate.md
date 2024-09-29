@@ -14,8 +14,12 @@ lua:
   description: "Set the playback rate of the animation"
   
   arguments:
-    - name: "rate"
-      type: number
+  - position: 1
+    name: "entity"
+    type: Entity
+  - position: 2
+    name: "rate"
+    type: number
   returns:
     
 ---

@@ -14,8 +14,12 @@ lua:
   description: "Sets whether the button is checkable"
   
   arguments:
-    - name: "checkable"
-      type: boolean
+  - position: 1
+    name: "checkButton"
+    type: CheckButton
+  - position: 2
+    name: "checkable"
+    type: boolean
   returns:
     
 ---

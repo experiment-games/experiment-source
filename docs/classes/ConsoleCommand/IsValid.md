@@ -13,7 +13,10 @@ lua:
   realm: shared
   description: "Whether the command is valid"
   
-  
+  arguments:
+  - position: 1
+    name: "consoleCommand"
+    type: ConsoleCommand
   returns:
     - type: boolean
       description: "Whether the command is valid"

@@ -13,7 +13,10 @@ lua:
   realm: shared
   description: "Get tracer type."
   
-  
+  arguments:
+  - position: 1
+    name: "entity"
+    type: Entity
   returns:
     - type: string
       description: "The tracer type."

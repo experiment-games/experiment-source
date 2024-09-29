@@ -14,8 +14,12 @@ lua:
   description: "Sets whether the minimize button is visible"
   
   arguments:
-    - name: "state"
-      type: boolean
+  - position: 1
+    name: "frame"
+    type: Frame
+  - position: 2
+    name: "state"
+    type: boolean
   returns:
     
 ---

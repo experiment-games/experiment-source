@@ -14,8 +14,12 @@ lua:
   description: "Compares two colors."
   
   arguments:
-    - name: "colorB"
-      type: Color
+  - position: 1
+    name: "color"
+    type: Color
+  - position: 2
+    name: "other"
+    type: Color
   returns:
     - type: boolean
       description: "Whether the colors are equal."

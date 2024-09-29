@@ -14,8 +14,12 @@ lua:
   description: "Class matches."
   
   arguments:
-    - name: "classNameOrWildcard"
-      type: string
+  - position: 1
+    name: "entity"
+    type: Entity
+  - position: 2
+    name: "classNameOrWildcard"
+    type: string
   returns:
     - type: boolean
       description: "true if matches, false otherwise."

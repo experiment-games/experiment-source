@@ -14,13 +14,16 @@ lua:
   description: "Rename a file."
   
   arguments:
-    - name: "oldPath"
-      type: string
-    - name: "newPath"
-      type: string
-    - name: "pathId"
-      type: string
-      default: "0"
+  - position: 1
+    name: "oldPath"
+    type: string
+  - position: 2
+    name: "newPath"
+    type: string
+  - position: 3
+    name: "pathId"
+    type: string
+    default: "0"
   returns:
     - type: boolean
       description: "true if the file was renamed, false otherwise."

@@ -14,8 +14,12 @@ lua:
   description: "Sets whether the drag chaining is blocked"
   
   arguments:
-    - name: "block"
-      type: boolean
+  - position: 1
+    name: "panel"
+    type: Panel
+  - position: 2
+    name: "block"
+    type: boolean
   returns:
     
 ---

@@ -13,7 +13,10 @@ lua:
   realm: client
   description: "Set the received sequence."
   
-  
+  arguments:
+  - position: 1
+    name: "entity"
+    type: Entity
   returns:
     
 ---

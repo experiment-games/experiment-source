@@ -14,8 +14,9 @@ lua:
   description: "Check if a map is valid."
   
   arguments:
-    - name: "mapName"
-      type: string
+  - position: 1
+    name: "mapName"
+    type: string
   returns:
     - type: integer
       description: "True if the map is valid, false otherwise."

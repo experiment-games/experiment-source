@@ -13,7 +13,10 @@ lua:
   realm: server
   description: "Returns the type of group (i.e, 'houndeye', or 'human military' so that NPCs with different classnames still realize that they are teammates. (overridden for NPCs that form groups)."
   
-  
+  arguments:
+  - position: 1
+    name: "entity"
+    type: Entity
   returns:
     - type: enumeration/AI_CLASS
       description: "The classification"

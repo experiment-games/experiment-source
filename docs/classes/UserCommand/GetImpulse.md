@@ -13,7 +13,10 @@ lua:
   realm: shared
   description: "Gets the impulse value"
   
-  
+  arguments:
+  - position: 1
+    name: "userCmd"
+    type: UserCommand
   returns:
     - type: integer
       description: "The impulse value"

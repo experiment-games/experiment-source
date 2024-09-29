@@ -19,9 +19,9 @@ const filesToUpdate = getAllFilesInDirectoriesAsMap(`${outputDir}/libraries`, `$
 const functionsThisRun = new Map();
 
 const luaBindingBeginPattern = /^LUA_BINDING_BEGIN\(\s*(\w+)\s*,\s*(\w+)\s*,\s*"([^"]+)"\s*,\s*"([^"]+)"\s*(?:,\s*"([^"]+)")?\s*\)/;
-const luaBindingArgumentPattern = /LUA_BINDING_ARGUMENT(?:_WITH_EXTRA|_ENUM|_ENUM_DEFINE)?\(\s*(\w+)\s*,\s*(\d+)\s*,\s*(?:[^,]+,\s*)?"([^"]+)"\s*\)/;
-const luaBindingArgumentNillablePattern = /LUA_BINDING_ARGUMENT_NILLABLE\(\s*(\w+)\s*,\s*(\d+)\s*,\s*"([^"]+)"\s*\)/;
-const luaBindingArgumentWithDefaultPattern = /LUA_BINDING_ARGUMENT(?:_ENUM)?_WITH_DEFAULT\(\s*(\w+)\s*,\s*(\d+)\s*,\s*([^,]+)\s*,\s*"([^"]+)"\s*\)/;
+const luaBindingArgumentPattern = /LUA_BINDING_ARGUMENT(?:_WITH_EXTRA|_ENUM|_ENUM_DEFINE)?\(\s*([^\s]+)\s*,\s*(\d+)\s*,\s*(?:[^,\n]+,\s*)?"([^"]+)"\s*\)/g;
+const luaBindingArgumentNillablePattern = /LUA_BINDING_ARGUMENT_NILLABLE\(\s*(\w+)\s*,\s*(\d+)\s*,\s*"([^"]+)"\s*\)/g;
+const luaBindingArgumentWithDefaultPattern = /LUA_BINDING_ARGUMENT(?:_ENUM)?_WITH_DEFAULT\(\s*(\w+)\s*,\s*(\d+)\s*,\s*([^,\n]+)\s*,\s*"([^"]+)"\s*\)/g;
 const luaBindingEndPattern = /^LUA_BINDING_END\((.*)\)$/m;
 const luaBindingReturnPattern = /"([^"]+)", "([^"]+)"/g;
 
@@ -98,25 +98,48 @@ function writeFunctionToFile(func) {
   let argumentSection = '';
 
   const buildArguments = (args) => {
-    return args.map(arg => {
-      let defaults = '';
-
-      if (arg.defaultValue) {
-        defaults = `\n  default: ${wrapQuotes(arg.defaultValue.trim())}`;
+    // Group the arguments by position
+    const groupedArgs = args.reduce((acc, arg) => {
+      if (!acc[arg.position]) {
+        acc[arg.position] = [];
       }
 
-      if (arg.isNillable) {
-        defaults += '\n  nillable: true';
+      acc[arg.position].push(arg);
+      return acc;
+    }, {});
+
+    // Build the yaml for each group
+    return Object.entries(groupedArgs).map(([position, args]) => {
+      let result = `- position: ${position}`;
+
+      if (args.length > 1) {
+        result += `\n  types:`;
       }
 
-      return indentEachLine(`- name: ${wrapQuotes(arg.name.replace('.', '_').trim())}\n  type: ${arg.type}${defaults}`, 2);
+      args.forEach(arg => {
+        let defaults = '';
+
+        if (arg.defaultValue) {
+          defaults = `\n  default: ${wrapQuotes(arg.defaultValue.trim())}`;
+        }
+
+        if (arg.isNillable) {
+          defaults += `\n  nillable: true`;
+        }
+
+        if (args.length > 1) {
+          result += `\n    - name: ${wrapQuotes(arg.name.replace('.', '_').trim())}\n      type: ${arg.type}${defaults}`;
+        } else {
+          result += `\n  name: ${wrapQuotes(arg.name.replace('.', '_').trim())}\n  type: ${arg.type}${defaults}`;
+        }
+      });
+
+      return result;
     }).join('\n');
   };
 
   if (func.arguments) {
     argumentSection = `arguments:\n${indentEachLine(buildArguments(func.arguments), 2)}`;
-  } else if (func.argumentSets) {
-    argumentSection = `argumentSets:\n${func.argumentSets.map(set => indentEachLine(`- arguments:\n${buildArguments(set.arguments)}`, 4)).join('\n')}`;
   }
 
   let returnSection = '';
@@ -247,15 +270,30 @@ function fromTypeChecker(typeChecker) {
     case 'lua_toangle':
       return 'Angle';
     case 'luaL_checktrace':
+    case 'luaL_opttrace':
+    case 'lua_totrace':
       return 'Trace';
     case 'luaL_checkdamageinfo':
+    case 'lua_todamageinfo':
       return 'DamageInfo';
     case 'luaL_checkrecipientfilter':
       return 'RecipientFilter';
     case 'luaL_checkphysicsobject':
       return 'PhysicsObject';
+    case 'luaL_checkphysicssurfaceprops':
+    case 'lua_tophysicssurfaceprops':
+      return 'PhysicsSurfacePropertiesHandle';
     case 'lua_tofirebulletsinfo':
       return 'FireBulletsInfo';
+    case 'luaL_checkmovehelper':
+    case 'lua_tomovehelper':
+      return 'MoveHelper';
+    case 'luaL_checkusercmd':
+    case 'lua_tousercmd':
+      return 'UserCommand';
+    case 'luaL_checknetchannel':
+    case 'lua_tonetchannel':
+      return 'NetChannelInfo';
     case 'luaL_checkcolor':
     case 'luaL_optcolor':
     case 'lua_tocolor':
@@ -283,6 +321,17 @@ function fromTypeChecker(typeChecker) {
     case 'luaL_optmovedata':
     case 'lua_tomovedata':
       return 'MoveData';
+    case 'luaL_checkconcommand':
+    case 'luaL_optconcommand':
+    case 'lua_toconcommand':
+      return 'ConsoleCommand';
+    case 'luaL_checkconvar':
+    case 'luaL_optconvar':
+    case 'lua_toconvar':
+      return 'ConsoleVariable';
+    case 'luaL_checksteamfriends':
+    case 'lua_tosteamfriends':
+      return 'SteamFriendsHandle';
     case 'luaL_checkprojectedtexture':
     case 'lua_toprojectedtexture':
       return 'ProjectedTexture';
@@ -310,19 +359,59 @@ function fromTypeChecker(typeChecker) {
     case 'lua_torecipientfilter':
       return 'RecipientFilter';
     case 'luaL_checkbf_read':
-    case 'luaL_optbf_read':
     case 'lua_tobf_read':
-      return 'UserMessageReader';
+      return 'MessageReader';
+    case 'luaL_checkbf_write':
+    case 'lua_tobf_write':
+      return 'MessageWriter';
     case 'lua_checktracestruct':
       return 'Trace';
     case 'luaL_checkfont':
     case 'luaL_optfont':
     case 'lua_tofont':
       return 'FontHandle';
+    case 'luaL_checkaudiochannel':
+    case 'luaL_optaudiochannel':
+    case 'lua_toaudiochannel':
+      return 'AudioChannel';
+
+    // Panels
     case 'luaL_checkpanel':
     case 'luaL_optpanel':
     case 'lua_topanel':
       return 'Panel';
+    case 'luaL_checkbutton':
+    case 'luaL_optbutton':
+    case 'lua_tobutton':
+      return 'Button';
+    case 'luaL_checkcheckbutton':
+    case 'luaL_optcheckbutton':
+    case 'lua_tocheckbutton':
+      return 'CheckButton';
+    case 'luaL_checkeditablepanel':
+    case 'luaL_opteditablepanel':
+    case 'lua_toeditablepanel':
+      return 'EditablePanel';
+    case 'luaL_checkframe':
+    case 'luaL_optframe':
+    case 'lua_toframe':
+      return 'Frame';
+    case 'luaL_checkhtml':
+    case 'luaL_opthtml':
+    case 'lua_tohtml':
+      return 'Html';
+    case 'luaL_checklabel':
+    case 'luaL_optlabel':
+    case 'lua_tolabel':
+      return 'Label';
+    case 'luaL_checkmodelimagepanel':
+    case 'luaL_optmodelimagepanel':
+    case 'lua_tomodelimagepanel':
+      return 'ModelImagePanel';
+    case 'luaL_checktextentry':
+    case 'luaL_opttextentry':
+    case 'lua_totextentry':
+      return 'TextEntry';
 
     // Enumerations:
     case 'Activity':
@@ -332,6 +421,7 @@ function fromTypeChecker(typeChecker) {
       return 'enumeration/ACTIVATION_TYPE';
     case 'Alignment':
     case 'vgui::Alignment':
+    case 'vgui::Label::Alignment':
       return 'enumeration/PANEL_ALIGNMENT';
     case 'AutoResize_e':
     case 'Panel::AutoResize_e':
@@ -418,6 +508,12 @@ function fromTypeChecker(typeChecker) {
       return 'enumeration/SURFACE';
     case 'NETWORK_VARIABLE':
       return 'enumeration/NETWORK_VARIABLE_TYPE';
+    case 'CHAT_MESSAGE_MODE':
+      return 'enumeration/CHAT_MESSAGE_MODE';
+    case 'STENCIL_OPERATION':
+      return 'enumeration/STENCIL_OPERATION';
+    case 'STENCIL_COMPARISON_FUNCTION':
+      return 'enumeration/STENCIL_COMPARISON_FUNCTION';
 
     default:
       return 'unknown';
@@ -447,15 +543,6 @@ function processBindingsInFile(file) {
   const lines = fileContent.split('\n');
 
   let currentFunction = null;
-  let currentFunctionArgumentSets = [];
-  let currentFunctionArgumentSet = null;
-
-  const newFunctionArgumentSet = () => {
-    currentFunctionArgumentSet = {
-      arguments: [],
-    };
-    currentFunctionArgumentSets.push(currentFunctionArgumentSet);
-  };
 
   for (let i = 0; i < lines.length; i++) {
     const line = lines[i];
@@ -468,102 +555,13 @@ function processBindingsInFile(file) {
         concept: match[3],
         description: match[4],
         realm: match[5],
+        lines: '',
       };
-    } else if (currentFunction && (luaBindingArgumentPattern.test(line) || luaBindingArgumentNillablePattern.test(line))) {
-      const isNillable = luaBindingArgumentNillablePattern.test(line);
-      const match = isNillable ? line.match(luaBindingArgumentNillablePattern) : line.match(luaBindingArgumentPattern);
-      const typeChecker = match[1];
-      const position = parseInt(match[2]);
-      const name = match[3];
-
-      if (position == 1 && currentFunction.concept === 'class') {
-        // Skip the first argument for classes, as it's always the class instance itself
-        continue;
-      }
-
-      // Put the argument in the current argument set, or if that already
-      // has a different type argument in the same position, create a new
-      // argument set to indicate the function can be called with different
-      // types in the same position.
-      if (currentFunctionArgumentSet) {
-        const existingArgument = currentFunctionArgumentSet.arguments.find(arg => arg.position === position);
-        if (existingArgument && existingArgument.typeChecker !== typeChecker) {
-          // Put this argument in a new set
-          newFunctionArgumentSet();
-        } else if (existingArgument) {
-          // We've already pushed the argument set, so we don't need to do anything
-          continue;
-        }
-      } else {
-        newFunctionArgumentSet();
-      }
-
-      const type = fromTypeChecker(typeChecker);
-
-      if (type === 'unknown')
-        console.warn(`Unknown type checker ${typeChecker} in ${file}:${i}`);
-
-      currentFunctionArgumentSet.arguments.push({
-        type: type,
-        position,
-        name,
-        isNillable,
-      });
-    } else if (currentFunction && luaBindingArgumentWithDefaultPattern.test(line)) {
-      const match = line.match(luaBindingArgumentWithDefaultPattern);
-      const typeChecker = match[1];
-      const position = parseInt(match[2]);
-      const defaultValue = match[3];
-      const name = match[4];
-
-      if (position == 1 && currentFunction.concept === 'class') {
-        // Skip the first argument for classes, as it's always the class instance itself
-        continue;
-      }
-
-      // Put the argument in the current argument set, or if that already
-      // has a different type argument in the same position, create a new
-      // argument set to indicate the function can be called with different
-      // types in the same position.
-      if (currentFunctionArgumentSet) {
-        const existingArgument = currentFunctionArgumentSet.arguments.find(arg => arg.position === position);
-        if (existingArgument && existingArgument.typeChecker !== typeChecker) {
-          // Put this argument in a new set
-          newFunctionArgumentSet();
-        } else if (existingArgument) {
-          // We've already pushed the argument set, so we don't need to do anything
-          continue;
-        }
-      } else {
-        newFunctionArgumentSet();
-      }
-
-      const type = fromTypeChecker(typeChecker);
-
-      if (type === 'unknown')
-        console.warn(`Unknown type checker ${typeChecker} in ${file}:${i}`);
-
-      currentFunctionArgumentSet.arguments.push({
-        type: type,
-        position,
-        name,
-        defaultValue,
-      });
     } else if (currentFunction && luaBindingEndPattern.test(line)) {
       if (!currentFunction) {
         throw new Error(`Found LUA_BINDING_END without a LUA_BINDING_BEGIN in ${file} at line ${i}`);
       }
       const match = line.match(luaBindingEndPattern);
-
-      // If there's only one set, push it to 'arguments'
-      if (currentFunctionArgumentSets.length === 1) {
-        currentFunction.arguments = currentFunctionArgumentSets[0].arguments;
-      }
-
-      // If there are multiple sets, push them to 'argumentSets'
-      if (currentFunctionArgumentSets.length > 1) {
-        currentFunction.argumentSets = currentFunctionArgumentSets;
-      }
 
       currentFunction.returns = parseReturns(match[1]);
 
@@ -572,12 +570,58 @@ function processBindingsInFile(file) {
         currentFunction.realm = getRealmByFile(file);
       }
 
+      // Use the regex to find the arguments in .lines. We use luaBindingArgumentPattern, luaBindingArgumentNillablePattern and luaBindingArgumentWithDefaultPattern
+      // to find the arguments
+      const arguments = [];
+
+      const fromTypeCheckerWithError = (typeChecker) => {
+        const type = fromTypeChecker(typeChecker);
+
+        if (type === 'unknown') {
+          console.warn(`Unknown type checker ${typeChecker} in function ${currentFunction.function} (${file}:${i})`);
+        }
+
+        return type;
+      }
+
+      let argumentMatch;
+      while ((argumentMatch = luaBindingArgumentPattern.exec(currentFunction.lines)) !== null) {
+        const type = fromTypeCheckerWithError(argumentMatch[1]);
+        arguments.push({
+          type,
+          position: parseInt(argumentMatch[2]),
+          name: argumentMatch[3],
+        });
+      }
+
+      while ((argumentMatch = luaBindingArgumentNillablePattern.exec(currentFunction.lines)) !== null) {
+        const type = fromTypeCheckerWithError(argumentMatch[1]);
+        arguments.push({
+          type,
+          position: parseInt(argumentMatch[2]),
+          name: argumentMatch[3],
+          isNillable: true,
+        });
+      }
+
+      while ((argumentMatch = luaBindingArgumentWithDefaultPattern.exec(currentFunction.lines)) !== null) {
+        const type = fromTypeCheckerWithError(argumentMatch[1]);
+        arguments.push({
+          type,
+          position: parseInt(argumentMatch[2]),
+          name: argumentMatch[4],
+          defaultValue: argumentMatch[3],
+        });
+      }
+
+      currentFunction.arguments = arguments;
+
       writeFunctionToFile(currentFunction);
 
       // Reset the function
       currentFunction = null;
-      currentFunctionArgumentSets = [];
-      currentFunctionArgumentSet = null;
+    } else if (currentFunction) {
+      currentFunction.lines += line + '\n';
     }
   }
 }

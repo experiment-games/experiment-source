@@ -13,7 +13,13 @@ lua:
   realm: shared
   description: "Parses surface data"
   
-  
+  arguments:
+  - position: 1
+    name: "stringData"
+    type: string
+  - position: 2
+    name: "textFileName"
+    type: string
   returns:
     - type: integer
       description: "The surface data."

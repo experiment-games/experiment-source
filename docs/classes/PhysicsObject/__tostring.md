@@ -13,7 +13,10 @@ lua:
   realm: shared
   description: "Provides a string representation of the object"
   
-  
+  arguments:
+  - position: 1
+    name: "physicsObject"
+    type: PhysicsObject
   returns:
     - type: string
       description: "The string representation."

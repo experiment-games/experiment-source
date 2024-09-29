@@ -13,7 +13,10 @@ lua:
   realm: client
   description: "Get render angles."
   
-  
+  arguments:
+  - position: 1
+    name: "entity"
+    type: Entity
   returns:
     - type: Angle
       description: "Render angles."

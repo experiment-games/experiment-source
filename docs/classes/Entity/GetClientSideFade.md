@@ -13,7 +13,10 @@ lua:
   realm: client
   description: "Get the client side fade."
   
-  
+  arguments:
+  - position: 1
+    name: "entity"
+    type: Entity
   returns:
     - type: integer
       description: "The client side fade"

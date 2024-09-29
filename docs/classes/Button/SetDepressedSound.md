@@ -14,8 +14,12 @@ lua:
   description: "Sets the depressed sound"
   
   arguments:
-    - name: "sound"
-      type: string
+  - position: 1
+    name: "button"
+    type: Button
+  - position: 2
+    name: "sound"
+    type: string
   returns:
     
 ---

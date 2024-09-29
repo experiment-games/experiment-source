@@ -14,8 +14,9 @@ lua:
   description: "Read a particle system config file, add it to the list of particle configs."
   
   arguments:
-    - name: "filePath"
-      type: string
+  - position: 1
+    name: "filePath"
+    type: string
   returns:
     
 ---

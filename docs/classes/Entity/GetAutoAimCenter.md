@@ -13,7 +13,10 @@ lua:
   realm: server
   description: "Get auto aim center."
   
-  
+  arguments:
+  - position: 1
+    name: "entity"
+    type: Entity
   returns:
     - type: Vector
       description: "The auto aim center"

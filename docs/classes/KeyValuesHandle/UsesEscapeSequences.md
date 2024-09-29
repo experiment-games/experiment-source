@@ -14,8 +14,12 @@ lua:
   description: "Set if the keyvalues uses escape sequences."
   
   arguments:
-    - name: "usesEscapeSequences"
-      type: boolean
+  - position: 1
+    name: "keyValues"
+    type: KeyValuesHandle
+  - position: 2
+    name: "usesEscapeSequences"
+    type: boolean
   returns:
     
 ---

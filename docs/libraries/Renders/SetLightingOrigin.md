@@ -14,8 +14,9 @@ lua:
   description: "Set the lighting origin."
   
   arguments:
-    - name: "lightingOrigin"
-      type: Vector
+  - position: 1
+    name: "lightingOrigin"
+    type: Vector
   returns:
     
 ---

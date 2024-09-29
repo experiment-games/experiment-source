@@ -13,7 +13,10 @@ lua:
   realm: shared
   description: "Check if entity is valid."
   
-  
+  arguments:
+  - position: 1
+    name: "entity"
+    type: Entity
   returns:
     
 ---

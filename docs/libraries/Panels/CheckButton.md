@@ -14,15 +14,18 @@ lua:
   description: "Creates a new CheckButton panel"
   
   arguments:
-    - name: "parent"
-      type: Panel
-      default: "VGui_GetClientLuaRootPanel()"
-    - name: "name"
-      type: string
-      default: "\"CheckButton\""
-    - name: "text"
-      type: string
-      default: "\"\""
+  - position: 1
+    name: "parent"
+    type: Panel
+    default: "VGui_GetClientLuaRootPanel()"
+  - position: 2
+    name: "name"
+    type: string
+    default: "\"CheckButton\""
+  - position: 3
+    name: "text"
+    type: string
+    default: "\"\""
   returns:
     - type: CheckButton
       description: "The new CheckButton Panel"

@@ -13,6 +13,7 @@ lua:
   realm: client
   description: "Get the current cursor position."
   
+  arguments:
   
   returns:
     - type: integer, integer

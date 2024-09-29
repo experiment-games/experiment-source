@@ -13,6 +13,7 @@ lua:
   realm: shared
   description: "Post restore operations."
   
+  arguments:
   
   returns:
     

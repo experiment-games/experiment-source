@@ -14,8 +14,9 @@ lua:
   description: "Get the player information."
   
   arguments:
-    - name: "playerIndex"
-      type: number
+  - position: 1
+    name: "playerIndex"
+    type: number
   returns:
     - type: table
       description: "The player information."

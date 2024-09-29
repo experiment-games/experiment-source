@@ -13,6 +13,7 @@ lua:
   realm: client
   description: "Check if a save is in progress."
   
+  arguments:
   
   returns:
     - type: boolean

@@ -14,8 +14,12 @@ lua:
   description: "Set check untouch."
   
   arguments:
-    - name: "checkUntouch"
-      type: boolean
+  - position: 1
+    name: "entity"
+    type: Entity
+  - position: 2
+    name: "checkUntouch"
+    type: boolean
   returns:
     
 ---

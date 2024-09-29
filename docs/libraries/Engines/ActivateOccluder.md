@@ -14,10 +14,12 @@ lua:
   description: "Allow immediate edict reuse."
   
   arguments:
-    - name: "occluderIndex"
-      type: number
-    - name: "shouldActivate"
-      type: boolean
+  - position: 1
+    name: "occluderIndex"
+    type: number
+  - position: 2
+    name: "shouldActivate"
+    type: boolean
   returns:
     
 ---

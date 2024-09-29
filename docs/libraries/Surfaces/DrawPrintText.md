@@ -14,11 +14,13 @@ lua:
   description: "Prints text"
   
   arguments:
-    - name: "text"
-      type: string
-    - name: "drawType"
-      type: enumeration/FONT_DRAW_TYPE
-      default: "FONT_DRAW_DEFAULT"
+  - position: 1
+    name: "text"
+    type: string
+  - position: 2
+    name: "drawType"
+    type: enumeration/FONT_DRAW_TYPE
+    default: "FONT_DRAW_DEFAULT"
   returns:
     
 ---

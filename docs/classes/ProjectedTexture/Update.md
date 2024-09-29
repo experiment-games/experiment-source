@@ -13,7 +13,10 @@ lua:
   realm: client
   description: "Updates the projected light and applies all previously set parameters."
   
-  
+  arguments:
+  - position: 1
+    name: "projectedTexture"
+    type: ProjectedTexture
   returns:
     
 ---

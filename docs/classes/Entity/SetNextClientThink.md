@@ -14,8 +14,12 @@ lua:
   description: "Set next client think."
   
   arguments:
-    - name: "nextThink"
-      type: number
+  - position: 1
+    name: "entity"
+    type: Entity
+  - position: 2
+    name: "nextThink"
+    type: number
   returns:
     
 ---

@@ -14,15 +14,21 @@ lua:
   description: "Initialize physics object."
   
   arguments:
-    - name: "solidType"
-      type: integer
-      default: "SOLID_VPHYSICS"
-    - name: "solidFlags"
-      type: number
-      default: "0"
-    - name: "createAsleep"
-      type: boolean
-      default: "false"
+  - position: 1
+    name: "entity"
+    type: Entity
+  - position: 2
+    name: "solidType"
+    type: integer
+    default: "SOLID_VPHYSICS"
+  - position: 3
+    name: "solidFlags"
+    type: number
+    default: "0"
+  - position: 4
+    name: "createAsleep"
+    type: boolean
+    default: "false"
   returns:
     
 ---

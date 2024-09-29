@@ -13,7 +13,13 @@ lua:
   realm: shared
   description: "Scales the damage force"
   
-  
+  arguments:
+  - position: 1
+    name: "damageInfo"
+    type: DamageInfo
+  - position: 2
+    name: "scale"
+    type: number
   returns:
     
 ---

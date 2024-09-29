@@ -14,8 +14,12 @@ lua:
   description: "Sets whether the key binding chain is allowed to go to the parent"
   
   arguments:
-    - name: "allow"
-      type: boolean
+  - position: 1
+    name: "panel"
+    type: Panel
+  - position: 2
+    name: "allow"
+    type: boolean
   returns:
     
 ---

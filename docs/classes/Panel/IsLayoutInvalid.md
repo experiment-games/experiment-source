@@ -13,7 +13,10 @@ lua:
   realm: client
   description: "Checks if the layout is invalid"
   
-  
+  arguments:
+  - position: 1
+    name: "panel"
+    type: Panel
   returns:
     - type: boolean
       description: "True if the layout is invalid, false otherwise"

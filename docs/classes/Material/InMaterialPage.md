@@ -13,7 +13,10 @@ lua:
   realm: shared
   description: "In material page."
   
-  
+  arguments:
+  - position: 1
+    name: "material"
+    type: Material
   returns:
     - type: boolean
       description: "True if in material page, false otherwise."

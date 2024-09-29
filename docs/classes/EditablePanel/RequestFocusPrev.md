@@ -14,8 +14,12 @@ lua:
   description: "Requests focus for the previous panel"
   
   arguments:
-    - name: "panel"
-      type: Panel
+  - position: 1
+    name: "editablePanel"
+    type: EditablePanel
+  - position: 2
+    name: "panel"
+    type: Panel
   returns:
     - type: boolean
       description: "True if the previous panel received focus"

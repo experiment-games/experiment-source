@@ -14,8 +14,12 @@ lua:
   description: "Sets the material index"
   
   arguments:
-    - name: "materialIndex"
-      type: number
+  - position: 1
+    name: "physicsObject"
+    type: PhysicsObject
+  - position: 2
+    name: "materialIndex"
+    type: number
   returns:
     
 ---

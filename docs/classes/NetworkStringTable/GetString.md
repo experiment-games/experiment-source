@@ -14,8 +14,12 @@ lua:
   description: "Get a string from the table."
   
   arguments:
-    - name: "index"
-      type: number
+  - position: 1
+    name: "networkStringTable"
+    type: NetworkStringTable
+  - position: 2
+    name: "index"
+    type: number
   returns:
     - type: string
       description: "The string."

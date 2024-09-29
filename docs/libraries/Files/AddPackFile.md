@@ -14,10 +14,12 @@ lua:
   description: "Add a pack file to the search path."
   
   arguments:
-    - name: "path"
-      type: string
-    - name: "pathId"
-      type: string
+  - position: 1
+    name: "path"
+    type: string
+  - position: 2
+    name: "pathId"
+    type: string
   returns:
     - type: boolean
       description: "true if the pack file was added, false otherwise."

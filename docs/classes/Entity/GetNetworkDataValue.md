@@ -14,10 +14,15 @@ lua:
   description: "Gets a data table variable of the given type, in the given slot."
   
   arguments:
-    - name: "type"
-      type: enumeration/NETWORK_VARIABLE_TYPE
-    - name: "slot"
-      type: number
+  - position: 1
+    name: "entity"
+    type: Entity
+  - position: 2
+    name: "type"
+    type: enumeration/NETWORK_VARIABLE_TYPE
+  - position: 3
+    name: "slot"
+    type: number
   returns:
     - type: any
       description: "The value of the network variable"

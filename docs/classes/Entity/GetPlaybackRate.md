@@ -13,7 +13,10 @@ lua:
   realm: shared
   description: "Get the playback rate."
   
-  
+  arguments:
+  - position: 1
+    name: "entity"
+    type: Entity
   returns:
     - type: number
       description: "The playback rate"

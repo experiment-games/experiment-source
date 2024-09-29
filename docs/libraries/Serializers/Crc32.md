@@ -14,8 +14,9 @@ lua:
   description: "Compute the CRC32 of a string"
   
   arguments:
-    - name: "string"
-      type: string
+  - position: 1
+    name: "string"
+    type: string
   returns:
     - type: integer
       description: "CRC32 of the string."

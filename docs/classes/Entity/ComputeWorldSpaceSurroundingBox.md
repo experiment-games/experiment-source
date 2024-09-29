@@ -13,7 +13,10 @@ lua:
   realm: shared
   description: "Compute world space surrounding box."
   
-  
+  arguments:
+  - position: 1
+    name: "entity"
+    type: Entity
   returns:
     - type: Vector
       description: "The minimum vector."

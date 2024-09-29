@@ -14,8 +14,12 @@ lua:
   description: "Dispatch response."
   
   arguments:
-    - name: "conceptName"
-      type: string
+  - position: 1
+    name: "entity"
+    type: Entity
+  - position: 2
+    name: "conceptName"
+    type: string
   returns:
     
 ---

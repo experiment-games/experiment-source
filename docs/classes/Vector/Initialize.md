@@ -14,12 +14,18 @@ lua:
   description: "Initializes the vector with the specified values."
   
   arguments:
-    - name: "x"
-      type: number
-    - name: "y"
-      type: number
-    - name: "z"
-      type: number
+  - position: 1
+    name: "vector"
+    type: Vector
+  - position: 2
+    name: "x"
+    type: number
+  - position: 3
+    name: "y"
+    type: number
+  - position: 4
+    name: "z"
+    type: number
   returns:
     
 ---

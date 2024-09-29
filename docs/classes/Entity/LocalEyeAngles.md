@@ -13,7 +13,10 @@ lua:
   realm: shared
   description: "Local eye angles."
   
-  
+  arguments:
+  - position: 1
+    name: "entity"
+    type: Entity
   returns:
     - type: Angle
       description: "The local eye angles."

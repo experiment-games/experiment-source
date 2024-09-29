@@ -14,8 +14,12 @@ lua:
   description: "Whether this entity can stand on the given surface entity."
   
   arguments:
-    - name: "surfaceEntity"
-      type: Entity
+  - position: 1
+    name: "entity"
+    type: Entity
+  - position: 2
+    name: "surfaceEntity"
+    type: Entity
   returns:
     - type: boolean
       description: "true if can stand on, false otherwise."

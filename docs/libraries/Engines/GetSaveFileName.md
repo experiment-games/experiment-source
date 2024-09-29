@@ -13,6 +13,7 @@ lua:
   realm: server
   description: "Get the save file name."
   
+  arguments:
   
   returns:
     - type: string

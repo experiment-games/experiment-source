@@ -13,6 +13,7 @@ lua:
   realm: client
   description: "Gets the alpha multiplier"
   
+  arguments:
   
   returns:
     - type: number

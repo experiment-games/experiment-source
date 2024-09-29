@@ -14,8 +14,9 @@ lua:
   description: "Show a message to all players."
   
   arguments:
-    - name: "message"
-      type: string
+  - position: 1
+    name: "message"
+    type: string
   returns:
     
 ---

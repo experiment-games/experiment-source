@@ -14,10 +14,15 @@ lua:
   description: "Sets the depressed color"
   
   arguments:
-    - name: "depressedForegroundColor"
-      type: Color
-    - name: "depressedBackgroundColor"
-      type: Color
+  - position: 1
+    name: "button"
+    type: Button
+  - position: 2
+    name: "depressedForegroundColor"
+    type: Color
+  - position: 3
+    name: "depressedBackgroundColor"
+    type: Color
   returns:
     
 ---

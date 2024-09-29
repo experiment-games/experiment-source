@@ -14,8 +14,9 @@ lua:
   description: "Copies the currently active Render Target to the specified texture."
   
   arguments:
-    - name: "texture"
-      type: Texture
+  - position: 1
+    name: "texture"
+    type: Texture
   returns:
     
 ---

@@ -13,7 +13,10 @@ lua:
   realm: client
   description: "Gets the dragger size"
   
-  
+  arguments:
+  - position: 1
+    name: "frame"
+    type: Frame
   returns:
     - type: integer
       description: "The dragger size"

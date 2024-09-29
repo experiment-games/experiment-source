@@ -13,7 +13,13 @@ lua:
   realm: shared
   description: "Switch to the player's next best weapon."
   
-  
+  arguments:
+  - position: 1
+    name: "player"
+    type: Player
+  - position: 2
+    name: "weapon"
+    type: Weapon
   returns:
     
 ---

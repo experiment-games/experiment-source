@@ -14,10 +14,15 @@ lua:
   description: "Rotates the angle around the specified axis by the specified degrees."
   
   arguments:
-    - name: "axis"
-      type: Vector
-    - name: "degrees"
-      type: number
+  - position: 1
+    name: "angle"
+    type: Angle
+  - position: 2
+    name: "axis"
+    type: Vector
+  - position: 3
+    name: "degrees"
+    type: number
   returns:
     - type: Angle
       description: "The rotated angle."

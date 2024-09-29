@@ -14,8 +14,12 @@ lua:
   description: "Sets whether the text is hidden"
   
   arguments:
-    - name: "hidden"
-      type: boolean
+  - position: 1
+    name: "textEntry"
+    type: TextEntry
+  - position: 2
+    name: "hidden"
+    type: boolean
   returns:
     
 ---

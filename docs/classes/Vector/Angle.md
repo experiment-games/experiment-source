@@ -13,7 +13,10 @@ lua:
   realm: shared
   description: "Converts a vector to an angle."
   
-  
+  arguments:
+  - position: 1
+    name: "vector"
+    type: Vector
   returns:
     - type: Angle
       description: "The converted angle."

@@ -14,8 +14,12 @@ lua:
   description: "Write to a file."
   
   arguments:
-    - name: "file"
-      type: FileHandle
+  - position: 1
+    name: "input"
+    type: string
+  - position: 2
+    name: "file"
+    type: FileHandle
   returns:
     - type: integer
       description: "The number of bytes written."

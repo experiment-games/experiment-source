@@ -13,21 +13,25 @@ lua:
   realm: shared
   description: "Converts an angle to a direction vector."
   
-  argumentSets:
-    - arguments:
+  arguments:
+  - position: 1
+    types:
       - name: "Angle"
         type: Angle
-      - name: "Vector"
-        type: Vector
-      - name: "Vector"
-        type: Vector
-      - name: "Vector"
-        type: Vector
-    - arguments:
       - name: "Angle"
         type: Angle
+  - position: 2
+    types:
       - name: "Vector"
         type: Vector
+      - name: "Vector"
+        type: Vector
+  - position: 3
+    name: "Vector"
+    type: Vector
+  - position: 4
+    name: "Vector"
+    type: Vector
   returns:
     
 ---

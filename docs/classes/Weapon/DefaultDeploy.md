@@ -14,14 +14,21 @@ lua:
   description: "Default deploy."
   
   arguments:
-    - name: "viewModel"
-      type: string
-    - name: "worldModel"
-      type: string
-    - name: "activity"
-      type: number
-    - name: "animationExtension"
-      type: string
+  - position: 1
+    name: "entity"
+    type: Weapon
+  - position: 2
+    name: "viewModel"
+    type: string
+  - position: 3
+    name: "worldModel"
+    type: string
+  - position: 4
+    name: "activity"
+    type: number
+  - position: 5
+    name: "animationExtension"
+    type: string
   returns:
     - type: boolean
       description: "Whether the weapon was successfully deployed."

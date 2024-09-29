@@ -14,8 +14,9 @@ lua:
   description: "Get a local copy of a file."
   
   arguments:
-    - name: "path"
-      type: string
+  - position: 1
+    name: "path"
+    type: string
   returns:
     
 ---

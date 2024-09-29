@@ -13,6 +13,7 @@ lua:
   realm: shared
   description: "Print opened files."
   
+  arguments:
   
   returns:
     

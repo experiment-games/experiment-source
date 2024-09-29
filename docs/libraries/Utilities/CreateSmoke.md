@@ -14,12 +14,15 @@ lua:
   description: "Create smoke effect at a position"
   
   arguments:
-    - name: "position"
-      type: Vector
-    - name: "modelIndex"
-      type: number
-    - name: "scale"
-      type: number
+  - position: 1
+    name: "position"
+    type: Vector
+  - position: 2
+    name: "modelIndex"
+    type: number
+  - position: 3
+    name: "scale"
+    type: number
   returns:
     
 ---

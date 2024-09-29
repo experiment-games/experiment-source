@@ -14,8 +14,12 @@ lua:
   description: "Snap the eye angles of the player."
   
   arguments:
-    - name: "angles"
-      type: Angle
+  - position: 1
+    name: "player"
+    type: Player
+  - position: 2
+    name: "angles"
+    type: Angle
   returns:
     
 ---

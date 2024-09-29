@@ -13,7 +13,10 @@ lua:
   realm: shared
   description: "Physics check for entity untouch."
   
-  
+  arguments:
+  - position: 1
+    name: "entity"
+    type: Entity
   returns:
     
 ---

@@ -13,7 +13,10 @@ lua:
   realm: client
   description: "Fires the action signal"
   
-  
+  arguments:
+  - position: 1
+    name: "button"
+    type: Button
   returns:
     
 ---

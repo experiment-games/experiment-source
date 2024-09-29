@@ -13,6 +13,7 @@ lua:
   realm: shared
   description: "Check if in simulation."
   
+  arguments:
   
   returns:
     - type: boolean

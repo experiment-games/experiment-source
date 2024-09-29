@@ -13,7 +13,10 @@ lua:
   realm: server
   description: "Is in any team."
   
-  
+  arguments:
+  - position: 1
+    name: "entity"
+    type: Entity
   returns:
     - type: boolean
       description: "true if in any team, false otherwise."

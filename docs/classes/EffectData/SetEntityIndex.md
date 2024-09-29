@@ -14,8 +14,12 @@ lua:
   description: "Set the entity index of the entity the effect is assigned to."
   
   arguments:
-    - name: "entityIndex"
-      type: number
+  - position: 1
+    name: "effectData"
+    type: EffectData
+  - position: 2
+    name: "entityIndex"
+    type: number
   returns:
     
 ---

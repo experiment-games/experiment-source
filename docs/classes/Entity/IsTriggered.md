@@ -14,8 +14,12 @@ lua:
   description: "Is triggered."
   
   arguments:
-    - name: "activator"
-      type: Entity
+  - position: 1
+    name: "entity"
+    type: Entity
+  - position: 2
+    name: "activator"
+    type: Entity
   returns:
     - type: boolean
       description: "true if triggered, false otherwise."

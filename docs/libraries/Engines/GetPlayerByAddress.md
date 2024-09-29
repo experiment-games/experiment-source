@@ -14,8 +14,9 @@ lua:
   description: "Get a player by their address."
   
   arguments:
-    - name: "address"
-      type: string
+  - position: 1
+    name: "address"
+    type: string
   returns:
     - type: Player
       description: "The player entity."

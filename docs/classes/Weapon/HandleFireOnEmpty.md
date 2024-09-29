@@ -13,7 +13,10 @@ lua:
   realm: shared
   description: "Handle fire on empty."
   
-  
+  arguments:
+  - position: 1
+    name: "entity"
+    type: Weapon
   returns:
     
 ---

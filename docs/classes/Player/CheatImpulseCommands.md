@@ -14,8 +14,12 @@ lua:
   description: "Handle cheat impulse commands for the player."
   
   arguments:
-    - name: "impulse"
-      type: number
+  - position: 1
+    name: "player"
+    type: Player
+  - position: 2
+    name: "impulse"
+    type: number
   returns:
     
 ---

@@ -14,8 +14,12 @@ lua:
   description: "Returns the resource string for the specified resource name."
   
   arguments:
-    - name: "resourceName"
-      type: string
+  - position: 1
+    name: "scheme"
+    type: Scheme
+  - position: 2
+    name: "resourceName"
+    type: string
   returns:
     - type: string
       description: "The resource string for the specified resource name."

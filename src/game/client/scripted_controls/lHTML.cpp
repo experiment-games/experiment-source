@@ -82,13 +82,13 @@ LUALIB_API lua_HTML *luaL_checkhtml( lua_State *L, int narg )
 {
     lua_HTML *d = lua_tohtml( L, narg );
     if ( d == NULL ) /* avoid extra test when d is not 0 */
-        luaL_argerror( L, narg, "HTML expected, got INVALID_PANEL" );
+        luaL_argerror( L, narg, "Html Panel expected, got INVALID_PANEL" );
     return d;
 }
 
-LUA_REGISTRATION_INIT( HTML )
+LUA_REGISTRATION_INIT( Html )
 
-LUA_BINDING_BEGIN( HTML, OpenUrl, "class", "Opens a URL in the HTML object" )
+LUA_BINDING_BEGIN( Html, OpenUrl, "class", "Opens a URL in the HTML object" )
 {
     lua_HTML *html = LUA_BINDING_ARGUMENT( luaL_checkhtml, 1, "html" );
     const char *url = LUA_BINDING_ARGUMENT( luaL_checkstring, 2, "url" );
@@ -99,7 +99,7 @@ LUA_BINDING_BEGIN( HTML, OpenUrl, "class", "Opens a URL in the HTML object" )
 }
 LUA_BINDING_END()
 
-LUA_BINDING_BEGIN( HTML, StopLoading, "class", "Stops loading the current page" )
+LUA_BINDING_BEGIN( Html, StopLoading, "class", "Stops loading the current page" )
 {
     lua_HTML *html = LUA_BINDING_ARGUMENT( luaL_checkhtml, 1, "html" );
     html->StopLoading();
@@ -107,7 +107,7 @@ LUA_BINDING_BEGIN( HTML, StopLoading, "class", "Stops loading the current page" 
 }
 LUA_BINDING_END()
 
-LUA_BINDING_BEGIN( HTML, Refresh, "class", "Refreshes the current page" )
+LUA_BINDING_BEGIN( Html, Refresh, "class", "Refreshes the current page" )
 {
     lua_HTML *html = LUA_BINDING_ARGUMENT( luaL_checkhtml, 1, "html" );
     html->Refresh();
@@ -115,7 +115,7 @@ LUA_BINDING_BEGIN( HTML, Refresh, "class", "Refreshes the current page" )
 }
 LUA_BINDING_END()
 
-LUA_BINDING_BEGIN( HTML, RunJavascript, "class", "Executes JavaScript in the HTML object" )
+LUA_BINDING_BEGIN( Html, RunJavascript, "class", "Executes JavaScript in the HTML object" )
 {
     lua_HTML *html = LUA_BINDING_ARGUMENT( luaL_checkhtml, 1, "html" );
     const char *jsCode = LUA_BINDING_ARGUMENT( luaL_checkstring, 2, "jsCode" );
@@ -124,7 +124,7 @@ LUA_BINDING_BEGIN( HTML, RunJavascript, "class", "Executes JavaScript in the HTM
 }
 LUA_BINDING_END()
 
-LUA_BINDING_BEGIN( HTML, SetHtml, "class", "Sets the HTML content of the object" )
+LUA_BINDING_BEGIN( Html, SetHtml, "class", "Sets the HTML content of the object" )
 {
     lua_HTML *html = LUA_BINDING_ARGUMENT( luaL_checkhtml, 1, "html" );
     const char *htmlContent = LUA_BINDING_ARGUMENT( luaL_checkstring, 2, "htmlContent" );
@@ -141,7 +141,7 @@ LUA_BINDING_BEGIN( HTML, SetHtml, "class", "Sets the HTML content of the object"
 }
 LUA_BINDING_END()
 
-LUA_BINDING_BEGIN( HTML, AddJavascriptObject, "class", "Adds a JavaScript object" )
+LUA_BINDING_BEGIN( Html, AddJavascriptObject, "class", "Adds a JavaScript object" )
 {
     lua_HTML *html = LUA_BINDING_ARGUMENT( luaL_checkhtml, 1, "html" );
     const char *objectName = LUA_BINDING_ARGUMENT( luaL_checkstring, 2, "objectName" );
@@ -150,7 +150,7 @@ LUA_BINDING_BEGIN( HTML, AddJavascriptObject, "class", "Adds a JavaScript object
 }
 LUA_BINDING_END()
 
-LUA_BINDING_BEGIN( HTML, AddJavascriptObjectCallback, "class", "Adds a callback to a JavaScript object" )
+LUA_BINDING_BEGIN( Html, AddJavascriptObjectCallback, "class", "Adds a callback to a JavaScript object" )
 {
     lua_HTML *html = LUA_BINDING_ARGUMENT( luaL_checkhtml, 1, "html" );
     const char *objectName = LUA_BINDING_ARGUMENT( luaL_checkstring, 2, "objectName" );
@@ -160,7 +160,7 @@ LUA_BINDING_BEGIN( HTML, AddJavascriptObjectCallback, "class", "Adds a callback 
 }
 LUA_BINDING_END()
 
-LUA_BINDING_BEGIN( HTML, GoBack, "class", "Navigates back in the browser history" )
+LUA_BINDING_BEGIN( Html, GoBack, "class", "Navigates back in the browser history" )
 {
     lua_HTML *html = LUA_BINDING_ARGUMENT( luaL_checkhtml, 1, "html" );
     html->GoBack();
@@ -168,7 +168,7 @@ LUA_BINDING_BEGIN( HTML, GoBack, "class", "Navigates back in the browser history
 }
 LUA_BINDING_END()
 
-LUA_BINDING_BEGIN( HTML, GoForward, "class", "Navigates forward in the browser history" )
+LUA_BINDING_BEGIN( Html, GoForward, "class", "Navigates forward in the browser history" )
 {
     lua_HTML *html = LUA_BINDING_ARGUMENT( luaL_checkhtml, 1, "html" );
     html->GoForward();
@@ -176,7 +176,7 @@ LUA_BINDING_BEGIN( HTML, GoForward, "class", "Navigates forward in the browser h
 }
 LUA_BINDING_END()
 
-LUA_BINDING_BEGIN( HTML, CanGoBack, "class", "Checks if the browser can go back" )
+LUA_BINDING_BEGIN( Html, CanGoBack, "class", "Checks if the browser can go back" )
 {
     lua_HTML *html = LUA_BINDING_ARGUMENT( luaL_checkhtml, 1, "html" );
     lua_pushboolean( L, html->BCanGoBack() );
@@ -184,7 +184,7 @@ LUA_BINDING_BEGIN( HTML, CanGoBack, "class", "Checks if the browser can go back"
 }
 LUA_BINDING_END( "boolean", "Whether the browser can go back" )
 
-LUA_BINDING_BEGIN( HTML, CanGoForward, "class", "Checks if the browser can go forward" )
+LUA_BINDING_BEGIN( Html, CanGoForward, "class", "Checks if the browser can go forward" )
 {
     lua_HTML *html = LUA_BINDING_ARGUMENT( luaL_checkhtml, 1, "html" );
     lua_pushboolean( L, html->BCanGoFoward() );
@@ -192,7 +192,7 @@ LUA_BINDING_BEGIN( HTML, CanGoForward, "class", "Checks if the browser can go fo
 }
 LUA_BINDING_END( "boolean", "Whether the browser can go forward" )
 
-LUA_BINDING_BEGIN( HTML, SetScrollbarsEnabled, "class", "Enables or disables scrollbars" )
+LUA_BINDING_BEGIN( Html, SetScrollbarsEnabled, "class", "Enables or disables scrollbars" )
 {
     lua_HTML *html = LUA_BINDING_ARGUMENT( luaL_checkhtml, 1, "html" );
     bool enable = LUA_BINDING_ARGUMENT( luaL_checkboolean, 2, "enable" );
@@ -201,7 +201,7 @@ LUA_BINDING_BEGIN( HTML, SetScrollbarsEnabled, "class", "Enables or disables scr
 }
 LUA_BINDING_END()
 
-LUA_BINDING_BEGIN( HTML, SetContextMenuEnabled, "class", "Enables or disables the context menu" )
+LUA_BINDING_BEGIN( Html, SetContextMenuEnabled, "class", "Enables or disables the context menu" )
 {
     lua_HTML *html = LUA_BINDING_ARGUMENT( luaL_checkhtml, 1, "html" );
     bool enable = LUA_BINDING_ARGUMENT( luaL_checkboolean, 2, "enable" );
@@ -210,7 +210,7 @@ LUA_BINDING_BEGIN( HTML, SetContextMenuEnabled, "class", "Enables or disables th
 }
 LUA_BINDING_END()
 
-LUA_BINDING_BEGIN( HTML, SetViewSourceEnabled, "class", "Enables or disables view source option" )
+LUA_BINDING_BEGIN( Html, SetViewSourceEnabled, "class", "Enables or disables view source option" )
 {
     lua_HTML *html = LUA_BINDING_ARGUMENT( luaL_checkhtml, 1, "html" );
     bool enable = LUA_BINDING_ARGUMENT( luaL_checkboolean, 2, "enable" );
@@ -219,7 +219,7 @@ LUA_BINDING_BEGIN( HTML, SetViewSourceEnabled, "class", "Enables or disables vie
 }
 LUA_BINDING_END()
 
-LUA_BINDING_BEGIN( HTML, NewWindowsOnly, "class", "Allows opening new windows only" )
+LUA_BINDING_BEGIN( Html, NewWindowsOnly, "class", "Allows opening new windows only" )
 {
     lua_HTML *html = LUA_BINDING_ARGUMENT( luaL_checkhtml, 1, "html" );
     bool enable = LUA_BINDING_ARGUMENT( luaL_checkboolean, 2, "enable" );
@@ -228,13 +228,13 @@ LUA_BINDING_BEGIN( HTML, NewWindowsOnly, "class", "Allows opening new windows on
 }
 LUA_BINDING_END()
 
-LUA_BINDING_BEGIN( HTML, IsLoading, "class", "Checks if the HTML is currently loading" )
+LUA_BINDING_BEGIN( Html, IsLoading, "class", "Checks if the HTML is currently loading" )
 {
     LHTML *html = dynamic_cast< LHTML * >( LUA_BINDING_ARGUMENT( luaL_checkhtml, 1, "html" ) );
     if ( html == NULL )
     {
         // Experiment; TODO: Will this happen?
-        luaL_argerror( L, 1, "Lua HTML expected, got a different HTML?" );
+        luaL_argerror( L, 1, "Lua Html Panel expected, got a different HTML?" );
         return 0;
     }
     lua_pushboolean( L, html->IsLoading() );
@@ -242,7 +242,7 @@ LUA_BINDING_BEGIN( HTML, IsLoading, "class", "Checks if the HTML is currently lo
 }
 LUA_BINDING_END( "boolean", "Whether the HTML is loading" )
 
-LUA_BINDING_BEGIN( HTML, IsScrolledToBottom, "class", "Checks if the HTML is scrolled to the bottom" )
+LUA_BINDING_BEGIN( Html, IsScrolledToBottom, "class", "Checks if the HTML is scrolled to the bottom" )
 {
     lua_HTML *html = LUA_BINDING_ARGUMENT( luaL_checkhtml, 1, "html" );
     lua_pushboolean( L, html->IsScrolledToBottom() );
@@ -250,7 +250,7 @@ LUA_BINDING_BEGIN( HTML, IsScrolledToBottom, "class", "Checks if the HTML is scr
 }
 LUA_BINDING_END( "boolean", "Whether the HTML is scrolled to the bottom" )
 
-LUA_BINDING_BEGIN( HTML, IsScrollbarVisible, "class", "Checks if the scrollbar is visible" )
+LUA_BINDING_BEGIN( Html, IsScrollbarVisible, "class", "Checks if the scrollbar is visible" )
 {
     lua_HTML *html = LUA_BINDING_ARGUMENT( luaL_checkhtml, 1, "html" );
     lua_pushboolean( L, html->IsScrollbarVisible() );
@@ -258,7 +258,7 @@ LUA_BINDING_BEGIN( HTML, IsScrollbarVisible, "class", "Checks if the scrollbar i
 }
 LUA_BINDING_END( "boolean", "Whether the scrollbar is visible" )
 
-LUA_BINDING_BEGIN( HTML, AddCustomURLHandler, "class", "Adds a custom URL handler" )
+LUA_BINDING_BEGIN( Html, AddCustomURLHandler, "class", "Adds a custom URL handler" )
 {
     lua_HTML *html = LUA_BINDING_ARGUMENT( luaL_checkhtml, 1, "html" );
     const char *url = LUA_BINDING_ARGUMENT( luaL_checkstring, 2, "url" );
@@ -268,7 +268,7 @@ LUA_BINDING_BEGIN( HTML, AddCustomURLHandler, "class", "Adds a custom URL handle
 }
 LUA_BINDING_END()
 
-LUA_BINDING_BEGIN( HTML, Find, "class", "Finds text in the HTML object" )
+LUA_BINDING_BEGIN( Html, Find, "class", "Finds text in the HTML object" )
 {
     lua_HTML *html = LUA_BINDING_ARGUMENT( luaL_checkhtml, 1, "html" );
     const char *text = LUA_BINDING_ARGUMENT( luaL_checkstring, 2, "text" );
@@ -277,7 +277,7 @@ LUA_BINDING_BEGIN( HTML, Find, "class", "Finds text in the HTML object" )
 }
 LUA_BINDING_END()
 
-LUA_BINDING_BEGIN( HTML, StopFind, "class", "Stops finding text" )
+LUA_BINDING_BEGIN( Html, StopFind, "class", "Stops finding text" )
 {
     lua_HTML *html = LUA_BINDING_ARGUMENT( luaL_checkhtml, 1, "html" );
     html->StopFind();
@@ -285,14 +285,14 @@ LUA_BINDING_BEGIN( HTML, StopFind, "class", "Stops finding text" )
 }
 LUA_BINDING_END()
 
-LUA_BINDING_BEGIN( HTML, FindNext, "class", "Finds the next occurrence of text" )
+LUA_BINDING_BEGIN( Html, FindNext, "class", "Finds the next occurrence of text" )
 {
     lua_HTML *html = LUA_BINDING_ARGUMENT( luaL_checkhtml, 1, "html" );
     html->FindNext();
     return 0;
 }
 LUA_BINDING_END()
-LUA_BINDING_BEGIN( HTML, FindPrevious, "class", "Finds the previous occurrence of text" )
+LUA_BINDING_BEGIN( Html, FindPrevious, "class", "Finds the previous occurrence of text" )
 {
     lua_HTML *html = LUA_BINDING_ARGUMENT( luaL_checkhtml, 1, "html" );
     html->FindPrevious();
@@ -300,7 +300,7 @@ LUA_BINDING_BEGIN( HTML, FindPrevious, "class", "Finds the previous occurrence o
 }
 LUA_BINDING_END()
 
-LUA_BINDING_BEGIN( HTML, ShowFindDialog, "class", "Shows the find dialog" )
+LUA_BINDING_BEGIN( Html, ShowFindDialog, "class", "Shows the find dialog" )
 {
     lua_HTML *html = LUA_BINDING_ARGUMENT( luaL_checkhtml, 1, "html" );
     html->ShowFindDialog();
@@ -308,7 +308,7 @@ LUA_BINDING_BEGIN( HTML, ShowFindDialog, "class", "Shows the find dialog" )
 }
 LUA_BINDING_END()
 
-LUA_BINDING_BEGIN( HTML, HideFindDialog, "class", "Hides the find dialog" )
+LUA_BINDING_BEGIN( Html, HideFindDialog, "class", "Hides the find dialog" )
 {
     lua_HTML *html = LUA_BINDING_ARGUMENT( luaL_checkhtml, 1, "html" );
     html->HideFindDialog();
@@ -316,7 +316,7 @@ LUA_BINDING_BEGIN( HTML, HideFindDialog, "class", "Hides the find dialog" )
 }
 LUA_BINDING_END()
 
-LUA_BINDING_BEGIN( HTML, FindDialogVisible, "class", "Checks if the find dialog is visible" )
+LUA_BINDING_BEGIN( Html, FindDialogVisible, "class", "Checks if the find dialog is visible" )
 {
     lua_HTML *html = LUA_BINDING_ARGUMENT( luaL_checkhtml, 1, "html" );
     lua_pushboolean( L, html->FindDialogVisible() );
@@ -324,7 +324,7 @@ LUA_BINDING_BEGIN( HTML, FindDialogVisible, "class", "Checks if the find dialog 
 }
 LUA_BINDING_END( "boolean", "Whether the find dialog is visible" )
 
-LUA_BINDING_BEGIN( HTML, HorizontalScrollMax, "class", "Gets the maximum horizontal scroll value" )
+LUA_BINDING_BEGIN( Html, HorizontalScrollMax, "class", "Gets the maximum horizontal scroll value" )
 {
     lua_HTML *html = LUA_BINDING_ARGUMENT( luaL_checkhtml, 1, "html" );
     lua_pushinteger( L, html->HorizontalScrollMax() );
@@ -332,7 +332,7 @@ LUA_BINDING_BEGIN( HTML, HorizontalScrollMax, "class", "Gets the maximum horizon
 }
 LUA_BINDING_END( "integer", "The maximum horizontal scroll value" )
 
-LUA_BINDING_BEGIN( HTML, VerticalScrollMax, "class", "Gets the maximum vertical scroll value" )
+LUA_BINDING_BEGIN( Html, VerticalScrollMax, "class", "Gets the maximum vertical scroll value" )
 {
     lua_HTML *html = LUA_BINDING_ARGUMENT( luaL_checkhtml, 1, "html" );
     lua_pushinteger( L, html->VerticalScrollMax() );
@@ -340,7 +340,7 @@ LUA_BINDING_BEGIN( HTML, VerticalScrollMax, "class", "Gets the maximum vertical 
 }
 LUA_BINDING_END( "integer", "The maximum vertical scroll value" )
 
-LUA_BINDING_BEGIN( HTML, GetLinkAtPosition, "class", "Gets the link at a specific position" )
+LUA_BINDING_BEGIN( Html, GetLinkAtPosition, "class", "Gets the link at a specific position" )
 {
     lua_HTML *html = LUA_BINDING_ARGUMENT( luaL_checkhtml, 1, "html" );
     double x = LUA_BINDING_ARGUMENT( luaL_checknumber, 2, "x" );
@@ -350,7 +350,7 @@ LUA_BINDING_BEGIN( HTML, GetLinkAtPosition, "class", "Gets the link at a specifi
 }
 LUA_BINDING_END()
 
-LUA_BINDING_BEGIN( HTML, __index, "class", "Metamethod called when a non-existent field is indexed" )
+LUA_BINDING_BEGIN( Html, __index, "class", "Metamethod called when a non-existent field is indexed" )
 {
     HTML *pHTML = LUA_BINDING_ARGUMENT( lua_tohtml, 1, "html" );
     LUA_METATABLE_INDEX_CHECK_VALID( L, PanelIsValid );
@@ -376,7 +376,7 @@ LUA_BINDING_BEGIN( HTML, __index, "class", "Metamethod called when a non-existen
 }
 LUA_BINDING_END( "any", "The value of the field" )
 
-LUA_BINDING_BEGIN( HTML, __newindex, "class", "Metamethod called when a new field is added" )
+LUA_BINDING_BEGIN( Html, __newindex, "class", "Metamethod called when a new field is added" )
 {
     HTML *pHTML = LUA_BINDING_ARGUMENT( lua_tohtml, 1, "html" );
 
@@ -403,14 +403,14 @@ LUA_BINDING_BEGIN( HTML, __newindex, "class", "Metamethod called when a new fiel
 }
 LUA_BINDING_END()
 
-LUA_BINDING_BEGIN( HTML, __eq, "class", "Metamethod called when two HTML objects are compared" )
+LUA_BINDING_BEGIN( Html, __eq, "class", "Metamethod called when two HTML objects are compared" )
 {
     lua_pushboolean( L, LUA_BINDING_ARGUMENT( lua_tohtml, 1, "html" ) == LUA_BINDING_ARGUMENT( lua_tohtml, 2, "other" ) );
     return 1;
 }
 LUA_BINDING_END( "boolean", "Whether the HTML objects are equal" )
 
-LUA_BINDING_BEGIN( HTML, __tostring, "class", "Metamethod called when the HTML object is converted to a string" )
+LUA_BINDING_BEGIN( Html, __tostring, "class", "Metamethod called when the HTML object is converted to a string" )
 {
     HTML *pHTML = LUA_BINDING_ARGUMENT( lua_tohtml, 1, "html" );
     if ( pHTML == NULL )
@@ -420,7 +420,7 @@ LUA_BINDING_BEGIN( HTML, __tostring, "class", "Metamethod called when the HTML o
         const char *pName = pHTML->GetName();
         if ( Q_strcmp( pName, "" ) == 0 )
             pName = "(no name)";
-        lua_pushfstring( L, "HTML: \"%s\"", pName );
+        lua_pushfstring( L, "Html: \"%s\"", pName );
     }
     return 1;
 }
@@ -453,7 +453,7 @@ LUALIB_API int luaopen_vgui_HTML( lua_State *L )
 {
     LUA_PUSH_NEW_METATABLE( L, "Html" );
 
-    LUA_REGISTRATION_COMMIT( HTML );
+    LUA_REGISTRATION_COMMIT( Html );
 
     lua_pushstring( L, LUA_PANELMETANAME );
     lua_setfield( L, -2, "__type" ); /* metatable.__type = "Panel" */

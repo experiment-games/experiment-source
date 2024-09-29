@@ -14,8 +14,12 @@ lua:
   description: "Set weapon visible."
   
   arguments:
-    - name: "visible"
-      type: boolean
+  - position: 1
+    name: "entity"
+    type: Weapon
+  - position: 2
+    name: "visible"
+    type: boolean
   returns:
     
 ---

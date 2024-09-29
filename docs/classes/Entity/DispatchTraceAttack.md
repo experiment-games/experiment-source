@@ -14,12 +14,18 @@ lua:
   description: "Dispatch trace attack."
   
   arguments:
-    - name: "damageInfo"
-      type: DamageInfo
-    - name: "direction"
-      type: Vector
-    - name: "trace"
-      type: Trace
+  - position: 1
+    name: "entity"
+    type: Entity
+  - position: 2
+    name: "damageInfo"
+    type: DamageInfo
+  - position: 3
+    name: "direction"
+    type: Vector
+  - position: 4
+    name: "trace"
+    type: Trace
   returns:
     
 ---

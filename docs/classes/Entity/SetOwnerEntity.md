@@ -14,8 +14,12 @@ lua:
   description: "Set owner entity."
   
   arguments:
-    - name: "owner"
-      type: Entity
+  - position: 1
+    name: "entity"
+    type: Entity
+  - position: 2
+    name: "owner"
+    type: Entity
   returns:
     
 ---

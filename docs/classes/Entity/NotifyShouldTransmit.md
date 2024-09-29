@@ -14,8 +14,12 @@ lua:
   description: "Notify should transmit."
   
   arguments:
-    - name: "state"
-      type: number
+  - position: 1
+    name: "entity"
+    type: Entity
+  - position: 2
+    name: "state"
+    type: number
   returns:
     
 ---

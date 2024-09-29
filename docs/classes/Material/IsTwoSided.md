@@ -13,7 +13,10 @@ lua:
   realm: shared
   description: "Is two sided."
   
-  
+  arguments:
+  - position: 1
+    name: "material"
+    type: Material
   returns:
     - type: boolean
       description: "True if two sided, false otherwise."

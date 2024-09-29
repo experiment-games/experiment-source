@@ -13,7 +13,10 @@ lua:
   realm: shared
   description: "Gets the name of the ammo"
   
-  
+  arguments:
+  - position: 1
+    name: "damageInfo"
+    type: DamageInfo
   returns:
     - type: string
       description: "The name of the ammo."

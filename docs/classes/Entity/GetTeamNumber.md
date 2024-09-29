@@ -13,7 +13,10 @@ lua:
   realm: shared
   description: "Get team number."
   
-  
+  arguments:
+  - position: 1
+    name: "entity"
+    type: Entity
   returns:
     - type: integer
       description: "The team number."

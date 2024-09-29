@@ -13,6 +13,7 @@ lua:
   realm: shared
   description: "Get all players."
   
+  arguments:
   
   returns:
     - type: table

@@ -14,10 +14,15 @@ lua:
   description: "Set the user data of a string."
   
   arguments:
-    - name: "index"
-      type: number
-    - name: "value"
-      type: string
+  - position: 1
+    name: "networkStringTable"
+    type: NetworkStringTable
+  - position: 2
+    name: "index"
+    type: number
+  - position: 3
+    name: "value"
+    type: string
   returns:
     
 ---

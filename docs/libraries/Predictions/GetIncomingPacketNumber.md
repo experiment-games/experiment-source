@@ -13,6 +13,7 @@ lua:
   realm: client
   description: "Get the incoming packet number."
   
+  arguments:
   
   returns:
     - type: integer

@@ -13,7 +13,10 @@ lua:
   realm: shared
   description: "Gets the constraint width"
   
-  
+  arguments:
+  - position: 1
+    name: "moveData"
+    type: MoveData
   returns:
     - type: number
       description: "The constraint width"

@@ -14,8 +14,12 @@ lua:
   description: "Move the Projected Texture to the specified position."
   
   arguments:
-    - name: "position"
-      type: Vector
+  - position: 1
+    name: "projectedTexture"
+    type: ProjectedTexture
+  - position: 2
+    name: "position"
+    type: Vector
   returns:
     
 ---

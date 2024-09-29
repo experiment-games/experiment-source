@@ -13,7 +13,10 @@ lua:
   realm: shared
   description: "Check if the player can sprint."
   
-  
+  arguments:
+  - position: 1
+    name: "entity"
+    type: Player
   returns:
     - type: boolean
       description: "Whether the player can sprint"

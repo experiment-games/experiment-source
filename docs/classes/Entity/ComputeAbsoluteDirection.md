@@ -14,8 +14,12 @@ lua:
   description: "Compute absolute direction."
   
   arguments:
-    - name: "localDir"
-      type: Vector
+  - position: 1
+    name: "entity"
+    type: Entity
+  - position: 2
+    name: "localDir"
+    type: Vector
   returns:
     - type: Vector
       description: "The absolute direction."

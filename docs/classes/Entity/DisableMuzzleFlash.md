@@ -13,7 +13,10 @@ lua:
   realm: client
   description: "Disable the muzzle flash."
   
-  
+  arguments:
+  - position: 1
+    name: "entity"
+    type: Entity
   returns:
     
 ---

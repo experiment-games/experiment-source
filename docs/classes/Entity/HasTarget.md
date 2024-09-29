@@ -14,8 +14,12 @@ lua:
   description: "Has target."
   
   arguments:
-    - name: "target"
-      type: string
+  - position: 1
+    name: "entity"
+    type: Entity
+  - position: 2
+    name: "target"
+    type: string
   returns:
     - type: boolean
       description: "true if has target, false otherwise."

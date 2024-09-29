@@ -14,8 +14,12 @@ lua:
   description: "Sets whether text wrapping is enabled"
   
   arguments:
-    - name: "wrap"
-      type: boolean
+  - position: 1
+    name: "textEntry"
+    type: TextEntry
+  - position: 2
+    name: "wrap"
+    type: boolean
   returns:
     
 ---

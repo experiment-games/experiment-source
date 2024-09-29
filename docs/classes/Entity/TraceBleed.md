@@ -14,14 +14,21 @@ lua:
   description: "Trace bleed."
   
   arguments:
-    - name: "damage"
-      type: number
-    - name: "direction"
-      type: Vector
-    - name: "trace"
-      type: Trace
-    - name: "type"
-      type: number
+  - position: 1
+    name: "entity"
+    type: Entity
+  - position: 2
+    name: "damage"
+    type: number
+  - position: 3
+    name: "direction"
+    type: Vector
+  - position: 4
+    name: "trace"
+    type: Trace
+  - position: 5
+    name: "type"
+    type: number
   returns:
     
 ---

@@ -13,7 +13,10 @@ lua:
   realm: shared
   description: "Get a random burst."
   
-  
+  arguments:
+  - position: 1
+    name: "entity"
+    type: Weapon
   returns:
     - type: integer
       description: "Random burst."

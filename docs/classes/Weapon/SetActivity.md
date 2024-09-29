@@ -14,8 +14,12 @@ lua:
   description: "Set activity."
   
   arguments:
-    - name: "activity"
-      type: number
+  - position: 1
+    name: "entity"
+    type: Weapon
+  - position: 2
+    name: "activity"
+    type: number
   returns:
     
 ---

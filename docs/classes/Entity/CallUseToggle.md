@@ -13,7 +13,10 @@ lua:
   realm: server
   description: "Call use toggle."
   
-  
+  arguments:
+  - position: 1
+    name: "entity"
+    type: Entity
   returns:
     
 ---

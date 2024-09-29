@@ -14,8 +14,12 @@ lua:
   description: "Set whenever or not the Texture should light up world geometry."
   
   arguments:
-    - name: "lightWorld"
-      type: boolean
+  - position: 1
+    name: "projectedTexture"
+    type: ProjectedTexture
+  - position: 2
+    name: "lightWorld"
+    type: boolean
   returns:
     
 ---

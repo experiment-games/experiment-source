@@ -13,7 +13,10 @@ lua:
   realm: shared
   description: "Get the fraction by which player's walk speed will be multiplied when crouched."
   
-  
+  arguments:
+  - position: 1
+    name: "player"
+    type: Player
   returns:
     - type: number
       description: "The player's crouched walk speed fraction."

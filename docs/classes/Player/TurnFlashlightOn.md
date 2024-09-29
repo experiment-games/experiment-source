@@ -13,7 +13,10 @@ lua:
   realm: server
   description: "Turn the flashlight on for the player."
   
-  
+  arguments:
+  - position: 1
+    name: "player"
+    type: Player
   returns:
     
 ---

@@ -14,10 +14,15 @@ lua:
   description: "Physics impact."
   
   arguments:
-    - name: "other"
-      type: Entity
-    - name: "trace"
-      type: Trace
+  - position: 1
+    name: "entity"
+    type: Entity
+  - position: 2
+    name: "other"
+    type: Entity
+  - position: 3
+    name: "trace"
+    type: Trace
   returns:
     
 ---

@@ -13,7 +13,10 @@ lua:
   realm: shared
   description: "Gets the velocity"
   
-  
+  arguments:
+  - position: 1
+    name: "moveData"
+    type: MoveData
   returns:
     - type: Vector
       description: "The velocity"

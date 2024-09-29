@@ -14,8 +14,12 @@ lua:
   description: "Modifies the existing angle, scaling it by a number."
   
   arguments:
-    - name: "scaleBy"
-      type: number
+  - position: 1
+    name: "angle"
+    type: Angle
+  - position: 2
+    name: "scaleBy"
+    type: number
   returns:
     - type: Angle
       description: "The same angle, now scaled."

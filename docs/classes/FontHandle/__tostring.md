@@ -13,7 +13,10 @@ lua:
   realm: client
   description: "Metamethod to get the string representation of the font handle."
   
-  
+  arguments:
+  - position: 1
+    name: "font"
+    type: FontHandle
   returns:
     - type: string
       description: "The string representation of the font handle."

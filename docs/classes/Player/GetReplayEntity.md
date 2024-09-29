@@ -13,7 +13,10 @@ lua:
   realm: server
   description: "Get the replay entity for the player."
   
-  
+  arguments:
+  - position: 1
+    name: "player"
+    type: Player
   returns:
     - type: integer
       description: "The replay entity."

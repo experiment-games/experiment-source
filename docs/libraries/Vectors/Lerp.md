@@ -14,12 +14,15 @@ lua:
   description: "Linearly interpolates between two vectors."
   
   arguments:
-    - name: "fraction"
-      type: number
-    - name: "from"
-      type: Vector
-    - name: "to"
-      type: Vector
+  - position: 1
+    name: "fraction"
+    type: number
+  - position: 2
+    name: "from"
+    type: Vector
+  - position: 3
+    name: "to"
+    type: Vector
   returns:
     - type: Vector
       description: "The interpolated vector."

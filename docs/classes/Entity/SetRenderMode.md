@@ -14,8 +14,12 @@ lua:
   description: "Set render mode."
   
   arguments:
-    - name: "mode"
-      type: enumeration/RENDER_MODE
+  - position: 1
+    name: "entity"
+    type: Entity
+  - position: 2
+    name: "mode"
+    type: enumeration/RENDER_MODE
   returns:
     
 ---

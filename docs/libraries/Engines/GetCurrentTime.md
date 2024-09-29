@@ -13,6 +13,7 @@ lua:
   realm: shared
   description: "Get the current time."
   
+  arguments:
   
   returns:
     - type: number

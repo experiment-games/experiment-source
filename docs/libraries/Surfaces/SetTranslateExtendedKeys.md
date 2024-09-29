@@ -14,8 +14,9 @@ lua:
   description: "Sets whether to translate extended keys"
   
   arguments:
-    - name: "state"
-      type: boolean
+  - position: 1
+    name: "state"
+    type: boolean
   returns:
     
 ---

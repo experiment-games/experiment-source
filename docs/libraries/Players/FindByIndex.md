@@ -14,8 +14,9 @@ lua:
   description: "Get a player by index."
   
   arguments:
-    - name: "index"
-      type: number
+  - position: 1
+    name: "index"
+    type: number
   returns:
     - type: Player
       description: "The player."

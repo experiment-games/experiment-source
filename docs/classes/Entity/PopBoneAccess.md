@@ -15,8 +15,9 @@ lua:
   
   static: true
   arguments:
-    - name: "name"
-      type: string
+  - position: 1
+    name: "name"
+    type: string
   returns:
     
 ---

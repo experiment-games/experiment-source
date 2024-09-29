@@ -13,6 +13,7 @@ lua:
   realm: shared
   description: "Get the whitelist spew flags."
   
+  arguments:
   
   returns:
     - type: integer

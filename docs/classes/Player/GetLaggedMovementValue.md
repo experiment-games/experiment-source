@@ -13,7 +13,10 @@ lua:
   realm: shared
   description: "Get the player's lagged movement value."
   
-  
+  arguments:
+  - position: 1
+    name: "player"
+    type: Player
   returns:
     - type: number
       description: "The player's lagged movement value."

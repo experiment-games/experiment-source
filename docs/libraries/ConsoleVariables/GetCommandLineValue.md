@@ -14,8 +14,9 @@ lua:
   description: "Get the value of a command line parameter."
   
   arguments:
-    - name: "name"
-      type: string
+  - position: 1
+    name: "name"
+    type: string
   returns:
     - type: string
       description: "Value of the command line parameter."

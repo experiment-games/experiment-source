@@ -14,8 +14,12 @@ lua:
   description: "Is point in bounds."
   
   arguments:
-    - name: "point"
-      type: Vector
+  - position: 1
+    name: "entity"
+    type: Entity
+  - position: 2
+    name: "point"
+    type: Vector
   returns:
     - type: boolean
       description: "True if point in bounds, false otherwise."

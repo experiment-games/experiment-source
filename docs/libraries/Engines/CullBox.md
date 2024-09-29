@@ -14,10 +14,12 @@ lua:
   description: "Cull a box."
   
   arguments:
-    - name: "boxMin"
-      type: Vector
-    - name: "boxMax"
-      type: Vector
+  - position: 1
+    name: "boxMin"
+    type: Vector
+  - position: 2
+    name: "boxMax"
+    type: Vector
   returns:
     - type: boolean
       description: "True if the box was culled, false otherwise."

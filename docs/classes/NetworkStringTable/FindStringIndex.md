@@ -14,8 +14,12 @@ lua:
   description: "Find the index of a string in the table."
   
   arguments:
-    - name: "value"
-      type: string
+  - position: 1
+    name: "networkStringTable"
+    type: NetworkStringTable
+  - position: 2
+    name: "value"
+    type: string
   returns:
     - type: integer
       description: "The index of the string."

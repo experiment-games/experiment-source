@@ -14,8 +14,12 @@ lua:
   description: "Set the bonus progress for the player."
   
   arguments:
-    - name: "progress"
-      type: number
+  - position: 1
+    name: "player"
+    type: Player
+  - position: 2
+    name: "progress"
+    type: number
   returns:
     
 ---

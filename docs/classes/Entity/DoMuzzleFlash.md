@@ -13,7 +13,10 @@ lua:
   realm: shared
   description: "Sets up muzzle flash parity."
   
-  
+  arguments:
+  - position: 1
+    name: "entity"
+    type: Entity
   returns:
     
 ---

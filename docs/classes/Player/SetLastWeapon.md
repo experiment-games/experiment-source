@@ -14,8 +14,12 @@ lua:
   description: "Set the player's last weapon."
   
   arguments:
-    - name: "weapon"
-      type: Weapon
+  - position: 1
+    name: "player"
+    type: Player
+  - position: 2
+    name: "weapon"
+    type: Weapon
   returns:
     
 ---

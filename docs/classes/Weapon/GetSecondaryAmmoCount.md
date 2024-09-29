@@ -13,7 +13,10 @@ lua:
   realm: shared
   description: "Get the amount of secondary ammo."
   
-  
+  arguments:
+  - position: 1
+    name: "entity"
+    type: Weapon
   returns:
     - type: integer
       description: "Amount of secondary ammo."

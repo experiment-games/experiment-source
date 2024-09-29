@@ -14,12 +14,18 @@ lua:
   description: "Returns the number of bytes in the specified packet."
   
   arguments:
-    - name: "flow"
-      type: number
-    - name: "frameNumber"
-      type: number
-    - name: "group"
-      type: number
+  - position: 1
+    name: "netChannel"
+    type: NetChannelInfo
+  - position: 2
+    name: "flow"
+    type: number
+  - position: 3
+    name: "frameNumber"
+    type: number
+  - position: 4
+    name: "group"
+    type: number
   returns:
     - type: integer
       description: "The number of bytes in the specified packet."

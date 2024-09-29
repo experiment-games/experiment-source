@@ -14,11 +14,13 @@ lua:
   description: "Precache a generic."
   
   arguments:
-    - name: "genericName"
-      type: string
-    - name: "preload"
-      type: boolean
-      default: "false"
+  - position: 1
+    name: "genericName"
+    type: string
+  - position: 2
+    name: "preload"
+    type: boolean
+    default: "false"
   returns:
     - type: integer
       description: "The generic index."

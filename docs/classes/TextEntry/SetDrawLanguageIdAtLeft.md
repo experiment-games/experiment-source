@@ -14,8 +14,12 @@ lua:
   description: "Sets whether the language ID is drawn on the left"
   
   arguments:
-    - name: "draw"
-      type: boolean
+  - position: 1
+    name: "textEntry"
+    type: TextEntry
+  - position: 2
+    name: "draw"
+    type: boolean
   returns:
     
 ---

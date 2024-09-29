@@ -14,8 +14,12 @@ lua:
   description: "Set render color blue."
   
   arguments:
-    - name: "blue"
-      type: number
+  - position: 1
+    name: "entity"
+    type: Entity
+  - position: 2
+    name: "blue"
+    type: number
   returns:
     
 ---

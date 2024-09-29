@@ -13,7 +13,10 @@ lua:
   realm: shared
   description: "Metatable that is called when the angle is to be negated."
   
-  
+  arguments:
+  - position: 1
+    name: "angle"
+    type: Angle
   returns:
     - type: Angle
       description: "The negated angle."

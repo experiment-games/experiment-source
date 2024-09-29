@@ -14,8 +14,12 @@ lua:
   description: "Modifies the existing angle, adding another angle to it."
   
   arguments:
-    - name: "angle2"
-      type: Angle
+  - position: 1
+    name: "angle"
+    type: Angle
+  - position: 2
+    name: "angle2"
+    type: Angle
   returns:
     - type: Angle
       description: "The added angle."

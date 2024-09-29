@@ -13,7 +13,10 @@ lua:
   realm: client
   description: "Record tool message."
   
-  
+  arguments:
+  - position: 1
+    name: "entity"
+    type: Entity
   returns:
     
 ---

@@ -14,9 +14,13 @@ lua:
   description: "Equip or remove the suit for the player."
   
   arguments:
-    - name: "shouldPlayEffects"
-      type: boolean
-      default: "true"
+  - position: 1
+    name: "player"
+    type: Player
+  - position: 2
+    name: "shouldPlayEffects"
+    type: boolean
+    default: "true"
   returns:
     
 ---

@@ -14,8 +14,9 @@ lua:
   description: "Force a material to be simple."
   
   arguments:
-    - name: "materialName"
-      type: string
+  - position: 1
+    name: "materialName"
+    type: string
   returns:
     
 ---

@@ -13,7 +13,13 @@ lua:
   realm: shared
   description: "Checks if two objects are equal"
   
-  
+  arguments:
+  - position: 1
+    name: "physicsProps1"
+    type: PhysicsSurfacePropertiesHandle
+  - position: 2
+    name: "physicsProps2"
+    type: PhysicsSurfacePropertiesHandle
   returns:
     - type: boolean
       description: "Whether the objects are equal or not."

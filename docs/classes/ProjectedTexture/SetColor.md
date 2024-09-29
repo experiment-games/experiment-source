@@ -14,8 +14,12 @@ lua:
   description: "Set the color of the projected texture."
   
   arguments:
-    - name: "color"
-      type: Color
+  - position: 1
+    name: "projectedTexture"
+    type: ProjectedTexture
+  - position: 2
+    name: "color"
+    type: Color
   returns:
     
 ---

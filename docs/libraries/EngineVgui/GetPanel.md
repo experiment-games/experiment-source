@@ -14,8 +14,9 @@ lua:
   description: "Get a VGUI panel instance by panel type."
   
   arguments:
-    - name: "panelType"
-      type: enumeration/VGUI_PANEL
+  - position: 1
+    name: "panelType"
+    type: enumeration/VGUI_PANEL
   returns:
     - type: VPanel
       description: "The VGUI panel instance."

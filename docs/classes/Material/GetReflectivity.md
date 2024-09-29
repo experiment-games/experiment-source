@@ -13,7 +13,10 @@ lua:
   realm: shared
   description: "Get reflectivity."
   
-  
+  arguments:
+  - position: 1
+    name: "material"
+    type: Material
   returns:
     - type: Vector
       description: "Reflectivity."

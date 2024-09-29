@@ -14,13 +14,19 @@ lua:
   description: "Restart a gesture."
   
   arguments:
-    - name: "slot"
-      type: number
-    - name: "activity"
-      type: number
-    - name: "autoKill"
-      type: boolean
-      default: "false"
+  - position: 1
+    name: "entity"
+    type: Player
+  - position: 2
+    name: "slot"
+    type: number
+  - position: 3
+    name: "activity"
+    type: number
+  - position: 4
+    name: "autoKill"
+    type: boolean
+    default: "false"
   returns:
     
 ---

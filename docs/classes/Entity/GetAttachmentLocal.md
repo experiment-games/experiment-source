@@ -14,8 +14,12 @@ lua:
   description: "Get the local attachment."
   
   arguments:
-    - name: "attachment"
-      type: number
+  - position: 1
+    name: "entity"
+    type: Entity
+  - position: 2
+    name: "attachment"
+    type: number
   returns:
     - type: boolean
       description: "Whether the operation was successful"

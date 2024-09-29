@@ -14,8 +14,12 @@ lua:
   description: "Adds a key to the buttons"
   
   arguments:
-    - name: "buttonCode"
-      type: number
+  - position: 1
+    name: "moveData"
+    type: MoveData
+  - position: 2
+    name: "buttonCode"
+    type: number
   returns:
     
 ---

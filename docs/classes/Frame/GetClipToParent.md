@@ -13,7 +13,10 @@ lua:
   realm: client
   description: "Returns whether the frame clips to the parent"
   
-  
+  arguments:
+  - position: 1
+    name: "frame"
+    type: Frame
   returns:
     - type: boolean
       description: "Whether the frame clips to the parent"

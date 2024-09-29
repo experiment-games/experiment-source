@@ -14,8 +14,12 @@ lua:
   description: "Set primary ammo count."
   
   arguments:
-    - name: "count"
-      type: number
+  - position: 1
+    name: "entity"
+    type: Weapon
+  - position: 2
+    name: "count"
+    type: number
   returns:
     
 ---

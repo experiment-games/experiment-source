@@ -13,7 +13,10 @@ lua:
   realm: shared
   description: "Wake resting objects."
   
-  
+  arguments:
+  - position: 1
+    name: "entity"
+    type: Entity
   returns:
     
 ---

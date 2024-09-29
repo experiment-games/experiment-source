@@ -13,7 +13,13 @@ lua:
   realm: shared
   description: "Sets side movement"
   
-  
+  arguments:
+  - position: 1
+    name: "userCmd"
+    type: UserCommand
+  - position: 2
+    name: "sideMove"
+    type: number
   returns:
     
 ---

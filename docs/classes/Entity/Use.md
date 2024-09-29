@@ -14,14 +14,21 @@ lua:
   description: "Dispatches use events to this entity's use handler, set via SetUse."
   
   arguments:
-    - name: "activator"
-      type: Entity
-    - name: "caller"
-      type: Entity
-    - name: "useType"
-      type: enumeration/USE_TYPE
-    - name: "value"
-      type: number
+  - position: 1
+    name: "entity"
+    type: Entity
+  - position: 2
+    name: "activator"
+    type: Entity
+  - position: 3
+    name: "caller"
+    type: Entity
+  - position: 4
+    name: "useType"
+    type: enumeration/USE_TYPE
+  - position: 5
+    name: "value"
+    type: number
   returns:
     
 ---

@@ -14,12 +14,15 @@ lua:
   description: "Check if a box touches an area frustum."
   
   arguments:
-    - name: "boxMin"
-      type: Vector
-    - name: "boxMax"
-      type: Vector
-    - name: "area"
-      type: number
+  - position: 1
+    name: "boxMin"
+    type: Vector
+  - position: 2
+    name: "boxMax"
+    type: Vector
+  - position: 3
+    name: "area"
+    type: number
   returns:
     - type: boolean
       description: "True if the box touches the area frustum, false otherwise."

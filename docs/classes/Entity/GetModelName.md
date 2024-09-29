@@ -13,7 +13,10 @@ lua:
   realm: shared
   description: "Get the model path of the entity"
   
-  
+  arguments:
+  - position: 1
+    name: "entity"
+    type: Entity
   returns:
     - type: string
       description: "The model name"

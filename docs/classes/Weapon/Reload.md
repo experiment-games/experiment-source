@@ -13,7 +13,10 @@ lua:
   realm: shared
   description: "Reload."
   
-  
+  arguments:
+  - position: 1
+    name: "entity"
+    type: Weapon
   returns:
     
 ---

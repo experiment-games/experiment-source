@@ -14,8 +14,15 @@ lua:
   description: "Get the body target of the player."
   
   arguments:
-    - name: "target"
-      type: Vector
+  - position: 1
+    name: "player"
+    type: Player
+  - position: 2
+    name: "target"
+    type: Vector
+  - position: 3
+    name: "isNoisy"
+    type: boolean
   returns:
     - type: Vector
       description: "The body target."

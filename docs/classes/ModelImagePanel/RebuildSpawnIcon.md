@@ -14,11 +14,16 @@ lua:
   description: "Rebuilds the spawn icon with the specified camera settings"
   
   arguments:
-    - name: "savePath"
-      type: string
-      default: "NULL"
-    - name: "data"
-      type: table
+  - position: 1
+    name: "modelImagePanel"
+    type: ModelImagePanel
+  - position: 2
+    name: "data"
+    type: table
+  - position: 3
+    name: "savePath"
+    type: string
+    default: "NULL"
   returns:
     
 ---

@@ -13,7 +13,10 @@ lua:
   realm: shared
   description: "Get texture memory bytes."
   
-  
+  arguments:
+  - position: 1
+    name: "material"
+    type: Material
   returns:
     - type: integer
       description: "Texture memory bytes."

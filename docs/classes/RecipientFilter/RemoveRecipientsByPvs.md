@@ -13,7 +13,13 @@ lua:
   realm: client
   description: "Removes recipients by potentially visible set"
   
-  
+  arguments:
+  - position: 1
+    name: "filter"
+    type: RecipientFilter
+  - position: 2
+    name: "position"
+    type: Vector
   returns:
     
 ---

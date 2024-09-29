@@ -14,8 +14,12 @@ lua:
   description: "Sets the center wrap of the label"
   
   arguments:
-    - name: "shouldCenterWrap"
-      type: boolean
+  - position: 1
+    name: "label"
+    type: Label
+  - position: 2
+    name: "shouldCenterWrap"
+    type: boolean
   returns:
     
 ---

@@ -13,7 +13,10 @@ lua:
   realm: client
   description: "Metamethod that is called when the panel is to be converted to a string"
   
-  
+  arguments:
+  - position: 1
+    name: "editablePanel"
+    type: EditablePanel
   returns:
     - type: string
       description: "String representation of the panel"

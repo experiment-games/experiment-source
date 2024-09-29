@@ -13,7 +13,10 @@ lua:
   realm: client
   description: "Gets the key bindings file of the panel"
   
-  
+  arguments:
+  - position: 1
+    name: "panel"
+    type: Panel
   returns:
     - type: string
       description: "The key bindings file of the panel"

@@ -14,8 +14,12 @@ lua:
   description: "Metamethod that is called a new field is added"
   
   arguments:
-    - name: "field"
-      type: string
+  - position: 1
+    name: "projectedTexture"
+    type: ProjectedTexture
+  - position: 2
+    name: "field"
+    type: string
   returns:
     
 ---

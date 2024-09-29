@@ -13,6 +13,7 @@ lua:
   realm: shared
   description: "Encode a lua table to JSON"
   
+  arguments:
   
   returns:
     - type: string

@@ -14,10 +14,15 @@ lua:
   description: "Set collision bounds."
   
   arguments:
-    - name: "mins"
-      type: Vector
-    - name: "maxs"
-      type: Vector
+  - position: 1
+    name: "entity"
+    type: Entity
+  - position: 2
+    name: "mins"
+    type: Vector
+  - position: 3
+    name: "maxs"
+    type: Vector
   returns:
     
 ---

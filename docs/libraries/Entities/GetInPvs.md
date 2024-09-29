@@ -14,8 +14,9 @@ lua:
   description: "Goes through the entities and find the ones that are in the PVS of the provided vector."
   
   arguments:
-    - name: "viewOrigin"
-      type: Vector
+  - position: 1
+    name: "viewOrigin"
+    type: Vector
   returns:
     - type: table
       description: "A table of entities found."

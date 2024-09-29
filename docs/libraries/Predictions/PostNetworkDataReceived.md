@@ -14,8 +14,9 @@ lua:
   description: "Call after the game receives network data."
   
   arguments:
-    - name: "commandsAcknowledged"
-      type: number
+  - position: 1
+    name: "commandsAcknowledged"
+    type: number
   returns:
     
 ---

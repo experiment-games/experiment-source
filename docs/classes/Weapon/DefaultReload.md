@@ -14,12 +14,18 @@ lua:
   description: "Default reload."
   
   arguments:
-    - name: "clipSize1"
-      type: number
-    - name: "clipSize2"
-      type: number
-    - name: "activity"
-      type: number
+  - position: 1
+    name: "entity"
+    type: Weapon
+  - position: 2
+    name: "clipSize1"
+    type: number
+  - position: 3
+    name: "clipSize2"
+    type: number
+  - position: 4
+    name: "activity"
+    type: number
   returns:
     - type: boolean
       description: "Whether the weapon was successfully reloaded."

@@ -14,8 +14,12 @@ lua:
   description: "Sets whether the button uses capture mouse"
   
   arguments:
-    - name: "useCaptureMouse"
-      type: boolean
+  - position: 1
+    name: "button"
+    type: Button
+  - position: 2
+    name: "useCaptureMouse"
+    type: boolean
   returns:
     
 ---

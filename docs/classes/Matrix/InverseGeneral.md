@@ -14,8 +14,12 @@ lua:
   description: "Inverts the matrix."
   
   arguments:
-    - name: "Matrix"
-      type: Matrix
+  - position: 1
+    name: "Matrix"
+    type: Matrix
+  - position: 2
+    name: "Matrix"
+    type: Matrix
   returns:
     - type: boolean
       description: "Whether the matrix was successfully inverted."

@@ -14,8 +14,12 @@ lua:
   description: "Draw bounding box overlay."
   
   arguments:
-    - name: "duration"
-      type: number
+  - position: 1
+    name: "entity"
+    type: Entity
+  - position: 2
+    name: "duration"
+    type: number
   returns:
     
 ---

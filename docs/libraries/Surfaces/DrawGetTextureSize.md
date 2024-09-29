@@ -14,8 +14,9 @@ lua:
   description: "Gets the texture size"
   
   arguments:
-    - name: "textureId"
-      type: number
+  - position: 1
+    name: "textureId"
+    type: number
   returns:
     - type: integer
       description: "The width of the texture"

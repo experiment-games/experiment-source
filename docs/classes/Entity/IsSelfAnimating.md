@@ -13,7 +13,10 @@ lua:
   realm: client
   description: "Check if the entity is self animating."
   
-  
+  arguments:
+  - position: 1
+    name: "entity"
+    type: Entity
   returns:
     - type: boolean
       description: "Whether the entity is self animating"

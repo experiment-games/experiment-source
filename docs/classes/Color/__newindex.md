@@ -13,21 +13,13 @@ lua:
   realm: shared
   description: "Metamethod for when the newindex field doesn't exist. Sets values when indexing r, g, b, a or 1, 2, 3, 4."
   
-  argumentSets:
-    - arguments:
-      - name: "field"
-        type: string
-      - name: "red"
-        type: number
-    - arguments:
-      - name: "green"
-        type: number
-    - arguments:
-      - name: "blue"
-        type: number
-    - arguments:
-      - name: "alpha"
-        type: number
+  arguments:
+  - position: 1
+    name: "color"
+    type: Color
+  - position: 2
+    name: "field"
+    type: string
   returns:
     
 ---

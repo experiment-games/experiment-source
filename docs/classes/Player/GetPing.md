@@ -13,7 +13,10 @@ lua:
   realm: shared
   description: "Get the player's ping."
   
-  
+  arguments:
+  - position: 1
+    name: "player"
+    type: Player
   returns:
     - type: integer
       description: "The player's ping."

@@ -14,9 +14,13 @@ lua:
   description: "Read from a file."
   
   arguments:
-    - name: "size"
-      type: number
-      default: "GET_FILE_SIZE"
+  - position: 1
+    name: "file"
+    type: FileHandle
+  - position: 2
+    name: "size"
+    type: number
+    default: "GET_FILE_SIZE"
   returns:
     - type: integer
       description: "The number of bytes read."

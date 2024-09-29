@@ -14,8 +14,12 @@ lua:
   description: "Sets whether the triple press is allowed"
   
   arguments:
-    - name: "allowed"
-      type: boolean
+  - position: 1
+    name: "panel"
+    type: Panel
+  - position: 2
+    name: "allowed"
+    type: boolean
   returns:
     
 ---

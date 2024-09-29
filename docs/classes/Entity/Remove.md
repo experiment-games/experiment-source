@@ -13,7 +13,10 @@ lua:
   realm: shared
   description: "Remove."
   
-  
+  arguments:
+  - position: 1
+    name: "entity"
+    type: Entity
   returns:
     
 ---

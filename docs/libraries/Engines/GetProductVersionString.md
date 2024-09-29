@@ -13,6 +13,7 @@ lua:
   realm: client
   description: "Get the product version string."
   
+  arguments:
   
   returns:
     - type: string

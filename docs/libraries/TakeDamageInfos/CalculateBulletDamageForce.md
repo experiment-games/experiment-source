@@ -14,17 +14,22 @@ lua:
   description: "Calculates the bullet damage force"
   
   arguments:
-    - name: "damageInfo"
-      type: DamageInfo
-    - name: "bulletType"
-      type: number
-    - name: "damageDirection"
-      type: Vector
-    - name: "damagePosition"
-      type: Vector
-    - name: "scale"
-      type: number
-      default: "1.0"
+  - position: 1
+    name: "damageInfo"
+    type: DamageInfo
+  - position: 2
+    name: "bulletType"
+    type: number
+  - position: 3
+    name: "damageDirection"
+    type: Vector
+  - position: 4
+    name: "damagePosition"
+    type: Vector
+  - position: 5
+    name: "scale"
+    type: number
+    default: "1.0"
   returns:
     
 ---

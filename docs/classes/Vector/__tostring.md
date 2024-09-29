@@ -13,7 +13,10 @@ lua:
   realm: shared
   description: "Converts the vector to a string."
   
-  
+  arguments:
+  - position: 1
+    name: "vector"
+    type: Vector
   returns:
     - type: string
       description: "The string representation of the vector."

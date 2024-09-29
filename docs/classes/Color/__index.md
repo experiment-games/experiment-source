@@ -14,8 +14,12 @@ lua:
   description: "Metamethod for when the index field doesn't exist. Returns values when indexing r, g, b, a or 1, 2, 3, 4."
   
   arguments:
-    - name: "field"
-      type: string
+  - position: 1
+    name: "color"
+    type: Color
+  - position: 2
+    name: "field"
+    type: string
   returns:
     - type: any
       description: "The value of the field."

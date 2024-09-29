@@ -13,6 +13,7 @@ lua:
   realm: client
   description: "Get the DirectX support level."
   
+  arguments:
   
   returns:
     - type: integer

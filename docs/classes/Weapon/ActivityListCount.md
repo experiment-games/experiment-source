@@ -13,7 +13,10 @@ lua:
   realm: shared
   description: "Activity list count."
   
-  
+  arguments:
+  - position: 1
+    name: "entity"
+    type: Weapon
   returns:
     - type: integer
       description: "Number of activities in the list."

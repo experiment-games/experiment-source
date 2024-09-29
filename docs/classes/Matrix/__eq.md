@@ -13,7 +13,13 @@ lua:
   realm: shared
   description: "Metatable called when the object is to be compared"
   
-  
+  arguments:
+  - position: 1
+    name: "matrix"
+    type: Matrix
+  - position: 2
+    name: "other"
+    type: Matrix
   returns:
     - type: boolean
       description: "Whether the objects are equal."

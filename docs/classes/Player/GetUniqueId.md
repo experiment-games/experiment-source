@@ -13,7 +13,10 @@ lua:
   realm: shared
   description: "Get the player's unique ID."
   
-  
+  arguments:
+  - position: 1
+    name: "player"
+    type: Player
   returns:
     - type: integer
       description: "The player's unique ID."

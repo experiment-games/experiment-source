@@ -14,8 +14,12 @@ lua:
   description: "Gets velocity at a specified point"
   
   arguments:
-    - name: "worldPosition"
-      type: Vector
+  - position: 1
+    name: "physicsObject"
+    type: PhysicsObject
+  - position: 2
+    name: "worldPosition"
+    type: Vector
   returns:
     - type: Vector
       description: "The velocity at the point."

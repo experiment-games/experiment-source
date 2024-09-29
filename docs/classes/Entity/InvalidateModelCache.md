@@ -13,7 +13,10 @@ lua:
   realm: shared
   description: "Invalidate the model cache."
   
-  
+  arguments:
+  - position: 1
+    name: "entity"
+    type: Entity
   returns:
     
 ---

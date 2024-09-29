@@ -14,8 +14,9 @@ lua:
   description: "Set simulation timestep."
   
   arguments:
-    - name: "timestep"
-      type: number
+  - position: 1
+    name: "timestep"
+    type: number
   returns:
     
 ---

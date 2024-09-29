@@ -14,8 +14,12 @@ lua:
   description: "Scales the impulse"
   
   arguments:
-    - name: "targetMass"
-      type: number
+  - position: 1
+    name: "targetMass"
+    type: number
+  - position: 2
+    name: "desiredSpeed"
+    type: number
   returns:
     - type: number
       description: "The scaled impulse."

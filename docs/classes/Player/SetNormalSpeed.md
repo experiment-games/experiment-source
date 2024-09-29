@@ -14,8 +14,12 @@ lua:
   description: "Set the player's normal speed (for when neither sprinting, walking nor crouching)"
   
   arguments:
-    - name: "speed"
-      type: number
+  - position: 1
+    name: "player"
+    type: Player
+  - position: 2
+    name: "speed"
+    type: number
   returns:
     
 ---

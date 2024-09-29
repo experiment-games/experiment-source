@@ -13,7 +13,10 @@ lua:
   realm: shared
   description: "Checks if the filter is reliable"
   
-  
+  arguments:
+  - position: 1
+    name: "filter"
+    type: RecipientFilter
   returns:
     
 ---

@@ -13,7 +13,10 @@ lua:
   realm: server
   description: "Get damage type."
   
-  
+  arguments:
+  - position: 1
+    name: "entity"
+    type: Entity
   returns:
     - type: integer
       description: "The damage type"

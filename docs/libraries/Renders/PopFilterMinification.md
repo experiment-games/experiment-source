@@ -13,6 +13,7 @@ lua:
   realm: client
   description: "Pop a minification filter."
   
+  arguments:
   
   returns:
     

@@ -13,7 +13,10 @@ lua:
   realm: shared
   description: "Gets the minimum value of the ConsoleVariable"
   
-  
+  arguments:
+  - position: 1
+    name: "consoleVariable"
+    type: ConsoleVariable
   returns:
     - type: boolean, number
       description: "Gets the minimum value of the ConsoleVariable"

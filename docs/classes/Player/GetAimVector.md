@@ -14,9 +14,13 @@ lua:
   description: "Get the player's autoaim vector."
   
   arguments:
-    - name: "scale"
-      type: number
-      default: "1"
+  - position: 1
+    name: "player"
+    type: Player
+  - position: 2
+    name: "scale"
+    type: number
+    default: "1"
   returns:
     - type: Vector
       description: "The player's autoaim vector."

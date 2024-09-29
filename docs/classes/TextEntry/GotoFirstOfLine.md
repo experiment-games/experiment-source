@@ -13,7 +13,10 @@ lua:
   realm: client
   description: "Moves the cursor to the beginning of the line"
   
-  
+  arguments:
+  - position: 1
+    name: "textEntry"
+    type: TextEntry
   returns:
     
 ---

@@ -13,7 +13,10 @@ lua:
   realm: shared
   description: "Update the player's client data."
   
-  
+  arguments:
+  - position: 1
+    name: "player"
+    type: Player
   returns:
     
 ---

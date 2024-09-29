@@ -14,10 +14,15 @@ lua:
   description: "Set the player's step sound cache."
   
   arguments:
-    - name: "index"
-      type: number
-    - name: "field"
-      type: string
+  - position: 1
+    name: "player"
+    type: Player
+  - position: 2
+    name: "index"
+    type: number
+  - position: 3
+    name: "field"
+    type: string
   returns:
     
 ---

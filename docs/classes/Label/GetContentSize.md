@@ -13,7 +13,10 @@ lua:
   realm: client
   description: "Gets the size of the content"
   
-  
+  arguments:
+  - position: 1
+    name: "label"
+    type: Label
   returns:
     - type: integer
       description: "The width of the content"

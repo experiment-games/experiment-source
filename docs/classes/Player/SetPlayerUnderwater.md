@@ -14,8 +14,12 @@ lua:
   description: "Set whether the player is underwater."
   
   arguments:
-    - name: "underwater"
-      type: boolean
+  - position: 1
+    name: "player"
+    type: Player
+  - position: 2
+    name: "underwater"
+    type: boolean
   returns:
     
 ---

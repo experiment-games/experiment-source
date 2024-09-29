@@ -14,10 +14,12 @@ lua:
   description: "Generate a random integer."
   
   arguments:
-    - name: "min"
-      type: number
-    - name: "max"
-      type: number
+  - position: 1
+    name: "min"
+    type: number
+  - position: 2
+    name: "max"
+    type: number
   returns:
     - type: integer
       description: "The generated random integer."

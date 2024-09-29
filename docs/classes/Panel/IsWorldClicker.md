@@ -13,7 +13,10 @@ lua:
   realm: client
   description: "Checks if the panel is a world clicker"
   
-  
+  arguments:
+  - position: 1
+    name: "panel"
+    type: Panel
   returns:
     - type: boolean
       description: "True if the panel is a world clicker, false otherwise"

@@ -13,7 +13,10 @@ lua:
   realm: client
   description: "Gets the value from the text entry as a float"
   
-  
+  arguments:
+  - position: 1
+    name: "textEntry"
+    type: TextEntry
   returns:
     - type: number
       description: "The value as a float"

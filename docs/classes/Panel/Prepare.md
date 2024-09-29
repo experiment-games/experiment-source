@@ -13,7 +13,10 @@ lua:
   realm: client
   description: "Prepares the panel"
   
-  
+  arguments:
+  - position: 1
+    name: "panel"
+    type: Panel
   returns:
     
 ---

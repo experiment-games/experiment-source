@@ -13,14 +13,17 @@ lua:
   realm: shared
   description: "Get a color from the keyvalues."
   
-  argumentSets:
-    - arguments:
+  arguments:
+  - position: 1
+    name: "keyValues"
+    type: KeyValuesHandle
+  - position: 2
+    types:
       - name: "key"
         type: number
-    - arguments:
       - name: "key"
         type: string
-        default: "0"
+    default: "0"
   returns:
     - type: Color
       description: "The value as a color."

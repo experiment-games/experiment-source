@@ -13,6 +13,7 @@ lua:
   realm: shared
   description: "Get all bots."
   
+  arguments:
   
   returns:
     - type: table

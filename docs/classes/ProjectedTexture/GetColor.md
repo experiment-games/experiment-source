@@ -13,7 +13,10 @@ lua:
   realm: client
   description: "Get the color of the projected texture."
   
-  
+  arguments:
+  - position: 1
+    name: "projectedTexture"
+    type: ProjectedTexture
   returns:
     - type: Color
       description: "The color of the projected texture."

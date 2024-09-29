@@ -14,8 +14,12 @@ lua:
   description: "Set the scale of the effect."
   
   arguments:
-    - name: "scale"
-      type: number
+  - position: 1
+    name: "effectData"
+    type: EffectData
+  - position: 2
+    name: "scale"
+    type: number
   returns:
     
 ---

@@ -14,10 +14,12 @@ lua:
   description: "Check if two teams are equal."
   
   arguments:
-    - name: "team 1"
-      type: string
-    - name: "team 2"
-      type: string
+  - position: 1
+    name: "team 1"
+    type: string
+  - position: 2
+    name: "team 2"
+    type: string
   returns:
     - type: boolean
       description: "Whether the teams are equal."

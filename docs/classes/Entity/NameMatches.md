@@ -14,8 +14,12 @@ lua:
   description: "Name matches."
   
   arguments:
-    - name: "name"
-      type: string
+  - position: 1
+    name: "entity"
+    type: Entity
+  - position: 2
+    name: "name"
+    type: string
   returns:
     - type: boolean
       description: "true if matches, false otherwise."

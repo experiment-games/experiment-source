@@ -14,14 +14,21 @@ lua:
   description: "Initializes the matrix."
   
   arguments:
-    - name: "Vector"
-      type: Vector
-    - name: "Vector"
-      type: Vector
-    - name: "Vector"
-      type: Vector
-    - name: "Vector"
-      type: Vector
+  - position: 1
+    name: "Matrix3x4"
+    type: Matrix3x4
+  - position: 2
+    name: "Vector"
+    type: Vector
+  - position: 3
+    name: "Vector"
+    type: Vector
+  - position: 4
+    name: "Vector"
+    type: Vector
+  - position: 5
+    name: "Vector"
+    type: Vector
   returns:
     
 ---

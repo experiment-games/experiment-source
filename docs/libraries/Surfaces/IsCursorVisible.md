@@ -13,6 +13,7 @@ lua:
   realm: client
   description: "Checks if the cursor is visible"
   
+  arguments:
   
   returns:
     - type: boolean

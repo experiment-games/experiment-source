@@ -13,7 +13,10 @@ lua:
   realm: client
   description: "Returns the button's foreground color"
   
-  
+  arguments:
+  - position: 1
+    name: "button"
+    type: Button
   returns:
     - type: Color
       description: "Returns the button's foreground color"

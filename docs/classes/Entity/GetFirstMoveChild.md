@@ -13,7 +13,10 @@ lua:
   realm: shared
   description: "Get first move child."
   
-  
+  arguments:
+  - position: 1
+    name: "entity"
+    type: Entity
   returns:
     - type: Entity
       description: "The first move child."

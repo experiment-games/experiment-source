@@ -14,8 +14,12 @@ lua:
   description: "Set the observer target for the player."
   
   arguments:
-    - name: "target"
-      type: Entity
+  - position: 1
+    name: "player"
+    type: Player
+  - position: 2
+    name: "target"
+    type: Entity
   returns:
     
 ---

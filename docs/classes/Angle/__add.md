@@ -14,8 +14,12 @@ lua:
   description: "Metatable that is called when the angle is to be added to another angle."
   
   arguments:
-    - name: "angle2"
-      type: Angle
+  - position: 1
+    name: "angle"
+    type: Angle
+  - position: 2
+    name: "angle2"
+    type: Angle
   returns:
     - type: Angle
       description: "The added angle."

@@ -14,8 +14,12 @@ lua:
   description: "Sets the font for the text entry"
   
   arguments:
-    - name: "font"
-      type: FontHandle
+  - position: 1
+    name: "textEntry"
+    type: TextEntry
+  - position: 2
+    name: "font"
+    type: FontHandle
   returns:
     
 ---

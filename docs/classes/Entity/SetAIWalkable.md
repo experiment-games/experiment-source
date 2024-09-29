@@ -14,8 +14,12 @@ lua:
   description: "Set AI walkable."
   
   arguments:
-    - name: "walkable"
-      type: boolean
+  - position: 1
+    name: "entity"
+    type: Entity
+  - position: 2
+    name: "walkable"
+    type: boolean
   returns:
     
 ---

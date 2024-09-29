@@ -14,9 +14,13 @@ lua:
   description: "Initialize physics object as static."
   
   arguments:
-    - name: "solidType"
-      type: integer
-      default: "SOLID_VPHYSICS"
+  - position: 1
+    name: "entity"
+    type: Entity
+  - position: 2
+    name: "solidType"
+    type: integer
+    default: "SOLID_VPHYSICS"
   returns:
     
 ---

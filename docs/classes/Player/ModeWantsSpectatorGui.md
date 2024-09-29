@@ -14,8 +14,12 @@ lua:
   description: "Check if the observer mode wants the spectator GUI for the player."
   
   arguments:
-    - name: "mode"
-      type: enumeration/OBSERVER_MODE
+  - position: 1
+    name: "player"
+    type: Player
+  - position: 2
+    name: "mode"
+    type: enumeration/OBSERVER_MODE
   returns:
     - type: boolean
       description: "Whether the observer mode wants the spectator GUI."

@@ -14,8 +14,12 @@ lua:
   description: "Get the player's weapon in a slot."
   
   arguments:
-    - name: "slot"
-      type: number
+  - position: 1
+    name: "player"
+    type: Player
+  - position: 2
+    name: "slot"
+    type: number
   returns:
     - type: Entity
       description: "The player's weapon in the slot."

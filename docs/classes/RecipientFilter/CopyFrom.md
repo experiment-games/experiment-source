@@ -13,7 +13,13 @@ lua:
   realm: shared
   description: "Copies from another filter"
   
-  
+  arguments:
+  - position: 1
+    name: "destFilter"
+    type: RecipientFilter
+  - position: 2
+    name: "srcFilter"
+    type: RecipientFilter
   returns:
     
 ---

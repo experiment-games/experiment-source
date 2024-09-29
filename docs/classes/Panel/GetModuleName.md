@@ -13,7 +13,10 @@ lua:
   realm: client
   description: "Gets the module name of the panel"
   
-  
+  arguments:
+  - position: 1
+    name: "panel"
+    type: Panel
   returns:
     - type: string
       description: "The module name of the panel"

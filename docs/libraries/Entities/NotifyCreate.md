@@ -14,8 +14,9 @@ lua:
   description: "Notifies the entity list that an entity was created"
   
   arguments:
-    - name: "entity"
-      type: Entity
+  - position: 1
+    name: "entity"
+    type: Entity
   returns:
     
 ---

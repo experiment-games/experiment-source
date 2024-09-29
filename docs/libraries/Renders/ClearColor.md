@@ -14,8 +14,9 @@ lua:
   description: "Clear the color."
   
   arguments:
-    - name: "color"
-      type: Color
+  - position: 1
+    name: "color"
+    type: Color
   returns:
     
 ---

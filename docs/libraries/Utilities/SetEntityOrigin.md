@@ -14,10 +14,12 @@ lua:
   description: "Set the origin for an entity"
   
   arguments:
-    - name: "entity"
-      type: Entity
-    - name: "origin"
-      type: Vector
+  - position: 1
+    name: "entity"
+    type: Entity
+  - position: 2
+    name: "origin"
+    type: Vector
   returns:
     
 ---

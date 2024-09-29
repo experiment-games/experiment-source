@@ -13,7 +13,10 @@ lua:
   realm: client
   description: "Get render origin."
   
-  
+  arguments:
+  - position: 1
+    name: "entity"
+    type: Entity
   returns:
     - type: Vector
       description: "Render origin."

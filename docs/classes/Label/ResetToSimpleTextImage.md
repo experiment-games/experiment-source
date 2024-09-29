@@ -13,7 +13,10 @@ lua:
   realm: client
   description: "Resets the label to a simple text image"
   
-  
+  arguments:
+  - position: 1
+    name: "label"
+    type: Label
   returns:
     
 ---

@@ -13,7 +13,10 @@ lua:
   realm: client
   description: "Handles the cursor exiting the panel"
   
-  
+  arguments:
+  - position: 1
+    name: "panel"
+    type: Panel
   returns:
     
 ---

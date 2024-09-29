@@ -14,16 +14,20 @@ lua:
   description: "Finds all entities in the given box. Note that clientPartitionMask is only available on the client."
   
   arguments:
-    - name: "mins"
-      type: Vector
-    - name: "maxs"
-      type: Vector
-    - name: "flagMask"
-      type: integer
-      default: "PARTITION_CLIENT_NON_STATIC_EDICTS"
-    - name: "clientPartitionMask"
-      type: integer
-      default: "PARTITION_CLIENT_NON_STATIC_EDICTS"
+  - position: 1
+    name: "mins"
+    type: Vector
+  - position: 2
+    name: "maxs"
+    type: Vector
+  - position: 3
+    name: "flagMask"
+    type: integer
+    default: "PARTITION_CLIENT_NON_STATIC_EDICTS"
+  - position: 4
+    name: "clientPartitionMask"
+    type: integer
+    default: "PARTITION_CLIENT_NON_STATIC_EDICTS"
   returns:
     - type: table
       description: "A table of entities found."

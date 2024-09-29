@@ -13,6 +13,7 @@ lua:
   realm: server
   description: "Whether the command was issued by a server admin"
   
+  arguments:
   
   returns:
     - type: boolean

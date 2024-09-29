@@ -13,7 +13,10 @@ lua:
   realm: shared
   description: "Set the player's lag compensation. On the client this does nothing."
   
-  
+  arguments:
+  - position: 1
+    name: "player"
+    type: Player
   returns:
     
 ---

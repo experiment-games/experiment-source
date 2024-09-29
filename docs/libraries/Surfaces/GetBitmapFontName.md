@@ -14,8 +14,9 @@ lua:
   description: "Gets the bitmap font name"
   
   arguments:
-    - name: "fontName"
-      type: string
+  - position: 1
+    name: "fontName"
+    type: string
   returns:
     - type: string
       description: "The bitmap font name"

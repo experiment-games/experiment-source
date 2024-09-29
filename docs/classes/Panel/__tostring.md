@@ -13,7 +13,10 @@ lua:
   realm: client
   description: "Metamethod called when the Panel object is converted to a string"
   
-  
+  arguments:
+  - position: 1
+    name: "panel"
+    type: Panel
   returns:
     - type: string
       description: "The string representation of the Panel object"

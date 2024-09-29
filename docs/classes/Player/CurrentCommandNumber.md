@@ -13,7 +13,10 @@ lua:
   realm: shared
   description: "Get the current command number."
   
-  
+  arguments:
+  - position: 1
+    name: "player"
+    type: Player
   returns:
     
 ---

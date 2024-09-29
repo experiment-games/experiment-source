@@ -13,7 +13,10 @@ lua:
   realm: client
   description: "Whether the player's player model will be drawn."
   
-  
+  arguments:
+  - position: 1
+    name: "player"
+    type: Player
   returns:
     - type: boolean
       description: "True if the player's player model will be drawn."

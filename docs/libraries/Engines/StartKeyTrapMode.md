@@ -13,6 +13,7 @@ lua:
   realm: client
   description: "Start trapping a key."
   
+  arguments:
   
   returns:
     

@@ -13,7 +13,10 @@ lua:
   realm: server
   description: "Returns the time since the last received packet."
   
-  
+  arguments:
+  - position: 1
+    name: "netChannel"
+    type: NetChannelInfo
   returns:
     - type: number
       description: "The time since the last received packet."

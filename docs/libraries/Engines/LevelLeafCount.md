@@ -13,6 +13,7 @@ lua:
   realm: client
   description: "Get the level leaf count."
   
+  arguments:
   
   returns:
     - type: integer

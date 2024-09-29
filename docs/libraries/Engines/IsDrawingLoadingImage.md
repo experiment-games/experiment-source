@@ -13,6 +13,7 @@ lua:
   realm: client
   description: "Check if the client is drawing a loading image."
   
+  arguments:
   
   returns:
     - type: boolean

@@ -14,8 +14,9 @@ lua:
   description: "Get the size of a game lump."
   
   arguments:
-    - name: "lumpId"
-      type: number
+  - position: 1
+    name: "lumpId"
+    type: number
   returns:
     - type: integer
       description: "The size of the game lump."

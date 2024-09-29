@@ -13,7 +13,10 @@ lua:
   realm: shared
   description: "Metamethod that is called when converting entity to string"
   
-  
+  arguments:
+  - position: 1
+    name: "entity"
+    type: Entity
   returns:
     - type: string
       description: "String representation of entity"

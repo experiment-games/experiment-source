@@ -13,6 +13,7 @@ lua:
   realm: client
   description: "Get the screen aspect ratio."
   
+  arguments:
   
   returns:
     - type: number

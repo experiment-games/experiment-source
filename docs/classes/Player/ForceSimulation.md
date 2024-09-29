@@ -13,7 +13,10 @@ lua:
   realm: server
   description: "Force the player to simulate."
   
-  
+  arguments:
+  - position: 1
+    name: "player"
+    type: Player
   returns:
     
 ---

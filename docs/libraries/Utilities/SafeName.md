@@ -14,8 +14,9 @@ lua:
   description: "Get a safe name for the provided string"
   
   arguments:
-    - name: "name"
-      type: string
+  - position: 1
+    name: "name"
+    type: string
   returns:
     - type: string
       description: "Safe name."

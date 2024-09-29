@@ -14,10 +14,12 @@ lua:
   description: "Set's the depth range of the upcoming render."
   
   arguments:
-    - name: "depthMin"
-      type: number
-    - name: "depthMax"
-      type: number
+  - position: 1
+    name: "depthMin"
+    type: number
+  - position: 2
+    name: "depthMax"
+    type: number
   returns:
     
 ---

@@ -13,7 +13,10 @@ lua:
   realm: shared
   description: "Gets the mouse wheel delta"
   
-  
+  arguments:
+  - position: 1
+    name: "userCmd"
+    type: UserCommand
   returns:
     - type: integer
       description: "The mouse wheel delta"

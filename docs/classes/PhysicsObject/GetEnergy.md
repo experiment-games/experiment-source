@@ -13,7 +13,10 @@ lua:
   realm: shared
   description: "Gets energy"
   
-  
+  arguments:
+  - position: 1
+    name: "physicsObject"
+    type: PhysicsObject
   returns:
     - type: number
       description: "The energy."

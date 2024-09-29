@@ -14,8 +14,12 @@ lua:
   description: "Set the radius of the effect."
   
   arguments:
-    - name: "radius"
-      type: number
+  - position: 1
+    name: "effectData"
+    type: EffectData
+  - position: 2
+    name: "radius"
+    type: number
   returns:
     
 ---

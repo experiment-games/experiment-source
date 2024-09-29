@@ -18,12 +18,12 @@ Most information about functions are specified in a page's metadata. This metada
 is placed at the top of the markdown file and is used to generate the page into the
 specified template.
 
-Take the following example taken from [Entity:GetAttachment](../classes/Entity/GetAttachment.md):
+Take the following example taken from [Vectors.Create](../libraries/Vectors/Create.md):
 
 ```yaml
 ---
-template: lua-class-function.html
-title: GetAttachment
+template: lua-library-function.html
+title: Create
 icon: lua-shared
 tags:
   - lua
@@ -31,20 +31,32 @@ tags:
   - needs-verification
   - needs-example
 lua:
-  library: Entity
-  function: GetAttachment
+  library: Vectors
+  function: Create
   realm: shared
-  description: "Get the attachment table for the specified attachment (by bone id or attachment name)"
-  argumentSets:
-    - arguments:
-      - name: "boneId"
-        type: number
-    - arguments:
-      - name: "attachmentName"
+  description: "Creates a new vector."
+
+  arguments:
+  - position: 1
+    types:
+      - name: "vector"
+        type: Vector
+      - name: "vectorString"
         type: string
+      - name: "x"
+        type: number
+    default: "0.0f"
+  - position: 2
+    name: "y"
+    type: number
+    default: "0.0f"
+  - position: 3
+    name: "z"
+    type: number
+    default: "0.0f"
   returns:
-    - type: table
-      description: "The attachment information"
+    - type: Vector
+      description: "The created vector."
 ---
 ```
 

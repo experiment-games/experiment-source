@@ -13,7 +13,10 @@ lua:
   realm: server
   description: "Returns the name of the remote connection."
   
-  
+  arguments:
+  - position: 1
+    name: "netChannel"
+    type: NetChannelInfo
   returns:
     - type: string
       description: "The name of the remote connection."

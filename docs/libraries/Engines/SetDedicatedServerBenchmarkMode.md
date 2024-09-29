@@ -14,8 +14,9 @@ lua:
   description: "Set the dedicated server benchmark mode."
   
   arguments:
-    - name: "enabled"
-      type: boolean
+  - position: 1
+    name: "enabled"
+    type: boolean
   returns:
     
 ---

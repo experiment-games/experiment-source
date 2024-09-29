@@ -14,9 +14,13 @@ lua:
   description: "Get the player's view model."
   
   arguments:
-    - name: "viewModelIndex"
-      type: number
-      default: "0"
+  - position: 1
+    name: "player"
+    type: Player
+  - position: 2
+    name: "viewModelIndex"
+    type: number
+    default: "0"
   returns:
     - type: Entity
       description: "The player's view model."

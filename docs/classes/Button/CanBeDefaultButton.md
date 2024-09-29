@@ -13,7 +13,10 @@ lua:
   realm: client
   description: "Returns whether the button can be the default button"
   
-  
+  arguments:
+  - position: 1
+    name: "button"
+    type: Button
   returns:
     - type: boolean
       description: "Returns whether the button can be the default button"

@@ -14,8 +14,9 @@ lua:
   description: "Disables clipping"
   
   arguments:
-    - name: "shouldDisable"
-      type: boolean
+  - position: 1
+    name: "shouldDisable"
+    type: boolean
   returns:
     - type: boolean
       description: "The previous clipping state"

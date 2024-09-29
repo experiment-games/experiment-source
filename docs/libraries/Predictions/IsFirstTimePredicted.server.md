@@ -13,6 +13,7 @@ lua:
   realm: server
   description: "Always returns true on the server. TODO: what should it do?"
   
+  arguments:
   
   returns:
     - type: boolean

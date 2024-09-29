@@ -14,8 +14,12 @@ lua:
   description: "Metamethod called when a new field is added"
   
   arguments:
-    - name: "field"
-      type: string
+  - position: 1
+    name: "textEntry"
+    type: TextEntry
+  - position: 2
+    name: "field"
+    type: string
   returns:
     
 ---

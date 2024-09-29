@@ -14,12 +14,15 @@ lua:
   description: "Unzip a file."
   
   arguments:
-    - name: "source"
-      type: string
-    - name: "destination"
-      type: string
-    - name: "pathId"
-      type: string
+  - position: 1
+    name: "source"
+    type: string
+  - position: 2
+    name: "destination"
+    type: string
+  - position: 3
+    name: "pathId"
+    type: string
   returns:
     - type: boolean
       description: "true if the file was unzipped, false otherwise."

@@ -13,7 +13,10 @@ lua:
   realm: shared
   description: "Get the life state."
   
-  
+  arguments:
+  - position: 1
+    name: "entity"
+    type: Entity
   returns:
     - type: enumeration/LIFE
       description: "The life state."

@@ -13,7 +13,10 @@ lua:
   realm: shared
   description: "Gets the final ideal velocity"
   
-  
+  arguments:
+  - position: 1
+    name: "moveData"
+    type: MoveData
   returns:
     - type: Vector
       description: "The final ideal velocity"

@@ -14,14 +14,21 @@ lua:
   description: "Called when the entity accepted input"
   
   arguments:
-    - name: "input"
-      type: string
-    - name: "activator"
-      type: Entity
-    - name: "caller"
-      type: Entity
-    - name: "outputID"
-      type: number
+  - position: 1
+    name: "entity"
+    type: Entity
+  - position: 2
+    name: "input"
+    type: string
+  - position: 3
+    name: "activator"
+    type: Entity
+  - position: 4
+    name: "caller"
+    type: Entity
+  - position: 5
+    name: "outputID"
+    type: number
   returns:
     - type: boolean
       description: "true if accepted, false otherwise."

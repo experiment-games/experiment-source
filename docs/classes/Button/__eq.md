@@ -13,7 +13,13 @@ lua:
   realm: client
   description: "Metamethod that is called when two buttons are compared"
   
-  
+  arguments:
+  - position: 1
+    name: "label"
+    type: Button
+  - position: 2
+    name: "other"
+    type: Button
   returns:
     - type: boolean
       description: "Whether the labels are equal"

@@ -13,23 +13,24 @@ lua:
   realm: shared
   description: "Creates a new vector."
   
-  argumentSets:
-    - arguments:
+  arguments:
+  - position: 1
+    types:
       - name: "vector"
         type: Vector
-    - arguments:
       - name: "vectorString"
         type: string
-    - arguments:
       - name: "x"
         type: number
-        default: "0.0f"
-      - name: "y"
-        type: number
-        default: "0.0f"
-      - name: "z"
-        type: number
-        default: "0.0f"
+    default: "0.0f"
+  - position: 2
+    name: "y"
+    type: number
+    default: "0.0f"
+  - position: 3
+    name: "z"
+    type: number
+    default: "0.0f"
   returns:
     - type: Vector
       description: "The created vector."

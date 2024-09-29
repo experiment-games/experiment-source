@@ -14,8 +14,12 @@ lua:
   description: "Passes damage filter."
   
   arguments:
-    - name: "damageInfo"
-      type: DamageInfo
+  - position: 1
+    name: "entity"
+    type: Entity
+  - position: 2
+    name: "damageInfo"
+    type: DamageInfo
   returns:
     - type: boolean
       description: "true if passes, false otherwise."

@@ -13,7 +13,10 @@ lua:
   realm: server
   description: "Extinguish the entity."
   
-  
+  arguments:
+  - position: 1
+    name: "entity"
+    type: Entity
   returns:
     
 ---

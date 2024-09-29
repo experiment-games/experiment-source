@@ -14,11 +14,16 @@ lua:
   description: "Returns the font for the specified font name."
   
   arguments:
-    - name: "fontName"
-      type: string
-    - name: "proportional"
-      type: boolean
-      default: "false"
+  - position: 1
+    name: "scheme"
+    type: Scheme
+  - position: 2
+    name: "fontName"
+    type: string
+  - position: 3
+    name: "proportional"
+    type: boolean
+    default: "false"
   returns:
     - type: font
       description: "The font for the specified font name."

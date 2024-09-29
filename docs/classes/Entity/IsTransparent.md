@@ -13,7 +13,10 @@ lua:
   realm: shared
   description: "Is transparent."
   
-  
+  arguments:
+  - position: 1
+    name: "entity"
+    type: Entity
   returns:
     - type: boolean
       description: "True if transparent, false otherwise."

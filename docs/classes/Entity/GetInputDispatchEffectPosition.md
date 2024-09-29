@@ -14,8 +14,12 @@ lua:
   description: "Get input dispatch effect position."
   
   arguments:
-    - name: "input"
-      type: string
+  - position: 1
+    name: "entity"
+    type: Entity
+  - position: 2
+    name: "input"
+    type: string
   returns:
     - type: vector, angle
       description: "The position and angles"

@@ -14,8 +14,12 @@ lua:
   description: "Set move collide."
   
   arguments:
-    - name: "collide"
-      type: enumeration/MOVE_COLLIDE
+  - position: 1
+    name: "entity"
+    type: Entity
+  - position: 2
+    name: "collide"
+    type: enumeration/MOVE_COLLIDE
   returns:
     
 ---

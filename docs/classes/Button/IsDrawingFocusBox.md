@@ -13,7 +13,10 @@ lua:
   realm: client
   description: "Returns whether the button is drawing the focus box"
   
-  
+  arguments:
+  - position: 1
+    name: "button"
+    type: Button
   returns:
     - type: boolean
       description: "Returns whether the button is drawing the focus box"

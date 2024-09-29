@@ -14,8 +14,12 @@ lua:
   description: "Returns the min and max values for the target flex controller"
   
   arguments:
-    - name: "flexControllerIndex"
-      type: number
+  - position: 1
+    name: "entity"
+    type: Entity
+  - position: 2
+    name: "flexControllerIndex"
+    type: number
   returns:
     - type: number
       description: "The min value"

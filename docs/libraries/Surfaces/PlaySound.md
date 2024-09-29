@@ -14,8 +14,9 @@ lua:
   description: "Plays a sound"
   
   arguments:
-    - name: "sound"
-      type: string
+  - position: 1
+    name: "sound"
+    type: string
   returns:
     
 ---

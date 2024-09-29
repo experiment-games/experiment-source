@@ -11,14 +11,17 @@ lua:
   library: Entity
   function: GetBodyGroups
   realm: shared
-  description: "Get the bodygroup values as a string of hexadecimal values. Each hexadecimal character represents the bodygroup at its index, e.g: 0a00001 means bodygroup 1 is 10(a) and bodygroup 6 is 1, the rest are 0"
+  description: "Get the bodygroup values as a table"
   
-  
+  arguments:
+  - position: 1
+    name: "entity"
+    type: Entity
   returns:
-    - type: string
-      description: "The bodygroup values as a string of hexadecimal values"
+    - type: table
+      description: "The bodygroup values"
 ---
 
 <div class="lua__search__keywords">
-Entity:GetBodyGroups &#x2013; Get the bodygroup values as a string of hexadecimal values. Each hexadecimal character represents the bodygroup at its index, e.g: 0a00001 means bodygroup 1 is 10(a) and bodygroup 6 is 1, the rest are 0
+Entity:GetBodyGroups &#x2013; Get the bodygroup values as a table
 </div>

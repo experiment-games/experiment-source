@@ -14,8 +14,9 @@ lua:
   description: "Add a grid overlay to the screen."
   
   arguments:
-    - name: "origin"
-      type: Vector
+  - position: 1
+    name: "origin"
+    type: Vector
   returns:
     
 ---

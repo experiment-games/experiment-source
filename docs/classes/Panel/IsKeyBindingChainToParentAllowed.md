@@ -13,7 +13,10 @@ lua:
   realm: client
   description: "Checks if the key binding chain to parent is allowed"
   
-  
+  arguments:
+  - position: 1
+    name: "panel"
+    type: Panel
   returns:
     - type: boolean
       description: "True if the key binding chain to parent is allowed, false otherwise"

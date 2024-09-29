@@ -14,16 +14,21 @@ lua:
   description: "Set the scissor rectangle."
   
   arguments:
-    - name: "left"
-      type: number
-    - name: "top"
-      type: number
-    - name: "right"
-      type: number
-    - name: "bottom"
-      type: number
-    - name: "enableScissor"
-      type: boolean
+  - position: 1
+    name: "left"
+    type: number
+  - position: 2
+    name: "top"
+    type: number
+  - position: 3
+    name: "right"
+    type: number
+  - position: 4
+    name: "bottom"
+    type: number
+  - position: 5
+    name: "enableScissor"
+    type: boolean
   returns:
     
 ---

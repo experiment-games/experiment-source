@@ -13,7 +13,13 @@ lua:
   realm: client
   description: "Sets the button activation type"
   
-  
+  arguments:
+  - position: 1
+    name: "button"
+    type: Button
+  - position: 2
+    name: "activationType"
+    type: enumeration/ACTIVATION_TYPE
   returns:
     
 ---

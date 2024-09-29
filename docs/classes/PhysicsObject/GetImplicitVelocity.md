@@ -13,7 +13,10 @@ lua:
   realm: shared
   description: "Gets implicit velocity and angular velocity"
   
-  
+  arguments:
+  - position: 1
+    name: "physicsObject"
+    type: PhysicsObject
   returns:
     - type: Vector
       description: "The implicit velocity."

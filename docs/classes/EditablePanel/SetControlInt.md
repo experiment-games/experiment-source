@@ -13,7 +13,16 @@ lua:
   realm: client
   description: "Sets an integer value for a control"
   
-  
+  arguments:
+  - position: 1
+    name: "editablePanel"
+    type: EditablePanel
+  - position: 2
+    name: "control"
+    type: string
+  - position: 3
+    name: "value"
+    type: number
   returns:
     
 ---

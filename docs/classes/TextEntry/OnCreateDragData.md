@@ -14,8 +14,12 @@ lua:
   description: "Creates drag data for the text entry"
   
   arguments:
-    - name: "dragData"
-      type: KeyValuesHandle
+  - position: 1
+    name: "textEntry"
+    type: TextEntry
+  - position: 2
+    name: "dragData"
+    type: KeyValuesHandle
   returns:
     
 ---

@@ -13,7 +13,10 @@ lua:
   realm: server
   description: "Check if the player is a fake client."
   
-  
+  arguments:
+  - position: 1
+    name: "player"
+    type: Player
   returns:
     - type: boolean
       description: "Whether the player is a fake client."

@@ -13,7 +13,13 @@ lua:
   realm: shared
   description: "Check if the player should select a weapon."
   
-  
+  arguments:
+  - position: 1
+    name: "player"
+    type: Player
+  - position: 2
+    name: "weapon"
+    type: Weapon
   returns:
     - type: boolean
       description: "Whether the player should select the weapon."

@@ -13,7 +13,10 @@ lua:
   realm: shared
   description: "Adds all players to the filter"
   
-  
+  arguments:
+  - position: 1
+    name: "filter"
+    type: RecipientFilter
   returns:
     
 ---

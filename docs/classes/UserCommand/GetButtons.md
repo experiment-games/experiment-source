@@ -13,7 +13,10 @@ lua:
   realm: shared
   description: "Gets the button states"
   
-  
+  arguments:
+  - position: 1
+    name: "userCmd"
+    type: UserCommand
   returns:
     - type: integer
       description: "The button states"

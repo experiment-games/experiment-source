@@ -14,8 +14,12 @@ lua:
   description: "Set prediction eligible."
   
   arguments:
-    - name: "canPredict"
-      type: boolean
+  - position: 1
+    name: "entity"
+    type: Entity
+  - position: 2
+    name: "canPredict"
+    type: boolean
   returns:
     
 ---

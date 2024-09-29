@@ -14,12 +14,18 @@ lua:
   description: "Paints the text with specified colors"
   
   arguments:
-    - name: "color1"
-      type: Color
-    - name: "color2"
-      type: Color
-    - name: "color3"
-      type: Color
+  - position: 1
+    name: "textEntry"
+    type: TextEntry
+  - position: 2
+    name: "color1"
+    type: Color
+  - position: 3
+    name: "color2"
+    type: Color
+  - position: 4
+    name: "color3"
+    type: Color
   returns:
     
 ---

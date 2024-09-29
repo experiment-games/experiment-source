@@ -14,8 +14,12 @@ lua:
   description: "Sets the old buttons"
   
   arguments:
-    - name: "buttons"
-      type: number
+  - position: 1
+    name: "moveData"
+    type: MoveData
+  - position: 2
+    name: "buttons"
+    type: number
   returns:
     
 ---

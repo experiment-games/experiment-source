@@ -14,8 +14,12 @@ lua:
   description: "Set the player's lag compensation."
   
   arguments:
-    - name: "lagCompensation"
-      type: boolean
+  - position: 1
+    name: "player"
+    type: Player
+  - position: 2
+    name: "lagCompensation"
+    type: boolean
   returns:
     
 ---

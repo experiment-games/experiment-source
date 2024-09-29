@@ -13,7 +13,10 @@ lua:
   realm: shared
   description: "Get the moveparent."
   
-  
+  arguments:
+  - position: 1
+    name: "entity"
+    type: Entity
   returns:
     - type: Entity
       description: "The moveparent."

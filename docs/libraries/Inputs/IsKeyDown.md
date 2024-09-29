@@ -14,8 +14,9 @@ lua:
   description: "Check if a specific key is down."
   
   arguments:
-    - name: "keyCode"
-      type: enumeration/BUTTON
+  - position: 1
+    name: "keyCode"
+    type: enumeration/BUTTON
   returns:
     - type: boolean
       description: "Whether the key is down."

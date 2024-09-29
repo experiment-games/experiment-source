@@ -14,8 +14,12 @@ lua:
   description: "Set ground entity."
   
   arguments:
-    - name: "ground"
-      type: Entity
+  - position: 1
+    name: "entity"
+    type: Entity
+  - position: 2
+    name: "ground"
+    type: Entity
   returns:
     
 ---

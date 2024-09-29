@@ -13,7 +13,13 @@ lua:
   realm: shared
   description: "Gets the property name"
   
-  
+  arguments:
+  - position: 1
+    name: "physprops"
+    type: PhysicsSurfacePropertiesHandle
+  - position: 2
+    name: "surfaceDataIndex"
+    type: number
   returns:
     - type: string
       description: "The property name."

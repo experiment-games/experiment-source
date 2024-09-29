@@ -14,8 +14,9 @@ lua:
   description: "Set the blobby cutoff area for shadows."
   
   arguments:
-    - name: "area"
-      type: number
+  - position: 1
+    name: "area"
+    type: number
   returns:
     
 ---

@@ -13,7 +13,10 @@ lua:
   realm: shared
   description: "Get the player's eye position and vectors."
   
-  
+  arguments:
+  - position: 1
+    name: "player"
+    type: Player
   returns:
     - type: Vector
       description: "The player's eye position."

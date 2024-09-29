@@ -14,8 +14,12 @@ lua:
   description: "Head target."
   
   arguments:
-    - name: "position"
-      type: Vector
+  - position: 1
+    name: "entity"
+    type: Entity
+  - position: 2
+    name: "position"
+    type: Vector
   returns:
     - type: Vector
       description: "The head target"

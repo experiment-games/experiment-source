@@ -14,20 +14,30 @@ lua:
   description: "Add a box overlay to the screen with specific colors."
   
   arguments:
-    - name: "start"
-      type: Vector
-    - name: "mins"
-      type: Vector
-    - name: "maxs"
-      type: Vector
-    - name: "angles"
-      type: Angle
-    - name: "duration"
-      type: number
-      default: "1"
-    - name: "edgeColor"
-      type: Color
-      default: "faceColor"
+  - position: 1
+    name: "start"
+    type: Vector
+  - position: 2
+    name: "mins"
+    type: Vector
+  - position: 3
+    name: "maxs"
+    type: Vector
+  - position: 4
+    name: "angles"
+    type: Angle
+  - position: 5
+    name: "duration"
+    type: number
+    default: "1"
+  - position: 6
+    name: "faceColor"
+    type: Color
+    default: "color_white"
+  - position: 7
+    name: "edgeColor"
+    type: Color
+    default: "faceColor"
   returns:
     
 ---

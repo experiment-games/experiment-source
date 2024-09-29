@@ -14,10 +14,12 @@ lua:
   description: "Set the position of the candidate window."
   
   arguments:
-    - name: "x"
-      type: number
-    - name: "y"
-      type: number
+  - position: 1
+    name: "x"
+    type: number
+  - position: 2
+    name: "y"
+    type: number
   returns:
     
 ---

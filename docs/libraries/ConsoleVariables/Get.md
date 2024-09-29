@@ -14,8 +14,9 @@ lua:
   description: "Gets a console variable"
   
   arguments:
-    - name: "name"
-      type: string
+  - position: 1
+    name: "name"
+    type: string
   returns:
     - type: ConsoleVariable
       description: "The ConsoleVariable found"

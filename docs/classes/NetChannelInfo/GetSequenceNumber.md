@@ -14,8 +14,12 @@ lua:
   description: "Returns the sequence number for the specified flow."
   
   arguments:
-    - name: "flow"
-      type: number
+  - position: 1
+    name: "netChannel"
+    type: NetChannelInfo
+  - position: 2
+    name: "flow"
+    type: number
   returns:
     - type: integer
       description: "The sequence number for the specified flow."

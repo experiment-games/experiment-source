@@ -13,6 +13,7 @@ lua:
   realm: shared
   description: "Get the game directory."
   
+  arguments:
   
   returns:
     - type: string

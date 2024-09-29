@@ -13,6 +13,7 @@ lua:
   realm: server
   description: "Ends a user message."
   
+  arguments:
   
   returns:
     

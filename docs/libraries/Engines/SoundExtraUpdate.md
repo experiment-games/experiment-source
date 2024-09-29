@@ -13,6 +13,7 @@ lua:
   realm: client
   description: "Update sound."
   
+  arguments:
   
   returns:
     

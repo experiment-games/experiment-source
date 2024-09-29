@@ -14,8 +14,12 @@ lua:
   description: "Scales the matrix."
   
   arguments:
-    - name: "vector"
-      type: Vector
+  - position: 1
+    name: "Matrix"
+    type: Matrix
+  - position: 2
+    name: "vector"
+    type: Vector
   returns:
     - type: Matrix
       description: "The scaled matrix."

@@ -14,8 +14,9 @@ lua:
   description: "Get a player by name."
   
   arguments:
-    - name: "name"
-      type: string
+  - position: 1
+    name: "name"
+    type: string
   returns:
     - type: Player
       description: "The player."

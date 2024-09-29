@@ -14,8 +14,9 @@ lua:
   description: "Set the direction of shadows as a vector."
   
   arguments:
-    - name: "direction"
-      type: Vector
+  - position: 1
+    name: "direction"
+    type: Vector
   returns:
     
 ---

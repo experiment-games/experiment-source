@@ -13,7 +13,10 @@ lua:
   realm: shared
   description: "Gets the default value of the ConsoleVariable"
   
-  
+  arguments:
+  - position: 1
+    name: "consoleVariable"
+    type: ConsoleVariable
   returns:
     - type: string
       description: "Gets the default value of the ConsoleVariable"

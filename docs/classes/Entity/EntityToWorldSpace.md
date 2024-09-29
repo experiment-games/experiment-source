@@ -14,8 +14,12 @@ lua:
   description: "Entity to world space."
   
   arguments:
-    - name: "local"
-      type: Vector
+  - position: 1
+    name: "entity"
+    type: Entity
+  - position: 2
+    name: "local"
+    type: Vector
   returns:
     - type: Vector
       description: "The world space vector."

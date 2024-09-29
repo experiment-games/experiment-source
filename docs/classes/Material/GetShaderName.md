@@ -13,7 +13,10 @@ lua:
   realm: shared
   description: "Get shader name."
   
-  
+  arguments:
+  - position: 1
+    name: "material"
+    type: Material
   returns:
     - type: string
       description: "Shader name."

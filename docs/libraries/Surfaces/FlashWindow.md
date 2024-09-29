@@ -14,10 +14,12 @@ lua:
   description: "Flashes the window"
   
   arguments:
-    - name: "panel"
-      type: Panel
-    - name: "flash"
-      type: boolean
+  - position: 1
+    name: "panel"
+    type: Panel
+  - position: 2
+    name: "flash"
+    type: boolean
   returns:
     
 ---

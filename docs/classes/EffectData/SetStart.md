@@ -14,8 +14,12 @@ lua:
   description: "Set the start position of the effect."
   
   arguments:
-    - name: "start"
-      type: Vector
+  - position: 1
+    name: "effectData"
+    type: EffectData
+  - position: 2
+    name: "start"
+    type: Vector
   returns:
     
 ---

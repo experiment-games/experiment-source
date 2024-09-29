@@ -13,7 +13,10 @@ lua:
   realm: client
   description: "Gets the background color of the panel"
   
-  
+  arguments:
+  - position: 1
+    name: "panel"
+    type: Panel
   returns:
     - type: Color
       description: "The background color of the panel"

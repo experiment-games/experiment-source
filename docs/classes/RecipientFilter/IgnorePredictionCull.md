@@ -13,7 +13,10 @@ lua:
   realm: shared
   description: "Checks if prediction culling is ignored"
   
-  
+  arguments:
+  - position: 1
+    name: "filter"
+    type: RecipientFilter
   returns:
     
 ---

@@ -13,7 +13,10 @@ lua:
   realm: client
   description: "Checks if the cursor is over the panel"
   
-  
+  arguments:
+  - position: 1
+    name: "panel"
+    type: Panel
   returns:
     - type: boolean
       description: "True if the cursor is over the panel, false otherwise"

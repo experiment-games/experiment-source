@@ -14,8 +14,12 @@ lua:
   description: "Sets whether only numeric input is allowed"
   
   arguments:
-    - name: "allow"
-      type: boolean
+  - position: 1
+    name: "textEntry"
+    type: TextEntry
+  - position: 2
+    name: "allow"
+    type: boolean
   returns:
     
 ---

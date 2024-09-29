@@ -14,10 +14,12 @@ lua:
   description: "Say text to a player."
   
   arguments:
-    - name: "text"
-      type: string
-    - name: "player"
-      type: Player
+  - position: 1
+    name: "player"
+    type: Player
+  - position: 2
+    name: "text"
+    type: string
   returns:
     
 ---

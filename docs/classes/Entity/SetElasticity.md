@@ -14,8 +14,12 @@ lua:
   description: "Set elasticity."
   
   arguments:
-    - name: "elasticity"
-      type: number
+  - position: 1
+    name: "entity"
+    type: Entity
+  - position: 2
+    name: "elasticity"
+    type: number
   returns:
     
 ---

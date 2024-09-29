@@ -13,7 +13,10 @@ lua:
   realm: shared
   description: "Checks if the texture is mipmapped."
   
-  
+  arguments:
+  - position: 1
+    name: "texture"
+    type: Texture
   returns:
     - type: boolean
       description: "true if the texture is mipmapped, false otherwise."

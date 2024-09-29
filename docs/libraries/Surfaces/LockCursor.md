@@ -13,6 +13,7 @@ lua:
   realm: client
   description: "Locks the cursor"
   
+  arguments:
   
   returns:
     

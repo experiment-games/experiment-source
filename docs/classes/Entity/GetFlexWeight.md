@@ -14,8 +14,12 @@ lua:
   description: "Get flex weight."
   
   arguments:
-    - name: "flexId"
-      type: number
+  - position: 1
+    name: "entity"
+    type: Entity
+  - position: 2
+    name: "flexId"
+    type: number
   returns:
     - type: number
       description: "Flex weight."

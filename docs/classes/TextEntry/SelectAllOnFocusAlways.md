@@ -14,8 +14,12 @@ lua:
   description: "Sets whether to always select all text on focus"
   
   arguments:
-    - name: "selectAll"
-      type: boolean
+  - position: 1
+    name: "textEntry"
+    type: TextEntry
+  - position: 2
+    name: "selectAll"
+    type: boolean
   returns:
     
 ---

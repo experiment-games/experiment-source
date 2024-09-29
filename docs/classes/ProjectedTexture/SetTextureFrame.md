@@ -14,8 +14,12 @@ lua:
   description: "For animated textures, this will choose which frame in the animation will be projected."
   
   arguments:
-    - name: "frame"
-      type: integer
+  - position: 1
+    name: "projectedTexture"
+    type: ProjectedTexture
+  - position: 2
+    name: "frame"
+    type: integer
   returns:
     
 ---

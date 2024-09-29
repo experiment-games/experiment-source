@@ -14,8 +14,9 @@ lua:
   description: "Handle IME composition."
   
   arguments:
-    - name: "composition"
-      type: number
+  - position: 1
+    name: "composition"
+    type: number
   returns:
     
 ---

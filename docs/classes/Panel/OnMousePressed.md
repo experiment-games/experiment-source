@@ -14,8 +14,12 @@ lua:
   description: "Handles the mouse being pressed"
   
   arguments:
-    - name: "code"
-      type: enumeration/BUTTON
+  - position: 1
+    name: "panel"
+    type: Panel
+  - position: 2
+    name: "code"
+    type: enumeration/BUTTON
   returns:
     
 ---

@@ -14,15 +14,19 @@ lua:
   description: "Guesses the damage force"
   
   arguments:
-    - name: "damageInfo"
-      type: DamageInfo
-    - name: "damageDirection"
-      type: Vector
-    - name: "damagePosition"
-      type: Vector
-    - name: "scale"
-      type: number
-      default: "1.0"
+  - position: 1
+    name: "damageInfo"
+    type: DamageInfo
+  - position: 2
+    name: "damageDirection"
+    type: Vector
+  - position: 3
+    name: "damagePosition"
+    type: Vector
+  - position: 4
+    name: "scale"
+    type: number
+    default: "1.0"
   returns:
     
 ---

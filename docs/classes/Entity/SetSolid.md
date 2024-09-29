@@ -14,8 +14,12 @@ lua:
   description: "Set solid type."
   
   arguments:
-    - name: "type"
-      type: enumeration/SOLID
+  - position: 1
+    name: "entity"
+    type: Entity
+  - position: 2
+    name: "type"
+    type: enumeration/SOLID
   returns:
     
 ---

@@ -13,6 +13,7 @@ lua:
   realm: server
   description: "Gets the number of edicts"
   
+  arguments:
   
   returns:
     - type: integer

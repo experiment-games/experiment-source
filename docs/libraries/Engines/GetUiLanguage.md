@@ -13,6 +13,7 @@ lua:
   realm: client
   description: "Get the UI language."
   
+  arguments:
   
   returns:
     - type: string

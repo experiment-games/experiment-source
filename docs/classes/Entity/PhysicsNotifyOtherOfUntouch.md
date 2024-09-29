@@ -15,10 +15,12 @@ lua:
   
   static: true
   arguments:
-    - name: "other"
-      type: Entity
-    - name: "ground"
-      type: Entity
+  - position: 1
+    name: "other"
+    type: Entity
+  - position: 2
+    name: "ground"
+    type: Entity
   returns:
     
 ---

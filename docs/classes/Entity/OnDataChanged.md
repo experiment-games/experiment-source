@@ -14,8 +14,12 @@ lua:
   description: "Call to inform that data changed. Creates/removes ragdolls, sets internal variables + other things that happen to an entity when data changes."
   
   arguments:
-    - name: "updateType"
-      type: number
+  - position: 1
+    name: "entity"
+    type: Entity
+  - position: 2
+    name: "updateType"
+    type: number
   returns:
     
 ---

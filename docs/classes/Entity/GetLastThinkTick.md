@@ -14,8 +14,12 @@ lua:
   description: "Get last think tick."
   
   arguments:
-    - name: "name"
-      type: string
+  - position: 1
+    name: "entity"
+    type: Entity
+  - position: 2
+    name: "name"
+    type: string
   returns:
     - type: integer
       description: "The last think tick."

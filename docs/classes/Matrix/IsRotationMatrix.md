@@ -13,7 +13,10 @@ lua:
   realm: shared
   description: "Checks if the matrix is a rotation matrix."
   
-  
+  arguments:
+  - position: 1
+    name: "Matrix"
+    type: Matrix
   returns:
     - type: boolean
       description: "Whether the matrix is a rotation matrix."

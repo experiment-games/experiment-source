@@ -13,30 +13,30 @@ lua:
   realm: shared
   description: "Sets a data table variable of the given type, in the given slot, to the given value. Slots start at 0 and there's 32 slots per type (except for strings, which have 4 slots and a limit of 512 characters per string)."
   
-  argumentSets:
-    - arguments:
-      - name: "type"
-        type: enumeration/NETWORK_VARIABLE_TYPE
-      - name: "slot"
-        type: number
+  arguments:
+  - position: 1
+    name: "entity"
+    type: Entity
+  - position: 2
+    name: "type"
+    type: enumeration/NETWORK_VARIABLE_TYPE
+  - position: 3
+    name: "slot"
+    type: number
+  - position: 4
+    types:
       - name: "value"
         type: boolean
-    - arguments:
       - name: "value"
         type: number
-    - arguments:
       - name: "value"
         type: number
-    - arguments:
       - name: "value"
         type: Vector
-    - arguments:
       - name: "value"
         type: Angle
-    - arguments:
       - name: "value"
         type: string
-    - arguments:
       - name: "value"
         type: Entity
   returns:

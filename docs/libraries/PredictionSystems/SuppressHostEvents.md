@@ -14,8 +14,9 @@ lua:
   description: "Suppresses host events."
   
   arguments:
-    - name: "host"
-      type: Entity
+  - position: 1
+    name: "host"
+    type: Entity
   returns:
     
 ---

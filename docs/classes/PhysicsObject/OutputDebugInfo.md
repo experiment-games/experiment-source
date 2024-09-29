@@ -13,7 +13,10 @@ lua:
   realm: shared
   description: "Outputs debug information"
   
-  
+  arguments:
+  - position: 1
+    name: "physicsObject"
+    type: PhysicsObject
   returns:
     
 ---

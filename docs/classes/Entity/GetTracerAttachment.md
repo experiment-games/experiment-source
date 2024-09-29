@@ -13,7 +13,10 @@ lua:
   realm: shared
   description: "Get tracer attachment."
   
-  
+  arguments:
+  - position: 1
+    name: "entity"
+    type: Entity
   returns:
     - type: integer
       description: "The tracer attachment."

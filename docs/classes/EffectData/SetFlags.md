@@ -14,8 +14,12 @@ lua:
   description: "Set the flags of the effect."
   
   arguments:
-    - name: "flags"
-      type: number
+  - position: 1
+    name: "effectData"
+    type: EffectData
+  - position: 2
+    name: "flags"
+    type: number
   returns:
     
 ---

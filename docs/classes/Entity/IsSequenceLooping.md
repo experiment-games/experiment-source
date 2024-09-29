@@ -14,8 +14,12 @@ lua:
   description: "Check if the sequence is looping."
   
   arguments:
-    - name: "sequence"
-      type: number
+  - position: 1
+    name: "entity"
+    type: Entity
+  - position: 2
+    name: "sequence"
+    type: number
   returns:
     - type: boolean
       description: "Whether the sequence is looping"

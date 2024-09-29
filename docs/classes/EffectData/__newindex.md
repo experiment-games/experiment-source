@@ -14,8 +14,12 @@ lua:
   description: "Metamethod called when a non-existant field is added"
   
   arguments:
-    - name: "field"
-      type: string
+  - position: 1
+    name: "effectData"
+    type: EffectData
+  - position: 2
+    name: "field"
+    type: string
   returns:
     
 ---

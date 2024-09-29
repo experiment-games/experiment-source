@@ -13,6 +13,7 @@ lua:
   realm: server
   description: "Disables immediate removal of entities"
   
+  arguments:
   
   returns:
     

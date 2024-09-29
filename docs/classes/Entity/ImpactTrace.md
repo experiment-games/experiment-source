@@ -14,13 +14,19 @@ lua:
   description: "Impact trace."
   
   arguments:
-    - name: "trace"
-      type: Trace
-    - name: "damage type"
-      type: number
-    - name: "custom impact name"
-      type: string
-      default: "nullptr"
+  - position: 1
+    name: "entity"
+    type: Entity
+  - position: 2
+    name: "trace"
+    type: Trace
+  - position: 3
+    name: "damage type"
+    type: number
+  - position: 4
+    name: "custom impact name"
+    type: string
+    default: "nullptr"
   returns:
     
 ---

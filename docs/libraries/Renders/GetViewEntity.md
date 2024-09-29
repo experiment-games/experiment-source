@@ -13,6 +13,7 @@ lua:
   realm: client
   description: "Returns the entity the client is using to see (mostly the player itself)"
   
+  arguments:
   
   returns:
     - type: Entity

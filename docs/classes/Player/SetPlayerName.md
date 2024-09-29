@@ -14,8 +14,12 @@ lua:
   description: "Set the name of the player."
   
   arguments:
-    - name: "name"
-      type: string
+  - position: 1
+    name: "player"
+    type: Player
+  - position: 2
+    name: "name"
+    type: string
   returns:
     
 ---

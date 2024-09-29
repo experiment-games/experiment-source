@@ -13,7 +13,10 @@ lua:
   realm: client
   description: "Get observer camera origin."
   
-  
+  arguments:
+  - position: 1
+    name: "entity"
+    type: Entity
   returns:
     - type: Vector
       description: "Observer camera origin."

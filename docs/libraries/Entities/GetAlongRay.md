@@ -14,14 +14,18 @@ lua:
   description: "Finds all entities along the given ray."
   
   arguments:
-    - name: "start"
-      type: Vector
-    - name: "end"
-      type: Vector
-    - name: "mins"
-      type: Vector
-    - name: "maxs"
-      type: Vector
+  - position: 1
+    name: "start"
+    type: Vector
+  - position: 2
+    name: "end"
+    type: Vector
+  - position: 3
+    name: "mins"
+    type: Vector
+  - position: 4
+    name: "maxs"
+    type: Vector
   returns:
     - type: table
       description: "A table of entities found."

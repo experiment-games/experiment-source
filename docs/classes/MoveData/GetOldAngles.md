@@ -13,7 +13,10 @@ lua:
   realm: shared
   description: "Gets the old angles"
   
-  
+  arguments:
+  - position: 1
+    name: "moveData"
+    type: MoveData
   returns:
     - type: Angle
       description: "The old angles"

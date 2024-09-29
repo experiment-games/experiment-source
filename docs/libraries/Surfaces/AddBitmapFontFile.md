@@ -14,8 +14,9 @@ lua:
   description: "Adds a bitmap font file to the list of fonts."
   
   arguments:
-    - name: "fontFileName"
-      type: string
+  - position: 1
+    name: "fontFileName"
+    type: string
   returns:
     - type: boolean
       description: "True if the font was added, false otherwise."

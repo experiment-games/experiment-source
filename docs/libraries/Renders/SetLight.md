@@ -14,18 +14,24 @@ lua:
   description: "Set a light."
   
   arguments:
-    - name: "r"
-      type: number
-    - name: "g"
-      type: number
-    - name: "b"
-      type: number
-    - name: "intensity"
-      type: number
-    - name: "direction"
-      type: Vector
-    - name: "lightIndex"
-      type: number
+  - position: 1
+    name: "r"
+    type: number
+  - position: 2
+    name: "g"
+    type: number
+  - position: 3
+    name: "b"
+    type: number
+  - position: 4
+    name: "intensity"
+    type: number
+  - position: 5
+    name: "direction"
+    type: Vector
+  - position: 6
+    name: "lightIndex"
+    type: number
   returns:
     
 ---

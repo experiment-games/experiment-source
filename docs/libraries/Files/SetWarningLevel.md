@@ -14,8 +14,9 @@ lua:
   description: "Set the warning level."
   
   arguments:
-    - name: "level"
-      type: enumeration/FILE_WARNING_LEVEL
+  - position: 1
+    name: "level"
+    type: enumeration/FILE_WARNING_LEVEL
   returns:
     
 ---

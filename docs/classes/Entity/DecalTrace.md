@@ -14,10 +14,15 @@ lua:
   description: "Decal trace."
   
   arguments:
-    - name: "trace"
-      type: Trace
-    - name: "decalName"
-      type: string
+  - position: 1
+    name: "entity"
+    type: Entity
+  - position: 2
+    name: "trace"
+    type: Trace
+  - position: 3
+    name: "decalName"
+    type: string
   returns:
     
 ---

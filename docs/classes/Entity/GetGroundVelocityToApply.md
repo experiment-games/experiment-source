@@ -13,7 +13,10 @@ lua:
   realm: server
   description: "Gets the velocity we impart to a player standing on us."
   
-  
+  arguments:
+  - position: 1
+    name: "entity"
+    type: Entity
   returns:
     - type: Vector
       description: "The ground velocity to apply"

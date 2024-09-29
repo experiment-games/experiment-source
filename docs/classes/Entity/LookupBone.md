@@ -14,8 +14,12 @@ lua:
   description: "Lookup the bone."
   
   arguments:
-    - name: "boneName"
-      type: string
+  - position: 1
+    name: "entity"
+    type: Entity
+  - position: 2
+    name: "boneName"
+    type: string
   returns:
     - type: integer
       description: "The bone"

@@ -14,8 +14,12 @@ lua:
   description: "Get the bone position."
   
   arguments:
-    - name: "bone"
-      type: number
+  - position: 1
+    name: "entity"
+    type: Entity
+  - position: 2
+    name: "bone"
+    type: number
   returns:
     - type: Vector
       description: "The origin"

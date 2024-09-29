@@ -14,8 +14,9 @@ lua:
   description: "Sets the embedded panel"
   
   arguments:
-    - name: "panel"
-      type: Panel
+  - position: 1
+    name: "panel"
+    type: Panel
   returns:
     
 ---

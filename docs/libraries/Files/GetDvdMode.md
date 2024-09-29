@@ -13,6 +13,7 @@ lua:
   realm: shared
   description: "Get the DVD mode."
   
+  arguments:
   
   returns:
     - type: integer

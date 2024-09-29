@@ -14,8 +14,9 @@ lua:
   description: "Force a file to be exact."
   
   arguments:
-    - name: "fileName"
-      type: string
+  - position: 1
+    name: "fileName"
+    type: string
   returns:
     
 ---

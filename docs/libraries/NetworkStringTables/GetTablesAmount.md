@@ -13,6 +13,7 @@ lua:
   realm: shared
   description: "Get the number of string tables."
   
+  arguments:
   
   returns:
     - type: integer

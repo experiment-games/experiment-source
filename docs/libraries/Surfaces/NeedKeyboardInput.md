@@ -13,6 +13,7 @@ lua:
   realm: client
   description: "Checks if the surface needs keyboard input"
   
+  arguments:
   
   returns:
     - type: boolean

@@ -14,8 +14,12 @@ lua:
   description: "Set the player's punch angle."
   
   arguments:
-    - name: "angle"
-      type: Angle
+  - position: 1
+    name: "player"
+    type: Player
+  - position: 2
+    name: "angle"
+    type: Angle
   returns:
     
 ---

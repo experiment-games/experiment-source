@@ -14,10 +14,12 @@ lua:
   description: "Print a network warning message to the console."
   
   arguments:
-    - name: "level"
-      type: number
-    - name: "message"
-      type: string
+  - position: 1
+    name: "level"
+    type: number
+  - position: 2
+    name: "message"
+    type: string
   returns:
     
 ---

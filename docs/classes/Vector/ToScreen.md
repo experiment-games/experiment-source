@@ -13,7 +13,10 @@ lua:
   realm: client
   description: "Converts the vector to screen coordinates."
   
-  
+  arguments:
+  - position: 1
+    name: "vector"
+    type: Vector
   returns:
     - type: table
       description: "A table containing the screen coordinates and whether it is visible."

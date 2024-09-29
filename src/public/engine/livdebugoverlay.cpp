@@ -11,6 +11,8 @@
 
 LUA_REGISTRATION_INIT( DebugOverlays );
 
+#define color_white lua_Color( 255, 255, 255, 255 )
+
 LUA_BINDING_BEGIN( DebugOverlays, AddBox, "library", "Add a box overlay to the screen with specific colors." )
 {
     Vector start = LUA_BINDING_ARGUMENT( luaL_checkvector, 1, "start" );
@@ -18,7 +20,7 @@ LUA_BINDING_BEGIN( DebugOverlays, AddBox, "library", "Add a box overlay to the s
     Vector maxs = LUA_BINDING_ARGUMENT( luaL_checkvector, 3, "maxs" );
     QAngle angles = LUA_BINDING_ARGUMENT( luaL_checkangle, 4, "angles" );
     float duration = LUA_BINDING_ARGUMENT_WITH_DEFAULT( luaL_optnumber, 5, 1, "duration" );
-    lua_Color faceColor = LUA_BINDING_ARGUMENT_WITH_DEFAULT( luaL_optcolor, 6, lua_Color( 255, 255, 255, 255 ), "faceColor" );
+    lua_Color faceColor = LUA_BINDING_ARGUMENT_WITH_DEFAULT( luaL_optcolor, 6, color_white, "faceColor" );
     lua_Color edgeColor = LUA_BINDING_ARGUMENT_WITH_DEFAULT( luaL_optcolor, 7, faceColor, "edgeColor" );
 
     debugoverlay->AddBoxOverlay2( start, mins, maxs, angles, faceColor, edgeColor, duration );
@@ -41,7 +43,7 @@ LUA_BINDING_BEGIN( DebugOverlays, AddLine, "library", "Add a line overlay to the
     Vector start = LUA_BINDING_ARGUMENT( luaL_checkvector, 1, "start" );
     Vector end = LUA_BINDING_ARGUMENT( luaL_checkvector, 2, "end" );
     float duration = LUA_BINDING_ARGUMENT_WITH_DEFAULT( luaL_optnumber, 3, 1, "duration" );
-    lua_Color color = LUA_BINDING_ARGUMENT_WITH_DEFAULT( luaL_optcolor, 4, lua_Color( 255, 255, 255, 255 ), "color" );
+    lua_Color color = LUA_BINDING_ARGUMENT_WITH_DEFAULT( luaL_optcolor, 4, color_white, "color" );
     bool noDepthTest = LUA_BINDING_ARGUMENT_WITH_DEFAULT( luaL_optboolean, 5, false, "noDepthTest" );
 
     debugoverlay->AddLineOverlayAlpha( start, end, color.r(), color.g(), color.b(), color.a(), noDepthTest, duration );
@@ -56,7 +58,7 @@ LUA_BINDING_BEGIN( DebugOverlays, AddText, "library", "Add a text overlay to the
     float duration = LUA_BINDING_ARGUMENT_WITH_DEFAULT( luaL_optnumber, 3, 1, "duration" );
     bool viewCheck = LUA_BINDING_ARGUMENT_WITH_DEFAULT( luaL_optboolean, 4, false, "viewCheck" );
     int lineOffset = LUA_BINDING_ARGUMENT_WITH_DEFAULT( luaL_optnumber, 5, 64, "lineOffset" );
-    lua_Color color = LUA_BINDING_ARGUMENT_WITH_DEFAULT( luaL_optcolor, 6, lua_Color( 255, 255, 255, 255 ), "color" );
+    lua_Color color = LUA_BINDING_ARGUMENT_WITH_DEFAULT( luaL_optcolor, 6, color_white, "color" );
 
     if ( viewCheck )
         DevWarning( "DebugOverlays.AddText: viewCheck argument (4) is not yet implemented.\n" );
@@ -72,7 +74,7 @@ LUA_BINDING_BEGIN( DebugOverlays, AddScreenText, "library", "Add a screen text o
     float y = LUA_BINDING_ARGUMENT( luaL_checknumber, 2, "y" );
     const char *text = LUA_BINDING_ARGUMENT( luaL_checkstring, 3, "text" );
     float duration = LUA_BINDING_ARGUMENT_WITH_DEFAULT( luaL_optnumber, 4, 1, "duration" );
-    lua_Color color = LUA_BINDING_ARGUMENT_WITH_DEFAULT( luaL_optcolor, 5, lua_Color( 255, 255, 255, 255 ), "color" );
+    lua_Color color = LUA_BINDING_ARGUMENT_WITH_DEFAULT( luaL_optcolor, 5, color_white, "color" );
 
     debugoverlay->AddScreenTextOverlay( x, y, duration, color.r(), color.g(), color.b(), color.a(), text );
     return 0;
@@ -85,7 +87,7 @@ LUA_BINDING_BEGIN( DebugOverlays, AddEntityTextOverlay, "library", "Displays 2D 
     int lineOffset = LUA_BINDING_ARGUMENT( luaL_checknumber, 2, "lineOffset" );
     const char *text = LUA_BINDING_ARGUMENT( luaL_checkstring, 3, "text" );
     float duration = LUA_BINDING_ARGUMENT_WITH_DEFAULT( luaL_optnumber, 4, 1, "duration" );
-    lua_Color color = LUA_BINDING_ARGUMENT_WITH_DEFAULT( luaL_optcolor, 5, lua_Color( 255, 255, 255, 255 ), "color" );
+    lua_Color color = LUA_BINDING_ARGUMENT_WITH_DEFAULT( luaL_optcolor, 5, color_white, "color" );
 
     debugoverlay->AddEntityTextOverlay( entity->entindex(), lineOffset, duration, color.r(), color.g(), color.b(), color.a(), "%s", text );
     return 0;
@@ -100,7 +102,7 @@ LUA_BINDING_BEGIN( DebugOverlays, AddSweptBox, "library", "Add a swept box overl
     Vector maxs = LUA_BINDING_ARGUMENT( luaL_checkvector, 4, "maxs" );
     QAngle angles = LUA_BINDING_ARGUMENT( luaL_checkangle, 5, "angles" );
     float duration = LUA_BINDING_ARGUMENT_WITH_DEFAULT( luaL_optnumber, 6, 1, "duration" );
-    lua_Color color = LUA_BINDING_ARGUMENT_WITH_DEFAULT( luaL_optcolor, 7, lua_Color( 255, 255, 255, 255 ), "color" );
+    lua_Color color = LUA_BINDING_ARGUMENT_WITH_DEFAULT( luaL_optcolor, 7, color_white, "color" );
 
     debugoverlay->AddSweptBoxOverlay( start, end, mins, maxs, angles, color.r(), color.g(), color.b(), color.a(), duration );
     return 0;
@@ -113,7 +115,7 @@ LUA_BINDING_BEGIN( DebugOverlays, AddTriangle, "library", "Add a triangle overla
     Vector p2 = LUA_BINDING_ARGUMENT( luaL_checkvector, 2, "p2" );
     Vector p3 = LUA_BINDING_ARGUMENT( luaL_checkvector, 3, "p3" );
     float duration = LUA_BINDING_ARGUMENT_WITH_DEFAULT( luaL_optnumber, 4, 1, "duration" );
-    lua_Color color = LUA_BINDING_ARGUMENT_WITH_DEFAULT( luaL_optcolor, 5, lua_Color( 255, 255, 255, 255 ), "color" );
+    lua_Color color = LUA_BINDING_ARGUMENT_WITH_DEFAULT( luaL_optcolor, 5, color_white, "color" );
     bool noDepthTest = LUA_BINDING_ARGUMENT_WITH_DEFAULT( luaL_optboolean, 6, false, "noDepthTest" );
 
     debugoverlay->AddTriangleOverlay( p1, p2, p3, color.r(), color.g(), color.b(), color.a(), noDepthTest, duration );

@@ -14,8 +14,9 @@ lua:
   description: "Set the seed for the random number generator."
   
   arguments:
-    - name: "seed"
-      type: number
+  - position: 1
+    name: "seed"
+    type: number
   returns:
     
 ---

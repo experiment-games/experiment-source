@@ -14,8 +14,9 @@ lua:
   description: "Checks if an entity is valid by checking if it's edict is valid and not free"
   
   arguments:
-    - name: "entity"
-      type: Entity
+  - position: 1
+    name: "entity"
+    type: Entity
   returns:
     - type: boolean
       description: "True if the entity is valid, false otherwise."

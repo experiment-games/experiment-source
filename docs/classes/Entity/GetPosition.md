@@ -13,7 +13,10 @@ lua:
   realm: shared
   description: "Get absolute origin."
   
-  
+  arguments:
+  - position: 1
+    name: "entity"
+    type: Entity
   returns:
     - type: Vector
       description: "The absolute origin."

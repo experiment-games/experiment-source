@@ -13,7 +13,10 @@ lua:
   realm: shared
   description: "Is sprite card."
   
-  
+  arguments:
+  - position: 1
+    name: "material"
+    type: Material
   returns:
     - type: boolean
       description: "True if sprite card, false otherwise."

@@ -13,7 +13,10 @@ lua:
   realm: shared
   description: "Gets the blue value of the color."
   
-  
+  arguments:
+  - position: 1
+    name: "color"
+    type: Color
   returns:
     - type: integer
       description: "The blue value."

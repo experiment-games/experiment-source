@@ -3,13 +3,6 @@
         {%- if page.meta.lua.arguments -%}
         {% set arguments = page.meta.lua.arguments %}
         {% include "lua-partials/function-title.html" %}
-        {%- elif page.meta.lua.argumentSets -%}
-        <div class="lua__symbol__list">
-            {% for argumentSet in page.meta.lua.argumentSets -%}
-            {% set arguments = argumentSet.arguments %}
-            {% include "lua-partials/function-title.html" %}
-            {% endfor -%}
-        </div>
         {%- else -%}
         {% set arguments = [] %}
         {% include "lua-partials/function-title.html" %}

@@ -13,7 +13,13 @@ lua:
   realm: client
   description: "Metamethod that is called when a new field is added"
   
-  
+  arguments:
+  - position: 1
+    name: "editablePanel"
+    type: EditablePanel
+  - position: 2
+    name: "field"
+    type: string
   returns:
     
 ---

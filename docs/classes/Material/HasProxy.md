@@ -13,7 +13,10 @@ lua:
   realm: shared
   description: "Has proxy."
   
-  
+  arguments:
+  - position: 1
+    name: "material"
+    type: Material
   returns:
     - type: boolean
       description: "True if has proxy, false otherwise."

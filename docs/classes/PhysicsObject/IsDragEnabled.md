@@ -13,7 +13,10 @@ lua:
   realm: shared
   description: "Checks if drag is enabled"
   
-  
+  arguments:
+  - position: 1
+    name: "physicsObject"
+    type: PhysicsObject
   returns:
     - type: boolean
       description: "Whether drag is enabled or not."

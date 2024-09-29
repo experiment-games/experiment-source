@@ -14,8 +14,12 @@ lua:
   description: "Set local angles."
   
   arguments:
-    - name: "angles"
-      type: Angle
+  - position: 1
+    name: "entity"
+    type: Entity
+  - position: 2
+    name: "angles"
+    type: Angle
   returns:
     
 ---

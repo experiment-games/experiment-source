@@ -14,8 +14,12 @@ lua:
   description: "Checks if the given entity has a matching root parent."
   
   arguments:
-    - name: "other"
-      type: Entity
+  - position: 1
+    name: "entity"
+    type: Entity
+  - position: 2
+    name: "other"
+    type: Entity
   returns:
     - type: boolean
       description: "The given entity has a matching root parent with this entity."

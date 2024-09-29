@@ -14,10 +14,15 @@ lua:
   description: "Set the value for the specified bone controller."
   
   arguments:
-    - name: "boneController"
-      type: number
-    - name: "value"
-      type: number
+  - position: 1
+    name: "entity"
+    type: Entity
+  - position: 2
+    name: "boneController"
+    type: number
+  - position: 3
+    name: "value"
+    type: number
   returns:
     - type: number
       description: "The bone controller value, clamped between acceptable values"

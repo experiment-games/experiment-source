@@ -13,7 +13,10 @@ lua:
   realm: shared
   description: "Get the number of flex controllers."
   
-  
+  arguments:
+  - position: 1
+    name: "entity"
+    type: Entity
   returns:
     - type: integer
       description: "The number of flex controllers"

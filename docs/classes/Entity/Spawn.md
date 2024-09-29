@@ -13,7 +13,10 @@ lua:
   realm: shared
   description: "Spawn entity."
   
-  
+  arguments:
+  - position: 1
+    name: "entity"
+    type: Entity
   returns:
     
 ---

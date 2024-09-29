@@ -13,7 +13,10 @@ lua:
   realm: shared
   description: "Get the player's local data."
   
-  
+  arguments:
+  - position: 1
+    name: "player"
+    type: Player
   returns:
     - type: table
       description: "The player's local data."

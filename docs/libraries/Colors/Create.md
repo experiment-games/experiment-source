@@ -14,15 +14,19 @@ lua:
   description: "Creates a new color."
   
   arguments:
-    - name: "red"
-      type: number
-    - name: "green"
-      type: number
-    - name: "blue"
-      type: number
-    - name: "alpha"
-      type: number
-      default: "255"
+  - position: 1
+    name: "red"
+    type: number
+  - position: 2
+    name: "green"
+    type: number
+  - position: 3
+    name: "blue"
+    type: number
+  - position: 4
+    name: "alpha"
+    type: number
+    default: "255"
   returns:
     - type: Color
       description: "The created color."

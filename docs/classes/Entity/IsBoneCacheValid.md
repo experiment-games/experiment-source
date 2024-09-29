@@ -13,7 +13,10 @@ lua:
   realm: client
   description: "Check if the bone cache is valid."
   
-  
+  arguments:
+  - position: 1
+    name: "entity"
+    type: Entity
   returns:
     - type: boolean
       description: "Whether the bone cache is valid"

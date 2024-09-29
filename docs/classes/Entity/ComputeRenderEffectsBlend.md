@@ -13,7 +13,10 @@ lua:
   realm: client
   description: "Compute RenderFX blend."
   
-  
+  arguments:
+  - position: 1
+    name: "entity"
+    type: Entity
   returns:
     
 ---

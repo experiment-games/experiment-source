@@ -14,10 +14,15 @@ lua:
   description: "Dispatch the muzzle effect."
   
   arguments:
-    - name: "options"
-      type: string
-    - name: "isFirstPerson"
-      type: boolean
+  - position: 1
+    name: "entity"
+    type: Entity
+  - position: 2
+    name: "options"
+    type: string
+  - position: 3
+    name: "isFirstPerson"
+    type: boolean
   returns:
     - type: boolean
       description: "Whether the operation was successful"

@@ -14,10 +14,15 @@ lua:
   description: "Check if entity should collide."
   
   arguments:
-    - name: "collisionGroup"
-      type: number
-    - name: "contentsMask"
-      type: number
+  - position: 1
+    name: "entity"
+    type: Entity
+  - position: 2
+    name: "collisionGroup"
+    type: number
+  - position: 3
+    name: "contentsMask"
+    type: number
   returns:
     
 ---

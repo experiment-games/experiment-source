@@ -13,7 +13,10 @@ lua:
   realm: shared
   description: "Needs tangent space."
   
-  
+  arguments:
+  - position: 1
+    name: "material"
+    type: Material
   returns:
     - type: boolean
       description: "True if needs tangent space, false otherwise."

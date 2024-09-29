@@ -13,6 +13,7 @@ lua:
   realm: client
   description: "Check if the client is in a game."
   
+  arguments:
   
   returns:
     - type: boolean

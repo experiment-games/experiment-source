@@ -1,22 +1,25 @@
 ---
 template: lua-class-function.html
 title: IsFlashlightOn
-icon: lua-server
+icon: lua-shared
 tags:
   - lua
-  - server
+  - shared
   - needs-verification
   - needs-example
 lua:
   library: Player
   function: IsFlashlightOn
-  realm: server
+  realm: shared
   description: "Check if the flashlight is on for the player."
   
-  
+  arguments:
+  - position: 1
+    name: "player"
+    type: Player
   returns:
-    - type: integer
-      description: "The flashlight state."
+    - type: boolean
+      description: "True if the flashlight is on, false otherwise."
 ---
 
 <div class="lua__search__keywords">

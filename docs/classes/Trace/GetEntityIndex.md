@@ -13,7 +13,10 @@ lua:
   realm: shared
   description: "Get the index of the entity that was hit."
   
-  
+  arguments:
+  - position: 1
+    name: "trace"
+    type: Trace
   returns:
     - type: integer
       description: "The index of the entity that was hit."

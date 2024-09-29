@@ -13,7 +13,10 @@ lua:
   realm: shared
   description: "Get ground entity."
   
-  
+  arguments:
+  - position: 1
+    name: "entity"
+    type: Entity
   returns:
     - type: Entity
       description: "The ground entity."

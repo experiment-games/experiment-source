@@ -13,6 +13,7 @@ lua:
   realm: shared
   description: "Get the country code of the user."
   
+  arguments:
   
   returns:
     - type: string

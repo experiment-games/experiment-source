@@ -14,8 +14,12 @@ lua:
   description: "Lookup the sequence."
   
   arguments:
-    - name: "sequenceName"
-      type: string
+  - position: 1
+    name: "entity"
+    type: Entity
+  - position: 2
+    name: "sequenceName"
+    type: string
   returns:
     - type: integer
       description: "The sequence"

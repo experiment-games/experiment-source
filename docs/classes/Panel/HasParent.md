@@ -14,8 +14,12 @@ lua:
   description: "Checks if the panel is a descendant of another panel"
   
   arguments:
-    - name: "potentialParent"
-      type: Panel
+  - position: 1
+    name: "panel"
+    type: Panel
+  - position: 2
+    name: "potentialParent"
+    type: Panel
   returns:
     - type: boolean
       description: "True if the panel is a descendant of the parent, false otherwise"

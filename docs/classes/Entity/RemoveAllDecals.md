@@ -13,7 +13,10 @@ lua:
   realm: shared
   description: "Remove all decals."
   
-  
+  arguments:
+  - position: 1
+    name: "entity"
+    type: Entity
   returns:
     
 ---

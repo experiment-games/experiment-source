@@ -14,12 +14,15 @@ lua:
   description: "Reset the ambient light cube."
   
   arguments:
-    - name: "r"
-      type: number
-    - name: "g"
-      type: number
-    - name: "b"
-      type: number
+  - position: 1
+    name: "r"
+    type: number
+  - position: 2
+    name: "g"
+    type: number
+  - position: 3
+    name: "b"
+    type: number
   returns:
     
 ---

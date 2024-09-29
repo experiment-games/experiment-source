@@ -13,7 +13,10 @@ lua:
   realm: client
   description: "Makes the panel modal"
   
-  
+  arguments:
+  - position: 1
+    name: "editablePanel"
+    type: EditablePanel
   returns:
     
 ---

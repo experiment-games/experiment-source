@@ -14,8 +14,15 @@ lua:
   description: "Reset the sequence."
   
   arguments:
-    - name: "sequence"
-      type: number
+  - position: 1
+    name: "entity"
+    type: Entity
+  - position: 2
+    types:
+      - name: "sequence"
+        type: number
+      - name: "sequence"
+        type: string
   returns:
     
 ---

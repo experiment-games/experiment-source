@@ -14,8 +14,12 @@ lua:
   description: "Set animation prefix."
   
   arguments:
-    - name: "prefix"
-      type: string
+  - position: 1
+    name: "entity"
+    type: Weapon
+  - position: 2
+    name: "prefix"
+    type: string
   returns:
     
 ---

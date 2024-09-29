@@ -14,12 +14,15 @@ lua:
   description: "Converts HSV to RGB."
   
   arguments:
-    - name: "hue"
-      type: number
-    - name: "saturation"
-      type: number
-    - name: "value"
-      type: number
+  - position: 1
+    name: "hue"
+    type: number
+  - position: 2
+    name: "saturation"
+    type: number
+  - position: 3
+    name: "value"
+    type: number
   returns:
     - type: Color
       description: "The converted color."

@@ -14,13 +14,16 @@ lua:
   description: "Finds an entity within a radius"
   
   arguments:
-    - name: "position"
-      type: Vector
-    - name: "radius"
-      type: number
-    - name: "startEntity"
-      type: Entity
-      default: "NULL"
+  - position: 1
+    name: "position"
+    type: Vector
+  - position: 2
+    name: "radius"
+    type: number
+  - position: 3
+    name: "startEntity"
+    type: Entity
+    default: "NULL"
   returns:
     - type: Entity
       description: "The entity found, or NULL if not found."

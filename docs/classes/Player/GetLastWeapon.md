@@ -13,7 +13,10 @@ lua:
   realm: server
   description: "Get the previous weapon of the player."
   
-  
+  arguments:
+  - position: 1
+    name: "player"
+    type: Player
   returns:
     
 ---

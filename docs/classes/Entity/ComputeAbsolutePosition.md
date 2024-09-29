@@ -14,8 +14,12 @@ lua:
   description: "Compute absolute position."
   
   arguments:
-    - name: "localPos"
-      type: Vector
+  - position: 1
+    name: "entity"
+    type: Entity
+  - position: 2
+    name: "localPos"
+    type: Vector
   returns:
     - type: Vector
       description: "The absolute position."

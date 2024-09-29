@@ -14,8 +14,9 @@ lua:
   description: "Get the player entity number for a user ID."
   
   arguments:
-    - name: "userId"
-      type: number
+  - position: 1
+    name: "userId"
+    type: number
   returns:
     - type: integer
       description: "The player entity number for the user ID."

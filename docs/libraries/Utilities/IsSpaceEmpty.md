@@ -14,12 +14,15 @@ lua:
   description: "Check if the space is empty"
   
   arguments:
-    - name: "entity"
-      type: Entity
-    - name: "minPos"
-      type: Vector
-    - name: "maxPos"
-      type: Vector
+  - position: 1
+    name: "entity"
+    type: Entity
+  - position: 2
+    name: "minPos"
+    type: Vector
+  - position: 3
+    name: "maxPos"
+    type: Vector
   returns:
     - type: boolean
       description: "True if the space is empty"

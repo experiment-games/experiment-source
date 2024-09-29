@@ -14,14 +14,17 @@ lua:
   description: "Say text to all players."
   
   arguments:
-    - name: "text"
-      type: string
-    - name: "speakingPlayer"
-      type: Player
-      default: "0"
-    - name: "withoutStringLookup"
-      type: boolean
-      default: "true"
+  - position: 1
+    name: "text"
+    type: string
+  - position: 2
+    name: "speakingPlayer"
+    type: Player
+    default: "0"
+  - position: 3
+    name: "withoutStringLookup"
+    type: boolean
+    default: "true"
   returns:
     
 ---

@@ -13,7 +13,10 @@ lua:
   realm: server
   description: "Post client active."
   
-  
+  arguments:
+  - position: 1
+    name: "entity"
+    type: Entity
   returns:
     
 ---

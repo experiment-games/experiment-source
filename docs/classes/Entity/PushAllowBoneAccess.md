@@ -15,12 +15,15 @@ lua:
   
   static: true
   arguments:
-    - name: "allowForNormalModels"
-      type: boolean
-    - name: "allowForViewModels"
-      type: boolean
-    - name: "tagPush"
-      type: string
+  - position: 1
+    name: "allowForNormalModels"
+    type: boolean
+  - position: 2
+    name: "allowForViewModels"
+    type: boolean
+  - position: 3
+    name: "tagPush"
+    type: string
   returns:
     
 ---

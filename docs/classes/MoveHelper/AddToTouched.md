@@ -14,10 +14,15 @@ lua:
   description: "Adds the trace result to touch list, if contact is not already in list"
   
   arguments:
-    - name: "trace"
-      type: Trace
-    - name: "impactVelocity"
-      type: Vector
+  - position: 1
+    name: "moveHelper"
+    type: MoveHelper
+  - position: 2
+    name: "trace"
+    type: Trace
+  - position: 3
+    name: "impactVelocity"
+    type: Vector
   returns:
     - type: boolean
       description: "Returns true if the contact was added to the touch list, false if it already exists"

@@ -14,8 +14,12 @@ lua:
   description: "Modify the existing vector, scaling it by a number."
   
   arguments:
-    - name: "scaleBy"
-      type: number
+  - position: 1
+    name: "vector"
+    type: Vector
+  - position: 2
+    name: "scaleBy"
+    type: number
   returns:
     
 ---

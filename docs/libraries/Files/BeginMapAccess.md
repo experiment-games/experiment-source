@@ -13,6 +13,7 @@ lua:
   realm: shared
   description: "Begin map access."
   
+  arguments:
   
   returns:
     

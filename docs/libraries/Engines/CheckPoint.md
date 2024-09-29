@@ -14,8 +14,9 @@ lua:
   description: "Check a point."
   
   arguments:
-    - name: "pointName"
-      type: string
+  - position: 1
+    name: "pointName"
+    type: string
   returns:
     
 ---

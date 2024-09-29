@@ -13,7 +13,10 @@ lua:
   realm: shared
   description: "Get the sub type."
   
-  
+  arguments:
+  - position: 1
+    name: "entity"
+    type: Weapon
   returns:
     - type: integer
       description: "Sub type."

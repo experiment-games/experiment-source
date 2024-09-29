@@ -14,8 +14,9 @@ lua:
   description: "Push a minification filter. (Non-functional; help wanted)"
   
   arguments:
-    - name: "filter"
-      type: number
+  - position: 1
+    name: "filter"
+    type: number
   returns:
     
 ---

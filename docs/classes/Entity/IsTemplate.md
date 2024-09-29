@@ -13,7 +13,10 @@ lua:
   realm: server
   description: "Wheter this entity is a template. Template entities are marked as templates by the level designer. They do not spawn, but their keyvalues are saved for use by a template spawner."
   
-  
+  arguments:
+  - position: 1
+    name: "entity"
+    type: Entity
   returns:
     - type: boolean
       description: "true if template, false otherwise."

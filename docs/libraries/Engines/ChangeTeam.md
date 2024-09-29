@@ -14,8 +14,9 @@ lua:
   description: "Change the player's team."
   
   arguments:
-    - name: "teamName"
-      type: string
+  - position: 1
+    name: "teamName"
+    type: string
   returns:
     
 ---

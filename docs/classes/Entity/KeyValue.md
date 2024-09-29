@@ -13,16 +13,19 @@ lua:
   realm: shared
   description: "Key value."
   
-  argumentSets:
-    - arguments:
-      - name: "key"
-        type: string
+  arguments:
+  - position: 1
+    name: "entity"
+    type: Entity
+  - position: 2
+    name: "key"
+    type: string
+  - position: 3
+    types:
       - name: "value"
         type: number
-    - arguments:
       - name: "value"
         type: string
-    - arguments:
       - name: "value"
         type: Vector
   returns:

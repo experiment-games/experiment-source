@@ -14,8 +14,12 @@ lua:
   description: "Set next time before the player can fire the secondary attack. E.g: `Engines.GetCurrentTime() + 2` for two seconds from now."
   
   arguments:
-    - name: "absoluteCurTime"
-      type: number
+  - position: 1
+    name: "entity"
+    type: Weapon
+  - position: 2
+    name: "absoluteCurTime"
+    type: number
   returns:
     
 ---

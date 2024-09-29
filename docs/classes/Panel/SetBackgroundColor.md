@@ -14,8 +14,12 @@ lua:
   description: "Sets the background color"
   
   arguments:
-    - name: "color"
-      type: Color
+  - position: 1
+    name: "panel"
+    type: Panel
+  - position: 2
+    name: "color"
+    type: Color
   returns:
     
 ---

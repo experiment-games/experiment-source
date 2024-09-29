@@ -14,8 +14,12 @@ lua:
   description: "Sets whether the border is painted"
   
   arguments:
-    - name: "enabled"
-      type: boolean
+  - position: 1
+    name: "panel"
+    type: Panel
+  - position: 2
+    name: "enabled"
+    type: boolean
   returns:
     
 ---

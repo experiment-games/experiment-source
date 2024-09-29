@@ -13,7 +13,10 @@ lua:
   realm: shared
   description: "Destroy all data objects."
   
-  
+  arguments:
+  - position: 1
+    name: "entity"
+    type: Entity
   returns:
     
 ---

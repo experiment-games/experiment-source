@@ -14,8 +14,12 @@ lua:
   description: "Set the player's previously predicted origin."
   
   arguments:
-    - name: "origin"
-      type: Vector
+  - position: 1
+    name: "player"
+    type: Player
+  - position: 2
+    name: "origin"
+    type: Vector
   returns:
     
 ---

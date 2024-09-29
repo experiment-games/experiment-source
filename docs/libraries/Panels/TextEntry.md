@@ -14,12 +14,14 @@ lua:
   description: "Creates a new TextEntry panel"
   
   arguments:
-    - name: "parent"
-      type: Panel
-      default: "VGui_GetClientLuaRootPanel()"
-    - name: "name"
-      type: string
-      default: "\"TextEntry\""
+  - position: 1
+    name: "parent"
+    type: Panel
+    default: "VGui_GetClientLuaRootPanel()"
+  - position: 2
+    name: "name"
+    type: string
+    default: "\"TextEntry\""
   returns:
     - type: TextEntry
       description: "The new TextEntry Panel"

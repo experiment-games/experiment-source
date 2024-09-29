@@ -14,8 +14,12 @@ lua:
   description: "Metamethod that is called when a non-existent field is indexed"
   
   arguments:
-    - name: "field"
-      type: string
+  - position: 1
+    name: "editablePanel"
+    type: EditablePanel
+  - position: 2
+    name: "field"
+    type: string
   returns:
     - type: any
       description: "The value of the field"

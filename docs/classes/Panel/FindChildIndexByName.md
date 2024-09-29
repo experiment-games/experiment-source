@@ -14,8 +14,12 @@ lua:
   description: "Finds the index of a child panel by its name"
   
   arguments:
-    - name: "name"
-      type: string
+  - position: 1
+    name: "panel"
+    type: Panel
+  - position: 2
+    name: "name"
+    type: string
   returns:
     - type: integer
       description: "The index of the child panel"

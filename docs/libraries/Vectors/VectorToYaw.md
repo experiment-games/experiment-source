@@ -14,8 +14,9 @@ lua:
   description: "Converts a vector to a yaw angle."
   
   arguments:
-    - name: "vector"
-      type: Vector
+  - position: 1
+    name: "vector"
+    type: Vector
   returns:
     - type: number
       description: "The converted yaw angle."

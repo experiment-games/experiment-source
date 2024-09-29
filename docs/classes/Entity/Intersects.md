@@ -14,8 +14,12 @@ lua:
   description: "Determines if the bounding boxes of two entities intersect."
   
   arguments:
-    - name: "other"
-      type: Entity
+  - position: 1
+    name: "entity"
+    type: Entity
+  - position: 2
+    name: "other"
+    type: Entity
   returns:
     - type: boolean
       description: "true if intersects, false otherwise."

@@ -14,8 +14,12 @@ lua:
   description: "Set the persona name of the current user."
   
   arguments:
-    - name: "name"
-      type: string
+  - position: 1
+    name: "steamFriends"
+    type: SteamFriendsHandle
+  - position: 2
+    name: "name"
+    type: string
   returns:
     
 ---

@@ -13,6 +13,7 @@ lua:
   realm: server
   description: "Get the index of the client that issued the command"
   
+  arguments:
   
   returns:
     - type: integer

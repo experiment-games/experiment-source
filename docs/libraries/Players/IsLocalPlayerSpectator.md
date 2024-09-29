@@ -1,18 +1,19 @@
 ---
 template: lua-library-function.html
 title: IsLocalPlayerSpectator
-icon: lua-shared
+icon: lua-client
 tags:
   - lua
-  - shared
+  - client
   - needs-verification
   - needs-example
 lua:
   library: Players
   function: IsLocalPlayerSpectator
-  realm: shared
+  realm: client
   description: "Check if local player is a spectator"
   
+  arguments:
   
   returns:
     - type: boolean

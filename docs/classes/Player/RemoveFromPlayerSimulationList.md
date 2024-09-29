@@ -14,8 +14,12 @@ lua:
   description: "Remove an entity from the player's simulation list."
   
   arguments:
-    - name: "entity"
-      type: Entity
+  - position: 1
+    name: "player"
+    type: Player
+  - position: 2
+    name: "entity"
+    type: Entity
   returns:
     
 ---

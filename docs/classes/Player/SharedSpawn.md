@@ -13,7 +13,10 @@ lua:
   realm: shared
   description: "Shared spawn."
   
-  
+  arguments:
+  - position: 1
+    name: "player"
+    type: Player
   returns:
     
 ---

@@ -14,8 +14,12 @@ lua:
   description: "Sets whether the build mode is deletable"
   
   arguments:
-    - name: "deletable"
-      type: boolean
+  - position: 1
+    name: "panel"
+    type: Panel
+  - position: 2
+    name: "deletable"
+    type: boolean
   returns:
     
 ---

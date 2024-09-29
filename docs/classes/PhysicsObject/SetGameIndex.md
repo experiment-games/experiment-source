@@ -14,8 +14,12 @@ lua:
   description: "Sets the game index"
   
   arguments:
-    - name: "index"
-      type: number
+  - position: 1
+    name: "physicsObject"
+    type: PhysicsObject
+  - position: 2
+    name: "index"
+    type: number
   returns:
     
 ---

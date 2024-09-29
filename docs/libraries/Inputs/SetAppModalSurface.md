@@ -14,8 +14,9 @@ lua:
   description: "Set the application modal surface."
   
   arguments:
-    - name: "panel"
-      type: Panel
+  - position: 1
+    name: "panel"
+    type: Panel
   returns:
     
 ---

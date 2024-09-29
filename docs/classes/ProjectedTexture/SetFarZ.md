@@ -14,8 +14,12 @@ lua:
   description: "Set the distance at which the projected texture ends."
   
   arguments:
-    - name: "farZ"
-      type: number
+  - position: 1
+    name: "projectedTexture"
+    type: ProjectedTexture
+  - position: 2
+    name: "farZ"
+    type: number
   returns:
     
 ---

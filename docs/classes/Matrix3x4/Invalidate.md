@@ -13,7 +13,10 @@ lua:
   realm: shared
   description: "Invalidates the matrix."
   
-  
+  arguments:
+  - position: 1
+    name: "Matrix3x4"
+    type: Matrix3x4
   returns:
     
 ---

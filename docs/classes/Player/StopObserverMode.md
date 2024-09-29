@@ -13,7 +13,10 @@ lua:
   realm: server
   description: "Stop the observer mode for the player."
   
-  
+  arguments:
+  - position: 1
+    name: "player"
+    type: Player
   returns:
     
 ---

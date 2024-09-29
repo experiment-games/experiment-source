@@ -14,10 +14,12 @@ lua:
   description: "Compute the difference between two angles"
   
   arguments:
-    - name: "srcAngle"
-      type: number
-    - name: "dstAngle"
-      type: number
+  - position: 1
+    name: "srcAngle"
+    type: number
+  - position: 2
+    name: "dstAngle"
+    type: number
   returns:
     - type: number
       description: "Difference between the angles."

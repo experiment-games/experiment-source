@@ -14,8 +14,9 @@ lua:
   description: "Set gravity."
   
   arguments:
-    - name: "gravity"
-      type: Vector
+  - position: 1
+    name: "gravity"
+    type: Vector
   returns:
     
 ---

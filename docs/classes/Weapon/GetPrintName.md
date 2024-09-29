@@ -13,7 +13,10 @@ lua:
   realm: shared
   description: "Get the print name."
   
-  
+  arguments:
+  - position: 1
+    name: "entity"
+    type: Weapon
   returns:
     - type: string
       description: "Print name."

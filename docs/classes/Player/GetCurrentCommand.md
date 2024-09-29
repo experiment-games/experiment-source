@@ -13,7 +13,10 @@ lua:
   realm: shared
   description: "Returns the last command which was sent by the current prediction player."
   
-  
+  arguments:
+  - position: 1
+    name: "player"
+    type: Player
   returns:
     - type: UserCommand
       description: "The last user command."

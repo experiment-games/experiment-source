@@ -13,7 +13,10 @@ lua:
   realm: client
   description: "Retrieve the ragdoll info."
   
-  
+  arguments:
+  - position: 1
+    name: "entity"
+    type: Entity
   returns:
     - type: boolean
       description: "Whether the operation was successful"

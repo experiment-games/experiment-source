@@ -13,7 +13,10 @@ lua:
   realm: shared
   description: "Get physics object."
   
-  
+  arguments:
+  - position: 1
+    name: "entity"
+    type: Entity
   returns:
     
 ---

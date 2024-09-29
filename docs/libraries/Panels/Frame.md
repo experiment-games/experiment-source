@@ -14,12 +14,14 @@ lua:
   description: "Creates a new Frame panel"
   
   arguments:
-    - name: "parent"
-      type: Panel
-      default: "VGui_GetClientLuaRootPanel()"
-    - name: "name"
-      type: string
-      default: "\"Frame\""
+  - position: 1
+    name: "parent"
+    type: Panel
+    default: "VGui_GetClientLuaRootPanel()"
+  - position: 2
+    name: "name"
+    type: string
+    default: "\"Frame\""
   returns:
     - type: Frame
       description: "The new Frame Panel"

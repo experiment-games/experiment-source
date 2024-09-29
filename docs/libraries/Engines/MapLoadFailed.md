@@ -13,6 +13,7 @@ lua:
   realm: client
   description: "Check if the map load failed."
   
+  arguments:
   
   returns:
     - type: boolean

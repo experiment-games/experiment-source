@@ -13,7 +13,10 @@ lua:
   realm: server
   description: "Update the player sound."
   
-  
+  arguments:
+  - position: 1
+    name: "player"
+    type: Player
   returns:
     
 ---

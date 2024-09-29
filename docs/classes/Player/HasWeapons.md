@@ -13,7 +13,10 @@ lua:
   realm: server
   description: "Check if the player has weapons."
   
-  
+  arguments:
+  - position: 1
+    name: "player"
+    type: Player
   returns:
     - type: boolean
       description: "Whether the player has weapons."

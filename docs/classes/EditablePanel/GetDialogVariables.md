@@ -13,7 +13,10 @@ lua:
   realm: client
   description: "Gets the dialog variables"
   
-  
+  arguments:
+  - position: 1
+    name: "editablePanel"
+    type: EditablePanel
   returns:
     - type: KeyValuesHandle
       description: "The dialog variables"

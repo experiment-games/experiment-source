@@ -13,7 +13,10 @@ lua:
   realm: shared
   description: "Converts MoveHelper to a string"
   
-  
+  arguments:
+  - position: 1
+    name: "moveHelper"
+    type: MoveHelper
   returns:
     - type: string
       description: "MoveHelper as a string"

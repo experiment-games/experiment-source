@@ -13,6 +13,7 @@ lua:
   realm: client
   description: "Get the count of candidates in the candidate list."
   
+  arguments:
   
   returns:
     - type: integer

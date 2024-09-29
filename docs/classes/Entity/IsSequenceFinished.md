@@ -13,7 +13,10 @@ lua:
   realm: shared
   description: "Check if the sequence is finished."
   
-  
+  arguments:
+  - position: 1
+    name: "entity"
+    type: Entity
   returns:
     - type: boolean
       description: "Whether the sequence is finished"

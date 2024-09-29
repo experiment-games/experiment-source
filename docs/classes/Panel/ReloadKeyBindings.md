@@ -13,7 +13,10 @@ lua:
   realm: client
   description: "Reloads the key bindings"
   
-  
+  arguments:
+  - position: 1
+    name: "panel"
+    type: Panel
   returns:
     
 ---

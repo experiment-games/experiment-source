@@ -13,67 +13,53 @@ lua:
   realm: shared
   description: "Set the player's local data."
   
-  argumentSets:
-    - arguments:
-      - name: "field"
-        type: string
+  arguments:
+  - position: 1
+    name: "player"
+    type: Player
+  - position: 2
+    name: "field"
+    type: string
+  - position: 3
+    types:
       - name: "value"
         type: number
-    - arguments:
       - name: "value"
         type: number
-    - arguments:
       - name: "value"
         type: boolean
-    - arguments:
       - name: "value"
         type: boolean
-    - arguments:
       - name: "value"
         type: boolean
-    - arguments:
       - name: "value"
         type: number
-    - arguments:
       - name: "value"
         type: number
-    - arguments:
       - name: "value"
         type: number
-    - arguments:
       - name: "value"
         type: number
-    - arguments:
       - name: "value"
         type: number
-    - arguments:
       - name: "value"
         type: number
-    - arguments:
       - name: "value"
         type: Vector
-    - arguments:
       - name: "value"
         type: Angle
-    - arguments:
       - name: "value"
         type: Angle
-    - arguments:
       - name: "value"
         type: boolean
-    - arguments:
       - name: "value"
         type: boolean
-    - arguments:
       - name: "value"
         type: boolean
-    - arguments:
       - name: "value"
         type: number
-    - arguments:
       - name: "value"
         type: boolean
-    - arguments:
       - name: "value"
         type: boolean
   returns:

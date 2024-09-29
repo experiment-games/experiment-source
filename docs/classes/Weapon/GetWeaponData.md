@@ -13,7 +13,10 @@ lua:
   realm: shared
   description: "Get weapon data"
   
-  
+  arguments:
+  - position: 1
+    name: "entity"
+    type: Weapon
   returns:
     - type: table
       description: "Weapon data."

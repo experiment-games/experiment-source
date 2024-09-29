@@ -13,7 +13,10 @@ lua:
   realm: client
   description: "Get RenderFX blend."
   
-  
+  arguments:
+  - position: 1
+    name: "entity"
+    type: Entity
   returns:
     - type: integer
       description: "RenderFX blend."

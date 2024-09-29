@@ -13,7 +13,10 @@ lua:
   realm: shared
   description: "Gets the linear and angular velocity"
   
-  
+  arguments:
+  - position: 1
+    name: "physicsObject"
+    type: PhysicsObject
   returns:
     - type: Vector
       description: "The linear velocity."

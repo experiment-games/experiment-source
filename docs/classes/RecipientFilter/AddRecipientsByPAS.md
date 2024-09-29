@@ -13,7 +13,13 @@ lua:
   realm: shared
   description: "Adds recipients by potentially audible set"
   
-  
+  arguments:
+  - position: 1
+    name: "filter"
+    type: RecipientFilter
+  - position: 2
+    name: "position"
+    type: Vector
   returns:
     
 ---

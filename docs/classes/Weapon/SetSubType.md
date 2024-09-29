@@ -14,8 +14,12 @@ lua:
   description: "Set sub type."
   
   arguments:
-    - name: "subType"
-      type: number
+  - position: 1
+    name: "entity"
+    type: Weapon
+  - position: 2
+    name: "subType"
+    type: number
   returns:
     
 ---

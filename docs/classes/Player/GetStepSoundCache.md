@@ -13,7 +13,10 @@ lua:
   realm: shared
   description: "Get the player's step sound cache."
   
-  
+  arguments:
+  - position: 1
+    name: "player"
+    type: Player
   returns:
     - type: table
       description: "The player's step sound cache."

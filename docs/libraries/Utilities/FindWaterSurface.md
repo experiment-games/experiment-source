@@ -14,12 +14,15 @@ lua:
   description: "Finds the water surface at the given position."
   
   arguments:
-    - name: "position"
-      type: Vector
-    - name: "minZ"
-      type: number
-    - name: "maxZ"
-      type: number
+  - position: 1
+    name: "position"
+    type: Vector
+  - position: 2
+    name: "minZ"
+    type: number
+  - position: 3
+    name: "maxZ"
+    type: number
   returns:
     - type: number
       description: "The water surface z position."

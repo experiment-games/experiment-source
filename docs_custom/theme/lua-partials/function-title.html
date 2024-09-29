@@ -7,7 +7,14 @@
     {{- functionSeparator -}}<wbr>
     {%- endif -%}
     {{- page.meta.lua.function -}}<wbr>({% for argument in arguments -%}
-    {{- argument.name -}}
+    {%- if argument.type -%}
+    {{- argument.type -}}
+    {%- elif argument.types -%}
+    {%- for argumentVariation in argument.types -%}
+    {{- argumentVariation.type -}}
+    {%- if not loop.last -%}|{%- endif -%}
+    {%- endfor -%}
+    {%- endif -%}
     {%- if argument.nillable -%}?{% endif -%}
     {%- if argument.default %} = {{ argument.default -}}
     {%- endif -%}

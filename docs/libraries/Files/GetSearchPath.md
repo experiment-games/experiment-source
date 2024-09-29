@@ -14,8 +14,13 @@ lua:
   description: "Get the search path."
   
   arguments:
-    - name: "path"
-      type: string
+  - position: 1
+    name: "path"
+    type: string
+  - position: 2
+    name: "bGetPackFiles"
+    type: boolean
+    default: "false"
   returns:
     - type: string
       description: "The search path."

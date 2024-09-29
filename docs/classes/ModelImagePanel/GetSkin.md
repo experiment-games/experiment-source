@@ -13,7 +13,10 @@ lua:
   realm: client
   description: "Gets the skin index from the model"
   
-  
+  arguments:
+  - position: 1
+    name: "modelImagePanel"
+    type: ModelImagePanel
   returns:
     - type: integer
       description: "The skin index"

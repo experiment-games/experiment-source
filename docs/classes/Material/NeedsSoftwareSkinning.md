@@ -13,7 +13,10 @@ lua:
   realm: shared
   description: "Needs software skinning."
   
-  
+  arguments:
+  - position: 1
+    name: "material"
+    type: Material
   returns:
     - type: boolean
       description: "True if needs software skinning, false otherwise."

@@ -14,12 +14,18 @@ lua:
   description: "Set the player's suit update."
   
   arguments:
-    - name: "name"
-      type: string
-    - name: "group"
-      type: number
-    - name: "repeat"
-      type: number
+  - position: 1
+    name: "player"
+    type: Player
+  - position: 2
+    name: "name"
+    type: string
+  - position: 3
+    name: "group"
+    type: number
+  - position: 4
+    name: "repeat"
+    type: number
   returns:
     
 ---

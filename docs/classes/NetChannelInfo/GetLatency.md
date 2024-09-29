@@ -14,8 +14,12 @@ lua:
   description: "Returns the latency for the specified flow."
   
   arguments:
-    - name: "flow"
-      type: number
+  - position: 1
+    name: "netChannel"
+    type: NetChannelInfo
+  - position: 2
+    name: "flow"
+    type: number
   returns:
     - type: number
       description: "The latency for the specified flow."

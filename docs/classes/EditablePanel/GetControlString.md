@@ -14,11 +14,16 @@ lua:
   description: "Gets a string value from a control"
   
   arguments:
-    - name: "control"
-      type: string
-    - name: "default"
-      type: string
-      default: "\"\""
+  - position: 1
+    name: "editablePanel"
+    type: EditablePanel
+  - position: 2
+    name: "control"
+    type: string
+  - position: 3
+    name: "default"
+    type: string
+    default: "\"\""
   returns:
     - type: string
       description: "The control string value"

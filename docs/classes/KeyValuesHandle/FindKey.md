@@ -13,16 +13,20 @@ lua:
   realm: shared
   description: "Find a key in the keyvalues."
   
-  argumentSets:
-    - arguments:
+  arguments:
+  - position: 1
+    name: "keyValues"
+    type: KeyValuesHandle
+  - position: 2
+    types:
       - name: "key"
         type: number
-    - arguments:
       - name: "key"
         type: string
-      - name: "recursive"
-        type: boolean
-        default: "false"
+  - position: 3
+    name: "recursive"
+    type: boolean
+    default: "false"
   returns:
     - type: KeyValuesHandle
       description: "The keyvalues key."

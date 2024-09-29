@@ -15,11 +15,13 @@ lua:
   
   static: true
   arguments:
-    - name: "sound"
-      type: string
-    - name: "actor"
-      type: string
-      default: "nullptr"
+  - position: 1
+    name: "sound"
+    type: string
+  - position: 2
+    name: "actor"
+    type: string
+    default: "nullptr"
   returns:
     - type: boolean
       description: "True if parameters for sound exist, false otherwise."

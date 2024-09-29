@@ -13,7 +13,10 @@ lua:
   realm: shared
   description: "Makes the angle invalid."
   
-  
+  arguments:
+  - position: 1
+    name: "angle"
+    type: Angle
   returns:
     - type: Angle
       description: "The invalidated angle."

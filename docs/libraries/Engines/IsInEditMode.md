@@ -13,6 +13,7 @@ lua:
   realm: shared
   description: "Check if the game is in edit mode."
   
+  arguments:
   
   returns:
     - type: boolean

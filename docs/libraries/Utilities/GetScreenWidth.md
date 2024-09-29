@@ -13,6 +13,7 @@ lua:
   realm: client
   description: "Get screen width"
   
+  arguments:
   
   returns:
     - type: integer

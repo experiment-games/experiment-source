@@ -14,8 +14,12 @@ lua:
   description: "Handles a key code being typed"
   
   arguments:
-    - name: "keyCode"
-      type: enumeration/BUTTON
+  - position: 1
+    name: "panel"
+    type: Panel
+  - position: 2
+    name: "keyCode"
+    type: enumeration/BUTTON
   returns:
     
 ---

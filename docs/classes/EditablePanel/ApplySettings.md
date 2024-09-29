@@ -13,7 +13,13 @@ lua:
   realm: client
   description: "Applies settings from key-values"
   
-  
+  arguments:
+  - position: 1
+    name: "editablePanel"
+    type: EditablePanel
+  - position: 2
+    name: "keyValues"
+    type: KeyValuesHandle
   returns:
     
 ---

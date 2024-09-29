@@ -14,8 +14,12 @@ lua:
   description: "Checks if a key is down"
   
   arguments:
-    - name: "key"
-      type: number
+  - position: 1
+    name: "userCmd"
+    type: UserCommand
+  - position: 2
+    name: "key"
+    type: number
   returns:
     - type: boolean
       description: "True if the key is down, false otherwise"

@@ -14,8 +14,9 @@ lua:
   description: "Sets the cull mode that decides how back faces are culled when rendering geometry."
   
   arguments:
-    - name: "cullMode"
-      type: enumeration/CULL_MODE
+  - position: 1
+    name: "cullMode"
+    type: enumeration/CULL_MODE
   returns:
     
 ---

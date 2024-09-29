@@ -14,8 +14,9 @@ lua:
   description: "Writes a normal vector."
   
   arguments:
-    - name: "normal"
-      type: Vector
+  - position: 1
+    name: "normal"
+    type: Vector
   returns:
     
 ---

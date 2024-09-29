@@ -14,8 +14,9 @@ lua:
   description: "Returns the proportional normalized value."
   
   arguments:
-    - name: "scaledValue"
-      type: number
+  - position: 1
+    name: "scaledValue"
+    type: number
   returns:
     - type: integer
       description: "The proportional normalized value."

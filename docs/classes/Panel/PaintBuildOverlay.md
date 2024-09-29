@@ -13,7 +13,10 @@ lua:
   realm: client
   description: "Paints the panel build overlay"
   
-  
+  arguments:
+  - position: 1
+    name: "panel"
+    type: Panel
   returns:
     
 ---

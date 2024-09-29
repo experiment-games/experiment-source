@@ -14,8 +14,12 @@ lua:
   description: "Check if the weapon is locked."
   
   arguments:
-    - name: "asker"
-      type: Entity
+  - position: 1
+    name: "entity"
+    type: Weapon
+  - position: 2
+    name: "asker"
+    type: Entity
   returns:
     - type: boolean
       description: "Whether the weapon is locked."

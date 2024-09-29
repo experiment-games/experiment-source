@@ -13,6 +13,7 @@ lua:
   realm: client
   description: "Check if the game is in prediction."
   
+  arguments:
   
   returns:
     - type: boolean

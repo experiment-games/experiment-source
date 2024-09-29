@@ -14,8 +14,12 @@ lua:
   description: "Modify the existing vector, adding another vector to it."
   
   arguments:
-    - name: "vectorToAdd"
-      type: Vector
+  - position: 1
+    name: "vector"
+    type: Vector
+  - position: 2
+    name: "vectorToAdd"
+    type: Vector
   returns:
     
 ---

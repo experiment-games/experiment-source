@@ -14,8 +14,12 @@ lua:
   description: "Checks if the object is attached to a constraint"
   
   arguments:
-    - name: "externalOnly"
-      type: boolean
+  - position: 1
+    name: "physicsObject"
+    type: PhysicsObject
+  - position: 2
+    name: "externalOnly"
+    type: boolean
   returns:
     - type: boolean
       description: "Whether the object is attached to a constraint or not."

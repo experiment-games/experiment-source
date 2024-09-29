@@ -13,7 +13,10 @@ lua:
   realm: shared
   description: "To string operator."
   
-  
+  arguments:
+  - position: 1
+    name: "effectData"
+    type: EffectData
   returns:
     - type: string
       description: "String representation of the effect data."

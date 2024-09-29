@@ -13,7 +13,10 @@ lua:
   realm: server
   description: "Get enemy. Probably for NPC's only to get their current enemy."
   
-  
+  arguments:
+  - position: 1
+    name: "entity"
+    type: Entity
   returns:
     - type: Entity
       description: "The enemy"

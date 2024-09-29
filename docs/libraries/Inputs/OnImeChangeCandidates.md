@@ -13,6 +13,7 @@ lua:
   realm: client
   description: "Notify a change in IME candidates."
   
+  arguments:
   
   returns:
     

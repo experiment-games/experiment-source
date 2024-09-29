@@ -13,6 +13,7 @@ lua:
   realm: client
   description: "Gets the client Lua root panel"
   
+  arguments:
   
   returns:
     

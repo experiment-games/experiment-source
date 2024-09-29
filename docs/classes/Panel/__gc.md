@@ -13,6 +13,7 @@ lua:
   realm: client
   description: "Metamethod called when the panel is garbage collected"
   
+  arguments:
   
   returns:
     

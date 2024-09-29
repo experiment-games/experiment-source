@@ -14,8 +14,12 @@ lua:
   description: "Sets the maximum character count"
   
   arguments:
-    - name: "maxCount"
-      type: number
+  - position: 1
+    name: "textEntry"
+    type: TextEntry
+  - position: 2
+    name: "maxCount"
+    type: number
   returns:
     
 ---

@@ -13,7 +13,10 @@ lua:
   realm: shared
   description: "Stop following entity."
   
-  
+  arguments:
+  - position: 1
+    name: "entity"
+    type: Entity
   returns:
     
 ---

@@ -13,7 +13,10 @@ lua:
   realm: client
   description: "Gets the inset of the panel"
   
-  
+  arguments:
+  - position: 1
+    name: "panel"
+    type: Panel
   returns:
     - type: integer
       description: "The left inset of the panel"

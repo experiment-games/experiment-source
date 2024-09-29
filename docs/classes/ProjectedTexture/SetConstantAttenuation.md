@@ -14,8 +14,12 @@ lua:
   description: "Set the constant attenuation of the projected texture."
   
   arguments:
-    - name: "constAtten"
-      type: number
+  - position: 1
+    name: "projectedTexture"
+    type: ProjectedTexture
+  - position: 2
+    name: "constAtten"
+    type: number
   returns:
     
 ---

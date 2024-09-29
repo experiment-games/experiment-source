@@ -14,8 +14,12 @@ lua:
   description: "Reset a gesture slot."
   
   arguments:
-    - name: "slot"
-      type: number
+  - position: 1
+    name: "entity"
+    type: Player
+  - position: 2
+    name: "slot"
+    type: number
   returns:
     
 ---

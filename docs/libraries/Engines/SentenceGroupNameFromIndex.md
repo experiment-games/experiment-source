@@ -14,8 +14,9 @@ lua:
   description: "Get the sentence group name from an index."
   
   arguments:
-    - name: "index"
-      type: number
+  - position: 1
+    name: "index"
+    type: number
   returns:
     - type: string
       description: "The sentence group name."

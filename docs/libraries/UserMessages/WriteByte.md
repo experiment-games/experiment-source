@@ -14,8 +14,9 @@ lua:
   description: "Writes a byte."
   
   arguments:
-    - name: "byte"
-      type: number
+  - position: 1
+    name: "byte"
+    type: number
   returns:
     
 ---

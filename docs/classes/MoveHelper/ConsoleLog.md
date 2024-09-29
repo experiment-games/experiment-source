@@ -14,10 +14,15 @@ lua:
   description: "Prints a message to the console at a specific line"
   
   arguments:
-    - name: "line"
-      type: number
-    - name: "message"
-      type: string
+  - position: 1
+    name: "moveHelper"
+    type: MoveHelper
+  - position: 2
+    name: "line"
+    type: number
+  - position: 3
+    name: "message"
+    type: string
   returns:
     
 ---

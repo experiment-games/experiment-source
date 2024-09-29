@@ -14,8 +14,9 @@ lua:
   description: "Gets the texture ID"
   
   arguments:
-    - name: "texturePath"
-      type: string
+  - position: 1
+    name: "texturePath"
+    type: string
   returns:
     - type: integer
       description: "The texture ID"

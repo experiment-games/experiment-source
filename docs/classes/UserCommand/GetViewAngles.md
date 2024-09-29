@@ -13,7 +13,10 @@ lua:
   realm: shared
   description: "Gets the view angles"
   
-  
+  arguments:
+  - position: 1
+    name: "userCmd"
+    type: UserCommand
   returns:
     - type: Angle
       description: "The view angles"

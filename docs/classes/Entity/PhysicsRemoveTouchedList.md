@@ -15,8 +15,9 @@ lua:
   
   static: true
   arguments:
-    - name: "ground"
-      type: Entity
+  - position: 1
+    name: "ground"
+    type: Entity
   returns:
     
 ---

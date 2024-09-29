@@ -13,6 +13,7 @@ lua:
   realm: shared
   description: "Get the server name."
   
+  arguments:
   
   returns:
     - type: string

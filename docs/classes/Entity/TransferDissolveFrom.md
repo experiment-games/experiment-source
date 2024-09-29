@@ -14,8 +14,12 @@ lua:
   description: "Transfer the dissolve from."
   
   arguments:
-    - name: "entityFrom"
-      type: Entity
+  - position: 1
+    name: "entity"
+    type: Entity
+  - position: 2
+    name: "entityFrom"
+    type: Entity
   returns:
     
 ---

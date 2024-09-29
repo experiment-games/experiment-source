@@ -14,8 +14,12 @@ lua:
   description: "Hint a message to the player."
   
   arguments:
-    - name: "message"
-      type: string
+  - position: 1
+    name: "player"
+    type: Player
+  - position: 2
+    name: "message"
+    type: string
   returns:
     
 ---

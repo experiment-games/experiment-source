@@ -13,9 +13,12 @@ lua:
   realm: shared
   description: "Get the player's active weapon."
   
-  
+  arguments:
+  - position: 1
+    name: "player"
+    type: Player
   returns:
-    - type: weapon
+    - type: Weapon
       description: "The player's active weapon."
 ---
 

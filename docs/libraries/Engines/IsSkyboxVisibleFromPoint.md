@@ -14,8 +14,9 @@ lua:
   description: "Check if the skybox is visible from a point."
   
   arguments:
-    - name: "point"
-      type: Vector
+  - position: 1
+    name: "point"
+    type: Vector
   returns:
     - type: enumeration/SKYBOX_VISIBILITY
       description: "The skybox visibility."

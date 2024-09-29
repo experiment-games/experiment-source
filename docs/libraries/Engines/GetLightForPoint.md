@@ -14,10 +14,12 @@ lua:
   description: "Get the light for a point."
   
   arguments:
-    - name: "point"
-      type: Vector
-    - name: "clamp"
-      type: boolean
+  - position: 1
+    name: "point"
+    type: Vector
+  - position: 2
+    name: "clamp"
+    type: boolean
   returns:
     - type: Vector
       description: "The light for the point."

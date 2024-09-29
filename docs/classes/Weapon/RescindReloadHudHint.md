@@ -13,7 +13,10 @@ lua:
   realm: shared
   description: "Rescind reload HUD hint."
   
-  
+  arguments:
+  - position: 1
+    name: "entity"
+    type: Weapon
   returns:
     
 ---

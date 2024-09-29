@@ -13,7 +13,10 @@ lua:
   realm: shared
   description: "Stop sprinting."
   
-  
+  arguments:
+  - position: 1
+    name: "entity"
+    type: Weapon
   returns:
     - type: boolean
       description: "Whether sprinting was stopped."

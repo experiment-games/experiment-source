@@ -14,8 +14,12 @@ lua:
   description: "Set a string value in the keyvalues."
   
   arguments:
-    - name: "value"
-      type: string
+  - position: 1
+    name: "keyValues"
+    type: KeyValuesHandle
+  - position: 2
+    name: "value"
+    type: string
   returns:
     
 ---

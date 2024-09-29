@@ -14,8 +14,9 @@ lua:
   description: "Pops the make current"
   
   arguments:
-    - name: "panel"
-      type: Panel
+  - position: 1
+    name: "panel"
+    type: Panel
   returns:
     
 ---

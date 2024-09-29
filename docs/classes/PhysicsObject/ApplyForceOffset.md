@@ -13,7 +13,16 @@ lua:
   realm: shared
   description: "Applies force at an offset"
   
-  
+  arguments:
+  - position: 1
+    name: "physicsObject"
+    type: PhysicsObject
+  - position: 2
+    name: "force"
+    type: Vector
+  - position: 3
+    name: "offset"
+    type: Vector
   returns:
     
 ---

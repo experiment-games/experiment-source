@@ -13,7 +13,10 @@ lua:
   realm: shared
   description: "Get draw activity."
   
-  
+  arguments:
+  - position: 1
+    name: "entity"
+    type: Weapon
   returns:
     - type: enumeration/ACTIVITY
       description: "Draw activity ID."

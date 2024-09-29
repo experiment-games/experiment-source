@@ -14,8 +14,9 @@ lua:
   description: "Set the map load failed state."
   
   arguments:
-    - name: "failed"
-      type: boolean
+  - position: 1
+    name: "failed"
+    type: boolean
   returns:
     
 ---

@@ -13,7 +13,10 @@ lua:
   realm: client
   description: "Get whether shadows are enabled for this projected texture."
   
-  
+  arguments:
+  - position: 1
+    name: "projectedTexture"
+    type: ProjectedTexture
   returns:
     - type: boolean
       description: "Whether shadows are enabled for this projected texture."

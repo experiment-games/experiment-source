@@ -14,8 +14,12 @@ lua:
   description: "Get the shoot sound."
   
   arguments:
-    - name: "index"
-      type: number
+  - position: 1
+    name: "entity"
+    type: Weapon
+  - position: 2
+    name: "index"
+    type: number
   returns:
     - type: string
       description: "Shoot sound."

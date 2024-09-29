@@ -14,8 +14,12 @@ lua:
   description: "Sets whether the button is armed"
   
   arguments:
-    - name: "isArmed"
-      type: boolean
+  - position: 1
+    name: "button"
+    type: Button
+  - position: 2
+    name: "isArmed"
+    type: boolean
   returns:
     
 ---

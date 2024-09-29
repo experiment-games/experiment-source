@@ -14,10 +14,12 @@ lua:
   description: "Gets the text size"
   
   arguments:
-    - name: "text"
-      type: string
-    - name: "font"
-      type: FontHandle
+  - position: 1
+    name: "font"
+    type: FontHandle
+  - position: 2
+    name: "text"
+    type: string
   returns:
     - type: integer
       description: "The width"

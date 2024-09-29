@@ -14,8 +14,9 @@ lua:
   description: "Writes a char."
   
   arguments:
-    - name: "char"
-      type: number
+  - position: 1
+    name: "char"
+    type: number
   returns:
     
 ---

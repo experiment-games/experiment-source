@@ -14,8 +14,9 @@ lua:
   description: "Lock the network string tables."
   
   arguments:
-    - name: "lock"
-      type: boolean
+  - position: 1
+    name: "lock"
+    type: boolean
   returns:
     - type: boolean
       description: "True if the network string tables were locked, false otherwise."

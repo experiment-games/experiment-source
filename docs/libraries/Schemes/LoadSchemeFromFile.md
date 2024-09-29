@@ -14,10 +14,12 @@ lua:
   description: "Loads the scheme from the specified file."
   
   arguments:
-    - name: "fileName"
-      type: string
-    - name: "tag"
-      type: string
+  - position: 1
+    name: "fileName"
+    type: string
+  - position: 2
+    name: "tag"
+    type: string
   returns:
     - type: scheme
       description: "The scheme loaded from the specified file."

@@ -14,8 +14,12 @@ lua:
   description: "Set the brightness of the projected texture."
   
   arguments:
-    - name: "brightness"
-      type: number
+  - position: 1
+    name: "projectedTexture"
+    type: ProjectedTexture
+  - position: 2
+    name: "brightness"
+    type: number
   returns:
     
 ---

@@ -13,7 +13,10 @@ lua:
   realm: client
   description: "Get the blended linear velocity."
   
-  
+  arguments:
+  - position: 1
+    name: "entity"
+    type: Entity
   returns:
     - type: Vector
       description: "The blended linear velocity"

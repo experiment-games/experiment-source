@@ -14,8 +14,9 @@ lua:
   description: "Set quick delete."
   
   arguments:
-    - name: "quickDelete"
-      type: boolean
+  - position: 1
+    name: "quickDelete"
+    type: boolean
   returns:
     
 ---

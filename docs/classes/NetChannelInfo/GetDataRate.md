@@ -13,7 +13,10 @@ lua:
   realm: server
   description: "Returns the data rate."
   
-  
+  arguments:
+  - position: 1
+    name: "netChannel"
+    type: NetChannelInfo
   returns:
     - type: integer
       description: "The data rate."

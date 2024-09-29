@@ -13,7 +13,10 @@ lua:
   realm: shared
   description: "Needs full frame buffer texture."
   
-  
+  arguments:
+  - position: 1
+    name: "material"
+    type: Material
   returns:
     - type: boolean
       description: "True if needs full frame buffer texture, false otherwise."

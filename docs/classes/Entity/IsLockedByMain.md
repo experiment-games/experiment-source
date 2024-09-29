@@ -13,7 +13,10 @@ lua:
   realm: server
   description: "Whether this door is locked by the main door (described as 'master' door in keyvalues)."
   
-  
+  arguments:
+  - position: 1
+    name: "entity"
+    type: Entity
   returns:
     - type: boolean
       description: "true if locked by main, false otherwise."

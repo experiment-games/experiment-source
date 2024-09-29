@@ -14,10 +14,15 @@ lua:
   description: "Spray a decal for the player based on a trace with start and end."
   
   arguments:
-    - name: "traceStart"
-      type: Vector
-    - name: "traceEnd"
-      type: Vector
+  - position: 1
+    name: "player"
+    type: Player
+  - position: 2
+    name: "traceStart"
+    type: Vector
+  - position: 3
+    name: "traceEnd"
+    type: Vector
   returns:
     
 ---

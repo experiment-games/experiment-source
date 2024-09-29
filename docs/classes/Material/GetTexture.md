@@ -14,8 +14,12 @@ lua:
   description: "Get texture."
   
   arguments:
-    - name: "varName"
-      type: string
+  - position: 1
+    name: "material"
+    type: Material
+  - position: 2
+    name: "varName"
+    type: string
   returns:
     - type: Texture
       description: "Texture value."

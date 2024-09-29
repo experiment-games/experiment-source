@@ -13,7 +13,10 @@ lua:
   realm: shared
   description: "Object capabilities for save/restore."
   
-  
+  arguments:
+  - position: 1
+    name: "entity"
+    type: Entity
   returns:
     - type: integer
       description: "The object y flags."

@@ -13,6 +13,7 @@ lua:
   realm: client
   description: "Check if the level is a main menu background."
   
+  arguments:
   
   returns:
     - type: boolean

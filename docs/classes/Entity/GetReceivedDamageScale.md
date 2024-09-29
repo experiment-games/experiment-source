@@ -14,8 +14,12 @@ lua:
   description: "Returns a value that scales all damage done to this entity."
   
   arguments:
-    - name: "inflictor"
-      type: Entity
+  - position: 1
+    name: "entity"
+    type: Entity
+  - position: 2
+    name: "inflictor"
+    type: Entity
   returns:
     - type: number
       description: "The received damage scale"

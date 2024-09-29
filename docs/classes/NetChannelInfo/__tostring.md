@@ -13,7 +13,10 @@ lua:
   realm: server
   description: "Returns the string representation of the INetChannelInfo object."
   
-  
+  arguments:
+  - position: 1
+    name: "netChannel"
+    type: NetChannelInfo
   returns:
     - type: string
       description: "The string representation of the INetChannelInfo object."

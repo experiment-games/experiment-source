@@ -13,7 +13,10 @@ lua:
   realm: shared
   description: "Should show control panels."
   
-  
+  arguments:
+  - position: 1
+    name: "entity"
+    type: Weapon
   returns:
     - type: boolean
       description: "Whether the control panels should be shown."

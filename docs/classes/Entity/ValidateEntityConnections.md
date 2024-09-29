@@ -13,7 +13,10 @@ lua:
   realm: server
   description: "Validate entity connections."
   
-  
+  arguments:
+  - position: 1
+    name: "entity"
+    type: Entity
   returns:
     
 ---

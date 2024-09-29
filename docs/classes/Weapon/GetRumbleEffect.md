@@ -13,7 +13,10 @@ lua:
   realm: shared
   description: "Get the rumble effect."
   
-  
+  arguments:
+  - position: 1
+    name: "entity"
+    type: Weapon
   returns:
     - type: integer
       description: "Rumble effect."

@@ -13,6 +13,7 @@ lua:
   realm: client
   description: "Unlock all shadow depth textures."
   
+  arguments:
   
   returns:
     

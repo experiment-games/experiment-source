@@ -14,10 +14,15 @@ lua:
   description: "Sets the matrix to a matrix with the given origin and angles."
   
   arguments:
-    - name: "vector"
-      type: Vector
-    - name: "angle"
-      type: Angle
+  - position: 1
+    name: "Matrix"
+    type: Matrix
+  - position: 2
+    name: "vector"
+    type: Vector
+  - position: 3
+    name: "angle"
+    type: Angle
   returns:
     
 ---

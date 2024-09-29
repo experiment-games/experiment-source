@@ -14,8 +14,12 @@ lua:
   description: "Sets the final step height"
   
   arguments:
-    - name: "height"
-      type: Vector
+  - position: 1
+    name: "moveData"
+    type: MoveData
+  - position: 2
+    name: "height"
+    type: Vector
   returns:
     
 ---

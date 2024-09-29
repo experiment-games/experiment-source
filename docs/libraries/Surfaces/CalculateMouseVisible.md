@@ -13,6 +13,7 @@ lua:
   realm: client
   description: "Calculates if the mouse is visible."
   
+  arguments:
   
   returns:
     

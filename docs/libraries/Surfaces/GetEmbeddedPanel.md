@@ -13,6 +13,7 @@ lua:
   realm: client
   description: "Gets the embedded panel"
   
+  arguments:
   
   returns:
     

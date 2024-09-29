@@ -13,7 +13,10 @@ lua:
   realm: client
   description: "Gets the model path from the panel"
   
-  
+  arguments:
+  - position: 1
+    name: "modelImagePanel"
+    type: ModelImagePanel
   returns:
     - type: string
       description: "The model path"

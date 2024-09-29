@@ -13,7 +13,10 @@ lua:
   realm: client
   description: "Handles the event when a panel is dropped"
   
-  
+  arguments:
+  - position: 1
+    name: "textEntry"
+    type: TextEntry
   returns:
     
 ---

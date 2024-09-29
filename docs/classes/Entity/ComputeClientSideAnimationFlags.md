@@ -13,7 +13,10 @@ lua:
   realm: client
   description: "Compute the client side animation flags."
   
-  
+  arguments:
+  - position: 1
+    name: "entity"
+    type: Entity
   returns:
     - type: integer
       description: "The client side animation flags"

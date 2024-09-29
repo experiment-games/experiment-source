@@ -14,8 +14,12 @@ lua:
   description: "Get the predicted postion of an entity of a certain number of seconds. Use this function with caution, it has great potential for annoying the player, especially if used for target firing predition"
   
   arguments:
-    - name: "timeDelta"
-      type: number
+  - position: 1
+    name: "entity"
+    type: Entity
+  - position: 2
+    name: "timeDelta"
+    type: number
   returns:
     - type: Vector
       description: "The predicted position of the entity"

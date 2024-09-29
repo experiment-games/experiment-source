@@ -13,7 +13,10 @@ lua:
   realm: server
   description: "Get the vehicle analog control bias for the player."
   
-  
+  arguments:
+  - position: 1
+    name: "player"
+    type: Player
   returns:
     - type: integer
       description: "The vehicle analog control bias."

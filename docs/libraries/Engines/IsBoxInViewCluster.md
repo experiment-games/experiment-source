@@ -14,10 +14,12 @@ lua:
   description: "Check if a box is in a view cluster."
   
   arguments:
-    - name: "boxMin"
-      type: Vector
-    - name: "boxMax"
-      type: Vector
+  - position: 1
+    name: "boxMin"
+    type: Vector
+  - position: 2
+    name: "boxMax"
+    type: Vector
   returns:
     - type: boolean
       description: "True if the box is in the view cluster, false otherwise."

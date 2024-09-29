@@ -13,7 +13,10 @@ lua:
   realm: shared
   description: "Call the player's item post frame."
   
-  
+  arguments:
+  - position: 1
+    name: "player"
+    type: Player
   returns:
     
 ---

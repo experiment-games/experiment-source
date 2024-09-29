@@ -14,8 +14,9 @@ lua:
   description: "Creates a sound script."
   
   arguments:
-    - name: "soundData"
-      type: table
+  - position: 1
+    name: "soundData"
+    type: table
   returns:
     
 ---

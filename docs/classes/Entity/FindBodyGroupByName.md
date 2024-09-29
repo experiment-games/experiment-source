@@ -14,8 +14,12 @@ lua:
   description: "Find the bodygroup id by the bodygroup name"
   
   arguments:
-    - name: "bodyGroupName"
-      type: string
+  - position: 1
+    name: "entity"
+    type: Entity
+  - position: 2
+    name: "bodyGroupName"
+    type: string
   returns:
     - type: integer
       description: "The bodygroup id"

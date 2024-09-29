@@ -14,10 +14,12 @@ lua:
   description: "Finds a client in the PVS"
   
   arguments:
-    - name: "minimumVector"
-      type: Vector
-    - name: "maximumVector"
-      type: Vector
+  - position: 1
+    name: "minimumVector"
+    type: Vector
+  - position: 2
+    name: "maximumVector"
+    type: Vector
   returns:
     - type: Entity
       description: "The entity found, or NULL if not found."

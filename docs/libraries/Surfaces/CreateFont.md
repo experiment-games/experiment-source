@@ -13,6 +13,7 @@ lua:
   realm: client
   description: "Creates a new font."
   
+  arguments:
   
   returns:
     - type: font

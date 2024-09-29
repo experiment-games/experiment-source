@@ -14,10 +14,15 @@ lua:
   description: "Checks if the key is overridden"
   
   arguments:
-    - name: "keyCode"
-      type: enumeration/BUTTON
-    - name: "modifiers"
-      type: number
+  - position: 1
+    name: "panel"
+    type: Panel
+  - position: 2
+    name: "keyCode"
+    type: enumeration/BUTTON
+  - position: 3
+    name: "modifiers"
+    type: number
   returns:
     - type: boolean
       description: "True if the key is overridden, false otherwise"

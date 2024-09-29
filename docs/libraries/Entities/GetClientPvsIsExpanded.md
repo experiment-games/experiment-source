@@ -13,6 +13,7 @@ lua:
   realm: server
   description: "Checks if the client PVS is expanded"
   
+  arguments:
   
   returns:
     - type: boolean

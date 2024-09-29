@@ -14,8 +14,12 @@ lua:
   description: "Set the hitbox set by name."
   
   arguments:
-    - name: "hitboxSetName"
-      type: string
+  - position: 1
+    name: "entity"
+    type: Entity
+  - position: 2
+    name: "hitboxSetName"
+    type: string
   returns:
     
 ---

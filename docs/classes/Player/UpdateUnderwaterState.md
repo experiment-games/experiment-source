@@ -13,7 +13,10 @@ lua:
   realm: shared
   description: "Update the player's underwater state."
   
-  
+  arguments:
+  - position: 1
+    name: "player"
+    type: Player
   returns:
     
 ---

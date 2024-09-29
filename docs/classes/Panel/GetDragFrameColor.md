@@ -13,7 +13,10 @@ lua:
   realm: client
   description: "Gets the color of the drag frame of the panel"
   
-  
+  arguments:
+  - position: 1
+    name: "panel"
+    type: Panel
   returns:
     - type: Color
       description: "The color of the drag frame of the panel"

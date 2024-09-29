@@ -13,7 +13,10 @@ lua:
   realm: shared
   description: "Checks if the length of the vector is less than the specified value."
   
-  
+  arguments:
+  - position: 1
+    name: "vector"
+    type: Vector
   returns:
     - type: boolean
       description: "True if the length of the vector is less than the specified value, false otherwise."

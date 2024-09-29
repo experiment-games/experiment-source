@@ -14,8 +14,12 @@ lua:
   description: "Set animated every tick."
   
   arguments:
-    - name: "animated"
-      type: boolean
+  - position: 1
+    name: "entity"
+    type: Entity
+  - position: 2
+    name: "animated"
+    type: boolean
   returns:
     
 ---

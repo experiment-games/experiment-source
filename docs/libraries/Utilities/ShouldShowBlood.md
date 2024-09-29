@@ -14,8 +14,9 @@ lua:
   description: "Check if blood of the given color should be shown"
   
   arguments:
-    - name: "bloodColor"
-      type: number
+  - position: 1
+    name: "bloodColor"
+    type: number
   returns:
     - type: boolean
       description: "True if blood should be shown"

@@ -14,8 +14,9 @@ lua:
   description: "Decode a base64 encoded string"
   
   arguments:
-    - name: "string"
-      type: string
+  - position: 1
+    name: "string"
+    type: string
   returns:
     - type: string
       description: "Decoded string."

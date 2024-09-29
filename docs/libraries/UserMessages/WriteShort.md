@@ -14,8 +14,9 @@ lua:
   description: "Writes a short integer."
   
   arguments:
-    - name: "short"
-      type: number
+  - position: 1
+    name: "short"
+    type: number
   returns:
     
 ---

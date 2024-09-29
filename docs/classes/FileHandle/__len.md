@@ -13,7 +13,10 @@ lua:
   realm: shared
   description: "Get the length of a file."
   
-  
+  arguments:
+  - position: 1
+    name: "file"
+    type: FileHandle
   returns:
     - type: integer
       description: "The length of the file or nil if the file handle is invalid."

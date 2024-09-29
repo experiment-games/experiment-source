@@ -14,10 +14,12 @@ lua:
   description: "Adds multi damage"
   
   arguments:
-    - name: "damageInfo"
-      type: DamageInfo
-    - name: "entity"
-      type: Entity
+  - position: 1
+    name: "damageInfo"
+    type: DamageInfo
+  - position: 2
+    name: "entity"
+    type: Entity
   returns:
     
 ---

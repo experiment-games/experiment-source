@@ -14,8 +14,12 @@ lua:
   description: "Set the player's animation extension."
   
   arguments:
-    - name: "extension"
-      type: string
+  - position: 1
+    name: "player"
+    type: Player
+  - position: 2
+    name: "extension"
+    type: string
   returns:
     
 ---

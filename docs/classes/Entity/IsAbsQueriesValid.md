@@ -14,6 +14,7 @@ lua:
   description: "Is abs queries valid."
   
   static: true
+  arguments:
   
   returns:
     - type: boolean

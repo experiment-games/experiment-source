@@ -13,6 +13,7 @@ lua:
   realm: client
   description: "Pop a 2D view."
   
+  arguments:
   
   returns:
     

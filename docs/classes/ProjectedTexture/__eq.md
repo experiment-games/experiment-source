@@ -14,8 +14,12 @@ lua:
   description: "Metamethod that is called when comparing two entities"
   
   arguments:
-    - name: "otherProjectedTexture"
-      type: ProjectedTexture
+  - position: 1
+    name: "projectedTexture"
+    type: ProjectedTexture
+  - position: 2
+    name: "other"
+    type: ProjectedTexture
   returns:
     - type: boolean
       description: "True if entities are equal."

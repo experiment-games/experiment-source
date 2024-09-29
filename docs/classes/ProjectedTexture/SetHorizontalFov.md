@@ -14,8 +14,12 @@ lua:
   description: "Set the horizontal angle of projection without affecting the vertical angle."
   
   arguments:
-    - name: "horizontalFov"
-      type: number
+  - position: 1
+    name: "projectedTexture"
+    type: ProjectedTexture
+  - position: 2
+    name: "horizontalFov"
+    type: number
   returns:
     
 ---

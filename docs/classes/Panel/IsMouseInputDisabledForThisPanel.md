@@ -13,7 +13,10 @@ lua:
   realm: client
   description: "Checks if the mouse input is disabled for this panel"
   
-  
+  arguments:
+  - position: 1
+    name: "panel"
+    type: Panel
   returns:
     - type: boolean
       description: "True if the mouse input is disabled for this panel, false otherwise"

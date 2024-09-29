@@ -13,6 +13,7 @@ lua:
   realm: shared
   description: "Get the number of simulated ticks this frame."
   
+  arguments:
   
   returns:
     - type: integer

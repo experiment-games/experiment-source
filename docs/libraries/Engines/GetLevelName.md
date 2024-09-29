@@ -13,6 +13,7 @@ lua:
   realm: shared
   description: "Get the name of the current level."
   
+  arguments:
   
   returns:
     - type: string

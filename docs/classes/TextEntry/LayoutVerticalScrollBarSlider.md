@@ -13,7 +13,10 @@ lua:
   realm: client
   description: "Layouts the vertical scrollbar slider"
   
-  
+  arguments:
+  - position: 1
+    name: "textEntry"
+    type: TextEntry
   returns:
     
 ---

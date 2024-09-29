@@ -13,7 +13,10 @@ lua:
   realm: client
   description: "Gets the drag start tolerance of the panel"
   
-  
+  arguments:
+  - position: 1
+    name: "panel"
+    type: Panel
   returns:
     - type: integer
       description: "The drag start tolerance of the panel"

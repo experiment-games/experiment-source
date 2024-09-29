@@ -14,11 +14,13 @@ lua:
   description: "Load the game state."
   
   arguments:
-    - name: "fileName"
-      type: string
-    - name: "isDemo"
-      type: boolean
-      default: "false"
+  - position: 1
+    name: "fileName"
+    type: string
+  - position: 2
+    name: "isDemo"
+    type: boolean
+    default: "false"
   returns:
     - type: boolean
       description: "True if the game state was loaded, false otherwise."

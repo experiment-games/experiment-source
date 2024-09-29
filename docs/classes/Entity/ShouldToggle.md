@@ -14,10 +14,15 @@ lua:
   description: "Should toggle."
   
   arguments:
-    - name: "useType"
-      type: enumeration/USE_TYPE
-    - name: "currentState"
-      type: number
+  - position: 1
+    name: "entity"
+    type: Entity
+  - position: 2
+    name: "useType"
+    type: enumeration/USE_TYPE
+  - position: 3
+    name: "currentState"
+    type: number
   returns:
     - type: integer
       description: "The toggle state"

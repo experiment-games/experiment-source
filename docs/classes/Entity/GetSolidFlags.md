@@ -13,7 +13,10 @@ lua:
   realm: shared
   description: "Get solid flags."
   
-  
+  arguments:
+  - position: 1
+    name: "entity"
+    type: Entity
   returns:
     - type: integer
       description: "The SOLID_FLAG flags."

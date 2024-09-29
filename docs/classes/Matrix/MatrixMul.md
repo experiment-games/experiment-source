@@ -14,10 +14,15 @@ lua:
   description: "Multiplies two matrices."
   
   arguments:
-    - name: "Matrix"
-      type: Matrix
-    - name: "Matrix"
-      type: Matrix
+  - position: 1
+    name: "Matrix"
+    type: Matrix
+  - position: 2
+    name: "Matrix"
+    type: Matrix
+  - position: 3
+    name: "Matrix"
+    type: Matrix
   returns:
     
 ---

@@ -13,7 +13,10 @@ lua:
   realm: shared
   description: "Get local origin."
   
-  
+  arguments:
+  - position: 1
+    name: "entity"
+    type: Entity
   returns:
     - type: Vector
       description: "The local origin."

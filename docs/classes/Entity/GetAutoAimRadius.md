@@ -13,7 +13,10 @@ lua:
   realm: server
   description: "Get auto aim radius."
   
-  
+  arguments:
+  - position: 1
+    name: "entity"
+    type: Entity
   returns:
     - type: number
       description: "The auto aim radius"

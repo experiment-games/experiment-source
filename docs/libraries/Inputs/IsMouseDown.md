@@ -14,8 +14,9 @@ lua:
   description: "Check if a specific mouse button is down."
   
   arguments:
-    - name: "mouseCode"
-      type: enumeration/BUTTON
+  - position: 1
+    name: "mouseCode"
+    type: enumeration/BUTTON
   returns:
     - type: boolean
       description: "Whether the mouse button is down."

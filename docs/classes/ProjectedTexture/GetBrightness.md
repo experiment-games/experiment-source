@@ -13,7 +13,10 @@ lua:
   realm: client
   description: "Get the brightness of the projected texture."
   
-  
+  arguments:
+  - position: 1
+    name: "projectedTexture"
+    type: ProjectedTexture
   returns:
     - type: number
       description: "The brightness of the projected texture."

@@ -13,6 +13,7 @@ lua:
   realm: shared
   description: "Creates an effect (EffectData)."
   
+  arguments:
   
   returns:
     - type: EffectData

@@ -14,8 +14,12 @@ lua:
   description: "Sets the text of the text entry"
   
   arguments:
-    - name: "text"
-      type: string
+  - position: 1
+    name: "textEntry"
+    type: TextEntry
+  - position: 2
+    name: "text"
+    type: string
   returns:
     
 ---

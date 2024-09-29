@@ -14,13 +14,16 @@ lua:
   description: "Set the modal sub-tree."
   
   arguments:
-    - name: "modalSubTree"
-      type: Panel
-    - name: "scopePanel"
-      type: Panel
-    - name: "receiveMessages"
-      type: boolean
-      default: "true"
+  - position: 1
+    name: "modalSubTree"
+    type: Panel
+  - position: 2
+    name: "scopePanel"
+    type: Panel
+  - position: 3
+    name: "receiveMessages"
+    type: boolean
+    default: "true"
   returns:
     
 ---

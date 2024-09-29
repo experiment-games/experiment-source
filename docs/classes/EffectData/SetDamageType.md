@@ -14,8 +14,12 @@ lua:
   description: "Set the damage type of the effect."
   
   arguments:
-    - name: "damageType"
-      type: number
+  - position: 1
+    name: "effectData"
+    type: EffectData
+  - position: 2
+    name: "damageType"
+    type: number
   returns:
     
 ---

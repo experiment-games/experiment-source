@@ -14,8 +14,12 @@ lua:
   description: "Divides a vector by a number."
   
   arguments:
-    - name: "number"
-      type: number
+  - position: 1
+    name: "vector"
+    type: Vector
+  - position: 2
+    name: "number"
+    type: number
   returns:
     - type: Vector
       description: "The vector divided by the number."

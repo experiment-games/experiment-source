@@ -13,6 +13,7 @@ lua:
   realm: client
   description: "Call when the game receives an uncompressed packet."
   
+  arguments:
   
   returns:
     

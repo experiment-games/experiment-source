@@ -14,10 +14,12 @@ lua:
   description: "Sets the text scale"
   
   arguments:
-    - name: "xScale"
-      type: number
-    - name: "yScale"
-      type: number
+  - position: 1
+    name: "xScale"
+    type: number
+  - position: 2
+    name: "yScale"
+    type: number
   returns:
     
 ---

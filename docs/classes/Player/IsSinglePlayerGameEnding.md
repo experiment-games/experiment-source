@@ -13,7 +13,10 @@ lua:
   realm: server
   description: "Check if the single player game is ending for the player."
   
-  
+  arguments:
+  - position: 1
+    name: "player"
+    type: Player
   returns:
     - type: boolean
       description: "Whether the single player game is ending."

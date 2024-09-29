@@ -14,15 +14,18 @@ lua:
   description: "Creates a new label"
   
   arguments:
-    - name: "parent"
-      type: Panel
-      default: "VGui_GetClientLuaRootPanel()"
-    - name: "text"
-      type: string
-      default: "\"\""
-    - name: "name"
-      type: string
-      default: "\"Label\""
+  - position: 1
+    name: "parent"
+    type: Panel
+    default: "VGui_GetClientLuaRootPanel()"
+  - position: 2
+    name: "text"
+    type: string
+    default: "\"\""
+  - position: 3
+    name: "name"
+    type: string
+    default: "\"Label\""
   returns:
     - type: Label
       description: "The new label"

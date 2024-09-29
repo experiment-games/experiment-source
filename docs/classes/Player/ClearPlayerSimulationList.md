@@ -13,7 +13,10 @@ lua:
   realm: shared
   description: "Clear the player simulation list."
   
-  
+  arguments:
+  - position: 1
+    name: "player"
+    type: Player
   returns:
     
 ---

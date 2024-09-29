@@ -14,10 +14,12 @@ lua:
   description: "Called when the screen size changes"
   
   arguments:
-    - name: "oldWidth"
-      type: number
-    - name: "oldHeight"
-      type: number
+  - position: 1
+    name: "oldWidth"
+    type: number
+  - position: 2
+    name: "oldHeight"
+    type: number
   returns:
     
 ---

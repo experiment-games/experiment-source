@@ -13,7 +13,10 @@ lua:
   realm: client
   description: "Get the texture of the projected texture."
   
-  
+  arguments:
+  - position: 1
+    name: "projectedTexture"
+    type: ProjectedTexture
   returns:
     - type: ITexture
       description: "The texture of the projected texture."

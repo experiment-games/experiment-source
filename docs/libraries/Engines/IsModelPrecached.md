@@ -14,8 +14,9 @@ lua:
   description: "Check if a model is precached."
   
   arguments:
-    - name: "modelName"
-      type: string
+  - position: 1
+    name: "modelName"
+    type: string
   returns:
     - type: boolean
       description: "True if the model is precached, false otherwise."

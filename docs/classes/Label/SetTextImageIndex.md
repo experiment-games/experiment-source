@@ -14,8 +14,12 @@ lua:
   description: "Sets the text image index of the label"
   
   arguments:
-    - name: "index"
-      type: number
+  - position: 1
+    name: "label"
+    type: Label
+  - position: 2
+    name: "index"
+    type: number
   returns:
     - type: integer
       description: "The text image index of the label"

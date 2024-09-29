@@ -13,7 +13,10 @@ lua:
   realm: shared
   description: "Is error material."
   
-  
+  arguments:
+  - position: 1
+    name: "material"
+    type: Material
   returns:
     - type: boolean
       description: "True if error material, false otherwise."

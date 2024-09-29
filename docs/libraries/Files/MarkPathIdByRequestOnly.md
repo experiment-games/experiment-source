@@ -14,10 +14,12 @@ lua:
   description: "Mark a path ID as request only."
   
   arguments:
-    - name: "pathId"
-      type: string
-    - name: "requestOnly"
-      type: boolean
+  - position: 1
+    name: "pathId"
+    type: string
+  - position: 2
+    name: "requestOnly"
+    type: boolean
   returns:
     
 ---

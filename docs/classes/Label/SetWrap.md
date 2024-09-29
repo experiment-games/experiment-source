@@ -14,8 +14,12 @@ lua:
   description: "Sets the wrap of the label"
   
   arguments:
-    - name: "shouldWrap"
-      type: boolean
+  - position: 1
+    name: "label"
+    type: Label
+  - position: 2
+    name: "shouldWrap"
+    type: boolean
   returns:
     
 ---

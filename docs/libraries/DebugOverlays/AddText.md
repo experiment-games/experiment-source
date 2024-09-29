@@ -14,19 +14,28 @@ lua:
   description: "Add a text overlay to the screen with specific colors."
   
   arguments:
-    - name: "origin"
-      type: Vector
-    - name: "text"
-      type: string
-    - name: "duration"
-      type: number
-      default: "1"
-    - name: "viewCheck"
-      type: boolean
-      default: "false"
-    - name: "lineOffset"
-      type: number
-      default: "64"
+  - position: 1
+    name: "origin"
+    type: Vector
+  - position: 2
+    name: "text"
+    type: string
+  - position: 3
+    name: "duration"
+    type: number
+    default: "1"
+  - position: 4
+    name: "viewCheck"
+    type: boolean
+    default: "false"
+  - position: 5
+    name: "lineOffset"
+    type: number
+    default: "64"
+  - position: 6
+    name: "color"
+    type: Color
+    default: "color_white"
   returns:
     
 ---

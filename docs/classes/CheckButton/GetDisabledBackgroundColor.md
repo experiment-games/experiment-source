@@ -13,7 +13,10 @@ lua:
   realm: client
   description: "Gets the disabled background color"
   
-  
+  arguments:
+  - position: 1
+    name: "checkButton"
+    type: CheckButton
   returns:
     - type: Color
       description: "The disabled background color"

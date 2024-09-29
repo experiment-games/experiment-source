@@ -14,8 +14,12 @@ lua:
   description: "Sets the drag start tolerance"
   
   arguments:
-    - name: "tolerance"
-      type: number
+  - position: 1
+    name: "panel"
+    type: Panel
+  - position: 2
+    name: "tolerance"
+    type: number
   returns:
     
 ---

@@ -14,8 +14,12 @@ lua:
   description: "Call to handle dying for the player."
   
   arguments:
-    - name: "info"
-      type: DamageInfo
+  - position: 1
+    name: "player"
+    type: Player
+  - position: 2
+    name: "info"
+    type: DamageInfo
   returns:
     
 ---

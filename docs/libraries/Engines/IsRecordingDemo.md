@@ -13,6 +13,7 @@ lua:
   realm: client
   description: "Check if the client is recording a demo."
   
+  arguments:
   
   returns:
     - type: boolean

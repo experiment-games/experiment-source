@@ -14,10 +14,12 @@ lua:
   description: "Adds a localized string."
   
   arguments:
-    - name: "string"
-      type: string
-    - name: "string"
-      type: string
+  - position: 1
+    name: "string"
+    type: string
+  - position: 2
+    name: "string"
+    type: string
   returns:
     
 ---

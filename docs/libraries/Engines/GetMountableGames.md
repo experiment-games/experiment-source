@@ -13,6 +13,7 @@ lua:
   realm: shared
   description: "Get a list of mountable games."
   
+  arguments:
   
   returns:
     - type: table

@@ -14,8 +14,12 @@ lua:
   description: "Sets the scheme"
   
   arguments:
-    - name: "scheme"
-      type: string
+  - position: 1
+    name: "panel"
+    type: Panel
+  - position: 2
+    name: "scheme"
+    type: string
   returns:
     
 ---

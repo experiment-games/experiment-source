@@ -13,7 +13,10 @@ lua:
   realm: client
   description: "Handles the mouse focus being ticked"
   
-  
+  arguments:
+  - position: 1
+    name: "panel"
+    type: Panel
   returns:
     
 ---

@@ -14,8 +14,12 @@ lua:
   description: "Check if the player can use a weapon."
   
   arguments:
-    - name: "weapon"
-      type: Weapon
+  - position: 1
+    name: "player"
+    type: Player
+  - position: 2
+    name: "weapon"
+    type: Weapon
   returns:
     - type: boolean
       description: "Whether the player can use the weapon."

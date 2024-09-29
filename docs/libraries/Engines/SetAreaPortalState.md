@@ -14,10 +14,12 @@ lua:
   description: "Set the area portal state."
   
   arguments:
-    - name: "portalIndex"
-      type: number
-    - name: "isOpen"
-      type: number
+  - position: 1
+    name: "portalIndex"
+    type: number
+  - position: 2
+    name: "isOpen"
+    type: number
   returns:
     
 ---

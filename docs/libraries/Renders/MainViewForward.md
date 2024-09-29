@@ -13,6 +13,7 @@ lua:
   realm: client
   description: "Get the main view forward."
   
+  arguments:
   
   returns:
     - type: Vector

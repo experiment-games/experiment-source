@@ -13,6 +13,7 @@ lua:
   realm: shared
   description: "Setup preload data."
   
+  arguments:
   
   returns:
     

@@ -14,11 +14,13 @@ lua:
   description: "Change the level."
   
   arguments:
-    - name: "levelName"
-      type: string
-    - name: "transitionMap"
-      type: string
-      default: "NULL"
+  - position: 1
+    name: "levelName"
+    type: string
+  - position: 2
+    name: "transitionMap"
+    type: string
+    default: "NULL"
   returns:
     
 ---

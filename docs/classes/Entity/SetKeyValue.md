@@ -14,10 +14,15 @@ lua:
   description: "Set key value."
   
   arguments:
-    - name: "key"
-      type: string
-    - name: "value"
-      type: string
+  - position: 1
+    name: "entity"
+    type: Entity
+  - position: 2
+    name: "key"
+    type: string
+  - position: 3
+    name: "value"
+    type: string
   returns:
     
 ---

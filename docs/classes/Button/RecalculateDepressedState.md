@@ -13,7 +13,10 @@ lua:
   realm: client
   description: "Recalculates the depressed state"
   
-  
+  arguments:
+  - position: 1
+    name: "button"
+    type: Button
   returns:
     
 ---

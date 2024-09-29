@@ -13,6 +13,7 @@ lua:
   realm: server
   description: "Clears the entity list."
   
+  arguments:
   
   returns:
     

@@ -14,8 +14,9 @@ lua:
   description: "Precache an entity by class name"
   
   arguments:
-    - name: "className"
-      type: string
+  - position: 1
+    name: "className"
+    type: string
   returns:
     
 ---

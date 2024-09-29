@@ -14,11 +14,16 @@ lua:
   description: "Ignite the entity."
   
   arguments:
-    - name: "lifetimeInSeconds"
-      type: number
-    - name: "spreadRadius"
-      type: number
-      default: "0.0f"
+  - position: 1
+    name: "entity"
+    type: Entity
+  - position: 2
+    name: "lifetimeInSeconds"
+    type: number
+  - position: 3
+    name: "spreadRadius"
+    type: number
+    default: "0.0f"
   returns:
     
 ---

@@ -13,7 +13,10 @@ lua:
   realm: server
   description: "Required edict index."
   
-  
+  arguments:
+  - position: 1
+    name: "entity"
+    type: Entity
   returns:
     - type: integer
       description: "The edict index"

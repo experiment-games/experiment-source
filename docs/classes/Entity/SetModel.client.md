@@ -14,8 +14,12 @@ lua:
   description: "Set model."
   
   arguments:
-    - name: "model"
-      type: string
+  - position: 1
+    name: "entity"
+    type: Entity
+  - position: 2
+    name: "model"
+    type: string
   returns:
     - type: boolean
       description: "False if the name is bogus or otherwise can't be loaded."

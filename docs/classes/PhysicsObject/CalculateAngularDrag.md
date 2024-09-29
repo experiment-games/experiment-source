@@ -13,7 +13,13 @@ lua:
   realm: shared
   description: "Calculates angular drag"
   
-  
+  arguments:
+  - position: 1
+    name: "physicsObject"
+    type: PhysicsObject
+  - position: 2
+    name: "objectSpaceRotationAxis"
+    type: Vector
   returns:
     - type: number
       description: "The angular drag value."

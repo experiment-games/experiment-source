@@ -13,14 +13,19 @@ lua:
   realm: shared
   description: "Remove ammo from the player."
   
-  argumentSets:
-    - arguments:
+  arguments:
+  - position: 1
+    name: "player"
+    type: Player
+  - position: 2
+    types:
       - name: "amount"
         type: number
+      - name: "amount"
+        type: number
+  - position: 3
+    types:
       - name: "ammo type"
-        type: number
-    - arguments:
-      - name: "amount"
         type: number
       - name: "ammo name"
         type: string

@@ -14,8 +14,12 @@ lua:
   description: "Sets the constraint radius"
   
   arguments:
-    - name: "radius"
-      type: number
+  - position: 1
+    name: "moveData"
+    type: MoveData
+  - position: 2
+    name: "radius"
+    type: number
   returns:
     
 ---

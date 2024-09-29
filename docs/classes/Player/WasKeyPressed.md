@@ -14,8 +14,12 @@ lua:
   description: "Check if a key was pressed."
   
   arguments:
-    - name: "keys"
-      type: number
+  - position: 1
+    name: "player"
+    type: Player
+  - position: 2
+    name: "keys"
+    type: number
   returns:
     - type: boolean
       description: "Whether the key was pressed."

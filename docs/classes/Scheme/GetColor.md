@@ -14,10 +14,15 @@ lua:
   description: "Returns the color for the specified color name."
   
   arguments:
-    - name: "colorName"
-      type: string
-    - name: "defaultColor"
-      type: Color
+  - position: 1
+    name: "scheme"
+    type: Scheme
+  - position: 2
+    name: "colorName"
+    type: string
+  - position: 3
+    name: "defaultColor"
+    type: Color
   returns:
     - type: color
       description: "The color for the specified color name."

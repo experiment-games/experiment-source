@@ -14,11 +14,16 @@ lua:
   description: "Weapon sound."
   
   arguments:
-    - name: "soundType"
-      type: number
-    - name: "soundTime"
-      type: number
-      default: "0.0f"
+  - position: 1
+    name: "entity"
+    type: Weapon
+  - position: 2
+    name: "soundType"
+    type: number
+  - position: 3
+    name: "soundTime"
+    type: number
+    default: "0.0f"
   returns:
     
 ---

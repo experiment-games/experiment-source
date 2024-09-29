@@ -14,11 +14,16 @@ lua:
   description: "Do an animation event."
   
   arguments:
-    - name: "event"
-      type: number
-    - name: "data"
-      type: integer
-      default: "0"
+  - position: 1
+    name: "entity"
+    type: Player
+  - position: 2
+    name: "event"
+    type: number
+  - position: 3
+    name: "data"
+    type: integer
+    default: "0"
   returns:
     
 ---

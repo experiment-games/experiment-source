@@ -14,9 +14,13 @@ lua:
   description: "Get last think."
   
   arguments:
-    - name: "name"
-      type: string
-      default: "nullptr"
+  - position: 1
+    name: "entity"
+    type: Entity
+  - position: 2
+    name: "name"
+    type: string
+    default: "nullptr"
   returns:
     - type: number
       description: "The last think."

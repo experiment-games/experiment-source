@@ -13,7 +13,10 @@ lua:
   realm: shared
   description: "Returns a string representation of the TakeDamageInfo instance"
   
-  
+  arguments:
+  - position: 1
+    name: "damageInfo"
+    type: DamageInfo
   returns:
     - type: string
       description: "The string representation of the TakeDamageInfo instance."

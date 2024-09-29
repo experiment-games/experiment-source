@@ -14,12 +14,15 @@ lua:
   description: "Finds the nearest entity by its class name"
   
   arguments:
-    - name: "className"
-      type: string
-    - name: "position"
-      type: Vector
-    - name: "maxDistance"
-      type: number
+  - position: 1
+    name: "className"
+    type: string
+  - position: 2
+    name: "position"
+    type: Vector
+  - position: 3
+    name: "maxDistance"
+    type: number
   returns:
     - type: Entity
       description: "The entity found, or NULL if not found."

@@ -13,7 +13,10 @@ lua:
   realm: shared
   description: "Get the player's walking speed (for when they press ALT)."
   
-  
+  arguments:
+  - position: 1
+    name: "player"
+    type: Player
   returns:
     - type: number
       description: "The player's walking speed."

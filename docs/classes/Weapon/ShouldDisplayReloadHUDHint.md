@@ -13,7 +13,10 @@ lua:
   realm: shared
   description: "Should display reload HUD hint."
   
-  
+  arguments:
+  - position: 1
+    name: "entity"
+    type: Weapon
   returns:
     - type: boolean
       description: "Whether the reload HUD hint should be displayed."

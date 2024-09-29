@@ -13,7 +13,10 @@ lua:
   realm: shared
   description: "Reload or switch weapons."
   
-  
+  arguments:
+  - position: 1
+    name: "entity"
+    type: Weapon
   returns:
     
 ---

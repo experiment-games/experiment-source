@@ -13,7 +13,10 @@ lua:
   realm: shared
   description: "Item holster frame."
   
-  
+  arguments:
+  - position: 1
+    name: "entity"
+    type: Weapon
   returns:
     
 ---

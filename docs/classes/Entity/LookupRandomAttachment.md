@@ -14,8 +14,12 @@ lua:
   description: "Get a random index of an attachment point with the specified substring in its name."
   
   arguments:
-    - name: "attachmentNameSubstring"
-      type: string
+  - position: 1
+    name: "entity"
+    type: Entity
+  - position: 2
+    name: "attachmentNameSubstring"
+    type: string
   returns:
     - type: integer
       description: "The random attachment"

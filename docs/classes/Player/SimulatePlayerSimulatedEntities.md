@@ -13,7 +13,10 @@ lua:
   realm: shared
   description: "Simulate player simulated entities."
   
-  
+  arguments:
+  - position: 1
+    name: "player"
+    type: Player
   returns:
     
 ---

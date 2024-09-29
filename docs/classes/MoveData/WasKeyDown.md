@@ -14,8 +14,12 @@ lua:
   description: "Checks if a key was down before"
   
   arguments:
-    - name: "buttonCode"
-      type: number
+  - position: 1
+    name: "moveData"
+    type: MoveData
+  - position: 2
+    name: "buttonCode"
+    type: number
   returns:
     - type: boolean
       description: "True if the key was down, false otherwise"

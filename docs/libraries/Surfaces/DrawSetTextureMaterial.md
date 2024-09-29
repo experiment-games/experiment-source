@@ -14,10 +14,12 @@ lua:
   description: "Sets the texture material"
   
   arguments:
-    - name: "textureId"
-      type: number
-    - name: "material"
-      type: Material
+  - position: 1
+    name: "textureId"
+    type: number
+  - position: 2
+    name: "material"
+    type: Material
   returns:
     
 ---

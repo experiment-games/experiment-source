@@ -13,7 +13,10 @@ lua:
   realm: shared
   description: "Get texture group name."
   
-  
+  arguments:
+  - position: 1
+    name: "material"
+    type: Material
   returns:
     - type: string
       description: "Texture group name."

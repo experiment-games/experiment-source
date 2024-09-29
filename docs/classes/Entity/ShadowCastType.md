@@ -13,7 +13,10 @@ lua:
   realm: client
   description: "Should this object cast render-to-texture shadows?."
   
-  
+  arguments:
+  - position: 1
+    name: "entity"
+    type: Entity
   returns:
     - type: enumeration/SHADOW_TYPE
       description: "The shadow cast type"

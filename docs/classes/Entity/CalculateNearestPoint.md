@@ -14,8 +14,12 @@ lua:
   description: "Computes the nearest point in the OBB to a point specified in world space."
   
   arguments:
-    - name: "point"
-      type: Vector
+  - position: 1
+    name: "entity"
+    type: Entity
+  - position: 2
+    name: "point"
+    type: Vector
   returns:
     - type: Vector
       description: "The nearest point."

@@ -13,7 +13,10 @@ lua:
   realm: client
   description: "Deletes the character after the cursor"
   
-  
+  arguments:
+  - position: 1
+    name: "textEntry"
+    type: TextEntry
   returns:
     
 ---

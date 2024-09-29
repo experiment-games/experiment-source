@@ -13,7 +13,10 @@ lua:
   realm: client
   description: "Checks if the text is fully selected"
   
-  
+  arguments:
+  - position: 1
+    name: "textEntry"
+    type: TextEntry
   returns:
     - type: boolean
       description: "Whether the text is fully selected"

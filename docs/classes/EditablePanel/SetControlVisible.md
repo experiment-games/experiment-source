@@ -13,7 +13,16 @@ lua:
   realm: client
   description: "Sets a control's visibility"
   
-  
+  arguments:
+  - position: 1
+    name: "editablePanel"
+    type: EditablePanel
+  - position: 2
+    name: "control"
+    type: string
+  - position: 3
+    name: "visible"
+    type: boolean
   returns:
     
 ---

@@ -14,8 +14,12 @@ lua:
   description: "Gets a child panel by its index (starting at 0)"
   
   arguments:
-    - name: "zeroBasedIndex"
-      type: number
+  - position: 1
+    name: "panel"
+    type: Panel
+  - position: 2
+    name: "zeroBasedIndex"
+    type: number
   returns:
     - type: Panel
       description: "The child panel"

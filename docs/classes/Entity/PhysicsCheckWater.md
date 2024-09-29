@@ -13,7 +13,10 @@ lua:
   realm: shared
   description: "Physics check water."
   
-  
+  arguments:
+  - position: 1
+    name: "entity"
+    type: Entity
   returns:
     - type: boolean
       description: "True if physics check water, false otherwise."

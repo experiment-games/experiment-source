@@ -14,8 +14,12 @@ lua:
   description: "Set simulated every tick."
   
   arguments:
-    - name: "simulated"
-      type: boolean
+  - position: 1
+    name: "entity"
+    type: Entity
+  - position: 2
+    name: "simulated"
+    type: boolean
   returns:
     
 ---

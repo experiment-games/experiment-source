@@ -13,6 +13,7 @@ lua:
   realm: client
   description: "Start the IME composition."
   
+  arguments:
   
   returns:
     

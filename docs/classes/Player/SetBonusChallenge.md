@@ -14,8 +14,12 @@ lua:
   description: "Set the bonus challenge for the player."
   
   arguments:
-    - name: "challenge"
-      type: number
+  - position: 1
+    name: "player"
+    type: Player
+  - position: 2
+    name: "challenge"
+    type: number
   returns:
     
 ---

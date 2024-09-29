@@ -13,7 +13,10 @@ lua:
   realm: shared
   description: "Get the table's name."
   
-  
+  arguments:
+  - position: 1
+    name: "networkStringTable"
+    type: NetworkStringTable
   returns:
     - type: string
       description: "The table's name."

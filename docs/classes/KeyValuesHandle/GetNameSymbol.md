@@ -13,7 +13,10 @@ lua:
   realm: shared
   description: "Get the name symbol of the keyvalues."
   
-  
+  arguments:
+  - position: 1
+    name: "keyValues"
+    type: KeyValuesHandle
   returns:
     - type: integer
       description: "The name symbol."

@@ -14,11 +14,13 @@ lua:
   description: "Starts a user message."
   
   arguments:
-    - name: "messageName"
-      type: string
-    - name: "recipientFilter"
-      type: RecipientFilter
-      nillable: true
+  - position: 1
+    name: "messageName"
+    type: string
+  - position: 2
+    name: "recipientFilter"
+    type: RecipientFilter
+    nillable: true
   returns:
     
 ---

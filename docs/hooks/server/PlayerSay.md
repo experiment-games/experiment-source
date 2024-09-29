@@ -14,7 +14,7 @@ lua:
   arguments:
     - name: "speaker"
       description: "The player who is speaking"
-      type: Entity
+      type: Player
     - name: "chatMessage"
       description: ""
       type: string

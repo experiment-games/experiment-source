@@ -14,18 +14,22 @@ lua:
   description: "Creates a new HTML panel"
   
   arguments:
-    - name: "parent"
-      type: Panel
-      default: "VGui_GetClientLuaRootPanel()"
-    - name: "name"
-      type: string
-      default: "\"Html\""
-    - name: "shouldAllowJavaScript"
-      type: boolean
-      default: "false"
-    - name: "popupWindow"
-      type: boolean
-      default: "false"
+  - position: 1
+    name: "parent"
+    type: Panel
+    default: "VGui_GetClientLuaRootPanel()"
+  - position: 2
+    name: "name"
+    type: string
+    default: "\"Html\""
+  - position: 3
+    name: "shouldAllowJavaScript"
+    type: boolean
+    default: "false"
+  - position: 4
+    name: "popupWindow"
+    type: boolean
+    default: "false"
   returns:
     - type: Html
       description: "The new HTML Panel"

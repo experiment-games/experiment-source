@@ -13,6 +13,7 @@ lua:
   realm: shared
   description: "Get simulation time."
   
+  arguments:
   
   returns:
     - type: number

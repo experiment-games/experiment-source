@@ -13,7 +13,10 @@ lua:
   realm: shared
   description: "Get the hit box ID of the effect."
   
-  
+  arguments:
+  - position: 1
+    name: "effectData"
+    type: EffectData
   returns:
     - type: integer
       description: "Hit box ID"

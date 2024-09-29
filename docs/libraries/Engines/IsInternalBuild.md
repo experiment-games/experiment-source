@@ -13,6 +13,7 @@ lua:
   realm: server
   description: "Check if the build is internal."
   
+  arguments:
   
   returns:
     - type: boolean

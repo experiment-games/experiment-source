@@ -13,6 +13,7 @@ lua:
   realm: server
   description: "Checks if the entity list is being cleared"
   
+  arguments:
   
   returns:
     - type: boolean

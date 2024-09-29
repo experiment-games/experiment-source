@@ -14,10 +14,12 @@ lua:
   description: "Print a message to the console with a specific color."
   
   arguments:
-    - name: "color"
-      type: Color
-    - name: "message"
-      type: string
+  - position: 1
+    name: "color"
+    type: Color
+  - position: 2
+    name: "message"
+    type: string
   returns:
     
 ---

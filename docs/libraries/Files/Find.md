@@ -14,11 +14,13 @@ lua:
   description: "Find files."
   
   arguments:
-    - name: "path"
-      type: string
-    - name: "pathId"
-      type: string
-      default: "\"GAME\""
+  - position: 1
+    name: "path"
+    type: string
+  - position: 2
+    name: "pathId"
+    type: string
+    default: "\"GAME\""
   returns:
     - type: table
       description: "The files and directories."

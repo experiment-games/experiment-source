@@ -13,7 +13,17 @@ lua:
   realm: client
   description: "Loads user configuration"
   
-  
+  arguments:
+  - position: 1
+    name: "editablePanel"
+    type: EditablePanel
+  - position: 2
+    name: "configName"
+    type: string
+  - position: 3
+    name: "dialogId"
+    type: number
+    default: "0"
   returns:
     
 ---

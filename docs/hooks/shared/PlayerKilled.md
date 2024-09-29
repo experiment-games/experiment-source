@@ -14,7 +14,7 @@ lua:
   arguments:
     - name: "pVictim"
       description: ""
-      type: Entity
+      type: Player
     - name: "linfo"
       description: ""
       type: CTakeDamageInfo

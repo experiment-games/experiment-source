@@ -13,7 +13,10 @@ lua:
   realm: client
   description: "Sets the text entry to full width"
   
-  
+  arguments:
+  - position: 1
+    name: "textEntry"
+    type: TextEntry
   returns:
     
 ---

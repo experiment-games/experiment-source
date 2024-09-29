@@ -13,7 +13,10 @@ lua:
   realm: shared
   description: "Weapon auto aim scale."
   
-  
+  arguments:
+  - position: 1
+    name: "entity"
+    type: Weapon
   returns:
     - type: number
       description: "Weapon auto aim scale."

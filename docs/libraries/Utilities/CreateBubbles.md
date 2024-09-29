@@ -14,12 +14,15 @@ lua:
   description: "Create bubbles at the specified position and range"
   
   arguments:
-    - name: "minPos"
-      type: Vector
-    - name: "maxPos"
-      type: Vector
-    - name: "count"
-      type: number
+  - position: 1
+    name: "minPos"
+    type: Vector
+  - position: 2
+    name: "maxPos"
+    type: Vector
+  - position: 3
+    name: "count"
+    type: number
   returns:
     
 ---

@@ -13,7 +13,10 @@ lua:
   realm: shared
   description: "Get the damage type of the effect."
   
-  
+  arguments:
+  - position: 1
+    name: "effectData"
+    type: EffectData
   returns:
     - type: integer
       description: "Damage type"

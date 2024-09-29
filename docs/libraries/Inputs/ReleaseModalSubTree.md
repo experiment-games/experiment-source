@@ -13,6 +13,7 @@ lua:
   realm: client
   description: "Release the modal sub-tree."
   
+  arguments:
   
   returns:
     

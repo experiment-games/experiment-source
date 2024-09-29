@@ -13,6 +13,7 @@ lua:
   realm: shared
   description: "Gets all entities in the list"
   
+  arguments:
   
   returns:
     - type: table

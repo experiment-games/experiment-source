@@ -14,8 +14,9 @@ lua:
   description: "Set the blend."
   
   arguments:
-    - name: "blend"
-      type: number
+  - position: 1
+    name: "blend"
+    type: number
   returns:
     
 ---

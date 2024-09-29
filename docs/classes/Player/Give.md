@@ -14,11 +14,16 @@ lua:
   description: "Give the weapon to the player."
   
   arguments:
-    - name: "className"
-      type: string
-    - name: "shouldGiveNoAmmo"
-      type: boolean
-      default: "false"
+  - position: 1
+    name: "player"
+    type: Player
+  - position: 2
+    name: "className"
+    type: string
+  - position: 3
+    name: "shouldGiveNoAmmo"
+    type: boolean
+    default: "false"
   returns:
     - type: Weapon
       description: "The weapon given to the player."

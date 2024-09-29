@@ -14,9 +14,13 @@ lua:
   description: "Remove all items from the player."
   
   arguments:
-    - name: "shouldRemoveSuit"
-      type: boolean
-      default: "false"
+  - position: 1
+    name: "player"
+    type: Player
+  - position: 2
+    name: "shouldRemoveSuit"
+    type: boolean
+    default: "false"
   returns:
     
 ---

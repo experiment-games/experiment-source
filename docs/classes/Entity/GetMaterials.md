@@ -13,7 +13,10 @@ lua:
   realm: shared
   description: "Get the materials"
   
-  
+  arguments:
+  - position: 1
+    name: "entity"
+    type: Entity
   returns:
     - type: table
       description: "The materials"

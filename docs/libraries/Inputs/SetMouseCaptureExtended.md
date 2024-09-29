@@ -14,10 +14,12 @@ lua:
   description: "Set the mouse capture with specific mouse code."
   
   arguments:
-    - name: "panel"
-      type: Panel
-    - name: "mouseCode"
-      type: enumeration/BUTTON
+  - position: 1
+    name: "panel"
+    type: Panel
+  - position: 2
+    name: "mouseCode"
+    type: enumeration/BUTTON
   returns:
     
 ---

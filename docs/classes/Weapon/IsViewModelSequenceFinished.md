@@ -13,7 +13,10 @@ lua:
   realm: shared
   description: "Check if the view model sequence is finished."
   
-  
+  arguments:
+  - position: 1
+    name: "entity"
+    type: Weapon
   returns:
     - type: boolean
       description: "Whether the view model sequence is finished."

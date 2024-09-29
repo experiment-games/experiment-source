@@ -14,10 +14,15 @@ lua:
   description: "Sets whether mouse clicks are enabled"
   
   arguments:
-    - name: "mouseCode"
-      type: enumeration/BUTTON
-    - name: "enabled"
-      type: boolean
+  - position: 1
+    name: "button"
+    type: Button
+  - position: 2
+    name: "mouseCode"
+    type: enumeration/BUTTON
+  - position: 3
+    name: "enabled"
+    type: boolean
   returns:
     
 ---

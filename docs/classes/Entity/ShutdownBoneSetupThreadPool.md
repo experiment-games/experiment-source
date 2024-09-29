@@ -14,6 +14,7 @@ lua:
   description: "Shutdown the bone setup thread pool."
   
   static: true
+  arguments:
   
   returns:
     

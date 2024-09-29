@@ -14,8 +14,12 @@ lua:
   description: "Add context."
   
   arguments:
-    - name: "nameAndValue"
-      type: string
+  - position: 1
+    name: "entity"
+    type: Entity
+  - position: 2
+    name: "nameAndValue"
+    type: string
   returns:
     
 ---

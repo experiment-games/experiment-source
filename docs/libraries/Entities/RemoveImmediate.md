@@ -14,8 +14,9 @@ lua:
   description: "Removes an entity immediately"
   
   arguments:
-    - name: "entity"
-      type: Entity
+  - position: 1
+    name: "entity"
+    type: Entity
   returns:
     
 ---

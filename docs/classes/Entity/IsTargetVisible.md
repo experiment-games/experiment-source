@@ -13,19 +13,24 @@ lua:
   realm: server
   description: "Returns true if a line can be traced from the caller's eyes to the target"
   
-  argumentSets:
-    - arguments:
+  arguments:
+  - position: 1
+    name: "entity"
+    type: Entity
+  - position: 2
+    types:
       - name: "position"
         type: Vector
-      - name: "mask"
-        type: integer
-        default: "MASK_BLOCKLOS"
-    - arguments:
       - name: "target"
         type: Entity
+  - position: 3
+    types:
       - name: "mask"
         type: integer
-        default: "MASK_BLOCKLOS"
+    default: "MASK_BLOCKLOS"
+      - name: "mask"
+        type: integer
+    default: "MASK_BLOCKLOS"
   returns:
     - type: boolean
       description: "true if visible, false otherwise."

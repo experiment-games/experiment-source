@@ -13,7 +13,10 @@ lua:
   realm: client
   description: "Get the skin."
   
-  
+  arguments:
+  - position: 1
+    name: "entity"
+    type: Entity
   returns:
     - type: integer
       description: "The skin"

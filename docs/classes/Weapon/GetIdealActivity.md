@@ -13,7 +13,10 @@ lua:
   realm: shared
   description: "Get ideal activity."
   
-  
+  arguments:
+  - position: 1
+    name: "entity"
+    type: Weapon
   returns:
     - type: enumeration/ACTIVITY
       description: "Ideal activity ID."

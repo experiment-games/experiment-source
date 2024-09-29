@@ -14,8 +14,12 @@ lua:
   description: "Looks up an activity by name."
   
   arguments:
-    - name: "activityName"
-      type: string
+  - position: 1
+    name: "entity"
+    type: Entity
+  - position: 2
+    name: "activityName"
+    type: string
   returns:
     - type: enumeration/ACTIVITY
       description: "The activity"

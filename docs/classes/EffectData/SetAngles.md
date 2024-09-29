@@ -14,8 +14,12 @@ lua:
   description: "Set the angles of the effect."
   
   arguments:
-    - name: "angles"
-      type: Angle
+  - position: 1
+    name: "effectData"
+    type: EffectData
+  - position: 2
+    name: "angles"
+    type: Angle
   returns:
     
 ---

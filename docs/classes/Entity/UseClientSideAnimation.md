@@ -13,7 +13,10 @@ lua:
   realm: shared
   description: "Use the client side animation."
   
-  
+  arguments:
+  - position: 1
+    name: "entity"
+    type: Entity
   returns:
     
 ---

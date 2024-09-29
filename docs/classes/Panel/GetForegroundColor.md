@@ -13,7 +13,10 @@ lua:
   realm: client
   description: "Gets the foreground color of the panel"
   
-  
+  arguments:
+  - position: 1
+    name: "panel"
+    type: Panel
   returns:
     - type: Color
       description: "The foreground color of the panel"

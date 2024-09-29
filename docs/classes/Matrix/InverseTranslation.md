@@ -13,7 +13,10 @@ lua:
   realm: shared
   description: "Does a fast inverse, assuming the matrix only contains translation and rotation."
   
-  
+  arguments:
+  - position: 1
+    name: "Matrix"
+    type: Matrix
   returns:
     - type: Matrix
       description: "The inverted matrix."

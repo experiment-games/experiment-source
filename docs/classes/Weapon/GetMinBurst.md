@@ -13,7 +13,10 @@ lua:
   realm: shared
   description: "Get min burst."
   
-  
+  arguments:
+  - position: 1
+    name: "entity"
+    type: Weapon
   returns:
     - type: integer
       description: "Min burst."

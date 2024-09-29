@@ -13,7 +13,10 @@ lua:
   realm: shared
   description: "Clears the buttons"
   
-  
+  arguments:
+  - position: 1
+    name: "moveData"
+    type: MoveData
   returns:
     
 ---

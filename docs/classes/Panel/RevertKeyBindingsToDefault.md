@@ -13,7 +13,10 @@ lua:
   realm: client
   description: "Reverts the key bindings to default"
   
-  
+  arguments:
+  - position: 1
+    name: "panel"
+    type: Panel
   returns:
     
 ---

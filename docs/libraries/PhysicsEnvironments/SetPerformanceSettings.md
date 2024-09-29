@@ -14,8 +14,9 @@ lua:
   description: "Set performance settings."
   
   arguments:
-    - name: "params"
-      type: PerformanceParameters
+  - position: 1
+    name: "params"
+    type: PerformanceParameters
   returns:
     
 ---

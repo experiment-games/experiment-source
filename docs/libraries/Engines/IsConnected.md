@@ -13,6 +13,7 @@ lua:
   realm: client
   description: "Check if the client is connected."
   
+  arguments:
   
   returns:
     - type: boolean

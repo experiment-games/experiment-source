@@ -13,6 +13,7 @@ lua:
   realm: client
   description: "Flushes the text"
   
+  arguments:
   
   returns:
     

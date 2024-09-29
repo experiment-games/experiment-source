@@ -13,7 +13,10 @@ lua:
   realm: shared
   description: "Get the attachment ID for the effect."
   
-  
+  arguments:
+  - position: 1
+    name: "effectData"
+    type: EffectData
   returns:
     - type: integer
       description: "Attachment ID"

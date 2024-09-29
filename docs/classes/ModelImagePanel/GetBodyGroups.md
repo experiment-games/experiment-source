@@ -13,7 +13,10 @@ lua:
   realm: client
   description: "Gets the body groups from the model"
   
-  
+  arguments:
+  - position: 1
+    name: "modelImagePanel"
+    type: ModelImagePanel
   returns:
     - type: string
       description: "The body groups"

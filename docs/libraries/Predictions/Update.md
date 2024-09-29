@@ -14,14 +14,18 @@ lua:
   description: "Update the prediction."
   
   arguments:
-    - name: "startFrame"
-      type: number
-    - name: "validFrame"
-      type: boolean
-    - name: "incomingAcknowledged"
-      type: number
-    - name: "outgoingCommand"
-      type: number
+  - position: 1
+    name: "startFrame"
+    type: number
+  - position: 2
+    name: "validFrame"
+    type: boolean
+  - position: 3
+    name: "incomingAcknowledged"
+    type: number
+  - position: 4
+    name: "outgoingCommand"
+    type: number
   returns:
     
 ---

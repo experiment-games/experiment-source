@@ -13,7 +13,10 @@ lua:
   realm: client
   description: "Handles the draggable panel being painted"
   
-  
+  arguments:
+  - position: 1
+    name: "panel"
+    type: Panel
   returns:
     
 ---

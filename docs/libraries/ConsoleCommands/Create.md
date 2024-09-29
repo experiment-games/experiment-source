@@ -14,14 +14,17 @@ lua:
   description: "Creates a console command or returns the existing one with the given name"
   
   arguments:
-    - name: "name"
-      type: string
-    - name: "helpString"
-      type: string
-      default: "\"\""
-    - name: "flags"
-      type: number
-      default: "0"
+  - position: 1
+    name: "name"
+    type: string
+  - position: 2
+    name: "helpString"
+    type: string
+    default: "\"\""
+  - position: 3
+    name: "flags"
+    type: number
+    default: "0"
   returns:
     - type: ConsoleCommand
       description: "Created console command (returns existing command if one with the same name exists)"

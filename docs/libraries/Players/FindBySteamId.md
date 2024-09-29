@@ -14,8 +14,9 @@ lua:
   description: "Get a player by Steam ID."
   
   arguments:
-    - name: "Steam ID"
-      type: string
+  - position: 1
+    name: "Steam ID"
+    type: string
   returns:
     - type: Player
       description: "The player."

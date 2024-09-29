@@ -13,7 +13,10 @@ lua:
   realm: client
   description: "Gets the tab position of the panel"
   
-  
+  arguments:
+  - position: 1
+    name: "panel"
+    type: Panel
   returns:
     - type: integer
       description: "The tab position of the panel"

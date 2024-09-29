@@ -13,7 +13,10 @@ lua:
   realm: client
   description: "Add the entity to the client side animation list."
   
-  
+  arguments:
+  - position: 1
+    name: "entity"
+    type: Entity
   returns:
     
 ---

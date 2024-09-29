@@ -13,6 +13,7 @@ lua:
   realm: client
   description: "Gets the text position"
   
+  arguments:
   
   returns:
     - type: integer

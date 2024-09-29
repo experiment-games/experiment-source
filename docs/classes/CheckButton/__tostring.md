@@ -13,7 +13,10 @@ lua:
   realm: client
   description: "Metamethod that is called when the button is to be converted to a string"
   
-  
+  arguments:
+  - position: 1
+    name: "checkButton"
+    type: CheckButton
   returns:
     - type: string
       description: "The string representation of the button"

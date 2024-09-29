@@ -13,7 +13,10 @@ lua:
   realm: client
   description: "Gets the drag panel of the panel"
   
-  
+  arguments:
+  - position: 1
+    name: "panel"
+    type: Panel
   returns:
     - type: Panel
       description: "The drag panel of the panel"

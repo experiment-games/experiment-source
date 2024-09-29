@@ -12,7 +12,9 @@ lua:
   realm: client
   description: ""
   arguments:
-  
+    - name: "this"
+      description: ""
+      type: Entity
   returns:
     
 ---

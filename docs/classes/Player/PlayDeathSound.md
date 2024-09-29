@@ -14,8 +14,12 @@ lua:
   description: "Play the death sound for the player."
   
   arguments:
-    - name: "info"
-      type: DamageInfo
+  - position: 1
+    name: "player"
+    type: Player
+  - position: 2
+    name: "info"
+    type: DamageInfo
   returns:
     
 ---

@@ -14,7 +14,7 @@ lua:
   arguments:
     - name: "player"
       description: ""
-      type: Entity
+      type: Player
     - name: "mv"
       description: ""
       type: MoveData

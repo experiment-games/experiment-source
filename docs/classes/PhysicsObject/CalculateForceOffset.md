@@ -13,7 +13,16 @@ lua:
   realm: shared
   description: "Calculates force and torque offset"
   
-  
+  arguments:
+  - position: 1
+    name: "physicsObject"
+    type: PhysicsObject
+  - position: 2
+    name: "force"
+    type: Vector
+  - position: 3
+    name: "worldPosition"
+    type: Vector
   returns:
     - type: Vector
       description: "The center force."

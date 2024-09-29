@@ -13,6 +13,7 @@ lua:
   realm: shared
   description: "Check if the game is running on the client."
   
+  arguments:
   
   returns:
     - type: boolean

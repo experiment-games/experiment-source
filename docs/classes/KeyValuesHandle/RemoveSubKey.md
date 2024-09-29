@@ -14,8 +14,12 @@ lua:
   description: "Remove a subkey from the keyvalues."
   
   arguments:
-    - name: "subKey"
-      type: KeyValuesHandle
+  - position: 1
+    name: "keyValues"
+    type: KeyValuesHandle
+  - position: 2
+    name: "subKey"
+    type: KeyValuesHandle
   returns:
     
 ---

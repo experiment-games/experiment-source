@@ -14,8 +14,9 @@ lua:
   description: "Checks if a material exists. TODO: This is likely not working correctly"
   
   arguments:
-    - name: "name"
-      type: string
+  - position: 1
+    name: "name"
+    type: string
   returns:
     - type: boolean
       description: "True if the material exists, false otherwise."

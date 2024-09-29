@@ -13,6 +13,7 @@ lua:
   realm: client
   description: "Check if a key is being trapped."
   
+  arguments:
   
   returns:
     - type: boolean

@@ -13,7 +13,13 @@ lua:
   realm: client
   description: "Metamethod called when two Panel objects are compared"
   
-  
+  arguments:
+  - position: 1
+    name: "panel"
+    type: Panel
+  - position: 2
+    name: "other"
+    type: Panel
   returns:
     - type: boolean
       description: "Whether the Panel objects are equal"

@@ -13,7 +13,10 @@ lua:
   realm: server
   description: "Notify the player that the single player game is ending."
   
-  
+  arguments:
+  - position: 1
+    name: "player"
+    type: Player
   returns:
     
 ---

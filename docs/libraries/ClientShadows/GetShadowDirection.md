@@ -13,6 +13,7 @@ lua:
   realm: client
   description: "Get the current shadow direction as a vector."
   
+  arguments:
   
   returns:
     - type: Vector

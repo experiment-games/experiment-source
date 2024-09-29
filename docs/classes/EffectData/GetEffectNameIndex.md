@@ -13,7 +13,10 @@ lua:
   realm: shared
   description: "Get the effect name index."
   
-  
+  arguments:
+  - position: 1
+    name: "effectData"
+    type: EffectData
   returns:
     - type: integer
       description: "Effect name index."

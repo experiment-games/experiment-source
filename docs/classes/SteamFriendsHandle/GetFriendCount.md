@@ -14,8 +14,12 @@ lua:
   description: "Get the number of friends the current user has of the specified flag types."
   
   arguments:
-    - name: "flag"
-      type: number
+  - position: 1
+    name: "steamFriends"
+    type: SteamFriendsHandle
+  - position: 2
+    name: "flag"
+    type: number
   returns:
     - type: integer
       description: "The number of friends the current user has."

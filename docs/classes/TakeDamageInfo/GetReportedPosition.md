@@ -13,7 +13,10 @@ lua:
   realm: shared
   description: "Gets the reported position of the damage"
   
-  
+  arguments:
+  - position: 1
+    name: "damageInfo"
+    type: DamageInfo
   returns:
     - type: Vector
       description: "The reported position of the damage."

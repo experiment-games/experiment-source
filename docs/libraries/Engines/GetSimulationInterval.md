@@ -13,6 +13,7 @@ lua:
   realm: server
   description: "Get the simulation interval."
   
+  arguments:
   
   returns:
     - type: number

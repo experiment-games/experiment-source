@@ -14,7 +14,7 @@ lua:
   arguments:
     - name: "this"
       description: ""
-      type: Entity
+      type: Player
     - name: "pNearest"
       description: ""
       type: Entity

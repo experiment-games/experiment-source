@@ -13,7 +13,10 @@ lua:
   realm: server
   description: "Is moving."
   
-  
+  arguments:
+  - position: 1
+    name: "entity"
+    type: Entity
   returns:
     - type: boolean
       description: "true if moving, false otherwise."

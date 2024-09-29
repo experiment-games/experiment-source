@@ -14,8 +14,12 @@ lua:
   description: "Sets the body groups for the model"
   
   arguments:
-    - name: "bodyGroups"
-      type: string
+  - position: 1
+    name: "modelImagePanel"
+    type: ModelImagePanel
+  - position: 2
+    name: "bodyGroups"
+    type: string
   returns:
     
 ---

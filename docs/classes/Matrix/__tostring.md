@@ -13,7 +13,10 @@ lua:
   realm: shared
   description: "Metatable called when the object is to be converted to a string"
   
-  
+  arguments:
+  - position: 1
+    name: "Matrix"
+    type: Matrix
   returns:
     - type: string
       description: "The string representation of the object."

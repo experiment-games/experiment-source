@@ -14,8 +14,12 @@ lua:
   description: "Check if the observer target is valid for the player."
   
   arguments:
-    - name: "target"
-      type: Entity
+  - position: 1
+    name: "player"
+    type: Player
+  - position: 2
+    name: "target"
+    type: Entity
   returns:
     - type: boolean
       description: "Whether the observer target is valid."

@@ -14,8 +14,9 @@ lua:
   description: "Remove search paths."
   
   arguments:
-    - name: "path"
-      type: string
+  - position: 1
+    name: "path"
+    type: string
   returns:
     
 ---

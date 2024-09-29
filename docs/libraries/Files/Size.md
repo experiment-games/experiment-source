@@ -13,13 +13,17 @@ lua:
   realm: shared
   description: "Get the size of a file."
   
-  argumentSets:
-    - arguments:
+  arguments:
+  - position: 1
+    types:
       - name: "path"
         type: string
-    - arguments:
       - name: "file"
         type: FileHandle
+  - position: 2
+    name: "pathId"
+    type: string
+    default: "0"
   returns:
     - type: integer
       description: "The size of the file."

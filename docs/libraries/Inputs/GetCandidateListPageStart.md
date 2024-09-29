@@ -13,6 +13,7 @@ lua:
   realm: client
   description: "Get the starting index of the current page in the candidate list."
   
+  arguments:
   
   returns:
     - type: integer

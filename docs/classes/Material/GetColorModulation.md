@@ -13,7 +13,10 @@ lua:
   realm: shared
   description: "Get color modulation."
   
-  
+  arguments:
+  - position: 1
+    name: "material"
+    type: Material
   returns:
     - type: number
       description: "Red modulation."

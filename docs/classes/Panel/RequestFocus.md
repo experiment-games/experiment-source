@@ -14,9 +14,13 @@ lua:
   description: "Requests the focus"
   
   arguments:
-    - name: "direction"
-      type: integer
-      default: "0"
+  - position: 1
+    name: "panel"
+    type: Panel
+  - position: 2
+    name: "direction"
+    type: integer
+    default: "0"
   returns:
     
 ---

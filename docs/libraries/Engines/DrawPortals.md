@@ -13,6 +13,7 @@ lua:
   realm: client
   description: "Draw portals."
   
+  arguments:
   
   returns:
     

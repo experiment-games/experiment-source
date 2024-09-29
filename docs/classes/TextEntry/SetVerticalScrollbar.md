@@ -14,8 +14,12 @@ lua:
   description: "Sets whether the vertical scrollbar is enabled"
   
   arguments:
-    - name: "enable"
-      type: boolean
+  - position: 1
+    name: "textEntry"
+    type: TextEntry
+  - position: 2
+    name: "enable"
+    type: boolean
   returns:
     
 ---

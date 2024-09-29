@@ -14,6 +14,7 @@ lua:
   description: "Invalidate the bone caches."
   
   static: true
+  arguments:
   
   returns:
     

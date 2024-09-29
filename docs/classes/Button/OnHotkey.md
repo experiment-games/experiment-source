@@ -13,7 +13,10 @@ lua:
   realm: client
   description: "Called when a hotkey is pressed"
   
-  
+  arguments:
+  - position: 1
+    name: "button"
+    type: Button
   returns:
     
 ---

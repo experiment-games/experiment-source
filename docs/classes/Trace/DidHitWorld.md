@@ -13,7 +13,10 @@ lua:
   realm: shared
   description: "Check if the trace hit the world."
   
-  
+  arguments:
+  - position: 1
+    name: "trace"
+    type: Trace
   returns:
     - type: boolean
       description: "true if the trace hit the world, false otherwise."

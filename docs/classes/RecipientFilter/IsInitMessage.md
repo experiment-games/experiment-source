@@ -13,7 +13,10 @@ lua:
   realm: shared
   description: "Checks if it is an init message"
   
-  
+  arguments:
+  - position: 1
+    name: "filter"
+    type: RecipientFilter
   returns:
     
 ---

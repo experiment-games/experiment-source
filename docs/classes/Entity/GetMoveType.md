@@ -13,7 +13,10 @@ lua:
   realm: shared
   description: "Get move type."
   
-  
+  arguments:
+  - position: 1
+    name: "entity"
+    type: Entity
   returns:
     - type: enumeration/MOVE_TYPE
       description: "The move type."

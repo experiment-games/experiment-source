@@ -13,6 +13,7 @@ lua:
   realm: client
   description: "Check which key was last trapped."
   
+  arguments:
   
   returns:
     - type: enumeration/BUTTON

@@ -13,6 +13,7 @@ lua:
   realm: client
   description: "Get the panel that currently has focus."
   
+  arguments:
   
   returns:
     - type: PanelHandle

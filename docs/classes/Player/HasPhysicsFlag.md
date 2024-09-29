@@ -14,8 +14,12 @@ lua:
   description: "Check if the player has a physics flag."
   
   arguments:
-    - name: "flag"
-      type: number
+  - position: 1
+    name: "player"
+    type: Player
+  - position: 2
+    name: "flag"
+    type: number
   returns:
     - type: boolean
       description: "Whether the player has the physics flag."

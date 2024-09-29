@@ -13,7 +13,10 @@ lua:
   realm: client
   description: "Metamethod called when the TextEntry object is converted to a string"
   
-  
+  arguments:
+  - position: 1
+    name: "textEntry"
+    type: TextEntry
   returns:
     - type: string
       description: "The string representation of the TextEntry object"

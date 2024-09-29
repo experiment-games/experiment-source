@@ -13,7 +13,10 @@ lua:
   realm: shared
   description: "Returns a string representation of the color."
   
-  
+  arguments:
+  - position: 1
+    name: "color"
+    type: Color
   returns:
     - type: string
       description: "The string representation of the color."

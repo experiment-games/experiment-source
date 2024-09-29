@@ -14,8 +14,9 @@ lua:
   description: "Set the distance for shadow rendering."
   
   arguments:
-    - name: "distance"
-      type: number
+  - position: 1
+    name: "distance"
+    type: number
   returns:
     
 ---

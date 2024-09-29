@@ -13,7 +13,10 @@ lua:
   realm: server
   description: "Validate the current observer target for the player."
   
-  
+  arguments:
+  - position: 1
+    name: "player"
+    type: Player
   returns:
     
 ---

@@ -14,11 +14,13 @@ lua:
   description: "Precache a file."
   
   arguments:
-    - name: "path"
-      type: string
-    - name: "pathId"
-      type: string
-      default: "0"
+  - position: 1
+    name: "path"
+    type: string
+  - position: 2
+    name: "pathId"
+    type: string
+    default: "0"
   returns:
     - type: boolean
       description: "true if the file was precached, false otherwise."

@@ -13,7 +13,10 @@ lua:
   realm: client
   description: "Paints the panel border"
   
-  
+  arguments:
+  - position: 1
+    name: "panel"
+    type: Panel
   returns:
     
 ---

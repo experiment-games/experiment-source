@@ -14,8 +14,9 @@ lua:
   description: "Unregister a listener for unhandled key codes."
   
   arguments:
-    - name: "panel"
-      type: Panel
+  - position: 1
+    name: "panel"
+    type: Panel
   returns:
     
 ---

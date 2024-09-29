@@ -13,7 +13,10 @@ lua:
   realm: server
   description: "Sets the entity invisible, and makes it remove itself on the next frame."
   
-  
+  arguments:
+  - position: 1
+    name: "entity"
+    type: Entity
   returns:
     
 ---

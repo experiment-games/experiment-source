@@ -14,6 +14,7 @@ lua:
   description: "Initializes the property converters"
   
   static: true
+  arguments:
   
   returns:
     

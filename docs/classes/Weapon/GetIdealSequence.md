@@ -13,7 +13,10 @@ lua:
   realm: shared
   description: "Get ideal sequence."
   
-  
+  arguments:
+  - position: 1
+    name: "entity"
+    type: Weapon
   returns:
     - type: integer
       description: "Ideal sequence ID."

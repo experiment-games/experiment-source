@@ -13,7 +13,10 @@ lua:
   realm: shared
   description: "Compute the entity space hitbox surrounding box."
   
-  
+  arguments:
+  - position: 1
+    name: "entity"
+    type: Entity
   returns:
     - type: boolean
       description: "Whether the operation was successful"

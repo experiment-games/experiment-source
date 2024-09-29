@@ -14,8 +14,9 @@ lua:
   description: "Get the sentence length."
   
   arguments:
-    - name: "index"
-      type: number
+  - position: 1
+    name: "index"
+    type: number
   returns:
     - type: number
       description: "The sentence length."

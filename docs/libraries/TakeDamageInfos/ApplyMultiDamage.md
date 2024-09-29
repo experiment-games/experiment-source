@@ -13,6 +13,7 @@ lua:
   realm: shared
   description: "Applies multi damage"
   
+  arguments:
   
   returns:
     

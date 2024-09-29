@@ -14,10 +14,15 @@ lua:
   description: "Sets the fallback font for the text entry"
   
   arguments:
-    - name: "useFallback"
-      type: boolean
-    - name: "fallbackFont"
-      type: FontHandle
+  - position: 1
+    name: "textEntry"
+    type: TextEntry
+  - position: 2
+    name: "useFallback"
+    type: boolean
+  - position: 3
+    name: "fallbackFont"
+    type: FontHandle
   returns:
     
 ---

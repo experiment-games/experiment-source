@@ -13,7 +13,10 @@ lua:
   realm: shared
   description: "Check if physics is flesh."
   
-  
+  arguments:
+  - position: 1
+    name: "entity"
+    type: Entity
   returns:
     
 ---

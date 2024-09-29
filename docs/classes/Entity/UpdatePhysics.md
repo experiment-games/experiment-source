@@ -14,8 +14,12 @@ lua:
   description: "Update physics object."
   
   arguments:
-    - name: "object"
-      type: PhysicsObject
+  - position: 1
+    name: "entity"
+    type: Entity
+  - position: 2
+    name: "object"
+    type: PhysicsObject
   returns:
     
 ---

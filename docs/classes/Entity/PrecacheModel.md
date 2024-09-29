@@ -15,8 +15,9 @@ lua:
   
   static: true
   arguments:
-    - name: "model"
-      type: string
+  - position: 1
+    name: "model"
+    type: string
   returns:
     - type: integer
       description: "The precached model."

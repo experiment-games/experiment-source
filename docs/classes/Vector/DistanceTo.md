@@ -14,8 +14,12 @@ lua:
   description: "Calculates the distance between two vectors."
   
   arguments:
-    - name: "vector2"
-      type: Vector
+  - position: 1
+    name: "vector1"
+    type: Vector
+  - position: 2
+    name: "vector2"
+    type: Vector
   returns:
     - type: number
       description: "The distance between the two vectors."

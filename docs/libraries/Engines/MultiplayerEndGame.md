@@ -13,6 +13,7 @@ lua:
   realm: server
   description: "End the multiplayer game."
   
+  arguments:
   
   returns:
     

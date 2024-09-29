@@ -13,7 +13,10 @@ lua:
   realm: shared
   description: "Rechecks the collision filter"
   
-  
+  arguments:
+  - position: 1
+    name: "physicsObject"
+    type: PhysicsObject
   returns:
     
 ---

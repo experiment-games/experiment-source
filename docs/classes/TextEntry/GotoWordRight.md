@@ -13,7 +13,10 @@ lua:
   realm: client
   description: "Moves the cursor to the next word on the right"
   
-  
+  arguments:
+  - position: 1
+    name: "textEntry"
+    type: TextEntry
   returns:
     
 ---

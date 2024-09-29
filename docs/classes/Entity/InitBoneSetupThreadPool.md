@@ -14,6 +14,7 @@ lua:
   description: "Initialize the bone setup thread pool."
   
   static: true
+  arguments:
   
   returns:
     

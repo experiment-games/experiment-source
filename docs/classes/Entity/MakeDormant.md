@@ -13,7 +13,10 @@ lua:
   realm: server
   description: "Makes the entity inactive."
   
-  
+  arguments:
+  - position: 1
+    name: "entity"
+    type: Entity
   returns:
     
 ---

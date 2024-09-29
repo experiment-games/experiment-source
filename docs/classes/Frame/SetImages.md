@@ -14,11 +14,16 @@ lua:
   description: "Sets the images"
   
   arguments:
-    - name: "imageName"
-      type: string
-    - name: "imageNameArmed"
-      type: string
-      default: "NULL"
+  - position: 1
+    name: "frame"
+    type: Frame
+  - position: 2
+    name: "imageName"
+    type: string
+  - position: 3
+    name: "imageNameArmed"
+    type: string
+    default: "NULL"
   returns:
     
 ---

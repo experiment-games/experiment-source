@@ -13,7 +13,10 @@ lua:
   realm: shared
   description: "Apply falling damage to host player based on set fall velocity"
   
-  
+  arguments:
+  - position: 1
+    name: "moveHelper"
+    type: MoveHelper
   returns:
     - type: boolean
       description: "Returns true if the player survived the fall, false if they died"

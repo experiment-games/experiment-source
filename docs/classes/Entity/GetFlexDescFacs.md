@@ -14,8 +14,12 @@ lua:
   description: "Get the flex desc facs."
   
   arguments:
-    - name: "flexDescIndex"
-      type: number
+  - position: 1
+    name: "entity"
+    type: Entity
+  - position: 2
+    name: "flexDescIndex"
+    type: number
   returns:
     - type: string
       description: "The flex desc facs"

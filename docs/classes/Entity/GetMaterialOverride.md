@@ -13,7 +13,10 @@ lua:
   realm: shared
   description: "Get the material override"
   
-  
+  arguments:
+  - position: 1
+    name: "entity"
+    type: Entity
   returns:
     - type: string
       description: "The material override"

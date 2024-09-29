@@ -13,7 +13,10 @@ lua:
   realm: server
   description: "Remove the suit for the player."
   
-  
+  arguments:
+  - position: 1
+    name: "player"
+    type: Player
   returns:
     
 ---

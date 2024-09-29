@@ -13,7 +13,10 @@ lua:
   realm: shared
   description: "Release the texture."
   
-  
+  arguments:
+  - position: 1
+    name: "texture"
+    type: Texture
   returns:
     
 ---

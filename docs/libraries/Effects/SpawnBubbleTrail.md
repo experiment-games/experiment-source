@@ -14,12 +14,15 @@ lua:
   description: "Creates a bubble trail effect."
   
   arguments:
-    - name: "start"
-      type: Vector
-    - name: "end"
-      type: Vector
-    - name: "count"
-      type: number
+  - position: 1
+    name: "start"
+    type: Vector
+  - position: 2
+    name: "end"
+    type: Vector
+  - position: 3
+    name: "count"
+    type: number
   returns:
     
 ---

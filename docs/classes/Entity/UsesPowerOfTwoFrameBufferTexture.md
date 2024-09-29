@@ -13,7 +13,10 @@ lua:
   realm: client
   description: "Uses power of two frame buffer texture."
   
-  
+  arguments:
+  - position: 1
+    name: "entity"
+    type: Entity
   returns:
     - type: boolean
       description: "true if uses power of two frame buffer texture, false otherwise."

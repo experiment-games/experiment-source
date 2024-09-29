@@ -14,8 +14,9 @@ lua:
   description: "Set the write depth to destination alpha."
   
   arguments:
-    - name: "enable"
-      type: boolean
+  - position: 1
+    name: "enable"
+    type: boolean
   returns:
     
 ---

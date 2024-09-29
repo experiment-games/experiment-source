@@ -14,21 +14,27 @@ lua:
   description: "Spawns a tracer particle effect."
   
   arguments:
-    - name: "effect"
-      type: string
-    - name: "start"
-      type: Vector
-    - name: "end"
-      type: Vector
-    - name: "whiz"
-      type: boolean
-      default: "false"
-    - name: "entityIndex"
-      type: number
-      default: "0"
-    - name: "attachment"
-      type: number
-      default: "0"
+  - position: 1
+    name: "effect"
+    type: string
+  - position: 2
+    name: "start"
+    type: Vector
+  - position: 3
+    name: "end"
+    type: Vector
+  - position: 4
+    name: "whiz"
+    type: boolean
+    default: "false"
+  - position: 5
+    name: "entityIndex"
+    type: number
+    default: "0"
+  - position: 6
+    name: "attachment"
+    type: number
+    default: "0"
   returns:
     
 ---

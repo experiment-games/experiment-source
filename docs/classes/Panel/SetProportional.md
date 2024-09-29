@@ -14,8 +14,12 @@ lua:
   description: "Sets whether the panel is proportional"
   
   arguments:
-    - name: "proportional"
-      type: boolean
+  - position: 1
+    name: "panel"
+    type: Panel
+  - position: 2
+    name: "proportional"
+    type: boolean
   returns:
     
 ---

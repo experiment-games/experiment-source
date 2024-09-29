@@ -13,7 +13,10 @@ lua:
   realm: shared
   description: "Get water type."
   
-  
+  arguments:
+  - position: 1
+    name: "entity"
+    type: Entity
   returns:
     - type: integer
       description: "The water type flags."

@@ -14,8 +14,12 @@ lua:
   description: "Set transmit with parent."
   
   arguments:
-    - name: "transmit"
-      type: boolean
+  - position: 1
+    name: "entity"
+    type: Entity
+  - position: 2
+    name: "transmit"
+    type: boolean
   returns:
     
 ---

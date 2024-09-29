@@ -13,6 +13,7 @@ lua:
   realm: client
   description: "Gets the absolute window bounds"
   
+  arguments:
   
   returns:
     - type: integer

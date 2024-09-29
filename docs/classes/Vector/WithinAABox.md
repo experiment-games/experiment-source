@@ -14,10 +14,15 @@ lua:
   description: "Checks if the vector is within an axis-aligned box."
   
   arguments:
-    - name: "boxMin"
-      type: Vector
-    - name: "boxMax"
-      type: Vector
+  - position: 1
+    name: "vector"
+    type: Vector
+  - position: 2
+    name: "boxMin"
+    type: Vector
+  - position: 3
+    name: "boxMax"
+    type: Vector
   returns:
     - type: boolean
       description: "True if the vector is within the axis-aligned box, false otherwise."

@@ -14,8 +14,12 @@ lua:
   description: "Set the amount of ammo in the primary clip."
   
   arguments:
-    - name: "clip"
-      type: number
+  - position: 1
+    name: "entity"
+    type: Weapon
+  - position: 2
+    name: "clip"
+    type: number
   returns:
     
 ---

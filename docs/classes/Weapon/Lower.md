@@ -13,7 +13,10 @@ lua:
   realm: shared
   description: "Lower the weapon."
   
-  
+  arguments:
+  - position: 1
+    name: "entity"
+    type: Weapon
   returns:
     - type: boolean
       description: "Whether the weapon was lowered."

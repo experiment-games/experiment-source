@@ -13,7 +13,10 @@ lua:
   realm: shared
   description: "Gets the up vector of the matrix."
   
-  
+  arguments:
+  - position: 1
+    name: "Matrix"
+    type: Matrix
   returns:
     - type: Vector
       description: "The up vector."

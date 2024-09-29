@@ -13,7 +13,10 @@ lua:
   realm: shared
   description: "Get the size of a file."
   
-  
+  arguments:
+  - position: 1
+    name: "file"
+    type: FileHandle
   returns:
     - type: integer
       description: "The size of the file."

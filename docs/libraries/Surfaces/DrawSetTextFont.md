@@ -14,8 +14,9 @@ lua:
   description: "Sets the text font"
   
   arguments:
-    - name: "font"
-      type: FontHandle
+  - position: 1
+    name: "font"
+    type: FontHandle
   returns:
     
 ---

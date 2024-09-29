@@ -13,7 +13,10 @@ lua:
   realm: client
   description: "Checks if the surface supports a feature"
   
-  
+  arguments:
+  - position: 1
+    name: "feature"
+    type: enumeration/SURFACE_FEATURE
   returns:
     - type: boolean
       description: "True if the surface supports the feature, false otherwise."

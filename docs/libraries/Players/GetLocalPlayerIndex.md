@@ -1,18 +1,19 @@
 ---
 template: lua-library-function.html
 title: GetLocalPlayerIndex
-icon: lua-shared
+icon: lua-client
 tags:
   - lua
-  - shared
+  - client
   - needs-verification
   - needs-example
 lua:
   library: Players
   function: GetLocalPlayerIndex
-  realm: shared
+  realm: client
   description: "Get local player index"
   
+  arguments:
   
   returns:
     - type: integer

@@ -13,6 +13,7 @@ lua:
   realm: server
   description: "Resets the delete list"
   
+  arguments:
   
   returns:
     - type: integer

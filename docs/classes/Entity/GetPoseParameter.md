@@ -14,8 +14,15 @@ lua:
   description: "Get the pose parameter."
   
   arguments:
-    - name: "poseParameter"
-      type: number
+  - position: 1
+    name: "entity"
+    type: Entity
+  - position: 2
+    types:
+      - name: "poseParameter"
+        type: number
+      - name: "poseParameterName"
+        type: string
   returns:
     - type: number
       description: "The pose parameter"

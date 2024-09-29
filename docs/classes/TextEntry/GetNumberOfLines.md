@@ -13,7 +13,10 @@ lua:
   realm: client
   description: "Gets the number of lines in the text entry"
   
-  
+  arguments:
+  - position: 1
+    name: "textEntry"
+    type: TextEntry
   returns:
     - type: integer
       description: "The number of lines in the text entry"

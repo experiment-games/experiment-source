@@ -14,8 +14,9 @@ lua:
   description: "Gets the title"
   
   arguments:
-    - name: "panel"
-      type: Panel
+  - position: 1
+    name: "panel"
+    type: Panel
   returns:
     - type: string
       description: "The title"

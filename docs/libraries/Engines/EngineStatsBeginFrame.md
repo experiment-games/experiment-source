@@ -13,6 +13,7 @@ lua:
   realm: client
   description: "Begin engine stats frame."
   
+  arguments:
   
   returns:
     

@@ -13,6 +13,7 @@ lua:
   realm: client
   description: "Gets the resolution key"
   
+  arguments:
   
   returns:
     - type: string

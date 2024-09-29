@@ -13,6 +13,7 @@ lua:
   realm: client
   description: "Checks if the panel is valid"
   
+  arguments:
   
   returns:
     - type: boolean

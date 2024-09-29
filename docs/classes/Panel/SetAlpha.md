@@ -14,8 +14,12 @@ lua:
   description: "Sets the panel alpha"
   
   arguments:
-    - name: "alpha"
-      type: number
+  - position: 1
+    name: "panel"
+    type: Panel
+  - position: 2
+    name: "alpha"
+    type: number
   returns:
     
 ---

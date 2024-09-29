@@ -14,8 +14,9 @@ lua:
   description: "Moves the popup to the back"
   
   arguments:
-    - name: "panel"
-      type: Panel
+  - position: 1
+    name: "panel"
+    type: Panel
   returns:
     
 ---

@@ -13,7 +13,10 @@ lua:
   realm: client
   description: "Moves the frame to the center of the screen"
   
-  
+  arguments:
+  - position: 1
+    name: "frame"
+    type: Frame
   returns:
     
 ---

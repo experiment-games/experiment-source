@@ -13,7 +13,10 @@ lua:
   realm: shared
   description: "Adds flags to the ConsoleVariable"
   
-  
+  arguments:
+  - position: 1
+    name: "consoleVariable"
+    type: ConsoleVariable
   returns:
     - type: void
       description: "Adds flags to the ConsoleVariable"

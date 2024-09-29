@@ -14,14 +14,21 @@ lua:
   description: "Physics splash."
   
   arguments:
-    - name: "center"
-      type: Vector
-    - name: "normal"
-      type: Vector
-    - name: "rawSpeed"
-      type: number
-    - name: "scaledSpeed"
-      type: number
+  - position: 1
+    name: "entity"
+    type: Entity
+  - position: 2
+    name: "center"
+    type: Vector
+  - position: 3
+    name: "normal"
+    type: Vector
+  - position: 4
+    name: "rawSpeed"
+    type: number
+  - position: 5
+    name: "scaledSpeed"
+    type: number
   returns:
     - type: boolean
       description: "true if splashed, false otherwise."

@@ -14,10 +14,15 @@ lua:
   description: "Set a color in the keyvalues."
   
   arguments:
-    - name: "key"
-      type: string
-    - name: "color"
-      type: Color
+  - position: 1
+    name: "keyValues"
+    type: KeyValuesHandle
+  - position: 2
+    name: "key"
+    type: string
+  - position: 3
+    name: "color"
+    type: Color
   returns:
     
 ---

@@ -13,6 +13,7 @@ lua:
   realm: client
   description: "Get the ideal pitch."
   
+  arguments:
   
   returns:
     - type: number

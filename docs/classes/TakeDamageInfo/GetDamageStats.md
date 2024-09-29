@@ -13,7 +13,10 @@ lua:
   realm: shared
   description: "Gets damage stats"
   
-  
+  arguments:
+  - position: 1
+    name: "damageInfo"
+    type: DamageInfo
   returns:
     - type: integer
       description: "The damage stats."

@@ -14,12 +14,15 @@ lua:
   description: "Clear the buffers."
   
   arguments:
-    - name: "clearColor"
-      type: boolean
-    - name: "clearDepth"
-      type: boolean
-    - name: "clearStencil"
-      type: boolean
+  - position: 1
+    name: "clearColor"
+    type: boolean
+  - position: 2
+    name: "clearDepth"
+    type: boolean
+  - position: 3
+    name: "clearStencil"
+    type: boolean
   returns:
     
 ---

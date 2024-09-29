@@ -14,8 +14,9 @@ lua:
   description: "Check if the end of a file has been reached."
   
   arguments:
-    - name: "file"
-      type: FileHandle
+  - position: 1
+    name: "file"
+    type: FileHandle
   returns:
     - type: boolean
       description: "true if the end of the file has been reached, false otherwise."

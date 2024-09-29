@@ -13,7 +13,10 @@ lua:
   realm: shared
   description: "Get debug name."
   
-  
+  arguments:
+  - position: 1
+    name: "entity"
+    type: Entity
   returns:
     - type: string
       description: "The debug name."

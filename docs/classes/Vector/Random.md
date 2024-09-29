@@ -13,7 +13,10 @@ lua:
   realm: shared
   description: "Generates a random vector."
   
-  
+  arguments:
+  - position: 1
+    name: "vector"
+    type: Vector
   returns:
     
 ---

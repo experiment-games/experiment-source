@@ -14,11 +14,16 @@ lua:
   description: "Select an item for the player."
   
   arguments:
-    - name: "item name"
-      type: string
-    - name: "slot"
-      type: number
-      default: "0"
+  - position: 1
+    name: "player"
+    type: Player
+  - position: 2
+    name: "item name"
+    type: string
+  - position: 3
+    name: "slot"
+    type: number
+    default: "0"
   returns:
     
 ---

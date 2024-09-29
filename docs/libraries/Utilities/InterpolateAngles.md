@@ -14,14 +14,18 @@ lua:
   description: "Interpolate between angles based on the provided fraction"
   
   arguments:
-    - name: "startAngles"
-      type: Angle
-    - name: "endAngles"
-      type: Angle
-    - name: "resultAngles"
-      type: Angle
-    - name: "fraction"
-      type: number
+  - position: 1
+    name: "startAngles"
+    type: Angle
+  - position: 2
+    name: "endAngles"
+    type: Angle
+  - position: 3
+    name: "resultAngles"
+    type: Angle
+  - position: 4
+    name: "fraction"
+    type: number
   returns:
     
 ---

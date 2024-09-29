@@ -14,8 +14,12 @@ lua:
   description: "Dispatches blocked events to this entity's blocked handler, set via SetBlocked."
   
   arguments:
-    - name: "blockingEntity"
-      type: Entity
+  - position: 1
+    name: "entity"
+    type: Entity
+  - position: 2
+    name: "blockingEntity"
+    type: Entity
   returns:
     
 ---

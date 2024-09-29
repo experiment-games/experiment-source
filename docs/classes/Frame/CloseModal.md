@@ -13,7 +13,10 @@ lua:
   realm: client
   description: "Closes the frame modally"
   
-  
+  arguments:
+  - position: 1
+    name: "frame"
+    type: Frame
   returns:
     
 ---

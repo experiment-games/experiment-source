@@ -13,7 +13,10 @@ lua:
   realm: server
   description: "Returns the sky camera of the skybox the entity is in."
   
-  
+  arguments:
+  - position: 1
+    name: "entity"
+    type: Entity
   returns:
     
 ---

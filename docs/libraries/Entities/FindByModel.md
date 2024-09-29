@@ -14,11 +14,13 @@ lua:
   description: "Finds an entity by its model name"
   
   arguments:
-    - name: "modelName"
-      type: string
-    - name: "startEntity"
-      type: Entity
-      default: "NULL"
+  - position: 1
+    name: "modelName"
+    type: string
+  - position: 2
+    name: "startEntity"
+    type: Entity
+    default: "NULL"
   returns:
     - type: Entity
       description: "The entity found, or NULL if not found."

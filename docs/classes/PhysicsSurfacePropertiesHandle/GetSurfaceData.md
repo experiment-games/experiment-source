@@ -13,7 +13,13 @@ lua:
   realm: shared
   description: "Gets the surface data"
   
-  
+  arguments:
+  - position: 1
+    name: "physprops"
+    type: PhysicsSurfacePropertiesHandle
+  - position: 2
+    name: "surfaceDataIndex"
+    type: number
   returns:
     - type: SurfaceData
       description: "The surface data."

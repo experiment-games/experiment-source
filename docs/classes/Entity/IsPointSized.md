@@ -13,7 +13,10 @@ lua:
   realm: shared
   description: "Is point sized."
   
-  
+  arguments:
+  - position: 1
+    name: "entity"
+    type: Entity
   returns:
     - type: boolean
       description: "True if point sized, false otherwise."

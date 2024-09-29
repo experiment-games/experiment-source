@@ -13,6 +13,7 @@ lua:
   realm: client
   description: "Get the light style value."
   
+  arguments:
   
   returns:
     - type: number

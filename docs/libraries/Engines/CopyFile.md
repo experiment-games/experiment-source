@@ -14,10 +14,12 @@ lua:
   description: "Copy a file."
   
   arguments:
-    - name: "source"
-      type: string
-    - name: "destination"
-      type: string
+  - position: 1
+    name: "source"
+    type: string
+  - position: 2
+    name: "destination"
+    type: string
   returns:
     - type: boolean
       description: "True if the file was copied, false otherwise."

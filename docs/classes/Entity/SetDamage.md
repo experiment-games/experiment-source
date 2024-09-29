@@ -14,8 +14,12 @@ lua:
   description: "Set damage."
   
   arguments:
-    - name: "damage"
-      type: number
+  - position: 1
+    name: "entity"
+    type: Entity
+  - position: 2
+    name: "damage"
+    type: number
   returns:
     
 ---

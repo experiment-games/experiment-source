@@ -13,7 +13,10 @@ lua:
   realm: shared
   description: "Get class name."
   
-  
+  arguments:
+  - position: 1
+    name: "entity"
+    type: Weapon
   returns:
     - type: string
       description: "Class name."

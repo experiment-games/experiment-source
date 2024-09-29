@@ -14,8 +14,12 @@ lua:
   description: "Sets the tall"
   
   arguments:
-    - name: "tall"
-      type: number
+  - position: 1
+    name: "panel"
+    type: Panel
+  - position: 2
+    name: "tall"
+    type: number
   returns:
     
 ---

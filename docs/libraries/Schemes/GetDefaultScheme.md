@@ -13,6 +13,7 @@ lua:
   realm: client
   description: "Returns the default scheme."
   
+  arguments:
   
   returns:
     - type: scheme

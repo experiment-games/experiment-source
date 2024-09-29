@@ -14,9 +14,13 @@ lua:
   description: "Sets whether the panel is visible"
   
   arguments:
-    - name: "visible"
-      type: boolean
-      default: "false"
+  - position: 1
+    name: "panel"
+    type: Panel
+  - position: 2
+    name: "visible"
+    type: boolean
+    default: "false"
   returns:
     
 ---

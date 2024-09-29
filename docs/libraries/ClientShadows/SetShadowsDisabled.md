@@ -14,8 +14,9 @@ lua:
   description: "Enable or disable shadow rendering."
   
   arguments:
-    - name: "disabled"
-      type: boolean
+  - position: 1
+    name: "disabled"
+    type: boolean
   returns:
     
 ---

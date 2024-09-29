@@ -14,8 +14,12 @@ lua:
   description: "Check if the player has the named weapon."
   
   arguments:
-    - name: "name"
-      type: string
+  - position: 1
+    name: "player"
+    type: Player
+  - position: 2
+    name: "name"
+    type: string
   returns:
     - type: boolean
       description: "Whether the player has the weapon."

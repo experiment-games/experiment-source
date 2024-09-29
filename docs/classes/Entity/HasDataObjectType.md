@@ -14,8 +14,12 @@ lua:
   description: "Has data object type."
   
   arguments:
-    - name: "type"
-      type: number
+  - position: 1
+    name: "entity"
+    type: Entity
+  - position: 2
+    name: "type"
+    type: number
   returns:
     - type: boolean
       description: "True if has data object type, false otherwise."

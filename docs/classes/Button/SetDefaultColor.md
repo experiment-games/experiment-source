@@ -14,10 +14,15 @@ lua:
   description: "Sets the default color"
   
   arguments:
-    - name: "defaultForegroundColor"
-      type: Color
-    - name: "defaultBackgroundColor"
-      type: Color
+  - position: 1
+    name: "button"
+    type: Button
+  - position: 2
+    name: "defaultForegroundColor"
+    type: Color
+  - position: 3
+    name: "defaultBackgroundColor"
+    type: Color
   returns:
     
 ---

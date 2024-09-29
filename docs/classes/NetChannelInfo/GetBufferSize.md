@@ -13,7 +13,10 @@ lua:
   realm: server
   description: "Returns the size of the buffer."
   
-  
+  arguments:
+  - position: 1
+    name: "netChannel"
+    type: NetChannelInfo
   returns:
     - type: integer
       description: "The size of the buffer."

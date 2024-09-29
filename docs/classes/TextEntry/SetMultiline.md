@@ -14,8 +14,12 @@ lua:
   description: "Sets whether the text entry is multiline"
   
   arguments:
-    - name: "multiline"
-      type: boolean
+  - position: 1
+    name: "textEntry"
+    type: TextEntry
+  - position: 2
+    name: "multiline"
+    type: boolean
   returns:
     
 ---

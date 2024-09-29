@@ -14,10 +14,15 @@ lua:
   description: "Check if the player can use an entity."
   
   arguments:
-    - name: "entity"
-      type: Entity
-    - name: "use type"
-      type: number
+  - position: 1
+    name: "player"
+    type: Player
+  - position: 2
+    name: "entity"
+    type: Entity
+  - position: 3
+    name: "use type"
+    type: number
   returns:
     - type: boolean
       description: "Whether the player can use the entity."

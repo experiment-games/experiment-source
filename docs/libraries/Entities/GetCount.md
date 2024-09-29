@@ -13,6 +13,7 @@ lua:
   realm: shared
   description: "Gets the number of entities in the list"
   
+  arguments:
   
   returns:
     - type: integer

@@ -14,8 +14,12 @@ lua:
   description: "Inserts a string at the cursor position"
   
   arguments:
-    - name: "str"
-      type: string
+  - position: 1
+    name: "textEntry"
+    type: TextEntry
+  - position: 2
+    name: "str"
+    type: string
   returns:
     
 ---

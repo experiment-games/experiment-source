@@ -13,6 +13,7 @@ lua:
   realm: shared
   description: "Check if the game is in low violence mode"
   
+  arguments:
   
   returns:
     - type: boolean

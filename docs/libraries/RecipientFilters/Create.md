@@ -14,9 +14,10 @@ lua:
   description: "Creates a new recipient filter"
   
   arguments:
-    - name: "isUnreliable"
-      type: boolean
-      default: "false"
+  - position: 1
+    name: "isUnreliable"
+    type: boolean
+    default: "false"
   returns:
     - type: RecipientFilter
       description: "The new recipient filter"

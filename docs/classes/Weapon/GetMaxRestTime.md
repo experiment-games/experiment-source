@@ -13,7 +13,10 @@ lua:
   realm: shared
   description: "Get max rest time."
   
-  
+  arguments:
+  - position: 1
+    name: "entity"
+    type: Weapon
   returns:
     - type: number
       description: "Max rest time."

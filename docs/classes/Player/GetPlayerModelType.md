@@ -13,7 +13,10 @@ lua:
   realm: server
   description: "Get the player model type."
   
-  
+  arguments:
+  - position: 1
+    name: "entity"
+    type: Player
   returns:
     - type: integer
       description: "The player model type"

@@ -13,7 +13,10 @@ lua:
   realm: shared
   description: "Is currently touching."
   
-  
+  arguments:
+  - position: 1
+    name: "entity"
+    type: Entity
   returns:
     - type: boolean
       description: "True if currently touching, false otherwise."

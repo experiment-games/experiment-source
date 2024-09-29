@@ -14,8 +14,15 @@ lua:
   description: "Clamps a number between two values."
   
   arguments:
-    - name: "number"
-      type: number
+  - position: 1
+    name: "number"
+    type: number
+  - position: 2
+    name: "number"
+    type: number
+  - position: 3
+    name: "number"
+    type: number
   returns:
     - type: number
       description: "The number clamped between the two values."

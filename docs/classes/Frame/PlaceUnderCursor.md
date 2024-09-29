@@ -13,7 +13,10 @@ lua:
   realm: client
   description: "Places the frame under the cursor"
   
-  
+  arguments:
+  - position: 1
+    name: "frame"
+    type: Frame
   returns:
     
 ---

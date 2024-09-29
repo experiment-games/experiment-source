@@ -13,7 +13,10 @@ lua:
   realm: shared
   description: "Gets mouse Y movement"
   
-  
+  arguments:
+  - position: 1
+    name: "userCmd"
+    type: UserCommand
   returns:
     - type: integer
       description: "The mouse Y movement"

@@ -14,12 +14,17 @@ lua:
   description: "Draw the client hitboxes."
   
   arguments:
-    - name: "duration"
-      type: number
-      default: "0.0f"
-    - name: "monoColor"
-      type: boolean
-      default: "false"
+  - position: 1
+    name: "entity"
+    type: Entity
+  - position: 2
+    name: "duration"
+    type: number
+    default: "0.0f"
+  - position: 3
+    name: "monoColor"
+    type: boolean
+    default: "false"
   returns:
     
 ---

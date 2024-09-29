@@ -13,6 +13,7 @@ lua:
   realm: client
   description: "Checks if the surface has cursor position functions"
   
+  arguments:
   
   returns:
     - type: boolean

@@ -13,7 +13,10 @@ lua:
   realm: client
   description: "Saves the current state for undo"
   
-  
+  arguments:
+  - position: 1
+    name: "textEntry"
+    type: TextEntry
   returns:
     
 ---

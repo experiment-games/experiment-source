@@ -14,8 +14,12 @@ lua:
   description: "Handles the mouse being wheeled"
   
   arguments:
-    - name: "delta"
-      type: number
+  - position: 1
+    name: "panel"
+    type: Panel
+  - position: 2
+    name: "delta"
+    type: number
   returns:
     
 ---

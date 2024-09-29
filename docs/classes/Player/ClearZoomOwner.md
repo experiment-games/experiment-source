@@ -13,7 +13,10 @@ lua:
   realm: shared
   description: "Clear the zoom owner."
   
-  
+  arguments:
+  - position: 1
+    name: "player"
+    type: Player
   returns:
     
 ---

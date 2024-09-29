@@ -13,7 +13,10 @@ lua:
   realm: shared
   description: "Get the maximum number of strings that can be stored in the table."
   
-  
+  arguments:
+  - position: 1
+    name: "networkStringTable"
+    type: NetworkStringTable
   returns:
     - type: integer
       description: "The maximum number of strings."

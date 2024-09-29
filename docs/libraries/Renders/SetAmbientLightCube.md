@@ -14,14 +14,18 @@ lua:
   description: "Set the ambient light cube."
   
   arguments:
-    - name: "directionFace"
-      type: number
-    - name: "r"
-      type: number
-    - name: "g"
-      type: number
-    - name: "b"
-      type: number
+  - position: 1
+    name: "directionFace"
+    type: number
+  - position: 2
+    name: "r"
+    type: number
+  - position: 3
+    name: "g"
+    type: number
+  - position: 4
+    name: "b"
+    type: number
   returns:
     
 ---

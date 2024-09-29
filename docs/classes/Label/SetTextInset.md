@@ -14,10 +14,15 @@ lua:
   description: "Sets the text inset of the label"
   
   arguments:
-    - name: "xInset"
-      type: number
-    - name: "yInset"
-      type: number
+  - position: 1
+    name: "label"
+    type: Label
+  - position: 2
+    name: "xInset"
+    type: number
+  - position: 3
+    name: "yInset"
+    type: number
   returns:
     
 ---

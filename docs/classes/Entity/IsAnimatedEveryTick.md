@@ -13,7 +13,10 @@ lua:
   realm: shared
   description: "Is animated every tick."
   
-  
+  arguments:
+  - position: 1
+    name: "entity"
+    type: Entity
   returns:
     - type: boolean
       description: "True if animated every tick, false otherwise."

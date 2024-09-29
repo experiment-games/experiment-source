@@ -14,10 +14,15 @@ lua:
   description: "Set an integer in the keyvalues."
   
   arguments:
-    - name: "key"
-      type: string
-    - name: "value"
-      type: number
+  - position: 1
+    name: "keyValues"
+    type: KeyValuesHandle
+  - position: 2
+    name: "key"
+    type: string
+  - position: 3
+    name: "value"
+    type: number
   returns:
     
 ---

@@ -13,7 +13,10 @@ lua:
   realm: shared
   description: "Converts a matrix to a 3x4 matrix."
   
-  
+  arguments:
+  - position: 1
+    name: "Matrix"
+    type: Matrix
   returns:
     - type: Matrix
       description: "The converted 3x4 matrix."

@@ -14,10 +14,12 @@ lua:
   description: "Compute width of the string with the given font"
   
   arguments:
-    - name: "font"
-      type: FontHandle
-    - name: "text"
-      type: string
+  - position: 1
+    name: "font"
+    type: FontHandle
+  - position: 2
+    name: "text"
+    type: string
   returns:
     - type: integer
       description: "Width of the string."

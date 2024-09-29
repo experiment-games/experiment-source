@@ -13,7 +13,10 @@ lua:
   realm: server
   description: "Team ID."
   
-  
+  arguments:
+  - position: 1
+    name: "entity"
+    type: Entity
   returns:
     - type: string
       description: "The team ID"

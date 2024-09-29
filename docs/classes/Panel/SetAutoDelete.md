@@ -14,8 +14,12 @@ lua:
   description: "Sets whether the panel is auto deleted"
   
   arguments:
-    - name: "autoDelete"
-      type: boolean
+  - position: 1
+    name: "panel"
+    type: Panel
+  - position: 2
+    name: "autoDelete"
+    type: boolean
   returns:
     
 ---

@@ -14,8 +14,9 @@ lua:
   description: "Get the binding for a specific key code."
   
   arguments:
-    - name: "keyCode"
-      type: enumeration/BUTTON
+  - position: 1
+    name: "keyCode"
+    type: enumeration/BUTTON
   returns:
     - type: string
       description: "The key binding."

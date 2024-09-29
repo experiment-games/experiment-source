@@ -13,7 +13,10 @@ lua:
   realm: shared
   description: "Hide think."
   
-  
+  arguments:
+  - position: 1
+    name: "entity"
+    type: Weapon
   returns:
     
 ---

@@ -14,9 +14,13 @@ lua:
   description: "Advance the frame."
   
   arguments:
-    - name: "interval"
-      type: number
-      default: "0.0f"
+  - position: 1
+    name: "entity"
+    type: Entity
+  - position: 2
+    name: "interval"
+    type: number
+    default: "0.0f"
   returns:
     - type: number
       description: "The new cycle"

@@ -14,8 +14,12 @@ lua:
   description: "Set collision group."
   
   arguments:
-    - name: "group"
-      type: number
+  - position: 1
+    name: "entity"
+    type: Entity
+  - position: 2
+    name: "group"
+    type: number
   returns:
     
 ---

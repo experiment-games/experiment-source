@@ -13,7 +13,10 @@ lua:
   realm: client
   description: "Converts a screen position to a local position"
   
-  
+  arguments:
+  - position: 1
+    name: "panel"
+    type: Panel
   returns:
     - type: integer
       description: "The x position of the local"

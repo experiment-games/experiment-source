@@ -13,7 +13,10 @@ lua:
   realm: shared
   description: "Whether the ConsoleVariable is valid"
   
-  
+  arguments:
+  - position: 1
+    name: "consoleVariable"
+    type: ConsoleVariable
   returns:
     - type: boolean
       description: "Whether the ConsoleVariable is valid"

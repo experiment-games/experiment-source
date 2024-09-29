@@ -14,6 +14,7 @@ lua:
   description: "Returns true if called on the server."
   
   static: true
+  arguments:
   
   returns:
     - type: boolean

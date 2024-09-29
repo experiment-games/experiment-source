@@ -13,7 +13,10 @@ lua:
   realm: client
   description: "Get the collide type."
   
-  
+  arguments:
+  - position: 1
+    name: "entity"
+    type: Entity
   returns:
     - type: enumeration/COLLIDE_TYPE
       description: "The collide type"

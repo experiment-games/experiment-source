@@ -14,12 +14,18 @@ lua:
   description: "Apply a rumble effect to the player."
   
   arguments:
-    - name: "index"
-      type: number
-    - name: "duration"
-      type: number
-    - name: "flags"
-      type: number
+  - position: 1
+    name: "player"
+    type: Player
+  - position: 2
+    name: "index"
+    type: number
+  - position: 3
+    name: "duration"
+    type: number
+  - position: 4
+    name: "flags"
+    type: number
   returns:
     
 ---

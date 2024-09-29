@@ -13,7 +13,10 @@ lua:
   realm: shared
   description: "Rescind alt fire HUD hint."
   
-  
+  arguments:
+  - position: 1
+    name: "entity"
+    type: Weapon
   returns:
     
 ---

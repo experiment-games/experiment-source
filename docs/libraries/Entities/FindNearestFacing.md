@@ -14,12 +14,15 @@ lua:
   description: "Finds the nearest entity facing a direction"
   
   arguments:
-    - name: "position"
-      type: Vector
-    - name: "direction"
-      type: Vector
-    - name: "maxDistance"
-      type: number
+  - position: 1
+    name: "position"
+    type: Vector
+  - position: 2
+    name: "direction"
+    type: Vector
+  - position: 3
+    name: "maxDistance"
+    type: number
   returns:
     - type: Entity
       description: "The entity found, or NULL if not found."

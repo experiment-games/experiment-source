@@ -10,27 +10,3 @@
     {% endfor %}
 </ul>
 {% endif %}
-
-{% if page.meta.lua.argumentSets %}
-{% set hasMultipleArguments = false %}
-{% for argumentSet in page.meta.lua.argumentSets %}
-{% if argumentSet.arguments|length > 1 %}
-{% set hasMultipleArguments = true %}
-{% endif %}
-{% endfor %}
-{% if hasMultipleArguments %}
-<h2>Arguments</h2>
-{% else %}
-<h2>Argument</h2>
-{% endif %}
-<ul class="lua__variable_list">
-    {% for argumentSet in page.meta.lua.argumentSets %}
-    {% if loop.index > 1 %}
-    Or:
-    {% endif %}
-    {% for argument in argumentSet.arguments %}
-    {% include 'lua-partials/argument.html' %}
-    {% endfor %}
-    {% endfor %}
-</ul>
-{% endif %}

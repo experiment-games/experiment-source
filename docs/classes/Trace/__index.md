@@ -14,8 +14,12 @@ lua:
   description: "Get a field from the trace."
   
   arguments:
-    - name: "field"
-      type: string
+  - position: 1
+    name: "trace"
+    type: Trace
+  - position: 2
+    name: "field"
+    type: string
   returns:
     - type: any
       description: "The value of the field."

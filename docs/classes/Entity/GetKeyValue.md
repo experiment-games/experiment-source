@@ -14,8 +14,12 @@ lua:
   description: "Get key value (the value is limited to 256 bytes)."
   
   arguments:
-    - name: "key"
-      type: string
+  - position: 1
+    name: "entity"
+    type: Entity
+  - position: 2
+    name: "key"
+    type: string
   returns:
     - type: boolean
       description: "True if key value exists, false otherwise."

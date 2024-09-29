@@ -18,7 +18,7 @@ LUA_BINDING_BEGIN( WebConnectionHeadersHandle, __index, "class", "Get the header
     luaL_getmetatable( L, WEBCONNECTIONSHEADERSMETANAME );
     lua_getmetatable( L, 1 );
 
-    if (!lua_istable( L, 1 ) || !lua_rawequal( L, -1, -2 ))
+    if ( !LUA_BINDING_ARGUMENT( lua_istable, 1, "webConnectionHeaders" ) || !lua_rawequal( L, -1, -2 ) )
     {
         luaL_typeerror( L, 1, WEBCONNECTIONSHEADERSMETANAME );
         return 0;

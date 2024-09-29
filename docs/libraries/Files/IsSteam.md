@@ -13,6 +13,7 @@ lua:
   realm: shared
   description: "Check if Steam is running."
   
+  arguments:
   
   returns:
     - type: boolean

@@ -13,7 +13,13 @@ lua:
   realm: shared
   description: "Enables or disables collisions"
   
-  
+  arguments:
+  - position: 1
+    name: "physicsObject"
+    type: PhysicsObject
+  - position: 2
+    name: "enable"
+    type: boolean
   returns:
     
 ---

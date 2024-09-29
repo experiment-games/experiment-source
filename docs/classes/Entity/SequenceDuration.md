@@ -14,9 +14,13 @@ lua:
   description: "Sequence duration."
   
   arguments:
-    - name: "sequence"
-      type: number
-      nillable: true
+  - position: 1
+    name: "entity"
+    type: Entity
+  - position: 2
+    name: "sequence"
+    type: number
+    nillable: true
   returns:
     - type: number
       description: "The sequence duration"

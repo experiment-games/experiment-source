@@ -13,7 +13,10 @@ lua:
   realm: shared
   description: "Puts the object to sleep"
   
-  
+  arguments:
+  - position: 1
+    name: "physicsObject"
+    type: PhysicsObject
   returns:
     
 ---

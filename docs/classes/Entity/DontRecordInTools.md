@@ -13,7 +13,10 @@ lua:
   realm: client
   description: "Don't record in tools."
   
-  
+  arguments:
+  - position: 1
+    name: "entity"
+    type: Entity
   returns:
     
 ---

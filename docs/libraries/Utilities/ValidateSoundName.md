@@ -14,10 +14,12 @@ lua:
   description: "Validates a sound name."
   
   arguments:
-    - name: "name"
-      type: string
-    - name: "default"
-      type: string
+  - position: 1
+    name: "name"
+    type: string
+  - position: 2
+    name: "default"
+    type: string
   returns:
     - type: string
       description: "The validated sound name."

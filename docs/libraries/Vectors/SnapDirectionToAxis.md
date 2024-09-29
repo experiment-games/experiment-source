@@ -14,11 +14,13 @@ lua:
   description: "Modifies a vector so it snaps to the nearest axis vector (if within epsilon)."
   
   arguments:
-    - name: "direction"
-      type: Vector
-    - name: "epsilon"
-      type: number
-      default: "0.002f"
+  - position: 1
+    name: "direction"
+    type: Vector
+  - position: 2
+    name: "epsilon"
+    type: number
+    default: "0.002f"
   returns:
     
 ---

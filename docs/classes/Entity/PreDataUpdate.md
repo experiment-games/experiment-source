@@ -14,8 +14,12 @@ lua:
   description: "Pre data update."
   
   arguments:
-    - name: "updateType"
-      type: number
+  - position: 1
+    name: "entity"
+    type: Entity
+  - position: 2
+    name: "updateType"
+    type: number
   returns:
     
 ---

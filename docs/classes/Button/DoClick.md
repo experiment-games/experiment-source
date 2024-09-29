@@ -13,7 +13,10 @@ lua:
   realm: client
   description: "Simulates a click on the button"
   
-  
+  arguments:
+  - position: 1
+    name: "button"
+    type: Button
   returns:
     
 ---

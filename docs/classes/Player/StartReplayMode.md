@@ -14,8 +14,18 @@ lua:
   description: "Start the replay mode for the player."
   
   arguments:
-    - name: "delay"
-      type: number
+  - position: 1
+    name: "player"
+    type: Player
+  - position: 2
+    name: "delay"
+    type: number
+  - position: 3
+    name: "duration"
+    type: number
+  - position: 4
+    name: "entityIndex"
+    type: number
   returns:
     - type: boolean
       description: "Whether the replay mode was started."

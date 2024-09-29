@@ -14,8 +14,9 @@ lua:
   description: "Check if a decal is precached."
   
   arguments:
-    - name: "decalName"
-      type: string
+  - position: 1
+    name: "decalName"
+    type: string
   returns:
     - type: boolean
       description: "True if the decal is precached, false otherwise."

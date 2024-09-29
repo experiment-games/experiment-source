@@ -13,7 +13,10 @@ lua:
   realm: server
   description: "Get the entity index of the entity the effect is assigned to."
   
-  
+  arguments:
+  - position: 1
+    name: "effectData"
+    type: EffectData
   returns:
     - type: integer
       description: "Entity index."

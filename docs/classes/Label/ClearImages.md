@@ -13,7 +13,10 @@ lua:
   realm: client
   description: "Clears the images of the label"
   
-  
+  arguments:
+  - position: 1
+    name: "label"
+    type: Label
   returns:
     
 ---

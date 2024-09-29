@@ -14,10 +14,15 @@ lua:
   description: "Add a string to the table."
   
   arguments:
-    - name: "isServer"
-      type: boolean
-    - name: "value"
-      type: string
+  - position: 1
+    name: "networkStringTable"
+    type: NetworkStringTable
+  - position: 2
+    name: "isServer"
+    type: boolean
+  - position: 3
+    name: "value"
+    type: string
   returns:
     - type: integer
       description: "The index of the string."

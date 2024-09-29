@@ -13,6 +13,7 @@ lua:
   realm: shared
   description: "Get the color of the current realm."
   
+  arguments:
   
   returns:
     

@@ -13,18 +13,21 @@ lua:
   realm: server
   description: "Set prevent transmit."
   
-  argumentSets:
-    - arguments:
+  arguments:
+  - position: 1
+    name: "entity"
+    type: Entity
+  - position: 2
+    types:
       - name: "filter"
         type: RecipientFilter
-    - arguments:
       - name: "filter"
         type: table
-    - arguments:
       - name: "filter"
         type: Entity
-      - name: "shouldPreventTransmitting"
-        type: boolean
+  - position: 3
+    name: "shouldPreventTransmitting"
+    type: boolean
   returns:
     
 ---

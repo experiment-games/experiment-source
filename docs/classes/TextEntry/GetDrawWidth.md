@@ -13,7 +13,10 @@ lua:
   realm: client
   description: "Gets the draw width of the text entry"
   
-  
+  arguments:
+  - position: 1
+    name: "textEntry"
+    type: TextEntry
   returns:
     - type: integer
       description: "The draw width of the text entry"

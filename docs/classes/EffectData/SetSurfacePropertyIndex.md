@@ -14,8 +14,12 @@ lua:
   description: "Set the surface property index of the effect."
   
   arguments:
-    - name: "surfaceProperties"
-      type: number
+  - position: 1
+    name: "effectData"
+    type: EffectData
+  - position: 2
+    name: "surfaceProperties"
+    type: number
   returns:
     
 ---

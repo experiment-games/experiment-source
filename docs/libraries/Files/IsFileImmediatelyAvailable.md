@@ -14,8 +14,9 @@ lua:
   description: "Check if a file is immediately available."
   
   arguments:
-    - name: "path"
-      type: string
+  - position: 1
+    name: "path"
+    type: string
   returns:
     - type: boolean
       description: "true if the file is immediately available, false otherwise."

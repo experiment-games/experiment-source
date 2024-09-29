@@ -14,8 +14,12 @@ lua:
   description: "Sets the associated control of the label"
   
   arguments:
-    - name: "control"
-      type: Panel
+  - position: 1
+    name: "label"
+    type: Label
+  - position: 2
+    name: "control"
+    type: Panel
   returns:
     
 ---

@@ -13,7 +13,10 @@ lua:
   realm: client
   description: "Gets the child panels"
   
-  
+  arguments:
+  - position: 1
+    name: "panel"
+    type: Panel
   returns:
     - type: table
       description: "The child panels"

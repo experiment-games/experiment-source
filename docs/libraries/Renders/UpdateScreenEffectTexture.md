@@ -14,8 +14,10 @@ lua:
   description: "Update the screen effect texture."
   
   arguments:
-    - name: "textureIndex"
-      type: number
+  - position: 1
+    name: "textureIndex"
+    type: number
+    default: "0"
   returns:
     
 ---

@@ -14,8 +14,12 @@ lua:
   description: "Converts world vector to local vector"
   
   arguments:
-    - name: "worldVector"
-      type: Vector
+  - position: 1
+    name: "physicsObject"
+    type: PhysicsObject
+  - position: 2
+    name: "worldVector"
+    type: Vector
   returns:
     - type: Vector
       description: "The local vector."

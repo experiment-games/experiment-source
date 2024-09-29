@@ -14,8 +14,12 @@ lua:
   description: "Set texture frame index."
   
   arguments:
-    - name: "index"
-      type: number
+  - position: 1
+    name: "entity"
+    type: Entity
+  - position: 2
+    name: "index"
+    type: number
   returns:
     
 ---

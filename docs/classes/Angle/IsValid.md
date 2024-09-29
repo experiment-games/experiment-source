@@ -13,7 +13,10 @@ lua:
   realm: shared
   description: "Checks if the angle is valid."
   
-  
+  arguments:
+  - position: 1
+    name: "angle"
+    type: Angle
   returns:
     - type: boolean
       description: "True if the angle is valid, false otherwise."

@@ -13,7 +13,10 @@ lua:
   realm: shared
   description: "Check if the activity is finished."
   
-  
+  arguments:
+  - position: 1
+    name: "entity"
+    type: Entity
   returns:
     - type: boolean
       description: "Whether the activity is finished"

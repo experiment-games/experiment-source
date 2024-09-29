@@ -14,14 +14,18 @@ lua:
   description: "Check if a sphere is intersecting another sphere"
   
   arguments:
-    - name: "sphereCenter1"
-      type: Vector
-    - name: "sphereRadius1"
-      type: number
-    - name: "sphereCenter2"
-      type: Vector
-    - name: "sphereRadius2"
-      type: number
+  - position: 1
+    name: "sphereCenter1"
+    type: Vector
+  - position: 2
+    name: "sphereRadius1"
+    type: number
+  - position: 3
+    name: "sphereCenter2"
+    type: Vector
+  - position: 4
+    name: "sphereRadius2"
+    type: number
   returns:
     - type: boolean
       description: "True if the spheres are intersecting"

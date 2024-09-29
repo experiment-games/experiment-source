@@ -13,6 +13,7 @@ lua:
   realm: client
   description: "Reset demo interpolation."
   
+  arguments:
   
   returns:
     

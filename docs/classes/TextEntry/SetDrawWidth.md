@@ -14,8 +14,12 @@ lua:
   description: "Sets the draw width of the text entry"
   
   arguments:
-    - name: "width"
-      type: number
+  - position: 1
+    name: "textEntry"
+    type: TextEntry
+  - position: 2
+    name: "width"
+    type: number
   returns:
     
 ---

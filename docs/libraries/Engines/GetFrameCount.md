@@ -13,6 +13,7 @@ lua:
   realm: shared
   description: "Get the frame count."
   
+  arguments:
   
   returns:
     - type: integer

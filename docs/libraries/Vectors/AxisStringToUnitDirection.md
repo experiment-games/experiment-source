@@ -14,8 +14,9 @@ lua:
   description: "Converts an axis string to a unit direction."
   
   arguments:
-    - name: "axisString"
-      type: string
+  - position: 1
+    name: "axisString"
+    type: string
   returns:
     - type: Vector
       description: "The converted unit direction."

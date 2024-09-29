@@ -14,8 +14,12 @@ lua:
   description: "Handles a command"
   
   arguments:
-    - name: "command"
-      type: string
+  - position: 1
+    name: "panel"
+    type: Panel
+  - position: 2
+    name: "command"
+    type: string
   returns:
     
 ---

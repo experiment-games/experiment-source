@@ -14,22 +14,28 @@ lua:
   description: "Creates a popup."
   
   arguments:
-    - name: "panel"
-      type: Panel
-    - name: "isMinimized"
-      type: boolean
-    - name: "shouldShowTaskbarIcon"
-      type: boolean
-      default: "true"
-    - name: "isDisabled"
-      type: boolean
-      default: "false"
-    - name: "hasMouseInput"
-      type: boolean
-      default: "true"
-    - name: "hasKeyboardInput"
-      type: boolean
-      default: "true"
+  - position: 1
+    name: "panel"
+    type: Panel
+  - position: 2
+    name: "isMinimized"
+    type: boolean
+  - position: 3
+    name: "shouldShowTaskbarIcon"
+    type: boolean
+    default: "true"
+  - position: 4
+    name: "isDisabled"
+    type: boolean
+    default: "false"
+  - position: 5
+    name: "hasMouseInput"
+    type: boolean
+    default: "true"
+  - position: 6
+    name: "hasKeyboardInput"
+    type: boolean
+    default: "true"
   returns:
     
 ---

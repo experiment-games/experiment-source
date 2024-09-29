@@ -13,7 +13,10 @@ lua:
   realm: shared
   description: "Checks if the object is hinged"
   
-  
+  arguments:
+  - position: 1
+    name: "physicsObject"
+    type: PhysicsObject
   returns:
     - type: boolean
       description: "Whether the object is hinged or not."

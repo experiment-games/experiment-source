@@ -14,8 +14,12 @@ lua:
   description: "Set the origin position of the effect."
   
   arguments:
-    - name: "origin"
-      type: Vector
+  - position: 1
+    name: "effectData"
+    type: EffectData
+  - position: 2
+    name: "origin"
+    type: Vector
   returns:
     
 ---

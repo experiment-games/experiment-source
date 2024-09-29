@@ -13,7 +13,10 @@ lua:
   realm: server
   description: "Draw debug text overlays."
   
-  
+  arguments:
+  - position: 1
+    name: "entity"
+    type: Entity
   returns:
     - type: integer
       description: "The number of overlays"

@@ -14,8 +14,12 @@ lua:
   description: "Set local angular velocity."
   
   arguments:
-    - name: "velocity"
-      type: Angle
+  - position: 1
+    name: "entity"
+    type: Entity
+  - position: 2
+    name: "velocity"
+    type: Angle
   returns:
     
 ---

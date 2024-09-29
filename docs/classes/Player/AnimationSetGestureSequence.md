@@ -14,10 +14,15 @@ lua:
   description: "Set a gesture sequence."
   
   arguments:
-    - name: "slot"
-      type: number
-    - name: "sequence"
-      type: number
+  - position: 1
+    name: "entity"
+    type: Player
+  - position: 2
+    name: "slot"
+    type: number
+  - position: 3
+    name: "sequence"
+    type: number
   returns:
     
 ---

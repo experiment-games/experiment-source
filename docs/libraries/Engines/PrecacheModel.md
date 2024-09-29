@@ -14,11 +14,13 @@ lua:
   description: "Precache a model."
   
   arguments:
-    - name: "modelName"
-      type: string
-    - name: "preload"
-      type: boolean
-      default: "false"
+  - position: 1
+    name: "modelName"
+    type: string
+  - position: 2
+    name: "preload"
+    type: boolean
+    default: "false"
   returns:
     - type: integer
       description: "The model index."

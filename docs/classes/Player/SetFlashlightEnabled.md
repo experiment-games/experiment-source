@@ -14,8 +14,12 @@ lua:
   description: "Enable or disable the flashlight for the player."
   
   arguments:
-    - name: "shouldEnable"
-      type: boolean
+  - position: 1
+    name: "player"
+    type: Player
+  - position: 2
+    name: "shouldEnable"
+    type: boolean
   returns:
     
 ---

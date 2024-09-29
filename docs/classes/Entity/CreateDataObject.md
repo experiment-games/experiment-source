@@ -14,8 +14,12 @@ lua:
   description: "Create data object."
   
   arguments:
-    - name: "type"
-      type: number
+  - position: 1
+    name: "entity"
+    type: Entity
+  - position: 2
+    name: "type"
+    type: number
   returns:
     
 ---

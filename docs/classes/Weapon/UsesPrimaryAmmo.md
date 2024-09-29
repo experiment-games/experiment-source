@@ -13,7 +13,10 @@ lua:
   realm: shared
   description: "Uses primary ammo."
   
-  
+  arguments:
+  - position: 1
+    name: "entity"
+    type: Weapon
   returns:
     - type: boolean
       description: "Whether primary ammo is used."

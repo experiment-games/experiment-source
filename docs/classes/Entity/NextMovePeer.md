@@ -13,7 +13,10 @@ lua:
   realm: shared
   description: "Next move peer."
   
-  
+  arguments:
+  - position: 1
+    name: "entity"
+    type: Entity
   returns:
     - type: Entity
       description: "The next move peer."

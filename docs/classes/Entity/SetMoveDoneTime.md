@@ -14,8 +14,12 @@ lua:
   description: "Set move done time."
   
   arguments:
-    - name: "time"
-      type: number
+  - position: 1
+    name: "entity"
+    type: Entity
+  - position: 2
+    name: "time"
+    type: number
   returns:
     
 ---

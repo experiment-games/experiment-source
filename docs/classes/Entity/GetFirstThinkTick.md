@@ -13,7 +13,10 @@ lua:
   realm: shared
   description: "Get first think tick."
   
-  
+  arguments:
+  - position: 1
+    name: "entity"
+    type: Entity
   returns:
     - type: integer
       description: "The first think tick."

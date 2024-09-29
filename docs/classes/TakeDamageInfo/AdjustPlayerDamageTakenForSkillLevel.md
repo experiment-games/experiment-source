@@ -13,7 +13,10 @@ lua:
   realm: shared
   description: "Adjusts player-taken damage based on skill level"
   
-  
+  arguments:
+  - position: 1
+    name: "damageInfo"
+    type: DamageInfo
   returns:
     
 ---

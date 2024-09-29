@@ -13,6 +13,7 @@ lua:
   realm: client
   description: "Check if the client is playing a time demo."
   
+  arguments:
   
   returns:
     - type: boolean

@@ -14,8 +14,15 @@ lua:
   description: "Set material variable flag."
   
   arguments:
-    - name: "on"
-      type: boolean
+  - position: 1
+    types:
+      - name: "flag"
+        type: number
+      - name: "material"
+        type: Material
+  - position: 2
+    name: "on"
+    type: boolean
   returns:
     
 ---

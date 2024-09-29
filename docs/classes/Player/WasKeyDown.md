@@ -14,8 +14,12 @@ lua:
   description: "Get if the specified key was down one tick before the current."
   
   arguments:
-    - name: "keys"
-      type: number
+  - position: 1
+    name: "player"
+    type: Player
+  - position: 2
+    name: "keys"
+    type: number
   returns:
     - type: boolean
       description: "Whether the key was down."

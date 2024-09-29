@@ -13,7 +13,10 @@ lua:
   realm: shared
   description: "Is vertex lit."
   
-  
+  arguments:
+  - position: 1
+    name: "material"
+    type: Material
   returns:
     - type: boolean
       description: "True if vertex lit, false otherwise."

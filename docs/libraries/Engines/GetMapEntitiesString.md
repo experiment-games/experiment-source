@@ -13,6 +13,7 @@ lua:
   realm: shared
   description: "Get the map entities string."
   
+  arguments:
   
   returns:
     - type: string

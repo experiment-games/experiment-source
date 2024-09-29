@@ -14,9 +14,13 @@ lua:
   description: "Drop."
   
   arguments:
-    - name: "velocity"
-      type: Vector
-      nillable: true
+  - position: 1
+    name: "entity"
+    type: Weapon
+  - position: 2
+    name: "velocity"
+    type: Vector
+    nillable: true
   returns:
     
 ---

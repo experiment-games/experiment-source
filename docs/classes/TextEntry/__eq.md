@@ -13,7 +13,13 @@ lua:
   realm: client
   description: "Metamethod called when two TextEntry objects are compared"
   
-  
+  arguments:
+  - position: 1
+    name: "textEntry"
+    type: TextEntry
+  - position: 2
+    name: "other"
+    type: TextEntry
   returns:
     - type: boolean
       description: "Whether the TextEntry objects are equal"

@@ -14,8 +14,9 @@ lua:
   description: "Call a hook for this game event name, when the event occurs."
   
   arguments:
-    - name: "eventName"
-      type: string
+  - position: 1
+    name: "eventName"
+    type: string
   returns:
     
 ---

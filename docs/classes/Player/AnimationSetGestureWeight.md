@@ -14,10 +14,15 @@ lua:
   description: "Set a gesture weight."
   
   arguments:
-    - name: "slot"
-      type: number
-    - name: "weight"
-      type: number
+  - position: 1
+    name: "entity"
+    type: Player
+  - position: 2
+    name: "slot"
+    type: number
+  - position: 3
+    name: "weight"
+    type: number
   returns:
     
 ---

@@ -13,7 +13,10 @@ lua:
   realm: client
   description: "Checks if the panel has no cursor"
   
-  
+  arguments:
+  - position: 1
+    name: "panel"
+    type: Panel
   returns:
     - type: boolean
       description: "True if the panel has no cursor, false otherwise"

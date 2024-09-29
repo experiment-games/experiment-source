@@ -13,7 +13,10 @@ lua:
   realm: client
   description: "Resets internal fields."
   
-  
+  arguments:
+  - position: 1
+    name: "entity"
+    type: Entity
   returns:
     
 ---

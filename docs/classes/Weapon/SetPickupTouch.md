@@ -13,7 +13,10 @@ lua:
   realm: shared
   description: "Set pickup touch."
   
-  
+  arguments:
+  - position: 1
+    name: "entity"
+    type: Weapon
   returns:
     
 ---

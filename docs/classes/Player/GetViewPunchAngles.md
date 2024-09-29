@@ -13,7 +13,10 @@ lua:
   realm: shared
   description: "Get the player's view punch angle."
   
-  
+  arguments:
+  - position: 1
+    name: "player"
+    type: Player
   returns:
     - type: Angle
       description: "The player's view punch angle."

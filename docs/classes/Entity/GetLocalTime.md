@@ -13,7 +13,10 @@ lua:
   realm: server
   description: "Get local time."
   
-  
+  arguments:
+  - position: 1
+    name: "entity"
+    type: Entity
   returns:
     - type: number
       description: "The local time"

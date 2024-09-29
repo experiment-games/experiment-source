@@ -14,12 +14,15 @@ lua:
   description: "Draws a sprite"
   
   arguments:
-    - name: "position"
-      type: Vector
-    - name: "width"
-      type: number
-    - name: "height"
-      type: number
+  - position: 1
+    name: "position"
+    type: Vector
+  - position: 2
+    name: "width"
+    type: number
+  - position: 3
+    name: "height"
+    type: number
   returns:
     
 ---

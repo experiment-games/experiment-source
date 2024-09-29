@@ -14,8 +14,12 @@ lua:
   description: "Register think context."
   
   arguments:
-    - name: "context"
-      type: string
+  - position: 1
+    name: "entity"
+    type: Entity
+  - position: 2
+    name: "context"
+    type: string
   returns:
     - type: integer
       description: "The registered think context."

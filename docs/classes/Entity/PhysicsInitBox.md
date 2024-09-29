@@ -14,13 +14,19 @@ lua:
   description: "Initialize physics object as box."
   
   arguments:
-    - name: "mins"
-      type: Vector
-    - name: "maxs"
-      type: Vector
-    - name: "surfaceProperty"
-      type: string
-      default: "\"default\""
+  - position: 1
+    name: "entity"
+    type: Entity
+  - position: 2
+    name: "mins"
+    type: Vector
+  - position: 3
+    name: "maxs"
+    type: Vector
+  - position: 4
+    name: "surfaceProperty"
+    type: string
+    default: "\"default\""
   returns:
     
 ---

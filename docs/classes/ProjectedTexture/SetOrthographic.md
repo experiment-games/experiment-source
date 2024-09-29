@@ -14,16 +14,24 @@ lua:
   description: "Changes the current projected texture between orthographic and perspective projection."
   
   arguments:
-    - name: "orthographic"
-      type: boolean
-    - name: "left"
-      type: number
-    - name: "top"
-      type: number
-    - name: "right"
-      type: number
-    - name: "bottom"
-      type: number
+  - position: 1
+    name: "projectedTexture"
+    type: ProjectedTexture
+  - position: 2
+    name: "orthographic"
+    type: boolean
+  - position: 3
+    name: "left"
+    type: number
+  - position: 4
+    name: "top"
+    type: number
+  - position: 5
+    name: "right"
+    type: number
+  - position: 6
+    name: "bottom"
+    type: number
   returns:
     
 ---

@@ -13,7 +13,10 @@ lua:
   realm: shared
   description: "Modifies the existing angle, normalizing it between -180 to 180 degrees pitch, yaw and roll."
   
-  
+  arguments:
+  - position: 1
+    name: "angle"
+    type: Angle
   returns:
     - type: Angle
       description: "The same angle, now normalized."

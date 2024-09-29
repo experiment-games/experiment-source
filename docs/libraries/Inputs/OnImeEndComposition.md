@@ -13,6 +13,7 @@ lua:
   realm: client
   description: "End the IME composition."
   
+  arguments:
   
   returns:
     

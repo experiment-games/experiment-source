@@ -13,6 +13,7 @@ lua:
   realm: client
   description: "Check if the server is dedicated. Internally this is getting this information from the server_spawn event."
   
+  arguments:
   
   returns:
     - type: boolean

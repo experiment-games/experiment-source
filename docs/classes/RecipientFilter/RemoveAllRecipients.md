@@ -13,7 +13,10 @@ lua:
   realm: client
   description: "Removes all recipients"
   
-  
+  arguments:
+  - position: 1
+    name: "filter"
+    type: RecipientFilter
   returns:
     
 ---

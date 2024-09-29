@@ -13,7 +13,13 @@ lua:
   realm: shared
   description: "Metatable called when the object is to be added"
   
-  
+  arguments:
+  - position: 1
+    name: "Matrix"
+    type: Matrix
+  - position: 2
+    name: "Matrix"
+    type: Matrix
   returns:
     - type: Matrix
       description: "The sum of the objects."

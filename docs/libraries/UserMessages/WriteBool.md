@@ -14,8 +14,9 @@ lua:
   description: "Writes a boolean."
   
   arguments:
-    - name: "boolean"
-      type: boolean
+  - position: 1
+    name: "boolean"
+    type: boolean
   returns:
     
 ---

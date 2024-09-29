@@ -13,7 +13,10 @@ lua:
   realm: shared
   description: "Get simulation time."
   
-  
+  arguments:
+  - position: 1
+    name: "entity"
+    type: Entity
   returns:
     - type: number
       description: "The simulation time."

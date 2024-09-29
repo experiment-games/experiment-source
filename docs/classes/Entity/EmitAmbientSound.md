@@ -15,18 +15,23 @@ lua:
   
   static: true
   arguments:
-    - name: "soundIndex"
-      type: number
-    - name: "origin"
-      type: Vector
-    - name: "soundName"
-      type: string
-    - name: "flags"
-      type: number
-      default: "0"
-    - name: "soundTime"
-      type: number
-      default: "0"
+  - position: 1
+    name: "soundIndex"
+    type: number
+  - position: 2
+    name: "origin"
+    type: Vector
+  - position: 3
+    name: "soundName"
+    type: string
+  - position: 4
+    name: "flags"
+    type: number
+    default: "0"
+  - position: 5
+    name: "soundTime"
+    type: number
+    default: "0"
   returns:
     
 ---

@@ -14,8 +14,12 @@ lua:
   description: "Get the sequence ground speed."
   
   arguments:
-    - name: "sequence"
-      type: number
+  - position: 1
+    name: "entity"
+    type: Entity
+  - position: 2
+    name: "sequence"
+    type: number
   returns:
     - type: number
       description: "The sequence ground speed"

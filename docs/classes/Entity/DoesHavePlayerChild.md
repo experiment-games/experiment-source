@@ -13,7 +13,10 @@ lua:
   realm: server
   description: "Whether this entity has a player child somewhere in the hierarchy (checks EFL_HAS_PLAYER_CHILD)."
   
-  
+  arguments:
+  - position: 1
+    name: "entity"
+    type: Entity
   returns:
     - type: boolean
       description: "true if has player child, false otherwise."

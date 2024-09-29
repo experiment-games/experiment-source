@@ -13,7 +13,10 @@ lua:
   realm: client
   description: "Gets the size of the panel"
   
-  
+  arguments:
+  - position: 1
+    name: "panel"
+    type: Panel
   returns:
     - type: integer
       description: "The width of the panel"

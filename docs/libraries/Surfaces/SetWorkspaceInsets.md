@@ -14,14 +14,18 @@ lua:
   description: "Sets the workspace insets"
   
   arguments:
-    - name: "left"
-      type: number
-    - name: "top"
-      type: number
-    - name: "right"
-      type: number
-    - name: "bottom"
-      type: number
+  - position: 1
+    name: "left"
+    type: number
+  - position: 2
+    name: "top"
+    type: number
+  - position: 3
+    name: "right"
+    type: number
+  - position: 4
+    name: "bottom"
+    type: number
   returns:
     
 ---

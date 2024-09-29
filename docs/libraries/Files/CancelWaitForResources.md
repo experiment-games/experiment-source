@@ -14,8 +14,9 @@ lua:
   description: "Cancel waiting for resources."
   
   arguments:
-    - name: "id"
-      type: number
+  - position: 1
+    name: "id"
+    type: number
   returns:
     
 ---

@@ -14,8 +14,12 @@ lua:
   description: "Send view model matching sequence. Only works on viewmodels."
   
   arguments:
-    - name: "sequence"
-      type: number
+  - position: 1
+    name: "entity"
+    type: Entity
+  - position: 2
+    name: "sequence"
+    type: number
   returns:
     
 ---

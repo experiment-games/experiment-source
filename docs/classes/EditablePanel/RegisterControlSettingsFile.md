@@ -13,7 +13,17 @@ lua:
   realm: client
   description: "Registers a control settings file"
   
-  
+  arguments:
+  - position: 1
+    name: "editablePanel"
+    type: EditablePanel
+  - position: 2
+    name: "dialogResourceName"
+    type: string
+  - position: 3
+    name: "pathId"
+    type: string
+    default: "NULL"
   returns:
     
 ---

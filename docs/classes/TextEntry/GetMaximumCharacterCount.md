@@ -13,7 +13,10 @@ lua:
   realm: client
   description: "Gets the maximum character count"
   
-  
+  arguments:
+  - position: 1
+    name: "textEntry"
+    type: TextEntry
   returns:
     - type: integer
       description: "The maximum character count"

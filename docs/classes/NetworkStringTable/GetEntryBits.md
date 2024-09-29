@@ -13,7 +13,10 @@ lua:
   realm: shared
   description: "Get the number of bits used to store each string."
   
-  
+  arguments:
+  - position: 1
+    name: "networkStringTable"
+    type: NetworkStringTable
   returns:
     - type: integer
       description: "The number of bits."

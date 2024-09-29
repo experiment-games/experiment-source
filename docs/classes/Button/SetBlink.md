@@ -14,8 +14,12 @@ lua:
   description: "Sets whether the button is blinking"
   
   arguments:
-    - name: "shouldBlink"
-      type: boolean
+  - position: 1
+    name: "button"
+    type: Button
+  - position: 2
+    name: "shouldBlink"
+    type: boolean
   returns:
     
 ---

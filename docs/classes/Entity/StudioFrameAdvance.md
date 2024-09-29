@@ -13,7 +13,10 @@ lua:
   realm: shared
   description: "Advances the animation frame."
   
-  
+  arguments:
+  - position: 1
+    name: "entity"
+    type: Entity
   returns:
     
 ---

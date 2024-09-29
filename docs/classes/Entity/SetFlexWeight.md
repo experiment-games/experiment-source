@@ -14,10 +14,15 @@ lua:
   description: "Set flex weight."
   
   arguments:
-    - name: "flexId"
-      type: number
-    - name: "weight"
-      type: number
+  - position: 1
+    name: "entity"
+    type: Entity
+  - position: 2
+    name: "flexId"
+    type: number
+  - position: 3
+    name: "weight"
+    type: number
   returns:
     
 ---

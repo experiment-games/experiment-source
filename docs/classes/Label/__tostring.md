@@ -13,7 +13,10 @@ lua:
   realm: client
   description: "Metamethod that is called when the label is to be treated as a string"
   
-  
+  arguments:
+  - position: 1
+    name: "label"
+    type: Label
   returns:
     - type: string
       description: "The string representation of the label"

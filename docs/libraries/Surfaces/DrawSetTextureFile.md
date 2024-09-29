@@ -14,16 +14,20 @@ lua:
   description: "Sets the texture file"
   
   arguments:
-    - name: "textureId"
-      type: number
-    - name: "texturePath"
-      type: string
-    - name: "hardwareFilter"
-      type: number
-      default: "0"
-    - name: "shouldForceReload"
-      type: boolean
-      default: "true"
+  - position: 1
+    name: "textureId"
+    type: number
+  - position: 2
+    name: "texturePath"
+    type: string
+  - position: 3
+    name: "hardwareFilter"
+    type: number
+    default: "0"
+  - position: 4
+    name: "shouldForceReload"
+    type: boolean
+    default: "true"
   returns:
     
 ---

@@ -14,8 +14,12 @@ lua:
   description: "Set render color red."
   
   arguments:
-    - name: "red"
-      type: number
+  - position: 1
+    name: "entity"
+    type: Entity
+  - position: 2
+    name: "red"
+    type: number
   returns:
     
 ---

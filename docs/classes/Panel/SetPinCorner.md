@@ -14,10 +14,18 @@ lua:
   description: "Sets the pin corner"
   
   arguments:
-    - name: "offsetX"
-      type: number
-    - name: "offsetY"
-      type: number
+  - position: 1
+    name: "panel"
+    type: Panel
+  - position: 2
+    name: "corner"
+    type: enumeration/PIN_CORNER
+  - position: 3
+    name: "offsetX"
+    type: number
+  - position: 4
+    name: "offsetY"
+    type: number
   returns:
     
 ---

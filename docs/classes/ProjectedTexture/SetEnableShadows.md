@@ -14,8 +14,12 @@ lua:
   description: "Enable or disable shadows cast from the projected texture."
   
   arguments:
-    - name: "newState"
-      type: boolean
+  - position: 1
+    name: "projectedTexture"
+    type: ProjectedTexture
+  - position: 2
+    name: "newState"
+    type: boolean
   returns:
     
 ---

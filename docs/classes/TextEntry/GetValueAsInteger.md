@@ -13,7 +13,10 @@ lua:
   realm: client
   description: "Gets the value from the text entry as an integer"
   
-  
+  arguments:
+  - position: 1
+    name: "textEntry"
+    type: TextEntry
   returns:
     - type: integer
       description: "The value as an integer"

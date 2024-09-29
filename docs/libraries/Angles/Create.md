@@ -13,23 +13,24 @@ lua:
   realm: shared
   description: "Creates a new angle."
   
-  argumentSets:
-    - arguments:
+  arguments:
+  - position: 1
+    types:
       - name: "angle"
         type: Angle
-    - arguments:
       - name: "angleString"
         type: string
-    - arguments:
       - name: "p"
         type: number
-        default: "0.0f"
-      - name: "y"
-        type: number
-        default: "0.0f"
-      - name: "r"
-        type: number
-        default: "0.0f"
+    default: "0.0f"
+  - position: 2
+    name: "y"
+    type: number
+    default: "0.0f"
+  - position: 3
+    name: "r"
+    type: number
+    default: "0.0f"
   returns:
     - type: Angle
       description: "The created angle."

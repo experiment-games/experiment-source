@@ -14,8 +14,12 @@ lua:
   description: "Set the target entity for this projected texture."
   
   arguments:
-    - name: "entity"
-      type: Entity
+  - position: 1
+    name: "projectedTexture"
+    type: ProjectedTexture
+  - position: 2
+    name: "entity"
+    type: Entity
   returns:
     
 ---

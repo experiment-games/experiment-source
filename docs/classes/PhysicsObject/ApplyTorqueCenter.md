@@ -13,7 +13,13 @@ lua:
   realm: shared
   description: "Applies torque at center"
   
-  
+  arguments:
+  - position: 1
+    name: "physicsObject"
+    type: PhysicsObject
+  - position: 2
+    name: "torque"
+    type: Vector
   returns:
     
 ---

@@ -13,6 +13,7 @@ lua:
   realm: shared
   description: "Print search paths."
   
+  arguments:
   
   returns:
     

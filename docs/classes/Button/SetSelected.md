@@ -14,8 +14,12 @@ lua:
   description: "Sets whether the button is selected"
   
   arguments:
-    - name: "selected"
-      type: boolean
+  - position: 1
+    name: "button"
+    type: Button
+  - position: 2
+    name: "selected"
+    type: boolean
   returns:
     
 ---

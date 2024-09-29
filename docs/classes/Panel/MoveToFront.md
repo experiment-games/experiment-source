@@ -13,7 +13,10 @@ lua:
   realm: client
   description: "Moves the panel to the front"
   
-  
+  arguments:
+  - position: 1
+    name: "panel"
+    type: Panel
   returns:
     
 ---

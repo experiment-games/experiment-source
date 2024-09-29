@@ -14,8 +14,9 @@ lua:
   description: "Writes an angle."
   
   arguments:
-    - name: "angle"
-      type: Angle
+  - position: 1
+    name: "angle"
+    type: Angle
   returns:
     
 ---

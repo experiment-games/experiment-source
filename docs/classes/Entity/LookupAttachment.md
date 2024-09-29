@@ -14,8 +14,12 @@ lua:
   description: "Lookup the attachment."
   
   arguments:
-    - name: "attachmentName"
-      type: string
+  - position: 1
+    name: "entity"
+    type: Entity
+  - position: 2
+    name: "attachmentName"
+    type: string
   returns:
     - type: integer
       description: "The attachment"

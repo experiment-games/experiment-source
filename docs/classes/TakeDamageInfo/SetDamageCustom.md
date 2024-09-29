@@ -13,7 +13,13 @@ lua:
   realm: shared
   description: "Sets custom damage"
   
-  
+  arguments:
+  - position: 1
+    name: "damageInfo"
+    type: DamageInfo
+  - position: 2
+    name: "customDamage"
+    type: number
   returns:
     
 ---

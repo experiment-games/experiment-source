@@ -14,8 +14,12 @@ lua:
   description: "Default touch."
   
   arguments:
-    - name: "touchingEntity"
-      type: Entity
+  - position: 1
+    name: "entity"
+    type: Weapon
+  - position: 2
+    name: "touchingEntity"
+    type: Entity
   returns:
     
 ---

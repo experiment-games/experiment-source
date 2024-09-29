@@ -14,8 +14,9 @@ lua:
   description: "Writes a long integer."
   
   arguments:
-    - name: "long"
-      type: number
+  - position: 1
+    name: "long"
+    type: number
   returns:
     
 ---

@@ -13,7 +13,10 @@ lua:
   realm: shared
   description: "Get local angles."
   
-  
+  arguments:
+  - position: 1
+    name: "entity"
+    type: Entity
   returns:
     - type: Angle
       description: "The local angles."

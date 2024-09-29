@@ -13,6 +13,7 @@ lua:
   realm: client
   description: "Get the handle of the English Input Method Editor (IME)."
   
+  arguments:
   
   returns:
     - type: integer

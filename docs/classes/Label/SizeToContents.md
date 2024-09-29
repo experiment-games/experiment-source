@@ -13,7 +13,10 @@ lua:
   realm: client
   description: "Sizes the label to its contents"
   
-  
+  arguments:
+  - position: 1
+    name: "label"
+    type: Label
   returns:
     
 ---

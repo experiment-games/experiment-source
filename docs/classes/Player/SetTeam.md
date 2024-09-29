@@ -14,8 +14,12 @@ lua:
   description: "Change the team for the player."
   
   arguments:
-    - name: "team"
-      type: number
+  - position: 1
+    name: "player"
+    type: Player
+  - position: 2
+    name: "team"
+    type: number
   returns:
     
 ---

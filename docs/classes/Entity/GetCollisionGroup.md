@@ -13,7 +13,10 @@ lua:
   realm: shared
   description: "Get collision group."
   
-  
+  arguments:
+  - position: 1
+    name: "entity"
+    type: Entity
   returns:
     - type: enumeration/COLLISION_GROUP
       description: "The collision group."

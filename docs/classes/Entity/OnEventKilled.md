@@ -14,8 +14,12 @@ lua:
   description: "Called when the 'Killed' event happened."
   
   arguments:
-    - name: "damageInfo"
-      type: DamageInfo
+  - position: 1
+    name: "entity"
+    type: Entity
+  - position: 2
+    name: "damageInfo"
+    type: DamageInfo
   returns:
     
 ---

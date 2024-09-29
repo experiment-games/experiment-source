@@ -14,8 +14,12 @@ lua:
   description: "Sets the child to skip during painting"
   
   arguments:
-    - name: "skip"
-      type: Panel
+  - position: 1
+    name: "panel"
+    type: Panel
+  - position: 2
+    name: "skip"
+    type: Panel
   returns:
     
 ---

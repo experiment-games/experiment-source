@@ -13,6 +13,7 @@ lua:
   realm: server
   description: "Check if the server is dedicated."
   
+  arguments:
   
   returns:
     - type: boolean

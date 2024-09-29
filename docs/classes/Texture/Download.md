@@ -13,7 +13,10 @@ lua:
   realm: shared
   description: "Downloads the texture into the material system."
   
-  
+  arguments:
+  - position: 1
+    name: "texture"
+    type: Texture
   returns:
     
 ---

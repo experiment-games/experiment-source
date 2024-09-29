@@ -13,7 +13,10 @@ lua:
   realm: shared
   description: "Check if the weapon is a melee weapon."
   
-  
+  arguments:
+  - position: 1
+    name: "entity"
+    type: Weapon
   returns:
     - type: boolean
       description: "Whether the weapon is a melee weapon."

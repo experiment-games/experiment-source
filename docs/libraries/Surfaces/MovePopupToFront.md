@@ -14,8 +14,9 @@ lua:
   description: "Moves the popup to the front"
   
   arguments:
-    - name: "panel"
-      type: Panel
+  - position: 1
+    name: "panel"
+    type: Panel
   returns:
     
 ---

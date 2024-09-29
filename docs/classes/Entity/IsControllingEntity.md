@@ -14,8 +14,12 @@ lua:
   description: "Whether we are controlling the given entity (train, tank, etc.) "
   
   arguments:
-    - name: "testEntityUnderControl"
-      type: Entity
+  - position: 1
+    name: "entity"
+    type: Entity
+  - position: 2
+    name: "testEntityUnderControl"
+    type: Entity
   returns:
     - type: boolean
       description: "true if on controls, false otherwise."

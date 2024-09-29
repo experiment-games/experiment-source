@@ -13,6 +13,7 @@ lua:
   realm: shared
   description: "Clears the physics stats."
   
+  arguments:
   
   returns:
     

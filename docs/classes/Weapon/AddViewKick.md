@@ -13,7 +13,10 @@ lua:
   realm: shared
   description: "Add view kick."
   
-  
+  arguments:
+  - position: 1
+    name: "entity"
+    type: Weapon
   returns:
     
 ---

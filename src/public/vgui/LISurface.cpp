@@ -261,7 +261,7 @@ LUA_BINDING_BEGIN( Surfaces, DrawPrintText, "library", "Prints text" )
         surface()->DrawPrintText(
             wbuf,
             wcslen( wbuf ),
-            LUA_BINDING_ARGUMENT_ENUM_WITH_DEFAULT( FontDrawType_t, 3, FONT_DRAW_DEFAULT, "drawType" ) );
+            LUA_BINDING_ARGUMENT_ENUM_WITH_DEFAULT( FontDrawType_t, 2, FONT_DRAW_DEFAULT, "drawType" ) );
     }
 
     return 0;

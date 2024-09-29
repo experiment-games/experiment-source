@@ -13,7 +13,13 @@ lua:
   realm: shared
   description: "Subtracts damage"
   
-  
+  arguments:
+  - position: 1
+    name: "damageInfo"
+    type: DamageInfo
+  - position: 2
+    name: "damage"
+    type: number
   returns:
     
 ---

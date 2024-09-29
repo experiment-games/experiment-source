@@ -14,8 +14,9 @@ lua:
   description: "Find a string table by name."
   
   arguments:
-    - name: "name"
-      type: string
+  - position: 1
+    name: "name"
+    type: string
   returns:
     - type: NetworkStringTable
       description: "The found string table."

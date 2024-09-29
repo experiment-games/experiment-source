@@ -14,8 +14,12 @@ lua:
   description: "Process resolution keys in the keyvalues."
   
   arguments:
-    - name: "key"
-      type: string
+  - position: 1
+    name: "keyValues"
+    type: KeyValuesHandle
+  - position: 2
+    name: "key"
+    type: string
   returns:
     - type: boolean
       description: "true if the resolution keys were processed, false otherwise."

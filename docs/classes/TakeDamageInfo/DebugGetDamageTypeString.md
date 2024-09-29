@@ -13,7 +13,13 @@ lua:
   realm: shared
   description: "Gets a string describing the damage type"
   
-  
+  arguments:
+  - position: 1
+    name: "damageInfo"
+    type: DamageInfo
+  - position: 2
+    name: "bufferSize"
+    type: number
   returns:
     - type: string
       description: "The string describing the damage type."

@@ -14,8 +14,12 @@ lua:
   description: "Sets the origin"
   
   arguments:
-    - name: "origin"
-      type: Vector
+  - position: 1
+    name: "moveData"
+    type: MoveData
+  - position: 2
+    name: "origin"
+    type: Vector
   returns:
     
 ---

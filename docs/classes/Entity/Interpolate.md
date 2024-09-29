@@ -14,8 +14,12 @@ lua:
   description: "Interpolate the entity."
   
   arguments:
-    - name: "currentTime"
-      type: number
+  - position: 1
+    name: "entity"
+    type: Entity
+  - position: 2
+    name: "currentTime"
+    type: number
   returns:
     - type: boolean
       description: "Whether the operation was successful"

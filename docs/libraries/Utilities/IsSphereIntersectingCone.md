@@ -14,18 +14,24 @@ lua:
   description: "Check if a sphere is intersecting a cone"
   
   arguments:
-    - name: "sphereCenter"
-      type: Vector
-    - name: "sphereRadius"
-      type: number
-    - name: "coneOrigin"
-      type: Vector
-    - name: "coneAxis"
-      type: Vector
-    - name: "coneSine"
-      type: number
-    - name: "coneCosine"
-      type: number
+  - position: 1
+    name: "sphereCenter"
+    type: Vector
+  - position: 2
+    name: "sphereRadius"
+    type: number
+  - position: 3
+    name: "coneOrigin"
+    type: Vector
+  - position: 4
+    name: "coneAxis"
+    type: Vector
+  - position: 5
+    name: "coneSine"
+    type: number
+  - position: 6
+    name: "coneCosine"
+    type: number
   returns:
     - type: boolean
       description: "True if the sphere is intersecting the cone"

@@ -14,13 +14,16 @@ lua:
   description: "Set a file as writable."
   
   arguments:
-    - name: "path"
-      type: string
-    - name: "writable"
-      type: boolean
-    - name: "pathId"
-      type: string
-      default: "0"
+  - position: 1
+    name: "path"
+    type: string
+  - position: 2
+    name: "writable"
+    type: boolean
+  - position: 3
+    name: "pathId"
+    type: string
+    default: "0"
   returns:
     - type: boolean
       description: "true if the file was set as writable, false otherwise."

@@ -14,11 +14,13 @@ lua:
   description: "Precache a decal."
   
   arguments:
-    - name: "decalName"
-      type: string
-    - name: "preload"
-      type: boolean
-      default: "false"
+  - position: 1
+    name: "decalName"
+    type: string
+  - position: 2
+    name: "preload"
+    type: boolean
+    default: "false"
   returns:
     - type: integer
       description: "The decal index."

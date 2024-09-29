@@ -13,7 +13,10 @@ lua:
   realm: client
   description: "Gets the current key focus"
   
-  
+  arguments:
+  - position: 1
+    name: "editablePanel"
+    type: EditablePanel
   returns:
     - type: Panel
       description: "The current key focus panel"

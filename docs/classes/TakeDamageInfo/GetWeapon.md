@@ -13,7 +13,10 @@ lua:
   realm: shared
   description: "Gets the weapon entity"
   
-  
+  arguments:
+  - position: 1
+    name: "damageInfo"
+    type: DamageInfo
   returns:
     - type: Entity
       description: "The weapon entity."

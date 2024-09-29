@@ -13,20 +13,25 @@ lua:
   realm: shared
   description: "Get an integer from the keyvalues."
   
-  argumentSets:
-    - arguments:
+  arguments:
+  - position: 1
+    name: "keyValues"
+    type: KeyValuesHandle
+  - position: 2
+    types:
       - name: "key"
         type: number
-      - name: "default"
-        type: number
-        default: "0"
-    - arguments:
       - name: "key"
         type: string
-        default: "0"
+    default: "0"
+  - position: 3
+    types:
       - name: "default"
         type: number
-        default: "0"
+    default: "0"
+      - name: "default"
+        type: number
+    default: "0"
   returns:
     - type: integer
       description: "The value as an integer."

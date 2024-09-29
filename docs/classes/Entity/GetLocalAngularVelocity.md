@@ -13,7 +13,10 @@ lua:
   realm: shared
   description: "Get local angular velocity."
   
-  
+  arguments:
+  - position: 1
+    name: "entity"
+    type: Entity
   returns:
     - type: Angle
       description: "The local angular velocity."

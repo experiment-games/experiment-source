@@ -13,6 +13,7 @@ lua:
   realm: client
   description: "Runs a frame"
   
+  arguments:
   
   returns:
     

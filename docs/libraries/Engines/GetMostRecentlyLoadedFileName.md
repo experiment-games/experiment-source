@@ -13,6 +13,7 @@ lua:
   realm: server
   description: "Get the most recently loaded file name."
   
+  arguments:
   
   returns:
     - type: string

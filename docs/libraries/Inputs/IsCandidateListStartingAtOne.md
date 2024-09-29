@@ -13,6 +13,7 @@ lua:
   realm: client
   description: "Check if the candidate list starts at index one."
   
+  arguments:
   
   returns:
     - type: boolean

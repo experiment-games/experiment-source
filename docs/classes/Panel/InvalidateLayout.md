@@ -14,12 +14,17 @@ lua:
   description: "Invalidates the layout of the panel"
   
   arguments:
-    - name: "shouldLayoutNow"
-      type: boolean
-      default: "false"
-    - name: "shouldReloadScheme"
-      type: boolean
-      default: "false"
+  - position: 1
+    name: "panel"
+    type: Panel
+  - position: 2
+    name: "shouldLayoutNow"
+    type: boolean
+    default: "false"
+  - position: 3
+    name: "shouldReloadScheme"
+    type: boolean
+    default: "false"
   returns:
     
 ---

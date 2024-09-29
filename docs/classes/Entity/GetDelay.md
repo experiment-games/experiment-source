@@ -13,7 +13,10 @@ lua:
   realm: server
   description: "Get the delay for the entity. Used mostly for trigger entities."
   
-  
+  arguments:
+  - position: 1
+    name: "entity"
+    type: Entity
   returns:
     - type: number
       description: "The delay"

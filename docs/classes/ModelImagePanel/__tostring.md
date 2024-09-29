@@ -13,7 +13,10 @@ lua:
   realm: client
   description: "Metamethod called when the panel is converted to a string"
   
-  
+  arguments:
+  - position: 1
+    name: "modelImagePanel"
+    type: ModelImagePanel
   returns:
     
 ---

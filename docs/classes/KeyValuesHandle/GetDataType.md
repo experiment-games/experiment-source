@@ -14,9 +14,13 @@ lua:
   description: "Get the data type of a key in the keyvalues."
   
   arguments:
-    - name: "key"
-      type: string
-      default: "0"
+  - position: 1
+    name: "keyValues"
+    type: KeyValuesHandle
+  - position: 2
+    name: "key"
+    type: string
+    default: "0"
   returns:
     - type: integer
       description: "The data type."

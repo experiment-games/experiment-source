@@ -13,6 +13,7 @@ lua:
   realm: client
   description: "Gets the workspace bounds"
   
+  arguments:
   
   returns:
     - type: integer

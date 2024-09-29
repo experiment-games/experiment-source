@@ -14,8 +14,12 @@ lua:
   description: "Select the weighted sequence."
   
   arguments:
-    - name: "activity"
-      type: number
+  - position: 1
+    name: "entity"
+    type: Entity
+  - position: 2
+    name: "activity"
+    type: number
   returns:
     - type: integer
       description: "The weighted sequence"

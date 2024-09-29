@@ -14,8 +14,12 @@ lua:
   description: "Set the player's current max speed."
   
   arguments:
-    - name: "speed"
-      type: number
+  - position: 1
+    name: "player"
+    type: Player
+  - position: 2
+    name: "speed"
+    type: number
   returns:
     
 ---

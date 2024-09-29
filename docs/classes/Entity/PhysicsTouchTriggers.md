@@ -13,7 +13,10 @@ lua:
   realm: server
   description: "Physics touch triggers."
   
-  
+  arguments:
+  - position: 1
+    name: "entity"
+    type: Entity
   returns:
     
 ---

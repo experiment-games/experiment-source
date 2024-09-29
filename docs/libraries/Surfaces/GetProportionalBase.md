@@ -13,6 +13,7 @@ lua:
   realm: client
   description: "Gets the proportional base"
   
+  arguments:
   
   returns:
     - type: integer

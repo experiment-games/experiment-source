@@ -14,6 +14,7 @@ lua:
   description: "Threaded bone setup."
   
   static: true
+  arguments:
   
   returns:
     

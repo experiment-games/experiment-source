@@ -14,8 +14,12 @@ lua:
   description: "Adds angular velocity"
   
   arguments:
-    - name: "angularVelocity"
-      type: Vector
+  - position: 1
+    name: "physicsObject"
+    type: PhysicsObject
+  - position: 2
+    name: "angularVelocity"
+    type: Vector
   returns:
     
 ---

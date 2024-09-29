@@ -14,8 +14,12 @@ lua:
   description: "Set the player's blood color."
   
   arguments:
-    - name: "color"
-      type: number
+  - position: 1
+    name: "player"
+    type: Player
+  - position: 2
+    name: "color"
+    type: number
   returns:
     
 ---

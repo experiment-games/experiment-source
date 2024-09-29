@@ -13,7 +13,10 @@ lua:
   realm: shared
   description: "Gets the name of the texture."
   
-  
+  arguments:
+  - position: 1
+    name: "texture"
+    type: Texture
   returns:
     - type: string
       description: "The name of the texture."

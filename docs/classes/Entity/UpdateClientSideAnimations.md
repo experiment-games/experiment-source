@@ -14,6 +14,7 @@ lua:
   description: "Update the client side animations for all in the g_ClientSideAnimationList."
   
   static: true
+  arguments:
   
   returns:
     

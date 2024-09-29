@@ -13,9 +13,10 @@ lua:
   realm: shared
   description: "Get prediction player."
   
+  arguments:
   
   returns:
-    - type: Entity
+    - type: Player
       description: "The prediction player."
 ---
 

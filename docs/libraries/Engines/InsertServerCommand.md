@@ -14,8 +14,9 @@ lua:
   description: "Insert a server command."
   
   arguments:
-    - name: "command"
-      type: string
+  - position: 1
+    name: "command"
+    type: string
   returns:
     
 ---

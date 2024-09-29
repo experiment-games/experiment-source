@@ -14,8 +14,12 @@ lua:
   description: "Sets the impulse command"
   
   arguments:
-    - name: "command"
-      type: number
+  - position: 1
+    name: "moveData"
+    type: MoveData
+  - position: 2
+    name: "command"
+    type: number
   returns:
     
 ---

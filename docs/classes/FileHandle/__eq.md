@@ -14,8 +14,12 @@ lua:
   description: "Check if two file handles are equal."
   
   arguments:
-    - name: "file2"
-      type: FileHandle
+  - position: 1
+    name: "file"
+    type: FileHandle
+  - position: 2
+    name: "other"
+    type: FileHandle
   returns:
     - type: boolean
       description: "true if the file handles are equal, false otherwise."

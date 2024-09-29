@@ -13,7 +13,10 @@ lua:
   realm: client
   description: "Deletes the panel"
   
-  
+  arguments:
+  - position: 1
+    name: "panel"
+    type: Panel
   returns:
     
 ---

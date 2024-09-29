@@ -14,8 +14,12 @@ lua:
   description: "Remove spawn flags."
   
   arguments:
-    - name: "flags"
-      type: number
+  - position: 1
+    name: "entity"
+    type: Entity
+  - position: 2
+    name: "flags"
+    type: number
   returns:
     
 ---

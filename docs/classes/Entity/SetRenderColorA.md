@@ -14,8 +14,12 @@ lua:
   description: "Set render color alpha."
   
   arguments:
-    - name: "alpha"
-      type: number
+  - position: 1
+    name: "entity"
+    type: Entity
+  - position: 2
+    name: "alpha"
+    type: number
   returns:
     
 ---

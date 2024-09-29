@@ -13,7 +13,10 @@ lua:
   realm: shared
   description: "Display alt fire HUD hint."
   
-  
+  arguments:
+  - position: 1
+    name: "entity"
+    type: Weapon
   returns:
     
 ---

@@ -14,8 +14,12 @@ lua:
   description: "Checks if two objects are equal"
   
   arguments:
-    - name: "physicsObject2"
-      type: PhysicsObject
+  - position: 1
+    name: "physicsObject"
+    type: PhysicsObject
+  - position: 2
+    name: "other"
+    type: PhysicsObject
   returns:
     - type: boolean
       description: "Whether the objects are equal or not."

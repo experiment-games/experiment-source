@@ -14,9 +14,10 @@ lua:
   description: "Gets the next entity in the list"
   
   arguments:
-    - name: "startingEntity"
-      type: Entity
-      default: "NULL"
+  - position: 1
+    name: "startingEntity"
+    type: Entity
+    default: "NULL"
   returns:
     - type: Entity
       description: "The next entity in the entity list."

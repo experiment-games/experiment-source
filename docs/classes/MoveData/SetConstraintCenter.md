@@ -14,8 +14,12 @@ lua:
   description: "Sets the constraint center"
   
   arguments:
-    - name: "center"
-      type: Vector
+  - position: 1
+    name: "moveData"
+    type: MoveData
+  - position: 2
+    name: "center"
+    type: Vector
   returns:
     
 ---

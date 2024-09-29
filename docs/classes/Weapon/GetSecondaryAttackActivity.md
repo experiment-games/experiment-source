@@ -13,7 +13,10 @@ lua:
   realm: shared
   description: "Get the secondary attack activity."
   
-  
+  arguments:
+  - position: 1
+    name: "entity"
+    type: Weapon
   returns:
     - type: integer
       description: "Secondary attack activity ID."

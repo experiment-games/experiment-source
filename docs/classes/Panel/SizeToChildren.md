@@ -14,12 +14,17 @@ lua:
   description: "Sizes to children"
   
   arguments:
-    - name: "width"
-      type: boolean
-      default: "false"
-    - name: "height"
-      type: boolean
-      default: "false"
+  - position: 1
+    name: "panel"
+    type: Panel
+  - position: 2
+    name: "width"
+    type: boolean
+    default: "false"
+  - position: 3
+    name: "height"
+    type: boolean
+    default: "false"
   returns:
     
 ---

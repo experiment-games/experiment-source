@@ -13,6 +13,7 @@ lua:
   realm: shared
   description: "Debug check contacts."
   
+  arguments:
   
   returns:
     

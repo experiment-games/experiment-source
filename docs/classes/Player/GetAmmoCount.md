@@ -13,11 +13,14 @@ lua:
   realm: shared
   description: "Get the player's ammo count."
   
-  argumentSets:
-    - arguments:
+  arguments:
+  - position: 1
+    name: "player"
+    type: Player
+  - position: 2
+    types:
       - name: "index"
         type: number
-    - arguments:
       - name: "name"
         type: string
   returns:

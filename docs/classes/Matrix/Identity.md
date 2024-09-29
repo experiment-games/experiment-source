@@ -13,7 +13,10 @@ lua:
   realm: shared
   description: "Sets the matrix to the identity matrix."
   
-  
+  arguments:
+  - position: 1
+    name: "Matrix"
+    type: Matrix
   returns:
     
 ---

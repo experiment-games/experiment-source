@@ -14,8 +14,12 @@ lua:
   description: "Removes a key from the buttons"
   
   arguments:
-    - name: "key"
-      type: number
+  - position: 1
+    name: "userCmd"
+    type: UserCommand
+  - position: 2
+    name: "key"
+    type: number
   returns:
     
 ---

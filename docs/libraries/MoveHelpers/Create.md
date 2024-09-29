@@ -13,6 +13,7 @@ lua:
   realm: shared
   description: "Creates a new MoveHelper object"
   
+  arguments:
   
   returns:
     - type: MoveHelper

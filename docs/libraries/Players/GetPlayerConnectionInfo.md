@@ -14,8 +14,9 @@ lua:
   description: "Get the connection info of a player."
   
   arguments:
-    - name: "index"
-      type: number
+  - position: 1
+    name: "index"
+    type: number
   returns:
     - type: integer
       description: "The player's ping."

@@ -13,6 +13,7 @@ lua:
   realm: client
   description: "Get the panel that currently is under the mouse cursor."
   
+  arguments:
   
   returns:
     - type: PanelHandle

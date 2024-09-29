@@ -13,20 +13,23 @@ lua:
   realm: client
   description: "Sets the text color"
   
-  argumentSets:
-    - arguments:
+  arguments:
+  - position: 1
+    types:
       - name: "red"
         type: number
-      - name: "green"
-        type: number
-      - name: "blue"
-        type: number
-      - name: "alpha"
-        type: number
-        default: "255"
-    - arguments:
       - name: "color"
         type: Color
+  - position: 2
+    name: "green"
+    type: number
+  - position: 3
+    name: "blue"
+    type: number
+  - position: 4
+    name: "alpha"
+    type: number
+    default: "255"
   returns:
     
 ---

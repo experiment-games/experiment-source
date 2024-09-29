@@ -13,7 +13,10 @@ lua:
   realm: shared
   description: "Think."
   
-  
+  arguments:
+  - position: 1
+    name: "entity"
+    type: Entity
   returns:
     
 ---

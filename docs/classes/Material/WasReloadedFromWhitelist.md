@@ -13,7 +13,10 @@ lua:
   realm: shared
   description: "Was reloaded from whitelist."
   
-  
+  arguments:
+  - position: 1
+    name: "material"
+    type: Material
   returns:
     
 ---

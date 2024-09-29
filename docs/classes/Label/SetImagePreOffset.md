@@ -14,10 +14,15 @@ lua:
   description: "Sets the image pre-offset of the label"
   
   arguments:
-    - name: "x"
-      type: number
-    - name: "y"
-      type: number
+  - position: 1
+    name: "label"
+    type: Label
+  - position: 2
+    name: "x"
+    type: number
+  - position: 3
+    name: "y"
+    type: number
   returns:
     
 ---

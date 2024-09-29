@@ -14,14 +14,20 @@ lua:
   description: "Set the player's field of view."
   
   arguments:
-    - name: "requester"
-      type: Entity
-      default: "PLAYER_THEMSELVES"
-    - name: "fov"
-      type: number
-    - name: "transitionTime"
-      type: number
-      default: "0"
+  - position: 1
+    name: "player"
+    type: Player
+  - position: 2
+    name: "fov"
+    type: number
+  - position: 3
+    name: "transitionTime"
+    type: number
+    default: "0"
+  - position: 4
+    name: "requester"
+    type: Entity
+    default: "PLAYER_THEMSELVES"
   returns:
     
 ---

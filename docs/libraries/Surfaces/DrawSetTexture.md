@@ -14,8 +14,9 @@ lua:
   description: "Sets the texture"
   
   arguments:
-    - name: "textureId"
-      type: number
+  - position: 1
+    name: "textureId"
+    type: number
   returns:
     
 ---

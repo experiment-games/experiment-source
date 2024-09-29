@@ -13,6 +13,7 @@ lua:
   realm: shared
   description: "End map access."
   
+  arguments:
   
   returns:
     

@@ -13,7 +13,10 @@ lua:
   realm: shared
   description: "Gets the forward speed"
   
-  
+  arguments:
+  - position: 1
+    name: "moveData"
+    type: MoveData
   returns:
     - type: number
       description: "The forward speed"

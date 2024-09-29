@@ -14,28 +14,36 @@ lua:
   description: "Creates a tracer effect."
   
   arguments:
-    - name: "start"
-      type: Vector
-    - name: "end"
-      type: Vector
-    - name: "entityIndex"
-      type: number
-      default: "0"
-    - name: "attachment"
-      type: number
-      default: "0"
-    - name: "velocity"
-      type: number
-      default: "0"
-    - name: "shouldWhiz"
-      type: boolean
-      default: "false"
-    - name: "customTracerName"
-      type: string
-      default: "NULL"
-    - name: "particleId"
-      type: number
-      default: "0"
+  - position: 1
+    name: "start"
+    type: Vector
+  - position: 2
+    name: "end"
+    type: Vector
+  - position: 3
+    name: "entityIndex"
+    type: number
+    default: "0"
+  - position: 4
+    name: "attachment"
+    type: number
+    default: "0"
+  - position: 5
+    name: "velocity"
+    type: number
+    default: "0"
+  - position: 6
+    name: "shouldWhiz"
+    type: boolean
+    default: "false"
+  - position: 7
+    name: "customTracerName"
+    type: string
+    default: "NULL"
+  - position: 8
+    name: "particleId"
+    type: number
+    default: "0"
   returns:
     
 ---

@@ -14,8 +14,9 @@ lua:
   description: "Checks if the panel is minimized"
   
   arguments:
-    - name: "panel"
-      type: Panel
+  - position: 1
+    name: "panel"
+    type: Panel
   returns:
     - type: boolean
       description: "True if the panel is minimized, false otherwise."

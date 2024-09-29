@@ -14,8 +14,9 @@ lua:
   description: "Get the index of an edict."
   
   arguments:
-    - name: "entity"
-      type: Entity
+  - position: 1
+    name: "entity"
+    type: Entity
   returns:
     - type: integer
       description: "The index of the edict."

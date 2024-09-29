@@ -14,8 +14,9 @@ lua:
   description: "Set the restrict client commands state."
   
   arguments:
-    - name: "restrict"
-      type: boolean
+  - position: 1
+    name: "restrict"
+    type: boolean
   returns:
     
 ---

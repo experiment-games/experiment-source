@@ -14,8 +14,12 @@ lua:
   description: "Drop the weapon in the specified slot."
   
   arguments:
-    - name: "slot"
-      type: number
+  - position: 1
+    name: "player"
+    type: Player
+  - position: 2
+    name: "slot"
+    type: number
   returns:
     
 ---

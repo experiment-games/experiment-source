@@ -13,7 +13,10 @@ lua:
   realm: client
   description: "Clear/destroy the clientside ragdoll."
   
-  
+  arguments:
+  - position: 1
+    name: "entity"
+    type: Entity
   returns:
     
 ---

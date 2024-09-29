@@ -14,8 +14,9 @@ lua:
   description: "Bound the vector to the world size"
   
   arguments:
-    - name: "vec"
-      type: Vector
+  - position: 1
+    name: "vec"
+    type: Vector
   returns:
     
 ---

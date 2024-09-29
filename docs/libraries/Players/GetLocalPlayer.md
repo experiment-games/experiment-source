@@ -13,6 +13,7 @@ lua:
   realm: client
   description: "Get the local player."
   
+  arguments:
   
   returns:
     - type: Player

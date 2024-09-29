@@ -1,18 +1,19 @@
 ---
 template: lua-library-function.html
 title: GetSpectatorTarget
-icon: lua-shared
+icon: lua-client
 tags:
   - lua
-  - shared
+  - client
   - needs-verification
   - needs-example
 lua:
   library: Players
   function: GetSpectatorTarget
-  realm: shared
+  realm: client
   description: "Get the spectator target of the local player"
   
+  arguments:
   
   returns:
     - type: integer

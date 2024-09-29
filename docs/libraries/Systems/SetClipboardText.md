@@ -14,8 +14,9 @@ lua:
   description: "Set the text in the clipboard."
   
   arguments:
-    - name: "text"
-      type: string
+  - position: 1
+    name: "text"
+    type: string
   returns:
     
 ---

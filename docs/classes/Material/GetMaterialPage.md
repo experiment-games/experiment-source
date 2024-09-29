@@ -13,7 +13,10 @@ lua:
   realm: shared
   description: "Get material page."
   
-  
+  arguments:
+  - position: 1
+    name: "material"
+    type: Material
   returns:
     - type: Material
       description: "Material page."

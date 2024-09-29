@@ -13,7 +13,10 @@ lua:
   realm: shared
   description: "Get the world model."
   
-  
+  arguments:
+  - position: 1
+    name: "entity"
+    type: Weapon
   returns:
     - type: string
       description: "World model."

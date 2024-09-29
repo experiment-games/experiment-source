@@ -14,10 +14,15 @@ lua:
   description: "Moves the cursor by a given offset"
   
   arguments:
-    - name: "offsetX"
-      type: number
-    - name: "offsetY"
-      type: number
+  - position: 1
+    name: "textEntry"
+    type: TextEntry
+  - position: 2
+    name: "offsetX"
+    type: number
+  - position: 3
+    name: "offsetY"
+    type: number
   returns:
     
 ---

@@ -14,11 +14,16 @@ lua:
   description: "Sets whether the drop is enabled"
   
   arguments:
-    - name: "enabled"
-      type: boolean
-    - name: "radius"
-      type: number
-      default: "0.0f"
+  - position: 1
+    name: "panel"
+    type: Panel
+  - position: 2
+    name: "enabled"
+    type: boolean
+  - position: 3
+    name: "radius"
+    type: number
+    default: "0.0f"
   returns:
     
 ---

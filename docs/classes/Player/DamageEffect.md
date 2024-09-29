@@ -14,10 +14,15 @@ lua:
   description: "Apply a damage effect to the player."
   
   arguments:
-    - name: "damage"
-      type: number
-    - name: "damageType"
-      type: number
+  - position: 1
+    name: "player"
+    type: Player
+  - position: 2
+    name: "damage"
+    type: number
+  - position: 3
+    name: "damageType"
+    type: number
   returns:
     
 ---

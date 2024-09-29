@@ -14,10 +14,15 @@ lua:
   description: "Converts a local position to a screen position"
   
   arguments:
-    - name: "x"
-      type: number
-    - name: "y"
-      type: number
+  - position: 1
+    name: "panel"
+    type: Panel
+  - position: 2
+    name: "x"
+    type: number
+  - position: 3
+    name: "y"
+    type: number
   returns:
     - type: integer
       description: "The x position of the screen"

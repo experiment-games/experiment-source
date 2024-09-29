@@ -13,7 +13,10 @@ lua:
   realm: shared
   description: "Gets the base damage"
   
-  
+  arguments:
+  - position: 1
+    name: "damageInfo"
+    type: DamageInfo
   returns:
     - type: number
       description: "The base damage."

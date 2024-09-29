@@ -13,7 +13,10 @@ lua:
   realm: shared
   description: "Get the next value of the keyvalues."
   
-  
+  arguments:
+  - position: 1
+    name: "keyValues"
+    type: KeyValuesHandle
   returns:
     - type: KeyValuesHandle
       description: "The next value."

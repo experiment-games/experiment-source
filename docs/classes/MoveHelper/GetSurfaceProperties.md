@@ -13,7 +13,10 @@ lua:
   realm: shared
   description: "Gets the physics surface properties"
   
-  
+  arguments:
+  - position: 1
+    name: "moveHelper"
+    type: MoveHelper
   returns:
     - type: PhysicsSurfaceProps
       description: "Physics surface properties"

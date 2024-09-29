@@ -13,7 +13,10 @@ lua:
   realm: shared
   description: "Gets the value of the ConsoleVariable as a float"
   
-  
+  arguments:
+  - position: 1
+    name: "consoleVariable"
+    type: ConsoleVariable
   returns:
     - type: number
       description: "Gets the value of the ConsoleVariable as a float"

@@ -14,8 +14,9 @@ lua:
   description: "Clears the given trace object."
   
   arguments:
-    - name: "trace"
-      type: Trace
+  - position: 1
+    name: "trace"
+    type: Trace
   returns:
     
 ---

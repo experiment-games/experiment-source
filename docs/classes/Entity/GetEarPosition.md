@@ -13,7 +13,10 @@ lua:
   realm: shared
   description: "Get ear position."
   
-  
+  arguments:
+  - position: 1
+    name: "entity"
+    type: Entity
   returns:
     - type: Vector
       description: "The ear position."

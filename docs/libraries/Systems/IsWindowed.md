@@ -13,6 +13,7 @@ lua:
   realm: shared
   description: "Check if the application is running in windowed mode."
   
+  arguments:
   
   returns:
     - type: boolean

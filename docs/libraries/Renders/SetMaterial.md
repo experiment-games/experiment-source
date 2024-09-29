@@ -14,8 +14,9 @@ lua:
   description: "Binds a material for use in the next render operations"
   
   arguments:
-    - name: "material"
-      type: Material
+  - position: 1
+    name: "material"
+    type: Material
   returns:
     
 ---

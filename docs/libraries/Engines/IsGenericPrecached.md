@@ -14,8 +14,9 @@ lua:
   description: "Check if a generic is precached."
   
   arguments:
-    - name: "genericName"
-      type: string
+  - position: 1
+    name: "genericName"
+    type: string
   returns:
     - type: boolean
       description: "True if the generic is precached, false otherwise."

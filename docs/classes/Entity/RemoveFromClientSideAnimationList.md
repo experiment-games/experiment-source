@@ -13,7 +13,10 @@ lua:
   realm: client
   description: "Remove from the client side animation list."
   
-  
+  arguments:
+  - position: 1
+    name: "entity"
+    type: Entity
   returns:
     
 ---

@@ -1,18 +1,19 @@
 ---
 template: lua-library-function.html
 title: GetLocalPlayerTeam
-icon: lua-shared
+icon: lua-client
 tags:
   - lua
-  - shared
+  - client
   - needs-verification
   - needs-example
 lua:
   library: Players
   function: GetLocalPlayerTeam
-  realm: shared
+  realm: client
   description: "Get the team of the local player"
   
+  arguments:
   
   returns:
     - type: integer

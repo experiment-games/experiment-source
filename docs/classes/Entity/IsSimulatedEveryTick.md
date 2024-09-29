@@ -13,7 +13,10 @@ lua:
   realm: shared
   description: "Is simulated every tick."
   
-  
+  arguments:
+  - position: 1
+    name: "entity"
+    type: Entity
   returns:
     - type: boolean
       description: "True if simulated every tick, false otherwise."

@@ -13,7 +13,10 @@ lua:
   realm: client
   description: "Reset the latched."
   
-  
+  arguments:
+  - position: 1
+    name: "entity"
+    type: Entity
   returns:
     
 ---

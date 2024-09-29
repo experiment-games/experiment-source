@@ -14,8 +14,9 @@ lua:
   description: "Gets all entities in the list by their class name"
   
   arguments:
-    - name: "className"
-      type: string
+  - position: 1
+    name: "className"
+    type: string
   returns:
     - type: table
       description: "A table of all entities in the entity list with the given class name."

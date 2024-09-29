@@ -14,8 +14,9 @@ lua:
   description: "Get the screen effect texture."
   
   arguments:
-    - name: "textureIndex"
-      type: number
+  - position: 1
+    name: "textureIndex"
+    type: number
   returns:
     - type: Texture
       description: "The screen effect texture."

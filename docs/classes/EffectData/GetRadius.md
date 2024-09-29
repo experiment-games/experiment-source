@@ -13,7 +13,10 @@ lua:
   realm: shared
   description: "Get the radius of the effect."
   
-  
+  arguments:
+  - position: 1
+    name: "effectData"
+    type: EffectData
   returns:
     - type: number
       description: "Radius"

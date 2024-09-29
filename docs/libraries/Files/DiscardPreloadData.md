@@ -13,6 +13,7 @@ lua:
   realm: shared
   description: "Discard preload data."
   
+  arguments:
   
   returns:
     

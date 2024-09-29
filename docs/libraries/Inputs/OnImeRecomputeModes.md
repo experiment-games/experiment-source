@@ -13,6 +13,7 @@ lua:
   realm: client
   description: "Recompute IME modes."
   
+  arguments:
   
   returns:
     

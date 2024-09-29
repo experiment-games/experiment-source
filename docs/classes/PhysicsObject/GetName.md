@@ -13,7 +13,10 @@ lua:
   realm: shared
   description: "Gets name"
   
-  
+  arguments:
+  - position: 1
+    name: "physicsObject"
+    type: PhysicsObject
   returns:
     - type: string
       description: "The name."

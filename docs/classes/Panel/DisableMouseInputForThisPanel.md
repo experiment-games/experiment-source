@@ -14,8 +14,12 @@ lua:
   description: "Disables mouse input for the panel"
   
   arguments:
-    - name: "disable"
-      type: boolean
+  - position: 1
+    name: "panel"
+    type: Panel
+  - position: 2
+    name: "disable"
+    type: boolean
   returns:
     
 ---

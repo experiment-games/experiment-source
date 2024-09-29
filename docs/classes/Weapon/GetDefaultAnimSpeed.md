@@ -13,7 +13,10 @@ lua:
   realm: shared
   description: "Get default animation speed."
   
-  
+  arguments:
+  - position: 1
+    name: "entity"
+    type: Weapon
   returns:
     - type: number
       description: "Default animation speed."

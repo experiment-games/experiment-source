@@ -14,10 +14,15 @@ lua:
   description: "Checks if the angle is equal to another angle within a tolerance."
   
   arguments:
-    - name: "other"
-      type: Angle
-    - name: "tolerance"
-      type: number
+  - position: 1
+    name: "angle"
+    type: Angle
+  - position: 2
+    name: "other"
+    type: Angle
+  - position: 3
+    name: "tolerance"
+    type: number
   returns:
     - type: boolean
       description: "True if the angles are equal within the tolerance, false otherwise."

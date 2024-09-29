@@ -14,18 +14,24 @@ lua:
   description: "Intersect a ray with an oriented bounding box"
   
   arguments:
-    - name: "vecRayStart"
-      type: Vector
-    - name: "vecRayDelta"
-      type: Vector
-    - name: "vecBoxOrigin"
-      type: Vector
-    - name: "angBoxAngles"
-      type: Angle
-    - name: "vecBoxMins"
-      type: Vector
-    - name: "vecBoxMaxs"
-      type: Vector
+  - position: 1
+    name: "vecRayStart"
+    type: Vector
+  - position: 2
+    name: "vecRayDelta"
+    type: Vector
+  - position: 3
+    name: "vecBoxOrigin"
+    type: Vector
+  - position: 4
+    name: "angBoxAngles"
+    type: Angle
+  - position: 5
+    name: "vecBoxMins"
+    type: Vector
+  - position: 6
+    name: "vecBoxMaxs"
+    type: Vector
   returns:
     - type: Vector
       description: "End position of the intersection"

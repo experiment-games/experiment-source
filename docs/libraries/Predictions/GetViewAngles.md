@@ -13,6 +13,7 @@ lua:
   realm: client
   description: "Get the view angles."
   
+  arguments:
   
   returns:
     - type: Angle

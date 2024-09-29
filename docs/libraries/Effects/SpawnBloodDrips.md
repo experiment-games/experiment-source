@@ -14,14 +14,18 @@ lua:
   description: "Creates a blood drip effect."
   
   arguments:
-    - name: "origin"
-      type: Vector
-    - name: "direction"
-      type: Vector
-    - name: "color"
-      type: number
-    - name: "amount"
-      type: number
+  - position: 1
+    name: "origin"
+    type: Vector
+  - position: 2
+    name: "direction"
+    type: Vector
+  - position: 3
+    name: "color"
+    type: number
+  - position: 4
+    name: "amount"
+    type: number
   returns:
     
 ---

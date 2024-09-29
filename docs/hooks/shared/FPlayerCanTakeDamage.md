@@ -14,7 +14,7 @@ lua:
   arguments:
     - name: "pPlayer"
       description: ""
-      type: Entity
+      type: Player
     - name: "pAttacker"
       description: ""
       type: Entity

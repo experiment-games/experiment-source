@@ -14,8 +14,9 @@ lua:
   description: "Create a fake client."
   
   arguments:
-    - name: "name"
-      type: string
+  - position: 1
+    name: "name"
+    type: string
   returns:
     - type: Entity
       description: "The created fake client."

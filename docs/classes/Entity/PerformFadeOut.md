@@ -13,7 +13,10 @@ lua:
   realm: server
   description: "Perform fade out."
   
-  
+  arguments:
+  - position: 1
+    name: "entity"
+    type: Entity
   returns:
     
 ---

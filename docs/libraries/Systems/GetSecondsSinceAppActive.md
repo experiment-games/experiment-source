@@ -13,6 +13,7 @@ lua:
   realm: shared
   description: "Get the number of seconds since the application was started."
   
+  arguments:
   
   returns:
     - type: integer

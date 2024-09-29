@@ -14,8 +14,9 @@ lua:
   description: "Check if the given string is a valid physics props"
   
   arguments:
-    - name: "model"
-      type: string
+  - position: 1
+    name: "model"
+    type: string
   returns:
     - type: boolean
       description: "True if the model is a valid physics prop"

@@ -14,8 +14,12 @@ lua:
   description: "Point at the specified entity"
   
   arguments:
-    - name: "target"
-      type: Entity
+  - position: 1
+    name: "entity"
+    type: Entity
+  - position: 2
+    name: "target"
+    type: Entity
   returns:
     - type: boolean
       description: "true if pointed at, false if one of the entities was invalid."

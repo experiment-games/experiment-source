@@ -14,8 +14,9 @@ lua:
   description: "Returns the scheme for the specified scheme name."
   
   arguments:
-    - name: "schemeName"
-      type: string
+  - position: 1
+    name: "schemeName"
+    type: string
   returns:
     - type: scheme
       description: "The scheme for the specified scheme name."

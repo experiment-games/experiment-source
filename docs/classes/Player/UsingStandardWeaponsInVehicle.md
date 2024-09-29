@@ -13,7 +13,10 @@ lua:
   realm: shared
   description: "Check if the player is using standard weapons in a vehicle."
   
-  
+  arguments:
+  - position: 1
+    name: "player"
+    type: Player
   returns:
     
 ---

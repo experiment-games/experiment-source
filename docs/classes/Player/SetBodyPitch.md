@@ -14,8 +14,12 @@ lua:
   description: "Set the body pitch of the player."
   
   arguments:
-    - name: "pitch"
-      type: number
+  - position: 1
+    name: "player"
+    type: Player
+  - position: 2
+    name: "pitch"
+    type: number
   returns:
     
 ---

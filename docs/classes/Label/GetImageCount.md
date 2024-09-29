@@ -13,7 +13,10 @@ lua:
   realm: client
   description: "Gets the image count of the label"
   
-  
+  arguments:
+  - position: 1
+    name: "label"
+    type: Label
   returns:
     - type: integer
       description: "The image count of the label"

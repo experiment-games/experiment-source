@@ -14,8 +14,12 @@ lua:
   description: "Gets the character width"
   
   arguments:
-    - name: "font"
-      type: FontHandle
+  - position: 1
+    name: "font"
+    type: FontHandle
+  - position: 2
+    name: "character"
+    type: number
   returns:
     - type: integer
       description: "The character width"

@@ -14,8 +14,12 @@ lua:
   description: "Sets the background color when disabled"
   
   arguments:
-    - name: "color"
-      type: Color
+  - position: 1
+    name: "textEntry"
+    type: TextEntry
+  - position: 2
+    name: "color"
+    type: Color
   returns:
     
 ---

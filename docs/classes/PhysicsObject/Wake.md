@@ -13,7 +13,10 @@ lua:
   realm: shared
   description: "Wakes the object up"
   
-  
+  arguments:
+  - position: 1
+    name: "physicsObject"
+    type: PhysicsObject
   returns:
     
 ---

@@ -14,8 +14,12 @@ lua:
   description: "Get flex ID by name."
   
   arguments:
-    - name: "flexName"
-      type: string
+  - position: 1
+    name: "entity"
+    type: Entity
+  - position: 2
+    name: "flexName"
+    type: string
   returns:
     - type: integer
       description: "Flex ID."

@@ -14,20 +14,27 @@ lua:
   description: "Create a tracer from the specified start to end position"
   
   arguments:
-    - name: "startPos"
-      type: Vector
-    - name: "endPos"
-      type: Vector
-    - name: "life"
-      type: number
-    - name: "width"
-      type: number
-    - name: "brightness"
-      type: number
-    - name: "noise"
-      type: boolean
-    - name: "modelname"
-      type: string
+  - position: 1
+    name: "startPos"
+    type: Vector
+  - position: 2
+    name: "endPos"
+    type: Vector
+  - position: 3
+    name: "life"
+    type: number
+  - position: 4
+    name: "width"
+    type: number
+  - position: 5
+    name: "brightness"
+    type: number
+  - position: 6
+    name: "noise"
+    type: boolean
+  - position: 7
+    name: "modelname"
+    type: string
   returns:
     
 ---

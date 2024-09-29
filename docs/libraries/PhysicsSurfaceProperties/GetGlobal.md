@@ -13,6 +13,7 @@ lua:
   realm: shared
   description: "Gets the global surface properties"
   
+  arguments:
   
   returns:
     - type: PhysicsSurfacePropertiesHandle

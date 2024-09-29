@@ -14,11 +14,16 @@ lua:
   description: "Set move type."
   
   arguments:
-    - name: "type"
-      type: enumeration/MOVE_TYPE
-    - name: "collide"
-      type: enumeration/MOVE_COLLIDE
-      default: "MOVECOLLIDE_DEFAULT"
+  - position: 1
+    name: "entity"
+    type: Entity
+  - position: 2
+    name: "type"
+    type: enumeration/MOVE_TYPE
+  - position: 3
+    name: "collide"
+    type: enumeration/MOVE_COLLIDE
+    default: "MOVECOLLIDE_DEFAULT"
   returns:
     
 ---

@@ -13,7 +13,10 @@ lua:
   realm: client
   description: "Gets the caption height"
   
-  
+  arguments:
+  - position: 1
+    name: "frame"
+    type: Frame
   returns:
     - type: integer
       description: "The caption height"

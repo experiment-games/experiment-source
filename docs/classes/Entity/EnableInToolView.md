@@ -14,8 +14,12 @@ lua:
   description: "Enable in tool view."
   
   arguments:
-    - name: "enable"
-      type: boolean
+  - position: 1
+    name: "entity"
+    type: Entity
+  - position: 2
+    name: "enable"
+    type: boolean
   returns:
     
 ---

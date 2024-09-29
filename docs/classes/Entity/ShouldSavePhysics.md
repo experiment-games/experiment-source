@@ -13,7 +13,10 @@ lua:
   realm: shared
   description: "Check if entity should save physics."
   
-  
+  arguments:
+  - position: 1
+    name: "entity"
+    type: Entity
   returns:
     
 ---

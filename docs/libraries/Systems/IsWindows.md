@@ -13,6 +13,7 @@ lua:
   realm: shared
   description: "Check if the application is running on Windows."
   
+  arguments:
   
   returns:
     - type: boolean

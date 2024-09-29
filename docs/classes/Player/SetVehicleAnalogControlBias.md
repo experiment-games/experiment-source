@@ -14,8 +14,12 @@ lua:
   description: "Set the vehicle analog control bias for the player."
   
   arguments:
-    - name: "bias"
-      type: number
+  - position: 1
+    name: "player"
+    type: Player
+  - position: 2
+    name: "bias"
+    type: number
   returns:
     
 ---

@@ -14,8 +14,12 @@ lua:
   description: "Smooth view on stairs."
   
   arguments:
-    - name: "normal"
-      type: Vector
+  - position: 1
+    name: "player"
+    type: Player
+  - position: 2
+    name: "normal"
+    type: Vector
   returns:
     
 ---

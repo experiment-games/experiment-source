@@ -14,8 +14,12 @@ lua:
   description: "Sets the cursor position in the text entry"
   
   arguments:
-    - name: "position"
-      type: number
+  - position: 1
+    name: "textEntry"
+    type: TextEntry
+  - position: 2
+    name: "position"
+    type: number
   returns:
     
 ---

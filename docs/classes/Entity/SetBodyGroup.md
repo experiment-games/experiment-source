@@ -14,10 +14,15 @@ lua:
   description: "Set the bodygroup value by the bodygroup id"
   
   arguments:
-    - name: "bodyGroupId"
-      type: number
-    - name: "value"
-      type: number
+  - position: 1
+    name: "entity"
+    type: Entity
+  - position: 2
+    name: "bodyGroupId"
+    type: number
+  - position: 3
+    name: "value"
+    type: number
   returns:
     
 ---

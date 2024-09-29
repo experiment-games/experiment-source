@@ -46,6 +46,18 @@ LUA_BINDING_BEGIN( Entities, CreateByName, "library", "Creates an entity by the 
 LUA_BINDING_END( "Entity", "The created entity" )
 #endif
 
+LUA_BINDING_BEGIN( Entities, CreatePredictedEntityByName, "class", "Create predicted entity by name." )
+{
+    const char *pszClassName = LUA_BINDING_ARGUMENT( luaL_checkstring, 1, "className" );
+    const char *pszModule = LUA_BINDING_ARGUMENT( luaL_checkstring, 2, "module" );
+    int nLine = LUA_BINDING_ARGUMENT( luaL_checknumber, 3, "line" );
+    bool bPersists = LUA_BINDING_ARGUMENT_WITH_DEFAULT( luaL_optboolean, 4, false, "shouldPersist" );
+
+    CBaseEntity::PushLuaInstanceSafe( L, CBaseEntity::CreatePredictedEntityByName( pszClassName, pszModule, nLine, bPersists ) );
+    return 1;
+}
+LUA_BINDING_END( "Entity", "The predicted entity." )
+
 LUA_BINDING_BEGIN( Entities, GetAlongRay, "library", "Finds all entities along the given ray." )
 {
     CBaseEntity *pList[MAX_ENTITYARRAY];

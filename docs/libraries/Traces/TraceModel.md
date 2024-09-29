@@ -14,16 +14,21 @@ lua:
   description: "Sweeps against a particular model, using collision rules."
   
   arguments:
-    - name: "entity"
-      type: Entity
-    - name: "start"
-      type: Vector
-    - name: "end"
-      type: Vector
-    - name: "hullMinimum"
-      type: Vector
-    - name: "hullMaximum"
-      type: Vector
+  - position: 1
+    name: "start"
+    type: Vector
+  - position: 2
+    name: "end"
+    type: Vector
+  - position: 3
+    name: "hullMinimum"
+    type: Vector
+  - position: 4
+    name: "hullMaximum"
+    type: Vector
+  - position: 5
+    name: "entity"
+    type: Entity
   returns:
     - type: TraceResult
       description: "The trace result."

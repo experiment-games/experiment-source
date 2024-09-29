@@ -13,7 +13,10 @@ lua:
   realm: server
   description: "Returns if the connection is timing out."
   
-  
+  arguments:
+  - position: 1
+    name: "netChannel"
+    type: NetChannelInfo
   returns:
     - type: boolean
       description: "If the connection is timing out."

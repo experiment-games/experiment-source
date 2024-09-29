@@ -14,10 +14,15 @@ lua:
   description: "Add points to team."
   
   arguments:
-    - name: "points"
-      type: number
-    - name: "allowNegative"
-      type: boolean
+  - position: 1
+    name: "entity"
+    type: Entity
+  - position: 2
+    name: "points"
+    type: number
+  - position: 3
+    name: "allowNegative"
+    type: boolean
   returns:
     
 ---

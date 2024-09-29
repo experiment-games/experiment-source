@@ -13,7 +13,10 @@ lua:
   realm: client
   description: "Gets the bottom right size"
   
-  
+  arguments:
+  - position: 1
+    name: "frame"
+    type: Frame
   returns:
     - type: integer
       description: "The bottom right size"

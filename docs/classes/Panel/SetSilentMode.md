@@ -14,8 +14,12 @@ lua:
   description: "Sets whether the silent mode is enabled"
   
   arguments:
-    - name: "silent"
-      type: boolean
+  - position: 1
+    name: "panel"
+    type: Panel
+  - position: 2
+    name: "silent"
+    type: boolean
   returns:
     
 ---

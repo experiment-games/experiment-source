@@ -13,7 +13,10 @@ lua:
   realm: shared
   description: "Get transmit with parent."
   
-  
+  arguments:
+  - position: 1
+    name: "entity"
+    type: Entity
   returns:
     
 ---

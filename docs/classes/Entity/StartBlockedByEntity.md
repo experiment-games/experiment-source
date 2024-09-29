@@ -14,8 +14,12 @@ lua:
   description: "Start blocked."
   
   arguments:
-    - name: "blockingEntity"
-      type: Entity
+  - position: 1
+    name: "entity"
+    type: Entity
+  - position: 2
+    name: "blockingEntity"
+    type: Entity
   returns:
     
 ---

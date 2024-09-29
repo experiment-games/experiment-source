@@ -13,7 +13,10 @@ lua:
   realm: shared
   description: "Gets contents"
   
-  
+  arguments:
+  - position: 1
+    name: "physicsObject"
+    type: PhysicsObject
   returns:
     - type: integer
       description: "The contents."

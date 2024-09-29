@@ -14,8 +14,9 @@ lua:
   description: "Suppresses events."
   
   arguments:
-    - name: "shouldSuppress"
-      type: boolean
+  - position: 1
+    name: "shouldSuppress"
+    type: boolean
   returns:
     
 ---

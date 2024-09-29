@@ -14,8 +14,12 @@ lua:
   description: "Set a field in the trace."
   
   arguments:
-    - name: "field"
-      type: string
+  - position: 1
+    name: "trace"
+    type: Trace
+  - position: 2
+    name: "field"
+    type: string
   returns:
     
 ---

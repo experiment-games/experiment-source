@@ -13,7 +13,10 @@ lua:
   realm: shared
   description: "Is solid"
   
-  
+  arguments:
+  - position: 1
+    name: "entity"
+    type: Entity
   returns:
     - type: boolean
       description: "True if solid, false otherwise."

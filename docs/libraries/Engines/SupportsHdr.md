@@ -13,6 +13,7 @@ lua:
   realm: client
   description: "Check if HDR is supported."
   
+  arguments:
   
   returns:
     - type: boolean

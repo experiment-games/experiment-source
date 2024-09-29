@@ -13,7 +13,10 @@ lua:
   realm: shared
   description: "Metatable called when the object is to be negated"
   
-  
+  arguments:
+  - position: 1
+    name: "Matrix"
+    type: Matrix
   returns:
     - type: Matrix
       description: "The negated object."

@@ -14,8 +14,12 @@ lua:
   description: "Metamethod that is called when a new field is added to the panel"
   
   arguments:
-    - name: "field"
-      type: string
+  - position: 1
+    name: "label"
+    type: Label
+  - position: 2
+    name: "field"
+    type: string
   returns:
     
 ---

@@ -14,11 +14,16 @@ lua:
   description: "Sets the title"
   
   arguments:
-    - name: "title"
-      type: string
-    - name: "showTaskbarIcon"
-      type: boolean
-      default: "true"
+  - position: 1
+    name: "frame"
+    type: Frame
+  - position: 2
+    name: "title"
+    type: string
+  - position: 3
+    name: "showTaskbarIcon"
+    type: boolean
+    default: "true"
   returns:
     
 ---

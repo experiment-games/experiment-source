@@ -13,6 +13,7 @@ lua:
   realm: client
   description: "Creates a new projected texture."
   
+  arguments:
   
   returns:
     - type: ProjectedTexture

@@ -13,7 +13,10 @@ lua:
   realm: server
   description: "Described as 'Convenient way to explicitly do nothing (passed to functions that require a method)'"
   
-  
+  arguments:
+  - position: 1
+    name: "entity"
+    type: Entity
   returns:
     
 ---

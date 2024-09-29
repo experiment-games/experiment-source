@@ -14,8 +14,9 @@ lua:
   description: "Trace a line."
   
   arguments:
-    - name: "trace"
-      type: Trace
+  - position: 1
+    name: "trace"
+    type: Trace
   returns:
     - type: TraceResult
       description: "The trace result."

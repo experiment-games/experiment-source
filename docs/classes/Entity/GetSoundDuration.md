@@ -15,10 +15,12 @@ lua:
   
   static: true
   arguments:
-    - name: "sound"
-      type: string
-    - name: "sound type"
-      type: string
+  - position: 1
+    name: "sound"
+    type: string
+  - position: 2
+    name: "sound type"
+    type: string
   returns:
     - type: number
       description: "The sound duration."

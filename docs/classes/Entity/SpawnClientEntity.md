@@ -13,7 +13,10 @@ lua:
   realm: client
   description: "Spawn client entity."
   
-  
+  arguments:
+  - position: 1
+    name: "entity"
+    type: Entity
   returns:
     
 ---

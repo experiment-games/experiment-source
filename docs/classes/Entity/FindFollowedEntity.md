@@ -13,7 +13,10 @@ lua:
   realm: client
   description: "Find the followed entity."
   
-  
+  arguments:
+  - position: 1
+    name: "entity"
+    type: Entity
   returns:
     - type: Entity
       description: "The followed entity"

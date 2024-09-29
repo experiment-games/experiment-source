@@ -14,8 +14,12 @@ lua:
   description: "Set the tick of the table."
   
   arguments:
-    - name: "tick"
-      type: number
+  - position: 1
+    name: "networkStringTable"
+    type: NetworkStringTable
+  - position: 2
+    name: "tick"
+    type: number
   returns:
     
 ---

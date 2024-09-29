@@ -13,7 +13,10 @@ lua:
   realm: client
   description: "Gets the number of child panels"
   
-  
+  arguments:
+  - position: 1
+    name: "panel"
+    type: Panel
   returns:
     - type: integer
       description: "The number of child panels"

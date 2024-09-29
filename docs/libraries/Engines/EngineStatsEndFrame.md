@@ -13,6 +13,7 @@ lua:
   realm: client
   description: "End engine stats frame."
   
+  arguments:
   
   returns:
     

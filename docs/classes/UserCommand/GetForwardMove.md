@@ -13,7 +13,10 @@ lua:
   realm: shared
   description: "Gets forward movement value"
   
-  
+  arguments:
+  - position: 1
+    name: "userCmd"
+    type: UserCommand
   returns:
     - type: number
       description: "The forward movement value"

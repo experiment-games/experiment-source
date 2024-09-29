@@ -13,7 +13,10 @@ lua:
   realm: server
   description: "Draw debug geometry overlays."
   
-  
+  arguments:
+  - position: 1
+    name: "entity"
+    type: Entity
   returns:
     
 ---

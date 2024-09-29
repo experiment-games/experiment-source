@@ -13,7 +13,10 @@ lua:
   realm: shared
   description: "Reverts the ConsoleVariable to its default value"
   
-  
+  arguments:
+  - position: 1
+    name: "consoleVariable"
+    type: ConsoleVariable
   returns:
     
 ---

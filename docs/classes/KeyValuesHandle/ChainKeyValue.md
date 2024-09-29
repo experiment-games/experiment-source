@@ -14,8 +14,12 @@ lua:
   description: "Chain a keyvalue to the keyvalues."
   
   arguments:
-    - name: "keyValue"
-      type: KeyValuesHandle
+  - position: 1
+    name: "keyValues"
+    type: KeyValuesHandle
+  - position: 2
+    name: "keyValue"
+    type: KeyValuesHandle
   returns:
     
 ---

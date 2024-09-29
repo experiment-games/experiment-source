@@ -13,7 +13,10 @@ lua:
   realm: client
   description: "Get the shadow filter size of the projected texture."
   
-  
+  arguments:
+  - position: 1
+    name: "projectedTexture"
+    type: ProjectedTexture
   returns:
     - type: number
       description: "The shadow filter size of the projected texture."

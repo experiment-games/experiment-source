@@ -14,8 +14,12 @@ lua:
   description: "Add an entity to the list of entities being deleted when this entity is removed."
   
   arguments:
-    - name: "entityToDelete"
-      type: Entity
+  - position: 1
+    name: "entity"
+    type: Entity
+  - position: 2
+    name: "entityToDelete"
+    type: Entity
   returns:
     
 ---

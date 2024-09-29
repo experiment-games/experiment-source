@@ -14,11 +14,16 @@ lua:
   description: "Body target."
   
   arguments:
-    - name: "position"
-      type: Vector
-    - name: "noisy"
-      type: boolean
-      default: "true"
+  - position: 1
+    name: "entity"
+    type: Entity
+  - position: 2
+    name: "position"
+    type: Vector
+  - position: 3
+    name: "noisy"
+    type: boolean
+    default: "true"
   returns:
     - type: Vector
       description: "The body target"

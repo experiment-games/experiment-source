@@ -13,7 +13,10 @@ lua:
   realm: client
   description: "Get all bone controller values."
   
-  
+  arguments:
+  - position: 1
+    name: "entity"
+    type: Entity
   returns:
     - type: table
       description: "The bone controller values"

@@ -14,8 +14,9 @@ lua:
   description: "Get the version of a game lump."
   
   arguments:
-    - name: "lumpId"
-      type: number
+  - position: 1
+    name: "lumpId"
+    type: number
   returns:
     - type: integer
       description: "The version of the game lump."

@@ -13,6 +13,7 @@ lua:
   realm: client
   description: "Get the main menu background name."
   
+  arguments:
   
   returns:
     - type: string

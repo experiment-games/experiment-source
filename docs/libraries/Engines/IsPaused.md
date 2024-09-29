@@ -13,6 +13,7 @@ lua:
   realm: shared
   description: "Check if the game is paused."
   
+  arguments:
   
   returns:
     - type: boolean

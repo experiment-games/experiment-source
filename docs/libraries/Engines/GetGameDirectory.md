@@ -13,6 +13,7 @@ lua:
   realm: client
   description: "Get the game directory."
   
+  arguments:
   
   returns:
     - type: string

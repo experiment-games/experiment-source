@@ -14,8 +14,12 @@ lua:
   description: "Get the attachment velocity."
   
   arguments:
-    - name: "attachment"
-      type: number
+  - position: 1
+    name: "entity"
+    type: Entity
+  - position: 2
+    name: "attachment"
+    type: number
   returns:
     - type: boolean
       description: "Whether the operation was successful"

@@ -13,7 +13,10 @@ lua:
   realm: shared
   description: "Get number of passes."
   
-  
+  arguments:
+  - position: 1
+    name: "material"
+    type: Material
   returns:
     - type: integer
       description: "Number of passes."

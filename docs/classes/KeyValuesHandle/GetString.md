@@ -13,20 +13,25 @@ lua:
   realm: shared
   description: "Get a string from the keyvalues."
   
-  argumentSets:
-    - arguments:
+  arguments:
+  - position: 1
+    name: "keyValues"
+    type: KeyValuesHandle
+  - position: 2
+    types:
       - name: "key"
         type: number
-      - name: "default"
-        type: string
-        default: "\"\""
-    - arguments:
       - name: "key"
         type: string
-        default: "0"
+    default: "0"
+  - position: 3
+    types:
       - name: "default"
         type: string
-        default: "\"\""
+    default: "\"\""
+      - name: "default"
+        type: string
+    default: "\"\""
   returns:
     - type: string
       description: "The value as a string."

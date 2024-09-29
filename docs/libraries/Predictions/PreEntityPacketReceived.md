@@ -14,10 +14,12 @@ lua:
   description: "Call before the game receives an entity packet."
   
   arguments:
-    - name: "commandsAcknowledged"
-      type: number
-    - name: "currentWorldUpdate"
-      type: number
+  - position: 1
+    name: "commandsAcknowledged"
+    type: number
+  - position: 2
+    name: "currentWorldUpdate"
+    type: number
   returns:
     
 ---

@@ -13,7 +13,10 @@ lua:
   realm: shared
   description: "Get the hitbox set name."
   
-  
+  arguments:
+  - position: 1
+    name: "entity"
+    type: Entity
   returns:
     - type: string
       description: "The hitbox set name"

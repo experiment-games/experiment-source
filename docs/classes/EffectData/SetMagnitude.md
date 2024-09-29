@@ -14,8 +14,12 @@ lua:
   description: "Set the magnitude of the effect."
   
   arguments:
-    - name: "magnitude"
-      type: number
+  - position: 1
+    name: "effectData"
+    type: EffectData
+  - position: 2
+    name: "magnitude"
+    type: number
   returns:
     
 ---

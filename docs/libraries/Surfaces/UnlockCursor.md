@@ -13,6 +13,7 @@ lua:
   realm: client
   description: "Unlocks the cursor"
   
+  arguments:
   
   returns:
     

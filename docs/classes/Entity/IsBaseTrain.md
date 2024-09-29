@@ -13,7 +13,10 @@ lua:
   realm: shared
   description: "Is base train."
   
-  
+  arguments:
+  - position: 1
+    name: "entity"
+    type: Entity
   returns:
     - type: boolean
       description: "True if base train, false otherwise."

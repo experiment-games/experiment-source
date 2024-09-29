@@ -13,7 +13,10 @@ lua:
   realm: shared
   description: "Get absolute velocity."
   
-  
+  arguments:
+  - position: 1
+    name: "entity"
+    type: Entity
   returns:
     - type: Vector
       description: "The absolute velocity."

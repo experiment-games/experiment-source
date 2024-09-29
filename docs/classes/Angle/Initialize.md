@@ -14,12 +14,18 @@ lua:
   description: "Initializes the angle with the specified values."
   
   arguments:
-    - name: "x"
-      type: number
-    - name: "y"
-      type: number
-    - name: "z"
-      type: number
+  - position: 1
+    name: "angle"
+    type: Angle
+  - position: 2
+    name: "x"
+    type: number
+  - position: 3
+    name: "y"
+    type: number
+  - position: 4
+    name: "z"
+    type: number
   returns:
     - type: Angle
       description: "The initialized angle."

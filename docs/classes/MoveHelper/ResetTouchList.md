@@ -13,7 +13,10 @@ lua:
   realm: shared
   description: "Resets the touch list"
   
-  
+  arguments:
+  - position: 1
+    name: "moveHelper"
+    type: MoveHelper
   returns:
     
 ---

@@ -14,10 +14,12 @@ lua:
   description: "Activate spew output."
   
   arguments:
-    - name: "groupName"
-      type: string
-    - name: "level"
-      type: number
+  - position: 1
+    name: "groupName"
+    type: string
+  - position: 2
+    name: "level"
+    type: number
   returns:
     
 ---

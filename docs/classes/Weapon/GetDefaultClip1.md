@@ -13,7 +13,10 @@ lua:
   realm: shared
   description: "Get default clip 1."
   
-  
+  arguments:
+  - position: 1
+    name: "entity"
+    type: Weapon
   returns:
     - type: integer
       description: "Default clip 1."

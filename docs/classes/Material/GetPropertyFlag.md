@@ -14,8 +14,12 @@ lua:
   description: "Get property flag."
   
   arguments:
-    - name: "flag"
-      type: number
+  - position: 1
+    name: "material"
+    type: Material
+  - position: 2
+    name: "flag"
+    type: number
   returns:
     - type: boolean
       description: "True if flag is set, false otherwise."

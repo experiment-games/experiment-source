@@ -14,8 +14,12 @@ lua:
   description: "Sets the wide"
   
   arguments:
-    - name: "wide"
-      type: number
+  - position: 1
+    name: "panel"
+    type: Panel
+  - position: 2
+    name: "wide"
+    type: number
   returns:
     
 ---

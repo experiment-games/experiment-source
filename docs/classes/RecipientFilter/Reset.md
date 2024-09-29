@@ -13,7 +13,10 @@ lua:
   realm: shared
   description: "Resets the filter"
   
-  
+  arguments:
+  - position: 1
+    name: "filter"
+    type: RecipientFilter
   returns:
     
 ---

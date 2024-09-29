@@ -14,10 +14,15 @@ lua:
   description: "Get damage."
   
   arguments:
-    - name: "damage"
-      type: number
-    - name: "location"
-      type: number
+  - position: 1
+    name: "entity"
+    type: Weapon
+  - position: 2
+    name: "damage"
+    type: number
+  - position: 3
+    name: "location"
+    type: number
   returns:
     - type: number
       description: "Damage."

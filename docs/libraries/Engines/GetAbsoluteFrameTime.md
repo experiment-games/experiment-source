@@ -13,6 +13,7 @@ lua:
   realm: shared
   description: "Get the absolute frame time."
   
+  arguments:
   
   returns:
     - type: number

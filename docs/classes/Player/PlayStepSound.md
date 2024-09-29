@@ -14,14 +14,21 @@ lua:
   description: "Play a step sound for the player."
   
   arguments:
-    - name: "origin"
-      type: Vector
-    - name: "surface data"
-      type: SurfaceData
-    - name: "volume"
-      type: number
-    - name: "force"
-      type: boolean
+  - position: 1
+    name: "player"
+    type: Player
+  - position: 2
+    name: "origin"
+    type: Vector
+  - position: 3
+    name: "surface data"
+    type: SurfaceData
+  - position: 4
+    name: "volume"
+    type: number
+  - position: 5
+    name: "force"
+    type: boolean
   returns:
     
 ---

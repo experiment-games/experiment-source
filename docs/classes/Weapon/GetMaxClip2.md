@@ -13,7 +13,10 @@ lua:
   realm: shared
   description: "Get max clip 2."
   
-  
+  arguments:
+  - position: 1
+    name: "entity"
+    type: Weapon
   returns:
     - type: integer
       description: "Max clip 2."

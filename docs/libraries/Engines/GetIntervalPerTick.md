@@ -13,6 +13,7 @@ lua:
   realm: shared
   description: "Get the interval per tick."
   
+  arguments:
   
   returns:
     - type: number

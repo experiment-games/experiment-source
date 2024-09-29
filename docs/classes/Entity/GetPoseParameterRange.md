@@ -14,8 +14,12 @@ lua:
   description: "Get the pose parameter range."
   
   arguments:
-    - name: "poseParameter"
-      type: number
+  - position: 1
+    name: "entity"
+    type: Entity
+  - position: 2
+    name: "poseParameter"
+    type: number
   returns:
     - type: boolean
       description: "Whether the operation was successful"

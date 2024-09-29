@@ -14,8 +14,12 @@ lua:
   description: "Sets player animation"
   
   arguments:
-    - name: "animation"
-      type: enumeration/PLAYER_ANIMATION
+  - position: 1
+    name: "moveHelper"
+    type: MoveHelper
+  - position: 2
+    name: "animation"
+    type: enumeration/PLAYER_ANIMATION
   returns:
     
 ---

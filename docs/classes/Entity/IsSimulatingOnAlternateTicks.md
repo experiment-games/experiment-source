@@ -14,6 +14,7 @@ lua:
   description: "Is simulating on alternate ticks."
   
   static: true
+  arguments:
   
   returns:
     - type: boolean

@@ -13,7 +13,10 @@ lua:
   realm: client
   description: "Checks if the input message should be handled"
   
-  
+  arguments:
+  - position: 1
+    name: "panel"
+    type: Panel
   returns:
     - type: boolean
       description: "Whether the input message should be handled"

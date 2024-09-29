@@ -13,7 +13,10 @@ lua:
   realm: shared
   description: "Check if the trace hit a non-world entity."
   
-  
+  arguments:
+  - position: 1
+    name: "trace"
+    type: Trace
   returns:
     - type: boolean
       description: "true if the trace hit a non-world entity, false otherwise."

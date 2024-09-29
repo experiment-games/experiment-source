@@ -13,7 +13,10 @@ lua:
   realm: shared
   description: "Blood type."
   
-  
+  arguments:
+  - position: 1
+    name: "entity"
+    type: Entity
   returns:
     - type: enumeration/BLOOD_COLOR
       description: "The blood type."

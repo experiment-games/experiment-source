@@ -14,8 +14,12 @@ lua:
   description: "Check if the player has any ammo of the specified type."
   
   arguments:
-    - name: "type"
-      type: number
+  - position: 1
+    name: "player"
+    type: Player
+  - position: 2
+    name: "type"
+    type: number
   returns:
     - type: boolean
       description: "Whether the player has any ammo of the specified type."

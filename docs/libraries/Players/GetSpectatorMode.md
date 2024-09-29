@@ -1,18 +1,19 @@
 ---
 template: lua-library-function.html
 title: GetSpectatorMode
-icon: lua-shared
+icon: lua-client
 tags:
   - lua
-  - shared
+  - client
   - needs-verification
   - needs-example
 lua:
   library: Players
   function: GetSpectatorMode
-  realm: shared
+  realm: client
   description: "Get spectator mode of the local player"
   
+  arguments:
   
   returns:
     - type: integer

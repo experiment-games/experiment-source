@@ -13,7 +13,10 @@ lua:
   realm: shared
   description: "Clear the keyvalues."
   
-  
+  arguments:
+  - position: 1
+    name: "keyValues"
+    type: KeyValuesHandle
   returns:
     
 ---

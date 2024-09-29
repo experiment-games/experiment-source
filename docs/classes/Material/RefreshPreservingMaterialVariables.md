@@ -13,7 +13,10 @@ lua:
   realm: shared
   description: "Refresh preserving material vars."
   
-  
+  arguments:
+  - position: 1
+    name: "material"
+    type: Material
   returns:
     
 ---

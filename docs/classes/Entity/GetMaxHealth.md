@@ -13,7 +13,10 @@ lua:
   realm: shared
   description: "Get max health."
   
-  
+  arguments:
+  - position: 1
+    name: "entity"
+    type: Entity
   returns:
     - type: integer
       description: "The max health."

@@ -13,7 +13,10 @@ lua:
   realm: shared
   description: "Returns a string representation of the ConsoleVariable"
   
-  
+  arguments:
+  - position: 1
+    name: "consoleVariable"
+    type: ConsoleVariable
   returns:
     - type: string
       description: "Returns a string representation of the ConsoleVariable"

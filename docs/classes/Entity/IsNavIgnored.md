@@ -13,7 +13,10 @@ lua:
   realm: server
   description: "Is nav ignored."
   
-  
+  arguments:
+  - position: 1
+    name: "entity"
+    type: Entity
   returns:
     - type: boolean
       description: "true if nav ignored, false otherwise."

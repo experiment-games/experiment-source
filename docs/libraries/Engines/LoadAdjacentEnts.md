@@ -14,10 +14,12 @@ lua:
   description: "Load adjacent entities."
   
   arguments:
-    - name: "mapName"
-      type: string
-    - name: "baseMapName"
-      type: string
+  - position: 1
+    name: "mapName"
+    type: string
+  - position: 2
+    name: "baseMapName"
+    type: string
   returns:
     
 ---

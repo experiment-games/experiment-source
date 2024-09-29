@@ -13,7 +13,10 @@ lua:
   realm: shared
   description: "Needs lightmap blend alpha."
   
-  
+  arguments:
+  - position: 1
+    name: "material"
+    type: Material
   returns:
     - type: boolean
       description: "True if needs lightmap blend alpha, false otherwise."

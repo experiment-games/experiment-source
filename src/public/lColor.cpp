@@ -33,10 +33,10 @@ LUALIB_API bool lua_iscolor( lua_State *L, int narg )
         lua_getfield( L, -1, "__type" );
         if ( lua_isstring( L, -1 ) && !strcmp( lua_tostring( L, -1 ), LUA_COLORMETANAME ) )
         {
-            lua_pop( L, 2 ); // Pop the string and the metatable
+            lua_pop( L, 2 );  // Pop the string and the metatable
             return true;
         }
-        lua_pop( L, 2 ); // Pop the string and the metatable
+        lua_pop( L, 2 );  // Pop the string and the metatable
     }
 
     return false;
@@ -62,7 +62,7 @@ LUA_API void lua_pushcolor( lua_State *L, Color &clr )
 
 LUALIB_API lua_Color &luaL_checkcolor( lua_State *L, int narg )
 {
-    if ( lua_isuserdata(L, narg) )
+    if ( lua_isuserdata( L, narg ) )
     {
         lua_Color *d = ( lua_Color * )luaL_checkudata( L, narg, LUA_COLORMETANAME );
         return *d;
@@ -132,13 +132,13 @@ LUA_BINDING_BEGIN( Color, GetGreen, "class", "Gets the green value of the color.
 LUA_BINDING_END( "integer", "The green value." )
 
 // Experiment; Returns the pointer? Not useful in Lua. Disabled:
-//LUA_BINDING_BEGIN( Color, GetRawColor, "class", "Gets the raw color value." )
+// LUA_BINDING_BEGIN( Color, GetRawColor, "class", "Gets the raw color value." )
 //{
 //    lua_Color color = LUA_BINDING_ARGUMENT( luaL_checkcolor, 1, "color" );
 //    lua_pushinteger( L, color.GetRawColor() );
 //    return 1;
 //}
-//LUA_BINDING_END( "integer", "The raw color value." )
+// LUA_BINDING_END( "integer", "The raw color value." )
 
 LUA_BINDING_BEGIN( Color, GetRed, "class", "Gets the red value of the color." )
 {
@@ -235,13 +235,13 @@ LUA_BINDING_BEGIN( Color, __newindex, "class", "Metamethod for when the newindex
     const char *field = LUA_BINDING_ARGUMENT( luaL_checkstring, 2, "field" );
 
     if ( Q_strcmp( field, "r" ) == 0 || strcmp( field, "1" ) == 0 )
-        color->SetColor( LUA_BINDING_ARGUMENT( luaL_checknumber, 3, "red" ), color->g(), color->b(), color->a() );
+        color->SetColor( luaL_checknumber( L, 3 ), color->g(), color->b(), color->a() );
     else if ( Q_strcmp( field, "g" ) == 0 || strcmp( field, "2" ) == 0 )
-        color->SetColor( color->r(), LUA_BINDING_ARGUMENT( luaL_checknumber, 3, "green" ), color->b(), color->a() );
+        color->SetColor( color->r(), luaL_checknumber( L, 3 ), color->b(), color->a() );
     else if ( Q_strcmp( field, "b" ) == 0 || strcmp( field, "3" ) == 0 )
-        color->SetColor( color->r(), color->g(), LUA_BINDING_ARGUMENT( luaL_checknumber, 3, "blue" ), color->a() );
+        color->SetColor( color->r(), color->g(), luaL_checknumber( L, 3 ), color->a() );
     else if ( Q_strcmp( field, "a" ) == 0 || strcmp( field, "4" ) == 0 )
-        color->SetColor( color->r(), color->g(), color->b(), LUA_BINDING_ARGUMENT( luaL_checknumber, 3, "alpha" ) );
+        color->SetColor( color->r(), color->g(), color->b(), luaL_checknumber( L, 3 ) );
     else
     {
         luaL_error( L, "attempt to set a field in a read-only table" );

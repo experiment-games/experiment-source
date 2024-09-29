@@ -13,6 +13,7 @@ lua:
   realm: server
   description: "Get the local player on a listen server - this is for multiplayer use only."
   
+  arguments:
   
   returns:
     - type: Entity

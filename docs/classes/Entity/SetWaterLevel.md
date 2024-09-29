@@ -14,8 +14,12 @@ lua:
   description: "Set water level enum."
   
   arguments:
-    - name: "level"
-      type: number
+  - position: 1
+    name: "entity"
+    type: Entity
+  - position: 2
+    name: "level"
+    type: number
   returns:
     
 ---

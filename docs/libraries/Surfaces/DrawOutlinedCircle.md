@@ -14,14 +14,18 @@ lua:
   description: "Draws an outlined circle"
   
   arguments:
-    - name: "x"
-      type: number
-    - name: "y"
-      type: number
-    - name: "radius"
-      type: number
-    - name: "segments"
-      type: number
+  - position: 1
+    name: "x"
+    type: number
+  - position: 2
+    name: "y"
+    type: number
+  - position: 3
+    name: "radius"
+    type: number
+  - position: 4
+    name: "segments"
+    type: number
   returns:
     
 ---

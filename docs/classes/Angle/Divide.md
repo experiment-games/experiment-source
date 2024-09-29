@@ -14,8 +14,12 @@ lua:
   description: "Modifies the existing angle, dividing it by a number."
   
   arguments:
-    - name: "divideBy"
-      type: number
+  - position: 1
+    name: "angle"
+    type: Angle
+  - position: 2
+    name: "divideBy"
+    type: number
   returns:
     - type: Angle
       description: "The divided angle."

@@ -14,8 +14,9 @@ lua:
   description: "Trigger a change in the IME state."
   
   arguments:
-    - name: "activate"
-      type: boolean
+  - position: 1
+    name: "activate"
+    type: boolean
   returns:
     
 ---

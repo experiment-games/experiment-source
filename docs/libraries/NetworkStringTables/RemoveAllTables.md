@@ -13,6 +13,7 @@ lua:
   realm: shared
   description: "Remove all string tables."
   
+  arguments:
   
   returns:
     

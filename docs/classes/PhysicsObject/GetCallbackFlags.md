@@ -13,7 +13,10 @@ lua:
   realm: shared
   description: "Gets callback flags"
   
-  
+  arguments:
+  - position: 1
+    name: "physicsObject"
+    type: PhysicsObject
   returns:
     - type: integer
       description: "The callback flags."

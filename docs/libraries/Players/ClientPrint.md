@@ -14,24 +14,31 @@ lua:
   description: "Print message to client"
   
   arguments:
-    - name: "player"
-      type: Player
-    - name: "msgDest"
-      type: number
-    - name: "message"
-      type: string
-    - name: "param1"
-      type: string
-      default: "0"
-    - name: "param2"
-      type: string
-      default: "0"
-    - name: "param3"
-      type: string
-      default: "0"
-    - name: "param4"
-      type: string
-      default: "0"
+  - position: 1
+    name: "player"
+    type: Player
+  - position: 2
+    name: "msgDest"
+    type: number
+  - position: 3
+    name: "message"
+    type: string
+  - position: 4
+    name: "param1"
+    type: string
+    default: "0"
+  - position: 5
+    name: "param2"
+    type: string
+    default: "0"
+  - position: 6
+    name: "param3"
+    type: string
+    default: "0"
+  - position: 7
+    name: "param4"
+    type: string
+    default: "0"
   returns:
     
 ---

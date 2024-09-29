@@ -14,8 +14,12 @@ lua:
   description: "Get vector."
   
   arguments:
-    - name: "varName"
-      type: string
+  - position: 1
+    name: "material"
+    type: Material
+  - position: 2
+    name: "varName"
+    type: string
   returns:
     - type: Vector
       description: "Vector value."

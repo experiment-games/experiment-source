@@ -13,7 +13,10 @@ lua:
   realm: shared
   description: "Call the player's pre think."
   
-  
+  arguments:
+  - position: 1
+    name: "player"
+    type: Player
   returns:
     
 ---

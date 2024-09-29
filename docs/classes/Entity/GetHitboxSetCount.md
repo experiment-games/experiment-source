@@ -13,7 +13,10 @@ lua:
   realm: shared
   description: "Get the hitbox set count."
   
-  
+  arguments:
+  - position: 1
+    name: "entity"
+    type: Entity
   returns:
     - type: integer
       description: "The hitbox set count"

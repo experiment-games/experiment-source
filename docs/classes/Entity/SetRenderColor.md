@@ -11,22 +11,19 @@ lua:
   library: Entity
   function: SetRenderColor
   realm: shared
-  description: "Set render color."
+  description: "Set the entity render color."
   
   arguments:
-    - name: "red"
-      type: number
-    - name: "green"
-      type: number
-    - name: "blue"
-      type: number
-    - name: "alpha"
-      type: number
-      default: "255"
+  - position: 1
+    name: "entity"
+    type: Entity
+  - position: 2
+    name: "color"
+    type: Color
   returns:
     
 ---
 
 <div class="lua__search__keywords">
-Entity:SetRenderColor &#x2013; Set render color.
+Entity:SetRenderColor &#x2013; Set the entity render color.
 </div>

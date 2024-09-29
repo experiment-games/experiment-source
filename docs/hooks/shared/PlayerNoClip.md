@@ -14,7 +14,7 @@ lua:
   arguments:
     - name: "player"
       description: ""
-      type: Entity
+      type: Player
     - name: "bNoClipDesired"
       description: ""
       type: boolean

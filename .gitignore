@@ -107,3 +107,7 @@ game/experiment/cfg/settings.scr
 
 # mkdocs/mkdocs-material
 .cache
+
+# mkdocs site or temp storage for speeding up test builds of mkdocs
+site/
+temp/

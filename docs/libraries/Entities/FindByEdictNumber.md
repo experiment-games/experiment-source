@@ -14,8 +14,9 @@ lua:
   description: "Gets an entity by its edict number"
   
   arguments:
-    - name: "edictNumber"
-      type: number
+  - position: 1
+    name: "edictNumber"
+    type: number
   returns:
     - type: Entity
       description: "The entity found, or NULL if not found."

@@ -13,7 +13,10 @@ lua:
   realm: shared
   description: "Checks if the vector is valid."
   
-  
+  arguments:
+  - position: 1
+    name: "vector"
+    type: Vector
   returns:
     - type: boolean
       description: "True if the vector is valid, false otherwise."

@@ -14,8 +14,12 @@ lua:
   description: "Sets the font of the label"
   
   arguments:
-    - name: "font"
-      type: FontHandle
+  - position: 1
+    name: "label"
+    type: Label
+  - position: 2
+    name: "font"
+    type: FontHandle
   returns:
     
 ---

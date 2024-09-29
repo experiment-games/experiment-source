@@ -13,7 +13,10 @@ lua:
   realm: client
   description: "Get the target entity of this projected texture."
   
-  
+  arguments:
+  - position: 1
+    name: "projectedTexture"
+    type: ProjectedTexture
   returns:
     - type: Entity
       description: "The target entity of this projected texture."

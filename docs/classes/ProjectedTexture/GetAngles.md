@@ -13,7 +13,10 @@ lua:
   realm: client
   description: "Get the angle of the projected texture."
   
-  
+  arguments:
+  - position: 1
+    name: "projectedTexture"
+    type: ProjectedTexture
   returns:
     - type: Angle
       description: "The angle of the projected texture."

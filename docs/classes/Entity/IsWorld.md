@@ -13,7 +13,10 @@ lua:
   realm: shared
   description: "Whether entity is world."
   
-  
+  arguments:
+  - position: 1
+    name: "entity"
+    type: Entity
   returns:
     - type: boolean
       description: "true if world, false otherwise."

@@ -13,20 +13,25 @@ lua:
   realm: shared
   description: "Get a float from the keyvalues."
   
-  argumentSets:
-    - arguments:
+  arguments:
+  - position: 1
+    name: "keyValues"
+    type: KeyValuesHandle
+  - position: 2
+    types:
       - name: "key"
         type: number
-      - name: "default"
-        type: number
-        default: "0.0f"
-    - arguments:
       - name: "key"
         type: string
-        default: "0"
+    default: "0"
+  - position: 3
+    types:
       - name: "default"
         type: number
-        default: "0.0f"
+    default: "0.0f"
+      - name: "default"
+        type: number
+    default: "0.0f"
   returns:
     - type: number
       description: "The value as a float."

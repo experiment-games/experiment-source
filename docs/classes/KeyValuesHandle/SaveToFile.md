@@ -14,11 +14,16 @@ lua:
   description: "Save keyvalues to a file."
   
   arguments:
-    - name: "filename"
-      type: string
-    - name: "pathID"
-      type: string
-      default: "0"
+  - position: 1
+    name: "keyValues"
+    type: KeyValuesHandle
+  - position: 2
+    name: "filename"
+    type: string
+  - position: 3
+    name: "pathID"
+    type: string
+    default: "0"
   returns:
     - type: boolean
       description: "true if the keyvalues were saved, false otherwise."

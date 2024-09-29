@@ -14,8 +14,12 @@ lua:
   description: "Set the life state."
   
   arguments:
-    - name: "lifeState"
-      type: enumeration/LIFE
+  - position: 1
+    name: "entity"
+    type: Entity
+  - position: 2
+    name: "lifeState"
+    type: enumeration/LIFE
   returns:
     
 ---

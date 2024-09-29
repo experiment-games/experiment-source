@@ -14,8 +14,12 @@ lua:
   description: "Sets auto-progress on hitting character limit"
   
   arguments:
-    - name: "autoProgress"
-      type: boolean
+  - position: 1
+    name: "textEntry"
+    type: TextEntry
+  - position: 2
+    name: "autoProgress"
+    type: boolean
   returns:
     
 ---

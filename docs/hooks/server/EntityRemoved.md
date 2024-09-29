@@ -12,7 +12,7 @@ lua:
   realm: server
   description: ""
   arguments:
-    - name: "entity"
+    - name: "oldObj"
       description: ""
       type: Entity
   returns:

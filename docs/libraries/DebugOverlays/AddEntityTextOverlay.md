@@ -14,15 +14,23 @@ lua:
   description: "Displays 2D text at the specified coordinates."
   
   arguments:
-    - name: "entity"
-      type: Entity
-    - name: "lineOffset"
-      type: number
-    - name: "text"
-      type: string
-    - name: "duration"
-      type: number
-      default: "1"
+  - position: 1
+    name: "entity"
+    type: Entity
+  - position: 2
+    name: "lineOffset"
+    type: number
+  - position: 3
+    name: "text"
+    type: string
+  - position: 4
+    name: "duration"
+    type: number
+    default: "1"
+  - position: 5
+    name: "color"
+    type: Color
+    default: "color_white"
   returns:
     
 ---

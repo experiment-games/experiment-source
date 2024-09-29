@@ -14,8 +14,9 @@ lua:
   description: "Change the IME conversion mode by handle."
   
   arguments:
-    - name: "handle"
-      type: number
+  - position: 1
+    name: "handle"
+    type: number
   returns:
     
 ---

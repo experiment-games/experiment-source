@@ -14,8 +14,9 @@ lua:
   description: "Sets the alpha multiplier"
   
   arguments:
-    - name: "alphaMultiplier"
-      type: number
+  - position: 1
+    name: "alphaMultiplier"
+    type: number
   returns:
     
 ---

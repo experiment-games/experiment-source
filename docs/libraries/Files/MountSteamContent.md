@@ -14,9 +14,10 @@ lua:
   description: "Mount Steam content."
   
   arguments:
-    - name: "appId"
-      type: number
-      default: "-1"
+  - position: 1
+    name: "appId"
+    type: number
+    default: "-1"
   returns:
     - type: integer
       description: "The mount Steam content."

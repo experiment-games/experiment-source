@@ -13,7 +13,10 @@ lua:
   realm: shared
   description: "Check if the entity is on fire."
   
-  
+  arguments:
+  - position: 1
+    name: "entity"
+    type: Entity
   returns:
     - type: boolean
       description: "Whether the entity is on fire"

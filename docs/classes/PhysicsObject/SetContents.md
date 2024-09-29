@@ -14,8 +14,12 @@ lua:
   description: "Sets the contents"
   
   arguments:
-    - name: "contents"
-      type: number
+  - position: 1
+    name: "physicsObject"
+    type: PhysicsObject
+  - position: 2
+    name: "contents"
+    type: number
   returns:
     
 ---

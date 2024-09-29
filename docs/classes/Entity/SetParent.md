@@ -14,11 +14,16 @@ lua:
   description: "Set parent."
   
   arguments:
-    - name: "parent"
-      type: Entity
-    - name: "attachment"
-      type: number
-      default: "0"
+  - position: 1
+    name: "entity"
+    type: Entity
+  - position: 2
+    name: "parent"
+    type: Entity
+  - position: 3
+    name: "attachment"
+    type: number
+    default: "0"
   returns:
     
 ---

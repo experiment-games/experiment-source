@@ -14,8 +14,12 @@ lua:
   description: "Get the aim entity origin."
   
   arguments:
-    - name: "attachedTo"
-      type: Entity
+  - position: 1
+    name: "entity"
+    type: Entity
+  - position: 2
+    name: "attachedTo"
+    type: Entity
   returns:
     - type: Vector
       description: "The aim entity origin"

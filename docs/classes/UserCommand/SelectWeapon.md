@@ -13,7 +13,13 @@ lua:
   realm: shared
   description: "Selects a weapon"
   
-  
+  arguments:
+  - position: 1
+    name: "userCmd"
+    type: UserCommand
+  - position: 2
+    name: "entity"
+    type: Entity
   returns:
     
 ---

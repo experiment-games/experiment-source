@@ -14,6 +14,7 @@ lua:
   description: "Is precache allowed."
   
   static: true
+  arguments:
   
   returns:
     - type: boolean

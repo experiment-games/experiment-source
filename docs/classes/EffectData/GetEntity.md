@@ -13,7 +13,10 @@ lua:
   realm: shared
   description: "Get the entity the effect is assigned to."
   
-  
+  arguments:
+  - position: 1
+    name: "effectData"
+    type: EffectData
   returns:
     - type: Entity
       description: "The entity the effect is assigned to."

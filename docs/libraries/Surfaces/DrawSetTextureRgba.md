@@ -14,20 +14,26 @@ lua:
   description: "Sets the texture raw RGBA bytes"
   
   arguments:
-    - name: "textureId"
-      type: number
-    - name: "rgba"
-      type: string
-    - name: "width"
-      type: number
-    - name: "height"
-      type: number
-    - name: "hardwareFilter"
-      type: number
-      default: "0"
-    - name: "shouldForceReload"
-      type: boolean
-      default: "true"
+  - position: 1
+    name: "textureId"
+    type: number
+  - position: 2
+    name: "rgba"
+    type: string
+  - position: 3
+    name: "width"
+    type: number
+  - position: 4
+    name: "height"
+    type: number
+  - position: 5
+    name: "hardwareFilter"
+    type: number
+    default: "0"
+  - position: 6
+    name: "shouldForceReload"
+    type: boolean
+    default: "true"
   returns:
     
 ---

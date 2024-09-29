@@ -12,10 +12,10 @@ lua:
   realm: server
   description: ""
   arguments:
-    - name: "entity"
+    - name: "this"
       description: ""
       type: Entity
-    - name: "entity"
+    - name: "pRagdoll"
       description: ""
       type: Entity
   returns:

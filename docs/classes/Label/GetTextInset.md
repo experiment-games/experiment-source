@@ -13,7 +13,10 @@ lua:
   realm: client
   description: "Gets the text inset of the label"
   
-  
+  arguments:
+  - position: 1
+    name: "label"
+    type: Label
   returns:
     - type: integer
       description: "The x inset of the label"

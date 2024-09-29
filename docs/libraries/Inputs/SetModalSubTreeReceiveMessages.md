@@ -14,8 +14,9 @@ lua:
   description: "Set the modal sub-tree to receive messages."
   
   arguments:
-    - name: "receive"
-      type: boolean
+  - position: 1
+    name: "receive"
+    type: boolean
   returns:
     
 ---

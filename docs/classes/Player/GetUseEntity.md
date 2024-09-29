@@ -13,7 +13,10 @@ lua:
   realm: shared
   description: "Get the player's use entity."
   
-  
+  arguments:
+  - position: 1
+    name: "player"
+    type: Player
   returns:
     - type: Entity
       description: "The player's use entity."

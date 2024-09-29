@@ -13,7 +13,10 @@ lua:
   realm: server
   description: "Handle impulse commands for the player."
   
-  
+  arguments:
+  - position: 1
+    name: "player"
+    type: Player
   returns:
     
 ---

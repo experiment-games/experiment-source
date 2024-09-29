@@ -13,7 +13,25 @@ lua:
   realm: client
   description: "Sets a dialog variable"
   
-  
+  arguments:
+  - position: 1
+    types:
+      - name: "editablePanel"
+        type: EditablePanel
+      - name: "editablePanel"
+        type: EditablePanel
+  - position: 2
+    types:
+      - name: "name"
+        type: string
+      - name: "name"
+        type: string
+  - position: 3
+    types:
+      - name: "value"
+        type: number
+      - name: "value"
+        type: string
   returns:
     
 ---

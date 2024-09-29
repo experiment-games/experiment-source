@@ -14,8 +14,12 @@ lua:
   description: "Applies a rotation to a vector."
   
   arguments:
-    - name: "vector"
-      type: Vector
+  - position: 1
+    name: "Matrix"
+    type: Matrix
+  - position: 2
+    name: "vector"
+    type: Vector
   returns:
     - type: Vector
       description: "The rotated vector."

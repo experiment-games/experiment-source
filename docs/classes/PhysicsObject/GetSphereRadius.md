@@ -13,7 +13,10 @@ lua:
   realm: shared
   description: "Gets the sphere radius"
   
-  
+  arguments:
+  - position: 1
+    name: "physicsObject"
+    type: PhysicsObject
   returns:
     - type: number
       description: "The sphere radius."

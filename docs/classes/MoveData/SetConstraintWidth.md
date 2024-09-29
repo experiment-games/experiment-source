@@ -14,8 +14,12 @@ lua:
   description: "Sets the constraint width"
   
   arguments:
-    - name: "width"
-      type: number
+  - position: 1
+    name: "moveData"
+    type: MoveData
+  - position: 2
+    name: "width"
+    type: number
   returns:
     
 ---

@@ -13,7 +13,10 @@ lua:
   realm: server
   description: "Allowed to fade."
   
-  
+  arguments:
+  - position: 1
+    name: "entity"
+    type: Entity
   returns:
     - type: boolean
       description: "true if allowed to fade, false otherwise."

@@ -13,7 +13,10 @@ lua:
   realm: client
   description: "Recalculates the line breaks in the text entry"
   
-  
+  arguments:
+  - position: 1
+    name: "textEntry"
+    type: TextEntry
   returns:
     
 ---

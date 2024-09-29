@@ -14,19 +14,29 @@ lua:
   description: "Add a swept box overlay to the screen."
   
   arguments:
-    - name: "start"
-      type: Vector
-    - name: "end"
-      type: Vector
-    - name: "mins"
-      type: Vector
-    - name: "maxs"
-      type: Vector
-    - name: "angles"
-      type: Angle
-    - name: "duration"
-      type: number
-      default: "1"
+  - position: 1
+    name: "start"
+    type: Vector
+  - position: 2
+    name: "end"
+    type: Vector
+  - position: 3
+    name: "mins"
+    type: Vector
+  - position: 4
+    name: "maxs"
+    type: Vector
+  - position: 5
+    name: "angles"
+    type: Angle
+  - position: 6
+    name: "duration"
+    type: number
+    default: "1"
+  - position: 7
+    name: "color"
+    type: Color
+    default: "color_white"
   returns:
     
 ---

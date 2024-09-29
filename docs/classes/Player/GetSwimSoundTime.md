@@ -13,7 +13,10 @@ lua:
   realm: shared
   description: "Get the player's swim sound time."
   
-  
+  arguments:
+  - position: 1
+    name: "player"
+    type: Player
   returns:
     - type: number
       description: "The player's swim sound time."

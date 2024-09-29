@@ -14,11 +14,13 @@ lua:
   description: "Paints the panel"
   
   arguments:
-    - name: "panel"
-      type: Panel
-    - name: "paintPopups"
-      type: boolean
-      default: "false"
+  - position: 1
+    name: "panel"
+    type: Panel
+  - position: 2
+    name: "paintPopups"
+    type: boolean
+    default: "false"
   returns:
     
 ---

@@ -14,8 +14,9 @@ lua:
   description: "Get the duration of a sound."
   
   arguments:
-    - name: "soundName"
-      type: string
+  - position: 1
+    name: "soundName"
+    type: string
   returns:
     - type: number
       description: "The duration of the sound."

@@ -13,7 +13,10 @@ lua:
   realm: client
   description: "Should record in tools."
   
-  
+  arguments:
+  - position: 1
+    name: "entity"
+    type: Entity
   returns:
     - type: boolean
       description: "true if should record, false otherwise."

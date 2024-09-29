@@ -13,7 +13,10 @@ lua:
   realm: shared
   description: "Transposes the matrix."
   
-  
+  arguments:
+  - position: 1
+    name: "Matrix"
+    type: Matrix
   returns:
     - type: Matrix
       description: "The transposed matrix."

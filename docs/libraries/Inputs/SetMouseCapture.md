@@ -14,9 +14,10 @@ lua:
   description: "Set the panel that captures the mouse input."
   
   arguments:
-    - name: "panel"
-      type: Panel
-      default: "NULL"
+  - position: 1
+    name: "panel"
+    type: Panel
+    default: "NULL"
   returns:
     
 ---

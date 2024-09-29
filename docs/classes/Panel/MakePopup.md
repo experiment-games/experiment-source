@@ -13,7 +13,10 @@ lua:
   realm: client
   description: "Makes the panel a popup"
   
-  
+  arguments:
+  - position: 1
+    name: "panel"
+    type: Panel
   returns:
     
 ---

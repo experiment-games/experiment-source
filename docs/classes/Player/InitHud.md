@@ -13,7 +13,10 @@ lua:
   realm: server
   description: "Initialize the HUD for the player."
   
-  
+  arguments:
+  - position: 1
+    name: "player"
+    type: Player
   returns:
     
 ---

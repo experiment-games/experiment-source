@@ -14,8 +14,12 @@ lua:
   description: "Converts a vector to an angle with a specified up vector."
   
   arguments:
-    - name: "up"
-      type: Vector
+  - position: 1
+    name: "vector"
+    type: Vector
+  - position: 2
+    name: "up"
+    type: Vector
   returns:
     - type: Angle
       description: "The converted angle."

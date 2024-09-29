@@ -13,7 +13,10 @@ lua:
   realm: shared
   description: "Get the table's ID."
   
-  
+  arguments:
+  - position: 1
+    name: "networkStringTable"
+    type: NetworkStringTable
   returns:
     - type: integer
       description: "The table's ID."

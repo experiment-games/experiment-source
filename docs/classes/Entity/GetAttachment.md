@@ -13,11 +13,14 @@ lua:
   realm: shared
   description: "Get the attachment table for the specified attachment (by bone id or attachment name)"
   
-  argumentSets:
-    - arguments:
+  arguments:
+  - position: 1
+    name: "entity"
+    type: Entity
+  - position: 2
+    types:
       - name: "boneId"
         type: number
-    - arguments:
       - name: "attachmentName"
         type: string
   returns:

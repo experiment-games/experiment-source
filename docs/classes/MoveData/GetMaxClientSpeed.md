@@ -13,7 +13,10 @@ lua:
   realm: shared
   description: "Gets the max client speed"
   
-  
+  arguments:
+  - position: 1
+    name: "moveData"
+    type: MoveData
   returns:
     - type: number
       description: "The max client speed"

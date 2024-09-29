@@ -13,7 +13,10 @@ lua:
   realm: shared
   description: "Gets the shadow position and angles"
   
-  
+  arguments:
+  - position: 1
+    name: "physicsObject"
+    type: PhysicsObject
   returns:
     - type: boolean
       description: "Whether there is a shadow position or not."

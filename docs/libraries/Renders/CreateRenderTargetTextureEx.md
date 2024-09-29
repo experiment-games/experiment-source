@@ -14,27 +14,35 @@ lua:
   description: "Create a new render target texture."
   
   arguments:
-    - name: "name"
-      type: string
-    - name: "width"
-      type: number
-    - name: "height"
-      type: number
-    - name: "sizeMode"
-      type: number
-      default: "RT_SIZE_DEFAULT"
-    - name: "depthMode"
-      type: number
-      default: "MATERIAL_RT_DEPTH_SHARED"
-    - name: "textureFlags"
-      type: number
-      default: "TEXTUREFLAGS_CLAMPS | TEXTUREFLAGS_CLAMPT"
-    - name: "renderTargetFlags"
-      type: number
-      default: "0"
-    - name: "imageFormat"
-      type: number
-      default: "IMAGE_FORMAT_RGBA8888"
+  - position: 1
+    name: "name"
+    type: string
+  - position: 2
+    name: "width"
+    type: number
+  - position: 3
+    name: "height"
+    type: number
+  - position: 4
+    name: "sizeMode"
+    type: number
+    default: "RT_SIZE_DEFAULT"
+  - position: 5
+    name: "depthMode"
+    type: number
+    default: "MATERIAL_RT_DEPTH_SHARED"
+  - position: 6
+    name: "textureFlags"
+    type: number
+    default: "TEXTUREFLAGS_CLAMPS | TEXTUREFLAGS_CLAMPT"
+  - position: 7
+    name: "renderTargetFlags"
+    type: number
+    default: "0"
+  - position: 8
+    name: "imageFormat"
+    type: number
+    default: "IMAGE_FORMAT_RGBA8888"
   returns:
     - type: Texture
       description: "The created render target texture."

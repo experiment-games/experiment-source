@@ -13,7 +13,10 @@ lua:
   realm: client
   description: "Converts the projected texture to a string."
   
-  
+  arguments:
+  - position: 1
+    name: "projectedTexture"
+    type: ProjectedTexture
   returns:
     - type: string
       description: "The string representation of the projected texture."

@@ -13,7 +13,10 @@ lua:
   realm: shared
   description: "Whether the ConsoleVariable is a command (and not a ConsoleVariable)"
   
-  
+  arguments:
+  - position: 1
+    name: "consoleVariable"
+    type: ConsoleVariable
   returns:
     - type: boolean
       description: "Whether the ConsoleVariable is a command (and not a ConsoleVariable)"

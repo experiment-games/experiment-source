@@ -14,8 +14,12 @@ lua:
   description: "Metatable that is called to set a value to a key that is not found in the table."
   
   arguments:
-    - name: "field"
-      type: string
+  - position: 1
+    name: "angle"
+    type: Angle
+  - position: 2
+    name: "field"
+    type: string
   returns:
     
 ---

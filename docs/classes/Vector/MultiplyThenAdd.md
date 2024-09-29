@@ -14,10 +14,15 @@ lua:
   description: "Multiplies the first vector by the second vector and adds the third vector."
   
   arguments:
-    - name: "vector2"
-      type: Vector
-    - name: "vector3"
-      type: Vector
+  - position: 1
+    name: "vector1"
+    type: Vector
+  - position: 2
+    name: "vector2"
+    type: Vector
+  - position: 3
+    name: "vector3"
+    type: Vector
   returns:
     
 ---

@@ -13,6 +13,7 @@ lua:
   realm: client
   description: "Gets the modal panel"
   
+  arguments:
   
   returns:
     

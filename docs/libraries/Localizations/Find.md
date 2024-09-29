@@ -14,8 +14,9 @@ lua:
   description: "Finds a localized string."
   
   arguments:
-    - name: "string"
-      type: string
+  - position: 1
+    name: "string"
+    type: string
   returns:
     - type: string
       description: "Returns the localized string."

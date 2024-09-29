@@ -14,8 +14,12 @@ lua:
   description: "Set the hit box ID of the effect."
   
   arguments:
-    - name: "hitBoxIndex"
-      type: number
+  - position: 1
+    name: "effectData"
+    type: EffectData
+  - position: 2
+    name: "hitBoxIndex"
+    type: number
   returns:
     
 ---

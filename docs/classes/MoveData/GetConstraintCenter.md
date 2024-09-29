@@ -13,7 +13,10 @@ lua:
   realm: shared
   description: "Gets the constraint center"
   
-  
+  arguments:
+  - position: 1
+    name: "moveData"
+    type: MoveData
   returns:
     - type: Vector
       description: "The constraint center"

@@ -13,7 +13,10 @@ lua:
   realm: client
   description: "Performs the muzzle flash effect."
   
-  
+  arguments:
+  - position: 1
+    name: "entity"
+    type: Entity
   returns:
     
 ---

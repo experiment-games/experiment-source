@@ -14,10 +14,12 @@ lua:
   description: "Adds a custom font file to the list of fonts."
   
   arguments:
-    - name: "fontFileName"
-      type: string
-    - name: "fontName"
-      type: string
+  - position: 1
+    name: "fontFileName"
+    type: string
+  - position: 2
+    name: "fontName"
+    type: string
   returns:
     - type: boolean
       description: "True if the font was added, false otherwise."

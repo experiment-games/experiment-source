@@ -13,7 +13,10 @@ lua:
   realm: shared
   description: "Select the player's last item."
   
-  
+  arguments:
+  - position: 1
+    name: "player"
+    type: Player
   returns:
     
 ---

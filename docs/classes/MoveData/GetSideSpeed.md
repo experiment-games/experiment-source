@@ -13,7 +13,10 @@ lua:
   realm: shared
   description: "Gets the side speed"
   
-  
+  arguments:
+  - position: 1
+    name: "moveData"
+    type: MoveData
   returns:
     - type: number
       description: "The side speed"

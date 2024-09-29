@@ -14,8 +14,9 @@ lua:
   description: "Set the starting index of the current page in the candidate list."
   
   arguments:
-    - name: "index"
-      type: number
+  - position: 1
+    name: "index"
+    type: number
   returns:
     
 ---

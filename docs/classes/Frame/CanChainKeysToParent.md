@@ -13,7 +13,10 @@ lua:
   realm: client
   description: "Returns whether keys can be chained to the parent"
   
-  
+  arguments:
+  - position: 1
+    name: "frame"
+    type: Frame
   returns:
     - type: boolean
       description: "Whether keys can be chained to the parent"

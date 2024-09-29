@@ -13,7 +13,10 @@ lua:
   realm: shared
   description: "Give default ammo."
   
-  
+  arguments:
+  - position: 1
+    name: "entity"
+    type: Weapon
   returns:
     
 ---

@@ -13,7 +13,10 @@ lua:
   realm: client
   description: "Disables the fade effect"
   
-  
+  arguments:
+  - position: 1
+    name: "frame"
+    type: Frame
   returns:
     
 ---

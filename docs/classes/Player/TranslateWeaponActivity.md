@@ -14,8 +14,12 @@ lua:
   description: "Translate a weapon activity."
   
   arguments:
-    - name: "activity"
-      type: enumeration/ACTIVITY
+  - position: 1
+    name: "player"
+    type: Player
+  - position: 2
+    name: "activity"
+    type: enumeration/ACTIVITY
   returns:
     - type: enumeration/ACTIVITY
       description: "The translated activity."

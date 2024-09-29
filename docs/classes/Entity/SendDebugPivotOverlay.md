@@ -13,7 +13,10 @@ lua:
   realm: server
   description: "Send debug pivot overlay."
   
-  
+  arguments:
+  - position: 1
+    name: "entity"
+    type: Entity
   returns:
     
 ---

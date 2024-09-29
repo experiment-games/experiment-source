@@ -13,6 +13,7 @@ lua:
   realm: client
   description: "Get the page size of the candidate list."
   
+  arguments:
   
   returns:
     - type: integer

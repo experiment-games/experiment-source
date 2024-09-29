@@ -14,8 +14,12 @@ lua:
   description: "Adds two vectors."
   
   arguments:
-    - name: "vectorB"
-      type: Vector
+  - position: 1
+    name: "vectorA"
+    type: Vector
+  - position: 2
+    name: "vectorB"
+    type: Vector
   returns:
     - type: Vector
       description: "The sum of the two vectors."

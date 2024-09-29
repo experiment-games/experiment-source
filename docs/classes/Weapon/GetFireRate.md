@@ -13,7 +13,10 @@ lua:
   realm: shared
   description: "Get fire rate."
   
-  
+  arguments:
+  - position: 1
+    name: "entity"
+    type: Weapon
   returns:
     - type: number
       description: "Fire rate."

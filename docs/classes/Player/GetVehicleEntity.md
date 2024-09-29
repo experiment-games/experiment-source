@@ -13,7 +13,10 @@ lua:
   realm: shared
   description: "Get the player's vehicle entity."
   
-  
+  arguments:
+  - position: 1
+    name: "player"
+    type: Player
   returns:
     - type: Entity
       description: "The player's vehicle entity."

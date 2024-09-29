@@ -13,6 +13,7 @@ lua:
   realm: client
   description: "Call after the game receives an entity packet."
   
+  arguments:
   
   returns:
     

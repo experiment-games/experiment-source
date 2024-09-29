@@ -13,7 +13,10 @@ lua:
   realm: shared
   description: "Remove all ammo from the player."
   
-  
+  arguments:
+  - position: 1
+    name: "player"
+    type: Player
   returns:
     
 ---

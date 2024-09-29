@@ -14,8 +14,9 @@ lua:
   description: "Checks if an entity class can be created"
   
   arguments:
-    - name: "className"
-      type: string
+  - position: 1
+    name: "className"
+    type: string
   returns:
     - type: boolean
       description: "True if the entity class can be created, false otherwise."

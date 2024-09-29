@@ -13,7 +13,10 @@ lua:
   realm: shared
   description: "Get model bounds."
   
-  
+  arguments:
+  - position: 1
+    name: "entity"
+    type: Entity
   returns:
     - type: Vector
       description: "The minimum bounds."

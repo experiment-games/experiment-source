@@ -13,7 +13,10 @@ lua:
   realm: shared
   description: "Get the string representation of a file handle."
   
-  
+  arguments:
+  - position: 1
+    name: "file"
+    type: FileHandle
   returns:
     - type: string
       description: "The string representation of the file handle."

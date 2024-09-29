@@ -14,11 +14,13 @@ lua:
   description: "Encode a string to base64"
   
   arguments:
-    - name: "string"
-      type: string
-    - name: "disableRfc2045Compliance"
-      type: boolean
-      default: "false"
+  - position: 1
+    name: "string"
+    type: string
+  - position: 2
+    name: "disableRfc2045Compliance"
+    type: boolean
+    default: "false"
   returns:
     - type: string
       description: "Base64 encoded string."

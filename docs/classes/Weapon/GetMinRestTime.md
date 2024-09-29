@@ -13,7 +13,10 @@ lua:
   realm: shared
   description: "Get min rest time."
   
-  
+  arguments:
+  - position: 1
+    name: "entity"
+    type: Weapon
   returns:
     - type: number
       description: "Min rest time."

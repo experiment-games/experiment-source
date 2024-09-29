@@ -14,8 +14,12 @@ lua:
   description: "Apply the inverse (transposed) rotation (only works on pure rotation matrix)."
   
   arguments:
-    - name: "vector"
-      type: Vector
+  - position: 1
+    name: "Matrix"
+    type: Matrix
+  - position: 2
+    name: "vector"
+    type: Vector
   returns:
     - type: Vector
       description: "The multiplied vector."

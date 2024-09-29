@@ -14,12 +14,18 @@ lua:
   description: "Sets the image bounds of the label"
   
   arguments:
-    - name: "index"
-      type: number
-    - name: "x"
-      type: number
-    - name: "width"
-      type: number
+  - position: 1
+    name: "label"
+    type: Label
+  - position: 2
+    name: "index"
+    type: number
+  - position: 3
+    name: "x"
+    type: number
+  - position: 4
+    name: "width"
+    type: number
   returns:
     
 ---

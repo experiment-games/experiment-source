@@ -14,8 +14,9 @@ lua:
   description: "Gets the texture file"
   
   arguments:
-    - name: "textureId"
-      type: number
+  - position: 1
+    name: "textureId"
+    type: number
   returns:
     - type: boolean
       description: "True if the texture file was found, false otherwise."

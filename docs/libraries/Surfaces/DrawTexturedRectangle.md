@@ -14,14 +14,18 @@ lua:
   description: "Draws a textured rectangle"
   
   arguments:
-    - name: "x0"
-      type: number
-    - name: "y0"
-      type: number
-    - name: "x1"
-      type: number
-    - name: "y1"
-      type: number
+  - position: 1
+    name: "x0"
+    type: number
+  - position: 2
+    name: "y0"
+    type: number
+  - position: 3
+    name: "x1"
+    type: number
+  - position: 4
+    name: "y1"
+    type: number
   returns:
     
 ---

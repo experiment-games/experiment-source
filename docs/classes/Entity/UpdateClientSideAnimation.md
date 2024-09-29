@@ -13,7 +13,10 @@ lua:
   realm: client
   description: "Update the client side animation for the given entity."
   
-  
+  arguments:
+  - position: 1
+    name: "entity"
+    type: Entity
   returns:
     
 ---

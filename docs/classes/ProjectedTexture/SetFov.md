@@ -14,8 +14,12 @@ lua:
   description: "Set the angle of projection."
   
   arguments:
-    - name: "fov"
-      type: number
+  - position: 1
+    name: "projectedTexture"
+    type: ProjectedTexture
+  - position: 2
+    name: "fov"
+    type: number
   returns:
     
 ---

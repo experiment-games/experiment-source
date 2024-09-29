@@ -13,7 +13,10 @@ lua:
   realm: client
   description: "Call this when the ragdoll moved to update the entity's position, angles and bounds to that of its ragdoll."
   
-  
+  arguments:
+  - position: 1
+    name: "entity"
+    type: Entity
   returns:
     
 ---

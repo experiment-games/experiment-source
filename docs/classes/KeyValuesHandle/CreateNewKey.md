@@ -13,7 +13,10 @@ lua:
   realm: shared
   description: "Create a new keyvalues key."
   
-  
+  arguments:
+  - position: 1
+    name: "keyValues"
+    type: KeyValuesHandle
   returns:
     - type: KeyValuesHandle
       description: "The new keyvalues key."

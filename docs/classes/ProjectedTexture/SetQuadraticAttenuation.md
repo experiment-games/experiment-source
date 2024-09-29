@@ -14,8 +14,12 @@ lua:
   description: "Set the quadratic attenuation of the projected texture."
   
   arguments:
-    - name: "quadAtten"
-      type: number
+  - position: 1
+    name: "projectedTexture"
+    type: ProjectedTexture
+  - position: 2
+    name: "quadAtten"
+    type: number
   returns:
     
 ---

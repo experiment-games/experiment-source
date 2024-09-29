@@ -14,8 +14,9 @@ lua:
   description: "Suppress engine lighting."
   
   arguments:
-    - name: "suppress"
-      type: boolean
+  - position: 1
+    name: "suppress"
+    type: boolean
   returns:
     
 ---

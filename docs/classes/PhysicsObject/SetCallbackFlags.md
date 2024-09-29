@@ -14,8 +14,12 @@ lua:
   description: "Sets callback flags"
   
   arguments:
-    - name: "flags"
-      type: number
+  - position: 1
+    name: "physicsObject"
+    type: PhysicsObject
+  - position: 2
+    name: "flags"
+    type: number
   returns:
     
 ---

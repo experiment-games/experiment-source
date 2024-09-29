@@ -13,7 +13,10 @@ lua:
   realm: client
   description: "Get the render bounds."
   
-  
+  arguments:
+  - position: 1
+    name: "entity"
+    type: Entity
   returns:
     - type: Vector
       description: "The minimum bounds"

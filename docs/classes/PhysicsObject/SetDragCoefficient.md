@@ -14,10 +14,15 @@ lua:
   description: "Sets drag coefficients"
   
   arguments:
-    - name: "pDrag"
-      type: number
-    - name: "pAngularDrag"
-      type: number
+  - position: 1
+    name: "physicsObject"
+    type: PhysicsObject
+  - position: 2
+    name: "pDrag"
+    type: number
+  - position: 3
+    name: "pAngularDrag"
+    type: number
   returns:
     
 ---

@@ -13,7 +13,10 @@ lua:
   realm: client
   description: "Is two pass."
   
-  
+  arguments:
+  - position: 1
+    name: "entity"
+    type: Entity
   returns:
     - type: boolean
       description: "true if two pass, false otherwise."

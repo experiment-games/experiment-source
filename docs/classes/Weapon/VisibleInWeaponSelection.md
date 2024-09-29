@@ -13,7 +13,10 @@ lua:
   realm: shared
   description: "Visible in weapon selection."
   
-  
+  arguments:
+  - position: 1
+    name: "entity"
+    type: Weapon
   returns:
     - type: boolean
       description: "Whether the weapon is visible in weapon selection."

@@ -13,7 +13,10 @@ lua:
   realm: shared
   description: "Is base object."
   
-  
+  arguments:
+  - position: 1
+    name: "entity"
+    type: Entity
   returns:
     - type: boolean
       description: "True if base object, false otherwise."

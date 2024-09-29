@@ -13,7 +13,10 @@ lua:
   realm: server
   description: "Get entity name."
   
-  
+  arguments:
+  - position: 1
+    name: "entity"
+    type: Entity
   returns:
     - type: string
       description: "The entity name"

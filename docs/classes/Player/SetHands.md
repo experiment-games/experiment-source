@@ -14,8 +14,12 @@ lua:
   description: "Set the player's hands."
   
   arguments:
-    - name: "hands"
-      type: Entity
+  - position: 1
+    name: "player"
+    type: Player
+  - position: 2
+    name: "hands"
+    type: Entity
   returns:
     
 ---

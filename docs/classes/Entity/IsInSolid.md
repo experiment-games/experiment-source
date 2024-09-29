@@ -13,7 +13,10 @@ lua:
   realm: server
   description: "Is in solid."
   
-  
+  arguments:
+  - position: 1
+    name: "entity"
+    type: Entity
   returns:
     - type: boolean
       description: "true if in solid, false otherwise."

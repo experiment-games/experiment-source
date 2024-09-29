@@ -14,8 +14,12 @@ lua:
   description: "Show or hide the crosshair for the player."
   
   arguments:
-    - name: "shouldShow"
-      type: boolean
+  - position: 1
+    name: "player"
+    type: Player
+  - position: 2
+    name: "shouldShow"
+    type: boolean
   returns:
     
 ---

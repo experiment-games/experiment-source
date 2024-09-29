@@ -13,7 +13,10 @@ lua:
   realm: client
   description: "Undoes the last action"
   
-  
+  arguments:
+  - position: 1
+    name: "textEntry"
+    type: TextEntry
   returns:
     
 ---

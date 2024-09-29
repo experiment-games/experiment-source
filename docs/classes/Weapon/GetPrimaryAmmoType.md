@@ -13,7 +13,10 @@ lua:
   realm: shared
   description: "Get the primary ammo type."
   
-  
+  arguments:
+  - position: 1
+    name: "entity"
+    type: Weapon
   returns:
     - type: integer
       description: "Primary ammo type."

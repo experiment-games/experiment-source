@@ -13,7 +13,10 @@ lua:
   realm: client
   description: "Uses full frame buffer texture."
   
-  
+  arguments:
+  - position: 1
+    name: "entity"
+    type: Entity
   returns:
     - type: boolean
       description: "true if uses full frame buffer texture, false otherwise."

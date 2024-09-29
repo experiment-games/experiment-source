@@ -13,6 +13,7 @@ lua:
   realm: client
   description: "Get the engine build number."
   
+  arguments:
   
   returns:
     - type: integer

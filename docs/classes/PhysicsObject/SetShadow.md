@@ -14,14 +14,21 @@ lua:
   description: "Sets the shadow parameters"
   
   arguments:
-    - name: "maxSpeed"
-      type: number
-    - name: "maxAngularSpeed"
-      type: number
-    - name: "allowTranslation"
-      type: boolean
-    - name: "allowRotation"
-      type: boolean
+  - position: 1
+    name: "physicsObject"
+    type: PhysicsObject
+  - position: 2
+    name: "maxSpeed"
+    type: number
+  - position: 3
+    name: "maxAngularSpeed"
+    type: number
+  - position: 4
+    name: "allowTranslation"
+    type: boolean
+  - position: 5
+    name: "allowRotation"
+    type: boolean
   returns:
     
 ---

@@ -14,8 +14,12 @@ lua:
   description: "Set the material index of the effect."
   
   arguments:
-    - name: "materialIndex"
-      type: number
+  - position: 1
+    name: "effectData"
+    type: EffectData
+  - position: 2
+    name: "materialIndex"
+    type: number
   returns:
     
 ---

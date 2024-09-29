@@ -14,11 +14,13 @@ lua:
   description: "Create a clientside entity with the specified model."
   
   arguments:
-    - name: "model"
-      type: string
-    - name: "renderGroup"
-      type: number
-      default: "RENDER_GROUP_OTHER"
+  - position: 1
+    name: "model"
+    type: string
+  - position: 2
+    name: "renderGroup"
+    type: number
+    default: "RENDER_GROUP_OTHER"
   returns:
     - type: Entity
       description: "Clientside model entity."

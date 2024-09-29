@@ -14,8 +14,12 @@ lua:
   description: "Returns the font name for the specified font handle."
   
   arguments:
-    - name: "font"
-      type: FontHandle
+  - position: 1
+    name: "scheme"
+    type: Scheme
+  - position: 2
+    name: "font"
+    type: FontHandle
   returns:
     - type: string
       description: "The font name for the specified font handle."

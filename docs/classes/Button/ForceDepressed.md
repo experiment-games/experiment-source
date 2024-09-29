@@ -14,8 +14,12 @@ lua:
   description: "Forces the button to be depressed"
   
   arguments:
-    - name: "depressed"
-      type: boolean
+  - position: 1
+    name: "button"
+    type: Button
+  - position: 2
+    name: "depressed"
+    type: boolean
   returns:
     
 ---

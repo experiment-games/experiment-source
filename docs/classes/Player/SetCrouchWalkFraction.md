@@ -14,8 +14,12 @@ lua:
   description: "Set the fraction by which player's walk speed will be multiplied when crouched."
   
   arguments:
-    - name: "speed"
-      type: number
+  - position: 1
+    name: "player"
+    type: Player
+  - position: 2
+    name: "speed"
+    type: number
   returns:
     
 ---

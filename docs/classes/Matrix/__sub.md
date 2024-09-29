@@ -13,7 +13,13 @@ lua:
   realm: shared
   description: "Metatable called when the object is to be subtracted"
   
-  
+  arguments:
+  - position: 1
+    name: "Matrix"
+    type: Matrix
+  - position: 2
+    name: "Matrix"
+    type: Matrix
   returns:
     - type: Matrix
       description: "The difference of the objects."

@@ -14,9 +14,13 @@ lua:
   description: "View punch reset."
   
   arguments:
-    - name: "time"
-      type: number
-      default: "0"
+  - position: 1
+    name: "player"
+    type: Player
+  - position: 2
+    name: "time"
+    type: number
+    default: "0"
   returns:
     
 ---

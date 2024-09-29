@@ -14,8 +14,12 @@ lua:
   description: "Set effect entity."
   
   arguments:
-    - name: "effect"
-      type: Entity
+  - position: 1
+    name: "entity"
+    type: Entity
+  - position: 2
+    name: "effect"
+    type: Entity
   returns:
     
 ---

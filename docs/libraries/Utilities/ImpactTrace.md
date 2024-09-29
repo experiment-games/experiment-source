@@ -14,13 +14,16 @@ lua:
   description: "Generate an impact trace"
   
   arguments:
-    - name: "trace"
-      type: Trace
-    - name: "damageType"
-      type: number
-    - name: "customImpactName"
-      type: string
-      default: "0"
+  - position: 1
+    name: "trace"
+    type: Trace
+  - position: 2
+    name: "damageType"
+    type: number
+  - position: 3
+    name: "customImpactName"
+    type: string
+    default: "0"
   returns:
     
 ---

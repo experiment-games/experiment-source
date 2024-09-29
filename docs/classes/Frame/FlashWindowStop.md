@@ -13,7 +13,10 @@ lua:
   realm: client
   description: "Stops flashing the frame"
   
-  
+  arguments:
+  - position: 1
+    name: "frame"
+    type: Frame
   returns:
     
 ---

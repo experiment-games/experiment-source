@@ -15,8 +15,9 @@ lua:
   
   static: true
   arguments:
-    - name: "allow"
-      type: boolean
+  - position: 1
+    name: "allow"
+    type: boolean
   returns:
     
 ---

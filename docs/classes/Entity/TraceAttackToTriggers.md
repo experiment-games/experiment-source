@@ -14,14 +14,21 @@ lua:
   description: "Trace attack to triggers."
   
   arguments:
-    - name: "damageInfo"
-      type: DamageInfo
-    - name: "startPos"
-      type: Vector
-    - name: "endPos"
-      type: Vector
-    - name: "direction"
-      type: Vector
+  - position: 1
+    name: "entity"
+    type: Entity
+  - position: 2
+    name: "damageInfo"
+    type: DamageInfo
+  - position: 3
+    name: "startPos"
+    type: Vector
+  - position: 4
+    name: "endPos"
+    type: Vector
+  - position: 5
+    name: "direction"
+    type: Vector
   returns:
     
 ---

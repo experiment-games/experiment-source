@@ -14,8 +14,12 @@ lua:
   description: "Is solid flag set."
   
   arguments:
-    - name: "flag"
-      type: number
+  - position: 1
+    name: "entity"
+    type: Entity
+  - position: 2
+    name: "flag"
+    type: number
   returns:
     - type: boolean
       description: "True if solid flag set, false otherwise."

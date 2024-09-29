@@ -14,10 +14,12 @@ lua:
   description: "Set whether clients can add strings to a table."
   
   arguments:
-    - name: "networkStringTable"
-      type: NetworkStringTable
-    - name: "allow"
-      type: boolean
+  - position: 1
+    name: "networkStringTable"
+    type: NetworkStringTable
+  - position: 2
+    name: "allow"
+    type: boolean
   returns:
     
 ---

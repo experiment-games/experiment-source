@@ -13,7 +13,10 @@ lua:
   realm: shared
   description: "Is marked for deletion."
   
-  
+  arguments:
+  - position: 1
+    name: "entity"
+    type: Entity
   returns:
     - type: boolean
       description: "True if marked for deletion, false otherwise."

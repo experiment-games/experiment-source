@@ -14,12 +14,18 @@ lua:
   description: "Checks if the panel is within the specified position"
   
   arguments:
-    - name: "x"
-      type: number
-    - name: "y"
-      type: number
-    - name: "traversePopups"
-      type: boolean
+  - position: 1
+    name: "panel"
+    type: Panel
+  - position: 2
+    name: "x"
+    type: number
+  - position: 3
+    name: "y"
+    type: number
+  - position: 4
+    name: "traversePopups"
+    type: boolean
   returns:
     - type: boolean
       description: "True if the panel is within the specified position, false otherwise"

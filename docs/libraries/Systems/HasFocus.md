@@ -13,6 +13,7 @@ lua:
   realm: shared
   description: "Check if the application has focus."
   
+  arguments:
   
   returns:
     - type: boolean

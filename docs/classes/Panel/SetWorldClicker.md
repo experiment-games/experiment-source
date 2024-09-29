@@ -14,8 +14,12 @@ lua:
   description: "Sets whether the world clicker is enabled"
   
   arguments:
-    - name: "clicker"
-      type: boolean
+  - position: 1
+    name: "panel"
+    type: Panel
+  - position: 2
+    name: "clicker"
+    type: boolean
   returns:
     
 ---

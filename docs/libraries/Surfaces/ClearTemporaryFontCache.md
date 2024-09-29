@@ -13,6 +13,7 @@ lua:
   realm: client
   description: "Clears the temporary font cache."
   
+  arguments:
   
   returns:
     

@@ -14,10 +14,12 @@ lua:
   description: "Enables mouse capture"
   
   arguments:
-    - name: "panel"
-      type: Panel
-    - name: "enable"
-      type: boolean
+  - position: 1
+    name: "panel"
+    type: Panel
+  - position: 2
+    name: "enable"
+    type: boolean
   returns:
     
 ---

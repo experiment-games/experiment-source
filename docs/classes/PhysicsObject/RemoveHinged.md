@@ -13,7 +13,10 @@ lua:
   realm: shared
   description: "Removes hinged state"
   
-  
+  arguments:
+  - position: 1
+    name: "physicsObject"
+    type: PhysicsObject
   returns:
     
 ---

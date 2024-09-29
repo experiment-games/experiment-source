@@ -13,7 +13,10 @@ lua:
   realm: shared
   description: "Physics solid mask for entity."
   
-  
+  arguments:
+  - position: 1
+    name: "entity"
+    type: Entity
   returns:
     - type: integer
       description: "The physics solid mask for entity."

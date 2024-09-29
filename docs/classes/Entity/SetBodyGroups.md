@@ -14,8 +14,12 @@ lua:
   description: "Set the bodygroup values by the bodygroup string. Each hexadecimal character represents the bodygroup at its index, e.g: 0a00001 sets bodygroup 1 to 10(a) and bodygroup 6 to 1, the rest are set to 0"
   
   arguments:
-    - name: "bodyGroupString"
-      type: string
+  - position: 1
+    name: "entity"
+    type: Entity
+  - position: 2
+    name: "bodyGroupString"
+    type: string
   returns:
     
 ---

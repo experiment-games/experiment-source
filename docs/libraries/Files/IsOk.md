@@ -14,8 +14,9 @@ lua:
   description: "Check if a file handle is valid."
   
   arguments:
-    - name: "file"
-      type: FileHandle
+  - position: 1
+    name: "file"
+    type: FileHandle
   returns:
     - type: boolean
       description: "true if the file handle is valid, false otherwise."

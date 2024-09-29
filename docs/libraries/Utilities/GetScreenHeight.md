@@ -13,6 +13,7 @@ lua:
   realm: client
   description: "Get screen height"
   
+  arguments:
   
   returns:
     - type: integer

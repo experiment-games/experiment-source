@@ -13,7 +13,10 @@ lua:
   realm: shared
   description: "Get the player's Steam ID."
   
-  
+  arguments:
+  - position: 1
+    name: "player"
+    type: Player
   returns:
     - type: string
       description: "The player's Steam ID."

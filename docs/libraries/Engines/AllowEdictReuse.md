@@ -13,6 +13,7 @@ lua:
   realm: server
   description: "Allow immediate edict reuse."
   
+  arguments:
   
   returns:
     

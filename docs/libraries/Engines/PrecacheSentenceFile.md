@@ -14,11 +14,13 @@ lua:
   description: "Precache a sentence file."
   
   arguments:
-    - name: "sentenceFileName"
-      type: string
-    - name: "preload"
-      type: boolean
-      default: "false"
+  - position: 1
+    name: "sentenceFileName"
+    type: string
+  - position: 2
+    name: "preload"
+    type: boolean
+    default: "false"
   returns:
     - type: integer
       description: "The sentence file index."

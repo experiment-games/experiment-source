@@ -13,7 +13,10 @@ lua:
   realm: shared
   description: "Is BSP model."
   
-  
+  arguments:
+  - position: 1
+    name: "entity"
+    type: Entity
   returns:
     - type: boolean
       description: "True if BSP model, false otherwise."

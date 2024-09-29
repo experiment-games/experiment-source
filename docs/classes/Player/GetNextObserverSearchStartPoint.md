@@ -14,8 +14,12 @@ lua:
   description: "Get the next observer search start point for the player."
   
   arguments:
-    - name: "reverse"
-      type: boolean
+  - position: 1
+    name: "player"
+    type: Player
+  - position: 2
+    name: "reverse"
+    type: boolean
   returns:
     - type: integer
       description: "The next observer search start point."

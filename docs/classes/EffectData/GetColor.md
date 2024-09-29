@@ -13,7 +13,10 @@ lua:
   realm: shared
   description: "Get the byte described as the color of the effect."
   
-  
+  arguments:
+  - position: 1
+    name: "effectData"
+    type: EffectData
   returns:
     - type: integer
       description: "Color"

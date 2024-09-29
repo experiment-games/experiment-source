@@ -13,6 +13,7 @@ lua:
   realm: shared
   description: "Get gravity vector."
   
+  arguments:
   
   returns:
     - type: Vector

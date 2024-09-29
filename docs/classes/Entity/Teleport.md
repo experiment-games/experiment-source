@@ -14,12 +14,18 @@ lua:
   description: "Teleport."
   
   arguments:
-    - name: "newPosition"
-      type: Vector
-    - name: "newAngles"
-      type: Angle
-    - name: "newVelocity"
-      type: Vector
+  - position: 1
+    name: "entity"
+    type: Entity
+  - position: 2
+    name: "newPosition"
+    type: Vector
+  - position: 3
+    name: "newAngles"
+    type: Angle
+  - position: 4
+    name: "newVelocity"
+    type: Vector
   returns:
     
 ---

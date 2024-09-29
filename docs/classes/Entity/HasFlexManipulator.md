@@ -13,7 +13,10 @@ lua:
   realm: shared
   description: "Check if the entity has flex manipulator."
   
-  
+  arguments:
+  - position: 1
+    name: "entity"
+    type: Entity
   returns:
     - type: boolean
       description: "True if the entity has flex manipulator."

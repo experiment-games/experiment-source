@@ -14,8 +14,12 @@ lua:
   description: "Converts world position to local position"
   
   arguments:
-    - name: "worldPosition"
-      type: Vector
+  - position: 1
+    name: "physicsObject"
+    type: PhysicsObject
+  - position: 2
+    name: "worldPosition"
+    type: Vector
   returns:
     - type: Vector
       description: "The local position."

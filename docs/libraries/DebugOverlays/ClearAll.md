@@ -13,6 +13,7 @@ lua:
   realm: shared
   description: "Clear all overlays."
   
+  arguments:
   
   returns:
     

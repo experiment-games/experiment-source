@@ -13,7 +13,10 @@ lua:
   realm: shared
   description: "Gets the move angles"
   
-  
+  arguments:
+  - position: 1
+    name: "moveData"
+    type: MoveData
   returns:
     - type: Angle
       description: "The move angles"

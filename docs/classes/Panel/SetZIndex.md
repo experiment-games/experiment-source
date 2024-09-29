@@ -14,8 +14,12 @@ lua:
   description: "Sets the z position"
   
   arguments:
-    - name: "zPos"
-      type: number
+  - position: 1
+    name: "panel"
+    type: Panel
+  - position: 2
+    name: "zPos"
+    type: number
   returns:
     
 ---

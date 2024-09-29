@@ -14,8 +14,12 @@ lua:
   description: "Sets the button as the current default button"
   
   arguments:
-    - name: "state"
-      type: number
+  - position: 1
+    name: "button"
+    type: Button
+  - position: 2
+    name: "state"
+    type: number
   returns:
     
 ---

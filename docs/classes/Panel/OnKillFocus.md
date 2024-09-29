@@ -13,7 +13,10 @@ lua:
   realm: client
   description: "Handles the focus being killed"
   
-  
+  arguments:
+  - position: 1
+    name: "panel"
+    type: Panel
   returns:
     
 ---

@@ -14,10 +14,12 @@ lua:
   description: "Check if spew output is active."
   
   arguments:
-    - name: "groupName"
-      type: string
-    - name: "level"
-      type: number
+  - position: 1
+    name: "groupName"
+    type: string
+  - position: 2
+    name: "level"
+    type: number
   returns:
     - type: boolean
       description: "True if spew output is active, false otherwise."

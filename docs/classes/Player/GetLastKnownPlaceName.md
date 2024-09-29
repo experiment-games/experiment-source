@@ -13,7 +13,10 @@ lua:
   realm: shared
   description: "Get the player's last known place name."
   
-  
+  arguments:
+  - position: 1
+    name: "player"
+    type: Player
   returns:
     - type: string
       description: "The player's last known place name."

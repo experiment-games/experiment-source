@@ -14,15 +14,19 @@ lua:
   description: "Punches the view of all clients within radius. If radius is 0, punches all clients.."
   
   arguments:
-    - name: "origin"
-      type: Vector
-    - name: "angle"
-      type: Angle
-    - name: "radius"
-      type: number
-    - name: "shouldPunchPlayersInAir"
-      type: boolean
-      default: "false"
+  - position: 1
+    name: "origin"
+    type: Vector
+  - position: 2
+    name: "angle"
+    type: Angle
+  - position: 3
+    name: "radius"
+    type: number
+  - position: 4
+    name: "shouldPunchPlayersInAir"
+    type: boolean
+    default: "false"
   returns:
     
 ---

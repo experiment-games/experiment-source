@@ -14,10 +14,12 @@ lua:
   description: "Gets the character ABC width"
   
   arguments:
-    - name: "font"
-      type: FontHandle
-    - name: "character"
-      type: number
+  - position: 1
+    name: "font"
+    type: FontHandle
+  - position: 2
+    name: "character"
+    type: number
   returns:
     - type: integer
       description: "The A value"

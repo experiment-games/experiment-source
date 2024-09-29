@@ -14,10 +14,12 @@ lua:
   description: "Look up a key binding."
   
   arguments:
-    - name: "keyName"
-      type: string
-    - name: "exactMatch"
-      type: boolean
+  - position: 1
+    name: "keyName"
+    type: string
+  - position: 2
+    name: "exactMatch"
+    type: boolean
   returns:
     - type: string
       description: "The key binding."

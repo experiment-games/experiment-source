@@ -13,6 +13,7 @@ lua:
   realm: shared
   description: "Get air density."
   
+  arguments:
   
   returns:
     - type: number

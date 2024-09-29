@@ -14,18 +14,27 @@ lua:
   description: "Fills a rectangle on the panel, skipping a panel"
   
   arguments:
-    - name: "color"
-      type: Color
-    - name: "x"
-      type: number
-    - name: "y"
-      type: number
-    - name: "width"
-      type: number
-    - name: "height"
-      type: number
-    - name: "panelToSkip"
-      type: Panel
+  - position: 1
+    name: "panel"
+    type: Panel
+  - position: 2
+    name: "color"
+    type: Color
+  - position: 3
+    name: "x"
+    type: number
+  - position: 4
+    name: "y"
+    type: number
+  - position: 5
+    name: "width"
+    type: number
+  - position: 6
+    name: "height"
+    type: number
+  - position: 7
+    name: "panelToSkip"
+    type: Panel
   returns:
     
 ---

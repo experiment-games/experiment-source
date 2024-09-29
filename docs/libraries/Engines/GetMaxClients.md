@@ -13,6 +13,7 @@ lua:
   realm: shared
   description: "Get the maximum number of clients."
   
+  arguments:
   
   returns:
     - type: integer

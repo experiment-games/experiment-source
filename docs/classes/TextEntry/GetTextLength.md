@@ -13,7 +13,10 @@ lua:
   realm: client
   description: "Gets the length of the text in the text entry"
   
-  
+  arguments:
+  - position: 1
+    name: "textEntry"
+    type: TextEntry
   returns:
     - type: integer
       description: "The length of the text"

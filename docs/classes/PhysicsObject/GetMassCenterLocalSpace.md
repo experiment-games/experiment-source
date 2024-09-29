@@ -13,7 +13,10 @@ lua:
   realm: shared
   description: "Gets mass center in local space"
   
-  
+  arguments:
+  - position: 1
+    name: "physicsObject"
+    type: PhysicsObject
   returns:
     - type: Vector
       description: "The mass center in local space."

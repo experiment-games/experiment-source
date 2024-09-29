@@ -13,7 +13,10 @@ lua:
   realm: shared
   description: "Normalizes the vector in place."
   
-  
+  arguments:
+  - position: 1
+    name: "vector"
+    type: Vector
   returns:
     - type: number
       description: "The length of the vector before normalization."

@@ -14,9 +14,13 @@ lua:
   description: "Draw model."
   
   arguments:
-    - name: "flags"
-      type: number
-      default: "STUDIO_RENDER"
+  - position: 1
+    name: "entity"
+    type: Entity
+  - position: 2
+    name: "flags"
+    type: number
+    default: "STUDIO_RENDER"
   returns:
     - type: integer
       description: "Draw model result."

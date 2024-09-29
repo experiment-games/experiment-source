@@ -13,6 +13,7 @@ lua:
   realm: server
   description: "Generate a random blood vector."
   
+  arguments:
   
   returns:
     - type: Vector

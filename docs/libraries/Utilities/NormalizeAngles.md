@@ -14,8 +14,9 @@ lua:
   description: "Normalize angles provided"
   
   arguments:
-    - name: "angles"
-      type: Angle
+  - position: 1
+    name: "angles"
+    type: Angle
   returns:
     
 ---

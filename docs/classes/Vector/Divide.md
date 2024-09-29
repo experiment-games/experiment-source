@@ -14,8 +14,12 @@ lua:
   description: "Modify the existing vector, dividing it by a number."
   
   arguments:
-    - name: "divideBy"
-      type: number
+  - position: 1
+    name: "vector"
+    type: Vector
+  - position: 2
+    name: "divideBy"
+    type: number
   returns:
     
 ---

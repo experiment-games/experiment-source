@@ -13,7 +13,13 @@ lua:
   realm: client
   description: "Sets the dock"
   
-  
+  arguments:
+  - position: 1
+    name: "panel"
+    type: Panel
+  - position: 2
+    name: "dock"
+    type: enumeration/DOCK_TYPE
   returns:
     
 ---

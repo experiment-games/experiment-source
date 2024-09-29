@@ -14,8 +14,12 @@ lua:
   description: "Post constructor."
   
   arguments:
-    - name: "className"
-      type: string
+  - position: 1
+    name: "entity"
+    type: Entity
+  - position: 2
+    name: "className"
+    type: string
   returns:
     
 ---

@@ -14,8 +14,12 @@ lua:
   description: "Sets the parent"
   
   arguments:
-    - name: "parent"
-      type: Panel
+  - position: 1
+    name: "panel"
+    type: Panel
+  - position: 2
+    name: "parent"
+    type: Panel
   returns:
     
 ---

@@ -13,7 +13,10 @@ lua:
   realm: shared
   description: "Get the weapon slot position in the selection screen."
   
-  
+  arguments:
+  - position: 1
+    name: "entity"
+    type: Weapon
   returns:
     - type: integer
       description: "Position in the selection screen."

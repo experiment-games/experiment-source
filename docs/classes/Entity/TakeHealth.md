@@ -14,10 +14,15 @@ lua:
   description: "Take health."
   
   arguments:
-    - name: "health"
-      type: number
-    - name: "bitsDamageType"
-      type: number
+  - position: 1
+    name: "entity"
+    type: Entity
+  - position: 2
+    name: "health"
+    type: number
+  - position: 3
+    name: "bitsDamageType"
+    type: number
   returns:
     - type: integer
       description: "The health actually taken"

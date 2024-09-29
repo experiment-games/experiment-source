@@ -14,14 +14,21 @@ lua:
   description: "Fire an event."
   
   arguments:
-    - name: "origin"
-      type: Vector
-    - name: "angles"
-      type: Angle
-    - name: "event"
-      type: number
-    - name: "options"
-      type: string
+  - position: 1
+    name: "entity"
+    type: Entity
+  - position: 2
+    name: "origin"
+    type: Vector
+  - position: 3
+    name: "angles"
+    type: Angle
+  - position: 4
+    name: "event"
+    type: number
+  - position: 5
+    name: "options"
+    type: string
   returns:
     
 ---

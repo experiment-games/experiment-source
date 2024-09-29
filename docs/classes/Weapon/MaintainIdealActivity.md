@@ -13,7 +13,10 @@ lua:
   realm: shared
   description: "Maintain ideal activity."
   
-  
+  arguments:
+  - position: 1
+    name: "entity"
+    type: Weapon
   returns:
     
 ---

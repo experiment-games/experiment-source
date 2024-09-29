@@ -14,8 +14,12 @@ lua:
   description: "Sets the buoyancy ratio"
   
   arguments:
-    - name: "ratio"
-      type: number
+  - position: 1
+    name: "physicsObject"
+    type: PhysicsObject
+  - position: 2
+    name: "ratio"
+    type: number
   returns:
     
 ---

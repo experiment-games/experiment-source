@@ -14,8 +14,12 @@ lua:
   description: "Check if two keyvalues are equal."
   
   arguments:
-    - name: "keyValues"
-      type: KeyValuesHandle
+  - position: 1
+    name: "keyValues"
+    type: KeyValuesHandle
+  - position: 2
+    name: "other"
+    type: KeyValuesHandle
   returns:
     - type: boolean
       description: "true if the keyvalues are equal, false otherwise."

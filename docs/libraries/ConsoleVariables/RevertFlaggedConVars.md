@@ -14,8 +14,9 @@ lua:
   description: "Revert flagged console variables."
   
   arguments:
-    - name: "flag"
-      type: number
+  - position: 1
+    name: "flag"
+    type: number
   returns:
     
 ---

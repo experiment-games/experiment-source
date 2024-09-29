@@ -14,10 +14,15 @@ lua:
   description: "Gets an integer value from a control"
   
   arguments:
-    - name: "control"
-      type: string
-    - name: "default"
-      type: number
+  - position: 1
+    name: "editablePanel"
+    type: EditablePanel
+  - position: 2
+    name: "control"
+    type: string
+  - position: 3
+    name: "default"
+    type: number
   returns:
     - type: integer
       description: "The control integer value"

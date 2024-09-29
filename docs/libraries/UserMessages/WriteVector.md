@@ -14,8 +14,9 @@ lua:
   description: "Writes a vector."
   
   arguments:
-    - name: "vector"
-      type: Vector
+  - position: 1
+    name: "vector"
+    type: Vector
   returns:
     
 ---

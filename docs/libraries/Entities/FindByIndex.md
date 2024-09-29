@@ -14,8 +14,9 @@ lua:
   description: "Gets an entity by its index. Might be the same as FindByEdictNumber?"
   
   arguments:
-    - name: "index"
-      type: number
+  - position: 1
+    name: "index"
+    type: number
   returns:
     - type: Entity
       description: "The entity found, or NULL if not found."

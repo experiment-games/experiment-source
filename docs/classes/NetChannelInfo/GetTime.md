@@ -13,7 +13,10 @@ lua:
   realm: server
   description: "Returns the time."
   
-  
+  arguments:
+  - position: 1
+    name: "netChannel"
+    type: NetChannelInfo
   returns:
     - type: number
       description: "The time."

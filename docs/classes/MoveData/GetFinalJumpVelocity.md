@@ -13,7 +13,10 @@ lua:
   realm: shared
   description: "Gets the final jump velocity"
   
-  
+  arguments:
+  - position: 1
+    name: "moveData"
+    type: MoveData
   returns:
     - type: Vector
       description: "The final jump velocity"

@@ -13,6 +13,7 @@ lua:
   realm: client
   description: "Get the panel that currently has mouse capture."
   
+  arguments:
   
   returns:
     - type: PanelHandle

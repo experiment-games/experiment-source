@@ -14,8 +14,9 @@ lua:
   description: "Notify of an edict flags change."
   
   arguments:
-    - name: "flags"
-      type: number
+  - position: 1
+    name: "flags"
+    type: number
   returns:
     
 ---

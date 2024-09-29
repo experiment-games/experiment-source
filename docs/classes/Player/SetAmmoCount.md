@@ -14,10 +14,15 @@ lua:
   description: "Set the player's ammo count."
   
   arguments:
-    - name: "amount"
-      type: number
-    - name: "ammo type"
-      type: number
+  - position: 1
+    name: "player"
+    type: Player
+  - position: 2
+    name: "amount"
+    type: number
+  - position: 3
+    name: "ammo type"
+    type: number
   returns:
     
 ---

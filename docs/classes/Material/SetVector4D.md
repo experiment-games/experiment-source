@@ -14,16 +14,24 @@ lua:
   description: "Set vector 4D."
   
   arguments:
-    - name: "varName"
-      type: string
-    - name: "x"
-      type: number
-    - name: "y"
-      type: number
-    - name: "z"
-      type: number
-    - name: "w"
-      type: number
+  - position: 1
+    name: "material"
+    type: Material
+  - position: 2
+    name: "varName"
+    type: string
+  - position: 3
+    name: "x"
+    type: number
+  - position: 4
+    name: "y"
+    type: number
+  - position: 5
+    name: "z"
+    type: number
+  - position: 6
+    name: "w"
+    type: number
   returns:
     
 ---

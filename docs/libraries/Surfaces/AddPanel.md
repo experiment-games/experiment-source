@@ -14,8 +14,9 @@ lua:
   description: "Adds a panel to the surface."
   
   arguments:
-    - name: "panel"
-      type: Panel
+  - position: 1
+    name: "panel"
+    type: Panel
   returns:
     
 ---

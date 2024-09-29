@@ -14,8 +14,12 @@ lua:
   description: "Set the normalized direction vector of the effect."
   
   arguments:
-    - name: "normal"
-      type: Vector
+  - position: 1
+    name: "effectData"
+    type: EffectData
+  - position: 2
+    name: "normal"
+    type: Vector
   returns:
     
 ---

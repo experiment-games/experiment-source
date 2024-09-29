@@ -13,7 +13,10 @@ lua:
   realm: server
   description: "Get friction."
   
-  
+  arguments:
+  - position: 1
+    name: "entity"
+    type: Entity
   returns:
     - type: number
       description: "The friction"
