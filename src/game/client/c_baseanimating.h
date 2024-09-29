@@ -868,6 +868,8 @@ inline float C_BaseAnimating::GetCycle() const
 
 inline CStudioHdr *C_BaseAnimating::GetModelPtr() const
 {
+    MDLCACHE_CRITICAL_SECTION();
+
     if ( IsDynamicModelLoading() )
         return NULL;
 

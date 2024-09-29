@@ -37,6 +37,7 @@
 #include <networksystem/inetworkgrouphandler.h>
 #include <networksystem/networkserver.h>
 #include "tier2/tier2.h"
+#include <util/lwebconnections.h>
 
 #ifdef _WIN32
 #include <winlite.h>
@@ -1408,6 +1409,7 @@ void luasrc_shutdown( void )
     Msg( "Lua shutdown - Server\n" );
 #endif
 
+    g_pLuaWebConnectionManager->PurgeAllRequests();
     ShutdownLuaGameEventHandler( L );
 
     luasrc_UnloadLoadedModules( L );

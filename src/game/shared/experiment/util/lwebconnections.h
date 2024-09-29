@@ -91,6 +91,12 @@ class CLuaWebConnectionManager
         return nullptr;
     }
 
+    // Call this before closing the Lua state
+    void PurgeAllRequests()
+    {
+        m_WebConnectionsMap.PurgeAndDeleteElements();
+    }
+
     STEAM_CALLBACK( CLuaWebConnectionManager, OnHTTPHeader, HTTPRequestHeadersReceived_t );
     STEAM_CALLBACK( CLuaWebConnectionManager, OnHTTPData, HTTPRequestDataReceived_t );
     void OnHTTPComplete( HTTPRequestCompleted_t *pParam, bool bIO );
