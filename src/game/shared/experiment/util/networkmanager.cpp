@@ -34,6 +34,10 @@ void CNetworkManager::FireGameEvent( IGameEvent *event )
     {
         int serverPort = event->GetInt( "port" );
 
+        // Experiment; TODO:    Since we're using the same port as the game server, we're causing a bug
+        //                      where the game server things its out of date and says that in the console...
+        //                      We should really figure out how to use the SDK integrated messaging over UDP
+        //                      with the datagrams.
         if ( !g_pNetworkManager->StartServer( serverPort ) )
         {
             Assert( 0 );  // Does this ever happen?
