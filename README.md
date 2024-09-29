@@ -2,15 +2,14 @@
 
 Initially this repository mainly worked towards creating a Source Engine mod
 called "Experiment". It is a multiplayer mod that is based on the Source SDK 2013.
-
 &raquo; [🕹 Read more about Experiment in the Garry's Mod gamemode repository](https://github.com/luttje/experiment-redux)
 
-An alternative idea that arose during development is that Experiment could be
-used as a platform for creating Source Engine mods. This would allow developers
-to create their own mods based on the Source SDK 2013, but with Lua scripting
-support and other features that are not present in the original SDK.
-
-&raquo; [💡 Read more about Experiment as a platform in the Developer Portal](https://luttje.github.io/experiment-source/general/)
+However an alternative idea that arose during development is that Experiment could
+be used as a platform for creating Source Engine mods. This would allow developers
+to create their own mods based on the Source SDK 2013, but without writing C++.
+Instead mods could be created with Lua scripting and other features not present
+in the original Source Engine SDK.
+&raquo; [💡 Read more about Experiment as a platform in the Developer Portal](https://luttje.github.io/experiment-source)
 
 <div align="middle">
 
