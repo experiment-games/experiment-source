@@ -36,34 +36,35 @@ static CUtlDict< CEntityFactory< CBaseScripted > *, unsigned short >
     m_EntityFactoryDatabase;
 #endif
 
-void RegisterScriptedEntity( const char *className )
-{
-#ifdef CLIENT_DLL
-    if ( GetClassMap().FindFactory( className ) )
-    {
-        return;
-    }
-
-    GetClassMap().Add( className, "CBaseScripted", sizeof( CBaseScripted ), &CCBaseScriptedFactory, true );
-#else
-    if ( EntityFactoryDictionary()->FindFactory( className ) )
-    {
-        return;
-    }
-
-    unsigned short lookup = m_EntityFactoryDatabase.Find( className );
-    if ( lookup != m_EntityFactoryDatabase.InvalidIndex() )
-    {
-        return;
-    }
-
-    CEntityFactory< CBaseScripted > *pFactory =
-        new CEntityFactory< CBaseScripted >( className );
-
-    lookup = m_EntityFactoryDatabase.Insert( className, pFactory );
-    Assert( lookup != m_EntityFactoryDatabase.InvalidIndex() );
-#endif
-}
+// Experiment; Commented to instead go ask Lua when we encounter a non-C-registered entities.
+// void RegisterScriptedEntity( const char *className )
+//{
+// #ifdef CLIENT_DLL
+//    if ( GetClassMap().FindFactory( className ) )
+//    {
+//        return;
+//    }
+//
+//    GetClassMap().Add( className, "CBaseScripted", sizeof( CBaseScripted ), &CCBaseScriptedFactory, true );
+// #else
+//    if ( EntityFactoryDictionary()->FindFactory( className ) )
+//    {
+//        return;
+//    }
+//
+//    unsigned short lookup = m_EntityFactoryDatabase.Find( className );
+//    if ( lookup != m_EntityFactoryDatabase.InvalidIndex() )
+//    {
+//        return;
+//    }
+//
+//    CEntityFactory< CBaseScripted > *pFactory =
+//        new CEntityFactory< CBaseScripted >( className );
+//
+//    lookup = m_EntityFactoryDatabase.Insert( className, pFactory );
+//    Assert( lookup != m_EntityFactoryDatabase.InvalidIndex() );
+// #endif
+//}
 
 void ResetEntityFactoryDatabase( void )
 {
@@ -111,6 +112,8 @@ void CBaseScripted::LoadScriptedEntity( void )
             lua_remove( L, -2 );
             lua_pushstring( L, GetClassname() );
             luasrc_pcall( L, 1, 1 );
+
+            Assert( lua_istable( L, -1 ) );  // The entity should exist, since we just created it
         }
         else
         {

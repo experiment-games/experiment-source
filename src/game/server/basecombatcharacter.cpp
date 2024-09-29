@@ -2286,7 +2286,13 @@ bool CBaseCombatCharacter::Weapon_CanUse( CBaseCombatWeapon *pWeapon )
 //-----------------------------------------------------------------------------
 CBaseCombatWeapon *CBaseCombatCharacter::Weapon_Create( const char *pWeaponName )
 {
+#ifdef LUA_SDK
+    LUA_EXPECTED_SCRIPTED_LIBRARY_BEGIN( LUA_SCRIPTEDWEAPONSLIBNAME );
+#endif
     CBaseCombatWeapon *pWeapon = static_cast< CBaseCombatWeapon * >( Create( pWeaponName, GetLocalOrigin(), GetLocalAngles(), this ) );
+#ifdef LUA_SDK
+    LUA_EXPECTED_SCRIPTED_LIBRARY_END( LUA_SCRIPTEDWEAPONSLIBNAME );
+#endif
 
     return pWeapon;
 }

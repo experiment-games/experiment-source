@@ -64,7 +64,7 @@ function MODULE.IsBasedOn(className, potentialBaseClassName)
 	return false
 end
 
---- Registers a weapon.
+--- Registers a weapon, will not overwrite existing weapons unless isReloading is true.
 --- @param weaponTable table
 --- @param className string
 --- @param isReloading boolean

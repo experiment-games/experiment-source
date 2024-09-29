@@ -1849,8 +1849,8 @@ hook.Add("Initialize", "GModCompatibility.CallInitializeHooks", function()
 	end
 	scripted_ents.OnLoaded()
 
-	local ScriptedWeapons = ScriptedWeapons.GetList()
-	for className, scriptedWeapon in pairs(ScriptedWeapons) do
+	local scriptedWeapons = ScriptedWeapons.GetList()
+    for className, scriptedWeapon in pairs(scriptedWeapons) do
 		weapons.Register(scriptedWeapon, className)
 	end
 	weapons.OnLoaded()
@@ -1859,6 +1859,14 @@ hook.Add("Initialize", "GModCompatibility.CallInitializeHooks", function()
 	hook.Run("PreGamemodeLoaded")
 	hook.Run("OnGamemodeLoaded")
 	hook.Run("PostGamemodeLoaded")
+end)
+
+-- Also register gmod weapons and entities in our system
+hook.Add("PreRegisterSWEP", "GModCompatibility.RegisterSWEP", function(weaponTable, className)
+	ScriptedWeapons.Register(weaponTable, className)
+end)
+hook.Add("PreRegisterSENT", "GModCompatibility.RegisterSENT", function(entityTable, className)
+	ScriptedEntities.Register(entityTable, className)
 end)
 
 hook.Add("PreEntityInitialize", "GModCompatibility.CallSetupDataTables", function(entity)

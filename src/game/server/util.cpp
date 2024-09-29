@@ -36,6 +36,8 @@
 #include "datacache/imdlcache.h"
 #include "util.h"
 #include "cdll_int.h"
+#include <basescripted.h>
+#include <weapon_experimentbase_scriptedweapon.h>
 
 #ifdef PORTAL
 #include "PortalSimulation.h"
@@ -170,16 +172,58 @@ void CEntityFactoryDictionary::RemoveFactory( IEntityFactory *pFactory,
 IServerNetworkable *CEntityFactoryDictionary::Create( const char *pClassName )
 {
     IEntityFactory *pFactory = FindFactory( pClassName );
+
     if ( !pFactory )
     {
+#ifdef LUA_SDK
+        // Experiment; instead of the RegisterScriptedEntity/RegisterScriptedTrigger/RegisterScriptedWeapon we had before, we'll just ask Lua for the entity right now.
+        if ( L )
+        {
+            AssertMsg( g_szLuaExpectedScriptedLibrary != nullptr, "Expected a Lua factory library name to be set!" );
+            lua_getglobal( L, g_szLuaExpectedScriptedLibrary );
+            Assert( lua_istable( L, -1 ) );  // ScriptedEntities table must exist
+
+            lua_getfield( L, -1, "Get" );
+            Assert( lua_isfunction( L, -1 ) );  // ScriptedEntities.Get must be a function
+
+            lua_pushstring( L, pClassName );
+
+            if ( luasrc_pcall( L, 1, 1 ) == LUA_OK )
+            {
+                if ( lua_istable( L, -1 ) )
+                {
+                    // Experiment:
+                    // We have a table registered, create and return the scripted entity
+                    if ( Q_strcmp( g_szLuaExpectedScriptedLibrary, LUA_SCRIPTEDENTITIESLIBNAME ) == 0 )
+                    {
+                        CBaseScripted *pEnt = _CreateEntityTemplate( ( CBaseScripted * )NULL, pClassName );
+                        // TODO: CBaseScripted should probably get the same treatment that the scripted weapons got (with regards to setting up the reftable)
+                        return pEnt->NetworkProp();
+                    }
+                    else if ( Q_strcmp( g_szLuaExpectedScriptedLibrary, LUA_SCRIPTEDWEAPONSLIBNAME ) == 0 )
+                    {
+                        CExperimentScriptedWeapon *pEnt = _CreateEntityTemplate( ( CExperimentScriptedWeapon * )NULL, pClassName );
+                        return pEnt->NetworkProp();
+                    }
+                    else
+                    {
+                        Assert( !"Unknown Lua factory library name!" );
+                    }
+                }
+            }
+        }
+#endif
+
 #ifdef STAGING_ONLY
         static ConVarRef tf_bot_use_items( "tf_bot_use_items" );
         if ( tf_bot_use_items.IsValid() && tf_bot_use_items.GetInt() )
             return NULL;
 #endif
         Warning( "Attempted to create unknown entity type %s!\n", pClassName );
+
         return NULL;
     }
+
 #if defined( TRACK_ENTITY_MEMORY ) && defined( USE_MEM_DEBUG )
     MEM_ALLOC_CREDIT_( m_Factories.GetElementName( m_Factories.Find( pClassName ) ) );
 #endif

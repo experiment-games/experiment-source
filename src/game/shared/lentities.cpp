@@ -32,7 +32,10 @@ LUA_BINDING_END( "Entity", "The found entity or NULL entity" )
 LUA_BINDING_BEGIN( Entities, CreateByName, "library", "Creates an entity by the given class name", "server" )
 {
     const char *pszClassName = LUA_BINDING_ARGUMENT( luaL_checkstring, 1, "className" );
+
+    LUA_EXPECTED_SCRIPTED_LIBRARY_BEGIN( LUA_SCRIPTEDENTITIESLIBNAME );
     CBaseEntity *pEntity = CreateEntityByName( pszClassName );
+    LUA_EXPECTED_SCRIPTED_LIBRARY_END( LUA_SCRIPTEDENTITIESLIBNAME );
 
     if ( dynamic_cast< CBaseScripted * >( pEntity ) != NULL )
         DispatchSpawn( pEntity );

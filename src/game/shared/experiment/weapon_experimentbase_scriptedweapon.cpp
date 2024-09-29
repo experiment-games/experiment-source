@@ -60,39 +60,45 @@ static CUtlDict< CEntityFactory< CExperimentScriptedWeapon > *, unsigned short >
     m_WeaponFactoryDatabase;
 #endif
 
-void RegisterScriptedWeapon( const char *className )
-{
-#ifdef CLIENT_DLL
-    if ( GetClassMap().FindFactory( className ) )
-    {
-        return;
-    }
-
-    GetClassMap().Add( className, "CExperimentScriptedWeapon", sizeof( CExperimentScriptedWeapon ), &CCExperimentScriptedWeaponFactory, true );
-#else
-    if ( EntityFactoryDictionary()->FindFactory( className ) )
-    {
-        return;
-    }
-
-    unsigned short lookup = m_WeaponFactoryDatabase.Find( className );
-    if ( lookup != m_WeaponFactoryDatabase.InvalidIndex() )
-    {
-        return;
-    }
-
-    // Andrew; This fixes months worth of pain and anguish.
-    CEntityFactory< CExperimentScriptedWeapon > *pFactory =
-        new CEntityFactory< CExperimentScriptedWeapon >( className );
-
-    lookup = m_WeaponFactoryDatabase.Insert( className, pFactory );
-    Assert( lookup != m_WeaponFactoryDatabase.InvalidIndex() );
-#endif
-    // BUGBUG: When attempting to precache weapons registered during runtime,
-    // they don't appear as valid registered entities.
-    // static CPrecacheRegister
-    // precache_weapon_(&CPrecacheRegister::PrecacheFn_Other, className);
-}
+// Experiment; Commented to instead go ask Lua when we encounter a non-C-registered weapon
+//void RegisterScriptedWeapon( const char *className )
+//{
+//    if (Q_strcmp(className, "exp_keys") == 0)
+//    {
+//        Warning("breakpoint!\n");
+//    }
+//
+//#ifdef CLIENT_DLL
+//    if ( GetClassMap().FindFactory( className ) )
+//    {
+//        return;
+//    }
+//
+//    GetClassMap().Add( className, "CExperimentScriptedWeapon", sizeof( CExperimentScriptedWeapon ), &CCExperimentScriptedWeaponFactory, true );
+//#else
+//    if ( EntityFactoryDictionary()->FindFactory( className ) )
+//    {
+//        return;
+//    }
+//
+//    unsigned short lookup = m_WeaponFactoryDatabase.Find( className );
+//    if ( lookup != m_WeaponFactoryDatabase.InvalidIndex() )
+//    {
+//        return;
+//    }
+//
+//    // Andrew; This fixes months worth of pain and anguish.
+//    CEntityFactory< CExperimentScriptedWeapon > *pFactory =
+//        new CEntityFactory< CExperimentScriptedWeapon >( className );
+//
+//    lookup = m_WeaponFactoryDatabase.Insert( className, pFactory );
+//    Assert( lookup != m_WeaponFactoryDatabase.InvalidIndex() );
+//#endif
+//    // BUGBUG: When attempting to precache weapons registered during runtime,
+//    // they don't appear as valid registered entities.
+//    // static CPrecacheRegister
+//    // precache_weapon_(&CPrecacheRegister::PrecacheFn_Other, className);
+//}
 
 void ResetWeaponFactoryDatabase( void )
 {

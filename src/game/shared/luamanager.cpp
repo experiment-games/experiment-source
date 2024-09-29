@@ -438,29 +438,30 @@ static void luasrc_LoadEntityFromFile( char *fullPath, char *className )
                 lua_getglobal( L, "ENT" );
                 lua_pushstring( L, className );
                 luasrc_pcall( L, 2, 0 );
-                lua_getglobal( L, "ENT" );
-                if ( lua_istable( L, -1 ) )
-                {
-                    lua_getfield( L, -1, "Factory" );
-                    if ( lua_isstring( L, -1 ) )
-                    {
-                        const char *pszClassname =
-                            lua_tostring( L, -1 );
-                        if ( Q_strcmp( pszClassname,
-                                       "CBaseAnimating" ) == 0 )
-                            RegisterScriptedEntity( className );
-#ifndef CLIENT_DLL
-                        else if ( Q_strcmp( pszClassname,
-                                            "CBaseTrigger" ) == 0 )
-                            RegisterScriptedTrigger( className );
-#endif
-                    }
-                    lua_pop( L, 2 );
-                }
-                else
-                {
-                    lua_pop( L, 1 );
-                }
+                // Experiment; Commented to instead go ask Lua when we encounter a non-C-registered entities.
+//                lua_getglobal( L, "ENT" );
+//                if ( lua_istable( L, -1 ) )
+//                {
+//                    lua_getfield( L, -1, "Factory" );
+//                    if ( lua_isstring( L, -1 ) )
+//                    {
+//                        const char *pszClassname =
+//                            lua_tostring( L, -1 );
+//                        if ( Q_strcmp( pszClassname,
+//                                       "CBaseAnimating" ) == 0 )
+//                            RegisterScriptedEntity( className );
+//#ifndef CLIENT_DLL
+//                        else if ( Q_strcmp( pszClassname,
+//                                            "CBaseTrigger" ) == 0 )
+//                            RegisterScriptedTrigger( className );
+//#endif
+//                    }
+//                    lua_pop( L, 2 );
+//                }
+//                else
+//                {
+//                    lua_pop( L, 1 );
+//                }
             }
             else
             {
@@ -719,7 +720,7 @@ static void luasrc_LoadWeaponFromFile( char *fullPath, char *className )
                 lua_getglobal( L, "SWEP" );
                 lua_pushstring( L, className );
                 luasrc_pcall( L, 2, 0 );
-                RegisterScriptedWeapon( className );
+                // RegisterScriptedWeapon( className );
             }
             else
             {

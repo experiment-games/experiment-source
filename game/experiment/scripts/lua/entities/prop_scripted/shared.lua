@@ -6,7 +6,7 @@
 --]]
 
 ENT.Base = "prop_scripted"
-ENT.Factory = "CBaseAnimating"
+-- ENT.Factory = "CBaseAnimating" -- Experiment: No longer implemented
 
 function ENT:Initialize()
 end

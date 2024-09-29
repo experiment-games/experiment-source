@@ -138,7 +138,7 @@ class CExperimentScriptedWeapon : public CBaseExperimentCombatWeapon
     CNetworkString( m_iScriptedClassname, MAX_WEAPON_STRING );
 };
 
-void RegisterScriptedWeapon( const char *szClassname );
+//void RegisterScriptedWeapon( const char *szClassname );
 void ResetWeaponFactoryDatabase( void );
 
 #endif  // BASEHLCOMBATWEAPON_H

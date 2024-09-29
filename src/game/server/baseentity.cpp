@@ -3758,6 +3758,8 @@ void CBaseEntity::SetPreventTransmit( CBasePlayer *filter, bool bPreventTransmit
         m_rfPreventTransmitEntities = new CRecipientFilter();
     }
 
+    Assert( filter );
+
     if ( bPreventTransmitting )
     {
         m_rfPreventTransmitEntities->AddRecipient( filter );

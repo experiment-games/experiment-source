@@ -66,7 +66,7 @@ class CBaseScripted : /* public CBaseEntity */ public CBaseAnimating
     CNetworkString( m_iScriptedClassname, 255 );
 };
 
-void RegisterScriptedEntity( const char *szClassname );
+//void RegisterScriptedEntity( const char *szClassname );
 void ResetEntityFactoryDatabase( void );
 
 #endif

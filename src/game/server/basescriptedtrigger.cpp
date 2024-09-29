@@ -48,25 +48,26 @@ DEFINE_KEYFIELD( m_iFilterName, FIELD_STRING, "filtername" ),
         static CUtlDict< CEntityFactory< CBaseScriptedTrigger > *,
                          unsigned short > m_TriggerFactoryDatabase;
 
-void RegisterScriptedTrigger( const char *className )
-{
-    if ( EntityFactoryDictionary()->FindFactory( className ) )
-    {
-        return;
-    }
-
-    unsigned short lookup = m_TriggerFactoryDatabase.Find( className );
-    if ( lookup != m_TriggerFactoryDatabase.InvalidIndex() )
-    {
-        return;
-    }
-
-    CEntityFactory< CBaseScriptedTrigger > *pFactory =
-        new CEntityFactory< CBaseScriptedTrigger >( className );
-
-    lookup = m_TriggerFactoryDatabase.Insert( className, pFactory );
-    Assert( lookup != m_TriggerFactoryDatabase.InvalidIndex() );
-}
+// Experiment; Commented to instead go ask Lua when we encounter a non-C-registered entities.
+//void RegisterScriptedTrigger( const char *className )
+//{
+//    if ( EntityFactoryDictionary()->FindFactory( className ) )
+//    {
+//        return;
+//    }
+//
+//    unsigned short lookup = m_TriggerFactoryDatabase.Find( className );
+//    if ( lookup != m_TriggerFactoryDatabase.InvalidIndex() )
+//    {
+//        return;
+//    }
+//
+//    CEntityFactory< CBaseScriptedTrigger > *pFactory =
+//        new CEntityFactory< CBaseScriptedTrigger >( className );
+//
+//    lookup = m_TriggerFactoryDatabase.Insert( className, pFactory );
+//    Assert( lookup != m_TriggerFactoryDatabase.InvalidIndex() );
+//}
 
 void ResetTriggerFactoryDatabase( void )
 {
@@ -105,6 +106,8 @@ void CBaseScriptedTrigger::LoadScriptedTrigger( void )
             lua_remove( L, -2 );
             lua_pushstring( L, GetClassname() );
             luasrc_pcall( L, 1, 1 );
+
+            Assert( lua_istable( L, -1 ) );  // The entity should exist, since we just created it
         }
         else
         {

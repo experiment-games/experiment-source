@@ -6,7 +6,7 @@
 --]]
 
 ENT.Base = "trigger_scripted"
-ENT.Factory = "CBaseTrigger"
+-- ENT.Factory = "CBaseTrigger" -- Experiment: No longer implemented
 
 function ENT:Initialize()
 end
