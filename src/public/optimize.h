@@ -84,6 +84,35 @@ struct StripHeader_t
 	};
 };
 
+struct StripHeader_v49_t
+{
+    DECLARE_BYTESWAP_DATADESC();
+    // indexOffset offsets into the mesh's index array.
+    int numIndices;
+    int indexOffset;
+
+    // vertexOffset offsets into the mesh's vert array.
+    int numVerts;
+    int vertOffset;
+
+    // use this to enable/disable skinning.
+    // May decide (in optimize.cpp) to put all with 1 bone in a different strip
+    // than those that need skinning.
+    short numBones;
+
+    unsigned char flags;
+
+    int numBoneStateChanges;
+    int boneStateChangeOffset;
+    inline BoneStateChangeHeader_t *pBoneStateChange( int i ) const
+    {
+        return ( BoneStateChangeHeader_t * )( ( ( byte * )this ) + boneStateChangeOffset ) + i;
+    };
+
+    int numTopologyIndices;
+    int topologyOffset;
+};
+
 enum StripGroupFlags_t
 {
     STRIPGROUP_IS_FLEXED = 0x01,
@@ -98,30 +127,64 @@ enum StripGroupFlags_t
 // a single index buffer
 struct StripGroupHeader_t
 {
-	DECLARE_BYTESWAP_DATADESC();
-	// These are the arrays of all verts and indices for this mesh.  strips index into this.
-	int numVerts;
-	int vertOffset;
-	inline Vertex_t *pVertex( int i ) const 
-	{ 
-		return (Vertex_t *)(((byte *)this) + vertOffset) + i; 
-	};
+    DECLARE_BYTESWAP_DATADESC();
+    // These are the arrays of all verts and indices for this mesh.  strips index into this.
+    int numVerts;
+    int vertOffset;
+    inline Vertex_t *pVertex( int i ) const
+    {
+        return ( Vertex_t * )( ( ( byte * )this ) + vertOffset ) + i;
+    };
 
-	int numIndices;
-	int indexOffset;
-	inline unsigned short *pIndex( int i ) const 
-	{ 
-		return (unsigned short *)(((byte *)this) + indexOffset) + i; 
-	};
+    int numIndices;
+    int indexOffset;
+    inline unsigned short *pIndex( int i ) const
+    {
+        return ( unsigned short * )( ( ( byte * )this ) + indexOffset ) + i;
+    };
 
-	int numStrips;
-	int stripOffset;
-	inline StripHeader_t *pStrip( int i ) const 
-	{ 
-		return (StripHeader_t *)(((byte *)this) + stripOffset) + i; 
-	};
+    int numStrips;
+    int stripOffset;
+    inline StripHeader_t *pStrip( int i ) const
+    {
+        if ( flags & STRIPGROUP_IS_MDL49 )
+            return ( StripHeader_t * )( ( StripHeader_v49_t * )( ( ( byte * )this ) + stripOffset ) + i );
+        else
+            return ( StripHeader_t * )( ( ( byte * )this ) + stripOffset ) + i;
+    };
 
-	unsigned char flags;
+    unsigned char flags;
+};
+
+struct StripGroupHeader_v49_t
+{
+    DECLARE_BYTESWAP_DATADESC();
+    // These are the arrays of all verts and indices for this mesh.  strips index into this.
+    int numVerts;
+    int vertOffset;
+    inline Vertex_t *pVertex( int i ) const
+    {
+        return ( Vertex_t * )( ( ( byte * )this ) + vertOffset ) + i;
+    };
+
+    int numIndices;
+    int indexOffset;
+    inline unsigned short *pIndex( int i ) const
+    {
+        return ( unsigned short * )( ( ( byte * )this ) + indexOffset ) + i;
+    };
+
+    int numStrips;
+    int stripOffset;
+    inline StripHeader_v49_t *pStrip( int i ) const
+    {
+        return ( StripHeader_v49_t * )( ( ( byte * )this ) + stripOffset ) + i;
+    };
+
+    unsigned char flags;
+
+    int numTopologyIndices;
+    int topologyOffset;
 };
 
 enum MeshFlags_t { 
@@ -141,15 +204,17 @@ enum MeshFlags_t {
 // A mesh has a material associated with it.
 struct MeshHeader_t
 {
-	DECLARE_BYTESWAP_DATADESC();
-	int numStripGroups;
-	int stripGroupHeaderOffset;
-	inline StripGroupHeader_t *pStripGroup( int i ) const 
-	{ 
-		StripGroupHeader_t *pDebug = (StripGroupHeader_t *)(((byte *)this) + stripGroupHeaderOffset) + i; 
-		return pDebug;
-	};
-	unsigned char flags;
+    DECLARE_BYTESWAP_DATADESC();
+    int numStripGroups;
+    int stripGroupHeaderOffset;
+    inline StripGroupHeader_t *pStripGroup( int i ) const
+    {
+        if ( flags & STRIPGROUP_IS_MDL49 )
+            return ( StripGroupHeader_t * )( ( StripGroupHeader_v49_t * )( ( ( byte * )this ) + stripGroupHeaderOffset ) + i );
+        else
+            return ( StripGroupHeader_t * )( ( ( byte * )this ) + stripGroupHeaderOffset ) + i;
+    };
+    unsigned char flags;
 };
 
 struct ModelLODHeader_t

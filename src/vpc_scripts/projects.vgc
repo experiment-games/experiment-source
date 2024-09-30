@@ -49,6 +49,11 @@ $Project "server"
 	"game\server\server_experiment.vpc"		[($WIN32||$POSIX) && $EXPERIMENT]
 }
 
+$Project "studiorender"
+{
+	"studiorender\studiorender.vpc" [$WIN32]
+}
+
 $Project "mathlib"
 {
 	"mathlib\mathlib.vpc" [$WINDOWS||$X360||$POSIX]
