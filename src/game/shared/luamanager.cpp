@@ -1419,7 +1419,7 @@ void luasrc_shutdown( void )
 
     g_bLuaInitialized = false;
 
-    // Remove the content searchpath for any load gamemode
+    // Remove the content searchpath for any loaded gamemode
     lua_getglobal( L, "GAMEMODE" );
 
     if ( lua_istable( L, -1 ) )

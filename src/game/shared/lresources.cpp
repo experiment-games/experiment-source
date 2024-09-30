@@ -59,7 +59,7 @@ static void AddRelatedFileOrWarn( const char *filePath, const char *relatedExten
 
     if ( !filesystem->FileExists( relatedFile ) )
     {
-        DevWarning( "resource.AddFile couldn't find: %s\n", relatedFile );
+        DevWarning( "Resources.AddFile couldn't find: %s\n", relatedFile );
     }
 
     g_pLuaResources.AddToTail( strdup( relatedFile ) );
