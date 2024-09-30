@@ -28,6 +28,9 @@
 #include <gamestringpool.h>
 #include <basescripted.h>
 #include <lColor.h>
+#include <datacache/imdlcache.h>
+#include <filesystem.h>
+#include <utlbuffer.h>
 
 // memdbgon must be the last include file in a .cpp file!!!
 #include "tier0/memdbgon.h"
@@ -1765,15 +1768,23 @@ LUA_BINDING_END()
 LUA_BINDING_BEGIN( Entity, PrecacheModel, "class|static", "Precache model." )
 {
     const char *pszModel = LUA_BINDING_ARGUMENT( luaL_checkstring, 1, "model" );
-    if ( Q_strstr( pszModel, "models/hl2rp/citizens/" ) != NULL )
+
+#ifdef GAME_DLL
+    // Read the version of the model (position 4 in the file is the version as an int)
+    CUtlBuffer versionBuffer;
+    filesystem->ReadFile( pszModel, NULL, versionBuffer, 4, 4 );
+    int nVersion = 0;
+    versionBuffer.Get( &nVersion, 4 );
+
+    // TODO: Why does this always return STUDIO_VERSION?
+    //MDLHandle_t hModel = mdlcache->FindMDL( pszModel );
+    //studiohdr_t *pStudioHdr = mdlcache->GetStudioHdr( hModel );
+    if ( nVersion > STUDIO_VERSION )
     {
-        DevWarning( "Note that these models seem to cause a Access violation in StudioRender.dll for some reason\n" );
-        // Perhaps because related models (m_anm/f_anm/z_anm) are mounted?
-        // I tried precaching from Lua but that didn't fix it:
-        // util.PrecacheModel( "models/models/f_anm.mdl" )
-        // util.PrecacheModel( "models/models/m_anm.mdl" )
-        // util.PrecacheModel( "models/models/z_anm.mdl" )
+        DevWarning( "Note that these models seem to cause a Access violation in StudioRender.dll (%s)\n", pszModel );
+        // Perhaps because the format is reading somewhere it shouldn't?
     }
+#endif
 
     bool bAllowPrecacheBefore = CBaseEntity::IsPrecacheAllowed();
     CBaseEntity::SetAllowPrecache( true );
