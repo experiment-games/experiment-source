@@ -1,0 +1,5 @@
+"VertexLitGeneric"
+{
+	"$baseTexture" 	"models/cyberpunk/outfit/sam/sam_head1"
+	"$bumpmap" 		"models/cyberpunk/outfit/sam/sam_head_normal"
+}

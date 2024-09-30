@@ -1,0 +1,7 @@
+"Eyeball"
+{
+	"$basetexture" "models/Humans/Male/pupil_t"
+	"$additive" "1"
+	"$selfillum" "1"
+
+}

@@ -1,0 +1,5 @@
+"VertexLitGeneric"
+{
+	"$basetexture" "Models/humans/male/hat"
+	"$translucent" 0
+}

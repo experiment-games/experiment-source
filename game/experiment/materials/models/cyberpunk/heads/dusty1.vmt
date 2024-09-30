@@ -1,0 +1,13 @@
+"VertexLitGeneric"
+{
+	"$baseTexture" 		"models/cyberpunk/heads/dusty1"
+	"$bumpmap" 			"models/cyberpunk/heads/dusty_normal"
+	"$phong" 1
+	"$phongexponent" "4"
+	"$phongboost" "0.7"
+	"$phongfresnelranges"	"[0.03 0.45 0.6]"
+	"$rimlight" "1"
+	"$rimlightexponent" "5"
+	"$rimlightboost" "0.2"
+}
+

@@ -1,0 +1,23 @@
+"VertexLitGeneric"
+{
+	
+	"$baseTexture"	"models/cherylredux/hair"
+	"$surfaceprop" "flesh"
+	//"$bumpmap" "models/cherylredux/hairn"
+
+
+
+	"$translucent" "1"
+	"$nodecal" 1
+	"$nocull" "1"
+	"$halflambert" "1"
+	"$phong" "1"
+	
+	"$phongexponent" 100
+	
+	"$phongboost"	"1"
+	"$phongfresnelranges"	"[0.03 0.03 0.5]"
+
+
+	
+}

@@ -1,0 +1,8 @@
+"VertexLitGeneric"
+{
+	"$baseTexture" 	"models/cyberpunk/heads/dustybeard1"
+	"$translucent" 	1
+	"$nocull" 		1
+	"$model" 		1
+}
+

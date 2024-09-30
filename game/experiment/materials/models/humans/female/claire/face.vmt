@@ -1,0 +1,7 @@
+"VertexlitGeneric"
+{
+	"$basetexture" "models/humans/female/claire/face"
+	"$halflambert" 1
+	"$nocull" "1"
+
+}

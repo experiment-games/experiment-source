@@ -1,0 +1,5 @@
+"VertexlitGeneric"
+{
+	"$basetexture" "models/humans/female/claire/hair_e"
+	"$translucent" 1
+}

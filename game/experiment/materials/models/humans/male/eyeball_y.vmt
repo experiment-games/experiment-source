@@ -1,0 +1,5 @@
+"unlitgeneric"
+{
+	"$basetexture" "models/Humans/Male/pupil_y"
+	"$halflambert" 1
+}

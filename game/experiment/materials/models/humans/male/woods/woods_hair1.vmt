@@ -1,0 +1,7 @@
+"VertexlitGeneric"
+{
+	"$basetexture" 		"models/humans/male/woods/woods_hair1"
+	"$nocull" 1
+	"$translucent" 1
+
+}

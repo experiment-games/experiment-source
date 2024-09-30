@@ -1,0 +1,10 @@
+"VertexlitGeneric"
+{
+	"$basetexture" "models/player/slow/aot/tyson/dave_tyson_body"
+	"$bumpmap" "models/player/slow/aot/tyson/slow_tyson_body_bump"
+
+ 	"$phong" "1"
+	"$phongexponent" "4"
+	"$phongboost"	".3"
+	"$phongfresnelranges"	"[.15 .45 1]"
+}
