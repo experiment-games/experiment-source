@@ -1765,8 +1765,26 @@ LUA_BINDING_END()
 LUA_BINDING_BEGIN( Entity, PrecacheModel, "class|static", "Precache model." )
 {
     const char *pszModel = LUA_BINDING_ARGUMENT( luaL_checkstring, 1, "model" );
+    if ( Q_strstr( pszModel, "models/hl2rp/citizens/" ) != NULL )
+    {
+        DevWarning( "Note that these models seem to cause a Access violation in StudioRender.dll for some reason\n" );
+        // Perhaps because related models (m_anm/f_anm/z_anm) are mounted?
+        // I tried precaching from Lua but that didn't fix it:
+        // util.PrecacheModel( "models/models/f_anm.mdl" )
+        // util.PrecacheModel( "models/models/m_anm.mdl" )
+        // util.PrecacheModel( "models/models/z_anm.mdl" )
+    }
 
+    bool bAllowPrecacheBefore = CBaseEntity::IsPrecacheAllowed();
+    CBaseEntity::SetAllowPrecache( true );
+
+#ifdef CLIENT_DLL
     lua_pushinteger( L, CBaseEntity::PrecacheModel( pszModel ) );
+#else
+    lua_pushinteger( L, CBaseEntity::PrecacheModel( pszModel /*, false */ ) );
+#endif
+
+    CBaseEntity::SetAllowPrecache( bAllowPrecacheBefore );
     return 1;
 }
 LUA_BINDING_END( "integer", "The precached model." )
