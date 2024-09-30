@@ -1770,16 +1770,9 @@ LUA_BINDING_BEGIN( Entity, PrecacheModel, "class|static", "Precache model." )
     const char *pszModel = LUA_BINDING_ARGUMENT( luaL_checkstring, 1, "model" );
 
 #ifdef GAME_DLL
-    // Read the version of the model (position 4 in the file is the version as an int)
-    CUtlBuffer versionBuffer;
-    filesystem->ReadFile( pszModel, NULL, versionBuffer, 4, 4 );
-    int nVersion = 0;
-    versionBuffer.Get( &nVersion, 4 );
-
-    // TODO: Why does this always return STUDIO_VERSION?
-    //MDLHandle_t hModel = mdlcache->FindMDL( pszModel );
-    //studiohdr_t *pStudioHdr = mdlcache->GetStudioHdr( hModel );
-    if ( nVersion > STUDIO_VERSION )
+    MDLHandle_t hModel = mdlcache->FindMDL( pszModel );
+    studiohdr_t *pStudioHdr = mdlcache->GetStudioHdr( hModel );
+    if ( pStudioHdr->version > STUDIO_VERSION )
     {
         DevWarning( "Note that these models seem to cause a Access violation in StudioRender.dll (%s)\n", pszModel );
         // Perhaps because the format is reading somewhere it shouldn't?
