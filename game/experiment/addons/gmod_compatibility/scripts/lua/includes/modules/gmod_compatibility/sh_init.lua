@@ -70,7 +70,7 @@ end
 local originalRandomSeed = math.randomseed
 
 function math.randomseed(seed)
-    originalRandomSeed(math.floor(seed))
+	originalRandomSeed(math.floor(seed))
 end
 
 timer.RepsLeft = Timers.RepetitionsLeft
@@ -78,6 +78,19 @@ timer.RepsLeft = Timers.RepetitionsLeft
 util = Utilities
 util.PrecacheModel = _R.Entity.PrecacheModel
 util.PrecacheSound = _R.Entity.PrecacheSound
+
+-- TODO: This is no help in fixing the crash in _R.Entity.PrecacheModel
+-- util.PrecacheModel("models/f_anm.mdl")
+-- util.PrecacheModel("models/m_anm.mdl")
+-- util.PrecacheModel("models/z_anm.mdl")
+-- util.PrecacheModel("models/humans/female_gestures.mdl")
+-- util.PrecacheModel("models/humans/female_ss.mdl")
+-- util.PrecacheModel("models/humans/female_postures.mdl")
+-- util.PrecacheModel("models/humans/female_shared.mdl")
+-- util.PrecacheModel("models/humans/male_gestures.mdl")
+-- util.PrecacheModel("models/humans/male_ss.mdl")
+-- util.PrecacheModel("models/humans/male_postures.mdl")
+-- util.PrecacheModel("models/humans/male_shared.mdl")
 
 util.AddNetworkString = Networks.AddNetworkString
 util.NetworkIDToString = Networks.NetworkIdToString
@@ -632,13 +645,13 @@ ENTITY_META.GetColor = ENTITY_META.GetRenderColor
 ENTITY_META.GetSequenceList = ENTITY_META.GetSequences
 
 function ENTITY_META:GetForward()
-    local forward, _, _ = self:GetVectors()
+	local forward, _, _ = self:GetVectors()
 	return forward
 end
 
 function ENTITY_META:GetRight()
-    local _, right, _ = self:GetVectors()
-    return right
+	local _, right, _ = self:GetVectors()
+	return right
 end
 
 function ENTITY_META:GetUp()
@@ -1134,7 +1147,7 @@ else
 		SetMousePos = input.SetCursorPosition,
 		ScreenToVector = input.ScreenToWorld,
 		AimToVector = input.AimToVector,
-        IsConsoleVisible = Engines.IsConsoleVisible,
+		IsConsoleVisible = Engines.IsConsoleVisible,
 		IsGameUIVisible = EngineVgui.IsGameUiVisible,
 	}
 
@@ -1308,8 +1321,8 @@ else
 
 	local LABEL_PANEL_META = FindMetaTable("Label")
 	LABEL_PANEL_META._OriginalSetFont = LABEL_PANEL_META._OriginalSetFont or LABEL_PANEL_META.SetFont
-    LABEL_PANEL_META._OriginalGetFont = LABEL_PANEL_META._OriginalGetFont or LABEL_PANEL_META.GetFont
-    LABEL_PANEL_META.SetTextColor = LABEL_PANEL_META.SetForegroundColor
+	LABEL_PANEL_META._OriginalGetFont = LABEL_PANEL_META._OriginalGetFont or LABEL_PANEL_META.GetFont
+	LABEL_PANEL_META.SetTextColor = LABEL_PANEL_META.SetForegroundColor
 	LABEL_PANEL_META.GetTextColor = LABEL_PANEL_META.GetForegroundColor
 	LABEL_PANEL_META._OriginalSetContentAlignment = LABEL_PANEL_META._OriginalSetContentAlignment or
 		LABEL_PANEL_META.SetContentAlignment
@@ -1872,7 +1885,7 @@ hook.Add("Initialize", "GModCompatibility.CallInitializeHooks", function()
 	scripted_ents.OnLoaded()
 
 	local scriptedWeapons = ScriptedWeapons.GetList()
-    for className, scriptedWeapon in pairs(scriptedWeapons) do
+	for className, scriptedWeapon in pairs(scriptedWeapons) do
 		weapons.Register(scriptedWeapon, className)
 	end
 	weapons.OnLoaded()
