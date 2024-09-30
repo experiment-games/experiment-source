@@ -19,6 +19,11 @@ $Project "client"
 	"game\client\client_experiment.vpc"		[($WIN32||$POSIX) && $EXPERIMENT]
 }
 
+$Project "datacache"
+{
+	"datacache\datacache.vpc" [$WIN32]
+}
+
 $Project "fgdlib"
 {
 	"fgdlib\fgdlib.vpc" [$WIN32]

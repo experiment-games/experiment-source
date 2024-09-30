@@ -3064,8 +3064,9 @@ inline bool Studio_ConvertStudioHdrToNewVersion( studiohdr_t *pStudioHdr )
 		}
 	}
 
-	// for now, just slam the version number since they're compatible
-	pStudioHdr->version = STUDIO_VERSION;
+    // Experiment: Commented this, since it has us lose information about the version of the file
+	// // for now, just slam the version number since they're compatible
+	// pStudioHdr->version = STUDIO_VERSION;
 
 	return bResult;
 }

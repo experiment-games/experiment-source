@@ -675,6 +675,8 @@ $Project
 		$File	"$SRCDIR\game\shared\gameinfostore.h"
 		$File	"$SRCDIR\game\shared\gameinfostore.cpp"
 
+		$File	"$SRCDIR\public\tier3\tier3.cpp"
+
 		$Folder	"Lua"
 		{
             $File "$SRCDIR\game\shared\lsingleluainstance.h"

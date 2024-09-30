@@ -953,6 +953,7 @@ int CHLClient::Init( CreateInterfaceFn appSystemFactory,
 
     ConnectTier1Libraries( &appSystemFactory, 1 );
     ConnectTier2Libraries( &appSystemFactory, 1 );
+    ConnectCustomTier3Libraries( &appSystemFactory, 1 );
     ConnectTier3Libraries( &appSystemFactory, 1 );
 
 #ifndef NO_STEAM

@@ -621,6 +621,7 @@ bool CServerGameDLL::DLLInit( CreateInterfaceFn appSystemFactory,
 {
     ConnectTier1Libraries( &appSystemFactory, 1 );
     ConnectTier2Libraries( &appSystemFactory, 1 );
+    ConnectCustomTier3Libraries( &appSystemFactory, 1 );
     ConnectTier3Libraries( &appSystemFactory, 1 );
 
     // Connected in ConnectTier1Libraries
