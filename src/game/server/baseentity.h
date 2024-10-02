@@ -222,6 +222,17 @@ enum Class_T
 
 #endif
 
+namespace USABILITY_TYPE
+{
+enum TYPE
+{
+    CONTINUOUS = 0, // FCAP_CONTINUOUS_USE
+    ON_OFF, // FCAP_ONOFF_USE
+    DIRECTIONAL, // FCAP_DIRECTIONAL_USE
+    IMPULSE, // FCAP_IMPULSE_USE
+};
+}
+
 //
 // Structure passed to input handlers.
 //
@@ -398,6 +409,8 @@ class CBaseEntity : public IServerEntity
 #ifdef LUA_SDK
     virtual void SetupRefTable( lua_State *L );
 #endif
+
+    virtual void SetUseType( USABILITY_TYPE::TYPE useType );
 
     // prediction system
     DECLARE_PREDICTABLE();
@@ -1900,6 +1913,8 @@ class CBaseEntity : public IServerEntity
 
     // A counter to help quickly build a list of potentially pushed objects for physics
     int m_nPushEnumCount;
+
+    int m_UsabilityType;
 
     Vector m_vecAbsOrigin;
     CNetworkVectorForDerived( m_vecVelocity );

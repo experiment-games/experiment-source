@@ -101,6 +101,7 @@ LUALIB_API int luaopen_SharedEnumerations( lua_State *L )
     lua_pushenum( L, Collision_Group_t::COLLISION_GROUP_PUSHAWAY, "PUSHAWAY" );
     lua_pushenum( L, Collision_Group_t::COLLISION_GROUP_NPC_ACTOR, "NPC_ACTOR" );
     lua_pushenum( L, Collision_Group_t::COLLISION_GROUP_NPC_SCRIPTED, "NPC_SCRIPTED" );
+    lua_pushenum( L, Collision_Group_t::COLLISION_GROUP_DEBRIS, "WORLD" ); // TODO: How different of debris is this really?
     lua_pushenum( L, Collision_Group_t::LAST_SHARED_COLLISION_GROUP, "LAST" );
     LUA_SET_ENUM_LIB_END( L );
 

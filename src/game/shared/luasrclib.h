@@ -40,6 +40,7 @@ LUALIB_API int( luaopen_Chats )( lua_State *L );
 #define LUA_BASECOMBATWEAPONLIBNAME "Weapon"
 LUALIB_API int( luaopen_CBaseCombatWeapon )( lua_State *L );
 
+#define LUA_USABILITYTYPELIBNAME "USABILITY_TYPE"
 #define LUA_BASEENTITYMETANAME "Entity"
 LUALIB_API int( luaopen_CBaseEntity )( lua_State *L );
 LUALIB_API int( luaopen_CBaseEntity_shared )( lua_State *L );

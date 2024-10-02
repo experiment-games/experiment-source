@@ -643,6 +643,7 @@ ENTITY_META.SetNoCollideWithTeammates = ENTITY_META.SetNoCollidingWithTeammates
 ENTITY_META.SetColor = ENTITY_META.SetRenderColor
 ENTITY_META.GetColor = ENTITY_META.GetRenderColor
 ENTITY_META.GetSequenceList = ENTITY_META.GetSequences
+ENTITY_META.NextThink = ENTITY_META.SetNextThink
 
 function ENTITY_META:GetForward()
 	local forward, _, _ = self:GetVectors()
@@ -712,7 +713,13 @@ function ENTITY_META:SetDTString(index, value)
 end
 
 function ENTITY_META:SetDTVector(index, value)
-	self:SetNetworkDataValue(_E.NETWORK_VARIABLE_TYPE.VECTOR, index, value)
+    self:SetNetworkDataValue(_E.NETWORK_VARIABLE_TYPE.VECTOR, index, value)
+end
+
+if (SERVER) then
+    function ENTITY_META:FrameAdvance()
+		-- TODO: Should this be implemented server-side? It isn't in engine.
+	end
 end
 
 function ENTITY_META:IsNextBot()

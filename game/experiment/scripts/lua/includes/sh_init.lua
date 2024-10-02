@@ -197,8 +197,13 @@ encodeTableSpecialTypes = function(table)
 				yaw = value.yaw,
 				roll = value.roll,
 			}
+		elseif (type(value) == "Entity") then
+            table[key] = {
+				__type = NET_TYPE_ENTITY,
+				id = value:GetEntityIndex()
+			}
 		elseif (type(value) == "table") then
-			encodeTableSpecialTypes(value)
+            encodeTableSpecialTypes(value)
 		end
 	end
 end
@@ -212,7 +217,9 @@ decodeTableSpecialTypes = function(table)
 			elseif (value.__type == NET_TYPE_VECTOR) then
 				table[key] = Vectors.Create(value.x, value.y, value.z)
 			elseif (value.__type == NET_TYPE_ANGLE) then
-				table[key] = Angles.Create(value.pitch, value.yaw, value.roll)
+                table[key] = Angles.Create(value.pitch, value.yaw, value.roll)
+            elseif (value.__type == NET_TYPE_ENTITY) then
+				table[key] = Entities.Find(value.id)
 			else
 				decodeTableSpecialTypes(value)
 			end

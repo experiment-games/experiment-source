@@ -2185,13 +2185,15 @@ int CBaseEntity::ObjectCaps( void )
 #if 1
     model_t *pModel = GetModel();
     bool bIsBrush = ( pModel && modelinfo->GetModelType( pModel ) == mod_brush );
+    int caps;
 
     // We inherit our parent's use capabilities so that we can forward use commands
     // to our parent.
     CBaseEntity *pParent = GetParent();
+
     if ( pParent )
     {
-        int caps = pParent->ObjectCaps();
+        caps = pParent->ObjectCaps();
 
         if ( !bIsBrush )
             caps &= ( FCAP_ACROSS_TRANSITION | FCAP_IMPULSE_USE | FCAP_CONTINUOUS_USE | FCAP_ONOFF_USE | FCAP_DIRECTIONAL_USE );
@@ -2200,15 +2202,30 @@ int CBaseEntity::ObjectCaps( void )
 
         if ( pParent->IsPlayer() )
             caps |= FCAP_ACROSS_TRANSITION;
-
-        return caps;
     }
     else if ( !bIsBrush )
     {
-        return FCAP_ACROSS_TRANSITION;
+        caps |= FCAP_ACROSS_TRANSITION;
     }
 
-    return 0;
+    if ( m_UsabilityType == USABILITY_TYPE::CONTINUOUS )
+    {
+        caps |= FCAP_CONTINUOUS_USE;
+    }
+    else if ( m_UsabilityType == USABILITY_TYPE::ON_OFF )
+    {
+        caps |= FCAP_ONOFF_USE;
+    }
+    else if ( m_UsabilityType == USABILITY_TYPE::DIRECTIONAL )
+    {
+        caps |= FCAP_DIRECTIONAL_USE;
+    }
+    else if ( m_UsabilityType == USABILITY_TYPE::IMPULSE )
+    {
+        caps |= FCAP_IMPULSE_USE;
+    }
+
+    return caps;
 #else
     // We inherit our parent's use capabilities so that we can forward use commands
     // to our parent.
@@ -2296,6 +2313,11 @@ void CBaseEntity::Use( CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYPE u
             m_pParent->Use( pActivator, pCaller, useType, value );
         }
     }
+}
+
+void CBaseEntity::SetUseType( USABILITY_TYPE::TYPE useType )
+{
+    m_UsabilityType = useType;
 }
 
 static CBaseEntity *FindPhysicsBlocker( IPhysicsObject *pPhysics, physicspushlist_t &list, const Vector &pushVel )

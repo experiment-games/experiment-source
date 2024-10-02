@@ -103,6 +103,7 @@ NET_TYPE_USERDATA = 7
 NET_TYPE_COLOR = 101
 NET_TYPE_VECTOR = 102
 NET_TYPE_ANGLE = 103
+NET_TYPE_ENTITY = 104
 
 -- Maps the result of type() to a unique identifier
 local typeIdMap = {

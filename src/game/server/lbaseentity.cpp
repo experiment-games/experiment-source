@@ -777,6 +777,15 @@ LUA_BINDING_BEGIN( Entity, Use, "class", "Dispatches use events to this entity's
 }
 LUA_BINDING_END()
 
+LUA_BINDING_BEGIN( Entity, SetUseType, "class", "Set use type." )
+{
+    lua_CBaseEntity *pEntity = LUA_BINDING_ARGUMENT( luaL_checkentity, 1, "entity" );
+    USABILITY_TYPE::TYPE usabilityType = LUA_BINDING_ARGUMENT_ENUM( USABILITY_TYPE::TYPE, 2, "useType" );
+    pEntity->SetUseType( usabilityType );
+    return 0;
+}
+LUA_BINDING_END()
+
 LUA_BINDING_BEGIN( Entity, StartBlockedByEntity, "class", "Start blocked." )
 {
     lua_CBaseEntity *pEntity = LUA_BINDING_ARGUMENT( luaL_checkentity, 1, "entity" );
@@ -1196,6 +1205,13 @@ LUALIB_API int luaopen_CBaseEntity( lua_State *L )
     LUA_PUSH_METATABLE_TO_EXTEND( L, LUA_BASEENTITYMETANAME );
 
     LUA_REGISTRATION_COMMIT( Entity );
+
+    LUA_SET_ENUM_LIB_BEGIN( L, LUA_USABILITYTYPELIBNAME );
+    lua_pushenum( L, USABILITY_TYPE::CONTINUOUS, "CONTINUOUS" );
+    lua_pushenum( L, USABILITY_TYPE::ON_OFF, "ON_OFF" );
+    lua_pushenum( L, USABILITY_TYPE::DIRECTIONAL, "DIRECTIONAL" );
+    lua_pushenum( L, USABILITY_TYPE::IMPULSE, "IMPULSE" );
+    LUA_SET_ENUM_LIB_END( L );
 
     return 1;
 }
