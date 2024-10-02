@@ -172,6 +172,14 @@ LUA_BINDING_BEGIN( Frame, GetDraggerSize, "class", "Gets the dragger size" )
 }
 LUA_BINDING_END( "integer", "The dragger size" )
 
+LUA_BINDING_BEGIN( Frame, IsActive, "class", "Returns whether the frame is currently focussed" )
+{
+    lua_Frame *frame = LUA_BINDING_ARGUMENT( luaL_checkframe, 1, "frame" );
+    lua_pushboolean( L, frame->IsActive() );
+    return 1;
+}
+LUA_BINDING_END( "boolean", "Whether the frame is focussed" )
+
 LUA_BINDING_BEGIN( Frame, IsMinimized, "class", "Returns whether the frame is minimized" )
 {
     lua_Frame *frame = LUA_BINDING_ARGUMENT( luaL_checkframe, 1, "frame" );

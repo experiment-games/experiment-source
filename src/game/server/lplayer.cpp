@@ -6,9 +6,12 @@
 #include "ltakedamageinfo.h"
 #include "gameinfostore.h"
 #include "mathlib/lvector.h"
+#include "rumble_shared.h"
 
 // memdbgon must be the last include file in a .cpp file!!!
 #include "tier0/memdbgon.h"
+#include <haptics/haptic_utils.h>
+#include <soundent.h>
 
 LUA_REGISTRATION_INIT( Player )
 
@@ -878,8 +881,9 @@ LUA_BINDING_END()
 LUA_BINDING_BEGIN( Player, KillSilent, "class", "Force the player character to die silently." )
 {
     lua_CBasePlayer *player = LUA_BINDING_ARGUMENT( luaL_checkplayer, 1, "player" );
-    // TODO: Figure out how to make this silent without duplicating the code inside CommitSuicide
-    player->CommitSuicide( false, false );
+
+    player->KillSilent();
+
     return 0;
 }
 LUA_BINDING_END()

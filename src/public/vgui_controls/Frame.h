@@ -137,7 +137,12 @@ public:
 	// Temporarily enables or disables the fade effect rather than zeroing the fade times as done in DisableFadeEffect
 	void SetFadeEffectDisableOverride( bool disabled );
 
-protected:
+    virtual bool IsActive() const
+    {
+        return m_bHasFocus;
+    }
+
+ protected:
 	// Respond to mouse presses
 	virtual void OnMousePressed(MouseCode code);
 	// Respond to Key typing

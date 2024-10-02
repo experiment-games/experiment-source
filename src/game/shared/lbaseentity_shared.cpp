@@ -1769,16 +1769,6 @@ LUA_BINDING_BEGIN( Entity, PrecacheModel, "class|static", "Precache model." )
 {
     const char *pszModel = LUA_BINDING_ARGUMENT( luaL_checkstring, 1, "model" );
 
-#ifdef GAME_DLL
-    MDLHandle_t hModel = mdlcache->FindMDL( pszModel );
-    studiohdr_t *pStudioHdr = mdlcache->GetStudioHdr( hModel );
-    if ( pStudioHdr->version > STUDIO_VERSION )
-    {
-        DevWarning( "Note that these models seem to cause a Access violation in StudioRender.dll (%s)\n", pszModel );
-        // Perhaps because the format is reading somewhere it shouldn't?
-    }
-#endif
-
     bool bAllowPrecacheBefore = CBaseEntity::IsPrecacheAllowed();
     CBaseEntity::SetAllowPrecache( true );
 

@@ -1379,7 +1379,11 @@ else
 	TEXT_ENTRY_PANEL_META._OriginalGetFont = TEXT_ENTRY_PANEL_META._OriginalGetFont or TEXT_ENTRY_PANEL_META.GetFont
 	TEXT_ENTRY_PANEL_META.DrawTextEntryText = TEXT_ENTRY_PANEL_META.PaintText
 	TEXT_ENTRY_PANEL_META.GetCaretPos = TEXT_ENTRY_PANEL_META.GetCursorPosition
-	TEXT_ENTRY_PANEL_META.SetCaretPos = TEXT_ENTRY_PANEL_META.SetCursorPosition
+    TEXT_ENTRY_PANEL_META.SetCaretPos = TEXT_ENTRY_PANEL_META.SetCursorPosition
+
+	local FRAME_PANEL_META = FindMetaTable("Frame")
+    FRAME_PANEL_META.SetDraggable = FRAME_PANEL_META.SetMoveable
+	FRAME_PANEL_META.GetDraggable = FRAME_PANEL_META.GetMoveable
 
 	function TEXT_ENTRY_PANEL_META:SetFontInternal(font)
 		self:SetFontByName(font)

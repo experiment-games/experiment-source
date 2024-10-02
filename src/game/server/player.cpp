@@ -5321,7 +5321,6 @@ void CBasePlayer::AllowImmediateDecalPainting()
     m_flNextDecalTime = gpGlobals->curtime;
 }
 
-// Suicide...
 void CBasePlayer::CommitSuicide( bool bExplode /*= false*/, bool bForce /*= false*/ )
 {
     MDLCACHE_CRITICAL_SECTION();
@@ -5372,6 +5371,124 @@ void CBasePlayer::CommitSuicide( const Vector &vecForce, bool bExplode /*= false
     info.SetDamageForce( vecForce );
     info.SetDamagePosition( WorldSpaceCenter() );
     TakeDamage( info );
+}
+
+// Experiment; TODO: Figure out how to make this silent without duplicating the code inside CommitSuicide into KillSilent
+void CBasePlayer::KillSilent()
+{
+    MDLCACHE_CRITICAL_SECTION();
+
+    if ( !IsAlive() )
+        return;
+
+    // don't let them suicide for 5 seconds after suiciding
+    m_fNextSuicideTime = gpGlobals->curtime + 5;
+
+    int fDamage = DMG_PREVENT_PHYSICS_FORCE | DMG_NEVERGIB;
+
+    m_iHealth = 0;
+    CTakeDamageInfo info( this, this, 0, fDamage, m_iSuicideCustomKillFlags );
+
+    // This next section is copied from Event_Killed
+
+    CSound *pSound;
+
+    if ( Hints() )
+    {
+        Hints()->ResetHintTimers();
+    }
+
+    //g_pGameRules->PlayerKilled( this, info );
+
+    //gamestats->Event_PlayerKilled( this, info );
+
+    RumbleEffect( RUMBLE_STOP_ALL, 0, RUMBLE_FLAGS_NONE );
+
+#if defined( WIN32 ) && !defined( _X360 )
+    // NVNT set the drag to zero in the case of underwater death.
+    HapticSetDrag( this, 0 );
+#endif
+    ClearUseEntity();
+
+    // this client isn't going to be thinking for a while, so reset the sound until they respawn
+    pSound = CSoundEnt::SoundPointerForIndex( CSoundEnt::ClientSoundIndex( edict() ) );
+    {
+        if ( pSound )
+        {
+            pSound->Reset();
+        }
+    }
+
+    // don't let the status bar glitch for players with <0 health.
+    if ( m_iHealth < -99 )
+    {
+        m_iHealth = 0;
+    }
+
+    // holster the current weapon
+    if ( GetActiveWeapon() )
+    {
+        GetActiveWeapon()->Holster();
+    }
+
+    SetAnimation( PLAYER_DIE );
+
+    if ( !IsObserver() )
+    {
+        SetViewOffset( VEC_DEAD_VIEWHEIGHT_SCALED( this ) );
+    }
+    m_lifeState = LIFE_DYING;
+
+    pl.deadflag = true;
+    AddSolidFlags( FSOLID_NOT_SOLID );
+    // force contact points to get flushed if no longer valid
+    // UNDONE: Always do this on RecheckCollisionFilter() ?
+    IPhysicsObject *pObject = VPhysicsGetObject();
+    if ( pObject )
+    {
+        pObject->RecheckContactPoints();
+    }
+
+    SetMoveType( MOVETYPE_FLYGRAVITY );
+    SetGroundEntity( NULL );
+
+    // clear out the suit message cache so we don't keep chattering
+    SetSuitUpdate( NULL, false, 0 );
+
+    // reset FOV
+    SetFOV( this, 0 );
+
+    if ( FlashlightIsOn() )
+    {
+        FlashlightTurnOff();
+    }
+
+    m_flDeathTime = gpGlobals->curtime;
+
+    ClearLastKnownArea();
+
+    // This next section is copied from Event_Dying
+
+    //DeathSound( info );
+
+    // The dead body rolls out of the vehicle.
+    if ( IsInAVehicle() )
+    {
+        LeaveVehicle();
+    }
+
+    QAngle angles = GetLocalAngles();
+
+    angles.x = 0;
+    angles.z = 0;
+
+    SetLocalAngles( angles );
+
+    SetThink( &CBasePlayer::PlayerDeathThink );
+    SetNextThink( gpGlobals->curtime + 0.1f );
+    //BaseClass::Event_Dying( info );
+
+    m_iSuicideCustomKillFlags = 0;
 }
 
 //==============================================
