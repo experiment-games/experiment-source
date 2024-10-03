@@ -8,6 +8,7 @@
 # 3. Run the initial setup: `o conf init`
 # 4. Run: `install String::CRC32`
 # 5. Ensure the .env file is in the root directory and is setup
+# 6. If you get an error and see perl from Git for Windows being used, ensure the PATH is correct (or temporarily rename the perl.exe in the Git for Windows directory)
 #
 
 # Ensure we are relative to where the script is
