@@ -46,12 +46,15 @@ files=(
     "hl2.exe"
 )
 
-# Before we proceed we will delete hl2.exe, or else the copy will fail
-# when it tries to copy the directory with the same name (hl2)
-if [ -e "$target_dir/hl2.exe" ]; then
-    echo "Removing $target_dir/hl2.exe"
-    rm "$target_dir/hl2.exe"
-fi
+# Delete all files and directories in the target directory (looping files) so we start clean
+# This is useful when we might have compiled different library dll's into the bin especially.
+echo "Removing all files and directories in $target_dir"
+for file in "${files[@]}"; do
+    if [ -e "$target_dir/$file" ]; then
+        echo "Removing $target_dir/$file"
+        rm -r "$target_dir/$file"
+    fi
+done
 
 for file in "${files[@]}"; do
     if [ -e "$STEAM_SDK_DIR/$file" ]; then
