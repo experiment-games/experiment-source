@@ -24,6 +24,7 @@ in the original Source Engine SDK.
 - Source SDK 2013 Multiplayer Base (Installed through Steam)
 - Visual Studio 2022 (or newer)
 - [Visual Studio 2013 (for the Source SDK 2013 solution)](https://archive.org/details/en_visual_studio_community_2013_with_update_5_x86_dvd_6816332)
+- Perl (e.g. [Strawberry Perl](https://strawberryperl.com/))
 
 [&raquo; See the Source SDK 2013 documentation for more information.](https://developer.valvesoftware.com/wiki/Source_SDK_2013)
 
@@ -36,36 +37,44 @@ in the original Source Engine SDK.
     creategameprojects.bat
     ```
 
-2. Copy the `.env.example` file to `.env`.
+2. Build the shaders
+
+    ```bash
+    cd src
+    ./buildshaders.sh
+    ```
+
+3. Copy the `.env.example` file to `.env`.
 
     ```bash
     cp .env.example .env
     ```
 
-3. Fill the `.env` file with the described values
+4. Fill the `.env` file with the described values
 
-4. Next run the `setupprojects.sh` script to modify the Visual Studio project files and solution.
+5. Next run the `setupprojects.sh` script to modify the Visual Studio project files and solution.
 
     ```bash
+    cd src
     ./setupprojects.sh --init
     ```
 
     _This sets up debugging and enforces the correct dependencies of the client & server projects._
 
-5. Open the created `experiment.sln` solution in Visual Studio 2022 (or newer).
+6. Open the created `experiment.sln` solution in Visual Studio 2022 (or newer).
 
     > [!WARNING]
     > Despite building in Visual Studio 2022, the Source SDK 2013 solution requires Visual Studio 2013 to be installed.
 
-6. Build the solution in `Release` mode.
+7. Build the solution in `Release` mode.
 
-7. After the build is complete make a symlink from the `game/experiment` directory to your `steamapps/sourcemods` directory. E.g:
+8. After the build is complete make a symlink from the `game/experiment` directory to your `steamapps/sourcemods` directory. E.g:
 
     ```bash
     mklink /J "C:\Program Files (x86)\Steam\steamapps\sourcemods\experiment" "<path to this repo>\game\experiment"
     ```
 
-8. To setup the game mod directory, run:
+9. To setup the game mod directory, run this in the root directory of the repository:
 
     ```bash
     ./tools/setup-game.sh
