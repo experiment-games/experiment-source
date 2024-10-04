@@ -74,6 +74,8 @@ game/experiment/downloadlists/*
 
 # Build products that building the solution will create
 game/experiment/bin/*
+!game/experiment/bin/bass.dll
+!game/experiment/bin/MinHook.x32.dll
 game/experiment/scripts/lua/bin/*
 src/lib/public/lua54.lib
 src/lib/public/luasocket.lib
