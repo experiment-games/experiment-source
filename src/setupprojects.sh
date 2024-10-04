@@ -82,10 +82,16 @@ function addDependenciesToProject {
     fi
 }
 
+addDependenciesToProject "Client (Experiment)" "03CA75EC-BE16-DF25-185C-9CC7E863F493" # networksystem
+addDependenciesToProject "Client (Experiment)" "AD5358D5-10AB-C05D-5008-2F1199805BC6" # datacache
+addDependenciesToProject "Client (Experiment)" "FB4C9B41-D258-AC16-EB69-1ECBD89CADED" # studiorender
 addDependenciesToProject "Client (Experiment)" "950C58AA-39F0-9CA2-8BB5-1AD6B8011443" # luasocket
 addDependenciesToProject "Client (Experiment)" "11C4CA93-C3BB-5EF6-0C85-700D6B69A2F6" # lua
 addDependenciesToProject "Client (Experiment)" "378EBA0C-3BA5-1CB2-6A4B-13E100D0686B" # libpng
 
+addDependenciesToProject "Server (Experiment)" "03CA75EC-BE16-DF25-185C-9CC7E863F493" # networksystem
+addDependenciesToProject "Server (Experiment)" "AD5358D5-10AB-C05D-5008-2F1199805BC6" # datacache
+addDependenciesToProject "Server (Experiment)" "FB4C9B41-D258-AC16-EB69-1ECBD89CADED" # studiorender
 addDependenciesToProject "Server (Experiment)" "950C58AA-39F0-9CA2-8BB5-1AD6B8011443" # luasocket
 addDependenciesToProject "Server (Experiment)" "11C4CA93-C3BB-5EF6-0C85-700D6B69A2F6" # lua
 addDependenciesToProject "Server (Experiment)" "378EBA0C-3BA5-1CB2-6A4B-13E100D0686B" # libpng
