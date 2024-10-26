@@ -1,4 +1,24 @@
-# Experiment (Source Engine Mod)
+<div align="middle">
+
+![Experiment](./logo.png)
+
+</div>
+
+# Experiment: Source
+
+An open-source platform for creating Source Engine mods with Lua, with compatibility for Garry's Mod scripts and addons.
+
+> [!WARNING]
+> This project is still in early development and is **not yet ready for use**.
+> Additionally it is currently being worked on on-and-off, by a single developer.
+>
+> Given the current state of the project: please be aware that you will likely encounter **bugs and security issues**, **documentation may be incomplete or outdated**, and features may be missing or incomplete.
+> Furthermore your contributions and issue reports are very welcome, but they **may not be responded to, reviewed or merged in a timely manner**.
+>
+> If you are interested in contributing, please feel free to [open an issue](https://github.com/luttje/experiment-source/issues) and/or create a pull request.
+> If you are not sure where to start or what to do, start a discussion in the [Discussions](https://github.com/luttje/experiment-source/discussions) tab.
+
+## 🐣 Origin
 
 Initially this repository mainly worked towards creating a Source Engine mod
 called "Experiment". It is a multiplayer mod that is based on the Source SDK 2013.
@@ -10,12 +30,6 @@ to create their own mods based on the Source SDK 2013, but without writing C++.
 Instead mods could be created with Lua scripting and other features not present
 in the original Source Engine SDK.
 &raquo; [💡 Read more about Experiment as a platform in the Developer Portal](https://luttje.github.io/experiment-source)
-
-<div align="middle">
-
-![Experiment logo](./logo.png)
-
-</div>
 
 ## ✨ Features
 
@@ -102,6 +116,16 @@ After (forking and) cloning the repository, follow these steps to setup the proj
     ```
 
     _This setups up a `settings.scr` file based on an example that is in this repository._
+
+8. Make sure Steam is running and start the game through the `Client (Experiment)` project.
+
+9. If you want to try out Garry's Mod sandbox:
+
+    - Make sure that Garry's Mod is installed through Steam
+    - Start Experiment
+    - Mount Garry's Mod through the main menu
+    - Restart Experiment
+    - When starting a new server, select the `sandbox` gamemode
 
 > [!NOTE]
 > Some of the instructions above may (no longer) be necessary, but they are included since at some point during development they were found to be necessary.
