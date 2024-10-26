@@ -27,13 +27,16 @@ in the original Source Engine SDK.
 
 ## 🎮 Gallery
 
-<div align="center">
+<details align="center">
+
+<summary>View media</summary>
 
 [<img src="./docs/screenshot-mounting-game-content.jpg" width="30%" alt="Game Content Mounting">](./docs/screenshot-mounting-game-content.jpg)&nbsp;
 [<img src="./docs/screenshot-start-server.jpg" width="30%" alt="Starting a server">](./docs/screenshot-start-server.jpg)&nbsp;
 
+https://github.com/user-attachments/assets/848c0f56-a067-4e93-a4b6-72bb14120803
 
-</div>
+</details>
 
 ## 🚀 Getting started
 
