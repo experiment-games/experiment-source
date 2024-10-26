@@ -25,6 +25,16 @@ in the original Source Engine SDK.
 
 [&raquo; Visit the Developer Portal for our full Goals & Roadmap.](https://luttje.github.io/experiment-source/general/goals-and-roadmap/)
 
+## 🎮 Gallery
+
+<div align="center">
+
+[<img src="./docs/screenshot-mounting-game-content.jpg" width="30%" alt="Game Content Mounting">](./docs/screenshot-mounting-game-content.jpg)&nbsp;
+[<img src="./docs/screenshot-start-server.jpg" width="30%" alt="Starting a server">](./docs/screenshot-start-server.jpg)&nbsp;
+
+
+</div>
+
 ## 🚀 Getting started
 
 Please keep in mind that this project has been developed on Windows. It is possible that instructions may not work on other operating systems.
