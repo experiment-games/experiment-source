@@ -4,7 +4,7 @@ Initially this repository mainly worked towards creating a Source Engine mod
 called "Experiment". It is a multiplayer mod that is based on the Source SDK 2013.
 &raquo; [🕹 Read more about Experiment in the Garry's Mod gamemode repository](https://github.com/luttje/experiment-redux)
 
-However an alternative idea that arose during development is that Experiment could
+However during development an alternative idea that arose: that Experiment could
 be used as a platform for creating Source Engine mods. This would allow developers
 to create their own mods based on the Source SDK 2013, but without writing C++.
 Instead mods could be created with Lua scripting and other features not present
@@ -13,22 +13,35 @@ in the original Source Engine SDK.
 
 <div align="middle">
 
-![Experiment Redux logo](./logo.png)
-
-**🐕 It's a dog-eat-dog world out there, and these dogs have guns.**
+![Experiment logo](./logo.png)
 
 </div>
 
-## Requirements
+## ✨ Features
+
+- **Lua Scripting**: Write your mod in Lua, a powerful and easy-to-learn scripting language.
+- **Garry's Mod compatibility**: Use Garry's Mod addons, gamemodes, scripts and binary modules in your mod.
+- **Game Content mounting**: Mount content from other Source Engine games, like Half-Life 2, Counter-Strike: Source and more.
+
+[&raquo; Visit the Developer Portal for our full Goals & Roadmap.](https://luttje.github.io/experiment-source/general/goals-and-roadmap/)
+
+## 🚀 Getting started
+
+Please keep in mind that this project has been developed on Windows. It is possible that instructions may not work on other operating systems.
+
+### Requirements
 
 - Source SDK 2013 Multiplayer Base (Installed through Steam)
 - Visual Studio 2022 (or newer)
-- [Visual Studio 2013 (for the Source SDK 2013 solution)](https://archive.org/details/en_visual_studio_community_2013_with_update_5_x86_dvd_6816332)
+- Visual Studio 2013 (for the Source SDK 2013 solution) ([`microsoft.com`](https://go.microsoft.com/fwlink/?LinkId=532504&type=ISO&clcid=0x409), [`archive.org mirror`](https://archive.org/details/en_visual_studio_community_2013_with_update_5_x86_dvd_6816332), [`alternative mirror`](https://mega.nz/file/Agw1zCyL#DhQtvdfir0CnusR2qMpGKxKx2LvnjhmWDhEcB029Dak))
 - Perl (e.g. [Strawberry Perl](https://strawberryperl.com/))
+- (Not required, but recommended) [Git Bash](https://git-scm.com/downloads) for running `bash` scripts
 
 [&raquo; See the Source SDK 2013 documentation for more information.](https://developer.valvesoftware.com/wiki/Source_SDK_2013)
 
-## Getting started
+### Step-by-step
+
+After (forking and) cloning the repository, follow these steps to setup the project:
 
 1. Go into the `src/` directory and generate the Visual Studio solution.
 
@@ -59,38 +72,41 @@ in the original Source Engine SDK.
     ./setupprojects.sh --init
     ```
 
-    _This sets up debugging and enforces the correct dependencies of the client & server projects._
+    _This script will:_
+    * _Set up debugging in the Visual Studio `Client (Experiment)` project file_
+    * _Enforces the correct project dependencies of all projects._
+    * _The `--init` flag will cause all Source SDK 2013 executables and neccessary files to be copied to `game/`, so that the game can be run as a standalone mod._
 
 6. Open the created `experiment.sln` solution in Visual Studio 2022 (or newer).
 
     > [!WARNING]
     > Despite building in Visual Studio 2022, the Source SDK 2013 solution requires Visual Studio 2013 to be installed.
 
-7. Build the solution in `Release` mode.
-
-8. After the build is complete make a symlink from the `game/experiment` directory to your `steamapps/sourcemods` directory. E.g:
-
-    ```bash
-    mklink /J "C:\Program Files (x86)\Steam\steamapps\sourcemods\experiment" "<path to this repo>\game\experiment"
-    ```
-
-9. To setup the game mod directory, run this in the root directory of the repository:
+7. To setup the game mod directory, run this in the root directory of the repository:
 
     ```bash
     ./tools/setup-game.sh
     ```
 
-## Documentation
+    _This setups up a `settings.scr` file based on an example that is in this repository._
+
+> [!NOTE]
+> Some of the instructions above may (no longer) be necessary, but they are included since at some point during development they were found to be necessary.
+
+## 📚 Documentation
 
 We build and present the Experiment Developer Documentation using [mkdocs-material](https://squidfunk.github.io/mkdocs-material/).
 
-- [Read our conventions](./docs/general/conventions.md)
+- [📕 View Lua API Documentation](https://luttje.github.io/experiment-source)
+- [👓 Read our conventions](https://luttje.github.io/experiment-source/general/conventions/)
 
-### Requirements
+### Building the documentation
+
+#### Requirements
 
 - Python 3.8 or newer
 
-### Installation
+#### Installation
 
 1. Install the required Python packages.
 
@@ -104,12 +120,14 @@ We build and present the Experiment Developer Documentation using [mkdocs-materi
     mkdocs serve --dirty
     ```
 
+    Compiling the documentation will take **a couple minutes**.
+
     _The `--dirty` flag is used to make live-reloading only rebuild the changed_
-    _files, rather than the entire site. This is useful for faster development._
+    _files, rather than the entire site. This is useful for faster development (see also [issue #3695 in the mkdocs repo](https://github.com/mkdocs/mkdocs/issues/3695))._
 
 3. Open the documentation in your browser @ [http://localhost:8000/experiment-source/]
 
-## Extras
+## 🏸 Extras
 
 <details>
 

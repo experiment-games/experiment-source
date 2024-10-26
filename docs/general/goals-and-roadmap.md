@@ -45,7 +45,7 @@ In order to provide complete transparency, we have outlined the goals of Experim
 
     Addons can be toggled on and off in the main menu.
 
-- [ ] **Game content mounting:**
+- [x] **Game content mounting:**
 
     Content of games installed with Steam can be mounted.
     The content can be toggled on and off in the main menu.
