@@ -27,7 +27,7 @@ Read more on compatibility in the [gmod_compatibility](../modules/gmod_compatibi
 
 ## Origins
 
-We started Experiment with the goal of porting our Garry's Mod gamemode [Experiment Redux](https://github.com/luttje/experiment-redux) to the Source Engine.
+We started Experiment with the goal of porting our Garry's Mod gamemode [Experiment Redux](https://github.com/luttje/gmod-experiment-redux) to the Source Engine.
 Not wanting to rewrite all our Lua code in C++, we decided to add Lua scripting support to the Source Engine instead.
 Because of this, we ended up basically having to implement everything that our gamemode uses in Garry's Mod, but in the Source Engine instead.
 

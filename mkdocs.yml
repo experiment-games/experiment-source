@@ -1,5 +1,5 @@
 site_name: Developer Portal
-site_url: https://luttje.github.io/experiment-source
+site_url: https://experiment-games.github.io/experiment-source
 extra_css:
   - stylesheets/extra.css
 theme:
@@ -24,7 +24,7 @@ theme:
     - toc.integrate
     - navigation.top
     - content.code.copy
-repo_url: https://github.com/luttje/experiment-source
+repo_url: https://github.com/experiment-games/experiment-source
 edit_uri: edit/experiment-main/docs/
 copyright: Copyright &copy; 2024 - experiment.games
 not_in_nav: /index.md

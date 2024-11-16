@@ -7,7 +7,7 @@ in the ways described below.
 
 If you find an error in the documentation, please open an issue or a pull request.
 The documentation is built from markdown files in the `docs` directory of the
-[Experiment repository](https://github.com/luttje/experiment-source).
+[Experiment repository](https://github.com/experiment-games/experiment-source).
 
 You can quickly head to a specific page by clicking on the "Edit"-icon in the top
 right corner of the page. This will take you to the markdown file in the repository.

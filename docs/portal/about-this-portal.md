@@ -4,4 +4,4 @@ This Developer Portal documents the [Lua bindings](../general/lua-bindings.md) t
 With this wiki we aim to provide reference material for the Lua API, as well as tutorials and examples to help you get started with Lua scripting in Experiment.
 
 !!! Warning
-    This wiki is a work in progress. If you have any questions or suggestions, please submit an issue on our [GitHub repository](https://github.com/luttje/experiment-source)
+    This wiki is a work in progress. If you have any questions or suggestions, please submit an issue on our [GitHub repository](https://github.com/experiment-games/experiment-source)

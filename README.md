@@ -15,21 +15,21 @@ An open-source platform for creating Source Engine mods with Lua, with compatibi
 > Given the current state of the project: please be aware that you will likely encounter **bugs and security issues**, **documentation may be incomplete or outdated**, and features may be missing or incomplete.
 > Furthermore your contributions and issue reports are very welcome, but they **may not be responded to, reviewed or merged in a timely manner**.
 >
-> If you are interested in contributing, please feel free to [open an issue](https://github.com/luttje/experiment-source/issues) and/or create a pull request.
-> If you are not sure where to start or what to do, start a discussion in the [Discussions](https://github.com/luttje/experiment-source/discussions) tab.
+> If you are interested in contributing, please feel free to [open an issue](https://github.com/experiment-games/experiment-source/issues) and/or create a pull request.
+> If you are not sure where to start or what to do, start a discussion in the [Discussions](https://github.com/experiment-games/experiment-source/discussions) tab.
 
 ## 🐣 Origin
 
 Initially this repository mainly worked towards creating a Source Engine mod
 called "Experiment". It is a multiplayer mod that is based on the Source SDK 2013.
-&raquo; [🕹 Read more about Experiment in the Garry's Mod gamemode repository](https://github.com/luttje/experiment-redux)
+&raquo; [🕹 Read more about Experiment in the Garry's Mod gamemode repository](https://github.com/luttje/gmod-experiment-redux)
 
 However during development an alternative idea that arose: that Experiment could
 be used as a platform for creating Source Engine mods. This would allow developers
 to create their own mods based on the Source SDK 2013, but without writing C++.
 Instead mods could be created with Lua scripting and other features not present
 in the original Source Engine SDK.
-&raquo; [💡 Read more about Experiment as a platform in the Developer Portal](https://luttje.github.io/experiment-source)
+&raquo; [💡 Read more about Experiment as a platform in the Developer Portal](https://experiment-games.github.io/experiment-source)
 
 ## ✨ Features
 
@@ -37,7 +37,7 @@ in the original Source Engine SDK.
 - **Garry's Mod compatibility**: Use Garry's Mod addons, gamemodes, scripts and binary modules in your mod.
 - **Game Content mounting**: Mount content from other Source Engine games, like Half-Life 2, Counter-Strike: Source and more.
 
-[&raquo; Visit the Developer Portal for our full Goals & Roadmap.](https://luttje.github.io/experiment-source/general/goals-and-roadmap/)
+[&raquo; Visit the Developer Portal for our full Goals & Roadmap.](https://experiment-games.github.io/experiment-source/general/goals-and-roadmap/)
 
 ## 🎮 Gallery
 
@@ -134,8 +134,8 @@ After (forking and) cloning the repository, follow these steps to setup the proj
 
 We build and present the Experiment Developer Documentation using [mkdocs-material](https://squidfunk.github.io/mkdocs-material/).
 
-- [📕 View Lua API Documentation](https://luttje.github.io/experiment-source)
-- [👓 Read our conventions](https://luttje.github.io/experiment-source/general/conventions/)
+- [📕 View Lua API Documentation](https://experiment-games.github.io/experiment-source)
+- [👓 Read our conventions](https://experiment-games.github.io/experiment-source/general/conventions/)
 
 ### Building the documentation
 
