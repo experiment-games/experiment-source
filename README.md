@@ -21,7 +21,8 @@ An open-source platform for creating Source Engine mods with Lua, with compatibi
 ## 🐣 Origin
 
 Initially this repository mainly worked towards creating a Source Engine mod
-called "Experiment". It is a multiplayer mod that is based on the Source SDK 2013.
+called "Experiment". It was intended as a multiplayer mod, based on the Source SDK 
+2013, running the Garry's Mod gamemode 'Experiment Redux'.
 &raquo; [🕹 Read more about Experiment in the Garry's Mod gamemode repository](https://github.com/luttje/gmod-experiment-redux)
 
 However during development an alternative idea that arose: that Experiment could
@@ -30,6 +31,9 @@ to create their own mods based on the Source SDK 2013, but without writing C++.
 Instead mods could be created with Lua scripting and other features not present
 in the original Source Engine SDK.
 &raquo; [💡 Read more about Experiment as a platform in the Developer Portal](https://experiment-games.github.io/experiment-source)
+
+Finally, super special thanks to those who contributed to the [Half-Life 2: Sandbox](https://github.com/Planimeter/hl2sb-src) project! 
+That repository served as a great source of code and inspiration to get 'Experiment: Source' off the ground.
 
 ## ✨ Features
 
@@ -106,8 +110,9 @@ After (forking and) cloning the repository, follow these steps to setup the proj
 
 6. Open the created `experiment.sln` solution in Visual Studio 2022 (or newer).
 
-    > [!WARNING]
-    > Despite building in Visual Studio 2022, the Source SDK 2013 solution requires Visual Studio 2013 to be installed.
+> [!WARNING]
+> Despite being able to build within Visual Studio 2022, the Source SDK 2013 solution requires
+> Visual Studio 2013 (and/or its build tools) to be installed.
 
 7. To setup the game mod directory, run this in the root directory of the repository:
 
