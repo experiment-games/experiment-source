@@ -18,23 +18,6 @@ An open-source platform for creating Source Engine mods with Lua, with compatibi
 > If you are interested in contributing, please feel free to [open an issue](https://github.com/experiment-games/experiment-source/issues) and/or create a pull request.
 > If you are not sure where to start or what to do, start a discussion in the [Discussions](https://github.com/experiment-games/experiment-source/discussions) tab.
 
-## 🐣 Origin
-
-Initially this repository mainly worked towards creating a Source Engine mod
-called "Experiment". It was intended as a multiplayer mod, based on the Source SDK 
-2013, running the Garry's Mod gamemode 'Experiment Redux'.
-&raquo; [🕹 Read more about Experiment in the Garry's Mod gamemode repository](https://github.com/luttje/gmod-experiment-redux)
-
-However during development an alternative idea that arose: that Experiment could
-be used as a platform for creating Source Engine mods. This would allow developers
-to create their own mods based on the Source SDK 2013, but without writing C++.
-Instead mods could be created with Lua scripting and other features not present
-in the original Source Engine SDK.
-&raquo; [💡 Read more about Experiment as a platform in the Developer Portal](https://experiment-games.github.io/experiment-source)
-
-Finally, super special thanks to those who contributed to the [Half-Life 2: Sandbox](https://github.com/Planimeter/hl2sb-src) project! 
-That repository served as a great source of code and inspiration to get 'Experiment: Source' off the ground.
-
 ## ✨ Features
 
 - **Lua Scripting**: Write your mod in Lua, a powerful and easy-to-learn scripting language.
@@ -74,27 +57,32 @@ Please keep in mind that this project has been developed on Windows. It is possi
 
 After (forking and) cloning the repository, follow these steps to setup the project:
 
-1. Go into the `src/` directory and generate the Visual Studio solution.
+1. Go into the `src/` directory and generate the Visual Studio solution in a Command Prompt terminal:
 
     ```bash
     cd src
     creategameprojects.bat
     ```
 
-2. Build the shaders
+2. Copy the `.env.example` file to `.env`.
 
     ```bash
-    cd src
-    ./buildshaders.sh
-    ```
-
-3. Copy the `.env.example` file to `.env`.
-
-    ```bash
+    # Ensure you are in the root directory of the repository
     cp .env.example .env
     ```
 
-4. Fill the `.env` file with the described values
+3. Fill the `.env` file with the described values.
+
+4. Build the shaders in a (Git) Bash terminal:
+
+    1. Ensure Perl is installed and configured in the `.env` file.
+
+    2. Run the `buildshaders.sh` script:
+
+        ```bash
+        cd src
+        ./buildshaders.sh
+        ```
 
 5. Next run the `setupprojects.sh` script to modify the Visual Studio project files and solution.
 
@@ -122,18 +110,21 @@ After (forking and) cloning the repository, follow these steps to setup the proj
 
     _This setups up a `settings.scr` file based on an example that is in this repository._
 
-8. Make sure Steam is running and start the game through the `Client (Experiment)` project.
+8. Make sure Steam is running and start the game through the `Client (Experiment)` project by clicking the 'Local Windows Debugger'-button.
 
-9. If you want to try out Garry's Mod sandbox:
+    > [!NOTE]
+    > If you're running with the 'Debug' configuration, give Visual Studio a minute to download the necessary symbols. This only needs to be done once (or when the symbols are updated).
 
-    - Make sure that Garry's Mod is installed through Steam
-    - Start Experiment
-    - Mount Garry's Mod through the main menu
-    - Restart Experiment
-    - When starting a new server, select the `sandbox` gamemode
+### Things to do
 
-> [!NOTE]
-> Some of the instructions above may (no longer) be necessary, but they are included since at some point during development they were found to be necessary.
+If you want to try out the Garry's Mod sandbox gamemode running in Experiment, follow these steps:
+
+1. Make sure that Garry's Mod is installed through Steam
+2. Start Experiment
+3. Click 'Content' (box icon top right) to choose which games to mount
+4. Check the checkbox behind 'Garry's Mod'
+5. Restart Experiment
+6. When starting a new server, select the `sandbox` gamemode
 
 ## 📚 Documentation
 
@@ -168,6 +159,25 @@ We build and present the Experiment Developer Documentation using [mkdocs-materi
     _files, rather than the entire site. This is useful for faster development (see also [issue #3695 in the mkdocs repo](https://github.com/mkdocs/mkdocs/issues/3695))._
 
 3. Open the documentation in your browser @ [http://localhost:8000/experiment-source/]
+
+## 🐣 Origin
+
+Initially this repository mainly worked towards creating a Source Engine mod
+called "Experiment". It was intended as a multiplayer mod, based on the Source SDK
+2013, running the Garry's Mod gamemode 'Experiment Redux'.
+
+&raquo; [🕹 Read more about Experiment in the Garry's Mod gamemode repository](https://github.com/luttje/gmod-experiment-redux)
+
+However during development an alternative idea that arose: that Experiment could
+be used as a platform for creating Source Engine mods. This would allow developers
+to create their own mods based on the Source SDK 2013, but without writing C++.
+Instead mods could be created with Lua scripting and other features not present
+in the original Source Engine SDK.
+
+&raquo; [💡 Read more about Experiment as a platform in the Developer Portal](https://experiment-games.github.io/experiment-source)
+
+Finally, super special thanks to those who contributed to the [Half-Life 2: Sandbox](https://github.com/Planimeter/hl2sb-src) project!
+That repository served as a great source of code and inspiration to get 'Experiment: Source' off the ground.
 
 ## 🏸 Extras
 
