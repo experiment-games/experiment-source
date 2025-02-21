@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -22,33 +22,40 @@ class CItemModelPanel;
 //-----------------------------------------------------------------------------
 class CComboBoxBackpackOverlayDialogBase : public vgui::EditablePanel
 {
-	DECLARE_CLASS_SIMPLE( CComboBoxBackpackOverlayDialogBase, vgui::EditablePanel );
+    DECLARE_CLASS_SIMPLE( CComboBoxBackpackOverlayDialogBase, vgui::EditablePanel );
 
-protected:
-	CComboBoxBackpackOverlayDialogBase( vgui::Panel *pParent, CEconItemView *pItem );
+   protected:
+    CComboBoxBackpackOverlayDialogBase( vgui::Panel *pParent, CEconItemView *pItem );
 
-public:
-	virtual ~CComboBoxBackpackOverlayDialogBase() { }
+   public:
+    virtual ~CComboBoxBackpackOverlayDialogBase() {}
 
-	virtual void	ApplySchemeSettings( vgui::IScheme *scheme );
-	virtual void	OnCommand( const char *command );
-	void			Show();
+    virtual void ApplySchemeSettings( vgui::IScheme *scheme );
+    virtual void OnCommand( const char *command );
+    void Show();
 
-protected:
-	CItemModelPanel *GetPreviewModelPanel() { return m_pPreviewModelPanel; }
-	vgui::ComboBox *GetComboBox() { return m_pComboBox; }
+   protected:
+    CItemModelPanel *GetPreviewModelPanel()
+    {
+        return m_pPreviewModelPanel;
+    }
+    vgui::ComboBox *GetComboBox()
+    {
+        return m_pComboBox;
+    }
 
-	CEconItemView			*m_pItem;
-private:
-	virtual void PopulateComboBoxOptions() = 0;
-	virtual void OnComboBoxApplication() = 0;
-	virtual void OnComboBoxChanged( int iNewSelection ) { }
-	virtual const char *GetTitleLabelLocalizationToken() const = 0;
+    CEconItemView *m_pItem;
 
-	MESSAGE_FUNC_PARAMS( OnTextChanged, "TextChanged", data );
+   private:
+    virtual void PopulateComboBoxOptions() = 0;
+    virtual void OnComboBoxApplication() = 0;
+    virtual void OnComboBoxChanged( int iNewSelection ) {}
+    virtual const char *GetTitleLabelLocalizationToken() const = 0;
 
-	CItemModelPanel			*m_pPreviewModelPanel;
-	vgui::ComboBox			*m_pComboBox;
+    MESSAGE_FUNC_PARAMS( OnTextChanged, "TextChanged", data );
+
+    CItemModelPanel *m_pPreviewModelPanel;
+    vgui::ComboBox *m_pComboBox;
 };
 
 //-----------------------------------------------------------------------------
@@ -56,16 +63,20 @@ private:
 //-----------------------------------------------------------------------------
 class CStyleSelectDialog : public CComboBoxBackpackOverlayDialogBase
 {
-	DECLARE_CLASS_SIMPLE( CStyleSelectDialog, CComboBoxBackpackOverlayDialogBase );
+    DECLARE_CLASS_SIMPLE( CStyleSelectDialog, CComboBoxBackpackOverlayDialogBase );
 
-public:
-	CStyleSelectDialog( vgui::Panel *pParent, CEconItemView *pItem ) : CComboBoxBackpackOverlayDialogBase( pParent, pItem ) { }
+   public:
+    CStyleSelectDialog( vgui::Panel *pParent, CEconItemView *pItem )
+        : CComboBoxBackpackOverlayDialogBase( pParent, pItem ) {}
 
-protected:
-	virtual void PopulateComboBoxOptions();
-	virtual void OnComboBoxApplication();
-	virtual void OnComboBoxChanged( int iNewSelection );
-	virtual const char *GetTitleLabelLocalizationToken() const { return "#TF_Item_SelectStyle"; }
+   protected:
+    virtual void PopulateComboBoxOptions();
+    virtual void OnComboBoxApplication();
+    virtual void OnComboBoxChanged( int iNewSelection );
+    virtual const char *GetTitleLabelLocalizationToken() const
+    {
+        return "#TF_Item_SelectStyle";
+    }
 };
 
-#endif // ITEM_STYLE_SELECT_DIALOG_H
+#endif  // ITEM_STYLE_SELECT_DIALOG_H

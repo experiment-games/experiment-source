@@ -24,5 +24,4 @@
 
 #include "bitvec.h"
 
-
-#endif // BITSTRING_H
+#endif  // BITSTRING_H

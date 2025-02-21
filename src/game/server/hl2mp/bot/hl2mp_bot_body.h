@@ -8,14 +8,15 @@
 //----------------------------------------------------------------------------
 class CHL2MPBotBody : public PlayerBody
 {
-public:
-	CHL2MPBotBody( INextBot* bot ) : PlayerBody( bot )
-	{
-	}
+   public:
+    CHL2MPBotBody( INextBot* bot )
+        : PlayerBody( bot )
+    {
+    }
 
-	virtual ~CHL2MPBotBody() { }
+    virtual ~CHL2MPBotBody() {}
 
-	virtual float GetHeadAimTrackingInterval( void ) const;			// return how often we should sample our target's position and velocity to update our aim tracking, to allow realistic slop in tracking
+    virtual float GetHeadAimTrackingInterval( void ) const;  // return how often we should sample our target's position and velocity to update our aim tracking, to allow realistic slop in tracking
 };
 
-#endif // HL2MP_BOT_BODY_H
+#endif  // HL2MP_BOT_BODY_H

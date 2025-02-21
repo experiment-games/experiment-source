@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -19,39 +19,47 @@
 // Trading Dialog states
 enum
 {
-	TDS_SELECTING_PLAYER,
-	TDS_SELECTING_FROM_FRIENDS,
-	TDS_SELECTING_FROM_SERVER,
-	TDS_SELECTING_FROM_PROFILE,
+    TDS_SELECTING_PLAYER,
+    TDS_SELECTING_FROM_FRIENDS,
+    TDS_SELECTING_FROM_SERVER,
+    TDS_SELECTING_FROM_PROFILE,
 
-	TDS_NUM_STATES,
+    TDS_NUM_STATES,
 };
 
 // Button that displays the name & avatar image of a potential trade target
 class CTradeTargetPanel : public vgui::EditablePanel
 {
-	DECLARE_CLASS_SIMPLE( CTradeTargetPanel, vgui::EditablePanel );
-public:
-	CTradeTargetPanel( vgui::Panel *parent, const char *name ) : vgui::EditablePanel( parent, name )
-	{
-		m_pAvatar = new CAvatarImagePanel( this, "avatar" );
-		m_pButton = new CExButton( this, "button", "", parent );
-	}
-	~CTradeTargetPanel( void )
-	{
-		m_pAvatar->MarkForDeletion();
-		m_pButton->MarkForDeletion();
-	}
+    DECLARE_CLASS_SIMPLE( CTradeTargetPanel, vgui::EditablePanel );
 
-	void	SetInfo( const CSteamID &steamID, const char *pszName );
+   public:
+    CTradeTargetPanel( vgui::Panel *parent, const char *name )
+        : vgui::EditablePanel( parent, name )
+    {
+        m_pAvatar = new CAvatarImagePanel( this, "avatar" );
+        m_pButton = new CExButton( this, "button", "", parent );
+    }
+    ~CTradeTargetPanel( void )
+    {
+        m_pAvatar->MarkForDeletion();
+        m_pButton->MarkForDeletion();
+    }
 
-	CAvatarImagePanel	*GetAvatar( void ) { return m_pAvatar; }
-	CExButton			*GetButton( void ) { return m_pButton; }
+    void SetInfo( const CSteamID &steamID, const char *pszName );
 
-private:
-	// Embedded panels
-	CAvatarImagePanel	*m_pAvatar;
-	CExButton			*m_pButton;
+    CAvatarImagePanel *GetAvatar( void )
+    {
+        return m_pAvatar;
+    }
+    CExButton *GetButton( void )
+    {
+        return m_pButton;
+    }
+
+   private:
+    // Embedded panels
+    CAvatarImagePanel *m_pAvatar;
+    CExButton *m_pButton;
 };
 
 //-----------------------------------------------------------------------------
@@ -59,57 +67,61 @@ private:
 //-----------------------------------------------------------------------------
 class CTradingStartDialog : public vgui::EditablePanel, public CGameEventListener
 {
-	DECLARE_CLASS_SIMPLE( CTradingStartDialog, vgui::EditablePanel );
-public:
-	CTradingStartDialog( vgui::Panel *parent );
-	~CTradingStartDialog( void );
+    DECLARE_CLASS_SIMPLE( CTradingStartDialog, vgui::EditablePanel );
 
-	virtual void ApplySettings( KeyValues *inResourceData );
-	virtual void ApplySchemeSettings( vgui::IScheme *pScheme );
-	virtual void PerformLayout( void );
-	virtual void OnCommand( const char *command );
-	virtual void FireGameEvent( IGameEvent *event );
+   public:
+    CTradingStartDialog( vgui::Panel *parent );
+    ~CTradingStartDialog( void );
 
-	void	Close( void );
-	void	Reset( void );
-	void	UpdateState( void );
-	void	SetupSelectFriends( void );
-	void	SetupSelectServer( void );
-	void	SetupSelectProfile( void );
-	void	UpdatePlayerList( void );
+    virtual void ApplySettings( KeyValues *inResourceData );
+    virtual void ApplySchemeSettings( vgui::IScheme *pScheme );
+    virtual void PerformLayout( void );
+    virtual void OnCommand( const char *command );
+    virtual void FireGameEvent( IGameEvent *event );
 
-	void	SendGiftTo( CSteamID steamID );
-	void	StartTradeWith( CSteamID steamID );
-	bool	ExtractSteamIDFromURL( char *inputURL );
-	void	OnLookupAccountResponse( uint64 iAccountID );
-	bool	IsInGiftMode( ) const { return m_bGiftMode; }
-	void	SetGift( CEconItemView* pGiftItem );
+    void Close( void );
+    void Reset( void );
+    void UpdateState( void );
+    void SetupSelectFriends( void );
+    void SetupSelectServer( void );
+    void SetupSelectProfile( void );
+    void UpdatePlayerList( void );
 
-	MESSAGE_FUNC_PARAMS( OnTextChanged, "TextChanged", data );
+    void SendGiftTo( CSteamID steamID );
+    void StartTradeWith( CSteamID steamID );
+    bool ExtractSteamIDFromURL( char *inputURL );
+    void OnLookupAccountResponse( uint64 iAccountID );
+    bool IsInGiftMode() const
+    {
+        return m_bGiftMode;
+    }
+    void SetGift( CEconItemView *pGiftItem );
 
-private:
-	struct trade_partner_info_t
-	{
-		CSteamID m_steamID;
-		CUtlString m_name;
-	};
-	vgui::EditablePanel				*m_pStatePanels[TDS_NUM_STATES];
-	int								m_iCurrentState;
-	CExButton						*m_pSelectFromServerButton;
-	CExButton						*m_pCancelButton;
+    MESSAGE_FUNC_PARAMS( OnTextChanged, "TextChanged", data );
 
-	vgui::EditablePanel				*m_pPlayerList;
-	vgui::ScrollableEditablePanel	*m_pPlayerListScroller;
-	CUtlVector<trade_partner_info_t> m_PlayerInfoList;
-	CUtlVector<CTradeTargetPanel*>	m_pPlayerPanels;
-	KeyValues						*m_pButtonKV;
-	bool							m_bReapplyButtonKVs;
-	vgui::Label						*m_pURLFailLabel;
-	vgui::Label						*m_pURLSearchingLabel;
-	CEconItemView					m_giftItem;
-	bool							m_bGiftMode;
+   private:
+    struct trade_partner_info_t
+    {
+        CSteamID m_steamID;
+        CUtlString m_name;
+    };
+    vgui::EditablePanel *m_pStatePanels[TDS_NUM_STATES];
+    int m_iCurrentState;
+    CExButton *m_pSelectFromServerButton;
+    CExButton *m_pCancelButton;
+
+    vgui::EditablePanel *m_pPlayerList;
+    vgui::ScrollableEditablePanel *m_pPlayerListScroller;
+    CUtlVector< trade_partner_info_t > m_PlayerInfoList;
+    CUtlVector< CTradeTargetPanel * > m_pPlayerPanels;
+    KeyValues *m_pButtonKV;
+    bool m_bReapplyButtonKVs;
+    vgui::Label *m_pURLFailLabel;
+    vgui::Label *m_pURLSearchingLabel;
+    CEconItemView m_giftItem;
+    bool m_bGiftMode;
 };
 
-CTradingStartDialog *OpenTradingStartDialog( vgui::Panel *pParent, CEconItemView* pOptGiftItem = NULL );
+CTradingStartDialog *OpenTradingStartDialog( vgui::Panel *pParent, CEconItemView *pOptGiftItem = NULL );
 
-#endif // TRADING_START_DIALOG_H
+#endif  // TRADING_START_DIALOG_H

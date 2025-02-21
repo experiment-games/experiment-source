@@ -20,42 +20,30 @@
 //
 class CNoGrenadesZone : public CBaseTrigger
 {
-public:
-	DECLARE_CLASS( CNoGrenadesZone, CBaseTrigger );
+   public:
+    DECLARE_CLASS( CNoGrenadesZone, CBaseTrigger );
 
-	CNoGrenadesZone();
+    CNoGrenadesZone();
 
-	void	Spawn( void );
-	void	Precache( void );
-	
-	// Return true if the specified entity is touching this zone
-	bool	IsTouching( const CBaseEntity *pEntity ) const OVERRIDE;
+    void Spawn( void );
+    void Precache( void );
 
-	bool	IsDisabled( void );
-	void	SetDisabled( bool bDisabled );
+    // Return true if the specified entity is touching this zone
+    bool IsTouching( const CBaseEntity *pEntity ) const OVERRIDE;
 
-	// Input handlers
-	void	InputEnable( inputdata_t &inputdata );
-	void	InputDisable( inputdata_t &inputdata );
-	void	InputToggle( inputdata_t &inputdata );
+    bool IsDisabled( void );
+    void SetDisabled( bool bDisabled );
 
-private:
-	bool	m_bDisabled;
+    // Input handlers
+    void InputEnable( inputdata_t &inputdata );
+    void InputDisable( inputdata_t &inputdata );
+    void InputToggle( inputdata_t &inputdata );
+
+   private:
+    bool m_bDisabled;
 };
 
 // Return true if the specified entity is in a NoGrenades zone
 bool InNoGrenadeZone( CBaseEntity *pEntity );
 
-#endif // FUNC_NOGRENADES_ZONE_H
-
-
-
-
-
-
-
-
-
-
-
-
+#endif  // FUNC_NOGRENADES_ZONE_H

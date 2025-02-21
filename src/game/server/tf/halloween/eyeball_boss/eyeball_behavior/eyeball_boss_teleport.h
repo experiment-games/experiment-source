@@ -10,36 +10,40 @@
 //---------------------------------------------------------------------------------------------
 class CEyeballBossTeleport : public Action< CEyeballBoss >
 {
-public:
-	virtual ActionResult< CEyeballBoss >	OnStart( CEyeballBoss *me, Action< CEyeballBoss > *priorAction );
-	virtual ActionResult< CEyeballBoss >	Update( CEyeballBoss *me, float interval );
+   public:
+    virtual ActionResult< CEyeballBoss > OnStart( CEyeballBoss *me, Action< CEyeballBoss > *priorAction );
+    virtual ActionResult< CEyeballBoss > Update( CEyeballBoss *me, float interval );
 
-	virtual const char *GetName( void ) const	{ return "Teleport"; }		// return name of this action
+    virtual const char *GetName( void ) const
+    {
+        return "Teleport";
+    }  // return name of this action
 
-private:
-	enum TeleportState
-	{
-		TELEPORTING_OUT,
-		TELEPORTING_IN,
-		DONE
-	};
-	TeleportState m_state;
+   private:
+    enum TeleportState
+    {
+        TELEPORTING_OUT,
+        TELEPORTING_IN,
+        DONE
+    };
+    TeleportState m_state;
 };
-
 
 //---------------------------------------------------------------------------------------------
 //---------------------------------------------------------------------------------------------
 class CEyeballBossEscape : public Action< CEyeballBoss >
 {
-public:
-	virtual ActionResult< CEyeballBoss >	OnStart( CEyeballBoss *me, Action< CEyeballBoss > *priorAction );
-	virtual ActionResult< CEyeballBoss >	Update( CEyeballBoss *me, float interval );
+   public:
+    virtual ActionResult< CEyeballBoss > OnStart( CEyeballBoss *me, Action< CEyeballBoss > *priorAction );
+    virtual ActionResult< CEyeballBoss > Update( CEyeballBoss *me, float interval );
 
-	virtual const char *GetName( void ) const	{ return "Escape"; }		// return name of this action
+    virtual const char *GetName( void ) const
+    {
+        return "Escape";
+    }  // return name of this action
 
-private:
-	CountdownTimer m_timer;
+   private:
+    CountdownTimer m_timer;
 };
 
-
-#endif // EYEBALL_BOSS_TELEPORT_H
+#endif  // EYEBALL_BOSS_TELEPORT_H

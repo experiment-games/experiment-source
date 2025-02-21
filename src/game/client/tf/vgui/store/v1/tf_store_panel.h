@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -16,23 +16,24 @@
 class CStorePage;
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 class CTFStorePanel1 : public CTFBaseStorePanel
 {
-	DECLARE_CLASS_SIMPLE( CTFStorePanel1, CTFBaseStorePanel );
-public:
-	CTFStorePanel1( vgui::Panel *parent );
+    DECLARE_CLASS_SIMPLE( CTFStorePanel1, CTFBaseStorePanel );
 
-	// UI Layout
-	virtual void ApplySchemeSettings( vgui::IScheme *pScheme );
-	virtual void OnThink();
+   public:
+    CTFStorePanel1( vgui::Panel *parent );
 
-	// GC Management
-	virtual void	PostTransactionCompleted( void );
+    // UI Layout
+    virtual void ApplySchemeSettings( vgui::IScheme *pScheme );
+    virtual void OnThink();
 
-private:
-	virtual CStorePage	*CreateStorePage( const CEconStoreCategoryManager::StoreCategory_t *pPageData );
+    // GC Management
+    virtual void PostTransactionCompleted( void );
+
+   private:
+    virtual CStorePage *CreateStorePage( const CEconStoreCategoryManager::StoreCategory_t *pPageData );
 };
 
-#endif // TF_STORE_PANEL1_H
+#endif  // TF_STORE_PANEL1_H

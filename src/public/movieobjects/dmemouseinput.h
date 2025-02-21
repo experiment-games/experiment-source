@@ -12,34 +12,35 @@
 
 #include "movieobjects/dmeinput.h"
 
-
 //-----------------------------------------------------------------------------
 // A class representing a camera
 //-----------------------------------------------------------------------------
 class CDmeMouseInput : public CDmeInput
 {
-	DEFINE_ELEMENT( CDmeMouseInput, CDmeInput );
+    DEFINE_ELEMENT( CDmeMouseInput, CDmeInput );
 
-public:
-	virtual bool IsDirty(); // ie needs to operate
-	virtual void Operate();
+   public:
+    virtual bool IsDirty();  // ie needs to operate
+    virtual void Operate();
 
-	virtual void GetInputAttributes ( CUtlVector< CDmAttribute * > &attrs );
-	virtual void GetOutputAttributes( CUtlVector< CDmAttribute * > &attrs );
+    virtual void GetInputAttributes( CUtlVector< CDmAttribute * > &attrs );
+    virtual void GetOutputAttributes( CUtlVector< CDmAttribute * > &attrs );
 
-	// makes the current mouse position be the origin
-	void ResetOrigin() { ResetOrigin( 0.0f, 0.0f ); }
-	void ResetOrigin( float dx, float dy );
+    // makes the current mouse position be the origin
+    void ResetOrigin()
+    {
+        ResetOrigin( 0.0f, 0.0f );
+    }
+    void ResetOrigin( float dx, float dy );
 
-protected:
-	void GetNormalizedCursorPos( float &flX, float &flY );
+   protected:
+    void GetNormalizedCursorPos( float &flX, float &flY );
 
-	float m_xOrigin;
-	float m_yOrigin;
+    float m_xOrigin;
+    float m_yOrigin;
 
-	CDmaVar< float > m_x;
-	CDmaVar< float > m_y;
+    CDmaVar< float > m_x;
+    CDmaVar< float > m_y;
 };
 
-
-#endif // DMEMOUSEINPUT_H
+#endif  // DMEMOUSEINPUT_H

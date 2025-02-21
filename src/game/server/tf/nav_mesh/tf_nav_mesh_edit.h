@@ -6,6 +6,4 @@
 #ifndef TF_NAV_MESH_EDIT_H
 #define TF_NAV_MESH_EDIT_H
 
-
-
-#endif // TF_NAV_MESH_EDIT_H
+#endif  // TF_NAV_MESH_EDIT_H

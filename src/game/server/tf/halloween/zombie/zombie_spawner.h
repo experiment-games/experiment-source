@@ -8,28 +8,29 @@
 
 class CZombieSpawner : public CPointEntity
 {
-	DECLARE_CLASS( CZombieSpawner, CPointEntity );
-	DECLARE_DATADESC();
-public:
-	CZombieSpawner();
+    DECLARE_CLASS( CZombieSpawner, CPointEntity );
+    DECLARE_DATADESC();
 
-	virtual void Spawn();
-	virtual void Think();
+   public:
+    CZombieSpawner();
 
-	void InputEnable( inputdata_t &inputdata );
-	void InputDisable( inputdata_t &inputdata );
-	void InputSetMaxActiveZombies( inputdata_t &inputdata );
+    virtual void Spawn();
+    virtual void Think();
 
-private:
-	bool m_bEnabled;
-	bool m_bInfiniteZombies;
-	int m_nMaxActiveZombies;
-	float m_flZombieLifeTime;
-	int m_nSkeletonType;
+    void InputEnable( inputdata_t &inputdata );
+    void InputDisable( inputdata_t &inputdata );
+    void InputSetMaxActiveZombies( inputdata_t &inputdata );
 
-	int m_nSpawned;
+   private:
+    bool m_bEnabled;
+    bool m_bInfiniteZombies;
+    int m_nMaxActiveZombies;
+    float m_flZombieLifeTime;
+    int m_nSkeletonType;
 
-	CUtlVector< CHandle< CZombie > > m_activeZombies;
+    int m_nSpawned;
+
+    CUtlVector< CHandle< CZombie > > m_activeZombies;
 };
 
-#endif // ZOMBIE_SPAWN_H
+#endif  // ZOMBIE_SPAWN_H

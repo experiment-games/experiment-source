@@ -16,19 +16,20 @@
 using namespace vgui;
 
 //-----------------------------------------------------------------------------
-// Purpose: Slideshow panel that adds all screenshots associated 
+// Purpose: Slideshow panel that adds all screenshots associated
 // with a given replay.
 //-----------------------------------------------------------------------------
 class CReplayScreenshotSlideshowPanel : public CSlideshowPanel
 {
-	DECLARE_CLASS_SIMPLE( CReplayScreenshotSlideshowPanel, CSlideshowPanel );
-public:
-	CReplayScreenshotSlideshowPanel( Panel *pParent, const char *pName, ReplayHandle_t hReplay );
+    DECLARE_CLASS_SIMPLE( CReplayScreenshotSlideshowPanel, CSlideshowPanel );
 
-	virtual void PerformLayout();
+   public:
+    CReplayScreenshotSlideshowPanel( Panel *pParent, const char *pName, ReplayHandle_t hReplay );
 
-private:
-	ReplayHandle_t		m_hReplay;
+    virtual void PerformLayout();
+
+   private:
+    ReplayHandle_t m_hReplay;
 };
 
 //-----------------------------------------------------------------------------
@@ -41,53 +42,54 @@ class CMoviePlayerPanel;
 
 class CReplayBrowserThumbnail : public CReplayBasePanel
 {
-	DECLARE_CLASS_SIMPLE( CReplayBrowserThumbnail, CReplayBasePanel );
-public:
-	CReplayBrowserThumbnail( Panel *pParent, const char *pName, QueryableReplayItemHandle_t hReplayItem, IReplayItemManager *pReplayItemManager );
-	~CReplayBrowserThumbnail();
+    DECLARE_CLASS_SIMPLE( CReplayBrowserThumbnail, CReplayBasePanel );
 
-	virtual void ApplySchemeSettings( IScheme *pScheme );
-	virtual void PerformLayout();
-	virtual void OnMousePressed( MouseCode code );
+   public:
+    CReplayBrowserThumbnail( Panel *pParent, const char *pName, QueryableReplayItemHandle_t hReplayItem, IReplayItemManager *pReplayItemManager );
+    ~CReplayBrowserThumbnail();
 
-	virtual void OnTick();
+    virtual void ApplySchemeSettings( IScheme *pScheme );
+    virtual void PerformLayout();
+    virtual void OnMousePressed( MouseCode code );
 
-	virtual void OnCommand( const char *pCommand );
+    virtual void OnTick();
 
-	void UpdateTitleText();
+    virtual void OnCommand( const char *pCommand );
 
-	void SetReplayItem( QueryableReplayItemHandle_t hReplayItem );
-	
-	CGenericClassBasedReplay	*GetReplay();
-	IQueryableReplayItem		*GetReplayItem();
+    void UpdateTitleText();
 
-	MESSAGE_FUNC_PARAMS( OnDownloadClicked, "Download", pParams );
-	MESSAGE_FUNC_PARAMS( OnDeleteReplay, "delete_replayitem", pParams );
+    void SetReplayItem( QueryableReplayItemHandle_t hReplayItem );
 
-	CCrossfadableImagePanel			*m_pScreenshotThumb;
-	QueryableReplayItemHandle_t		m_hReplayItem;
+    CGenericClassBasedReplay *GetReplay();
+    IQueryableReplayItem *GetReplayItem();
 
-private:
-	void SetupReplayItemUserData( void *pUserData );
-	void UpdateProgress( bool bDownloadPhase, const CReplay *pReplay );
+    MESSAGE_FUNC_PARAMS( OnDownloadClicked, "Download", pParams );
+    MESSAGE_FUNC_PARAMS( OnDeleteReplay, "delete_replayitem", pParams );
 
-	Label				*m_pTitle;
-	Label				*m_pDownloadLabel;
-	Label				*m_pRecordingInProgressLabel;
-	ProgressBar			*m_pDownloadProgress;
-	CExButton			*m_pDownloadButton;
-	CExButton			*m_pDeleteButton;
-	Label				*m_pErrorLabel;
-	CMoviePlayerPanel	*m_pMoviePlayer;
-	Panel				*m_pDownloadOverlay;
-	EditablePanel		*m_pBorderPanel;
-	Color				m_clrHighlight;
-	Color				m_clrDefaultBg;
-	bool				m_bMouseOver;
-	IReplayItemManager	*m_pReplayItemManager;
-	float				m_flLastMovieScrubTime;
-	float				m_flHoverStartTime;
-	float				m_flLastProgressChangeTime;
+    CCrossfadableImagePanel *m_pScreenshotThumb;
+    QueryableReplayItemHandle_t m_hReplayItem;
+
+   private:
+    void SetupReplayItemUserData( void *pUserData );
+    void UpdateProgress( bool bDownloadPhase, const CReplay *pReplay );
+
+    Label *m_pTitle;
+    Label *m_pDownloadLabel;
+    Label *m_pRecordingInProgressLabel;
+    ProgressBar *m_pDownloadProgress;
+    CExButton *m_pDownloadButton;
+    CExButton *m_pDeleteButton;
+    Label *m_pErrorLabel;
+    CMoviePlayerPanel *m_pMoviePlayer;
+    Panel *m_pDownloadOverlay;
+    EditablePanel *m_pBorderPanel;
+    Color m_clrHighlight;
+    Color m_clrDefaultBg;
+    bool m_bMouseOver;
+    IReplayItemManager *m_pReplayItemManager;
+    float m_flLastMovieScrubTime;
+    float m_flHoverStartTime;
+    float m_flLastProgressChangeTime;
 };
 
 //-----------------------------------------------------------------------------
@@ -95,23 +97,27 @@ private:
 //-----------------------------------------------------------------------------
 class CReplayBrowserThumbnailRow : public EditablePanel
 {
-	DECLARE_CLASS_SIMPLE( CReplayBrowserThumbnailRow, EditablePanel );
-public:
-	CReplayBrowserThumbnailRow( Panel *pParent, const char *pName, IReplayItemManager *pReplayItemManager );
+    DECLARE_CLASS_SIMPLE( CReplayBrowserThumbnailRow, EditablePanel );
 
-	void AddReplayThumbnail( const IQueryableReplayItem *pReplay );
-	void AddReplayThumbnail( QueryableReplayItemHandle_t hReplayItem );
-	void DeleteReplayItemThumbnail( const IQueryableReplayItem *pReplayItem );
-	int GetNumReplayItems() const { return m_vecThumbnails.Count(); }
-	int GetNumVisibleReplayItems() const;
+   public:
+    CReplayBrowserThumbnailRow( Panel *pParent, const char *pName, IReplayItemManager *pReplayItemManager );
 
-	virtual void ApplySchemeSettings( IScheme *pScheme );
-	virtual void PerformLayout();
+    void AddReplayThumbnail( const IQueryableReplayItem *pReplay );
+    void AddReplayThumbnail( QueryableReplayItemHandle_t hReplayItem );
+    void DeleteReplayItemThumbnail( const IQueryableReplayItem *pReplayItem );
+    int GetNumReplayItems() const
+    {
+        return m_vecThumbnails.Count();
+    }
+    int GetNumVisibleReplayItems() const;
 
-	CReplayBrowserThumbnail *FindThumbnail( const IQueryableReplayItem *pReplay );
+    virtual void ApplySchemeSettings( IScheme *pScheme );
+    virtual void PerformLayout();
 
-	CUtlVector< CReplayBrowserThumbnail * > m_vecThumbnails;
-	IReplayItemManager		*m_pReplayItemManager;
+    CReplayBrowserThumbnail *FindThumbnail( const IQueryableReplayItem *pReplay );
+
+    CUtlVector< CReplayBrowserThumbnail * > m_vecThumbnails;
+    IReplayItemManager *m_pReplayItemManager;
 };
 
 //-----------------------------------------------------------------------------
@@ -124,116 +130,120 @@ class CReplayListPanel;
 
 class CBaseThumbnailCollection : public EditablePanel
 {
-	DECLARE_CLASS_SIMPLE( CBaseThumbnailCollection, EditablePanel );
-public:
-	CBaseThumbnailCollection( CReplayListPanel *pParent, const char *pName, IReplayItemManager *pReplayItemManager );
+    DECLARE_CLASS_SIMPLE( CBaseThumbnailCollection, EditablePanel );
 
-	void			AddReplay( const IQueryableReplayItem *pItem );
+   public:
+    CBaseThumbnailCollection( CReplayListPanel *pParent, const char *pName, IReplayItemManager *pReplayItemManager );
 
-	virtual bool	IsMovieCollection() const = 0;
+    void AddReplay( const IQueryableReplayItem *pItem );
 
-	void			CleanupUIForReplayItem( ReplayItemHandle_t hReplayItem );
+    virtual bool IsMovieCollection() const = 0;
 
-	virtual void	PerformLayout();
-	virtual void	ApplySchemeSettings( IScheme *pScheme );
+    void CleanupUIForReplayItem( ReplayItemHandle_t hReplayItem );
 
-	void			RemoveEmptyRows();
-	void			RemoveAll();
+    virtual void PerformLayout();
+    virtual void ApplySchemeSettings( IScheme *pScheme );
 
-	void			OnUpdated();
+    void RemoveEmptyRows();
+    void RemoveAll();
 
-	void			OnCommand( const char *pCommand );
+    void OnUpdated();
 
-	CReplayBrowserThumbnailRow *FindReplayItemThumbnailRow( const IQueryableReplayItem *pReplayItem );
+    void OnCommand( const char *pCommand );
 
-	inline int		GetNumRows() const { return m_vecRows.Count(); }
+    CReplayBrowserThumbnailRow *FindReplayItemThumbnailRow( const IQueryableReplayItem *pReplayItem );
 
-	typedef CUtlVector< CReplayBrowserThumbnailRow * > RowContainer_t;
-	RowContainer_t	m_vecRows;
+    inline int GetNumRows() const
+    {
+        return m_vecRows.Count();
+    }
 
-protected:
-	// Called from PerformLayout() - layout any panels that should appear at the top (vertically)-most position
-	virtual void	LayoutUpperPanels( int nStartY, int nBgWidth ) = 0;
-	virtual void	LayoutBackgroundPanel( int nWide, int nTall ) {}
-	virtual Panel	*GetLowestPanel( int &nVerticalBuffer ) = 0;
+    typedef CUtlVector< CReplayBrowserThumbnailRow * > RowContainer_t;
+    RowContainer_t m_vecRows;
 
-	void			UpdateViewingPage( void );
+   protected:
+    // Called from PerformLayout() - layout any panels that should appear at the top (vertically)-most position
+    virtual void LayoutUpperPanels( int nStartY, int nBgWidth ) = 0;
+    virtual void LayoutBackgroundPanel( int nWide, int nTall ) {}
+    virtual Panel *GetLowestPanel( int &nVerticalBuffer ) = 0;
 
-	int				m_nStartX;
+    void UpdateViewingPage( void );
 
-protected:
-	CExLabel			*m_pNoReplayItemsLabel;
-	IReplayItemManager	*m_pReplayItemManager;
+    int m_nStartX;
 
-	CExButton			*m_pShowNextButton;
-	CExButton			*m_pShowPrevButton;
-	CUtlVector<ReplayItemHandle_t>	m_vecReplays;
-	int					m_iViewingPage;
+   protected:
+    CExLabel *m_pNoReplayItemsLabel;
+    IReplayItemManager *m_pReplayItemManager;
 
-	int					m_nReplayThumbnailsPerRow;
-	int					m_nMaxRows;
+    CExButton *m_pShowNextButton;
+    CExButton *m_pShowPrevButton;
+    CUtlVector< ReplayItemHandle_t > m_vecReplays;
+    int m_iViewingPage;
 
-	CExLabel			*m_pCaratLabel;
-	CExLabel			*m_pTitleLabel;
-	CExButton			*m_pRenderAllButton;
+    int m_nReplayThumbnailsPerRow;
+    int m_nMaxRows;
 
-private:
-	int GetRowStartY();
+    CExLabel *m_pCaratLabel;
+    CExLabel *m_pTitleLabel;
+    CExButton *m_pRenderAllButton;
 
-	CReplayListPanel	*m_pParentListPanel;		// Parent gets altered so we keep this cached ptr around
+   private:
+    int GetRowStartY();
+
+    CReplayListPanel *m_pParentListPanel;  // Parent gets altered so we keep this cached ptr around
 };
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 class CReplayThumbnailCollection : public CBaseThumbnailCollection
 {
-	DECLARE_CLASS_SIMPLE( CReplayThumbnailCollection, CBaseThumbnailCollection );
-public:
-	CReplayThumbnailCollection( CReplayListPanel *pParent, const char *pName, IReplayItemManager *pReplayItemManager );
+    DECLARE_CLASS_SIMPLE( CReplayThumbnailCollection, CBaseThumbnailCollection );
 
-	virtual bool	IsMovieCollection() const;
+   public:
+    CReplayThumbnailCollection( CReplayListPanel *pParent, const char *pName, IReplayItemManager *pReplayItemManager );
 
-	virtual void	PerformLayout();
-	virtual void	ApplySchemeSettings( IScheme *pScheme );
+    virtual bool IsMovieCollection() const;
 
-	virtual void	LayoutUpperPanels( int nStartY, int nBgWidth );
-	virtual void	LayoutBackgroundPanel( int nWide, int nTall );
-	virtual Panel	*GetLowestPanel( int &nVerticalBuffer );
+    virtual void PerformLayout();
+    virtual void ApplySchemeSettings( IScheme *pScheme );
 
-	Panel			*m_pLinePanel;
-	CExLabel		*m_pWarningLabel;
-	Panel			*m_pUnconvertedBg;
+    virtual void LayoutUpperPanels( int nStartY, int nBgWidth );
+    virtual void LayoutBackgroundPanel( int nWide, int nTall );
+    virtual Panel *GetLowestPanel( int &nVerticalBuffer );
+
+    Panel *m_pLinePanel;
+    CExLabel *m_pWarningLabel;
+    Panel *m_pUnconvertedBg;
 };
 
-#define OLDER_MOVIES_COLLECTION		-2
+#define OLDER_MOVIES_COLLECTION -2
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 class CMovieThumbnailCollection : public CBaseThumbnailCollection
 {
-	DECLARE_CLASS_SIMPLE( CMovieThumbnailCollection, CBaseThumbnailCollection );
-public:
-	CMovieThumbnailCollection( CReplayListPanel *pParent, const char *pName, IReplayItemManager *pReplayItemManager,
-								     int nDay, int nMonth, int nYear, bool bShowSavedMoviesLabel );
-	CMovieThumbnailCollection( CReplayListPanel *pParent, const char *pName, IReplayItemManager *pReplayItemManager,
-								     bool bShowSavedMoviesLabel );
+    DECLARE_CLASS_SIMPLE( CMovieThumbnailCollection, CBaseThumbnailCollection );
 
-	bool			DoesDateMatch( int nDay, int nMonth, int nYear );
-	virtual bool	IsMovieCollection() const;
+   public:
+    CMovieThumbnailCollection( CReplayListPanel *pParent, const char *pName, IReplayItemManager *pReplayItemManager, int nDay, int nMonth, int nYear, bool bShowSavedMoviesLabel );
+    CMovieThumbnailCollection( CReplayListPanel *pParent, const char *pName, IReplayItemManager *pReplayItemManager, bool bShowSavedMoviesLabel );
 
-private:
-	void			Init( int nDay, int nMonth, int nYear, bool bShowSavedMoviesLabel );
-	virtual void	PerformLayout();
-	virtual void	ApplySchemeSettings( IScheme *pScheme );
+    bool DoesDateMatch( int nDay, int nMonth, int nYear );
+    virtual bool IsMovieCollection() const;
 
-	Panel			*GetLowestPanel( int &nVerticalBuffer );
-	void			LayoutUpperPanels( int nStartY, int nBgWidth );
+   private:
+    void Init( int nDay, int nMonth, int nYear, bool bShowSavedMoviesLabel );
+    virtual void PerformLayout();
+    virtual void ApplySchemeSettings( IScheme *pScheme );
 
-	int				m_nDay, m_nMonth, m_nYear;
-	CExLabel		*m_pDateLabel;
-	bool			m_bShowSavedMoviesLabel;
+    Panel *GetLowestPanel( int &nVerticalBuffer );
+    void LayoutUpperPanels( int nStartY, int nBgWidth );
+
+    int m_nDay, m_nMonth, m_nYear;
+    CExLabel *m_pDateLabel;
+    bool m_bShowSavedMoviesLabel;
 };
 
-#endif // REPLAYLISTITEMPANEL_H
+#endif  // REPLAYLISTITEMPANEL_H

@@ -18,7 +18,7 @@ BEGIN_PREDICTION_DATA( CTFNailgun )
 END_PREDICTION_DATA()
 
 LINK_ENTITY_TO_CLASS( tf_weapon_nailgun, CTFNailgun );
-PRECACHE_WEAPON_REGISTER( tf_weapon_nailgun);
+PRECACHE_WEAPON_REGISTER( tf_weapon_nailgun );
 
 // Server specific.
 #ifndef CLIENT_DLL

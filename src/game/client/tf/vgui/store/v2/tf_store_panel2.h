@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -16,26 +16,27 @@
 class CStorePage;
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 class CTFStorePanel2 : public CTFBaseStorePanel
 {
-	DECLARE_CLASS_SIMPLE( CTFStorePanel2, CTFBaseStorePanel );
-public:
-	CTFStorePanel2( vgui::Panel *parent );
+    DECLARE_CLASS_SIMPLE( CTFStorePanel2, CTFBaseStorePanel );
 
-	// UI Layout
-	virtual void ApplySchemeSettings( vgui::IScheme *pScheme );
-	virtual void OnThink();
-	virtual void OnKeyCodePressed( vgui::KeyCode code );
-	virtual void ShowPanel( bool bShow );
-	virtual void OnAddToCart( void );
+   public:
+    CTFStorePanel2( vgui::Panel *parent );
 
-	// GC Management
-	virtual void	PostTransactionCompleted( void );
+    // UI Layout
+    virtual void ApplySchemeSettings( vgui::IScheme *pScheme );
+    virtual void OnThink();
+    virtual void OnKeyCodePressed( vgui::KeyCode code );
+    virtual void ShowPanel( bool bShow );
+    virtual void OnAddToCart( void );
 
-private:
-	virtual CStorePage	*CreateStorePage( const CEconStoreCategoryManager::StoreCategory_t *pPageData );
+    // GC Management
+    virtual void PostTransactionCompleted( void );
+
+   private:
+    virtual CStorePage *CreateStorePage( const CEconStoreCategoryManager::StoreCategory_t *pPageData );
 };
 
-#endif // TF_STORE_PANEL2_H
+#endif  // TF_STORE_PANEL2_H

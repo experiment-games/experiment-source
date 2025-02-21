@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
 
@@ -10,67 +10,66 @@
 #pragma once
 #endif
 
-
 class CDmAttribute;
 
 //-----------------------------------------------------------------------------
 // Helper template for external attributes
 //-----------------------------------------------------------------------------
-template< typename T >
+template < typename T >
 class CDmaVar
 {
-	typedef typename CDmAttributeInfo< T >::StorageType_t D;
+    typedef typename CDmAttributeInfo< T >::StorageType_t D;
 
-public:
-	CDmaVar( );
+   public:
+    CDmaVar();
 
-	// Setup to be used in OnConstruction methods of DmElements
-	void Init( CDmElement *pOwner, const char *pAttributeName, int flags = 0 );
-	void InitAndSet( CDmElement *pOwner, const char *pAttributeName, const T &value, int flags = 0 );
+    // Setup to be used in OnConstruction methods of DmElements
+    void Init( CDmElement *pOwner, const char *pAttributeName, int flags = 0 );
+    void InitAndSet( CDmElement *pOwner, const char *pAttributeName, const T &value, int flags = 0 );
 
-	// Set/get
-	const T& Set( const T &val );
-	const T& Get() const;
+    // Set/get
+    const T &Set( const T &val );
+    const T &Get() const;
 
-	// Cast operators
-	operator const T&() const;
-	const T* operator->() const;
+    // Cast operators
+    operator const T &() const;
+    const T *operator->() const;
 
-	// Assignment operator
-	const CDmaVar<T>& operator=( const CDmaVar<T>& src );
+    // Assignment operator
+    const CDmaVar< T > &operator=( const CDmaVar< T > &src );
 
-	// Math utility operations
-	const T& operator=( const T &val );
-	const T& operator+=( const T &val ); 
-	const T& operator-=( const T &val ); 
-	const T& operator/=( const T &val ); 
-	const T& operator*=( const T &val ); 
-	const T& operator^=( const T &val ); 
-	const T& operator|=( const T &val ); 
-	const T& operator&=( const T &val ); 
-	T operator++();
-	T operator--();
-	T operator++( int ); // postfix version..
-	T operator--( int ); // postfix version..
+    // Math utility operations
+    const T &operator=( const T &val );
+    const T &operator+=( const T &val );
+    const T &operator-=( const T &val );
+    const T &operator/=( const T &val );
+    const T &operator*=( const T &val );
+    const T &operator^=( const T &val );
+    const T &operator|=( const T &val );
+    const T &operator&=( const T &val );
+    T operator++();
+    T operator--();
+    T operator++( int );  // postfix version..
+    T operator--( int );  // postfix version..
 
-	// Returns the attribute associated with the var
-	CDmAttribute *GetAttribute();
-	const CDmAttribute *GetAttribute() const;
+    // Returns the attribute associated with the var
+    CDmAttribute *GetAttribute();
+    const CDmAttribute *GetAttribute() const;
 
-	// Is the attribute dirty?
-	bool IsDirty() const;
+    // Is the attribute dirty?
+    bool IsDirty() const;
 
-protected:
-	const T& Value() const;
-	T& Value();
-	const D& Storage() const;
-	D& Storage();
+   protected:
+    const T &Value() const;
+    T &Value();
+    const D &Storage() const;
+    D &Storage();
 
-private:
-	D m_Storage;
+   private:
+    D m_Storage;
 
-protected:
-	CDmAttribute *m_pAttribute;
+   protected:
+    CDmAttribute *m_pAttribute;
 };
 
 //-----------------------------------------------------------------------------
@@ -78,16 +77,16 @@ protected:
 //-----------------------------------------------------------------------------
 class CDmaString : public CDmaVar< CUtlString >
 {
-public:
-	const char *Get( ) const;
-	operator const char*() const;
+   public:
+    const char *Get() const;
+    operator const char *() const;
 
-	void Set( const char *pValue );
-	CDmaString &operator=( const char *src );
-	const CDmaString& operator=( const CDmaString& src );
+    void Set( const char *pValue );
+    CDmaString &operator=( const char *src );
+    const CDmaString &operator=( const CDmaString &src );
 
-	// Returns strlen
-	int	Length() const;
+    // Returns strlen
+    int Length() const;
 };
 
-#endif // DMVAR_H
+#endif  // DMVAR_H

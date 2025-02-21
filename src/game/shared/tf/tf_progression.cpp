@@ -8,20 +8,20 @@
 
 const IProgressionDesc* GetProgressionDesc( EProgressionDesc eType )
 {
-	static CCasualProgressionDesc progressionCasual;
-	static CDrilloProgressionDesc progressionDrillo;
-	static CGlickoProgressionDesc progressionGlicko;
+    static CCasualProgressionDesc progressionCasual;
+    static CDrilloProgressionDesc progressionDrillo;
+    static CGlickoProgressionDesc progressionGlicko;
 
-	switch ( eType )
-	{
-	case k_eProgression_Casual:
-		return &progressionCasual;
-	case k_eProgression_Drillo:
-		return &progressionDrillo;
-	case k_eProgression_Glicko:
-		return &progressionGlicko;
-	}
+    switch ( eType )
+    {
+        case k_eProgression_Casual:
+            return &progressionCasual;
+        case k_eProgression_Drillo:
+            return &progressionDrillo;
+        case k_eProgression_Glicko:
+            return &progressionGlicko;
+    }
 
-	Assert( false );
-	return NULL;
+    Assert( false );
+    return NULL;
 }

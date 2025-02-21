@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
 
@@ -10,8 +10,6 @@
 #pragma once
 #endif
 
-
 #include "serverbenchmark_base.h"
 
-
-#endif // SERVERBENCHMARK_TF_H
+#endif  // SERVERBENCHMARK_TF_H

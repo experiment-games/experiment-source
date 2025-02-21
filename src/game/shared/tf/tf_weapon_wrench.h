@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
 
@@ -25,38 +25,44 @@
 //
 class CTFWrench : public CTFWeaponBaseMelee
 {
-public:
+   public:
+    DECLARE_CLASS( CTFWrench, CTFWeaponBaseMelee );
+    DECLARE_NETWORKCLASS();
+    DECLARE_PREDICTABLE();
 
-	DECLARE_CLASS( CTFWrench, CTFWeaponBaseMelee );
-	DECLARE_NETWORKCLASS(); 
-	DECLARE_PREDICTABLE();
+    CTFWrench();
 
-	CTFWrench();
+    virtual void Spawn();
+    virtual int GetWeaponID( void ) const
+    {
+        return TF_WEAPON_WRENCH;
+    }
+    virtual void Smack( void );
 
-	virtual void		Spawn();
-	virtual int			GetWeaponID( void ) const			{ return TF_WEAPON_WRENCH; }
-	virtual void		Smack( void );
+    virtual bool Holster( CBaseCombatWeapon *pSwitchingTo );
 
-	virtual bool		Holster( CBaseCombatWeapon *pSwitchingTo );
-
-	bool				IsPDQ( void ) { int iMode = 0; CALL_ATTRIB_HOOK_INT( iMode, wrench_builds_minisentry ); return iMode==1; };
-	float				GetConstructionValue( void );
-	float				GetRepairAmount( void );
+    bool IsPDQ( void )
+    {
+        int iMode = 0;
+        CALL_ATTRIB_HOOK_INT( iMode, wrench_builds_minisentry );
+        return iMode == 1;
+    };
+    float GetConstructionValue( void );
+    float GetRepairAmount( void );
 #ifdef GAME_DLL
-	virtual void		Equip( CBaseCombatCharacter *pOwner );
-	virtual void		Detach();
+    virtual void Equip( CBaseCombatCharacter *pOwner );
+    virtual void Detach();
 
-	void				ApplyBuildingHealthUpgrade( void );
+    void ApplyBuildingHealthUpgrade( void );
 
-	void				OnFriendlyBuildingHit( CBaseObject *pObject, CTFPlayer *pPlayer, Vector hitLoc );
+    void OnFriendlyBuildingHit( CBaseObject *pObject, CTFPlayer *pPlayer, Vector hitLoc );
 #else
-	virtual void		ItemPostFrame();
+    virtual void ItemPostFrame();
 #endif
 
-
-private:
-	bool				m_bReloadDown;
-	CTFWrench( const CTFWrench & ) {}
+   private:
+    bool m_bReloadDown;
+    CTFWrench( const CTFWrench & ) {}
 };
 
 //=============================================================================
@@ -65,47 +71,50 @@ private:
 //
 class CTFRobotArm : public CTFWrench
 {
-public:
-	DECLARE_CLASS( CTFRobotArm, CTFWrench );
-	DECLARE_NETWORKCLASS();
-	DECLARE_PREDICTABLE();
+   public:
+    DECLARE_CLASS( CTFRobotArm, CTFWrench );
+    DECLARE_NETWORKCLASS();
+    DECLARE_PREDICTABLE();
 
-	CTFRobotArm();
+    CTFRobotArm();
 
-	virtual void		Precache();
+    virtual void Precache();
 
 #ifdef GAME_DLL
-	virtual void		Equip( CBaseCombatCharacter *pOwner );
-	virtual void		Drop( const Vector &vecVelocity );
-	virtual void		UpdateOnRemove( void );
-	void				RemoveRobotArm();
-	virtual void		OnActiveStateChanged( int iOldState );
-	virtual int			GetDamageCustom();
-	virtual float		GetForceScale( void );
-	virtual bool 		HideAttachmentsAndShowBodygroupsWhenPerformingWeaponIndependentTaunt() const OVERRIDE { return false; }
+    virtual void Equip( CBaseCombatCharacter *pOwner );
+    virtual void Drop( const Vector &vecVelocity );
+    virtual void UpdateOnRemove( void );
+    void RemoveRobotArm();
+    virtual void OnActiveStateChanged( int iOldState );
+    virtual int GetDamageCustom();
+    virtual float GetForceScale( void );
+    virtual bool HideAttachmentsAndShowBodygroupsWhenPerformingWeaponIndependentTaunt() const OVERRIDE
+    {
+        return false;
+    }
 #endif
 
-	virtual void		PrimaryAttack();
+    virtual void PrimaryAttack();
 
-	virtual void		Smack( void );
-	virtual void		WeaponIdle( void );
+    virtual void Smack( void );
+    virtual void WeaponIdle( void );
 
-	virtual void		DoViewModelAnimation( void );
+    virtual void DoViewModelAnimation( void );
 
-private:
-	CNetworkHandle( CTFWearable, m_hRobotArm );
+   private:
+    CNetworkHandle( CTFWearable, m_hRobotArm );
 
-	int					m_iComboCount;
-	float				m_flLastComboHit;
-	bool				m_bBigIdle;
-	bool				m_bBigHit;
+    int m_iComboCount;
+    float m_flLastComboHit;
+    bool m_bBigIdle;
+    bool m_bBigHit;
 };
 
 class CTFWearableRobotArm : public CTFWearable
 {
-public:
-	DECLARE_CLASS( CTFWearableRobotArm, CTFWearable );
-	DECLARE_NETWORKCLASS();
+   public:
+    DECLARE_CLASS( CTFWearableRobotArm, CTFWearable );
+    DECLARE_NETWORKCLASS();
 };
 
-#endif // TF_WEAPON_WRENCH_H
+#endif  // TF_WEAPON_WRENCH_H

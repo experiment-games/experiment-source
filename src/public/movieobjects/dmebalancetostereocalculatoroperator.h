@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
 
@@ -14,32 +14,31 @@
 
 class CDmeBalanceToStereoCalculatorOperator : public CDmeOperator
 {
-	DEFINE_ELEMENT( CDmeBalanceToStereoCalculatorOperator, CDmeOperator );
+    DEFINE_ELEMENT( CDmeBalanceToStereoCalculatorOperator, CDmeOperator );
 
-public:
-	virtual void Operate();
+   public:
+    virtual void Operate();
 
-	virtual void GetInputAttributes ( CUtlVector< CDmAttribute * > &attrs );
-	virtual void GetOutputAttributes( CUtlVector< CDmAttribute * > &attrs );
+    virtual void GetInputAttributes( CUtlVector< CDmAttribute * > &attrs );
+    virtual void GetOutputAttributes( CUtlVector< CDmAttribute * > &attrs );
 
-	void		SetSpewResult( bool state );
-	 
-protected:
-	float ComputeDefaultValue();
+    void SetSpewResult( bool state );
 
-	CDmaVar< float > m_result_left;
-	CDmaVar< float > m_result_right;
-	CDmaVar< float > m_result_multi;
+   protected:
+    float ComputeDefaultValue();
 
-	CDmaVar< float > m_value;		// input value
-	CDmaVar< float > m_balance;		// balance value
-	CDmaVar< float > m_multilevel;	// multilevel value
+    CDmaVar< float > m_result_left;
+    CDmaVar< float > m_result_right;
+    CDmaVar< float > m_result_multi;
 
-	// Debuggin
-	CDmaVar< bool >  m_bSpewResult;
+    CDmaVar< float > m_value;       // input value
+    CDmaVar< float > m_balance;     // balance value
+    CDmaVar< float > m_multilevel;  // multilevel value
 
-	float m_flDefaultValue;
+    // Debuggin
+    CDmaVar< bool > m_bSpewResult;
+
+    float m_flDefaultValue;
 };
 
-
-#endif // DMEBALANCETOSTEREOCALCULATOROPERATOR_H
+#endif  // DMEBALANCETOSTEREOCALCULATOROPERATOR_H

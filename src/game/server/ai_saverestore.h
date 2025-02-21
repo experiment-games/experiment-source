@@ -14,4 +14,4 @@
 
 ISaveRestoreBlockHandler *GetAISaveRestoreBlockHandler();
 
-#endif // AI_SAVERESTORE_H
+#endif  // AI_SAVERESTORE_H

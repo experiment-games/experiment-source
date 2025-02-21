@@ -7,7 +7,6 @@
 #ifndef TF_LOBBY_CONTAINER_FRAME_H
 #define TF_LOBBY_CONTAINER_FRAME_H
 
-
 #include "cbase.h"
 #include "vgui_controls/PropertyDialog.h"
 #include "GameEventListener.h"
@@ -22,68 +21,68 @@ class CBaseLobbyPanel;
 // This is a big fat kludge so I can use the PropertyPage
 class CBaseLobbyContainerFrame : public vgui::PropertyDialog, public CGameEventListener
 {
-	DECLARE_CLASS_SIMPLE( CBaseLobbyContainerFrame, PropertyDialog );
-public:
-	CBaseLobbyContainerFrame( const char *pszPanelName );
-	virtual ~CBaseLobbyContainerFrame();
+    DECLARE_CLASS_SIMPLE( CBaseLobbyContainerFrame, PropertyDialog );
 
-	//
-	// PropertyDialog overrides
-	//
-	virtual void ApplySchemeSettings( vgui::IScheme *pScheme ) OVERRIDE;
-	virtual void PerformLayout( void ) OVERRIDE;
-	virtual void OnKeyCodeTyped(vgui::KeyCode code) OVERRIDE;
-	virtual void OnKeyCodePressed(vgui::KeyCode code) OVERRIDE;
-	virtual void OnCommand( const char *command ) OVERRIDE;
+   public:
+    CBaseLobbyContainerFrame( const char *pszPanelName );
+    virtual ~CBaseLobbyContainerFrame();
 
-	//
-	// CGameEventListener overrides
-	//
-	virtual void FireGameEvent( IGameEvent *event ) OVERRIDE;
+    //
+    // PropertyDialog overrides
+    //
+    virtual void ApplySchemeSettings( vgui::IScheme *pScheme ) OVERRIDE;
+    virtual void PerformLayout( void ) OVERRIDE;
+    virtual void OnKeyCodeTyped( vgui::KeyCode code ) OVERRIDE;
+    virtual void OnKeyCodePressed( vgui::KeyCode code ) OVERRIDE;
+    virtual void OnCommand( const char *command ) OVERRIDE;
 
-	void StartSearch( void );
-	virtual void ShowPanel(bool bShow);
-	void SetNextButtonEnabled( bool bValue );
+    //
+    // CGameEventListener overrides
+    //
+    virtual void FireGameEvent( IGameEvent *event ) OVERRIDE;
 
-	virtual void OnThink() OVERRIDE;
+    void StartSearch( void );
+    virtual void ShowPanel( bool bShow );
+    void SetNextButtonEnabled( bool bValue );
 
-	static void LeaveLobbyPanel( bool bConfirmed, void *pContext )
-	{
-		CBaseLobbyContainerFrame* pCaller = (CBaseLobbyContainerFrame*)pContext;
-		if ( bConfirmed && pCaller )
-		{
-			pCaller->OnCommand( "back" );
-		}
-	}
+    virtual void OnThink() OVERRIDE;
 
-	MESSAGE_FUNC( OpenPingOptions, "Context_Ping" );
+    static void LeaveLobbyPanel( bool bConfirmed, void *pContext )
+    {
+        CBaseLobbyContainerFrame *pCaller = ( CBaseLobbyContainerFrame * )pContext;
+        if ( bConfirmed && pCaller )
+        {
+            pCaller->OnCommand( "back" );
+        }
+    }
 
-	// What is this panel good for?
-	virtual bool CanHandleMatchGroup( ETFMatchGroup eMatchGroup ) const = 0;
-	// Helper that checks against the currently selected party matchgroup
-	bool CanHandleCurrentMatchGroup() const;
+    MESSAGE_FUNC( OpenPingOptions, "Context_Ping" );
 
-protected:
-	bool ShouldShowPartyButton() const;
-	virtual void WriteControls();
-	virtual void HandleBackPressed();
-	void OpenOptionsContextMenu();
+    // What is this panel good for?
+    virtual bool CanHandleMatchGroup( ETFMatchGroup eMatchGroup ) const = 0;
+    // Helper that checks against the currently selected party matchgroup
+    bool CanHandleCurrentMatchGroup() const;
 
-	CBaseLobbyPanel *m_pContents;
-	vgui::Button *m_pNextButton;
-	vgui::Button *m_pBackButton;
+   protected:
+    bool ShouldShowPartyButton() const;
+    virtual void WriteControls();
+    virtual void HandleBackPressed();
+    void OpenOptionsContextMenu();
 
-private:
-	virtual const char* GetResFile() const = 0;
-	virtual bool VerifyPartyAuthorization() const = 0;
+    CBaseLobbyPanel *m_pContents;
+    vgui::Button *m_pNextButton;
+    vgui::Button *m_pBackButton;
 
+   private:
+    virtual const char *GetResFile() const = 0;
+    virtual bool VerifyPartyAuthorization() const = 0;
 
-	vgui::Button *m_pStartPartyButton;
-	vgui::Menu *m_pContextMenu;
+    vgui::Button *m_pStartPartyButton;
+    vgui::Menu *m_pContextMenu;
 
-	bool m_bNextButtonEnabled;
+    bool m_bNextButtonEnabled;
 
-	vgui::DHANDLE< vgui::Panel > m_hPingPanel;
+    vgui::DHANDLE< vgui::Panel > m_hPingPanel;
 };
 
-#endif //TF_LOBBY_CONTAINER_FRAME_H
+#endif  // TF_LOBBY_CONTAINER_FRAME_H

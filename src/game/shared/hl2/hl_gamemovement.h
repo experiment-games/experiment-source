@@ -22,8 +22,8 @@ class CInfoLadderDismount;
 
 struct NearbyDismount_t
 {
-	CInfoLadderDismount		*dismount;
-	float					distSqr;
+    CInfoLadderDismount *dismount;
+    float distSqr;
 };
 
 //-----------------------------------------------------------------------------
@@ -31,112 +31,109 @@ struct NearbyDismount_t
 //-----------------------------------------------------------------------------
 class CHL2GameMovement : public CGameMovement
 {
-	typedef CGameMovement BaseClass;
-public:
+    typedef CGameMovement BaseClass;
 
-	CHL2GameMovement();
+   public:
+    CHL2GameMovement();
 
-// Overrides
-	virtual void ProcessMovement( CBasePlayer *pPlayer, CMoveData *pMove ) OVERRIDE;
-	virtual void CheckParameters( void ) OVERRIDE;
-	virtual void ReduceTimers( void ) OVERRIDE;
-	virtual void FullLadderMove();
-	virtual bool LadderMove( void );
-	virtual bool OnLadder( trace_t &trace );
-	virtual int GetCheckInterval( IntervalType_t type );
-	virtual void	SetGroundEntity( trace_t *pm );
-	virtual bool CanAccelerate( void );
+    // Overrides
+    virtual void ProcessMovement( CBasePlayer *pPlayer, CMoveData *pMove ) OVERRIDE;
+    virtual void CheckParameters( void ) OVERRIDE;
+    virtual void ReduceTimers( void ) OVERRIDE;
+    virtual void FullLadderMove();
+    virtual bool LadderMove( void );
+    virtual bool OnLadder( trace_t &trace );
+    virtual int GetCheckInterval( IntervalType_t type );
+    virtual void SetGroundEntity( trace_t *pm );
+    virtual bool CanAccelerate( void );
 
-	virtual float MaxSpeed();
+    virtual float MaxSpeed();
 
-private:
+   private:
+    // See if we are pressing use near a ladder "mount" point and if so, latch us onto the ladder
+    bool CheckLadderAutoMount( CFuncLadder *ladder, const Vector &bestOrigin );
 
-	// See if we are pressing use near a ladder "mount" point and if so, latch us onto the ladder
-	bool		CheckLadderAutoMount( CFuncLadder *ladder, const Vector& bestOrigin );
+    bool CheckLadderAutoMountCone( CFuncLadder *ladder, const Vector &bestOrigin, float maxAngleDelta, float maxDistToLadder );
+    bool CheckLadderAutoMountEndPoint( CFuncLadder *ladder, const Vector &bestOrigin );
 
-	bool		CheckLadderAutoMountCone( CFuncLadder *ladder, const Vector& bestOrigin, float maxAngleDelta, float maxDistToLadder );
-	bool		CheckLadderAutoMountEndPoint(CFuncLadder *ladder, const Vector& bestOrigin );
+    bool LookingAtLadder( CFuncLadder *ladder );
 
+    // Are we forcing the user's position to a new spot
+    bool IsForceMoveActive();
+    // Start forcing player position
+    void StartForcedMove( bool mounting, float transit_speed, const Vector &goalpos, CFuncLadder *ladder );
+    // Returns false when finished
+    bool ContinueForcedMove();
 
-	bool		LookingAtLadder( CFuncLadder *ladder );
+    // Given a list of nearby ladders, find the best ladder and the "mount" origin
+    void Findladder( float maxdist, CFuncLadder **ppLadder, Vector &ladderOrigin, const CFuncLadder *skipLadder );
 
-	// Are we forcing the user's position to a new spot
-	bool		IsForceMoveActive();
-	// Start forcing player position
-	void		StartForcedMove( bool mounting, float transit_speed, const Vector& goalpos, CFuncLadder *ladder );
-	// Returns false when finished
-	bool		ContinueForcedMove();
+    // Debounce the +USE key
+    void SwallowUseKey();
 
-	// Given a list of nearby ladders, find the best ladder and the "mount" origin
-	void		Findladder( float maxdist, CFuncLadder **ppLadder, Vector& ladderOrigin, const CFuncLadder *skipLadder );
+    // Returns true if the player will auto-exit the ladder via a dismount node
+    bool ExitLadderViaDismountNode( CFuncLadder *ladder, bool strict, bool useAlternate = false );
+    void GetSortedDismountNodeList( const Vector &org, float radius, CFuncLadder *ladder, CUtlRBTree< NearbyDismount_t, int > &list );
 
-	// Debounce the +USE key
-	void		SwallowUseKey();
+    LadderMove_t *GetLadderMove();
+    CHL2_Player *GetHL2Player();
 
-	// Returns true if the player will auto-exit the ladder via a dismount node
-	bool		ExitLadderViaDismountNode( CFuncLadder *ladder, bool strict, bool useAlternate = false );
-	void		GetSortedDismountNodeList( const Vector &org, float radius, CFuncLadder *ladder, CUtlRBTree< NearbyDismount_t, int >& list );
-
-	LadderMove_t *GetLadderMove();
-	CHL2_Player	*GetHL2Player();
-
-	void		SetLadder( CFuncLadder *ladder );
-	CFuncLadder *GetLadder();
+    void SetLadder( CFuncLadder *ladder );
+    CFuncLadder *GetLadder();
 };
 
-
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-inline CHL2_Player	*CHL2GameMovement::GetHL2Player()
+inline CHL2_Player *CHL2GameMovement::GetHL2Player()
 {
-	return static_cast< CHL2_Player * >( player );
+    return static_cast< CHL2_Player * >( player );
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : inline LadderMove*
 //-----------------------------------------------------------------------------
 inline LadderMove_t *CHL2GameMovement::GetLadderMove()
 {
-	CHL2_Player *p = GetHL2Player();
-	if ( !p )
-	{
-		return NULL;
-	}
-	return p->GetLadderMove();
+    CHL2_Player *p = GetHL2Player();
+    if ( !p )
+    {
+        return NULL;
+    }
+    return p->GetLadderMove();
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *ladder - 
+// Purpose:
+// Input  : *ladder -
 //-----------------------------------------------------------------------------
 inline void CHL2GameMovement::SetLadder( CFuncLadder *ladder )
 {
-	CFuncLadder* oldLadder = GetLadder();
+    CFuncLadder *oldLadder = GetLadder();
 
-	if ( !ladder && oldLadder )
-	{
-		oldLadder->PlayerGotOff( GetHL2Player() );
-	}
+    if ( !ladder && oldLadder )
+    {
+        oldLadder->PlayerGotOff( GetHL2Player() );
+    }
 
-	GetHL2Player()->m_HL2Local.m_hLadder.Set( ladder );
+    GetHL2Player()->m_HL2Local.m_hLadder.Set( ladder );
 
 #ifdef CLIENT_DLL
-	// misyl: Look for ladder dismount points when we get one one on the client.
-	// (Matches ::Activate behaviour on the server... as best we can!)
-	if ( ladder )
-	{
-		ladder->SearchForDismountPoints();
-	}
+    // misyl: Look for ladder dismount points when we get one one on the client.
+    // (Matches ::Activate behaviour on the server... as best we can!)
+    if ( ladder )
+    {
+        ladder->SearchForDismountPoints();
+    }
 #endif
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : CFuncLadder
 //-----------------------------------------------------------------------------
 inline CFuncLadder *CHL2GameMovement::GetLadder()
 {
-	return static_cast<CFuncLadder*>( static_cast<CBaseEntity *>( GetHL2Player()->m_HL2Local.m_hLadder.Get() ) );
+    return static_cast< CFuncLadder * >( static_cast< CBaseEntity * >( GetHL2Player()->m_HL2Local.m_hLadder.Get() ) );
 }

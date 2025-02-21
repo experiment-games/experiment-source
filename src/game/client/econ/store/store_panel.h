@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -19,21 +19,21 @@
 #include "econ_gcmessages.h"
 #include "steam/isteamuser.h"
 
-#define MAX_CART_ITEMS	256
+#define MAX_CART_ITEMS 256
 
-#define STOREPANEL_SHOW_UPGRADESTEPS		-1
+#define STOREPANEL_SHOW_UPGRADESTEPS -1
 
 class CStorePage;
 
 // An "item" in the cart.
 struct cart_item_t
 {
-	const econ_store_entry_t *pEntry;
-	int						  iQuantity;
-	ECartItemType			  eType;
-	bool					  bPreviewItem;
+    const econ_store_entry_t *pEntry;
+    int iQuantity;
+    ECartItemType eType;
+    bool bPreviewItem;
 
-	item_price_t GetDisplayPrice() const;
+    item_price_t GetDisplayPrice() const;
 };
 
 //-----------------------------------------------------------------------------
@@ -41,150 +41,224 @@ struct cart_item_t
 //-----------------------------------------------------------------------------
 class CStoreCart
 {
-public:
-	CStoreCart( void );
+   public:
+    CStoreCart( void );
 
-	void		AddToCart( const econ_store_entry_t *pEntry, const char* pszPageName, ECartItemType eCartItemType );
-	void		RemoveFromCart( int iEntryIndex );
-	void		EmptyCart( void );
+    void AddToCart( const econ_store_entry_t *pEntry, const char *pszPageName, ECartItemType eCartItemType );
+    void RemoveFromCart( int iEntryIndex );
+    void EmptyCart( void );
 
-	// Returns the total number of items in the cart
-	int			GetTotalItems( void ) const;
-	int			GetTotalConcreteItems( void ) const;
-	// Returns the number of different entries in the cart (ignoring quantities)
-	int			GetNumEntries( void ) const { return m_Items.Count(); }
-	cart_item_t *GetItem( int iIndex ) { return ( ( GetNumEntries() > 0 ) ? &m_Items[iIndex] : NULL ); }
+    // Returns the total number of items in the cart
+    int GetTotalItems( void ) const;
+    int GetTotalConcreteItems( void ) const;
+    // Returns the number of different entries in the cart (ignoring quantities)
+    int GetNumEntries( void ) const
+    {
+        return m_Items.Count();
+    }
+    cart_item_t *GetItem( int iIndex )
+    {
+        return ( ( GetNumEntries() > 0 ) ? &m_Items[iIndex] : NULL );
+    }
 
-	item_price_t GetTotalPrice( void ) const;
+    item_price_t GetTotalPrice( void ) const;
 
-	bool		ContainsHolidayRestrictedItems() const;
-	bool		ContainsChanceRestrictedItems() const;
-	bool		ContainsItemDefinition( item_definition_index_t unItemDef ) const;
+    bool ContainsHolidayRestrictedItems() const;
+    bool ContainsChanceRestrictedItems() const;
+    bool ContainsItemDefinition( item_definition_index_t unItemDef ) const;
 
-private:
-	int			GetIndexForEntry( const econ_store_entry_t *pEntry, ECartItemType eCartItemType ) const;
+   private:
+    int GetIndexForEntry( const econ_store_entry_t *pEntry, ECartItemType eCartItemType ) const;
 
-private:
-	CUtlVector<cart_item_t>	m_Items;
+   private:
+    CUtlVector< cart_item_t > m_Items;
 };
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 class CStorePanel : public vgui::PropertyDialog, public CGameEventListener
 {
-	DECLARE_CLASS_SIMPLE( CStorePanel, vgui::PropertyDialog );
-public:
-	CStorePanel( Panel *parent );
-	virtual ~CStorePanel();
+    DECLARE_CLASS_SIMPLE( CStorePanel, vgui::PropertyDialog );
+
+   public:
+    CStorePanel( Panel *parent );
+    virtual ~CStorePanel();
 
 #ifdef _DEBUG
-	void		ReAddPage( int iPage );
+    void ReAddPage( int iPage );
 #endif
 
-	// UI Layout
-	virtual void ApplySchemeSettings( vgui::IScheme *pScheme );
-	virtual void PerformLayout( void );
-	virtual void OnCommand( const char *command );
-	virtual void ShowPanel( bool bShow );
-	virtual void OnKeyCodeTyped(vgui::KeyCode code);
-	virtual void FireGameEvent( IGameEvent *event );
-	void		 SetPreventClosure( bool bPrevent ) { m_bPreventClosure = bPrevent; }
-	void		 StartAtItemDef( int iItemDef, bool bAddToCart ) { m_iStartItemDef = iItemDef; m_bAddStartItemDefToCart = bAddToCart; };
+    // UI Layout
+    virtual void ApplySchemeSettings( vgui::IScheme *pScheme );
+    virtual void PerformLayout( void );
+    virtual void OnCommand( const char *command );
+    virtual void ShowPanel( bool bShow );
+    virtual void OnKeyCodeTyped( vgui::KeyCode code );
+    virtual void FireGameEvent( IGameEvent *event );
+    void SetPreventClosure( bool bPrevent )
+    {
+        m_bPreventClosure = bPrevent;
+    }
+    void StartAtItemDef( int iItemDef, bool bAddToCart )
+    {
+        m_iStartItemDef = iItemDef;
+        m_bAddStartItemDefToCart = bAddToCart;
+    };
 
-	virtual void OnTick();
+    virtual void OnTick();
 
-	// Steam Interaction
-	STEAM_CALLBACK( CStorePanel, OnMicroTransactionAuthResponse, MicroTxnAuthorizationResponse_t, m_CallbackMicroTransactionAuthResponse );
+    // Steam Interaction
+    STEAM_CALLBACK( CStorePanel, OnMicroTransactionAuthResponse, MicroTxnAuthorizationResponse_t, m_CallbackMicroTransactionAuthResponse );
 
-	// GC Management
-	static bool	CheckMessageResult( EPurchaseResult msgResult );
-	void		FinalizeTransaction( void );
-	virtual void	PostTransactionCompleted( void ) { return; }
+    // GC Management
+    static bool CheckMessageResult( EPurchaseResult msgResult );
+    void FinalizeTransaction( void );
+    virtual void PostTransactionCompleted( void )
+    {
+        return;
+    }
 
-	// Cart Management
-	CStoreCart	 *GetCart( void ) { return &m_Cart; }
-	void		ShowStorePanel( void );
-	bool		ShouldUpsellStamps( void );
-	bool		HasValidUpsellStamps( void );
-	void		UpsellStamps( void );
-	static void ConfirmUpsellStamps( bool bConfirmed, CSchemaItemDefHandle hItemDef, int nSecondsVisible );
-	void		InitiateCheckout( bool bSkipUpsell, bool bSkipDecoderWarning = false );
-	void		CheckoutCancel( void );
-	virtual void OnAddToCart( void ) {}
-	void		AddToCartAndCheckoutImmediately( item_definition_index_t nDefIndex );
+    // Cart Management
+    CStoreCart *GetCart( void )
+    {
+        return &m_Cart;
+    }
+    void ShowStorePanel( void );
+    bool ShouldUpsellStamps( void );
+    bool HasValidUpsellStamps( void );
+    void UpsellStamps( void );
+    static void ConfirmUpsellStamps( bool bConfirmed, CSchemaItemDefHandle hItemDef, int nSecondsVisible );
+    void InitiateCheckout( bool bSkipUpsell, bool bSkipDecoderWarning = false );
+    void CheckoutCancel( void );
+    virtual void OnAddToCart( void ) {}
+    void AddToCartAndCheckoutImmediately( item_definition_index_t nDefIndex );
 
-	// Pricesheet Management
-	static bool	IsPricesheetLoaded( void ) { return CStorePanel::m_bPricesheetLoaded; }
-	static bool	ShouldShowWarnings( void ) { return CStorePanel::m_bShowWarnings; }
-	static void SetShouldShowWarnings( bool bShow ) { CStorePanel::m_bShowWarnings = bShow; }
-	static void	RequestPricesheet( void );
+    // Pricesheet Management
+    static bool IsPricesheetLoaded( void )
+    {
+        return CStorePanel::m_bPricesheetLoaded;
+    }
+    static bool ShouldShowWarnings( void )
+    {
+        return CStorePanel::m_bShowWarnings;
+    }
+    static void SetShouldShowWarnings( bool bShow )
+    {
+        CStorePanel::m_bShowWarnings = bShow;
+    }
+    static void RequestPricesheet( void );
 
-	const CEconStorePriceSheet *GetPriceSheet( void ) { return &m_StoreSheet; }
-	CEconStorePriceSheet *GetPriceSheetForEdit( void ) { return &m_StoreSheet; }
-	bool		LoadPricesheet( KeyValuesAD* pKVPricesheet );
-	void		SetCurrency( ECurrency in_currency );
-	ECurrency	GetCurrency( void ) { return m_eCurrency; }
-	void		SetCountryCode( const char* in_country );
-	char*		GetCountryCode( void ) { return m_rgchCountry; }
-	const econ_store_entry_t *GetFeaturedEntry( void );
-	void		SetMostRecentSuccessfulTransactionID( uint64 inID ) { m_unMostRecentSuccessfulTransaction = inID; }
-	uint64		GetMostRecentSuccessfulTransactionID() const { return m_unMostRecentSuccessfulTransaction; }
-	virtual void	SetTransactionID( uint64 inID ) { m_unTransactionID = inID; }
-	uint64		GetTransactionID( void ) { return m_unTransactionID; }
+    const CEconStorePriceSheet *GetPriceSheet( void )
+    {
+        return &m_StoreSheet;
+    }
+    CEconStorePriceSheet *GetPriceSheetForEdit( void )
+    {
+        return &m_StoreSheet;
+    }
+    bool LoadPricesheet( KeyValuesAD *pKVPricesheet );
+    void SetCurrency( ECurrency in_currency );
+    ECurrency GetCurrency( void )
+    {
+        return m_eCurrency;
+    }
+    void SetCountryCode( const char *in_country );
+    char *GetCountryCode( void )
+    {
+        return m_rgchCountry;
+    }
+    const econ_store_entry_t *GetFeaturedEntry( void );
+    void SetMostRecentSuccessfulTransactionID( uint64 inID )
+    {
+        m_unMostRecentSuccessfulTransaction = inID;
+    }
+    uint64 GetMostRecentSuccessfulTransactionID() const
+    {
+        return m_unMostRecentSuccessfulTransaction;
+    }
+    virtual void SetTransactionID( uint64 inID )
+    {
+        m_unTransactionID = inID;
+    }
+    uint64 GetTransactionID( void )
+    {
+        return m_unTransactionID;
+    }
 
-	int			GetCheckoutAttempts() { return m_iCheckoutAttempts; }
-	void		SetLastPurchaseAttemptPrice( int totalPrice ) { m_iLastPurchaseAttemptPrice = totalPrice; }
-	int			GetLastPurchaseAttemptPrice() { return m_iLastPurchaseAttemptPrice; }
+    int GetCheckoutAttempts()
+    {
+        return m_iCheckoutAttempts;
+    }
+    void SetLastPurchaseAttemptPrice( int totalPrice )
+    {
+        m_iLastPurchaseAttemptPrice = totalPrice;
+    }
+    int GetLastPurchaseAttemptPrice()
+    {
+        return m_iLastPurchaseAttemptPrice;
+    }
 
-	void		ClearPopularItems( void ) { m_vPopularItems.Purge(); }
-	void		AddPopularItem( uint32 iItemDef ) { m_vPopularItems.AddToTail(iItemDef); }
-	const CUtlVector<uint32>& GetPopularItems( void ) const { return m_vPopularItems; }
+    void ClearPopularItems( void )
+    {
+        m_vPopularItems.Purge();
+    }
+    void AddPopularItem( uint32 iItemDef )
+    {
+        m_vPopularItems.AddToTail( iItemDef );
+    }
+    const CUtlVector< uint32 > &GetPopularItems( void ) const
+    {
+        return m_vPopularItems;
+    }
 
-	MESSAGE_FUNC( OnStartShopping, "StartShopping" );
-	MESSAGE_FUNC( OnFindAndSelectFeaturedItem, "FindAndSelectFeaturedItem" );
-	MESSAGE_FUNC_PARAMS( OnItemLinkClicked, "URLClicked", pParams );
-	MESSAGE_FUNC_PARAMS( OnJumpToItem, "JumpToItem", pParams );
-	MESSAGE_FUNC( DoCheckout, "DoCheckout" );
+    MESSAGE_FUNC( OnStartShopping, "StartShopping" );
+    MESSAGE_FUNC( OnFindAndSelectFeaturedItem, "FindAndSelectFeaturedItem" );
+    MESSAGE_FUNC_PARAMS( OnItemLinkClicked, "URLClicked", pParams );
+    MESSAGE_FUNC_PARAMS( OnJumpToItem, "JumpToItem", pParams );
+    MESSAGE_FUNC( DoCheckout, "DoCheckout" );
 
-protected:
-	void		ParseStoreKV( void );
-	CStorePage	*AddPageFromPriceSheet( int iPage );
+   protected:
+    void ParseStoreKV( void );
+    CStorePage *AddPageFromPriceSheet( int iPage );
 
-	void		FindAndSelectEntry( const econ_store_entry_t *pEntry );
-	const econ_store_entry_t *FindEntryForItemDef( int iItemDef ) { return m_StoreSheet.GetEntry( iItemDef ); }
+    void FindAndSelectEntry( const econ_store_entry_t *pEntry );
+    const econ_store_entry_t *FindEntryForItemDef( int iItemDef )
+    {
+        return m_StoreSheet.GetEntry( iItemDef );
+    }
 
-	virtual CStorePage	*CreateStorePage( const CEconStoreCategoryManager::StoreCategory_t *pPageData );
+    virtual CStorePage *CreateStorePage( const CEconStoreCategoryManager::StoreCategory_t *pPageData );
 
-	bool		ShouldShowDx8PurchaseWarning( ) const;
+    bool ShouldShowDx8PurchaseWarning() const;
 
-protected:
-	static void ConfirmCheckout( bool bConfirmed, void *pContext );
-	static void ProceedCheckout_DecoderWarning( bool bConfirmed, void *pContext );
+   protected:
+    static void ConfirmCheckout( bool bConfirmed, void *pContext );
+    static void ProceedCheckout_DecoderWarning( bool bConfirmed, void *pContext );
 
-	static bool	m_bPricesheetLoaded;
-	static bool	m_bShowWarnings;
-	bool		m_bPreventClosure;
-	int			m_iStartItemDef;
-	bool		m_bAddStartItemDefToCart;
-	CStoreCart	m_Cart;
-	CEconStorePriceSheet	m_StoreSheet;
+    static bool m_bPricesheetLoaded;
+    static bool m_bShowWarnings;
+    bool m_bPreventClosure;
+    int m_iStartItemDef;
+    bool m_bAddStartItemDefToCart;
+    CStoreCart m_Cart;
+    CEconStorePriceSheet m_StoreSheet;
 
-	ECurrency	m_eCurrency;
-	char		m_rgchCountry[3]; // This will change to an enum soon.
-	uint64		m_unTransactionID;
-	uint64		m_unMostRecentSuccessfulTransaction;
+    ECurrency m_eCurrency;
+    char m_rgchCountry[3];  // This will change to an enum soon.
+    uint64 m_unTransactionID;
+    uint64 m_unMostRecentSuccessfulTransaction;
 
-	bool		m_bShouldFinalize;
-	bool		m_bOGSLogging;
+    bool m_bShouldFinalize;
+    bool m_bOGSLogging;
 
-	int			m_iCheckoutAttempts;
-	int			m_iLastPurchaseAttemptPrice;
+    int m_iCheckoutAttempts;
+    int m_iLastPurchaseAttemptPrice;
 
-	CUtlVector<uint32> m_vPopularItems;
+    CUtlVector< uint32 > m_vPopularItems;
 };
 
-void OpenStoreStatusDialog( vgui::Panel *pParent, const char *pszText, bool bAllowClose, bool bShowOnExit, bool bCancel=false );
+void OpenStoreStatusDialog( vgui::Panel *pParent, const char *pszText, bool bAllowClose, bool bShowOnExit, bool bCancel = false );
 void CloseStoreStatusDialog( void );
 
 //-----------------------------------------------------------------------------
@@ -192,12 +266,13 @@ void CloseStoreStatusDialog( void );
 //-----------------------------------------------------------------------------
 class CGCClientJobGetUserData : public GCSDK::CGCClientJob
 {
-public:
-	CGCClientJobGetUserData( GCSDK::CGCClient *pGCClient, RTime32 rTimeVersion ) : GCSDK::CGCClientJob( pGCClient ), m_RTimeVersion( rTimeVersion ) {}
-	virtual bool BYieldingRunJob( void *pvStartParam );
+   public:
+    CGCClientJobGetUserData( GCSDK::CGCClient *pGCClient, RTime32 rTimeVersion )
+        : GCSDK::CGCClientJob( pGCClient ), m_RTimeVersion( rTimeVersion ) {}
+    virtual bool BYieldingRunJob( void *pvStartParam );
 
-private:
-	RTime32 m_RTimeVersion;
+   private:
+    RTime32 m_RTimeVersion;
 };
 
 //-----------------------------------------------------------------------------
@@ -205,9 +280,10 @@ private:
 //-----------------------------------------------------------------------------
 class CGCClientJobInitPurchase : public GCSDK::CGCClientJob
 {
-public:
-	CGCClientJobInitPurchase( GCSDK::CGCClient *pGCClient ) : GCSDK::CGCClientJob( pGCClient ) {}
-	virtual bool BYieldingRunJob( void *pvStartParam );
+   public:
+    CGCClientJobInitPurchase( GCSDK::CGCClient *pGCClient )
+        : GCSDK::CGCClientJob( pGCClient ) {}
+    virtual bool BYieldingRunJob( void *pvStartParam );
 };
 
 //-----------------------------------------------------------------------------
@@ -215,12 +291,13 @@ public:
 //-----------------------------------------------------------------------------
 class CGCClientJobCancelPurchase : public GCSDK::CGCClientJob
 {
-public:
-	CGCClientJobCancelPurchase( GCSDK::CGCClient *pGCClient, uint64 ulTxnID ) : GCSDK::CGCClientJob( pGCClient ), m_ulTxnID( ulTxnID ) {}
-	virtual bool BYieldingRunJob( void *pvStartParam );
+   public:
+    CGCClientJobCancelPurchase( GCSDK::CGCClient *pGCClient, uint64 ulTxnID )
+        : GCSDK::CGCClientJob( pGCClient ), m_ulTxnID( ulTxnID ) {}
+    virtual bool BYieldingRunJob( void *pvStartParam );
 
-private:
-	uint64 m_ulTxnID;
+   private:
+    uint64 m_ulTxnID;
 };
 
 //-----------------------------------------------------------------------------
@@ -228,12 +305,13 @@ private:
 //-----------------------------------------------------------------------------
 class CGCClientJobFinalizePurchase : public GCSDK::CGCClientJob
 {
-public:
-	CGCClientJobFinalizePurchase( GCSDK::CGCClient *pGCClient, uint64 ulTxnID ) : GCSDK::CGCClientJob( pGCClient ), m_ulTxnID( ulTxnID ) {}
-	virtual bool BYieldingRunJob( void *pvStartParam );
+   public:
+    CGCClientJobFinalizePurchase( GCSDK::CGCClient *pGCClient, uint64 ulTxnID )
+        : GCSDK::CGCClientJob( pGCClient ), m_ulTxnID( ulTxnID ) {}
+    virtual bool BYieldingRunJob( void *pvStartParam );
 
-private:
-	uint64 m_ulTxnID;
+   private:
+    uint64 m_ulTxnID;
 };
 
-#endif // STORE_PANEL_H
+#endif  // STORE_PANEL_H

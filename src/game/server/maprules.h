@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -9,7 +9,4 @@
 #ifndef MAPRULES_H
 #define MAPRULES_H
 
-
-
-#endif		// MAPRULES_H
-
+#endif  // MAPRULES_H

@@ -4,7 +4,6 @@
 //
 //=============================================================================
 
-
 #include "cbase.h"
 #include "gcsdk/gcsdk_auto.h"
 #include "tf_gcmessages.h"

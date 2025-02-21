@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -10,7 +10,6 @@
 #ifdef _WIN32
 #pragma once
 #endif
-
 
 #include "hudelement.h"
 #include "tf_controls.h"
@@ -33,91 +32,93 @@
 //=========================================================
 class CMvMScoreboardEnemyInfo : public vgui::EditablePanel
 {
-	DECLARE_CLASS_SIMPLE( CMvMScoreboardEnemyInfo, vgui::EditablePanel );
+    DECLARE_CLASS_SIMPLE( CMvMScoreboardEnemyInfo, vgui::EditablePanel );
 
-public:
-	CMvMScoreboardEnemyInfo( Panel *parent, const char *pName );
+   public:
+    CMvMScoreboardEnemyInfo( Panel *parent, const char *pName );
 
-	virtual void ApplySchemeSettings( vgui::IScheme *pScheme );
-	virtual void FireGameEvent( IGameEvent *event );
+    virtual void ApplySchemeSettings( vgui::IScheme *pScheme );
+    virtual void FireGameEvent( IGameEvent *event );
 
-	void UpdateEntry( char* icon, bool bIsGiant );
+    void UpdateEntry( char *icon, bool bIsGiant );
 
-private:
-	CPanelAnimationVar( Color, m_clrNormal, "color_normal", "TanLight" );
-	CPanelAnimationVar( Color, m_clrMiniBoss, "color_miniboss", "RedSolid" );
+   private:
+    CPanelAnimationVar( Color, m_clrNormal, "color_normal", "TanLight" );
+    CPanelAnimationVar( Color, m_clrMiniBoss, "color_miniboss", "RedSolid" );
 };
 
 //=========================================================
 class CTFHudMannVsMachineScoreboard : public vgui::EditablePanel, public CGameEventListener
 {
-	DECLARE_CLASS_SIMPLE( CTFHudMannVsMachineScoreboard, vgui::EditablePanel );
+    DECLARE_CLASS_SIMPLE( CTFHudMannVsMachineScoreboard, vgui::EditablePanel );
 
-public:
-	CTFHudMannVsMachineScoreboard( Panel *parent, const char *pName );
-	~CTFHudMannVsMachineScoreboard();
-	
-	virtual void ApplySchemeSettings( vgui::IScheme *pScheme );
-	virtual void FireGameEvent( IGameEvent *event );
-	virtual void OnTick( void );
+   public:
+    CTFHudMannVsMachineScoreboard( Panel *parent, const char *pName );
+    ~CTFHudMannVsMachineScoreboard();
 
-	static void UpdateCreditPanel( CCreditDisplayPanel *panel, int nAcquired, int nMissed, int nBonus );
+    virtual void ApplySchemeSettings( vgui::IScheme *pScheme );
+    virtual void FireGameEvent( IGameEvent *event );
+    virtual void OnTick( void );
 
-	void UpdateCreditSpend ( CCreditSpendPanel *panel, int nUpgrades, int nBuybacks, int nBottles );
+    static void UpdateCreditPanel( CCreditDisplayPanel *panel, int nAcquired, int nMissed, int nBonus );
 
-	vgui::SectionedListPanel *GetPlayerList( void ){ return m_pPlayerList; }
+    void UpdateCreditSpend( CCreditSpendPanel *panel, int nUpgrades, int nBuybacks, int nBottles );
 
-private:
-	void InitPlayerList( vgui::IScheme *pScheme );
-	void UpdatePlayerList();
-	void UpdatePlayerAvatar( int playerIndex, KeyValues *kv );
-	void UpdateCreditStats();
-	void UpdateCreditSpend();
-	void UpdatePopFile();
+    vgui::SectionedListPanel *GetPlayerList( void )
+    {
+        return m_pPlayerList;
+    }
 
+   private:
+    void InitPlayerList( vgui::IScheme *pScheme );
+    void UpdatePlayerList();
+    void UpdatePlayerAvatar( int playerIndex, KeyValues *kv );
+    void UpdateCreditStats();
+    void UpdateCreditSpend();
+    void UpdatePopFile();
 
-	bool m_bInitialized;
-	char m_popfile[ MAX_PATH ];
+    bool m_bInitialized;
+    char m_popfile[MAX_PATH];
 
-	vgui::ScalableImagePanel	*m_pPlayerListBackground;
-	vgui::SectionedListPanel	*m_pPlayerList;
-	vgui::ImageList				*m_pImageList;
-	CUtlMap<CSteamID,int>		m_mapAvatarsToImageList;
-	int							m_iImageDead;
-	int							m_iImageClass[SCOREBOARD_CLASS_ICONS];
-	int							m_iImageClassAlt[SCOREBOARD_CLASS_ICONS];
-	int							m_iSquadSurplusTexture;
+    vgui::ScalableImagePanel *m_pPlayerListBackground;
+    vgui::SectionedListPanel *m_pPlayerList;
+    vgui::ImageList *m_pImageList;
+    CUtlMap< CSteamID, int > m_mapAvatarsToImageList;
+    int m_iImageDead;
+    int m_iImageClass[SCOREBOARD_CLASS_ICONS];
+    int m_iImageClassAlt[SCOREBOARD_CLASS_ICONS];
+    int m_iSquadSurplusTexture;
 
-	vgui::EditablePanel *m_pDifficultyContainer;
+    vgui::EditablePanel *m_pDifficultyContainer;
 
-	vgui::EditablePanel *m_pInfoContainerPanel;
-	CMvMScoreboardEnemyInfo *m_pBaseEnemyPanel;
-	vgui::ScalableImagePanel *m_pInfoBackgroundPanel;
+    vgui::EditablePanel *m_pInfoContainerPanel;
+    CMvMScoreboardEnemyInfo *m_pBaseEnemyPanel;
+    vgui::ScalableImagePanel *m_pInfoBackgroundPanel;
 
-	vgui::EditablePanel *m_pCreditStatsPanel;
-	CCreditDisplayPanel *m_pPreviousWaveCreditsInfo;
-	CCreditDisplayPanel *m_pTotalCreditsInfo;
+    vgui::EditablePanel *m_pCreditStatsPanel;
+    CCreditDisplayPanel *m_pPreviousWaveCreditsInfo;
+    CCreditDisplayPanel *m_pTotalCreditsInfo;
 
-	CCreditSpendPanel *m_pPreviousWaveCreditsSpend;
-	CCreditSpendPanel *m_pTotalCreditsSpend;
+    CCreditSpendPanel *m_pPreviousWaveCreditsSpend;
+    CCreditSpendPanel *m_pTotalCreditsSpend;
 
-	vgui::EditablePanel *m_pLocalPlayerStatsPanel;
-	
-	vgui::Label			*m_pRespecStatusLabel;
+    vgui::EditablePanel *m_pLocalPlayerStatsPanel;
 
-	int		m_iDisplayedWave;
+    vgui::Label *m_pRespecStatusLabel;
 
-	vgui::HFont m_hScoreFont;	
+    int m_iDisplayedWave;
 
-	//380
-	CPanelAnimationVarAliasType( int, m_iMedalWidth, "medal_width", "20", "proportional_int" );
-	CPanelAnimationVarAliasType( int, m_iMedalSpacerWidth, "medal_spacer_width", "4", "proportional_int" );
-	CPanelAnimationVar( int, m_iAvatarWidth, "avatar_width", "32" );		// Avatar width doesn't scale with resolution
-	CPanelAnimationVarAliasType( int, m_iSpacerWidth, "spacer_width", "2", "proportional_int" );
-	CPanelAnimationVarAliasType( int, m_iNameWidth, "name_width", "94", "proportional_int" );
-	CPanelAnimationVarAliasType( int, m_iStatWidth, "stat_width", "43", "proportional_int" );
-	CPanelAnimationVarAliasType( int, m_iClassWidth, "class_width", "25", "proportional_int" );
-	CPanelAnimationVarAliasType( int, m_iPingWidth, "ping_width", "25", "proportional_int" );
+    vgui::HFont m_hScoreFont;
+
+    // 380
+    CPanelAnimationVarAliasType( int, m_iMedalWidth, "medal_width", "20", "proportional_int" );
+    CPanelAnimationVarAliasType( int, m_iMedalSpacerWidth, "medal_spacer_width", "4", "proportional_int" );
+    CPanelAnimationVar( int, m_iAvatarWidth, "avatar_width", "32" );  // Avatar width doesn't scale with resolution
+    CPanelAnimationVarAliasType( int, m_iSpacerWidth, "spacer_width", "2", "proportional_int" );
+    CPanelAnimationVarAliasType( int, m_iNameWidth, "name_width", "94", "proportional_int" );
+    CPanelAnimationVarAliasType( int, m_iStatWidth, "stat_width", "43", "proportional_int" );
+    CPanelAnimationVarAliasType( int, m_iClassWidth, "class_width", "25", "proportional_int" );
+    CPanelAnimationVarAliasType( int, m_iPingWidth, "ping_width", "25", "proportional_int" );
 };
 
-#endif // TF_HUD_MANN_VS_MACHINE_SCOREBOARD_H
+#endif  // TF_HUD_MANN_VS_MACHINE_SCOREBOARD_H

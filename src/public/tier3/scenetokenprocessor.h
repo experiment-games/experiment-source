@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
 
@@ -15,4 +15,4 @@ class ISceneTokenProcessor;
 ISceneTokenProcessor *GetTokenProcessor();
 void SetTokenProcessorBuffer( const char *buf );
 
-#endif // SCENETOKENPROCESSOR_H
+#endif  // SCENETOKENPROCESSOR_H

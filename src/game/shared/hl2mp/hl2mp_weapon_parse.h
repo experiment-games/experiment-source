@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -10,26 +10,21 @@
 #pragma once
 #endif
 
-
 #include "weapon_parse.h"
 #include "networkvar.h"
-
 
 //--------------------------------------------------------------------------------------------------------
 class CHL2MPSWeaponInfo : public FileWeaponInfo_t
 {
-public:
-	DECLARE_CLASS_GAMEROOT( CHL2MPSWeaponInfo, FileWeaponInfo_t );
-	
-	CHL2MPSWeaponInfo();
-	
-	virtual void Parse( ::KeyValues *pKeyValuesData, const char *szWeaponName );
+   public:
+    DECLARE_CLASS_GAMEROOT( CHL2MPSWeaponInfo, FileWeaponInfo_t );
 
+    CHL2MPSWeaponInfo();
 
-public:
+    virtual void Parse( ::KeyValues *pKeyValuesData, const char *szWeaponName );
 
-	int m_iPlayerDamage;
+   public:
+    int m_iPlayerDamage;
 };
 
-
-#endif // HL2MP_WEAPON_PARSE_H
+#endif  // HL2MP_WEAPON_PARSE_H

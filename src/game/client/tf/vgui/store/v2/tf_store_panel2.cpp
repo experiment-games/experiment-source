@@ -4,7 +4,6 @@
 //
 //=============================================================================//
 
-
 #include "cbase.h"
 #include "store/v2/tf_store_panel2.h"
 #include "store/v2/tf_store_page2.h"
@@ -15,76 +14,77 @@
 #include <tier0/memdbgon.h>
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-CTFStorePanel2::CTFStorePanel2( vgui::Panel *parent ) : CTFBaseStorePanel(parent)
+CTFStorePanel2::CTFStorePanel2( vgui::Panel *parent )
+    : CTFBaseStorePanel( parent )
 {
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFStorePanel2::ApplySchemeSettings( vgui::IScheme *pScheme )
 {
-	BaseClass::ApplySchemeSettings( pScheme );
+    BaseClass::ApplySchemeSettings( pScheme );
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFStorePanel2::ShowPanel( bool bShow )
 {
-	BaseClass::ShowPanel( bShow );
+    BaseClass::ShowPanel( bShow );
 
-	// Base class should turn this on
-	if ( bShow && m_bOGSLogging )
-	{
-		EconUI()->Gamestats_Store( IE_STORE2_ENTERED );
-	}
+    // Base class should turn this on
+    if ( bShow && m_bOGSLogging )
+    {
+        EconUI()->Gamestats_Store( IE_STORE2_ENTERED );
+    }
 
-	Panel *pCheckOutButton = FindChildByName( "CheckOutButton" );
-	if ( pCheckOutButton )
-	{
-		pCheckOutButton->RequestFocus();
-	}
+    Panel *pCheckOutButton = FindChildByName( "CheckOutButton" );
+    if ( pCheckOutButton )
+    {
+        pCheckOutButton->RequestFocus();
+    }
 }
 
 void CTFStorePanel2::OnAddToCart( void )
 {
-	Panel *pCheckOutButton = FindChildByName( "CheckOutButton" );
-	if ( pCheckOutButton )
-	{
-		pCheckOutButton->RequestFocus();
-	}
+    Panel *pCheckOutButton = FindChildByName( "CheckOutButton" );
+    if ( pCheckOutButton )
+    {
+        pCheckOutButton->RequestFocus();
+    }
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFStorePanel2::OnThink()
 {
-	BaseClass::OnThink();
+    BaseClass::OnThink();
 }
 
 void CTFStorePanel2::OnKeyCodePressed( vgui::KeyCode code )
 {
-	// ESC cancels
-	if ( code == KEY_XBUTTON_B )
-	{
-		OnCommand( "close" );
-	}
-	else
-	{
-		BaseClass::OnKeyCodePressed( code );
-	}
+    // ESC cancels
+    if ( code == KEY_XBUTTON_B )
+    {
+        OnCommand( "close" );
+    }
+    else
+    {
+        BaseClass::OnKeyCodePressed( code );
+    }
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFStorePanel2::PostTransactionCompleted( void )
 {
-	BaseClass::PostTransactionCompleted();
+    BaseClass::PostTransactionCompleted();
 }
 
 //-----------------------------------------------------------------------------
@@ -92,18 +92,18 @@ void CTFStorePanel2::PostTransactionCompleted( void )
 //-----------------------------------------------------------------------------
 CStorePage *CTFStorePanel2::CreateStorePage( const CEconStoreCategoryManager::StoreCategory_t *pPageData )
 {
-	if ( pPageData )
-	{
-		if ( !Q_strcmp( pPageData->m_pchPageClass, "CStorePage_SpecialPromo" ) )
-			return new CTFStorePage_SpecialPromo( this, pPageData );
+    if ( pPageData )
+    {
+        if ( !Q_strcmp( pPageData->m_pchPageClass, "CStorePage_SpecialPromo" ) )
+            return new CTFStorePage_SpecialPromo( this, pPageData );
 
-		if ( !Q_strcmp( pPageData->m_pchPageClass, "CStorePage_Maps" ) )
-			return new CTFStorePage_Maps2( this, pPageData );
+        if ( !Q_strcmp( pPageData->m_pchPageClass, "CStorePage_Maps" ) )
+            return new CTFStorePage_Maps2( this, pPageData );
 
-		if ( !Q_strcmp( pPageData->m_pchPageClass, "CStorePage_Popular" ) )
-			return new CTFStorePage_Popular( this, pPageData );
-	}
+        if ( !Q_strcmp( pPageData->m_pchPageClass, "CStorePage_Popular" ) )
+            return new CTFStorePage_Popular( this, pPageData );
+    }
 
-	// Default, standard store page.
-	return new CTFStorePage2( this, pPageData );
+    // Default, standard store page.
+    return new CTFStorePage2( this, pPageData );
 }

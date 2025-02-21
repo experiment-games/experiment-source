@@ -18,71 +18,68 @@
 // memdbgon must be the last include file in a .cpp file!!!
 #include <tier0/memdbgon.h>
 
-
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-CHalloweenOfferingPanel::CHalloweenOfferingPanel( vgui::Panel *parent, CItemModelPanelToolTip* pTooltip ) 
-	: BaseClass( parent, pTooltip )
+CHalloweenOfferingPanel::CHalloweenOfferingPanel( vgui::Panel *parent, CItemModelPanelToolTip *pTooltip )
+    : BaseClass( parent, pTooltip )
 {
-	
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CHalloweenOfferingPanel::~CHalloweenOfferingPanel( void )
 {
-
 }
 
 //-----------------------------------------------------------------------------
 void CHalloweenOfferingPanel::CreateSelectionPanel()
 {
-	CHalloweenOfferingSelectionPanel *pSelectionPanel = new CHalloweenOfferingSelectionPanel( this );
-	m_hSelectionPanel = (CCollectionCraftingSelectionPanel*)pSelectionPanel;
+    CHalloweenOfferingSelectionPanel *pSelectionPanel = new CHalloweenOfferingSelectionPanel( this );
+    m_hSelectionPanel = ( CCollectionCraftingSelectionPanel * )pSelectionPanel;
 }
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CHalloweenOfferingPanel::OnCommand( const char *command )
 {
-	if ( FStrEq( "envelopesend", command ) )
-	{
-		GCSDK::CProtoBufMsg<CMsgCraftHalloweenOffering> msg( k_EMsgGCCraftHalloweenOffering );
+    if ( FStrEq( "envelopesend", command ) )
+    {
+        GCSDK::CProtoBufMsg< CMsgCraftHalloweenOffering > msg( k_EMsgGCCraftHalloweenOffering );
 
-		// Find the Garygoyle 'tool' item for this
-		static CSchemaItemDefHandle pItemDef_Gargoyle( "Activated Halloween Pass" );
-		Assert( pItemDef_Gargoyle );
-		if ( !pItemDef_Gargoyle )
-			return;
-		// Find out if the user owns this item or not and place in the proper bucket
-		CPlayerInventory *pLocalInv = TFInventoryManager()->GetLocalInventory();
-		if ( !pLocalInv )
-			return;
+        // Find the Garygoyle 'tool' item for this
+        static CSchemaItemDefHandle pItemDef_Gargoyle( "Activated Halloween Pass" );
+        Assert( pItemDef_Gargoyle );
+        if ( !pItemDef_Gargoyle )
+            return;
+        // Find out if the user owns this item or not and place in the proper bucket
+        CPlayerInventory *pLocalInv = TFInventoryManager()->GetLocalInventory();
+        if ( !pLocalInv )
+            return;
 
-		const CEconItemView *pRefItem = pLocalInv->FindFirstItembyItemDef( pItemDef_Gargoyle->GetDefinitionIndex() );
-		if ( !pRefItem )
-			return;
+        const CEconItemView *pRefItem = pLocalInv->FindFirstItembyItemDef( pItemDef_Gargoyle->GetDefinitionIndex() );
+        if ( !pRefItem )
+            return;
 
-		msg.Body().set_tool_id( pRefItem->GetItemID() );
+        msg.Body().set_tool_id( pRefItem->GetItemID() );
 
-		FOR_EACH_VEC( m_vecItemPanels, i )
-		{
-			 if ( m_vecItemPanels[ i ]->GetItem() == NULL )
-				 return;
+        FOR_EACH_VEC( m_vecItemPanels, i )
+        {
+            if ( m_vecItemPanels[i]->GetItem() == NULL )
+                return;
 
-			msg.Body().add_item_id( m_vecItemPanels[ i ]->GetItem()->GetItemID() );
-		}
-		 // Send if off
-		GCClientSystem()->BSendMessage( msg );
+            msg.Body().add_item_id( m_vecItemPanels[i]->GetItem()->GetItemID() );
+        }
+        // Send if off
+        GCClientSystem()->BSendMessage( msg );
 
-		m_bWaitingForGCResponse = true;
-		m_nFoundItemID.Purge();
-		m_timerResponse.Start( 5.f );
-		g_pClientMode->GetViewportAnimationController()->StartAnimationSequence( this, "CollectionCrafting_LetterSend" );	
-		return;
-	}
+        m_bWaitingForGCResponse = true;
+        m_nFoundItemID.Purge();
+        m_timerResponse.Start( 5.f );
+        g_pClientMode->GetViewportAnimationController()->StartAnimationSequence( this, "CollectionCrafting_LetterSend" );
+        return;
+    }
 
-	BaseClass::OnCommand( command );
+    BaseClass::OnCommand( command );
 }

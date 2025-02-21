@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
 
@@ -19,23 +19,27 @@
 //-----------------------------------------------------------------------------
 class C_TFProjectile_Rocket : public C_TFBaseRocket
 {
-	DECLARE_CLASS( C_TFProjectile_Rocket, C_TFBaseRocket );
-public:
-	DECLARE_NETWORKCLASS();
+    DECLARE_CLASS( C_TFProjectile_Rocket, C_TFBaseRocket );
 
-	C_TFProjectile_Rocket();
-	~C_TFProjectile_Rocket();
+   public:
+    DECLARE_NETWORKCLASS();
 
-	virtual void	OnDataChanged(DataUpdateType_t updateType);
+    C_TFProjectile_Rocket();
+    ~C_TFProjectile_Rocket();
 
-	virtual void	CreateTrails( void );
-	virtual const char *GetTrailParticleName( void );
-	bool			IsCritical() const { return m_bCritical; }
+    virtual void OnDataChanged( DataUpdateType_t updateType );
 
-private:
-	bool	m_bCritical;
+    virtual void CreateTrails( void );
+    virtual const char *GetTrailParticleName( void );
+    bool IsCritical() const
+    {
+        return m_bCritical;
+    }
 
-	CNewParticleEffect	*pEffect;
+   private:
+    bool m_bCritical;
+
+    CNewParticleEffect *pEffect;
 };
 
-#endif // C_TF_PROJECTILE_ROCKET_H
+#endif  // C_TF_PROJECTILE_ROCKET_H

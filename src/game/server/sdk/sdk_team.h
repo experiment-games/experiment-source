@@ -12,27 +12,22 @@
 #pragma once
 #endif
 
-
 #include "utlvector.h"
 #include "team.h"
-
 
 //-----------------------------------------------------------------------------
 // Purpose: Team Manager
 //-----------------------------------------------------------------------------
 class CSDKTeam : public CTeam
 {
-	DECLARE_CLASS( CSDKTeam, CTeam );
-	DECLARE_SERVERCLASS();
+    DECLARE_CLASS( CSDKTeam, CTeam );
+    DECLARE_SERVERCLASS();
 
-public:
-
-	// Initialization
-	virtual void Init( const char *pName, int iNumber );
+   public:
+    // Initialization
+    virtual void Init( const char *pName, int iNumber );
 };
-
 
 extern CSDKTeam *GetGlobalSDKTeam( int iIndex );
 
-
-#endif // TF_TEAM_H
+#endif  // TF_TEAM_H

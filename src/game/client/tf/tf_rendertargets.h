@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //
 // $Workfile:     $
@@ -13,7 +13,7 @@
 #pragma once
 #endif
 
-#include "baseclientrendertargets.h" // Base class, with interfaces called by engine and inherited members to init common render targets
+#include "baseclientrendertargets.h"  // Base class, with interfaces called by engine and inherited members to init common render targets
 #include "item_model_panel.h"
 
 // externs
@@ -22,21 +22,21 @@ class IMaterialSystemHardwareConfig;
 
 class CTFRenderTargets : public CBaseClientRenderTargets
 {
-	// no networked vars
-	DECLARE_CLASS_GAMEROOT( CTFRenderTargets, CBaseClientRenderTargets );
-public:
-	virtual void InitClientRenderTargets( IMaterialSystem* pMaterialSystem, IMaterialSystemHardwareConfig* pHardwareConfig );
-	virtual void ShutdownClientRenderTargets();
+    // no networked vars
+    DECLARE_CLASS_GAMEROOT( CTFRenderTargets, CBaseClientRenderTargets );
 
-private:
-	ITexture *CreateItemModelPanelTexture( const char *pszName, IMaterialSystem* pMaterialSystem, int iSize );
+   public:
+    virtual void InitClientRenderTargets( IMaterialSystem* pMaterialSystem, IMaterialSystemHardwareConfig* pHardwareConfig );
+    virtual void ShutdownClientRenderTargets();
 
-private:
-	// Used for rendering item model panels.
-	CUtlVector< CTextureReference >		m_tfRenderTargets;
+   private:
+    ITexture* CreateItemModelPanelTexture( const char* pszName, IMaterialSystem* pMaterialSystem, int iSize );
+
+   private:
+    // Used for rendering item model panels.
+    CUtlVector< CTextureReference > m_tfRenderTargets;
 };
 
 extern CTFRenderTargets* g_pTFRenderTargets;
 
-
-#endif // TF_RENDERTARGETS_H
+#endif  // TF_RENDERTARGETS_H

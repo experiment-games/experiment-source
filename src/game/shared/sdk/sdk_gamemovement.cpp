@@ -1,13 +1,13 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
 
 //========= Copyright © 1996-2001, Valve LLC, All rights reserved. ============
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================
@@ -18,29 +18,25 @@
 #include "in_buttons.h"
 #include "movevars_shared.h"
 
-
 #ifdef CLIENT_DLL
-	#include "c_sdk_player.h"
+#include "c_sdk_player.h"
 #else
-	#include "sdk_player.h"
+#include "sdk_player.h"
 #endif
-
 
 class CSDKGameMovement : public CGameMovement
 {
-public:
-	DECLARE_CLASS( CSDKGameMovement, CGameMovement );
+   public:
+    DECLARE_CLASS( CSDKGameMovement, CGameMovement );
 
-	CSDKGameMovement();
+    CSDKGameMovement();
 };
-
 
 // Expose our interface.
 static CSDKGameMovement g_GameMovement;
 IGameMovement *g_pGameMovement = ( IGameMovement * )&g_GameMovement;
 
-EXPOSE_SINGLE_INTERFACE_GLOBALVAR(CGameMovement, IGameMovement,INTERFACENAME_GAMEMOVEMENT, g_GameMovement );
-
+EXPOSE_SINGLE_INTERFACE_GLOBALVAR( CGameMovement, IGameMovement, INTERFACENAME_GAMEMOVEMENT, g_GameMovement );
 
 // ---------------------------------------------------------------------------------------- //
 // CSDKGameMovement.
@@ -48,6 +44,5 @@ EXPOSE_SINGLE_INTERFACE_GLOBALVAR(CGameMovement, IGameMovement,INTERFACENAME_GAM
 
 CSDKGameMovement::CSDKGameMovement()
 {
-	//m_vecViewOffsetNormal = SDK_PLAYER_VIEW_OFFSET;
+    // m_vecViewOffsetNormal = SDK_PLAYER_VIEW_OFFSET;
 }
-

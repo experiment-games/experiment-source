@@ -15,49 +15,46 @@
 //			interest to the player.
 //-----------------------------------------------------------------------------
 BEGIN_DATADESC( CTrainingAnnotation )
-	DEFINE_KEYFIELD( m_displayText, FIELD_STRING, "display_text" ),
-	DEFINE_KEYFIELD( m_flLifetime,  FIELD_FLOAT, "lifetime" ),
-	DEFINE_KEYFIELD( m_flVerticalOffset,  FIELD_FLOAT, "offset" ),
-	DEFINE_INPUTFUNC( FIELD_VOID, "Show", InputShow ),
-	DEFINE_INPUTFUNC( FIELD_VOID, "Hide", InputHide ),
-END_DATADESC()
+DEFINE_KEYFIELD( m_displayText, FIELD_STRING, "display_text" ),
+    DEFINE_KEYFIELD( m_flLifetime, FIELD_FLOAT, "lifetime" ),
+    DEFINE_KEYFIELD( m_flVerticalOffset, FIELD_FLOAT, "offset" ),
+    DEFINE_INPUTFUNC( FIELD_VOID, "Show", InputShow ),
+    DEFINE_INPUTFUNC( FIELD_VOID, "Hide", InputHide ),
+    END_DATADESC()
 
-LINK_ENTITY_TO_CLASS( training_annotation, CTrainingAnnotation );
+        LINK_ENTITY_TO_CLASS( training_annotation, CTrainingAnnotation );
 
 CTrainingAnnotation::CTrainingAnnotation()
-	: m_flLifetime(1.0f),
-	  m_flVerticalOffset(0.0f)
+    : m_flLifetime( 1.0f ),
+      m_flVerticalOffset( 0.0f )
 {
-
 }
 
 void CTrainingAnnotation::Show()
 {
-	IGameEvent *pEvent = gameeventmanager->CreateEvent( "show_annotation" );
-	if ( pEvent )
-	{
-		Vector location = GetAbsOrigin();
+    IGameEvent *pEvent = gameeventmanager->CreateEvent( "show_annotation" );
+    if ( pEvent )
+    {
+        Vector location = GetAbsOrigin();
 
-		pEvent->SetString( "text", STRING( m_displayText ) );
-		pEvent->SetInt( "id", (long)this );
-		pEvent->SetFloat( "worldPosX", location.x );
-		pEvent->SetFloat( "worldPosY", location.y );
-		pEvent->SetFloat( "worldPosZ", location.z + m_flVerticalOffset );
-		pEvent->SetFloat( "lifetime", m_flLifetime );
-		pEvent->SetInt( "follow_entindex", 0 );
+        pEvent->SetString( "text", STRING( m_displayText ) );
+        pEvent->SetInt( "id", ( long )this );
+        pEvent->SetFloat( "worldPosX", location.x );
+        pEvent->SetFloat( "worldPosY", location.y );
+        pEvent->SetFloat( "worldPosZ", location.z + m_flVerticalOffset );
+        pEvent->SetFloat( "lifetime", m_flLifetime );
+        pEvent->SetInt( "follow_entindex", 0 );
 
-		gameeventmanager->FireEvent( pEvent );
-	}
+        gameeventmanager->FireEvent( pEvent );
+    }
 }
 
 void CTrainingAnnotation::Hide()
 {
-	IGameEvent *pEvent = gameeventmanager->CreateEvent( "hide_annotation" );
-	if ( pEvent )
-	{
-		pEvent->SetInt( "id", (long)this );
-		gameeventmanager->FireEventClientSide( pEvent );
-	}
+    IGameEvent *pEvent = gameeventmanager->CreateEvent( "hide_annotation" );
+    if ( pEvent )
+    {
+        pEvent->SetInt( "id", ( long )this );
+        gameeventmanager->FireEventClientSide( pEvent );
+    }
 }
-
-

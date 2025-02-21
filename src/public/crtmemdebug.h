@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $Workfile:     $
 // $Date:         $
@@ -29,5 +29,4 @@ void CheckHeap( void );
 
 void InitCRTMemDebug( void );
 
-
-#endif // CRTMEMDEBUG_H
+#endif  // CRTMEMDEBUG_H

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -26,83 +26,118 @@
 class CEconItemView;
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 class CGiveawayPlayerPanel : public vgui::EditablePanel
 {
-	DECLARE_CLASS_SIMPLE( CGiveawayPlayerPanel, vgui::EditablePanel );
-public:
-	CGiveawayPlayerPanel( vgui::Panel *parent, const char *name );
+    DECLARE_CLASS_SIMPLE( CGiveawayPlayerPanel, vgui::EditablePanel );
 
-	virtual void	PerformLayout( void );
+   public:
+    CGiveawayPlayerPanel( vgui::Panel *parent, const char *name );
 
-	void			SetPlayer( CTFPlayer *pPlayer );
-	int				GetPlayerIndex( void ) { return m_iPlayerIndex; }
-	int				GetBonus( void ) { return m_iBonus; }
-	void			SpinBonus( void );
-	void			LockBonus( int iRoll );
+    virtual void PerformLayout( void );
 
-private:
-	vgui::Label		*m_pNameLabel;
-	vgui::Label		*m_pScoreLabel;
-	Color			m_PlayerColorLocal;
-	Color			m_PlayerColorOther;
-	int				m_iBonus;
-	int				m_iRoll;
-	int				m_iPlayerIndex;
+    void SetPlayer( CTFPlayer *pPlayer );
+    int GetPlayerIndex( void )
+    {
+        return m_iPlayerIndex;
+    }
+    int GetBonus( void )
+    {
+        return m_iBonus;
+    }
+    void SpinBonus( void );
+    void LockBonus( int iRoll );
+
+   private:
+    vgui::Label *m_pNameLabel;
+    vgui::Label *m_pScoreLabel;
+    Color m_PlayerColorLocal;
+    Color m_PlayerColorOther;
+    int m_iBonus;
+    int m_iRoll;
+    int m_iPlayerIndex;
 };
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 class CTFGiveawayItemPanel : public vgui::Frame, public IViewPortPanel, public CGameEventListener
 {
-	DECLARE_CLASS_SIMPLE( CTFGiveawayItemPanel, vgui::Frame );
-public:
-	CTFGiveawayItemPanel( IViewPort *pViewPort );
-	~CTFGiveawayItemPanel( void );
+    DECLARE_CLASS_SIMPLE( CTFGiveawayItemPanel, vgui::Frame );
 
-	virtual void	ApplySchemeSettings( vgui::IScheme *pScheme );
-	virtual void	ApplySettings( KeyValues *inResourceData );
-	virtual void	PerformLayout( void );
-	virtual void	OnCommand( const char *command );
-	virtual void	FireGameEvent( IGameEvent *event );
+   public:
+    CTFGiveawayItemPanel( IViewPort *pViewPort );
+    ~CTFGiveawayItemPanel( void );
 
-	void			SetItem( CEconItemView *pItem );
-	void			BuildPlayerList( void );
+    virtual void ApplySchemeSettings( vgui::IScheme *pScheme );
+    virtual void ApplySettings( KeyValues *inResourceData );
+    virtual void PerformLayout( void );
+    virtual void OnCommand( const char *command );
+    virtual void FireGameEvent( IGameEvent *event );
 
-	// IViewPortPanel overrides
-	virtual const char *GetName( void ){ return PANEL_GIVEAWAY_ITEM; }
-	virtual void SetData( KeyValues *data ) { return; }
-	virtual void Reset(){ Update(); }
-	virtual void Update();
-	virtual void ShowPanel( bool bShow );
-	virtual bool NeedsUpdate( void ){ return true; }
-	virtual bool HasInputElements( void ){ return true; }
+    void SetItem( CEconItemView *pItem );
+    void BuildPlayerList( void );
 
-	// both vgui::Frame and IViewPortPanel define these, so explicitly define them here as passthroughs to vgui
-	vgui::VPANEL GetVPanel( void ){ return BaseClass::GetVPanel(); }
-	virtual bool IsVisible(){ return BaseClass::IsVisible(); }
-	virtual void SetParent( vgui::VPANEL parent ){ BaseClass::SetParent( parent ); }
+    // IViewPortPanel overrides
+    virtual const char *GetName( void )
+    {
+        return PANEL_GIVEAWAY_ITEM;
+    }
+    virtual void SetData( KeyValues *data )
+    {
+        return;
+    }
+    virtual void Reset()
+    {
+        Update();
+    }
+    virtual void Update();
+    virtual void ShowPanel( bool bShow );
+    virtual bool NeedsUpdate( void )
+    {
+        return true;
+    }
+    virtual bool HasInputElements( void )
+    {
+        return true;
+    }
 
-	virtual GameActionSet_t GetPreferredActionSet() { return GAME_ACTION_SET_MENUCONTROLS; }
+    // both vgui::Frame and IViewPortPanel define these, so explicitly define them here as passthroughs to vgui
+    vgui::VPANEL GetVPanel( void )
+    {
+        return BaseClass::GetVPanel();
+    }
+    virtual bool IsVisible()
+    {
+        return BaseClass::IsVisible();
+    }
+    virtual void SetParent( vgui::VPANEL parent )
+    {
+        BaseClass::SetParent( parent );
+    }
 
-private:
-	IViewPort						*m_pViewPort;
-	CItemModelPanel					*m_pModelPanel;
-	CUtlVector< CGiveawayPlayerPanel * >	m_aPlayerList;
-	KeyValues						*m_pPlayerListPanelKVs;
-	int								m_iNumActivePlayers;
+    virtual GameActionSet_t GetPreferredActionSet()
+    {
+        return GAME_ACTION_SET_MENUCONTROLS;
+    }
 
-	// Animation
-	bool							m_bBuiltPlayerList;
-	float							m_flNextRollStart;
-	int								m_iRollingForPlayer;
+   private:
+    IViewPort *m_pViewPort;
+    CItemModelPanel *m_pModelPanel;
+    CUtlVector< CGiveawayPlayerPanel * > m_aPlayerList;
+    KeyValues *m_pPlayerListPanelKVs;
+    int m_iNumActivePlayers;
 
-	CPanelAnimationVarAliasType( int, m_iPlayerYPos, "player_ypos", "0", "proportional_int" );
-	CPanelAnimationVarAliasType( int, m_iPlayerXOffset, "player_xoffset", "0", "proportional_int" );
+    // Animation
+    bool m_bBuiltPlayerList;
+    float m_flNextRollStart;
+    int m_iRollingForPlayer;
+
+    CPanelAnimationVarAliasType( int, m_iPlayerYPos, "player_ypos", "0", "proportional_int" );
+    CPanelAnimationVarAliasType( int, m_iPlayerXOffset, "player_xoffset", "0", "proportional_int" );
 };
 
 CTFGiveawayItemPanel *OpenGiveawayItemPanel( CEconItemView *pItem );
 
-#endif // TF_GIVEAWAYITEMPANEL_H
+#endif  // TF_GIVEAWAYITEMPANEL_H

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================
@@ -31,179 +31,180 @@ void AddSubKeyNamed( KeyValues *pKeys, const char *pszName );
 DECLARE_HUDELEMENT( CHudTeamGoalTournament );
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-CHudTeamGoalTournament::CHudTeamGoalTournament( const char *pElementName ) : CHudElement( pElementName ), BaseClass( NULL, "HudTeamGoalTournament" )
+CHudTeamGoalTournament::CHudTeamGoalTournament( const char *pElementName )
+    : CHudElement( pElementName ), BaseClass( NULL, "HudTeamGoalTournament" )
 {
-	Panel *pParent = g_pClientMode->GetViewport();
-	SetParent( pParent );
+    Panel *pParent = g_pClientMode->GetViewport();
+    SetParent( pParent );
 
-	SetHiddenBits( HIDEHUD_MISCSTATUS );
+    SetHiddenBits( HIDEHUD_MISCSTATUS );
 
-	m_flShowAt = -1.f;
+    m_flShowAt = -1.f;
 
-	RegisterForRenderGroup( "commentary" );
+    RegisterForRenderGroup( "commentary" );
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CHudTeamGoalTournament::LevelInit( void )
 {
-	m_flShowAt = -1.f;
+    m_flShowAt = -1.f;
 
-	ListenForGameEvent( "tournament_stateupdate" );
-	ListenForGameEvent( "teamplay_round_start" );
-	ListenForGameEvent( "competitive_state_changed" );
+    ListenForGameEvent( "tournament_stateupdate" );
+    ListenForGameEvent( "teamplay_round_start" );
+    ListenForGameEvent( "competitive_state_changed" );
 }
 C_TFTeam *GetTeamRoles( int iTeamRole )
 {
-	for ( int i = LAST_SHARED_TEAM+1; i < GetNumberOfTeams(); i++ )
-	{
-		C_TFTeam *pTeam = GetGlobalTFTeam( i );
+    for ( int i = LAST_SHARED_TEAM + 1; i < GetNumberOfTeams(); i++ )
+    {
+        C_TFTeam *pTeam = GetGlobalTFTeam( i );
 
-		if ( pTeam )
-		{
-			if ( pTeam->GetRole() == iTeamRole )
-			{
-				return pTeam;
-			}
-		}
-	}
+        if ( pTeam )
+        {
+            if ( pTeam->GetRole() == iTeamRole )
+            {
+                return pTeam;
+            }
+        }
+    }
 
-	return NULL;
+    return NULL;
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-int	CHudTeamGoalTournament::HudElementKeyInput( int down, ButtonCode_t keynum, const char *pszCurrentBinding )
+int CHudTeamGoalTournament::HudElementKeyInput( int down, ButtonCode_t keynum, const char *pszCurrentBinding )
 {
-	if ( IsVisible() && TFGameRules() && TFGameRules()->IsInTournamentMode() && TFGameRules()->IsInStopWatch() )
-	{
-		if ( ( TFGameRules()->State_Get() == GR_STATE_PREROUND ) || TFGameRules()->InSetup() )
-		{
-			if ( down && ( keynum == KEY_F1 ) )
-			{
-				m_flShowAt = -1.f;
-				return 0;
-			}
-		}
-	}
+    if ( IsVisible() && TFGameRules() && TFGameRules()->IsInTournamentMode() && TFGameRules()->IsInStopWatch() )
+    {
+        if ( ( TFGameRules()->State_Get() == GR_STATE_PREROUND ) || TFGameRules()->InSetup() )
+        {
+            if ( down && ( keynum == KEY_F1 ) )
+            {
+                m_flShowAt = -1.f;
+                return 0;
+            }
+        }
+    }
 
-	return 1;
+    return 1;
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-void CHudTeamGoalTournament::FireGameEvent( IGameEvent * event )
+void CHudTeamGoalTournament::FireGameEvent( IGameEvent *event )
 {
-	const char *pEventName = event->GetName();
+    const char *pEventName = event->GetName();
 
-	if ( FStrEq( "tournament_stateupdate", pEventName ) )
-	{
-		m_flShowAt = -1.f;
-	}
-	else if ( FStrEq( "teamplay_round_start", pEventName ) )
-	{
-		if ( TFGameRules() && TFGameRules()->IsInTournamentMode() && TFGameRules()->IsInStopWatch() )
-		{
-			C_TFTeam *pAttacker = GetTeamRoles( TEAM_ROLE_ATTACKERS );
-			C_TFTeam *pDefender = GetTeamRoles( TEAM_ROLE_DEFENDERS );
+    if ( FStrEq( "tournament_stateupdate", pEventName ) )
+    {
+        m_flShowAt = -1.f;
+    }
+    else if ( FStrEq( "teamplay_round_start", pEventName ) )
+    {
+        if ( TFGameRules() && TFGameRules()->IsInTournamentMode() && TFGameRules()->IsInStopWatch() )
+        {
+            C_TFTeam *pAttacker = GetTeamRoles( TEAM_ROLE_ATTACKERS );
+            C_TFTeam *pDefender = GetTeamRoles( TEAM_ROLE_DEFENDERS );
 
-			if( !pAttacker || !pDefender )
-				return;
+            if ( !pAttacker || !pDefender )
+                return;
 
-			if ( ( pAttacker->Get_Score() != 0 ) && ( pDefender->Get_Score() != 0 ) )
-				return;
-		
-			m_flShowAt = gpGlobals->curtime + 1.f;
-		}
-	}
-	else if ( FStrEq( "competitive_state_changed", pEventName ) )
-	{
-		InvalidateLayout( false, true );
-	}
+            if ( ( pAttacker->Get_Score() != 0 ) && ( pDefender->Get_Score() != 0 ) )
+                return;
+
+            m_flShowAt = gpGlobals->curtime + 1.f;
+        }
+    }
+    else if ( FStrEq( "competitive_state_changed", pEventName ) )
+    {
+        InvalidateLayout( false, true );
+    }
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CHudTeamGoalTournament::ApplySchemeSettings( IScheme *pScheme )
 {
-	KeyValues *pConditions = NULL;
-	if ( ShouldUseMatchHUD() )
-	{
-		pConditions = new KeyValues( "conditions" );
-		AddSubKeyNamed( pConditions, "if_comp" );
-	}
+    KeyValues *pConditions = NULL;
+    if ( ShouldUseMatchHUD() )
+    {
+        pConditions = new KeyValues( "conditions" );
+        AddSubKeyNamed( pConditions, "if_comp" );
+    }
 
-	// load control settings...
-	LoadControlSettings( "resource/UI/HudTeamGoalTournament.res", NULL, NULL, pConditions );
+    // load control settings...
+    LoadControlSettings( "resource/UI/HudTeamGoalTournament.res", NULL, NULL, pConditions );
 
-	BaseClass::ApplySchemeSettings( pScheme );
+    BaseClass::ApplySchemeSettings( pScheme );
 
-	if ( pConditions )
-	{
-		pConditions->deleteThis();
-	}
+    if ( pConditions )
+    {
+        pConditions->deleteThis();
+    }
 
-	m_cRegularColor = pScheme->GetColor( "TanLight", Color( 0, 0, 0 ) );
-	m_cHighlightColor = pScheme->GetColor( "GoalOrange", Color( 0, 0, 0 ) );
+    m_cRegularColor = pScheme->GetColor( "TanLight", Color( 0, 0, 0 ) );
+    m_cHighlightColor = pScheme->GetColor( "GoalOrange", Color( 0, 0, 0 ) );
 
-	m_pStopWatchGoal = dynamic_cast<EditablePanel *>( FindChildByName( "HudStopWatchObjective" ) );
+    m_pStopWatchGoal = dynamic_cast< EditablePanel * >( FindChildByName( "HudStopWatchObjective" ) );
 
-	if ( m_pStopWatchGoal )
-	{
-		m_pStopWatchGoalText = dynamic_cast<CExRichText *>( m_pStopWatchGoal->FindChildByName( "HudStopWatchObjectiveText1" ) );
-	}
+    if ( m_pStopWatchGoal )
+    {
+        m_pStopWatchGoalText = dynamic_cast< CExRichText * >( m_pStopWatchGoal->FindChildByName( "HudStopWatchObjectiveText1" ) );
+    }
 
-	if ( m_pStopWatchGoalText )
-	{
-		m_pStopWatchGoalText->SetVisible( true );
-		m_pStopWatchGoalText->InsertColorChange( m_cRegularColor );
-	}
+    if ( m_pStopWatchGoalText )
+    {
+        m_pStopWatchGoalText->SetVisible( true );
+        m_pStopWatchGoalText->InsertColorChange( m_cRegularColor );
+    }
 
-	if ( m_pStopWatchGoal )
-	{
-		m_pStopWatchGoalText2 = dynamic_cast<CExRichText *>( m_pStopWatchGoal->FindChildByName( "HudStopWatchObjectiveText2" ) );
-	}
+    if ( m_pStopWatchGoal )
+    {
+        m_pStopWatchGoalText2 = dynamic_cast< CExRichText * >( m_pStopWatchGoal->FindChildByName( "HudStopWatchObjectiveText2" ) );
+    }
 
-	if ( m_pStopWatchGoalText2 )
-	{
-		m_pStopWatchGoalText2->SetVisible( true );
-		m_pStopWatchGoalText2->InsertColorChange( m_cRegularColor );
-	}
+    if ( m_pStopWatchGoalText2 )
+    {
+        m_pStopWatchGoalText2->SetVisible( true );
+        m_pStopWatchGoalText2->InsertColorChange( m_cRegularColor );
+    }
 
-	if ( m_pStopWatchGoal )
-	{
-		m_pStopWatchGoalBGLarge = m_pStopWatchGoal->FindChildByName( "HudStopWatchObjectiveBG" );
-		m_pStopWatchGoalBGSmall = m_pStopWatchGoal->FindChildByName( "HudStopWatchObjectiveBGSmall" );
-		m_pStopWatchGoalDivider = m_pStopWatchGoal->FindChildByName( "HudStopWatchObjectiveShadedBar" );
-	}
+    if ( m_pStopWatchGoal )
+    {
+        m_pStopWatchGoalBGLarge = m_pStopWatchGoal->FindChildByName( "HudStopWatchObjectiveBG" );
+        m_pStopWatchGoalBGSmall = m_pStopWatchGoal->FindChildByName( "HudStopWatchObjectiveBGSmall" );
+        m_pStopWatchGoalDivider = m_pStopWatchGoal->FindChildByName( "HudStopWatchObjectiveShadedBar" );
+    }
 
-	m_pStopWatchGoalArrow = FindChildByName( "HudStopWatchObjectiveArrow" );
+    m_pStopWatchGoalArrow = FindChildByName( "HudStopWatchObjectiveArrow" );
 }
 inline wchar_t *CloneWString( const wchar_t *str );
 
 enum
 {
-	STOPWATCH_COLOR_NORMAL = 1,
-	STOPWATCH_COLOR_SUB = 3,
+    STOPWATCH_COLOR_NORMAL = 1,
+    STOPWATCH_COLOR_SUB = 3,
 };
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CHudTeamGoalTournament::SetVisible( bool bState )
 {
-	if ( bState )
-	{
-		SetupStopWatchLabel();
-	}
+    if ( bState )
+    {
+        SetupStopWatchLabel();
+    }
 
-	BaseClass::SetVisible( bState );
+    BaseClass::SetVisible( bState );
 }
 
 //-----------------------------------------------------------------------------
@@ -213,379 +214,378 @@ void CHudTeamGoalTournament::SetVisible( bool bState )
 //-----------------------------------------------------------------------------
 void CHudTeamGoalTournament::PrepareStopWatchString( wchar_t *pszString, CExRichText *pText )
 {
-	if ( m_text )
-	{
-		delete[] m_text;
-		m_text = NULL;
-	}
+    if ( m_text )
+    {
+        delete[] m_text;
+        m_text = NULL;
+    }
 
-	m_textRanges.RemoveAll();
+    m_textRanges.RemoveAll();
 
-	m_text = CloneWString( pszString );
+    m_text = CloneWString( pszString );
 
-	wchar_t *txt = m_text;
-	int lineLen = wcslen( m_text );
+    wchar_t *txt = m_text;
+    int lineLen = wcslen( m_text );
 
-	TextRange range;
-	range.start = 0;
-	range.end = wcslen( m_text );
-	range.color = Color( 235, 226, 202 );
-	m_textRanges.AddToTail( range );
+    TextRange range;
+    range.start = 0;
+    range.end = wcslen( m_text );
+    range.color = Color( 235, 226, 202 );
+    m_textRanges.AddToTail( range );
 
-	while ( txt && *txt )
-	{
-		switch ( *txt )
-		{
-		case STOPWATCH_COLOR_SUB:
-		case STOPWATCH_COLOR_NORMAL:
-			{
-				// save this start
-				range.start = (txt-m_text) + 1;
+    while ( txt && *txt )
+    {
+        switch ( *txt )
+        {
+            case STOPWATCH_COLOR_SUB:
+            case STOPWATCH_COLOR_NORMAL:
+            {
+                // save this start
+                range.start = ( txt - m_text ) + 1;
 
-				if ( *txt == STOPWATCH_COLOR_NORMAL )
-					range.color = m_cRegularColor;
-				else
-					range.color = m_cHighlightColor;
+                if ( *txt == STOPWATCH_COLOR_NORMAL )
+                    range.color = m_cRegularColor;
+                else
+                    range.color = m_cHighlightColor;
 
-				range.end = lineLen;
+                range.end = lineLen;
 
-				int count = m_textRanges.Count();
-				if ( count )
-				{
-					m_textRanges[count-1].end = range.start - 1;
-				}
+                int count = m_textRanges.Count();
+                if ( count )
+                {
+                    m_textRanges[count - 1].end = range.start - 1;
+                }
 
-				m_textRanges.AddToTail( range );
-			}
-			++txt;
-			break;
+                m_textRanges.AddToTail( range );
+            }
+                ++txt;
+                break;
 
-		default:
-			++txt;
-		}
-	}
+            default:
+                ++txt;
+        }
+    }
 
-	for ( int i=0; i<m_textRanges.Count(); ++i )
-	{
-		wchar_t * start = m_text + m_textRanges[i].start;
-		if ( *start > 0 && *start < COLOR_MAX )
-		{
-			m_textRanges[i].start += 1;
-		}
-	}
+    for ( int i = 0; i < m_textRanges.Count(); ++i )
+    {
+        wchar_t *start = m_text + m_textRanges[i].start;
+        if ( *start > 0 && *start < COLOR_MAX )
+        {
+            m_textRanges[i].start += 1;
+        }
+    }
 
-	wchar_t wText[4096];
-	Color color;
-	for ( int i=0; i<m_textRanges.Count(); ++i )
-	{
-		wchar_t * start = m_text + m_textRanges[i].start;
-		int len = m_textRanges[i].end - m_textRanges[i].start + 1;
-		if ( len > 1 )
-		{
-			wcsncpy( wText, start, len );
-			wText[len-1] = 0;
-			color = m_textRanges[i].color;
-			color[3] = 255;
-			pText->InsertColorChange( color );
-			pText->InsertString( wText );
-		}
-	}
+    wchar_t wText[4096];
+    Color color;
+    for ( int i = 0; i < m_textRanges.Count(); ++i )
+    {
+        wchar_t *start = m_text + m_textRanges[i].start;
+        int len = m_textRanges[i].end - m_textRanges[i].start + 1;
+        if ( len > 1 )
+        {
+            wcsncpy( wText, start, len );
+            wText[len - 1] = 0;
+            color = m_textRanges[i].color;
+            color[3] = 255;
+            pText->InsertColorChange( color );
+            pText->InsertString( wText );
+        }
+    }
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CHudTeamGoalTournament::SetupStopWatchLabel( void )
 {
-	int iPoints = 0;
+    int iPoints = 0;
 
-	if ( !TFGameRules() )
-		return;
+    if ( !TFGameRules() )
+        return;
 
-	if ( !ObjectiveResource() )
-		return;
+    if ( !ObjectiveResource() )
+        return;
 
-	C_TFTeam *pAttacker = GetTeamRoles( TEAM_ROLE_ATTACKERS );
-	C_TFTeam *pDefender = GetTeamRoles( TEAM_ROLE_DEFENDERS );
+    C_TFTeam *pAttacker = GetTeamRoles( TEAM_ROLE_ATTACKERS );
+    C_TFTeam *pDefender = GetTeamRoles( TEAM_ROLE_DEFENDERS );
 
-	if( !pAttacker || !pDefender )
-		return;
+    if ( !pAttacker || !pDefender )
+        return;
 
-	int iActiveTimer = ObjectiveResource()->GetStopWatchTimer();
+    int iActiveTimer = ObjectiveResource()->GetStopWatchTimer();
 
-	CTeamRoundTimer *pTimer = dynamic_cast< CTeamRoundTimer* >( ClientEntityList().GetEnt( iActiveTimer ) );
+    CTeamRoundTimer *pTimer = dynamic_cast< CTeamRoundTimer * >( ClientEntityList().GetEnt( iActiveTimer ) );
 
-	if ( !pTimer )
-		return;
-		
-	if ( !pTimer->IsWatchingTimeStamps() )
-	{
-		iPoints = pDefender->Get_Score();
+    if ( !pTimer )
+        return;
 
-		if ( m_pStopWatchGoal )
-		{
-			m_pStopWatchGoal->SetVisible( true );
-		}
+    if ( !pTimer->IsWatchingTimeStamps() )
+    {
+        iPoints = pDefender->Get_Score();
 
-		if ( m_pStopWatchGoalArrow )
-		{
-			m_pStopWatchGoalArrow->SetVisible( true );
-		}
-	}
-	else
-	{
-		if ( m_pStopWatchGoal )
-		{
-			m_pStopWatchGoal->SetVisible( false );
-		}
-		
-		if ( m_pStopWatchGoalArrow )
-		{
-			m_pStopWatchGoalArrow->SetVisible( false );
-		}
+        if ( m_pStopWatchGoal )
+        {
+            m_pStopWatchGoal->SetVisible( true );
+        }
 
-		return;
-	}
+        if ( m_pStopWatchGoalArrow )
+        {
+            m_pStopWatchGoalArrow->SetVisible( true );
+        }
+    }
+    else
+    {
+        if ( m_pStopWatchGoal )
+        {
+            m_pStopWatchGoal->SetVisible( false );
+        }
 
-	C_TFPlayer *pLocalPlayer = C_TFPlayer::GetLocalTFPlayer();
+        if ( m_pStopWatchGoalArrow )
+        {
+            m_pStopWatchGoalArrow->SetVisible( false );
+        }
 
-	if ( !pLocalPlayer )
-		return;
+        return;
+    }
 
-	wchar_t wzHelp[256];
+    C_TFPlayer *pLocalPlayer = C_TFPlayer::GetLocalTFPlayer();
 
-	C_TFTeam *pBlueTeam = GetGlobalTFTeam( TF_TEAM_BLUE );
-	const wchar_t *pBlueTeamName = pBlueTeam ? pBlueTeam->Get_Localized_Name() : L"BLU";
+    if ( !pLocalPlayer )
+        return;
 
-	C_TFTeam *pRedTeam = GetGlobalTFTeam( TF_TEAM_RED );
-	const wchar_t *pRedTeamName = pRedTeam ? pRedTeam->Get_Localized_Name() : L"RED";
+    wchar_t wzHelp[256];
 
-	wchar_t wszAttackersName[MAX_TEAM_NAME_LENGTH];
-	wchar_t wszDefendersName[MAX_TEAM_NAME_LENGTH];
+    C_TFTeam *pBlueTeam = GetGlobalTFTeam( TF_TEAM_BLUE );
+    const wchar_t *pBlueTeamName = pBlueTeam ? pBlueTeam->Get_Localized_Name() : L"BLU";
 
-	V_wcscpy_safe( wszAttackersName, ( pAttacker->GetTeamNumber() == TF_TEAM_BLUE ) ? pBlueTeamName : pRedTeamName ); 
-	V_wcscpy_safe( wszDefendersName, ( pDefender->GetTeamNumber() == TF_TEAM_BLUE ) ? pBlueTeamName : pRedTeamName );
+    C_TFTeam *pRedTeam = GetGlobalTFTeam( TF_TEAM_RED );
+    const wchar_t *pRedTeamName = pRedTeam ? pRedTeam->Get_Localized_Name() : L"RED";
+
+    wchar_t wszAttackersName[MAX_TEAM_NAME_LENGTH];
+    wchar_t wszDefendersName[MAX_TEAM_NAME_LENGTH];
+
+    V_wcscpy_safe( wszAttackersName, ( pAttacker->GetTeamNumber() == TF_TEAM_BLUE ) ? pBlueTeamName : pRedTeamName );
+    V_wcscpy_safe( wszDefendersName, ( pDefender->GetTeamNumber() == TF_TEAM_BLUE ) ? pBlueTeamName : pRedTeamName );
 
 #ifdef WIN32
 #define INT_CHAR_FMT L"%d %s"
 #else
-#define INT_CHAR_FMT L"%d %S"	
+#define INT_CHAR_FMT L"%d %S"
 #endif
-	
-	wchar_t wszPoints[256];
-	_snwprintf( wszPoints, ARRAYSIZE( wszPoints ), INT_CHAR_FMT, iPoints, iPoints == 1 ? g_pVGuiLocalize->Find( "Tournament_StopWatch_Point" ) : g_pVGuiLocalize->Find( "Tournament_StopWatch_Points" ) );
 
-	wchar_t wszTime[256];
-	wchar_t wszLabel[256];
+    wchar_t wszPoints[256];
+    _snwprintf( wszPoints, ARRAYSIZE( wszPoints ), INT_CHAR_FMT, iPoints, iPoints == 1 ? g_pVGuiLocalize->Find( "Tournament_StopWatch_Point" ) : g_pVGuiLocalize->Find( "Tournament_StopWatch_Points" ) );
 
-	int iMinutes = pTimer->GetTimeRemaining() / 60;
-	int iSeconds = ((int)pTimer->GetTimeRemaining()) % 60;
+    wchar_t wszTime[256];
+    wchar_t wszLabel[256];
 
-	if ( iMinutes > 0 )
-	{
+    int iMinutes = pTimer->GetTimeRemaining() / 60;
+    int iSeconds = ( ( int )pTimer->GetTimeRemaining() ) % 60;
+
+    if ( iMinutes > 0 )
+    {
 #ifdef WIN32
-		_snwprintf( wszTime, ARRAYSIZE( wszTime ) , L"%d %s %d %s", iMinutes, iMinutes == 1 ? g_pVGuiLocalize->Find( "Tournament_WinConditionsMinute" ) : g_pVGuiLocalize->Find( "Tournament_WinConditionsMinutes" ), iSeconds, iSeconds == 1 ? g_pVGuiLocalize->Find( "Tournament_WinConditionsSecond" ) : g_pVGuiLocalize->Find( "Tournament_WinConditionsSeconds" ) );
+        _snwprintf( wszTime, ARRAYSIZE( wszTime ), L"%d %s %d %s", iMinutes, iMinutes == 1 ? g_pVGuiLocalize->Find( "Tournament_WinConditionsMinute" ) : g_pVGuiLocalize->Find( "Tournament_WinConditionsMinutes" ), iSeconds, iSeconds == 1 ? g_pVGuiLocalize->Find( "Tournament_WinConditionsSecond" ) : g_pVGuiLocalize->Find( "Tournament_WinConditionsSeconds" ) );
 #else
-		_snwprintf( wszTime, ARRAYSIZE( wszTime ) , L"%d %S %d %S", iMinutes, iMinutes == 1 ? g_pVGuiLocalize->Find( "Tournament_WinConditionsMinute" ) : g_pVGuiLocalize->Find( "Tournament_WinConditionsMinutes" ), iSeconds, iSeconds == 1 ? g_pVGuiLocalize->Find( "Tournament_WinConditionsSecond" ) : g_pVGuiLocalize->Find( "Tournament_WinConditionsSeconds" ) );
+        _snwprintf( wszTime, ARRAYSIZE( wszTime ), L"%d %S %d %S", iMinutes, iMinutes == 1 ? g_pVGuiLocalize->Find( "Tournament_WinConditionsMinute" ) : g_pVGuiLocalize->Find( "Tournament_WinConditionsMinutes" ), iSeconds, iSeconds == 1 ? g_pVGuiLocalize->Find( "Tournament_WinConditionsSecond" ) : g_pVGuiLocalize->Find( "Tournament_WinConditionsSeconds" ) );
 #endif
-	}
-	else
-	{
-		_snwprintf( wszTime, ARRAYSIZE( wszTime ), INT_CHAR_FMT, iSeconds, iSeconds == 1 ? g_pVGuiLocalize->Find( "Tournament_WinConditionsSecond" ) : g_pVGuiLocalize->Find( "Tournament_WinConditionsSeconds" ) );
-	}
+    }
+    else
+    {
+        _snwprintf( wszTime, ARRAYSIZE( wszTime ), INT_CHAR_FMT, iSeconds, iSeconds == 1 ? g_pVGuiLocalize->Find( "Tournament_WinConditionsSecond" ) : g_pVGuiLocalize->Find( "Tournament_WinConditionsSeconds" ) );
+    }
 
-	if ( m_pStopWatchGoalText )
-	{
-		m_pStopWatchGoalText->SetText("");
-	}
+    if ( m_pStopWatchGoalText )
+    {
+        m_pStopWatchGoalText->SetText( "" );
+    }
 
-	if ( m_pStopWatchGoalText2 )
-	{
-		m_pStopWatchGoalText2->SetText("");
-	}
+    if ( m_pStopWatchGoalText2 )
+    {
+        m_pStopWatchGoalText2->SetText( "" );
+    }
 
-	if ( m_pStopWatchGoal )
-	{
-		m_pStopWatchGoal->SetDialogVariable( "objectivelabel", "" );	
-	}
+    if ( m_pStopWatchGoal )
+    {
+        m_pStopWatchGoal->SetDialogVariable( "objectivelabel", "" );
+    }
 
-	if ( pLocalPlayer->GetTeam() == pDefender )
-	{
-		g_pVGuiLocalize->ConstructString_safe( wszLabel, g_pVGuiLocalize->Find( "Tournament_StopWatch_LabelDefender" ), 1, wszAttackersName );
+    if ( pLocalPlayer->GetTeam() == pDefender )
+    {
+        g_pVGuiLocalize->ConstructString_safe( wszLabel, g_pVGuiLocalize->Find( "Tournament_StopWatch_LabelDefender" ), 1, wszAttackersName );
 
-		if ( m_pStopWatchGoal )
-		{
-			m_pStopWatchGoal->SetDialogVariable( "objectivelabel", wszLabel );	
-		}
-	}
-	
-	//Attackers capped something last round case
-	if ( iPoints > 0 )
-	{
-		bool bCappedAllPoints = ( iPoints == ObjectiveResource()->GetNumControlPoints() );
+        if ( m_pStopWatchGoal )
+        {
+            m_pStopWatchGoal->SetDialogVariable( "objectivelabel", wszLabel );
+        }
+    }
 
-		g_pVGuiLocalize->ConstructString_safe( wzHelp, g_pVGuiLocalize->Find( bCappedAllPoints ? "Tournament_StopWatch_GoalTextPointsAndTimeAndClose" : "Tournament_StopWatch_GoalTextPointsAndTime" ), 5, wszDefendersName, wszPoints, wszTime, wszAttackersName, wszPoints );
+    // Attackers capped something last round case
+    if ( iPoints > 0 )
+    {
+        bool bCappedAllPoints = ( iPoints == ObjectiveResource()->GetNumControlPoints() );
 
-		if ( m_pStopWatchGoalText )
-		{
-			PrepareStopWatchString( wzHelp, m_pStopWatchGoalText );
-		}
+        g_pVGuiLocalize->ConstructString_safe( wzHelp, g_pVGuiLocalize->Find( bCappedAllPoints ? "Tournament_StopWatch_GoalTextPointsAndTimeAndClose" : "Tournament_StopWatch_GoalTextPointsAndTime" ), 5, wszDefendersName, wszPoints, wszTime, wszAttackersName, wszPoints );
 
-		if ( bCappedAllPoints )
-		{
-			if ( m_pStopWatchGoalText2 )
-			{
-				m_pStopWatchGoalText2->SetVisible( false );
-			}
+        if ( m_pStopWatchGoalText )
+        {
+            PrepareStopWatchString( wzHelp, m_pStopWatchGoalText );
+        }
 
-			if ( m_pStopWatchGoalBGLarge )
-			{
-				m_pStopWatchGoalBGLarge->SetVisible( false );
-			}
+        if ( bCappedAllPoints )
+        {
+            if ( m_pStopWatchGoalText2 )
+            {
+                m_pStopWatchGoalText2->SetVisible( false );
+            }
 
-			if ( m_pStopWatchGoalBGSmall )
-			{
-				m_pStopWatchGoalBGSmall->SetVisible( true );
-			}
+            if ( m_pStopWatchGoalBGLarge )
+            {
+                m_pStopWatchGoalBGLarge->SetVisible( false );
+            }
 
-			if ( m_pStopWatchGoalDivider )
-			{
-				m_pStopWatchGoalDivider->SetVisible( false );
-			}
-		}
-		else
-		{
-			if ( m_pStopWatchGoalText2 )
-			{
-				m_pStopWatchGoalText2->SetVisible( true );
-			}
+            if ( m_pStopWatchGoalBGSmall )
+            {
+                m_pStopWatchGoalBGSmall->SetVisible( true );
+            }
 
-			if ( m_pStopWatchGoalBGLarge )
-			{
-				m_pStopWatchGoalBGLarge->SetVisible( true );
-			}
+            if ( m_pStopWatchGoalDivider )
+            {
+                m_pStopWatchGoalDivider->SetVisible( false );
+            }
+        }
+        else
+        {
+            if ( m_pStopWatchGoalText2 )
+            {
+                m_pStopWatchGoalText2->SetVisible( true );
+            }
 
-			if ( m_pStopWatchGoalBGSmall )
-			{
-				m_pStopWatchGoalBGSmall->SetVisible( false );
-			}
+            if ( m_pStopWatchGoalBGLarge )
+            {
+                m_pStopWatchGoalBGLarge->SetVisible( true );
+            }
 
-			if ( m_pStopWatchGoalDivider )
-			{
-				m_pStopWatchGoalDivider->SetVisible( true );
-			}
+            if ( m_pStopWatchGoalBGSmall )
+            {
+                m_pStopWatchGoalBGSmall->SetVisible( false );
+            }
 
-			iPoints += 1;
-			_snwprintf( wszPoints, ARRAYSIZE( wszPoints ), INT_CHAR_FMT, iPoints, iPoints == 1 ? g_pVGuiLocalize->Find( "Tournament_StopWatch_Point" ) : g_pVGuiLocalize->Find( "Tournament_StopWatch_Points" ) );
-			g_pVGuiLocalize->ConstructString_safe( wzHelp, g_pVGuiLocalize->Find( "Tournament_StopWatch_GoalTextPointsAndTime2" ), 4, wszAttackersName, wszDefendersName, wszAttackersName, wszPoints );
+            if ( m_pStopWatchGoalDivider )
+            {
+                m_pStopWatchGoalDivider->SetVisible( true );
+            }
 
-			if ( m_pStopWatchGoalText2 )
-			{
-				PrepareStopWatchString( wzHelp, m_pStopWatchGoalText2 );
-			}
-		}
+            iPoints += 1;
+            _snwprintf( wszPoints, ARRAYSIZE( wszPoints ), INT_CHAR_FMT, iPoints, iPoints == 1 ? g_pVGuiLocalize->Find( "Tournament_StopWatch_Point" ) : g_pVGuiLocalize->Find( "Tournament_StopWatch_Points" ) );
+            g_pVGuiLocalize->ConstructString_safe( wzHelp, g_pVGuiLocalize->Find( "Tournament_StopWatch_GoalTextPointsAndTime2" ), 4, wszAttackersName, wszDefendersName, wszAttackersName, wszPoints );
 
-		if ( pLocalPlayer->GetTeam() == pAttacker )
-		{
-			g_pVGuiLocalize->ConstructString_safe( wszLabel, g_pVGuiLocalize->Find( "Tournament_StopWatch_TimeVictory" ), 1, wszDefendersName );
+            if ( m_pStopWatchGoalText2 )
+            {
+                PrepareStopWatchString( wzHelp, m_pStopWatchGoalText2 );
+            }
+        }
 
-			if ( m_pStopWatchGoal )
-			{
-				m_pStopWatchGoal->SetDialogVariable( "objectivelabel", wszLabel );	
-			}
-		}
-	}
-	else
-	{
-		if ( m_pStopWatchGoalText2 )
-		{
-			m_pStopWatchGoalText2->SetVisible( false );
-		}
+        if ( pLocalPlayer->GetTeam() == pAttacker )
+        {
+            g_pVGuiLocalize->ConstructString_safe( wszLabel, g_pVGuiLocalize->Find( "Tournament_StopWatch_TimeVictory" ), 1, wszDefendersName );
 
-		if ( m_pStopWatchGoalBGLarge )
-		{
-			m_pStopWatchGoalBGLarge->SetVisible( false );
-		}
+            if ( m_pStopWatchGoal )
+            {
+                m_pStopWatchGoal->SetDialogVariable( "objectivelabel", wszLabel );
+            }
+        }
+    }
+    else
+    {
+        if ( m_pStopWatchGoalText2 )
+        {
+            m_pStopWatchGoalText2->SetVisible( false );
+        }
 
-		if ( m_pStopWatchGoalBGSmall )
-		{
-			m_pStopWatchGoalBGSmall->SetVisible( true );
-		}
+        if ( m_pStopWatchGoalBGLarge )
+        {
+            m_pStopWatchGoalBGLarge->SetVisible( false );
+        }
 
-		if ( m_pStopWatchGoalDivider )
-		{
-			m_pStopWatchGoalDivider->SetVisible( false );
-		}
+        if ( m_pStopWatchGoalBGSmall )
+        {
+            m_pStopWatchGoalBGSmall->SetVisible( true );
+        }
 
-		g_pVGuiLocalize->ConstructString_safe( wzHelp, g_pVGuiLocalize->Find( "Tournament_StopWatch_GoalTextPoints" ), 4, wszDefendersName, wszAttackersName );
+        if ( m_pStopWatchGoalDivider )
+        {
+            m_pStopWatchGoalDivider->SetVisible( false );
+        }
 
+        g_pVGuiLocalize->ConstructString_safe( wzHelp, g_pVGuiLocalize->Find( "Tournament_StopWatch_GoalTextPoints" ), 4, wszDefendersName, wszAttackersName );
 
-		if ( m_pStopWatchGoalText )
-		{
-			PrepareStopWatchString( wzHelp, m_pStopWatchGoalText );
-		}
+        if ( m_pStopWatchGoalText )
+        {
+            PrepareStopWatchString( wzHelp, m_pStopWatchGoalText );
+        }
 
-		if ( pLocalPlayer->GetTeam() == pAttacker )
-		{
-			g_pVGuiLocalize->ConstructString_safe( wszLabel, g_pVGuiLocalize->Find( "Tournament_StopWatch_AttackerScore" ), 1, wszDefendersName );
+        if ( pLocalPlayer->GetTeam() == pAttacker )
+        {
+            g_pVGuiLocalize->ConstructString_safe( wszLabel, g_pVGuiLocalize->Find( "Tournament_StopWatch_AttackerScore" ), 1, wszDefendersName );
 
-			if ( m_pStopWatchGoal )
-			{
-				m_pStopWatchGoal->SetDialogVariable( "objectivelabel", wszLabel );
-			}
-		}
-	}
+            if ( m_pStopWatchGoal )
+            {
+                m_pStopWatchGoal->SetDialogVariable( "objectivelabel", wszLabel );
+            }
+        }
+    }
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CHudTeamGoalTournament::ShouldDraw( void )
 {
-	if ( !TFGameRules() || 
-		 !TFGameRules()->IsInTournamentMode() || 
-		 !TFGameRules()->IsInStopWatch() ||
-		 ( ( TFGameRules()->State_Get() != GR_STATE_PREROUND ) && !TFGameRules()->InSetup() ) )
-	{
-		m_flShowAt = -1.f;
-		return false;
-	}
-	
-	if ( ObjectiveResource() )
-	{
-		int iActiveTimer = ObjectiveResource()->GetStopWatchTimer();
-		CTeamRoundTimer *pTimer = dynamic_cast<CTeamRoundTimer*>( ClientEntityList().GetEnt( iActiveTimer ) );
-		if ( pTimer && pTimer->IsWatchingTimeStamps() )
-		{
-			m_flShowAt = -1.f;
-			return false;
-		}
-	}
+    if ( !TFGameRules() ||
+         !TFGameRules()->IsInTournamentMode() ||
+         !TFGameRules()->IsInStopWatch() ||
+         ( ( TFGameRules()->State_Get() != GR_STATE_PREROUND ) && !TFGameRules()->InSetup() ) )
+    {
+        m_flShowAt = -1.f;
+        return false;
+    }
 
-	if ( ( m_flShowAt < 0 ) || ( m_flShowAt > gpGlobals->curtime ) )
-	{
-		return false;
-	}
+    if ( ObjectiveResource() )
+    {
+        int iActiveTimer = ObjectiveResource()->GetStopWatchTimer();
+        CTeamRoundTimer *pTimer = dynamic_cast< CTeamRoundTimer * >( ClientEntityList().GetEnt( iActiveTimer ) );
+        if ( pTimer && pTimer->IsWatchingTimeStamps() )
+        {
+            m_flShowAt = -1.f;
+            return false;
+        }
+    }
 
-	// only show the panel for 15 seconds after it is first draws
-	if ( gpGlobals->curtime - m_flShowAt > 15.f )
-	{
-		m_flShowAt = -1.f;
-		return false;
-	}
+    if ( ( m_flShowAt < 0 ) || ( m_flShowAt > gpGlobals->curtime ) )
+    {
+        return false;
+    }
 
-	C_TFPlayer *pPlayer = C_TFPlayer::GetLocalTFPlayer();
-	if ( pPlayer && pPlayer->IsAlive() && ( pPlayer->GetTeamNumber() >= FIRST_GAME_TEAM ) )
-	{
-		if ( CHudElement::ShouldDraw() )
-		{
-			CHudElement *pHudSwitch = gHUD.FindElement( "CHudTeamSwitch" );
-			if ( pHudSwitch && pHudSwitch->ShouldDraw() )
-				return false;
-			
-			return true;
-		}
-	}
+    // only show the panel for 15 seconds after it is first draws
+    if ( gpGlobals->curtime - m_flShowAt > 15.f )
+    {
+        m_flShowAt = -1.f;
+        return false;
+    }
 
-	return false;
+    C_TFPlayer *pPlayer = C_TFPlayer::GetLocalTFPlayer();
+    if ( pPlayer && pPlayer->IsAlive() && ( pPlayer->GetTeamNumber() >= FIRST_GAME_TEAM ) )
+    {
+        if ( CHudElement::ShouldDraw() )
+        {
+            CHudElement *pHudSwitch = gHUD.FindElement( "CHudTeamSwitch" );
+            if ( pHudSwitch && pHudSwitch->ShouldDraw() )
+                return false;
+
+            return true;
+        }
+    }
+
+    return false;
 }

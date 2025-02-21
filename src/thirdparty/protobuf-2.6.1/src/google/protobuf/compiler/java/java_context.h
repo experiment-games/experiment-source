@@ -37,54 +37,62 @@
 
 #include <google/protobuf/stubs/common.h>
 
-namespace google {
-namespace protobuf {
-  class FileDescriptor;
-  class FieldDescriptor;
-  class OneofDescriptor;
-  class Descriptor;
-  namespace compiler {
-    namespace java {
-      class ClassNameResolver;  // name_resolver.h
-    }
-  }
+namespace google
+{
+namespace protobuf
+{
+class FileDescriptor;
+class FieldDescriptor;
+class OneofDescriptor;
+class Descriptor;
+namespace compiler
+{
+namespace java
+{
+class ClassNameResolver;  // name_resolver.h
+}
+}  // namespace compiler
 }  // namespace protobuf
 
-namespace protobuf {
-namespace compiler {
-namespace java {
+namespace protobuf
+{
+namespace compiler
+{
+namespace java
+{
 
 struct FieldGeneratorInfo;
 struct OneofGeneratorInfo;
 // A context object holds the information that is shared among all code
 // generators.
-class Context {
- public:
-  explicit Context(const FileDescriptor* file);
-  ~Context();
+class Context
+{
+   public:
+    explicit Context( const FileDescriptor* file );
+    ~Context();
 
-  // Get the name resolver associated with this context. The resolver
-  // can be used to map descriptors to Java class names.
-  ClassNameResolver* GetNameResolver();
+    // Get the name resolver associated with this context. The resolver
+    // can be used to map descriptors to Java class names.
+    ClassNameResolver* GetNameResolver();
 
-  // Get the FieldGeneratorInfo for a given field.
-  const FieldGeneratorInfo* GetFieldGeneratorInfo(
-      const FieldDescriptor* field) const;
+    // Get the FieldGeneratorInfo for a given field.
+    const FieldGeneratorInfo* GetFieldGeneratorInfo(
+        const FieldDescriptor* field ) const;
 
-  // Get the OneofGeneratorInfo for a given oneof.
-  const OneofGeneratorInfo* GetOneofGeneratorInfo(
-      const OneofDescriptor* oneof) const;
+    // Get the OneofGeneratorInfo for a given oneof.
+    const OneofGeneratorInfo* GetOneofGeneratorInfo(
+        const OneofDescriptor* oneof ) const;
 
- private:
-  void InitializeFieldGeneratorInfo(const FileDescriptor* file);
-  void InitializeFieldGeneratorInfoForMessage(const Descriptor* message);
-  void InitializeFieldGeneratorInfoForFields(
-      const vector<const FieldDescriptor*>& fields);
+   private:
+    void InitializeFieldGeneratorInfo( const FileDescriptor* file );
+    void InitializeFieldGeneratorInfoForMessage( const Descriptor* message );
+    void InitializeFieldGeneratorInfoForFields(
+        const vector< const FieldDescriptor* >& fields );
 
-  scoped_ptr<ClassNameResolver> name_resolver_;
-  map<const FieldDescriptor*, FieldGeneratorInfo> field_generator_info_map_;
-  map<const OneofDescriptor*, OneofGeneratorInfo> oneof_generator_info_map_;
-  GOOGLE_DISALLOW_EVIL_CONSTRUCTORS(Context);
+    scoped_ptr< ClassNameResolver > name_resolver_;
+    map< const FieldDescriptor*, FieldGeneratorInfo > field_generator_info_map_;
+    map< const OneofDescriptor*, OneofGeneratorInfo > oneof_generator_info_map_;
+    GOOGLE_DISALLOW_EVIL_CONSTRUCTORS( Context );
 };
 
 }  // namespace java

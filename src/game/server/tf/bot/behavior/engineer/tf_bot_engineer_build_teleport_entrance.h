@@ -8,16 +8,19 @@
 
 class CTFBotEngineerBuildTeleportEntrance : public Action< CTFBot >
 {
-public:
-	virtual ActionResult< CTFBot >	OnStart( CTFBot *me, Action< CTFBot > *priorAction );
-	virtual ActionResult< CTFBot >	Update( CTFBot *me, float interval );
+   public:
+    virtual ActionResult< CTFBot > OnStart( CTFBot *me, Action< CTFBot > *priorAction );
+    virtual ActionResult< CTFBot > Update( CTFBot *me, float interval );
 
-	virtual EventDesiredResult< CTFBot > OnStuck( CTFBot *me );
+    virtual EventDesiredResult< CTFBot > OnStuck( CTFBot *me );
 
-	virtual const char *GetName( void ) const	{ return "EngineerBuildTeleportEntrance"; };
+    virtual const char *GetName( void ) const
+    {
+        return "EngineerBuildTeleportEntrance";
+    };
 
-private:
-	PathFollower m_path;
+   private:
+    PathFollower m_path;
 };
 
-#endif // TF_BOT_ENGINEER_BUILD_TELEPORT_ENTRANCE_H
+#endif  // TF_BOT_ENGINEER_BUILD_TELEPORT_ENTRANCE_H

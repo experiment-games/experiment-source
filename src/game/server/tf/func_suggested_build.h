@@ -24,4 +24,4 @@ bool NotifyObjectBuiltInSuggestedArea( CBaseObject &baseObject );
 //-----------------------------------------------------------------------------
 bool NotifyObjectUpgradedInSuggestedArea( CBaseObject &baseObject );
 
-#endif // TF_FUNC_SUGGESTED_BUILD_H
+#endif  // TF_FUNC_SUGGESTED_BUILD_H

@@ -4,7 +4,6 @@
 //
 //=============================================================================//
 
-
 #include "cbase.h"
 
 #include "ai_networkmanager.h"
@@ -15,12 +14,12 @@
 
 class CHL2NetworkBuildHelper : public CAI_NetworkBuildHelper
 {
-	DECLARE_CLASS( CHL2NetworkBuildHelper, CAI_NetworkBuildHelper );
+    DECLARE_CLASS( CHL2NetworkBuildHelper, CAI_NetworkBuildHelper );
 
-	void PostInitNodePosition( CAI_Network *pNetwork, CAI_Node *pNode )
-	{
-		AdjustStriderNodePosition( pNetwork, pNode );
-	}
+    void PostInitNodePosition( CAI_Network *pNetwork, CAI_Node *pNode )
+    {
+        AdjustStriderNodePosition( pNetwork, pNode );
+    }
 };
 
-LINK_ENTITY_TO_CLASS(ai_network_build_helper,CHL2NetworkBuildHelper);
+LINK_ENTITY_TO_CLASS( ai_network_build_helper, CHL2NetworkBuildHelper );

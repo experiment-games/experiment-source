@@ -13,4 +13,4 @@
 
 const uint32 k_nMaxNumActiveContracts = 1;
 
-#endif // TF_QUEST_CONSTANTS_H
+#endif  // TF_QUEST_CONSTANTS_H

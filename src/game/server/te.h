@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $Workfile:     $
 // $NoKeywords: $
@@ -14,4 +14,4 @@
 
 #include "itempents.h"
 
-#endif // TE_H
+#endif  // TE_H

@@ -18,45 +18,45 @@
 
 class CEntityCroc : public CBaseAnimating
 {
-	DECLARE_CLASS( CEntityCroc, CBaseAnimating );
-public:
+    DECLARE_CLASS( CEntityCroc, CBaseAnimating );
 
-	CEntityCroc();
-	void InitCroc( CBaseEntity *pOther, const char *pszModel );
-	virtual void Think( void ) OVERRIDE;
+   public:
+    CEntityCroc();
+    void InitCroc( CBaseEntity *pOther, const char *pszModel );
+    virtual void Think( void ) OVERRIDE;
 
-private:
-	void CrocAttack( void );
-	CHandle< CTFPlayer > m_hTarget;
+   private:
+    void CrocAttack( void );
+    CHandle< CTFPlayer > m_hTarget;
 };
 
 class CFuncCroc : public CBaseTrigger
 {
-	DECLARE_CLASS( CFuncCroc, CBaseTrigger );
-public:
-	CFuncCroc();
+    DECLARE_CLASS( CFuncCroc, CBaseTrigger );
 
-	DECLARE_DATADESC();
+   public:
+    CFuncCroc();
 
-	virtual void Spawn( void ) OVERRIDE;
-	virtual void Precache( void ) OVERRIDE;
-	virtual int UpdateTransmitState( void ) OVERRIDE;
-	virtual int ShouldTransmit( const CCheckTransmitInfo *pInfo ) OVERRIDE;
-	virtual bool ShouldCollide( int collisionGroup, int contentsMask ) const OVERRIDE;
+    DECLARE_DATADESC();
 
-	virtual void StartTouch( CBaseEntity *pOther ) OVERRIDE;
+    virtual void Spawn( void ) OVERRIDE;
+    virtual void Precache( void ) OVERRIDE;
+    virtual int UpdateTransmitState( void ) OVERRIDE;
+    virtual int ShouldTransmit( const CCheckTransmitInfo *pInfo ) OVERRIDE;
+    virtual bool ShouldCollide( int collisionGroup, int contentsMask ) const OVERRIDE;
 
-	void FireOutputs( CTFPlayer *pTFPlayer );
+    virtual void StartTouch( CBaseEntity *pOther ) OVERRIDE;
 
-	const char *GetCrocModel( void );
+    void FireOutputs( CTFPlayer *pTFPlayer );
 
-private:
+    const char *GetCrocModel( void );
 
-	string_t m_iszModel;
+   private:
+    string_t m_iszModel;
 
-	COutputEvent m_OnEat;
-	COutputEvent m_OnEatRed;
-	COutputEvent m_OnEatBlue;
+    COutputEvent m_OnEat;
+    COutputEvent m_OnEatRed;
+    COutputEvent m_OnEatBlue;
 };
 
-#endif // TF_FUNC_CROC_H
+#endif  // TF_FUNC_CROC_H

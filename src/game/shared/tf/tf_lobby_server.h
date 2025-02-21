@@ -17,19 +17,29 @@
 // CTFLobby supercedes this, this just provides CTFLobbyShared + SharedObject (whereas the GS Lobby is nested within the
 // greater proto object on the GC -- see CTFGSLobby_Dummy)
 
-class CTFGSLobby : public CTFLobbyShared, public GCSDK::CProtoBufSharedObject<CSOTFGameServerLobby, k_EProtoObjectTFGameServerLobby>
+class CTFGSLobby : public CTFLobbyShared, public GCSDK::CProtoBufSharedObject< CSOTFGameServerLobby, k_EProtoObjectTFGameServerLobby >
 {
-	typedef GCSDK::CProtoBufSharedObject<CSOTFGameServerLobby, k_EProtoObjectTFGameServerLobby> BaseClass;
-public:
-	virtual ~CTFGSLobby() {}
+    typedef GCSDK::CProtoBufSharedObject< CSOTFGameServerLobby, k_EProtoObjectTFGameServerLobby > BaseClass;
 
-	virtual void Dump() const OVERRIDE;
+   public:
+    virtual ~CTFGSLobby() {}
 
-	virtual CSharedObject* GetSharedObjectForMember( const CSteamID & ) OVERRIDE { return this; }
+    virtual void Dump() const OVERRIDE;
 
-private:
-	virtual const CSOTFGameServerLobby &GSObj() const OVERRIDE final { return Obj(); }
-	virtual CSOTFGameServerLobby &GSObj() OVERRIDE final { return Obj(); }
+    virtual CSharedObject *GetSharedObjectForMember( const CSteamID & ) OVERRIDE
+    {
+        return this;
+    }
+
+   private:
+    virtual const CSOTFGameServerLobby &GSObj() const OVERRIDE final
+    {
+        return Obj();
+    }
+    virtual CSOTFGameServerLobby &GSObj() OVERRIDE final
+    {
+        return Obj();
+    }
 };
 
-#endif // TF_LOBBY_SERVER_H
+#endif  // TF_LOBBY_SERVER_H

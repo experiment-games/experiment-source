@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
 
@@ -13,31 +13,34 @@
 using namespace vgui;
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 class CHudInspectPanel : public CHudElement, public EditablePanel
 {
-	DECLARE_CLASS_SIMPLE( CHudInspectPanel, EditablePanel );
+    DECLARE_CLASS_SIMPLE( CHudInspectPanel, EditablePanel );
 
-public:
-	CHudInspectPanel( const char *pElementName );
+   public:
+    CHudInspectPanel( const char *pElementName );
 
-	virtual void	ApplySchemeSettings( IScheme *scheme );
-	virtual bool	ShouldDraw( void );
+    virtual void ApplySchemeSettings( IScheme *scheme );
+    virtual bool ShouldDraw( void );
 
-	virtual int		GetRenderGroupPriority( void ) { return 35; }	// less than statpanel
-	void		UserCmd_InspectTarget( void );
-	C_TFPlayer		*GetInspectTarget( C_TFPlayer *pLocalTFPlayer );
+    virtual int GetRenderGroupPriority( void )
+    {
+        return 35;
+    }  // less than statpanel
+    void UserCmd_InspectTarget( void );
+    C_TFPlayer *GetInspectTarget( C_TFPlayer *pLocalTFPlayer );
 
-	int	HudElementKeyInput( int down, ButtonCode_t keynum, const char *pszCurrentBinding );
+    int HudElementKeyInput( int down, ButtonCode_t keynum, const char *pszCurrentBinding );
 
-private:
-	void LockInspectRenderGroup( bool bLock );
-	void SetPanelVisible( bool bVisible );
+   private:
+    void LockInspectRenderGroup( bool bLock );
+    void SetPanelVisible( bool bVisible );
 
-	CItemModelPanel		*m_pItemPanel;
-	CHandle<C_TFPlayer>	m_hTarget;
-	int					m_iTargetItemIterator;
+    CItemModelPanel *m_pItemPanel;
+    CHandle< C_TFPlayer > m_hTarget;
+    int m_iTargetItemIterator;
 };
 
-#endif // TF_HUD_INSPECTPANEL_H
+#endif  // TF_HUD_INSPECTPANEL_H

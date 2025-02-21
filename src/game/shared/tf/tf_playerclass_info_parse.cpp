@@ -9,5 +9,5 @@
 
 FilePlayerClassInfo_t *CreatePlayerClassInfo()
 {
-	return NULL;
+    return NULL;
 }

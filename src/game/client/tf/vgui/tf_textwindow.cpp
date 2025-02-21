@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -30,9 +30,9 @@
 #include "tf_controls.h"
 #include "tf_shareddefs.h"
 
-#include "IGameUIFuncs.h" // for key bindings
+#include "IGameUIFuncs.h"  // for key bindings
 #include <igameresources.h>
-extern IGameUIFuncs *gameuifuncs; // for key binding details
+extern IGameUIFuncs *gameuifuncs;  // for key binding details
 
 #include <game/client/iviewport.h>
 
@@ -44,11 +44,12 @@ using namespace vgui;
 //-----------------------------------------------------------------------------
 // Purpose: Constructor
 //-----------------------------------------------------------------------------
-CTFTextWindow::CTFTextWindow( IViewPort *pViewPort ) : CTextWindow( pViewPort )
+CTFTextWindow::CTFTextWindow( IViewPort *pViewPort )
+    : CTextWindow( pViewPort )
 {
-	m_pTFTextMessage = new CExRichText( this, "TFTextMessage" );
+    m_pTFTextMessage = new CExRichText( this, "TFTextMessage" );
 
-	SetProportional( true );
+    SetProportional( true );
 }
 
 //-----------------------------------------------------------------------------
@@ -59,118 +60,117 @@ CTFTextWindow::~CTFTextWindow()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFTextWindow::ApplySchemeSettings( IScheme *pScheme )
 {
-	Frame::ApplySchemeSettings( pScheme );  // purposely skipping the CTextWindow version
+    Frame::ApplySchemeSettings( pScheme );  // purposely skipping the CTextWindow version
 
-	if ( ::input->IsSteamControllerActive() )
-	{
-		if ( m_bCustomSvrPage )
-		{
-			LoadControlSettings( "Resource/UI/TextWindowCustomServer_SC.res" );
-		}
-		else
-		{
-			LoadControlSettings( "Resource/UI/TextWindow_SC.res" );
-		}
+    if ( ::input->IsSteamControllerActive() )
+    {
+        if ( m_bCustomSvrPage )
+        {
+            LoadControlSettings( "Resource/UI/TextWindowCustomServer_SC.res" );
+        }
+        else
+        {
+            LoadControlSettings( "Resource/UI/TextWindow_SC.res" );
+        }
 
-		SetMouseInputEnabled( false );
-	}
-	else
-	{
-		if ( m_bCustomSvrPage )
-		{
-			LoadControlSettings( "Resource/UI/TextWindowCustomServer.res" );
-		}
-		else
-		{
-			LoadControlSettings( "Resource/UI/TextWindow.res" );
-		}
-		SetMouseInputEnabled( true );
-	}
+        SetMouseInputEnabled( false );
+    }
+    else
+    {
+        if ( m_bCustomSvrPage )
+        {
+            LoadControlSettings( "Resource/UI/TextWindowCustomServer.res" );
+        }
+        else
+        {
+            LoadControlSettings( "Resource/UI/TextWindow.res" );
+        }
+        SetMouseInputEnabled( true );
+    }
 
-
-	if ( m_pHTMLMessage )
-	{
-		m_pHTMLMessage->SetBgColor( pScheme->GetColor( "HTMLBackground", Color( 255, 0, 0, 255 ) ) );
-	}
+    if ( m_pHTMLMessage )
+    {
+        m_pHTMLMessage->SetBgColor( pScheme->GetColor( "HTMLBackground", Color( 255, 0, 0, 255 ) ) );
+    }
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFTextWindow::Reset( void )
 {
-	Update();
+    Update();
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFTextWindow::OnThink()
 {
-	//Always hide the health... this needs to be done every frame because a message from the server keeps resetting this.
-	C_BasePlayer *pLocalPlayer = C_BasePlayer::GetLocalPlayer();
-	if ( pLocalPlayer )
-	{
-		pLocalPlayer->m_Local.m_iHideHUD |= HIDEHUD_HEALTH;
-	}
+    // Always hide the health... this needs to be done every frame because a message from the server keeps resetting this.
+    C_BasePlayer *pLocalPlayer = C_BasePlayer::GetLocalPlayer();
+    if ( pLocalPlayer )
+    {
+        pLocalPlayer->m_Local.m_iHideHUD |= HIDEHUD_HEALTH;
+    }
 
-	BaseClass::OnThink();
+    BaseClass::OnThink();
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-void CTFTextWindow::SetData(KeyValues *data)
+void CTFTextWindow::SetData( KeyValues *data )
 {
-	m_bCustomSvrPage = data->GetBool( "customsvr" );
-	InvalidateLayout( false, true );
-	BaseClass::SetData( data );
+    m_bCustomSvrPage = data->GetBool( "customsvr" );
+    InvalidateLayout( false, true );
+    BaseClass::SetData( data );
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFTextWindow::Update()
 {
-	CExLabel *pTitle = dynamic_cast<CExLabel *>( FindChildByName( "TFMessageTitle" ) );
-	if ( pTitle )
-	{
-		pTitle->SetText( m_szTitle );
-	}
+    CExLabel *pTitle = dynamic_cast< CExLabel * >( FindChildByName( "TFMessageTitle" ) );
+    if ( pTitle )
+    {
+        pTitle->SetText( m_szTitle );
+    }
 
-	if ( m_pTFTextMessage )
-	{
-		m_pTFTextMessage->SetVisible( false );
-	}
+    if ( m_pTFTextMessage )
+    {
+        m_pTFTextMessage->SetVisible( false );
+    }
 
-	BaseClass::Update();
+    BaseClass::Update();
 
-	Panel *pOK = FindChildByName( "ok" );
-	if ( pOK )
-	{
-		pOK->RequestFocus();
-	}
+    Panel *pOK = FindChildByName( "ok" );
+    if ( pOK )
+    {
+        pOK->RequestFocus();
+    }
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //---------------------------------------------------------------------------
 void CTFTextWindow::SetVisible( bool state )
 {
-	BaseClass::SetVisible( state );
+    BaseClass::SetVisible( state );
 
-	if ( state )
-	{
-		Panel *pOK = FindChildByName( "ok" );
-		if ( pOK )
-		{
-			pOK->RequestFocus();
-		}
-	}
+    if ( state )
+    {
+        Panel *pOK = FindChildByName( "ok" );
+        if ( pOK )
+        {
+            pOK->RequestFocus();
+        }
+    }
 }
 
 //-----------------------------------------------------------------------------
@@ -178,33 +178,33 @@ void CTFTextWindow::SetVisible( bool state )
 //-----------------------------------------------------------------------------
 void CTFTextWindow::ShowPanel( bool bShow )
 {
-	if ( IsVisible() == bShow )
-		return;
+    if ( IsVisible() == bShow )
+        return;
 
-	// Force use to reevaluate our scheme, in case Steam Controller stuff has changed.
-	InvalidateLayout( true, true );
+    // Force use to reevaluate our scheme, in case Steam Controller stuff has changed.
+    InvalidateLayout( true, true );
 
-	BaseClass::ShowPanel( bShow );
+    BaseClass::ShowPanel( bShow );
 
-	if ( m_pViewPort )
-	{
-		m_pViewPort->ShowBackGround( false );
-	}
+    if ( m_pViewPort )
+    {
+        m_pViewPort->ShowBackGround( false );
+    }
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFTextWindow::OnKeyCodePressed( KeyCode code )
 {
-	if ( code == KEY_XBUTTON_A || code == STEAMCONTROLLER_A )
-	{
-		OnCommand( "okay" );		
-	}
-	else
-	{
-		BaseClass::OnKeyCodePressed( code );
-	}
+    if ( code == KEY_XBUTTON_A || code == STEAMCONTROLLER_A )
+    {
+        OnCommand( "okay" );
+    }
+    else
+    {
+        BaseClass::OnKeyCodePressed( code );
+    }
 }
 
 //-----------------------------------------------------------------------------
@@ -215,60 +215,60 @@ void CTFTextWindow::PaintBackground()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFTextWindow::OnCommand( const char *command )
 {
-	BaseClass::OnCommand( command );
+    BaseClass::OnCommand( command );
 
-	// Don't open up the mapinfo if it was a custom server html page
-	if ( !Q_strcmp( command, "okay" ) && !m_bCustomSvrPage )
-	{
-		m_pViewPort->ShowPanel( PANEL_MAPINFO, true );
-	}
+    // Don't open up the mapinfo if it was a custom server html page
+    if ( !Q_strcmp( command, "okay" ) && !m_bCustomSvrPage )
+    {
+        m_pViewPort->ShowPanel( PANEL_MAPINFO, true );
+    }
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFTextWindow::ShowText( const char *text )
 {
-	ShowTitleLabel( true );
+    ShowTitleLabel( true );
 
-	if ( m_pTFTextMessage )
-	{
-		m_pTFTextMessage->SetVisible( true );
-		m_pTFTextMessage->SetText( text );
-		m_pTFTextMessage->GotoTextStart();
-	}
+    if ( m_pTFTextMessage )
+    {
+        m_pTFTextMessage->SetVisible( true );
+        m_pTFTextMessage->SetText( text );
+        m_pTFTextMessage->GotoTextStart();
+    }
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFTextWindow::ShowURL( const char *URL, bool bAllowUserToDisable )
 {
-	ShowTitleLabel( false );
-	BaseClass::ShowURL( URL, bAllowUserToDisable );
+    ShowTitleLabel( false );
+    BaseClass::ShowURL( URL, bAllowUserToDisable );
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFTextWindow::ShowFile( const char *filename )
 {
-	ShowTitleLabel( false )	;
-	BaseClass::ShowFile( filename );
+    ShowTitleLabel( false );
+    BaseClass::ShowFile( filename );
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFTextWindow::ShowTitleLabel( bool show )
 {
-	CExLabel *pTitle = dynamic_cast<CExLabel *>( FindChildByName( "TFMessageTitle" ) );
-	if ( pTitle )
-	{
-		pTitle->SetVisible( show );
-	}
+    CExLabel *pTitle = dynamic_cast< CExLabel * >( FindChildByName( "TFMessageTitle" ) );
+    if ( pTitle )
+    {
+        pTitle->SetVisible( show );
+    }
 }

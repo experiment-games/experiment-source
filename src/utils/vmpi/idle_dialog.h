@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -11,9 +11,7 @@
 #pragma once
 #endif
 
-
 #include "win_idle.h"
-
 
 //
 // This is a base class that provides in-thread idle processing.
@@ -27,22 +25,19 @@
 
 class CIdleDialog : public CDialog
 {
-public:
-					
-					CIdleDialog( int id, CWnd *pParent );
-	
-	// Call this to start the idle processing.
-	void			StartIdleProcessing( DWORD msInterval );
-	
-	virtual void	OnIdle() = 0;
+   public:
+    CIdleDialog( int id, CWnd *pParent );
 
+    // Call this to start the idle processing.
+    void StartIdleProcessing( DWORD msInterval );
 
-private:
-	DECLARE_MESSAGE_MAP()
-	afx_msg LONG OnStartIdle(UINT, LONG);
+    virtual void OnIdle() = 0;
 
-	CWinIdle m_cWinIdle;
+   private:
+    DECLARE_MESSAGE_MAP()
+    afx_msg LONG OnStartIdle( UINT, LONG );
+
+    CWinIdle m_cWinIdle;
 };
 
-
-#endif // IDLE_DIALOG_H
+#endif  // IDLE_DIALOG_H

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================
@@ -15,65 +15,68 @@
 #include <teammenu.h>
 #include "tf_teammenu.h"
 
-
 //-----------------------------------------------------------------------------
 // Purpose: Displays the team menu
 //-----------------------------------------------------------------------------
 class CTFArenaTeamMenu : public CTeamMenu
 {
-private:
-	DECLARE_CLASS_SIMPLE( CTFArenaTeamMenu, CTeamMenu );
-		
-public:
-	CTFArenaTeamMenu( IViewPort *pViewPort );
-	~CTFArenaTeamMenu();
+   private:
+    DECLARE_CLASS_SIMPLE( CTFArenaTeamMenu, CTeamMenu );
 
-	void Update();
-	void ShowPanel( bool bShow );
+   public:
+    CTFArenaTeamMenu( IViewPort *pViewPort );
+    ~CTFArenaTeamMenu();
+
+    void Update();
+    void ShowPanel( bool bShow );
 
 #ifdef _X360
-	CON_COMMAND_MEMBER_F( CTFTeamMenu, "join_team", Join_Team, "Send a jointeam command", 0 );
+    CON_COMMAND_MEMBER_F( CTFTeamMenu, "join_team", Join_Team, "Send a jointeam command", 0 );
 #endif
 
-protected:
-	virtual void ApplySchemeSettings(vgui::IScheme *pScheme);
-	virtual void OnKeyCodePressed( vgui::KeyCode code );
+   protected:
+    virtual void ApplySchemeSettings( vgui::IScheme *pScheme );
+    virtual void OnKeyCodePressed( vgui::KeyCode code );
 
-	// command callbacks
-	virtual void OnCommand( const char *command );
+    // command callbacks
+    virtual void OnCommand( const char *command );
 
-	virtual void LoadMapPage( const char *mapName );
+    virtual void LoadMapPage( const char *mapName );
 
-	virtual void OnTick( void );
+    virtual void OnTick( void );
 
-	virtual const char *GetName( void ) { return PANEL_ARENA_TEAM; }
+    virtual const char *GetName( void )
+    {
+        return PANEL_ARENA_TEAM;
+    }
 
-private:
-	
-	CTFTeamButton	*m_pAutoTeamButton;
-	CTFTeamButton	*m_pSpecTeamButton;
-	CExLabel		*m_pSpecLabel;
+   private:
+    CTFTeamButton *m_pAutoTeamButton;
+    CTFTeamButton *m_pSpecTeamButton;
+    CExLabel *m_pSpecLabel;
 
 #ifdef _X360
-	CTFFooter		*m_pFooter;
+    CTFFooter *m_pFooter;
 #else
-	CExButton		*m_pCancelButton;
+    CExButton *m_pCancelButton;
 #endif
 
-	CSCHintIcon		*m_pCancelHintIcon;
-	CSCHintIcon		*m_pJoinAutoHintIcon;
-	CSCHintIcon		*m_pJoinSpectatorsHintIcon;
+    CSCHintIcon *m_pCancelHintIcon;
+    CSCHintIcon *m_pJoinAutoHintIcon;
+    CSCHintIcon *m_pJoinSpectatorsHintIcon;
 
-	bool m_bRedDisabled;
-	bool m_bBlueDisabled;
+    bool m_bRedDisabled;
+    bool m_bBlueDisabled;
 
+   private:
+    enum
+    {
+        NUM_TEAMS = 3
+    };
 
-private:
-	enum { NUM_TEAMS = 3 };
+    ButtonCode_t m_iTeamMenuKey;
 
-	ButtonCode_t m_iTeamMenuKey;
-
-	void ActivateSelectIconHint( int focus_group_number );
+    void ActivateSelectIconHint( int focus_group_number );
 };
 
-#endif // TF_ARENATEAMMENU_H
+#endif  // TF_ARENATEAMMENU_H

@@ -8,49 +8,45 @@
 #include "../eyeball_boss.h"
 #include "eyeball_boss_emote.h"
 
-
 //---------------------------------------------------------------------------------------------
 CEyeballBossEmote::CEyeballBossEmote( int animationSequence, const char *soundName, Action< CEyeballBoss > *nextAction )
 {
-	m_animationSequence = animationSequence;
-	m_soundName = soundName;
-	m_nextAction = nextAction;
+    m_animationSequence = animationSequence;
+    m_soundName = soundName;
+    m_nextAction = nextAction;
 }
-
 
 //---------------------------------------------------------------------------------------------
 ActionResult< CEyeballBoss > CEyeballBossEmote::OnStart( CEyeballBoss *me, Action< CEyeballBoss > *priorAction )
 {
-	if ( m_animationSequence )
-	{
-		me->SetSequence( m_animationSequence );
-		me->SetPlaybackRate( 1.0f );
-		me->SetCycle( 0 );
-		me->ResetSequenceInfo();
-	}
+    if ( m_animationSequence )
+    {
+        me->SetSequence( m_animationSequence );
+        me->SetPlaybackRate( 1.0f );
+        me->SetCycle( 0 );
+        me->ResetSequenceInfo();
+    }
 
-	if ( m_soundName )
-	{
-		me->EmitSound( m_soundName );
-	}
+    if ( m_soundName )
+    {
+        me->EmitSound( m_soundName );
+    }
 
-	return Continue();
+    return Continue();
 }
-
 
 //---------------------------------------------------------------------------------------------
 ActionResult< CEyeballBoss > CEyeballBossEmote::Update( CEyeballBoss *me, float interval )
 {
-	if ( me->IsSequenceFinished() )
-	{
-		if ( m_nextAction )
-		{
-			return ChangeTo( m_nextAction );
-		}
+    if ( me->IsSequenceFinished() )
+    {
+        if ( m_nextAction )
+        {
+            return ChangeTo( m_nextAction );
+        }
 
-		return Done();
-	}
+        return Done();
+    }
 
-	return Continue();
+    return Continue();
 }
-

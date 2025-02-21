@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -10,7 +10,6 @@
 #pragma once
 #endif
 
-
 // Print a CONTENTS_ mask to a string.
 void PrintBrushContentsToString( int contents, char *pOut, int nMaxChars );
 
@@ -19,14 +18,13 @@ void PrintBrushContents( int contents );
 
 void FixupAreaportalWaterBrushes( bspbrush_t *pList );
 
-bspbrush_t *MakeBspBrushList (int startbrush, int endbrush,
-		const Vector& clipmins, const Vector& clipmaxs, int detailScreen);
-bspbrush_t *MakeBspBrushList (mapbrush_t **pBrushes, int nBrushCount, const Vector& clipmins, const Vector& clipmaxs);
+bspbrush_t *MakeBspBrushList( int startbrush, int endbrush, const Vector &clipmins, const Vector &clipmaxs, int detailScreen );
+bspbrush_t *MakeBspBrushList( mapbrush_t **pBrushes, int nBrushCount, const Vector &clipmins, const Vector &clipmaxs );
 
-void WriteBrushMap (char *name, bspbrush_t *list);
+void WriteBrushMap( char *name, bspbrush_t *list );
 
-bspbrush_t *ChopBrushes (bspbrush_t *head);
-bspbrush_t *IntersectBrush (bspbrush_t *a, bspbrush_t *b);
-qboolean BrushesDisjoint (bspbrush_t *a, bspbrush_t *b);
+bspbrush_t *ChopBrushes( bspbrush_t *head );
+bspbrush_t *IntersectBrush( bspbrush_t *a, bspbrush_t *b );
+qboolean BrushesDisjoint( bspbrush_t *a, bspbrush_t *b );
 
-#endif // CSG_H
+#endif  // CSG_H

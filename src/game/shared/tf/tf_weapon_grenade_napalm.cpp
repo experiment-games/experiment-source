@@ -49,11 +49,9 @@ END_DATADESC()
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-CTFWeaponBaseGrenadeProj *CTFGrenadeNapalm::EmitGrenade( Vector vecSrc, QAngle vecAngles, Vector vecVel, 
-							        AngularImpulse angImpulse, CBasePlayer *pPlayer, float flTime, int iflags )
+CTFWeaponBaseGrenadeProj *CTFGrenadeNapalm::EmitGrenade( Vector vecSrc, QAngle vecAngles, Vector vecVel, AngularImpulse angImpulse, CBasePlayer *pPlayer, float flTime, int iflags )
 {
-	return CTFGrenadeNapalmProjectile::Create( vecSrc, vecAngles, vecVel, angImpulse, 
-		                                pPlayer, GetTFWpnData(), flTime );
+    return CTFGrenadeNapalmProjectile::Create( vecSrc, vecAngles, vecVel, angImpulse, pPlayer, GetTFWpnData(), flTime );
 }
 
 #endif
@@ -72,17 +70,15 @@ PRECACHE_WEAPON_REGISTER( tf_weapon_grenade_napalm_projectile );
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-CTFGrenadeNapalmProjectile* CTFGrenadeNapalmProjectile::Create( const Vector &position, const QAngle &angles, 
-																const Vector &velocity, const AngularImpulse &angVelocity, 
-																CBaseCombatCharacter *pOwner, const CTFWeaponInfo &weaponInfo, float timer, int iFlags )
+CTFGrenadeNapalmProjectile *CTFGrenadeNapalmProjectile::Create( const Vector &position, const QAngle &angles, const Vector &velocity, const AngularImpulse &angVelocity, CBaseCombatCharacter *pOwner, const CTFWeaponInfo &weaponInfo, float timer, int iFlags )
 {
-	CTFGrenadeNapalmProjectile *pGrenade = static_cast<CTFGrenadeNapalmProjectile*>( CTFWeaponBaseGrenadeProj::Create( "tf_weapon_grenade_napalm_projectile", position, angles, velocity, angVelocity, pOwner, weaponInfo, timer, iFlags ) );
-	if ( pGrenade )
-	{
-		pGrenade->ApplyLocalAngularVelocityImpulse( angVelocity );	
-	}
+    CTFGrenadeNapalmProjectile *pGrenade = static_cast< CTFGrenadeNapalmProjectile * >( CTFWeaponBaseGrenadeProj::Create( "tf_weapon_grenade_napalm_projectile", position, angles, velocity, angVelocity, pOwner, weaponInfo, timer, iFlags ) );
+    if ( pGrenade )
+    {
+        pGrenade->ApplyLocalAngularVelocityImpulse( angVelocity );
+    }
 
-	return pGrenade;
+    return pGrenade;
 }
 
 //-----------------------------------------------------------------------------
@@ -90,8 +86,8 @@ CTFGrenadeNapalmProjectile* CTFGrenadeNapalmProjectile::Create( const Vector &po
 //-----------------------------------------------------------------------------
 void CTFGrenadeNapalmProjectile::Spawn()
 {
-	SetModel( GRENADE_MODEL );
-	BaseClass::Spawn();
+    SetModel( GRENADE_MODEL );
+    BaseClass::Spawn();
 }
 
 //-----------------------------------------------------------------------------
@@ -99,9 +95,9 @@ void CTFGrenadeNapalmProjectile::Spawn()
 //-----------------------------------------------------------------------------
 void CTFGrenadeNapalmProjectile::Precache()
 {
-	PrecacheModel( GRENADE_MODEL );
+    PrecacheModel( GRENADE_MODEL );
 
-	BaseClass::Precache();
+    BaseClass::Precache();
 }
 
 //-----------------------------------------------------------------------------
@@ -109,7 +105,7 @@ void CTFGrenadeNapalmProjectile::Precache()
 //-----------------------------------------------------------------------------
 void CTFGrenadeNapalmProjectile::BounceSound( void )
 {
-	EmitSound( "Weapon_Grenade_Nail.Bounce" );
+    EmitSound( "Weapon_Grenade_Nail.Bounce" );
 }
 
 //-----------------------------------------------------------------------------
@@ -117,13 +113,13 @@ void CTFGrenadeNapalmProjectile::BounceSound( void )
 //-----------------------------------------------------------------------------
 void CTFGrenadeNapalmProjectile::Detonate()
 {
-	if ( ShouldNotDetonate() )
-	{
-		RemoveGrenade();
-		return;
-	}
+    if ( ShouldNotDetonate() )
+    {
+        RemoveGrenade();
+        return;
+    }
 
-	BaseClass::Detonate();
+    BaseClass::Detonate();
 
 #if 0
 	// Tell the bots an HE grenade has exploded

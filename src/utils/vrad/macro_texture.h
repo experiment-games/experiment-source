@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -10,9 +10,7 @@
 #pragma once
 #endif
 
-
 #include "mathlib/vector.h"
-
 
 // The macro texture looks for a TGA file with the same name as the BSP file and in
 // the same directory. If it finds one, it maps this texture onto the world dimensions
@@ -20,5 +18,4 @@
 void InitMacroTexture( const char *pBSPFilename );
 void ApplyMacroTextures( int iFace, const Vector &vWorldPos, Vector &outLuxel );
 
-
-#endif // MACRO_TEXTURE_H
+#endif  // MACRO_TEXTURE_H

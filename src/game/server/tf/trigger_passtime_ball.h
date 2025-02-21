@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -16,18 +16,18 @@
 //-----------------------------------------------------------------------------
 class CTriggerPasstimeBall : public CBaseEntity
 {
-public:
-	DECLARE_CLASS( CTriggerPasstimeBall, CBaseEntity );
-	DECLARE_DATADESC();
-	virtual void Spawn() OVERRIDE;
+   public:
+    DECLARE_CLASS( CTriggerPasstimeBall, CBaseEntity );
+    DECLARE_DATADESC();
+    virtual void Spawn() OVERRIDE;
 
-private:
-	void Update();
-	bool BTouching( CBaseEntity *pEnt );
+   private:
+    void Update();
+    bool BTouching( CBaseEntity *pEnt );
 
-	bool m_bPresent;
-	COutputEvent m_onBallEnter;
-	COutputEvent m_onBallExit;
+    bool m_bPresent;
+    COutputEvent m_onBallEnter;
+    COutputEvent m_onBallExit;
 };
 
-#endif // TRIGGER_PASSTIME_BALL_H 
+#endif  // TRIGGER_PASSTIME_BALL_H

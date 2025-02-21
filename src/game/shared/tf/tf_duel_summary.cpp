@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -11,4 +11,3 @@
 #include "gcsdk/enumutils.h"
 
 using namespace GCSDK;
-

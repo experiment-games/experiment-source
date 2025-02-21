@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -22,40 +22,40 @@ PLATFORM_INTERFACE void SetMinidumpComment( const char *pszComment );
 // writes out a minidump of the current stack trace with a unique filename
 PLATFORM_INTERFACE void WriteMiniDump( const char *pszFilenameSuffix = NULL );
 
-typedef void (*FnWMain)( int , tchar *[] );
-typedef void (*FnVoidPtrFn)( void * );
+typedef void ( *FnWMain )( int, tchar *[] );
+typedef void ( *FnVoidPtrFn )( void * );
 
-#if defined(_WIN32) && !defined(_X360)
+#if defined( _WIN32 ) && !defined( _X360 )
 
 // calls the passed in function pointer and catches any exceptions/crashes thrown by it, and writes a minidump
 // use from wmain() to protect the whole program
-typedef void (*FnWMain)( int , tchar *[] );
-typedef int (*FnWMainIntRet)( int , tchar *[] );
-typedef void (*FnVoidPtrFn)( void * );
+typedef void ( *FnWMain )( int, tchar *[] );
+typedef int ( *FnWMainIntRet )( int, tchar *[] );
+typedef void ( *FnVoidPtrFn )( void * );
 
 enum ECatchAndWriteMinidumpAction
 {
-	k_ECatchAndWriteMiniDumpAbort = 0,
-	k_ECatchAndWriteMiniDumpReThrow = 1,
-	k_ECatchAndWriteMiniDumpIgnore = 2,
+    k_ECatchAndWriteMiniDumpAbort = 0,
+    k_ECatchAndWriteMiniDumpReThrow = 1,
+    k_ECatchAndWriteMiniDumpIgnore = 2,
 };
 
-PLATFORM_INTERFACE void CatchAndWriteMiniDump( FnWMain pfn, int argc, tchar *argv[] ); // action = Abort
-PLATFORM_INTERFACE void CatchAndWriteMiniDumpForVoidPtrFn( FnVoidPtrFn pfn, void *pv, bool bExitQuietly ); // action = abort if bExitQuietly, Rethrow otherwise
+PLATFORM_INTERFACE void CatchAndWriteMiniDump( FnWMain pfn, int argc, tchar *argv[] );                      // action = Abort
+PLATFORM_INTERFACE void CatchAndWriteMiniDumpForVoidPtrFn( FnVoidPtrFn pfn, void *pv, bool bExitQuietly );  // action = abort if bExitQuietly, Rethrow otherwise
 
 PLATFORM_INTERFACE void CatchAndWriteMiniDumpEx( FnWMain pfn, int argc, tchar *argv[], ECatchAndWriteMinidumpAction eAction );
 PLATFORM_INTERFACE int CatchAndWriteMiniDumpExReturnsInt( FnWMainIntRet pfn, int argc, tchar *argv[], ECatchAndWriteMinidumpAction eAction );
 PLATFORM_INTERFACE void CatchAndWriteMiniDumpExForVoidPtrFn( FnVoidPtrFn pfn, void *pv, ECatchAndWriteMinidumpAction eAction );
 
 // Let's not include this.  We'll use forwards instead.
-//#include <dbghelp.h>
+// #include <dbghelp.h>
 struct _EXCEPTION_POINTERS;
 
 // Replaces the current function pointer with the one passed in.
 // Returns the previously-set function.
 // The function is called internally by WriteMiniDump() and CatchAndWriteMiniDump()
 // The default is the built-in function that uses DbgHlp.dll's MiniDumpWriteDump function
-typedef void (*FnMiniDump)( unsigned int uStructuredExceptionCode, _EXCEPTION_POINTERS * pExceptionInfo, const char *pszFilenameSuffix );
+typedef void ( *FnMiniDump )( unsigned int uStructuredExceptionCode, _EXCEPTION_POINTERS *pExceptionInfo, const char *pszFilenameSuffix );
 PLATFORM_INTERFACE FnMiniDump SetMiniDumpFunction( FnMiniDump pfn );
 
 // Use this to write a minidump explicitly.
@@ -67,18 +67,17 @@ PLATFORM_INTERFACE FnMiniDump SetMiniDumpFunction( FnMiniDump pfn );
 // If ptchMinidumpFileNameBuffer is NULL the name of the minidump file written will not
 // be available after the function returns.
 //
-PLATFORM_INTERFACE bool WriteMiniDumpUsingExceptionInfo( 
-	unsigned int uStructuredExceptionCode,
-	_EXCEPTION_POINTERS * pExceptionInfo, 
-	int /* MINIDUMP_TYPE */ minidumpType,
-	const char *pszFilenameSuffix = NULL,
-	tchar *ptchMinidumpFileNameBuffer = NULL
-	);
+PLATFORM_INTERFACE bool WriteMiniDumpUsingExceptionInfo(
+    unsigned int uStructuredExceptionCode,
+    _EXCEPTION_POINTERS *pExceptionInfo,
+    int /* MINIDUMP_TYPE */ minidumpType,
+    const char *pszFilenameSuffix = NULL,
+    tchar *ptchMinidumpFileNameBuffer = NULL );
 
 // A slightly smart wrapper around WriteMiniDumpUsingExceptionInfo that tries to select the right minidump type on
 // context.
 PLATFORM_INTERFACE void AutoWriteMiniDumpUsingExceptionInfo( unsigned int uStructuredExceptionCode,
-                                                             _EXCEPTION_POINTERS * pExceptionInfo,
+                                                             _EXCEPTION_POINTERS *pExceptionInfo,
                                                              const char *pszFilenameSuffix );
 
 // Call this to enable a handler for unhandled exceptions.
@@ -88,7 +87,7 @@ PLATFORM_INTERFACE void MinidumpSetUnhandledExceptionFunction( FnMiniDump pfn );
 // being silently swallowed. We should always call this at startup.
 PLATFORM_INTERFACE void EnableCrashingOnCrashes();
 
-#endif // defined(_WIN32) && !defined(_X360)
+#endif  // defined(_WIN32) && !defined(_X360)
 
 //
 // Minidump User Stream Info Comments.
@@ -106,5 +105,4 @@ PLATFORM_INTERFACE void MinidumpUserStreamInfoAppend( const char *pFormat, ... )
 //  Empty strings ("\0") can be returned if comment hasn't been set
 PLATFORM_INTERFACE const char *MinidumpUserStreamInfoGet( int Index );
 
-#endif // MINIDUMP_H
-
+#endif  // MINIDUMP_H

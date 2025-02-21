@@ -10,7 +10,6 @@
 // $NoKeywords: $
 //=============================================================================//
 
-
 #ifdef STEAM
 //-----------------------------------------------------------------------------
 // Unicode-related #defines (see wchartypes.h)
@@ -18,7 +17,6 @@
 #ifdef ENFORCE_WCHAR
 #define char DontUseChar_SeeWcharOn.h
 #endif
-
 
 //-----------------------------------------------------------------------------
 // Memory-related #defines

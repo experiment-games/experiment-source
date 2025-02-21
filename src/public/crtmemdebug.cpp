@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $Workfile:     $
 // $Date:         $
@@ -11,7 +11,7 @@
 // $NoKeywords: $
 //=============================================================================//
 
-#if !defined(_STATIC_LINKED) || defined(_SHARED_LIB)
+#if !defined( _STATIC_LINKED ) || defined( _SHARED_LIB )
 
 #include "crtmemdebug.h"
 #ifdef USECRTMEMDEBUG
@@ -24,7 +24,7 @@
 void CheckHeap( void )
 {
 #ifdef USECRTMEMDEBUG
-	_CrtCheckMemory();
+    _CrtCheckMemory();
 #endif
 }
 
@@ -33,12 +33,12 @@ void CheckHeap( void )
 void InitCRTMemDebug( void )
 {
 #ifdef USECRTMEMDEBUG
-	_CrtSetDbgFlag( 
-//	_CRTDBG_ALLOC_MEM_DF  | 
-	_CRTDBG_CHECK_ALWAYS_DF |
-	_CRTDBG_CHECK_CRT_DF | 
-	_CRTDBG_DELAY_FREE_MEM_DF );
+    _CrtSetDbgFlag(
+        //	_CRTDBG_ALLOC_MEM_DF  |
+        _CRTDBG_CHECK_ALWAYS_DF |
+        _CRTDBG_CHECK_CRT_DF |
+        _CRTDBG_DELAY_FREE_MEM_DF );
 #endif
 }
 
-#endif // !_STATIC_LINKED || _SHARED_LIB
+#endif  // !_STATIC_LINKED || _SHARED_LIB

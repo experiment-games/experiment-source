@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -11,23 +11,21 @@
 #pragma once
 #endif
 
-
 #include "basetempentity.h"
-
 
 class CTEParticleSystem : public CBaseTempEntity
 {
-public:
-	DECLARE_CLASS( CTEParticleSystem, CBaseTempEntity );
-	DECLARE_SERVERCLASS();
+   public:
+    DECLARE_CLASS( CTEParticleSystem, CBaseTempEntity );
+    DECLARE_SERVERCLASS();
 
-	CTEParticleSystem(const char *pName) : BaseClass(pName)
-	{
-		m_vecOrigin.GetForModify().Init();
-	}
+    CTEParticleSystem( const char *pName )
+        : BaseClass( pName )
+    {
+        m_vecOrigin.GetForModify().Init();
+    }
 
-	CNetworkVector( m_vecOrigin );
+    CNetworkVector( m_vecOrigin );
 };
 
-
-#endif // TE_PARTICLESYSTEM_H
+#endif  // TE_PARTICLESYSTEM_H

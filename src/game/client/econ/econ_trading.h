@@ -35,6 +35,6 @@ void Trading_RequestTrade( const CSteamID &steamID );
  * @param steamID
  * @param giftItem
  */
-void Trading_SendGift( const CSteamID &steamID, const CEconItemView& giftItem );
+void Trading_SendGift( const CSteamID &steamID, const CEconItemView &giftItem );
 
-#endif // TF_TRADING_H
+#endif  // TF_TRADING_H

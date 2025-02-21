@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -24,113 +24,116 @@ class CBackpackPanel;
 class CCraftingPanel;
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 class CServerNotConnectedToSteamDialog : public vgui::EditablePanel
 {
-	DECLARE_CLASS_SIMPLE( CServerNotConnectedToSteamDialog, vgui::EditablePanel );
+    DECLARE_CLASS_SIMPLE( CServerNotConnectedToSteamDialog, vgui::EditablePanel );
 
-public:
-	CServerNotConnectedToSteamDialog( vgui::Panel *pParent, const char *pElementName );
+   public:
+    CServerNotConnectedToSteamDialog( vgui::Panel *pParent, const char *pElementName );
 
-	virtual void	ApplySchemeSettings( vgui::IScheme *scheme );
-	virtual void	OnCommand( const char *command );
+    virtual void ApplySchemeSettings( vgui::IScheme *scheme );
+    virtual void OnCommand( const char *command );
 };
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 class CCheatDetectionDialog : public vgui::EditablePanel
 {
-	DECLARE_CLASS_SIMPLE( CCheatDetectionDialog, vgui::EditablePanel );
+    DECLARE_CLASS_SIMPLE( CCheatDetectionDialog, vgui::EditablePanel );
 
-public:
-	CCheatDetectionDialog( vgui::Panel *pParent, const char *pElementName );
+   public:
+    CCheatDetectionDialog( vgui::Panel *pParent, const char *pElementName );
 
-	virtual void	ApplySchemeSettings( vgui::IScheme *scheme );
-	virtual void	OnCommand( const char *command );
+    virtual void ApplySchemeSettings( vgui::IScheme *scheme );
+    virtual void OnCommand( const char *command );
 };
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 class CCharacterInfoPanel : public vgui::PropertyDialog, public IEconRootUI, public CGameEventListener
 {
-	DECLARE_CLASS_SIMPLE( CCharacterInfoPanel, vgui::PropertyDialog );
-public:
-	CCharacterInfoPanel( Panel *parent );
-	virtual ~CCharacterInfoPanel();
+    DECLARE_CLASS_SIMPLE( CCharacterInfoPanel, vgui::PropertyDialog );
 
-	virtual void ApplySchemeSettings( vgui::IScheme *pScheme );
-	virtual void PerformLayout( void );
-	virtual void OnCommand( const char *command );
-	virtual void ShowPanel( bool bShow );
-	virtual void OnKeyCodeTyped(vgui::KeyCode code) OVERRIDE;
-	virtual void OnKeyCodePressed(vgui::KeyCode code) OVERRIDE;
-	virtual void OnThink();
+   public:
+    CCharacterInfoPanel( Panel *parent );
+    virtual ~CCharacterInfoPanel();
 
-	void		 OpenLoadoutToClass( int iClassIndex, bool bOpenClassLoadout );
-	void		 OpenLoadoutToBackpack( void );
-	void		 OpenLoadoutToCrafting( void );
-	void		 OpenLoadoutToArmory( void );
-	void		 OpenToPaintkitPreview( CEconItemView* pItem, bool bFixedItem, bool bFixedPaintkit );
-	void		 SetCheckForRoomOnExit( bool bCheck ) { m_bCheckForRoomOnExit = bCheck; }
+    virtual void ApplySchemeSettings( vgui::IScheme *pScheme );
+    virtual void PerformLayout( void );
+    virtual void OnCommand( const char *command );
+    virtual void ShowPanel( bool bShow );
+    virtual void OnKeyCodeTyped( vgui::KeyCode code ) OVERRIDE;
+    virtual void OnKeyCodePressed( vgui::KeyCode code ) OVERRIDE;
+    virtual void OnThink();
 
-	void		 FireGameEvent( IGameEvent *event );
-	
-	CArmoryPanel   *GetArmoryPanel( void );
+    void OpenLoadoutToClass( int iClassIndex, bool bOpenClassLoadout );
+    void OpenLoadoutToBackpack( void );
+    void OpenLoadoutToCrafting( void );
+    void OpenLoadoutToArmory( void );
+    void OpenToPaintkitPreview( CEconItemView *pItem, bool bFixedItem, bool bFixedPaintkit );
+    void SetCheckForRoomOnExit( bool bCheck )
+    {
+        m_bCheckForRoomOnExit = bCheck;
+    }
 
-	MESSAGE_FUNC_PARAMS( OnOpenArmoryDirect, "OpenArmoryDirect", data );
+    void FireGameEvent( IGameEvent *event );
 
-	//---------------------------------------
-	// IEconRootUI
-	virtual IEconRootUI	*OpenEconUI( int iDirectToPage = 0, bool bCheckForInventorySpaceOnExit = false );
-	virtual void		CloseEconUI( void );
-	virtual bool		IsUIPanelVisible( EconBaseUIPanels_t iPanel );
-	virtual void		SetPreventClosure( bool bPrevent ) OVERRIDE;
+    CArmoryPanel *GetArmoryPanel( void );
 
-	// Sub panel access.
-	// These are panels that are parented to the root EconUI.
-	virtual CBackpackPanel *GetBackpackPanel( void );
-	virtual CCraftingPanel *GetCraftingPanel( void );
+    MESSAGE_FUNC_PARAMS( OnOpenArmoryDirect, "OpenArmoryDirect", data );
 
-	// Gamestats access
-	virtual void		Gamestats_ItemTransaction( int eventID, CEconItemView *item, const char *pszReason = NULL, int iQuality = 0 );
-	virtual void		Gamestats_Store( int eventID, CEconItemView* item=NULL, const char* panelName=NULL, 
-		int classId=0, const cart_item_t* in_cartItem=NULL, int in_checkoutAttempts=0, const char* storeError=NULL, int in_totalPrice=0, int in_currencyCode=0 );
-	virtual void		SetExperimentValue( uint64 experimentValue );
+    //---------------------------------------
+    // IEconRootUI
+    virtual IEconRootUI *OpenEconUI( int iDirectToPage = 0, bool bCheckForInventorySpaceOnExit = false );
+    virtual void CloseEconUI( void );
+    virtual bool IsUIPanelVisible( EconBaseUIPanels_t iPanel );
+    virtual void SetPreventClosure( bool bPrevent ) OVERRIDE;
 
-	// Open separate economy panels (they're not parented to the root EconUI)
-	// This is here so that games can customize the implementation of these panels.
-	virtual CItemPickupPanel	*OpenItemPickupPanel( void );
-	virtual CItemDiscardPanel	*OpenItemDiscardPanel( void );
-	virtual void				CreateStorePanel( void );
-	virtual CStorePanel			*OpenStorePanel( int iItemDef, bool bAddToCart );
-	virtual CStorePanel			*GetStorePanel( void );
+    // Sub panel access.
+    // These are panels that are parented to the root EconUI.
+    virtual CBackpackPanel *GetBackpackPanel( void );
+    virtual CCraftingPanel *GetCraftingPanel( void );
 
-	// When the root UI is closed, send an "EconUIClosed" message to pListener.
-	virtual void		AddPanelCloseListener( vgui::Panel *pListener );
+    // Gamestats access
+    virtual void Gamestats_ItemTransaction( int eventID, CEconItemView *item, const char *pszReason = NULL, int iQuality = 0 );
+    virtual void Gamestats_Store( int eventID, CEconItemView *item = NULL, const char *panelName = NULL, int classId = 0, const cart_item_t *in_cartItem = NULL, int in_checkoutAttempts = 0, const char *storeError = NULL, int in_totalPrice = 0, int in_currencyCode = 0 );
+    virtual void SetExperimentValue( uint64 experimentValue );
 
-	// The panel at which we want back to actually close the UI - defaults to the root panel - a negative value can be passed in for class loadout panels
-	virtual void		SetClosePanel( int iPanel );
+    // Open separate economy panels (they're not parented to the root EconUI)
+    // This is here so that games can customize the implementation of these panels.
+    virtual CItemPickupPanel *OpenItemPickupPanel( void );
+    virtual CItemDiscardPanel *OpenItemDiscardPanel( void );
+    virtual void CreateStorePanel( void );
+    virtual CStorePanel *OpenStorePanel( int iItemDef, bool bAddToCart );
+    virtual CStorePanel *GetStorePanel( void );
 
-	// Call this to set which team the class loadout should display
-	virtual void		SetDefaultTeam( int iTeam );
+    // When the root UI is closed, send an "EconUIClosed" message to pListener.
+    virtual void AddPanelCloseListener( vgui::Panel *pListener );
 
-private:
-	void Close();
-	void NotifyListenersOfCloseEvent();
+    // The panel at which we want back to actually close the UI - defaults to the root panel - a negative value can be passed in for class loadout panels
+    virtual void SetClosePanel( int iPanel );
 
-	vgui::Panel					*m_pNotificationsPresentPanel;
-	CCharInfoLoadoutSubPanel	*m_pLoadoutPanel;
-	bool						m_bCheckForRoomOnExit;
-	bool						m_bPreventClosure;
-	int							m_iClosePanel;
-	int							m_iDefaultTeam;
+    // Call this to set which team the class loadout should display
+    virtual void SetDefaultTeam( int iTeam );
 
-	CUtlVector< vgui::VPanelHandle >	m_vecOnCloseListeners;
+   private:
+    void Close();
+    void NotifyListenersOfCloseEvent();
+
+    vgui::Panel *m_pNotificationsPresentPanel;
+    CCharInfoLoadoutSubPanel *m_pLoadoutPanel;
+    bool m_bCheckForRoomOnExit;
+    bool m_bPreventClosure;
+    int m_iClosePanel;
+    int m_iDefaultTeam;
+
+    CUtlVector< vgui::VPanelHandle > m_vecOnCloseListeners;
 };
 
 CCheatDetectionDialog *OpenCheatDetectionDialog( vgui::Panel *pParent, const char *pszCheatMessage );
 
-#endif // CHARACTER_INFO_PANEL_H
+#endif  // CHARACTER_INFO_PANEL_H

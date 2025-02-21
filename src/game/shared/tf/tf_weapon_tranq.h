@@ -21,25 +21,26 @@
 //
 class CTFTranq : public CTFWeaponBaseGun
 {
-public:
-
-	DECLARE_CLASS( CTFTranq, CTFWeaponBaseGun );
-	DECLARE_NETWORKCLASS(); 
-	DECLARE_PREDICTABLE();
+   public:
+    DECLARE_CLASS( CTFTranq, CTFWeaponBaseGun );
+    DECLARE_NETWORKCLASS();
+    DECLARE_PREDICTABLE();
 
 // Server specific.
 #ifdef GAME_DLL
-	DECLARE_DATADESC();
+    DECLARE_DATADESC();
 #endif
 
-	CTFTranq() {}
-	~CTFTranq() {}
+    CTFTranq() {}
+    ~CTFTranq() {}
 
-	virtual int		GetWeaponID( void ) const			{ return TF_WEAPON_TRANQ; }
+    virtual int GetWeaponID( void ) const
+    {
+        return TF_WEAPON_TRANQ;
+    }
 
-private:
-
-	CTFTranq( const CTFTranq & ) {}
+   private:
+    CTFTranq( const CTFTranq& ) {}
 };
 
-#endif // TF_WEAPON_TRANQ_H
+#endif  // TF_WEAPON_TRANQ_H

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -19,19 +19,23 @@
 #include "GameEventListener.h"
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 class CConfirmDeleteItemDialog : public CConfirmDeleteDialog
 {
-	DECLARE_CLASS_SIMPLE( CConfirmDeleteItemDialog, CConfirmDeleteDialog );
-public:
-	CConfirmDeleteItemDialog( vgui::Panel *parent, bool bMultiItem = false );
+    DECLARE_CLASS_SIMPLE( CConfirmDeleteItemDialog, CConfirmDeleteDialog );
 
-	void	SetMultiItem( bool bMultiItem ) { m_bMultiItem = bMultiItem; }
-	virtual const wchar_t *GetText();
+   public:
+    CConfirmDeleteItemDialog( vgui::Panel *parent, bool bMultiItem = false );
 
-private:
-	bool	m_bMultiItem;
+    void SetMultiItem( bool bMultiItem )
+    {
+        m_bMultiItem = bMultiItem;
+    }
+    virtual const wchar_t *GetText();
+
+   private:
+    bool m_bMultiItem;
 };
 
-#endif // ITEM_CONFIRM_DELETE_DIALOG_H
+#endif  // ITEM_CONFIRM_DELETE_DIALOG_H

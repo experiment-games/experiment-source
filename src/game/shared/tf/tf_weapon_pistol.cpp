@@ -66,150 +66,149 @@ END_PREDICTION_DATA()
 LINK_ENTITY_TO_CLASS( tf_weapon_handgun_scout_primary, CTFPistol_ScoutPrimary );
 PRECACHE_WEAPON_REGISTER( tf_weapon_handgun_scout_primary );
 
-
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CTFPistol_ScoutPrimary::CTFPistol_ScoutPrimary()
 {
-	m_flPushTime = -1.f;
+    m_flPushTime = -1.f;
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFPistol_ScoutPrimary::PlayWeaponShootSound( void )
 {
-	BaseClass::PlayWeaponShootSound();
+    BaseClass::PlayWeaponShootSound();
 
-	if ( TFGameRules()->GameModeUsesUpgrades() )
-	{
-		PlayUpgradedShootSound( "Weapon_Upgrade.DamageBonus" );
-	}
+    if ( TFGameRules()->GameModeUsesUpgrades() )
+    {
+        PlayUpgradedShootSound( "Weapon_Upgrade.DamageBonus" );
+    }
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFPistol_ScoutPrimary::SecondaryAttack( void )
 {
-	CTFPlayer *pOwner = ToTFPlayer( GetPlayerOwner() );
-	if ( !pOwner )
-		return;
+    CTFPlayer *pOwner = ToTFPlayer( GetPlayerOwner() );
+    if ( !pOwner )
+        return;
 
-	if ( !CanAttack() )
-		return;
+    if ( !CanAttack() )
+        return;
 
-	if ( m_flNextSecondaryAttack > gpGlobals->curtime )
-		return;
+    if ( m_flNextSecondaryAttack > gpGlobals->curtime )
+        return;
 
-	pOwner->DoAnimationEvent( PLAYERANIMEVENT_ATTACK_SECONDARY );
-	SendWeaponAnim( ACT_SECONDARY_VM_ALTATTACK );
+    pOwner->DoAnimationEvent( PLAYERANIMEVENT_ATTACK_SECONDARY );
+    SendWeaponAnim( ACT_SECONDARY_VM_ALTATTACK );
 
-	m_flNextPrimaryAttack = gpGlobals->curtime + 0.6f;
-	m_flNextSecondaryAttack = gpGlobals->curtime + 1.5f;
-	m_flPushTime = gpGlobals->curtime + 0.2f;	// Anim delay
+    m_flNextPrimaryAttack = gpGlobals->curtime + 0.6f;
+    m_flNextSecondaryAttack = gpGlobals->curtime + 1.5f;
+    m_flPushTime = gpGlobals->curtime + 0.2f;  // Anim delay
 
-	EmitSound( "Weapon_Hands.Push" );
+    EmitSound( "Weapon_Hands.Push" );
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFPistol_ScoutPrimary::Push( void )
 {
-	CTFPlayer *pOwner = ToTFPlayer( GetPlayerOwner() );
-	if ( !pOwner )
-		return;
+    CTFPlayer *pOwner = ToTFPlayer( GetPlayerOwner() );
+    if ( !pOwner )
+        return;
 
 #ifdef GAME_DLL
-	lagcompensation->StartLagCompensation( pOwner, pOwner->GetCurrentCommand() );
+    lagcompensation->StartLagCompensation( pOwner, pOwner->GetCurrentCommand() );
 
-	CUtlVector< CTFPlayer* > enemyVector;
-	CollectPlayers( &enemyVector, GetEnemyTeam( pOwner->GetTeamNumber() ), COLLECT_ONLY_LIVING_PLAYERS );
+    CUtlVector< CTFPlayer * > enemyVector;
+    CollectPlayers( &enemyVector, GetEnemyTeam( pOwner->GetTeamNumber() ), COLLECT_ONLY_LIVING_PLAYERS );
 
-	for ( int i = 0; i < enemyVector.Count(); ++i )
-	{
-		CTFPlayer *pVictim = enemyVector[i];
+    for ( int i = 0; i < enemyVector.Count(); ++i )
+    {
+        CTFPlayer *pVictim = enemyVector[i];
 
-		if ( !pVictim->IsAlive() )
-			continue;
+        if ( !pVictim->IsAlive() )
+            continue;
 
-		if ( pVictim == pOwner )
-			continue;
+        if ( pVictim == pOwner )
+            continue;
 
-		if ( pVictim->InSameTeam( pOwner ) )
-			continue;
+        if ( pVictim->InSameTeam( pOwner ) )
+            continue;
 
-		if ( TFGameRules() && TFGameRules()->IsTruceActive() && pOwner->IsTruceValidForEnt() )
-			continue;
+        if ( TFGameRules() && TFGameRules()->IsTruceActive() && pOwner->IsTruceValidForEnt() )
+            continue;
 
-		if ( ( pOwner->GetAbsOrigin()- pVictim->GetAbsOrigin() ).LengthSqr() > ( 128.f * 128.f ) )
-			continue;
+        if ( ( pOwner->GetAbsOrigin() - pVictim->GetAbsOrigin() ).LengthSqr() > ( 128.f * 128.f ) )
+            continue;
 
-		if ( !pOwner->FVisible( pVictim, MASK_SOLID ) )
-			continue;
+        if ( !pOwner->FVisible( pVictim, MASK_SOLID ) )
+            continue;
 
-		Vector vecEyes = pOwner->EyePosition();
-		Vector vecForward;
-		AngleVectors( pOwner->EyeAngles(), &vecForward );
-		CTraceFilterSimple traceFilter( this, COLLISION_GROUP_NONE );
-		const Vector vHull = Vector( 16.f, 16.f, 16.f );
-		trace_t trace;
+        Vector vecEyes = pOwner->EyePosition();
+        Vector vecForward;
+        AngleVectors( pOwner->EyeAngles(), &vecForward );
+        CTraceFilterSimple traceFilter( this, COLLISION_GROUP_NONE );
+        const Vector vHull = Vector( 16.f, 16.f, 16.f );
+        trace_t trace;
 
-		float flDist = 50.f;
-		UTIL_TraceHull( vecEyes, vecEyes + vecForward * flDist,  -vHull, vHull, MASK_SOLID, &traceFilter, &trace );
-		
-		bool bDebug = false;
-		if ( bDebug )
-		{
-			NDebugOverlay::SweptBox( vecEyes, vecEyes + vecForward * flDist, -vHull, vHull, pOwner->EyeAngles(), 255, 0, 0, 40, 5 );
-		}
+        float flDist = 50.f;
+        UTIL_TraceHull( vecEyes, vecEyes + vecForward * flDist, -vHull, vHull, MASK_SOLID, &traceFilter, &trace );
 
-		if ( trace.m_pEnt && trace.m_pEnt == pVictim && trace.fraction < 1.f )
-		{
-			Vector vecToVictim = pVictim->GetAbsOrigin() - pOwner->GetAbsOrigin();
-			VectorNormalize( vecToVictim );
-			pVictim->ApplyGenericPushbackImpulse( vecToVictim * 400.f, pOwner );
-			float flDamage = 1.f;
-			CTakeDamageInfo info( pVictim, pOwner, this, flDamage, DMG_MELEE | DMG_NEVERGIB | DMG_CLUB, TF_DMG_CUSTOM_NONE );
-			CalculateMeleeDamageForce( &info, vecForward, GetAbsOrigin() + vecForward * flDist, 1.f / flDamage * 80.f );
-			pVictim->DispatchTraceAttack( info, vecForward, &trace );
-			ApplyMultiDamage();
+        bool bDebug = false;
+        if ( bDebug )
+        {
+            NDebugOverlay::SweptBox( vecEyes, vecEyes + vecForward * flDist, -vHull, vHull, pOwner->EyeAngles(), 255, 0, 0, 40, 5 );
+        }
 
-			CPVSFilter filter( vecToVictim );
-			EmitSound( "Weapon_Hands.PushImpact" );
+        if ( trace.m_pEnt && trace.m_pEnt == pVictim && trace.fraction < 1.f )
+        {
+            Vector vecToVictim = pVictim->GetAbsOrigin() - pOwner->GetAbsOrigin();
+            VectorNormalize( vecToVictim );
+            pVictim->ApplyGenericPushbackImpulse( vecToVictim * 400.f, pOwner );
+            float flDamage = 1.f;
+            CTakeDamageInfo info( pVictim, pOwner, this, flDamage, DMG_MELEE | DMG_NEVERGIB | DMG_CLUB, TF_DMG_CUSTOM_NONE );
+            CalculateMeleeDamageForce( &info, vecForward, GetAbsOrigin() + vecForward * flDist, 1.f / flDamage * 80.f );
+            pVictim->DispatchTraceAttack( info, vecForward, &trace );
+            ApplyMultiDamage();
 
-			// Make sure we get credit for the push if the target falls to its death
-			pVictim->m_AchievementData.AddDamagerToHistory( pOwner );
+            CPVSFilter filter( vecToVictim );
+            EmitSound( "Weapon_Hands.PushImpact" );
 
-			break;			
-		}
-	}
+            // Make sure we get credit for the push if the target falls to its death
+            pVictim->m_AchievementData.AddDamagerToHistory( pOwner );
 
-	pOwner->SpeakWeaponFire();
-	CTF_GameStats.Event_PlayerFiredWeapon( pOwner, IsCurrentAttackACrit() );
+            break;
+        }
+    }
 
-	lagcompensation->FinishLagCompensation( pOwner );
+    pOwner->SpeakWeaponFire();
+    CTF_GameStats.Event_PlayerFiredWeapon( pOwner, IsCurrentAttackACrit() );
+
+    lagcompensation->FinishLagCompensation( pOwner );
 #else
-	C_CTF_GameStats.Event_PlayerFiredWeapon( pOwner, IsCurrentAttackACrit() );
+    C_CTF_GameStats.Event_PlayerFiredWeapon( pOwner, IsCurrentAttackACrit() );
 #endif
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  :  - 
+// Purpose:
+// Input  :  -
 //-----------------------------------------------------------------------------
 void CTFPistol_ScoutPrimary::ItemPostFrame()
 {
-	// Check for smack.
-	if ( m_flPushTime > -1.f && gpGlobals->curtime > m_flPushTime )
-	{
-		Push();
-		m_flPushTime = -1.f;
-	}
+    // Check for smack.
+    if ( m_flPushTime > -1.f && gpGlobals->curtime > m_flPushTime )
+    {
+        Push();
+        m_flPushTime = -1.f;
+    }
 
-	BaseClass::ItemPostFrame();
+    BaseClass::ItemPostFrame();
 }
 
 //-----------------------------------------------------------------------------
@@ -217,20 +216,20 @@ void CTFPistol_ScoutPrimary::ItemPostFrame()
 //-----------------------------------------------------------------------------
 bool CTFPistol_ScoutPrimary::Holster( CBaseCombatWeapon *pSwitchingTo )
 {
-	m_flPushTime = -1.f;
+    m_flPushTime = -1.f;
 
-	return BaseClass::Holster( pSwitchingTo );
+    return BaseClass::Holster( pSwitchingTo );
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFPistol_ScoutPrimary::Precache( void )
 {
-	PrecacheScriptSound( "Weapon_Hands.Push" );
-	PrecacheScriptSound( "Weapon_Hands.PushImpact" );
-	
-	BaseClass::Precache();
+    PrecacheScriptSound( "Weapon_Hands.Push" );
+    PrecacheScriptSound( "Weapon_Hands.PushImpact" );
+
+    BaseClass::Precache();
 }
 
 //============================
@@ -247,13 +246,13 @@ LINK_ENTITY_TO_CLASS( tf_weapon_handgun_scout_secondary, CTFPistol_ScoutSecondar
 PRECACHE_WEAPON_REGISTER( tf_weapon_handgun_scout_secondary );
 
 //-----------------------------------------------------------------------------
-int	CTFPistol_ScoutSecondary::GetDamageType( void ) const
+int CTFPistol_ScoutSecondary::GetDamageType( void ) const
 {
-	int iBackheadshot = 0;
-	CALL_ATTRIB_HOOK_INT( iBackheadshot, back_headshot );
-	if ( iBackheadshot )
-	{
-		return BaseClass::GetDamageType() | DMG_USE_HITLOCATIONS;	
-	}
-	return BaseClass::GetDamageType();
+    int iBackheadshot = 0;
+    CALL_ATTRIB_HOOK_INT( iBackheadshot, back_headshot );
+    if ( iBackheadshot )
+    {
+        return BaseClass::GetDamageType() | DMG_USE_HITLOCATIONS;
+    }
+    return BaseClass::GetDamageType();
 }

@@ -9,17 +9,17 @@
 #include <stdlib.h>
 
 // #if (_MSC_VER >= 1200)
-#pragma intrinsic(_rotl)
-#pragma intrinsic(_rotr)
+#pragma intrinsic( _rotl )
+#pragma intrinsic( _rotr )
 // #endif
 
-#define rotlFixed(x, n) _rotl((x), (n))
-#define rotrFixed(x, n) _rotr((x), (n))
+#define rotlFixed( x, n ) _rotl( ( x ), ( n ) )
+#define rotrFixed( x, n ) _rotr( ( x ), ( n ) )
 
 #else
 
-#define rotlFixed(x, n) (((x) << (n)) | ((x) >> (32 - (n))))
-#define rotrFixed(x, n) (((x) >> (n)) | ((x) << (32 - (n))))
+#define rotlFixed( x, n ) ( ( ( x ) << ( n ) ) | ( ( x ) >> ( 32 - ( n ) ) ) )
+#define rotrFixed( x, n ) ( ( ( x ) >> ( n ) ) | ( ( x ) << ( 32 - ( n ) ) ) )
 
 #endif
 

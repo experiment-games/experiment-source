@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -11,12 +11,9 @@
 #pragma once
 #endif
 
-
 class IMessageRecvMgr
 {
-public:
-	
+   public:
 };
 
-
-#endif // MESSAGERECVMGR_H
+#endif  // MESSAGERECVMGR_H

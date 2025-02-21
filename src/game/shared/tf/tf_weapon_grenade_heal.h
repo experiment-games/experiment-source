@@ -23,28 +23,30 @@
 //
 class CTFGrenadeHeal : public CTFWeaponBaseGrenade
 {
-public:
+   public:
+    DECLARE_CLASS( CTFGrenadeHeal, CTFWeaponBaseGrenade );
+    DECLARE_NETWORKCLASS();
+    DECLARE_PREDICTABLE();
+    //	DECLARE_ACTTABLE();
 
-	DECLARE_CLASS( CTFGrenadeHeal, CTFWeaponBaseGrenade );
-	DECLARE_NETWORKCLASS();
-	DECLARE_PREDICTABLE();
-	//	DECLARE_ACTTABLE();
+    CTFGrenadeHeal() {}
 
-	CTFGrenadeHeal() {}
+    // Unique identifier.
+    virtual int GetWeaponID( void ) const
+    {
+        return TF_WEAPON_GRENADE_HEAL;
+    }
 
-	// Unique identifier.
-	virtual int			GetWeaponID( void ) const			{ return TF_WEAPON_GRENADE_HEAL; }
-
-	// Server specific.
+    // Server specific.
 #ifdef GAME_DLL
 
-	DECLARE_DATADESC();
+    DECLARE_DATADESC();
 
-	virtual CTFWeaponBaseGrenadeProj *EmitGrenade( Vector vecSrc, QAngle vecAngles, Vector vecVel, AngularImpulse angImpulse, CBasePlayer *pPlayer, float flTime, int iflags = 0 );
+    virtual CTFWeaponBaseGrenadeProj *EmitGrenade( Vector vecSrc, QAngle vecAngles, Vector vecVel, AngularImpulse angImpulse, CBasePlayer *pPlayer, float flTime, int iflags = 0 );
 
 #endif
 
-	CTFGrenadeHeal( const CTFGrenadeHeal & ) {}
+    CTFGrenadeHeal( const CTFGrenadeHeal & ) {}
 };
 
 //=============================================================================
@@ -55,31 +57,31 @@ public:
 
 class CTFGrenadeHealProjectile : public CTFWeaponBaseGrenadeProj
 {
-public:
+   public:
+    DECLARE_CLASS( CTFGrenadeHealProjectile, CTFWeaponBaseGrenadeProj );
 
-	DECLARE_CLASS( CTFGrenadeHealProjectile, CTFWeaponBaseGrenadeProj );
+    // Unique identifier.
+    virtual int GetWeaponID( void ) const
+    {
+        return TF_WEAPON_GRENADE_HEAL;
+    }
 
-	// Unique identifier.
-	virtual int			GetWeaponID( void ) const			{ return TF_WEAPON_GRENADE_HEAL; }
+    // Creation.
+    static CTFGrenadeHealProjectile *Create( const Vector &position, const QAngle &angles, const Vector &velocity, const AngularImpulse &angVelocity, CBaseCombatCharacter *pOwner, const CTFWeaponInfo &weaponInfo, float timer, int iFlags = 0 );
 
-	// Creation.
-	static CTFGrenadeHealProjectile *Create( const Vector &position, const QAngle &angles, const Vector &velocity, 
-		const AngularImpulse &angVelocity, CBaseCombatCharacter *pOwner, const CTFWeaponInfo &weaponInfo, float timer, int iFlags = 0 );
+    // Overrides.
+    virtual void Spawn();
+    virtual void Precache();
+    virtual void BounceSound( void );
+    virtual void Detonate();
+    void DetonateThink( void );
 
-	// Overrides.
-	virtual void	Spawn();
-	virtual void	Precache();
-	virtual void	BounceSound( void );
-	virtual void	Detonate();
-	void			DetonateThink( void );
+    DECLARE_DATADESC();
 
-	DECLARE_DATADESC();
-
-private:
-
-	bool			m_bPlayedLeadIn;
+   private:
+    bool m_bPlayedLeadIn;
 };
 
 #endif
 
-#endif // TF_WEAPON_GRENADE_HEAL_H
+#endif  // TF_WEAPON_GRENADE_HEAL_H

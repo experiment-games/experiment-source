@@ -15,39 +15,43 @@
 
 class CPlayerResource : public CBaseEntity
 {
-	DECLARE_CLASS( CPlayerResource, CBaseEntity );
-public:
-	DECLARE_SERVERCLASS();
-	DECLARE_DATADESC();
+    DECLARE_CLASS( CPlayerResource, CBaseEntity );
 
-	virtual void Spawn( void );
-	virtual void Init( int iIndex );
-	virtual	int	 ObjectCaps( void ) { return BaseClass::ObjectCaps() | FCAP_DONT_SAVE; }
-	virtual void ResourceThink( void );
-	virtual void UpdatePlayerData( void );
-	virtual int  UpdateTransmitState( void );
-	virtual int  GetTeam( int iIndex );
+   public:
+    DECLARE_SERVERCLASS();
+    DECLARE_DATADESC();
 
-protected:
-	virtual void UpdateConnectedPlayer( int iIndex, CBasePlayer *pPlayer );
-	virtual void UpdateDisconnectedPlayer( int iIndex );
+    virtual void Spawn( void );
+    virtual void Init( int iIndex );
+    virtual int ObjectCaps( void )
+    {
+        return BaseClass::ObjectCaps() | FCAP_DONT_SAVE;
+    }
+    virtual void ResourceThink( void );
+    virtual void UpdatePlayerData( void );
+    virtual int UpdateTransmitState( void );
+    virtual int GetTeam( int iIndex );
 
-	// Data for each player that's propagated to all clients
-	// Stored in individual arrays so they can be sent down via datatables
-	CNetworkArray( int, m_iPing, MAX_PLAYERS_ARRAY_SAFE );
-	CNetworkArray( int, m_iScore, MAX_PLAYERS_ARRAY_SAFE );
-	CNetworkArray( int, m_iDeaths, MAX_PLAYERS_ARRAY_SAFE );
-	CNetworkArray( int, m_bConnected, MAX_PLAYERS_ARRAY_SAFE );
-	CNetworkArray( int, m_iTeam, MAX_PLAYERS_ARRAY_SAFE );
-	CNetworkArray( int, m_bAlive, MAX_PLAYERS_ARRAY_SAFE );
-	CNetworkArray( int, m_iHealth, MAX_PLAYERS_ARRAY_SAFE );
-	CNetworkArray( uint32, m_iAccountID, MAX_PLAYERS_ARRAY_SAFE );
-	CNetworkArray( int, m_bValid, MAX_PLAYERS_ARRAY_SAFE );
-	CNetworkArray( int, m_iUserID, MAX_PLAYERS_ARRAY_SAFE );
-		
-	int	m_nUpdateCounter;
+   protected:
+    virtual void UpdateConnectedPlayer( int iIndex, CBasePlayer *pPlayer );
+    virtual void UpdateDisconnectedPlayer( int iIndex );
+
+    // Data for each player that's propagated to all clients
+    // Stored in individual arrays so they can be sent down via datatables
+    CNetworkArray( int, m_iPing, MAX_PLAYERS_ARRAY_SAFE );
+    CNetworkArray( int, m_iScore, MAX_PLAYERS_ARRAY_SAFE );
+    CNetworkArray( int, m_iDeaths, MAX_PLAYERS_ARRAY_SAFE );
+    CNetworkArray( int, m_bConnected, MAX_PLAYERS_ARRAY_SAFE );
+    CNetworkArray( int, m_iTeam, MAX_PLAYERS_ARRAY_SAFE );
+    CNetworkArray( int, m_bAlive, MAX_PLAYERS_ARRAY_SAFE );
+    CNetworkArray( int, m_iHealth, MAX_PLAYERS_ARRAY_SAFE );
+    CNetworkArray( uint32, m_iAccountID, MAX_PLAYERS_ARRAY_SAFE );
+    CNetworkArray( int, m_bValid, MAX_PLAYERS_ARRAY_SAFE );
+    CNetworkArray( int, m_iUserID, MAX_PLAYERS_ARRAY_SAFE );
+
+    int m_nUpdateCounter;
 };
 
 extern CPlayerResource *g_pPlayerResource;
 
-#endif // PLAYER_RESOURCE_H
+#endif  // PLAYER_RESOURCE_H

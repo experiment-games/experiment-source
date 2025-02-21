@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -12,21 +12,20 @@
 
 class C_Corpse : public C_BaseAnimating
 {
-public:
-	DECLARE_CLASS( C_Corpse, C_BaseAnimating );
-	DECLARE_CLIENTCLASS();
+   public:
+    DECLARE_CLASS( C_Corpse, C_BaseAnimating );
+    DECLARE_CLIENTCLASS();
 
-						C_Corpse( void );
+    C_Corpse( void );
 
-	virtual int			DrawModel( int flags );
+    virtual int DrawModel( int flags );
 
-public:
-	// The player whom we are copying our data from
-	int					m_nReferencePlayer;
+   public:
+    // The player whom we are copying our data from
+    int m_nReferencePlayer;
 
-private:
-						C_Corpse( const C_Corpse & );
+   private:
+    C_Corpse( const C_Corpse& );
 };
 
-
-#endif // C_CORPSE_H
+#endif  // C_CORPSE_H

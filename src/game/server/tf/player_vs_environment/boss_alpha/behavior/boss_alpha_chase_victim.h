@@ -13,29 +13,31 @@
 //---------------------------------------------------------------------------------------------
 class CBossAlphaChaseVictim : public Action< CBossAlpha >
 {
-public:
-	CBossAlphaChaseVictim( CBaseCombatCharacter *chaseTarget );
+   public:
+    CBossAlphaChaseVictim( CBaseCombatCharacter *chaseTarget );
 
-	virtual ActionResult< CBossAlpha >	OnStart( CBossAlpha *me, Action< CBossAlpha > *priorAction );
-	virtual ActionResult< CBossAlpha >	Update( CBossAlpha *me, float interval );
-	virtual void					OnEnd( CBossAlpha *me, Action< CBossAlpha > *nextAction );
+    virtual ActionResult< CBossAlpha > OnStart( CBossAlpha *me, Action< CBossAlpha > *priorAction );
+    virtual ActionResult< CBossAlpha > Update( CBossAlpha *me, float interval );
+    virtual void OnEnd( CBossAlpha *me, Action< CBossAlpha > *nextAction );
 
-	virtual EventDesiredResult< CBossAlpha > OnStuck( CBossAlpha *me );
-	virtual EventDesiredResult< CBossAlpha > OnMoveToSuccess( CBossAlpha *me, const Path *path );
-	virtual EventDesiredResult< CBossAlpha > OnMoveToFailure( CBossAlpha *me, const Path *path, MoveToFailureType reason );
+    virtual EventDesiredResult< CBossAlpha > OnStuck( CBossAlpha *me );
+    virtual EventDesiredResult< CBossAlpha > OnMoveToSuccess( CBossAlpha *me, const Path *path );
+    virtual EventDesiredResult< CBossAlpha > OnMoveToFailure( CBossAlpha *me, const Path *path, MoveToFailureType reason );
 
-	virtual const char *GetName( void ) const	{ return "ChaseVictim"; }		// return name of this action
+    virtual const char *GetName( void ) const
+    {
+        return "ChaseVictim";
+    }  // return name of this action
 
-private:
-	CTFPathFollower m_path;
-	IntervalTimer m_visibleTimer;
-	CHandle< CBaseCombatCharacter > m_lastTarget;
+   private:
+    CTFPathFollower m_path;
+    IntervalTimer m_visibleTimer;
+    CHandle< CBaseCombatCharacter > m_lastTarget;
 
-	CHandle< CBaseCombatCharacter > m_chaseTarget;
-	Vector m_lastKnownTargetSpot;
+    CHandle< CBaseCombatCharacter > m_chaseTarget;
+    Vector m_lastKnownTargetSpot;
 };
 
+#endif  // TF_RAID_MODE
 
-#endif // TF_RAID_MODE
-
-#endif // BOSS_ALPHA_CHASE_VICTIM_H
+#endif  // BOSS_ALPHA_CHASE_VICTIM_H

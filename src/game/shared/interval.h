@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -13,8 +13,7 @@
 
 #include "basetypes.h"
 
-
 interval_t ReadInterval( const char *pString );
 float RandomInterval( const interval_t &interval );
 
-#endif // INTERVAL_H
+#endif  // INTERVAL_H

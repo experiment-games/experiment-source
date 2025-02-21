@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -22,9 +22,9 @@ class C_MuzzleFlashModel;
 
 enum
 {
-	SHIELD_NONE = 0,
-	SHIELD_NORMAL,	// 33% damage taken
-	SHIELD_MAX,		// 10% damage taken, no inactive period
+    SHIELD_NONE = 0,
+    SHIELD_NORMAL,  // 33% damage taken
+    SHIELD_MAX,     // 10% damage taken, no inactive period
 };
 
 //-----------------------------------------------------------------------------
@@ -32,119 +32,129 @@ enum
 //-----------------------------------------------------------------------------
 class C_ObjectSentrygun : public C_BaseObject
 {
-	DECLARE_CLASS( C_ObjectSentrygun, C_BaseObject );
-public:
-	DECLARE_CLIENTCLASS();
+    DECLARE_CLASS( C_ObjectSentrygun, C_BaseObject );
 
-	C_ObjectSentrygun();
+   public:
+    DECLARE_CLIENTCLASS();
 
-	virtual void UpdateOnRemove( void );
+    C_ObjectSentrygun();
 
-	void GetAmmoCount( int &iShells, int &iMaxShells, int &iRockets, int & iMaxRockets );
+    virtual void UpdateOnRemove( void );
 
-	virtual BuildingHudAlert_t GetBuildingAlertLevel( void );
+    void GetAmmoCount( int &iShells, int &iMaxShells, int &iRockets, int &iMaxRockets );
 
-	virtual const char *GetHudStatusIcon( void );
+    virtual BuildingHudAlert_t GetBuildingAlertLevel( void );
 
-	int GetKills( void ) { return m_iKills; }
-	int GetAssists( void ) { return m_iAssists; }
+    virtual const char *GetHudStatusIcon( void );
 
-	virtual void GetShadowRenderBounds( Vector &mins, Vector &maxs, ShadowType_t shadowType );
+    int GetKills( void )
+    {
+        return m_iKills;
+    }
+    int GetAssists( void )
+    {
+        return m_iAssists;
+    }
 
-	virtual CStudioHdr *OnNewModel( void );
-	virtual void UpdateDamageEffects( BuildingDamageLevel_t damageLevel );
+    virtual void GetShadowRenderBounds( Vector &mins, Vector &maxs, ShadowType_t shadowType );
 
-	virtual void OnPlacementStateChanged( bool bValidPlacement );
+    virtual CStudioHdr *OnNewModel( void );
+    virtual void UpdateDamageEffects( BuildingDamageLevel_t damageLevel );
 
-	void DebugDamageParticles();
+    virtual void OnPlacementStateChanged( bool bValidPlacement );
 
-	virtual const char* GetStatusName() const;
+    void DebugDamageParticles();
 
-	virtual void	OnPreDataChanged( DataUpdateType_t updateType );
-	virtual void	OnDataChanged( DataUpdateType_t updateType );
+    virtual const char *GetStatusName() const;
 
-	virtual bool	IsUpgrading( void ) const { return ( m_iState == SENTRY_STATE_UPGRADING ); }
+    virtual void OnPreDataChanged( DataUpdateType_t updateType );
+    virtual void OnDataChanged( DataUpdateType_t updateType );
 
-	void			CreateLaserBeam( void );
-	void			DestroyLaserBeam( void );
+    virtual bool IsUpgrading( void ) const
+    {
+        return ( m_iState == SENTRY_STATE_UPGRADING );
+    }
 
-	virtual void	SetDormant( bool bDormant );
-	void			CreateShield( void );
-	void			DestroyShield( void );
+    void CreateLaserBeam( void );
+    void DestroyLaserBeam( void );
 
-	void			CreateSiren( void );
-	void			DestroySiren( void );
+    virtual void SetDormant( bool bDormant );
+    void CreateShield( void );
+    void DestroyShield( void );
 
-	virtual void	OnGoActive( void );
-	virtual void	OnGoInactive( void );
-	virtual void	OnStartDisabled( void );
-	virtual void	OnEndDisabled( void );
+    void CreateSiren( void );
+    void DestroySiren( void );
 
-	virtual void	ClientThink( void );
+    virtual void OnGoActive( void );
+    virtual void OnGoInactive( void );
+    virtual void OnStartDisabled( void );
+    virtual void OnEndDisabled( void );
 
-	void			CheckNearMiss( Vector vecStart, Vector vecEnd );
+    virtual void ClientThink( void );
 
-	// ITargetIDProvidesHint
-public:
-	virtual void	DisplayHintTo( C_BasePlayer *pPlayer );
+    void CheckNearMiss( Vector vecStart, Vector vecEnd );
 
-	virtual void	BuildTransformations( CStudioHdr *hdr, Vector *pos, Quaternion q[], const matrix3x4_t& cameraTransform, int boneMask, CBoneBitList &boneComputed );
+    // ITargetIDProvidesHint
+   public:
+    virtual void DisplayHintTo( C_BasePlayer *pPlayer );
 
-private:
+    virtual void BuildTransformations( CStudioHdr *hdr, Vector *pos, Quaternion q[], const matrix3x4_t &cameraTransform, int boneMask, CBoneBitList &boneComputed );
 
-	virtual void UpgradeLevelChanged();
+   private:
+    virtual void UpgradeLevelChanged();
 
-private:
-	int m_iState;
+   private:
+    int m_iState;
 
-	int m_iAmmoShells;
-	int m_iMaxAmmoShells;
-	int m_iAmmoRockets;
+    int m_iAmmoShells;
+    int m_iMaxAmmoShells;
+    int m_iAmmoRockets;
 
-	int m_iKills;
-	int m_iAssists;
+    int m_iKills;
+    int m_iAssists;
 
-	int m_iPlacementBodygroup;
-	int m_iPlacementBodygroup_Mini;
+    int m_iPlacementBodygroup;
+    int m_iPlacementBodygroup_Mini;
 
-	int m_iOldBodygroups;
+    int m_iOldBodygroups;
 
-	bool m_bPlayerControlled;
-	bool m_bOldPlayerControlled;
-	uint32 m_nShieldLevel;
-	uint32 m_nOldShieldLevel;
-	bool m_bOldCarried;
+    bool m_bPlayerControlled;
+    bool m_bOldPlayerControlled;
+    uint32 m_nShieldLevel;
+    uint32 m_nOldShieldLevel;
+    bool m_bOldCarried;
 
-	bool m_bPDQSentry;
+    bool m_bPDQSentry;
 
-	int m_iOldModelIndex;
+    int m_iOldModelIndex;
 
-	bool m_bNearMiss;
-	bool m_bRecreateShield;
-	bool m_bRecreateLaserBeam;
-	float m_flNextNearMissCheck;
+    bool m_bNearMiss;
+    bool m_bRecreateShield;
+    bool m_bRecreateLaserBeam;
+    float m_flNextNearMissCheck;
 
-	C_LocalTempEntity *m_pTempShield;
+    C_LocalTempEntity *m_pTempShield;
 
-	HPARTICLEFFECT  m_hSirenEffect;
-	HPARTICLEFFECT  m_hShieldEffect;
-	HPARTICLEFFECT	m_hLaserBeamEffect;
-	CNetworkHandle( CBaseEntity, m_hEnemy );
-	CNetworkHandle( C_TFPlayer, m_hAutoAimTarget );
+    HPARTICLEFFECT m_hSirenEffect;
+    HPARTICLEFFECT m_hShieldEffect;
+    HPARTICLEFFECT m_hLaserBeamEffect;
+    CNetworkHandle( CBaseEntity, m_hEnemy );
+    CNetworkHandle( C_TFPlayer, m_hAutoAimTarget );
 
-	Vector	m_vecLaserBeamPos;
+    Vector m_vecLaserBeamPos;
 
-private:
-	C_ObjectSentrygun( const C_ObjectSentrygun & ); // not defined, not accessible
+   private:
+    C_ObjectSentrygun( const C_ObjectSentrygun & );  // not defined, not accessible
 };
 
 class C_TFProjectile_SentryRocket : public C_TFProjectile_Rocket
 {
-	DECLARE_CLASS( C_TFProjectile_SentryRocket, C_TFProjectile_Rocket );
-public:
-	DECLARE_CLIENTCLASS();
+    DECLARE_CLASS( C_TFProjectile_SentryRocket, C_TFProjectile_Rocket );
 
-	virtual void CreateRocketTrails( void ) {}
+   public:
+    DECLARE_CLIENTCLASS();
+
+    virtual void CreateRocketTrails( void ) {}
 };
 
-#endif	//C_OBJ_SENTRYGUN_H
+#endif  // C_OBJ_SENTRYGUN_H

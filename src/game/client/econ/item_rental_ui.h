@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -23,44 +23,55 @@
 
 class CEconPreviewNotification : public CEconNotification
 {
-public:
-	CEconPreviewNotification( uint64 ulSteamID, uint32 iItemDef );
+   public:
+    CEconPreviewNotification( uint64 ulSteamID, uint32 iItemDef );
 
-	virtual EType NotificationType() { return eType_Trigger; }
+    virtual EType NotificationType()
+    {
+        return eType_Trigger;
+    }
 
-	virtual void Trigger() {}
+    virtual void Trigger() {}
 
-	int GetItemDefIndex()
-	{
-		return m_pItemDef->GetDefinitionIndex();
-	}
+    int GetItemDefIndex()
+    {
+        return m_pItemDef->GetDefinitionIndex();
+    }
 
-public:
-	const CEconItemDefinition *m_pItemDef;
+   public:
+    const CEconItemDefinition *m_pItemDef;
 };
 
 class CEconPreviewExpiredNotification : public CEconPreviewNotification
 {
-public:
-	CEconPreviewExpiredNotification( uint64 ulSteamID, uint32 iItemDef ) : CEconPreviewNotification( ulSteamID, iItemDef ) {}
+   public:
+    CEconPreviewExpiredNotification( uint64 ulSteamID, uint32 iItemDef )
+        : CEconPreviewNotification( ulSteamID, iItemDef ) {}
 
-	virtual EType NotificationType() { return eType_Trigger; }
+    virtual EType NotificationType()
+    {
+        return eType_Trigger;
+    }
 
-	virtual void Trigger();
+    virtual void Trigger();
 };
 
 class CEconPreviewItemBoughtNotification : public CEconPreviewNotification
 {
-public:
-	CEconPreviewItemBoughtNotification( uint64 ulSteamID, uint32 iItemDef ) : CEconPreviewNotification( ulSteamID, iItemDef ) {}
+   public:
+    CEconPreviewItemBoughtNotification( uint64 ulSteamID, uint32 iItemDef )
+        : CEconPreviewNotification( ulSteamID, iItemDef ) {}
 
-	virtual EType NotificationType() { return eType_Trigger; }
+    virtual EType NotificationType()
+    {
+        return eType_Trigger;
+    }
 
-	virtual void Trigger()
-	{
-		EconUI()->OpenEconUI( ECONUI_BACKPACK );
-		MarkForDeletion();
-	}
+    virtual void Trigger()
+    {
+        EconUI()->OpenEconUI( ECONUI_BACKPACK );
+        MarkForDeletion();
+    }
 };
 
-#endif // ITEM_RENTAL_UI_H
+#endif  // ITEM_RENTAL_UI_H

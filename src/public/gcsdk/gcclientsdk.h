@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: includes all the headers required for the cliend side of the GC 
+// Purpose: includes all the headers required for the cliend side of the GC
 //			SDK GC SDK. Include this in your stdafx.h
 //
 //=============================================================================
@@ -61,4 +61,4 @@
 
 #include "webapi_response.h"
 
-#endif // GCCLIENTSDK_H
+#endif  // GCCLIENTSDK_H

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -14,26 +14,27 @@
 #include "store/tf_store_page_base.h"
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 class CTFStorePage1 : public CTFStorePageBase
 {
-	DECLARE_CLASS_SIMPLE( CTFStorePage1, CTFStorePageBase );
-public:
-	CTFStorePage1( Panel *parent, const CEconStoreCategoryManager::StoreCategory_t *pPageData, const char *pPreviewItemResFile = NULL );
+    DECLARE_CLASS_SIMPLE( CTFStorePage1, CTFStorePageBase );
 
-	virtual const char *GetPageResFile( void );
-	virtual void	OnCommand( const char *command );
-	virtual void	ShowPreview( int iClass, const econ_store_entry_t* pEntry );
+   public:
+    CTFStorePage1( Panel *parent, const CEconStoreCategoryManager::StoreCategory_t *pPageData, const char *pPreviewItemResFile = NULL );
 
-	MESSAGE_FUNC( OnPageShow, "PageShow" );
-	MESSAGE_FUNC_PTR( OnItemDetails, "ItemDetails", panel );
+    virtual const char *GetPageResFile( void );
+    virtual void OnCommand( const char *command );
+    virtual void ShowPreview( int iClass, const econ_store_entry_t *pEntry );
 
-	virtual void	UpdateFilterComboBox( void );
-	virtual void	GetFiltersForDef( GameItemDefinition_t *pDef, CUtlVector<int> *pVecFilters );
-	virtual void	OnTick( void );
+    MESSAGE_FUNC( OnPageShow, "PageShow" );
+    MESSAGE_FUNC_PTR( OnItemDetails, "ItemDetails", panel );
 
-	virtual CStorePreviewItemPanel	*CreatePreviewPanel( void );
+    virtual void UpdateFilterComboBox( void );
+    virtual void GetFiltersForDef( GameItemDefinition_t *pDef, CUtlVector< int > *pVecFilters );
+    virtual void OnTick( void );
+
+    virtual CStorePreviewItemPanel *CreatePreviewPanel( void );
 };
 
-#endif // TF_STORE_PAGE1_H
+#endif  // TF_STORE_PAGE1_H

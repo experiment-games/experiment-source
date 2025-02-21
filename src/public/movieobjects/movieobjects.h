@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
 
@@ -57,8 +57,8 @@
 #include "movieobjects/dmeeyeball.h"
 #include "movieobjects/dmedrawsettings.h"
 
-#define USING_ELEMENT_FACTORY( className )			\
-	extern C##className *g_##C##className##LinkerHack;		\
-	C##className *g_##C##className##PullInModule = g_##C##className##LinkerHack;
+#define USING_ELEMENT_FACTORY( className )             \
+    extern C##className *g_##C##className##LinkerHack; \
+    C##className *g_##C##className##PullInModule = g_##C##className##LinkerHack;
 
-#endif // MOVIEOBJECTS_H
+#endif  // MOVIEOBJECTS_H

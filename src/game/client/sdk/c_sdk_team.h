@@ -23,14 +23,12 @@ class CBaseTechnology;
 //-----------------------------------------------------------------------------
 class C_SDKTeam : public C_Team
 {
-	DECLARE_CLASS( C_SDKTeam, C_Team );
-	DECLARE_CLIENTCLASS();
+    DECLARE_CLASS( C_SDKTeam, C_Team );
+    DECLARE_CLIENTCLASS();
 
-public:
-
-					C_SDKTeam();
-	virtual			~C_SDKTeam();
+   public:
+    C_SDKTeam();
+    virtual ~C_SDKTeam();
 };
 
-
-#endif // C_SDK_TEAM_H
+#endif  // C_SDK_TEAM_H

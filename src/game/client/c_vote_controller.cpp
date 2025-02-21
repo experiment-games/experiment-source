@@ -16,31 +16,31 @@
 #include "tier0/memdbgon.h"
 
 IMPLEMENT_CLIENTCLASS_DT( C_VoteController, DT_VoteController, CVoteController )
-	RecvPropInt( RECVINFO( m_iActiveIssueIndex ), 0, C_VoteController::RecvProxy_VoteType ),
-	RecvPropInt( RECVINFO( m_nVoteIdx ) ),
-	RecvPropInt( RECVINFO( m_iOnlyTeamToVote ) ),
-	RecvPropArray3( RECVINFO_ARRAY( m_nVoteOptionCount ), RecvPropInt( RECVINFO( m_nVoteOptionCount[0] ), 0, C_VoteController::RecvProxy_VoteOption ) ),
-	RecvPropInt( RECVINFO( m_nPotentialVotes ) ),
-	RecvPropBool( RECVINFO( m_bIsYesNoVote ) )
-END_RECV_TABLE()
+RecvPropInt( RECVINFO( m_iActiveIssueIndex ), 0, C_VoteController::RecvProxy_VoteType ),
+    RecvPropInt( RECVINFO( m_nVoteIdx ) ),
+    RecvPropInt( RECVINFO( m_iOnlyTeamToVote ) ),
+    RecvPropArray3( RECVINFO_ARRAY( m_nVoteOptionCount ), RecvPropInt( RECVINFO( m_nVoteOptionCount[0] ), 0, C_VoteController::RecvProxy_VoteOption ) ),
+    RecvPropInt( RECVINFO( m_nPotentialVotes ) ),
+    RecvPropBool( RECVINFO( m_bIsYesNoVote ) )
+        END_RECV_TABLE()
 
-ConVar sv_vote_holder_may_vote_no( "sv_vote_holder_may_vote_no", "0", FCVAR_REPLICATED, "1 = Vote caller is not forced to vote yes on yes/no votes." );
+            ConVar sv_vote_holder_may_vote_no( "sv_vote_holder_may_vote_no", "0", FCVAR_REPLICATED, "1 = Vote caller is not forced to vote yes on yes/no votes." );
 
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
 void C_VoteController::RecvProxy_VoteType( const CRecvProxyData *pData, void *pStruct, void *pOut )
 {
-	C_VoteController *pMe = (C_VoteController *)pStruct;
-	if( pMe->m_iActiveIssueIndex == pData->m_Value.m_Int )
-		return;
+    C_VoteController *pMe = ( C_VoteController * )pStruct;
+    if ( pMe->m_iActiveIssueIndex == pData->m_Value.m_Int )
+        return;
 
-	pMe->m_iActiveIssueIndex = pData->m_Value.m_Int;
-	pMe->m_bTypeDirty = true;
+    pMe->m_iActiveIssueIndex = pData->m_Value.m_Int;
+    pMe->m_bTypeDirty = true;
 
-	// Since the contents of a new vote are in three parts, we can't directly send an event to the Hud
-	// because we don't really know if we have all three parts yet.  So we'll mark dirty, and our think
-	// can notice that and send the event.
+    // Since the contents of a new vote are in three parts, we can't directly send an event to the Hud
+    // because we don't really know if we have all three parts yet.  So we'll mark dirty, and our think
+    // can notice that and send the event.
 }
 
 //-----------------------------------------------------------------------------
@@ -48,16 +48,16 @@ void C_VoteController::RecvProxy_VoteType( const CRecvProxyData *pData, void *pS
 //-----------------------------------------------------------------------------
 void C_VoteController::RecvProxy_VoteOption( const CRecvProxyData *pData, void *pStruct, void *pOut )
 {
-	int index = pData->m_pRecvProp->GetOffset() / sizeof(int);
-	
-	size_t offset = offsetof( C_VoteController, m_nVoteOptionCount );
-	C_VoteController *pMe = (C_VoteController *)((byte *)pStruct - offset );
-	if( pMe->m_nVoteOptionCount[index] == pData->m_Value.m_Int )
-		return;
-	
-	pMe->m_nVoteOptionCount[index] = pData->m_Value.m_Int;
-	pMe->m_bVotesDirty = true;
-	pMe->SetNextClientThink( gpGlobals->curtime + 0.001 );
+    int index = pData->m_pRecvProp->GetOffset() / sizeof( int );
+
+    size_t offset = offsetof( C_VoteController, m_nVoteOptionCount );
+    C_VoteController *pMe = ( C_VoteController * )( ( byte * )pStruct - offset );
+    if ( pMe->m_nVoteOptionCount[index] == pData->m_Value.m_Int )
+        return;
+
+    pMe->m_nVoteOptionCount[index] = pData->m_Value.m_Int;
+    pMe->m_bVotesDirty = true;
+    pMe->SetNextClientThink( gpGlobals->curtime + 0.001 );
 }
 
 //-----------------------------------------------------------------------------
@@ -65,9 +65,9 @@ void C_VoteController::RecvProxy_VoteOption( const CRecvProxyData *pData, void *
 //-----------------------------------------------------------------------------
 C_VoteController::C_VoteController()
 {
-	ResetData();
+    ResetData();
 
-	ListenForGameEvent( "vote_cast" );
+    ListenForGameEvent( "vote_cast" );
 }
 
 //-----------------------------------------------------------------------------
@@ -82,16 +82,16 @@ C_VoteController::~C_VoteController()
 //-----------------------------------------------------------------------------
 void C_VoteController::ResetData()
 {
-	m_nVoteIdx = -1;
-	m_iActiveIssueIndex = INVALID_ISSUE;
-	m_iOnlyTeamToVote = TEAM_UNASSIGNED;
-	for( int i = 0; i < MAX_VOTE_OPTIONS; i++ )
-	{
-		m_nVoteOptionCount[i] = 0;
-	}
-	m_nPotentialVotes = 0;
-	m_bVotesDirty = false;
-	m_bTypeDirty = false;
+    m_nVoteIdx = -1;
+    m_iActiveIssueIndex = INVALID_ISSUE;
+    m_iOnlyTeamToVote = TEAM_UNASSIGNED;
+    for ( int i = 0; i < MAX_VOTE_OPTIONS; i++ )
+    {
+        m_nVoteOptionCount[i] = 0;
+    }
+    m_nPotentialVotes = 0;
+    m_bVotesDirty = false;
+    m_bTypeDirty = false;
 }
 
 //-----------------------------------------------------------------------------
@@ -99,9 +99,9 @@ void C_VoteController::ResetData()
 //-----------------------------------------------------------------------------
 void C_VoteController::Spawn( void )
 {
-	ResetData();
-	BaseClass::Spawn();
-	SetNextClientThink( gpGlobals->curtime );
+    ResetData();
+    BaseClass::Spawn();
+    SetNextClientThink( gpGlobals->curtime );
 }
 
 //-----------------------------------------------------------------------------
@@ -109,42 +109,41 @@ void C_VoteController::Spawn( void )
 //-----------------------------------------------------------------------------
 void C_VoteController::ClientThink()
 {
-	BaseClass::ClientThink();
+    BaseClass::ClientThink();
 
-	if( m_bTypeDirty )
-	{
-		m_bTypeDirty = false;
-		m_bVotesDirty = true;
-	}
-	
-	if( m_bVotesDirty )
-	{
-		if ( m_nPotentialVotes > 0 )
-		{
+    if ( m_bTypeDirty )
+    {
+        m_bTypeDirty = false;
+        m_bVotesDirty = true;
+    }
 
-			IGameEvent *event = gameeventmanager->CreateEvent( "vote_changed" );
-			if ( event )
-			{
-				for ( int i = 0; i < MAX_VOTE_OPTIONS; i++ )
-				{	
-					char szOption[2];
-					Q_snprintf( szOption, sizeof( szOption ), "%i", i + 1 );
+    if ( m_bVotesDirty )
+    {
+        if ( m_nPotentialVotes > 0 )
+        {
+            IGameEvent *event = gameeventmanager->CreateEvent( "vote_changed" );
+            if ( event )
+            {
+                for ( int i = 0; i < MAX_VOTE_OPTIONS; i++ )
+                {
+                    char szOption[2];
+                    Q_snprintf( szOption, sizeof( szOption ), "%i", i + 1 );
 
-					char szVoteOption[13] = "vote_option";
-					Q_strncat( szVoteOption, szOption, sizeof( szVoteOption ), COPY_ALL_CHARACTERS );
+                    char szVoteOption[13] = "vote_option";
+                    Q_strncat( szVoteOption, szOption, sizeof( szVoteOption ), COPY_ALL_CHARACTERS );
 
-					event->SetInt( szVoteOption, m_nVoteOptionCount[i] );
-				}
-				event->SetInt( "voteidx", m_nVoteIdx );
-				event->SetInt( "potentialVotes", m_nPotentialVotes );
-				gameeventmanager->FireEventClientSide( event );
-			}
-		}
+                    event->SetInt( szVoteOption, m_nVoteOptionCount[i] );
+                }
+                event->SetInt( "voteidx", m_nVoteIdx );
+                event->SetInt( "potentialVotes", m_nPotentialVotes );
+                gameeventmanager->FireEventClientSide( event );
+            }
+        }
 
-		m_bVotesDirty = false;
-	}
+        m_bVotesDirty = false;
+    }
 
-	SetNextClientThink( gpGlobals->curtime + 0.5f );
+    SetNextClientThink( gpGlobals->curtime + 0.5f );
 }
 
 //-----------------------------------------------------------------------------
@@ -152,42 +151,42 @@ void C_VoteController::ClientThink()
 //-----------------------------------------------------------------------------
 void C_VoteController::FireGameEvent( IGameEvent *event )
 {
-	CHudVote *pHudVote = GET_HUDELEMENT( CHudVote );
-	if ( pHudVote && pHudVote->IsVisible() )
-	{
-		const char *eventName = event->GetName();
-		if ( !eventName )
-			return;
+    CHudVote *pHudVote = GET_HUDELEMENT( CHudVote );
+    if ( pHudVote && pHudVote->IsVisible() )
+    {
+        const char *eventName = event->GetName();
+        if ( !eventName )
+            return;
 
-		if ( m_nVoteIdx != event->GetInt( "voteidx" ) )
-			return;
+        if ( m_nVoteIdx != event->GetInt( "voteidx" ) )
+            return;
 
-		C_BasePlayer *pLocalPlayer = C_BasePlayer::GetLocalPlayer();
-		if ( !pLocalPlayer )
-			return;
+        C_BasePlayer *pLocalPlayer = C_BasePlayer::GetLocalPlayer();
+        if ( !pLocalPlayer )
+            return;
 
-		int team = event->GetInt( "team", TEAM_UNASSIGNED );
-		if ( team > TEAM_UNASSIGNED && team != pLocalPlayer->GetTeamNumber() )
-			return;
+        int team = event->GetInt( "team", TEAM_UNASSIGNED );
+        if ( team > TEAM_UNASSIGNED && team != pLocalPlayer->GetTeamNumber() )
+            return;
 
-		if ( FStrEq( eventName, "vote_cast" ) )
-		{
-			if ( m_bIsYesNoVote )
-			{
-				int vote_option = event->GetInt( "vote_option", TEAM_UNASSIGNED );
-				if( vote_option == VOTE_OPTION2 )
-				{
-					pLocalPlayer->EmitSound( "Vote.Cast.No" );
-				}
-				else if( vote_option == VOTE_OPTION1 )
-				{
-					pLocalPlayer->EmitSound( "Vote.Cast.Yes" );
-				}
-			}
-			else
-			{
-				pLocalPlayer->EmitSound( "Vote.Cast.Yes" );
-			}
-		}
-	}
+        if ( FStrEq( eventName, "vote_cast" ) )
+        {
+            if ( m_bIsYesNoVote )
+            {
+                int vote_option = event->GetInt( "vote_option", TEAM_UNASSIGNED );
+                if ( vote_option == VOTE_OPTION2 )
+                {
+                    pLocalPlayer->EmitSound( "Vote.Cast.No" );
+                }
+                else if ( vote_option == VOTE_OPTION1 )
+                {
+                    pLocalPlayer->EmitSound( "Vote.Cast.Yes" );
+                }
+            }
+            else
+            {
+                pLocalPlayer->EmitSound( "Vote.Cast.Yes" );
+            }
+        }
+    }
 }

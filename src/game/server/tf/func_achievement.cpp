@@ -17,16 +17,16 @@ LINK_ENTITY_TO_CLASS( func_achievement, CAchievementZone );
 //
 
 BEGIN_DATADESC( CAchievementZone )
-	DEFINE_KEYFIELD( m_iZoneID, FIELD_INTEGER, "zone_id" ),
-END_DATADESC()
+DEFINE_KEYFIELD( m_iZoneID, FIELD_INTEGER, "zone_id" ),
+    END_DATADESC()
 
-//-----------------------------------------------------------------------------
-// Purpose: 
-//-----------------------------------------------------------------------------
-CAchievementZone::CAchievementZone()
+    //-----------------------------------------------------------------------------
+    // Purpose:
+    //-----------------------------------------------------------------------------
+    CAchievementZone::CAchievementZone()
 {
-	m_bDisabled = false;
-	m_iZoneID = 0;
+    m_bDisabled = false;
+    m_iZoneID = 0;
 }
 
 //-----------------------------------------------------------------------------
@@ -34,20 +34,19 @@ CAchievementZone::CAchievementZone()
 //-----------------------------------------------------------------------------
 void CAchievementZone::Spawn( void )
 {
-	Precache();
-	BaseClass::Spawn();
-	InitTrigger();
+    Precache();
+    BaseClass::Spawn();
+    InitTrigger();
 
-	AddSpawnFlags( SF_TRIGGER_ALLOW_ALL ); // so we can keep track of who is touching us
-	AddEffects( EF_NODRAW );
+    AddSpawnFlags( SF_TRIGGER_ALLOW_ALL );  // so we can keep track of who is touching us
+    AddEffects( EF_NODRAW );
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CAchievementZone::Precache( void )
 {
-
 }
 
 //-----------------------------------------------------------------------------
@@ -55,7 +54,7 @@ void CAchievementZone::Precache( void )
 //-----------------------------------------------------------------------------
 bool CAchievementZone::IsTouching( const CBaseEntity *pEntity ) const
 {
-	return BaseClass::IsTouching( pEntity );
+    return BaseClass::IsTouching( pEntity );
 }
 
 //-----------------------------------------------------------------------------
@@ -63,7 +62,7 @@ bool CAchievementZone::IsTouching( const CBaseEntity *pEntity ) const
 //-----------------------------------------------------------------------------
 void CAchievementZone::InputEnable( inputdata_t &inputdata )
 {
-	SetDisabled( false );
+    SetDisabled( false );
 }
 
 //-----------------------------------------------------------------------------
@@ -71,7 +70,7 @@ void CAchievementZone::InputEnable( inputdata_t &inputdata )
 //-----------------------------------------------------------------------------
 void CAchievementZone::InputDisable( inputdata_t &inputdata )
 {
-	SetDisabled( true );
+    SetDisabled( true );
 }
 
 //-----------------------------------------------------------------------------
@@ -79,7 +78,7 @@ void CAchievementZone::InputDisable( inputdata_t &inputdata )
 //-----------------------------------------------------------------------------
 bool CAchievementZone::IsDisabled( void )
 {
-	return m_bDisabled;
+    return m_bDisabled;
 }
 
 //-----------------------------------------------------------------------------
@@ -87,14 +86,14 @@ bool CAchievementZone::IsDisabled( void )
 //-----------------------------------------------------------------------------
 void CAchievementZone::InputToggle( inputdata_t &inputdata )
 {
-	if ( m_bDisabled )
-	{
-		SetDisabled( false );
-	}
-	else
-	{
-		SetDisabled( true );
-	}
+    if ( m_bDisabled )
+    {
+        SetDisabled( false );
+    }
+    else
+    {
+        SetDisabled( true );
+    }
 }
 
 //-----------------------------------------------------------------------------
@@ -102,7 +101,7 @@ void CAchievementZone::InputToggle( inputdata_t &inputdata )
 //-----------------------------------------------------------------------------
 void CAchievementZone::SetDisabled( bool bDisabled )
 {
-	m_bDisabled = bDisabled;
+    m_bDisabled = bDisabled;
 }
 
 //-----------------------------------------------------------------------------
@@ -110,23 +109,23 @@ void CAchievementZone::SetDisabled( bool bDisabled )
 //-----------------------------------------------------------------------------
 CAchievementZone *InAchievementZone( CBaseEntity *pEntity )
 {
-	if ( pEntity )
-	{
-		CBaseEntity *pTempEnt = NULL;
-		while ( ( pTempEnt = gEntList.FindEntityByClassname( pTempEnt, "func_achievement" ) ) != NULL )
-		{
-			CAchievementZone *pZone = dynamic_cast<CAchievementZone *>( pTempEnt );
+    if ( pEntity )
+    {
+        CBaseEntity *pTempEnt = NULL;
+        while ( ( pTempEnt = gEntList.FindEntityByClassname( pTempEnt, "func_achievement" ) ) != NULL )
+        {
+            CAchievementZone *pZone = dynamic_cast< CAchievementZone * >( pTempEnt );
 
-			if ( !pZone->IsDisabled() && pZone->PointIsWithin( pEntity->GetAbsOrigin() ) )
-			{
-				int iTeam = pZone->GetTeamNumber();
-				if ( !iTeam || ( iTeam && ( pEntity->GetTeamNumber() == iTeam ) ) )
-				{
-					return pZone;
-				}
-			}
-		}
-	}
+            if ( !pZone->IsDisabled() && pZone->PointIsWithin( pEntity->GetAbsOrigin() ) )
+            {
+                int iTeam = pZone->GetTeamNumber();
+                if ( !iTeam || ( iTeam && ( pEntity->GetTeamNumber() == iTeam ) ) )
+                {
+                    return pZone;
+                }
+            }
+        }
+    }
 
-	return NULL;
+    return NULL;
 }

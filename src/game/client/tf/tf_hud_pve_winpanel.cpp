@@ -1,7 +1,7 @@
 
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -32,85 +32,86 @@
 //-----------------------------------------------------------------------------
 // Purpose: Constructor
 //-----------------------------------------------------------------------------
-CTFPVEWinPanel::CTFPVEWinPanel( IViewPort *pViewPort ) : EditablePanel( NULL, "PVEWinPanel" )
+CTFPVEWinPanel::CTFPVEWinPanel( IViewPort *pViewPort )
+    : EditablePanel( NULL, "PVEWinPanel" )
 {
-	//SetAlpha( 0 );
-	SetScheme( "ClientScheme" );
+    // SetAlpha( 0 );
+    SetScheme( "ClientScheme" );
 
-	ListenForGameEvent( "pve_win_panel" );
-	ListenForGameEvent( "teamplay_round_start" );
-	ListenForGameEvent( "teamplay_game_over" );
-	ListenForGameEvent( "tf_game_over" );
+    ListenForGameEvent( "pve_win_panel" );
+    ListenForGameEvent( "teamplay_round_start" );
+    ListenForGameEvent( "teamplay_game_over" );
+    ListenForGameEvent( "tf_game_over" );
 
-	m_bShouldBeVisible = false;
+    m_bShouldBeVisible = false;
 
-	m_pRespecContainerPanel = NULL;
-	m_pRespecBackground = NULL;
-	m_pRespecCountLabel = NULL;
-	m_pRespecTextLabel = NULL;
+    m_pRespecContainerPanel = NULL;
+    m_pRespecBackground = NULL;
+    m_pRespecCountLabel = NULL;
+    m_pRespecTextLabel = NULL;
 
-	vgui::ivgui()->AddTickSignal( GetVPanel(), 50 );
+    vgui::ivgui()->AddTickSignal( GetVPanel(), 50 );
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFPVEWinPanel::ApplySettings( KeyValues *inResourceData )
 {
-	BaseClass::ApplySettings( inResourceData );
+    BaseClass::ApplySettings( inResourceData );
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-void CTFPVEWinPanel::FireGameEvent( IGameEvent * event )
+void CTFPVEWinPanel::FireGameEvent( IGameEvent *event )
 {
-	const char *pEventName = event->GetName();
+    const char *pEventName = event->GetName();
 
-	if ( Q_strcmp( "teamplay_round_start", pEventName ) == 0 || 
-		 Q_strcmp( "teamplay_game_over", pEventName ) == 0 || 
-		 Q_strcmp( "tf_game_over", pEventName ) == 0 || 
-		 Q_strcmp( "training_complete", pEventName ) == 0 )
-	{
-		m_bShouldBeVisible = false;
-	}
-	else if ( Q_strcmp( "pve_win_panel", pEventName ) == 0 )
-	{
-		if ( !g_PR )
-			return;
+    if ( Q_strcmp( "teamplay_round_start", pEventName ) == 0 ||
+         Q_strcmp( "teamplay_game_over", pEventName ) == 0 ||
+         Q_strcmp( "tf_game_over", pEventName ) == 0 ||
+         Q_strcmp( "training_complete", pEventName ) == 0 )
+    {
+        m_bShouldBeVisible = false;
+    }
+    else if ( Q_strcmp( "pve_win_panel", pEventName ) == 0 )
+    {
+        if ( !g_PR )
+            return;
 
-		int iWinningTeam = event->GetInt( "winning_team" );
-		int iWinReason = event->GetInt( "winreason" );
+        int iWinningTeam = event->GetInt( "winning_team" );
+        int iWinReason = event->GetInt( "winreason" );
 
-		if ( iWinningTeam != TF_TEAM_PVE_INVADERS )
-		{
-			// Only show this when the robots win
-			return;
-		}
+        if ( iWinningTeam != TF_TEAM_PVE_INVADERS )
+        {
+            // Only show this when the robots win
+            return;
+        }
 
-		LoadControlSettings( "resource/UI/HudPVEWinPanel.res" );	
-		InvalidateLayout( false, true );
+        LoadControlSettings( "resource/UI/HudPVEWinPanel.res" );
+        InvalidateLayout( false, true );
 
-		SetDialogVariable( "WinningTeamLabel", "" );
-		SetDialogVariable( "WinReasonLabel", "" );
-		SetDialogVariable( "DetailsLabel", "" );
+        SetDialogVariable( "WinningTeamLabel", "" );
+        SetDialogVariable( "WinReasonLabel", "" );
+        SetDialogVariable( "DetailsLabel", "" );
 
-		wchar_t *pwchWinReason = L"";
-		switch ( iWinReason )
-		{
-		case 0:
-		default:
-			pwchWinReason = g_pVGuiLocalize->Find( "#Winpanel_PVE_Bomb_Deployed" );
-		}
+        wchar_t *pwchWinReason = L"";
+        switch ( iWinReason )
+        {
+            case 0:
+            default:
+                pwchWinReason = g_pVGuiLocalize->Find( "#Winpanel_PVE_Bomb_Deployed" );
+        }
 
-		SetDialogVariable( "WinReasonLabel", pwchWinReason );
+        SetDialogVariable( "WinReasonLabel", pwchWinReason );
 
-		SetDialogVariable( "DetailsLabel", g_pVGuiLocalize->Find( "#TF_PVE_RestoreToCheckpointDetailed" ) );
+        SetDialogVariable( "DetailsLabel", g_pVGuiLocalize->Find( "#TF_PVE_RestoreToCheckpointDetailed" ) );
 
-		m_bShouldBeVisible = true;
+        m_bShouldBeVisible = true;
 
-		MoveToFront();
-	}
+        MoveToFront();
+    }
 }
 
 //-----------------------------------------------------------------------------
@@ -118,99 +119,99 @@ void CTFPVEWinPanel::FireGameEvent( IGameEvent * event )
 //-----------------------------------------------------------------------------
 void CTFPVEWinPanel::ApplySchemeSettings( vgui::IScheme *pScheme )
 {
-	BaseClass::ApplySchemeSettings( pScheme );
+    BaseClass::ApplySchemeSettings( pScheme );
 
-	LoadControlSettings( "resource/UI/HudPVEWinPanel.res" );
+    LoadControlSettings( "resource/UI/HudPVEWinPanel.res" );
 
-	m_pRespecBackground = dynamic_cast< vgui::ScalableImagePanel* >( FindChildByName( "RespecBackground" ) );
-	m_pRespecContainerPanel = dynamic_cast< vgui::EditablePanel* >( FindChildByName( "RespecContainer" ) );
-	if ( m_pRespecContainerPanel )
-	{
-		m_pRespecTextLabel = dynamic_cast< vgui::Label* >( m_pRespecContainerPanel->FindChildByName( "RespecTextLabelLoss" ) );
-		m_pRespecCountLabel = dynamic_cast< vgui::Label* >( m_pRespecContainerPanel->FindChildByName( "RespecCountLabel" ) );
-	}
+    m_pRespecBackground = dynamic_cast< vgui::ScalableImagePanel * >( FindChildByName( "RespecBackground" ) );
+    m_pRespecContainerPanel = dynamic_cast< vgui::EditablePanel * >( FindChildByName( "RespecContainer" ) );
+    if ( m_pRespecContainerPanel )
+    {
+        m_pRespecTextLabel = dynamic_cast< vgui::Label * >( m_pRespecContainerPanel->FindChildByName( "RespecTextLabelLoss" ) );
+        m_pRespecCountLabel = dynamic_cast< vgui::Label * >( m_pRespecContainerPanel->FindChildByName( "RespecCountLabel" ) );
+    }
 }
 
 void CTFPVEWinPanel::OnTick()
 {
-	if ( m_bShouldBeVisible == true )
-	{
-		IViewPortPanel *scoreboard = gViewPortInterface->FindPanelByName( PANEL_SCOREBOARD );
-		if ( (scoreboard && scoreboard->IsVisible() == true) || IsInFreezeCam() == true )
-		{
-			SetVisible( false );
-			return;
-		}
+    if ( m_bShouldBeVisible == true )
+    {
+        IViewPortPanel *scoreboard = gViewPortInterface->FindPanelByName( PANEL_SCOREBOARD );
+        if ( ( scoreboard && scoreboard->IsVisible() == true ) || IsInFreezeCam() == true )
+        {
+            SetVisible( false );
+            return;
+        }
 
-		// We dont want the stats panel showing up at the same time
-		CTFStatPanel *pStatPanel = GetStatPanel();
-		if ( pStatPanel && pStatPanel->IsVisible() )
-		{
-			pStatPanel->Hide();
-		}
+        // We dont want the stats panel showing up at the same time
+        CTFStatPanel *pStatPanel = GetStatPanel();
+        if ( pStatPanel && pStatPanel->IsVisible() )
+        {
+            pStatPanel->Hide();
+        }
 
-		if ( TFGameRules() && TFGameRules()->State_Get() != GR_STATE_TEAM_WIN )
-		{
-			m_bShouldBeVisible = false;
-		}
+        if ( TFGameRules() && TFGameRules()->State_Get() != GR_STATE_TEAM_WIN )
+        {
+            m_bShouldBeVisible = false;
+        }
 
-		// Respec
-		if ( m_pRespecContainerPanel && m_pRespecBackground && m_pRespecCountLabel && m_pRespecTextLabel )
-		{
-			CMannVsMachineStats *pStats = MannVsMachineStats_GetInstance();
-			if ( pStats )
-			{
-				uint16 nRespecs = pStats->GetNumRespecsEarnedInWave();
+        // Respec
+        if ( m_pRespecContainerPanel && m_pRespecBackground && m_pRespecCountLabel && m_pRespecTextLabel )
+        {
+            CMannVsMachineStats *pStats = MannVsMachineStats_GetInstance();
+            if ( pStats )
+            {
+                uint16 nRespecs = pStats->GetNumRespecsEarnedInWave();
 
-				bool bRespecVisible = nRespecs > 0;
+                bool bRespecVisible = nRespecs > 0;
 
-				// Do this only once
-				if ( bRespecVisible && !m_pRespecBackground->IsVisible() )
-				{
-					g_pClientMode->GetViewportAnimationController()->StartAnimationSequence( "RespecEarnedPulseLoss" );
-				
-					C_TFPlayer *pLocalTFPlayer = C_TFPlayer::GetLocalTFPlayer();
-					if ( pLocalTFPlayer )
-					{
-						pLocalTFPlayer->EmitSound( "MVM.RespecAwarded" );
-					}
-				}
+                // Do this only once
+                if ( bRespecVisible && !m_pRespecBackground->IsVisible() )
+                {
+                    g_pClientMode->GetViewportAnimationController()->StartAnimationSequence( "RespecEarnedPulseLoss" );
 
-				if ( m_pRespecContainerPanel->IsVisible() != bRespecVisible )
-				{
-					m_pRespecContainerPanel->SetVisible( bRespecVisible );
-				}
+                    C_TFPlayer *pLocalTFPlayer = C_TFPlayer::GetLocalTFPlayer();
+                    if ( pLocalTFPlayer )
+                    {
+                        pLocalTFPlayer->EmitSound( "MVM.RespecAwarded" );
+                    }
+                }
 
-				if (  m_pRespecBackground->IsVisible() != bRespecVisible )
-				{
-					m_pRespecBackground->SetVisible( bRespecVisible );
-				}
+                if ( m_pRespecContainerPanel->IsVisible() != bRespecVisible )
+                {
+                    m_pRespecContainerPanel->SetVisible( bRespecVisible );
+                }
 
-				if ( m_pRespecCountLabel->IsVisible() != bRespecVisible )
-				{
-					m_pRespecCountLabel->SetVisible( bRespecVisible );
-				}
+                if ( m_pRespecBackground->IsVisible() != bRespecVisible )
+                {
+                    m_pRespecBackground->SetVisible( bRespecVisible );
+                }
 
-				if ( m_pRespecTextLabel->IsVisible() != bRespecVisible )
-				{
-					m_pRespecTextLabel->SetVisible( bRespecVisible );
-				}
+                if ( m_pRespecCountLabel->IsVisible() != bRespecVisible )
+                {
+                    m_pRespecCountLabel->SetVisible( bRespecVisible );
+                }
 
-				if ( bRespecVisible )
-				{
-					m_pRespecContainerPanel->SetDialogVariable( "respeccount", nRespecs );
-				}
-			}
-		}
-	}
+                if ( m_pRespecTextLabel->IsVisible() != bRespecVisible )
+                {
+                    m_pRespecTextLabel->SetVisible( bRespecVisible );
+                }
 
-	SetVisible( m_bShouldBeVisible );
+                if ( bRespecVisible )
+                {
+                    m_pRespecContainerPanel->SetDialogVariable( "respeccount", nRespecs );
+                }
+            }
+        }
+    }
+
+    SetVisible( m_bShouldBeVisible );
 }
 
 void CTFPVEWinPanel::Reset( void )
 {
-	Update();
-	m_bShouldBeVisible = false;
+    Update();
+    m_bShouldBeVisible = false;
 }
 
 void CTFPVEWinPanel::Update( void )

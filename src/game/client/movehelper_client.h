@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -12,7 +12,6 @@
 #pragma once
 #endif
 
-
 #include "imovehelper.h"
 
-#endif // MOVEHELPER_CLIENT_H
+#endif  // MOVEHELPER_CLIENT_H

@@ -8,20 +8,22 @@
 
 class CTFBotScenarioMonitor : public Action< CTFBot >
 {
-public:
-	virtual Action< CTFBot > *InitialContainedAction( CTFBot *me );
+   public:
+    virtual Action< CTFBot > *InitialContainedAction( CTFBot *me );
 
-	virtual ActionResult< CTFBot >	OnStart( CTFBot *me, Action< CTFBot > *priorAction );
-	virtual ActionResult< CTFBot >	Update( CTFBot *me, float interval );
+    virtual ActionResult< CTFBot > OnStart( CTFBot *me, Action< CTFBot > *priorAction );
+    virtual ActionResult< CTFBot > Update( CTFBot *me, float interval );
 
-	virtual const char *GetName( void ) const	{ return "ScenarioMonitor"; }
+    virtual const char *GetName( void ) const
+    {
+        return "ScenarioMonitor";
+    }
 
-private:
-	CountdownTimer m_ignoreLostFlagTimer;
-	CountdownTimer m_lostFlagTimer;
+   private:
+    CountdownTimer m_ignoreLostFlagTimer;
+    CountdownTimer m_lostFlagTimer;
 
-	virtual Action< CTFBot > *DesiredScenarioAndClassAction( CTFBot *me );
+    virtual Action< CTFBot > *DesiredScenarioAndClassAction( CTFBot *me );
 };
 
-
-#endif // TF_BOT_SCENARIO_MONITOR_H
+#endif  // TF_BOT_SCENARIO_MONITOR_H

@@ -14,7 +14,6 @@
 
 class CTFPlayer;
 
-#define CATAPULT_MAX_HEALTH		150
+#define CATAPULT_MAX_HEALTH 150
 
-
-#endif // TF_OBJ_CATAPULT_H
+#endif  // TF_OBJ_CATAPULT_H

@@ -18,11 +18,10 @@ class CSharedObject;
 
 class ILobby : public IPlayerGroup
 {
-public:
-	virtual ~ILobby() { }
-
+   public:
+    virtual ~ILobby() {}
 };
 
-}
+}  // namespace GCSDK
 
 #endif

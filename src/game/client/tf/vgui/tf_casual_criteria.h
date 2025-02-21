@@ -13,56 +13,52 @@
 // memdbgon must be the last include file in a .cpp file!!!
 #include <tier0/memdbgon.h>
 
-
-
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-class CCasualCriteriaPanel	: public vgui::EditablePanel
-							, public CGameEventListener
+class CCasualCriteriaPanel : public vgui::EditablePanel, public CGameEventListener
 {
-	DECLARE_CLASS_SIMPLE( CCasualCriteriaPanel, vgui::EditablePanel );
+    DECLARE_CLASS_SIMPLE( CCasualCriteriaPanel, vgui::EditablePanel );
 
-public:
-	CCasualCriteriaPanel( vgui::Panel *pParent, const char* pszName );
-	virtual ~CCasualCriteriaPanel();
+   public:
+    CCasualCriteriaPanel( vgui::Panel *pParent, const char *pszName );
+    virtual ~CCasualCriteriaPanel();
 
-	//
-	// Panel overrides
-	//
-	virtual void ApplySchemeSettings( vgui::IScheme *pScheme ) OVERRIDE;
-	virtual void PerformLayout( void ) OVERRIDE;
-	virtual void OnCommand( const char *command ) OVERRIDE;
-	virtual void OnThink() OVERRIDE;
+    //
+    // Panel overrides
+    //
+    virtual void ApplySchemeSettings( vgui::IScheme *pScheme ) OVERRIDE;
+    virtual void PerformLayout( void ) OVERRIDE;
+    virtual void OnCommand( const char *command ) OVERRIDE;
+    virtual void OnThink() OVERRIDE;
 
-	virtual void FireGameEvent( IGameEvent *event ) OVERRIDE;
+    virtual void FireGameEvent( IGameEvent *event ) OVERRIDE;
 
-private:
+   private:
+    void WriteCategories( void );
 
-	void WriteCategories( void );
+    MESSAGE_FUNC_PARAMS( OnCategoryExpanded, "CategoryExpanded", params );
+    MESSAGE_FUNC_PTR( OnCheckButtonChecked, "CheckButtonChecked", panel );
 
-	MESSAGE_FUNC_PARAMS( OnCategoryExpanded, "CategoryExpanded", params );
-	MESSAGE_FUNC_PTR( OnCheckButtonChecked, "CheckButtonChecked", panel );
+    CPanelAnimationVarAliasType( int, m_iCategorySpacer, "category_spacer", "4", "proportional_int" );
+    CPanelAnimationVarAliasType( int, m_iCategoryNameWidth, "category_name_width", "190", "proportional_int" );
 
-	CPanelAnimationVarAliasType( int, m_iCategorySpacer, "category_spacer", "4", "proportional_int" );
-	CPanelAnimationVarAliasType( int, m_iCategoryNameWidth, "category_name_width", "190", "proportional_int" );
+    CUtlVector< vgui::Label * > m_vecSearchCriteriaLabels;
 
-	CUtlVector<vgui::Label *> m_vecSearchCriteriaLabels;
+    vgui::HFont m_fontCategoryListItem;
+    vgui::HFont m_fontGroupHeader;
 
-	vgui::HFont m_fontCategoryListItem;
-	vgui::HFont m_fontGroupHeader;
+    float m_flCompetitiveRankProgress;
+    float m_flCompetitiveRankPrevProgress;
+    float m_flRefreshPlayerListTime;
+    bool m_bCompetitiveRankChangePlayedSound;
 
-	float m_flCompetitiveRankProgress;
-	float m_flCompetitiveRankPrevProgress;
-	float m_flRefreshPlayerListTime;
-	bool m_bCompetitiveRankChangePlayedSound;
+    bool m_bHasAMapSelected;
 
-	bool m_bHasAMapSelected;
+    CUtlMap< EMatchmakingGroupType, Panel * > m_mapGroupPanels;
+    CUtlMap< EGameCategory, Panel * > m_mapCategoryPanels;
 
-	CUtlMap< EMatchmakingGroupType, Panel* > m_mapGroupPanels;
-	CUtlMap< EGameCategory, Panel* > m_mapCategoryPanels;
-
-	bool					m_bCriteriaDirty;
+    bool m_bCriteriaDirty;
 };
 
-#endif //TF_CASUAL_CRITERIA_H
+#endif  // TF_CASUAL_CRITERIA_H

@@ -13,48 +13,46 @@
 #include "tf/halloween/eyeball_boss/teleport_vortex.h"
 
 //---------------------------------------------------------------------------------------------
-ActionResult< CMerasmus >	CMerasmusDying::OnStart( CMerasmus *me, Action< CMerasmus > *priorAction )
+ActionResult< CMerasmus > CMerasmusDying::OnStart( CMerasmus *me, Action< CMerasmus > *priorAction )
 {
-	me->GetBodyInterface()->StartActivity( ACT_DIESIMPLE );
-	me->PlayHighPrioritySound( "Halloween.MerasmusBanish" );
-	TFGameRules()->BroadcastSound( 255, "Halloween.Merasmus_Death" );
+    me->GetBodyInterface()->StartActivity( ACT_DIESIMPLE );
+    me->PlayHighPrioritySound( "Halloween.MerasmusBanish" );
+    TFGameRules()->BroadcastSound( 255, "Halloween.Merasmus_Death" );
 
-	return Continue();
+    return Continue();
 }
-
 
 //---------------------------------------------------------------------------------------------
-ActionResult< CMerasmus >	CMerasmusDying::Update( CMerasmus *me, float interval )
+ActionResult< CMerasmus > CMerasmusDying::Update( CMerasmus *me, float interval )
 {
-	if ( me->IsActivityFinished() )
-	{
-		me->Break();
-		DispatchParticleEffect( "merasmus_spawn", me->GetAbsOrigin(), me->GetAbsAngles() );
+    if ( me->IsActivityFinished() )
+    {
+        me->Break();
+        DispatchParticleEffect( "merasmus_spawn", me->GetAbsOrigin(), me->GetAbsAngles() );
 
-		IGameEvent *event = gameeventmanager->CreateEvent( "merasmus_killed" );
-		if ( event )
-		{
-			event->SetInt( "level", me->GetLevel() );
-			gameeventmanager->FireEvent( event );
-		}
-		me->TriggerLogicRelay( "boss_dead_relay" );
+        IGameEvent *event = gameeventmanager->CreateEvent( "merasmus_killed" );
+        if ( event )
+        {
+            event->SetInt( "level", me->GetLevel() );
+            gameeventmanager->FireEvent( event );
+        }
+        me->TriggerLogicRelay( "boss_dead_relay" );
 
-		// create vortex to loot
-		CTeleportVortex *vortex = (CTeleportVortex *)CBaseEntity::Create( "teleport_vortex", me->WorldSpaceCenter(), vec3_angle );
-		if ( vortex )
-		{
-			vortex->SetupVortex( true, true );
-		}
+        // create vortex to loot
+        CTeleportVortex *vortex = ( CTeleportVortex * )CBaseEntity::Create( "teleport_vortex", me->WorldSpaceCenter(), vec3_angle );
+        if ( vortex )
+        {
+            vortex->SetupVortex( true, true );
+        }
 
-		me->GainLevel();
+        me->GainLevel();
 
-		me->StartRespawnTimer();
+        me->StartRespawnTimer();
 
-		UTIL_Remove( me );
+        UTIL_Remove( me );
 
-		return Done();
-	}
+        return Done();
+    }
 
-	return Continue();
+    return Continue();
 }
-

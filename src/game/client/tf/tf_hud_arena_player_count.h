@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
 
@@ -18,28 +18,26 @@
 using namespace vgui;
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 class CHudArenaPlayerCount : public CHudElement, public EditablePanel
 {
-	DECLARE_CLASS_SIMPLE( CHudArenaPlayerCount, EditablePanel );
+    DECLARE_CLASS_SIMPLE( CHudArenaPlayerCount, EditablePanel );
 
-public:
-	CHudArenaPlayerCount( const char *pElementName );
+   public:
+    CHudArenaPlayerCount( const char *pElementName );
 
-	virtual void ApplySchemeSettings( IScheme *scheme );
-	virtual bool ShouldDraw( void );
-//	virtual void FireGameEvent( IGameEvent * event );
-	virtual void OnTick( void );
+    virtual void ApplySchemeSettings( IScheme *scheme );
+    virtual bool ShouldDraw( void );
+    //	virtual void FireGameEvent( IGameEvent * event );
+    virtual void OnTick( void );
 
-private:
-	void UpdateCounts( void );
+   private:
+    void UpdateCounts( void );
 
-private:
-
-	EditablePanel *m_pBlueTeam;
-	EditablePanel *m_pRedTeam;
-
+   private:
+    EditablePanel *m_pBlueTeam;
+    EditablePanel *m_pRedTeam;
 };
 
-#endif // TF_HUD_ARENA_PLAYER_COUNT_H
+#endif  // TF_HUD_ARENA_PLAYER_COUNT_H

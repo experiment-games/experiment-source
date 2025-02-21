@@ -11,5 +11,4 @@
 #pragma once
 #endif
 
-
-#endif // TF_COACH_RATING_H
+#endif  // TF_COACH_RATING_H

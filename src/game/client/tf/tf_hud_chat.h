@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -16,28 +16,28 @@
 
 struct ChatMessage_t
 {
-	ETFPartyChatType m_eType;
-	wchar_t* m_pwszText;
-	CSteamID m_steamID;
+    ETFPartyChatType m_eType;
+    wchar_t *m_pwszText;
+    CSteamID m_steamID;
 };
 
-void RenderPartyChatMessage( const ChatMessage_t& message,
-							 vgui::RichText* pRichText,
-							 const Color& colorSystemMessage,
-							 const Color& colorPlayerName, 
-							 const Color& colorText );
+void RenderPartyChatMessage( const ChatMessage_t &message,
+                             vgui::RichText *pRichText,
+                             const Color &colorSystemMessage,
+                             const Color &colorPlayerName,
+                             const Color &colorText );
 
 class CHudChatLine : public CBaseHudChatLine
 {
-	DECLARE_CLASS_SIMPLE( CHudChatLine, CBaseHudChatLine );
+    DECLARE_CLASS_SIMPLE( CHudChatLine, CBaseHudChatLine );
 
-public:
+   public:
+    CHudChatLine( vgui::Panel *parent, const char *panelName );
 
-	CHudChatLine( vgui::Panel *parent, const char *panelName );
+    virtual void ApplySchemeSettings( vgui::IScheme *pScheme );
 
-	virtual void	ApplySchemeSettings(vgui::IScheme *pScheme);
-private:
-	CHudChatLine( const CHudChatLine & ); // not defined, not accessible
+   private:
+    CHudChatLine( const CHudChatLine & );  // not defined, not accessible
 };
 
 //-----------------------------------------------------------------------------
@@ -45,50 +45,54 @@ private:
 //-----------------------------------------------------------------------------
 class CHudChatInputLine : public CBaseHudChatInputLine
 {
-	DECLARE_CLASS_SIMPLE( CHudChatInputLine, CBaseHudChatInputLine );
-	
-public:
-	CHudChatInputLine( CBaseHudChat *parent, char const *panelName ) : CBaseHudChatInputLine( parent, panelName ) {}
+    DECLARE_CLASS_SIMPLE( CHudChatInputLine, CBaseHudChatInputLine );
 
-	virtual void	ApplySchemeSettings(vgui::IScheme *pScheme);
+   public:
+    CHudChatInputLine( CBaseHudChat *parent, char const *panelName )
+        : CBaseHudChatInputLine( parent, panelName ) {}
+
+    virtual void ApplySchemeSettings( vgui::IScheme *pScheme );
 };
 
 class CHudChat : public CBaseHudChat
 {
-	DECLARE_CLASS_SIMPLE( CHudChat, CBaseHudChat );
+    DECLARE_CLASS_SIMPLE( CHudChat, CBaseHudChat );
 
-public:
-	CHudChat( const char *pElementName );
+   public:
+    CHudChat( const char *pElementName );
 
-	virtual void ApplySchemeSettings( vgui::IScheme *pScheme ) OVERRIDE;
+    virtual void ApplySchemeSettings( vgui::IScheme *pScheme ) OVERRIDE;
 
-	virtual void	CreateChatInputLine( void );
+    virtual void CreateChatInputLine( void );
 
-	virtual void	Init( void );
-	virtual void	Reset( void );
-	int				GetChatInputOffset( void );
-	void			CreateChatLines( void );
-	virtual void	FireGameEvent( IGameEvent *event ) OVERRIDE;
+    virtual void Init( void );
+    virtual void Reset( void );
+    int GetChatInputOffset( void );
+    void CreateChatLines( void );
+    virtual void FireGameEvent( IGameEvent *event ) OVERRIDE;
 
-	virtual bool	ShouldDraw( void );
+    virtual bool ShouldDraw( void );
 
-	virtual Color	GetTextColorForClient( TextColor colorNum, int clientIndex );
-	virtual Color	GetClientColor( int clientIndex );
+    virtual Color GetTextColorForClient( TextColor colorNum, int clientIndex );
+    virtual Color GetClientColor( int clientIndex );
 
-	virtual int		GetFilterForString( const char *pString );
+    virtual int GetFilterForString( const char *pString );
 
-	virtual const char *GetDisplayedSubtitlePlayerName( int clientIndex );
-	virtual bool IsVisible();
+    virtual const char *GetDisplayedSubtitlePlayerName( int clientIndex );
+    virtual bool IsVisible();
 
-	virtual int				GetFilterFlags( void );
+    virtual int GetFilterFlags( void );
 
 #if defined( _X360 )
-	// hide behind other panels ( stats , build menu ) in 360
-	virtual int		GetRenderGroupPriority( void ) { return 35; }	// less than statpanel
+    // hide behind other panels ( stats , build menu ) in 360
+    virtual int GetRenderGroupPriority( void )
+    {
+        return 35;
+    }  // less than statpanel
 #endif
 
-	Color m_colorPartyEvent;
-	Color m_colorPartyMessage;
+    Color m_colorPartyEvent;
+    Color m_colorPartyMessage;
 };
 
-#endif	//CS_HUD_CHAT_H
+#endif  // CS_HUD_CHAT_H

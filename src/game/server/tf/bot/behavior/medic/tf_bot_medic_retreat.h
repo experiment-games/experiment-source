@@ -10,20 +10,23 @@
 
 class CTFBotMedicRetreat : public Action< CTFBot >
 {
-public:
-	virtual ActionResult< CTFBot >	OnStart( CTFBot *me, Action< CTFBot > *priorAction );
-	virtual ActionResult< CTFBot >	Update( CTFBot *me, float interval );
-	virtual ActionResult< CTFBot >	OnResume( CTFBot *me, Action< CTFBot > *interruptingAction );
+   public:
+    virtual ActionResult< CTFBot > OnStart( CTFBot *me, Action< CTFBot > *priorAction );
+    virtual ActionResult< CTFBot > Update( CTFBot *me, float interval );
+    virtual ActionResult< CTFBot > OnResume( CTFBot *me, Action< CTFBot > *interruptingAction );
 
-	virtual EventDesiredResult< CTFBot > OnStuck( CTFBot *me );
-	virtual EventDesiredResult< CTFBot > OnMoveToFailure( CTFBot *me, const Path *path, MoveToFailureType reason );
-	virtual QueryResultType ShouldAttack( const INextBot *me, const CKnownEntity *them ) const;
+    virtual EventDesiredResult< CTFBot > OnStuck( CTFBot *me );
+    virtual EventDesiredResult< CTFBot > OnMoveToFailure( CTFBot *me, const Path *path, MoveToFailureType reason );
+    virtual QueryResultType ShouldAttack( const INextBot *me, const CKnownEntity *them ) const;
 
-	virtual const char *GetName( void ) const	{ return "Retreat"; };
+    virtual const char *GetName( void ) const
+    {
+        return "Retreat";
+    };
 
-private:
-	PathFollower m_path;
-	CountdownTimer m_lookAroundTimer;
+   private:
+    PathFollower m_path;
+    CountdownTimer m_lookAroundTimer;
 };
 
-#endif // TF_BOT_MEDIC_RETREAT_H
+#endif  // TF_BOT_MEDIC_RETREAT_H

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -14,5 +14,4 @@
 
 face_t *MergeDetailTree( tree_t *worldtree, int brush_start, int brush_end );
 
-
-#endif // DETAIL_H
+#endif  // DETAIL_H

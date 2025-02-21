@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -25,166 +25,167 @@ class CTFFlagCalloutPanel;
 //-----------------------------------------------------------------------------
 class CTFArrowPanel : public vgui::Panel
 {
-public:
-	DECLARE_CLASS_SIMPLE( CTFArrowPanel, vgui::Panel );
+   public:
+    DECLARE_CLASS_SIMPLE( CTFArrowPanel, vgui::Panel );
 
-	CTFArrowPanel( vgui::Panel *parent, const char *name );
-	virtual void Paint();
-	virtual bool IsVisible( void );
-	void SetEntity( EHANDLE hEntity ){ m_hEntity = hEntity; }
-	float GetAngleRotation( void );
-	void OnTick( void );
+    CTFArrowPanel( vgui::Panel *parent, const char *name );
+    virtual void Paint();
+    virtual bool IsVisible( void );
+    void SetEntity( EHANDLE hEntity )
+    {
+        m_hEntity = hEntity;
+    }
+    float GetAngleRotation( void );
+    void OnTick( void );
 
-private:
+   private:
+    EHANDLE m_hEntity;
 
-	EHANDLE				m_hEntity;	
+    CMaterialReference m_RedMaterial;
+    CMaterialReference m_BlueMaterial;
+    CMaterialReference m_NeutralMaterial;
+    CMaterialReference m_NeutralRedMaterial;
 
-	CMaterialReference	m_RedMaterial;
-	CMaterialReference	m_BlueMaterial;
-	CMaterialReference	m_NeutralMaterial;
-	CMaterialReference	m_NeutralRedMaterial;
+    CMaterialReference m_RedMaterialNoArrow;
+    CMaterialReference m_BlueMaterialNoArrow;
 
-	CMaterialReference	m_RedMaterialNoArrow;
-	CMaterialReference	m_BlueMaterialNoArrow;
-
-	bool				m_bUseRed;
-	float				m_flNextColorSwitch;
-	IMaterial			*m_pMaterial;
+    bool m_bUseRed;
+    float m_flNextColorSwitch;
+    IMaterial *m_pMaterial;
 };
 
 //-----------------------------------------------------------------------------
-// Purpose:  
+// Purpose:
 //-----------------------------------------------------------------------------
 class CTFFlagStatus : public vgui::EditablePanel
 {
-public:
-	DECLARE_CLASS_SIMPLE( CTFFlagStatus, vgui::EditablePanel );
+   public:
+    DECLARE_CLASS_SIMPLE( CTFFlagStatus, vgui::EditablePanel );
 
-	CTFFlagStatus( vgui::Panel *parent, const char *name );
+    CTFFlagStatus( vgui::Panel *parent, const char *name );
 
-	virtual void ApplySchemeSettings( vgui::IScheme *pScheme );
-	virtual bool IsVisible( void );
-	void UpdateStatus( void );
+    virtual void ApplySchemeSettings( vgui::IScheme *pScheme );
+    virtual bool IsVisible( void );
+    void UpdateStatus( void );
 
-	void SetEntity( EHANDLE hEntity )
-	{ 
-		m_hEntity = hEntity;
+    void SetEntity( EHANDLE hEntity )
+    {
+        m_hEntity = hEntity;
 
-		if ( m_pArrow )
-		{
-			m_pArrow->SetEntity( hEntity );
-		}
+        if ( m_pArrow )
+        {
+            m_pArrow->SetEntity( hEntity );
+        }
 
-		UpdateStatus();
-	}
+        UpdateStatus();
+    }
 
-	CBaseEntity *GetEntity( void ){ return m_hEntity.Get(); }
+    CBaseEntity *GetEntity( void )
+    {
+        return m_hEntity.Get();
+    }
 
-private:
+   private:
+    EHANDLE m_hEntity;
 
-	EHANDLE			m_hEntity;
-
-	CTFArrowPanel	*m_pArrow;
-	CTFImagePanel	*m_pStatusIcon;
-	CTFImagePanel	*m_pBriefcase;
+    CTFArrowPanel *m_pArrow;
+    CTFImagePanel *m_pStatusIcon;
+    CTFImagePanel *m_pBriefcase;
 };
 
-
 //-----------------------------------------------------------------------------
-// Purpose:  
+// Purpose:
 //-----------------------------------------------------------------------------
 class CTFHudFlagObjectives : public vgui::EditablePanel, public CGameEventListener
 {
-	DECLARE_CLASS_SIMPLE( CTFHudFlagObjectives, vgui::EditablePanel );
+    DECLARE_CLASS_SIMPLE( CTFHudFlagObjectives, vgui::EditablePanel );
 
-public:
+   public:
+    CTFHudFlagObjectives( vgui::Panel *parent, const char *name );
 
-	CTFHudFlagObjectives( vgui::Panel *parent, const char *name );
+    virtual void ApplySchemeSettings( vgui::IScheme *pScheme );
+    virtual bool IsVisible( void );
+    virtual void Reset();
+    void OnTick();
 
-	virtual void ApplySchemeSettings( vgui::IScheme *pScheme );
-	virtual bool IsVisible( void );
-	virtual void Reset();
-	void OnTick();
+   public:  // IGameEventListener:
+    virtual void FireGameEvent( IGameEvent *event );
 
-public: // IGameEventListener:
-	virtual void FireGameEvent( IGameEvent *event );
+   private:
+    void UpdateStatus( C_BasePlayer *pNewOwner = NULL, C_BaseEntity *pFlagEntity = NULL );
+    void SetPlayingToLabelVisible( bool bVisible );
+    void SetCarriedImage( const char *pchIcon );
 
-private:
-	
-	void UpdateStatus( C_BasePlayer *pNewOwner = NULL, C_BaseEntity *pFlagEntity = NULL );
-	void SetPlayingToLabelVisible( bool bVisible );
-	void SetCarriedImage( const char *pchIcon );
+   private:
+    vgui::ImagePanel *m_pCarriedImage;
 
-private:
+    CExLabel *m_pPlayingTo;
+    vgui::Panel *m_pPlayingToBG;
 
-	vgui::ImagePanel		*m_pCarriedImage;
+    CTFFlagStatus *m_pRedFlag;
+    CTFFlagStatus *m_pBlueFlag;
+    CTFArrowPanel *m_pCapturePoint;
 
-	CExLabel				*m_pPlayingTo;
-	vgui::Panel				*m_pPlayingToBG;
+    bool m_bFlagAnimationPlayed;
+    bool m_bCarryingFlag;
 
-	CTFFlagStatus			*m_pRedFlag;
-	CTFFlagStatus			*m_pBlueFlag;
-	CTFArrowPanel			*m_pCapturePoint;
+    vgui::ImagePanel *m_pSpecCarriedImage;
 
-	bool					m_bFlagAnimationPlayed;
-	bool					m_bCarryingFlag;
+    vgui::ImagePanel *m_pPoisonImage;
+    CExLabel *m_pPoisonTimeLabel;
 
-	vgui::ImagePanel		*m_pSpecCarriedImage;
+    bool m_bPlayingHybrid_CTF_CP;
+    bool m_bPlayingSpecialDeliveryMode;
 
-	vgui::ImagePanel		*m_pPoisonImage;
-	CExLabel				*m_pPoisonTimeLabel;
-
-	bool					m_bPlayingHybrid_CTF_CP;
-	bool					m_bPlayingSpecialDeliveryMode;
-
-	int						m_nNumValidFlags;
+    int m_nNumValidFlags;
 };
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 class CTFFlagCalloutPanel : public CHudElement, public vgui::EditablePanel
 {
-	DECLARE_CLASS_SIMPLE( CTFFlagCalloutPanel, vgui::EditablePanel );
-public:
-	CTFFlagCalloutPanel( const char *pElementName );
-	~CTFFlagCalloutPanel( void );
+    DECLARE_CLASS_SIMPLE( CTFFlagCalloutPanel, vgui::EditablePanel );
 
-	virtual void ApplySchemeSettings( vgui::IScheme *pScheme );
-	virtual void PerformLayout( void );
-	virtual void OnTick( void );
-	virtual void PaintBackground( void );
-	virtual void Paint( void );
-	
-	void	GetCalloutPosition( const Vector &vecDelta, float flRadius, float *xpos, float *ypos, float *flRotation );
-	void	SetFlag( CCaptureFlag *pFlag, float flDuration, Vector &vecOffset );
-	static CTFFlagCalloutPanel *AddFlagCalloutIfNotFound( CCaptureFlag *pFlag, float flDuration, Vector &vecLocation );
-	bool	ShouldShowFlagIconToLocalPlayer( void );
-	void	ScaleAndPositionCallout( float flScale = 1.f );
-	
-	CHandle< CCaptureFlag > m_hFlag;
+   public:
+    CTFFlagCalloutPanel( const char *pElementName );
+    ~CTFFlagCalloutPanel( void );
 
-private:
-	IMaterial		*m_pArrowMaterial;
-	CTFImagePanel	*m_pFlagCalloutPanel;
-	vgui::Label		*m_pFlagValueLabel;
-	CTFImagePanel	*m_pFlagStatusIcon;
+    virtual void ApplySchemeSettings( vgui::IScheme *pScheme );
+    virtual void PerformLayout( void );
+    virtual void OnTick( void );
+    virtual void PaintBackground( void );
+    virtual void Paint( void );
 
-	float			m_flRemoveTime;
-	float			m_flFirstDisplayTime;
-	Vector			m_vecOffset;
-	int				m_iDrawArrow;
-	bool			m_bFlagVisible;		// LOS
+    void GetCalloutPosition( const Vector &vecDelta, float flRadius, float *xpos, float *ypos, float *flRotation );
+    void SetFlag( CCaptureFlag *pFlag, float flDuration, Vector &vecOffset );
+    static CTFFlagCalloutPanel *AddFlagCalloutIfNotFound( CCaptureFlag *pFlag, float flDuration, Vector &vecLocation );
+    bool ShouldShowFlagIconToLocalPlayer( void );
+    void ScaleAndPositionCallout( float flScale = 1.f );
 
-	float			m_flPrevScale;
-	int				m_nPanelWideOrig;
-	int				m_nPanelTallOrig;
-	int				m_nLabelWideOrig;
-	int				m_nLabelTallOrig;
-	int				m_nIconWideOrig;
-	int				m_nIconTallOrig;
+    CHandle< CCaptureFlag > m_hFlag;
 
-	static CUtlVector< CTFFlagCalloutPanel* > m_FlagCalloutPanels;
+   private:
+    IMaterial *m_pArrowMaterial;
+    CTFImagePanel *m_pFlagCalloutPanel;
+    vgui::Label *m_pFlagValueLabel;
+    CTFImagePanel *m_pFlagStatusIcon;
+
+    float m_flRemoveTime;
+    float m_flFirstDisplayTime;
+    Vector m_vecOffset;
+    int m_iDrawArrow;
+    bool m_bFlagVisible;  // LOS
+
+    float m_flPrevScale;
+    int m_nPanelWideOrig;
+    int m_nPanelTallOrig;
+    int m_nLabelWideOrig;
+    int m_nLabelTallOrig;
+    int m_nIconWideOrig;
+    int m_nIconTallOrig;
+
+    static CUtlVector< CTFFlagCalloutPanel * > m_FlagCalloutPanels;
 };
 
-#endif	// TF_HUD_FLAGSTATUS_H
+#endif  // TF_HUD_FLAGSTATUS_H

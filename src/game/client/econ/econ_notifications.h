@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================
@@ -15,7 +15,7 @@
 class KeyValues;
 namespace vgui
 {
-	class EditablePanel;
+class EditablePanel;
 };
 class CEconNotificationQueue;
 
@@ -24,121 +24,130 @@ class CEconNotificationQueue;
  */
 class CEconNotification
 {
-public:
-	CEconNotification();
-	virtual ~CEconNotification();
+   public:
+    CEconNotification();
+    virtual ~CEconNotification();
 
-	void SetText( const char *pText );
-	void AddStringToken( const char* pToken, const wchar_t* pValue );
+    void SetText( const char *pText );
+    void AddStringToken( const char *pToken, const wchar_t *pValue );
 
-	void SetKeyValues( KeyValues *pKeyValues );
-	KeyValues *GetKeyValues() const;
+    void SetKeyValues( KeyValues *pKeyValues );
+    KeyValues *GetKeyValues() const;
 
-	const char* GetUnlocalizedText() { return m_pText; }
-	const wchar_t *GetText();
-	int GetID() const;
+    const char *GetUnlocalizedText()
+    {
+        return m_pText;
+    }
+    const wchar_t *GetText();
+    int GetID() const;
 
-	virtual void SetLifetime( float flSeconds );
-	virtual float GetExpireTime() const;
+    virtual void SetLifetime( float flSeconds );
+    virtual float GetExpireTime() const;
 
-	virtual float GetInGameLifeTime() const;
-	
-	void SetIsInUse( bool bInUse );
-	bool GetIsInUse() const;
+    virtual float GetInGameLifeTime() const;
 
-	void SetSteamID( const CSteamID &steamID );
-	const CSteamID &GetSteamID() const;
+    void SetIsInUse( bool bInUse );
+    bool GetIsInUse() const;
 
-	virtual bool BShowInGameElements() const { return true; }
-	bool BCreateMainMenuPanel() const { return m_bCreateMainMenuPanel; }
+    void SetSteamID( const CSteamID &steamID );
+    const CSteamID &GetSteamID() const;
 
-	virtual void MarkForDeletion();
+    virtual bool BShowInGameElements() const
+    {
+        return true;
+    }
+    bool BCreateMainMenuPanel() const
+    {
+        return m_bCreateMainMenuPanel;
+    }
 
-	enum EType {
-		// Can only be deleted
-		eType_Basic,
-		// Can be accept or declined
-		eType_AcceptDecline,
-		// Can be triggered or deleted
-		eType_Trigger,
-		// Can only be triggered
-		eType_MustTrigger,
-	};
+    virtual void MarkForDeletion();
 
-	virtual EType NotificationType();
+    enum EType
+    {
+        // Can only be deleted
+        eType_Basic,
+        // Can be accept or declined
+        eType_AcceptDecline,
+        // Can be triggered or deleted
+        eType_Trigger,
+        // Can only be triggered
+        eType_MustTrigger,
+    };
 
-	// Is this an important/high priority notification.  Triggers higher visibility etc..
-	virtual bool BHighPriority();
+    virtual EType NotificationType();
 
-	// eType_Trigger or eType_MustTrigger
-	virtual void Trigger();
+    // Is this an important/high priority notification.  Triggers higher visibility etc..
+    virtual bool BHighPriority();
 
-	// eType_AcceptDecline
-	virtual void Accept();
-	virtual void Decline();
+    // eType_Trigger or eType_MustTrigger
+    virtual void Trigger();
 
-	// eType_Basic or eType_Trigger
-	virtual void Deleted();
+    // eType_AcceptDecline
+    virtual void Accept();
+    virtual void Decline();
 
-	// All types, if expire time is set
-	virtual void Expired();
+    // eType_Basic or eType_Trigger
+    virtual void Deleted();
 
+    // All types, if expire time is set
+    virtual void Expired();
 
+    virtual void UpdateTick() {}
 
-	virtual void UpdateTick() { }
+    virtual const char *GetUnlocalizedHelpText();
 
-	virtual const char *GetUnlocalizedHelpText();
+    virtual vgui::EditablePanel *CreateUIElement( bool bMainMenu ) const;
 
-	virtual vgui::EditablePanel *CreateUIElement( bool bMainMenu ) const;
+    void SetSoundFilename( const char *filename )
+    {
+        m_pSoundFilename = filename;
+    }
 
-	void SetSoundFilename( const char *filename )
-	{
-		m_pSoundFilename = filename;
-	}
+    const char *GetSoundFilename() const
+    {
+        if ( m_pSoundFilename )
+        {
+            return m_pSoundFilename;
+        }
 
-	const char *GetSoundFilename() const
-	{
-		if ( m_pSoundFilename )
-		{
-			return m_pSoundFilename;
-		}
+        return "ui/notification_alert.wav";
+    }
 
-		return "ui/notification_alert.wav";
-	}
+    int GetKVVersion() const
+    {
+        return m_iKVVersion;
+    }
 
-	int GetKVVersion() const { return m_iKVVersion; }
+   protected:
+    const char *m_pText;
+    const char *m_pSoundFilename;
+    float m_flExpireTime;
+    KeyValues *m_pKeyValues;
+    wchar_t m_wszBuffer[1024];
+    CSteamID m_steamID;
+    bool m_bCreateMainMenuPanel = true;
 
-protected:
-	const char *m_pText;
-	const char *m_pSoundFilename;
-	float m_flExpireTime;
-	KeyValues *m_pKeyValues;
-	wchar_t m_wszBuffer[1024];
-	CSteamID m_steamID;
-	bool m_bCreateMainMenuPanel = true;
-
-private:
-	friend class CEconNotificationQueue;
-	int m_iID;
-	bool m_bInUse;
-	int m_iKVVersion = 0;
+   private:
+    friend class CEconNotificationQueue;
+    int m_iID;
+    bool m_bInUse;
+    int m_iKVVersion = 0;
 };
-
-
 
 /**
  * Filter function for CEconNotification's, used to remove them
  * @return true if the notification matches, false otherwise
  */
-typedef bool (*NotificationFilterFunc)( CEconNotification *pNotification );
+typedef bool ( *NotificationFilterFunc )( CEconNotification *pNotification );
 
 /**
  * Visitor object for notifications.
  */
 class CEconNotificationVisitor
 {
-public:
-	virtual void Visit( CEconNotification &notification ) = 0;
+   public:
+    virtual void Visit( CEconNotification &notification ) = 0;
 };
 
 /**
@@ -204,8 +213,8 @@ void NotificationQueue_Visit( CEconNotificationVisitor &visitor );
 void NotificationQueue_Update();
 
 /*
-*  @return the number of notifications that should show on the main menu
-*/
+ *  @return the number of notifications that should show on the main menu
+ */
 int NotificationQueue_GetNumMainMenuNotifications();
 
 /**
@@ -219,6 +228,6 @@ int NotificationQueue_GetNumNotifications();
  * @param pElementName
  * @return the control that was created
  */
-vgui::EditablePanel* NotificationQueue_CreateMainMenuUIElement( vgui::EditablePanel *pParent, const char *pElementName );
+vgui::EditablePanel *NotificationQueue_CreateMainMenuUIElement( vgui::EditablePanel *pParent, const char *pElementName );
 
-#endif // endif
+#endif  // endif

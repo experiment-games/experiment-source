@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -31,91 +31,99 @@ class CStoreItemControlsPanel;
 
 extern const char *g_pszTipsClassImages[];
 
-#define FILTER_ALLCLASS_ITEMS		TF_LAST_NORMAL_CLASS
-#define FILTER_UNOWNED_ITEMS		(TF_LAST_NORMAL_CLASS + 1)
+#define FILTER_ALLCLASS_ITEMS TF_LAST_NORMAL_CLASS
+#define FILTER_UNOWNED_ITEMS ( TF_LAST_NORMAL_CLASS + 1 )
 
 //-----------------------------------------------------------------------------
 // Purpose: A player class preview icon in the store's item preview panel
 //-----------------------------------------------------------------------------
 class CStorePreviewClassIcon : public CBaseStorePreviewIcon
 {
-	DECLARE_CLASS_SIMPLE( CStorePreviewClassIcon, CBaseStorePreviewIcon );
-public:
-	CStorePreviewClassIcon( vgui::Panel *parent, const char *name ) : CBaseStorePreviewIcon(parent,name)
-	{
-		m_pImagePanel = new vgui::ImagePanel( this, "classimage" );
-		m_pImagePanel->SetShouldScaleImage( true );
-		m_pImagePanel->SetMouseInputEnabled( false );
-		m_pImagePanel->SetKeyBoardInputEnabled( false );
-		m_iClass = 0;
-	}
+    DECLARE_CLASS_SIMPLE( CStorePreviewClassIcon, CBaseStorePreviewIcon );
 
-	virtual void OnCursorEntered()
-	{
-		BaseClass::OnCursorEntered();
-		PostActionSignal(new KeyValues("ShowClassIconMouseover", "class", m_iClass));
-	}
-	virtual void OnCursorExited()
-	{
-		BaseClass::OnCursorExited();
-		PostActionSignal(new KeyValues("HideClassIconMouseover"));
-	}
-	virtual void OnMouseReleased(vgui::MouseCode code)
-	{
-		BaseClass::OnMouseReleased(code);
-		PostActionSignal(new KeyValues("ClassIconSelected", "class", m_iClass));
-	}
+   public:
+    CStorePreviewClassIcon( vgui::Panel *parent, const char *name )
+        : CBaseStorePreviewIcon( parent, name )
+    {
+        m_pImagePanel = new vgui::ImagePanel( this, "classimage" );
+        m_pImagePanel->SetShouldScaleImage( true );
+        m_pImagePanel->SetMouseInputEnabled( false );
+        m_pImagePanel->SetKeyBoardInputEnabled( false );
+        m_iClass = 0;
+    }
 
-	virtual void SetInternalImageBounds( int iX, int iY, int iWide, int iTall )
-	{
-		m_pImagePanel->SetBounds( iX, iY, iWide, iTall );
-	}
+    virtual void OnCursorEntered()
+    {
+        BaseClass::OnCursorEntered();
+        PostActionSignal( new KeyValues( "ShowClassIconMouseover", "class", m_iClass ) );
+    }
+    virtual void OnCursorExited()
+    {
+        BaseClass::OnCursorExited();
+        PostActionSignal( new KeyValues( "HideClassIconMouseover" ) );
+    }
+    virtual void OnMouseReleased( vgui::MouseCode code )
+    {
+        BaseClass::OnMouseReleased( code );
+        PostActionSignal( new KeyValues( "ClassIconSelected", "class", m_iClass ) );
+    }
 
-	void SetClass( int iClass )
-	{
-		if ( iClass >= TF_FIRST_NORMAL_CLASS && iClass < TF_LAST_NORMAL_CLASS )
-		{
-			m_pImagePanel->SetImage( g_pszTipsClassImages[iClass] );
-		}
-		else
-		{
-			m_pImagePanel->SetImage( "class_portraits/all_class" );
-		}
-		m_iClass = iClass;
-	}
+    virtual void SetInternalImageBounds( int iX, int iY, int iWide, int iTall )
+    {
+        m_pImagePanel->SetBounds( iX, iY, iWide, iTall );
+    }
 
-	int GetClass( void ) { return m_iClass; }
+    void SetClass( int iClass )
+    {
+        if ( iClass >= TF_FIRST_NORMAL_CLASS && iClass < TF_LAST_NORMAL_CLASS )
+        {
+            m_pImagePanel->SetImage( g_pszTipsClassImages[iClass] );
+        }
+        else
+        {
+            m_pImagePanel->SetImage( "class_portraits/all_class" );
+        }
+        m_iClass = iClass;
+    }
 
-private:
-	vgui::ImagePanel	*m_pImagePanel;
-	int					m_iClass;
+    int GetClass( void )
+    {
+        return m_iClass;
+    }
+
+   private:
+    vgui::ImagePanel *m_pImagePanel;
+    int m_iClass;
 };
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 class CTFStorePageBase : public CStorePage
 {
-	DECLARE_CLASS_SIMPLE( CTFStorePageBase, CStorePage );
-protected:
-	// CTFStorePageBase should not be instantiated directly
-	CTFStorePageBase( Panel *parent, const CEconStoreCategoryManager::StoreCategory_t *pPageData, const char *pPreviewItemResFile = NULL );
+    DECLARE_CLASS_SIMPLE( CTFStorePageBase, CStorePage );
 
-public:
+   protected:
+    // CTFStorePageBase should not be instantiated directly
+    CTFStorePageBase( Panel *parent, const CEconStoreCategoryManager::StoreCategory_t *pPageData, const char *pPreviewItemResFile = NULL );
 
-	virtual void	OnCommand( const char *command );
-	virtual void	ShowPreview( int iClass, const econ_store_entry_t* pEntry );
+   public:
+    virtual void OnCommand( const char *command );
+    virtual void ShowPreview( int iClass, const econ_store_entry_t *pEntry );
 
-	MESSAGE_FUNC( OnPageShow, "PageShow" );
-	MESSAGE_FUNC_PTR( OnItemDetails, "ItemDetails", panel );
+    MESSAGE_FUNC( OnPageShow, "PageShow" );
+    MESSAGE_FUNC_PTR( OnItemDetails, "ItemDetails", panel );
 
-	virtual void	UpdateFilterComboBox( void );
-	virtual void	GetFiltersForDef( GameItemDefinition_t *pDef, CUtlVector<int> *pVecFilters );
-	virtual void	OnTick( void );
-	virtual int		GetNumPrimaryFilters( void ) { return FILTER_UNOWNED_ITEMS+1; }
+    virtual void UpdateFilterComboBox( void );
+    virtual void GetFiltersForDef( GameItemDefinition_t *pDef, CUtlVector< int > *pVecFilters );
+    virtual void OnTick( void );
+    virtual int GetNumPrimaryFilters( void )
+    {
+        return FILTER_UNOWNED_ITEMS + 1;
+    }
 
-protected:
-	float		m_flStartExplanationsAt;
+   protected:
+    float m_flStartExplanationsAt;
 };
 
-#endif // TF_STORE_PAGE_H
+#endif  // TF_STORE_PAGE_H

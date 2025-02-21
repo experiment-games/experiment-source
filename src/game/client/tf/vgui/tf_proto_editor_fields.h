@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -16,5 +16,4 @@
 #pragma once
 #endif
 
-
-#endif // PROTO_EDITOR_FIELDS_H
+#endif  // PROTO_EDITOR_FIELDS_H

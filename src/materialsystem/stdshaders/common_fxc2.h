@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -11,9 +11,9 @@
 // This file is here so you can add new utility functions without
 // changing common_fxc.h and causing a recompile of the entire universe.
 
-float LinearToMonochrome ( float3 r )
+float LinearToMonochrome( float3 r )
 {
-	return dot( r, float3( 0.299f, 0.587f, 0.114f ) );
+    return dot( r, float3( 0.299f, 0.587f, 0.114f ) );
 }
 
-#endif //#ifndef COMMON_FXC2_H_
+#endif  // #ifndef COMMON_FXC2_H_

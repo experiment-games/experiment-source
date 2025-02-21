@@ -10,14 +10,18 @@
 
 class CTFBotHintTeleporterExit : public CBaseTFBotHintEntity
 {
-	DECLARE_CLASS( CTFBotHintTeleporterExit, CBaseTFBotHintEntity );
-public:
-	DECLARE_DATADESC();
+    DECLARE_CLASS( CTFBotHintTeleporterExit, CBaseTFBotHintEntity );
 
-	CTFBotHintTeleporterExit( void );
-	virtual ~CTFBotHintTeleporterExit() { }
+   public:
+    DECLARE_DATADESC();
 
-	virtual HintType GetHintType() const OVERRIDE { return HINT_TELEPORTER_EXIT; }
+    CTFBotHintTeleporterExit( void );
+    virtual ~CTFBotHintTeleporterExit() {}
+
+    virtual HintType GetHintType() const OVERRIDE
+    {
+        return HINT_TELEPORTER_EXIT;
+    }
 };
 
-#endif // TF_BOT_HINT_TELEPORTER_EXIT_H
+#endif  // TF_BOT_HINT_TELEPORTER_EXIT_H

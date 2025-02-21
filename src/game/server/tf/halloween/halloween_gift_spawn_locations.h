@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -12,5 +12,5 @@
 #include "tier0/memdbgon.h"
 
 //
-void AddHalloweenGiftPositionsForMap( const char *pszMapName, CUtlVector<Vector> &vLocations );
+void AddHalloweenGiftPositionsForMap( const char *pszMapName, CUtlVector< Vector > &vLocations );
 //

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -264,6 +264,6 @@ protected:
 	CPanelAnimationVarAliasType( EDecodeStyle, m_eDecodeStyle, "decode_style", "0", "int" );
 };
 
-#endif // QUEST_ITEM_PANEL_H
+#endif  // QUEST_ITEM_PANEL_H
 
 #endif

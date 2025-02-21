@@ -13,13 +13,13 @@
 
 using namespace vgui;
 
-
 //--------------------------------------------------------------------------------------------------------
-MeshToolPanel::MeshToolPanel( vgui::Panel *parent, const char *toolName ) : CNavUIToolPanel( parent, toolName )
+MeshToolPanel::MeshToolPanel( vgui::Panel *parent, const char *toolName )
+    : CNavUIToolPanel( parent, toolName )
 {
-	LoadControlSettings( "Resource/UI/NavTools/MeshTool.res" );
+    LoadControlSettings( "Resource/UI/NavTools/MeshTool.res" );
 }
 
-#endif // SERVER_USES_VGUI
+#endif  // SERVER_USES_VGUI
 
 //--------------------------------------------------------------------------------------------------------

@@ -37,29 +37,35 @@
 
 #include <google/protobuf/descriptor.h>
 
-namespace google {
-namespace protobuf {
-  namespace io {
-    class Printer;             // printer.h
-  }
+namespace google
+{
+namespace protobuf
+{
+namespace io
+{
+class Printer;  // printer.h
 }
+}  // namespace protobuf
 
-namespace protobuf {
-namespace compiler {
-namespace java {
+namespace protobuf
+{
+namespace compiler
+{
+namespace java
+{
 
-void WriteMessageDocComment(io::Printer* printer, const Descriptor* message);
-void WriteFieldDocComment(io::Printer* printer, const FieldDescriptor* field);
-void WriteEnumDocComment(io::Printer* printer, const EnumDescriptor* enum_);
-void WriteEnumValueDocComment(io::Printer* printer,
-                              const EnumValueDescriptor* value);
-void WriteServiceDocComment(io::Printer* printer,
-                            const ServiceDescriptor* service);
-void WriteMethodDocComment(io::Printer* printer,
-                           const MethodDescriptor* method);
+void WriteMessageDocComment( io::Printer* printer, const Descriptor* message );
+void WriteFieldDocComment( io::Printer* printer, const FieldDescriptor* field );
+void WriteEnumDocComment( io::Printer* printer, const EnumDescriptor* enum_ );
+void WriteEnumValueDocComment( io::Printer* printer,
+                               const EnumValueDescriptor* value );
+void WriteServiceDocComment( io::Printer* printer,
+                             const ServiceDescriptor* service );
+void WriteMethodDocComment( io::Printer* printer,
+                            const MethodDescriptor* method );
 
 // Exposed for testing only.
-LIBPROTOC_EXPORT string EscapeJavadoc(const string& input);
+LIBPROTOC_EXPORT string EscapeJavadoc( const string& input );
 
 }  // namespace java
 }  // namespace compiler

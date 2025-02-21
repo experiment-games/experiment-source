@@ -16,7 +16,7 @@
 
 namespace GCSDK
 {
-	class CSQLAccess;
+class CSQLAccess;
 };
 
 //---------------------------------------------------------------------------------
@@ -24,11 +24,8 @@ namespace GCSDK
 //---------------------------------------------------------------------------------
 class CTFMapContribution : public GCSDK::CProtoBufSharedObject< CSOTFMapContribution, k_EEconTypeMapContribution >
 {
-
-public:
-	CTFMapContribution() {}
-
+   public:
+    CTFMapContribution() {}
 };
 
-#endif // TFMAPCONTRIBUTION_H
-
+#endif  // TFMAPCONTRIBUTION_H

@@ -20,9 +20,15 @@
 // constructor would work just fine, so the solution might just be to delete
 // your code that does what the compiler would have done anyway.
 #if defined( __GNUC__ ) && ( __GNUC__ < 5 ) && !defined( __clang__ )
-	template<typename T> struct is_copy_cheap : std::integral_constant<bool, ( std::has_trivial_copy_constructor<T>::value && sizeof(T) <= 8 ) > {};
+template < typename T >
+struct is_copy_cheap : std::integral_constant< bool, ( std::has_trivial_copy_constructor< T >::value && sizeof( T ) <= 8 ) >
+{
+};
 #else
-	template<typename T> struct is_copy_cheap : std::integral_constant<bool, ( std::is_trivially_copy_constructible<T>::value && sizeof(T) <= 8 ) > {};
+template < typename T >
+struct is_copy_cheap : std::integral_constant< bool, ( std::is_trivially_copy_constructible< T >::value && sizeof( T ) <= 8 ) >
+{
+};
 #endif
 
 //
@@ -39,196 +45,298 @@
 // Use as NoncastableType_t( NoncastableCheck, nSomeInt ).
 enum NoncastableCheckFlag_t
 {
-	NoncastableCheckValue,
+    NoncastableCheckValue,
 };
 
-#define MAKE_NONCASTABLE_INTEGER_TYPE_BODY( className, inttype, defaultValue )										\
-	public:																											\
-	enum { IS_BOXED_INTEGER_TYPE = 1 };																				\
-																													\
-	className( InternalIntType_t val = defaultValue ) : m_nBoxedTypeSafeInt( val )									\
-	{																												\
-	}																												\
-	template< typename _ArgT >																						\
-	className( NoncastableCheckFlag_t ignoredFlag, _ArgT val )														\
-	{																												\
-		m_nBoxedTypeSafeInt = AssertCast< InternalIntType_t >( val );												\
-	}																												\
-	InternalIntType_t GetRaw() const																				\
-	{																												\
-		return m_nBoxedTypeSafeInt;																					\
-	}																												\
-	void SetRaw( InternalIntType_t other )																			\
-	{																												\
-		m_nBoxedTypeSafeInt = other;																				\
-	}																												\
-	InternalIntType_t& GetRawRef()																					\
-	{																												\
-		return m_nBoxedTypeSafeInt;																					\
-	}																												\
-	const InternalIntType_t& GetRawRef() const																		\
-	{																												\
-		return m_nBoxedTypeSafeInt;																					\
-	}																												\
-	InternalIntType_t *GetRawPtrForWrite()																			\
-	{																												\
-		return &m_nBoxedTypeSafeInt;																				\
-	}																												\
-	bool operator==( const className &other ) const { return other.m_nBoxedTypeSafeInt == m_nBoxedTypeSafeInt; }	\
-	bool operator!=( const className &other ) const { return other.m_nBoxedTypeSafeInt != m_nBoxedTypeSafeInt; }	\
-	bool operator<( const className &other ) const { return m_nBoxedTypeSafeInt < other.m_nBoxedTypeSafeInt; }		\
-	bool operator<=( const className &other ) const { return m_nBoxedTypeSafeInt <= other.m_nBoxedTypeSafeInt; }	\
-	bool operator>( const className &other ) const { return m_nBoxedTypeSafeInt > other.m_nBoxedTypeSafeInt; }		\
-	bool operator>=( const className &other ) const { return m_nBoxedTypeSafeInt >= other.m_nBoxedTypeSafeInt; }	\
-	className &operator++() { ++m_nBoxedTypeSafeInt; return *this; }												\
-	className operator++(int) { className copy( *this ); ++(*this); return copy; }									\
-	className &operator--() { --m_nBoxedTypeSafeInt; return *this; }												\
-	className operator--(int) { className copy( *this ); --(*this); return copy; }									\
-private:																											\
-	inttype m_nBoxedTypeSafeInt;																					\
-	className &operator =( InternalIntType_t other );
+#define MAKE_NONCASTABLE_INTEGER_TYPE_BODY( className, inttype, defaultValue )     \
+   public:                                                                         \
+    enum                                                                           \
+    {                                                                              \
+        IS_BOXED_INTEGER_TYPE = 1                                                  \
+    };                                                                             \
+                                                                                   \
+    className( InternalIntType_t val = defaultValue ) : m_nBoxedTypeSafeInt( val ) \
+    {                                                                              \
+    }                                                                              \
+    template < typename _ArgT >                                                    \
+    className( NoncastableCheckFlag_t ignoredFlag, _ArgT val )                     \
+    {                                                                              \
+        m_nBoxedTypeSafeInt = AssertCast< InternalIntType_t >( val );              \
+    }                                                                              \
+    InternalIntType_t GetRaw() const                                               \
+    {                                                                              \
+        return m_nBoxedTypeSafeInt;                                                \
+    }                                                                              \
+    void SetRaw( InternalIntType_t other )                                         \
+    {                                                                              \
+        m_nBoxedTypeSafeInt = other;                                               \
+    }                                                                              \
+    InternalIntType_t &GetRawRef()                                                 \
+    {                                                                              \
+        return m_nBoxedTypeSafeInt;                                                \
+    }                                                                              \
+    const InternalIntType_t &GetRawRef() const                                     \
+    {                                                                              \
+        return m_nBoxedTypeSafeInt;                                                \
+    }                                                                              \
+    InternalIntType_t *GetRawPtrForWrite()                                         \
+    {                                                                              \
+        return &m_nBoxedTypeSafeInt;                                               \
+    }                                                                              \
+    bool operator==( const className &other ) const                                \
+    {                                                                              \
+        return other.m_nBoxedTypeSafeInt == m_nBoxedTypeSafeInt;                   \
+    }                                                                              \
+    bool operator!=( const className &other ) const                                \
+    {                                                                              \
+        return other.m_nBoxedTypeSafeInt != m_nBoxedTypeSafeInt;                   \
+    }                                                                              \
+    bool operator<( const className &other ) const                                 \
+    {                                                                              \
+        return m_nBoxedTypeSafeInt < other.m_nBoxedTypeSafeInt;                    \
+    }                                                                              \
+    bool operator<=( const className &other ) const                                \
+    {                                                                              \
+        return m_nBoxedTypeSafeInt <= other.m_nBoxedTypeSafeInt;                   \
+    }                                                                              \
+    bool operator>( const className &other ) const                                 \
+    {                                                                              \
+        return m_nBoxedTypeSafeInt > other.m_nBoxedTypeSafeInt;                    \
+    }                                                                              \
+    bool operator>=( const className &other ) const                                \
+    {                                                                              \
+        return m_nBoxedTypeSafeInt >= other.m_nBoxedTypeSafeInt;                   \
+    }                                                                              \
+    className &operator++()                                                        \
+    {                                                                              \
+        ++m_nBoxedTypeSafeInt;                                                     \
+        return *this;                                                              \
+    }                                                                              \
+    className operator++( int )                                                    \
+    {                                                                              \
+        className copy( *this );                                                   \
+        ++( *this );                                                               \
+        return copy;                                                               \
+    }                                                                              \
+    className &operator--()                                                        \
+    {                                                                              \
+        --m_nBoxedTypeSafeInt;                                                     \
+        return *this;                                                              \
+    }                                                                              \
+    className operator--( int )                                                    \
+    {                                                                              \
+        className copy( *this );                                                   \
+        --( *this );                                                               \
+        return copy;                                                               \
+    }                                                                              \
+                                                                                   \
+   private:                                                                        \
+    inttype m_nBoxedTypeSafeInt;                                                   \
+    className &operator=( InternalIntType_t other );
 
-#define MAKE_NONCASTABLE_INTEGER_TYPE( className, inttype, defaultValue )											\
-class className																										\
-{																													\
-public:																												\
-	using InternalIntType_t = inttype;																				\
-	MAKE_NONCASTABLE_INTEGER_TYPE_BODY( className, inttype, defaultValue );											\
-};																													\
-COMPILE_TIME_ASSERT( ::is_copy_cheap< className >::value );
+#define MAKE_NONCASTABLE_INTEGER_TYPE( className, inttype, defaultValue )       \
+    class className                                                             \
+    {                                                                           \
+       public:                                                                  \
+        using InternalIntType_t = inttype;                                      \
+        MAKE_NONCASTABLE_INTEGER_TYPE_BODY( className, inttype, defaultValue ); \
+    };                                                                          \
+    COMPILE_TIME_ASSERT( ::is_copy_cheap< className >::value );
 
-#define MAKE_SCHEMATIZED_NONCASTABLE_INTEGER_TYPE( className, inttype, defaultValue )								\
-schema class className																								\
-{																													\
-public:																												\
-	DECLARE_SCHEMA_DATA_CLASS( className );																			\
-	TYPEMETA( MIsBoxedIntegerType );																				\
-	typedef inttype InternalIntType_t;																				\
-	MAKE_NONCASTABLE_INTEGER_TYPE_BODY( className, inttype, defaultValue );											\
-};																													\
-COMPILE_TIME_ASSERT( ::is_copy_cheap< className >::value );
+#define MAKE_SCHEMATIZED_NONCASTABLE_INTEGER_TYPE( className, inttype, defaultValue ) \
+    schema class className                                                            \
+    {                                                                                 \
+       public:                                                                        \
+        DECLARE_SCHEMA_DATA_CLASS( className );                                       \
+        TYPEMETA( MIsBoxedIntegerType );                                              \
+        typedef inttype InternalIntType_t;                                            \
+        MAKE_NONCASTABLE_INTEGER_TYPE_BODY( className, inttype, defaultValue );       \
+    };                                                                                \
+    COMPILE_TIME_ASSERT( ::is_copy_cheap< className >::value );
 
-#define MAKE_NONAUTOCONSTRUCT_INTEGER_TYPE_BODY( className, inttype, defaultValue )									\
-	enum { IS_BOXED_INTEGER_TYPE = 1 };																				\
-																													\
-	className() : m_nBoxedTypeSafeInt( defaultValue ) {}															\
-    explicit constexpr className( InternalIntType_t val ) : m_nBoxedTypeSafeInt( val ) {}							\
-	template< typename _ArgT >																						\
-	className( NoncastableCheckFlag_t ignoredFlag, _ArgT val )														\
-	{																												\
-		m_nBoxedTypeSafeInt = AssertCast< InternalIntType_t >( val );												\
-	}																												\
-	constexpr InternalIntType_t GetRaw() const																		\
-	{																												\
-		return m_nBoxedTypeSafeInt;																					\
-	}																												\
-	void SetRaw( InternalIntType_t other )																			\
-	{																												\
-		m_nBoxedTypeSafeInt = other;																				\
-	}																												\
-	InternalIntType_t& GetRawRef()																					\
-	{																												\
-		return m_nBoxedTypeSafeInt;																					\
-	}																												\
-	const InternalIntType_t& GetRawRef() const																		\
-	{																												\
-		return m_nBoxedTypeSafeInt;																					\
-	}																												\
-	InternalIntType_t *GetRawPtrForWrite()																			\
-	{																												\
-		return &m_nBoxedTypeSafeInt;																				\
-	}																												\
-	bool operator==( const className &other ) const { return other.m_nBoxedTypeSafeInt == m_nBoxedTypeSafeInt; }	\
-	bool operator!=( const className &other ) const { return other.m_nBoxedTypeSafeInt != m_nBoxedTypeSafeInt; }	\
-	bool operator<( const className &other ) const { return m_nBoxedTypeSafeInt < other.m_nBoxedTypeSafeInt; }		\
-	bool operator<=( const className &other ) const { return m_nBoxedTypeSafeInt <= other.m_nBoxedTypeSafeInt; }	\
-	bool operator>( const className &other ) const { return m_nBoxedTypeSafeInt > other.m_nBoxedTypeSafeInt; }		\
-	bool operator>=( const className &other ) const { return m_nBoxedTypeSafeInt >= other.m_nBoxedTypeSafeInt; }	\
-	className &operator++() { ++m_nBoxedTypeSafeInt; return *this; }												\
-	className operator++(int) { className copy( *this ); ++(*this); return copy; }									\
-	className &operator--() { --m_nBoxedTypeSafeInt; return *this; }												\
-	className operator--(int) { className copy( *this ); --(*this); return copy; }									\
-private:																											\
-	inttype m_nBoxedTypeSafeInt;																					\
-	className &operator =( InternalIntType_t other );
+#define MAKE_NONAUTOCONSTRUCT_INTEGER_TYPE_BODY( className, inttype, defaultValue )       \
+    enum                                                                                  \
+    {                                                                                     \
+        IS_BOXED_INTEGER_TYPE = 1                                                         \
+    };                                                                                    \
+                                                                                          \
+    className() : m_nBoxedTypeSafeInt( defaultValue ) {}                                  \
+    explicit constexpr className( InternalIntType_t val ) : m_nBoxedTypeSafeInt( val ) {} \
+    template < typename _ArgT >                                                           \
+    className( NoncastableCheckFlag_t ignoredFlag, _ArgT val )                            \
+    {                                                                                     \
+        m_nBoxedTypeSafeInt = AssertCast< InternalIntType_t >( val );                     \
+    }                                                                                     \
+    constexpr InternalIntType_t GetRaw() const                                            \
+    {                                                                                     \
+        return m_nBoxedTypeSafeInt;                                                       \
+    }                                                                                     \
+    void SetRaw( InternalIntType_t other )                                                \
+    {                                                                                     \
+        m_nBoxedTypeSafeInt = other;                                                      \
+    }                                                                                     \
+    InternalIntType_t &GetRawRef()                                                        \
+    {                                                                                     \
+        return m_nBoxedTypeSafeInt;                                                       \
+    }                                                                                     \
+    const InternalIntType_t &GetRawRef() const                                            \
+    {                                                                                     \
+        return m_nBoxedTypeSafeInt;                                                       \
+    }                                                                                     \
+    InternalIntType_t *GetRawPtrForWrite()                                                \
+    {                                                                                     \
+        return &m_nBoxedTypeSafeInt;                                                      \
+    }                                                                                     \
+    bool operator==( const className &other ) const                                       \
+    {                                                                                     \
+        return other.m_nBoxedTypeSafeInt == m_nBoxedTypeSafeInt;                          \
+    }                                                                                     \
+    bool operator!=( const className &other ) const                                       \
+    {                                                                                     \
+        return other.m_nBoxedTypeSafeInt != m_nBoxedTypeSafeInt;                          \
+    }                                                                                     \
+    bool operator<( const className &other ) const                                        \
+    {                                                                                     \
+        return m_nBoxedTypeSafeInt < other.m_nBoxedTypeSafeInt;                           \
+    }                                                                                     \
+    bool operator<=( const className &other ) const                                       \
+    {                                                                                     \
+        return m_nBoxedTypeSafeInt <= other.m_nBoxedTypeSafeInt;                          \
+    }                                                                                     \
+    bool operator>( const className &other ) const                                        \
+    {                                                                                     \
+        return m_nBoxedTypeSafeInt > other.m_nBoxedTypeSafeInt;                           \
+    }                                                                                     \
+    bool operator>=( const className &other ) const                                       \
+    {                                                                                     \
+        return m_nBoxedTypeSafeInt >= other.m_nBoxedTypeSafeInt;                          \
+    }                                                                                     \
+    className &operator++()                                                               \
+    {                                                                                     \
+        ++m_nBoxedTypeSafeInt;                                                            \
+        return *this;                                                                     \
+    }                                                                                     \
+    className operator++( int )                                                           \
+    {                                                                                     \
+        className copy( *this );                                                          \
+        ++( *this );                                                                      \
+        return copy;                                                                      \
+    }                                                                                     \
+    className &operator--()                                                               \
+    {                                                                                     \
+        --m_nBoxedTypeSafeInt;                                                            \
+        return *this;                                                                     \
+    }                                                                                     \
+    className operator--( int )                                                           \
+    {                                                                                     \
+        className copy( *this );                                                          \
+        --( *this );                                                                      \
+        return copy;                                                                      \
+    }                                                                                     \
+                                                                                          \
+   private:                                                                               \
+    inttype m_nBoxedTypeSafeInt;                                                          \
+    className &operator=( InternalIntType_t other );
 
-#define MAKE_NONAUTOCONSTRUCT_INTEGER_TYPE( className, inttype, defaultValue )										\
-class className																										\
-{																													\
-public:																												\
-	using InternalIntType_t = inttype;																				\
-	MAKE_NONAUTOCONSTRUCT_INTEGER_TYPE_BODY( className, inttype, defaultValue );									\
-};																													\
-COMPILE_TIME_ASSERT( ::is_copy_cheap< className >::value );
+#define MAKE_NONAUTOCONSTRUCT_INTEGER_TYPE( className, inttype, defaultValue )       \
+    class className                                                                  \
+    {                                                                                \
+       public:                                                                       \
+        using InternalIntType_t = inttype;                                           \
+        MAKE_NONAUTOCONSTRUCT_INTEGER_TYPE_BODY( className, inttype, defaultValue ); \
+    };                                                                               \
+    COMPILE_TIME_ASSERT( ::is_copy_cheap< className >::value );
 
-#define MAKE_SCHEMATIZED_NONAUTOCONSTRUCT_INTEGER_TYPE( className, inttype, defaultValue )							\
-schema class className																								\
-{																													\
-public:																												\
-	DECLARE_SCHEMA_DATA_CLASS( className );																			\
-	TYPEMETA( MIsBoxedIntegerType );																				\
-	typedef inttype InternalIntType_t;																				\
-	MAKE_NONAUTOCONSTRUCT_INTEGER_TYPE_BODY( className, inttype, defaultValue );									\
-};																													\
-COMPILE_TIME_ASSERT( ::is_copy_cheap< className >::value );
+#define MAKE_SCHEMATIZED_NONAUTOCONSTRUCT_INTEGER_TYPE( className, inttype, defaultValue ) \
+    schema class className                                                                 \
+    {                                                                                      \
+       public:                                                                             \
+        DECLARE_SCHEMA_DATA_CLASS( className );                                            \
+        TYPEMETA( MIsBoxedIntegerType );                                                   \
+        typedef inttype InternalIntType_t;                                                 \
+        MAKE_NONAUTOCONSTRUCT_INTEGER_TYPE_BODY( className, inttype, defaultValue );       \
+    };                                                                                     \
+    COMPILE_TIME_ASSERT( ::is_copy_cheap< className >::value );
 
-#define MAKE_NONCASTABLE_INTEGER_TYPE_NO_MATH_BODY( className, inttype, defaultValue )								\
-	enum { IS_BOXED_INTEGER_TYPE = 1 };																				\
-																													\
-	className( InternalIntType_t val = defaultValue ) : m_nBoxedTypeSafeInt( val )									\
-	{																												\
-	}																												\
-	template< typename _ArgT >																						\
-	className( NoncastableCheckFlag_t ignoredFlag, _ArgT val )														\
-	{																												\
-		m_nBoxedTypeSafeInt = AssertCast< InternalIntType_t >( val );												\
-	}																												\
-	InternalIntType_t GetRaw() const																				\
-	{																												\
-		return m_nBoxedTypeSafeInt;																					\
-	}																												\
-	void SetRaw( InternalIntType_t other )																			\
-	{																												\
-		m_nBoxedTypeSafeInt = other;																				\
-	}																												\
-	InternalIntType_t& GetRawRef()																					\
-	{																												\
-		return m_nBoxedTypeSafeInt;																					\
-	}																												\
-	const InternalIntType_t& GetRawRef() const																		\
-	{																												\
-		return m_nBoxedTypeSafeInt;																					\
-	}																												\
-	InternalIntType_t *GetRawPtrForWrite()																			\
-	{																												\
-		return &m_nBoxedTypeSafeInt;																				\
-	}																												\
-	bool operator==( const className &other ) const { return other.m_nBoxedTypeSafeInt == m_nBoxedTypeSafeInt; }	\
-	bool operator!=( const className &other ) const { return other.m_nBoxedTypeSafeInt != m_nBoxedTypeSafeInt; }	\
-	bool operator<( const className &other ) const { return m_nBoxedTypeSafeInt < other.m_nBoxedTypeSafeInt; }		\
-	bool operator<=( const className &other ) const { return m_nBoxedTypeSafeInt <= other.m_nBoxedTypeSafeInt; }	\
-	bool operator>( const className &other ) const { return m_nBoxedTypeSafeInt > other.m_nBoxedTypeSafeInt; }		\
-	bool operator>=( const className &other ) const { return m_nBoxedTypeSafeInt >= other.m_nBoxedTypeSafeInt; }	\
-private:																											\
-	inttype m_nBoxedTypeSafeInt;																					\
-	className &operator =( InternalIntType_t other );
+#define MAKE_NONCASTABLE_INTEGER_TYPE_NO_MATH_BODY( className, inttype, defaultValue ) \
+    enum                                                                               \
+    {                                                                                  \
+        IS_BOXED_INTEGER_TYPE = 1                                                      \
+    };                                                                                 \
+                                                                                       \
+    className( InternalIntType_t val = defaultValue ) : m_nBoxedTypeSafeInt( val )     \
+    {                                                                                  \
+    }                                                                                  \
+    template < typename _ArgT >                                                        \
+    className( NoncastableCheckFlag_t ignoredFlag, _ArgT val )                         \
+    {                                                                                  \
+        m_nBoxedTypeSafeInt = AssertCast< InternalIntType_t >( val );                  \
+    }                                                                                  \
+    InternalIntType_t GetRaw() const                                                   \
+    {                                                                                  \
+        return m_nBoxedTypeSafeInt;                                                    \
+    }                                                                                  \
+    void SetRaw( InternalIntType_t other )                                             \
+    {                                                                                  \
+        m_nBoxedTypeSafeInt = other;                                                   \
+    }                                                                                  \
+    InternalIntType_t &GetRawRef()                                                     \
+    {                                                                                  \
+        return m_nBoxedTypeSafeInt;                                                    \
+    }                                                                                  \
+    const InternalIntType_t &GetRawRef() const                                         \
+    {                                                                                  \
+        return m_nBoxedTypeSafeInt;                                                    \
+    }                                                                                  \
+    InternalIntType_t *GetRawPtrForWrite()                                             \
+    {                                                                                  \
+        return &m_nBoxedTypeSafeInt;                                                   \
+    }                                                                                  \
+    bool operator==( const className &other ) const                                    \
+    {                                                                                  \
+        return other.m_nBoxedTypeSafeInt == m_nBoxedTypeSafeInt;                       \
+    }                                                                                  \
+    bool operator!=( const className &other ) const                                    \
+    {                                                                                  \
+        return other.m_nBoxedTypeSafeInt != m_nBoxedTypeSafeInt;                       \
+    }                                                                                  \
+    bool operator<( const className &other ) const                                     \
+    {                                                                                  \
+        return m_nBoxedTypeSafeInt < other.m_nBoxedTypeSafeInt;                        \
+    }                                                                                  \
+    bool operator<=( const className &other ) const                                    \
+    {                                                                                  \
+        return m_nBoxedTypeSafeInt <= other.m_nBoxedTypeSafeInt;                       \
+    }                                                                                  \
+    bool operator>( const className &other ) const                                     \
+    {                                                                                  \
+        return m_nBoxedTypeSafeInt > other.m_nBoxedTypeSafeInt;                        \
+    }                                                                                  \
+    bool operator>=( const className &other ) const                                    \
+    {                                                                                  \
+        return m_nBoxedTypeSafeInt >= other.m_nBoxedTypeSafeInt;                       \
+    }                                                                                  \
+                                                                                       \
+   private:                                                                            \
+    inttype m_nBoxedTypeSafeInt;                                                       \
+    className &operator=( InternalIntType_t other );
 
-#define MAKE_NONCASTABLE_INTEGER_TYPE_NO_MATH( className, inttype, defaultValue )									\
-class className																										\
-{																													\
-public:																												\
-	using InternalIntType_t = inttype;																				\
-	MAKE_NONCASTABLE_INTEGER_TYPE_NO_MATH_BODY( className, inttype, defaultValue )									\
-};																													\
-COMPILE_TIME_ASSERT( ::is_copy_cheap< className >::value );
+#define MAKE_NONCASTABLE_INTEGER_TYPE_NO_MATH( className, inttype, defaultValue )      \
+    class className                                                                    \
+    {                                                                                  \
+       public:                                                                         \
+        using InternalIntType_t = inttype;                                             \
+        MAKE_NONCASTABLE_INTEGER_TYPE_NO_MATH_BODY( className, inttype, defaultValue ) \
+    };                                                                                 \
+    COMPILE_TIME_ASSERT( ::is_copy_cheap< className >::value );
 
-#define MAKE_SCHEMATIZED_NONCASTABLE_INTEGER_TYPE_NO_MATH( className, inttype, defaultValue )						\
-schema class className																								\
-{																													\
-public:																												\
-	DECLARE_SCHEMA_DATA_CLASS( className );																			\
-	TYPEMETA( MIsBoxedIntegerType );																				\
-	typedef inttype InternalIntType_t;																				\
-	MAKE_NONCASTABLE_INTEGER_TYPE_NO_MATH_BODY( className, inttype, defaultValue )									\
-};																													\
-COMPILE_TIME_ASSERT( ::is_copy_cheap< className >::value );
+#define MAKE_SCHEMATIZED_NONCASTABLE_INTEGER_TYPE_NO_MATH( className, inttype, defaultValue ) \
+    schema class className                                                                    \
+    {                                                                                         \
+       public:                                                                                \
+        DECLARE_SCHEMA_DATA_CLASS( className );                                               \
+        TYPEMETA( MIsBoxedIntegerType );                                                      \
+        typedef inttype InternalIntType_t;                                                    \
+        MAKE_NONCASTABLE_INTEGER_TYPE_NO_MATH_BODY( className, inttype, defaultValue )        \
+    };                                                                                        \
+    COMPILE_TIME_ASSERT( ::is_copy_cheap< className >::value );

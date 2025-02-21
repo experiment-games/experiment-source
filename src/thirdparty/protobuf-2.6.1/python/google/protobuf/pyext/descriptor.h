@@ -38,54 +38,60 @@
 
 #include <google/protobuf/descriptor.h>
 
-#if PY_VERSION_HEX < 0x02050000 && !defined(PY_SSIZE_T_MIN)
+#if PY_VERSION_HEX < 0x02050000 && !defined( PY_SSIZE_T_MIN )
 typedef int Py_ssize_t;
 #define PY_SSIZE_T_MAX INT_MAX
 #define PY_SSIZE_T_MIN INT_MIN
 #endif
 
-namespace google {
-namespace protobuf {
-namespace python {
+namespace google
+{
+namespace protobuf
+{
+namespace python
+{
 
-typedef struct CFieldDescriptor {
-  PyObject_HEAD
+typedef struct CFieldDescriptor
+{
+    PyObject_HEAD
 
-  // The proto2 descriptor that this object represents.
-  const google::protobuf::FieldDescriptor* descriptor;
+        // The proto2 descriptor that this object represents.
+        const google::protobuf::FieldDescriptor* descriptor;
 
-  // Reference to the original field object in the Python DESCRIPTOR.
-  PyObject* descriptor_field;
+    // Reference to the original field object in the Python DESCRIPTOR.
+    PyObject* descriptor_field;
 } CFieldDescriptor;
 
-typedef struct {
-  PyObject_HEAD
+typedef struct
+{
+    PyObject_HEAD
 
-  const google::protobuf::DescriptorPool* pool;
+        const google::protobuf::DescriptorPool* pool;
 } CDescriptorPool;
 
 extern PyTypeObject CFieldDescriptor_Type;
 
 extern PyTypeObject CDescriptorPool_Type;
 
-namespace cdescriptor_pool {
+namespace cdescriptor_pool
+{
 
 // Looks up a field by name. Returns a CDescriptor corresponding to
 // the field on success, or NULL on failure.
 //
 // Returns a new reference.
-PyObject* FindFieldByName(CDescriptorPool* self, PyObject* name);
+PyObject* FindFieldByName( CDescriptorPool* self, PyObject* name );
 
 // Looks up an extension by name. Returns a CDescriptor corresponding
 // to the field on success, or NULL on failure.
 //
 // Returns a new reference.
-PyObject* FindExtensionByName(CDescriptorPool* self, PyObject* arg);
+PyObject* FindExtensionByName( CDescriptorPool* self, PyObject* arg );
 
 }  // namespace cdescriptor_pool
 
-PyObject* Python_NewCDescriptorPool(PyObject* ignored, PyObject* args);
-PyObject* Python_BuildFile(PyObject* ignored, PyObject* args);
+PyObject* Python_NewCDescriptorPool( PyObject* ignored, PyObject* args );
+PyObject* Python_BuildFile( PyObject* ignored, PyObject* args );
 bool InitDescriptor();
 google::protobuf::DescriptorPool* GetDescriptorPool();
 

@@ -8,37 +8,38 @@
 
 class CTFBotHintSentrygun;
 
-
 class CTFBotEngineerBuildSentryGun : public Action< CTFBot >
 {
-public:
-	CTFBotEngineerBuildSentryGun( void );
-	CTFBotEngineerBuildSentryGun( CTFBotHintSentrygun *sentryBuildHint );
+   public:
+    CTFBotEngineerBuildSentryGun( void );
+    CTFBotEngineerBuildSentryGun( CTFBotHintSentrygun *sentryBuildHint );
 
-	virtual ActionResult< CTFBot >	OnStart( CTFBot *me, Action< CTFBot > *priorAction );
-	virtual ActionResult< CTFBot >	Update( CTFBot *me, float interval );
+    virtual ActionResult< CTFBot > OnStart( CTFBot *me, Action< CTFBot > *priorAction );
+    virtual ActionResult< CTFBot > Update( CTFBot *me, float interval );
 
-	virtual ActionResult< CTFBot >	OnResume( CTFBot *me, Action< CTFBot > *interruptingAction );
+    virtual ActionResult< CTFBot > OnResume( CTFBot *me, Action< CTFBot > *interruptingAction );
 
-	virtual const char *GetName( void ) const	{ return "EngineerBuildSentryGun"; };
+    virtual const char *GetName( void ) const
+    {
+        return "EngineerBuildSentryGun";
+    };
 
-private:
-	CountdownTimer m_searchTimer;
-	CountdownTimer m_giveUpTimer;
-	CountdownTimer m_getAmmoTimer;
-	CountdownTimer m_repathTimer;
-	CountdownTimer m_buildTeleporterExitTimer;
+   private:
+    CountdownTimer m_searchTimer;
+    CountdownTimer m_giveUpTimer;
+    CountdownTimer m_getAmmoTimer;
+    CountdownTimer m_repathTimer;
+    CountdownTimer m_buildTeleporterExitTimer;
 
-	int m_sentryTriesLeft;
-	PathFollower m_path;
+    int m_sentryTriesLeft;
+    PathFollower m_path;
 
-	CTFBotHintSentrygun *m_sentryBuildHint;
-	Vector m_sentryBuildLocation;
+    CTFBotHintSentrygun *m_sentryBuildHint;
+    Vector m_sentryBuildLocation;
 
-	int m_wanderWay;
-	bool m_needToAimSentry;
-	Vector m_sentryBuildAimTarget;
+    int m_wanderWay;
+    bool m_needToAimSentry;
+    Vector m_sentryBuildAimTarget;
 };
 
-
-#endif // TF_BOT_ENGINEER_BUILD_SENTRYGUN_H
+#endif  // TF_BOT_ENGINEER_BUILD_SENTRYGUN_H

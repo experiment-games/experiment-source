@@ -11,7 +11,6 @@
 #pragma once
 #endif
 
-
 //-----------------------------------------------------------------------------
 // Helper methods to create various standard index buffer types
 //-----------------------------------------------------------------------------
@@ -21,6 +20,4 @@ void GeneratePolygonIndexBuffer( unsigned short* pIndexMemory, int nIndexCount, 
 void GenerateLineStripIndexBuffer( unsigned short* pIndexMemory, int nIndexCount, int nFirstVertex );
 void GenerateLineLoopIndexBuffer( unsigned short* pIndexMemory, int nIndexCount, int nFirstVertex );
 
-
-#endif // MESHUTILS_H
-
+#endif  // MESHUTILS_H

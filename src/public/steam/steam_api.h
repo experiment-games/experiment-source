@@ -47,14 +47,12 @@
 #include "isteamnetworkingsockets.h"
 #include "isteamnetworkingutils.h"
 
-
 //----------------------------------------------------------------------------------------------------------------------------------------------------------//
 //	Steam API setup & shutdown
 //
 //	These functions manage loading, initializing and shutdown of the steamclient.dll
 //
 //----------------------------------------------------------------------------------------------------------------------------------------------------------//
-
 
 // SteamAPI_Init must be called before using any other API functions. If it fails, an
 // error message will be output to the debugger (or stderr) with further information.
@@ -81,9 +79,8 @@ S_API bool S_CALLTYPE SteamAPI_RestartAppIfNecessary( uint32 unOwnAppID );
 // program never needs to explicitly call this function.
 S_API void S_CALLTYPE SteamAPI_ReleaseCurrentThreadMemory();
 
-
 // crash dump recording functions
-S_API void S_CALLTYPE SteamAPI_WriteMiniDump( uint32 uStructuredExceptionCode, void* pvExceptionInfo, uint32 uBuildID );
+S_API void S_CALLTYPE SteamAPI_WriteMiniDump( uint32 uStructuredExceptionCode, void *pvExceptionInfo, uint32 uBuildID );
 S_API void S_CALLTYPE SteamAPI_SetMiniDumpComment( const char *pchMsg );
 
 //----------------------------------------------------------------------------------------------------------------------------------------------------------//
@@ -108,7 +105,7 @@ S_API void SteamAPI_SetTryCatchCallbacks( bool bTryCatchCallbacks );
 S_API bool S_CALLTYPE SteamAPI_InitSafe();
 #endif
 
-#if defined(USE_BREAKPAD_HANDLER) || defined(STEAM_API_EXPORTS)
+#if defined( USE_BREAKPAD_HANDLER ) || defined( STEAM_API_EXPORTS )
 // this should be called before the game initialized the steam APIs
 // pchDate should be of the format "Mmm dd yyyy" (such as from the __ DATE __ macro )
 // pchTime should be of the format "hh:mm:ss" (such as from the __ TIME __ macro )
@@ -133,31 +130,31 @@ S_API void S_CALLTYPE SteamAPI_SetBreakpadAppID( uint32 unAppID );
 // Here is the basic template for replacing SteamAPI_RunCallbacks() with manual dispatch
 /*
 
-	HSteamPipe hSteamPipe = SteamAPI_GetHSteamPipe(); // See also SteamGameServer_GetHSteamPipe()
-	SteamAPI_ManualDispatch_RunFrame( hSteamPipe )
-	CallbackMsg_t callback;
-	while ( SteamAPI_ManualDispatch_GetNextCallback( hSteamPipe, &callback ) )
-	{
-		// Check for dispatching API call results
-		if ( callback.m_iCallback == SteamAPICallCompleted_t::k_iCallback )
-		{
-			SteamAPICallCompleted_t *pCallCompleted = (SteamAPICallCompleted_t *)callback.
-			void *pTmpCallResult = malloc( pCallback->m_cubParam );
-			bool bFailed;
-			if ( SteamAPI_ManualDispatch_GetAPICallResult( hSteamPipe, pCallCompleted->m_hAsyncCall, pTmpCallResult, pCallback->m_cubParam, pCallback->m_iCallback, &bFailed ) )
-			{
-				// Dispatch the call result to the registered handler(s) for the
-				// call identified by pCallCompleted->m_hAsyncCall
-			}
-			free( pTmpCallResult );
-		}
-		else
-		{
-			// Look at callback.m_iCallback to see what kind of callback it is,
-			// and dispatch to appropriate handler(s)
-		}
-		SteamAPI_ManualDispatch_FreeLastCallback( hSteamPipe );
-	}
+  HSteamPipe hSteamPipe = SteamAPI_GetHSteamPipe(); // See also SteamGameServer_GetHSteamPipe()
+  SteamAPI_ManualDispatch_RunFrame( hSteamPipe )
+  CallbackMsg_t callback;
+  while ( SteamAPI_ManualDispatch_GetNextCallback( hSteamPipe, &callback ) )
+  {
+    // Check for dispatching API call results
+    if ( callback.m_iCallback == SteamAPICallCompleted_t::k_iCallback )
+    {
+      SteamAPICallCompleted_t *pCallCompleted = (SteamAPICallCompleted_t *)callback.
+      void *pTmpCallResult = malloc( pCallback->m_cubParam );
+      bool bFailed;
+      if ( SteamAPI_ManualDispatch_GetAPICallResult( hSteamPipe, pCallCompleted->m_hAsyncCall, pTmpCallResult, pCallback->m_cubParam, pCallback->m_iCallback, &bFailed ) )
+      {
+        // Dispatch the call result to the registered handler(s) for the
+        // call identified by pCallCompleted->m_hAsyncCall
+      }
+      free( pTmpCallResult );
+    }
+    else
+    {
+      // Look at callback.m_iCallback to see what kind of callback it is,
+      // and dispatch to appropriate handler(s)
+    }
+    SteamAPI_ManualDispatch_FreeLastCallback( hSteamPipe );
+  }
 
 */
 //----------------------------------------------------------------------------------------------------------------------------------------------------------//
@@ -193,105 +190,105 @@ S_API bool S_CALLTYPE SteamAPI_ManualDispatch_GetAPICallResult( HSteamPipe hStea
 
 inline bool CSteamAPIContext::Init()
 {
-	m_pSteamClient = ::SteamClient();
-	if ( !m_pSteamClient )
-		return false;
+    m_pSteamClient = ::SteamClient();
+    if ( !m_pSteamClient )
+        return false;
 
-	m_pSteamUser = ::SteamUser();
-	if ( !m_pSteamUser )
-		return false;
+    m_pSteamUser = ::SteamUser();
+    if ( !m_pSteamUser )
+        return false;
 
-	m_pSteamFriends = ::SteamFriends();
-	if ( !m_pSteamFriends )
-		return false;
+    m_pSteamFriends = ::SteamFriends();
+    if ( !m_pSteamFriends )
+        return false;
 
-	m_pSteamUtils = ::SteamUtils();
-	if ( !m_pSteamUtils )
-		return false;
+    m_pSteamUtils = ::SteamUtils();
+    if ( !m_pSteamUtils )
+        return false;
 
-	m_pSteamMatchmaking = ::SteamMatchmaking();
-	if ( !m_pSteamMatchmaking )
-		return false;
+    m_pSteamMatchmaking = ::SteamMatchmaking();
+    if ( !m_pSteamMatchmaking )
+        return false;
 
-	m_pSteamGameSearch = ::SteamGameSearch();
-	if ( !m_pSteamGameSearch )
-		return false;
+    m_pSteamGameSearch = ::SteamGameSearch();
+    if ( !m_pSteamGameSearch )
+        return false;
 
-#if !defined( IOSALL) // Not yet supported on iOS.
-	m_pSteamMatchmakingServers = ::SteamMatchmakingServers();
-	if ( !m_pSteamMatchmakingServers )
-		return false;
+#if !defined( IOSALL )  // Not yet supported on iOS.
+    m_pSteamMatchmakingServers = ::SteamMatchmakingServers();
+    if ( !m_pSteamMatchmakingServers )
+        return false;
 #endif
 
-	m_pSteamUserStats = ::SteamUserStats();
-	if ( !m_pSteamUserStats )
-		return false;
+    m_pSteamUserStats = ::SteamUserStats();
+    if ( !m_pSteamUserStats )
+        return false;
 
-	m_pSteamApps = ::SteamApps();
-	if ( !m_pSteamApps )
-		return false;
+    m_pSteamApps = ::SteamApps();
+    if ( !m_pSteamApps )
+        return false;
 
-	m_pSteamNetworking = ::SteamNetworking();
-	if ( !m_pSteamNetworking )
-		return false;
+    m_pSteamNetworking = ::SteamNetworking();
+    if ( !m_pSteamNetworking )
+        return false;
 
-	m_pSteamRemoteStorage = ::SteamRemoteStorage();
-	if ( !m_pSteamRemoteStorage )
-		return false;
+    m_pSteamRemoteStorage = ::SteamRemoteStorage();
+    if ( !m_pSteamRemoteStorage )
+        return false;
 
-	m_pSteamScreenshots = ::SteamScreenshots();
-	if ( !m_pSteamScreenshots )
-		return false;
+    m_pSteamScreenshots = ::SteamScreenshots();
+    if ( !m_pSteamScreenshots )
+        return false;
 
-	m_pSteamHTTP = ::SteamHTTP();
-	if ( !m_pSteamHTTP )
-		return false;
+    m_pSteamHTTP = ::SteamHTTP();
+    if ( !m_pSteamHTTP )
+        return false;
 
-	m_pController = ::SteamController();
-	if ( !m_pController )
-		return false;
+    m_pController = ::SteamController();
+    if ( !m_pController )
+        return false;
 
-	m_pSteamUGC = ::SteamUGC();
-	if ( !m_pSteamUGC )
-		return false;
+    m_pSteamUGC = ::SteamUGC();
+    if ( !m_pSteamUGC )
+        return false;
 
-	m_pSteamAppList = ::SteamAppList();
-	if ( !m_pSteamAppList )
-		return false;
+    m_pSteamAppList = ::SteamAppList();
+    if ( !m_pSteamAppList )
+        return false;
 
-	m_pSteamMusic = ::SteamMusic();
-	if ( !m_pSteamMusic )
-		return false;
+    m_pSteamMusic = ::SteamMusic();
+    if ( !m_pSteamMusic )
+        return false;
 
-	m_pSteamMusicRemote = ::SteamMusicRemote();
-	if ( !m_pSteamMusicRemote )
-		return false;
+    m_pSteamMusicRemote = ::SteamMusicRemote();
+    if ( !m_pSteamMusicRemote )
+        return false;
 
-#if !defined( ANDROID ) && !defined( IOSALL) // Not yet supported on Android or ios.
-	m_pSteamHTMLSurface = ::SteamHTMLSurface();
-	if ( !m_pSteamHTMLSurface )
-	return false;
+#if !defined( ANDROID ) && !defined( IOSALL )  // Not yet supported on Android or ios.
+    m_pSteamHTMLSurface = ::SteamHTMLSurface();
+    if ( !m_pSteamHTMLSurface )
+        return false;
 #endif
 
-	m_pSteamInventory = ::SteamInventory();
-	if ( !m_pSteamInventory )
-		return false;
+    m_pSteamInventory = ::SteamInventory();
+    if ( !m_pSteamInventory )
+        return false;
 
-	m_pSteamVideo = ::SteamVideo();
-	if ( !m_pSteamVideo )
-		return false;
+    m_pSteamVideo = ::SteamVideo();
+    if ( !m_pSteamVideo )
+        return false;
 
-	m_pSteamParentalSettings = ::SteamParentalSettings();
-	if ( !m_pSteamParentalSettings )
-		return false;
+    m_pSteamParentalSettings = ::SteamParentalSettings();
+    if ( !m_pSteamParentalSettings )
+        return false;
 
-	m_pSteamInput = ::SteamInput();
-	if ( !m_pSteamInput )
-		return false;
+    m_pSteamInput = ::SteamInput();
+    if ( !m_pSteamInput )
+        return false;
 
-	return true;
+    return true;
 }
 
 #endif
 
-#endif // STEAM_API_H
+#endif  // STEAM_API_H

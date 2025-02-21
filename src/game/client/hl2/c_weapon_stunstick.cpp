@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 #include "cbase.h"
@@ -21,167 +21,167 @@ CLIENTEFFECT_REGISTER_END()
 
 class C_WeaponStunStick : public C_BaseHLBludgeonWeapon
 {
-	DECLARE_CLASS( C_WeaponStunStick, C_BaseHLBludgeonWeapon );
-public:
-	DECLARE_CLIENTCLASS();
-	DECLARE_PREDICTABLE();
+    DECLARE_CLASS( C_WeaponStunStick, C_BaseHLBludgeonWeapon );
 
-	int DrawModel( int flags )
-	{
-		//FIXME: This sucks, but I can't easily create temp ents...
+   public:
+    DECLARE_CLIENTCLASS();
+    DECLARE_PREDICTABLE();
 
-		if ( m_bActive )
-		{
-			Vector	vecOrigin;
-			QAngle	vecAngles;
-			float	color[3];
+    int DrawModel( int flags )
+    {
+        // FIXME: This sucks, but I can't easily create temp ents...
 
-			color[0] = color[1] = color[2] = random->RandomFloat( 0.1f, 0.2f );
+        if ( m_bActive )
+        {
+            Vector vecOrigin;
+            QAngle vecAngles;
+            float color[3];
 
-			GetAttachment( 1, vecOrigin, vecAngles );
+            color[0] = color[1] = color[2] = random->RandomFloat( 0.1f, 0.2f );
 
-			Vector	vForward;
-			AngleVectors( vecAngles, &vForward );
+            GetAttachment( 1, vecOrigin, vecAngles );
 
-			Vector vEnd = vecOrigin - vForward * 1.0f;
+            Vector vForward;
+            AngleVectors( vecAngles, &vForward );
 
-			IMaterial *pMaterial = materials->FindMaterial( "effects/stunstick", NULL, false );
+            Vector vEnd = vecOrigin - vForward * 1.0f;
 
-			CMatRenderContextPtr pRenderContext( materials );
-			pRenderContext->Bind( pMaterial );
-			DrawHalo( pMaterial, vEnd, random->RandomFloat( 4.0f, 6.0f ), color );
+            IMaterial *pMaterial = materials->FindMaterial( "effects/stunstick", NULL, false );
 
-			color[0] = color[1] = color[2] = random->RandomFloat( 0.9f, 1.0f );
+            CMatRenderContextPtr pRenderContext( materials );
+            pRenderContext->Bind( pMaterial );
+            DrawHalo( pMaterial, vEnd, random->RandomFloat( 4.0f, 6.0f ), color );
 
-			DrawHalo( pMaterial, vEnd, random->RandomFloat( 2.0f, 3.0f ), color );
-		}
+            color[0] = color[1] = color[2] = random->RandomFloat( 0.9f, 1.0f );
 
-		return BaseClass::DrawModel( flags );
-	}
+            DrawHalo( pMaterial, vEnd, random->RandomFloat( 2.0f, 3.0f ), color );
+        }
 
-	// Do part of our effect
-	void ClientThink( void )
-	{
-		// Update our effects
-		if ( m_bActive && 
-			gpGlobals->frametime != 0.0f &&
-			( random->RandomInt( 0, 5 ) == 0 ) )
-		{
-			Vector	vecOrigin;
-			QAngle	vecAngles;
+        return BaseClass::DrawModel( flags );
+    }
 
-			GetAttachment( 1, vecOrigin, vecAngles );
+    // Do part of our effect
+    void ClientThink( void )
+    {
+        // Update our effects
+        if ( m_bActive &&
+             gpGlobals->frametime != 0.0f &&
+             ( random->RandomInt( 0, 5 ) == 0 ) )
+        {
+            Vector vecOrigin;
+            QAngle vecAngles;
 
-			Vector	vForward;
-			AngleVectors( vecAngles, &vForward );
+            GetAttachment( 1, vecOrigin, vecAngles );
 
-			Vector vEnd = vecOrigin - vForward * 1.0f;
+            Vector vForward;
+            AngleVectors( vecAngles, &vForward );
 
-			// Inner beams
-			BeamInfo_t beamInfo;
+            Vector vEnd = vecOrigin - vForward * 1.0f;
 
-			beamInfo.m_vecStart = vEnd;
-			Vector	offset = RandomVector( -6, 2 );
+            // Inner beams
+            BeamInfo_t beamInfo;
 
-			offset += Vector(2,2,2);
-			beamInfo.m_vecEnd = vecOrigin + offset;
+            beamInfo.m_vecStart = vEnd;
+            Vector offset = RandomVector( -6, 2 );
 
-			beamInfo.m_pStartEnt= cl_entitylist->GetEnt( BEAMENT_ENTITY( entindex() ) );
-			beamInfo.m_pEndEnt	= cl_entitylist->GetEnt( BEAMENT_ENTITY( entindex() ) );
-			beamInfo.m_nStartAttachment = 1;
-			beamInfo.m_nEndAttachment = 2;
-			
-			beamInfo.m_nType = TE_BEAMTESLA;
-			beamInfo.m_pszModelName = "sprites/physbeam.vmt";
-			beamInfo.m_flHaloScale = 0.0f;
-			beamInfo.m_flLife = 0.01f;
-			beamInfo.m_flWidth = random->RandomFloat( 0.5f, 2.0f );
-			beamInfo.m_flEndWidth = 0;
-			beamInfo.m_flFadeLength = 0.0f;
-			beamInfo.m_flAmplitude = random->RandomFloat( 1, 2 );
-			beamInfo.m_flBrightness = 255.0;
-			beamInfo.m_flSpeed = 0.0;
-			beamInfo.m_nStartFrame = 0.0;
-			beamInfo.m_flFrameRate = 1.0f;
-			beamInfo.m_flRed = 255.0f;;
-			beamInfo.m_flGreen = 255.0f;
-			beamInfo.m_flBlue = 255.0f;
-			beamInfo.m_nSegments = 8;
-			beamInfo.m_bRenderable = true;
-			beamInfo.m_nFlags = (FBEAM_ONLYNOISEONCE|FBEAM_SHADEOUT);
-			
-			beams->CreateBeamPoints( beamInfo );
-		}
-	}
+            offset += Vector( 2, 2, 2 );
+            beamInfo.m_vecEnd = vecOrigin + offset;
 
-	void OnDataChanged( DataUpdateType_t updateType )
-	{
-		BaseClass::OnDataChanged( updateType );
-		if ( updateType == DATA_UPDATE_CREATED )
-		{
-			SetNextClientThink( CLIENT_THINK_ALWAYS );
-		}
-	}
-	
-	//-----------------------------------------------------------------------------
-	// Purpose: 
-	//-----------------------------------------------------------------------------
-	void StartStunEffect( void )
-	{
-		//TODO: Play startup sound
-	}
+            beamInfo.m_pStartEnt = cl_entitylist->GetEnt( BEAMENT_ENTITY( entindex() ) );
+            beamInfo.m_pEndEnt = cl_entitylist->GetEnt( BEAMENT_ENTITY( entindex() ) );
+            beamInfo.m_nStartAttachment = 1;
+            beamInfo.m_nEndAttachment = 2;
 
-	//-----------------------------------------------------------------------------
-	// Purpose: 
-	//-----------------------------------------------------------------------------
-	void StopStunEffect( void )
-	{
-		//TODO: Play shutdown sound
-	}
+            beamInfo.m_nType = TE_BEAMTESLA;
+            beamInfo.m_pszModelName = "sprites/physbeam.vmt";
+            beamInfo.m_flHaloScale = 0.0f;
+            beamInfo.m_flLife = 0.01f;
+            beamInfo.m_flWidth = random->RandomFloat( 0.5f, 2.0f );
+            beamInfo.m_flEndWidth = 0;
+            beamInfo.m_flFadeLength = 0.0f;
+            beamInfo.m_flAmplitude = random->RandomFloat( 1, 2 );
+            beamInfo.m_flBrightness = 255.0;
+            beamInfo.m_flSpeed = 0.0;
+            beamInfo.m_nStartFrame = 0.0;
+            beamInfo.m_flFrameRate = 1.0f;
+            beamInfo.m_flRed = 255.0f;
+            ;
+            beamInfo.m_flGreen = 255.0f;
+            beamInfo.m_flBlue = 255.0f;
+            beamInfo.m_nSegments = 8;
+            beamInfo.m_bRenderable = true;
+            beamInfo.m_nFlags = ( FBEAM_ONLYNOISEONCE | FBEAM_SHADEOUT );
 
-	//-----------------------------------------------------------------------------
-	// Purpose: 
-	// Output : RenderGroup_t
-	//-----------------------------------------------------------------------------
-	RenderGroup_t GetRenderGroup( void )
-	{
-		return RENDER_GROUP_TRANSLUCENT_ENTITY;
-	}
+            beams->CreateBeamPoints( beamInfo );
+        }
+    }
 
-private:
-	CNetworkVar( bool, m_bActive );
+    void OnDataChanged( DataUpdateType_t updateType )
+    {
+        BaseClass::OnDataChanged( updateType );
+        if ( updateType == DATA_UPDATE_CREATED )
+        {
+            SetNextClientThink( CLIENT_THINK_ALWAYS );
+        }
+    }
+
+    //-----------------------------------------------------------------------------
+    // Purpose:
+    //-----------------------------------------------------------------------------
+    void StartStunEffect( void )
+    {
+        // TODO: Play startup sound
+    }
+
+    //-----------------------------------------------------------------------------
+    // Purpose:
+    //-----------------------------------------------------------------------------
+    void StopStunEffect( void )
+    {
+        // TODO: Play shutdown sound
+    }
+
+    //-----------------------------------------------------------------------------
+    // Purpose:
+    // Output : RenderGroup_t
+    //-----------------------------------------------------------------------------
+    RenderGroup_t GetRenderGroup( void )
+    {
+        return RENDER_GROUP_TRANSLUCENT_ENTITY;
+    }
+
+   private:
+    CNetworkVar( bool, m_bActive );
 };
 
-
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *pData - 
-//			*pStruct - 
-//			*pOut - 
+// Purpose:
+// Input  : *pData -
+//			*pStruct -
+//			*pOut -
 //-----------------------------------------------------------------------------
 void RecvProxy_StunActive( const CRecvProxyData *pData, void *pStruct, void *pOut )
 {
-	bool state = *((bool *)&pData->m_Value.m_Int);
+    bool state = *( ( bool * )&pData->m_Value.m_Int );
 
-	C_WeaponStunStick *pWeapon = (C_WeaponStunStick *) pStruct;
+    C_WeaponStunStick *pWeapon = ( C_WeaponStunStick * )pStruct;
 
-	if ( state )
-	{
-		// Turn on the effect
-		pWeapon->StartStunEffect();
-	}
-	else
-	{
-		// Turn off the effect
-		pWeapon->StopStunEffect();
-	}
+    if ( state )
+    {
+        // Turn on the effect
+        pWeapon->StartStunEffect();
+    }
+    else
+    {
+        // Turn off the effect
+        pWeapon->StopStunEffect();
+    }
 
-	*(bool *)pOut = state;
+    *( bool * )pOut = state;
 }
 
 STUB_WEAPON_CLASS_IMPLEMENT( weapon_stunstick, C_WeaponStunStick );
 
 IMPLEMENT_CLIENTCLASS_DT( C_WeaponStunStick, DT_WeaponStunStick, CWeaponStunStick )
-	RecvPropInt( RECVINFO(m_bActive), 0, RecvProxy_StunActive ),
-END_RECV_TABLE()
-
+RecvPropInt( RECVINFO( m_bActive ), 0, RecvProxy_StunActive ),
+    END_RECV_TABLE()

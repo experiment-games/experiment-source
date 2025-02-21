@@ -33,247 +33,246 @@ END_DATADESC()
 // -- Data Desc
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-CTFWearableDemoShield::CTFWearableDemoShield() : CTFWearable()
+CTFWearableDemoShield::CTFWearableDemoShield()
+    : CTFWearable()
 {
 #ifdef GAME_DLL
-	m_bImpactedSomething = false;
+    m_bImpactedSomething = false;
 #endif
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFWearableDemoShield::Precache()
 {
-	BaseClass::Precache();
+    BaseClass::Precache();
 
-	PrecacheScriptSound( "DemoCharge.HitWorld" );
-	PrecacheScriptSound( "DemoCharge.HitFlesh" );
-	PrecacheScriptSound( "DemoCharge.HitFleshRange" );
+    PrecacheScriptSound( "DemoCharge.HitWorld" );
+    PrecacheScriptSound( "DemoCharge.HitFlesh" );
+    PrecacheScriptSound( "DemoCharge.HitFleshRange" );
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFWearableDemoShield::DoSpecialAction( CTFPlayer *pPlayer )
 {
-	if ( CanCharge( pPlayer ) )
-	{
-		DoCharge( pPlayer );
-		return;
-	}
+    if ( CanCharge( pPlayer ) )
+    {
+        DoCharge( pPlayer );
+        return;
+    }
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFWearableDemoShield::EndSpecialAction( CTFPlayer *pPlayer )
 {
-	int nAttackNotCancelCharge = 0;
-	CALL_ATTRIB_HOOK_INT( nAttackNotCancelCharge, attack_not_cancel_charge );
-	if ( nAttackNotCancelCharge > 0 )
-	{
-		return;
-	}
+    int nAttackNotCancelCharge = 0;
+    CALL_ATTRIB_HOOK_INT( nAttackNotCancelCharge, attack_not_cancel_charge );
+    if ( nAttackNotCancelCharge > 0 )
+    {
+        return;
+    }
 
-	if ( pPlayer->m_Shared.InCond( TF_COND_SHIELD_CHARGE ) )
-	{
-		pPlayer->m_Shared.CalcChargeCrit();
-		pPlayer->m_Shared.SetDemomanChargeMeter( 0 );
-		pPlayer->m_Shared.RemoveCond( TF_COND_SHIELD_CHARGE );
-	}
+    if ( pPlayer->m_Shared.InCond( TF_COND_SHIELD_CHARGE ) )
+    {
+        pPlayer->m_Shared.CalcChargeCrit();
+        pPlayer->m_Shared.SetDemomanChargeMeter( 0 );
+        pPlayer->m_Shared.RemoveCond( TF_COND_SHIELD_CHARGE );
+    }
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CTFWearableDemoShield::CanCharge( CTFPlayer *pPlayer )
 {
-	// 6/14/2011 - Demos can now charge while in the air to counter pyro control.
-//	if ( !(pPlayer->GetFlags() & FL_ONGROUND) )
-//		return false;
+    // 6/14/2011 - Demos can now charge while in the air to counter pyro control.
+    //	if ( !(pPlayer->GetFlags() & FL_ONGROUND) )
+    //		return false;
 
-	if ( TFGameRules() && (TFGameRules()->State_Get() == GR_STATE_PREROUND) )
-		return false;
+    if ( TFGameRules() && ( TFGameRules()->State_Get() == GR_STATE_PREROUND ) )
+        return false;
 
-	if ( pPlayer->m_Shared.IsLoser() )
-		return false;
+    if ( pPlayer->m_Shared.IsLoser() )
+        return false;
 
-	if ( pPlayer->m_Shared.InCond( TF_COND_STUNNED ) )
-		return false;
+    if ( pPlayer->m_Shared.InCond( TF_COND_STUNNED ) )
+        return false;
 
-	if ( pPlayer->IsTaunting() )
-		return false;
+    if ( pPlayer->IsTaunting() )
+        return false;
 
-	if ( pPlayer->GetGrapplingHookTarget() )
-		return false;
+    if ( pPlayer->GetGrapplingHookTarget() )
+        return false;
 
-	if ( pPlayer->m_Shared.GetDemomanChargeMeter() == 100.f )
-		return true;
+    if ( pPlayer->m_Shared.GetDemomanChargeMeter() == 100.f )
+        return true;
 
-	if ( TFGameRules() && TFGameRules()->IsPasstimeMode() && pPlayer->m_Shared.HasPasstimeBall() )
-		return false;
+    if ( TFGameRules() && TFGameRules()->IsPasstimeMode() && pPlayer->m_Shared.HasPasstimeBall() )
+        return false;
 
-	return false;
+    return false;
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFWearableDemoShield::DoCharge( CTFPlayer *pPlayer )
 {
 #ifdef GAME_DLL
-	float flChargeTime = 1.5f;
-	CALL_ATTRIB_HOOK_FLOAT_ON_OTHER( pPlayer, flChargeTime, mod_charge_time );
-	pPlayer->m_Shared.AddCond( TF_COND_SHIELD_CHARGE, flChargeTime );
+    float flChargeTime = 1.5f;
+    CALL_ATTRIB_HOOK_FLOAT_ON_OTHER( pPlayer, flChargeTime, mod_charge_time );
+    pPlayer->m_Shared.AddCond( TF_COND_SHIELD_CHARGE, flChargeTime );
 
-	m_bImpactedSomething = false;
+    m_bImpactedSomething = false;
 #endif
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFWearableDemoShield::ShieldBash( CTFPlayer *pPlayer, float flCurrentChargeMeter )
 {
-	CTFPlayer *pOwner = ToTFPlayer( GetOwnerEntity() );
-	if ( !pOwner )
-		return;
+    CTFPlayer *pOwner = ToTFPlayer( GetOwnerEntity() );
+    if ( !pOwner )
+        return;
 
 #ifdef GAME_DLL
 
-	if ( m_bImpactedSomething )
-		return;
+    if ( m_bImpactedSomething )
+        return;
 
-	m_bImpactedSomething = true;
+    m_bImpactedSomething = true;
 
-	// Setup the swing range.
-	Vector vecForward; 
-	AngleVectors( pOwner->EyeAngles(), &vecForward );
-	Vector vecStart = pOwner->Weapon_ShootPosition();
-	Vector vecEnd = vecStart + vecForward * 48;
+    // Setup the swing range.
+    Vector vecForward;
+    AngleVectors( pOwner->EyeAngles(), &vecForward );
+    Vector vecStart = pOwner->Weapon_ShootPosition();
+    Vector vecEnd = vecStart + vecForward * 48;
 
-	// See if we hit anything.
-	trace_t trace;
-	UTIL_TraceHull( vecStart, vecEnd, -Vector(24,24,24), Vector(24,24,24),
-		MASK_SOLID, pOwner, COLLISION_GROUP_NONE, &trace );
+    // See if we hit anything.
+    trace_t trace;
+    UTIL_TraceHull( vecStart, vecEnd, -Vector( 24, 24, 24 ), Vector( 24, 24, 24 ), MASK_SOLID, pOwner, COLLISION_GROUP_NONE, &trace );
 
-	// Play an impact sound.
-	bool bImpactDamage = false;
-	if ( trace.m_pEnt )
-	{
-		const char* pszSoundName = "";
-		if ( trace.m_pEnt->IsPlayer() )
-		{
-			bImpactDamage = true;
-			pszSoundName = "DemoCharge.HitFleshRange";
-		}
-		else
-		{
-			pszSoundName = "DemoCharge.HitWorld";
-		}
-		pOwner->EmitSound( pszSoundName );
-	}
+    // Play an impact sound.
+    bool bImpactDamage = false;
+    if ( trace.m_pEnt )
+    {
+        const char *pszSoundName = "";
+        if ( trace.m_pEnt->IsPlayer() )
+        {
+            bImpactDamage = true;
+            pszSoundName = "DemoCharge.HitFleshRange";
+        }
+        else
+        {
+            pszSoundName = "DemoCharge.HitWorld";
+        }
+        pOwner->EmitSound( pszSoundName );
+    }
 
-	// Apply impact damage, if any.
-	if ( bImpactDamage )
-	{
-		float flBashDamage = CalculateChargeDamage( flCurrentChargeMeter );
-		CTakeDamageInfo info;
-		info.SetAttacker( pOwner );
-		info.SetInflictor( this ); 
-		info.SetWeapon( this );
-		info.SetDamage( flBashDamage );
-		info.SetDamageCustom( TF_DMG_CUSTOM_CHARGE_IMPACT );
-		info.SetDamageForce( GetShieldDamageForce( flCurrentChargeMeter ) );
-		info.SetDamagePosition( trace.endpos );
-		info.SetDamageType( DMG_CLUB );
+    // Apply impact damage, if any.
+    if ( bImpactDamage )
+    {
+        float flBashDamage = CalculateChargeDamage( flCurrentChargeMeter );
+        CTakeDamageInfo info;
+        info.SetAttacker( pOwner );
+        info.SetInflictor( this );
+        info.SetWeapon( this );
+        info.SetDamage( flBashDamage );
+        info.SetDamageCustom( TF_DMG_CUSTOM_CHARGE_IMPACT );
+        info.SetDamageForce( GetShieldDamageForce( flCurrentChargeMeter ) );
+        info.SetDamagePosition( trace.endpos );
+        info.SetDamageType( DMG_CLUB );
 
-		Vector dir;
-		AngleVectors( pOwner->GetAbsAngles(), &dir );
-		trace.m_pEnt->DispatchTraceAttack( info, dir, &trace );
-		ApplyMultiDamage();
+        Vector dir;
+        AngleVectors( pOwner->GetAbsAngles(), &dir );
+        trace.m_pEnt->DispatchTraceAttack( info, dir, &trace );
+        ApplyMultiDamage();
 
-		// Calculate charge crit if we did any bash damage
-		pOwner->m_Shared.CalcChargeCrit();
-	}
+        // Calculate charge crit if we did any bash damage
+        pOwner->m_Shared.CalcChargeCrit();
+    }
 
-	UTIL_ScreenShake( pOwner->WorldSpaceCenter(), 25.0, 150.0, 1.0, 750, SHAKE_START );
+    UTIL_ScreenShake( pOwner->WorldSpaceCenter(), 25.0, 150.0, 1.0, 750, SHAKE_START );
 
 #endif
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 float CTFWearableDemoShield::CalculateChargeDamage( float flCurrentChargeMeter )
 {
-	float flImpactDamage = RemapValClamped( flCurrentChargeMeter, 90.0f, 40.0f, 15.0f, 50.0f );
+    float flImpactDamage = RemapValClamped( flCurrentChargeMeter, 90.0f, 40.0f, 15.0f, 50.0f );
 
-	CTFPlayer *pOwner = ToTFPlayer( GetOwnerEntity() );
-	if ( !pOwner )
-		return flImpactDamage;
+    CTFPlayer *pOwner = ToTFPlayer( GetOwnerEntity() );
+    if ( !pOwner )
+        return flImpactDamage;
 
-	// Cap at 5 decapitations for dmg bonus
-	int iDecaps = Min( pOwner->m_Shared.GetDecapitations(), 5 );
-	if ( iDecaps > 0 )
-	{
-		flImpactDamage *= (1.0f + iDecaps * 0.1f );
-	}
+    // Cap at 5 decapitations for dmg bonus
+    int iDecaps = Min( pOwner->m_Shared.GetDecapitations(), 5 );
+    if ( iDecaps > 0 )
+    {
+        flImpactDamage *= ( 1.0f + iDecaps * 0.1f );
+    }
 
-	CALL_ATTRIB_HOOK_FLOAT_ON_OTHER( pOwner, flImpactDamage, charge_impact_damage );
+    CALL_ATTRIB_HOOK_FLOAT_ON_OTHER( pOwner, flImpactDamage, charge_impact_damage );
 
-	return flImpactDamage;
+    return flImpactDamage;
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 Vector CTFWearableDemoShield::GetShieldDamageForce( float flCurrentChargeMeter )
 {
-	Vector vecVelocity = GetAbsVelocity();
-	IPhysicsObject *pPhysicsObject = VPhysicsGetObject();
-	if ( pPhysicsObject )
-	{
-		pPhysicsObject->GetVelocity( &vecVelocity, NULL );
-		VectorNormalize( vecVelocity );
-	}
+    Vector vecVelocity = GetAbsVelocity();
+    IPhysicsObject *pPhysicsObject = VPhysicsGetObject();
+    if ( pPhysicsObject )
+    {
+        pPhysicsObject->GetVelocity( &vecVelocity, NULL );
+        VectorNormalize( vecVelocity );
+    }
 
-	return (vecVelocity * CalculateChargeDamage( flCurrentChargeMeter ) );
+    return ( vecVelocity * CalculateChargeDamage( flCurrentChargeMeter ) );
 }
 
 //-----------------------------------------------------------------------------
 // Purpose: Attaches the item to the player.
 //-----------------------------------------------------------------------------
-void CTFWearableDemoShield::Equip( CBasePlayer* pOwner )
+void CTFWearableDemoShield::Equip( CBasePlayer *pOwner )
 {
-	BaseClass::Equip( pOwner );
-	if ( !CanEquip( pOwner ) )
-		return;
+    BaseClass::Equip( pOwner );
+    if ( !CanEquip( pOwner ) )
+        return;
 
-	CTFPlayer *pTFPlayer = ToTFPlayer( pOwner );
-	if ( pTFPlayer )
-	{
-		pTFPlayer->m_Shared.SetShieldEquipped( true );
-	}
+    CTFPlayer *pTFPlayer = ToTFPlayer( pOwner );
+    if ( pTFPlayer )
+    {
+        pTFPlayer->m_Shared.SetShieldEquipped( true );
+    }
 }
 
 //-----------------------------------------------------------------------------
 // Purpose: Remove item from the player.
 //-----------------------------------------------------------------------------
-void CTFWearableDemoShield::UnEquip( CBasePlayer* pOwner )
+void CTFWearableDemoShield::UnEquip( CBasePlayer *pOwner )
 {
-	BaseClass::UnEquip( pOwner );
+    BaseClass::UnEquip( pOwner );
 
-	CTFPlayer *pTFPlayer = ToTFPlayer( pOwner );
-	if ( pTFPlayer )
-	{
-		pTFPlayer->m_Shared.SetShieldEquipped( false );
-	}
+    CTFPlayer *pTFPlayer = ToTFPlayer( pOwner );
+    if ( pTFPlayer )
+    {
+        pTFPlayer->m_Shared.SetShieldEquipped( false );
+    }
 }
-
 
 LINK_ENTITY_TO_CLASS( tf_wearable_razorback, CTFWearableRazorback );
 IMPLEMENT_NETWORKCLASS_ALIASED( TFWearableRazorback, DT_TFWearableRazorback )
@@ -291,10 +290,10 @@ END_DATADESC()
 void CTFWearableRazorback::OnResourceMeterFilled()
 {
 #ifdef GAME_DLL
-	// unhide the model when meter is filled
-	if ( IsEffectActive( EF_NODRAW ) )
-	{
-		RemoveEffects( EF_NODRAW );
-	}
-#endif // GAME_DLL
+    // unhide the model when meter is filled
+    if ( IsEffectActive( EF_NODRAW ) )
+    {
+        RemoveEffects( EF_NODRAW );
+    }
+#endif  // GAME_DLL
 }

@@ -28,33 +28,33 @@ extern Color s_colorChallengeHeader;
 
 extern const char *s_pszMatchGroups[];
 
-CLobbyPanel_Casual::CLobbyPanel_Casual( vgui::Panel *pParent, CBaseLobbyContainerFrame* pLobbyContainer )
-	: CBaseLobbyPanel( pParent, pLobbyContainer )
+CLobbyPanel_Casual::CLobbyPanel_Casual( vgui::Panel *pParent, CBaseLobbyContainerFrame *pLobbyContainer )
+    : CBaseLobbyPanel( pParent, pLobbyContainer )
 {
-	m_pCriteriaPanel = new CCasualCriteriaPanel( this, "criteria" );
+    m_pCriteriaPanel = new CCasualCriteriaPanel( this, "criteria" );
 }
 
 CLobbyPanel_Casual::~CLobbyPanel_Casual()
 {
-	m_pCriteriaPanel->MarkForDeletion();
+    m_pCriteriaPanel->MarkForDeletion();
 }
 
 void CLobbyPanel_Casual::ApplyChatUserSettings( const CBaseLobbyPanel::LobbyPlayerInfo &player, KeyValues *pKV ) const
 {
-	pKV->SetInt( "has_ticket", 0 );
-	pKV->SetInt( "squad_surplus", 0 );
+    pKV->SetInt( "has_ticket", 0 );
+    pKV->SetInt( "squad_surplus", 0 );
 }
 
 void CLobbyPanel_Casual::ApplySchemeSettings( vgui::IScheme *pScheme )
 {
-	BaseClass::ApplySchemeSettings( pScheme );
+    BaseClass::ApplySchemeSettings( pScheme );
 
-	int nAvatarWidth = ( ( m_iAvatarWidth * 5 / 4 ) + 1 ); 
-	int nExtraWidth = ( m_pChatPlayerList->GetWide() - ( 2 * nAvatarWidth ) - m_iPlayerNameWidth - m_iBannedWidth );
+    int nAvatarWidth = ( ( m_iAvatarWidth * 5 / 4 ) + 1 );
+    int nExtraWidth = ( m_pChatPlayerList->GetWide() - ( 2 * nAvatarWidth ) - m_iPlayerNameWidth - m_iBannedWidth );
 
-	m_pChatPlayerList->AddColumnToSection( 0, "avatar", "#TF_Players", vgui::SectionedListPanel::COLUMN_IMAGE, nAvatarWidth );
-	m_pChatPlayerList->AddColumnToSection( 0, "name", "", 0, m_iPlayerNameWidth + nExtraWidth );
-	m_pChatPlayerList->AddColumnToSection( 0, "is_banned", "", vgui::SectionedListPanel::COLUMN_IMAGE | vgui::SectionedListPanel::COLUMN_CENTER, m_iBannedWidth );
-	m_pChatPlayerList->AddColumnToSection( 0, "rank", "", vgui::SectionedListPanel::COLUMN_IMAGE | vgui::SectionedListPanel::COLUMN_CENTER, nAvatarWidth );
-	m_pChatPlayerList->SetDrawHeaders( false );
+    m_pChatPlayerList->AddColumnToSection( 0, "avatar", "#TF_Players", vgui::SectionedListPanel::COLUMN_IMAGE, nAvatarWidth );
+    m_pChatPlayerList->AddColumnToSection( 0, "name", "", 0, m_iPlayerNameWidth + nExtraWidth );
+    m_pChatPlayerList->AddColumnToSection( 0, "is_banned", "", vgui::SectionedListPanel::COLUMN_IMAGE | vgui::SectionedListPanel::COLUMN_CENTER, m_iBannedWidth );
+    m_pChatPlayerList->AddColumnToSection( 0, "rank", "", vgui::SectionedListPanel::COLUMN_IMAGE | vgui::SectionedListPanel::COLUMN_CENTER, nAvatarWidth );
+    m_pChatPlayerList->SetDrawHeaders( false );
 }

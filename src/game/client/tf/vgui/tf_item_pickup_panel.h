@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -14,47 +14,49 @@
 #include "item_pickup_panel.h"
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 class CTFItemPickupPanel : public CItemPickupPanel
 {
-	DECLARE_CLASS_SIMPLE( CTFItemPickupPanel, CItemPickupPanel );
-public:
-	CTFItemPickupPanel( Panel *parent );
-	virtual ~CTFItemPickupPanel();
+    DECLARE_CLASS_SIMPLE( CTFItemPickupPanel, CItemPickupPanel );
 
-	virtual void	ApplySchemeSettings( vgui::IScheme *pScheme );
-	virtual void	OnCommand( const char *command );
+   public:
+    CTFItemPickupPanel( Panel *parent );
+    virtual ~CTFItemPickupPanel();
 
-protected:
-	virtual void	UpdateModelPanels( void );
+    virtual void ApplySchemeSettings( vgui::IScheme *pScheme );
+    virtual void OnCommand( const char *command );
 
-private:
-	vgui::ImagePanel				*m_pClassImage;
-	vgui::Panel						*m_pClassImageBG;
+   protected:
+    virtual void UpdateModelPanels( void );
+
+   private:
+    vgui::ImagePanel *m_pClassImage;
+    vgui::Panel *m_pClassImageBG;
 };
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 class CTFItemDiscardPanel : public CItemDiscardPanel
 {
-	DECLARE_CLASS_SIMPLE( CTFItemDiscardPanel, CItemDiscardPanel );
-public:
-	CTFItemDiscardPanel( Panel *parent );
-	virtual ~CTFItemDiscardPanel();
+    DECLARE_CLASS_SIMPLE( CTFItemDiscardPanel, CItemDiscardPanel );
 
-	virtual void	ApplySchemeSettings( vgui::IScheme *pScheme );
-	virtual void	PerformLayout( void );
-	virtual void	ShowPanel( bool bShow );
-	virtual void	OnTick( void );
-	virtual void	OnCommand( const char *command );
+   public:
+    CTFItemDiscardPanel( Panel *parent );
+    virtual ~CTFItemDiscardPanel();
 
-private:
-	vgui::Label		*m_pExplanationALabel;
-	vgui::Label		*m_pExplanationBLabel;
-	vgui::Label		*m_pExplanationCaratLabel;
-	float			m_flStartExplanationsAt;
+    virtual void ApplySchemeSettings( vgui::IScheme *pScheme );
+    virtual void PerformLayout( void );
+    virtual void ShowPanel( bool bShow );
+    virtual void OnTick( void );
+    virtual void OnCommand( const char *command );
+
+   private:
+    vgui::Label *m_pExplanationALabel;
+    vgui::Label *m_pExplanationBLabel;
+    vgui::Label *m_pExplanationCaratLabel;
+    float m_flStartExplanationsAt;
 };
 
-#endif // TF_ITEM_PICKUP_PANEL_H
+#endif  // TF_ITEM_PICKUP_PANEL_H

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -11,4 +11,4 @@
 #pragma once
 #endif
 
-#endif // DECODER_RING_TOOL_H
+#endif  // DECODER_RING_TOOL_H

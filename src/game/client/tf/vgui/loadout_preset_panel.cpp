@@ -20,158 +20,158 @@ using namespace vgui;
 DECLARE_BUILD_FACTORY( CLoadoutPresetPanel );
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CLoadoutPresetPanel::CLoadoutPresetPanel( vgui::Panel *pParent, const char *pName )
-:	EditablePanel( pParent, "loadout_preset_panel" )
+    : EditablePanel( pParent, "loadout_preset_panel" )
 {
-	V_memset( m_pPresetButtons, 0, sizeof( m_pPresetButtons ) );
+    V_memset( m_pPresetButtons, 0, sizeof( m_pPresetButtons ) );
 
-	m_iClass = TF_CLASS_UNDEFINED;
-	m_pPresetButtonKv = NULL;
-	m_bDisplayVertical = false;
+    m_iClass = TF_CLASS_UNDEFINED;
+    m_pPresetButtonKv = NULL;
+    m_bDisplayVertical = false;
 
-	// Create all buttons
-	for ( int i = 0; i < MAX_PRESETS; ++i )
-	{
-		CFmtStr fmtTokenName( "TF_ItemPresetName%i", i );
-		CFmtStr fmtButtonName( "LoadPresetButton%i", i );
-		wchar_t *pwszPresetName = g_pVGuiLocalize->Find( fmtTokenName.Access() );
-		m_pPresetButtons[i] = new CExButton( this, fmtButtonName.Access(), pwszPresetName, this );
-	}
+    // Create all buttons
+    for ( int i = 0; i < MAX_PRESETS; ++i )
+    {
+        CFmtStr fmtTokenName( "TF_ItemPresetName%i", i );
+        CFmtStr fmtButtonName( "LoadPresetButton%i", i );
+        wchar_t *pwszPresetName = g_pVGuiLocalize->Find( fmtTokenName.Access() );
+        m_pPresetButtons[i] = new CExButton( this, fmtButtonName.Access(), pwszPresetName, this );
+    }
 
-	m_pClassLoadoutPanel = NULL;
+    m_pClassLoadoutPanel = NULL;
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CLoadoutPresetPanel::ApplySchemeSettings( vgui::IScheme *pScheme )
 {
-	BaseClass::ApplySchemeSettings( pScheme );
+    BaseClass::ApplySchemeSettings( pScheme );
 
-	LoadControlSettings( "Resource/UI/LoadoutPresetPanel.res" );
+    LoadControlSettings( "Resource/UI/LoadoutPresetPanel.res" );
 
-	m_aDefaultColors[LOADED][FG][DEFAULT] = vgui::scheme()->GetIScheme( GetScheme() )->GetColor( "Econ.Button.PresetDefaultColorFg", Color( 255, 255, 255, 255 ) );
-	m_aDefaultColors[LOADED][FG][ARMED] = vgui::scheme()->GetIScheme( GetScheme() )->GetColor( "Econ.Button.PresetArmedColorFg", Color( 255, 255, 255, 255 ) );
-	m_aDefaultColors[LOADED][FG][DEPRESSED] = vgui::scheme()->GetIScheme( GetScheme() )->GetColor( "Econ.Button.PresetDepressedColorFg", Color( 255, 255, 255, 255 ) );
+    m_aDefaultColors[LOADED][FG][DEFAULT] = vgui::scheme()->GetIScheme( GetScheme() )->GetColor( "Econ.Button.PresetDefaultColorFg", Color( 255, 255, 255, 255 ) );
+    m_aDefaultColors[LOADED][FG][ARMED] = vgui::scheme()->GetIScheme( GetScheme() )->GetColor( "Econ.Button.PresetArmedColorFg", Color( 255, 255, 255, 255 ) );
+    m_aDefaultColors[LOADED][FG][DEPRESSED] = vgui::scheme()->GetIScheme( GetScheme() )->GetColor( "Econ.Button.PresetDepressedColorFg", Color( 255, 255, 255, 255 ) );
 
-	m_aDefaultColors[LOADED][BG][DEFAULT] = vgui::scheme()->GetIScheme( GetScheme() )->GetColor( "Econ.Button.PresetDefaultColorBg", Color( 255, 255, 255, 255 ) );
-	m_aDefaultColors[LOADED][BG][ARMED] = vgui::scheme()->GetIScheme( GetScheme() )->GetColor( "Econ.Button.PresetArmedColorBg", Color( 255, 255, 255, 255 ) );
-	m_aDefaultColors[LOADED][BG][DEPRESSED] = vgui::scheme()->GetIScheme( GetScheme() )->GetColor( "Econ.Button.PresetDepressedColorBg", Color( 255, 255, 255, 255 ) );
+    m_aDefaultColors[LOADED][BG][DEFAULT] = vgui::scheme()->GetIScheme( GetScheme() )->GetColor( "Econ.Button.PresetDefaultColorBg", Color( 255, 255, 255, 255 ) );
+    m_aDefaultColors[LOADED][BG][ARMED] = vgui::scheme()->GetIScheme( GetScheme() )->GetColor( "Econ.Button.PresetArmedColorBg", Color( 255, 255, 255, 255 ) );
+    m_aDefaultColors[LOADED][BG][DEPRESSED] = vgui::scheme()->GetIScheme( GetScheme() )->GetColor( "Econ.Button.PresetDepressedColorBg", Color( 255, 255, 255, 255 ) );
 
-	m_aDefaultColors[NOTLOADED][FG][DEFAULT] = vgui::scheme()->GetIScheme( GetScheme() )->GetColor( "Button.TextColor", Color( 255, 255, 255, 255 ) );
-	m_aDefaultColors[NOTLOADED][FG][ARMED] = vgui::scheme()->GetIScheme( GetScheme() )->GetColor( "Button.ArmedTextColor", Color( 255, 255, 255, 255 ) );
-	m_aDefaultColors[NOTLOADED][FG][DEPRESSED] = vgui::scheme()->GetIScheme( GetScheme() )->GetColor( "Button.DepressedTextColor", Color( 255, 255, 255, 255 ) );
+    m_aDefaultColors[NOTLOADED][FG][DEFAULT] = vgui::scheme()->GetIScheme( GetScheme() )->GetColor( "Button.TextColor", Color( 255, 255, 255, 255 ) );
+    m_aDefaultColors[NOTLOADED][FG][ARMED] = vgui::scheme()->GetIScheme( GetScheme() )->GetColor( "Button.ArmedTextColor", Color( 255, 255, 255, 255 ) );
+    m_aDefaultColors[NOTLOADED][FG][DEPRESSED] = vgui::scheme()->GetIScheme( GetScheme() )->GetColor( "Button.DepressedTextColor", Color( 255, 255, 255, 255 ) );
 
-	m_aDefaultColors[NOTLOADED][BG][DEFAULT] = vgui::scheme()->GetIScheme( GetScheme() )->GetColor( "Button.BgColor", Color( 255, 255, 255, 255 ) );
-	m_aDefaultColors[NOTLOADED][BG][ARMED] = vgui::scheme()->GetIScheme( GetScheme() )->GetColor( "Button.ArmedBgColor", Color( 255, 255, 255, 255 ) );
-	m_aDefaultColors[NOTLOADED][BG][DEPRESSED] = vgui::scheme()->GetIScheme( GetScheme() )->GetColor( "Button.DepressedBgColor", Color( 255, 255, 255, 255 ) );
+    m_aDefaultColors[NOTLOADED][BG][DEFAULT] = vgui::scheme()->GetIScheme( GetScheme() )->GetColor( "Button.BgColor", Color( 255, 255, 255, 255 ) );
+    m_aDefaultColors[NOTLOADED][BG][ARMED] = vgui::scheme()->GetIScheme( GetScheme() )->GetColor( "Button.ArmedBgColor", Color( 255, 255, 255, 255 ) );
+    m_aDefaultColors[NOTLOADED][BG][DEPRESSED] = vgui::scheme()->GetIScheme( GetScheme() )->GetColor( "Button.DepressedBgColor", Color( 255, 255, 255, 255 ) );
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CLoadoutPresetPanel::ApplySettings( KeyValues *pInResourceData )
 {
-	BaseClass::ApplySettings( pInResourceData );
+    BaseClass::ApplySettings( pInResourceData );
 
-	KeyValues *pPresetButtonKv = pInResourceData->FindKey( "presetbutton_kv" );
-	if ( pPresetButtonKv && !m_pPresetButtonKv )
-	{
-		m_pPresetButtonKv = new KeyValues( "presetbutton_kv" );
-		pPresetButtonKv->CopySubkeys( m_pPresetButtonKv );
-	}
+    KeyValues *pPresetButtonKv = pInResourceData->FindKey( "presetbutton_kv" );
+    if ( pPresetButtonKv && !m_pPresetButtonKv )
+    {
+        m_pPresetButtonKv = new KeyValues( "presetbutton_kv" );
+        pPresetButtonKv->CopySubkeys( m_pPresetButtonKv );
+    }
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-void CLoadoutPresetPanel::PerformLayout() 
+void CLoadoutPresetPanel::PerformLayout()
 {
-	BaseClass::PerformLayout();
+    BaseClass::PerformLayout();
 
-	if ( !m_pPresetButtons[0] )
-		return;
+    if ( !m_pPresetButtons[0] )
+        return;
 
-	const int nBuffer = XRES( 2 );
+    const int nBuffer = XRES( 2 );
 
-	for ( int i = 0; i < MAX_PRESETS; ++i )
-	{
-		if ( m_pPresetButtonKv )
-		{
-			m_pPresetButtons[i]->ApplySettings( m_pPresetButtonKv );
-		}
+    for ( int i = 0; i < MAX_PRESETS; ++i )
+    {
+        if ( m_pPresetButtonKv )
+        {
+            m_pPresetButtons[i]->ApplySettings( m_pPresetButtonKv );
+        }
 
-		// Display buttons vertically or horizontally?
-		// NOTE: Button width and height will be valid here, since we've just applied settings
-		if ( m_bDisplayVertical )
-		{
-			const int nButtonHeight = m_pPresetButtons[0]->GetTall();
-			m_pPresetButtons[i]->SetPos( 0, i * ( nButtonHeight + nBuffer ) );
-		}
-		else
-		{
-			const int nButtonWidth = m_pPresetButtons[0]->GetWide();
-			const int nStartX = 0.5f * ( GetWide() - MAX_PRESETS * ( nButtonWidth + nBuffer ) );
-			m_pPresetButtons[i]->SetPos( nStartX + i * ( nButtonWidth + nBuffer ), 0 );
-		}
-		m_pPresetButtons[i]->SetVisible( true );
-	}
+        // Display buttons vertically or horizontally?
+        // NOTE: Button width and height will be valid here, since we've just applied settings
+        if ( m_bDisplayVertical )
+        {
+            const int nButtonHeight = m_pPresetButtons[0]->GetTall();
+            m_pPresetButtons[i]->SetPos( 0, i * ( nButtonHeight + nBuffer ) );
+        }
+        else
+        {
+            const int nButtonWidth = m_pPresetButtons[0]->GetWide();
+            const int nStartX = 0.5f * ( GetWide() - MAX_PRESETS * ( nButtonWidth + nBuffer ) );
+            m_pPresetButtons[i]->SetPos( nStartX + i * ( nButtonWidth + nBuffer ), 0 );
+        }
+        m_pPresetButtons[i]->SetVisible( true );
+    }
 
-	vgui::ivgui()->AddTickSignal( GetVPanel(), 150 );
+    vgui::ivgui()->AddTickSignal( GetVPanel(), 150 );
 
-	UpdatePresetButtonStates();
+    UpdatePresetButtonStates();
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CLoadoutPresetPanel::SetClass( int iClass )
 {
-	m_iClass = iClass;
+    m_iClass = iClass;
 
-	if ( iClass != TF_CLASS_UNDEFINED )
-	{
-		UpdatePresetButtonStates();
-	}
+    if ( iClass != TF_CLASS_UNDEFINED )
+    {
+        UpdatePresetButtonStates();
+    }
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CLoadoutPresetPanel::EnableVerticalDisplay( bool bVertical )
 {
-	m_bDisplayVertical = bVertical;
+    m_bDisplayVertical = bVertical;
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CLoadoutPresetPanel::LoadPreset( int iPresetIndex )
 {
-	TFInventoryManager()->LoadPreset( m_iClass, iPresetIndex );
+    TFInventoryManager()->LoadPreset( m_iClass, iPresetIndex );
 
-	if (m_pClassLoadoutPanel)
-	{
-		m_pClassLoadoutPanel->UpdateModelPanels();
-	}
+    if ( m_pClassLoadoutPanel )
+    {
+        m_pClassLoadoutPanel->UpdateModelPanels();
+    }
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CLoadoutPresetPanel::OnCommand( const char *command )
 {
-	if ( !V_strnicmp( command, "loadpreset_", 11 ) )
-	{
-		const int iPresetIndex = atoi( command + 11 );
-		LoadPreset( iPresetIndex );
-	}
-	else
-	{
-		BaseClass::OnCommand( command );
-	}
+    if ( !V_strnicmp( command, "loadpreset_", 11 ) )
+    {
+        const int iPresetIndex = atoi( command + 11 );
+        LoadPreset( iPresetIndex );
+    }
+    else
+    {
+        BaseClass::OnCommand( command );
+    }
 }
 
 //-----------------------------------------------------------------------------
@@ -179,7 +179,7 @@ void CLoadoutPresetPanel::OnCommand( const char *command )
 //-----------------------------------------------------------------------------
 void CLoadoutPresetPanel::OnTick()
 {
-	UpdatePresetButtonStates();
+    UpdatePresetButtonStates();
 }
 
 //-----------------------------------------------------------------------------
@@ -187,77 +187,78 @@ void CLoadoutPresetPanel::OnTick()
 //-----------------------------------------------------------------------------
 bool CLoadoutPresetPanel::HandlePresetKeyPressed( vgui::KeyCode code )
 {
-	ButtonCode_t nButtonCode = GetBaseButtonCode( code );
+    ButtonCode_t nButtonCode = GetBaseButtonCode( code );
 
-	if( nButtonCode == KEY_XBUTTON_LEFT_SHOULDER )
-	{
-		if( GetSelectedPresetID() > 0 )
-			LoadPreset( GetSelectedPresetID() - 1 );
-		return true;
-	}
-	else if( nButtonCode == KEY_XBUTTON_RIGHT_SHOULDER )
-	{
-		if( GetSelectedPresetID() < MAX_PRESETS - 1 )
-			LoadPreset( GetSelectedPresetID() + 1 );
-		return true;
-	}
-	else
-	{
-		return false;
-	}
+    if ( nButtonCode == KEY_XBUTTON_LEFT_SHOULDER )
+    {
+        if ( GetSelectedPresetID() > 0 )
+            LoadPreset( GetSelectedPresetID() - 1 );
+        return true;
+    }
+    else if ( nButtonCode == KEY_XBUTTON_RIGHT_SHOULDER )
+    {
+        if ( GetSelectedPresetID() < MAX_PRESETS - 1 )
+            LoadPreset( GetSelectedPresetID() + 1 );
+        return true;
+    }
+    else
+    {
+        return false;
+    }
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 equipped_preset_t CLoadoutPresetPanel::GetSelectedPresetID() const
 {
-	if ( !InventoryManager()->GetLocalInventory() )
-		return INVALID_PRESET_INDEX;
+    if ( !InventoryManager()->GetLocalInventory() )
+        return INVALID_PRESET_INDEX;
 
-	const uint32 unAccountID = InventoryManager()->GetLocalInventory()->GetOwner().GetAccountID();
-	const CEconItemPerClassPresetData soSearch( unAccountID, m_iClass );
+    const uint32 unAccountID = InventoryManager()->GetLocalInventory()->GetOwner().GetAccountID();
+    const CEconItemPerClassPresetData soSearch( unAccountID, m_iClass );
 
-	GCSDK::CSharedObjectCache *pSOCache = InventoryManager()->GetLocalInventory()->GetSOC();
-	if ( !pSOCache )
-		return INVALID_PRESET_INDEX;
+    GCSDK::CSharedObjectCache *pSOCache = InventoryManager()->GetLocalInventory()->GetSOC();
+    if ( !pSOCache )
+        return INVALID_PRESET_INDEX;
 
-	const CEconItemPerClassPresetData *pExistingPerClassData = assert_cast<CEconItemPerClassPresetData *>( pSOCache->FindSharedObject( soSearch ) );
-	if ( !pExistingPerClassData )
-		return INVALID_PRESET_INDEX;
+    const CEconItemPerClassPresetData *pExistingPerClassData = assert_cast< CEconItemPerClassPresetData * >( pSOCache->FindSharedObject( soSearch ) );
+    if ( !pExistingPerClassData )
+        return INVALID_PRESET_INDEX;
 
-	return pExistingPerClassData->GetActivePreset();
+    return pExistingPerClassData->GetActivePreset();
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CLoadoutPresetPanel::UpdatePresetButtonStates()
 {
-	equipped_preset_t unEquippedPresetID = GetSelectedPresetID();
+    equipped_preset_t unEquippedPresetID = GetSelectedPresetID();
 
-	CSteamID localSteamID = steamapicontext->SteamUser()->GetSteamID();
-	CTFPlayerInventory *pInv = TFInventoryManager()->GetInventoryForPlayer(localSteamID);
-	if (pInv) {
-		unEquippedPresetID = pInv->GetActiveLocalPreset(m_iClass);
-	}
+    CSteamID localSteamID = steamapicontext->SteamUser()->GetSteamID();
+    CTFPlayerInventory *pInv = TFInventoryManager()->GetInventoryForPlayer( localSteamID );
+    if ( pInv )
+    {
+        unEquippedPresetID = pInv->GetActiveLocalPreset( m_iClass );
+    }
 
-	for ( int i = 0; i < MAX_PRESETS; ++i )
-	{
-		if ( i == unEquippedPresetID )
-		{
-			m_pPresetButtons[i]->SetDefaultColor( m_aDefaultColors[LOADED][FG][DEFAULT], m_aDefaultColors[LOADED][BG][DEFAULT] );
-			m_pPresetButtons[i]->SetArmedColor( m_aDefaultColors[LOADED][FG][ARMED], m_aDefaultColors[LOADED][BG][ARMED] );
-			m_pPresetButtons[i]->SetDepressedColor( m_aDefaultColors[LOADED][FG][DEPRESSED], m_aDefaultColors[LOADED][BG][DEPRESSED] );
-		}
-		else
-		{
-			m_pPresetButtons[i]->SetDefaultColor( m_aDefaultColors[NOTLOADED][FG][DEFAULT], m_aDefaultColors[NOTLOADED][BG][DEFAULT] );
-			m_pPresetButtons[i]->SetArmedColor( m_aDefaultColors[NOTLOADED][FG][ARMED], m_aDefaultColors[NOTLOADED][BG][ARMED] );
-			m_pPresetButtons[i]->SetDepressedColor( m_aDefaultColors[NOTLOADED][FG][DEPRESSED], m_aDefaultColors[NOTLOADED][BG][DEPRESSED] );
-		}
+    for ( int i = 0; i < MAX_PRESETS; ++i )
+    {
+        if ( i == unEquippedPresetID )
+        {
+            m_pPresetButtons[i]->SetDefaultColor( m_aDefaultColors[LOADED][FG][DEFAULT], m_aDefaultColors[LOADED][BG][DEFAULT] );
+            m_pPresetButtons[i]->SetArmedColor( m_aDefaultColors[LOADED][FG][ARMED], m_aDefaultColors[LOADED][BG][ARMED] );
+            m_pPresetButtons[i]->SetDepressedColor( m_aDefaultColors[LOADED][FG][DEPRESSED], m_aDefaultColors[LOADED][BG][DEPRESSED] );
+        }
+        else
+        {
+            m_pPresetButtons[i]->SetDefaultColor( m_aDefaultColors[NOTLOADED][FG][DEFAULT], m_aDefaultColors[NOTLOADED][BG][DEFAULT] );
+            m_pPresetButtons[i]->SetArmedColor( m_aDefaultColors[NOTLOADED][FG][ARMED], m_aDefaultColors[NOTLOADED][BG][ARMED] );
+            m_pPresetButtons[i]->SetDepressedColor( m_aDefaultColors[NOTLOADED][FG][DEPRESSED], m_aDefaultColors[NOTLOADED][BG][DEPRESSED] );
+        }
 
-		CFmtStr fmtCmd( "loadpreset_%i", i );
-		m_pPresetButtons[i]->SetCommand( fmtCmd.Access() );
-	}
+        CFmtStr fmtCmd( "loadpreset_%i", i );
+        m_pPresetButtons[i]->SetCommand( fmtCmd.Access() );
+    }
 }

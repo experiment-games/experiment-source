@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -10,14 +10,11 @@
 #pragma once
 #endif
 
-
 #include <vgui_controls/Panel.h>
 #include <vgui_controls/EditablePanel.h>
 #include "utlvector.h"
 
-
 class CPanelEffect;
-
 
 // Serial under of effect, for safe lookup
 typedef unsigned int EFFECT_HANDLE;
@@ -28,29 +25,28 @@ typedef unsigned int EFFECT_HANDLE;
 //-----------------------------------------------------------------------------
 class C_SDKRootPanel : public vgui::Panel
 {
-	typedef vgui::Panel BaseClass;
-public:
-						C_SDKRootPanel( vgui::VPANEL parent );
-	virtual				~C_SDKRootPanel( void );
+    typedef vgui::Panel BaseClass;
 
-	// Draw Panel effects here
-	virtual void		PostChildPaint();
+   public:
+    C_SDKRootPanel( vgui::VPANEL parent );
+    virtual ~C_SDKRootPanel( void );
 
-	// Clear list of Panel Effects
-	virtual void		LevelInit( void );
-	virtual void		LevelShutdown( void );
+    // Draw Panel effects here
+    virtual void PostChildPaint();
 
-	// Run effects and let them decide whether to remove themselves
-	void				OnTick( void );
+    // Clear list of Panel Effects
+    virtual void LevelInit( void );
+    virtual void LevelShutdown( void );
 
-private:
+    // Run effects and let them decide whether to remove themselves
+    void OnTick( void );
 
-	// Render all panel effects
-	void		RenderPanelEffects( void );
+   private:
+    // Render all panel effects
+    void RenderPanelEffects( void );
 
-	// List of current panel effects
-	CUtlVector< CPanelEffect *> m_Effects;
+    // List of current panel effects
+    CUtlVector< CPanelEffect * > m_Effects;
 };
 
-
-#endif // VGUI_ROOTPANEL_SDK_H
+#endif  // VGUI_ROOTPANEL_SDK_H

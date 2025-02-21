@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -18,14 +18,14 @@ class CTFPlayer;
 
 class CFuncPasstimeGoalieZone : public CBaseTrigger, public IFuncPasstimeGoalieZoneAutoList
 {
-public:
-	DECLARE_CLASS( CFuncPasstimeGoalieZone, CBaseTrigger );
-	DECLARE_DATADESC();
-	virtual void Spawn() OVERRIDE;
+   public:
+    DECLARE_CLASS( CFuncPasstimeGoalieZone, CBaseTrigger );
+    DECLARE_DATADESC();
+    virtual void Spawn() OVERRIDE;
 
-	static bool BPlayerInAny( CTFPlayer *pPlayer );
-	static bool BPlayerInFriendly( CTFPlayer *pPlayer );
-	static bool BPlayerInEnemy( CTFPlayer *pPlayer );
+    static bool BPlayerInAny( CTFPlayer *pPlayer );
+    static bool BPlayerInFriendly( CTFPlayer *pPlayer );
+    static bool BPlayerInEnemy( CTFPlayer *pPlayer );
 };
 
-#endif // FUNC_PASSTIME_GOALIE_ZONE_H  
+#endif  // FUNC_PASSTIME_GOALIE_ZONE_H

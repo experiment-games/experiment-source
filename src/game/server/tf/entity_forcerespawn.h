@@ -15,28 +15,25 @@
 // CTF Force Respawn Entity.
 //
 
-class CTFForceRespawn : public CPointEntity 
+class CTFForceRespawn : public CPointEntity
 {
-public:
-	DECLARE_CLASS( CTFForceRespawn, CPointEntity );
+   public:
+    DECLARE_CLASS( CTFForceRespawn, CPointEntity );
 
-	CTFForceRespawn();
-	void Reset( void );
+    CTFForceRespawn();
+    void Reset( void );
 
-	void ForceRespawn( bool bSwitchTeams, int nTeam = TEAM_UNASSIGNED, bool bRemoveEverything = true );
+    void ForceRespawn( bool bSwitchTeams, int nTeam = TEAM_UNASSIGNED, bool bRemoveEverything = true );
 
-	// Input.
-	void InputForceRespawn( inputdata_t &inputdata );
-	void InputForceRespawnSwitchTeams( inputdata_t &inputdata );
-	void InputForceTeamRespawn( inputdata_t &inputdata );
+    // Input.
+    void InputForceRespawn( inputdata_t &inputdata );
+    void InputForceRespawnSwitchTeams( inputdata_t &inputdata );
+    void InputForceTeamRespawn( inputdata_t &inputdata );
 
-private:
+   private:
+    COutputEvent m_outputOnForceRespawn;  // Fired when the entity is done respawning the players.
 
-	COutputEvent	m_outputOnForceRespawn;	// Fired when the entity is done respawning the players.
-
-	DECLARE_DATADESC();
+    DECLARE_DATADESC();
 };
 
-#endif // ENTITY_FORCERESPAWN_H
-
-
+#endif  // ENTITY_FORCERESPAWN_H

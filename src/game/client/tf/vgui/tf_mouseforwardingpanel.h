@@ -18,17 +18,18 @@
 //-----------------------------------------------------------------------------
 class CMouseMessageForwardingPanel : public vgui::EditablePanel
 {
-	DECLARE_CLASS_SIMPLE( CMouseMessageForwardingPanel, vgui::EditablePanel );
-public:
-	CMouseMessageForwardingPanel( Panel *parent, const char *name );
+    DECLARE_CLASS_SIMPLE( CMouseMessageForwardingPanel, vgui::EditablePanel );
 
-	virtual void PerformLayout( void );
-	virtual void OnCursorEntered();
-	virtual void OnCursorExited();
-	virtual void OnMousePressed( vgui::MouseCode code );
-	virtual void OnMouseReleased( vgui::MouseCode code );
-	virtual void OnMouseDoublePressed( vgui::MouseCode code );
-	virtual void OnMouseWheeled(int delta);
+   public:
+    CMouseMessageForwardingPanel( Panel *parent, const char *name );
+
+    virtual void PerformLayout( void );
+    virtual void OnCursorEntered();
+    virtual void OnCursorExited();
+    virtual void OnMousePressed( vgui::MouseCode code );
+    virtual void OnMouseReleased( vgui::MouseCode code );
+    virtual void OnMouseDoublePressed( vgui::MouseCode code );
+    virtual void OnMouseWheeled( int delta );
 };
 
-#endif // TF_MOUSEFORWARDINGPANEL_H
+#endif  // TF_MOUSEFORWARDINGPANEL_H

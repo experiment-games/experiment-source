@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -21,46 +21,49 @@
 
 using namespace vgui;
 
-#define NUM_NOTABLE_PLAYERS	3
-#define NUM_CATEGORIES	2
-#define NUM_ITEMS_PER_CATEGORY	3
+#define NUM_NOTABLE_PLAYERS 3
+#define NUM_CATEGORIES 2
+#define NUM_ITEMS_PER_CATEGORY 3
 
 class CTFWinPanel : public EditablePanel, public CHudElement
 {
-private:
-	DECLARE_CLASS_SIMPLE( CTFWinPanel, EditablePanel );
+   private:
+    DECLARE_CLASS_SIMPLE( CTFWinPanel, EditablePanel );
 
-public:
-	CTFWinPanel( const char *pElementName );
+   public:
+    CTFWinPanel( const char *pElementName );
 
-	virtual void Reset();
-	virtual void Init();
-	virtual void ApplySchemeSettings( vgui::IScheme *pScheme );
-	virtual void ApplySettings( KeyValues *inResourceData );
-	virtual void FireGameEvent( IGameEvent * event );
-	virtual void OnThink();
-	virtual bool ShouldDraw( void );
-	virtual void SetVisible( bool state );
+    virtual void Reset();
+    virtual void Init();
+    virtual void ApplySchemeSettings( vgui::IScheme *pScheme );
+    virtual void ApplySettings( KeyValues *inResourceData );
+    virtual void FireGameEvent( IGameEvent *event );
+    virtual void OnThink();
+    virtual bool ShouldDraw( void );
+    virtual void SetVisible( bool state );
 
-	virtual int GetRenderGroupPriority() { return 70; }
+    virtual int GetRenderGroupPriority()
+    {
+        return 70;
+    }
 
-private:
-	void UpdateTeamInfo();
+   private:
+    void UpdateTeamInfo();
 
-private:
-	EditablePanel		*m_pTeamScorePanel;
-	CExLabel			*m_pRedTeamName;
-	CExLabel			*m_pBlueTeamName;
-	CAvatarImagePanel	*m_pRedLeaderAvatarImage;
-	CAvatarImagePanel	*m_pBlueLeaderAvatarImage;
-	EditablePanel		*m_pRedLeaderAvatarBG;
-	EditablePanel		*m_pBlueLeaderAvatarBG;
+   private:
+    EditablePanel *m_pTeamScorePanel;
+    CExLabel *m_pRedTeamName;
+    CExLabel *m_pBlueTeamName;
+    CAvatarImagePanel *m_pRedLeaderAvatarImage;
+    CAvatarImagePanel *m_pBlueLeaderAvatarImage;
+    EditablePanel *m_pRedLeaderAvatarBG;
+    EditablePanel *m_pBlueLeaderAvatarBG;
 
-	float	m_flTimeUpdateTeamScore;
-	int		m_iBlueTeamScore;
-	int		m_iRedTeamScore;
+    float m_flTimeUpdateTeamScore;
+    int m_iBlueTeamScore;
+    int m_iRedTeamScore;
 
-	bool	m_bShouldBeVisible;
+    bool m_bShouldBeVisible;
 };
 
-#endif //TFWINPANEL_H
+#endif  // TFWINPANEL_H

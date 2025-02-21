@@ -21,23 +21,21 @@ BEGIN_DATADESC( CTFForceRespawn )
 
 // Inputs.
 DEFINE_INPUTFUNC( FIELD_VOID, "ForceRespawn", InputForceRespawn ),
-DEFINE_INPUTFUNC( FIELD_VOID, "ForceRespawnSwitchTeams", InputForceRespawnSwitchTeams ),
-DEFINE_INPUTFUNC( FIELD_INTEGER, "ForceTeamRespawn", InputForceTeamRespawn ),
+    DEFINE_INPUTFUNC( FIELD_VOID, "ForceRespawnSwitchTeams", InputForceRespawnSwitchTeams ),
+    DEFINE_INPUTFUNC( FIELD_INTEGER, "ForceTeamRespawn", InputForceTeamRespawn ),
 
-// Outputs.
-DEFINE_OUTPUT( m_outputOnForceRespawn, "OnForceRespawn" ),
+    // Outputs.
+    DEFINE_OUTPUT( m_outputOnForceRespawn, "OnForceRespawn" ),
 
-END_DATADESC()
+    END_DATADESC()
 
-
-LINK_ENTITY_TO_CLASS( game_forcerespawn, CTFForceRespawn );
+        LINK_ENTITY_TO_CLASS( game_forcerespawn, CTFForceRespawn );
 
 //-----------------------------------------------------------------------------
 // Purpose: Constructor.
 //-----------------------------------------------------------------------------
 CTFForceRespawn::CTFForceRespawn()
 {
-
 }
 
 //-----------------------------------------------------------------------------
@@ -45,75 +43,75 @@ CTFForceRespawn::CTFForceRespawn()
 //-----------------------------------------------------------------------------
 void CTFForceRespawn::ForceRespawn( bool bSwitchTeams, int nTeam /* = TEAM_UNASSIGNED */, bool bRemoveEverything /* = true */ )
 {
-	int i = 0;
+    int i = 0;
 
-	if ( bRemoveEverything && TFGameRules() )
-	{
-		TFGameRules()->RemoveAllProjectilesAndBuildings();
-	}
+    if ( bRemoveEverything && TFGameRules() )
+    {
+        TFGameRules()->RemoveAllProjectilesAndBuildings();
+    }
 
-	// respawn the players
-	for ( i = 1 ; i <= gpGlobals->maxClients ; i++ )
-	{
-		CTFPlayer *pPlayer = ToTFPlayer( UTIL_PlayerByIndex( i ) );
-		if ( pPlayer )
-		{
-			// Ignore players who aren't on an active team
-			if ( pPlayer->GetTeamNumber() != TF_TEAM_RED && pPlayer->GetTeamNumber() != TF_TEAM_BLUE )
-			{
-				// Let the player spawn immediately when they do pick a class
-				pPlayer->AllowInstantSpawn();
-				continue;
-			}
+    // respawn the players
+    for ( i = 1; i <= gpGlobals->maxClients; i++ )
+    {
+        CTFPlayer *pPlayer = ToTFPlayer( UTIL_PlayerByIndex( i ) );
+        if ( pPlayer )
+        {
+            // Ignore players who aren't on an active team
+            if ( pPlayer->GetTeamNumber() != TF_TEAM_RED && pPlayer->GetTeamNumber() != TF_TEAM_BLUE )
+            {
+                // Let the player spawn immediately when they do pick a class
+                pPlayer->AllowInstantSpawn();
+                continue;
+            }
 
-			if ( bSwitchTeams )
-			{
-				if ( pPlayer->GetTeamNumber() == TF_TEAM_RED )
-				{
-					pPlayer->ForceChangeTeam( TF_TEAM_BLUE, true );
-				}
-				else if ( pPlayer->GetTeamNumber() == TF_TEAM_BLUE )
-				{
-					pPlayer->ForceChangeTeam( TF_TEAM_RED, true );
-				}
-			}
+            if ( bSwitchTeams )
+            {
+                if ( pPlayer->GetTeamNumber() == TF_TEAM_RED )
+                {
+                    pPlayer->ForceChangeTeam( TF_TEAM_BLUE, true );
+                }
+                else if ( pPlayer->GetTeamNumber() == TF_TEAM_BLUE )
+                {
+                    pPlayer->ForceChangeTeam( TF_TEAM_RED, true );
+                }
+            }
 
-			// Ignore players who haven't picked a class yet
-			if ( !pPlayer->GetPlayerClass() || pPlayer->GetPlayerClass()->GetClassIndex() == TF_CLASS_UNDEFINED )
-			{
-				// Allow them to spawn instantly when they do choose
-				pPlayer->AllowInstantSpawn();
-				continue;
-			}
+            // Ignore players who haven't picked a class yet
+            if ( !pPlayer->GetPlayerClass() || pPlayer->GetPlayerClass()->GetClassIndex() == TF_CLASS_UNDEFINED )
+            {
+                // Allow them to spawn instantly when they do choose
+                pPlayer->AllowInstantSpawn();
+                continue;
+            }
 
-			if ( nTeam != TEAM_UNASSIGNED )
-			{
-				// Ignore players who aren't on the team we're trying to respawn
-				if ( pPlayer->GetTeamNumber() != nTeam )
-				{
-					continue;
-				}
-				else
-				{
-					// Ignore players on the team that aren't dead
-					if ( pPlayer->IsAlive() )
-						continue;
-				}
-			}
-			
-			pPlayer->ForceRespawn();
-		}
-	}
+            if ( nTeam != TEAM_UNASSIGNED )
+            {
+                // Ignore players who aren't on the team we're trying to respawn
+                if ( pPlayer->GetTeamNumber() != nTeam )
+                {
+                    continue;
+                }
+                else
+                {
+                    // Ignore players on the team that aren't dead
+                    if ( pPlayer->IsAlive() )
+                        continue;
+                }
+            }
 
-	// remove any dropped weapons/ammo packs	
-	CBaseEntity *pEnt = NULL;
-	while ( (pEnt = gEntList.FindEntityByClassname( pEnt, "tf_ammo_pack" )) != NULL )
-	{
-		UTIL_Remove( pEnt );
-	}
+            pPlayer->ForceRespawn();
+        }
+    }
 
-	// Output.
-	m_outputOnForceRespawn.FireOutput( this, this );
+    // remove any dropped weapons/ammo packs
+    CBaseEntity *pEnt = NULL;
+    while ( ( pEnt = gEntList.FindEntityByClassname( pEnt, "tf_ammo_pack" ) ) != NULL )
+    {
+        UTIL_Remove( pEnt );
+    }
+
+    // Output.
+    m_outputOnForceRespawn.FireOutput( this, this );
 }
 
 //-----------------------------------------------------------------------------
@@ -121,7 +119,7 @@ void CTFForceRespawn::ForceRespawn( bool bSwitchTeams, int nTeam /* = TEAM_UNASS
 //-----------------------------------------------------------------------------
 void CTFForceRespawn::InputForceRespawn( inputdata_t &inputdata )
 {
-	ForceRespawn( false );
+    ForceRespawn( false );
 }
 
 //-----------------------------------------------------------------------------
@@ -129,7 +127,7 @@ void CTFForceRespawn::InputForceRespawn( inputdata_t &inputdata )
 //-----------------------------------------------------------------------------
 void CTFForceRespawn::InputForceRespawnSwitchTeams( inputdata_t &inputdata )
 {
-	ForceRespawn( true );
+    ForceRespawn( true );
 }
 
 //-----------------------------------------------------------------------------
@@ -137,7 +135,6 @@ void CTFForceRespawn::InputForceRespawnSwitchTeams( inputdata_t &inputdata )
 //-----------------------------------------------------------------------------
 void CTFForceRespawn::InputForceTeamRespawn( inputdata_t &inputdata )
 {
-	int nTeam = inputdata.value.Int();
-	ForceRespawn( false, nTeam, false );
+    int nTeam = inputdata.value.Int();
+    ForceRespawn( false, nTeam, false );
 }
-

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //===========================================================================//
@@ -23,4 +23,4 @@ int CodeForPhonemeByIndex( int index );
 const char *DescForPhonemeByIndex( int index );
 bool IsStandardPhoneme( int index );
 
-#endif // PHONEMECONVERTER_H
+#endif  // PHONEMECONVERTER_H

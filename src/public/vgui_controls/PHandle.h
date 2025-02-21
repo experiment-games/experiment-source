@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -24,22 +24,38 @@ class Panel;
 //-----------------------------------------------------------------------------
 class PHandle
 {
-public:
-	PHandle() : m_iPanelID(INVALID_PANEL) {} //m_iSerialNumber(0), m_pListEntry(0) {}
+   public:
+    PHandle()
+        : m_iPanelID( INVALID_PANEL ) {}  // m_iSerialNumber(0), m_pListEntry(0) {}
 
-	Panel *Get() const;
-	Panel *Set( Panel *pPanel );
-	Panel *Set( HPanel hPanel );
+    Panel *Get() const;
+    Panel *Set( Panel *pPanel );
+    Panel *Set( HPanel hPanel );
 
-	operator Panel *() const				{ return Get(); }
-	Panel * operator ->() const				{ return Get(); }
-	Panel * operator = (Panel *pPanel)		{ return Set(pPanel); }
+    operator Panel *() const
+    {
+        return Get();
+    }
+    Panel *operator->() const
+    {
+        return Get();
+    }
+    Panel *operator=( Panel *pPanel )
+    {
+        return Set( pPanel );
+    }
 
-	bool operator == (Panel *pPanel)		{ return (Get() == pPanel); }
-	operator bool ()						{ return Get() != 0; }
+    bool operator==( Panel *pPanel )
+    {
+        return ( Get() == pPanel );
+    }
+    operator bool()
+    {
+        return Get() != 0;
+    }
 
-private:
-	HPanel m_iPanelID;
+   private:
+    HPanel m_iPanelID;
 };
 
 //-----------------------------------------------------------------------------
@@ -47,40 +63,77 @@ private:
 //-----------------------------------------------------------------------------
 class VPanelHandle
 {
-public:
-	VPanelHandle() : m_iPanelID(INVALID_PANEL) {}
+   public:
+    VPanelHandle()
+        : m_iPanelID( INVALID_PANEL ) {}
 
-	VPANEL Get() const;
-	VPANEL Set( VPANEL pPanel );
+    VPANEL Get() const;
+    VPANEL Set( VPANEL pPanel );
 
-	operator VPANEL () const					{ return Get(); }
-	VPANEL operator = (VPANEL pPanel)			{ return Set(pPanel); }
+    operator VPANEL() const
+    {
+        return Get();
+    }
+    VPANEL operator=( VPANEL pPanel )
+    {
+        return Set( pPanel );
+    }
 
-	bool operator == (VPANEL pPanel) const		{ return (Get() == pPanel); }
-	operator bool () const						{ return Get() != 0; }
+    bool operator==( VPANEL pPanel ) const
+    {
+        return ( Get() == pPanel );
+    }
+    operator bool() const
+    {
+        return Get() != 0;
+    }
 
-private:
-	HPanel m_iPanelID;
+   private:
+    HPanel m_iPanelID;
 };
 
 //-----------------------------------------------------------------------------
 // Purpose: DHANDLE is a templated version of PHandle
 //-----------------------------------------------------------------------------
-template< class PanelType >
+template < class PanelType >
 class DHANDLE : public PHandle
 {
-public:
-	PanelType *Get() const				{ return (PanelType *)PHandle::Get(); }
-	PanelType *Set( PanelType *pPanel )	{ return (PanelType *)PHandle::Set(pPanel); }
-	PanelType *Set( HPanel hPanel )		{ return (PanelType *)PHandle::Set(hPanel); }
+   public:
+    PanelType *Get() const
+    {
+        return ( PanelType * )PHandle::Get();
+    }
+    PanelType *Set( PanelType *pPanel )
+    {
+        return ( PanelType * )PHandle::Set( pPanel );
+    }
+    PanelType *Set( HPanel hPanel )
+    {
+        return ( PanelType * )PHandle::Set( hPanel );
+    }
 
-	operator PanelType *() const					{ return (PanelType *)PHandle::Get(); }
-	PanelType * operator ->() const				{ return (PanelType *)PHandle::Get(); }
-	PanelType * operator = (PanelType *pPanel)	{ return (PanelType *)PHandle::Set(pPanel); }
-	bool operator == (Panel *pPanel) const		{ return (PHandle::Get() == pPanel); }
-	operator bool () const						{ return PHandle::Get() != NULL; }
+    operator PanelType *() const
+    {
+        return ( PanelType * )PHandle::Get();
+    }
+    PanelType *operator->() const
+    {
+        return ( PanelType * )PHandle::Get();
+    }
+    PanelType *operator=( PanelType *pPanel )
+    {
+        return ( PanelType * )PHandle::Set( pPanel );
+    }
+    bool operator==( Panel *pPanel ) const
+    {
+        return ( PHandle::Get() == pPanel );
+    }
+    operator bool() const
+    {
+        return PHandle::Get() != NULL;
+    }
 };
 
-};
+};  // namespace vgui
 
-#endif // PHANDLE_H
+#endif  // PHANDLE_H

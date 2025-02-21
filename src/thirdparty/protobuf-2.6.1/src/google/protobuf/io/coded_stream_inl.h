@@ -41,26 +41,32 @@
 #include <string>
 #include <google/protobuf/stubs/stl_util.h>
 
-namespace google {
-namespace protobuf {
-namespace io {
+namespace google
+{
+namespace protobuf
+{
+namespace io
+{
 
-inline bool CodedInputStream::InternalReadStringInline(string* buffer,
-                                                       int size) {
-  if (size < 0) return false;  // security: size is often user-supplied
+inline bool CodedInputStream::InternalReadStringInline( string* buffer,
+                                                        int size )
+{
+    if ( size < 0 ) return false;  // security: size is often user-supplied
 
-  if (BufferSize() >= size) {
-    STLStringResizeUninitialized(buffer, size);
-    // When buffer is empty, string_as_array(buffer) will return NULL but memcpy
-    // requires non-NULL pointers even when size is 0. Hench this check.
-    if (size > 0) {
-      memcpy(mutable_string_data(buffer), buffer_, size);
-      Advance(size);
+    if ( BufferSize() >= size )
+    {
+        STLStringResizeUninitialized( buffer, size );
+        // When buffer is empty, string_as_array(buffer) will return NULL but memcpy
+        // requires non-NULL pointers even when size is 0. Hench this check.
+        if ( size > 0 )
+        {
+            memcpy( mutable_string_data( buffer ), buffer_, size );
+            Advance( size );
+        }
+        return true;
     }
-    return true;
-  }
 
-  return ReadStringFallback(buffer, size);
+    return ReadStringFallback( buffer, size );
 }
 
 }  // namespace io

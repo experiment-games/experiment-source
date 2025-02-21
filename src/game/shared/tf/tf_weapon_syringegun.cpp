@@ -42,13 +42,13 @@ END_DATADESC()
 //
 void CTFSyringeGun::Precache()
 {
-	BaseClass::Precache();
+    BaseClass::Precache();
 
 #ifndef CLIENT_DLL
-	PrecacheParticleSystem( "nailtrails_medic_blue_crit" );
-	PrecacheParticleSystem( "nailtrails_medic_blue" );
-	PrecacheParticleSystem( "nailtrails_medic_red_crit" );
-	PrecacheParticleSystem( "nailtrails_medic_red" );
+    PrecacheParticleSystem( "nailtrails_medic_blue_crit" );
+    PrecacheParticleSystem( "nailtrails_medic_blue" );
+    PrecacheParticleSystem( "nailtrails_medic_red_crit" );
+    PrecacheParticleSystem( "nailtrails_medic_red" );
 #endif
 }
 
@@ -57,13 +57,13 @@ void CTFSyringeGun::Precache()
 //-----------------------------------------------------------------------------
 bool CTFSyringeGun::Deploy()
 {
-	CBaseEntity *pOwner = GetOwnerEntity();
-	if ( pOwner )
-	{
-		ToTFPlayer( pOwner )->TeamFortress_SetSpeed();
-	}
-	
-	return BaseClass::Deploy();
+    CBaseEntity *pOwner = GetOwnerEntity();
+    if ( pOwner )
+    {
+        ToTFPlayer( pOwner )->TeamFortress_SetSpeed();
+    }
+
+    return BaseClass::Deploy();
 }
 
 //-----------------------------------------------------------------------------
@@ -71,52 +71,52 @@ bool CTFSyringeGun::Deploy()
 //-----------------------------------------------------------------------------
 bool CTFSyringeGun::Holster( CBaseCombatWeapon *pSwitchingTo )
 {
-	CBaseEntity *pOwner = GetOwnerEntity();
-	if ( pOwner )
-	{
-		ToTFPlayer( pOwner )->TeamFortress_SetSpeed();
-	}
+    CBaseEntity *pOwner = GetOwnerEntity();
+    if ( pOwner )
+    {
+        ToTFPlayer( pOwner )->TeamFortress_SetSpeed();
+    }
 
-	return BaseClass::Holster( pSwitchingTo );
+    return BaseClass::Holster( pSwitchingTo );
 }
 
 void CTFSyringeGun::RemoveProjectileAmmo( CTFPlayer *pPlayer )
 {
-	float flUberChargeAmmoPerShot = UberChargeAmmoPerShot();
-	if ( flUberChargeAmmoPerShot > 0.0f )
-	{
+    float flUberChargeAmmoPerShot = UberChargeAmmoPerShot();
+    if ( flUberChargeAmmoPerShot > 0.0f )
+    {
 #ifndef CLIENT_DLL
-		if ( !pPlayer )
-			return;
+        if ( !pPlayer )
+            return;
 
-		CWeaponMedigun *pMedigun = static_cast< CWeaponMedigun * >( pPlayer->Weapon_OwnsThisID( TF_WEAPON_MEDIGUN ) );
-		if ( !pMedigun )
-			return;
+        CWeaponMedigun *pMedigun = static_cast< CWeaponMedigun * >( pPlayer->Weapon_OwnsThisID( TF_WEAPON_MEDIGUN ) );
+        if ( !pMedigun )
+            return;
 
-		pMedigun->SubtractCharge( flUberChargeAmmoPerShot );
+        pMedigun->SubtractCharge( flUberChargeAmmoPerShot );
 #endif
-		return;
-	}
+        return;
+    }
 
-	return BaseClass::RemoveProjectileAmmo( pPlayer );
+    return BaseClass::RemoveProjectileAmmo( pPlayer );
 }
 
 bool CTFSyringeGun::HasPrimaryAmmo( void )
 {
-	float flUberChargeAmmoPerShot = UberChargeAmmoPerShot();
-	if ( flUberChargeAmmoPerShot > 0.0f )
-	{
-		CTFPlayer *pPlayer = ToTFPlayer( GetOwnerEntity() );
-		if ( !pPlayer )
-			return false;
+    float flUberChargeAmmoPerShot = UberChargeAmmoPerShot();
+    if ( flUberChargeAmmoPerShot > 0.0f )
+    {
+        CTFPlayer *pPlayer = ToTFPlayer( GetOwnerEntity() );
+        if ( !pPlayer )
+            return false;
 
-		CWeaponMedigun *pMedigun = static_cast< CWeaponMedigun * >( pPlayer->Weapon_OwnsThisID( TF_WEAPON_MEDIGUN ) );
-		if ( !pMedigun )
-			return false;
+        CWeaponMedigun *pMedigun = static_cast< CWeaponMedigun * >( pPlayer->Weapon_OwnsThisID( TF_WEAPON_MEDIGUN ) );
+        if ( !pMedigun )
+            return false;
 
-		float flCharge = pMedigun->GetChargeLevel();
-		return flUberChargeAmmoPerShot <= flCharge;
-	}
+        float flCharge = pMedigun->GetChargeLevel();
+        return flUberChargeAmmoPerShot <= flCharge;
+    }
 
-	return BaseClass::HasPrimaryAmmo();
+    return BaseClass::HasPrimaryAmmo();
 }

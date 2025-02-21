@@ -12,12 +12,12 @@
 //--------------------------------------------------------------------------------------------------------
 class AttributeToolPanel : public CNavUIToolPanel
 {
-	DECLARE_CLASS_SIMPLE( AttributeToolPanel, CNavUIToolPanel );
+    DECLARE_CLASS_SIMPLE( AttributeToolPanel, CNavUIToolPanel );
 
-public:
-	AttributeToolPanel( vgui::Panel *parent, const char *toolName );
+   public:
+    AttributeToolPanel( vgui::Panel *parent, const char *toolName );
 };
 
-#endif // SERVER_USES_VGUI
+#endif  // SERVER_USES_VGUI
 
-#endif // ATTRIBUTETOOL_H
+#endif  // ATTRIBUTETOOL_H

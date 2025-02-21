@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -24,129 +24,134 @@ class CMatchMakingDashboardSidePanel* GetPlayListPanel( bool bRecreate );
 
 class CPlayListEntry : public vgui::EditablePanel
 {
-	DECLARE_CLASS_SIMPLE( CPlayListEntry, vgui::EditablePanel );
-public:
+    DECLARE_CLASS_SIMPLE( CPlayListEntry, vgui::EditablePanel );
 
-	CPlayListEntry( Panel* pParent, const char* pszName );
-	virtual ~CPlayListEntry();
+   public:
+    CPlayListEntry( Panel* pParent, const char* pszName );
+    virtual ~CPlayListEntry();
 
-	virtual void ApplySchemeSettings( vgui::IScheme *pScheme ) OVERRIDE;
-	virtual void ApplySettings( KeyValues *inResourceData ) OVERRIDE;
-	virtual void OnCommand( const char *command ) OVERRIDE;
-	virtual void OnTick() OVERRIDE;
-	virtual void PerformLayout() OVERRIDE;
+    virtual void ApplySchemeSettings( vgui::IScheme* pScheme ) OVERRIDE;
+    virtual void ApplySettings( KeyValues* inResourceData ) OVERRIDE;
+    virtual void OnCommand( const char* command ) OVERRIDE;
+    virtual void OnTick() OVERRIDE;
+    virtual void PerformLayout() OVERRIDE;
 
-	virtual void UpdateDisabledState();
-	virtual void OnPlaylistActive() {};
+    virtual void UpdateDisabledState();
+    virtual void OnPlaylistActive(){};
 
-protected:
+   protected:
+    CUtlString m_strImageName;
+    CUtlString m_strButtonCommand;
+    CUtlString m_strButtonToken;
+    CUtlString m_strDescToken;
+    ETFMatchGroup m_eMatchGroup = k_eTFMatchGroup_Invalid;
 
-	CUtlString m_strImageName;
-	CUtlString m_strButtonCommand;
-	CUtlString m_strButtonToken;
-	CUtlString m_strDescToken;
-	ETFMatchGroup m_eMatchGroup = k_eTFMatchGroup_Invalid;
+    void SetEnabled();
+    void SetDisabled( bool bUsersCanAccess, const char* pszImage, const char* pszCommand, const wchar_t* pszTooltipLocalized );
 
-	void SetEnabled();
-	void SetDisabled( bool bUsersCanAccess, const char* pszImage, const char* pszCommand, const wchar_t* pszTooltipLocalized );
+   private:
+    void UpdateBannedState();
 
-private:
+    struct DisabledStateDesc_t
+    {
+        const char* m_pszLocToken;
+        const char* m_pszButtonCommand;
+        const char* m_pszImageName;
+    };
 
-	void UpdateBannedState();
+    bool m_bDisabled;
 
-	struct DisabledStateDesc_t
-	{
-		const char* m_pszLocToken;
-		const char* m_pszButtonCommand;
-		const char* m_pszImageName;
-	};
-
-	
-	bool m_bDisabled;
-
-	EditablePanel* m_pToolTipHack;
-	EditablePanel* m_pToolTipButtonHack;
-	CExImageButton* m_pDisabledIcon;
-	CExButton* m_pModeButton;
-	
+    EditablePanel* m_pToolTipHack;
+    EditablePanel* m_pToolTipButtonHack;
+    CExImageButton* m_pDisabledIcon;
+    CExButton* m_pModeButton;
 };
 
-class CEventPlayListEntry : public CPlayListEntry
-						  , public CGameEventListener
+class CEventPlayListEntry : public CPlayListEntry, public CGameEventListener
 {
-	DECLARE_CLASS_SIMPLE( CEventPlayListEntry, CPlayListEntry );
-public:
-	CEventPlayListEntry( Panel* pParent, const char* pszName );
+    DECLARE_CLASS_SIMPLE( CEventPlayListEntry, CPlayListEntry );
 
-	virtual void PerformLayout() OVERRIDE;
-	virtual void ApplySchemeSettings( vgui::IScheme *pScheme ) OVERRIDE;
-	virtual void OnThink() OVERRIDE;
+   public:
+    CEventPlayListEntry( Panel* pParent, const char* pszName );
 
-	virtual void FireGameEvent( IGameEvent *event ) OVERRIDE;
+    virtual void PerformLayout() OVERRIDE;
+    virtual void ApplySchemeSettings( vgui::IScheme* pScheme ) OVERRIDE;
+    virtual void OnThink() OVERRIDE;
 
-	void UpdateEventMatchGroup();
+    virtual void FireGameEvent( IGameEvent* event ) OVERRIDE;
 
-	virtual void UpdateDisabledState() OVERRIDE;
-	virtual void OnPlaylistActive() OVERRIDE;
+    void UpdateEventMatchGroup();
 
-private:
-	void UpdateExpireLabel();
+    virtual void UpdateDisabledState() OVERRIDE;
+    virtual void OnPlaylistActive() OVERRIDE;
 
-	bool m_bFlashedOnce = false;
-	RTime32 m_rtExpireTime = 0;
+   private:
+    void UpdateExpireLabel();
+
+    bool m_bFlashedOnce = false;
+    RTime32 m_rtExpireTime = 0;
 };
 
 //-----------------------------------------------------------------------------
 // Purpose: Matchmaking panel that contains controls for matchmaking
 //-----------------------------------------------------------------------------
-class CTFPlaylistPanel : public vgui::EditablePanel
-					   , public CLocalSteamSharedObjectListener
-					   , public CGameEventListener
-						
+class CTFPlaylistPanel : public vgui::EditablePanel, public CLocalSteamSharedObjectListener, public CGameEventListener
+
 {
-public:
-	DECLARE_CLASS_SIMPLE( CTFPlaylistPanel, vgui::EditablePanel );
-	CTFPlaylistPanel( Panel *parent, const char *panelName );
-	virtual ~CTFPlaylistPanel();
+   public:
+    DECLARE_CLASS_SIMPLE( CTFPlaylistPanel, vgui::EditablePanel );
+    CTFPlaylistPanel( Panel* parent, const char* panelName );
+    virtual ~CTFPlaylistPanel();
 
-	virtual void ApplySchemeSettings( vgui::IScheme *pScheme ) OVERRIDE;
-	virtual void OnCommand( const char *command ) OVERRIDE;
-	virtual void OnThink() OVERRIDE;
+    virtual void ApplySchemeSettings( vgui::IScheme* pScheme ) OVERRIDE;
+    virtual void OnCommand( const char* command ) OVERRIDE;
+    virtual void OnThink() OVERRIDE;
 
-	virtual void SOCreated( const CSteamID & steamIDOwner, const GCSDK::CSharedObject *pObject, GCSDK::ESOCacheEvent eEvent ) OVERRIDE { SOEvent( pObject ); }
-	virtual void SOUpdated( const CSteamID & steamIDOwner, const GCSDK::CSharedObject *pObject, GCSDK::ESOCacheEvent eEvent ) OVERRIDE { SOEvent( pObject ); }
-	virtual void SODestroyed( const CSteamID & steamIDOwner, const GCSDK::CSharedObject *pObject, GCSDK::ESOCacheEvent eEvent ) OVERRIDE { SOEvent( pObject ); }
+    virtual void SOCreated( const CSteamID& steamIDOwner, const GCSDK::CSharedObject* pObject, GCSDK::ESOCacheEvent eEvent ) OVERRIDE
+    {
+        SOEvent( pObject );
+    }
+    virtual void SOUpdated( const CSteamID& steamIDOwner, const GCSDK::CSharedObject* pObject, GCSDK::ESOCacheEvent eEvent ) OVERRIDE
+    {
+        SOEvent( pObject );
+    }
+    virtual void SODestroyed( const CSteamID& steamIDOwner, const GCSDK::CSharedObject* pObject, GCSDK::ESOCacheEvent eEvent ) OVERRIDE
+    {
+        SOEvent( pObject );
+    }
 
-	virtual void FireGameEvent( IGameEvent* event ) OVERRIDE;
+    virtual void FireGameEvent( IGameEvent* event ) OVERRIDE;
 
-	void UpdatePlaylistEntries( void );
+    void UpdatePlaylistEntries( void );
 
-	MESSAGE_FUNC( SidePanelActive, "SidePanelActive" );
-private:
-	void UpdateEventStatus();
-	void SOEvent( const GCSDK::CSharedObject* pObject );
+    MESSAGE_FUNC( SidePanelActive, "SidePanelActive" );
 
-	CPlayListEntry* m_pCasual = NULL;
-	CPlayListEntry* m_pCompetitive = NULL;
-	CPlayListEntry* m_pMvM = NULL;
-	CEventPlayListEntry* m_pEvent = NULL;
-	bool m_bLastSawEventActive = false;
+   private:
+    void UpdateEventStatus();
+    void SOEvent( const GCSDK::CSharedObject* pObject );
+
+    CPlayListEntry* m_pCasual = NULL;
+    CPlayListEntry* m_pCompetitive = NULL;
+    CPlayListEntry* m_pMvM = NULL;
+    CEventPlayListEntry* m_pEvent = NULL;
+    bool m_bLastSawEventActive = false;
 };
 
 class CTFDashboardPlaylistPanel : public CMatchMakingDashboardSidePanel,
-								  public CGameEventListener
+                                  public CGameEventListener
 {
-public:
-	DECLARE_CLASS_SIMPLE( CTFDashboardPlaylistPanel, CMatchMakingDashboardSidePanel);
-	CTFDashboardPlaylistPanel( Panel *parent, const char *panelName );
-	virtual ~CTFDashboardPlaylistPanel();
+   public:
+    DECLARE_CLASS_SIMPLE( CTFDashboardPlaylistPanel, CMatchMakingDashboardSidePanel );
+    CTFDashboardPlaylistPanel( Panel* parent, const char* panelName );
+    virtual ~CTFDashboardPlaylistPanel();
 
-	virtual void AddActionSignalTarget( Panel *messageTarget ) OVERRIDE;
-	virtual void OnCommand( const char *command ) OVERRIDE;
+    virtual void AddActionSignalTarget( Panel* messageTarget ) OVERRIDE;
+    virtual void OnCommand( const char* command ) OVERRIDE;
 
-	virtual void FireGameEvent( IGameEvent *event ) OVERRIDE;
-private:
-	CTFPlaylistPanel* m_pPlayList;
+    virtual void FireGameEvent( IGameEvent* event ) OVERRIDE;
+
+   private:
+    CTFPlaylistPanel* m_pPlayList;
 };
 
-#endif // TF_MATCHMAKING_DASHBOARD_PLAYLIST_H
+#endif  // TF_MATCHMAKING_DASHBOARD_PLAYLIST_H

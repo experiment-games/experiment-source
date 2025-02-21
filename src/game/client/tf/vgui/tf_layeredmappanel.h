@@ -22,85 +22,94 @@ class CTFLayeredMapPanel;
 class CTFLayeredMapItemPanel;
 
 //=========================================================
-class CLayeredMapToolTip : public vgui::BaseTooltip 
+class CLayeredMapToolTip : public vgui::BaseTooltip
 {
-	DECLARE_CLASS_SIMPLE( CLayeredMapToolTip, vgui::BaseTooltip );
-public:
-	CLayeredMapToolTip(vgui::Panel *parent, const char *text = NULL);
+    DECLARE_CLASS_SIMPLE( CLayeredMapToolTip, vgui::BaseTooltip );
 
-	void SetText(const char *text) { return; }
-	const char *GetText() { return NULL; }
+   public:
+    CLayeredMapToolTip( vgui::Panel *parent, const char *text = NULL );
 
-	virtual void PerformLayout();
-	virtual void ShowTooltip( vgui::Panel *currentPanel );
-	virtual void HideTooltip();
+    void SetText( const char *text )
+    {
+        return;
+    }
+    const char *GetText()
+    {
+        return NULL;
+    }
 
-	void SetupPanels( CTFLayeredMapPanel *pParentPanel, vgui::EditablePanel *pControlledPanel );
+    virtual void PerformLayout();
+    virtual void ShowTooltip( vgui::Panel *currentPanel );
+    virtual void HideTooltip();
 
-private:
-	void GetPosition( itempanel_tooltippos_t iTooltipPosition, CTFLayeredMapItemPanel *pMapItemPanel, int iItemX, int iItemY, int *iXPos, int *iYPos );
-	bool ValidatePosition( CTFLayeredMapItemPanel *pItemPanel, int iItemX, int iItemY, int *iXPos, int *iYPos );
+    void SetupPanels( CTFLayeredMapPanel *pParentPanel, vgui::EditablePanel *pControlledPanel );
 
-	vgui::DHANDLE<CTFLayeredMapItemPanel> m_hCurrentPanel;
+   private:
+    void GetPosition( itempanel_tooltippos_t iTooltipPosition, CTFLayeredMapItemPanel *pMapItemPanel, int iItemX, int iItemY, int *iXPos, int *iYPos );
+    bool ValidatePosition( CTFLayeredMapItemPanel *pItemPanel, int iItemX, int iItemY, int *iXPos, int *iYPos );
 
-	CTFLayeredMapPanel *m_pParentPanel;
-	vgui::EditablePanel	*m_pControlledPanel;
+    vgui::DHANDLE< CTFLayeredMapItemPanel > m_hCurrentPanel;
+
+    CTFLayeredMapPanel *m_pParentPanel;
+    vgui::EditablePanel *m_pControlledPanel;
 };
 
 //=========================================================
 class CTFLayeredMapItemPanel : public vgui::EditablePanel
 {
-	DECLARE_CLASS_SIMPLE( CTFLayeredMapItemPanel, vgui::EditablePanel );
-public:
-	CTFLayeredMapItemPanel( Panel *parent, const char *pName );
+    DECLARE_CLASS_SIMPLE( CTFLayeredMapItemPanel, vgui::EditablePanel );
 
-	virtual void ApplySettings( KeyValues *inResourceData );
-	virtual void ApplySchemeSettings( vgui::IScheme *pScheme );
+   public:
+    CTFLayeredMapItemPanel( Panel *parent, const char *pName );
 
-	// Button 
-	virtual void OnCursorEntered();
-	virtual void OnCursorExited();
-	virtual void OnMousePressed(vgui::MouseCode code);
-	
-	//
-	void SetCompletionState( bool bIsCompleted );
-	KeyValues * GetItemKvData () { return m_kvData; }
+    virtual void ApplySettings( KeyValues *inResourceData );
+    virtual void ApplySchemeSettings( vgui::IScheme *pScheme );
 
-private:
+    // Button
+    virtual void OnCursorEntered();
+    virtual void OnCursorExited();
+    virtual void OnMousePressed( vgui::MouseCode code );
 
-	vgui::ScalableImagePanel	*m_pIsCompleted;
-	vgui::ScalableImagePanel	*m_pIsCompletedHighlight;
+    //
+    void SetCompletionState( bool bIsCompleted );
+    KeyValues *GetItemKvData()
+    {
+        return m_kvData;
+    }
 
-	vgui::ScalableImagePanel	*m_pNotCompleted;
-	vgui::ScalableImagePanel	*m_pNotCompletedHighlight;
+   private:
+    vgui::ScalableImagePanel *m_pIsCompleted;
+    vgui::ScalableImagePanel *m_pIsCompletedHighlight;
 
-	bool m_bIsCompleted;
-	bool m_bIsMouseOvered;
+    vgui::ScalableImagePanel *m_pNotCompleted;
+    vgui::ScalableImagePanel *m_pNotCompletedHighlight;
 
-	KeyValues *m_kvData;
+    bool m_bIsCompleted;
+    bool m_bIsMouseOvered;
+
+    KeyValues *m_kvData;
 };
 
 //=========================================================
 class CTFLayeredMapPanel : public vgui::EditablePanel
 {
-	DECLARE_CLASS_SIMPLE( CTFLayeredMapPanel, vgui::EditablePanel );
-public:
-	CTFLayeredMapPanel( Panel *parent, const char *pName );
+    DECLARE_CLASS_SIMPLE( CTFLayeredMapPanel, vgui::EditablePanel );
 
-	virtual void ApplySettings( KeyValues *inResourceData );
-	virtual void ApplySchemeSettings( vgui::IScheme *pScheme );
-	
+   public:
+    CTFLayeredMapPanel( Panel *parent, const char *pName );
 
-	//CUtlVector<vgui::ImagePanel*> m_pImages;
+    virtual void ApplySettings( KeyValues *inResourceData );
+    virtual void ApplySchemeSettings( vgui::IScheme *pScheme );
 
-private:
+    // CUtlVector<vgui::ImagePanel*> m_pImages;
 
-	EditablePanel				*m_pToolTipPanel;
-	CLayeredMapToolTip			*m_pToolTip;
+   private:
+    EditablePanel *m_pToolTipPanel;
+    CLayeredMapToolTip *m_pToolTip;
 
-	KeyValues *m_pLayeredMapKv;
+    KeyValues *m_pLayeredMapKv;
 
-	CUtlVector<CTFLayeredMapItemPanel*> m_MapItems;
+    CUtlVector< CTFLayeredMapItemPanel * > m_MapItems;
 };
 
-#endif // TF_LAYEREDIMAGEPANEL_H
+#endif  // TF_LAYEREDIMAGEPANEL_H

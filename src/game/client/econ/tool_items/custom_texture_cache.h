@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -12,7 +12,7 @@
 #endif
 
 #ifndef GC_CLIENTSYSTEM_H
-	#include "gc_clientsystem.h"
+#include "gc_clientsystem.h"
 #endif
 
 class IGameSystem;
@@ -29,32 +29,31 @@ int GetCustomTextureGuiHandle( uint64 hCloudId );
 //-----------------------------------------------------------------------------
 class CApplyCustomTextureJob : public GCSDK::CGCClientJob
 {
-public:
+   public:
+    CApplyCustomTextureJob( itemid_t nToolItemID, itemid_t nSubjectItemID, const void *pPNGData, int nPNGDataBytes );
 
-	CApplyCustomTextureJob( itemid_t nToolItemID, itemid_t nSubjectItemID, const void *pPNGData, int nPNGDataBytes );
+   protected:
+    char m_chRemoteStorageName[MAX_PATH];
 
-protected:
-	char	m_chRemoteStorageName[ MAX_PATH ];
+    virtual bool BYieldingRunGCJob();
+    virtual EResult YieldingRunJob();
+    virtual EResult YieldingFindFileIncacheOrUploadFileToCDN();
+    virtual EResult YieldingApplyTool();
 
-	virtual bool BYieldingRunGCJob();
-	virtual EResult YieldingRunJob();
-	virtual EResult YieldingFindFileIncacheOrUploadFileToCDN();
-	virtual EResult YieldingApplyTool();
+    /// The file data, in PNG format
+    CUtlBuffer m_bufPNGData;
 
-	/// The file data, in PNG format
-	CUtlBuffer m_bufPNGData;
+    /// Item that we are applying the texture onto
+    itemid_t m_nSubjectItemID;
 
-	/// Item that we are applying the texture onto
-	itemid_t m_nSubjectItemID;
+    /// Tool that is being applied and will be consumed
+    itemid_t m_nToolItemID;
 
-	/// Tool that is being applied and will be consumed
-	itemid_t m_nToolItemID;
+    /// Cloud file ID
+    uint64 m_hCloudID;
 
-	/// Cloud file ID
-	uint64 m_hCloudID;
-
-private:
-	void CleanUp();
+   private:
+    void CleanUp();
 };
 
 /// get interface to the game system responsible for managing the custom texture cache
@@ -78,6 +77,6 @@ extern bool g_pPreviewCustomTextureDirty;
 extern const char k_rchCustomTextureFilterPreviewImageName[];
 extern const char k_rchCustomTextureFilterPreviewTextureName[];
 
-}
+}  // namespace CustomTextureSystem
 
-#endif // CUSTOM_TEXTURE_CACHE_H
+#endif  // CUSTOM_TEXTURE_CACHE_H

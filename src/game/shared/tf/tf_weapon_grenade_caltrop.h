@@ -24,28 +24,30 @@
 //
 class CTFGrenadeCaltrop : public CTFWeaponBaseGrenade
 {
-public:
+   public:
+    DECLARE_CLASS( CTFGrenadeCaltrop, CTFWeaponBaseGrenade );
+    DECLARE_NETWORKCLASS();
+    DECLARE_PREDICTABLE();
+    //	DECLARE_ACTTABLE();
 
-	DECLARE_CLASS( CTFGrenadeCaltrop, CTFWeaponBaseGrenade );
-	DECLARE_NETWORKCLASS();
-	DECLARE_PREDICTABLE();
-//	DECLARE_ACTTABLE();
+    CTFGrenadeCaltrop() {}
 
-	CTFGrenadeCaltrop() {}
-
-	// Unique identifier.
-	virtual int			GetWeaponID( void ) const			{ return TF_WEAPON_GRENADE_CALTROP; }
+    // Unique identifier.
+    virtual int GetWeaponID( void ) const
+    {
+        return TF_WEAPON_GRENADE_CALTROP;
+    }
 
 // Server specific.
 #ifdef GAME_DLL
 
-	DECLARE_DATADESC();
+    DECLARE_DATADESC();
 
-	virtual CTFWeaponBaseGrenadeProj *EmitGrenade( Vector vecSrc, QAngle vecAngles, Vector vecVel, AngularImpulse angImpulse, CBasePlayer *pPlayer, float flTime, int iflags = 0 );
+    virtual CTFWeaponBaseGrenadeProj *EmitGrenade( Vector vecSrc, QAngle vecAngles, Vector vecVel, AngularImpulse angImpulse, CBasePlayer *pPlayer, float flTime, int iflags = 0 );
 
 #endif
 
-	CTFGrenadeCaltrop( const CTFGrenadeCaltrop & ) {}
+    CTFGrenadeCaltrop( const CTFGrenadeCaltrop & ) {}
 };
 
 //=============================================================================
@@ -54,33 +56,34 @@ public:
 //
 class CTFGrenadeCaltropProjectile : public CTFWeaponBaseGrenadeProj
 {
-public:
-	DECLARE_CLASS( CTFGrenadeCaltropProjectile, CTFWeaponBaseGrenadeProj );
-	DECLARE_NETWORKCLASS();
+   public:
+    DECLARE_CLASS( CTFGrenadeCaltropProjectile, CTFWeaponBaseGrenadeProj );
+    DECLARE_NETWORKCLASS();
 
-	// Unique identifier.
-	virtual int			GetWeaponID( void ) const			{ return TF_WEAPON_GRENADE_CALTROP; }
+    // Unique identifier.
+    virtual int GetWeaponID( void ) const
+    {
+        return TF_WEAPON_GRENADE_CALTROP;
+    }
 
 #ifdef GAME_DLL
-	// Creation.
-	static CTFGrenadeCaltropProjectile *Create( const Vector &position, const QAngle &angles, const Vector &velocity, 
-		                                       const AngularImpulse &angVelocity, CBaseCombatCharacter *pOwner, const CTFWeaponInfo &weaponInfo, float timer, int iFlags = 0 );
-	// Overrides.
-	virtual void	Spawn();
-	virtual void	Precache();
-	virtual void	BounceSound( void );
-	virtual void	Detonate();
+    // Creation.
+    static CTFGrenadeCaltropProjectile *Create( const Vector &position, const QAngle &angles, const Vector &velocity, const AngularImpulse &angVelocity, CBaseCombatCharacter *pOwner, const CTFWeaponInfo &weaponInfo, float timer, int iFlags = 0 );
+    // Overrides.
+    virtual void Spawn();
+    virtual void Precache();
+    virtual void BounceSound( void );
+    virtual void Detonate();
 #endif
 
-	virtual void	Touch( CBaseEntity *pOther );
+    virtual void Touch( CBaseEntity *pOther );
 
 #ifdef CLIENT_DLL
-	virtual void	OnDataChanged(DataUpdateType_t updateType);
+    virtual void OnDataChanged( DataUpdateType_t updateType );
 #endif
 
-private:
-
-	float m_flDetonateTime;
+   private:
+    float m_flDetonateTime;
 };
 
-#endif // TF_WEAPON_GRENADE_CALTROP_H
+#endif  // TF_WEAPON_GRENADE_CALTROP_H

@@ -10,35 +10,32 @@
 #include "../headless_hatman.h"
 #include "headless_hatman_dying.h"
 
-
 //---------------------------------------------------------------------------------------------
-ActionResult< CHeadlessHatman >	CHeadlessHatmanDying::OnStart( CHeadlessHatman *me, Action< CHeadlessHatman > *priorAction )
+ActionResult< CHeadlessHatman > CHeadlessHatmanDying::OnStart( CHeadlessHatman *me, Action< CHeadlessHatman > *priorAction )
 {
-	me->GetBodyInterface()->StartActivity( ACT_DIESIMPLE );
-	me->EmitSound( "Halloween.HeadlessBossDying" );
-	return Continue();
+    me->GetBodyInterface()->StartActivity( ACT_DIESIMPLE );
+    me->EmitSound( "Halloween.HeadlessBossDying" );
+    return Continue();
 }
 
-
 //---------------------------------------------------------------------------------------------
-ActionResult< CHeadlessHatman >	CHeadlessHatmanDying::Update( CHeadlessHatman *me, float interval )
+ActionResult< CHeadlessHatman > CHeadlessHatmanDying::Update( CHeadlessHatman *me, float interval )
 {
-	if ( me->IsActivityFinished() )
-	{
-		me->Break();
-		DispatchParticleEffect( "halloween_boss_death", me->GetAbsOrigin(), me->GetAbsAngles() );
+    if ( me->IsActivityFinished() )
+    {
+        me->Break();
+        DispatchParticleEffect( "halloween_boss_death", me->GetAbsOrigin(), me->GetAbsAngles() );
 
-		UTIL_Remove( me );
+        UTIL_Remove( me );
 
-		IGameEvent *event = gameeventmanager->CreateEvent( "pumpkin_lord_killed" );
-		if ( event )
-		{
-			gameeventmanager->FireEvent( event );
-		}
+        IGameEvent *event = gameeventmanager->CreateEvent( "pumpkin_lord_killed" );
+        if ( event )
+        {
+            gameeventmanager->FireEvent( event );
+        }
 
-		return Done();
-	}
+        return Done();
+    }
 
-	return Continue();
+    return Continue();
 }
-

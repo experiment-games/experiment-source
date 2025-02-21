@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
 
@@ -11,7 +11,6 @@
 #include "tf_gamerules.h"
 #include "tf_timer.h"
 #include "tf_team.h"
-
 
 #if 0
 
@@ -1142,7 +1141,7 @@ void Apply_Results(CTFGoal *Goal, CTFPlayer *Player, CTFPlayer *AP, BOOL bAddBon
 			Player->GiveAmmo( Goal->ammo_medikit, TF_AMMO_MEDIKIT );
 			Player->GiveAmmo( Goal->ammo_detpack, TF_AMMO_DETPACK );
 
-#ifdef TFTODO // do this when grenades are implemented.
+#ifdef TFTODO  // do this when grenades are implemented.
 			// Grenades
 			if ( Player->tp_grenades_1 != GR_TYPE_NONE )
 				Player->no_grenades_1 += Goal->no_grenades_1;
@@ -1552,12 +1551,12 @@ void DoGroupWork(CTFGoal *Goal, CTFPlayer *AP)
 				if (pGoal)
 					DoResults(pGoal, AP, (Goal->goal_result & TFGR_ADD_BONUSES));
 			}
-		#ifdef MAP_DEBUG
+#ifdef MAP_DEBUG
 			else
 			{
 				Warning("Not all Active.\n");
 			}
-		#endif
+#endif
 		}
 	}
 
@@ -2333,10 +2332,10 @@ void CTFGoal::tfgoal_timer_tick()
 	// Check criteria
 	if (goal_state != TFGS_REMOVED)
 	{
-	#ifdef MAP_DEBUG
+#ifdef MAP_DEBUG
 		Warning("==========================\n");
 		Warning("Timer Tick for: %s\nChecking Criteria...", GetEntityName().ToCStr());
-	#endif
+#endif
 
 		// Timers don't fire during prematch.
 		// Instead, they setup to fire the correct amount of time past the prematch
@@ -2867,7 +2866,7 @@ void CTFGoalItem::tfgoalitem_dropthink()
 		{
 			SetNextThink( gpGlobals->curtime + (drop_time / 4) );
 		}
-#ifdef TFTODO // CONTENTS_LAVA and CONTENTS_SKY don't exist in src.
+#ifdef TFTODO  // CONTENTS_LAVA and CONTENTS_SKY don't exist in src.
 		else if (iEnviron == CONTENTS_LAVA)
 		{
 			SetNextThink( gpGlobals->curtime + 5 );

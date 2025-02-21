@@ -25,44 +25,54 @@ class C_TFPlayer;
 //-----------------------------------------------------------------------------
 class C_TFTeam : public C_Team
 {
-	DECLARE_CLASS( C_TFTeam, C_Team );
-	DECLARE_CLIENTCLASS();
+    DECLARE_CLASS( C_TFTeam, C_Team );
+    DECLARE_CLIENTCLASS();
 
-public:
+   public:
+    C_TFTeam();
+    virtual ~C_TFTeam();
 
-					C_TFTeam();
-	virtual			~C_TFTeam();
+    int GetFlagCaptures( void )
+    {
+        return m_nFlagCaptures;
+    }
+    int GetRole( void )
+    {
+        return m_iRole;
+    }
+    char *Get_Name( void );
 
-	int				GetFlagCaptures( void ) { return m_nFlagCaptures; }
-	int				GetRole( void ) { return m_iRole; }
-	char			*Get_Name( void );
+    int GetNumObjects( int iObjectType = -1 );
+    CBaseObject *GetObject( int num );
 
-	int				GetNumObjects( int iObjectType = -1 );
-	CBaseObject		*GetObject( int num );
+    CUtlVector< CHandle< C_BaseObject > > m_aObjects;
 
-	CUtlVector< CHandle<C_BaseObject> > m_aObjects;
+    C_BasePlayer *GetTeamLeader( void );
+    void UpdateTeamName( void );
+    const wchar_t *Get_Localized_Name( void )
+    {
+        return m_wzTeamname;
+    };
 
-	C_BasePlayer	*GetTeamLeader( void );
-	void			UpdateTeamName( void );
-	const wchar_t *Get_Localized_Name( void ){ return m_wzTeamname; };
+    virtual void OnDataChanged( DataUpdateType_t updateType ) OVERRIDE;
 
-	virtual void OnDataChanged( DataUpdateType_t updateType ) OVERRIDE;
+    bool IsUsingCustomTeamName( void )
+    {
+        return m_bUsingCustomTeamName;
+    }
 
-	bool IsUsingCustomTeamName( void ) { return m_bUsingCustomTeamName; }
+    // IClientThinkable override
+    virtual void ClientThink();
 
-	// IClientThinkable override
-	virtual	void	ClientThink();
+   private:
+    int m_nFlagCaptures;
+    int m_iRole;
 
-private:
-
-	int		m_nFlagCaptures;
-	int		m_iRole;
-
-	CNetworkHandle( C_BasePlayer, m_hLeader );
-	wchar_t	m_wzTeamname[ MAX_TEAM_NAME_LENGTH ];
-	bool m_bUsingCustomTeamName;
+    CNetworkHandle( C_BasePlayer, m_hLeader );
+    wchar_t m_wzTeamname[MAX_TEAM_NAME_LENGTH];
+    bool m_bUsingCustomTeamName;
 };
 
 C_TFTeam *GetGlobalTFTeam( int iTeamNumber );
 
-#endif // C_TF_TEAM_H
+#endif  // C_TF_TEAM_H

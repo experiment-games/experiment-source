@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -13,29 +13,28 @@
 DEFINE_FALLBACK_SHADER( WriteZ, WriteZ_DX6 )
 
 BEGIN_SHADER_FLAGS( WriteZ_DX6, "Help for WriteZ_DX6", SHADER_NOT_EDITABLE )
-	BEGIN_SHADER_PARAMS
-	END_SHADER_PARAMS
+BEGIN_SHADER_PARAMS
+END_SHADER_PARAMS
 
-	SHADER_INIT_PARAMS()
-	{
-	}
+SHADER_INIT_PARAMS()
+{
+}
 
-	SHADER_INIT
-	{
-	}
+SHADER_INIT
+{
+}
 
-	SHADER_DRAW
-	{
-		SHADOW_STATE
-		{
-			pShaderShadow->EnableColorWrites( false );
-			pShaderShadow->EnableAlphaWrites( false );
-			pShaderShadow->DrawFlags( SHADER_DRAW_POSITION );
-		}
-		DYNAMIC_STATE
-		{
-		}
-		Draw();
-	}
+SHADER_DRAW
+{
+    SHADOW_STATE
+    {
+        pShaderShadow->EnableColorWrites( false );
+        pShaderShadow->EnableAlphaWrites( false );
+        pShaderShadow->DrawFlags( SHADER_DRAW_POSITION );
+    }
+    DYNAMIC_STATE
+    {
+    }
+    Draw();
+}
 END_SHADER
-

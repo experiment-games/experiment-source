@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
 
@@ -10,8 +10,6 @@
 #pragma once
 #endif
 
-
 void respawn( CBaseEntity *pEdict, bool fCopyCorpse );
 
-
-#endif // TF_CLIENT_H
+#endif  // TF_CLIENT_H

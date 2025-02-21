@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //===========================================================================//
@@ -26,12 +26,12 @@ DECLARE_BUILD_FACTORY( ExpandButton );
 //-----------------------------------------------------------------------------
 // Purpose: Constructor
 //-----------------------------------------------------------------------------
-ExpandButton::ExpandButton( Panel *parent, const char *panelName ) : ToggleButton( parent, panelName, "" )
+ExpandButton::ExpandButton( Panel *parent, const char *panelName )
+    : ToggleButton( parent, panelName, "" )
 {
-	m_bExpandable = true;
-	m_hFont = INVALID_FONT;
+    m_bExpandable = true;
+    m_hFont = INVALID_FONT;
 }
-
 
 //-----------------------------------------------------------------------------
 // Purpose: Destructor
@@ -41,74 +41,70 @@ ExpandButton::~ExpandButton()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-void ExpandButton::ApplySchemeSettings(IScheme *pScheme)
+void ExpandButton::ApplySchemeSettings( IScheme *pScheme )
 {
-	BaseClass::ApplySchemeSettings(pScheme);
+    BaseClass::ApplySchemeSettings( pScheme );
 
-	m_Color = GetSchemeColor( "ExpandButton.Color", pScheme );
-	m_hFont = pScheme->GetFont("Marlett", IsProportional() );
+    m_Color = GetSchemeColor( "ExpandButton.Color", pScheme );
+    m_hFont = pScheme->GetFont( "Marlett", IsProportional() );
 
-	// don't draw a background
-	SetPaintBackgroundEnabled(false);
+    // don't draw a background
+    SetPaintBackgroundEnabled( false );
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-IBorder *ExpandButton::GetBorder(bool depressed, bool armed, bool selected, bool keyfocus)
+IBorder *ExpandButton::GetBorder( bool depressed, bool armed, bool selected, bool keyfocus )
 {
-	return NULL;
+    return NULL;
 }
-
 
 //-----------------------------------------------------------------------------
 // Purpose: Expand the button
 //-----------------------------------------------------------------------------
-void ExpandButton::SetSelected(bool state)
+void ExpandButton::SetSelected( bool state )
 {
-	if ( m_bExpandable && ( state != IsSelected() ) )
-	{
-		// send a message saying we've been checked
-		KeyValues *msg = new KeyValues("Expanded", "state", (int)state);
-		PostActionSignal(msg);
+    if ( m_bExpandable && ( state != IsSelected() ) )
+    {
+        // send a message saying we've been checked
+        KeyValues *msg = new KeyValues( "Expanded", "state", ( int )state );
+        PostActionSignal( msg );
 
-		BaseClass::SetSelected(state);
-	}
+        BaseClass::SetSelected( state );
+    }
 }
-
 
 //-----------------------------------------------------------------------------
 // Purpose: sets whether or not the state of the check can be changed
 //-----------------------------------------------------------------------------
-void ExpandButton::SetExpandable(bool state)
+void ExpandButton::SetExpandable( bool state )
 {
-	m_bExpandable = state;
-	Repaint();
+    m_bExpandable = state;
+    Repaint();
 }
-
 
 void ExpandButton::Paint()
 {
-	surface()->DrawSetTextFont( m_hFont );
+    surface()->DrawSetTextFont( m_hFont );
 
-	wchar_t code = IsSelected( ) ? L'6' : L'4';
-	wchar_t pString[2] = { code, 0 };
+    wchar_t code = IsSelected() ? L'6' : L'4';
+    wchar_t pString[2] = { code, 0 };
 
-	// draw selected check
-	int tw, th, w, h;
-	GetSize( w, h );
-	surface()->GetTextSize( m_hFont, pString, tw, th );
-	surface()->DrawSetTextColor( m_Color );
-	surface()->DrawSetTextPos( ( w - tw ) / 2, ( h - th ) / 2 );
-	surface()->DrawUnicodeChar( code );
+    // draw selected check
+    int tw, th, w, h;
+    GetSize( w, h );
+    surface()->GetTextSize( m_hFont, pString, tw, th );
+    surface()->DrawSetTextColor( m_Color );
+    surface()->DrawSetTextPos( ( w - tw ) / 2, ( h - th ) / 2 );
+    surface()->DrawUnicodeChar( code );
 }
 
-	
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-void ExpandButton::OnExpanded(Panel *panel)
+void ExpandButton::OnExpanded( Panel *panel )
 {
 }

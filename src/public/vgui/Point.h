@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -23,39 +23,38 @@ namespace vgui
 //-----------------------------------------------------------------------------
 class Point
 {
-public:
-	// constructors
-	Point()
-	{
-		SetPoint(0, 0);
-	}
-	Point(int x,int y)
-	{
-		SetPoint(x,y);
-	}
+   public:
+    // constructors
+    Point()
+    {
+        SetPoint( 0, 0 );
+    }
+    Point( int x, int y )
+    {
+        SetPoint( x, y );
+    }
 
-	void SetPoint(int x1, int y1)
-	{
-		x=x1;
-		y=y1;	
-	}
+    void SetPoint( int x1, int y1 )
+    {
+        x = x1;
+        y = y1;
+    }
 
-	void GetPoint(int &x1, int &y1) const
-	{
-		x1 = x;
-		y1 = y;
-	
-	}
+    void GetPoint( int &x1, int &y1 ) const
+    {
+        x1 = x;
+        y1 = y;
+    }
 
-	bool operator == (Point &rhs) const
-	{
-		return (x == rhs.x && y == rhs.y);
-	}
+    bool operator==( Point &rhs ) const
+    {
+        return ( x == rhs.x && y == rhs.y );
+    }
 
-private:
-	int x, y;
+   private:
+    int x, y;
 };
 
-} // namespace vgui
+}  // namespace vgui
 
-#endif // POINT_H
+#endif  // POINT_H

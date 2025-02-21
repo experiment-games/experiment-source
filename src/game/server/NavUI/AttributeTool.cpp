@@ -13,13 +13,13 @@
 
 using namespace vgui;
 
-
 //--------------------------------------------------------------------------------------------------------
-AttributeToolPanel::AttributeToolPanel( vgui::Panel *parent, const char *toolName ) : CNavUIToolPanel( parent, toolName )
+AttributeToolPanel::AttributeToolPanel( vgui::Panel *parent, const char *toolName )
+    : CNavUIToolPanel( parent, toolName )
 {
-	LoadControlSettings( "Resource/UI/NavTools/AttributeTool.res" );
+    LoadControlSettings( "Resource/UI/NavTools/AttributeTool.res" );
 }
 
-#endif // SERVER_USES_VGUI
+#endif  // SERVER_USES_VGUI
 
 //--------------------------------------------------------------------------------------------------------

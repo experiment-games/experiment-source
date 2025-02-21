@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -22,17 +22,15 @@ namespace vgui
 //-----------------------------------------------------------------------------
 class Divider : public Panel
 {
-	DECLARE_CLASS_SIMPLE( Divider, Panel );
+    DECLARE_CLASS_SIMPLE( Divider, Panel );
 
-public:
-	Divider(Panel *parent, const char *name);
-	~Divider();
+   public:
+    Divider( Panel *parent, const char *name );
+    ~Divider();
 
-	virtual void ApplySchemeSettings(IScheme *pScheme);
+    virtual void ApplySchemeSettings( IScheme *pScheme );
 };
 
+}  // namespace vgui
 
-} // namespace vgui
-
-
-#endif // DIVIDER_H
+#endif  // DIVIDER_H

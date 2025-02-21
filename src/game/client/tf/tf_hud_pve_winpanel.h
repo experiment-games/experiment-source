@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -22,43 +22,68 @@ using namespace vgui;
 
 class CCreditDisplayPanel;
 
-
 class CTFPVEWinPanel : public EditablePanel, public CGameEventListener, public IViewPortPanel
 {
-private:
-	DECLARE_CLASS_SIMPLE( CTFPVEWinPanel, EditablePanel );
+   private:
+    DECLARE_CLASS_SIMPLE( CTFPVEWinPanel, EditablePanel );
 
-public:
-	CTFPVEWinPanel( IViewPort *pViewPort );
+   public:
+    CTFPVEWinPanel( IViewPort *pViewPort );
 
-	virtual void ApplySchemeSettings( vgui::IScheme *pScheme );
-	virtual void ApplySettings( KeyValues *inResourceData );
-	virtual void FireGameEvent( IGameEvent * event );
-	virtual void OnTick();
+    virtual void ApplySchemeSettings( vgui::IScheme *pScheme );
+    virtual void ApplySettings( KeyValues *inResourceData );
+    virtual void FireGameEvent( IGameEvent *event );
+    virtual void OnTick();
 
-	virtual int GetRenderGroupPriority() { return 70; }
+    virtual int GetRenderGroupPriority()
+    {
+        return 70;
+    }
 
-	virtual void SetParent( vgui::VPANEL parent ) { BaseClass::SetParent( parent ); }
-	virtual const char *GetName( void ){ return PANEL_PVE_WIN; }
-	virtual void SetData( KeyValues *data ){ return; }
-	virtual void Reset();
-	virtual void Update();
-	virtual bool NeedsUpdate( void ) { return false; }
-	virtual bool HasInputElements( void ) { return true; }
-	virtual void ShowPanel( bool bShow ){ };
-	vgui::VPANEL GetVPanel( void ) { return BaseClass::GetVPanel(); }
-	virtual bool IsVisible() { return BaseClass::IsVisible(); }
+    virtual void SetParent( vgui::VPANEL parent )
+    {
+        BaseClass::SetParent( parent );
+    }
+    virtual const char *GetName( void )
+    {
+        return PANEL_PVE_WIN;
+    }
+    virtual void SetData( KeyValues *data )
+    {
+        return;
+    }
+    virtual void Reset();
+    virtual void Update();
+    virtual bool NeedsUpdate( void )
+    {
+        return false;
+    }
+    virtual bool HasInputElements( void )
+    {
+        return true;
+    }
+    virtual void ShowPanel( bool bShow ){};
+    vgui::VPANEL GetVPanel( void )
+    {
+        return BaseClass::GetVPanel();
+    }
+    virtual bool IsVisible()
+    {
+        return BaseClass::IsVisible();
+    }
 
-	virtual GameActionSet_t GetPreferredActionSet() { return GAME_ACTION_SET_NONE; }
+    virtual GameActionSet_t GetPreferredActionSet()
+    {
+        return GAME_ACTION_SET_NONE;
+    }
 
-private:
+   private:
+    vgui::ScalableImagePanel *m_pRespecBackground;
+    vgui::EditablePanel *m_pRespecContainerPanel;
+    vgui::Label *m_pRespecTextLabel;
+    vgui::Label *m_pRespecCountLabel;
 
-	vgui::ScalableImagePanel *m_pRespecBackground;
-	vgui::EditablePanel *m_pRespecContainerPanel;
-	vgui::Label *m_pRespecTextLabel;
-	vgui::Label *m_pRespecCountLabel;
-
-	bool	m_bShouldBeVisible;
+    bool m_bShouldBeVisible;
 };
 
-#endif //TF_HUD_PVE_WINPANEL_H
+#endif  // TF_HUD_PVE_WINPANEL_H

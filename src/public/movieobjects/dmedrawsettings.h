@@ -11,185 +11,227 @@
 #pragma once
 #endif
 
-
 #include "datamodel/dmelement.h"
 #include "materialsystem/MaterialSystemUtil.h"
 #include "tier1/utlstack.h"
-
 
 //-----------------------------------------------------------------------------
 //
 //-----------------------------------------------------------------------------
 class CDmeDag;
 
-
 //-----------------------------------------------------------------------------
 //
 //-----------------------------------------------------------------------------
 class CDmeDrawSettings : public CDmElement
 {
-	DEFINE_ELEMENT( CDmeDrawSettings, CDmElement );
+    DEFINE_ELEMENT( CDmeDrawSettings, CDmElement );
 
-public:
+   public:
+    enum DrawType_t
+    {
+        DRAW_INVALID = -1,
 
-	enum DrawType_t
-	{
-		DRAW_INVALID = -1,
+        DRAW_SMOOTH,
+        DRAW_FLAT,
+        DRAW_WIREFRAME,
+        DRAW_BOUNDINGBOX,
 
-		DRAW_SMOOTH,
-		DRAW_FLAT,
-		DRAW_WIREFRAME,
-		DRAW_BOUNDINGBOX,
+        STANDARD_DRAW_COUNT
+    };
 
-		STANDARD_DRAW_COUNT
-	};
+    // resolve internal data from changed attributes
+    virtual void Resolve();
 
-	// resolve internal data from changed attributes
-	virtual void Resolve();
+    DrawType_t GetDrawType() const;
+    DrawType_t SetDrawType( int drawType );
+    void PushDrawType();
+    void PopDrawType();
 
-	DrawType_t GetDrawType() const;
-	DrawType_t SetDrawType( int drawType );
-	void PushDrawType();
-	void PopDrawType();
+    bool Shaded() const
+    {
+        const DrawType_t drawType = GetDrawType();
+        return drawType == DRAW_SMOOTH || drawType == DRAW_FLAT;
+    }
 
-	bool Shaded() const {
-		const DrawType_t drawType = GetDrawType();
-		return drawType == DRAW_SMOOTH || drawType == DRAW_FLAT;
-	}
+    bool GetBackfaceCulling() const
+    {
+        return m_bBackfaceCulling.Get();
+    }
+    void SetBackfaceCulling( bool val )
+    {
+        m_bBackfaceCulling.Set( val );
+    }
 
-	bool GetBackfaceCulling() const { return m_bBackfaceCulling.Get(); }
-	void SetBackfaceCulling( bool val ) { m_bBackfaceCulling.Set( val ); }
+    bool GetWireframeOnShaded() const
+    {
+        return m_bWireframeOnShaded.Get();
+    }
+    void SetWireframeOnShaded( bool val )
+    {
+        m_bWireframeOnShaded.Set( val );
+    }
 
-	bool GetWireframeOnShaded() const { return m_bWireframeOnShaded.Get(); }
-	void SetWireframeOnShaded( bool val ) { m_bWireframeOnShaded.Set( val ); }
+    bool GetXRay() const
+    {
+        return m_bXRay.Get();
+    }
+    void SetXRay( bool val )
+    {
+        m_bXRay.Set( val );
+    }
 
-	bool GetXRay() const { return m_bXRay.Get(); }
-	void SetXRay( bool val ) { m_bXRay.Set( val ); }
+    bool GetGrayShade() const
+    {
+        return m_bGrayShade.Get();
+    }
+    void SetGrayShade( bool val )
+    {
+        m_bGrayShade.Set( val );
+    }
 
-	bool GetGrayShade() const { return m_bGrayShade.Get(); }
-	void SetGrayShade( bool val ) { m_bGrayShade.Set( val ); }
+    bool GetNormals() const
+    {
+        return m_bNormals.Get();
+    }
+    void SetNormals( bool val )
+    {
+        m_bNormals.Set( val );
+    }
 
-	bool GetNormals() const { return m_bNormals.Get(); }
-	void SetNormals( bool val ) { m_bNormals.Set( val ); }
+    float GetNormalLength() const
+    {
+        return m_NormalLength.Get();
+    }
+    void SetNormalLength( float val )
+    {
+        m_NormalLength.Set( val );
+    }
 
-	float GetNormalLength() const { return m_NormalLength.Get(); }
-	void SetNormalLength( float val ) { m_NormalLength.Set( val ); }
+    const Color &GetColor() const
+    {
+        return m_Color.Get();
+    }
+    void SetColor( Color val )
+    {
+        m_Color.Set( val );
+    }
 
-	const Color &GetColor() const { return m_Color.Get(); }
-	void SetColor( Color val ) { m_Color.Set( val ); }
+    bool Drawable( CDmElement *pElement );
 
-	bool Drawable( CDmElement *pElement );
+    void BindWireframe();
 
-	void BindWireframe();
+    void BindWireframeOnShaded();
 
-	void BindWireframeOnShaded();
+    void BindGray();
 
-	void BindGray();
+    void BindUnlitGray();
 
-	void BindUnlitGray();
+    bool GetDeltaHighlight() const
+    {
+        return m_bDeltaHighlight;
+    }
+    void SetDeltaHighlight( bool bDeltaHighlight )
+    {
+        m_bDeltaHighlight.Set( bDeltaHighlight );
+    }
 
-	bool GetDeltaHighlight() const { return m_bDeltaHighlight; }
-	void SetDeltaHighlight( bool bDeltaHighlight ) { m_bDeltaHighlight.Set( bDeltaHighlight ); }
+    bool IsAMaterialBound() const
+    {
+        return m_IsAMaterialBound;
+    }
 
-	bool IsAMaterialBound() const {
-		return m_IsAMaterialBound;
-	}
+    void DrawDag( CDmeDag *pDag );
 
-	void DrawDag( CDmeDag *pDag );
+    CUtlVector< Vector > &GetHighlightPoints()
+    {
+        return m_vHighlightPoints;
+    }
 
-	CUtlVector< Vector > &GetHighlightPoints() { return m_vHighlightPoints; }
+   public:
+    CDmaVar< int > m_DrawType;
+    CDmaVar< bool > m_bBackfaceCulling;
+    CDmaVar< bool > m_bWireframeOnShaded;
+    CDmaVar< bool > m_bXRay;
+    CDmaVar< bool > m_bGrayShade;
+    CDmaVar< bool > m_bNormals;
+    CDmaVar< float > m_NormalLength;
+    CDmaVar< Color > m_Color;
+    CDmaVar< bool > m_bDeltaHighlight;
+    CDmaVar< float > m_flHighlightSize;
+    CDmaVar< Color > m_cHighlightColor;
 
-public:
+   protected:
+    void BuildKnownDrawableTypes();
 
-	CDmaVar< int > m_DrawType;
-	CDmaVar< bool > m_bBackfaceCulling;
-	CDmaVar< bool > m_bWireframeOnShaded;
-	CDmaVar< bool > m_bXRay;
-	CDmaVar< bool > m_bGrayShade;
-	CDmaVar< bool > m_bNormals;
-	CDmaVar< float > m_NormalLength;
-	CDmaVar< Color > m_Color;
-	CDmaVar< bool > m_bDeltaHighlight;
-	CDmaVar< float > m_flHighlightSize;
-	CDmaVar< Color > m_cHighlightColor;
+    static bool s_bWireframeMaterialInitialized;
+    static CMaterialReference s_WireframeMaterial;
 
-protected:
+    static bool s_bWireframeOnShadedMaterialInitialized;
+    static CMaterialReference s_WireframeOnShadedMaterial;
 
-	void BuildKnownDrawableTypes();
+    static bool s_bFlatGrayMaterial;
+    static CMaterialReference s_FlatGrayMaterial;
 
-	static bool s_bWireframeMaterialInitialized;
-	static CMaterialReference s_WireframeMaterial;
+    static bool s_bUnlitGrayMaterial;
+    static CMaterialReference s_UnlitGrayMaterial;
 
-	static bool s_bWireframeOnShadedMaterialInitialized;
-	static CMaterialReference s_WireframeOnShadedMaterial;
+    static CUtlRBTree< CUtlSymbol > s_KnownDrawableTypes;
+    CUtlRBTree< CUtlSymbol > m_NotDrawable;
 
-	static bool s_bFlatGrayMaterial;
-	static CMaterialReference s_FlatGrayMaterial;
+    CUtlStack< DrawType_t > m_drawTypeStack;
+    bool m_IsAMaterialBound;
 
-	static bool s_bUnlitGrayMaterial;
-	static CMaterialReference s_UnlitGrayMaterial;
-
-	static CUtlRBTree< CUtlSymbol > s_KnownDrawableTypes;
-	CUtlRBTree< CUtlSymbol > m_NotDrawable;
-
-	CUtlStack< DrawType_t > m_drawTypeStack;
-	bool m_IsAMaterialBound;
-
-	// Points to highlight
-	CUtlVector< Vector > m_vHighlightPoints;
+    // Points to highlight
+    CUtlVector< Vector > m_vHighlightPoints;
 };
-
 
 //-----------------------------------------------------------------------------
 //
 //-----------------------------------------------------------------------------
 inline CDmeDrawSettings::DrawType_t CDmeDrawSettings::SetDrawType( int drawType )
 {
-	if ( drawType < 0 || drawType >= STANDARD_DRAW_COUNT )
-	{
-		drawType = DRAW_SMOOTH;
-	}
+    if ( drawType < 0 || drawType >= STANDARD_DRAW_COUNT )
+    {
+        drawType = DRAW_SMOOTH;
+    }
 
-	m_DrawType.Set( drawType );
+    m_DrawType.Set( drawType );
 
-	return GetDrawType();
+    return GetDrawType();
 }
-
 
 //-----------------------------------------------------------------------------
 //
 //-----------------------------------------------------------------------------
 inline CDmeDrawSettings::DrawType_t CDmeDrawSettings::GetDrawType() const
 {
-	const int drawType( m_DrawType.Get() );
-	if ( drawType < 0 || drawType >= STANDARD_DRAW_COUNT )
-		return DRAW_SMOOTH;
+    const int drawType( m_DrawType.Get() );
+    if ( drawType < 0 || drawType >= STANDARD_DRAW_COUNT )
+        return DRAW_SMOOTH;
 
-	return static_cast< DrawType_t >( drawType );
+    return static_cast< DrawType_t >( drawType );
 }
-
 
 //-----------------------------------------------------------------------------
 //
 //-----------------------------------------------------------------------------
 inline void CDmeDrawSettings::PushDrawType()
 {
-	m_drawTypeStack.Push( GetDrawType() );
+    m_drawTypeStack.Push( GetDrawType() );
 }
-
 
 //-----------------------------------------------------------------------------
 //
 //-----------------------------------------------------------------------------
 inline void CDmeDrawSettings::PopDrawType()
 {
-	if ( m_drawTypeStack.Count() )
-	{
-		DrawType_t drawType = GetDrawType();
-		m_drawTypeStack.Pop( drawType );
-		SetDrawType( drawType );
-	}
+    if ( m_drawTypeStack.Count() )
+    {
+        DrawType_t drawType = GetDrawType();
+        m_drawTypeStack.Pop( drawType );
+        SetDrawType( drawType );
+    }
 }
 
-
-#endif // DMEDRAWSETTINGS_H
+#endif  // DMEDRAWSETTINGS_H

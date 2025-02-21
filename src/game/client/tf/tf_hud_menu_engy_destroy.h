@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -18,61 +18,63 @@
 
 using namespace vgui;
 
-#define ALL_BUILDINGS	-1
+#define ALL_BUILDINGS -1
 #define NUM_ENGY_BUILDINGS 4
 
 enum destroymenulayouts_t
 {
-	DESTROYMENU_DEFAULT = 0,
-	DESTROYMENU_PIPBOY,
+    DESTROYMENU_DEFAULT = 0,
+    DESTROYMENU_PIPBOY,
 };
 
 class CEngyDestroyMenuItem : public EditablePanel
 {
-	DECLARE_CLASS_SIMPLE( CEngyDestroyMenuItem, EditablePanel );
+    DECLARE_CLASS_SIMPLE( CEngyDestroyMenuItem, EditablePanel );
 
-public:
+   public:
+    CEngyDestroyMenuItem( Panel *parent, const char *panelName )
+        : EditablePanel( parent, panelName )
+    {
+    }
 
-	CEngyDestroyMenuItem( Panel *parent, const char *panelName ) : EditablePanel(parent, panelName) 
-	{
-	}
-
-private:
+   private:
 };
 
 class CHudMenuEngyDestroy : public CHudBaseBuildMenu
 {
-	DECLARE_CLASS_SIMPLE( CHudMenuEngyDestroy, EditablePanel );
+    DECLARE_CLASS_SIMPLE( CHudMenuEngyDestroy, EditablePanel );
 
-public:
-	CHudMenuEngyDestroy( const char *pElementName );
+   public:
+    CHudMenuEngyDestroy( const char *pElementName );
 
-	virtual void	LevelInit( void );
-	virtual void	ApplySchemeSettings( IScheme *scheme );
+    virtual void LevelInit( void );
+    virtual void ApplySchemeSettings( IScheme *scheme );
 
-	virtual void	SetVisible( bool state );
+    virtual void SetVisible( bool state );
 
-	int	HudElementKeyInput( int down, ButtonCode_t keynum, const char *pszCurrentBinding );
+    int HudElementKeyInput( int down, ButtonCode_t keynum, const char *pszCurrentBinding );
 
-	virtual void	OnTick( void );
+    virtual void OnTick( void );
 
-	void ErrorSound( void );
+    void ErrorSound( void );
 
-	virtual int GetRenderGroupPriority() { return 50; }
+    virtual int GetRenderGroupPriority()
+    {
+        return 50;
+    }
 
-	int			CalcCustomDestroyMenuLayout( void );
+    int CalcCustomDestroyMenuLayout( void );
 
-private:
+   private:
+    void InitBuildings();
 
-	void InitBuildings();
+    CEngyDestroyMenuItem *m_pActiveItems[NUM_ENGY_BUILDINGS];
+    CEngyDestroyMenuItem *m_pInactiveItems[NUM_ENGY_BUILDINGS];
+    CEngyDestroyMenuItem *m_pUnavailableItems[NUM_ENGY_BUILDINGS];
 
-	CEngyDestroyMenuItem *m_pActiveItems[NUM_ENGY_BUILDINGS];
-	CEngyDestroyMenuItem *m_pInactiveItems[NUM_ENGY_BUILDINGS];
-	CEngyDestroyMenuItem *m_pUnavailableItems[NUM_ENGY_BUILDINGS];
+    destroymenulayouts_t m_iCurrentDestroyMenuLayout;
 
-	destroymenulayouts_t		m_iCurrentDestroyMenuLayout;
-
-	EngyConstructBuilding_t m_Buildings[NUM_ENGY_BUILDINGS];
+    EngyConstructBuilding_t m_Buildings[NUM_ENGY_BUILDINGS];
 };
 
-#endif	// TF_HUD_MENU_ENGY_DESTROY_H
+#endif  // TF_HUD_MENU_ENGY_DESTROY_H

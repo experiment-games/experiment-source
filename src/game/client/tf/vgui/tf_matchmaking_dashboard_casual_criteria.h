@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -14,4 +14,4 @@
 #include <vgui_controls/EditablePanel.h>
 #include "tf_matchmaking_dashboard_side_panel.h"
 
-#endif // TF_MATCHMAKING_DASHBOARD_CASUAL_CRITERIA_H
+#endif  // TF_MATCHMAKING_DASHBOARD_CASUAL_CRITERIA_H

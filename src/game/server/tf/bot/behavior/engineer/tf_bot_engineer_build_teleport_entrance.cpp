@@ -19,94 +19,92 @@ ConVar tf_bot_max_teleport_entrance_travel( "tf_bot_max_teleport_entrance_travel
 ConVar tf_bot_teleport_build_surface_normal_limit( "tf_bot_teleport_build_surface_normal_limit", "0.99", FCVAR_CHEAT, "If the ground normal Z component is less that this value, Engineer bots won't place their entrance teleporter" );
 
 //---------------------------------------------------------------------------------------------
-ActionResult< CTFBot >	CTFBotEngineerBuildTeleportEntrance::OnStart( CTFBot *me, Action< CTFBot > *priorAction )
+ActionResult< CTFBot > CTFBotEngineerBuildTeleportEntrance::OnStart( CTFBot *me, Action< CTFBot > *priorAction )
 {
-	return Continue();
+    return Continue();
 }
-
 
 //---------------------------------------------------------------------------------------------
-ActionResult< CTFBot >	CTFBotEngineerBuildTeleportEntrance::Update( CTFBot *me, float interval )
+ActionResult< CTFBot > CTFBotEngineerBuildTeleportEntrance::Update( CTFBot *me, float interval )
 {
-	CTeamControlPoint *point = me->GetMyControlPoint();
-	if ( !point )
-	{
-		// wait until a control point becomes available
-		return Continue();
-	}
+    CTeamControlPoint *point = me->GetMyControlPoint();
+    if ( !point )
+    {
+        // wait until a control point becomes available
+        return Continue();
+    }
 
-	CTFNavArea *myArea = me->GetLastKnownArea();
+    CTFNavArea *myArea = me->GetLastKnownArea();
 
-	if ( !myArea )
-	{
-		return Done( "No nav mesh!" );
-	}
+    if ( !myArea )
+    {
+        return Done( "No nav mesh!" );
+    }
 
-	if ( myArea->GetIncursionDistance( me->GetTeamNumber() ) > tf_bot_max_teleport_entrance_travel.GetFloat() )
-	{
-		return ChangeTo( new CTFBotEngineerMoveToBuild, "Too far from our spawn room to build teleporter entrance" );
-	}
+    if ( myArea->GetIncursionDistance( me->GetTeamNumber() ) > tf_bot_max_teleport_entrance_travel.GetFloat() )
+    {
+        return ChangeTo( new CTFBotEngineerMoveToBuild, "Too far from our spawn room to build teleporter entrance" );
+    }
 
-	// make sure we go back to our resupply cabinet after planting the teleporter entrance before we move on
-	if ( !me->IsAmmoFull() && CTFBotGetAmmo::IsPossible( me ) )
-	{
-		return SuspendFor( new CTFBotGetAmmo, "Refilling ammo" );
-	}
+    // make sure we go back to our resupply cabinet after planting the teleporter entrance before we move on
+    if ( !me->IsAmmoFull() && CTFBotGetAmmo::IsPossible( me ) )
+    {
+        return SuspendFor( new CTFBotGetAmmo, "Refilling ammo" );
+    }
 
-	CBaseObject	*myTeleportEntrance = me->GetObjectOfType( OBJ_TELEPORTER, MODE_TELEPORTER_ENTRANCE );
-	if ( myTeleportEntrance )
-	{
-		// successfully built
-		return ChangeTo( new CTFBotEngineerMoveToBuild, "Teleport entrance built" );
-	}
+    CBaseObject *myTeleportEntrance = me->GetObjectOfType( OBJ_TELEPORTER, MODE_TELEPORTER_ENTRANCE );
+    if ( myTeleportEntrance )
+    {
+        // successfully built
+        return ChangeTo( new CTFBotEngineerMoveToBuild, "Teleport entrance built" );
+    }
 
-	// head towards the control point and build as soon as we can
-	if ( !m_path.IsValid() )
-	{
-		CTFBotPathCost cost( me, FASTEST_ROUTE );
-		m_path.Compute( me, point->GetAbsOrigin(), cost );
-	}
+    // head towards the control point and build as soon as we can
+    if ( !m_path.IsValid() )
+    {
+        CTFBotPathCost cost( me, FASTEST_ROUTE );
+        m_path.Compute( me, point->GetAbsOrigin(), cost );
+    }
 
-	m_path.Update( me );
+    m_path.Update( me );
 
-	// build
-	CTFWeaponBase *myGun = me->GetActiveTFWeapon();
-	if ( myGun )
-	{
-		CTFWeaponBuilder *builder = dynamic_cast< CTFWeaponBuilder * >( myGun );
-		if ( builder )
-		{
-			// don't build on slopes - causes player blockages
-			Vector forward;
-			me->EyeVectors( &forward );
+    // build
+    CTFWeaponBase *myGun = me->GetActiveTFWeapon();
+    if ( myGun )
+    {
+        CTFWeaponBuilder *builder = dynamic_cast< CTFWeaponBuilder * >( myGun );
+        if ( builder )
+        {
+            // don't build on slopes - causes player blockages
+            Vector forward;
+            me->EyeVectors( &forward );
 
-			const float placementRange = 30.0f;
-			forward *= placementRange;
+            const float placementRange = 30.0f;
+            forward *= placementRange;
 
-			trace_t result;
-			UTIL_TraceLine( me->WorldSpaceCenter() + Vector( forward.x, forward.y, 0.0f ), me->WorldSpaceCenter() + Vector( forward.x, forward.y, -200.0f ), MASK_PLAYERSOLID, me, COLLISION_GROUP_NONE, &result );
+            trace_t result;
+            UTIL_TraceLine( me->WorldSpaceCenter() + Vector( forward.x, forward.y, 0.0f ), me->WorldSpaceCenter() + Vector( forward.x, forward.y, -200.0f ), MASK_PLAYERSOLID, me, COLLISION_GROUP_NONE, &result );
 
-			if ( builder->IsValidPlacement() && result.DidHit() && result.plane.normal.z > tf_bot_teleport_build_surface_normal_limit.GetFloat() )
-			{
-				// place it down
-				me->PressFireButton();
-			}
-		}
-		else
-		{
-			// switch to teleporter builder
-			me->StartBuildingObjectOfType( OBJ_TELEPORTER, MODE_TELEPORTER_ENTRANCE );
-		}
-	}
+            if ( builder->IsValidPlacement() && result.DidHit() && result.plane.normal.z > tf_bot_teleport_build_surface_normal_limit.GetFloat() )
+            {
+                // place it down
+                me->PressFireButton();
+            }
+        }
+        else
+        {
+            // switch to teleporter builder
+            me->StartBuildingObjectOfType( OBJ_TELEPORTER, MODE_TELEPORTER_ENTRANCE );
+        }
+    }
 
-	return Continue();
+    return Continue();
 }
-
 
 //---------------------------------------------------------------------------------------------
 EventDesiredResult< CTFBot > CTFBotEngineerBuildTeleportEntrance::OnStuck( CTFBot *me )
 {
-	m_path.Invalidate();
+    m_path.Invalidate();
 
-	return TryContinue();
+    return TryContinue();
 }

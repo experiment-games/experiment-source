@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //===========================================================================//
@@ -23,34 +23,37 @@ namespace vgui
 //-----------------------------------------------------------------------------
 class ToggleButton : public Button
 {
-	DECLARE_CLASS_SIMPLE( ToggleButton, Button );
+    DECLARE_CLASS_SIMPLE( ToggleButton, Button );
 
-public:
-	ToggleButton(Panel *parent, const char *panelName, const char *text);
+   public:
+    ToggleButton( Panel *parent, const char *panelName, const char *text );
 
-	virtual void DoClick();
+    virtual void DoClick();
 
-	/* messages sent (get via AddActionSignalTarget()):
-		"ButtonToggled"
-			int "state"
-	*/
+    /* messages sent (get via AddActionSignalTarget()):
+      "ButtonToggled"
+        int "state"
+    */
 
-	virtual bool IsToggleButton() { return true; }
+    virtual bool IsToggleButton()
+    {
+        return true;
+    }
 
-protected:
-	// overrides
-	virtual void OnMouseDoublePressed(MouseCode code);
+   protected:
+    // overrides
+    virtual void OnMouseDoublePressed( MouseCode code );
 
-	virtual Color GetButtonFgColor();
-	virtual void ApplySchemeSettings(IScheme *pScheme);
+    virtual Color GetButtonFgColor();
+    virtual void ApplySchemeSettings( IScheme *pScheme );
 
-    virtual bool CanBeDefaultButton(void);
-    virtual void OnKeyCodePressed(KeyCode code);
+    virtual bool CanBeDefaultButton( void );
+    virtual void OnKeyCodePressed( KeyCode code );
 
-private:
-	Color _selectedColor;
+   private:
+    Color _selectedColor;
 };
 
-} // namespace vgui
+}  // namespace vgui
 
-#endif // TOGGLEBUTTON_H
+#endif  // TOGGLEBUTTON_H

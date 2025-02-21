@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -23,8 +23,8 @@ char const *GetImpactDecal( C_BaseEntity *pEntity, int iMaterial, int iDamageTyp
 // Returns true if it hit something
 enum
 {
-	IMPACT_NODECAL = 0x1,
-	IMPACT_REPORT_RAGDOLL_IMPACTS = 0x2,
+    IMPACT_NODECAL = 0x1,
+    IMPACT_REPORT_RAGDOLL_IMPACTS = 0x2,
 };
 
 bool Impact( Vector &vecOrigin, Vector &vecStart, int iMaterial, int iDamageType, int iHitbox, C_BaseEntity *pEntity, trace_t &tr, int nFlags = 0, int maxLODToDecal = ADDDECAL_TO_ALL_LODS );
@@ -32,7 +32,7 @@ bool Impact( Vector &vecOrigin, Vector &vecStart, int iMaterial, int iDamageType
 // Flags for PerformCustomEffects
 enum
 {
-	FLAGS_CUSTIOM_EFFECTS_NOFLECKS = 0x1,
+    FLAGS_CUSTIOM_EFFECTS_NOFLECKS = 0x1,
 };
 
 // Do spiffy things according to the material hit
@@ -43,7 +43,7 @@ void PlayImpactSound( C_BaseEntity *pServerEntity, trace_t &tr, Vector &vecServe
 
 // This can be used to hook impact sounds and play them at a later time.
 // Shotguns do this so it doesn't play 10 identical sounds in the same spot.
-typedef void (*ImpactSoundRouteFn)( const char *pSoundName, const Vector &vEndPos );
+typedef void ( *ImpactSoundRouteFn )( const char *pSoundName, const Vector &vEndPos );
 void SetImpactSoundRoute( ImpactSoundRouteFn fn );
 
 //-----------------------------------------------------------------------------
@@ -51,19 +51,22 @@ void SetImpactSoundRoute( ImpactSoundRouteFn fn );
 //-----------------------------------------------------------------------------
 class CRagdollEnumerator : public IPartitionEnumerator
 {
-public:
-	// Forced constructor
-	CRagdollEnumerator( Ray_t& shot, int iDamageType );
+   public:
+    // Forced constructor
+    CRagdollEnumerator( Ray_t &shot, int iDamageType );
 
-	// Actual work code
-	virtual IterationRetval_t EnumElement( IHandleEntity *pHandleEntity );
+    // Actual work code
+    virtual IterationRetval_t EnumElement( IHandleEntity *pHandleEntity );
 
-	bool Hit( void ) const { return m_bHit; }
+    bool Hit( void ) const
+    {
+        return m_bHit;
+    }
 
-private:
-	Ray_t			m_rayShot;
-	int				m_iDamageType;
-	bool			m_bHit;
+   private:
+    Ray_t m_rayShot;
+    int m_iDamageType;
+    bool m_bHit;
 };
 
-#endif // FX_IMPACT_H
+#endif  // FX_IMPACT_H

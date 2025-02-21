@@ -7,9 +7,8 @@
 #ifndef TF_LOBBY_CONTAINER_FRAME_CASUAL_H
 #define TF_LOBBY_CONTAINER_FRAME_CASUAL_H
 
-
 #include "cbase.h"
-//#include "tf_pvelobbypanel.h"
+// #include "tf_pvelobbypanel.h"
 #include "game/client/iviewport.h"
 #include "tf_shareddefs.h"
 #include "econ/confirm_dialog.h"
@@ -52,36 +51,41 @@ class CBaseLobbyPanel;
 // This is a big fat kludge so I can use the PropertyPage
 class CLobbyContainerFrame_Casual : public CBaseLobbyContainerFrame
 {
-	DECLARE_CLASS_SIMPLE( CLobbyContainerFrame_Casual, CBaseLobbyContainerFrame );
-public:
-	CLobbyContainerFrame_Casual();
-	~CLobbyContainerFrame_Casual();
+    DECLARE_CLASS_SIMPLE( CLobbyContainerFrame_Casual, CBaseLobbyContainerFrame );
 
-	//
-	// PropertyDialog overrides
-	//
-	virtual void ShowPanel( bool bShow ) OVERRIDE;
-	virtual void OnCommand( const char *command ) OVERRIDE;
+   public:
+    CLobbyContainerFrame_Casual();
+    ~CLobbyContainerFrame_Casual();
 
-	CMainMenuToolTip *GetTooltipPanel(){ return m_pToolTip; }
+    //
+    // PropertyDialog overrides
+    //
+    virtual void ShowPanel( bool bShow ) OVERRIDE;
+    virtual void OnCommand( const char *command ) OVERRIDE;
 
-	static bool TypeCanHandleMatchGroup( ETFMatchGroup eMatchGroup );
-	virtual bool CanHandleMatchGroup( ETFMatchGroup eMatchGroup ) const OVERRIDE
-	{
-		return TypeCanHandleMatchGroup( eMatchGroup );
-	}
+    CMainMenuToolTip *GetTooltipPanel()
+    {
+        return m_pToolTip;
+    }
 
-protected:
+    static bool TypeCanHandleMatchGroup( ETFMatchGroup eMatchGroup );
+    virtual bool CanHandleMatchGroup( ETFMatchGroup eMatchGroup ) const OVERRIDE
+    {
+        return TypeCanHandleMatchGroup( eMatchGroup );
+    }
 
-	virtual void WriteControls() OVERRIDE;
+   protected:
+    virtual void WriteControls() OVERRIDE;
 
-private:
-	virtual const char* GetResFile() const OVERRIDE { return "Resource/UI/LobbyContainerFrame_Casual.res"; }
-	virtual bool VerifyPartyAuthorization() const OVERRIDE;
-	virtual void HandleBackPressed() OVERRIDE;
+   private:
+    virtual const char *GetResFile() const OVERRIDE
+    {
+        return "Resource/UI/LobbyContainerFrame_Casual.res";
+    }
+    virtual bool VerifyPartyAuthorization() const OVERRIDE;
+    virtual void HandleBackPressed() OVERRIDE;
 
-
-	CMainMenuToolTip *m_pToolTip;
+    CMainMenuToolTip *m_pToolTip;
 };
 
-#endif //TF_LOBBY_CONTAINER_FRAME_CASUAL_H
+#endif  // TF_LOBBY_CONTAINER_FRAME_CASUAL_H

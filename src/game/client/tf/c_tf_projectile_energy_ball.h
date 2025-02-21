@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
 
@@ -19,24 +19,23 @@
 //-----------------------------------------------------------------------------
 class C_TFProjectile_EnergyBall : public C_TFBaseRocket
 {
-	DECLARE_CLASS( C_TFProjectile_EnergyBall, C_TFBaseRocket );
+    DECLARE_CLASS( C_TFProjectile_EnergyBall, C_TFBaseRocket );
 
-public:
+   public:
+    DECLARE_NETWORKCLASS();
 
-	DECLARE_NETWORKCLASS();
+    C_TFProjectile_EnergyBall();
+    ~C_TFProjectile_EnergyBall();
 
-	C_TFProjectile_EnergyBall();
-	~C_TFProjectile_EnergyBall();
+    virtual void CreateTrails( void );
+    virtual const char *GetTrailParticleName( void );
 
-	virtual void	CreateTrails( void );
-	virtual const char *GetTrailParticleName( void );
+   private:
+    CNewParticleEffect *pEffect;
+    bool m_bChargedShot;
 
-private:
-	CNewParticleEffect	*pEffect;
-	bool m_bChargedShot;
-
-	Vector m_vColor1;
-	Vector m_vColor2;
+    Vector m_vColor1;
+    Vector m_vColor2;
 };
 
-#endif // C_TF_PROJECTILE_ENERGY_BALL_H
+#endif  // C_TF_PROJECTILE_ENERGY_BALL_H

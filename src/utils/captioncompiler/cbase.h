@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
 
@@ -16,4 +16,4 @@
 #include "ai_activity.h"
 #include "utlvector.h"
 
-#endif // CBASE_H
+#endif  // CBASE_H

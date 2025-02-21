@@ -12,28 +12,38 @@
 
 class CTFTauntProp : public CBaseCombatCharacter
 {
-	DECLARE_CLASS( CTFTauntProp, CBaseCombatCharacter );
-public:
-	DECLARE_SERVERCLASS();
+    DECLARE_CLASS( CTFTauntProp, CBaseCombatCharacter );
 
-	CTFTauntProp();
+   public:
+    DECLARE_SERVERCLASS();
 
-	virtual bool StartSceneEvent( CSceneEventInfo *info, CChoreoScene *scene, CChoreoEvent *event, CChoreoActor *actor, CBaseEntity *pTarget ) OVERRIDE;
+    CTFTauntProp();
 
-	virtual bool ProcessSceneEvent( CSceneEventInfo *info, CChoreoScene *scene, CChoreoEvent *event ) OVERRIDE;
+    virtual bool StartSceneEvent( CSceneEventInfo *info, CChoreoScene *scene, CChoreoEvent *event, CChoreoActor *actor, CBaseEntity *pTarget ) OVERRIDE;
 
-	virtual float PlayScene( const char *pszScene, float flDelay = 0.0f, AI_Response *response = NULL, IRecipientFilter *filter = NULL ) OVERRIDE;
+    virtual bool ProcessSceneEvent( CSceneEventInfo *info, CChoreoScene *scene, CChoreoEvent *event ) OVERRIDE;
 
-	virtual void UpdateOnRemove() OVERRIDE;
+    virtual float PlayScene( const char *pszScene, float flDelay = 0.0f, AI_Response *response = NULL, IRecipientFilter *filter = NULL ) OVERRIDE;
 
-	void SetAutoRemove( bool bAutoRemove ) { m_bAutoRemove = bAutoRemove; }
-	bool ShouldSelfRemove() const { return m_bAutoRemove; }
+    virtual void UpdateOnRemove() OVERRIDE;
 
-	CBaseEntity *GetSceneEntity() { return m_hScene.Get(); }
+    void SetAutoRemove( bool bAutoRemove )
+    {
+        m_bAutoRemove = bAutoRemove;
+    }
+    bool ShouldSelfRemove() const
+    {
+        return m_bAutoRemove;
+    }
 
-private:
-	EHANDLE m_hScene;
-	bool m_bAutoRemove;
+    CBaseEntity *GetSceneEntity()
+    {
+        return m_hScene.Get();
+    }
+
+   private:
+    EHANDLE m_hScene;
+    bool m_bAutoRemove;
 };
 
-#endif // TF_TAUNT_PROP_H
+#endif  // TF_TAUNT_PROP_H

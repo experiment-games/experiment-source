@@ -26,28 +26,27 @@ class CCompStatsPanel;
 #include "iclientmode.h"
 #include <vgui_controls/AnimationController.h>
 
-CLobbyPanel_Comp::CLobbyPanel_Comp( vgui::Panel *pParent, CBaseLobbyContainerFrame* pLobbyContainer )
-	: BaseClass( pParent, pLobbyContainer )
+CLobbyPanel_Comp::CLobbyPanel_Comp( vgui::Panel *pParent, CBaseLobbyContainerFrame *pLobbyContainer )
+    : BaseClass( pParent, pLobbyContainer )
 {
-	m_pCompStats = new CCompStatsPanel( this, "stats" );
+    m_pCompStats = new CCompStatsPanel( this, "stats" );
 }
 
 CLobbyPanel_Comp::~CLobbyPanel_Comp()
 {
-	m_pCompStats->MarkForDeletion();
+    m_pCompStats->MarkForDeletion();
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CLobbyPanel_Comp::ApplyChatUserSettings( const CBaseLobbyPanel::LobbyPlayerInfo &player, KeyValues *pKV ) const
 {
-	pKV->SetInt( "has_ticket", 0 );
-	pKV->SetInt( "squad_surplus", 0 );
+    pKV->SetInt( "has_ticket", 0 );
+    pKV->SetInt( "squad_surplus", 0 );
 }
-
 
 void CLobbyPanel_Comp::WriteGameSettingsControls()
 {
-	m_pCompStats->WriteControls();
+    m_pCompStats->WriteControls();
 }

@@ -18,229 +18,271 @@ class CTFPlayer;
 
 enum
 {
-	SENTRY_LEVEL_1 = 0,
-	// SENTRY_LEVEL_1_UPGRADING,
-	SENTRY_LEVEL_2,
-	// SENTRY_LEVEL_2_UPGRADING,
-	SENTRY_LEVEL_3,
+    SENTRY_LEVEL_1 = 0,
+    // SENTRY_LEVEL_1_UPGRADING,
+    SENTRY_LEVEL_2,
+    // SENTRY_LEVEL_2_UPGRADING,
+    SENTRY_LEVEL_3,
 };
 
-#define SF_SENTRY_UPGRADEABLE	(LAST_SF_BASEOBJ<<1)
-#define SF_SENTRY_INFINITE_AMMO (LAST_SF_BASEOBJ<<2)
+#define SF_SENTRY_UPGRADEABLE ( LAST_SF_BASEOBJ << 1 )
+#define SF_SENTRY_INFINITE_AMMO ( LAST_SF_BASEOBJ << 2 )
 
-#define SENTRYGUN_MAX_HEALTH	150
+#define SENTRYGUN_MAX_HEALTH 150
 
-#define SENTRYGUN_MINI_MAX_HEALTH	100
+#define SENTRYGUN_MINI_MAX_HEALTH 100
 
-#define SENTRY_MAX_RANGE 1100.0f		// magic numbers are evil, people. adding this #define to demystify the value. (MSB 5/14/09)
+#define SENTRY_MAX_RANGE 1100.0f  // magic numbers are evil, people. adding this #define to demystify the value. (MSB 5/14/09)
 #define SENTRY_MAX_RANGE_SQRD 1210000.0f
-
 
 // ------------------------------------------------------------------------ //
 // Sentrygun object that's built by the player
 // ------------------------------------------------------------------------ //
 class CObjectSentrygun : public CBaseObject
 {
-	DECLARE_CLASS( CObjectSentrygun, CBaseObject );
+    DECLARE_CLASS( CObjectSentrygun, CBaseObject );
 
-public:
-	DECLARE_SERVERCLASS();
+   public:
+    DECLARE_SERVERCLASS();
 
-	CObjectSentrygun();
+    CObjectSentrygun();
 
-	static CObjectSentrygun* Create(const Vector &vOrigin, const QAngle &vAngles);
+    static CObjectSentrygun *Create( const Vector &vOrigin, const QAngle &vAngles );
 
-	virtual void	Spawn();
-	virtual void	FirstSpawn();
-	virtual void	Precache();
-	virtual void	OnGoActive( void );
-	virtual int		DrawDebugTextOverlays(void);
-	virtual int		OnTakeDamage( const CTakeDamageInfo &info );
-	virtual void	Killed( const CTakeDamageInfo &info );
-	virtual void	SetModel( const char *pModel );
+    virtual void Spawn();
+    virtual void FirstSpawn();
+    virtual void Precache();
+    virtual void OnGoActive( void );
+    virtual int DrawDebugTextOverlays( void );
+    virtual int OnTakeDamage( const CTakeDamageInfo &info );
+    virtual void Killed( const CTakeDamageInfo &info );
+    virtual void SetModel( const char *pModel );
 
-	virtual bool	StartBuilding( CBaseEntity *pBuilder );
-	virtual void	SetStartBuildingModel( void );
-	virtual void	StartPlacement( CTFPlayer *pPlayer );
+    virtual bool StartBuilding( CBaseEntity *pBuilder );
+    virtual void SetStartBuildingModel( void );
+    virtual void StartPlacement( CTFPlayer *pPlayer );
 
-	// Engineer hit me with a wrench
-	virtual bool	OnWrenchHit( CTFPlayer *pPlayer, CTFWrench *pWrench, Vector hitLoc );
-	virtual void	OnStartDisabled( void );
-	virtual void	OnEndDisabled( void );
+    // Engineer hit me with a wrench
+    virtual bool OnWrenchHit( CTFPlayer *pPlayer, CTFWrench *pWrench, Vector hitLoc );
+    virtual void OnStartDisabled( void );
+    virtual void OnEndDisabled( void );
 
-	virtual int		GetTracerAttachment( void );
+    virtual int GetTracerAttachment( void );
 
-	virtual bool	IsUpgrading( void ) const { return m_iState == SENTRY_STATE_UPGRADING; }
+    virtual bool IsUpgrading( void ) const
+    {
+        return m_iState == SENTRY_STATE_UPGRADING;
+    }
 
-	virtual float	GetTimeSinceLastFired( void ) const		{ return m_timeSinceLastFired.GetElapsedTime();	}
+    virtual float GetTimeSinceLastFired( void ) const
+    {
+        return m_timeSinceLastFired.GetElapsedTime();
+    }
 
-	virtual const QAngle &GetTurretAngles( void ) const		{ return m_vecCurAngles; }
+    virtual const QAngle &GetTurretAngles( void ) const
+    {
+        return m_vecCurAngles;
+    }
 
-	virtual void	SetBuildingSize( void );
+    virtual void SetBuildingSize( void );
 
-	void			ClearTarget( void ) { m_hEnemy = NULL; }
-	CBaseEntity		*GetTarget( void ) { return m_hEnemy.Get(); }
-	void			FireNextFrame( void ) { m_bFireNextFrame = true; }
-	void			FireRocketNextFrame( void ) {m_bFireRocketNextFrame = true; }
+    void ClearTarget( void )
+    {
+        m_hEnemy = NULL;
+    }
+    CBaseEntity *GetTarget( void )
+    {
+        return m_hEnemy.Get();
+    }
+    void FireNextFrame( void )
+    {
+        m_bFireNextFrame = true;
+    }
+    void FireRocketNextFrame( void )
+    {
+        m_bFireRocketNextFrame = true;
+    }
 
-	void			SetAutoAimTarget( CTFPlayer* pPlayer );
+    void SetAutoAimTarget( CTFPlayer *pPlayer );
 
-	int				GetFireAttachment( void );
+    int GetFireAttachment( void );
 
-	void            OnKilledEnemy(CBasePlayer* pVictim);
-	
-	virtual void	MakeMiniBuilding( CTFPlayer* pPlayer );
-	virtual void	MakeCarriedObject( CTFPlayer *pCarrier );
-	void			MakeScaledBuilding( CTFPlayer* pPlayer );
+    void OnKilledEnemy( CBasePlayer *pVictim );
 
-	float			GetPushMultiplier();
+    virtual void MakeMiniBuilding( CTFPlayer *pPlayer );
+    virtual void MakeCarriedObject( CTFPlayer *pCarrier );
+    void MakeScaledBuilding( CTFPlayer *pPlayer );
 
-	void			EmitSentrySound( const char* soundname );
-	void			EmitSentrySound( IRecipientFilter& filter, int iEntIndex, const char *soundname );
+    float GetPushMultiplier();
 
-	CTFPlayer *		GetAssistingTeammate( float maxAssistDuration = -1.0f ) const;
+    void EmitSentrySound( const char *soundname );
+    void EmitSentrySound( IRecipientFilter &filter, int iEntIndex, const char *soundname );
 
-	virtual int		GetBaseHealth( void ) { return SENTRYGUN_MAX_HEALTH; }
+    CTFPlayer *GetAssistingTeammate( float maxAssistDuration = -1.0f ) const;
 
-	void			SetShieldLevel( int nLevel, float flDuration ) { m_nShieldLevel = nLevel; m_flShieldFadeTime = gpGlobals->curtime + flDuration; }
+    virtual int GetBaseHealth( void )
+    {
+        return SENTRYGUN_MAX_HEALTH;
+    }
 
-	virtual int		GetMaxUpgradeLevel( void ) OVERRIDE;
+    void SetShieldLevel( int nLevel, float flDuration )
+    {
+        m_nShieldLevel = nLevel;
+        m_flShieldFadeTime = gpGlobals->curtime + flDuration;
+    }
 
-	virtual int		GetMiniBuildingStartingHealth( void ) OVERRIDE { return SENTRYGUN_MINI_MAX_HEALTH; }
+    virtual int GetMaxUpgradeLevel( void ) OVERRIDE;
 
-	void RemoveAllAmmo();
+    virtual int GetMiniBuildingStartingHealth( void ) OVERRIDE
+    {
+        return SENTRYGUN_MINI_MAX_HEALTH;
+    }
 
-	virtual int		GetMaxHealthForCurrentLevel( void );
-	virtual int		GetUpgradeMetalRequired();
-	bool			IsScaledSentry() { return m_flScaledSentry != 1.0f; }
+    void RemoveAllAmmo();
 
-	virtual int	GetShieldLevel() { return m_nShieldLevel; }
+    virtual int GetMaxHealthForCurrentLevel( void );
+    virtual int GetUpgradeMetalRequired();
+    bool IsScaledSentry()
+    {
+        return m_flScaledSentry != 1.0f;
+    }
 
-	virtual bool	IsTruceValidForEnt( void ) const OVERRIDE { return true; }
+    virtual int GetShieldLevel()
+    {
+        return m_nShieldLevel;
+    }
 
-private:
-	Vector GetEnemyAimPosition( CBaseEntity* pEnemy ) const;
+    virtual bool IsTruceValidForEnt( void ) const OVERRIDE
+    {
+        return true;
+    }
 
-	// Main think
-	void SentryThink( void );
+   private:
+    Vector GetEnemyAimPosition( CBaseEntity *pEnemy ) const;
 
-	// If the players hit us with a wrench, should we upgrade
-	bool CanBeUpgraded( CTFPlayer *pPlayer );
-	void StartUpgrading( void );
-	void FinishUpgrading( void );
+    // Main think
+    void SentryThink( void );
 
-	// Target acquisition
-	bool FindTarget( void );
-	bool ValidTargetPlayer( CTFPlayer *pPlayer, const Vector &vecStart, const Vector &vecEnd );
-	bool ValidTargetObject( CBaseObject *pObject, const Vector &vecStart, const Vector &vecEnd );
-	bool ValidTargetBot( CBaseCombatCharacter *pBot, const Vector &vecStart, const Vector &vecEnd );
+    // If the players hit us with a wrench, should we upgrade
+    bool CanBeUpgraded( CTFPlayer *pPlayer );
+    void StartUpgrading( void );
+    void FinishUpgrading( void );
 
-	void FoundTarget( CBaseEntity *pTarget, const Vector &vecSoundCenter, bool bNoSound=false );
-	bool FInViewCone ( CBaseEntity *pEntity );
-	int Range( CBaseEntity *pTarget );
+    // Target acquisition
+    bool FindTarget( void );
+    bool ValidTargetPlayer( CTFPlayer *pPlayer, const Vector &vecStart, const Vector &vecEnd );
+    bool ValidTargetObject( CBaseObject *pObject, const Vector &vecStart, const Vector &vecEnd );
+    bool ValidTargetBot( CBaseCombatCharacter *pBot, const Vector &vecStart, const Vector &vecEnd );
 
-	// Rotations
-	void SentryRotate( void );
-	bool MoveTurret( void );
+    void FoundTarget( CBaseEntity *pTarget, const Vector &vecSoundCenter, bool bNoSound = false );
+    bool FInViewCone( CBaseEntity *pEntity );
+    int Range( CBaseEntity *pTarget );
 
-	// Attack
-	void Attack( void );
-	void MakeTracer( const Vector &vecTracerSrc, const trace_t &tr, int iTracerType );
-	bool Fire( void );
-	bool FireRocket( void );
-	virtual void ModifyFireBulletsDamage( CTakeDamageInfo* dmgInfo );
+    // Rotations
+    void SentryRotate( void );
+    bool MoveTurret( void );
 
-	int GetBaseTurnRate( void );
-	
-	virtual void	MakeDisposableBuilding( CTFPlayer *pPlayer );
+    // Attack
+    void Attack( void );
+    void MakeTracer( const Vector &vecTracerSrc, const trace_t &tr, int iTracerType );
+    bool Fire( void );
+    bool FireRocket( void );
+    virtual void ModifyFireBulletsDamage( CTakeDamageInfo *dmgInfo );
 
-	CNetworkVar( int, m_iState );
+    int GetBaseTurnRate( void );
 
-	float m_flNextAttack;
-	float m_flFireRate;
-	IntervalTimer m_timeSinceLastFired;
+    virtual void MakeDisposableBuilding( CTFPlayer *pPlayer );
 
-	// Rotation
-	int m_iRightBound;
-	int m_iLeftBound;
-	int	m_iBaseTurnRate;
-	bool m_bTurningRight;
+    CNetworkVar( int, m_iState );
 
-	QAngle m_vecCurAngles;
-	QAngle m_vecGoalAngles;
+    float m_flNextAttack;
+    float m_flFireRate;
+    IntervalTimer m_timeSinceLastFired;
 
-	float m_flTurnRate;
+    // Rotation
+    int m_iRightBound;
+    int m_iLeftBound;
+    int m_iBaseTurnRate;
+    bool m_bTurningRight;
 
-	// Ammo
-	CNetworkVar( int, m_iAmmoShells );
-	CNetworkVar( int, m_iMaxAmmoShells );
-	CNetworkVar( int, m_iAmmoRockets );
-	CNetworkVar( int, m_iMaxAmmoRockets );
-	int m_iOldAmmoShells;
-	int m_iOldAmmoRockets;
+    QAngle m_vecCurAngles;
+    QAngle m_vecGoalAngles;
 
-	int	m_iAmmoType;
+    float m_flTurnRate;
 
-	float m_flNextRocketAttack;
+    // Ammo
+    CNetworkVar( int, m_iAmmoShells );
+    CNetworkVar( int, m_iMaxAmmoShells );
+    CNetworkVar( int, m_iAmmoRockets );
+    CNetworkVar( int, m_iMaxAmmoRockets );
+    int m_iOldAmmoShells;
+    int m_iOldAmmoRockets;
 
-	// Target player / object
-	CNetworkHandle( CBaseEntity, m_hEnemy );
-	bool m_bFireNextFrame;
-	bool m_bFireRocketNextFrame;
-	float m_flSentryRange;
+    int m_iAmmoType;
 
-	// Player control shield.
-	CNetworkVar( bool, m_bPlayerControlled );
-	CNetworkVar( uint32, m_nShieldLevel );
-	float m_flShieldFadeTime;
+    float m_flNextRocketAttack;
 
-	// PDQ Sentry
-	CNetworkVar( bool, m_bPDQSentry );
+    // Target player / object
+    CNetworkHandle( CBaseEntity, m_hEnemy );
+    bool m_bFireNextFrame;
+    bool m_bFireRocketNextFrame;
+    float m_flSentryRange;
 
-	//cached attachment indeces
-	int m_iAttachments[4];
+    // Player control shield.
+    CNetworkVar( bool, m_bPlayerControlled );
+    CNetworkVar( uint32, m_nShieldLevel );
+    float m_flShieldFadeTime;
 
-	int m_iPitchPoseParameter;
-	int m_iYawPoseParameter;
+    // PDQ Sentry
+    CNetworkVar( bool, m_bPDQSentry );
 
-	float m_flLastAttackedTime;
+    // cached attachment indeces
+    int m_iAttachments[4];
 
-	float m_flHeavyBulletResist;
+    int m_iPitchPoseParameter;
+    int m_iYawPoseParameter;
 
-	CNetworkHandle( CTFPlayer, m_hAutoAimTarget );
-	float m_flAutoAimStartTime;
+    float m_flLastAttackedTime;
 
-	// for achievement: ACHIEVEMENT_TF_ENGINEER_MANUAL_SENTRY_ABSORB_DMG
-	int m_iLifetimeShieldedDamage;
+    float m_flHeavyBulletResist;
 
-	DECLARE_DATADESC();
+    CNetworkHandle( CTFPlayer, m_hAutoAimTarget );
+    float m_flAutoAimStartTime;
 
-	CountdownTimer m_inCombatThrottleTimer;
-	void UpdateNavMeshCombatStatus( void );
+    // for achievement: ACHIEVEMENT_TF_ENGINEER_MANUAL_SENTRY_ABSORB_DMG
+    int m_iLifetimeShieldedDamage;
 
-	CHandle< CTFPlayer > m_lastTeammateWrenchHit;	// which teammate last hit us with a wrench
-	IntervalTimer m_lastTeammateWrenchHitTimer;		// time since last wrench hit
+    DECLARE_DATADESC();
 
-	int m_iLastMuzzleAttachmentFired;
+    CountdownTimer m_inCombatThrottleTimer;
+    void UpdateNavMeshCombatStatus( void );
 
-	float m_flScaledSentry;
+    CHandle< CTFPlayer > m_lastTeammateWrenchHit;  // which teammate last hit us with a wrench
+    IntervalTimer m_lastTeammateWrenchHitTimer;    // time since last wrench hit
+
+    int m_iLastMuzzleAttachmentFired;
+
+    float m_flScaledSentry;
 };
 
 // sentry rocket class just to give it a unique class name, so we can distinguish it from other rockets
 class CTFProjectile_SentryRocket : public CTFProjectile_Rocket
 {
-public:
-	DECLARE_CLASS( CTFProjectile_SentryRocket, CTFProjectile_Rocket );
-	DECLARE_NETWORKCLASS();
+   public:
+    DECLARE_CLASS( CTFProjectile_SentryRocket, CTFProjectile_Rocket );
+    DECLARE_NETWORKCLASS();
 
-	CTFProjectile_SentryRocket();
+    CTFProjectile_SentryRocket();
 
-	virtual int GetProjectileType() const OVERRIDE { return TF_PROJECTILE_SENTRY_ROCKET; }
+    virtual int GetProjectileType() const OVERRIDE
+    {
+        return TF_PROJECTILE_SENTRY_ROCKET;
+    }
 
-	// Creation.
-	static CTFProjectile_SentryRocket *Create( const Vector &vecOrigin, const QAngle &vecAngles, CBaseEntity *pOwner = NULL, CBaseEntity *pScorer = NULL );	
+    // Creation.
+    static CTFProjectile_SentryRocket *Create( const Vector &vecOrigin, const QAngle &vecAngles, CBaseEntity *pOwner = NULL, CBaseEntity *pScorer = NULL );
 
-	virtual void Spawn();
+    virtual void Spawn();
 };
 
-#endif // TF_OBJ_SENTRYGUN_H
+#endif  // TF_OBJ_SENTRYGUN_H

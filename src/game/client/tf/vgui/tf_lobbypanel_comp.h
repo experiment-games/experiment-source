@@ -21,26 +21,34 @@ class CBaseLobbyPanel;
 
 namespace vgui
 {
-	class ScrollableEditablePanel;
+class ScrollableEditablePanel;
 };
-
 
 class CLobbyPanel_Comp : public CBaseLobbyPanel, public CLocalSteamSharedObjectListener
 {
-	DECLARE_CLASS_SIMPLE( CLobbyPanel_Comp, CBaseLobbyPanel );
-public:
+    DECLARE_CLASS_SIMPLE( CLobbyPanel_Comp, CBaseLobbyPanel );
 
-	CLobbyPanel_Comp( vgui::Panel *pParent, CBaseLobbyContainerFrame* pLobbyContainer );
-	virtual ~CLobbyPanel_Comp();
+   public:
+    CLobbyPanel_Comp( vgui::Panel* pParent, CBaseLobbyContainerFrame* pLobbyContainer );
+    virtual ~CLobbyPanel_Comp();
 
-	virtual void ApplyChatUserSettings( const LobbyPlayerInfo &player,KeyValues *pKV ) const OVERRIDE;
-	virtual const char* GetResFile() const OVERRIDE { return "Resource/UI/LobbyPanel_Comp.res"; }
-	virtual EMatchGroup GetMatchGroup( void ) const OVERRIDE { return k_nMatchGroup_Ladder_6v6; }
-	virtual bool ShouldShowLateJoin() const OVERRIDE { return false; }
-	void WriteGameSettingsControls() OVERRIDE;
+    virtual void ApplyChatUserSettings( const LobbyPlayerInfo& player, KeyValues* pKV ) const OVERRIDE;
+    virtual const char* GetResFile() const OVERRIDE
+    {
+        return "Resource/UI/LobbyPanel_Comp.res";
+    }
+    virtual EMatchGroup GetMatchGroup( void ) const OVERRIDE
+    {
+        return k_nMatchGroup_Ladder_6v6;
+    }
+    virtual bool ShouldShowLateJoin() const OVERRIDE
+    {
+        return false;
+    }
+    void WriteGameSettingsControls() OVERRIDE;
 
-private:
-	class CCompStatsPanel* m_pCompStats;
+   private:
+    class CCompStatsPanel* m_pCompStats;
 };
 
-#endif //TF_LOBBYPANEL_COMP_H
+#endif  // TF_LOBBYPANEL_COMP_H

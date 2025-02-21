@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //===========================================================================//
@@ -11,100 +11,99 @@
 #include "Downsample_ps20.inc"
 #include "Downsample_ps20b.inc"
 
-
 BEGIN_VS_SHADER_FLAGS( Downsample, "Help for Downsample", SHADER_NOT_EDITABLE )
-	BEGIN_SHADER_PARAMS
-	END_SHADER_PARAMS
+BEGIN_SHADER_PARAMS
+END_SHADER_PARAMS
 
-	SHADER_INIT
-	{
-		LoadTexture( BASETEXTURE );
-	}
-	
-	SHADER_FALLBACK
-	{
-		// Requires DX9 + above
-		if ( !g_pHardwareConfig->SupportsVertexAndPixelShaders() )
-		{
-//			Assert( 0 );
-			return "Wireframe";
-		}
-		return 0;
-	}
+SHADER_INIT
+{
+    LoadTexture( BASETEXTURE );
+}
 
-	SHADER_DRAW
-	{
-		SHADOW_STATE
-		{
-			pShaderShadow->EnableDepthWrites( false );
-			pShaderShadow->EnableAlphaWrites( true );
+SHADER_FALLBACK
+{
+    // Requires DX9 + above
+    if ( !g_pHardwareConfig->SupportsVertexAndPixelShaders() )
+    {
+        //			Assert( 0 );
+        return "Wireframe";
+    }
+    return 0;
+}
 
-			pShaderShadow->EnableTexture( SHADER_SAMPLER0, true );
+SHADER_DRAW
+{
+    SHADOW_STATE
+    {
+        pShaderShadow->EnableDepthWrites( false );
+        pShaderShadow->EnableAlphaWrites( true );
 
-			// Render targets are pegged as sRGB on OSX GL, so just force these reads and writes
-			bool bForceSRGBReadAndWrite = IsOSX() && g_pHardwareConfig->CanDoSRGBReadFromRTs();
-			pShaderShadow->EnableSRGBRead( SHADER_SAMPLER0, bForceSRGBReadAndWrite );
-			pShaderShadow->EnableSRGBWrite( bForceSRGBReadAndWrite );
+        pShaderShadow->EnableTexture( SHADER_SAMPLER0, true );
 
-			int fmt = VERTEX_POSITION;
-			pShaderShadow->VertexShaderVertexFormat( fmt, 1, 0, 0 );
+        // Render targets are pegged as sRGB on OSX GL, so just force these reads and writes
+        bool bForceSRGBReadAndWrite = IsOSX() && g_pHardwareConfig->CanDoSRGBReadFromRTs();
+        pShaderShadow->EnableSRGBRead( SHADER_SAMPLER0, bForceSRGBReadAndWrite );
+        pShaderShadow->EnableSRGBWrite( bForceSRGBReadAndWrite );
 
-			pShaderShadow->SetVertexShader( "Downsample_vs20", 0 );
-			
-			if( g_pHardwareConfig->SupportsPixelShaders_2_b() )
-			{
-				DECLARE_STATIC_PIXEL_SHADER( downsample_ps20b );
-				SET_STATIC_PIXEL_SHADER( downsample_ps20b );
-			}
-			else
-			{
-				DECLARE_STATIC_PIXEL_SHADER( downsample_ps20 );
-				SET_STATIC_PIXEL_SHADER( downsample_ps20 );
-			}
-		}
+        int fmt = VERTEX_POSITION;
+        pShaderShadow->VertexShaderVertexFormat( fmt, 1, 0, 0 );
 
-		DYNAMIC_STATE
-		{
-			BindTexture( SHADER_SAMPLER0, BASETEXTURE, -1 );
+        pShaderShadow->SetVertexShader( "Downsample_vs20", 0 );
 
-			int width, height;
-			pShaderAPI->GetBackBufferDimensions( width, height );
+        if ( g_pHardwareConfig->SupportsPixelShaders_2_b() )
+        {
+            DECLARE_STATIC_PIXEL_SHADER( downsample_ps20b );
+            SET_STATIC_PIXEL_SHADER( downsample_ps20b );
+        }
+        else
+        {
+            DECLARE_STATIC_PIXEL_SHADER( downsample_ps20 );
+            SET_STATIC_PIXEL_SHADER( downsample_ps20 );
+        }
+    }
 
-			float v[4];
-			float dX = 1.0f / width;
-			float dY = 1.0f / height;
+    DYNAMIC_STATE
+    {
+        BindTexture( SHADER_SAMPLER0, BASETEXTURE, -1 );
 
-			v[0] = -dX;
-			v[1] = -dY;
-			pShaderAPI->SetVertexShaderConstant( VERTEX_SHADER_SHADER_SPECIFIC_CONST_0, v, 1 );
-			v[0] = -dX;
-			v[1] = dY;
-			pShaderAPI->SetVertexShaderConstant( VERTEX_SHADER_SHADER_SPECIFIC_CONST_1, v, 1 );
-			v[0] = dX;
-			v[1] = -dY;
-			pShaderAPI->SetVertexShaderConstant( VERTEX_SHADER_SHADER_SPECIFIC_CONST_2, v, 1 );
-			v[0] = dX;
-			v[1] = dY;
-			pShaderAPI->SetVertexShaderConstant( VERTEX_SHADER_SHADER_SPECIFIC_CONST_3, v, 1 );
+        int width, height;
+        pShaderAPI->GetBackBufferDimensions( width, height );
 
-			// Setup luminance threshold (all values are scaled down by max luminance)
-//			v[0] = 1.0f / MAX_HDR_OVERBRIGHT;
-			v[0] = 0.0f;
-			pShaderAPI->SetPixelShaderConstant( 0, v, 1 );
+        float v[4];
+        float dX = 1.0f / width;
+        float dY = 1.0f / height;
 
-			pShaderAPI->SetVertexShaderIndex( 0 );
+        v[0] = -dX;
+        v[1] = -dY;
+        pShaderAPI->SetVertexShaderConstant( VERTEX_SHADER_SHADER_SPECIFIC_CONST_0, v, 1 );
+        v[0] = -dX;
+        v[1] = dY;
+        pShaderAPI->SetVertexShaderConstant( VERTEX_SHADER_SHADER_SPECIFIC_CONST_1, v, 1 );
+        v[0] = dX;
+        v[1] = -dY;
+        pShaderAPI->SetVertexShaderConstant( VERTEX_SHADER_SHADER_SPECIFIC_CONST_2, v, 1 );
+        v[0] = dX;
+        v[1] = dY;
+        pShaderAPI->SetVertexShaderConstant( VERTEX_SHADER_SHADER_SPECIFIC_CONST_3, v, 1 );
 
-			if( g_pHardwareConfig->SupportsPixelShaders_2_b() )
-			{
-				DECLARE_DYNAMIC_PIXEL_SHADER( downsample_ps20b );
-				SET_DYNAMIC_PIXEL_SHADER( downsample_ps20b );
-			}
-			else
-			{
-				DECLARE_DYNAMIC_PIXEL_SHADER( downsample_ps20 );
-				SET_DYNAMIC_PIXEL_SHADER( downsample_ps20 );
-			}
-		}
-		Draw();
-	}
+        // Setup luminance threshold (all values are scaled down by max luminance)
+        //			v[0] = 1.0f / MAX_HDR_OVERBRIGHT;
+        v[0] = 0.0f;
+        pShaderAPI->SetPixelShaderConstant( 0, v, 1 );
+
+        pShaderAPI->SetVertexShaderIndex( 0 );
+
+        if ( g_pHardwareConfig->SupportsPixelShaders_2_b() )
+        {
+            DECLARE_DYNAMIC_PIXEL_SHADER( downsample_ps20b );
+            SET_DYNAMIC_PIXEL_SHADER( downsample_ps20b );
+        }
+        else
+        {
+            DECLARE_DYNAMIC_PIXEL_SHADER( downsample_ps20 );
+            SET_DYNAMIC_PIXEL_SHADER( downsample_ps20 );
+        }
+    }
+    Draw();
+}
 END_SHADER

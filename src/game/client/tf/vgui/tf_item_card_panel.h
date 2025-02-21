@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -20,13 +20,12 @@ class CEconItemView;
 class CEmbeddedItemModelPanel;
 namespace vgui
 {
-	class ScrollBar;
-	class ImagePanel;
-}
+class ScrollBar;
+class ImagePanel;
+}  // namespace vgui
 class CIconPanel;
 
 using namespace vgui;
-
 
 //-----------------------------------------------------------------------------
 // Purpose: A simple container that contains repeating elements with common
@@ -34,26 +33,30 @@ using namespace vgui;
 //-----------------------------------------------------------------------------
 class CRepeatingContainer : public EditablePanel
 {
-	DECLARE_CLASS_SIMPLE( CRepeatingContainer, EditablePanel );
-public:
-	CRepeatingContainer( Panel *pParent, const char *pszName );
-	virtual ~CRepeatingContainer();
+    DECLARE_CLASS_SIMPLE( CRepeatingContainer, EditablePanel );
 
-	virtual void ApplySettings( KeyValues *inResourceData ) OVERRIDE;
-	virtual void PerformLayout() OVERRIDE;
+   public:
+    CRepeatingContainer( Panel *pParent, const char *pszName );
+    virtual ~CRepeatingContainer();
 
-	Panel* GetRepeatingChild( int nIndex ) const { return m_vecChildren[ nIndex ]; }
-private:
+    virtual void ApplySettings( KeyValues *inResourceData ) OVERRIDE;
+    virtual void PerformLayout() OVERRIDE;
 
-	enum ELayoutMethod_t
-	{
-		METHOD_EVEN,
-		METHOD_STEP,
-	};
+    Panel *GetRepeatingChild( int nIndex ) const
+    {
+        return m_vecChildren[nIndex];
+    }
 
-	CUtlVector< Panel* > m_vecChildren;
-	ELayoutMethod_t m_eLayoutMethod;
-	CPanelAnimationVarAliasType( int, m_iXStep, "x_step", "0", "proportional_xpos" );
+   private:
+    enum ELayoutMethod_t
+    {
+        METHOD_EVEN,
+        METHOD_STEP,
+    };
+
+    CUtlVector< Panel * > m_vecChildren;
+    ELayoutMethod_t m_eLayoutMethod;
+    CPanelAnimationVarAliasType( int, m_iXStep, "x_step", "0", "proportional_xpos" );
 };
 
 //-----------------------------------------------------------------------------
@@ -61,99 +64,119 @@ private:
 //-----------------------------------------------------------------------------
 class CTFItemCardPanel : public EditablePanel
 {
-	DECLARE_CLASS_SIMPLE( CTFItemCardPanel, EditablePanel );
-public:
-	CTFItemCardPanel( Panel *parent, const char *name );
-	virtual ~CTFItemCardPanel( void );
+    DECLARE_CLASS_SIMPLE( CTFItemCardPanel, EditablePanel );
 
-	virtual void ApplySchemeSettings( IScheme *pScheme ) OVERRIDE;
-	virtual void ApplySettings( KeyValues *inResourceData ) OVERRIDE;
-	virtual void PerformLayout( void ) OVERRIDE;
-	virtual void SetVisible( bool bVisible ) OVERRIDE;
-	virtual void SetMouseInputEnabled( bool state ) OVERRIDE;
+   public:
+    CTFItemCardPanel( Panel *parent, const char *name );
+    virtual ~CTFItemCardPanel( void );
 
-	void SetItem( CEconItemView* pItem );
-	CEconItemView* GetItem() { return m_pItem; }
+    virtual void ApplySchemeSettings( IScheme *pScheme ) OVERRIDE;
+    virtual void ApplySettings( KeyValues *inResourceData ) OVERRIDE;
+    virtual void PerformLayout( void ) OVERRIDE;
+    virtual void SetVisible( bool bVisible ) OVERRIDE;
+    virtual void SetMouseInputEnabled( bool state ) OVERRIDE;
 
-	void PinCard( bool bPin );
-	bool IsPinned() const { return m_bPinned; }
-private:
+    void SetItem( CEconItemView *pItem );
+    CEconItemView *GetItem()
+    {
+        return m_pItem;
+    }
 
-	void UpdateDescription();
-	void UpdateModelOrIcon();
-	void LoadResFileForCurrentItem();
+    void PinCard( bool bPin );
+    bool IsPinned() const
+    {
+        return m_bPinned;
+    }
 
-	template < class T >
-	T* FindAndVerifyControl( Panel* pParent, const char* pszPanelName );
+   private:
+    void UpdateDescription();
+    void UpdateModelOrIcon();
+    void LoadResFileForCurrentItem();
 
-	
-	CEconItemView*		m_pItem;
+    template < class T >
+    T *FindAndVerifyControl( Panel *pParent, const char *pszPanelName );
 
-	ImagePanel *m_pDropShadow;
-	CExImageButton *m_pCloseButton;
+    CEconItemView *m_pItem;
 
-	ImagePanel *m_pBackground;
-	ImagePanel *m_pGrime;
-	ImagePanel *m_pRarityBackgroundOverlay;
-	EditablePanel *m_pMainContainer;
-	
-	EditablePanel *m_pCardTop;
-	CEmbeddedItemModelPanel *m_pItemModel;
+    ImagePanel *m_pDropShadow;
+    CExImageButton *m_pCloseButton;
 
-	EditablePanel *m_pRarityContainer;
-	Label *m_pItemName;
-	Label *m_pRarityName;
+    ImagePanel *m_pBackground;
+    ImagePanel *m_pGrime;
+    ImagePanel *m_pRarityBackgroundOverlay;
+    EditablePanel *m_pMainContainer;
 
-	EditablePanel *m_pInfoContainer;
-	Label *m_pClassLabel;
-	CRepeatingContainer *m_pClassIconContainer;
-	Label *m_pTypeLabel;
-	Label *m_pTypeLabelValue;
-	Label *m_pExteriorLabel;
-	Label *m_pExteriorLabelValue;
+    EditablePanel *m_pCardTop;
+    CEmbeddedItemModelPanel *m_pItemModel;
 
-	EditablePanel *m_pBottomContainer;
-	CExScrollingEditablePanel *m_pBottomScrollingContainer;
-	Label *m_pAttribsLabel;
-	Label *m_pEquipSlotLabel;
+    EditablePanel *m_pRarityContainer;
+    Label *m_pItemName;
+    Label *m_pRarityName;
 
-	bool m_bAllControlsValid;
-	bool m_bPinned;
+    EditablePanel *m_pInfoContainer;
+    Label *m_pClassLabel;
+    CRepeatingContainer *m_pClassIconContainer;
+    Label *m_pTypeLabel;
+    Label *m_pTypeLabelValue;
+    Label *m_pExteriorLabel;
+    Label *m_pExteriorLabelValue;
 
-	CPanelAnimationVarAliasType( int, m_iShadowOffset, "shadowoffset", "5", "proportional_int" );
+    EditablePanel *m_pBottomContainer;
+    CExScrollingEditablePanel *m_pBottomScrollingContainer;
+    Label *m_pAttribsLabel;
+    Label *m_pEquipSlotLabel;
+
+    bool m_bAllControlsValid;
+    bool m_bPinned;
+
+    CPanelAnimationVarAliasType( int, m_iShadowOffset, "shadowoffset", "5", "proportional_int" );
 };
 
 //-----------------------------------------------------------------------------
 // Purpose: Item model panel tooltip. Calls setvisible on the controlled panel
 //			and positions it below/above the current panel.
 //-----------------------------------------------------------------------------
-class CItemCardPanelToolTip : public vgui::BaseTooltip 
+class CItemCardPanelToolTip : public vgui::BaseTooltip
 {
-	DECLARE_CLASS_SIMPLE( CItemCardPanelToolTip, vgui::BaseTooltip );
-public:
-	CItemCardPanelToolTip(vgui::Panel *parent, const char *text = NULL);
+    DECLARE_CLASS_SIMPLE( CItemCardPanelToolTip, vgui::BaseTooltip );
 
-	void SetText(const char *text) { return; }
-	const char *GetText() { return NULL; }
+   public:
+    CItemCardPanelToolTip( vgui::Panel *parent, const char *text = NULL );
 
-	virtual void PerformLayout();
-	virtual void ShowTooltip( vgui::Panel *currentPanel );
-	virtual void HideTooltip();
+    void SetText( const char *text )
+    {
+        return;
+    }
+    const char *GetText()
+    {
+        return NULL;
+    }
 
-	void SetupPanels( vgui::Panel *pParentPanel, CTFItemCardPanel *pMouseOverItemPanel ) { m_pParentPanel = pParentPanel; m_pMouseOverItemPanel = pMouseOverItemPanel; }
-	void SetPositioningStrategy( itempanel_tooltip_strategies_t iStrat ) { m_iPositioningStrategy = iStrat; }
+    virtual void PerformLayout();
+    virtual void ShowTooltip( vgui::Panel *currentPanel );
+    virtual void HideTooltip();
 
-private:
-	void GetPosition( itempanel_tooltippos_t iTooltipPosition, CItemModelPanel *pItemPanel, int iItemX, int iItemY, int *iXPos, int *iYPos );
-	bool ValidatePosition( CItemModelPanel *pItemPanel, int iItemX, int iItemY, int *iXPos, int *iYPos );
+    void SetupPanels( vgui::Panel *pParentPanel, CTFItemCardPanel *pMouseOverItemPanel )
+    {
+        m_pParentPanel = pParentPanel;
+        m_pMouseOverItemPanel = pMouseOverItemPanel;
+    }
+    void SetPositioningStrategy( itempanel_tooltip_strategies_t iStrat )
+    {
+        m_iPositioningStrategy = iStrat;
+    }
 
-private:
-	CTFItemCardPanel				*m_pMouseOverItemPanel;	// This is the tooltip panel we make visible. Must be a CItemModelPanel.
-	vgui::Panel						*m_pParentPanel;		// This is the panel that we send item entered/exited messages to
-	vgui::DHANDLE<CItemModelPanel> m_hCurrentPanel;
+   private:
+    void GetPosition( itempanel_tooltippos_t iTooltipPosition, CItemModelPanel *pItemPanel, int iItemX, int iItemY, int *iXPos, int *iYPos );
+    bool ValidatePosition( CItemModelPanel *pItemPanel, int iItemX, int iItemY, int *iXPos, int *iYPos );
 
-	itempanel_tooltip_strategies_t	m_iPositioningStrategy;
-	bool							m_bHorizontalPreferLeft;
+   private:
+    CTFItemCardPanel *m_pMouseOverItemPanel;  // This is the tooltip panel we make visible. Must be a CItemModelPanel.
+    vgui::Panel *m_pParentPanel;              // This is the panel that we send item entered/exited messages to
+    vgui::DHANDLE< CItemModelPanel > m_hCurrentPanel;
+
+    itempanel_tooltip_strategies_t m_iPositioningStrategy;
+    bool m_bHorizontalPreferLeft;
 };
 
-#endif // TF_ITEM_CARD_PANEL_H
+#endif  // TF_ITEM_CARD_PANEL_H

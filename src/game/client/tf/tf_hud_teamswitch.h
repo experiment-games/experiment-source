@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
 
@@ -18,27 +18,27 @@ using namespace vgui;
 using namespace vgui;
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 class CHudTeamSwitch : public CHudElement, public EditablePanel
 {
-	DECLARE_CLASS_SIMPLE( CHudTeamSwitch, EditablePanel );
+    DECLARE_CLASS_SIMPLE( CHudTeamSwitch, EditablePanel );
 
-public:
-	CHudTeamSwitch( const char *pElementName );
+   public:
+    CHudTeamSwitch( const char *pElementName );
 
-	virtual void	Init( void );
-	virtual void	OnTick( void );
-	virtual void	LevelInit( void );
-	virtual void	ApplySchemeSettings( IScheme *scheme );
-	virtual bool	ShouldDraw( void );
+    virtual void Init( void );
+    virtual void OnTick( void );
+    virtual void LevelInit( void );
+    virtual void ApplySchemeSettings( IScheme *scheme );
+    virtual bool ShouldDraw( void );
 
-	virtual void	FireGameEvent( IGameEvent * event );
-	void			SetupSwitchPanel( int iNewTeam );
+    virtual void FireGameEvent( IGameEvent *event );
+    void SetupSwitchPanel( int iNewTeam );
 
-private:
-	Label			*m_pBalanceLabel;
-	float			m_flHideAt;
+   private:
+    Label *m_pBalanceLabel;
+    float m_flHideAt;
 };
 
-#endif // TF_HUD_TEAMSWITCH_H
+#endif  // TF_HUD_TEAMSWITCH_H

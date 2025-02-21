@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -22,17 +22,18 @@ extern const char *FormatSeconds( int seconds );
 //-----------------------------------------------------------------------------
 // Purpose: Constructor
 //-----------------------------------------------------------------------------
-CMutePlayerDialog::CMutePlayerDialog( vgui::Panel *parent ) : BaseClass( parent, "MutePlayerDialog" )
+CMutePlayerDialog::CMutePlayerDialog( vgui::Panel *parent )
+    : BaseClass( parent, "MutePlayerDialog" )
 {
-	SetSize( 320, 270 );
-	SetTitle( "#TF_MutePlayerCaps", true );
+    SetSize( 320, 270 );
+    SetTitle( "#TF_MutePlayerCaps", true );
 
-	m_pMuteButton = new Button( this, "MuteButton", "" );
-	m_pPlayerList = new ListPanel( this, "PlayerList" );
-	m_pPlayerList->SetEmptyListText( "#GameUI_NoOtherPlayersInGame" );
+    m_pMuteButton = new Button( this, "MuteButton", "" );
+    m_pPlayerList = new ListPanel( this, "PlayerList" );
+    m_pPlayerList->SetEmptyListText( "#GameUI_NoOtherPlayersInGame" );
 
-	m_mapAvatarsToImageList.SetLessFunc( DefLessFunc( CSteamID ) );
-	m_mapAvatarsToImageList.RemoveAll();
+    m_mapAvatarsToImageList.SetLessFunc( DefLessFunc( CSteamID ) );
+    m_mapAvatarsToImageList.RemoveAll();
 }
 
 //-----------------------------------------------------------------------------
@@ -43,139 +44,139 @@ CMutePlayerDialog::~CMutePlayerDialog()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CMutePlayerDialog::ApplySchemeSettings( vgui::IScheme *pScheme )
 {
-	BaseClass::ApplySchemeSettings( pScheme );
+    BaseClass::ApplySchemeSettings( pScheme );
 
-	LoadControlSettings( "Resource/MutePlayerDialog.res" );
+    LoadControlSettings( "Resource/MutePlayerDialog.res" );
 
-	if ( m_pImageList )
-	{
-		delete m_pImageList;
-	}
-	m_pImageList = new ImageList( false );
+    if ( m_pImageList )
+    {
+        delete m_pImageList;
+    }
+    m_pImageList = new ImageList( false );
 
-	if ( m_pPlayerList )
-	{
-		m_pPlayerList->DeleteAllItems();
+    if ( m_pPlayerList )
+    {
+        m_pPlayerList->DeleteAllItems();
 
-		m_pPlayerList->AddColumnHeader( 0, "medal", "", m_iMedalWidth, ListPanel::COLUMN_IMAGE );
+        m_pPlayerList->AddColumnHeader( 0, "medal", "", m_iMedalWidth, ListPanel::COLUMN_IMAGE );
 
-		// Avatars are always displayed at 32x32 regardless of resolution
-		m_pPlayerList->AddColumnHeader( 1, "avatar", "", m_iAvatarWidth, ListPanel::COLUMN_IMAGE );
+        // Avatars are always displayed at 32x32 regardless of resolution
+        m_pPlayerList->AddColumnHeader( 1, "avatar", "", m_iAvatarWidth, ListPanel::COLUMN_IMAGE );
 
-		// The player avatar is always a fixed size, so as we change resolutions we need to vary the size of the name column to adjust the total width of all the columns
-		m_nExtraSpace = m_pPlayerList->GetWide() - m_iMedalWidth - m_iAvatarWidth - m_iNameWidth - m_iScoreWidth - m_iTimeWidth - m_iStatusWidth;
+        // The player avatar is always a fixed size, so as we change resolutions we need to vary the size of the name column to adjust the total width of all the columns
+        m_nExtraSpace = m_pPlayerList->GetWide() - m_iMedalWidth - m_iAvatarWidth - m_iNameWidth - m_iScoreWidth - m_iTimeWidth - m_iStatusWidth;
 
-		m_pPlayerList->AddColumnHeader( 2, "name", "#TF_Scoreboard_Name", m_iNameWidth + m_nExtraSpace );
-		m_pPlayerList->AddColumnHeader( 3, "score", "#TF_Scoreboard_Score", m_iScoreWidth );
-		m_pPlayerList->AddColumnHeader( 4, "time", "#TF_Connected", m_iTimeWidth );
-		m_pPlayerList->AddColumnHeader( 5, "status", "", m_iStatusWidth );
+        m_pPlayerList->AddColumnHeader( 2, "name", "#TF_Scoreboard_Name", m_iNameWidth + m_nExtraSpace );
+        m_pPlayerList->AddColumnHeader( 3, "score", "#TF_Scoreboard_Score", m_iScoreWidth );
+        m_pPlayerList->AddColumnHeader( 4, "time", "#TF_Connected", m_iTimeWidth );
+        m_pPlayerList->AddColumnHeader( 5, "status", "", m_iStatusWidth );
 
-		// doesn't make sense to sort with the images
-		m_pPlayerList->SetColumnSortable( 0, false );
-		m_pPlayerList->SetColumnSortable( 1, false );
+        // doesn't make sense to sort with the images
+        m_pPlayerList->SetColumnSortable( 0, false );
+        m_pPlayerList->SetColumnSortable( 1, false );
 
-		m_pPlayerList->SetImageList( m_pImageList, false );
-		m_pPlayerList->SetVisible( true );
-	}
+        m_pPlayerList->SetImageList( m_pImageList, false );
+        m_pPlayerList->SetVisible( true );
+    }
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CMutePlayerDialog::Activate()
 {
-	BaseClass::Activate();
+    BaseClass::Activate();
 
-	if ( m_pPlayerList )
-	{
-		m_pPlayerList->DeleteAllItems();
+    if ( m_pPlayerList )
+    {
+        m_pPlayerList->DeleteAllItems();
 
-		static EUniverse universe = steamapicontext->SteamUtils()->GetConnectedUniverse();
+        static EUniverse universe = steamapicontext->SteamUtils()->GetConnectedUniverse();
 
-		for ( int playerIndex = 1; playerIndex <= MAX_PLAYERS; playerIndex++ )
-		{
-			if ( g_PR->IsConnected( playerIndex ) || g_PR->IsValid( playerIndex ) )
-			{
-				if ( g_TF_PR->GetPlayerConnectionState( playerIndex ) != MM_CONNECTED )
-					continue;
+        for ( int playerIndex = 1; playerIndex <= MAX_PLAYERS; playerIndex++ )
+        {
+            if ( g_PR->IsConnected( playerIndex ) || g_PR->IsValid( playerIndex ) )
+            {
+                if ( g_TF_PR->GetPlayerConnectionState( playerIndex ) != MM_CONNECTED )
+                    continue;
 
-				// No need to add local player
-				if ( engine->GetLocalPlayer() == playerIndex )
-					continue;
+                // No need to add local player
+                if ( engine->GetLocalPlayer() == playerIndex )
+                    continue;
 
-				player_info_t pi;
-				if ( !engine->GetPlayerInfo( playerIndex, &pi ) )
-					continue;
+                player_info_t pi;
+                if ( !engine->GetPlayerInfo( playerIndex, &pi ) )
+                    continue;
 
-				// Don't add bots
-				if ( pi.fakeplayer )
-					continue;
+                // Don't add bots
+                if ( pi.fakeplayer )
+                    continue;
 
-				int nTeam = g_PR->GetTeam( playerIndex );
+                int nTeam = g_PR->GetTeam( playerIndex );
 
-				KeyValues *pKeyValues = new KeyValues( "data" );
-				pKeyValues->SetInt( "index", playerIndex );
-				pKeyValues->SetString( "name", g_TF_PR->GetPlayerName( playerIndex ) );
-				pKeyValues->SetInt( "score", g_TF_PR->GetTotalScore( playerIndex ) );
+                KeyValues *pKeyValues = new KeyValues( "data" );
+                pKeyValues->SetInt( "index", playerIndex );
+                pKeyValues->SetString( "name", g_TF_PR->GetPlayerName( playerIndex ) );
+                pKeyValues->SetInt( "score", g_TF_PR->GetTotalScore( playerIndex ) );
 
-				// Update their avatar
-				if ( steamapicontext->SteamFriends() && steamapicontext->SteamUtils() )
-				{
-					if ( pi.friendsID )
-					{
-						CSteamID steamIDForPlayer( pi.friendsID, 1, GetUniverse(), k_EAccountTypeIndividual );
+                // Update their avatar
+                if ( steamapicontext->SteamFriends() && steamapicontext->SteamUtils() )
+                {
+                    if ( pi.friendsID )
+                    {
+                        CSteamID steamIDForPlayer( pi.friendsID, 1, GetUniverse(), k_EAccountTypeIndividual );
 
-						// See if we already have that avatar in our list
-						int iMapIndex = m_mapAvatarsToImageList.Find( steamIDForPlayer );
-						int iImageIndex;
-						if ( iMapIndex == m_mapAvatarsToImageList.InvalidIndex() )
-						{
-							CAvatarImage *pImage = new CAvatarImage();
-							pImage->SetAvatarSteamID( steamIDForPlayer );
-							pImage->SetAvatarSize( 32, 32 );	// Deliberately non scaling
-							iImageIndex = m_pImageList->AddImage( pImage );
+                        // See if we already have that avatar in our list
+                        int iMapIndex = m_mapAvatarsToImageList.Find( steamIDForPlayer );
+                        int iImageIndex;
+                        if ( iMapIndex == m_mapAvatarsToImageList.InvalidIndex() )
+                        {
+                            CAvatarImage *pImage = new CAvatarImage();
+                            pImage->SetAvatarSteamID( steamIDForPlayer );
+                            pImage->SetAvatarSize( 32, 32 );  // Deliberately non scaling
+                            iImageIndex = m_pImageList->AddImage( pImage );
 
-							m_mapAvatarsToImageList.Insert( steamIDForPlayer, iImageIndex );
-						}
-						else
-						{
-							iImageIndex = m_mapAvatarsToImageList[iMapIndex];
-						}
+                            m_mapAvatarsToImageList.Insert( steamIDForPlayer, iImageIndex );
+                        }
+                        else
+                        {
+                            iImageIndex = m_mapAvatarsToImageList[iMapIndex];
+                        }
 
-						pKeyValues->SetInt( "avatar", iImageIndex );
+                        pKeyValues->SetInt( "avatar", iImageIndex );
 
-						CAvatarImage *pAvIm = ( CAvatarImage * ) m_pImageList->GetImage( iImageIndex );
-						pAvIm->UpdateFriendStatus();
-					}
-				}
+                        CAvatarImage *pAvIm = ( CAvatarImage * )m_pImageList->GetImage( iImageIndex );
+                        pAvIm->UpdateFriendStatus();
+                    }
+                }
 
-				// The medal column is just a place holder for the images that are displayed later
-				pKeyValues->SetInt( "medal", 0 );
-				pKeyValues->SetString( "time", FormatSeconds( gpGlobals->curtime - g_TF_PR->GetConnectTime( playerIndex ) ) );
+                // The medal column is just a place holder for the images that are displayed later
+                pKeyValues->SetInt( "medal", 0 );
+                pKeyValues->SetString( "time", FormatSeconds( gpGlobals->curtime - g_TF_PR->GetConnectTime( playerIndex ) ) );
 
-				Color clr = g_PR->GetTeamColor( nTeam );
-				pKeyValues->SetColor( "cellcolor", clr );
+                Color clr = g_PR->GetTeamColor( nTeam );
+                pKeyValues->SetColor( "cellcolor", clr );
 
-				m_pPlayerList->AddItem( pKeyValues, 0, false, false );
+                m_pPlayerList->AddItem( pKeyValues, 0, false, false );
 
-				pKeyValues->deleteThis();
-			}
-		}
-	}
+                pKeyValues->deleteThis();
+            }
+        }
+    }
 
-	// refresh player status info
-	RefreshPlayerStatus();
+    // refresh player status info
+    RefreshPlayerStatus();
 
-	m_pPlayerList->InvalidateLayout( true );
+    m_pPlayerList->InvalidateLayout( true );
 
-	UpdateBadgePanels();
+    UpdateBadgePanels();
 
-	m_pPlayerList->SetSingleSelectedItem( m_pPlayerList->GetItemIDFromRow( 0 ) );
-	OnItemSelected();
+    m_pPlayerList->SetSingleSelectedItem( m_pPlayerList->GetItemIDFromRow( 0 ) );
+    OnItemSelected();
 }
 
 //-----------------------------------------------------------------------------
@@ -183,35 +184,35 @@ void CMutePlayerDialog::Activate()
 //-----------------------------------------------------------------------------
 void CMutePlayerDialog::RefreshPlayerStatus()
 {
-	for ( int i = 0; i <= m_pPlayerList->GetItemCount(); i++ )
-	{
-		KeyValues *data = m_pPlayerList->GetItem( i );
-		if ( !data )
-			continue;
+    for ( int i = 0; i <= m_pPlayerList->GetItemCount(); i++ )
+    {
+        KeyValues *data = m_pPlayerList->GetItem( i );
+        if ( !data )
+            continue;
 
-		// assemble properties
-		int playerIndex = data->GetInt( "index" );
-		player_info_t pi;
+        // assemble properties
+        int playerIndex = data->GetInt( "index" );
+        player_info_t pi;
 
-		if ( !engine->GetPlayerInfo( playerIndex, &pi ) )
-		{
-			// disconnected
-			data->SetString( "status", "#TF_Disconnected" );
-			continue;
-		}
+        if ( !engine->GetPlayerInfo( playerIndex, &pi ) )
+        {
+            // disconnected
+            data->SetString( "status", "#TF_Disconnected" );
+            continue;
+        }
 
-		data->SetString( "name", UTIL_GetFilteredPlayerName( playerIndex, pi.name ) );
+        data->SetString( "name", UTIL_GetFilteredPlayerName( playerIndex, pi.name ) );
 
-		if ( GetClientVoiceMgr() && GetClientVoiceMgr()->IsPlayerBlocked( playerIndex ) )
-		{
-			data->SetString( "status", "#TF_Muted" );
-		}
-		else
-		{
-			data->SetString( "status", "" );
-		}
-	}
-	m_pPlayerList->RereadAllItems();
+        if ( GetClientVoiceMgr() && GetClientVoiceMgr()->IsPlayerBlocked( playerIndex ) )
+        {
+            data->SetString( "status", "#TF_Muted" );
+        }
+        else
+        {
+            data->SetString( "status", "" );
+        }
+    }
+    m_pPlayerList->RereadAllItems();
 }
 
 //-----------------------------------------------------------------------------
@@ -219,14 +220,14 @@ void CMutePlayerDialog::RefreshPlayerStatus()
 //-----------------------------------------------------------------------------
 void CMutePlayerDialog::OnCommand( const char *command )
 {
-	if ( !stricmp( command, "Mute" ) )
-	{
-		ToggleMuteStateOfSelectedUser();
-	}
-	else
-	{
-		BaseClass::OnCommand( command );
-	}
+    if ( !stricmp( command, "Mute" ) )
+    {
+        ToggleMuteStateOfSelectedUser();
+    }
+    else
+    {
+        BaseClass::OnCommand( command );
+    }
 }
 
 //-----------------------------------------------------------------------------
@@ -234,172 +235,169 @@ void CMutePlayerDialog::OnCommand( const char *command )
 //-----------------------------------------------------------------------------
 void CMutePlayerDialog::ToggleMuteStateOfSelectedUser()
 {
-	if ( !GetClientVoiceMgr() )
-		return;
+    if ( !GetClientVoiceMgr() )
+        return;
 
-	for ( int iSelectedItem = 0; iSelectedItem < m_pPlayerList->GetSelectedItemsCount(); iSelectedItem++ )
-	{
-		KeyValues *data = m_pPlayerList->GetItem( m_pPlayerList->GetSelectedItem( iSelectedItem ) );
-		if ( !data )
-			return;
-		int playerIndex = data->GetInt( "index" );
-		Assert( playerIndex );
+    for ( int iSelectedItem = 0; iSelectedItem < m_pPlayerList->GetSelectedItemsCount(); iSelectedItem++ )
+    {
+        KeyValues *data = m_pPlayerList->GetItem( m_pPlayerList->GetSelectedItem( iSelectedItem ) );
+        if ( !data )
+            return;
+        int playerIndex = data->GetInt( "index" );
+        Assert( playerIndex );
 
-		if ( GetClientVoiceMgr()->IsPlayerBlocked( playerIndex ) )
-		{
-			GetClientVoiceMgr()->SetPlayerBlockedState( playerIndex, false );
-		}
-		else
-		{
-			GetClientVoiceMgr()->SetPlayerBlockedState( playerIndex, true );
-		}
-	}
+        if ( GetClientVoiceMgr()->IsPlayerBlocked( playerIndex ) )
+        {
+            GetClientVoiceMgr()->SetPlayerBlockedState( playerIndex, false );
+        }
+        else
+        {
+            GetClientVoiceMgr()->SetPlayerBlockedState( playerIndex, true );
+        }
+    }
 
-	RefreshPlayerStatus();
-	OnItemSelected();
+    RefreshPlayerStatus();
+    OnItemSelected();
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CMutePlayerDialog::OnItemSelected()
 {
-	// make sure the data is up-to-date
-	RefreshPlayerStatus();
+    // make sure the data is up-to-date
+    RefreshPlayerStatus();
 
-	// set the button state based on the selected item
-	bool bMuteButtonEnabled = false;
-	if ( m_pPlayerList->GetSelectedItemsCount() > 0 )
-	{
-		KeyValues *data = m_pPlayerList->GetItem( m_pPlayerList->GetSelectedItem( 0 ) );
+    // set the button state based on the selected item
+    bool bMuteButtonEnabled = false;
+    if ( m_pPlayerList->GetSelectedItemsCount() > 0 )
+    {
+        KeyValues *data = m_pPlayerList->GetItem( m_pPlayerList->GetSelectedItem( 0 ) );
 
-		player_info_t pi;
+        player_info_t pi;
 
-		int iLocalPlayer = engine->GetLocalPlayer();
+        int iLocalPlayer = engine->GetLocalPlayer();
 
-		int iPlayerIndex = data->GetInt( "index" );
-		bool isValidPlayer = engine->GetPlayerInfo( iPlayerIndex, &pi );
+        int iPlayerIndex = data->GetInt( "index" );
+        bool isValidPlayer = engine->GetPlayerInfo( iPlayerIndex, &pi );
 
-		// make sure the player is not a bot, or the user 
-		// Matt - changed this check to see if player indices match, instead of using friends ID
-		if ( iPlayerIndex == iLocalPlayer ) // || pi.friendsID == g_pFriendsUser->GetFriendsID() )
-		{
-			// invalid player, 
-			isValidPlayer = false;
-		}
+        // make sure the player is not a bot, or the user
+        // Matt - changed this check to see if player indices match, instead of using friends ID
+        if ( iPlayerIndex == iLocalPlayer )  // || pi.friendsID == g_pFriendsUser->GetFriendsID() )
+        {
+            // invalid player,
+            isValidPlayer = false;
+        }
 
-		if ( data && isValidPlayer && GetClientVoiceMgr() && GetClientVoiceMgr()->IsPlayerBlocked( data->GetInt( "index" ) ) )
-		{
-			m_pMuteButton->SetText( "#GameUI_UnmuteIngameVoice" );
-		}
-		else
-		{
-			m_pMuteButton->SetText( "#GameUI_MuteIngameVoice" );
-		}
+        if ( data && isValidPlayer && GetClientVoiceMgr() && GetClientVoiceMgr()->IsPlayerBlocked( data->GetInt( "index" ) ) )
+        {
+            m_pMuteButton->SetText( "#GameUI_UnmuteIngameVoice" );
+        }
+        else
+        {
+            m_pMuteButton->SetText( "#GameUI_MuteIngameVoice" );
+        }
 
-		if ( GetClientVoiceMgr() && isValidPlayer )
-		{
-			bMuteButtonEnabled = true;
-		}
-	}
-	else
-	{
-		m_pMuteButton->SetText( "#GameUI_MuteIngameVoice" );
-	}
+        if ( GetClientVoiceMgr() && isValidPlayer )
+        {
+            bMuteButtonEnabled = true;
+        }
+    }
+    else
+    {
+        m_pMuteButton->SetText( "#GameUI_MuteIngameVoice" );
+    }
 
-	m_pMuteButton->SetEnabled( bMuteButtonEnabled );
+    m_pMuteButton->SetEnabled( bMuteButtonEnabled );
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CMutePlayerDialog::UpdateBadgePanels()
 {
-	int iNumPanels = 0;
+    int iNumPanels = 0;
 
-	const IMatchGroupDescription *pMatchDesc = TFGameRules() ? GetMatchGroupDescription( TFGameRules()->GetCurrentMatchGroup() ) : NULL;
-	if ( pMatchDesc && m_pPlayerList )
-	{
-		if ( TFGameRules()->IsMatchTypeCasual() )
-		{
-			int parentTall = m_pPlayerList->GetTall();
-			CTFBadgePanel *pPanel = NULL;
+    const IMatchGroupDescription *pMatchDesc = TFGameRules() ? GetMatchGroupDescription( TFGameRules()->GetCurrentMatchGroup() ) : NULL;
+    if ( pMatchDesc && m_pPlayerList )
+    {
+        if ( TFGameRules()->IsMatchTypeCasual() )
+        {
+            int parentTall = m_pPlayerList->GetTall();
+            CTFBadgePanel *pPanel = NULL;
 
-			for ( int i = 0; i < m_pPlayerList->GetItemCount(); i++ )
-			{
-				KeyValues *pKeyValues = m_pPlayerList->GetItem( m_pPlayerList->GetItemIDFromRow( i ) );
-				if ( !pKeyValues )
-					continue;
+            for ( int i = 0; i < m_pPlayerList->GetItemCount(); i++ )
+            {
+                KeyValues *pKeyValues = m_pPlayerList->GetItem( m_pPlayerList->GetItemIDFromRow( i ) );
+                if ( !pKeyValues )
+                    continue;
 
-				int iPlayerIndex = pKeyValues->GetInt( "index" );
-				const CSteamID steamID = GetSteamIDForPlayerIndex( iPlayerIndex );
-				if ( steamID.IsValid() )
-				{
-					if ( iNumPanels >= m_pBadgePanels.Count() )
-					{
-						pPanel = new CTFBadgePanel( this, "BadgePanel" );
-						pPanel->MakeReadyForUse();
-						pPanel->SetVisible( true );
-						pPanel->SetZPos( 9999 );
-						m_pBadgePanels.AddToTail( pPanel );
-					}
-					else
-					{
-						pPanel = m_pBadgePanels[iNumPanels];
-					}
+                int iPlayerIndex = pKeyValues->GetInt( "index" );
+                const CSteamID steamID = GetSteamIDForPlayerIndex( iPlayerIndex );
+                if ( steamID.IsValid() )
+                {
+                    if ( iNumPanels >= m_pBadgePanels.Count() )
+                    {
+                        pPanel = new CTFBadgePanel( this, "BadgePanel" );
+                        pPanel->MakeReadyForUse();
+                        pPanel->SetVisible( true );
+                        pPanel->SetZPos( 9999 );
+                        m_pBadgePanels.AddToTail( pPanel );
+                    }
+                    else
+                    {
+                        pPanel = m_pBadgePanels[iNumPanels];
+                    }
 
-					int x, y, wide, tall;
-					m_pPlayerList->GetCellBounds( i, 0, x, y, wide, tall );
+                    int x, y, wide, tall;
+                    m_pPlayerList->GetCellBounds( i, 0, x, y, wide, tall );
 
-					if ( y + tall > parentTall )
-						continue;
+                    if ( y + tall > parentTall )
+                        continue;
 
-					if ( !pPanel->IsVisible() )
-					{
-						pPanel->SetVisible( true );
-					}
+                    if ( !pPanel->IsVisible() )
+                    {
+                        pPanel->SetVisible( true );
+                    }
 
-					int xParent, yParent;
-					m_pPlayerList->GetPos( xParent, yParent );
+                    int xParent, yParent;
+                    m_pPlayerList->GetPos( xParent, yParent );
 
-					int nPanelXPos, nPanelYPos, nPanelWide, nPanelTall;
-					pPanel->GetBounds( nPanelXPos, nPanelYPos, nPanelWide, nPanelTall );
+                    int nPanelXPos, nPanelYPos, nPanelWide, nPanelTall;
+                    pPanel->GetBounds( nPanelXPos, nPanelYPos, nPanelWide, nPanelTall );
 
-					if ( ( nPanelXPos != xParent + x )
-						|| ( nPanelYPos != yParent + y )
-						|| ( nPanelWide != wide )
-						|| ( nPanelTall != tall ) )
-					{
-						pPanel->SetBounds( xParent + x, yParent + y, wide, tall );
-						pPanel->InvalidateLayout( true, true );
-					}
+                    if ( ( nPanelXPos != xParent + x ) || ( nPanelYPos != yParent + y ) || ( nPanelWide != wide ) || ( nPanelTall != tall ) )
+                    {
+                        pPanel->SetBounds( xParent + x, yParent + y, wide, tall );
+                        pPanel->InvalidateLayout( true, true );
+                    }
 
-					pPanel->SetupBadge( pMatchDesc, steamID );
-					iNumPanels++;
-				}
-			}
-		}
-	}
+                    pPanel->SetupBadge( pMatchDesc, steamID );
+                    iNumPanels++;
+                }
+            }
+        }
+    }
 
-	// hide any unused images
-	for ( int i = iNumPanels; i < m_pBadgePanels.Count(); i++ )
-	{
-		if ( m_pBadgePanels[i]->IsVisible() )
-		{
-			m_pBadgePanels[i]->SetVisible( false );
-		}
-	}
+    // hide any unused images
+    for ( int i = iNumPanels; i < m_pBadgePanels.Count(); i++ )
+    {
+        if ( m_pBadgePanels[i]->IsVisible() )
+        {
+            m_pBadgePanels[i]->SetVisible( false );
+        }
+    }
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CMutePlayerDialog::OnThink()
 {
-	if ( IsVisible() )
-	{
-		UpdateBadgePanels();
-	}
+    if ( IsVisible() )
+    {
+        UpdateBadgePanels();
+    }
 
-	BaseClass::OnThink();
+    BaseClass::OnThink();
 }

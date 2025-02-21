@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -18,15 +18,15 @@ class KeyValues;
 
 abstract_class IMaterialProxy
 {
-public:
-	virtual bool Init( IMaterial* pMaterial, KeyValues *pKeyValues ) = 0;
-	virtual void OnBind( void * ) = 0;
-	virtual void Release() = 0;
-	virtual IMaterial *	GetMaterial() = 0;
+   public:
+    virtual bool Init( IMaterial * pMaterial, KeyValues * pKeyValues ) = 0;
+    virtual void OnBind( void* ) = 0;
+    virtual void Release() = 0;
+    virtual IMaterial* GetMaterial() = 0;
 
-protected:
-	// no one should call this directly
-	virtual ~IMaterialProxy() {}
+   protected:
+    // no one should call this directly
+    virtual ~IMaterialProxy() {}
 };
 
-#endif // IMATERIALPROXY_H
+#endif  // IMATERIALPROXY_H

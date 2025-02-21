@@ -2,5 +2,4 @@
 
 #include "cbase.h"
 
-
 // Just be cool

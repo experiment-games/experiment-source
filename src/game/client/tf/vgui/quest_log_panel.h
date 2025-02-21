@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -141,6 +141,6 @@ private:
 	Button			*m_pDebugButton;
 };
 
-#endif // QUEST_LOG_PANEL_H
+#endif  // QUEST_LOG_PANEL_H
 
 #endif

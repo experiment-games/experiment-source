@@ -20,26 +20,26 @@
 
 BEGIN_PREDICTION_DATA_NO_BASE( CTFConditionList )
 DEFINE_PRED_FIELD( _condition_bits, FIELD_INTEGER, FTYPEDESC_INSENDTABLE ),
-END_PREDICTION_DATA()
+    END_PREDICTION_DATA()
 
-BEGIN_RECV_TABLE_NOBASE( CTFConditionList, DT_TFPlayerConditionListExclusive )
-RecvPropInt( RECVINFO( _condition_bits ) ),
-END_RECV_TABLE()
+        BEGIN_RECV_TABLE_NOBASE( CTFConditionList, DT_TFPlayerConditionListExclusive )
+            RecvPropInt( RECVINFO( _condition_bits ) ),
+    END_RECV_TABLE()
 
 #else
 
 BEGIN_SEND_TABLE_NOBASE( CTFConditionList, DT_TFPlayerConditionListExclusive )
 SendPropInt( SENDINFO( _condition_bits ), MIN( TF_COND_LAST, 32 ), SPROP_UNSIGNED ),
-END_SEND_TABLE()
+    END_SEND_TABLE()
 
 #endif
 
-//-----------------------------------------------------------------------------
-// Ctor
-//-----------------------------------------------------------------------------
-CTFConditionList::CTFConditionList()
+    //-----------------------------------------------------------------------------
+    // Ctor
+    //-----------------------------------------------------------------------------
+    CTFConditionList::CTFConditionList()
 {
-	_condition_bits = _old_condition_bits = 0;
+    _condition_bits = _old_condition_bits = 0;
 }
 
 //-----------------------------------------------------------------------------
@@ -48,48 +48,48 @@ CTFConditionList::CTFConditionList()
 bool CTFConditionList::Add( ETFCond type, float duration, CTFPlayer* outer, CBaseEntity* provider /*= NULL*/ )
 {
 #ifdef GAME_DLL
-	return _Add( type, duration, outer, provider );
+    return _Add( type, duration, outer, provider );
 #else
-	return type == TF_COND_CRITBOOSTED;
+    return type == TF_COND_CRITBOOSTED;
 #endif
 }
 
 bool CTFConditionList::_Add( ETFCond type, float duration, CTFPlayer* outer, CBaseEntity* provider /*= NULL*/ )
 {
-	// If we already have a condition of this type, ask it to handle the addition of another.
-	for ( int i = 0; i < _conditions.Count(); ++i )
-	{
-		if ( _conditions[i]->GetType() == type )
-		{
-			_conditions[i]->Add( duration );
-			_conditions[i]->SetProvider( provider );
-			return true;
-		}
-	}
+    // If we already have a condition of this type, ask it to handle the addition of another.
+    for ( int i = 0; i < _conditions.Count(); ++i )
+    {
+        if ( _conditions[i]->GetType() == type )
+        {
+            _conditions[i]->Add( duration );
+            _conditions[i]->SetProvider( provider );
+            return true;
+        }
+    }
 
-	// Add a new condition.
-	CTFCondition* newCond = NULL;
-	switch ( type )
-	{
-		// TODO: Register new conditions anonymously instead of switching.
-	case TF_COND_CRITBOOSTED:
-		newCond = new CTFCondition_CritBoost( type, duration, outer, provider );
-		break;
-	}
+    // Add a new condition.
+    CTFCondition* newCond = NULL;
+    switch ( type )
+    {
+            // TODO: Register new conditions anonymously instead of switching.
+        case TF_COND_CRITBOOSTED:
+            newCond = new CTFCondition_CritBoost( type, duration, outer, provider );
+            break;
+    }
 
-	if ( newCond )
-	{
-		_condition_bits |= (1<<type);
-		_old_condition_bits |= (1<<type);
+    if ( newCond )
+    {
+        _condition_bits |= ( 1 << type );
+        _old_condition_bits |= ( 1 << type );
 
-		_conditions.AddToTail( newCond );
-		newCond->OnAdded();
-		newCond->SetProvider( provider );
+        _conditions.AddToTail( newCond );
+        newCond->OnAdded();
+        newCond->SetProvider( provider );
 
-		return true;
-	}
+        return true;
+    }
 
-	return false;
+    return false;
 }
 
 //-----------------------------------------------------------------------------
@@ -98,44 +98,44 @@ bool CTFConditionList::_Add( ETFCond type, float duration, CTFPlayer* outer, CBa
 bool CTFConditionList::Remove( ETFCond type, bool ignore_duration )
 {
 #ifdef GAME_DLL
-	bool bConditionListHandledRemoval = _Remove( type, ignore_duration );
+    bool bConditionListHandledRemoval = _Remove( type, ignore_duration );
 
-	// The condition list only handles one type of condition. Written slightly weird
-	// to avoid unused variable warnings with asserts disabled.
-	if ( bConditionListHandledRemoval )
-	{
-		Assert( type == TF_COND_CRITBOOSTED );
-	}
+    // The condition list only handles one type of condition. Written slightly weird
+    // to avoid unused variable warnings with asserts disabled.
+    if ( bConditionListHandledRemoval )
+    {
+        Assert( type == TF_COND_CRITBOOSTED );
+    }
 #endif
-	return type == TF_COND_CRITBOOSTED;
+    return type == TF_COND_CRITBOOSTED;
 }
 
 bool CTFConditionList::_Remove( ETFCond type, bool ignore_duration )
 {
-	for ( int i=_conditions.Count()-1; i>=0; --i )
-	{
-		CTFCondition* cond = _conditions[i];
-		if ( !cond || cond->GetType() != type )
-			continue;
+    for ( int i = _conditions.Count() - 1; i >= 0; --i )
+    {
+        CTFCondition* cond = _conditions[i];
+        if ( !cond || cond->GetType() != type )
+            continue;
 
-		if ( cond->UsesMinDuration() && !ignore_duration && cond->GetMinDuration() > 0 )
-		{
-			cond->SetMaxDuration( cond->GetMinDuration() );
-			continue; // Can't remove conditions that haven't expired.
-		}
+        if ( cond->UsesMinDuration() && !ignore_duration && cond->GetMinDuration() > 0 )
+        {
+            cond->SetMaxDuration( cond->GetMinDuration() );
+            continue;  // Can't remove conditions that haven't expired.
+        }
 
-		_conditions.Remove( i );
+        _conditions.Remove( i );
 
-		_condition_bits &= ~(1<<type);
-		_old_condition_bits &= ~(1<<type);
+        _condition_bits &= ~( 1 << type );
+        _old_condition_bits &= ~( 1 << type );
 
-		cond->OnRemoved();
-		delete cond;
+        cond->OnRemoved();
+        delete cond;
 
-		return true;
-	}
+        return true;
+    }
 
-	return false;
+    return false;
 }
 
 //-----------------------------------------------------------------------------
@@ -143,14 +143,14 @@ bool CTFConditionList::_Remove( ETFCond type, bool ignore_duration )
 //-----------------------------------------------------------------------------
 void CTFConditionList::RemoveAll()
 {
-	_condition_bits = 0;
-	_old_condition_bits = 0;
+    _condition_bits = 0;
+    _old_condition_bits = 0;
 
-	for ( int i=0; i<_conditions.Count(); ++i )
-	{
-		_conditions[i]->OnRemoved();
-	}
-	_conditions.PurgeAndDeleteElements();
+    for ( int i = 0; i < _conditions.Count(); ++i )
+    {
+        _conditions[i]->OnRemoved();
+    }
+    _conditions.PurgeAndDeleteElements();
 }
 
 //-----------------------------------------------------------------------------
@@ -158,25 +158,25 @@ void CTFConditionList::RemoveAll()
 //-----------------------------------------------------------------------------
 bool CTFConditionList::InCond( ETFCond type ) const
 {
-	return ( ( _condition_bits & (1<<type) ) != 0 );
+    return ( ( _condition_bits & ( 1 << type ) ) != 0 );
 }
 
 //-----------------------------------------------------------------------------
 //
 //-----------------------------------------------------------------------------
-CBaseEntity *CTFConditionList::GetProvider( ETFCond type ) const
+CBaseEntity* CTFConditionList::GetProvider( ETFCond type ) const
 {
-	CBaseEntity *pProvider = NULL;
-	for ( int i = 0; i < _conditions.Count(); ++i )
-	{
-		if ( _conditions[i]->GetType() == type )
-		{
-			pProvider = _conditions[i]->GetProvider();
-			break;
-		}
-	}
+    CBaseEntity* pProvider = NULL;
+    for ( int i = 0; i < _conditions.Count(); ++i )
+    {
+        if ( _conditions[i]->GetType() == type )
+        {
+            pProvider = _conditions[i]->GetProvider();
+            break;
+        }
+    }
 
-	return pProvider;
+    return pProvider;
 }
 
 //-----------------------------------------------------------------------------
@@ -184,10 +184,10 @@ CBaseEntity *CTFConditionList::GetProvider( ETFCond type ) const
 //-----------------------------------------------------------------------------
 void CTFConditionList::Think()
 {
-	for ( int i=0; i<_conditions.Count(); ++i )
-	{
-		_conditions[i]->OnThink();
-	}
+    for ( int i = 0; i < _conditions.Count(); ++i )
+    {
+        _conditions[i]->OnThink();
+    }
 }
 
 //-----------------------------------------------------------------------------
@@ -196,73 +196,73 @@ void CTFConditionList::Think()
 void CTFConditionList::ServerThink()
 {
 #ifdef GAME_DLL
-	for ( int i=0; i<_conditions.Count(); ++i )
-	{
-		CTFCondition* cond = _conditions[i];
-		if ( cond->GetMaxDuration() > PERMANENT_CONDITION ||
-			 cond->GetMinDuration() > PERMANENT_CONDITION )
-		{
-			// Reduce the duration over time.
-			float reduction = gpGlobals->frametime;
+    for ( int i = 0; i < _conditions.Count(); ++i )
+    {
+        CTFCondition* cond = _conditions[i];
+        if ( cond->GetMaxDuration() > PERMANENT_CONDITION ||
+             cond->GetMinDuration() > PERMANENT_CONDITION )
+        {
+            // Reduce the duration over time.
+            float reduction = gpGlobals->frametime;
 
-			// Healable conditions expire faster when we have healers.
-			int numHealers = cond->GetOuter()->m_Shared.GetNumHealers();
-			if ( cond->IsHealable() && numHealers > 0 )
-			{
-				reduction += numHealers * reduction * 4;
-			}
+            // Healable conditions expire faster when we have healers.
+            int numHealers = cond->GetOuter()->m_Shared.GetNumHealers();
+            if ( cond->IsHealable() && numHealers > 0 )
+            {
+                reduction += numHealers * reduction * 4;
+            }
 
-			// Decrement min duration.
-			if ( cond->GetMinDuration() > PERMANENT_CONDITION )
-			{
-				cond->SetMinDuration( MAX( cond->GetMinDuration() - reduction, 0 ) );
-			}
+            // Decrement min duration.
+            if ( cond->GetMinDuration() > PERMANENT_CONDITION )
+            {
+                cond->SetMinDuration( MAX( cond->GetMinDuration() - reduction, 0 ) );
+            }
 
-			// Decrement max duration.
-			if ( cond->GetMaxDuration() > PERMANENT_CONDITION )
-			{
-				cond->SetMaxDuration( MAX( cond->GetMaxDuration() - reduction, 0 ) );
+            // Decrement max duration.
+            if ( cond->GetMaxDuration() > PERMANENT_CONDITION )
+            {
+                cond->SetMaxDuration( MAX( cond->GetMaxDuration() - reduction, 0 ) );
 
-				if ( cond->GetMaxDuration() < cond->GetMinDuration() )
-				{
-					cond->SetMaxDuration( cond->GetMinDuration() );
-				}
-			}
+                if ( cond->GetMaxDuration() < cond->GetMinDuration() )
+                {
+                    cond->SetMaxDuration( cond->GetMinDuration() );
+                }
+            }
 
-			if ( cond->GetMaxDuration() == 0 )
-			{
-				Remove( cond->GetType() );
-				continue;
-			}
-		}
+            if ( cond->GetMaxDuration() == 0 )
+            {
+                Remove( cond->GetType() );
+                continue;
+            }
+        }
 
-		_conditions[i]->OnServerThink();
-	}
+        _conditions[i]->OnServerThink();
+    }
 #endif
 }
 
 #ifdef CLIENT_DLL
 
 //-----------------------------------------------------------------------------
-// 
+//
 //-----------------------------------------------------------------------------
 void CTFConditionList::OnPreDataChanged( void )
 {
-//	_old_condition_bits = _condition_bits;
+    //	_old_condition_bits = _condition_bits;
 }
 
 //-----------------------------------------------------------------------------
-// 
+//
 //-----------------------------------------------------------------------------
 void CTFConditionList::OnDataChanged( CTFPlayer* outer )
 {
-	// Is there a way to improve this by hooking directly into network state changed?
-	if ( _old_condition_bits != _condition_bits )
-	{
-		UpdateClientConditions( outer );
+    // Is there a way to improve this by hooking directly into network state changed?
+    if ( _old_condition_bits != _condition_bits )
+    {
+        UpdateClientConditions( outer );
 
-		_old_condition_bits = _condition_bits;
-	}
+        _old_condition_bits = _condition_bits;
+    }
 }
 
 //-----------------------------------------------------------------------------
@@ -270,22 +270,22 @@ void CTFConditionList::OnDataChanged( CTFPlayer* outer )
 //-----------------------------------------------------------------------------
 void CTFConditionList::UpdateClientConditions( CTFPlayer* outer )
 {
-	int nCondChanged = _condition_bits ^ _old_condition_bits;
-	int nCondAdded = nCondChanged & _condition_bits;
-	int nCondRemoved = nCondChanged & _old_condition_bits;
+    int nCondChanged = _condition_bits ^ _old_condition_bits;
+    int nCondAdded = nCondChanged & _condition_bits;
+    int nCondRemoved = nCondChanged & _old_condition_bits;
 
-	int i;
-	for ( i=0;i<TF_COND_LAST;i++ )
-	{
-		if ( nCondAdded & (1<<i) )
-		{
-			_Add( (ETFCond)i, PERMANENT_CONDITION, outer );
-		}
-		else if ( nCondRemoved & (1<<i) )
-		{
-			_Remove( (ETFCond)i );
-		}
-	}
+    int i;
+    for ( i = 0; i < TF_COND_LAST; i++ )
+    {
+        if ( nCondAdded & ( 1 << i ) )
+        {
+            _Add( ( ETFCond )i, PERMANENT_CONDITION, outer );
+        }
+        else if ( nCondRemoved & ( 1 << i ) )
+        {
+            _Remove( ( ETFCond )i );
+        }
+    }
 }
 
 #endif
@@ -294,11 +294,11 @@ void CTFConditionList::UpdateClientConditions( CTFPlayer* outer )
 // Ctor
 //-----------------------------------------------------------------------------
 CTFCondition::CTFCondition( ETFCond type, float duration, CTFPlayer* outer, CBaseEntity* provider /*= NULL*/ )
-: _type( type ),
-  _min_duration( 0 ),
-  _max_duration( duration ),
-  _outer( outer ),
-  _provider( provider )
+    : _type( type ),
+      _min_duration( 0 ),
+      _max_duration( duration ),
+      _outer( outer ),
+      _provider( provider )
 {
 }
 
@@ -314,81 +314,81 @@ CTFCondition::~CTFCondition()
 //-----------------------------------------------------------------------------
 void CTFCondition::Add( float duration )
 {
-	if ( duration != PERMANENT_CONDITION )
-	{
-		// If our new duration is not permanent, is shorter than
-		// our current duration, and is longer than our min duration
-		// make it our new min duration.
-		if ( GetMaxDuration() == PERMANENT_CONDITION ||
-			 duration < GetMaxDuration() )
-		{
-			if ( duration > GetMinDuration() )
-				SetMinDuration( duration );
+    if ( duration != PERMANENT_CONDITION )
+    {
+        // If our new duration is not permanent, is shorter than
+        // our current duration, and is longer than our min duration
+        // make it our new min duration.
+        if ( GetMaxDuration() == PERMANENT_CONDITION ||
+             duration < GetMaxDuration() )
+        {
+            if ( duration > GetMinDuration() )
+                SetMinDuration( duration );
 
-			return;
-		}
-	}
-	else if ( GetMaxDuration() != PERMANENT_CONDITION )
-	{
-		// If our current duration is not permanent and we are adding a
-		// permanent duration, make our old finite duration the new min duration.
-		// This ensures we last at least that long.
-		SetMinDuration( GetMaxDuration() );
-	}
+            return;
+        }
+    }
+    else if ( GetMaxDuration() != PERMANENT_CONDITION )
+    {
+        // If our current duration is not permanent and we are adding a
+        // permanent duration, make our old finite duration the new min duration.
+        // This ensures we last at least that long.
+        SetMinDuration( GetMaxDuration() );
+    }
 
-	SetMaxDuration( duration );
+    SetMaxDuration( duration );
 }
 
 //=============================================================================
 // Crit Boost
 //=============================================================================
 CTFCondition_CritBoost::CTFCondition_CritBoost( ETFCond type, float duration, CTFPlayer* outer, CBaseEntity* provider /*= NULL*/ )
-: CTFCondition( type, duration, outer, provider )
+    : CTFCondition( type, duration, outer, provider )
 {
-	Assert( type == TF_COND_CRITBOOSTED );
+    Assert( type == TF_COND_CRITBOOSTED );
 }
 
 void CTFCondition_CritBoost::OnAdded()
 {
 #ifdef CLIENT_DLL
-	GetOuter()->m_Shared.UpdateCritBoostEffect();
+    GetOuter()->m_Shared.UpdateCritBoostEffect();
 
-	if ( GetOuter()->IsLocalPlayer() && GetOuter()->IsPlayerClass( TF_CLASS_HEAVYWEAPONS ) )
-	{
-		g_AchievementMgrTF.OnAchievementEvent( ACHIEVEMENT_TF_HEAVY_RECEIVE_UBER_GRIND );
-	}
+    if ( GetOuter()->IsLocalPlayer() && GetOuter()->IsPlayerClass( TF_CLASS_HEAVYWEAPONS ) )
+    {
+        g_AchievementMgrTF.OnAchievementEvent( ACHIEVEMENT_TF_HEAVY_RECEIVE_UBER_GRIND );
+    }
 #endif
 }
 
 void CTFCondition_CritBoost::OnRemoved()
 {
 #ifdef CLIENT_DLL
-	GetOuter()->m_Shared.UpdateCritBoostEffect();
+    GetOuter()->m_Shared.UpdateCritBoostEffect();
 #endif
 }
 
 void CTFCondition_CritBoost::OnThink()
 {
 #ifdef CLIENT_DLL
-	if ( GetOuter()->m_pCritBoostEffect )
-	{
-		CBaseEntity *pWeapon = NULL;
-		// Use GetRenderedWeaponModel() instead?
-		if ( GetOuter()->IsLocalPlayer() )
-		{
-			pWeapon = GetOuter()->GetViewModel(0);
-		}
-		else
-		{
-			pWeapon = GetOuter()->GetActiveWeapon();
-		}
+    if ( GetOuter()->m_pCritBoostEffect )
+    {
+        CBaseEntity* pWeapon = NULL;
+        // Use GetRenderedWeaponModel() instead?
+        if ( GetOuter()->IsLocalPlayer() )
+        {
+            pWeapon = GetOuter()->GetViewModel( 0 );
+        }
+        else
+        {
+            pWeapon = GetOuter()->GetActiveWeapon();
+        }
 
-		// Transfer the crit boosted effect if we've switched weapons
-		if ( GetOuter()->m_pCritBoostEffect->GetOwner() != pWeapon )
-		{
-			GetOuter()->m_Shared.UpdateCritBoostEffect();
-		}
-	}
+        // Transfer the crit boosted effect if we've switched weapons
+        if ( GetOuter()->m_pCritBoostEffect->GetOwner() != pWeapon )
+        {
+            GetOuter()->m_Shared.UpdateCritBoostEffect();
+        }
+    }
 #endif
 }
 

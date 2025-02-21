@@ -19,51 +19,50 @@ IMPLEMENT_CLIENTCLASS_DT( C_TFTauntProp, DT_TFTauntProp, CTFTauntProp )
 END_RECV_TABLE()
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool C_TFTauntProp::StartSceneEvent( CSceneEventInfo *info, CChoreoScene *scene, CChoreoEvent *event, CChoreoActor *actor, CBaseEntity *pTarget )
 {
-	switch ( event->GetType() )
-	{
-	case CChoreoEvent::SEQUENCE:
-	case CChoreoEvent::GESTURE:
-		{
-			// Get the (gesture) sequence.
-			info->m_nSequence = LookupSequence( event->GetParameters() );
-			if ( info->m_nSequence < 0 )
-				return false;
+    switch ( event->GetType() )
+    {
+        case CChoreoEvent::SEQUENCE:
+        case CChoreoEvent::GESTURE:
+        {
+            // Get the (gesture) sequence.
+            info->m_nSequence = LookupSequence( event->GetParameters() );
+            if ( info->m_nSequence < 0 )
+                return false;
 
-			SetSequence( info->m_nSequence );
-			SetPlaybackRate( 1.0f );
-			SetCycle( scene->GetTime() / scene->GetDuration() );
-		}
-		return true;
-	default:
-		return BaseClass::StartSceneEvent( info, scene, event, actor, pTarget );
-	}
+            SetSequence( info->m_nSequence );
+            SetPlaybackRate( 1.0f );
+            SetCycle( scene->GetTime() / scene->GetDuration() );
+        }
+            return true;
+        default:
+            return BaseClass::StartSceneEvent( info, scene, event, actor, pTarget );
+    }
 }
 
-
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool C_TFTauntProp::ClearSceneEvent( CSceneEventInfo *info, bool fastKill, bool canceled )
 {
-	switch ( info->m_pEvent->GetType() )
-	{
-	case CChoreoEvent::SEQUENCE:
-	case CChoreoEvent::GESTURE:
-		//return StopGestureSceneEvent( info, fastKill, canceled );
-	default:
-		return BaseClass::ClearSceneEvent( info, fastKill, canceled );
-	}
+    switch ( info->m_pEvent->GetType() )
+    {
+        case CChoreoEvent::SEQUENCE:
+        case CChoreoEvent::GESTURE:
+            // return StopGestureSceneEvent( info, fastKill, canceled );
+        default:
+            return BaseClass::ClearSceneEvent( info, fastKill, canceled );
+    }
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void C_TFTauntProp::UpdateOnRemove()
 {
-	ParticleProp()->StopEmissionAndDestroyImmediately();
-	BaseClass::UpdateOnRemove();
+    ParticleProp()->StopEmissionAndDestroyImmediately();
+    BaseClass::UpdateOnRemove();
 }

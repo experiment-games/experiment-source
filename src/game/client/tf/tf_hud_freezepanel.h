@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
 
@@ -29,125 +29,132 @@ bool IsTakingAFreezecamScreenshot( void );
 //-----------------------------------------------------------------------------
 class CTFFreezePanelHealth : public CTFHudPlayerHealth
 {
-public:
-	CTFFreezePanelHealth( Panel *parent, const char *name ) : CTFHudPlayerHealth( parent, name )
-	{
-	}
+   public:
+    CTFFreezePanelHealth( Panel *parent, const char *name )
+        : CTFHudPlayerHealth( parent, name )
+    {
+    }
 
-	virtual const char *GetResFilename( void ) OVERRIDE { return "resource/UI/FreezePanelKillerHealth.res"; }
-	virtual void OnThink()
-	{
-		// Do nothing. We're just preventing the base health panel from updating.
-	}
+    virtual const char *GetResFilename( void ) OVERRIDE
+    {
+        return "resource/UI/FreezePanelKillerHealth.res";
+    }
+    virtual void OnThink()
+    {
+        // Do nothing. We're just preventing the base health panel from updating.
+    }
 };
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 class CTFFreezePanelCallout : public EditablePanel
 {
-	DECLARE_CLASS_SIMPLE( CTFFreezePanelCallout, EditablePanel );
-public:
-	CTFFreezePanelCallout( Panel *parent, const char *name );
+    DECLARE_CLASS_SIMPLE( CTFFreezePanelCallout, EditablePanel );
 
-	virtual void ApplySchemeSettings( vgui::IScheme *pScheme );
+   public:
+    CTFFreezePanelCallout( Panel *parent, const char *name );
 
-	void	UpdateForGib( int iGib, int iCount );
-	void	UpdateForRagdoll( void );
+    virtual void ApplySchemeSettings( vgui::IScheme *pScheme );
 
-private:
-	vgui::Label	*m_pGibLabel;
+    void UpdateForGib( int iGib, int iCount );
+    void UpdateForRagdoll( void );
+
+   private:
+    vgui::Label *m_pGibLabel;
 };
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 class CReplayReminderPanel;
 
 class CTFFreezePanel : public EditablePanel, public CHudElement
 {
-private:
-	DECLARE_CLASS_SIMPLE( CTFFreezePanel, EditablePanel );
+   private:
+    DECLARE_CLASS_SIMPLE( CTFFreezePanel, EditablePanel );
 
-public:
-	CTFFreezePanel( const char *pElementName );
+   public:
+    CTFFreezePanel( const char *pElementName );
 
-	static CTFFreezePanel *Instance();
+    static CTFFreezePanel *Instance();
 
-	virtual void Reset();
-	virtual void Init();
-	virtual void ApplySchemeSettings( vgui::IScheme *pScheme );
-	virtual void FireGameEvent( IGameEvent * event );
+    virtual void Reset();
+    virtual void Init();
+    virtual void ApplySchemeSettings( vgui::IScheme *pScheme );
+    virtual void FireGameEvent( IGameEvent *event );
 
-	const char *GetResFilename( C_TFPlayer *pTFPlayer = NULL ) const;
+    const char *GetResFilename( C_TFPlayer *pTFPlayer = NULL ) const;
 
-	void ShowSnapshotPanel( bool bShow );
-	void ShowSaveReplayPanel( bool bShow );
-	void UpdateCallout( void );
-	void ShowCalloutsIn( float flTime );
-	void ShowSnapshotPanelIn( float flTime );
-	void ShowSaveReplayPanelIn( float flTime );
-	void Show();
-	void Hide();
-	virtual bool ShouldDraw( void );
-	void OnThink( void );
+    void ShowSnapshotPanel( bool bShow );
+    void ShowSaveReplayPanel( bool bShow );
+    void UpdateCallout( void );
+    void ShowCalloutsIn( float flTime );
+    void ShowSnapshotPanelIn( float flTime );
+    void ShowSaveReplayPanelIn( float flTime );
+    void Show();
+    void Hide();
+    virtual bool ShouldDraw( void );
+    void OnThink( void );
 
-	int	HudElementKeyInput( int down, ButtonCode_t keynum, const char *pszCurrentBinding );
+    int HudElementKeyInput( int down, ButtonCode_t keynum, const char *pszCurrentBinding );
 
-	bool IsHoldingAfterScreenShot( void ) { return m_bHoldingAfterScreenshot; }
-	void SendTauntAcknowledgement( const char *pszCommand, int iGibs = 0 );
+    bool IsHoldingAfterScreenShot( void )
+    {
+        return m_bHoldingAfterScreenshot;
+    }
+    void SendTauntAcknowledgement( const char *pszCommand, int iGibs = 0 );
 
-protected:
-	CTFFreezePanelCallout *TestAndAddCallout( Vector &origin, Vector &vMins, Vector &vMaxs, CUtlVector<Vector> *vecCalloutsTL, 
-		CUtlVector<Vector> *vecCalloutsBR, Vector &vecFreezeTL, Vector &vecFreezeBR, Vector &vecStatTL, Vector &vecStatBR, int *iX, int *iY );
+   protected:
+    CTFFreezePanelCallout *TestAndAddCallout( Vector &origin, Vector &vMins, Vector &vMaxs, CUtlVector< Vector > *vecCalloutsTL, CUtlVector< Vector > *vecCalloutsBR, Vector &vecFreezeTL, Vector &vecFreezeBR, Vector &vecStatTL, Vector &vecStatBR, int *iX, int *iY );
 
-private:
-	static CTFFreezePanel *s_pFreezePanel;
+   private:
+    static CTFFreezePanel *s_pFreezePanel;
 
-	void DeleteCalloutPanels();
-	void ShowNemesisPanel( bool bShow );
-	const char *GetFilesafePlayerName( const char *pszOldName );
+    void DeleteCalloutPanels();
+    void ShowNemesisPanel( bool bShow );
+    const char *GetFilesafePlayerName( const char *pszOldName );
 
-	CPanelAnimationVar( bool, m_bShouldScreenshotMovePanelToCorner, "screenshot_move_panel_to_corner", "1" );
+    CPanelAnimationVar( bool, m_bShouldScreenshotMovePanelToCorner, "screenshot_move_panel_to_corner", "1" );
 
-	int						m_iYBase;
-	int						m_iKillerIndex;
-	CTFHudPlayerHealth		*m_pKillerHealth;
-	int						m_iShowNemesisPanel;
-	CUtlVector<CTFFreezePanelCallout*>	m_pCalloutPanels;
-	float					m_flShowCalloutsAt;
-	float					m_flShowSnapshotReminderAt;
-	float					m_flShowReplayReminderAt;
-	EditablePanel			*m_pNemesisSubPanel;
-	vgui::Label				*m_pFreezeLabel;
-	CTFImagePanel			*m_pFreezePanelBG;
-	CTFImagePanel			*m_pFreezeTeamIcon;
-	CAvatarImagePanel		*m_pAvatar;
-	vgui::Label				*m_pKillerLabel;
-	vgui::EditablePanel		*m_pScreenshotPanel;
+    int m_iYBase;
+    int m_iKillerIndex;
+    CTFHudPlayerHealth *m_pKillerHealth;
+    int m_iShowNemesisPanel;
+    CUtlVector< CTFFreezePanelCallout * > m_pCalloutPanels;
+    float m_flShowCalloutsAt;
+    float m_flShowSnapshotReminderAt;
+    float m_flShowReplayReminderAt;
+    EditablePanel *m_pNemesisSubPanel;
+    vgui::Label *m_pFreezeLabel;
+    CTFImagePanel *m_pFreezePanelBG;
+    CTFImagePanel *m_pFreezeTeamIcon;
+    CAvatarImagePanel *m_pAvatar;
+    vgui::Label *m_pKillerLabel;
+    vgui::EditablePanel *m_pScreenshotPanel;
 #if defined( REPLAY_ENABLED )
-	CReplayReminderPanel	*m_pSaveReplayPanel;
+    CReplayReminderPanel *m_pSaveReplayPanel;
 #endif
-	vgui::EditablePanel		*m_pBasePanel;
-	CItemModelPanel			*m_pItemPanel;
+    vgui::EditablePanel *m_pBasePanel;
+    CItemModelPanel *m_pItemPanel;
 
-	int 					m_iBasePanelOriginalX;
-	int 					m_iBasePanelOriginalY;
-	int						m_iItemPanelOriginalX;
-	int						m_iItemPanelOriginalY;
-	int						m_iKillerOriginalX;
-	int						m_iKillerOriginalY;
+    int m_iBasePanelOriginalX;
+    int m_iBasePanelOriginalY;
+    int m_iItemPanelOriginalX;
+    int m_iItemPanelOriginalY;
+    int m_iKillerOriginalX;
+    int m_iKillerOriginalY;
 
-	bool					m_bHoldingAfterScreenshot;
+    bool m_bHoldingAfterScreenshot;
 
-	enum 
-	{
-		SHOW_NO_NEMESIS = 0,
-		SHOW_NEW_NEMESIS,
-		SHOW_REVENGE
-	};
+    enum
+    {
+        SHOW_NO_NEMESIS = 0,
+        SHOW_NEW_NEMESIS,
+        SHOW_REVENGE
+    };
 
-	CUtlString m_strCurrentFreezeCamResFile;
+    CUtlString m_strCurrentFreezeCamResFile;
 };
 
-#endif // TF_HUD_FREEZEPANEL_H
+#endif  // TF_HUD_FREEZEPANEL_H

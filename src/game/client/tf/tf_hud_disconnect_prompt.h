@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -16,61 +16,59 @@
 
 enum eDisconnectReason
 {
-	REASON_QUIT,
-	REASON_DISCONNECT
+    REASON_QUIT,
+    REASON_DISCONNECT
 };
 
 class CTFDisconnectConfirmDialog : public CTFGenericConfirmDialog
 {
-	DECLARE_CLASS_SIMPLE( CTFDisconnectConfirmDialog, CTFGenericConfirmDialog );
-public:
-	CTFDisconnectConfirmDialog(	const char *pTitle, 
-								const char *pTextKey, 
-								const char *pConfirmBtnText,
-								const char *pCancelBtnText, 
-								GenericConfirmDialogCallback callback, 
-								vgui::Panel *pParent );
+    DECLARE_CLASS_SIMPLE( CTFDisconnectConfirmDialog, CTFGenericConfirmDialog );
 
-	virtual const char *GetResFile();
+   public:
+    CTFDisconnectConfirmDialog( const char *pTitle,
+                                const char *pTextKey,
+                                const char *pConfirmBtnText,
+                                const char *pCancelBtnText,
+                                GenericConfirmDialogCallback callback,
+                                vgui::Panel *pParent );
 
-	void SetReason( eDisconnectReason reason );
-	virtual void OnCommand( const char *command );
-	void AddConfirmCommand( const char *command );
-	void AddCancelCommand( const char *command );
+    virtual const char *GetResFile();
 
-private:
-	CUtlVector< CUtlString > m_confirmCommands;
-	CUtlVector< CUtlString > m_cancelCommands;
+    void SetReason( eDisconnectReason reason );
+    virtual void OnCommand( const char *command );
+    void AddConfirmCommand( const char *command );
+    void AddCancelCommand( const char *command );
 
-	eDisconnectReason m_eReason;
-	EAbandonGameStatus m_eAbandonStatus;
+   private:
+    CUtlVector< CUtlString > m_confirmCommands;
+    CUtlVector< CUtlString > m_cancelCommands;
 
+    eDisconnectReason m_eReason;
+    EAbandonGameStatus m_eAbandonStatus;
 };
-CTFDisconnectConfirmDialog * BuildDisconnectConfirmDialog();
-
+CTFDisconnectConfirmDialog *BuildDisconnectConfirmDialog();
 
 class CTFRejoinConfirmDialog : public CTFGenericConfirmDialog
 {
-	DECLARE_CLASS_SIMPLE( CTFRejoinConfirmDialog, CTFGenericConfirmDialog );
-public:
-	CTFRejoinConfirmDialog(	const char *pTitle, 
-		const char *pTextKey, 
-		const char *pConfirmBtnText,
-		const char *pCancelBtnText, 
-		GenericConfirmDialogCallback callback, 
-		vgui::Panel *pParent );
+    DECLARE_CLASS_SIMPLE( CTFRejoinConfirmDialog, CTFGenericConfirmDialog );
 
-	virtual const char *GetResFile();
+   public:
+    CTFRejoinConfirmDialog( const char *pTitle,
+                            const char *pTextKey,
+                            const char *pConfirmBtnText,
+                            const char *pCancelBtnText,
+                            GenericConfirmDialogCallback callback,
+                            vgui::Panel *pParent );
 
-	void CloseRejoinWindow();
+    virtual const char *GetResFile();
 
-private:
+    void CloseRejoinWindow();
 
-	EAbandonGameStatus m_eAbandonStatus;
-
+   private:
+    EAbandonGameStatus m_eAbandonStatus;
 };
-CTFRejoinConfirmDialog * BuildRejoinConfirmDialog();
+CTFRejoinConfirmDialog *BuildRejoinConfirmDialog();
 
 bool HandleDisconnectAttempt();
 
-#endif // TF_HUD_DISCONNECT_PROMPT_H
+#endif  // TF_HUD_DISCONNECT_PROMPT_H

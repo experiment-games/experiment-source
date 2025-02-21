@@ -9,106 +9,138 @@
 #include "ai_speech.h"
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-class CBaseMultiplayerPlayer : public CAI_ExpresserHost<CBasePlayer>
+class CBaseMultiplayerPlayer : public CAI_ExpresserHost< CBasePlayer >
 {
+    DECLARE_CLASS( CBaseMultiplayerPlayer, CAI_ExpresserHost< CBasePlayer > );
+    DECLARE_ENT_SCRIPTDESC();
 
-	DECLARE_CLASS( CBaseMultiplayerPlayer, CAI_ExpresserHost<CBasePlayer> );
-	DECLARE_ENT_SCRIPTDESC();
+   public:
+    CBaseMultiplayerPlayer();
+    ~CBaseMultiplayerPlayer();
 
-public:
+    virtual void Spawn( void );
 
-	CBaseMultiplayerPlayer();
-	~CBaseMultiplayerPlayer();
+    virtual void PostConstructor( const char *szClassname );
+    virtual void ModifyOrAppendCriteria( AI_CriteriaSet &criteriaSet );
 
-	virtual void		Spawn( void );
+    virtual bool SpeakIfAllowed( AIConcept_t concept, const char *modifiers = NULL, char *pszOutResponseChosen = NULL, size_t bufsize = 0, IRecipientFilter *filter = NULL );
+    virtual IResponseSystem *GetResponseSystem();
+    bool SpeakConcept( AI_Response &response, int iConcept );
+    virtual bool SpeakConceptIfAllowed( int iConcept, const char *modifiers = NULL, char *pszOutResponseChosen = NULL, size_t bufsize = 0, IRecipientFilter *filter = NULL );
 
-	virtual void		PostConstructor( const char *szClassname );
-	virtual void		ModifyOrAppendCriteria( AI_CriteriaSet& criteriaSet );
+    virtual bool CanHearAndReadChatFrom( CBasePlayer *pPlayer );
+    virtual bool CanSpeak( void )
+    {
+        return true;
+    }
+    virtual bool CanBeAutobalanced()
+    {
+        return true;
+    }
 
-	virtual bool			SpeakIfAllowed( AIConcept_t concept, const char *modifiers = NULL, char *pszOutResponseChosen = NULL, size_t bufsize = 0, IRecipientFilter *filter = NULL );
-	virtual IResponseSystem *GetResponseSystem();
-	bool					SpeakConcept( AI_Response& response, int iConcept );
-	virtual bool			SpeakConceptIfAllowed( int iConcept, const char *modifiers = NULL, char *pszOutResponseChosen = NULL, size_t bufsize = 0, IRecipientFilter *filter = NULL );
+    virtual void Precache( void )
+    {
+        PrecacheParticleSystem( "achieved" );
 
-	virtual bool		CanHearAndReadChatFrom( CBasePlayer *pPlayer );
-	virtual bool		CanSpeak( void ) { return true; }
-	virtual bool		CanBeAutobalanced() { return true; }
+        BaseClass::Precache();
+    }
 
-	virtual void		Precache( void )
-	{
-		PrecacheParticleSystem( "achieved" );
+    virtual bool ClientCommand( const CCommand &args );
 
-		BaseClass::Precache();
-	}
+    virtual bool CanSpeakVoiceCommand( void )
+    {
+        return true;
+    }
+    virtual bool ShouldShowVoiceSubtitleToEnemy( void );
+    virtual void NoteSpokeVoiceCommand( const char *pszScenePlayed ) {}
 
-	virtual bool		ClientCommand( const CCommand &args );
+    virtual void OnAchievementEarned( int iAchievement ) {}
 
-	virtual bool		CanSpeakVoiceCommand( void ) { return true; }
-	virtual bool		ShouldShowVoiceSubtitleToEnemy( void );
-	virtual void		NoteSpokeVoiceCommand( const char *pszScenePlayed ) {}
+    enum
+    {
+        CHAT_IGNORE_NONE = 0,
+        CHAT_IGNORE_ALL,
+        CHAT_IGNORE_TEAM,
+    };
 
-	virtual void OnAchievementEarned( int iAchievement ) {}
+    int m_iIgnoreGlobalChat;
 
-	enum
-	{
-		CHAT_IGNORE_NONE = 0,
-		CHAT_IGNORE_ALL,
-		CHAT_IGNORE_TEAM,
-	};
+    //---------------------------------
+    // Speech support
+    virtual CAI_Expresser *GetExpresser()
+    {
+        return m_pExpresser;
+    }
+    virtual CMultiplayer_Expresser *GetMultiplayerExpresser()
+    {
+        return m_pExpresser;
+    }
 
-	int m_iIgnoreGlobalChat;
+    void SetLastForcedChangeTeamTimeToNow( void )
+    {
+        m_flLastForcedChangeTeamTime = gpGlobals->curtime;
+    }
+    float GetLastForcedChangeTeamTime( void )
+    {
+        return m_flLastForcedChangeTeamTime;
+    }
 
-	//---------------------------------
-	// Speech support
-	virtual CAI_Expresser *GetExpresser() { return m_pExpresser; }
-	virtual CMultiplayer_Expresser *GetMultiplayerExpresser() { return m_pExpresser; }
+    void SetTeamBalanceScore( int iScore )
+    {
+        m_iBalanceScore = iScore;
+    }
+    int GetTeamBalanceScore( void )
+    {
+        return m_iBalanceScore;
+    }
 
-	void SetLastForcedChangeTeamTimeToNow( void ) { m_flLastForcedChangeTeamTime = gpGlobals->curtime; }
-	float GetLastForcedChangeTeamTime( void ) { return m_flLastForcedChangeTeamTime; }
+    virtual int CalculateTeamBalanceScore( void );
 
-	void SetTeamBalanceScore( int iScore ) { m_iBalanceScore = iScore; }
-	int GetTeamBalanceScore( void ) { return m_iBalanceScore; }
+    void AwardAchievement( int iAchievement, int iCount = 1 );
+    int GetPerLifeCounterKV( const char *name );
+    void SetPerLifeCounterKV( const char *name, int value );
+    void ResetPerLifeCounters( void );
 
-	virtual int	CalculateTeamBalanceScore( void );
+    KeyValues *GetPerLifeCounterKeys( void )
+    {
+        return m_pAchievementKV;
+    }
 
-	void AwardAchievement( int iAchievement, int iCount = 1 );
-	int	GetPerLifeCounterKV( const char *name );
-	void SetPerLifeCounterKV( const char *name, int value );
-	void ResetPerLifeCounters( void );
+    void EscortScoringThink( void );
+    void StartScoringEscortPoints( float flRate );
+    void StopScoringEscortPoints( void );
+    float m_flAreaCaptureScoreAccumulator;
+    float m_flCapPointScoreRate;
 
-	KeyValues *GetPerLifeCounterKeys( void ) { return m_pAchievementKV; }
+    float GetConnectionTime( void )
+    {
+        return m_flConnectionTime;
+    }
 
-	void EscortScoringThink( void );
-	void StartScoringEscortPoints( float flRate );
-	void StopScoringEscortPoints( void );
-	float m_flAreaCaptureScoreAccumulator;
-	float m_flCapPointScoreRate;
+    // Command rate limiting.
+    bool ShouldRunRateLimitedCommand( const CCommand &args );
+    bool ShouldRunRateLimitedCommand( const char *pszCommand );
 
-	float GetConnectionTime( void ) { return m_flConnectionTime; }
+   protected:
+    virtual CAI_Expresser *CreateExpresser( void );
 
-	// Command rate limiting.
-	bool ShouldRunRateLimitedCommand( const CCommand &args );
-	bool ShouldRunRateLimitedCommand( const char *pszCommand );
+    int m_iCurrentConcept;
 
-protected:
-	virtual CAI_Expresser *CreateExpresser( void );
+   private:
+    //---------------------------------
+    CMultiplayer_Expresser *m_pExpresser;
 
-	int		m_iCurrentConcept;
-private:
-	//---------------------------------
-	CMultiplayer_Expresser		*m_pExpresser;
+    float m_flConnectionTime;
+    float m_flLastForcedChangeTeamTime;
 
-	float m_flConnectionTime;
-	float m_flLastForcedChangeTeamTime;
+    int m_iBalanceScore;  // a score used to determine which players are switched to balance the teams
 
-	int m_iBalanceScore;	// a score used to determine which players are switched to balance the teams
+    KeyValues *m_pAchievementKV;
 
-	KeyValues	*m_pAchievementKV;
-
-	// This lets us rate limit the commands the players can execute so they don't overflow things like reliable buffers.
-	CUtlDict<float,int>	m_RateLimitLastCommandTimes;
+    // This lets us rate limit the commands the players can execute so they don't overflow things like reliable buffers.
+    CUtlDict< float, int > m_RateLimitLastCommandTimes;
 };
 
 //-----------------------------------------------------------------------------
@@ -116,13 +148,13 @@ private:
 //-----------------------------------------------------------------------------
 inline CBaseMultiplayerPlayer *ToBaseMultiplayerPlayer( CBaseEntity *pEntity )
 {
-	if ( !pEntity || !pEntity->IsPlayer() )
-		return NULL;
+    if ( !pEntity || !pEntity->IsPlayer() )
+        return NULL;
 #if _DEBUG
-	return dynamic_cast<CBaseMultiplayerPlayer *>( pEntity );
+    return dynamic_cast< CBaseMultiplayerPlayer * >( pEntity );
 #else
-	return static_cast<CBaseMultiplayerPlayer *>( pEntity );
+    return static_cast< CBaseMultiplayerPlayer * >( pEntity );
 #endif
 }
 
-#endif	// BASEMULTIPLAYERPLAYER_H
+#endif  // BASEMULTIPLAYERPLAYER_H

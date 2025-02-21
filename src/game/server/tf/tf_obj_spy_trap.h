@@ -12,5 +12,4 @@
 
 #include "tf_obj.h"
 
-
-#endif // TF_OBJ_SPY_TRAP_H
+#endif  // TF_OBJ_SPY_TRAP_H

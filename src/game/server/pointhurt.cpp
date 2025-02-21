@@ -17,92 +17,92 @@
 
 BEGIN_DATADESC( CPointHurt )
 
-	DEFINE_KEYFIELD( m_flRadius, FIELD_FLOAT, "DamageRadius" ),
-	DEFINE_KEYFIELD( m_nDamage, FIELD_INTEGER, "Damage" ),
-	DEFINE_KEYFIELD( m_flDelay, FIELD_FLOAT, "DamageDelay" ),
-	DEFINE_KEYFIELD( m_bitsDamageType, FIELD_INTEGER, "DamageType" ),
-	DEFINE_KEYFIELD( m_strTarget, FIELD_STRING, "DamageTarget" ),
-	
-	// Function Pointers
-	DEFINE_FUNCTION( HurtThink ),
+DEFINE_KEYFIELD( m_flRadius, FIELD_FLOAT, "DamageRadius" ),
+    DEFINE_KEYFIELD( m_nDamage, FIELD_INTEGER, "Damage" ),
+    DEFINE_KEYFIELD( m_flDelay, FIELD_FLOAT, "DamageDelay" ),
+    DEFINE_KEYFIELD( m_bitsDamageType, FIELD_INTEGER, "DamageType" ),
+    DEFINE_KEYFIELD( m_strTarget, FIELD_STRING, "DamageTarget" ),
 
-	// Inputs
-	DEFINE_INPUTFUNC( FIELD_VOID, "TurnOn", InputTurnOn ),
-	DEFINE_INPUTFUNC( FIELD_VOID, "TurnOff", InputTurnOff ),
-	DEFINE_INPUTFUNC( FIELD_VOID, "Toggle", InputToggle ),
-	DEFINE_INPUTFUNC( FIELD_VOID, "Hurt", InputHurt ),
+    // Function Pointers
+    DEFINE_FUNCTION( HurtThink ),
 
-	DEFINE_FIELD( m_pActivator, FIELD_EHANDLE ),
+    // Inputs
+    DEFINE_INPUTFUNC( FIELD_VOID, "TurnOn", InputTurnOn ),
+    DEFINE_INPUTFUNC( FIELD_VOID, "TurnOff", InputTurnOff ),
+    DEFINE_INPUTFUNC( FIELD_VOID, "Toggle", InputToggle ),
+    DEFINE_INPUTFUNC( FIELD_VOID, "Hurt", InputHurt ),
 
-END_DATADESC()
+    DEFINE_FIELD( m_pActivator, FIELD_EHANDLE ),
 
-LINK_ENTITY_TO_CLASS( point_hurt, CPointHurt );
+    END_DATADESC()
+
+        LINK_ENTITY_TO_CLASS( point_hurt, CPointHurt );
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-void CPointHurt::Spawn(void)
+void CPointHurt::Spawn( void )
 {
-	SetThink( NULL );
-	SetUse( NULL );
-		
-	m_pActivator = NULL;
+    SetThink( NULL );
+    SetUse( NULL );
 
-	if ( HasSpawnFlags( SF_PHURT_START_ON ) )
-	{
-		SetThink( &CPointHurt::HurtThink );
-	}
+    m_pActivator = NULL;
 
-	SetNextThink( gpGlobals->curtime + 0.1f );
-	
-	if ( m_flRadius <= 0.0f )
-	{
-		m_flRadius = 128.0f;
-	}
+    if ( HasSpawnFlags( SF_PHURT_START_ON ) )
+    {
+        SetThink( &CPointHurt::HurtThink );
+    }
 
-	if ( m_nDamage <= 0 )
-	{
-		m_nDamage = 2;
-	}
+    SetNextThink( gpGlobals->curtime + 0.1f );
 
-	if ( m_flDelay <= 0 )
-	{
-		m_flDelay = 0.1f;
-	}
+    if ( m_flRadius <= 0.0f )
+    {
+        m_flRadius = 128.0f;
+    }
 
-	Precache();
+    if ( m_nDamage <= 0 )
+    {
+        m_nDamage = 2;
+    }
+
+    if ( m_flDelay <= 0 )
+    {
+        m_flDelay = 0.1f;
+    }
+
+    Precache();
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CPointHurt::Precache( void )
 {
-	BaseClass::Precache();
+    BaseClass::Precache();
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CPointHurt::HurtThink( void )
 {
-	if ( m_strTarget != NULL_STRING )
-	{
-		CBaseEntity	*pEnt = NULL;
-			
-		CTakeDamageInfo info( this, m_pActivator, m_nDamage, m_bitsDamageType );
-		while ( ( pEnt = gEntList.FindEntityByName( pEnt, m_strTarget, NULL, m_pActivator ) ) != NULL )
-		{
-			GuessDamageForce( &info, (pEnt->GetAbsOrigin() - GetAbsOrigin()), pEnt->GetAbsOrigin() );
-			pEnt->TakeDamage( info );
-		}
-	}
-	else
-	{
-		RadiusDamage( CTakeDamageInfo( this, this, m_nDamage, m_bitsDamageType ), GetAbsOrigin(), m_flRadius, CLASS_NONE, NULL );
-	}
+    if ( m_strTarget != NULL_STRING )
+    {
+        CBaseEntity *pEnt = NULL;
 
-	SetNextThink( gpGlobals->curtime + m_flDelay );
+        CTakeDamageInfo info( this, m_pActivator, m_nDamage, m_bitsDamageType );
+        while ( ( pEnt = gEntList.FindEntityByName( pEnt, m_strTarget, NULL, m_pActivator ) ) != NULL )
+        {
+            GuessDamageForce( &info, ( pEnt->GetAbsOrigin() - GetAbsOrigin() ), pEnt->GetAbsOrigin() );
+            pEnt->TakeDamage( info );
+        }
+    }
+    else
+    {
+        RadiusDamage( CTakeDamageInfo( this, this, m_nDamage, m_bitsDamageType ), GetAbsOrigin(), m_flRadius, CLASS_NONE, NULL );
+    }
+
+    SetNextThink( gpGlobals->curtime + m_flDelay );
 }
 
 //-----------------------------------------------------------------------------
@@ -110,11 +110,11 @@ void CPointHurt::HurtThink( void )
 //-----------------------------------------------------------------------------
 void CPointHurt::InputTurnOn( inputdata_t &data )
 {
-	SetThink( &CPointHurt::HurtThink );
+    SetThink( &CPointHurt::HurtThink );
 
-	SetNextThink( gpGlobals->curtime + 0.1f );
+    SetNextThink( gpGlobals->curtime + 0.1f );
 
-	m_pActivator = data.pActivator;
+    m_pActivator = data.pActivator;
 }
 
 //-----------------------------------------------------------------------------
@@ -122,9 +122,9 @@ void CPointHurt::InputTurnOn( inputdata_t &data )
 //-----------------------------------------------------------------------------
 void CPointHurt::InputTurnOff( inputdata_t &data )
 {
-	SetThink( NULL );
+    SetThink( NULL );
 
-	m_pActivator = data.pActivator;
+    m_pActivator = data.pActivator;
 }
 
 //-----------------------------------------------------------------------------
@@ -132,16 +132,16 @@ void CPointHurt::InputTurnOff( inputdata_t &data )
 //-----------------------------------------------------------------------------
 void CPointHurt::InputToggle( inputdata_t &data )
 {
-	m_pActivator = data.pActivator;
+    m_pActivator = data.pActivator;
 
-	if ( m_pfnThink == (void (CBaseEntity::*)())&CPointHurt::HurtThink )
-	{
-		SetThink( NULL );
-	}
-	else
-	{
-		SetThink( &CPointHurt::HurtThink );
-	}
+    if ( m_pfnThink == ( void( CBaseEntity::* )() ) & CPointHurt::HurtThink )
+    {
+        SetThink( NULL );
+    }
+    else
+    {
+        SetThink( &CPointHurt::HurtThink );
+    }
 }
 
 //-----------------------------------------------------------------------------
@@ -149,8 +149,7 @@ void CPointHurt::InputToggle( inputdata_t &data )
 //-----------------------------------------------------------------------------
 void CPointHurt::InputHurt( inputdata_t &data )
 {
-	m_pActivator = data.pActivator;
+    m_pActivator = data.pActivator;
 
-	HurtThink();
+    HurtThink();
 }
-

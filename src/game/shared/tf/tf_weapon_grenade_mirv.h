@@ -24,38 +24,43 @@
 //
 class CTFGrenadeMirv : public CTFWeaponBaseGrenade
 {
-public:
+   public:
+    DECLARE_CLASS( CTFGrenadeMirv, CTFWeaponBaseGrenade );
+    DECLARE_NETWORKCLASS();
+    DECLARE_PREDICTABLE();
 
-	DECLARE_CLASS( CTFGrenadeMirv, CTFWeaponBaseGrenade );
-	DECLARE_NETWORKCLASS();
-	DECLARE_PREDICTABLE();
+    CTFGrenadeMirv() {}
 
-	CTFGrenadeMirv() {}
-
-	// Unique identifier.
-	virtual int			GetWeaponID( void ) const			{ return TF_WEAPON_GRENADE_MIRV; }
+    // Unique identifier.
+    virtual int GetWeaponID( void ) const
+    {
+        return TF_WEAPON_GRENADE_MIRV;
+    }
 
 // Server specific.
 #ifdef GAME_DLL
 
-	DECLARE_DATADESC();
+    DECLARE_DATADESC();
 
-	virtual CTFWeaponBaseGrenadeProj *EmitGrenade( Vector vecSrc, QAngle vecAngles, Vector vecVel, AngularImpulse angImpulse, CBasePlayer *pPlayer, float flTime, int iflags = 0 );
+    virtual CTFWeaponBaseGrenadeProj *EmitGrenade( Vector vecSrc, QAngle vecAngles, Vector vecVel, AngularImpulse angImpulse, CBasePlayer *pPlayer, float flTime, int iflags = 0 );
 
 #endif
 
-	CTFGrenadeMirv( const CTFGrenadeMirv & ) {}
+    CTFGrenadeMirv( const CTFGrenadeMirv & ) {}
 };
 
 // Demoman version calls different models
 class CTFGrenadeMirv_Demoman : public CTFGrenadeMirv
 {
-public:
-	DECLARE_CLASS( CTFGrenadeMirv_Demoman, CTFGrenadeMirv );
-	DECLARE_NETWORKCLASS(); 
-	DECLARE_PREDICTABLE();
+   public:
+    DECLARE_CLASS( CTFGrenadeMirv_Demoman, CTFGrenadeMirv );
+    DECLARE_NETWORKCLASS();
+    DECLARE_PREDICTABLE();
 
-	virtual int		GetWeaponID( void ) const		{ return TF_WEAPON_GRENADE_MIRV_DEMOMAN; }
+    virtual int GetWeaponID( void ) const
+    {
+        return TF_WEAPON_GRENADE_MIRV_DEMOMAN;
+    }
 };
 
 //=============================================================================
@@ -66,49 +71,50 @@ public:
 
 class CTFGrenadeMirvProjectile : public CTFWeaponBaseGrenadeProj
 {
-public:
+   public:
+    DECLARE_CLASS( CTFGrenadeMirvProjectile, CTFWeaponBaseGrenadeProj );
 
-	DECLARE_CLASS( CTFGrenadeMirvProjectile, CTFWeaponBaseGrenadeProj );
+    // Unique identifier.
+    virtual int GetWeaponID( void ) const
+    {
+        return TF_WEAPON_GRENADE_MIRV;
+    }
 
-	// Unique identifier.
-	virtual int			GetWeaponID( void ) const			{ return TF_WEAPON_GRENADE_MIRV; }
+    // Creation.
+    static CTFGrenadeMirvProjectile *Create( const Vector &position, const QAngle &angles, const Vector &velocity, const AngularImpulse &angVelocity, CBaseCombatCharacter *pOwner, const CTFWeaponInfo &weaponInfo, float timer, int iFlags = 0 );
 
-	// Creation.
-	static CTFGrenadeMirvProjectile *Create( const Vector &position, const QAngle &angles, const Vector &velocity, 
-		                                     const AngularImpulse &angVelocity, CBaseCombatCharacter *pOwner, const CTFWeaponInfo &weaponInfo, float timer, int iFlags = 0 );
+    // Overrides.
+    virtual void Spawn();
+    virtual void Precache();
+    virtual void BounceSound( void );
+    virtual void Detonate();
+    virtual void Explode( trace_t *pTrace, int bitsDamageType );
+    void DetonateThink( void );
 
-	// Overrides.
-	virtual void	Spawn();
-	virtual void	Precache();
-	virtual void	BounceSound( void );
-	virtual void	Detonate();
-	virtual void	Explode( trace_t *pTrace, int bitsDamageType );
-	void			DetonateThink( void );
+    DECLARE_DATADESC();
 
-	DECLARE_DATADESC();
-
-private:
-
-	bool			m_bPlayedLeadIn;
+   private:
+    bool m_bPlayedLeadIn;
 };
 
 class CTFGrenadeMirvBomb : public CTFWeaponBaseGrenadeProj
 {
-public:
+   public:
+    DECLARE_CLASS( CTFGrenadeMirvBomb, CTFWeaponBaseGrenadeProj );
 
-	DECLARE_CLASS( CTFGrenadeMirvBomb, CTFWeaponBaseGrenadeProj );
+    // Creation.
+    static CTFGrenadeMirvBomb *Create( const Vector &position, const QAngle &angles, const Vector &velocity, const AngularImpulse &angVelocity, CBaseCombatCharacter *pOwner, float timer );
 
-	// Creation.
-	static CTFGrenadeMirvBomb *Create( const Vector &position, const QAngle &angles, const Vector &velocity, 
-		                               const AngularImpulse &angVelocity, CBaseCombatCharacter *pOwner, float timer );
+    virtual int GetWeaponID( void ) const
+    {
+        return TF_WEAPON_GRENADE_MIRVBOMB;
+    }
 
-	virtual int			GetWeaponID( void ) const			{ return TF_WEAPON_GRENADE_MIRVBOMB; }
-
-	virtual void	Spawn();
-	virtual void	Precache();
-	virtual void	BounceSound( void );
+    virtual void Spawn();
+    virtual void Precache();
+    virtual void BounceSound( void );
 };
 
 #endif
 
-#endif // TF_WEAPON_GRENADE_MIRV_H
+#endif  // TF_WEAPON_GRENADE_MIRV_H

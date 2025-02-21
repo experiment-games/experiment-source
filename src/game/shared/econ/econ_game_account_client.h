@@ -21,4 +21,4 @@ class CEconGameAccountClient : public GCSDK::CProtoBufSharedObject< CSOEconGameA
 {
 };
 
-#endif //ECON_GAME_ACCOUNT_CLIENT_H
+#endif  // ECON_GAME_ACCOUNT_CLIENT_H

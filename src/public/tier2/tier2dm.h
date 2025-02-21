@@ -4,7 +4,6 @@
 //
 //===========================================================================//
 
-
 #ifndef TIER2DM_H
 #define TIER2DM_H
 
@@ -25,52 +24,51 @@ void DisconnectDataModel();
 //-----------------------------------------------------------------------------
 // Helper empty implementation of an IAppSystem for tier2 libraries
 //-----------------------------------------------------------------------------
-template< class IInterface, int ConVarFlag = 0 > 
+template < class IInterface, int ConVarFlag = 0 >
 class CTier2DmAppSystem : public CTier2AppSystem< IInterface, ConVarFlag >
 {
-	typedef CTier2AppSystem< IInterface, ConVarFlag > BaseClass;
+    typedef CTier2AppSystem< IInterface, ConVarFlag > BaseClass;
 
-public:
-	CTier2DmAppSystem( bool bIsPrimaryAppSystem = true ) : BaseClass( bIsPrimaryAppSystem )
-	{
-	}
+   public:
+    CTier2DmAppSystem( bool bIsPrimaryAppSystem = true )
+        : BaseClass( bIsPrimaryAppSystem )
+    {
+    }
 
-	virtual bool Connect( CreateInterfaceFn factory ) 
-	{
-		if ( !BaseClass::Connect( factory ) )
-			return false;
+    virtual bool Connect( CreateInterfaceFn factory )
+    {
+        if ( !BaseClass::Connect( factory ) )
+            return false;
 
-		ConnectDataModel( factory );
+        ConnectDataModel( factory );
 
-		return true;
-	}
+        return true;
+    }
 
-	virtual InitReturnVal_t Init()
-	{
-		InitReturnVal_t nRetVal = BaseClass::Init();
-		if ( nRetVal != INIT_OK )
-			return nRetVal;
+    virtual InitReturnVal_t Init()
+    {
+        InitReturnVal_t nRetVal = BaseClass::Init();
+        if ( nRetVal != INIT_OK )
+            return nRetVal;
 
-		nRetVal = InitDataModel();
-		if ( nRetVal != INIT_OK )
-			return nRetVal;
+        nRetVal = InitDataModel();
+        if ( nRetVal != INIT_OK )
+            return nRetVal;
 
-		return INIT_OK;
-	}
+        return INIT_OK;
+    }
 
-	virtual void Shutdown()
-	{
-		ShutdownDataModel();
-		BaseClass::Shutdown();
-	}
+    virtual void Shutdown()
+    {
+        ShutdownDataModel();
+        BaseClass::Shutdown();
+    }
 
-	virtual void Disconnect() 
-	{
-		DisconnectDataModel();
-		BaseClass::Disconnect();
-	}
+    virtual void Disconnect()
+    {
+        DisconnectDataModel();
+        BaseClass::Disconnect();
+    }
 };
 
-
-#endif // TIER2DM_H
-
+#endif  // TIER2DM_H

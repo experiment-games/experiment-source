@@ -19,8 +19,8 @@
 #include "KeyValues.h"
 #endif
 
-#define GRENADE_MIRV_TIMER	3.0f // seconds
-#define	GRENADE_MIRV_LEADIN	2.0f 
+#define GRENADE_MIRV_TIMER 3.0f  // seconds
+#define GRENADE_MIRV_LEADIN 2.0f
 
 //=============================================================================
 //
@@ -68,11 +68,9 @@ END_DATADESC()
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-CTFWeaponBaseGrenadeProj *CTFGrenadeMirv::EmitGrenade( Vector vecSrc, QAngle vecAngles, Vector vecVel, 
-							      AngularImpulse angImpulse, CBasePlayer *pPlayer, float flTime, int iflags )
+CTFWeaponBaseGrenadeProj *CTFGrenadeMirv::EmitGrenade( Vector vecSrc, QAngle vecAngles, Vector vecVel, AngularImpulse angImpulse, CBasePlayer *pPlayer, float flTime, int iflags )
 {
-	return CTFGrenadeMirvProjectile::Create( vecSrc, vecAngles, vecVel, angImpulse,
-									  pPlayer, GetTFWpnData(), flTime );
+    return CTFGrenadeMirvProjectile::Create( vecSrc, vecAngles, vecVel, angImpulse, pPlayer, GetTFWpnData(), flTime );
 }
 
 #endif
@@ -85,22 +83,20 @@ CTFWeaponBaseGrenadeProj *CTFGrenadeMirv::EmitGrenade( Vector vecSrc, QAngle vec
 
 BEGIN_DATADESC( CTFGrenadeMirvProjectile )
 DEFINE_THINKFUNC( DetonateThink ),
-END_DATADESC()
+    END_DATADESC()
 
 #define GRENADE_MODEL "models/weapons/w_models/w_grenade_mirv.mdl"
 
-LINK_ENTITY_TO_CLASS( tf_weapon_grenade_mirv_projectile, CTFGrenadeMirvProjectile );
+        LINK_ENTITY_TO_CLASS( tf_weapon_grenade_mirv_projectile, CTFGrenadeMirvProjectile );
 PRECACHE_WEAPON_REGISTER( tf_weapon_grenade_mirv_projectile );
 
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-CTFGrenadeMirvProjectile* CTFGrenadeMirvProjectile::Create( const Vector &position, const QAngle &angles, 
-															const Vector &velocity, const AngularImpulse &angVelocity, 
-															CBaseCombatCharacter *pOwner, const CTFWeaponInfo &weaponInfo, float timer, int iFlags )
+CTFGrenadeMirvProjectile *CTFGrenadeMirvProjectile::Create( const Vector &position, const QAngle &angles, const Vector &velocity, const AngularImpulse &angVelocity, CBaseCombatCharacter *pOwner, const CTFWeaponInfo &weaponInfo, float timer, int iFlags )
 {
-	CTFGrenadeMirvProjectile *pGrenade = static_cast<CTFGrenadeMirvProjectile*>( CTFWeaponBaseGrenadeProj::Create( "tf_weapon_grenade_mirv_projectile", position, angles, velocity, angVelocity, pOwner, weaponInfo, timer, iFlags ) );
-	return pGrenade;
+    CTFGrenadeMirvProjectile *pGrenade = static_cast< CTFGrenadeMirvProjectile * >( CTFWeaponBaseGrenadeProj::Create( "tf_weapon_grenade_mirv_projectile", position, angles, velocity, angVelocity, pOwner, weaponInfo, timer, iFlags ) );
+    return pGrenade;
 }
 
 //-----------------------------------------------------------------------------
@@ -108,13 +104,13 @@ CTFGrenadeMirvProjectile* CTFGrenadeMirvProjectile::Create( const Vector &positi
 //-----------------------------------------------------------------------------
 void CTFGrenadeMirvProjectile::Spawn()
 {
-	SetModel( GRENADE_MODEL );
+    SetModel( GRENADE_MODEL );
 
-	BaseClass::Spawn();
+    BaseClass::Spawn();
 
-	m_bPlayedLeadIn = false;
+    m_bPlayedLeadIn = false;
 
-	SetThink( &CTFGrenadeMirvProjectile::DetonateThink );
+    SetThink( &CTFGrenadeMirvProjectile::DetonateThink );
 }
 
 //-----------------------------------------------------------------------------
@@ -122,10 +118,10 @@ void CTFGrenadeMirvProjectile::Spawn()
 //-----------------------------------------------------------------------------
 void CTFGrenadeMirvProjectile::Precache()
 {
-	PrecacheModel( GRENADE_MODEL );
-	PrecacheScriptSound( "Weapon_Grenade_Mirv.LeadIn" );
+    PrecacheModel( GRENADE_MODEL );
+    PrecacheScriptSound( "Weapon_Grenade_Mirv.LeadIn" );
 
-	BaseClass::Precache();
+    BaseClass::Precache();
 }
 
 //-----------------------------------------------------------------------------
@@ -133,7 +129,7 @@ void CTFGrenadeMirvProjectile::Precache()
 //-----------------------------------------------------------------------------
 void CTFGrenadeMirvProjectile::BounceSound( void )
 {
-	EmitSound( "Weapon_Grenade_Mirv.Bounce" );
+    EmitSound( "Weapon_Grenade_Mirv.Bounce" );
 }
 
 //-----------------------------------------------------------------------------
@@ -141,13 +137,13 @@ void CTFGrenadeMirvProjectile::BounceSound( void )
 //-----------------------------------------------------------------------------
 void CTFGrenadeMirvProjectile::Detonate()
 {
-	if ( ShouldNotDetonate() )
-	{
-		RemoveGrenade();
-		return;
-	}
+    if ( ShouldNotDetonate() )
+    {
+        RemoveGrenade();
+        return;
+    }
 
-	BaseClass::Detonate();
+    BaseClass::Detonate();
 }
 
 //-----------------------------------------------------------------------------
@@ -155,16 +151,16 @@ void CTFGrenadeMirvProjectile::Detonate()
 //-----------------------------------------------------------------------------
 void CTFGrenadeMirvProjectile::DetonateThink( void )
 {
-	if ( !m_bPlayedLeadIn && gpGlobals->curtime > GetDetonateTime() - GRENADE_MIRV_LEADIN )
-	{
-		Vector soundPosition = GetAbsOrigin() + Vector( 0, 0, 5 );
-		CPASAttenuationFilter filter( soundPosition );
+    if ( !m_bPlayedLeadIn && gpGlobals->curtime > GetDetonateTime() - GRENADE_MIRV_LEADIN )
+    {
+        Vector soundPosition = GetAbsOrigin() + Vector( 0, 0, 5 );
+        CPASAttenuationFilter filter( soundPosition );
 
-		EmitSound( filter, entindex(), "Weapon_Grenade_Mirv.LeadIn" );
-		m_bPlayedLeadIn = true;
-	}
+        EmitSound( filter, entindex(), "Weapon_Grenade_Mirv.LeadIn" );
+        m_bPlayedLeadIn = true;
+    }
 
-	BaseClass::DetonateThink();
+    BaseClass::DetonateThink();
 }
 
 //-----------------------------------------------------------------------------
@@ -172,27 +168,27 @@ void CTFGrenadeMirvProjectile::DetonateThink( void )
 //-----------------------------------------------------------------------------
 void CTFGrenadeMirvProjectile::Explode( trace_t *pTrace, int bitsDamageType )
 {
-	// Pass through.
-	BaseClass::Explode( pTrace, bitsDamageType );
+    // Pass through.
+    BaseClass::Explode( pTrace, bitsDamageType );
 
-	m_bPlayedLeadIn = false;
+    m_bPlayedLeadIn = false;
 
 // Server specific.
 #ifdef GAME_DLL
 
-	// Create the bomblets.
-	for ( int iBomb = 0; iBomb < TF_WEAPON_GRENADE_MIRV_BOMB_COUNT; ++iBomb )
-	{
-		Vector vecSrc = pTrace->endpos + Vector( 0, 0, 1.0f ); 
-		Vector vecVelocity( random->RandomFloat( -75.0f, 75.0f ) * 3.0f,
-			                random->RandomFloat( -75.0f, 75.0f ) * 3.0f,
-							random->RandomFloat( 30.0f, 70.0f ) * 5.0f );
-		Vector vecZero( 0,0,0 );
-		CTFPlayer *pPlayer = ToTFPlayer( GetThrower() );
-		float flTime = 2.0f + random->RandomFloat( 0.0f, 1.0f );
+    // Create the bomblets.
+    for ( int iBomb = 0; iBomb < TF_WEAPON_GRENADE_MIRV_BOMB_COUNT; ++iBomb )
+    {
+        Vector vecSrc = pTrace->endpos + Vector( 0, 0, 1.0f );
+        Vector vecVelocity( random->RandomFloat( -75.0f, 75.0f ) * 3.0f,
+                            random->RandomFloat( -75.0f, 75.0f ) * 3.0f,
+                            random->RandomFloat( 30.0f, 70.0f ) * 5.0f );
+        Vector vecZero( 0, 0, 0 );
+        CTFPlayer *pPlayer = ToTFPlayer( GetThrower() );
+        float flTime = 2.0f + random->RandomFloat( 0.0f, 1.0f );
 
-		CTFGrenadeMirvBomb::Create( vecSrc, GetAbsAngles(), vecVelocity, vecZero, pPlayer, flTime );
-	}
+        CTFGrenadeMirvBomb::Create( vecSrc, GetAbsAngles(), vecVelocity, vecZero, pPlayer, flTime );
+    }
 
 #endif
 }
@@ -204,9 +200,9 @@ void CTFGrenadeMirvProjectile::Explode( trace_t *pTrace, int bitsDamageType )
 
 #define GRENADE_MODEL_BOMBLET "models/weapons/w_models/w_grenade_bomblet.mdl"
 
-#define TF_WEAPON_GRENADE_MIRV_BOMB_GRAVITY		0.5f
-#define TF_WEAPON_GRENADE_MIRV_BOMB_FRICTION	0.8f
-#define TF_WEAPON_GRENADE_MIRV_BOMB_ELASTICITY	0.45f
+#define TF_WEAPON_GRENADE_MIRV_BOMB_GRAVITY 0.5f
+#define TF_WEAPON_GRENADE_MIRV_BOMB_FRICTION 0.8f
+#define TF_WEAPON_GRENADE_MIRV_BOMB_ELASTICITY 0.45f
 
 LINK_ENTITY_TO_CLASS( tf_weapon_grenade_mirv_bomb, CTFGrenadeMirvBomb );
 PRECACHE_WEAPON_REGISTER( tf_weapon_grenade_mirv_bomb );
@@ -214,36 +210,35 @@ PRECACHE_WEAPON_REGISTER( tf_weapon_grenade_mirv_bomb );
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-CTFGrenadeMirvBomb *CTFGrenadeMirvBomb::Create( const Vector &position, const QAngle &angles, const Vector &velocity, 
-							                    const AngularImpulse &angVelocity, CBaseCombatCharacter *pOwner, float timer )
+CTFGrenadeMirvBomb *CTFGrenadeMirvBomb::Create( const Vector &position, const QAngle &angles, const Vector &velocity, const AngularImpulse &angVelocity, CBaseCombatCharacter *pOwner, float timer )
 {
-	CTFGrenadeMirvBomb *pBomb = static_cast<CTFGrenadeMirvBomb*>( CBaseEntity::Create( "tf_weapon_grenade_mirv_bomb", position, angles, pOwner ) );
-	if ( pBomb )
-	{
-		pBomb->SetDetonateTimerLength( timer );
-		pBomb->SetupInitialTransmittedGrenadeVelocity( velocity );
-		pBomb->SetThrower( pOwner ); 
-		pBomb->SetOwnerEntity( NULL );
+    CTFGrenadeMirvBomb *pBomb = static_cast< CTFGrenadeMirvBomb * >( CBaseEntity::Create( "tf_weapon_grenade_mirv_bomb", position, angles, pOwner ) );
+    if ( pBomb )
+    {
+        pBomb->SetDetonateTimerLength( timer );
+        pBomb->SetupInitialTransmittedGrenadeVelocity( velocity );
+        pBomb->SetThrower( pOwner );
+        pBomb->SetOwnerEntity( NULL );
 
-		pBomb->SetGravity( TF_WEAPON_GRENADE_MIRV_BOMB_GRAVITY );
-		pBomb->SetFriction( TF_WEAPON_GRENADE_MIRV_BOMB_GRAVITY );
-		pBomb->SetElasticity( TF_WEAPON_GRENADE_MIRV_BOMB_ELASTICITY );
+        pBomb->SetGravity( TF_WEAPON_GRENADE_MIRV_BOMB_GRAVITY );
+        pBomb->SetFriction( TF_WEAPON_GRENADE_MIRV_BOMB_GRAVITY );
+        pBomb->SetElasticity( TF_WEAPON_GRENADE_MIRV_BOMB_ELASTICITY );
 
-		pBomb->m_flDamage = 180.0f;
-		pBomb->m_DmgRadius = 198.0f;
+        pBomb->m_flDamage = 180.0f;
+        pBomb->m_DmgRadius = 198.0f;
 
-		pBomb->ChangeTeam( pOwner->GetTeamNumber() );
+        pBomb->ChangeTeam( pOwner->GetTeamNumber() );
 
-		pBomb->SetCollisionGroup( TF_COLLISIONGROUP_GRENADES );
+        pBomb->SetCollisionGroup( TF_COLLISIONGROUP_GRENADES );
 
-		IPhysicsObject *pPhysicsObject = pBomb->VPhysicsGetObject();
-		if ( pPhysicsObject )
-		{
-			pPhysicsObject->AddVelocity( &velocity, &angVelocity );
-		}
-	}
+        IPhysicsObject *pPhysicsObject = pBomb->VPhysicsGetObject();
+        if ( pPhysicsObject )
+        {
+            pPhysicsObject->AddVelocity( &velocity, &angVelocity );
+        }
+    }
 
-	return pBomb;
+    return pBomb;
 }
 
 //-----------------------------------------------------------------------------
@@ -251,9 +246,9 @@ CTFGrenadeMirvBomb *CTFGrenadeMirvBomb::Create( const Vector &position, const QA
 //-----------------------------------------------------------------------------
 void CTFGrenadeMirvBomb::Spawn()
 {
-	SetModel( GRENADE_MODEL_BOMBLET );
+    SetModel( GRENADE_MODEL_BOMBLET );
 
-	BaseClass::Spawn();
+    BaseClass::Spawn();
 }
 
 //-----------------------------------------------------------------------------
@@ -261,9 +256,9 @@ void CTFGrenadeMirvBomb::Spawn()
 //-----------------------------------------------------------------------------
 void CTFGrenadeMirvBomb::Precache()
 {
-	PrecacheModel( GRENADE_MODEL_BOMBLET );
+    PrecacheModel( GRENADE_MODEL_BOMBLET );
 
-	BaseClass::Precache();
+    BaseClass::Precache();
 }
 
 //-----------------------------------------------------------------------------
@@ -271,7 +266,7 @@ void CTFGrenadeMirvBomb::Precache()
 //-----------------------------------------------------------------------------
 void CTFGrenadeMirvBomb::BounceSound( void )
 {
-	EmitSound( "Weapon_Grenade_MirvBomb.Bounce" );
+    EmitSound( "Weapon_Grenade_MirvBomb.Bounce" );
 }
 
 #endif

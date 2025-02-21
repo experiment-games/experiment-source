@@ -23,30 +23,32 @@
 //
 class CTFGrenadeSmokeBomb : public CTFWeaponBaseGrenade
 {
-public:
+   public:
+    DECLARE_CLASS( CTFGrenadeSmokeBomb, CTFWeaponBaseGrenade );
+    DECLARE_NETWORKCLASS();
+    DECLARE_PREDICTABLE();
+    //	DECLARE_ACTTABLE();
 
-	DECLARE_CLASS( CTFGrenadeSmokeBomb, CTFWeaponBaseGrenade );
-	DECLARE_NETWORKCLASS();
-	DECLARE_PREDICTABLE();
-	//	DECLARE_ACTTABLE();
+    CTFGrenadeSmokeBomb() {}
 
-	CTFGrenadeSmokeBomb() {}
+    // Unique identifier.
+    virtual int GetWeaponID( void ) const
+    {
+        return TF_WEAPON_GRENADE_SMOKE_BOMB;
+    }
 
-	// Unique identifier.
-	virtual int			GetWeaponID( void ) const			{ return TF_WEAPON_GRENADE_SMOKE_BOMB; }
-
-	// Server specific.
+    // Server specific.
 #ifdef GAME_DLL
 
-	DECLARE_DATADESC();
+    DECLARE_DATADESC();
 
-	virtual CTFWeaponBaseGrenadeProj *EmitGrenade( Vector vecSrc, QAngle vecAngles, Vector vecVel, AngularImpulse angImpulse, CBasePlayer *pPlayer, float flTime, int iflags = 0 );
+    virtual CTFWeaponBaseGrenadeProj *EmitGrenade( Vector vecSrc, QAngle vecAngles, Vector vecVel, AngularImpulse angImpulse, CBasePlayer *pPlayer, float flTime, int iflags = 0 );
 
-	virtual bool ShouldDetonate( void );
+    virtual bool ShouldDetonate( void );
 
 #endif
 
-	CTFGrenadeSmokeBomb( const CTFGrenadeSmokeBomb & ) {}
+    CTFGrenadeSmokeBomb( const CTFGrenadeSmokeBomb & ) {}
 };
 
-#endif // TF_WEAPON_GRENADE_SMOKE_BOMB_H
+#endif  // TF_WEAPON_GRENADE_SMOKE_BOMB_H

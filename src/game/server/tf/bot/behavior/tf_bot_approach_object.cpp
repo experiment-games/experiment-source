@@ -14,56 +14,52 @@ extern ConVar tf_bot_path_lookahead_range;
 //---------------------------------------------------------------------------------------------
 CTFBotApproachObject::CTFBotApproachObject( CBaseEntity *loot, float range )
 {
-	m_loot = loot;
-	m_range = range;
+    m_loot = loot;
+    m_range = range;
 }
-
 
 //---------------------------------------------------------------------------------------------
-ActionResult< CTFBot >	CTFBotApproachObject::OnStart( CTFBot *me, Action< CTFBot > *priorAction )
+ActionResult< CTFBot > CTFBotApproachObject::OnStart( CTFBot *me, Action< CTFBot > *priorAction )
 {
-	m_path.SetMinLookAheadDistance( me->GetDesiredPathLookAheadRange() );
+    m_path.SetMinLookAheadDistance( me->GetDesiredPathLookAheadRange() );
 
-	return Continue();
+    return Continue();
 }
-
 
 //---------------------------------------------------------------------------------------------
-ActionResult< CTFBot >	CTFBotApproachObject::Update( CTFBot *me, float interval )
+ActionResult< CTFBot > CTFBotApproachObject::Update( CTFBot *me, float interval )
 {
-	if ( m_loot == NULL )
-	{
-		return Done( "Object is NULL" );
-	}
+    if ( m_loot == NULL )
+    {
+        return Done( "Object is NULL" );
+    }
 
-	if ( m_loot->IsEffectActive( EF_NODRAW ) )
-	{
-		return Done( "Object is NODRAW" );
-	}
+    if ( m_loot->IsEffectActive( EF_NODRAW ) )
+    {
+        return Done( "Object is NODRAW" );
+    }
 
-	if ( me->GetLocomotionInterface()->GetGround() == m_loot )
-	{
-		return Done( "I'm standing on the object" );
-	}
+    if ( me->GetLocomotionInterface()->GetGround() == m_loot )
+    {
+        return Done( "I'm standing on the object" );
+    }
 
-	if ( me->IsDistanceBetweenLessThan( m_loot->GetAbsOrigin(), m_range ) )
-	{
-		// in case we can't pick up the loot for some reason
-		return Done( "Reached object" );
-	}
+    if ( me->IsDistanceBetweenLessThan( m_loot->GetAbsOrigin(), m_range ) )
+    {
+        // in case we can't pick up the loot for some reason
+        return Done( "Reached object" );
+    }
 
-	if ( m_repathTimer.IsElapsed() )
-	{
-		m_repathTimer.Start( RandomFloat( 1.0f, 2.0f ) );
+    if ( m_repathTimer.IsElapsed() )
+    {
+        m_repathTimer.Start( RandomFloat( 1.0f, 2.0f ) );
 
-		CTFBotPathCost cost( me, FASTEST_ROUTE );
-		m_path.Compute( me, m_loot->GetAbsOrigin(), cost );
-	}
+        CTFBotPathCost cost( me, FASTEST_ROUTE );
+        m_path.Compute( me, m_loot->GetAbsOrigin(), cost );
+    }
 
-	// move to the loot
-	m_path.Update( me );
+    // move to the loot
+    m_path.Update( me );
 
-	return Continue();
+    return Continue();
 }
-
-

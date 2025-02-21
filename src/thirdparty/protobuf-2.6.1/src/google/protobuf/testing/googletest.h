@@ -39,12 +39,14 @@
 #include <google/protobuf/stubs/common.h>
 
 // Disable death tests if we use exceptions in CHECK().
-#if !PROTOBUF_USE_EXCEPTIONS && defined(GTEST_HAS_DEATH_TEST)
+#if !PROTOBUF_USE_EXCEPTIONS && defined( GTEST_HAS_DEATH_TEST )
 #define PROTOBUF_HAS_DEATH_TEST
 #endif
 
-namespace google {
-namespace protobuf {
+namespace google
+{
+namespace protobuf
+{
 
 // When running unittests, get the directory containing the source code.
 string TestSourceDir();
@@ -76,24 +78,24 @@ static const LogLevel WARNING = LOGLEVEL_WARNING;
 //   }  // destructor unregisters object as a log sink
 // This is a dummy implementation which covers only what is used by protocol
 // buffer unit tests.
-class ScopedMemoryLog {
- public:
-  ScopedMemoryLog();
-  virtual ~ScopedMemoryLog();
+class ScopedMemoryLog
+{
+   public:
+    ScopedMemoryLog();
+    virtual ~ScopedMemoryLog();
 
-  // Fetches all messages with the given severity level.
-  const vector<string>& GetMessages(LogLevel error);
+    // Fetches all messages with the given severity level.
+    const vector< string >& GetMessages( LogLevel error );
 
- private:
-  map<LogLevel, vector<string> > messages_;
-  LogHandler* old_handler_;
+   private:
+    map< LogLevel, vector< string > > messages_;
+    LogHandler* old_handler_;
 
-  static void HandleLog(LogLevel level, const char* filename, int line,
-                        const string& message);
+    static void HandleLog( LogLevel level, const char* filename, int line, const string& message );
 
-  static ScopedMemoryLog* active_log_;
+    static ScopedMemoryLog* active_log_;
 
-  GOOGLE_DISALLOW_EVIL_CONSTRUCTORS(ScopedMemoryLog);
+    GOOGLE_DISALLOW_EVIL_CONSTRUCTORS( ScopedMemoryLog );
 };
 
 }  // namespace protobuf

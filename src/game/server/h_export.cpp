@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -13,7 +13,7 @@
 
 */
 
-#if defined(_WIN32) && !defined(_XBOX)
+#if defined( _WIN32 ) && !defined( _XBOX )
 
 #include "winlite.h"
 #include "datamap.h"
@@ -27,26 +27,25 @@ HMODULE win32DLLHandle;
 // Required DLL entry point
 BOOL WINAPI DllMain( HINSTANCE hinstDLL, DWORD fdwReason, LPVOID lpvReserved )
 {
-	// ensure data sizes are stable
+    // ensure data sizes are stable
 #ifdef PLATFORM_64BITS
-	if ( sizeof(inputfunc_t) != sizeof(void*) )
+    if ( sizeof( inputfunc_t ) != sizeof( void* ) )
 #else
-	if ( sizeof(inputfunc_t) != sizeof(int) )
+    if ( sizeof( inputfunc_t ) != sizeof( int ) )
 #endif
-	{
-		Assert( sizeof(inputfunc_t) == sizeof(int) );
-		return FALSE;
-	}
+    {
+        Assert( sizeof( inputfunc_t ) == sizeof( int ) );
+        return FALSE;
+    }
 
-	if ( fdwReason == DLL_PROCESS_ATTACH )
+    if ( fdwReason == DLL_PROCESS_ATTACH )
     {
-		win32DLLHandle = hinstDLL;
+        win32DLLHandle = hinstDLL;
     }
-	else if ( fdwReason == DLL_PROCESS_DETACH )
+    else if ( fdwReason == DLL_PROCESS_DETACH )
     {
     }
-	return TRUE;
+    return TRUE;
 }
 
 #endif
-

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
 
@@ -17,18 +17,18 @@
 //-----------------------------------------------------------------------------
 class CFuncRespawnFlagZone : public CBaseTrigger
 {
-	DECLARE_CLASS( CFuncRespawnFlagZone, CBaseTrigger );
+    DECLARE_CLASS( CFuncRespawnFlagZone, CBaseTrigger );
 
-public:
-	DECLARE_DATADESC();
+   public:
+    DECLARE_DATADESC();
 
-	CFuncRespawnFlagZone();
+    CFuncRespawnFlagZone();
 
-	void	Spawn( void );
-	void	Touch( CBaseEntity *pOther );
+    void Spawn( void );
+    void Touch( CBaseEntity *pOther );
 };
 
 // Return true if the specified entity is in a NoGrenades zone
 bool PointInRespawnFlagZone( const Vector &vecPoint );
 
-#endif // FUNC_RESPAWNFLAG_H
+#endif  // FUNC_RESPAWNFLAG_H

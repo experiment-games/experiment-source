@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -17,64 +17,63 @@ typedef struct activityentry_s activityentry_t;
 
 class CActivityRemap
 {
-public:
+   public:
+    CActivityRemap()
+    {
+        pExtraBlock = NULL;
+    }
 
-	CActivityRemap()
-	{
-		pExtraBlock = NULL;
-	}
+    void SetExtraKeyValueBlock( KeyValues *pKVBlock )
+    {
+        pExtraBlock = pKVBlock;
+    }
 
-	void SetExtraKeyValueBlock ( KeyValues *pKVBlock )
-	{
-		pExtraBlock = pKVBlock;
-	}
+    KeyValues *GetExtraKeyValueBlock( void )
+    {
+        return pExtraBlock;
+    }
 
-	KeyValues *GetExtraKeyValueBlock ( void ) { return pExtraBlock; }
+    Activity activity;
+    Activity mappedActivity;
 
-	Activity 		activity;
-	Activity		mappedActivity;
-
-private:
-
-	KeyValues		*pExtraBlock;
+   private:
+    KeyValues *pExtraBlock;
 };
-
 
 class CActivityRemapCache
 {
-public:
+   public:
+    CActivityRemapCache()
+    {
+    }
 
-	CActivityRemapCache()
-	{
-	}
+    CActivityRemapCache( const CActivityRemapCache &src )
+    {
+        int c = src.m_cachedActivityRemaps.Count();
+        for ( int i = 0; i < c; i++ )
+        {
+            m_cachedActivityRemaps.AddToTail( src.m_cachedActivityRemaps[i] );
+        }
+    }
 
-	CActivityRemapCache( const CActivityRemapCache& src )
-	{
-		int c = src.m_cachedActivityRemaps.Count();
-		for ( int i = 0; i < c; i++ )
-		{
-			m_cachedActivityRemaps.AddToTail( src.m_cachedActivityRemaps[ i ] );
-		}
-	}
+    CActivityRemapCache &operator=( const CActivityRemapCache &src )
+    {
+        if ( this == &src )
+            return *this;
 
-	CActivityRemapCache& operator = ( const CActivityRemapCache& src )
-	{
-		if ( this == &src )
-			return *this;
+        int c = src.m_cachedActivityRemaps.Count();
+        for ( int i = 0; i < c; i++ )
+        {
+            m_cachedActivityRemaps.AddToTail( src.m_cachedActivityRemaps[i] );
+        }
 
-		int c = src.m_cachedActivityRemaps.Count();
-		for ( int i = 0; i < c; i++ )
-		{
-			m_cachedActivityRemaps.AddToTail( src.m_cachedActivityRemaps[ i ] );
-		}
+        return *this;
+    }
 
-		return *this;
-	}
-
-	CUtlVector< CActivityRemap > m_cachedActivityRemaps;
+    CUtlVector< CActivityRemap > m_cachedActivityRemaps;
 };
 
-void UTIL_LoadActivityRemapFile( const char *filename, const char *section, CUtlVector <CActivityRemap> &entries );
+void UTIL_LoadActivityRemapFile( const char *filename, const char *section, CUtlVector< CActivityRemap > &entries );
 
 //=========================================================
 //=========================================================
@@ -88,13 +87,13 @@ extern int ActivityList_HighestIndex();
 
 // This macro guarantees that the names of each activity and the constant used to
 // reference it in the code are identical.
-#define REGISTER_SHARED_ACTIVITY( _n ) ActivityList_RegisterSharedActivity(#_n, _n);
+#define REGISTER_SHARED_ACTIVITY( _n ) ActivityList_RegisterSharedActivity( #_n, _n );
 #define REGISTER_PRIVATE_ACTIVITY( _n ) _n = ActivityList_RegisterPrivateActivity( #_n );
 
 // Implemented in shared code
 extern void ActivityList_RegisterSharedActivities( void );
 
 class ISaveRestoreOps;
-extern ISaveRestoreOps* ActivityDataOps();
+extern ISaveRestoreOps *ActivityDataOps();
 
-#endif // ACTIVITYLIST_H
+#endif  // ACTIVITYLIST_H

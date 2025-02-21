@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -11,4 +11,4 @@
 #pragma once
 #endif
 
-#endif // GIFT_WRAP_TOOL_H
+#endif  // GIFT_WRAP_TOOL_H

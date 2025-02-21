@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -15,4 +15,4 @@ void GameCoordinator_NotifyGameState();
 void GameCoordinator_NotifyLevelShutdown();
 const char *GameCoordinator_GetRegistrationString();
 
-#endif // TF_GC_API_H
+#endif  // TF_GC_API_H

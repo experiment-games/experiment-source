@@ -19,17 +19,15 @@
 //
 class CTeamMaterialProxy : public CEntityMaterialProxy
 {
-public:
+   public:
+    CTeamMaterialProxy();
+    virtual ~CTeamMaterialProxy();
+    virtual bool Init( IMaterial *pMaterial, KeyValues *pKeyValues );
+    virtual void OnBind( C_BaseEntity *pEnt );
+    virtual IMaterial *GetMaterial();
 
-	CTeamMaterialProxy();
-	virtual ~CTeamMaterialProxy();
-	virtual bool Init( IMaterial *pMaterial, KeyValues* pKeyValues );
-	virtual void OnBind( C_BaseEntity *pEnt );
-	virtual IMaterial *GetMaterial();
-
-private:
-
-	IMaterialVar* m_FrameVar;
+   private:
+    IMaterialVar *m_FrameVar;
 };
 
 //-----------------------------------------------------------------------------
@@ -37,7 +35,7 @@ private:
 //-----------------------------------------------------------------------------
 CTeamMaterialProxy::CTeamMaterialProxy()
 {
-	m_FrameVar = 0;
+    m_FrameVar = 0;
 }
 
 //-----------------------------------------------------------------------------
@@ -50,15 +48,15 @@ CTeamMaterialProxy::~CTeamMaterialProxy()
 //-----------------------------------------------------------------------------
 // Purpose: Initialization.
 //-----------------------------------------------------------------------------
-bool CTeamMaterialProxy::Init( IMaterial *pMaterial, KeyValues* pKeyValues )
+bool CTeamMaterialProxy::Init( IMaterial *pMaterial, KeyValues *pKeyValues )
 {
-	bool foundVar;
-	m_FrameVar = pMaterial->FindVar( "$frame", &foundVar, false );
-	if( !foundVar )
-	{
-		m_FrameVar = 0;
-	}
-	return true;
+    bool foundVar;
+    m_FrameVar = pMaterial->FindVar( "$frame", &foundVar, false );
+    if ( !foundVar )
+    {
+        m_FrameVar = 0;
+    }
+    return true;
 }
 
 //-----------------------------------------------------------------------------
@@ -66,22 +64,22 @@ bool CTeamMaterialProxy::Init( IMaterial *pMaterial, KeyValues* pKeyValues )
 //-----------------------------------------------------------------------------
 void CTeamMaterialProxy::OnBind( C_BaseEntity *pEnt )
 {
-	if( !m_FrameVar )
-		return;
+    if ( !m_FrameVar )
+        return;
 
-	int team = pEnt->GetRenderTeamNumber();
-	team -= 2;
+    int team = pEnt->GetRenderTeamNumber();
+    team -= 2;
 
-	// Use that as an animated frame number
-	m_FrameVar->SetIntValue( team );
+    // Use that as an animated frame number
+    m_FrameVar->SetIntValue( team );
 }
 
 IMaterial *CTeamMaterialProxy::GetMaterial()
 {
-	if ( !m_FrameVar )
-		return NULL;
+    if ( !m_FrameVar )
+        return NULL;
 
-	return m_FrameVar->GetOwningMaterial();
+    return m_FrameVar->GetOwningMaterial();
 }
 
 EXPOSE_INTERFACE( CTeamMaterialProxy, IMaterialProxy, "TeamTexture" IMATERIAL_PROXY_INTERFACE_VERSION );

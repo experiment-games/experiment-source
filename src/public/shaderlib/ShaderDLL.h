@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $Header: $
 // $NoKeywords: $
@@ -26,11 +26,10 @@ class ICvar;
 //-----------------------------------------------------------------------------
 class IShaderDLL
 {
-public:
-	// Adds a shader to the list of shaders
-	virtual void InsertShader( IShader *pShader ) = 0;
+   public:
+    // Adds a shader to the list of shaders
+    virtual void InsertShader( IShader *pShader ) = 0;
 };
-
 
 //-----------------------------------------------------------------------------
 // Singleton interface
@@ -42,8 +41,4 @@ IShaderDLL *GetShaderDLL();
 //-----------------------------------------------------------------------------
 ICvar *GetCVar();
 
-
-
-
-
-#endif // SHADERDLL_H
+#endif  // SHADERDLL_H

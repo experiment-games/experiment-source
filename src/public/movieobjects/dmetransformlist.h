@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Snapshot of 
+// Snapshot of
 //
 //===========================================================================//
 
@@ -13,35 +13,32 @@
 
 #include "movieobjects/dmedag.h"
 
-
 //-----------------------------------------------------------------------------
 // A class representing a skeletal model
 //-----------------------------------------------------------------------------
 class CDmeTransformList : public CDmElement
 {
-	DEFINE_ELEMENT( CDmeTransformList, CDmElement );
+    DEFINE_ELEMENT( CDmeTransformList, CDmElement );
 
-public:
-	int GetTransformCount() const;
-	CDmeTransform *GetTransform( int nIndex );
-	void SetTransform( int nIndex, const matrix3x4_t& mat );
+   public:
+    int GetTransformCount() const;
+    CDmeTransform *GetTransform( int nIndex );
+    void SetTransform( int nIndex, const matrix3x4_t &mat );
 
-	CDmaElementArray<CDmeTransform> m_Transforms;
+    CDmaElementArray< CDmeTransform > m_Transforms;
 };
-
 
 //-----------------------------------------------------------------------------
 // Inline methods
 //-----------------------------------------------------------------------------
 inline int CDmeTransformList::GetTransformCount() const
 {
-	return m_Transforms.Count();
+    return m_Transforms.Count();
 }
 
 inline CDmeTransform *CDmeTransformList::GetTransform( int nIndex )
 {
-	return m_Transforms[nIndex];
+    return m_Transforms[nIndex];
 }
 
-
-#endif // DMETRANSFORMLIST_H
+#endif  // DMETRANSFORMLIST_H

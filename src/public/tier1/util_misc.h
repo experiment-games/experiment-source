@@ -17,13 +17,24 @@
 //-----------------------------------------------------------------------------
 class ScopeExitRunner
 {
-public:
-	ScopeExitRunner( std::function<void()> && func ) : m_func( std::move(func) ) {}
-	~ScopeExitRunner() { if ( m_func ) { m_func(); } }
+   public:
+    ScopeExitRunner( std::function< void() >&& func )
+        : m_func( std::move( func ) ) {}
+    ~ScopeExitRunner()
+    {
+        if ( m_func )
+        {
+            m_func();
+        }
+    }
 
-	void Inhibit() { m_func = nullptr; }
-private:
-	std::function<void()> m_func;
+    void Inhibit()
+    {
+        m_func = nullptr;
+    }
+
+   private:
+    std::function< void() > m_func;
 };
 
-#endif // TIER1_UTIL_MISC_H
+#endif  // TIER1_UTIL_MISC_H

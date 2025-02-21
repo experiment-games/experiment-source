@@ -17,39 +17,37 @@ class CUtlString;
 
 enum eYouTubeLoginStatus
 {
-	kYouTubeLogin_NotLoggedIn,
-	kYouTubeLogin_LoggedIn,
-	kYouTubeLogin_Pending,
-	kYouTubeLogin_CouldNotConnect,
-	kYouTubeLogin_Forbidden,
-	kYouTubeLogin_GenericFailure,
-	kYouTubeLogin_Cancelled,
+    kYouTubeLogin_NotLoggedIn,
+    kYouTubeLogin_LoggedIn,
+    kYouTubeLogin_Pending,
+    kYouTubeLogin_CouldNotConnect,
+    kYouTubeLogin_Forbidden,
+    kYouTubeLogin_GenericFailure,
+    kYouTubeLogin_Cancelled,
 };
 
 enum eYouTubeAccessControl
 {
-	kYouTubeAccessControl_Public,
-	kYouTubeAccessControl_Private,
-	kYouTubeAccessControl_Unlisted,
+    kYouTubeAccessControl_Public,
+    kYouTubeAccessControl_Private,
+    kYouTubeAccessControl_Unlisted,
 };
 
-DECLARE_POINTER_HANDLE(YouTubeUploadHandle_t);
-DECLARE_POINTER_HANDLE(YouTubeInfoHandle_t);
+DECLARE_POINTER_HANDLE( YouTubeUploadHandle_t );
+DECLARE_POINTER_HANDLE( YouTubeInfoHandle_t );
 
 /**
  * Interface to general response handler for YouTube requests
  */
 class CYouTubeResponseHandler
 {
-public:
-
-	/**
-	 * Invoked in the main thread after a response has been fully received.
-	 * @param pResponse
-	 */
-	virtual void HandleResponse( long responseCode, const char *pResponse ) = 0;
+   public:
+    /**
+     * Invoked in the main thread after a response has been fully received.
+     * @param pResponse
+     */
+    virtual void HandleResponse( long responseCode, const char *pResponse ) = 0;
 };
-
 
 /**
  * Set application specific developer settings, which must be set before trying to log in the user or upload a video
@@ -89,7 +87,7 @@ bool YouTube_GetProfileURL( CUtlString &strProfileURL );
 /**
  * Attempt to upload a movie file to YouTube
  * @param pFilePath full path to the file
- * @param pMimeType i.e. "video/mp4" 
+ * @param pMimeType i.e. "video/mp4"
  * @param pTitle (must be less than 60 characters)
  * @param pDescription
  * @param pCategory - usually "Games" (see category terms in http://gdata.youtube.com/schemas/2007/categories.cat)
@@ -98,7 +96,7 @@ bool YouTube_GetProfileURL( CUtlString &strProfileURL );
  * @param pURLToVideo if the upload was successful, this string will be a URL to the video on YouTube
  * @return true if the video was uploaded successfully, false otherwise
  */
-YouTubeUploadHandle_t YouTube_Upload( const char* pFilePath, const char *pMimeType, const char *pTitle, const char *pDescription, const char *pCategory, const char *pKeywords, eYouTubeAccessControl access );
+YouTubeUploadHandle_t YouTube_Upload( const char *pFilePath, const char *pMimeType, const char *pTitle, const char *pDescription, const char *pCategory, const char *pKeywords, eYouTubeAccessControl access );
 
 /**
  * @param handle
@@ -145,4 +143,4 @@ YouTubeInfoHandle_t YouTube_GetVideoInfo( const char *pURLToVideoStats, CYouTube
  */
 void YouTube_CancelGetVideoInfo( YouTubeInfoHandle_t handle );
 
-#endif // YOUTUBEAPI_H
+#endif  // YOUTUBEAPI_H

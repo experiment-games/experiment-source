@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -11,5 +11,4 @@
 #pragma once
 #endif
 
-
-#endif // PAINT_CAN_TOOL_H
+#endif  // PAINT_CAN_TOOL_H

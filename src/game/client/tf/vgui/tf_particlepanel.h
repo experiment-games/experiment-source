@@ -15,73 +15,83 @@
 
 class CTFParticlePanel : public vgui::EditablePanel
 {
-	DECLARE_CLASS_SIMPLE( CTFParticlePanel, vgui::EditablePanel );
-public:
-	// constructor, destructor
-	CTFParticlePanel( vgui::Panel *pParent, const char *pName );
-	virtual ~CTFParticlePanel();
+    DECLARE_CLASS_SIMPLE( CTFParticlePanel, vgui::EditablePanel );
 
-	virtual void OnTick();
-	virtual void ApplySettings( KeyValues *inResourceData );
-	virtual void ApplySchemeSettings( vgui::IScheme *pScheme );
-	virtual void OnCommand( const char *command ) OVERRIDE;
-	virtual void OnSizeChanged( int wide, int tall ) OVERRIDE;
+   public:
+    // constructor, destructor
+    CTFParticlePanel( vgui::Panel *pParent, const char *pName );
+    virtual ~CTFParticlePanel();
 
-	void FireParticleEffect( const char *pszName, int xPos, int yPos, float flScale, bool bLoop, float flEndTime = FLT_MAX );
-private:
+    virtual void OnTick();
+    virtual void ApplySettings( KeyValues *inResourceData );
+    virtual void ApplySchemeSettings( vgui::IScheme *pScheme );
+    virtual void OnCommand( const char *command ) OVERRIDE;
+    virtual void OnSizeChanged( int wide, int tall ) OVERRIDE;
 
-	// paint it!
-	virtual void Paint() OVERRIDE;
-	void UpdateParticlesFromKV();
+    void FireParticleEffect( const char *pszName, int xPos, int yPos, float flScale, bool bLoop, float flEndTime = FLT_MAX );
 
-	// Class to contain all of the per-instance particle system data
-	struct ParticleEffect_t
-	{
-		ParticleEffect_t();
-		~ParticleEffect_t();
+   private:
+    // paint it!
+    virtual void Paint() OVERRIDE;
+    void UpdateParticlesFromKV();
 
-		// Shutdown, startup particle collection
-		void StartupParticleCollection();
-		void ShutdownParticleCollection();
+    // Class to contain all of the per-instance particle system data
+    struct ParticleEffect_t
+    {
+        ParticleEffect_t();
+        ~ParticleEffect_t();
 
-		// Accessor for control point values
-		const Vector& GetControlPointValue( int nControlPoint ) const { return m_pControlPointValue[ nControlPoint ]; };
-		void SetControlPointValue( int nControlPoint, const Vector &value ) { m_pControlPointValue[ nControlPoint ] = value; }
-		// Set the particle system to draw
-		void SetParticleSystem( const char* pszParticleSystemName );
+        // Shutdown, startup particle collection
+        void StartupParticleCollection();
+        void ShutdownParticleCollection();
 
-		bool Update( float flTime );
-		void Paint( CMatRenderContextPtr& pRenderContext, int iXOffset, int iYOffset, int nWide, int nTall );
-		bool BNeedsToPaint() const { return m_pParticleSystem && m_bStarted; }
+        // Accessor for control point values
+        const Vector &GetControlPointValue( int nControlPoint ) const
+        {
+            return m_pControlPointValue[nControlPoint];
+        };
+        void SetControlPointValue( int nControlPoint, const Vector &value )
+        {
+            m_pControlPointValue[nControlPoint] = value;
+        }
+        // Set the particle system to draw
+        void SetParticleSystem( const char *pszParticleSystemName );
 
-		Vector m_pControlPointValue[MAX_PARTICLE_CONTROL_POINTS];
-		CParticleCollection *m_pParticleSystem;
-		CUtlString m_ParticleSystemName;
-		float m_flLastTime;
-		float m_flScale;
-		float m_flEndTime;
-		int m_nXPos;
-		int m_nYPos;
-		QAngle m_Angles;
-		bool m_bStartActivated;	// Start the effect immediately?
-		bool m_bLoop;	// Loop the effect?
-		bool m_bForceStopped;
-		bool m_bAutoDelete;
-		bool m_bStarted;
+        bool Update( float flTime );
+        void Paint( CMatRenderContextPtr &pRenderContext, int iXOffset, int iYOffset, int nWide, int nTall );
+        bool BNeedsToPaint() const
+        {
+            return m_pParticleSystem && m_bStarted;
+        }
 
-		Panel* m_pParent;
-	};
+        Vector m_pControlPointValue[MAX_PARTICLE_CONTROL_POINTS];
+        CParticleCollection *m_pParticleSystem;
+        CUtlString m_ParticleSystemName;
+        float m_flLastTime;
+        float m_flScale;
+        float m_flEndTime;
+        int m_nXPos;
+        int m_nYPos;
+        QAngle m_Angles;
+        bool m_bStartActivated;  // Start the effect immediately?
+        bool m_bLoop;            // Loop the effect?
+        bool m_bForceStopped;
+        bool m_bAutoDelete;
+        bool m_bStarted;
 
-	CUtlVector< ParticleEffect_t* > m_vecParticleEffects;
-	KeyValues* m_pKVParticles = NULL;
+        Panel *m_pParent;
+    };
 
-	// A texture to use for a lightmap
-	CTextureReference m_pLightmapTexture;
+    CUtlVector< ParticleEffect_t * > m_vecParticleEffects;
+    KeyValues *m_pKVParticles = NULL;
 
-	// The default env_cubemap
-	CTextureReference m_DefaultEnvCubemap;
+    // A texture to use for a lightmap
+    CTextureReference m_pLightmapTexture;
 
-	Camera_t m_Camera;
+    // The default env_cubemap
+    CTextureReference m_DefaultEnvCubemap;
+
+    Camera_t m_Camera;
 };
 
-#endif // TF_PARTICLEPANEL_H
+#endif  // TF_PARTICLEPANEL_H

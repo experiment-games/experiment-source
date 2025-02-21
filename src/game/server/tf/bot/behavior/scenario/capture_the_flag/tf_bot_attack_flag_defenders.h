@@ -9,26 +9,27 @@
 #include "Path/NextBotPathFollow.h"
 #include "bot/behavior/tf_bot_attack.h"
 
-
 //-----------------------------------------------------------------------------
 class CTFBotAttackFlagDefenders : public CTFBotAttack
 {
-public:
-	CTFBotAttackFlagDefenders( float minDuration = -1.0f );
-	virtual ~CTFBotAttackFlagDefenders() { }
+   public:
+    CTFBotAttackFlagDefenders( float minDuration = -1.0f );
+    virtual ~CTFBotAttackFlagDefenders() {}
 
-	virtual ActionResult< CTFBot >	OnStart( CTFBot *me, Action< CTFBot > *priorAction );
-	virtual ActionResult< CTFBot >	Update( CTFBot *me, float interval );
+    virtual ActionResult< CTFBot > OnStart( CTFBot *me, Action< CTFBot > *priorAction );
+    virtual ActionResult< CTFBot > Update( CTFBot *me, float interval );
 
-	virtual const char *GetName( void ) const	{ return "AttackFlagDefenders"; }
+    virtual const char *GetName( void ) const
+    {
+        return "AttackFlagDefenders";
+    }
 
-private:
-	CountdownTimer m_minDurationTimer;
-	CountdownTimer m_watchFlagTimer;
-	CHandle< CTFPlayer > m_chasePlayer;
-	PathFollower m_path;
-	CountdownTimer m_repathTimer;
+   private:
+    CountdownTimer m_minDurationTimer;
+    CountdownTimer m_watchFlagTimer;
+    CHandle< CTFPlayer > m_chasePlayer;
+    PathFollower m_path;
+    CountdownTimer m_repathTimer;
 };
 
-
-#endif // TF_BOT_ATTACK_FLAG_DEFENDERS_H
+#endif  // TF_BOT_ATTACK_FLAG_DEFENDERS_H

@@ -23,27 +23,29 @@
 //
 class CTFGrenadeConcussion : public CTFWeaponBaseGrenade
 {
-public:
+   public:
+    DECLARE_CLASS( CTFGrenadeConcussion, CTFWeaponBaseGrenade );
+    DECLARE_NETWORKCLASS();
+    DECLARE_PREDICTABLE();
 
-	DECLARE_CLASS( CTFGrenadeConcussion, CTFWeaponBaseGrenade );
-	DECLARE_NETWORKCLASS();
-	DECLARE_PREDICTABLE();
+    CTFGrenadeConcussion() {}
 
-	CTFGrenadeConcussion() {}
-
-	// Unique identifier.
-	virtual int			GetWeaponID( void ) const			{ return TF_WEAPON_GRENADE_CONCUSSION; }
+    // Unique identifier.
+    virtual int GetWeaponID( void ) const
+    {
+        return TF_WEAPON_GRENADE_CONCUSSION;
+    }
 
 // Server specific.
 #ifdef GAME_DLL
 
-	DECLARE_DATADESC();
+    DECLARE_DATADESC();
 
-	virtual CTFWeaponBaseGrenadeProj *EmitGrenade( Vector vecSrc, QAngle vecAngles, Vector vecVel, AngularImpulse angImpulse, CBasePlayer *pPlayer, float flTime, int iflags = 0 );
+    virtual CTFWeaponBaseGrenadeProj *EmitGrenade( Vector vecSrc, QAngle vecAngles, Vector vecVel, AngularImpulse angImpulse, CBasePlayer *pPlayer, float flTime, int iflags = 0 );
 
 #endif
 
-	CTFGrenadeConcussion( const CTFGrenadeConcussion & ) {}
+    CTFGrenadeConcussion( const CTFGrenadeConcussion & ) {}
 };
 
 //=============================================================================
@@ -54,29 +56,29 @@ public:
 
 class CTFGrenadeConcussionProjectile : public CTFWeaponBaseGrenadeProj
 {
-public:
+   public:
+    DECLARE_CLASS( CTFGrenadeConcussionProjectile, CTFWeaponBaseGrenadeProj );
 
-	DECLARE_CLASS( CTFGrenadeConcussionProjectile, CTFWeaponBaseGrenadeProj );
+    // Unique identifier.
+    virtual int GetWeaponID( void ) const
+    {
+        return TF_WEAPON_GRENADE_CONCUSSION;
+    }
 
-	// Unique identifier.
-	virtual int			GetWeaponID( void ) const			{ return TF_WEAPON_GRENADE_CONCUSSION; }
+    // Creation.
+    static CTFGrenadeConcussionProjectile *Create( const Vector &position, const QAngle &angles, const Vector &velocity, const AngularImpulse &angVelocity, CBaseCombatCharacter *pOwner, const CTFWeaponInfo &weaponInfo, float timer, int iFlags = 0 );
 
-	// Creation.
-	static CTFGrenadeConcussionProjectile *Create( const Vector &position, const QAngle &angles, const Vector &velocity, 
-		                                       const AngularImpulse &angVelocity, CBaseCombatCharacter *pOwner, const CTFWeaponInfo &weaponInfo, float timer, int iFlags = 0 );
+    // Overrides.
+    virtual void Spawn();
+    virtual void Precache();
+    virtual void BounceSound( void );
+    virtual void Explode( trace_t *pTrace, int bitsDamageType );
+    virtual void Detonate();
 
-	// Overrides.
-	virtual void	Spawn();
-	virtual void	Precache();
-	virtual void	BounceSound( void );
-	virtual void	Explode( trace_t *pTrace, int bitsDamageType );
-	virtual void	Detonate();
-
-private:
-
-	float m_flDetonateTime;
+   private:
+    float m_flDetonateTime;
 };
 
 #endif
 
-#endif // TF_WEAPON_GRENADE_CONCUSSION_H
+#endif  // TF_WEAPON_GRENADE_CONCUSSION_H

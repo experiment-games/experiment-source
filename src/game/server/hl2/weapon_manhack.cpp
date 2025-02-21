@@ -1,11 +1,10 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
 //=============================================================================//
-
 
 #include "cbase.h"
 #include "basehlcombatweapon.h"
@@ -20,51 +19,51 @@
 
 class CWeapon_Manhack : public CBaseHLCombatWeapon
 {
-	DECLARE_DATADESC();
-public:
-	DECLARE_CLASS( CWeapon_Manhack, CBaseHLCombatWeapon );
+    DECLARE_DATADESC();
 
-	DECLARE_SERVERCLASS();
+   public:
+    DECLARE_CLASS( CWeapon_Manhack, CBaseHLCombatWeapon );
 
-	void			Spawn( void );
-	void			Precache( void );
+    DECLARE_SERVERCLASS();
 
-	void			ItemPostFrame( void );
-	void			PrimaryAttack( void );
-	void			SecondaryAttack( void );
+    void Spawn( void );
+    void Precache( void );
 
-	float			m_flBladeYaw;
+    void ItemPostFrame( void );
+    void PrimaryAttack( void );
+    void SecondaryAttack( void );
+
+    float m_flBladeYaw;
 };
 
-IMPLEMENT_SERVERCLASS_ST( CWeapon_Manhack, DT_Weapon_Manhack)
+IMPLEMENT_SERVERCLASS_ST( CWeapon_Manhack, DT_Weapon_Manhack )
 END_SEND_TABLE()
 
 LINK_ENTITY_TO_CLASS( weapon_manhack, CWeapon_Manhack );
-PRECACHE_WEAPON_REGISTER(weapon_manhack);
+PRECACHE_WEAPON_REGISTER( weapon_manhack );
 
 //---------------------------------------------------------
 // Save/Restore
 //---------------------------------------------------------
 BEGIN_DATADESC( CWeapon_Manhack )
 
-	DEFINE_FIELD( m_flBladeYaw,			FIELD_FLOAT ),
+DEFINE_FIELD( m_flBladeYaw, FIELD_FLOAT ),
 
-END_DATADESC()
+    END_DATADESC()
 
-void CWeapon_Manhack::Spawn( )
+        void CWeapon_Manhack::Spawn()
 {
-	// Call base class first
-	BaseClass::Spawn();
+    // Call base class first
+    BaseClass::Spawn();
 
-	Precache( );
-	SetModel( GetViewModel() );
+    Precache();
+    SetModel( GetViewModel() );
 
-	FallInit();// get ready to fall down.
+    FallInit();  // get ready to fall down.
 
-	m_flBladeYaw = NULL;
-	AddSolidFlags( FSOLID_NOT_SOLID );
+    m_flBladeYaw = NULL;
+    AddSolidFlags( FSOLID_NOT_SOLID );
 }
-
 
 //------------------------------------------------------------------------------
 // Purpose :
@@ -73,14 +72,13 @@ void CWeapon_Manhack::Spawn( )
 //------------------------------------------------------------------------------
 void CWeapon_Manhack::ItemPostFrame( void )
 {
-	WeaponIdle( );
+    WeaponIdle();
 }
 
 void CWeapon_Manhack::Precache( void )
 {
-	BaseClass::Precache();
+    BaseClass::Precache();
 }
-
 
 //------------------------------------------------------------------------------
 // Purpose :
@@ -99,6 +97,3 @@ void CWeapon_Manhack::PrimaryAttack()
 void CWeapon_Manhack::SecondaryAttack()
 {
 }
-
-
-

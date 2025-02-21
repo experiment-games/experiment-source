@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -14,23 +14,24 @@
 #include "vgui_controls/EditablePanel.h"
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 class CTFMapStampsInfoDialog : public vgui::EditablePanel
 {
-	DECLARE_CLASS_SIMPLE( CTFMapStampsInfoDialog, vgui::EditablePanel );
-public:
-	CTFMapStampsInfoDialog( vgui::Panel *pParent, const char *pName = "" );
+    DECLARE_CLASS_SIMPLE( CTFMapStampsInfoDialog, vgui::EditablePanel );
 
-	void			DoClose();
+   public:
+    CTFMapStampsInfoDialog( vgui::Panel *pParent, const char *pName = "" );
 
-	virtual void	ApplySchemeSettings( vgui::IScheme *pScheme );
-	virtual void	OnCommand( const char *command );
-	virtual void	PerformLayout( void );
-	virtual void	OnMouseReleased(vgui::MouseCode code);
+    void DoClose();
 
-	Panel			*m_pBgPanel;
-	EditablePanel	*m_pDlgFrame;
+    virtual void ApplySchemeSettings( vgui::IScheme *pScheme );
+    virtual void OnCommand( const char *command );
+    virtual void PerformLayout( void );
+    virtual void OnMouseReleased( vgui::MouseCode code );
+
+    Panel *m_pBgPanel;
+    EditablePanel *m_pDlgFrame;
 };
 
-#endif // TF_MAPS_INFO_DIALOG_H
+#endif  // TF_MAPS_INFO_DIALOG_H

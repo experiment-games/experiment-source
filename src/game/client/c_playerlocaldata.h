@@ -21,68 +21,67 @@
 //-----------------------------------------------------------------------------
 class CPlayerLocalData
 {
-public:
-	DECLARE_PREDICTABLE();
-	DECLARE_CLASS_NOBASE( CPlayerLocalData );
-	DECLARE_EMBEDDED_NETWORKVAR();
+   public:
+    DECLARE_PREDICTABLE();
+    DECLARE_CLASS_NOBASE( CPlayerLocalData );
+    DECLARE_EMBEDDED_NETWORKVAR();
 
-	CPlayerLocalData() :
-		m_iv_vecPunchAngle( "CPlayerLocalData::m_iv_vecPunchAngle" ),
-		m_iv_vecPunchAngleVel( "CPlayerLocalData::m_iv_vecPunchAngleVel" )
-	{
-		m_iv_vecPunchAngle.Setup( &m_vecPunchAngle.m_Value, LATCH_SIMULATION_VAR );
-		m_iv_vecPunchAngleVel.Setup( &m_vecPunchAngleVel.m_Value, LATCH_SIMULATION_VAR );
-		m_flFOVRate = 0;
-		m_bForceLocalPlayerDraw = false;
-		m_bPrevForceLocalPlayerDraw = false;
+    CPlayerLocalData()
+        : m_iv_vecPunchAngle( "CPlayerLocalData::m_iv_vecPunchAngle" ),
+          m_iv_vecPunchAngleVel( "CPlayerLocalData::m_iv_vecPunchAngleVel" )
+    {
+        m_iv_vecPunchAngle.Setup( &m_vecPunchAngle.m_Value, LATCH_SIMULATION_VAR );
+        m_iv_vecPunchAngleVel.Setup( &m_vecPunchAngleVel.m_Value, LATCH_SIMULATION_VAR );
+        m_flFOVRate = 0;
+        m_bForceLocalPlayerDraw = false;
+        m_bPrevForceLocalPlayerDraw = false;
 
-		m_szScriptOverlayMaterial.GetForModify()[0] = '\0';
-	}
+        m_szScriptOverlayMaterial.GetForModify()[0] = '\0';
+    }
 
-	unsigned char			m_chAreaBits[MAX_AREA_STATE_BYTES];				// Area visibility flags.
-	unsigned char			m_chAreaPortalBits[MAX_AREA_PORTAL_STATE_BYTES];// Area portal visibility flags.
+    unsigned char m_chAreaBits[MAX_AREA_STATE_BYTES];               // Area visibility flags.
+    unsigned char m_chAreaPortalBits[MAX_AREA_PORTAL_STATE_BYTES];  // Area portal visibility flags.
 
-	int						m_iHideHUD;			// bitfields containing sections of the HUD to hide
-	
-	float					m_flFOVRate;		// rate at which the FOV changes
-	
+    int m_iHideHUD;  // bitfields containing sections of the HUD to hide
 
-	bool					m_bDucked;
-	bool					m_bDucking;
-	bool					m_bInDuckJump;
-	float					m_flDucktime;
-	float					m_flDuckJumpTime;
-	float					m_flJumpTime;
-	int						m_nStepside;
-	float					m_flFallVelocity;
-	int						m_nOldButtons;
-	float					m_flOldForwardMove;
-	// Base velocity that was passed in to server physics so 
-	//  client can predict conveyors correctly.  Server zeroes it, so we need to store here, too.
-	Vector					m_vecClientBaseVelocity;  
-	CNetworkQAngle( m_vecPunchAngle );		// auto-decaying view angle adjustment
-	CInterpolatedVar< QAngle >	m_iv_vecPunchAngle;
+    float m_flFOVRate;  // rate at which the FOV changes
 
-	CNetworkQAngle( m_vecPunchAngleVel );		// velocity of auto-decaying view angle adjustment
-	CInterpolatedVar< QAngle >	m_iv_vecPunchAngleVel;
-	bool					m_bDrawViewmodel;
-	bool					m_bWearingSuit;
-	bool					m_bPoisoned;
-	bool					m_bForceLocalPlayerDraw; // Allows VScripts, etc to force the local player to draw.
-	bool					m_bPrevForceLocalPlayerDraw;
-	float					m_flStepSize;
-	bool					m_bAllowAutoMovement;
+    bool m_bDucked;
+    bool m_bDucking;
+    bool m_bInDuckJump;
+    float m_flDucktime;
+    float m_flDuckJumpTime;
+    float m_flJumpTime;
+    int m_nStepside;
+    float m_flFallVelocity;
+    int m_nOldButtons;
+    float m_flOldForwardMove;
+    // Base velocity that was passed in to server physics so
+    //  client can predict conveyors correctly.  Server zeroes it, so we need to store here, too.
+    Vector m_vecClientBaseVelocity;
+    CNetworkQAngle( m_vecPunchAngle );  // auto-decaying view angle adjustment
+    CInterpolatedVar< QAngle > m_iv_vecPunchAngle;
 
-	// 3d skybox
-	sky3dparams_t			m_skybox3d;
-	// fog params
-	fogplayerparams_t		m_PlayerFog;
-	// audio environment
-	audioparams_t			m_audio;
+    CNetworkQAngle( m_vecPunchAngleVel );  // velocity of auto-decaying view angle adjustment
+    CInterpolatedVar< QAngle > m_iv_vecPunchAngleVel;
+    bool m_bDrawViewmodel;
+    bool m_bWearingSuit;
+    bool m_bPoisoned;
+    bool m_bForceLocalPlayerDraw;  // Allows VScripts, etc to force the local player to draw.
+    bool m_bPrevForceLocalPlayerDraw;
+    float m_flStepSize;
+    bool m_bAllowAutoMovement;
 
-	bool					m_bSlowMovement;
+    // 3d skybox
+    sky3dparams_t m_skybox3d;
+    // fog params
+    fogplayerparams_t m_PlayerFog;
+    // audio environment
+    audioparams_t m_audio;
 
-	CNetworkString( m_szScriptOverlayMaterial, MAX_PATH );
+    bool m_bSlowMovement;
+
+    CNetworkString( m_szScriptOverlayMaterial, MAX_PATH );
 };
 
-#endif // C_PLAYERLOCALDATA_H
+#endif  // C_PLAYERLOCALDATA_H

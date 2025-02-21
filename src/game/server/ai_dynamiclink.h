@@ -20,8 +20,8 @@
 
 enum DynamicLinkState_t
 {
-	LINK_OFF = 0,
-	LINK_ON = 1,
+    LINK_OFF = 0,
+    LINK_ON = 1,
 };
 
 class CAI_Link;
@@ -31,49 +31,50 @@ class CAI_Link;
 //=============================================================================
 class CAI_DynamicLink : public CServerOnlyEntity
 {
-	DECLARE_CLASS( CAI_DynamicLink, CServerOnlyEntity );
-public:
-	static void					InitDynamicLinks(void);
-	static void					ResetDynamicLinks(void);
-	static void					PurgeDynamicLinks(void);
-	static void 				GenerateControllerLinks();
+    DECLARE_CLASS( CAI_DynamicLink, CServerOnlyEntity );
 
-	static bool					gm_bInitialized;
+   public:
+    static void InitDynamicLinks( void );
+    static void ResetDynamicLinks( void );
+    static void PurgeDynamicLinks( void );
+    static void GenerateControllerLinks();
 
-	static CAI_DynamicLink*		GetDynamicLink(int nSrcID, int nDstID);
+    static bool gm_bInitialized;
 
-	static CAI_DynamicLink*		m_pAllDynamicLinks;		// A linked list of all dynamic link
-	CAI_DynamicLink*			m_pNextDynamicLink;		// The next dynamic link in the list of dynamic links
+    static CAI_DynamicLink *GetDynamicLink( int nSrcID, int nDstID );
 
-	int							m_nSrcEditID;			// the node that 'owns' this link
-	int							m_nDestEditID;			// the node on the other end of the link. 
+    static CAI_DynamicLink *m_pAllDynamicLinks;  // A linked list of all dynamic link
+    CAI_DynamicLink *m_pNextDynamicLink;         // The next dynamic link in the list of dynamic links
 
-	int							m_nSrcID;				// the node that 'owns' this link
-	int							m_nDestID;				// the node on the other end of the link. 
-	DynamicLinkState_t			m_nLinkState;			// 
-	string_t					m_strAllowUse;			// Only this entity name or classname may use the link
-	bool						m_bInvertAllow;			// Instead of only allowing the m_strAllowUse entity, exclude only it
-	
-	bool						m_bFixedUpIds;
-	bool						m_bNotSaved;
-	int							m_nLinkType;
+    int m_nSrcEditID;   // the node that 'owns' this link
+    int m_nDestEditID;  // the node on the other end of the link.
 
-	void						SetLinkState( void );
-	bool						IsLinkValid( void );
+    int m_nSrcID;                     // the node that 'owns' this link
+    int m_nDestID;                    // the node on the other end of the link.
+    DynamicLinkState_t m_nLinkState;  //
+    string_t m_strAllowUse;           // Only this entity name or classname may use the link
+    bool m_bInvertAllow;              // Instead of only allowing the m_strAllowUse entity, exclude only it
 
-	CAI_Link *					FindLink();
+    bool m_bFixedUpIds;
+    bool m_bNotSaved;
+    int m_nLinkType;
 
-	int							ObjectCaps();
+    void SetLinkState( void );
+    bool IsLinkValid( void );
 
-	// ----------------
-	//	Inputs
-	// ----------------
-	void InputTurnOn( inputdata_t &inputdata );
-	void InputTurnOff( inputdata_t &inputdata );
-	DECLARE_DATADESC();
+    CAI_Link *FindLink();
 
-	CAI_DynamicLink();
-	~CAI_DynamicLink();
+    int ObjectCaps();
+
+    // ----------------
+    //	Inputs
+    // ----------------
+    void InputTurnOn( inputdata_t &inputdata );
+    void InputTurnOff( inputdata_t &inputdata );
+    DECLARE_DATADESC();
+
+    CAI_DynamicLink();
+    ~CAI_DynamicLink();
 };
 
 //=============================================================================
@@ -81,45 +82,46 @@ public:
 //=============================================================================
 class CAI_DynamicLinkController : public CServerOnlyEntity
 {
-	DECLARE_CLASS( CAI_DynamicLinkController, CServerOnlyEntity );
-public:
-	void GenerateLinksFromVolume();
+    DECLARE_CLASS( CAI_DynamicLinkController, CServerOnlyEntity );
 
-	// ----------------
-	//	Inputs
-	// ----------------
-	void InputTurnOn( inputdata_t &inputdata );
-	void InputTurnOff( inputdata_t &inputdata );
-	void InputSetAllowed( inputdata_t &inputdata );
-	void InputSetInvert( inputdata_t &inputdata );
-	
-	CUtlVector< CHandle<CAI_DynamicLink> > m_ControlledLinks;
-	DynamicLinkState_t			m_nLinkState;
-	string_t					m_strAllowUse;		// Only this entity name or classname may use the link
-	bool						m_bInvertAllow;		// Instead of only allowing the m_strAllowUse entity, exclude only it
-	bool						m_bUseAirLinkRadius;
+   public:
+    void GenerateLinksFromVolume();
 
-	DECLARE_DATADESC();
+    // ----------------
+    //	Inputs
+    // ----------------
+    void InputTurnOn( inputdata_t &inputdata );
+    void InputTurnOff( inputdata_t &inputdata );
+    void InputSetAllowed( inputdata_t &inputdata );
+    void InputSetInvert( inputdata_t &inputdata );
+
+    CUtlVector< CHandle< CAI_DynamicLink > > m_ControlledLinks;
+    DynamicLinkState_t m_nLinkState;
+    string_t m_strAllowUse;  // Only this entity name or classname may use the link
+    bool m_bInvertAllow;     // Instead of only allowing the m_strAllowUse entity, exclude only it
+    bool m_bUseAirLinkRadius;
+
+    DECLARE_DATADESC();
 };
 
 //=============================================================================
 //=============================================================================
 class CAI_RadialLinkController : public CBaseEntity
 {
-	DECLARE_CLASS( CAI_RadialLinkController, CBaseEntity );
+    DECLARE_CLASS( CAI_RadialLinkController, CBaseEntity );
 
-public:
-	void	Spawn();
-	void	Activate();
-	void	PollMotionThink();
-	void	ModifyNodeLinks( bool bMakeStale );
+   public:
+    void Spawn();
+    void Activate();
+    void PollMotionThink();
+    void ModifyNodeLinks( bool bMakeStale );
 
-public:
-	float	m_flRadius;
-	Vector	m_vecAtRestOrigin;
-	bool	m_bAtRest;
+   public:
+    float m_flRadius;
+    Vector m_vecAtRestOrigin;
+    bool m_bAtRest;
 
-	DECLARE_DATADESC();
+    DECLARE_DATADESC();
 };
 
-#endif // AI_DYNAMICLINK_H
+#endif  // AI_DYNAMICLINK_H

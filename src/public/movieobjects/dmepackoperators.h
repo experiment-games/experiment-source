@@ -12,27 +12,26 @@
 
 #include "movieobjects/dmeoperator.h"
 
-
 //-----------------------------------------------------------------------------
 // CDmePackColorOperator - combines floats into a color
 //-----------------------------------------------------------------------------
 class CDmePackColorOperator : public CDmeOperator
 {
-	DEFINE_ELEMENT( CDmePackColorOperator, CDmeOperator );
+    DEFINE_ELEMENT( CDmePackColorOperator, CDmeOperator );
 
-public:
-	virtual bool IsDirty(); // ie needs to operate
-	virtual void Operate();
+   public:
+    virtual bool IsDirty();  // ie needs to operate
+    virtual void Operate();
 
-	virtual void GetInputAttributes ( CUtlVector< CDmAttribute * > &attrs );
-	virtual void GetOutputAttributes( CUtlVector< CDmAttribute * > &attrs );
+    virtual void GetInputAttributes( CUtlVector< CDmAttribute * > &attrs );
+    virtual void GetOutputAttributes( CUtlVector< CDmAttribute * > &attrs );
 
-protected:
-	CDmaVar< Color > m_color;
-	CDmaVar< float> m_red;
-	CDmaVar< float> m_green;
-	CDmaVar< float> m_blue;
-	CDmaVar< float> m_alpha;
+   protected:
+    CDmaVar< Color > m_color;
+    CDmaVar< float > m_red;
+    CDmaVar< float > m_green;
+    CDmaVar< float > m_blue;
+    CDmaVar< float > m_alpha;
 };
 
 //-----------------------------------------------------------------------------
@@ -40,19 +39,19 @@ protected:
 //-----------------------------------------------------------------------------
 class CDmePackVector2Operator : public CDmeOperator
 {
-	DEFINE_ELEMENT( CDmePackVector2Operator, CDmeOperator );
+    DEFINE_ELEMENT( CDmePackVector2Operator, CDmeOperator );
 
-public:
-	virtual bool IsDirty(); // ie needs to operate
-	virtual void Operate();
+   public:
+    virtual bool IsDirty();  // ie needs to operate
+    virtual void Operate();
 
-	virtual void GetInputAttributes ( CUtlVector< CDmAttribute * > &attrs );
-	virtual void GetOutputAttributes( CUtlVector< CDmAttribute * > &attrs );
+    virtual void GetInputAttributes( CUtlVector< CDmAttribute * > &attrs );
+    virtual void GetOutputAttributes( CUtlVector< CDmAttribute * > &attrs );
 
-protected:
-	CDmaVar< Vector2D > m_vector;
-	CDmaVar< float> m_x;
-	CDmaVar< float> m_y;
+   protected:
+    CDmaVar< Vector2D > m_vector;
+    CDmaVar< float > m_x;
+    CDmaVar< float > m_y;
 };
 
 //-----------------------------------------------------------------------------
@@ -60,20 +59,20 @@ protected:
 //-----------------------------------------------------------------------------
 class CDmePackVector3Operator : public CDmeOperator
 {
-	DEFINE_ELEMENT( CDmePackVector3Operator, CDmeOperator );
+    DEFINE_ELEMENT( CDmePackVector3Operator, CDmeOperator );
 
-public:
-	virtual bool IsDirty(); // ie needs to operate
-	virtual void Operate();
+   public:
+    virtual bool IsDirty();  // ie needs to operate
+    virtual void Operate();
 
-	virtual void GetInputAttributes ( CUtlVector< CDmAttribute * > &attrs );
-	virtual void GetOutputAttributes( CUtlVector< CDmAttribute * > &attrs );
+    virtual void GetInputAttributes( CUtlVector< CDmAttribute * > &attrs );
+    virtual void GetOutputAttributes( CUtlVector< CDmAttribute * > &attrs );
 
-protected:
-	CDmaVar< Vector > m_vector;
-	CDmaVar< float> m_x;
-	CDmaVar< float> m_y;
-	CDmaVar< float> m_z;
+   protected:
+    CDmaVar< Vector > m_vector;
+    CDmaVar< float > m_x;
+    CDmaVar< float > m_y;
+    CDmaVar< float > m_z;
 };
 
 //-----------------------------------------------------------------------------
@@ -81,21 +80,21 @@ protected:
 //-----------------------------------------------------------------------------
 class CDmePackVector4Operator : public CDmeOperator
 {
-	DEFINE_ELEMENT( CDmePackVector4Operator, CDmeOperator );
+    DEFINE_ELEMENT( CDmePackVector4Operator, CDmeOperator );
 
-public:
-	virtual bool IsDirty(); // ie needs to operate
-	virtual void Operate();
+   public:
+    virtual bool IsDirty();  // ie needs to operate
+    virtual void Operate();
 
-	virtual void GetInputAttributes ( CUtlVector< CDmAttribute * > &attrs );
-	virtual void GetOutputAttributes( CUtlVector< CDmAttribute * > &attrs );
+    virtual void GetInputAttributes( CUtlVector< CDmAttribute * > &attrs );
+    virtual void GetOutputAttributes( CUtlVector< CDmAttribute * > &attrs );
 
-protected:
-	CDmaVar< Vector4D > m_vector;
-	CDmaVar< float> m_x;
-	CDmaVar< float> m_y;
-	CDmaVar< float> m_z;
-	CDmaVar< float> m_w;
+   protected:
+    CDmaVar< Vector4D > m_vector;
+    CDmaVar< float > m_x;
+    CDmaVar< float > m_y;
+    CDmaVar< float > m_z;
+    CDmaVar< float > m_w;
 };
 
 //-----------------------------------------------------------------------------
@@ -103,20 +102,20 @@ protected:
 //-----------------------------------------------------------------------------
 class CDmePackQAngleOperator : public CDmeOperator
 {
-	DEFINE_ELEMENT( CDmePackQAngleOperator, CDmeOperator );
+    DEFINE_ELEMENT( CDmePackQAngleOperator, CDmeOperator );
 
-public:
-	virtual bool IsDirty(); // ie needs to operate
-	virtual void Operate();
+   public:
+    virtual bool IsDirty();  // ie needs to operate
+    virtual void Operate();
 
-	virtual void GetInputAttributes ( CUtlVector< CDmAttribute * > &attrs );
-	virtual void GetOutputAttributes( CUtlVector< CDmAttribute * > &attrs );
+    virtual void GetInputAttributes( CUtlVector< CDmAttribute * > &attrs );
+    virtual void GetOutputAttributes( CUtlVector< CDmAttribute * > &attrs );
 
-protected:
-	CDmaVar< QAngle > m_qangle;
-	CDmaVar< float> m_x;
-	CDmaVar< float> m_y;
-	CDmaVar< float> m_z;
+   protected:
+    CDmaVar< QAngle > m_qangle;
+    CDmaVar< float > m_x;
+    CDmaVar< float > m_y;
+    CDmaVar< float > m_z;
 };
 
 //-----------------------------------------------------------------------------
@@ -124,21 +123,21 @@ protected:
 //-----------------------------------------------------------------------------
 class CDmePackQuaternionOperator : public CDmeOperator
 {
-	DEFINE_ELEMENT( CDmePackQuaternionOperator, CDmeOperator );
+    DEFINE_ELEMENT( CDmePackQuaternionOperator, CDmeOperator );
 
-public:
-	virtual bool IsDirty(); // ie needs to operate
-	virtual void Operate();
+   public:
+    virtual bool IsDirty();  // ie needs to operate
+    virtual void Operate();
 
-	virtual void GetInputAttributes ( CUtlVector< CDmAttribute * > &attrs );
-	virtual void GetOutputAttributes( CUtlVector< CDmAttribute * > &attrs );
+    virtual void GetInputAttributes( CUtlVector< CDmAttribute * > &attrs );
+    virtual void GetOutputAttributes( CUtlVector< CDmAttribute * > &attrs );
 
-protected:
-	CDmaVar< Quaternion > m_quaternion;
-	CDmaVar< float> m_x;
-	CDmaVar< float> m_y;
-	CDmaVar< float> m_z;
-	CDmaVar< float> m_w;
+   protected:
+    CDmaVar< Quaternion > m_quaternion;
+    CDmaVar< float > m_x;
+    CDmaVar< float > m_y;
+    CDmaVar< float > m_z;
+    CDmaVar< float > m_w;
 };
 
 //-----------------------------------------------------------------------------
@@ -146,19 +145,18 @@ protected:
 //-----------------------------------------------------------------------------
 class CDmePackVMatrixOperator : public CDmeOperator
 {
-	DEFINE_ELEMENT( CDmePackVMatrixOperator, CDmeOperator );
+    DEFINE_ELEMENT( CDmePackVMatrixOperator, CDmeOperator );
 
-public:
-	virtual bool IsDirty(); // ie needs to operate
-	virtual void Operate();
+   public:
+    virtual bool IsDirty();  // ie needs to operate
+    virtual void Operate();
 
-	virtual void GetInputAttributes ( CUtlVector< CDmAttribute * > &attrs );
-	virtual void GetOutputAttributes( CUtlVector< CDmAttribute * > &attrs );
+    virtual void GetInputAttributes( CUtlVector< CDmAttribute * > &attrs );
+    virtual void GetOutputAttributes( CUtlVector< CDmAttribute * > &attrs );
 
-protected:
-	CDmaVar< VMatrix > m_vmatrix;
-	CDmaVar< float > m_cells[ 16 ];
+   protected:
+    CDmaVar< VMatrix > m_vmatrix;
+    CDmaVar< float > m_cells[16];
 };
 
-
-#endif // DMEPACKOPERATORS_H
+#endif  // DMEPACKOPERATORS_H

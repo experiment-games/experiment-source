@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -25,44 +25,35 @@
 
 class IUnicodeWindows : public IBaseInterface
 {
-public:
-	virtual LRESULT DefWindowProcW
-	(
-		HWND hWnd,
-		UINT Msg,
-		WPARAM wParam,
-		LPARAM lParam 
-	) = 0;
+   public:
+    virtual LRESULT DefWindowProcW(
+        HWND hWnd,
+        UINT Msg,
+        WPARAM wParam,
+        LPARAM lParam ) = 0;
 
-	virtual HWND CreateWindowExW
-	(          
-		DWORD dwExStyle,
-	    LPCWSTR lpClassName,
-	    LPCWSTR lpWindowName,
-	    DWORD dwStyle,
-	    int x,
-	    int y,
-	    int nWidth,
-	    int nHeight,
-	    HWND hWndParent,
-	    HMENU hMenu,
-	    HINSTANCE hInstance,
-	    LPVOID lpParam
-	) = 0;
+    virtual HWND CreateWindowExW(
+        DWORD dwExStyle,
+        LPCWSTR lpClassName,
+        LPCWSTR lpWindowName,
+        DWORD dwStyle,
+        int x,
+        int y,
+        int nWidth,
+        int nHeight,
+        HWND hWndParent,
+        HMENU hMenu,
+        HINSTANCE hInstance,
+        LPVOID lpParam ) = 0;
 
-	virtual ATOM RegisterClassW
-	( 
-		CONST WNDCLASSW *lpWndClass
-	) = 0;
+    virtual ATOM RegisterClassW(
+        CONST WNDCLASSW *lpWndClass ) = 0;
 
-	virtual BOOL UnregisterClassW
-	( 
-		LPCWSTR lpClassName,
-		HINSTANCE hInstance
-	) = 0;
+    virtual BOOL UnregisterClassW(
+        LPCWSTR lpClassName,
+        HINSTANCE hInstance ) = 0;
 };
 
-#define VENGINE_UNICODEINTERFACE_VERSION	"VENGINEUNICODE001"
+#define VENGINE_UNICODEINTERFACE_VERSION "VENGINEUNICODE001"
 
-
-#endif // UNICODE_H
+#endif  // UNICODE_H

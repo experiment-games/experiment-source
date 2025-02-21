@@ -10,20 +10,19 @@
 #include "zombie_attack.h"
 #include "zombie_spawn.h"
 
-ActionResult< CZombie >	CZombieSpawn::OnStart( CZombie *me, Action< CZombie > *priorAction )
+ActionResult< CZombie > CZombieSpawn::OnStart( CZombie *me, Action< CZombie > *priorAction )
 {
-	me->GetBodyInterface()->StartActivity( ACT_TRANSITION );
+    me->GetBodyInterface()->StartActivity( ACT_TRANSITION );
 
-	return Continue();
+    return Continue();
 }
 
-
-ActionResult< CZombie >	CZombieSpawn::Update( CZombie *me, float interval )
+ActionResult< CZombie > CZombieSpawn::Update( CZombie *me, float interval )
 {
-	if ( me->IsActivityFinished() )
-	{
-		return ChangeTo( new CZombieAttack, "Start Attack!" );
-	}
+    if ( me->IsActivityFinished() )
+    {
+        return ChangeTo( new CZombieAttack, "Start Attack!" );
+    }
 
-	return Continue();
+    return Continue();
 }

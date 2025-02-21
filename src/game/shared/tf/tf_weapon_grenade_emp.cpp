@@ -21,8 +21,8 @@
 #include "beam_shared.h"
 #endif
 
-#define GRENADE_EMP_TIMER	3.0f //Seconds
-#define	GRENADE_EMP_LEADIN	2.0f 
+#define GRENADE_EMP_TIMER 3.0f  // Seconds
+#define GRENADE_EMP_LEADIN 2.0f
 
 //=============================================================================
 //
@@ -54,11 +54,9 @@ END_DATADESC()
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-CTFWeaponBaseGrenadeProj *CTFGrenadeEmp::EmitGrenade( Vector vecSrc, QAngle vecAngles, Vector vecVel, 
-							        AngularImpulse angImpulse, CBasePlayer *pPlayer, float flTime, int iflags )
+CTFWeaponBaseGrenadeProj *CTFGrenadeEmp::EmitGrenade( Vector vecSrc, QAngle vecAngles, Vector vecVel, AngularImpulse angImpulse, CBasePlayer *pPlayer, float flTime, int iflags )
 {
-	return CTFGrenadeEmpProjectile::Create( vecSrc, vecAngles, vecVel, angImpulse, 
-		                                pPlayer, GetTFWpnData(), flTime );
+    return CTFGrenadeEmpProjectile::Create( vecSrc, vecAngles, vecVel, angImpulse, pPlayer, GetTFWpnData(), flTime );
 }
 
 #endif
@@ -76,22 +74,20 @@ PRECACHE_REGISTER( tf_weapon_grenade_emp_projectile );
 
 BEGIN_DATADESC( CTFGrenadeEmpProjectile )
 DEFINE_THINKFUNC( DetonateThink ),
-END_DATADESC()
+    END_DATADESC()
 
-//-----------------------------------------------------------------------------
-// Purpose:
-//-----------------------------------------------------------------------------
-CTFGrenadeEmpProjectile* CTFGrenadeEmpProjectile::Create( const Vector &position, const QAngle &angles, 
-																const Vector &velocity, const AngularImpulse &angVelocity, 
-																CBaseCombatCharacter *pOwner, const CTFWeaponInfo &weaponInfo, float timer, int iFlags )
+    //-----------------------------------------------------------------------------
+    // Purpose:
+    //-----------------------------------------------------------------------------
+    CTFGrenadeEmpProjectile *CTFGrenadeEmpProjectile::Create( const Vector &position, const QAngle &angles, const Vector &velocity, const AngularImpulse &angVelocity, CBaseCombatCharacter *pOwner, const CTFWeaponInfo &weaponInfo, float timer, int iFlags )
 {
-	CTFGrenadeEmpProjectile *pGrenade = static_cast<CTFGrenadeEmpProjectile*>( CTFWeaponBaseGrenadeProj::Create( "tf_weapon_grenade_emp_projectile", position, angles, velocity, angVelocity, pOwner, weaponInfo, timer, iFlags ) );
-	if ( pGrenade )
-	{
-		pGrenade->ApplyLocalAngularVelocityImpulse( angVelocity );	
-	}
+    CTFGrenadeEmpProjectile *pGrenade = static_cast< CTFGrenadeEmpProjectile * >( CTFWeaponBaseGrenadeProj::Create( "tf_weapon_grenade_emp_projectile", position, angles, velocity, angVelocity, pOwner, weaponInfo, timer, iFlags ) );
+    if ( pGrenade )
+    {
+        pGrenade->ApplyLocalAngularVelocityImpulse( angVelocity );
+    }
 
-	return pGrenade;
+    return pGrenade;
 }
 
 //-----------------------------------------------------------------------------
@@ -99,14 +95,14 @@ CTFGrenadeEmpProjectile* CTFGrenadeEmpProjectile::Create( const Vector &position
 //-----------------------------------------------------------------------------
 void CTFGrenadeEmpProjectile::Spawn()
 {
-	Precache();
-	SetModel( GRENADE_MODEL );
+    Precache();
+    SetModel( GRENADE_MODEL );
 
-	BaseClass::Spawn();
+    BaseClass::Spawn();
 
-	m_bPlayedLeadIn = false;
+    m_bPlayedLeadIn = false;
 
-	SetThink( &CTFGrenadeEmpProjectile::DetonateThink );
+    SetThink( &CTFGrenadeEmpProjectile::DetonateThink );
 }
 
 //-----------------------------------------------------------------------------
@@ -114,11 +110,11 @@ void CTFGrenadeEmpProjectile::Spawn()
 //-----------------------------------------------------------------------------
 void CTFGrenadeEmpProjectile::Precache()
 {
-	PrecacheModel( GRENADE_MODEL );
-	PrecacheScriptSound( "Weapon_Grenade_Emp.LeadIn" );
-	PrecacheModel( "sprites/physcannon_bluelight1b.vmt" );
-	PrecacheParticleSystem( "emp_shockwave" );
-	BaseClass::Precache();
+    PrecacheModel( GRENADE_MODEL );
+    PrecacheScriptSound( "Weapon_Grenade_Emp.LeadIn" );
+    PrecacheModel( "sprites/physcannon_bluelight1b.vmt" );
+    PrecacheParticleSystem( "emp_shockwave" );
+    BaseClass::Precache();
 }
 
 //-----------------------------------------------------------------------------
@@ -126,7 +122,7 @@ void CTFGrenadeEmpProjectile::Precache()
 //-----------------------------------------------------------------------------
 void CTFGrenadeEmpProjectile::BounceSound( void )
 {
-	EmitSound( "Weapon_Grenade_Emp.Bounce" );
+    EmitSound( "Weapon_Grenade_Emp.Bounce" );
 }
 
 extern ConVar tf_grenade_show_radius;
@@ -136,68 +132,68 @@ extern ConVar tf_grenade_show_radius;
 //-----------------------------------------------------------------------------
 void CTFGrenadeEmpProjectile::Detonate()
 {
-	if ( ShouldNotDetonate() )
-	{
-		RemoveGrenade();
-		return;
-	}
+    if ( ShouldNotDetonate() )
+    {
+        RemoveGrenade();
+        return;
+    }
 
-	// Explosion effect on client
-	SendDispatchEffect();
+    // Explosion effect on client
+    SendDispatchEffect();
 
-	float flRadius = 180;
-	float flDamage = 1;
+    float flRadius = 180;
+    float flDamage = 1;
 
-	if ( tf_grenade_show_radius.GetBool() )
-	{
-		DrawRadius( flRadius );
-	}
+    if ( tf_grenade_show_radius.GetBool() )
+    {
+        DrawRadius( flRadius );
+    }
 
-	// Apply some amount of EMP damage to every entity in the radius. They will calculate 
-	// their own damage based on how much ammo they have or some other wacky calculation.
+    // Apply some amount of EMP damage to every entity in the radius. They will calculate
+    // their own damage based on how much ammo they have or some other wacky calculation.
 
-	CTakeDamageInfo info( this, GetThrower(), vec3_origin, GetAbsOrigin(), flDamage, DMG_EMP | DMG_PREVENT_PHYSICS_FORCE );
+    CTakeDamageInfo info( this, GetThrower(), vec3_origin, GetAbsOrigin(), flDamage, DMG_EMP | DMG_PREVENT_PHYSICS_FORCE );
 
-	CBaseEntity *pEntityList[100];
-	int nEntityCount = UTIL_EntitiesInSphere( pEntityList, 100, GetAbsOrigin(), flRadius, 0 );
-	int iEntity;
-	for ( iEntity = 0; iEntity < nEntityCount; ++iEntity )
-	{
-		CBaseEntity *pEntity = pEntityList[iEntity];
+    CBaseEntity *pEntityList[100];
+    int nEntityCount = UTIL_EntitiesInSphere( pEntityList, 100, GetAbsOrigin(), flRadius, 0 );
+    int iEntity;
+    for ( iEntity = 0; iEntity < nEntityCount; ++iEntity )
+    {
+        CBaseEntity *pEntity = pEntityList[iEntity];
 
-		if ( pEntity == this )
-			continue;
+        if ( pEntity == this )
+            continue;
 
-		if ( pEntity && pEntity->IsPlayer() )
-			continue;
+        if ( pEntity && pEntity->IsPlayer() )
+            continue;
 
-		if ( pEntity && ( pEntity->m_takedamage == DAMAGE_YES || pEntity->m_takedamage == DAMAGE_EVENTS_ONLY ) )
-		{
-			pEntity->TakeDamage( info );
+        if ( pEntity && ( pEntity->m_takedamage == DAMAGE_YES || pEntity->m_takedamage == DAMAGE_EVENTS_ONLY ) )
+        {
+            pEntity->TakeDamage( info );
 
-			//if ( pEntity->IsPlayer() /* || is ammo box || is enemy object */ )
-			{
-				CBeam *pBeam = CBeam::BeamCreate( "sprites/physcannon_bluelight1b.vmt", 3.0 );
-				if ( !pBeam )
-					return;
+            // if ( pEntity->IsPlayer() /* || is ammo box || is enemy object */ )
+            {
+                CBeam *pBeam = CBeam::BeamCreate( "sprites/physcannon_bluelight1b.vmt", 3.0 );
+                if ( !pBeam )
+                    return;
 
-				pBeam->PointsInit( GetAbsOrigin(), pEntity->WorldSpaceCenter() );
+                pBeam->PointsInit( GetAbsOrigin(), pEntity->WorldSpaceCenter() );
 
-				pBeam->SetColor( 255, 255, 255 );
-				pBeam->SetBrightness( 128 );
-				pBeam->SetNoise( 12.0f );
-				pBeam->SetEndWidth( 3.0f );
-				pBeam->SetWidth( 3.0f );
-				pBeam->LiveForTime( 0.5f );	// Fail-safe
-				pBeam->SetFrameRate( 25.0f );
-				pBeam->SetFrame( random->RandomInt( 0, 2 ) );
-			}
-		}
-	}
+                pBeam->SetColor( 255, 255, 255 );
+                pBeam->SetBrightness( 128 );
+                pBeam->SetNoise( 12.0f );
+                pBeam->SetEndWidth( 3.0f );
+                pBeam->SetWidth( 3.0f );
+                pBeam->LiveForTime( 0.5f );  // Fail-safe
+                pBeam->SetFrameRate( 25.0f );
+                pBeam->SetFrame( random->RandomInt( 0, 2 ) );
+            }
+        }
+    }
 
-	DispatchParticleEffect( "emp_shockwave", GetAbsOrigin(), vec3_angle );
+    DispatchParticleEffect( "emp_shockwave", GetAbsOrigin(), vec3_angle );
 
-	UTIL_Remove( this );
+    UTIL_Remove( this );
 
 #if 0
 	// Tell the bots an HE grenade has exploded
@@ -216,16 +212,16 @@ void CTFGrenadeEmpProjectile::Detonate()
 //-----------------------------------------------------------------------------
 void CTFGrenadeEmpProjectile::DetonateThink( void )
 {
-	if ( !m_bPlayedLeadIn && gpGlobals->curtime > GetDetonateTime() - GRENADE_EMP_LEADIN )
-	{
-		Vector soundPosition = GetAbsOrigin() + Vector( 0, 0, 5 );
-		CPASAttenuationFilter filter( soundPosition );
+    if ( !m_bPlayedLeadIn && gpGlobals->curtime > GetDetonateTime() - GRENADE_EMP_LEADIN )
+    {
+        Vector soundPosition = GetAbsOrigin() + Vector( 0, 0, 5 );
+        CPASAttenuationFilter filter( soundPosition );
 
-		EmitSound( filter, entindex(), "Weapon_Grenade_Emp.LeadIn" );
-		m_bPlayedLeadIn = true;
-	}
+        EmitSound( filter, entindex(), "Weapon_Grenade_Emp.LeadIn" );
+        m_bPlayedLeadIn = true;
+    }
 
-	BaseClass::DetonateThink();
+    BaseClass::DetonateThink();
 }
 
 #endif

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================
@@ -29,175 +29,266 @@ class CItemEffectMeterManager;
 extern CItemEffectMeterManager g_ItemEffectMeterManager;
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 class CItemEffectMeterManager : public CGameEventListener
 {
-public:
-	~CItemEffectMeterManager();
+   public:
+    ~CItemEffectMeterManager();
 
-	void			ClearExistingMeters();
-	void			SetPlayer( C_TFPlayer* pPlayer );
-	void			Update( C_TFPlayer* pPlayer );
-	virtual void	FireGameEvent( IGameEvent *event );
-	int				GetNumEnabled( void );
+    void ClearExistingMeters();
+    void SetPlayer( C_TFPlayer *pPlayer );
+    void Update( C_TFPlayer *pPlayer );
+    virtual void FireGameEvent( IGameEvent *event );
+    int GetNumEnabled( void );
 
-private:
-	CUtlVector< vgui::DHANDLE< CHudItemEffectMeter > >	m_Meters;
+   private:
+    CUtlVector< vgui::DHANDLE< CHudItemEffectMeter > > m_Meters;
 };
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 DECLARE_AUTO_LIST( IHudItemEffectMeterAutoList );
 class CHudItemEffectMeter : public CHudElement, public EditablePanel, public IHudItemEffectMeterAutoList
 {
-	DECLARE_CLASS_SIMPLE( CHudItemEffectMeter, EditablePanel );
+    DECLARE_CLASS_SIMPLE( CHudItemEffectMeter, EditablePanel );
 
-public:
-	CHudItemEffectMeter( const char *pszElementName, C_TFPlayer* pPlayer );
-	~CHudItemEffectMeter();
+   public:
+    CHudItemEffectMeter( const char *pszElementName, C_TFPlayer *pPlayer );
+    ~CHudItemEffectMeter();
 
-	static void		CreateHudElementsForClass( C_TFPlayer* pPlayer, CUtlVector< vgui::DHANDLE< CHudItemEffectMeter > >& outMeters );
+    static void CreateHudElementsForClass( C_TFPlayer *pPlayer, CUtlVector< vgui::DHANDLE< CHudItemEffectMeter > > &outMeters );
 
-	// Hud Element
-	virtual void	ApplySchemeSettings( IScheme *scheme );
-	virtual void	PerformLayout() OVERRIDE;
-	virtual bool	ShouldDraw( void );
-	virtual void	Update( C_TFPlayer* pPlayer );
+    // Hud Element
+    virtual void ApplySchemeSettings( IScheme *scheme );
+    virtual void PerformLayout() OVERRIDE;
+    virtual bool ShouldDraw( void );
+    virtual void Update( C_TFPlayer *pPlayer );
 
-	// Effect Meter Logic
-	virtual bool		IsEnabled( void )		{ return m_bEnabled; }
-	virtual const char*	GetLabelText( void );
-	virtual const char*	GetIconName( void )		{ return "../hud/ico_stickybomb_red"; }
-	virtual float		GetProgress( void );
-	virtual bool		ShouldBeep( void )
-	{ 
-		if ( m_pPlayer && m_pPlayer->IsPlayerClass( TF_CLASS_SPY ) )
-		{
-			CTFWeaponInvis *pWpn = (CTFWeaponInvis *) m_pPlayer->Weapon_OwnsThisID( TF_WEAPON_INVIS );
-			if ( pWpn && pWpn->HasFeignDeath() )
-				return true;
-		}
-		
-		return false;
-	}
-	virtual const char*	GetBeepSound( void )		{ return "TFPlayer.ReCharged"; }
-	virtual const char *GetResFile( void )			{ return "resource/UI/HudItemEffectMeter.res"; }
-	virtual int			GetCount( void )			{ return -1; }
-	virtual bool		ShouldFlash( void )			{ return false; }
-	virtual bool		ShowPercentSymbol( void )	{ return false; }
+    // Effect Meter Logic
+    virtual bool IsEnabled( void )
+    {
+        return m_bEnabled;
+    }
+    virtual const char *GetLabelText( void );
+    virtual const char *GetIconName( void )
+    {
+        return "../hud/ico_stickybomb_red";
+    }
+    virtual float GetProgress( void );
+    virtual bool ShouldBeep( void )
+    {
+        if ( m_pPlayer && m_pPlayer->IsPlayerClass( TF_CLASS_SPY ) )
+        {
+            CTFWeaponInvis *pWpn = ( CTFWeaponInvis * )m_pPlayer->Weapon_OwnsThisID( TF_WEAPON_INVIS );
+            if ( pWpn && pWpn->HasFeignDeath() )
+                return true;
+        }
 
-	virtual int			GetNumProgressBar( void ) const { return 1; }
-	virtual Color		GetProgressBarColor( void )	{ return Color( 255, 255, 255, 255 ); }
-	virtual Color		GetLabelTextColor( void )	{ return Color( 255, 255, 255, 255 ); }
+        return false;
+    }
+    virtual const char *GetBeepSound( void )
+    {
+        return "TFPlayer.ReCharged";
+    }
+    virtual const char *GetResFile( void )
+    {
+        return "resource/UI/HudItemEffectMeter.res";
+    }
+    virtual int GetCount( void )
+    {
+        return -1;
+    }
+    virtual bool ShouldFlash( void )
+    {
+        return false;
+    }
+    virtual bool ShowPercentSymbol( void )
+    {
+        return false;
+    }
 
-	// Override this to update some field on the panel when state changes
-	virtual int			GetState( void )			{ return -1; }
+    virtual int GetNumProgressBar( void ) const
+    {
+        return 1;
+    }
+    virtual Color GetProgressBarColor( void )
+    {
+        return Color( 255, 255, 255, 255 );
+    }
+    virtual Color GetLabelTextColor( void )
+    {
+        return Color( 255, 255, 255, 255 );
+    }
 
-	virtual bool		IsKillstreakMeter( void ) { return false; }
+    // Override this to update some field on the panel when state changes
+    virtual int GetState( void )
+    {
+        return -1;
+    }
 
-	virtual void		SetLabelText( const char *pszText = NULL );
+    virtual bool IsKillstreakMeter( void )
+    {
+        return false;
+    }
 
-	virtual bool		ShouldAutoAdjustPosition() const { return true; }
+    virtual void SetLabelText( const char *pszText = NULL );
 
-protected:
-	vgui::Label *m_pLabel;
-	CUtlVector< vgui::ContinuousProgressBar* > m_vecProgressBars;
-	float				m_flOldProgress;
+    virtual bool ShouldAutoAdjustPosition() const
+    {
+        return true;
+    }
 
-	CHandle<C_TFPlayer>	m_pPlayer;
-	bool				m_bEnabled;
+   protected:
+    vgui::Label *m_pLabel;
+    CUtlVector< vgui::ContinuousProgressBar * > m_vecProgressBars;
+    float m_flOldProgress;
 
-	CTFImagePanel		*m_pItemEffectIcon;
+    CHandle< C_TFPlayer > m_pPlayer;
+    bool m_bEnabled;
 
-	int					m_nState;
+    CTFImagePanel *m_pItemEffectIcon;
 
-	CPanelAnimationVarAliasType( float, m_iXOffset, "x_offset", "0", "proportional_float" );
+    int m_nState;
+
+    CPanelAnimationVarAliasType( float, m_iXOffset, "x_offset", "0", "proportional_float" );
 };
 
 //-----------------------------------------------------------------------------
 // Purpose: Template variation for weapon based meters.
 //-----------------------------------------------------------------------------
-template <class T>
+template < class T >
 class CHudItemEffectMeter_Weapon : public CHudItemEffectMeter
 {
-public:
-	CHudItemEffectMeter_Weapon( const char *pszElementName, C_TFPlayer *pPlayer, int iWeaponID, bool bBeeps=true, const char* pszResFile=NULL );
+   public:
+    CHudItemEffectMeter_Weapon( const char *pszElementName, C_TFPlayer *pPlayer, int iWeaponID, bool bBeeps = true, const char *pszResFile = NULL );
 
-	T*					GetWeapon( void );
+    T *GetWeapon( void );
 
-	virtual void		PerformLayout() OVERRIDE { CHudItemEffectMeter::PerformLayout(); }
+    virtual void PerformLayout() OVERRIDE
+    {
+        CHudItemEffectMeter::PerformLayout();
+    }
 
-	virtual void		Update( C_TFPlayer *pPlayer ) OVERRIDE;
+    virtual void Update( C_TFPlayer *pPlayer ) OVERRIDE;
 
-	// Effect Meter Logic
-	virtual bool		IsEnabled( void );
-	virtual const char*	GetLabelText( void ) { return m_hWeapon ? m_hWeapon->GetEffectLabelText() : ""; }
-	virtual const char*	GetIconName( void ) { return "../hud/ico_stickybomb_red"; }
-	virtual float		GetProgress( void );
-	virtual bool		ShouldBeep( void ) { return m_bBeeps; }
-	virtual const char*	GetBeepSound( void ) OVERRIDE { return CHudItemEffectMeter::GetBeepSound(); }
-	virtual const char *GetResFile( void );
-	virtual int			GetCount( void ) { return -1; }
-	virtual bool		ShouldFlash( void ) { return false; }
+    // Effect Meter Logic
+    virtual bool IsEnabled( void );
+    virtual const char *GetLabelText( void )
+    {
+        return m_hWeapon ? m_hWeapon->GetEffectLabelText() : "";
+    }
+    virtual const char *GetIconName( void )
+    {
+        return "../hud/ico_stickybomb_red";
+    }
+    virtual float GetProgress( void );
+    virtual bool ShouldBeep( void )
+    {
+        return m_bBeeps;
+    }
+    virtual const char *GetBeepSound( void ) OVERRIDE
+    {
+        return CHudItemEffectMeter::GetBeepSound();
+    }
+    virtual const char *GetResFile( void );
+    virtual int GetCount( void )
+    {
+        return -1;
+    }
+    virtual bool ShouldFlash( void )
+    {
+        return false;
+    }
 
-	virtual int			GetNumProgressBar( void ) const OVERRIDE { return 1; }
-	virtual Color		GetProgressBarColor( void ) OVERRIDE { return Color( 255, 255, 255, 255 ); }
-	virtual Color		GetLabelTextColor( void ) OVERRIDE { return Color( 255, 255, 255, 255 ); }
-	virtual int			GetState( void ) OVERRIDE { return -1; }
+    virtual int GetNumProgressBar( void ) const OVERRIDE
+    {
+        return 1;
+    }
+    virtual Color GetProgressBarColor( void ) OVERRIDE
+    {
+        return Color( 255, 255, 255, 255 );
+    }
+    virtual Color GetLabelTextColor( void ) OVERRIDE
+    {
+        return Color( 255, 255, 255, 255 );
+    }
+    virtual int GetState( void ) OVERRIDE
+    {
+        return -1;
+    }
 
-	virtual bool		ShouldDraw( void );
-	virtual bool		ShowPercentSymbol( void )	{ return false; }
-	virtual bool		IsKillstreakMeter( void )	{ return false; }
+    virtual bool ShouldDraw( void );
+    virtual bool ShowPercentSymbol( void )
+    {
+        return false;
+    }
+    virtual bool IsKillstreakMeter( void )
+    {
+        return false;
+    }
 
-	virtual bool		ShouldAutoAdjustPosition() const OVERRIDE { return true; }
+    virtual bool ShouldAutoAdjustPosition() const OVERRIDE
+    {
+        return true;
+    }
 
-private:
-	CHandle<T>			m_hWeapon;
-	int					m_iWeaponID;
-	bool				m_bBeeps;
-	const char*			m_pszResFile;
+   private:
+    CHandle< T > m_hWeapon;
+    int m_iWeaponID;
+    bool m_bBeeps;
+    const char *m_pszResFile;
 };
 
 class CHudItemEffectMeter_Rune : public CHudItemEffectMeter
 {
-public:
+   public:
+    CHudItemEffectMeter_Rune( const char *pszElementName, C_TFPlayer *pPlayer );
 
-	CHudItemEffectMeter_Rune( const char *pszElementName, C_TFPlayer *pPlayer );
+    // Effect Meter Logic
+    virtual bool IsEnabled( void );
+    virtual float GetProgress( void );
+    virtual bool ShouldDraw( void );
 
-	// Effect Meter Logic
-	virtual bool		IsEnabled( void );
-	virtual float		GetProgress( void );
-	virtual bool		ShouldDraw( void );
+    virtual const char *GetLabelText( void )
+    {
+        return "Powerup";
+    }
+    virtual const char *GetResFile( void )
+    {
+        return "resource/UI/HudPowerupEffectMeter.res";
+    }
 
-	virtual const char*	GetLabelText( void ) { return "Powerup"; }
-	virtual const char *GetResFile( void )		{ return "resource/UI/HudPowerupEffectMeter.res"; }
-
-	virtual bool		ShouldFlash( void );
+    virtual bool ShouldFlash( void );
 };
-
 
 class CHudItemEffectMeter_ItemAttribute : public CHudItemEffectMeter
 {
-public:
-	CHudItemEffectMeter_ItemAttribute( const char *pszElementName, C_TFPlayer *pPlayer, loadout_positions_t iLoadoutSlot, const char *pszLabelText = NULL, bool bBeeps = true );
+   public:
+    CHudItemEffectMeter_ItemAttribute( const char *pszElementName, C_TFPlayer *pPlayer, loadout_positions_t iLoadoutSlot, const char *pszLabelText = NULL, bool bBeeps = true );
 
-	const IHasGenericMeter	*GetItem();
+    const IHasGenericMeter *GetItem();
 
-	// Effect Meter Logic
-	virtual const char*	GetLabelText(void) OVERRIDE { return m_strLabelText.Get() ? m_strLabelText.Get() : ""; }
-	virtual float		GetProgress( void ) OVERRIDE;
-	virtual bool		ShouldBeep( void ) OVERRIDE { return m_bBeeps; }
-	virtual bool		ShouldDraw(void) OVERRIDE;
-	virtual void		OnTick( void ) OVERRIDE;
+    // Effect Meter Logic
+    virtual const char *GetLabelText( void ) OVERRIDE
+    {
+        return m_strLabelText.Get() ? m_strLabelText.Get() : "";
+    }
+    virtual float GetProgress( void ) OVERRIDE;
+    virtual bool ShouldBeep( void ) OVERRIDE
+    {
+        return m_bBeeps;
+    }
+    virtual bool ShouldDraw( void ) OVERRIDE;
+    virtual void OnTick( void ) OVERRIDE;
 
-private:
-	CHandle< CBaseEntity >	m_hEntity;
-	const IHasGenericMeter* m_pMeterEntity;
-	loadout_positions_t		m_iLoadoutSlot;
-	CUtlString				m_strLabelText;
-	bool					m_bBeeps;
+   private:
+    CHandle< CBaseEntity > m_hEntity;
+    const IHasGenericMeter *m_pMeterEntity;
+    loadout_positions_t m_iLoadoutSlot;
+    CUtlString m_strLabelText;
+    bool m_bBeeps;
 };
 
 #endif

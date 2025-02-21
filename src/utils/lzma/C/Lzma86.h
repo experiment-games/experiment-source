@@ -8,8 +8,8 @@
 
 EXTERN_C_BEGIN
 
-#define LZMA86_SIZE_OFFSET (1 + 5)
-#define LZMA86_HEADER_SIZE (LZMA86_SIZE_OFFSET + 8)
+#define LZMA86_SIZE_OFFSET ( 1 + 5 )
+#define LZMA86_HEADER_SIZE ( LZMA86_SIZE_OFFSET + 8 )
 
 /*
 It's an example for LZMA + x86 Filter use.
@@ -63,14 +63,12 @@ Return code:
 
 enum ESzFilterMode
 {
-  SZ_FILTER_NO,
-  SZ_FILTER_YES,
-  SZ_FILTER_AUTO
+    SZ_FILTER_NO,
+    SZ_FILTER_YES,
+    SZ_FILTER_AUTO
 };
 
-SRes Lzma86_Encode(Byte *dest, size_t *destLen, const Byte *src, size_t srcLen,
-    int level, UInt32 dictSize, int filterMode);
-
+SRes Lzma86_Encode( Byte *dest, size_t *destLen, const Byte *src, size_t srcLen, int level, UInt32 dictSize, int filterMode );
 
 /*
 Lzma86_GetUnpackSize:
@@ -84,7 +82,7 @@ Lzma86_GetUnpackSize:
     SZ_ERROR_INPUT_EOF  - Error in headers
 */
 
-SRes Lzma86_GetUnpackSize(const Byte *src, SizeT srcLen, UInt64 *unpackSize);
+SRes Lzma86_GetUnpackSize( const Byte *src, SizeT srcLen, UInt64 *unpackSize );
 
 /*
 Lzma86_Decode:
@@ -104,7 +102,7 @@ Lzma86_Decode:
     SZ_ERROR_INPUT_EOF - it needs more bytes in input buffer
 */
 
-SRes Lzma86_Decode(Byte *dest, SizeT *destLen, const Byte *src, SizeT *srcLen);
+SRes Lzma86_Decode( Byte *dest, SizeT *destLen, const Byte *src, SizeT *srcLen );
 
 EXTERN_C_END
 

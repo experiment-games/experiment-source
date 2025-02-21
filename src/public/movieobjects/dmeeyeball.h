@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Model eyeposition node, kind of a top level 
+// Model eyeposition node, kind of a top level
 //
 //=============================================================================
 
@@ -26,7 +26,7 @@ eyeball righteye "bip_head" -1.425952 83.274592 1.41954 "eyeball_r" 1.80
 eyeball lefteye  "bip_head"  1.425952 83.274592 1.41954 "eyeball_l" 1.80
 356  1 "pupil_l" 0.6
 
-localvar %dummy_eyelid_flex 
+localvar %dummy_eyelid_flex
 
 flexcontroller eyes range -30 30 eyes_updown
 flexcontroller eyes range -30 30 eyes_rightleft
@@ -62,15 +62,14 @@ eyeball (name) (bone name) (X) (Y) (Z) (material name) (diameter) (angle) (iris 
 //-----------------------------------------------------------------------------
 class CDmeEyeball : public CDmeDag
 {
-	DEFINE_ELEMENT( CDmeEyeball, CDmeDag );
+    DEFINE_ELEMENT( CDmeEyeball, CDmeDag );
 
-public:
-	void GetWorldPosition( Vector &worldPosition );
+   public:
+    void GetWorldPosition( Vector &worldPosition );
 
-	CDmaVar< float > m_flDiameter;		// Diameter of the ball of the eye
-	CDmaVar< float > m_flYawAngle;		// Yaw offset from "forward" for iris.  Humans are typically 2-4 degrees walleyed.
-	CDmaVar< float > m_flPupilScale;	// Scale of the iris texture
+    CDmaVar< float > m_flDiameter;    // Diameter of the ball of the eye
+    CDmaVar< float > m_flYawAngle;    // Yaw offset from "forward" for iris.  Humans are typically 2-4 degrees walleyed.
+    CDmaVar< float > m_flPupilScale;  // Scale of the iris texture
 };
 
-
-#endif // DMEEYEBALL_H
+#endif  // DMEEYEBALL_H

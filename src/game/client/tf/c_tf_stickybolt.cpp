@@ -41,189 +41,188 @@ IPhysicsObject *GetWorldPhysObject( void );
 //-----------------------------------------------------------------------------
 void CreateCrossbowBoltTF( const Vector &vecOrigin, const Vector &vecDirection, const int iFlags, unsigned char nColor )
 {
-	const char* pszModelName = NULL;
-	float flDirOffset = 5.0f;
-	float flScale = 1.0f;
-	float flLifeTime = 30.0f;
-	switch ( iFlags )
-	{
-	case TF_PROJECTILE_STICKY_BALL:
-		pszModelName = g_pszArrowModels[MODEL_SNOWBALL];
-		break;
-	case TF_PROJECTILE_ARROW:
-		pszModelName = g_pszArrowModels[MODEL_ARROW_REGULAR];
-		break;
-	case TF_PROJECTILE_BUILDING_REPAIR_BOLT:
-		pszModelName = g_pszArrowModels[MODEL_ARROW_BUILDING_REPAIR];
-		flDirOffset = -2.0f;
-		break;
-	case TF_PROJECTILE_FESTIVE_ARROW:
-		pszModelName = g_pszArrowModels[MODEL_FESTIVE_ARROW_REGULAR];
-		break;
-	case TF_PROJECTILE_HEALING_BOLT:
-		pszModelName = g_pszArrowModels[MODEL_SYRINGE];
-		flDirOffset = 0.0f;
-		flScale = 3.0f;
-		break;
-	case TF_PROJECTILE_FESTIVE_HEALING_BOLT:
-		pszModelName = g_pszArrowModels[MODEL_FESTIVE_HEALING_BOLT];
-		flScale = 2.5f;
-		break;
-	case TF_PROJECTILE_BREAD_MONSTER:
-	case TF_PROJECTILE_BREADMONSTER_JARATE:
-	case TF_PROJECTILE_BREADMONSTER_MADMILK:
-		pszModelName = g_pszArrowModels[MODEL_BREAD_MONSTER];
-		flLifeTime = 8.0f;
-		flScale = 2.5f;
-		break;
-	case TF_PROJECTILE_GRAPPLINGHOOK:
-		pszModelName = g_pszArrowModels[MODEL_GRAPPLINGHOOK];
-		flDirOffset = 0.0f;
-		flLifeTime = 0.1f;
-		break;
-	default:
-		// Unsupported Model
-		Assert( 0 );
-		pszModelName = g_pszArrowModels[MODEL_ARROW_REGULAR];
-		return;
-	}
-	model_t *pModel = (model_t *)engine->LoadModel( pszModelName );
+    const char *pszModelName = NULL;
+    float flDirOffset = 5.0f;
+    float flScale = 1.0f;
+    float flLifeTime = 30.0f;
+    switch ( iFlags )
+    {
+        case TF_PROJECTILE_STICKY_BALL:
+            pszModelName = g_pszArrowModels[MODEL_SNOWBALL];
+            break;
+        case TF_PROJECTILE_ARROW:
+            pszModelName = g_pszArrowModels[MODEL_ARROW_REGULAR];
+            break;
+        case TF_PROJECTILE_BUILDING_REPAIR_BOLT:
+            pszModelName = g_pszArrowModels[MODEL_ARROW_BUILDING_REPAIR];
+            flDirOffset = -2.0f;
+            break;
+        case TF_PROJECTILE_FESTIVE_ARROW:
+            pszModelName = g_pszArrowModels[MODEL_FESTIVE_ARROW_REGULAR];
+            break;
+        case TF_PROJECTILE_HEALING_BOLT:
+            pszModelName = g_pszArrowModels[MODEL_SYRINGE];
+            flDirOffset = 0.0f;
+            flScale = 3.0f;
+            break;
+        case TF_PROJECTILE_FESTIVE_HEALING_BOLT:
+            pszModelName = g_pszArrowModels[MODEL_FESTIVE_HEALING_BOLT];
+            flScale = 2.5f;
+            break;
+        case TF_PROJECTILE_BREAD_MONSTER:
+        case TF_PROJECTILE_BREADMONSTER_JARATE:
+        case TF_PROJECTILE_BREADMONSTER_MADMILK:
+            pszModelName = g_pszArrowModels[MODEL_BREAD_MONSTER];
+            flLifeTime = 8.0f;
+            flScale = 2.5f;
+            break;
+        case TF_PROJECTILE_GRAPPLINGHOOK:
+            pszModelName = g_pszArrowModels[MODEL_GRAPPLINGHOOK];
+            flDirOffset = 0.0f;
+            flLifeTime = 0.1f;
+            break;
+        default:
+            // Unsupported Model
+            Assert( 0 );
+            pszModelName = g_pszArrowModels[MODEL_ARROW_REGULAR];
+            return;
+    }
+    model_t *pModel = ( model_t * )engine->LoadModel( pszModelName );
 
-	QAngle vAngles;
-	VectorAngles( vecDirection, vAngles );	
-	C_LocalTempEntity *arrow = tempents->SpawnTempModel( pModel, vecOrigin - vecDirection * flDirOffset, vAngles, Vector(0, 0, 0 ), flLifeTime, FTENT_NONE );
+    QAngle vAngles;
+    VectorAngles( vecDirection, vAngles );
+    C_LocalTempEntity *arrow = tempents->SpawnTempModel( pModel, vecOrigin - vecDirection * flDirOffset, vAngles, Vector( 0, 0, 0 ), flLifeTime, FTENT_NONE );
 
-	if ( arrow )
-	{
-		arrow->SetModelScale( flScale );
-		arrow->m_nSkin = nColor;
-	}
+    if ( arrow )
+    {
+        arrow->SetModelScale( flScale );
+        arrow->m_nSkin = nColor;
+    }
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-void StickRagdollNowTF( 
-	const Vector &vecOrigin, 
-	const Vector &vecDirection, 
-	const ClientEntityHandle_t &entHandle, 
-	const int boneIndexAttached, 
-	const int physicsBoneIndex, 
-	const int iShooterIndex, 
-	const int iHitGroup, 
-	const int iVictim,
-	const int iFlags,
-	unsigned char nColor
-) {
-	Ray_t	shotRay;
-	trace_t tr;
-	
-	UTIL_TraceLine( vecOrigin - vecDirection * 16, vecOrigin + vecDirection * 64, MASK_SOLID_BRUSHONLY, NULL, COLLISION_GROUP_NONE, &tr );
-	if ( tr.surface.flags & SURF_SKY )
-		return;
+void StickRagdollNowTF(
+    const Vector &vecOrigin,
+    const Vector &vecDirection,
+    const ClientEntityHandle_t &entHandle,
+    const int boneIndexAttached,
+    const int physicsBoneIndex,
+    const int iShooterIndex,
+    const int iHitGroup,
+    const int iVictim,
+    const int iFlags,
+    unsigned char nColor )
+{
+    Ray_t shotRay;
+    trace_t tr;
 
-	C_BaseAnimating *pModel = dynamic_cast< C_BaseAnimating * >( entHandle.Get() );
-	if ( pModel  )
-	{
-		IPhysicsObject	*pPhysicsObject = NULL;
-		ragdoll_t *pRagdollT = NULL;
-		if ( pModel->m_pRagdoll )
-		{
-			CRagdoll *pCRagdoll = dynamic_cast < CRagdoll * > ( pModel->m_pRagdoll );
-			if ( pCRagdoll )
-			{
-				pRagdollT = pCRagdoll->GetRagdoll();
-				if ( physicsBoneIndex < pRagdollT->listCount )
-				{
-					pPhysicsObject = pRagdollT->list[physicsBoneIndex].pObject;
-				}
-			}
-		}
+    UTIL_TraceLine( vecOrigin - vecDirection * 16, vecOrigin + vecDirection * 64, MASK_SOLID_BRUSHONLY, NULL, COLLISION_GROUP_NONE, &tr );
+    if ( tr.surface.flags & SURF_SKY )
+        return;
 
-		IPhysicsObject *pReference = GetWorldPhysObject();
+    C_BaseAnimating *pModel = dynamic_cast< C_BaseAnimating * >( entHandle.Get() );
+    if ( pModel )
+    {
+        IPhysicsObject *pPhysicsObject = NULL;
+        ragdoll_t *pRagdollT = NULL;
+        if ( pModel->m_pRagdoll )
+        {
+            CRagdoll *pCRagdoll = dynamic_cast< CRagdoll * >( pModel->m_pRagdoll );
+            if ( pCRagdoll )
+            {
+                pRagdollT = pCRagdoll->GetRagdoll();
+                if ( physicsBoneIndex < pRagdollT->listCount )
+                {
+                    pPhysicsObject = pRagdollT->list[physicsBoneIndex].pObject;
+                }
+            }
+        }
 
-		if ( pReference == NULL || pPhysicsObject == NULL )
-			return;
+        IPhysicsObject *pReference = GetWorldPhysObject();
 
-		float frand = (float) rand() / VALVE_RAND_MAX;
-		Vector adjust = vecDirection*7 + vecDirection * frand * 7;
+        if ( pReference == NULL || pPhysicsObject == NULL )
+            return;
 
-		Vector vecBonePos;
-		QAngle boneAngles;
-		pPhysicsObject->GetPosition( &vecBonePos, &boneAngles );
+        float frand = ( float )rand() / VALVE_RAND_MAX;
+        Vector adjust = vecDirection * 7 + vecDirection * frand * 7;
 
-		QAngle angles;
-		pPhysicsObject->SetPosition( vecOrigin-adjust, boneAngles, true );
+        Vector vecBonePos;
+        QAngle boneAngles;
+        pPhysicsObject->GetPosition( &vecBonePos, &boneAngles );
 
-		pPhysicsObject->EnableMotion( false );
+        QAngle angles;
+        pPhysicsObject->SetPosition( vecOrigin - adjust, boneAngles, true );
 
-		int nNodeIndex = pRagdollT->list[physicsBoneIndex].parentIndex;
+        pPhysicsObject->EnableMotion( false );
 
-		// find largest mass bone
-		float flTargetMass = 0;
-		for ( int i = 0; i < pRagdollT->listCount; i++ )
-		{
-			flTargetMass = MAX(flTargetMass, pRagdollT->list[i].pObject->GetMass() );
-		}
+        int nNodeIndex = pRagdollT->list[physicsBoneIndex].parentIndex;
 
-		// walk the chain of bones from the pinned bone to the root and set each to the max mass
-		// This helps transmit the impulses required to stabilize the constraint -- it keeps the body from
-		// leaving the constraint because of some high mass bone hanging at the other end of the chain
-		while ( nNodeIndex >= 0 )
-		{
-			if ( pRagdollT->list[nNodeIndex].pConstraint )
-			{
-				float flCurrentMass = pRagdollT->list[nNodeIndex].pObject->GetMass();
-				flCurrentMass = MAX(flCurrentMass, flTargetMass);
-				pRagdollT->list[nNodeIndex].pObject->SetMass( flCurrentMass );
-			}
-			nNodeIndex = pRagdollT->list[nNodeIndex].parentIndex;
-		}
-	}
+        // find largest mass bone
+        float flTargetMass = 0;
+        for ( int i = 0; i < pRagdollT->listCount; i++ )
+        {
+            flTargetMass = MAX( flTargetMass, pRagdollT->list[i].pObject->GetMass() );
+        }
 
-	UTIL_ImpactTrace( &tr, 0 );
+        // walk the chain of bones from the pinned bone to the root and set each to the max mass
+        // This helps transmit the impulses required to stabilize the constraint -- it keeps the body from
+        // leaving the constraint because of some high mass bone hanging at the other end of the chain
+        while ( nNodeIndex >= 0 )
+        {
+            if ( pRagdollT->list[nNodeIndex].pConstraint )
+            {
+                float flCurrentMass = pRagdollT->list[nNodeIndex].pObject->GetMass();
+                flCurrentMass = MAX( flCurrentMass, flTargetMass );
+                pRagdollT->list[nNodeIndex].pObject->SetMass( flCurrentMass );
+            }
+            nNodeIndex = pRagdollT->list[nNodeIndex].parentIndex;
+        }
+    }
 
-	CreateCrossbowBoltTF( vecOrigin, vecDirection, iFlags, nColor );
+    UTIL_ImpactTrace( &tr, 0 );
 
-	//Achievement stuff.
-	if ( iHitGroup == HITGROUP_HEAD )
-	{
-		CTFPlayer *pLocalPlayer = C_TFPlayer::GetLocalTFPlayer();
-	
-		if ( pLocalPlayer && pLocalPlayer->entindex() == iShooterIndex )
-		{
-			CTFPlayer *pVictim = ToTFPlayer( UTIL_PlayerByIndex( iVictim ) );
+    CreateCrossbowBoltTF( vecOrigin, vecDirection, iFlags, nColor );
 
-			if ( pVictim && pVictim->IsPlayerClass( TF_CLASS_HEAVYWEAPONS ) )
-			{
-				IGameEvent *event = gameeventmanager->CreateEvent( "player_pinned" );
+    // Achievement stuff.
+    if ( iHitGroup == HITGROUP_HEAD )
+    {
+        CTFPlayer *pLocalPlayer = C_TFPlayer::GetLocalTFPlayer();
 
-				if ( event )
-				{
-					gameeventmanager->FireEventClientSide( event );
-				}
-			}
-		}
-	}
+        if ( pLocalPlayer && pLocalPlayer->entindex() == iShooterIndex )
+        {
+            CTFPlayer *pVictim = ToTFPlayer( UTIL_PlayerByIndex( iVictim ) );
+
+            if ( pVictim && pVictim->IsPlayerClass( TF_CLASS_HEAVYWEAPONS ) )
+            {
+                IGameEvent *event = gameeventmanager->CreateEvent( "player_pinned" );
+
+                if ( event )
+                {
+                    gameeventmanager->FireEventClientSide( event );
+                }
+            }
+        }
+    }
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void StickyBoltCallbackTF( const CEffectData &data )
 {
-	StickRagdollNowTF( 
-		data.m_vOrigin, 
-		data.m_vNormal, 
-		data.m_hEntity, 
-		data.m_nAttachmentIndex, 
-		data.m_nMaterial, 
-		data.m_nHitBox, 
-		data.m_nDamageType, 
-		data.m_nSurfaceProp, 
-		data.m_fFlags, 
-		data.m_nColor
-	);
+    StickRagdollNowTF(
+        data.m_vOrigin,
+        data.m_vNormal,
+        data.m_hEntity,
+        data.m_nAttachmentIndex,
+        data.m_nMaterial,
+        data.m_nHitBox,
+        data.m_nDamageType,
+        data.m_nSurfaceProp,
+        data.m_fFlags,
+        data.m_nColor );
 }
 
 DECLARE_CLIENT_EFFECT( "TFBoltImpact", StickyBoltCallbackTF );

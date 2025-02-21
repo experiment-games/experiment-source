@@ -15,141 +15,130 @@
 #include "bot/behavior/medic/tf_bot_medic_heal.h"
 #include "bot/behavior/engineer/tf_bot_engineer_build.h"
 
-
 extern ConVar tf_bot_path_lookahead_range;
 ConVar tf_bot_cart_push_radius( "tf_bot_cart_push_radius", "60", FCVAR_CHEAT );
 
-
 //---------------------------------------------------------------------------------------------
-ActionResult< CTFBot >	CTFBotPayloadPush::OnStart( CTFBot *me, Action< CTFBot > *priorAction )
+ActionResult< CTFBot > CTFBotPayloadPush::OnStart( CTFBot *me, Action< CTFBot > *priorAction )
 {
-	m_path.SetMinLookAheadDistance( me->GetDesiredPathLookAheadRange() );
-	m_path.Invalidate();
+    m_path.SetMinLookAheadDistance( me->GetDesiredPathLookAheadRange() );
+    m_path.Invalidate();
 
-	m_hideAngle = 180.0f;
+    m_hideAngle = 180.0f;
 
-	return Continue();
+    return Continue();
 }
 
-
 //---------------------------------------------------------------------------------------------
-ActionResult< CTFBot >	CTFBotPayloadPush::Update( CTFBot *me, float interval )
+ActionResult< CTFBot > CTFBotPayloadPush::Update( CTFBot *me, float interval )
 {
-	const CKnownEntity *threat = me->GetVisionInterface()->GetPrimaryKnownThreat();
-	if ( threat && threat->IsVisibleRecently() )
-	{
-		// prepare to fight
-		me->EquipBestWeaponForThreat( threat );
-	}
+    const CKnownEntity *threat = me->GetVisionInterface()->GetPrimaryKnownThreat();
+    if ( threat && threat->IsVisibleRecently() )
+    {
+        // prepare to fight
+        me->EquipBestWeaponForThreat( threat );
+    }
 
-	if ( TFGameRules()->InSetup() )
-	{
-		// wait until the gates open, then path
-		m_path.Invalidate();
-		m_repathTimer.Start( RandomFloat( 1.0f, 2.0f ) );
+    if ( TFGameRules()->InSetup() )
+    {
+        // wait until the gates open, then path
+        m_path.Invalidate();
+        m_repathTimer.Start( RandomFloat( 1.0f, 2.0f ) );
 
-		return Continue();
-	}
+        return Continue();
+    }
 
-	CTeamTrainWatcher *trainWatcher = TFGameRules()->GetPayloadToPush( me->GetTeamNumber() );
-	if ( !trainWatcher )
-	{
-		return Continue();
-	}
+    CTeamTrainWatcher *trainWatcher = TFGameRules()->GetPayloadToPush( me->GetTeamNumber() );
+    if ( !trainWatcher )
+    {
+        return Continue();
+    }
 
-	CBaseEntity *cart = trainWatcher->GetTrainEntity();
-	if ( !cart )
-	{
-		return Continue();
-	}
+    CBaseEntity *cart = trainWatcher->GetTrainEntity();
+    if ( !cart )
+    {
+        return Continue();
+    }
 
+    // move toward the point, periodically repathing to account for changing situation
+    if ( m_repathTimer.IsElapsed() )
+    {
+        VPROF_BUDGET( "CTFBotPayloadPush::Update( repath )", "NextBot" );
 
-	// move toward the point, periodically repathing to account for changing situation
-	if ( m_repathTimer.IsElapsed() )
-	{
-		VPROF_BUDGET( "CTFBotPayloadPush::Update( repath )", "NextBot" );
+        Vector cartForward;
+        cart->GetVectors( &cartForward, NULL, NULL );
 
-		Vector cartForward;
-		cart->GetVectors( &cartForward, NULL, NULL );
+        // default push position is behind cart
+        Vector pushPos = cart->WorldSpaceCenter() - cartForward * tf_bot_cart_push_radius.GetFloat();
 
-		// default push position is behind cart
-		Vector pushPos = cart->WorldSpaceCenter() - cartForward * tf_bot_cart_push_radius.GetFloat();
+        // try to hide from enemies on other side of cart
+        const CKnownEntity *threat = me->GetVisionInterface()->GetPrimaryKnownThreat();
+        if ( threat )
+        {
+            Vector enemyToCart = cart->WorldSpaceCenter() - threat->GetLastKnownPosition();
+            enemyToCart.z = 0.0f;
+            enemyToCart.NormalizeInPlace();
 
-		// try to hide from enemies on other side of cart
-		const CKnownEntity *threat = me->GetVisionInterface()->GetPrimaryKnownThreat();
-		if ( threat )
-		{
-			Vector enemyToCart = cart->WorldSpaceCenter() - threat->GetLastKnownPosition();
-			enemyToCart.z = 0.0f;
-			enemyToCart.NormalizeInPlace();
+            pushPos = cart->WorldSpaceCenter() + tf_bot_cart_push_radius.GetFloat() * enemyToCart;
+        }
 
-			pushPos = cart->WorldSpaceCenter() + tf_bot_cart_push_radius.GetFloat() * enemyToCart;		
-		}
+        CTFBotPathCost cost( me, DEFAULT_ROUTE );
+        m_path.Compute( me, pushPos, cost );
 
-		CTFBotPathCost cost( me, DEFAULT_ROUTE );
-		m_path.Compute( me, pushPos, cost );
+        m_repathTimer.Start( RandomFloat( 0.2f, 0.4f ) );
+    }
 
-		m_repathTimer.Start( RandomFloat( 0.2f, 0.4f ) );
-	}
+    // push the cartTrigger
+    m_path.Update( me );
 
-	// push the cartTrigger
-	m_path.Update( me );
-
-	return Continue();
+    return Continue();
 }
-
 
 //---------------------------------------------------------------------------------------------
 ActionResult< CTFBot > CTFBotPayloadPush::OnResume( CTFBot *me, Action< CTFBot > *interruptingAction )
 {
-	VPROF_BUDGET( "CTFBotPayloadPush::OnResume", "NextBot" );
+    VPROF_BUDGET( "CTFBotPayloadPush::OnResume", "NextBot" );
 
-	m_repathTimer.Invalidate();
+    m_repathTimer.Invalidate();
 
-	return Continue();
+    return Continue();
 }
-
 
 //---------------------------------------------------------------------------------------------
 EventDesiredResult< CTFBot > CTFBotPayloadPush::OnStuck( CTFBot *me )
 {
-	VPROF_BUDGET( "CTFBotPayloadPush::OnStuck", "NextBot" );
+    VPROF_BUDGET( "CTFBotPayloadPush::OnStuck", "NextBot" );
 
-	m_repathTimer.Invalidate();
-	me->GetLocomotionInterface()->ClearStuckStatus();
+    m_repathTimer.Invalidate();
+    me->GetLocomotionInterface()->ClearStuckStatus();
 
-	return TryContinue();
+    return TryContinue();
 }
-
 
 //---------------------------------------------------------------------------------------------
 EventDesiredResult< CTFBot > CTFBotPayloadPush::OnMoveToSuccess( CTFBot *me, const Path *path )
 {
-	return TryContinue();
+    return TryContinue();
 }
-
 
 //---------------------------------------------------------------------------------------------
 EventDesiredResult< CTFBot > CTFBotPayloadPush::OnMoveToFailure( CTFBot *me, const Path *path, MoveToFailureType reason )
 {
-	VPROF_BUDGET( "CTFBotPayloadPush::OnMoveToFailure", "NextBot" );
+    VPROF_BUDGET( "CTFBotPayloadPush::OnMoveToFailure", "NextBot" );
 
-	m_repathTimer.Invalidate();
+    m_repathTimer.Invalidate();
 
-	return TryContinue();
+    return TryContinue();
 }
-
 
 //---------------------------------------------------------------------------------------------
-QueryResultType	CTFBotPayloadPush::ShouldRetreat( const INextBot *bot ) const
+QueryResultType CTFBotPayloadPush::ShouldRetreat( const INextBot *bot ) const
 {
-	return ANSWER_UNDEFINED;
+    return ANSWER_UNDEFINED;
 }
-
 
 //---------------------------------------------------------------------------------------------
 QueryResultType CTFBotPayloadPush::ShouldHurry( const INextBot *bot ) const
 {
-	return ANSWER_UNDEFINED;
+    return ANSWER_UNDEFINED;
 }
-

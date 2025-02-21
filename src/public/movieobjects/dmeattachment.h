@@ -19,23 +19,21 @@
 //-----------------------------------------------------------------------------
 class CDmeDrawSettings;
 
-
 //-----------------------------------------------------------------------------
 // A class representing an attachment point
 //-----------------------------------------------------------------------------
 class CDmeAttachment : public CDmeShape
 {
-	DEFINE_ELEMENT( CDmeAttachment, CDmeShape );
+    DEFINE_ELEMENT( CDmeAttachment, CDmeShape );
 
-public:
-	virtual void Draw( const matrix3x4_t &shapeToWorld, CDmeDrawSettings *pDrawSettings = NULL );
+   public:
+    virtual void Draw( const matrix3x4_t &shapeToWorld, CDmeDrawSettings *pDrawSettings = NULL );
 
-	CDmaVar< bool > m_bIsRigid;	// Does the attachment animate?
-	CDmaVar< bool > m_bIsWorldAligned;	// Is the attachment world-aligned?
+    CDmaVar< bool > m_bIsRigid;         // Does the attachment animate?
+    CDmaVar< bool > m_bIsWorldAligned;  // Is the attachment world-aligned?
 
-private:
-	CMaterialReference m_AttachmentMaterial;
+   private:
+    CMaterialReference m_AttachmentMaterial;
 };
 
-
-#endif // DMEATTACHMENT_H
+#endif  // DMEATTACHMENT_H

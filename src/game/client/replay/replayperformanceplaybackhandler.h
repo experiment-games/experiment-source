@@ -18,4 +18,4 @@ extern IReplayPerformancePlaybackHandler *g_pReplayPerformancePlaybackHandler;
 
 //-----------------------------------------------------------------------------
 
-#endif // REPLAYPERFORMANCEPLAYER_H
+#endif  // REPLAYPERFORMANCEPLAYER_H

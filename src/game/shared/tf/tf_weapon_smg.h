@@ -22,30 +22,36 @@
 //
 class CTFSMG : public CTFWeaponBaseGun
 {
-public:
-
-	DECLARE_CLASS( CTFSMG, CTFWeaponBaseGun );
-	DECLARE_NETWORKCLASS(); 
-	DECLARE_PREDICTABLE();
+   public:
+    DECLARE_CLASS( CTFSMG, CTFWeaponBaseGun );
+    DECLARE_NETWORKCLASS();
+    DECLARE_PREDICTABLE();
 
 // Server specific.
 #ifdef GAME_DLL
-	DECLARE_DATADESC();
+    DECLARE_DATADESC();
 #endif
 
-	CTFSMG() {}
-	~CTFSMG() {}
+    CTFSMG() {}
+    ~CTFSMG() {}
 
-	virtual int		GetWeaponID( void ) const			{ return TF_WEAPON_SMG; }
+    virtual int GetWeaponID( void ) const
+    {
+        return TF_WEAPON_SMG;
+    }
 
-	virtual int		GetDamageType( void ) const;
-	virtual bool	CanFireCriticalShot( bool bIsHeadshot, CBaseEntity *pTarget = NULL ) OVERRIDE;
+    virtual int GetDamageType( void ) const;
+    virtual bool CanFireCriticalShot( bool bIsHeadshot, CBaseEntity *pTarget = NULL ) OVERRIDE;
 
-	bool			CanHeadshot( void ) const { int iMode = 0; CALL_ATTRIB_HOOK_INT( iMode, set_weapon_mode ); return (iMode == 1); };
+    bool CanHeadshot( void ) const
+    {
+        int iMode = 0;
+        CALL_ATTRIB_HOOK_INT( iMode, set_weapon_mode );
+        return ( iMode == 1 );
+    };
 
-private:
-
-	CTFSMG( const CTFSMG & ) {}
+   private:
+    CTFSMG( const CTFSMG & ) {}
 };
 
 //=============================================================================
@@ -54,40 +60,45 @@ private:
 //
 class CTFChargedSMG : public CTFSMG
 {
-public:
-	DECLARE_CLASS( CTFChargedSMG, CTFSMG );
-	DECLARE_NETWORKCLASS();
-	DECLARE_PREDICTABLE();
+   public:
+    DECLARE_CLASS( CTFChargedSMG, CTFSMG );
+    DECLARE_NETWORKCLASS();
+    DECLARE_PREDICTABLE();
 
-	// Server specific.
+    // Server specific.
 #ifdef GAME_DLL
-	DECLARE_DATADESC();
+    DECLARE_DATADESC();
 #endif
 
-	CTFChargedSMG() {}
-	~CTFChargedSMG() {}
+    CTFChargedSMG() {}
+    ~CTFChargedSMG() {}
 
-	virtual int		GetWeaponID( void ) const			{ return TF_WEAPON_CHARGED_SMG; }
+    virtual int GetWeaponID( void ) const
+    {
+        return TF_WEAPON_CHARGED_SMG;
+    }
 
-	const char*		GetEffectLabelText( void ) { return "#TF_SmgCharge"; }
-	float			GetProgress( void );
-	bool			ShouldFlashChargeBar();
-	void			SecondaryAttack() OVERRIDE;
-	bool			CanPerformSecondaryAttack() const OVERRIDE;
-	void			WeaponReset() OVERRIDE;
+    const char *GetEffectLabelText( void )
+    {
+        return "#TF_SmgCharge";
+    }
+    float GetProgress( void );
+    bool ShouldFlashChargeBar();
+    void SecondaryAttack() OVERRIDE;
+    bool CanPerformSecondaryAttack() const OVERRIDE;
+    void WeaponReset() OVERRIDE;
 
 #ifdef GAME_DLL
-	void	ApplyOnHitAttributes( CBaseEntity *pVictimBaseEntity, CTFPlayer *pAttacker, const CTakeDamageInfo &info ) OVERRIDE;
+    void ApplyOnHitAttributes( CBaseEntity *pVictimBaseEntity, CTFPlayer *pAttacker, const CTakeDamageInfo &info ) OVERRIDE;
 #endif
 
-protected:
-	CNetworkVar( float, m_flMinicritCharge );
+   protected:
+    CNetworkVar( float, m_flMinicritCharge );
 
-	float m_flMinicritStartTime;
+    float m_flMinicritStartTime;
 
-private:
-	CTFChargedSMG( const CTFChargedSMG & ) {}
+   private:
+    CTFChargedSMG( const CTFChargedSMG & ) {}
 };
 
-
-#endif // TF_WEAPON_SMG_H
+#endif  // TF_WEAPON_SMG_H

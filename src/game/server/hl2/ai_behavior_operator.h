@@ -11,7 +11,6 @@
 // $NoKeywords: $
 //=============================================================================//
 
-
 #ifndef AI_BEHAVIOR_OPERATOR_H
 #define AI_BEHAVIOR_OPERATOR_H
 #ifdef _WIN32
@@ -21,124 +20,132 @@
 #include "ai_behavior.h"
 #include "ai_goalentity.h"
 
-enum 
+enum
 {
-	OPERATOR_STATE_NOT_READY = 0,
-	OPERATOR_STATE_READY,
-	OPERATOR_STATE_FINISHED,
+    OPERATOR_STATE_NOT_READY = 0,
+    OPERATOR_STATE_READY,
+    OPERATOR_STATE_FINISHED,
 };
 
 enum
 {
-	OPERATOR_MOVETO_RESERVED = 0,
-	OPERATOR_MOVETO_WALK,
-	OPERATOR_MOVETO_RUN,
+    OPERATOR_MOVETO_RESERVED = 0,
+    OPERATOR_MOVETO_WALK,
+    OPERATOR_MOVETO_RUN,
 };
 
 //=========================================================
 //=========================================================
 class CAI_OperatorGoal : public CAI_GoalEntity
 {
-	DECLARE_CLASS( CAI_OperatorGoal, CAI_GoalEntity );
-public:
-	CAI_OperatorGoal()
-	{
-	}
+    DECLARE_CLASS( CAI_OperatorGoal, CAI_GoalEntity );
 
-	void EnableGoal( CAI_BaseNPC *pAI );
+   public:
+    CAI_OperatorGoal()
+    {
+    }
 
-	int GetState() { return m_iState; }
-	int GetMoveTo() { return m_iMoveTo; }
+    void EnableGoal( CAI_BaseNPC *pAI );
 
-	// Inputs
-	virtual void InputActivate( inputdata_t &inputdata );
-	virtual void InputDeactivate( inputdata_t &inputdata );
+    int GetState()
+    {
+        return m_iState;
+    }
+    int GetMoveTo()
+    {
+        return m_iMoveTo;
+    }
 
-	void	InputSetStateReady( inputdata_t &inputdata );
-	void	InputSetStateFinished( inputdata_t &inputdata );
+    // Inputs
+    virtual void InputActivate( inputdata_t &inputdata );
+    virtual void InputDeactivate( inputdata_t &inputdata );
 
-	COutputEvent	m_OnBeginApproach;
-	COutputEvent	m_OnMakeReady;
-	COutputEvent	m_OnBeginOperating;
-	COutputEvent	m_OnFinished;
+    void InputSetStateReady( inputdata_t &inputdata );
+    void InputSetStateFinished( inputdata_t &inputdata );
 
-	DECLARE_DATADESC();
+    COutputEvent m_OnBeginApproach;
+    COutputEvent m_OnMakeReady;
+    COutputEvent m_OnBeginOperating;
+    COutputEvent m_OnFinished;
 
-protected:
-	int			m_iState;
-	int			m_iMoveTo;
-	string_t	m_iszContextTarget;
+    DECLARE_DATADESC();
+
+   protected:
+    int m_iState;
+    int m_iMoveTo;
+    string_t m_iszContextTarget;
 };
 
 //=========================================================
 //=========================================================
 class CAI_OperatorBehavior : public CAI_SimpleBehavior
 {
-	DECLARE_CLASS( CAI_OperatorBehavior, CAI_SimpleBehavior );
+    DECLARE_CLASS( CAI_OperatorBehavior, CAI_SimpleBehavior );
 
-public:
-	CAI_OperatorBehavior();
+   public:
+    CAI_OperatorBehavior();
 
-	virtual const char *GetName() {	return "Operator"; }
+    virtual const char *GetName()
+    {
+        return "Operator";
+    }
 
-	virtual void SetParameters( CAI_OperatorGoal *pGoal, CBaseEntity *pPositionEnt, CBaseEntity *pContextTarget );
+    virtual void SetParameters( CAI_OperatorGoal *pGoal, CBaseEntity *pPositionEnt, CBaseEntity *pContextTarget );
 
-	virtual bool 	CanSelectSchedule();
-	//virtual void	BeginScheduleSelection();
-	//virtual void	EndScheduleSelection();
+    virtual bool CanSelectSchedule();
+    // virtual void	BeginScheduleSelection();
+    // virtual void	EndScheduleSelection();
 
-	bool CanSeePositionEntity();
-	bool IsAtPositionEntity();
+    bool CanSeePositionEntity();
+    bool IsAtPositionEntity();
 
-	void GatherConditionsNotActive();
-	void GatherConditions( void );
+    void GatherConditionsNotActive();
+    void GatherConditions( void );
 
-	void StartTask( const Task_t *pTask );
-	void RunTask( const Task_t *pTask );
+    void StartTask( const Task_t *pTask );
+    void RunTask( const Task_t *pTask );
 
-	CAI_OperatorGoal *GetGoalEntity();
+    CAI_OperatorGoal *GetGoalEntity();
 
-	bool IsGoalReady();
+    bool IsGoalReady();
 
-	//void BuildScheduleTestBits();
-	//int TranslateSchedule( int scheduleType );
-	//void OnStartSchedule( int scheduleType );
+    // void BuildScheduleTestBits();
+    // int TranslateSchedule( int scheduleType );
+    // void OnStartSchedule( int scheduleType );
 
-	//void InitializeBehavior();
+    // void InitializeBehavior();
 
-	enum
-	{
-		SCHED_OPERATOR_APPROACH_POSITION = BaseClass::NEXT_SCHEDULE,
-		SCHED_OPERATOR_MAKE_READY,
-		SCHED_OPERATOR_OPERATE,
-		SCHED_OPERATOR_WAIT_FOR_HOLSTER,
-		NEXT_SCHEDULE,
+    enum
+    {
+        SCHED_OPERATOR_APPROACH_POSITION = BaseClass::NEXT_SCHEDULE,
+        SCHED_OPERATOR_MAKE_READY,
+        SCHED_OPERATOR_OPERATE,
+        SCHED_OPERATOR_WAIT_FOR_HOLSTER,
+        NEXT_SCHEDULE,
 
-		TASK_OPERATOR_GET_PATH_TO_POSITION = BaseClass::NEXT_TASK,
-		TASK_OPERATOR_START_PATH,
-		TASK_OPERATOR_OPERATE,
-		NEXT_TASK,
+        TASK_OPERATOR_GET_PATH_TO_POSITION = BaseClass::NEXT_TASK,
+        TASK_OPERATOR_START_PATH,
+        TASK_OPERATOR_OPERATE,
+        NEXT_TASK,
 
-		COND_OPERATOR_LOST_SIGHT_OF_POSITION = BaseClass::NEXT_CONDITION,
-		NEXT_CONDITION,
-	};
+        COND_OPERATOR_LOST_SIGHT_OF_POSITION = BaseClass::NEXT_CONDITION,
+        NEXT_CONDITION,
+    };
 
-	DEFINE_CUSTOM_SCHEDULE_PROVIDER;
+    DEFINE_CUSTOM_SCHEDULE_PROVIDER;
 
-public:
-	EHANDLE	m_hGoalEntity;
-	EHANDLE m_hPositionEnt;
-	EHANDLE m_hContextTarget;
-	CRandStopwatch  m_WatchSeeEntity;
+   public:
+    EHANDLE m_hGoalEntity;
+    EHANDLE m_hPositionEnt;
+    EHANDLE m_hContextTarget;
+    CRandStopwatch m_WatchSeeEntity;
 
-private:
-	virtual int		SelectSchedule();
+   private:
+    virtual int SelectSchedule();
 
-	//---------------------------------
+    //---------------------------------
 
-	DECLARE_DATADESC();
+    DECLARE_DATADESC();
 };
 
-#endif // AI_BEHAVIOR_OPERATOR_H
-
-
+#endif  // AI_BEHAVIOR_OPERATOR_H

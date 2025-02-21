@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -10,7 +10,6 @@
 #ifdef _WIN32
 #pragma once
 #endif
-
 
 // The VMPI stats module reports a bunch of statistics to a MySQL server, and the
 // stats can be used to trace and graph a compile session.
@@ -34,20 +33,20 @@ void VMPI_Stats_AddEventText( const char *pText );
 
 class CDBInfo
 {
-public:
-	char			m_HostName[128];
-	char			m_DBName[128];
-	char			m_UserName[128];
+   public:
+    char m_HostName[128];
+    char m_DBName[128];
+    char m_UserName[128];
 };
 
-// If you're the master, this loads pDBInfoFilename, sends that info to the workers, and 
+// If you're the master, this loads pDBInfoFilename, sends that info to the workers, and
 // connects to the database.
 //
 // If you're a worker, this waits for the DB info, then connects to the database.
-void StatsDB_InitStatsDatabase( 
-	int argc, 
-	char **argv, 
-	const char *pDBInfoFilename );
+void StatsDB_InitStatsDatabase(
+    int argc,
+    char **argv,
+    const char *pDBInfoFilename );
 
 // The database gives back a unique ID for the job.
 unsigned long StatsDB_GetUniqueJobID();
@@ -55,5 +54,4 @@ unsigned long StatsDB_GetUniqueJobID();
 // Get the worker ID (used for the JobWorkerID fields in the database).
 unsigned long VMPI_Stats_GetJobWorkerID();
 
-
-#endif // MPI_STATS_H
+#endif  // MPI_STATS_H

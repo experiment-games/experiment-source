@@ -17,8 +17,8 @@
 // CTF Armor defines.
 //
 
-#define TF_ARMOR_PICKUP_SOUND	"Armor.Touch"
-#define TF_ARMOR_CAPACITY		200
+#define TF_ARMOR_PICKUP_SOUND "Armor.Touch"
+#define TF_ARMOR_CAPACITY 200
 
 LINK_ENTITY_TO_CLASS( item_armor, CArmor );
 
@@ -32,7 +32,7 @@ LINK_ENTITY_TO_CLASS( item_armor, CArmor );
 //-----------------------------------------------------------------------------
 void CArmor::Spawn( void )
 {
-	BaseClass::Spawn();
+    BaseClass::Spawn();
 }
 
 //-----------------------------------------------------------------------------
@@ -40,8 +40,8 @@ void CArmor::Spawn( void )
 //-----------------------------------------------------------------------------
 void CArmor::Precache( void )
 {
-	PrecacheScriptSound( TF_ARMOR_PICKUP_SOUND );
-	BaseClass::Precache();
+    PrecacheScriptSound( TF_ARMOR_PICKUP_SOUND );
+    BaseClass::Precache();
 }
 
 //-----------------------------------------------------------------------------
@@ -49,42 +49,42 @@ void CArmor::Precache( void )
 //-----------------------------------------------------------------------------
 bool CArmor::MyTouch( CBasePlayer *pPlayer )
 {
-	bool bSuccess = false;
+    bool bSuccess = false;
 
-	if ( ValidTouch( pPlayer ) )
-	{
-		CTFPlayer *pCTFPlayer = ToTFPlayer(pPlayer);
+    if ( ValidTouch( pPlayer ) )
+    {
+        CTFPlayer *pCTFPlayer = ToTFPlayer( pPlayer );
 
-		if ( pCTFPlayer )
-		{
-			int iMaxArmor = pCTFPlayer->GetPlayerClass()->GetMaxArmor();
-			int iCurrentArmor = pCTFPlayer->ArmorValue();
+        if ( pCTFPlayer )
+        {
+            int iMaxArmor = pCTFPlayer->GetPlayerClass()->GetMaxArmor();
+            int iCurrentArmor = pCTFPlayer->ArmorValue();
 
-			if ( iCurrentArmor < iMaxArmor )
-			{
-				if ( iCurrentArmor + TF_ARMOR_CAPACITY >= iMaxArmor )
-				{
-					pCTFPlayer->SetArmorValue( iMaxArmor );
-				}
-				else
-				{
-					pCTFPlayer->SetArmorValue( iCurrentArmor + TF_ARMOR_CAPACITY );
-				}
+            if ( iCurrentArmor < iMaxArmor )
+            {
+                if ( iCurrentArmor + TF_ARMOR_CAPACITY >= iMaxArmor )
+                {
+                    pCTFPlayer->SetArmorValue( iMaxArmor );
+                }
+                else
+                {
+                    pCTFPlayer->SetArmorValue( iCurrentArmor + TF_ARMOR_CAPACITY );
+                }
 
-				CSingleUserRecipientFilter user( pPlayer );
-				user.MakeReliable();
+                CSingleUserRecipientFilter user( pPlayer );
+                user.MakeReliable();
 
-				UserMessageBegin( user, "ItemPickup" );
-				WRITE_STRING( GetClassname() );
-				MessageEnd();
+                UserMessageBegin( user, "ItemPickup" );
+                WRITE_STRING( GetClassname() );
+                MessageEnd();
 
-				CPASAttenuationFilter filter( this, TF_ARMOR_PICKUP_SOUND );
-				EmitSound( filter, entindex(), TF_ARMOR_PICKUP_SOUND );
+                CPASAttenuationFilter filter( this, TF_ARMOR_PICKUP_SOUND );
+                EmitSound( filter, entindex(), TF_ARMOR_PICKUP_SOUND );
 
-				bSuccess = true;
-			}
-		}
-	}
+                bSuccess = true;
+            }
+        }
+    }
 
-	return bSuccess;
+    return bSuccess;
 }

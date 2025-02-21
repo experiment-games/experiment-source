@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -12,11 +12,9 @@
 #pragma once
 #endif
 
-
 class CCommand;
 class CUserCmd;
 class CBasePlayer;
-
 
 void ClientActive( edict_t *pEdict, bool bLoadGame );
 void ClientPutInServer( edict_t *pEdict, const char *playername );
@@ -27,12 +25,13 @@ void ClientGamePrecache( void );
 const char *GetGameDescription( void );
 void Host_Say( edict_t *pEdict, bool teamonly );
 
-enum eAllowPointServerCommand {
-	eAllowNever,
-	eAllowOfficial,
-	eAllowAlways
+enum eAllowPointServerCommand
+{
+    eAllowNever,
+    eAllowOfficial,
+    eAllowAlways
 };
 
 extern eAllowPointServerCommand sAllowPointServerCommand;
 
-#endif		// CLIENT_H
+#endif  // CLIENT_H

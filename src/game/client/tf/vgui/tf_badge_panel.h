@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
 #ifndef TF_BADGE_PANEL_H
@@ -17,41 +17,41 @@ class IProgressionDesc;
 
 class CTFBadgePanel : public vgui::EditablePanel
 {
-	DECLARE_CLASS_SIMPLE( CTFBadgePanel, vgui::EditablePanel );
-public:
-	CTFBadgePanel( vgui::Panel *pParent, const char *pName );
+    DECLARE_CLASS_SIMPLE( CTFBadgePanel, vgui::EditablePanel );
 
-	virtual void ApplySchemeSettings( vgui::IScheme *pScheme ) OVERRIDE;
+   public:
+    CTFBadgePanel( vgui::Panel *pParent, const char *pName );
 
-	void SetupDummyBadge( uint32 nLevel, bool bInPlacement );
+    virtual void ApplySchemeSettings( vgui::IScheme *pScheme ) OVERRIDE;
 
-	void SetupBadge( const IMatchGroupDescription* pMatchDesc, const LevelInfo_t& levelInfo, const CSteamID& steamID, bool bInPlacement );
-	void SetupBadge( const IMatchGroupDescription* pMatchDesc, const LevelInfo_t& levelInfo, const CSteamID& steamID );
-	void SetupBadge( const IMatchGroupDescription* pMatchDesc, const CSteamID& steamID );
+    void SetupDummyBadge( uint32 nLevel, bool bInPlacement );
 
-private:
-	class CModelImagePanel *m_pBadgePanel;
-	uint32 m_nPrevLevel;
-	bool m_bPreviouslyInPlacement = false;
+    void SetupBadge( const IMatchGroupDescription *pMatchDesc, const LevelInfo_t &levelInfo, const CSteamID &steamID, bool bInPlacement );
+    void SetupBadge( const IMatchGroupDescription *pMatchDesc, const LevelInfo_t &levelInfo, const CSteamID &steamID );
+    void SetupBadge( const IMatchGroupDescription *pMatchDesc, const CSteamID &steamID );
+
+   private:
+    class CModelImagePanel *m_pBadgePanel;
+    uint32 m_nPrevLevel;
+    bool m_bPreviouslyInPlacement = false;
 };
 
-class CTFLocalPlayerBadgePanel : public CTFBadgePanel
-							   , public CLocalSteamSharedObjectListener
+class CTFLocalPlayerBadgePanel : public CTFBadgePanel, public CLocalSteamSharedObjectListener
 {
-public:
-	DECLARE_CLASS_SIMPLE( CTFLocalPlayerBadgePanel, CTFBadgePanel );
-	CTFLocalPlayerBadgePanel( vgui::Panel *pParent, const char *pName );
+   public:
+    DECLARE_CLASS_SIMPLE( CTFLocalPlayerBadgePanel, CTFBadgePanel );
+    CTFLocalPlayerBadgePanel( vgui::Panel *pParent, const char *pName );
 
-	virtual void ApplySettings( KeyValues *inResourceData ) OVERRIDE;
+    virtual void ApplySettings( KeyValues *inResourceData ) OVERRIDE;
 
-	virtual void SOCreated( const CSteamID & steamIDOwner, const GCSDK::CSharedObject *pObject, GCSDK::ESOCacheEvent eEvent ) OVERRIDE;
-	virtual void SOUpdated( const CSteamID & steamIDOwner, const GCSDK::CSharedObject *pObject, GCSDK::ESOCacheEvent eEvent ) OVERRIDE;
+    virtual void SOCreated( const CSteamID &steamIDOwner, const GCSDK::CSharedObject *pObject, GCSDK::ESOCacheEvent eEvent ) OVERRIDE;
+    virtual void SOUpdated( const CSteamID &steamIDOwner, const GCSDK::CSharedObject *pObject, GCSDK::ESOCacheEvent eEvent ) OVERRIDE;
 
-	void SetMatchGroup( ETFMatchGroup eMatchGroup );
+    void SetMatchGroup( ETFMatchGroup eMatchGroup );
 
-private:
-	void UpdateBadge();
-	ETFMatchGroup m_eMatchGroup = k_eTFMatchGroup_Invalid;
+   private:
+    void UpdateBadge();
+    ETFMatchGroup m_eMatchGroup = k_eTFMatchGroup_Invalid;
 };
 
-#endif // TF_BADGE_PANEL_H
+#endif  // TF_BADGE_PANEL_H

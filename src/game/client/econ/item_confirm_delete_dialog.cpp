@@ -4,7 +4,6 @@
 //
 //=============================================================================//
 
-
 #include "cbase.h"
 #include "item_confirm_delete_dialog.h"
 #include <vgui/ILocalize.h>
@@ -13,17 +12,18 @@
 #include <tier0/memdbgon.h>
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-CConfirmDeleteItemDialog::CConfirmDeleteItemDialog( vgui::Panel *parent, bool bMultiItem ) : BaseClass(parent)
+CConfirmDeleteItemDialog::CConfirmDeleteItemDialog( vgui::Panel *parent, bool bMultiItem )
+    : BaseClass( parent )
 {
-	m_bMultiItem = bMultiItem;
+    m_bMultiItem = bMultiItem;
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 const wchar_t *CConfirmDeleteItemDialog::GetText()
 {
-	return m_bMultiItem ? g_pVGuiLocalize->Find("MultiDeleteItemConfirmText") : g_pVGuiLocalize->Find("DeleteItemConfirmText");
+    return m_bMultiItem ? g_pVGuiLocalize->Find( "MultiDeleteItemConfirmText" ) : g_pVGuiLocalize->Find( "DeleteItemConfirmText" );
 }

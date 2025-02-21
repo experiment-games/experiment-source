@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================
@@ -31,80 +31,81 @@
 using namespace vgui;
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 class CHudTrainingInfoMsg : public CHudElement, public EditablePanel
 {
-	DECLARE_CLASS_SIMPLE( CHudTrainingInfoMsg, EditablePanel );
+    DECLARE_CLASS_SIMPLE( CHudTrainingInfoMsg, EditablePanel );
 
-public:
-	CHudTrainingInfoMsg( const char *pElementName );
+   public:
+    CHudTrainingInfoMsg( const char *pElementName );
 
-	virtual void	Init( void );
-	virtual void	Reset( void );
-	virtual void	ApplySchemeSettings( IScheme *scheme );
-	virtual bool	ShouldDraw( void );
+    virtual void Init( void );
+    virtual void Reset( void );
+    virtual void ApplySchemeSettings( IScheme *scheme );
+    virtual bool ShouldDraw( void );
 
-	void			MsgFunc_TrainingInfoMsg( bf_read &msg );
-	void			LocalizeAndDisplay( const char *szRawString );
+    void MsgFunc_TrainingInfoMsg( bf_read &msg );
+    void LocalizeAndDisplay( const char *szRawString );
 
-private:
-	Label			*m_pGoalLabel;
-	//Color			m_cRegularColor;
+   private:
+    Label *m_pGoalLabel;
+    // Color			m_cRegularColor;
 };
 
 DECLARE_HUDELEMENT( CHudTrainingInfoMsg );
 DECLARE_HUD_MESSAGE( CHudTrainingInfoMsg, TrainingInfoMsg );
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-CHudTrainingInfoMsg::CHudTrainingInfoMsg( const char *pElementName ) : CHudElement( pElementName ), BaseClass( NULL, "HudTrainingInfoMsg" )
+CHudTrainingInfoMsg::CHudTrainingInfoMsg( const char *pElementName )
+    : CHudElement( pElementName ), BaseClass( NULL, "HudTrainingInfoMsg" )
 {
-	Panel *pParent = g_pClientMode->GetViewport();
-	SetParent( pParent );
+    Panel *pParent = g_pClientMode->GetViewport();
+    SetParent( pParent );
 
-	SetHiddenBits( HIDEHUD_MISCSTATUS );
+    SetHiddenBits( HIDEHUD_MISCSTATUS );
 
-	RegisterForRenderGroup( "commentary" );
-	SetVisible( false );
+    RegisterForRenderGroup( "commentary" );
+    SetVisible( false );
 }
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CHudTrainingInfoMsg::Reset()
 {
-	SetVisible( false );
+    SetVisible( false );
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CHudTrainingInfoMsg::Init()
 {
-	HOOK_HUD_MESSAGE( CHudTrainingInfoMsg, TrainingInfoMsg );
+    HOOK_HUD_MESSAGE( CHudTrainingInfoMsg, TrainingInfoMsg );
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CHudTrainingInfoMsg::ApplySchemeSettings( IScheme *pScheme )
 {
-	// load control settings...
-	LoadControlSettings( "resource/UI/HudTrainingInfoMsg.res" );
+    // load control settings...
+    LoadControlSettings( "resource/UI/HudTrainingInfoMsg.res" );
 
-	BaseClass::ApplySchemeSettings( pScheme );
+    BaseClass::ApplySchemeSettings( pScheme );
 
-	m_pGoalLabel = dynamic_cast<Label *>( FindChildByName("GoalLabel") );
-	//m_cRegularColor = pScheme->GetColor( "TanLight", Color( 0, 0, 0 ) );
+    m_pGoalLabel = dynamic_cast< Label * >( FindChildByName( "GoalLabel" ) );
+    // m_cRegularColor = pScheme->GetColor( "TanLight", Color( 0, 0, 0 ) );
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CHudTrainingInfoMsg::ShouldDraw( void )
 {
-	return IsVisible();
+    return IsVisible();
 }
 
 //-----------------------------------------------------------------------------
@@ -112,32 +113,29 @@ bool CHudTrainingInfoMsg::ShouldDraw( void )
 //-----------------------------------------------------------------------------
 void CHudTrainingInfoMsg::MsgFunc_TrainingInfoMsg( bf_read &msg )
 {
-	// Read the string(s)
-	char szString[255];
-	msg.ReadString( szString, sizeof(szString) );
+    // Read the string(s)
+    char szString[255];
+    msg.ReadString( szString, sizeof( szString ) );
 
-	if ( !szString[0] )
-	{
-		SetVisible( false );
-		return;
-	}
+    if ( !szString[0] )
+    {
+        SetVisible( false );
+        return;
+    }
 
+    // Localize and display the string.
+    wchar_t outputText[MAX_TRAINING_MSG_LENGTH];
+    CTFHudTraining::FormatTrainingText( szString, outputText );
 
-	//Localize and display the string.
-	wchar_t outputText[MAX_TRAINING_MSG_LENGTH];
-	CTFHudTraining::FormatTrainingText(szString , outputText);
+    SetVisible( true );
+    m_pGoalLabel->SetText( outputText );
 
-	SetVisible( true );
-	m_pGoalLabel->SetText( outputText );
+    // g_pClientMode->GetViewportAnimationController()->StartAnimationSequence( "HintMessageShow" );
+    // g_pClientMode->GetViewportAnimationController()->StartAnimationSequence( "HintMessageHide" );
 
-	//g_pClientMode->GetViewportAnimationController()->StartAnimationSequence( "HintMessageShow" ); 
-	//g_pClientMode->GetViewportAnimationController()->StartAnimationSequence( "HintMessageHide" ); 
-
-	C_BasePlayer *pLocalPlayer = C_BasePlayer::GetLocalPlayer();
-	if ( pLocalPlayer )
-	{
-		pLocalPlayer->EmitSound( "Hud.Hint" );
-	}
-
-
+    C_BasePlayer *pLocalPlayer = C_BasePlayer::GetLocalPlayer();
+    if ( pLocalPlayer )
+    {
+        pLocalPlayer->EmitSound( "Hud.Hint" );
+    }
 }

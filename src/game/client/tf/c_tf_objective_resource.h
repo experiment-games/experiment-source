@@ -19,69 +19,106 @@
 
 class C_TFObjectiveResource : public C_BaseTeamObjectiveResource
 {
-	DECLARE_CLASS( C_TFObjectiveResource, C_BaseTeamObjectiveResource );
-public:
-	DECLARE_CLIENTCLASS();
+    DECLARE_CLASS( C_TFObjectiveResource, C_BaseTeamObjectiveResource );
 
-					C_TFObjectiveResource();
-	virtual			~C_TFObjectiveResource();
+   public:
+    DECLARE_CLIENTCLASS();
 
-	const char		*GetGameSpecificCPCappingSwipe( int index, int iCappingTeam );
-	const char		*GetGameSpecificCPBarFG( int index, int iOwningTeam );
-	const char		*GetGameSpecificCPBarBG( int index, int iCappingTeam );
-	void			SetCappingTeam( int index, int team );
-	
-	int				GetMannVsMachineMaxWaveCount( void ) { return m_nMannVsMachineMaxWaveCount; }
-	int				GetMannVsMachineWaveCount( void ) { return m_nMannVsMachineWaveCount; }
-	int				GetMannVsMachineWaveEnemyCount( void ) { return m_nMannVsMachineWaveEnemyCount; }
-	int				GetMvMInWorldMoney( void ) { return m_nMvMWorldMoney; }
+    C_TFObjectiveResource();
+    virtual ~C_TFObjectiveResource();
 
-	float			GetMannVsMachineNextWaveTime( void ) { return m_flMannVsMachineNextWaveTime; }
-	bool			GetMannVsMachineIsBetweenWaves( void ) { return m_bMannVsMachineBetweenWaves; }
+    const char *GetGameSpecificCPCappingSwipe( int index, int iCappingTeam );
+    const char *GetGameSpecificCPBarFG( int index, int iOwningTeam );
+    const char *GetGameSpecificCPBarBG( int index, int iCappingTeam );
+    void SetCappingTeam( int index, int team );
 
-	int				GetMannVsMachineWaveClassCount( int nIndex );
-	const char		*GetMannVsMachineWaveClassName( int nIndex );
-	unsigned int	GetMannVsMachineWaveClassFlags( int nIndex );
-	bool			GetMannVsMachineWaveClassActive( int nIndex );
+    int GetMannVsMachineMaxWaveCount( void )
+    {
+        return m_nMannVsMachineMaxWaveCount;
+    }
+    int GetMannVsMachineWaveCount( void )
+    {
+        return m_nMannVsMachineWaveCount;
+    }
+    int GetMannVsMachineWaveEnemyCount( void )
+    {
+        return m_nMannVsMachineWaveEnemyCount;
+    }
+    int GetMvMInWorldMoney( void )
+    {
+        return m_nMvMWorldMoney;
+    }
 
-	int				GetFlagCarrierUpgradeLevel( void ) { return m_nFlagCarrierUpgradeLevel; }
-	float			GetBaseMvMBombUpgradeTime( void ) { return m_flMvMBaseBombUpgradeTime; }
-	float			GetNextMvMBombUpgradeTime( void ) { return m_flMvMNextBombUpgradeTime; }
+    float GetMannVsMachineNextWaveTime( void )
+    {
+        return m_flMannVsMachineNextWaveTime;
+    }
+    bool GetMannVsMachineIsBetweenWaves( void )
+    {
+        return m_bMannVsMachineBetweenWaves;
+    }
 
-	int				GetMvMChallengeIndex ( void ) { return m_iChallengeIndex; }	
-	char *			GetMvMPopFileName ( void ) { return m_iszMvMPopfileName; }	
-	int				GetMvMEventPopfileType( void ) { return m_nMvMEventPopfileType; }
+    int GetMannVsMachineWaveClassCount( int nIndex );
+    const char *GetMannVsMachineWaveClassName( int nIndex );
+    unsigned int GetMannVsMachineWaveClassFlags( int nIndex );
+    bool GetMannVsMachineWaveClassActive( int nIndex );
 
-private:
-	int		m_nMannVsMachineMaxWaveCount;
-	int		m_nMannVsMachineWaveCount;
-	int		m_nMannVsMachineWaveEnemyCount;
-	
-	int		m_nMvMWorldMoney;
+    int GetFlagCarrierUpgradeLevel( void )
+    {
+        return m_nFlagCarrierUpgradeLevel;
+    }
+    float GetBaseMvMBombUpgradeTime( void )
+    {
+        return m_flMvMBaseBombUpgradeTime;
+    }
+    float GetNextMvMBombUpgradeTime( void )
+    {
+        return m_flMvMNextBombUpgradeTime;
+    }
 
-	float	m_flMannVsMachineNextWaveTime;
-	bool	m_bMannVsMachineBetweenWaves;
-	
-	int		m_nFlagCarrierUpgradeLevel;
-	float	m_flMvMBaseBombUpgradeTime;
-	float	m_flMvMNextBombUpgradeTime;
-	int		m_nMvMEventPopfileType;
+    int GetMvMChallengeIndex( void )
+    {
+        return m_iChallengeIndex;
+    }
+    char *GetMvMPopFileName( void )
+    {
+        return m_iszMvMPopfileName;
+    }
+    int GetMvMEventPopfileType( void )
+    {
+        return m_nMvMEventPopfileType;
+    }
 
-	int			m_nMannVsMachineWaveClassCounts[ MVM_CLASS_TYPES_PER_WAVE_MAX ];
-	int			m_nMannVsMachineWaveClassCounts2[ MVM_CLASS_TYPES_PER_WAVE_MAX ];
-	char		m_iszMannVsMachineWaveClassNames[ MVM_CLASS_TYPES_PER_WAVE_MAX ][ 64 ];
-	char		m_iszMannVsMachineWaveClassNames2[ MVM_CLASS_TYPES_PER_WAVE_MAX ][ 64 ];
-	int			m_iChallengeIndex;
-	char		m_iszMvMPopfileName[ MAX_PATH ];
-	unsigned int m_nMannVsMachineWaveClassFlags[ MVM_CLASS_TYPES_PER_WAVE_MAX ];
-	unsigned int m_nMannVsMachineWaveClassFlags2[ MVM_CLASS_TYPES_PER_WAVE_MAX ];
-	bool		m_bMannVsMachineWaveClassActive[ MVM_CLASS_TYPES_PER_WAVE_MAX ];
-	bool		m_bMannVsMachineWaveClassActive2[ MVM_CLASS_TYPES_PER_WAVE_MAX ];
+   private:
+    int m_nMannVsMachineMaxWaveCount;
+    int m_nMannVsMachineWaveCount;
+    int m_nMannVsMachineWaveEnemyCount;
+
+    int m_nMvMWorldMoney;
+
+    float m_flMannVsMachineNextWaveTime;
+    bool m_bMannVsMachineBetweenWaves;
+
+    int m_nFlagCarrierUpgradeLevel;
+    float m_flMvMBaseBombUpgradeTime;
+    float m_flMvMNextBombUpgradeTime;
+    int m_nMvMEventPopfileType;
+
+    int m_nMannVsMachineWaveClassCounts[MVM_CLASS_TYPES_PER_WAVE_MAX];
+    int m_nMannVsMachineWaveClassCounts2[MVM_CLASS_TYPES_PER_WAVE_MAX];
+    char m_iszMannVsMachineWaveClassNames[MVM_CLASS_TYPES_PER_WAVE_MAX][64];
+    char m_iszMannVsMachineWaveClassNames2[MVM_CLASS_TYPES_PER_WAVE_MAX][64];
+    int m_iChallengeIndex;
+    char m_iszMvMPopfileName[MAX_PATH];
+    unsigned int m_nMannVsMachineWaveClassFlags[MVM_CLASS_TYPES_PER_WAVE_MAX];
+    unsigned int m_nMannVsMachineWaveClassFlags2[MVM_CLASS_TYPES_PER_WAVE_MAX];
+    bool m_bMannVsMachineWaveClassActive[MVM_CLASS_TYPES_PER_WAVE_MAX];
+    bool m_bMannVsMachineWaveClassActive2[MVM_CLASS_TYPES_PER_WAVE_MAX];
 };
 
 inline C_TFObjectiveResource *TFObjectiveResource()
 {
-	return static_cast<C_TFObjectiveResource*>(g_pObjectiveResource);
+    return static_cast< C_TFObjectiveResource * >( g_pObjectiveResource );
 }
 
-#endif // C_TF_OBJECTIVE_RESOURCE_H
+#endif  // C_TF_OBJECTIVE_RESOURCE_H

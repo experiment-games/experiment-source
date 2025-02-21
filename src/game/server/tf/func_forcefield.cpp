@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
 
@@ -25,20 +25,20 @@ IMPLEMENT_SERVERCLASS_ST( CFuncForceField, DT_FuncForceField )
 END_SEND_TABLE()
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CFuncForceField::Spawn( void )
 {
-	BaseClass::Spawn();
-	SetActive( IsOn() );
+    BaseClass::Spawn();
+    SetActive( IsOn() );
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 int CFuncForceField::UpdateTransmitState()
 {
-	return SetTransmitState( FL_EDICT_ALWAYS );
+    return SetTransmitState( FL_EDICT_ALWAYS );
 }
 
 //-----------------------------------------------------------------------------
@@ -46,106 +46,105 @@ int CFuncForceField::UpdateTransmitState()
 //-----------------------------------------------------------------------------
 int CFuncForceField::ShouldTransmit( const CCheckTransmitInfo *pInfo )
 {
-	return FL_EDICT_ALWAYS;
+    return FL_EDICT_ALWAYS;
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CFuncForceField::TurnOff( void )
 {
-	BaseClass::TurnOff();
-	SetActive( false );
+    BaseClass::TurnOff();
+    SetActive( false );
 }
 
-
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CFuncForceField::TurnOn( void )
 {
-	BaseClass::TurnOn();
-	SetActive( true );
+    BaseClass::TurnOn();
+    SetActive( true );
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CFuncForceField::ShouldCollide( int collisionGroup, int contentsMask ) const
 {
-	// Force fields are off during a team win
-	if ( TFGameRules()->State_Get() == GR_STATE_TEAM_WIN )
-		return false;
+    // Force fields are off during a team win
+    if ( TFGameRules()->State_Get() == GR_STATE_TEAM_WIN )
+        return false;
 
-	if ( GetTeamNumber() == TEAM_UNASSIGNED )
-		return false;
+    if ( GetTeamNumber() == TEAM_UNASSIGNED )
+        return false;
 
-	if ( collisionGroup == COLLISION_GROUP_PLAYER_MOVEMENT )
-	{
-		switch ( GetTeamNumber() )
-		{
-		case TF_TEAM_BLUE:
-			if ( !( contentsMask & CONTENTS_BLUETEAM ) )
-				return false;
-			break;
+    if ( collisionGroup == COLLISION_GROUP_PLAYER_MOVEMENT )
+    {
+        switch ( GetTeamNumber() )
+        {
+            case TF_TEAM_BLUE:
+                if ( !( contentsMask & CONTENTS_BLUETEAM ) )
+                    return false;
+                break;
 
-		case TF_TEAM_RED:
-			if ( !( contentsMask & CONTENTS_REDTEAM ) )
-				return false;
-			break;
-		}
+            case TF_TEAM_RED:
+                if ( !( contentsMask & CONTENTS_REDTEAM ) )
+                    return false;
+                break;
+        }
 
-		return true;
-	}
+        return true;
+    }
 
-	return false;
+    return false;
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CFuncForceField::SetActive( bool bActive )
 {
-	if ( bActive )
-	{
-		// We're a trigger, but we want to be solid. Our ShouldCollide() will make
-		// us non-solid to members of the team that spawns here.
-		RemoveSolidFlags( FSOLID_TRIGGER );
-		RemoveSolidFlags( FSOLID_NOT_SOLID );
-	}
-	else
-	{
-		AddSolidFlags( FSOLID_NOT_SOLID );
-		AddSolidFlags( FSOLID_TRIGGER );
-	}
+    if ( bActive )
+    {
+        // We're a trigger, but we want to be solid. Our ShouldCollide() will make
+        // us non-solid to members of the team that spawns here.
+        RemoveSolidFlags( FSOLID_TRIGGER );
+        RemoveSolidFlags( FSOLID_NOT_SOLID );
+    }
+    else
+    {
+        AddSolidFlags( FSOLID_NOT_SOLID );
+        AddSolidFlags( FSOLID_TRIGGER );
+    }
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-bool PointsCrossForceField( const Vector& vecStart, const Vector &vecEnd, int nTeamToIgnore )
+bool PointsCrossForceField( const Vector &vecStart, const Vector &vecEnd, int nTeamToIgnore )
 {
-	// Setup the ray.
-	Ray_t ray;
-	ray.Init( vecStart, vecEnd );
+    // Setup the ray.
+    Ray_t ray;
+    ray.Init( vecStart, vecEnd );
 
-	for ( int i = 0; i < IFuncForceFieldAutoList::AutoList().Count(); ++i )
-	{
-		CFuncForceField *pEntity = static_cast< CFuncForceField* >( IFuncForceFieldAutoList::AutoList()[i] );
+    for ( int i = 0; i < IFuncForceFieldAutoList::AutoList().Count(); ++i )
+    {
+        CFuncForceField *pEntity = static_cast< CFuncForceField * >( IFuncForceFieldAutoList::AutoList()[i] );
 
-		if ( pEntity->m_iDisabled )
-			continue;
+        if ( pEntity->m_iDisabled )
+            continue;
 
-		if ( pEntity->GetTeamNumber() == nTeamToIgnore && nTeamToIgnore != TEAM_UNASSIGNED )
-			continue;
+        if ( pEntity->GetTeamNumber() == nTeamToIgnore && nTeamToIgnore != TEAM_UNASSIGNED )
+            continue;
 
-		trace_t trace;
-		enginetrace->ClipRayToEntity( ray, MASK_ALL, pEntity, &trace );
-		if ( trace.fraction < 1.0f )
-		{
-			return true;
-		}
-	}
+        trace_t trace;
+        enginetrace->ClipRayToEntity( ray, MASK_ALL, pEntity, &trace );
+        if ( trace.fraction < 1.0f )
+        {
+            return true;
+        }
+    }
 
-	return false;
+    return false;
 }

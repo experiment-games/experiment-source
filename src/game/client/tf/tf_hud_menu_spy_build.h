@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -11,5 +11,4 @@
 #pragma once
 #endif
 
-
-#endif	// TF_HUD_MENU_SPY_BUILD_H
+#endif  // TF_HUD_MENU_SPY_BUILD_H

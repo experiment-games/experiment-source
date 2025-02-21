@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -11,8 +11,6 @@
 #pragma once
 #endif
 
-
 void FormatTimeString( unsigned long nSeconds, char *pOut, int outLen );
 
-
-#endif // VMPI_BROWSER_HELPERS_H
+#endif  // VMPI_BROWSER_HELPERS_H

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -18,11 +18,9 @@ using namespace GCSDK;
 
 CXPSource::CXPSource()
 {
-	Obj().set_account_id( 0 );
-	Obj().set_amount( 0 );
-	Obj().set_match_id( 0 );
-	Obj().set_match_group( ETFMatchGroup::k_eTFMatchGroup_Invalid );
-	// Explicitly not setting type()
+    Obj().set_account_id( 0 );
+    Obj().set_amount( 0 );
+    Obj().set_match_id( 0 );
+    Obj().set_match_group( ETFMatchGroup::k_eTFMatchGroup_Invalid );
+    // Explicitly not setting type()
 }
-
-

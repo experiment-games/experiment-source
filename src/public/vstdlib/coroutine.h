@@ -20,7 +20,7 @@
 //-----------------------------------------------------------------------------
 
 // coroutine callback
-typedef void (__cdecl *CoroutineFunc_t )(void *);
+typedef void( __cdecl *CoroutineFunc_t )( void * );
 
 // handle to a coroutine
 typedef int32 HCoroutine;
@@ -58,12 +58,10 @@ VSTDLIB_INTERFACE void Coroutine_ReleaseThreadMemory();
 // runs a self-test of the coroutine system
 VSTDLIB_INTERFACE bool Coroutine_Test();
 
-// memory validation 
+// memory validation
 VSTDLIB_INTERFACE void Coroutine_ValidateGlobals( class CValidator &validator );
 
 // for debugging purposes - returns stack depth of current coroutine
 VSTDLIB_INTERFACE size_t Coroutine_GetStackDepth();
 
-
-
-#endif // COROUTINE_H
+#endif  // COROUTINE_H

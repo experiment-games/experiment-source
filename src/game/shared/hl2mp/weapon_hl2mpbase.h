@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -15,13 +15,13 @@
 #include "hl2mp_weapon_parse.h"
 
 #if defined( CLIENT_DLL )
-	#define CWeaponHL2MPBase C_WeaponHL2MPBase
-	void UTIL_ClipPunchAngleOffset( QAngle &in, const QAngle &punch, const QAngle &clip );
+#define CWeaponHL2MPBase C_WeaponHL2MPBase
+void UTIL_ClipPunchAngleOffset( QAngle &in, const QAngle &punch, const QAngle &clip );
 #endif
 
 class CHL2MP_Player;
 
-// These are the names of the ammo types that go in the CAmmoDefs and that the 
+// These are the names of the ammo types that go in the CAmmoDefs and that the
 // weapon script files reference.
 
 // Given an ammo type (like from a weapon's GetPrimaryAmmoType()), this compares it
@@ -31,63 +31,66 @@ bool IsAmmoType( int iAmmoType, const char *pAmmoName );
 
 class CWeaponHL2MPBase : public CBaseCombatWeapon
 {
-public:
-	DECLARE_CLASS( CWeaponHL2MPBase, CBaseCombatWeapon );
-	DECLARE_NETWORKCLASS(); 
-	DECLARE_PREDICTABLE();
+   public:
+    DECLARE_CLASS( CWeaponHL2MPBase, CBaseCombatWeapon );
+    DECLARE_NETWORKCLASS();
+    DECLARE_PREDICTABLE();
 
-	CWeaponHL2MPBase();
+    CWeaponHL2MPBase();
 
-	#ifdef GAME_DLL
-		DECLARE_DATADESC();
-	
-		void SendReloadSoundEvent( void );
+#ifdef GAME_DLL
+    DECLARE_DATADESC();
 
-		void Materialize( void );
-		virtual	int	ObjectCaps( void );
-	#endif
+    void SendReloadSoundEvent( void );
 
-	// All predicted weapons need to implement and return true
-	virtual bool	IsPredicted() const;
+    void Materialize( void );
+    virtual int ObjectCaps( void );
+#endif
 
-	CBasePlayer* GetPlayerOwner() const;
-	CHL2MP_Player* GetHL2MPPlayerOwner() const;
+    // All predicted weapons need to implement and return true
+    virtual bool IsPredicted() const;
 
-	void WeaponSound( WeaponSound_t sound_type, float soundtime = 0.0f );
-	
-	CHL2MPSWeaponInfo const	&GetHL2MPWpnData() const;
+    CBasePlayer *GetPlayerOwner() const;
+    CHL2MP_Player *GetHL2MPPlayerOwner() const;
 
+    void WeaponSound( WeaponSound_t sound_type, float soundtime = 0.0f );
 
-	virtual void FireBullets( const FireBulletsInfo_t &info );
-	virtual void FallInit( void );
-	
-public:
-	#if defined( CLIENT_DLL )
-		
-		virtual bool	ShouldPredict();
-		virtual void	OnDataChanged( DataUpdateType_t type );
+    CHL2MPSWeaponInfo const &GetHL2MPWpnData() const;
 
-		virtual bool	OnFireEvent( C_BaseViewModel *pViewModel, const Vector& origin, const QAngle& angles, int event, const char *options );
+    virtual void FireBullets( const FireBulletsInfo_t &info );
+    virtual void FallInit( void );
 
-	#else
+   public:
+#if defined( CLIENT_DLL )
 
-		virtual void	Spawn();
+    virtual bool ShouldPredict();
+    virtual void OnDataChanged( DataUpdateType_t type );
 
-	#endif
+    virtual bool OnFireEvent( C_BaseViewModel *pViewModel, const Vector &origin, const QAngle &angles, int event, const char *options );
 
-	float		m_flPrevAnimTime;
-	float  m_flNextResetCheckTime;
+#else
 
-	Vector	GetOriginalSpawnOrigin( void ) { return m_vOriginalSpawnOrigin;	}
-	QAngle	GetOriginalSpawnAngles( void ) { return m_vOriginalSpawnAngles;	}
+    virtual void Spawn();
 
-private:
+#endif
 
-	CWeaponHL2MPBase( const CWeaponHL2MPBase & );
+    float m_flPrevAnimTime;
+    float m_flNextResetCheckTime;
 
-	Vector m_vOriginalSpawnOrigin;
-	QAngle m_vOriginalSpawnAngles;
+    Vector GetOriginalSpawnOrigin( void )
+    {
+        return m_vOriginalSpawnOrigin;
+    }
+    QAngle GetOriginalSpawnAngles( void )
+    {
+        return m_vOriginalSpawnAngles;
+    }
+
+   private:
+    CWeaponHL2MPBase( const CWeaponHL2MPBase & );
+
+    Vector m_vOriginalSpawnOrigin;
+    QAngle m_vOriginalSpawnAngles;
 };
 
-
-#endif // WEAPON_HL2MPBASE_H
+#endif  // WEAPON_HL2MPBASE_H

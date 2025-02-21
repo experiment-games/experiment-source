@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
 
@@ -14,37 +14,38 @@
 #include <vgui_controls/EditablePanel.h>
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 class CTFHudSpectatorExtras : public CHudElement, public vgui::EditablePanel
 {
-	DECLARE_CLASS_SIMPLE( CTFHudSpectatorExtras, vgui::EditablePanel );
-public:
-	CTFHudSpectatorExtras( const char *pElementName );
-	virtual ~CTFHudSpectatorExtras(){}
+    DECLARE_CLASS_SIMPLE( CTFHudSpectatorExtras, vgui::EditablePanel );
 
-	virtual bool	ShouldDraw( void ) OVERRIDE;
-	virtual void	OnTick() OVERRIDE;
-	virtual void	Paint() OVERRIDE;
+   public:
+    CTFHudSpectatorExtras( const char *pElementName );
+    virtual ~CTFHudSpectatorExtras() {}
 
-	void RemoveEntity( int nRemove );
+    virtual bool ShouldDraw( void ) OVERRIDE;
+    virtual void OnTick() OVERRIDE;
+    virtual void Paint() OVERRIDE;
 
-private:
-	void Reset( void );
+    void RemoveEntity( int nRemove );
 
-	typedef struct
-	{
-		int m_nEntIndex;
-		wchar_t m_wszName[MAX_ID_STRING];
-		int m_nNameWidth;
-		float m_flHealth;
-		Color m_clrGlowColor;
-		bool m_bDrawName;
-		int m_nOffset;
-	} spec_extra_t;
+   private:
+    void Reset( void );
 
-	CUtlVector< spec_extra_t > m_vecEntitiesToDraw;
-	CPanelAnimationVar( vgui::HFont, m_hNameFont, "player_name_font", "SpectatorVerySmall" );
+    typedef struct
+    {
+        int m_nEntIndex;
+        wchar_t m_wszName[MAX_ID_STRING];
+        int m_nNameWidth;
+        float m_flHealth;
+        Color m_clrGlowColor;
+        bool m_bDrawName;
+        int m_nOffset;
+    } spec_extra_t;
+
+    CUtlVector< spec_extra_t > m_vecEntitiesToDraw;
+    CPanelAnimationVar( vgui::HFont, m_hNameFont, "player_name_font", "SpectatorVerySmall" );
 };
 
-#endif // TF_HUD_SPECTATOR_EXTRAS_H
+#endif  // TF_HUD_SPECTATOR_EXTRAS_H

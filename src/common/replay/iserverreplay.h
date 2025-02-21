@@ -14,7 +14,7 @@
 
 //----------------------------------------------------------------------------------------
 
-#define SERVER_REPLAY_INTERFACE_VERSION		"ServerReplay001"
+#define SERVER_REPLAY_INTERFACE_VERSION "ServerReplay001"
 
 //----------------------------------------------------------------------------------------
 
@@ -28,10 +28,10 @@ class KeyValues;
 //
 class IServerReplay : public IBaseInterface
 {
-public:
-	virtual void				UploadOgsData( KeyValues *pData, bool bIncludeTimeField ) = 0;
+   public:
+    virtual void UploadOgsData( KeyValues *pData, bool bIncludeTimeField ) = 0;
 };
 
 //----------------------------------------------------------------------------------------
 
-#endif // ISERVERREPLAY_H
+#endif  // ISERVERREPLAY_H

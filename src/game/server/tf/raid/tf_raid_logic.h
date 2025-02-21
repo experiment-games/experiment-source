@@ -13,162 +13,160 @@
 
 class CBaseDoor;
 
-
 //-----------------------------------------------------------------------
 class CRaidLogic : public CPointEntity, public CGameEventListener
 {
-	DECLARE_CLASS( CRaidLogic, CPointEntity );
-public:
-	DECLARE_DATADESC();
+    DECLARE_CLASS( CRaidLogic, CPointEntity );
 
-	CRaidLogic();
-	virtual ~CRaidLogic();
+   public:
+    DECLARE_DATADESC();
 
-	virtual void Spawn( void );
-	void Reset( void );
-	void Update( void );
+    CRaidLogic();
+    virtual ~CRaidLogic();
 
-	virtual void FireGameEvent( IGameEvent *event );
+    virtual void Spawn( void );
+    void Reset( void );
+    void Update( void );
 
-	void DrawDebugDisplay( float deltaT );
+    virtual void FireGameEvent( IGameEvent *event );
 
-	CTeamControlPoint *GetContestedPoint( void ) const;					// return the next control point that can be captured
+    void DrawDebugDisplay( float deltaT );
 
-	bool IsWaitingForRaidersToLeaveSafeRoom( void ) const;				// returns true if all raiders have not yet left the spawn room for the first time
-	bool IsMobSpawning( void ) const;									// return true if a mob is trying to spawn right now
-	bool IsSentryGunArea( CTFNavArea *area ) const;						// return true if this area should contain an enemy sentry gun
+    CTeamControlPoint *GetContestedPoint( void ) const;  // return the next control point that can be captured
 
-	int GetWandererCount( void ) const;									// how many wanderers exist at the moment?
+    bool IsWaitingForRaidersToLeaveSafeRoom( void ) const;  // returns true if all raiders have not yet left the spawn room for the first time
+    bool IsMobSpawning( void ) const;                       // return true if a mob is trying to spawn right now
+    bool IsSentryGunArea( CTFNavArea *area ) const;         // return true if this area should contain an enemy sentry gun
 
-	CTFPlayer *GetFarthestAlongRaider( void ) const;					// return raider who is farthest through the map
+    int GetWandererCount( void ) const;  // how many wanderers exist at the moment?
 
-	float GetMaximumRaiderIncursionDistance( void ) const;				// return incursion distance of farthest along raider
-	float GetIncursionDistanceAtEnd( void ) const;						// return maximum incursion distance at end of route
+    CTFPlayer *GetFarthestAlongRaider( void ) const;  // return raider who is farthest through the map
 
-	CTFNavArea *GetEscapeRouteStart( void ) const;
-	CTFNavArea *GetEscapeRouteEnd( void ) const;
+    float GetMaximumRaiderIncursionDistance( void ) const;  // return incursion distance of farthest along raider
+    float GetIncursionDistanceAtEnd( void ) const;          // return maximum incursion distance at end of route
 
-	CTFNavArea *FindSniperSpawn( void );
-	CTFNavArea *FindSentryArea( void );
+    CTFNavArea *GetEscapeRouteStart( void ) const;
+    CTFNavArea *GetEscapeRouteEnd( void ) const;
 
-	CTFNavArea *FindSpawnAreaAhead( void );
-	CTFNavArea *FindSpawnAreaBehind( void );
+    CTFNavArea *FindSniperSpawn( void );
+    CTFNavArea *FindSentryArea( void );
 
-	CTFNavArea *SelectRaidSentryArea( void ) const;						// choose unpopulated sentry area nearest the invaders
+    CTFNavArea *FindSpawnAreaAhead( void );
+    CTFNavArea *FindSpawnAreaBehind( void );
 
-	CTFPlayer *SelectRaiderToAttack( void );							// pick a member of the raiding (blue) team for a red defender to attack
+    CTFNavArea *SelectRaidSentryArea( void ) const;  // choose unpopulated sentry area nearest the invaders
 
-	virtual int UpdateTransmitState()
-	{
-		return SetTransmitState( FL_EDICT_ALWAYS );
-	}
+    CTFPlayer *SelectRaiderToAttack( void );  // pick a member of the raiding (blue) team for a red defender to attack
 
-	CBaseEntity *GetRescueRespawn( void ) const;						// return entity positioned within next valid rescue closet area for to respawn players in
+    virtual int UpdateTransmitState()
+    {
+        return SetTransmitState( FL_EDICT_ALWAYS );
+    }
 
-private:
-	bool LoadPopulationFromFile( void );
+    CBaseEntity *GetRescueRespawn( void ) const;  // return entity positioned within next valid rescue closet area for to respawn players in
 
-	int m_priorRaiderAliveCount;
+   private:
+    bool LoadPopulationFromFile( void );
 
-	int m_wandererCount;
-	int m_engineerCount;
-	int m_demomanCount;
-	int m_heavyCount;
-	int m_soldierCount;
-	int m_pyroCount;
-	int m_spyCount;
-	int m_sniperCount;
-	int m_squadCount;
+    int m_priorRaiderAliveCount;
 
-	void OnRoundStart( void );
-	bool Unspawn( CTFPlayer *who );
-	void CullObsoleteEnemies( float minIncursion, float maxIncursion );
+    int m_wandererCount;
+    int m_engineerCount;
+    int m_demomanCount;
+    int m_heavyCount;
+    int m_soldierCount;
+    int m_pyroCount;
+    int m_spyCount;
+    int m_sniperCount;
+    int m_squadCount;
 
-//	void SpawnMobs( CUtlVector< CTFNavArea * > *spawnAreaVector );
-	CountdownTimer m_mobSpawnTimer;
-	CountdownTimer m_mobLifetimeTimer;
-	CTFNavArea *m_mobArea;
-	int m_mobCountRemaining;
-	int m_mobClass;
+    void OnRoundStart( void );
+    bool Unspawn( CTFPlayer *who );
+    void CullObsoleteEnemies( float minIncursion, float maxIncursion );
 
-//	void SpawnEngineers( void );
-	CountdownTimer m_engineerSpawnTimer;
+    //	void SpawnMobs( CUtlVector< CTFNavArea * > *spawnAreaVector );
+    CountdownTimer m_mobSpawnTimer;
+    CountdownTimer m_mobLifetimeTimer;
+    CTFNavArea *m_mobArea;
+    int m_mobCountRemaining;
+    int m_mobClass;
 
-//	void SpawnSpecials( CUtlVector< CTFNavArea * > *spawnAheadVector, CUtlVector< CTFNavArea * > *spawnAnywhereVector );
-	CountdownTimer m_specialSpawnTimer;
+    //	void SpawnEngineers( void );
+    CountdownTimer m_engineerSpawnTimer;
 
-	CTFNavArea *SelectMobSpawn( CUtlVector< CTFNavArea * > *spawnAreaVector, RelativePositionType where );
-//	bool SpawnSquad( CTFNavArea *spawnArea );
-	void StartMobTimer( float duration );
+    //	void SpawnSpecials( CUtlVector< CTFNavArea * > *spawnAheadVector, CUtlVector< CTFNavArea * > *spawnAnywhereVector );
+    CountdownTimer m_specialSpawnTimer;
 
-	bool m_isWaitingForRaidersToLeaveSpawnRoom;
-	bool m_wasCapturingPoint;
-	bool m_didFailLastTime;
+    CTFNavArea *SelectMobSpawn( CUtlVector< CTFNavArea * > *spawnAreaVector, RelativePositionType where );
+    //	bool SpawnSquad( CTFNavArea *spawnArea );
+    void StartMobTimer( float duration );
 
-	CHandle< CTFPlayer > m_farthestAlongRaider;							// raider with highest incursion distance
-	float m_incursionDistanceAtEnd;
+    bool m_isWaitingForRaidersToLeaveSpawnRoom;
+    bool m_wasCapturingPoint;
+    bool m_didFailLastTime;
 
-	void BuildEscapeRoute( void );
-	CUtlVector< CTFNavArea * > m_escapeRouteVector;						// a vector of areas in order along the escape route
-	CTFNavArea *m_farthestAlongEscapeRouteArea;
-	CTFNavArea *FindEarliestVisibleEscapeRouteAreaNearTeam( CTFNavArea *viewArea ) const;	// given a viewing area, return the earliest escape route area near the team that is visible
+    CHandle< CTFPlayer > m_farthestAlongRaider;  // raider with highest incursion distance
+    float m_incursionDistanceAtEnd;
 
-	CUtlVector< CTFNavArea * > m_sniperSpotVector;						// a vector of good sniping areas
-	CUtlVector< CTFNavArea * > m_sentrySpotVector;						// a vector of good sentry areas
-	CUtlVector< CTFNavArea * > m_actualSentrySpotVector;				// a vector of areas to actually place sentry guns
+    void BuildEscapeRoute( void );
+    CUtlVector< CTFNavArea * > m_escapeRouteVector;  // a vector of areas in order along the escape route
+    CTFNavArea *m_farthestAlongEscapeRouteArea;
+    CTFNavArea *FindEarliestVisibleEscapeRouteAreaNearTeam( CTFNavArea *viewArea ) const;  // given a viewing area, return the earliest escape route area near the team that is visible
 
-	CUtlVector< CTFNavArea * > m_rescueClosetVector;					// a vector of areas to respawn raiders
+    CUtlVector< CTFNavArea * > m_sniperSpotVector;        // a vector of good sniping areas
+    CUtlVector< CTFNavArea * > m_sentrySpotVector;        // a vector of good sentry areas
+    CUtlVector< CTFNavArea * > m_actualSentrySpotVector;  // a vector of areas to actually place sentry guns
 
-	CUtlVector< CTFNavArea * > m_miniBossHomeVector;
-	int m_miniBossIndex;
+    CUtlVector< CTFNavArea * > m_rescueClosetVector;  // a vector of areas to respawn raiders
 
-	CUtlVector< CBaseDoor * > m_gateVector;								// vector of gates that open when point is captured
+    CUtlVector< CTFNavArea * > m_miniBossHomeVector;
+    int m_miniBossIndex;
+
+    CUtlVector< CBaseDoor * > m_gateVector;  // vector of gates that open when point is captured
 };
 
 inline bool CRaidLogic::IsSentryGunArea( CTFNavArea *area ) const
 {
-	return m_actualSentrySpotVector.HasElement( area );
+    return m_actualSentrySpotVector.HasElement( area );
 }
 
 inline int CRaidLogic::GetWandererCount( void ) const
 {
-	return m_wandererCount;
+    return m_wandererCount;
 }
 
 inline CTFNavArea *CRaidLogic::GetEscapeRouteStart( void ) const
 {
-	return m_escapeRouteVector.Count() ? m_escapeRouteVector[0] : NULL;
+    return m_escapeRouteVector.Count() ? m_escapeRouteVector[0] : NULL;
 }
 
 inline CTFNavArea *CRaidLogic::GetEscapeRouteEnd( void ) const
 {
-	return m_escapeRouteVector.Count() ? m_escapeRouteVector[ m_escapeRouteVector.Count()-1 ] : NULL;
+    return m_escapeRouteVector.Count() ? m_escapeRouteVector[m_escapeRouteVector.Count() - 1] : NULL;
 }
 
 inline CTFPlayer *CRaidLogic::GetFarthestAlongRaider( void ) const
 {
-	return m_farthestAlongRaider;
+    return m_farthestAlongRaider;
 }
-
 
 inline bool CRaidLogic::IsWaitingForRaidersToLeaveSafeRoom( void ) const
 {
-	return m_isWaitingForRaidersToLeaveSpawnRoom;
+    return m_isWaitingForRaidersToLeaveSpawnRoom;
 }
 
 inline bool CRaidLogic::IsMobSpawning( void ) const
 {
-	return m_mobLifetimeTimer.HasStarted() && !m_mobLifetimeTimer.IsElapsed();
+    return m_mobLifetimeTimer.HasStarted() && !m_mobLifetimeTimer.IsElapsed();
 }
 
 inline float CRaidLogic::GetIncursionDistanceAtEnd( void ) const
 {
-	return m_incursionDistanceAtEnd;
+    return m_incursionDistanceAtEnd;
 }
 
 extern CRaidLogic *g_pRaidLogic;
 
-#endif // TF_RAID_MODE
+#endif  // TF_RAID_MODE
 
-
-#endif // TF_RAID_LOGIC_H
+#endif  // TF_RAID_LOGIC_H

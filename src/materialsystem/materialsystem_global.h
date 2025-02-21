@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $Header: $
 // $NoKeywords: $
@@ -14,10 +14,8 @@
 #pragma once
 #endif
 
-
 #include "tier0/dbg.h"
 #include "tier2/tier2.h"
-
 
 //-----------------------------------------------------------------------------
 // Forward declarations
@@ -34,7 +32,6 @@ class IMaterialInternal;
 class IColorCorrectionSystem;
 class IMaterialVar;
 
-
 //-----------------------------------------------------------------------------
 // Constants used by the system
 //-----------------------------------------------------------------------------
@@ -42,7 +39,7 @@ class IMaterialVar;
 #define MATERIAL_MAX_PATH 256
 
 // GR - limits for blured image (HDR stuff)
-#define MAX_BLUR_IMAGE_WIDTH  256
+#define MAX_BLUR_IMAGE_WIDTH 256
 #define MAX_BLUR_IMAGE_HEIGHT 192
 
 #define CLAMP_BLUR_IMAGE_WIDTH( _w ) ( ( _w < MAX_BLUR_IMAGE_WIDTH ) ? _w : MAX_BLUR_IMAGE_WIDTH )
@@ -54,49 +51,46 @@ class IMaterialVar;
 extern MaterialSystem_Config_t g_config;
 extern uint32 g_nDebugVarsSignature;
 
-//extern MaterialSystem_ErrorFunc_t	Error;
-//extern MaterialSystem_WarningFunc_t Warning;
+// extern MaterialSystem_ErrorFunc_t	Error;
+// extern MaterialSystem_WarningFunc_t Warning;
 
-extern int				g_FrameNum;
+extern int g_FrameNum;
 
-extern IShaderAPI*	g_pShaderAPI;
+extern IShaderAPI* g_pShaderAPI;
 extern IShaderDeviceMgr* g_pShaderDeviceMgr;
-extern IShaderDevice*	g_pShaderDevice;
+extern IShaderDevice* g_pShaderDevice;
 extern IShaderShadow* g_pShaderShadow;
 
-extern IMaterialInternal *g_pErrorMaterial;
+extern IMaterialInternal* g_pErrorMaterial;
 
 IShaderSystemInternal* ShaderSystem();
 inline IShaderSystemInternal* ShaderSystem()
 {
-	extern IShaderSystemInternal *g_pShaderSystem;
-	return g_pShaderSystem;
+    extern IShaderSystemInternal* g_pShaderSystem;
+    return g_pShaderSystem;
 }
 
-inline IHardwareConfigInternal *HardwareConfig()
+inline IHardwareConfigInternal* HardwareConfig()
 {
-	extern IHardwareConfigInternal* g_pHWConfig;
-	return g_pHWConfig;
+    extern IHardwareConfigInternal* g_pHWConfig;
+    return g_pHWConfig;
 }
-
 
 inline IShaderUtil* ShaderUtil()
 {
-	extern IShaderUtil *g_pShaderUtil;
-	return g_pShaderUtil;
+    extern IShaderUtil* g_pShaderUtil;
+    return g_pShaderUtil;
 }
 
-extern IColorCorrectionSystem *g_pColorCorrectionSystem;
-inline IColorCorrectionSystem *ColorCorrectionSystem()
+extern IColorCorrectionSystem* g_pColorCorrectionSystem;
+inline IColorCorrectionSystem* ColorCorrectionSystem()
 {
-	return g_pColorCorrectionSystem;
+    return g_pColorCorrectionSystem;
 }
-
 
 //-----------------------------------------------------------------------------
 // Global methods related to material vars
 //-----------------------------------------------------------------------------
 void EnableThreadedMaterialVarAccess( bool bEnable );
 
-
-#endif // MATERIALSYSTEM_GLOBAL_H
+#endif  // MATERIALSYSTEM_GLOBAL_H

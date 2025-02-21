@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
 
@@ -43,7 +43,7 @@ PRECACHE_WEAPON_REGISTER( tf_weapon_fists );
 // -----------------------------------------------------------------------------
 void CTFFists::ItemPreFrame( void )
 {
-	return BaseClass::ItemPreFrame();
+    return BaseClass::ItemPreFrame();
 }
 
 // -----------------------------------------------------------------------------
@@ -51,21 +51,21 @@ void CTFFists::ItemPreFrame( void )
 // -----------------------------------------------------------------------------
 void CTFFists::PrimaryAttack()
 {
-	if ( !CanAttack() )
-		return;
+    if ( !CanAttack() )
+        return;
 
-	// Set the weapon usage mode - primary, secondary.
-	// reversed for 360 because the primary attack is on the right side of the controller
-	if ( IsX360() || IsViewModelFlipped() )
-	{
-		m_iWeaponMode = TF_WEAPON_SECONDARY_MODE;
-	}
-	else
-	{
-		m_iWeaponMode = TF_WEAPON_PRIMARY_MODE;
-	}
+    // Set the weapon usage mode - primary, secondary.
+    // reversed for 360 because the primary attack is on the right side of the controller
+    if ( IsX360() || IsViewModelFlipped() )
+    {
+        m_iWeaponMode = TF_WEAPON_SECONDARY_MODE;
+    }
+    else
+    {
+        m_iWeaponMode = TF_WEAPON_PRIMARY_MODE;
+    }
 
-	Punch();
+    Punch();
 }
 
 // -----------------------------------------------------------------------------
@@ -73,26 +73,26 @@ void CTFFists::PrimaryAttack()
 // -----------------------------------------------------------------------------
 void CTFFists::SecondaryAttack()
 {
-	if ( !CanAttack() )
-		return;
+    if ( !CanAttack() )
+        return;
 
-	CTFPlayer *pPlayer = GetTFPlayerOwner();
-	if ( pPlayer && pPlayer->m_Shared.IsControlStunned() )
-	{
-		return;
-	}
+    CTFPlayer *pPlayer = GetTFPlayerOwner();
+    if ( pPlayer && pPlayer->m_Shared.IsControlStunned() )
+    {
+        return;
+    }
 
-	// Set the weapon usage mode - primary, secondary.
-	if ( IsX360() || IsViewModelFlipped() )
-	{
-		m_iWeaponMode = TF_WEAPON_PRIMARY_MODE;
-	}
-	else
-	{
-		m_iWeaponMode = TF_WEAPON_SECONDARY_MODE;
-	}
+    // Set the weapon usage mode - primary, secondary.
+    if ( IsX360() || IsViewModelFlipped() )
+    {
+        m_iWeaponMode = TF_WEAPON_PRIMARY_MODE;
+    }
+    else
+    {
+        m_iWeaponMode = TF_WEAPON_SECONDARY_MODE;
+    }
 
-	Punch();
+    Punch();
 }
 
 // -----------------------------------------------------------------------------
@@ -100,7 +100,7 @@ void CTFFists::SecondaryAttack()
 // -----------------------------------------------------------------------------
 bool CTFFists::Holster( CBaseCombatWeapon *pSwitchingTo )
 {
-	return BaseClass::Holster( pSwitchingTo );
+    return BaseClass::Holster( pSwitchingTo );
 }
 
 // -----------------------------------------------------------------------------
@@ -108,155 +108,155 @@ bool CTFFists::Holster( CBaseCombatWeapon *pSwitchingTo )
 // -----------------------------------------------------------------------------
 void CTFFists::Punch( void )
 {
-	// Get the current player.
-	CTFPlayer *pPlayer = GetTFPlayerOwner();
-	if ( !pPlayer )
-		return;
+    // Get the current player.
+    CTFPlayer *pPlayer = GetTFPlayerOwner();
+    if ( !pPlayer )
+        return;
 
-	// Swing the weapon.
-	Swing( pPlayer );
+    // Swing the weapon.
+    Swing( pPlayer );
 
-	m_flNextSecondaryAttack = m_flNextPrimaryAttack;
+    m_flNextSecondaryAttack = m_flNextPrimaryAttack;
 
-#if !defined( CLIENT_DLL ) 
-	pPlayer->SpeakWeaponFire();
-	CTF_GameStats.Event_PlayerFiredWeapon( pPlayer, IsCurrentAttackACrit() );
+#if !defined( CLIENT_DLL )
+    pPlayer->SpeakWeaponFire();
+    CTF_GameStats.Event_PlayerFiredWeapon( pPlayer, IsCurrentAttackACrit() );
 
-	if ( pPlayer->m_Shared.IsStealthed() )
-	{
-		pPlayer->RemoveInvisibility();
-	}
+    if ( pPlayer->m_Shared.IsStealthed() )
+    {
+        pPlayer->RemoveInvisibility();
+    }
 #else
-	C_CTF_GameStats.Event_PlayerFiredWeapon( pPlayer, IsCurrentAttackACrit() );
+    C_CTF_GameStats.Event_PlayerFiredWeapon( pPlayer, IsCurrentAttackACrit() );
 #endif
 }
 
 //-----------------------------------------------------------------------------
 // Purpose: Allow melee weapons to send different anim events
-// Input  :  - 
+// Input  :  -
 //-----------------------------------------------------------------------------
 void CTFFists::SendPlayerAnimEvent( CTFPlayer *pPlayer )
 {
-	// Send extra activities to the weapon for breadgloves
-	if ( IsCurrentAttackACrit() )
-	{
-		pPlayer->DoAnimationEvent( PLAYERANIMEVENT_ATTACK_SECONDARY );
-	}
-	else
-	{
-		pPlayer->DoAnimationEvent( PLAYERANIMEVENT_ATTACK_PRIMARY );
-	}
+    // Send extra activities to the weapon for breadgloves
+    if ( IsCurrentAttackACrit() )
+    {
+        pPlayer->DoAnimationEvent( PLAYERANIMEVENT_ATTACK_SECONDARY );
+    }
+    else
+    {
+        pPlayer->DoAnimationEvent( PLAYERANIMEVENT_ATTACK_PRIMARY );
+    }
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFFists::DoViewModelAnimation( void )
 {
-	Activity act;
+    Activity act;
 
-	if ( IsCurrentAttackACrit() )
-	{
-		act = ACT_VM_SWINGHARD;
-	}
-	else
-	{
-		act = ( m_iWeaponMode == TF_WEAPON_PRIMARY_MODE ) ? ACT_VM_HITLEFT : ACT_VM_HITRIGHT;
-	}
+    if ( IsCurrentAttackACrit() )
+    {
+        act = ACT_VM_SWINGHARD;
+    }
+    else
+    {
+        act = ( m_iWeaponMode == TF_WEAPON_PRIMARY_MODE ) ? ACT_VM_HITLEFT : ACT_VM_HITRIGHT;
+    }
 
-	SendWeaponAnim( act );
+    SendWeaponAnim( act );
 
-	// Send WeaponAnim actually sets all anims and we want an override for the world model
-	//int iIsBreadgloves = 0;
-	//CALL_ATTRIB_HOOK_INT( iIsBreadgloves, breadgloves_properties );
-	//if ( iIsBreadgloves )
-	//{
-	//	ResetSequence( SelectWeightedSequence( ACT_BREADMONSTER_GLOVES_HITRIGHT ) );
-	//	SetPlaybackRate( 0.0f );
-	//	ResetClientsideFrame();
-	//}
+    // Send WeaponAnim actually sets all anims and we want an override for the world model
+    // int iIsBreadgloves = 0;
+    // CALL_ATTRIB_HOOK_INT( iIsBreadgloves, breadgloves_properties );
+    // if ( iIsBreadgloves )
+    //{
+    //	ResetSequence( SelectWeightedSequence( ACT_BREADMONSTER_GLOVES_HITRIGHT ) );
+    //	SetPlaybackRate( 0.0f );
+    //	ResetClientsideFrame();
+    //}
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CTFFists::AllowTaunts( void )
 {
-	// Radial buff fists don't allow player to taunt manually
-	return ( GetFistType() != FISTTYPE_RADIAL_BUFF );
+    // Radial buff fists don't allow player to taunt manually
+    return ( GetFistType() != FISTTYPE_RADIAL_BUFF );
 }
 
 #ifdef GAME_DLL
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFFists::OnEntityHit( CBaseEntity *pEntity, CTakeDamageInfo *info )
 {
-	CTFPlayer *pHitPlayer = ToTFPlayer( pEntity );
+    CTFPlayer *pHitPlayer = ToTFPlayer( pEntity );
 
-	if ( !pHitPlayer )
-		return;
+    if ( !pHitPlayer )
+        return;
 
-	// Get the current player.
-	CTFPlayer *pPlayer = GetTFPlayerOwner();
-	if ( !pPlayer )
-		return;
+    // Get the current player.
+    CTFPlayer *pPlayer = GetTFPlayerOwner();
+    if ( !pPlayer )
+        return;
 
-	if ( pHitPlayer->GetTeamNumber() == pPlayer->GetTeamNumber() )
-		return;
+    if ( pHitPlayer->GetTeamNumber() == pPlayer->GetTeamNumber() )
+        return;
 
-	if ( pPlayer->m_Shared.InCond( TF_COND_INVULNERABLE ) )
-	{
-		int iNumHealers = pPlayer->m_Shared.GetNumHealers();
+    if ( pPlayer->m_Shared.InCond( TF_COND_INVULNERABLE ) )
+    {
+        int iNumHealers = pPlayer->m_Shared.GetNumHealers();
 
-		// for each medic healing me
-		for ( int i=0;i<iNumHealers;i++ )
-		{
-			CTFPlayer *pMedic = ToTFPlayer( pPlayer->m_Shared.GetHealerByIndex( i ) );
+        // for each medic healing me
+        for ( int i = 0; i < iNumHealers; i++ )
+        {
+            CTFPlayer *pMedic = ToTFPlayer( pPlayer->m_Shared.GetHealerByIndex( i ) );
 
-			// if it's a medic and that medic is releasing charge
-			if ( pMedic && pMedic->GetChargeEffectBeingProvided() == MEDIGUN_CHARGE_INVULN )
-			{
-				// they are invulning me - add pEntity to their list of people punched 
-				pMedic->HandleAchievement_Medic_AssistHeavy( pHitPlayer );
-			}
-		}
-	}
+            // if it's a medic and that medic is releasing charge
+            if ( pMedic && pMedic->GetChargeEffectBeingProvided() == MEDIGUN_CHARGE_INVULN )
+            {
+                // they are invulning me - add pEntity to their list of people punched
+                pMedic->HandleAchievement_Medic_AssistHeavy( pHitPlayer );
+            }
+        }
+    }
 
-	// If we've killed someone, check to see for the unique fist kill response
-	if ( !pEntity->IsAlive() )
-	{
-		if ( GetFistType() == FISTTYPE_RADIAL_BUFF )
-		{
-			pPlayer->Taunt();
-		}
-	}
+    // If we've killed someone, check to see for the unique fist kill response
+    if ( !pEntity->IsAlive() )
+    {
+        if ( GetFistType() == FISTTYPE_RADIAL_BUFF )
+        {
+            pPlayer->Taunt();
+        }
+    }
 }
 #endif
 
 void CTFFists::SetWeaponVisible( bool visible )
-{ 
-	if ( visible )	// intentionally never hiding the fists
-	{ 
-		BaseClass::SetWeaponVisible( visible );
-	} 
-}  
+{
+    if ( visible )  // intentionally never hiding the fists
+    {
+        BaseClass::SetWeaponVisible( visible );
+    }
+}
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CTFFists::Deploy( void )
 {
-// #ifdef GAME_DLL
-// 	if ( GetFistType() == FISTTYPE_GRU )
-// 	{
-// 		CTFPlayer *pTFOwner = GetTFPlayerOwner();
-// 		if ( pTFOwner )
-// 		{
-			// TODO: Penalty for spam-equipping gloves
-// 		}
-// 	}
-// #endif
+    // #ifdef GAME_DLL
+    // 	if ( GetFistType() == FISTTYPE_GRU )
+    // 	{
+    // 		CTFPlayer *pTFOwner = GetTFPlayerOwner();
+    // 		if ( pTFOwner )
+    // 		{
+    // TODO: Penalty for spam-equipping gloves
+    // 		}
+    // 	}
+    // #endif
 
-	return BaseClass::Deploy();
+    return BaseClass::Deploy();
 }

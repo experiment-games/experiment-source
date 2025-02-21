@@ -10,27 +10,28 @@
 using namespace vgui;
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 class CTFLeaderboardPanel : public CBaseASyncPanel
 {
-	DECLARE_CLASS_SIMPLE( CTFLeaderboardPanel, CBaseASyncPanel );
-public:
-	CTFLeaderboardPanel( Panel *pParent, const char *pszPanelName );
-	virtual void ApplySchemeSettings( vgui::IScheme *pScheme ) OVERRIDE;
-	virtual void ApplySettings( KeyValues *inResourceData );
+    DECLARE_CLASS_SIMPLE( CTFLeaderboardPanel, CBaseASyncPanel );
 
-protected:
-	virtual bool GetLeaderboardData( CUtlVector< LeaderboardEntry_t* >& scores ) = 0;
-	virtual bool UpdateLeaderboards();
-	virtual bool CheckForData_Internal() OVERRIDE;
+   public:
+    CTFLeaderboardPanel( Panel *pParent, const char *pszPanelName );
+    virtual void ApplySchemeSettings( vgui::IScheme *pScheme ) OVERRIDE;
+    virtual void ApplySettings( KeyValues *inResourceData );
 
-	CUtlVector< EditablePanel* > m_vecLeaderboardEntries;
+   protected:
+    virtual bool GetLeaderboardData( CUtlVector< LeaderboardEntry_t * > &scores ) = 0;
+    virtual bool UpdateLeaderboards();
+    virtual bool CheckForData_Internal() OVERRIDE;
 
-	CPanelAnimationVarAliasType( int, m_yEntryStep, "entry_step", "5", "proportional_int");
-	Color m_EvenTextColor;
-	Color m_OddTextColor;
-	Color m_LocalPlayerTextColor;
+    CUtlVector< EditablePanel * > m_vecLeaderboardEntries;
+
+    CPanelAnimationVarAliasType( int, m_yEntryStep, "entry_step", "5", "proportional_int" );
+    Color m_EvenTextColor;
+    Color m_OddTextColor;
+    Color m_LocalPlayerTextColor;
 };
 
-#endif //TF_LEADERBOARDPANEL_H
+#endif  // TF_LEADERBOARDPANEL_H

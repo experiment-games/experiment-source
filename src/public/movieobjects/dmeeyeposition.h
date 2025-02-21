@@ -12,7 +12,6 @@
 
 #include "movieobjects/dmedag.h"
 
-
 //-----------------------------------------------------------------------------
 /*
 $eyeposition 0 83.274592 0
@@ -23,15 +22,15 @@ $attachment "lefteye"  "bip_head"  1.425952  83.274592 1.41954 absolute
 $cdmaterials "models/player/hvyweapon/"
 $model heavy "parts/dmx/heavy_reference_lo.dmx"{
 
-	eyeball righteye "bip_head" -1.425952 83.274592 1.41954 "eyeball_r" 1.80
-		356  -1 "pupil_r" 0.6
-		eyeball lefteye  "bip_head"  1.425952 83.274592 1.41954 "eyeball_l" 1.80
-		356  1 "pupil_l" 0.6
+  eyeball righteye "bip_head" -1.425952 83.274592 1.41954 "eyeball_r" 1.80
+    356  -1 "pupil_r" 0.6
+    eyeball lefteye  "bip_head"  1.425952 83.274592 1.41954 "eyeball_l" 1.80
+    356  1 "pupil_l" 0.6
 
-		localvar %dummy_eyelid_flex 
+    localvar %dummy_eyelid_flex
 
-		flexcontroller eyes range -30 30 eyes_updown
-		flexcontroller eyes range -30 30 eyes_rightleft
+    flexcontroller eyes range -30 30 eyes_updown
+    flexcontroller eyes range -30 30 eyes_rightleft
 
 }
 
@@ -62,12 +61,10 @@ eyeball (name) (bone name) (X) (Y) (Z) (material name) (diameter) (angle) (iris 
 //-----------------------------------------------------------------------------
 class CDmeEyePosition : public CDmeDag
 {
-	DEFINE_ELEMENT( CDmeEyePosition, CDmeDag );
+    DEFINE_ELEMENT( CDmeEyePosition, CDmeDag );
 
-public:
-
-	void GetWorldPosition( Vector &worldPosition );
+   public:
+    void GetWorldPosition( Vector &worldPosition );
 };
 
-
-#endif // DMEEYEPOSITION_H
+#endif  // DMEEYEPOSITION_H

@@ -10,33 +10,35 @@
 
 class CTFBotSpyInfiltrate : public Action< CTFBot >
 {
-public:
-	virtual ActionResult< CTFBot >	OnStart( CTFBot *me, Action< CTFBot > *priorAction );
-	virtual ActionResult< CTFBot >	Update( CTFBot *me, float interval );
-	virtual void					OnEnd( CTFBot *me, Action< CTFBot > *nextAction );
-	virtual ActionResult< CTFBot >	OnSuspend( CTFBot *me, Action< CTFBot > *interruptingAction );
-	virtual ActionResult< CTFBot >	OnResume( CTFBot *me, Action< CTFBot > *interruptingAction );
+   public:
+    virtual ActionResult< CTFBot > OnStart( CTFBot *me, Action< CTFBot > *priorAction );
+    virtual ActionResult< CTFBot > Update( CTFBot *me, float interval );
+    virtual void OnEnd( CTFBot *me, Action< CTFBot > *nextAction );
+    virtual ActionResult< CTFBot > OnSuspend( CTFBot *me, Action< CTFBot > *interruptingAction );
+    virtual ActionResult< CTFBot > OnResume( CTFBot *me, Action< CTFBot > *interruptingAction );
 
-	virtual EventDesiredResult< CTFBot > OnStuck( CTFBot *me );
-	virtual EventDesiredResult< CTFBot > OnTerritoryCaptured( CTFBot *me, int territoryID );
-	virtual EventDesiredResult< CTFBot > OnTerritoryLost( CTFBot *me, int territoryID );
+    virtual EventDesiredResult< CTFBot > OnStuck( CTFBot *me );
+    virtual EventDesiredResult< CTFBot > OnTerritoryCaptured( CTFBot *me, int territoryID );
+    virtual EventDesiredResult< CTFBot > OnTerritoryLost( CTFBot *me, int territoryID );
 
-	virtual QueryResultType ShouldAttack( const INextBot *me, const CKnownEntity *them ) const;	// should we attack "them"?
+    virtual QueryResultType ShouldAttack( const INextBot *me, const CKnownEntity *them ) const;  // should we attack "them"?
 
-	virtual const char *GetName( void ) const	{ return "SpyInfiltrate"; };
+    virtual const char *GetName( void ) const
+    {
+        return "SpyInfiltrate";
+    };
 
-private:
-	CountdownTimer m_repathTimer;
-	PathFollower m_path;
+   private:
+    CountdownTimer m_repathTimer;
+    PathFollower m_path;
 
-	CTFNavArea *m_hideArea;
-	bool FindHidingSpot( CTFBot *me );
-	CountdownTimer m_findHidingSpotTimer;
+    CTFNavArea *m_hideArea;
+    bool FindHidingSpot( CTFBot *me );
+    CountdownTimer m_findHidingSpotTimer;
 
-	CountdownTimer m_waitTimer;
+    CountdownTimer m_waitTimer;
 
-	bool m_hasEnteredCombatZone;
+    bool m_hasEnteredCombatZone;
 };
 
-
-#endif // TF_BOT_SPY_INFILTRATE_H
+#endif  // TF_BOT_SPY_INFILTRATE_H

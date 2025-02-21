@@ -9,5 +9,5 @@ using namespace GCSDK;
 //-----------------------------------------------------------------------------
 void CTFGSLobby::Dump() const
 {
-	CProtoBufSharedObjectBase::Dump( GSObj() );
+    CProtoBufSharedObjectBase::Dump( GSObj() );
 }

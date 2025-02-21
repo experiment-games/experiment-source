@@ -8,20 +8,22 @@
 
 class CTFBotUseItem : public Action< CTFBot >
 {
-public:
-	CTFBotUseItem( CTFWeaponBase *item );
-	virtual ~CTFBotUseItem() { }
+   public:
+    CTFBotUseItem( CTFWeaponBase *item );
+    virtual ~CTFBotUseItem() {}
 
-	virtual ActionResult< CTFBot >	OnStart( CTFBot *me, Action< CTFBot > *priorAction );
-	virtual ActionResult< CTFBot >	Update( CTFBot *me, float interval );
-	virtual void					OnEnd( CTFBot *me, Action< CTFBot > *nextAction );
+    virtual ActionResult< CTFBot > OnStart( CTFBot *me, Action< CTFBot > *priorAction );
+    virtual ActionResult< CTFBot > Update( CTFBot *me, float interval );
+    virtual void OnEnd( CTFBot *me, Action< CTFBot > *nextAction );
 
-	virtual const char *GetName( void ) const	{ return "UseItem"; };
+    virtual const char *GetName( void ) const
+    {
+        return "UseItem";
+    };
 
-private:
-	CHandle< CTFWeaponBase > m_item;
-	CountdownTimer m_cooldownTimer;
+   private:
+    CHandle< CTFWeaponBase > m_item;
+    CountdownTimer m_cooldownTimer;
 };
 
-
-#endif // TF_BOT_USE_ITEM_H
+#endif  // TF_BOT_USE_ITEM_H

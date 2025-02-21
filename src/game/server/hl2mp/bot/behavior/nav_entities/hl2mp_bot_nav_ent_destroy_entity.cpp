@@ -11,32 +11,30 @@ extern ConVar hl2mp_bot_path_lookahead_range;
 //---------------------------------------------------------------------------------------------
 CHL2MPBotNavEntDestroyEntity::CHL2MPBotNavEntDestroyEntity( const CFuncNavPrerequisite *prereq )
 {
-	m_prereq = prereq;
+    m_prereq = prereq;
 }
-
 
 //---------------------------------------------------------------------------------------------
-ActionResult< CHL2MPBot >	CHL2MPBotNavEntDestroyEntity::OnStart( CHL2MPBot *me, Action< CHL2MPBot > *priorAction )
+ActionResult< CHL2MPBot > CHL2MPBotNavEntDestroyEntity::OnStart( CHL2MPBot *me, Action< CHL2MPBot > *priorAction )
 {
-	if ( m_prereq == NULL )
-	{
-		return Done( "Prerequisite has been removed before we started" );
-	}
+    if ( m_prereq == NULL )
+    {
+        return Done( "Prerequisite has been removed before we started" );
+    }
 
-	m_path.SetMinLookAheadDistance( me->GetDesiredPathLookAheadRange() );
+    m_path.SetMinLookAheadDistance( me->GetDesiredPathLookAheadRange() );
 
-	m_wasIgnoringEnemies = me->HasAttribute( CHL2MPBot::IGNORE_ENEMIES );
+    m_wasIgnoringEnemies = me->HasAttribute( CHL2MPBot::IGNORE_ENEMIES );
 
-	m_isReadyToLaunchSticky = true;
+    m_isReadyToLaunchSticky = true;
 
-	return Continue();
+    return Continue();
 }
-
 
 //---------------------------------------------------------------------------------------------
 void CHL2MPBotNavEntDestroyEntity::DetonateStickiesWhenSet( CHL2MPBot *me, CWeapon_SLAM *slam ) const
 {
-	// TODO(misyl): Hook this up for SLAM someday.
+    // TODO(misyl): Hook this up for SLAM someday.
 #if 0
 	if ( !stickyLauncher )
 		return;
@@ -64,87 +62,84 @@ void CHL2MPBotNavEntDestroyEntity::DetonateStickiesWhenSet( CHL2MPBot *me, CWeap
 #endif
 }
 
-
 //---------------------------------------------------------------------------------------------
-ActionResult< CHL2MPBot >	CHL2MPBotNavEntDestroyEntity::Update( CHL2MPBot *me, float interval )
+ActionResult< CHL2MPBot > CHL2MPBotNavEntDestroyEntity::Update( CHL2MPBot *me, float interval )
 {
-	if ( m_prereq == NULL )
-	{
-		return Done( "Prerequisite has been removed" );
-	}
+    if ( m_prereq == NULL )
+    {
+        return Done( "Prerequisite has been removed" );
+    }
 
-	CBaseEntity *target = m_prereq->GetTaskEntity();
-	if ( target == NULL )
-	{
-		return Done( "Target entity is NULL" );
-	}
+    CBaseEntity *target = m_prereq->GetTaskEntity();
+    if ( target == NULL )
+    {
+        return Done( "Target entity is NULL" );
+    }
 
-	float attackRange = me->GetMaxAttackRange();
-		
-	if ( m_prereq->GetTaskValue() > 0.0f ) 
-	{
-		attackRange = MIN( attackRange, m_prereq->GetTaskValue() );
-	}
+    float attackRange = me->GetMaxAttackRange();
 
-	if ( me->IsDistanceBetweenLessThan( target, attackRange ) && me->GetVisionInterface()->IsLineOfSightClearToEntity( target ) )
-	{
-		me->SetAttribute( CHL2MPBot::IGNORE_ENEMIES );
+    if ( m_prereq->GetTaskValue() > 0.0f )
+    {
+        attackRange = MIN( attackRange, m_prereq->GetTaskValue() );
+    }
 
-		me->GetBodyInterface()->AimHeadTowards( target->WorldSpaceCenter(), IBody::CRITICAL, 0.2f, NULL, "Aiming at target we need to destroy to progress" );
+    if ( me->IsDistanceBetweenLessThan( target, attackRange ) && me->GetVisionInterface()->IsLineOfSightClearToEntity( target ) )
+    {
+        me->SetAttribute( CHL2MPBot::IGNORE_ENEMIES );
 
-		if ( me->GetBodyInterface()->IsHeadAimingOnTarget() )
-		{
-			// attack
-			CWeapon_SLAM *pSLAM = ( CWeapon_SLAM * ) me->Weapon_OwnsThisType( "weapon_slam" );
-			if ( pSLAM )
-			{
-				me->Weapon_Switch( pSLAM );
+        me->GetBodyInterface()->AimHeadTowards( target->WorldSpaceCenter(), IBody::CRITICAL, 0.2f, NULL, "Aiming at target we need to destroy to progress" );
 
-				if ( m_isReadyToLaunchSticky )
-				{
-					me->PressAltFireButton();
-				}
+        if ( me->GetBodyInterface()->IsHeadAimingOnTarget() )
+        {
+            // attack
+            CWeapon_SLAM *pSLAM = ( CWeapon_SLAM * )me->Weapon_OwnsThisType( "weapon_slam" );
+            if ( pSLAM )
+            {
+                me->Weapon_Switch( pSLAM );
 
-				m_isReadyToLaunchSticky = !m_isReadyToLaunchSticky;
+                if ( m_isReadyToLaunchSticky )
+                {
+                    me->PressAltFireButton();
+                }
 
-				DetonateStickiesWhenSet( me, pSLAM );
+                m_isReadyToLaunchSticky = !m_isReadyToLaunchSticky;
 
-				return Continue();
-			}
+                DetonateStickiesWhenSet( me, pSLAM );
 
-			me->EquipBestWeaponForThreat( NULL );
-			me->PressFireButton();
-		}
+                return Continue();
+            }
 
-		return Continue();
-	}
+            me->EquipBestWeaponForThreat( NULL );
+            me->PressFireButton();
+        }
 
+        return Continue();
+    }
 
-	if ( !m_wasIgnoringEnemies )
-	{
-		me->ClearAttribute( CHL2MPBot::IGNORE_ENEMIES );
-	}
+    if ( !m_wasIgnoringEnemies )
+    {
+        me->ClearAttribute( CHL2MPBot::IGNORE_ENEMIES );
+    }
 
-	// move into view of our target
-	if ( m_repathTimer.IsElapsed() )
-	{
-		m_repathTimer.Start( RandomFloat( 1.0f, 2.0f ) );
+    // move into view of our target
+    if ( m_repathTimer.IsElapsed() )
+    {
+        m_repathTimer.Start( RandomFloat( 1.0f, 2.0f ) );
 
-		CHL2MPBotPathCost cost( me, FASTEST_ROUTE );
-		m_path.Compute( me, target->GetAbsOrigin(), cost );
-	}
+        CHL2MPBotPathCost cost( me, FASTEST_ROUTE );
+        m_path.Compute( me, target->GetAbsOrigin(), cost );
+    }
 
-	m_path.Update( me );
+    m_path.Update( me );
 
-	return Continue();
+    return Continue();
 }
-
 
 //---------------------------------------------------------------------------------------------
 void CHL2MPBotNavEntDestroyEntity::OnEnd( CHL2MPBot *me, Action< CHL2MPBot > *nextAction )
 {
-	if ( !m_wasIgnoringEnemies )
-	{
-		me->ClearAttribute( CHL2MPBot::IGNORE_ENEMIES );
-	}
+    if ( !m_wasIgnoringEnemies )
+    {
+        me->ClearAttribute( CHL2MPBot::IGNORE_ENEMIES );
+    }
 }

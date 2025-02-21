@@ -11,4 +11,3 @@
 #include "econ_claimcode.h"
 
 using namespace GCSDK;
-

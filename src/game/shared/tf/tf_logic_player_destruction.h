@@ -11,136 +11,164 @@
 #include "tf_logic_robot_destruction.h"
 
 #ifdef CLIENT_DLL
-	#define CTFPlayerDestructionLogic C_TFPlayerDestructionLogic
-	#define CPlayerDestructionDispenser C_PlayerDestructionDispenser
+#define CTFPlayerDestructionLogic C_TFPlayerDestructionLogic
+#define CPlayerDestructionDispenser C_PlayerDestructionDispenser
 #endif
 
 //-----------------------------------------------------------------------------
 class CTFPlayerDestructionLogic : public CTFRobotDestructionLogic
 {
-public:
+   public:
 #ifdef GAME_DLL
-	DECLARE_DATADESC();
-#endif // GAME_DLL
-	DECLARE_CLASS( CTFPlayerDestructionLogic, CTFRobotDestructionLogic )
-	DECLARE_NETWORKCLASS();
+    DECLARE_DATADESC();
+#endif  // GAME_DLL
+    DECLARE_CLASS( CTFPlayerDestructionLogic, CTFRobotDestructionLogic )
+    DECLARE_NETWORKCLASS();
 
-	virtual EType GetType() const { return TYPE_PLAYER_DESTRUCTION; }
+    virtual EType GetType() const
+    {
+        return TYPE_PLAYER_DESTRUCTION;
+    }
 
-	CTFPlayerDestructionLogic();
-	static CTFPlayerDestructionLogic* GetPlayerDestructionLogic();
+    CTFPlayerDestructionLogic();
+    static CTFPlayerDestructionLogic* GetPlayerDestructionLogic();
 
-	CTFPlayer* GetRedTeamLeader() const { return m_hRedTeamLeader.Get(); }
-	CTFPlayer* GetBlueTeamLeader() const { return m_hBlueTeamLeader.Get(); }
+    CTFPlayer* GetRedTeamLeader() const
+    {
+        return m_hRedTeamLeader.Get();
+    }
+    CTFPlayer* GetBlueTeamLeader() const
+    {
+        return m_hBlueTeamLeader.Get();
+    }
 
 #ifdef GAME_DLL
-	virtual void Precache() OVERRIDE;
+    virtual void Precache() OVERRIDE;
 
-	const char *GetPropModelName() const;
+    const char* GetPropModelName() const;
 
-	void CalcTeamLeader( int iTeam );
+    void CalcTeamLeader( int iTeam );
 
-	virtual void FireGameEvent( IGameEvent *pEvent ) OVERRIDE;
+    virtual void FireGameEvent( IGameEvent* pEvent ) OVERRIDE;
 
-	void InputScoreRedPoints( inputdata_t& inputdata );
-	void InputScoreBluePoints( inputdata_t& inputdata );
-	void InputEnableMaxScoreUpdating( inputdata_t& inputdata );
-	void InputDisableMaxScoreUpdating( inputdata_t& inputdata );
-	void InputSetCountdownTimer( inputdata_t& inputdata );
-	void InputSetCountdownImage( inputdata_t& inputdata );
-	void InputSetFlagResetDelay( inputdata_t& inputdata );
-	void InputSetPointsOnPlayerDeath( inputdata_t& inputdata );
+    void InputScoreRedPoints( inputdata_t& inputdata );
+    void InputScoreBluePoints( inputdata_t& inputdata );
+    void InputEnableMaxScoreUpdating( inputdata_t& inputdata );
+    void InputDisableMaxScoreUpdating( inputdata_t& inputdata );
+    void InputSetCountdownTimer( inputdata_t& inputdata );
+    void InputSetCountdownImage( inputdata_t& inputdata );
+    void InputSetFlagResetDelay( inputdata_t& inputdata );
+    void InputSetPointsOnPlayerDeath( inputdata_t& inputdata );
 
-	void PlayPropDropSound( CTFPlayer *pPlayer );
-	void PlayPropPickupSound( CTFPlayer *pPlayer );
+    void PlayPropDropSound( CTFPlayer* pPlayer );
+    void PlayPropPickupSound( CTFPlayer* pPlayer );
 
-	void CountdownThink( void );
-	int GetFlagResetDelay( void ){ return m_nFlagResetDelay; }
-	int GetPointsOnPlayerDeath( void ){ return m_nPointsOnPlayerDeath; }
-	virtual int GetHealDistance( void ) OVERRIDE { return m_nHealDistance; }
-	virtual void TeamWin( int nTeam ) OVERRIDE;
+    void CountdownThink( void );
+    int GetFlagResetDelay( void )
+    {
+        return m_nFlagResetDelay;
+    }
+    int GetPointsOnPlayerDeath( void )
+    {
+        return m_nPointsOnPlayerDeath;
+    }
+    virtual int GetHealDistance( void ) OVERRIDE
+    {
+        return m_nHealDistance;
+    }
+    virtual void TeamWin( int nTeam ) OVERRIDE;
 
-#endif // GAME_DLL
+#endif  // GAME_DLL
 
-	CTFPlayer *GetTeamLeader( int iTeam ) const OVERRIDE;
-	string_t GetCountdownImage( void ) OVERRIDE { return m_iszCountdownImage; }
-	virtual bool IsUsingCustomCountdownImage( void ) OVERRIDE{ return m_bUsingCountdownImage; }
+    CTFPlayer* GetTeamLeader( int iTeam ) const OVERRIDE;
+    string_t GetCountdownImage( void ) OVERRIDE
+    {
+        return m_iszCountdownImage;
+    }
+    virtual bool IsUsingCustomCountdownImage( void ) OVERRIDE
+    {
+        return m_bUsingCountdownImage;
+    }
 
-private:
+   private:
 #ifdef GAME_DLL
-	void PlaySound( const char *pszSound, CTFPlayer *pPlayer );
-	virtual void OnRedScoreChanged() OVERRIDE;
-	virtual void OnBlueScoreChanged() OVERRIDE;
-	
-	void EvaluatePlayerCount();
+    void PlaySound( const char* pszSound, CTFPlayer* pPlayer );
+    virtual void OnRedScoreChanged() OVERRIDE;
+    virtual void OnBlueScoreChanged() OVERRIDE;
 
-	void SetCountdownImage( string_t iszCountdownImage ) { m_iszCountdownImage = iszCountdownImage; }
+    void EvaluatePlayerCount();
 
-	string_t m_iszPropModelName;
-	string_t m_iszPropDropSound;
-	string_t m_iszPropPickupSound;
+    void SetCountdownImage( string_t iszCountdownImage )
+    {
+        m_iszCountdownImage = iszCountdownImage;
+    }
 
-	int m_nMinPoints;
-	int m_nPointsPerPlayer;
-	bool m_bMaxScoreUpdatingAllowed;
+    string_t m_iszPropModelName;
+    string_t m_iszPropDropSound;
+    string_t m_iszPropPickupSound;
 
-	int m_nFlagResetDelay;
-	int m_nHealDistance;
+    int m_nMinPoints;
+    int m_nPointsPerPlayer;
+    bool m_bMaxScoreUpdatingAllowed;
 
-	CObjectDispenser* CreateDispenser( int iTeam );
-	CHandle< CObjectDispenser > m_hRedDispenser;
-	CHandle< CObjectDispenser > m_hBlueDispenser;
+    int m_nFlagResetDelay;
+    int m_nHealDistance;
 
-	COutputFloat m_OnRedScoreChanged;
-	COutputFloat m_OnBlueScoreChanged;
+    CObjectDispenser* CreateDispenser( int iTeam );
+    CHandle< CObjectDispenser > m_hRedDispenser;
+    CHandle< CObjectDispenser > m_hBlueDispenser;
 
-	COutputEvent m_OnCountdownTimerExpired;
-#endif // GAME_DLL
+    COutputFloat m_OnRedScoreChanged;
+    COutputFloat m_OnBlueScoreChanged;
 
-	CNetworkHandle( CTFPlayer, m_hRedTeamLeader );
-	CNetworkHandle( CTFPlayer, m_hBlueTeamLeader );
+    COutputEvent m_OnCountdownTimerExpired;
+#endif  // GAME_DLL
 
-	CNetworkVar( bool, m_bUsingCountdownImage );
+    CNetworkHandle( CTFPlayer, m_hRedTeamLeader );
+    CNetworkHandle( CTFPlayer, m_hBlueTeamLeader );
+
+    CNetworkVar( bool, m_bUsingCountdownImage );
 
 #ifdef CLIENT_DLL
-	char		m_iszCountdownImage[MAX_PATH];
+    char m_iszCountdownImage[MAX_PATH];
 #else
-	CNetworkVar( string_t, m_iszCountdownImage );
-	int m_nPointsOnPlayerDeath;
+    CNetworkVar( string_t, m_iszCountdownImage );
+    int m_nPointsOnPlayerDeath;
 #endif
 };
 
 class CPlayerDestructionDispenser :
 #ifdef GAME_DLL
-	public CObjectDispenser
+    public CObjectDispenser
 #else
-	public C_ObjectDispenser
+    public C_ObjectDispenser
 #endif
 {
 #ifdef GAME_DLL
-	DECLARE_CLASS( CPlayerDestructionDispenser, CObjectDispenser )
+    DECLARE_CLASS( CPlayerDestructionDispenser, CObjectDispenser )
 #else
-	DECLARE_CLASS( CPlayerDestructionDispenser, C_ObjectDispenser )
+    DECLARE_CLASS( CPlayerDestructionDispenser, C_ObjectDispenser )
 #endif
-	DECLARE_NETWORKCLASS();
-	DECLARE_DATADESC();
-public:
+    DECLARE_NETWORKCLASS();
+    DECLARE_DATADESC();
+
+   public:
 #ifdef GAME_DLL
-	virtual float GetDispenserRadius( void ) OVERRIDE
-	{
-		if ( CTFPlayerDestructionLogic::GetRobotDestructionLogic() && ( CTFPlayerDestructionLogic::GetRobotDestructionLogic()->GetType() == CTFPlayerDestructionLogic::TYPE_PLAYER_DESTRUCTION ) )
-		{
-			return CTFPlayerDestructionLogic::GetRobotDestructionLogic()->GetHealDistance();
-		}
+    virtual float GetDispenserRadius( void ) OVERRIDE
+    {
+        if ( CTFPlayerDestructionLogic::GetRobotDestructionLogic() && ( CTFPlayerDestructionLogic::GetRobotDestructionLogic()->GetType() == CTFPlayerDestructionLogic::TYPE_PLAYER_DESTRUCTION ) )
+        {
+            return CTFPlayerDestructionLogic::GetRobotDestructionLogic()->GetHealDistance();
+        }
 
-		return 450;
-	}
+        return 450;
+    }
 
-	virtual void Spawn( void ) OVERRIDE;
-	void OnGoActive( void ) OVERRIDE;
-	void GetControlPanelInfo( int nPanelIndex, const char *&pPanelName ) OVERRIDE;
+    virtual void Spawn( void ) OVERRIDE;
+    void OnGoActive( void ) OVERRIDE;
+    void GetControlPanelInfo( int nPanelIndex, const char*& pPanelName ) OVERRIDE;
 
 #endif
 };
 
-#endif// PLAYER_DESTRUCTION_H
+#endif  // PLAYER_DESTRUCTION_H

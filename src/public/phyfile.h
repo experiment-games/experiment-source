@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -13,11 +13,11 @@
 
 typedef struct phyheader_s
 {
-	DECLARE_BYTESWAP_DATADESC();
-	int		size;
-	int		id;
-	int		solidCount;
-	int32	checkSum;	// checksum of source .mdl file
+    DECLARE_BYTESWAP_DATADESC();
+    int size;
+    int id;
+    int solidCount;
+    int32 checkSum;  // checksum of source .mdl file
 } phyheader_t;
 
-#endif // PHYFILE_H
+#endif  // PHYFILE_H

@@ -41,79 +41,83 @@
 #include <google/protobuf/stubs/shared_ptr.h>
 #endif
 
-
-namespace google {
-namespace protobuf {
+namespace google
+{
+namespace protobuf
+{
 
 class Message;
 class FieldDescriptor;
 
 using internal::shared_ptr;
 
-namespace python {
+namespace python
+{
 
 struct CMessage;
 struct CFieldDescriptor;
 
-typedef struct ExtensionDict {
-  PyObject_HEAD;
-  shared_ptr<Message> owner;
-  CMessage* parent;
-  Message* message;
-  PyObject* values;
+typedef struct ExtensionDict
+{
+    PyObject_HEAD;
+    shared_ptr< Message > owner;
+    CMessage* parent;
+    Message* message;
+    PyObject* values;
 } ExtensionDict;
 
 extern PyTypeObject ExtensionDict_Type;
 
-namespace extension_dict {
+namespace extension_dict
+{
 
 // Gets the _cdescriptor reference to a CFieldDescriptor object given a
 // python descriptor object.
 //
 // Returns a new reference.
-CFieldDescriptor* InternalGetCDescriptorFromExtension(PyObject* extension);
+CFieldDescriptor* InternalGetCDescriptorFromExtension( PyObject* extension );
 
 // Gets the number of extension values in this ExtensionDict as a python object.
 //
 // Returns a new reference.
-PyObject* len(ExtensionDict* self);
+PyObject* len( ExtensionDict* self );
 
 // Releases extensions referenced outside this dictionary to keep outside
 // references alive.
 //
 // Returns 0 on success, -1 on failure.
-int ReleaseExtension(ExtensionDict* self,
-                     PyObject* extension,
-                     const google::protobuf::FieldDescriptor* descriptor);
+int ReleaseExtension( ExtensionDict* self,
+                      PyObject* extension,
+                      const google::protobuf::FieldDescriptor* descriptor );
 
 // Gets an extension from the dict for the given extension descriptor.
 //
 // Returns a new reference.
-PyObject* subscript(ExtensionDict* self, PyObject* key);
+PyObject* subscript( ExtensionDict* self, PyObject* key );
 
 // Assigns a value to an extension in the dict. Can only be used for singular
 // simple types.
 //
 // Returns 0 on success, -1 on failure.
-int ass_subscript(ExtensionDict* self, PyObject* key, PyObject* value);
+int ass_subscript( ExtensionDict* self, PyObject* key, PyObject* value );
 
 // Clears an extension from the dict. Will release the extension if there
 // is still an external reference left to it.
 //
 // Returns None on success.
-PyObject* ClearExtension(ExtensionDict* self,
-                                       PyObject* extension);
+PyObject* ClearExtension( ExtensionDict* self,
+                          PyObject* extension );
 
 // Checks if the dict has an extension.
 //
 // Returns a new python boolean reference.
-PyObject* HasExtension(ExtensionDict* self, PyObject* extension);
+PyObject* HasExtension( ExtensionDict* self, PyObject* extension );
 
 // Gets an extension from the dict given the extension name as opposed to
 // descriptor.
 //
 // Returns a new reference.
-PyObject* _FindExtensionByName(ExtensionDict* self, PyObject* name);
+PyObject* _FindExtensionByName( ExtensionDict* self, PyObject* name );
 
 }  // namespace extension_dict
 }  // namespace python

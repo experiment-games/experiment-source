@@ -4,7 +4,6 @@
 //
 //=============================================================================//
 
-
 #include "cbase.h"
 #include "tf_match_description.h"
 #include "tf_matchmaking_dashboard.h"
@@ -17,173 +16,171 @@
 using namespace vgui;
 using namespace GCSDK;
 
-class CTFDashboardEventPanel : public CMatchMakingDashboardSidePanel
-							 , public CGameEventListener
+class CTFDashboardEventPanel : public CMatchMakingDashboardSidePanel, public CGameEventListener
 {
+    DECLARE_CLASS_SIMPLE( CTFDashboardEventPanel, CMatchMakingDashboardSidePanel );
 
-	DECLARE_CLASS_SIMPLE( CTFDashboardEventPanel, CMatchMakingDashboardSidePanel );
+    CTFDashboardEventPanel( Panel* parent, const char* panelName )
+        : BaseClass( parent, panelName, "resource/ui/MatchMakingDashboardEventMatch.res", k_eSideRight )
+    {
+        ListenForGameEvent( "party_criteria_changed" );
+        ListenForGameEvent( "party_queue_state_changed" );
+        ListenForGameEvent( "world_status_changed" );
+    }
 
-	CTFDashboardEventPanel( Panel *parent, const char *panelName )
-		: BaseClass( parent, panelName, "resource/ui/MatchMakingDashboardEventMatch.res", k_eSideRight )
-	{
-		ListenForGameEvent( "party_criteria_changed" );
-		ListenForGameEvent( "party_queue_state_changed" );
-		ListenForGameEvent( "world_status_changed" );
-	}
+    virtual ~CTFDashboardEventPanel()
+    {
+    }
 
-	virtual ~CTFDashboardEventPanel()
-	{}
+    virtual void PerformLayout() OVERRIDE
+    {
+        BaseClass::PerformLayout();
 
-	virtual void PerformLayout() OVERRIDE
-	{
-		BaseClass::PerformLayout();
+        UpdateFromWorldStatus();
+    }
 
-		UpdateFromWorldStatus();
-	}
+    virtual void OnCommand( const char* command ) OVERRIDE
+    {
+        if ( FStrEq( "show_explanations", command ) )
+        {
+            ShowDashboardExplanation( "CompIntro" );
+            return;
+        }
+        else if ( FStrEq( command, "find_game" ) )
+        {
+            ETFMatchGroup eEventMatchGroup = GTFGCClientSystem()->WorldStatus().event_match_group();
+            auto pMatchGroup = GetMatchGroupDescription( eEventMatchGroup );
+            // Match groups that have strict abandons pop up a dialog to confirm that you want to queue.  This helps
+            // inform players that they need to be ready to commit a lot of time.
+            if ( pMatchGroup && pMatchGroup->BUsesStrictAbandons() )
+            {
+                ShowConfirmDialog( "#TF_MM_Disconnect_Title",
+                                   "#TF_Matchmaking_AbandonQueuePrompt",
+                                   "#TF_OK",
+                                   "#Cancel",
+                                   []( bool bConfirmed, void* pContext )
+                                   {
+                                       if ( bConfirmed )
+                                       {
+                                           ETFMatchGroup eEventMatchGroup = GTFGCClientSystem()->WorldStatus().event_match_group();
+                                           GTFPartyClient()->RequestQueueForMatch( eEventMatchGroup );
+                                       }
+                                   } );
+            }
+            else
+            {
+                GTFPartyClient()->RequestQueueForMatch( eEventMatchGroup );
+            }
 
-	virtual void OnCommand( const char *command ) OVERRIDE
-	{
-		if ( FStrEq( "show_explanations", command ) )
-		{
-			ShowDashboardExplanation( "CompIntro" );
-			return;
-		}
-		else if ( FStrEq( command, "find_game" ) )
-		{
-			ETFMatchGroup eEventMatchGroup = GTFGCClientSystem()->WorldStatus().event_match_group();
-			auto pMatchGroup = GetMatchGroupDescription( eEventMatchGroup );
-			// Match groups that have strict abandons pop up a dialog to confirm that you want to queue.  This helps
-			// inform players that they need to be ready to commit a lot of time.
-			if ( pMatchGroup && pMatchGroup->BUsesStrictAbandons() )
-			{
-				ShowConfirmDialog( "#TF_MM_Disconnect_Title",
-								   "#TF_Matchmaking_AbandonQueuePrompt",
-								   "#TF_OK",
-								   "#Cancel",
-								   []( bool bConfirmed, void* pContext )
-				{
-					if ( bConfirmed )
-					{
-						ETFMatchGroup eEventMatchGroup = GTFGCClientSystem()->WorldStatus().event_match_group();
-						GTFPartyClient()->RequestQueueForMatch( eEventMatchGroup );
-					}
-				} );
-			}
-			else
-			{
-				GTFPartyClient()->RequestQueueForMatch( eEventMatchGroup );
-			}
+            return;
+        }
 
-			return;
-		}
+        BaseClass::OnCommand( command );
+    }
 
-		BaseClass::OnCommand( command );
-	}
+    void FireGameEvent( IGameEvent* event ) OVERRIDE
+    {
+        if ( FStrEq( event->GetName(), "party_criteria_changed" ) )
+        {
+            InvalidateLayout();
+        }
+        else if ( FStrEq( event->GetName(), "party_queue_state_changed" ) )
+        {
+            InvalidateLayout();
+        }
+        else if ( FStrEq( event->GetName(), "world_status_changed" ) )
+        {
+            UpdateFromWorldStatus();
+        }
+    }
 
-	void FireGameEvent( IGameEvent *event ) OVERRIDE
-	{
-		if ( FStrEq( event->GetName(), "party_criteria_changed" ) )
-		{
-			InvalidateLayout();
-		}
-		else if ( FStrEq( event->GetName(), "party_queue_state_changed" ) )
-		{
-			InvalidateLayout();
-		}
-		else if ( FStrEq( event->GetName(), "world_status_changed" ) )
-		{
-			UpdateFromWorldStatus();
-		}
-	}
+   private:
+    void UpdateFromWorldStatus()
+    {
+        auto& msgWorldStatus = GTFGCClientSystem()->WorldStatus();
+        ETFMatchGroup eEventMatchGroup = msgWorldStatus.event_match_group();
+        CRTime rtimeExpireTime( msgWorldStatus.event_expire_time() );
 
-private:
+        if ( eEventMatchGroup == k_eTFMatchGroup_Invalid )
+            return;
 
-	void UpdateFromWorldStatus()
-	{
-		auto& msgWorldStatus = GTFGCClientSystem()->WorldStatus();
-		ETFMatchGroup eEventMatchGroup = msgWorldStatus.event_match_group();
-		CRTime rtimeExpireTime( msgWorldStatus.event_expire_time() );
+        if ( rtimeExpireTime < CRTime::RTime32TimeCur() )
+            return;
 
-		if ( eEventMatchGroup == k_eTFMatchGroup_Invalid )
-			return;
+        auto pMatchGroup = GetMatchGroupDescription( eEventMatchGroup );
+        if ( !pMatchGroup )
+            return;
 
-		if ( rtimeExpireTime < CRTime::RTime32TimeCur() )
-			return;
+        auto pUIData = pMatchGroup->GetPlayListEntryData();
+        if ( !pUIData )
+            return;
 
-		auto pMatchGroup = GetMatchGroupDescription( eEventMatchGroup );
-		if ( !pMatchGroup )
-			return;
+        SetupQueueButton( eEventMatchGroup );
+        SetDialogVariable( "title", g_pVGuiLocalize->Find( pUIData->m_pszSidePanelTitle ) );
 
-		auto pUIData = pMatchGroup->GetPlayListEntryData();
-		if ( !pUIData )
-			return;
+        Label* pDescLabel = FindControl< Label >( "ModeDesc", true );
+        if ( pDescLabel )
+        {
+            // Hack?  Are we really ever going to have more?
+            if ( eEventMatchGroup == k_eTFMatchGroup_Event_Placeholder )
+            {
+                const SchemaGameCategory_t* pCategory = GetItemSchema()->GetGameCategory( kGameCategory_Competitive_12v12 );
 
-		SetupQueueButton( eEventMatchGroup );
-		SetDialogVariable( "title", g_pVGuiLocalize->Find( pUIData->m_pszSidePanelTitle ) );
+                wchar_t wszMaps[512];
+                wszMaps[0] = 0;
+                wchar_t wszLocString[4096];
+                wszLocString[0] = 0;
 
-		Label* pDescLabel = FindControl< Label >( "ModeDesc", true );
-		if ( pDescLabel )
-		{
-			// Hack?  Are we really ever going to have more?
-			if ( eEventMatchGroup == k_eTFMatchGroup_Event_Placeholder )
-			{
-				const SchemaGameCategory_t* pCategory = GetItemSchema()->GetGameCategory( kGameCategory_Competitive_12v12 );
+                FOR_EACH_VEC( pCategory->m_vecEnabledMaps, idxMap )
+                {
+                    if ( idxMap != 0 )
+                    {
+                        V_wcscat_safe( wszMaps, L"\n" );
+                    }
 
-				wchar_t wszMaps[512];
-				wszMaps[0] = 0;
-				wchar_t wszLocString[4096];
-				wszLocString[0] = 0;
+                    V_wcscat_safe( wszMaps, L"    - " );
 
-				FOR_EACH_VEC( pCategory->m_vecEnabledMaps, idxMap )
-				{
-					if ( idxMap != 0 )
-					{
-						V_wcscat_safe( wszMaps, L"\n" );
-					}
+                    const MapDef_t* pMap = pCategory->m_vecEnabledMaps[idxMap];
+                    V_wcscat_safe( wszMaps, g_pVGuiLocalize->Find( pMap->pszMapNameLocKey ) );
+                }
 
-					V_wcscat_safe( wszMaps, L"    - " );
+                g_pVGuiLocalize->ConstructString_safe( wszLocString, g_pVGuiLocalize->Find( pUIData->m_pszSidePanelDesc ), 1, wszMaps );
+                pDescLabel->SetText( wszLocString );
+            }
+            else
+            {
+                pDescLabel->SetText( pUIData->m_pszSidePanelDesc );
+            }
 
-					const MapDef_t* pMap = pCategory->m_vecEnabledMaps[ idxMap ];
-					V_wcscat_safe( wszMaps, g_pVGuiLocalize->Find( pMap->pszMapNameLocKey ) );
-				}
+            pDescLabel->SizeToContents();
+        }
 
-				g_pVGuiLocalize->ConstructString_safe( wszLocString, g_pVGuiLocalize->Find( pUIData->m_pszSidePanelDesc ), 1, wszMaps );
-				pDescLabel->SetText( wszLocString );
-			}
-			else
-			{
-				pDescLabel->SetText( pUIData->m_pszSidePanelDesc );
-			}
+        ImagePanel* pModeImage = FindControl< ImagePanel >( "ModeImage", true );
+        if ( pModeImage && pUIData->m_pszSidePanelImage )
+        {
+            pModeImage->SetImage( pUIData->m_pszSidePanelImage );
+        }
 
-			pDescLabel->SizeToContents();
-		}
+        // Update the badge panels with what the event match group is
+        CPvPRankPanel* pRankPanel = FindControl< CPvPRankPanel >( "RankPanel", true );
+        if ( pRankPanel )
+        {
+            pRankPanel->SetMatchGroup( eEventMatchGroup );
+        }
 
-		ImagePanel* pModeImage = FindControl< ImagePanel >( "ModeImage", true );
-		if ( pModeImage && pUIData->m_pszSidePanelImage )
-		{
-			pModeImage->SetImage( pUIData->m_pszSidePanelImage );
-		}
-
-		// Update the badge panels with what the event match group is
-		CPvPRankPanel* pRankPanel = FindControl< CPvPRankPanel >( "RankPanel", true );
-		if ( pRankPanel )
-		{
-			pRankPanel->SetMatchGroup( eEventMatchGroup );
-		}
-
-		CTFLocalPlayerBadgePanel* pBadgePanel = FindControl< CTFLocalPlayerBadgePanel >( "RankImage", true );
-		if ( pBadgePanel )
-		{
-			pBadgePanel->SetMatchGroup( eEventMatchGroup );
-		}
-	}
+        CTFLocalPlayerBadgePanel* pBadgePanel = FindControl< CTFLocalPlayerBadgePanel >( "RankImage", true );
+        if ( pBadgePanel )
+        {
+            pBadgePanel->SetMatchGroup( eEventMatchGroup );
+        }
+    }
 };
 
 Panel* GetEventMatchPanel()
 {
-	Panel* pPanel = new CTFDashboardEventPanel( NULL, "EventMatch" );
-	pPanel->MakeReadyForUse();
-	pPanel->AddActionSignalTarget( GetMMDashboard() );
-	return pPanel;
+    Panel* pPanel = new CTFDashboardEventPanel( NULL, "EventMatch" );
+    pPanel->MakeReadyForUse();
+    pPanel->AddActionSignalTarget( GetMMDashboard() );
+    return pPanel;
 }
 REGISTER_FUNC_FOR_DASHBOARD_PANEL_TYPE( GetEventMatchPanel, k_eEventMatch );

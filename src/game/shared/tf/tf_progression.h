@@ -1,7 +1,7 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose:  
-//			
+// Purpose:
+//
 //=============================================================================
 
 #ifndef TF_PROGRESSION_H
@@ -14,10 +14,10 @@ class IProgressionDesc;
 
 enum EProgressionDesc
 {
-	k_eProgression_Casual,
-	k_eProgression_Drillo,
-	k_eProgression_Glicko
+    k_eProgression_Casual,
+    k_eProgression_Drillo,
+    k_eProgression_Glicko
 };
 
 const IProgressionDesc* GetProgressionDesc( EProgressionDesc eType );
-#endif //TF_PROGRESSION_H
+#endif  // TF_PROGRESSION_H

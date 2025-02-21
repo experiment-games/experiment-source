@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
 
@@ -17,9 +17,13 @@ class CFuncRespawnRoomVisualizer;
 // This class is to get around the fact that DEFINE_FUNCTION doesn't like multiple inheritance
 class CFuncRespawnRoomShim : public CBaseTrigger
 {
-	virtual void RespawnRoomTouch( CBaseEntity *pOther ) = 0;
-public:
-	void	Touch( CBaseEntity *pOther ) { return RespawnRoomTouch( pOther ) ; }
+    virtual void RespawnRoomTouch( CBaseEntity *pOther ) = 0;
+
+   public:
+    void Touch( CBaseEntity *pOther )
+    {
+        return RespawnRoomTouch( pOther );
+    }
 };
 
 //-----------------------------------------------------------------------------
@@ -27,42 +31,40 @@ public:
 //-----------------------------------------------------------------------------
 DECLARE_AUTO_LIST( IFuncRespawnRoomAutoList );
 
-
 class CFuncRespawnRoom : public CFuncRespawnRoomShim, public IFuncRespawnRoomAutoList
 {
-	DECLARE_CLASS( CFuncRespawnRoom, CFuncRespawnRoomShim );
+    DECLARE_CLASS( CFuncRespawnRoom, CFuncRespawnRoomShim );
 
-public:
+   public:
+    CFuncRespawnRoom();
 
-	CFuncRespawnRoom();
+    DECLARE_DATADESC();
+    DECLARE_SERVERCLASS();
 
-	DECLARE_DATADESC();
-	DECLARE_SERVERCLASS();
+    virtual void Spawn( void );
+    virtual void Activate( void );
+    virtual void ChangeTeam( int iTeamNum ) OVERRIDE;
 
-	virtual void Spawn( void );
-	virtual void Activate( void );
-	virtual void ChangeTeam( int iTeamNum ) OVERRIDE;
+    virtual void RespawnRoomTouch( CBaseEntity *pOther ) OVERRIDE;
+    virtual void StartTouch( CBaseEntity *pOther ) OVERRIDE;
+    virtual void EndTouch( CBaseEntity *pOther ) OVERRIDE;
 
-	virtual void RespawnRoomTouch( CBaseEntity *pOther ) OVERRIDE;
-	virtual void StartTouch(CBaseEntity *pOther) OVERRIDE;
-	virtual void EndTouch(CBaseEntity *pOther) OVERRIDE;
+    // Inputs
+    void InputSetActive( inputdata_t &inputdata );
+    void InputSetInactive( inputdata_t &inputdata );
+    void InputToggleActive( inputdata_t &inputdata );
+    void InputRoundActivate( inputdata_t &inputdata );
 
-	// Inputs
-	void	InputSetActive( inputdata_t &inputdata );
-	void	InputSetInactive( inputdata_t &inputdata );
-	void	InputToggleActive( inputdata_t &inputdata );
-	void	InputRoundActivate( inputdata_t &inputdata );
+    void SetActive( bool bActive );
+    bool GetActive() const;
 
-	void	SetActive( bool bActive );
-	bool	GetActive() const;
+    void AddVisualizer( CFuncRespawnRoomVisualizer *pViz );
 
-	void	AddVisualizer( CFuncRespawnRoomVisualizer *pViz );
-	
-private:
-	bool	m_bActive;
-	int		m_iOriginalTeam;
+   private:
+    bool m_bActive;
+    int m_iOriginalTeam;
 
-	CUtlVector< CHandle<CFuncRespawnRoomVisualizer> >	m_hVisualizers;
+    CUtlVector< CHandle< CFuncRespawnRoomVisualizer > > m_hVisualizers;
 };
 
 //-----------------------------------------------------------------------------
@@ -70,5 +72,5 @@ private:
 //-----------------------------------------------------------------------------
 bool PointInRespawnRoom( const CBaseEntity *pEntity, const Vector &vecOrigin, bool bTouching_SameTeamOnly = false );
 
-bool PointsCrossRespawnRoomVisualizer( const Vector& vecStart, const Vector &vecEnd, int nTeamToIgnore = TEAM_UNASSIGNED );
-#endif // FUNC_RESPAWNROOM_H
+bool PointsCrossRespawnRoomVisualizer( const Vector &vecStart, const Vector &vecEnd, int nTeamToIgnore = TEAM_UNASSIGNED );
+#endif  // FUNC_RESPAWNROOM_H

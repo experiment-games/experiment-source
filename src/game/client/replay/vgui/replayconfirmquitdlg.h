@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -16,24 +16,25 @@
 #include "vgui_controls/CheckButton.h"
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 class CExButton;
 
 class CReplayConfirmQuitDialog : public CReplayBasePanel
 {
-	DECLARE_CLASS_SIMPLE( CReplayConfirmQuitDialog, CReplayBasePanel );
-public:
-	CReplayConfirmQuitDialog( Panel *pParent );
+    DECLARE_CLASS_SIMPLE( CReplayConfirmQuitDialog, CReplayBasePanel );
 
-	virtual void	ApplySchemeSettings( vgui::IScheme *pScheme );
-	virtual void	OnCommand( const char *pCommand );
-	virtual void	OnKeyCodeTyped( vgui::KeyCode code );
-	virtual void	OnKeyCodePressed( vgui::KeyCode code );
+   public:
+    CReplayConfirmQuitDialog( Panel *pParent );
 
-private:
-	vgui::CheckButton			*m_pDontShowAgain;
-	CExButton					*m_pQuitButton;
+    virtual void ApplySchemeSettings( vgui::IScheme *pScheme );
+    virtual void OnCommand( const char *pCommand );
+    virtual void OnKeyCodeTyped( vgui::KeyCode code );
+    virtual void OnKeyCodePressed( vgui::KeyCode code );
+
+   private:
+    vgui::CheckButton *m_pDontShowAgain;
+    CExButton *m_pQuitButton;
 };
 
 //-----------------------------------------------------------------------------
@@ -42,4 +43,4 @@ bool ReplayUI_ShowConfirmQuitDlg();
 
 //-----------------------------------------------------------------------------
 
-#endif // REPLAYBROWSER_CONFIRMQUITDLG_H
+#endif  // REPLAYBROWSER_CONFIRMQUITDLG_H

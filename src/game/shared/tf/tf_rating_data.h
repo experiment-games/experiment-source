@@ -8,7 +8,7 @@
 
 #include "gcsdk/protobufsharedobject.h"
 #include "tf_gcmessages.h"
-#if defined (CLIENT_DLL) || defined (GAME_DLL)
+#if defined( CLIENT_DLL ) || defined( GAME_DLL )
 #include "gc_clientsystem.h"
 #endif
 
@@ -19,18 +19,16 @@
 //---------------------------------------------------------------------------------
 class CTFRatingData : public GCSDK::CProtoBufSharedObject< CSOTFRatingData, k_EProtoObjectTFRatingData, /* bPublicMutable */ false >
 {
-public:
-	CTFRatingData();
-	CTFRatingData( uint32 unAccountID, EMMRating eRatingType, const MMRatingData_t &ratingData );
+   public:
+    CTFRatingData();
+    CTFRatingData( uint32 unAccountID, EMMRating eRatingType, const MMRatingData_t &ratingData );
 
+    // Helpers
+    static CTFRatingData *YieldingGetPlayerRatingDataBySteamID( const CSteamID &steamID, EMMRating eRatingType );
 
-	// Helpers
-	static CTFRatingData *YieldingGetPlayerRatingDataBySteamID( const CSteamID &steamID, EMMRating eRatingType );
-
-
-	// Private on the GC to encourage callers to go through the proper lookup in CTFSharedObjectCache (GC) or
-	// GetLocalPlayerRatingData (client)
-	MMRatingData_t GetRatingData() const;
+    // Private on the GC to encourage callers to go through the proper lookup in CTFSharedObjectCache (GC) or
+    // GetLocalPlayerRatingData (client)
+    MMRatingData_t GetRatingData() const;
 };
 
-#endif // TF_RATING_DATA_H
+#endif  // TF_RATING_DATA_H

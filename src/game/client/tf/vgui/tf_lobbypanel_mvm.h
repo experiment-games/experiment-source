@@ -6,7 +6,6 @@
 #ifndef TF_LOBBYPANEL_MVM_H
 #define TF_LOBBYPANEL_MVM_H
 
-
 #include "cbase.h"
 #include "game/client/iviewport.h"
 #include "vgui_bitmapimage.h"
@@ -20,30 +19,32 @@ class CMVMCriteriaPanel;
 
 class CLobbyPanel_MvM : public CBaseLobbyPanel
 {
-	DECLARE_CLASS_SIMPLE( CLobbyPanel_MvM, CBaseLobbyPanel );
-public:
-	CLobbyPanel_MvM( vgui::Panel *pParent, CBaseLobbyContainerFrame* pLobbyContainer );
-	virtual ~CLobbyPanel_MvM() {}
+    DECLARE_CLASS_SIMPLE( CLobbyPanel_MvM, CBaseLobbyPanel );
 
-	virtual void ApplySchemeSettings( vgui::IScheme *pScheme ) OVERRIDE;
+   public:
+    CLobbyPanel_MvM( vgui::Panel* pParent, CBaseLobbyContainerFrame* pLobbyContainer );
+    virtual ~CLobbyPanel_MvM() {}
 
-	virtual void ApplyChatUserSettings( const LobbyPlayerInfo& player, KeyValues* pSettings ) const OVERRIDE;
-	virtual EMatchGroup GetMatchGroup( void ) const OVERRIDE;
-	virtual const char* GetResFile() const OVERRIDE { return "Resource/UI/LobbyPanel_MvM.res"; } ;
-	void WriteGameSettingsControls() OVERRIDE;
-	virtual bool ShouldShowLateJoin() const OVERRIDE;
+    virtual void ApplySchemeSettings( vgui::IScheme* pScheme ) OVERRIDE;
 
+    virtual void ApplyChatUserSettings( const LobbyPlayerInfo& player, KeyValues* pSettings ) const OVERRIDE;
+    virtual EMatchGroup GetMatchGroup( void ) const OVERRIDE;
+    virtual const char* GetResFile() const OVERRIDE
+    {
+        return "Resource/UI/LobbyPanel_MvM.res";
+    };
+    void WriteGameSettingsControls() OVERRIDE;
+    virtual bool ShouldShowLateJoin() const OVERRIDE;
 
-private:
+   private:
+    CPanelAnimationVarAliasType( int, m_iHasTicketWidth, "has_ticket_width", "12", "proportional_int" );
+    CPanelAnimationVarAliasType( int, m_iSquadSurplusWidth, "squad_surplus_width", "12", "proportional_int" );
 
-	CPanelAnimationVarAliasType( int, m_iHasTicketWidth, "has_ticket_width", "12", "proportional_int" );
-	CPanelAnimationVarAliasType( int, m_iSquadSurplusWidth, "squad_surplus_width", "12", "proportional_int" );
-
-	int m_iImageNoTicket;
-	int m_iImageHasTicket;
-	int m_iImageNoSquadSurplus;
-	int m_iImageSquadSurplus;
-	CMVMCriteriaPanel* m_pCriteria;
+    int m_iImageNoTicket;
+    int m_iImageHasTicket;
+    int m_iImageNoSquadSurplus;
+    int m_iImageSquadSurplus;
+    CMVMCriteriaPanel* m_pCriteria;
 };
 
-#endif // TF_LOBBYPANEL_MVM_H
+#endif  // TF_LOBBYPANEL_MVM_H

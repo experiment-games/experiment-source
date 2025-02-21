@@ -10,23 +10,25 @@
 
 class C_TFBotHintEngineerNest : public C_BaseEntity
 {
-	DECLARE_CLASS( C_TFBotHintEngineerNest, C_BaseEntity );
-public:
-	DECLARE_CLIENTCLASS();
+    DECLARE_CLASS( C_TFBotHintEngineerNest, C_BaseEntity );
 
-	C_TFBotHintEngineerNest( void );
-	virtual ~C_TFBotHintEngineerNest();
+   public:
+    DECLARE_CLIENTCLASS();
 
-	virtual void UpdateOnRemove() OVERRIDE;
-	virtual void OnPreDataChanged( DataUpdateType_t type ) OVERRIDE;
-	virtual void OnDataChanged( DataUpdateType_t type ) OVERRIDE;
-private:
-	bool m_bHadActiveTeleporter;
-	CNetworkVar( bool, m_bHasActiveTeleporter );
+    C_TFBotHintEngineerNest( void );
+    virtual ~C_TFBotHintEngineerNest();
 
-	void StartEffect();
-	void StopEffect();
-	CNewParticleEffect			*m_pMvMActiveTeleporter;
+    virtual void UpdateOnRemove() OVERRIDE;
+    virtual void OnPreDataChanged( DataUpdateType_t type ) OVERRIDE;
+    virtual void OnDataChanged( DataUpdateType_t type ) OVERRIDE;
+
+   private:
+    bool m_bHadActiveTeleporter;
+    CNetworkVar( bool, m_bHasActiveTeleporter );
+
+    void StartEffect();
+    void StopEffect();
+    CNewParticleEffect *m_pMvMActiveTeleporter;
 };
 
-#endif // TF_BOT_HINT_ENGINEER_NEST_H
+#endif  // TF_BOT_HINT_ENGINEER_NEST_H

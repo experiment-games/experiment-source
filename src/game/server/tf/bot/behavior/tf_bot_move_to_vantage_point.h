@@ -10,24 +10,27 @@
 
 class CTFBotMoveToVantagePoint : public Action< CTFBot >
 {
-public:
-	CTFBotMoveToVantagePoint( float maxTravelDistance = 2000.0f );
-	virtual ~CTFBotMoveToVantagePoint() { }
+   public:
+    CTFBotMoveToVantagePoint( float maxTravelDistance = 2000.0f );
+    virtual ~CTFBotMoveToVantagePoint() {}
 
-	virtual ActionResult< CTFBot >	OnStart( CTFBot *me, Action< CTFBot > *priorAction );
-	virtual ActionResult< CTFBot >	Update( CTFBot *me, float interval );
+    virtual ActionResult< CTFBot > OnStart( CTFBot *me, Action< CTFBot > *priorAction );
+    virtual ActionResult< CTFBot > Update( CTFBot *me, float interval );
 
-	virtual EventDesiredResult< CTFBot > OnStuck( CTFBot *me );
-	virtual EventDesiredResult< CTFBot > OnMoveToSuccess( CTFBot *me, const Path *path );
-	virtual EventDesiredResult< CTFBot > OnMoveToFailure( CTFBot *me, const Path *path, MoveToFailureType reason );
+    virtual EventDesiredResult< CTFBot > OnStuck( CTFBot *me );
+    virtual EventDesiredResult< CTFBot > OnMoveToSuccess( CTFBot *me, const Path *path );
+    virtual EventDesiredResult< CTFBot > OnMoveToFailure( CTFBot *me, const Path *path, MoveToFailureType reason );
 
-	virtual const char *GetName( void ) const	{ return "MoveToVantagePoint"; };
+    virtual const char *GetName( void ) const
+    {
+        return "MoveToVantagePoint";
+    };
 
-private:
-	float m_maxTravelDistance;
-	PathFollower m_path;
-	CountdownTimer m_repathTimer;
-	CTFNavArea *m_vantageArea;
+   private:
+    float m_maxTravelDistance;
+    PathFollower m_path;
+    CountdownTimer m_repathTimer;
+    CTFNavArea *m_vantageArea;
 };
 
-#endif // TF_BOT_MOVE_TO_VANTAGE_POINT_H
+#endif  // TF_BOT_MOVE_TO_VANTAGE_POINT_H

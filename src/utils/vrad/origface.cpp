@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $Workfile:     $
 // $Date:         $
@@ -15,20 +15,18 @@
 
 bool bOrigFacesTouched[MAX_MAP_FACES];
 
-
 //-----------------------------------------------------------------------------
 // Pupose: clear (reset) the bOrigFacesTouched list -- parellels the original
-//         face list allowing an original face to only be processed once in 
+//         face list allowing an original face to only be processed once in
 //         pairing edges!
 //-----------------------------------------------------------------------------
 void ResetOrigFacesTouched( void )
 {
-    for( int i = 0; i < MAX_MAP_FACES; i++ )
+    for ( int i = 0; i < MAX_MAP_FACES; i++ )
     {
         bOrigFacesTouched[i] = false;
     }
 }
-
 
 //-----------------------------------------------------------------------------
 // Purpose: mark an original faces as touched (dirty)
@@ -38,7 +36,6 @@ void SetOrigFaceTouched( int index )
 {
     bOrigFacesTouched[index] = true;
 }
-
 
 //-----------------------------------------------------------------------------
 // Purpose: return whether or not an original face has been touched

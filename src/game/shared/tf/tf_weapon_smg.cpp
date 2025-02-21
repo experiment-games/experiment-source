@@ -41,22 +41,22 @@ RecvPropFloat( RECVINFO( m_flMinicritCharge ) ),
 #else
 SendPropFloat( SENDINFO( m_flMinicritCharge ), 4, SPROP_NOSCALE, 0.0f, DAMAGE_TO_FILL_MINICRIT_METER ),
 #endif
-END_NETWORK_TABLE()
+    END_NETWORK_TABLE()
 
 // Server specific
 #ifndef CLIENT_DLL
-BEGIN_DATADESC( CTFChargedSMG )
-END_DATADESC()
+        BEGIN_DATADESC( CTFChargedSMG )
+            END_DATADESC()
 #endif
 
 // Client specific
 #ifdef CLIENT_DLL
-BEGIN_PREDICTION_DATA( CTFChargedSMG )
-DEFINE_FIELD(  m_flMinicritCharge, FIELD_FLOAT )
-END_PREDICTION_DATA()
+                BEGIN_PREDICTION_DATA( CTFChargedSMG )
+                    DEFINE_FIELD( m_flMinicritCharge, FIELD_FLOAT )
+                        END_PREDICTION_DATA()
 #endif
 
-LINK_ENTITY_TO_CLASS( tf_weapon_charged_smg, CTFChargedSMG );
+                            LINK_ENTITY_TO_CLASS( tf_weapon_charged_smg, CTFChargedSMG );
 PRECACHE_WEAPON_REGISTER( tf_weapon_charged_smg );
 
 //=============================================================================
@@ -64,17 +64,17 @@ PRECACHE_WEAPON_REGISTER( tf_weapon_charged_smg );
 // Weapon SMG functions.
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-int	CTFSMG::GetDamageType( void ) const
+int CTFSMG::GetDamageType( void ) const
 {
-	if ( CanHeadshot() )
-	{
-		int iDamageType = BaseClass::GetDamageType() | DMG_USE_HITLOCATIONS;
-		return iDamageType;
-	}
+    if ( CanHeadshot() )
+    {
+        int iDamageType = BaseClass::GetDamageType() | DMG_USE_HITLOCATIONS;
+        return iDamageType;
+    }
 
-	return BaseClass::GetDamageType();
+    return BaseClass::GetDamageType();
 }
 
 //-----------------------------------------------------------------------------
@@ -82,17 +82,17 @@ int	CTFSMG::GetDamageType( void ) const
 //-----------------------------------------------------------------------------
 bool CTFSMG::CanFireCriticalShot( bool bIsHeadshot, CBaseEntity *pTarget /*= NULL*/ )
 {
-	if ( !BaseClass::CanFireCriticalShot( bIsHeadshot, pTarget ) )
-		return false;
+    if ( !BaseClass::CanFireCriticalShot( bIsHeadshot, pTarget ) )
+        return false;
 
-	CTFPlayer *pPlayer = GetTFPlayerOwner();
-	if ( pPlayer && pPlayer->m_Shared.IsCritBoosted() )
-		return true;
+    CTFPlayer *pPlayer = GetTFPlayerOwner();
+    if ( pPlayer && pPlayer->m_Shared.IsCritBoosted() )
+        return true;
 
-	if ( !bIsHeadshot )
-		return !CanHeadshot();
+    if ( !bIsHeadshot )
+        return !CanHeadshot();
 
-	return true;
+    return true;
 }
 
 //-----------------------------------------------------------------------------
@@ -100,7 +100,7 @@ bool CTFSMG::CanFireCriticalShot( bool bIsHeadshot, CBaseEntity *pTarget /*= NUL
 //-----------------------------------------------------------------------------
 bool CTFChargedSMG::CanPerformSecondaryAttack() const
 {
-	return ( m_flMinicritCharge >= DAMAGE_TO_FILL_MINICRIT_METER && BaseClass::CanPerformSecondaryAttack() );
+    return ( m_flMinicritCharge >= DAMAGE_TO_FILL_MINICRIT_METER && BaseClass::CanPerformSecondaryAttack() );
 }
 
 //-----------------------------------------------------------------------------
@@ -108,7 +108,7 @@ bool CTFChargedSMG::CanPerformSecondaryAttack() const
 //-----------------------------------------------------------------------------
 bool CTFChargedSMG::ShouldFlashChargeBar()
 {
-	return m_flMinicritCharge >= DAMAGE_TO_FILL_MINICRIT_METER;
+    return m_flMinicritCharge >= DAMAGE_TO_FILL_MINICRIT_METER;
 }
 
 //-----------------------------------------------------------------------------
@@ -116,27 +116,27 @@ bool CTFChargedSMG::ShouldFlashChargeBar()
 //-----------------------------------------------------------------------------
 float CTFChargedSMG::GetProgress( void )
 {
-	// Progress bar shows charge amount if we're charging up, otherwise drains over time if we're mini-crit boosted.
-	CTFPlayer *pPlayer = ToTFPlayer( GetOwner() );
-	if ( pPlayer && pPlayer->m_Shared.InCond( TF_COND_ENERGY_BUFF ) )
-	{
-		int flBuffDuration = 0;
-		CALL_ATTRIB_HOOK_FLOAT( flBuffDuration, minicrit_boost_when_charged );
-		if ( flBuffDuration > 0 )
-		{
-			float flElapsed = gpGlobals->curtime - m_flMinicritStartTime;
-			float flRemainingPortion = Clamp( (flBuffDuration - flElapsed) / flBuffDuration, 0.0f, 1.0f );
-			return flRemainingPortion;
-		}
-		else
-		{
-			return 0.0f;
-		}
-	}
-	else
-	{
-		return m_flMinicritCharge / DAMAGE_TO_FILL_MINICRIT_METER;
-	}
+    // Progress bar shows charge amount if we're charging up, otherwise drains over time if we're mini-crit boosted.
+    CTFPlayer *pPlayer = ToTFPlayer( GetOwner() );
+    if ( pPlayer && pPlayer->m_Shared.InCond( TF_COND_ENERGY_BUFF ) )
+    {
+        int flBuffDuration = 0;
+        CALL_ATTRIB_HOOK_FLOAT( flBuffDuration, minicrit_boost_when_charged );
+        if ( flBuffDuration > 0 )
+        {
+            float flElapsed = gpGlobals->curtime - m_flMinicritStartTime;
+            float flRemainingPortion = Clamp( ( flBuffDuration - flElapsed ) / flBuffDuration, 0.0f, 1.0f );
+            return flRemainingPortion;
+        }
+        else
+        {
+            return 0.0f;
+        }
+    }
+    else
+    {
+        return m_flMinicritCharge / DAMAGE_TO_FILL_MINICRIT_METER;
+    }
 }
 
 //-----------------------------------------------------------------------------
@@ -144,9 +144,9 @@ float CTFChargedSMG::GetProgress( void )
 //-----------------------------------------------------------------------------
 void CTFChargedSMG::WeaponReset()
 {
-	BaseClass::WeaponReset();
-	m_flMinicritCharge = 0.0f;
-	m_flMinicritStartTime = 0.0f;
+    BaseClass::WeaponReset();
+    m_flMinicritCharge = 0.0f;
+    m_flMinicritStartTime = 0.0f;
 }
 
 //-----------------------------------------------------------------------------
@@ -154,21 +154,21 @@ void CTFChargedSMG::WeaponReset()
 //-----------------------------------------------------------------------------
 void CTFChargedSMG::SecondaryAttack()
 {
-	BaseClass::SecondaryAttack();
+    BaseClass::SecondaryAttack();
 
-	m_flMinicritCharge = 0.0f;
+    m_flMinicritCharge = 0.0f;
 
-	CTFPlayer *pPlayer = ToTFPlayer( GetOwner() );
-	if ( pPlayer )
-	{
-		float flBuffDuration = 0;
-		CALL_ATTRIB_HOOK_FLOAT( flBuffDuration, minicrit_boost_when_charged );
-		if ( flBuffDuration > 0 )
-		{
-			pPlayer->m_Shared.AddCond( TF_COND_ENERGY_BUFF, flBuffDuration );
-			m_flMinicritStartTime = gpGlobals->curtime;
-		}
-	}
+    CTFPlayer *pPlayer = ToTFPlayer( GetOwner() );
+    if ( pPlayer )
+    {
+        float flBuffDuration = 0;
+        CALL_ATTRIB_HOOK_FLOAT( flBuffDuration, minicrit_boost_when_charged );
+        if ( flBuffDuration > 0 )
+        {
+            pPlayer->m_Shared.AddCond( TF_COND_ENERGY_BUFF, flBuffDuration );
+            m_flMinicritStartTime = gpGlobals->curtime;
+        }
+    }
 }
 
 #ifdef GAME_DLL
@@ -177,21 +177,21 @@ void CTFChargedSMG::SecondaryAttack()
 //-----------------------------------------------------------------------------
 void CTFChargedSMG::ApplyOnHitAttributes( CBaseEntity *pVictimBaseEntity, CTFPlayer *pAttacker, const CTakeDamageInfo &info )
 {
-	BaseClass::ApplyOnHitAttributes( pVictimBaseEntity, pAttacker, info );
-	if ( pAttacker )
-	{
-		CTFPlayer *pPlayer = ToTFPlayer( GetOwner() );
-		if ( pPlayer && !pPlayer->m_Shared.InCond( TF_COND_ENERGY_BUFF ) )
-		{
-			float damage = info.GetDamage();
-			float flChargeRate = 0.0f;
-			CALL_ATTRIB_HOOK_FLOAT( flChargeRate, minicrit_boost_charge_rate );
-			m_flMinicritCharge += damage * flChargeRate;
-			if ( m_flMinicritCharge > DAMAGE_TO_FILL_MINICRIT_METER )
-			{
-				m_flMinicritCharge = DAMAGE_TO_FILL_MINICRIT_METER;
-			}
-		}
-	}
+    BaseClass::ApplyOnHitAttributes( pVictimBaseEntity, pAttacker, info );
+    if ( pAttacker )
+    {
+        CTFPlayer *pPlayer = ToTFPlayer( GetOwner() );
+        if ( pPlayer && !pPlayer->m_Shared.InCond( TF_COND_ENERGY_BUFF ) )
+        {
+            float damage = info.GetDamage();
+            float flChargeRate = 0.0f;
+            CALL_ATTRIB_HOOK_FLOAT( flChargeRate, minicrit_boost_charge_rate );
+            m_flMinicritCharge += damage * flChargeRate;
+            if ( m_flMinicritCharge > DAMAGE_TO_FILL_MINICRIT_METER )
+            {
+                m_flMinicritCharge = DAMAGE_TO_FILL_MINICRIT_METER;
+            }
+        }
+    }
 }
 #endif

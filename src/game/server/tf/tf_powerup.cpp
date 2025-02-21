@@ -16,10 +16,10 @@
 
 //=============================================================================
 float PackRatios[POWERUP_SIZES] =
-{
-	0.2,	// SMALL
-	0.5,	// MEDIUM
-	1.0,	// FULL
+    {
+        0.2,  // SMALL
+        0.5,  // MEDIUM
+        1.0,  // FULL
 };
 
 //=============================================================================
@@ -29,19 +29,19 @@ float PackRatios[POWERUP_SIZES] =
 
 BEGIN_DATADESC( CTFPowerup )
 
-	// Keyfields.
-	DEFINE_KEYFIELD( m_bDisabled, FIELD_BOOLEAN, "StartDisabled" ),
-	DEFINE_KEYFIELD( m_iszModel, FIELD_STRING, "powerup_model" ),
-	DEFINE_KEYFIELD( m_bAutoMaterialize, FIELD_BOOLEAN, "AutoMaterialize" ),
+// Keyfields.
+DEFINE_KEYFIELD( m_bDisabled, FIELD_BOOLEAN, "StartDisabled" ),
+    DEFINE_KEYFIELD( m_iszModel, FIELD_STRING, "powerup_model" ),
+    DEFINE_KEYFIELD( m_bAutoMaterialize, FIELD_BOOLEAN, "AutoMaterialize" ),
 
-	// Inputs.
-	DEFINE_INPUTFUNC( FIELD_VOID, "Enable", InputEnable ),
-	DEFINE_INPUTFUNC( FIELD_VOID, "Disable", InputDisable ),
-	DEFINE_INPUTFUNC( FIELD_VOID, "Toggle", InputToggle ),
+    // Inputs.
+    DEFINE_INPUTFUNC( FIELD_VOID, "Enable", InputEnable ),
+    DEFINE_INPUTFUNC( FIELD_VOID, "Disable", InputDisable ),
+    DEFINE_INPUTFUNC( FIELD_VOID, "Toggle", InputToggle ),
 
-	// Outputs.
+    // Outputs.
 
-END_DATADESC();
+    END_DATADESC();
 
 //=============================================================================
 //
@@ -49,139 +49,139 @@ END_DATADESC();
 //
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CTFPowerup::CTFPowerup()
 {
-	m_bDisabled = false;
-	m_bRespawning = false;
-	m_bAutoMaterialize = true;
+    m_bDisabled = false;
+    m_bRespawning = false;
+    m_bAutoMaterialize = true;
 
-	m_iszModel = NULL_STRING;
+    m_iszModel = NULL_STRING;
 
-	m_flThrowerTouchTime = -1;
+    m_flThrowerTouchTime = -1;
 
-	UseClientSideAnimation();
+    UseClientSideAnimation();
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFPowerup::Spawn( void )
 {
-	Precache();
-	SetModel( GetPowerupModel() );
+    Precache();
+    SetModel( GetPowerupModel() );
 
-	BaseClass::Spawn();
+    BaseClass::Spawn();
 
-	BaseClass::SetOriginalSpawnOrigin( GetAbsOrigin() );
-	BaseClass::SetOriginalSpawnAngles( GetAbsAngles() );
+    BaseClass::SetOriginalSpawnOrigin( GetAbsOrigin() );
+    BaseClass::SetOriginalSpawnAngles( GetAbsAngles() );
 
-	VPhysicsDestroyObject();
-	SetMoveType( MOVETYPE_NONE );
-	SetSolidFlags( FSOLID_NOT_SOLID | FSOLID_TRIGGER );
+    VPhysicsDestroyObject();
+    SetMoveType( MOVETYPE_NONE );
+    SetSolidFlags( FSOLID_NOT_SOLID | FSOLID_TRIGGER );
 
-	if ( m_bDisabled )
-	{
-		SetDisabled( true );
-	}
+    if ( m_bDisabled )
+    {
+        SetDisabled( true );
+    }
 
-	m_bRespawning = false;
+    m_bRespawning = false;
 
-	ResetSequence( LookupSequence("idle") );
+    ResetSequence( LookupSequence( "idle" ) );
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFPowerup::Precache()
 {
-	PrecacheModel( GetPowerupModel() );
-	BaseClass::Precache();
+    PrecacheModel( GetPowerupModel() );
+    BaseClass::Precache();
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-CBaseEntity* CTFPowerup::Respawn( void )
+CBaseEntity *CTFPowerup::Respawn( void )
 {
-	m_bRespawning = true;
-	CBaseEntity *pReturn = BaseClass::Respawn();
+    m_bRespawning = true;
+    CBaseEntity *pReturn = BaseClass::Respawn();
 
-	// Override the respawn time
-	SetNextThink( gpGlobals->curtime + GetRespawnDelay() );
+    // Override the respawn time
+    SetNextThink( gpGlobals->curtime + GetRespawnDelay() );
 
-	return pReturn;
+    return pReturn;
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFPowerup::Materialize( void )
 {
-	if ( !m_bAutoMaterialize )
-	{
-		return;
-	}
+    if ( !m_bAutoMaterialize )
+    {
+        return;
+    }
 
-	Materialize_Internal();
+    Materialize_Internal();
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFPowerup::Materialize_Internal( void )
 {
-	if ( !m_bDisabled && IsEffectActive( EF_NODRAW ) )
-	{
-		// changing from invisible state to visible.
-		EmitSound( "Item.Materialize" );
-		RemoveEffects( EF_NODRAW );
-	}
+    if ( !m_bDisabled && IsEffectActive( EF_NODRAW ) )
+    {
+        // changing from invisible state to visible.
+        EmitSound( "Item.Materialize" );
+        RemoveEffects( EF_NODRAW );
+    }
 
-	m_bRespawning = false;
-	SetTouch( &CItem::ItemTouch );
+    m_bRespawning = false;
+    SetTouch( &CItem::ItemTouch );
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CTFPowerup::ValidTouch( CBasePlayer *pPlayer )
 {
-	// Is the item enabled?
-	if ( IsDisabled() )
-	{
-		return false;
-	}
+    // Is the item enabled?
+    if ( IsDisabled() )
+    {
+        return false;
+    }
 
-	// Only touch a live player.
-	if ( !pPlayer || !pPlayer->IsPlayer() || !pPlayer->IsAlive() )
-	{
-		return false;
-	}
+    // Only touch a live player.
+    if ( !pPlayer || !pPlayer->IsPlayer() || !pPlayer->IsAlive() )
+    {
+        return false;
+    }
 
-	// Team number and does it match?
-	int iTeam = GetTeamNumber();
-	if ( iTeam && ( pPlayer->GetTeamNumber() != iTeam ) )
-	{
-		return false;
-	}
+    // Team number and does it match?
+    int iTeam = GetTeamNumber();
+    if ( iTeam && ( pPlayer->GetTeamNumber() != iTeam ) )
+    {
+        return false;
+    }
 
-	// enemies in mann vs machine can't pick up any powerups
-	if ( TFGameRules()->IsMannVsMachineMode() && pPlayer->GetTeamNumber() == TF_TEAM_PVE_INVADERS )
-	{
-		return false;
-	}
+    // enemies in mann vs machine can't pick up any powerups
+    if ( TFGameRules()->IsMannVsMachineMode() && pPlayer->GetTeamNumber() == TF_TEAM_PVE_INVADERS )
+    {
+        return false;
+    }
 
-	return true;
+    return true;
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CTFPowerup::MyTouch( CBasePlayer *pPlayer )
 {
-	return false;
+    return false;
 }
 
 //-----------------------------------------------------------------------------
@@ -189,23 +189,23 @@ bool CTFPowerup::MyTouch( CBasePlayer *pPlayer )
 //-----------------------------------------------------------------------------
 void CTFPowerup::DropSingleInstance( Vector &vecLaunchVel, CBaseCombatCharacter *pThrower, float flThrowerTouchDelay, float flResetTime /*= 0.1f*/ )
 {
-//	SetSize( Vector(-8,-8,-8), Vector(8,8,8) );
-	SetMoveType( MOVETYPE_FLYGRAVITY, MOVECOLLIDE_FLY_BOUNCE );
-	SetAbsVelocity( vecLaunchVel );	
-	SetSolid( SOLID_BBOX );
-	if ( flResetTime )
-	{
-		ActivateWhenAtRest( flResetTime );
-	}
+    //	SetSize( Vector(-8,-8,-8), Vector(8,8,8) );
+    SetMoveType( MOVETYPE_FLYGRAVITY, MOVECOLLIDE_FLY_BOUNCE );
+    SetAbsVelocity( vecLaunchVel );
+    SetSolid( SOLID_BBOX );
+    if ( flResetTime )
+    {
+        ActivateWhenAtRest( flResetTime );
+    }
 
-	m_bThrownSingleInstance = true;
-	AddSpawnFlags( SF_NORESPAWN );
+    m_bThrownSingleInstance = true;
+    AddSpawnFlags( SF_NORESPAWN );
 
-	SetOwnerEntity( pThrower );
-	m_flThrowerTouchTime = gpGlobals->curtime + flThrowerTouchDelay;
+    SetOwnerEntity( pThrower );
+    m_flThrowerTouchTime = gpGlobals->curtime + flThrowerTouchDelay;
 
-	// Remove ourselves after some time
-	SetContextThink( &CBaseEntity::SUB_Remove, gpGlobals->curtime + GetLifeTime(), "PowerupRemoveThink" );
+    // Remove ourselves after some time
+    SetContextThink( &CBaseEntity::SUB_Remove, gpGlobals->curtime + GetLifeTime(), "PowerupRemoveThink" );
 }
 
 //-----------------------------------------------------------------------------
@@ -213,7 +213,7 @@ void CTFPowerup::DropSingleInstance( Vector &vecLaunchVel, CBaseCombatCharacter 
 //-----------------------------------------------------------------------------
 void CTFPowerup::InputEnable( inputdata_t &inputdata )
 {
-	SetDisabled( false );
+    SetDisabled( false );
 }
 
 //-----------------------------------------------------------------------------
@@ -221,7 +221,7 @@ void CTFPowerup::InputEnable( inputdata_t &inputdata )
 //-----------------------------------------------------------------------------
 void CTFPowerup::InputDisable( inputdata_t &inputdata )
 {
-	SetDisabled( true );
+    SetDisabled( true );
 }
 
 //-----------------------------------------------------------------------------
@@ -229,7 +229,7 @@ void CTFPowerup::InputDisable( inputdata_t &inputdata )
 //-----------------------------------------------------------------------------
 bool CTFPowerup::IsDisabled( void )
 {
-	return m_bDisabled;
+    return m_bDisabled;
 }
 
 //-----------------------------------------------------------------------------
@@ -237,14 +237,14 @@ bool CTFPowerup::IsDisabled( void )
 //-----------------------------------------------------------------------------
 void CTFPowerup::InputToggle( inputdata_t &inputdata )
 {
-	if ( m_bDisabled )
-	{
-		SetDisabled( false );
-	}
-	else
-	{
-		SetDisabled( true );
-	}
+    if ( m_bDisabled )
+    {
+        SetDisabled( false );
+    }
+    else
+    {
+        SetDisabled( true );
+    }
 }
 
 //-----------------------------------------------------------------------------
@@ -252,26 +252,26 @@ void CTFPowerup::InputToggle( inputdata_t &inputdata )
 //-----------------------------------------------------------------------------
 void CTFPowerup::SetDisabled( bool bDisabled )
 {
-	m_bDisabled = bDisabled;
+    m_bDisabled = bDisabled;
 
-	if ( bDisabled )
-	{
-		AddEffects( EF_NODRAW );
-	}
-	else
-	{
-		// only turn it back on if we're not in the middle of respawning
-		if ( !m_bRespawning )
-		{
+    if ( bDisabled )
+    {
+        AddEffects( EF_NODRAW );
+    }
+    else
+    {
+        // only turn it back on if we're not in the middle of respawning
+        if ( !m_bRespawning )
+        {
             RemoveEffects( EF_NODRAW );
-		}
-		else if ( !m_bAutoMaterialize )
-		{
-			// We wait for a set-enabled to re-materialize if we were 
-			// set to not auto-materialize
-			Materialize_Internal();
-		}
-	}
+        }
+        else if ( !m_bAutoMaterialize )
+        {
+            // We wait for a set-enabled to re-materialize if we were
+            // set to not auto-materialize
+            Materialize_Internal();
+        }
+    }
 }
 
 //-----------------------------------------------------------------------------
@@ -279,15 +279,15 @@ void CTFPowerup::SetDisabled( bool bDisabled )
 //-----------------------------------------------------------------------------
 const char *CTFPowerup::GetPowerupModel( void )
 {
-	if ( m_iszModel != NULL_STRING )
-	{
-		if ( g_pFullFileSystem->FileExists( STRING( m_iszModel ), "GAME" ) )
-		{
-			return ( STRING( m_iszModel ) );
-		}
-	}
+    if ( m_iszModel != NULL_STRING )
+    {
+        if ( g_pFullFileSystem->FileExists( STRING( m_iszModel ), "GAME" ) )
+        {
+            return ( STRING( m_iszModel ) );
+        }
+    }
 
-	return GetDefaultPowerupModel();
+    return GetDefaultPowerupModel();
 }
 
 //-----------------------------------------------------------------------------
@@ -295,13 +295,13 @@ const char *CTFPowerup::GetPowerupModel( void )
 //-----------------------------------------------------------------------------
 bool CTFPowerup::ItemCanBeTouchedByPlayer( CBasePlayer *pPlayer )
 {
-	if ( pPlayer == GetOwnerEntity() )
-	{
-		if ( ( m_flThrowerTouchTime > 0 ) && ( gpGlobals->curtime < m_flThrowerTouchTime ) )
-		{
-			return false;
-		}
-	}
+    if ( pPlayer == GetOwnerEntity() )
+    {
+        if ( ( m_flThrowerTouchTime > 0 ) && ( gpGlobals->curtime < m_flThrowerTouchTime ) )
+        {
+            return false;
+        }
+    }
 
-	return BaseClass::ItemCanBeTouchedByPlayer( pPlayer );
+    return BaseClass::ItemCanBeTouchedByPlayer( pPlayer );
 }

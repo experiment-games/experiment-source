@@ -18,10 +18,10 @@ class CBaseRecordingSessionBlock;
 
 class IRecordingSession : public IBaseInterface
 {
-public:
-	virtual void	AddBlock( CBaseRecordingSessionBlock *pBlock ) = 0;
+   public:
+    virtual void AddBlock( CBaseRecordingSessionBlock *pBlock ) = 0;
 };
 
 //----------------------------------------------------------------------------------------
 
-#endif // IRECORDINGSESSION_H
+#endif  // IRECORDINGSESSION_H

@@ -27,46 +27,50 @@ class CAI_MoveProbe;
 //-----------------------------------------------------------------------------
 
 class CAI_LocalNavigator : public CAI_Component,
-						   public CAI_ProxyMovementSink
+                           public CAI_ProxyMovementSink
 {
-public:
-	CAI_LocalNavigator(CAI_BaseNPC *pOuter);
-	virtual ~CAI_LocalNavigator();
+   public:
+    CAI_LocalNavigator( CAI_BaseNPC *pOuter );
+    virtual ~CAI_LocalNavigator();
 
-	void Init( IAI_MovementSink *pMovementServices );
+    void Init( IAI_MovementSink *pMovementServices );
 
-	//---------------------------------
-	
-	AIMoveResult_t		MoveCalc( AILocalMoveGoal_t *pResult, bool bPreviouslyValidated = false );
-	void				ResetMoveCalculations();
+    //---------------------------------
 
-	//---------------------------------
-	
-	void 				AddObstacle( const Vector &pos, float radius, AI_MoveSuggType_t type = AIMST_AVOID_OBJECT );
-	bool				HaveObstacles();
+    AIMoveResult_t MoveCalc( AILocalMoveGoal_t *pResult, bool bPreviouslyValidated = false );
+    void ResetMoveCalculations();
 
-protected:
+    //---------------------------------
 
-	AIMoveResult_t		MoveCalcRaw( AILocalMoveGoal_t *pResult, bool bOnlyCurThink );
-	bool 				MoveCalcDirect( AILocalMoveGoal_t *pMoveGoal, bool bOnlyCurThink, float *pDistClear, AIMoveResult_t *pResult );
-	bool 				MoveCalcSteer(  AILocalMoveGoal_t *pMoveGoal, float distClear, AIMoveResult_t *pResult );
-	bool		 		MoveCalcStop( AILocalMoveGoal_t *pMoveGoal, float distClear, AIMoveResult_t *pResult );
+    void AddObstacle( const Vector &pos, float radius, AI_MoveSuggType_t type = AIMST_AVOID_OBJECT );
+    bool HaveObstacles();
 
-	CAI_MoveProbe *		GetMoveProbe()		  { return m_pMoveProbe; }
-	const CAI_MoveProbe *GetMoveProbe() const { return m_pMoveProbe; }
+   protected:
+    AIMoveResult_t MoveCalcRaw( AILocalMoveGoal_t *pResult, bool bOnlyCurThink );
+    bool MoveCalcDirect( AILocalMoveGoal_t *pMoveGoal, bool bOnlyCurThink, float *pDistClear, AIMoveResult_t *pResult );
+    bool MoveCalcSteer( AILocalMoveGoal_t *pMoveGoal, float distClear, AIMoveResult_t *pResult );
+    bool MoveCalcStop( AILocalMoveGoal_t *pMoveGoal, float distClear, AIMoveResult_t *pResult );
 
-private:
+    CAI_MoveProbe *GetMoveProbe()
+    {
+        return m_pMoveProbe;
+    }
+    const CAI_MoveProbe *GetMoveProbe() const
+    {
+        return m_pMoveProbe;
+    }
 
-	// --------------------------------
+   private:
+    // --------------------------------
 
-	bool				m_fLastWasClear;
-	AILocalMoveGoal_t	m_LastMoveGoal;
-	CSimpleSimTimer		m_FullDirectTimer;
-	
-	CAI_PlaneSolver *	m_pPlaneSolver;
-	CAI_MoveProbe *		m_pMoveProbe;
+    bool m_fLastWasClear;
+    AILocalMoveGoal_t m_LastMoveGoal;
+    CSimpleSimTimer m_FullDirectTimer;
 
-	DECLARE_SIMPLE_DATADESC();
+    CAI_PlaneSolver *m_pPlaneSolver;
+    CAI_MoveProbe *m_pMoveProbe;
+
+    DECLARE_SIMPLE_DATADESC();
 };
 
-#endif // AI_LOCALNAVIGATOR_H
+#endif  // AI_LOCALNAVIGATOR_H

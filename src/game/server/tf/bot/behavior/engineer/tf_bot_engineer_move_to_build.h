@@ -10,35 +10,37 @@
 
 class CTFBotHintSentrygun;
 
-
 class CTFBotEngineerMoveToBuild : public Action< CTFBot >
 {
-public:
-	virtual ActionResult< CTFBot >	OnStart( CTFBot *me, Action< CTFBot > *priorAction );
-	virtual ActionResult< CTFBot >	Update( CTFBot *me, float interval );
+   public:
+    virtual ActionResult< CTFBot > OnStart( CTFBot *me, Action< CTFBot > *priorAction );
+    virtual ActionResult< CTFBot > Update( CTFBot *me, float interval );
 
-	virtual EventDesiredResult< CTFBot > OnStuck( CTFBot *me );
-	virtual EventDesiredResult< CTFBot > OnMoveToSuccess( CTFBot *me, const Path *path );
-	virtual EventDesiredResult< CTFBot > OnMoveToFailure( CTFBot *me, const Path *path, MoveToFailureType reason );
+    virtual EventDesiredResult< CTFBot > OnStuck( CTFBot *me );
+    virtual EventDesiredResult< CTFBot > OnMoveToSuccess( CTFBot *me, const Path *path );
+    virtual EventDesiredResult< CTFBot > OnMoveToFailure( CTFBot *me, const Path *path, MoveToFailureType reason );
 
-	virtual EventDesiredResult< CTFBot > OnTerritoryLost( CTFBot *me, int territoryID );
-	virtual EventDesiredResult< CTFBot > OnTerritoryCaptured( CTFBot *me, int territoryID );
+    virtual EventDesiredResult< CTFBot > OnTerritoryLost( CTFBot *me, int territoryID );
+    virtual EventDesiredResult< CTFBot > OnTerritoryCaptured( CTFBot *me, int territoryID );
 
-	virtual const char *GetName( void ) const	{ return "EngineerMoveToBuild"; };
+    virtual const char *GetName( void ) const
+    {
+        return "EngineerMoveToBuild";
+    };
 
-private:
-	CHandle< CTFBotHintSentrygun > m_sentryBuildHint;
-	Vector m_sentryBuildLocation;
+   private:
+    CHandle< CTFBotHintSentrygun > m_sentryBuildHint;
+    Vector m_sentryBuildLocation;
 
-	PathFollower m_path;
-	CountdownTimer m_repathTimer;
+    PathFollower m_path;
+    CountdownTimer m_repathTimer;
 
-	CUtlVector< CTFNavArea * > m_sentryAreaVector;
-	float m_totalSurfaceArea;
-	void CollectBuildAreas( CTFBot *me );
+    CUtlVector< CTFNavArea * > m_sentryAreaVector;
+    float m_totalSurfaceArea;
+    void CollectBuildAreas( CTFBot *me );
 
-	void SelectBuildLocation( CTFBot *me );
-	CountdownTimer m_fallBackTimer;
+    void SelectBuildLocation( CTFBot *me );
+    CountdownTimer m_fallBackTimer;
 };
 
-#endif // TF_BOT_ENGINEER_MOVE_TO_BUILD_H
+#endif  // TF_BOT_ENGINEER_MOVE_TO_BUILD_H

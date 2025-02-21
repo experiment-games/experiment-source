@@ -12,64 +12,67 @@ class CTFPlayer;
 
 class CTFBotHintSentrygun : public CBaseTFBotHintEntity
 {
-public:
-	DECLARE_CLASS( CTFBotHintSentrygun, CBaseTFBotHintEntity );
-	DECLARE_DATADESC();
+   public:
+    DECLARE_CLASS( CTFBotHintSentrygun, CBaseTFBotHintEntity );
+    DECLARE_DATADESC();
 
-	CTFBotHintSentrygun( void );
-	virtual ~CTFBotHintSentrygun() { }
+    CTFBotHintSentrygun( void );
+    virtual ~CTFBotHintSentrygun() {}
 
-	bool IsSticky() const;
-	bool IsInUse() const;
+    bool IsSticky() const;
+    bool IsInUse() const;
 
-	CTFPlayer *GetPlayerOwner() const;
-	void SetPlayerOwner( CTFPlayer *pPlayerOwner );
+    CTFPlayer *GetPlayerOwner() const;
+    void SetPlayerOwner( CTFPlayer *pPlayerOwner );
 
-	void IncrementUseCount();
-	void DecrementUseCount();
+    void IncrementUseCount();
+    void DecrementUseCount();
 
-	void OnSentryGunDestroyed( CBaseEntity *pBaseEntity );
+    void OnSentryGunDestroyed( CBaseEntity *pBaseEntity );
 
-	bool IsAvailableForSelection( CTFPlayer *pRequestingPlayer ) const;
+    bool IsAvailableForSelection( CTFPlayer *pRequestingPlayer ) const;
 
-	virtual HintType GetHintType() const OVERRIDE { return HINT_SENTRYGUN; }
+    virtual HintType GetHintType() const OVERRIDE
+    {
+        return HINT_SENTRYGUN;
+    }
 
-private:
-	bool m_isSticky;
-	int m_iUseCount;
-	COutputEvent m_outputOnSentryGunDestroyed;
+   private:
+    bool m_isSticky;
+    int m_iUseCount;
+    COutputEvent m_outputOnSentryGunDestroyed;
 
-	CHandle< CTFPlayer > m_playerOwner;
+    CHandle< CTFPlayer > m_playerOwner;
 };
 
 inline bool CTFBotHintSentrygun::IsSticky() const
 {
-	return m_isSticky;
+    return m_isSticky;
 }
 
 inline bool CTFBotHintSentrygun::IsInUse() const
 {
-	return m_iUseCount != 0;
+    return m_iUseCount != 0;
 }
 
 inline CTFPlayer *CTFBotHintSentrygun::GetPlayerOwner() const
 {
-	return m_playerOwner;
+    return m_playerOwner;
 }
 
 inline void CTFBotHintSentrygun::SetPlayerOwner( CTFPlayer *pPlayerOwner )
 {
-	m_playerOwner = pPlayerOwner;
+    m_playerOwner = pPlayerOwner;
 }
 
 inline void CTFBotHintSentrygun::IncrementUseCount()
 {
-	++m_iUseCount;
+    ++m_iUseCount;
 }
 
 inline void CTFBotHintSentrygun::DecrementUseCount()
 {
-	--m_iUseCount;
+    --m_iUseCount;
 }
 
-#endif // TF_BOT_HINT_SENTRYGUN_H
+#endif  // TF_BOT_HINT_SENTRYGUN_H

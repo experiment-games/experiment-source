@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -23,11 +23,11 @@ IMPLEMENT_AUTO_LIST( IFuncPasstimeNoBallZoneAutoList );
 //-----------------------------------------------------------------------------
 void CFuncPasstimeNoBallZone::Spawn()
 {
-	AddSpawnFlags( SF_TRIGGER_ALLOW_CLIENTS | SF_TRIGGER_ALLOW_PHYSICS );
-	BaseClass::Spawn();
-	InitTrigger();
-	SetNextThink( TICK_NEVER_THINK );
-	SetThink( NULL );
+    AddSpawnFlags( SF_TRIGGER_ALLOW_CLIENTS | SF_TRIGGER_ALLOW_PHYSICS );
+    BaseClass::Spawn();
+    InitTrigger();
+    SetNextThink( TICK_NEVER_THINK );
+    SetThink( NULL );
 }
 
 //-----------------------------------------------------------------------------
@@ -35,14 +35,14 @@ void CFuncPasstimeNoBallZone::Spawn()
 //-----------------------------------------------------------------------------
 bool EntityIsInNoBallZone( CBaseEntity *pTarget )
 {
-	const auto &allNoBallZones = IFuncPasstimeNoBallZoneAutoList::AutoList();
-	for ( int i = 0; i < allNoBallZones.Count(); ++i )
-	{
-		CFuncPasstimeNoBallZone *pNoBallZone = static_cast< CFuncPasstimeNoBallZone* >( allNoBallZones[i] );
-		if ( pTarget && pNoBallZone->IsTouching(pTarget) )
-		{
-			return true;
-		}
-	}
-	return false;
+    const auto &allNoBallZones = IFuncPasstimeNoBallZoneAutoList::AutoList();
+    for ( int i = 0; i < allNoBallZones.Count(); ++i )
+    {
+        CFuncPasstimeNoBallZone *pNoBallZone = static_cast< CFuncPasstimeNoBallZone * >( allNoBallZones[i] );
+        if ( pTarget && pNoBallZone->IsTouching( pTarget ) )
+        {
+            return true;
+        }
+    }
+    return false;
 }

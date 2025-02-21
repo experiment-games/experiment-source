@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -26,31 +26,32 @@ class TextImage;
 //-----------------------------------------------------------------------------
 class CheckImage : public TextImage
 {
-public:
-	CheckImage(CheckButton *CheckButton) : TextImage( "g" )
-	{
-		_CheckButton = CheckButton;
+   public:
+    CheckImage( CheckButton *CheckButton )
+        : TextImage( "g" )
+    {
+        _CheckButton = CheckButton;
 
-		SetSize(20, 13);
-	}
+        SetSize( 20, 13 );
+    }
 
-	virtual void Paint();
+    virtual void Paint();
 
-	virtual void SetColor(Color color)
-	{
-		_borderColor1 = color;
-		_borderColor2 = color;
-		_checkColor = color;
-	}
+    virtual void SetColor( Color color )
+    {
+        _borderColor1 = color;
+        _borderColor2 = color;
+        _checkColor = color;
+    }
 
-	Color _borderColor1;
-	Color _borderColor2;
-	Color _checkColor;
+    Color _borderColor1;
+    Color _borderColor2;
+    Color _checkColor;
 
-	Color _bgColor;
+    Color _bgColor;
 
-private:
-	CheckButton *_CheckButton;
+   private:
+    CheckButton *_CheckButton;
 };
 
 //-----------------------------------------------------------------------------
@@ -58,51 +59,65 @@ private:
 //-----------------------------------------------------------------------------
 class CheckButton : public ToggleButton
 {
-	DECLARE_CLASS_SIMPLE( CheckButton, ToggleButton );
+    DECLARE_CLASS_SIMPLE( CheckButton, ToggleButton );
 
-public:
-	CheckButton(Panel *parent, const char *panelName, const char *text);
-	~CheckButton();
+   public:
+    CheckButton( Panel *parent, const char *panelName, const char *text );
+    ~CheckButton();
 
-	// Check the button
-	virtual void SetSelected(bool state );
+    // Check the button
+    virtual void SetSelected( bool state );
 
-	// sets whether or not the state of the check can be changed
-	// if this is set to false, then no input in the code or by the user can change it's state
-	virtual void SetCheckButtonCheckable(bool state);
-	virtual bool IsCheckButtonCheckable() const { return m_bCheckButtonCheckable; }
+    // sets whether or not the state of the check can be changed
+    // if this is set to false, then no input in the code or by the user can change it's state
+    virtual void SetCheckButtonCheckable( bool state );
+    virtual bool IsCheckButtonCheckable() const
+    {
+        return m_bCheckButtonCheckable;
+    }
 
-	Color GetDisabledFgColor() { return _disabledFgColor; }
-	Color GetDisabledBgColor() { return _disabledBgColor; }
+    Color GetDisabledFgColor()
+    {
+        return _disabledFgColor;
+    }
+    Color GetDisabledBgColor()
+    {
+        return _disabledBgColor;
+    }
 
-	CheckImage *GetCheckImage() { return _checkBoxImage; }
+    CheckImage *GetCheckImage()
+    {
+        return _checkBoxImage;
+    }
 
-	virtual void SetHighlightColor(Color fgColor);
-	virtual void ApplySettings( KeyValues *inResourceData ) OVERRIDE;
+    virtual void SetHighlightColor( Color fgColor );
+    virtual void ApplySettings( KeyValues *inResourceData ) OVERRIDE;
 
-protected:
-	virtual void ApplySchemeSettings(IScheme *pScheme);
-	MESSAGE_FUNC_PTR( OnCheckButtonChecked, "CheckButtonChecked", panel );
-	virtual Color GetButtonFgColor();
+   protected:
+    virtual void ApplySchemeSettings( IScheme *pScheme );
+    MESSAGE_FUNC_PTR( OnCheckButtonChecked, "CheckButtonChecked", panel );
+    virtual Color GetButtonFgColor();
 
-	virtual IBorder *GetBorder(bool depressed, bool armed, bool selected, bool keyfocus);
+    virtual IBorder *GetBorder( bool depressed, bool armed, bool selected, bool keyfocus );
 
-	/* MESSAGES SENT
-		"CheckButtonChecked" - sent when the check button state is changed
-			"state"	- button state: 1 is checked, 0 is unchecked
-	*/
+    /* MESSAGES SENT
+      "CheckButtonChecked" - sent when the check button state is changed
+        "state"	- button state: 1 is checked, 0 is unchecked
+    */
 
-
-private:
-	enum { CHECK_INSET = 6 };
-	bool m_bCheckButtonCheckable;
-	bool m_bUseSmallCheckImage;
-	CheckImage *_checkBoxImage;
-	Color _disabledFgColor;
-	Color _disabledBgColor;
-	Color _highlightFgColor;
+   private:
+    enum
+    {
+        CHECK_INSET = 6
+    };
+    bool m_bCheckButtonCheckable;
+    bool m_bUseSmallCheckImage;
+    CheckImage *_checkBoxImage;
+    Color _disabledFgColor;
+    Color _disabledBgColor;
+    Color _highlightFgColor;
 };
 
-} // namespace vgui
+}  // namespace vgui
 
-#endif // CHECKBUTTON_H
+#endif  // CHECKBUTTON_H

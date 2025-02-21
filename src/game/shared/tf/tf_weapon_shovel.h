@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
 
@@ -18,9 +18,9 @@
 
 enum shovel_weapontypes_t
 {
-	SHOVEL_STANDARD = 0,
-	SHOVEL_DAMAGE_BOOST,
-	SHOVEL_SPEED_BOOST,
+    SHOVEL_STANDARD = 0,
+    SHOVEL_DAMAGE_BOOST,
+    SHOVEL_SPEED_BOOST,
 };
 
 //=============================================================================
@@ -29,39 +29,51 @@ enum shovel_weapontypes_t
 //
 class CTFShovel : public CTFWeaponBaseMelee
 {
-public:
+   public:
+    DECLARE_CLASS( CTFShovel, CTFWeaponBaseMelee );
+    DECLARE_NETWORKCLASS();
+    DECLARE_PREDICTABLE();
 
-	DECLARE_CLASS( CTFShovel, CTFWeaponBaseMelee );
-	DECLARE_NETWORKCLASS(); 
-	DECLARE_PREDICTABLE();
+    CTFShovel();
+    virtual int GetWeaponID( void ) const
+    {
+        return TF_WEAPON_SHOVEL;
+    }
+    virtual void PrimaryAttack();
 
-	CTFShovel();
-	virtual int		GetWeaponID( void ) const			{ return TF_WEAPON_SHOVEL; }
-	virtual void	PrimaryAttack();
+    int GetShovelType( void )
+    {
+        int iMode = 0;
+        CALL_ATTRIB_HOOK_INT( iMode, set_weapon_mode );
+        return iMode;
+    };
+    virtual bool HasDamageBoost( void )
+    {
+        return ( GetShovelType() == SHOVEL_DAMAGE_BOOST );
+    }
+    virtual bool HasSpeedBoost( void )
+    {
+        return ( GetShovelType() == SHOVEL_SPEED_BOOST );
+    }
+    virtual void ItemPreFrame( void ) OVERRIDE;
+    virtual float GetMeleeDamage( CBaseEntity* pTarget, int* piDamageType, int* piCustomDamage );
+    virtual float GetSpeedMod( void );
 
-	int				GetShovelType( void ) { int iMode = 0; CALL_ATTRIB_HOOK_INT( iMode, set_weapon_mode ); return iMode; };
-	virtual bool	HasDamageBoost( void ) { return (GetShovelType() == SHOVEL_DAMAGE_BOOST); }
-	virtual bool	HasSpeedBoost( void ) { return (GetShovelType() == SHOVEL_SPEED_BOOST); }
-	virtual void	ItemPreFrame( void ) OVERRIDE;
-	virtual float	GetMeleeDamage( CBaseEntity *pTarget, int* piDamageType, int* piCustomDamage );
-	virtual float	GetSpeedMod( void );
+    void MoveSpeedThink( void );
 
-	void			MoveSpeedThink( void );
-
-	virtual bool	Deploy( void );
-	virtual bool	Holster( CBaseCombatWeapon *pSwitchingTo );
+    virtual bool Deploy( void );
+    virtual bool Holster( CBaseCombatWeapon* pSwitchingTo );
 
 #ifndef CLIENT_DLL
-	virtual float	GetForceScale( void );
-	virtual int		GetDamageCustom();
+    virtual float GetForceScale( void );
+    virtual int GetDamageCustom();
 #endif
 
-private:
+   private:
+    CTFShovel( const CTFShovel& ) {}
 
-	CTFShovel( const CTFShovel & ) {}
-
-	bool			m_bHolstering;
-	float			m_flLastHealthRatio;
+    bool m_bHolstering;
+    float m_flLastHealthRatio;
 };
 
-#endif // TF_WEAPON_SHOVEL_H
+#endif  // TF_WEAPON_SHOVEL_H

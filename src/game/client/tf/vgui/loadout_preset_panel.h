@@ -21,49 +21,54 @@ class CSelectedItemPreset;
 //-----------------------------------------------------------------------------
 class CLoadoutPresetPanel : public vgui::EditablePanel
 {
-	DECLARE_CLASS_SIMPLE( CLoadoutPresetPanel, vgui::EditablePanel );
-public:
-	CLoadoutPresetPanel( vgui::Panel *pParent, const char *pName );	// name is ignored but needed for DECLARE_BUILD_FACTORY()
+    DECLARE_CLASS_SIMPLE( CLoadoutPresetPanel, vgui::EditablePanel );
 
-	void			SetClass( int iClass );
-	void			EnableVerticalDisplay( bool bVertical );
+   public:
+    CLoadoutPresetPanel( vgui::Panel *pParent, const char *pName );  // name is ignored but needed for DECLARE_BUILD_FACTORY()
 
-	virtual void	ApplySchemeSettings( vgui::IScheme *pScheme );
-	virtual void	ApplySettings( KeyValues *pInResourceData );
-	virtual void	PerformLayout();
-	virtual void	OnCommand( const char *command );
-	virtual void	OnTick() OVERRIDE;
+    void SetClass( int iClass );
+    void EnableVerticalDisplay( bool bVertical );
 
-	bool			HandlePresetKeyPressed( vgui::KeyCode code );
+    virtual void ApplySchemeSettings( vgui::IScheme *pScheme );
+    virtual void ApplySettings( KeyValues *pInResourceData );
+    virtual void PerformLayout();
+    virtual void OnCommand( const char *command );
+    virtual void OnTick() OVERRIDE;
 
-	void			SetClassLoadoutPanel(CClassLoadoutPanel* pPanel) {
-		m_pClassLoadoutPanel = pPanel;
-	}
+    bool HandlePresetKeyPressed( vgui::KeyCode code );
 
-private:
-	equipped_preset_t	GetSelectedPresetID() const;
-	void				UpdatePresetButtonStates();
-	void				LoadPreset( int iPresetIndex );
+    void SetClassLoadoutPanel( CClassLoadoutPanel *pPanel )
+    {
+        m_pClassLoadoutPanel = pPanel;
+    }
 
-	enum PresetsConsts_t
-	{
-		MAX_PRESETS = 4,
-	};
+   private:
+    equipped_preset_t GetSelectedPresetID() const;
+    void UpdatePresetButtonStates();
+    void LoadPreset( int iPresetIndex );
 
-	int						m_iClass;
-	KeyValues				*m_pPresetButtonKv;
-	CExButton				*m_pPresetButtons[ MAX_PRESETS ];
-	bool					m_bDisplayVertical;
-	CClassLoadoutPanel*		m_pClassLoadoutPanel;
+    enum PresetsConsts_t
+    {
+        MAX_PRESETS = 4,
+    };
 
-	enum PresetButtonColors_t
-	{
-		LOADED = 0, NOTLOADED,
-		FG = 0, BG,
-		DEFAULT = 0, ARMED, DEPRESSED
-	};
-	Color					m_aDefaultColors[2][2][3];	// [LOADED|NOTLOADED][FG|BG][DEFAULT|ARMED|DEPRESSED]
+    int m_iClass;
+    KeyValues *m_pPresetButtonKv;
+    CExButton *m_pPresetButtons[MAX_PRESETS];
+    bool m_bDisplayVertical;
+    CClassLoadoutPanel *m_pClassLoadoutPanel;
+
+    enum PresetButtonColors_t
+    {
+        LOADED = 0,
+        NOTLOADED,
+        FG = 0,
+        BG,
+        DEFAULT = 0,
+        ARMED,
+        DEPRESSED
+    };
+    Color m_aDefaultColors[2][2][3];  // [LOADED|NOTLOADED][FG|BG][DEFAULT|ARMED|DEPRESSED]
 };
 
-
-#endif // LOADOUT_PRESET_PANEL_H
+#endif  // LOADOUT_PRESET_PANEL_H

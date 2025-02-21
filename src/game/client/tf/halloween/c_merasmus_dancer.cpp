@@ -13,17 +13,12 @@
 IMPLEMENT_CLIENTCLASS_DT( C_MerasmusDancer, DT_MerasmusDancer, CMerasmusDancer )
 END_RECV_TABLE()
 
-
 //-----------------------------------------------------------------------------
 C_MerasmusDancer::C_MerasmusDancer()
 {
 }
 
-
 //-----------------------------------------------------------------------------
 C_MerasmusDancer::~C_MerasmusDancer()
 {
 }
-
-
-

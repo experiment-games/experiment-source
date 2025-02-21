@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
 
@@ -14,11 +14,11 @@
 
 class CDmePhonemeMapping : public CDmElement
 {
-	DEFINE_ELEMENT( CDmePhonemeMapping, CDmElement );
+    DEFINE_ELEMENT( CDmePhonemeMapping, CDmElement );
 
-public:
-	CDmaString    m_Preset; // "preset"  // map this item to this preset
-	CDmaVar< float > m_Weight; // "weight"  // using this weight
+   public:
+    CDmaString m_Preset;        // "preset"  // map this item to this preset
+    CDmaVar< float > m_Weight;  // "weight"  // using this weight
 };
 
-#endif // DMEPHONEMEMAPPING_H
+#endif  // DMEPHONEMEMAPPING_H

@@ -2,7 +2,7 @@
 //
 // Purpose: Maintain data about voice communications from various players
 //			so that the server can react to it.
-//			
+//
 //===========================================================================
 
 #include "cbase.h"
@@ -13,16 +13,16 @@
 ConVar voice_player_speaking_delay_threshold( "voice_player_speaking_delay_threshold", "0.5f", FCVAR_CHEAT );
 
 BEGIN_SCRIPTDESC_ROOT_NAMED( CPlayerVoiceListener, "CPlayerVoiceListener", SCRIPT_SINGLETON "Player voice listeners" )
-	DEFINE_SCRIPTFUNC_NAMED( ScriptIsPlayerSpeaking, "IsPlayerSpeaking", "Returns whether the player specified is speaking." )
-	DEFINE_SCRIPTFUNC_NAMED( ScriptGetPlayerSpeechDuration, "GetPlayerSpeechDuration", "Returns the number of seconds the player has been continuously speaking." )
+DEFINE_SCRIPTFUNC_NAMED( ScriptIsPlayerSpeaking, "IsPlayerSpeaking", "Returns whether the player specified is speaking." )
+DEFINE_SCRIPTFUNC_NAMED( ScriptGetPlayerSpeechDuration, "GetPlayerSpeechDuration", "Returns the number of seconds the player has been continuously speaking." )
 END_SCRIPTDESC()
 
 inline bool IsPlayerIndexValid( int nPlayerIndex )
 {
-	if ( nPlayerIndex < 1 || nPlayerIndex > MAX_PLAYERS )
-		return false;
+    if ( nPlayerIndex < 1 || nPlayerIndex > MAX_PLAYERS )
+        return false;
 
-	return true;
+    return true;
 }
 
 //---------------------------------------------------------------------------
@@ -30,7 +30,7 @@ inline bool IsPlayerIndexValid( int nPlayerIndex )
 //---------------------------------------------------------------------------
 CPlayerVoiceListener::CPlayerVoiceListener( void )
 {
-	InitData();
+    InitData();
 }
 
 //---------------------------------------------------------------------------
@@ -38,16 +38,16 @@ CPlayerVoiceListener::CPlayerVoiceListener( void )
 //---------------------------------------------------------------------------
 bool CPlayerVoiceListener::IsPlayerSpeaking( int nPlayerIndex )
 {
-	// Validate the player index
-	if ( IsPlayerIndexValid( nPlayerIndex ) == false )
-		return false;
+    // Validate the player index
+    if ( IsPlayerIndexValid( nPlayerIndex ) == false )
+        return false;
 
-	// See if they last spoke within our time threshold
-	if ( ( m_flLastPlayerSpeechTime[nPlayerIndex] + voice_player_speaking_delay_threshold.GetFloat() ) >= gpGlobals->curtime )
-		return true;
+    // See if they last spoke within our time threshold
+    if ( ( m_flLastPlayerSpeechTime[nPlayerIndex] + voice_player_speaking_delay_threshold.GetFloat() ) >= gpGlobals->curtime )
+        return true;
 
-	// Silent too long
-	return false;
+    // Silent too long
+    return false;
 }
 
 //---------------------------------------------------------------------------
@@ -55,12 +55,12 @@ bool CPlayerVoiceListener::IsPlayerSpeaking( int nPlayerIndex )
 //---------------------------------------------------------------------------
 bool CPlayerVoiceListener::IsPlayerSpeaking( CBasePlayer *pPlayer )
 {
-	// Validate the player
-	Assert( pPlayer );
-	if ( pPlayer == NULL )
-		return false;
+    // Validate the player
+    Assert( pPlayer );
+    if ( pPlayer == NULL )
+        return false;
 
-	return IsPlayerSpeaking( pPlayer->entindex() );
+    return IsPlayerSpeaking( pPlayer->entindex() );
 }
 
 //---------------------------------------------------------------------------
@@ -68,37 +68,36 @@ bool CPlayerVoiceListener::IsPlayerSpeaking( CBasePlayer *pPlayer )
 //---------------------------------------------------------------------------
 bool CPlayerVoiceListener::ScriptIsPlayerSpeaking( int nPlayerIndex )
 {
-	return IsPlayerSpeaking( nPlayerIndex );
+    return IsPlayerSpeaking( nPlayerIndex );
 }
 
-
-#define SPEECH_DURATION_HACK	1.0f	// This is a total hack to guess a duration of a voice packet, this has no real value
+#define SPEECH_DURATION_HACK 1.0f  // This is a total hack to guess a duration of a voice packet, this has no real value
 
 //---------------------------------------------------------------------------
 // Purpose:
 //---------------------------------------------------------------------------
 void CPlayerVoiceListener::AddPlayerSpeakTime( int nPlayerIndex )
 {
-	// Validate the player index
-	if ( IsPlayerIndexValid( nPlayerIndex ) == false )
-		return;
+    // Validate the player index
+    if ( IsPlayerIndexValid( nPlayerIndex ) == false )
+        return;
 
-	// Maintain our current speech time
-	if ( IsPlayerSpeaking( nPlayerIndex ) )
-	{
-		// We're continuing the speech
-		m_flPlayerSpeechDuration[nPlayerIndex] += ( gpGlobals->curtime - m_flLastPlayerSpeechTime[nPlayerIndex] );
-	}
-	else
-	{
-		// We've just begun to speak
-		m_flPlayerSpeechDuration[nPlayerIndex] = 0.0f;
-	}
+    // Maintain our current speech time
+    if ( IsPlayerSpeaking( nPlayerIndex ) )
+    {
+        // We're continuing the speech
+        m_flPlayerSpeechDuration[nPlayerIndex] += ( gpGlobals->curtime - m_flLastPlayerSpeechTime[nPlayerIndex] );
+    }
+    else
+    {
+        // We've just begun to speak
+        m_flPlayerSpeechDuration[nPlayerIndex] = 0.0f;
+    }
 
-	// Take the time update
-	m_flLastPlayerSpeechTime[nPlayerIndex] = gpGlobals->curtime;
+    // Take the time update
+    m_flLastPlayerSpeechTime[nPlayerIndex] = gpGlobals->curtime;
 
-	// Msg("Player %d last spoke at %0.2f for %0.2f seconds\n", nPlayerIndex, gpGlobals->curtime, m_flPlayerSpeechDuration[nPlayerIndex] );
+    // Msg("Player %d last spoke at %0.2f for %0.2f seconds\n", nPlayerIndex, gpGlobals->curtime, m_flPlayerSpeechDuration[nPlayerIndex] );
 }
 
 //---------------------------------------------------------------------------
@@ -106,12 +105,12 @@ void CPlayerVoiceListener::AddPlayerSpeakTime( int nPlayerIndex )
 //---------------------------------------------------------------------------
 void CPlayerVoiceListener::AddPlayerSpeakTime( CBasePlayer *pPlayer )
 {
-	// Validate the player
-	Assert( pPlayer );
-	if ( pPlayer == NULL )
-		return;
+    // Validate the player
+    Assert( pPlayer );
+    if ( pPlayer == NULL )
+        return;
 
-	return AddPlayerSpeakTime( pPlayer->entindex() );
+    return AddPlayerSpeakTime( pPlayer->entindex() );
 }
 
 //---------------------------------------------------------------------------
@@ -119,10 +118,10 @@ void CPlayerVoiceListener::AddPlayerSpeakTime( CBasePlayer *pPlayer )
 //---------------------------------------------------------------------------
 float CPlayerVoiceListener::GetPlayerLastSpeechTime( int nPlayerIndex )
 {
-	if ( IsPlayerIndexValid( nPlayerIndex ) == false )
-		return -1.0f;
+    if ( IsPlayerIndexValid( nPlayerIndex ) == false )
+        return -1.0f;
 
-	return m_flLastPlayerSpeechTime[ nPlayerIndex ];
+    return m_flLastPlayerSpeechTime[nPlayerIndex];
 }
 
 //---------------------------------------------------------------------------
@@ -130,12 +129,12 @@ float CPlayerVoiceListener::GetPlayerLastSpeechTime( int nPlayerIndex )
 //---------------------------------------------------------------------------
 float CPlayerVoiceListener::GetPlayerLastSpeechTime( CBasePlayer *pPlayer )
 {
-	// Validate the player
-	Assert( pPlayer );
-	if ( pPlayer == NULL )
-		return -1.0f;
+    // Validate the player
+    Assert( pPlayer );
+    if ( pPlayer == NULL )
+        return -1.0f;
 
-	return GetPlayerLastSpeechTime( pPlayer->entindex() );
+    return GetPlayerLastSpeechTime( pPlayer->entindex() );
 }
 
 //---------------------------------------------------------------------------
@@ -143,10 +142,10 @@ float CPlayerVoiceListener::GetPlayerLastSpeechTime( CBasePlayer *pPlayer )
 //---------------------------------------------------------------------------
 float CPlayerVoiceListener::GetPlayerSilenceDuration( int nPlayerIndex )
 {
-	if ( IsPlayerIndexValid( nPlayerIndex ) == false )
-		return -1.0f;
+    if ( IsPlayerIndexValid( nPlayerIndex ) == false )
+        return -1.0f;
 
-	return gpGlobals->curtime - m_flLastPlayerSpeechTime[ nPlayerIndex ];
+    return gpGlobals->curtime - m_flLastPlayerSpeechTime[nPlayerIndex];
 }
 
 //---------------------------------------------------------------------------
@@ -154,12 +153,12 @@ float CPlayerVoiceListener::GetPlayerSilenceDuration( int nPlayerIndex )
 //---------------------------------------------------------------------------
 float CPlayerVoiceListener::GetPlayerSilenceDuration( CBasePlayer *pPlayer )
 {
-	// Validate the player
-	Assert( pPlayer );
-	if ( pPlayer == NULL )
-		return -1.0f;
+    // Validate the player
+    Assert( pPlayer );
+    if ( pPlayer == NULL )
+        return -1.0f;
 
-	return GetPlayerSilenceDuration( pPlayer->entindex() );
+    return GetPlayerSilenceDuration( pPlayer->entindex() );
 }
 
 //---------------------------------------------------------------------------
@@ -167,10 +166,10 @@ float CPlayerVoiceListener::GetPlayerSilenceDuration( CBasePlayer *pPlayer )
 //---------------------------------------------------------------------------
 float CPlayerVoiceListener::GetPlayerSpeechDuration( int nPlayerIndex )
 {
-	if ( IsPlayerIndexValid( nPlayerIndex ) == false )
-		return -1.0f;
+    if ( IsPlayerIndexValid( nPlayerIndex ) == false )
+        return -1.0f;
 
-	return m_flPlayerSpeechDuration[nPlayerIndex];
+    return m_flPlayerSpeechDuration[nPlayerIndex];
 }
 
 //---------------------------------------------------------------------------
@@ -178,12 +177,12 @@ float CPlayerVoiceListener::GetPlayerSpeechDuration( int nPlayerIndex )
 //---------------------------------------------------------------------------
 float CPlayerVoiceListener::GetPlayerSpeechDuration( CBasePlayer *pPlayer )
 {
-	// Validate the player
-	Assert( pPlayer );
-	if ( pPlayer == NULL )
-		return -1.0f;
+    // Validate the player
+    Assert( pPlayer );
+    if ( pPlayer == NULL )
+        return -1.0f;
 
-	return GetPlayerSpeechDuration( pPlayer->entindex() );
+    return GetPlayerSpeechDuration( pPlayer->entindex() );
 }
 
 //---------------------------------------------------------------------------
@@ -191,7 +190,7 @@ float CPlayerVoiceListener::GetPlayerSpeechDuration( CBasePlayer *pPlayer )
 //---------------------------------------------------------------------------
 float CPlayerVoiceListener::ScriptGetPlayerSpeechDuration( int nPlayerIndex )
 {
-	return GetPlayerSpeechDuration( nPlayerIndex );
+    return GetPlayerSpeechDuration( nPlayerIndex );
 }
 
 //---------------------------------------------------------------------------
@@ -199,9 +198,9 @@ float CPlayerVoiceListener::ScriptGetPlayerSpeechDuration( int nPlayerIndex )
 //---------------------------------------------------------------------------
 void CPlayerVoiceListener::InitData( void )
 {
-	// Clear our tracking data
-	memset( m_flLastPlayerSpeechTime, 0.0f, sizeof( m_flLastPlayerSpeechTime ) );
-	memset( m_flPlayerSpeechDuration, 0.0f, sizeof( m_flPlayerSpeechDuration ) );
+    // Clear our tracking data
+    memset( m_flLastPlayerSpeechTime, 0.0f, sizeof( m_flLastPlayerSpeechTime ) );
+    memset( m_flPlayerSpeechDuration, 0.0f, sizeof( m_flPlayerSpeechDuration ) );
 }
 
 //---------------------------------------------------------------------------
@@ -209,7 +208,7 @@ void CPlayerVoiceListener::InitData( void )
 //---------------------------------------------------------------------------
 void CPlayerVoiceListener::LevelInitPreEntity( void )
 {
-	InitData();
+    InitData();
 }
 
 //---------------------------------------------------------------------------
@@ -217,9 +216,12 @@ void CPlayerVoiceListener::LevelInitPreEntity( void )
 //---------------------------------------------------------------------------
 void CPlayerVoiceListener::LevelShutdownPreEntity( void )
 {
-	InitData();
+    InitData();
 }
 
 // Singleton
 CPlayerVoiceListener g_PlayerVoiceListener;
-CPlayerVoiceListener &PlayerVoiceListener( void ) { return g_PlayerVoiceListener; }
+CPlayerVoiceListener &PlayerVoiceListener( void )
+{
+    return g_PlayerVoiceListener;
+}

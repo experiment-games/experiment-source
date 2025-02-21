@@ -15,29 +15,27 @@
 //-----------------------------------------------------------------------------
 class CLogicEventListener : public CLogicalEntity, public CGameEventListener
 {
-	DECLARE_CLASS( CLogicEventListener, CLogicalEntity );
-	DECLARE_DATADESC();
+    DECLARE_CLASS( CLogicEventListener, CLogicalEntity );
+    DECLARE_DATADESC();
 
-public:
-	// FIXME: Subclass
+   public:
+    // FIXME: Subclass
 #ifdef PORTAL2
-#endif // PORTAL2
+#endif  // PORTAL2
 
-	virtual void Spawn( void );
-	virtual void FireGameEvent( IGameEvent *event );
-	
-	void	InputEnable( inputdata_t &inputdata );
-	void	InputDisable( inputdata_t &inputdata );
+    virtual void Spawn( void );
+    virtual void FireGameEvent( IGameEvent *event );
 
-private:
+    void InputEnable( inputdata_t &inputdata );
+    void InputDisable( inputdata_t &inputdata );
 
-	string_t	m_iszEventName;
-	bool		m_bIsEnabled;
-	int			m_nTeam;
-	bool		m_bFetchEventData;
+   private:
+    string_t m_iszEventName;
+    bool m_bIsEnabled;
+    int m_nTeam;
+    bool m_bFetchEventData;
 
-	COutputEvent m_OnEventFired;
-
+    COutputEvent m_OnEventFired;
 };
 
 //-----------------------------------------------------------------------------
@@ -45,22 +43,22 @@ private:
 //-----------------------------------------------------------------------------
 class CLogicEventListenerItemEquip : public CLogicEventListener
 {
-	DECLARE_CLASS( CLogicEventListenerItemEquip, CLogicalEntity );
-	DECLARE_DATADESC();
+    DECLARE_CLASS( CLogicEventListenerItemEquip, CLogicalEntity );
+    DECLARE_DATADESC();
 
-public:
-	virtual void Spawn( void );
-	virtual void FireGameEvent( IGameEvent *event );
+   public:
+    virtual void Spawn( void );
+    virtual void FireGameEvent( IGameEvent *event );
 
-	void	InputEnable( inputdata_t &inputdata );
-	void	InputDisable( inputdata_t &inputdata );
+    void InputEnable( inputdata_t &inputdata );
+    void InputDisable( inputdata_t &inputdata );
 
-private:
-	bool		m_bIsEnabled;
-	int			m_nTeam;
-	string_t	m_szWeaponClassname;
-	int			m_nWeaponType;
+   private:
+    bool m_bIsEnabled;
+    int m_nTeam;
+    string_t m_szWeaponClassname;
+    int m_nWeaponType;
 
-	COutputEvent m_OnEventFired;
+    COutputEvent m_OnEventFired;
 };
-#endif	// LOGIC_EVENTLISTENER_H
+#endif  // LOGIC_EVENTLISTENER_H

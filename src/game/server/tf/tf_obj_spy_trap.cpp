@@ -11,4 +11,3 @@
 #include "bot/tf_bot.h"
 #include "tf_gamerules.h"
 #include "tf_fx.h"
-

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -14,12 +14,11 @@
 // Hacky macros to allow shared code to work without even worse macro-izing
 #if defined( CLIENT_DLL )
 
-#define CBaseEntity				C_BaseEntity
-#define CBaseCombatCharacter	C_BaseCombatCharacter
-#define CBaseAnimating			C_BaseAnimating
-#define CBasePlayer				C_BasePlayer
+#define CBaseEntity C_BaseEntity
+#define CBaseCombatCharacter C_BaseCombatCharacter
+#define CBaseAnimating C_BaseAnimating
+#define CBasePlayer C_BasePlayer
 
 #endif
 
-
-#endif // SHARED_CLASSNAMES_H
+#endif  // SHARED_CLASSNAMES_H

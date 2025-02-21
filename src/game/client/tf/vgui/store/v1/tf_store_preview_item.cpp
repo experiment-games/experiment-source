@@ -4,7 +4,6 @@
 //
 //=============================================================================//
 
-
 #include "cbase.h"
 #include "store/v1/tf_store_preview_item.h"
 
@@ -12,89 +11,89 @@
 #include <tier0/memdbgon.h>
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CTFStorePreviewItemPanel1::CTFStorePreviewItemPanel1( vgui::Panel *pParent, const char *pResFile, const char *pPanelName, CStorePage *pOwner )
-:	BaseClass( pParent, pResFile, "storepreviewitem", pOwner )
-{								   
+    : BaseClass( pParent, pResFile, "storepreviewitem", pOwner )
+{
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFStorePreviewItemPanel1::ApplySchemeSettings( vgui::IScheme *pScheme )
 {
-	BaseClass::ApplySchemeSettings( pScheme );
+    BaseClass::ApplySchemeSettings( pScheme );
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFStorePreviewItemPanel1::PerformLayout( void )
 {
-	BaseClass::PerformLayout();
+    BaseClass::PerformLayout();
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFStorePreviewItemPanel1::OnCommand( const char *command )
 {
-	BaseClass::OnCommand( command );
+    BaseClass::OnCommand( command );
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFStorePreviewItemPanel1::OnClassIconSelected( KeyValues *data )
 {
-	BaseClass::OnClassIconSelected( data );
+    BaseClass::OnClassIconSelected( data );
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFStorePreviewItemPanel1::OnHideClassIconMouseover( void )
 {
-	BaseClass::OnHideClassIconMouseover();
+    BaseClass::OnHideClassIconMouseover();
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFStorePreviewItemPanel1::OnShowClassIconMouseover( KeyValues *data )
 {
-	BaseClass::OnShowClassIconMouseover( data );
+    BaseClass::OnShowClassIconMouseover( data );
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-void CTFStorePreviewItemPanel1::PreviewItem( int iClass, CEconItemView *pItem, const econ_store_entry_t* pEntry )
+void CTFStorePreviewItemPanel1::PreviewItem( int iClass, CEconItemView *pItem, const econ_store_entry_t *pEntry )
 {
-	BaseClass::PreviewItem( iClass, pItem, pEntry );
+    BaseClass::PreviewItem( iClass, pItem, pEntry );
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFStorePreviewItemPanel1::SetState( preview_state_t iState )
 {
-	BaseClass::SetState( iState );
+    BaseClass::SetState( iState );
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFStorePreviewItemPanel1::UpdateIcons( void )
 {
-	BaseClass::UpdateIcons();
+    BaseClass::UpdateIcons();
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFStorePreviewItemPanel1::OnTick( void )
 {
-	BaseClass::OnTick();
+    BaseClass::OnTick();
 }

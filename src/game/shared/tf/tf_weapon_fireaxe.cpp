@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
 
@@ -24,18 +24,17 @@ PRECACHE_WEAPON_REGISTER( tf_weapon_fireaxe );
 
 #ifdef GAME_DLL
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-float CTFFireAxe::GetInitialAfterburnDuration() const 
-{ 
-	int iAddBurningDamageType = 0;
-	CALL_ATTRIB_HOOK_INT( iAddBurningDamageType, set_dmgtype_ignite );
-	if ( iAddBurningDamageType )
-	{
-		return 7.5f;
-	}
+float CTFFireAxe::GetInitialAfterburnDuration() const
+{
+    int iAddBurningDamageType = 0;
+    CALL_ATTRIB_HOOK_INT( iAddBurningDamageType, set_dmgtype_ignite );
+    if ( iAddBurningDamageType )
+    {
+        return 7.5f;
+    }
 
-	return BaseClass::GetInitialAfterburnDuration();
+    return BaseClass::GetInitialAfterburnDuration();
 }
 #endif
-

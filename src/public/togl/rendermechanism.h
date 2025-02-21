@@ -25,7 +25,7 @@
 #ifndef RENDERMECHANISM_H
 #define RENDERMECHANISM_H
 
-#if defined(DX_TO_GL_ABSTRACTION) && !defined(USE_DXVK)
+#if defined( DX_TO_GL_ABSTRACTION ) && !defined( USE_DXVK )
 
 #undef PROTECTED_THINGS_ENABLE
 
@@ -56,31 +56,31 @@
 #include "togl/d3dx_impl.h"
 
 #else
-	//USE_ACTUAL_DX
-	#ifdef WIN32
-		#ifdef _X360
-			#include "d3d9.h"
-			#include "d3dx9.h"
-		#else
-			#include <WinSock2.h>
-			#include <windows.h>
-			#if __has_include( "../../dx9sdk/include/d3d9.h" )
-				#include "../../dx9sdk/include/d3d9.h"
-			#else
-				#include <d3d9.h>		
-			#endif
-			#include "togl/d3dx_impl.h"
-		#endif
-		typedef HWND VD3DHWND;
-	#else
-		#include <d3d9.h>
-		#include "togl/d3dx_impl.h"
-		typedef HWND VD3DHWND;
-	#endif
+// USE_ACTUAL_DX
+#ifdef WIN32
+#ifdef _X360
+#include "d3d9.h"
+#include "d3dx9.h"
+#else
+#include <WinSock2.h>
+#include <windows.h>
+#if __has_include( "../../dx9sdk/include/d3d9.h" )
+#include "../../dx9sdk/include/d3d9.h"
+#else
+#include <d3d9.h>
+#endif
+#include "togl/d3dx_impl.h"
+#endif
+typedef HWND VD3DHWND;
+#else
+#include <d3d9.h>
+#include "togl/d3dx_impl.h"
+typedef HWND VD3DHWND;
+#endif
 
-	#define	GLMPRINTF(args)	
-	#define	GLMPRINTSTR(args)
-	#define	GLMPRINTTEXT(args)
-#endif // defined(DX_TO_GL_ABSTRACTION)
+#define GLMPRINTF( args )
+#define GLMPRINTSTR( args )
+#define GLMPRINTTEXT( args )
+#endif  // defined(DX_TO_GL_ABSTRACTION)
 
-#endif // RENDERMECHANISM_H
+#endif  // RENDERMECHANISM_H

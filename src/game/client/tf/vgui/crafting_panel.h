@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -22,56 +22,55 @@
 class CImageButton;
 
 // Crafting slots on crafting page
-#define CRAFTING_SLOTS_INPUT_ROWS					3
-#define CRAFTING_SLOTS_INPUT_COLUMNS				4
-#define CRAFTING_SLOTS_INPUTPANELS					(CRAFTING_SLOTS_INPUT_ROWS * CRAFTING_SLOTS_INPUT_COLUMNS)
-#define CRAFTING_SLOTS_OUTPUT_ROWS					1
-#define CRAFTING_SLOTS_OUTPUT_COLUMNS				4
-#define CRAFTING_SLOTS_COUNT						(CRAFTING_SLOTS_INPUTPANELS + (CRAFTING_SLOTS_OUTPUT_ROWS * CRAFTING_SLOTS_OUTPUT_COLUMNS))
+#define CRAFTING_SLOTS_INPUT_ROWS 3
+#define CRAFTING_SLOTS_INPUT_COLUMNS 4
+#define CRAFTING_SLOTS_INPUTPANELS ( CRAFTING_SLOTS_INPUT_ROWS * CRAFTING_SLOTS_INPUT_COLUMNS )
+#define CRAFTING_SLOTS_OUTPUT_ROWS 1
+#define CRAFTING_SLOTS_OUTPUT_COLUMNS 4
+#define CRAFTING_SLOTS_COUNT ( CRAFTING_SLOTS_INPUTPANELS + ( CRAFTING_SLOTS_OUTPUT_ROWS * CRAFTING_SLOTS_OUTPUT_COLUMNS ) )
 
-#define RECIPE_CUSTOM								-2
+#define RECIPE_CUSTOM -2
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 class CRecipeButton : public CExButton
 {
-private:
-	DECLARE_CLASS_SIMPLE( CRecipeButton, CExButton );
+   private:
+    DECLARE_CLASS_SIMPLE( CRecipeButton, CExButton );
 
-public:
-	CRecipeButton( vgui::Panel *parent, const char *name, const char *text, vgui::Panel *pActionSignalTarget = NULL, const char *cmd = NULL )
-		: CExButton( parent, name, text, pActionSignalTarget, cmd )
-	{
-	}
+   public:
+    CRecipeButton( vgui::Panel *parent, const char *name, const char *text, vgui::Panel *pActionSignalTarget = NULL, const char *cmd = NULL )
+        : CExButton( parent, name, text, pActionSignalTarget, cmd )
+    {
+    }
 
-	virtual void ApplySettings( KeyValues *inResourceData )
-	{
-		BaseClass::ApplySettings( inResourceData );
-		SetEnabled( m_iRecipeDefIndex != -1 );
-	}
+    virtual void ApplySettings( KeyValues *inResourceData )
+    {
+        BaseClass::ApplySettings( inResourceData );
+        SetEnabled( m_iRecipeDefIndex != -1 );
+    }
 
-	void SetDefIndex( int iIndex )
-	{
-		m_iRecipeDefIndex = iIndex;
-		SetEnabled( m_iRecipeDefIndex != -1 );
-	}
+    void SetDefIndex( int iIndex )
+    {
+        m_iRecipeDefIndex = iIndex;
+        SetEnabled( m_iRecipeDefIndex != -1 );
+    }
 
-	void OnCursorEntered( void )
-	{
-		PostActionSignal( new KeyValues("RecipePanelEntered") );
-		BaseClass::OnCursorEntered();
-	}
+    void OnCursorEntered( void )
+    {
+        PostActionSignal( new KeyValues( "RecipePanelEntered" ) );
+        BaseClass::OnCursorEntered();
+    }
 
-	void OnCursorExited( void )
-	{
-		PostActionSignal( new KeyValues("RecipePanelExited") );
-		BaseClass::OnCursorExited();
-	}
+    void OnCursorExited( void )
+    {
+        PostActionSignal( new KeyValues( "RecipePanelExited" ) );
+        BaseClass::OnCursorExited();
+    }
 
-
-public:
-	int		m_iRecipeDefIndex;
+   public:
+    int m_iRecipeDefIndex;
 };
 
 //-----------------------------------------------------------------------------
@@ -79,97 +78,107 @@ public:
 //-----------------------------------------------------------------------------
 class CCraftingPanel : public CBaseLoadoutPanel
 {
-	DECLARE_CLASS_SIMPLE( CCraftingPanel, CBaseLoadoutPanel );
-public:
-	CCraftingPanel( vgui::Panel *parent, const char *panelName );
-	~CCraftingPanel( void );
+    DECLARE_CLASS_SIMPLE( CCraftingPanel, CBaseLoadoutPanel );
 
-	virtual const char *GetResFile( void ) { return "Resource/UI/CraftingPanel.res"; }
-	virtual void ApplySchemeSettings( vgui::IScheme *pScheme );
-	virtual void ApplySettings( KeyValues *inResourceData );
-	virtual void PerformLayout( void );
-	virtual void OnShowPanel( bool bVisible, bool bReturningFromArmory );
-	virtual void OnCommand( const char *command );
+   public:
+    CCraftingPanel( vgui::Panel *parent, const char *panelName );
+    ~CCraftingPanel( void );
 
-	void		 CreateRecipeFilterButtons( void );
-	void		 UpdateRecipeFilter( void );
+    virtual const char *GetResFile( void )
+    {
+        return "Resource/UI/CraftingPanel.res";
+    }
+    virtual void ApplySchemeSettings( vgui::IScheme *pScheme );
+    virtual void ApplySettings( KeyValues *inResourceData );
+    virtual void PerformLayout( void );
+    virtual void OnShowPanel( bool bVisible, bool bReturningFromArmory );
+    virtual void OnCommand( const char *command );
 
-	virtual int	 GetNumItemPanels( void ) { return CRAFTING_SLOTS_COUNT; };
+    void CreateRecipeFilterButtons( void );
+    void UpdateRecipeFilter( void );
 
-	bool		 IsInputItemPanel( int iSlot ) { return (iSlot < CRAFTING_SLOTS_INPUTPANELS); }
-	virtual void PositionItemPanel( CItemModelPanel *pPanel, int iIndex );
-	int			 GetItemPanelIndex( CItemModelPanel *pItemPanel );
+    virtual int GetNumItemPanels( void )
+    {
+        return CRAFTING_SLOTS_COUNT;
+    };
 
-	void		 UpdateSelectedRecipe( bool bClearInputItems );
-	void		 UpdateRecipeItems( bool bClearInputItems );
-	void		 UpdateCraftButton( void );
+    bool IsInputItemPanel( int iSlot )
+    {
+        return ( iSlot < CRAFTING_SLOTS_INPUTPANELS );
+    }
+    virtual void PositionItemPanel( CItemModelPanel *pPanel, int iIndex );
+    int GetItemPanelIndex( CItemModelPanel *pItemPanel );
 
-	const char	 *GetItemTextForCriteria( const CItemSelectionCriteria *pCriteria );
-	CEconItemDefinition *GetItemDefFromCriteria( const CItemSelectionCriteria *pCriteria );
-	virtual void AddNewItemPanel( int iPanelIndex );
-	virtual void UpdateModelPanels( void );
-	void		 SetButtonToRecipe( int iButton, int iDefIndex, wchar_t *pszText );
+    void UpdateSelectedRecipe( bool bClearInputItems );
+    void UpdateRecipeItems( bool bClearInputItems );
+    void UpdateCraftButton( void );
 
-	bool		 CheckForUntradableItems( void );
-	void		 Craft( void );
-	void		 OnCraftResponse( EGCMsgResponse eResponse, CUtlVector<uint64> *vecCraftedIndices, int iRecipeUsed );
-	void		 ShowCraftFinish( void );
-	virtual void OnTick( void );
-	void		 CleanupPostCraft( bool bClearInputItems );
+    const char *GetItemTextForCriteria( const CItemSelectionCriteria *pCriteria );
+    CEconItemDefinition *GetItemDefFromCriteria( const CItemSelectionCriteria *pCriteria );
+    virtual void AddNewItemPanel( int iPanelIndex );
+    virtual void UpdateModelPanels( void );
+    void SetButtonToRecipe( int iButton, int iDefIndex, wchar_t *pszText );
 
-	MESSAGE_FUNC_PTR( OnItemPanelMousePressed, "ItemPanelMousePressed", panel );
-	MESSAGE_FUNC_PTR( OnRecipePanelEntered, "RecipePanelEntered", panel );
-	MESSAGE_FUNC_PTR( OnRecipePanelExited, "RecipePanelExited", panel );
-	MESSAGE_FUNC( OnCancelSelection, "CancelSelection" );
-	MESSAGE_FUNC_PARAMS( OnSelectionReturned, "SelectionReturned", data );
+    bool CheckForUntradableItems( void );
+    void Craft( void );
+    void OnCraftResponse( EGCMsgResponse eResponse, CUtlVector< uint64 > *vecCraftedIndices, int iRecipeUsed );
+    void ShowCraftFinish( void );
+    virtual void OnTick( void );
+    void CleanupPostCraft( bool bClearInputItems );
 
-	MESSAGE_FUNC( OnClosing, "Closing" );
+    MESSAGE_FUNC_PTR( OnItemPanelMousePressed, "ItemPanelMousePressed", panel );
+    MESSAGE_FUNC_PTR( OnRecipePanelEntered, "RecipePanelEntered", panel );
+    MESSAGE_FUNC_PTR( OnRecipePanelExited, "RecipePanelExited", panel );
+    MESSAGE_FUNC( OnCancelSelection, "CancelSelection" );
+    MESSAGE_FUNC_PARAMS( OnSelectionReturned, "SelectionReturned", data );
 
-	virtual ConVar	*GetExplanationConVar( void );
+    MESSAGE_FUNC( OnClosing, "Closing" );
 
-private:
-	// Items in the input model panels
-	itemid_t						m_InputItems[CRAFTING_SLOTS_INPUTPANELS];
-	const CItemSelectionCriteria	*m_ItemPanelCriteria[CRAFTING_SLOTS_INPUTPANELS];
+    virtual ConVar *GetExplanationConVar( void );
 
-	CExButton						*m_pCraftButton;
-	CExButton						*m_pUpgradeButton;
-	CExLabel						*m_pFreeAccountLabel;
-	vgui::EditablePanel				*m_pRecipeListContainer;
-	vgui::ScrollableEditablePanel	*m_pRecipeListContainerScroller;
-	vgui::EditablePanel				*m_pSelectedRecipeContainer;
+   private:
+    // Items in the input model panels
+    itemid_t m_InputItems[CRAFTING_SLOTS_INPUTPANELS];
+    const CItemSelectionCriteria *m_ItemPanelCriteria[CRAFTING_SLOTS_INPUTPANELS];
 
-	KeyValues						*m_pRecipeButtonsKV;
-	CUtlVector<CRecipeButton*>		m_pRecipeButtons;
-	KeyValues						*m_pRecipeFilterButtonsKV;
-	CUtlVector<CImageButton*>		m_pRecipeFilterButtons;
+    CExButton *m_pCraftButton;
+    CExButton *m_pUpgradeButton;
+    CExLabel *m_pFreeAccountLabel;
+    vgui::EditablePanel *m_pRecipeListContainer;
+    vgui::ScrollableEditablePanel *m_pRecipeListContainerScroller;
+    vgui::EditablePanel *m_pSelectedRecipeContainer;
 
-	int								m_iCurrentlySelectedRecipe;
-	int								m_iCurrentRecipeTotalInputs;
-	int								m_iCurrentRecipeTotalOutputs;
-	recipecategories_t				m_iRecipeCategoryFilter;
+    KeyValues *m_pRecipeButtonsKV;
+    CUtlVector< CRecipeButton * > m_pRecipeButtons;
+    KeyValues *m_pRecipeFilterButtonsKV;
+    CUtlVector< CImageButton * > m_pRecipeFilterButtons;
 
-	CUtlVector<itemid_t>			m_vecNewlyCraftedItems;
-	double							m_flAbortCraftingAt;
-	bool							m_bWaitingForCraftItems;
-	int								m_iRecipeIndexTried;
-	int								m_iNewRecipeIndex;
-	bool							m_bEventLogging;
-	int								m_iCraftingAttempts;
+    int m_iCurrentlySelectedRecipe;
+    int m_iCurrentRecipeTotalInputs;
+    int m_iCurrentRecipeTotalOutputs;
+    recipecategories_t m_iRecipeCategoryFilter;
 
-	CTFTextToolTip					*m_pToolTip;
-	vgui::EditablePanel				*m_pToolTipEmbeddedPanel;
+    CUtlVector< itemid_t > m_vecNewlyCraftedItems;
+    double m_flAbortCraftingAt;
+    bool m_bWaitingForCraftItems;
+    int m_iRecipeIndexTried;
+    int m_iNewRecipeIndex;
+    bool m_bEventLogging;
+    int m_iCraftingAttempts;
 
-	CCraftingItemSelectionPanel		*m_pSelectionPanel;
-	int								m_iSelectingForSlot;
+    CTFTextToolTip *m_pToolTip;
+    vgui::EditablePanel *m_pToolTipEmbeddedPanel;
 
-	CPanelAnimationVarAliasType( int, m_iItemCraftingOffcenterX, "item_crafting_offcenter_x", "0", "proportional_int" );
-	CPanelAnimationVarAliasType( int, m_iFilterOffcenterX, "filter_xoffset", "0", "proportional_int" );
-	CPanelAnimationVarAliasType( int, m_iFilterYPos, "filter_ypos", "0", "proportional_int" );
-	CPanelAnimationVarAliasType( int, m_iFilterDeltaX, "filter_xdelta", "0", "proportional_int" );
-	CPanelAnimationVarAliasType( int, m_iFilterDeltaY, "filter_ydelta", "0", "proportional_int" );
+    CCraftingItemSelectionPanel *m_pSelectionPanel;
+    int m_iSelectingForSlot;
 
-	CPanelAnimationVarAliasType( int, m_iOutputItemYPos, "output_item_ypos", "0", "proportional_int" );
+    CPanelAnimationVarAliasType( int, m_iItemCraftingOffcenterX, "item_crafting_offcenter_x", "0", "proportional_int" );
+    CPanelAnimationVarAliasType( int, m_iFilterOffcenterX, "filter_xoffset", "0", "proportional_int" );
+    CPanelAnimationVarAliasType( int, m_iFilterYPos, "filter_ypos", "0", "proportional_int" );
+    CPanelAnimationVarAliasType( int, m_iFilterDeltaX, "filter_xdelta", "0", "proportional_int" );
+    CPanelAnimationVarAliasType( int, m_iFilterDeltaY, "filter_ydelta", "0", "proportional_int" );
+
+    CPanelAnimationVarAliasType( int, m_iOutputItemYPos, "output_item_ypos", "0", "proportional_int" );
 };
 
 //-----------------------------------------------------------------------------
@@ -177,26 +186,26 @@ private:
 //-----------------------------------------------------------------------------
 class CCraftingStatusDialog : public vgui::EditablePanel
 {
-	DECLARE_CLASS_SIMPLE( CCraftingStatusDialog, vgui::EditablePanel );
+    DECLARE_CLASS_SIMPLE( CCraftingStatusDialog, vgui::EditablePanel );
 
-public:
-	CCraftingStatusDialog( vgui::Panel *pParent, const char *pElementName );
+   public:
+    CCraftingStatusDialog( vgui::Panel *pParent, const char *pElementName );
 
-	virtual void	ApplySchemeSettings( vgui::IScheme *scheme );
-	virtual void	OnCommand( const char *command );
-	virtual void	OnTick( void );
-	void			UpdateSchemeForVersion( bool bRecipe );
-	void			ShowStatusUpdate( bool bAnimateEllipses, bool bAllowed, bool bShowOnExit );
+    virtual void ApplySchemeSettings( vgui::IScheme *scheme );
+    virtual void OnCommand( const char *command );
+    virtual void OnTick( void );
+    void UpdateSchemeForVersion( bool bRecipe );
+    void ShowStatusUpdate( bool bAnimateEllipses, bool bAllowed, bool bShowOnExit );
 
-private:
-	bool			m_bShowOnExit;
-	bool			m_bAnimateEllipses;
-	int				m_iNumEllipses;
-	bool			m_bShowNewRecipe;
-	CItemModelPanel	*m_pRecipePanel;
+   private:
+    bool m_bShowOnExit;
+    bool m_bAnimateEllipses;
+    int m_iNumEllipses;
+    bool m_bShowNewRecipe;
+    CItemModelPanel *m_pRecipePanel;
 };
 CCraftingStatusDialog *OpenCraftingStatusDialog( vgui::Panel *pParent, const char *pszText, bool bAnimateEllipses, bool bAllowClose, bool bShowOnExit );
 CCraftingStatusDialog *OpenNewRecipeFoundDialog( vgui::Panel *pParent, const CEconCraftingRecipeDefinition *pRecipeDef );
 void CloseCraftingStatusDialog( void );
 
-#endif // CRAFTING_PANEL_H
+#endif  // CRAFTING_PANEL_H

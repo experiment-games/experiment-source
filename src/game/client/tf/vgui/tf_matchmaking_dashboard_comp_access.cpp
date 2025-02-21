@@ -4,7 +4,6 @@
 //
 //=============================================================================//
 
-
 #include "cbase.h"
 #include "tf_shareddefs.h"
 #include "tf_matchmaking_dashboard_side_panel.h"
@@ -23,194 +22,194 @@
 using namespace vgui;
 using namespace GCSDK;
 
-class CCompetitiveAccessInfoPanel : public EditablePanel
-								  , public CLocalSteamSharedObjectListener
+class CCompetitiveAccessInfoPanel : public EditablePanel, public CLocalSteamSharedObjectListener
 {
-	DECLARE_CLASS_SIMPLE( CCompetitiveAccessInfoPanel, EditablePanel );
-public:
-	CCompetitiveAccessInfoPanel( Panel* pParent, const char* pszName )
-		: EditablePanel( pParent, pszName )
-	{
-		vgui::HScheme scheme = vgui::scheme()->LoadSchemeFromFileEx( enginevgui->GetPanel( PANEL_CLIENTDLL ), "resource/ClientScheme.res", "ClientScheme");
-		SetScheme(scheme);
-		SetProportional( true );
+    DECLARE_CLASS_SIMPLE( CCompetitiveAccessInfoPanel, EditablePanel );
 
-		m_pPhoneButton = NULL;
-		m_pPremiumButton = NULL;
-		m_pRankImage = NULL;
-		m_pRankButton = NULL;
+   public:
+    CCompetitiveAccessInfoPanel( Panel *pParent, const char *pszName )
+        : EditablePanel( pParent, pszName )
+    {
+        vgui::HScheme scheme = vgui::scheme()->LoadSchemeFromFileEx( enginevgui->GetPanel( PANEL_CLIENTDLL ), "resource/ClientScheme.res", "ClientScheme" );
+        SetScheme( scheme );
+        SetProportional( true );
 
-		m_pPhoneCheckImage = NULL;
-		m_pPremiumCheckImage = NULL;
-		m_pRankCheckImage = NULL;
-	}
+        m_pPhoneButton = NULL;
+        m_pPremiumButton = NULL;
+        m_pRankImage = NULL;
+        m_pRankButton = NULL;
 
-	virtual void ApplySchemeSettings( IScheme *pScheme ) OVERRIDE
-	{
-		BaseClass::ApplySchemeSettings( pScheme );
-		LoadControlSettings( "resource/ui/CompetitiveAccessInfo.res" );
+        m_pPhoneCheckImage = NULL;
+        m_pPremiumCheckImage = NULL;
+        m_pRankCheckImage = NULL;
+    }
 
-		m_pPhoneButton = FindControl< CExImageButton >( "PhoneButton", true );
-		m_pPremiumButton = FindControl< CExImageButton >( "PremiumButton", true );
-		m_pRankImage = FindControl< CTFBadgePanel >( "RankImage", true );
-		m_pRankButton = FindControl< CExImageButton >( "RankButton", true );
+    virtual void ApplySchemeSettings( IScheme *pScheme ) OVERRIDE
+    {
+        BaseClass::ApplySchemeSettings( pScheme );
+        LoadControlSettings( "resource/ui/CompetitiveAccessInfo.res" );
 
-		m_pPhoneCheckImage = FindControl< ImagePanel >( "PhoneCheckImage", true );
-		m_pPremiumCheckImage = FindControl< ImagePanel >( "PremiumCheckImage", true );
-		m_pRankCheckImage = FindControl< ImagePanel >( "RankCheckImage", true );
-	}
+        m_pPhoneButton = FindControl< CExImageButton >( "PhoneButton", true );
+        m_pPremiumButton = FindControl< CExImageButton >( "PremiumButton", true );
+        m_pRankImage = FindControl< CTFBadgePanel >( "RankImage", true );
+        m_pRankButton = FindControl< CExImageButton >( "RankButton", true );
 
-	virtual void PerformLayout() OVERRIDE
-	{
-		BaseClass::PerformLayout();
+        m_pPhoneCheckImage = FindControl< ImagePanel >( "PhoneCheckImage", true );
+        m_pPremiumCheckImage = FindControl< ImagePanel >( "PremiumCheckImage", true );
+        m_pRankCheckImage = FindControl< ImagePanel >( "RankCheckImage", true );
+    }
 
-		// premium
-		bool bIsFreeAccount = IsFreeTrialAccount();
-		if ( m_pPremiumButton )
-		{
-			m_pPremiumButton->SetEnabled( bIsFreeAccount );
-		}
-		if ( m_pPremiumCheckImage )
-		{
-			m_pPremiumCheckImage->SetVisible( !bIsFreeAccount );
-		}
+    virtual void PerformLayout() OVERRIDE
+    {
+        BaseClass::PerformLayout();
 
-		// phone
-		bool bIsPhoneVerified = GTFGCClientSystem()->BIsPhoneVerified();
-		bool bIsPhoneIdentifying = GTFGCClientSystem()->BIsPhoneIdentifying();
-		bool bPhoneReady = bIsPhoneVerified && bIsPhoneIdentifying;
-		if ( m_pPhoneButton )
-		{
-			m_pPhoneButton->SetEnabled( !bPhoneReady );
-		}
-		if ( m_pPhoneCheckImage )
-		{
-			m_pPhoneCheckImage->SetVisible( bPhoneReady );
-		}
+        // premium
+        bool bIsFreeAccount = IsFreeTrialAccount();
+        if ( m_pPremiumButton )
+        {
+            m_pPremiumButton->SetEnabled( bIsFreeAccount );
+        }
+        if ( m_pPremiumCheckImage )
+        {
+            m_pPremiumCheckImage->SetVisible( !bIsFreeAccount );
+        }
 
-		// rank
-		const IMatchGroupDescription* pMatchDesc = GetMatchGroupDescription( k_eTFMatchGroup_Casual_12v12 );
-		if ( pMatchDesc && pMatchDesc->m_pProgressionDesc )
-		{
-			if ( m_pRankImage )
-			{
-				m_pRankImage->SetupBadge( pMatchDesc, SteamUser()->GetSteamID() );
-			}
+        // phone
+        bool bIsPhoneVerified = GTFGCClientSystem()->BIsPhoneVerified();
+        bool bIsPhoneIdentifying = GTFGCClientSystem()->BIsPhoneIdentifying();
+        bool bPhoneReady = bIsPhoneVerified && bIsPhoneIdentifying;
+        if ( m_pPhoneButton )
+        {
+            m_pPhoneButton->SetEnabled( !bPhoneReady );
+        }
+        if ( m_pPhoneCheckImage )
+        {
+            m_pPhoneCheckImage->SetVisible( bPhoneReady );
+        }
 
-			bool bHighEnoughLevel = false;
-			if ( m_pRankCheckImage )
-			{
-				if ( steamapicontext && steamapicontext->SteamUser() )
-				{
-					CSteamID steamID = steamapicontext->SteamUser()->GetSteamID();
-					const auto pRankRating = CTFRatingData::YieldingGetPlayerRatingDataBySteamID( SteamUser()->GetSteamID(), pMatchDesc->GetCurrentDisplayRank() );
-					if ( pRankRating )
-					{
-						auto level = pMatchDesc->m_pProgressionDesc->GetLevelByNumber( pRankRating->GetRatingData().unRatingPrimary );
-						bHighEnoughLevel = level.m_nLevelNum >= k_nMinCasualLevelForCompetitive;
-					}
-				}
-				m_pRankCheckImage->SetVisible( bHighEnoughLevel );
-			}
+        // rank
+        const IMatchGroupDescription *pMatchDesc = GetMatchGroupDescription( k_eTFMatchGroup_Casual_12v12 );
+        if ( pMatchDesc && pMatchDesc->m_pProgressionDesc )
+        {
+            if ( m_pRankImage )
+            {
+                m_pRankImage->SetupBadge( pMatchDesc, SteamUser()->GetSteamID() );
+            }
 
-			if ( m_pRankButton )
-			{
-				m_pRankButton->SetEnabled( !bHighEnoughLevel );
-			}
-		}
-	}
+            bool bHighEnoughLevel = false;
+            if ( m_pRankCheckImage )
+            {
+                if ( steamapicontext && steamapicontext->SteamUser() )
+                {
+                    CSteamID steamID = steamapicontext->SteamUser()->GetSteamID();
+                    const auto pRankRating = CTFRatingData::YieldingGetPlayerRatingDataBySteamID( SteamUser()->GetSteamID(), pMatchDesc->GetCurrentDisplayRank() );
+                    if ( pRankRating )
+                    {
+                        auto level = pMatchDesc->m_pProgressionDesc->GetLevelByNumber( pRankRating->GetRatingData().unRatingPrimary );
+                        bHighEnoughLevel = level.m_nLevelNum >= k_nMinCasualLevelForCompetitive;
+                    }
+                }
+                m_pRankCheckImage->SetVisible( bHighEnoughLevel );
+            }
 
-	virtual void OnCommand(  const char *command ) OVERRIDE
-	{
-		if ( FStrEq( command, "close" ) )
-		{
-			SetVisible( false );
-			return;
-		}
-		else if ( FStrEq( command, "addphone" ) )
-		{
-			if ( steamapicontext && steamapicontext->SteamFriends() )
-			{
-				steamapicontext->SteamFriends()->ActivateGameOverlayToWebPage( "https://support.steampowered.com/kb_article.php?ref=8625-WRAH-9030#addphone" );
-			}
-			return;
-		}
-		else if ( FStrEq( command, "addpremium" ) )
-		{
-			if ( steamapicontext && steamapicontext->SteamFriends() )
-			{
-				steamapicontext->SteamFriends()->ActivateGameOverlayToWebPage( "https://steamcommunity.com/sharedfiles/filedetails/?id=143430756" );
-			}
-			return;
-		}
-		else if ( FStrEq( command, "open_casual" ) )
-		{
-			// Defaulting to 12v12
-			PostMessage( GetMMDashboard(), new KeyValues( "PlayCasual" ) );
-			return;
-		}
+            if ( m_pRankButton )
+            {
+                m_pRankButton->SetEnabled( !bHighEnoughLevel );
+            }
+        }
+    }
 
-		BaseClass::OnCommand( command );
-	}
+    virtual void OnCommand( const char *command ) OVERRIDE
+    {
+        if ( FStrEq( command, "close" ) )
+        {
+            SetVisible( false );
+            return;
+        }
+        else if ( FStrEq( command, "addphone" ) )
+        {
+            if ( steamapicontext && steamapicontext->SteamFriends() )
+            {
+                steamapicontext->SteamFriends()->ActivateGameOverlayToWebPage( "https://support.steampowered.com/kb_article.php?ref=8625-WRAH-9030#addphone" );
+            }
+            return;
+        }
+        else if ( FStrEq( command, "addpremium" ) )
+        {
+            if ( steamapicontext && steamapicontext->SteamFriends() )
+            {
+                steamapicontext->SteamFriends()->ActivateGameOverlayToWebPage( "https://steamcommunity.com/sharedfiles/filedetails/?id=143430756" );
+            }
+            return;
+        }
+        else if ( FStrEq( command, "open_casual" ) )
+        {
+            // Defaulting to 12v12
+            PostMessage( GetMMDashboard(), new KeyValues( "PlayCasual" ) );
+            return;
+        }
 
-	virtual void SOCreated( const CSteamID & steamIDOwner, const CSharedObject *pObject, ESOCacheEvent eEvent ) OVERRIDE
-	{
-		if ( pObject->GetTypeID() != CEconGameAccountClient::k_nTypeID )
-			return;
+        BaseClass::OnCommand( command );
+    }
 
-		if ( GTFGCClientSystem()->BHasCompetitiveAccess() )
-		{
-		//	SetVisible( false );
-		}
-		else
-		{
-			InvalidateLayout();
-		}
-	}
+    virtual void SOCreated( const CSteamID &steamIDOwner, const CSharedObject *pObject, ESOCacheEvent eEvent ) OVERRIDE
+    {
+        if ( pObject->GetTypeID() != CEconGameAccountClient::k_nTypeID )
+            return;
 
-	virtual void SOUpdated( const CSteamID & steamIDOwner, const CSharedObject *pObject, ESOCacheEvent eEvent ) OVERRIDE
-	{
-		if ( pObject->GetTypeID() != CEconGameAccountClient::k_nTypeID && pObject->GetTypeID() != CSOTFLadderData::k_nTypeID )
-			return;
+        if ( GTFGCClientSystem()->BHasCompetitiveAccess() )
+        {
+            //	SetVisible( false );
+        }
+        else
+        {
+            InvalidateLayout();
+        }
+    }
 
-		if ( GTFGCClientSystem()->BHasCompetitiveAccess() )
-		{
-		//	SetVisible( false );
-		}
-		else
-		{
-			InvalidateLayout();
-		}
-	}
+    virtual void SOUpdated( const CSteamID &steamIDOwner, const CSharedObject *pObject, ESOCacheEvent eEvent ) OVERRIDE
+    {
+        if ( pObject->GetTypeID() != CEconGameAccountClient::k_nTypeID && pObject->GetTypeID() != CSOTFLadderData::k_nTypeID )
+            return;
 
-private:
-	CExImageButton	*m_pPhoneButton;
-	CExImageButton	*m_pPremiumButton;
-	CTFBadgePanel	*m_pRankImage;
-	CExImageButton	*m_pRankButton;
+        if ( GTFGCClientSystem()->BHasCompetitiveAccess() )
+        {
+            //	SetVisible( false );
+        }
+        else
+        {
+            InvalidateLayout();
+        }
+    }
 
-	ImagePanel		*m_pPhoneCheckImage;
-	ImagePanel		*m_pPremiumCheckImage;
-	ImagePanel		*m_pRankCheckImage;
+   private:
+    CExImageButton *m_pPhoneButton;
+    CExImageButton *m_pPremiumButton;
+    CTFBadgePanel *m_pRankImage;
+    CExImageButton *m_pRankButton;
+
+    ImagePanel *m_pPhoneCheckImage;
+    ImagePanel *m_pPremiumCheckImage;
+    ImagePanel *m_pRankCheckImage;
 };
 
 class CCompAccessSlidePanel : public CMatchMakingDashboardSidePanel
 {
-	DECLARE_CLASS_SIMPLE( CCompAccessSlidePanel, CMatchMakingDashboardSidePanel );
-	CCompAccessSlidePanel( Panel* pParent, const char* pszName )
-		: CMatchMakingDashboardSidePanel( NULL, pszName, "resource/ui/MatchMakingDashboardCompAccess.res", k_eSideRight )
-	{
-		m_pCompAccessPanel = new CCompetitiveAccessInfoPanel( this, "CompAccessEmbedded" );
-	}
+    DECLARE_CLASS_SIMPLE( CCompAccessSlidePanel, CMatchMakingDashboardSidePanel );
+    CCompAccessSlidePanel( Panel *pParent, const char *pszName )
+        : CMatchMakingDashboardSidePanel( NULL, pszName, "resource/ui/MatchMakingDashboardCompAccess.res", k_eSideRight )
+    {
+        m_pCompAccessPanel = new CCompetitiveAccessInfoPanel( this, "CompAccessEmbedded" );
+    }
 
-	CCompetitiveAccessInfoPanel* m_pCompAccessPanel;
+    CCompetitiveAccessInfoPanel *m_pCompAccessPanel;
 };
 
-Panel* GetCompAccessPanel()
+Panel *GetCompAccessPanel()
 {
-	Panel* pPanel = new CCompAccessSlidePanel( NULL, "CompAccess" );
-	pPanel->MakeReadyForUse();
-	pPanel->AddActionSignalTarget( GetMMDashboard() );
-	return pPanel;
+    Panel *pPanel = new CCompAccessSlidePanel( NULL, "CompAccess" );
+    pPanel->MakeReadyForUse();
+    pPanel->AddActionSignalTarget( GetMMDashboard() );
+    return pPanel;
 }
 REGISTER_FUNC_FOR_DASHBOARD_PANEL_TYPE( GetCompAccessPanel, k_eCompAccess );

@@ -14,41 +14,41 @@ class CBotNPC;
 
 class CTFSpawnerBoss : public CPointEntity
 {
-public:
-	DECLARE_CLASS( CTFSpawnerBoss, CPointEntity );
-	DECLARE_DATADESC();
+   public:
+    DECLARE_CLASS( CTFSpawnerBoss, CPointEntity );
+    DECLARE_DATADESC();
 
-	CTFSpawnerBoss( void );
-	virtual ~CTFSpawnerBoss() { }
+    CTFSpawnerBoss( void );
+    virtual ~CTFSpawnerBoss() {}
 
-	void SpawnerThink( void );
+    void SpawnerThink( void );
 
-	// Input.
-	void InputEnable( inputdata_t &inputdata );
-	void InputDisable( inputdata_t &inputdata );
+    // Input.
+    void InputEnable( inputdata_t &inputdata );
+    void InputDisable( inputdata_t &inputdata );
 
-	// Output
-	void OnBotKilled( CBotNPC *pBot );
-	void OnBotStunned( CBotNPC *pBot );
+    // Output
+    void OnBotKilled( CBotNPC *pBot );
+    void OnBotStunned( CBotNPC *pBot );
 
-private:
-	bool m_isExpended;
-	int m_spawnCount;
-	int m_spawnCountRemaining;
-	int m_maxActiveCount;
-	float m_spawnInterval;
-	string_t m_teamName;
+   private:
+    bool m_isExpended;
+    int m_spawnCount;
+    int m_spawnCountRemaining;
+    int m_maxActiveCount;
+    float m_spawnInterval;
+    string_t m_teamName;
 
-	COutputEvent m_onSpawned;
-	COutputEvent m_onExpended;
-	COutputEvent m_onBotKilled;
-	COutputEvent m_onBotStunned;
+    COutputEvent m_onSpawned;
+    COutputEvent m_onExpended;
+    COutputEvent m_onBotKilled;
+    COutputEvent m_onBotStunned;
 
-	CUtlVector< CHandle< CBotNPC > > m_spawnedBotVector;
+    CUtlVector< CHandle< CBotNPC > > m_spawnedBotVector;
 };
 
-#endif // TF_RAID_MODE
+#endif  // TF_RAID_MODE
 
-#endif // OBSOLETE_USE_BOSS_ALPHA
+#endif  // OBSOLETE_USE_BOSS_ALPHA
 
-#endif // TF_SPAWNER_BOSS_H
+#endif  // TF_SPAWNER_BOSS_H

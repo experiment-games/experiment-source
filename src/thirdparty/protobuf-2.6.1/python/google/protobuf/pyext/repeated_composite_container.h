@@ -43,16 +43,18 @@
 #include <string>
 #include <vector>
 
-
-namespace google {
-namespace protobuf {
+namespace google
+{
+namespace protobuf
+{
 
 class FieldDescriptor;
 class Message;
 
 using internal::shared_ptr;
 
-namespace python {
+namespace python
+{
 
 struct CMessage;
 struct CFieldDescriptor;
@@ -67,102 +69,104 @@ struct CFieldDescriptor;
 //
 // When in the released state 'message', 'owner', 'parent', and
 // 'parent_field' are NULL.
-typedef struct RepeatedCompositeContainer {
-  PyObject_HEAD;
+typedef struct RepeatedCompositeContainer
+{
+    PyObject_HEAD;
 
-  // This is the top-level C++ Message object that owns the whole
-  // proto tree.  Every Python RepeatedCompositeContainer holds a
-  // reference to it in order to keep it alive as long as there's a
-  // Python object that references any part of the tree.
-  shared_ptr<Message> owner;
+    // This is the top-level C++ Message object that owns the whole
+    // proto tree.  Every Python RepeatedCompositeContainer holds a
+    // reference to it in order to keep it alive as long as there's a
+    // Python object that references any part of the tree.
+    shared_ptr< Message > owner;
 
-  // Weak reference to parent object. May be NULL. Used to make sure
-  // the parent is writable before modifying the
-  // RepeatedCompositeContainer.
-  CMessage* parent;
+    // Weak reference to parent object. May be NULL. Used to make sure
+    // the parent is writable before modifying the
+    // RepeatedCompositeContainer.
+    CMessage* parent;
 
-  // A descriptor used to modify the underlying 'message'.
-  CFieldDescriptor* parent_field;
+    // A descriptor used to modify the underlying 'message'.
+    CFieldDescriptor* parent_field;
 
-  // Pointer to the C++ Message that contains this container.  The
-  // RepeatedCompositeContainer does not own this pointer.
-  //
-  // If NULL, this message has been released from its parent (by
-  // calling Clear() or ClearField() on the parent.
-  Message* message;
+    // Pointer to the C++ Message that contains this container.  The
+    // RepeatedCompositeContainer does not own this pointer.
+    //
+    // If NULL, this message has been released from its parent (by
+    // calling Clear() or ClearField() on the parent.
+    Message* message;
 
-  // A callable that is used to create new child messages.
-  PyObject* subclass_init;
+    // A callable that is used to create new child messages.
+    PyObject* subclass_init;
 
-  // A list of child messages.
-  PyObject* child_messages;
+    // A list of child messages.
+    PyObject* child_messages;
 } RepeatedCompositeContainer;
 
 extern PyTypeObject RepeatedCompositeContainer_Type;
 
-namespace repeated_composite_container {
+namespace repeated_composite_container
+{
 
 // Returns the number of items in this repeated composite container.
-static Py_ssize_t Length(RepeatedCompositeContainer* self);
+static Py_ssize_t Length( RepeatedCompositeContainer* self );
 
 // Appends a new CMessage to the container and returns it.  The
 // CMessage is initialized using the content of kwargs.
 //
 // Returns a new reference if successful; returns NULL and sets an
 // exception if unsuccessful.
-PyObject* Add(RepeatedCompositeContainer* self,
-              PyObject* args,
-              PyObject* kwargs);
+PyObject* Add( RepeatedCompositeContainer* self,
+               PyObject* args,
+               PyObject* kwargs );
 
 // Appends all the CMessages in the input iterator to the container.
 //
 // Returns None if successful; returns NULL and sets an exception if
 // unsuccessful.
-PyObject* Extend(RepeatedCompositeContainer* self, PyObject* value);
+PyObject* Extend( RepeatedCompositeContainer* self, PyObject* value );
 
 // Appends a new message to the container for each message in the
 // input iterator, merging each data element in. Equivalent to extend.
 //
 // Returns None if successful; returns NULL and sets an exception if
 // unsuccessful.
-PyObject* MergeFrom(RepeatedCompositeContainer* self, PyObject* other);
+PyObject* MergeFrom( RepeatedCompositeContainer* self, PyObject* other );
 
 // Accesses messages in the container.
 //
 // Returns a new reference to the message for an integer parameter.
 // Returns a new reference to a list of messages for a slice.
-PyObject* Subscript(RepeatedCompositeContainer* self, PyObject* slice);
+PyObject* Subscript( RepeatedCompositeContainer* self, PyObject* slice );
 
 // Deletes items from the container (cannot be used for assignment).
 //
 // Returns 0 on success, -1 on failure.
-int AssignSubscript(RepeatedCompositeContainer* self,
-                    PyObject* slice,
-                    PyObject* value);
+int AssignSubscript( RepeatedCompositeContainer* self,
+                     PyObject* slice,
+                     PyObject* value );
 
 // Releases the messages in the container to the given message.
 //
 // Returns 0 on success, -1 on failure.
-int ReleaseToMessage(RepeatedCompositeContainer* self,
-                     google::protobuf::Message* new_message);
+int ReleaseToMessage( RepeatedCompositeContainer* self,
+                      google::protobuf::Message* new_message );
 
 // Releases the messages in the container to a new message.
 //
 // Returns 0 on success, -1 on failure.
-int Release(RepeatedCompositeContainer* self);
+int Release( RepeatedCompositeContainer* self );
 
 // Returns 0 on success, -1 on failure.
-int SetOwner(RepeatedCompositeContainer* self,
-             const shared_ptr<Message>& new_owner);
+int SetOwner( RepeatedCompositeContainer* self,
+              const shared_ptr< Message >& new_owner );
 
 // Removes the last element of the repeated message field 'field' on
 // the Message 'message', and transfers the ownership of the released
 // Message to 'cmessage'.
 //
 // Corresponds to reflection api method ReleaseMessage.
-void ReleaseLastTo(const FieldDescriptor* field,
-                   Message* message,
-                   CMessage* cmessage);
+void ReleaseLastTo( const FieldDescriptor* field,
+                    Message* message,
+                    CMessage* cmessage );
 
 }  // namespace repeated_composite_container
 }  // namespace python

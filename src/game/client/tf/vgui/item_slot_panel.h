@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -15,40 +15,41 @@ class CItemCriteriaSelectionPanel;
 //-----------------------------------------------------------------------------
 class CItemSlotPanel : public CBaseLoadoutPanel
 {
-	DECLARE_CLASS_SIMPLE( CItemSlotPanel, CBaseLoadoutPanel );
-public:
-	CItemSlotPanel( vgui::Panel *parent );
-	~CItemSlotPanel();
+    DECLARE_CLASS_SIMPLE( CItemSlotPanel, CBaseLoadoutPanel );
 
-	virtual void ApplySchemeSettings( vgui::IScheme *pScheme );
-	virtual void PerformLayout( void );
+   public:
+    CItemSlotPanel( vgui::Panel *parent );
+    ~CItemSlotPanel();
 
-	virtual void AddNewItemPanel( int iPanelIndex ) OVERRIDE;
-	virtual void UpdateModelPanels( void ) OVERRIDE;
-	virtual int	 GetNumItemPanels( void ) OVERRIDE;
-	virtual void OnShowPanel( bool bVisible, bool bReturningFromArmory ) OVERRIDE;
+    virtual void ApplySchemeSettings( vgui::IScheme *pScheme );
+    virtual void PerformLayout( void );
 
-	MESSAGE_FUNC_PTR( OnItemPanelMouseReleased, "ItemPanelMouseReleased", panel );
-	MESSAGE_FUNC_PARAMS( OnSelectionReturned, "SelectionReturned", data );
-	MESSAGE_FUNC( OnCancelSelection, "CancelSelection" );
-	virtual void OnCommand( const char *command );
+    virtual void AddNewItemPanel( int iPanelIndex ) OVERRIDE;
+    virtual void UpdateModelPanels( void ) OVERRIDE;
+    virtual int GetNumItemPanels( void ) OVERRIDE;
+    virtual void OnShowPanel( bool bVisible, bool bReturningFromArmory ) OVERRIDE;
 
-	void	SetItem( CEconItem* pItem );
+    MESSAGE_FUNC_PTR( OnItemPanelMouseReleased, "ItemPanelMouseReleased", panel );
+    MESSAGE_FUNC_PARAMS( OnSelectionReturned, "SelectionReturned", data );
+    MESSAGE_FUNC( OnCancelSelection, "CancelSelection" );
+    virtual void OnCommand( const char *command );
 
-private:
-	CEconItem	*m_pItem;
+    void SetItem( CEconItem *pItem );
 
-	struct ItemSlot_t
-	{
-		CAttribute_ItemSlotCriteria m_slotCriteriaAttribute;
-		itemid_t m_ulOriginalID;
-		bool m_bHasSlot;
-	};
-	CUtlVector< ItemSlot_t > m_itemSlots;
+   private:
+    CEconItem *m_pItem;
 
-	int m_iCurrentSlotIndex;
-	CItemSelectionCriteria m_selectionCriteria;
-	CItemCriteriaSelectionPanel	*m_pSelectionPanel;
+    struct ItemSlot_t
+    {
+        CAttribute_ItemSlotCriteria m_slotCriteriaAttribute;
+        itemid_t m_ulOriginalID;
+        bool m_bHasSlot;
+    };
+    CUtlVector< ItemSlot_t > m_itemSlots;
+
+    int m_iCurrentSlotIndex;
+    CItemSelectionCriteria m_selectionCriteria;
+    CItemCriteriaSelectionPanel *m_pSelectionPanel;
 };
 
-#endif // ITEM_SLOT_PANEL_H
+#endif  // ITEM_SLOT_PANEL_H

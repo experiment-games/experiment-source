@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -16,79 +16,92 @@
 
 class C_ObjectTeleporter : public C_BaseObject
 {
-	DECLARE_CLASS( C_ObjectTeleporter, C_BaseObject );
-public:
-	DECLARE_CLIENTCLASS();
+    DECLARE_CLASS( C_ObjectTeleporter, C_BaseObject );
 
-	C_ObjectTeleporter();
+   public:
+    DECLARE_CLIENTCLASS();
 
-	virtual void OnPreDataChanged( DataUpdateType_t updateType );
-	virtual void OnDataChanged( DataUpdateType_t updateType );
+    C_ObjectTeleporter();
 
-	virtual void GetTargetIDDataString( OUT_Z_BYTECAP(iMaxLenInBytes) wchar_t *sDataString, int iMaxLenInBytes );
+    virtual void OnPreDataChanged( DataUpdateType_t updateType );
+    virtual void OnDataChanged( DataUpdateType_t updateType );
 
-	virtual void ClientThink( void );
+    virtual void GetTargetIDDataString( OUT_Z_BYTECAP( iMaxLenInBytes ) wchar_t *sDataString, int iMaxLenInBytes );
 
-	virtual void UpdateOnRemove();
+    virtual void ClientThink( void );
 
-	virtual CStudioHdr *OnNewModel( void );
+    virtual void UpdateOnRemove();
 
-	virtual bool IsPlacementPosValid( void );
+    virtual CStudioHdr *OnNewModel( void );
 
-	float GetChargeTime( void );
+    virtual bool IsPlacementPosValid( void );
 
-	float GetCurrentRechargeDuration( void ) { return m_flCurrentRechargeDuration; }
+    float GetChargeTime( void );
 
-	int GetState( void ) { return m_iState; }
+    float GetCurrentRechargeDuration( void )
+    {
+        return m_flCurrentRechargeDuration;
+    }
 
-	int GetTimesUsed( void );
+    int GetState( void )
+    {
+        return m_iState;
+    }
 
-	void StartChargedEffects( void );
-	void StopChargedEffects( void );
+    int GetTimesUsed( void );
 
-	void StartActiveEffects( void );
-	void StopActiveEffects( void );
+    void StartChargedEffects( void );
+    void StopChargedEffects( void );
 
-	void StartBuildingEffects( void );
-	void StopBuildingEffects( void );
+    void StartActiveEffects( void );
+    void StopActiveEffects( void );
 
-	virtual void SetInvisibilityLevel( float flValue );
-	void UpdateTeleporterEffects( void );
+    void StartBuildingEffects( void );
+    void StopBuildingEffects( void );
 
-	virtual void UpdateDamageEffects( BuildingDamageLevel_t damageLevel );
+    virtual void SetInvisibilityLevel( float flValue );
+    void UpdateTeleporterEffects( void );
 
-	virtual int		GetUpgradeLevel( void ) { return m_iUpgradeLevel; }
-	int				GetUpgradeMetal( void ) { return m_iUpgradeMetal; }
-	//virtual int		GetUpgradeMetalRequired( void ) { return GetObjectInfo( GetType() )->m_UpgradeCost; }
-	virtual void	UpgradeLevelChanged( void );
+    virtual void UpdateDamageEffects( BuildingDamageLevel_t damageLevel );
 
-	virtual void	OnGoInactive( void ) OVERRIDE;
+    virtual int GetUpgradeLevel( void )
+    {
+        return m_iUpgradeLevel;
+    }
+    int GetUpgradeMetal( void )
+    {
+        return m_iUpgradeMetal;
+    }
+    // virtual int		GetUpgradeMetalRequired( void ) { return GetObjectInfo( GetType() )->m_UpgradeCost; }
+    virtual void UpgradeLevelChanged( void );
 
-private:
-	int m_iState;
-	int m_iOldState;
-	float m_flRechargeTime;
-	float m_flCurrentRechargeDuration;
-	int m_iTimesUsed;
-	float m_flYawToExit;
-	bool m_bMatchBuilding;
-	bool m_bOldMatchBuilding;
+    virtual void OnGoInactive( void ) OVERRIDE;
 
-	int m_iDirectionArrowPoseParam;
+   private:
+    int m_iState;
+    int m_iOldState;
+    float m_flRechargeTime;
+    float m_flCurrentRechargeDuration;
+    int m_iTimesUsed;
+    float m_flYawToExit;
+    bool m_bMatchBuilding;
+    bool m_bOldMatchBuilding;
 
-	HPARTICLEFFECT	m_hChargedEffect;
-	HPARTICLEFFECT	m_hDirectionEffect;
+    int m_iDirectionArrowPoseParam;
 
-	HPARTICLEFFECT	m_hChargedLeftArmEffect;
-	HPARTICLEFFECT	m_hChargedRightArmEffect;
+    HPARTICLEFFECT m_hChargedEffect;
+    HPARTICLEFFECT m_hDirectionEffect;
 
-	HPARTICLEFFECT	m_hBuildingLeftArmEffect;
-	HPARTICLEFFECT	m_hBuildingRightArmEffect;
+    HPARTICLEFFECT m_hChargedLeftArmEffect;
+    HPARTICLEFFECT m_hChargedRightArmEffect;
 
-	CSoundPatch		*m_pSpinSound;
+    HPARTICLEFFECT m_hBuildingLeftArmEffect;
+    HPARTICLEFFECT m_hBuildingRightArmEffect;
 
-private:
-	C_ObjectTeleporter( const C_ObjectTeleporter & ); // not defined, not accessible
+    CSoundPatch *m_pSpinSound;
+
+   private:
+    C_ObjectTeleporter( const C_ObjectTeleporter & );  // not defined, not accessible
 };
 
-#endif	//C_OBJ_TELEPORTER_H
+#endif  // C_OBJ_TELEPORTER_H

@@ -24,8 +24,8 @@ END_NETWORK_TABLE()
 // Purpose: Identifier.
 //-----------------------------------------------------------------------------
 unsigned int CTFItem::GetItemID( void ) const
-{ 
-	return TF_ITEM_UNDEFINED; 
+{
+    return TF_ITEM_UNDEFINED;
 }
 
 //-----------------------------------------------------------------------------
@@ -33,25 +33,25 @@ unsigned int CTFItem::GetItemID( void ) const
 //-----------------------------------------------------------------------------
 void CTFItem::PickUp( CTFPlayer *pPlayer, bool bInvisible )
 {
-	// SetParent with attachment point - look it up later if need be!
-	SetOwnerEntity( pPlayer );
-	SetParent( pPlayer );
-	SetLocalOrigin( vec3_origin );
-	SetLocalAngles( vec3_angle );
+    // SetParent with attachment point - look it up later if need be!
+    SetOwnerEntity( pPlayer );
+    SetParent( pPlayer );
+    SetLocalOrigin( vec3_origin );
+    SetLocalAngles( vec3_angle );
 
-	// Make invisible?
-	if ( bInvisible )
-	{
-		AddEffects( EF_NODRAW );
-	}
+    // Make invisible?
+    if ( bInvisible )
+    {
+        AddEffects( EF_NODRAW );
+    }
 
-	// Add the item to the player's item inventory.
-	pPlayer->SetItem( this );
-	// NVNT if this is the client dll and the owner is the local
-	//  player notify the haptics system.
+    // Add the item to the player's item inventory.
+    pPlayer->SetItem( this );
+    // NVNT if this is the client dll and the owner is the local
+    //  player notify the haptics system.
 #ifdef CLIENT_DLL
-	if(pPlayer->IsLocalPlayer())
-		haptics->ProcessHapticEvent(2,"Game","ctf_item_start");
+    if ( pPlayer->IsLocalPlayer() )
+        haptics->ProcessHapticEvent( 2, "Game", "ctf_item_start" );
 #endif
 }
 
@@ -60,37 +60,37 @@ void CTFItem::PickUp( CTFPlayer *pPlayer, bool bInvisible )
 //-----------------------------------------------------------------------------
 void CTFItem::Drop( CTFPlayer *pPlayer, bool bVisible, bool bThrown /*= false*/, bool bMessage /*= true*/ )
 {
-	// Remove the item from the player's item inventory.
-	pPlayer->SetItem( NULL );
+    // Remove the item from the player's item inventory.
+    pPlayer->SetItem( NULL );
 
-	// Make visible?
-	if ( bVisible )
-	{
-		RemoveEffects( EF_NODRAW );
-	}
-	// NVNT if this is the client dll and the owner is the local
-	//  player notify the haptics system we are dropping this item.
+    // Make visible?
+    if ( bVisible )
+    {
+        RemoveEffects( EF_NODRAW );
+    }
+    // NVNT if this is the client dll and the owner is the local
+    //  player notify the haptics system we are dropping this item.
 #ifdef CLIENT_DLL
-	if(pPlayer->IsLocalPlayer())
-		haptics->ProcessHapticEvent(2,"Game","ctf_item_stop");
+    if ( pPlayer->IsLocalPlayer() )
+        haptics->ProcessHapticEvent( 2, "Game", "ctf_item_stop" );
 #endif
 
-	// Clear the parent.
-	SetParent( NULL );
-	SetOwnerEntity( NULL );
+    // Clear the parent.
+    SetParent( NULL );
+    SetOwnerEntity( NULL );
 }
 
 #ifdef CLIENT_DLL
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CTFItem::ShouldDraw()
 {
-	// If I'm carrying the flag in 1st person, don't draw it
-	if ( ToTFPlayer(GetMoveParent())->InFirstPersonView() )
-		return false;
+    // If I'm carrying the flag in 1st person, don't draw it
+    if ( ToTFPlayer( GetMoveParent() )->InFirstPersonView() )
+        return false;
 
-	return BaseClass::ShouldDraw();
+    return BaseClass::ShouldDraw();
 }
 
 //-----------------------------------------------------------------------------
@@ -98,13 +98,13 @@ bool CTFItem::ShouldDraw()
 //-----------------------------------------------------------------------------
 ShadowType_t CTFItem::ShadowCastType()
 {
-	if ( ToTFPlayer(GetMoveParent())->ShouldDrawThisPlayer() )
-	{
-		// Using the viewmodel.
-		return SHADOWS_NONE;
-	}
+    if ( ToTFPlayer( GetMoveParent() )->ShouldDrawThisPlayer() )
+    {
+        // Using the viewmodel.
+        return SHADOWS_NONE;
+    }
 
-	return BaseClass::ShadowCastType();
+    return BaseClass::ShadowCastType();
 }
 
 #endif

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: declares a variety of constants 
+// Purpose: declares a variety of constants
 //
 // $NoKeywords: $
 //=============================================================================
@@ -23,7 +23,7 @@ const int64 k_nMegabyte = k_nKiloByte * k_nKiloByte;
 // Timing constants
 //-----------------------------------------------------------------------------
 
-const unsigned int k_nSecondsPerHour = 60*60;
+const unsigned int k_nSecondsPerHour = 60 * 60;
 const unsigned int k_nSecondsPerDay = k_nSecondsPerHour * 24;
 
 const int k_cSecondsPerMinute = 60;
@@ -32,4 +32,4 @@ const int k_cSecondsPerDay = k_cSecondsPerHour * 24;
 const int k_cSecondsPerWeek = k_cSecondsPerDay * 7;
 const int k_cSecondsPerYear = k_cSecondsPerDay * 365;
 
-#endif // T0CONSTANTS_H
+#endif  // T0CONSTANTS_H

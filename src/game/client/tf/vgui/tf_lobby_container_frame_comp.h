@@ -7,9 +7,8 @@
 #ifndef TF_LOBBY_CONTAINER_FRAME_COMP_H
 #define TF_LOBBY_CONTAINER_FRAME_COMP_H
 
-
 #include "cbase.h"
-//#include "tf_pvelobbypanel.h"
+// #include "tf_pvelobbypanel.h"
 #include "game/client/iviewport.h"
 #include "tf_shareddefs.h"
 #include "econ/confirm_dialog.h"
@@ -52,31 +51,34 @@ class CBaseLobbyPanel;
 // This is a big fat kludge so I can use the PropertyPage
 class CLobbyContainerFrame_Comp : public CBaseLobbyContainerFrame
 {
-	DECLARE_CLASS_SIMPLE( CLobbyContainerFrame_Comp, CBaseLobbyContainerFrame );
-public:
-	CLobbyContainerFrame_Comp();
-	~CLobbyContainerFrame_Comp();
+    DECLARE_CLASS_SIMPLE( CLobbyContainerFrame_Comp, CBaseLobbyContainerFrame );
 
-	//
-	// PropertyDialog overrides
-	//
-	virtual void ShowPanel( bool bShow ) OVERRIDE;
-	virtual void OnCommand( const char *command ) OVERRIDE;
+   public:
+    CLobbyContainerFrame_Comp();
+    ~CLobbyContainerFrame_Comp();
 
-	static bool TypeCanHandleMatchGroup( ETFMatchGroup eMatchGroup );
-	virtual bool CanHandleMatchGroup( ETFMatchGroup eMatchGroup ) const OVERRIDE
-	{
-		return TypeCanHandleMatchGroup( eMatchGroup );
-	}
+    //
+    // PropertyDialog overrides
+    //
+    virtual void ShowPanel( bool bShow ) OVERRIDE;
+    virtual void OnCommand( const char* command ) OVERRIDE;
 
-protected:
+    static bool TypeCanHandleMatchGroup( ETFMatchGroup eMatchGroup );
+    virtual bool CanHandleMatchGroup( ETFMatchGroup eMatchGroup ) const OVERRIDE
+    {
+        return TypeCanHandleMatchGroup( eMatchGroup );
+    }
 
-	virtual void WriteControls() OVERRIDE;
+   protected:
+    virtual void WriteControls() OVERRIDE;
 
-private:
-	virtual const char* GetResFile() const OVERRIDE { return "Resource/UI/LobbyContainerFrame_Comp.res"; }
-	virtual bool VerifyPartyAuthorization() const OVERRIDE;
-	virtual void HandleBackPressed() OVERRIDE;
+   private:
+    virtual const char* GetResFile() const OVERRIDE
+    {
+        return "Resource/UI/LobbyContainerFrame_Comp.res";
+    }
+    virtual bool VerifyPartyAuthorization() const OVERRIDE;
+    virtual void HandleBackPressed() OVERRIDE;
 };
 
-#endif //TF_LOBBY_CONTAINER_FRAME_COMP_H
+#endif  // TF_LOBBY_CONTAINER_FRAME_COMP_H

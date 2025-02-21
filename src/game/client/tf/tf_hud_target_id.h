@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
 
@@ -21,105 +21,119 @@
 class CFloatingHealthIcon;
 class CAvatarImagePanel;
 
-#define PLAYER_HINT_DISTANCE	150
-#define PLAYER_HINT_DISTANCE_SQ	(PLAYER_HINT_DISTANCE*PLAYER_HINT_DISTANCE)
-#define MAX_ID_STRING			256
-#define MAX_PREPEND_STRING		32
+#define PLAYER_HINT_DISTANCE 150
+#define PLAYER_HINT_DISTANCE_SQ ( PLAYER_HINT_DISTANCE * PLAYER_HINT_DISTANCE )
+#define MAX_ID_STRING 256
+#define MAX_PREPEND_STRING 32
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 class CTargetID : public CHudElement, public vgui::EditablePanel
 {
-	DECLARE_CLASS_SIMPLE( CTargetID, vgui::EditablePanel );
-public:
-	CTargetID( const char *pElementName );
-	
-	virtual void	LevelShutdown( void );
-	void			Reset( void );
-	void			VidInit( void );
-	virtual bool	ShouldDraw( void );
-	virtual void	PerformLayout( void );
-	virtual void	ApplySettings( KeyValues *inResourceData );
-	virtual void	ApplySchemeSettings( vgui::IScheme *scheme );
+    DECLARE_CLASS_SIMPLE( CTargetID, vgui::EditablePanel );
 
-	void			UpdateID( void );
+   public:
+    CTargetID( const char *pElementName );
 
-	virtual int		CalculateTargetIndex( C_TFPlayer *pLocalTFPlayer );
-	virtual wchar_t	*GetPrepend( void ) { return NULL; }
+    virtual void LevelShutdown( void );
+    void Reset( void );
+    void VidInit( void );
+    virtual bool ShouldDraw( void );
+    virtual void PerformLayout( void );
+    virtual void ApplySettings( KeyValues *inResourceData );
+    virtual void ApplySchemeSettings( vgui::IScheme *scheme );
 
-	int				GetTargetIndex( void ) { return m_iTargetEntIndex; }
+    void UpdateID( void );
 
-	virtual int		GetRenderGroupPriority( void );
+    virtual int CalculateTargetIndex( C_TFPlayer *pLocalTFPlayer );
+    virtual wchar_t *GetPrepend( void )
+    {
+        return NULL;
+    }
 
-	virtual void	FireGameEvent( IGameEvent * event );
+    int GetTargetIndex( void )
+    {
+        return m_iTargetEntIndex;
+    }
 
-	virtual	bool	DrawHealthIcon();
-	virtual	C_TFPlayer *GetTargetForSteamAvatar( C_TFPlayer *pTFPlayer );
-private:
+    virtual int GetRenderGroupPriority( void );
 
-	bool IsValidIDTarget( int nEntIndex, float flOldTargetRetainFOV, float &flNewTargetRetainFOV );
-	void UpdateFloatingHealthIconVisibility( bool bVisible );
+    virtual void FireGameEvent( IGameEvent *event );
 
-protected:
-	vgui::HFont		m_hFont;
-	int				m_iLastEntIndex;
-	float			m_flLastChangeTime;
-	float			m_flTargetRetainFOV;
-	int				m_iTargetEntIndex;
-	bool			m_bLayoutOnUpdate;
+    virtual bool DrawHealthIcon();
+    virtual C_TFPlayer *GetTargetForSteamAvatar( C_TFPlayer *pTFPlayer );
 
-	vgui::Label				*m_pTargetNameLabel;
-	vgui::Label				*m_pTargetDataLabel;
-	CTFImagePanel			*m_pBGPanel;
-	vgui::EditablePanel		*m_pMoveableSubPanel;
-	CIconPanel				*m_pMoveableIcon;
-	vgui::ImagePanel		*m_pMoveableSymbolIcon;
-	vgui::Label				*m_pMoveableKeyLabel;
-	CIconPanel				*m_pMoveableIconBG;
-	CTFSpectatorGUIHealth	*m_pTargetHealth;
-	vgui::ImagePanel		*m_pTargetAmmoIcon;
-	vgui::ImagePanel		*m_pTargetKillStreakIcon;
-	CAvatarImagePanel		*m_pAvatarImage;
+   private:
+    bool IsValidIDTarget( int nEntIndex, float flOldTargetRetainFOV, float &flNewTargetRetainFOV );
+    void UpdateFloatingHealthIconVisibility( bool bVisible );
 
-	int				m_iRenderPriority;
-	int				m_nOriginalY;
-	Color			m_LabelColorDefault;
+   protected:
+    vgui::HFont m_hFont;
+    int m_iLastEntIndex;
+    float m_flLastChangeTime;
+    float m_flTargetRetainFOV;
+    int m_iTargetEntIndex;
+    bool m_bLayoutOnUpdate;
 
-	bool			m_bArenaPanelVisible;
+    vgui::Label *m_pTargetNameLabel;
+    vgui::Label *m_pTargetDataLabel;
+    CTFImagePanel *m_pBGPanel;
+    vgui::EditablePanel *m_pMoveableSubPanel;
+    CIconPanel *m_pMoveableIcon;
+    vgui::ImagePanel *m_pMoveableSymbolIcon;
+    vgui::Label *m_pMoveableKeyLabel;
+    CIconPanel *m_pMoveableIconBG;
+    CTFSpectatorGUIHealth *m_pTargetHealth;
+    vgui::ImagePanel *m_pTargetAmmoIcon;
+    vgui::ImagePanel *m_pTargetKillStreakIcon;
+    CAvatarImagePanel *m_pAvatarImage;
 
-	CFloatingHealthIcon		*m_pFloatingHealthIcon;
-	int						m_iLastScannedEntIndex;
+    int m_iRenderPriority;
+    int m_nOriginalY;
+    Color m_LabelColorDefault;
 
-	CPanelAnimationVarAliasType( int, m_iXOffset, "x_offset", "20", "proportional_int" );
-	CPanelAnimationVarAliasType( int, m_iYOffset, "y_offset", "20", "proportional_int" );
+    bool m_bArenaPanelVisible;
+
+    CFloatingHealthIcon *m_pFloatingHealthIcon;
+    int m_iLastScannedEntIndex;
+
+    CPanelAnimationVarAliasType( int, m_iXOffset, "x_offset", "20", "proportional_int" );
+    CPanelAnimationVarAliasType( int, m_iYOffset, "y_offset", "20", "proportional_int" );
 };
 
 class CMainTargetID : public CTargetID
 {
-	DECLARE_CLASS_SIMPLE( CMainTargetID, CTargetID );
-public:
-	CMainTargetID( const char *pElementName ) : CTargetID( pElementName ) {}
+    DECLARE_CLASS_SIMPLE( CMainTargetID, CTargetID );
 
-	virtual bool ShouldDraw( void );
+   public:
+    CMainTargetID( const char *pElementName )
+        : CTargetID( pElementName ) {}
+
+    virtual bool ShouldDraw( void );
 };
 
 class CSpectatorTargetID : public CTargetID
 {
-	DECLARE_CLASS_SIMPLE( CSpectatorTargetID, CTargetID );
-public:
-	CSpectatorTargetID( const char *pElementName ) : CTargetID( pElementName ) {}
+    DECLARE_CLASS_SIMPLE( CSpectatorTargetID, CTargetID );
 
-	virtual bool ShouldDraw( void );
-	virtual int	CalculateTargetIndex( C_TFPlayer *pLocalTFPlayer );
-	virtual void ApplySchemeSettings( vgui::IScheme *scheme );
-	virtual void PerformLayout( void );
+   public:
+    CSpectatorTargetID( const char *pElementName )
+        : CTargetID( pElementName ) {}
 
-	virtual	bool	DrawHealthIcon()	{ return true; }
-private:
-	vgui::Panel		*m_pBGPanel_Spec_Blue;
-	vgui::Panel		*m_pBGPanel_Spec_Red;
-																					
+    virtual bool ShouldDraw( void );
+    virtual int CalculateTargetIndex( C_TFPlayer *pLocalTFPlayer );
+    virtual void ApplySchemeSettings( vgui::IScheme *scheme );
+    virtual void PerformLayout( void );
+
+    virtual bool DrawHealthIcon()
+    {
+        return true;
+    }
+
+   private:
+    vgui::Panel *m_pBGPanel_Spec_Blue;
+    vgui::Panel *m_pBGPanel_Spec_Red;
 };
 
 //-----------------------------------------------------------------------------
@@ -127,51 +141,62 @@ private:
 //-----------------------------------------------------------------------------
 class CSecondaryTargetID : public CTargetID
 {
-	DECLARE_CLASS_SIMPLE( CSecondaryTargetID, CTargetID );
-public:
-	CSecondaryTargetID( const char *pElementName );
+    DECLARE_CLASS_SIMPLE( CSecondaryTargetID, CTargetID );
 
-	virtual bool	ShouldDraw( void );
-	virtual int		CalculateTargetIndex( C_TFPlayer *pLocalTFPlayer );
-	virtual wchar_t	*GetPrepend( void ) { return m_wszPrepend; }
+   public:
+    CSecondaryTargetID( const char *pElementName );
 
-	virtual	bool	DrawHealthIcon() { return true; }
-private:
-	wchar_t		m_wszPrepend[ MAX_PREPEND_STRING ];
+    virtual bool ShouldDraw( void );
+    virtual int CalculateTargetIndex( C_TFPlayer *pLocalTFPlayer );
+    virtual wchar_t *GetPrepend( void )
+    {
+        return m_wszPrepend;
+    }
 
-	bool m_bWasHidingLowerElements;
+    virtual bool DrawHealthIcon()
+    {
+        return true;
+    }
+
+   private:
+    wchar_t m_wszPrepend[MAX_PREPEND_STRING];
+
+    bool m_bWasHidingLowerElements;
 };
 
-
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 class CFloatingHealthIcon : public vgui::EditablePanel
 {
-	DECLARE_CLASS_SIMPLE( CFloatingHealthIcon, vgui::EditablePanel );
-public:
-	CFloatingHealthIcon( vgui::Panel *parent, const char *name );
+    DECLARE_CLASS_SIMPLE( CFloatingHealthIcon, vgui::EditablePanel );
 
-	virtual void ApplySchemeSettings( vgui::IScheme *pScheme );
-	virtual void OnTick( void );
-	virtual void Paint( void );
-	virtual bool IsVisible( void );
+   public:
+    CFloatingHealthIcon( vgui::Panel *parent, const char *name );
 
-	virtual void SetVisible( bool state );
+    virtual void ApplySchemeSettings( vgui::IScheme *pScheme );
+    virtual void OnTick( void );
+    virtual void Paint( void );
+    virtual bool IsVisible( void );
 
-	void		Reset( void );
-	void		SetEntity( C_BaseEntity *pEntity );
-	C_BaseEntity *GetEntity( void ) { return m_hEntity; }
+    virtual void SetVisible( bool state );
 
-	static CFloatingHealthIcon* AddFloatingHealthIcon( C_BaseEntity *pEntity );
+    void Reset( void );
+    void SetEntity( C_BaseEntity *pEntity );
+    C_BaseEntity *GetEntity( void )
+    {
+        return m_hEntity;
+    }
 
-	bool		CalculatePosition();
+    static CFloatingHealthIcon *AddFloatingHealthIcon( C_BaseEntity *pEntity );
 
-private:
-	CTFSpectatorGUIHealth	*m_pTargetHealth;
-	CHandle< C_BaseEntity >	m_hEntity;
-	float					m_flPrevHealth;
-	int						m_nPrevLevel;
+    bool CalculatePosition();
+
+   private:
+    CTFSpectatorGUIHealth *m_pTargetHealth;
+    CHandle< C_BaseEntity > m_hEntity;
+    float m_flPrevHealth;
+    int m_nPrevLevel;
 };
 
-#endif // TF_HUD_TARGET_ID_H
+#endif  // TF_HUD_TARGET_ID_H

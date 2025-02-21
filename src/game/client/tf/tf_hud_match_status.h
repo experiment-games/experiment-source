@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -22,117 +22,116 @@ using namespace vgui;
 bool ShouldUseMatchHUD();
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-class CRoundCounterPanel : public EditablePanel, public CGameEventListener 
+class CRoundCounterPanel : public EditablePanel, public CGameEventListener
 {
-public:
-	DECLARE_CLASS_SIMPLE( CRoundCounterPanel, EditablePanel );
-	typedef CUtlVector< ImagePanel* > ImageVector;
+   public:
+    DECLARE_CLASS_SIMPLE( CRoundCounterPanel, EditablePanel );
+    typedef CUtlVector< ImagePanel * > ImageVector;
 
-	CRoundCounterPanel( Panel *parent, const char *panelName );
-	~CRoundCounterPanel();
+    CRoundCounterPanel( Panel *parent, const char *panelName );
+    ~CRoundCounterPanel();
 
-	virtual void ApplySchemeSettings(IScheme *pScheme) OVERRIDE;
-	virtual void ApplySettings(KeyValues *inResourceData) OVERRIDE;
-	virtual void PerformLayout() OVERRIDE;
-	virtual void OnThink() OVERRIDE;
+    virtual void ApplySchemeSettings( IScheme *pScheme ) OVERRIDE;
+    virtual void ApplySettings( KeyValues *inResourceData ) OVERRIDE;
+    virtual void PerformLayout() OVERRIDE;
+    virtual void OnThink() OVERRIDE;
 
-	virtual void FireGameEvent(IGameEvent * event) OVERRIDE;
+    virtual void FireGameEvent( IGameEvent *event ) OVERRIDE;
 
-private:
+   private:
+    void CreateRoundPanels( ImageVector &vecImages, const char *pszName, KeyValues *pKVSettings );
 
-	void CreateRoundPanels( ImageVector& vecImages, const char* pszName, KeyValues* pKVSettings );
+    enum EAlignment
+    {
+        ALIGN_WEST,
+        ALIGN_EAST
+    };
 
-	enum EAlignment
-	{
-		ALIGN_WEST,
-		ALIGN_EAST
-	};
+    void LayoutPanels( ImageVector &vecImages, EAlignment eAlignment, int nStartPos, int nMaxWide );
 
-	void LayoutPanels( ImageVector& vecImages, EAlignment eAlignment, int nStartPos, int nMaxWide );
+    KeyValues *m_pRoundIndicatorKVs;
+    KeyValues *m_pRoundWinIndicatorRedKV;
+    KeyValues *m_pRoundWinIndicatorBlueKV;
 
-	KeyValues* m_pRoundIndicatorKVs;
-	KeyValues* m_pRoundWinIndicatorRedKV;
-	KeyValues* m_pRoundWinIndicatorBlueKV;
+    ImageVector m_vecRedRoundIndicators;
+    ImageVector m_vecBlueRoundIndicators;
 
-	ImageVector m_vecRedRoundIndicators;
-	ImageVector m_vecBlueRoundIndicators;
+    ImageVector m_vecRedWinIndicators;
+    ImageVector m_vecBlueWinIndicators;
 
-	ImageVector m_vecRedWinIndicators;
-	ImageVector m_vecBlueWinIndicators;
+    bool m_bCountDirty;
 
-	bool m_bCountDirty;
-
-	CPanelAnimationVarAliasType( int, m_nStartingWidth, "starting_width", "10", "proportional_int" );
-	CPanelAnimationVarAliasType( int, m_nWidthPerRound, "width_per_round", "10", "proportional_int" );
-	CPanelAnimationVarAliasType( int, m_nIndicatorStartOffset, "indicator_start_offset", "8", "proportional_int" );
-	CPanelAnimationVarAliasType( int, m_nIndicatorPanelStep, "indicator_max_wide", "10", "proportional_int" );
+    CPanelAnimationVarAliasType( int, m_nStartingWidth, "starting_width", "10", "proportional_int" );
+    CPanelAnimationVarAliasType( int, m_nWidthPerRound, "width_per_round", "10", "proportional_int" );
+    CPanelAnimationVarAliasType( int, m_nIndicatorStartOffset, "indicator_start_offset", "8", "proportional_int" );
+    CPanelAnimationVarAliasType( int, m_nIndicatorPanelStep, "indicator_max_wide", "10", "proportional_int" );
 };
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 class CTFHudMatchStatus : public CHudElement, public EditablePanel
 {
-	DECLARE_CLASS_SIMPLE( CTFHudMatchStatus, EditablePanel );
-public:
-	CTFHudMatchStatus( const char *pElementName );
-	virtual ~CTFHudMatchStatus( void );
-	
-	virtual void ApplySchemeSettings( IScheme *pScheme ) OVERRIDE;
-	virtual void FireGameEvent( IGameEvent * event ) OVERRIDE;
-	virtual void OnThink() OVERRIDE;
-	virtual void PerformLayout() OVERRIDE;
+    DECLARE_CLASS_SIMPLE( CTFHudMatchStatus, EditablePanel );
 
-	virtual bool IsVisible( void ) OVERRIDE;
-	virtual bool ShouldDraw( void ) OVERRIDE;
+   public:
+    CTFHudMatchStatus( const char *pElementName );
+    virtual ~CTFHudMatchStatus( void );
 
-	virtual void Reset() OVERRIDE;
+    virtual void ApplySchemeSettings( IScheme *pScheme ) OVERRIDE;
+    virtual void FireGameEvent( IGameEvent *event ) OVERRIDE;
+    virtual void OnThink() OVERRIDE;
+    virtual void PerformLayout() OVERRIDE;
 
-	void SetPanelsVisible();
+    virtual bool IsVisible( void ) OVERRIDE;
+    virtual bool ShouldDraw( void ) OVERRIDE;
 
-private:
+    virtual void Reset() OVERRIDE;
 
-	void ShowMatchStartDoors();
-	void ShowRoundSign( int nRoundNumber );
-	void InitPlayerList( SectionedListPanel *pPlayerList, int nTeam );
-	void UpdatePlayerList();
-	void UpdatePlayerAvatar( int playerIndex, KeyValues *kv );
-	void UpdateTeamInfo();
-	void HandleCountdown( int nTime );
+    void SetPanelsVisible();
 
-	CRoundCounterPanel	*m_pRoundCounter;
-	class CTFHudTimeStatus	*m_pTimePanel;
-	CModelPanel			*m_pRoundSignModel;
-	CTFTeamStatus		*m_pTeamStatus;
-	CModelPanel			*m_pMatchStartModelPanel;
-	ETFMatchGroup			m_eMatchGroupSettings;
+   private:
+    void ShowMatchStartDoors();
+    void ShowRoundSign( int nRoundNumber );
+    void InitPlayerList( SectionedListPanel *pPlayerList, int nTeam );
+    void UpdatePlayerList();
+    void UpdatePlayerAvatar( int playerIndex, KeyValues *kv );
+    void UpdateTeamInfo();
+    void HandleCountdown( int nTime );
 
-	vgui::EditablePanel			*m_pBlueTeamPanel;
-	vgui::SectionedListPanel	*m_pPlayerListBlue;
-	vgui::EditablePanel			*m_pRedTeamPanel;
-	vgui::SectionedListPanel	*m_pPlayerListRed;
-	vgui::ImageList				*m_pImageList;
-	CUtlMap<CSteamID, int>		m_mapAvatarsToImageList;
+    CRoundCounterPanel *m_pRoundCounter;
+    class CTFHudTimeStatus *m_pTimePanel;
+    CModelPanel *m_pRoundSignModel;
+    CTFTeamStatus *m_pTeamStatus;
+    CModelPanel *m_pMatchStartModelPanel;
+    ETFMatchGroup m_eMatchGroupSettings;
 
-	CAvatarImagePanel			*m_pRedLeaderAvatarImage;
-	EditablePanel				*m_pRedLeaderAvatarBG;
-	vgui::ImagePanel			*m_pRedTeamImage;
-	CExLabel					*m_pRedTeamName;
-	CAvatarImagePanel			*m_pBlueLeaderAvatarImage;
-	EditablePanel				*m_pBlueLeaderAvatarBG;
-	vgui::ImagePanel			*m_pBlueTeamImage;
-	CExLabel					*m_pBlueTeamName;
+    vgui::EditablePanel *m_pBlueTeamPanel;
+    vgui::SectionedListPanel *m_pPlayerListBlue;
+    vgui::EditablePanel *m_pRedTeamPanel;
+    vgui::SectionedListPanel *m_pPlayerListRed;
+    vgui::ImageList *m_pImageList;
+    CUtlMap< CSteamID, int > m_mapAvatarsToImageList;
 
-	CPanelAnimationVar( int, m_iAvatarWidth, "avatar_width", "34" );		// Avatar width doesn't scale with resolution
-	CPanelAnimationVarAliasType( int, m_iSpacerWidth, "spacer", "5", "proportional_int" );
-	CPanelAnimationVarAliasType( int, m_iNameWidth, "name_width", "136", "proportional_int" );
-	CPanelAnimationVarAliasType( int, m_iHorizFillInset, "horiz_inset", "4", "proportional_int" );
+    CAvatarImagePanel *m_pRedLeaderAvatarImage;
+    EditablePanel *m_pRedLeaderAvatarBG;
+    vgui::ImagePanel *m_pRedTeamImage;
+    CExLabel *m_pRedTeamName;
+    CAvatarImagePanel *m_pBlueLeaderAvatarImage;
+    EditablePanel *m_pBlueLeaderAvatarBG;
+    vgui::ImagePanel *m_pBlueTeamImage;
+    CExLabel *m_pBlueTeamName;
 
-	vgui::HFont					m_hPlayerListFont;
+    CPanelAnimationVar( int, m_iAvatarWidth, "avatar_width", "34" );  // Avatar width doesn't scale with resolution
+    CPanelAnimationVarAliasType( int, m_iSpacerWidth, "spacer", "5", "proportional_int" );
+    CPanelAnimationVarAliasType( int, m_iNameWidth, "name_width", "136", "proportional_int" );
+    CPanelAnimationVarAliasType( int, m_iHorizFillInset, "horiz_inset", "4", "proportional_int" );
 
-	bool m_bUseMatchHUD;
+    vgui::HFont m_hPlayerListFont;
+
+    bool m_bUseMatchHUD;
 };
 
-#endif	// TF_HUD_MATCH_STATUS_H
+#endif  // TF_HUD_MATCH_STATUS_H

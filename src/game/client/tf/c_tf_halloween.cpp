@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================
@@ -24,195 +24,194 @@
 //-----------------------------------------------------------------------------
 EHalloweenMap GetHalloweenMap()
 {
-	if ( FStrEq( engine->GetLevelName(), "maps/cp_manor_event.bsp" ) )
-		return kHalloweenMap_MannManor;
+    if ( FStrEq( engine->GetLevelName(), "maps/cp_manor_event.bsp" ) )
+        return kHalloweenMap_MannManor;
 
-	if ( FStrEq( engine->GetLevelName(), "maps/koth_viaduct_event.bsp" ) )
-		return kHalloweenMap_Viaduct;
+    if ( FStrEq( engine->GetLevelName(), "maps/koth_viaduct_event.bsp" ) )
+        return kHalloweenMap_Viaduct;
 
-	if ( FStrEq( engine->GetLevelName(), "maps/koth_lakeside_event.bsp" ) )
-		return kHalloweenMap_Lakeside;
+    if ( FStrEq( engine->GetLevelName(), "maps/koth_lakeside_event.bsp" ) )
+        return kHalloweenMap_Lakeside;
 
-	if ( FStrEq( engine->GetLevelName(), "maps/plr_hightower_event.bsp" ) )
-		return kHalloweenMap_Hightower;
+    if ( FStrEq( engine->GetLevelName(), "maps/plr_hightower_event.bsp" ) )
+        return kHalloweenMap_Hightower;
 
-	return kHalloweenMapCount;
+    return kHalloweenMapCount;
 }
-
 
 //-----------------------------------------------------------------------------
 // Created when the GC decides to give out an item.
 // A player must intersect the item to claim it.
 //-----------------------------------------------------------------------------
 #define HALLOWEEN_ITEM_TIME_TO_READY 10.0f
-class C_HalloweenItemPickup	: public CBaseAnimating
+class C_HalloweenItemPickup : public CBaseAnimating
 {
-	DECLARE_CLASS( C_HalloweenItemPickup, CBaseAnimating );
-public:
-	C_HalloweenItemPickup()
-		: m_bReadyForPickup( false )
-		, m_bClaimed( false )
-		, m_flTimeToReady( 0.0f )
-	{
-		AddEFlags( EFL_USE_PARTITION_WHEN_NOT_SOLID );
-	}
+    DECLARE_CLASS( C_HalloweenItemPickup, CBaseAnimating );
 
-	virtual ~C_HalloweenItemPickup()
-	{
-	}
+   public:
+    C_HalloweenItemPickup()
+        : m_bReadyForPickup( false ), m_bClaimed( false ), m_flTimeToReady( 0.0f )
+    {
+        AddEFlags( EFL_USE_PARTITION_WHEN_NOT_SOLID );
+    }
 
-	bool Initialize()
-	{
-		const char *pszModelName = "models/props_halloween/halloween_gift.mdl";
-		SetModelName( AllocPooledString( pszModelName ) );
+    virtual ~C_HalloweenItemPickup()
+    {
+    }
 
-		if ( InitializeAsClientEntity( STRING(GetModelName()), RENDER_GROUP_OPAQUE_ENTITY ) == false )
-			return false;
-				
-		const model_t *mod = GetModel();
-		if ( mod )
-		{
-			Vector mins, maxs;
-			modelinfo->GetModelBounds( mod, mins, maxs );
-			SetCollisionBounds( mins, maxs );
-		}
+    bool Initialize()
+    {
+        const char *pszModelName = "models/props_halloween/halloween_gift.mdl";
+        SetModelName( AllocPooledString( pszModelName ) );
 
-		Spawn();
+        if ( InitializeAsClientEntity( STRING( GetModelName() ), RENDER_GROUP_OPAQUE_ENTITY ) == false )
+            return false;
 
-		// initialize as translucent		
-		float alpha = 0.0f;
-		SetRenderMode( kRenderTransTexture );		
-		SetRenderColorA( alpha * 256 );
-		m_flTimeToReady = gpGlobals->realtime + HALLOWEEN_ITEM_TIME_TO_READY;
-		
-		UpdatePartitionListEntry();
-		
-		SetBlocksLOS( false ); // this should be a small object
-		
-		// Set up shadows; do it here so that objects can change shadowcasting state
-		CreateShadow();
-		
-		UpdateVisibility();
-		
-		SetNextClientThink( CLIENT_THINK_ALWAYS );
-		
-		return true;
-	}
+        const model_t *mod = GetModel();
+        if ( mod )
+        {
+            Vector mins, maxs;
+            modelinfo->GetModelBounds( mod, mins, maxs );
+            SetCollisionBounds( mins, maxs );
+        }
 
-	virtual void Spawn()
-	{
-		Precache();
-		BaseClass::Spawn();
-		SetSolid( SOLID_NONE );	
-		AddSolidFlags( FSOLID_NOT_SOLID );
-		SetMoveType( MOVETYPE_NONE );
-	}
+        Spawn();
 
-	virtual void ClientThink()
-	{
-		if ( m_bReadyForPickup )
-		{
-			ClientThink_Active();
-			return;
-		}
+        // initialize as translucent
+        float alpha = 0.0f;
+        SetRenderMode( kRenderTransTexture );
+        SetRenderColorA( alpha * 256 );
+        m_flTimeToReady = gpGlobals->realtime + HALLOWEEN_ITEM_TIME_TO_READY;
 
-		float flTimeDelta = m_flTimeToReady - gpGlobals->realtime;
-		if ( flTimeDelta < 0 )
-		{
-			m_bReadyForPickup = true;
-			ParticleProp()->Create( "halloween_pickup_active", PATTACH_ABSORIGIN_FOLLOW );
-			SetRenderMode( kRenderNormal );
-		}
-		else
-		{
-			float alpha = 0.75f * ( ( HALLOWEEN_ITEM_TIME_TO_READY - flTimeDelta ) / HALLOWEEN_ITEM_TIME_TO_READY );
-			SetRenderColorA( alpha * 256 );
-		}		
-	}
+        UpdatePartitionListEntry();
 
-	void ClientThink_Active( void )
-	{
-		Vector vWorldMins = WorldAlignMins();
-		Vector vWorldMaxs = WorldAlignMaxs();
-		Vector vBoxMin1 = GetAbsOrigin() + vWorldMins;
-		Vector vBoxMax1	= GetAbsOrigin() + vWorldMaxs;
+        SetBlocksLOS( false );  // this should be a small object
 
-		float flBestDistance2 = 0.0f;
-		CSteamID bestSteamID;
-		bool bBestHasNoclip = false;
+        // Set up shadows; do it here so that objects can change shadowcasting state
+        CreateShadow();
+
+        UpdateVisibility();
+
+        SetNextClientThink( CLIENT_THINK_ALWAYS );
+
+        return true;
+    }
+
+    virtual void Spawn()
+    {
+        Precache();
+        BaseClass::Spawn();
+        SetSolid( SOLID_NONE );
+        AddSolidFlags( FSOLID_NOT_SOLID );
+        SetMoveType( MOVETYPE_NONE );
+    }
+
+    virtual void ClientThink()
+    {
+        if ( m_bReadyForPickup )
+        {
+            ClientThink_Active();
+            return;
+        }
+
+        float flTimeDelta = m_flTimeToReady - gpGlobals->realtime;
+        if ( flTimeDelta < 0 )
+        {
+            m_bReadyForPickup = true;
+            ParticleProp()->Create( "halloween_pickup_active", PATTACH_ABSORIGIN_FOLLOW );
+            SetRenderMode( kRenderNormal );
+        }
+        else
+        {
+            float alpha = 0.75f * ( ( HALLOWEEN_ITEM_TIME_TO_READY - flTimeDelta ) / HALLOWEEN_ITEM_TIME_TO_READY );
+            SetRenderColorA( alpha * 256 );
+        }
+    }
+
+    void ClientThink_Active( void )
+    {
+        Vector vWorldMins = WorldAlignMins();
+        Vector vWorldMaxs = WorldAlignMaxs();
+        Vector vBoxMin1 = GetAbsOrigin() + vWorldMins;
+        Vector vBoxMax1 = GetAbsOrigin() + vWorldMaxs;
+
+        float flBestDistance2 = 0.0f;
+        CSteamID bestSteamID;
+        bool bBestHasNoclip = false;
 
 #define CLIENT_HALLOWEEN_LOGIC_ENABLE_LOCAL_PLAYER_ONLY 1
 
 #if !CLIENT_HALLOWEEN_LOGIC_ENABLE_LOCAL_PLAYER_ONLY
-		for( int iPlayerIndex = 1 ; iPlayerIndex <= MAX_PLAYERS; iPlayerIndex++ )
-		{
-			C_TFPlayer *pPlayer = ToTFPlayer( UTIL_PlayerByIndex( iPlayerIndex ) );
+        for ( int iPlayerIndex = 1; iPlayerIndex <= MAX_PLAYERS; iPlayerIndex++ )
+        {
+            C_TFPlayer *pPlayer = ToTFPlayer( UTIL_PlayerByIndex( iPlayerIndex ) );
 #else
-		do
-		{
-			C_TFPlayer *pPlayer = C_TFPlayer::GetLocalTFPlayer();
+        do
+        {
+            C_TFPlayer *pPlayer = C_TFPlayer::GetLocalTFPlayer();
 #endif
-			CSteamID steamID;
-			if ( pPlayer == NULL || pPlayer->IsBot() == true || pPlayer->GetSteamID( &steamID ) == false || 
-				 ( pPlayer->GetTeamNumber() != TF_TEAM_RED && pPlayer->GetTeamNumber() != TF_TEAM_BLUE ) ||
-				 pPlayer->IsAlive() == false ||
-				 pPlayer->GetObserverMode() != OBS_MODE_NONE )
-			{
-				continue;
-			}
-			
-			Vector vPlayerMins = pPlayer->GetAbsOrigin() + pPlayer->WorldAlignMins();
-			Vector vPlayerMaxs = pPlayer->GetAbsOrigin() + pPlayer->WorldAlignMaxs();
-			bool bIntersecting = IsBoxIntersectingBox( vBoxMin1, vBoxMax1, vPlayerMins, vPlayerMaxs );
-			float flDistance2 = ( pPlayer->GetAbsOrigin(), GetAbsOrigin() ).LengthSqr();
-			if ( bIntersecting && ( bestSteamID.GetAccountID() == 0 || flDistance2 < flBestDistance2 ) )
-			{
-				bestSteamID = steamID;
-				bBestHasNoclip = pPlayer->GetMoveType() == MOVETYPE_NOCLIP;
-				flBestDistance2 = flDistance2;
-			}
-		}
+            CSteamID steamID;
+            if ( pPlayer == NULL || pPlayer->IsBot() == true || pPlayer->GetSteamID( &steamID ) == false ||
+                 ( pPlayer->GetTeamNumber() != TF_TEAM_RED && pPlayer->GetTeamNumber() != TF_TEAM_BLUE ) ||
+                 pPlayer->IsAlive() == false ||
+                 pPlayer->GetObserverMode() != OBS_MODE_NONE )
+            {
+                continue;
+            }
+
+            Vector vPlayerMins = pPlayer->GetAbsOrigin() + pPlayer->WorldAlignMins();
+            Vector vPlayerMaxs = pPlayer->GetAbsOrigin() + pPlayer->WorldAlignMaxs();
+            bool bIntersecting = IsBoxIntersectingBox( vBoxMin1, vBoxMax1, vPlayerMins, vPlayerMaxs );
+            float flDistance2 = ( pPlayer->GetAbsOrigin(), GetAbsOrigin() ).LengthSqr();
+            if ( bIntersecting && ( bestSteamID.GetAccountID() == 0 || flDistance2 < flBestDistance2 ) )
+            {
+                bestSteamID = steamID;
+                bBestHasNoclip = pPlayer->GetMoveType() == MOVETYPE_NOCLIP;
+                flBestDistance2 = flDistance2;
+            }
+        }
 #if CLIENT_HALLOWEEN_LOGIC_ENABLE_LOCAL_PLAYER_ONLY
-		while ( false );
+        while ( false )
+            ;
 #endif
 
-		if ( bestSteamID.GetAccountID() != 0 )
-		{
-			GCSDK::CProtoBufMsg<CMsgGC_Halloween_GrantItem> msg( k_EMsgGC_Halloween_GrantItem );
-			msg.Body().set_recipient_account_id( bestSteamID.GetAccountID() );
-			msg.Body().set_level_id( GetHalloweenMap() );
-			msg.Body().set_flagged( bBestHasNoclip );
-			GCClientSystem()->BSendMessage( msg );
-			OnClaimed( true );
-			return;
-		}
+        if ( bestSteamID.GetAccountID() != 0 )
+        {
+            GCSDK::CProtoBufMsg< CMsgGC_Halloween_GrantItem > msg( k_EMsgGC_Halloween_GrantItem );
+            msg.Body().set_recipient_account_id( bestSteamID.GetAccountID() );
+            msg.Body().set_level_id( GetHalloweenMap() );
+            msg.Body().set_flagged( bBestHasNoclip );
+            GCClientSystem()->BSendMessage( msg );
+            OnClaimed( true );
+            return;
+        }
 
-		SetNextClientThink( gpGlobals->curtime + 0.33f );
-	}
+        SetNextClientThink( gpGlobals->curtime + 0.33f );
+    }
 
-	void OnClaimed( bool bPlayAudio )
-	{
-		if ( m_bClaimed )
-			return;
+    void OnClaimed( bool bPlayAudio )
+    {
+        if ( m_bClaimed )
+            return;
 
-		m_bClaimed = true;
-		// stop thinking and remove sparkle...
-		ParticleProp()->StopParticlesNamed( "halloween_pickup_active", true );
-		SetNextClientThink( CLIENT_THINK_NEVER );
-		// throw up bday confetti
-		DispatchParticleEffect( "halloween_gift_pickup", GetAbsOrigin(), vec3_angle );
+        m_bClaimed = true;
+        // stop thinking and remove sparkle...
+        ParticleProp()->StopParticlesNamed( "halloween_pickup_active", true );
+        SetNextClientThink( CLIENT_THINK_NEVER );
+        // throw up bday confetti
+        DispatchParticleEffect( "halloween_gift_pickup", GetAbsOrigin(), vec3_angle );
 
-		if ( bPlayAudio )
-		{
-			C_BaseEntity::EmitSound( "Game.HappyBirthday" );
-		}
-		SetRenderMode( kRenderNone );
-		UpdateVisibility();
-	}
+        if ( bPlayAudio )
+        {
+            C_BaseEntity::EmitSound( "Game.HappyBirthday" );
+        }
+        SetRenderMode( kRenderNone );
+        UpdateVisibility();
+    }
 
-	bool m_bReadyForPickup;
-	bool m_bClaimed;
-	float m_flTimeToReady;
+    bool m_bReadyForPickup;
+    bool m_bClaimed;
+    float m_flTimeToReady;
 };
 
 LINK_ENTITY_TO_CLASS( tf_halloween_item_pickup, C_HalloweenItemPickup );
@@ -223,55 +222,58 @@ static EHANDLE gHalloweenPickup;
 #ifdef _DEBUG
 CON_COMMAND( cl_halloween_test_cheating, "Test cheating the halloween pickup" )
 {
-	GCSDK::CProtoBufMsg< CMsgGC_Halloween_GrantItem > msg( k_EMsgGC_Halloween_GrantItem );
-	msg.Body().set_recipient_account_id( steamapicontext->SteamUser()->GetSteamID().GetAccountID() );
-	GCClientSystem()->BSendMessage( msg );
+    GCSDK::CProtoBufMsg< CMsgGC_Halloween_GrantItem > msg( k_EMsgGC_Halloween_GrantItem );
+    msg.Body().set_recipient_account_id( steamapicontext->SteamUser()->GetSteamID().GetAccountID() );
+    GCClientSystem()->BSendMessage( msg );
 }
 
 CON_COMMAND( cl_halloween_test_spawn_pickup, "Test spawning the pickup item" )
 {
-	C_TFPlayer *pLocalPlayer = C_TFPlayer::GetLocalTFPlayer();
-	if ( pLocalPlayer == NULL )
-		return;
+    C_TFPlayer *pLocalPlayer = C_TFPlayer::GetLocalTFPlayer();
+    if ( pLocalPlayer == NULL )
+        return;
 
-	// Now create the pickup item
-	C_HalloweenItemPickup *pEntity = new C_HalloweenItemPickup();
-	if ( !pEntity )
-		return;
-	
-	Vector vecTargetPoint;
-	trace_t tr;
-	Vector forward;
-	pLocalPlayer->EyeVectors( &forward );
-	UTIL_TraceLine( pLocalPlayer->EyePosition(),
-					pLocalPlayer->EyePosition() + forward * MAX_TRACE_LENGTH,MASK_NPCSOLID, 
-					pLocalPlayer, COLLISION_GROUP_NONE, &tr );
+    // Now create the pickup item
+    C_HalloweenItemPickup *pEntity = new C_HalloweenItemPickup();
+    if ( !pEntity )
+        return;
 
-	if ( tr.fraction != 1.0 )
-	{
-		vecTargetPoint = tr.endpos;
-	}
+    Vector vecTargetPoint;
+    trace_t tr;
+    Vector forward;
+    pLocalPlayer->EyeVectors( &forward );
+    UTIL_TraceLine( pLocalPlayer->EyePosition(),
+                    pLocalPlayer->EyePosition() + forward * MAX_TRACE_LENGTH,
+                    MASK_NPCSOLID,
+                    pLocalPlayer,
+                    COLLISION_GROUP_NONE,
+                    &tr );
 
-	pEntity->SetAbsOrigin( vecTargetPoint );
-	if ( !pEntity->Initialize() )
-	{
-		pEntity->Release();
-	}
-	else
-	{
-		if ( gHalloweenPickup.Get() )
-			gHalloweenPickup->Release();
-		gHalloweenPickup = pEntity;
-	}
+    if ( tr.fraction != 1.0 )
+    {
+        vecTargetPoint = tr.endpos;
+    }
+
+    pEntity->SetAbsOrigin( vecTargetPoint );
+    if ( !pEntity->Initialize() )
+    {
+        pEntity->Release();
+    }
+    else
+    {
+        if ( gHalloweenPickup.Get() )
+            gHalloweenPickup->Release();
+        gHalloweenPickup = pEntity;
+    }
 }
 #endif
 
 //-----------------------------------------------------------------------------
 // GC has decided to drop a Halloween item
 //-----------------------------------------------------------------------------
-//class CGCHalloween_ReservedItem : public GCSDK::CGCClientJob
+// class CGCHalloween_ReservedItem : public GCSDK::CGCClientJob
 //{
-//public:
+// public:
 //	CGCHalloween_ReservedItem( GCSDK::CGCClient *pClient ) : GCSDK::CGCClientJob( pClient ) {}
 //
 //	virtual bool BYieldingRunGCJob( GCSDK::IMsgNetPacket *pNetPacket )
@@ -291,9 +293,9 @@ CON_COMMAND( cl_halloween_test_spawn_pickup, "Test spawning the pickup item" )
 //			return true;
 //
 //		// Don't spawn gifts during startup.
-//		if ( TFGameRules() == NULL 
-//			|| TFGameRules()->State_Get() != GR_STATE_RND_RUNNING 
-//			|| TFGameRules()->InSetup() 
+//		if ( TFGameRules() == NULL
+//			|| TFGameRules()->State_Get() != GR_STATE_RND_RUNNING
+//			|| TFGameRules()->InSetup()
 //			|| TFGameRules()->IsInWaitingForPlayers()
 //			|| TFGameRules()->ArePlayersInHell() )	// Dont spawn gifts if players are in 2013 Hell
 //			return true;
@@ -309,7 +311,7 @@ CON_COMMAND( cl_halloween_test_spawn_pickup, "Test spawning the pickup item" )
 //			C_HalloweenItemPickup *pEntity = new C_HalloweenItemPickup();
 //			if ( !pEntity )
 //				return true;
-//		
+//
 //			Vector position( msg.Body().x( eMap ), msg.Body().y( eMap ), msg.Body().z( eMap ) );
 //			pEntity->SetAbsOrigin( position );
 //			if ( !pEntity->Initialize() )
@@ -333,14 +335,14 @@ CON_COMMAND( cl_halloween_test_spawn_pickup, "Test spawning the pickup item" )
 //		return true;
 //	}
 //};
-//GC_REG_JOB( GCSDK::CGCClient, CGCHalloween_ReservedItem, "CGCHalloween_ReservedItem", k_EMsgGC_Halloween_ReservedItem, GCSDK::k_EServerTypeGCClient );
+// GC_REG_JOB( GCSDK::CGCClient, CGCHalloween_ReservedItem, "CGCHalloween_ReservedItem", k_EMsgGC_Halloween_ReservedItem, GCSDK::k_EServerTypeGCClient );
 
 //-----------------------------------------------------------------------------
 // GC gave out the Halloween item to a player
 //-----------------------------------------------------------------------------
-//class CGCHalloween_GrantedItemResponse : public GCSDK::CGCClientJob
+// class CGCHalloween_GrantedItemResponse : public GCSDK::CGCClientJob
 //{
-//public:
+// public:
 //	CGCHalloween_GrantedItemResponse( GCSDK::CGCClient *pClient ) : GCSDK::CGCClientJob( pClient ) {}
 //
 //	virtual bool BYieldingRunGCJob( GCSDK::IMsgNetPacket *pNetPacket )
@@ -366,7 +368,7 @@ CON_COMMAND( cl_halloween_test_spawn_pickup, "Test spawning the pickup item" )
 //		EHalloweenMap eMap = GetHalloweenMap();
 //		if ( eMap == kHalloweenMapCount )
 //			return true;
-//		
+//
 //		// add alert
 //		const char* pPlayerName = InventoryManager()->PersonaName_Get( steamIDRecipient.GetAccountID() );
 //		wchar_t wszPlayerName[MAX_PLAYER_NAME_LENGTH] = L"";
@@ -389,7 +391,7 @@ CON_COMMAND( cl_halloween_test_spawn_pickup, "Test spawning the pickup item" )
 //			pNotification->SetText( "#TF_HalloweenItem_GrantPickupFail" );
 //			// pNotification->SetSoundFilename( "coach/coach_student_died.wav" );
 //		}
-//		
+//
 //		NotificationQueue_Add( pNotification );
 //
 //		// is this the local player? award the achievement...
@@ -405,12 +407,11 @@ CON_COMMAND( cl_halloween_test_spawn_pickup, "Test spawning the pickup item" )
 //		return true;
 //	}
 //};
-//GC_REG_JOB( GCSDK::CGCClient, CGCHalloween_GrantedItemResponse, "CGCHalloween_GrantedItemResponse", k_EMsgGC_Halloween_GrantItemResponse, GCSDK::k_EServerTypeGCClient );
-
+// GC_REG_JOB( GCSDK::CGCClient, CGCHalloween_GrantedItemResponse, "CGCHalloween_GrantedItemResponse", k_EMsgGC_Halloween_GrantItemResponse, GCSDK::k_EServerTypeGCClient );
 
 //-----------------------------------------------------------------------------
 
 void CL_Halloween_LevelShutdown()
 {
-	gHalloweenPickup = NULL;
+    gHalloweenPickup = NULL;
 }

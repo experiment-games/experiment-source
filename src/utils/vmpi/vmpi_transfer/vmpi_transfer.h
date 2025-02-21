@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
 
@@ -10,5 +10,4 @@
 #pragma once
 #endif
 
-
-#endif // VMPI_TRANSFER_H
+#endif  // VMPI_TRANSFER_H

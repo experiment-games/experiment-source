@@ -13,29 +13,28 @@ BEGIN_NETWORK_TABLE( CBaseObjectUpgrade, DT_BaseObjectUpgrade )
 END_NETWORK_TABLE()
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CBaseObjectUpgrade::CBaseObjectUpgrade()
 {
-	UseClientSideAnimation();
+    UseClientSideAnimation();
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CBaseObjectUpgrade::Spawn()
 {
 #if !defined( CLIENT_DLL )
-     m_fObjectFlags.Set( m_fObjectFlags | OF_MUST_BE_BUILT_ON_ATTACHMENT );
+    m_fObjectFlags.Set( m_fObjectFlags | OF_MUST_BE_BUILT_ON_ATTACHMENT );
 #endif
 
-	BaseClass::Spawn();
+    BaseClass::Spawn();
 
 #if !defined( CLIENT_DLL )
-	SetCollisionGroup( TFCOLLISION_GROUP_COMBATOBJECT );
+    SetCollisionGroup( TFCOLLISION_GROUP_COMBATOBJECT );
 #endif
 }
-
 
 //-----------------------------------------------------------------------------
 // Purpose: Prevent Team Damage
@@ -43,8 +42,8 @@ void CBaseObjectUpgrade::Spawn()
 int CBaseObjectUpgrade::OnTakeDamage( const CTakeDamageInfo &info )
 {
 #if !defined( CLIENT_DLL )
-	return BaseClass::OnTakeDamage( info );
+    return BaseClass::OnTakeDamage( info );
 #else
-	return 0;
+    return 0;
 #endif
 }

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -11,11 +11,9 @@
 #pragma once
 #endif
 
-
 #include "client_class.h"
 #include "iclientnetworkable.h"
 #include "c_recipientfilter.h"
-
 
 //-----------------------------------------------------------------------------
 // Purpose: Base class for TEs.  All TEs should derive from this and at
@@ -25,98 +23,124 @@
 class C_BaseTempEntity : public IClientUnknown, public IClientNetworkable
 
 {
-public:
-	DECLARE_CLASS_NOBASE( C_BaseTempEntity );
-	DECLARE_CLIENTCLASS();
-	
-									C_BaseTempEntity( void );
-	virtual							~C_BaseTempEntity( void );
+   public:
+    DECLARE_CLASS_NOBASE( C_BaseTempEntity );
+    DECLARE_CLIENTCLASS();
 
+    C_BaseTempEntity( void );
+    virtual ~C_BaseTempEntity( void );
 
-// IClientUnknown implementation.
-public:
+    // IClientUnknown implementation.
+   public:
+    virtual void SetRefEHandle( const CBaseHandle &handle )
+    {
+        Assert( false );
+    }
+    virtual const CBaseHandle &GetRefEHandle() const
+    {
+        return *( ( CBaseHandle * )0 );
+    }
 
-	virtual void SetRefEHandle( const CBaseHandle &handle )	{ Assert( false ); }
-	virtual const CBaseHandle& GetRefEHandle() const		{ return *((CBaseHandle*)0); }
+    virtual IClientUnknown *GetIClientUnknown()
+    {
+        return this;
+    }
+    virtual ICollideable *GetCollideable()
+    {
+        return 0;
+    }
+    virtual IClientNetworkable *GetClientNetworkable()
+    {
+        return this;
+    }
+    virtual IClientRenderable *GetClientRenderable()
+    {
+        return 0;
+    }
+    virtual IClientEntity *GetIClientEntity()
+    {
+        return 0;
+    }
+    virtual C_BaseEntity *GetBaseEntity()
+    {
+        return 0;
+    }
+    virtual IClientThinkable *GetClientThinkable()
+    {
+        return 0;
+    }
 
-	virtual IClientUnknown*		GetIClientUnknown()		{ return this; }
-	virtual ICollideable*		GetCollideable()		{ return 0; }
-	virtual IClientNetworkable*	GetClientNetworkable()	{ return this; }
-	virtual IClientRenderable*	GetClientRenderable()	{ return 0; }
-	virtual IClientEntity*		GetIClientEntity()		{ return 0; }
-	virtual C_BaseEntity*		GetBaseEntity()			{ return 0; }
-	virtual IClientThinkable*	GetClientThinkable()	{ return 0; }
+    // IClientNetworkable overrides.
+   public:
+    virtual void Release();
+    virtual void NotifyShouldTransmit( ShouldTransmitState_t state );
+    virtual void PreDataUpdate( DataUpdateType_t updateType );
+    virtual void PostDataUpdate( DataUpdateType_t updateType );
+    virtual void OnDataUnchangedInPVS( void ) {}
+    virtual void OnPreDataChanged( DataUpdateType_t updateType );
+    virtual void OnDataChanged( DataUpdateType_t updateType );
+    virtual void SetDormant( bool bDormant );
+    virtual bool IsDormant( void );
+    virtual int entindex( void ) const;
+    virtual void ReceiveMessage( int classID, bf_read &msg );
+    virtual void *GetDataTableBasePtr();
+    virtual void SetDestroyedOnRecreateEntities( void );
 
+   public:
+    // Dummy for CNetworkVars.
+    void NetworkStateChanged() {}
+    void NetworkStateChanged( void *pVar ) {}
 
-// IClientNetworkable overrides.
-public:
+    virtual bool Init( int entnum, int iSerialNum );
 
-	virtual void					Release();	
-	virtual void					NotifyShouldTransmit( ShouldTransmitState_t state );
-	virtual void					PreDataUpdate( DataUpdateType_t updateType );
-	virtual void					PostDataUpdate( DataUpdateType_t updateType );
-	virtual void					OnDataUnchangedInPVS( void ) { }
-	virtual void					OnPreDataChanged( DataUpdateType_t updateType );
-	virtual void					OnDataChanged( DataUpdateType_t updateType );
-	virtual void					SetDormant( bool bDormant );
-	virtual bool					IsDormant( void );
-	virtual int						entindex( void ) const;
-	virtual void					ReceiveMessage( int classID, bf_read &msg );
-	virtual void*					GetDataTableBasePtr();
-	virtual void					SetDestroyedOnRecreateEntities( void );
+    virtual void Precache( void );
 
-public:
+    // For dynamic entities, return true to allow destruction
+    virtual bool ShouldDestroy( void )
+    {
+        return false;
+    };
 
-	// Dummy for CNetworkVars.
-	void NetworkStateChanged() {}
-	void NetworkStateChanged( void *pVar ) {}
+    C_BaseTempEntity *GetNext( void );
 
-	virtual bool					Init(int entnum, int iSerialNum);
+    // Get list of tempentities
+    static C_BaseTempEntity *GetList( void );
 
-	virtual void					Precache( void );
+    C_BaseTempEntity *GetNextDynamic( void );
 
-	// For dynamic entities, return true to allow destruction
-	virtual bool					ShouldDestroy( void ) { return false; };
+    // Determine the color modulation amount
+    void GetColorModulation( float *color )
+    {
+        assert( color );
+        color[0] = color[1] = color[2] = 1.0f;
+    }
 
-	C_BaseTempEntity				*GetNext( void );
+    // Should this object be able to have shadows cast onto it?
+    virtual bool ShouldReceiveProjectedTextures( int flags )
+    {
+        return false;
+    }
 
-	// Get list of tempentities
-	static C_BaseTempEntity			*GetList( void );
+    // Static members
+   public:
+    // List of dynamically allocated temp entis
+    static C_BaseTempEntity *GetDynamicList();
 
-	C_BaseTempEntity				*GetNextDynamic( void );
+    // Called at startup to allow temp entities to precache any models/sounds that they need
+    static void PrecacheTempEnts( void );
 
-	// Determine the color modulation amount
-	void	GetColorModulation( float* color )
-	{
-		assert(color);
-		color[0] = color[1] = color[2] = 1.0f;
-	}
+    static void ClearDynamicTempEnts( void );
 
-	// Should this object be able to have shadows cast onto it?
-	virtual bool	ShouldReceiveProjectedTextures( int flags ) { return false; }
+    static void CheckDynamicTempEnts( void );
 
-// Static members
-public:
-	// List of dynamically allocated temp entis
-	static C_BaseTempEntity			*GetDynamicList();
+   private:
+    // Next in chain
+    C_BaseTempEntity *m_pNext;
+    C_BaseTempEntity *m_pNextDynamic;
 
-	// Called at startup to allow temp entities to precache any models/sounds that they need
-	static void						PrecacheTempEnts( void );
-
-	static void						ClearDynamicTempEnts( void );
-
-	static void						CheckDynamicTempEnts( void );
-
-private:
-
-	// Next in chain
-	C_BaseTempEntity		*m_pNext;
-	C_BaseTempEntity		*m_pNextDynamic;
-
-	// TEs add themselves to this list for the executable.
-	static C_BaseTempEntity	*s_pTempEntities;
-	static C_BaseTempEntity *s_pDynamicEntities;
+    // TEs add themselves to this list for the executable.
+    static C_BaseTempEntity *s_pTempEntities;
+    static C_BaseTempEntity *s_pDynamicEntities;
 };
 
-
-#endif // C_BASETEMPENTITY_H
+#endif  // C_BASETEMPENTITY_H

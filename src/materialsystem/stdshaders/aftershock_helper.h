@@ -21,22 +21,25 @@ class IShaderShadow;
 //-----------------------------------------------------------------------------
 struct AftershockVars_t
 {
-	AftershockVars_t() { memset( this, 0xFF, sizeof(AftershockVars_t) ); }
+    AftershockVars_t()
+    {
+        memset( this, 0xFF, sizeof( AftershockVars_t ) );
+    }
 
-	int m_nColorTint;
-	int m_nRefractAmount;
+    int m_nColorTint;
+    int m_nRefractAmount;
 
-	int m_nBumpmap;
-	int m_nBumpFrame;
-	int m_nBumpTransform;
+    int m_nBumpmap;
+    int m_nBumpFrame;
+    int m_nBumpTransform;
 
-	int m_nSilhouetteThickness;
-	int m_nSilhouetteColor;
-	int m_nGroundMin;
-	int m_nGroundMax;
-	int m_nBlurAmount;
+    int m_nSilhouetteThickness;
+    int m_nSilhouetteColor;
+    int m_nGroundMin;
+    int m_nGroundMax;
+    int m_nBlurAmount;
 
-	int m_nTime;
+    int m_nTime;
 };
 
 // Default values (Arrays should only be vec[4])
@@ -48,9 +51,8 @@ static const float kDefaultGroundMin = -0.3f;
 static const float kDefaultGroundMax = -0.1f;
 static const float kDefaultBlurAmount = 0.01f;
 
-void InitParamsAftershock( CBaseVSShader *pShader, IMaterialVar** params, const char *pMaterialName, AftershockVars_t &info );
-void InitAftershock( CBaseVSShader *pShader, IMaterialVar** params, AftershockVars_t &info );
-void DrawAftershock( CBaseVSShader *pShader, IMaterialVar** params, IShaderDynamicAPI *pShaderAPI,
-					IShaderShadow* pShaderShadow, AftershockVars_t &info, VertexCompressionType_t vertexCompression );
+void InitParamsAftershock( CBaseVSShader *pShader, IMaterialVar **params, const char *pMaterialName, AftershockVars_t &info );
+void InitAftershock( CBaseVSShader *pShader, IMaterialVar **params, AftershockVars_t &info );
+void DrawAftershock( CBaseVSShader *pShader, IMaterialVar **params, IShaderDynamicAPI *pShaderAPI, IShaderShadow *pShaderShadow, AftershockVars_t &info, VertexCompressionType_t vertexCompression );
 
-#endif // AFTERSHOCK_HELPER_H
+#endif  // AFTERSHOCK_HELPER_H

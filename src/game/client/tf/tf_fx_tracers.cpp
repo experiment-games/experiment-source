@@ -18,100 +18,98 @@
 #include "tier0/memdbgon.h"
 
 CLIENTEFFECT_REGISTER_BEGIN( PrecacheTFTracers )
-	CLIENTEFFECT_MATERIAL( "effects/spark" )
+CLIENTEFFECT_MATERIAL( "effects/spark" )
 CLIENTEFFECT_REGISTER_END()
 
 #define LISTENER_HEIGHT 24
 
-
-#define TRACER_TYPE_FAINT	4
+#define TRACER_TYPE_FAINT 4
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void FX_TFTracerSound( const Vector &start, const Vector &end, int iTracerType )
 {
-	// don't play on very short hits
-	if ( ( start - end ).Length() < 200 )
-		return;
-	
-	const char *pszSoundName = "Bullets.DefaultNearmiss";
-	float flWhizDist = 64;
-	Vector vecListenOrigin = MainViewOrigin();
+    // don't play on very short hits
+    if ( ( start - end ).Length() < 200 )
+        return;
 
-	switch( iTracerType )
-	{
-	case TRACER_TYPE_DEFAULT:
-		flWhizDist = 96;
-		// fall through !
+    const char *pszSoundName = "Bullets.DefaultNearmiss";
+    float flWhizDist = 64;
+    Vector vecListenOrigin = MainViewOrigin();
 
-	default:
-		{
-			Ray_t bullet, listener;
-			bullet.Init( start, end );
+    switch ( iTracerType )
+    {
+        case TRACER_TYPE_DEFAULT:
+            flWhizDist = 96;
+            // fall through !
 
-			Vector vecLower = vecListenOrigin;
-			vecLower.z -= LISTENER_HEIGHT;
-			listener.Init( vecListenOrigin,	vecLower );
+        default:
+        {
+            Ray_t bullet, listener;
+            bullet.Init( start, end );
 
-			float s, t;
-			IntersectRayWithRay( bullet, listener, s, t );
-			t = clamp( t, 0.f, 1.f );
-			vecListenOrigin.z -= t * LISTENER_HEIGHT;
-		}
-		break;
-	}
+            Vector vecLower = vecListenOrigin;
+            vecLower.z -= LISTENER_HEIGHT;
+            listener.Init( vecListenOrigin, vecLower );
 
-	static float flNextWhizTime = 0;
+            float s, t;
+            IntersectRayWithRay( bullet, listener, s, t );
+            t = clamp( t, 0.f, 1.f );
+            vecListenOrigin.z -= t * LISTENER_HEIGHT;
+        }
+        break;
+    }
 
-	// Is it time yet?
-	float dt = flNextWhizTime - gpGlobals->curtime;
-	if ( dt > 0 )
-		return;
+    static float flNextWhizTime = 0;
 
-	// Did the thing pass close enough to our head?
-	float vDist = CalcDistanceSqrToLineSegment( vecListenOrigin, start, end );
-	if ( vDist >= (flWhizDist * flWhizDist) )
-		return;
+    // Is it time yet?
+    float dt = flNextWhizTime - gpGlobals->curtime;
+    if ( dt > 0 )
+        return;
 
-	CSoundParameters params;
-	if( C_BaseEntity::GetParametersForSound( pszSoundName, params, NULL ) )
-	{
-		// Get shot direction
-		Vector shotDir;
-		VectorSubtract( end, start, shotDir );
-		VectorNormalize( shotDir );
+    // Did the thing pass close enough to our head?
+    float vDist = CalcDistanceSqrToLineSegment( vecListenOrigin, start, end );
+    if ( vDist >= ( flWhizDist * flWhizDist ) )
+        return;
 
-		CLocalPlayerFilter filter;
-		enginesound->EmitSound(	filter, SOUND_FROM_WORLD, CHAN_STATIC, params.soundname, 
-			params.volume, SNDLVL_TO_ATTN(params.soundlevel), 0, params.pitch, 0, &start, &shotDir, NULL);
-	}
+    CSoundParameters params;
+    if ( C_BaseEntity::GetParametersForSound( pszSoundName, params, NULL ) )
+    {
+        // Get shot direction
+        Vector shotDir;
+        VectorSubtract( end, start, shotDir );
+        VectorNormalize( shotDir );
 
-	// Don't play another bullet whiz for this client until this time has run out
-	flNextWhizTime = gpGlobals->curtime + 0.1f;
+        CLocalPlayerFilter filter;
+        enginesound->EmitSound( filter, SOUND_FROM_WORLD, CHAN_STATIC, params.soundname, params.volume, SNDLVL_TO_ATTN( params.soundlevel ), 0, params.pitch, 0, &start, &shotDir, NULL );
+    }
+
+    // Don't play another bullet whiz for this client until this time has run out
+    flNextWhizTime = gpGlobals->curtime + 0.1f;
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-void FX_BrightTracer( Vector& start, Vector& end )
+void FX_BrightTracer( Vector &start, Vector &end )
 {
-	//Don't make small tracers
-	float dist;
-	Vector dir;
-	int velocity = 5000;
+    // Don't make small tracers
+    float dist;
+    Vector dir;
+    int velocity = 5000;
 
-	VectorSubtract( end, start, dir );
-	dist = VectorNormalize( dir );
+    VectorSubtract( end, start, dir );
+    dist = VectorNormalize( dir );
 
-	// Don't make short tracers.
-	float length = random->RandomFloat( 64.0f, 128.0f );
-	float life = ( dist + length ) / velocity;	//NOTENOTE: We want the tail to finish its run as well
-		
-	//Add it
-	FX_AddDiscreetLine( start, dir, velocity, length, dist, random->RandomFloat( 1, 3 ), life, "effects/spark" );
+    // Don't make short tracers.
+    float length = random->RandomFloat( 64.0f, 128.0f );
+    float life = ( dist + length ) / velocity;  // NOTENOTE: We want the tail to finish its run as well
 
-	FX_TFTracerSound( start, end, TRACER_TYPE_DEFAULT );	
+    // Add it
+    FX_AddDiscreetLine( start, dir, velocity, length, dist, random->RandomFloat( 1, 3 ), life, "effects/spark" );
+
+    FX_TFTracerSound( start, end, TRACER_TYPE_DEFAULT );
 }
 
 //-----------------------------------------------------------------------------
@@ -119,7 +117,7 @@ void FX_BrightTracer( Vector& start, Vector& end )
 //-----------------------------------------------------------------------------
 void BrightTracerCallback( const CEffectData &data )
 {
-	FX_BrightTracer( (Vector&)data.m_vStart, (Vector&)data.m_vOrigin );
+    FX_BrightTracer( ( Vector & )data.m_vStart, ( Vector & )data.m_vOrigin );
 }
 
 DECLARE_CLIENT_EFFECT( "BrightTracer", BrightTracerCallback );

@@ -15,11 +15,11 @@
 //-----------------------------------------------------------------------------
 class CTFPlayerClass : public CTFPlayerClassShared
 {
-public:
+   public:
+    CTFPlayerClass();
+    ~CTFPlayerClass();
 
-	CTFPlayerClass();
-	~CTFPlayerClass();
-private:
+   private:
 };
 
-#endif // TF_PLAYERCLASS_H
+#endif  // TF_PLAYERCLASS_H

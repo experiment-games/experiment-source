@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -11,5 +11,4 @@
 #pragma once
 #endif
 
-
-#endif // VMPI_DISPATCH_H
+#endif  // VMPI_DISPATCH_H

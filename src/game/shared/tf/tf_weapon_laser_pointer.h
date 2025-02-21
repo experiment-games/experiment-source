@@ -24,19 +24,22 @@
 //
 class CLaserDot : public CSniperDot
 {
-public:
-	DECLARE_CLASS( CLaserDot, CSniperDot );
-	DECLARE_NETWORKCLASS();
-	DECLARE_DATADESC();
+   public:
+    DECLARE_CLASS( CLaserDot, CSniperDot );
+    DECLARE_NETWORKCLASS();
+    DECLARE_DATADESC();
 
-	// Creation/Destruction.
-	CLaserDot( void );
-	~CLaserDot( void );
+    // Creation/Destruction.
+    CLaserDot( void );
+    ~CLaserDot( void );
 
-	static CLaserDot *Create( const Vector &origin, CBaseEntity *pOwner = NULL, bool bVisibleDot = true );
+    static CLaserDot *Create( const Vector &origin, CBaseEntity *pOwner = NULL, bool bVisibleDot = true );
 #ifdef CLIENT_DLL
-	virtual int DrawModel( int flags );
-	virtual bool ShouldDraw( void ) { return false; }
+    virtual int DrawModel( int flags );
+    virtual bool ShouldDraw( void )
+    {
+        return false;
+    }
 #endif
 };
 
@@ -46,53 +49,65 @@ public:
 //
 class CTFLaserPointer : public CTFWeaponBaseGun
 {
-public:
+   public:
+    DECLARE_CLASS( CTFLaserPointer, CTFWeaponBaseGun );
+    DECLARE_NETWORKCLASS();
+    DECLARE_PREDICTABLE();
 
-	DECLARE_CLASS( CTFLaserPointer, CTFWeaponBaseGun );
-	DECLARE_NETWORKCLASS(); 
-	DECLARE_PREDICTABLE();
+    CTFLaserPointer();
+    ~CTFLaserPointer();
 
-	CTFLaserPointer();
-	~CTFLaserPointer();
+    virtual int GetWeaponID( void ) const
+    {
+        return TF_WEAPON_LASER_POINTER;
+    }
 
-	virtual int	GetWeaponID( void ) const			{ return TF_WEAPON_LASER_POINTER; }
+    virtual void Precache();
+    virtual bool Deploy( void );
+    virtual bool Holster( CBaseCombatWeapon *pSwitchingTo );
+    virtual void ItemPostFrame( void );
+    virtual void PrimaryAttack( void );
+    virtual void SecondaryAttack( void );
 
-	virtual void Precache();
-	virtual bool Deploy( void );
-	virtual bool Holster( CBaseCombatWeapon *pSwitchingTo );
-	virtual void ItemPostFrame( void );
-	virtual void PrimaryAttack( void );
-	virtual void SecondaryAttack( void );
+    virtual void WeaponIdle( void );
 
-	virtual void WeaponIdle( void );
-
-	virtual bool UsesClipsForAmmo1( void ) const { return false; }
-	virtual bool UsesClipsForAmmo2( void ) const { return false; }
-
-#ifdef GAME_DLL
-	CLaserDot*	GetLaserDot() { return m_hLaserDot.Get(); }
-	bool		HasLaserDot() { return GetLaserDot()?true:false; }
-#endif
-
-private:
-
-	void CreateLaserDot( void );
-	void DestroyLaserDot( void );
-	void UpdateLaserDot( void );
-
-private:
+    virtual bool UsesClipsForAmmo1( void ) const
+    {
+        return false;
+    }
+    virtual bool UsesClipsForAmmo2( void ) const
+    {
+        return false;
+    }
 
 #ifdef GAME_DLL
-	CHandle<CLaserDot>		m_hLaserDot;
+    CLaserDot *GetLaserDot()
+    {
+        return m_hLaserDot.Get();
+    }
+    bool HasLaserDot()
+    {
+        return GetLaserDot() ? true : false;
+    }
 #endif
 
-	float					m_flNextAttack;
-	float					m_flStartedFiring;
-	bool					m_bDoHandIdle;
+   private:
+    void CreateLaserDot( void );
+    void DestroyLaserDot( void );
+    void UpdateLaserDot( void );
 
-	bool					m_bDeployed;
+   private:
+#ifdef GAME_DLL
+    CHandle< CLaserDot > m_hLaserDot;
+#endif
 
-	CTFLaserPointer( const CTFLaserPointer & );
+    float m_flNextAttack;
+    float m_flStartedFiring;
+    bool m_bDoHandIdle;
+
+    bool m_bDeployed;
+
+    CTFLaserPointer( const CTFLaserPointer & );
 };
 
-#endif // TF_WEAPON_LASER_POINTER_H
+#endif  // TF_WEAPON_LASER_POINTER_H

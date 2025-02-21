@@ -11,21 +11,19 @@
 extern ConVar tf_bot_path_lookahead_range;
 
 //---------------------------------------------------------------------------------------------
-ActionResult< CTFBot >	CTFBotSpyBackstab::OnStart( CTFBot *me, Action< CTFBot > *priorAction )
+ActionResult< CTFBot > CTFBotSpyBackstab::OnStart( CTFBot *me, Action< CTFBot > *priorAction )
 {
-	return Continue();
+    return Continue();
 }
-
 
 //---------------------------------------------------------------------------------------------
-ActionResult< CTFBot >	CTFBotSpyBackstab::Update( CTFBot *me, float interval )
+ActionResult< CTFBot > CTFBotSpyBackstab::Update( CTFBot *me, float interval )
 {
-	return Continue();
+    return Continue();
 }
-
 
 //---------------------------------------------------------------------------------------------
 QueryResultType CTFBotSpyBackstab::ShouldAttack( const INextBot *me, const CKnownEntity *them ) const
 {
-	return ANSWER_NO;
+    return ANSWER_NO;
 }

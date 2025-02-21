@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -11,66 +11,74 @@
 #include "cbase.h"
 #include "utlvector.h"
 
-
 struct SlideMaterialList_t
 {
-	char				szSlideKeyword[64];
-	CUtlVector<int>		iSlideMaterials;
-	CUtlVector<int>		iSlideIndex;
+    char szSlideKeyword[64];
+    CUtlVector< int > iSlideMaterials;
+    CUtlVector< int > iSlideIndex;
 };
-
 
 class C_SlideshowDisplay : public C_BaseEntity
 {
-public:
-	DECLARE_CLASS( C_SlideshowDisplay, CBaseEntity );
-	DECLARE_CLIENTCLASS();
+   public:
+    DECLARE_CLASS( C_SlideshowDisplay, CBaseEntity );
+    DECLARE_CLIENTCLASS();
 
-	C_SlideshowDisplay();
-	virtual ~C_SlideshowDisplay();
+    C_SlideshowDisplay();
+    virtual ~C_SlideshowDisplay();
 
-	void Spawn( void );
+    void Spawn( void );
 
-	virtual void	OnDataChanged( DataUpdateType_t updateType );
+    virtual void OnDataChanged( DataUpdateType_t updateType );
 
-	void ClientThink( void );
+    void ClientThink( void );
 
-	bool IsEnabled( void ) { return m_bEnabled; }
+    bool IsEnabled( void )
+    {
+        return m_bEnabled;
+    }
 
-	void GetDisplayText( char *pchText ) { Q_strcpy( pchText, m_szDisplayText ); }
-	int CurrentMaterialIndex( void ) { return m_iCurrentMaterialIndex; }
-	int GetMaterialIndex( int iSlideIndex );
-	int NumMaterials( void );
-	int CurrentSlideIndex( void ) { return m_iCurrentSlideIndex; }
+    void GetDisplayText( char* pchText )
+    {
+        Q_strcpy( pchText, m_szDisplayText );
+    }
+    int CurrentMaterialIndex( void )
+    {
+        return m_iCurrentMaterialIndex;
+    }
+    int GetMaterialIndex( int iSlideIndex );
+    int NumMaterials( void );
+    int CurrentSlideIndex( void )
+    {
+        return m_iCurrentSlideIndex;
+    }
 
-private:
+   private:
+    void BuildSlideShowImagesList( void );
 
-	void BuildSlideShowImagesList( void );
+   private:
+    bool m_bEnabled;
 
-private:
+    char m_szDisplayText[128];
 
-	bool	m_bEnabled;
+    char m_szSlideshowDirectory[128];
 
-	char	m_szDisplayText[ 128 ];
+    CUtlVector< SlideMaterialList_t* > m_SlideMaterialLists;
+    unsigned char m_chCurrentSlideLists[16];
+    int m_iCurrentMaterialIndex;
+    int m_iCurrentSlideIndex;
 
-	char	m_szSlideshowDirectory[ 128 ];
+    float m_fMinSlideTime;
+    float m_fMaxSlideTime;
 
-	CUtlVector<SlideMaterialList_t*>	m_SlideMaterialLists;
-	unsigned char						m_chCurrentSlideLists[ 16 ];
-	int									m_iCurrentMaterialIndex;
-	int									m_iCurrentSlideIndex;
+    float m_NextSlideTime;
 
-	float	m_fMinSlideTime;
-	float	m_fMaxSlideTime;
-
-	float	m_NextSlideTime;
-
-	int		m_iCycleType;
-	bool	m_bNoListRepeats;
-	int		m_iCurrentSlideList;
-	int		m_iCurrentSlide;
+    int m_iCycleType;
+    bool m_bNoListRepeats;
+    int m_iCurrentSlideList;
+    int m_iCurrentSlide;
 };
 
 extern CUtlVector< C_SlideshowDisplay* > g_SlideshowDisplays;
 
-#endif //C_SLIDESHOW_STATS_DISPLAY_H
+#endif  // C_SLIDESHOW_STATS_DISPLAY_H

@@ -9,55 +9,55 @@
 //------------------------------------------------------------------------------
 class C_PointWorldText : public C_BaseEntity
 {
-public:
-	DECLARE_CLASS( C_PointWorldText, C_BaseEntity );
-		
-	DECLARE_CLIENTCLASS();
+   public:
+    DECLARE_CLASS( C_PointWorldText, C_BaseEntity );
 
-	C_PointWorldText();
+    DECLARE_CLIENTCLASS();
 
-	virtual ~C_PointWorldText();
+    C_PointWorldText();
 
-	virtual void Spawn() OVERRIDE;
-	virtual bool ShouldDraw() OVERRIDE;
-	virtual void ClientThink() OVERRIDE;
-	virtual int DrawModel( int flags ) OVERRIDE;
-	virtual void GetRenderBounds( Vector& mins, Vector& maxs ) OVERRIDE;
-	virtual bool ValidateEntityAttachedToPlayer( bool &bShouldRetry );
-	virtual void PostDataUpdate( DataUpdateType_t updateType ) OVERRIDE;
+    virtual ~C_PointWorldText();
 
-	void SetText( const char* pszText );
-	void SetFont( int nFont );
+    virtual void Spawn() OVERRIDE;
+    virtual bool ShouldDraw() OVERRIDE;
+    virtual void ClientThink() OVERRIDE;
+    virtual int DrawModel( int flags ) OVERRIDE;
+    virtual void GetRenderBounds( Vector &mins, Vector &maxs ) OVERRIDE;
+    virtual bool ValidateEntityAttachedToPlayer( bool &bShouldRetry );
+    virtual void PostDataUpdate( DataUpdateType_t updateType ) OVERRIDE;
 
-	bool IsTransparent( void );
-	 
-private:
-	void UpdateRenderBounds();
-	void ComputeCornerVertices( const QAngle &angles, const Vector &origin, Vector *pVerts ) const;
+    void SetText( const char *pszText );
+    void SetFont( int nFont );
 
-	void CalcTextTotalSize(float &outWidth, float &outHeight);
-	void UpdateTextWorldSize();
+    bool IsTransparent( void );
 
-	float GetTextWorldWidth() const;
-	float GetTextWorldHeight() const;
-	float GetTextSpacingX() const;
-	float GetTextSpacingY() const;
+   private:
+    void UpdateRenderBounds();
+    void ComputeCornerVertices( const QAngle &angles, const Vector &origin, Vector *pVerts ) const;
 
-	Vector m_localBBMin;
-	Vector m_localBBMax;
+    void CalcTextTotalSize( float &outWidth, float &outHeight );
+    void UpdateTextWorldSize();
 
-	char m_szText[ MAX_PATH ];
-	float m_flTextSize;
-	float m_flTextSpacingX;
-	float m_flTextSpacingY;
-	color32 m_colTextColor;
-	int m_nOrientation;
-	int m_nTextLength;
-	int m_nFont;
-	bool m_bRainbow;
+    float GetTextWorldWidth() const;
+    float GetTextWorldHeight() const;
+    float GetTextSpacingX() const;
+    float GetTextSpacingY() const;
 
-	float m_flTextWorldWidth;
-	float m_flTextWorldHeight;
+    Vector m_localBBMin;
+    Vector m_localBBMax;
 
-	CMaterialReference m_Font;
+    char m_szText[MAX_PATH];
+    float m_flTextSize;
+    float m_flTextSpacingX;
+    float m_flTextSpacingY;
+    color32 m_colTextColor;
+    int m_nOrientation;
+    int m_nTextLength;
+    int m_nFont;
+    bool m_bRainbow;
+
+    float m_flTextWorldWidth;
+    float m_flTextWorldHeight;
+
+    CMaterialReference m_Font;
 };

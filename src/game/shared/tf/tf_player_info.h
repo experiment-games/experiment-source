@@ -21,4 +21,4 @@ class CTFPlayerInfo : public GCSDK::CProtoBufSharedObject< CSOTFPlayerInfo, k_EE
 {
 };
 
-#endif // TFPLAYERINFO_H
+#endif  // TFPLAYERINFO_H

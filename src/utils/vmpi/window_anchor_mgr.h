@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -11,49 +11,40 @@
 #pragma once
 #endif
 
-
 #include "utllinkedlist.h"
-
 
 enum
 {
-	ANCHOR_LEFT = 1,
-	ANCHOR_RIGHT,
-	ANCHOR_TOP,
-	ANCHOR_BOTTOM,
-	ANCHOR_WIDTH_PERCENT,
-	ANCHOR_HEIGHT_PERCENT
+    ANCHOR_LEFT = 1,
+    ANCHOR_RIGHT,
+    ANCHOR_TOP,
+    ANCHOR_BOTTOM,
+    ANCHOR_WIDTH_PERCENT,
+    ANCHOR_HEIGHT_PERCENT
 };
-
 
 class CWindowAnchor
 {
-public:
-	
-	bool	Init( CWnd *pParentWnd, CWnd *pChildWnd, int aLeft, int aTop, int aRight, int aBottom );
-	void	Update( CWnd *pParentWnd );
+   public:
+    bool Init( CWnd *pParentWnd, CWnd *pChildWnd, int aLeft, int aTop, int aRight, int aBottom );
+    void Update( CWnd *pParentWnd );
 
+   private:
+    CWnd *m_pWnd;
+    CRect m_Rect;  // The rectangle in client coordinates of the parent.
+    CRect m_ParentRect;
 
-private:
-	CWnd	*m_pWnd;
-	CRect	m_Rect;	// The rectangle in client coordinates of the parent.
-	CRect	m_ParentRect;
-	
-	int		m_aLeft, m_aTop, m_aRight, m_aBottom;
+    int m_aLeft, m_aTop, m_aRight, m_aBottom;
 };
-
 
 class CWindowAnchorMgr
 {
-public:
+   public:
+    bool AddAnchor( CWnd *pParentWnd, CWnd *pChildWnd, int aLeft, int aTop, int aRight, int aBottom );
+    void UpdateAnchors( CWnd *pParentWnd );
 
-	bool	AddAnchor( CWnd *pParentWnd, CWnd *pChildWnd, int aLeft, int aTop, int aRight, int aBottom );
-	void	UpdateAnchors( CWnd *pParentWnd );
-
-
-private:
-	CUtlLinkedList<CWindowAnchor,int>	m_Anchors;
+   private:
+    CUtlLinkedList< CWindowAnchor, int > m_Anchors;
 };
 
-
-#endif // WINDOW_ANCHOR_MGR_H
+#endif  // WINDOW_ANCHOR_MGR_H

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -13,36 +13,29 @@
 #include "clientmode_shared.h"
 #include "sdkviewport.h"
 
-class ClientModeSDKNormal : public ClientModeShared 
+class ClientModeSDKNormal : public ClientModeShared
 {
-DECLARE_CLASS( ClientModeSDKNormal, ClientModeShared );
+    DECLARE_CLASS( ClientModeSDKNormal, ClientModeShared );
 
-private:
+   private:
+    // IClientMode overrides.
+   public:
+    ClientModeSDKNormal();
+    virtual ~ClientModeSDKNormal();
 
-// IClientMode overrides.
-public:
+    virtual void InitViewport();
 
-					ClientModeSDKNormal();
-	virtual			~ClientModeSDKNormal();
+    virtual float GetViewModelFOV( void );
 
-	virtual void	InitViewport();
+    int GetDeathMessageStartHeight( void );
 
-	virtual float	GetViewModelFOV( void );
+    virtual void PostRenderVGui();
 
-	int				GetDeathMessageStartHeight( void );
-
-	virtual void	PostRenderVGui();
-
-	
-private:
-	
-	//	void	UpdateSpectatorMode( void );
-
+   private:
+    //	void	UpdateSpectatorMode( void );
 };
 
-
-extern IClientMode *GetClientModeNormal();
+extern IClientMode* GetClientModeNormal();
 extern ClientModeSDKNormal* GetClientModeSDKNormal();
 
-
-#endif // SDK_CLIENTMODE_H
+#endif  // SDK_CLIENTMODE_H

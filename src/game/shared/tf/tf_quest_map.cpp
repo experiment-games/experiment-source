@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -20,34 +20,34 @@ using namespace GCSDK;
 REGISTER_PROTO_DEF_FACTORY( CQuestMapRegion, DEF_TYPE_QUEST_MAP_REGION )
 REGISTER_PROTO_DEF_FACTORY( CQuestMapStoreItem, DEF_TYPE_QUEST_MAP_STORE_ITEM )
 
-bool CQuestMapRegion::BPostDataLoaded( CUtlVector<CUtlString> *pVecErrors )
+bool CQuestMapRegion::BPostDataLoaded( CUtlVector< CUtlString >* pVecErrors )
 {
-	if ( GetTypedMsg().has_return_link() )
-	{
-		m_pParent = GetProtoScriptObjDefManager()->GetTypedDefinition< CQuestMapRegion >( GetTypedMsg().return_link() );
-		Assert( m_pParent );
-	}
+    if ( GetTypedMsg().has_return_link() )
+    {
+        m_pParent = GetProtoScriptObjDefManager()->GetTypedDefinition< CQuestMapRegion >( GetTypedMsg().return_link() );
+        Assert( m_pParent );
+    }
 
-	// Snag all the node definitions within us
-	m_vecNodesWithin.Purge();
-	const DefinitionMap_t& mapType = GetProtoScriptObjDefManager()->GetDefinitionMapForType( DEF_TYPE_QUEST_MAP_NODE );
+    // Snag all the node definitions within us
+    m_vecNodesWithin.Purge();
+    const DefinitionMap_t& mapType = GetProtoScriptObjDefManager()->GetDefinitionMapForType( DEF_TYPE_QUEST_MAP_NODE );
 
-	FOR_EACH_MAP_FAST( mapType, idx )
-	{
-		const CQuestMapNodeDefinition* pNode = assert_cast< const CQuestMapNodeDefinition* >( mapType[ idx ] );
-		if ( pNode->GetRegionDefIndex() == GetDefIndex() && !pNode->GetHeader().prefab_only() )
-		{
-			m_vecNodesWithin.AddToTail( pNode );
-		}
-	}
+    FOR_EACH_MAP_FAST( mapType, idx )
+    {
+        const CQuestMapNodeDefinition* pNode = assert_cast< const CQuestMapNodeDefinition* >( mapType[idx] );
+        if ( pNode->GetRegionDefIndex() == GetDefIndex() && !pNode->GetHeader().prefab_only() )
+        {
+            m_vecNodesWithin.AddToTail( pNode );
+        }
+    }
 
-	return true;
+    return true;
 }
 
 const CQuestMapStarType* CQuestMapRegion::GetStarType() const
 {
-	if ( m_msgData.has_star_type() )
-		return GetProtoScriptObjDefManager()->GetTypedDefinition< CQuestMapStarType >( m_msgData.star_type() );
+    if ( m_msgData.has_star_type() )
+        return GetProtoScriptObjDefManager()->GetTypedDefinition< CQuestMapStarType >( m_msgData.star_type() );
 
-	return NULL;
+    return NULL;
 }

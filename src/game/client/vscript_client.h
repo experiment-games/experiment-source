@@ -14,9 +14,9 @@
 #pragma once
 #endif
 
-extern IScriptVM * g_pScriptVM;
+extern IScriptVM* g_pScriptVM;
 
 // Only allow scripts to create entities during map initialization
 bool IsEntityCreationAllowedInScripts( void );
 
-#endif // VSCRIPT_SERVER_H
+#endif  // VSCRIPT_SERVER_H

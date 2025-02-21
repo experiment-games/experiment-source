@@ -8,48 +8,47 @@
 #include "NextBot.h"
 #include "NextBotBodyInterface.h"
 
-
 void IBody::AimHeadTowards( const Vector &lookAtPos, LookAtPriorityType priority, float duration, INextBotReply *replyWhenAimed, const char *reason )
 {
-	if ( replyWhenAimed )
-	{
-		replyWhenAimed->OnFail( GetBot(), INextBotReply::FAILED );
-	}
+    if ( replyWhenAimed )
+    {
+        replyWhenAimed->OnFail( GetBot(), INextBotReply::FAILED );
+    }
 }
 
 void IBody::AimHeadTowards( CBaseEntity *subject, LookAtPriorityType priority, float duration, INextBotReply *replyWhenAimed, const char *reason )
 {
-	if ( replyWhenAimed )
-	{
-		replyWhenAimed->OnFail( GetBot(), INextBotReply::FAILED );
-	}
+    if ( replyWhenAimed )
+    {
+        replyWhenAimed->OnFail( GetBot(), INextBotReply::FAILED );
+    }
 }
 
 bool IBody::SetPosition( const Vector &pos )
 {
-	GetBot()->GetEntity()->SetAbsOrigin( pos );
-	return true;
+    GetBot()->GetEntity()->SetAbsOrigin( pos );
+    return true;
 }
 
 const Vector &IBody::GetEyePosition( void ) const
 {
-	static Vector eye;
+    static Vector eye;
 
-	eye = GetBot()->GetEntity()->WorldSpaceCenter();
+    eye = GetBot()->GetEntity()->WorldSpaceCenter();
 
-	return eye;
+    return eye;
 }
 
 const Vector &IBody::GetViewVector( void ) const
 {
-	static Vector view;
-	
-	AngleVectors( GetBot()->GetEntity()->EyeAngles(), &view );
+    static Vector view;
 
-	return view;
+    AngleVectors( GetBot()->GetEntity()->EyeAngles(), &view );
+
+    return view;
 }
 
 bool IBody::IsHeadAimingOnTarget( void ) const
 {
-	return false;
+    return false;
 }

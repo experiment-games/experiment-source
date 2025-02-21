@@ -1,7 +1,7 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: Contains an interface to log some events to the Steam Share 
-//			timeline via ISteamVideo 
+// Purpose: Contains an interface to log some events to the Steam Share
+//			timeline via ISteamVideo
 //
 // $NoKeywords: $
 //
@@ -19,16 +19,16 @@
 
 class CSteamShareSystem : public CBaseGameSystemPerFrame, public CGameEventListener
 {
-public:
-	// Methods of IGameSystem
-	virtual bool	Init();
+   public:
+    // Methods of IGameSystem
+    virtual bool Init();
 
-	// Methods of IGameEventListener2
-	virtual void FireGameEvent( IGameEvent *event );
+    // Methods of IGameEventListener2
+    virtual void FireGameEvent( IGameEvent *event );
 
-private:
+   private:
 };
 
 extern IGameSystem *SteamShareSystem();
 
-#endif // STEAMSHARE_H
+#endif  // STEAMSHARE_H

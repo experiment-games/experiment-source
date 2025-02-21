@@ -9,9 +9,9 @@
 #include "tier2/tier2.h"
 #include <time.h>
 
-#ifdef	GAME_DLL
+#ifdef GAME_DLL
 #include "gameinterface.h"
-#elif	CLIENT_DLL
+#elif CLIENT_DLL
 #include "c_playerresource.h"
 #endif
 
@@ -31,26 +31,28 @@ static CSteamWorksGameStatsUploader g_SteamWorksGameStats;
 //-----------------------------------------------------------------------------
 time_t CSteamWorksGameStatsUploader::GetTimeSinceEpoch( void )
 {
-	time_t aclock;
-	time( &aclock );
-	return aclock;
+    time_t aclock;
+    time( &aclock );
+    return aclock;
 }
 
 //-----------------------------------------------------------------------------
 // Purpose: Returns a reference to the global object
 //-----------------------------------------------------------------------------
-CSteamWorksGameStatsUploader& GetSteamWorksSGameStatsUploader()
+CSteamWorksGameStatsUploader &GetSteamWorksSGameStatsUploader()
 {
-	return g_SteamWorksGameStats;
+    return g_SteamWorksGameStats;
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: Constructor. Sets up the steam callbacks accordingly depending on client/server dll 
+// Purpose: Constructor. Sets up the steam callbacks accordingly depending on client/server dll
 //-----------------------------------------------------------------------------
-CSteamWorksGameStatsUploader::CSteamWorksGameStatsUploader() : CAutoGameSystemPerFrame( "CSteamWorksGameStatsUploader" )
-#if !defined(NO_STEAM) && defined(GAME_DLL) 
-, m_CallbackSteamSessionInfoIssued(this, &CSteamWorksGameStatsUploader::Steam_OnSteamSessionInfoIssued)
-, m_CallbackSteamSessionInfoClosed(this, &CSteamWorksGameStatsUploader::Steam_OnSteamSessionInfoClosed)
+CSteamWorksGameStatsUploader::CSteamWorksGameStatsUploader()
+    : CAutoGameSystemPerFrame( "CSteamWorksGameStatsUploader" )
+#if !defined( NO_STEAM ) && defined( GAME_DLL )
+      ,
+      m_CallbackSteamSessionInfoIssued( this, &CSteamWorksGameStatsUploader::Steam_OnSteamSessionInfoIssued ),
+      m_CallbackSteamSessionInfoClosed( this, &CSteamWorksGameStatsUploader::Steam_OnSteamSessionInfoClosed )
 #endif
 {
 }
@@ -74,8 +76,7 @@ void CSteamWorksGameStatsUploader::Reset()
 //-----------------------------------------------------------------------------
 bool CSteamWorksGameStatsUploader::Init()
 {
-
-	return true;
+    return true;
 }
 
 //-----------------------------------------------------------------------------
@@ -83,13 +84,12 @@ bool CSteamWorksGameStatsUploader::Init()
 //-----------------------------------------------------------------------------
 void CSteamWorksGameStatsUploader::FireGameEvent( IGameEvent *event )
 {
-
 }
 
 #ifdef CLIENT_DLL
 
 //-----------------------------------------------------------------------------
-// Purpose:	Sets the server session ID but ONLY if it's not 0. We are using this to avoid a race 
+// Purpose:	Sets the server session ID but ONLY if it's not 0. We are using this to avoid a race
 // 			condition where a server sends their session stats before a client does, thereby,
 //			resetting the client's server session ID to 0.
 //-----------------------------------------------------------------------------
@@ -102,8 +102,6 @@ void CSteamWorksGameStatsUploader::SetServerSessionID( uint64 serverSessionID )
 //-----------------------------------------------------------------------------
 void CSteamWorksGameStatsUploader::ClientDisconnect()
 {
-
-
 }
 
 #endif
@@ -118,9 +116,9 @@ void CSteamWorksGameStatsUploader::LevelShutdown()
 //-----------------------------------------------------------------------------
 // Purpose: Requests a session ID from steam.
 //-----------------------------------------------------------------------------
-EResult	CSteamWorksGameStatsUploader::RequestSessionID()
+EResult CSteamWorksGameStatsUploader::RequestSessionID()
 {
-	return k_EResultOK;
+    return k_EResultOK;
 }
 
 //-----------------------------------------------------------------------------
@@ -130,14 +128,13 @@ void CSteamWorksGameStatsUploader::ClearSessionID()
 {
 }
 
-#ifndef	NO_STEAM
+#ifndef NO_STEAM
 
 //-----------------------------------------------------------------------------
 // Purpose: The steam callback used to get our session IDs.
 //-----------------------------------------------------------------------------
 void CSteamWorksGameStatsUploader::Steam_OnSteamSessionInfoIssued( GameStatsSessionIssued_t *pGameStatsSessionInfo )
 {
-
 }
 
 //-----------------------------------------------------------------------------
@@ -169,7 +166,6 @@ void CSteamWorksGameStatsUploader::StartSession()
 //-----------------------------------------------------------------------------
 void CSteamWorksGameStatsUploader::EndSession()
 {
-
 }
 
 //-----------------------------------------------------------------------------
@@ -184,7 +180,6 @@ void CSteamWorksGameStatsUploader::FlushStats()
 //-----------------------------------------------------------------------------
 void CSteamWorksGameStatsUploader::WriteSessionRow()
 {
-
 }
 
 //-----------------------------------------------------------------------------
@@ -196,7 +191,7 @@ void CSteamWorksGameStatsUploader::WriteSessionRow()
 //-----------------------------------------------------------------------------
 bool CSteamWorksGameStatsUploader::VerifyInterface( void )
 {
-	return true;
+    return true;
 }
 
 //-----------------------------------------------------------------------------
@@ -204,7 +199,7 @@ bool CSteamWorksGameStatsUploader::VerifyInterface( void )
 //-----------------------------------------------------------------------------
 EResult CSteamWorksGameStatsUploader::WriteIntToTable( const int value, uint64 iTableID, const char *pzRow )
 {
-	return k_EResultNoConnection;
+    return k_EResultNoConnection;
 }
 
 //-----------------------------------------------------------------------------
@@ -212,7 +207,7 @@ EResult CSteamWorksGameStatsUploader::WriteIntToTable( const int value, uint64 i
 //-----------------------------------------------------------------------------
 EResult CSteamWorksGameStatsUploader::WriteInt64ToTable( const uint64 value, uint64 iTableID, const char *pzRow )
 {
-	return k_EResultNoConnection;
+    return k_EResultNoConnection;
 }
 
 //-----------------------------------------------------------------------------
@@ -220,7 +215,7 @@ EResult CSteamWorksGameStatsUploader::WriteInt64ToTable( const uint64 value, uin
 //-----------------------------------------------------------------------------
 EResult CSteamWorksGameStatsUploader::WriteFloatToTable( const float value, uint64 iTableID, const char *pzRow )
 {
-	return k_EResultNoConnection;
+    return k_EResultNoConnection;
 }
 
 //-----------------------------------------------------------------------------
@@ -228,28 +223,26 @@ EResult CSteamWorksGameStatsUploader::WriteFloatToTable( const float value, uint
 //-----------------------------------------------------------------------------
 EResult CSteamWorksGameStatsUploader::WriteStringToTable( const char *value, uint64 iTableID, const char *pzRow )
 {
-	return k_EResultNoConnection;
+    return k_EResultNoConnection;
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: Wrapper function to search a KeyValues for a value with the given keyName and add the result to the 
-// row. If the key isn't present, return ResultNoMatch to indicate such. 
+// Purpose: Wrapper function to search a KeyValues for a value with the given keyName and add the result to the
+// row. If the key isn't present, return ResultNoMatch to indicate such.
 //-----------------------------------------------------------------------------
-EResult	CSteamWorksGameStatsUploader::WriteOptionalFloatToTable( KeyValues *pKV, const char* keyName, uint64 iTableID, const char *pzRow )
+EResult CSteamWorksGameStatsUploader::WriteOptionalFloatToTable( KeyValues *pKV, const char *keyName, uint64 iTableID, const char *pzRow )
 {
-	return k_EResultNoConnection;
+    return k_EResultNoConnection;
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: Wrapper function to search a KeyValues for a value with the given keyName and add the result to the 
-// row. If the key isn't present, return ResultNoMatch to indicate such. 
+// Purpose: Wrapper function to search a KeyValues for a value with the given keyName and add the result to the
+// row. If the key isn't present, return ResultNoMatch to indicate such.
 //-----------------------------------------------------------------------------
-EResult	CSteamWorksGameStatsUploader::WriteOptionalIntToTable( KeyValues *pKV, const char* keyName, uint64 iTableID, const char *pzRow )
+EResult CSteamWorksGameStatsUploader::WriteOptionalIntToTable( KeyValues *pKV, const char *keyName, uint64 iTableID, const char *pzRow )
 {
-	return k_EResultNoConnection;
+    return k_EResultNoConnection;
 }
-
-
 
 //-----------------------------------------------------------------------------
 // STEAM ACCESS UTILITIES
@@ -260,17 +253,16 @@ EResult	CSteamWorksGameStatsUploader::WriteOptionalIntToTable( KeyValues *pKV, c
 //-----------------------------------------------------------------------------
 bool CSteamWorksGameStatsUploader::AccessToSteamAPI( void )
 {
-	return false;
+    return false;
 }
 
 //-----------------------------------------------------------------------------
 // Purpose: There's no guarantee that your interface pointer will persist across level transitions,
 //			so this function will update your interface.
 //-----------------------------------------------------------------------------
-ISteamGameStats* CSteamWorksGameStatsUploader::GetInterface( void )
+ISteamGameStats *CSteamWorksGameStatsUploader::GetInterface( void )
 {
-
-	return NULL;
+    return NULL;
 }
 
 //-----------------------------------------------------------------------------
@@ -278,9 +270,7 @@ ISteamGameStats* CSteamWorksGameStatsUploader::GetInterface( void )
 //-----------------------------------------------------------------------------
 EResult CSteamWorksGameStatsUploader::AddStatsForUpload( KeyValues *pKV, bool bSendImmediately )
 {
-
-
-	return k_EResultFail;
+    return k_EResultFail;
 }
 
 //-----------------------------------------------------------------------------
@@ -290,43 +280,40 @@ double g_rowCommitTime = 0.0f;
 double g_rowWriteTime = 0.0f;
 EResult CSteamWorksGameStatsUploader::ParseKeyValuesAndSendStats( KeyValues *pKV, bool bIncludeClientsServerSessionID )
 {
-	return k_EResultFail;
+    return k_EResultFail;
 }
 
-#ifdef	CLIENT_DLL
+#ifdef CLIENT_DLL
 //-----------------------------------------------------------------------------
 // Purpose: Reports client's perf data at the end of a client session.
 //---------------------------------`--------------------------------------------
 void CSteamWorksGameStatsUploader::AddClientPerfData( KeyValues *pKV )
 {
-
 }
 #endif
 
 //-------------------------------------------------------------------------------------------------
 /**
-*	Purpose:	Calculates the number of humans in the game
-*/
+ *	Purpose:	Calculates the number of humans in the game
+ */
 int CSteamWorksGameStatsUploader::GetHumanCountInGame()
 {
-	int iHumansInGame = 0;
-	// TODO: Need to add server/client code to count the number of connected humans.
-	return iHumansInGame;
+    int iHumansInGame = 0;
+    // TODO: Need to add server/client code to count the number of connected humans.
+    return iHumansInGame;
 }
 
-#ifdef	CLIENT_DLL
+#ifdef CLIENT_DLL
 //-------------------------------------------------------------------------------------------------
 /**
-*	Purpose:	Calculates the number of friends in the game
-*/
+ *	Purpose:	Calculates the number of friends in the game
+ */
 int CSteamWorksGameStatsUploader::GetFriendCountInGame()
 {
-
-	return 0;
+    return 0;
 }
 #endif
 
 void CSteamWorksGameStatsUploader::ServerAddressToInt()
 {
 }
-

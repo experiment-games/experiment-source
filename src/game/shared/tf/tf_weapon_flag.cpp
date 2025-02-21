@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
 
@@ -42,7 +42,6 @@ PRECACHE_WEAPON_REGISTER( tf_weapon_flag );
 //-----------------------------------------------------------------------------
 CTFFlag::CTFFlag()
 {
-
 }
 
 //-----------------------------------------------------------------------------
@@ -50,33 +49,32 @@ CTFFlag::CTFFlag()
 //-----------------------------------------------------------------------------
 bool CTFFlag::Deploy( void )
 {
-	if ( BaseClass::Deploy() )
-	{
+    if ( BaseClass::Deploy() )
+    {
 #ifdef GAME_DLL
         TFTeamMgr()->PlayerCenterPrint( ToTFPlayer( GetOwner() ), "#TF_Flag_AltFireToDrop" );
 #endif
-		return true;
-	}
+        return true;
+    }
 
-	return false;
+    return false;
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFFlag::SecondaryAttack( void )
 {
-	CTFPlayer *pPlayer = ToTFPlayer( GetOwner() );
+    CTFPlayer *pPlayer = ToTFPlayer( GetOwner() );
 
-	if ( !pPlayer )
-		return;
+    if ( !pPlayer )
+        return;
 
-	if ( !CanAttack() )
-		return;
+    if ( !CanAttack() )
+        return;
 
 #ifdef GAME_DLL
-	pPlayer->DropCurrentWeapon();
+    pPlayer->DropCurrentWeapon();
 #endif
-	pPlayer->SwitchToNextBestWeapon( this );
+    pPlayer->SwitchToNextBestWeapon( this );
 }
-

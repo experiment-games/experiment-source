@@ -20,24 +20,25 @@ using namespace GCSDK;
 
 class CGCReplicateConVars : public CGCClientJob
 {
-public:
-	CGCReplicateConVars( CGCClient *pClient ) : CGCClientJob( pClient ) {}
+   public:
+    CGCReplicateConVars( CGCClient *pClient )
+        : CGCClientJob( pClient ) {}
 
-	virtual bool BYieldingRunGCJob( GCSDK::IMsgNetPacket *pNetPacket )
-	{
-		CProtoBufMsg< CMsgReplicateConVars > msg ( pNetPacket );
-		for ( int i = 0; i < msg.Body().convars_size(); ++i )
-		{
-			const CMsgConVarValue &updatedConVar = msg.Body().convars( i );
-			ConVar *pVar = g_pCVar->FindVar( updatedConVar.name().data() );
-			if ( pVar )
-			{
-				pVar->SetValue( updatedConVar.value().data() );
-			}
-		}
+    virtual bool BYieldingRunGCJob( GCSDK::IMsgNetPacket *pNetPacket )
+    {
+        CProtoBufMsg< CMsgReplicateConVars > msg( pNetPacket );
+        for ( int i = 0; i < msg.Body().convars_size(); ++i )
+        {
+            const CMsgConVarValue &updatedConVar = msg.Body().convars( i );
+            ConVar *pVar = g_pCVar->FindVar( updatedConVar.name().data() );
+            if ( pVar )
+            {
+                pVar->SetValue( updatedConVar.value().data() );
+            }
+        }
 
-		return true;
-	}
+        return true;
+    }
 };
 
 //=============================================================================
@@ -46,20 +47,20 @@ GC_REG_JOB( CGCClient, CGCReplicateConVars, "CGCReplicateConVars", k_EMsgGCRepli
 
 class CGCUpdateConVar : public CGCClientJob
 {
-public:
-	CGCUpdateConVar( CGCClient *pClient ) : CGCClientJob( pClient ) {}
+   public:
+    CGCUpdateConVar( CGCClient *pClient )
+        : CGCClientJob( pClient ) {}
 
-	virtual bool BYieldingRunGCJob( GCSDK::IMsgNetPacket *pNetPacket )
-	{
-		CProtoBufMsg< CMsgConVarValue > msg ( pNetPacket );
-		ConVar *pVar = g_pCVar->FindVar( msg.Body().name().data() );
-		if ( pVar )
-		{
-			pVar->SetValue( msg.Body().value().data() );
-		}
-		return true;
-	}
+    virtual bool BYieldingRunGCJob( GCSDK::IMsgNetPacket *pNetPacket )
+    {
+        CProtoBufMsg< CMsgConVarValue > msg( pNetPacket );
+        ConVar *pVar = g_pCVar->FindVar( msg.Body().name().data() );
+        if ( pVar )
+        {
+            pVar->SetValue( msg.Body().value().data() );
+        }
+        return true;
+    }
 };
 
 GC_REG_JOB( CGCClient, CGCUpdateConVar, "CGCUpdateConVar", k_EMsgGCConVarUpdated, GCSDK::k_EServerTypeGCClient );
-

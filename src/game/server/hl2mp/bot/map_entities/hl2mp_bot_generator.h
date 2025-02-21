@@ -5,57 +5,57 @@
 
 class CHL2MPBotGenerator : public CPointEntity
 {
-public:
-	DECLARE_CLASS( CHL2MPBotGenerator, CPointEntity );
-	DECLARE_DATADESC();
+   public:
+    DECLARE_CLASS( CHL2MPBotGenerator, CPointEntity );
+    DECLARE_DATADESC();
 
-	CHL2MPBotGenerator( void );
-	virtual ~CHL2MPBotGenerator() { }
+    CHL2MPBotGenerator( void );
+    virtual ~CHL2MPBotGenerator() {}
 
-	virtual void Activate();
+    virtual void Activate();
 
-	void GeneratorThink( void );
-	void SpawnBot( void );
+    void GeneratorThink( void );
+    void SpawnBot( void );
 
-	// Input.
-	void InputEnable( inputdata_t &inputdata );
-	void InputDisable( inputdata_t &inputdata );
-	void InputSetSuppressFire( inputdata_t &inputdata );
-	void InputSetDisableDodge( inputdata_t &inputdata );
-	void InputSetDifficulty( inputdata_t &inputdata );
-	void InputCommandGotoActionPoint( inputdata_t &inputdata );
-	void InputSetAttentionFocus( inputdata_t &inputdata );
-	void InputClearAttentionFocus( inputdata_t &inputdata );
-	void InputSpawnBot( inputdata_t &inputdata );
-	void InputRemoveBots( inputdata_t &inputdata );
+    // Input.
+    void InputEnable( inputdata_t &inputdata );
+    void InputDisable( inputdata_t &inputdata );
+    void InputSetSuppressFire( inputdata_t &inputdata );
+    void InputSetDisableDodge( inputdata_t &inputdata );
+    void InputSetDifficulty( inputdata_t &inputdata );
+    void InputCommandGotoActionPoint( inputdata_t &inputdata );
+    void InputSetAttentionFocus( inputdata_t &inputdata );
+    void InputClearAttentionFocus( inputdata_t &inputdata );
+    void InputSpawnBot( inputdata_t &inputdata );
+    void InputRemoveBots( inputdata_t &inputdata );
 
-	// Output
-	void OnBotKilled( CHL2MPBot *pBot );
+    // Output
+    void OnBotKilled( CHL2MPBot *pBot );
 
-private:
-	bool m_bSuppressFire;
-	bool m_bDisableDodge;
-	bool m_bUseTeamSpawnpoint;
-	bool m_bRetainBuildings;
-	bool m_bExpended;
-	int m_iOnDeathAction;
-	int m_spawnCount;
-	int m_spawnCountRemaining;
-	int m_maxActiveCount;
-	float m_spawnInterval;
-	string_t m_teamName;
-	string_t m_actionPointName;
-	string_t m_initialCommand;
-	CHandle< CBaseEntity > m_moveGoal;
-	int m_difficulty;
-	bool m_bSpawnOnlyWhenTriggered;
-	bool m_bEnabled;
+   private:
+    bool m_bSuppressFire;
+    bool m_bDisableDodge;
+    bool m_bUseTeamSpawnpoint;
+    bool m_bRetainBuildings;
+    bool m_bExpended;
+    int m_iOnDeathAction;
+    int m_spawnCount;
+    int m_spawnCountRemaining;
+    int m_maxActiveCount;
+    float m_spawnInterval;
+    string_t m_teamName;
+    string_t m_actionPointName;
+    string_t m_initialCommand;
+    CHandle< CBaseEntity > m_moveGoal;
+    int m_difficulty;
+    bool m_bSpawnOnlyWhenTriggered;
+    bool m_bEnabled;
 
-	COutputEvent m_onSpawned;
-	COutputEvent m_onExpended;
-	COutputEvent m_onBotKilled;
+    COutputEvent m_onSpawned;
+    COutputEvent m_onExpended;
+    COutputEvent m_onBotKilled;
 
-	CUtlVector< CHandle< CHL2MPBot > > m_spawnedBotVector;
+    CUtlVector< CHandle< CHL2MPBot > > m_spawnedBotVector;
 };
 
 //---------------------------------------------------------------
@@ -66,32 +66,33 @@ private:
 //
 class CHL2MPBotActionPoint : public CPointEntity
 {
-	DECLARE_CLASS( CHL2MPBotActionPoint, CPointEntity );
-public:
-	DECLARE_DATADESC();
+    DECLARE_CLASS( CHL2MPBotActionPoint, CPointEntity );
 
- 	CHL2MPBotActionPoint( void );
- 	virtual ~CHL2MPBotActionPoint() { }
+   public:
+    DECLARE_DATADESC();
 
-	virtual void Activate();
+    CHL2MPBotActionPoint( void );
+    virtual ~CHL2MPBotActionPoint() {}
 
-	bool IsWithinRange( CBaseEntity *entity );
-	void ReachedActionPoint( CHL2MPBot* pBot );
+    virtual void Activate();
 
-	CHandle< CBaseEntity > m_moveGoal;
+    bool IsWithinRange( CBaseEntity *entity );
+    void ReachedActionPoint( CHL2MPBot *pBot );
 
-	// reflected
-	float m_stayTime;
-	float m_desiredDistance;
-	string_t m_nextActionPointName;
-	string_t m_command;
+    CHandle< CBaseEntity > m_moveGoal;
 
-	COutputEvent m_onReachedActionPoint;
+    // reflected
+    float m_stayTime;
+    float m_desiredDistance;
+    string_t m_nextActionPointName;
+    string_t m_command;
+
+    COutputEvent m_onReachedActionPoint;
 };
 
 inline HSCRIPT ToHScript( CHL2MPBotActionPoint *pPoint )
 {
-	return ( pPoint ) ? pPoint->GetScriptInstance() : NULL;
+    return ( pPoint ) ? pPoint->GetScriptInstance() : NULL;
 }
 
-#endif // HL2MP_BOT_GENERATOR_H
+#endif  // HL2MP_BOT_GENERATOR_H

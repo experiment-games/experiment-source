@@ -58,15 +58,18 @@
 
 #include <google/protobuf/stubs/platform_macros.h>
 
-namespace google {
-namespace protobuf {
-namespace internal {
+namespace google
+{
+namespace protobuf
+{
+namespace internal
+{
 
 typedef int32 Atomic32;
 #ifdef GOOGLE_PROTOBUF_ARCH_64_BIT
 // We need to be able to go between Atomic64 and AtomicWord implicitly.  This
 // means Atomic64 and AtomicWord should be the same type on 64-bit.
-#if defined(__ILP32__) || defined(GOOGLE_PROTOBUF_OS_NACL) || defined(GOOGLE_PROTOBUF_ARCH_SPARC)
+#if defined( __ILP32__ ) || defined( GOOGLE_PROTOBUF_OS_NACL ) || defined( GOOGLE_PROTOBUF_ARCH_SPARC )
 // NaCl's intptr_t is not actually 64-bits on 64-bit!
 // http://code.google.com/p/nativeclient/issues/detail?id=1162
 // sparcv9's pointer type is 32bits
@@ -90,20 +93,20 @@ typedef intptr_t AtomicWord;
 // Always return the old value of "*ptr"
 //
 // This routine implies no memory barriers.
-Atomic32 NoBarrier_CompareAndSwap(volatile Atomic32* ptr,
-                                  Atomic32 old_value,
-                                  Atomic32 new_value);
+Atomic32 NoBarrier_CompareAndSwap( volatile Atomic32* ptr,
+                                   Atomic32 old_value,
+                                   Atomic32 new_value );
 
 // Atomically store new_value into *ptr, returning the previous value held in
 // *ptr.  This routine implies no memory barriers.
-Atomic32 NoBarrier_AtomicExchange(volatile Atomic32* ptr, Atomic32 new_value);
+Atomic32 NoBarrier_AtomicExchange( volatile Atomic32* ptr, Atomic32 new_value );
 
 // Atomically increment *ptr by "increment".  Returns the new value of
 // *ptr with the increment applied.  This routine implies no memory barriers.
-Atomic32 NoBarrier_AtomicIncrement(volatile Atomic32* ptr, Atomic32 increment);
+Atomic32 NoBarrier_AtomicIncrement( volatile Atomic32* ptr, Atomic32 increment );
 
-Atomic32 Barrier_AtomicIncrement(volatile Atomic32* ptr,
-                                 Atomic32 increment);
+Atomic32 Barrier_AtomicIncrement( volatile Atomic32* ptr,
+                                  Atomic32 increment );
 
 // These following lower-level operations are typically useful only to people
 // implementing higher-level synchronization operations like spinlocks,
@@ -114,46 +117,46 @@ Atomic32 Barrier_AtomicIncrement(volatile Atomic32* ptr,
 // after the operation.  "Barrier" operations have both "Acquire" and "Release"
 // semantics.   A MemoryBarrier() has "Barrier" semantics, but does no memory
 // access.
-Atomic32 Acquire_CompareAndSwap(volatile Atomic32* ptr,
-                                Atomic32 old_value,
-                                Atomic32 new_value);
-Atomic32 Release_CompareAndSwap(volatile Atomic32* ptr,
-                                Atomic32 old_value,
-                                Atomic32 new_value);
+Atomic32 Acquire_CompareAndSwap( volatile Atomic32* ptr,
+                                 Atomic32 old_value,
+                                 Atomic32 new_value );
+Atomic32 Release_CompareAndSwap( volatile Atomic32* ptr,
+                                 Atomic32 old_value,
+                                 Atomic32 new_value );
 
-#if defined(__MINGW32__) && defined(MemoryBarrier)
+#if defined( __MINGW32__ ) && defined( MemoryBarrier )
 #undef MemoryBarrier
 #endif
 void MemoryBarrier();
-void NoBarrier_Store(volatile Atomic32* ptr, Atomic32 value);
-void Acquire_Store(volatile Atomic32* ptr, Atomic32 value);
-void Release_Store(volatile Atomic32* ptr, Atomic32 value);
+void NoBarrier_Store( volatile Atomic32* ptr, Atomic32 value );
+void Acquire_Store( volatile Atomic32* ptr, Atomic32 value );
+void Release_Store( volatile Atomic32* ptr, Atomic32 value );
 
-Atomic32 NoBarrier_Load(volatile const Atomic32* ptr);
-Atomic32 Acquire_Load(volatile const Atomic32* ptr);
-Atomic32 Release_Load(volatile const Atomic32* ptr);
+Atomic32 NoBarrier_Load( volatile const Atomic32* ptr );
+Atomic32 Acquire_Load( volatile const Atomic32* ptr );
+Atomic32 Release_Load( volatile const Atomic32* ptr );
 
 // 64-bit atomic operations (only available on 64-bit processors).
 #ifdef GOOGLE_PROTOBUF_ARCH_64_BIT
-Atomic64 NoBarrier_CompareAndSwap(volatile Atomic64* ptr,
-                                  Atomic64 old_value,
-                                  Atomic64 new_value);
-Atomic64 NoBarrier_AtomicExchange(volatile Atomic64* ptr, Atomic64 new_value);
-Atomic64 NoBarrier_AtomicIncrement(volatile Atomic64* ptr, Atomic64 increment);
-Atomic64 Barrier_AtomicIncrement(volatile Atomic64* ptr, Atomic64 increment);
+Atomic64 NoBarrier_CompareAndSwap( volatile Atomic64* ptr,
+                                   Atomic64 old_value,
+                                   Atomic64 new_value );
+Atomic64 NoBarrier_AtomicExchange( volatile Atomic64* ptr, Atomic64 new_value );
+Atomic64 NoBarrier_AtomicIncrement( volatile Atomic64* ptr, Atomic64 increment );
+Atomic64 Barrier_AtomicIncrement( volatile Atomic64* ptr, Atomic64 increment );
 
-Atomic64 Acquire_CompareAndSwap(volatile Atomic64* ptr,
-                                Atomic64 old_value,
-                                Atomic64 new_value);
-Atomic64 Release_CompareAndSwap(volatile Atomic64* ptr,
-                                Atomic64 old_value,
-                                Atomic64 new_value);
-void NoBarrier_Store(volatile Atomic64* ptr, Atomic64 value);
-void Acquire_Store(volatile Atomic64* ptr, Atomic64 value);
-void Release_Store(volatile Atomic64* ptr, Atomic64 value);
-Atomic64 NoBarrier_Load(volatile const Atomic64* ptr);
-Atomic64 Acquire_Load(volatile const Atomic64* ptr);
-Atomic64 Release_Load(volatile const Atomic64* ptr);
+Atomic64 Acquire_CompareAndSwap( volatile Atomic64* ptr,
+                                 Atomic64 old_value,
+                                 Atomic64 new_value );
+Atomic64 Release_CompareAndSwap( volatile Atomic64* ptr,
+                                 Atomic64 old_value,
+                                 Atomic64 new_value );
+void NoBarrier_Store( volatile Atomic64* ptr, Atomic64 value );
+void Acquire_Store( volatile Atomic64* ptr, Atomic64 value );
+void Release_Store( volatile Atomic64* ptr, Atomic64 value );
+Atomic64 NoBarrier_Load( volatile const Atomic64* ptr );
+Atomic64 Acquire_Load( volatile const Atomic64* ptr );
+Atomic64 Release_Load( volatile const Atomic64* ptr );
 #endif  // GOOGLE_PROTOBUF_ARCH_64_BIT
 
 }  // namespace internal
@@ -162,45 +165,45 @@ Atomic64 Release_Load(volatile const Atomic64* ptr);
 
 // Include our platform specific implementation.
 #define GOOGLE_PROTOBUF_ATOMICOPS_ERROR \
-#error "Atomic operations are not supported on your platform"
+    #error "Atomic operations are not supported on your platform"
 
 // ThreadSanitizer, http://clang.llvm.org/docs/ThreadSanitizer.html.
-#if defined(THREAD_SANITIZER)
+#if defined( THREAD_SANITIZER )
 #include <google/protobuf/stubs/atomicops_internals_tsan.h>
 // MSVC.
-#elif defined(_MSC_VER)
-#if defined(GOOGLE_PROTOBUF_ARCH_IA32) || defined(GOOGLE_PROTOBUF_ARCH_X64)
+#elif defined( _MSC_VER )
+#if defined( GOOGLE_PROTOBUF_ARCH_IA32 ) || defined( GOOGLE_PROTOBUF_ARCH_X64 )
 #include <google/protobuf/stubs/atomicops_internals_x86_msvc.h>
 #else
 GOOGLE_PROTOBUF_ATOMICOPS_ERROR
 #endif
 
 // Solaris
-#elif defined(GOOGLE_PROTOBUF_OS_SOLARIS)
+#elif defined( GOOGLE_PROTOBUF_OS_SOLARIS )
 #include <google/protobuf/stubs/atomicops_internals_solaris.h>
 
 // Apple.
-#elif defined(GOOGLE_PROTOBUF_OS_APPLE)
+#elif defined( GOOGLE_PROTOBUF_OS_APPLE )
 #include <google/protobuf/stubs/atomicops_internals_macosx.h>
 
 // GCC.
-#elif defined(__GNUC__)
-#if defined(GOOGLE_PROTOBUF_ARCH_IA32) || defined(GOOGLE_PROTOBUF_ARCH_X64)
+#elif defined( __GNUC__ )
+#if defined( GOOGLE_PROTOBUF_ARCH_IA32 ) || defined( GOOGLE_PROTOBUF_ARCH_X64 )
 #include <google/protobuf/stubs/atomicops_internals_x86_gcc.h>
-#elif defined(GOOGLE_PROTOBUF_ARCH_ARM) && defined(__linux__)
+#elif defined( GOOGLE_PROTOBUF_ARCH_ARM ) && defined( __linux__ )
 #include <google/protobuf/stubs/atomicops_internals_arm_gcc.h>
-#elif defined(GOOGLE_PROTOBUF_ARCH_AARCH64)
+#elif defined( GOOGLE_PROTOBUF_ARCH_AARCH64 )
 #include <google/protobuf/stubs/atomicops_internals_arm64_gcc.h>
-#elif defined(GOOGLE_PROTOBUF_ARCH_ARM_QNX)
+#elif defined( GOOGLE_PROTOBUF_ARCH_ARM_QNX )
 #include <google/protobuf/stubs/atomicops_internals_arm_qnx.h>
-#elif defined(GOOGLE_PROTOBUF_ARCH_MIPS) || defined(GOOGLE_PROTOBUF_ARCH_MIPS64)
+#elif defined( GOOGLE_PROTOBUF_ARCH_MIPS ) || defined( GOOGLE_PROTOBUF_ARCH_MIPS64 )
 #include <google/protobuf/stubs/atomicops_internals_mips_gcc.h>
-#elif defined(__native_client__)
+#elif defined( __native_client__ )
 #include <google/protobuf/stubs/atomicops_internals_pnacl.h>
-#elif (((__GNUC__ == 4) && (__GNUC_MINOR__ >= 7)) || (__GNUC__ > 4))
+#elif ( ( ( __GNUC__ == 4 ) && ( __GNUC_MINOR__ >= 7 ) ) || ( __GNUC__ > 4 ) )
 #include <google/protobuf/stubs/atomicops_internals_generic_gcc.h>
-#elif defined(__clang__)
-#if __has_extension(c_atomic)
+#elif defined( __clang__ )
+#if __has_extension( c_atomic )
 #include <google/protobuf/stubs/atomicops_internals_generic_gcc.h>
 #else
 GOOGLE_PROTOBUF_ATOMICOPS_ERROR
@@ -216,7 +219,7 @@ GOOGLE_PROTOBUF_ATOMICOPS_ERROR
 
 // On some platforms we need additional declarations to make AtomicWord
 // compatible with our other Atomic* types.
-#if defined(GOOGLE_PROTOBUF_OS_APPLE)
+#if defined( GOOGLE_PROTOBUF_OS_APPLE )
 #include <google/protobuf/stubs/atomicops_internals_atomicword_compat.h>
 #endif
 

@@ -35,60 +35,86 @@
 
 #include <Python.h>
 
-namespace google {
-class ScopedPyObjectPtr {
- public:
-  // Constructor.  Defaults to intializing with NULL.
-  // There is no way to create an uninitialized ScopedPyObjectPtr.
-  explicit ScopedPyObjectPtr(PyObject* p = NULL) : ptr_(p) { }
+namespace google
+{
+class ScopedPyObjectPtr
+{
+   public:
+    // Constructor.  Defaults to intializing with NULL.
+    // There is no way to create an uninitialized ScopedPyObjectPtr.
+    explicit ScopedPyObjectPtr( PyObject* p = NULL )
+        : ptr_( p ) {}
 
-  // Destructor.  If there is a PyObject object, delete it.
-  ~ScopedPyObjectPtr() {
-    Py_XDECREF(ptr_);
-  }
-
-  // Reset.  Deletes the current owned object, if any.
-  // Then takes ownership of a new object, if given.
-  // this->reset(this->get()) works.
-  PyObject* reset(PyObject* p = NULL) {
-    if (p != ptr_) {
-      Py_XDECREF(ptr_);
-      ptr_ = p;
+    // Destructor.  If there is a PyObject object, delete it.
+    ~ScopedPyObjectPtr()
+    {
+        Py_XDECREF( ptr_ );
     }
-    return ptr_;
-  }
 
-  // Releases ownership of the object.
-  PyObject* release() {
-    PyObject* p = ptr_;
-    ptr_ = NULL;
-    return p;
-  }
+    // Reset.  Deletes the current owned object, if any.
+    // Then takes ownership of a new object, if given.
+    // this->reset(this->get()) works.
+    PyObject* reset( PyObject* p = NULL )
+    {
+        if ( p != ptr_ )
+        {
+            Py_XDECREF( ptr_ );
+            ptr_ = p;
+        }
+        return ptr_;
+    }
 
-  operator PyObject*() { return ptr_; }
+    // Releases ownership of the object.
+    PyObject* release()
+    {
+        PyObject* p = ptr_;
+        ptr_ = NULL;
+        return p;
+    }
 
-  PyObject* operator->() const  {
-    assert(ptr_ != NULL);
-    return ptr_;
-  }
+    operator PyObject*()
+    {
+        return ptr_;
+    }
 
-  PyObject* get() const { return ptr_; }
+    PyObject* operator->() const
+    {
+        assert( ptr_ != NULL );
+        return ptr_;
+    }
 
-  Py_ssize_t refcnt() const { return Py_REFCNT(ptr_); }
+    PyObject* get() const
+    {
+        return ptr_;
+    }
 
-  void inc() const { Py_INCREF(ptr_); }
+    Py_ssize_t refcnt() const
+    {
+        return Py_REFCNT( ptr_ );
+    }
 
-  // Comparison operators.
-  // These return whether a ScopedPyObjectPtr and a raw pointer
-  // refer to the same object, not just to two different but equal
-  // objects.
-  bool operator==(const PyObject* p) const { return ptr_ == p; }
-  bool operator!=(const PyObject* p) const { return ptr_ != p; }
+    void inc() const
+    {
+        Py_INCREF( ptr_ );
+    }
 
- private:
-  PyObject* ptr_;
+    // Comparison operators.
+    // These return whether a ScopedPyObjectPtr and a raw pointer
+    // refer to the same object, not just to two different but equal
+    // objects.
+    bool operator==( const PyObject* p ) const
+    {
+        return ptr_ == p;
+    }
+    bool operator!=( const PyObject* p ) const
+    {
+        return ptr_ != p;
+    }
 
-  GOOGLE_DISALLOW_EVIL_CONSTRUCTORS(ScopedPyObjectPtr);
+   private:
+    PyObject* ptr_;
+
+    GOOGLE_DISALLOW_EVIL_CONSTRUCTORS( ScopedPyObjectPtr );
 };
 
 }  // namespace google

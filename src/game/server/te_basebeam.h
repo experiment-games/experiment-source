@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $Workfile:     $
 // $Date:         $
@@ -24,36 +24,34 @@
 
 abstract_class CTEBaseBeam : public CBaseTempEntity
 {
-public:
+   public:
+    DECLARE_CLASS( CTEBaseBeam, CBaseTempEntity );
+    DECLARE_SERVERCLASS();
 
-	DECLARE_CLASS( CTEBaseBeam, CBaseTempEntity );
-	DECLARE_SERVERCLASS();
+   public:
+    CTEBaseBeam( const char* name );
+    virtual ~CTEBaseBeam( void );
 
+    virtual void Test( const Vector& current_origin, const QAngle& current_angles ) = 0;
 
-public:
-					CTEBaseBeam( const char *name );
-	virtual			~CTEBaseBeam( void );
-
-	virtual void	Test( const Vector& current_origin, const QAngle& current_angles ) = 0;
-	
-public:
-	CNetworkVar( int, m_nModelIndex );
-	CNetworkVar( int, m_nHaloIndex );
-	CNetworkVar( int, m_nStartFrame );
-	CNetworkVar( int, m_nFrameRate );
-	CNetworkVar( float, m_fLife );
-	CNetworkVar( float, m_fWidth );
-	CNetworkVar( float, m_fEndWidth );
-	CNetworkVar( int, m_nFadeLength );
-	CNetworkVar( float, m_fAmplitude );
-	CNetworkVar( int, r );
-	CNetworkVar( int, g );
-	CNetworkVar( int, b );
-	CNetworkVar( int, a );
-	CNetworkVar( int, m_nSpeed );
-	CNetworkVar( int, m_nFlags );
+   public:
+    CNetworkVar( int, m_nModelIndex );
+    CNetworkVar( int, m_nHaloIndex );
+    CNetworkVar( int, m_nStartFrame );
+    CNetworkVar( int, m_nFrameRate );
+    CNetworkVar( float, m_fLife );
+    CNetworkVar( float, m_fWidth );
+    CNetworkVar( float, m_fEndWidth );
+    CNetworkVar( int, m_nFadeLength );
+    CNetworkVar( float, m_fAmplitude );
+    CNetworkVar( int, r );
+    CNetworkVar( int, g );
+    CNetworkVar( int, b );
+    CNetworkVar( int, a );
+    CNetworkVar( int, m_nSpeed );
+    CNetworkVar( int, m_nFlags );
 };
 
-EXTERN_SEND_TABLE(DT_BaseBeam);
+EXTERN_SEND_TABLE( DT_BaseBeam );
 
-#endif // TE_BASEBEAM_H
+#endif  // TE_BASEBEAM_H

@@ -18,53 +18,71 @@
 
 enum EQuestTurnInState
 {
-	TURN_IN_BEGIN = 0,
-	TURN_IN_SHOW_SUCCESS,
-	TURN_IN_HIDE_SUCCESS,
-	TURN_IN_SHOW_STARS_EARNED,
-	TURN_IN_SHOW_BLOOD_MONEY_EARNED,
-	TURN_IN_SHOW_ITEMS_EARNED_EARNED,
-	TURN_IN_SHOW_ITEM_PICKUP_SCREEN,
-	TURN_IN_HIDE_NODE_VIEW,
-	TURN_IN_SHOW_NODE_UNLOCKS,
-	TURN_IN_SHOW_GLOBAL_BLOOD_MONEY,
-	TURN_IN_SHOW_GLOBAL_STARS,
-	TURN_IN_SHOW_FAILURE,
-	TURN_IN_HIDE_FAILURE,
-	TURN_IN_COMPLETE
+    TURN_IN_BEGIN = 0,
+    TURN_IN_SHOW_SUCCESS,
+    TURN_IN_HIDE_SUCCESS,
+    TURN_IN_SHOW_STARS_EARNED,
+    TURN_IN_SHOW_BLOOD_MONEY_EARNED,
+    TURN_IN_SHOW_ITEMS_EARNED_EARNED,
+    TURN_IN_SHOW_ITEM_PICKUP_SCREEN,
+    TURN_IN_HIDE_NODE_VIEW,
+    TURN_IN_SHOW_NODE_UNLOCKS,
+    TURN_IN_SHOW_GLOBAL_BLOOD_MONEY,
+    TURN_IN_SHOW_GLOBAL_STARS,
+    TURN_IN_SHOW_FAILURE,
+    TURN_IN_HIDE_FAILURE,
+    TURN_IN_COMPLETE
 };
 
 class CGCClientQuestProgressReport;
 
 class CQuestMapController : public CLocalSteamSharedObjectListener
 {
-	friend CGCClientQuestProgressReport;
-public:
-	CQuestMapController();
+    friend CGCClientQuestProgressReport;
 
-	void RedeemLootForNode( const CSOQuestMapNode& node );
-	void SelectNodeQuest( const CSOQuestMapNode& node, uint32 nQuestDefIndex );
-	void PurchaseReward( const CQuestMapStoreItem* pStoreItemDef );
-	void SetPartyProgressDisableState( bool bDisable );
+   public:
+    CQuestMapController();
 
-	bool BBusyWithARequest() const { return ( Plat_FloatTime() - m_flRequestTime ) < 5.f; }
-	const CMsgQuestProgressReport& GetMostRecentProgressReport() const { return m_msgMostRecentReport; }
+    void RedeemLootForNode( const CSOQuestMapNode& node );
+    void SelectNodeQuest( const CSOQuestMapNode& node, uint32 nQuestDefIndex );
+    void PurchaseReward( const CQuestMapStoreItem* pStoreItemDef );
+    void SetPartyProgressDisableState( bool bDisable );
 
-private:
+    bool BBusyWithARequest() const
+    {
+        return ( Plat_FloatTime() - m_flRequestTime ) < 5.f;
+    }
+    const CMsgQuestProgressReport& GetMostRecentProgressReport() const
+    {
+        return m_msgMostRecentReport;
+    }
 
-	void SetMostRecentProgressReport( CMsgQuestProgressReport& report ) { m_msgMostRecentReport.CopyFrom( report ); }
+   private:
+    void SetMostRecentProgressReport( CMsgQuestProgressReport& report )
+    {
+        m_msgMostRecentReport.CopyFrom( report );
+    }
 
-	virtual void SOCreated( const CSteamID & steamIDOwner, const GCSDK::CSharedObject *pObject, GCSDK::ESOCacheEvent eEvent ) OVERRIDE { NewSOObject( pObject ); }
-	virtual void SOUpdated( const CSteamID & steamIDOwner, const GCSDK::CSharedObject *pObject, GCSDK::ESOCacheEvent eEvent ) OVERRIDE { NewSOObject( pObject ); }
-	virtual void SODestroyed( const CSteamID & steamIDOwner, const GCSDK::CSharedObject *pObject, GCSDK::ESOCacheEvent eEvent ) OVERRIDE { DestroyedSOObject( pObject ); }
+    virtual void SOCreated( const CSteamID& steamIDOwner, const GCSDK::CSharedObject* pObject, GCSDK::ESOCacheEvent eEvent ) OVERRIDE
+    {
+        NewSOObject( pObject );
+    }
+    virtual void SOUpdated( const CSteamID& steamIDOwner, const GCSDK::CSharedObject* pObject, GCSDK::ESOCacheEvent eEvent ) OVERRIDE
+    {
+        NewSOObject( pObject );
+    }
+    virtual void SODestroyed( const CSteamID& steamIDOwner, const GCSDK::CSharedObject* pObject, GCSDK::ESOCacheEvent eEvent ) OVERRIDE
+    {
+        DestroyedSOObject( pObject );
+    }
 
-	void NewSOObject( const GCSDK::CSharedObject *pObject );
-	void DestroyedSOObject( const GCSDK::CSharedObject *pObject );
-	
-	float m_flRequestTime;
-	CMsgQuestProgressReport m_msgMostRecentReport;
+    void NewSOObject( const GCSDK::CSharedObject* pObject );
+    void DestroyedSOObject( const GCSDK::CSharedObject* pObject );
+
+    float m_flRequestTime;
+    CMsgQuestProgressReport m_msgMostRecentReport;
 };
 
 CQuestMapController& GetQuestMapController();
 
-#endif // #ifndef TF_QUEST_MAP_CONTROLLER_H
+#endif  // #ifndef TF_QUEST_MAP_CONTROLLER_H

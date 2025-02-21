@@ -12,23 +12,20 @@
 
 DECLARE_AUTO_LIST( ISoldierStatueAutoList );
 
-
 class CEntitySoldierStatue : public CBaseAnimating, public ISoldierStatueAutoList
 {
-	DECLARE_CLASS( CEntitySoldierStatue, CBaseAnimating );
+    DECLARE_CLASS( CEntitySoldierStatue, CBaseAnimating );
 
-public:
-	virtual void	Spawn( void ) OVERRIDE;
-	virtual void	Precache( void ) OVERRIDE;
+   public:
+    virtual void Spawn( void ) OVERRIDE;
+    virtual void Precache( void ) OVERRIDE;
 
-private:
-	void			StatueThink();
-	void			PlaySound( void );
+   private:
+    void StatueThink();
+    void PlaySound( void );
 
-private: 
-	float m_flNextSpeakTime = -1.f;
+   private:
+    float m_flNextSpeakTime = -1.f;
 };
 
-#endif // ENTITY_SOLDIER_STATUE_H
-
-
+#endif  // ENTITY_SOLDIER_STATUE_H

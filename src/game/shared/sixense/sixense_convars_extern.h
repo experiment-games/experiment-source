@@ -121,4 +121,4 @@ extern ConVar sixense_scaling_blend;
 extern ConVar sixense_scaling_blend_time;
 extern ConVar sixense_scaling_controller_pos_offset_z;
 
-#endif // SIXENSE
+#endif  // SIXENSE

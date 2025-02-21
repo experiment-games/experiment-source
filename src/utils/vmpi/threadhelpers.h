@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -11,102 +11,92 @@
 #pragma once
 #endif
 
-
 #include "tier1/utllinkedlist.h"
 
 #if PLATFORM_WINDOWS_PC64
-	#define SIZEOF_CS	40	// sizeof( CRITICAL_SECTION )
+#define SIZEOF_CS 40  // sizeof( CRITICAL_SECTION )
 #else
-	#define SIZEOF_CS	24	// sizeof( CRITICAL_SECTION )
+#define SIZEOF_CS 24  // sizeof( CRITICAL_SECTION )
 #endif
 
 class CVMPICriticalSection
 {
-public:
-			CVMPICriticalSection();
-			~CVMPICriticalSection();
+   public:
+    CVMPICriticalSection();
+    ~CVMPICriticalSection();
 
+   protected:
+    friend class CVMPICriticalSectionLock;
 
-protected:
+    void Lock();
+    void Unlock();
 
-	friend class CVMPICriticalSectionLock;
-	
-	void	Lock();
-	void	Unlock();
+   public:
+    char m_CS[SIZEOF_CS];
 
-
-public:
-	char	m_CS[SIZEOF_CS];
-
-	// Used to protect against deadlock in debug mode.
-//#if defined( _DEBUG )
-	CUtlLinkedList<unsigned long,int>	m_Locks;
-	char								m_DeadlockProtect[SIZEOF_CS];
-//#endif
+    // Used to protect against deadlock in debug mode.
+    // #if defined( _DEBUG )
+    CUtlLinkedList< unsigned long, int > m_Locks;
+    char m_DeadlockProtect[SIZEOF_CS];
+    // #endif
 };
-
 
 // Use this to lock a critical section.
 class CVMPICriticalSectionLock
 {
-public:
-			CVMPICriticalSectionLock( CVMPICriticalSection *pCS );
-			~CVMPICriticalSectionLock();
-	void	Lock();
-	void	Unlock();
+   public:
+    CVMPICriticalSectionLock( CVMPICriticalSection *pCS );
+    ~CVMPICriticalSectionLock();
+    void Lock();
+    void Unlock();
 
-private:
-	CVMPICriticalSection	*m_pCS;
-	bool				m_bLocked;
+   private:
+    CVMPICriticalSection *m_pCS;
+    bool m_bLocked;
 };
 
-
-template< class T >
+template < class T >
 class CCriticalSectionData : private CVMPICriticalSection
 {
-public:
-	// You only have access to the data between Lock() and Unlock().
-	T*		Lock()
-	{
-		CVMPICriticalSection::Lock();
-		return &m_Data;
-	}
-	
-	void	Unlock()
-	{
-		CVMPICriticalSection::Unlock();
-	}
+   public:
+    // You only have access to the data between Lock() and Unlock().
+    T *Lock()
+    {
+        CVMPICriticalSection::Lock();
+        return &m_Data;
+    }
 
-private:
-	T m_Data;
+    void Unlock()
+    {
+        CVMPICriticalSection::Unlock();
+    }
+
+   private:
+    T m_Data;
 };
-
-
 
 // ------------------------------------------------------------------------------------------------ //
 // CEvent.
 // ------------------------------------------------------------------------------------------------ //
 class CEvent
 {
-public:
-	CEvent();
-	~CEvent();
+   public:
+    CEvent();
+    ~CEvent();
 
-	bool Init( bool bManualReset, bool bInitialState );
-	void Term();
-	
-	void* GetEventHandle() const;
+    bool Init( bool bManualReset, bool bInitialState );
+    void Term();
 
-	// Signal the event.
-	bool SetEvent();
+    void *GetEventHandle() const;
 
-	// Unset the event's signalled status.
-	bool ResetEvent();
+    // Signal the event.
+    bool SetEvent();
 
+    // Unset the event's signalled status.
+    bool ResetEvent();
 
-private:
-	void *m_hEvent;
+   private:
+    void *m_hEvent;
 };
 
-
-#endif // THREADHELPERS_H
+#endif  // THREADHELPERS_H

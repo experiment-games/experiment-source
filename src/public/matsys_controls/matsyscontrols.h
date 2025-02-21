@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -13,7 +13,6 @@
 #endif
 
 #include "tier1/interface.h"
-
 
 //-----------------------------------------------------------------------------
 // Forward declarations
@@ -35,7 +34,6 @@ namespace vgui
 //-----------------------------------------------------------------------------
 bool VGui_InitMatSysInterfacesList( const char *moduleName, CreateInterfaceFn *factoryList, int numFactories );
 
-
 //-----------------------------------------------------------------------------
 // set of accessor functions to matsys interfaces
 // the appropriate header file for each is listed above the item
@@ -56,8 +54,7 @@ IStudioRender *StudioRender();
 // #include <materialsystem/imaterialsystemhardwareconfig.h>
 IMaterialSystemHardwareConfig *MaterialSystemHardwareConfig();
 
-} // end namespace vgui
-
+}  // end namespace vgui
 
 //-----------------------------------------------------------------------------
 // predeclare all the matsys control class names
@@ -68,5 +65,4 @@ class CMDLPicker;
 class CSequencePicker;
 class CGameFileTreeView;
 
-
-#endif // MATSYSCONTROLS_H
+#endif  // MATSYSCONTROLS_H

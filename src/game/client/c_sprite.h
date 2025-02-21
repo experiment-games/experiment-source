@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -13,4 +13,4 @@
 #include "Sprite.h"
 #include "c_pixel_visibility.h"
 
-#endif // C_SPRITE_H
+#endif  // C_SPRITE_H

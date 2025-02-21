@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -8,14 +8,14 @@
 #ifndef ANIMATION_H
 #define ANIMATION_H
 
-#define ACTIVITY_NOT_AVAILABLE		-1
+#define ACTIVITY_NOT_AVAILABLE -1
 
 struct animevent_t;
 struct studiohdr_t;
 class CStudioHdr;
 struct mstudioseqdesc_t;
 
-int ExtractBbox( CStudioHdr *pstudiohdr, int sequence, Vector& mins, Vector& maxs );
+int ExtractBbox( CStudioHdr *pstudiohdr, int sequence, Vector &mins, Vector &maxs );
 
 void IndexModelSequences( CStudioHdr *pstudiohdr );
 void ResetActivityIndexes( CStudioHdr *pstudiohdr );
@@ -44,7 +44,7 @@ bool HasAnimationEventOfType( CStudioHdr *pstudiohdr, int sequence, int type );
 int FindTransitionSequence( CStudioHdr *pstudiohdr, int iCurrentSequence, int iGoalSequence, int *piDir );
 bool GotoSequence( CStudioHdr *pstudiohdr, int iCurrentSequence, float flCurrentCycle, float flCurrentRate, int iGoalSequence, int &nNextSequence, float &flNextCycle, int &iNextDir );
 
-void SetBodygroup( CStudioHdr *pstudiohdr, int& body, int iGroup, int iValue );
+void SetBodygroup( CStudioHdr *pstudiohdr, int &body, int iGroup, int iValue );
 int GetBodygroup( CStudioHdr *pstudiohdr, int body, int iGroup );
 
 const char *GetBodygroupName( CStudioHdr *pstudiohdr, int iGroup );
@@ -63,4 +63,4 @@ int FindHitboxSetByName( CStudioHdr *pstudiohdr, const char *name );
 const char *GetHitboxSetName( CStudioHdr *pstudiohdr, int setnumber );
 int GetHitboxSetCount( CStudioHdr *pstudiohdr );
 
-#endif	//ANIMATION_H
+#endif  // ANIMATION_H

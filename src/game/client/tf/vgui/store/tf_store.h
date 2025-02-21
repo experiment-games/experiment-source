@@ -8,5 +8,4 @@
 #pragma once
 #endif
 
-
-#endif // TF_STORE_H
+#endif  // TF_STORE_H

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
 
@@ -22,22 +22,23 @@
 //
 class CTFFireAxe : public CTFWeaponBaseMelee
 {
-public:
+   public:
+    DECLARE_CLASS( CTFFireAxe, CTFWeaponBaseMelee );
+    DECLARE_NETWORKCLASS();
+    DECLARE_PREDICTABLE();
 
-	DECLARE_CLASS( CTFFireAxe, CTFWeaponBaseMelee );
-	DECLARE_NETWORKCLASS(); 
-	DECLARE_PREDICTABLE();
-
-	CTFFireAxe() {}
-	virtual int			GetWeaponID( void ) const			{ return TF_WEAPON_FIREAXE; }
+    CTFFireAxe() {}
+    virtual int GetWeaponID( void ) const
+    {
+        return TF_WEAPON_FIREAXE;
+    }
 
 #ifdef GAME_DLL
-	virtual float GetInitialAfterburnDuration() const OVERRIDE;
+    virtual float GetInitialAfterburnDuration() const OVERRIDE;
 #endif
 
-private:
-
-	CTFFireAxe( const CTFFireAxe & ) {}
+   private:
+    CTFFireAxe( const CTFFireAxe& ) {}
 };
 
-#endif // TF_WEAPON_FIREAXE_H
+#endif  // TF_WEAPON_FIREAXE_H

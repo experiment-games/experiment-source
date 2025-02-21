@@ -14,21 +14,19 @@
 
 #include "tier1/utlvector.h"
 
-
 //-----------------------------------------------------------------------------
 // A class representing a camera
 //-----------------------------------------------------------------------------
 class CDmeOperator : public IDmeOperator, public CDmElement
 {
-	DEFINE_ELEMENT( CDmeOperator, CDmElement );
+    DEFINE_ELEMENT( CDmeOperator, CDmElement );
 
-public:
-	virtual bool IsDirty(); // ie needs to operate
-	virtual void Operate() {}
+   public:
+    virtual bool IsDirty();  // ie needs to operate
+    virtual void Operate() {}
 
-	virtual void GetInputAttributes ( CUtlVector< CDmAttribute * > &attrs ) {}
-	virtual void GetOutputAttributes( CUtlVector< CDmAttribute * > &attrs ) {}
+    virtual void GetInputAttributes( CUtlVector< CDmAttribute * > &attrs ) {}
+    virtual void GetOutputAttributes( CUtlVector< CDmAttribute * > &attrs ) {}
 };
 
-
-#endif // DMEOPERATOR_H
+#endif  // DMEOPERATOR_H

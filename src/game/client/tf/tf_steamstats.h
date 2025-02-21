@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -16,19 +16,19 @@
 
 class CTFSteamStats : public CAutoGameSystem, public CGameEventListener
 {
-public:
-	CTFSteamStats();
-	virtual void PostInit();
-	virtual void LevelShutdownPreEntity();
-	virtual void UploadStats();
+   public:
+    CTFSteamStats();
+    virtual void PostInit();
+    virtual void LevelShutdownPreEntity();
+    virtual void UploadStats();
 
-private:
-	void FireGameEvent( IGameEvent *event );
-	void SetNextForceUploadTime();
-	void ReportLiveStats();	// Xbox 360
-	float m_flTimeNextForceUpload;
+   private:
+    void FireGameEvent( IGameEvent *event );
+    void SetNextForceUploadTime();
+    void ReportLiveStats();  // Xbox 360
+    float m_flTimeNextForceUpload;
 };
 
 extern CTFSteamStats g_TFSteamStats;
 
-#endif //TF_STEAMSTATS_H
+#endif  // TF_STEAMSTATS_H

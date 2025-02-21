@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -16,7 +16,7 @@
 // FIXME: Can't use this until we get multithreaded allocations in tier0 working for tools
 // This is used by VVIS and fails to link
 // NOTE: This must be the last file included!!!
-//#include "tier0/memdbgon.h"
+// #include "tier0/memdbgon.h"
 
 #ifdef _X360
 // mandatory ... wary of above comment and isolating, tier0 is built as MT though

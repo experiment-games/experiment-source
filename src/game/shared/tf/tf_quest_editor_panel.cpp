@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -12,4 +12,3 @@
 #include "tier2/fileutils.h"
 #include "vgui/IInput.h"
 #include "econ_quests.h"
-

@@ -11,28 +11,27 @@
 // $NoKeywords: $
 //=============================================================================//
 
-#ifndef	GRENADEMOLOTOV_H
-#define	GRENADEMOLOTOV_H
+#ifndef GRENADEMOLOTOV_H
+#define GRENADEMOLOTOV_H
 
 #include "basegrenade_shared.h"
 #include "smoke_trail.h"
 
 class CGrenade_Molotov : public CBaseGrenade
 {
-public:
-	DECLARE_CLASS( CGrenade_Molotov, CBaseGrenade );
+   public:
+    DECLARE_CLASS( CGrenade_Molotov, CBaseGrenade );
 
-	virtual void	Spawn( void );
-	virtual void	Precache( void );
-	virtual void	Detonate( void );
-	void			MolotovTouch( CBaseEntity *pOther );
-	void			MolotovThink( void );
+    virtual void Spawn( void );
+    virtual void Precache( void );
+    virtual void Detonate( void );
+    void MolotovTouch( CBaseEntity *pOther );
+    void MolotovThink( void );
 
-protected:
+   protected:
+    SmokeTrail *m_pFireTrail;
 
-	SmokeTrail		*m_pFireTrail;
-
-	DECLARE_DATADESC();
+    DECLARE_DATADESC();
 };
 
-#endif	//GRENADEMOLOTOV_H
+#endif  // GRENADEMOLOTOV_H

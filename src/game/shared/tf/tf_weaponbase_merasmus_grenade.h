@@ -12,7 +12,6 @@
 #include "tf_shareddefs.h"
 #include "tf_weaponbase_grenadeproj.h"
 
-
 // Client specific.
 #ifdef CLIENT_DLL
 #define CTFWeaponBaseMerasmusGrenade C_TFWeaponBaseMerasmusGrenade
@@ -24,22 +23,20 @@
 //
 class CTFWeaponBaseMerasmusGrenade : public CTFWeaponBaseGrenadeProj
 {
-public:
+   public:
+    DECLARE_CLASS( CTFWeaponBaseMerasmusGrenade, CBaseGrenade );
+    DECLARE_NETWORKCLASS();
 
-	DECLARE_CLASS( CTFWeaponBaseMerasmusGrenade, CBaseGrenade );
-	DECLARE_NETWORKCLASS();
+    virtual int GetDamageCustom();
+    virtual int GetCustomParticleIndex();
 
-	virtual int GetDamageCustom();
-	virtual int GetCustomParticleIndex();
-
-	// Client specific.
+    // Client specific.
 #ifdef CLIENT_DLL
 
-public:
-	virtual int	DrawModel( int flags );
+   public:
+    virtual int DrawModel( int flags );
 
 #endif
-
 };
 
-#endif // TF_WEAPONBASE_MERASMUS_GRENADE_H
+#endif  // TF_WEAPONBASE_MERASMUS_GRENADE_H

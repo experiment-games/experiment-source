@@ -3,51 +3,49 @@
 #ifndef HL2MP_BOT_PROXY_H
 #define HL2MP_BOT_PROXY_H
 
-
 class CHL2MPBot;
 class CHL2MPBotActionPoint;
 
-
 class CHL2MPBotProxy : public CPointEntity
 {
-	DECLARE_CLASS( CHL2MPBotProxy, CPointEntity );
-public:
-	DECLARE_DATADESC();
+    DECLARE_CLASS( CHL2MPBotProxy, CPointEntity );
 
-	CHL2MPBotProxy( void );
-	virtual ~CHL2MPBotProxy() { }
+   public:
+    DECLARE_DATADESC();
 
-	void Think( void );
+    CHL2MPBotProxy( void );
+    virtual ~CHL2MPBotProxy() {}
 
-	// Input
-	void InputSetTeam( inputdata_t &inputdata );
-	void InputSetMovementGoal( inputdata_t &inputdata );
-	void InputSpawn( inputdata_t &inputdata );
-	void InputDelete( inputdata_t &inputdata );
+    void Think( void );
 
-	void OnInjured( void );
-	void OnKilled( void );
-	void OnAttackingEnemy( void );
-	void OnKilledEnemy( void );
+    // Input
+    void InputSetTeam( inputdata_t &inputdata );
+    void InputSetMovementGoal( inputdata_t &inputdata );
+    void InputSpawn( inputdata_t &inputdata );
+    void InputDelete( inputdata_t &inputdata );
 
-protected:
-	// Output
-	COutputEvent m_onSpawned;
-	COutputEvent m_onInjured;
-	COutputEvent m_onKilled;
-	COutputEvent m_onAttackingEnemy;
-	COutputEvent m_onKilledEnemy;
+    void OnInjured( void );
+    void OnKilled( void );
+    void OnAttackingEnemy( void );
+    void OnKilledEnemy( void );
 
-	char m_botName[64];
-	char m_teamName[64];
+   protected:
+    // Output
+    COutputEvent m_onSpawned;
+    COutputEvent m_onInjured;
+    COutputEvent m_onKilled;
+    COutputEvent m_onAttackingEnemy;
+    COutputEvent m_onKilledEnemy;
 
-	string_t m_spawnOnStart;
-	string_t m_actionPointName;
-	float m_respawnInterval;
+    char m_botName[64];
+    char m_teamName[64];
 
-	CHandle< CHL2MPBot > m_bot;
-	CHandle< CHL2MPBotActionPoint > m_moveGoal;
+    string_t m_spawnOnStart;
+    string_t m_actionPointName;
+    float m_respawnInterval;
+
+    CHandle< CHL2MPBot > m_bot;
+    CHandle< CHL2MPBotActionPoint > m_moveGoal;
 };
 
-
-#endif // HL2MP_BOT_PROXY_H
+#endif  // HL2MP_BOT_PROXY_H

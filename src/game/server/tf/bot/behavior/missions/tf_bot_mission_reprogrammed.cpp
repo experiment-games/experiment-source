@@ -11,5 +11,3 @@
 #include "bot/behavior/missions/tf_bot_mission_reprogrammed.h"
 #include "particle_parse.h"
 #include "tf_obj_sentrygun.h"
-
-

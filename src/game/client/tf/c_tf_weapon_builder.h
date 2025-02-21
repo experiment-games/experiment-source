@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -22,111 +22,146 @@
 //=============================================================================
 class C_TFWeaponBuilder : public C_TFWeaponBase
 {
-	DECLARE_CLASS( C_TFWeaponBuilder, C_TFWeaponBase );
-public:
-	DECLARE_CLIENTCLASS();
-	DECLARE_PREDICTABLE();
+    DECLARE_CLASS( C_TFWeaponBuilder, C_TFWeaponBase );
 
-	C_TFWeaponBuilder();
-	~C_TFWeaponBuilder();
+   public:
+    DECLARE_CLIENTCLASS();
+    DECLARE_PREDICTABLE();
 
-	virtual void Redraw();
+    C_TFWeaponBuilder();
+    ~C_TFWeaponBuilder();
 
-	virtual void SecondaryAttack();
+    virtual void Redraw();
 
-	virtual bool	IsPlacingObject( void );
+    virtual void SecondaryAttack();
 
-	virtual const char *GetCurrentSelectionObjectName( void );
+    virtual bool IsPlacingObject( void );
 
-	virtual const char *GetViewModel( int iViewModel ) const;
-	virtual const char *GetWorldModel( void ) const;
+    virtual const char *GetCurrentSelectionObjectName( void );
 
-	virtual bool Deploy( void );
-	virtual void	PostDataUpdate( DataUpdateType_t type );
+    virtual const char *GetViewModel( int iViewModel ) const;
+    virtual const char *GetWorldModel( void ) const;
 
-	C_BaseObject	*GetPlacementModel( void ) { return m_hObjectBeingBuilt.Get(); }
+    virtual bool Deploy( void );
+    virtual void PostDataUpdate( DataUpdateType_t type );
 
-	virtual void UpdateAttachmentModels( void );
+    C_BaseObject *GetPlacementModel( void )
+    {
+        return m_hObjectBeingBuilt.Get();
+    }
 
-	virtual int GetSlot( void ) const;
-	virtual int GetPosition( void ) const;
+    virtual void UpdateAttachmentModels( void );
 
-	void SetupObjectSelectionSprite( void );
+    virtual int GetSlot( void ) const;
+    virtual int GetPosition( void ) const;
 
-	virtual CHudTexture const *GetSpriteActive( void ) const;
-	virtual CHudTexture const *GetSpriteInactive( void ) const;
+    void SetupObjectSelectionSprite( void );
 
-	virtual const char *GetPrintName( void ) const;
+    virtual CHudTexture const *GetSpriteActive( void ) const;
+    virtual CHudTexture const *GetSpriteInactive( void ) const;
 
-	virtual int	GetSubType( void );
+    virtual const char *GetPrintName( void ) const;
 
-	virtual bool CanBeSelected( void );
-	virtual bool VisibleInWeaponSelection( void );
+    virtual int GetSubType( void );
 
-	virtual bool HasAmmo( void );
+    virtual bool CanBeSelected( void );
+    virtual bool VisibleInWeaponSelection( void );
 
-	virtual int		GetWeaponID( void ) const			{ return TF_WEAPON_BUILDER; }
+    virtual bool HasAmmo( void );
 
-	int GetType( void ) { return m_iObjectType; }
-	bool CanBuildObjectType( int iObjectType );
+    virtual int GetWeaponID( void ) const
+    {
+        return TF_WEAPON_BUILDER;
+    }
 
-	virtual Activity GetDrawActivity( void );
+    int GetType( void )
+    {
+        return m_iObjectType;
+    }
+    bool CanBuildObjectType( int iObjectType );
 
-	virtual CStudioHdr *OnNewModel( void );
+    virtual Activity GetDrawActivity( void );
 
-	virtual float		InternalGetEffectBarRechargeTime( void ) { return 15.0; }
-	virtual int			GetEffectBarAmmo( void ) { return TF_AMMO_GRENADES2; }
-	float				GetProgress( void ) { return GetEffectBarProgress(); }
-	const char*			GetEffectLabelText( void ) { return "#TF_Sapper"; }
-	virtual bool		EffectMeterShouldFlash( void );
+    virtual CStudioHdr *OnNewModel( void );
 
-public:
-	// Builder Data
-	int			m_iBuildState;
-	unsigned int m_iObjectType;
-	unsigned int m_iObjectMode;
-	float		m_flStartTime;
-	float		m_flTotalTime;
+    virtual float InternalGetEffectBarRechargeTime( void )
+    {
+        return 15.0;
+    }
+    virtual int GetEffectBarAmmo( void )
+    {
+        return TF_AMMO_GRENADES2;
+    }
+    float GetProgress( void )
+    {
+        return GetEffectBarProgress();
+    }
+    const char *GetEffectLabelText( void )
+    {
+        return "#TF_Sapper";
+    }
+    virtual bool EffectMeterShouldFlash( void );
 
-	CHudTexture *m_pSelectionTextureActive;
-	CHudTexture *m_pSelectionTextureInactive;
+   public:
+    // Builder Data
+    int m_iBuildState;
+    unsigned int m_iObjectType;
+    unsigned int m_iObjectMode;
+    float m_flStartTime;
+    float m_flTotalTime;
 
-	// Our placement model
-	CHandle<C_BaseObject>	m_hObjectBeingBuilt;
+    CHudTexture *m_pSelectionTextureActive;
+    CHudTexture *m_pSelectionTextureInactive;
 
-	int m_iValidBuildPoseParam;
+    // Our placement model
+    CHandle< C_BaseObject > m_hObjectBeingBuilt;
 
-	// Wheatly Data
-	float m_flWheatleyTalkingUntil;
+    int m_iValidBuildPoseParam;
 
-private:
-	C_TFWeaponBuilder( const C_TFWeaponBuilder & );
-	bool m_aBuildableObjectTypes[OBJ_LAST];
+    // Wheatly Data
+    float m_flWheatleyTalkingUntil;
+
+   private:
+    C_TFWeaponBuilder( const C_TFWeaponBuilder & );
+    bool m_aBuildableObjectTypes[OBJ_LAST];
 };
 
-
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 class C_TFWeaponSapper : public C_TFWeaponBuilder, public ITFChargeUpWeapon
 {
-	DECLARE_CLASS( C_TFWeaponSapper, C_TFWeaponBuilder );
-public:
-	DECLARE_NETWORKCLASS();
-	//DECLARE_PREDICTABLE();
+    DECLARE_CLASS( C_TFWeaponSapper, C_TFWeaponBuilder );
 
-	// ITFChargeUpWeapon
-	virtual bool CanCharge( void )				{ return GetChargeMaxTime() > 0; }
-	virtual float GetChargeBeginTime( void )	{ return m_flChargeBeginTime; }
-	virtual float GetChargeMaxTime( void )		{ float flChargeTime = 0; CALL_ATTRIB_HOOK_FLOAT( flChargeTime, sapper_deploy_time ); return flChargeTime; };
+   public:
+    DECLARE_NETWORKCLASS();
+    // DECLARE_PREDICTABLE();
 
-	virtual const char *GetViewModel( int iViewModel ) const;
-	virtual const char *GetWorldModel( void ) const;
+    // ITFChargeUpWeapon
+    virtual bool CanCharge( void )
+    {
+        return GetChargeMaxTime() > 0;
+    }
+    virtual float GetChargeBeginTime( void )
+    {
+        return m_flChargeBeginTime;
+    }
+    virtual float GetChargeMaxTime( void )
+    {
+        float flChargeTime = 0;
+        CALL_ATTRIB_HOOK_FLOAT( flChargeTime, sapper_deploy_time );
+        return flChargeTime;
+    };
 
-	bool IsWheatleyTalking( void ) { return gpGlobals->curtime <= m_flWheatleyTalkingUntil; }
+    virtual const char *GetViewModel( int iViewModel ) const;
+    virtual const char *GetWorldModel( void ) const;
 
-	CNetworkVar( float, m_flChargeBeginTime );
+    bool IsWheatleyTalking( void )
+    {
+        return gpGlobals->curtime <= m_flWheatleyTalkingUntil;
+    }
+
+    CNetworkVar( float, m_flChargeBeginTime );
 };
 
-
-#endif // C_TF_WEAPON_BUILDER_H
+#endif  // C_TF_WEAPON_BUILDER_H

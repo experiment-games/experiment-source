@@ -28,10 +28,10 @@
 #include "vgui/ISystem.h"
 #include "vgui/IVGui.h"
 
+#if defined( CSTRIKE_DLL ) && defined( CLIENT_DLL )
 
-#if defined(CSTRIKE_DLL) && defined(CLIENT_DLL)
-
-CSAchievementsAndStatsInterface::CSAchievementsAndStatsInterface() : AchievementsAndStatsInterface()
+CSAchievementsAndStatsInterface::CSAchievementsAndStatsInterface()
+    : AchievementsAndStatsInterface()
 {
     m_pAchievementAndStatsSummary = NULL;
 
@@ -48,23 +48,23 @@ void CSAchievementsAndStatsInterface::CreatePanel( vgui::Panel* pParent )
 
     if ( m_pAchievementAndStatsSummary )
     {
-        m_pAchievementAndStatsSummary->SetParent(pParent);
+        m_pAchievementAndStatsSummary->SetParent( pParent );
     }
 }
 
 void CSAchievementsAndStatsInterface::DisplayPanel()
 {
     // Position & show dialog
-    PositionDialog(m_pAchievementAndStatsSummary);
+    PositionDialog( m_pAchievementAndStatsSummary );
     m_pAchievementAndStatsSummary->Activate();
 
-	//Make sure the top of the page appears on the screen (for video modes such as 1280x720).
-	int x, y;
-	m_pAchievementAndStatsSummary->GetPos( x, y );
-	if ( y <  0 )
-	{
-		m_pAchievementAndStatsSummary->SetPos( x, 0 );
-	}
+    // Make sure the top of the page appears on the screen (for video modes such as 1280x720).
+    int x, y;
+    m_pAchievementAndStatsSummary->GetPos( x, y );
+    if ( y < 0 )
+    {
+        m_pAchievementAndStatsSummary->SetPos( x, 0 );
+    }
 }
 
 void CSAchievementsAndStatsInterface::ReleasePanel()
@@ -72,9 +72,8 @@ void CSAchievementsAndStatsInterface::ReleasePanel()
     // Make sure the BasePanel doesn't try to delete this, because it doesn't really own it.
     if ( m_pAchievementAndStatsSummary )
     {
-        m_pAchievementAndStatsSummary->SetParent((vgui::Panel*)NULL);
+        m_pAchievementAndStatsSummary->SetParent( ( vgui::Panel* )NULL );
     }
 }
 
 #endif
-

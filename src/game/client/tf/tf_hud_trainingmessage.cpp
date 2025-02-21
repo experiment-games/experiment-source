@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================
@@ -26,22 +26,22 @@
 using namespace vgui;
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 class CHudTrainingMsg : public CHudElement, public EditablePanel
 {
-	DECLARE_CLASS_SIMPLE( CHudTrainingMsg, EditablePanel );
+    DECLARE_CLASS_SIMPLE( CHudTrainingMsg, EditablePanel );
 
-public:
-	CHudTrainingMsg( const char *pElementName );
+   public:
+    CHudTrainingMsg( const char *pElementName );
 
-	virtual void	Init( void );
-	virtual bool	ShouldDraw( void );
+    virtual void Init( void );
+    virtual bool ShouldDraw( void );
 
-	void			MsgFunc_TrainingMsg( bf_read &msg );
-	void			MsgFunc_TrainingObjective( bf_read &msg );
+    void MsgFunc_TrainingMsg( bf_read &msg );
+    void MsgFunc_TrainingObjective( bf_read &msg );
 
-private:
+   private:
 };
 
 DECLARE_HUDELEMENT( CHudTrainingMsg );
@@ -49,30 +49,31 @@ DECLARE_HUD_MESSAGE( CHudTrainingMsg, TrainingMsg );
 DECLARE_HUD_MESSAGE( CHudTrainingMsg, TrainingObjective );
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-CHudTrainingMsg::CHudTrainingMsg( const char *pElementName ) : CHudElement( pElementName ), BaseClass( NULL, "HudTrainingMsg" )
+CHudTrainingMsg::CHudTrainingMsg( const char *pElementName )
+    : CHudElement( pElementName ), BaseClass( NULL, "HudTrainingMsg" )
 {
-	Panel *pParent = g_pClientMode->GetViewport();
-	SetParent( pParent );
-	SetVisible( false );
+    Panel *pParent = g_pClientMode->GetViewport();
+    SetParent( pParent );
+    SetVisible( false );
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CHudTrainingMsg::Init()
 {
-	HOOK_HUD_MESSAGE( CHudTrainingMsg, TrainingMsg );
-	HOOK_HUD_MESSAGE( CHudTrainingMsg, TrainingObjective );
+    HOOK_HUD_MESSAGE( CHudTrainingMsg, TrainingMsg );
+    HOOK_HUD_MESSAGE( CHudTrainingMsg, TrainingObjective );
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CHudTrainingMsg::ShouldDraw( void )
 {
-	return false;
+    return false;
 }
 
 //-----------------------------------------------------------------------------
@@ -80,17 +81,17 @@ bool CHudTrainingMsg::ShouldDraw( void )
 //-----------------------------------------------------------------------------
 void CHudTrainingMsg::MsgFunc_TrainingMsg( bf_read &msg )
 {
-	if ( engine->IsPlayingDemo() )
-		return;
+    if ( engine->IsPlayingDemo() )
+        return;
 
-	char szString[MAX_TRAINING_MSG_LENGTH];
-	msg.ReadString( szString, MAX_TRAINING_MSG_LENGTH );
+    char szString[MAX_TRAINING_MSG_LENGTH];
+    msg.ReadString( szString, MAX_TRAINING_MSG_LENGTH );
 
-	CTFHudObjectiveStatus *pStatus = GET_HUDELEMENT( CTFHudObjectiveStatus );
-	if ( pStatus )
-	{
-		pStatus->SetTrainingText(szString);
-	}
+    CTFHudObjectiveStatus *pStatus = GET_HUDELEMENT( CTFHudObjectiveStatus );
+    if ( pStatus )
+    {
+        pStatus->SetTrainingText( szString );
+    }
 }
 
 //-----------------------------------------------------------------------------
@@ -98,16 +99,15 @@ void CHudTrainingMsg::MsgFunc_TrainingMsg( bf_read &msg )
 //-----------------------------------------------------------------------------
 void CHudTrainingMsg::MsgFunc_TrainingObjective( bf_read &msg )
 {
-	if ( engine->IsPlayingDemo() )
-		return;
+    if ( engine->IsPlayingDemo() )
+        return;
 
-	char szString[MAX_TRAINING_MSG_LENGTH];
-	msg.ReadString( szString, MAX_TRAINING_MSG_LENGTH );
+    char szString[MAX_TRAINING_MSG_LENGTH];
+    msg.ReadString( szString, MAX_TRAINING_MSG_LENGTH );
 
-	CTFHudObjectiveStatus *pStatus = GET_HUDELEMENT( CTFHudObjectiveStatus );
-	if ( pStatus )
-	{
-		pStatus->SetTrainingObjective(szString);
-	}
+    CTFHudObjectiveStatus *pStatus = GET_HUDELEMENT( CTFHudObjectiveStatus );
+    if ( pStatus )
+    {
+        pStatus->SetTrainingObjective( szString );
+    }
 }
-

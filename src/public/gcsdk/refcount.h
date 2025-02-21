@@ -17,91 +17,110 @@ namespace GCSDK
 // on the stack.
 
 // utility class
-template< class T >
+template < class T >
 class CAutoPtr
 {
-	T *m_pT;
-public:
-	CAutoPtr()
-	{
-		m_pT = NULL;
-	}
+    T *m_pT;
 
-	~CAutoPtr()
-	{
-		delete m_pT;
-	}
+   public:
+    CAutoPtr()
+    {
+        m_pT = NULL;
+    }
 
-	T *reset( T *p )
-	{
-		delete m_pT;
-		m_pT = p;
-		return m_pT;
-	}
+    ~CAutoPtr()
+    {
+        delete m_pT;
+    }
 
-	T *TakeOwnership()
-	{
-		T *p = m_pT;
-		m_pT = NULL;
-		return p;
-	}
+    T *reset( T *p )
+    {
+        delete m_pT;
+        m_pT = p;
+        return m_pT;
+    }
 
-	T *release( )
-	{
-		T *pT = m_pT;
-		m_pT = NULL;
-		return pT;
-	}
+    T *TakeOwnership()
+    {
+        T *p = m_pT;
+        m_pT = NULL;
+        return p;
+    }
 
-	T *operator->()
-	{
-		return m_pT;
-	}
+    T *release()
+    {
+        T *pT = m_pT;
+        m_pT = NULL;
+        return pT;
+    }
 
-	operator T*()
-	{
-		return m_pT;
-	}
+    T *operator->()
+    {
+        return m_pT;
+    }
 
-protected:
-	T *operator=(T*p)
-	{
-		AssertMsg( NULL == m_pT, "If this assert fires, you're leaking.\n" );
-		m_pT = p;
-		return m_pT;
-	}
+    operator T *()
+    {
+        return m_pT;
+    }
+
+   protected:
+    T *operator=( T *p )
+    {
+        AssertMsg( NULL == m_pT, "If this assert fires, you're leaking.\n" );
+        m_pT = p;
+        return m_pT;
+    }
 };
 
-class CRefCount 
+class CRefCount
 {
-public:
-	CRefCount() { m_cRef = 1; }		// we are born with a ref count of 1
+   public:
+    CRefCount()
+    {
+        m_cRef = 1;
+    }  // we are born with a ref count of 1
 
-	// increment ref count
-	int AddRef() { return ThreadInterlockedIncrement( &m_cRef ); }
+    // increment ref count
+    int AddRef()
+    {
+        return ThreadInterlockedIncrement( &m_cRef );
+    }
 
-	// delete ourselves when ref count reaches 0
-	int Release() 
-	{ 
-		Assert( m_cRef > 0 ); 
-		int cRef = ThreadInterlockedDecrement( &m_cRef ); 
-		if ( 0 == cRef )
-			DestroyThis();
-		return cRef;
-	}
-protected:
-	// Classes that derive from this should make their destructors private and virtual!
-	virtual ~CRefCount() { Assert( 0 == m_cRef ); }
+    // delete ourselves when ref count reaches 0
+    int Release()
+    {
+        Assert( m_cRef > 0 );
+        int cRef = ThreadInterlockedDecrement( &m_cRef );
+        if ( 0 == cRef )
+            DestroyThis();
+        return cRef;
+    }
 
-	virtual void DestroyThis() { delete this; }		// derived classes may override this if they want to be part of a mem pool
+   protected:
+    // Classes that derive from this should make their destructors private and virtual!
+    virtual ~CRefCount()
+    {
+        Assert( 0 == m_cRef );
+    }
 
-	volatile int32 m_cRef;					// ref count of this object
+    virtual void DestroyThis()
+    {
+        delete this;
+    }  // derived classes may override this if they want to be part of a mem pool
+
+    volatile int32 m_cRef;  // ref count of this object
 };
 
-#define SAFE_RELEASE( x )		if ( NULL != ( x ) ) { ( x )->Release(); x = NULL; }
+#define SAFE_RELEASE( x ) \
+    if ( NULL != ( x ) )  \
+    {                     \
+        ( x )->Release(); \
+        x = NULL;         \
+    }
 
-} // namespace GCSDK
+}  // namespace GCSDK
 
 #include "tier0/memdbgoff.h"
 
-#endif // GCREFCOUNT_H
+#endif  // GCREFCOUNT_H

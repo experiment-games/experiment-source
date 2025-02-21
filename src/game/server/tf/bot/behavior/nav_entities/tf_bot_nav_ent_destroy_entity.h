@@ -12,24 +12,26 @@
 
 class CTFBotNavEntDestroyEntity : public Action< CTFBot >
 {
-public:
-	CTFBotNavEntDestroyEntity( const CFuncNavPrerequisite *prereq );
+   public:
+    CTFBotNavEntDestroyEntity( const CFuncNavPrerequisite *prereq );
 
-	virtual ActionResult< CTFBot >	OnStart( CTFBot *me, Action< CTFBot > *priorAction );
-	virtual ActionResult< CTFBot >	Update( CTFBot *me, float interval );
-	virtual void					OnEnd( CTFBot *me, Action< CTFBot > *nextAction );
+    virtual ActionResult< CTFBot > OnStart( CTFBot *me, Action< CTFBot > *priorAction );
+    virtual ActionResult< CTFBot > Update( CTFBot *me, float interval );
+    virtual void OnEnd( CTFBot *me, Action< CTFBot > *nextAction );
 
-	virtual const char *GetName( void ) const	{ return "NavEntDestroyEntity"; };
+    virtual const char *GetName( void ) const
+    {
+        return "NavEntDestroyEntity";
+    };
 
-private:
-	CHandle< CFuncNavPrerequisite > m_prereq;
-	PathFollower m_path;				// how we get to the target
-	CountdownTimer m_repathTimer;
-	bool m_wasIgnoringEnemies;
+   private:
+    CHandle< CFuncNavPrerequisite > m_prereq;
+    PathFollower m_path;  // how we get to the target
+    CountdownTimer m_repathTimer;
+    bool m_wasIgnoringEnemies;
 
-	void DetonateStickiesWhenSet( CTFBot *me, CTFPipebombLauncher *stickyLauncher ) const;
-	bool m_isReadyToLaunchSticky;
+    void DetonateStickiesWhenSet( CTFBot *me, CTFPipebombLauncher *stickyLauncher ) const;
+    bool m_isReadyToLaunchSticky;
 };
 
-
-#endif // TF_BOT_NAV_ENT_DESTROY_ENTITY_H
+#endif  // TF_BOT_NAV_ENT_DESTROY_ENTITY_H

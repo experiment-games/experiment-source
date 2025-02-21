@@ -390,7 +390,7 @@ void CQuestItemPanel::LoadResFileForCurrentItem()
 		m_pCompleteButton->SetZPos( 101 );
 		m_pCompleteButton->SetPos( 100, 40 );
 		m_pCompleteButton->SetVisible( false );
-#endif // STAGING_ONLY || DEBUG
+#endif  // STAGING_ONLY || DEBUG
 
 		m_pFindServerButton = m_pQuestPaperContainer->FindControl< CExButton >( "FindServerButton", true );
 
@@ -1372,7 +1372,7 @@ void CQuestItemPanel::OnCollapsedGlowEnd( void )
 //-----------------------------------------------------------------------------
 void CQuestItemPanel::OnDiscardQuest( void )
 {
-#if !defined(STAGING_ONLY) && !defined(DEBUG)
+#if !defined( STAGING_ONLY ) && !defined( DEBUG )
 	// Not in public!
 	return;
 #endif
@@ -1587,4 +1587,4 @@ public:
 
 GC_REG_JOB( GCSDK::CGCClient, CGCLoanerRequestResponse, "CGCLoanerRequestResponse", k_EMsgGCQuestObjective_RequestLoanerResponse, GCSDK::k_EServerTypeGCClient );
 
-#endif // 0
+#endif  // 0

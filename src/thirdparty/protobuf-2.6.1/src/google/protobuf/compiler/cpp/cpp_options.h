@@ -36,23 +36,29 @@
 #include <string>
 
 #include <google/protobuf/stubs/common.h>
-namespace google {
-namespace protobuf {
-namespace compiler {
-namespace cpp {
+namespace google
+{
+namespace protobuf
+{
+namespace compiler
+{
+namespace cpp
+{
 
 // Generator options:
-struct Options {
-  Options() : safe_boundary_check(false) {
-  }
-  string dllexport_decl;
-  bool safe_boundary_check;
+struct Options
+{
+    Options()
+        : safe_boundary_check( false )
+    {
+    }
+    string dllexport_decl;
+    bool safe_boundary_check;
 };
 
 }  // namespace cpp
 }  // namespace compiler
 }  // namespace protobuf
-
 
 }  // namespace google
 #endif  // GOOGLE_PROTOBUF_COMPILER_CPP_OPTIONS_H__

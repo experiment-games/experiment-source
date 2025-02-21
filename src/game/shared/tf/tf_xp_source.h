@@ -14,14 +14,13 @@
 #include "gcsdk/protobufsharedobject.h"
 #include "tf_gcmessages.h"
 
-
 //---------------------------------------------------------------------------------
 // Purpose: Contains a delta for a player's XP
 //---------------------------------------------------------------------------------
 class CXPSource : public GCSDK::CProtoBufSharedObject< CMsgTFXPSource, k_EEconTypeXPSource >
 {
-public:
-	CXPSource();
+   public:
+    CXPSource();
 };
 
-#endif // TF_XP_SOURCE_H
+#endif  // TF_XP_SOURCE_H

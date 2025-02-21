@@ -15,39 +15,44 @@ class CTFBotHintTeleporterExit;
 
 class CTFBotHintEngineerNest : public CBaseTFBotHintEntity
 {
-	DECLARE_CLASS( CTFBotHintEngineerNest, CBaseTFBotHintEntity );
-public:
-	DECLARE_SERVERCLASS();
-	DECLARE_DATADESC();
+    DECLARE_CLASS( CTFBotHintEngineerNest, CBaseTFBotHintEntity );
 
-	CTFBotHintEngineerNest( void );
-	virtual ~CTFBotHintEngineerNest() { }
+   public:
+    DECLARE_SERVERCLASS();
+    DECLARE_DATADESC();
 
-	virtual void Spawn() OVERRIDE;
+    CTFBotHintEngineerNest( void );
+    virtual ~CTFBotHintEngineerNest() {}
 
-	virtual HintType GetHintType() const OVERRIDE { return HINT_ENGINEER_NEST; }
+    virtual void Spawn() OVERRIDE;
 
-	virtual int UpdateTransmitState()
-	{
-		return SetTransmitState( FL_EDICT_ALWAYS );
-	}
+    virtual HintType GetHintType() const OVERRIDE
+    {
+        return HINT_ENGINEER_NEST;
+    }
 
-	void HintThink();
-	void HintTeleporterThink();
+    virtual int UpdateTransmitState()
+    {
+        return SetTransmitState( FL_EDICT_ALWAYS );
+    }
 
-	bool IsStaleNest() const;
-	void DetonateStaleNest();
+    void HintThink();
+    void HintTeleporterThink();
 
-	CTFBotHintSentrygun* GetSentryHint() const;
-	CTFBotHintTeleporterExit* GetTeleporterHint() const;
-private:
-	void DetonateObjectsFromHints( const HintVector_t& hints );
-	CBaseTFBotHintEntity* GetHint( const HintVector_t& hints ) const;
+    bool IsStaleNest() const;
+    void DetonateStaleNest();
 
-	HintVector_t m_sentries;
-	HintVector_t m_teleporters;
+    CTFBotHintSentrygun* GetSentryHint() const;
+    CTFBotHintTeleporterExit* GetTeleporterHint() const;
 
-	CNetworkVar( bool, m_bHasActiveTeleporter );
+   private:
+    void DetonateObjectsFromHints( const HintVector_t& hints );
+    CBaseTFBotHintEntity* GetHint( const HintVector_t& hints ) const;
+
+    HintVector_t m_sentries;
+    HintVector_t m_teleporters;
+
+    CNetworkVar( bool, m_bHasActiveTeleporter );
 };
 
-#endif // TF_BOT_HINT_ENGINEER_NEST_H
+#endif  // TF_BOT_HINT_ENGINEER_NEST_H

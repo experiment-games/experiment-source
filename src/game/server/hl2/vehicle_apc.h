@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -20,143 +20,155 @@
 //-----------------------------------------------------------------------------
 class CAPCFourWheelServerVehicle : public CFourWheelServerVehicle
 {
-	typedef CFourWheelServerVehicle BaseClass;
-// IServerVehicle
-public:
-	bool		NPC_HasPrimaryWeapon( void ) { return true; }
-	void		NPC_AimPrimaryWeapon( Vector vecTarget );
-	bool		NPC_HasSecondaryWeapon( void ) { return true; }
-	void		NPC_AimSecondaryWeapon( Vector vecTarget );
+    typedef CFourWheelServerVehicle BaseClass;
+    // IServerVehicle
+   public:
+    bool NPC_HasPrimaryWeapon( void )
+    {
+        return true;
+    }
+    void NPC_AimPrimaryWeapon( Vector vecTarget );
+    bool NPC_HasSecondaryWeapon( void )
+    {
+        return true;
+    }
+    void NPC_AimSecondaryWeapon( Vector vecTarget );
 
-	// Weaponry
-	void		Weapon_PrimaryRanges( float *flMinRange, float *flMaxRange );
-	void		Weapon_SecondaryRanges( float *flMinRange, float *flMaxRange );
-	float		Weapon_PrimaryCanFireAt( void );		// Return the time at which this vehicle's primary weapon can fire again
-	float		Weapon_SecondaryCanFireAt( void );		// Return the time at which this vehicle's secondary weapon can fire again
+    // Weaponry
+    void Weapon_PrimaryRanges( float *flMinRange, float *flMaxRange );
+    void Weapon_SecondaryRanges( float *flMinRange, float *flMaxRange );
+    float Weapon_PrimaryCanFireAt( void );    // Return the time at which this vehicle's primary weapon can fire again
+    float Weapon_SecondaryCanFireAt( void );  // Return the time at which this vehicle's secondary weapon can fire again
 };
-
 
 //-----------------------------------------------------------------------------
 // A driveable vehicle with a gun that shoots wherever the driver looks.
 //-----------------------------------------------------------------------------
 class CPropAPC : public CPropVehicleDriveable
 {
-	DECLARE_CLASS( CPropAPC, CPropVehicleDriveable );
-public:
-	// CBaseEntity
-	virtual void Precache( void );
-	void	Think( void );
-	virtual void Spawn(void);
-	virtual void Activate();
-	virtual void UpdateOnRemove( void );
-	virtual void OnRestore( void );
+    DECLARE_CLASS( CPropAPC, CPropVehicleDriveable );
 
-	// CPropVehicle
-	virtual void	CreateServerVehicle( void );
-	virtual void	DriveVehicle( float flFrameTime, CUserCmd *ucmd, int iButtonsDown, int iButtonsReleased );
-	virtual void	ProcessMovement( CBasePlayer *pPlayer, CMoveData *pMoveData );
-	virtual Class_T	ClassifyPassenger( CBaseCombatCharacter *pPassenger, Class_T defaultClassification );
-	virtual int		OnTakeDamage( const CTakeDamageInfo &info );
-	virtual float	PassengerDamageModifier( const CTakeDamageInfo &info );
+   public:
+    // CBaseEntity
+    virtual void Precache( void );
+    void Think( void );
+    virtual void Spawn( void );
+    virtual void Activate();
+    virtual void UpdateOnRemove( void );
+    virtual void OnRestore( void );
 
-	// Weaponry
-	const Vector	&GetPrimaryGunOrigin( void );
-	void			AimPrimaryWeapon( const Vector &vecForward );
-	void			AimSecondaryWeaponAt( CBaseEntity *pTarget );
-	float			PrimaryWeaponFireTime( void ) { return m_flMachineGunTime; }
-	float			SecondaryWeaponFireTime( void ) { return m_flRocketTime; }
-	float			MaxAttackRange() const;
-	bool			IsInPrimaryFiringCone() const { return m_bInFiringCone; }
+    // CPropVehicle
+    virtual void CreateServerVehicle( void );
+    virtual void DriveVehicle( float flFrameTime, CUserCmd *ucmd, int iButtonsDown, int iButtonsReleased );
+    virtual void ProcessMovement( CBasePlayer *pPlayer, CMoveData *pMoveData );
+    virtual Class_T ClassifyPassenger( CBaseCombatCharacter *pPassenger, Class_T defaultClassification );
+    virtual int OnTakeDamage( const CTakeDamageInfo &info );
+    virtual float PassengerDamageModifier( const CTakeDamageInfo &info );
 
-	// Muzzle flashes
-	const char		*GetTracerType( void ) ;
-	void			DoImpactEffect( trace_t &tr, int nDamageType );
-	void			DoMuzzleFlash( void );
+    // Weaponry
+    const Vector &GetPrimaryGunOrigin( void );
+    void AimPrimaryWeapon( const Vector &vecForward );
+    void AimSecondaryWeaponAt( CBaseEntity *pTarget );
+    float PrimaryWeaponFireTime( void )
+    {
+        return m_flMachineGunTime;
+    }
+    float SecondaryWeaponFireTime( void )
+    {
+        return m_flRocketTime;
+    }
+    float MaxAttackRange() const;
+    bool IsInPrimaryFiringCone() const
+    {
+        return m_bInFiringCone;
+    }
 
-	virtual Vector	EyePosition( );				// position of eyes
-	Vector			BodyTarget( const Vector &posSrc, bool bNoisy );
+    // Muzzle flashes
+    const char *GetTracerType( void );
+    void DoImpactEffect( trace_t &tr, int nDamageType );
+    void DoMuzzleFlash( void );
 
-	
-	virtual void	Use( CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYPE useType, float value );
+    virtual Vector EyePosition();  // position of eyes
+    Vector BodyTarget( const Vector &posSrc, bool bNoisy );
 
-private:
-	enum
-	{
-		MAX_SMOKE_TRAILS = 4,
-		MAX_EXPLOSIONS = 4,
-	};
+    virtual void Use( CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYPE useType, float value );
 
-	// Should we trigger a damage effect?
-	bool ShouldTriggerDamageEffect( int nPrevHealth, int nEffectCount ) const;
+   private:
+    enum
+    {
+        MAX_SMOKE_TRAILS = 4,
+        MAX_EXPLOSIONS = 4,
+    };
 
-	// Add a smoke trail since we've taken more damage
-	void AddSmokeTrail( const Vector &vecPos );
+    // Should we trigger a damage effect?
+    bool ShouldTriggerDamageEffect( int nPrevHealth, int nEffectCount ) const;
 
-	// Creates the breakable husk of an attack chopper
-	void CreateChopperHusk();
+    // Add a smoke trail since we've taken more damage
+    void AddSmokeTrail( const Vector &vecPos );
 
-	// Pow!
-	void ExplodeAndThrowChunk( const Vector &vecExplosionPos );
+    // Creates the breakable husk of an attack chopper
+    void CreateChopperHusk();
 
-	void Event_Killed( const CTakeDamageInfo &info );
+    // Pow!
+    void ExplodeAndThrowChunk( const Vector &vecExplosionPos );
 
-	// Purpose: 
-	void GetRocketShootPosition( Vector *pPosition );
+    void Event_Killed( const CTakeDamageInfo &info );
 
-	void FireMachineGun( void );
-	void FireRocket( void );
+    // Purpose:
+    void GetRocketShootPosition( Vector *pPosition );
 
-	// Death volley 
-	void FireDying( );
+    void FireMachineGun( void );
+    void FireRocket( void );
 
-	// Create a corpse 
-	void CreateCorpse( );
+    // Death volley
+    void FireDying();
 
-	// Blows da shizzle up
-	void InputDestroy( inputdata_t &inputdata );
-	void InputFireMissileAt( inputdata_t &inputdata );
+    // Create a corpse
+    void CreateCorpse();
 
-	void CreateAPCLaserDot( void );
+    // Blows da shizzle up
+    void InputDestroy( inputdata_t &inputdata );
+    void InputFireMissileAt( inputdata_t &inputdata );
 
-	virtual bool ShouldAttractAutoAim( CBaseEntity *pAimingEnt );
+    void CreateAPCLaserDot( void );
 
+    virtual bool ShouldAttractAutoAim( CBaseEntity *pAimingEnt );
 
-private:
-	// Danger sounds made by the APC
-	float	m_flDangerSoundTime;
+   private:
+    // Danger sounds made by the APC
+    float m_flDangerSoundTime;
 
-	// handbrake after the fact to keep vehicles from rolling
-	float	m_flHandbrakeTime;
-	bool	m_bInitialHandbrake;
+    // handbrake after the fact to keep vehicles from rolling
+    float m_flHandbrakeTime;
+    bool m_bInitialHandbrake;
 
-	// Damage effects
-	int		m_nSmokeTrailCount;
+    // Damage effects
+    int m_nSmokeTrailCount;
 
-	// Machine gun attacks
-	int		m_nMachineGunMuzzleAttachment;
-	int		m_nMachineGunBaseAttachment;
-	float	m_flMachineGunTime;
-	int		m_iMachineGunBurstLeft;
-	Vector	m_vecBarrelPos;
-	bool	m_bInFiringCone;
+    // Machine gun attacks
+    int m_nMachineGunMuzzleAttachment;
+    int m_nMachineGunBaseAttachment;
+    float m_flMachineGunTime;
+    int m_iMachineGunBurstLeft;
+    Vector m_vecBarrelPos;
+    bool m_bInFiringCone;
 
-	// Rocket attacks
-	EHANDLE	m_hLaserDot;
-	EHANDLE m_hRocketTarget;
-	int		m_iRocketSalvoLeft;
-	float	m_flRocketTime;
-	int		m_nRocketAttachment;
-	int		m_nRocketSide;
-	EHANDLE m_hSpecificRocketTarget;
-	string_t m_strMissileHint;
+    // Rocket attacks
+    EHANDLE m_hLaserDot;
+    EHANDLE m_hRocketTarget;
+    int m_iRocketSalvoLeft;
+    float m_flRocketTime;
+    int m_nRocketAttachment;
+    int m_nRocketSide;
+    EHANDLE m_hSpecificRocketTarget;
+    string_t m_strMissileHint;
 
-	COutputEvent m_OnDeath;
-	COutputEvent m_OnFiredMissile;
-	COutputEvent m_OnDamaged;
-	COutputEvent m_OnDamagedByPlayer;
+    COutputEvent m_OnDeath;
+    COutputEvent m_OnFiredMissile;
+    COutputEvent m_OnDamaged;
+    COutputEvent m_OnDamagedByPlayer;
 
-	DECLARE_DATADESC();
+    DECLARE_DATADESC();
 };
 
-#endif // VEHICLE_APC_H
-
+#endif  // VEHICLE_APC_H

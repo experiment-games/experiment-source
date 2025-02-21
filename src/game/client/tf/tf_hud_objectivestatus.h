@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -27,54 +27,55 @@
 class CTFHudPasstime;
 class CTFHudObjectiveStatus : public CHudElement, public vgui::EditablePanel
 {
-	DECLARE_CLASS_SIMPLE( CTFHudObjectiveStatus, vgui::EditablePanel );
+    DECLARE_CLASS_SIMPLE( CTFHudObjectiveStatus, vgui::EditablePanel );
 
-public:
-	CTFHudObjectiveStatus( const char *pElementName );
-	virtual void ApplySchemeSettings( vgui::IScheme *pScheme );
-	virtual void Reset();
-	virtual void Think();
-	virtual bool ShouldDraw() OVERRIDE;
+   public:
+    CTFHudObjectiveStatus( const char *pElementName );
+    virtual void ApplySchemeSettings( vgui::IScheme *pScheme );
+    virtual void Reset();
+    virtual void Think();
+    virtual bool ShouldDraw() OVERRIDE;
 
-	virtual int GetRenderGroupPriority( void ) { return 60; }	// higher than build menus
+    virtual int GetRenderGroupPriority( void )
+    {
+        return 60;
+    }  // higher than build menus
 
-	CControlPointProgressBar *GetControlPointProgressBar( void );
+    CControlPointProgressBar *GetControlPointProgressBar( void );
 
-	//=============================================================================
-	// HPE_BEGIN
-	// [msmith] Functions for training stuff.
-	//=============================================================================
-	void SetTrainingText( char *msg);
-	void SetTrainingObjective (char *obj);
-	//=============================================================================
-	// HPE_END
-	//=============================================================================
+    //=============================================================================
+    // HPE_BEGIN
+    // [msmith] Functions for training stuff.
+    //=============================================================================
+    void SetTrainingText( char *msg );
+    void SetTrainingObjective( char *obj );
+    //=============================================================================
+    // HPE_END
+    //=============================================================================
 
-private:
+   private:
+    void SetVisiblePanels( void );
 
-	void	SetVisiblePanels( void );
+   private:
+    float m_flNextThink;
 
-private:
+    CTFHudFlagObjectives *m_pFlagPanel;
 
-	float					m_flNextThink;
+    CHudControlPointIcons *m_pControlPointIconsPanel;
+    CControlPointProgressBar *m_pControlPointProgressBar;
+    CTFHudEscort *m_pEscortPanel;
+    CTFHudMultipleEscort *m_pMultipleEscortPanel;
+    class CTFHUDRobotDestruction *m_pRobotDestructionPanel;
+    CTFHudPasstime *m_pHudPasstime;
 
-	CTFHudFlagObjectives	*m_pFlagPanel;
-	
-	CHudControlPointIcons	*m_pControlPointIconsPanel;
-	CControlPointProgressBar *m_pControlPointProgressBar;
-	CTFHudEscort			*m_pEscortPanel;
-	CTFHudMultipleEscort	*m_pMultipleEscortPanel;
-	class CTFHUDRobotDestruction	*m_pRobotDestructionPanel;
-	CTFHudPasstime			*m_pHudPasstime;
-	
-	//=============================================================================
-	// HPE_BEGIN:
-	// [msmith]	HUD for training stuff.
-	//=============================================================================
-	CTFHudTraining      *m_pTrainingPanel;
-	//=============================================================================
-	// HPE_END
-	//=============================================================================
+    //=============================================================================
+    // HPE_BEGIN:
+    // [msmith]	HUD for training stuff.
+    //=============================================================================
+    CTFHudTraining *m_pTrainingPanel;
+    //=============================================================================
+    // HPE_END
+    //=============================================================================
 };
 
-#endif	// TF_HUD_OBJECTIVESTATUS_H
+#endif  // TF_HUD_OBJECTIVESTATUS_H

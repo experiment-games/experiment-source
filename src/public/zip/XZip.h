@@ -8,9 +8,9 @@
 // Version 1.0   - Turned C files into just a single CPP file
 //               - Made them compile cleanly as C++ files
 //               - Gave them simpler APIs
-//               - Added the ability to zip/unzip directly in memory without 
+//               - Added the ability to zip/unzip directly in memory without
 //                 any intermediate files
-// 
+//
 // Modified by:  Hans Dietrich
 //               hdietrich2@hotmail.com
 //
@@ -30,10 +30,10 @@
 //
 // Original authors' comments:
 // ---------------------------
-// This is version 2002-Feb-16 of the Info-ZIP copyright and license. The 
-// definitive version of this document should be available at 
+// This is version 2002-Feb-16 of the Info-ZIP copyright and license. The
+// definitive version of this document should be available at
 // ftp://ftp.info-zip.org/pub/infozip/license.html indefinitely.
-// 
+//
 // Copyright (c) 1990-2002 Info-ZIP.  All rights reserved.
 //
 // For the purposes of this copyright and license, "Info-ZIP" is defined as
@@ -41,10 +41,10 @@
 //
 //   Mark Adler, John Bush, Karl Davis, Harald Denker, Jean-Michel Dubois,
 //   Jean-loup Gailly, Hunter Goatley, Ian Gorman, Chris Herborth, Dirk Haase,
-//   Greg Hartwig, Robert Heath, Jonathan Hudson, Paul Kienitz, 
-//   David Kirschbaum, Johnny Lee, Onno van der Linden, Igor Mandrichenko, 
-//   Steve P. Miller, Sergio Monesi, Keith Owens, George Petrov, Greg Roelofs, 
-//   Kai Uwe Rommel, Steve Salisbury, Dave Smith, Christian Spieler, 
+//   Greg Hartwig, Robert Heath, Jonathan Hudson, Paul Kienitz,
+//   David Kirschbaum, Johnny Lee, Onno van der Linden, Igor Mandrichenko,
+//   Steve P. Miller, Sergio Monesi, Keith Owens, George Petrov, Greg Roelofs,
+//   Kai Uwe Rommel, Steve Salisbury, Dave Smith, Christian Spieler,
 //   Antoine Verheijen, Paul von Behren, Rich Wales, Mike White
 //
 // This software is provided "as is", without warranty of any kind, express
@@ -59,29 +59,29 @@
 //    1. Redistributions of source code must retain the above copyright notice,
 //       definition, disclaimer, and this list of conditions.
 //
-//    2. Redistributions in binary form (compiled executables) must reproduce 
-//       the above copyright notice, definition, disclaimer, and this list of 
-//       conditions in documentation and/or other materials provided with the 
-//       distribution. The sole exception to this condition is redistribution 
-//       of a standard UnZipSFX binary as part of a self-extracting archive; 
-//       that is permitted without inclusion of this license, as long as the 
+//    2. Redistributions in binary form (compiled executables) must reproduce
+//       the above copyright notice, definition, disclaimer, and this list of
+//       conditions in documentation and/or other materials provided with the
+//       distribution. The sole exception to this condition is redistribution
+//       of a standard UnZipSFX binary as part of a self-extracting archive;
+//       that is permitted without inclusion of this license, as long as the
 //       normal UnZipSFX banner has not been removed from the binary or disabled.
 //
-//    3. Altered versions--including, but not limited to, ports to new 
-//       operating systems, existing ports with new graphical interfaces, and 
-//       dynamic, shared, or static library versions--must be plainly marked 
-//       as such and must not be misrepresented as being the original source.  
-//       Such altered versions also must not be misrepresented as being 
-//       Info-ZIP releases--including, but not limited to, labeling of the 
-//       altered versions with the names "Info-ZIP" (or any variation thereof, 
-//       including, but not limited to, different capitalizations), 
-//       "Pocket UnZip", "WiZ" or "MacZip" without the explicit permission of 
-//       Info-ZIP.  Such altered versions are further prohibited from 
-//       misrepresentative use of the Zip-Bugs or Info-ZIP e-mail addresses or 
+//    3. Altered versions--including, but not limited to, ports to new
+//       operating systems, existing ports with new graphical interfaces, and
+//       dynamic, shared, or static library versions--must be plainly marked
+//       as such and must not be misrepresented as being the original source.
+//       Such altered versions also must not be misrepresented as being
+//       Info-ZIP releases--including, but not limited to, labeling of the
+//       altered versions with the names "Info-ZIP" (or any variation thereof,
+//       including, but not limited to, different capitalizations),
+//       "Pocket UnZip", "WiZ" or "MacZip" without the explicit permission of
+//       Info-ZIP.  Such altered versions are further prohibited from
+//       misrepresentative use of the Zip-Bugs or Info-ZIP e-mail addresses or
 //       of the Info-ZIP URL(s).
 //
 //    4. Info-ZIP retains the right to use the names "Info-ZIP", "Zip", "UnZip",
-//       "UnZipSFX", "WiZ", "Pocket UnZip", "Pocket Zip", and "MacZip" for its 
+//       "UnZipSFX", "WiZ", "Pocket UnZip", "Pocket Zip", and "MacZip" for its
 //       own source and binary releases.
 //
 ///////////////////////////////////////////////////////////////////////////////
@@ -114,23 +114,26 @@ typedef char TCHAR;
 #endif
 
 #ifndef XUNZIP_H
-#if !defined(DECLARE_HANDLE)
-#if !defined(HANDLE)
-typedef void * HANDLE;
+#if !defined( DECLARE_HANDLE )
+#if !defined( HANDLE )
+typedef void *HANDLE;
 #endif
-#define DECLARE_HANDLE(name) typedef struct name##__ { int unused; } *name
+#define DECLARE_HANDLE( name ) \
+    typedef struct name##__    \
+    {                          \
+        int unused;            \
+    } *name
 #endif
-DECLARE_HANDLE(HZIP);		// An HZIP identifies a zip file that is being created
+DECLARE_HANDLE( HZIP );  // An HZIP identifies a zip file that is being created
 #endif
 
-typedef DWORD ZRESULT;		// result codes from any of the zip functions. Listed later.
+typedef DWORD ZRESULT;  // result codes from any of the zip functions. Listed later.
 
 // flag values passed to some functions
-#define ZIP_HANDLE   1
+#define ZIP_HANDLE 1
 #define ZIP_FILENAME 2
-#define ZIP_MEMORY   3
-#define ZIP_FOLDER   4
-
+#define ZIP_MEMORY 3
+#define ZIP_FOLDER 4
 
 ///////////////////////////////////////////////////////////////////////////////
 //
@@ -147,7 +150,7 @@ typedef DWORD ZRESULT;		// result codes from any of the zip functions. Listed la
 //
 // Returns:     HZIP   - non-zero if zip archive created ok, otherwise 0
 //
-HZIP CreateZip(void *z, unsigned int len, DWORD flags);
+HZIP CreateZip( void *z, unsigned int len, DWORD flags );
 // CreateZip - call this to start the creation of a zip file.
 // As the zip is being created, it will be stored somewhere:
 // to a pipe:              CreateZip(hpipe_write, 0,ZIP_HANDLE);
@@ -172,7 +175,6 @@ HZIP CreateZip(void *z, unsigned int len, DWORD flags);
 // or you have to add items not from a pipe, or at least when adding items
 // from a pipe you have to specify the length.
 
-
 ///////////////////////////////////////////////////////////////////////////////
 //
 // ZipAdd()
@@ -183,14 +185,14 @@ HZIP CreateZip(void *z, unsigned int len, DWORD flags);
 //              dstzn   - name used inside the zip archive to identify the file
 //              src     - for a file (ZIP_FILENAME) this specifies the filename
 //                        to be added to the archive;  for other uses, see below
-//              len     - for memory (ZIP_MEMORY) this specifies the buffer 
+//              len     - for memory (ZIP_MEMORY) this specifies the buffer
 //                        length;  for other uses, this should be 0
 //              flags   - indicates usage, see below;  for files, this will be
 //                        ZIP_FILENAME
 //
 // Returns:     ZRESULT - ZR_OK if success, otherwise some other value
 //
-ZRESULT ZipAdd(HZIP hz, const TCHAR *dstzn, void *src, unsigned int len, DWORD flags);
+ZRESULT ZipAdd( HZIP hz, const TCHAR *dstzn, void *src, unsigned int len, DWORD flags );
 // ZipAdd - call this for each file to be added to the zip.
 // dstzn is the name that the file will be stored as in the zip file.
 // The file to be added to the zip can come
@@ -205,7 +207,6 @@ ZRESULT ZipAdd(HZIP hz, const TCHAR *dstzn, void *src, unsigned int len, DWORD f
 // compressed item itself, which in turn makes it easier when unzipping the
 // zipfile into a pipe.
 
-
 ///////////////////////////////////////////////////////////////////////////////
 //
 // CloseZip()
@@ -216,55 +217,49 @@ ZRESULT ZipAdd(HZIP hz, const TCHAR *dstzn, void *src, unsigned int len, DWORD f
 //
 // Returns:     ZRESULT - ZR_OK if success, otherwise some other value
 //
-ZRESULT CloseZip(HZIP hz);
+ZRESULT CloseZip( HZIP hz );
 // CloseZip - the zip handle must be closed with this function.
 
-
-ZRESULT ZipGetMemory(HZIP hz, void **buf, unsigned long *len);
+ZRESULT ZipGetMemory( HZIP hz, void **buf, unsigned long *len );
 // ZipGetMemory - If the zip was created in memory, via ZipCreate(0,ZIP_MEMORY),
 // then this function will return information about that memory block.
 // buf will receive a pointer to its start, and len its length.
 // Note: you can't add any more after calling this.
 
-
-unsigned int FormatZipMessage(ZRESULT code, char *buf,unsigned int len);
+unsigned int FormatZipMessage( ZRESULT code, char *buf, unsigned int len );
 // FormatZipMessage - given an error code, formats it as a string.
 // It returns the length of the error message. If buf/len points
 // to a real buffer, then it also writes as much as possible into there.
 
-
-
 // These are the result codes:
-#define ZR_OK         0x00000000     // nb. the pseudo-code zr-recent is never returned,
-#define ZR_RECENT     0x00000001     // but can be passed to FormatZipMessage.
+#define ZR_OK 0x00000000      // nb. the pseudo-code zr-recent is never returned,
+#define ZR_RECENT 0x00000001  // but can be passed to FormatZipMessage.
 // The following come from general system stuff (e.g. files not openable)
-#define ZR_GENMASK    0x0000FF00
-#define ZR_NODUPH     0x00000100     // couldn't duplicate the handle
-#define ZR_NOFILE     0x00000200     // couldn't create/open the file
-#define ZR_NOALLOC    0x00000300     // failed to allocate some resource
-#define ZR_WRITE      0x00000400     // a general error writing to the file
-#define ZR_NOTFOUND   0x00000500     // couldn't find that file in the zip
-#define ZR_MORE       0x00000600     // there's still more data to be unzipped
-#define ZR_CORRUPT    0x00000700     // the zipfile is corrupt or not a zipfile
-#define ZR_READ       0x00000800     // a general error reading the file
+#define ZR_GENMASK 0x0000FF00
+#define ZR_NODUPH 0x00000100    // couldn't duplicate the handle
+#define ZR_NOFILE 0x00000200    // couldn't create/open the file
+#define ZR_NOALLOC 0x00000300   // failed to allocate some resource
+#define ZR_WRITE 0x00000400     // a general error writing to the file
+#define ZR_NOTFOUND 0x00000500  // couldn't find that file in the zip
+#define ZR_MORE 0x00000600      // there's still more data to be unzipped
+#define ZR_CORRUPT 0x00000700   // the zipfile is corrupt or not a zipfile
+#define ZR_READ 0x00000800      // a general error reading the file
 // The following come from mistakes on the part of the caller
 #define ZR_CALLERMASK 0x00FF0000
-#define ZR_ARGS       0x00010000     // general mistake with the arguments
-#define ZR_NOTMMAP    0x00020000     // tried to ZipGetMemory, but that only works on mmap zipfiles, which yours wasn't
-#define ZR_MEMSIZE    0x00030000     // the memory size is too small
-#define ZR_FAILED     0x00040000     // the thing was already failed when you called this function
-#define ZR_ENDED      0x00050000     // the zip creation has already been closed
-#define ZR_MISSIZE    0x00060000     // the indicated input file size turned out mistaken
-#define ZR_PARTIALUNZ 0x00070000     // the file had already been partially unzipped
-#define ZR_ZMODE      0x00080000     // tried to mix creating/opening a zip 
+#define ZR_ARGS 0x00010000        // general mistake with the arguments
+#define ZR_NOTMMAP 0x00020000     // tried to ZipGetMemory, but that only works on mmap zipfiles, which yours wasn't
+#define ZR_MEMSIZE 0x00030000     // the memory size is too small
+#define ZR_FAILED 0x00040000      // the thing was already failed when you called this function
+#define ZR_ENDED 0x00050000       // the zip creation has already been closed
+#define ZR_MISSIZE 0x00060000     // the indicated input file size turned out mistaken
+#define ZR_PARTIALUNZ 0x00070000  // the file had already been partially unzipped
+#define ZR_ZMODE 0x00080000       // tried to mix creating/opening a zip
 // The following come from bugs within the zip library itself
-#define ZR_BUGMASK    0xFF000000
-#define ZR_NOTINITED  0x01000000     // initialisation didn't work
-#define ZR_SEEK       0x02000000     // trying to seek in an unseekable file
-#define ZR_NOCHANGE   0x04000000     // changed its mind on storage, but not allowed
-#define ZR_FLATE      0x05000000     // an internal error in the de/inflation code
-
-
+#define ZR_BUGMASK 0xFF000000
+#define ZR_NOTINITED 0x01000000  // initialisation didn't work
+#define ZR_SEEK 0x02000000       // trying to seek in an unseekable file
+#define ZR_NOCHANGE 0x04000000   // changed its mind on storage, but not allowed
+#define ZR_FLATE 0x05000000      // an internal error in the de/inflation code
 
 // e.g.
 //
@@ -323,26 +318,24 @@ unsigned int FormatZipMessage(ZRESULT code, char *buf,unsigned int len);
 //                   }
 //
 
-
 // Now we indulge in a little skullduggery so that the code works whether
 // the user has included just zip or both zip and unzip.
 // Idea: if header files for both zip and unzip are present, then presumably
 // the cpp files for zip and unzip are both present, so we will call
 // one or the other of them based on a dynamic choice. If the header file
 // for only one is present, then we will bind to that particular one.
-HZIP CreateZipZ(void *z,unsigned int len,DWORD flags);
-ZRESULT CloseZipZ(HZIP hz);
-unsigned int FormatZipMessageZ(ZRESULT code, char *buf,unsigned int len);
-bool IsZipHandleZ(HZIP hz);
+HZIP CreateZipZ( void *z, unsigned int len, DWORD flags );
+ZRESULT CloseZipZ( HZIP hz );
+unsigned int FormatZipMessageZ( ZRESULT code, char *buf, unsigned int len );
+bool IsZipHandleZ( HZIP hz );
 #define CreateZip CreateZipZ
 
 #ifdef XUNZIP_H
 #undef CloseZip
-#define CloseZip(hz) (IsZipHandleZ(hz)?CloseZipZ(hz):CloseZipU(hz))
+#define CloseZip( hz ) ( IsZipHandleZ( hz ) ? CloseZipZ( hz ) : CloseZipU( hz ) )
 #else
 #define CloseZip CloseZipZ
 #define FormatZipMessage FormatZipMessageZ
 #endif
 
-
-#endif //XZIP_H
+#endif  // XZIP_H

@@ -9,24 +9,30 @@
 //=============================================================================
 // CTrainingAnnotation Entity.
 //=============================================================================
-class CTrainingAnnotation : public CPointEntity 
+class CTrainingAnnotation : public CPointEntity
 {
-	DECLARE_CLASS( CTrainingAnnotation, CPointEntity );
+    DECLARE_CLASS( CTrainingAnnotation, CPointEntity );
 
-public:
-	DECLARE_DATADESC();
+   public:
+    DECLARE_DATADESC();
 
-	CTrainingAnnotation();
-	~CTrainingAnnotation(){}
+    CTrainingAnnotation();
+    ~CTrainingAnnotation() {}
 
-	// Input.
-	void InputShow( inputdata_t &inputdata ){ Show(); }
-	void InputHide( inputdata_t &inputdata ) {Hide(); }
+    // Input.
+    void InputShow( inputdata_t &inputdata )
+    {
+        Show();
+    }
+    void InputHide( inputdata_t &inputdata )
+    {
+        Hide();
+    }
 
-	void Show();
-	void Hide();
+    void Show();
+    void Hide();
 
-	string_t	m_displayText;
-	float       m_flLifetime;
-	float		m_flVerticalOffset;
+    string_t m_displayText;
+    float m_flLifetime;
+    float m_flVerticalOffset;
 };

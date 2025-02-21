@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -16,9 +16,9 @@
 
 namespace vgui
 {
-	class Panel;
-	class EditablePanel;
-}
+class Panel;
+class EditablePanel;
+}  // namespace vgui
 
 class CMMDashboardParentManager* GetMMDashboardParentManager();
 
@@ -34,41 +34,41 @@ class CMMDashboardParentManager* GetMMDashboardParentManager();
 //			the our special popup container.  Why not always just parent to that
 //			single popup container?  Because we want the MINIMUM mouse focus area
 //			possible because the dashboard is not a rectangle (it grows/shrinks).
-//			
-//			
+//
+//
 //			If anything draws on top of the MM dashboard and you dont want it to
 //			have that panel add itself to this class using PushModalFullscreenPopup
 //			when it goes visible and PopModalFullscreenPopup when it hides itself
 //-----------------------------------------------------------------------------
 class CMMDashboardParentManager : public CGameEventListener
 {
-public:
-	CMMDashboardParentManager();
+   public:
+    CMMDashboardParentManager();
 
-	void UpdateParenting();
+    void UpdateParenting();
 
-	void AddPanel( vgui::Panel* pChild );
-	void RemovePanel( vgui::Panel* pChild );
+    void AddPanel( vgui::Panel* pChild );
+    void RemovePanel( vgui::Panel* pChild );
 
-	virtual void FireGameEvent( IGameEvent *event ) OVERRIDE;
-private:
+    virtual void FireGameEvent( IGameEvent* event ) OVERRIDE;
 
-	void AttachToGameUI();
-	void AttachToTopMostPopup();
+   private:
+    void AttachToGameUI();
+    void AttachToTopMostPopup();
 
-	bool m_bAttachedToGameUI;
+    bool m_bAttachedToGameUI;
 
-	class CUtlSortVectorPanelZPos
-	{
-	public:
-		bool Less( const vgui::Panel* lhs, const vgui::Panel* rhs, void * )
-		{
-			return lhs->GetZPos() < rhs->GetZPos();
-		}
-	};
+    class CUtlSortVectorPanelZPos
+    {
+       public:
+        bool Less( const vgui::Panel* lhs, const vgui::Panel* rhs, void* )
+        {
+            return lhs->GetZPos() < rhs->GetZPos();
+        }
+    };
 
-	CUtlSortVector< vgui::Panel*, CUtlSortVectorPanelZPos > m_vecPanels;
-	vgui::PHandle m_pHUDPopup;
+    CUtlSortVector< vgui::Panel*, CUtlSortVectorPanelZPos > m_vecPanels;
+    vgui::PHandle m_pHUDPopup;
 };
 
-#endif // TF_MATCHMAKING_DASHBOARD_PARENT_MANAGER_H
+#endif  // TF_MATCHMAKING_DASHBOARD_PARENT_MANAGER_H

@@ -27,22 +27,25 @@ class CTFPlayer;
 //
 class CTFItem : public CDynamicProp
 {
-public:
-	DECLARE_CLASS( CTFItem,CDynamicProp  )
-	DECLARE_NETWORKCLASS();
+   public:
+    DECLARE_CLASS( CTFItem, CDynamicProp )
+    DECLARE_NETWORKCLASS();
 
-	// Unique identifier.
-	virtual unsigned int GetItemID() const;
-	
-	// Pick up and drop.
-	virtual void PickUp( CTFPlayer *pPlayer, bool bInvisible );
-	virtual void Drop( CTFPlayer *pPlayer, bool bVisible, bool bThrown = false, bool bMessage = true );
+    // Unique identifier.
+    virtual unsigned int GetItemID() const;
+
+    // Pick up and drop.
+    virtual void PickUp( CTFPlayer *pPlayer, bool bInvisible );
+    virtual void Drop( CTFPlayer *pPlayer, bool bVisible, bool bThrown = false, bool bMessage = true );
 
 #ifdef CLIENT_DLL
-	virtual bool ShouldDraw();
-	virtual ShadowType_t ShadowCastType();
-	virtual bool ShouldHideGlowEffect( void ) { return false; }
+    virtual bool ShouldDraw();
+    virtual ShadowType_t ShadowCastType();
+    virtual bool ShouldHideGlowEffect( void )
+    {
+        return false;
+    }
 #endif
 };
 
-#endif // TF_ITEM_H
+#endif  // TF_ITEM_H

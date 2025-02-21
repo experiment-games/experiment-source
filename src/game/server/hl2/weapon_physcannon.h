@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -9,8 +9,6 @@
 #ifdef _WIN32
 #pragma once
 #endif
-
-
 
 //-----------------------------------------------------------------------------
 // Do we have the super-phys gun?
@@ -30,4 +28,4 @@ CBaseEntity *GetPlayerHeldEntity( CBasePlayer *pPlayer );
 
 bool PhysCannonAccountableForObject( CBaseCombatWeapon *pPhysCannon, CBaseEntity *pObject );
 
-#endif // WEAPON_PHYSCANNON_H
+#endif  // WEAPON_PHYSCANNON_H

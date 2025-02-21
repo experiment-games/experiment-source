@@ -24,10 +24,10 @@
 //
 // TF Energy Ball Projectile functions (Server specific).
 //
-#define ENERGY_BALL_MODEL					"models/weapons/w_models/w_drg_ball.mdl"
-#define ARROW_GRAVITY				0.3f
+#define ENERGY_BALL_MODEL "models/weapons/w_models/w_drg_ball.mdl"
+#define ARROW_GRAVITY 0.3f
 
-#define ENERGY_BALL_THINK_CONTEXT			"CTFProjectile_EnergyBallThink"
+#define ENERGY_BALL_THINK_CONTEXT "CTFProjectile_EnergyBallThink"
 
 //-----------------------------------------------------------------------------
 LINK_ENTITY_TO_CLASS( tf_projectile_energy_ball, CTFProjectile_EnergyBall );
@@ -36,21 +36,21 @@ PRECACHE_WEAPON_REGISTER( tf_projectile_energy_ball );
 IMPLEMENT_NETWORKCLASS_ALIASED( TFProjectile_EnergyBall, DT_TFProjectile_EnergyBall )
 
 BEGIN_NETWORK_TABLE( CTFProjectile_EnergyBall, DT_TFProjectile_EnergyBall )
-	SendPropBool( SENDINFO( m_bChargedShot ) ),
-	SendPropVector( SENDINFO( m_vColor1 ), 8, 0, 0, 1 ),
-	SendPropVector( SENDINFO( m_vColor2 ), 8, 0, 0, 1 )
-END_NETWORK_TABLE()
+SendPropBool( SENDINFO( m_bChargedShot ) ),
+    SendPropVector( SENDINFO( m_vColor1 ), 8, 0, 0, 1 ),
+    SendPropVector( SENDINFO( m_vColor2 ), 8, 0, 0, 1 )
+        END_NETWORK_TABLE()
 
-BEGIN_DATADESC( CTFProjectile_EnergyBall )
-//DEFINE_THINKFUNC( ImpactThink ),
-END_DATADESC()
+            BEGIN_DATADESC( CTFProjectile_EnergyBall )
+    // DEFINE_THINKFUNC( ImpactThink ),
+    END_DATADESC()
 
-//-----------------------------------------------------------------------------
-// Purpose:
-//-----------------------------------------------------------------------------
-CTFProjectile_EnergyBall::CTFProjectile_EnergyBall()
+    //-----------------------------------------------------------------------------
+    // Purpose:
+    //-----------------------------------------------------------------------------
+    CTFProjectile_EnergyBall::CTFProjectile_EnergyBall()
 {
-	m_bChargedShot = false;
+    m_bChargedShot = false;
 }
 
 //-----------------------------------------------------------------------------
@@ -65,13 +65,13 @@ CTFProjectile_EnergyBall::~CTFProjectile_EnergyBall()
 //-----------------------------------------------------------------------------
 CTFProjectile_EnergyBall *CTFProjectile_EnergyBall::Create( const Vector &vecOrigin, const QAngle &vecAngles, const float fSpeed, const float fGravity, CBaseEntity *pOwner, CBaseEntity *pScorer )
 {
-	CTFProjectile_EnergyBall *pBall = static_cast<CTFProjectile_EnergyBall*>( CBaseEntity::Create( "tf_projectile_energy_ball", vecOrigin, vecAngles, pOwner ) );
-	if ( pBall )
-	{
-		pBall->InitEnergyBall( vecOrigin, vecAngles, fSpeed, fGravity, pOwner, pScorer );
-	}
+    CTFProjectile_EnergyBall *pBall = static_cast< CTFProjectile_EnergyBall * >( CBaseEntity::Create( "tf_projectile_energy_ball", vecOrigin, vecAngles, pOwner ) );
+    if ( pBall )
+    {
+        pBall->InitEnergyBall( vecOrigin, vecAngles, fSpeed, fGravity, pOwner, pScorer );
+    }
 
-	return pBall;
+    return pBall;
 }
 
 //-----------------------------------------------------------------------------
@@ -79,51 +79,51 @@ CTFProjectile_EnergyBall *CTFProjectile_EnergyBall::Create( const Vector &vecOri
 //-----------------------------------------------------------------------------
 void CTFProjectile_EnergyBall::InitEnergyBall( const Vector &vecOrigin, const QAngle &vecAngles, const float fSpeed, const float fGravity, CBaseEntity *pOwner, CBaseEntity *pScorer )
 {
-	// Initialize the owner.
-	SetOwnerEntity( pOwner );
+    // Initialize the owner.
+    SetOwnerEntity( pOwner );
 
-	// Set team.
-	ChangeTeam( pOwner->GetTeamNumber() );
+    // Set team.
+    ChangeTeam( pOwner->GetTeamNumber() );
 
-	// Spawn.
-	Spawn();
+    // Spawn.
+    Spawn();
 
-	SetGravity( fGravity );
+    SetGravity( fGravity );
 
-	SetCritical( true );
+    SetCritical( true );
 
-	// Setup the initial velocity.
-	Vector vecForward, vecRight, vecUp;
-	AngleVectors( vecAngles, &vecForward, &vecRight, &vecUp );
+    // Setup the initial velocity.
+    Vector vecForward, vecRight, vecUp;
+    AngleVectors( vecAngles, &vecForward, &vecRight, &vecUp );
 
-	Vector vecVelocity = vecForward * fSpeed;
-	
-	SetAbsVelocity( vecVelocity );	
-	SetupInitialTransmittedGrenadeVelocity( vecVelocity );
+    Vector vecVelocity = vecForward * fSpeed;
 
-	// Setup the initial angles.
-	QAngle angles;
-	VectorAngles( vecVelocity, angles );
-	SetAbsAngles( angles );
+    SetAbsVelocity( vecVelocity );
+    SetupInitialTransmittedGrenadeVelocity( vecVelocity );
 
-	// Save the scoring player.
-	SetScorer( pScorer );
+    // Setup the initial angles.
+    QAngle angles;
+    VectorAngles( vecVelocity, angles );
+    SetAbsAngles( angles );
 
-	if ( pScorer )
-	{
-		SetTruceValidForEnt( pScorer->IsTruceValidForEnt() );
-	}
+    // Save the scoring player.
+    SetScorer( pScorer );
 
-	m_flInitTime = gpGlobals->curtime;
+    if ( pScorer )
+    {
+        SetTruceValidForEnt( pScorer->IsTruceValidForEnt() );
+    }
+
+    m_flInitTime = gpGlobals->curtime;
 }
 
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
 void CTFProjectile_EnergyBall::Spawn()
-{	
-	SetModel( ENERGY_BALL_MODEL );
-	BaseClass::Spawn();
+{
+    SetModel( ENERGY_BALL_MODEL );
+    BaseClass::Spawn();
 }
 
 //-----------------------------------------------------------------------------
@@ -131,16 +131,16 @@ void CTFProjectile_EnergyBall::Spawn()
 //-----------------------------------------------------------------------------
 void CTFProjectile_EnergyBall::Precache()
 {
-	PrecacheParticleSystem( "drg_cow_rockettrail_charged" );
-	PrecacheParticleSystem( "drg_cow_rockettrail_charged_blue" );
-	PrecacheParticleSystem( "drg_cow_rockettrail_normal" );
-	PrecacheParticleSystem( "drg_cow_rockettrail_normal_blue" );
+    PrecacheParticleSystem( "drg_cow_rockettrail_charged" );
+    PrecacheParticleSystem( "drg_cow_rockettrail_charged_blue" );
+    PrecacheParticleSystem( "drg_cow_rockettrail_normal" );
+    PrecacheParticleSystem( "drg_cow_rockettrail_normal_blue" );
 
-	PrecacheModel( ENERGY_BALL_MODEL );
+    PrecacheModel( ENERGY_BALL_MODEL );
 
-	PrecacheScriptSound( "Weapon_CowMangler.Explode" );
+    PrecacheScriptSound( "Weapon_CowMangler.Explode" );
 
-	BaseClass::Precache();
+    BaseClass::Precache();
 }
 
 //-----------------------------------------------------------------------------
@@ -148,7 +148,7 @@ void CTFProjectile_EnergyBall::Precache()
 //-----------------------------------------------------------------------------
 void CTFProjectile_EnergyBall::SetScorer( CBaseEntity *pScorer )
 {
-	m_Scorer = pScorer;
+    m_Scorer = pScorer;
 }
 
 //-----------------------------------------------------------------------------
@@ -156,7 +156,7 @@ void CTFProjectile_EnergyBall::SetScorer( CBaseEntity *pScorer )
 //-----------------------------------------------------------------------------
 CBasePlayer *CTFProjectile_EnergyBall::GetScorer( void )
 {
-	return dynamic_cast<CBasePlayer *>( m_Scorer.Get() );
+    return dynamic_cast< CBasePlayer * >( m_Scorer.Get() );
 }
 
 //-----------------------------------------------------------------------------
@@ -164,50 +164,50 @@ CBasePlayer *CTFProjectile_EnergyBall::GetScorer( void )
 //-----------------------------------------------------------------------------
 void CTFProjectile_EnergyBall::ImpactSound( const char *pszSoundName, bool bLoudForAttacker )
 {
-	CTFPlayer *pAttacker = ToTFPlayer( GetScorer() );
-	if ( !pAttacker )
-		return;
+    CTFPlayer *pAttacker = ToTFPlayer( GetScorer() );
+    if ( !pAttacker )
+        return;
 
-	if ( bLoudForAttacker )
-	{
-		float soundlen = 0;
-		EmitSound_t params;
-		params.m_flSoundTime = 0;
-		params.m_pSoundName = pszSoundName;
-		params.m_pflSoundDuration = &soundlen;
-		CPASFilter filter( GetAbsOrigin() );
-		filter.RemoveRecipient( ToTFPlayer(pAttacker) );
-		EmitSound( filter, entindex(), params );
+    if ( bLoudForAttacker )
+    {
+        float soundlen = 0;
+        EmitSound_t params;
+        params.m_flSoundTime = 0;
+        params.m_pSoundName = pszSoundName;
+        params.m_pflSoundDuration = &soundlen;
+        CPASFilter filter( GetAbsOrigin() );
+        filter.RemoveRecipient( ToTFPlayer( pAttacker ) );
+        EmitSound( filter, entindex(), params );
 
-		CSingleUserRecipientFilter attackerFilter( ToTFPlayer(pAttacker) );
-		EmitSound( attackerFilter, pAttacker->entindex(), params );
-	}
-	else
-	{
-		EmitSound( pszSoundName );
-	}
+        CSingleUserRecipientFilter attackerFilter( ToTFPlayer( pAttacker ) );
+        EmitSound( attackerFilter, pAttacker->entindex(), params );
+    }
+    else
+    {
+        EmitSound( pszSoundName );
+    }
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFProjectile_EnergyBall::FadeOut( int iTime )
 {
-	SetMoveType( MOVETYPE_NONE );
-	SetAbsVelocity( vec3_origin	);
-	AddSolidFlags( FSOLID_NOT_SOLID );
-	AddEffects( EF_NODRAW );
+    SetMoveType( MOVETYPE_NONE );
+    SetAbsVelocity( vec3_origin );
+    AddSolidFlags( FSOLID_NOT_SOLID );
+    AddEffects( EF_NODRAW );
 
-	// Start remove timer.
-	SetContextThink( &CTFProjectile_EnergyBall::RemoveThink, gpGlobals->curtime + iTime, "ENERGY_BALL_REMOVE_THINK" );
+    // Start remove timer.
+    SetContextThink( &CTFProjectile_EnergyBall::RemoveThink, gpGlobals->curtime + iTime, "ENERGY_BALL_REMOVE_THINK" );
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFProjectile_EnergyBall::RemoveThink( void )
 {
-	UTIL_Remove( this );
+    UTIL_Remove( this );
 }
 
 //-----------------------------------------------------------------------------
@@ -215,177 +215,176 @@ void CTFProjectile_EnergyBall::RemoveThink( void )
 //-----------------------------------------------------------------------------
 void CTFProjectile_EnergyBall::Deflected( CBaseEntity *pDeflectedBy, Vector &vecDir )
 {
-	CTFPlayer *pTFDeflector = ToTFPlayer( pDeflectedBy );
-	if ( !pTFDeflector )
-		return;
+    CTFPlayer *pTFDeflector = ToTFPlayer( pDeflectedBy );
+    if ( !pTFDeflector )
+        return;
 
-	ChangeTeam( pTFDeflector->GetTeamNumber() );
-	SetLauncher( pTFDeflector->GetActiveWeapon() );
+    ChangeTeam( pTFDeflector->GetTeamNumber() );
+    SetLauncher( pTFDeflector->GetActiveWeapon() );
 
-	CTFPlayer* pOldOwner = ToTFPlayer( GetOwnerEntity() );
-	SetOwnerEntity( pTFDeflector );
+    CTFPlayer *pOldOwner = ToTFPlayer( GetOwnerEntity() );
+    SetOwnerEntity( pTFDeflector );
 
-	if ( pOldOwner )
-	{
-		pOldOwner->SpeakConceptIfAllowed( MP_CONCEPT_DEFLECTED, "projectile:1,victim:1" );
-	}
+    if ( pOldOwner )
+    {
+        pOldOwner->SpeakConceptIfAllowed( MP_CONCEPT_DEFLECTED, "projectile:1,victim:1" );
+    }
 
-	if ( pTFDeflector->m_Shared.IsCritBoosted() )
-	{
-		SetCritical( true );
-	}
+    if ( pTFDeflector->m_Shared.IsCritBoosted() )
+    {
+        SetCritical( true );
+    }
 
-	CTFWeaponBase::SendObjectDeflectedEvent( pTFDeflector, pOldOwner, GetWeaponID(), this );
+    CTFWeaponBase::SendObjectDeflectedEvent( pTFDeflector, pOldOwner, GetWeaponID(), this );
 
-	IncrementDeflected();
-	SetScorer( pTFDeflector );
+    IncrementDeflected();
+    SetScorer( pTFDeflector );
 
-	// Change particle color data.
-	if ( GetTeamNumber() == TF_TEAM_BLUE )
-	{
-		m_vColor1 = TF_PARTICLE_WEAPON_BLUE_1;
-		m_vColor2 = TF_PARTICLE_WEAPON_BLUE_2;
-	}
-	else
-	{
-		m_vColor1 = TF_PARTICLE_WEAPON_RED_1;
-		m_vColor2 = TF_PARTICLE_WEAPON_RED_2;
-	}
+    // Change particle color data.
+    if ( GetTeamNumber() == TF_TEAM_BLUE )
+    {
+        m_vColor1 = TF_PARTICLE_WEAPON_BLUE_1;
+        m_vColor2 = TF_PARTICLE_WEAPON_BLUE_2;
+    }
+    else
+    {
+        m_vColor1 = TF_PARTICLE_WEAPON_RED_1;
+        m_vColor2 = TF_PARTICLE_WEAPON_RED_2;
+    }
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFProjectile_EnergyBall::Explode( trace_t *pTrace, CBaseEntity *pOther )
 {
-	if ( ShouldNotDetonate() )
-	{
-		Destroy( true );
-		return;
-	}
+    if ( ShouldNotDetonate() )
+    {
+        Destroy( true );
+        return;
+    }
 
-	// Save this entity as enemy, they will take 100% damage.
-	m_hEnemy = pOther;
+    // Save this entity as enemy, they will take 100% damage.
+    m_hEnemy = pOther;
 
-	// Invisible.
-	SetModelName( NULL_STRING );
-	AddSolidFlags( FSOLID_NOT_SOLID );
-	m_takedamage = DAMAGE_NO;
+    // Invisible.
+    SetModelName( NULL_STRING );
+    AddSolidFlags( FSOLID_NOT_SOLID );
+    m_takedamage = DAMAGE_NO;
 
-	// Pull out a bit.
-	if ( pTrace->fraction != 1.0 )
-	{
-		SetAbsOrigin( pTrace->endpos + ( pTrace->plane.normal * 1.0f ) );
-	}
+    // Pull out a bit.
+    if ( pTrace->fraction != 1.0 )
+    {
+        SetAbsOrigin( pTrace->endpos + ( pTrace->plane.normal * 1.0f ) );
+    }
 
-	// Particle (oriented)
-	Vector vecOrigin = GetAbsOrigin();
-	CPVSFilter filter( vecOrigin );
-	QAngle angExplosion( 0.f, 0.f, 0.f );
-	VectorAngles( pTrace->plane.normal, angExplosion );
-	TE_TFParticleEffect( filter, 0.f, GetExplosionParticleName(), vecOrigin, pTrace->plane.normal, angExplosion, NULL );
-	
-	// Screenshake
-	if ( m_bChargedShot )
-	{
-		UTIL_ScreenShake( WorldSpaceCenter(), 25.0, 150.0, 1.0, 750, SHAKE_START );
-	}
+    // Particle (oriented)
+    Vector vecOrigin = GetAbsOrigin();
+    CPVSFilter filter( vecOrigin );
+    QAngle angExplosion( 0.f, 0.f, 0.f );
+    VectorAngles( pTrace->plane.normal, angExplosion );
+    TE_TFParticleEffect( filter, 0.f, GetExplosionParticleName(), vecOrigin, pTrace->plane.normal, angExplosion, NULL );
 
-	// Sound
-	ImpactSound( "Weapon_CowMangler.Explode" );
-	CSoundEnt::InsertSound ( SOUND_COMBAT, vecOrigin, 1024, 3.0 );
+    // Screenshake
+    if ( m_bChargedShot )
+    {
+        UTIL_ScreenShake( WorldSpaceCenter(), 25.0, 150.0, 1.0, 750, SHAKE_START );
+    }
 
-	// Damage.
-	CBaseEntity *pAttacker = GetOwnerEntity();
-	IScorer *pScorerInterface = dynamic_cast<IScorer*>( pAttacker );
-	if ( pScorerInterface )
-	{
-		pAttacker = pScorerInterface->GetScorer();
-	}
+    // Sound
+    ImpactSound( "Weapon_CowMangler.Explode" );
+    CSoundEnt::InsertSound( SOUND_COMBAT, vecOrigin, 1024, 3.0 );
 
-	float flRadius = GetRadius();
+    // Damage.
+    CBaseEntity *pAttacker = GetOwnerEntity();
+    IScorer *pScorerInterface = dynamic_cast< IScorer * >( pAttacker );
+    if ( pScorerInterface )
+    {
+        pAttacker = pScorerInterface->GetScorer();
+    }
 
-	if ( pAttacker ) // No attacker, deal no damage. Otherwise we could potentially kill teammates.
-	{
-		CTFPlayer *pTarget = ToTFPlayer( GetEnemy() );
-		if ( pTarget )
-		{
-			// Rocket Specialist
-			CheckForStunOnImpact( pTarget );
+    float flRadius = GetRadius();
 
-			if ( pTarget->GetTeamNumber() != pAttacker->GetTeamNumber() )
-			{
-				RecordEnemyPlayerHit( pTarget, true );
-			}
-		}
+    if ( pAttacker )  // No attacker, deal no damage. Otherwise we could potentially kill teammates.
+    {
+        CTFPlayer *pTarget = ToTFPlayer( GetEnemy() );
+        if ( pTarget )
+        {
+            // Rocket Specialist
+            CheckForStunOnImpact( pTarget );
 
-		CTakeDamageInfo info( this, pAttacker, m_hLauncher, vec3_origin, vecOrigin, GetDamage(), GetDamageType(), GetDamageCustom() );
-		CTFRadiusDamageInfo radiusinfo( &info, vecOrigin, flRadius, NULL, m_bChargedShot ? TF_ROCKET_RADIUS_FOR_RJS*1.33 : TF_ROCKET_RADIUS_FOR_RJS );
-		TFGameRules()->RadiusDamage( radiusinfo );
-	}
+            if ( pTarget->GetTeamNumber() != pAttacker->GetTeamNumber() )
+            {
+                RecordEnemyPlayerHit( pTarget, true );
+            }
+        }
 
-	// Don't decal players with scorch.
-	if ( !pOther->IsPlayer() )
-	{
-		UTIL_DecalTrace( pTrace, "Scorch" );
-	}
+        CTakeDamageInfo info( this, pAttacker, m_hLauncher, vec3_origin, vecOrigin, GetDamage(), GetDamageType(), GetDamageCustom() );
+        CTFRadiusDamageInfo radiusinfo( &info, vecOrigin, flRadius, NULL, m_bChargedShot ? TF_ROCKET_RADIUS_FOR_RJS * 1.33 : TF_ROCKET_RADIUS_FOR_RJS );
+        TFGameRules()->RadiusDamage( radiusinfo );
+    }
 
-	// Remove the rocket.
-	UTIL_Remove( this );
+    // Don't decal players with scorch.
+    if ( !pOther->IsPlayer() )
+    {
+        UTIL_DecalTrace( pTrace, "Scorch" );
+    }
 
-	return;
+    // Remove the rocket.
+    UTIL_Remove( this );
+
+    return;
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 const char *CTFProjectile_EnergyBall::GetExplosionParticleName( void )
 {
-	if ( m_bChargedShot )
-	{
-		return ( GetTeamNumber() == TF_TEAM_RED ) ? "drg_cow_explosioncore_charged" : "drg_cow_explosioncore_charged_blue";
-	}
-	else
-	{
-		return ( GetTeamNumber() == TF_TEAM_RED ) ? "drg_cow_explosioncore_normal" : "drg_cow_explosioncore_normal_blue";
-	}
+    if ( m_bChargedShot )
+    {
+        return ( GetTeamNumber() == TF_TEAM_RED ) ? "drg_cow_explosioncore_charged" : "drg_cow_explosioncore_charged_blue";
+    }
+    else
+    {
+        return ( GetTeamNumber() == TF_TEAM_RED ) ? "drg_cow_explosioncore_normal" : "drg_cow_explosioncore_normal_blue";
+    }
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 float CTFProjectile_EnergyBall::GetDamage()
 {
-	return m_flDamage;
+    return m_flDamage;
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-int	CTFProjectile_EnergyBall::GetDamageType()
+int CTFProjectile_EnergyBall::GetDamageType()
 {
-	int iDamageType;
-	if ( m_bChargedShot )
-	{
-		iDamageType = DMG_BLAST | DMG_HALF_FALLOFF | DMG_USEDISTANCEMOD | DMG_IGNITE;
-	}
-	else
-	{
-		iDamageType = DMG_BLAST | DMG_HALF_FALLOFF | DMG_USEDISTANCEMOD;
-		if ( m_bCritical )
-		{
-			iDamageType |= DMG_CRITICAL;
-		}
-	}
+    int iDamageType;
+    if ( m_bChargedShot )
+    {
+        iDamageType = DMG_BLAST | DMG_HALF_FALLOFF | DMG_USEDISTANCEMOD | DMG_IGNITE;
+    }
+    else
+    {
+        iDamageType = DMG_BLAST | DMG_HALF_FALLOFF | DMG_USEDISTANCEMOD;
+        if ( m_bCritical )
+        {
+            iDamageType |= DMG_CRITICAL;
+        }
+    }
 
-	return iDamageType;
+    return iDamageType;
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-int	CTFProjectile_EnergyBall::GetDamageCustom()
+int CTFProjectile_EnergyBall::GetDamageCustom()
 {
-	return m_bChargedShot ? TF_DMG_CUSTOM_PLASMA_CHARGED : TF_DMG_CUSTOM_PLASMA;
+    return m_bChargedShot ? TF_DMG_CUSTOM_PLASMA_CHARGED : TF_DMG_CUSTOM_PLASMA;
 }
-

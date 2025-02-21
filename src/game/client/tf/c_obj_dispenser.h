@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -17,79 +17,81 @@
 
 class C_ObjectDispenser : public C_BaseObject
 {
-	DECLARE_CLASS( C_ObjectDispenser, C_BaseObject );
-public:
-	DECLARE_CLIENTCLASS();
+    DECLARE_CLASS( C_ObjectDispenser, C_BaseObject );
 
-	C_ObjectDispenser();
-	~C_ObjectDispenser();
+   public:
+    DECLARE_CLIENTCLASS();
 
-	int GetMetalAmmoCount() { return m_iAmmoMetal; }
+    C_ObjectDispenser();
+    ~C_ObjectDispenser();
 
-	CUtlVector< CHandle<C_TFPlayer> > m_hHealingTargets;
+    int GetMetalAmmoCount()
+    {
+        return m_iAmmoMetal;
+    }
 
-	virtual void OnDataChanged( DataUpdateType_t updateType );
-	virtual void ClientThink() OVERRIDE;
+    CUtlVector< CHandle< C_TFPlayer > > m_hHealingTargets;
 
-	virtual void SetInvisibilityLevel( float flValue );
-	void UpdateEffects( void );
-	void StopEffects( bool bRemoveAll = false );
+    virtual void OnDataChanged( DataUpdateType_t updateType );
+    virtual void ClientThink() OVERRIDE;
 
-	virtual void UpdateDamageEffects( BuildingDamageLevel_t damageLevel );
+    virtual void SetInvisibilityLevel( float flValue );
+    void UpdateEffects( void );
+    void StopEffects( bool bRemoveAll = false );
 
-	virtual int GetMaxMetal( void );
+    virtual void UpdateDamageEffects( BuildingDamageLevel_t damageLevel );
 
-	bool m_bUpdateHealingTargets;
+    virtual int GetMaxMetal( void );
 
-private:
+    bool m_bUpdateHealingTargets;
 
+   private:
+    int m_iState;
+    int m_iAmmoMetal;
+    int m_iMiniBombCounter;
 
-	int m_iState;
-	int m_iAmmoMetal;
-	int m_iMiniBombCounter;
+    bool m_bPlayingSound;
 
-	bool m_bPlayingSound;
+    struct healingtargeteffects_t
+    {
+        C_BaseEntity *pTarget;
+        CNewParticleEffect *pEffect;
+    };
+    CUtlVector< healingtargeteffects_t > m_hHealingTargetEffects;
 
-	struct healingtargeteffects_t
-	{
-		C_BaseEntity		*pTarget;
-		CNewParticleEffect	*pEffect;
-	};
-	CUtlVector<healingtargeteffects_t> m_hHealingTargetEffects;
-
-	C_ObjectDispenser( const C_ObjectDispenser & ); // not defined, not accessible
+    C_ObjectDispenser( const C_ObjectDispenser & );  // not defined, not accessible
 };
-
 
 class CDispenserControlPanel : public CObjectControlPanel
 {
-	DECLARE_CLASS( CDispenserControlPanel, CObjectControlPanel );
+    DECLARE_CLASS( CDispenserControlPanel, CObjectControlPanel );
 
-public:
-	CDispenserControlPanel( vgui::Panel *parent, const char *panelName );
+   public:
+    CDispenserControlPanel( vgui::Panel *parent, const char *panelName );
 
-protected:
-	virtual void OnTickActive( C_BaseObject *pObj, C_TFPlayer *pLocalPlayer );
-	virtual bool IsVisible() OVERRIDE;
+   protected:
+    virtual void OnTickActive( C_BaseObject *pObj, C_TFPlayer *pLocalPlayer );
+    virtual bool IsVisible() OVERRIDE;
 
-private:
-	vgui::RotatingProgressBar *m_pAmmoProgress;
-	CHandle< C_ObjectDispenser > m_hDispenser;
+   private:
+    vgui::RotatingProgressBar *m_pAmmoProgress;
+    CHandle< C_ObjectDispenser > m_hDispenser;
 };
 
 class CDispenserControlPanel_Red : public CDispenserControlPanel
 {
-	DECLARE_CLASS( CDispenserControlPanel_Red, CDispenserControlPanel );
+    DECLARE_CLASS( CDispenserControlPanel_Red, CDispenserControlPanel );
 
-public:
-	CDispenserControlPanel_Red( vgui::Panel *parent, const char *panelName ) : CDispenserControlPanel( parent, panelName ) {}
+   public:
+    CDispenserControlPanel_Red( vgui::Panel *parent, const char *panelName )
+        : CDispenserControlPanel( parent, panelName ) {}
 };
-
 
 class C_ObjectCartDispenser : public C_ObjectDispenser
 {
-	DECLARE_CLASS( C_ObjectCartDispenser, C_ObjectDispenser );
-public:
-	DECLARE_CLIENTCLASS();
+    DECLARE_CLASS( C_ObjectCartDispenser, C_ObjectDispenser );
+
+   public:
+    DECLARE_CLIENTCLASS();
 };
-#endif	//C_OBJ_DISPENSER_H
+#endif  // C_OBJ_DISPENSER_H

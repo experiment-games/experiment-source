@@ -16,103 +16,95 @@
 #include "bot/behavior/engineer/tf_bot_engineer_build_teleport_entrance.h"
 #include "bot/behavior/engineer/tf_bot_engineer_move_to_build.h"
 
-
 #include "raid/tf_raid_logic.h"
 
 // this was useful when engineers build at their normal (slow) rate to make sure initial sentries get built in time
 ConVar tf_raid_engineer_infinte_metal( "tf_raid_engineer_infinte_metal", "1", FCVAR_CHEAT | FCVAR_DEVELOPMENTONLY );
 
-
 //---------------------------------------------------------------------------------------------
 Action< CTFBot > *CTFBotEngineerBuild::InitialContainedAction( CTFBot *me )
 {
-	if ( TFGameRules()->IsPVEModeActive() )
-	{
-		return new CTFBotEngineerMoveToBuild;
-	}
+    if ( TFGameRules()->IsPVEModeActive() )
+    {
+        return new CTFBotEngineerMoveToBuild;
+    }
 
-	return new CTFBotEngineerBuildTeleportEntrance;
+    return new CTFBotEngineerBuildTeleportEntrance;
 }
-
 
 //---------------------------------------------------------------------------------------------
-ActionResult< CTFBot >	CTFBotEngineerBuild::OnStart( CTFBot *me, Action< CTFBot > *priorAction )
+ActionResult< CTFBot > CTFBotEngineerBuild::OnStart( CTFBot *me, Action< CTFBot > *priorAction )
 {
-	return Continue();
+    return Continue();
 }
-
 
 //---------------------------------------------------------------------------------------------
-ActionResult< CTFBot >	CTFBotEngineerBuild::Update( CTFBot *me, float interval )
+ActionResult< CTFBot > CTFBotEngineerBuild::Update( CTFBot *me, float interval )
 {
-	if ( TFGameRules()->IsPVEModeActive() && tf_raid_engineer_infinte_metal.GetBool() )
-	{
-		// infinite ammo
-		me->GiveAmmo( 1000, TF_AMMO_METAL, true );
-	}
+    if ( TFGameRules()->IsPVEModeActive() && tf_raid_engineer_infinte_metal.GetBool() )
+    {
+        // infinite ammo
+        me->GiveAmmo( 1000, TF_AMMO_METAL, true );
+    }
 
-	return Continue();
+    return Continue();
 }
-
 
 //---------------------------------------------------------------------------------------------
 ActionResult< CTFBot > CTFBotEngineerBuild::OnResume( CTFBot *me, Action< CTFBot > *interruptingAction )
 {
-	return Continue();
+    return Continue();
 }
-
 
 //---------------------------------------------------------------------------------------------
 EventDesiredResult< CTFBot > CTFBotEngineerBuild::OnTerritoryLost( CTFBot *me, int territoryID )
 {
-	return TryContinue();
+    return TryContinue();
 }
-
 
 //---------------------------------------------------------------------------------------------
 // Hack to disable ammo/health gathering elsewhere
 QueryResultType CTFBotEngineerBuild::ShouldHurry( const INextBot *meBot ) const
 {
-	CTFBot *me = (CTFBot *)meBot->GetEntity();
+    CTFBot *me = ( CTFBot * )meBot->GetEntity();
 
-	CObjectSentrygun *mySentry = (CObjectSentrygun *)me->GetObjectOfType( OBJ_SENTRYGUN );
-	CObjectDispenser *myDispenser = (CObjectDispenser *)me->GetObjectOfType( OBJ_DISPENSER );
+    CObjectSentrygun *mySentry = ( CObjectSentrygun * )me->GetObjectOfType( OBJ_SENTRYGUN );
+    CObjectDispenser *myDispenser = ( CObjectDispenser * )me->GetObjectOfType( OBJ_DISPENSER );
 
-	if ( mySentry && myDispenser && !mySentry->IsBuilding() && !myDispenser->IsBuilding() && me->GetActiveTFWeapon() && me->GetActiveTFWeapon()->GetWeaponID() == TF_WEAPON_WRENCH )
-	{
-		if ( me->IsAmmoLow() && myDispenser->GetAvailableMetal() <= 0 )
-		{
-			// we're totally out of metal - collect some nearby
-			return ANSWER_NO;
-		}
+    if ( mySentry && myDispenser && !mySentry->IsBuilding() && !myDispenser->IsBuilding() && me->GetActiveTFWeapon() && me->GetActiveTFWeapon()->GetWeaponID() == TF_WEAPON_WRENCH )
+    {
+        if ( me->IsAmmoLow() && myDispenser->GetAvailableMetal() <= 0 )
+        {
+            // we're totally out of metal - collect some nearby
+            return ANSWER_NO;
+        }
 
-		// by being in a "hurry" we wont collect health and ammo
-		return ANSWER_YES;
-	}
+        // by being in a "hurry" we wont collect health and ammo
+        return ANSWER_YES;
+    }
 
-	return ANSWER_UNDEFINED;
+    return ANSWER_UNDEFINED;
 }
-
 
 //---------------------------------------------------------------------------------------------
 QueryResultType CTFBotEngineerBuild::ShouldAttack( const INextBot *meBot, const CKnownEntity *them ) const
 {
-	CTFBot *me = (CTFBot *)meBot->GetEntity();
-	CObjectSentrygun *mySentry = (CObjectSentrygun *)me->GetObjectOfType( OBJ_SENTRYGUN );
+    CTFBot *me = ( CTFBot * )meBot->GetEntity();
+    CObjectSentrygun *mySentry = ( CObjectSentrygun * )me->GetObjectOfType( OBJ_SENTRYGUN );
 
-	CTFPlayer *themPlayer = ToTFPlayer( them->GetEntity() );
+    CTFPlayer *themPlayer = ToTFPlayer( them->GetEntity() );
 
-	if ( themPlayer && themPlayer->IsPlayerClass( TF_CLASS_SPY ) )
-	{
-		// Engineers hate Spies
-		return ANSWER_YES;
-	}
+    if ( themPlayer && themPlayer->IsPlayerClass( TF_CLASS_SPY ) )
+    {
+        // Engineers hate Spies
+        return ANSWER_YES;
+    }
 
-	if ( mySentry && me->IsRangeLessThan( mySentry, 100.0f ) )
-	{
-		// focus on keeping our sentry alive
-		return ANSWER_NO;
-	}
+    if ( mySentry && me->IsRangeLessThan( mySentry, 100.0f ) )
+    {
+        // focus on keeping our sentry alive
+        return ANSWER_NO;
+    }
 
-	return ANSWER_UNDEFINED;
+    return ANSWER_UNDEFINED;
 }

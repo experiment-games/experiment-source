@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -11,6 +11,6 @@
 #pragma once
 #endif
 
-void TE_TFBlood( IRecipientFilter& filter, float delay,	const Vector &origin, const Vector &normal, int nEntIndex );
+void TE_TFBlood( IRecipientFilter &filter, float delay, const Vector &origin, const Vector &normal, int nEntIndex );
 
 #endif

@@ -13,21 +13,19 @@
 // memdbgon must be the last include file in a .cpp file!!!
 #include "tier0/memdbgon.h"
 
-
-IMPLEMENT_CLIENTCLASS_DT(C_SDKTeam, DT_SDKTeam, CSDKTeam)
+IMPLEMENT_CLIENTCLASS_DT( C_SDKTeam, DT_SDKTeam, CSDKTeam )
 END_RECV_TABLE()
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 C_SDKTeam::C_SDKTeam()
 {
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 C_SDKTeam::~C_SDKTeam()
 {
 }
-

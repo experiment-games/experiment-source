@@ -28,207 +28,193 @@ extern ConVar mp_timelimit;
 
 CRaidLogic *g_pRaidLogic = NULL;
 
-ConVar tf_debug_sniper_spots( "tf_debug_sniper_spots", "0"/*, FCVAR_CHEAT*/ );
+ConVar tf_debug_sniper_spots( "tf_debug_sniper_spots", "0" /*, FCVAR_CHEAT*/ );
 
-
-ConVar tf_raid_max_wanderers( "tf_raid_max_wanderers", "10"/*, FCVAR_CHEAT*/ );
-ConVar tf_raid_max_defense_engineers( "tf_raid_max_defense_engineers", "6"/*, FCVAR_CHEAT*/ );
-ConVar tf_raid_max_defense_demomen( "tf_raid_max_defense_demomen", "1"/*, FCVAR_CHEAT*/ );
-ConVar tf_raid_max_defense_heavies( "tf_raid_max_defense_heavies", "1"/*, FCVAR_CHEAT*/ );
-ConVar tf_raid_max_defense_soldiers( "tf_raid_max_defense_soldiers", "1"/*, FCVAR_CHEAT*/ );
-ConVar tf_raid_max_defense_pyros( "tf_raid_max_defense_pyros", "1"/*, FCVAR_CHEAT*/ );
-ConVar tf_raid_max_defense_spies( "tf_raid_max_defense_spies", "1"/*, FCVAR_CHEAT*/ );
-ConVar tf_raid_max_defense_snipers( "tf_raid_max_defense_snipers", "3"/*, FCVAR_CHEAT*/ );
-ConVar tf_raid_max_defense_squads( "tf_raid_max_defense_squads", "1"/*, FCVAR_CHEAT*/ );
-
+ConVar tf_raid_max_wanderers( "tf_raid_max_wanderers", "10" /*, FCVAR_CHEAT*/ );
+ConVar tf_raid_max_defense_engineers( "tf_raid_max_defense_engineers", "6" /*, FCVAR_CHEAT*/ );
+ConVar tf_raid_max_defense_demomen( "tf_raid_max_defense_demomen", "1" /*, FCVAR_CHEAT*/ );
+ConVar tf_raid_max_defense_heavies( "tf_raid_max_defense_heavies", "1" /*, FCVAR_CHEAT*/ );
+ConVar tf_raid_max_defense_soldiers( "tf_raid_max_defense_soldiers", "1" /*, FCVAR_CHEAT*/ );
+ConVar tf_raid_max_defense_pyros( "tf_raid_max_defense_pyros", "1" /*, FCVAR_CHEAT*/ );
+ConVar tf_raid_max_defense_spies( "tf_raid_max_defense_spies", "1" /*, FCVAR_CHEAT*/ );
+ConVar tf_raid_max_defense_snipers( "tf_raid_max_defense_snipers", "3" /*, FCVAR_CHEAT*/ );
+ConVar tf_raid_max_defense_squads( "tf_raid_max_defense_squads", "1" /*, FCVAR_CHEAT*/ );
 
 ConVar tf_raid_wandering_density( "tf_raid_wandering_density", "0.00001", FCVAR_CHEAT, "Wandering defenders per unit area" );
-ConVar tf_raid_spawn_wanderers( "tf_raid_spawn_wanderers", "1"/*, FCVAR_CHEAT*/ );
+ConVar tf_raid_spawn_wanderers( "tf_raid_spawn_wanderers", "1" /*, FCVAR_CHEAT*/ );
 
-ConVar tf_raid_defender_density( "tf_raid_defender_density", "0.000001", 0/*FCVAR_CHEAT*/, "Wandering defenders per unit area" );
-ConVar tf_raid_max_defender_count( "tf_raid_max_defender_count", "18", 0/*FCVAR_CHEAT*/ );
-ConVar tf_raid_spawn_defenders( "tf_raid_spawn_defenders", "1"/*, FCVAR_CHEAT*/ );
+ConVar tf_raid_defender_density( "tf_raid_defender_density", "0.000001", 0 /*FCVAR_CHEAT*/, "Wandering defenders per unit area" );
+ConVar tf_raid_max_defender_count( "tf_raid_max_defender_count", "18", 0 /*FCVAR_CHEAT*/ );
+ConVar tf_raid_spawn_defenders( "tf_raid_spawn_defenders", "1" /*, FCVAR_CHEAT*/ );
 
+ConVar tf_raid_sentry_density( "tf_raid_sentry_density", "0.0000005", 0 /*FCVAR_CHEAT*/, "Sentry guns per unit area" );
+ConVar tf_raid_sentry_spacing( "tf_raid_sentry_spacing", "750", 0 /*FCVAR_CHEAT*/, "Minimum travel distance between sentry gun spots" );
+ConVar tf_raid_debug_sentry_placement( "tf_raid_debug_sentry_placement", "0" /*, FCVAR_CHEAT*/ );
+ConVar tf_raid_spawn_sentries( "tf_raid_spawn_sentries", "1" /*, FCVAR_CHEAT*/ );
+ConVar tf_raid_spawn_engineers( "tf_raid_spawn_engineers", "0" /*, FCVAR_CHEAT*/ );
+ConVar tf_raid_engineer_spawn_interval( "tf_raid_engineer_spawn_interval", "20" /*, FCVAR_CHEAT*/ );
 
-ConVar tf_raid_sentry_density( "tf_raid_sentry_density", "0.0000005", 0/*FCVAR_CHEAT*/, "Sentry guns per unit area" );
-ConVar tf_raid_sentry_spacing( "tf_raid_sentry_spacing", "750", 0/*FCVAR_CHEAT*/, "Minimum travel distance between sentry gun spots" );
-ConVar tf_raid_debug_sentry_placement( "tf_raid_debug_sentry_placement", "0"/*, FCVAR_CHEAT*/ );
-ConVar tf_raid_spawn_sentries( "tf_raid_spawn_sentries", "1"/*, FCVAR_CHEAT*/ );
-ConVar tf_raid_spawn_engineers( "tf_raid_spawn_engineers", "0"/*, FCVAR_CHEAT*/ );
-ConVar tf_raid_engineer_spawn_interval( "tf_raid_engineer_spawn_interval", "20"/*, FCVAR_CHEAT*/ );
+ConVar tf_raid_mob_spawn_min_interval( "tf_raid_mob_spawn_min_interval", "60" /*, FCVAR_CHEAT*/ );
+ConVar tf_raid_mob_spawn_max_interval( "tf_raid_mob_spawn_max_interval", "90" /*, FCVAR_CHEAT*/ );
+ConVar tf_raid_mob_spawn_count( "tf_raid_mob_spawn_count", "15" /*, FCVAR_CHEAT*/ );
+ConVar tf_raid_mob_spawn_below_tolerance( "tf_raid_mob_spawn_below_tolerance", "150" /*, FCVAR_CHEAT*/ );
+ConVar tf_raid_mob_spawn_min_range( "tf_raid_mob_spawn_min_range", "1000" /*, FCVAR_CHEAT*/ );
+ConVar tf_raid_spawn_mobs( "tf_raid_spawn_mobs", "1" /*, FCVAR_CHEAT*/ );
 
-ConVar tf_raid_mob_spawn_min_interval( "tf_raid_mob_spawn_min_interval", "60"/*, FCVAR_CHEAT*/ );
-ConVar tf_raid_mob_spawn_max_interval( "tf_raid_mob_spawn_max_interval", "90"/*, FCVAR_CHEAT*/ );
-ConVar tf_raid_mob_spawn_count( "tf_raid_mob_spawn_count", "15"/*, FCVAR_CHEAT*/ );
-ConVar tf_raid_mob_spawn_below_tolerance( "tf_raid_mob_spawn_below_tolerance", "150"/*, FCVAR_CHEAT*/ );
-ConVar tf_raid_mob_spawn_min_range( "tf_raid_mob_spawn_min_range", "1000"/*, FCVAR_CHEAT*/ );
-ConVar tf_raid_spawn_mobs( "tf_raid_spawn_mobs", "1"/*, FCVAR_CHEAT*/ );
+ConVar tf_raid_spawn_mob_as_squad_chance_start( "tf_raid_spawn_mob_as_squad_chance_start", "100" );      // /*, FCVAR_CHEAT*/ );
+ConVar tf_raid_spawn_mob_as_squad_chance_halfway( "tf_raid_spawn_mob_as_squad_chance_halfway", "100" );  // /*, FCVAR_CHEAT*/ );
+ConVar tf_raid_spawn_mob_as_squad_chance_final( "tf_raid_spawn_mob_as_squad_chance_final", "100" );      // /*, FCVAR_CHEAT*/ );
+ConVar tf_raid_squad_medic_intro_percent( "tf_raid_squad_medic_intro_percent", "0.5" );                  // /*, FCVAR_CHEAT*/ );
 
-ConVar tf_raid_spawn_mob_as_squad_chance_start( "tf_raid_spawn_mob_as_squad_chance_start", "100" ); // /*, FCVAR_CHEAT*/ );
-ConVar tf_raid_spawn_mob_as_squad_chance_halfway( "tf_raid_spawn_mob_as_squad_chance_halfway", "100" ); // /*, FCVAR_CHEAT*/ );
-ConVar tf_raid_spawn_mob_as_squad_chance_final( "tf_raid_spawn_mob_as_squad_chance_final", "100" ); // /*, FCVAR_CHEAT*/ );
-ConVar tf_raid_squad_medic_intro_percent( "tf_raid_squad_medic_intro_percent", "0.5" ); // /*, FCVAR_CHEAT*/ );
+ConVar tf_raid_capture_mob_interval( "tf_raid_capture_mob_interval", "20" /*, FCVAR_CHEAT*/ );
 
+ConVar tf_raid_special_spawn_min_interval( "tf_raid_special_spawn_min_interval", "20" /*, FCVAR_CHEAT*/ );
+ConVar tf_raid_special_spawn_max_interval( "tf_raid_special_spawn_max_interval", "30" /*, FCVAR_CHEAT*/ );
+ConVar tf_raid_spawn_specials( "tf_raid_spawn_specials", "0" /*, FCVAR_CHEAT*/ );
 
-ConVar tf_raid_capture_mob_interval( "tf_raid_capture_mob_interval", "20"/*, FCVAR_CHEAT*/ );
+ConVar tf_raid_sniper_spawn_ahead_incursion( "tf_raid_sniper_spawn_ahead_incursion", "6000" /*, FCVAR_CHEAT*/ );
+ConVar tf_raid_sniper_spawn_behind_incursion( "tf_raid_sniper_spawn_behind_incursion", "6000" /*, FCVAR_CHEAT*/ );
+ConVar tf_raid_sniper_spawn_max_range( "tf_raid_sniper_spawn_max_range", "6000" /*, FCVAR_CHEAT*/ );
+ConVar tf_raid_sniper_spawn_min_range( "tf_raid_sniper_spawn_min_range", "1000" /*, FCVAR_CHEAT*/ );
+ConVar tf_raid_show_escape_route( "tf_raid_show_escape_route", "0" /*, FCVAR_CHEAT*/ );
 
-ConVar tf_raid_special_spawn_min_interval( "tf_raid_special_spawn_min_interval", "20"/*, FCVAR_CHEAT*/ );
-ConVar tf_raid_special_spawn_max_interval( "tf_raid_special_spawn_max_interval", "30"/*, FCVAR_CHEAT*/ );
-ConVar tf_raid_spawn_specials( "tf_raid_spawn_specials", "0"/*, FCVAR_CHEAT*/ );
+ConVar tf_raid_sentry_build_ahead_incursion( "tf_raid_sentry_build_ahead_incursion", "5000" /*, FCVAR_CHEAT*/ );
+ConVar tf_raid_sentry_build_behind_incursion( "tf_raid_sentry_build_behind_incursion", "-1000" /*, FCVAR_CHEAT*/ );
 
-ConVar tf_raid_sniper_spawn_ahead_incursion( "tf_raid_sniper_spawn_ahead_incursion", "6000"/*, FCVAR_CHEAT*/ );
-ConVar tf_raid_sniper_spawn_behind_incursion( "tf_raid_sniper_spawn_behind_incursion", "6000"/*, FCVAR_CHEAT*/ );
-ConVar tf_raid_sniper_spawn_max_range( "tf_raid_sniper_spawn_max_range", "6000"/*, FCVAR_CHEAT*/ );
-ConVar tf_raid_sniper_spawn_min_range( "tf_raid_sniper_spawn_min_range", "1000"/*, FCVAR_CHEAT*/ );
-ConVar tf_raid_show_escape_route( "tf_raid_show_escape_route", "0"/*, FCVAR_CHEAT*/ );
+ConVar tf_raid_debug( "tf_raid_debug", "0" /*, FCVAR_CHEAT*/ );
+ConVar tf_raid_debug_escape_route( "tf_raid_debug_escape_route", "0" /*, FCVAR_CHEAT*/ );
+ConVar tf_raid_debug_director( "tf_raid_debug_director", "0" /*, FCVAR_CHEAT*/ );
 
-ConVar tf_raid_sentry_build_ahead_incursion( "tf_raid_sentry_build_ahead_incursion", "5000"/*, FCVAR_CHEAT*/ );
-ConVar tf_raid_sentry_build_behind_incursion( "tf_raid_sentry_build_behind_incursion", "-1000"/*, FCVAR_CHEAT*/ );
-
-ConVar tf_raid_debug( "tf_raid_debug", "0"/*, FCVAR_CHEAT*/ );
-ConVar tf_raid_debug_escape_route( "tf_raid_debug_escape_route", "0"/*, FCVAR_CHEAT*/ );
-ConVar tf_raid_debug_director( "tf_raid_debug_director", "0"/*, FCVAR_CHEAT*/ );
-
-ConVar tf_raid_spawn_enable( "tf_raid_spawn_enable", "1"/*, FCVAR_CHEAT*/ );
+ConVar tf_raid_spawn_enable( "tf_raid_spawn_enable", "1" /*, FCVAR_CHEAT*/ );
 
 extern ConVar tf_populator_active_buffer_range;
 
-
 extern bool IsSpaceToSpawnHere( const Vector &where );
-
 
 //--------------------------------------------------------------------------------------------------------
 // Check actual line of sight to team
 bool IsPlayerVisibleToTeam( CTFPlayer *subject, int teamIndex )
 {
-	CTeam *team = GetGlobalTeam( teamIndex );
-	for( int t=0; t<team->GetNumPlayers(); ++t )
-	{
-		CTFPlayer *teamMember = (CTFPlayer *)team->GetPlayer(t);
+    CTeam *team = GetGlobalTeam( teamIndex );
+    for ( int t = 0; t < team->GetNumPlayers(); ++t )
+    {
+        CTFPlayer *teamMember = ( CTFPlayer * )team->GetPlayer( t );
 
-		if ( !teamMember->IsAlive() )
-			continue;
+        if ( !teamMember->IsAlive() )
+            continue;
 
-		CTFBot *bot = ToTFBot( teamMember );
-		if ( bot && bot->HasAttribute( CTFBot::IS_NPC ) )
-			continue;
+        CTFBot *bot = ToTFBot( teamMember );
+        if ( bot && bot->HasAttribute( CTFBot::IS_NPC ) )
+            continue;
 
-		if ( teamMember->IsInFieldOfView( subject->EyePosition() ) )
-		{
-			if ( teamMember->IsLineOfSightClear( subject, CBaseCombatCharacter::IGNORE_ACTORS ) )
-			{
-				// visible to team
-				return true;
-			}
-		}
-	}
+        if ( teamMember->IsInFieldOfView( subject->EyePosition() ) )
+        {
+            if ( teamMember->IsLineOfSightClear( subject, CBaseCombatCharacter::IGNORE_ACTORS ) )
+            {
+                // visible to team
+                return true;
+            }
+        }
+    }
 
-	return false;
+    return false;
 }
-
-
 
 //--------------------------------------------------------------------------------------------------------------
 int GetAvailableRedSpawnSlots( void )
 {
-	int available = 0;
+    int available = 0;
 
-	// count dead bots we can re-use
-	CTeam *deadTeam = GetGlobalTeam( TEAM_SPECTATOR );
-	for( int i=0; i<deadTeam->GetNumPlayers(); ++i )
-	{
-		if ( !deadTeam->GetPlayer(i)->IsBot() )
-			continue;
+    // count dead bots we can re-use
+    CTeam *deadTeam = GetGlobalTeam( TEAM_SPECTATOR );
+    for ( int i = 0; i < deadTeam->GetNumPlayers(); ++i )
+    {
+        if ( !deadTeam->GetPlayer( i )->IsBot() )
+            continue;
 
-		// reuse this guy
-		++available;
-	}
+        // reuse this guy
+        ++available;
+    }
 
-	// count unused player slots
-	int totalPlayerCount = 0;
-	totalPlayerCount += GetGlobalTeam( TEAM_SPECTATOR )->GetNumPlayers();
-	totalPlayerCount += 4; // always leave room for 4 blue players
-	totalPlayerCount += GetGlobalTeam( TF_TEAM_RED )->GetNumPlayers();
+    // count unused player slots
+    int totalPlayerCount = 0;
+    totalPlayerCount += GetGlobalTeam( TEAM_SPECTATOR )->GetNumPlayers();
+    totalPlayerCount += 4;  // always leave room for 4 blue players
+    totalPlayerCount += GetGlobalTeam( TF_TEAM_RED )->GetNumPlayers();
 
-	available += gpGlobals->maxClients - totalPlayerCount;
+    available += gpGlobals->maxClients - totalPlayerCount;
 
-	return available;
+    return available;
 }
-
 
 //-------------------------------------------------------------------------
 //-------------------------------------------------------------------------
 BEGIN_DATADESC( CRaidLogic )
-	DEFINE_THINKFUNC( Update ),
-END_DATADESC()
+DEFINE_THINKFUNC( Update ),
+    END_DATADESC()
 
-LINK_ENTITY_TO_CLASS( tf_logic_raid, CRaidLogic );
-
+        LINK_ENTITY_TO_CLASS( tf_logic_raid, CRaidLogic );
 
 //-------------------------------------------------------------------------
 CRaidLogic::CRaidLogic()
 {
-	ListenForGameEvent( "teamplay_point_captured" );
-	ListenForGameEvent( "teamplay_round_win" );
-	ListenForGameEvent( "teamplay_round_start" );
-	m_didFailLastTime = false;
+    ListenForGameEvent( "teamplay_point_captured" );
+    ListenForGameEvent( "teamplay_round_win" );
+    ListenForGameEvent( "teamplay_round_start" );
+    m_didFailLastTime = false;
 }
-
 
 //-------------------------------------------------------------------------
 CRaidLogic::~CRaidLogic()
 {
-	g_pRaidLogic = NULL;
+    g_pRaidLogic = NULL;
 }
-
 
 //-------------------------------------------------------------------------
 void CRaidLogic::Spawn( void )
 {
-	BaseClass::Spawn();
+    BaseClass::Spawn();
 
-	Reset();
+    Reset();
 
-	SetThink( &CRaidLogic::Update );
-	SetNextThink( gpGlobals->curtime );
+    SetThink( &CRaidLogic::Update );
+    SetNextThink( gpGlobals->curtime );
 
-	m_didFailLastTime = false;
+    m_didFailLastTime = false;
 
-	g_pRaidLogic = this;
+    g_pRaidLogic = this;
 
-	m_miniBossIndex = 0;
+    m_miniBossIndex = 0;
 }
-
 
 //-------------------------------------------------------------------------
 void CRaidLogic::Reset( void )
 {
-	m_isWaitingForRaidersToLeaveSpawnRoom = true;
-	m_wasCapturingPoint = false;
-	m_mobSpawnTimer.Invalidate();
-	m_mobLifetimeTimer.Invalidate();
-	m_specialSpawnTimer.Invalidate();
-	m_mobCountRemaining = 0;
-	m_mobArea = NULL;
-	m_mobClass = TF_CLASS_SCOUT;
-	m_priorRaiderAliveCount = -1;
-	m_farthestAlongRaider = NULL;
-	m_farthestAlongEscapeRouteArea = NULL;
-	m_incursionDistanceAtEnd = -1.0f;
+    m_isWaitingForRaidersToLeaveSpawnRoom = true;
+    m_wasCapturingPoint = false;
+    m_mobSpawnTimer.Invalidate();
+    m_mobLifetimeTimer.Invalidate();
+    m_specialSpawnTimer.Invalidate();
+    m_mobCountRemaining = 0;
+    m_mobArea = NULL;
+    m_mobClass = TF_CLASS_SCOUT;
+    m_priorRaiderAliveCount = -1;
+    m_farthestAlongRaider = NULL;
+    m_farthestAlongEscapeRouteArea = NULL;
+    m_incursionDistanceAtEnd = -1.0f;
 
-	m_wandererCount = 0;
-	m_engineerCount = 0;
-	m_demomanCount = 0;
-	m_heavyCount = 0;
-	m_soldierCount = 0;
-	m_pyroCount = 0;
-	m_spyCount = 0;
-	m_sniperCount = 0;
-	m_squadCount = 0;
+    m_wandererCount = 0;
+    m_engineerCount = 0;
+    m_demomanCount = 0;
+    m_heavyCount = 0;
+    m_soldierCount = 0;
+    m_pyroCount = 0;
+    m_spyCount = 0;
+    m_sniperCount = 0;
+    m_squadCount = 0;
 
-	m_miniBossIndex = 0;
+    m_miniBossIndex = 0;
 }
-
 
 #if 0
 //--------------------------------------------------------------------------------------------------------
@@ -254,85 +240,83 @@ bool SpawnWanderer( const Vector &spot )
 	return false;
 */
 }
-#endif // 0
-
+#endif  // 0
 
 //-------------------------------------------------------------------------
 void CRaidLogic::OnRoundStart( void )
 {
-	if ( !TFGameRules() || !TFGameRules()->IsRaidMode() )
-		return;
+    if ( !TFGameRules() || !TFGameRules()->IsRaidMode() )
+        return;
 
-	Reset();
+    Reset();
 
-	// unspawn entire red team
-	CTeam *defendingTeam = GetGlobalTeam( TF_TEAM_RED );
-	int i;
-	for( i=0; i<defendingTeam->GetNumPlayers(); ++i )
-	{
-		engine->ServerCommand( UTIL_VarArgs( "kickid %d\n", defendingTeam->GetPlayer(i)->GetUserID() ) );
-	}
+    // unspawn entire red team
+    CTeam *defendingTeam = GetGlobalTeam( TF_TEAM_RED );
+    int i;
+    for ( i = 0; i < defendingTeam->GetNumPlayers(); ++i )
+    {
+        engine->ServerCommand( UTIL_VarArgs( "kickid %d\n", defendingTeam->GetPlayer( i )->GetUserID() ) );
+    }
 
-	// remove all minions
-	CBaseEntity *minion = NULL;
-	while( ( minion = gEntList.FindEntityByClassname( minion, "bot_npc_minion" ) ) != NULL )
-	{
-		UTIL_Remove( minion );
-	}
+    // remove all minions
+    CBaseEntity *minion = NULL;
+    while ( ( minion = gEntList.FindEntityByClassname( minion, "bot_npc_minion" ) ) != NULL )
+    {
+        UTIL_Remove( minion );
+    }
 
-	// kick last round's NPCs
-	CTeam *raidingTeam = GetGlobalTeam( TF_TEAM_BLUE );
-	for( i=0; i<raidingTeam->GetNumPlayers(); ++i )
-	{
-		CTFBot *bot = ToTFBot( raidingTeam->GetPlayer(i) );
-		if ( bot && bot->HasAttribute( CTFBot::IS_NPC ) )
-		{
-			engine->ServerCommand( UTIL_VarArgs( "kickid %d\n", raidingTeam->GetPlayer(i)->GetUserID() ) );
-		}
-	}
+    // kick last round's NPCs
+    CTeam *raidingTeam = GetGlobalTeam( TF_TEAM_BLUE );
+    for ( i = 0; i < raidingTeam->GetNumPlayers(); ++i )
+    {
+        CTFBot *bot = ToTFBot( raidingTeam->GetPlayer( i ) );
+        if ( bot && bot->HasAttribute( CTFBot::IS_NPC ) )
+        {
+            engine->ServerCommand( UTIL_VarArgs( "kickid %d\n", raidingTeam->GetPlayer( i )->GetUserID() ) );
+        }
+    }
 
+    BuildEscapeRoute();
 
-	BuildEscapeRoute();
+    // collect special areas
+    m_sniperSpotVector.RemoveAll();
+    m_sentrySpotVector.RemoveAll();
+    m_rescueClosetVector.RemoveAll();
 
-	// collect special areas
-	m_sniperSpotVector.RemoveAll();
-	m_sentrySpotVector.RemoveAll();
-	m_rescueClosetVector.RemoveAll();
+    m_miniBossHomeVector.RemoveAll();
+    m_miniBossIndex = 0;
 
-	m_miniBossHomeVector.RemoveAll();
-	m_miniBossIndex = 0;
+    float availableSentrySpotArea = 0.0f;
+    for ( i = 0; i < TheNavAreas.Count(); ++i )
+    {
+        CTFNavArea *area = ( CTFNavArea * )TheNavAreas[i];
 
-	float availableSentrySpotArea = 0.0f;
-	for( i=0; i<TheNavAreas.Count(); ++i )
-	{
-		CTFNavArea *area = (CTFNavArea *)TheNavAreas[i];
+        if ( area->HasAttributeTF( TF_NAV_SNIPER_SPOT ) )
+            m_sniperSpotVector.AddToTail( area );
 
-		if ( area->HasAttributeTF( TF_NAV_SNIPER_SPOT ) )
-			m_sniperSpotVector.AddToTail( area );
+        if ( area->HasAttributeTF( TF_NAV_SENTRY_SPOT ) )
+        {
+            m_sentrySpotVector.AddToTail( area );
+            availableSentrySpotArea += area->GetSizeX() * area->GetSizeY();
+        }
 
-		if ( area->HasAttributeTF( TF_NAV_SENTRY_SPOT ) )
-		{
-			m_sentrySpotVector.AddToTail( area );
-			availableSentrySpotArea += area->GetSizeX() * area->GetSizeY();
-		}
+        if ( area->HasAttributeTF( TF_NAV_RESCUE_CLOSET ) )
+            m_rescueClosetVector.AddToTail( area );
 
-		if ( area->HasAttributeTF( TF_NAV_RESCUE_CLOSET ) )
-			m_rescueClosetVector.AddToTail( area );
+        if ( area->HasAttributeTF( TF_NAV_RED_SETUP_GATE ) )
+            m_miniBossHomeVector.AddToTail( area );
+    }
 
-		if ( area->HasAttributeTF( TF_NAV_RED_SETUP_GATE ) )
-			m_miniBossHomeVector.AddToTail( area );
-	}
+    // compute total geometric area of entire nav mesh, and clear all wander counts
+    float totalSpace = 0.0f;
+    for ( i = 0; i < TheNavAreas.Count(); ++i )
+    {
+        CTFNavArea *area = ( CTFNavArea * )TheNavAreas[i];
 
-	// compute total geometric area of entire nav mesh, and clear all wander counts
-	float totalSpace = 0.0f;
-	for( i=0; i<TheNavAreas.Count(); ++i )
-	{
-		CTFNavArea *area = (CTFNavArea *)TheNavAreas[ i ];
+        totalSpace += area->GetSizeX() * area->GetSizeY();
 
-		totalSpace += area->GetSizeX() * area->GetSizeY();
-
-		area->SetWanderCount( 0 );
-	}
+        area->SetWanderCount( 0 );
+    }
 
 #if 0
 	//----------------------------------------------
@@ -409,63 +393,59 @@ void CRaidLogic::OnRoundStart( void )
 	}
 #endif
 
+    // collect all capture point gates
+    m_gateVector.RemoveAll();
+    CBaseEntity *entity = NULL;
+    while ( ( entity = gEntList.FindEntityByClassname( entity, "func_door*" ) ) != NULL )
+    {
+        CBaseDoor *door = ( CBaseDoor * )entity;
 
-	// collect all capture point gates
-	m_gateVector.RemoveAll();
-	CBaseEntity *entity = NULL;
-	while( ( entity = gEntList.FindEntityByClassname( entity, "func_door*" ) ) != NULL )
-	{
-		CBaseDoor *door = (CBaseDoor *)entity;
-
-		if ( door->GetEntityName() != NULL_STRING && V_stristr( STRING( door->GetEntityName() ), "raid" ) )
-		{
-			m_gateVector.AddToTail( door );
-		}
-	}
+        if ( door->GetEntityName() != NULL_STRING && V_stristr( STRING( door->GetEntityName() ), "raid" ) )
+        {
+            m_gateVector.AddToTail( door );
+        }
+    }
 }
-
 
 //--------------------------------------------------------------------------------------------------------
 void CRaidLogic::FireGameEvent( IGameEvent *event )
 {
-	const char *eventName = event->GetName();
+    const char *eventName = event->GetName();
 
-	if ( !Q_strcmp( eventName, "teamplay_point_captured" ) )
-	{
-		// they just capped - give them a break and reset the mob spawner
-		StartMobTimer( RandomFloat( tf_raid_mob_spawn_min_interval.GetFloat(), tf_raid_mob_spawn_max_interval.GetFloat() ) );
-		DevMsg( "RAID: %3.2f: Reset Mob timer after successful point capture\n", gpGlobals->curtime );
-	}
-	else if ( !Q_strcmp( eventName, "teamplay_round_win" ) )
-	{
-		if ( event->GetInt( "team" ) == TF_TEAM_RED )
-		{
-			// the raiders didn't make it
-			m_didFailLastTime = true;
-		}
-	}
-	else if ( !Q_strcmp( eventName, "teamplay_round_start" ) )
-	{
-		OnRoundStart();
-	}
+    if ( !Q_strcmp( eventName, "teamplay_point_captured" ) )
+    {
+        // they just capped - give them a break and reset the mob spawner
+        StartMobTimer( RandomFloat( tf_raid_mob_spawn_min_interval.GetFloat(), tf_raid_mob_spawn_max_interval.GetFloat() ) );
+        DevMsg( "RAID: %3.2f: Reset Mob timer after successful point capture\n", gpGlobals->curtime );
+    }
+    else if ( !Q_strcmp( eventName, "teamplay_round_win" ) )
+    {
+        if ( event->GetInt( "team" ) == TF_TEAM_RED )
+        {
+            // the raiders didn't make it
+            m_didFailLastTime = true;
+        }
+    }
+    else if ( !Q_strcmp( eventName, "teamplay_round_start" ) )
+    {
+        OnRoundStart();
+    }
 }
-
 
 //--------------------------------------------------------------------------------------------------------
-int CompareIncursionDistances( CTFNavArea * const *area1, CTFNavArea * const *area2 )
+int CompareIncursionDistances( CTFNavArea *const *area1, CTFNavArea *const *area2 )
 {
-	float d1 = (*area1)->GetIncursionDistance( TF_TEAM_BLUE );
-	float d2 = (*area2)->GetIncursionDistance( TF_TEAM_BLUE );
+    float d1 = ( *area1 )->GetIncursionDistance( TF_TEAM_BLUE );
+    float d2 = ( *area2 )->GetIncursionDistance( TF_TEAM_BLUE );
 
-	if ( d1 < d2 )
-		return -1;
+    if ( d1 < d2 )
+        return -1;
 
-	if ( d1 > d2 )
-		return 1;
+    if ( d1 > d2 )
+        return 1;
 
-	return 0;
+    return 0;
 }
-
 
 #if 0
 //--------------------------------------------------------------------------------------------------------
@@ -625,115 +605,111 @@ public:
 	CUtlVector< CTFNavArea * > m_hiddenAreaAheadVector;
 	CUtlVector< CTFNavArea * > m_hiddenAreaAheadHighVector;
 };
-#endif // 0
-
+#endif  // 0
 
 //--------------------------------------------------------------------------------------------------------
 bool CRaidLogic::Unspawn( CTFPlayer *who )
 {
-	if ( who->IsAlive() && who->GetTeamNumber() == TF_TEAM_RED )
-	{
-		// only cull Engineers who are far behind the team
-		if ( who->IsPlayerClass( TF_CLASS_ENGINEER ) )
-		{
-			CTFNavArea *area = (CTFNavArea *)who->GetLastKnownArea();
-			if ( area && area->GetIncursionDistance( TF_TEAM_BLUE ) > GetMaximumRaiderIncursionDistance() - tf_populator_active_buffer_range.GetFloat() )
-				return false;
-		}
-		else if ( !who->IsPlayerClass( TF_CLASS_SCOUT ) )
- 		{
- 			// do not unspawn these classes - they lurk at far distances
- 			return false;
-		}
- 	}
+    if ( who->IsAlive() && who->GetTeamNumber() == TF_TEAM_RED )
+    {
+        // only cull Engineers who are far behind the team
+        if ( who->IsPlayerClass( TF_CLASS_ENGINEER ) )
+        {
+            CTFNavArea *area = ( CTFNavArea * )who->GetLastKnownArea();
+            if ( area && area->GetIncursionDistance( TF_TEAM_BLUE ) > GetMaximumRaiderIncursionDistance() - tf_populator_active_buffer_range.GetFloat() )
+                return false;
+        }
+        else if ( !who->IsPlayerClass( TF_CLASS_SCOUT ) )
+        {
+            // do not unspawn these classes - they lurk at far distances
+            return false;
+        }
+    }
 
-	// check actual line of sight to team
-	if ( IsPlayerVisibleToTeam( who, TF_TEAM_BLUE ) )
-		return false;
+    // check actual line of sight to team
+    if ( IsPlayerVisibleToTeam( who, TF_TEAM_BLUE ) )
+        return false;
 
-	who->ChangeTeam( TEAM_SPECTATOR, false, true );
+    who->ChangeTeam( TEAM_SPECTATOR, false, true );
 
-	// destroy all buildings (for relocated engineers)
-	who->RemoveAllObjects();
+    // destroy all buildings (for relocated engineers)
+    who->RemoveAllObjects();
 
-	return true;
+    return true;
 }
-
 
 //--------------------------------------------------------------------------------------------------------
 CTFNavArea *CRaidLogic::FindSpawnAreaAhead( void )
 {
-	CTFPlayer *leader = GetFarthestAlongRaider();
+    CTFPlayer *leader = GetFarthestAlongRaider();
 
-	if ( leader == NULL || m_escapeRouteVector.Count() == 0 )
-		return NULL;
+    if ( leader == NULL || m_escapeRouteVector.Count() == 0 )
+        return NULL;
 
-	const float minTravel = 1000.0f;
-	float minIncursion = GetMaximumRaiderIncursionDistance() + minTravel;
+    const float minTravel = 1000.0f;
+    float minIncursion = GetMaximumRaiderIncursionDistance() + minTravel;
 
-	// find first non-visible area ahead of leader along escape path beyond a minimum distance
-	for( int i=0; i<m_escapeRouteVector.Count(); ++i )
-	{
-		CTFNavArea *area = m_escapeRouteVector[i];
+    // find first non-visible area ahead of leader along escape path beyond a minimum distance
+    for ( int i = 0; i < m_escapeRouteVector.Count(); ++i )
+    {
+        CTFNavArea *area = m_escapeRouteVector[i];
 
-		if ( area->IsBlocked( TF_TEAM_RED ) )
-			return NULL;
+        if ( area->IsBlocked( TF_TEAM_RED ) )
+            return NULL;
 
-		if ( area->HasAttributeTF( TF_NAV_NO_SPAWNING ) )
-			continue;
+        if ( area->HasAttributeTF( TF_NAV_NO_SPAWNING ) )
+            continue;
 
-		if ( area->GetIncursionDistance( TF_TEAM_BLUE ) < minIncursion )
-			continue;
+        if ( area->GetIncursionDistance( TF_TEAM_BLUE ) < minIncursion )
+            continue;
 
-		if ( area->IsPotentiallyVisibleToTeam( TF_TEAM_BLUE ) )
-			continue;
+        if ( area->IsPotentiallyVisibleToTeam( TF_TEAM_BLUE ) )
+            continue;
 
-		if ( IsSpaceToSpawnHere( area->GetCenter() ) )
-		{
-			// found valid squad spawn
-			return area;
-		}
-	}
+        if ( IsSpaceToSpawnHere( area->GetCenter() ) )
+        {
+            // found valid squad spawn
+            return area;
+        }
+    }
 
-	return NULL;
+    return NULL;
 }
-
 
 //--------------------------------------------------------------------------------------------------------
 CTFNavArea *CRaidLogic::FindSpawnAreaBehind( void )
 {
-	CTFPlayer *leader = GetFarthestAlongRaider();
+    CTFPlayer *leader = GetFarthestAlongRaider();
 
-	if ( leader == NULL || m_escapeRouteVector.Count() == 0 )
-		return NULL;
+    if ( leader == NULL || m_escapeRouteVector.Count() == 0 )
+        return NULL;
 
-	const float minTravel = 1000.0f;
-	float maxIncursion = GetMaximumRaiderIncursionDistance() - minTravel;
+    const float minTravel = 1000.0f;
+    float maxIncursion = GetMaximumRaiderIncursionDistance() - minTravel;
 
-	// find first non-visible area behind leader along escape path beyond a minimum distance
-	for( int i=m_escapeRouteVector.Count()-1; i >= 0; --i )
-	{
-		CTFNavArea *area = m_escapeRouteVector[i];
+    // find first non-visible area behind leader along escape path beyond a minimum distance
+    for ( int i = m_escapeRouteVector.Count() - 1; i >= 0; --i )
+    {
+        CTFNavArea *area = m_escapeRouteVector[i];
 
-		if ( area->HasAttributeTF( TF_NAV_NO_SPAWNING ) )
-			continue;
+        if ( area->HasAttributeTF( TF_NAV_NO_SPAWNING ) )
+            continue;
 
-		if ( area->GetIncursionDistance( TF_TEAM_BLUE ) > maxIncursion )
-			continue;
+        if ( area->GetIncursionDistance( TF_TEAM_BLUE ) > maxIncursion )
+            continue;
 
-		if ( area->IsPotentiallyVisibleToTeam( TF_TEAM_BLUE ) )
-			continue;
+        if ( area->IsPotentiallyVisibleToTeam( TF_TEAM_BLUE ) )
+            continue;
 
-		if ( IsSpaceToSpawnHere( area->GetCenter() ) )
-		{
-			// found valid squad spawn
-			return area;
-		}
-	}
+        if ( IsSpaceToSpawnHere( area->GetCenter() ) )
+        {
+            // found valid squad spawn
+            return area;
+        }
+    }
 
-	return NULL;
+    return NULL;
 }
-
 
 #if 0
 //--------------------------------------------------------------------------------------------------------
@@ -805,24 +781,22 @@ bool CRaidLogic::SpawnSquad( CTFNavArea *spawnArea )
 
 	return true;
 }
-#endif // 0
-
+#endif  // 0
 
 //--------------------------------------------------------------------------------------------------------
 void CRaidLogic::StartMobTimer( float duration )
 {
-	if ( IsMobSpawning() )
-	{
-		DevMsg( "RAID: %3.2f: Skipping mob spawn because an existing mob is still in progress\n", gpGlobals->curtime );
-		return;
-	}
+    if ( IsMobSpawning() )
+    {
+        DevMsg( "RAID: %3.2f: Skipping mob spawn because an existing mob is still in progress\n", gpGlobals->curtime );
+        return;
+    }
 
-	m_mobSpawnTimer.Start( duration );
-	m_mobLifetimeTimer.Invalidate();
-	m_mobCountRemaining = 0;
-	m_mobArea = NULL;
+    m_mobSpawnTimer.Start( duration );
+    m_mobLifetimeTimer.Invalidate();
+    m_mobCountRemaining = 0;
+    m_mobArea = NULL;
 }
-
 
 #if 0
 //--------------------------------------------------------------------------------------------------------
@@ -971,41 +945,39 @@ void CRaidLogic::SpawnMobs( CUtlVector< CTFNavArea * > *spawnAreaVector )
 		}
 	}
 }
-#endif // 0
-
+#endif  // 0
 
 //--------------------------------------------------------------------------------------------------------
 class CNearbyHiddenScan : public ISearchSurroundingAreasFunctor
 {
-public:
-	CNearbyHiddenScan( void )
-	{
-		m_hiddenArea = NULL;
-	}
+   public:
+    CNearbyHiddenScan( void )
+    {
+        m_hiddenArea = NULL;
+    }
 
-	virtual bool operator() ( CNavArea *baseArea, CNavArea *priorArea, float travelDistanceSoFar )
-	{
-		CTFNavArea *area = (CTFNavArea *)baseArea;
+    virtual bool operator()( CNavArea *baseArea, CNavArea *priorArea, float travelDistanceSoFar )
+    {
+        CTFNavArea *area = ( CTFNavArea * )baseArea;
 
-		if ( area->GetIncursionDistance( TF_TEAM_BLUE ) < TFGameRules()->GetRaidLogic()->GetMaximumRaiderIncursionDistance() )
-		{
-			// defenders can't spawn in region under raider's control
-			return true;
-		}
+        if ( area->GetIncursionDistance( TF_TEAM_BLUE ) < TFGameRules()->GetRaidLogic()->GetMaximumRaiderIncursionDistance() )
+        {
+            // defenders can't spawn in region under raider's control
+            return true;
+        }
 
-		if ( !area->IsPotentiallyVisibleToTeam( TF_TEAM_BLUE ) && area->IsValidForWanderingPopulation() )
-		{
-			// found a hidden spot
-			m_hiddenArea = area;
-			return false;
-		}
+        if ( !area->IsPotentiallyVisibleToTeam( TF_TEAM_BLUE ) && area->IsValidForWanderingPopulation() )
+        {
+            // found a hidden spot
+            m_hiddenArea = area;
+            return false;
+        }
 
-		return true;
-	}
+        return true;
+    }
 
-	CTFNavArea *m_hiddenArea;
+    CTFNavArea *m_hiddenArea;
 };
-
 
 //--------------------------------------------------------------------------------------------------------
 //
@@ -1013,83 +985,82 @@ public:
 //
 CTFNavArea *CRaidLogic::SelectRaidSentryArea( void ) const
 {
-	CTFNavArea *nearestSentryArea = NULL;
-	float nearestSentryAreaIncDist = FLT_MAX;
+    CTFNavArea *nearestSentryArea = NULL;
+    float nearestSentryAreaIncDist = FLT_MAX;
 
-	float invaderIncDist = GetMaximumRaiderIncursionDistance();
-	float aheadLimit = invaderIncDist + tf_raid_sentry_build_ahead_incursion.GetFloat();
-	float behindLimit = invaderIncDist - tf_raid_sentry_build_behind_incursion.GetFloat();
+    float invaderIncDist = GetMaximumRaiderIncursionDistance();
+    float aheadLimit = invaderIncDist + tf_raid_sentry_build_ahead_incursion.GetFloat();
+    float behindLimit = invaderIncDist - tf_raid_sentry_build_behind_incursion.GetFloat();
 
-	// collect a vector of alive enemies
-	CUtlVector< CTFPlayer * > enemyVector;
-	CollectPlayers( &enemyVector, TF_TEAM_RED, COLLECT_ONLY_LIVING_PLAYERS );
+    // collect a vector of alive enemies
+    CUtlVector< CTFPlayer * > enemyVector;
+    CollectPlayers( &enemyVector, TF_TEAM_RED, COLLECT_ONLY_LIVING_PLAYERS );
 
-	// check for unpopulated sentry areas in the active area set
-	for( int i=0; i<m_actualSentrySpotVector.Count(); ++i )
-	{
-		CTFNavArea *sentryArea = m_actualSentrySpotVector[i];
+    // check for unpopulated sentry areas in the active area set
+    for ( int i = 0; i < m_actualSentrySpotVector.Count(); ++i )
+    {
+        CTFNavArea *sentryArea = m_actualSentrySpotVector[i];
 
-		// is this area in play?
-		if ( sentryArea->GetIncursionDistance( TF_TEAM_BLUE ) > aheadLimit )
-			continue;
+        // is this area in play?
+        if ( sentryArea->GetIncursionDistance( TF_TEAM_BLUE ) > aheadLimit )
+            continue;
 
-		if ( sentryArea->GetIncursionDistance( TF_TEAM_BLUE ) < behindLimit )
-			continue;
+        if ( sentryArea->GetIncursionDistance( TF_TEAM_BLUE ) < behindLimit )
+            continue;
 
-		// is this area 'owned' by another, active, engineer?
-		int e;
-		for( e=0; e<enemyVector.Count(); ++e )
-		{
-			if ( !enemyVector[e]->IsBot() )
-				continue;
+        // is this area 'owned' by another, active, engineer?
+        int e;
+        for ( e = 0; e < enemyVector.Count(); ++e )
+        {
+            if ( !enemyVector[e]->IsBot() )
+                continue;
 
-			if ( !enemyVector[e]->IsPlayerClass( TF_CLASS_ENGINEER ) )
-				continue;
+            if ( !enemyVector[e]->IsPlayerClass( TF_CLASS_ENGINEER ) )
+                continue;
 
-			CTFBot *engineer = (CTFBot *)enemyVector[e];
-			if ( engineer->GetHomeArea() && engineer->GetHomeArea()->GetID() == sentryArea->GetID() )
-			{
-				break;
-			}
-		}
+            CTFBot *engineer = ( CTFBot * )enemyVector[e];
+            if ( engineer->GetHomeArea() && engineer->GetHomeArea()->GetID() == sentryArea->GetID() )
+            {
+                break;
+            }
+        }
 
-		if ( e < enemyVector.Count() )
-		{
-			// another engineer is using this area
-			continue;
-		}
+        if ( e < enemyVector.Count() )
+        {
+            // another engineer is using this area
+            continue;
+        }
 
-		// this is an unreserved sentry area in the active area set, keep the nearest one that is ahead of the team
-		float incDist = sentryArea->GetIncursionDistance( TF_TEAM_BLUE );
-		if ( incDist < nearestSentryAreaIncDist && incDist >= behindLimit )
-		{
-			nearestSentryArea = sentryArea;
-			nearestSentryAreaIncDist = incDist;
-		}
-	}
+        // this is an unreserved sentry area in the active area set, keep the nearest one that is ahead of the team
+        float incDist = sentryArea->GetIncursionDistance( TF_TEAM_BLUE );
+        if ( incDist < nearestSentryAreaIncDist && incDist >= behindLimit )
+        {
+            nearestSentryArea = sentryArea;
+            nearestSentryAreaIncDist = incDist;
+        }
+    }
 
-	if ( nearestSentryArea )
-	{
-		// find a nearby non-visible spawn spot for the engineer to enter from
-		CNearbyHiddenScan hide;
-		const float hideRange = 1000.0f;
-		SearchSurroundingAreas( nearestSentryArea, hide, hideRange );
+    if ( nearestSentryArea )
+    {
+        // find a nearby non-visible spawn spot for the engineer to enter from
+        CNearbyHiddenScan hide;
+        const float hideRange = 1000.0f;
+        SearchSurroundingAreas( nearestSentryArea, hide, hideRange );
 
-		if ( !hide.m_hiddenArea )
-		{
-			DevMsg( "RAID: %3.2f: Can't find hidden area to spawn in engineer", gpGlobals->curtime );
-			return NULL;
-		}
+        if ( !hide.m_hiddenArea )
+        {
+            DevMsg( "RAID: %3.2f: Can't find hidden area to spawn in engineer", gpGlobals->curtime );
+            return NULL;
+        }
 
-		// actual spawn-in, hidden area is this area's parent
-		nearestSentryArea->SetParent( hide.m_hiddenArea );
+        // actual spawn-in, hidden area is this area's parent
+        nearestSentryArea->SetParent( hide.m_hiddenArea );
 
-		return nearestSentryArea;
-	}
+        return nearestSentryArea;
+    }
 
-	return NULL;
+    return NULL;
 }
-
 
 #if 0
 //--------------------------------------------------------------------------------------------------------
@@ -1228,519 +1199,523 @@ void CRaidLogic::SpawnSpecials( CUtlVector< CTFNavArea * > *spawnAheadVector, CU
 		DevMsg( "RAID: %3.2f: Failed to spawn Special.\n", gpGlobals->curtime );
 	}
 }
-#endif // 0
-
+#endif  // 0
 
 //--------------------------------------------------------------------------------------------------------
 void CRaidLogic::CullObsoleteEnemies( float minIncursion, float maxIncursion )
 {
-return;
+    return;
 
-	// cull wanderers outside of the active area set - use slightly larger range to avoid thrashing
-	CTeam *defenseTeam = GetGlobalTeam( TF_TEAM_RED );
+    // cull wanderers outside of the active area set - use slightly larger range to avoid thrashing
+    CTeam *defenseTeam = GetGlobalTeam( TF_TEAM_RED );
 
-	float cullMinIncursionDistance = minIncursion - 1.1f * tf_populator_active_buffer_range.GetFloat();
-	float cullMaxIncursionDistance = maxIncursion + 1.1f * tf_populator_active_buffer_range.GetFloat();
+    float cullMinIncursionDistance = minIncursion - 1.1f * tf_populator_active_buffer_range.GetFloat();
+    float cullMaxIncursionDistance = maxIncursion + 1.1f * tf_populator_active_buffer_range.GetFloat();
 
-	for( int i=0; i<defenseTeam->GetNumPlayers(); ++i )
-	{
-		if ( !defenseTeam->GetPlayer(i)->IsBot() )
-			continue;
+    for ( int i = 0; i < defenseTeam->GetNumPlayers(); ++i )
+    {
+        if ( !defenseTeam->GetPlayer( i )->IsBot() )
+            continue;
 
-		CTFBot *defender = (CTFBot *)defenseTeam->GetPlayer(i);
+        CTFBot *defender = ( CTFBot * )defenseTeam->GetPlayer( i );
 
-		if ( !defender->IsAlive() )
-			continue;
+        if ( !defender->IsAlive() )
+            continue;
 
-		CTFNavArea *defenderArea = (CTFNavArea *)defender->GetLastKnownArea();
-		if ( defenderArea == NULL )
-		{
-			// bad placement, underground most likely
-			Unspawn( defender );
-		}
-		else if ( !defender->IsMoving() || defender->GetLocomotionInterface()->IsStuck() )
-		{
-			if ( defenderArea->GetIncursionDistance( TF_TEAM_BLUE ) < cullMinIncursionDistance ||
-				 defenderArea->GetIncursionDistance( TF_TEAM_BLUE ) > cullMaxIncursionDistance )
-			{
-				if ( Unspawn( defender ) )
-				{
-					if ( !defender->HasAttribute( CTFBot::AGGRESSIVE ) )
-					{
-						defenderArea->AddToWanderCount( 1 );
-					}
-				}
-			}
-		}
-	}
+        CTFNavArea *defenderArea = ( CTFNavArea * )defender->GetLastKnownArea();
+        if ( defenderArea == NULL )
+        {
+            // bad placement, underground most likely
+            Unspawn( defender );
+        }
+        else if ( !defender->IsMoving() || defender->GetLocomotionInterface()->IsStuck() )
+        {
+            if ( defenderArea->GetIncursionDistance( TF_TEAM_BLUE ) < cullMinIncursionDistance ||
+                 defenderArea->GetIncursionDistance( TF_TEAM_BLUE ) > cullMaxIncursionDistance )
+            {
+                if ( Unspawn( defender ) )
+                {
+                    if ( !defender->HasAttribute( CTFBot::AGGRESSIVE ) )
+                    {
+                        defenderArea->AddToWanderCount( 1 );
+                    }
+                }
+            }
+        }
+    }
 
-	// aggressively cull wanderers if we need to spawn a mob and have no room
-	if ( IsMobSpawning() && GetAvailableRedSpawnSlots() <= 0 )
-	{
-		// try to make room by removing an unseen wanderer
-		for( int i=0; i<defenseTeam->GetNumPlayers(); ++i )
-		{
-			if ( !defenseTeam->GetPlayer(i)->IsBot() )
-				continue;
+    // aggressively cull wanderers if we need to spawn a mob and have no room
+    if ( IsMobSpawning() && GetAvailableRedSpawnSlots() <= 0 )
+    {
+        // try to make room by removing an unseen wanderer
+        for ( int i = 0; i < defenseTeam->GetNumPlayers(); ++i )
+        {
+            if ( !defenseTeam->GetPlayer( i )->IsBot() )
+                continue;
 
-			CTFBot *defender = (CTFBot *)defenseTeam->GetPlayer(i);
+            CTFBot *defender = ( CTFBot * )defenseTeam->GetPlayer( i );
 
-			if ( !defender->IsAlive() )
-				continue;
+            if ( !defender->IsAlive() )
+                continue;
 
-			// only cull Scouts
-			if ( !defender->IsPlayerClass( TF_CLASS_SCOUT ) )
-				continue;
+            // only cull Scouts
+            if ( !defender->IsPlayerClass( TF_CLASS_SCOUT ) )
+                continue;
 
-			// don't cull mob rushers
-			if ( defender->HasAttribute( CTFBot::AGGRESSIVE ) )
-				continue;
+            // don't cull mob rushers
+            if ( defender->HasAttribute( CTFBot::AGGRESSIVE ) )
+                continue;
 
-			// try to open up a slot
-			if ( Unspawn( defender ) )
-			{
-				if ( defender->GetLastKnownArea() )
-				{
-					defender->GetLastKnownArea()->AddToWanderCount( 1 );
-				}
-				break;
-			}
-		}
-	}
+            // try to open up a slot
+            if ( Unspawn( defender ) )
+            {
+                if ( defender->GetLastKnownArea() )
+                {
+                    defender->GetLastKnownArea()->AddToWanderCount( 1 );
+                }
+                break;
+            }
+        }
+    }
 }
-
 
 //--------------------------------------------------------------------------------------------------------
 class CShowEscapeRoute : public ISearchSurroundingAreasFunctor
 {
-public:
-	virtual bool operator() ( CNavArea *baseArea, CNavArea *priorArea, float travelDistanceSoFar )
-	{
-		CTFNavArea *area = (CTFNavArea *)baseArea;
+   public:
+    virtual bool operator()( CNavArea *baseArea, CNavArea *priorArea, float travelDistanceSoFar )
+    {
+        CTFNavArea *area = ( CTFNavArea * )baseArea;
 
-		if ( area->HasAttributeTF( TF_NAV_ESCAPE_ROUTE ) )
-		{
-			area->DrawFilled( 100, 255, 255, 255, NDEBUG_PERSIST_TILL_NEXT_SERVER, false );
-		}
-		else if ( area->HasAttributeTF( TF_NAV_ESCAPE_ROUTE_VISIBLE ) )
-		{
-			area->DrawFilled( 100, 200, 100, 255, NDEBUG_PERSIST_TILL_NEXT_SERVER, false );
-		}
+        if ( area->HasAttributeTF( TF_NAV_ESCAPE_ROUTE ) )
+        {
+            area->DrawFilled( 100, 255, 255, 255, NDEBUG_PERSIST_TILL_NEXT_SERVER, false );
+        }
+        else if ( area->HasAttributeTF( TF_NAV_ESCAPE_ROUTE_VISIBLE ) )
+        {
+            area->DrawFilled( 100, 200, 100, 255, NDEBUG_PERSIST_TILL_NEXT_SERVER, false );
+        }
 
-		return true;
-	}
+        return true;
+    }
 
-	virtual bool ShouldSearch( CNavArea *adjArea, CNavArea *currentArea, float travelDistanceSoFar ) 
-	{
-		return travelDistanceSoFar < 3000.0f;
-	}
+    virtual bool ShouldSearch( CNavArea *adjArea, CNavArea *currentArea, float travelDistanceSoFar )
+    {
+        return travelDistanceSoFar < 3000.0f;
+    }
 };
-
 
 //--------------------------------------------------------------------------------------------------------
 void CRaidLogic::DrawDebugDisplay( float deltaT )
 {
-	// avoid Warning() spam from UTIL_GetListenServerHost when on a dedicated server
-	if ( engine->IsDedicatedServer() )
-		return;
+    // avoid Warning() spam from UTIL_GetListenServerHost when on a dedicated server
+    if ( engine->IsDedicatedServer() )
+        return;
 
-	CBasePlayer *player = UTIL_GetListenServerHost();
-	if ( player == NULL )
-		return;
+    CBasePlayer *player = UTIL_GetListenServerHost();
+    if ( player == NULL )
+        return;
 
-	if ( tf_raid_debug_director.GetBool() )
-	{
-		NDebugOverlay::ScreenText( 0.01f, 0.5f, CFmtStr( "Mob timer: %3.2f", m_mobSpawnTimer.GetRemainingTime() ), 255, 255, 0, 255, 0.33f );
-		NDebugOverlay::ScreenText( 0.01f, 0.51f, CFmtStr( "Wanderers: %d", m_wandererCount ), 255, 255, 0, 255, 0.33f );
-		NDebugOverlay::ScreenText( 0.01f, 0.52f, CFmtStr( "Engineers: %d", m_engineerCount ), 255, 255, 0, 255, 0.33f );
-		NDebugOverlay::ScreenText( 0.01f, 0.53f, CFmtStr( "Demomen: %d", m_demomanCount ), 255, 255, 0, 255, 0.33f );
-		NDebugOverlay::ScreenText( 0.01f, 0.54f, CFmtStr( "Heavies: %d", m_heavyCount ), 255, 255, 0, 255, 0.33f );
-		NDebugOverlay::ScreenText( 0.01f, 0.55f, CFmtStr( "Soldiers: %d", m_soldierCount ), 255, 255, 0, 255, 0.33f );
-		NDebugOverlay::ScreenText( 0.01f, 0.56f, CFmtStr( "Pyros: %d", m_pyroCount ), 255, 255, 0, 255, 0.33f );
-		NDebugOverlay::ScreenText( 0.01f, 0.57f, CFmtStr( "Spies: %d", m_spyCount ), 255, 255, 0, 255, 0.33f );
-		NDebugOverlay::ScreenText( 0.01f, 0.58f, CFmtStr( "Snipers: %d", m_sniperCount ), 255, 255, 0, 255, 0.33f );
-		NDebugOverlay::ScreenText( 0.01f, 0.59f, CFmtStr( "Squads: %d", m_squadCount ), 255, 255, 0, 255, 0.33f );
-		NDebugOverlay::ScreenText( 0.01f, 0.60f, CFmtStr( "Raider max inc range: %3.2f", GetMaximumRaiderIncursionDistance() ), 255, 255, 0, 255, 0.33f );
-	}
+    if ( tf_raid_debug_director.GetBool() )
+    {
+        NDebugOverlay::ScreenText( 0.01f, 0.5f, CFmtStr( "Mob timer: %3.2f", m_mobSpawnTimer.GetRemainingTime() ), 255, 255, 0, 255, 0.33f );
+        NDebugOverlay::ScreenText( 0.01f, 0.51f, CFmtStr( "Wanderers: %d", m_wandererCount ), 255, 255, 0, 255, 0.33f );
+        NDebugOverlay::ScreenText( 0.01f, 0.52f, CFmtStr( "Engineers: %d", m_engineerCount ), 255, 255, 0, 255, 0.33f );
+        NDebugOverlay::ScreenText( 0.01f, 0.53f, CFmtStr( "Demomen: %d", m_demomanCount ), 255, 255, 0, 255, 0.33f );
+        NDebugOverlay::ScreenText( 0.01f, 0.54f, CFmtStr( "Heavies: %d", m_heavyCount ), 255, 255, 0, 255, 0.33f );
+        NDebugOverlay::ScreenText( 0.01f, 0.55f, CFmtStr( "Soldiers: %d", m_soldierCount ), 255, 255, 0, 255, 0.33f );
+        NDebugOverlay::ScreenText( 0.01f, 0.56f, CFmtStr( "Pyros: %d", m_pyroCount ), 255, 255, 0, 255, 0.33f );
+        NDebugOverlay::ScreenText( 0.01f, 0.57f, CFmtStr( "Spies: %d", m_spyCount ), 255, 255, 0, 255, 0.33f );
+        NDebugOverlay::ScreenText( 0.01f, 0.58f, CFmtStr( "Snipers: %d", m_sniperCount ), 255, 255, 0, 255, 0.33f );
+        NDebugOverlay::ScreenText( 0.01f, 0.59f, CFmtStr( "Squads: %d", m_squadCount ), 255, 255, 0, 255, 0.33f );
+        NDebugOverlay::ScreenText( 0.01f, 0.60f, CFmtStr( "Raider max inc range: %3.2f", GetMaximumRaiderIncursionDistance() ), 255, 255, 0, 255, 0.33f );
+    }
 
-	if ( tf_raid_show_escape_route.GetInt() == 2 )
-	{
-		if ( m_escapeRouteVector.Count() >= 2 )
-		{
-			int anchor=0;
-			float closeRangeSq = FLT_MAX;
-			for( int i=0; i<m_escapeRouteVector.Count(); ++i )
-			{
-				float rangeSq = ( m_escapeRouteVector[i]->GetCenter() - player->GetAbsOrigin() ).LengthSqr();
-				if ( rangeSq < closeRangeSq )
-				{
-					closeRangeSq = rangeSq;
-					anchor = i;
-				}
-			}
+    if ( tf_raid_show_escape_route.GetInt() == 2 )
+    {
+        if ( m_escapeRouteVector.Count() >= 2 )
+        {
+            int anchor = 0;
+            float closeRangeSq = FLT_MAX;
+            for ( int i = 0; i < m_escapeRouteVector.Count(); ++i )
+            {
+                float rangeSq = ( m_escapeRouteVector[i]->GetCenter() - player->GetAbsOrigin() ).LengthSqr();
+                if ( rangeSq < closeRangeSq )
+                {
+                    closeRangeSq = rangeSq;
+                    anchor = i;
+                }
+            }
 
-			int lo = MAX( 0, anchor-20 );
-			int hi = MIN( m_escapeRouteVector.Count(), anchor+20 );
+            int lo = MAX( 0, anchor - 20 );
+            int hi = MIN( m_escapeRouteVector.Count(), anchor + 20 );
 
-			for( int i=lo; i<hi-1; ++i )
-			{
-				NDebugOverlay::HorzArrow( m_escapeRouteVector[i]->GetCenter(), m_escapeRouteVector[i+1]->GetCenter(), 5.0f, 255, 0, 0, 255, true, deltaT );
-				NDebugOverlay::Text( m_escapeRouteVector[i]->GetCenter(), CFmtStr( "%d", i ), true, deltaT );
-			}
-		}
-	}
-	else if ( tf_raid_show_escape_route.GetInt() == 1 )
-	{
-		CShowEscapeRoute show;
-		SearchSurroundingAreas( player->GetLastKnownArea(), show );
-	}
+            for ( int i = lo; i < hi - 1; ++i )
+            {
+                NDebugOverlay::HorzArrow( m_escapeRouteVector[i]->GetCenter(), m_escapeRouteVector[i + 1]->GetCenter(), 5.0f, 255, 0, 0, 255, true, deltaT );
+                NDebugOverlay::Text( m_escapeRouteVector[i]->GetCenter(), CFmtStr( "%d", i ), true, deltaT );
+            }
+        }
+    }
+    else if ( tf_raid_show_escape_route.GetInt() == 1 )
+    {
+        CShowEscapeRoute show;
+        SearchSurroundingAreas( player->GetLastKnownArea(), show );
+    }
 
-	if ( tf_raid_debug_sentry_placement.GetBool() )
-	{
-		for( int i=0; i<m_actualSentrySpotVector.Count(); ++i )
-		{
-			m_actualSentrySpotVector[i]->DrawFilled( 255, 155, 0, 255, deltaT, true );		
-		}
-	}
+    if ( tf_raid_debug_sentry_placement.GetBool() )
+    {
+        for ( int i = 0; i < m_actualSentrySpotVector.Count(); ++i )
+        {
+            m_actualSentrySpotVector[i]->DrawFilled( 255, 155, 0, 255, deltaT, true );
+        }
+    }
 }
-
 
 //--------------------------------------------------------------------------------------------------------
 void CRaidLogic::Update( void )
 {
-	VPROF_BUDGET( "CRaidLogic::Update", "Game" );
+    VPROF_BUDGET( "CRaidLogic::Update", "Game" );
 
-	const float deltaT = 0.33f;
+    const float deltaT = 0.33f;
 
-	SetNextThink( gpGlobals->curtime + deltaT );
+    SetNextThink( gpGlobals->curtime + deltaT );
 
-	if ( !TFGameRules()->IsRaidMode() )
-		return;
+    if ( !TFGameRules()->IsRaidMode() )
+        return;
 
-	DrawDebugDisplay( deltaT );
+    DrawDebugDisplay( deltaT );
 
-	CTeam *raidingTeam = GetGlobalTeam( TF_TEAM_BLUE );
+    CTeam *raidingTeam = GetGlobalTeam( TF_TEAM_BLUE );
 
-	// total hack for testing mini-bosses
-	if ( m_miniBossIndex == 0 && m_miniBossHomeVector.Count() > 0 )
-	{
-		CTFNavArea *bossHomeArea = m_miniBossHomeVector[0];
+    // total hack for testing mini-bosses
+    if ( m_miniBossIndex == 0 && m_miniBossHomeVector.Count() > 0 )
+    {
+        CTFNavArea *bossHomeArea = m_miniBossHomeVector[0];
 
-		CBaseEntity *miniBoss = CreateEntityByName( "bot_boss_mini_rockets" );
-		if ( miniBoss )
-		{
-			miniBoss->SetAbsOrigin( bossHomeArea->GetCenter() );
-			miniBoss->SetOwnerEntity( NULL );
+        CBaseEntity *miniBoss = CreateEntityByName( "bot_boss_mini_rockets" );
+        if ( miniBoss )
+        {
+            miniBoss->SetAbsOrigin( bossHomeArea->GetCenter() );
+            miniBoss->SetOwnerEntity( NULL );
 
-			DispatchSpawn( miniBoss );
-		}
+            DispatchSpawn( miniBoss );
+        }
 
-		++m_miniBossIndex;
-	}
-	else if ( m_miniBossIndex == 1 && m_miniBossHomeVector.Count() > 1 )
-	{
-		if ( gEntList.FindEntityByClassname( NULL, "bot_boss_mini_rockets" ) == NULL )
-		{
-			CTFNavArea *bossHomeArea = m_miniBossHomeVector[1];
+        ++m_miniBossIndex;
+    }
+    else if ( m_miniBossIndex == 1 && m_miniBossHomeVector.Count() > 1 )
+    {
+        if ( gEntList.FindEntityByClassname( NULL, "bot_boss_mini_rockets" ) == NULL )
+        {
+            CTFNavArea *bossHomeArea = m_miniBossHomeVector[1];
 
-			CBaseEntity *miniBoss = CreateEntityByName( "bot_boss_mini_nuker" );
-			if ( miniBoss )
-			{
-				miniBoss->SetAbsOrigin( bossHomeArea->GetCenter() );
-				miniBoss->SetOwnerEntity( NULL );
+            CBaseEntity *miniBoss = CreateEntityByName( "bot_boss_mini_nuker" );
+            if ( miniBoss )
+            {
+                miniBoss->SetAbsOrigin( bossHomeArea->GetCenter() );
+                miniBoss->SetOwnerEntity( NULL );
 
-				DispatchSpawn( miniBoss );
-			}
+                DispatchSpawn( miniBoss );
+            }
 
-			++m_miniBossIndex;
-		}
-	}
+            ++m_miniBossIndex;
+        }
+    }
 
+    if ( IsWaitingForRaidersToLeaveSafeRoom() )
+    {
+        // has anyone left?
+        for ( int i = 0; i < raidingTeam->GetNumPlayers(); ++i )
+        {
+            CTFPlayer *player = ( CTFPlayer * )raidingTeam->GetPlayer( i );
 
-	if ( IsWaitingForRaidersToLeaveSafeRoom() )
-	{
-		// has anyone left?
-		for( int i=0; i<raidingTeam->GetNumPlayers(); ++i )
-		{
-			CTFPlayer *player = (CTFPlayer *)raidingTeam->GetPlayer(i);
+            if ( !player->IsAlive() || !player->GetLastKnownArea() )
+                continue;
 
-			if ( !player->IsAlive() || !player->GetLastKnownArea() )
-				continue;
+            // don't start until a HUMAN leaves the safe room
+            if ( player->IsBot() )
+                continue;
 
-			// don't start until a HUMAN leaves the safe room
-			if ( player->IsBot() )
-				continue;
+            CTFNavArea *area = ( CTFNavArea * )player->GetLastKnownArea();
 
-			CTFNavArea *area = (CTFNavArea *)player->GetLastKnownArea();
+            if ( !area->HasAttributeTF( TF_NAV_SPAWN_ROOM_BLUE ) )
+            {
+                // this Raider has left the spawn room - game on!
+                m_isWaitingForRaidersToLeaveSpawnRoom = false;
 
-			if ( !area->HasAttributeTF( TF_NAV_SPAWN_ROOM_BLUE ) )
-			{
-				// this Raider has left the spawn room - game on!
-				m_isWaitingForRaidersToLeaveSpawnRoom = false;
+                StartMobTimer( RandomFloat( 0.5f * tf_raid_mob_spawn_min_interval.GetFloat(), tf_raid_mob_spawn_max_interval.GetFloat() ) );
+                m_specialSpawnTimer.Start( RandomFloat( 0.0f, tf_raid_special_spawn_min_interval.GetFloat() ) );
 
-				StartMobTimer( RandomFloat( 0.5f * tf_raid_mob_spawn_min_interval.GetFloat(), tf_raid_mob_spawn_max_interval.GetFloat() ) );
-				m_specialSpawnTimer.Start( RandomFloat( 0.0f, tf_raid_special_spawn_min_interval.GetFloat() ) );
+                DevMsg( "RAID: %3.2f: Raiders left the spawn room!\n", gpGlobals->curtime );
+            }
+        }
+    }
+    else
+    {
+        int aliveCount = 0;
+        for ( int i = 0; i < raidingTeam->GetNumPlayers(); ++i )
+        {
+            CTFPlayer *player = ToTFPlayer( raidingTeam->GetPlayer( i ) );
 
-				DevMsg( "RAID: %3.2f: Raiders left the spawn room!\n", gpGlobals->curtime );
-			}
-		}
-	}
-	else
-	{
-		int aliveCount = 0;
-		for( int i=0; i<raidingTeam->GetNumPlayers(); ++i )
-		{
-			CTFPlayer *player = ToTFPlayer( raidingTeam->GetPlayer(i) );
+            CTFBot *bot = ToTFBot( player );
+            if ( bot && bot->HasAttribute( CTFBot::IS_NPC ) )
+                continue;
 
-			CTFBot *bot = ToTFBot( player );
-			if ( bot && bot->HasAttribute( CTFBot::IS_NPC ) )
-				continue;
+            if ( player->IsAlive() )
+            {
+                CTFNavArea *area = ( CTFNavArea * )player->GetLastKnownArea();
+                if ( !area || !area->HasAttributeTF( TF_NAV_RESCUE_CLOSET ) )
+                {
+                    // only count raiders not in a rescue closet
+                    ++aliveCount;
+                }
+            }
+        }
 
-			if ( player->IsAlive() )
-			{
-				CTFNavArea *area = (CTFNavArea *)player->GetLastKnownArea();
-				if ( !area || !area->HasAttributeTF( TF_NAV_RESCUE_CLOSET ) )
-				{
-					// only count raiders not in a rescue closet
-					++aliveCount;
-				}
-			}
-		}
+        if ( m_priorRaiderAliveCount < 0 )
+        {
+            // just left the safe room
+            if ( m_didFailLastTime )
+            {
+                TFGameRules()->BroadcastSound( 255, "Announcer.DontFailAgain" );
+            }
+            else
+            {
+                TFGameRules()->BroadcastSound( 255, "Announcer.AM_GameStarting04" );  // "Let the games begin!"
+            }
+        }
+        else
+        {
+            if ( m_priorRaiderAliveCount > aliveCount )
+            {
+                // somebody died, warn the team
+                switch ( aliveCount )
+                {
+                    case 3:
+                        TFGameRules()->BroadcastSound( 255, "Announcer.RoundEnds3seconds" );
+                        break;
+                    case 2:
+                        TFGameRules()->BroadcastSound( 255, "Announcer.RoundEnds2seconds" );
+                        break;
+                    case 1:
+                        TFGameRules()->BroadcastSound( 255, "Announcer.AM_LastManAlive01" );
+                        break;
+                }
+            }
+            else if ( m_priorRaiderAliveCount < aliveCount )
+            {
+                // someone has joined/respawned, let the team know
+                switch ( aliveCount )
+                {
+                    case 4:
+                        TFGameRules()->BroadcastSound( 255, "Announcer.RoundEnds4seconds" );
+                        break;
+                    case 3:
+                        TFGameRules()->BroadcastSound( 255, "Announcer.RoundEnds3seconds" );
+                        break;
+                    case 2:
+                        TFGameRules()->BroadcastSound( 255, "Announcer.RoundEnds2seconds" );
+                        break;
+                }
+            }
+        }
 
-		if ( m_priorRaiderAliveCount < 0 )
-		{
-			// just left the safe room
-			if ( m_didFailLastTime )
-			{
-				TFGameRules()->BroadcastSound( 255, "Announcer.DontFailAgain" );
-			}
-			else
-			{
-				TFGameRules()->BroadcastSound( 255, "Announcer.AM_GameStarting04" );		// "Let the games begin!"
-			}
-		}
-		else
-		{
-			if ( m_priorRaiderAliveCount > aliveCount )
-			{
-				// somebody died, warn the team
-				switch( aliveCount )
-				{
-				case 3:	TFGameRules()->BroadcastSound( 255, "Announcer.RoundEnds3seconds" );	break;
-				case 2: TFGameRules()->BroadcastSound( 255, "Announcer.RoundEnds2seconds" );	break;
-				case 1:	TFGameRules()->BroadcastSound( 255, "Announcer.AM_LastManAlive01" );	break;
-				}
-			}
-			else if ( m_priorRaiderAliveCount < aliveCount )
-			{
-				// someone has joined/respawned, let the team know
-				switch( aliveCount )
-				{
-				case 4:	TFGameRules()->BroadcastSound( 255, "Announcer.RoundEnds4seconds" );	break;
-				case 3:	TFGameRules()->BroadcastSound( 255, "Announcer.RoundEnds3seconds" );	break;
-				case 2: TFGameRules()->BroadcastSound( 255, "Announcer.RoundEnds2seconds" );	break;
-				}
-			}
-		}
+        m_priorRaiderAliveCount = aliveCount;
 
-		m_priorRaiderAliveCount = aliveCount;
+        if ( TFGameRules() && !TFGameRules()->IsInWaitingForPlayers() )
+        {
+            // if all of the raiders die, they lose
+            if ( aliveCount == 0 )
+            {
+                CTeamplayRoundBasedRules *pRules = dynamic_cast< CTeamplayRoundBasedRules * >( GameRules() );
+                if ( pRules )
+                {
+                    pRules->SetWinningTeam( TF_TEAM_RED, WINREASON_OPPONENTS_DEAD );
+                }
+            }
+        }
+    }
 
+    // have the raiders begun capturing the next point?
+    CTeamControlPoint *ctrlPoint = GetContestedPoint();
+    bool isCapturingPoint = ( ctrlPoint && ctrlPoint->GetTeamCapPercentage( TF_TEAM_BLUE ) );
 
-		if ( TFGameRules() && !TFGameRules()->IsInWaitingForPlayers() )
-		{
-			// if all of the raiders die, they lose
-			if ( aliveCount == 0 )
-			{
-				CTeamplayRoundBasedRules *pRules = dynamic_cast<CTeamplayRoundBasedRules*>( GameRules() );
-				if ( pRules )
-				{
-					pRules->SetWinningTeam( TF_TEAM_RED, WINREASON_OPPONENTS_DEAD );
-				}
-			}
-		}
-	}
+    // find maximum incursion distance
+    if ( m_incursionDistanceAtEnd < 0.0f )
+    {
+        for ( int i = 0; i < TheNavAreas.Count(); ++i )
+        {
+            CTFNavArea *area = ( CTFNavArea * )TheNavAreas[i];
 
+            if ( area->GetIncursionDistance( TF_TEAM_BLUE ) > m_incursionDistanceAtEnd )
+            {
+                m_incursionDistanceAtEnd = area->GetIncursionDistance( TF_TEAM_BLUE );
+            }
+        }
+    }
 
-	// have the raiders begun capturing the next point?
-	CTeamControlPoint *ctrlPoint = GetContestedPoint();
-	bool isCapturingPoint = ( ctrlPoint && ctrlPoint->GetTeamCapPercentage( TF_TEAM_BLUE ) );
+    // find incursion range that surrounds raider team
+    float minIncursion = FLT_MAX, maxIncursion = -FLT_MAX;
 
-	// find maximum incursion distance
-	if ( m_incursionDistanceAtEnd < 0.0f ) 
-	{
-		for( int i=0; i<TheNavAreas.Count(); ++i )
-		{
-			CTFNavArea *area = (CTFNavArea *)TheNavAreas[ i ];
+    m_farthestAlongRaider = NULL;
+    CTFPlayer *capturer = NULL;
+    int i;
 
-			if ( area->GetIncursionDistance( TF_TEAM_BLUE ) > m_incursionDistanceAtEnd )
-			{
-				m_incursionDistanceAtEnd = area->GetIncursionDistance( TF_TEAM_BLUE );
-			}
-		}
-	}
+    for ( i = 0; i < raidingTeam->GetNumPlayers(); ++i )
+    {
+        CTFPlayer *player = ( CTFPlayer * )raidingTeam->GetPlayer( i );
 
-	// find incursion range that surrounds raider team
-	float minIncursion = FLT_MAX, maxIncursion = -FLT_MAX;
+        if ( !player->IsAlive() || !player->GetLastKnownArea() )
+            continue;
 
-	m_farthestAlongRaider = NULL;
-	CTFPlayer *capturer = NULL;
-	int i;
+        CTFBot *bot = ToTFBot( player );
+        if ( bot && bot->HasAttribute( CTFBot::IS_NPC ) )
+            continue;
 
-	for( i=0; i<raidingTeam->GetNumPlayers(); ++i )
-	{
-		CTFPlayer *player = (CTFPlayer *)raidingTeam->GetPlayer(i);
+        if ( player->IsCapturingPoint() )
+        {
+            capturer = player;
+        }
 
-		if ( !player->IsAlive() || !player->GetLastKnownArea() )
-			continue;
+        CTFNavArea *area = ( CTFNavArea * )player->GetLastKnownArea();
 
-		CTFBot *bot = ToTFBot( player );
-		if ( bot && bot->HasAttribute( CTFBot::IS_NPC ) )
-			continue;
+        float myIncursion = area->GetIncursionDistance( TF_TEAM_BLUE );
 
-		if ( player->IsCapturingPoint() )
-		{
-			capturer = player;
-		}
+        if ( maxIncursion < myIncursion )
+        {
+            maxIncursion = myIncursion;
+            m_farthestAlongRaider = player;
+        }
 
-		CTFNavArea *area = (CTFNavArea *)player->GetLastKnownArea();
+        if ( minIncursion > myIncursion )
+        {
+            minIncursion = myIncursion;
+        }
+    }
 
-		float myIncursion = area->GetIncursionDistance( TF_TEAM_BLUE );
+    m_farthestAlongEscapeRouteArea = NULL;
 
-		if ( maxIncursion < myIncursion )
-		{
-			maxIncursion = myIncursion;
-			m_farthestAlongRaider = player;
-		}
-		
-		if ( minIncursion > myIncursion )
-		{
-			minIncursion = myIncursion;
-		}
-	}
+    if ( !m_farthestAlongRaider )
+        return;
 
-	m_farthestAlongEscapeRouteArea = NULL;
+    // watch for point capture events
+    if ( !m_wasCapturingPoint && isCapturingPoint )
+    {
+        DevMsg( "RAID: %3.2f: Point capture STARTED!\n", gpGlobals->curtime );
 
-	if ( !m_farthestAlongRaider )
-		return;
+        // UTIL_CenterPrintAll( CFmtStr( "*** %s started capturing the point! ***", capturer->GetPlayerName() ) );
 
-	// watch for point capture events
-	if ( !m_wasCapturingPoint && isCapturingPoint )
-	{
-		DevMsg( "RAID: %3.2f: Point capture STARTED!\n", gpGlobals->curtime );
+        // spawn a mob immediately
+        StartMobTimer( 0.1f );
+    }
+    else if ( m_wasCapturingPoint && !isCapturingPoint )
+    {
+        DevMsg( "RAID: %3.2f: Point capture STOPPED!\n", gpGlobals->curtime );
+    }
+    m_wasCapturingPoint = isCapturingPoint;
 
-		// UTIL_CenterPrintAll( CFmtStr( "*** %s started capturing the point! ***", capturer->GetPlayerName() ) );
+    // track escape route area nearest leader
+    for ( i = 0; i < m_escapeRouteVector.Count(); ++i )
+    {
+        CTFNavArea *area = m_escapeRouteVector[i];
 
-		// spawn a mob immediately
-		StartMobTimer( 0.1f );
-	}
-	else if ( m_wasCapturingPoint && !isCapturingPoint )
-	{
-		DevMsg( "RAID: %3.2f: Point capture STOPPED!\n", gpGlobals->curtime );
-	}
-	m_wasCapturingPoint = isCapturingPoint;
+        if ( area->GetIncursionDistance( TF_TEAM_BLUE ) <= GetMaximumRaiderIncursionDistance() )
+        {
+            if ( m_farthestAlongEscapeRouteArea )
+            {
+                if ( m_farthestAlongEscapeRouteArea->GetIncursionDistance( TF_TEAM_BLUE ) < area->GetIncursionDistance( TF_TEAM_BLUE ) )
+                {
+                    m_farthestAlongEscapeRouteArea = area;
+                }
+            }
+            else
+            {
+                m_farthestAlongEscapeRouteArea = area;
+            }
+        }
+    }
 
-	// track escape route area nearest leader
-	for( i=0; i<m_escapeRouteVector.Count(); ++i )
-	{
-		CTFNavArea *area = m_escapeRouteVector[i];
+    if ( tf_raid_debug_escape_route.GetBool() && m_farthestAlongEscapeRouteArea )
+    {
+        m_farthestAlongEscapeRouteArea->DrawFilled( 255, 100, 0, 255, NDEBUG_PERSIST_TILL_NEXT_SERVER );
+    }
 
-		if ( area->GetIncursionDistance( TF_TEAM_BLUE ) <= GetMaximumRaiderIncursionDistance() )
-		{
-			if ( m_farthestAlongEscapeRouteArea )
-			{
-				if ( m_farthestAlongEscapeRouteArea->GetIncursionDistance( TF_TEAM_BLUE ) < area->GetIncursionDistance( TF_TEAM_BLUE ) )
-				{
-					m_farthestAlongEscapeRouteArea = area;
-				}
-			}
-			else
-			{
-				m_farthestAlongEscapeRouteArea = area;
-			}
-		}
-	}
+    CullObsoleteEnemies( minIncursion, maxIncursion );
 
-	if ( tf_raid_debug_escape_route.GetBool() && m_farthestAlongEscapeRouteArea )
-	{
-		m_farthestAlongEscapeRouteArea->DrawFilled( 255, 100, 0, 255, NDEBUG_PERSIST_TILL_NEXT_SERVER );
-	}
+    // count defensive types
+    CTeam *defenseTeam = GetGlobalTeam( TF_TEAM_RED );
+    m_wandererCount = 0;
+    m_engineerCount = 0;
+    m_demomanCount = 0;
+    m_heavyCount = 0;
+    m_soldierCount = 0;
+    m_pyroCount = 0;
+    m_spyCount = 0;
+    m_sniperCount = 0;
+    m_squadCount = 0;
 
-	CullObsoleteEnemies( minIncursion, maxIncursion );
+    CUtlVector< CTFBotSquad * > m_squadVector;
 
-	// count defensive types
-	CTeam *defenseTeam = GetGlobalTeam( TF_TEAM_RED );
-	m_wandererCount = 0;
-	m_engineerCount = 0;
-	m_demomanCount = 0;
-	m_heavyCount = 0;
-	m_soldierCount = 0;
-	m_pyroCount = 0;
-	m_spyCount = 0;
-	m_sniperCount = 0;
-	m_squadCount = 0;
+    for ( i = 0; i < defenseTeam->GetNumPlayers(); ++i )
+    {
+        if ( !defenseTeam->GetPlayer( i )->IsBot() )
+            continue;
 
-	CUtlVector< CTFBotSquad * > m_squadVector;
+        CTFBot *defender = ( CTFBot * )defenseTeam->GetPlayer( i );
 
-	for( i=0; i<defenseTeam->GetNumPlayers(); ++i )
-	{
-		if ( !defenseTeam->GetPlayer(i)->IsBot() )
-			continue;
+        if ( !defender->IsAlive() )
+            continue;
 
-		CTFBot *defender = (CTFBot *)defenseTeam->GetPlayer(i);
+        if ( defender->GetSquad() )
+        {
+            if ( m_squadVector.Find( defender->GetSquad() ) == m_squadVector.InvalidIndex() )
+            {
+                m_squadVector.AddToTail( defender->GetSquad() );
+                ++m_squadCount;
+            }
+            continue;
+        }
 
-		if ( !defender->IsAlive() )
-			continue;
+        if ( defender->IsPlayerClass( TF_CLASS_ENGINEER ) )
+        {
+            ++m_engineerCount;
+        }
+        else if ( defender->IsPlayerClass( TF_CLASS_DEMOMAN ) )
+        {
+            ++m_demomanCount;
+        }
+        else if ( defender->IsPlayerClass( TF_CLASS_HEAVYWEAPONS ) )
+        {
+            ++m_heavyCount;
+        }
+        else if ( defender->IsPlayerClass( TF_CLASS_SOLDIER ) )
+        {
+            ++m_soldierCount;
+        }
+        else if ( defender->IsPlayerClass( TF_CLASS_PYRO ) )
+        {
+            ++m_pyroCount;
+        }
+        else if ( defender->IsPlayerClass( TF_CLASS_SPY ) )
+        {
+            ++m_spyCount;
+        }
+        else if ( defender->IsPlayerClass( TF_CLASS_SNIPER ) )
+        {
+            ++m_sniperCount;
+        }
+        else if ( defender->IsPlayerClass( TF_CLASS_SCOUT ) )
+        {
+            if ( defender->HasAttribute( CTFBot::AGGRESSIVE ) )
+                continue;
 
-		if ( defender->GetSquad() )
-		{
-			if ( m_squadVector.Find( defender->GetSquad() ) == m_squadVector.InvalidIndex() )
-			{
-				m_squadVector.AddToTail( defender->GetSquad() );
-				++m_squadCount;
-			}
-			continue;
-		}
+            ++m_wandererCount;
+        }
+    }
 
-		if ( defender->IsPlayerClass( TF_CLASS_ENGINEER ) )
-		{
-			++m_engineerCount;
-		}
-		else if ( defender->IsPlayerClass( TF_CLASS_DEMOMAN ) )
-		{
-			++m_demomanCount;
-		}
-		else if ( defender->IsPlayerClass( TF_CLASS_HEAVYWEAPONS ) )
-		{
-			++m_heavyCount;
-		}
-		else if ( defender->IsPlayerClass( TF_CLASS_SOLDIER ) )
-		{
-			++m_soldierCount;
-		}
-		else if ( defender->IsPlayerClass( TF_CLASS_PYRO ) )
-		{
-			++m_pyroCount;
-		}
-		else if ( defender->IsPlayerClass( TF_CLASS_SPY ) )
-		{
-			++m_spyCount;
-		}
-		else if ( defender->IsPlayerClass( TF_CLASS_SNIPER ) )
-		{
-			++m_sniperCount;
-		}
-		else if ( defender->IsPlayerClass( TF_CLASS_SCOUT ) )
-		{
-			if ( defender->HasAttribute( CTFBot::AGGRESSIVE ) )
-				continue;
-
-			++m_wandererCount;
-		}
-	}
-
-
-	if ( tf_raid_spawn_enable.GetBool() == false )
-		return;
+    if ( tf_raid_spawn_enable.GetBool() == false )
+        return;
 
 #if 0
 	// populate wanderers
@@ -1784,49 +1759,47 @@ void CRaidLogic::Update( void )
 			}
 		}
 	}
-#endif // 0
+#endif  // 0
 
-	// block/unblock capture point gate doors
-	// TODO: Do this more efficiently 
-	for( i=0; i<m_gateVector.Count(); ++i )
-	{
-		CBaseDoor *door = m_gateVector[i];
+    // block/unblock capture point gate doors
+    // TODO: Do this more efficiently
+    for ( i = 0; i < m_gateVector.Count(); ++i )
+    {
+        CBaseDoor *door = m_gateVector[i];
 
-		Extent doorExtent;
-		doorExtent.Init( door );
+        Extent doorExtent;
+        doorExtent.Init( door );
 
-		NavAreaCollector overlapAreas;
-		TheNavMesh->ForAllAreasOverlappingExtent( overlapAreas, doorExtent );
+        NavAreaCollector overlapAreas;
+        TheNavMesh->ForAllAreasOverlappingExtent( overlapAreas, doorExtent );
 
-		for( int b=0; b<overlapAreas.m_area.Count(); ++b )
-		{
-			CTFNavArea *area = (CTFNavArea *)overlapAreas.m_area[b];
-			if ( door->m_toggle_state == TS_AT_TOP )
-			{
-				// open, not blocked
-				area->ClearAttributeTF( TF_NAV_BLOCKED );
-			}
-			else
-			{
-				// not open, blocked
-				area->SetAttributeTF( TF_NAV_BLOCKED );
-			}
-		}
-	}
+        for ( int b = 0; b < overlapAreas.m_area.Count(); ++b )
+        {
+            CTFNavArea *area = ( CTFNavArea * )overlapAreas.m_area[b];
+            if ( door->m_toggle_state == TS_AT_TOP )
+            {
+                // open, not blocked
+                area->ClearAttributeTF( TF_NAV_BLOCKED );
+            }
+            else
+            {
+                // not open, blocked
+                area->SetAttributeTF( TF_NAV_BLOCKED );
+            }
+        }
+    }
 }
-
 
 //--------------------------------------------------------------------------------------------------------
 float CRaidLogic::GetMaximumRaiderIncursionDistance( void ) const
 {
-	if ( m_farthestAlongRaider == NULL )
-		return 0.0f;
+    if ( m_farthestAlongRaider == NULL )
+        return 0.0f;
 
-	CTFNavArea *area = (CTFNavArea *)m_farthestAlongRaider->GetLastKnownArea();
+    CTFNavArea *area = ( CTFNavArea * )m_farthestAlongRaider->GetLastKnownArea();
 
-	return area ? area->GetIncursionDistance( TF_TEAM_BLUE ) : 0.0f;
+    return area ? area->GetIncursionDistance( TF_TEAM_BLUE ) : 0.0f;
 }
-
 
 //--------------------------------------------------------------------------------------------------------
 /**
@@ -1834,53 +1807,52 @@ float CRaidLogic::GetMaximumRaiderIncursionDistance( void ) const
  */
 CTFNavArea *CRaidLogic::FindEarliestVisibleEscapeRouteAreaNearTeam( CTFNavArea *viewArea ) const
 {
-	if ( viewArea == NULL || m_farthestAlongEscapeRouteArea == NULL )
-		return NULL;
+    if ( viewArea == NULL || m_farthestAlongEscapeRouteArea == NULL )
+        return NULL;
 
-	const float nearIncursionRange = 1000.0f;
-	const float minIncursion = GetMaximumRaiderIncursionDistance() - nearIncursionRange;
-	const float maxIncursion = GetMaximumRaiderIncursionDistance() + nearIncursionRange;
+    const float nearIncursionRange = 1000.0f;
+    const float minIncursion = GetMaximumRaiderIncursionDistance() - nearIncursionRange;
+    const float maxIncursion = GetMaximumRaiderIncursionDistance() + nearIncursionRange;
 
-	NavAreaCollector collector;
-	viewArea->ForAllCompletelyVisibleAreas( collector );
+    NavAreaCollector collector;
+    viewArea->ForAllCompletelyVisibleAreas( collector );
 
-	CTFNavArea *firstArea = NULL;
-	float firstAreaIncursion = FLT_MAX;
+    CTFNavArea *firstArea = NULL;
+    float firstAreaIncursion = FLT_MAX;
 
-	for( int i=0; i<collector.m_area.Count(); ++i )
-	{
-		CTFNavArea *area = (CTFNavArea *)collector.m_area[i];
-		float areaIncursion = area->GetIncursionDistance( TF_TEAM_BLUE );
+    for ( int i = 0; i < collector.m_area.Count(); ++i )
+    {
+        CTFNavArea *area = ( CTFNavArea * )collector.m_area[i];
+        float areaIncursion = area->GetIncursionDistance( TF_TEAM_BLUE );
 
-		if ( area->HasAttributeTF( TF_NAV_ESCAPE_ROUTE ) && areaIncursion > minIncursion && areaIncursion < maxIncursion )
-		{
-			if ( tf_debug_sniper_spots.GetBool() )
-			{
-				area->DrawFilled( 255, 0, 255, 255, 120.0f );
-			}
+        if ( area->HasAttributeTF( TF_NAV_ESCAPE_ROUTE ) && areaIncursion > minIncursion && areaIncursion < maxIncursion )
+        {
+            if ( tf_debug_sniper_spots.GetBool() )
+            {
+                area->DrawFilled( 255, 0, 255, 255, 120.0f );
+            }
 
-/*
-			float rangeSq = ( viewArea->GetCenter() - area->GetCenter() ).LengthSqr();
+            /*
+                  float rangeSq = ( viewArea->GetCenter() - area->GetCenter() ).LengthSqr();
 
-			if ( firstAreaIncursion > rangeSq )
-			{
-				// closest
-				firstAreaIncursion = rangeSq;
-				firstArea = area;
-			}
-*/
+                  if ( firstAreaIncursion > rangeSq )
+                  {
+                    // closest
+                    firstAreaIncursion = rangeSq;
+                    firstArea = area;
+                  }
+            */
 
-			if ( firstAreaIncursion > areaIncursion )
-			{
-				firstArea = area;
-				firstAreaIncursion = areaIncursion;
-			}
-		}
-	}
+            if ( firstAreaIncursion > areaIncursion )
+            {
+                firstArea = area;
+                firstAreaIncursion = areaIncursion;
+            }
+        }
+    }
 
-	return firstArea;
+    return firstArea;
 }
-
 
 //--------------------------------------------------------------------------------------------------------
 /**
@@ -1889,81 +1861,80 @@ CTFNavArea *CRaidLogic::FindEarliestVisibleEscapeRouteAreaNearTeam( CTFNavArea *
  */
 CTFNavArea *CRaidLogic::FindSniperSpawn( void )
 {
-	CUtlVector< CTFNavArea * > validAreas;
+    CUtlVector< CTFNavArea * > validAreas;
 
-	float aheadLimit = GetMaximumRaiderIncursionDistance() + tf_raid_sniper_spawn_ahead_incursion.GetFloat();
-	float behindLimit = GetMaximumRaiderIncursionDistance() - tf_raid_sniper_spawn_behind_incursion.GetFloat();
+    float aheadLimit = GetMaximumRaiderIncursionDistance() + tf_raid_sniper_spawn_ahead_incursion.GetFloat();
+    float behindLimit = GetMaximumRaiderIncursionDistance() - tf_raid_sniper_spawn_behind_incursion.GetFloat();
 
-	float tooCloseLimitSq = tf_raid_sniper_spawn_min_range.GetFloat();
-	tooCloseLimitSq *= tooCloseLimitSq;
+    float tooCloseLimitSq = tf_raid_sniper_spawn_min_range.GetFloat();
+    tooCloseLimitSq *= tooCloseLimitSq;
 
-	for( int i=0; i<m_sniperSpotVector.Count(); ++i )
-	{
-		CTFNavArea *sniperArea = m_sniperSpotVector[i];
+    for ( int i = 0; i < m_sniperSpotVector.Count(); ++i )
+    {
+        CTFNavArea *sniperArea = m_sniperSpotVector[i];
 
-		if ( sniperArea->GetIncursionDistance( TF_TEAM_BLUE ) < 0.0f )
-			continue;
+        if ( sniperArea->GetIncursionDistance( TF_TEAM_BLUE ) < 0.0f )
+            continue;
 
-		if ( sniperArea->GetIncursionDistance( TF_TEAM_BLUE ) > aheadLimit )
-			continue;
+        if ( sniperArea->GetIncursionDistance( TF_TEAM_BLUE ) > aheadLimit )
+            continue;
 
-		if ( sniperArea->GetIncursionDistance( TF_TEAM_BLUE ) < behindLimit )
-			continue;
+        if ( sniperArea->GetIncursionDistance( TF_TEAM_BLUE ) < behindLimit )
+            continue;
 
-		// make sure no Raider is too close
-		CClosestTFPlayer close( sniperArea->GetCenter(), TF_TEAM_BLUE );
-		ForEachPlayer( close );
+        // make sure no Raider is too close
+        CClosestTFPlayer close( sniperArea->GetCenter(), TF_TEAM_BLUE );
+        ForEachPlayer( close );
 
-		if ( close.m_closePlayer && close.m_closeRangeSq < tooCloseLimitSq )
-			continue;
+        if ( close.m_closePlayer && close.m_closeRangeSq < tooCloseLimitSq )
+            continue;
 
-		// this is often too restrictive - we really want "potentially visible to region near team"
-		if ( !sniperArea->IsPotentiallyVisibleToTeam( TF_TEAM_BLUE ) )
-		{
-			if ( tf_debug_sniper_spots.GetBool() )
-				sniperArea->DrawFilled( 100, 100, 100, 255, 99999.9f );
+        // this is often too restrictive - we really want "potentially visible to region near team"
+        if ( !sniperArea->IsPotentiallyVisibleToTeam( TF_TEAM_BLUE ) )
+        {
+            if ( tf_debug_sniper_spots.GetBool() )
+                sniperArea->DrawFilled( 100, 100, 100, 255, 99999.9f );
 
-			continue;
-		}
+            continue;
+        }
 
-		validAreas.AddToTail( sniperArea );
-	}
+        validAreas.AddToTail( sniperArea );
+    }
 
-	if ( validAreas.Count() )
-	{
-		// choose a specific sniper spot
-		CTFNavArea *sniperArea = validAreas[ RandomInt( 0, validAreas.Count()-1 ) ];
+    if ( validAreas.Count() )
+    {
+        // choose a specific sniper spot
+        CTFNavArea *sniperArea = validAreas[RandomInt( 0, validAreas.Count() - 1 )];
 
-		// find a nearby non-visible spawn spot
-		CNearbyHiddenScan hide;
-		const float hideRange = 1000.0f;
-		SearchSurroundingAreas( sniperArea, hide, hideRange );
+        // find a nearby non-visible spawn spot
+        CNearbyHiddenScan hide;
+        const float hideRange = 1000.0f;
+        SearchSurroundingAreas( sniperArea, hide, hideRange );
 
-		if ( hide.m_hiddenArea )
-		{
-			sniperArea->SetParent( hide.m_hiddenArea );
+        if ( hide.m_hiddenArea )
+        {
+            sniperArea->SetParent( hide.m_hiddenArea );
 
-			if ( tf_debug_sniper_spots.GetBool() )
-			{
-				const float deltaT = 999999.9f;
-				hide.m_hiddenArea->DrawFilled( 0, 0, 255, 255, deltaT );
-				NDebugOverlay::HorzArrow( hide.m_hiddenArea->GetCenter() + Vector( 0, 0, 10.0f ), sniperArea->GetCenter() + Vector( 0, 0, 10.0f ), 5.0f, 255, 255, 0, 255, true, deltaT );
-				sniperArea->DrawFilled( 255, 0, 0, 255, deltaT );
+            if ( tf_debug_sniper_spots.GetBool() )
+            {
+                const float deltaT = 999999.9f;
+                hide.m_hiddenArea->DrawFilled( 0, 0, 255, 255, deltaT );
+                NDebugOverlay::HorzArrow( hide.m_hiddenArea->GetCenter() + Vector( 0, 0, 10.0f ), sniperArea->GetCenter() + Vector( 0, 0, 10.0f ), 5.0f, 255, 255, 0, 255, true, deltaT );
+                sniperArea->DrawFilled( 255, 0, 0, 255, deltaT );
 
-				for( int i=0; i<validAreas.Count(); ++i )
-				{
-					if ( validAreas[i] != sniperArea && validAreas[i] != hide.m_hiddenArea )
-						validAreas[i]->DrawFilled( 0, 255, 0, 255, 99999.9f );
-				}
-			}
+                for ( int i = 0; i < validAreas.Count(); ++i )
+                {
+                    if ( validAreas[i] != sniperArea && validAreas[i] != hide.m_hiddenArea )
+                        validAreas[i]->DrawFilled( 0, 255, 0, 255, 99999.9f );
+                }
+            }
 
-			return sniperArea;
-		}
-	}
+            return sniperArea;
+        }
+    }
 
-	return NULL;
+    return NULL;
 }
-
 
 //--------------------------------------------------------------------------------------------------------
 /**
@@ -1972,255 +1943,248 @@ CTFNavArea *CRaidLogic::FindSniperSpawn( void )
  */
 CTFNavArea *CRaidLogic::FindSentryArea( void )
 {
-	CUtlVector< CTFNavArea * > validAreas;
+    CUtlVector< CTFNavArea * > validAreas;
 
-	float aheadLimit = GetMaximumRaiderIncursionDistance() + tf_raid_sentry_build_ahead_incursion.GetFloat();
-	float behindLimit = GetMaximumRaiderIncursionDistance() - tf_raid_sentry_build_behind_incursion.GetFloat();
+    float aheadLimit = GetMaximumRaiderIncursionDistance() + tf_raid_sentry_build_ahead_incursion.GetFloat();
+    float behindLimit = GetMaximumRaiderIncursionDistance() - tf_raid_sentry_build_behind_incursion.GetFloat();
 
-	for( int i=0; i<m_sentrySpotVector.Count(); ++i )
-	{
-		CTFNavArea *sentryArea = m_sentrySpotVector[i];
+    for ( int i = 0; i < m_sentrySpotVector.Count(); ++i )
+    {
+        CTFNavArea *sentryArea = m_sentrySpotVector[i];
 
-		if ( sentryArea->GetIncursionDistance( TF_TEAM_BLUE ) < 0.0f )
-			continue;
+        if ( sentryArea->GetIncursionDistance( TF_TEAM_BLUE ) < 0.0f )
+            continue;
 
-		if ( sentryArea->GetIncursionDistance( TF_TEAM_BLUE ) > aheadLimit )
-			continue;
+        if ( sentryArea->GetIncursionDistance( TF_TEAM_BLUE ) > aheadLimit )
+            continue;
 
-		if ( sentryArea->GetIncursionDistance( TF_TEAM_BLUE ) < behindLimit )
-			continue;
+        if ( sentryArea->GetIncursionDistance( TF_TEAM_BLUE ) < behindLimit )
+            continue;
 
-		// don't use this area if it already has a sentry in it
-		if ( TheTFNavMesh()->IsSentryGunHere( sentryArea ) )
-			continue;
+        // don't use this area if it already has a sentry in it
+        if ( TheTFNavMesh()->IsSentryGunHere( sentryArea ) )
+            continue;
 
-		validAreas.AddToTail( sentryArea );
-	}
+        validAreas.AddToTail( sentryArea );
+    }
 
-	if ( validAreas.Count() )
-	{
-		// choose a specific sentry spot
-		CTFNavArea *sentryArea = validAreas[ RandomInt( 0, validAreas.Count()-1 ) ];
+    if ( validAreas.Count() )
+    {
+        // choose a specific sentry spot
+        CTFNavArea *sentryArea = validAreas[RandomInt( 0, validAreas.Count() - 1 )];
 
-		// find a nearby non-visible spawn spot for the engineer
-		CNearbyHiddenScan hide;
-		const float hideRange = 1000.0f;
-		SearchSurroundingAreas( sentryArea, hide, hideRange );
+        // find a nearby non-visible spawn spot for the engineer
+        CNearbyHiddenScan hide;
+        const float hideRange = 1000.0f;
+        SearchSurroundingAreas( sentryArea, hide, hideRange );
 
-		if ( hide.m_hiddenArea )
-		{
-			sentryArea->SetParent( hide.m_hiddenArea );
-			return sentryArea;
-		}
-	}
+        if ( hide.m_hiddenArea )
+        {
+            sentryArea->SetParent( hide.m_hiddenArea );
+            return sentryArea;
+        }
+    }
 
-	return NULL;
+    return NULL;
 }
-
 
 //---------------------------------------------------------------------------------------------
 // Pick a member of the raiding (blue) team for a red defender to attack
 CTFPlayer *CRaidLogic::SelectRaiderToAttack( void )
 {
-	CTeam *invaderTeam = GetGlobalTeam( TF_TEAM_BLUE );
+    CTeam *invaderTeam = GetGlobalTeam( TF_TEAM_BLUE );
 
-	// attack point cappers first
-	CUtlVector< CTFPlayer * > victimVector;
-	int i;
-	for( i=0; i<invaderTeam->GetNumPlayers(); ++i )
-	{
-		CTFPlayer *player = (CTFPlayer *)invaderTeam->GetPlayer(i);
+    // attack point cappers first
+    CUtlVector< CTFPlayer * > victimVector;
+    int i;
+    for ( i = 0; i < invaderTeam->GetNumPlayers(); ++i )
+    {
+        CTFPlayer *player = ( CTFPlayer * )invaderTeam->GetPlayer( i );
 
-		if ( player->IsAlive() && player->IsCapturingPoint() )
-			victimVector.AddToTail( player );
-	}
+        if ( player->IsAlive() && player->IsCapturingPoint() )
+            victimVector.AddToTail( player );
+    }
 
-	if ( victimVector.Count() == 0 )
-	{
-		// pick a random living Raider
-		for( i=0; i<invaderTeam->GetNumPlayers(); ++i )
-		{
-			CTFPlayer *player = (CTFPlayer *)invaderTeam->GetPlayer(i);
+    if ( victimVector.Count() == 0 )
+    {
+        // pick a random living Raider
+        for ( i = 0; i < invaderTeam->GetNumPlayers(); ++i )
+        {
+            CTFPlayer *player = ( CTFPlayer * )invaderTeam->GetPlayer( i );
 
-			CTFBot *bot = ToTFBot( player );
-			if ( bot && bot->HasAttribute( CTFBot::IS_NPC ) )
-				continue;
+            CTFBot *bot = ToTFBot( player );
+            if ( bot && bot->HasAttribute( CTFBot::IS_NPC ) )
+                continue;
 
-			if ( player->IsAlive() )
-				victimVector.AddToTail( player );
-		}
-	}
+            if ( player->IsAlive() )
+                victimVector.AddToTail( player );
+        }
+    }
 
-	if ( victimVector.Count() )
-	{
-		return victimVector[ RandomInt( 0, victimVector.Count()-1 ) ];
-	}
+    if ( victimVector.Count() )
+    {
+        return victimVector[RandomInt( 0, victimVector.Count() - 1 )];
+    }
 
-	return NULL;
+    return NULL;
 }
-
 
 //--------------------------------------------------------------------------------------------------------
 // Return entity positioned within next valid rescue closet area for to respawn players in
 CBaseEntity *CRaidLogic::GetRescueRespawn( void ) const
 {
-	if ( g_internalSpawnPoint == NULL )
-	{
-		g_internalSpawnPoint = (CPopulatorInternalSpawnPoint *)CreateEntityByName( "populator_internal_spawn_point" );
-		g_internalSpawnPoint->Spawn();
-	}
+    if ( g_internalSpawnPoint == NULL )
+    {
+        g_internalSpawnPoint = ( CPopulatorInternalSpawnPoint * )CreateEntityByName( "populator_internal_spawn_point" );
+        g_internalSpawnPoint->Spawn();
+    }
 
-	float limit = GetMaximumRaiderIncursionDistance() - 500.0f;
+    float limit = GetMaximumRaiderIncursionDistance() - 500.0f;
 
-	CTFNavArea *rescueArea = NULL;
-	float rescueFlow = FLT_MAX;
+    CTFNavArea *rescueArea = NULL;
+    float rescueFlow = FLT_MAX;
 
-	for( int i=0; i<m_rescueClosetVector.Count(); ++i )
-	{
-		float flow = m_rescueClosetVector[i]->GetIncursionDistance( TF_TEAM_BLUE );
-		if ( flow > limit && flow < rescueFlow )
-		{
-			rescueArea = m_rescueClosetVector[i];
-			rescueFlow = flow;
-		}
-	}
+    for ( int i = 0; i < m_rescueClosetVector.Count(); ++i )
+    {
+        float flow = m_rescueClosetVector[i]->GetIncursionDistance( TF_TEAM_BLUE );
+        if ( flow > limit && flow < rescueFlow )
+        {
+            rescueArea = m_rescueClosetVector[i];
+            rescueFlow = flow;
+        }
+    }
 
-	if ( rescueArea )
-	{
-		g_internalSpawnPoint->SetAbsOrigin( rescueArea->GetCenter() );
-		g_internalSpawnPoint->SetLocalAngles( vec3_angle );
+    if ( rescueArea )
+    {
+        g_internalSpawnPoint->SetAbsOrigin( rescueArea->GetCenter() );
+        g_internalSpawnPoint->SetLocalAngles( vec3_angle );
 
-		return g_internalSpawnPoint;
-	}
+        return g_internalSpawnPoint;
+    }
 
-	return NULL;
+    return NULL;
 }
-
 
 //--------------------------------------------------------------------------------------------------------
 class CMarkEscapeRoute
 {
-public:
-	CMarkEscapeRoute( CUtlVector< CTFNavArea * > *escapeRouteVector )
-	{
-		m_escapeRouteVector = escapeRouteVector;
-	}
+   public:
+    CMarkEscapeRoute( CUtlVector< CTFNavArea * > *escapeRouteVector )
+    {
+        m_escapeRouteVector = escapeRouteVector;
+    }
 
-	void operator() ( CNavArea *baseArea )
-	{
-		CTFNavArea *area = (CTFNavArea *)baseArea;
+    void operator()( CNavArea *baseArea )
+    {
+        CTFNavArea *area = ( CTFNavArea * )baseArea;
 
-		if ( !m_escapeRouteVector->HasElement( area ) )
-		{
-			area->SetAttributeTF( TF_NAV_ESCAPE_ROUTE );
-			m_escapeRouteVector->AddToTail( area );
-		}
-	}
+        if ( !m_escapeRouteVector->HasElement( area ) )
+        {
+            area->SetAttributeTF( TF_NAV_ESCAPE_ROUTE );
+            m_escapeRouteVector->AddToTail( area );
+        }
+    }
 
-	CUtlVector< CTFNavArea * > *m_escapeRouteVector;
+    CUtlVector< CTFNavArea * > *m_escapeRouteVector;
 };
-
 
 //--------------------------------------------------------------------------------------------------------
 class CMarkEscapeRouteVisible
 {
-public:
-	bool operator() ( CNavArea *baseArea )
-	{
-		CTFNavArea *area = (CTFNavArea *)baseArea;
+   public:
+    bool operator()( CNavArea *baseArea )
+    {
+        CTFNavArea *area = ( CTFNavArea * )baseArea;
 
-		area->SetAttributeTF( TF_NAV_ESCAPE_ROUTE_VISIBLE );
+        area->SetAttributeTF( TF_NAV_ESCAPE_ROUTE_VISIBLE );
 
-		return true;
-	}
+        return true;
+    }
 };
-
 
 //---------------------------------------------------------------------------------------------
 // Locate and store escape route
 void CRaidLogic::BuildEscapeRoute( void )
 {
-	// find blue spawn room
-	CBaseEntity *entity = NULL;
-	for ( int i=0; i<IFuncRespawnRoomAutoList::AutoList().Count(); ++i )
-	{
-		CFuncRespawnRoom *respawnRoom = static_cast< CFuncRespawnRoom* >( IFuncRespawnRoomAutoList::AutoList()[i] );
-		entity = respawnRoom;
-		if ( respawnRoom->GetActive() && respawnRoom->GetTeamNumber() == TF_TEAM_BLUE )
-		{
-			break;
-		}
-	}
+    // find blue spawn room
+    CBaseEntity *entity = NULL;
+    for ( int i = 0; i < IFuncRespawnRoomAutoList::AutoList().Count(); ++i )
+    {
+        CFuncRespawnRoom *respawnRoom = static_cast< CFuncRespawnRoom * >( IFuncRespawnRoomAutoList::AutoList()[i] );
+        entity = respawnRoom;
+        if ( respawnRoom->GetActive() && respawnRoom->GetTeamNumber() == TF_TEAM_BLUE )
+        {
+            break;
+        }
+    }
 
-	if ( entity ) 
-	{
-		// respawn room absorigin is 0,0,0 - have to use extent
-		Extent extent;
-		extent.Init( entity );
-		Vector safeRoomPos = ( extent.lo + extent.hi ) / 2;
+    if ( entity )
+    {
+        // respawn room absorigin is 0,0,0 - have to use extent
+        Extent extent;
+        extent.Init( entity );
+        Vector safeRoomPos = ( extent.lo + extent.hi ) / 2;
 
-		DevMsg( "RAID: Blue spawn room at (%g, %g, %g)\n", safeRoomPos.x, safeRoomPos.y, safeRoomPos.z );
+        DevMsg( "RAID: Blue spawn room at (%g, %g, %g)\n", safeRoomPos.x, safeRoomPos.y, safeRoomPos.z );
 
+        // assume path_track nearest the blue spawn is the start of the escape route
+        // according to the mappers, previous pointers do not contain useful data
+        CPathTrack *pathNode = NULL;
+        CPathTrack *firstPathNode = NULL;
+        float closeRangeSq = FLT_MAX;
 
-		// assume path_track nearest the blue spawn is the start of the escape route
-		// according to the mappers, previous pointers do not contain useful data
-		CPathTrack *pathNode = NULL;
-		CPathTrack *firstPathNode = NULL;
-		float closeRangeSq = FLT_MAX;
+        for ( pathNode = dynamic_cast< CPathTrack * >( gEntList.FindEntityByClassname( pathNode, "path_track" ) );
+              pathNode;
+              pathNode = dynamic_cast< CPathTrack * >( gEntList.FindEntityByClassname( pathNode, "path_track" ) ) )
+        {
+            float rangeSq = ( pathNode->GetAbsOrigin() - safeRoomPos ).LengthSqr();
 
-		for( pathNode = dynamic_cast< CPathTrack * >( gEntList.FindEntityByClassname( pathNode, "path_track" ) );
-			 pathNode;
-			 pathNode = dynamic_cast< CPathTrack * >( gEntList.FindEntityByClassname( pathNode, "path_track" ) ) )
-		{
-			float rangeSq = ( pathNode->GetAbsOrigin() - safeRoomPos ).LengthSqr();
+            if ( rangeSq < closeRangeSq )
+            {
+                closeRangeSq = rangeSq;
+                firstPathNode = pathNode;
+            }
+        }
 
-			if ( rangeSq < closeRangeSq )
-			{
-				closeRangeSq = rangeSq;
-				firstPathNode = pathNode;
-			}
-		}
+        if ( firstPathNode )
+        {
+            CUtlVector< CTFNavArea * > pathTrackAreaVector;
 
-		if ( firstPathNode )
-		{
-			CUtlVector< CTFNavArea * > pathTrackAreaVector;
+            for ( pathNode = firstPathNode; pathNode; pathNode = pathNode->GetNext() )
+            {
+                CTFNavArea *pathArea = ( CTFNavArea * )TheNavMesh->GetNavArea( pathNode->GetAbsOrigin() );
+                if ( pathArea )
+                {
+                    if ( !pathTrackAreaVector.HasElement( pathArea ) )
+                    {
+                        pathTrackAreaVector.AddToTail( pathArea );
+                    }
+                }
+            }
 
-			for( pathNode = firstPathNode; pathNode; pathNode = pathNode->GetNext() )
-			{
-				CTFNavArea *pathArea = (CTFNavArea *)TheNavMesh->GetNavArea( pathNode->GetAbsOrigin() );
-				if ( pathArea )
-				{
-					if ( !pathTrackAreaVector.HasElement( pathArea ) )
-					{
-						pathTrackAreaVector.AddToTail( pathArea );
-					}
-				}
-			}
+            if ( pathTrackAreaVector.Count() > 1 )
+            {
+                // build contiguous escape route area vector
+                m_escapeRouteVector.RemoveAll();
+                CMarkEscapeRoute markAsEscapeRoute( &m_escapeRouteVector );
+                for ( int i = 1; i < pathTrackAreaVector.Count(); ++i )
+                {
+                    // mark all areas between as on the escape route
+                    TheNavMesh->ForAllAreasAlongLine( markAsEscapeRoute, pathTrackAreaVector[i - 1], pathTrackAreaVector[i] );
+                }
 
-			if ( pathTrackAreaVector.Count() > 1 )
-			{
-				// build contiguous escape route area vector
-				m_escapeRouteVector.RemoveAll();
-				CMarkEscapeRoute markAsEscapeRoute( &m_escapeRouteVector );
-				for( int i=1; i<pathTrackAreaVector.Count(); ++i )
-				{
-					// mark all areas between as on the escape route
-					TheNavMesh->ForAllAreasAlongLine( markAsEscapeRoute, pathTrackAreaVector[i-1], pathTrackAreaVector[i] );
-				}
+                // flag all areas that can see the escape route as escape route 'visible'
+                for ( int i = 0; i < m_escapeRouteVector.Count(); ++i )
+                {
+                    CTFNavArea *escapeArea = m_escapeRouteVector[i];
 
-				// flag all areas that can see the escape route as escape route 'visible'
-				for( int i=0; i<m_escapeRouteVector.Count(); ++i )
-				{
-					CTFNavArea *escapeArea = m_escapeRouteVector[i];
-
-					CMarkEscapeRouteVisible markAsEscapeRouteVisible;
-					escapeArea->ForAllCompletelyVisibleAreas( markAsEscapeRouteVisible );
-				}
-			}
-		}
-	}
+                    CMarkEscapeRouteVisible markAsEscapeRouteVisible;
+                    escapeArea->ForAllCompletelyVisibleAreas( markAsEscapeRouteVisible );
+                }
+            }
+        }
+    }
 }
-
 
 //---------------------------------------------------------------------------------------------
 //
@@ -2228,28 +2192,27 @@ void CRaidLogic::BuildEscapeRoute( void )
 //
 CTeamControlPoint *CRaidLogic::GetContestedPoint( void ) const
 {
-	CTeamControlPointMaster *pMaster = g_hControlPointMasters.Count() ? g_hControlPointMasters[0] : NULL;
-	if ( pMaster )
-	{
-		for( int i=0; i<pMaster->GetNumPoints(); ++i )
-		{
-			CTeamControlPoint *point = pMaster->GetControlPoint( i );
-			if ( point && pMaster->IsInRound( point ) )
-			{
-				if ( ObjectiveResource()->GetOwningTeam( point->GetPointIndex() ) == TF_TEAM_BLUE )
-					continue;
+    CTeamControlPointMaster *pMaster = g_hControlPointMasters.Count() ? g_hControlPointMasters[0] : NULL;
+    if ( pMaster )
+    {
+        for ( int i = 0; i < pMaster->GetNumPoints(); ++i )
+        {
+            CTeamControlPoint *point = pMaster->GetControlPoint( i );
+            if ( point && pMaster->IsInRound( point ) )
+            {
+                if ( ObjectiveResource()->GetOwningTeam( point->GetPointIndex() ) == TF_TEAM_BLUE )
+                    continue;
 
-				// blue are the invaders
-				if ( !TeamplayGameRules()->TeamMayCapturePoint( TF_TEAM_BLUE, point->GetPointIndex() ) )
-					continue;
+                // blue are the invaders
+                if ( !TeamplayGameRules()->TeamMayCapturePoint( TF_TEAM_BLUE, point->GetPointIndex() ) )
+                    continue;
 
-				return point;
-			}
-		}
-	}
+                return point;
+            }
+        }
+    }
 
-	return NULL;
+    return NULL;
 }
 
-
-#endif // TF_RAID_MODE
+#endif  // TF_RAID_MODE

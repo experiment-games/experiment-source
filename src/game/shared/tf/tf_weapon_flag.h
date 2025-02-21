@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
 
@@ -22,22 +22,26 @@
 //
 class CTFFlag : public CTFWeaponBaseMelee
 {
-public:
+   public:
+    DECLARE_CLASS( CTFFlag, CTFWeaponBaseMelee );
+    DECLARE_NETWORKCLASS();
+    DECLARE_PREDICTABLE();
 
-	DECLARE_CLASS( CTFFlag, CTFWeaponBaseMelee );
-	DECLARE_NETWORKCLASS(); 
-	DECLARE_PREDICTABLE();
+    CTFFlag();
+    virtual int GetWeaponID( void ) const
+    {
+        return TF_WEAPON_FLAG;
+    }
+    virtual void SecondaryAttack();
+    bool Deploy( void );
 
-	CTFFlag();
-	virtual int			GetWeaponID( void ) const			{ return TF_WEAPON_FLAG; }
-	virtual void		SecondaryAttack();
-	bool				Deploy( void );
+    virtual bool CanDrop( void )
+    {
+        return true;
+    }
 
-	virtual bool		CanDrop( void ) { return true; }
-
-private:
-
-	CTFFlag( const CTFFlag & ) {}
+   private:
+    CTFFlag( const CTFFlag& ) {}
 };
 
-#endif // TF_WEAPON_FLAG_H
+#endif  // TF_WEAPON_FLAG_H

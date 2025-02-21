@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -15,4 +15,3 @@
 #include "tier0/memdbgon.h"
 
 using namespace GCSDK;
-

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 #ifndef TF_WEARABLE_ITEM_DEMOSHIELD_H
@@ -27,55 +27,54 @@
 class C_TFSword;
 #endif
 
-
 //=============================================================================
 //
-// 
+//
 //
 class CTFWearableDemoShield : public CTFWearable
 {
-	DECLARE_CLASS( CTFWearableDemoShield, CTFWearable );
+    DECLARE_CLASS( CTFWearableDemoShield, CTFWearable );
 
-public:
-	DECLARE_NETWORKCLASS();
-	DECLARE_DATADESC();
+   public:
+    DECLARE_NETWORKCLASS();
+    DECLARE_DATADESC();
 
-	CTFWearableDemoShield();
+    CTFWearableDemoShield();
 
-	virtual void Precache();
+    virtual void Precache();
 
-	void DoSpecialAction( CTFPlayer *pPlayer );
-	void EndSpecialAction( CTFPlayer *pPlayer );
+    void DoSpecialAction( CTFPlayer *pPlayer );
+    void EndSpecialAction( CTFPlayer *pPlayer );
 
-	// Charge
-	bool CanCharge( CTFPlayer *pPlayer );
-	void DoCharge( CTFPlayer *pPlayer );
-	void ShieldBash( CTFPlayer *pPlayer, float flCurrentChargeMeter );
+    // Charge
+    bool CanCharge( CTFPlayer *pPlayer );
+    void DoCharge( CTFPlayer *pPlayer );
+    void ShieldBash( CTFPlayer *pPlayer, float flCurrentChargeMeter );
 
-	virtual void Equip( CBasePlayer* pOwner );
-	virtual void UnEquip( CBasePlayer* pOwner );
+    virtual void Equip( CBasePlayer *pOwner );
+    virtual void UnEquip( CBasePlayer *pOwner );
 
-	float CalculateChargeDamage( float flCurrentChargeMeter );
-	Vector GetShieldDamageForce( float flCurrentChargeMeter );
+    float CalculateChargeDamage( float flCurrentChargeMeter );
+    Vector GetShieldDamageForce( float flCurrentChargeMeter );
 
-private:
+   private:
 #ifdef GAME_DLL
-	bool m_bImpactedSomething;
+    bool m_bImpactedSomething;
 #endif
 };
 
 class CTFWearableRazorback : public CTFWearable
 {
-	DECLARE_CLASS( CTFWearableRazorback, CTFWearable );
-public:
-	DECLARE_NETWORKCLASS();
-	DECLARE_DATADESC();
+    DECLARE_CLASS( CTFWearableRazorback, CTFWearable );
 
-	CTFWearableRazorback() {}
+   public:
+    DECLARE_NETWORKCLASS();
+    DECLARE_DATADESC();
 
-	// IHasGenericMeter
-	virtual void OnResourceMeterFilled() OVERRIDE;
+    CTFWearableRazorback() {}
+
+    // IHasGenericMeter
+    virtual void OnResourceMeterFilled() OVERRIDE;
 };
 
-
-#endif // TF_WEARABLE_ITEM_DEMOSHIELD_H
+#endif  // TF_WEARABLE_ITEM_DEMOSHIELD_H

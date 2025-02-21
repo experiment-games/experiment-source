@@ -8,12 +8,20 @@
 
 #include <initializer_list>
 
-namespace google { namespace protobuf { class Message; class Descriptor; }; };
+namespace google
+{
+namespace protobuf
+{
+class Message;
+class Descriptor;
+};  // namespace protobuf
+};  // namespace google
 
-namespace ValveProtoUtils {
-	// Allows you to assert a message messages this field list for code that should be checked upon message changes
-	bool MessageHasExactFields( const google::protobuf::Descriptor &desc, std::initializer_list<int> fields );
-	bool MessageHasExactFields( const google::protobuf::Message &msg, std::initializer_list<int> fields );
-};
+namespace ValveProtoUtils
+{
+// Allows you to assert a message messages this field list for code that should be checked upon message changes
+bool MessageHasExactFields( const google::protobuf::Descriptor &desc, std::initializer_list< int > fields );
+bool MessageHasExactFields( const google::protobuf::Message &msg, std::initializer_list< int > fields );
+};  // namespace ValveProtoUtils
 
-#endif // VALVE_PROTO_UTILS_H
+#endif  // VALVE_PROTO_UTILS_H

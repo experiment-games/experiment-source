@@ -10,50 +10,52 @@ DECLARE_AUTO_LIST( ITFBotHintEntityAutoList );
 
 class CBaseTFBotHintEntity : public CPointEntity, public ITFBotHintEntityAutoList
 {
-	DECLARE_CLASS( CBaseTFBotHintEntity, CPointEntity );
-public:
-	DECLARE_DATADESC();
+    DECLARE_CLASS( CBaseTFBotHintEntity, CPointEntity );
 
-	CBaseTFBotHintEntity( void );
-	virtual ~CBaseTFBotHintEntity() { }
+   public:
+    DECLARE_DATADESC();
 
-	enum HintType
-	{
-		HINT_INVALID = -1,
-		HINT_TELEPORTER_EXIT,
-		HINT_SENTRYGUN,
-		HINT_ENGINEER_NEST,
-	};
-	virtual HintType GetHintType() const = 0;
-	bool IsHintType( HintType hintType ) { return GetHintType() == hintType; }
+    CBaseTFBotHintEntity( void );
+    virtual ~CBaseTFBotHintEntity() {}
 
-	bool OwnerObjectHasNoOwner() const;
-	bool OwnerObjectFinishBuilding() const;
+    enum HintType
+    {
+        HINT_INVALID = -1,
+        HINT_TELEPORTER_EXIT,
+        HINT_SENTRYGUN,
+        HINT_ENGINEER_NEST,
+    };
+    virtual HintType GetHintType() const = 0;
+    bool IsHintType( HintType hintType )
+    {
+        return GetHintType() == hintType;
+    }
 
-	bool IsEnabled() const;
-	void InputEnable( inputdata_t &inputdata );
-	void InputDisable( inputdata_t &inputdata );
+    bool OwnerObjectHasNoOwner() const;
+    bool OwnerObjectFinishBuilding() const;
 
-private:
+    bool IsEnabled() const;
+    void InputEnable( inputdata_t &inputdata );
+    void InputDisable( inputdata_t &inputdata );
 
-	bool m_isDisabled;
-	HintType m_hintType;
+   private:
+    bool m_isDisabled;
+    HintType m_hintType;
 };
-
 
 inline void CBaseTFBotHintEntity::InputEnable( inputdata_t &inputdata )
 {
-	m_isDisabled = false;
+    m_isDisabled = false;
 }
 
 inline void CBaseTFBotHintEntity::InputDisable( inputdata_t &inputdata )
 {
-	m_isDisabled = true;
+    m_isDisabled = true;
 }
 
 inline bool CBaseTFBotHintEntity::IsEnabled() const
 {
-	return !m_isDisabled;
+    return !m_isDisabled;
 }
 
-#endif // TF_BOT_HINT_ENTITY_H
+#endif  // TF_BOT_HINT_ENTITY_H

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -25,36 +25,38 @@
 //-----------------------------------------------------------------------------
 class CStrangeCountTransferPanel : public vgui::EditablePanel, public CGameEventListener
 {
-public:
-	DECLARE_CLASS_SIMPLE( CStrangeCountTransferPanel, vgui::EditablePanel );
-	CStrangeCountTransferPanel( vgui::Panel *parent, CEconItemView* pToolItem );
-	~CStrangeCountTransferPanel( void );
+   public:
+    DECLARE_CLASS_SIMPLE( CStrangeCountTransferPanel, vgui::EditablePanel );
+    CStrangeCountTransferPanel( vgui::Panel *parent, CEconItemView *pToolItem );
+    ~CStrangeCountTransferPanel( void );
 
-	virtual const char *GetResFile( void ) { return "Resource/UI/econ/StrangeCountTransferDialog.res"; }
-	virtual void ApplySchemeSettings( vgui::IScheme *pScheme );
-	virtual void PerformLayout() OVERRIDE;
-	virtual void FireGameEvent( IGameEvent *event ) OVERRIDE;
-	virtual void OnCommand( const char *command ) OVERRIDE;
+    virtual const char *GetResFile( void )
+    {
+        return "Resource/UI/econ/StrangeCountTransferDialog.res";
+    }
+    virtual void ApplySchemeSettings( vgui::IScheme *pScheme );
+    virtual void PerformLayout() OVERRIDE;
+    virtual void FireGameEvent( IGameEvent *event ) OVERRIDE;
+    virtual void OnCommand( const char *command ) OVERRIDE;
 
-	MESSAGE_FUNC_PTR( OnItemPanelMousePressed, "ItemPanelMousePressed", panel );
-	MESSAGE_FUNC_PARAMS( OnSelectionReturned, "SelectionReturned", data );
+    MESSAGE_FUNC_PTR( OnItemPanelMousePressed, "ItemPanelMousePressed", panel );
+    MESSAGE_FUNC_PARAMS( OnSelectionReturned, "SelectionReturned", data );
 
-private:
+   private:
+    void UpdateOKButton();
 
-	void UpdateOKButton();
+    CTFTextToolTip *m_pToolTip;
+    vgui::EditablePanel *m_pToolTipEmbeddedPanel;
 
-	CTFTextToolTip					*m_pToolTip;
-	vgui::EditablePanel				*m_pToolTipEmbeddedPanel;
+    DHANDLE< CItemCriteriaSelectionPanel > m_hSelectionPanel;
 
-	DHANDLE<CItemCriteriaSelectionPanel> m_hSelectionPanel;
-
-	CExButton				*m_pOKButton;
-	CEconItemView			*m_pToolItem;
-	CItemModelPanel			*m_pSelectingItemModelPanel;
-	CItemModelPanel			*m_pSourceStrangeModelPanel;
-	CItemModelPanel			*m_pTargetStrangeModelPanel;
-	CItemModelPanel			*m_pMouseOverItemPanel;
-	CItemModelPanelToolTip	*m_pMouseOverTooltip;
+    CExButton *m_pOKButton;
+    CEconItemView *m_pToolItem;
+    CItemModelPanel *m_pSelectingItemModelPanel;
+    CItemModelPanel *m_pSourceStrangeModelPanel;
+    CItemModelPanel *m_pTargetStrangeModelPanel;
+    CItemModelPanel *m_pMouseOverItemPanel;
+    CItemModelPanelToolTip *m_pMouseOverTooltip;
 };
 
-#endif // STRANGE_COUNT_TRANSFER
+#endif  // STRANGE_COUNT_TRANSFER

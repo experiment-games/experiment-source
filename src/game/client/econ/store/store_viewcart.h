@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -21,55 +21,61 @@
 //-----------------------------------------------------------------------------
 class CCartViewItemEntry : public vgui::EditablePanel
 {
-	DECLARE_CLASS_SIMPLE( CCartViewItemEntry, vgui::EditablePanel );
-public:
-	CCartViewItemEntry( vgui::Panel *parent, const char *name ) : vgui::EditablePanel(parent,name)
-	{
-		m_pEntry = NULL;
-	}
+    DECLARE_CLASS_SIMPLE( CCartViewItemEntry, vgui::EditablePanel );
 
-	void	SetEntry( cart_item_t *pEntry, int iEntryIndex );
-	cart_item_t *GetEntry( void ) { return m_pEntry; }
+   public:
+    CCartViewItemEntry( vgui::Panel *parent, const char *name )
+        : vgui::EditablePanel( parent, name )
+    {
+        m_pEntry = NULL;
+    }
 
-private:
-	cart_item_t *m_pEntry;
+    void SetEntry( cart_item_t *pEntry, int iEntryIndex );
+    cart_item_t *GetEntry( void )
+    {
+        return m_pEntry;
+    }
+
+   private:
+    cart_item_t *m_pEntry;
 };
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 class CStoreViewCartPanel : public vgui::Frame, public CGameEventListener
 {
-	DECLARE_CLASS_SIMPLE( CStoreViewCartPanel, vgui::Frame );
-public:
-	CStoreViewCartPanel( Panel *parent );
-	virtual ~CStoreViewCartPanel();
+    DECLARE_CLASS_SIMPLE( CStoreViewCartPanel, vgui::Frame );
 
-	virtual void ApplySettings( KeyValues *inResourceData );
-	virtual void ApplySchemeSettings( vgui::IScheme *pScheme );
-	virtual void PerformLayout( void );
-	virtual void OnCommand( const char *command );
-	virtual void ShowPanel( bool bShow );
-	virtual void FireGameEvent( IGameEvent *event );
+   public:
+    CStoreViewCartPanel( Panel *parent );
+    virtual ~CStoreViewCartPanel();
 
-	void	UpdateCartItemList( void );
+    virtual void ApplySettings( KeyValues *inResourceData );
+    virtual void ApplySchemeSettings( vgui::IScheme *pScheme );
+    virtual void PerformLayout( void );
+    virtual void OnCommand( const char *command );
+    virtual void ShowPanel( bool bShow );
+    virtual void FireGameEvent( IGameEvent *event );
 
-private:
-	vgui::EditablePanel		*m_pClientArea;
-	vgui::EditablePanel		*m_pPurchaseFooter;
-	KeyValues				*m_pItemEntryKVs;
-	bool					m_bReapplyItemKVs;
-	vgui::Label				*m_pEmptyCartLabel;
-	vgui::ImagePanel		*m_pFeaturedItemImage;
+    void UpdateCartItemList( void );
 
-	vgui::EditablePanel				*m_pItemListContainer;
-	vgui::ScrollableEditablePanel	*m_pItemListContainerScroller;
-	CUtlVector<CCartViewItemEntry*> m_pItemEntries;
+   private:
+    vgui::EditablePanel *m_pClientArea;
+    vgui::EditablePanel *m_pPurchaseFooter;
+    KeyValues *m_pItemEntryKVs;
+    bool m_bReapplyItemKVs;
+    vgui::Label *m_pEmptyCartLabel;
+    vgui::ImagePanel *m_pFeaturedItemImage;
 
-	CPanelAnimationVar( int, m_iSheetInsetBottom, "sheetinset_bottom", "32" );
+    vgui::EditablePanel *m_pItemListContainer;
+    vgui::ScrollableEditablePanel *m_pItemListContainerScroller;
+    CUtlVector< CCartViewItemEntry * > m_pItemEntries;
+
+    CPanelAnimationVar( int, m_iSheetInsetBottom, "sheetinset_bottom", "32" );
 };
 
 CStoreViewCartPanel *OpenStoreViewCartPanel( void );
 CStoreViewCartPanel *GetStoreViewCartPanel( void );
 
-#endif // STORE_VIEWCART_H
+#endif  // STORE_VIEWCART_H

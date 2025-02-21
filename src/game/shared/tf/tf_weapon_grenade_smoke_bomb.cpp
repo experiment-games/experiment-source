@@ -53,8 +53,7 @@ extern ConVar tf_smoke_bomb_time;
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-CTFWeaponBaseGrenadeProj *CTFGrenadeSmokeBomb::EmitGrenade( Vector vecSrc, QAngle vecAngles, Vector vecVel, 
-													 AngularImpulse angImpulse, CBasePlayer *pPlayer, float flTime, int iflags )
+CTFWeaponBaseGrenadeProj *CTFGrenadeSmokeBomb::EmitGrenade( Vector vecSrc, QAngle vecAngles, Vector vecVel, AngularImpulse angImpulse, CBasePlayer *pPlayer, float flTime, int iflags )
 {
 #if 0
 	CTFPlayer *pTFPlayer = ToTFPlayer( pPlayer );
@@ -81,7 +80,7 @@ CTFWeaponBaseGrenadeProj *CTFGrenadeSmokeBomb::EmitGrenade( Vector vecSrc, QAngl
 	}
 #endif
 
-	return NULL;
+    return NULL;
 }
 
 //-----------------------------------------------------------------------------
@@ -89,7 +88,7 @@ CTFWeaponBaseGrenadeProj *CTFGrenadeSmokeBomb::EmitGrenade( Vector vecSrc, QAngl
 //-----------------------------------------------------------------------------
 bool CTFGrenadeSmokeBomb::ShouldDetonate( void )
 {
-	return false;
+    return false;
 }
 
-#endif // GAME_DLL
+#endif  // GAME_DLL

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -16,25 +16,25 @@ class IFileSystem;
 
 struct CombinerEntry
 {
-	CombinerEntry()
-	{
-		wavefile[ 0 ] = 0;
-		startoffset = 0.0f;
-	}
+    CombinerEntry()
+    {
+        wavefile[0] = 0;
+        startoffset = 0.0f;
+    }
 
-	char	wavefile[ MAX_PATH ];
-	float	startoffset;
+    char wavefile[MAX_PATH];
+    float startoffset;
 };
 
 abstract_class ISoundCombiner
 {
-public:
-	virtual ~ISoundCombiner() {}
+   public:
+    virtual ~ISoundCombiner() {}
 
-	virtual bool CombineSoundFiles( IFileSystem *filesystem, char const *outfile, CUtlVector< CombinerEntry >& info ) = 0;
-	virtual bool IsCombinedFileChecksumValid( IFileSystem *filesystem, char const *outfile, CUtlVector< CombinerEntry >& info ) = 0;
+    virtual bool CombineSoundFiles( IFileSystem * filesystem, char const *outfile, CUtlVector< CombinerEntry > &info ) = 0;
+    virtual bool IsCombinedFileChecksumValid( IFileSystem * filesystem, char const *outfile, CUtlVector< CombinerEntry > &info ) = 0;
 };
 
 extern ISoundCombiner *soundcombiner;
 
-#endif // ISOUNDCOMBINER_H
+#endif  // ISOUNDCOMBINER_H

@@ -4,7 +4,6 @@
 //
 //=============================================================================//
 
-
 #include "cbase.h"
 #include "tf_matchmaking_dashboard_parent_manager.h"
 #include "tf_matchmaking_dashboard_popup.h"
@@ -20,341 +19,344 @@
 using namespace vgui;
 using namespace GCSDK;
 
-
 class CJoinMatchNotification : public CEconNotification
 {
-public:
-	CJoinMatchNotification( Panel* pDispatcher )
-	{
-		m_pDispatcher.Set( pDispatcher );
-		m_bCreateMainMenuPanel = false;
-	}
+   public:
+    CJoinMatchNotification( Panel* pDispatcher )
+    {
+        m_pDispatcher.Set( pDispatcher );
+        m_bCreateMainMenuPanel = false;
+    }
 
-	virtual EType NotificationType() OVERRIDE { return CEconNotification::eType_MustTrigger; }
+    virtual EType NotificationType() OVERRIDE
+    {
+        return CEconNotification::eType_MustTrigger;
+    }
 
-	virtual void Trigger() OVERRIDE
-	{
-		if ( m_pDispatcher )
-		{
-			m_pDispatcher->OnCommand( "join_match" );
-		}
-	}
+    virtual void Trigger() OVERRIDE
+    {
+        if ( m_pDispatcher )
+        {
+            m_pDispatcher->OnCommand( "join_match" );
+        }
+    }
 
-	virtual const char *GetUnlocalizedHelpText() OVERRIDE
-	{
-		return "#Notification_Accept_Help";
-	}
+    virtual const char* GetUnlocalizedHelpText() OVERRIDE
+    {
+        return "#Notification_Accept_Help";
+    }
 
-	PHandle m_pDispatcher;
+    PHandle m_pDispatcher;
 };
-
 
 class CMatchInviteNotification : public CTFDashboardNotification, public CGameEventListener
 {
-	DECLARE_CLASS_SIMPLE( CMatchInviteNotification, CTFDashboardNotification );
-public:
-	CMatchInviteNotification( PlayerGroupID_t groupID )
-		: CTFDashboardNotification( CTFDashboardNotification::TYPE_LOBBY_INVITE,
-									CTFDashboardNotification::CENTER,
-									0.f,
-									"NewMatchFound" )
-		, m_GroupID( groupID )
-		, m_flAutoJoinTime( 0.f )
-	{
-		m_pBGPanel = new EditablePanel( this, "BGPanel" );
-		
-		// If the lobby is here already, then we prompt differently
-		m_eState = GTFGCClientSystem()->GetLiveMatchLobbyID() == m_GroupID	? STATE_LOBBY_PRESENT_PROMPT
-																			: STATE_LOBBY_INVITE_PROMPT;
-		ListenForGameEvent( "match_invites_updated" );
-		ListenForGameEvent( "lobby_updated" );
-		PlaySoundEntry( "MatchMaking.Join" );
+    DECLARE_CLASS_SIMPLE( CMatchInviteNotification, CTFDashboardNotification );
 
-		vgui::ivgui()->AddTickSignal( GetVPanel(), 100 );
-	}
+   public:
+    CMatchInviteNotification( PlayerGroupID_t groupID )
+        : CTFDashboardNotification( CTFDashboardNotification::TYPE_LOBBY_INVITE,
+                                    CTFDashboardNotification::CENTER,
+                                    0.f,
+                                    "NewMatchFound" ),
+          m_GroupID( groupID ),
+          m_flAutoJoinTime( 0.f )
+    {
+        m_pBGPanel = new EditablePanel( this, "BGPanel" );
 
-	~CMatchInviteNotification()
-	{
-		m_flAutoJoinTime = 0.f;
-		NotificationQueue_Remove( m_nNotificationID ); 
-	}
+        // If the lobby is here already, then we prompt differently
+        m_eState = GTFGCClientSystem()->GetLiveMatchLobbyID() == m_GroupID ? STATE_LOBBY_PRESENT_PROMPT
+                                                                           : STATE_LOBBY_INVITE_PROMPT;
+        ListenForGameEvent( "match_invites_updated" );
+        ListenForGameEvent( "lobby_updated" );
+        PlaySoundEntry( "MatchMaking.Join" );
 
-	bool BAutojoinTimerRunning()
-	{
-		return m_flAutoJoinTime != 0.f;
-	}
+        vgui::ivgui()->AddTickSignal( GetVPanel(), 100 );
+    }
 
-	void ResetTimer()
-	{
-		m_flAutoJoinTime = Plat_FloatTime() + 10.f;
-		InvalidateLayout();
-	}
+    ~CMatchInviteNotification()
+    {
+        m_flAutoJoinTime = 0.f;
+        NotificationQueue_Remove( m_nNotificationID );
+    }
 
-	virtual int GetYMargin() const OVERRIDE { return YRES(-5); }
+    bool BAutojoinTimerRunning()
+    {
+        return m_flAutoJoinTime != 0.f;
+    }
 
-	virtual void ApplySchemeSettings( vgui::IScheme *pScheme ) OVERRIDE
-	{
-		KeyValuesAD pConditions( "conditions" );
-		if ( m_eState == STATE_LOBBY_INVITE_PROMPT )
-		{
-			pConditions->AddSubKey( new KeyValues( "if_expected" ) );
-		}
-		LoadControlSettings( "resource/UI/MatchMakingDashboardPopup_NewMatch.res" );
+    void ResetTimer()
+    {
+        m_flAutoJoinTime = Plat_FloatTime() + 10.f;
+        InvalidateLayout();
+    }
 
-		BaseClass::ApplySchemeSettings( pScheme );
-	}
+    virtual int GetYMargin() const OVERRIDE
+    {
+        return YRES( -5 );
+    }
 
-	ETFMatchGroup GetMatchGroup() const
-	{
-		if ( m_GroupID == GTFGCClientSystem()->GetLiveMatchLobbyID() )
-			return GTFGCClientSystem()->GetLiveMatchGroup();
-		else
-		{
-			return GetInviteForID().eMatchGroup;
-		}
-	}
+    virtual void ApplySchemeSettings( vgui::IScheme* pScheme ) OVERRIDE
+    {
+        KeyValuesAD pConditions( "conditions" );
+        if ( m_eState == STATE_LOBBY_INVITE_PROMPT )
+        {
+            pConditions->AddSubKey( new KeyValues( "if_expected" ) );
+        }
+        LoadControlSettings( "resource/UI/MatchMakingDashboardPopup_NewMatch.res" );
 
-	virtual void PerformLayout() OVERRIDE
-	{
-		BaseClass::PerformLayout();
+        BaseClass::ApplySchemeSettings( pScheme );
+    }
 
-		// Different things are visible at different times
-		m_pBGPanel->SetControlVisible( "AbandonButton", m_eState == STATE_LOBBY_PRESENT_PROMPT );
-		m_pBGPanel->SetControlVisible( "SmallJoinButton", m_eState == STATE_LOBBY_PRESENT_PROMPT );
-		m_pBGPanel->SetControlVisible( "WideJoinButton", m_eState == STATE_LOBBY_INVITE_PROMPT );
-		m_pBGPanel->SetControlVisible( "Spinner", m_eState == STATE_LOBBY_INVITE_ACCEPTING 
-								   || m_eState == STATE_LOBBY_PRESENT_JOINING );
-		m_pBGPanel->SetControlVisible( "JoiningLabel", m_eState == STATE_LOBBY_INVITE_ACCEPTING 
-									   || m_eState == STATE_LOBBY_PRESENT_JOINING );
-		m_pBGPanel->SetControlVisible( "DescLabel", m_eState == STATE_LOBBY_INVITE_PROMPT 
-									 || m_eState == STATE_LOBBY_PRESENT_PROMPT );
-		m_pBGPanel->SetControlVisible( "AutoJoinLabel", ( m_eState == STATE_LOBBY_INVITE_PROMPT 
-										 || m_eState == STATE_LOBBY_PRESENT_PROMPT ) && m_flAutoJoinTime != 0.f );
+    ETFMatchGroup GetMatchGroup() const
+    {
+        if ( m_GroupID == GTFGCClientSystem()->GetLiveMatchLobbyID() )
+            return GTFGCClientSystem()->GetLiveMatchGroup();
+        else
+        {
+            return GetInviteForID().eMatchGroup;
+        }
+    }
 
-		ETFMatchGroup eMatchGroup = GetMatchGroup();
-		auto pMatchDesc = GetMatchGroupDescription( eMatchGroup );
-		if ( pMatchDesc )
-		{
-			wchar_t wszBuff[ 512 ];
-			KeyValues* pKV = new KeyValues( nullptr );
-			pKV->SetWString( "matchtype", g_pVGuiLocalize->Find( pMatchDesc->GetNameLocToken() ) );
-			// Craft the "Your Casual match is ready" string
-			g_pVGuiLocalize->ConstructString_safe( wszBuff,
-												   g_pVGuiLocalize->Find( "#TF_Matchmaking_RollingQueue_NewTypedMatchReady" ),
-												   pKV );
-			m_pBGPanel->SetDialogVariable( "match_type",
-										   wszBuff );
+    virtual void PerformLayout() OVERRIDE
+    {
+        BaseClass::PerformLayout();
 
-			// Make sure we have our in-game notification
-			if ( NotificationQueue_Get( m_nNotificationID ) == NULL )
-			{
-				CJoinMatchNotification* pNoti = new CJoinMatchNotification( this );
-				pNoti->SetText( "#TF_Matchmaking_RollingQueue_MatchReadyInGame" ); 
-				pNoti->SetKeyValues( pKV );
-				pNoti->SetLifetime( 10.f );
-				m_nNotificationID = NotificationQueue_Add( pNoti );
-			}
-		}
-		else
-		{
-			Assert( false ); // This should not happen.  Use generic "Your match is ready"
-			m_pBGPanel->SetDialogVariable( "match_type",
-										   g_pVGuiLocalize->Find( "#TF_Matchmaking_RollingQueue_NewMatchReady" ) );
-		}
-	}
+        // Different things are visible at different times
+        m_pBGPanel->SetControlVisible( "AbandonButton", m_eState == STATE_LOBBY_PRESENT_PROMPT );
+        m_pBGPanel->SetControlVisible( "SmallJoinButton", m_eState == STATE_LOBBY_PRESENT_PROMPT );
+        m_pBGPanel->SetControlVisible( "WideJoinButton", m_eState == STATE_LOBBY_INVITE_PROMPT );
+        m_pBGPanel->SetControlVisible( "Spinner", m_eState == STATE_LOBBY_INVITE_ACCEPTING || m_eState == STATE_LOBBY_PRESENT_JOINING );
+        m_pBGPanel->SetControlVisible( "JoiningLabel", m_eState == STATE_LOBBY_INVITE_ACCEPTING || m_eState == STATE_LOBBY_PRESENT_JOINING );
+        m_pBGPanel->SetControlVisible( "DescLabel", m_eState == STATE_LOBBY_INVITE_PROMPT || m_eState == STATE_LOBBY_PRESENT_PROMPT );
+        m_pBGPanel->SetControlVisible( "AutoJoinLabel", ( m_eState == STATE_LOBBY_INVITE_PROMPT || m_eState == STATE_LOBBY_PRESENT_PROMPT ) && m_flAutoJoinTime != 0.f );
 
-	virtual void FireGameEvent( IGameEvent *event ) OVERRIDE
-	{
-		if ( FStrEq( event->GetName(), "match_invites_updated" ) )
-		{
-			CheckForExpectedLobby();
-		}
-		else if ( FStrEq( event->GetName(), "lobby_updated" ) )
-		{
-			CheckForExpectedLobby();
-		}
-	}
+        ETFMatchGroup eMatchGroup = GetMatchGroup();
+        auto pMatchDesc = GetMatchGroupDescription( eMatchGroup );
+        if ( pMatchDesc )
+        {
+            wchar_t wszBuff[512];
+            KeyValues* pKV = new KeyValues( nullptr );
+            pKV->SetWString( "matchtype", g_pVGuiLocalize->Find( pMatchDesc->GetNameLocToken() ) );
+            // Craft the "Your Casual match is ready" string
+            g_pVGuiLocalize->ConstructString_safe( wszBuff,
+                                                   g_pVGuiLocalize->Find( "#TF_Matchmaking_RollingQueue_NewTypedMatchReady" ),
+                                                   pKV );
+            m_pBGPanel->SetDialogVariable( "match_type",
+                                           wszBuff );
 
-	//
-	// We use OnTick instead of OnThink to update the countdown because we might not be visible (ie. in-game)
-	//
-	virtual void OnTick() OVERRIDE
-	{
-		BaseClass::OnTick();
+            // Make sure we have our in-game notification
+            if ( NotificationQueue_Get( m_nNotificationID ) == NULL )
+            {
+                CJoinMatchNotification* pNoti = new CJoinMatchNotification( this );
+                pNoti->SetText( "#TF_Matchmaking_RollingQueue_MatchReadyInGame" );
+                pNoti->SetKeyValues( pKV );
+                pNoti->SetLifetime( 10.f );
+                m_nNotificationID = NotificationQueue_Add( pNoti );
+            }
+        }
+        else
+        {
+            Assert( false );  // This should not happen.  Use generic "Your match is ready"
+            m_pBGPanel->SetDialogVariable( "match_type",
+                                           g_pVGuiLocalize->Find( "#TF_Matchmaking_RollingQueue_NewMatchReady" ) );
+        }
+    }
 
-		if ( m_eState != STATE_LOBBY_INVITE_PROMPT && m_eState != STATE_LOBBY_PRESENT_PROMPT )
-			return;
+    virtual void FireGameEvent( IGameEvent* event ) OVERRIDE
+    {
+        if ( FStrEq( event->GetName(), "match_invites_updated" ) )
+        {
+            CheckForExpectedLobby();
+        }
+        else if ( FStrEq( event->GetName(), "lobby_updated" ) )
+        {
+            CheckForExpectedLobby();
+        }
+    }
 
-		if ( m_flAutoJoinTime != 0.f && Plat_FloatTime() > m_flAutoJoinTime )
-		{
-			AcceptMatch();
-		}
+    //
+    // We use OnTick instead of OnThink to update the countdown because we might not be visible (ie. in-game)
+    //
+    virtual void OnTick() OVERRIDE
+    {
+        BaseClass::OnTick();
 
-		if ( m_flAutoJoinTime < Plat_FloatTime() )
-			return;
+        if ( m_eState != STATE_LOBBY_INVITE_PROMPT && m_eState != STATE_LOBBY_PRESENT_PROMPT )
+            return;
 
-		// Autojoin time
-		wchar_t *pwszAutoJoinTime = NULL;
+        if ( m_flAutoJoinTime != 0.f && Plat_FloatTime() > m_flAutoJoinTime )
+        {
+            AcceptMatch();
+        }
 
-		// Update the countdown label
-		double flTimeUntilAutoJoin = Max( 0., m_flAutoJoinTime - Plat_FloatTime() );
-		pwszAutoJoinTime = LocalizeNumberWithToken( "TF_Matchmaking_RollingQueue_AutojoinWarning", ceil( flTimeUntilAutoJoin ) );
+        if ( m_flAutoJoinTime < Plat_FloatTime() )
+            return;
 
-		m_pBGPanel->SetDialogVariable( "auto_join", pwszAutoJoinTime );
+        // Autojoin time
+        wchar_t* pwszAutoJoinTime = NULL;
 
-		ETFMatchGroup eMatchGroup = GetMatchGroup();
-		auto pMatchDesc = GetMatchGroupDescription( eMatchGroup );
-		CEconNotification* pNoti = NotificationQueue_Get( m_nNotificationID );
+        // Update the countdown label
+        double flTimeUntilAutoJoin = Max( 0., m_flAutoJoinTime - Plat_FloatTime() );
+        pwszAutoJoinTime = LocalizeNumberWithToken( "TF_Matchmaking_RollingQueue_AutojoinWarning", ceil( flTimeUntilAutoJoin ) );
 
-		// Update the KVs so the timer ticks down on the notification panel
-		if ( pNoti && pMatchDesc )
-		{
-			wchar_t wszTimeBuff[ 3 ];
-			_snwprintf( wszTimeBuff, 3, L"%.0f", flTimeUntilAutoJoin );
-			KeyValuesAD pKV( "" );
-			pKV->SetWString( "matchtype", g_pVGuiLocalize->Find( pMatchDesc->GetNameLocToken() ) );
-			pKV->SetWString( "time", wszTimeBuff );
-			pNoti->SetKeyValues( pKV );
-		}
-	}
+        m_pBGPanel->SetDialogVariable( "auto_join", pwszAutoJoinTime );
 
-	virtual void OnCommand( const char* pszCommand ) OVERRIDE
-	{
-		if ( FStrEq( pszCommand, "join_match" ) )
-		{
-			// Join it!
-			AcceptMatch();
-		}
-		else if ( FStrEq( pszCommand, "abandon_match" ) )
-		{
-			CTFRejoinConfirmDialog* pAbandonDialog = BuildRejoinConfirmDialog();
+        ETFMatchGroup eMatchGroup = GetMatchGroup();
+        auto pMatchDesc = GetMatchGroupDescription( eMatchGroup );
+        CEconNotification* pNoti = NotificationQueue_Get( m_nNotificationID );
 
-			if ( pAbandonDialog )
-			{
-				pAbandonDialog->Show();
-			}
-		}
-	}
+        // Update the KVs so the timer ticks down on the notification panel
+        if ( pNoti && pMatchDesc )
+        {
+            wchar_t wszTimeBuff[3];
+            _snwprintf( wszTimeBuff, 3, L"%.0f", flTimeUntilAutoJoin );
+            KeyValuesAD pKV( "" );
+            pKV->SetWString( "matchtype", g_pVGuiLocalize->Find( pMatchDesc->GetNameLocToken() ) );
+            pKV->SetWString( "time", wszTimeBuff );
+            pNoti->SetKeyValues( pKV );
+        }
+    }
 
-	void AcceptInvite()
-	{
-		// Tell the GC we want this lobby
-		if ( !GetInviteForID().bSentAcceptMsg )
-		{
-			GTFGCClientSystem()->RequestAcceptMatchInvite( m_GroupID );
-			m_eState = STATE_LOBBY_INVITE_ACCEPTING;
-			InvalidateLayout();
-		}
-	}
+    virtual void OnCommand( const char* pszCommand ) OVERRIDE
+    {
+        if ( FStrEq( pszCommand, "join_match" ) )
+        {
+            // Join it!
+            AcceptMatch();
+        }
+        else if ( FStrEq( pszCommand, "abandon_match" ) )
+        {
+            CTFRejoinConfirmDialog* pAbandonDialog = BuildRejoinConfirmDialog();
 
-	MESSAGE_FUNC( OnConnect, "Connect" )
-	{
-		// Connect to the lobby
-		GTFGCClientSystem()->JoinMMMatch();
-		m_eState = STATE_LOBBY_PRESENT_JOINING;
-		InvalidateLayout();
-	}
+            if ( pAbandonDialog )
+            {
+                pAbandonDialog->Show();
+            }
+        }
+    }
 
-	void Destroy()
-	{
-		MarkForDeletion();
-	}
+    void AcceptInvite()
+    {
+        // Tell the GC we want this lobby
+        if ( !GetInviteForID().bSentAcceptMsg )
+        {
+            GTFGCClientSystem()->RequestAcceptMatchInvite( m_GroupID );
+            m_eState = STATE_LOBBY_INVITE_ACCEPTING;
+            InvalidateLayout();
+        }
+    }
 
-private:
-	void AcceptMatch()
-	{
-		switch( m_eState )
-		{
-			case STATE_LOBBY_INVITE_PROMPT:
-			{
-				AcceptInvite();
-				break;
-			}
-			case STATE_LOBBY_PRESENT_PROMPT:
-			{
-				BeginConnect();
-				break;
-			}
+    MESSAGE_FUNC( OnConnect, "Connect" )
+    {
+        // Connect to the lobby
+        GTFGCClientSystem()->JoinMMMatch();
+        m_eState = STATE_LOBBY_PRESENT_JOINING;
+        InvalidateLayout();
+    }
 
-			default:
-				// Shouldn't be hit
-				Assert( false );
-		}
-	}
+    void Destroy()
+    {
+        MarkForDeletion();
+    }
 
-	void CheckForExpectedLobby()
-	{
-		if ( m_eState == STATE_LOBBY_INVITE_ACCEPTING )
-		{
-			// Did it become a lobby?
-			auto unLiveLobbyID = GTFGCClientSystem()->GetLiveMatchLobbyID();
-			// Hey that's us!
-			if ( unLiveLobbyID == m_GroupID )
-			{
-				BeginConnect();
-				return;
-			}
+   private:
+    void AcceptMatch()
+    {
+        switch ( m_eState )
+        {
+            case STATE_LOBBY_INVITE_PROMPT:
+            {
+                AcceptInvite();
+                break;
+            }
+            case STATE_LOBBY_PRESENT_PROMPT:
+            {
+                BeginConnect();
+                break;
+            }
 
-			// Did it vanish or fail to accept without becoming a lobby?
-			int idxInvite = GTFGCClientSystem()->GetMatchInviteIdxByLobbyID( m_GroupID );
-			// Vanished without becoming a lobby, dashboard will destroy us
-			if ( idxInvite == -1 )
-				{ return; }
+            default:
+                // Shouldn't be hit
+                Assert( false );
+        }
+    }
 
-			// Stopped accepting
-			if ( !GTFGCClientSystem()->GetMatchInvite( idxInvite ).bSentAcceptMsg )
-			{
-				Msg( "CLobbyInviteManager: Invite %llu failed to accept, returning to prompt\n", m_GroupID );
-				m_eState = STATE_LOBBY_INVITE_PROMPT;
-				ResetTimer();
-				InvalidateLayout();
-			}
-		}
-	}
+    void CheckForExpectedLobby()
+    {
+        if ( m_eState == STATE_LOBBY_INVITE_ACCEPTING )
+        {
+            // Did it become a lobby?
+            auto unLiveLobbyID = GTFGCClientSystem()->GetLiveMatchLobbyID();
+            // Hey that's us!
+            if ( unLiveLobbyID == m_GroupID )
+            {
+                BeginConnect();
+                return;
+            }
 
-	//
-	// Ask GCClientSystem for the invite that corresponds to our groupID.  Only valid if we're representing an invite
-	// and not a lobby.
-	//
-	CTFGCClientSystem::MatchInvite_t GetInviteForID() const
-	{
-		int nNumInvites = GTFGCClientSystem()->GetNumMatchInvites();
-		for( int idxInvite=0; idxInvite < nNumInvites; ++idxInvite )
-		{
-			auto invite = GTFGCClientSystem()->GetMatchInvite( idxInvite );
-			if ( invite.nLobbyID == m_GroupID )
-			{
-				return invite;
-			}
-		}
+            // Did it vanish or fail to accept without becoming a lobby?
+            int idxInvite = GTFGCClientSystem()->GetMatchInviteIdxByLobbyID( m_GroupID );
+            // Vanished without becoming a lobby, dashboard will destroy us
+            if ( idxInvite == -1 )
+            {
+                return;
+            }
 
-		Assert( false );
-		return CTFGCClientSystem::MatchInvite_t{ 0, k_eTFMatchGroup_Invalid, false };
-	}
+            // Stopped accepting
+            if ( !GTFGCClientSystem()->GetMatchInvite( idxInvite ).bSentAcceptMsg )
+            {
+                Msg( "CLobbyInviteManager: Invite %llu failed to accept, returning to prompt\n", m_GroupID );
+                m_eState = STATE_LOBBY_INVITE_PROMPT;
+                ResetTimer();
+                InvalidateLayout();
+            }
+        }
+    }
 
-	// Animate thing out and get ready to connect
-	void BeginConnect()
-	{
-		// Make the main dashboard sides go away
-		PostActionSignal( new KeyValues( "CloseSideStack" ) ); // Not passing in "side", meaning all sides
-		// Delay the actual connect a smidge so everything can animate.
-		PostMessage( this, new KeyValues( "Connect" ), 0.5f );
-		InvalidateLayout();
-	}
+    //
+    // Ask GCClientSystem for the invite that corresponds to our groupID.  Only valid if we're representing an invite
+    // and not a lobby.
+    //
+    CTFGCClientSystem::MatchInvite_t GetInviteForID() const
+    {
+        int nNumInvites = GTFGCClientSystem()->GetNumMatchInvites();
+        for ( int idxInvite = 0; idxInvite < nNumInvites; ++idxInvite )
+        {
+            auto invite = GTFGCClientSystem()->GetMatchInvite( idxInvite );
+            if ( invite.nLobbyID == m_GroupID )
+            {
+                return invite;
+            }
+        }
 
-	enum EInviteState_t
-	{
-		STATE_LOBBY_INVITE_PROMPT,
-		STATE_LOBBY_INVITE_ACCEPTING,
-		STATE_LOBBY_PRESENT_PROMPT,
-		STATE_LOBBY_PRESENT_JOINING,
-	};
+        Assert( false );
+        return CTFGCClientSystem::MatchInvite_t{ 0, k_eTFMatchGroup_Invalid, false };
+    }
 
-	double m_flAutoJoinTime;
-	EditablePanel* m_pBGPanel = NULL;
-	int m_nNotificationID = 0;
-	PlayerGroupID_t m_GroupID = 0u;
-	EInviteState_t m_eState;
+    // Animate thing out and get ready to connect
+    void BeginConnect()
+    {
+        // Make the main dashboard sides go away
+        PostActionSignal( new KeyValues( "CloseSideStack" ) );  // Not passing in "side", meaning all sides
+        // Delay the actual connect a smidge so everything can animate.
+        PostMessage( this, new KeyValues( "Connect" ), 0.5f );
+        InvalidateLayout();
+    }
+
+    enum EInviteState_t
+    {
+        STATE_LOBBY_INVITE_PROMPT,
+        STATE_LOBBY_INVITE_ACCEPTING,
+        STATE_LOBBY_PRESENT_PROMPT,
+        STATE_LOBBY_PRESENT_JOINING,
+    };
+
+    double m_flAutoJoinTime;
+    EditablePanel* m_pBGPanel = NULL;
+    int m_nNotificationID = 0;
+    PlayerGroupID_t m_GroupID = 0u;
+    EInviteState_t m_eState;
 };
 
 //
@@ -363,176 +365,174 @@ private:
 //
 class CLobbyInviteManager : public CAutoGameSystemPerFrame
 {
-public:
-	CLobbyInviteManager() 
-		: m_mapInvitePanels( DefLessFunc( PlayerGroupID_t ) )
-	{}
+   public:
+    CLobbyInviteManager()
+        : m_mapInvitePanels( DefLessFunc( PlayerGroupID_t ) )
+    {
+    }
 
-	virtual void Update( float frametime ) OVERRIDE
-	{
-		bool bResetTimers = false;
+    virtual void Update( float frametime ) OVERRIDE
+    {
+        bool bResetTimers = false;
 
-		bResetTimers |= EnsurePanelsForInvites();
-		bResetTimers |= EnsurePanelForExistingLobby();
-		bResetTimers |= CleanupOrphanPanels();
+        bResetTimers |= EnsurePanelsForInvites();
+        bResetTimers |= EnsurePanelForExistingLobby();
+        bResetTimers |= CleanupOrphanPanels();
 
-		// Give the user time to think about their options
-		if ( bResetTimers )
-		{
-			ResetTimers();
-		}
-	}
+        // Give the user time to think about their options
+        if ( bResetTimers )
+        {
+            ResetTimers();
+        }
+    }
 
-private:
+   private:
+    //
+    // Need a panel for any lobby that's present in our SOCache
+    //
+    bool EnsurePanelForExistingLobby()
+    {
+        auto unLobbyID = GTFGCClientSystem()->GetLiveMatchLobbyID();
+        bool bNeedsPanel = !GTFGCClientSystem()->BConnectedToMatchServer( true ) && GTFGCClientSystem()->BHaveLiveMatch() && unLobbyID != 0u;
 
-	//
-	// Need a panel for any lobby that's present in our SOCache
-	//
-	bool EnsurePanelForExistingLobby()
-	{
-		auto unLobbyID = GTFGCClientSystem()->GetLiveMatchLobbyID();
-		bool bNeedsPanel = !GTFGCClientSystem()->BConnectedToMatchServer( true ) 
-			&& GTFGCClientSystem()->BHaveLiveMatch()
-			&& unLobbyID != 0u;
+        bool bHasPanel = BHasPanelForLobby( unLobbyID );
+        if ( bNeedsPanel && !bHasPanel )
+        {
+            CreateNewPanel( unLobbyID );
+            return true;
+        }
 
-		bool bHasPanel = BHasPanelForLobby( unLobbyID );
-		if ( bNeedsPanel && !bHasPanel )
-		{
-			CreateNewPanel( unLobbyID );
-			return true;
-		}
+        return false;
+    }
 
-		return false;
-	}
+    //
+    // Walks all the invites from the GC and makes sure we have a panel for those that we need to respond to
+    //
+    bool EnsurePanelsForInvites()
+    {
+        bool bPanelCreated = false;
+        int nNumInvites = GTFGCClientSystem()->GetNumMatchInvites();
+        for ( int idxInvite = 0; idxInvite < nNumInvites; ++idxInvite )
+        {
+            auto invite = GTFGCClientSystem()->GetMatchInvite( idxInvite );
 
-	//
-	// Walks all the invites from the GC and makes sure we have a panel for those that we need to respond to
-	//
-	bool EnsurePanelsForInvites()
-	{
-		bool bPanelCreated = false;
-		int nNumInvites = GTFGCClientSystem()->GetNumMatchInvites();
-		for( int idxInvite=0; idxInvite < nNumInvites; ++idxInvite )
-		{
-			auto invite = GTFGCClientSystem()->GetMatchInvite( idxInvite );
+            bool bGroupHasInvite = BHasPanelForLobby( invite.nLobbyID );
 
-			bool bGroupHasInvite = BHasPanelForLobby( invite.nLobbyID );
+            if ( !bGroupHasInvite )
+            {
+                // Create a new panel for this invite
+                CreateNewPanel( invite.nLobbyID );
+                bPanelCreated = true;
+            }
+        }
 
-			if ( !bGroupHasInvite )
-			{
-				// Create a new panel for this invite
-				CreateNewPanel( invite.nLobbyID );
-				bPanelCreated = true;
-			}
-		}
+        return bPanelCreated;
+    }
 
-		return bPanelCreated;
-	}
+    //
+    // Resets the timers on all of the panels
+    //
+    void ResetTimers()
+    {
+        bool bResetSomeone = false;
+        FOR_EACH_MAP_FAST( m_mapInvitePanels, idx )
+        {
+            if ( m_mapInvitePanels[idx]->BAutojoinTimerRunning() )
+            {
+                m_mapInvitePanels[idx]->ResetTimer();
+                bResetSomeone = true;
+            }
+        }
 
-	//
-	// Resets the timers on all of the panels
-	//
-	void ResetTimers()
-	{
-		bool bResetSomeone = false;
-		FOR_EACH_MAP_FAST( m_mapInvitePanels, idx )
-		{
-			if ( m_mapInvitePanels[ idx ]->BAutojoinTimerRunning() )
-			{
-				m_mapInvitePanels[ idx ]->ResetTimer();
-				bResetSomeone = true;
-			}
-		}
+        if ( !bResetSomeone && m_mapInvitePanels.Count() == 1 )
+        {
+            m_mapInvitePanels[m_mapInvitePanels.FirstInorder()]->ResetTimer();
+        }
+    }
 
-		if ( !bResetSomeone && m_mapInvitePanels.Count() == 1 )
-		{
-			m_mapInvitePanels[ m_mapInvitePanels.FirstInorder() ]->ResetTimer();
-		}
-	}
+    //
+    // Remove any panels not associated with an invite or the present lobby
+    //
+    bool CleanupOrphanPanels()
+    {
+        auto unLiveLobbyID = GTFGCClientSystem()->GetLiveMatchLobbyID();
+        bool bRemovedAny = false;
 
-	//
-	// Remove any panels not associated with an invite or the present lobby
-	//
-	bool CleanupOrphanPanels()
-	{
-		auto unLiveLobbyID = GTFGCClientSystem()->GetLiveMatchLobbyID();
-		bool bRemovedAny = false;
+        FOR_EACH_MAP_FAST( m_mapInvitePanels, idx )
+        {
+            auto unPanelLobbyID = m_mapInvitePanels.Key( idx );
 
-		FOR_EACH_MAP_FAST( m_mapInvitePanels, idx )
-		{
-			auto unPanelLobbyID = m_mapInvitePanels.Key( idx );
+            if ( unLiveLobbyID == unPanelLobbyID && !GTFGCClientSystem()->BConnectedToMatchServer( true ) )
+            {
+                continue;
+            }
 
-			if ( unLiveLobbyID == unPanelLobbyID && !GTFGCClientSystem()->BConnectedToMatchServer( true )  )
-			{
-				continue;
-			}
+            int nNumInvites = GTFGCClientSystem()->GetNumMatchInvites();
+            bool bInviteMatch = false;
+            for ( int idxInvite = 0; idxInvite < nNumInvites; ++idxInvite )
+            {
+                auto invite = GTFGCClientSystem()->GetMatchInvite( idxInvite );
+                if ( invite.nLobbyID == unPanelLobbyID )
+                {
+                    // WTB double-continue
+                    bInviteMatch = true;
+                    break;
+                }
+            }
 
-			int nNumInvites = GTFGCClientSystem()->GetNumMatchInvites();
-			bool bInviteMatch = false;
-			for( int idxInvite=0; idxInvite < nNumInvites; ++idxInvite )
-			{
-				auto invite = GTFGCClientSystem()->GetMatchInvite( idxInvite );
-				if ( invite.nLobbyID == unPanelLobbyID )
-				{
-					// WTB double-continue
-					bInviteMatch = true;
-					break;
-				}
-			}
+            if ( bInviteMatch )
+                continue;
 
-			if ( bInviteMatch )
-				continue;
+            m_mapInvitePanels[idx]->Destroy();
+            m_mapInvitePanels.RemoveAt( idx );
+            idx = 0;
+            bRemovedAny = true;
+        }
 
-			m_mapInvitePanels[ idx ]->Destroy();
-			m_mapInvitePanels.RemoveAt( idx );
-			idx = 0;
-			bRemovedAny = true;
-		}
+        return bRemovedAny;
+    }
 
-		return bRemovedAny;
-	}
+    bool BHasPanelForLobby( PlayerGroupID_t id ) const
+    {
+        return m_mapInvitePanels.Find( id ) != m_mapInvitePanels.InvalidIndex();
+    }
 
-	bool BHasPanelForLobby( PlayerGroupID_t id ) const
-	{
-		return m_mapInvitePanels.Find( id ) != m_mapInvitePanels.InvalidIndex();
-	}
+    //
+    // Creates a new invite panel for the passedin invite
+    //
+    CMatchInviteNotification* CreateNewPanel( PlayerGroupID_t unGroupID )
+    {
+        // Better not be double-inserting!
+        Assert( m_mapInvitePanels.Find( unGroupID ) == m_mapInvitePanels.InvalidIndex() );
 
-	//
-	// Creates a new invite panel for the passedin invite
-	//
-	CMatchInviteNotification* CreateNewPanel( PlayerGroupID_t unGroupID )
-	{
-		// Better not be double-inserting!
-		Assert( m_mapInvitePanels.Find( unGroupID ) == m_mapInvitePanels.InvalidIndex() );
+        CMatchInviteNotification* pPanel = new CMatchInviteNotification( unGroupID );
+        if ( m_mapInvitePanels.Count() == 0 )
+        {
+            pPanel->ResetTimer();
+        }
+        pPanel->MakeReadyForUse();  // Because the notifications get positioned RIGHT AWAY using their height
+        m_mapInvitePanels.Insert( unGroupID, pPanel );
+        return pPanel;
+    }
 
-		CMatchInviteNotification* pPanel = new CMatchInviteNotification( unGroupID );
-		if ( m_mapInvitePanels.Count() == 0 )
-		{
-			pPanel->ResetTimer();
-		}
-		pPanel->MakeReadyForUse(); // Because the notifications get positioned RIGHT AWAY using their height
-		m_mapInvitePanels.Insert( unGroupID, pPanel );
-		return pPanel;
-	}
+    //
+    // Destroys the panel specified by invite
+    //
+    void RemoveExistingPanel( PlayerGroupID_t unGroupID )
+    {
+        // The panel should be there!
+        auto idx = m_mapInvitePanels.Find( unGroupID );
+        Assert( idx != m_mapInvitePanels.InvalidIndex() );
 
-	//
-	// Destroys the panel specified by invite
-	//
-	void RemoveExistingPanel( PlayerGroupID_t unGroupID )
-	{
-		// The panel should be there!
-		auto idx = m_mapInvitePanels.Find( unGroupID );
-		Assert( idx != m_mapInvitePanels.InvalidIndex() );
+        if ( idx != m_mapInvitePanels.InvalidIndex() )
+        {
+            m_mapInvitePanels[idx]->Destroy();
+            m_mapInvitePanels.RemoveAt( idx );
+        }
+    }
 
-		if ( idx != m_mapInvitePanels.InvalidIndex() )
-		{
-			m_mapInvitePanels[ idx ]->Destroy();
-			m_mapInvitePanels.RemoveAt( idx );
-		}
-	}
-
-	// Map of group IDs to invite panels.
-	CUtlMap< PlayerGroupID_t, CMatchInviteNotification* > m_mapInvitePanels;
+    // Map of group IDs to invite panels.
+    CUtlMap< PlayerGroupID_t, CMatchInviteNotification* > m_mapInvitePanels;
 };
 
 static CLobbyInviteManager s_LobbyInviteManager;

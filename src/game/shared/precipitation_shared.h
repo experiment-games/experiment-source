@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -10,16 +10,14 @@
 #pragma once
 #endif
 
-
 // Types of precipitation
 enum PrecipitationType_t
 {
-	PRECIPITATION_TYPE_RAIN = 0,
-	PRECIPITATION_TYPE_SNOW,
-	PRECIPITATION_TYPE_ASH,
-	PRECIPITATION_TYPE_SNOWFALL,
-	NUM_PRECIPITATION_TYPES
+    PRECIPITATION_TYPE_RAIN = 0,
+    PRECIPITATION_TYPE_SNOW,
+    PRECIPITATION_TYPE_ASH,
+    PRECIPITATION_TYPE_SNOWFALL,
+    NUM_PRECIPITATION_TYPES
 };
 
-
-#endif // PRECIPITATION_SHARED_H
+#endif  // PRECIPITATION_SHARED_H

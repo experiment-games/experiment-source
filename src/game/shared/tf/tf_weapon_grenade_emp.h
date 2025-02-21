@@ -23,28 +23,30 @@
 //
 class CTFGrenadeEmp : public CTFWeaponBaseGrenade
 {
-public:
+   public:
+    DECLARE_CLASS( CTFGrenadeEmp, CTFWeaponBaseGrenade );
+    DECLARE_NETWORKCLASS();
+    DECLARE_PREDICTABLE();
+    //	DECLARE_ACTTABLE();
 
-	DECLARE_CLASS( CTFGrenadeEmp, CTFWeaponBaseGrenade );
-	DECLARE_NETWORKCLASS();
-	DECLARE_PREDICTABLE();
-//	DECLARE_ACTTABLE();
+    CTFGrenadeEmp() {}
 
-	CTFGrenadeEmp() {}
-
-	// Unique identifier.
-	virtual int			GetWeaponID( void ) const			{ return TF_WEAPON_GRENADE_EMP; }
+    // Unique identifier.
+    virtual int GetWeaponID( void ) const
+    {
+        return TF_WEAPON_GRENADE_EMP;
+    }
 
 // Server specific.
 #ifdef GAME_DLL
 
-	DECLARE_DATADESC();
+    DECLARE_DATADESC();
 
-	virtual CTFWeaponBaseGrenadeProj *EmitGrenade( Vector vecSrc, QAngle vecAngles, Vector vecVel, AngularImpulse angImpulse, CBasePlayer *pPlayer, float flTime, int iflags = 0 );
+    virtual CTFWeaponBaseGrenadeProj *EmitGrenade( Vector vecSrc, QAngle vecAngles, Vector vecVel, AngularImpulse angImpulse, CBasePlayer *pPlayer, float flTime, int iflags = 0 );
 
 #endif
 
-	CTFGrenadeEmp( const CTFGrenadeEmp & ) {}
+    CTFGrenadeEmp( const CTFGrenadeEmp & ) {}
 };
 
 //=============================================================================
@@ -55,31 +57,31 @@ public:
 
 class CTFGrenadeEmpProjectile : public CTFWeaponBaseGrenadeProj
 {
-public:
+   public:
+    DECLARE_CLASS( CTFGrenadeEmpProjectile, CTFWeaponBaseGrenadeProj );
 
-	DECLARE_CLASS( CTFGrenadeEmpProjectile, CTFWeaponBaseGrenadeProj );
+    // Unique identifier.
+    virtual int GetWeaponID( void ) const
+    {
+        return TF_WEAPON_GRENADE_EMP;
+    }
 
-	// Unique identifier.
-	virtual int			GetWeaponID( void ) const			{ return TF_WEAPON_GRENADE_EMP; }
+    // Creation.
+    static CTFGrenadeEmpProjectile *Create( const Vector &position, const QAngle &angles, const Vector &velocity, const AngularImpulse &angVelocity, CBaseCombatCharacter *pOwner, const CTFWeaponInfo &weaponInfo, float timer, int iFlags = 0 );
 
-	// Creation.
-	static CTFGrenadeEmpProjectile *Create( const Vector &position, const QAngle &angles, const Vector &velocity, 
-		                                       const AngularImpulse &angVelocity, CBaseCombatCharacter *pOwner, const CTFWeaponInfo &weaponInfo, float timer, int iFlags = 0 );
+    // Overrides.
+    virtual void Spawn();
+    virtual void Precache();
+    virtual void BounceSound( void );
+    virtual void Detonate();
+    void DetonateThink( void );
 
-	// Overrides.
-	virtual void	Spawn();
-	virtual void	Precache();
-	virtual void	BounceSound( void );
-	virtual void	Detonate();
-	void			DetonateThink( void );
+    DECLARE_DATADESC();
 
-	DECLARE_DATADESC();
-
-private:
-
-	bool			m_bPlayedLeadIn;
+   private:
+    bool m_bPlayedLeadIn;
 };
 
 #endif
 
-#endif // TF_WEAPON_GRENADE_EMP_H
+#endif  // TF_WEAPON_GRENADE_EMP_H

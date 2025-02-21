@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -15,4 +15,3 @@
 
 #include "tier2/p4helpers.h"
 #include "tier2/fileutils.h"
-

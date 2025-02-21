@@ -12,17 +12,15 @@
 
 #include "movieobjects/dmeoperator.h"
 
-
 //-----------------------------------------------------------------------------
 // A class representing a camera
 //-----------------------------------------------------------------------------
 class CDmeInput : public CDmeOperator
 {
-	DEFINE_ELEMENT( CDmeInput, CDmeOperator );
+    DEFINE_ELEMENT( CDmeInput, CDmeOperator );
 
-public:
-	virtual bool IsDirty(); // ie needs to operate
+   public:
+    virtual bool IsDirty();  // ie needs to operate
 };
 
-
-#endif // DMEINPUT_H
+#endif  // DMEINPUT_H

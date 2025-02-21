@@ -12,79 +12,71 @@
 
 extern ConVar tf_bot_path_lookahead_range;
 
-
 //---------------------------------------------------------------------------------------------
 CTFBotMoveToVantagePoint::CTFBotMoveToVantagePoint( float maxTravelDistance )
 {
-	m_maxTravelDistance = maxTravelDistance;
+    m_maxTravelDistance = maxTravelDistance;
 }
-
 
 //---------------------------------------------------------------------------------------------
-ActionResult< CTFBot >	CTFBotMoveToVantagePoint::OnStart( CTFBot *me, Action< CTFBot > *priorAction )
+ActionResult< CTFBot > CTFBotMoveToVantagePoint::OnStart( CTFBot *me, Action< CTFBot > *priorAction )
 {
-	m_path.SetMinLookAheadDistance( me->GetDesiredPathLookAheadRange() );
+    m_path.SetMinLookAheadDistance( me->GetDesiredPathLookAheadRange() );
 
-	m_vantageArea = me->FindVantagePoint( m_maxTravelDistance );
-	if ( !m_vantageArea )
-	{
-		return Done( "No vantage point found" );
-	}
+    m_vantageArea = me->FindVantagePoint( m_maxTravelDistance );
+    if ( !m_vantageArea )
+    {
+        return Done( "No vantage point found" );
+    }
 
-	m_path.Invalidate();
-	m_repathTimer.Invalidate();
+    m_path.Invalidate();
+    m_repathTimer.Invalidate();
 
-	return Continue();
+    return Continue();
 }
-
 
 //---------------------------------------------------------------------------------------------
-ActionResult< CTFBot >	CTFBotMoveToVantagePoint::Update( CTFBot *me, float interval )
+ActionResult< CTFBot > CTFBotMoveToVantagePoint::Update( CTFBot *me, float interval )
 {
-	const CKnownEntity *threat = me->GetVisionInterface()->GetPrimaryKnownThreat();
-	if ( threat && threat->IsVisibleInFOVNow() )
-	{
-		return Done( "Enemy is visible" );
-	}
+    const CKnownEntity *threat = me->GetVisionInterface()->GetPrimaryKnownThreat();
+    if ( threat && threat->IsVisibleInFOVNow() )
+    {
+        return Done( "Enemy is visible" );
+    }
 
-	if ( !m_path.IsValid() && m_repathTimer.IsElapsed() )
-	{
-		m_repathTimer.Start( 1.0f );
+    if ( !m_path.IsValid() && m_repathTimer.IsElapsed() )
+    {
+        m_repathTimer.Start( 1.0f );
 
-		CTFBotPathCost cost( me, FASTEST_ROUTE );
-		if ( !m_path.Compute( me, m_vantageArea->GetCenter(), cost ) )
-		{
-			return Done( "No path to vantage point exists" );
-		}
-	}
+        CTFBotPathCost cost( me, FASTEST_ROUTE );
+        if ( !m_path.Compute( me, m_vantageArea->GetCenter(), cost ) )
+        {
+            return Done( "No path to vantage point exists" );
+        }
+    }
 
-	// move along path to vantage point
-	m_path.Update( me );
+    // move along path to vantage point
+    m_path.Update( me );
 
-	return Continue();
+    return Continue();
 }
-
 
 //---------------------------------------------------------------------------------------------
 EventDesiredResult< CTFBot > CTFBotMoveToVantagePoint::OnStuck( CTFBot *me )
 {
-	m_path.Invalidate();
-	return TryContinue();
+    m_path.Invalidate();
+    return TryContinue();
 }
-
 
 //---------------------------------------------------------------------------------------------
 EventDesiredResult< CTFBot > CTFBotMoveToVantagePoint::OnMoveToSuccess( CTFBot *me, const Path *path )
 {
-	return TryDone( RESULT_CRITICAL, "Vantage point reached" );
+    return TryDone( RESULT_CRITICAL, "Vantage point reached" );
 }
-
 
 //---------------------------------------------------------------------------------------------
 EventDesiredResult< CTFBot > CTFBotMoveToVantagePoint::OnMoveToFailure( CTFBot *me, const Path *path, MoveToFailureType reason )
 {
-	m_path.Invalidate();
-	return TryContinue();
+    m_path.Invalidate();
+    return TryContinue();
 }
-
-

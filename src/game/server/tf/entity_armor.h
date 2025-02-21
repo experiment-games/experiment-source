@@ -19,16 +19,17 @@
 
 class CArmor : public CTFPowerup
 {
-public:
-	DECLARE_CLASS( CArmor, CTFPowerup );
+   public:
+    DECLARE_CLASS( CArmor, CTFPowerup );
 
-	void	Spawn( void );
-	void	Precache( void );
-	bool	MyTouch( CBasePlayer *pPlayer );
+    void Spawn( void );
+    void Precache( void );
+    bool MyTouch( CBasePlayer *pPlayer );
 
-	virtual const char *GetDefaultPowerupModel( void ) { return "models/items/car_battery01.mdl"; }
+    virtual const char *GetDefaultPowerupModel( void )
+    {
+        return "models/items/car_battery01.mdl";
+    }
 };
 
-#endif // ENTITY_ARMOR_H
-
-
+#endif  // ENTITY_ARMOR_H

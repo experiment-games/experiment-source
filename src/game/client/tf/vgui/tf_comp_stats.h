@@ -21,113 +21,112 @@ class CBaseLobbyPanel;
 
 namespace vgui
 {
-	class ScrollableEditablePanel;
+class ScrollableEditablePanel;
 };
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-class CLadderLobbyLeaderboard : public CTFLeaderboardPanel
-							  , public CLocalSteamSharedObjectListener
+class CLadderLobbyLeaderboard : public CTFLeaderboardPanel, public CLocalSteamSharedObjectListener
 {
-	DECLARE_CLASS_SIMPLE( CLadderLobbyLeaderboard, CTFLeaderboardPanel );
-public:
+    DECLARE_CLASS_SIMPLE( CLadderLobbyLeaderboard, CTFLeaderboardPanel );
 
-	CLadderLobbyLeaderboard( Panel *pParent, const char *pszPanelName );
-	virtual ~CLadderLobbyLeaderboard();
+   public:
+    CLadderLobbyLeaderboard( Panel *pParent, const char *pszPanelName );
+    virtual ~CLadderLobbyLeaderboard();
 
-	//-----------------------------------------------------------------------------
-	// Purpose: Create leaderboard panels
-	//-----------------------------------------------------------------------------
-	virtual void ApplySchemeSettings( vgui::IScheme *pScheme ) OVERRIDE;
-	virtual void OnCommand( const char *command ) OVERRIDE;
-	virtual void OnThink() OVERRIDE;
+    //-----------------------------------------------------------------------------
+    // Purpose: Create leaderboard panels
+    //-----------------------------------------------------------------------------
+    virtual void ApplySchemeSettings( vgui::IScheme *pScheme ) OVERRIDE;
+    virtual void OnCommand( const char *command ) OVERRIDE;
+    virtual void OnThink() OVERRIDE;
 
-	virtual bool GetLeaderboardData( CUtlVector< LeaderboardEntry_t* >& scores );
-	virtual bool UpdateLeaderboards();
+    virtual bool GetLeaderboardData( CUtlVector< LeaderboardEntry_t * > &scores );
+    virtual bool UpdateLeaderboards();
 
-	bool IsDataValid( void ) { return m_bIsDataValid; }
+    bool IsDataValid( void )
+    {
+        return m_bIsDataValid;
+    }
 
-	virtual void SOCreated( const CSteamID & steamIDOwner, const CSharedObject *pObject, ESOCacheEvent eEvent ) OVERRIDE;
-	virtual void SOUpdated( const CSteamID & steamIDOwner, const CSharedObject *pObject, ESOCacheEvent eEvent ) OVERRIDE;
+    virtual void SOCreated( const CSteamID &steamIDOwner, const CSharedObject *pObject, ESOCacheEvent eEvent ) OVERRIDE;
+    virtual void SOUpdated( const CSteamID &steamIDOwner, const CSharedObject *pObject, ESOCacheEvent eEvent ) OVERRIDE;
 
-private:
-	const char *m_pszLeaderboardName;
-	bool m_bIsDataValid;
-	bool m_bDataDirty = true;
+   private:
+    const char *m_pszLeaderboardName;
+    bool m_bIsDataValid;
+    bool m_bDataDirty = true;
 
-	vgui::ScrollableEditablePanel *m_pScoreListScroller;
-	EditablePanel *m_pScoreList;
+    vgui::ScrollableEditablePanel *m_pScoreListScroller;
+    EditablePanel *m_pScoreList;
 };
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-class CCompStatsPanel : public EditablePanel
-					  , public CLocalSteamSharedObjectListener
-					  , public CGameEventListener
+class CCompStatsPanel : public EditablePanel, public CLocalSteamSharedObjectListener, public CGameEventListener
 {
-	DECLARE_CLASS_SIMPLE( CCompStatsPanel, EditablePanel );
+    DECLARE_CLASS_SIMPLE( CCompStatsPanel, EditablePanel );
 
-public:
-	CCompStatsPanel( vgui::Panel *pParent, const char* pszName );
-	virtual ~CCompStatsPanel();
+   public:
+    CCompStatsPanel( vgui::Panel *pParent, const char *pszName );
+    virtual ~CCompStatsPanel();
 
-	//
-	// Panel overrides
-	//
-	virtual void PerformLayout() OVERRIDE;
-	virtual void ApplySchemeSettings( vgui::IScheme *pScheme ) OVERRIDE;
-	virtual void OnCommand( const char *command ) OVERRIDE;
+    //
+    // Panel overrides
+    //
+    virtual void PerformLayout() OVERRIDE;
+    virtual void ApplySchemeSettings( vgui::IScheme *pScheme ) OVERRIDE;
+    virtual void OnCommand( const char *command ) OVERRIDE;
 
-	virtual void SOCreated( const CSteamID & steamIDOwner, const CSharedObject *pObject, ESOCacheEvent eEvent ) OVERRIDE;
-	virtual void SOUpdated( const CSteamID & steamIDOwner, const CSharedObject *pObject, ESOCacheEvent eEvent ) OVERRIDE;
+    virtual void SOCreated( const CSteamID &steamIDOwner, const CSharedObject *pObject, ESOCacheEvent eEvent ) OVERRIDE;
+    virtual void SOUpdated( const CSteamID &steamIDOwner, const CSharedObject *pObject, ESOCacheEvent eEvent ) OVERRIDE;
 
-	virtual void OnThink() OVERRIDE;
+    virtual void OnThink() OVERRIDE;
 
-	void WriteControls();
+    void WriteControls();
 
-	//
-	// CGameEventListener overrides
-	//
-	virtual void FireGameEvent( IGameEvent *event ) OVERRIDE;
+    //
+    // CGameEventListener overrides
+    //
+    virtual void FireGameEvent( IGameEvent *event ) OVERRIDE;
 
-private:
-	
-	CPanelAnimationVarAliasType( int, m_iStatMedalWidth, "stat_medal_width", "14", "proportional_int" );
-	CPanelAnimationVarAliasType( int, m_iMedalCountWidth, "stat_medal_count_width", "20", "proportional_int" );
-	CPanelAnimationVarAliasType( int, m_iHasPassWidth, "has_pass_width", "12", "proportional_int" );
+   private:
+    CPanelAnimationVarAliasType( int, m_iStatMedalWidth, "stat_medal_width", "14", "proportional_int" );
+    CPanelAnimationVarAliasType( int, m_iMedalCountWidth, "stat_medal_count_width", "20", "proportional_int" );
+    CPanelAnimationVarAliasType( int, m_iHasPassWidth, "has_pass_width", "12", "proportional_int" );
 
-	CUtlVector<vgui::Label *> m_vecSearchCriteriaLabels;
+    CUtlVector< vgui::Label * > m_vecSearchCriteriaLabels;
 
-	// leaderboards
-	CLadderLobbyLeaderboard *m_pCompetitiveModeLeaderboard;
+    // leaderboards
+    CLadderLobbyLeaderboard *m_pCompetitiveModeLeaderboard;
 
-	vgui::HFont m_fontMedalsCount;
+    vgui::HFont m_fontMedalsCount;
 
-	enum EMatchHistorySortMethods_t
-	{
-		SORT_BY_RESULT = 0,
-		SORT_BY_DATE,
-		SORT_BY_MAP,
-		SORT_BY_KDR,
+    enum EMatchHistorySortMethods_t
+    {
+        SORT_BY_RESULT = 0,
+        SORT_BY_DATE,
+        SORT_BY_MAP,
+        SORT_BY_KDR,
 
-		NUM_SORT_METHODS
-	};
+        NUM_SORT_METHODS
+    };
 
-	CScrollableList* m_pMatchHistoryScroller;
-	EMatchHistorySortMethods_t m_eMatchSortMethod;
-	bool m_bDescendingMatchHistorySort;
+    CScrollableList *m_pMatchHistoryScroller;
+    EMatchHistorySortMethods_t m_eMatchSortMethod;
+    bool m_bDescendingMatchHistorySort;
 
-	float m_flCompetitiveRankProgress;
-	float m_flCompetitiveRankPrevProgress;
-	float m_flRefreshPlayerListTime;
-	bool m_bCompetitiveRankChangePlayedSound;
-	bool m_bMatchHistoryLoaded;
-	int m_iWritingPanel = 0;
+    float m_flCompetitiveRankProgress;
+    float m_flCompetitiveRankPrevProgress;
+    float m_flRefreshPlayerListTime;
+    bool m_bCompetitiveRankChangePlayedSound;
+    bool m_bMatchHistoryLoaded;
+    int m_iWritingPanel = 0;
 
-	void UpdateMatchDataForLocalPlayer();
-	bool m_bMatchDataForLocalPlayerDirty;
+    void UpdateMatchDataForLocalPlayer();
+    bool m_bMatchDataForLocalPlayerDirty;
 };
 
-#endif //TF_COMP_STATS_H
+#endif  // TF_COMP_STATS_H

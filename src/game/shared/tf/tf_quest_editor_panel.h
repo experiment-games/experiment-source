@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -17,5 +17,4 @@
 #include "vgui_controls/ScrollableEditablePanel.h"
 #include "tf_controls.h"
 
-
-#endif // TF_QUEST_EDITOR_PANEL_H
+#endif  // TF_QUEST_EDITOR_PANEL_H

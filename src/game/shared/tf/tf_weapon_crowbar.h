@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
 
@@ -22,18 +22,19 @@
 //
 class CTFCrowbar : public CTFWeaponBaseMelee
 {
-public:
+   public:
+    DECLARE_CLASS( CTFCrowbar, CTFWeaponBaseMelee );
+    DECLARE_NETWORKCLASS();
+    DECLARE_PREDICTABLE();
 
-	DECLARE_CLASS( CTFCrowbar, CTFWeaponBaseMelee );
-	DECLARE_NETWORKCLASS(); 
-	DECLARE_PREDICTABLE();
+    CTFCrowbar();
+    virtual int GetWeaponID( void ) const
+    {
+        return TF_WEAPON_CROWBAR;
+    }
 
-	CTFCrowbar();
-	virtual int			GetWeaponID( void ) const			{ return TF_WEAPON_CROWBAR; }
-
-private:
-
-	CTFCrowbar( const CTFCrowbar & ) {}
+   private:
+    CTFCrowbar( const CTFCrowbar& ) {}
 };
 
-#endif // TF_WEAPON_CROWBAR_H
+#endif  // TF_WEAPON_CROWBAR_H

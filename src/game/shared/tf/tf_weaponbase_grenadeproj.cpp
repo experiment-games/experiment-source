@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 #include "cbase.h"
@@ -25,7 +25,6 @@
 // memdbgon must be the last include file in a .cpp file!!!
 #include "tier0/memdbgon.h"
 
-
 //=============================================================================
 //
 // TF Grenade projectile tables.
@@ -35,10 +34,9 @@
 #ifdef GAME_DLL
 BEGIN_DATADESC( CTFWeaponBaseGrenadeProj )
 DEFINE_THINKFUNC( DetonateThink ),
-END_DATADESC()
+    END_DATADESC()
 
-
-extern void SendProxy_Origin( const SendProp *pProp, const void *pStruct, const void *pData, DVariant *pOut, int iElement, int objectID );
+        extern void SendProxy_Origin( const SendProp *pProp, const void *pStruct, const void *pData, DVariant *pOut, int iElement, int objectID );
 extern void SendProxy_Angles( const SendProp *pProp, const void *pStruct, const void *pData, DVariant *pOut, int iElement, int objectID );
 
 #endif
@@ -50,40 +48,40 @@ PRECACHE_REGISTER( tf_weaponbase_grenade_proj );
 
 BEGIN_NETWORK_TABLE( CTFWeaponBaseGrenadeProj, DT_TFWeaponBaseGrenadeProj )
 #ifdef CLIENT_DLL
-	RecvPropVector( RECVINFO( m_vInitialVelocity ) ),
-	RecvPropBool( RECVINFO( m_bCritical ) ),
-	RecvPropInt( RECVINFO( m_iDeflected ) ),
+RecvPropVector( RECVINFO( m_vInitialVelocity ) ),
+    RecvPropBool( RECVINFO( m_bCritical ) ),
+    RecvPropInt( RECVINFO( m_iDeflected ) ),
 
-	RecvPropVector( RECVINFO_NAME( m_vecNetworkOrigin, m_vecOrigin ) ),
-	RecvPropQAngles( RECVINFO_NAME( m_angNetworkAngles, m_angRotation ) ),
-	RecvPropEHandle( RECVINFO( m_hDeflectOwner )),
+    RecvPropVector( RECVINFO_NAME( m_vecNetworkOrigin, m_vecOrigin ) ),
+    RecvPropQAngles( RECVINFO_NAME( m_angNetworkAngles, m_angRotation ) ),
+    RecvPropEHandle( RECVINFO( m_hDeflectOwner ) ),
 
 #else
-	SendPropVector( SENDINFO( m_vInitialVelocity ), 20 /*nbits*/, 0 /*flags*/, -3000 /*low value*/, 3000 /*high value*/	),
-	SendPropBool( SENDINFO( m_bCritical ) ),
+SendPropVector( SENDINFO( m_vInitialVelocity ), 20 /*nbits*/, 0 /*flags*/, -3000 /*low value*/, 3000 /*high value*/ ),
+    SendPropBool( SENDINFO( m_bCritical ) ),
 
-	SendPropExclude( "DT_BaseEntity", "m_vecOrigin" ),
-	SendPropExclude( "DT_BaseEntity", "m_angRotation" ),
+    SendPropExclude( "DT_BaseEntity", "m_vecOrigin" ),
+    SendPropExclude( "DT_BaseEntity", "m_angRotation" ),
 
-	SendPropVector	(SENDINFO(m_vecOrigin), -1,  SPROP_COORD_MP_INTEGRAL|SPROP_CHANGES_OFTEN, 0.0f, HIGH_DEFAULT, SendProxy_Origin ),
-	SendPropQAngles	(SENDINFO(m_angRotation), 6, SPROP_CHANGES_OFTEN, SendProxy_Angles ),
-	SendPropInt( SENDINFO( m_iDeflected ), 4, SPROP_UNSIGNED ),
-	SendPropEHandle(SENDINFO( m_hDeflectOwner )),
+    SendPropVector( SENDINFO( m_vecOrigin ), -1, SPROP_COORD_MP_INTEGRAL | SPROP_CHANGES_OFTEN, 0.0f, HIGH_DEFAULT, SendProxy_Origin ),
+    SendPropQAngles( SENDINFO( m_angRotation ), 6, SPROP_CHANGES_OFTEN, SendProxy_Angles ),
+    SendPropInt( SENDINFO( m_iDeflected ), 4, SPROP_UNSIGNED ),
+    SendPropEHandle( SENDINFO( m_hDeflectOwner ) ),
 #endif
-END_NETWORK_TABLE()
+    END_NETWORK_TABLE()
 
-//-----------------------------------------------------------------------------
-// Purpose: Constructor.
-//-----------------------------------------------------------------------------
-CTFWeaponBaseGrenadeProj::CTFWeaponBaseGrenadeProj()
+    //-----------------------------------------------------------------------------
+    // Purpose: Constructor.
+    //-----------------------------------------------------------------------------
+    CTFWeaponBaseGrenadeProj::CTFWeaponBaseGrenadeProj()
 {
 #ifndef CLIENT_DLL
-	m_bUseImpactNormal = false;
-	m_vecImpactNormal.Init();
-	m_iDeflected = 0;
-	m_flDestroyableTime = 0.0f;
-	m_bIsMerasmusGrenade = false;
-	m_iDestroyableHitCount = 0;
+    m_bUseImpactNormal = false;
+    m_vecImpactNormal.Init();
+    m_iDeflected = 0;
+    m_flDestroyableTime = 0.0f;
+    m_bIsMerasmusGrenade = false;
+    m_iDestroyableHitCount = 0;
 #endif
 }
 
@@ -91,28 +89,29 @@ CTFWeaponBaseGrenadeProj::CTFWeaponBaseGrenadeProj()
 // Purpose: Destructor.
 //-----------------------------------------------------------------------------
 CTFWeaponBaseGrenadeProj::~CTFWeaponBaseGrenadeProj()
-{}
-
-//-----------------------------------------------------------------------------
-// Purpose: 
-//-----------------------------------------------------------------------------
-int	CTFWeaponBaseGrenadeProj::GetDamageType() 
-{ 
-	int iDmgType = g_aWeaponDamageTypes[ GetWeaponID() ];
-	if ( m_bCritical )
-	{
-		iDmgType |= DMG_CRITICAL;
-	}
-
-	return iDmgType;
+{
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
+//-----------------------------------------------------------------------------
+int CTFWeaponBaseGrenadeProj::GetDamageType()
+{
+    int iDmgType = g_aWeaponDamageTypes[GetWeaponID()];
+    if ( m_bCritical )
+    {
+        iDmgType |= DMG_CRITICAL;
+    }
+
+    return iDmgType;
+}
+
+//-----------------------------------------------------------------------------
+// Purpose:
 //-----------------------------------------------------------------------------
 int CTFWeaponBaseGrenadeProj::GetDamageCustom()
 {
-	return 0;
+    return 0;
 }
 
 const float GRENADE_COEFFICIENT_OF_RESTITUTION = 0.2f;
@@ -122,37 +121,37 @@ const float GRENADE_COEFFICIENT_OF_RESTITUTION = 0.2f;
 //-----------------------------------------------------------------------------
 void CTFWeaponBaseGrenadeProj::BounceOff( IPhysicsObject *pPhysics )
 {
-	if ( !pPhysics )
-		return;
+    if ( !pPhysics )
+        return;
 
-	Vector vecVel;
-	pPhysics->GetVelocity( &vecVel, NULL );
-	vecVel *= -GRENADE_COEFFICIENT_OF_RESTITUTION;
-	pPhysics->SetVelocity( &vecVel, NULL );
+    Vector vecVel;
+    pPhysics->GetVelocity( &vecVel, NULL );
+    vecVel *= -GRENADE_COEFFICIENT_OF_RESTITUTION;
+    pPhysics->SetVelocity( &vecVel, NULL );
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-float CTFWeaponBaseGrenadeProj::GetDamageRadius() 
-{ 
-	float flRadius = m_DmgRadius;
-	CALL_ATTRIB_HOOK_FLOAT_ON_OTHER( m_hLauncher, flRadius, mult_explosion_radius );
-	return flRadius; 
-}	
+float CTFWeaponBaseGrenadeProj::GetDamageRadius()
+{
+    float flRadius = m_DmgRadius;
+    CALL_ATTRIB_HOOK_FLOAT_ON_OTHER( m_hLauncher, flRadius, mult_explosion_radius );
+    return flRadius;
+}
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFWeaponBaseGrenadeProj::Precache( void )
 {
-	BaseClass::Precache();
+    BaseClass::Precache();
 
 #ifndef CLIENT_DLL
-	PrecacheModel( NOGRENADE_SPRITE );
-	PrecacheParticleSystem( "critical_grenade_blue" );
-	PrecacheParticleSystem( "critical_grenade_red" );
-	PrecacheParticleSystem( "ExplosionCore_Wall_Jumper" );
+    PrecacheModel( NOGRENADE_SPRITE );
+    PrecacheParticleSystem( "critical_grenade_blue" );
+    PrecacheParticleSystem( "critical_grenade_red" );
+    PrecacheParticleSystem( "ExplosionCore_Wall_Jumper" );
 #endif
 }
 
@@ -167,10 +166,10 @@ void CTFWeaponBaseGrenadeProj::Precache( void )
 //-----------------------------------------------------------------------------
 void CTFWeaponBaseGrenadeProj::Spawn()
 {
-	m_flSpawnTime = gpGlobals->curtime;
-	BaseClass::Spawn();
+    m_flSpawnTime = gpGlobals->curtime;
+    BaseClass::Spawn();
 
-	AddFlag( FL_GRENADE );
+    AddFlag( FL_GRENADE );
 }
 
 //-----------------------------------------------------------------------------
@@ -178,24 +177,24 @@ void CTFWeaponBaseGrenadeProj::Spawn()
 //-----------------------------------------------------------------------------
 void CTFWeaponBaseGrenadeProj::OnDataChanged( DataUpdateType_t type )
 {
-	BaseClass::OnDataChanged( type );
+    BaseClass::OnDataChanged( type );
 
-	if ( type == DATA_UPDATE_CREATED )
-	{
-		// Now stick our initial velocity into the interpolation history 
-		CInterpolatedVar< Vector > &interpolator = GetOriginInterpolator();
+    if ( type == DATA_UPDATE_CREATED )
+    {
+        // Now stick our initial velocity into the interpolation history
+        CInterpolatedVar< Vector > &interpolator = GetOriginInterpolator();
 
-		interpolator.ClearHistory();
-		float changeTime = GetLastChangeTime( LATCH_SIMULATION_VAR );
+        interpolator.ClearHistory();
+        float changeTime = GetLastChangeTime( LATCH_SIMULATION_VAR );
 
-		// Add a sample 1 second back.
-		Vector vCurOrigin = GetLocalOrigin() - m_vInitialVelocity;
-		interpolator.AddToHead( changeTime - 1.0, &vCurOrigin, false );
+        // Add a sample 1 second back.
+        Vector vCurOrigin = GetLocalOrigin() - m_vInitialVelocity;
+        interpolator.AddToHead( changeTime - 1.0, &vCurOrigin, false );
 
-		// Add the current sample.
-		vCurOrigin = GetLocalOrigin();
-		interpolator.AddToHead( changeTime, &vCurOrigin, false );
-	}
+        // Add the current sample.
+        vCurOrigin = GetLocalOrigin();
+        interpolator.AddToHead( changeTime, &vCurOrigin, false );
+    }
 }
 
 //=============================================================================
@@ -207,54 +206,50 @@ void CTFWeaponBaseGrenadeProj::OnDataChanged( DataUpdateType_t type )
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-CTFWeaponBaseGrenadeProj *CTFWeaponBaseGrenadeProj::Create( const char *szName, const Vector &position, const QAngle &angles, 
-													   const Vector &velocity, const AngularImpulse &angVelocity, 
-													   CBaseCombatCharacter *pOwner, const CTFWeaponInfo &weaponInfo, int iFlags )
+CTFWeaponBaseGrenadeProj *CTFWeaponBaseGrenadeProj::Create( const char *szName, const Vector &position, const QAngle &angles, const Vector &velocity, const AngularImpulse &angVelocity, CBaseCombatCharacter *pOwner, const CTFWeaponInfo &weaponInfo, int iFlags )
 {
-	CTFWeaponBaseGrenadeProj *pGrenade = static_cast<CTFWeaponBaseGrenadeProj*>( CBaseEntity::Create( szName, position, angles, pOwner ) );
-	if ( pGrenade )
-	{
-		pGrenade->InitGrenade( velocity, angVelocity, pOwner, weaponInfo );
-	}
+    CTFWeaponBaseGrenadeProj *pGrenade = static_cast< CTFWeaponBaseGrenadeProj * >( CBaseEntity::Create( szName, position, angles, pOwner ) );
+    if ( pGrenade )
+    {
+        pGrenade->InitGrenade( velocity, angVelocity, pOwner, weaponInfo );
+    }
 
-	return pGrenade;
+    return pGrenade;
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-void CTFWeaponBaseGrenadeProj::InitGrenade( const Vector &velocity, const AngularImpulse &angVelocity, 
-										   CBaseCombatCharacter *pOwner, const CTFWeaponInfo &weaponInfo )
+void CTFWeaponBaseGrenadeProj::InitGrenade( const Vector &velocity, const AngularImpulse &angVelocity, CBaseCombatCharacter *pOwner, const CTFWeaponInfo &weaponInfo )
 {
-	InitGrenade( velocity, angVelocity, pOwner, weaponInfo.GetWeaponData( TF_WEAPON_PRIMARY_MODE ).m_nDamage, weaponInfo.m_flDamageRadius );
+    InitGrenade( velocity, angVelocity, pOwner, weaponInfo.GetWeaponData( TF_WEAPON_PRIMARY_MODE ).m_nDamage, weaponInfo.m_flDamageRadius );
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-void CTFWeaponBaseGrenadeProj::InitGrenade( const Vector &velocity, const AngularImpulse &angVelocity, 
-									CBaseCombatCharacter *pOwner, const int iDamage, const float flRadius )
+void CTFWeaponBaseGrenadeProj::InitGrenade( const Vector &velocity, const AngularImpulse &angVelocity, CBaseCombatCharacter *pOwner, const int iDamage, const float flRadius )
 {
-	// We can't use OwnerEntity for grenades, because then the owner can't shoot them with his hitscan weapons (due to collide rules)
-	// Thrower is used to store the person who threw the grenade, for damage purposes.
-	SetOwnerEntity( NULL );
-	SetThrower( pOwner ); 
+    // We can't use OwnerEntity for grenades, because then the owner can't shoot them with his hitscan weapons (due to collide rules)
+    // Thrower is used to store the person who threw the grenade, for damage purposes.
+    SetOwnerEntity( NULL );
+    SetThrower( pOwner );
 
-	SetupInitialTransmittedGrenadeVelocity( velocity );
+    SetupInitialTransmittedGrenadeVelocity( velocity );
 
-	SetGravity( 0.4f/*BaseClass::GetGrenadeGravity()*/ );
-	SetFriction( 0.2f/*BaseClass::GetGrenadeFriction()*/ );
-	SetElasticity( 0.45f/*BaseClass::GetGrenadeElasticity()*/ );
+    SetGravity( 0.4f /*BaseClass::GetGrenadeGravity()*/ );
+    SetFriction( 0.2f /*BaseClass::GetGrenadeFriction()*/ );
+    SetElasticity( 0.45f /*BaseClass::GetGrenadeElasticity()*/ );
 
-	SetDamage( iDamage );
-	SetDamageRadius( flRadius );
-	ChangeTeam( pOwner ? pOwner->GetTeamNumber() : TEAM_UNASSIGNED );
+    SetDamage( iDamage );
+    SetDamageRadius( flRadius );
+    ChangeTeam( pOwner ? pOwner->GetTeamNumber() : TEAM_UNASSIGNED );
 
-	IPhysicsObject *pPhysicsObject = VPhysicsGetObject();
-	if ( pPhysicsObject )
-	{
-		pPhysicsObject->AddVelocity( &velocity, &angVelocity );
-	}
+    IPhysicsObject *pPhysicsObject = VPhysicsGetObject();
+    if ( pPhysicsObject )
+    {
+        pPhysicsObject->AddVelocity( &velocity, &angVelocity );
+    }
 }
 
 //-----------------------------------------------------------------------------
@@ -262,175 +257,174 @@ void CTFWeaponBaseGrenadeProj::InitGrenade( const Vector &velocity, const Angula
 //-----------------------------------------------------------------------------
 void CTFWeaponBaseGrenadeProj::Spawn( void )
 {
-	// Base class spawn.
-	BaseClass::Spawn();
+    // Base class spawn.
+    BaseClass::Spawn();
 
-	// So it will collide with physics props!
-	SetSolidFlags( FSOLID_NOT_STANDABLE );
-	SetSolid( SOLID_BBOX );	
+    // So it will collide with physics props!
+    SetSolidFlags( FSOLID_NOT_STANDABLE );
+    SetSolid( SOLID_BBOX );
 
-	AddEffects( EF_NOSHADOW );
+    AddEffects( EF_NOSHADOW );
 
-	// Set the grenade size here.
-	UTIL_SetSize( this, TF_GRENADE_PROJECTILE_MINS, TF_GRENADE_PROJECTILE_MAXS );
+    // Set the grenade size here.
+    UTIL_SetSize( this, TF_GRENADE_PROJECTILE_MINS, TF_GRENADE_PROJECTILE_MAXS );
 
-	// Set the movement type.
-	SetCollisionGroup( TF_COLLISIONGROUP_GRENADES );
+    // Set the movement type.
+    SetCollisionGroup( TF_COLLISIONGROUP_GRENADES );
 
-	VPhysicsInitNormal( SOLID_BBOX, 0, false );
+    VPhysicsInitNormal( SOLID_BBOX, 0, false );
 
-	m_takedamage = DAMAGE_EVENTS_ONLY;
+    m_takedamage = DAMAGE_EVENTS_ONLY;
 
-	// Set the team.
-	ChangeTeam( GetThrower() ? GetThrower()->GetTeamNumber() : TEAM_UNASSIGNED );
+    // Set the team.
+    ChangeTeam( GetThrower() ? GetThrower()->GetTeamNumber() : TEAM_UNASSIGNED );
 
-	// Set skin based on team ( red = 1, blue = 2 )
-	m_nSkin = ( GetTeamNumber() == TF_TEAM_BLUE ) ? 1 : 0;
+    // Set skin based on team ( red = 1, blue = 2 )
+    m_nSkin = ( GetTeamNumber() == TF_TEAM_BLUE ) ? 1 : 0;
 
-	m_flDestroyableTime = gpGlobals->curtime + TF_GRENADE_DESTROYABLE_TIMER;
+    m_flDestroyableTime = gpGlobals->curtime + TF_GRENADE_DESTROYABLE_TIMER;
 
-	// Setup the think and touch functions (see CBaseEntity).
-	SetThink( &CTFWeaponBaseGrenadeProj::DetonateThink );
-	SetNextThink( gpGlobals->curtime + 0.2 );
+    // Setup the think and touch functions (see CBaseEntity).
+    SetThink( &CTFWeaponBaseGrenadeProj::DetonateThink );
+    SetNextThink( gpGlobals->curtime + 0.2 );
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-#define TF_GRENADE_JUMP_RADIUS	146
+#define TF_GRENADE_JUMP_RADIUS 146
 void CTFWeaponBaseGrenadeProj::Explode( trace_t *pTrace, int bitsDamageType )
 {
-	if ( ShouldNotDetonate() )
-	{
-		Destroy();
-		return;
-	}
+    if ( ShouldNotDetonate() )
+    {
+        Destroy();
+        return;
+    }
 
-	SetModelName( NULL_STRING );//invisible
-	AddSolidFlags( FSOLID_NOT_SOLID );
+    SetModelName( NULL_STRING );  // invisible
+    AddSolidFlags( FSOLID_NOT_SOLID );
 
-	m_takedamage = DAMAGE_NO;
+    m_takedamage = DAMAGE_NO;
 
-	// Pull out of the wall a bit
-	if ( pTrace->fraction != 1.0 )
-	{
-		SetAbsOrigin( pTrace->endpos + ( pTrace->plane.normal * 1.0f ) );
-	}
+    // Pull out of the wall a bit
+    if ( pTrace->fraction != 1.0 )
+    {
+        SetAbsOrigin( pTrace->endpos + ( pTrace->plane.normal * 1.0f ) );
+    }
 
-	CSoundEnt::InsertSound ( SOUND_COMBAT, GetAbsOrigin(), BASEGRENADE_EXPLOSION_VOLUME, 3.0 );
+    CSoundEnt::InsertSound( SOUND_COMBAT, GetAbsOrigin(), BASEGRENADE_EXPLOSION_VOLUME, 3.0 );
 
-	// Explosion effect on client
-	Vector vecOrigin = GetAbsOrigin();
-	CPVSFilter filter( vecOrigin );
+    // Explosion effect on client
+    Vector vecOrigin = GetAbsOrigin();
+    CPVSFilter filter( vecOrigin );
 
+    item_definition_index_t ownerWeaponDefIndex = INVALID_ITEM_DEF_INDEX;
+    CTFWeaponBase *pWeapon = dynamic_cast< CTFWeaponBase * >( GetOriginalLauncher() );
+    if ( pWeapon )
+    {
+        ownerWeaponDefIndex = pWeapon->GetAttributeContainer()->GetItem()->GetItemDefIndex();
+    }
 
-	item_definition_index_t ownerWeaponDefIndex = INVALID_ITEM_DEF_INDEX;
-	CTFWeaponBase *pWeapon = dynamic_cast<CTFWeaponBase *>(GetOriginalLauncher());
-	if (pWeapon)
-	{
-		ownerWeaponDefIndex = pWeapon->GetAttributeContainer()->GetItem()->GetItemDefIndex();
-	}
+    // Halloween Custom Spell Effect
+    int iHalloweenSpell = 0;
+    int iCustomParticleIndex = GetCustomParticleIndex();
+    if ( TF_IsHolidayActive( kHoliday_HalloweenOrFullMoon ) )
+    {
+        CALL_ATTRIB_HOOK_INT_ON_OTHER( m_hLauncher, iHalloweenSpell, halloween_pumpkin_explosions );
+        if ( iHalloweenSpell > 0 )
+        {
+            iCustomParticleIndex = GetParticleSystemIndex( "halloween_explosion" );
+        }
+    }
 
-	// Halloween Custom Spell Effect
-	int iHalloweenSpell = 0;
-	int iCustomParticleIndex = GetCustomParticleIndex();
-	if ( TF_IsHolidayActive( kHoliday_HalloweenOrFullMoon ) )
-	{
-		CALL_ATTRIB_HOOK_INT_ON_OTHER( m_hLauncher, iHalloweenSpell, halloween_pumpkin_explosions );
-		if ( iHalloweenSpell > 0 )
-		{
-			iCustomParticleIndex = GetParticleSystemIndex( "halloween_explosion" );
-		}
-	}
+    int iNoSelfBlastDamage = 0;
+    CALL_ATTRIB_HOOK_INT_ON_OTHER( m_hLauncher, iNoSelfBlastDamage, no_self_blast_dmg );
+    if ( iNoSelfBlastDamage )
+    {
+        iCustomParticleIndex = GetParticleSystemIndex( "ExplosionCore_Wall_Jumper" );
+    }
 
-	int iNoSelfBlastDamage = 0;
-	CALL_ATTRIB_HOOK_INT_ON_OTHER( m_hLauncher, iNoSelfBlastDamage, no_self_blast_dmg );
-	if ( iNoSelfBlastDamage )
-	{
-		iCustomParticleIndex = GetParticleSystemIndex( "ExplosionCore_Wall_Jumper" );
-	}
+    int iLargeExplosion = 0;
+    CALL_ATTRIB_HOOK_INT_ON_OTHER( m_hLauncher, iLargeExplosion, use_large_smoke_explosion );
+    if ( iLargeExplosion > 0 )
+    {
+        DispatchParticleEffect( "explosionTrail_seeds_mvm", GetAbsOrigin(), GetAbsAngles() );
+        DispatchParticleEffect( "fluidSmokeExpl_ring_mvm", GetAbsOrigin(), GetAbsAngles() );
+    }
 
-	int iLargeExplosion = 0;
-	CALL_ATTRIB_HOOK_INT_ON_OTHER( m_hLauncher, iLargeExplosion, use_large_smoke_explosion );
-	if ( iLargeExplosion > 0 )
-	{
-		DispatchParticleEffect( "explosionTrail_seeds_mvm", GetAbsOrigin(), GetAbsAngles() );
-		DispatchParticleEffect( "fluidSmokeExpl_ring_mvm", GetAbsOrigin(), GetAbsAngles() );
-	}
+    if ( UseImpactNormal() )
+    {
+        if ( pTrace->m_pEnt && pTrace->m_pEnt->IsPlayer() )
+        {
+            TE_TFExplosion( filter, 0.0f, vecOrigin, GetImpactNormal(), GetWeaponID(), pTrace->m_pEnt->entindex(), ownerWeaponDefIndex, SPECIAL1, iCustomParticleIndex );
+        }
+        else
+        {
+            TE_TFExplosion( filter, 0.0f, vecOrigin, GetImpactNormal(), GetWeaponID(), kInvalidEHandleExplosion, ownerWeaponDefIndex, SPECIAL1, iCustomParticleIndex );
+        }
+    }
+    else
+    {
+        if ( pTrace->m_pEnt && pTrace->m_pEnt->IsPlayer() )
+        {
+            TE_TFExplosion( filter, 0.0f, vecOrigin, pTrace->plane.normal, GetWeaponID(), pTrace->m_pEnt->entindex(), ownerWeaponDefIndex, SPECIAL1, iCustomParticleIndex );
+        }
+        else
+        {
+            TE_TFExplosion( filter, 0.0f, vecOrigin, pTrace->plane.normal, GetWeaponID(), kInvalidEHandleExplosion, ownerWeaponDefIndex, SPECIAL1, iCustomParticleIndex );
+        }
+    }
 
-	if ( UseImpactNormal() )
-	{
-		if ( pTrace->m_pEnt && pTrace->m_pEnt->IsPlayer() )
-		{
-			TE_TFExplosion(filter, 0.0f, vecOrigin, GetImpactNormal(), GetWeaponID(), pTrace->m_pEnt->entindex(), ownerWeaponDefIndex, SPECIAL1, iCustomParticleIndex);
-		}
-		else
-		{
-			TE_TFExplosion(filter, 0.0f, vecOrigin, GetImpactNormal(), GetWeaponID(), kInvalidEHandleExplosion, ownerWeaponDefIndex, SPECIAL1, iCustomParticleIndex);
-		}
-	}
-	else
-	{
-		if ( pTrace->m_pEnt && pTrace->m_pEnt->IsPlayer() )
-		{
-			TE_TFExplosion(filter, 0.0f, vecOrigin, pTrace->plane.normal, GetWeaponID(), pTrace->m_pEnt->entindex(), ownerWeaponDefIndex, SPECIAL1, iCustomParticleIndex);
-		}
-		else
-		{
-			TE_TFExplosion(filter, 0.0f, vecOrigin, pTrace->plane.normal, GetWeaponID(), kInvalidEHandleExplosion, ownerWeaponDefIndex, SPECIAL1, iCustomParticleIndex);
-		}
-	}
+    // Use the thrower's position as the reported position
+    Vector vecReported = GetThrower() ? GetThrower()->GetAbsOrigin() : vec3_origin;
+    int nCustomDamage = GetDamageCustom();
+    CTakeDamageInfo info( this, GetThrower(), m_hLauncher, GetBlastForce(), GetAbsOrigin(), m_flDamage, bitsDamageType, nCustomDamage, &vecReported );
 
-	// Use the thrower's position as the reported position
-	Vector vecReported = GetThrower() ? GetThrower()->GetAbsOrigin() : vec3_origin;
-	int nCustomDamage = GetDamageCustom();
-	CTakeDamageInfo info( this, GetThrower(), m_hLauncher, GetBlastForce(), GetAbsOrigin(), m_flDamage, bitsDamageType, nCustomDamage, &vecReported );
+    float flRadius = GetDamageRadius();
 
-	float flRadius = GetDamageRadius();
+    CTFRadiusDamageInfo radiusinfo( &info, vecOrigin, flRadius, NULL, TF_GRENADE_JUMP_RADIUS );
+    TFGameRules()->RadiusDamage( radiusinfo );
 
-	CTFRadiusDamageInfo radiusinfo( &info, vecOrigin, flRadius, NULL, TF_GRENADE_JUMP_RADIUS );
-	TFGameRules()->RadiusDamage( radiusinfo );
+    // Don't decal players with scorch.
+    if ( pTrace->m_pEnt && !pTrace->m_pEnt->IsPlayer() && ( iNoSelfBlastDamage == 0 ) )
+    {
+        UTIL_DecalTrace( pTrace, "Scorch" );
+    }
 
-	// Don't decal players with scorch.
-	if ( pTrace->m_pEnt && !pTrace->m_pEnt->IsPlayer() && ( iNoSelfBlastDamage == 0 ) )
-	{
-		UTIL_DecalTrace( pTrace, "Scorch" );
-	}
+    if ( GetEnemy() && GetThrower() )
+    {
+        CTFPlayer *pTarget = ToTFPlayer( GetEnemy() );
+        if ( pTarget )
+        {
+            RecordEnemyPlayerHit( pTarget, true );
+        }
+    }
 
-	if ( GetEnemy() && GetThrower() )
-	{
-		CTFPlayer *pTarget = ToTFPlayer( GetEnemy() );
-		if ( pTarget )
-		{
-			RecordEnemyPlayerHit( pTarget, true );
-		}
-	}
+    SetThink( &CBaseGrenade::SUB_Remove );
+    SetTouch( NULL );
 
-	SetThink( &CBaseGrenade::SUB_Remove );
-	SetTouch( NULL );
-
-	AddEffects( EF_NODRAW );
-	SetAbsVelocity( vec3_origin );
-	SetNextThink( gpGlobals->curtime );
+    AddEffects( EF_NODRAW );
+    SetAbsVelocity( vec3_origin );
+    SetNextThink( gpGlobals->curtime );
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 int CTFWeaponBaseGrenadeProj::OnTakeDamage( const CTakeDamageInfo &info )
 {
-	CTakeDamageInfo info2 = info;
+    CTakeDamageInfo info2 = info;
 
-	// Reduce explosion damage so that we don't get knocked too far
-	if ( info.GetDamageType() & DMG_BLAST )
-	{
-		info2.ScaleDamageForce( 0.05 );
-	}
+    // Reduce explosion damage so that we don't get knocked too far
+    if ( info.GetDamageType() & DMG_BLAST )
+    {
+        info2.ScaleDamageForce( 0.05 );
+    }
 
-	// We need to skip back to the base entity take damage, because
-	// CBaseCombatCharacter doesn't, which prevents us from reacting
-	// to physics impact damage.
-	return CBaseEntity::OnTakeDamage( info2 );
+    // We need to skip back to the base entity take damage, because
+    // CBaseCombatCharacter doesn't, which prevents us from reacting
+    // to physics impact damage.
+    return CBaseEntity::OnTakeDamage( info2 );
 }
 
 //-----------------------------------------------------------------------------
@@ -438,41 +432,40 @@ int CTFWeaponBaseGrenadeProj::OnTakeDamage( const CTakeDamageInfo &info )
 //-----------------------------------------------------------------------------
 void CTFWeaponBaseGrenadeProj::DetonateThink( void )
 {
-	if ( !IsInWorld() )
-	{
-		Remove( );
-		return;
-	}
+    if ( !IsInWorld() )
+    {
+        Remove();
+        return;
+    }
 
-	if ( gpGlobals->curtime > m_flDetonateTime )
-	{
-		Detonate();
-		return;
-	}
+    if ( gpGlobals->curtime > m_flDetonateTime )
+    {
+        Detonate();
+        return;
+    }
 
-
-	SetNextThink( gpGlobals->curtime + 0.2 );
+    SetNextThink( gpGlobals->curtime + 0.2 );
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFWeaponBaseGrenadeProj::Detonate( void )
 {
-	trace_t		tr;
-	Vector		vecSpot;// trace starts here!
+    trace_t tr;
+    Vector vecSpot;  // trace starts here!
 
-	SetThink( NULL );
+    SetThink( NULL );
 
-	vecSpot = GetAbsOrigin() + Vector ( 0 , 0 , 8 );
-	UTIL_TraceLine ( vecSpot, vecSpot + Vector ( 0, 0, -32 ), MASK_SHOT_HULL, this, COLLISION_GROUP_NONE, & tr);
+    vecSpot = GetAbsOrigin() + Vector( 0, 0, 8 );
+    UTIL_TraceLine( vecSpot, vecSpot + Vector( 0, 0, -32 ), MASK_SHOT_HULL, this, COLLISION_GROUP_NONE, &tr );
 
-	Explode( &tr, GetDamageType() );
+    Explode( &tr, GetDamageType() );
 
-	if ( GetShakeAmplitude() )
-	{
-		UTIL_ScreenShake( GetAbsOrigin(), GetShakeAmplitude(), 150.0, 1.0, GetShakeRadius(), SHAKE_START );
-	}
+    if ( GetShakeAmplitude() )
+    {
+        UTIL_ScreenShake( GetAbsOrigin(), GetShakeAmplitude(), 150.0, 1.0, GetShakeRadius(), SHAKE_START );
+    }
 }
 
 //-----------------------------------------------------------------------------
@@ -480,13 +473,13 @@ void CTFWeaponBaseGrenadeProj::Detonate( void )
 //-----------------------------------------------------------------------------
 void CTFWeaponBaseGrenadeProj::SetDetonateTimerLength( float timer )
 {
-	float fFuseMult = 1.0f;
-	if ( GetOwnerEntity() )
-	{
-		CALL_ATTRIB_HOOK_FLOAT_ON_OTHER( GetOwnerEntity(), fFuseMult, fuse_mult );
-	}
-	
-	m_flDetonateTime = gpGlobals->curtime + ( timer * fFuseMult );
+    float fFuseMult = 1.0f;
+    if ( GetOwnerEntity() )
+    {
+        CALL_ATTRIB_HOOK_FLOAT_ON_OTHER( GetOwnerEntity(), fFuseMult, fuse_mult );
+    }
+
+    m_flDetonateTime = gpGlobals->curtime + ( timer * fFuseMult );
 }
 
 //-----------------------------------------------------------------------------
@@ -494,14 +487,14 @@ void CTFWeaponBaseGrenadeProj::SetDetonateTimerLength( float timer )
 //-----------------------------------------------------------------------------
 void CTFWeaponBaseGrenadeProj::ResolveFlyCollisionCustom( trace_t &trace, Vector &vecVelocity )
 {
-	//Assume all surfaces have the same elasticity
-	float flSurfaceElasticity = 1.0;
+    // Assume all surfaces have the same elasticity
+    float flSurfaceElasticity = 1.0;
 
-	//Don't bounce off of players with perfect elasticity
-	if( trace.m_pEnt && trace.m_pEnt->IsPlayer() )
-	{
-		flSurfaceElasticity = 0.3;
-	}
+    // Don't bounce off of players with perfect elasticity
+    if ( trace.m_pEnt && trace.m_pEnt->IsPlayer() )
+    {
+        flSurfaceElasticity = 0.3;
+    }
 
 #if 0
 	// if its breakable glass and we kill it, don't bounce.
@@ -539,78 +532,78 @@ void CTFWeaponBaseGrenadeProj::ResolveFlyCollisionCustom( trace_t &trace, Vector
 	}
 #endif
 
-	float flTotalElasticity = GetElasticity() * flSurfaceElasticity;
-	flTotalElasticity = clamp( flTotalElasticity, 0.0f, 0.9f );
+    float flTotalElasticity = GetElasticity() * flSurfaceElasticity;
+    flTotalElasticity = clamp( flTotalElasticity, 0.0f, 0.9f );
 
-	// NOTE: A backoff of 2.0f is a reflection
-	Vector vecAbsVelocity;
-	PhysicsClipVelocity( GetAbsVelocity(), trace.plane.normal, vecAbsVelocity, 2.0f );
-	vecAbsVelocity *= flTotalElasticity;
+    // NOTE: A backoff of 2.0f is a reflection
+    Vector vecAbsVelocity;
+    PhysicsClipVelocity( GetAbsVelocity(), trace.plane.normal, vecAbsVelocity, 2.0f );
+    vecAbsVelocity *= flTotalElasticity;
 
-	// Get the total velocity (player + conveyors, etc.)
-	VectorAdd( vecAbsVelocity, GetBaseVelocity(), vecVelocity );
-	float flSpeedSqr = DotProduct( vecVelocity, vecVelocity );
+    // Get the total velocity (player + conveyors, etc.)
+    VectorAdd( vecAbsVelocity, GetBaseVelocity(), vecVelocity );
+    float flSpeedSqr = DotProduct( vecVelocity, vecVelocity );
 
-	// Stop if on ground.
-	if ( trace.plane.normal.z > 0.7f )			// Floor
-	{
-		// Verify that we have an entity.
-		CBaseEntity *pEntity = trace.m_pEnt;
-		Assert( pEntity );
+    // Stop if on ground.
+    if ( trace.plane.normal.z > 0.7f )  // Floor
+    {
+        // Verify that we have an entity.
+        CBaseEntity *pEntity = trace.m_pEnt;
+        Assert( pEntity );
 
-		SetAbsVelocity( vecAbsVelocity );
+        SetAbsVelocity( vecAbsVelocity );
 
-		if ( flSpeedSqr < ( 30 * 30 ) )
-		{
-			if ( pEntity->IsStandable() )
-			{
-				SetGroundEntity( pEntity );
-			}
+        if ( flSpeedSqr < ( 30 * 30 ) )
+        {
+            if ( pEntity->IsStandable() )
+            {
+                SetGroundEntity( pEntity );
+            }
 
-			// Reset velocities.
-			SetAbsVelocity( vec3_origin );
-			SetLocalAngularVelocity( vec3_angle );
+            // Reset velocities.
+            SetAbsVelocity( vec3_origin );
+            SetLocalAngularVelocity( vec3_angle );
 
-			//align to the ground so we're not standing on end
-			QAngle angle;
-			VectorAngles( trace.plane.normal, angle );
+            // align to the ground so we're not standing on end
+            QAngle angle;
+            VectorAngles( trace.plane.normal, angle );
 
-			// rotate randomly in yaw
-			angle[1] = random->RandomFloat( 0, 360 );
+            // rotate randomly in yaw
+            angle[1] = random->RandomFloat( 0, 360 );
 
-			// TFTODO: rotate around trace.plane.normal
+            // TFTODO: rotate around trace.plane.normal
 
-			SetAbsAngles( angle );			
-		}
-		else
-		{
-			Vector vecDelta = GetBaseVelocity() - vecAbsVelocity;	
-			Vector vecBaseDir = GetBaseVelocity();
-			VectorNormalize( vecBaseDir );
-			float flScale = vecDelta.Dot( vecBaseDir );
+            SetAbsAngles( angle );
+        }
+        else
+        {
+            Vector vecDelta = GetBaseVelocity() - vecAbsVelocity;
+            Vector vecBaseDir = GetBaseVelocity();
+            VectorNormalize( vecBaseDir );
+            float flScale = vecDelta.Dot( vecBaseDir );
 
-			VectorScale( vecAbsVelocity, ( 1.0f - trace.fraction ) * gpGlobals->frametime, vecVelocity ); 
-			VectorMA( vecVelocity, ( 1.0f - trace.fraction ) * gpGlobals->frametime, GetBaseVelocity() * flScale, vecVelocity );
-			PhysicsPushEntity( vecVelocity, &trace );
-		}
-	}
-	else
-	{
-		// If we get *too* slow, we'll stick without ever coming to rest because
-		// we'll get pushed down by gravity faster than we can escape from the wall.
-		if ( flSpeedSqr < ( 30 * 30 ) )
-		{
-			// Reset velocities.
-			SetAbsVelocity( vec3_origin );
-			SetLocalAngularVelocity( vec3_angle );
-		}
-		else
-		{
-			SetAbsVelocity( vecAbsVelocity );
-		}
-	}
+            VectorScale( vecAbsVelocity, ( 1.0f - trace.fraction ) * gpGlobals->frametime, vecVelocity );
+            VectorMA( vecVelocity, ( 1.0f - trace.fraction ) * gpGlobals->frametime, GetBaseVelocity() * flScale, vecVelocity );
+            PhysicsPushEntity( vecVelocity, &trace );
+        }
+    }
+    else
+    {
+        // If we get *too* slow, we'll stick without ever coming to rest because
+        // we'll get pushed down by gravity faster than we can escape from the wall.
+        if ( flSpeedSqr < ( 30 * 30 ) )
+        {
+            // Reset velocities.
+            SetAbsVelocity( vec3_origin );
+            SetLocalAngularVelocity( vec3_angle );
+        }
+        else
+        {
+            SetAbsVelocity( vecAbsVelocity );
+        }
+    }
 
-	BounceSound();
+    BounceSound();
 
 #if 0
 	// tell the bots a grenade has bounced
@@ -626,38 +619,38 @@ void CTFWeaponBaseGrenadeProj::ResolveFlyCollisionCustom( trace_t &trace, Vector
 
 bool CTFWeaponBaseGrenadeProj::ShouldNotDetonate( void )
 {
-	return InNoGrenadeZone( this );
+    return InNoGrenadeZone( this );
 }
 
 void CTFWeaponBaseGrenadeProj::Destroy( bool bBlinkOut, bool bBreak )
 {
-	if ( bBreak )
-	{
-		CPVSFilter filter( GetAbsOrigin() );
-		UserMessageBegin( filter, "BreakModelRocketDud" );
-		WRITE_SHORT( GetModelIndex() );
-		WRITE_VEC3COORD( GetAbsOrigin() );
-		WRITE_ANGLES( GetAbsAngles() );
-		MessageEnd();
-	}
+    if ( bBreak )
+    {
+        CPVSFilter filter( GetAbsOrigin() );
+        UserMessageBegin( filter, "BreakModelRocketDud" );
+        WRITE_SHORT( GetModelIndex() );
+        WRITE_VEC3COORD( GetAbsOrigin() );
+        WRITE_ANGLES( GetAbsAngles() );
+        MessageEnd();
+    }
 
-	// Kill it
-	SetThink( &BaseClass::SUB_Remove );
-	SetNextThink( gpGlobals->curtime );
-	SetTouch( NULL );
-	AddEffects( EF_NODRAW );
+    // Kill it
+    SetThink( &BaseClass::SUB_Remove );
+    SetNextThink( gpGlobals->curtime );
+    SetTouch( NULL );
+    AddEffects( EF_NODRAW );
 
-	if ( bBlinkOut )
-	{
-		// Sprite flash
-		CSprite *pGlowSprite = CSprite::SpriteCreate( NOGRENADE_SPRITE, GetAbsOrigin(), false );
-		if ( pGlowSprite )
-		{
-			pGlowSprite->SetTransparency( kRenderGlow, 255, 255, 255, 255, kRenderFxFadeFast );
-			pGlowSprite->SetThink( &CSprite::SUB_Remove );
-			pGlowSprite->SetNextThink( gpGlobals->curtime + 1.0 );
-		}
-	}
+    if ( bBlinkOut )
+    {
+        // Sprite flash
+        CSprite *pGlowSprite = CSprite::SpriteCreate( NOGRENADE_SPRITE, GetAbsOrigin(), false );
+        if ( pGlowSprite )
+        {
+            pGlowSprite->SetTransparency( kRenderGlow, 255, 255, 255, 255, kRenderFxFadeFast );
+            pGlowSprite->SetThink( &CSprite::SUB_Remove );
+            pGlowSprite->SetNextThink( gpGlobals->curtime + 1.0 );
+        }
+    }
 }
 
 //-----------------------------------------------------------------------------
@@ -666,46 +659,45 @@ void CTFWeaponBaseGrenadeProj::Destroy( bool bBlinkOut, bool bBreak )
 //-----------------------------------------------------------------------------
 class CTraceFilterCollisionGrenades : public CTraceFilterEntitiesOnly
 {
-public:
-	// It does have a base, but we'll never network anything below here..
-	DECLARE_CLASS_NOBASE( CTraceFilterCollisionGrenades );
+   public:
+    // It does have a base, but we'll never network anything below here..
+    DECLARE_CLASS_NOBASE( CTraceFilterCollisionGrenades );
 
-	CTraceFilterCollisionGrenades( const IHandleEntity *passentity, const IHandleEntity *passentity2 )
-		: m_pPassEnt(passentity), m_pPassEnt2(passentity2)
-	{
-	}
+    CTraceFilterCollisionGrenades( const IHandleEntity *passentity, const IHandleEntity *passentity2 )
+        : m_pPassEnt( passentity ), m_pPassEnt2( passentity2 )
+    {
+    }
 
-	virtual bool ShouldHitEntity( IHandleEntity *pHandleEntity, int contentsMask )
-	{
-		if ( !PassServerEntityFilter( pHandleEntity, m_pPassEnt ) )
-			return false;
-		CBaseEntity *pEntity = EntityFromEntityHandle( pHandleEntity );
-		if ( pEntity )
-		{
-			if ( pEntity == m_pPassEnt2 )
-				return false;
-			if ( pEntity->GetCollisionGroup() == TF_COLLISIONGROUP_GRENADES )
-				return false;
-			if ( pEntity->GetCollisionGroup() == TFCOLLISION_GROUP_ROCKETS )
-				return false;
-			if ( pEntity->GetCollisionGroup() == COLLISION_GROUP_DEBRIS )
-				return false;
-			if ( pEntity->GetCollisionGroup() == TFCOLLISION_GROUP_RESPAWNROOMS )
-				return false;
-			if ( pEntity->GetCollisionGroup() == COLLISION_GROUP_NONE )
-				return false;
+    virtual bool ShouldHitEntity( IHandleEntity *pHandleEntity, int contentsMask )
+    {
+        if ( !PassServerEntityFilter( pHandleEntity, m_pPassEnt ) )
+            return false;
+        CBaseEntity *pEntity = EntityFromEntityHandle( pHandleEntity );
+        if ( pEntity )
+        {
+            if ( pEntity == m_pPassEnt2 )
+                return false;
+            if ( pEntity->GetCollisionGroup() == TF_COLLISIONGROUP_GRENADES )
+                return false;
+            if ( pEntity->GetCollisionGroup() == TFCOLLISION_GROUP_ROCKETS )
+                return false;
+            if ( pEntity->GetCollisionGroup() == COLLISION_GROUP_DEBRIS )
+                return false;
+            if ( pEntity->GetCollisionGroup() == TFCOLLISION_GROUP_RESPAWNROOMS )
+                return false;
+            if ( pEntity->GetCollisionGroup() == COLLISION_GROUP_NONE )
+                return false;
 
-			return true;
-		}
+            return true;
+        }
 
-		return true;
-	}
+        return true;
+    }
 
-protected:
-	const IHandleEntity *m_pPassEnt;
-	const IHandleEntity *m_pPassEnt2;
+   protected:
+    const IHandleEntity *m_pPassEnt;
+    const IHandleEntity *m_pPassEnt2;
 };
-
 
 //-----------------------------------------------------------------------------
 // Purpose: Grenades aren't solid to players, so players don't get stuck on
@@ -715,84 +707,83 @@ protected:
 //-----------------------------------------------------------------------------
 void CTFWeaponBaseGrenadeProj::VPhysicsUpdate( IPhysicsObject *pPhysics )
 {
-	BaseClass::VPhysicsUpdate( pPhysics );
+    BaseClass::VPhysicsUpdate( pPhysics );
 
-	Vector vel;
-	AngularImpulse angVel;
-	pPhysics->GetVelocity( &vel, &angVel );
+    Vector vel;
+    AngularImpulse angVel;
+    pPhysics->GetVelocity( &vel, &angVel );
 
-	Vector start = GetAbsOrigin();
+    Vector start = GetAbsOrigin();
 
-	// find all entities that my collision group wouldn't hit, but COLLISION_GROUP_NONE would and bounce off of them as a ray cast
-	CTraceFilterCollisionGrenades filter( this, GetThrower() );
-	
-	ITraceFilter *pFilterChain = NULL;
-	CTraceFilterIgnoreFriendlyCombatItems filterCombatItems( this, COLLISION_GROUP_NONE, GetTeamNumber(), true );
-	if ( TFGameRules() && TFGameRules()->GameModeUsesUpgrades() )
-	{
-		pFilterChain = &filterCombatItems;
-	}
-	CTraceFilterChain filterChain( &filter, pFilterChain );
+    // find all entities that my collision group wouldn't hit, but COLLISION_GROUP_NONE would and bounce off of them as a ray cast
+    CTraceFilterCollisionGrenades filter( this, GetThrower() );
 
-	trace_t tr;
-	UTIL_TraceLine( start, start + vel * gpGlobals->frametime, CONTENTS_HITBOX|CONTENTS_MONSTER|CONTENTS_SOLID, &filterChain, &tr );
+    ITraceFilter *pFilterChain = NULL;
+    CTraceFilterIgnoreFriendlyCombatItems filterCombatItems( this, COLLISION_GROUP_NONE, GetTeamNumber(), true );
+    if ( TFGameRules() && TFGameRules()->GameModeUsesUpgrades() )
+    {
+        pFilterChain = &filterCombatItems;
+    }
+    CTraceFilterChain filterChain( &filter, pFilterChain );
 
-	bool bHitEnemy = tr.m_pEnt && tr.m_pEnt->GetTeamNumber() == GetEnemyTeam( GetTeamNumber() );
-	bool bHitFriendly = tr.m_pEnt && tr.m_pEnt->GetTeamNumber() == GetTeamNumber() && CanCollideWithTeammates();
+    trace_t tr;
+    UTIL_TraceLine( start, start + vel * gpGlobals->frametime, CONTENTS_HITBOX | CONTENTS_MONSTER | CONTENTS_SOLID, &filterChain, &tr );
 
-	// Combat items are solid to enemy projectiles and bullets
-	if ( bHitEnemy && tr.m_pEnt->IsCombatItem() )
-	{
-		if ( IsAllowedToExplode() )
-		{
-			Explode( &tr, GetDamageType() );
-		}
-		else
-		{
-			BounceOff( pPhysics );
-		}
-		return;
-	}
+    bool bHitEnemy = tr.m_pEnt && tr.m_pEnt->GetTeamNumber() == GetEnemyTeam( GetTeamNumber() );
+    bool bHitFriendly = tr.m_pEnt && tr.m_pEnt->GetTeamNumber() == GetTeamNumber() && CanCollideWithTeammates();
 
-	if ( tr.startsolid )
-	{
-		if ( bHitEnemy )
-		{
-			Touch( tr.m_pEnt );
-		}
-		else if ( !m_bInSolid && bHitFriendly )
-		{
-			BounceOff( pPhysics );
-		}
-		m_bInSolid = true;
+    // Combat items are solid to enemy projectiles and bullets
+    if ( bHitEnemy && tr.m_pEnt->IsCombatItem() )
+    {
+        if ( IsAllowedToExplode() )
+        {
+            Explode( &tr, GetDamageType() );
+        }
+        else
+        {
+            BounceOff( pPhysics );
+        }
+        return;
+    }
 
-		return;
-	}
+    if ( tr.startsolid )
+    {
+        if ( bHitEnemy )
+        {
+            Touch( tr.m_pEnt );
+        }
+        else if ( !m_bInSolid && bHitFriendly )
+        {
+            BounceOff( pPhysics );
+        }
+        m_bInSolid = true;
 
-	m_bInSolid = false;
+        return;
+    }
 
-	if ( tr.DidHit() )
-	{
-		Touch( tr.m_pEnt );
-		
-		if ( bHitFriendly || bHitEnemy )
-		{
-			// reflect velocity around normal
-			vel = -2.0f * tr.plane.normal * DotProduct(vel,tr.plane.normal) + vel;
+    m_bInSolid = false;
 
-			// absorb 80% in impact
-			vel *= GetElasticity();
+    if ( tr.DidHit() )
+    {
+        Touch( tr.m_pEnt );
 
-			if ( bHitEnemy == true )
-			{
-				vel *= 0.5f;
-			}
+        if ( bHitFriendly || bHitEnemy )
+        {
+            // reflect velocity around normal
+            vel = -2.0f * tr.plane.normal * DotProduct( vel, tr.plane.normal ) + vel;
 
-			angVel *= -0.5f;
-			pPhysics->SetVelocity( &vel, &angVel );
-		}
-	}
+            // absorb 80% in impact
+            vel *= GetElasticity();
+
+            if ( bHitEnemy == true )
+            {
+                vel *= 0.5f;
+            }
+
+            angVel *= -0.5f;
+            pPhysics->SetVelocity( &vel, &angVel );
+        }
+    }
 }
-
 
 #endif

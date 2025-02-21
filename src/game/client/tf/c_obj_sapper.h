@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -14,26 +14,29 @@
 #include "tf_obj_baseupgrade_shared.h"
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 class C_ObjectSapper : public C_BaseObjectUpgrade
 {
-	DECLARE_CLASS( C_ObjectSapper, C_BaseObjectUpgrade );
-public:
-	DECLARE_CLIENTCLASS();
+    DECLARE_CLASS( C_ObjectSapper, C_BaseObjectUpgrade );
 
-	C_ObjectSapper() {}
+   public:
+    DECLARE_CLIENTCLASS();
 
-	virtual void ClientThink( void );
-	virtual void OnDataChanged( DataUpdateType_t type );
+    C_ObjectSapper() {}
 
-	virtual bool	IsHostileUpgrade( void ) { return true; }
+    virtual void ClientThink( void );
+    virtual void OnDataChanged( DataUpdateType_t type );
 
-	float			GetReversesBuildingConstructionSpeed( void );
+    virtual bool IsHostileUpgrade( void )
+    {
+        return true;
+    }
 
-private:
-	C_ObjectSapper( const C_ObjectSapper & ); // not defined, not accessible
+    float GetReversesBuildingConstructionSpeed( void );
+
+   private:
+    C_ObjectSapper( const C_ObjectSapper& );  // not defined, not accessible
 };
 
-
-#endif // C_OBJ_SAPPER_H
+#endif  // C_OBJ_SAPPER_H

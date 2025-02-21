@@ -14,7 +14,6 @@
 #include "gcsdk/protobufsharedobject.h"
 #include "tf_gcmessages.h"
 
-
 //---------------------------------------------------------------------------------
 // Purpose: Send a notification to the client
 //---------------------------------------------------------------------------------
@@ -27,9 +26,8 @@
 
 class CTFNotification : public GCSDK::CProtoBufSharedObject< CMsgGCNotification, k_EEconTypeNotification >
 {
-public:
-	// If using this form, ensure you call BLocalize after filling fields for localized types.
-
+   public:
+    // If using this form, ensure you call BLocalize after filling fields for localized types.
 };
 
-#endif // TF_NOTIFICATION_H
+#endif  // TF_NOTIFICATION_H

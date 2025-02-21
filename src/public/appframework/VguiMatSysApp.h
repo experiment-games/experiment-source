@@ -18,54 +18,54 @@
 #pragma once
 #endif
 
-
 #include "appframework/tier3app.h"
-
 
 //-----------------------------------------------------------------------------
 // The application object
 //-----------------------------------------------------------------------------
 class CVguiMatSysApp : public CVguiSteamApp
 {
-	typedef CVguiSteamApp BaseClass;
+    typedef CVguiSteamApp BaseClass;
 
-public:
-	CVguiMatSysApp();
+   public:
+    CVguiMatSysApp();
 
-	// Methods of IApplication
-	virtual bool Create();
-	virtual bool PreInit();
-	virtual void PostShutdown();
-	virtual void Destroy();
+    // Methods of IApplication
+    virtual bool Create();
+    virtual bool PreInit();
+    virtual void PostShutdown();
+    virtual void Destroy();
 
-	// Returns the window handle (HWND in Win32)
-	void* GetAppWindow();
+    // Returns the window handle (HWND in Win32)
+    void *GetAppWindow();
 
-	// Gets the window size
-	int GetWindowWidth() const;
-	int GetWindowHeight() const;
+    // Gets the window size
+    int GetWindowWidth() const;
+    int GetWindowHeight() const;
 
-protected:
-	void AppPumpMessages();
+   protected:
+    void AppPumpMessages();
 
-	// Sets the video mode
-	bool SetVideoMode( );
+    // Sets the video mode
+    bool SetVideoMode();
 
-	// Sets up the game path
-	bool SetupSearchPaths( const char *pStartingDir, bool bOnlyUseStartingDir, bool bIsTool );
+    // Sets up the game path
+    bool SetupSearchPaths( const char *pStartingDir, bool bOnlyUseStartingDir, bool bIsTool );
 
-private:
-	// Returns the app name
-	virtual const char *GetAppName() = 0;
-	virtual bool AppUsesReadPixels() { return false; }
+   private:
+    // Returns the app name
+    virtual const char *GetAppName() = 0;
+    virtual bool AppUsesReadPixels()
+    {
+        return false;
+    }
 
-	// Creates the app window
-	virtual void *CreateAppWindow( char const *pTitle, bool bWindowed, int w, int h );
+    // Creates the app window
+    virtual void *CreateAppWindow( char const *pTitle, bool bWindowed, int w, int h );
 
-	void *m_HWnd;
-	int m_nWidth;
-	int m_nHeight;
+    void *m_HWnd;
+    int m_nWidth;
+    int m_nHeight;
 };
 
-
-#endif // VGUIMATSYSAPP_H
+#endif  // VGUIMATSYSAPP_H

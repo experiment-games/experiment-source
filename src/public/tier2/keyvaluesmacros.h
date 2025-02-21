@@ -4,7 +4,6 @@
 
 #pragma once
 
-
 //--------------------------------------------------------------------------------------------------
 // Returns true if the passed string matches the filename style glob, false otherwise
 // * matches any characters, ? matches any single character, otherwise case insensitive matching

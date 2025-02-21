@@ -41,46 +41,54 @@
 
 #include <google/protobuf/stubs/common.h>
 
-namespace google {
-namespace protobuf {
-  class FileDescriptor;        // descriptor.h
-  namespace compiler {
-    class GeneratorContext;    // code_generator.h
-    namespace java {
-      class ClassNameResolver;       // name_resolver.h
-    }
-  }
-  namespace io {
-    class Printer;             // printer.h
-  }
+namespace google
+{
+namespace protobuf
+{
+class FileDescriptor;  // descriptor.h
+namespace compiler
+{
+class GeneratorContext;  // code_generator.h
+namespace java
+{
+class ClassNameResolver;  // name_resolver.h
 }
+}  // namespace compiler
+namespace io
+{
+class Printer;  // printer.h
+}
+}  // namespace protobuf
 
-namespace protobuf {
-namespace compiler {
-namespace java {
+namespace protobuf
+{
+namespace compiler
+{
+namespace java
+{
 
 // A generator that generates code that are shared between immutable API
 // and mutable API. Currently only descriptors are shared.
-class SharedCodeGenerator {
- public:
-  explicit SharedCodeGenerator(const FileDescriptor* file);
-  ~SharedCodeGenerator();
+class SharedCodeGenerator
+{
+   public:
+    explicit SharedCodeGenerator( const FileDescriptor* file );
+    ~SharedCodeGenerator();
 
-  void Generate(GeneratorContext* generator_context,
-                vector<string>* file_list);
-  void GenerateDescriptors(io::Printer* printer);
+    void Generate( GeneratorContext* generator_context,
+                   vector< string >* file_list );
+    void GenerateDescriptors( io::Printer* printer );
 
- private:
-  // Returns whether the dependency should be included in the output file.
-  // Always returns true for opensource, but used internally at Google to help
-  // improve compatibility with version 1 of protocol buffers.
-  bool ShouldIncludeDependency(const FileDescriptor* descriptor);
+   private:
+    // Returns whether the dependency should be included in the output file.
+    // Always returns true for opensource, but used internally at Google to help
+    // improve compatibility with version 1 of protocol buffers.
+    bool ShouldIncludeDependency( const FileDescriptor* descriptor );
 
-  scoped_ptr<ClassNameResolver> name_resolver_;
-  const FileDescriptor* file_;
-  GOOGLE_DISALLOW_EVIL_CONSTRUCTORS(SharedCodeGenerator);
+    scoped_ptr< ClassNameResolver > name_resolver_;
+    const FileDescriptor* file_;
+    GOOGLE_DISALLOW_EVIL_CONSTRUCTORS( SharedCodeGenerator );
 };
-
 
 }  // namespace java
 }  // namespace compiler

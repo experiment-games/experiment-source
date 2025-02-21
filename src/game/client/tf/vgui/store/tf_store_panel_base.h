@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -17,38 +17,42 @@ class CArmoryPanel;
 class CStorePage;
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 class CTFBaseStorePanel : public CStorePanel
 {
-	DECLARE_CLASS_SIMPLE( CTFBaseStorePanel, CStorePanel );
-protected:
-	// CTFBaseStorePanel should not be instantiated directly
-	CTFBaseStorePanel( Panel *parent );
+    DECLARE_CLASS_SIMPLE( CTFBaseStorePanel, CStorePanel );
 
-public:
-	// UI Layout
-	virtual void ApplySchemeSettings( vgui::IScheme *pScheme );
-	virtual void OnThink();
+   protected:
+    // CTFBaseStorePanel should not be instantiated directly
+    CTFBaseStorePanel( Panel *parent );
 
-	// GC Management
-	virtual void	PostTransactionCompleted( void );
+   public:
+    // UI Layout
+    virtual void ApplySchemeSettings( vgui::IScheme *pScheme );
+    virtual void OnThink();
 
-	// Cart Management
-	CStoreCart	 *GetCart( void ) { return &m_Cart; }
-	void		ShowStorePanel( void );
-	void		InitiateCheckout( void );
-	void		CheckoutCancel( void );
-	
-	virtual void SetTransactionID( uint64 inID ) OVERRIDE;
+    // GC Management
+    virtual void PostTransactionCompleted( void );
 
-	// Armory management
-	MESSAGE_FUNC_PARAMS( OnArmoryOpened, "ArmoryOpened", data );
-	MESSAGE_FUNC( OnArmoryClosed, "ArmoryClosed" );
+    // Cart Management
+    CStoreCart *GetCart( void )
+    {
+        return &m_Cart;
+    }
+    void ShowStorePanel( void );
+    void InitiateCheckout( void );
+    void CheckoutCancel( void );
 
-private:
-	CArmoryPanel	*m_pArmoryPanel;			
-	vgui::Panel		*m_pNotificationsPresentPanel;
+    virtual void SetTransactionID( uint64 inID ) OVERRIDE;
+
+    // Armory management
+    MESSAGE_FUNC_PARAMS( OnArmoryOpened, "ArmoryOpened", data );
+    MESSAGE_FUNC( OnArmoryClosed, "ArmoryClosed" );
+
+   private:
+    CArmoryPanel *m_pArmoryPanel;
+    vgui::Panel *m_pNotificationsPresentPanel;
 };
 
-#endif // TF_STORE_PANEL_BASE_H
+#endif  // TF_STORE_PANEL_BASE_H

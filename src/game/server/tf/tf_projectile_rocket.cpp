@@ -21,28 +21,28 @@ PRECACHE_REGISTER( tf_projectile_rocket );
 IMPLEMENT_NETWORKCLASS_ALIASED( TFProjectile_Rocket, DT_TFProjectile_Rocket )
 
 BEGIN_NETWORK_TABLE( CTFProjectile_Rocket, DT_TFProjectile_Rocket )
-	SendPropBool( SENDINFO( m_bCritical ) ),
-END_NETWORK_TABLE()
+SendPropBool( SENDINFO( m_bCritical ) ),
+    END_NETWORK_TABLE()
 
-//-----------------------------------------------------------------------------
-// Purpose:
-//-----------------------------------------------------------------------------
-CTFProjectile_Rocket *CTFProjectile_Rocket::Create( CBaseEntity *pLauncher, const Vector &vecOrigin, const QAngle &vecAngles, CBaseEntity *pOwner, CBaseEntity *pScorer )
+    //-----------------------------------------------------------------------------
+    // Purpose:
+    //-----------------------------------------------------------------------------
+    CTFProjectile_Rocket *CTFProjectile_Rocket::Create( CBaseEntity *pLauncher, const Vector &vecOrigin, const QAngle &vecAngles, CBaseEntity *pOwner, CBaseEntity *pScorer )
 {
-	CTFProjectile_Rocket *pRocket = static_cast<CTFProjectile_Rocket*>( CTFBaseRocket::Create( pLauncher, "tf_projectile_rocket", vecOrigin, vecAngles, pOwner ) );
+    CTFProjectile_Rocket *pRocket = static_cast< CTFProjectile_Rocket * >( CTFBaseRocket::Create( pLauncher, "tf_projectile_rocket", vecOrigin, vecAngles, pOwner ) );
 
-	if ( pRocket )
-	{
-		pRocket->SetScorer( pScorer );
-		pRocket->SetEyeBallRocket( false );
-		pRocket->SetSpell( false );
+    if ( pRocket )
+    {
+        pRocket->SetScorer( pScorer );
+        pRocket->SetEyeBallRocket( false );
+        pRocket->SetSpell( false );
 
-		CTFWeaponBase *pWeapon = dynamic_cast< CTFWeaponBase * >( pLauncher );
-		bool bDirectHit = pWeapon ? ( pWeapon->GetWeaponID() == TF_WEAPON_ROCKETLAUNCHER_DIRECTHIT ) : false;
-		pRocket->SetDirectHit( bDirectHit );
-	}
+        CTFWeaponBase *pWeapon = dynamic_cast< CTFWeaponBase * >( pLauncher );
+        bool bDirectHit = pWeapon ? ( pWeapon->GetWeaponID() == TF_WEAPON_ROCKETLAUNCHER_DIRECTHIT ) : false;
+        pRocket->SetDirectHit( bDirectHit );
+    }
 
-	return pRocket;
+    return pRocket;
 }
 
 //-----------------------------------------------------------------------------
@@ -50,8 +50,8 @@ CTFProjectile_Rocket *CTFProjectile_Rocket::Create( CBaseEntity *pLauncher, cons
 //-----------------------------------------------------------------------------
 void CTFProjectile_Rocket::Spawn()
 {
-	SetModel( ROCKET_MODEL );
-	BaseClass::Spawn();
+    SetModel( ROCKET_MODEL );
+    BaseClass::Spawn();
 }
 
 //-----------------------------------------------------------------------------
@@ -59,14 +59,14 @@ void CTFProjectile_Rocket::Spawn()
 //-----------------------------------------------------------------------------
 void CTFProjectile_Rocket::Precache()
 {
-	int iModel = PrecacheModel( ROCKET_MODEL );
-	PrecacheGibsForModel( iModel );
-	PrecacheParticleSystem( "critical_rocket_blue" );
-	PrecacheParticleSystem( "critical_rocket_red" );
-	PrecacheParticleSystem( "eyeboss_projectile" );
-	PrecacheParticleSystem( "rockettrail" );
-	PrecacheParticleSystem( "rockettrail_RocketJumper" );
-	BaseClass::Precache();
+    int iModel = PrecacheModel( ROCKET_MODEL );
+    PrecacheGibsForModel( iModel );
+    PrecacheParticleSystem( "critical_rocket_blue" );
+    PrecacheParticleSystem( "critical_rocket_red" );
+    PrecacheParticleSystem( "eyeboss_projectile" );
+    PrecacheParticleSystem( "rockettrail" );
+    PrecacheParticleSystem( "rockettrail_RocketJumper" );
+    BaseClass::Precache();
 }
 
 //-----------------------------------------------------------------------------
@@ -74,7 +74,7 @@ void CTFProjectile_Rocket::Precache()
 //-----------------------------------------------------------------------------
 void CTFProjectile_Rocket::SetScorer( CBaseEntity *pScorer )
 {
-	m_Scorer = pScorer;
+    m_Scorer = pScorer;
 }
 
 //-----------------------------------------------------------------------------
@@ -82,63 +82,62 @@ void CTFProjectile_Rocket::SetScorer( CBaseEntity *pScorer )
 //-----------------------------------------------------------------------------
 CBasePlayer *CTFProjectile_Rocket::GetScorer( void )
 {
-	return dynamic_cast<CBasePlayer *>( m_Scorer.Get() );
+    return dynamic_cast< CBasePlayer * >( m_Scorer.Get() );
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-int	CTFProjectile_Rocket::GetDamageType() 
-{ 
-	int iDmgType = BaseClass::GetDamageType();
-	if ( m_bCritical )
-	{
-		iDmgType |= DMG_CRITICAL;
-	}
-
-	return iDmgType;
-}
-
-//-----------------------------------------------------------------------------
-// Purpose: 
-//-----------------------------------------------------------------------------
-int	CTFProjectile_Rocket::GetDamageCustom()
+int CTFProjectile_Rocket::GetDamageType()
 {
-	if ( m_bDirectHit )
-	{
-		return TF_DMG_CUSTOM_ROCKET_DIRECTHIT;
-	}
-	else if ( m_bEyeBallRocket )
-	{
-		return TF_DMG_CUSTOM_EYEBALL_ROCKET;
-	}
-	else if ( m_bSpell )
-	{
-		return TF_DMG_CUSTOM_SPELL_MONOCULUS;
-	}
-	else
-		return BaseClass::GetDamageCustom();
+    int iDmgType = BaseClass::GetDamageType();
+    if ( m_bCritical )
+    {
+        iDmgType |= DMG_CRITICAL;
+    }
+
+    return iDmgType;
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
+//-----------------------------------------------------------------------------
+int CTFProjectile_Rocket::GetDamageCustom()
+{
+    if ( m_bDirectHit )
+    {
+        return TF_DMG_CUSTOM_ROCKET_DIRECTHIT;
+    }
+    else if ( m_bEyeBallRocket )
+    {
+        return TF_DMG_CUSTOM_EYEBALL_ROCKET;
+    }
+    else if ( m_bSpell )
+    {
+        return TF_DMG_CUSTOM_SPELL_MONOCULUS;
+    }
+    else
+        return BaseClass::GetDamageCustom();
+}
+
+//-----------------------------------------------------------------------------
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFProjectile_Rocket::RocketTouch( CBaseEntity *pOther )
 {
-	BaseClass::RocketTouch( pOther );
-		
-	if (m_bCritical && pOther && pOther->IsPlayer())
-	{		
-		CTFPlayer *pHitPlayer = ToTFPlayer( pOther );
-		int iHitPlayerTeamNumber = pHitPlayer->GetTeamNumber();
-		int iRocketTeamNumber = BaseClass::GetTeamNumber();
+    BaseClass::RocketTouch( pOther );
 
-		if (pHitPlayer->IsPlayerClass(TF_CLASS_HEAVYWEAPONS) && !pHitPlayer->m_Shared.InCond( TF_COND_INVULNERABLE)
-			&& pHitPlayer->IsAlive() && iHitPlayerTeamNumber != iRocketTeamNumber)
-		{
-			pHitPlayer->AwardAchievement( ACHIEVEMENT_TF_HEAVY_SURVIVE_CROCKET );
-		}
-	}
+    if ( m_bCritical && pOther && pOther->IsPlayer() )
+    {
+        CTFPlayer *pHitPlayer = ToTFPlayer( pOther );
+        int iHitPlayerTeamNumber = pHitPlayer->GetTeamNumber();
+        int iRocketTeamNumber = BaseClass::GetTeamNumber();
+
+        if ( pHitPlayer->IsPlayerClass( TF_CLASS_HEAVYWEAPONS ) && !pHitPlayer->m_Shared.InCond( TF_COND_INVULNERABLE ) && pHitPlayer->IsAlive() && iHitPlayerTeamNumber != iRocketTeamNumber )
+        {
+            pHitPlayer->AwardAchievement( ACHIEVEMENT_TF_HEAVY_SURVIVE_CROCKET );
+        }
+    }
 }
 
 //-----------------------------------------------------------------------------
@@ -146,28 +145,28 @@ void CTFProjectile_Rocket::RocketTouch( CBaseEntity *pOther )
 //-----------------------------------------------------------------------------
 void CTFProjectile_Rocket::Deflected( CBaseEntity *pDeflectedBy, Vector &vecDir )
 {
-	CTFPlayer *pTFDeflector = ToTFPlayer( pDeflectedBy );
-	if ( !pTFDeflector )
-		return;
+    CTFPlayer *pTFDeflector = ToTFPlayer( pDeflectedBy );
+    if ( !pTFDeflector )
+        return;
 
-	ChangeTeam( pTFDeflector->GetTeamNumber() );
-	SetLauncher( pTFDeflector->GetActiveWeapon() );
+    ChangeTeam( pTFDeflector->GetTeamNumber() );
+    SetLauncher( pTFDeflector->GetActiveWeapon() );
 
-	CTFPlayer* pOldOwner = ToTFPlayer( GetOwnerEntity() );
-	SetOwnerEntity( pTFDeflector );
+    CTFPlayer *pOldOwner = ToTFPlayer( GetOwnerEntity() );
+    SetOwnerEntity( pTFDeflector );
 
-	if ( pOldOwner )
-	{
-		pOldOwner->SpeakConceptIfAllowed( MP_CONCEPT_DEFLECTED, "projectile:1,victim:1" );
-	}
+    if ( pOldOwner )
+    {
+        pOldOwner->SpeakConceptIfAllowed( MP_CONCEPT_DEFLECTED, "projectile:1,victim:1" );
+    }
 
-	if ( pTFDeflector->m_Shared.IsCritBoosted() )
-	{
-		SetCritical( true );
-	}
+    if ( pTFDeflector->m_Shared.IsCritBoosted() )
+    {
+        SetCritical( true );
+    }
 
-	CTFWeaponBase::SendObjectDeflectedEvent( pTFDeflector, pOldOwner, GetWeaponID(), this );
+    CTFWeaponBase::SendObjectDeflectedEvent( pTFDeflector, pOldOwner, GetWeaponID(), this );
 
-	IncrementDeflected();
-	m_nSkin = ( GetTeamNumber() == TF_TEAM_BLUE ) ? 1 : 0;
+    IncrementDeflected();
+    m_nSkin = ( GetTeamNumber() == TF_TEAM_BLUE ) ? 1 : 0;
 }

@@ -14,27 +14,26 @@
 #include "gcsdk/protobufsharedobject.h"
 #include "tf_gcmessages.h"
 
-
 // do not re-order, stored in DB
 enum eDuelStatus
 {
-	kDuelStatus_Loss,
-	kDuelStatus_Tie,
-	kDuelStatus_Win,
+    kDuelStatus_Loss,
+    kDuelStatus_Tie,
+    kDuelStatus_Win,
 };
 
 // do not re-order, stored in DB
 enum eDuelEndReason
 {
-	kDuelEndReason_DuelOver,
-	kDuelEndReason_PlayerDisconnected,
-	kDuelEndReason_PlayerSwappedTeams,
-	kDuelEndReason_LevelShutdown,
-	kDuelEndReason_ScoreTiedAtZero,
-	kDuelEndReason_PlayerKicked,
-	kDuelEndReason_PlayerForceSwappedTeams,
-	kDuelEndReason_ScoreTied,
-	kDuelEndReason_Cancelled
+    kDuelEndReason_DuelOver,
+    kDuelEndReason_PlayerDisconnected,
+    kDuelEndReason_PlayerSwappedTeams,
+    kDuelEndReason_LevelShutdown,
+    kDuelEndReason_ScoreTiedAtZero,
+    kDuelEndReason_PlayerKicked,
+    kDuelEndReason_PlayerForceSwappedTeams,
+    kDuelEndReason_ScoreTied,
+    kDuelEndReason_Cancelled
 };
 
 const char *PchNameFromeDuelEndReason( eDuelEndReason eReason );
@@ -42,12 +41,11 @@ const char *PchNameFromeDuelEndReason( eDuelEndReason eReason );
 const uint32 kWinsPerLevel = 10;
 
 //---------------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //---------------------------------------------------------------------------------
 class CTFDuelSummary : public GCSDK::CProtoBufSharedObject< CSOTFDuelSummary, k_EEconTypeDuelSummary >
 {
-
-public:
+   public:
 };
 
-#endif //TFDUELSUMMARY_H
+#endif  // TFDUELSUMMARY_H

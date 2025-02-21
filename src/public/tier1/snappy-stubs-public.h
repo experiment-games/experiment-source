@@ -52,11 +52,12 @@
 #define SNAPPY_MINOR 1
 #define SNAPPY_PATCHLEVEL 2
 #define SNAPPY_VERSION \
-    ((SNAPPY_MAJOR << 16) | (SNAPPY_MINOR << 8) | SNAPPY_PATCHLEVEL)
+    ( ( SNAPPY_MAJOR << 16 ) | ( SNAPPY_MINOR << 8 ) | SNAPPY_PATCHLEVEL )
 
 #include <string>
 
-namespace snappy {
+namespace snappy
+{
 
 #if 1
 typedef int8_t int8;
@@ -80,16 +81,17 @@ typedef unsigned long long uint64;
 
 typedef std::string string;
 
-#define DISALLOW_COPY_AND_ASSIGN(TypeName) \
-  TypeName(const TypeName&);               \
-  void operator=(const TypeName&)
+#define DISALLOW_COPY_AND_ASSIGN( TypeName ) \
+    TypeName( const TypeName& );             \
+    void operator=( const TypeName& )
 
 #if !0
 // Windows does not have an iovec type, yet the concept is universally useful.
 // It is simple to define it ourselves, so we put it inside our own namespace.
-struct iovec {
-	void* iov_base;
-	size_t iov_len;
+struct iovec
+{
+    void* iov_base;
+    size_t iov_len;
 };
 #endif
 

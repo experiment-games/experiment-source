@@ -38,17 +38,20 @@
 
 #include <Python.h>
 
-namespace google {
-namespace protobuf {
+namespace google
+{
+namespace protobuf
+{
 
 class Message;
 
-namespace python {
+namespace python
+{
 
 // Return the pointer to the C proto inside the given Python proto,
 // or NULL when this is not a Python proto implemented with a C proto.
-const Message* GetCProtoInsidePyProto(PyObject* msg);
-Message* MutableCProtoInsidePyProto(PyObject* msg);
+const Message* GetCProtoInsidePyProto( PyObject* msg );
+Message* MutableCProtoInsidePyProto( PyObject* msg );
 
 }  // namespace python
 }  // namespace protobuf

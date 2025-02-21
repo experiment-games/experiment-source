@@ -19,4 +19,3 @@ ConVar NextBotPlayerStop( "nb_player_stop", "0", FCVAR_CHEAT, "Stop all NextBotP
 ConVar NextBotPlayerWalk( "nb_player_walk", "0", FCVAR_CHEAT, "Force bots to walk" );
 ConVar NextBotPlayerCrouch( "nb_player_crouch", "0", FCVAR_CHEAT, "Force bots to crouch" );
 ConVar NextBotPlayerMove( "nb_player_move", "1", FCVAR_CHEAT, "Prevents bots from moving" );
-

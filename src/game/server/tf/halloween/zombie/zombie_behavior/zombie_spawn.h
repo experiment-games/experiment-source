@@ -10,13 +10,16 @@
 //---------------------------------------------------------------------------------------------
 class CZombieSpawn : public Action< CZombie >
 {
-public:
-	virtual ActionResult< CZombie >	OnStart( CZombie *me, Action< CZombie > *priorAction );
-	virtual ActionResult< CZombie >	Update( CZombie *me, float interval );
+   public:
+    virtual ActionResult< CZombie > OnStart( CZombie *me, Action< CZombie > *priorAction );
+    virtual ActionResult< CZombie > Update( CZombie *me, float interval );
 
-	virtual const char *GetName( void ) const	{ return "Spawn"; }		// return name of this action
+    virtual const char *GetName( void ) const
+    {
+        return "Spawn";
+    }  // return name of this action
 
-private:
+   private:
 };
 
-#endif // ZOMBIE_SPAWN_H
+#endif  // ZOMBIE_SPAWN_H

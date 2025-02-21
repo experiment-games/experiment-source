@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -11,36 +11,34 @@
 
 class CSDKEventLog : public CEventLog
 {
-private:
-	typedef CEventLog BaseClass;
+   private:
+    typedef CEventLog BaseClass;
 
-public:
-	virtual ~CSDKEventLog() {};
+   public:
+    virtual ~CSDKEventLog(){};
 
-public:
-	bool PrintEvent( IGameEvent * event )	// override virtual function
-	{
-		if ( BaseClass::PrintEvent( event ) )
-		{
-			return true;
-		}
-	
-		if ( Q_strcmp(event->GetName(), "sdk_") == 0 )
-		{
-			return PrintSDKEvent( event );
-		}
+   public:
+    bool PrintEvent( IGameEvent* event )  // override virtual function
+    {
+        if ( BaseClass::PrintEvent( event ) )
+        {
+            return true;
+        }
 
-		return false;
-	}
+        if ( Q_strcmp( event->GetName(), "sdk_" ) == 0 )
+        {
+            return PrintSDKEvent( event );
+        }
 
-protected:
+        return false;
+    }
 
-	bool PrintSDKEvent( IGameEvent * event )	// print Mod specific logs
-	{
-		//const char * name = event->GetName() + Q_strlen("sdk_"); // remove prefix
-		return false;
-	}
-
+   protected:
+    bool PrintSDKEvent( IGameEvent* event )  // print Mod specific logs
+    {
+        // const char * name = event->GetName() + Q_strlen("sdk_"); // remove prefix
+        return false;
+    }
 };
 
 CSDKEventLog g_SDKEventLog;
@@ -50,6 +48,5 @@ CSDKEventLog g_SDKEventLog;
 //-----------------------------------------------------------------------------
 IGameSystem* GameLogSystem()
 {
-	return &g_SDKEventLog;
+    return &g_SDKEventLog;
 }
-

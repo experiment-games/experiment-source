@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
 
@@ -22,18 +22,19 @@
 //
 class CTFBoomerang : public CTFWeaponBaseMelee
 {
-public:
+   public:
+    DECLARE_CLASS( CTFBoomerang, CTFWeaponBaseMelee );
+    DECLARE_NETWORKCLASS();
+    DECLARE_PREDICTABLE();
 
-	DECLARE_CLASS( CTFBoomerang, CTFWeaponBaseMelee );
-	DECLARE_NETWORKCLASS(); 
-	DECLARE_PREDICTABLE();
+    CTFBoomerang();
+    virtual int GetWeaponID( void ) const
+    {
+        return TF_WEAPON_BOOMERANG;
+    }
 
-	CTFBoomerang();
-	virtual int			GetWeaponID( void ) const			{ return TF_WEAPON_BOOMERANG; }
-
-private:
-
-	CTFBoomerang( const CTFBoomerang & ) {}
+   private:
+    CTFBoomerang( const CTFBoomerang& ) {}
 };
 
-#endif // TF_WEAPON_BOOMERANG_H
+#endif  // TF_WEAPON_BOOMERANG_H

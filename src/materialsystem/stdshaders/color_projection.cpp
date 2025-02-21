@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================
@@ -19,35 +19,35 @@ static ConVar *mat_color_projection = NULL;
 
 typedef struct SProjectionInfo
 {
-	bool	m_bNeedBlindMK;
-	bool	m_bNeedMonochrome;
-	bool	m_bNeedAnomylize;
-	float	m_flCPU;
-	float	m_flCPV;
-	float	m_flAM;
-	float	m_flAYI;
+    bool m_bNeedBlindMK;
+    bool m_bNeedMonochrome;
+    bool m_bNeedAnomylize;
+    float m_flCPU;
+    float m_flCPV;
+    float m_flAM;
+    float m_flAYI;
 } TProjectionInfo;
 
-#define MAX_PROJECTIONS	8
+#define MAX_PROJECTIONS 8
 
-TProjectionInfo ProjectionInfo[ MAX_PROJECTIONS ] =
-{
-	{ true,		false,	false,	0.735f,		0.265f,		1.273463f,	-0.073894f },		// protanopia red-green blindness (no red cones)
-	{ true,		false,	false,	1.14f,		-0.14f,		0.968437f,	0.003331f },		// deutanopia red-green blindness (no green cones)
-	{ true,		false,	false,	0.171f,		-0.003f,	0.062921f,	0.292119f },		// tritanopia blue-yellow blindness (no blue cones)
-	{ false,	true,	false,	0.0f,		0.0f,		0.0f,		0.0f },				// typical achromatopsia (no cones; rod monochromat)
-	{ true,		false,	true,	0.735f,		0.265f,		1.273463f,	-0.073894f },		// protanomaly (anomalous red cones)
-	{ true,		false,	true,	1.14f,		-0.14f,		0.968437f,	0.003331f },		// deutanomaly (anomalous green cones)
-	{ true,		false,	true,	0.171f,		-0.003f,	0.062921f,	0.292119f },		// tritanomaly (anomalous blue cones)
-	{ false,	true,	true,	0.0f,		0.0f,		0.0f,		0.0f }				// atypical achromatopsia (low cones; cone monochromat)
+TProjectionInfo ProjectionInfo[MAX_PROJECTIONS] =
+    {
+        { true, false, false, 0.735f, 0.265f, 1.273463f, -0.073894f },  // protanopia red-green blindness (no red cones)
+        { true, false, false, 1.14f, -0.14f, 0.968437f, 0.003331f },    // deutanopia red-green blindness (no green cones)
+        { true, false, false, 0.171f, -0.003f, 0.062921f, 0.292119f },  // tritanopia blue-yellow blindness (no blue cones)
+        { false, true, false, 0.0f, 0.0f, 0.0f, 0.0f },                 // typical achromatopsia (no cones; rod monochromat)
+        { true, false, true, 0.735f, 0.265f, 1.273463f, -0.073894f },   // protanomaly (anomalous red cones)
+        { true, false, true, 1.14f, -0.14f, 0.968437f, 0.003331f },     // deutanomaly (anomalous green cones)
+        { true, false, true, 0.171f, -0.003f, 0.062921f, 0.292119f },   // tritanomaly (anomalous blue cones)
+        { false, true, true, 0.0f, 0.0f, 0.0f, 0.0f }                   // atypical achromatopsia (low cones; cone monochromat)
 };
 
 #if 0
 
-#define cpu									ProjectionInfo[ 2 ].m_flCPU
-#define cpv									ProjectionInfo[ 2 ].m_flCPV
-#define am									ProjectionInfo[ 2 ].m_flAM
-#define ayi									ProjectionInfo[ 2 ].m_flAYI
+#define cpu ProjectionInfo[2].m_flCPU
+#define cpv ProjectionInfo[2].m_flCPV
+#define am ProjectionInfo[2].m_flAM
+#define ayi ProjectionInfo[2].m_flAYI
 
 
 Vector rgb_from_xyz( Vector vNum )
@@ -178,19 +178,18 @@ Vector blindMK( Vector vColor )
 
 #endif
 
-
 BEGIN_VS_SHADER( color_projection, "Help for deferred color correction" )
-	BEGIN_SHADER_PARAMS
-		SHADER_PARAM( FRAME_TEXTURE, SHADER_PARAM_TYPE_TEXTURE, "_rt_FullFrameFB1", "" )
+BEGIN_SHADER_PARAMS
+SHADER_PARAM( FRAME_TEXTURE, SHADER_PARAM_TYPE_TEXTURE, "_rt_FullFrameFB1", "" )
 
-		SHADER_PARAM( HSV_CORRECTION, SHADER_PARAM_TYPE_VEC3, "[ 0.0 0.0 0.0 ]", "" )
-		SHADER_PARAM( CONTRAST_CORRECTION, SHADER_PARAM_TYPE_FLOAT, "0.0", "" )
+SHADER_PARAM( HSV_CORRECTION, SHADER_PARAM_TYPE_VEC3, "[ 0.0 0.0 0.0 ]", "" )
+SHADER_PARAM( CONTRAST_CORRECTION, SHADER_PARAM_TYPE_FLOAT, "0.0", "" )
 
-	END_SHADER_PARAMS
+END_SHADER_PARAMS
 
-	SHADER_INIT_PARAMS()
-	{
-		SET_FLAGS2( MATERIAL_VAR2_NEEDS_FULL_FRAME_BUFFER_TEXTURE );
+SHADER_INIT_PARAMS()
+{
+    SET_FLAGS2( MATERIAL_VAR2_NEEDS_FULL_FRAME_BUFFER_TEXTURE );
 
 #if 0
 		Vector vResult;
@@ -204,87 +203,87 @@ BEGIN_VS_SHADER( color_projection, "Help for deferred color correction" )
 		Msg( "%g %g %g", vResult.x, vResult.y, vResult.z );
 
 #endif
-	}
+}
 
-	SHADER_FALLBACK
-	{
-		return 0;
-	}
+SHADER_FALLBACK
+{
+    return 0;
+}
 
-	SHADER_INIT
-	{
-		if ( mat_color_projection == NULL )
-		{
-			mat_color_projection = cvar->FindVar( "mat_color_projection" );
-		}
+SHADER_INIT
+{
+    if ( mat_color_projection == NULL )
+    {
+        mat_color_projection = cvar->FindVar( "mat_color_projection" );
+    }
 
-		if ( params[ FRAME_TEXTURE ]->IsDefined() == false )
-		{
-			params[ FRAME_TEXTURE ]->SetStringValue( "_rt_FullFrameFB1" );
-		}
-//		params[ FRAME_TEXTURE ]->SetStringValue( "rj/colors" );
-		LoadTexture( FRAME_TEXTURE );
-	}
+    if ( params[FRAME_TEXTURE]->IsDefined() == false )
+    {
+        params[FRAME_TEXTURE]->SetStringValue( "_rt_FullFrameFB1" );
+    }
+    //		params[ FRAME_TEXTURE ]->SetStringValue( "rj/colors" );
+    LoadTexture( FRAME_TEXTURE );
+}
 
-	SHADER_DRAW
-	{
-		SHADOW_STATE
-		{
-			SetInitialShadowState( );
+SHADER_DRAW
+{
+    SHADOW_STATE
+    {
+        SetInitialShadowState();
 
-			pShaderShadow->EnableDepthWrites( false );
-			pShaderShadow->EnableDepthTest( false );
-//			pShaderShadow->EnableBlending( true );
-//			pShaderShadow->BlendOp( SHADER_BLEND_OP_REVSUBTRACT );
-//			EnableAlphaBlending( SHADER_BLEND_SRC_ALPHA, SHADER_BLEND_ONE );
+        pShaderShadow->EnableDepthWrites( false );
+        pShaderShadow->EnableDepthTest( false );
+        //			pShaderShadow->EnableBlending( true );
+        //			pShaderShadow->BlendOp( SHADER_BLEND_OP_REVSUBTRACT );
+        //			EnableAlphaBlending( SHADER_BLEND_SRC_ALPHA, SHADER_BLEND_ONE );
 
-			pShaderShadow->EnableTexture( SHADER_SAMPLER4, true );
+        pShaderShadow->EnableTexture( SHADER_SAMPLER4, true );
 
-			pShaderShadow->EnableSRGBRead( SHADER_SAMPLER4, false );
+        pShaderShadow->EnableSRGBRead( SHADER_SAMPLER4, false );
 
-			pShaderShadow->EnableSRGBWrite( false );
-			pShaderShadow->EnableAlphaWrites( true ); // writing water fog alpha always.
+        pShaderShadow->EnableSRGBWrite( false );
+        pShaderShadow->EnableAlphaWrites( true );  // writing water fog alpha always.
 
-			int fmt = VERTEX_POSITION;
-			int nTexCoordDims[ 2 ] = { 2, 3 };
-			pShaderShadow->VertexShaderVertexFormat( fmt, 2, nTexCoordDims, 0 );
+        int fmt = VERTEX_POSITION;
+        int nTexCoordDims[2] = { 2, 3 };
+        pShaderShadow->VertexShaderVertexFormat( fmt, 2, nTexCoordDims, 0 );
 
-			DECLARE_STATIC_VERTEX_SHADER( color_projection_vs20 );
-			SET_STATIC_VERTEX_SHADER( color_projection_vs20 );
+        DECLARE_STATIC_VERTEX_SHADER( color_projection_vs20 );
+        SET_STATIC_VERTEX_SHADER( color_projection_vs20 );
 
-			DECLARE_STATIC_PIXEL_SHADER( color_projection_ps20 );
-			SET_STATIC_PIXEL_SHADER( color_projection_ps20 );
-		}
+        DECLARE_STATIC_PIXEL_SHADER( color_projection_ps20 );
+        SET_STATIC_PIXEL_SHADER( color_projection_ps20 );
+    }
 
-		DYNAMIC_STATE
-		{
-			pShaderAPI->SetDefaultState();
+    DYNAMIC_STATE
+    {
+        pShaderAPI->SetDefaultState();
 
-			BindTexture( SHADER_SAMPLER4, FRAME_TEXTURE, -1 );
+        BindTexture( SHADER_SAMPLER4, FRAME_TEXTURE, -1 );
 
-			int nIndex = mat_color_projection->GetInt() - 1;
-			if ( nIndex < 0 || nIndex >= MAX_PROJECTIONS )
-			{
-				nIndex = 0;
-			}
+        int nIndex = mat_color_projection->GetInt() - 1;
+        if ( nIndex < 0 || nIndex >= MAX_PROJECTIONS )
+        {
+            nIndex = 0;
+        }
 
-			Vector4D vCorrectionParms;
+        Vector4D vCorrectionParms;
 
-			vCorrectionParms.x = ProjectionInfo[ nIndex ].m_flCPU;
-			vCorrectionParms.y = ProjectionInfo[ nIndex ].m_flCPV;
-			vCorrectionParms.z = ProjectionInfo[ nIndex ].m_flAM;
-			vCorrectionParms.w = ProjectionInfo[ nIndex ].m_flAYI;
-			pShaderAPI->SetPixelShaderConstant( 1, vCorrectionParms.Base() );
+        vCorrectionParms.x = ProjectionInfo[nIndex].m_flCPU;
+        vCorrectionParms.y = ProjectionInfo[nIndex].m_flCPV;
+        vCorrectionParms.z = ProjectionInfo[nIndex].m_flAM;
+        vCorrectionParms.w = ProjectionInfo[nIndex].m_flAYI;
+        pShaderAPI->SetPixelShaderConstant( 1, vCorrectionParms.Base() );
 
-			DECLARE_DYNAMIC_VERTEX_SHADER( color_projection_vs20 );
-			SET_DYNAMIC_VERTEX_SHADER( color_projection_vs20 );
+        DECLARE_DYNAMIC_VERTEX_SHADER( color_projection_vs20 );
+        SET_DYNAMIC_VERTEX_SHADER( color_projection_vs20 );
 
-			DECLARE_DYNAMIC_PIXEL_SHADER( color_projection_ps20 );
-			SET_DYNAMIC_PIXEL_SHADER_COMBO( NEED_BLINDMK, ProjectionInfo[ nIndex ].m_bNeedBlindMK );
-			SET_DYNAMIC_PIXEL_SHADER_COMBO( NEED_MONOCHROME, ProjectionInfo[ nIndex ].m_bNeedMonochrome );
-			SET_DYNAMIC_PIXEL_SHADER_COMBO( NEED_ANOMYLIZE, ProjectionInfo[ nIndex ].m_bNeedAnomylize );
-			SET_DYNAMIC_PIXEL_SHADER( color_projection_ps20 );
-		}
-		Draw();
-	}
+        DECLARE_DYNAMIC_PIXEL_SHADER( color_projection_ps20 );
+        SET_DYNAMIC_PIXEL_SHADER_COMBO( NEED_BLINDMK, ProjectionInfo[nIndex].m_bNeedBlindMK );
+        SET_DYNAMIC_PIXEL_SHADER_COMBO( NEED_MONOCHROME, ProjectionInfo[nIndex].m_bNeedMonochrome );
+        SET_DYNAMIC_PIXEL_SHADER_COMBO( NEED_ANOMYLIZE, ProjectionInfo[nIndex].m_bNeedAnomylize );
+        SET_DYNAMIC_PIXEL_SHADER( color_projection_ps20 );
+    }
+    Draw();
+}
 END_SHADER

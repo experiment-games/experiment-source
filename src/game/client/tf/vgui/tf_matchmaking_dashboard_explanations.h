@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -21,21 +21,22 @@ CExplanationPopup* ShowDashboardExplanation( const char* pszExplanation );
 
 class CExplanationManager : public EditablePanel
 {
-	DECLARE_CLASS_SIMPLE( CExplanationManager, EditablePanel );
-public:
-	CExplanationManager();
-	virtual ~CExplanationManager();
+    DECLARE_CLASS_SIMPLE( CExplanationManager, EditablePanel );
 
-	virtual void SetParent( Panel *newParent ) OVERRIDE;
-	virtual void ApplySchemeSettings( vgui::IScheme *pScheme ) OVERRIDE;
-	virtual void OnChildAdded( VPANEL child ) OVERRIDE;
-	virtual void OnTick() OVERRIDE;
+   public:
+    CExplanationManager();
+    virtual ~CExplanationManager();
 
-	CExplanationPopup* ShowExplanation( const char* pszExplanationName );
+    virtual void SetParent( Panel* newParent ) OVERRIDE;
+    virtual void ApplySchemeSettings( vgui::IScheme* pScheme ) OVERRIDE;
+    virtual void OnChildAdded( VPANEL child ) OVERRIDE;
+    virtual void OnTick() OVERRIDE;
 
-private:
-	CUtlVector < CExplanationPopup* > m_vecPopups;
-	CUtlVector < CExplanationPopup* > m_vecQueuedPopups;
+    CExplanationPopup* ShowExplanation( const char* pszExplanationName );
+
+   private:
+    CUtlVector< CExplanationPopup* > m_vecPopups;
+    CUtlVector< CExplanationPopup* > m_vecQueuedPopups;
 };
 
-#endif // TF_MATCHMAKING_DASHBOARD_EXPLANATIONS_H
+#endif  // TF_MATCHMAKING_DASHBOARD_EXPLANATIONS_H

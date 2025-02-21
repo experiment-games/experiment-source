@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -11,12 +11,9 @@
 #pragma once
 #endif
 
-
 #include "ichannel.h"
-
 
 // Loopback sockets receive the same data they send.
 IChannel* CreateLoopbackChannel();
 
-
-#endif // LOOPBACK_CHANNEL_H
+#endif  // LOOPBACK_CHANNEL_H

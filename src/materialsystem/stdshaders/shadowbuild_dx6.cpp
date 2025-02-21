@@ -14,32 +14,32 @@
 DEFINE_FALLBACK_SHADER( ShadowBuild, ShadowBuild_DX6 )
 
 BEGIN_SHADER_FLAGS( ShadowBuild_DX6, "Help for ShadowBuild", SHADER_NOT_EDITABLE )
-	BEGIN_SHADER_PARAMS
-	END_SHADER_PARAMS
+BEGIN_SHADER_PARAMS
+END_SHADER_PARAMS
 
-	SHADER_INIT_PARAMS()
-	{
-	}
+SHADER_INIT_PARAMS()
+{
+}
 
-	SHADER_INIT
-	{
-	}
+SHADER_INIT
+{
+}
 
-	SHADER_DRAW
-	{
-		SHADOW_STATE
-		{
-			pShaderShadow->EnableAlphaWrites( true );
-			pShaderShadow->EnableConstantColor( true );
-			pShaderShadow->EnableConstantAlpha( true );
-			pShaderShadow->EnableDepthWrites( false );
-			pShaderShadow->EnableDepthTest( false );
-			pShaderShadow->DrawFlags( SHADER_DRAW_POSITION );
-			FogToGrey();
-		}
-		DYNAMIC_STATE
-		{
-		}
-		Draw( );
-	}
+SHADER_DRAW
+{
+    SHADOW_STATE
+    {
+        pShaderShadow->EnableAlphaWrites( true );
+        pShaderShadow->EnableConstantColor( true );
+        pShaderShadow->EnableConstantAlpha( true );
+        pShaderShadow->EnableDepthWrites( false );
+        pShaderShadow->EnableDepthTest( false );
+        pShaderShadow->DrawFlags( SHADER_DRAW_POSITION );
+        FogToGrey();
+    }
+    DYNAMIC_STATE
+    {
+    }
+    Draw();
+}
 END_SHADER

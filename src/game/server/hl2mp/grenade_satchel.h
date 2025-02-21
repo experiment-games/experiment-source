@@ -7,8 +7,8 @@
 // $NoKeywords: $
 //=============================================================================//
 
-#ifndef	SATCHEL_H
-#define	SATCHEL_H
+#ifndef SATCHEL_H
+#define SATCHEL_H
 
 #ifdef _WIN32
 #pragma once
@@ -22,35 +22,35 @@ class CSprite;
 
 class CSatchelCharge : public CBaseGrenade
 {
-public:
-	DECLARE_CLASS( CSatchelCharge, CBaseGrenade );
+   public:
+    DECLARE_CLASS( CSatchelCharge, CBaseGrenade );
 
-	void			Spawn( void );
-	void			Precache( void );
-	void			BounceSound( void );
-	void			SatchelTouch( CBaseEntity *pOther );
-	void			SatchelThink( void );
-	
-	// Input handlers
-	void			InputExplode( inputdata_t &inputdata );
+    void Spawn( void );
+    void Precache( void );
+    void BounceSound( void );
+    void SatchelTouch( CBaseEntity *pOther );
+    void SatchelThink( void );
 
-	float			m_flNextBounceSoundTime;
-	bool			m_bInAir;
-	Vector			m_vLastPosition;
+    // Input handlers
+    void InputExplode( inputdata_t &inputdata );
 
-public:
-	CWeapon_SLAM*	m_pMyWeaponSLAM;	// Who shot me..
-	bool			m_bIsAttached;
-	void			Deactivate( void );
+    float m_flNextBounceSoundTime;
+    bool m_bInAir;
+    Vector m_vLastPosition;
 
-	CSatchelCharge();
-	~CSatchelCharge();
+   public:
+    CWeapon_SLAM *m_pMyWeaponSLAM;  // Who shot me..
+    bool m_bIsAttached;
+    void Deactivate( void );
 
-	DECLARE_DATADESC();
+    CSatchelCharge();
+    ~CSatchelCharge();
 
-private:
-	void				CreateEffects( void );
-	CHandle<CSprite>	m_hGlowSprite;
+    DECLARE_DATADESC();
+
+   private:
+    void CreateEffects( void );
+    CHandle< CSprite > m_hGlowSprite;
 };
 
-#endif	//SATCHEL_H
+#endif  // SATCHEL_H

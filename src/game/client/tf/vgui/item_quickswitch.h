@@ -4,7 +4,6 @@
 //
 //=============================================================================//
 
-
 #ifndef ITEM_QUICKSWITCH_H
 #define ITEM_QUICKSWITCH_H
 #ifdef _WIN32
@@ -17,56 +16,60 @@ class CLoadoutPresetPanel;
 
 class CItemQuickSwitchPanel : public vgui::EditablePanel, public CHudElement
 {
-	DECLARE_CLASS_SIMPLE( CItemQuickSwitchPanel, vgui::EditablePanel );
-public:
-	CItemQuickSwitchPanel( const char *pElementName );
-	virtual ~CItemQuickSwitchPanel();
+    DECLARE_CLASS_SIMPLE( CItemQuickSwitchPanel, vgui::EditablePanel );
 
-	void		 OpenQS( void );
-	void		 CloseQS( void );
-	bool		 ShouldDraw( void ) { return IsVisible(); }
+   public:
+    CItemQuickSwitchPanel( const char *pElementName );
+    virtual ~CItemQuickSwitchPanel();
 
-	virtual void ApplySchemeSettings( vgui::IScheme *pScheme );
-	virtual void ApplySettings( KeyValues *inResourceData );
-	virtual void PerformLayout( void );
-	virtual void OnTick( void );
+    void OpenQS( void );
+    void CloseQS( void );
+    bool ShouldDraw( void )
+    {
+        return IsVisible();
+    }
 
-	void		 UpdateEquippedItem( void );
-	bool		 CalculateClassAndSlot();
-	void		 UpdateModelPanels( void );
-	void		 SetButtonToItem( int iButton, CEconItemView *pItem );
+    virtual void ApplySchemeSettings( vgui::IScheme *pScheme );
+    virtual void ApplySettings( KeyValues *inResourceData );
+    virtual void PerformLayout( void );
+    virtual void OnTick( void );
 
-	bool		 IsValid( void );
+    void UpdateEquippedItem( void );
+    bool CalculateClassAndSlot();
+    void UpdateModelPanels( void );
+    void SetButtonToItem( int iButton, CEconItemView *pItem );
 
-	virtual void FireGameEvent( IGameEvent *event );
+    bool IsValid( void );
 
-	int	HudElementKeyInput( int down, ButtonCode_t keynum, const char *pszCurrentBinding );
+    virtual void FireGameEvent( IGameEvent *event );
 
-	MESSAGE_FUNC( OnItemPresetLoaded, "ItemPresetLoaded" );
+    int HudElementKeyInput( int down, ButtonCode_t keynum, const char *pszCurrentBinding );
 
-	MESSAGE_FUNC_PTR( OnIPMouseReleased, "ItemPanelMouseReleased", panel );
-	MESSAGE_FUNC_PTR( OnItemPanelEntered, "ItemPanelEntered", panel );
-	MESSAGE_FUNC_PTR( OnItemPanelExited, "ItemPanelExited", panel );
+    MESSAGE_FUNC( OnItemPresetLoaded, "ItemPresetLoaded" );
 
-private:
-	int								m_iClass;		// Class of the player we're selecting an item for
-	int								m_iSlot;		// Slot on the player that we're selecting an item for
-	bool							m_bLoadoutHasChanged;
+    MESSAGE_FUNC_PTR( OnIPMouseReleased, "ItemPanelMouseReleased", panel );
+    MESSAGE_FUNC_PTR( OnItemPanelEntered, "ItemPanelEntered", panel );
+    MESSAGE_FUNC_PTR( OnItemPanelExited, "ItemPanelExited", panel );
 
-	vgui::EditablePanel				*m_pItemContainer;
-	vgui::ScrollableEditablePanel	*m_pItemContainerScroller;
-	vgui::Label						*m_pWeaponLabel;
-	vgui::Label						*m_pEquipYourClassLabel;
-	vgui::Label						*m_pNoItemsToEquipLabel;
-	vgui::Label						*m_pEquippedLabel;
+   private:
+    int m_iClass;  // Class of the player we're selecting an item for
+    int m_iSlot;   // Slot on the player that we're selecting an item for
+    bool m_bLoadoutHasChanged;
 
-	CLoadoutPresetPanel				*m_pLoadoutPresetPanel;
+    vgui::EditablePanel *m_pItemContainer;
+    vgui::ScrollableEditablePanel *m_pItemContainerScroller;
+    vgui::Label *m_pWeaponLabel;
+    vgui::Label *m_pEquipYourClassLabel;
+    vgui::Label *m_pNoItemsToEquipLabel;
+    vgui::Label *m_pEquippedLabel;
 
-	KeyValues						*m_pItemKV;
-	CUtlVector<CItemModelPanel	*>	m_pItemPanels;
+    CLoadoutPresetPanel *m_pLoadoutPresetPanel;
 
-	CPanelAnimationVarAliasType( int, m_iItemPanelXPos, "itempanel_xpos", "0", "proportional_int" );
-	CPanelAnimationVarAliasType( int, m_iItemPanelYDelta, "itempanel_ydelta", "0", "proportional_int" );
+    KeyValues *m_pItemKV;
+    CUtlVector< CItemModelPanel * > m_pItemPanels;
+
+    CPanelAnimationVarAliasType( int, m_iItemPanelXPos, "itempanel_xpos", "0", "proportional_int" );
+    CPanelAnimationVarAliasType( int, m_iItemPanelYDelta, "itempanel_ydelta", "0", "proportional_int" );
 };
 
-#endif // ITEM_QUICKSWITCH_H
+#endif  // ITEM_QUICKSWITCH_H

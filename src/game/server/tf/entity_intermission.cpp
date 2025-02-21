@@ -8,36 +8,32 @@
 #include "tf_gamerules.h"
 #include "entity_intermission.h"
 
-
-
 LINK_ENTITY_TO_CLASS( point_intermission, CTFIntermission );
 
-BEGIN_DATADESC(CTFIntermission)
-	// Keys
+BEGIN_DATADESC( CTFIntermission )
+// Keys
 
-	// Inputs
-	DEFINE_INPUTFUNC(FIELD_VOID, "Activate", InputActivate ),
+// Inputs
+DEFINE_INPUTFUNC( FIELD_VOID, "Activate", InputActivate ),
 
-	// Outputs
+    // Outputs
 
-END_DATADESC()
+    END_DATADESC()
 
-//=============================================================================
-//
-// CTF Intermission functions.
-//
+    //=============================================================================
+    //
+    // CTF Intermission functions.
+    //
 
-//-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : &inputdata - 
-//-----------------------------------------------------------------------------
-void CTFIntermission::InputActivate( inputdata_t &inputdata )
+    //-----------------------------------------------------------------------------
+    // Purpose:
+    // Input  : &inputdata -
+    //-----------------------------------------------------------------------------
+    void CTFIntermission::InputActivate( inputdata_t &inputdata )
 {
-	CTFGameRules *pCTFGameRules = TFGameRules();
-	if ( pCTFGameRules )
-	{
-		pCTFGameRules->GoToIntermission();
-	}
+    CTFGameRules *pCTFGameRules = TFGameRules();
+    if ( pCTFGameRules )
+    {
+        pCTFGameRules->GoToIntermission();
+    }
 }
-
-

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $Workfile:     $
 // $Date:         $
@@ -20,31 +20,32 @@ class CConPanel;
 
 class CConsole : public IConsole
 {
-private:
-	CConPanel *conPanel;
-public:
-	CConsole( void )
-	{
-		conPanel = NULL;
-	}
-	
-	void Create( vgui::VPANEL parent )
-	{
-		/*
-		conPanel = new CConPanel( parent );
-		*/
-	}
+   private:
+    CConPanel *conPanel;
 
-	void Destroy( void )
-	{
-		/*
-		if ( conPanel )
-		{
-			conPanel->SetParent( (vgui::Panel *)NULL );
-			delete conPanel;
-		}
-		*/
-	}
+   public:
+    CConsole( void )
+    {
+        conPanel = NULL;
+    }
+
+    void Create( vgui::VPANEL parent )
+    {
+        /*
+        conPanel = new CConPanel( parent );
+        */
+    }
+
+    void Destroy( void )
+    {
+        /*
+        if ( conPanel )
+        {
+          conPanel->SetParent( (vgui::Panel *)NULL );
+          delete conPanel;
+        }
+        */
+    }
 };
 
 static CConsole g_Console;

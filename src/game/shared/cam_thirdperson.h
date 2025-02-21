@@ -12,9 +12,9 @@
 #endif
 
 #ifdef CLIENT_DLL
-	#include "c_baseplayer.h"
+#include "c_baseplayer.h"
 #else
-	#include "baseplayer.h"
+#include "baseplayer.h"
 #endif
 
 #define DIST_FORWARD 0
@@ -28,81 +28,118 @@
 #define MAX_ANGLE_DIFF 10.0
 #define PITCH_MAX 90.0
 #define PITCH_MIN 0
-#define YAW_MAX  135.0
-#define YAW_MIN	 -135.0
-#define	DIST	 2
-#define CAM_HULL_OFFSET		14.0    // the size of the bounding hull used for collision checking
+#define YAW_MAX 135.0
+#define YAW_MIN -135.0
+#define DIST 2
+#define CAM_HULL_OFFSET 14.0  // the size of the bounding hull used for collision checking
 
-#define CAMERA_UP_OFFSET	25.0f
+#define CAMERA_UP_OFFSET 25.0f
 #define CAMERA_OFFSET_LERP_TIME 0.5f
 #define CAMERA_UP_OFFSET_LERP_TIME 0.25f
 
 class CThirdPersonManager
 {
-public:
+   public:
+    CThirdPersonManager();
+    void SetCameraOffsetAngles( const Vector& vecOffset )
+    {
+        m_vecCameraOffset = vecOffset;
+    }
+    const Vector& GetCameraOffsetAngles( void ) const
+    {
+        return m_vecCameraOffset;
+    }
 
-	CThirdPersonManager();
-	void	SetCameraOffsetAngles( const Vector& vecOffset ) { m_vecCameraOffset = vecOffset; }
-	const Vector&	GetCameraOffsetAngles( void ) const { return m_vecCameraOffset; }
-	
-	void	SetDesiredCameraOffset( const Vector& vecOffset ) { m_vecDesiredCameraOffset = vecOffset; }
-	const Vector&	GetDesiredCameraOffset( void ) const { return m_vecDesiredCameraOffset; }
+    void SetDesiredCameraOffset( const Vector& vecOffset )
+    {
+        m_vecDesiredCameraOffset = vecOffset;
+    }
+    const Vector& GetDesiredCameraOffset( void ) const
+    {
+        return m_vecDesiredCameraOffset;
+    }
 
-	Vector	GetFinalCameraOffset( void );
+    Vector GetFinalCameraOffset( void );
 
-	void	SetCameraOrigin( const Vector& vecOffset ) { m_vecCameraOrigin = vecOffset; }
-	const Vector&	GetCameraOrigin( void ) const { return m_vecCameraOrigin; }
+    void SetCameraOrigin( const Vector& vecOffset )
+    {
+        m_vecCameraOrigin = vecOffset;
+    }
+    const Vector& GetCameraOrigin( void ) const
+    {
+        return m_vecCameraOrigin;
+    }
 
-	void	Update( void );
+    void Update( void );
 
-	void	PositionCamera( CBasePlayer *pPlayer, const QAngle& angles );
+    void PositionCamera( CBasePlayer* pPlayer, const QAngle& angles );
 
-	void	UseCameraOffsets( bool bUse ) { m_bUseCameraOffsets = bUse; }
-	bool	UsingCameraOffsets( void ) { return m_bUseCameraOffsets; }
+    void UseCameraOffsets( bool bUse )
+    {
+        m_bUseCameraOffsets = bUse;
+    }
+    bool UsingCameraOffsets( void )
+    {
+        return m_bUseCameraOffsets;
+    }
 
-	const QAngle&	GetCameraViewAngles( void ) const { return m_ViewAngles; }
+    const QAngle& GetCameraViewAngles( void ) const
+    {
+        return m_ViewAngles;
+    }
 
-	Vector	GetDistanceFraction( void );
+    Vector GetDistanceFraction( void );
 
-	bool	WantToUseGameThirdPerson( void );
+    bool WantToUseGameThirdPerson( void );
 
-	void	SetOverridingThirdPerson( bool bOverride ) { m_bOverrideThirdPerson = bOverride; }
-	bool	IsOverridingThirdPerson( void ) { return m_bOverrideThirdPerson; }
+    void SetOverridingThirdPerson( bool bOverride )
+    {
+        m_bOverrideThirdPerson = bOverride;
+    }
+    bool IsOverridingThirdPerson( void )
+    {
+        return m_bOverrideThirdPerson;
+    }
 
-	void	Init( void );
+    void Init( void );
 
-	void	SetForcedThirdPerson( bool bForced ) { m_bForced = bForced; }
-	bool	GetForcedThirdPerson() const { return m_bForced; }
+    void SetForcedThirdPerson( bool bForced )
+    {
+        m_bForced = bForced;
+    }
+    bool GetForcedThirdPerson() const
+    {
+        return m_bForced;
+    }
 
-private:
+   private:
+    // What is the current camera offset from the view origin?
+    Vector m_vecCameraOffset;
+    // Distances from the center
+    Vector m_vecDesiredCameraOffset;
 
-	// What is the current camera offset from the view origin?
-	Vector		m_vecCameraOffset;
-	// Distances from the center
-	Vector		m_vecDesiredCameraOffset;
+    Vector m_vecCameraOrigin;
 
-	Vector m_vecCameraOrigin;
+    bool m_bUseCameraOffsets;
 
-	bool	m_bUseCameraOffsets;
+    QAngle m_ViewAngles;
 
-	QAngle	m_ViewAngles;
+    float m_flFraction;
+    float m_flUpFraction;
 
-	float	m_flFraction;
-	float	m_flUpFraction;
+    float m_flTargetFraction;
+    float m_flTargetUpFraction;
 
-	float	m_flTargetFraction;
-	float	m_flTargetUpFraction;
+    bool m_bOverrideThirdPerson;
 
-	bool	m_bOverrideThirdPerson;
+    bool m_bForced;
 
-	bool	m_bForced;
+    float m_flUpOffset;
 
-	float	m_flUpOffset;
-
-	float	m_flLerpTime;
-	float	m_flUpLerpTime;
+    float m_flLerpTime;
+    float m_flUpLerpTime;
 };
 
 extern CThirdPersonManager g_ThirdPersonManager;
 
-#endif // CAM_THIRDPERSON_H
+#endif  // CAM_THIRDPERSON_H

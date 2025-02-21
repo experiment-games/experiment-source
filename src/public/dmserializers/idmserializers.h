@@ -21,7 +21,6 @@
 
 #include "appframework/IAppSystem.h"
 
-
 //-----------------------------------------------------------------------------
 // Interface
 //-----------------------------------------------------------------------------
@@ -29,19 +28,14 @@ class IDmSerializers : public IAppSystem
 {
 };
 
-
 //-----------------------------------------------------------------------------
 // Used only by applications to hook in DmSerializers
 //-----------------------------------------------------------------------------
-#define DMSERIALIZERS_INTERFACE_VERSION		"VDmSerializers001"
-
+#define DMSERIALIZERS_INTERFACE_VERSION "VDmSerializers001"
 
 //-----------------------------------------------------------------------------
 // Singleton
 //-----------------------------------------------------------------------------
 extern IDmSerializers *g_pDmSerializers;
 
-
-#endif // DMSERIALIZERS_H
-
-
+#endif  // DMSERIALIZERS_H

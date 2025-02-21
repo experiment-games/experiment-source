@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
 
@@ -27,118 +27,127 @@ class CSCHintIcon;
 //-----------------------------------------------------------------------------
 class CTFSpectatorGUIHealth : public CTFHudPlayerHealth
 {
-public:
-	CTFSpectatorGUIHealth( Panel *parent, const char *name ) : CTFHudPlayerHealth( parent, name )
-	{
-	}
+   public:
+    CTFSpectatorGUIHealth( Panel *parent, const char *name )
+        : CTFHudPlayerHealth( parent, name )
+    {
+    }
 
-	virtual const char *GetResFilename( void ) 
-	{ 
-		return "resource/UI/SpectatorGUIHealth.res"; 
-	}
-	virtual void OnThink()
-	{
-		// Do nothing. We're just preventing the base health panel from updating.
-	}
+    virtual const char *GetResFilename( void )
+    {
+        return "resource/UI/SpectatorGUIHealth.res";
+    }
+    virtual void OnThink()
+    {
+        // Do nothing. We're just preventing the base health panel from updating.
+    }
 };
-
 
 //-----------------------------------------------------------------------------
 // Purpose: TF Spectator UI
 //-----------------------------------------------------------------------------
 class CTFSpectatorGUI : public CSpectatorGUI, public CGameEventListener
 {
-private:
-	DECLARE_CLASS_SIMPLE( CTFSpectatorGUI, CSpectatorGUI );
+   private:
+    DECLARE_CLASS_SIMPLE( CTFSpectatorGUI, CSpectatorGUI );
 
-public:
-	CTFSpectatorGUI( IViewPort *pViewPort );
-	~CTFSpectatorGUI( void );
-		
-	virtual void Reset( void );
-	virtual void PerformLayout( void );
-	virtual void ApplySchemeSettings( vgui::IScheme *pScheme );
-	virtual void ApplySettings( KeyValues *inResourceData );
+   public:
+    CTFSpectatorGUI( IViewPort *pViewPort );
+    ~CTFSpectatorGUI( void );
 
-	virtual void Update( void );
-	virtual bool NeedsUpdate( void );
-	virtual bool ShouldShowPlayerLabel( int specmode ) { return false; }
-	void		 UpdateReinforcements( void );
-	virtual void ShowPanel(bool bShow);
-	virtual Color GetBlackBarColor( void ) { return Color(52,48,45, 255); }
+    virtual void Reset( void );
+    virtual void PerformLayout( void );
+    virtual void ApplySchemeSettings( vgui::IScheme *pScheme );
+    virtual void ApplySettings( KeyValues *inResourceData );
 
-	void		UpdateKeyLabels( void );
+    virtual void Update( void );
+    virtual bool NeedsUpdate( void );
+    virtual bool ShouldShowPlayerLabel( int specmode )
+    {
+        return false;
+    }
+    void UpdateReinforcements( void );
+    virtual void ShowPanel( bool bShow );
+    virtual Color GetBlackBarColor( void )
+    {
+        return Color( 52, 48, 45, 255 );
+    }
 
-	virtual void FireGameEvent( IGameEvent *event );
-	void		UpdateItemPanel( bool bForce = false );
-	void		ForceItemPanelCycle( void );
-	virtual const char *GetResFile( void );
+    void UpdateKeyLabels( void );
 
-	// Tournament mode handling
-	bool		InTournamentGUI( void );
-	void		RecalculatePlayerPanels( void );
-	void		UpdatePlayerPanels( void );
-	void		SelectSpec( int iSlot );
+    virtual void FireGameEvent( IGameEvent *event );
+    void UpdateItemPanel( bool bForce = false );
+    void ForceItemPanelCycle( void );
+    virtual const char *GetResFile( void );
 
-	virtual int GetTopBarHeight();
+    // Tournament mode handling
+    bool InTournamentGUI( void );
+    void RecalculatePlayerPanels( void );
+    void UpdatePlayerPanels( void );
+    void SelectSpec( int iSlot );
 
-	virtual GameActionSet_t GetPreferredActionSet() { return GAME_ACTION_SET_SPECTATOR; }
+    virtual int GetTopBarHeight();
 
-protected:	
-	int		m_nLastSpecMode;
-	float	m_flNextTipChangeTime;		// time at which to next change the tip
-	int		m_iTipClass;				// class that current tip is for
+    virtual GameActionSet_t GetPreferredActionSet()
+    {
+        return GAME_ACTION_SET_SPECTATOR;
+    }
 
-	// used to store the x and y position of the Engy and Spy build panels so we can reset them when the spec panel goes away
-	int		m_nEngBuilds_xpos;
-	int		m_nEngBuilds_ypos;
-	int		m_nSpyBuilds_xpos;
-	int		m_nSpyBuilds_ypos;
+   protected:
+    int m_nLastSpecMode;
+    float m_flNextTipChangeTime;  // time at which to next change the tip
+    int m_iTipClass;              // class that current tip is for
 
-	int		m_nMannVsMachineStatus_xpos;
-	int		m_nMannVsMachineStatus_ypos;
+    // used to store the x and y position of the Engy and Spy build panels so we can reset them when the spec panel goes away
+    int m_nEngBuilds_xpos;
+    int m_nEngBuilds_ypos;
+    int m_nSpyBuilds_xpos;
+    int m_nSpyBuilds_ypos;
 
-	vgui::Label				*m_pReinforcementsLabel;
-	CExLabel				*m_pBuyBackLabel;
-	vgui::Label				*m_pClassOrTeamLabel;
-	CExLabel				*m_pClassOrTeamKeyLabel;
-	vgui::Label				*m_pSwitchCamModeKeyLabel;
-	vgui::Label				*m_pCycleTargetFwdKeyLabel;
-	vgui::Label				*m_pCycleTargetRevKeyLabel;
-	vgui::Label				*m_pMapLabel;
-	CItemModelPanel			*m_pItemPanel;
-	CSCHintIcon				*m_pCycleTargetFwdHintIcon;
-	CSCHintIcon				*m_pCycleTargetRevHintIcon;
-	CSCHintIcon				*m_pClassOrTeamHintIcon;
+    int m_nMannVsMachineStatus_xpos;
+    int m_nMannVsMachineStatus_ypos;
 
-	float					m_flNextItemPanelUpdate;
-	EHANDLE					m_hPrevItemPlayer;
-	int						m_iPrevItemShown;
-	int						m_iFirstItemShown;
-	bool					m_bShownItems;
+    vgui::Label *m_pReinforcementsLabel;
+    CExLabel *m_pBuyBackLabel;
+    vgui::Label *m_pClassOrTeamLabel;
+    CExLabel *m_pClassOrTeamKeyLabel;
+    vgui::Label *m_pSwitchCamModeKeyLabel;
+    vgui::Label *m_pCycleTargetFwdKeyLabel;
+    vgui::Label *m_pCycleTargetRevKeyLabel;
+    vgui::Label *m_pMapLabel;
+    CItemModelPanel *m_pItemPanel;
+    CSCHintIcon *m_pCycleTargetFwdHintIcon;
+    CSCHintIcon *m_pCycleTargetRevHintIcon;
+    CSCHintIcon *m_pClassOrTeamHintIcon;
 
-	// Tournament mode player panel handling
-	CUtlVector<CTFPlayerPanel*>	m_PlayerPanels;
-	KeyValues				*m_pPlayerPanelKVs;
-	bool					m_bReapplyPlayerPanelKVs;
-	bool					m_bPrevTournamentMode;
-	float					m_flNextPlayerPanelUpdate;
+    float m_flNextItemPanelUpdate;
+    EHANDLE m_hPrevItemPlayer;
+    int m_iPrevItemShown;
+    int m_iFirstItemShown;
+    bool m_bShownItems;
 
-	// Coaching
-	bool					m_bCoaching;
-	CAvatarImagePanel		*m_pAvatar;
-	CTFSpectatorGUIHealth	*m_pStudentHealth;
+    // Tournament mode player panel handling
+    CUtlVector< CTFPlayerPanel * > m_PlayerPanels;
+    KeyValues *m_pPlayerPanelKVs;
+    bool m_bReapplyPlayerPanelKVs;
+    bool m_bPrevTournamentMode;
+    float m_flNextPlayerPanelUpdate;
 
-	CPanelAnimationVarAliasType( int, m_iTeam1PlayerBaseOffsetX, "team1_player_base_offset_x", "0", "proportional_int" );
-	CPanelAnimationVarAliasType( int, m_iTeam1PlayerBaseX, "team1_player_base_x", "0", "proportional_int" );
-	CPanelAnimationVarAliasType( int, m_iTeam1PlayerBaseY, "team1_player_base_y", "0", "proportional_int" );
-	CPanelAnimationVarAliasType( int, m_iTeam2PlayerBaseX, "team2_player_base_x", "0", "proportional_int" );
-	CPanelAnimationVarAliasType( int, m_iTeam2PlayerBaseOffsetX, "team2_player_base_offset_x", "0", "proportional_int" );
-	CPanelAnimationVarAliasType( int, m_iTeam2PlayerBaseY, "team2_player_base_y", "0", "proportional_int" );
-	CPanelAnimationVarAliasType( int, m_iTeam1PlayerDeltaX, "team1_player_delta_x", "0", "proportional_int" );
-	CPanelAnimationVarAliasType( int, m_iTeam1PlayerDeltaY, "team1_player_delta_y", "0", "proportional_int" );
-	CPanelAnimationVarAliasType( int, m_iTeam2PlayerDeltaX, "team2_player_delta_x", "0", "proportional_int" );
-	CPanelAnimationVarAliasType( int, m_iTeam2PlayerDeltaY, "team2_player_delta_y", "0", "proportional_int" );
+    // Coaching
+    bool m_bCoaching;
+    CAvatarImagePanel *m_pAvatar;
+    CTFSpectatorGUIHealth *m_pStudentHealth;
+
+    CPanelAnimationVarAliasType( int, m_iTeam1PlayerBaseOffsetX, "team1_player_base_offset_x", "0", "proportional_int" );
+    CPanelAnimationVarAliasType( int, m_iTeam1PlayerBaseX, "team1_player_base_x", "0", "proportional_int" );
+    CPanelAnimationVarAliasType( int, m_iTeam1PlayerBaseY, "team1_player_base_y", "0", "proportional_int" );
+    CPanelAnimationVarAliasType( int, m_iTeam2PlayerBaseX, "team2_player_base_x", "0", "proportional_int" );
+    CPanelAnimationVarAliasType( int, m_iTeam2PlayerBaseOffsetX, "team2_player_base_offset_x", "0", "proportional_int" );
+    CPanelAnimationVarAliasType( int, m_iTeam2PlayerBaseY, "team2_player_base_y", "0", "proportional_int" );
+    CPanelAnimationVarAliasType( int, m_iTeam1PlayerDeltaX, "team1_player_delta_x", "0", "proportional_int" );
+    CPanelAnimationVarAliasType( int, m_iTeam1PlayerDeltaY, "team1_player_delta_y", "0", "proportional_int" );
+    CPanelAnimationVarAliasType( int, m_iTeam2PlayerDeltaX, "team2_player_delta_x", "0", "proportional_int" );
+    CPanelAnimationVarAliasType( int, m_iTeam2PlayerDeltaY, "team2_player_delta_y", "0", "proportional_int" );
 };
 
-#endif // TF_SPECTATORGUI_H
+#endif  // TF_SPECTATORGUI_H

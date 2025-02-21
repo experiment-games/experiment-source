@@ -4,7 +4,6 @@
 //
 //=============================================================================//
 
-
 #include "cbase.h"
 #include "quest_log_panel.h"
 #include "ienginevgui.h"
@@ -14,7 +13,7 @@
 #include "clientmode_tf.h"
 #include "tf_hud_mainmenuoverride.h"
 #include "vgui_int.h"
-#include "IGameUIFuncs.h" // for key bindings
+#include "IGameUIFuncs.h"  // for key bindings
 #include <vgui_controls/AnimationController.h>
 #include "tf_item_inventory.h"
 #include "vgui/IInput.h"
@@ -1158,7 +1157,5 @@ public:
 };
 
 GC_REG_JOB( GCSDK::CGCClient, CGCCompleteQuestCompleteResponse, "CGCCompleteQuestCompleteResponse", k_EMsgGCQuestCompleted, GCSDK::k_EServerTypeGCClient );
-
-
 
 #endif

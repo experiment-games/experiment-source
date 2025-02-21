@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -25,69 +25,82 @@ class IImage;
 //-----------------------------------------------------------------------------
 class ImagePanel : public Panel
 {
-	DECLARE_CLASS_SIMPLE( ImagePanel, Panel );
-public:
-	ImagePanel(Panel *parent, const char *name);
-	~ImagePanel();
+    DECLARE_CLASS_SIMPLE( ImagePanel, Panel );
 
-	virtual void SetImage(IImage *image);
-	virtual void SetImage(const char *imageName);
-	virtual IImage *GetImage();
-	char *GetImageName();
+   public:
+    ImagePanel( Panel *parent, const char *name );
+    ~ImagePanel();
 
-	void SetShouldCenterImage( bool state ) { m_bCenterImage = state; }
-	bool GetShouldCenterImage() const { return m_bCenterImage; }
+    virtual void SetImage( IImage *image );
+    virtual void SetImage( const char *imageName );
+    virtual IImage *GetImage();
+    char *GetImageName();
 
-	// sets whether or not the image should scale to fit the size of the ImagePanel (defaults to false)
-	void SetShouldScaleImage( bool state );
-	bool GetShouldScaleImage();
-	void SetScaleAmount( float scale );
-	float GetScaleAmount( void );
+    void SetShouldCenterImage( bool state )
+    {
+        m_bCenterImage = state;
+    }
+    bool GetShouldCenterImage() const
+    {
+        return m_bCenterImage;
+    }
 
-	void SetTileImage( bool bTile )	{ m_bTileImage = bTile; }
+    // sets whether or not the image should scale to fit the size of the ImagePanel (defaults to false)
+    void SetShouldScaleImage( bool state );
+    bool GetShouldScaleImage();
+    void SetScaleAmount( float scale );
+    float GetScaleAmount( void );
 
-	// set the color to fill with, if no image is specified
-	void SetFillColor( Color col );
-	Color GetFillColor();
+    void SetTileImage( bool bTile )
+    {
+        m_bTileImage = bTile;
+    }
 
-	virtual Color GetDrawColor( void );
-	virtual void SetDrawColor( Color drawColor );
+    // set the color to fill with, if no image is specified
+    void SetFillColor( Color col );
+    Color GetFillColor();
 
-	virtual void ApplySettings(KeyValues *inResourceData);
+    virtual Color GetDrawColor( void );
+    virtual void SetDrawColor( Color drawColor );
 
-	// unhooks and evicts image if possible, caller must re-establish
-	bool EvictImage();
-	
-	int GetNumFrames();
-	void SetFrame( int nFrame );
+    virtual void ApplySettings( KeyValues *inResourceData );
 
-	void SetRotation( int iRotation ) { m_iRotation = iRotation; }
+    // unhooks and evicts image if possible, caller must re-establish
+    bool EvictImage();
 
-protected:
-	virtual void PaintBackground();
-	virtual void GetSettings(KeyValues *outResourceData);
-	virtual const char *GetDescription();
-	virtual void OnSizeChanged(int newWide, int newTall);
-	virtual void ApplySchemeSettings( IScheme *pScheme );
+    int GetNumFrames();
+    void SetFrame( int nFrame );
 
-private:
-	IImage *m_pImage;
-	char *m_pszImageName;
-	char *m_pszFillColorName;
-	char *m_pszDrawColorName;
-	bool m_bPositionImage;
-	bool m_bCenterImage;
-	bool m_bScaleImage;
-	int m_nScaleProportional = 0;
-	bool m_bTileImage;
-	bool m_bTileHorizontally;
-	bool m_bTileVertically;
-	float m_fScaleAmount;
-	Color m_FillColor;
-	Color m_DrawColor;
-	int m_iRotation;
+    void SetRotation( int iRotation )
+    {
+        m_iRotation = iRotation;
+    }
+
+   protected:
+    virtual void PaintBackground();
+    virtual void GetSettings( KeyValues *outResourceData );
+    virtual const char *GetDescription();
+    virtual void OnSizeChanged( int newWide, int newTall );
+    virtual void ApplySchemeSettings( IScheme *pScheme );
+
+   private:
+    IImage *m_pImage;
+    char *m_pszImageName;
+    char *m_pszFillColorName;
+    char *m_pszDrawColorName;
+    bool m_bPositionImage;
+    bool m_bCenterImage;
+    bool m_bScaleImage;
+    int m_nScaleProportional = 0;
+    bool m_bTileImage;
+    bool m_bTileHorizontally;
+    bool m_bTileVertically;
+    float m_fScaleAmount;
+    Color m_FillColor;
+    Color m_DrawColor;
+    int m_iRotation;
 };
 
-} // namespace vgui
+}  // namespace vgui
 
-#endif // IMAGEPANEL_H
+#endif  // IMAGEPANEL_H

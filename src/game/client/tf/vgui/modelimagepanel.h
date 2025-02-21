@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
 #ifndef MODELIMAGEPANEL_H
@@ -15,29 +15,28 @@ class CIconRenderReceiver;
 
 class CModelImagePanel : public CBaseModelPanel
 {
-DECLARE_CLASS_SIMPLE( CModelImagePanel, CBaseModelPanel );
+    DECLARE_CLASS_SIMPLE( CModelImagePanel, CBaseModelPanel );
 
-public:
+   public:
+    // Constructor, Destructor.
+    CModelImagePanel( vgui::Panel *pParent, const char *pName );
+    virtual ~CModelImagePanel();
 
-	// Constructor, Destructor.
-	CModelImagePanel( vgui::Panel *pParent, const char *pName );
-	virtual ~CModelImagePanel();
+    virtual void PerformLayout() OVERRIDE;
+    virtual void Paint() OVERRIDE;
+    virtual void OnSizeChanged( int wide, int tall ) OVERRIDE;
 
-	virtual void PerformLayout() OVERRIDE;
-	virtual void Paint() OVERRIDE;
-	virtual void OnSizeChanged( int wide, int tall ) OVERRIDE;
+    virtual void SetMDL( MDLHandle_t handle, void *pProxyData = NULL ) OVERRIDE;
+    virtual void SetMDL( const char *pMDLName, void *pProxyData = NULL ) OVERRIDE;
+    void SetMDLBody( unsigned int nBody );
+    void SetMDLSkin( int nSkin );
 
-	virtual void SetMDL( MDLHandle_t handle, void *pProxyData = NULL ) OVERRIDE;
-	virtual void SetMDL( const char *pMDLName, void *pProxyData = NULL ) OVERRIDE;
-	void SetMDLBody( unsigned int nBody );
-	void SetMDLSkin( int nSkin );
+    void InvalidateImage();
 
-	void InvalidateImage();
-
-private:
-	CIconRenderReceiver *m_pCachedIcon;
-	IMaterial			*m_pCachedMaterial;
-	int					m_iCachedTextureID;
+   private:
+    CIconRenderReceiver *m_pCachedIcon;
+    IMaterial *m_pCachedMaterial;
+    int m_iCachedTextureID;
 };
 
-#endif // MODELIMAGEPANEL_H
+#endif  // MODELIMAGEPANEL_H

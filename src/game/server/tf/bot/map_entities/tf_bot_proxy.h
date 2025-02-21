@@ -6,53 +6,51 @@
 #ifndef TF_BOT_PROXY_H
 #define TF_BOT_PROXY_H
 
-
 class CTFBot;
 class CTFBotActionPoint;
 
-
 class CTFBotProxy : public CPointEntity
 {
-	DECLARE_CLASS( CTFBotProxy, CPointEntity );
-public:
-	DECLARE_DATADESC();
+    DECLARE_CLASS( CTFBotProxy, CPointEntity );
 
-	CTFBotProxy( void );
-	virtual ~CTFBotProxy() { }
+   public:
+    DECLARE_DATADESC();
 
-	void Think( void );
+    CTFBotProxy( void );
+    virtual ~CTFBotProxy() {}
 
-	// Input
-	void InputSetTeam( inputdata_t &inputdata );
-	void InputSetClass( inputdata_t &inputdata );
-	void InputSetMovementGoal( inputdata_t &inputdata );
-	void InputSpawn( inputdata_t &inputdata );
-	void InputDelete( inputdata_t &inputdata );
+    void Think( void );
 
-	void OnInjured( void );
-	void OnKilled( void );
-	void OnAttackingEnemy( void );
-	void OnKilledEnemy( void );
+    // Input
+    void InputSetTeam( inputdata_t &inputdata );
+    void InputSetClass( inputdata_t &inputdata );
+    void InputSetMovementGoal( inputdata_t &inputdata );
+    void InputSpawn( inputdata_t &inputdata );
+    void InputDelete( inputdata_t &inputdata );
 
-protected:
-	// Output
-	COutputEvent m_onSpawned;
-	COutputEvent m_onInjured;
-	COutputEvent m_onKilled;
-	COutputEvent m_onAttackingEnemy;
-	COutputEvent m_onKilledEnemy;
+    void OnInjured( void );
+    void OnKilled( void );
+    void OnAttackingEnemy( void );
+    void OnKilledEnemy( void );
 
-	char m_botName[64];
-	char m_className[64];
-	char m_teamName[64];
+   protected:
+    // Output
+    COutputEvent m_onSpawned;
+    COutputEvent m_onInjured;
+    COutputEvent m_onKilled;
+    COutputEvent m_onAttackingEnemy;
+    COutputEvent m_onKilledEnemy;
 
-	string_t m_spawnOnStart;
-	string_t m_actionPointName;
-	float m_respawnInterval;
+    char m_botName[64];
+    char m_className[64];
+    char m_teamName[64];
 
-	CHandle< CTFBot > m_bot;
-	CHandle< CTFBotActionPoint > m_moveGoal;
+    string_t m_spawnOnStart;
+    string_t m_actionPointName;
+    float m_respawnInterval;
+
+    CHandle< CTFBot > m_bot;
+    CHandle< CTFBotActionPoint > m_moveGoal;
 };
 
-
-#endif // TF_BOT_PROXY_H
+#endif  // TF_BOT_PROXY_H

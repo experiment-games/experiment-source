@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
 
@@ -27,32 +27,32 @@ IMPLEMENT_NETWORKCLASS_ALIASED( TFBreakableMelee, DT_TFWeaponBreakableMelee )
 
 BEGIN_NETWORK_TABLE( CTFBreakableMelee, DT_TFWeaponBreakableMelee )
 #if defined( CLIENT_DLL )
-	RecvPropBool( RECVINFO( m_bBroken ), 0, CTFBreakableMelee::RecvProxy_Broken )
+RecvPropBool( RECVINFO( m_bBroken ), 0, CTFBreakableMelee::RecvProxy_Broken )
 #else
-	SendPropBool( SENDINFO( m_bBroken ) )
+SendPropBool( SENDINFO( m_bBroken ) )
 #endif
-END_NETWORK_TABLE()
+    END_NETWORK_TABLE()
 
-BEGIN_PREDICTION_DATA( CTFBreakableMelee )
+        BEGIN_PREDICTION_DATA( CTFBreakableMelee )
 #ifdef CLIENT_DLL
-	DEFINE_PRED_FIELD( m_bBroken, FIELD_BOOLEAN, FTYPEDESC_INSENDTABLE ),
-	DEFINE_PRED_FIELD( m_nBody, FIELD_INTEGER, FTYPEDESC_OVERRIDE | FTYPEDESC_INSENDTABLE )
-#endif // CLIENT_DLL
-END_PREDICTION_DATA()
+            DEFINE_PRED_FIELD( m_bBroken, FIELD_BOOLEAN, FTYPEDESC_INSENDTABLE ),
+    DEFINE_PRED_FIELD( m_nBody, FIELD_INTEGER, FTYPEDESC_OVERRIDE | FTYPEDESC_INSENDTABLE )
+#endif  // CLIENT_DLL
+        END_PREDICTION_DATA()
 
-//=============================================================================
-//
-// Weapon Bottle tables.
-//
-IMPLEMENT_NETWORKCLASS_ALIASED( TFBottle, DT_TFWeaponBottle )
+    //=============================================================================
+    //
+    // Weapon Bottle tables.
+    //
+    IMPLEMENT_NETWORKCLASS_ALIASED( TFBottle, DT_TFWeaponBottle )
 
-BEGIN_NETWORK_TABLE( CTFBottle, DT_TFWeaponBottle )
-END_NETWORK_TABLE()
+        BEGIN_NETWORK_TABLE( CTFBottle, DT_TFWeaponBottle )
+            END_NETWORK_TABLE()
 
-BEGIN_PREDICTION_DATA( CTFBottle )
-END_PREDICTION_DATA()
+                BEGIN_PREDICTION_DATA( CTFBottle )
+                    END_PREDICTION_DATA()
 
-LINK_ENTITY_TO_CLASS( tf_weapon_bottle, CTFBottle );
+                        LINK_ENTITY_TO_CLASS( tf_weapon_bottle, CTFBottle );
 PRECACHE_WEAPON_REGISTER( tf_weapon_bottle );
 
 //=============================================================================
@@ -82,20 +82,20 @@ void RecvProxy_Detonated( const CRecvProxyData *pData, void *pStruct, void *pOut
 
 BEGIN_NETWORK_TABLE( CTFStickBomb, DT_TFWeaponStickBomb )
 #if defined( CLIENT_DLL )
-	RecvPropInt( RECVINFO( m_iDetonated ), 0, RecvProxy_Detonated )
+RecvPropInt( RECVINFO( m_iDetonated ), 0, RecvProxy_Detonated )
 #else
-	SendPropInt( SENDINFO( m_iDetonated ), 1, SPROP_UNSIGNED )
+SendPropInt( SENDINFO( m_iDetonated ), 1, SPROP_UNSIGNED )
 #endif
-END_NETWORK_TABLE()
+    END_NETWORK_TABLE()
 
-BEGIN_PREDICTION_DATA( CTFStickBomb )
-END_PREDICTION_DATA()
+        BEGIN_PREDICTION_DATA( CTFStickBomb )
+            END_PREDICTION_DATA()
 
-LINK_ENTITY_TO_CLASS( tf_weapon_stickbomb, CTFStickBomb );
+                LINK_ENTITY_TO_CLASS( tf_weapon_stickbomb, CTFStickBomb );
 PRECACHE_WEAPON_REGISTER( tf_weapon_stickbomb );
 
-#define TF_WEAPON_STICKBOMB_NORMAL_MODEL	"models/workshop/weapons/c_models/c_caber/c_caber.mdl"
-#define TF_WEAPON_STICKBOMB_BROKEN_MODEL	"models/workshop/weapons/c_models/c_caber/c_caber_exploded.mdl"
+#define TF_WEAPON_STICKBOMB_NORMAL_MODEL "models/workshop/weapons/c_models/c_caber/c_caber.mdl"
+#define TF_WEAPON_STICKBOMB_BROKEN_MODEL "models/workshop/weapons/c_models/c_caber/c_caber_exploded.mdl"
 
 //=============================================================================
 
@@ -112,223 +112,225 @@ PRECACHE_WEAPON_REGISTER( tf_weapon_stickbomb );
 
 CTFBreakableMelee::CTFBreakableMelee()
 {
-	m_bBroken = false;
+    m_bBroken = false;
 }
 
 void CTFBreakableMelee::WeaponReset( void )
 {
-	BaseClass::WeaponReset();
+    BaseClass::WeaponReset();
 
-	if ( !GetOwner() || !GetOwner()->IsAlive() )
-	{
-		m_bBroken = false;
-	}
+    if ( !GetOwner() || !GetOwner()->IsAlive() )
+    {
+        m_bBroken = false;
+    }
 }
 
 bool CTFBreakableMelee::DefaultDeploy( char *szViewModel, char *szWeaponModel, int iActivity, char *szAnimExt )
 {
-	bool bRet = BaseClass::DefaultDeploy( szViewModel, szWeaponModel, iActivity, szAnimExt );
+    bool bRet = BaseClass::DefaultDeploy( szViewModel, szWeaponModel, iActivity, szAnimExt );
 
-	if ( bRet )
-	{
-		SwitchBodyGroups();
-	}
+    if ( bRet )
+    {
+        SwitchBodyGroups();
+    }
 
-	return bRet;
+    return bRet;
 }
 
 void CTFBreakableMelee::SwitchBodyGroups( void )
 {
-	int iState = 0;
+    int iState = 0;
 
-	if ( m_bBroken == true )
-	{
-		iState = 1;
-	}
+    if ( m_bBroken == true )
+    {
+        iState = 1;
+    }
 
 #ifdef CLIENT_DLL
-	// We'll successfully predict m_nBody along with m_bBroken, but this can be called outside prediction, in which case
-	// we want to use the networked m_nBody value -- but still fixup our viewmodel which is clientside only.
-	if ( prediction->InPrediction() )
-		{ SetBodygroup( TF_BREAKABLE_MELEE_BREAK_BODYGROUP, iState ); }
+    // We'll successfully predict m_nBody along with m_bBroken, but this can be called outside prediction, in which case
+    // we want to use the networked m_nBody value -- but still fixup our viewmodel which is clientside only.
+    if ( prediction->InPrediction() )
+    {
+        SetBodygroup( TF_BREAKABLE_MELEE_BREAK_BODYGROUP, iState );
+    }
 
-	CTFPlayer *pTFPlayer = ToTFPlayer( GetOwner() );
-	if ( pTFPlayer && pTFPlayer->GetActiveWeapon() == this )
-	{
-		C_BaseAnimating *pViewWpn = GetAppropriateWorldOrViewModel();
-		if ( pViewWpn != this )
-		{
-			pViewWpn->SetBodygroup( TF_BREAKABLE_MELEE_BREAK_BODYGROUP, iState );
-		}
-	}
-#else // CLIENT_DLL
-	m_nBody = iState ? TF_BREAKABLE_MELEE_BODY_BROKEN : TF_BREAKABLE_MELEE_BODY_NOTBROKEN;
-#endif // CLIENT_DLL
+    CTFPlayer *pTFPlayer = ToTFPlayer( GetOwner() );
+    if ( pTFPlayer && pTFPlayer->GetActiveWeapon() == this )
+    {
+        C_BaseAnimating *pViewWpn = GetAppropriateWorldOrViewModel();
+        if ( pViewWpn != this )
+        {
+            pViewWpn->SetBodygroup( TF_BREAKABLE_MELEE_BREAK_BODYGROUP, iState );
+        }
+    }
+#else   // CLIENT_DLL
+    m_nBody = iState ? TF_BREAKABLE_MELEE_BODY_BROKEN : TF_BREAKABLE_MELEE_BODY_NOTBROKEN;
+#endif  // CLIENT_DLL
 }
 
-bool CTFBreakableMelee::UpdateBodygroups( CBaseCombatCharacter* pOwner, int iState )
+bool CTFBreakableMelee::UpdateBodygroups( CBaseCombatCharacter *pOwner, int iState )
 {
-	SwitchBodyGroups();
+    SwitchBodyGroups();
 
-	return BaseClass::UpdateBodygroups( pOwner, iState );
+    return BaseClass::UpdateBodygroups( pOwner, iState );
 }
 
 void CTFBreakableMelee::Smack( void )
 {
-	BaseClass::Smack();
+    BaseClass::Smack();
 
-	if ( ConnectedHit() && IsCurrentAttackACrit() )
-	{
-		SetBroken( true );
-	}
+    if ( ConnectedHit() && IsCurrentAttackACrit() )
+    {
+        SetBroken( true );
+    }
 }
 
 void CTFBreakableMelee::SetBroken( bool bBroken )
-{ 
-	m_bBroken = bBroken;
-	SwitchBodyGroups();
+{
+    m_bBroken = bBroken;
+    SwitchBodyGroups();
 }
 
 #ifdef CLIENT_DLL
 /* static */ void CTFBreakableMelee::RecvProxy_Broken( const CRecvProxyData *pData, void *pStruct, void *pOut )
 {
-	C_TFBreakableMelee* pWeapon = ( C_TFBreakableMelee*) pStruct;
+    C_TFBreakableMelee *pWeapon = ( C_TFBreakableMelee * )pStruct;
 
-	if ( !!pData->m_Value.m_Int != pWeapon->m_bBroken )
-	{
-		pWeapon->m_bBroken = !!pData->m_Value.m_Int;
-		pWeapon->SwitchBodyGroups();
-	}
+    if ( !!pData->m_Value.m_Int != pWeapon->m_bBroken )
+    {
+        pWeapon->m_bBroken = !!pData->m_Value.m_Int;
+        pWeapon->SwitchBodyGroups();
+    }
 }
-#endif // CLIENT_DLL
+#endif  // CLIENT_DLL
 
 CTFStickBomb::CTFStickBomb()
-: CTFBreakableMelee()
+    : CTFBreakableMelee()
 {
-	m_iDetonated = 0;
+    m_iDetonated = 0;
 }
 
 void CTFStickBomb::Precache( void )
 {
-	BaseClass::Precache();
+    BaseClass::Precache();
 
-	PrecacheModel( TF_WEAPON_STICKBOMB_NORMAL_MODEL );
-	PrecacheModel( TF_WEAPON_STICKBOMB_BROKEN_MODEL );
+    PrecacheModel( TF_WEAPON_STICKBOMB_NORMAL_MODEL );
+    PrecacheModel( TF_WEAPON_STICKBOMB_BROKEN_MODEL );
 }
 
 void CTFStickBomb::Smack( void )
 {
-	CTFWeaponBaseMelee::Smack();
+    CTFWeaponBaseMelee::Smack();
 
-	// Stick bombs detonate once, on impact.
-	if ( m_iDetonated == 0 && ConnectedHit() )
-	{
-		m_iDetonated = 1;
-		m_bBroken = true;
-		SwitchBodyGroups();
+    // Stick bombs detonate once, on impact.
+    if ( m_iDetonated == 0 && ConnectedHit() )
+    {
+        m_iDetonated = 1;
+        m_bBroken = true;
+        SwitchBodyGroups();
 
 #ifdef GAME_DLL
-		CTFPlayer *pTFPlayer = ToTFPlayer( GetOwner() );
-		if ( pTFPlayer )
-		{
-			Vector vecForward; 
-			AngleVectors( pTFPlayer->EyeAngles(), &vecForward );
-			Vector vecSwingStart = pTFPlayer->Weapon_ShootPosition();
-			Vector vecSwingEnd = vecSwingStart + vecForward * GetSwingRange();
+        CTFPlayer *pTFPlayer = ToTFPlayer( GetOwner() );
+        if ( pTFPlayer )
+        {
+            Vector vecForward;
+            AngleVectors( pTFPlayer->EyeAngles(), &vecForward );
+            Vector vecSwingStart = pTFPlayer->Weapon_ShootPosition();
+            Vector vecSwingEnd = vecSwingStart + vecForward * GetSwingRange();
 
-			Vector explosion = vecSwingStart;
+            Vector explosion = vecSwingStart;
 
-			CPVSFilter filter( explosion );
-			
-			// Halloween Spell
-			int iHalloweenSpell = 0;
-			int iCustomParticleIndex = INVALID_STRING_INDEX;
-			if ( TF_IsHolidayActive( kHoliday_HalloweenOrFullMoon ) )
-			{
-				CALL_ATTRIB_HOOK_INT_ON_OTHER( this, iHalloweenSpell, halloween_pumpkin_explosions );
-				if ( iHalloweenSpell > 0 )
-				{
-					iCustomParticleIndex = GetParticleSystemIndex( "halloween_explosion" );
-				}
-			}
+            CPVSFilter filter( explosion );
 
-			TE_TFExplosion( filter, 0.0f, explosion, Vector(0,0,1), TF_WEAPON_GRENADELAUNCHER, pTFPlayer->entindex(), -1, SPECIAL1, iCustomParticleIndex );
+            // Halloween Spell
+            int iHalloweenSpell = 0;
+            int iCustomParticleIndex = INVALID_STRING_INDEX;
+            if ( TF_IsHolidayActive( kHoliday_HalloweenOrFullMoon ) )
+            {
+                CALL_ATTRIB_HOOK_INT_ON_OTHER( this, iHalloweenSpell, halloween_pumpkin_explosions );
+                if ( iHalloweenSpell > 0 )
+                {
+                    iCustomParticleIndex = GetParticleSystemIndex( "halloween_explosion" );
+                }
+            }
 
-			int dmgType = DMG_BLAST | DMG_USEDISTANCEMOD;
-			if ( IsCurrentAttackACrit() )
-				dmgType |= DMG_CRITICAL;
+            TE_TFExplosion( filter, 0.0f, explosion, Vector( 0, 0, 1 ), TF_WEAPON_GRENADELAUNCHER, pTFPlayer->entindex(), -1, SPECIAL1, iCustomParticleIndex );
 
-			CTakeDamageInfo info( pTFPlayer, pTFPlayer, this, explosion, explosion, 75.0f, dmgType, TF_DMG_CUSTOM_STICKBOMB_EXPLOSION, &explosion );
-			CTFRadiusDamageInfo radiusinfo( &info, explosion, 100.f );
-			TFGameRules()->RadiusDamage( radiusinfo );
-		}
+            int dmgType = DMG_BLAST | DMG_USEDISTANCEMOD;
+            if ( IsCurrentAttackACrit() )
+                dmgType |= DMG_CRITICAL;
+
+            CTakeDamageInfo info( pTFPlayer, pTFPlayer, this, explosion, explosion, 75.0f, dmgType, TF_DMG_CUSTOM_STICKBOMB_EXPLOSION, &explosion );
+            CTFRadiusDamageInfo radiusinfo( &info, explosion, 100.f );
+            TFGameRules()->RadiusDamage( radiusinfo );
+        }
 #endif
-	}
+    }
 }
 
 void CTFStickBomb::WeaponReset( void )
 {
-	BaseClass::WeaponReset();
+    BaseClass::WeaponReset();
 
-	m_iDetonated = 0;
+    m_iDetonated = 0;
 
-	SwitchBodyGroups();
+    SwitchBodyGroups();
 }
 
 void CTFStickBomb::WeaponRegenerate( void )
 {
-	BaseClass::WeaponRegenerate();
+    BaseClass::WeaponRegenerate();
 
-	m_iDetonated = 0;
+    m_iDetonated = 0;
 
-	SetContextThink( &CTFStickBomb::SwitchBodyGroups, gpGlobals->curtime + 0.01f, "SwitchBodyGroups" );
+    SetContextThink( &CTFStickBomb::SwitchBodyGroups, gpGlobals->curtime + 0.01f, "SwitchBodyGroups" );
 }
 
 void CTFStickBomb::SwitchBodyGroups( void )
 {
 #ifdef CLIENT_DLL
-	if ( !GetViewmodelAttachment() )
-		return;
+    if ( !GetViewmodelAttachment() )
+        return;
 
-	if ( m_iDetonated == 1 )
-	{
-		GetViewmodelAttachment()->SetModel( TF_WEAPON_STICKBOMB_BROKEN_MODEL );
-	}
-	else
-	{
-		GetViewmodelAttachment()->SetModel( TF_WEAPON_STICKBOMB_NORMAL_MODEL );
-	}
+    if ( m_iDetonated == 1 )
+    {
+        GetViewmodelAttachment()->SetModel( TF_WEAPON_STICKBOMB_BROKEN_MODEL );
+    }
+    else
+    {
+        GetViewmodelAttachment()->SetModel( TF_WEAPON_STICKBOMB_NORMAL_MODEL );
+    }
 #endif
 }
 
 const char *CTFStickBomb::GetWorldModel( void ) const
 {
-	if ( m_iDetonated == 1 )
-	{
-		return TF_WEAPON_STICKBOMB_BROKEN_MODEL;
-	}
-	else
-	{
-		return BaseClass::GetWorldModel();
-	}
+    if ( m_iDetonated == 1 )
+    {
+        return TF_WEAPON_STICKBOMB_BROKEN_MODEL;
+    }
+    else
+    {
+        return BaseClass::GetWorldModel();
+    }
 }
 
 #ifdef CLIENT_DLL
 int CTFStickBomb::GetWorldModelIndex( void )
 {
-	if ( !modelinfo )
-		return BaseClass::GetWorldModelIndex();
+    if ( !modelinfo )
+        return BaseClass::GetWorldModelIndex();
 
-	if ( m_iDetonated == 1 )
-	{
-		m_iWorldModelIndex = modelinfo->GetModelIndex( TF_WEAPON_STICKBOMB_BROKEN_MODEL );
-		return m_iWorldModelIndex;
-	}
-	else
-	{
-		m_iWorldModelIndex = modelinfo->GetModelIndex( TF_WEAPON_STICKBOMB_NORMAL_MODEL );
-		return m_iWorldModelIndex;
-	}
+    if ( m_iDetonated == 1 )
+    {
+        m_iWorldModelIndex = modelinfo->GetModelIndex( TF_WEAPON_STICKBOMB_BROKEN_MODEL );
+        return m_iWorldModelIndex;
+    }
+    else
+    {
+        m_iWorldModelIndex = modelinfo->GetModelIndex( TF_WEAPON_STICKBOMB_NORMAL_MODEL );
+        return m_iWorldModelIndex;
+    }
 }
 #endif
 
@@ -336,13 +338,13 @@ int CTFStickBomb::GetWorldModelIndex( void )
 
 void RecvProxy_Detonated( const CRecvProxyData *pData, void *pStruct, void *pOut )
 {
-	C_TFStickBomb* pBomb = (C_TFStickBomb*) pStruct;
+    C_TFStickBomb *pBomb = ( C_TFStickBomb * )pStruct;
 
-	if ( pData->m_Value.m_Int != pBomb->GetDetonated() )
-	{
-		pBomb->SetDetonated( pData->m_Value.m_Int );
-		pBomb->SwitchBodyGroups();
-	}
+    if ( pData->m_Value.m_Int != pBomb->GetDetonated() )
+    {
+        pBomb->SetDetonated( pData->m_Value.m_Int );
+        pBomb->SwitchBodyGroups();
+    }
 }
 
 #endif

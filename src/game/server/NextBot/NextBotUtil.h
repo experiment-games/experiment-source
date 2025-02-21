@@ -17,16 +17,14 @@
  */
 class INextBotEntityFilter
 {
-public:
-	// return true if the given entity passes this filter
-	virtual bool IsAllowed( CBaseEntity *entity ) const = 0;
+   public:
+    // return true if the given entity passes this filter
+    virtual bool IsAllowed( CBaseEntity *entity ) const = 0;
 };
-
 
 // trace filter callback functions. needed for use with the querycache/optimization functionality
 bool VisionTraceFilterFunction( IHandleEntity *pServerEntity, int contentsMask );
 bool IgnoreActorsTraceFilterFunction( IHandleEntity *pServerEntity, int contentsMask );
-
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -34,12 +32,12 @@ bool IgnoreActorsTraceFilterFunction( IHandleEntity *pServerEntity, int contents
  */
 class NextBotTraceFilterIgnoreActors : public CTraceFilterSimple
 {
-public:
-	NextBotTraceFilterIgnoreActors( const IHandleEntity *passentity, int collisionGroup ) : CTraceFilterSimple( passentity, collisionGroup, IgnoreActorsTraceFilterFunction )
-	{
-	}
+   public:
+    NextBotTraceFilterIgnoreActors( const IHandleEntity *passentity, int collisionGroup )
+        : CTraceFilterSimple( passentity, collisionGroup, IgnoreActorsTraceFilterFunction )
+    {
+    }
 };
-
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -47,12 +45,12 @@ public:
  */
 class NextBotVisionTraceFilter : public CTraceFilterSimple
 {
-public:
-	NextBotVisionTraceFilter( const IHandleEntity *passentity, int collisionGroup )	: CTraceFilterSimple( passentity, collisionGroup, VisionTraceFilterFunction )
-	{
-	}
+   public:
+    NextBotVisionTraceFilter( const IHandleEntity *passentity, int collisionGroup )
+        : CTraceFilterSimple( passentity, collisionGroup, VisionTraceFilterFunction )
+    {
+    }
 };
-
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -60,29 +58,28 @@ public:
  */
 class NextBotTraceFilterIgnoreNextBots : public CTraceFilterSimple
 {
-public:
-	NextBotTraceFilterIgnoreNextBots( const IHandleEntity *passentity, int collisionGroup )
-		: CTraceFilterSimple( passentity, collisionGroup )
-	{
-	}
+   public:
+    NextBotTraceFilterIgnoreNextBots( const IHandleEntity *passentity, int collisionGroup )
+        : CTraceFilterSimple( passentity, collisionGroup )
+    {
+    }
 
-	virtual bool ShouldHitEntity( IHandleEntity *pServerEntity, int contentsMask )
-	{
-		if ( CTraceFilterSimple::ShouldHitEntity( pServerEntity, contentsMask ) )
-		{
-			CBaseEntity *entity = EntityFromEntityHandle( pServerEntity );
+    virtual bool ShouldHitEntity( IHandleEntity *pServerEntity, int contentsMask )
+    {
+        if ( CTraceFilterSimple::ShouldHitEntity( pServerEntity, contentsMask ) )
+        {
+            CBaseEntity *entity = EntityFromEntityHandle( pServerEntity );
 #ifdef TERROR
-			CBasePlayer *player = ToBasePlayer( entity );
-			if ( player && player->IsGhost() )
-				return false;
-#endif // TERROR
+            CBasePlayer *player = ToBasePlayer( entity );
+            if ( player && player->IsGhost() )
+                return false;
+#endif  // TERROR
 
-			return ( entity->MyNextBotPointer() == NULL );
-		}
-		return false;
-	}
+            return ( entity->MyNextBotPointer() == NULL );
+        }
+        return false;
+    }
 };
-
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -90,40 +87,39 @@ public:
  */
 class NextBotTraceFilter : public CTraceFilterSimple
 {
-public:
-	NextBotTraceFilter( const IHandleEntity *passentity, int collisionGroup )
-		: CTraceFilterSimple( passentity, collisionGroup )
-	{
-		CBaseEntity *entity = const_cast<CBaseEntity *>(EntityFromEntityHandle( passentity ));
-		m_passBot = entity->MyNextBotPointer();
-	}
+   public:
+    NextBotTraceFilter( const IHandleEntity *passentity, int collisionGroup )
+        : CTraceFilterSimple( passentity, collisionGroup )
+    {
+        CBaseEntity *entity = const_cast< CBaseEntity * >( EntityFromEntityHandle( passentity ) );
+        m_passBot = entity->MyNextBotPointer();
+    }
 
-	virtual bool ShouldHitEntity( IHandleEntity *pServerEntity, int contentsMask )
-	{
-		if ( CTraceFilterSimple::ShouldHitEntity( pServerEntity, contentsMask ) )
-		{
-			CBaseEntity *entity = EntityFromEntityHandle( pServerEntity );
+    virtual bool ShouldHitEntity( IHandleEntity *pServerEntity, int contentsMask )
+    {
+        if ( CTraceFilterSimple::ShouldHitEntity( pServerEntity, contentsMask ) )
+        {
+            CBaseEntity *entity = EntityFromEntityHandle( pServerEntity );
 #ifdef TERROR
-			CBasePlayer *player = ToBasePlayer( entity );
-			if ( player && player->IsGhost() )
-				return false;
-#endif // TERROR
+            CBasePlayer *player = ToBasePlayer( entity );
+            if ( player && player->IsGhost() )
+                return false;
+#endif  // TERROR
 
-			// Skip players on the same team - they're not solid to us, and we'll avoid them
-			if ( entity->IsPlayer() && m_passBot && m_passBot->GetEntity() &&
-				m_passBot->GetEntity()->GetTeamNumber() == entity->GetTeamNumber() )
-				return false;
+            // Skip players on the same team - they're not solid to us, and we'll avoid them
+            if ( entity->IsPlayer() && m_passBot && m_passBot->GetEntity() &&
+                 m_passBot->GetEntity()->GetTeamNumber() == entity->GetTeamNumber() )
+                return false;
 
-			INextBot *bot = entity->MyNextBotPointer();
-			
-			return ( !bot || bot->IsAbleToBlockMovementOf( m_passBot ) );
-		}
-		return false;
-	}
-	
-	const INextBot *m_passBot;
+            INextBot *bot = entity->MyNextBotPointer();
+
+            return ( !bot || bot->IsAbleToBlockMovementOf( m_passBot ) );
+        }
+        return false;
+    }
+
+    const INextBot *m_passBot;
 };
-
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -131,35 +127,34 @@ public:
  */
 class NextBotTraceFilterOnlyActors : public CTraceFilterSimple
 {
-public:
-	NextBotTraceFilterOnlyActors( const IHandleEntity *passentity, int collisionGroup )
-		: CTraceFilterSimple( passentity, collisionGroup )
-	{
-	}
+   public:
+    NextBotTraceFilterOnlyActors( const IHandleEntity *passentity, int collisionGroup )
+        : CTraceFilterSimple( passentity, collisionGroup )
+    {
+    }
 
-	virtual TraceType_t	GetTraceType() const
-	{
-		return TRACE_ENTITIES_ONLY;
-	}
+    virtual TraceType_t GetTraceType() const
+    {
+        return TRACE_ENTITIES_ONLY;
+    }
 
-	virtual bool ShouldHitEntity( IHandleEntity *pServerEntity, int contentsMask )
-	{
-		if ( CTraceFilterSimple::ShouldHitEntity( pServerEntity, contentsMask ) )
-		{
-			CBaseEntity *entity = EntityFromEntityHandle( pServerEntity );
+    virtual bool ShouldHitEntity( IHandleEntity *pServerEntity, int contentsMask )
+    {
+        if ( CTraceFilterSimple::ShouldHitEntity( pServerEntity, contentsMask ) )
+        {
+            CBaseEntity *entity = EntityFromEntityHandle( pServerEntity );
 
 #ifdef TERROR
-			CBasePlayer *player = ToBasePlayer( entity );
-			if ( player && player->IsGhost() )
-				return false;
-#endif // TERROR
+            CBasePlayer *player = ToBasePlayer( entity );
+            if ( player && player->IsGhost() )
+                return false;
+#endif  // TERROR
 
-			return ( entity->MyNextBotPointer() || entity->IsPlayer() );
-		}
-		return false;
-	}
+            return ( entity->MyNextBotPointer() || entity->IsPlayer() );
+        }
+        return false;
+    }
 };
-
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -170,67 +165,66 @@ public:
  */
 class NextBotTraversableTraceFilter : public CTraceFilterSimple
 {
-public:
-	NextBotTraversableTraceFilter( INextBot *bot, ILocomotion::TraverseWhenType when = ILocomotion::EVENTUALLY ) : CTraceFilterSimple( bot->GetEntity(), COLLISION_GROUP_NONE )
-	{
-		m_bot = bot;
-		m_when = when;
-	}
+   public:
+    NextBotTraversableTraceFilter( INextBot *bot, ILocomotion::TraverseWhenType when = ILocomotion::EVENTUALLY )
+        : CTraceFilterSimple( bot->GetEntity(), COLLISION_GROUP_NONE )
+    {
+        m_bot = bot;
+        m_when = when;
+    }
 
-	virtual bool ShouldHitEntity( IHandleEntity *pServerEntity, int contentsMask )
-	{
-		CBaseEntity *entity = EntityFromEntityHandle( pServerEntity );
+    virtual bool ShouldHitEntity( IHandleEntity *pServerEntity, int contentsMask )
+    {
+        CBaseEntity *entity = EntityFromEntityHandle( pServerEntity );
 
-		if ( m_bot->IsSelf( entity ) )
-		{
-			return false;
-		}
+        if ( m_bot->IsSelf( entity ) )
+        {
+            return false;
+        }
 
-		if ( CTraceFilterSimple::ShouldHitEntity( pServerEntity, contentsMask ) )
-		{
-			return !m_bot->GetLocomotionInterface()->IsEntityTraversable( entity, m_when );
-		}
+        if ( CTraceFilterSimple::ShouldHitEntity( pServerEntity, contentsMask ) )
+        {
+            return !m_bot->GetLocomotionInterface()->IsEntityTraversable( entity, m_when );
+        }
 
-		return false;
-	}
+        return false;
+    }
 
-private:
-	INextBot *m_bot;
-	ILocomotion::TraverseWhenType m_when;
+   private:
+    INextBot *m_bot;
+    ILocomotion::TraverseWhenType m_when;
 };
-
 
 //---------------------------------------------------------------------------------------------
 /**
- * Given a vector of entities, a nav area, and a max travel distance, return 
+ * Given a vector of entities, a nav area, and a max travel distance, return
  * the entity that has the shortest travel distance.
  */
 inline CBaseEntity *SelectClosestEntityByTravelDistance( INextBot *me, const CUtlVector< CBaseEntity * > &candidateEntities, CNavArea *startArea, float travelRange )
 {
-	// collect nearby walkable areas within travelRange
-	CUtlVector< CNavArea * > nearbyAreaVector;
-	CollectSurroundingAreas( &nearbyAreaVector, startArea, travelRange, me->GetLocomotionInterface()->GetStepHeight(), me->GetLocomotionInterface()->GetDeathDropHeight() );
+    // collect nearby walkable areas within travelRange
+    CUtlVector< CNavArea * > nearbyAreaVector;
+    CollectSurroundingAreas( &nearbyAreaVector, startArea, travelRange, me->GetLocomotionInterface()->GetStepHeight(), me->GetLocomotionInterface()->GetDeathDropHeight() );
 
-	// find closest entity in the collected area set
-	CBaseEntity *closeEntity = NULL;
-	float closeTravelRange = FLT_MAX;
+    // find closest entity in the collected area set
+    CBaseEntity *closeEntity = NULL;
+    float closeTravelRange = FLT_MAX;
 
-	for( int i=0; i<candidateEntities.Count(); ++i )
-	{
-		CBaseEntity *candidate = candidateEntities[i];
+    for ( int i = 0; i < candidateEntities.Count(); ++i )
+    {
+        CBaseEntity *candidate = candidateEntities[i];
 
-		CNavArea *area = TheNavMesh->GetNearestNavArea( candidate, GETNAVAREA_CHECK_LOS, 500.0f );
+        CNavArea *area = TheNavMesh->GetNearestNavArea( candidate, GETNAVAREA_CHECK_LOS, 500.0f );
 
-		if ( area && area->IsMarked() && area->GetCostSoFar() < closeTravelRange )
-		{
-			closeEntity = candidate;
-			closeTravelRange = area->GetCostSoFar();
-		}
-	}
+        if ( area && area->IsMarked() && area->GetCostSoFar() < closeTravelRange )
+        {
+            closeEntity = candidate;
+            closeTravelRange = area->GetCostSoFar();
+        }
+    }
 
-	return closeEntity;
+    return closeEntity;
 }
-
 
 #ifdef OBSOLETE
 //--------------------------------------------------------------------------------------------
@@ -240,39 +234,39 @@ inline CBaseEntity *SelectClosestEntityByTravelDistance( INextBot *me, const CUt
  */
 class NextBotMovementAvoidanceTraceFilter : public CTraceFilterSimple
 {
-public:
-	NextBotMovementAvoidanceTraceFilter( INextBot *bot ) : CTraceFilterSimple( bot->GetEntity(), COLLISION_GROUP_NONE )
-	{
-		m_bot = bot;
-	}
+   public:
+    NextBotMovementAvoidanceTraceFilter( INextBot *bot )
+        : CTraceFilterSimple( bot->GetEntity(), COLLISION_GROUP_NONE )
+    {
+        m_bot = bot;
+    }
 
-	virtual bool ShouldHitEntity( IHandleEntity *pServerEntity, int contentsMask )
-	{
-		CBaseEntity *entity = EntityFromEntityHandle( pServerEntity );
+    virtual bool ShouldHitEntity( IHandleEntity *pServerEntity, int contentsMask )
+    {
+        CBaseEntity *entity = EntityFromEntityHandle( pServerEntity );
 
 #ifdef TERROR
-		CBasePlayer *player = ToBasePlayer( entity );
-		if ( player && player->IsGhost() )
-			return false;
-#endif // TERROR
+        CBasePlayer *player = ToBasePlayer( entity );
+        if ( player && player->IsGhost() )
+            return false;
+#endif  // TERROR
 
-		if ( m_bot->IsSelf( entity ) )
-		{
-			return false;
-		}
+        if ( m_bot->IsSelf( entity ) )
+        {
+            return false;
+        }
 
-		if ( CTraceFilterSimple::ShouldHitEntity( pServerEntity, contentsMask ) )
-		{
-			return !m_bot->GetLocomotionInterface()->IsEntityTraversable( entity, ILocomotion::IMMEDIATELY );
-		}
+        if ( CTraceFilterSimple::ShouldHitEntity( pServerEntity, contentsMask ) )
+        {
+            return !m_bot->GetLocomotionInterface()->IsEntityTraversable( entity, ILocomotion::IMMEDIATELY );
+        }
 
-		return false;
-	}
+        return false;
+    }
 
-private:
-	INextBot *m_bot;
+   private:
+    INextBot *m_bot;
 };
 #endif
 
-
-#endif // _NEXT_BOT_UTIL_H_
+#endif  // _NEXT_BOT_UTIL_H_

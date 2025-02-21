@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 #ifndef EXTRA_MAP_ENTITY_H
@@ -12,71 +12,92 @@
 
 #include "baseanimating.h"
 
-#define ENTITYROCKET_DEFAULT_MODEL	"models/props_skybox/grocket_001.mdl"
-#define ENTITYCARRIER_DEFAULT_MODEL	"models/props_skybox/skybox_carrier.mdl"
-#define ENTITYSIGN_DEFAULT_MODEL	"models/props_teaser/update_billboard001.mdl"
-#define ENTITYSAUCER_DEFAULT_MODEL	"models/props_teaser/saucer.mdl"
+#define ENTITYROCKET_DEFAULT_MODEL "models/props_skybox/grocket_001.mdl"
+#define ENTITYCARRIER_DEFAULT_MODEL "models/props_skybox/skybox_carrier.mdl"
+#define ENTITYSIGN_DEFAULT_MODEL "models/props_teaser/update_billboard001.mdl"
+#define ENTITYSAUCER_DEFAULT_MODEL "models/props_teaser/saucer.mdl"
 
 DECLARE_AUTO_LIST( IExtraMapEntityAutoList );
 class CExtraMapEntity : public CBaseAnimating, public IExtraMapEntityAutoList
 {
-	DECLARE_CLASS( CExtraMapEntity, CBaseAnimating );
-public:
-	DECLARE_DATADESC();
+    DECLARE_CLASS( CExtraMapEntity, CBaseAnimating );
 
-	virtual void	Spawn( void ) OVERRIDE;
-	virtual void	Precache( void ) OVERRIDE;
-	virtual const char *GetDefaultModel( void ) = 0;
-	virtual void	PrepareModelName( const char *szModelName );
+   public:
+    DECLARE_DATADESC();
 
-	static void		SpawnExtraModel( void );
+    virtual void Spawn( void ) OVERRIDE;
+    virtual void Precache( void ) OVERRIDE;
+    virtual const char *GetDefaultModel( void ) = 0;
+    virtual void PrepareModelName( const char *szModelName );
 
-	virtual bool	ShouldAnimate( void ){ return false; }
-	void			AnimThink( void );
+    static void SpawnExtraModel( void );
 
-protected:
-	virtual void	Precache_Internal( void );
+    virtual bool ShouldAnimate( void )
+    {
+        return false;
+    }
+    void AnimThink( void );
 
-private:
-	static const char *ValidateKeyName( const char *pszEntName );
+   protected:
+    virtual void Precache_Internal( void );
+
+   private:
+    static const char *ValidateKeyName( const char *pszEntName );
 };
 
 class CExtraMapEntity_Rocket : public CExtraMapEntity
 {
-	DECLARE_CLASS( CExtraMapEntity_Rocket, CExtraMapEntity );
-public:
-	virtual void	Spawn( void ) OVERRIDE;
-	virtual const char *GetDefaultModel( void ) OVERRIDE { return ENTITYROCKET_DEFAULT_MODEL; }
+    DECLARE_CLASS( CExtraMapEntity_Rocket, CExtraMapEntity );
 
-protected:
-	virtual void	Precache_Internal( void ) OVERRIDE;
+   public:
+    virtual void Spawn( void ) OVERRIDE;
+    virtual const char *GetDefaultModel( void ) OVERRIDE
+    {
+        return ENTITYROCKET_DEFAULT_MODEL;
+    }
+
+   protected:
+    virtual void Precache_Internal( void ) OVERRIDE;
 };
 
 class CExtraMapEntity_Carrier : public CExtraMapEntity
 {
-	DECLARE_CLASS( CExtraMapEntity_Carrier, CExtraMapEntity );
-public:
-	virtual void	Spawn( void ) OVERRIDE;
-	virtual const char *GetDefaultModel( void ) OVERRIDE { return ENTITYCARRIER_DEFAULT_MODEL; }
+    DECLARE_CLASS( CExtraMapEntity_Carrier, CExtraMapEntity );
+
+   public:
+    virtual void Spawn( void ) OVERRIDE;
+    virtual const char *GetDefaultModel( void ) OVERRIDE
+    {
+        return ENTITYCARRIER_DEFAULT_MODEL;
+    }
 };
 
 class CExtraMapEntity_Sign : public CExtraMapEntity
 {
-	DECLARE_CLASS( CExtraMapEntity_Sign, CExtraMapEntity );
-public:
-	virtual void	Spawn( void ) OVERRIDE;
-	virtual const char *GetDefaultModel( void ) OVERRIDE { return ENTITYSIGN_DEFAULT_MODEL; }
+    DECLARE_CLASS( CExtraMapEntity_Sign, CExtraMapEntity );
+
+   public:
+    virtual void Spawn( void ) OVERRIDE;
+    virtual const char *GetDefaultModel( void ) OVERRIDE
+    {
+        return ENTITYSIGN_DEFAULT_MODEL;
+    }
 };
 
 class CExtraMapEntity_Saucer : public CExtraMapEntity
 {
-	DECLARE_CLASS( CExtraMapEntity_Saucer, CExtraMapEntity );
-public:
-	virtual void	Spawn( void ) OVERRIDE;
-	virtual const char *GetDefaultModel( void ) OVERRIDE{ return ENTITYSAUCER_DEFAULT_MODEL; }
-	virtual bool	ShouldAnimate( void ){ return true; }
+    DECLARE_CLASS( CExtraMapEntity_Saucer, CExtraMapEntity );
+
+   public:
+    virtual void Spawn( void ) OVERRIDE;
+    virtual const char *GetDefaultModel( void ) OVERRIDE
+    {
+        return ENTITYSAUCER_DEFAULT_MODEL;
+    }
+    virtual bool ShouldAnimate( void )
+    {
+        return true;
+    }
 };
 
-#endif // EXTRA_MAP_ENTITY_H
-
-
+#endif  // EXTRA_MAP_ENTITY_H

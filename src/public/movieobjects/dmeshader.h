@@ -12,42 +12,40 @@
 
 #include "datamodel/dmelement.h"
 
-
 //-----------------------------------------------------------------------------
 // Forward declarations
 //-----------------------------------------------------------------------------
 class IShader;
-
 
 //-----------------------------------------------------------------------------
 // A class representing a material
 //-----------------------------------------------------------------------------
 class CDmeShader : public CDmElement
 {
-	DEFINE_ELEMENT( CDmeShader, CDmElement );
+    DEFINE_ELEMENT( CDmeShader, CDmElement );
 
-public:
-	void SetShaderName( const char *pShaderName );
-	const char *GetShaderName() const;
+   public:
+    void SetShaderName( const char *pShaderName );
+    const char *GetShaderName() const;
 
-	// Resolve
-	virtual void Resolve();
+    // Resolve
+    virtual void Resolve();
 
-private:
-	// Finds a shader
-	IShader *FindShader();
+   private:
+    // Finds a shader
+    IShader *FindShader();
 
-	// Remove all shader parameters that don't exist in the new shader
-	void RemoveUnusedShaderParams( IShader *pShader );
+    // Remove all shader parameters that don't exist in the new shader
+    void RemoveUnusedShaderParams( IShader *pShader );
 
-	// Add all shader parameters that don't currently exist
-	void AddNewShaderParams( IShader *pShader );
+    // Add all shader parameters that don't currently exist
+    void AddNewShaderParams( IShader *pShader );
 
-	// Add attribute for shader parameter
-	CDmAttribute* AddAttributeForShaderParameter( IShader *pShader, int nIndex );
+    // Add attribute for shader parameter
+    CDmAttribute *AddAttributeForShaderParameter( IShader *pShader, int nIndex );
 
-	IShader *m_pShader;
-	CDmAttributeVarString m_ShaderName;
+    IShader *m_pShader;
+    CDmAttributeVarString m_ShaderName;
 };
 
-#endif // DMESHADER_H
+#endif  // DMESHADER_H

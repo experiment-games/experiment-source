@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -18,8 +18,7 @@ using namespace vgui;
 
 vgui::Panel *Create_CvarToggleCheckButton()
 {
-	return new CvarToggleCheckButton< UIConVarRef >( NULL, NULL );
+    return new CvarToggleCheckButton< UIConVarRef >( NULL, NULL );
 }
 
-DECLARE_BUILD_FACTORY_CUSTOM_ALIAS( CvarToggleCheckButton<UIConVarRef>, CvarToggleCheckButton, Create_CvarToggleCheckButton );
-
+DECLARE_BUILD_FACTORY_CUSTOM_ALIAS( CvarToggleCheckButton< UIConVarRef >, CvarToggleCheckButton, Create_CvarToggleCheckButton );

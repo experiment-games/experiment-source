@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================
@@ -12,7 +12,7 @@
 #include "tier0/memdbgon.h"
 
 IMPLEMENT_CLIENTCLASS_DT( C_CaptureZone, DT_CaptureZone, CCaptureZone )
-	RecvPropInt( RECVINFO( m_bDisabled ) ),
-END_RECV_TABLE()
+RecvPropInt( RECVINFO( m_bDisabled ) ),
+    END_RECV_TABLE()
 
-IMPLEMENT_AUTO_LIST( ICaptureZoneAutoList );
+        IMPLEMENT_AUTO_LIST( ICaptureZoneAutoList );

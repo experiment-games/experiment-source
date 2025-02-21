@@ -14,32 +14,30 @@
 
 class CPointNavInterface : public CPointEntity
 {
-	DECLARE_CLASS( CPointNavInterface, CPointEntity );
+    DECLARE_CLASS( CPointNavInterface, CPointEntity );
 
-public:
+   public:
+    // Input handlers
+    void RecomputeBlockers( inputdata_t &inputdata );
 
-	// Input handlers
-	void RecomputeBlockers(inputdata_t &inputdata);
-	
-	DECLARE_DATADESC();
+    DECLARE_DATADESC();
 };
 
 BEGIN_DATADESC( CPointNavInterface )
 
-	// Inputs
-	DEFINE_INPUTFUNC( FIELD_VOID, "RecomputeBlockers", RecomputeBlockers ),
+// Inputs
+DEFINE_INPUTFUNC( FIELD_VOID, "RecomputeBlockers", RecomputeBlockers ),
 
-END_DATADESC()
+    END_DATADESC()
 
-LINK_ENTITY_TO_CLASS( tf_point_nav_interface, CPointNavInterface );
-
+        LINK_ENTITY_TO_CLASS( tf_point_nav_interface, CPointNavInterface );
 
 void CPointNavInterface::RecomputeBlockers( inputdata_t &inputdata )
 {
-	CTFNavMesh* pTFNavMesh = dynamic_cast<CTFNavMesh*>( TheNavMesh );
-	Assert( pTFNavMesh );
-	if( pTFNavMesh )
-	{
-		pTFNavMesh->ScheduleRecomputationOfInternalData( CTFNavMesh::MAP_LOGIC );
-	}
+    CTFNavMesh *pTFNavMesh = dynamic_cast< CTFNavMesh * >( TheNavMesh );
+    Assert( pTFNavMesh );
+    if ( pTFNavMesh )
+    {
+        pTFNavMesh->ScheduleRecomputationOfInternalData( CTFNavMesh::MAP_LOGIC );
+    }
 }

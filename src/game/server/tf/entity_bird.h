@@ -19,20 +19,19 @@
 
 class CEntityBird : public CBaseAnimating
 {
-	DECLARE_CLASS( CEntityBird, CBaseAnimating );
-public:
-	virtual void	Spawn( void );
-	virtual void	Precache( void );
-	virtual void	Touch( CBaseEntity *pOther ); 
-	virtual int		OnTakeDamage( const CTakeDamageInfo &info );
+    DECLARE_CLASS( CEntityBird, CBaseAnimating );
 
-	// Spawn random birds at locations on certain maps.
-	static void		SpawnRandomBirds( void );
+   public:
+    virtual void Spawn( void );
+    virtual void Precache( void );
+    virtual void Touch( CBaseEntity *pOther );
+    virtual int OnTakeDamage( const CTakeDamageInfo &info );
 
-private:
-	void			Explode( void );
+    // Spawn random birds at locations on certain maps.
+    static void SpawnRandomBirds( void );
+
+   private:
+    void Explode( void );
 };
 
-#endif // ENTITY_BIRD_H
-
-
+#endif  // ENTITY_BIRD_H

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //===========================================================================//
 
@@ -15,128 +15,127 @@
 DEFINE_FALLBACK_SHADER( DecalBaseTimesLightmapAlphaBlendSelfIllum, DecalBaseTimesLightmapAlphaBlendSelfIllum_DX8 )
 
 BEGIN_VS_SHADER( DecalBaseTimesLightmapAlphaBlendSelfIllum_DX8, "" )
-			  
-	BEGIN_SHADER_PARAMS
-		SHADER_PARAM_OVERRIDE( BASETEXTURE, SHADER_PARAM_TYPE_TEXTURE, "decals/decalporthole001b", "decal base texture", 0 )
-		SHADER_PARAM( SELFILLUMTEXTURE, SHADER_PARAM_TYPE_TEXTURE, "decals/decalporthole001b_mask", "self-illum texture" )
-		SHADER_PARAM( SELFILLUMTEXTUREFRAME, SHADER_PARAM_TYPE_INTEGER, "0", "self-illum texture frame" )
-	END_SHADER_PARAMS
 
-	SHADER_INIT_PARAMS()
-	{
-		// FLASHLIGHTFIXME
-		params[FLASHLIGHTTEXTURE]->SetStringValue( "effects/flashlight001" );
-		SET_FLAGS( MATERIAL_VAR_NO_DEBUG_OVERRIDE );
-		SET_FLAGS( MATERIAL_VAR_TRANSLUCENT );
-		SET_FLAGS2( MATERIAL_VAR2_LIGHTING_LIGHTMAP );
-	}
+BEGIN_SHADER_PARAMS
+SHADER_PARAM_OVERRIDE( BASETEXTURE, SHADER_PARAM_TYPE_TEXTURE, "decals/decalporthole001b", "decal base texture", 0 )
+SHADER_PARAM( SELFILLUMTEXTURE, SHADER_PARAM_TYPE_TEXTURE, "decals/decalporthole001b_mask", "self-illum texture" )
+SHADER_PARAM( SELFILLUMTEXTUREFRAME, SHADER_PARAM_TYPE_INTEGER, "0", "self-illum texture frame" )
+END_SHADER_PARAMS
 
-	SHADER_FALLBACK
-	{
-		if ( IsPC() && ( g_pHardwareConfig->GetDXSupportLevel() < 80 ) )
-		{
-			return "DecalBaseTimesLightmapAlphaBlendSelfIllum_DX6";
-		}
-		return 0;
-	}
+SHADER_INIT_PARAMS()
+{
+    // FLASHLIGHTFIXME
+    params[FLASHLIGHTTEXTURE]->SetStringValue( "effects/flashlight001" );
+    SET_FLAGS( MATERIAL_VAR_NO_DEBUG_OVERRIDE );
+    SET_FLAGS( MATERIAL_VAR_TRANSLUCENT );
+    SET_FLAGS2( MATERIAL_VAR2_LIGHTING_LIGHTMAP );
+}
 
-	SHADER_INIT
-	{
-		LoadTexture( FLASHLIGHTTEXTURE );
-		LoadTexture( BASETEXTURE );
-		LoadTexture( SELFILLUMTEXTURE );
-	}
+SHADER_FALLBACK
+{
+    if ( IsPC() && ( g_pHardwareConfig->GetDXSupportLevel() < 80 ) )
+    {
+        return "DecalBaseTimesLightmapAlphaBlendSelfIllum_DX6";
+    }
+    return 0;
+}
 
-	void DrawDecal( IMaterialVar **params, IShaderDynamicAPI *pShaderAPI, IShaderShadow *pShaderShadow )
-	{
-		if( IsSnapshotting() )
-		{
-			pShaderShadow->EnableDepthWrites( false );
-			pShaderShadow->EnablePolyOffset( SHADER_POLYOFFSET_DECAL );
-			pShaderShadow->EnableBlending( true );
-			pShaderShadow->BlendFunc( SHADER_BLEND_SRC_ALPHA, SHADER_BLEND_ONE_MINUS_SRC_ALPHA );
+SHADER_INIT
+{
+    LoadTexture( FLASHLIGHTTEXTURE );
+    LoadTexture( BASETEXTURE );
+    LoadTexture( SELFILLUMTEXTURE );
+}
 
-			pShaderShadow->EnableTexture( SHADER_SAMPLER0, true );
-			pShaderShadow->EnableTexture( SHADER_SAMPLER1, true );
-			pShaderShadow->EnableTexture( SHADER_SAMPLER2, true );
-			pShaderShadow->EnableTexture( SHADER_SAMPLER3, true );
+void DrawDecal( IMaterialVar **params, IShaderDynamicAPI *pShaderAPI, IShaderShadow *pShaderShadow )
+{
+    if ( IsSnapshotting() )
+    {
+        pShaderShadow->EnableDepthWrites( false );
+        pShaderShadow->EnablePolyOffset( SHADER_POLYOFFSET_DECAL );
+        pShaderShadow->EnableBlending( true );
+        pShaderShadow->BlendFunc( SHADER_BLEND_SRC_ALPHA, SHADER_BLEND_ONE_MINUS_SRC_ALPHA );
 
-			int pTexCoords[3] = { 2, 2, 1 };
-			pShaderShadow->VertexShaderVertexFormat( VERTEX_POSITION | VERTEX_COLOR, 3, pTexCoords, 0 );
+        pShaderShadow->EnableTexture( SHADER_SAMPLER0, true );
+        pShaderShadow->EnableTexture( SHADER_SAMPLER1, true );
+        pShaderShadow->EnableTexture( SHADER_SAMPLER2, true );
+        pShaderShadow->EnableTexture( SHADER_SAMPLER3, true );
 
-			lightmappedgeneric_decal_Static_Index vshIndex;
-			pShaderShadow->SetVertexShader( "LightmappedGeneric_Decal", vshIndex.GetIndex() );
-			pShaderShadow->SetPixelShader( "LightmappedGeneric_Decal" );
-			FogToFogColor();
-		}
-		else
-		{
-			BindTexture( SHADER_SAMPLER0, BASETEXTURE, FRAME );
+        int pTexCoords[3] = { 2, 2, 1 };
+        pShaderShadow->VertexShaderVertexFormat( VERTEX_POSITION | VERTEX_COLOR, 3, pTexCoords, 0 );
 
-			// Load the z^2 components of the lightmap coordinate axes only
-			// This is (N dot basis)^2
-			Vector vecZValues( g_localBumpBasis[0].z, g_localBumpBasis[1].z, g_localBumpBasis[2].z );
-			vecZValues *= vecZValues;
+        lightmappedgeneric_decal_Static_Index vshIndex;
+        pShaderShadow->SetVertexShader( "LightmappedGeneric_Decal", vshIndex.GetIndex() );
+        pShaderShadow->SetPixelShader( "LightmappedGeneric_Decal" );
+        FogToFogColor();
+    }
+    else
+    {
+        BindTexture( SHADER_SAMPLER0, BASETEXTURE, FRAME );
 
-			Vector4D basis[3];
-			basis[0].Init( vecZValues.x, vecZValues.x, vecZValues.x, 0.0f );
-			basis[1].Init( vecZValues.y, vecZValues.y, vecZValues.y, 0.0f );
-			basis[2].Init( vecZValues.z, vecZValues.z, vecZValues.z, 0.0f );
-			pShaderAPI->SetPixelShaderConstant( 0, (float*)basis, 3 );
+        // Load the z^2 components of the lightmap coordinate axes only
+        // This is (N dot basis)^2
+        Vector vecZValues( g_localBumpBasis[0].z, g_localBumpBasis[1].z, g_localBumpBasis[2].z );
+        vecZValues *= vecZValues;
 
-			pShaderAPI->BindStandardTexture( SHADER_SAMPLER1, TEXTURE_LIGHTMAP_BUMPED );
-			SetVertexShaderTextureTransform( VERTEX_SHADER_SHADER_SPECIFIC_CONST_0, BASETEXTURETRANSFORM );
-			SetModulationPixelShaderDynamicState( 3 );
+        Vector4D basis[3];
+        basis[0].Init( vecZValues.x, vecZValues.x, vecZValues.x, 0.0f );
+        basis[1].Init( vecZValues.y, vecZValues.y, vecZValues.y, 0.0f );
+        basis[2].Init( vecZValues.z, vecZValues.z, vecZValues.z, 0.0f );
+        pShaderAPI->SetPixelShaderConstant( 0, ( float * )basis, 3 );
 
-			lightmappedgeneric_decal_Dynamic_Index vshIndex;
-			vshIndex.SetDOWATERFOG( pShaderAPI->GetSceneFogMode() == MATERIAL_FOG_LINEAR_BELOW_FOG_Z );
-			pShaderAPI->SetVertexShaderIndex( vshIndex.GetIndex() );
-		}
-		Draw();
+        pShaderAPI->BindStandardTexture( SHADER_SAMPLER1, TEXTURE_LIGHTMAP_BUMPED );
+        SetVertexShaderTextureTransform( VERTEX_SHADER_SHADER_SPECIFIC_CONST_0, BASETEXTURETRANSFORM );
+        SetModulationPixelShaderDynamicState( 3 );
 
-		if( IsSnapshotting() )
-		{
-			SetInitialShadowState( );
-			pShaderShadow->EnableDepthWrites( false );
-			pShaderShadow->EnablePolyOffset( SHADER_POLYOFFSET_DECAL );
-			pShaderShadow->EnableBlending( true );
-			pShaderShadow->BlendFunc( SHADER_BLEND_SRC_ALPHA, SHADER_BLEND_ONE_MINUS_SRC_ALPHA );
-			pShaderShadow->EnableTexture( SHADER_SAMPLER0, true );
+        lightmappedgeneric_decal_Dynamic_Index vshIndex;
+        vshIndex.SetDOWATERFOG( pShaderAPI->GetSceneFogMode() == MATERIAL_FOG_LINEAR_BELOW_FOG_Z );
+        pShaderAPI->SetVertexShaderIndex( vshIndex.GetIndex() );
+    }
+    Draw();
 
-			pShaderShadow->VertexShaderVertexFormat( VERTEX_POSITION, 1, 0, 0 );
-			lightmappedgeneric_vs11_Static_Index vshIndex;
-			vshIndex.SetDETAIL( false );
-			vshIndex.SetENVMAP( false );
-			vshIndex.SetENVMAPCAMERASPACE( false );
-			vshIndex.SetENVMAPSPHERE( false );
-			vshIndex.SetVERTEXCOLOR( false );
-			pShaderShadow->SetVertexShader( "LightmappedGeneric_vs11", vshIndex.GetIndex() );
-			pShaderShadow->SetPixelShader( "DecalBaseTimesLightmapAlphaBlendSelfIllum2_ps11" );
+    if ( IsSnapshotting() )
+    {
+        SetInitialShadowState();
+        pShaderShadow->EnableDepthWrites( false );
+        pShaderShadow->EnablePolyOffset( SHADER_POLYOFFSET_DECAL );
+        pShaderShadow->EnableBlending( true );
+        pShaderShadow->BlendFunc( SHADER_BLEND_SRC_ALPHA, SHADER_BLEND_ONE_MINUS_SRC_ALPHA );
+        pShaderShadow->EnableTexture( SHADER_SAMPLER0, true );
 
-			FogToFogColor();
-		}
-		else
-		{
-			BindTexture( SHADER_SAMPLER0, SELFILLUMTEXTURE, SELFILLUMTEXTUREFRAME );
+        pShaderShadow->VertexShaderVertexFormat( VERTEX_POSITION, 1, 0, 0 );
+        lightmappedgeneric_vs11_Static_Index vshIndex;
+        vshIndex.SetDETAIL( false );
+        vshIndex.SetENVMAP( false );
+        vshIndex.SetENVMAPCAMERASPACE( false );
+        vshIndex.SetENVMAPSPHERE( false );
+        vshIndex.SetVERTEXCOLOR( false );
+        pShaderShadow->SetVertexShader( "LightmappedGeneric_vs11", vshIndex.GetIndex() );
+        pShaderShadow->SetPixelShader( "DecalBaseTimesLightmapAlphaBlendSelfIllum2_ps11" );
 
-			lightmappedgeneric_vs11_Dynamic_Index vshIndex;
-			vshIndex.SetDOWATERFOG( pShaderAPI->GetSceneFogMode() == MATERIAL_FOG_LINEAR_BELOW_FOG_Z );
-			pShaderAPI->SetVertexShaderIndex( vshIndex.GetIndex() );
-		}
-		Draw();
-	}
+        FogToFogColor();
+    }
+    else
+    {
+        BindTexture( SHADER_SAMPLER0, SELFILLUMTEXTURE, SELFILLUMTEXTUREFRAME );
 
-	SHADER_DRAW
-	{
-		if( UsingFlashlight( params ) )
-		{
-			DrawFlashlight_dx80( params, pShaderAPI, pShaderShadow, false, -1, -1, -1, 
-				FLASHLIGHTTEXTURE, FLASHLIGHTTEXTUREFRAME, true, false, 0, -1, -1 );
-		}
-		else
-		{
-			DrawDecal( params, pShaderAPI, pShaderShadow );
-		}
-	}
+        lightmappedgeneric_vs11_Dynamic_Index vshIndex;
+        vshIndex.SetDOWATERFOG( pShaderAPI->GetSceneFogMode() == MATERIAL_FOG_LINEAR_BELOW_FOG_Z );
+        pShaderAPI->SetVertexShaderIndex( vshIndex.GetIndex() );
+    }
+    Draw();
+}
+
+SHADER_DRAW
+{
+    if ( UsingFlashlight( params ) )
+    {
+        DrawFlashlight_dx80( params, pShaderAPI, pShaderShadow, false, -1, -1, -1, FLASHLIGHTTEXTURE, FLASHLIGHTTEXTUREFRAME, true, false, 0, -1, -1 );
+    }
+    else
+    {
+        DrawDecal( params, pShaderAPI, pShaderShadow );
+    }
+}
 
 END_SHADER

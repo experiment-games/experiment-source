@@ -17,79 +17,76 @@
 #include "player_vs_environment/tf_population_manager.h"
 
 //---------------------------------------------------------------------------------------------
-CTFBotMvMEngineerTeleportSpawn::CTFBotMvMEngineerTeleportSpawn( CBaseTFBotHintEntity* pHint, bool bFirstTeleportSpawn )
+CTFBotMvMEngineerTeleportSpawn::CTFBotMvMEngineerTeleportSpawn( CBaseTFBotHintEntity *pHint, bool bFirstTeleportSpawn )
 {
-	m_hintEntity = pHint;
-	m_bFirstTeleportSpawn = bFirstTeleportSpawn;
+    m_hintEntity = pHint;
+    m_bFirstTeleportSpawn = bFirstTeleportSpawn;
 }
-
 
 //---------------------------------------------------------------------------------------------
-ActionResult< CTFBot >	CTFBotMvMEngineerTeleportSpawn::OnStart( CTFBot *me, Action< CTFBot > *priorAction )
+ActionResult< CTFBot > CTFBotMvMEngineerTeleportSpawn::OnStart( CTFBot *me, Action< CTFBot > *priorAction )
 {
-	if ( !me->HasAttribute( CTFBot::TELEPORT_TO_HINT ) )
-	{
-		return Done( "Cannot teleport to hint with out Attributes TeleportToHint" );
-	}
+    if ( !me->HasAttribute( CTFBot::TELEPORT_TO_HINT ) )
+    {
+        return Done( "Cannot teleport to hint with out Attributes TeleportToHint" );
+    }
 
-	return Continue();
+    return Continue();
 }
-
 
 //---------------------------------------------------------------------------------------------
-ActionResult< CTFBot >	CTFBotMvMEngineerTeleportSpawn::Update( CTFBot *me, float interval )
+ActionResult< CTFBot > CTFBotMvMEngineerTeleportSpawn::Update( CTFBot *me, float interval )
 {
-	if ( !m_teleportDelay.HasStarted() )
-	{
-		m_teleportDelay.Start( 0.1f );
-		if ( m_hintEntity )
-			TFGameRules()->PushAllPlayersAway( m_hintEntity->GetAbsOrigin(), 400, 500, TF_TEAM_RED );
-	}
-	else if ( m_teleportDelay.IsElapsed() )
-	{
-		if ( !m_hintEntity )
-			return Done( "Cannot teleport to hint as m_hintEntity is NULL" );
+    if ( !m_teleportDelay.HasStarted() )
+    {
+        m_teleportDelay.Start( 0.1f );
+        if ( m_hintEntity )
+            TFGameRules()->PushAllPlayersAway( m_hintEntity->GetAbsOrigin(), 400, 500, TF_TEAM_RED );
+    }
+    else if ( m_teleportDelay.IsElapsed() )
+    {
+        if ( !m_hintEntity )
+            return Done( "Cannot teleport to hint as m_hintEntity is NULL" );
 
-		// teleport the engineer to the sentry spawn point
-		QAngle angles = m_hintEntity->GetAbsAngles();
-		Vector origin = m_hintEntity->GetAbsOrigin();
-		origin.z += 10.f; // move up off the around a little bit to prevent the engineer from getting stuck in the ground
+        // teleport the engineer to the sentry spawn point
+        QAngle angles = m_hintEntity->GetAbsAngles();
+        Vector origin = m_hintEntity->GetAbsOrigin();
+        origin.z += 10.f;  // move up off the around a little bit to prevent the engineer from getting stuck in the ground
 
-		me->Teleport( &origin, &angles, NULL );
+        me->Teleport( &origin, &angles, NULL );
 
-		CPVSFilter filter( origin );
-		TE_TFParticleEffect( filter, 0.0, "teleported_blue", origin, vec3_angle );
-		TE_TFParticleEffect( filter, 0.0, "player_sparkles_blue", origin, vec3_angle );
+        CPVSFilter filter( origin );
+        TE_TFParticleEffect( filter, 0.0, "teleported_blue", origin, vec3_angle );
+        TE_TFParticleEffect( filter, 0.0, "player_sparkles_blue", origin, vec3_angle );
 
-		if ( m_bFirstTeleportSpawn )
-		{
-			// notify players that engineer's teleported into the map
-			TE_TFParticleEffect( filter, 0.0, "teleported_mvm_bot", origin, vec3_angle );
-			me->EmitSound( "Engineer.MVM_BattleCry07" );
-			m_hintEntity->EmitSound( "MVM.Robot_Engineer_Spawn" );
+        if ( m_bFirstTeleportSpawn )
+        {
+            // notify players that engineer's teleported into the map
+            TE_TFParticleEffect( filter, 0.0, "teleported_mvm_bot", origin, vec3_angle );
+            me->EmitSound( "Engineer.MVM_BattleCry07" );
+            m_hintEntity->EmitSound( "MVM.Robot_Engineer_Spawn" );
 
-			if ( g_pPopulationManager )
-			{
-				CWave *pWave = g_pPopulationManager->GetCurrentWave();
-				if ( pWave )
-				{
-					if ( pWave->NumEngineersTeleportSpawned() == 0 )
-					{
-						TFGameRules()->BroadcastSound( 255, "Announcer.MVM_First_Engineer_Teleport_Spawned" );
-					}
-					else
-					{
-						TFGameRules()->BroadcastSound( 255, "Announcer.MVM_Another_Engineer_Teleport_Spawned" );
-					}
+            if ( g_pPopulationManager )
+            {
+                CWave *pWave = g_pPopulationManager->GetCurrentWave();
+                if ( pWave )
+                {
+                    if ( pWave->NumEngineersTeleportSpawned() == 0 )
+                    {
+                        TFGameRules()->BroadcastSound( 255, "Announcer.MVM_First_Engineer_Teleport_Spawned" );
+                    }
+                    else
+                    {
+                        TFGameRules()->BroadcastSound( 255, "Announcer.MVM_Another_Engineer_Teleport_Spawned" );
+                    }
 
-					pWave->IncrementEngineerTeleportSpawned();
-				}
-			}
-		}
+                    pWave->IncrementEngineerTeleportSpawned();
+                }
+            }
+        }
 
-		return Done( "Teleported" );
-	}
+        return Done( "Teleported" );
+    }
 
-	return Continue();
+    return Continue();
 }
-

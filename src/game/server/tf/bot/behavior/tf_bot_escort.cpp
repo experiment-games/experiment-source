@@ -18,113 +18,103 @@ extern ConVar tf_bot_path_lookahead_range;
 
 ConVar tf_bot_escort_range( "tf_bot_escort_range", "300", FCVAR_CHEAT );
 
-
 //---------------------------------------------------------------------------------------------
 CTFBotEscort::CTFBotEscort( CBaseEntity *who )
 {
-	SetWho( who );
+    SetWho( who );
 }
-
 
 //---------------------------------------------------------------------------------------------
 void CTFBotEscort::SetWho( CBaseEntity *who )
 {
-	m_who = who;
+    m_who = who;
 }
-
 
 //---------------------------------------------------------------------------------------------
 CBaseEntity *CTFBotEscort::GetWho( void ) const
 {
-	return m_who;
+    return m_who;
 }
-
 
 //---------------------------------------------------------------------------------------------
-ActionResult< CTFBot >	CTFBotEscort::OnStart( CTFBot *me, Action< CTFBot > *priorAction )
+ActionResult< CTFBot > CTFBotEscort::OnStart( CTFBot *me, Action< CTFBot > *priorAction )
 {
-	m_pathToWho.SetMinLookAheadDistance( me->GetDesiredPathLookAheadRange() );
+    m_pathToWho.SetMinLookAheadDistance( me->GetDesiredPathLookAheadRange() );
 
-	return Continue();
+    return Continue();
 }
-
 
 //---------------------------------------------------------------------------------------------
-ActionResult< CTFBot >	CTFBotEscort::Update( CTFBot *me, float interval )
+ActionResult< CTFBot > CTFBotEscort::Update( CTFBot *me, float interval )
 {
-	const CKnownEntity *threat = me->GetVisionInterface()->GetPrimaryKnownThreat();
-	if ( threat && threat->IsVisibleInFOVNow() )
-	{
-		return SuspendFor( new CTFBotAttack, "Attacking nearby threat" );
-	}
-	else
-	{
-		// no enemy is visible - move near who we are escorting
-		if ( m_who != NULL )
-		{
-			if ( me->IsRangeGreaterThan( m_who, tf_bot_escort_range.GetFloat() ) )
-			{
-				if ( m_repathTimer.IsElapsed() )
-				{
-					CTFBotPathCost cost( me, FASTEST_ROUTE );
-					m_pathToWho.Compute( me, m_who->GetAbsOrigin(), cost );
-					m_repathTimer.Start( RandomFloat( 2.0f, 3.0f ) );
-				}
+    const CKnownEntity *threat = me->GetVisionInterface()->GetPrimaryKnownThreat();
+    if ( threat && threat->IsVisibleInFOVNow() )
+    {
+        return SuspendFor( new CTFBotAttack, "Attacking nearby threat" );
+    }
+    else
+    {
+        // no enemy is visible - move near who we are escorting
+        if ( m_who != NULL )
+        {
+            if ( me->IsRangeGreaterThan( m_who, tf_bot_escort_range.GetFloat() ) )
+            {
+                if ( m_repathTimer.IsElapsed() )
+                {
+                    CTFBotPathCost cost( me, FASTEST_ROUTE );
+                    m_pathToWho.Compute( me, m_who->GetAbsOrigin(), cost );
+                    m_repathTimer.Start( RandomFloat( 2.0f, 3.0f ) );
+                }
 
-				m_pathToWho.Update( me );
-			}
-			else
-			{
-				if ( CTFBotPrepareStickybombTrap::IsPossible( me ) )
-				{
-					return SuspendFor( new CTFBotPrepareStickybombTrap, "Laying sticky bombs!" );
-				}
-			}
-		}
+                m_pathToWho.Update( me );
+            }
+            else
+            {
+                if ( CTFBotPrepareStickybombTrap::IsPossible( me ) )
+                {
+                    return SuspendFor( new CTFBotPrepareStickybombTrap, "Laying sticky bombs!" );
+                }
+            }
+        }
 
-		// destroy enemy sentry guns we've encountered
-		if ( me->GetEnemySentry() && CTFBotDestroyEnemySentry::IsPossible( me ) )
-		{
-			return SuspendFor( new CTFBotDestroyEnemySentry, "Going after an enemy sentry to destroy it" );
-		}
-	}
+        // destroy enemy sentry guns we've encountered
+        if ( me->GetEnemySentry() && CTFBotDestroyEnemySentry::IsPossible( me ) )
+        {
+            return SuspendFor( new CTFBotDestroyEnemySentry, "Going after an enemy sentry to destroy it" );
+        }
+    }
 
-	return Continue();
+    return Continue();
 }
-
 
 //---------------------------------------------------------------------------------------------
 EventDesiredResult< CTFBot > CTFBotEscort::OnStuck( CTFBot *me )
 {
-	m_repathTimer.Invalidate();
+    m_repathTimer.Invalidate();
 
-	return TryContinue();
+    return TryContinue();
 }
-
 
 //---------------------------------------------------------------------------------------------
 EventDesiredResult< CTFBot > CTFBotEscort::OnMoveToSuccess( CTFBot *me, const Path *path )
 {
-	return TryContinue();
+    return TryContinue();
 }
-
 
 //---------------------------------------------------------------------------------------------
 EventDesiredResult< CTFBot > CTFBotEscort::OnMoveToFailure( CTFBot *me, const Path *path, MoveToFailureType reason )
 {
-	return TryContinue();
+    return TryContinue();
 }
-
 
 //---------------------------------------------------------------------------------------------
-QueryResultType	CTFBotEscort::ShouldRetreat( const INextBot *me ) const
+QueryResultType CTFBotEscort::ShouldRetreat( const INextBot *me ) const
 {
-	return ANSWER_NO;
+    return ANSWER_NO;
 }
-
 
 //---------------------------------------------------------------------------------------------
 EventDesiredResult< CTFBot > CTFBotEscort::OnCommandApproach( CTFBot *me, const Vector &pos, float range )
 {
-	return TryContinue();
+    return TryContinue();
 }

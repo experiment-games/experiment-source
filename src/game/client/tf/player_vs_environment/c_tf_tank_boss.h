@@ -7,16 +7,19 @@
 
 class C_TFTankBoss : public C_TFBaseBoss
 {
-public:
-	DECLARE_CLASS( C_TFTankBoss, C_TFBaseBoss );
-	DECLARE_CLIENTCLASS();
+   public:
+    DECLARE_CLASS( C_TFTankBoss, C_TFBaseBoss );
+    DECLARE_CLIENTCLASS();
 
-	C_TFTankBoss();
+    C_TFTankBoss();
 
-	virtual void GetGlowEffectColor( float *r, float *g, float *b );
+    virtual void GetGlowEffectColor( float *r, float *g, float *b );
 
-	// ITFMvMBossProgressUser
-	virtual const char* GetBossProgressImageName() const OVERRIDE { return "tank"; }
+    // ITFMvMBossProgressUser
+    virtual const char *GetBossProgressImageName() const OVERRIDE
+    {
+        return "tank";
+    }
 };
 
-#endif // C_TF_TANK_BOSS_H
+#endif  // C_TF_TANK_BOSS_H

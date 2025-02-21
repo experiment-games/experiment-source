@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -17,9 +17,9 @@
 
 enum preview_state_t
 {
-	PS_ITEM,
-	PS_PLAYER,
-	PS_DETAILS,
+    PS_ITEM,
+    PS_PLAYER,
+    PS_DETAILS,
 };
 
 //-----------------------------------------------------------------------------
@@ -27,74 +27,83 @@ enum preview_state_t
 //-----------------------------------------------------------------------------
 class CPreviewRotButton : public CExButton
 {
-	DECLARE_CLASS_SIMPLE( CPreviewRotButton, CExButton );
-public:
-	CPreviewRotButton( vgui::Panel *parent, const char *name, const char *text, vgui::Panel *pActionSignalTarget = NULL, const char *cmd = NULL ) :
-		CExButton( parent, name, text, pActionSignalTarget, cmd )
-	{
-	}
-	CPreviewRotButton( vgui::Panel *parent, const char *name, const wchar_t *wszText, vgui::Panel *pActionSignalTarget = NULL, const char *cmd = NULL ) :
-		CExButton( parent, name, wszText, pActionSignalTarget, cmd )
-	{
-	}
+    DECLARE_CLASS_SIMPLE( CPreviewRotButton, CExButton );
 
-	virtual void OnMousePressed(vgui::MouseCode code);
-	virtual void OnMouseReleased(vgui::MouseCode code);
+   public:
+    CPreviewRotButton( vgui::Panel *parent, const char *name, const char *text, vgui::Panel *pActionSignalTarget = NULL, const char *cmd = NULL )
+        : CExButton( parent, name, text, pActionSignalTarget, cmd )
+    {
+    }
+    CPreviewRotButton( vgui::Panel *parent, const char *name, const wchar_t *wszText, vgui::Panel *pActionSignalTarget = NULL, const char *cmd = NULL )
+        : CExButton( parent, name, wszText, pActionSignalTarget, cmd )
+    {
+    }
 
-	// Our fire action signal does nothing, because it's all done in mouse pressed/released
-	virtual void FireActionSignal( void ) { return; }
+    virtual void OnMousePressed( vgui::MouseCode code );
+    virtual void OnMouseReleased( vgui::MouseCode code );
+
+    // Our fire action signal does nothing, because it's all done in mouse pressed/released
+    virtual void FireActionSignal( void )
+    {
+        return;
+    }
 };
 
-
-
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 class CStorePreviewItemPanel : public vgui::EditablePanel
 {
-	DECLARE_CLASS_SIMPLE( CStorePreviewItemPanel, vgui::EditablePanel );
-public:
-	CStorePreviewItemPanel( vgui::Panel *pParent, const char *pResFile, const char *pPanelName, CStorePage *pOwner );
-	virtual ~CStorePreviewItemPanel();
+    DECLARE_CLASS_SIMPLE( CStorePreviewItemPanel, vgui::EditablePanel );
 
-	CStorePage *GetOwningStorePage()	{ return m_pOwner; }
+   public:
+    CStorePreviewItemPanel( vgui::Panel *pParent, const char *pResFile, const char *pPanelName, CStorePage *pOwner );
+    virtual ~CStorePreviewItemPanel();
 
-	virtual void ApplySchemeSettings( vgui::IScheme *pScheme );
-	virtual void OnCommand( const char *command );
-	virtual void PerformLayout( void );
-	virtual void OnTick( void );
+    CStorePage *GetOwningStorePage()
+    {
+        return m_pOwner;
+    }
 
-	virtual void PreviewItem( int iClass, CEconItemView *pItem, const econ_store_entry_t* pEntry=NULL );
-	virtual void SetState( preview_state_t iState );
+    virtual void ApplySchemeSettings( vgui::IScheme *pScheme );
+    virtual void OnCommand( const char *command );
+    virtual void PerformLayout( void );
+    virtual void OnTick( void );
 
-	// Subclass interface.
-	virtual int	 GetPreviewTeam() const { return 0; }
+    virtual void PreviewItem( int iClass, CEconItemView *pItem, const econ_store_entry_t *pEntry = NULL );
+    virtual void SetState( preview_state_t iState );
 
-	MESSAGE_FUNC_PARAMS( OnRotButtonDown, "RotButtonDown", data );
-	MESSAGE_FUNC( OnRotButtonUp, "RotButtonUp" );
+    // Subclass interface.
+    virtual int GetPreviewTeam() const
+    {
+        return 0;
+    }
 
-	MESSAGE_FUNC_PARAMS( OnItemIconSelected, "ItemIconSelected", data );
+    MESSAGE_FUNC_PARAMS( OnRotButtonDown, "RotButtonDown", data );
+    MESSAGE_FUNC( OnRotButtonUp, "RotButtonUp" );
 
-protected:
-	virtual void UpdateIcons( void );
+    MESSAGE_FUNC_PARAMS( OnItemIconSelected, "ItemIconSelected", data );
 
-protected:
-	const char					*m_pResFile;
-	CUtlVector<CStorePreviewItemIcon*>	m_pItemIcons;
+   protected:
+    virtual void UpdateIcons( void );
 
-	int							m_iCurrentIconPosition;
+   protected:
+    const char *m_pResFile;
+    CUtlVector< CStorePreviewItemIcon * > m_pItemIcons;
 
-	CEconItemDetailsRichText	*m_pDataTextRichText;
-	CItemModelPanel				*m_pItemFullImage;
+    int m_iCurrentIconPosition;
 
-	CEconItemView				m_item;
-	preview_state_t				m_iState;
+    CEconItemDetailsRichText *m_pDataTextRichText;
+    CItemModelPanel *m_pItemFullImage;
 
-	int							m_iCurrentRotation;
-	CExButton					*m_pIconsMoveLeftButton;
-	CExButton					*m_pIconsMoveRightButton;
+    CEconItemView m_item;
+    preview_state_t m_iState;
 
-	CStorePage					*m_pOwner;
+    int m_iCurrentRotation;
+    CExButton *m_pIconsMoveLeftButton;
+    CExButton *m_pIconsMoveRightButton;
+
+    CStorePage *m_pOwner;
 };
 
-#endif // STORE_PREVIEW_ITEM_H
+#endif  // STORE_PREVIEW_ITEM_H

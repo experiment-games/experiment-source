@@ -10,122 +10,129 @@
 //----------------------------------------------------------------------------
 class CTFTankBoss : public CTFBaseBoss
 {
-public:
-	DECLARE_CLASS( CTFTankBoss, CTFBaseBoss );
-	DECLARE_SERVERCLASS();
-	DECLARE_DATADESC();
+   public:
+    DECLARE_CLASS( CTFTankBoss, CTFBaseBoss );
+    DECLARE_SERVERCLASS();
+    DECLARE_DATADESC();
 
-	CTFTankBoss();
-	virtual ~CTFTankBoss();
+    CTFTankBoss();
+    virtual ~CTFTankBoss();
 
-	virtual void Precache( void );
-	virtual void Spawn( void );
-	virtual void SetSkin( int nSkin ) { if ( m_body ) m_body->SetSkin( nSkin ); }
+    virtual void Precache( void );
+    virtual void Spawn( void );
+    virtual void SetSkin( int nSkin )
+    {
+        if ( m_body ) m_body->SetSkin( nSkin );
+    }
 
-	virtual void UpdateOnRemove( void );
+    virtual void UpdateOnRemove( void );
 
-	virtual void UpdateCollisionBounds( void );
+    virtual void UpdateCollisionBounds( void );
 
-	virtual CTFTankBossBody *GetBodyInterface( void ) const { return m_body; }
+    virtual CTFTankBossBody *GetBodyInterface( void ) const
+    {
+        return m_body;
+    }
 
-	virtual int OnTakeDamage_Alive( const CTakeDamageInfo &rawInfo );
+    virtual int OnTakeDamage_Alive( const CTakeDamageInfo &rawInfo );
 
-	virtual void Event_Killed( const CTakeDamageInfo &info );
+    virtual void Event_Killed( const CTakeDamageInfo &info );
 
-	void TankBossThink( void );
+    void TankBossThink( void );
 
-	void SetStartingPathTrackNode( char *name );
+    void SetStartingPathTrackNode( char *name );
 
-	void DefineOnKilledOutput( EventInfo *eventInfo );
-	void DefineOnBombDroppedOutput( EventInfo *eventInfo );
+    void DefineOnKilledOutput( EventInfo *eventInfo );
+    void DefineOnBombDroppedOutput( EventInfo *eventInfo );
 
-	void SetWaveSpawnPopulator( CWaveSpawnPopulator *pWave ){ m_pWaveSpawnPopulator = pWave; }
+    void SetWaveSpawnPopulator( CWaveSpawnPopulator *pWave )
+    {
+        m_pWaveSpawnPopulator = pWave;
+    }
 
-	virtual int GetCurrencyValue( void );
+    virtual int GetCurrencyValue( void );
 
-	// Input handlers
-	void InputDestroyIfAtCapturePoint( inputdata_t &inputdata );
-	void InputAddCaptureDestroyPostfix( inputdata_t &inputdata );
+    // Input handlers
+    void InputDestroyIfAtCapturePoint( inputdata_t &inputdata );
+    void InputAddCaptureDestroyPostfix( inputdata_t &inputdata );
 
-	void UpdatePingSound( void );
+    void UpdatePingSound( void );
 
-protected:
-	virtual void ModifyDamage( CTakeDamageInfo *info ) const;
+   protected:
+    virtual void ModifyDamage( CTakeDamageInfo *info ) const;
 
-private:
+   private:
+    void Explode();
 
-	void Explode();
+   private:
+    CTFTankBossBody *m_body;
 
-private:
-	CTFTankBossBody *m_body;
+    CHandle< CPathTrack > m_startNode;
+    CHandle< CPathTrack > m_endNode;
+    CHandle< CPathTrack > m_goalNode;
+    CUtlVector< float > m_CumulativeDistances;
+    float m_fTotalDistance;
+    int m_nNodeNumber;
 
-	CHandle< CPathTrack > m_startNode;
-	CHandle< CPathTrack > m_endNode;
-	CHandle< CPathTrack > m_goalNode;
-	CUtlVector< float > m_CumulativeDistances;
-	float m_fTotalDistance;
-	int m_nNodeNumber;
+    float m_flSpawnTime;
 
-	float m_flSpawnTime;
+    bool m_isDroppingBomb;
+    float m_flDroppingStart;
 
-	bool m_isDroppingBomb;
-	float m_flDroppingStart;
+    int m_exhaustAttachment;
+    bool m_isSmoking;
 
-	int m_exhaustAttachment;
-	bool m_isSmoking;
+    bool m_bIsPlayerKilled;
+    bool m_bPlayedHalfwayAlert;
+    bool m_bPlayedNearAlert;
 
-	bool m_bIsPlayerKilled;
-	bool m_bPlayedHalfwayAlert;
-	bool m_bPlayedNearAlert;
+    int m_lastHealth;
+    int m_damageModelIndex;
+    int m_nDeathAnimPick;
+    char m_szDeathPostfix[8];
 
-	int m_lastHealth;
-	int m_damageModelIndex;
-	int m_nDeathAnimPick;
-	char m_szDeathPostfix[ 8 ];
+    Vector m_lastRightTrackPos;
+    Vector m_lastLeftTrackPos;
 
-	Vector m_lastRightTrackPos;
-	Vector m_lastLeftTrackPos;
+    CountdownTimer m_rumbleTimer;
 
-	CountdownTimer m_rumbleTimer;
+    EventInfo m_onKilledEventInfo;
+    EventInfo m_onBombDroppedEventInfo;
+    void FirePopFileEvent( EventInfo *eventInfo );
 
-	EventInfo m_onKilledEventInfo;
-	EventInfo m_onBombDroppedEventInfo;
-	void FirePopFileEvent( EventInfo *eventInfo );
+    CHandle< CBaseAnimating > m_bomb;
+    CHandle< CBaseAnimating > m_leftTracks;
+    CHandle< CBaseAnimating > m_rightTracks;
 
-	CHandle< CBaseAnimating > m_bomb;
-	CHandle< CBaseAnimating > m_leftTracks;
-	CHandle< CBaseAnimating > m_rightTracks;
+    CountdownTimer m_crushTimer;
+    CWaveSpawnPopulator *m_pWaveSpawnPopulator;
 
-	CountdownTimer m_crushTimer;
-	CWaveSpawnPopulator *m_pWaveSpawnPopulator;
+    Vector m_vCollisionMins;
+    Vector m_vCollisionMaxs;
 
-	Vector m_vCollisionMins;
-	Vector m_vCollisionMaxs;
+    float m_flLastPingTime;
 
-	float m_flLastPingTime;
+    static float m_flLastTankAlert;
 
-	static float m_flLastTankAlert;
-
-	CHistoryVector< EntityHistory_t, CEntityHistoryLess, 12 > m_vecDamagers;
+    CHistoryVector< EntityHistory_t, CEntityHistoryLess, 12 > m_vecDamagers;
 };
-
 
 inline void CTFTankBoss::DefineOnKilledOutput( EventInfo *eventInfo )
 {
-	if ( eventInfo )
-	{
-		m_onKilledEventInfo.m_action = eventInfo->m_action;
-		m_onKilledEventInfo.m_target = eventInfo->m_target;
-	}
+    if ( eventInfo )
+    {
+        m_onKilledEventInfo.m_action = eventInfo->m_action;
+        m_onKilledEventInfo.m_target = eventInfo->m_target;
+    }
 }
 
 inline void CTFTankBoss::DefineOnBombDroppedOutput( EventInfo *eventInfo )
 {
-	if ( eventInfo )
-	{
-		m_onBombDroppedEventInfo.m_action = eventInfo->m_action;
-		m_onBombDroppedEventInfo.m_target = eventInfo->m_target;
-	}
+    if ( eventInfo )
+    {
+        m_onBombDroppedEventInfo.m_action = eventInfo->m_action;
+        m_onBombDroppedEventInfo.m_target = eventInfo->m_target;
+    }
 }
 
-#endif // TF_TANK_BOSS_H
+#endif  // TF_TANK_BOSS_H

@@ -15,40 +15,48 @@
 
 class CTFDespawn : public Action< CTFBot >
 {
-public:
-	virtual ActionResult< CTFBot >	Update( CTFBot *me, float interval );
-	virtual const char *GetName( void ) const	{ return "Despawn"; };
+   public:
+    virtual ActionResult< CTFBot > Update( CTFBot *me, float interval );
+    virtual const char *GetName( void ) const
+    {
+        return "Despawn";
+    };
 };
-
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 // Simple behavior for training where the bot approaches action point and tries to fire at it (and anything there)
 
 class CTFTrainingAttackSentryActionPoint : public Action< CTFBot >
 {
-public:
-	virtual ActionResult< CTFBot >	Update( CTFBot *me, float interval );
-	virtual const char *GetName( void ) const	{ return "Despawn"; };
+   public:
+    virtual ActionResult< CTFBot > Update( CTFBot *me, float interval );
+    virtual const char *GetName( void ) const
+    {
+        return "Despawn";
+    };
 
-private:
-	CountdownTimer m_repathTimer;
-	PathFollower m_path;
+   private:
+    CountdownTimer m_repathTimer;
+    PathFollower m_path;
 };
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 // Tells a bot to go an Action Point and run any command it has
 class CTFGotoActionPoint : public Action< CTFBot >
 {
-public:
-	virtual ActionResult< CTFBot >	OnStart( CTFBot *me, Action< CTFBot > *priorAction );
-	virtual ActionResult< CTFBot >	Update( CTFBot *me, float interval );
-	virtual const char *GetName( void ) const	{ return "GotoActionPoint"; };
+   public:
+    virtual ActionResult< CTFBot > OnStart( CTFBot *me, Action< CTFBot > *priorAction );
+    virtual ActionResult< CTFBot > Update( CTFBot *me, float interval );
+    virtual const char *GetName( void ) const
+    {
+        return "GotoActionPoint";
+    };
 
-private:
-	CountdownTimer m_stayTimer;
-	CountdownTimer m_repathTimer;
-	PathFollower m_path;
-	bool m_wasTeleported;
+   private:
+    CountdownTimer m_stayTimer;
+    CountdownTimer m_repathTimer;
+    PathFollower m_path;
+    bool m_wasTeleported;
 };
 
-#endif // TF_BOT_TRAINING_H
+#endif  // TF_BOT_TRAINING_H

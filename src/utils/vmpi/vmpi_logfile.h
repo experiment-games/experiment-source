@@ -10,7 +10,6 @@
 #pragma once
 #endif
 
-
 // This checks the registry for HKLM\Software\Valve\VMPI\LogFile. If that exists,
 // then it will log anything that comes through here to that file.
 //
@@ -19,5 +18,4 @@ void VMPI_WriteToLogFile( const char *pMsg, ... );
 
 bool VMPI_IsLogFileEnabled();
 
-
-#endif // VMPI_LOGFILE_H
+#endif  // VMPI_LOGFILE_H

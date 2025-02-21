@@ -8,59 +8,59 @@
 
 class CTFBotGenerator : public CPointEntity
 {
-public:
-	DECLARE_CLASS( CTFBotGenerator, CPointEntity );
-	DECLARE_DATADESC();
+   public:
+    DECLARE_CLASS( CTFBotGenerator, CPointEntity );
+    DECLARE_DATADESC();
 
-	CTFBotGenerator( void );
-	virtual ~CTFBotGenerator() { }
+    CTFBotGenerator( void );
+    virtual ~CTFBotGenerator() {}
 
-	virtual void Activate();
+    virtual void Activate();
 
-	void GeneratorThink( void );
-	void SpawnBot( void );
+    void GeneratorThink( void );
+    void SpawnBot( void );
 
-	// Input.
-	void InputEnable( inputdata_t &inputdata );
-	void InputDisable( inputdata_t &inputdata );
-	void InputSetSuppressFire( inputdata_t &inputdata );
-	void InputSetDisableDodge( inputdata_t &inputdata );
-	void InputSetDifficulty( inputdata_t &inputdata );
-	void InputCommandGotoActionPoint( inputdata_t &inputdata );
-	void InputSetAttentionFocus( inputdata_t &inputdata );
-	void InputClearAttentionFocus( inputdata_t &inputdata );
-	void InputSpawnBot( inputdata_t &inputdata );
-	void InputRemoveBots( inputdata_t &inputdata );
+    // Input.
+    void InputEnable( inputdata_t &inputdata );
+    void InputDisable( inputdata_t &inputdata );
+    void InputSetSuppressFire( inputdata_t &inputdata );
+    void InputSetDisableDodge( inputdata_t &inputdata );
+    void InputSetDifficulty( inputdata_t &inputdata );
+    void InputCommandGotoActionPoint( inputdata_t &inputdata );
+    void InputSetAttentionFocus( inputdata_t &inputdata );
+    void InputClearAttentionFocus( inputdata_t &inputdata );
+    void InputSpawnBot( inputdata_t &inputdata );
+    void InputRemoveBots( inputdata_t &inputdata );
 
-	// Output
-	void OnBotKilled( CTFBot *pBot );
+    // Output
+    void OnBotKilled( CTFBot *pBot );
 
-private:
-	bool m_bBotChoosesClass;
-	bool m_bSuppressFire;
-	bool m_bDisableDodge;
-	bool m_bUseTeamSpawnpoint;
-	bool m_bRetainBuildings;
-	bool m_bExpended;
-	int m_iOnDeathAction;
-	int m_spawnCount;
-	int m_spawnCountRemaining;
-	int m_maxActiveCount;
-	float m_spawnInterval;
-	string_t m_className;
-	string_t m_teamName;
-	string_t m_actionPointName;
-	string_t m_initialCommand;
-	CHandle< CBaseEntity > m_moveGoal;
-	int m_difficulty;
-	bool m_bSpawnOnlyWhenTriggered;
-	bool m_bEnabled;
+   private:
+    bool m_bBotChoosesClass;
+    bool m_bSuppressFire;
+    bool m_bDisableDodge;
+    bool m_bUseTeamSpawnpoint;
+    bool m_bRetainBuildings;
+    bool m_bExpended;
+    int m_iOnDeathAction;
+    int m_spawnCount;
+    int m_spawnCountRemaining;
+    int m_maxActiveCount;
+    float m_spawnInterval;
+    string_t m_className;
+    string_t m_teamName;
+    string_t m_actionPointName;
+    string_t m_initialCommand;
+    CHandle< CBaseEntity > m_moveGoal;
+    int m_difficulty;
+    bool m_bSpawnOnlyWhenTriggered;
+    bool m_bEnabled;
 
-	COutputEvent m_onSpawned;
-	COutputEvent m_onExpended;
-	COutputEvent m_onBotKilled;
+    COutputEvent m_onSpawned;
+    COutputEvent m_onExpended;
+    COutputEvent m_onBotKilled;
 
-	CUtlVector< CHandle< CTFBot > > m_spawnedBotVector;
+    CUtlVector< CHandle< CTFBot > > m_spawnedBotVector;
 };
 
 //---------------------------------------------------------------
@@ -71,32 +71,33 @@ private:
 //
 class CTFBotActionPoint : public CPointEntity
 {
-	DECLARE_CLASS( CTFBotActionPoint, CPointEntity );
-public:
-	DECLARE_DATADESC();
+    DECLARE_CLASS( CTFBotActionPoint, CPointEntity );
 
- 	CTFBotActionPoint( void );
- 	virtual ~CTFBotActionPoint() { }
+   public:
+    DECLARE_DATADESC();
 
-	virtual void Activate();
+    CTFBotActionPoint( void );
+    virtual ~CTFBotActionPoint() {}
 
-	bool IsWithinRange( CBaseEntity *entity );
-	void ReachedActionPoint( CTFBot* pBot );
+    virtual void Activate();
 
-	CHandle< CBaseEntity > m_moveGoal;
+    bool IsWithinRange( CBaseEntity *entity );
+    void ReachedActionPoint( CTFBot *pBot );
 
-	// reflected
-	float m_stayTime;
-	float m_desiredDistance;
-	string_t m_nextActionPointName;
-	string_t m_command;
+    CHandle< CBaseEntity > m_moveGoal;
 
-	COutputEvent m_onReachedActionPoint;
+    // reflected
+    float m_stayTime;
+    float m_desiredDistance;
+    string_t m_nextActionPointName;
+    string_t m_command;
+
+    COutputEvent m_onReachedActionPoint;
 };
 
 inline HSCRIPT ToHScript( CTFBotActionPoint *pPoint )
 {
-	return ( pPoint ) ? pPoint->GetScriptInstance() : NULL;
+    return ( pPoint ) ? pPoint->GetScriptInstance() : NULL;
 }
 
-#endif // TF_BOT_GENERATOR_H
+#endif  // TF_BOT_GENERATOR_H

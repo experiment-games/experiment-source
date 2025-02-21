@@ -14,7 +14,7 @@
 class CBaseEntity;
 
 /// true if given entity pointer is a hunter.
-bool Hunter_IsHunter(CBaseEntity *pEnt);
+bool Hunter_IsHunter( CBaseEntity *pEnt );
 
 // call throughs for member functions
 

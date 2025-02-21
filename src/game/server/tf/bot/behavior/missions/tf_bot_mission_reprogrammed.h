@@ -12,5 +12,4 @@ class CTFBotMissionReprogrammed : public Action< CTFBot >
 {
 };
 
-
-#endif // TF_BOT_MISSION_REPROGRAMMED_H
+#endif  // TF_BOT_MISSION_REPROGRAMMED_H

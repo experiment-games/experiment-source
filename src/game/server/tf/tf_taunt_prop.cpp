@@ -21,97 +21,93 @@ END_SEND_TABLE()
 LINK_ENTITY_TO_CLASS( tf_taunt_prop, CTFTauntProp );
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CTFTauntProp::CTFTauntProp()
-	: m_bAutoRemove( false )
+    : m_bAutoRemove( false )
 {
-	UseClientSideAnimation();
+    UseClientSideAnimation();
 }
 
-
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CTFTauntProp::StartSceneEvent( CSceneEventInfo *info, CChoreoScene *scene, CChoreoEvent *event, CChoreoActor *actor, CBaseEntity *pTarget )
 {
-	switch ( event->GetType() )
-	{
-	case CChoreoEvent::SEQUENCE:
-	case CChoreoEvent::GESTURE:
-	{
-		// Get the (gesture) sequence.
-		info->m_nSequence = LookupSequence( event->GetParameters() );
-		if ( info->m_nSequence < 0 )
-			return false;
+    switch ( event->GetType() )
+    {
+        case CChoreoEvent::SEQUENCE:
+        case CChoreoEvent::GESTURE:
+        {
+            // Get the (gesture) sequence.
+            info->m_nSequence = LookupSequence( event->GetParameters() );
+            if ( info->m_nSequence < 0 )
+                return false;
 
-		SetSequence( info->m_nSequence );
-		SetPlaybackRate( 1.0f );
-		SetCycle( 0 );
-		ResetSequenceInfo();
+            SetSequence( info->m_nSequence );
+            SetPlaybackRate( 1.0f );
+            SetCycle( 0 );
+            ResetSequenceInfo();
 
-		if ( IsUsingClientSideAnimation() )
-		{
-			ResetClientsideFrame();
-		}
+            if ( IsUsingClientSideAnimation() )
+            {
+                ResetClientsideFrame();
+            }
 
-		return true;
-	}
-	default:
-		return BaseClass::StartSceneEvent( info, scene, event, actor, pTarget );
-	}
+            return true;
+        }
+        default:
+            return BaseClass::StartSceneEvent( info, scene, event, actor, pTarget );
+    }
 }
 
-
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CTFTauntProp::ProcessSceneEvent( CSceneEventInfo *info, CChoreoScene *scene, CChoreoEvent *event )
 {
-	// Only process sequences
-	if ( event->GetType() != CChoreoEvent::SEQUENCE )
-		return false;
+    // Only process sequences
+    if ( event->GetType() != CChoreoEvent::SEQUENCE )
+        return false;
 
-	return BaseClass::ProcessSceneEvent( info, scene, event );
+    return BaseClass::ProcessSceneEvent( info, scene, event );
 }
 
-
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 float CTFTauntProp::PlayScene( const char *pszScene, float flDelay /*= 0.0f*/, AI_Response *response /*= NULL*/, IRecipientFilter *filter /*= NULL*/ )
 {
-	if ( m_hScene.Get() )
-	{
-		StopScriptedScene( this, m_hScene );
-		m_hScene = NULL;
-	}
+    if ( m_hScene.Get() )
+    {
+        StopScriptedScene( this, m_hScene );
+        m_hScene = NULL;
+    }
 
-	MDLCACHE_CRITICAL_SECTION();
+    MDLCACHE_CRITICAL_SECTION();
 
-	float flDuration = InstancedScriptedScene( this, pszScene, &m_hScene, flDelay, false, response, true, filter );
+    float flDuration = InstancedScriptedScene( this, pszScene, &m_hScene, flDelay, false, response, true, filter );
 
-	// Remove this at the end of the scene if needed
-	if ( m_bAutoRemove )
-	{
-		SetThink( &BaseClass::SUB_Remove );
-		SetNextThink( gpGlobals->curtime + flDuration );
-	}
+    // Remove this at the end of the scene if needed
+    if ( m_bAutoRemove )
+    {
+        SetThink( &BaseClass::SUB_Remove );
+        SetNextThink( gpGlobals->curtime + flDuration );
+    }
 
-	return flDuration;
+    return flDuration;
 }
 
-
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFTauntProp::UpdateOnRemove()
 {
-	if ( m_hScene.Get() )
-	{
-		StopScriptedScene( this, m_hScene );
-		m_hScene = NULL;
-	}
-		
-	BaseClass::UpdateOnRemove();
+    if ( m_hScene.Get() )
+    {
+        StopScriptedScene( this, m_hScene );
+        m_hScene = NULL;
+    }
+
+    BaseClass::UpdateOnRemove();
 }

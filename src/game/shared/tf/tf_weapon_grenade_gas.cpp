@@ -19,7 +19,7 @@
 #include "KeyValues.h"
 #endif
 
-#define GRENADE_GAS_TIMER	3.0f //Seconds
+#define GRENADE_GAS_TIMER 3.0f  // Seconds
 
 //=============================================================================
 //
@@ -51,11 +51,9 @@ END_DATADESC()
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-CTFWeaponBaseGrenadeProj *CTFGrenadeGas::EmitGrenade( Vector vecSrc, QAngle vecAngles, Vector vecVel, 
-							        AngularImpulse angImpulse, CBasePlayer *pPlayer, float flTime, int iflags )
+CTFWeaponBaseGrenadeProj *CTFGrenadeGas::EmitGrenade( Vector vecSrc, QAngle vecAngles, Vector vecVel, AngularImpulse angImpulse, CBasePlayer *pPlayer, float flTime, int iflags )
 {
-	return CTFGrenadeGasProjectile::Create( vecSrc, vecAngles, vecVel, angImpulse, 
-		                                pPlayer, GetTFWpnData(), flTime );
+    return CTFGrenadeGasProjectile::Create( vecSrc, vecAngles, vecVel, angImpulse, pPlayer, GetTFWpnData(), flTime );
 }
 
 #endif
@@ -71,25 +69,22 @@ CTFWeaponBaseGrenadeProj *CTFGrenadeGas::EmitGrenade( Vector vecSrc, QAngle vecA
 LINK_ENTITY_TO_CLASS( tf_weapon_grenade_gas_projectile, CTFGrenadeGasProjectile );
 PRECACHE_WEAPON_REGISTER( tf_weapon_grenade_gas_projectile );
 
-
 BEGIN_DATADESC( CTFGrenadeGasProjectile )
-	DEFINE_THINKFUNC( Think_Emit ),
-	DEFINE_THINKFUNC( Think_Fade ),
-END_DATADESC()
-//-----------------------------------------------------------------------------
-// Purpose:
-//-----------------------------------------------------------------------------
-CTFGrenadeGasProjectile* CTFGrenadeGasProjectile::Create( const Vector &position, const QAngle &angles, 
-																const Vector &velocity, const AngularImpulse &angVelocity, 
-																CBaseCombatCharacter *pOwner, const CTFWeaponInfo &weaponInfo, float timer, int iFlags )
+DEFINE_THINKFUNC( Think_Emit ),
+    DEFINE_THINKFUNC( Think_Fade ),
+    END_DATADESC()
+    //-----------------------------------------------------------------------------
+    // Purpose:
+    //-----------------------------------------------------------------------------
+    CTFGrenadeGasProjectile *CTFGrenadeGasProjectile::Create( const Vector &position, const QAngle &angles, const Vector &velocity, const AngularImpulse &angVelocity, CBaseCombatCharacter *pOwner, const CTFWeaponInfo &weaponInfo, float timer, int iFlags )
 {
-	CTFGrenadeGasProjectile *pGrenade = static_cast<CTFGrenadeGasProjectile*>( CTFWeaponBaseGrenadeProj::Create( "tf_weapon_grenade_gas_projectile", position, angles, velocity, angVelocity, pOwner, weaponInfo, timer, iFlags ) );
-	if ( pGrenade )
-	{
-		pGrenade->ApplyLocalAngularVelocityImpulse( angVelocity );	
-	}
+    CTFGrenadeGasProjectile *pGrenade = static_cast< CTFGrenadeGasProjectile * >( CTFWeaponBaseGrenadeProj::Create( "tf_weapon_grenade_gas_projectile", position, angles, velocity, angVelocity, pOwner, weaponInfo, timer, iFlags ) );
+    if ( pGrenade )
+    {
+        pGrenade->ApplyLocalAngularVelocityImpulse( angVelocity );
+    }
 
-	return pGrenade;
+    return pGrenade;
 }
 
 //-----------------------------------------------------------------------------
@@ -97,19 +92,19 @@ CTFGrenadeGasProjectile* CTFGrenadeGasProjectile::Create( const Vector &position
 //-----------------------------------------------------------------------------
 void CTFGrenadeGasProjectile::Spawn()
 {
-	SetModel( GRENADE_MODEL );
+    SetModel( GRENADE_MODEL );
 
-	BaseClass::Spawn();
+    BaseClass::Spawn();
 
-	m_hGasEffect = NULL;
+    m_hGasEffect = NULL;
 }
 
 CTFGrenadeGasProjectile::~CTFGrenadeGasProjectile()
 {
-	if ( m_hGasEffect.Get() )
-	{
-		UTIL_Remove( m_hGasEffect );
-	}
+    if ( m_hGasEffect.Get() )
+    {
+        UTIL_Remove( m_hGasEffect );
+    }
 }
 
 //-----------------------------------------------------------------------------
@@ -117,9 +112,9 @@ CTFGrenadeGasProjectile::~CTFGrenadeGasProjectile()
 //-----------------------------------------------------------------------------
 void CTFGrenadeGasProjectile::Precache()
 {
-	PrecacheModel( GRENADE_MODEL );
-	PrecacheParticleSystem( "spy_gasgrenade" );
-	BaseClass::Precache();
+    PrecacheModel( GRENADE_MODEL );
+    PrecacheParticleSystem( "spy_gasgrenade" );
+    BaseClass::Precache();
 }
 
 //-----------------------------------------------------------------------------
@@ -127,7 +122,7 @@ void CTFGrenadeGasProjectile::Precache()
 //-----------------------------------------------------------------------------
 void CTFGrenadeGasProjectile::BounceSound( void )
 {
-	EmitSound( "Weapon_Grenade_Gas.Bounce" );
+    EmitSound( "Weapon_Grenade_Gas.Bounce" );
 }
 
 //-----------------------------------------------------------------------------
@@ -135,19 +130,19 @@ void CTFGrenadeGasProjectile::BounceSound( void )
 //-----------------------------------------------------------------------------
 void CTFGrenadeGasProjectile::DetonateThink( void )
 {
-	// if we're past the detonate time but still moving, delay the detonate
-	if ( gpGlobals->curtime > GetDetonateTime() && VPhysicsGetObject() )
-	{
-		Vector vel;
-		VPhysicsGetObject()->GetVelocity( &vel, NULL );
+    // if we're past the detonate time but still moving, delay the detonate
+    if ( gpGlobals->curtime > GetDetonateTime() && VPhysicsGetObject() )
+    {
+        Vector vel;
+        VPhysicsGetObject()->GetVelocity( &vel, NULL );
 
-		if ( vel.Length() > 35.0 )
-		{
-			SetTimer( gpGlobals->curtime + 0.5 );
-		}
-	}
+        if ( vel.Length() > 35.0 )
+        {
+            SetTimer( gpGlobals->curtime + 0.5 );
+        }
+    }
 
-	BaseClass::DetonateThink();
+    BaseClass::DetonateThink();
 }
 
 //-----------------------------------------------------------------------------
@@ -155,30 +150,30 @@ void CTFGrenadeGasProjectile::DetonateThink( void )
 //-----------------------------------------------------------------------------
 void CTFGrenadeGasProjectile::Detonate()
 {
-	if ( ShouldNotDetonate() )
-	{
-		RemoveGrenade();
-		return;
-	}
+    if ( ShouldNotDetonate() )
+    {
+        RemoveGrenade();
+        return;
+    }
 
-	// start emitting gas
-	VPhysicsGetObject()->EnableMotion( false );
+    // start emitting gas
+    VPhysicsGetObject()->EnableMotion( false );
 
-	m_hGasEffect = ( CTFGasGrenadeEffect * )CreateEntityByName("tf_gas_grenade_effect");
-	CBaseEntity *pGasEffect = m_hGasEffect.Get();
-	if ( pGasEffect )
-	{	
-		DispatchSpawn( pGasEffect );
-		pGasEffect->SetAbsOrigin( GetAbsOrigin() );
-	}
+    m_hGasEffect = ( CTFGasGrenadeEffect * )CreateEntityByName( "tf_gas_grenade_effect" );
+    CBaseEntity *pGasEffect = m_hGasEffect.Get();
+    if ( pGasEffect )
+    {
+        DispatchSpawn( pGasEffect );
+        pGasEffect->SetAbsOrigin( GetAbsOrigin() );
+    }
 
-	EmitSound( "BaseSmokeEffect.Sound" );
+    EmitSound( "BaseSmokeEffect.Sound" );
 
-	// damage / hallucination effect in waves
-	m_nPulses = 20;
+    // damage / hallucination effect in waves
+    m_nPulses = 20;
 
-	SetThink( &CTFGrenadeGasProjectile::Think_Emit );
-	SetNextThink( gpGlobals->curtime + 0.1f );
+    SetThink( &CTFGrenadeGasProjectile::Think_Emit );
+    SetNextThink( gpGlobals->curtime + 0.1f );
 }
 
 //-----------------------------------------------------------------------------
@@ -186,29 +181,29 @@ void CTFGrenadeGasProjectile::Detonate()
 //-----------------------------------------------------------------------------
 void CTFGrenadeGasProjectile::Think_Emit( void )
 {
-	Vector vecOrigin = GetAbsOrigin();
-	float flDamage = 10;
-	CTakeDamageInfo info( this, GetThrower(), vec3_origin, vecOrigin, flDamage, DMG_NERVEGAS | DMG_PREVENT_PHYSICS_FORCE );
+    Vector vecOrigin = GetAbsOrigin();
+    float flDamage = 10;
+    CTakeDamageInfo info( this, GetThrower(), vec3_origin, vecOrigin, flDamage, DMG_NERVEGAS | DMG_PREVENT_PHYSICS_FORCE );
 
-	CBaseEntity* pEntity = NULL;
-	while ( ( pEntity = gEntList.FindEntityInSphere( pEntity, vecOrigin, TF_HALLUCINATION_RADIUS ) ) != NULL )
-	{
-		// check for valid player
-		if ( !pEntity->IsPlayer() )
-			continue;
+    CBaseEntity *pEntity = NULL;
+    while ( ( pEntity = gEntList.FindEntityInSphere( pEntity, vecOrigin, TF_HALLUCINATION_RADIUS ) ) != NULL )
+    {
+        // check for valid player
+        if ( !pEntity->IsPlayer() )
+            continue;
 
-		pEntity->TakeDamage( info );
-	}
+        pEntity->TakeDamage( info );
+    }
 
-	m_nPulses--;
+    m_nPulses--;
 
-	if ( m_nPulses <= 0 )
-	{
-		// Fade out
-		SetThink( &CTFGrenadeGasProjectile::Think_Fade );
-	}
+    if ( m_nPulses <= 0 )
+    {
+        // Fade out
+        SetThink( &CTFGrenadeGasProjectile::Think_Fade );
+    }
 
-	SetNextThink( gpGlobals->curtime + 0.75 );
+    SetNextThink( gpGlobals->curtime + 0.75 );
 }
 
 //-----------------------------------------------------------------------------
@@ -216,45 +211,44 @@ void CTFGrenadeGasProjectile::Think_Emit( void )
 //-----------------------------------------------------------------------------
 void CTFGrenadeGasProjectile::Think_Fade()
 {
-	color32 c = GetRenderColor();
-	c.a -= 1;
-	SetRenderColor( c.r, c.b, c.g, c.a );
+    color32 c = GetRenderColor();
+    c.a -= 1;
+    SetRenderColor( c.r, c.b, c.g, c.a );
 
-	if ( !c.a )
-	{
-		UTIL_Remove( this );
-	}
+    if ( !c.a )
+    {
+        UTIL_Remove( this );
+    }
 
-	SetNextThink( gpGlobals->curtime );
+    SetNextThink( gpGlobals->curtime );
 }
 
 #endif
 
-
 IMPLEMENT_NETWORKCLASS_ALIASED( TFGasGrenadeEffect, DT_TFGasGrenadeEffect )
 
-BEGIN_NETWORK_TABLE(CTFGasGrenadeEffect, DT_TFGasGrenadeEffect )
+BEGIN_NETWORK_TABLE( CTFGasGrenadeEffect, DT_TFGasGrenadeEffect )
 END_NETWORK_TABLE()
 
 #ifndef CLIENT_DLL
-	LINK_ENTITY_TO_CLASS( tf_gas_grenade_effect, CTFGasGrenadeEffect );
+LINK_ENTITY_TO_CLASS( tf_gas_grenade_effect, CTFGasGrenadeEffect );
 #endif
 
 #ifndef CLIENT_DLL
 
-	int CTFGasGrenadeEffect::UpdateTransmitState( void )
-	{
-		return SetTransmitState( FL_EDICT_PVSCHECK );
-	}
+int CTFGasGrenadeEffect::UpdateTransmitState( void )
+{
+    return SetTransmitState( FL_EDICT_PVSCHECK );
+}
 
 #else
 
-	void CTFGasGrenadeEffect::OnDataChanged( DataUpdateType_t updateType )
-	{
-		if ( updateType == DATA_UPDATE_CREATED && m_pGasEffect == NULL )
-		{
-			m_pGasEffect = ParticleProp()->Create( "spy_gasgrenade", PATTACH_ABSORIGIN );
-		}
-	}
+void CTFGasGrenadeEffect::OnDataChanged( DataUpdateType_t updateType )
+{
+    if ( updateType == DATA_UPDATE_CREATED && m_pGasEffect == NULL )
+    {
+        m_pGasEffect = ParticleProp()->Create( "spy_gasgrenade", PATTACH_ABSORIGIN );
+    }
+}
 
-#endif // CLIENT_DLL
+#endif  // CLIENT_DLL

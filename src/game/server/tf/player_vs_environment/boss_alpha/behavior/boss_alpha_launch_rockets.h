@@ -10,29 +10,34 @@
 //---------------------------------------------------------------------------------------------
 class CBossAlphaLaunchRockets : public Action< CBossAlpha >
 {
-public:
-	virtual ActionResult< CBossAlpha >	OnStart( CBossAlpha *me, Action< CBossAlpha > *priorAction );
-	virtual ActionResult< CBossAlpha >	Update( CBossAlpha *me, float interval );
-	virtual void					OnEnd( CBossAlpha *me, Action< CBossAlpha > *nextAction );
+   public:
+    virtual ActionResult< CBossAlpha > OnStart( CBossAlpha *me, Action< CBossAlpha > *priorAction );
+    virtual ActionResult< CBossAlpha > Update( CBossAlpha *me, float interval );
+    virtual void OnEnd( CBossAlpha *me, Action< CBossAlpha > *nextAction );
 
-	// if anything interrupts this action, abort it
-	virtual ActionResult< CBossAlpha >	OnSuspend( CBossAlpha *me, Action< CBossAlpha > *interruptingAction )	{ return Done(); }
+    // if anything interrupts this action, abort it
+    virtual ActionResult< CBossAlpha > OnSuspend( CBossAlpha *me, Action< CBossAlpha > *interruptingAction )
+    {
+        return Done();
+    }
 
-	virtual const char *GetName( void ) const	{ return "LaunchRockets"; }		// return name of this action
+    virtual const char *GetName( void ) const
+    {
+        return "LaunchRockets";
+    }  // return name of this action
 
-private:
-	CountdownTimer m_timer;
+   private:
+    CountdownTimer m_timer;
 
-	CountdownTimer m_launchTimer;
-	int m_rocketsLeft;
+    CountdownTimer m_launchTimer;
+    int m_rocketsLeft;
 
-	int m_animLayer;
+    int m_animLayer;
 
-	CHandle< CBaseCombatCharacter > m_target;
-	Vector m_lastTargetPosition;
+    CHandle< CBaseCombatCharacter > m_target;
+    Vector m_lastTargetPosition;
 };
 
+#endif  // TF_RAID_MODE
 
-#endif // TF_RAID_MODE
-
-#endif // BOSS_ALPHA_LAUNCH_ROCKETS_H
+#endif  // BOSS_ALPHA_LAUNCH_ROCKETS_H

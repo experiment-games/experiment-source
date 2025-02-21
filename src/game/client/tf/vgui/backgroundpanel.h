@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -28,7 +28,7 @@ void LayoutBackgroundPanel( vgui::EditablePanel *pWindow );
 void ApplyBackgroundSchemeSettings( vgui::EditablePanel *pWindow, vgui::IScheme *pScheme );
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void ResizeWindowControls( vgui::EditablePanel *pWindow, int tall, int wide, int offsetX, int offsetY );
 
@@ -39,15 +39,15 @@ void ResizeWindowControls( vgui::EditablePanel *pWindow, int tall, int wide, int
 int GetAlternateProportionalValueFromScaled( vgui::HScheme hScheme, int scaledValue );
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void DrawRoundedBackground( Color bgColor, int wide, int tall );
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void DrawRoundedBorder( Color borderColor, int wide, int tall );
 
 //-----------------------------------------------------------------------------
 
-#endif // TFBACKGROUND_H
+#endif  // TFBACKGROUND_H

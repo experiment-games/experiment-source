@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -14,63 +14,62 @@
 
 class CBloodSprayEmitter : public CSimpleEmitter
 {
-public:
-	
-	CBloodSprayEmitter( const char *pDebugName ) : CSimpleEmitter( pDebugName ) {}
-	
-	static CBloodSprayEmitter *Create( const char *pDebugName )
-	{
-		return new CBloodSprayEmitter( pDebugName );
-	}
+   public:
+    CBloodSprayEmitter( const char *pDebugName )
+        : CSimpleEmitter( pDebugName ) {}
 
-	inline void SetGravity( float flGravity )
-	{
-		m_flGravity = flGravity;
-	}
+    static CBloodSprayEmitter *Create( const char *pDebugName )
+    {
+        return new CBloodSprayEmitter( pDebugName );
+    }
 
-	virtual	float UpdateRoll( SimpleParticle *pParticle, float timeDelta )
-	{
-		pParticle->m_flRoll += pParticle->m_flRollDelta * timeDelta;
-		
-		pParticle->m_flRollDelta += pParticle->m_flRollDelta * ( timeDelta * -4.0f );
+    inline void SetGravity( float flGravity )
+    {
+        m_flGravity = flGravity;
+    }
 
-		//Cap the minimum roll
-		/*
-		if ( fabs( pParticle->m_flRollDelta ) < 0.5f )
-		{
-			pParticle->m_flRollDelta = ( pParticle->m_flRollDelta > 0.0f ) ? 0.5f : -0.5f;
-		}
-		*/
+    virtual float UpdateRoll( SimpleParticle *pParticle, float timeDelta )
+    {
+        pParticle->m_flRoll += pParticle->m_flRollDelta * timeDelta;
 
-		return pParticle->m_flRoll;
-	}
+        pParticle->m_flRollDelta += pParticle->m_flRollDelta * ( timeDelta * -4.0f );
 
-	virtual void UpdateVelocity( SimpleParticle *pParticle, float timeDelta )
-	{
-		if ( !( pParticle->m_iFlags & SIMPLE_PARTICLE_FLAG_NO_VEL_DECAY ) )
-		{
-			//Decelerate
-			static float dtime;
-			static float decay;
+        // Cap the minimum roll
+        /*
+        if ( fabs( pParticle->m_flRollDelta ) < 0.5f )
+        {
+          pParticle->m_flRollDelta = ( pParticle->m_flRollDelta > 0.0f ) ? 0.5f : -0.5f;
+        }
+        */
 
-			if ( dtime != timeDelta )
-			{
-				decay = ExponentialDecay( 0.1, 0.4f, dtime );
-				dtime = timeDelta;
-			}
+        return pParticle->m_flRoll;
+    }
 
-			pParticle->m_vecVelocity *= decay;
-			pParticle->m_vecVelocity[2] -= ( m_flGravity * timeDelta );
-		}
-	}
+    virtual void UpdateVelocity( SimpleParticle *pParticle, float timeDelta )
+    {
+        if ( !( pParticle->m_iFlags & SIMPLE_PARTICLE_FLAG_NO_VEL_DECAY ) )
+        {
+            // Decelerate
+            static float dtime;
+            static float decay;
 
-private:
+            if ( dtime != timeDelta )
+            {
+                decay = ExponentialDecay( 0.1, 0.4f, dtime );
+                dtime = timeDelta;
+            }
 
-	float m_flGravity;
+            pParticle->m_vecVelocity *= decay;
+            pParticle->m_vecVelocity[2] -= ( m_flGravity * timeDelta );
+        }
+    }
 
-	CBloodSprayEmitter( const CBloodSprayEmitter & );
+   private:
+    float m_flGravity;
+
+    CBloodSprayEmitter( const CBloodSprayEmitter & );
 };
 
 #include "tier0/memdbgoff.h"
 
-#endif // FX_BLOOD_H
+#endif  // FX_BLOOD_H

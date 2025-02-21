@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
 
@@ -26,49 +26,60 @@
 //
 class CTFParachute : public CTFBuffItem
 {
-public:
+   public:
+    DECLARE_CLASS( CTFParachute, CTFBuffItem );
+    DECLARE_NETWORKCLASS();
+    DECLARE_PREDICTABLE();
 
-	DECLARE_CLASS( CTFParachute, CTFBuffItem );
-	DECLARE_NETWORKCLASS();
-	DECLARE_PREDICTABLE();
+    CTFParachute();
 
-	CTFParachute();
+    virtual int GetWeaponID( void ) const
+    {
+        return TF_WEAPON_PARACHUTE;
+    }
 
-	virtual int		GetWeaponID( void ) const			{ return TF_WEAPON_PARACHUTE; }
-
-	virtual bool	VisibleInWeaponSelection( void )				{ return false; }
-	virtual bool	CanBeSelected( void )							{ return false; }
-	virtual bool	CanDeploy( void )								{ return false; }
-	virtual void	CreateBanner();
+    virtual bool VisibleInWeaponSelection( void )
+    {
+        return false;
+    }
+    virtual bool CanBeSelected( void )
+    {
+        return false;
+    }
+    virtual bool CanDeploy( void )
+    {
+        return false;
+    }
+    virtual void CreateBanner();
 
 #ifdef CLIENT_DLL
-	virtual void	ClientThink( void );
-	void			ParachuteAnimThink( void );
-#endif // CLIENT_DLL
+    virtual void ClientThink( void );
+    void ParachuteAnimThink( void );
+#endif  // CLIENT_DLL
 
-private:
+   private:
 #ifdef CLIENT_DLL
-	int							m_iParachuteAnimState;
-	float						m_flParachuteToIdleTime;
-#endif // CLIENT_DLL
+    int m_iParachuteAnimState;
+    float m_flParachuteToIdleTime;
+#endif  // CLIENT_DLL
 };
 
 //=============================================================================
 // Parachute Primary (demo)
 class CTFParachute_Primary : public CTFParachute
 {
-public:
-	DECLARE_CLASS( CTFParachute_Primary, CTFParachute );
-	DECLARE_NETWORKCLASS();
-	DECLARE_PREDICTABLE();
+   public:
+    DECLARE_CLASS( CTFParachute_Primary, CTFParachute );
+    DECLARE_NETWORKCLASS();
+    DECLARE_PREDICTABLE();
 };
 //=============================================================================
 // Parachute Secondary (soldier)
 class CTFParachute_Secondary : public CTFParachute
 {
-public:
-	DECLARE_CLASS( CTFParachute_Secondary, CTFParachute );
-	DECLARE_NETWORKCLASS();
-	DECLARE_PREDICTABLE();
+   public:
+    DECLARE_CLASS( CTFParachute_Secondary, CTFParachute );
+    DECLARE_NETWORKCLASS();
+    DECLARE_PREDICTABLE();
 };
-#endif // TF_WEAPON_BUFF_ITEM_H
+#endif  // TF_WEAPON_BUFF_ITEM_H

@@ -15,72 +15,74 @@
 // Client specific.
 #ifdef CLIENT_DLL
 
-	#define CTFWeaponFlameBall C_TFWeaponFlameBall
+#define CTFWeaponFlameBall C_TFWeaponFlameBall
 #else
-	#include "tf_projectile_rocket.h"
-	#include "baseentity.h"
-	#include "iscorer.h"
+#include "tf_projectile_rocket.h"
+#include "baseentity.h"
+#include "iscorer.h"
 #endif
-
-
 
 class CTFWeaponFlameBall : public CTFFlameThrower
 {
-public:
-	DECLARE_CLASS( CTFWeaponFlameBall, CTFFlameThrower );
-	DECLARE_NETWORKCLASS(); 
-	DECLARE_PREDICTABLE();
+   public:
+    DECLARE_CLASS( CTFWeaponFlameBall, CTFFlameThrower );
+    DECLARE_NETWORKCLASS();
+    DECLARE_PREDICTABLE();
 
-	// Server specific.
+    // Server specific.
 #ifdef GAME_DLL
-	DECLARE_DATADESC();
+    DECLARE_DATADESC();
 #endif
 
-	CTFWeaponFlameBall();
+    CTFWeaponFlameBall();
 
 #ifndef CLIENT_DLL
-	virtual void	Precache();
+    virtual void Precache();
 #endif
 
-	virtual int		GetWeaponID( void ) const			{ return TF_WEAPON_FLAME_BALL; }
+    virtual int GetWeaponID( void ) const
+    {
+        return TF_WEAPON_FLAME_BALL;
+    }
 
-	virtual CBaseEntity *FireProjectile( CTFPlayer *pPlayer );
+    virtual CBaseEntity *FireProjectile( CTFPlayer *pPlayer );
 
-	virtual void	PrimaryAttack( void ) OVERRIDE;
-	virtual void	SecondaryAttack( void ) OVERRIDE;
-	virtual void	ItemPostFrame( void ) OVERRIDE;
+    virtual void PrimaryAttack( void ) OVERRIDE;
+    virtual void SecondaryAttack( void ) OVERRIDE;
+    virtual void ItemPostFrame( void ) OVERRIDE;
 
-	bool HasFullCharge() const;
+    bool HasFullCharge() const;
 
-	virtual void	OnResourceMeterFilled() OVERRIDE;
-	virtual float	GetMeterMultiplier() const OVERRIDE;
+    virtual void OnResourceMeterFilled() OVERRIDE;
+    virtual float GetMeterMultiplier() const OVERRIDE;
 
 #ifdef GAME_DLL
-	virtual float GetInitialAfterburnDuration() const OVERRIDE { return 0.f; }
-	void RefundAmmo( int nAmmo );
+    virtual float GetInitialAfterburnDuration() const OVERRIDE
+    {
+        return 0.f;
+    }
+    void RefundAmmo( int nAmmo );
 #else
-	virtual void	OnDataChanged( DataUpdateType_t updateType ) OVERRIDE;
-	virtual bool	ShouldDrawMeter() const OVERRIDE;
-	virtual void	GetPoseParameters( CStudioHdr *pStudioHdr, float poseParameter[MAXSTUDIOPOSEPARAM] );
-	void			UpdatePoseParams();
+    virtual void OnDataChanged( DataUpdateType_t updateType ) OVERRIDE;
+    virtual bool ShouldDrawMeter() const OVERRIDE;
+    virtual void GetPoseParameters( CStudioHdr *pStudioHdr, float poseParameter[MAXSTUDIOPOSEPARAM] );
+    void UpdatePoseParams();
 #endif
 
-private:
-
+   private:
 #ifdef GAME_DLL
-	void StartPressureSound();
-	void StopPressureSound();
+    void StartPressureSound();
+    void StopPressureSound();
 #endif
 
-	CNetworkVar( float, m_flRechargeScale );
+    CNetworkVar( float, m_flRechargeScale );
 
-	int m_nNeedlePoseParam = -1;
-	int m_nBarrelPoseParam = -1;
+    int m_nNeedlePoseParam = -1;
+    int m_nBarrelPoseParam = -1;
 
 #ifdef GAME_DLL
-	CSoundPatch*	m_pSndPressure;
+    CSoundPatch *m_pSndPressure;
 #endif
 };
 
-
-#endif // TF_WEAPON_FLAMETHROWER_H
+#endif  // TF_WEAPON_FLAMETHROWER_H

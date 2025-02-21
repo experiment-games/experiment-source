@@ -10,7 +10,6 @@
 #pragma once
 #endif
 
-
 #include "baseobject_shared.h"
 #include "takedamageinfo.h"
 
@@ -23,19 +22,22 @@
 // ------------------------------------------------------------------------ //
 class CBaseObjectUpgrade : public CBaseObject
 {
-DECLARE_CLASS( CBaseObjectUpgrade, CBaseObject );
+    DECLARE_CLASS( CBaseObjectUpgrade, CBaseObject );
 
-public:
-	DECLARE_NETWORKCLASS();
+   public:
+    DECLARE_NETWORKCLASS();
 
-	CBaseObjectUpgrade();
+    CBaseObjectUpgrade();
 
-	virtual void	Spawn( void );
-	virtual bool	IsAnUpgrade( void )			{ return true; }
-	virtual int		OnTakeDamage( const CTakeDamageInfo &info );
+    virtual void Spawn( void );
+    virtual bool IsAnUpgrade( void )
+    {
+        return true;
+    }
+    virtual int OnTakeDamage( const CTakeDamageInfo &info );
 
-private:
-	CBaseObjectUpgrade( const CBaseObjectUpgrade & ); // not defined, not accessible
+   private:
+    CBaseObjectUpgrade( const CBaseObjectUpgrade & );  // not defined, not accessible
 };
 
-#endif // TF_OBJ_BASEUPGRADE_H
+#endif  // TF_OBJ_BASEUPGRADE_H

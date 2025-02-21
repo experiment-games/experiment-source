@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -18,32 +18,33 @@
 //-----------------------------------------------------------------------------
 class CEnvPlayerSurfaceTrigger : public CPointEntity
 {
-	DECLARE_CLASS( CEnvPlayerSurfaceTrigger, CPointEntity );
-public:
-	DECLARE_DATADESC();
+    DECLARE_CLASS( CEnvPlayerSurfaceTrigger, CPointEntity );
 
-	~CEnvPlayerSurfaceTrigger( void );
-	void	Spawn( void );
-	void	OnRestore( void );
+   public:
+    DECLARE_DATADESC();
 
-	// Main interface to all surface triggers
-	static void	SetPlayerSurface( CBasePlayer *pPlayer, char gameMaterial );
+    ~CEnvPlayerSurfaceTrigger( void );
+    void Spawn( void );
+    void OnRestore( void );
 
-	void	UpdateMaterialThink( void );
+    // Main interface to all surface triggers
+    static void SetPlayerSurface( CBasePlayer *pPlayer, char gameMaterial );
 
-private:
-	void	PlayerSurfaceChanged( CBasePlayer *pPlayer, char gameMaterial );
-	void	InputDisable( inputdata_t &inputdata );
-	void	InputEnable( inputdata_t &inputdata );
+    void UpdateMaterialThink( void );
 
-private:
-	int		m_iTargetGameMaterial;
-	int		m_iCurrentGameMaterial;
-	bool	m_bDisabled;
+   private:
+    void PlayerSurfaceChanged( CBasePlayer *pPlayer, char gameMaterial );
+    void InputDisable( inputdata_t &inputdata );
+    void InputEnable( inputdata_t &inputdata );
 
-	// Outputs
-	COutputEvent m_OnSurfaceChangedToTarget;
-	COutputEvent m_OnSurfaceChangedFromTarget;
+   private:
+    int m_iTargetGameMaterial;
+    int m_iCurrentGameMaterial;
+    bool m_bDisabled;
+
+    // Outputs
+    COutputEvent m_OnSurfaceChangedToTarget;
+    COutputEvent m_OnSurfaceChangedFromTarget;
 };
 
-#endif // ENV_PLAYER_SURFACE_TRIGGER_H
+#endif  // ENV_PLAYER_SURFACE_TRIGGER_H

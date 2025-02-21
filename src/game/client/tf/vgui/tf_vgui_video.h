@@ -14,32 +14,38 @@
 
 class CTFVideoPanel : public VideoPanel
 {
-	DECLARE_CLASS_SIMPLE( CTFVideoPanel, VideoPanel );
-public:
+    DECLARE_CLASS_SIMPLE( CTFVideoPanel, VideoPanel );
 
-	CTFVideoPanel( vgui::Panel *parent, const char *panelName );
-	~CTFVideoPanel();
+   public:
+    CTFVideoPanel( vgui::Panel *parent, const char *panelName );
+    ~CTFVideoPanel();
 
-	virtual void OnClose();
-	virtual void OnKeyCodePressed( vgui::KeyCode code ){}
-	virtual void ApplySettings( KeyValues *inResourceData );
-	
-	virtual void GetPanelPos( int &xpos, int &ypos );
-	virtual void Shutdown();
+    virtual void OnClose();
+    virtual void OnKeyCodePressed( vgui::KeyCode code ) {}
+    virtual void ApplySettings( KeyValues *inResourceData );
 
-	float GetStartDelay(){ return m_flStartAnimDelay; }
-	float GetEndDelay(){ return m_flEndAnimDelay; }
+    virtual void GetPanelPos( int &xpos, int &ypos );
+    virtual void Shutdown();
 
-	virtual bool BeginPlayback( const char *pFilename ) OVERRIDE;
+    float GetStartDelay()
+    {
+        return m_flStartAnimDelay;
+    }
+    float GetEndDelay()
+    {
+        return m_flEndAnimDelay;
+    }
 
-protected:
-	virtual void ReleaseVideo();
-	virtual void OnVideoOver();
+    virtual bool BeginPlayback( const char *pFilename ) OVERRIDE;
 
-private:
-	float m_flStartAnimDelay;
-	float m_flEndAnimDelay;
-	bool m_bLoop;
+   protected:
+    virtual void ReleaseVideo();
+    virtual void OnVideoOver();
+
+   private:
+    float m_flStartAnimDelay;
+    float m_flEndAnimDelay;
+    bool m_bLoop;
 };
 
-#endif // TF_VGUI_VIDEO_H
+#endif  // TF_VGUI_VIDEO_H

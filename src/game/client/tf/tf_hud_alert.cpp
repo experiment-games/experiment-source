@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================
@@ -26,146 +26,147 @@
 using namespace vgui;
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 class CHudAlert : public CHudElement, public EditablePanel
 {
-	DECLARE_CLASS_SIMPLE( CHudAlert, EditablePanel );
+    DECLARE_CLASS_SIMPLE( CHudAlert, EditablePanel );
 
-public:
-	CHudAlert( const char *pElementName );
+   public:
+    CHudAlert( const char *pElementName );
 
-	virtual void	Init( void );
-	virtual void	OnTick( void );
-	virtual void	LevelInit( void );
-	virtual void	ApplySchemeSettings( IScheme *scheme );
-	virtual bool	ShouldDraw( void );
+    virtual void Init( void );
+    virtual void OnTick( void );
+    virtual void LevelInit( void );
+    virtual void ApplySchemeSettings( IScheme *scheme );
+    virtual bool ShouldDraw( void );
 
-	virtual void	FireGameEvent( IGameEvent * event );
-	void			SetupAlertPanel( int iAlertType );
+    virtual void FireGameEvent( IGameEvent *event );
+    void SetupAlertPanel( int iAlertType );
 
-private:
-	Label			*m_pAlertLabel;
-	float			m_flHideAt;
+   private:
+    Label *m_pAlertLabel;
+    float m_flHideAt;
 };
 
 DECLARE_HUDELEMENT( CHudAlert );
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-CHudAlert::CHudAlert( const char *pElementName ) : CHudElement( pElementName ), BaseClass( NULL, "HudAlert" )
+CHudAlert::CHudAlert( const char *pElementName )
+    : CHudElement( pElementName ), BaseClass( NULL, "HudAlert" )
 {
-	Panel *pParent = g_pClientMode->GetViewport();
-	SetParent( pParent );
+    Panel *pParent = g_pClientMode->GetViewport();
+    SetParent( pParent );
 
-	m_flHideAt = 0;
-	vgui::ivgui()->AddTickSignal( GetVPanel(), 200 );
+    m_flHideAt = 0;
+    vgui::ivgui()->AddTickSignal( GetVPanel(), 200 );
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CHudAlert::Init( void )
 {
-	ListenForGameEvent( "teamplay_alert" );
+    ListenForGameEvent( "teamplay_alert" );
 
-	SetVisible( false );
-	CHudElement::Init();
+    SetVisible( false );
+    CHudElement::Init();
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-void CHudAlert::FireGameEvent( IGameEvent * event )
+void CHudAlert::FireGameEvent( IGameEvent *event )
 {
-	const char *pEventName = event->GetName();
-	if ( Q_strcmp( "teamplay_alert", pEventName ) == 0 )
-	{
-		int iAlertType = event->GetInt( "alert_type" );
+    const char *pEventName = event->GetName();
+    if ( Q_strcmp( "teamplay_alert", pEventName ) == 0 )
+    {
+        int iAlertType = event->GetInt( "alert_type" );
 
-		SetupAlertPanel( iAlertType );
-		SetVisible( true );
-	}
+        SetupAlertPanel( iAlertType );
+        SetVisible( true );
+    }
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  :  - 
+// Purpose:
+// Input  :  -
 //-----------------------------------------------------------------------------
 void CHudAlert::OnTick( void )
 {
-	if ( m_flHideAt && m_flHideAt < gpGlobals->curtime )
-	{
-		SetVisible( false );
-		m_flHideAt = 0;
-	}
+    if ( m_flHideAt && m_flHideAt < gpGlobals->curtime )
+    {
+        SetVisible( false );
+        m_flHideAt = 0;
+    }
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CHudAlert::LevelInit( void )
 {
-	m_flHideAt = 0;
-	SetVisible( false );
+    m_flHideAt = 0;
+    SetVisible( false );
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CHudAlert::ShouldDraw( void )
 {
-	if ( IsTakingAFreezecamScreenshot() )
-		return false;
+    if ( IsTakingAFreezecamScreenshot() )
+        return false;
 
-	if ( engine->IsPlayingDemo() )
-		return false;
+    if ( engine->IsPlayingDemo() )
+        return false;
 
-	return ( IsVisible() );
+    return ( IsVisible() );
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CHudAlert::ApplySchemeSettings( IScheme *pScheme )
 {
-	// load control settings...
-	LoadControlSettings( "resource/UI/HudAlert.res" );
+    // load control settings...
+    LoadControlSettings( "resource/UI/HudAlert.res" );
 
-	BaseClass::ApplySchemeSettings( pScheme );
+    BaseClass::ApplySchemeSettings( pScheme );
 
-	m_pAlertLabel = dynamic_cast<Label *>( FindChildByName("AlertLabel") );
+    m_pAlertLabel = dynamic_cast< Label * >( FindChildByName( "AlertLabel" ) );
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CHudAlert::SetupAlertPanel( int iAlertType )
 {
-	C_BasePlayer *pPlayer = C_BasePlayer::GetLocalPlayer();
-	if ( !pPlayer )
-		return;
+    C_BasePlayer *pPlayer = C_BasePlayer::GetLocalPlayer();
+    if ( !pPlayer )
+        return;
 
-	if ( !m_pAlertLabel )
-		return;
+    if ( !m_pAlertLabel )
+        return;
 
-	// Alert case handling
-	const char *pszResult = NULL;
+    // Alert case handling
+    const char *pszResult = NULL;
 
-	switch ( iAlertType )
-	{
-		case HUD_ALERT_SCRAMBLE_TEAMS:
-			pszResult = "#game_scramble_onrestart";
-			m_flHideAt = gpGlobals->curtime + 5.0;
-			break;
-		default:
-			m_flHideAt = gpGlobals->curtime + 10.0;
-			break;
-	}
+    switch ( iAlertType )
+    {
+        case HUD_ALERT_SCRAMBLE_TEAMS:
+            pszResult = "#game_scramble_onrestart";
+            m_flHideAt = gpGlobals->curtime + 5.0;
+            break;
+        default:
+            m_flHideAt = gpGlobals->curtime + 10.0;
+            break;
+    }
 
-	if ( pszResult )
-	{
-		m_pAlertLabel->SetText( g_pVGuiLocalize->Find( pszResult ) );
-	}
+    if ( pszResult )
+    {
+        m_pAlertLabel->SetText( g_pVGuiLocalize->Find( pszResult ) );
+    }
 }

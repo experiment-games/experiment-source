@@ -5,7 +5,6 @@
 #include "tf_ladder_data.h"
 #include "tf_rating_data.h"
 
-
 #if defined CLIENT_DLL || defined GAME_DLL
 #include "tf_gamerules.h"
 #endif
@@ -40,4 +39,3 @@ extern ConVar tf_gamemode_ctf;
 extern ConVar tf_mvm_allow_abandon_after_seconds;
 extern ConVar tf_mvm_allow_abandon_below_players;
 #endif
-

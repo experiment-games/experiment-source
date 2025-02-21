@@ -11,18 +11,16 @@
 #pragma once
 #endif
 
-
 //-----------------------------------------------------------------------------
 // Purpose: Is the client running on Steam Global or Steam China
 //-----------------------------------------------------------------------------
 enum ESteamRealm
 {
-	k_ESteamRealmUnknown = 0,	// Unknown / not set
-	k_ESteamRealmGlobal = 1,	// Steam Global
-	k_ESteamRealmChina = 2,		// Steam China
+    k_ESteamRealmUnknown = 0,  // Unknown / not set
+    k_ESteamRealmGlobal = 1,   // Steam Global
+    k_ESteamRealmChina = 2,    // Steam China
 
-	k_ESteamRealmMax
+    k_ESteamRealmMax
 };
 
-
-#endif // STEAMREALM_H
+#endif  // STEAMREALM_H

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -18,16 +18,14 @@
 //
 class C_FogController : public C_BaseEntity
 {
-public:
-	DECLARE_NETWORKCLASS();
-	DECLARE_CLASS( C_FogController, C_BaseEntity );
+   public:
+    DECLARE_NETWORKCLASS();
+    DECLARE_CLASS( C_FogController, C_BaseEntity );
 
-	C_FogController();
+    C_FogController();
 
-public:
-
-	fogparams_t				m_fog;
+   public:
+    fogparams_t m_fog;
 };
 
-
-#endif // C_ENV_FOG_CONTROLLER_H
+#endif  // C_ENV_FOG_CONTROLLER_H

@@ -13,7 +13,7 @@
 
 namespace vgui
 {
-	class Panel;
+class Panel;
 };
 class CSelectPlayerDialog;
 
@@ -39,4 +39,4 @@ void NotifyNeedsToChooseMostHelpfulFriend();
  */
 CSelectPlayerDialog *OpenSelectMostHelpfulFriendDialog( vgui::Panel *pParent );
 
-#endif // C_TF_FREEACCOUNT_H
+#endif  // C_TF_FREEACCOUNT_H

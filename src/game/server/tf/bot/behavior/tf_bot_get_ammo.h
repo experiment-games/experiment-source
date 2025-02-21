@@ -10,29 +10,31 @@
 
 class CTFBotGetAmmo : public Action< CTFBot >
 {
-public:
-	CTFBotGetAmmo( void );
+   public:
+    CTFBotGetAmmo( void );
 
-	static bool IsPossible( CTFBot *me );			// return true if this Action has what it needs to perform right now
+    static bool IsPossible( CTFBot *me );  // return true if this Action has what it needs to perform right now
 
-	virtual ActionResult< CTFBot >	OnStart( CTFBot *me, Action< CTFBot > *priorAction );
-	virtual ActionResult< CTFBot >	Update( CTFBot *me, float interval );
+    virtual ActionResult< CTFBot > OnStart( CTFBot *me, Action< CTFBot > *priorAction );
+    virtual ActionResult< CTFBot > Update( CTFBot *me, float interval );
 
-	virtual EventDesiredResult< CTFBot > OnContact( CTFBot *me, CBaseEntity *other, CGameTrace *result = NULL );
+    virtual EventDesiredResult< CTFBot > OnContact( CTFBot *me, CBaseEntity *other, CGameTrace *result = NULL );
 
-	virtual EventDesiredResult< CTFBot > OnStuck( CTFBot *me );
-	virtual EventDesiredResult< CTFBot > OnMoveToSuccess( CTFBot *me, const Path *path );
-	virtual EventDesiredResult< CTFBot > OnMoveToFailure( CTFBot *me, const Path *path, MoveToFailureType reason );
+    virtual EventDesiredResult< CTFBot > OnStuck( CTFBot *me );
+    virtual EventDesiredResult< CTFBot > OnMoveToSuccess( CTFBot *me, const Path *path );
+    virtual EventDesiredResult< CTFBot > OnMoveToFailure( CTFBot *me, const Path *path, MoveToFailureType reason );
 
-	virtual QueryResultType ShouldHurry( const INextBot *me ) const;					// are we in a hurry?
+    virtual QueryResultType ShouldHurry( const INextBot *me ) const;  // are we in a hurry?
 
-	virtual const char *GetName( void ) const	{ return "GetAmmo"; };
+    virtual const char *GetName( void ) const
+    {
+        return "GetAmmo";
+    };
 
-private:
-	PathFollower m_path;
-	CHandle< CBaseEntity > m_ammo;
-	bool m_isGoalDispenser;
+   private:
+    PathFollower m_path;
+    CHandle< CBaseEntity > m_ammo;
+    bool m_isGoalDispenser;
 };
 
-
-#endif // TF_BOT_GET_AMMO_H
+#endif  // TF_BOT_GET_AMMO_H

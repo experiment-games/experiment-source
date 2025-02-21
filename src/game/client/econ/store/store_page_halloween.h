@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -14,36 +14,39 @@
 #include "store/v1/tf_store_page.h"
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 class CTFStorePage_SpecialPromo : public CTFStorePage1
 {
-	DECLARE_CLASS_SIMPLE( CTFStorePage_SpecialPromo, CTFStorePage1 );
-public:
-	CTFStorePage_SpecialPromo( Panel *parent, const CEconStoreCategoryManager::StoreCategory_t *pPageData );
+    DECLARE_CLASS_SIMPLE( CTFStorePage_SpecialPromo, CTFStorePage1 );
 
-	virtual const char* GetPageResFile() { return pszResFile; }
+   public:
+    CTFStorePage_SpecialPromo( Panel *parent, const CEconStoreCategoryManager::StoreCategory_t *pPageData );
 
-protected:
-//	virtual void OrderItemsForDisplay( CUtlVector<const econ_store_entry_t *>& vecItems ) const;
+    virtual const char *GetPageResFile()
+    {
+        return pszResFile;
+    }
 
-private:
-	const char* pszResFile;
+   protected:
+    //	virtual void OrderItemsForDisplay( CUtlVector<const econ_store_entry_t *>& vecItems ) const;
+
+   private:
+    const char *pszResFile;
 };
 
-
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 class CTFStorePage_Popular : public CTFStorePage1
 {
-	DECLARE_CLASS_SIMPLE( CTFStorePage_Popular, CTFStorePage1 );
-public:
-	CTFStorePage_Popular( Panel *parent, const CEconStoreCategoryManager::StoreCategory_t *pPageData );
+    DECLARE_CLASS_SIMPLE( CTFStorePage_Popular, CTFStorePage1 );
 
-protected:
-	virtual void	UpdateFilteredItems( void );
+   public:
+    CTFStorePage_Popular( Panel *parent, const CEconStoreCategoryManager::StoreCategory_t *pPageData );
+
+   protected:
+    virtual void UpdateFilteredItems( void );
 };
 
-
-#endif // STORE_PAGE_SPECIALPROMO_H
+#endif  // STORE_PAGE_SPECIALPROMO_H

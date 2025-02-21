@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -11,4 +11,4 @@
 #pragma once
 #endif
 
-#endif // TF_MATCHMAKING_DASHBOARD_EVENT_H
+#endif  // TF_MATCHMAKING_DASHBOARD_EVENT_H

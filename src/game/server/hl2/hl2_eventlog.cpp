@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -14,39 +14,40 @@
 
 class CHL2EventLog : public CEventLog
 {
-private:
-	typedef CEventLog BaseClass;
+   private:
+    typedef CEventLog BaseClass;
 
-public:
-	virtual char const *Name() { return "CHL2EventLog"; }
+   public:
+    virtual char const* Name()
+    {
+        return "CHL2EventLog";
+    }
 
-	virtual ~CHL2EventLog() {};
+    virtual ~CHL2EventLog(){};
 
-public:
-	bool PrintEvent( IGameEvent * event )	// override virtual function
-	{
-		if ( BaseClass::PrintEvent( event ) )
-		{
-			return true;
-		}
-	
-		if ( Q_strcmp(event->GetName(), "hl2_") == 0 )
-		{
-			return PrintHL2Event( event );
-		}
+   public:
+    bool PrintEvent( IGameEvent* event )  // override virtual function
+    {
+        if ( BaseClass::PrintEvent( event ) )
+        {
+            return true;
+        }
 
-		return false;
-	}
+        if ( Q_strcmp( event->GetName(), "hl2_" ) == 0 )
+        {
+            return PrintHL2Event( event );
+        }
 
-protected:
+        return false;
+    }
 
-	bool PrintHL2Event( IGameEvent * event )	// print Mod specific logs
-	{
-	//	const char * name = event->GetName() + Q_strlen("hl2_"); // remove prefix
+   protected:
+    bool PrintHL2Event( IGameEvent* event )  // print Mod specific logs
+    {
+        //	const char * name = event->GetName() + Q_strlen("hl2_"); // remove prefix
 
-		return false;
-	}
-
+        return false;
+    }
 };
 
 static CHL2EventLog s_HL2EventLog;
@@ -56,6 +57,5 @@ static CHL2EventLog s_HL2EventLog;
 //-----------------------------------------------------------------------------
 IGameSystem* GameLogSystem()
 {
-	return &s_HL2EventLog;
+    return &s_HL2EventLog;
 }
-

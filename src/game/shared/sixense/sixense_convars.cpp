@@ -29,15 +29,15 @@ ConVar sixense_disable_scale_reset_lesson( "sixense_disable_scale_reset_lesson",
 // grab convars
 //
 
-ConVar sixense_throw_multiplier ("sixense_throw_multiplier", "1.0", FCVAR_REPLICATED | FCVAR_ARCHIVE );
-ConVar sixense_hold_multiplier ("sixense_hold_multiplier", "7.0", FCVAR_REPLICATED | FCVAR_ARCHIVE );
-ConVar sixense_hold_z_scale ("sixense_hold_z_scale", "1.0", FCVAR_REPLICATED | FCVAR_CHEAT );
+ConVar sixense_throw_multiplier( "sixense_throw_multiplier", "1.0", FCVAR_REPLICATED | FCVAR_ARCHIVE );
+ConVar sixense_hold_multiplier( "sixense_hold_multiplier", "7.0", FCVAR_REPLICATED | FCVAR_ARCHIVE );
+ConVar sixense_hold_z_scale( "sixense_hold_z_scale", "1.0", FCVAR_REPLICATED | FCVAR_CHEAT );
 ConVar sixense_hold_z_min( "sixense_hold_z_min", "-128.0", FCVAR_REPLICATED | FCVAR_CHEAT );
-ConVar sixense_hold_z_max ("sixense_hold_z_max", "256.0", FCVAR_REPLICATED | FCVAR_CHEAT );
+ConVar sixense_hold_z_max( "sixense_hold_z_max", "256.0", FCVAR_REPLICATED | FCVAR_CHEAT );
 ConVar sixense_hold_z_min_no_portalgun( "sixense_hold_z_min_no_portalgun", "0.0", FCVAR_REPLICATED | FCVAR_CHEAT );
 ConVar sixense_hold_z_max_no_portalgun( "sixense_hold_z_max_no_portalgun", "48.0", FCVAR_REPLICATED | FCVAR_CHEAT );
-ConVar sixense_throw_max_vel ("sixense_throw_max_vel", "750.0", FCVAR_REPLICATED | FCVAR_CHEAT );
-ConVar sixense_hold_blend ("sixense_hold_blend", "0.925", FCVAR_REPLICATED | FCVAR_ARCHIVE );
+ConVar sixense_throw_max_vel( "sixense_throw_max_vel", "750.0", FCVAR_REPLICATED | FCVAR_CHEAT );
+ConVar sixense_hold_blend( "sixense_hold_blend", "0.925", FCVAR_REPLICATED | FCVAR_ARCHIVE );
 ConVar sixense_hold_offset_x( "sixense_hold_offset_x", "0.0", FCVAR_REPLICATED | FCVAR_CHEAT );
 ConVar sixense_hold_offset_y( "sixense_hold_offset_y", "0.0", FCVAR_REPLICATED | FCVAR_CHEAT );
 ConVar sixense_hold_offset_z( "sixense_hold_offset_z", "-20.0", FCVAR_REPLICATED | FCVAR_CHEAT );
@@ -62,7 +62,7 @@ ConVar sixense_hold_turret_distance( "sixense_hold_turret_distance", "70.0", FCV
 // portal tweaking convars
 //
 
-ConVar sixense_portal_tweaking_enabled("sixense_portal_tweaking_enabled", "1", FCVAR_REPLICATED | FCVAR_ARCHIVE );
+ConVar sixense_portal_tweaking_enabled( "sixense_portal_tweaking_enabled", "1", FCVAR_REPLICATED | FCVAR_ARCHIVE );
 ConVar sixense_portal_tweaking_roll_scale( "sixense_portal_tweaking_roll_scale", "2.0", FCVAR_CHEAT | FCVAR_REPLICATED, "Scale portal tweaking controller rotation by this amount." );
 ConVar sixense_portal_tweaking_grab_radius( "sixense_portal_tweaking_grab_radius", "25.0", FCVAR_CHEAT | FCVAR_REPLICATED, "Max grab radius from aimed trace world intersection and portal." );
 ConVar sixense_portal_tweaking_fire_hold_time( "sixense_portal_tweaking_fire_hold_time", "0.375", FCVAR_REPLICATED | FCVAR_CHEAT, "Minimum time button held after firing portal to enter tweaking." );
@@ -123,6 +123,6 @@ ConVar sixense_scaling_blend( "sixense_scaling_blend", "1", FCVAR_REPLICATED | F
 ConVar sixense_scaling_blend_time( "sixense_scaling_blend_time", "0.1", FCVAR_REPLICATED | FCVAR_CHEAT );
 ConVar sixense_scaling_controller_pos_offset_z( "sixense_scaling_controller_pos_offset_z", "-100", FCVAR_REPLICATED | FCVAR_CHEAT );
 
-#endif // PORTAL2
+#endif  // PORTAL2
 
-#endif // SIXENSE
+#endif  // SIXENSE
