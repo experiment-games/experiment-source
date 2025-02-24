@@ -47,7 +47,8 @@ $Configuration
 {
 	$General
 	{
-		$OutputDirectory		".\$GAMENAME"		[$OSXALL]
+		$OutputDirectory		        ".\$GAMENAME"		[$OSXALL]
+        $AdditionalProjectDependencies	"networksystem;luasocket;lua54"
 	}
 
 	$Compiler

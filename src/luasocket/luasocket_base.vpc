@@ -16,7 +16,6 @@ $MacroRequired		"OUTDLLEXT" "$_DLL_EXT"
 
 $Include "$SRCDIR\vpc_scripts\source_dll_base.vpc"
 $Include "$SRCDIR\tier0\tier0_exclude.vpc"
-$Include "$SRCDIR\tier1\tier1_exclude.vpc"
 $Include "$SRCDIR\vstdlib\vstdlib_exclude.vpc"
 
 $MacroRequired PLATSUBDIR
@@ -27,40 +26,45 @@ $Configuration	"Debug"
 {
     $General
     {
-		$OutputDirectory			".\Debug_$GAMENAME"			[$WIN32]
-		$IntermediateDirectory		".\Debug_$GAMENAME"			[$WIN32]
+        $OutputDirectory			".\Debug_$GAMENAME"			[$WINDOWS]
+        $IntermediateDirectory		".\Debug_$GAMENAME"			[$WINDOWS]
 
-		$OutputDirectory			".\Debug_$GAMENAME_360"		[$X360]
-		$IntermediateDirectory		".\Debug_$GAMENAME_360"		[$X360]
+        $OutputDirectory			".\Debug_$GAMENAME_360"		[$X360]
+        $IntermediateDirectory		".\Debug_$GAMENAME_360"		[$X360]
     }
 
-	$Compiler
-	{
-		$PreprocessorDefinitions        "$BASE;LUASOCKET_DEBUG"
+    $Compiler
+    {
+        $PreprocessorDefinitions        "$BASE;LUASOCKET_DEBUG"
     }
 }
 
 $Configuration	"Release"
 {
-	$General
-	{
-		$OutputDirectory			".\Release_$GAMENAME"		[$WIN32]
-		$IntermediateDirectory		".\Release_$GAMENAME"		[$WIN32]
+    $General
+    {
+        $OutputDirectory			".\Release_$GAMENAME"		[$WINDOWS]
+        $IntermediateDirectory		".\Release_$GAMENAME"		[$WINDOWS]
 
-		$OutputDirectory			".\Release_$GAMENAME_360"	[$X360]
-		$IntermediateDirectory		".\Release_$GAMENAME_360"	[$X360]
-	}
+        $OutputDirectory			".\Release_$GAMENAME_360"	[$X360]
+        $IntermediateDirectory		".\Release_$GAMENAME_360"	[$X360]
+    }
 }
 
 $Configuration
 {
-	$Compiler
-	{
-		$AdditionalIncludeDirectories       "$BASE;$(SRCDIR)\luasocket\src;$SRCDIR\lua"
-		$PreprocessorDefinitions            "$BASE;_CRT_SECURE_NO_WARNINGS"
-		$DisableSpecificWarnings	"$BASE;4127"
+    $General
+    {
+        $AdditionalProjectDependencies			"lua54"
+	  }
 
-		"$CompileAs"    "Compile as C Code (/TC)"
+    $Compiler
+    {
+        $AdditionalIncludeDirectories       "$BASE;$(SRCDIR)\luasocket\src;$SRCDIR\lua"
+        $PreprocessorDefinitions            "$BASE;_CRT_SECURE_NO_WARNINGS"
+        $DisableSpecificWarnings	"$BASE;4127"
+
+        "$CompileAs"    "Compile as C Code (/TC)"
     }
 
     $Linker
@@ -71,7 +75,7 @@ $Configuration
     $CustomBuildStep
     {
         $Description	"Copying .lib to $OUTLIBDIR"
-        $CommandLine	"copy /Y $QUOTE$(OutDir)$(TargetName).lib$QUOTE $QUOTE$OUTLIBDIR\$OUTBINNAME.lib$QUOTE" [$WIN32]
+        $CommandLine	"copy /Y $QUOTE$(OutDir)$(TargetName).lib$QUOTE $QUOTE$OUTLIBDIR\$OUTBINNAME.lib$QUOTE" [$WINDOWS]
         $CommandLine	"cp $QUOTE$(OutDir)$(TargetName).lib$QUOTE $QUOTE$OUTLIBDIR/$OUTBINNAME.lib$QUOTE" [$LINUX]
         $Outputs        "$OUTLIBDIR\$OUTBINNAME.lib"
         $ExecuteAfter  "BuildLink"
@@ -117,8 +121,8 @@ $Project "luasocket"
         $File	"src/wsocket.h"
     }
 
-	$Folder	"Link Libraries"
-	{
-		$Lib	"lua54"
- 	}
+    $Folder	"Link Libraries"
+    {
+        $Lib	"lua54"
+    }
 }

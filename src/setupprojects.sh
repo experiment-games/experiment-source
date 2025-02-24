@@ -50,50 +50,6 @@ cat <<EOL > $PROJECT_FILE
 </Project>
 EOL
 
-# For whatever reason Valve decided to not allow us to configure dependencies in *.vpc files. For
-# this reason we modify the solution file to add the dependencies to Lua and Luasocket to the client
-# and server projects
-# TODO: Please someone tell me I am wrong and there is a better way to do this
-sln_file="experiment.sln"
-echo "Modifying the solution file $sln_file..."
-
-function addDependenciesToProject {
-    local project_name=$1
-    local dependency_guid=$2
-
-    fromProject_to_EndProjectSection=$(sed -n "/Project(\"{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}\") = \"$project_name\"/, /EndProject/p" "$sln_file")
-    if [[ $fromProject_to_EndProjectSection == *"$dependency_guid"* ]]; then
-        echo "Dependency $dependency_guid already added to the project $project_name (ignoring)"
-    else
-        if [[ $fromProject_to_EndProjectSection != *"EndProjectSection"* ]]; then
-            echo "Adding ProjectSection(ProjectDependencies) to the project $project_name"
-            sed -i '/Project(\"{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}\") = \"'"$project_name"'\"/, /EndProject/ {
-                /EndProject/ i\
-\tProjectSection(ProjectDependencies) = postProject\
-\tEndProjectSection
-            }' "$sln_file"
-        fi
-
-        echo "Adding dependency $dependency_guid to the project $project_name"
-        sed -i '/Project(\"{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}\") = \"'"$project_name"'\"/, /EndProjectSection/ {
-            /EndProjectSection/ i\
-\t\t{'"$dependency_guid"'} = {'"$dependency_guid"'}
-        }' "$sln_file"
-    fi
-}
-
-addDependenciesToProject "Client (Experiment)" "03CA75EC-BE16-DF25-185C-9CC7E863F493" # networksystem
-addDependenciesToProject "Client (Experiment)" "950C58AA-39F0-9CA2-8BB5-1AD6B8011443" # luasocket
-addDependenciesToProject "Client (Experiment)" "11C4CA93-C3BB-5EF6-0C85-700D6B69A2F6" # lua
-addDependenciesToProject "Client (Experiment)" "378EBA0C-3BA5-1CB2-6A4B-13E100D0686B" # libpng
-
-addDependenciesToProject "Server (Experiment)" "03CA75EC-BE16-DF25-185C-9CC7E863F493" # networksystem
-addDependenciesToProject "Server (Experiment)" "950C58AA-39F0-9CA2-8BB5-1AD6B8011443" # luasocket
-addDependenciesToProject "Server (Experiment)" "11C4CA93-C3BB-5EF6-0C85-700D6B69A2F6" # lua
-addDependenciesToProject "Server (Experiment)" "378EBA0C-3BA5-1CB2-6A4B-13E100D0686B" # libpng
-
-addDependenciesToProject "luasocket" "11C4CA93-C3BB-5EF6-0C85-700D6B69A2F6" # lua
-
 if [ "$IS_INITIAL_SETUP" = true ]; then
     echo "Initial setup detected, copying the source SDK files..."
     # Copy the source SDK files over to the game directory

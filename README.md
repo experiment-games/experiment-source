@@ -91,10 +91,9 @@ After (forking and) cloning the repository, follow these steps to setup the proj
     ./setupprojects.sh --init
     ```
 
-    _This script will:_
-    * _Set up debugging in the Visual Studio `Client (Experiment)` project file_
-    * _Enforces the correct project dependencies of all projects._
-    * _The `--init` flag will cause all Source SDK 2013 executables and neccessary files to be copied to `game/`, so that the game can be run as a standalone mod._
+    _This script:_
+    * _Will set up debugging in the Visual Studio `Client (Experiment)` project file_
+    * _With the `--init` flag cause all Source SDK 2013 executables and neccessary files to be copied to `game/`, so that the game can be run as a standalone mod._
 
 6. Open the created `experiment.sln` solution in Visual Studio 2022 (or newer).
 
