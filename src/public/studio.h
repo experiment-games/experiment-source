@@ -1,4 +1,4 @@
-//========= Copyright Valve Corporation, All rights reserved. ============//
+//===== Copyright © 1996-2008, Valve Corporation, All rights reserved. ======//
 //
 // Purpose:
 //
@@ -31,16 +31,6 @@
 #define STUDIO_ENABLE_PERF_COUNTERS
 
 #define STUDIO_SEQUENCE_ACTIVITY_LOOKUPS_ARE_SLOW 0
-// If this is set to 1, then the activity->sequence mapping inside
-// the CStudioHdr will not be initialized until the first call to
-// SelectWeightedSequence() or HaveSequenceForActivity(). If set
-// to zero, the mapping will be initialized from CStudioHdr::Init()
-// (itself called from the constructor).
-// As of June 4 2007, this was set to 1 because physics, among other
-// systems, extemporaneously declares CStudioHdrs inside local function
-// scopes without querying their activity/sequence mapping at all.
-#define STUDIO_SEQUENCE_ACTIVITY_LAZY_INITIALIZE 1
-
 //-----------------------------------------------------------------------------
 // forward declarations
 //-----------------------------------------------------------------------------
@@ -68,25 +58,26 @@ Studio models are position independent, so the cache manager can move them.
 
 #define STUDIO_VERSION 49
 
-#ifndef _XBOX
+struct studiohdr_t;
+
+#ifdef _X360
+#define MAXSTUDIOTRIANGLES 65536  //
+#define MAXSTUDIOVERTS 32768      // These numbers save memory in CCachedRenderData, but restrict usable model sizes on 360
+#define MAXSTUDIOFLEXVERTS 4096   //
+#else
 #define MAXSTUDIOTRIANGLES 65536  // TODO: tune this
 #define MAXSTUDIOVERTS 65536      // TODO: tune this
 #define MAXSTUDIOFLEXVERTS 10000  // max number of verts that can be flexed per mesh.  TODO: tune this
-#else
-#define MAXSTUDIOTRIANGLES 25000
-#define MAXSTUDIOVERTS 10000
-#define MAXSTUDIOFLEXVERTS 1000
 #endif
 #define MAXSTUDIOSKINS 32       // total textures
-#define MAXSTUDIOBONES 256      // total bones actually used // Experiment: Was 128 before.
+#define MAXSTUDIOBONES 128      // total bones actually used
 #define MAXSTUDIOFLEXDESC 1024  // maximum number of low level flexes (actual morph targets)
 #define MAXSTUDIOFLEXCTRL 96    // maximum number of flexcontrollers (input sliders)
 #define MAXSTUDIOPOSEPARAM 24
 #define MAXSTUDIOBONECTRLS 4
 #define MAXSTUDIOANIMBLOCKS 256
 
-// Experiment: upped to 8 from 7 to support increase of MAXSTUDIOBONES
-#define MAXSTUDIOBONEBITS 8  // NOTE: MUST MATCH MAXSTUDIOBONES
+#define MAXSTUDIOBONEBITS 7  // NOTE: MUST MATCH MAXSTUDIOBONES
 
 // NOTE!!! : Changing this number also changes the vtx file format!!!!!
 #define MAX_NUM_BONES_PER_VERT 3
@@ -105,6 +96,8 @@ struct mstudiodata_t
 #define STUDIO_PROC_AIMATBONE 3
 #define STUDIO_PROC_AIMATATTACH 4
 #define STUDIO_PROC_JIGGLE 5
+#define STUDIO_PROC_TWIST_MASTER 6
+#define STUDIO_PROC_TWIST_SLAVE 7  // Multiple twist bones are computed at once for the same parent/child combo so TWIST_NULL do nothing
 
 struct mstudioaxisinterpbone_t
 {
@@ -161,7 +154,6 @@ struct mstudioquatinterpbone_t
 #define JIGGLE_HAS_ANGLE_CONSTRAINT 0x10
 #define JIGGLE_HAS_LENGTH_CONSTRAINT 0x20
 #define JIGGLE_HAS_BASE_SPRING 0x40
-#define JIGGLE_IS_BOING 0x80  // simple squash and stretch sinusoid "boing"
 
 struct mstudiojigglebone_t
 {
@@ -210,13 +202,6 @@ struct mstudiojigglebone_t
     float baseMaxForward;
     float baseForwardFriction;
 
-    // boing
-    float boingImpactSpeed;
-    float boingImpactAngle;
-    float boingDampingRate;
-    float boingFrequency;
-    float boingAmplitude;
-
    private:
     // No copy constructors allowed
     // mstudiojigglebone_t(const mstudiojigglebone_t& vOther);
@@ -237,6 +222,52 @@ struct mstudioaimatbone_t
    private:
     // No copy constructors allowed
     mstudioaimatbone_t( const mstudioaimatbone_t &vOther );
+};
+
+//-----------------------------------------------------------------------------
+//
+//-----------------------------------------------------------------------------
+struct mstudiotwistbonetarget_t
+{
+    DECLARE_BYTESWAP_DATADESC();
+
+    int m_nBone;
+    float m_flWeight;
+    Vector m_vBaseTranslate;
+    Quaternion m_qBaseRotation;
+
+    mstudiotwistbonetarget_t() {}
+
+   private:
+    // No copy constructors allowed
+    mstudiotwistbonetarget_t( const mstudiotwistbonetarget_t &vOther );
+};
+
+//-----------------------------------------------------------------------------
+//
+//-----------------------------------------------------------------------------
+struct mstudiotwistbone_t
+{
+    DECLARE_BYTESWAP_DATADESC();
+
+    bool m_bInverse;     // False: Apply child rotation to twist targets True: Apply parent rotation to twist targets
+    Vector m_vUpVector;  // In parent space, projected into plane defined by vector between parent & child
+    int m_nParentBone;
+    Quaternion m_qBaseInv;  // The base rotation of the parent, used if m_bInverse is true
+    int m_nChildBone;
+
+    int m_nTargetCount;
+    int m_nTargetIndex;
+    inline mstudiotwistbonetarget_t *pTarget( int i ) const
+    {
+        return ( mstudiotwistbonetarget_t * )( ( ( byte * )this ) + m_nTargetIndex ) + i;
+    }
+
+    mstudiotwistbone_t() {}
+
+   private:
+    // No copy constructors allowed
+    mstudiotwistbone_t( const mstudiotwistbone_t &vOther );
 };
 
 // bones
@@ -277,9 +308,14 @@ struct mstudiobone_t
     {
         return ( ( char * )this ) + surfacepropidx;
     }
-    int contents;  // See BSPFlags.h for the contents flags
+    inline int GetSurfaceProp( void ) const
+    {
+        return surfacepropLookup;
+    }
 
-    int unused[8];  // remove as appropriate
+    int contents;           // See BSPFlags.h for the contents flags
+    int surfacepropLookup;  // this index must be cached by the loader, not saved in the file
+    int unused[7];          // remove as appropriate
 
     mstudiobone_t() {}
 
@@ -314,49 +350,49 @@ struct mstudiolinearbone_t
     };
 
     int posindex;
-    inline Vector pos( int i ) const
+    inline const Vector &pos( int i ) const
     {
         Assert( i >= 0 && i < numbones );
         return *( ( Vector * )( ( ( byte * )this ) + posindex ) + i );
     };
 
     int quatindex;
-    inline Quaternion quat( int i ) const
+    inline const Quaternion &quat( int i ) const
     {
         Assert( i >= 0 && i < numbones );
         return *( ( Quaternion * )( ( ( byte * )this ) + quatindex ) + i );
     };
 
     int rotindex;
-    inline RadianEuler rot( int i ) const
+    inline const RadianEuler &rot( int i ) const
     {
         Assert( i >= 0 && i < numbones );
         return *( ( RadianEuler * )( ( ( byte * )this ) + rotindex ) + i );
     };
 
     int posetoboneindex;
-    inline matrix3x4_t poseToBone( int i ) const
+    inline const matrix3x4_t &poseToBone( int i ) const
     {
         Assert( i >= 0 && i < numbones );
         return *( ( matrix3x4_t * )( ( ( byte * )this ) + posetoboneindex ) + i );
     };
 
     int posscaleindex;
-    inline Vector posscale( int i ) const
+    inline const Vector &posscale( int i ) const
     {
         Assert( i >= 0 && i < numbones );
         return *( ( Vector * )( ( ( byte * )this ) + posscaleindex ) + i );
     };
 
     int rotscaleindex;
-    inline Vector rotscale( int i ) const
+    inline const Vector &rotscale( int i ) const
     {
         Assert( i >= 0 && i < numbones );
         return *( ( Vector * )( ( ( byte * )this ) + rotscaleindex ) + i );
     };
 
     int qalignmentindex;
-    inline Quaternion qalignment( int i ) const
+    inline const Quaternion &qalignment( int i ) const
     {
         Assert( i >= 0 && i < numbones );
         return *( ( Quaternion * )( ( ( byte * )this ) + qalignmentindex ) + i );
@@ -457,8 +493,9 @@ struct mstudioboneflexdriver_t
 #define BONE_TYPE_MASK 0x00F00000
 #define BONE_FIXED_ALIGNMENT 0x00100000  // bone can't spin 360 degrees, all interpolation is normalized around a fixed orientation
 
-#define BONE_HAS_SAVEFRAME_POS 0x00200000  // Vector48
-#define BONE_HAS_SAVEFRAME_ROT 0x00400000  // Quaternion64
+#define BONE_HAS_SAVEFRAME_POS 0x00200000    // Vector48
+#define BONE_HAS_SAVEFRAME_ROT64 0x00400000  // Quaternion64
+#define BONE_HAS_SAVEFRAME_ROT32 0x00800000  // Quaternion32
 
 // bone controllers
 struct mstudiobonecontroller_t
@@ -484,7 +521,7 @@ struct mstudiobbox_t
     int szhitboxnameindex;  // offset to the name of the hitbox.
     int unused[8];
 
-    const char *pszHitboxName()
+    const char *pszHitboxName() const
     {
         if ( szhitboxnameindex == 0 )
             return "";
@@ -522,6 +559,7 @@ struct mstudiomodelgrouplookup_t
 };
 
 // events
+// NOTE: If you modify this struct you MUST also modify mstudioevent_for_client_server_t in npcevent.h!!!
 struct mstudioevent_t
 {
     DECLARE_BYTESWAP_DATADESC();
@@ -659,6 +697,16 @@ struct mstudioikrule_t
     mstudioikrule_t( const mstudioikrule_t &vOther );
 };
 
+struct mstudioikrulezeroframe_t
+{
+    short chain;
+    short slot;
+    float16 start;  // beginning of influence
+    float16 peak;   // start of full influence
+    float16 tail;   // end of full influence
+    float16 end;    // end of all influence
+};
+
 struct mstudioiklock_t
 {
     DECLARE_BYTESWAP_DATADESC();
@@ -723,8 +771,8 @@ struct mstudioanim_valueptr_t
 #define STUDIO_ANIM_DELTA 0x10
 #define STUDIO_ANIM_RAWROT2 0x20  // Quaternion64
 
-// per bone per animation DOF and weight pointers
-struct mstudioanim_t
+// per bone per animation DOF and weight pointers, RLE encoded
+struct mstudio_rle_anim_t
 {
     DECLARE_BYTESWAP_DATADESC();
     byte bone;
@@ -733,7 +781,7 @@ struct mstudioanim_t
     // valid for animating data only
     inline byte *pData( void ) const
     {
-        return ( ( ( byte * )this ) + sizeof( struct mstudioanim_t ) );
+        return ( ( ( byte * )this ) + sizeof( struct mstudio_rle_anim_t ) );
     };
     inline mstudioanim_valueptr_t *pRotV( void ) const
     {
@@ -758,14 +806,47 @@ struct mstudioanim_t
         return ( Vector48 * )( pData() + ( ( flags & STUDIO_ANIM_RAWROT ) != 0 ) * sizeof( *pQuat48() ) + ( ( flags & STUDIO_ANIM_RAWROT2 ) != 0 ) * sizeof( *pQuat64() ) );
     };
 
+    // points to next bone in the list
     short nextoffset;
-    inline mstudioanim_t *pNext( void ) const
+    inline mstudio_rle_anim_t *pNext( void ) const
     {
         if ( nextoffset != 0 )
-            return ( mstudioanim_t * )( ( ( byte * )this ) + nextoffset );
+            return ( mstudio_rle_anim_t * )( ( ( byte * )this ) + nextoffset );
         else
             return NULL;
     };
+};
+#define mstudioanim_t mstudio_rle_anim_t
+
+#define STUDIO_FRAME_RAWPOS 0x01       // Vector48 in constants
+#define STUDIO_FRAME_RAWROT 0x02       // Quaternion48 in constants
+#define STUDIO_FRAME_ANIMPOS 0x04      // Vector48 in framedata
+#define STUDIO_FRAME_ANIMROT 0x08      // Quaternion48 in framedata
+#define STUDIO_FRAME_FULLANIMPOS 0x10  // Vector in framedata
+
+struct mstudio_frame_anim_t
+{
+    DECLARE_BYTESWAP_DATADESC();
+
+    inline byte *pBoneFlags( void ) const
+    {
+        return ( ( ( byte * )this ) + sizeof( struct mstudio_frame_anim_t ) );
+    };
+
+    int constantsoffset;
+    inline byte *pConstantData( void ) const
+    {
+        return ( ( ( byte * )this ) + constantsoffset );
+    };
+
+    int frameoffset;
+    int framelength;
+    inline byte *pFrameData( int iFrame ) const
+    {
+        return ( ( ( byte * )this ) + frameoffset + iFrame * framelength );
+    };
+
+    int unused[3];
 };
 
 struct mstudiomovement_t
@@ -785,8 +866,6 @@ struct mstudiomovement_t
     // No copy constructors allowed
     mstudiomovement_t( const mstudiomovement_t &vOther );
 };
-
-struct studiohdr_t;
 
 // used for piecewise loading of animation data
 struct mstudioanimblock_t
@@ -831,16 +910,25 @@ struct mstudioanimdesc_t
         return ( mstudiomovement_t * )( ( ( byte * )this ) + movementindex ) + i;
     };
 
-    int unused1[6];  // remove as appropriate (and zero if loading older versions)
+    int ikrulezeroframeindex;
+    mstudioikrulezeroframe_t *pIKRuleZeroFrame( int i ) const
+    {
+        if ( ikrulezeroframeindex )
+            return ( mstudioikrulezeroframe_t * )( ( ( byte * )this ) + ikrulezeroframeindex ) + i;
+        else
+            return NULL;
+    };
+
+    int unused1[5];  // remove as appropriate (and zero if loading older versions)
 
     int animblock;
-    int animindex;                                               // non-zero when anim data isn't in sections
-    mstudioanim_t *pAnimBlock( int block, int index ) const;     // returns pointer to a specific anim block (local or external)
-    mstudioanim_t *pAnim( int *piFrame, float &flStall ) const;  // returns pointer to data and new frame index
-    mstudioanim_t *pAnim( int *piFrame ) const;                  // returns pointer to data and new frame index
+    int animindex;                                                    // non-zero when anim data isn't in sections
+    byte *pAnimBlock( int block, int index ) const;                   // returns pointer to a specific anim block (local or external)
+    mstudio_rle_anim_t *pAnim( int *piFrame, float &flStall ) const;  // returns pointer to data and new frame index
+    mstudio_rle_anim_t *pAnim( int *piFrame ) const;                  // returns pointer to data and new frame index
 
     int numikrules;
-    int ikruleindex;           // non-zero when IK data is stored in the mdl
+    int ikruleindex;           // non-zero when IK rule is stored in the mdl
     int animblockikruleindex;  // non-zero when IK data is stored in animblock file
     mstudioikrule_t *pIKRule( int i ) const;
 
@@ -1183,7 +1271,6 @@ struct mstudiovertanim_t
     byte side;   // 255/left_right
 
    protected:
-    // JasonM changing this type a lot, to prefer fixed point 16 bit...
     union
     {
         short delta[3];
@@ -1493,7 +1580,12 @@ struct mstudioikchain_t
 
 struct mstudioiface_t
 {
-    unsigned short a, b, c;  // Indices to vertices
+    mstudioiface_t()
+    {
+        a = b = c = d = 0xFFFF;
+    }
+
+    unsigned short a, b, c, d;  // Indices to vertices (If d is 0xFFFF, this is a triangle, else it's a quad)
 };
 
 struct mstudiomodel_t;
@@ -1752,13 +1844,12 @@ inline mstudiovertex_t *mstudio_meshvertexdata_t::Vertex( int i ) const
 // a group of studio model data
 enum studiomeshgroupflags_t
 {
-    MESHGROUP_IS_FLEXED = 0x1,
     MESHGROUP_IS_HWSKINNED = 0x2,
     MESHGROUP_IS_DELTA_FLEXED = 0x4
 };
 
 // ----------------------------------------------------------
-// runtime stuff
+// Runtime stuff
 // ----------------------------------------------------------
 
 struct studiomeshgroup_t
@@ -1769,8 +1860,9 @@ struct studiomeshgroup_t
     OptimizedModel::StripHeader_t *m_pStripData;
     unsigned short *m_pGroupIndexToMeshIndex;
     int m_NumVertices;
-    int *m_pUniqueTris;  // for performance measurements
+    int *m_pUniqueFaces;  // for performance measurements
     unsigned short *m_pIndices;
+    unsigned short *m_pTopologyIndices;
     bool m_MeshNeedsRestore;
     short m_ColorMeshID;
     IMorph *m_pMorph;
@@ -1972,20 +2064,11 @@ struct virtualmodel_t
     virtualgroup_t *pAnimGroup( int animation )
     {
         return &m_group[m_anim[animation].group];
-    }  // Note: user must manage mutex for this
+    };  // Note: user must manage mutex for this
     virtualgroup_t *pSeqGroup( int sequence )
     {
-        // Check for out of range access that is causing crashes on some servers.
-        // Perhaps caused by sourcemod bugs. Typical sequence in these cases is ~292
-        // when the count is 234. Using unsigned math allows for free range
-        // checking against zero.
-        if ( ( unsigned )sequence >= ( unsigned )m_seq.Count() )
-        {
-            Assert( 0 );
-            return 0;
-        }
         return &m_group[m_seq[sequence].group];
-    }  // Note: user must manage mutex for this
+    };  // Note: user must manage mutex for this
 
     CThreadFastMutex m_Lock;
 
@@ -2034,7 +2117,7 @@ struct thinModelVertices_t
     {
         Assert( ( m_numBoneInfluences >= 1 ) && ( m_numBoneInfluences <= 3 ) );
         Assert( ( boneWeights.numbones >= 1 ) && ( boneWeights.numbones <= m_numBoneInfluences ) );
-        int numStoredWeights = max( 0, ( m_numBoneInfluences - 1 ) );
+        int numStoredWeights = MAX( 0, ( m_numBoneInfluences - 1 ) );
         float *pBaseWeight = m_boneWeights + vertIndex * numStoredWeights;
         char *pBaseIndex = m_boneIndices + vertIndex * m_numBoneInfluences;
         for ( int i = 0; i < m_numBoneInfluences; i++ )
@@ -2099,24 +2182,44 @@ struct thinModelVertices_t
         UnpackNormal_UBYTE4( &packedNormal, pNormal->Base() );
     }
 
-    void GetBoneWeights( int vertIndex, mstudioboneweight_t *pBoneWeights ) const
+    void GetBoneWeights( int vertIndex, mstudioboneweight_t *RESTRICT pBoneWeights ) const
     {
         Assert( pBoneWeights );
         Assert( ( m_numBoneInfluences <= 1 ) || ( m_boneWeights != NULL ) );
         Assert( ( m_numBoneInfluences <= 0 ) || ( m_boneIndices != NULL ) );
-        int numStoredWeights = max( 0, ( m_numBoneInfluences - 1 ) );
-        float *pBaseWeight = m_boneWeights + vertIndex * numStoredWeights;
-        char *pBaseIndex = m_boneIndices + vertIndex * m_numBoneInfluences;
+        int numStoredWeights = MAX( 0, ( m_numBoneInfluences - 1 ) );
+        float *RESTRICT pBaseWeight = m_boneWeights + vertIndex * numStoredWeights;
+        char *RESTRICT pBaseIndex = m_boneIndices + vertIndex * m_numBoneInfluences;
         float sum = 0.0f;
+        // TODO: unroll this loop? It's only three. We could use a switch
+        // and code it explicitly for the various possible m_numBoneInfluences
+        // which would improve scheduling but bloat code.
         for ( int i = 0; i < MAX_NUM_BONES_PER_VERT; i++ )
         {
+            float weight;
             if ( i < ( m_numBoneInfluences - 1 ) )
-                pBoneWeights->weight[i] = pBaseWeight[i];
+            {
+                weight = pBaseWeight[i];
+                sum += weight;
+            }
             else
-                pBoneWeights->weight[i] = 1.0f - sum;
+            {
+                weight = 1.0f - sum;
+                sum = 1.0f;
+            }
+
+            pBoneWeights->weight[i] = weight;
+            pBoneWeights->bone[i] = ( i < m_numBoneInfluences ) ? pBaseIndex[i] : 0;
+
+            /*
+            if ( i < ( m_numBoneInfluences - 1 ) )
+              pBoneWeights->weight[i] = pBaseWeight[i];
+            else
+              pBoneWeights->weight[i] = 1.0f - sum;
             sum += pBoneWeights->weight[i];
 
             pBoneWeights->bone[i] = ( i < m_numBoneInfluences ) ? pBaseIndex[i] : 0;
+            */
         }
 
         // Treat 'zero weights' as '100% binding to bone zero':
@@ -2131,6 +2234,37 @@ struct thinModelVertices_t
 };
 
 // ----------------------------------------------------------
+// Studio Model Stream Data File
+// ----------------------------------------------------------
+
+// little-endian "IDSS"
+#define MODEL_STREAM_FILE_ID ( ( 'S' << 24 ) + ( 'S' << 16 ) + ( 'D' << 8 ) + 'I' )
+#define MODEL_STREAM_FILE_VERSION 1
+
+struct vertexStreamFileHeader_t
+{
+    DECLARE_BYTESWAP_DATADESC();
+    int id;              // MODEL_STREAM_FILE_ID
+    int version;         // MODEL_STREAM_FILE_VERSION
+    long checksum;       // same as studiohdr_t, ensures sync
+    long flags;          // flags
+    int numVerts;        // number of vertices
+    int uv2StreamStart;  // offset from base to uv2 stream
+    int uv2ElementSize;  // size of each uv2 element
+    int pad;             // pad
+
+   public:
+    // Accessor to uv2 stream
+    const void *GetStreamUv2() const
+    {
+        if ( ( id == MODEL_STREAM_FILE_ID ) && ( uv2StreamStart != 0 ) )
+            return ( void * )( uv2StreamStart + ( byte * )this );
+        else
+            return NULL;
+    }
+};
+
+// ----------------------------------------------------------
 // Studio Model Vertex Data File
 // Position independent flat data for cache manager
 // ----------------------------------------------------------
@@ -2140,13 +2274,15 @@ struct thinModelVertices_t
 #define MODEL_VERTEX_FILE_VERSION 4
 // this id (IDCV) is used once the vertex data has been compressed (see CMDLCache::CreateThinVertexes)
 #define MODEL_VERTEX_FILE_THIN_ID ( ( 'V' << 24 ) + ( 'C' << 16 ) + ( 'D' << 8 ) + 'I' )
+// this id (IDDV) is used once the vertex data has been discarded (see CMDLCache::CreateNullVertexes)
+#define MODEL_VERTEX_FILE_NULL_ID ( ( 'V' << 24 ) + ( 'D' << 16 ) + ( 'D' << 8 ) + 'I' )
 
 struct vertexFileHeader_t
 {
     DECLARE_BYTESWAP_DATADESC();
     int id;                            // MODEL_VERTEX_FILE_ID
     int version;                       // MODEL_VERTEX_FILE_VERSION
-    int checksum;                      // same as studiohdr_t, ensures sync
+    long checksum;                     // same as studiohdr_t, ensures sync
     int numLODs;                       // num of valid lods
     int numLODVertexes[MAX_NUM_LODS];  // num verts for desired root lod
     int numFixups;                     // num of vertexFileFixup_t
@@ -2186,11 +2322,7 @@ inline const mstudio_modelvertexdata_t *mstudiomodel_t::GetVertexData( void *pMo
 {
     const vertexFileHeader_t *pVertexHdr = CacheVertexData( pModelData );
     if ( !pVertexHdr )
-    {
-        vertexdata.pVertexData = NULL;
-        vertexdata.pTangentData = NULL;
         return NULL;
-    }
 
     vertexdata.pVertexData = pVertexHdr->GetVertexData();
     vertexdata.pTangentData = pVertexHdr->GetTangentData();
@@ -2221,74 +2353,83 @@ struct vertexFileFixup_t
 };
 
 // This flag is set if no hitbox information was specified
-#define STUDIOHDR_FLAGS_AUTOGENERATED_HITBOX 0x00000001
+#define STUDIOHDR_FLAGS_AUTOGENERATED_HITBOX ( 1 << 0 )
 
 // NOTE:  This flag is set at loadtime, not mdl build time so that we don't have to rebuild
 // models when we change materials.
-#define STUDIOHDR_FLAGS_USES_ENV_CUBEMAP 0x00000002
+#define STUDIOHDR_FLAGS_USES_ENV_CUBEMAP ( 1 << 1 )
 
 // Use this when there are translucent parts to the model but we're not going to sort it
-#define STUDIOHDR_FLAGS_FORCE_OPAQUE 0x00000004
+#define STUDIOHDR_FLAGS_FORCE_OPAQUE ( 1 << 2 )
 
 // Use this when we want to render the opaque parts during the opaque pass
 // and the translucent parts during the translucent pass
-#define STUDIOHDR_FLAGS_TRANSLUCENT_TWOPASS 0x00000008
+#define STUDIOHDR_FLAGS_TRANSLUCENT_TWOPASS ( 1 << 3 )
 
 // This is set any time the .qc files has $staticprop in it
 // Means there's no bones and no transforms
-#define STUDIOHDR_FLAGS_STATIC_PROP 0x00000010
+#define STUDIOHDR_FLAGS_STATIC_PROP ( 1 << 4 )
 
 // NOTE:  This flag is set at loadtime, not mdl build time so that we don't have to rebuild
 // models when we change materials.
-#define STUDIOHDR_FLAGS_USES_FB_TEXTURE 0x00000020
+#define STUDIOHDR_FLAGS_USES_FB_TEXTURE ( 1 << 5 )
 
 // This flag is set by studiomdl.exe if a separate "$shadowlod" entry was present
 //  for the .mdl (the shadow lod is the last entry in the lod list if present)
-#define STUDIOHDR_FLAGS_HASSHADOWLOD 0x00000040
+#define STUDIOHDR_FLAGS_HASSHADOWLOD ( 1 << 6 )
 
 // NOTE:  This flag is set at loadtime, not mdl build time so that we don't have to rebuild
 // models when we change materials.
-#define STUDIOHDR_FLAGS_USES_BUMPMAPPING 0x00000080
+#define STUDIOHDR_FLAGS_USES_BUMPMAPPING ( 1 << 7 )
 
 // NOTE:  This flag is set when we should use the actual materials on the shadow LOD
 // instead of overriding them with the default one (necessary for translucent shadows)
-#define STUDIOHDR_FLAGS_USE_SHADOWLOD_MATERIALS 0x00000100
+#define STUDIOHDR_FLAGS_USE_SHADOWLOD_MATERIALS ( 1 << 8 )
 
 // NOTE:  This flag is set when we should use the actual materials on the shadow LOD
 // instead of overriding them with the default one (necessary for translucent shadows)
-#define STUDIOHDR_FLAGS_OBSOLETE 0x00000200
+#define STUDIOHDR_FLAGS_OBSOLETE ( 1 << 9 )
 
-#define STUDIOHDR_FLAGS_UNUSED 0x00000400
+#define STUDIOHDR_FLAGS_UNUSED ( 1 << 10 )
 
 // NOTE:  This flag is set at mdl build time
-#define STUDIOHDR_FLAGS_NO_FORCED_FADE 0x00000800
+#define STUDIOHDR_FLAGS_NO_FORCED_FADE ( 1 << 11 )
 
 // NOTE:  The npc will lengthen the viseme check to always include two phonemes
-#define STUDIOHDR_FLAGS_FORCE_PHONEME_CROSSFADE 0x00001000
+#define STUDIOHDR_FLAGS_FORCE_PHONEME_CROSSFADE ( 1 << 12 )
 
 // This flag is set when the .qc has $constantdirectionallight in it
 // If set, we use constantdirectionallightdot to calculate light intensity
 // rather than the normal directional dot product
 // only valid if STUDIOHDR_FLAGS_STATIC_PROP is also set
-#define STUDIOHDR_FLAGS_CONSTANT_DIRECTIONAL_LIGHT_DOT 0x00002000
+#define STUDIOHDR_FLAGS_CONSTANT_DIRECTIONAL_LIGHT_DOT ( 1 << 13 )
 
 // Flag to mark delta flexes as already converted from disk format to memory format
-#define STUDIOHDR_FLAGS_FLEXES_CONVERTED 0x00004000
+#define STUDIOHDR_FLAGS_FLEXES_CONVERTED ( 1 << 14 )
 
 // Indicates the studiomdl was built in preview mode
-#define STUDIOHDR_FLAGS_BUILT_IN_PREVIEW_MODE 0x00008000
+#define STUDIOHDR_FLAGS_BUILT_IN_PREVIEW_MODE ( 1 << 15 )
 
 // Ambient boost (runtime flag)
-#define STUDIOHDR_FLAGS_AMBIENT_BOOST 0x00010000
+#define STUDIOHDR_FLAGS_AMBIENT_BOOST ( 1 << 16 )
 
 // Don't cast shadows from this model (useful on first-person models)
-#define STUDIOHDR_FLAGS_DO_NOT_CAST_SHADOWS 0x00020000
+#define STUDIOHDR_FLAGS_DO_NOT_CAST_SHADOWS ( 1 << 17 )
 
 // alpha textures should cast shadows in vrad on this model (ONLY prop_static!)
-#define STUDIOHDR_FLAGS_CAST_TEXTURE_SHADOWS 0x00040000
+#define STUDIOHDR_FLAGS_CAST_TEXTURE_SHADOWS ( 1 << 18 )
+
+// Model has a quad-only Catmull-Clark SubD cage
+#define STUDIOHDR_FLAGS_SUBDIVISION_SURFACE ( 1 << 19 )
 
 // flagged on load to indicate no animation events on this model
-#define STUDIOHDR_FLAGS_VERT_ANIM_FIXED_POINT_SCALE 0x00200000
+#define STUDIOHDR_FLAGS_NO_ANIM_EVENTS ( 1 << 20 )
+
+// If flag is set then studiohdr_t.flVertAnimFixedPointScale contains the
+// scale value for fixed point vert anim data, if not set then the
+// scale value is the default of 1.0 / 4096.0.  Regardless use
+// studiohdr_t::VertAnimFixedPointScale() to always retrieve the scale value
+#define STUDIOHDR_FLAGS_VERT_ANIM_FIXED_POINT_SCALE ( 1 << 21 )
 
 // NOTE! Next time we up the .mdl file format, remove studiohdr2_t
 // and insert all fields in this structure into studiohdr_t.
@@ -2342,7 +2483,7 @@ struct studiohdr_t
     int id;
     int version;
 
-    int checksum;  // this has to be the same in the phy and vtx files to load!
+    long checksum;  // this has to be the same in the phy and vtx files to load!
 
     inline const char *pszName( void ) const
     {
@@ -2352,6 +2493,7 @@ struct studiohdr_t
             return name;
     }
     char name[64];
+
     int length;
 
     Vector eyeposition;  // ideal eye position
@@ -2580,6 +2722,10 @@ struct studiohdr_t
     {
         return ( ( char * )this ) + surfacepropindex;
     }
+    inline int GetSurfaceProp() const
+    {
+        return surfacepropLookup;
+    }
 
     // Key values
     int keyvalueindex;
@@ -2683,7 +2829,7 @@ struct studiohdr_t
         return ( flags & STUDIOHDR_FLAGS_VERT_ANIM_FIXED_POINT_SCALE ) ? flVertAnimFixedPointScale : 1.0f / 4096.0f;
     }
 
-    int unused3[1];
+    mutable int surfacepropLookup;  // this index must be cached by the loader, not saved in the file
 
     // FIXME: Remove when we up the model version. Move all fields of studiohdr2_t into studiohdr_t.
     int studiohdr2index;
@@ -2914,7 +3060,10 @@ class CStudioHdr
         return m_pStudioHdr->pFlexControllerUI( i );
     };
 
-    // inline const char	*name() const { return m_pStudioHdr->name; }; // deprecated -- remove after full xbox merge
+    inline const char *name() const
+    {
+        return m_pStudioHdr->pszName();
+    };  // deprecated -- remove after full xbox merge
     inline const char *pszName() const
     {
         return m_pStudioHdr->pszName();
@@ -2971,6 +3120,10 @@ class CStudioHdr
     {
         return m_pStudioHdr->pszSurfaceProp();
     };
+    inline int GetSurfaceProp() const
+    {
+        return m_pStudioHdr->surfacepropLookup;
+    }
 
     inline float mass() const
     {
@@ -3038,21 +3191,26 @@ class CStudioHdr
         return m_pStudioHdr->BoneFlexDriver( i );
     }
 
-    inline float VertAnimFixedPointScale() const
-    {
-        return m_pStudioHdr->VertAnimFixedPointScale();
-    }
-
    public:
     int IsSequenceLooping( int iSequence );
     float GetSequenceCycleRate( int iSequence );
 
     void RunFlexRules( const float *src, float *dest );
+    void RunFlexRulesOld( const float *src, float *dest );
+    void RunFlexRulesNew( const float *src, float *dest );
 
    public:
     inline int boneFlags( int iBone ) const
     {
         return m_boneFlags[iBone];
+    }
+    inline void setBoneFlags( int iBone, int flags )
+    {
+        m_boneFlags[iBone] |= flags;
+    }
+    inline void clearBoneFlags( int iBone, int flags )
+    {
+        m_boneFlags[iBone] &= ~flags;
     }
     inline int boneParent( int iBone ) const
     {
@@ -3146,12 +3304,7 @@ class CStudioHdr
 
         // ctor
         CActivityToSequenceMapping( void )
-            : m_pSequenceTuples( NULL ), m_iSequenceTuplesCount( 0 ), m_ActToSeqHash( 8, 0, 0 ), m_expectedPStudioHdr( NULL ), m_expectedVModel( NULL )
-#if STUDIO_SEQUENCE_ACTIVITY_LAZY_INITIALIZE
-              ,
-              m_bIsInitialized( false )
-#endif
-                  {};
+            : m_pSequenceTuples( NULL ), m_iSequenceTuplesCount( 0 ), m_ActToSeqHash( 8, 0, 0 ), m_expectedVModel( NULL ), m_pStudioHdr( NULL ) {};
 
         // dtor -- not virtual because this class has no inheritors
         ~CActivityToSequenceMapping()
@@ -3176,17 +3329,14 @@ class CStudioHdr
         /// The number of sequences available for an activity.
         int NumSequencesForActivity( int forActivity );
 
-#if STUDIO_SEQUENCE_ACTIVITY_LAZY_INITIALIZE
-        inline bool IsInitialized( void )
-        {
-            return m_bIsInitialized;
-        }
-#endif
+        static CActivityToSequenceMapping *FindMapping( const CStudioHdr *pstudiohdr );
+        static void ReleaseMapping( CActivityToSequenceMapping *pMap );
+        static void ResetMappings();
 
        private:
         /// Allocate my internal array. (It is freed in the destructor.) Also,
         /// build the hash of activities to sequences and populate m_pSequenceTuples.
-        void Initialize( CStudioHdr *pstudiohdr );
+        void Initialize( const CStudioHdr *pstudiohdr );
 
         /// Force Initialize() to occur again, even if it has already occured.
         void Reinitialize( CStudioHdr *pstudiohdr );
@@ -3200,9 +3350,6 @@ class CStudioHdr
         // Actually a big array, into which the hash values index.
         SequenceTuple *m_pSequenceTuples;
         unsigned int m_iSequenceTuplesCount;  // (size of the whole array)
-#if STUDIO_SEQUENCE_ACTIVITY_LAZY_INITIALIZE
-        bool m_bIsInitialized;
-#endif
 
         // we don't store an outer pointer because we can't initialize it at construction time
         // (warning c4355) -- there are ways around this but it's easier to just pass in a
@@ -3212,64 +3359,59 @@ class CStudioHdr
 
         ActivityToValueIdxHash m_ActToSeqHash;
 
+        const studiohdr_t *m_pStudioHdr;
+
         // we store these so we can know if the contents of the studiohdr have changed
         // from underneath our feet (this is an emergency data integrity check)
-        const void *m_expectedPStudioHdr;
         const void *m_expectedVModel;
 
         // double-check that the data I point to hasn't changed
         bool ValidateAgainst( const CStudioHdr *RESTRICT pstudiohdr );
-        void SetValidationPair( const CStudioHdr *RESTRICT pstudiohdr );
+        void SetValidation( const CStudioHdr *RESTRICT pstudiohdr );
 
         friend class CStudioHdr;
     };
 
-    CActivityToSequenceMapping m_ActivityToSequence;
+    CActivityToSequenceMapping *m_pActivityToSequence;
+
+    void InitActivityToSequence()
+    {
+        if ( !m_pActivityToSequence )
+        {
+            m_pActivityToSequence = CActivityToSequenceMapping::FindMapping( this );
+        }
+    }
 
     /// A more efficient version of the old SelectWeightedSequence() function in animation.cpp.
     /// Returns -1 on failure to find a sequence
     inline int SelectWeightedSequence( int activity, int curSequence )
     {
-#if STUDIO_SEQUENCE_ACTIVITY_LAZY_INITIALIZE
-        // We lazy-initialize the header on demand here, because CStudioHdr::Init() is
-        // called from the constructor, at which time the this pointer is illegitimate.
-        if ( !m_ActivityToSequence.IsInitialized() )
-        {
-            m_ActivityToSequence.Initialize( this );
-        }
-#endif
-        return m_ActivityToSequence.SelectWeightedSequence( this, activity, curSequence );
+        InitActivityToSequence();
+        return m_pActivityToSequence->SelectWeightedSequence( this, activity, curSequence );
     }
 
     inline int SelectWeightedSequenceFromModifiers( int activity, CUtlSymbol *pActivityModifiers, int iModifierCount )
     {
-#if STUDIO_SEQUENCE_ACTIVITY_LAZY_INITIALIZE
-        // We lazy-initialize the header on demand here, because CStudioHdr::Init() is
-        // called from the constructor, at which time the this pointer is illegitimate.
-        if ( !m_ActivityToSequence.IsInitialized() )
-        {
-            m_ActivityToSequence.Initialize( this );
-        }
-#endif
-        return m_ActivityToSequence.SelectWeightedSequenceFromModifiers( this, activity, pActivityModifiers, iModifierCount );
+        InitActivityToSequence();
+        return m_pActivityToSequence->SelectWeightedSequenceFromModifiers( this, activity, pActivityModifiers, iModifierCount );
     }
 
     /// True iff there is at least one sequence for the given activity.
     inline bool HaveSequenceForActivity( int activity )
     {
-#if STUDIO_SEQUENCE_ACTIVITY_LAZY_INITIALIZE
-        if ( !m_ActivityToSequence.IsInitialized() )
-        {
-            m_ActivityToSequence.Initialize( this );
-        }
-#endif
-        return ( m_ActivityToSequence.NumSequencesForActivity( activity ) > 0 );
+        InitActivityToSequence();
+        return ( m_pActivityToSequence->NumSequencesForActivity( activity ) > 0 );
     }
 
     // Force this CStudioHdr's activity-to-sequence mapping to be reinitialized
     inline void ReinitializeSequenceMapping( void )
     {
-        m_ActivityToSequence.Reinitialize( this );
+        if ( m_pActivityToSequence )
+        {
+            CActivityToSequenceMapping::ReleaseMapping( m_pActivityToSequence );
+            m_pActivityToSequence = NULL;
+        }
+        m_pActivityToSequence = CActivityToSequenceMapping::FindMapping( this );
     }
 
 #ifdef STUDIO_ENABLE_PERF_COUNTERS
@@ -3538,21 +3680,24 @@ inline const mstudioflexcontroller_t *mstudioflexcontrollerui_t::pController( in
 #define STUDIO_RLOOP 0x00040000  // controller that wraps shortest distance
 
 // sequence and autolayer flags
-#define STUDIO_LOOPING 0x0001   // ending frame should be the same as the starting frame
-#define STUDIO_SNAP 0x0002      // do not interpolate between previous animation and this one
-#define STUDIO_DELTA 0x0004     // this sequence "adds" to the base sequences, not slerp blends
-#define STUDIO_AUTOPLAY 0x0008  // temporary flag that forces the sequence to always play
-#define STUDIO_POST 0x0010      //
-#define STUDIO_ALLZEROS 0x0020  // this animation/sequence has no real animation data
-//						0x0040
-#define STUDIO_CYCLEPOSE 0x0080  // cycle index is taken from a pose parameter index
-#define STUDIO_REALTIME 0x0100   // cycle index is taken from a real-time clock, not the animations cycle index
-#define STUDIO_LOCAL 0x0200      // sequence has a local context sequence
-#define STUDIO_HIDDEN 0x0400     // don't show in default selection views
-#define STUDIO_OVERRIDE 0x0800   // a forward declared sequence (empty)
-#define STUDIO_ACTIVITY 0x1000   // Has been updated at runtime to activity index
-#define STUDIO_EVENT 0x2000      // Has been updated at runtime to event index
-#define STUDIO_WORLD 0x4000      // sequence blends in worldspace
+#define STUDIO_LOOPING 0x0001        // ending frame should be the same as the starting frame
+#define STUDIO_SNAP 0x0002           // do not interpolate between previous animation and this one
+#define STUDIO_DELTA 0x0004          // this sequence "adds" to the base sequences, not slerp blends
+#define STUDIO_AUTOPLAY 0x0008       // temporary flag that forces the sequence to always play
+#define STUDIO_POST 0x0010           //
+#define STUDIO_ALLZEROS 0x0020       // this animation/sequence has no real animation data
+#define STUDIO_FRAMEANIM 0x0040      // animation is encoded as by frame x bone instead of RLE bone x frame
+#define STUDIO_CYCLEPOSE 0x0080      // cycle index is taken from a pose parameter index
+#define STUDIO_REALTIME 0x0100       // cycle index is taken from a real-time clock, not the animations cycle index
+#define STUDIO_LOCAL 0x0200          // sequence has a local context sequence
+#define STUDIO_HIDDEN 0x0400         // don't show in default selection views
+#define STUDIO_OVERRIDE 0x0800       // a forward declared sequence (empty)
+#define STUDIO_ACTIVITY 0x1000       // Has been updated at runtime to activity index
+#define STUDIO_EVENT 0x2000          // Has been updated at runtime to event index on server
+#define STUDIO_WORLD 0x4000          // sequence blends in worldspace
+#define STUDIO_NOFORCELOOP 0x8000    // do not force the animation loop
+#define STUDIO_EVENT_CLIENT 0x10000  // Has been updated at runtime to event index on client
+
 // autolayer flags
 //							0x0001
 //							0x0002
@@ -3570,8 +3715,7 @@ inline const mstudioflexcontroller_t *mstudioflexcontrollerui_t::pController( in
 //							0x2000
 #define STUDIO_AL_POSE 0x4000  // layer blends using a pose parameter instead of parent cycle
 
-// Insert this code anywhere that you need to allow for conversion from an old STUDIO_VERSION
-// to a new one.
+// Insert this code anywhere that you need to allow for conversion from an old STUDIO_VERSION to a new one.
 // If we only support the current version, this function should be empty.
 inline bool Studio_ConvertStudioHdrToNewVersion( studiohdr_t *pStudioHdr )
 {
@@ -3604,7 +3748,7 @@ inline bool Studio_ConvertStudioHdrToNewVersion( studiohdr_t *pStudioHdr )
 
     if ( version < 47 )
     {
-        // used to contain zeroframe cache data
+        // now used to contain zeroframe cache data, make sure it's empty
         if ( pStudioHdr->unused4 != 0 )
         {
             pStudioHdr->unused4 = 0;
@@ -3619,6 +3763,7 @@ inline bool Studio_ConvertStudioHdrToNewVersion( studiohdr_t *pStudioHdr )
     }
     else if ( version == 47 )
     {
+        // clear out stale version of zeroframe cache data
         for ( int i = 0; i < pStudioHdr->numlocalanim; i++ )
         {
             mstudioanimdesc_t *pAnim = ( mstudioanimdesc_t * )pStudioHdr->pLocalAnimdesc( i );
@@ -3631,24 +3776,21 @@ inline bool Studio_ConvertStudioHdrToNewVersion( studiohdr_t *pStudioHdr )
         }
     }
 
-    // Experiment; TODO: STUDIO_FRAMEANIM https://github.com/NicolasDe/AlienSwarm/blob/c5a2d3fa853c726d040032ff2c7b90c8ed8d5d84/src/public/studio.h#L3189 (low priority if things work)
-    //if ( version < 49 )
-    //{
-    //    // remove any frameanim flag settings that might be stale
-    //    for ( int i = 0; i < pStudioHdr->numlocalanim; i++ )
-    //    {
-    //        mstudioanimdesc_t *pAnim = ( mstudioanimdesc_t * )pStudioHdr->pLocalAnimdesc( i );
-    //        if ( pAnim->flags & STUDIO_FRAMEANIM )
-    //        {
-    //            pAnim->flags &= ~STUDIO_FRAMEANIM;
-    //            bResult = false;
-    //        }
-    //    }
-    //}
-
-    // Experiment: Commented this, since it has us lose information about the version of the file
-    // // for now, just slam the version number since they're compatible
-    // pStudioHdr->version = STUDIO_VERSION;
+    if ( version < 49 )
+    {
+        // remove any frameanim flag settings that might be stale
+        for ( int i = 0; i < pStudioHdr->numlocalanim; i++ )
+        {
+            mstudioanimdesc_t *pAnim = ( mstudioanimdesc_t * )pStudioHdr->pLocalAnimdesc( i );
+            if ( pAnim->flags & STUDIO_FRAMEANIM )
+            {
+                pAnim->flags &= ~STUDIO_FRAMEANIM;
+                bResult = false;
+            }
+        }
+    }
+    // for now, just slam the version number since they're compatible
+    pStudioHdr->version = STUDIO_VERSION;
 
     return bResult;
 }
@@ -3662,9 +3804,6 @@ inline void Studio_SetRootLOD( studiohdr_t *pStudioHdr, int rootLOD )
     {
         rootLOD = pStudioHdr->numAllowedRootLODs - 1;
     }
-
-    Assert( rootLOD >= 0 && rootLOD < MAX_NUM_LODS );
-    Clamp( rootLOD, 0, MAX_NUM_LODS - 1 );
 
     // run the lod fixups that culls higher detail lods
     // vertexes are external, fixups ensure relative offsets and counts are cognizant of shrinking data

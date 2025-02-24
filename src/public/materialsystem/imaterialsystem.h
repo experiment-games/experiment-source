@@ -236,49 +236,26 @@ enum MaterialFindContext_t
 //-----------------------------------------------------------------------------
 #include "mathlib/lightdesc.h"
 
-#if 0
-enum LightType_t
+// Experiment; This enum and struct are from the AlienSwarm source code
+enum
 {
-	MATERIAL_LIGHT_DISABLE = 0,
-	MATERIAL_LIGHT_POINT,
-	MATERIAL_LIGHT_DIRECTIONAL,
-	MATERIAL_LIGHT_SPOT,
+    MATERIAL_MAX_LIGHT_COUNT = 4,
 };
 
-enum LightType_OptimizationFlags_t
+struct MaterialLightingState_t
 {
-	LIGHTTYPE_OPTIMIZATIONFLAGS_HAS_ATTENUATION0 = 1,
-	LIGHTTYPE_OPTIMIZATIONFLAGS_HAS_ATTENUATION1 = 2,
-	LIGHTTYPE_OPTIMIZATIONFLAGS_HAS_ATTENUATION2 = 4,
+    Vector m_vecAmbientCube[6];  // ambient, and lights that aren't in locallight[]
+    Vector m_vecLightingOrigin;  // The position from which lighting state was computed
+    int m_nLocalLightCount;
+    LightDesc_t m_pLocalLightDesc[MATERIAL_MAX_LIGHT_COUNT];
+
+    MaterialLightingState_t &operator=( const MaterialLightingState_t &src )
+    {
+        memcpy( this, &src, sizeof( MaterialLightingState_t ) - MATERIAL_MAX_LIGHT_COUNT * sizeof( LightDesc_t ) );
+        memcpy( m_pLocalLightDesc, &src.m_pLocalLightDesc, src.m_nLocalLightCount * sizeof( LightDesc_t ) );
+        return *this;
+    }
 };
-
-
-struct LightDesc_t 
-{
-	LightType_t		m_Type;
-	Vector			m_Color;
-	Vector	m_Position;
-	Vector  m_Direction;
-	float   m_Range;
-	float   m_Falloff;
-	float   m_Attenuation0;
-	float   m_Attenuation1;
-	float   m_Attenuation2;
-	float   m_Theta;
-	float   m_Phi;
-	// These aren't used by DX8. . used for software lighting.
-	float	m_ThetaDot;
-	float	m_PhiDot;
-	unsigned int	m_Flags;
-
-
-	LightDesc_t() {}
-
-private:
-	// No copy constructors allowed
-	LightDesc_t(const LightDesc_t& vOther);
-};
-#endif
 
 #define CREATERENDERTARGETFLAGS_HDR 0x00000001
 #define CREATERENDERTARGETFLAGS_AUTOMIPMAP 0x00000002
@@ -1328,11 +1305,11 @@ abstract_class IMatRenderContext : public IRefCounted
     virtual void SetFlexWeights( int nFirstWeight, int nCount, const MorphWeight_t *pWeights ) = 0;
 
     // FIXME: Remove
-    virtual void Unused4(){};
-    virtual void Unused5(){};
-    virtual void Unused6(){};
-    virtual void Unused7(){};
-    virtual void Unused8(){};
+    virtual void Unused4() {};
+    virtual void Unused5() {};
+    virtual void Unused6() {};
+    virtual void Unused7() {};
+    virtual void Unused8() {};
 
     // Read w/ stretch to a host-memory buffer
     virtual void ReadPixelsAndStretch( Rect_t * pSrcRect, Rect_t * pDstRect, unsigned char *pBuffer, ImageFormat dstFormat, int nDstStride ) = 0;

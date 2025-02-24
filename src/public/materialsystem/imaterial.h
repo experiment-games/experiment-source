@@ -28,46 +28,54 @@ class Vector;
 //-----------------------------------------------------------------------------
 // Flags for GetVertexFormat
 //-----------------------------------------------------------------------------
-#define	VERTEX_POSITION					0x0001
-#define	VERTEX_NORMAL					0x0002
-#define	VERTEX_COLOR					0x0004
-#define	VERTEX_SPECULAR					0x0008
+enum VertexFormatFlags_t
+{
+    // Indicates an uninitialized VertexFormat_t value
+    VERTEX_FORMAT_INVALID = 0xFFFFFFFFFFFFFFFFull,
 
-#define	VERTEX_TANGENT_S				0x0010
-#define	VERTEX_TANGENT_T				0x0020
-#define	VERTEX_TANGENT_SPACE			( VERTEX_TANGENT_S | VERTEX_TANGENT_T )
+    VERTEX_POSITION = 0x0001,
+    VERTEX_NORMAL = 0x0002,
+    VERTEX_COLOR = 0x0004,
+    VERTEX_SPECULAR = 0x0008,
 
-// Indicates we're using wrinkle
-#define	VERTEX_WRINKLE					0x0040
+    VERTEX_TANGENT_S = 0x0010,
+    VERTEX_TANGENT_T = 0x0020,
+    VERTEX_TANGENT_SPACE = VERTEX_TANGENT_S | VERTEX_TANGENT_T,
 
-// Indicates we're using bone indices
-#define	VERTEX_BONE_INDEX				0x0080
+    // Indicates we're using wrinkle
+    VERTEX_WRINKLE = 0x0040,
 
-// Indicates this is a vertex shader
-#define	VERTEX_FORMAT_VERTEX_SHADER		0x0100
+    // Indicates we're using bone indices
+    VERTEX_BONE_INDEX = 0x0080,
 
-// Indicates this format shouldn't be bloated to cache align it
-// (only used for VertexUsage)
-#define	VERTEX_FORMAT_USE_EXACT_FORMAT	0x0200
+    // Indicates this expects a color stream on stream 1
+    VERTEX_COLOR_STREAM_1 = 0x0100,
 
-// Indicates that compressed vertex elements are to be used (see also VertexCompressionType_t)
-#define	VERTEX_FORMAT_COMPRESSED		0x400
+    // Indicates this format shouldn't be bloated to cache align it
+    // (only used for VertexUsage)
+    VERTEX_FORMAT_USE_EXACT_FORMAT = 0x0200,
 
-// Update this if you add or remove bits...
-#define	VERTEX_LAST_BIT					10
+    // Indicates that compressed vertex elements are to be used (see also VertexCompressionType_t)
+    VERTEX_FORMAT_COMPRESSED = 0x400,
 
-#define	VERTEX_BONE_WEIGHT_BIT			(VERTEX_LAST_BIT + 1)
-#define	USER_DATA_SIZE_BIT				(VERTEX_LAST_BIT + 4)
-#define	TEX_COORD_SIZE_BIT				(VERTEX_LAST_BIT + 7)
+    // Position or normal (if present) should be 4D not 3D
+    VERTEX_FORMAT_PAD_POS_NORM = 0x800,
 
-#define	VERTEX_BONE_WEIGHT_MASK			( 0x7 << VERTEX_BONE_WEIGHT_BIT )
-#define	USER_DATA_SIZE_MASK				( 0x7 << USER_DATA_SIZE_BIT )
+    // Update this if you add or remove bits...
+    VERTEX_LAST_BIT = 11,
 
-#define	VERTEX_FORMAT_FIELD_MASK		0x0FF
+    VERTEX_BONE_WEIGHT_BIT = VERTEX_LAST_BIT + 1,
+    USER_DATA_SIZE_BIT = VERTEX_LAST_BIT + 4,
+    TEX_COORD_SIZE_BIT = VERTEX_LAST_BIT + 7,
 
-// If everything is off, it's an unknown vertex format
-#define	VERTEX_FORMAT_UNKNOWN			0
+    VERTEX_BONE_WEIGHT_MASK = ( 0x7 << VERTEX_BONE_WEIGHT_BIT ),
+    USER_DATA_SIZE_MASK = ( 0x7 << USER_DATA_SIZE_BIT ),
 
+    VERTEX_FORMAT_FIELD_MASK = 0x0FF,
+
+    // If everything is off, it's an unknown vertex format
+    VERTEX_FORMAT_UNKNOWN = 0,
+};
 
 
 //-----------------------------------------------------------------------------
@@ -111,7 +119,7 @@ inline int TexCoordSize( int nTexCoordIndex, VertexFormat_t vertexFormat )
 
 inline bool UsesVertexShader( VertexFormat_t vertexFormat )
 {
-	return (vertexFormat & VERTEX_FORMAT_VERTEX_SHADER) != 0;
+    return ( vertexFormat & VERTEX_COLOR_STREAM_1 ) != 0;
 }
 
 inline VertexCompressionType_t CompressionType( VertexFormat_t vertexFormat )

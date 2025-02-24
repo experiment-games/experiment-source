@@ -19,11 +19,6 @@ $Project "client"
 	"game\client\client_experiment.vpc"		[($WIN32||$POSIX) && $EXPERIMENT]
 }
 
-$Project "datacache"
-{
-	"datacache\datacache.vpc" [$WIN32]
-}
-
 $Project "fgdlib"
 {
 	"fgdlib\fgdlib.vpc" [$WIN32]
@@ -47,11 +42,6 @@ $Project "height2normal"
 $Project "server"
 {
 	"game\server\server_experiment.vpc"		[($WIN32||$POSIX) && $EXPERIMENT]
-}
-
-$Project "studiorender"
-{
-	"studiorender\studiorender.vpc" [$WIN32]
 }
 
 $Project "mathlib"
