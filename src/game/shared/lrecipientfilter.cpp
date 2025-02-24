@@ -211,6 +211,27 @@ LUA_BINDING_BEGIN( RecipientFilter, RemoveRecipientsByPvs, "class", "Removes rec
     return 0;
 }
 LUA_BINDING_END()
+
+LUA_BINDING_BEGIN( RecipientFilter, GetRecipients, "class", "Gets all recipients in the filter" )
+{
+    // returns a table of all recipeitns
+    lua_CRecipientFilter &filter = LUA_BINDING_ARGUMENT( luaL_checkrecipientfilter, 1, "filter" );
+
+    lua_newtable( L );
+
+    for ( int i = 0; i < filter.m_Recipients.Count(); i++ )
+    {
+        int entIndex = filter.m_Recipients[i];
+        CBasePlayer *pPlayer = UTIL_PlayerByIndex( entIndex );
+
+        lua_pushinteger( L, i + 1 );  // Lua tables are 1-based
+        CBasePlayer::PushLuaInstanceSafe( L, pPlayer );
+        lua_settable( L, -3 );  // Set table[i+1] = pPlayer
+    }
+
+    return 1;
+}
+LUA_BINDING_END( "table", "Table of all recipient players" )
 #endif
 
 static int luasrc_CRecipientFilter( lua_State *L )

@@ -205,6 +205,13 @@ function FindMetaTable(name)
 	return registry[name]
 end
 
+function RegisterMetaTable(name, table)
+	-- TODO: What should MetaName and MetaID be set to to match GMod behavior?
+    table.MetaName = name
+	table.MetaID = name
+	registry[name] = table
+end
+
 -- TODO: Actually implement SQLite
 sql = {
 	Begin = function() end,
@@ -1073,6 +1080,16 @@ function MATERIAL_META:Height()
 	end
 
 	return 0
+end
+
+if (SERVER) then
+	local RECIPIENT_FILTER_META = FindMetaTable("RecipientFilter")
+	RECIPIENT_FILTER_META.AddPlayer = RECIPIENT_FILTER_META.AddRecipient
+	RECIPIENT_FILTER_META.AddPlayers = RECIPIENT_FILTER_META.CopyFrom
+    RECIPIENT_FILTER_META.GetCount = RECIPIENT_FILTER_META.GetRecipientCount
+	RECIPIENT_FILTER_META.GetPlayers = RECIPIENT_FILTER_META.GetRecipients
+	RECIPIENT_FILTER_META.RemovePlayer = RECIPIENT_FILTER_META.RemoveRecipient
+	RECIPIENT_FILTER_META.RemoveAllPlayers = RECIPIENT_FILTER_META.RemoveAllRecipients
 end
 
 --[[

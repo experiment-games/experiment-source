@@ -9,6 +9,7 @@
 
 // memdbgon must be the last include file in a .cpp file!!!
 #include "tier0/memdbgon.h"
+#include <physconstraint.h>
 
 LUA_REGISTRATION_INIT( Entity )
 
@@ -72,6 +73,15 @@ LUA_BINDING_BEGIN( Entity, ClearNavIgnore, "class", "Clear nav ignore." )
     return 0;
 }
 LUA_BINDING_END()
+
+LUA_BINDING_BEGIN( Entity, IsConstraint, "class", "Is nav ignored." )
+{
+    lua_CBaseEntity *pEntity = LUA_BINDING_ARGUMENT( luaL_checkentity, 1, "entity" );
+    CPhysConstraint *pConstraintEntity = dynamic_cast< CPhysConstraint * >( pEntity );
+    lua_pushboolean( L, pConstraintEntity != nullptr );
+    return 1;
+}
+LUA_BINDING_END( "boolean", "true if the entity is a constraint" )
 
 LUA_BINDING_BEGIN( Entity, IsNavIgnored, "class", "Is nav ignored." )
 {
